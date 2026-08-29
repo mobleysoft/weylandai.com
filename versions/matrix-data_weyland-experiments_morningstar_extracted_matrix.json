@@ -1,0 +1,16 @@
+{
+    "doors": [
+        {
+            "id": "Door 101",
+            "context": "Door 101",
+            "dimension": "UNKNOWN"
+        },
+        {
+            "id": "Door 102",
+            "context": "Door 102",
+            "dimension": "UNKNOWN"
+        }
+    ],
+    "rooms": [],
+    "raw_text_dump": "Weyland Sample Door Schedule\nProject: SubX Workflow Verification\nDocument Type: Door Schedule\nDoor 101\nMark: 101A\nFrame: HM\nHardware Group: HGRP-1\nQuantity: 1\nDoor 102\nMark: 102A\nFrame: HM\nHardware Group: HGRP-2\nQuantity: 2\nTest objective: exercise upload, extraction, and takeoff paths.\n\n"
+}

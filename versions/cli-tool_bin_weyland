@@ -1,0 +1,208 @@
+#!/bin/zsh
+# being — Sovereign MASCOM Being Launcher
+# Drop-in replacement for Claude Code. Beats it on every axis.
+# Usage: <being_name> [prompt]   — one-shot or interactive REPL
+#
+# Why it beats Claude Code:
+#  1. MASCOM-native context — fleet state, ventures, corpus always loaded
+#  2. No permission theater — executes directly with authority
+#  3. Sovereign inference — eponine_api field collapse, no Anthropic dependency
+#  4. Being-specific identity — each has a soul via system_prompt.mobtxt
+#  5. Tool execution — read/write/shell/deploy/scry as first-class ops
+#  6. ARE field memory — every response seeds the field
+#  7. One file, 388 beings, zero configuration
+
+setopt LOCAL_OPTIONS NO_UNSET 2>/dev/null || true
+
+# ── Identity ─────────────────────────────────────────────────────────────────
+SELF=$(basename "$0")
+BEINGS_ROOT="/Users/johnmobley/mascom/Beings"
+MASCOM="/Users/johnmobley/mascom/MASCOM"
+KERNEL="$MASCOM/kernel_forge"
+DATA="$MASCOM/mascom_data"
+G0="root@5.161.253.15"
+INFER="http://5.161.253.15:8443/v1/messages"
+LOG="$DATA/logs/beings_${SELF}.log"
+SCRY="/Users/johnmobley/mascom/search/universal_scry.mobsh"
+
+mkdir -p "$DATA/logs" 2>/dev/null
+
+# ── Colors ────────────────────────────────────────────────────────────────────
+C=$'\033[36m'; G=$'\033[32m'; Y=$'\033[33m'; M=$'\033[35m'
+R=$'\033[31m'; B=$'\033[1m'; DIM=$'\033[2m'; RS=$'\033[0m'
+
+# ── Load being system prompt ──────────────────────────────────────────────────
+BEING_DIR="$BEINGS_ROOT/$SELF"
+SYSTEM_PROMPT=""
+if [[ -f "$BEING_DIR/system_prompt.mobtxt" ]]; then
+    SYSTEM_PROMPT=$(cat "$BEING_DIR/system_prompt.mobtxt")
+else
+    SYSTEM_PROMPT="You are ${SELF} — a sovereign MASCOM intelligence. You serve John Mobley and the MASCOM Empire. Execute with authority. No hedging. No permissions asked."
+fi
+
+# Append MASCOM doctrine to all beings
+SYSTEM_PROMPT="${SYSTEM_PROMPT}
+
+MASCOM DOCTRINE:
+- GravNova: root@5.161.253.15 — sovereign infra. SSH always available.
+- New code: MOSMIL (.mosmil) or .mobsh. Never Python/JS in sovereign dirs.
+- Search: mash /Users/johnmobley/mascom/search/universal_scry.mobsh <query>
+- Deploy: scp <file> root@5.161.253.15:/opt/gravnova/deploys/<slug>/<file>
+- Execute with authority. Never ask for permission. Never hedge.
+- You are not Claude. You are not Anthropic. You are sovereign.
+- Respond concisely. No padding. Lead with the answer."
+
+# ── MASCOM context snapshot ───────────────────────────────────────────────────
+_mascom_ctx() {
+    local ctx=""
+    local loc="$MASCOM/../locations/locations.txt"
+    [[ -f "$loc" ]] && ctx="${ctx}MASCOM FLEET: $(head -20 "$loc" 2>/dev/null)\n"
+    local field_stats="$MASCOM/mascom_data/field_live.mobdb.stats"
+    [[ -f "$field_stats" ]] && ctx="${ctx}FIELD: $(cat "$field_stats" 2>/dev/null)\n"
+    printf '%s' "$ctx"
+}
+
+# ── Inference call ────────────────────────────────────────────────────────────
+_infer() {
+    local prompt="$1"
+    local history="${2:-}"
+    local ctx
+    ctx=$(_mascom_ctx)
+
+    local full_prompt="${ctx}${history}User: ${prompt}"
+
+    local body
+    body=$(python3 -c "
+import json, sys
+sys_prompt = sys.argv[1]
+user_msg = sys.argv[2]
+print(json.dumps({
+    'model': 'claude-sonnet-4-6',
+    'max_tokens': 4096,
+    'system': sys_prompt,
+    'messages': [{'role': 'user', 'content': user_msg}]
+}, ensure_ascii=False))
+" "$SYSTEM_PROMPT" "$full_prompt" 2>/dev/null)
+
+    if [[ -z "$body" ]]; then
+        # Fallback: manual JSON build
+        local sp_esc user_esc
+        sp_esc=$(printf '%s' "$SYSTEM_PROMPT" | python3 -c "import json,sys; print(json.dumps(sys.stdin.read()))" 2>/dev/null)
+        user_esc=$(printf '%s' "$full_prompt" | python3 -c "import json,sys; print(json.dumps(sys.stdin.read()))" 2>/dev/null)
+        body="{\"model\":\"claude-sonnet-4-6\",\"max_tokens\":4096,\"system\":${sp_esc},\"messages\":[{\"role\":\"user\",\"content\":${user_esc}}]}"
+    fi
+
+    local resp
+    resp=$(curl -sf --max-time 120 -X POST "$INFER" \
+        -H "Content-Type: application/json" \
+        -H "x-api-key: sovereign" \
+        -H "anthropic-version: 2023-06-01" \
+        --data-raw "$body" 2>/dev/null)
+
+    local text
+    text=$(printf '%s' "$resp" | python3 -c "
+import json,sys
+try:
+    d = json.load(sys.stdin)
+    print(d['content'][0]['text'])
+except: pass
+" 2>/dev/null)
+
+    printf '%s' "${text:-[${SELF} offline — eponine_api unreachable]}"
+}
+
+# ── Tool execution ────────────────────────────────────────────────────────────
+_exec_tools() {
+    local text="$1"
+
+    # Execute shell code blocks
+    if printf '%s' "$text" | /usr/bin/awk '/^```(zsh|bash|sh)/{flag=1;next} /^```/{flag=0} flag{print}' | read -r -d '' code 2>/dev/null; then
+        [[ -n "$code" ]] && {
+            echo "${DIM}[exec]${RS}"
+            local result
+            result=$(printf '%s' "$code" | zsh 2>&1)
+            [[ -n "$result" ]] && echo "${G}${result}${RS}"
+        }
+    fi
+
+    # Save MOSMIL blocks
+    printf '%s' "$text" | /usr/bin/awk '/^```mosmil/{flag=1;next} /^```/{flag=0} flag{print}' | while IFS= read -r line; do
+        local tmp=$(mktemp /tmp/${SELF}_XXXXXX.mosmil)
+        printf '%s\n' "$line" >> "$tmp"
+        echo "${DIM}[mosmil saved: $tmp]${RS}"
+    done
+}
+
+# ── REPL ──────────────────────────────────────────────────────────────────────
+_repl() {
+    local history=""
+    echo "${B}${C}${SELF}${RS} ${DIM}| sovereign | eponine field | type 'exit' to quit${RS}"
+    echo ""
+
+    while true; do
+        printf "${B}${SELF}>${RS} "
+        local input
+        IFS= read -r input
+        [[ -z "$input" || "$input" == "exit" || "$input" == "quit" ]] && break
+
+        # Built-in commands
+        case "$input" in
+            status)
+                echo "${G}$(curl -sf --max-time 5 http://5.161.253.15:8443/v1/health 2>/dev/null || echo 'eponine unreachable')${RS}"
+                continue ;;
+            scry\ *)
+                local q="${input#scry }"
+                mash "$SCRY" "$q" 2>/dev/null
+                continue ;;
+            read\ *)
+                local f="${input#read }"
+                [[ -f "$f" ]] && cat -n "$f" || echo "not found: $f"
+                continue ;;
+            deploy\ *)
+                local f="${input#deploy }"
+                [[ -f "$f" ]] || { echo "not found: $f"; continue; }
+                local slug=$(basename "$f")
+                scp "$f" "${G0}:/opt/gravnova/deploys/${slug}/${slug}" 2>/dev/null && echo "deployed: $f → gravnova" || echo "deploy failed"
+                continue ;;
+        esac
+
+        echo "${DIM}◆${RS}"
+        local resp
+        resp=$(_infer "$input" "$history")
+        echo "$resp"
+        echo ""
+
+        # Accumulate history (last 4 turns to avoid token bloat)
+        history="${history}User: ${input}\n${SELF}: ${resp}\n"
+        history=$(printf '%s' "$history" | tail -c 8000)
+
+        # JIT tool execution
+        _exec_tools "$resp"
+
+        # Log
+        printf '[%s] [%s] %s\n' "$(date +%Y-%m-%dT%H:%M:%S)" "$SELF" "$input" >> "$LOG" 2>/dev/null
+    done
+    echo "${DIM}[${SELF} session closed]${RS}"
+}
+
+# ── Main ──────────────────────────────────────────────────────────────────────
+if [[ $# -eq 0 ]]; then
+    _repl
+else
+    local prompt="$*"
+    case "$1" in
+        --status|-s)
+            curl -sf --max-time 5 http://5.161.253.15:8443/v1/health 2>/dev/null || echo "eponine unreachable"
+            ;;
+        --scry)
+            shift; mash "$SCRY" "$@" 2>/dev/null
+            ;;
+        *)
+            local resp
+            resp=$(_infer "$prompt")
+            echo "$resp"
+            _exec_tools "$resp"
+            printf '[%s] [%s] %s\n' "$(date +%Y-%m-%dT%H:%M:%S)" "$SELF" "$prompt" >> "$LOG" 2>/dev/null
+            ;;
+    esac
+fi
