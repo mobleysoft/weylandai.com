@@ -58,5 +58,17 @@
   "qtext": {
     "file": "qtext.html",
     "type": "raw"
+  },
+  "subscribe": {
+    "file": "subscribe.html",
+    "type": "raw"
+  },
+  "financials": {
+    "file": "financials.html",
+    "type": "raw"
+  },
+  "pricing": {
+    "file": "pricing.html",
+    "type": "raw"
   }
 }
