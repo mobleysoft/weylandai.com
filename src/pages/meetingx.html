@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#090a0d">
+  <title>MeetingX | WeylandAI</title>
+  <meta name="description" content="MeetingX turns live construction conversations into decisions, action items, and project intelligence.">
+  <style>
+    :root{--ink:#090a0d;--panel:#111318;--panel2:#171a20;--line:#2b3038;--paper:#eef1f2;--muted:#9299a3;--gold:#f0b800;--gold2:#ffd950;--green:#68e0a0;--red:#ff716b;--blue:#6ed8ff;--r:18px}
+    *{box-sizing:border-box}html,body{margin:0;min-height:100%;background:var(--ink);color:var(--paper);font-family:"Avenir Next","Helvetica Neue",sans-serif}body{overflow-x:hidden}
+    body:before{content:"";position:fixed;inset:0;pointer-events:none;background:radial-gradient(circle at 12% 8%,rgba(240,184,0,.14),transparent 24rem),radial-gradient(circle at 87% 83%,rgba(110,216,255,.08),transparent 28rem),linear-gradient(rgba(255,255,255,.015) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.015) 1px,transparent 1px);background-size:auto,auto,32px 32px,32px 32px}
+    button,input,textarea{font:inherit}.shell{position:relative;max-width:1540px;margin:auto;padding:20px clamp(14px,2.5vw,36px) 40px}
+    header{display:flex;align-items:center;justify-content:space-between;gap:18px;margin-bottom:20px}.brand{display:flex;align-items:center;gap:13px;text-decoration:none;color:var(--paper)}.mark{width:42px;height:42px;display:grid;place-items:center;background:var(--gold);color:var(--ink);font-weight:900;letter-spacing:-.08em}.brand strong{display:block;letter-spacing:.14em;font-size:14px}.brand small{display:block;color:var(--muted);font:600 9px/1.5 ui-monospace,monospace;letter-spacing:.15em}.top-actions{display:flex;align-items:center;gap:8px;flex-wrap:wrap}.status{display:flex;align-items:center;gap:7px;border:1px solid var(--line);border-radius:99px;padding:8px 12px;color:var(--muted);font:700 10px/1 ui-monospace,monospace;letter-spacing:.09em}.dot{width:7px;height:7px;border-radius:50%;background:var(--green);box-shadow:0 0 14px var(--green)}.link{color:var(--paper);text-decoration:none;border:1px solid var(--line);border-radius:99px;padding:8px 12px;font:700 10px/1 ui-monospace,monospace;letter-spacing:.08em}.link:hover{border-color:var(--gold);color:var(--gold)}
+    .intro{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(290px,.65fr);gap:18px;margin-bottom:18px}.hero,.brief,.card{background:rgba(17,19,24,.91);border:1px solid var(--line);border-radius:var(--r);box-shadow:0 24px 80px rgba(0,0,0,.25)}
+    .hero{position:relative;min-height:470px;overflow:hidden}.hero video{width:100%;height:100%;min-height:470px;object-fit:cover;background:#050609;display:block}.hero-placeholder{position:absolute;inset:0;display:grid;place-items:center;text-align:center;padding:40px;background:radial-gradient(circle at 50% 43%,rgba(240,184,0,.12),transparent 22%),linear-gradient(145deg,#11151b,#07080b)}.hero-placeholder.hidden{display:none}.orb{width:110px;height:110px;border:1px solid rgba(240,184,0,.45);transform:rotate(45deg);margin:0 auto 38px;position:relative;animation:turn 16s linear infinite}.orb:before,.orb:after{content:"";position:absolute;inset:15px;border:1px solid rgba(240,184,0,.33)}.orb:after{inset:32px;background:var(--gold);box-shadow:0 0 50px rgba(240,184,0,.3)}@keyframes turn{to{transform:rotate(405deg)}}
+    .hero-placeholder h1{font-size:clamp(34px,5vw,72px);line-height:.95;margin:0 0 14px;letter-spacing:-.05em}.hero-placeholder h1 span{color:var(--gold)}.hero-placeholder p{max-width:620px;color:var(--muted);margin:0 auto;line-height:1.65}.live-tag{position:absolute;top:16px;left:16px;background:rgba(9,10,13,.75);backdrop-filter:blur(14px);border:1px solid var(--line);border-radius:99px;padding:9px 12px;font:800 10px/1 ui-monospace,monospace;letter-spacing:.1em}.timer{position:absolute;top:16px;right:16px;background:rgba(9,10,13,.75);backdrop-filter:blur(14px);border:1px solid var(--line);border-radius:99px;padding:9px 12px;font:700 11px/1 ui-monospace,monospace}.controls{position:absolute;left:50%;bottom:18px;transform:translateX(-50%);display:flex;gap:8px;background:rgba(9,10,13,.78);border:1px solid var(--line);border-radius:99px;padding:7px;backdrop-filter:blur(16px)}
+    .control{border:0;border-radius:99px;background:var(--panel2);color:var(--paper);padding:11px 14px;cursor:pointer;font:750 10px/1 ui-monospace,monospace;letter-spacing:.04em;white-space:nowrap}.control:hover,.control.active{background:var(--gold);color:var(--ink)}.control.danger:hover{background:var(--red)}
+    .brief{padding:23px;display:flex;flex-direction:column}.eyebrow{color:var(--gold);font:800 10px/1 ui-monospace,monospace;letter-spacing:.16em;text-transform:uppercase}.brief h2{font-size:30px;line-height:1.05;letter-spacing:-.035em;margin:13px 0 9px}.brief>p{color:var(--muted);line-height:1.55;margin:0 0 20px}.flow{display:grid;gap:8px;margin:4px 0 20px}.flow-row{display:grid;grid-template-columns:32px 1fr;gap:11px;align-items:center;padding:11px;border:1px solid var(--line);border-radius:12px;background:rgba(255,255,255,.018)}.flow-row b{display:grid;place-items:center;width:30px;height:30px;border-radius:9px;background:rgba(240,184,0,.12);color:var(--gold);font:800 11px ui-monospace,monospace}.flow-row strong{font-size:13px}.flow-row small{display:block;color:var(--muted);margin-top:2px;line-height:1.35}.metrics{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:auto}.metric{padding:12px;border:1px solid var(--line);border-radius:12px}.metric strong{display:block;color:var(--gold);font-size:22px}.metric span{color:var(--muted);font:700 9px/1.3 ui-monospace,monospace;letter-spacing:.07em}
+    .workspace{display:grid;grid-template-columns:1.2fr .8fr .8fr;gap:18px}.card{padding:20px;min-height:300px}.card-head{display:flex;justify-content:space-between;gap:12px;align-items:center;margin-bottom:15px}.card h3{margin:0;font-size:17px}.badge{color:var(--muted);font:700 9px/1 ui-monospace,monospace;border:1px solid var(--line);border-radius:99px;padding:6px 8px}.transcript{height:260px;overflow:auto;padding:13px;border:1px solid var(--line);border-radius:12px;background:#0b0c0f;color:#cbd0d5;font:13px/1.65 ui-monospace,monospace;white-space:pre-wrap}.interim{color:var(--muted)}
+    .list{display:grid;gap:8px;max-height:230px;overflow:auto}.item{border:1px solid var(--line);border-radius:11px;padding:11px 12px;background:rgba(255,255,255,.018);font-size:13px;line-height:1.45}.item small{display:block;color:var(--muted);font:700 9px/1.4 ui-monospace,monospace;margin-top:5px}.empty{color:var(--muted);font-size:13px;line-height:1.6}.add{width:100%;margin-top:10px;border:1px dashed #454b54;background:transparent;color:var(--muted);border-radius:11px;padding:10px;cursor:pointer}.add:hover{border-color:var(--gold);color:var(--gold)}
+    .ask{display:flex;gap:8px;margin-top:10px}.ask input{min-width:0;flex:1;background:#0b0c0f;color:var(--paper);border:1px solid var(--line);border-radius:10px;padding:11px;outline:none}.ask input:focus{border-color:var(--gold)}.ask button{border:0;background:var(--gold);color:var(--ink);font-weight:800;border-radius:10px;padding:0 14px;cursor:pointer}.answer{min-height:145px;border-left:2px solid var(--gold);padding:3px 0 3px 13px;color:#cbd0d5;font-size:13px;line-height:1.6}.footerbar{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-top:18px;color:var(--muted);font:700 9px/1.5 ui-monospace,monospace;letter-spacing:.05em}.footerbar button{border:1px solid var(--line);background:transparent;color:var(--paper);border-radius:10px;padding:9px 12px;cursor:pointer}.footerbar button:hover{border-color:var(--gold);color:var(--gold)}
+    @media(max-width:1050px){.intro{grid-template-columns:1fr}.workspace{grid-template-columns:1fr 1fr}.workspace .card:first-child{grid-column:1/-1}}
+    @media(max-width:700px){.shell{padding:12px}.brand small,.top-actions .link{display:none}.hero,.hero video{min-height:55vh}.controls{width:calc(100% - 24px);overflow-x:auto;justify-content:flex-start}.workspace{grid-template-columns:1fr}.workspace .card:first-child{grid-column:auto}.brief{padding:18px}.footerbar{align-items:flex-start;flex-direction:column}}
+  </style>
+</head>
+<body>
+  <div class="shell">
+    <header>
+      <a class="brand" href="/"><span class="mark">WX</span><span><strong>MEETINGX</strong><small>WEYLAND COLLABORATION INTELLIGENCE</small></span></a>
+      <div class="top-actions"><span class="status"><i class="dot"></i> LIVE BETA</span><a class="link" href="/sightx/">SIGHTX</a><a class="link" href="/">WEYLAND</a></div>
+    </header>
+
+    <section class="intro">
+      <div class="hero">
+        <video id="stage" autoplay playsinline muted></video>
+        <div class="hero-placeholder" id="placeholder">
+          <div><div class="orb"></div><h1>Meet inside the<br><span>project model.</span></h1><p>MeetingX converts live conversation into a durable project record: transcript, decisions, actions, and the Weyland product context needed to act.</p></div>
+        </div>
+        <span class="live-tag" id="media-status">LOCAL FACILITATION SURFACE</span>
+        <span class="timer" id="timer">00:00:00</span>
+        <div class="controls">
+          <button class="control" id="media-btn">CAM + MIC</button>
+          <button class="control" id="share-btn">SHARE SCREEN</button>
+          <button class="control" id="record-btn">TRANSCRIBE</button>
+          <button class="control" id="decision-btn">DECISION</button>
+          <button class="control" id="action-btn">ACTION</button>
+        </div>
+      </div>
+
+      <aside class="brief">
+        <span class="eyebrow">Capital Meeting Brief</span>
+        <h2>One data spine.<br>Four revenue surfaces.</h2>
+        <p>The profitable wedge is not a list of disconnected products. It is one project intelligence flow sold at the points where construction loses the most time.</p>
+        <div class="flow">
+          <div class="flow-row"><b>01</b><div><strong>SubX</strong><small>Documents, specifications, submittals, and subcontractor intelligence.</small></div></div>
+          <div class="flow-row"><b>02</b><div><strong>TakeoffX</strong><small>Quantities, costs, labor, and estimate-ready scope.</small></div></div>
+          <div class="flow-row"><b>03</b><div><strong>PropX</strong><small>Bundles verified outputs into a reviewable proposal.</small></div></div>
+          <div class="flow-row"><b>04</b><div><strong>SightX</strong><small>Makes the same project data spatial, explorable, and explainable.</small></div></div>
+        </div>
+        <div class="metrics"><div class="metric"><strong>$2K</strong><span>SUBCONP ACTIVE SEAT / MONTH</span></div><div class="metric"><strong>$10M</strong><span>TARGET SEED ROUND</span></div></div>
+      </aside>
+    </section>
+
+    <section class="workspace">
+      <article class="card">
+        <div class="card-head"><h3>Live Transcript</h3><span class="badge" id="speech-status">READY</span></div>
+        <div class="transcript" id="transcript">MeetingX ready. Start transcription to create a local meeting record.</div>
+      </article>
+      <article class="card">
+        <div class="card-head"><h3>Decisions</h3><span class="badge" id="decision-count">0 CAPTURED</span></div>
+        <div class="list" id="decisions"><p class="empty">Capture the commitments that change the project or company.</p></div>
+        <button class="add" data-add="decision">+ Record decision</button>
+      </article>
+      <article class="card">
+        <div class="card-head"><h3>Actions</h3><span class="badge" id="action-count">0 OPEN</span></div>
+        <div class="list" id="actions"><p class="empty">Turn conversation into an owner, outcome, and next step.</p></div>
+        <button class="add" data-add="action">+ Add action</button>
+      </article>
+      <article class="card" style="grid-column:1/-1;min-height:220px">
+        <div class="card-head"><h3>Ask Weyland</h3><span class="badge">MEETING CONTEXT</span></div>
+        <div class="answer" id="answer">Ask about the product flow, the commercial wedge, the raise, or what should be demonstrated. MeetingX answers from the verified meeting brief rather than the public web.</div>
+        <form class="ask" id="ask-form"><input id="ask-input" autocomplete="off" placeholder="What is the clearest way to explain SubX and TakeoffX?"><button>ASK</button></form>
+      </article>
+    </section>
+
+    <div class="footerbar"><span>MEETINGX BETA · MEDIA AND NOTES STAY IN THIS BROWSER · MULTI-PARTY TRANSPORT NOT YET CLAIMED</span><button id="export-btn">EXPORT MEETING RECORD</button></div>
+  </div>
+
+  <script>
+    const state={started:Date.now(),transcript:[],decisions:[],actions:[],camera:null,display:null,recognition:null,recording:false};
+    const $=id=>document.getElementById(id);
+    const clock=()=>{const s=Math.floor((Date.now()-state.started)/1000);$('timer').textContent=[s/3600,s/60%60,s%60].map(v=>String(Math.floor(v)).padStart(2,'0')).join(':')};setInterval(clock,1000);clock();
+    function showStream(stream,label){$('stage').srcObject=stream;$('placeholder').classList.add('hidden');$('media-status').textContent=label}
+    async function startMedia(){try{if(!state.camera)state.camera=await navigator.mediaDevices.getUserMedia({video:{width:{ideal:1280},height:{ideal:720}},audio:{echoCancellation:true,noiseSuppression:true}});showStream(state.camera,'CAMERA + MICROPHONE READY');$('media-btn').classList.add('active')}catch(e){$('media-status').textContent='MEDIA PERMISSION REQUIRED';alert('Allow camera and microphone access to activate the MeetingX stage.') }}
+    async function shareScreen(){try{state.display=await navigator.mediaDevices.getDisplayMedia({video:true,audio:true});showStream(state.display,'SCREEN SHARE ACTIVE');$('share-btn').classList.add('active');state.display.getVideoTracks()[0].addEventListener('ended',()=>{state.display=null;$('share-btn').classList.remove('active');if(state.camera)showStream(state.camera,'CAMERA + MICROPHONE READY');else{$('stage').srcObject=null;$('placeholder').classList.remove('hidden')}})}catch(e){if(e.name!=='NotAllowedError')alert('Screen sharing could not start: '+e.message)}}
+    function initSpeech(){const SR=window.SpeechRecognition||window.webkitSpeechRecognition;if(!SR)return null;const r=new SR();r.continuous=true;r.interimResults=true;r.lang='en-US';r.onresult=e=>{let interim='';for(let i=e.resultIndex;i<e.results.length;i++){const text=e.results[i][0].transcript.trim();if(e.results[i].isFinal){state.transcript.push({at:new Date().toISOString(),text});}else interim=text}renderTranscript(interim)};r.onend=()=>{if(state.recording){try{r.start()}catch(_){}}};r.onerror=e=>{$('speech-status').textContent=e.error.toUpperCase()};return r}
+    function renderTranscript(interim=''){$('transcript').innerHTML=(state.transcript.length?state.transcript.map(x=>`<div>${escapeHtml(x.text)}</div>`).join(''):'<span class="interim">Listening…</span>')+(interim?`<div class="interim">${escapeHtml(interim)}</div>`:'');$('transcript').scrollTop=$('transcript').scrollHeight}
+    function toggleSpeech(){if(!state.recognition)state.recognition=initSpeech();if(!state.recognition){$('speech-status').textContent='UNSUPPORTED';alert('Live browser transcription is not available in this browser. Camera, notes, decisions, and export still work.');return}state.recording=!state.recording;if(state.recording){state.recognition.start();$('record-btn').classList.add('active');$('speech-status').textContent='LISTENING'}else{state.recognition.stop();$('record-btn').classList.remove('active');$('speech-status').textContent='PAUSED'}}
+    function escapeHtml(v){return String(v).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+    function add(kind){const label=kind==='decision'?'Decision':'Action and owner';const value=prompt(label+':');if(!value)return;state[kind+'s'].push({text:value,at:new Date().toISOString()});renderList(kind)}
+    function renderList(kind){const values=state[kind+'s'],node=$(kind+'s');node.innerHTML=values.length?values.map((x,i)=>`<div class="item">${escapeHtml(x.text)}<small>${new Date(x.at).toLocaleTimeString([], {hour:'2-digit',minute:'2-digit'})} · ${kind.toUpperCase()} ${i+1}</small></div>`).join(''):`<p class="empty">Nothing captured yet.</p>`;$(kind+'-count').textContent=`${values.length} ${kind==='action'?'OPEN':'CAPTURED'}`}
+    function answer(q){const s=q.toLowerCase();if(/price|cost|2k|2,000/.test(s))return 'SubConP, the Subcontractor Operating Package, is $2,000 per active operator seat per month. It includes HuntX, SubX, TakeoffX, CutsheetX, PropX, and SightX.';if(/flow|together|pipeline|product|subconp/.test(s))return 'Explain one project record across six products: HuntX finds the opportunity; SubX prepares submittals; TakeoffX quantifies drawings; CutsheetX assembles product data; PropX produces the reviewed proposal; SightX makes the same record spatial.';if(/takeoff/.test(s))return 'TakeoffX, or Takeoff Express, is the estimating wedge: quantify scope, connect current cost and labor assumptions, and move an estimator from tracing plans to reviewing a machine-produced result.';if(/subx|submittal/.test(s))return 'SubX means Submittal Express. It reduces document handling and submittal preparation from hours or days to a professional review cycle.';if(/raise|10m|capital|fund/.test(s))return 'The deck asks for $10M and frames five years of runway with 60% engineering, 30% staffing, and 10% operations. The strongest proof is the revenue-producing SubX and TakeoffX workflow, not the count of future products.';if(/demo|show|present/.test(s))return 'Show three things: the Weyland homepage for the platform thesis, SightX for spatial comprehension, and MeetingX for conversation-to-action. Describe SubConP as six products operating on one shared project record.';if(/meetingx|meetx/.test(s))return 'MeetingX is the canonical name. This beta proves local media, screen sharing, transcription, decisions, actions, export, and context-aware facilitation. Multi-party conferencing still requires a signaling and TURN layer and is not being claimed today.';return 'Anchor the answer to SubConP: less manual construction work, faster quote and approval cycles, and one project record reused across HuntX, SubX, TakeoffX, CutsheetX, PropX, and SightX.'}
+    function exportRecord(){const payload={product:'MeetingX',schema_version:1,started_at:new Date(state.started).toISOString(),exported_at:new Date().toISOString(),transcript:state.transcript,decisions:state.decisions,actions:state.actions};const blob=new Blob([JSON.stringify(payload,null,2)],{type:'application/json'}),a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=`meetingx-${new Date().toISOString().replace(/[:.]/g,'-')}.json`;a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1000)}
+    $('media-btn').onclick=startMedia;$('share-btn').onclick=shareScreen;$('record-btn').onclick=toggleSpeech;$('decision-btn').onclick=()=>add('decision');$('action-btn').onclick=()=>add('action');document.querySelectorAll('[data-add]').forEach(b=>b.onclick=()=>add(b.dataset.add));$('export-btn').onclick=exportRecord;
+    $('ask-form').onsubmit=e=>{e.preventDefault();const q=$('ask-input').value.trim();if(!q)return;$('answer').textContent=answer(q);$('ask-input').value=''};
+  </script>
+</body>
+</html>

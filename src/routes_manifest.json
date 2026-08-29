@@ -1,0 +1,62 @@
+{
+  "onboarding": {
+    "file": "onboarding.html",
+    "type": "templated_with_nav"
+  },
+  "huntx": {
+    "file": "huntx.html",
+    "type": "templated_with_nav"
+  },
+  "takeoffx": {
+    "file": "takeoffx.html",
+    "type": "templated_with_nav"
+  },
+  "subx": {
+    "file": "subx.html",
+    "type": "templated_with_nav"
+  },
+  "propx": {
+    "file": "propx.html",
+    "type": "templated_with_nav"
+  },
+  "whyweyland": {
+    "file": "whyweyland.html",
+    "type": "templated_with_nav"
+  },
+  "venturedeck": {
+    "file": "venturedeck.html",
+    "type": "templated_with_nav"
+  },
+  "careers": {
+    "file": "careers.html",
+    "type": "templated_with_nav"
+  },
+  "progress": {
+    "file": "progress.html",
+    "type": "templated_with_nav"
+  },
+  "sightx": {
+    "file": "sightx.html",
+    "type": "raw"
+  },
+  "meetingx": {
+    "file": "meetingx.html",
+    "type": "raw"
+  },
+  "sightx/runtime-manifest.json": {
+    "type": "static_json",
+    "source": "/Users/johnmobley/nginx/sites/weylandai.com/sightx/runtime-manifest.json"
+  },
+  "sightx/runtime-manifest.schema.json": {
+    "type": "static_json",
+    "source": "/Users/johnmobley/nginx/sites/weylandai.com/sightx/runtime-manifest.schema.json"
+  },
+  "sightx/projects/glendale-camino-real/catalog.json": {
+    "type": "static_json",
+    "source": "/Users/johnmobley/nginx/sites/weylandai.com/sightx/projects/glendale-camino-real/catalog.json"
+  },
+  "qtext": {
+    "file": "qtext.html",
+    "type": "raw"
+  }
+}
