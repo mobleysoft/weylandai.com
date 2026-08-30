@@ -2,3 +2,30 @@ name = "weylandai-com-worker"
 main = "weyland.worker.js"
 compatibility_date = "2025-10-31"
 compatibility_flags = ["nodejs_compat"]
+
+# ── D1 Database ──────────────────────────────────────────────
+# Created 2026-08-30, schema applied from schema.sql (86 tables,
+# reconstructed from the real weyland_onamerica_schema.sql source of
+# truth found in MHSCOM/ingested_assets/d1/). Previously the live worker
+# had NO database bound at all despite the code depending on it.
+[[d1_databases]]
+binding = "DB"
+database_name = "weyland_db"
+database_id = "5729f77e-d7e3-4577-ab43-3c064fa90ca5"
+
+# ── KV Namespaces ────────────────────────────────────────────
+[[kv_namespaces]]
+binding = "CACHE"
+id = "80a77dcf4f5f4e8588c172f2ecef95fb"
+
+[[kv_namespaces]]
+binding = "DEMO_REQUESTS"
+id = "090d0771923a4c40b6c37dadf6e8f067"
+
+# ── R2 Buckets ───────────────────────────────────────────────
+# NOT YET BOUND: R2 is not enabled on this Cloudflare account
+# (wrangler r2 bucket create fails with code 10042 - "Please enable R2
+# through the Cloudflare Dashboard"). File upload endpoints will fail
+# until this is enabled manually and these buckets are created:
+#   subx-uploads  (binding UPLOADS)
+#   subx-outputs  (binding OUTPUTS)
