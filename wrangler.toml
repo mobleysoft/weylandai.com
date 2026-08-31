@@ -31,6 +31,16 @@ id = "090d0771923a4c40b6c37dadf6e8f067"
 binding = "OCR_SERVICE"
 service = "weyland-ocr-worker"
 
+# mascom-edge: shared conglomerate-wide pull-through cache for GitHub-Pages-
+# sourced static content (local disk -> GitHub repo -> GitHub Pages ->
+# mascom-edge cache -> visitor). Used here only for the homepage "/" - the
+# other marketing pages still live as bundled HTML in this worker until
+# they're published to the weylandai.com GitHub Pages repo too. Falls back
+# to the bundled copy automatically if this binding errors or 404s.
+[[services]]
+binding = "MASCOM_EDGE"
+service = "mascom-edge"
+
 # ── R2 Buckets ───────────────────────────────────────────────
 # NOT YET BOUND: R2 is not enabled on this Cloudflare account
 # (wrangler r2 bucket create fails with code 10042 - "Please enable R2

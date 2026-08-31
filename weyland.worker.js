@@ -144183,19 +144183,19 @@ async function performHealthCheck(env2) {
     health.status = "degraded";
   }
   try {
-    if (!env2.ANTHROPIC_API_KEY) {
-      throw new Error("API key not configured");
+    if (!env2.OCR_SERVICE) {
+      throw new Error("OCR_SERVICE binding not configured");
     }
-    const apiKeyValid = env2.ANTHROPIC_API_KEY.startsWith("sk-ant-");
-    health.checks.claude_api = {
-      status: apiKeyValid ? "healthy" : "degraded",
-      note: apiKeyValid ? "API key configured" : "Invalid API key format"
+    const ocrResp = await env2.OCR_SERVICE.fetch("https://weyland-ocr-worker/health");
+    health.checks.ocr_service = {
+      status: ocrResp.ok ? "healthy" : "degraded",
+      note: ocrResp.ok ? "pure-JS OCR (PDFium + tesseract-wasm), no external API" : `HTTP ${ocrResp.status}`
     };
-    if (!apiKeyValid) {
+    if (!ocrResp.ok) {
       health.status = "degraded";
     }
   } catch (error4) {
-    health.checks.claude_api = { status: "unhealthy", error: error4.message };
+    health.checks.ocr_service = { status: "unhealthy", error: error4.message };
     health.status = "degraded";
   }
   return health;
@@ -146580,8 +146580,8 @@ router.get("/api/health", async (request2, env2) => {
       version: WORKER_VERSION,
       environment: env2.ENVIRONMENT || "production",
       dependencies: 0,
-      ocr: "claude_vision",
-      deployment: "weyland-onamerica.ron-helms.workers.dev",
+      ocr: "pdfium_tesseract_wasm",
+      deployment: "weylandai-com-worker",
       organization: "Mobley Helms Systems LP"
     }, health.status === "healthy" ? 200 : 503);
   } catch (error4) {
@@ -163037,6 +163037,7 @@ var SovereignWeylandRoutes = (function() {
     "takeoffx": serve_takeoffx,
     "subx": serve_subx,
     "propx": serve_propx,
+    "": serve_whyweyland,
     "whyweyland": serve_whyweyland,
     "venturedeck": serve_venturedeck,
     "careers": serve_careers,
@@ -163058,6 +163059,7 @@ var SovereignWeylandRoutes = (function() {
     dispatch: function(pathname) {
       var clean = pathname.toLowerCase().replace(/^\/|\/$/g, "");
       if (clean === "deck") clean = "venturedeck";
+      if (clean === "index.html" || clean === "index") clean = "";
       if (map[clean]) return map[clean]();
       return null;
     }
@@ -163072,6 +163074,25 @@ var weyland_worker_default = {
       return Response.redirect(url.toString(), 301);
     }
     if (request2.method === "GET" || request2.method === "HEAD") {
+      const isHome = url.pathname === "/" || url.pathname === "/index.html";
+      if (isHome && env2.MASCOM_EDGE) {
+        try {
+          const edgeResp = await env2.MASCOM_EDGE.fetch("https://weylandai.com/");
+          if (edgeResp && edgeResp.status === 200) {
+            const body = await edgeResp.arrayBuffer();
+            return new Response(body, {
+              status: 200,
+              headers: {
+                "Content-Type": edgeResp.headers.get("Content-Type") || "text/html; charset=utf-8",
+                "X-Cache": edgeResp.headers.get("X-Cache") || "",
+                "X-Served-By": "mascom-edge-via-weylandai-com-worker"
+              }
+            });
+          }
+        } catch (e) {
+          console.log("[MASCOM_EDGE delegation failed, falling back to bundled page]", e.message);
+        }
+      }
       var sovereignResponse = SovereignWeylandRoutes.dispatch(url.pathname);
       if (sovereignResponse) return sovereignResponse;
     }
