@@ -1,0 +1,5 @@
+{
+  "name": "weyland-storage-service",
+  "private": true,
+  "type": "module"
+}
