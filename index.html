@@ -160,6 +160,64 @@
       box-shadow: 0 0 0 2px #fdfdf3;
     }
 
+    /* Hero: the 3 real commercial paths, big-icon tiles like a Stripe
+       product page - left to right on wide screens, stacked on mobile. */
+    .tiers {
+      display: flex;
+      gap: 14px;
+      margin-top: clamp(32px, 6vw, 48px);
+    }
+    .tier {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+      border: 1px solid #fdfdf3;
+      border-radius: 6px;
+      padding: clamp(20px, 4vw, 32px) 16px;
+      text-align: center;
+      transition: color .15s, background-color .15s;
+    }
+    .tier:hover, .tier:focus-visible {
+      color: #000711;
+      background-color: #fdfdf3;
+      outline: none;
+    }
+    .tier svg {
+      width: clamp(34px, 6vw, 44px);
+      height: clamp(34px, 6vw, 44px);
+      fill: currentColor;
+      stroke: none;
+    }
+    .tier .tier-name {
+      font-size: clamp(16px, 3vw, 19px);
+      font-weight: 700;
+      letter-spacing: .01em;
+    }
+    .tier .tier-price {
+      font: 600 12px/1.5 ui-monospace, "SF Mono", monospace;
+      letter-spacing: .04em;
+      opacity: .75;
+    }
+    .tier.primary {
+      border-width: 2px;
+    }
+
+    @media (max-width: 699px) {
+      .tiers { flex-direction: column; }
+    }
+
+    .browse-heading {
+      text-align: center;
+      margin-top: clamp(40px, 7vw, 56px);
+      color: #9299a3;
+      font: 700 11px/1 ui-monospace, "SF Mono", monospace;
+      letter-spacing: .16em;
+      text-transform: uppercase;
+    }
+
     footer {
       text-align: center;
       color: #9299a3;
@@ -210,6 +268,39 @@
     <div class="tagline">
       <p>"Turn drawings into bids, automatically."</p>
     </div>
+
+    <div class="tiers">
+      <a class="tier primary" href="/subscribe">
+        <svg viewBox="0 0 48 48" aria-hidden="true">
+          <path d="M24 4 C24 4 15 15 15 25 C15 33 19.5 39 25 39 C30.5 39 35 34 35 27.5 C35 21.5 31 17 29 13.5 C29.3 17.5 27.3 20 25 20 C22.3 20 20.5 17.7 21.2 14 C21.8 10.5 24 8 24 4 Z M25 34.5 C21.5 34.5 19.5 31.7 19.5 28.5 C19.5 25.5 21.5 23 23.2 21 C23.2 23.3 24.7 25 26.5 25 C28.2 25 29.5 23.7 29.7 22 C30.6 23.7 30.8 25.3 30.8 27 C30.8 31 28.3 34.5 25 34.5 Z"/>
+        </svg>
+        <span class="tier-name">Free Trial</span>
+        <span class="tier-price">$0 for 30 days</span>
+      </a>
+      <a class="tier" href="/pricing">
+        <svg viewBox="0 0 48 48" aria-hidden="true">
+          <g transform="rotate(45 24 24)">
+            <rect x="20.5" y="18" width="7" height="27" rx="2"/>
+            <rect x="10" y="7" width="28" height="12" rx="2.5"/>
+          </g>
+        </svg>
+        <span class="tier-name">Subcontractor</span>
+        <span class="tier-price">$2,000 / month</span>
+      </a>
+      <a class="tier" href="/pricing#builder">
+        <svg viewBox="0 0 48 48" aria-hidden="true">
+          <rect x="4" y="27" width="7" height="14"/>
+          <rect x="12" y="19" width="7" height="22"/>
+          <rect x="20.5" y="9" width="8" height="32"/>
+          <rect x="29.5" y="22" width="7" height="19"/>
+          <rect x="37.5" y="30" width="6.5" height="11"/>
+        </svg>
+        <span class="tier-name">Builder</span>
+        <span class="tier-price">Contact Us</span>
+      </a>
+    </div>
+
+    <div class="browse-heading">Browse All Products</div>
     <nav class="options" aria-label="Products">
       <a href="/onboarding">Onboarding</a>
       <a href="/huntx">HuntX</a>
