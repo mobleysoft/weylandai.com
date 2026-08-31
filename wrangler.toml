@@ -22,6 +22,15 @@ id = "80a77dcf4f5f4e8588c172f2ecef95fb"
 binding = "DEMO_REQUESTS"
 id = "090d0771923a4c40b6c37dadf6e8f067"
 
+# ── Service Bindings ─────────────────────────────────────────
+# weyland-ocr-worker: dedicated OCR/PDF-vision service (PDFium + tesseract,
+# both bundled directly - no runtime WASM compilation, no KV, no external
+# API). Same-account service binding, zero network hop, real and verified
+# end-to-end 2026-08-30.
+[[services]]
+binding = "OCR_SERVICE"
+service = "weyland-ocr-worker"
+
 # ── R2 Buckets ───────────────────────────────────────────────
 # NOT YET BOUND: R2 is not enabled on this Cloudflare account
 # (wrangler r2 bucket create fails with code 10042 - "Please enable R2

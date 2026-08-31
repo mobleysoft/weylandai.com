@@ -1,0 +1,9 @@
+{
+  "name": "weyland-ocr-worker",
+  "private": true,
+  "type": "module",
+  "dependencies": {
+    "@hyzyla/pdfium": "^2.1.13",
+    "tesseract-wasm": "^0.11.0"
+  }
+}

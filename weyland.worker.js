@@ -149106,7 +149106,51 @@ router.post("/api/hardware-schedule/session/:sessionId/detect-schedules", async 
     if (routingDecision === "text-extractable") {
       console.log(`[Detect Schedules] Text-extractable route - creating candidates from text analysis`);
     } else {
-      console.log(`[Detect Schedules] Vision-primary route - document requires human-guided region selection`);
+      console.log(`[Detect Schedules] Vision-primary route - calling weyland-ocr-worker`);
+      try {
+        if (!env2.OCR_SERVICE) throw new Error("OCR_SERVICE binding not configured");
+        const ocrResp = await env2.OCR_SERVICE.fetch("https://weyland-ocr-worker/detect-schedules", {
+          method: "POST",
+          headers: { "X-Session-Id": sessionId, "X-Total-Pages": String(session.total_pages) },
+          body: pdfBuffer,
+        });
+        if (!ocrResp.ok) {
+          const errBody = await ocrResp.text().catch(() => "");
+          throw new Error(`OCR service returned ${ocrResp.status}: ${errBody.slice(0, 300)}`);
+        }
+        const visionResult = await ocrResp.json();
+        candidates = (visionResult.candidates || []).map((c) => ({
+          id: `cand_${sessionId}_${c.pageNumber}_${crypto.randomUUID().slice(0, 8)}`,
+          session_id: sessionId,
+          page_number: c.pageNumber,
+          schedule_type: c.scheduleType,
+          detection_confidence: null,
+          // Full-page candidate - this pipeline detects candidate PAGES, not
+          // sub-regions within a page. Real dimensions aren't known here
+          // (the ocr-worker doesn't return them); recorded as null rather
+          // than fabricated.
+          bounding_box: JSON.stringify({ x: 0, y: 0, width: null, height: null }),
+          detection_hints_found: null,
+          row_count_estimate: null,
+          detection_method: "ocr_title_scan_pdfium",
+          status: "pending",
+        }));
+        if (candidates.length > 0) {
+          const stmt = env2.DB.prepare(`
+            INSERT INTO schedule_region_candidates
+              (id, session_id, page_number, schedule_type, detection_confidence, bounding_box,
+               detection_hints_found, row_count_estimate, detection_method, status)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+          `);
+          await env2.DB.batch(candidates.map((c) => stmt.bind(
+            c.id, c.session_id, c.page_number, c.schedule_type, c.detection_confidence,
+            c.bounding_box, c.detection_hints_found, c.row_count_estimate, c.detection_method, c.status,
+          )));
+        }
+        console.log(`[Detect Schedules] OCR detection found ${candidates.length} candidates (${visionResult.pagesWithNoOcrText} pages with no OCR text, ${(visionResult.unresolved || []).length} unresolved)`);
+      } catch (visionError) {
+        console.error(`[Detect Schedules] OCR detection failed, falling back to manual selection:`, visionError.message);
+      }
     }
     await env2.DB.prepare(`
       UPDATE hardware_extraction_sessions
