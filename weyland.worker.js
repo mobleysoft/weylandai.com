@@ -148008,7 +148008,45 @@ const WEYLAND_PRODUCTS = {
   "weyland-huntx-seat": { priceId: "price_1UAtsgLWTxUJi5AVmc9hxKTG", tier: "huntx" },
   "weyland-subx-seat": { priceId: "price_1UAuLJLWTxUJi5AVeQGMZegU", tier: "subx" },
   "weyland-meetingx-seat": { priceId: "price_1UAwDiLWTxUJi5AV3zx4ZMgp", tier: "meetingx" },
-  "weyland-sightx-seat": { priceId: "price_1UAwEmLWTxUJi5AVnfVmPSPq", tier: "sightx" }
+  "weyland-sightx-seat": { priceId: "price_1UAwEmLWTxUJi5AVnfVmPSPq", tier: "sightx" },
+  // PropX Pro family - real live-mode Stripe objects (same account as everything
+  // above). NOT wired to any real backend route yet - do not surface these on
+  // /pricing or any checkout UI until #26/#27/#28 (real LienX/BidX/CoA routes)
+  // are built. A live, chargeable price with no product behind it is worse than
+  // not having the SKU at all.
+  "weyland-lienx-seat": { priceId: "price_1UAxoNLWTxUJi5AV7ysXAvxm", tier: "lienx" },
+  "weyland-bidx-seat": { priceId: "price_1UAxoOLWTxUJi5AVrw6I89f6", tier: "bidx" },
+  "weyland-coa-seat": { priceId: "price_1UAxoOLWTxUJi5AVtRLsCXPq", tier: "coa" },
+  // TakeoffX Pro, SubX Pro, HuntX Pro, SightX Pro - real live-mode Stripe
+  // objects, but NONE of these 24 have a real backend route or page yet
+  // (unlike lienx/bidx/coa above, which do). Registered here only so the
+  // catalog endpoint and future checkout wiring have something real to
+  // point at - do not surface any of these on /pricing or any nav until
+  // each has actual working functionality behind it.
+  "weyland-drawx-seat": { priceId: "price_1UAzFFLWTxUJi5AVqu5Mo8oi", tier: "drawx" },
+  "weyland-asx-seat": { priceId: "price_1UAzEuLWTxUJi5AVYYpFhmov", tier: "asx" },
+  "weyland-specx-seat": { priceId: "price_1UAzEvLWTxUJi5AV7GooVFVv", tier: "specx" },
+  "weyland-rfax-seat": { priceId: "price_1UAzEwLWTxUJi5AVbt7di7am", tier: "rfax" },
+  "weyland-changeordx-seat": { priceId: "price_1UAzEwLWTxUJi5AVEGEBbCzB", tier: "changeordx" },
+  "weyland-permitx-seat": { priceId: "price_1UAzExLWTxUJi5AVNnusMWUs", tier: "permitx" },
+  "weyland-safetyx-seat": { priceId: "price_1UAzExLWTxUJi5AVbuYnJgWq", tier: "safetyx" },
+  "weyland-closex-seat": { priceId: "price_1UAzEyLWTxUJi5AVe8R5mxaa", tier: "closex" },
+  "weyland-notesx-seat": { priceId: "price_1UAzEyLWTxUJi5AVA2LBoSfw", tier: "notesx" },
+  "weyland-leadx-seat": { priceId: "price_1UAzEzLWTxUJi5AVgEKlta57", tier: "leadx" },
+  "weyland-marketx-seat": { priceId: "price_1UAzF0LWTxUJi5AVmpyVEvLb", tier: "marketx" },
+  "weyland-compx-seat": { priceId: "price_1UAzF0LWTxUJi5AV6GptNE42", tier: "compx" },
+  "weyland-pricex-seat": { priceId: "price_1UAzF1LWTxUJi5AVuRxlbnaL", tier: "pricex" },
+  "weyland-zoningx-seat": { priceId: "price_1UAzF1LWTxUJi5AVBIA2woi4", tier: "zoningx" },
+  "weyland-riskx-seat": { priceId: "price_1UAzF2LWTxUJi5AV73PrQvi7", tier: "riskx" },
+  "weyland-forecastx-seat": { priceId: "price_1UAzF3LWTxUJi5AVxp0lAbAH", tier: "forecastx" },
+  "weyland-geox-seat": { priceId: "price_1UAzF3LWTxUJi5AVNz5ZtV4j", tier: "geox" },
+  "weyland-sitex-seat": { priceId: "price_1UAzF4LWTxUJi5AVhLWKTCI3", tier: "sitex" },
+  "weyland-dronex-seat": { priceId: "price_1UAzF4LWTxUJi5AV4VnC6MVh", tier: "dronex" },
+  "weyland-photox-seat": { priceId: "price_1UAzF5LWTxUJi5AVRa52dt1u", tier: "photox" },
+  "weyland-inspecx-seat": { priceId: "price_1UAzF6LWTxUJi5AVeycqwHkE", tier: "inspecx" },
+  "weyland-survx-seat": { priceId: "price_1UAzF6LWTxUJi5AVURjQkscV", tier: "survx" },
+  "weyland-mobilex-seat": { priceId: "price_1UAzF7LWTxUJi5AVbjF6Yzqg", tier: "mobilex" },
+  "weyland-weatherx-seat": { priceId: "price_1UAzF7LWTxUJi5AVV0rfO1Rl", tier: "weatherx" }
 };
 
 async function stripeRequest(env2, method, path, params) {
@@ -156141,6 +156179,654 @@ router.get("/api/proposals/:id/download", async (request2, env2) => {
     return jsonResponse3({ error: "Failed to download proposal", details: error5.message }, 500);
   }
 });
+
+// ---- Shared document-PDF helpers ------------------------------------------
+// Every "form -> templated PDF" product (proposals, lien waivers, bid
+// packages, CoA packages, and now RFaX/ChangeOrdX/PermitX/CloseX/NotesX)
+// does the exact same three mechanical steps: render HTML to a PDF via the
+// Browser Rendering binding, put the bytes in R2, and stream them back on
+// download. Pulled out once here instead of copy-pasted per product - the
+// part that stays per-product is the HTML template and the D1 columns,
+// which genuinely differ document to document.
+async function renderHtmlToPdf(env2, html) {
+  const browser = await puppeteer_cloudflare_default.launch(env2.BROWSER);
+  try {
+    const page = await browser.newPage();
+    await page.setContent(html, { waitUntil: "load" });
+    return await page.pdf({ format: "Letter", printBackground: true, margin: { top: "0in", right: "0in", bottom: "0in", left: "0in" } });
+  } finally {
+    await browser.close();
+  }
+}
+__name(renderHtmlToPdf, "renderHtmlToPdf");
+async function storeDocumentPdf(env2, r2Key, pdfBytes, metadata) {
+  await env2.UPLOADS.put(r2Key, pdfBytes, { httpMetadata: { contentType: "application/pdf" }, customMetadata: metadata });
+}
+__name(storeDocumentPdf, "storeDocumentPdf");
+function makeDocumentDownloadRoute(table, tier, filenamePrefix) {
+  return async (request2, env2) => {
+    const { error: error4, user } = await authenticate(request2, env2);
+    if (error4) return error4;
+    const _prodErr = await requireProductAccess(user, env2, tier);
+    if (_prodErr) return _prodErr;
+    try {
+      const row = await env2.DB.prepare(`SELECT r2_key FROM ${table} WHERE id = ? AND user_id = ?`).bind(request2.params.id, user.userId).first();
+      if (!row) return jsonResponse3({ error: `${filenamePrefix} not found` }, 404);
+      const object = await env2.UPLOADS.get(row.r2_key);
+      if (!object) return jsonResponse3({ error: `${filenamePrefix} PDF not found in storage` }, 404);
+      return new Response(object.body, { headers: { "Content-Type": "application/pdf", "Content-Disposition": `attachment; filename="${filenamePrefix}-${request2.params.id.slice(0, 8)}.pdf"` } });
+    } catch (error5) {
+      console.error(`[${filenamePrefix} Download] Error:`, error5);
+      return jsonResponse3({ error: `Failed to download ${filenamePrefix.toLowerCase()}`, details: error5.message }, 500);
+    }
+  };
+}
+__name(makeDocumentDownloadRoute, "makeDocumentDownloadRoute");
+
+// ---- LienX: lien waiver generator (PropX Pro family) ----------------------
+// Generic-form language only, not any state's exact statutory text (several
+// states - CA, TX, FL, GA among them - require the precise statutory wording
+// to be legally effective). The generated PDF says so explicitly rather than
+// implying compliance we haven't verified.
+const LIEN_WAIVER_TYPES = {
+  conditional_progress: {
+    label: "Conditional Waiver and Release on Progress Payment",
+    body: (d) => `Upon receipt by the undersigned of a check from ${d.ownerName || "[Owner]"} in the sum of $${Number(d.amount || 0).toLocaleString(void 0, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}, payable to ${d.claimantName || "[Claimant]"}, and when the check has been properly endorsed and has cleared the bank, this document becomes effective to release any mechanic's lien, stop payment notice, or bond right the undersigned has on the job of ${d.ownerName || "[Owner]"} located at ${d.projectAddress || "[Project Address]"} to the extent of the payment described above, for labor, services, equipment, or material furnished through ${d.throughDate || "[Through Date]"} only. This release does not cover retention, extras, or items furnished after the date stated above.`
+  },
+  unconditional_progress: {
+    label: "Unconditional Waiver and Release on Progress Payment",
+    body: (d) => `The undersigned has been paid and has received a progress payment in the sum of $${Number(d.amount || 0).toLocaleString(void 0, { minimumFractionDigits: 2, maximumFractionDigits: 2 })} for labor, services, equipment, or material furnished to ${d.ownerName || "[Owner]"} on the job located at ${d.projectAddress || "[Project Address]"} through ${d.throughDate || "[Through Date]"}, and does hereby release any mechanic's lien, stop payment notice, or bond right to the extent of that payment. This release covers a progress payment only and does not cover retention, extras, or items furnished after the date stated above.`
+  },
+  conditional_final: {
+    label: "Conditional Waiver and Release on Final Payment",
+    body: (d) => `Upon receipt by the undersigned of a check from ${d.ownerName || "[Owner]"} in the sum of $${Number(d.amount || 0).toLocaleString(void 0, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}, payable to ${d.claimantName || "[Claimant]"}, and when the check has been properly endorsed and has cleared the bank, this document becomes effective to release any mechanic's lien, stop payment notice, or bond right the undersigned has on the job of ${d.ownerName || "[Owner]"} located at ${d.projectAddress || "[Project Address]"}. This is the entire amount owed and due for labor, services, equipment, or material furnished to the job.`
+  },
+  unconditional_final: {
+    label: "Unconditional Waiver and Release on Final Payment",
+    body: (d) => `The undersigned has been paid in full for labor, services, equipment, or material furnished to ${d.ownerName || "[Owner]"} on the job located at ${d.projectAddress || "[Project Address]"}, and does hereby waive and release any right to a mechanic's lien, stop payment notice, or bond right against the property for all labor, services, equipment, or material furnished to the job, except for disputed claims, if any, noted below.`
+  }
+};
+function generateLienWaiverHtml(d) {
+  const type = LIEN_WAIVER_TYPES[d.waiverType] || LIEN_WAIVER_TYPES.conditional_progress;
+  return `<!doctype html><html><head><meta charset="utf-8"><style>
+    body{font-family:Georgia,"Times New Roman",serif;color:#111;margin:0;padding:60px 70px;font-size:13px;line-height:1.6}
+    h1{font-size:18px;text-transform:uppercase;letter-spacing:.04em;text-align:center;margin:0 0 6px}
+    .sub{text-align:center;color:#555;font-size:11px;margin-bottom:34px}
+    .row{display:flex;justify-content:space-between;gap:24px;margin-bottom:18px}
+    .field{flex:1}
+    .field label{display:block;font-size:9px;text-transform:uppercase;letter-spacing:.06em;color:#777;margin-bottom:2px}
+    .field div{border-bottom:1px solid #999;padding-bottom:3px}
+    .body-text{margin:28px 0;text-align:justify}
+    .exceptions{margin-top:24px}
+    .exceptions label{font-size:9px;text-transform:uppercase;letter-spacing:.06em;color:#777}
+    .sig{margin-top:60px;display:flex;justify-content:space-between;gap:40px}
+    .sig div{flex:1;border-top:1px solid #333;padding-top:6px;font-size:11px;color:#555}
+    .disclaimer{margin-top:50px;padding-top:14px;border-top:1px solid #ccc;font-size:9.5px;color:#777;line-height:1.5}
+  </style></head><body>
+    <h1>${type.label}</h1>
+    <div class="sub">Generated by WeylandAI / LienX &middot; ${new Date().toLocaleDateString()}</div>
+    <div class="row">
+      <div class="field"><label>Claimant</label><div>${d.claimantName || ""}</div></div>
+      <div class="field"><label>Claimant Address</label><div>${d.claimantAddress || ""}</div></div>
+    </div>
+    <div class="row">
+      <div class="field"><label>Owner</label><div>${d.ownerName || ""}</div></div>
+      <div class="field"><label>Project</label><div>${d.projectName || ""}</div></div>
+    </div>
+    <div class="row">
+      <div class="field"><label>Project Address</label><div>${d.projectAddress || ""}</div></div>
+      <div class="field"><label>Through Date</label><div>${d.throughDate || ""}</div></div>
+    </div>
+    <div class="body-text">${type.body(d)}</div>
+    ${d.exceptionsText ? `<div class="exceptions"><label>Exceptions</label><div>${d.exceptionsText}</div></div>` : ""}
+    <div class="sig">
+      <div>Signature</div>
+      <div>Date</div>
+    </div>
+    <div class="disclaimer">This is a general-form waiver, not any state's exact statutory language. Several states (including California, Texas, Florida, and Georgia) require the precise statutory wording for a waiver to be legally effective - verify against your state's requirements, or have counsel review, before using this on a real project.</div>
+  </body></html>`;
+}
+router.post("/api/lien-waivers/generate", async (request2, env2) => {
+  const { error: error4, user } = await authenticate(request2, env2);
+  if (error4) return error4;
+  {
+    const _prodErr = await requireProductAccess(user, env2, "lienx");
+    if (_prodErr) return _prodErr;
+  }
+  try {
+    const body = await request2.json();
+    if (!LIEN_WAIVER_TYPES[body.waiverType]) {
+      return jsonResponse3({ error: "waiverType must be one of: " + Object.keys(LIEN_WAIVER_TYPES).join(", ") }, 400);
+    }
+    if (!body.claimantName || !body.projectAddress) {
+      return jsonResponse3({ error: "claimantName and projectAddress are required" }, 400);
+    }
+    const tenantId = user.tenantId || user.tenant_id || "ven_weyland";
+    const waiverId = crypto.randomUUID();
+    const now = (/* @__PURE__ */ new Date()).toISOString();
+    const html = generateLienWaiverHtml(body);
+    const pdfBytes = await renderHtmlToPdf(env2, html);
+    const r2Key = `lien-waivers/${user.userId}/${waiverId}.pdf`;
+    await storeDocumentPdf(env2, r2Key, pdfBytes, { userId: user.userId, tenantId, generatedAt: now });
+    await env2.DB.prepare(`
+      INSERT INTO lien_waivers (
+        id, user_id, tenant_id, waiver_type, claimant_name, claimant_address, owner_name,
+        project_name, project_address, through_date, amount, exceptions_text, r2_key,
+        status, created_at, updated_at
+      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 'draft', ?, ?)
+    `).bind(
+      waiverId, user.userId, tenantId, body.waiverType, body.claimantName, body.claimantAddress || null,
+      body.ownerName || null, body.projectName || null, body.projectAddress, body.throughDate || null,
+      Number(body.amount) || 0, body.exceptionsText || null, r2Key, now, now
+    ).run();
+    return jsonResponse3({ success: true, waiverId, downloadUrl: `/api/lien-waivers/${waiverId}/download` });
+  } catch (error5) {
+    console.error("[LienX Generate] Error:", error5);
+    return jsonResponse3({ error: "Failed to generate lien waiver", details: error5.message }, 500);
+  }
+});
+router.get("/api/lien-waivers/:id/download", makeDocumentDownloadRoute("lien_waivers", "lienx", "LienWaiver"));
+
+// ---- BidX: bid package assembler (PropX Pro family) ------------------------
+// Same priced-line-item engine as PropX, but submittalId is optional (a bid
+// package doesn't require a SubX submittal to exist) and adds bid-specific
+// fields PropX doesn't have: bid bond, addenda acknowledgment.
+function generateBidPackageHtml(d) {
+  const rows = (d.lineItems || []).map((li) => `<tr><td>${li.description || ""}</td><td>${li.quantity || 0}</td><td>$${Number(li.unitPrice || 0).toLocaleString(void 0, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td><td>$${(Number(li.quantity || 0) * Number(li.unitPrice || 0)).toLocaleString(void 0, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td></tr>`).join("");
+  return `<!doctype html><html><head><meta charset="utf-8"><style>
+    body{font-family:Georgia,"Times New Roman",serif;color:#111;margin:0;padding:60px 70px;font-size:13px;line-height:1.55}
+    h1{font-size:22px;letter-spacing:-.01em;margin:0 0 4px}
+    .sub{color:#666;font-size:11px;margin-bottom:30px}
+    .row{display:flex;gap:24px;margin-bottom:16px}
+    .field{flex:1}
+    .field label{display:block;font-size:9px;text-transform:uppercase;letter-spacing:.06em;color:#777;margin-bottom:2px}
+    .field div{border-bottom:1px solid #999;padding-bottom:3px}
+    table{width:100%;border-collapse:collapse;margin-top:26px;font-size:12px}
+    th{text-align:left;font-size:9px;text-transform:uppercase;letter-spacing:.06em;color:#777;border-bottom:2px solid #333;padding:6px 4px}
+    td{padding:7px 4px;border-bottom:1px solid #ddd}
+    .totals{display:flex;justify-content:flex-end;margin-top:14px}
+    .totals table{width:280px}
+    .totals td{border:none;padding:3px 4px}
+    .totals .grand td{font-weight:700;font-size:15px;border-top:1px solid #333;padding-top:8px}
+    .bond{margin-top:26px;padding:14px;background:#f6f6f2;border:1px solid #ddd;font-size:12px}
+    .exclusions{margin-top:22px;font-size:11px;color:#555}
+    .sig{margin-top:50px;display:flex;justify-content:space-between;gap:40px}
+    .sig div{flex:1;border-top:1px solid #333;padding-top:6px;font-size:11px;color:#555}
+  </style></head><body>
+    <h1>Bid Package</h1>
+    <div class="sub">Prepared via WeylandAI / BidX &middot; ${new Date().toLocaleDateString()}</div>
+    <div class="row">
+      <div class="field"><label>Owner / Awarding Authority</label><div>${d.ownerName || ""}</div></div>
+      <div class="field"><label>Project</label><div>${d.projectName || ""}</div></div>
+    </div>
+    <div class="row">
+      <div class="field"><label>Project Address</label><div>${d.projectAddress || ""}</div></div>
+      <div class="field"><label>Bid Due</label><div>${d.bidDueDate || ""}</div></div>
+    </div>
+    <table><thead><tr><th>Description</th><th>Qty</th><th>Unit Price</th><th>Amount</th></tr></thead><tbody>${rows}</tbody></table>
+    <div class="totals"><table>
+      <tr><td>Subtotal</td><td>$${Number(d.subtotal || 0).toLocaleString(void 0, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td></tr>
+      <tr><td>Tax (${((d.taxRate || 0) * 100).toFixed(2)}%)</td><td>$${Number(d.taxAmount || 0).toLocaleString(void 0, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td></tr>
+      <tr class="grand"><td>Total Bid</td><td>$${Number(d.grandTotal || 0).toLocaleString(void 0, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td></tr>
+    </table></div>
+    ${d.bidBondRequired ? `<div class="bond"><b>Bid Bond:</b> ${d.bidBondPercent || 0}% of bid amount, as required by the solicitation.</div>` : ""}
+    ${d.addendaAcknowledged ? `<div class="bond"><b>Addenda Acknowledged:</b> ${d.addendaAcknowledged}</div>` : ""}
+    ${d.exclusionsText ? `<div class="exclusions"><b>Exclusions / Terms:</b> ${d.exclusionsText}</div>` : ""}
+    <div class="sig"><div>Authorized Signature</div><div>Date</div></div>
+  </body></html>`;
+}
+router.post("/api/bid-packages/generate", async (request2, env2) => {
+  const { error: error4, user } = await authenticate(request2, env2);
+  if (error4) return error4;
+  {
+    const _prodErr = await requireProductAccess(user, env2, "bidx");
+    if (_prodErr) return _prodErr;
+  }
+  try {
+    const body = await request2.json();
+    const lineItems = Array.isArray(body.lineItems) ? body.lineItems : [];
+    if (!body.projectName || !body.projectAddress) {
+      return jsonResponse3({ error: "projectName and projectAddress are required" }, 400);
+    }
+    const tenantId = user.tenantId || user.tenant_id || "ven_weyland";
+    const subtotal = lineItems.reduce((sum2, li) => sum2 + (Number(li.quantity) || 0) * (Number(li.unitPrice) || 0), 0);
+    const taxRate = Number(body.taxRate) || 0;
+    const taxAmount = subtotal * taxRate;
+    const grandTotal = subtotal + taxAmount;
+    const packageData = { ...body, subtotal, taxAmount, grandTotal };
+    const bidId = crypto.randomUUID();
+    const now = (/* @__PURE__ */ new Date()).toISOString();
+    const html = generateBidPackageHtml(packageData);
+    const pdfBytes = await renderHtmlToPdf(env2, html);
+    const r2Key = `bid-packages/${user.userId}/${bidId}.pdf`;
+    await storeDocumentPdf(env2, r2Key, pdfBytes, { userId: user.userId, tenantId, generatedAt: now });
+    await env2.DB.prepare(`
+      INSERT INTO bid_packages (
+        id, user_id, tenant_id, submittal_id, project_name, project_address, owner_name,
+        bid_due_date, bid_bond_required, bid_bond_percent, addenda_acknowledged,
+        line_item_snapshot, subtotal, tax_rate, tax_amount, grand_total, exclusions_text,
+        r2_key, status, created_at, updated_at
+      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 'draft', ?, ?)
+    `).bind(
+      bidId, user.userId, tenantId, body.submittalId || null, body.projectName, body.projectAddress,
+      body.ownerName || null, body.bidDueDate || null, body.bidBondRequired ? 1 : 0, Number(body.bidBondPercent) || null,
+      body.addendaAcknowledged || null, JSON.stringify(lineItems), subtotal, taxRate, taxAmount, grandTotal,
+      body.exclusionsText || null, r2Key, now, now
+    ).run();
+    return jsonResponse3({ success: true, bidId, subtotal, taxAmount, grandTotal, downloadUrl: `/api/bid-packages/${bidId}/download` });
+  } catch (error5) {
+    console.error("[BidX Generate] Error:", error5);
+    return jsonResponse3({ error: "Failed to generate bid package", details: error5.message }, 500);
+  }
+});
+router.get("/api/bid-packages/:id/download", makeDocumentDownloadRoute("bid_packages", "bidx", "BidPackage"));
+
+// ---- CoA: Certificate of Occupancy *application* package assembler --------
+// Deliberately not named/framed as generating an actual Certificate of
+// Occupancy - a CO is issued by the local building authority (AHJ), not by
+// software. This assembles the submission-ready cover package (cover letter
+// + supporting-document checklist) a contractor sends to request one.
+const COA_CHECKLIST_ITEMS = [
+  "Final building inspection sign-off",
+  "Final electrical inspection sign-off",
+  "Final plumbing inspection sign-off",
+  "Final mechanical/HVAC inspection sign-off",
+  "Fire marshal / fire alarm system approval",
+  "ADA / accessibility compliance sign-off",
+  "As-built drawings (if required by permit)",
+  "Utility connection confirmations (water, sewer, gas, electric)"
+];
+function generateCoaPackageHtml(d) {
+  const checked = new Set(d.checklist || []);
+  const items = COA_CHECKLIST_ITEMS.map((item) => `<li>${checked.has(item) ? "☑" : "☐"} ${item}</li>`).join("");
+  return `<!doctype html><html><head><meta charset="utf-8"><style>
+    body{font-family:Georgia,"Times New Roman",serif;color:#111;margin:0;padding:60px 70px;font-size:13px;line-height:1.6}
+    h1{font-size:20px;margin:0 0 4px}
+    .sub{color:#666;font-size:11px;margin-bottom:30px}
+    .row{display:flex;gap:24px;margin-bottom:16px}
+    .field{flex:1}
+    .field label{display:block;font-size:9px;text-transform:uppercase;letter-spacing:.06em;color:#777;margin-bottom:2px}
+    .field div{border-bottom:1px solid #999;padding-bottom:3px}
+    p.cover{margin:26px 0;text-align:justify}
+    ul{margin-top:10px;padding-left:0;list-style:none}
+    li{padding:6px 0;border-bottom:1px solid #eee;font-size:12.5px}
+    .notes{margin-top:22px;font-size:12px;color:#333}
+    .disclaimer{margin-top:50px;padding-top:14px;border-top:1px solid #ccc;font-size:9.5px;color:#777;line-height:1.5}
+  </style></head><body>
+    <h1>Certificate of Occupancy &mdash; Application Package</h1>
+    <div class="sub">Prepared via WeylandAI / CoA &middot; ${new Date().toLocaleDateString()}</div>
+    <div class="row">
+      <div class="field"><label>Authority Having Jurisdiction</label><div>${d.ahjName || ""}</div></div>
+      <div class="field"><label>Permit Number</label><div>${d.permitNumber || ""}</div></div>
+    </div>
+    <div class="row">
+      <div class="field"><label>Project</label><div>${d.projectName || ""}</div></div>
+      <div class="field"><label>Project Address</label><div>${d.projectAddress || ""}</div></div>
+    </div>
+    <div class="row">
+      <div class="field"><label>Contact</label><div>${d.contactName || ""}</div></div>
+      <div class="field"><label>Phone / Email</label><div>${[d.contactPhone, d.contactEmail].filter(Boolean).join(" / ")}</div></div>
+    </div>
+    <p class="cover">To ${d.ahjName || "the Authority Having Jurisdiction"}: the undersigned respectfully requests issuance of a Certificate of Occupancy for the above-referenced project. The following supporting documentation is enclosed or has been completed as indicated below.</p>
+    <ul>${items}</ul>
+    ${d.notes ? `<div class="notes"><b>Notes:</b> ${d.notes}</div>` : ""}
+    <div class="disclaimer">This document is a submission cover package prepared by the contractor - it is not a Certificate of Occupancy and has no legal effect on its own. The actual Certificate of Occupancy can only be issued by the Authority Having Jurisdiction after its own inspection and review.</div>
+  </body></html>`;
+}
+router.post("/api/coa-packages/generate", async (request2, env2) => {
+  const { error: error4, user } = await authenticate(request2, env2);
+  if (error4) return error4;
+  {
+    const _prodErr = await requireProductAccess(user, env2, "coa");
+    if (_prodErr) return _prodErr;
+  }
+  try {
+    const body = await request2.json();
+    if (!body.projectName || !body.projectAddress) {
+      return jsonResponse3({ error: "projectName and projectAddress are required" }, 400);
+    }
+    const tenantId = user.tenantId || user.tenant_id || "ven_weyland";
+    const coaId = crypto.randomUUID();
+    const now = (/* @__PURE__ */ new Date()).toISOString();
+    const html = generateCoaPackageHtml(body);
+    const pdfBytes = await renderHtmlToPdf(env2, html);
+    const r2Key = `coa-packages/${user.userId}/${coaId}.pdf`;
+    await storeDocumentPdf(env2, r2Key, pdfBytes, { userId: user.userId, tenantId, generatedAt: now });
+    await env2.DB.prepare(`
+      INSERT INTO coa_packages (
+        id, user_id, tenant_id, project_name, project_address, ahj_name, permit_number,
+        contact_name, contact_phone, contact_email, checklist_snapshot, notes, r2_key,
+        status, created_at, updated_at
+      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 'draft', ?, ?)
+    `).bind(
+      coaId, user.userId, tenantId, body.projectName, body.projectAddress, body.ahjName || null,
+      body.permitNumber || null, body.contactName || null, body.contactPhone || null, body.contactEmail || null,
+      JSON.stringify(body.checklist || []), body.notes || null, r2Key, now, now
+    ).run();
+    return jsonResponse3({ success: true, coaId, downloadUrl: `/api/coa-packages/${coaId}/download` });
+  } catch (error5) {
+    console.error("[CoA Generate] Error:", error5);
+    return jsonResponse3({ error: "Failed to generate CoA application package", details: error5.message }, 500);
+  }
+});
+router.get("/api/coa-packages/:id/download", makeDocumentDownloadRoute("coa_packages", "coa", "CoA-Package"));
+
+// ---- RFaX: RFI/RFA generator (SubX Pro family) -----------------------------
+function generateRfaHtml(d) {
+  return `<!doctype html><html><head><meta charset="utf-8"><style>
+    body{font-family:Georgia,"Times New Roman",serif;color:#111;margin:0;padding:60px 70px;font-size:13px;line-height:1.6}
+    h1{font-size:20px;margin:0 0 4px}
+    .sub{color:#666;font-size:11px;margin-bottom:30px}
+    .row{display:flex;gap:24px;margin-bottom:16px}
+    .field{flex:1}
+    .field label{display:block;font-size:9px;text-transform:uppercase;letter-spacing:.06em;color:#777;margin-bottom:2px}
+    .field div{border-bottom:1px solid #999;padding-bottom:3px;min-height:16px}
+    .question{margin:28px 0;padding:16px;background:#f6f6f2;border:1px solid #ddd}
+    .question label{font-size:9px;text-transform:uppercase;letter-spacing:.06em;color:#777;display:block;margin-bottom:6px}
+    .sig{margin-top:60px;display:flex;justify-content:space-between;gap:40px}
+    .sig div{flex:1;border-top:1px solid #333;padding-top:6px;font-size:11px;color:#555}
+  </style></head><body>
+    <h1>Request for Information / Action</h1>
+    <div class="sub">Prepared via WeylandAI / RFaX &middot; ${new Date().toLocaleDateString()}</div>
+    <div class="row">
+      <div class="field"><label>RFA Number</label><div>${d.rfaNumber || ""}</div></div>
+      <div class="field"><label>Date Submitted</label><div>${d.dateSubmitted || ""}</div></div>
+      <div class="field"><label>Response Needed By</label><div>${d.responseNeededBy || ""}</div></div>
+    </div>
+    <div class="row">
+      <div class="field"><label>Owner / Recipient</label><div>${d.ownerName || ""}</div></div>
+      <div class="field"><label>Project</label><div>${d.projectName || ""}</div></div>
+    </div>
+    <div class="row"><div class="field"><label>Project Address</label><div>${d.projectAddress || ""}</div></div></div>
+    <div class="row"><div class="field"><label>Subject</label><div>${d.subject || ""}</div></div></div>
+    <div class="question"><label>Question / Information Requested</label>${d.question || ""}</div>
+    ${d.distributionList ? `<div class="row"><div class="field"><label>Distribution</label><div>${d.distributionList}</div></div></div>` : ""}
+    <div class="sig"><div>Response (Owner/Architect)</div><div>Date</div></div>
+  </body></html>`;
+}
+router.post("/api/rfas/generate", async (request2, env2) => {
+  const { error: error4, user } = await authenticate(request2, env2);
+  if (error4) return error4;
+  const _prodErr = await requireProductAccess(user, env2, "rfax");
+  if (_prodErr) return _prodErr;
+  try {
+    const body = await request2.json();
+    if (!body.subject || !body.question || !body.projectAddress) {
+      return jsonResponse3({ error: "subject, question, and projectAddress are required" }, 400);
+    }
+    const tenantId = user.tenantId || user.tenant_id || "ven_weyland";
+    const id = crypto.randomUUID();
+    const now = (/* @__PURE__ */ new Date()).toISOString();
+    const pdfBytes = await renderHtmlToPdf(env2, generateRfaHtml(body));
+    const r2Key = `rfas/${user.userId}/${id}.pdf`;
+    await storeDocumentPdf(env2, r2Key, pdfBytes, { userId: user.userId, tenantId, generatedAt: now });
+    await env2.DB.prepare(`
+      INSERT INTO rfas (id, user_id, tenant_id, rfa_number, subject, question, owner_name, project_name, project_address, date_submitted, response_needed_by, distribution_list, r2_key, status, created_at, updated_at)
+      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 'draft', ?, ?)
+    `).bind(id, user.userId, tenantId, body.rfaNumber || null, body.subject, body.question, body.ownerName || null, body.projectName || null, body.projectAddress, body.dateSubmitted || null, body.responseNeededBy || null, body.distributionList || null, r2Key, now, now).run();
+    return jsonResponse3({ success: true, rfaId: id, downloadUrl: `/api/rfas/${id}/download` });
+  } catch (error5) {
+    console.error("[RFaX Generate] Error:", error5);
+    return jsonResponse3({ error: "Failed to generate RFA", details: error5.message }, 500);
+  }
+});
+router.get("/api/rfas/:id/download", makeDocumentDownloadRoute("rfas", "rfax", "RFA"));
+
+// ---- ChangeOrdX: change order generator (SubX Pro family) ------------------
+function generateChangeOrderHtml(d) {
+  return `<!doctype html><html><head><meta charset="utf-8"><style>
+    body{font-family:Georgia,"Times New Roman",serif;color:#111;margin:0;padding:60px 70px;font-size:13px;line-height:1.6}
+    h1{font-size:20px;margin:0 0 4px}
+    .sub{color:#666;font-size:11px;margin-bottom:30px}
+    .row{display:flex;gap:24px;margin-bottom:16px}
+    .field{flex:1}
+    .field label{display:block;font-size:9px;text-transform:uppercase;letter-spacing:.06em;color:#777;margin-bottom:2px}
+    .field div{border-bottom:1px solid #999;padding-bottom:3px;min-height:16px}
+    .impact{display:flex;gap:24px;margin:26px 0}
+    .impact .box{flex:1;padding:14px;background:#f6f6f2;border:1px solid #ddd;text-align:center}
+    .impact .box strong{display:block;font-size:20px}
+    .impact .box span{font-size:9px;text-transform:uppercase;letter-spacing:.06em;color:#777}
+    .desc{margin:20px 0}
+    .desc label{font-size:9px;text-transform:uppercase;letter-spacing:.06em;color:#777;display:block;margin-bottom:6px}
+    .sig{margin-top:50px;display:flex;justify-content:space-between;gap:40px}
+    .sig div{flex:1;border-top:1px solid #333;padding-top:6px;font-size:11px;color:#555}
+  </style></head><body>
+    <h1>Change Order</h1>
+    <div class="sub">Prepared via WeylandAI / ChangeOrdX &middot; ${new Date().toLocaleDateString()}</div>
+    <div class="row">
+      <div class="field"><label>Change Order #</label><div>${d.changeOrderNumber || ""}</div></div>
+      <div class="field"><label>Owner</label><div>${d.ownerName || ""}</div></div>
+    </div>
+    <div class="row">
+      <div class="field"><label>Project</label><div>${d.projectName || ""}</div></div>
+      <div class="field"><label>Project Address</label><div>${d.projectAddress || ""}</div></div>
+    </div>
+    <div class="desc"><label>Description of Change</label>${d.description || ""}</div>
+    <div class="desc"><label>Reason</label>${d.reason || ""}</div>
+    <div class="impact">
+      <div class="box"><strong>$${Number(d.costImpact || 0).toLocaleString(void 0, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</strong><span>Cost Impact</span></div>
+      <div class="box"><strong>${d.scheduleImpactDays || 0}</strong><span>Schedule Impact (days)</span></div>
+    </div>
+    <div class="sig"><div>Contractor Signature</div><div>Owner/Architect Approval</div></div>
+  </body></html>`;
+}
+router.post("/api/change-orders/generate", async (request2, env2) => {
+  const { error: error4, user } = await authenticate(request2, env2);
+  if (error4) return error4;
+  const _prodErr = await requireProductAccess(user, env2, "changeordx");
+  if (_prodErr) return _prodErr;
+  try {
+    const body = await request2.json();
+    if (!body.description || !body.projectAddress) {
+      return jsonResponse3({ error: "description and projectAddress are required" }, 400);
+    }
+    const tenantId = user.tenantId || user.tenant_id || "ven_weyland";
+    const id = crypto.randomUUID();
+    const now = (/* @__PURE__ */ new Date()).toISOString();
+    const pdfBytes = await renderHtmlToPdf(env2, generateChangeOrderHtml(body));
+    const r2Key = `change-orders/${user.userId}/${id}.pdf`;
+    await storeDocumentPdf(env2, r2Key, pdfBytes, { userId: user.userId, tenantId, generatedAt: now });
+    await env2.DB.prepare(`
+      INSERT INTO change_orders (id, user_id, tenant_id, co_number, owner_name, project_name, project_address, description, cost_impact, schedule_impact_days, reason, r2_key, status, created_at, updated_at)
+      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 'draft', ?, ?)
+    `).bind(id, user.userId, tenantId, body.changeOrderNumber || null, body.ownerName || null, body.projectName || null, body.projectAddress, body.description, Number(body.costImpact) || 0, Number(body.scheduleImpactDays) || 0, body.reason || null, r2Key, now, now).run();
+    return jsonResponse3({ success: true, changeOrderId: id, downloadUrl: `/api/change-orders/${id}/download` });
+  } catch (error5) {
+    console.error("[ChangeOrdX Generate] Error:", error5);
+    return jsonResponse3({ error: "Failed to generate change order", details: error5.message }, 500);
+  }
+});
+router.get("/api/change-orders/:id/download", makeDocumentDownloadRoute("change_orders", "changeordx", "ChangeOrder"));
+
+// ---- PermitX: permit application package assembler (SubX Pro family) ------
+// Same framing discipline as CoA: assembles the application package sent to
+// the AHJ, not the permit itself - only the AHJ issues a permit.
+function generatePermitPackageHtml(d) {
+  return `<!doctype html><html><head><meta charset="utf-8"><style>
+    body{font-family:Georgia,"Times New Roman",serif;color:#111;margin:0;padding:60px 70px;font-size:13px;line-height:1.6}
+    h1{font-size:20px;margin:0 0 4px}
+    .sub{color:#666;font-size:11px;margin-bottom:30px}
+    .row{display:flex;gap:24px;margin-bottom:16px}
+    .field{flex:1}
+    .field label{display:block;font-size:9px;text-transform:uppercase;letter-spacing:.06em;color:#777;margin-bottom:2px}
+    .field div{border-bottom:1px solid #999;padding-bottom:3px;min-height:16px}
+    .desc{margin:24px 0}
+    .desc label{font-size:9px;text-transform:uppercase;letter-spacing:.06em;color:#777;display:block;margin-bottom:6px}
+    .disclaimer{margin-top:50px;padding-top:14px;border-top:1px solid #ccc;font-size:9.5px;color:#777;line-height:1.5}
+  </style></head><body>
+    <h1>Permit Application Package</h1>
+    <div class="sub">Prepared via WeylandAI / PermitX &middot; ${new Date().toLocaleDateString()}</div>
+    <div class="row">
+      <div class="field"><label>Permit Type</label><div>${d.permitType || ""}</div></div>
+      <div class="field"><label>Authority Having Jurisdiction</label><div>${d.ahjName || ""}</div></div>
+    </div>
+    <div class="row">
+      <div class="field"><label>Project</label><div>${d.projectName || ""}</div></div>
+      <div class="field"><label>Project Address</label><div>${d.projectAddress || ""}</div></div>
+    </div>
+    <div class="row">
+      <div class="field"><label>Applicant</label><div>${d.applicantName || ""}</div></div>
+      <div class="field"><label>Applicant Contact</label><div>${d.applicantContact || ""}</div></div>
+    </div>
+    <div class="desc"><label>Scope of Work</label>${d.scopeDescription || ""}</div>
+    <div class="disclaimer">This document is a submission cover package prepared by the applicant - it is not a permit and has no legal effect on its own. The actual permit can only be issued by the Authority Having Jurisdiction after its own review.</div>
+  </body></html>`;
+}
+router.post("/api/permit-packages/generate", async (request2, env2) => {
+  const { error: error4, user } = await authenticate(request2, env2);
+  if (error4) return error4;
+  const _prodErr = await requireProductAccess(user, env2, "permitx");
+  if (_prodErr) return _prodErr;
+  try {
+    const body = await request2.json();
+    if (!body.projectAddress || !body.scopeDescription) {
+      return jsonResponse3({ error: "projectAddress and scopeDescription are required" }, 400);
+    }
+    const tenantId = user.tenantId || user.tenant_id || "ven_weyland";
+    const id = crypto.randomUUID();
+    const now = (/* @__PURE__ */ new Date()).toISOString();
+    const pdfBytes = await renderHtmlToPdf(env2, generatePermitPackageHtml(body));
+    const r2Key = `permit-packages/${user.userId}/${id}.pdf`;
+    await storeDocumentPdf(env2, r2Key, pdfBytes, { userId: user.userId, tenantId, generatedAt: now });
+    await env2.DB.prepare(`
+      INSERT INTO permit_packages (id, user_id, tenant_id, permit_type, ahj_name, project_name, project_address, applicant_name, applicant_contact, scope_description, r2_key, status, created_at, updated_at)
+      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 'draft', ?, ?)
+    `).bind(id, user.userId, tenantId, body.permitType || null, body.ahjName || null, body.projectName || null, body.projectAddress, body.applicantName || null, body.applicantContact || null, body.scopeDescription, r2Key, now, now).run();
+    return jsonResponse3({ success: true, permitId: id, downloadUrl: `/api/permit-packages/${id}/download` });
+  } catch (error5) {
+    console.error("[PermitX Generate] Error:", error5);
+    return jsonResponse3({ error: "Failed to generate permit package", details: error5.message }, 500);
+  }
+});
+router.get("/api/permit-packages/:id/download", makeDocumentDownloadRoute("permit_packages", "permitx", "PermitPackage"));
+
+// ---- CloseX: project closeout package assembler (SubX Pro family) ---------
+const CLOSEOUT_CHECKLIST_ITEMS = [
+  "Final punch list completed and signed off",
+  "As-built drawings delivered",
+  "O&M manuals delivered",
+  "Warranty documentation delivered",
+  "Lien waivers collected from all subs",
+  "Final payment application submitted",
+  "Keys / access credentials transferred",
+  "Training / owner walkthrough completed"
+];
+function generateCloseoutHtml(d) {
+  const checked = new Set(d.checklist || []);
+  const items = CLOSEOUT_CHECKLIST_ITEMS.map((item) => `<li>${checked.has(item) ? "☑" : "☐"} ${item}</li>`).join("");
+  return `<!doctype html><html><head><meta charset="utf-8"><style>
+    body{font-family:Georgia,"Times New Roman",serif;color:#111;margin:0;padding:60px 70px;font-size:13px;line-height:1.6}
+    h1{font-size:20px;margin:0 0 4px}
+    .sub{color:#666;font-size:11px;margin-bottom:30px}
+    .row{display:flex;gap:24px;margin-bottom:16px}
+    .field{flex:1}
+    .field label{display:block;font-size:9px;text-transform:uppercase;letter-spacing:.06em;color:#777;margin-bottom:2px}
+    .field div{border-bottom:1px solid #999;padding-bottom:3px;min-height:16px}
+    ul{margin-top:16px;padding-left:0;list-style:none}
+    li{padding:6px 0;border-bottom:1px solid #eee;font-size:12.5px}
+    .notes{margin-top:22px;font-size:12px;color:#333}
+  </style></head><body>
+    <h1>Project Closeout Package</h1>
+    <div class="sub">Prepared via WeylandAI / CloseX &middot; ${new Date().toLocaleDateString()}</div>
+    <div class="row">
+      <div class="field"><label>Owner</label><div>${d.ownerName || ""}</div></div>
+      <div class="field"><label>Project</label><div>${d.projectName || ""}</div></div>
+    </div>
+    <div class="row">
+      <div class="field"><label>Project Address</label><div>${d.projectAddress || ""}</div></div>
+      <div class="field"><label>Completion Date</label><div>${d.completionDate || ""}</div></div>
+    </div>
+    <div class="row"><div class="field"><label>Warranty Period</label><div>${d.warrantyPeriod || ""}</div></div></div>
+    <ul>${items}</ul>
+    ${d.notes ? `<div class="notes"><b>Notes:</b> ${d.notes}</div>` : ""}
+  </body></html>`;
+}
+router.post("/api/closeout-packages/generate", async (request2, env2) => {
+  const { error: error4, user } = await authenticate(request2, env2);
+  if (error4) return error4;
+  const _prodErr = await requireProductAccess(user, env2, "closex");
+  if (_prodErr) return _prodErr;
+  try {
+    const body = await request2.json();
+    if (!body.projectName || !body.projectAddress) {
+      return jsonResponse3({ error: "projectName and projectAddress are required" }, 400);
+    }
+    const tenantId = user.tenantId || user.tenant_id || "ven_weyland";
+    const id = crypto.randomUUID();
+    const now = (/* @__PURE__ */ new Date()).toISOString();
+    const pdfBytes = await renderHtmlToPdf(env2, generateCloseoutHtml(body));
+    const r2Key = `closeout-packages/${user.userId}/${id}.pdf`;
+    await storeDocumentPdf(env2, r2Key, pdfBytes, { userId: user.userId, tenantId, generatedAt: now });
+    await env2.DB.prepare(`
+      INSERT INTO closeout_packages (id, user_id, tenant_id, project_name, project_address, owner_name, completion_date, warranty_period, checklist_snapshot, notes, r2_key, status, created_at, updated_at)
+      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 'draft', ?, ?)
+    `).bind(id, user.userId, tenantId, body.projectName, body.projectAddress, body.ownerName || null, body.completionDate || null, body.warrantyPeriod || null, JSON.stringify(body.checklist || []), body.notes || null, r2Key, now, now).run();
+    return jsonResponse3({ success: true, closeoutId: id, downloadUrl: `/api/closeout-packages/${id}/download` });
+  } catch (error5) {
+    console.error("[CloseX Generate] Error:", error5);
+    return jsonResponse3({ error: "Failed to generate closeout package", details: error5.message }, 500);
+  }
+});
+router.get("/api/closeout-packages/:id/download", makeDocumentDownloadRoute("closeout_packages", "closex", "CloseoutPackage"));
+
+// ---- NotesX: meeting minutes generator (SubX Pro family) -------------------
+function generateMeetingNotesHtml(d) {
+  const attendees = (d.attendees || "").split(",").map((s) => s.trim()).filter(Boolean).map((a) => `<li>${a}</li>`).join("");
+  const agenda = (d.agendaItems || "").split("\n").map((s) => s.trim()).filter(Boolean).map((a) => `<li>${a}</li>`).join("");
+  const actions = (d.actionItems || "").split("\n").map((s) => s.trim()).filter(Boolean).map((a) => `<li>${a}</li>`).join("");
+  return `<!doctype html><html><head><meta charset="utf-8"><style>
+    body{font-family:Georgia,"Times New Roman",serif;color:#111;margin:0;padding:60px 70px;font-size:13px;line-height:1.6}
+    h1{font-size:20px;margin:0 0 4px}
+    .sub{color:#666;font-size:11px;margin-bottom:30px}
+    .row{display:flex;gap:24px;margin-bottom:16px}
+    .field{flex:1}
+    .field label{display:block;font-size:9px;text-transform:uppercase;letter-spacing:.06em;color:#777;margin-bottom:2px}
+    .field div{border-bottom:1px solid #999;padding-bottom:3px;min-height:16px}
+    section{margin-top:24px}
+    section h2{font-size:13px;text-transform:uppercase;letter-spacing:.06em;color:#777;margin:0 0 8px}
+    ul{margin:0;padding-left:20px}
+    li{padding:3px 0;font-size:12.5px}
+  </style></head><body>
+    <h1>Meeting Minutes</h1>
+    <div class="sub">Prepared via WeylandAI / NotesX &middot; ${new Date().toLocaleDateString()}</div>
+    <div class="row">
+      <div class="field"><label>Project</label><div>${d.projectName || ""}</div></div>
+      <div class="field"><label>Meeting Date</label><div>${d.meetingDate || ""}</div></div>
+      <div class="field"><label>Next Meeting</label><div>${d.nextMeetingDate || ""}</div></div>
+    </div>
+    <section><h2>Attendees</h2><ul>${attendees || "<li>None recorded</li>"}</ul></section>
+    <section><h2>Agenda</h2><ul>${agenda || "<li>None recorded</li>"}</ul></section>
+    <section><h2>Action Items</h2><ul>${actions || "<li>None recorded</li>"}</ul></section>
+  </body></html>`;
+}
+router.post("/api/meeting-notes/generate", async (request2, env2) => {
+  const { error: error4, user } = await authenticate(request2, env2);
+  if (error4) return error4;
+  const _prodErr = await requireProductAccess(user, env2, "notesx");
+  if (_prodErr) return _prodErr;
+  try {
+    const body = await request2.json();
+    if (!body.projectName || !body.meetingDate) {
+      return jsonResponse3({ error: "projectName and meetingDate are required" }, 400);
+    }
+    const tenantId = user.tenantId || user.tenant_id || "ven_weyland";
+    const id = crypto.randomUUID();
+    const now = (/* @__PURE__ */ new Date()).toISOString();
+    const pdfBytes = await renderHtmlToPdf(env2, generateMeetingNotesHtml(body));
+    const r2Key = `meeting-notes/${user.userId}/${id}.pdf`;
+    await storeDocumentPdf(env2, r2Key, pdfBytes, { userId: user.userId, tenantId, generatedAt: now });
+    await env2.DB.prepare(`
+      INSERT INTO meeting_notes (id, user_id, tenant_id, meeting_date, project_name, attendees, agenda_items, action_items, next_meeting_date, r2_key, status, created_at, updated_at)
+      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 'draft', ?, ?)
+    `).bind(id, user.userId, tenantId, body.meetingDate, body.projectName, body.attendees || null, body.agendaItems || null, body.actionItems || null, body.nextMeetingDate || null, r2Key, now, now).run();
+    return jsonResponse3({ success: true, notesId: id, downloadUrl: `/api/meeting-notes/${id}/download` });
+  } catch (error5) {
+    console.error("[NotesX Generate] Error:", error5);
+    return jsonResponse3({ error: "Failed to generate meeting notes", details: error5.message }, 500);
+  }
+});
+router.get("/api/meeting-notes/:id/download", makeDocumentDownloadRoute("meeting_notes", "notesx", "MeetingNotes"));
+
 async function fetchTxdotOpportunities() {
   const url = "https://data.texas.gov/resource/qh8x-rm8r.json?" + new URLSearchParams({
     "$select": "project_number,county,highway,district_division,project_classification,bids_will_be_opened_date,sealed_engineer_s_estimate,proposal_status,project_id",
@@ -163691,7 +164377,15 @@ var SovereignWeylandRoutes = (function() {
     meetingx: "MEETX",
     qtext: "QTEXT",
     whyweyland: "WHY WEYLAND",
-    venturedeck: "VENTURE DECK",
+    investors: "INVESTORS",
+    lienx: "LIENX",
+    bidx: "BIDX",
+    coa: "COA",
+    rfax: "RFAX",
+    changeordx: "CHANGEORDX",
+    permitx: "PERMITX",
+    closex: "CLOSEX",
+    notesx: "NOTESX",
     careers: "CAREERS"
   };
   function renderNav(current) {
@@ -163715,7 +164409,15 @@ var SovereignWeylandRoutes = (function() {
     meetingx: "MEETX",
     qtext: "QTEXT",
     whyweyland: "WHY WEYLAND",
-    venturedeck: "VENTURE DECK",
+    investors: "INVESTORS",
+    lienx: "LIENX",
+    bidx: "BIDX",
+    coa: "COA",
+    rfax: "RFAX",
+    changeordx: "CHANGEORDX",
+    permitx: "PERMITX",
+    closex: "CLOSEX",
+    notesx: "NOTESX",
     careers: "CAREERS"
   };
   function renderNav(current) {
@@ -163739,7 +164441,15 @@ var SovereignWeylandRoutes = (function() {
     meetingx: "MEETX",
     qtext: "QTEXT",
     whyweyland: "WHY WEYLAND",
-    venturedeck: "VENTURE DECK",
+    investors: "INVESTORS",
+    lienx: "LIENX",
+    bidx: "BIDX",
+    coa: "COA",
+    rfax: "RFAX",
+    changeordx: "CHANGEORDX",
+    permitx: "PERMITX",
+    closex: "CLOSEX",
+    notesx: "NOTESX",
     careers: "CAREERS"
   };
   function renderNav(current) {
@@ -163788,6 +164498,886 @@ var SovereignWeylandRoutes = (function() {
     // body past the nav, same truncation bug found in serve_careers) - fixed
     // by pointing straight at the real asset instead of a broken shell.
     return Response.redirect("https://deck.weyland.onamerica.org", 302);
+  }
+  function serve_investors() {
+    return new Response(`<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#090a0d">
+  <title>Investors | WeylandAI</title>
+  <style>
+    :root{--bg:#090a0d;--panel:#121419;--line:#2c3139;--text:#edf0f1;--muted:#9299a3;--gold:#f0b800;--green:#61dfa0;--blue:#66d4ff;--purple:#a78bfa}
+    *{box-sizing:border-box}html,body{margin:0;min-height:100%;background:var(--bg);color:var(--text);font-family:"Avenir Next","Helvetica Neue",sans-serif}
+    body:before{content:"";position:fixed;inset:0;pointer-events:none;background:radial-gradient(circle at 80% 80%,rgba(102,212,255,.12),transparent 30rem),linear-gradient(rgba(255,255,255,.015) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.015) 1px,transparent 1px);background-size:auto,30px 30px,30px 30px}
+    .shell{position:relative;max-width:1000px;margin:auto;padding:20px clamp(16px,3vw,40px) 60px}
+    header{display:flex;align-items:center;justify-content:space-between;gap:15px;margin-bottom:24px}
+    .brand{display:flex;align-items:center;gap:12px;color:var(--text);text-decoration:none}
+    .mark{width:42px;height:42px;display:grid;place-items:center;background:var(--blue);color:var(--bg);font-weight:900}
+    .brand b{display:block;letter-spacing:.16em}
+    .brand small{display:block;color:var(--muted);font:700 9px/1.5 ui-monospace,monospace;letter-spacing:.11em}
+    .nav{display:flex;gap:8px;flex-wrap:wrap}
+    .nav a,.button{border:1px solid var(--line);border-radius:99px;padding:9px 14px;color:var(--text);text-decoration:none;background:transparent;font:750 10px/1 ui-monospace,monospace;letter-spacing:.06em;cursor:pointer;transition:all .2s}
+    .nav a:hover,.button:hover{border-color:var(--blue);color:var(--blue)}
+    .button.primary{background:var(--blue);border-color:var(--blue);color:var(--bg);font-weight:900}
+    .titlebar{text-align:center;margin:45px 0 50px}
+    .eyebrow{color:var(--blue);font:800 11px/1 ui-monospace,monospace;letter-spacing:.18em;text-transform:uppercase}
+    .titlebar h1{font-size:clamp(32px,4.5vw,52px);letter-spacing:-.04em;line-height:1.08;margin:14px 0}
+    .titlebar p{max-width:700px;color:var(--muted);line-height:1.6;margin:0 auto;font-size:16px}
+    section{margin-top:56px}
+    section h2{font-size:22px;margin:0 0 8px}
+    section > p{color:var(--muted);line-height:1.65;font-size:15px;max-width:680px}
+    .stack-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin-top:22px}
+    .stack-card{background:rgba(18,20,25,.92);border:1px solid var(--line);border-radius:14px;padding:18px 20px}
+    .stack-card .sc-name{font-size:16px;font-weight:800}
+    .stack-card .sc-desc{color:var(--muted);font-size:13px;line-height:1.5;margin-top:6px}
+    .stack-card .sc-price{margin-top:10px;font:800 13px ui-monospace,monospace;color:var(--blue)}
+    .fig-row{display:flex;flex-wrap:wrap;gap:24px;margin-top:22px}
+    .fig{border-left:2px solid var(--blue);padding-left:14px}
+    .fig strong{display:block;font-size:26px;font-weight:900}
+    .fig span{color:var(--muted);font:700 11px/1.6 ui-monospace,monospace;letter-spacing:.04em;text-transform:uppercase}
+    .note{margin-top:14px;color:var(--muted);font-size:13px;line-height:1.6;border-left:2px solid var(--line);padding-left:14px}
+  </style>
+</head>
+<body>
+  <div class="shell">
+    <header>
+      <a class="brand" href="/"><span class="mark">IX</span><span><b>WEYLANDAI</b><small>FOR INVESTORS</small></span></a>
+      <nav class="nav">${renderNav("investors")}</nav>
+    </header>
+    <div class="titlebar">
+      <div class="eyebrow">FOR INVESTORS</div>
+      <h1>Construction bids, generated automatically.</h1>
+      <p>WeylandAI is a small, founder-led team building construction document automation: seven live products that take a project from RFP to submitted bid on one shared project record &mdash; HuntX finds the opportunity, SubX and TakeoffX read the drawings, CutsheetX matches real hardware, PropX drafts the proposal, SightX visualizes the result.</p>
+      <p style="margin-top:24px"><a class="button primary" href="mailto:hello@weylandai.com?subject=Investor%20Inquiry">EMAIL HELLO@WEYLANDAI.COM</a></p>
+    </div>
+
+    <section>
+      <h2>What's live today</h2>
+      <p>Every product below has a working page, a real Stripe price, and can be bought standalone or as the $2,000/mo SubConP bundle.</p>
+      <div class="stack-grid">
+        <div class="stack-card"><div class="sc-name">SightX</div><div class="sc-desc">Spatial project intelligence &amp; 3D walkthrough</div><div class="sc-price">$999/mo</div></div>
+        <div class="stack-card"><div class="sc-name">HuntX</div><div class="sc-desc">Live RFP &amp; permit opportunity crawler</div><div class="sc-price">$799/mo</div></div>
+        <div class="stack-card"><div class="sc-name">SubX</div><div class="sc-desc">Submittal &amp; door-hardware extraction</div><div class="sc-price">$599/mo</div></div>
+        <div class="stack-card"><div class="sc-name">TakeoffX</div><div class="sc-desc">Machine-vision quantity takeoff</div><div class="sc-price">$499/mo</div></div>
+        <div class="stack-card"><div class="sc-name">PropX</div><div class="sc-desc">Submittal-to-proposal generator</div><div class="sc-price">$299/mo</div></div>
+        <div class="stack-card"><div class="sc-name">MeetX</div><div class="sc-desc">Live avatars &amp; chat inside SightX</div><div class="sc-price">$299/mo</div></div>
+        <div class="stack-card"><div class="sc-name">CutsheetX</div><div class="sc-desc">Hardware product &amp; cut-sheet matching</div><div class="sc-price">$199/mo</div></div>
+      </div>
+    </section>
+
+    <section>
+      <h2>The technical bet</h2>
+      <p>TakeoffX's extraction runs on the customer's own Claude Code subscription through a downloadable bridge, not our API meter &mdash; no per-page inference cost on our side, and the customer's drawings never leave their machine except as the results they choose to send back. That's a real cost-structure difference from a per-seat SaaS tool billing every API call.</p>
+    </section>
+
+    <section>
+      <h2>Roadmap: reuse, not reinvention</h2>
+      <p>72 products are scoped across the full platform. Of those, 27 are direct extensions of a live product's existing engine &mdash; same document pipeline, one more document type &mdash; grouped into five packages: SubX Pro (8 extensions), SightX Pro (8), HuntX Pro (4), TakeoffX Pro (1), PropX Pro (1). The rest are genuinely new verticals, not yet built.</p>
+      <div class="fig-row">
+        <div class="fig"><strong>5</strong><span>Live core engines</span></div>
+        <div class="fig"><strong>27</strong><span>Scoped near-term extensions</span></div>
+        <div class="fig"><strong>72</strong><span>Full roadmap</span></div>
+      </div>
+    </section>
+
+    <p class="note">Early-stage: this page intentionally doesn't cite revenue, customer counts, or a valuation &mdash; ask directly and we'll give you the real numbers, not rounded ones.</p>
+  </div>
+</body>
+</html>`, { headers: { "Content-Type": "text/html; charset=UTF-8", "Cache-Control": "public, max-age=60" } });
+  }
+  // Generic "form -> generate -> download PDF" page. Every product in this
+  // family (RFaX/ChangeOrdX/PermitX/CloseX/NotesX, and it would have fit
+  // LienX/BidX/CoA too) is the same interaction shape - fields in, one
+  // button, one download link out - so the page markup and wiring live here
+  // once; only the field list, copy, and API path differ per product.
+  function renderDocFormPage(cfg) {
+    const fieldsHtml = cfg.fields.map((f) => {
+      const label = `<label>${f.label}</label>`;
+      if (f.type === "textarea") return `<div style="grid-column:1/-1"><label>${f.label}</label><textarea id="df-${f.id}" placeholder="${f.placeholder || ""}"></textarea></div>`;
+      if (f.type === "checkbox") return `<div class="checkline"><input id="df-${f.id}" type="checkbox"><label style="margin:0" for="df-${f.id}">${f.label}</label></div>`;
+      return `<div>${label}<input id="df-${f.id}" type="${f.type || "text"}" placeholder="${f.placeholder || ""}"></div>`;
+    }).join("");
+    return new Response(`<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#090a0d">
+  <title>${cfg.title} | ${cfg.subtitle}</title>
+  <style>
+    :root{--bg:#090a0d;--panel:#121419;--panel2:#181b21;--line:#2c3139;--text:#edf0f1;--muted:#9299a3;--gold:#f0b800;--green:#61dfa0;--blue:#66d4ff;--red:#ff756e;--purple:#a78bfa;--accent:var(--${cfg.accent})}
+    *{box-sizing:border-box}html,body{margin:0;min-height:100%;background:var(--bg);color:var(--text);font-family:"Avenir Next","Helvetica Neue",sans-serif}
+    .shell{position:relative;max-width:900px;margin:auto;padding:20px clamp(16px,3vw,40px) 60px}
+    header{display:flex;align-items:center;justify-content:space-between;gap:15px;margin-bottom:24px}
+    .brand{display:flex;align-items:center;gap:12px;color:var(--text);text-decoration:none}
+    .mark{width:42px;height:42px;display:grid;place-items:center;background:var(--accent);color:var(--bg);font-weight:900}
+    .brand b{display:block;letter-spacing:.16em}
+    .brand small{display:block;color:var(--muted);font:700 9px/1.5 ui-monospace,monospace;letter-spacing:.11em}
+    .nav{display:flex;gap:8px;flex-wrap:wrap}
+    .nav a,.button{border:1px solid var(--line);border-radius:99px;padding:9px 14px;color:var(--text);text-decoration:none;background:transparent;font:750 10px/1 ui-monospace,monospace;letter-spacing:.06em;cursor:pointer;transition:all .2s}
+    .nav a:hover,.button:hover{border-color:var(--accent);color:var(--accent)}
+    .button.primary{background:var(--accent);border-color:var(--accent);color:var(--bg);font-weight:900}
+    .button:disabled{opacity:.5;cursor:not-allowed}
+    .titlebar{margin:35px 0 25px}
+    .eyebrow{color:var(--accent);font:800 11px/1 ui-monospace,monospace;letter-spacing:.18em;text-transform:uppercase}
+    .titlebar h1{font-size:clamp(30px,4.5vw,48px);letter-spacing:-.04em;margin:12px 0}
+    .titlebar p{max-width:640px;color:var(--muted);line-height:1.6;margin:0;font-size:15px}
+    .card{background:rgba(18,20,25,.94);border:1px solid var(--line);border-radius:16px;padding:22px;margin-bottom:18px}
+    .form-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px}
+    label{display:block;color:var(--muted);font:750 10px/1 ui-monospace,monospace;letter-spacing:.08em;margin-bottom:8px}
+    input,textarea{width:100%;padding:11px;background:var(--panel2);border:1px solid var(--line);border-radius:8px;color:var(--text);font-size:14px;box-sizing:border-box;font-family:inherit}
+    textarea{min-height:70px;resize:vertical}
+    input:focus,textarea:focus{outline:none;border-color:var(--accent)}
+    .checkline{display:flex;align-items:center;gap:8px;grid-column:1/-1}
+    .checkline input{width:auto}
+    .step-log{margin-top:14px;color:var(--muted);font-size:13px}
+    .step-log .ok{color:var(--green)}
+    .step-log .err{color:var(--red)}
+    .note-card{color:var(--muted);font-size:14px;line-height:1.6}
+    .note-card code{background:#161920;padding:2px 6px;border-radius:4px;color:var(--accent);font-size:13px}
+    .result-row{display:flex;justify-content:space-between;align-items:center;gap:14px;flex-wrap:wrap}
+  </style>
+</head>
+<body>
+  <div class="shell">
+    <header>
+      <a class="brand" href="/"><span class="mark">${cfg.markInitials}</span><span><b>${cfg.productName}</b><small>${cfg.subtitle}</small></span></a>
+      <nav class="nav">${renderNav(cfg.slug)}</nav>
+    </header>
+    <div class="titlebar">
+      <div class="eyebrow">${cfg.subtitle}</div>
+      <h1>${cfg.title}</h1>
+      <p>${cfg.description}</p>
+      <a class="button primary" id="signin-btn" href="/login?redirect=/${cfg.slug}" style="display:none">SIGN IN</a>
+    </div>
+
+    <div id="app" style="display:none">
+      <div class="card">
+        <div class="form-grid">${fieldsHtml}</div>
+        <button id="df-generate-btn" class="button primary" style="height:42px;margin-top:16px">${cfg.buttonLabel || "GENERATE"}</button>
+        <div class="step-log" id="df-log"></div>
+      </div>
+      <div class="card" id="df-result" style="display:none">
+        <div class="result-row">
+          <span>Generated.</span>
+          <a id="df-download" class="button primary" href="#" target="_blank">DOWNLOAD PDF</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="card note-card" id="guest-note">${cfg.priceNote}</div>
+  </div>
+  <script src="/assets/authfor-integration-standard.js"></script>
+  <script>
+    const auth = new AuthForStandard({ clientId: 'af_weyland_login', ventureName: 'weylandai.com' });
+    function authHeaders(json) {
+      const t = auth.getToken();
+      const h = t ? { 'Authorization': 'Bearer ' + t } : {};
+      if (json) h['Content-Type'] = 'application/json';
+      return h;
+    }
+    const FIELD_IDS = ${JSON.stringify(cfg.fields.map((f) => ({ id: f.id, type: f.type || "text" })))};
+    const REQUIRED = ${JSON.stringify(cfg.required || [])};
+    const log = document.getElementById('df-log');
+    function logLine(msg, cls) { const d = document.createElement('div'); if (cls) d.className = cls; d.textContent = msg; log.appendChild(d); }
+
+    document.getElementById('df-generate-btn').addEventListener('click', async () => {
+      const btn = document.getElementById('df-generate-btn');
+      log.innerHTML = '';
+      document.getElementById('df-result').style.display = 'none';
+      const payload = {};
+      FIELD_IDS.forEach(f => {
+        const el = document.getElementById('df-' + f.id);
+        payload[f.id] = f.type === 'checkbox' ? el.checked : el.value.trim();
+      });
+      const missing = REQUIRED.filter(id => !payload[id]);
+      if (missing.length) { logLine('Required: ' + missing.join(', '), 'err'); return; }
+      btn.disabled = true;
+      logLine('Generating...');
+      try {
+        const res = await fetch('${cfg.apiPath}', { method: 'POST', headers: authHeaders(true), body: JSON.stringify(payload) });
+        const data = await res.json();
+        if (!res.ok) { logLine('Error: ' + (data.error && (data.error.message || data.error) || 'generation failed'), 'err'); btn.disabled = false; return; }
+        logLine('Done.', 'ok');
+        document.getElementById('df-download').href = data.downloadUrl;
+        document.getElementById('df-result').style.display = 'block';
+      } catch (e) {
+        logLine('Error: ' + e.message, 'err');
+      }
+      btn.disabled = false;
+    });
+
+    (async () => {
+      try {
+        const probe = await fetch('${cfg.apiPath}', { method: 'POST', headers: authHeaders(true), body: JSON.stringify({}) });
+        if (probe.status === 401 || probe.status === 403) {
+          document.getElementById('signin-btn').style.display = 'inline-block';
+          return;
+        }
+        if (probe.status === 402) {
+          document.getElementById('guest-note').innerHTML = 'You\\'re signed in, but your plan doesn\\'t include ${cfg.title} yet. See <code>/pricing</code> to add it.';
+          return;
+        }
+        document.getElementById('app').style.display = 'block';
+        document.getElementById('guest-note').style.display = 'none';
+      } catch (e) {
+        document.getElementById('signin-btn').style.display = 'inline-block';
+      }
+    })();
+  </script>
+</body>
+</html>`, { headers: { "Content-Type": "text/html; charset=UTF-8", "Cache-Control": "public, max-age=60" } });
+  }
+  function serve_lienx() {
+    return new Response(`<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#090a0d">
+  <title>LienX | Lien Waiver Generator</title>
+  <style>
+    :root{--bg:#090a0d;--panel:#121419;--panel2:#181b21;--line:#2c3139;--text:#edf0f1;--muted:#9299a3;--gold:#f0b800;--green:#61dfa0;--blue:#66d4ff;--red:#ff756e}
+    *{box-sizing:border-box}html,body{margin:0;min-height:100%;background:var(--bg);color:var(--text);font-family:"Avenir Next","Helvetica Neue",sans-serif}
+    .shell{position:relative;max-width:900px;margin:auto;padding:20px clamp(16px,3vw,40px) 60px}
+    header{display:flex;align-items:center;justify-content:space-between;gap:15px;margin-bottom:24px}
+    .brand{display:flex;align-items:center;gap:12px;color:var(--text);text-decoration:none}
+    .mark{width:42px;height:42px;display:grid;place-items:center;background:var(--red);color:var(--bg);font-weight:900}
+    .brand b{display:block;letter-spacing:.16em}
+    .brand small{display:block;color:var(--muted);font:700 9px/1.5 ui-monospace,monospace;letter-spacing:.11em}
+    .nav{display:flex;gap:8px;flex-wrap:wrap}
+    .nav a,.button{border:1px solid var(--line);border-radius:99px;padding:9px 14px;color:var(--text);text-decoration:none;background:transparent;font:750 10px/1 ui-monospace,monospace;letter-spacing:.06em;cursor:pointer;transition:all .2s}
+    .nav a:hover,.button:hover{border-color:var(--red);color:var(--red)}
+    .button.primary{background:var(--red);border-color:var(--red);color:var(--bg);font-weight:900}
+    .button:disabled{opacity:.5;cursor:not-allowed}
+    .titlebar{margin:35px 0 25px}
+    .eyebrow{color:var(--red);font:800 11px/1 ui-monospace,monospace;letter-spacing:.18em;text-transform:uppercase}
+    .titlebar h1{font-size:clamp(30px,4.5vw,48px);letter-spacing:-.04em;margin:12px 0}
+    .titlebar p{max-width:620px;color:var(--muted);line-height:1.6;margin:0;font-size:15px}
+    .card{background:rgba(18,20,25,.94);border:1px solid var(--line);border-radius:16px;padding:22px;margin-bottom:18px}
+    .form-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px}
+    label{display:block;color:var(--muted);font:750 10px/1 ui-monospace,monospace;letter-spacing:.08em;margin-bottom:8px}
+    input,select,textarea{width:100%;padding:11px;background:var(--panel2);border:1px solid var(--line);border-radius:8px;color:var(--text);font-size:14px;box-sizing:border-box;font-family:inherit}
+    textarea{min-height:60px;resize:vertical}
+    input:focus,select:focus,textarea:focus{outline:none;border-color:var(--red)}
+    .step-log{margin-top:14px;color:var(--muted);font-size:13px}
+    .step-log .ok{color:var(--green)}
+    .step-log .err{color:var(--red)}
+    .note-card{color:var(--muted);font-size:14px;line-height:1.6}
+    .note-card code{background:#161920;padding:2px 6px;border-radius:4px;color:var(--red);font-size:13px}
+    .result-row{display:flex;justify-content:space-between;align-items:center;gap:14px;flex-wrap:wrap}
+  </style>
+</head>
+<body>
+  <div class="shell">
+    <header>
+      <a class="brand" href="/"><span class="mark">LX</span><span><b>LIENX</b><small>LIEN WAIVER GENERATOR</small></span></a>
+      <nav class="nav">${renderNav("lienx")}</nav>
+    </header>
+    <div class="titlebar">
+      <div class="eyebrow">LIEN WAIVER GENERATOR</div>
+      <h1>LienX</h1>
+      <p>Generates a general-form lien waiver from real project and payment details. Not a substitute for your state's exact statutory form &mdash; the generated PDF says so.</p>
+      <a class="button primary" id="signin-btn" href="/login?redirect=/lienx" style="display:none">SIGN IN</a>
+    </div>
+
+    <div id="app" style="display:none">
+      <div class="card">
+        <div class="form-grid">
+          <div>
+            <label>WAIVER TYPE</label>
+            <select id="lx-type">
+              <option value="conditional_progress">Conditional &mdash; Progress Payment</option>
+              <option value="unconditional_progress">Unconditional &mdash; Progress Payment</option>
+              <option value="conditional_final">Conditional &mdash; Final Payment</option>
+              <option value="unconditional_final">Unconditional &mdash; Final Payment</option>
+            </select>
+          </div>
+          <div><label>AMOUNT</label><input id="lx-amount" type="number" min="0" step="0.01" placeholder="0.00"></div>
+          <div><label>THROUGH DATE</label><input id="lx-through-date" type="date"></div>
+        </div>
+        <div class="form-grid" style="margin-top:14px">
+          <div><label>CLAIMANT (YOU)</label><input id="lx-claimant-name" type="text" placeholder="Your company name"></div>
+          <div><label>CLAIMANT ADDRESS</label><input id="lx-claimant-address" type="text"></div>
+        </div>
+        <div class="form-grid" style="margin-top:14px">
+          <div><label>OWNER</label><input id="lx-owner-name" type="text" placeholder="Property owner / GC"></div>
+          <div><label>PROJECT NAME</label><input id="lx-project-name" type="text"></div>
+        </div>
+        <div style="margin-top:14px">
+          <label>PROJECT ADDRESS</label>
+          <input id="lx-project-address" type="text" placeholder="Job site address">
+        </div>
+        <div style="margin-top:14px">
+          <label>EXCEPTIONS (OPTIONAL)</label>
+          <textarea id="lx-exceptions" placeholder="Any disputed amounts or items excluded from this waiver"></textarea>
+        </div>
+        <button id="lx-generate-btn" class="button primary" style="height:42px;margin-top:16px">GENERATE WAIVER</button>
+        <div class="step-log" id="lx-log"></div>
+      </div>
+
+      <div class="card" id="lx-result" style="display:none">
+        <div class="result-row">
+          <span>Waiver generated.</span>
+          <a id="lx-download" class="button primary" href="#" target="_blank">DOWNLOAD PDF</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="card note-card" id="guest-note">
+      LienX is available standalone at $99/mo or as part of PropX Pro. See
+      <code>/pricing</code> for licensing, or sign in above if you already have access.
+    </div>
+  </div>
+  <script src="/assets/authfor-integration-standard.js"></script>
+  <script>
+    const auth = new AuthForStandard({ clientId: 'af_weyland_login', ventureName: 'weylandai.com' });
+    function authHeaders(json) {
+      const t = auth.getToken();
+      const h = t ? { 'Authorization': 'Bearer ' + t } : {};
+      if (json) h['Content-Type'] = 'application/json';
+      return h;
+    }
+    const log = document.getElementById('lx-log');
+    function logLine(msg, cls) { const d = document.createElement('div'); if (cls) d.className = cls; d.textContent = msg; log.appendChild(d); }
+
+    document.getElementById('lx-generate-btn').addEventListener('click', async () => {
+      const btn = document.getElementById('lx-generate-btn');
+      log.innerHTML = '';
+      document.getElementById('lx-result').style.display = 'none';
+      const payload = {
+        waiverType: document.getElementById('lx-type').value,
+        amount: Number(document.getElementById('lx-amount').value) || 0,
+        throughDate: document.getElementById('lx-through-date').value,
+        claimantName: document.getElementById('lx-claimant-name').value.trim(),
+        claimantAddress: document.getElementById('lx-claimant-address').value.trim(),
+        ownerName: document.getElementById('lx-owner-name').value.trim(),
+        projectName: document.getElementById('lx-project-name').value.trim(),
+        projectAddress: document.getElementById('lx-project-address').value.trim(),
+        exceptionsText: document.getElementById('lx-exceptions').value.trim()
+      };
+      if (!payload.claimantName || !payload.projectAddress) { logLine('Claimant name and project address are required.', 'err'); return; }
+      btn.disabled = true;
+      logLine('Generating waiver...');
+      try {
+        const res = await fetch('/api/lien-waivers/generate', { method: 'POST', headers: authHeaders(true), body: JSON.stringify(payload) });
+        const data = await res.json();
+        if (!res.ok) { logLine('Error: ' + (data.error && (data.error.message || data.error) || 'generation failed'), 'err'); btn.disabled = false; return; }
+        logLine('Done.', 'ok');
+        document.getElementById('lx-download').href = data.downloadUrl;
+        document.getElementById('lx-result').style.display = 'block';
+      } catch (e) {
+        logLine('Error: ' + e.message, 'err');
+      }
+      btn.disabled = false;
+    });
+
+    (async () => {
+      try {
+        const probe = await fetch('/api/lien-waivers/generate', { method: 'POST', headers: authHeaders(true), body: JSON.stringify({}) });
+        if (probe.status === 401 || probe.status === 403) {
+          document.getElementById('signin-btn').style.display = 'inline-block';
+          return;
+        }
+        if (probe.status === 402) {
+          document.getElementById('guest-note').innerHTML = 'You\\'re signed in, but your plan doesn\\'t include LienX yet. See <code>/pricing</code> to add it.';
+          return;
+        }
+        document.getElementById('app').style.display = 'block';
+        document.getElementById('guest-note').style.display = 'none';
+      } catch (e) {
+        document.getElementById('signin-btn').style.display = 'inline-block';
+      }
+    })();
+  </script>
+</body>
+</html>`, { headers: { "Content-Type": "text/html; charset=UTF-8", "Cache-Control": "public, max-age=60" } });
+  }
+  function serve_bidx() {
+    return new Response(`<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#090a0d">
+  <title>BidX | Bid Package Assembler</title>
+  <style>
+    :root{--bg:#090a0d;--panel:#121419;--panel2:#181b21;--line:#2c3139;--text:#edf0f1;--muted:#9299a3;--gold:#f0b800;--green:#61dfa0;--blue:#66d4ff;--red:#ff756e}
+    *{box-sizing:border-box}html,body{margin:0;min-height:100%;background:var(--bg);color:var(--text);font-family:"Avenir Next","Helvetica Neue",sans-serif}
+    .shell{position:relative;max-width:1000px;margin:auto;padding:20px clamp(16px,3vw,40px) 60px}
+    header{display:flex;align-items:center;justify-content:space-between;gap:15px;margin-bottom:24px}
+    .brand{display:flex;align-items:center;gap:12px;color:var(--text);text-decoration:none}
+    .mark{width:42px;height:42px;display:grid;place-items:center;background:var(--blue);color:var(--bg);font-weight:900}
+    .brand b{display:block;letter-spacing:.16em}
+    .brand small{display:block;color:var(--muted);font:700 9px/1.5 ui-monospace,monospace;letter-spacing:.11em}
+    .nav{display:flex;gap:8px;flex-wrap:wrap}
+    .nav a,.button{border:1px solid var(--line);border-radius:99px;padding:9px 14px;color:var(--text);text-decoration:none;background:transparent;font:750 10px/1 ui-monospace,monospace;letter-spacing:.06em;cursor:pointer;transition:all .2s}
+    .nav a:hover,.button:hover{border-color:var(--blue);color:var(--blue)}
+    .button.primary{background:var(--blue);border-color:var(--blue);color:var(--bg);font-weight:900}
+    .button:disabled{opacity:.5;cursor:not-allowed}
+    .titlebar{margin:35px 0 25px}
+    .eyebrow{color:var(--blue);font:800 11px/1 ui-monospace,monospace;letter-spacing:.18em;text-transform:uppercase}
+    .titlebar h1{font-size:clamp(30px,4.5vw,48px);letter-spacing:-.04em;margin:12px 0}
+    .titlebar p{max-width:660px;color:var(--muted);line-height:1.6;margin:0;font-size:15px}
+    .card{background:rgba(18,20,25,.94);border:1px solid var(--line);border-radius:16px;padding:22px;margin-bottom:18px}
+    .section-label{color:var(--blue);font:800 10px/1 ui-monospace,monospace;letter-spacing:.1em;text-transform:uppercase;margin-bottom:14px;display:block}
+    .form-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px}
+    label{display:block;color:var(--muted);font:750 10px/1 ui-monospace,monospace;letter-spacing:.08em;margin-bottom:8px}
+    input,select,textarea{width:100%;padding:11px;background:var(--panel2);border:1px solid var(--line);border-radius:8px;color:var(--text);font-size:14px;box-sizing:border-box;font-family:inherit}
+    textarea{min-height:60px;resize:vertical}
+    input:focus,select:focus,textarea:focus{outline:none;border-color:var(--blue)}
+    .checkline{display:flex;align-items:center;gap:8px;margin-top:6px}
+    .checkline input{width:auto}
+    table{width:100%;border-collapse:collapse;font-size:13px;margin-top:6px}
+    th{text-align:left;color:var(--muted);font:750 9px/1 ui-monospace,monospace;letter-spacing:.08em;padding:8px 6px;border-bottom:1px solid var(--line)}
+    td{padding:6px;border-bottom:1px solid #20242a}
+    .li-remove{background:none;border:1px solid var(--line);color:var(--red);border-radius:6px;width:28px;height:28px;cursor:pointer}
+    .totals-preview{display:flex;justify-content:flex-end;gap:22px;margin-top:14px;font-size:13px;color:var(--muted)}
+    .totals-preview b{color:var(--text);font-size:15px}
+    .step-log{margin-top:14px;color:var(--muted);font-size:13px}
+    .step-log .ok{color:var(--green)}
+    .step-log .err{color:var(--red)}
+    .note-card{color:var(--muted);font-size:14px;line-height:1.6}
+    .note-card code{background:#161920;padding:2px 6px;border-radius:4px;color:var(--blue);font-size:13px}
+    .result-row{display:flex;justify-content:space-between;align-items:center;gap:14px;flex-wrap:wrap}
+    .quote-total{font-size:20px;font-weight:900;color:var(--green)}
+  </style>
+</head>
+<body>
+  <div class="shell">
+    <header>
+      <a class="brand" href="/"><span class="mark">BX</span><span><b>BIDX</b><small>BID PACKAGE ASSEMBLER</small></span></a>
+      <nav class="nav">${renderNav("bidx")}</nav>
+    </header>
+    <div class="titlebar">
+      <div class="eyebrow">BID PACKAGE ASSEMBLER</div>
+      <h1>BidX</h1>
+      <p>Assembles a priced bid package &mdash; scope, bid bond, addenda acknowledgment, and terms &mdash; into a signature-ready PDF. Works with or without a SubX submittal behind it.</p>
+      <a class="button primary" id="signin-btn" href="/login?redirect=/bidx" style="display:none">SIGN IN</a>
+    </div>
+
+    <div id="app" style="display:none">
+      <div class="card">
+        <span class="section-label">PROJECT &amp; OWNER</span>
+        <div class="form-grid">
+          <div><label>OWNER / AWARDING AUTHORITY</label><input id="bx-owner" type="text"></div>
+          <div><label>PROJECT NAME</label><input id="bx-project-name" type="text"></div>
+          <div><label>BID DUE DATE</label><input id="bx-bid-due" type="date"></div>
+        </div>
+        <div style="margin-top:14px"><label>PROJECT ADDRESS</label><input id="bx-project-address" type="text"></div>
+      </div>
+
+      <div class="card">
+        <span class="section-label">PRICED SCOPE</span>
+        <table id="bx-li-table">
+          <thead><tr><th>Description</th><th>Qty</th><th>Unit Price</th><th>Amount</th><th></th></tr></thead>
+          <tbody id="bx-li-body"></tbody>
+        </table>
+        <button id="bx-li-add" class="button" type="button" style="margin-top:10px">+ ADD LINE</button>
+        <div class="totals-preview"><div>SUBTOTAL <b id="bx-subtotal-preview">$0.00</b></div></div>
+      </div>
+
+      <div class="card">
+        <span class="section-label">BID REQUIREMENTS &amp; TERMS</span>
+        <div class="form-grid">
+          <div><label>TAX RATE (%)</label><input id="bx-tax-rate" type="number" value="0" min="0" step="0.01"></div>
+          <div><label>BID BOND %</label><input id="bx-bond-percent" type="number" min="0" step="0.1" placeholder="e.g. 10"></div>
+          <div><label>ADDENDA ACKNOWLEDGED</label><input id="bx-addenda" type="text" placeholder="e.g. Addendum 1, 2"></div>
+        </div>
+        <div class="checkline"><input id="bx-bond-required" type="checkbox"><label style="margin:0" for="bx-bond-required">Bid bond required by this solicitation</label></div>
+        <div style="margin-top:14px"><label>EXCLUSIONS / TERMS (OPTIONAL)</label><textarea id="bx-exclusions"></textarea></div>
+        <button id="bx-generate-btn" class="button primary" style="height:42px;margin-top:16px">GENERATE BID PACKAGE</button>
+        <div class="step-log" id="bx-log"></div>
+      </div>
+
+      <div class="card" id="bx-result" style="display:none">
+        <div class="result-row">
+          <div id="bx-summary"></div>
+          <a id="bx-download" class="button primary" href="#" target="_blank">DOWNLOAD PDF</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="card note-card" id="guest-note">
+      BidX is available standalone at $249/mo or as part of PropX Pro. See
+      <code>/pricing</code> for licensing, or sign in above if you already have access.
+    </div>
+  </div>
+  <script src="/assets/authfor-integration-standard.js"></script>
+  <script>
+    const auth = new AuthForStandard({ clientId: 'af_weyland_login', ventureName: 'weylandai.com' });
+    function authHeaders(json) {
+      const t = auth.getToken();
+      const h = t ? { 'Authorization': 'Bearer ' + t } : {};
+      if (json) h['Content-Type'] = 'application/json';
+      return h;
+    }
+    function esc(s) { return String(s == null ? '' : s).replace(/[<>&]/g, c => ({'<':'&lt;','>':'&gt;','&':'&amp;'}[c])); }
+    const log = document.getElementById('bx-log');
+    function logLine(msg, cls) { const d = document.createElement('div'); if (cls) d.className = cls; d.textContent = msg; log.appendChild(d); }
+
+    function addLiRow() {
+      const tbody = document.getElementById('bx-li-body');
+      const tr = document.createElement('tr');
+      tr.innerHTML = \`
+        <td><input class="li-desc" type="text"></td>
+        <td><input class="li-qty" type="number" min="0" value="1" style="width:64px"></td>
+        <td><input class="li-price" type="number" min="0" step="0.01" value="0" style="width:90px"></td>
+        <td class="li-amount">$0.00</td>
+        <td><button class="li-remove" type="button">&times;</button></td>\`;
+      tbody.appendChild(tr);
+      tr.querySelector('.li-remove').addEventListener('click', () => { tr.remove(); recalcTotals(); });
+      tr.querySelectorAll('.li-qty, .li-price').forEach(inp => inp.addEventListener('input', recalcTotals));
+      recalcTotals();
+    }
+    function recalcTotals() {
+      let subtotal = 0;
+      document.querySelectorAll('#bx-li-body tr').forEach(tr => {
+        const qty = Number(tr.querySelector('.li-qty').value) || 0;
+        const price = Number(tr.querySelector('.li-price').value) || 0;
+        const amount = qty * price;
+        tr.querySelector('.li-amount').textContent = '$' + amount.toLocaleString(undefined, {minimumFractionDigits:2, maximumFractionDigits:2});
+        subtotal += amount;
+      });
+      document.getElementById('bx-subtotal-preview').textContent = '$' + subtotal.toLocaleString(undefined, {minimumFractionDigits:2, maximumFractionDigits:2});
+    }
+    document.getElementById('bx-li-add').addEventListener('click', addLiRow);
+
+    document.getElementById('bx-generate-btn').addEventListener('click', async () => {
+      const btn = document.getElementById('bx-generate-btn');
+      log.innerHTML = '';
+      document.getElementById('bx-result').style.display = 'none';
+      const lineItems = Array.from(document.querySelectorAll('#bx-li-body tr')).map(tr => ({
+        description: tr.querySelector('.li-desc').value,
+        quantity: Number(tr.querySelector('.li-qty').value) || 0,
+        unitPrice: Number(tr.querySelector('.li-price').value) || 0
+      }));
+      const payload = {
+        ownerName: document.getElementById('bx-owner').value.trim(),
+        projectName: document.getElementById('bx-project-name').value.trim(),
+        projectAddress: document.getElementById('bx-project-address').value.trim(),
+        bidDueDate: document.getElementById('bx-bid-due').value,
+        taxRate: (Number(document.getElementById('bx-tax-rate').value) || 0) / 100,
+        bidBondRequired: document.getElementById('bx-bond-required').checked,
+        bidBondPercent: Number(document.getElementById('bx-bond-percent').value) || 0,
+        addendaAcknowledged: document.getElementById('bx-addenda').value.trim(),
+        exclusionsText: document.getElementById('bx-exclusions').value.trim(),
+        lineItems
+      };
+      if (!payload.projectName || !payload.projectAddress) { logLine('Project name and address are required.', 'err'); return; }
+      btn.disabled = true;
+      logLine('Assembling bid package...');
+      try {
+        const res = await fetch('/api/bid-packages/generate', { method: 'POST', headers: authHeaders(true), body: JSON.stringify(payload) });
+        const data = await res.json();
+        if (!res.ok) { logLine('Error: ' + (data.error && (data.error.message || data.error) || 'generation failed'), 'err'); btn.disabled = false; return; }
+        logLine('Done.', 'ok');
+        document.getElementById('bx-summary').innerHTML = \`<span class="quote-total">$\${Number(data.grandTotal||0).toLocaleString(undefined,{minimumFractionDigits:2,maximumFractionDigits:2})}</span> total bid\`;
+        document.getElementById('bx-download').href = data.downloadUrl;
+        document.getElementById('bx-result').style.display = 'block';
+      } catch (e) {
+        logLine('Error: ' + e.message, 'err');
+      }
+      btn.disabled = false;
+    });
+
+    (async () => {
+      try {
+        const probe = await fetch('/api/bid-packages/generate', { method: 'POST', headers: authHeaders(true), body: JSON.stringify({}) });
+        if (probe.status === 401 || probe.status === 403) {
+          document.getElementById('signin-btn').style.display = 'inline-block';
+          return;
+        }
+        if (probe.status === 402) {
+          document.getElementById('guest-note').innerHTML = 'You\\'re signed in, but your plan doesn\\'t include BidX yet. See <code>/pricing</code> to add it.';
+          return;
+        }
+        document.getElementById('app').style.display = 'block';
+        document.getElementById('guest-note').style.display = 'none';
+        addLiRow();
+      } catch (e) {
+        document.getElementById('signin-btn').style.display = 'inline-block';
+      }
+    })();
+  </script>
+</body>
+</html>`, { headers: { "Content-Type": "text/html; charset=UTF-8", "Cache-Control": "public, max-age=60" } });
+  }
+  function serve_coa() {
+    return new Response(`<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#090a0d">
+  <title>CoA | Certificate of Occupancy Application Package</title>
+  <style>
+    :root{--bg:#090a0d;--panel:#121419;--panel2:#181b21;--line:#2c3139;--text:#edf0f1;--muted:#9299a3;--gold:#f0b800;--green:#61dfa0;--blue:#66d4ff;--red:#ff756e}
+    *{box-sizing:border-box}html,body{margin:0;min-height:100%;background:var(--bg);color:var(--text);font-family:"Avenir Next","Helvetica Neue",sans-serif}
+    .shell{position:relative;max-width:900px;margin:auto;padding:20px clamp(16px,3vw,40px) 60px}
+    header{display:flex;align-items:center;justify-content:space-between;gap:15px;margin-bottom:24px}
+    .brand{display:flex;align-items:center;gap:12px;color:var(--text);text-decoration:none}
+    .mark{width:42px;height:42px;display:grid;place-items:center;background:var(--green);color:var(--bg);font-weight:900}
+    .brand b{display:block;letter-spacing:.16em}
+    .brand small{display:block;color:var(--muted);font:700 9px/1.5 ui-monospace,monospace;letter-spacing:.11em}
+    .nav{display:flex;gap:8px;flex-wrap:wrap}
+    .nav a,.button{border:1px solid var(--line);border-radius:99px;padding:9px 14px;color:var(--text);text-decoration:none;background:transparent;font:750 10px/1 ui-monospace,monospace;letter-spacing:.06em;cursor:pointer;transition:all .2s}
+    .nav a:hover,.button:hover{border-color:var(--green);color:var(--green)}
+    .button.primary{background:var(--green);border-color:var(--green);color:var(--bg);font-weight:900}
+    .button:disabled{opacity:.5;cursor:not-allowed}
+    .titlebar{margin:35px 0 25px}
+    .eyebrow{color:var(--green);font:800 11px/1 ui-monospace,monospace;letter-spacing:.18em;text-transform:uppercase}
+    .titlebar h1{font-size:clamp(28px,4.5vw,44px);letter-spacing:-.04em;margin:12px 0}
+    .titlebar p{max-width:640px;color:var(--muted);line-height:1.6;margin:0;font-size:15px}
+    .titlebar .caveat{margin-top:10px;color:var(--gold);font-size:12.5px}
+    .card{background:rgba(18,20,25,.94);border:1px solid var(--line);border-radius:16px;padding:22px;margin-bottom:18px}
+    .form-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px}
+    label{display:block;color:var(--muted);font:750 10px/1 ui-monospace,monospace;letter-spacing:.08em;margin-bottom:8px}
+    input,textarea{width:100%;padding:11px;background:var(--panel2);border:1px solid var(--line);border-radius:8px;color:var(--text);font-size:14px;box-sizing:border-box;font-family:inherit}
+    textarea{min-height:60px;resize:vertical}
+    input:focus,textarea:focus{outline:none;border-color:var(--green)}
+    .checklist{margin-top:10px;display:flex;flex-direction:column;gap:8px}
+    .checkline{display:flex;align-items:center;gap:8px;font-size:13px}
+    .checkline input{width:auto}
+    .step-log{margin-top:14px;color:var(--muted);font-size:13px}
+    .step-log .ok{color:var(--green)}
+    .step-log .err{color:var(--red)}
+    .note-card{color:var(--muted);font-size:14px;line-height:1.6}
+    .note-card code{background:#161920;padding:2px 6px;border-radius:4px;color:var(--green);font-size:13px}
+    .result-row{display:flex;justify-content:space-between;align-items:center;gap:14px;flex-wrap:wrap}
+  </style>
+</head>
+<body>
+  <div class="shell">
+    <header>
+      <a class="brand" href="/"><span class="mark">CA</span><span><b>COA</b><small>OCCUPANCY APPLICATION PACKAGE</small></span></a>
+      <nav class="nav">${renderNav("coa")}</nav>
+    </header>
+    <div class="titlebar">
+      <div class="eyebrow">CERTIFICATE OF OCCUPANCY APPLICATION PACKAGE</div>
+      <h1>CoA</h1>
+      <p>Assembles the cover letter and supporting-document checklist you submit to the Authority Having Jurisdiction to request a Certificate of Occupancy.</p>
+      <p class="caveat">This generates a submission package, not the Certificate of Occupancy itself &mdash; only your local building authority can issue that.</p>
+      <a class="button primary" id="signin-btn" href="/login?redirect=/coa" style="display:none">SIGN IN</a>
+    </div>
+
+    <div id="app" style="display:none">
+      <div class="card">
+        <div class="form-grid">
+          <div><label>AUTHORITY HAVING JURISDICTION</label><input id="ca-ahj" type="text" placeholder="e.g. City of Springfield Building Dept."></div>
+          <div><label>PERMIT NUMBER</label><input id="ca-permit" type="text"></div>
+        </div>
+        <div class="form-grid" style="margin-top:14px">
+          <div><label>PROJECT NAME</label><input id="ca-project-name" type="text"></div>
+          <div><label>PROJECT ADDRESS</label><input id="ca-project-address" type="text"></div>
+        </div>
+        <div class="form-grid" style="margin-top:14px">
+          <div><label>CONTACT NAME</label><input id="ca-contact-name" type="text"></div>
+          <div><label>CONTACT PHONE</label><input id="ca-contact-phone" type="text"></div>
+          <div><label>CONTACT EMAIL</label><input id="ca-contact-email" type="email"></div>
+        </div>
+        <div style="margin-top:16px">
+          <label>SUPPORTING DOCUMENTATION</label>
+          <div class="checklist" id="ca-checklist"></div>
+        </div>
+        <div style="margin-top:14px"><label>NOTES (OPTIONAL)</label><textarea id="ca-notes"></textarea></div>
+        <button id="ca-generate-btn" class="button primary" style="height:42px;margin-top:16px">GENERATE APPLICATION PACKAGE</button>
+        <div class="step-log" id="ca-log"></div>
+      </div>
+
+      <div class="card" id="ca-result" style="display:none">
+        <div class="result-row">
+          <span>Package generated.</span>
+          <a id="ca-download" class="button primary" href="#" target="_blank">DOWNLOAD PDF</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="card note-card" id="guest-note">
+      CoA is available standalone at $99/mo or as part of PropX Pro. See
+      <code>/pricing</code> for licensing, or sign in above if you already have access.
+    </div>
+  </div>
+  <script src="/assets/authfor-integration-standard.js"></script>
+  <script>
+    const auth = new AuthForStandard({ clientId: 'af_weyland_login', ventureName: 'weylandai.com' });
+    function authHeaders(json) {
+      const t = auth.getToken();
+      const h = t ? { 'Authorization': 'Bearer ' + t } : {};
+      if (json) h['Content-Type'] = 'application/json';
+      return h;
+    }
+    const CHECKLIST_ITEMS = [
+      "Final building inspection sign-off",
+      "Final electrical inspection sign-off",
+      "Final plumbing inspection sign-off",
+      "Final mechanical/HVAC inspection sign-off",
+      "Fire marshal / fire alarm system approval",
+      "ADA / accessibility compliance sign-off",
+      "As-built drawings (if required by permit)",
+      "Utility connection confirmations (water, sewer, gas, electric)"
+    ];
+    const listEl = document.getElementById('ca-checklist');
+    CHECKLIST_ITEMS.forEach((item, i) => {
+      const div = document.createElement('div');
+      div.className = 'checkline';
+      div.innerHTML = \`<input type="checkbox" id="ca-item-\${i}" checked><label style="margin:0" for="ca-item-\${i}">\${item}</label>\`;
+      listEl.appendChild(div);
+    });
+
+    const log = document.getElementById('ca-log');
+    function logLine(msg, cls) { const d = document.createElement('div'); if (cls) d.className = cls; d.textContent = msg; log.appendChild(d); }
+
+    document.getElementById('ca-generate-btn').addEventListener('click', async () => {
+      const btn = document.getElementById('ca-generate-btn');
+      log.innerHTML = '';
+      document.getElementById('ca-result').style.display = 'none';
+      const checklist = CHECKLIST_ITEMS.filter((item, i) => document.getElementById('ca-item-' + i).checked);
+      const payload = {
+        ahjName: document.getElementById('ca-ahj').value.trim(),
+        permitNumber: document.getElementById('ca-permit').value.trim(),
+        projectName: document.getElementById('ca-project-name').value.trim(),
+        projectAddress: document.getElementById('ca-project-address').value.trim(),
+        contactName: document.getElementById('ca-contact-name').value.trim(),
+        contactPhone: document.getElementById('ca-contact-phone').value.trim(),
+        contactEmail: document.getElementById('ca-contact-email').value.trim(),
+        notes: document.getElementById('ca-notes').value.trim(),
+        checklist
+      };
+      if (!payload.projectName || !payload.projectAddress) { logLine('Project name and address are required.', 'err'); return; }
+      btn.disabled = true;
+      logLine('Assembling application package...');
+      try {
+        const res = await fetch('/api/coa-packages/generate', { method: 'POST', headers: authHeaders(true), body: JSON.stringify(payload) });
+        const data = await res.json();
+        if (!res.ok) { logLine('Error: ' + (data.error && (data.error.message || data.error) || 'generation failed'), 'err'); btn.disabled = false; return; }
+        logLine('Done.', 'ok');
+        document.getElementById('ca-download').href = data.downloadUrl;
+        document.getElementById('ca-result').style.display = 'block';
+      } catch (e) {
+        logLine('Error: ' + e.message, 'err');
+      }
+      btn.disabled = false;
+    });
+
+    (async () => {
+      try {
+        const probe = await fetch('/api/coa-packages/generate', { method: 'POST', headers: authHeaders(true), body: JSON.stringify({}) });
+        if (probe.status === 401 || probe.status === 403) {
+          document.getElementById('signin-btn').style.display = 'inline-block';
+          return;
+        }
+        if (probe.status === 402) {
+          document.getElementById('guest-note').innerHTML = 'You\\'re signed in, but your plan doesn\\'t include CoA yet. See <code>/pricing</code> to add it.';
+          return;
+        }
+        document.getElementById('app').style.display = 'block';
+        document.getElementById('guest-note').style.display = 'none';
+      } catch (e) {
+        document.getElementById('signin-btn').style.display = 'inline-block';
+      }
+    })();
+  </script>
+</body>
+</html>`, { headers: { "Content-Type": "text/html; charset=UTF-8", "Cache-Control": "public, max-age=60" } });
+  }
+  function serve_rfax() {
+    return renderDocFormPage({
+      slug: "rfax", markInitials: "RA", productName: "RFAX", subtitle: "RFI/RFA GENERATOR",
+      accent: "gold", title: "RFaX",
+      description: "Generates a formatted Request for Information / Action from a project question, ready to submit to the owner or architect and track a response.",
+      apiPath: "/api/rfas/generate",
+      priceNote: 'RFaX is available standalone at $199/mo or as part of SubX Pro. See <code>/pricing</code> for licensing, or sign in above if you already have access.',
+      required: ["subject", "question", "projectAddress"],
+      fields: [
+        { id: "rfaNumber", label: "RFA NUMBER" },
+        { id: "dateSubmitted", label: "DATE SUBMITTED", type: "date" },
+        { id: "responseNeededBy", label: "RESPONSE NEEDED BY", type: "date" },
+        { id: "ownerName", label: "OWNER / RECIPIENT" },
+        { id: "projectName", label: "PROJECT NAME" },
+        { id: "projectAddress", label: "PROJECT ADDRESS" },
+        { id: "subject", label: "SUBJECT" },
+        { id: "question", label: "QUESTION / INFORMATION REQUESTED", type: "textarea" },
+        { id: "distributionList", label: "DISTRIBUTION (OPTIONAL)" }
+      ]
+    });
+  }
+  function serve_changeordx() {
+    return renderDocFormPage({
+      slug: "changeordx", markInitials: "CO", productName: "CHANGEORDX", subtitle: "CHANGE ORDER GENERATOR",
+      accent: "purple", title: "ChangeOrdX",
+      description: "Turns a scope change into a formatted change order with cost and schedule impact, ready for owner/architect approval.",
+      apiPath: "/api/change-orders/generate",
+      priceNote: 'ChangeOrdX is available standalone at $199/mo or as part of SubX Pro. See <code>/pricing</code> for licensing, or sign in above if you already have access.',
+      required: ["description", "projectAddress"],
+      fields: [
+        { id: "changeOrderNumber", label: "CHANGE ORDER #" },
+        { id: "ownerName", label: "OWNER" },
+        { id: "projectName", label: "PROJECT NAME" },
+        { id: "projectAddress", label: "PROJECT ADDRESS" },
+        { id: "description", label: "DESCRIPTION OF CHANGE", type: "textarea" },
+        { id: "reason", label: "REASON", type: "textarea" },
+        { id: "costImpact", label: "COST IMPACT ($)", type: "number" },
+        { id: "scheduleImpactDays", label: "SCHEDULE IMPACT (DAYS)", type: "number" }
+      ]
+    });
+  }
+  function serve_permitx() {
+    return renderDocFormPage({
+      slug: "permitx", markInitials: "PX", productName: "PERMITX", subtitle: "PERMIT APPLICATION PACKAGE",
+      accent: "blue", title: "PermitX",
+      description: "Assembles the application package you submit to the Authority Having Jurisdiction to request a permit. Not the permit itself - only the AHJ can issue that.",
+      apiPath: "/api/permit-packages/generate",
+      priceNote: 'PermitX is available standalone at $149/mo or as part of SubX Pro. See <code>/pricing</code> for licensing, or sign in above if you already have access.',
+      required: ["projectAddress", "scopeDescription"],
+      fields: [
+        { id: "permitType", label: "PERMIT TYPE" },
+        { id: "ahjName", label: "AUTHORITY HAVING JURISDICTION" },
+        { id: "projectName", label: "PROJECT NAME" },
+        { id: "projectAddress", label: "PROJECT ADDRESS" },
+        { id: "applicantName", label: "APPLICANT" },
+        { id: "applicantContact", label: "APPLICANT CONTACT" },
+        { id: "scopeDescription", label: "SCOPE OF WORK", type: "textarea" }
+      ]
+    });
+  }
+  function serve_closex() {
+    return renderDocFormPage({
+      slug: "closex", markInitials: "CX", productName: "CLOSEX", subtitle: "PROJECT CLOSEOUT PACKAGE",
+      accent: "green", title: "CloseX",
+      description: "Assembles the closeout package - completion status, warranty terms, and an 8-item checklist - ready to hand the owner at project end.",
+      apiPath: "/api/closeout-packages/generate",
+      priceNote: 'CloseX is available standalone at $199/mo or as part of SubX Pro. See <code>/pricing</code> for licensing, or sign in above if you already have access.',
+      required: ["projectName", "projectAddress"],
+      fields: [
+        { id: "ownerName", label: "OWNER" },
+        { id: "projectName", label: "PROJECT NAME" },
+        { id: "projectAddress", label: "PROJECT ADDRESS" },
+        { id: "completionDate", label: "COMPLETION DATE", type: "date" },
+        { id: "warrantyPeriod", label: "WARRANTY PERIOD", placeholder: "e.g. 1 year from substantial completion" },
+        { id: "notes", label: "NOTES (OPTIONAL)", type: "textarea" }
+      ]
+    });
+  }
+  function serve_notesx() {
+    return renderDocFormPage({
+      slug: "notesx", markInitials: "NX", productName: "NOTESX", subtitle: "MEETING MINUTES GENERATOR",
+      accent: "red", title: "NotesX",
+      description: "Turns attendees, agenda, and action items into formatted meeting minutes, ready to distribute.",
+      apiPath: "/api/meeting-notes/generate",
+      priceNote: 'NotesX is available standalone at $49/mo or as part of SubX Pro. See <code>/pricing</code> for licensing, or sign in above if you already have access.',
+      required: ["projectName", "meetingDate"],
+      fields: [
+        { id: "projectName", label: "PROJECT NAME" },
+        { id: "meetingDate", label: "MEETING DATE", type: "date" },
+        { id: "nextMeetingDate", label: "NEXT MEETING DATE", type: "date" },
+        { id: "attendees", label: "ATTENDEES (COMMA-SEPARATED)", type: "textarea" },
+        { id: "agendaItems", label: "AGENDA ITEMS (ONE PER LINE)", type: "textarea" },
+        { id: "actionItems", label: "ACTION ITEMS (ONE PER LINE)", type: "textarea" }
+      ]
+    });
   }
   function serve_careers() {
     return new Response("<!doctype html>\n<html lang=\"en\">\n<head>\n  <meta charset=\"utf-8\">\n  <meta name=\"viewport\" content=\"width=device-width,initial-scale=1\">\n  <meta name=\"theme-color\" content=\"#090a0d\">\n  <title>Careers | WeylandAI</title>\n  <style>\n    :root{--bg:#090a0d;--panel:#121419;--line:#2c3139;--text:#edf0f1;--muted:#9299a3;--gold:#f0b800;--green:#61dfa0;--blue:#66d4ff;--purple:#a78bfa}\n    *{box-sizing:border-box}html,body{margin:0;min-height:100%;background:var(--bg);color:var(--text);font-family:\"Avenir Next\",\"Helvetica Neue\",sans-serif}\n    body:before{content:\"\";position:fixed;inset:0;pointer-events:none;background:radial-gradient(circle at 80% 80%,rgba(167,139,242,.12),transparent 30rem),linear-gradient(rgba(255,255,255,.015) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.015) 1px,transparent 1px);background-size:auto,30px 30px,30px 30px}\n    .shell{position:relative;max-width:1300px;margin:auto;padding:20px clamp(16px,3vw,40px) 60px}\n    header{display:flex;align-items:center;justify-content:space-between;gap:15px;margin-bottom:24px}\n    .brand{display:flex;align-items:center;gap:12px;color:var(--text);text-decoration:none}\n    .mark{width:42px;height:42px;display:grid;place-items:center;background:var(--purple);color:var(--bg);font-weight:900}\n    .brand b{display:block;letter-spacing:.16em}\n    .brand small{display:block;color:var(--muted);font:700 9px/1.5 ui-monospace,monospace;letter-spacing:.11em}\n    .nav{display:flex;gap:8px;flex-wrap:wrap}\n    .nav a,.button{border:1px solid var(--line);border-radius:99px;padding:9px 14px;color:var(--text);text-decoration:none;background:transparent;font:750 10px/1 ui-monospace,monospace;letter-spacing:.06em;cursor:pointer;transition:all .2s}\n    .nav a:hover,.button:hover{border-color:var(--purple);color:var(--purple)}\n    .button.primary{background:var(--purple);border-color:var(--purple);color:var(--bg);font-weight:900}\n    \n    .titlebar{text-align:center;margin:45px 0 50px}\n    .eyebrow{color:var(--purple);font:800 11px/1 ui-monospace,monospace;letter-spacing:.18em;text-transform:uppercase}\n    .titlebar h1{font-size:clamp(36px,5vw,62px);letter-spacing:-.05em;line-height:1.05;margin:14px 0}\n    .titlebar p{max-width:700px;color:var(--muted);line-height:1.6;margin:0 auto;font-size:17px}\n    \n    .req-grid{display:grid;gap:20px;margin-top:30px}\n    .req-card{background:rgba(18,20,25,.92);border:1px solid var(--line);border-radius:16px;padding:26px;display:flex;justify-content:space-between;align-items:center;transition:all .2s;flex-wrap:wrap;gap:20px}\n    .req-card:hover{border-color:var(--purple);transform:translateY(-2px);box-shadow:0 15px 40px rgba(0,0,0,.3)}\n    .req-meta span{font:800 10px ui-monospace,monospace;color:var(--purple);display:inline-block;margin-right:12px;text-transform:uppercase}\n    .req-title{font-size:22px;font-weight:800;color:#fff;margin:8px 0 6px}\n    .req-desc{color:var(--muted);font-size:14px;line-height:1.5;max-width:680px;margin:0}\n    .salary-box{text-align:right}\n    .salary-box strong{font-size:20px;color:var(--green);display:block;font-weight:900}\n    .salary-box small{color:var(--muted);font-size:12px;display:block;margin-top:2px}\n    \n    @media(max-width:800px){.req-card{flex-direction:column;align-items:flex-start}.salary-box{text-align:left;width:100%}}\n  </style>\n</head>\n<body>\n  <div class=\"shell\">\n    <header>\n      <a class=\"brand\" href=\"/\"><span class=\"mark\">CR</span><span><b>WEYLANDAI</b><small>THE FECUNDITY TALENT VECTOR</small></span></a>\n      <nav class=\"nav\">" + renderNav("careers") + "</nav>\n    </header>\n    <div class=\"titlebar\">\n      <div class=\"eyebrow\">JOIN THE TEAM</div>\n      <h1>We're not hiring through a job board yet.</h1>\n      <p>WeylandAI is a small, early-stage team building construction document automation — HuntX, SubX, TakeoffX, PropX, and SightX on one shared project record. If you want to work on real construction AI with a founder-led team, reach out directly with what you'd want to build and why.</p>\n      <p style=\"margin-top:24px\"><a class=\"button primary\" href=\"mailto:hello@weylandai.com?subject=Interested%20in%20WeylandAI\">EMAIL HELLO@WEYLANDAI.COM</a></p>\n    </div>\n  </div>\n</body>\n</html>\n", { headers: { "Content-Type": "text/html; charset=UTF-8", "Cache-Control": "public, max-age=60" } });
@@ -163838,6 +165428,15 @@ var SovereignWeylandRoutes = (function() {
     "": serve_whyweyland,
     "whyweyland": serve_whyweyland,
     "venturedeck": serve_venturedeck,
+    "investors": serve_investors,
+    "lienx": serve_lienx,
+    "bidx": serve_bidx,
+    "coa": serve_coa,
+    "rfax": serve_rfax,
+    "changeordx": serve_changeordx,
+    "permitx": serve_permitx,
+    "closex": serve_closex,
+    "notesx": serve_notesx,
     "careers": serve_careers,
     "progress": serve_progress,
     "sightx": serve_sightx,
