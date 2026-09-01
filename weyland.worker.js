@@ -146752,11 +146752,22 @@ router.post("/api/auth/session", async (request2, env2) => {
     if (!node || !node.email) {
       return jsonResponse3({ error: "Node identity required" }, 400);
     }
+    // Introspect only confirms the token is a *valid Fleet Auth identity
+    // somewhere in the mesh* - it doesn't establish this identity was ever
+    // granted weyland access specifically (couldn't verify the claims shape
+    // enforces venture scoping; see task #17). Rather than guess, require
+    // the email to already be a real weylandai.com account - same rule the
+    // AuthFor bridge in authenticate() already applies - instead of
+    // auto-provisioning a free trial for any mesh-wide identity.
+    const existingUser = await env2.DB.prepare("SELECT id FROM users WHERE email = ?").bind(node.email).first();
+    if (!existingUser) {
+      return jsonResponse3({ error: "no_weyland_account", message: "No WeylandAI account for this identity yet — subscribe at /pricing" }, 404);
+    }
     const sessionId = "wses_" + crypto.randomUUID().replace(/-/g, "");
     const expiresAt = new Date(Date.now() + 24 * 60 * 60 * 1e3).toISOString();
     let user = await env2.DB.prepare("SELECT id, mhs_id FROM nodes WHERE email = ?").bind(node.email).first();
     if (!user) {
-      const userId = "usr_" + Date.now();
+      const userId = existingUser.id;
       await env2.DB.prepare(
         "INSERT INTO nodes (id, email, name, mhs_id, created_at) VALUES (?, ?, ?, ?, datetime('now'))"
       ).bind(userId, node.email, node.name || "", node.mhsId || "").run();
@@ -146766,9 +146777,6 @@ router.post("/api/auth/session", async (request2, env2) => {
         "UPDATE nodes SET mhs_id = ?, name = COALESCE(NULLIF(?, ''), name), updated_at = datetime('now') WHERE id = ?"
       ).bind(node.mhsId, node.name || "", user.id).run();
     }
-    await env2.DB.prepare(
-      "INSERT OR IGNORE INTO users (id, email, name, tenant_id, subscription_tier, subscription_status, submittals_used, submittals_limit) VALUES (?, ?, ?, 'ven_weyland', 'trial', 'trial', 0, 10)"
-    ).bind(user.id, node.email, node.name || "").run();
     await env2.DB.prepare(
       "INSERT INTO weyland_sessions (id, user_id, email, mhs_id, player_json, expires_at, created_at) VALUES (?, ?, ?, ?, ?, ?, datetime('now'))"
     ).bind(sessionId, user.id, node.email, node.mhsId || "", JSON.stringify(node), expiresAt).run();
