@@ -41,6 +41,13 @@ service = "weyland-ocr-worker"
 binding = "MASCOM_EDGE"
 service = "mascom-edge"
 
+# ── Browser Rendering ────────────────────────────────────────
+# Needed for quote/proposal PDF generation (puppeteer_cloudflare_default.
+# launch(env2.BROWSER)) - was never bound, so every PDF-producing endpoint
+# (TakeoffX generate-quote, and now PropX generate-proposal) would fail.
+[browser]
+binding = "BROWSER"
+
 # ── R2 Buckets ───────────────────────────────────────────────
 # R2 is enabled on this account (the 2026-08-30 comment claiming otherwise
 # was stale - both buckets already existed, just never bound here).
