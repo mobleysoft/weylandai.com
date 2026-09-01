@@ -15,7 +15,7 @@
       color: #fdfdf3;
       background-color: #000711;
     }
-    a { color: inherit; }
+    a { color: inherit; text-decoration: none; }
 
     header {
       position: relative;
@@ -38,10 +38,15 @@
       width: clamp(160px, 42vw, 220px);
       height: auto;
       display: block;
+      /* The crop bounds include the descender on the "y" in Weyland, which
+         pulls the image's visual center below its box's geometric center -
+         nudge up slightly so the glyphs themselves look vertically centered. */
+      margin-top: -0.35em;
+      margin-bottom: 0.35em;
     }
     header .brand-subtitle {
       display: none;
-      font: 700 12px/1.3 ui-monospace, "SF Mono", monospace;
+      font: 700 15px/1.3 ui-monospace, "SF Mono", monospace;
       letter-spacing: .04em;
       color: #9299a3;
       white-space: nowrap;
@@ -395,6 +400,7 @@
         <p class="slide-body">"Turn drawings into bids, automatically."</p>
 
         <div class="flow" aria-label="Product workflow">
+          <span class="step outcome">RFPs</span><span class="arrow">&rarr;</span>
           <span class="step">HuntX</span><span class="arrow">&rarr;</span>
           <span class="step">SubX</span><span class="arrow">&rarr;</span>
           <span class="step">TakeoffX</span><span class="arrow">&rarr;</span>
