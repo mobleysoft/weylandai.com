@@ -42,9 +42,12 @@ binding = "MASCOM_EDGE"
 service = "mascom-edge"
 
 # ── R2 Buckets ───────────────────────────────────────────────
-# NOT YET BOUND: R2 is not enabled on this Cloudflare account
-# (wrangler r2 bucket create fails with code 10042 - "Please enable R2
-# through the Cloudflare Dashboard"). File upload endpoints will fail
-# until this is enabled manually and these buckets are created:
-#   subx-uploads  (binding UPLOADS)
-#   subx-outputs  (binding OUTPUTS)
+# R2 is enabled on this account (the 2026-08-30 comment claiming otherwise
+# was stale - both buckets already existed, just never bound here).
+[[r2_buckets]]
+binding = "UPLOADS"
+bucket_name = "subx-uploads"
+
+[[r2_buckets]]
+binding = "OUTPUTS"
+bucket_name = "subx-outputs"
