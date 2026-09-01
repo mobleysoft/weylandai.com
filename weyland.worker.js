@@ -145502,6 +145502,38 @@ async function authenticate(request2, env2) {
       return { user: payload };
     } catch (e) {
     }
+    // AuthFor is the conglomerate-wide identity provider - this is the real
+    // Bearer path (nothing in this worker signs a local JWT_SECRET token,
+    // so the block above is effectively dead for real traffic). Verify
+    // against authfor.com, then bridge to OUR local users row by email,
+    // since users.id is a locally-generated UUID, not AuthFor's own id.
+    try {
+      const verifyResp = await fetch("https://authfor.com/api/v1/verify", {
+        headers: { "Authorization": `Bearer ${token}` }
+      });
+      if (verifyResp.ok) {
+        const identity = await verifyResp.json();
+        if (identity && identity.email) {
+          const localUser = await env2.DB.prepare(
+            "SELECT id, email, name FROM users WHERE email = ?"
+          ).bind(identity.email).first();
+          if (localUser) {
+            return {
+              user: {
+                sub: localUser.id,
+                userId: localUser.id,
+                id: localUser.id,
+                email: localUser.email,
+                name: localUser.name || identity.name
+              }
+            };
+          }
+          return { error: jsonResponse3({ error: "No WeylandAI account for this identity yet — subscribe at /pricing" }, 404) };
+        }
+      }
+    } catch (e) {
+      console.log("[Auth] AuthFor verify error:", e.message);
+    }
   }
   const hasSigParams = url.searchParams.has("expires") && url.searchParams.has("sig");
   if (hasSigParams) {
@@ -146622,18 +146654,52 @@ router.get("/api/metrics/errors", async (request2, env2) => {
   }
 });
 router.get("/login", async (request2, env2) => {
-  try {
-    const url = new URL(request2.url);
-    const redirect = url.searchParams.get("redirect") || "/";
-    const portalUrl = "https://auth-onamerica.ron-helms.workers.dev/?venture=weyland&redirect=" + encodeURIComponent(redirect);
-    const resp = await fetch(portalUrl, { headers: { "Accept": "text/html" } });
-    if (!resp.ok)
-      return new Response("Auth portal unavailable (" + resp.status + ")", { status: 502 });
-    const html = await resp.text();
-    return new Response(html, { status: 200, headers: { "Content-Type": "text/html;charset=utf-8", "Cache-Control": "no-store" } });
-  } catch (e) {
-    return new Response("Auth portal error: " + (e && e.message), { status: 500 });
-  }
+  // Real identity provider is AuthFor (conglomerate-wide), not Ron's
+  // onamerica Fleet Auth - that service is invite-only for the weyland
+  // venture ("No account found... registration closed") and disconnected
+  // from the users Stripe checkout actually provisions. This page uses the
+  // already-shipped AuthForStandard SDK, then hands the resulting token to
+  // /api/billing/checkout/status or direct API calls via Authorization
+  // header (authenticate() bridges AuthFor -> local users row by email).
+  const url = new URL(request2.url);
+  const redirect = url.searchParams.get("redirect") || "/subx";
+  const html = `<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Sign In | WeylandAI</title>
+<style>
+  html,body{margin:0;min-height:100%;background:#090a0d;color:#edf0f1;font-family:"Avenir Next","Helvetica Neue",sans-serif}
+  .wrap{max-width:440px;margin:0 auto;padding:60px 20px}
+  .brand{display:block;text-align:center;color:#edf0f1;text-decoration:none;font-weight:800;letter-spacing:.12em;margin-bottom:30px}
+  #status{text-align:center;color:#9299a3;font:700 11px/1.6 ui-monospace,monospace;letter-spacing:.06em;margin-bottom:16px}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <a class="brand" href="/">WEYLANDAI</a>
+  <div id="status">CHECKING IDENTITY...</div>
+  <div id="login-ui"></div>
+</div>
+<script src="/assets/authfor-integration-standard.js"></script>
+<script>
+  const auth = new AuthForStandard({ clientId: 'af_weyland_login', ventureName: 'weylandai.com', loginUISelector: '#login-ui' });
+  window.addEventListener('authfor-success', () => {
+    document.getElementById('status').textContent = 'SIGNED IN — REDIRECTING...';
+    location.assign(${JSON.stringify(redirect)});
+  });
+  auth.init().then((result) => {
+    if (result.authenticated) {
+      location.assign(${JSON.stringify(redirect)});
+    } else {
+      document.getElementById('status').textContent = 'SIGN IN OR CREATE AN ACCOUNT';
+    }
+  });
+</script>
+</body>
+</html>`;
+  return new Response(html, { status: 200, headers: { "Content-Type": "text/html;charset=utf-8", "Cache-Control": "no-store" } });
 });
 router.post("/api/auth/session", async (request2, env2) => {
   try {
@@ -148185,7 +148251,14 @@ router.get("/api/billing/checkout/status/:session_id", async (request2, env2) =>
       const cached = await env2.CACHE.get(`checkout_status:${sessionId}`);
       if (cached) {
         const parsed = JSON.parse(cached);
-        return jsonResponse3({ status: parsed.status, quantity: parsed.quantity });
+        const headers = { "Content-Type": "application/json" };
+        // Self-serve sign-in: the webhook already created a real weyland_sessions
+        // row (parsed.session_id) - hand it to the browser as a cookie here so
+        // payment -> signed-in happens automatically, no manual founder onboarding.
+        if (parsed.status === "active" && parsed.session_id) {
+          headers["Set-Cookie"] = `weyland_session=${parsed.session_id}; Path=/; Max-Age=2592000; Secure; HttpOnly; SameSite=Lax`;
+        }
+        return new Response(JSON.stringify({ status: parsed.status, quantity: parsed.quantity }), { status: 200, headers });
       }
     }
     return jsonResponse3({ status: "pending" });
@@ -148308,7 +148381,7 @@ router.post("/api/submittals/upload", async (request2, env2) => {
         await env2.DB.prepare(
           "UPDATE submittals SET extracted_data = ?, status = ?, progress = 100, updated_at = ? WHERE id = ?"
         ).bind(JSON.stringify(extractionResult), "review", (/* @__PURE__ */ new Date()).toISOString(), submittalId).run();
-        for (const door of extractionResult.doors) {
+        for (const door of extractionResult.doors || []) {
           await env2.DB.prepare(
             `INSERT INTO door_entries (
               id, submittal_id, door_number, door_type, material_code,
@@ -148359,7 +148432,7 @@ router.post("/api/submittals/upload", async (request2, env2) => {
           filename: file.name,
           submittalId,
           status: "review",
-          doorCount: extractionResult.doors.length,
+          doorCount: (extractionResult.doors || []).length,
           tokenUsage: extractionResult.token_usage,
           extractionConfidence: extractionResult.extraction_confidence
         });
@@ -148395,7 +148468,7 @@ router.post("/api/submittals/upload", async (request2, env2) => {
             await env2.DB.prepare(
               "UPDATE submittals SET extracted_data = ?, status = ?, progress = 100, updated_at = ? WHERE id = ?"
             ).bind(JSON.stringify(retryResult), "review", (/* @__PURE__ */ new Date()).toISOString(), submittalId).run();
-            for (const door of retryResult.doors) {
+            for (const door of retryResult.doors || []) {
               await env2.DB.prepare(
                 `INSERT INTO door_entries (
                   id, submittal_id, door_number, door_type, material_code,
@@ -148428,7 +148501,7 @@ router.post("/api/submittals/upload", async (request2, env2) => {
               filename: file.name,
               submittalId,
               status: "review",
-              doorCount: retryResult.doors.length,
+              doorCount: (retryResult.doors || []).length,
               retriedSuccessfully: true,
               retryAttempt: retryCount
             });
@@ -148573,7 +148646,7 @@ router.post("/api/submittals/:id/retry", async (request2, env2) => {
       await env2.DB.prepare(
         "UPDATE submittals SET extracted_data = ?, status = ?, progress = 100, error_message = NULL, updated_at = ? WHERE id = ?"
       ).bind(JSON.stringify(extractionResult), "review", (/* @__PURE__ */ new Date()).toISOString(), submittalId).run();
-      for (const door of extractionResult.doors) {
+      for (const door of extractionResult.doors || []) {
         await env2.DB.prepare(
           `INSERT INTO door_entries (
             id, submittal_id, door_number, door_type, material_code,
@@ -148600,7 +148673,7 @@ router.post("/api/submittals/:id/retry", async (request2, env2) => {
       return jsonResponse3({
         submittalId,
         status: "review",
-        doorCount: extractionResult.doors.length,
+        doorCount: (extractionResult.doors || []).length,
         retryAttempt: retryCount,
         message: "Retry successful"
       });
@@ -163139,7 +163212,7 @@ var SovereignWeylandRoutes = (function() {
     return new Response("<!doctype html>\n<html lang=\"en\">\n<head>\n  <meta charset=\"utf-8\">\n  <meta name=\"viewport\" content=\"width=device-width,initial-scale=1\">\n  <meta name=\"theme-color\" content=\"#090a0d\">\n  <title>TakeoffX | Machine-Vision Vector Blueprint Quantification</title>\n  <style>\n    :root{--bg:#090a0d;--panel:#121419;--panel2:#181b21;--line:#2c3139;--text:#edf0f1;--muted:#9299a3;--gold:#f0b800;--green:#61dfa0;--blue:#66d4ff;--red:#ff756e;--purple:#a78bfa}\n    *{box-sizing:border-box}html,body{margin:0;min-height:100%;background:var(--bg);color:var(--text);font-family:\"Avenir Next\",\"Helvetica Neue\",sans-serif}\n    body:before{content:\"\";position:fixed;inset:0;pointer-events:none;background:radial-gradient(circle at 50% 20%,rgba(97,223,160,.12),transparent 28rem),linear-gradient(rgba(255,255,255,.015) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.015) 1px,transparent 1px);background-size:auto,30px 30px,30px 30px}\n    .shell{position:relative;max-width:1500px;margin:auto;padding:20px clamp(16px,3vw,40px) 60px}\n    header{display:flex;align-items:center;justify-content:space-between;gap:15px;margin-bottom:24px}\n    .brand{display:flex;align-items:center;gap:12px;color:var(--text);text-decoration:none}\n    .mark{width:42px;height:42px;display:grid;place-items:center;background:var(--green);color:var(--bg);font-weight:900}\n    .brand b{display:block;letter-spacing:.16em}\n    .brand small{display:block;color:var(--muted);font:700 9px/1.5 ui-monospace,monospace;letter-spacing:.11em}\n    .nav{display:flex;gap:8px;flex-wrap:wrap}\n    .nav a,.button{border:1px solid var(--line);border-radius:99px;padding:9px 14px;color:var(--text);text-decoration:none;background:transparent;font:750 10px/1 ui-monospace,monospace;letter-spacing:.06em;cursor:pointer;transition:all .2s}\n    .nav a:hover,.button:hover{border-color:var(--green);color:var(--green);box-shadow:0 0 15px rgba(97,223,160,.2)}\n    .button.primary{background:var(--green);border-color:var(--green);color:var(--bg);font-weight:900}\n    .titlebar{display:flex;justify-content:space-between;align-items:end;gap:25px;margin:35px 0 25px}\n    .eyebrow{color:var(--green);font:800 11px/1 ui-monospace,monospace;letter-spacing:.18em;text-transform:uppercase}\n    .titlebar h1{font-size:clamp(34px,4.5vw,64px);letter-spacing:-.05em;line-height:1.02;margin:12px 0}\n    .titlebar p{max-width:680px;color:var(--muted);line-height:1.6;margin:0;font-size:16px}\n    .pill{border:1px solid rgba(97,223,160,.4);color:var(--green);border-radius:99px;padding:10px 15px;font:800 10px/1 ui-monospace,monospace;letter-spacing:.1em;background:rgba(97,223,160,.1)}\n    \n    .workspace-grid{display:grid;grid-template-columns:minmax(380px,1.2fr) minmax(320px,.8fr);gap:22px;margin-top:28px}\n    .canvas-card{background:#0b0d12;border:1px solid var(--line);border-radius:18px;padding:22px;box-shadow:0 25px 70px rgba(0,0,0,.3);display:flex;flex-direction:column}\n    .canvas-header{display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid var(--line);padding-bottom:14px;margin-bottom:18px}\n    .canvas-viewport{background:linear-gradient(145deg,#11151d,#0a0c10);border:1px solid #1f2531;border-radius:12px;min-height:480px;position:relative;overflow:hidden;display:flex;align-items:center;justify-content:center;flex:1}\n    \n    .blueprint-grid{position:absolute;inset:0;background-size:40px 40px;background-image:linear-gradient(to right,rgba(97,223,160,.05) 1px,transparent 1px),linear-gradient(to bottom,rgba(97,223,160,.05) 1px,transparent 1px);pointer-events:none}\n    .vector-overlay{z-index:2;width:90%;height:85%;border:2px dashed rgba(97,223,160,.35);border-radius:8px;padding:20px;position:relative;display:grid;grid-template-columns:1fr 1fr;gap:20px}\n    .zone-box{background:rgba(97,223,160,.07);border:1px solid rgba(97,223,160,.3);border-radius:8px;padding:16px;position:relative;transition:all .2s;cursor:pointer}\n    .zone-box:hover{background:rgba(97,223,160,.16);box-shadow:0 0 20px rgba(97,223,160,.25)}\n    .zone-tag{font:800 10px ui-monospace,monospace;color:var(--green);position:absolute;top:10px;right:10px;background:#090a0d;padding:4px 8px;border-radius:4px;border:1px solid var(--green)}\n    \n    .ledger-card{background:rgba(18,20,25,.94);border:1px solid var(--line);border-radius:18px;padding:22px;display:flex;flex-direction:column;justify-content:space-between}\n    .ledger-row{display:flex;justify-content:space-between;padding:14px 0;border-bottom:1px solid #1f232b;align-items:center}\n    .ledger-row span{color:var(--muted);font-size:14px}\n    .ledger-row strong{color:#fff;font-size:15px;font-weight:700}\n    \n    @media(max-width:1000px){.workspace-grid{grid-template-columns:1fr}}\n  </style>\n</head>\n<body>\n  <div class=\"shell\">\n    <header>\n      <a class=\"brand\" href=\"/\"><span class=\"mark\">TX</span><span><b>TAKEOFFX</b><small>MACHINE-VISION TAKEOFF</small></span></a>\n      <nav class=\"nav\">" + renderNav("takeoffx") + "</nav>\n    </header>\n    <div class=\"titlebar\">\n      <div>\n        <div class=\"eyebrow\">MACHINE-VISION TAKEOFF</div>\n        <h1>TakeoffX</h1>\n        <p>Reads door schedules and hardware requirements directly from uploaded project\n        drawings, with confidence scoring and a review step before anything is written to your\n        project record - built to be checked, not blindly trusted.</p>\n      </div>\n      <a class=\"button primary\" href=\"/login?redirect=/\">SIGN IN TO START A TAKEOFF</a>\n    </div>\n    <div class=\"note-card\">\n      TakeoffX is part of the SubConP suite. See <code>/pricing</code> for standalone and bundled\n      licensing, or sign in above if you already have access.\n    </div>\n  </div>\n</body>\n</html>", { headers: { "Content-Type": "text/html; charset=UTF-8", "Cache-Control": "public, max-age=60" } });
   }
   function serve_subx() {
-    return new Response("<!doctype html>\n<html lang=\"en\">\n<head>\n  <meta charset=\"utf-8\">\n  <meta name=\"viewport\" content=\"width=device-width,initial-scale=1\">\n  <meta name=\"theme-color\" content=\"#090a0d\">\n  <title>SubX | Cut-Sheet Matching &amp; Submittal Package Automation</title>\n  <style>\n    :root{--bg:#090a0d;--panel:#121419;--panel2:#181b21;--line:#2c3139;--text:#edf0f1;--muted:#9299a3;--gold:#f0b800;--green:#61dfa0;--blue:#66d4ff;--red:#ff756e;--purple:#a78bfa}\n    *{box-sizing:border-box}html,body{margin:0;min-height:100%;background:var(--bg);color:var(--text);font-family:\"Avenir Next\",\"Helvetica Neue\",sans-serif}\n    body:before{content:\"\";position:fixed;inset:0;pointer-events:none;background:radial-gradient(circle at 20% 20%,rgba(167,139,242,.12),transparent 28rem),linear-gradient(rgba(255,255,255,.015) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.015) 1px,transparent 1px);background-size:auto,30px 30px,30px 30px}\n    .shell{position:relative;max-width:1500px;margin:auto;padding:20px clamp(16px,3vw,40px) 60px}\n    header{display:flex;align-items:center;justify-content:space-between;gap:15px;margin-bottom:24px}\n    .brand{display:flex;align-items:center;gap:12px;color:var(--text);text-decoration:none}\n    .mark{width:42px;height:42px;display:grid;place-items:center;background:var(--purple);color:var(--bg);font-weight:900}\n    .brand b{display:block;letter-spacing:.16em}\n    .brand small{display:block;color:var(--muted);font:700 9px/1.5 ui-monospace,monospace;letter-spacing:.11em}\n    .nav{display:flex;gap:8px;flex-wrap:wrap}\n    .nav a,.button{border:1px solid var(--line);border-radius:99px;padding:9px 14px;color:var(--text);text-decoration:none;background:transparent;font:750 10px/1 ui-monospace,monospace;letter-spacing:.06em;cursor:pointer;transition:all .2s}\n    .nav a:hover,.button:hover{border-color:var(--purple);color:var(--purple);box-shadow:0 0 15px rgba(167,139,242,.2)}\n    .button.primary{background:var(--purple);border-color:var(--purple);color:var(--bg);font-weight:900}\n    .titlebar{display:flex;justify-content:space-between;align-items:end;gap:25px;margin:35px 0 25px}\n    .eyebrow{color:var(--purple);font:800 11px/1 ui-monospace,monospace;letter-spacing:.18em;text-transform:uppercase}\n    .titlebar h1{font-size:clamp(34px,4.5vw,64px);letter-spacing:-.05em;line-height:1.02;margin:12px 0}\n    .titlebar p{max-width:680px;color:var(--muted);line-height:1.6;margin:0;font-size:16px}\n    .pill{border:1px solid rgba(167,139,242,.4);color:var(--purple);border-radius:99px;padding:10px 15px;font:800 10px/1 ui-monospace,monospace;letter-spacing:.1em;background:rgba(167,139,242,.1)}\n    .table-card{background:rgba(18,20,25,.94);border:1px solid var(--line);border-radius:18px;overflow:hidden;box-shadow:0 25px 70px rgba(0,0,0,.25);margin-bottom:24px}\n    table{width:100%;border-collapse:collapse;font-size:14px}\n    th{text-align:left;color:var(--muted);font:750 10px/1 ui-monospace,monospace;letter-spacing:.1em;padding:16px 20px;background:#0d0f14;border-bottom:2px solid var(--line)}\n    td{padding:16px 20px;border-bottom:1px solid #1f232b;vertical-align:middle}\n    tr:hover td{background:rgba(167,139,242,.04)}\n    .status-badge{font:800 9px ui-monospace,monospace;padding:5px 10px;border-radius:99px;display:inline-block;letter-spacing:.08em}\n    .status-matched{background:rgba(97,223,160,.15);color:var(--green);border:1px solid rgba(97,223,160,.35)}\n    .status-pending{background:rgba(240,184,0,.15);color:var(--gold);border:1px solid rgba(240,184,0,.35)}\n    .note-card{background:rgba(18,20,25,.9);border:1px solid var(--line);border-radius:14px;padding:22px;color:var(--muted);font-size:14px;line-height:1.6}\n    .note-card code{background:#161920;padding:2px 6px;border-radius:4px;color:var(--purple);font-size:13px}\n    @media(max-width:900px){.titlebar{flex-direction:column;align-items:flex-start}}\n  </style>\n</head>\n<body>\n  <div class=\"shell\">\n    <header>\n      <a class=\"brand\" href=\"/\"><span class=\"mark\">SX</span><span><b>SUBX</b><small>CUT-SHEET MATCHING & SUBMITTALS</small></span></a>\n      <nav class=\"nav\">" + renderNav("subx") + "</nav>\n    </header>\n    <div class=\"titlebar\">\n      <div>\n        <div class=\"eyebrow\">SUBMITTAL AUTOMATION</div>\n        <h1>SubX</h1>\n        <p>Extracts hardware and submittal requirements straight from project manuals and\n        specifications, matches them against a real manufacturer cut-sheet catalogue, and\n        assembles a complete submittal compliance package for review before it goes out.\n        Every match keeps its source citation attached.</p>\n      </div>\n      <a class=\"button primary\" href=\"/login?redirect=/\">SIGN IN TO START A SUBMITTAL</a>\n    </div>\n    <div class=\"note-card\">\n      SubX is part of the SubConP suite. See <code>/pricing</code> for standalone and bundled\n      licensing, or sign in above if you already have access.\n    </div>\n  </div>\n</body>\n</html>", { headers: { "Content-Type": "text/html; charset=UTF-8", "Cache-Control": "public, max-age=60" } });
+    return new Response("<!doctype html>\n<html lang=\"en\">\n<head>\n  <meta charset=\"utf-8\">\n  <meta name=\"viewport\" content=\"width=device-width,initial-scale=1\">\n  <meta name=\"theme-color\" content=\"#090a0d\">\n  <title>SubX | Cut-Sheet Matching &amp; Submittal Package Automation</title>\n  <style>\n    :root{--bg:#090a0d;--panel:#121419;--panel2:#181b21;--line:#2c3139;--text:#edf0f1;--muted:#9299a3;--gold:#f0b800;--green:#61dfa0;--blue:#66d4ff;--red:#ff756e;--purple:#a78bfa}\n    *{box-sizing:border-box}html,body{margin:0;min-height:100%;background:var(--bg);color:var(--text);font-family:\"Avenir Next\",\"Helvetica Neue\",sans-serif}\n    body:before{content:\"\";position:fixed;inset:0;pointer-events:none;background:radial-gradient(circle at 20% 20%,rgba(167,139,242,.12),transparent 28rem),linear-gradient(rgba(255,255,255,.015) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.015) 1px,transparent 1px);background-size:auto,30px 30px,30px 30px}\n    .shell{position:relative;max-width:1500px;margin:auto;padding:20px clamp(16px,3vw,40px) 60px}\n    header{display:flex;align-items:center;justify-content:space-between;gap:15px;margin-bottom:24px}\n    .brand{display:flex;align-items:center;gap:12px;color:var(--text);text-decoration:none}\n    .mark{width:42px;height:42px;display:grid;place-items:center;background:var(--purple);color:var(--bg);font-weight:900}\n    .brand b{display:block;letter-spacing:.16em}\n    .brand small{display:block;color:var(--muted);font:700 9px/1.5 ui-monospace,monospace;letter-spacing:.11em}\n    .nav{display:flex;gap:8px;flex-wrap:wrap}\n    .nav a,.button{border:1px solid var(--line);border-radius:99px;padding:9px 14px;color:var(--text);text-decoration:none;background:transparent;font:750 10px/1 ui-monospace,monospace;letter-spacing:.06em;cursor:pointer;transition:all .2s}\n    .nav a:hover,.button:hover{border-color:var(--purple);color:var(--purple);box-shadow:0 0 15px rgba(167,139,242,.2)}\n    .button.primary{background:var(--purple);border-color:var(--purple);color:var(--bg);font-weight:900}\n    .titlebar{display:flex;justify-content:space-between;align-items:end;gap:25px;margin:35px 0 25px}\n    .eyebrow{color:var(--purple);font:800 11px/1 ui-monospace,monospace;letter-spacing:.18em;text-transform:uppercase}\n    .titlebar h1{font-size:clamp(34px,4.5vw,64px);letter-spacing:-.05em;line-height:1.02;margin:12px 0}\n    .titlebar p{max-width:680px;color:var(--muted);line-height:1.6;margin:0;font-size:16px}\n    .pill{border:1px solid rgba(167,139,242,.4);color:var(--purple);border-radius:99px;padding:10px 15px;font:800 10px/1 ui-monospace,monospace;letter-spacing:.1em;background:rgba(167,139,242,.1)}\n    .table-card{background:rgba(18,20,25,.94);border:1px solid var(--line);border-radius:18px;overflow:hidden;box-shadow:0 25px 70px rgba(0,0,0,.25);margin-bottom:24px}\n    table{width:100%;border-collapse:collapse;font-size:14px}\n    th{text-align:left;color:var(--muted);font:750 10px/1 ui-monospace,monospace;letter-spacing:.1em;padding:16px 20px;background:#0d0f14;border-bottom:2px solid var(--line)}\n    td{padding:16px 20px;border-bottom:1px solid #1f232b;vertical-align:middle}\n    tr:hover td{background:rgba(167,139,242,.04)}\n    .status-badge{font:800 9px ui-monospace,monospace;padding:5px 10px;border-radius:99px;display:inline-block;letter-spacing:.08em}\n    .status-matched{background:rgba(97,223,160,.15);color:var(--green);border:1px solid rgba(97,223,160,.35)}\n    .status-pending{background:rgba(240,184,0,.15);color:var(--gold);border:1px solid rgba(240,184,0,.35)}\n    .note-card{background:rgba(18,20,25,.9);border:1px solid var(--line);border-radius:14px;padding:22px;color:var(--muted);font-size:14px;line-height:1.6}\n    .note-card code{background:#161920;padding:2px 6px;border-radius:4px;color:var(--purple);font-size:13px}\n    @media(max-width:900px){.titlebar{flex-direction:column;align-items:flex-start}}\n  </style>\n</head>\n<body>\n  <div class=\"shell\">\n    <header>\n      <a class=\"brand\" href=\"/\"><span class=\"mark\">SX</span><span><b>SUBX</b><small>CUT-SHEET MATCHING & SUBMITTALS</small></span></a>\n      <nav class=\"nav\">" + renderNav("subx") + "</nav>\n    </header>\n    <div class=\"titlebar\">\n      <div>\n        <div class=\"eyebrow\">SUBMITTAL AUTOMATION</div>\n        <h1>SubX</h1>\n        <p>Extracts hardware and submittal requirements straight from project manuals and\n        specifications, matches them against a real manufacturer cut-sheet catalogue, and\n        assembles a complete submittal compliance package for review before it goes out.\n        Every match keeps its source citation attached.</p>\n      </div>\n      <a class=\"button primary\" id=\"signin-btn\" href=\"/login?redirect=/subx\" style=\"display:none\">SIGN IN TO START A SUBMITTAL</a>\n    </div>\n\n    <div id=\"app\" style=\"display:none\">\n      <div class=\"table-card\" style=\"padding:22px\">\n        <div style=\"display:flex;gap:14px;flex-wrap:wrap;align-items:flex-end\">\n          <div style=\"flex:1;min-width:220px\">\n            <label style=\"display:block;color:var(--muted);font:750 10px/1 ui-monospace,monospace;letter-spacing:.08em;margin-bottom:8px\">PROJECT NAME</label>\n            <input id=\"project-name\" type=\"text\" placeholder=\"Untitled Project\" style=\"width:100%;padding:11px;background:var(--panel2);border:1px solid var(--line);border-radius:8px;color:var(--text);font-size:14px;box-sizing:border-box\">\n          </div>\n          <div style=\"flex:2;min-width:260px\">\n            <label style=\"display:block;color:var(--muted);font:750 10px/1 ui-monospace,monospace;letter-spacing:.08em;margin-bottom:8px\">PROJECT MANUAL / SPEC (PDF)</label>\n            <input id=\"pdf-file\" type=\"file\" accept=\"application/pdf\" style=\"width:100%;padding:9px;background:var(--panel2);border:1px solid var(--line);border-radius:8px;color:var(--text);font-size:13px;box-sizing:border-box\">\n          </div>\n          <button id=\"upload-btn\" class=\"button primary\" style=\"height:42px\">EXTRACT DOOR SCHEDULE</button>\n        </div>\n        <div id=\"upload-status\" style=\"margin-top:14px;color:var(--muted);font-size:13px\"></div>\n      </div>\n\n      <div class=\"table-card\">\n        <table>\n          <thead><tr><th>PROJECT</th><th>FILE</th><th>STATUS</th><th>UPLOADED</th></tr></thead>\n          <tbody id=\"submittals-body\"><tr><td colspan=\"4\" style=\"color:var(--muted)\">Loading...</td></tr></tbody>\n        </table>\n      </div>\n    </div>\n\n    <div class=\"note-card\" id=\"guest-note\">\n      SubX is part of the SubConP suite. See <code>/pricing</code> for standalone and bundled\n      licensing, or sign in above if you already have access.\n    </div>\n  </div>\n  <script src=\"/assets/authfor-integration-standard.js\"></script>\n  <script>\n    const auth = new AuthForStandard({ clientId: 'af_weyland_login', ventureName: 'weylandai.com' });\n    function authHeaders() {\n      const t = auth.getToken();\n      return t ? { 'Authorization': 'Bearer ' + t } : {};\n    }\n    async function loadSubmittals() {\n      const res = await fetch('/api/submittals', { headers: authHeaders() });\n      const body = document.getElementById('submittals-body');\n      if (!res.ok) { body.innerHTML = '<tr><td colspan=\"4\" style=\"color:var(--muted)\">No submittals yet.</td></tr>'; return; }\n      const data = await res.json();\n      const rows = data.submittals || data.results || (Array.isArray(data) ? data : []);\n      if (!rows.length) { body.innerHTML = '<tr><td colspan=\"4\" style=\"color:var(--muted)\">No submittals yet — upload a PDF above to start.</td></tr>'; return; }\n      body.innerHTML = rows.map(r => `<tr><td>${(r.project_name||'').replace(/[<>]/g,'')}</td><td>${(r.original_filename||'').replace(/[<>]/g,'')}</td><td><span class=\"status-badge status-${r.status==='review'||r.status==='complete'?'matched':'pending'}\">${(r.status||'').toUpperCase()}</span></td><td>${(r.created_at||'').slice(0,10)}</td></tr>`).join('');\n    }\n    document.getElementById('upload-btn').addEventListener('click', async () => {\n      const fileInput = document.getElementById('pdf-file');\n      const status = document.getElementById('upload-status');\n      if (!fileInput.files.length) { status.textContent = 'Choose a PDF first.'; return; }\n      const fd = new FormData();\n      fd.append('file', fileInput.files[0]);\n      fd.append('projectName', document.getElementById('project-name').value || 'Untitled Project');\n      status.textContent = 'Uploading and extracting...';\n      try {\n        const res = await fetch('/api/submittals/upload', { method: 'POST', body: fd, headers: authHeaders() });\n        const data = await res.json();\n        if (!res.ok) { status.textContent = 'Error: ' + (data.error && (data.error.message || data.error) || 'upload failed'); return; }\n        status.textContent = 'Extraction complete.';\n        fileInput.value = '';\n        loadSubmittals();\n      } catch (e) {\n        status.textContent = 'Error: ' + e.message;\n      }\n    });\n    (async () => {\n      // Don't trust AuthFor's own client-side token state alone - a user who\n      // just paid is authenticated via the weyland_session cookie set after\n      // checkout, with no AuthFor token in localStorage at all. Ask the real\n      // API what it thinks, using whichever credential is available.\n      try {\n        const probe = await fetch('/api/submittals', { headers: authHeaders() });\n        if (probe.ok) {\n          document.getElementById('app').style.display = 'block';\n          document.getElementById('guest-note').style.display = 'none';\n          loadSubmittals();\n          return;\n        }\n      } catch (e) {}\n      document.getElementById('signin-btn').style.display = 'inline-block';\n    })();\n  </script>\n</body>\n</html>", { headers: { "Content-Type": "text/html; charset=UTF-8", "Cache-Control": "public, max-age=60" } });
   }
   function serve_propx() {
     return new Response("<!doctype html>\n<html lang=\"en\">\n<head>\n  <meta charset=\"utf-8\">\n  <meta name=\"viewport\" content=\"width=device-width,initial-scale=1\">\n  <meta name=\"theme-color\" content=\"#090a0d\">\n  <title>PropX | WeylandAI</title>\n  <style>\n    :root{--bg:#090a0d;--panel:#121419;--panel2:#181b21;--line:#2c3139;--text:#edf0f1;--muted:#9299a3;--gold:#f0b800;--green:#61dfa0;--blue:#66d4ff;--red:#ff756e}*{box-sizing:border-box}html,body{margin:0;min-height:100%;background:var(--bg);color:var(--text);font-family:\"Avenir Next\",\"Helvetica Neue\",sans-serif}body:before{content:\"\";position:fixed;inset:0;pointer-events:none;background:radial-gradient(circle at 10% 5%,rgba(240,184,0,.12),transparent 27rem),linear-gradient(rgba(255,255,255,.014) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.014) 1px,transparent 1px);background-size:auto,30px 30px,30px 30px}.shell{position:relative;max-width:1500px;margin:auto;padding:18px clamp(14px,2.5vw,34px) 40px}header{display:flex;align-items:center;justify-content:space-between;gap:15px;margin-bottom:18px}.brand{display:flex;align-items:center;gap:12px;color:var(--text);text-decoration:none}.mark{width:42px;height:42px;display:grid;place-items:center;background:var(--gold);color:var(--bg);font-weight:900}.brand b{display:block;letter-spacing:.16em}.brand small{display:block;color:var(--muted);font:700 9px/1.5 ui-monospace,monospace;letter-spacing:.11em}.nav{display:flex;gap:7px;flex-wrap:wrap}.nav a,.button{border:1px solid var(--line);border-radius:99px;padding:9px 12px;color:var(--text);text-decoration:none;background:transparent;font:750 10px/1 ui-monospace,monospace;letter-spacing:.06em;cursor:pointer}.nav a:hover,.button:hover{border-color:var(--gold);color:var(--gold)}.button.primary{background:var(--gold);border-color:var(--gold);color:var(--bg)}.titlebar{display:flex;justify-content:space-between;align-items:end;gap:25px;margin:28px 0 18px}.eyebrow{color:var(--gold);font:800 10px/1 ui-monospace,monospace;letter-spacing:.17em}.titlebar h1{font-size:clamp(36px,5vw,72px);letter-spacing:-.055em;line-height:.93;margin:11px 0}.titlebar p{max-width:700px;color:var(--muted);line-height:1.6;margin:0}.pill{white-space:nowrap;border:1px solid rgba(97,223,160,.35);color:var(--green);border-radius:99px;padding:10px 13px;font:800 9px/1 ui-monospace,monospace;letter-spacing:.09em}.layout{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(320px,.65fr);gap:18px}.card{background:rgba(18,20,25,.94);border:1px solid var(--line);border-radius:18px;padding:20px;box-shadow:0 25px 70px rgba(0,0,0,.22)}.card-head{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:16px}.card h2{font-size:17px;margin:0}.meta{color:var(--muted);font:700 9px/1 ui-monospace,monospace;letter-spacing:.08em}.proposal-head{padding:22px;border:1px solid var(--line);background:#0d0f12;border-radius:14px;margin-bottom:14px}.proposal-head h2{font-size:30px;margin:5px 0}.proposal-head p{color:var(--muted);margin:4px 0;font-size:13px}.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:14px}.fact{border-top:1px solid var(--line);padding-top:10px}.fact span{display:block;color:var(--muted);font:700 9px/1.4 ui-monospace,monospace}.fact strong{display:block;font-size:13px;margin-top:3px}table{width:100%;border-collapse:collapse;font-size:12px}th{text-align:left;color:var(--muted);font:750 9px/1 ui-monospace,monospace;letter-spacing:.08em;padding:10px 8px;border-bottom:1px solid var(--line)}td{padding:11px 8px;border-bottom:1px solid #20242a;vertical-align:top}td:last-child,th:last-child{text-align:right}.source{display:block;color:var(--blue);font:700 9px/1.4 ui-monospace,monospace;margin-top:4px}.money{width:95px;background:#0b0d10;color:var(--text);border:1px solid var(--line);border-radius:7px;padding:7px;text-align:right}.total{margin-left:auto;width:min(100%,340px);padding-top:15px}.total div{display:flex;justify-content:space-between;padding:7px 0;color:var(--muted);font-size:13px}.total .grand{border-top:1px solid var(--gold);color:var(--text);font-size:20px;font-weight:800}.warning{margin-top:14px;border-left:2px solid var(--gold);padding:10px 13px;color:var(--muted);font-size:12px;line-height:1.55;background:rgba(240,184,0,.04)}.stack{display:grid;gap:10px}.step{border:1px solid var(--line);border-radius:12px;padding:12px;display:grid;grid-template-columns:31px 1fr;gap:10px}.step b{display:grid;place-items:center;width:30px;height:30px;background:rgba(240,184,0,.11);color:var(--gold);border-radius:8px;font:800 10px ui-monospace,monospace}.step strong{font-size:13px}.step small{display:block;color:var(--muted);margin-top:3px}.source-list{display:grid;gap:8px}.source-item{border:1px solid var(--line);border-radius:11px;padding:11px}.source-item strong{font-size:12px}.source-item span{display:block;color:var(--blue);font:700 9px/1.5 ui-monospace,monospace}.source-item p{color:var(--muted);font-size:11px;line-height:1.45;margin:5px 0 0}.actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:16px}.audit{margin-top:15px;padding-top:14px;border-top:1px solid var(--line);color:var(--muted);font:700 9px/1.7 ui-monospace,monospace}.loading{padding:50px;text-align:center;color:var(--muted)}@media(max-width:900px){.layout{grid-template-columns:1fr}.titlebar{align-items:flex-start;flex-direction:column}.grid{grid-template-columns:1fr}.nav a:nth-child(-n+2){display:none}}@media print{body:before,header,.titlebar,.side,.actions,.warning{display:none!important}.shell{padding:0}.layout{display:block}.card{border:0;box-shadow:none;padding:0}.proposal-head{border:0;padding:0}body{background:#fff;color:#111}td,th{border-color:#ddd}.source,.proposal-head p,.fact span{color:#555}.money{border:0;color:#111;background:#fff}.total div{color:#333}}\n  </style>\n</head>\n<body>\n  <div class=\"shell\">\n    <header><a class=\"brand\" href=\"/\"><span class=\"mark\">PX</span><span><b>PROPX</b><small>PROPOSAL INTELLIGENCE</small></span></a><nav class=\"nav\">" + renderNav("propx") + "</nav>\n    </header>\n    <div class=\"titlebar\">\n      <div>\n        <div class=\"eyebrow\">PROPOSAL INTELLIGENCE</div>\n        <h1>PropX</h1>\n        <p>Builds commercial bid and quote packages from live catalogue pricing and material\n        data, with automated markup and margin protection, so a proposal reflects real supplier\n        pricing instead of a stale spreadsheet.</p>\n      </div>\n      <a class=\"button primary\" href=\"/login?redirect=/\">SIGN IN TO START A PROPOSAL</a>\n    </div>\n    <div class=\"note-card\">\n      PropX is part of the SubConP suite. See <code>/pricing</code> for standalone and bundled\n      licensing, or sign in above if you already have access.\n    </div>\n  </div>\n</body>\n</html>", { headers: { "Content-Type": "text/html; charset=UTF-8", "Cache-Control": "public, max-age=60" } });
@@ -163225,6 +163298,12 @@ var weyland_worker_default = {
       url.protocol = "https:";
       return Response.redirect(url.toString(), 301);
     }
+    const LEGACY_PRODUCT_SUBDOMAINS = ["subx", "takeoffx", "propx", "cutsheetx", "huntx", "sightx"];
+    const subdomainMatch = url.hostname.match(/^([a-z]+)\.weylandai\.com$/);
+    if (subdomainMatch && LEGACY_PRODUCT_SUBDOMAINS.includes(subdomainMatch[1])) {
+      const target = `https://weylandai.com/${subdomainMatch[1]}${url.pathname === "/" ? "" : url.pathname}${url.search}`;
+      return Response.redirect(target, 301);
+    }
     if (request2.method === "GET" || request2.method === "HEAD") {
       const isHome = url.pathname === "/" || url.pathname === "/index.html";
       const isStaticAsset = url.pathname.startsWith("/assets/");
@@ -163272,19 +163351,13 @@ var weyland_worker_default = {
     if (url.pathname.startsWith("/api/")) {
       return monolith.fetch(request2, env2, ctx);
     }
-    if (request2.method === "GET" || request2.method === "HEAD") {
-      try {
-        const valid = await checkSession(env2, request2);
-        if (!valid)
-          return new Response(null, { status: 302, headers: { "Location": "/", "Cache-Control": "no-cache" } });
-        const r2 = await serveR2(env2, url.pathname);
-        if (r2)
-          return r2;
-      } catch (e) {
-        console.log("[Protected path error]", e.message);
-        return new Response(null, { status: 302, headers: { "Location": "/" } });
-      }
-    }
+    // R2 is not bound on this account (never enabled - sovereignty doctrine)
+    // so serveR2() can never succeed here. This used to unconditionally 302
+    // any unauthenticated GET/HEAD to "/" before falling through, which
+    // silently locked out real public monolith page routes - /login itself,
+    // plus customer-facing /quote/:id/view and /q/:id/:token links sent by
+    // email. Fall through directly to monolith instead of gating on a
+    // session for content that was never actually reachable.
     return monolith.fetch(request2, env2, ctx);
   }
 };
