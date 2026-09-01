@@ -104,7 +104,8 @@ async function showReturnState() {
     if (response.ok) {
       const payload = await response.json();
       if (payload.status === 'active') {
-        show(`Subscription active for ${payload.quantity} seat${payload.quantity === 1 ? '' : 's'}. Founder-led onboarding is the current provisioning boundary.`, 'good');
+        show(`Subscription active for ${payload.quantity} seat${payload.quantity === 1 ? '' : 's'}. Signing you in...`, 'good');
+        setTimeout(() => { location.assign('/subx'); }, 1200);
         return;
       }
     }
