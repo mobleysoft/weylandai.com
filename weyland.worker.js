@@ -147861,6 +147861,94 @@ router.get("/api/subscription/status", async (request2, env2) => {
     return errorResponse("DATABASE_ERROR", "Failed to fetch subscription: " + err.message);
   }
 });
+// Real billing routes matching what subscribe.js actually calls. Built
+// 2026-08-31 after discovering /api/subscription/checkout (below) proxies
+// through VendyAI's checkout API, which has no working implementation
+// anywhere in the portfolio, and requires an AuthFor-gated user session
+// that also doesn't work (authfor.com is an unconfigured GitHub Pages
+// 404). These call Stripe directly with a real secret key and skip the
+// login gate entirely - Stripe Checkout collects the customer's email on
+// its own hosted page, so no account needs to exist before payment.
+const WEYLAND_SUBCONP_PRICE_ID = "price_1UAh7DLWTxUJi5AVaNKljKc7";
+const WEYLAND_SUBCONP_PRODUCT_ID = "weyland-subconp-seat";
+
+async function stripeRequest(env2, method, path, params) {
+  const body = params
+    ? Object.entries(params)
+        .map(([k, v]) => `${encodeURIComponent(k)}=${encodeURIComponent(v)}`)
+        .join("&")
+    : undefined;
+  const resp = await fetch(`https://api.stripe.com/v1${path}`, {
+    method,
+    headers: {
+      "Authorization": "Basic " + btoa(env2.STRIPE_SECRET_KEY + ":"),
+      "Content-Type": "application/x-www-form-urlencoded"
+    },
+    body
+  });
+  const data = await resp.json();
+  if (!resp.ok) {
+    const err = new Error(data.error?.message || `Stripe ${resp.status}`);
+    err.stripeError = data.error;
+    throw err;
+  }
+  return data;
+}
+__name(stripeRequest, "stripeRequest");
+
+router.get("/api/billing/catalog", async (request2, env2) => {
+  try {
+    const price = await stripeRequest(env2, "GET", `/prices/${WEYLAND_SUBCONP_PRICE_ID}`);
+    return jsonResponse3({
+      products: [{
+        id: WEYLAND_SUBCONP_PRODUCT_ID,
+        checkout_ready: price.active === true,
+        price_id: price.id,
+        unit_amount: price.unit_amount,
+        currency: price.currency,
+        trial_period_days: price.recurring?.trial_period_days ?? null,
+        livemode: price.livemode
+      }]
+    });
+  } catch (err) {
+    console.error("[Billing] catalog error:", err.message);
+    return jsonResponse3({
+      products: [{
+        id: WEYLAND_SUBCONP_PRODUCT_ID,
+        checkout_ready: false,
+        blockers: [err.message]
+      }]
+    });
+  }
+});
+
+router.post("/api/billing/checkout/create", async (request2, env2) => {
+  try {
+    const body = await request2.json().catch(() => ({}));
+    if (body.product_id !== WEYLAND_SUBCONP_PRODUCT_ID) {
+      return jsonResponse3({ detail: { message: `unknown product_id: ${body.product_id}` } }, 400);
+    }
+    const quantity = Math.max(1, Math.min(250, Number.parseInt(body.quantity, 10) || 1));
+    const url = new URL(request2.url);
+    const baseUrl = `${url.protocol}//${url.host}`;
+
+    const session = await stripeRequest(env2, "POST", "/checkout/sessions", {
+      mode: "subscription",
+      "line_items[0][price]": WEYLAND_SUBCONP_PRICE_ID,
+      "line_items[0][quantity]": quantity,
+      success_url: `${baseUrl}/subscribe?checkout=success&session_id={CHECKOUT_SESSION_ID}`,
+      cancel_url: `${baseUrl}/subscribe?checkout=cancelled`,
+      "metadata[venture]": "weylandai.com",
+      "metadata[seats]": String(quantity)
+    });
+
+    return jsonResponse3({ checkout_url: session.url, session_id: session.id }, 201);
+  } catch (err) {
+    console.error("[Billing] checkout create error:", err.message);
+    return jsonResponse3({ detail: { message: err.message } }, 502);
+  }
+});
+
 router.post("/api/subscription/checkout", async (request2, env2) => {
   const { error: error4, user } = await authenticate(request2, env2);
   if (error4)
@@ -163075,9 +163163,11 @@ var weyland_worker_default = {
     }
     if (request2.method === "GET" || request2.method === "HEAD") {
       const isHome = url.pathname === "/" || url.pathname === "/index.html";
-      if (isHome && env2.MASCOM_EDGE) {
+      const isStaticAsset = url.pathname.startsWith("/assets/");
+      if ((isHome || isStaticAsset) && env2.MASCOM_EDGE) {
         try {
-          const edgeResp = await env2.MASCOM_EDGE.fetch("https://weylandai.com/");
+          const edgeUrl = isHome ? "https://weylandai.com/" : "https://weylandai.com" + url.pathname;
+          const edgeResp = await env2.MASCOM_EDGE.fetch(edgeUrl);
           if (edgeResp && edgeResp.status === 200) {
             const body = await edgeResp.arrayBuffer();
             return new Response(body, {
