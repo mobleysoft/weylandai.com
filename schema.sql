@@ -1289,6 +1289,29 @@ CREATE TABLE takeoff_line_items (
 );
 
 -- Table: takeoff_quotes
+-- opportunities: HuntX. Real public construction/procurement leads pulled
+-- from public open-data APIs (TxDOT lettings via data.texas.gov Socrata;
+-- CA school construction funding releases via data.ca.gov CKAN datastore).
+-- Upserted by POST /api/hunt/refresh, keyed on (source, source_ref) so
+-- re-fetching is idempotent. See requireProductAccess(user, env2, "huntx").
+CREATE TABLE opportunities (
+  id TEXT PRIMARY KEY,
+  source TEXT NOT NULL,
+  source_ref TEXT NOT NULL,
+  title TEXT NOT NULL,
+  agency TEXT,
+  location TEXT,
+  category TEXT,
+  status TEXT,
+  key_date TEXT,
+  estimated_value REAL,
+  detail_url TEXT,
+  raw_data TEXT,
+  fetched_at TEXT NOT NULL,
+  created_at TEXT NOT NULL DEFAULT (datetime('now')),
+  UNIQUE(source, source_ref)
+);
+
 -- proposals: PropX. Reuses SubX's real extraction/matching data (submittals,
 -- door_entries) plus a customer-provided RFP reference/summary (never
 -- fabricated) to render an HTML->PDF proposal via the same puppeteer path
