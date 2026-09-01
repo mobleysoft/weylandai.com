@@ -1488,7 +1488,10 @@ CREATE TABLE vendor_profile (
 , affirmed INTEGER DEFAULT 0, affirmed_at TEXT, affirmed_by TEXT);
 
 -- Table: users
-CREATE TABLE users (id TEXT PRIMARY KEY, email TEXT UNIQUE NOT NULL, password_hash TEXT, name TEXT NOT NULL DEFAULT '', company TEXT, tenant_id TEXT, subscription_tier TEXT DEFAULT 'enterprise', subscription_status TEXT DEFAULT 'active', submittals_used INTEGER DEFAULT 0, submittals_limit INTEGER DEFAULT 999, trial_ends_at TEXT, stripe_customer_id TEXT, created_at TEXT NOT NULL DEFAULT (datetime('now')), updated_at TEXT DEFAULT (datetime('now')));
+CREATE TABLE users (id TEXT PRIMARY KEY, email TEXT UNIQUE NOT NULL, password_hash TEXT, name TEXT NOT NULL DEFAULT '', company TEXT, tenant_id TEXT, subscription_tier TEXT DEFAULT 'enterprise', subscription_status TEXT DEFAULT 'active', submittals_used INTEGER DEFAULT 0, submittals_limit INTEGER DEFAULT 999, trial_ends_at TEXT, stripe_customer_id TEXT, created_at TEXT NOT NULL DEFAULT (datetime('now')), updated_at TEXT DEFAULT (datetime('now')), products_enabled TEXT DEFAULT '');
+-- products_enabled: comma-separated standalone product slugs (e.g. "cutsheetx,takeoffx")
+-- granted independent of subscription_tier='subconp' (which implies all products).
+-- Checked by requireProductAccess() in weyland.worker.js.
 
 -- Table: install_device_auth
 CREATE TABLE install_device_auth (
