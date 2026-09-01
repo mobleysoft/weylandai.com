@@ -1289,6 +1289,24 @@ CREATE TABLE takeoff_line_items (
 );
 
 -- Table: takeoff_quotes
+-- proposals: PropX. Reuses SubX's real extraction/matching data (submittals,
+-- door_entries) plus a customer-provided RFP reference/summary (never
+-- fabricated) to render an HTML->PDF proposal via the same puppeteer path
+-- TakeoffX quotes use. See requireProductAccess(user, env2, "propx").
+CREATE TABLE proposals (
+  id TEXT PRIMARY KEY,
+  submittal_id TEXT NOT NULL,
+  user_id TEXT NOT NULL,
+  tenant_id TEXT,
+  rfp_reference TEXT,
+  rfp_summary TEXT,
+  door_count INTEGER,
+  r2_key TEXT,
+  status TEXT DEFAULT 'draft',
+  created_at TEXT NOT NULL DEFAULT (datetime('now')),
+  updated_at TEXT DEFAULT (datetime('now'))
+);
+
 CREATE TABLE takeoff_quotes (
   id TEXT PRIMARY KEY,
   session_id TEXT NOT NULL,
