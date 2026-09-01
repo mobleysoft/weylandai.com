@@ -146662,7 +146662,11 @@ router.get("/login", async (request2, env2) => {
   // /api/billing/checkout/status or direct API calls via Authorization
   // header (authenticate() bridges AuthFor -> local users row by email).
   const url = new URL(request2.url);
-  const redirect = url.searchParams.get("redirect") || "/subx";
+  const rawRedirect = url.searchParams.get("redirect") || "/subx";
+  // Same-origin only - a bare query param here was an open-redirect vector
+  // (location.assign() below would happily send a just-authenticated user
+  // to an attacker's domain via ?redirect=https://evil.example/phish).
+  const redirect = /^\/(?!\/)/.test(rawRedirect) ? rawRedirect : "/subx";
   const html = `<!doctype html>
 <html lang="en">
 <head>
@@ -148011,8 +148015,11 @@ router.post("/api/billing/checkout/create", async (request2, env2) => {
       return jsonResponse3({ detail: { message: `unknown product_id: ${body.product_id}` } }, 400);
     }
     const quantity = Math.max(1, Math.min(250, Number.parseInt(body.quantity, 10) || 1));
-    const url = new URL(request2.url);
-    const baseUrl = `${url.protocol}//${url.host}`;
+    // Fixed, not derived from the request's Host header - this worker is
+    // also reachable at its own *.workers.dev URL with an arbitrary Host
+    // header, which would otherwise let an attacker steer a real paying
+    // customer's post-Stripe-checkout redirect to an external domain.
+    const baseUrl = "https://weylandai.com";
 
     const session = await stripeRequest(env2, "POST", "/checkout/sessions", {
       mode: "subscription",
