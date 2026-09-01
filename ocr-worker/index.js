@@ -110,6 +110,39 @@ async function renderAndDetect(pdfBuffer, totalPages, sessionId) {
   });
 }
 
+// General-purpose full-page text extraction, for text-heavy documents
+// (inspection reports, safety logs, spec sections) rather than the
+// table-structure-specific detectSchedules() above. Same render pipeline,
+// pageseg_mode 3 (fully automatic layout, no OSD) instead of 11 (sparse
+// text) since these are prose/paragraph documents, not schedule tables.
+async function renderAndExtractText(pdfBuffer, totalPages) {
+  const library = await getPdfiumLibrary();
+  const ocrEngine = await getOcrEngine();
+
+  const doc = await library.loadDocument(new Uint8Array(pdfBuffer));
+  const pages = [];
+  try {
+    const pageCount = Math.min(totalPages, doc.getPageCount());
+    for (let i = 0; i < pageCount; i++) {
+      const page = doc.getPage(i);
+      const rendered = await page.render({ scale: 150 / 72, colorSpace: 'BGRA' });
+      const pageImage = {
+        data: bgraToRgba(rendered.data),
+        width: rendered.width,
+        height: rendered.height,
+      };
+      ocrEngine.clearImage();
+      ocrEngine.loadImage(pageImage);
+      ocrEngine.setVariable('tessedit_pageseg_mode', '3');
+      const text = ocrEngine.getText();
+      pages.push({ page: i + 1, text: (text || '').trim() });
+    }
+  } finally {
+    doc.destroy();
+  }
+  return { pages, pageCount: pages.length };
+}
+
 export default {
   async fetch(request, env, ctx) {
     const url = new URL(request.url);
@@ -126,6 +159,20 @@ export default {
         const totalPages = parseInt(request.headers.get('X-Total-Pages') || '1', 10);
         const pdfBuffer = await request.arrayBuffer();
         const result = await renderAndDetect(pdfBuffer, totalPages, sessionId);
+        return new Response(JSON.stringify(result), { headers: { 'Content-Type': 'application/json' } });
+      } catch (err) {
+        return new Response(JSON.stringify({ error: err.message, stack: err.stack }), {
+          status: 500,
+          headers: { 'Content-Type': 'application/json' },
+        });
+      }
+    }
+
+    if (url.pathname === '/extract-text' && request.method === 'POST') {
+      try {
+        const totalPages = parseInt(request.headers.get('X-Total-Pages') || '1', 10);
+        const pdfBuffer = await request.arrayBuffer();
+        const result = await renderAndExtractText(pdfBuffer, totalPages);
         return new Response(JSON.stringify(result), { headers: { 'Content-Type': 'application/json' } });
       } catch (err) {
         return new Response(JSON.stringify({ error: err.message, stack: err.stack }), {
