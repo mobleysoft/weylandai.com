@@ -41,8 +41,13 @@
       /* The crop bounds include the descender on the "y" in Weyland, which
          pulls the image's visual center below its box's geometric center -
          nudge up slightly so the glyphs themselves look vertically centered. */
-      margin-top: -0.35em;
-      margin-bottom: 0.35em;
+      /* Measured, not guessed: the ink-weighted vertical center of mass of
+         the cropped logo PNG sits 5.2% of its own height above the
+         geometric center of its bounding box (the "y" descender pulls the
+         box down without pulling much visible ink with it). transform is
+         resolution-independent and doesn't disturb the flex box's layout
+         size, so no compensating margin is needed. */
+      transform: translateY(-5.2%);
     }
     header .brand-subtitle {
       display: none;
@@ -315,6 +320,47 @@
       text-transform: uppercase;
     }
 
+    /* Full 72-product roadmap: not links (most have no live page yet) -
+       deliberately visually distinct from the 10 real product links above,
+       so nobody mistakes "planned" for "available today". */
+    .roadmap-note {
+      text-align: center;
+      max-width: 60ch;
+      margin: 12px auto 0;
+      color: #9299a3;
+      font-size: 13px;
+      line-height: 1.6;
+    }
+    .roadmap {
+      margin-top: clamp(24px, 4vw, 32px);
+      border: 1px dashed #454952;
+      border-radius: 6px;
+      padding: clamp(18px, 4vw, 28px);
+    }
+    .roadmap-division {
+      margin-bottom: 18px;
+    }
+    .roadmap-division:last-child { margin-bottom: 0; }
+    .roadmap-division h3 {
+      font: 700 11px/1 ui-monospace, "SF Mono", monospace;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: #9299a3;
+      margin: 0 0 8px;
+    }
+    .roadmap-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+    .roadmap-tags span {
+      border: 1px solid #454952;
+      border-radius: 99px;
+      padding: 4px 10px;
+      font: 500 12px/1.3 ui-monospace, "SF Mono", monospace;
+      color: #d8d9d0;
+    }
+
     footer {
       text-align: center;
       color: #9299a3;
@@ -434,6 +480,55 @@
       <a href="/venturedeck">Venture Deck</a>
       <a href="/careers">Careers</a>
     </nav>
+
+    <div class="browse-heading" style="margin-top:clamp(48px,8vw,64px)">Full Product Roadmap (72)</div>
+    <p class="roadmap-note">Planned, not yet live. Shown for transparency into where the platform is headed - these are not clickable pages yet.</p>
+    <div class="roadmap">
+      <div class="roadmap-division">
+        <h3>Build &middot; Construction Document Intelligence (16)</h3>
+        <div class="roadmap-tags"><span>SubX</span><span>TakeoffX</span><span>PropX</span><span>CutSheetX</span><span>AssistX</span><span>ScheduleX</span><span>SpecX</span><span>RFaX</span><span>PunchX</span><span>CloseX</span><span>ChangeOrdX</span><span>MeetX</span><span>SafetyX</span><span>DrawX</span><span>PermitX</span><span>BidX</span></div>
+      </div>
+      <div class="roadmap-division">
+        <h3>Field &middot; On-Site &amp; Mobile (8)</h3>
+        <div class="roadmap-tags"><span>HuntX</span><span>InspecX</span><span>SurvX</span><span>MobileX</span><span>GeoX</span><span>SiteX</span><span>DroneX</span><span>PhotoX</span></div>
+      </div>
+      <div class="roadmap-division">
+        <h3>Intel &middot; Market &amp; Data Intelligence (6)</h3>
+        <div class="roadmap-tags"><span>SightX</span><span>MarketX</span><span>CompX</span><span>PriceX</span><span>LeadX</span><span>ReportX</span></div>
+      </div>
+      <div class="roadmap-division">
+        <h3>Industrial &middot; Manufacturing Verticals (6)</h3>
+        <div class="roadmap-tags"><span>Industrize</span><span>ManufaX</span><span>LogistX</span><span>SupChainX</span><span>QualX</span><span>MaintX</span></div>
+      </div>
+      <div class="roadmap-division">
+        <h3>Energy &middot; Sustainability (7)</h3>
+        <div class="roadmap-tags"><span>EnergyX</span><span>SolarX</span><span>GridX</span><span>EmissionX</span><span>CarbonX</span><span>AuditX</span><span>ComplianceX</span></div>
+      </div>
+      <div class="roadmap-division">
+        <h3>Water &middot; Environmental (5)</h3>
+        <div class="roadmap-tags"><span>WaterX</span><span>FloodX</span><span>DrainX</span><span>UtilX</span><span>EnvX</span></div>
+      </div>
+      <div class="roadmap-division">
+        <h3>Compute &middot; AI &amp; Edge Infrastructure (5)</h3>
+        <div class="roadmap-tags"><span>InferX</span><span>EmbedX</span><span>OrchestrX</span><span>QueueX</span><span>CacheX</span></div>
+      </div>
+      <div class="roadmap-division">
+        <h3>Defense &middot; Security &amp; Cleared Verticals (4)</h3>
+        <div class="roadmap-tags"><span>DefenseX</span><span>VigilX</span><span>SecureDocX</span><span>ClearanceX</span></div>
+      </div>
+      <div class="roadmap-division">
+        <h3>Crypto &middot; Web3 &amp; Tokenization (3)</h3>
+        <div class="roadmap-tags"><span>CryptoX</span><span>ChainX</span><span>TokenX</span></div>
+      </div>
+      <div class="roadmap-division">
+        <h3>Crew &middot; Human Capital (9)</h3>
+        <div class="roadmap-tags"><span>CrewX</span><span>TalentX</span><span>HRX</span><span>OnboardX</span><span>PayrollX</span><span>TimeX</span><span>BenefitX</span><span>CertX</span><span>HR ComplianceX</span></div>
+      </div>
+      <div class="roadmap-division">
+        <h3>Bundles (1)</h3>
+        <div class="roadmap-tags"><span>StarterX (SubX + TakeoffX)</span></div>
+      </div>
+    </div>
   </main>
   <footer>Mobley Helms Systems LP</footer>
 </body>
