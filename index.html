@@ -5,6 +5,12 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="theme-color" content="#000711">
   <title>WeylandAI — Construction Document Automation</title>
+  <meta name="description" content="Turn drawings into bids, automatically. HuntX finds the RFP, SubX and TakeoffX read the drawings, CutsheetX matches real hardware, PropX drafts the proposal, SightX visualizes the result. Seven products, priced individually from $199/mo or bundled as one $2,000/mo SubConP seat.">
+  <meta property="og:title" content="WeylandAI — Construction Document Automation">
+  <meta property="og:description" content="Seven live products that turn a drawing set into a priced, submitted bid. Buy standalone from $199/mo, or the full SubConP suite at $2,000/mo.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://weylandai.com/">
+  <meta name="twitter:card" content="summary">
   <style>
     * { box-sizing: border-box; }
     html { -webkit-text-size-adjust: 100%; }
@@ -372,6 +378,88 @@
     @media (max-width: 420px) {
       nav.options { grid-template-columns: 1fr; }
     }
+
+    /* À la carte pricing: same tile language as nav.options, but each
+       tile carries a real standalone price - this is the thing people
+       land here looking for and couldn't previously find on this page. */
+    .alacarte-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      gap: 10px;
+      margin-top: clamp(20px, 4vw, 28px);
+    }
+    .alacarte-card {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      border: 1px solid #fdfdf3;
+      border-radius: 4px;
+      padding: 16px 14px;
+      text-decoration: none;
+      transition: color .15s, background-color .15s;
+    }
+    .alacarte-card:hover, .alacarte-card:focus-visible {
+      color: #000711;
+      background-color: #fdfdf3;
+      outline: none;
+    }
+    .ac-name { font-size: 16px; font-weight: 700; }
+    .ac-desc { font-size: 12.5px; line-height: 1.5; opacity: .82; }
+    .ac-price { margin-top: 4px; font: 700 13px/1 ui-monospace, "SF Mono", monospace; letter-spacing: .02em; }
+
+    /* Orbit diagrams: a live product as the solid core, its roadmap
+       extensions as pills on a dashed ring around it - same "dashed =
+       planned" convention already used by .roadmap below. */
+    .orbit-grid {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: clamp(20px, 4vw, 32px);
+      margin-top: clamp(24px, 4vw, 32px);
+    }
+    .orbit { position: relative; width: 200px; height: 200px; }
+    .orbit-ring {
+      position: absolute;
+      inset: 8px;
+      border: 1px dashed #454952;
+      border-radius: 50%;
+    }
+    .orbit-core {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 92px;
+      height: 92px;
+      border: 2px solid #fdfdf3;
+      border-radius: 50%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 4px;
+    }
+    .orbit-core b { font-size: 13px; }
+    .orbit-core span { margin-top: 3px; font: 600 9px/1 ui-monospace, "SF Mono", monospace; color: #9299a3; }
+    .orbit-tag {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%) rotate(calc(-90deg + var(--i) * (360deg / var(--n)))) translateX(92px) rotate(calc((-90deg + var(--i) * (360deg / var(--n))) * -1));
+      font: 500 10px/1 ui-monospace, "SF Mono", monospace;
+      color: #d8d9d0;
+      background: #000711;
+      border: 1px solid #454952;
+      border-radius: 99px;
+      padding: 4px 9px;
+      white-space: nowrap;
+    }
+    @media (max-width: 460px) {
+      .orbit { width: 168px; height: 168px; }
+      .orbit-core { width: 80px; height: 80px; }
+      .orbit-tag { transform: translate(-50%, -50%) rotate(calc(-90deg + var(--i) * (360deg / var(--n)))) translateX(76px) rotate(calc((-90deg + var(--i) * (360deg / var(--n))) * -1)); font-size: 9px; padding: 3px 7px; }
+    }
   </style>
 </head>
 <body>
@@ -383,7 +471,7 @@
     <nav class="site-nav" id="site-nav" aria-label="Primary">
       <a href="/pricing">Pricing</a>
       <a href="/careers">Careers</a>
-      <a href="/venturedeck">Venture Deck</a>
+      <a href="/investors">Investors</a>
       <a href="/subscribe" class="cta">Start Free Trial</a>
     </nav>
   </header>
@@ -467,19 +555,108 @@
       </div>
     </div>
 
-    <div class="browse-heading">Browse All Products</div>
+    <div class="browse-heading">À La Carte Pricing</div>
+    <p class="roadmap-note">Every product below is live and buyable on its own. Bought separately they run $3,693/mo total &mdash; the $2,000/mo Subcontractor plan above is a real $1,693/mo (46%) discount, not marketing math.</p>
+    <div class="alacarte-grid">
+      <a class="alacarte-card" href="/sightx">
+        <span class="ac-name">SightX</span>
+        <span class="ac-desc">Spatial project intelligence &amp; 3D walkthrough</span>
+        <span class="ac-price">$999/mo</span>
+      </a>
+      <a class="alacarte-card" href="/huntx">
+        <span class="ac-name">HuntX</span>
+        <span class="ac-desc">Live RFP &amp; permit opportunity crawler</span>
+        <span class="ac-price">$799/mo</span>
+      </a>
+      <a class="alacarte-card" href="/subx">
+        <span class="ac-name">SubX</span>
+        <span class="ac-desc">Submittal &amp; door-hardware extraction</span>
+        <span class="ac-price">$599/mo</span>
+      </a>
+      <a class="alacarte-card" href="/takeoffx">
+        <span class="ac-name">TakeoffX</span>
+        <span class="ac-desc">Machine-vision quantity takeoff</span>
+        <span class="ac-price">$499/mo</span>
+      </a>
+      <a class="alacarte-card" href="/propx">
+        <span class="ac-name">PropX</span>
+        <span class="ac-desc">Submittal-to-proposal generator</span>
+        <span class="ac-price">$299/mo</span>
+      </a>
+      <a class="alacarte-card" href="/meetingx">
+        <span class="ac-name">MeetX</span>
+        <span class="ac-desc">Live avatars &amp; chat inside SightX</span>
+        <span class="ac-price">$299/mo</span>
+      </a>
+      <a class="alacarte-card" href="/cutsheetx">
+        <span class="ac-name">CutsheetX</span>
+        <span class="ac-desc">Hardware product &amp; cut-sheet matching</span>
+        <span class="ac-price">$199/mo</span>
+      </a>
+    </div>
+
+    <div class="browse-heading" style="margin-top:clamp(48px,8vw,64px)">Browse All Products</div>
     <nav class="options" aria-label="Products">
       <a href="/onboarding">Onboarding</a>
       <a href="/huntx">HuntX</a>
       <a href="/takeoffx">TakeoffX</a>
       <a href="/subx">SubX</a>
       <a href="/propx">PropX</a>
+      <a href="/cutsheetx">CutsheetX</a>
       <a href="/sightx">SightX</a>
       <a href="/meetingx">MeetX</a>
       <a href="/qtext">QText</a>
-      <a href="/venturedeck">Venture Deck</a>
+      <a href="/investors">Investors</a>
       <a href="/careers">Careers</a>
     </nav>
+
+    <div class="browse-heading" style="margin-top:clamp(48px,8vw,64px)">How The Roadmap Extends What's Live</div>
+    <p class="roadmap-note">Solid center = live today. Dashed ring = same engine, same code, aimed at one more document type - not a new AI capability, just more surface area on what already works.</p>
+    <div class="orbit-grid">
+      <div class="orbit" style="--n:8">
+        <div class="orbit-ring"></div>
+        <div class="orbit-core"><b>SubX</b><span>$599/mo</span></div>
+        <span class="orbit-tag" style="--i:0">ScheduleX</span>
+        <span class="orbit-tag" style="--i:1">SpecX</span>
+        <span class="orbit-tag" style="--i:2">RFaX</span>
+        <span class="orbit-tag" style="--i:3">PunchX</span>
+        <span class="orbit-tag" style="--i:4">CloseX</span>
+        <span class="orbit-tag" style="--i:5">ChangeOrdX</span>
+        <span class="orbit-tag" style="--i:6">SafetyX</span>
+        <span class="orbit-tag" style="--i:7">PermitX</span>
+      </div>
+      <div class="orbit" style="--n:1">
+        <div class="orbit-ring"></div>
+        <div class="orbit-core"><b>TakeoffX</b><span>$499/mo</span></div>
+        <span class="orbit-tag" style="--i:0">DrawX</span>
+      </div>
+      <div class="orbit" style="--n:1">
+        <div class="orbit-ring"></div>
+        <div class="orbit-core"><b>PropX</b><span>$299/mo</span></div>
+        <span class="orbit-tag" style="--i:0">BidX</span>
+      </div>
+      <div class="orbit" style="--n:4">
+        <div class="orbit-ring"></div>
+        <div class="orbit-core"><b>HuntX</b><span>$799/mo</span></div>
+        <span class="orbit-tag" style="--i:0">LeadX</span>
+        <span class="orbit-tag" style="--i:1">MarketX</span>
+        <span class="orbit-tag" style="--i:2">CompX</span>
+        <span class="orbit-tag" style="--i:3">PriceX</span>
+      </div>
+      <div class="orbit" style="--n:8">
+        <div class="orbit-ring"></div>
+        <div class="orbit-core"><b>SightX</b><span>$999/mo</span></div>
+        <span class="orbit-tag" style="--i:0">GeoX</span>
+        <span class="orbit-tag" style="--i:1">SiteX</span>
+        <span class="orbit-tag" style="--i:2">DroneX</span>
+        <span class="orbit-tag" style="--i:3">PhotoX</span>
+        <span class="orbit-tag" style="--i:4">InspecX</span>
+        <span class="orbit-tag" style="--i:5">SurvX</span>
+        <span class="orbit-tag" style="--i:6">MobileX</span>
+        <span class="orbit-tag" style="--i:7">ReportX</span>
+      </div>
+    </div>
+    <p class="roadmap-note" style="margin-top:16px">CutsheetX ($199/mo, live) and AssistX (planned) don't have roadmap extensions of their own yet.</p>
 
     <div class="browse-heading" style="margin-top:clamp(48px,8vw,64px)">Full Product Roadmap (72)</div>
     <p class="roadmap-note">Planned, not yet live. Shown for transparency into where the platform is headed - these are not clickable pages yet.</p>
