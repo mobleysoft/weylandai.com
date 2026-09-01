@@ -148034,90 +148034,136 @@ router.post("/api/subscription/portal", async (request2, env2) => {
     return errorResponse("INTERNAL_ERROR", "Portal session failed: " + err.message);
   }
 });
+// Real Stripe webhook signature verification (Stripe-Signature header:
+// "t=<ts>,v1=<hex hmac>"). Hex output, unlike createHmacSignature above
+// which is base64url - Stripe's own format, not invented here.
+async function verifyStripeWebhookSignature(rawBody, sigHeader, secret) {
+  const parts = Object.fromEntries(
+    (sigHeader || "").split(",").map((p) => p.split("=")).filter((p) => p.length === 2)
+  );
+  const timestamp = parts.t;
+  const v1 = parts.v1;
+  if (!timestamp || !v1) return { valid: false, reason: "malformed_signature_header" };
+  const age = Math.floor(Date.now() / 1e3) - parseInt(timestamp, 10);
+  if (isNaN(age) || age > 300) return { valid: false, reason: "expired" };
+  const signedPayload = `${timestamp}.${rawBody}`;
+  const key = await crypto.subtle.importKey(
+    "raw", encoder2.encode(secret), { name: "HMAC", hash: "SHA-256" }, false, ["sign"]
+  );
+  const sigBuf = await crypto.subtle.sign("HMAC", key, encoder2.encode(signedPayload));
+  const expectedHex = Array.from(new Uint8Array(sigBuf)).map((b) => b.toString(16).padStart(2, "0")).join("");
+  if (expectedHex !== v1) return { valid: false, reason: "signature_mismatch" };
+  return { valid: true };
+}
+__name(verifyStripeWebhookSignature, "verifyStripeWebhookSignature");
+const encoder2 = new TextEncoder();
+
 router.post("/api/webhooks/subscription", async (request2, env2) => {
   try {
     const rawBody = await request2.text();
-    const signature = request2.headers.get("X-Webhook-Signature") || "";
-    const webhookSecret = env2.SUBSCRIPTION_WEBHOOK_SECRET;
-    if (webhookSecret) {
-      const timestamp = request2.headers.get("X-Webhook-Timestamp") || "";
-      const signedPayload = `${timestamp}.${rawBody}`;
-      const expectedSig = await createHmacSignature(signedPayload, webhookSecret);
-      if (signature !== expectedSig) {
-        console.warn("[Webhook] Invalid signature");
-        return jsonResponse3({ error: "Invalid signature" }, 401);
+    const sigHeader = request2.headers.get("Stripe-Signature") || "";
+    if (env2.STRIPE_WEBHOOK_SECRET) {
+      const check = await verifyStripeWebhookSignature(rawBody, sigHeader, env2.STRIPE_WEBHOOK_SECRET);
+      if (!check.valid) {
+        console.warn("[Webhook] Invalid Stripe signature:", check.reason);
+        return jsonResponse3({ error: "Invalid signature", reason: check.reason }, 401);
       }
-      const age = Math.floor(Date.now() / 1e3) - parseInt(timestamp, 10);
-      if (isNaN(age) || age > 300) {
-        return jsonResponse3({ error: "Webhook expired" }, 401);
-      }
+    } else {
+      console.warn("[Webhook] STRIPE_WEBHOOK_SECRET not configured - rejecting unverifiable webhook");
+      return jsonResponse3({ error: "Webhook verification not configured" }, 500);
     }
     const event = JSON.parse(rawBody);
     const eventType = event.type;
-    const data = event.data || {};
-    console.log(`[Webhook] Received: ${eventType}`, JSON.stringify(data).slice(0, 200));
+    const obj = event.data?.object || {};
+    console.log(`[Webhook] Received: ${eventType} (${obj.id || "no-id"})`);
     switch (eventType) {
       case "checkout.session.completed": {
-        const userId = data.metadata?.weyland_user_id;
-        if (!userId)
+        if (obj.mode !== "subscription") break;
+        const email = obj.customer_details?.email || obj.customer_email;
+        if (!email) {
+          console.error("[Webhook] checkout.session.completed with no email:", obj.id);
           break;
+        }
+        let quantity = 1;
+        try {
+          const items = await stripeRequest(env2, "GET", `/checkout/sessions/${obj.id}/line_items`);
+          quantity = items.data?.[0]?.quantity || 1;
+        } catch (e) {
+          console.error("[Webhook] line_items lookup failed:", e.message);
+        }
+
+        // Real AuthFor identity - tolerate "already registered" for returning customers.
+        try {
+          await fetch("https://authfor.com/api/v1/register", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              email,
+              password: crypto.randomUUID() + crypto.randomUUID(),
+              name: obj.customer_details?.name || email,
+              client_id: "af_weyland_subscribe",
+              venture_id: "weylandai.com"
+            })
+          });
+        } catch (e) {
+          console.error("[Webhook] AuthFor register call failed:", e.message);
+        }
+
+        const now = (/* @__PURE__ */ new Date()).toISOString();
+        const existing = await env2.DB.prepare("SELECT id FROM users WHERE email = ?").bind(email).first();
+        const userId = existing?.id || crypto.randomUUID();
+        if (existing) {
+          await env2.DB.prepare(`
+            UPDATE users SET subscription_status='active', subscription_tier='subconp',
+              submittals_limit=?, stripe_customer_id=?, updated_at=? WHERE id=?
+          `).bind(quantity * 50, obj.customer || null, now, userId).run();
+        } else {
+          await env2.DB.prepare(`
+            INSERT INTO users (id, email, name, subscription_tier, subscription_status, submittals_limit, stripe_customer_id, created_at, updated_at)
+            VALUES (?, ?, ?, 'subconp', 'active', ?, ?, ?, ?)
+          `).bind(userId, email, obj.customer_details?.name || email, quantity * 50, obj.customer || null, now, now).run();
+        }
+
+        // Real local session so the existing cookie-based authenticate() path
+        // works unmodified - separate random id, never the exposed cs_ value.
+        const sessionId = crypto.randomUUID();
+        const expiresAt = new Date(Date.now() + 30 * 24 * 3600 * 1e3).toISOString();
         await env2.DB.prepare(`
-          UPDATE users SET
-            subscription_status = 'active',
-            subscription_tier = ?,
-            submittals_limit = ?,
-            stripe_customer_id = ?,
-            updated_at = ?
-          WHERE id = ?
-        `).bind(
-          data.metadata?.plan || "starter",
-          data.metadata?.plan === "professional" ? 100 : 50,
-          // Starter=50, Pro=100
-          data.stripe_customer_id || null,
-          (/* @__PURE__ */ new Date()).toISOString(),
-          userId
-        ).run();
-        console.log(`[Webhook] Activated subscription for user ${userId}`);
+          INSERT INTO weyland_sessions (id, user_id, email, player_json, expires_at)
+          VALUES (?, ?, ?, ?, ?)
+        `).bind(sessionId, userId, email, JSON.stringify({ name: obj.customer_details?.name || email, role: "member" }), expiresAt).run();
+
+        if (env2.CACHE) {
+          await env2.CACHE.put(`checkout_status:${obj.id}`, JSON.stringify({
+            status: "active", quantity, session_id: sessionId
+          }), { expirationTtl: 3600 });
+        }
+        console.log(`[Webhook] Provisioned user ${userId} (${email}) for checkout ${obj.id}, ${quantity} seat(s)`);
         break;
       }
       case "customer.subscription.updated": {
-        const stripeCustomerId = data.customer;
-        if (!stripeCustomerId)
-          break;
-        const statusMap = {
-          "active": "active",
-          "past_due": "past_due",
-          "canceled": "cancelled",
-          "unpaid": "past_due",
-          "trialing": "trial"
-        };
-        const newStatus = statusMap[data.status] || data.status;
-        await env2.DB.prepare(`
-          UPDATE users SET subscription_status = ?, updated_at = ?
-          WHERE stripe_customer_id = ?
-        `).bind(newStatus, (/* @__PURE__ */ new Date()).toISOString(), stripeCustomerId).run();
+        const stripeCustomerId = obj.customer;
+        if (!stripeCustomerId) break;
+        const statusMap = { active: "active", past_due: "past_due", canceled: "cancelled", unpaid: "past_due", trialing: "trial" };
+        const newStatus = statusMap[obj.status] || obj.status;
+        await env2.DB.prepare(`UPDATE users SET subscription_status=?, updated_at=? WHERE stripe_customer_id=?`)
+          .bind(newStatus, (/* @__PURE__ */ new Date()).toISOString(), stripeCustomerId).run();
         console.log(`[Webhook] Updated subscription status to ${newStatus} for customer ${stripeCustomerId}`);
         break;
       }
       case "customer.subscription.deleted": {
-        const stripeCustomerId = data.customer;
-        if (!stripeCustomerId)
-          break;
-        await env2.DB.prepare(`
-          UPDATE users SET subscription_status = 'cancelled', updated_at = ?
-          WHERE stripe_customer_id = ?
-        `).bind((/* @__PURE__ */ new Date()).toISOString(), stripeCustomerId).run();
+        const stripeCustomerId = obj.customer;
+        if (!stripeCustomerId) break;
+        await env2.DB.prepare(`UPDATE users SET subscription_status='cancelled', updated_at=? WHERE stripe_customer_id=?`)
+          .bind((/* @__PURE__ */ new Date()).toISOString(), stripeCustomerId).run();
         console.log(`[Webhook] Cancelled subscription for customer ${stripeCustomerId}`);
         break;
       }
       case "invoice.payment_failed": {
-        const stripeCustomerId = data.customer;
-        if (!stripeCustomerId)
-          break;
-        await env2.DB.prepare(`
-          UPDATE users SET subscription_status = 'past_due', updated_at = ?
-          WHERE stripe_customer_id = ?
-        `).bind((/* @__PURE__ */ new Date()).toISOString(), stripeCustomerId).run();
+        const stripeCustomerId = obj.customer;
+        if (!stripeCustomerId) break;
+        await env2.DB.prepare(`UPDATE users SET subscription_status='past_due', updated_at=? WHERE stripe_customer_id=?`)
+          .bind((/* @__PURE__ */ new Date()).toISOString(), stripeCustomerId).run();
         console.log(`[Webhook] Payment failed for customer ${stripeCustomerId}`);
         break;
       }
@@ -148128,6 +148174,24 @@ router.post("/api/webhooks/subscription", async (request2, env2) => {
   } catch (err) {
     console.error("[Webhook] Processing error:", err);
     return jsonResponse3({ error: "Webhook processing failed" }, 500);
+  }
+});
+
+router.get("/api/billing/checkout/status/:session_id", async (request2, env2) => {
+  const sessionId = request2.params?.session_id;
+  if (!sessionId) return jsonResponse3({ status: "unknown" }, 400);
+  try {
+    if (env2.CACHE) {
+      const cached = await env2.CACHE.get(`checkout_status:${sessionId}`);
+      if (cached) {
+        const parsed = JSON.parse(cached);
+        return jsonResponse3({ status: parsed.status, quantity: parsed.quantity });
+      }
+    }
+    return jsonResponse3({ status: "pending" });
+  } catch (err) {
+    console.error("[Billing] status lookup error:", err.message);
+    return jsonResponse3({ status: "pending" });
   }
 });
 router.post("/api/submittals/upload", async (request2, env2) => {
