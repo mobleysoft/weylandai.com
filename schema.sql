@@ -1514,3 +1514,151 @@ CREATE VIRTUAL TABLE catalogue_pages_fts USING fts5(text_content, content='catal
 
 -- Table: kdp_packets
 CREATE TABLE kdp_packets (id TEXT PRIMARY KEY, connection_id TEXT NOT NULL, candidate_id TEXT, page_number INTEGER, sequence INTEGER, unit_type TEXT DEFAULT 'hardware_set', job_id TEXT, route TEXT, provider_path TEXT, owner_id TEXT, state TEXT NOT NULL DEFAULT 'in_flight', attempts INTEGER DEFAULT 1, groups_count INTEGER, components_count INTEGER, checksum_confidence REAL, error TEXT, delivered_at TEXT, created_at TEXT DEFAULT (datetime('now')), updated_at TEXT DEFAULT (datetime('now')), project_id TEXT);
+-- Table: access_requests
+CREATE TABLE access_requests (
+  id TEXT PRIMARY KEY,
+  email TEXT NOT NULL,
+  name TEXT,
+  company TEXT,
+  role TEXT,
+  trade TEXT NOT NULL CHECK (trade IN ('doors_glazing', 'plumbing', 'hvac', 'electrical', 'other')),
+  trade_other TEXT,
+  message TEXT,
+  source TEXT,
+  venture_code TEXT NOT NULL DEFAULT 'weyland',
+  status TEXT NOT NULL DEFAULT 'requested' CHECK (status IN ('requested', 'approved', 'denied')),
+  approved_by TEXT,
+  approved_at TEXT,
+  invited_mhs_id TEXT,
+  request_ip_hash TEXT,
+  created_at TEXT NOT NULL DEFAULT (datetime('now')),
+  updated_at TEXT DEFAULT (datetime('now'))
+);
+
+-- Table: annotation_view_grants
+CREATE TABLE annotation_view_grants (id TEXT PRIMARY KEY, owner_id TEXT NOT NULL, grantee_id TEXT NOT NULL, created_at TEXT NOT NULL, revoked_at TEXT, UNIQUE(owner_id, grantee_id));
+
+-- Table: catalogue_coverage
+CREATE TABLE catalogue_coverage (
+  slug TEXT PRIMARY KEY,
+  display_name TEXT NOT NULL,
+  parent_group TEXT,
+  category TEXT,
+  priority INTEGER DEFAULT 3,
+  book_status TEXT DEFAULT 'not_attempted',
+  edition_label TEXT,
+  edition_year INTEGER,
+  source_url TEXT,
+  rows_parsed INTEGER DEFAULT 0,
+  variants_active INTEGER DEFAULT 0,
+  parser_class TEXT,
+  last_swept_at TEXT,
+  last_outcome TEXT,
+  notes TEXT,
+  updated_at TEXT DEFAULT (datetime('now'))
+, trade TEXT DEFAULT 'div08_openings', csi_division TEXT DEFAULT '08', manufacturer_id TEXT);
+
+-- Table: catalogue_page_annotations
+CREATE TABLE catalogue_page_annotations (annotation_id TEXT PRIMARY KEY, catalogue_id TEXT NOT NULL, page_num TEXT NOT NULL, shape TEXT NOT NULL, color TEXT NOT NULL, geometry TEXT NOT NULL, stroke_width REAL, author TEXT, author_id TEXT, created_at TEXT, updated_at TEXT);
+
+-- Table: catalogue_trigram_fts
+CREATE VIRTUAL TABLE catalogue_trigram_fts USING fts5(
+    catalogue_id,
+    page_num,
+    search_text,
+    tokenize='trigram'
+);
+
+-- Table: cps_gaps
+CREATE TABLE cps_gaps (
+  id TEXT PRIMARY KEY,
+  component_id TEXT,
+  session_id TEXT,  -- PROVENANCE: the session that first surfaced this gap. Not a key, not a filter.
+  manufacturer_raw TEXT,
+  manufacturer_slug TEXT,
+  model TEXT,
+  missing TEXT NOT NULL,
+  opened_at TEXT NOT NULL,
+  opened_by TEXT NOT NULL,
+  status TEXT NOT NULL DEFAULT 'open',
+  routed_path TEXT,
+  closed_at TEXT,
+  closed_method TEXT,
+  closure_ref TEXT
+);
+
+-- Table: manufacturer_aliases
+CREATE TABLE manufacturer_aliases (
+  alias TEXT NOT NULL,
+  manufacturer_id TEXT NOT NULL REFERENCES manufacturers(id),
+  source TEXT DEFAULT 'industry_standard',
+  created_at TEXT DEFAULT (datetime('now')),
+  PRIMARY KEY (alias)
+);
+
+-- Table: product_cert_claims
+CREATE TABLE product_cert_claims (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  product_id TEXT NOT NULL,
+  column_name TEXT NOT NULL,
+  value TEXT NOT NULL,
+  catalogue_id TEXT NOT NULL,
+  page_num INTEGER NOT NULL,
+  binding_kind TEXT NOT NULL,
+  listing_type TEXT,
+  evidence_snippet TEXT,
+  rollup_status TEXT NOT NULL DEFAULT 'evidence',
+  mined_at TEXT NOT NULL,
+  affirmed_by TEXT,
+  UNIQUE(product_id, column_name, catalogue_id, page_num, value)
+);
+
+-- Table: product_option_constraints
+CREATE TABLE product_option_constraints (
+  id               INTEGER PRIMARY KEY AUTOINCREMENT,
+  natural_key      TEXT    NOT NULL UNIQUE,
+  manufacturer_id  TEXT    NOT NULL,
+  scope_kind       TEXT    NOT NULL,          -- exact-model | series | page-ambient
+  scope_ref        TEXT,                      -- model or series ref; NULL for page-ambient
+  constraint_kind  TEXT    NOT NULL,          -- excludes | requires | not_offered_on
+  left_token       TEXT,
+  right_token      TEXT,                      -- NULL for unary claims
+  left_group       TEXT,
+  right_group      TEXT,
+  catalogue_id     TEXT    NOT NULL,
+  page_num         INTEGER NOT NULL,          -- 1-based PDF index, /render-compatible
+  evidence_snippet TEXT,                      -- <=200 chars, the printed sentence
+  source_signal    TEXT,                      -- prose | na_cell | dash_cell | footnote
+  confidence       REAL,
+  dup_count        INTEGER DEFAULT 1,
+  rollup_status    TEXT    NOT NULL DEFAULT 'evidence',   -- evidence | affirmed
+  mined_by         TEXT,
+  mined_at         TEXT    NOT NULL,
+  affirmed_by      TEXT,
+  affirmed_at      TEXT,
+  created_at       TEXT    DEFAULT (datetime('now'))
+);
+
+-- Table: user_preferences
+CREATE TABLE user_preferences (user_id TEXT PRIMARY KEY, prefs_json TEXT NOT NULL DEFAULT '{}', updated_at TEXT);
+
+CREATE UNIQUE INDEX idx_access_requests_email_venture ON access_requests(email, venture_code);
+
+CREATE INDEX idx_access_requests_status ON access_requests(status);
+
+CREATE INDEX idx_access_requests_trade ON access_requests(trade);
+
+CREATE INDEX idx_avg_grantee ON annotation_view_grants(grantee_id, revoked_at);
+
+CREATE INDEX idx_cpa_page ON catalogue_page_annotations (catalogue_id, page_num);
+
+CREATE INDEX idx_cps_gaps_manufacturer_slug ON cps_gaps(manufacturer_slug);
+
+CREATE UNIQUE INDEX idx_cps_gaps_open ON cps_gaps(component_id, missing) WHERE status <> 'closed';
+
+CREATE INDEX idx_cps_gaps_status ON cps_gaps(status);
+
+CREATE INDEX idx_pcc_product ON product_cert_claims(product_id, rollup_status);
+
+CREATE INDEX idx_poc_lookup
+  ON product_option_constraints (manufacturer_id, rollup_status, left_token);
