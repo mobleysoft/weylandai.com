@@ -58,3 +58,16 @@ bucket_name = "subx-uploads"
 [[r2_buckets]]
 binding = "OUTPUTS"
 bucket_name = "subx-outputs"
+
+# ── Durable Objects ──────────────────────────────────────────
+# SIGHTX_ROOM: real-time presence/chat/WebRTC-signaling relay for MeetingX
+# (live avatars + text/voice chat layered into the SightX walkthrough - not
+# a separate app, per the actual product architecture). One DO instance per
+# project, keyed by idFromName(projectId).
+[[durable_objects.bindings]]
+name = "SIGHTX_ROOM"
+class_name = "SightXRoom"
+
+[[migrations]]
+tag = "v1"
+new_sqlite_classes = ["SightXRoom"]
