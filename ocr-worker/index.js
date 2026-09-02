@@ -143,6 +143,62 @@ async function renderAndExtractText(pdfBuffer, totalPages) {
   return { pages, pageCount: pages.length };
 }
 
+// Renders a single page to a raw RGBA pixel buffer - used by AsX's diff
+// below, not for OCR. No text extraction here, just pixels.
+async function renderPageImage(pdfBuffer, pageNum) {
+  const library = await getPdfiumLibrary();
+  const doc = await library.loadDocument(new Uint8Array(pdfBuffer));
+  try {
+    const index = Math.max(0, Math.min(pageNum - 1, doc.getPageCount() - 1));
+    const page = doc.getPage(index);
+    const rendered = await page.render({ scale: 150 / 72, colorSpace: 'BGRA' });
+    return { data: bgraToRgba(rendered.data), width: rendered.width, height: rendered.height };
+  } finally {
+    doc.destroy();
+  }
+}
+
+// Coarse grid-cell pixel diff between two page renders - AsX's real
+// capability. This is literal pixel-value comparison, not any kind of
+// semantic markup/redline recognition: it will flag scan misalignment,
+// scale differences, and print-quality noise exactly the same as an
+// actual field revision. Grid size is fixed and modest (24x32 max) so the
+// output stays a readable heatmap, not per-pixel noise.
+function diffPageImages(imgA, imgB) {
+  const width = Math.min(imgA.width, imgB.width);
+  const height = Math.min(imgA.height, imgB.height);
+  const gridCols = Math.min(24, width);
+  const gridRows = Math.min(32, height);
+  const cellW = Math.floor(width / gridCols);
+  const cellH = Math.floor(height / gridRows);
+  const cellDiffs = [];
+  let totalDiff = 0;
+  for (let gy = 0; gy < gridRows; gy++) {
+    const row = [];
+    for (let gx = 0; gx < gridCols; gx++) {
+      let sum = 0, count = 0;
+      const x0 = gx * cellW, y0 = gy * cellH;
+      for (let y = y0; y < y0 + cellH; y += 2) {
+        for (let x = x0; x < x0 + cellW; x += 2) {
+          const i = (y * imgA.width + x) * 4;
+          const j = (y * imgB.width + x) * 4;
+          if (i + 2 >= imgA.data.length || j + 2 >= imgB.data.length) continue;
+          const dr = Math.abs(imgA.data[i] - imgB.data[j]);
+          const dg = Math.abs(imgA.data[i + 1] - imgB.data[j + 1]);
+          const db = Math.abs(imgA.data[i + 2] - imgB.data[j + 2]);
+          sum += (dr + dg + db) / 3;
+          count++;
+        }
+      }
+      const avg = count ? sum / count / 255 : 0;
+      row.push(Math.round(avg * 1000) / 1000);
+      totalDiff += avg;
+    }
+    cellDiffs.push(row);
+  }
+  return { width, height, gridCols, gridRows, cellDiffs, overallDiffPercent: Math.round((totalDiff / (gridCols * gridRows)) * 1000) / 10 };
+}
+
 export default {
   async fetch(request, env, ctx) {
     const url = new URL(request.url);
@@ -173,6 +229,32 @@ export default {
         const totalPages = parseInt(request.headers.get('X-Total-Pages') || '1', 10);
         const pdfBuffer = await request.arrayBuffer();
         const result = await renderAndExtractText(pdfBuffer, totalPages);
+        return new Response(JSON.stringify(result), { headers: { 'Content-Type': 'application/json' } });
+      } catch (err) {
+        return new Response(JSON.stringify({ error: err.message, stack: err.stack }), {
+          status: 500,
+          headers: { 'Content-Type': 'application/json' },
+        });
+      }
+    }
+
+    if (url.pathname === '/diff-pages' && request.method === 'POST') {
+      try {
+        const formData = await request.formData();
+        const originalFile = formData.get('original');
+        const revisedFile = formData.get('revised');
+        const page = parseInt(formData.get('page') || '1', 10);
+        if (!originalFile || !revisedFile) {
+          return new Response(JSON.stringify({ error: 'Both "original" and "revised" files are required' }), {
+            status: 400,
+            headers: { 'Content-Type': 'application/json' },
+          });
+        }
+        const [imgA, imgB] = await Promise.all([
+          renderPageImage(await originalFile.arrayBuffer(), page),
+          renderPageImage(await revisedFile.arrayBuffer(), page),
+        ]);
+        const result = diffPageImages(imgA, imgB);
         return new Response(JSON.stringify(result), { headers: { 'Content-Type': 'application/json' } });
       } catch (err) {
         return new Response(JSON.stringify({ error: err.message, stack: err.stack }), {
