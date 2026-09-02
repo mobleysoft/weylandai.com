@@ -157567,6 +157567,126 @@ router.get("/api/hunt/opportunities", async (request2, env2) => {
     return jsonResponse3({ error: "Failed to list opportunities", details: error5.message }, 500);
   }
 });
+
+// ---- LeadX: lead qualification engine (HuntX Pro family) ------------------
+// Genuine reuse, not just the same shape: this scores the real opportunities
+// HuntX already crawls (TXDOT + CA OPSC) against the user's saved
+// qualification criteria - no new external data source needed. Scoring is
+// three simple, explainable axes (value threshold, keyword match, location
+// match), not an AI judgment call.
+function scoreOpportunity(opp, criteria) {
+  const minValue = Number(criteria.min_value) || 0;
+  const keywords = (criteria.keywords || "").split(",").map((k) => k.trim().toLowerCase()).filter(Boolean);
+  const locations = (criteria.locations || "").split(",").map((l) => l.trim().toLowerCase()).filter(Boolean);
+  let score = 0;
+  const reasons = [];
+  if (minValue <= 0 || (opp.estimated_value != null && Number(opp.estimated_value) >= minValue)) {
+    score++;
+    if (minValue > 0) reasons.push(`Value $${Number(opp.estimated_value).toLocaleString()} meets $${minValue.toLocaleString()} minimum`);
+  }
+  const haystack = `${opp.title || ""} ${opp.category || ""}`.toLowerCase();
+  if (!keywords.length || keywords.some((k) => haystack.includes(k))) {
+    score++;
+    if (keywords.length) reasons.push("Matches keyword: " + keywords.find((k) => haystack.includes(k)));
+  }
+  const locHaystack = (opp.location || "").toLowerCase();
+  if (!locations.length || locations.some((l) => locHaystack.includes(l))) {
+    score++;
+    if (locations.length) reasons.push("Matches location: " + locations.find((l) => locHaystack.includes(l)));
+  }
+  return { score, qualified: score >= 2, reasons };
+}
+router.post("/api/leads/criteria", async (request2, env2) => {
+  const { error: error4, user } = await authenticate(request2, env2);
+  if (error4) return error4;
+  const _prodErr = await requireProductAccess(user, env2, "leadx");
+  if (_prodErr) return _prodErr;
+  try {
+    const body = await request2.json();
+    const tenantId = user.tenantId || user.tenant_id || "ven_weyland";
+    const now = (/* @__PURE__ */ new Date()).toISOString();
+    const existing = await env2.DB.prepare("SELECT id FROM lead_criteria WHERE user_id = ?").bind(user.userId).first();
+    if (existing) {
+      await env2.DB.prepare("UPDATE lead_criteria SET min_value=?, keywords=?, locations=?, updated_at=? WHERE user_id=?")
+        .bind(Number(body.minValue) || 0, body.keywords || "", body.locations || "", now, user.userId).run();
+    } else {
+      await env2.DB.prepare("INSERT INTO lead_criteria (id, user_id, tenant_id, min_value, keywords, locations, created_at, updated_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?)")
+        .bind(crypto.randomUUID(), user.userId, tenantId, Number(body.minValue) || 0, body.keywords || "", body.locations || "", now, now).run();
+    }
+    return jsonResponse3({ success: true });
+  } catch (error5) {
+    console.error("[LeadX Criteria] Error:", error5);
+    return jsonResponse3({ error: "Failed to save criteria", details: error5.message }, 500);
+  }
+});
+router.get("/api/leads/criteria", async (request2, env2) => {
+  const { error: error4, user } = await authenticate(request2, env2);
+  if (error4) return error4;
+  const _prodErr = await requireProductAccess(user, env2, "leadx");
+  if (_prodErr) return _prodErr;
+  const row = await env2.DB.prepare("SELECT min_value, keywords, locations FROM lead_criteria WHERE user_id = ?").bind(user.userId).first();
+  return jsonResponse3({ criteria: row || { min_value: 0, keywords: "", locations: "" } });
+});
+function generateLeadReportHtml(d) {
+  const rows = d.qualified.length
+    ? d.qualified.map((o) => `<tr><td>${o.title || ""}</td><td>${o.location || ""}</td><td>${o.estimated_value ? "$" + Number(o.estimated_value).toLocaleString() : "&mdash;"}</td><td>${o.key_date || ""}</td><td>${o.score}/3</td></tr>`).join("")
+    : `<tr><td colspan="5" class="none">No opportunities in the current HuntX data met your criteria.</td></tr>`;
+  return `<!doctype html><html><head><meta charset="utf-8"><style>
+    body{font-family:Georgia,"Times New Roman",serif;color:#111;margin:0;padding:60px 70px;font-size:13px;line-height:1.6}
+    h1{font-size:20px;margin:0 0 4px}
+    .sub{color:#666;font-size:11px;margin-bottom:30px}
+    .stats{display:flex;gap:24px;margin:26px 0}
+    .stats .box{flex:1;padding:14px;background:#f6f6f2;border:1px solid #ddd;text-align:center}
+    .stats .box strong{display:block;font-size:22px}
+    .stats .box span{font-size:9px;text-transform:uppercase;letter-spacing:.06em;color:#777}
+    table{width:100%;border-collapse:collapse;font-size:12px;margin-top:10px}
+    th{text-align:left;font-size:9px;text-transform:uppercase;letter-spacing:.06em;color:#777;border-bottom:2px solid #333;padding:6px 4px}
+    td{padding:6px 4px;border-bottom:1px solid #eee}
+    td.none{color:#777}
+    .disclaimer{margin-top:40px;padding-top:14px;border-top:1px solid #ccc;font-size:9.5px;color:#777;line-height:1.5}
+  </style></head><body>
+    <h1>Qualified Leads Report</h1>
+    <div class="sub">Prepared via WeylandAI / LeadX &middot; ${new Date().toLocaleDateString()}</div>
+    <div class="stats">
+      <div class="box"><strong>${d.totalScanned}</strong><span>Opportunities Scanned</span></div>
+      <div class="box"><strong>${d.qualified.length}</strong><span>Qualified Leads</span></div>
+    </div>
+    <table><thead><tr><th>Title</th><th>Location</th><th>Est. Value</th><th>Key Date</th><th>Score</th></tr></thead><tbody>${rows}</tbody></table>
+    <div class="disclaimer">Qualification is scored against your saved criteria (minimum value, keywords, locations) on a 0-3 scale - not a judgment of project quality or win probability. Source data is the same live HuntX feed (TXDOT + CA OPSC open data).</div>
+  </body></html>`;
+}
+router.post("/api/leads/qualify", async (request2, env2) => {
+  const { error: error4, user } = await authenticate(request2, env2);
+  if (error4) return error4;
+  const _prodErr = await requireProductAccess(user, env2, "leadx");
+  if (_prodErr) return _prodErr;
+  try {
+    const criteriaRow = await env2.DB.prepare("SELECT min_value, keywords, locations FROM lead_criteria WHERE user_id = ?").bind(user.userId).first();
+    const criteria = criteriaRow || { min_value: 0, keywords: "", locations: "" };
+    const oppsResult = await env2.DB.prepare(
+      "SELECT id, title, agency, location, category, status, key_date, estimated_value FROM opportunities ORDER BY key_date ASC LIMIT 300"
+    ).all();
+    const opportunities = oppsResult.results || [];
+    const scored = opportunities.map((o) => ({ ...o, ...scoreOpportunity(o, criteria) }));
+    const qualified = scored.filter((o) => o.qualified).sort((a, b) => b.score - a.score);
+    const tenantId = user.tenantId || user.tenant_id || "ven_weyland";
+    const id = crypto.randomUUID();
+    const now = (/* @__PURE__ */ new Date()).toISOString();
+    const pdfBytes = await renderHtmlToPdf(env2, generateLeadReportHtml({ qualified, totalScanned: opportunities.length }));
+    const r2Key = `lead-reports/${user.userId}/${id}.pdf`;
+    await storeDocumentPdf(env2, r2Key, pdfBytes, { userId: user.userId, tenantId, generatedAt: now });
+    await env2.DB.prepare(`
+      INSERT INTO lead_reports (id, user_id, tenant_id, qualified_count, total_scanned, report_json, r2_key, status, created_at, updated_at)
+      VALUES (?, ?, ?, ?, ?, ?, ?, 'draft', ?, ?)
+    `).bind(id, user.userId, tenantId, qualified.length, opportunities.length, JSON.stringify(qualified), r2Key, now, now).run();
+    return jsonResponse3({ success: true, reportId: id, totalScanned: opportunities.length, qualifiedCount: qualified.length, downloadUrl: `/api/leads/reports/${id}/download` });
+  } catch (error5) {
+    console.error("[LeadX Qualify] Error:", error5);
+    return jsonResponse3({ error: "Failed to qualify leads", details: error5.message }, 500);
+  }
+});
+router.get("/api/leads/reports/:id/download", makeDocumentDownloadRoute("lead_reports", "leadx", "QualifiedLeads"));
+
 router.get("/api/quote-templates", async (request2, env2) => {
   const { error: error4, user } = await authenticate(request2, env2);
   if (error4)
@@ -165015,6 +165135,7 @@ var SovereignWeylandRoutes = (function() {
     specx: "SPECX",
     drawx: "DRAWX",
     asbuiltx: "ASBUILTX",
+    leadx: "LEADX",
     careers: "CAREERS"
   };
   function renderNav(current) {
@@ -165053,6 +165174,7 @@ var SovereignWeylandRoutes = (function() {
     specx: "SPECX",
     drawx: "DRAWX",
     asbuiltx: "ASBUILTX",
+    leadx: "LEADX",
     careers: "CAREERS"
   };
   function renderNav(current) {
@@ -165091,6 +165213,7 @@ var SovereignWeylandRoutes = (function() {
     specx: "SPECX",
     drawx: "DRAWX",
     asbuiltx: "ASBUILTX",
+    leadx: "LEADX",
     careers: "CAREERS"
   };
   function renderNav(current) {
@@ -166863,6 +166986,169 @@ var SovereignWeylandRoutes = (function() {
 </body>
 </html>`, { headers: { "Content-Type": "text/html; charset=UTF-8", "Cache-Control": "public, max-age=60" } });
   }
+  function serve_leadx() {
+    return new Response(`<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#090a0d">
+  <title>LeadX | Lead Qualification Engine</title>
+  <style>
+    :root{--bg:#090a0d;--panel:#121419;--panel2:#181b21;--line:#2c3139;--text:#edf0f1;--muted:#9299a3;--gold:#f0b800;--green:#61dfa0;--blue:#66d4ff;--red:#ff756e}
+    *{box-sizing:border-box}html,body{margin:0;min-height:100%;background:var(--bg);color:var(--text);font-family:"Avenir Next","Helvetica Neue",sans-serif}
+    .shell{position:relative;max-width:900px;margin:auto;padding:20px clamp(16px,3vw,40px) 60px}
+    header{display:flex;align-items:center;justify-content:space-between;gap:15px;margin-bottom:24px}
+    .brand{display:flex;align-items:center;gap:12px;color:var(--text);text-decoration:none}
+    .mark{width:42px;height:42px;display:grid;place-items:center;background:var(--gold);color:var(--bg);font-weight:900}
+    .brand b{display:block;letter-spacing:.16em}
+    .brand small{display:block;color:var(--muted);font:700 9px/1.5 ui-monospace,monospace;letter-spacing:.11em}
+    .nav{display:flex;gap:8px;flex-wrap:wrap}
+    .nav a,.button{border:1px solid var(--line);border-radius:99px;padding:9px 14px;color:var(--text);text-decoration:none;background:transparent;font:750 10px/1 ui-monospace,monospace;letter-spacing:.06em;cursor:pointer;transition:all .2s}
+    .nav a:hover,.button:hover{border-color:var(--gold);color:var(--gold)}
+    .button.primary{background:var(--gold);border-color:var(--gold);color:var(--bg);font-weight:900}
+    .button:disabled{opacity:.5;cursor:not-allowed}
+    .titlebar{margin:35px 0 25px}
+    .eyebrow{color:var(--gold);font:800 11px/1 ui-monospace,monospace;letter-spacing:.18em;text-transform:uppercase}
+    .titlebar h1{font-size:clamp(30px,4.5vw,48px);letter-spacing:-.04em;margin:12px 0}
+    .titlebar p{max-width:640px;color:var(--muted);line-height:1.6;margin:0;font-size:15px}
+    .titlebar .caveat{margin-top:10px;color:var(--red);font-size:12.5px}
+    .card{background:rgba(18,20,25,.94);border:1px solid var(--line);border-radius:16px;padding:22px;margin-bottom:18px}
+    .section-label{color:var(--gold);font:800 10px/1 ui-monospace,monospace;letter-spacing:.1em;text-transform:uppercase;margin-bottom:14px;display:block}
+    .form-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px}
+    label{display:block;color:var(--muted);font:750 10px/1 ui-monospace,monospace;letter-spacing:.08em;margin-bottom:8px}
+    input{width:100%;padding:11px;background:var(--panel2);border:1px solid var(--line);border-radius:8px;color:var(--text);font-size:14px;box-sizing:border-box;font-family:inherit}
+    input:focus{outline:none;border-color:var(--gold)}
+    .step-log{margin-top:14px;color:var(--muted);font-size:13px}
+    .step-log .ok{color:var(--green)}
+    .step-log .err{color:var(--red)}
+    .note-card{color:var(--muted);font-size:14px;line-height:1.6}
+    .note-card code{background:#161920;padding:2px 6px;border-radius:4px;color:var(--gold);font-size:13px}
+    .result-row{display:flex;justify-content:space-between;align-items:center;gap:14px;flex-wrap:wrap}
+    .stat-row{display:flex;gap:20px;color:var(--muted);font-size:13px}
+    .stat-row b{color:var(--text);font-size:18px;display:block}
+  </style>
+</head>
+<body>
+  <div class="shell">
+    <header>
+      <a class="brand" href="/"><span class="mark">LX</span><span><b>LEADX</b><small>LEAD QUALIFICATION ENGINE</small></span></a>
+      <nav class="nav">${renderNav("leadx")}</nav>
+    </header>
+    <div class="titlebar">
+      <div class="eyebrow">LEAD QUALIFICATION ENGINE</div>
+      <h1>LeadX</h1>
+      <p>Scores the live opportunities HuntX already crawls (TXDOT + CA OPSC open data) against your saved criteria - minimum value, keywords, and locations - and generates a qualified-leads report.</p>
+      <p class="caveat">Scoring is three simple, explainable rules, not an AI judgment of project quality or win probability.</p>
+      <a class="button primary" id="lx-signin-btn" href="/login?redirect=/leadx" style="display:none">SIGN IN</a>
+    </div>
+
+    <div id="app" style="display:none">
+      <div class="card">
+        <span class="section-label">QUALIFICATION CRITERIA</span>
+        <div class="form-grid">
+          <div><label>MINIMUM VALUE ($)</label><input id="lx-min-value" type="number" min="0" placeholder="e.g. 500000"></div>
+          <div><label>KEYWORDS (COMMA-SEPARATED)</label><input id="lx-keywords" type="text" placeholder="e.g. door, hardware, school"></div>
+          <div><label>LOCATIONS (COMMA-SEPARATED)</label><input id="lx-locations" type="text" placeholder="e.g. Travis, Harris, CA"></div>
+        </div>
+        <button id="lx-save-btn" class="button" style="margin-top:14px">SAVE CRITERIA</button>
+        <button id="lx-qualify-btn" class="button primary" style="height:42px;margin-top:14px">RUN QUALIFICATION</button>
+        <div class="step-log" id="lx-log"></div>
+      </div>
+      <div class="card" id="lx-result" style="display:none">
+        <div class="result-row">
+          <div class="stat-row" id="lx-stats"></div>
+          <a id="lx-download" class="button primary" href="#" target="_blank">DOWNLOAD REPORT PDF</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="card note-card" id="guest-note">
+      LeadX is available standalone at $249/mo or as part of HuntX Pro. See
+      <code>/pricing</code> for licensing, or sign in above if you already have access. Requires an active HuntX seat for opportunity data.
+    </div>
+  </div>
+  <script src="/assets/authfor-integration-standard.js"></script>
+  <script>
+    const auth = new AuthForStandard({ clientId: 'af_weyland_login', ventureName: 'weylandai.com' });
+    function authHeaders(json) {
+      const t = auth.getToken();
+      const h = t ? { 'Authorization': 'Bearer ' + t } : {};
+      if (json) h['Content-Type'] = 'application/json';
+      return h;
+    }
+    const log = document.getElementById('lx-log');
+    function logLine(msg, cls) { const d = document.createElement('div'); if (cls) d.className = cls; d.textContent = msg; log.appendChild(d); }
+
+    async function loadCriteria() {
+      try {
+        const res = await fetch('/api/leads/criteria', { headers: authHeaders() });
+        const data = await res.json();
+        if (data.criteria) {
+          document.getElementById('lx-min-value').value = data.criteria.min_value || '';
+          document.getElementById('lx-keywords').value = data.criteria.keywords || '';
+          document.getElementById('lx-locations').value = data.criteria.locations || '';
+        }
+      } catch (e) {}
+    }
+
+    document.getElementById('lx-save-btn').addEventListener('click', async () => {
+      logLine('Saving criteria...');
+      try {
+        const res = await fetch('/api/leads/criteria', { method: 'POST', headers: authHeaders(true), body: JSON.stringify({
+          minValue: document.getElementById('lx-min-value').value,
+          keywords: document.getElementById('lx-keywords').value.trim(),
+          locations: document.getElementById('lx-locations').value.trim()
+        }) });
+        if (!res.ok) { logLine('Error saving criteria.', 'err'); return; }
+        logLine('Criteria saved.', 'ok');
+      } catch (e) {
+        logLine('Error: ' + e.message, 'err');
+      }
+    });
+
+    document.getElementById('lx-qualify-btn').addEventListener('click', async () => {
+      const btn = document.getElementById('lx-qualify-btn');
+      log.innerHTML = '';
+      document.getElementById('lx-result').style.display = 'none';
+      btn.disabled = true;
+      logLine('Scoring current HuntX opportunities...');
+      try {
+        const res = await fetch('/api/leads/qualify', { method: 'POST', headers: authHeaders(true), body: JSON.stringify({}) });
+        const data = await res.json();
+        if (!res.ok) { logLine('Error: ' + (data.error && (data.error.message || data.error) || 'qualification failed'), 'err'); btn.disabled = false; return; }
+        logLine('Done.', 'ok');
+        document.getElementById('lx-stats').innerHTML = '<div><b>' + data.totalScanned + '</b>SCANNED</div><div><b>' + data.qualifiedCount + '</b>QUALIFIED</div>';
+        document.getElementById('lx-download').href = data.downloadUrl;
+        document.getElementById('lx-result').style.display = 'block';
+      } catch (e) {
+        logLine('Error: ' + e.message, 'err');
+      }
+      btn.disabled = false;
+    });
+
+    (async () => {
+      try {
+        const probe = await fetch('/api/leads/criteria', { headers: authHeaders() });
+        if (probe.status === 401 || probe.status === 403) {
+          document.getElementById('lx-signin-btn').style.display = 'inline-block';
+          return;
+        }
+        if (probe.status === 402) {
+          document.getElementById('guest-note').innerHTML = 'You\\'re signed in, but your plan doesn\\'t include LeadX yet. See <code>/pricing</code> to add it.';
+          return;
+        }
+        document.getElementById('app').style.display = 'block';
+        document.getElementById('guest-note').style.display = 'none';
+        loadCriteria();
+      } catch (e) {
+        document.getElementById('lx-signin-btn').style.display = 'inline-block';
+      }
+    })();
+  </script>
+</body>
+</html>`, { headers: { "Content-Type": "text/html; charset=UTF-8", "Cache-Control": "public, max-age=60" } });
+  }
   function serve_careers() {
     return new Response("<!doctype html>\n<html lang=\"en\">\n<head>\n  <meta charset=\"utf-8\">\n  <meta name=\"viewport\" content=\"width=device-width,initial-scale=1\">\n  <meta name=\"theme-color\" content=\"#090a0d\">\n  <title>Careers | WeylandAI</title>\n  <style>\n    :root{--bg:#090a0d;--panel:#121419;--line:#2c3139;--text:#edf0f1;--muted:#9299a3;--gold:#f0b800;--green:#61dfa0;--blue:#66d4ff;--purple:#a78bfa}\n    *{box-sizing:border-box}html,body{margin:0;min-height:100%;background:var(--bg);color:var(--text);font-family:\"Avenir Next\",\"Helvetica Neue\",sans-serif}\n    body:before{content:\"\";position:fixed;inset:0;pointer-events:none;background:radial-gradient(circle at 80% 80%,rgba(167,139,242,.12),transparent 30rem),linear-gradient(rgba(255,255,255,.015) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.015) 1px,transparent 1px);background-size:auto,30px 30px,30px 30px}\n    .shell{position:relative;max-width:1300px;margin:auto;padding:20px clamp(16px,3vw,40px) 60px}\n    header{display:flex;align-items:center;justify-content:space-between;gap:15px;margin-bottom:24px}\n    .brand{display:flex;align-items:center;gap:12px;color:var(--text);text-decoration:none}\n    .mark{width:42px;height:42px;display:grid;place-items:center;background:var(--purple);color:var(--bg);font-weight:900}\n    .brand b{display:block;letter-spacing:.16em}\n    .brand small{display:block;color:var(--muted);font:700 9px/1.5 ui-monospace,monospace;letter-spacing:.11em}\n    .nav{display:flex;gap:8px;flex-wrap:wrap}\n    .nav a,.button{border:1px solid var(--line);border-radius:99px;padding:9px 14px;color:var(--text);text-decoration:none;background:transparent;font:750 10px/1 ui-monospace,monospace;letter-spacing:.06em;cursor:pointer;transition:all .2s}\n    .nav a:hover,.button:hover{border-color:var(--purple);color:var(--purple)}\n    .button.primary{background:var(--purple);border-color:var(--purple);color:var(--bg);font-weight:900}\n    \n    .titlebar{text-align:center;margin:45px 0 50px}\n    .eyebrow{color:var(--purple);font:800 11px/1 ui-monospace,monospace;letter-spacing:.18em;text-transform:uppercase}\n    .titlebar h1{font-size:clamp(36px,5vw,62px);letter-spacing:-.05em;line-height:1.05;margin:14px 0}\n    .titlebar p{max-width:700px;color:var(--muted);line-height:1.6;margin:0 auto;font-size:17px}\n    \n    .req-grid{display:grid;gap:20px;margin-top:30px}\n    .req-card{background:rgba(18,20,25,.92);border:1px solid var(--line);border-radius:16px;padding:26px;display:flex;justify-content:space-between;align-items:center;transition:all .2s;flex-wrap:wrap;gap:20px}\n    .req-card:hover{border-color:var(--purple);transform:translateY(-2px);box-shadow:0 15px 40px rgba(0,0,0,.3)}\n    .req-meta span{font:800 10px ui-monospace,monospace;color:var(--purple);display:inline-block;margin-right:12px;text-transform:uppercase}\n    .req-title{font-size:22px;font-weight:800;color:#fff;margin:8px 0 6px}\n    .req-desc{color:var(--muted);font-size:14px;line-height:1.5;max-width:680px;margin:0}\n    .salary-box{text-align:right}\n    .salary-box strong{font-size:20px;color:var(--green);display:block;font-weight:900}\n    .salary-box small{color:var(--muted);font-size:12px;display:block;margin-top:2px}\n    \n    @media(max-width:800px){.req-card{flex-direction:column;align-items:flex-start}.salary-box{text-align:left;width:100%}}\n  </style>\n</head>\n<body>\n  <div class=\"shell\">\n    <header>\n      <a class=\"brand\" href=\"/\"><span class=\"mark\">CR</span><span><b>WEYLANDAI</b><small>THE FECUNDITY TALENT VECTOR</small></span></a>\n      <nav class=\"nav\">" + renderNav("careers") + "</nav>\n    </header>\n    <div class=\"titlebar\">\n      <div class=\"eyebrow\">JOIN THE TEAM</div>\n      <h1>We're not hiring through a job board yet.</h1>\n      <p>WeylandAI is a small, early-stage team building construction document automation — HuntX, SubX, TakeoffX, PropX, and SightX on one shared project record. If you want to work on real construction AI with a founder-led team, reach out directly with what you'd want to build and why.</p>\n      <p style=\"margin-top:24px\"><a class=\"button primary\" href=\"mailto:hello@weylandai.com?subject=Interested%20in%20WeylandAI\">EMAIL HELLO@WEYLANDAI.COM</a></p>\n    </div>\n  </div>\n</body>\n</html>\n", { headers: { "Content-Type": "text/html; charset=UTF-8", "Cache-Control": "public, max-age=60" } });
   }
@@ -166927,6 +167213,7 @@ var SovereignWeylandRoutes = (function() {
     "specx": serve_specx,
     "drawx": serve_drawx,
     "asbuiltx": serve_asbuiltx,
+    "leadx": serve_leadx,
     "careers": serve_careers,
     "progress": serve_progress,
     "sightx": serve_sightx,
