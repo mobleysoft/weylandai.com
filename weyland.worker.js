@@ -157261,6 +157261,106 @@ router.post("/api/spec-sections/analyze", async (request2, env2) => {
 });
 router.get("/api/spec-sections/:id/download", makeDocumentDownloadRoute("spec_sections", "specx", "SpecIndex"));
 
+// ---- DrawX: drawing set sheet index (TakeoffX Pro family) -----------------
+// Same OCR pattern as the SubX Pro extraction products, applied to drawing
+// sheets: title blocks and general notes are usually real printed text even
+// on a vector/line drawing, so OCR + a sheet-number regex builds a real
+// sheet index (number, title) without claiming any symbol/line recognition
+// this pipeline doesn't have. Regex verified locally against realistic
+// sheet numbering (A-101, M-1.1, S201) before deploying.
+const SHEET_NUMBER_PATTERN = /\b([A-Z]{1,2}[\-.]?\d{1,4}(?:\.\d{1,2})?)\b[\s\-–—:]*([A-Z][A-Z0-9 ,&/'\-]{3,60})?/g;
+function parseDrawingSheets(fullText) {
+  const matches = [...fullText.matchAll(SHEET_NUMBER_PATTERN)];
+  const seen = new Set();
+  const sheets = [];
+  for (const m of matches) {
+    const number = m[1];
+    if (seen.has(number)) continue;
+    seen.add(number);
+    sheets.push({ number, title: (m[2] || "").trim().replace(/\s+/g, " ").slice(0, 60) });
+  }
+  return sheets;
+}
+function generateDrawingIndexHtml(d) {
+  const rows = d.sheets.length
+    ? d.sheets.map((s) => `<tr><td>${s.number}</td><td>${s.title || "&mdash;"}</td></tr>`).join("")
+    : `<tr><td colspan="2" class="none">No sheet-number patterns (e.g. A-101, M-1.1) were detected in this document.</td></tr>`;
+  return `<!doctype html><html><head><meta charset="utf-8"><style>
+    body{font-family:Georgia,"Times New Roman",serif;color:#111;margin:0;padding:60px 70px;font-size:13px;line-height:1.6}
+    h1{font-size:20px;margin:0 0 4px}
+    .sub{color:#666;font-size:11px;margin-bottom:30px}
+    .row{display:flex;gap:24px;margin-bottom:16px}
+    .field{flex:1}
+    .field label{display:block;font-size:9px;text-transform:uppercase;letter-spacing:.06em;color:#777;margin-bottom:2px}
+    .field div{border-bottom:1px solid #999;padding-bottom:3px;min-height:16px}
+    .stats{display:flex;gap:24px;margin:26px 0}
+    .stats .box{flex:1;padding:14px;background:#f6f6f2;border:1px solid #ddd;text-align:center}
+    .stats .box strong{display:block;font-size:22px}
+    .stats .box span{font-size:9px;text-transform:uppercase;letter-spacing:.06em;color:#777}
+    table{width:100%;border-collapse:collapse;font-size:12px;margin-top:10px}
+    th{text-align:left;font-size:9px;text-transform:uppercase;letter-spacing:.06em;color:#777;border-bottom:2px solid #333;padding:6px 4px}
+    td{padding:6px 4px;border-bottom:1px solid #eee}
+    td.none{color:#777}
+    .disclaimer{margin-top:50px;padding-top:14px;border-top:1px solid #ccc;font-size:9.5px;color:#777;line-height:1.5}
+  </style></head><body>
+    <h1>Drawing Set Sheet Index</h1>
+    <div class="sub">Prepared via WeylandAI / DrawX &middot; ${new Date().toLocaleDateString()}</div>
+    <div class="row">
+      <div class="field"><label>Project</label><div>${d.projectName || ""}</div></div>
+      <div class="field"><label>Drawing Set Date</label><div>${d.drawingSetDate || ""}</div></div>
+    </div>
+    <div class="stats">
+      <div class="box"><strong>${d.pageCount}</strong><span>Pages Scanned</span></div>
+      <div class="box"><strong>${d.sheets.length}</strong><span>Sheets Indexed</span></div>
+    </div>
+    <table><thead><tr><th>Sheet #</th><th>Title</th></tr></thead><tbody>${rows}</tbody></table>
+    <div class="disclaimer">Sheets are detected from OCR'd title-block text matching common sheet-numbering patterns (e.g. A-101, M-1.1) - this is a sheet index, not drawing content analysis. It doesn't read lines, symbols, or dimensions, and may miss sheets with non-standard numbering or misread similar-looking numbers/letters.</div>
+  </body></html>`;
+}
+router.post("/api/drawing-index/analyze", async (request2, env2) => {
+  const { error: error4, user } = await authenticate(request2, env2);
+  if (error4) return error4;
+  const _prodErr = await requireProductAccess(user, env2, "drawx");
+  if (_prodErr) return _prodErr;
+  try {
+    const formData = await request2.formData();
+    const file = formData.get("file");
+    const projectName = formData.get("projectName") || "";
+    const drawingSetDate = formData.get("drawingSetDate") || "";
+    if (!file) return jsonResponse3({ error: "No file provided" }, 400);
+    if (!env2.OCR_SERVICE) return jsonResponse3({ error: "OCR service is not configured" }, 500);
+    const fileBuffer = await file.arrayBuffer();
+    const ocrRes = await env2.OCR_SERVICE.fetch("https://weyland-ocr-worker/extract-text", {
+      method: "POST",
+      headers: { "X-Total-Pages": "50" },
+      body: fileBuffer
+    });
+    if (!ocrRes.ok) {
+      const errText = await ocrRes.text();
+      return jsonResponse3({ error: "OCR extraction failed", details: errText }, 502);
+    }
+    const ocrData = await ocrRes.json();
+    const fullText = (ocrData.pages || []).map((p) => p.text).join("\n");
+    const sheets = parseDrawingSheets(fullText);
+    const tenantId = user.tenantId || user.tenant_id || "ven_weyland";
+    const id = crypto.randomUUID();
+    const now = (/* @__PURE__ */ new Date()).toISOString();
+    const summaryData = { projectName, drawingSetDate, pageCount: ocrData.pageCount || 0, sheets };
+    const pdfBytes = await renderHtmlToPdf(env2, generateDrawingIndexHtml(summaryData));
+    const r2Key = `drawing-indexes/${user.userId}/${id}.pdf`;
+    await storeDocumentPdf(env2, r2Key, pdfBytes, { userId: user.userId, tenantId, generatedAt: now });
+    await env2.DB.prepare(`
+      INSERT INTO drawing_indexes (id, user_id, tenant_id, project_name, drawing_set_date, raw_text, sheet_count, sheets_json, page_count, r2_key, status, created_at, updated_at)
+      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 'draft', ?, ?)
+    `).bind(id, user.userId, tenantId, projectName || null, drawingSetDate || null, fullText, sheets.length, JSON.stringify(sheets), ocrData.pageCount || 0, r2Key, now, now).run();
+    return jsonResponse3({ success: true, drawIndexId: id, pageCount: ocrData.pageCount || 0, sheetCount: sheets.length, downloadUrl: `/api/drawing-index/${id}/download` });
+  } catch (error5) {
+    console.error("[DrawX Analyze] Error:", error5);
+    return jsonResponse3({ error: "Failed to analyze drawing set", details: error5.message }, 500);
+  }
+});
+router.get("/api/drawing-index/:id/download", makeDocumentDownloadRoute("drawing_indexes", "drawx", "DrawingIndex"));
+
 async function fetchTxdotOpportunities() {
   const url = "https://data.texas.gov/resource/qh8x-rm8r.json?" + new URLSearchParams({
     "$select": "project_number,county,highway,district_division,project_classification,bids_will_be_opened_date,sealed_engineer_s_estimate,proposal_status,project_id",
@@ -164824,6 +164924,7 @@ var SovereignWeylandRoutes = (function() {
     safetyx: "SAFETYX",
     survx: "SURVX",
     specx: "SPECX",
+    drawx: "DRAWX",
     careers: "CAREERS"
   };
   function renderNav(current) {
@@ -164860,6 +164961,7 @@ var SovereignWeylandRoutes = (function() {
     safetyx: "SAFETYX",
     survx: "SURVX",
     specx: "SPECX",
+    drawx: "DRAWX",
     careers: "CAREERS"
   };
   function renderNav(current) {
@@ -164896,6 +164998,7 @@ var SovereignWeylandRoutes = (function() {
     safetyx: "SAFETYX",
     survx: "SURVX",
     specx: "SPECX",
+    drawx: "DRAWX",
     careers: "CAREERS"
   };
   function renderNav(current) {
@@ -166389,6 +166492,144 @@ var SovereignWeylandRoutes = (function() {
 </body>
 </html>`, { headers: { "Content-Type": "text/html; charset=UTF-8", "Cache-Control": "public, max-age=60" } });
   }
+  function serve_drawx() {
+    return new Response(`<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#090a0d">
+  <title>DrawX | Drawing Set Sheet Index</title>
+  <style>
+    :root{--bg:#090a0d;--panel:#121419;--panel2:#181b21;--line:#2c3139;--text:#edf0f1;--muted:#9299a3;--gold:#f0b800;--green:#61dfa0;--blue:#66d4ff;--red:#ff756e}
+    *{box-sizing:border-box}html,body{margin:0;min-height:100%;background:var(--bg);color:var(--text);font-family:"Avenir Next","Helvetica Neue",sans-serif}
+    .shell{position:relative;max-width:900px;margin:auto;padding:20px clamp(16px,3vw,40px) 60px}
+    header{display:flex;align-items:center;justify-content:space-between;gap:15px;margin-bottom:24px}
+    .brand{display:flex;align-items:center;gap:12px;color:var(--text);text-decoration:none}
+    .mark{width:42px;height:42px;display:grid;place-items:center;background:var(--blue);color:var(--bg);font-weight:900}
+    .brand b{display:block;letter-spacing:.16em}
+    .brand small{display:block;color:var(--muted);font:700 9px/1.5 ui-monospace,monospace;letter-spacing:.11em}
+    .nav{display:flex;gap:8px;flex-wrap:wrap}
+    .nav a,.button{border:1px solid var(--line);border-radius:99px;padding:9px 14px;color:var(--text);text-decoration:none;background:transparent;font:750 10px/1 ui-monospace,monospace;letter-spacing:.06em;cursor:pointer;transition:all .2s}
+    .nav a:hover,.button:hover{border-color:var(--blue);color:var(--blue)}
+    .button.primary{background:var(--blue);border-color:var(--blue);color:var(--bg);font-weight:900}
+    .button:disabled{opacity:.5;cursor:not-allowed}
+    .titlebar{margin:35px 0 25px}
+    .eyebrow{color:var(--blue);font:800 11px/1 ui-monospace,monospace;letter-spacing:.18em;text-transform:uppercase}
+    .titlebar h1{font-size:clamp(30px,4.5vw,48px);letter-spacing:-.04em;margin:12px 0}
+    .titlebar p{max-width:640px;color:var(--muted);line-height:1.6;margin:0;font-size:15px}
+    .titlebar .caveat{margin-top:10px;color:var(--red);font-size:12.5px}
+    .card{background:rgba(18,20,25,.94);border:1px solid var(--line);border-radius:16px;padding:22px;margin-bottom:18px}
+    .form-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px}
+    label{display:block;color:var(--muted);font:750 10px/1 ui-monospace,monospace;letter-spacing:.08em;margin-bottom:8px}
+    input{width:100%;padding:11px;background:var(--panel2);border:1px solid var(--line);border-radius:8px;color:var(--text);font-size:14px;box-sizing:border-box;font-family:inherit}
+    input:focus{outline:none;border-color:var(--blue)}
+    .step-log{margin-top:14px;color:var(--muted);font-size:13px}
+    .step-log .ok{color:var(--green)}
+    .step-log .err{color:var(--red)}
+    .note-card{color:var(--muted);font-size:14px;line-height:1.6}
+    .note-card code{background:#161920;padding:2px 6px;border-radius:4px;color:var(--blue);font-size:13px}
+    .result-row{display:flex;justify-content:space-between;align-items:center;gap:14px;flex-wrap:wrap}
+    .stat-row{display:flex;gap:20px;color:var(--muted);font-size:13px}
+    .stat-row b{color:var(--text);font-size:18px;display:block}
+  </style>
+</head>
+<body>
+  <div class="shell">
+    <header>
+      <a class="brand" href="/"><span class="mark">DX</span><span><b>DRAWX</b><small>DRAWING SET SHEET INDEX</small></span></a>
+      <nav class="nav">${renderNav("drawx")}</nav>
+    </header>
+    <div class="titlebar">
+      <div class="eyebrow">DRAWING SET SHEET INDEX</div>
+      <h1>DrawX</h1>
+      <p>Uploads a drawing set PDF, OCRs title blocks and notes (PDFium + Tesseract, no external API), and detects sheet numbers (A-101, M-1.1, etc.) to build a sheet index.</p>
+      <p class="caveat">This indexes sheet numbers and titles from text - it doesn't read lines, symbols, or dimensions on the drawing itself.</p>
+      <a class="button primary" id="dx-signin-btn" href="/login?redirect=/drawx" style="display:none">SIGN IN</a>
+    </div>
+
+    <div id="app" style="display:none">
+      <div class="card">
+        <div class="form-grid">
+          <div><label>PROJECT NAME</label><input id="dx-project" type="text"></div>
+          <div><label>DRAWING SET DATE</label><input id="dx-date" type="date"></div>
+          <div style="grid-column:1/-1"><label>DRAWING SET (PDF)</label><input id="dx-file" type="file" accept="application/pdf"></div>
+        </div>
+        <button id="dx-analyze-btn" class="button primary" style="height:42px;margin-top:16px">BUILD SHEET INDEX</button>
+        <div class="step-log" id="dx-log"></div>
+      </div>
+      <div class="card" id="dx-result" style="display:none">
+        <div class="result-row">
+          <div class="stat-row" id="dx-stats"></div>
+          <a id="dx-download" class="button primary" href="#" target="_blank">DOWNLOAD SHEET INDEX PDF</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="card note-card" id="guest-note">
+      DrawX is available standalone at $399/mo or as part of TakeoffX Pro. See
+      <code>/pricing</code> for licensing, or sign in above if you already have access.
+    </div>
+  </div>
+  <script src="/assets/authfor-integration-standard.js"></script>
+  <script>
+    const auth = new AuthForStandard({ clientId: 'af_weyland_login', ventureName: 'weylandai.com' });
+    function authHeaders(json) {
+      const t = auth.getToken();
+      const h = t ? { 'Authorization': 'Bearer ' + t } : {};
+      if (json) h['Content-Type'] = 'application/json';
+      return h;
+    }
+    const log = document.getElementById('dx-log');
+    function logLine(msg, cls) { const d = document.createElement('div'); if (cls) d.className = cls; d.textContent = msg; log.appendChild(d); }
+
+    document.getElementById('dx-analyze-btn').addEventListener('click', async () => {
+      const btn = document.getElementById('dx-analyze-btn');
+      const fileInput = document.getElementById('dx-file');
+      log.innerHTML = '';
+      document.getElementById('dx-result').style.display = 'none';
+      if (!fileInput.files.length) { logLine('Choose a PDF first.', 'err'); return; }
+      const fd = new FormData();
+      fd.append('file', fileInput.files[0]);
+      fd.append('projectName', document.getElementById('dx-project').value.trim());
+      fd.append('drawingSetDate', document.getElementById('dx-date').value);
+      btn.disabled = true;
+      logLine('Uploading and running OCR...');
+      try {
+        const res = await fetch('/api/drawing-index/analyze', { method: 'POST', headers: authHeaders(false), body: fd });
+        const data = await res.json();
+        if (!res.ok) { logLine('Error: ' + (data.error && (data.error.message || data.error) || 'analysis failed'), 'err'); btn.disabled = false; return; }
+        logLine('Done - ' + data.pageCount + ' page(s) scanned.', 'ok');
+        document.getElementById('dx-stats').innerHTML = '<div><b>' + data.pageCount + '</b>PAGES</div><div><b>' + data.sheetCount + '</b>SHEETS</div>';
+        document.getElementById('dx-download').href = data.downloadUrl;
+        document.getElementById('dx-result').style.display = 'block';
+      } catch (e) {
+        logLine('Error: ' + e.message, 'err');
+      }
+      btn.disabled = false;
+    });
+
+    (async () => {
+      try {
+        const probe = await fetch('/api/drawing-index/analyze', { method: 'POST', headers: authHeaders(true), body: JSON.stringify({}) });
+        if (probe.status === 401 || probe.status === 403) {
+          document.getElementById('dx-signin-btn').style.display = 'inline-block';
+          return;
+        }
+        if (probe.status === 402) {
+          document.getElementById('guest-note').innerHTML = 'You\\'re signed in, but your plan doesn\\'t include DrawX yet. See <code>/pricing</code> to add it.';
+          return;
+        }
+        document.getElementById('app').style.display = 'block';
+        document.getElementById('guest-note').style.display = 'none';
+      } catch (e) {
+        document.getElementById('dx-signin-btn').style.display = 'inline-block';
+      }
+    })();
+  </script>
+</body>
+</html>`, { headers: { "Content-Type": "text/html; charset=UTF-8", "Cache-Control": "public, max-age=60" } });
+  }
   function serve_careers() {
     return new Response("<!doctype html>\n<html lang=\"en\">\n<head>\n  <meta charset=\"utf-8\">\n  <meta name=\"viewport\" content=\"width=device-width,initial-scale=1\">\n  <meta name=\"theme-color\" content=\"#090a0d\">\n  <title>Careers | WeylandAI</title>\n  <style>\n    :root{--bg:#090a0d;--panel:#121419;--line:#2c3139;--text:#edf0f1;--muted:#9299a3;--gold:#f0b800;--green:#61dfa0;--blue:#66d4ff;--purple:#a78bfa}\n    *{box-sizing:border-box}html,body{margin:0;min-height:100%;background:var(--bg);color:var(--text);font-family:\"Avenir Next\",\"Helvetica Neue\",sans-serif}\n    body:before{content:\"\";position:fixed;inset:0;pointer-events:none;background:radial-gradient(circle at 80% 80%,rgba(167,139,242,.12),transparent 30rem),linear-gradient(rgba(255,255,255,.015) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.015) 1px,transparent 1px);background-size:auto,30px 30px,30px 30px}\n    .shell{position:relative;max-width:1300px;margin:auto;padding:20px clamp(16px,3vw,40px) 60px}\n    header{display:flex;align-items:center;justify-content:space-between;gap:15px;margin-bottom:24px}\n    .brand{display:flex;align-items:center;gap:12px;color:var(--text);text-decoration:none}\n    .mark{width:42px;height:42px;display:grid;place-items:center;background:var(--purple);color:var(--bg);font-weight:900}\n    .brand b{display:block;letter-spacing:.16em}\n    .brand small{display:block;color:var(--muted);font:700 9px/1.5 ui-monospace,monospace;letter-spacing:.11em}\n    .nav{display:flex;gap:8px;flex-wrap:wrap}\n    .nav a,.button{border:1px solid var(--line);border-radius:99px;padding:9px 14px;color:var(--text);text-decoration:none;background:transparent;font:750 10px/1 ui-monospace,monospace;letter-spacing:.06em;cursor:pointer;transition:all .2s}\n    .nav a:hover,.button:hover{border-color:var(--purple);color:var(--purple)}\n    .button.primary{background:var(--purple);border-color:var(--purple);color:var(--bg);font-weight:900}\n    \n    .titlebar{text-align:center;margin:45px 0 50px}\n    .eyebrow{color:var(--purple);font:800 11px/1 ui-monospace,monospace;letter-spacing:.18em;text-transform:uppercase}\n    .titlebar h1{font-size:clamp(36px,5vw,62px);letter-spacing:-.05em;line-height:1.05;margin:14px 0}\n    .titlebar p{max-width:700px;color:var(--muted);line-height:1.6;margin:0 auto;font-size:17px}\n    \n    .req-grid{display:grid;gap:20px;margin-top:30px}\n    .req-card{background:rgba(18,20,25,.92);border:1px solid var(--line);border-radius:16px;padding:26px;display:flex;justify-content:space-between;align-items:center;transition:all .2s;flex-wrap:wrap;gap:20px}\n    .req-card:hover{border-color:var(--purple);transform:translateY(-2px);box-shadow:0 15px 40px rgba(0,0,0,.3)}\n    .req-meta span{font:800 10px ui-monospace,monospace;color:var(--purple);display:inline-block;margin-right:12px;text-transform:uppercase}\n    .req-title{font-size:22px;font-weight:800;color:#fff;margin:8px 0 6px}\n    .req-desc{color:var(--muted);font-size:14px;line-height:1.5;max-width:680px;margin:0}\n    .salary-box{text-align:right}\n    .salary-box strong{font-size:20px;color:var(--green);display:block;font-weight:900}\n    .salary-box small{color:var(--muted);font-size:12px;display:block;margin-top:2px}\n    \n    @media(max-width:800px){.req-card{flex-direction:column;align-items:flex-start}.salary-box{text-align:left;width:100%}}\n  </style>\n</head>\n<body>\n  <div class=\"shell\">\n    <header>\n      <a class=\"brand\" href=\"/\"><span class=\"mark\">CR</span><span><b>WEYLANDAI</b><small>THE FECUNDITY TALENT VECTOR</small></span></a>\n      <nav class=\"nav\">" + renderNav("careers") + "</nav>\n    </header>\n    <div class=\"titlebar\">\n      <div class=\"eyebrow\">JOIN THE TEAM</div>\n      <h1>We're not hiring through a job board yet.</h1>\n      <p>WeylandAI is a small, early-stage team building construction document automation — HuntX, SubX, TakeoffX, PropX, and SightX on one shared project record. If you want to work on real construction AI with a founder-led team, reach out directly with what you'd want to build and why.</p>\n      <p style=\"margin-top:24px\"><a class=\"button primary\" href=\"mailto:hello@weylandai.com?subject=Interested%20in%20WeylandAI\">EMAIL HELLO@WEYLANDAI.COM</a></p>\n    </div>\n  </div>\n</body>\n</html>\n", { headers: { "Content-Type": "text/html; charset=UTF-8", "Cache-Control": "public, max-age=60" } });
   }
@@ -166451,6 +166692,7 @@ var SovereignWeylandRoutes = (function() {
     "safetyx": serve_safetyx,
     "survx": serve_survx,
     "specx": serve_specx,
+    "drawx": serve_drawx,
     "careers": serve_careers,
     "progress": serve_progress,
     "sightx": serve_sightx,
