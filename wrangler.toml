@@ -31,6 +31,16 @@ id = "090d0771923a4c40b6c37dadf6e8f067"
 binding = "OCR_SERVICE"
 service = "weyland-ocr-worker"
 
+# vendyai-com-worker: the conglomerate's single point of direct Stripe
+# integration (per John's 2026-09-03 directive: all ventures sell through
+# vendyai, authenticate through AuthFor). Same-account service binding,
+# zero network hop - replaces the broken env.VENDYAI_API_URL fetch() path
+# that /api/subscription/checkout used (the var was never actually set,
+# so that endpoint threw on every real call before this).
+[[services]]
+binding = "VENDYAI"
+service = "vendyai-com-worker"
+
 # mascom-edge: shared conglomerate-wide pull-through cache for GitHub-Pages-
 # sourced static content (local disk -> GitHub repo -> GitHub Pages ->
 # mascom-edge cache -> visitor). Used here only for the homepage "/" - the
