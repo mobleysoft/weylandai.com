@@ -61,6 +61,12 @@ CREATE TABLE kv_compat (
 -- Table: weyland_sessions
 CREATE TABLE weyland_sessions (id TEXT PRIMARY KEY, user_id TEXT, email TEXT, mhs_id TEXT, player_json TEXT, expires_at TEXT, created_at TEXT DEFAULT (datetime('now')));
 
+-- Table: processed_webhook_events
+-- Idempotency ledger for /api/webhooks/subscription - see the handler for why.
+-- Created directly on the remote DB 2026-09-04; added here so schema.sql
+-- stops silently lying about what's actually live.
+CREATE TABLE IF NOT EXISTS processed_webhook_events (event_id TEXT PRIMARY KEY, event_type TEXT, processed_at TEXT NOT NULL DEFAULT (datetime('now')));
+
 -- Table: affirm_audit_log
 CREATE TABLE affirm_audit_log (
   id TEXT PRIMARY KEY,

@@ -148583,6 +148583,25 @@ router.post("/api/webhooks/subscription", async (request2, env2) => {
     const eventType = event.type;
     const obj = event.data?.object || {};
     console.log(`[Webhook] Received: ${eventType} (${obj.id || "no-id"})`);
+
+    // Idempotency: Stripe does not guarantee exactly-once delivery, and can
+    // redeliver events out of order. Without this, a stale redelivered event
+    // arriving after a newer one silently overwrites subscription_tier /
+    // submittals_limit with older values. INSERT OR IGNORE keyed on the
+    // Stripe event id itself (not obj.id, which repeats across event types)
+    // makes "already processed this exact event" a single atomic check.
+    if (event.id) {
+      const dedupe = await env2.DB.prepare(
+        "INSERT OR IGNORE INTO processed_webhook_events (event_id, event_type) VALUES (?, ?)"
+      ).bind(event.id, eventType).run();
+      if (dedupe.meta.changes === 0) {
+        console.log(`[Webhook] Duplicate event ${event.id} (${eventType}) - already processed, skipping.`);
+        return jsonResponse3({ received: true, duplicate: true });
+      }
+    } else {
+      console.warn("[Webhook] Event has no id - cannot dedupe, processing anyway:", eventType);
+    }
+
     switch (eventType) {
       case "checkout.session.completed": {
         if (obj.mode !== "subscription") break;
