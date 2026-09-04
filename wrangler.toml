@@ -1,4 +1,4 @@
-name = "weylandai-com-worker-SUPERSEDED-see-weyland.ai"
+name = "weylandai-com-worker"
 main = "weyland.worker.js"
 compatibility_date = "2025-10-31"
 compatibility_flags = ["nodejs_compat"]
