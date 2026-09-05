@@ -14,12 +14,13 @@ hand-edited ever since instead of being regenerated from real sources.
 - `auth-module.js` — extracted from the segment tagged `// auth-module.js`
   / `init_auth_module` (original file lines ~1064-1201). JWT
   generate/verify, password hashing, signed-URL generate/verify, HMAC
-  signing, base64url encode/decode. **Verified correct in isolation**
-  (2026-09-05): JWT round-trip, password-hash determinism, signed-URL
-  round-trip, tampered-signature rejection, and `authenticateRequest`
-  against a real `Request` object all pass as real Node tests (run ad
-  hoc, not yet saved as a test file - unlike cors-handler.js below, this
-  one should get a real `auth-module.test.mjs` in a future tick).
+  signing, base64url encode/decode. **Verified via a real, saved,
+  re-runnable test file** (`auth-module.test.mjs`, 16 passing cases -
+  run with `node --test src/auth-module.test.mjs`): JWT round-trip,
+  tampered/wrong-secret/expired rejection, malformed-input rejection,
+  password-hash determinism, `authenticateRequest` against real `Request`
+  objects, signed-URL round-trip (valid/tampered/expired/missing-params),
+  HMAC signing determinism, base64url round-trip including unicode.
 - `cors-handler.js` — extracted from the segment tagged
   `// cors-handler.js` (original file lines ~138248-138382). The
   `CorsHandler` class: origin allow-listing (string or regex), preflight
@@ -30,6 +31,19 @@ hand-edited ever since instead of being regenerated from real sources.
   regex origin matching, preflight accept/reject, corsify wrapping both
   a Response and a plain object, credentials-header logic, exposed-header
   configuration.
+- `rate-limit.js` — extracted from the segment tagged `// rate-limit.js`
+  (original file lines ~138387-138427). `checkRateLimit(userId,
+  operation, env, limits)`: a KV-backed (`env.CACHE`) fixed-window rate
+  limiter, single real call site (`POST
+  /api/hardware-schedule/session/:sessionId/enrich`, 10 requests/60s).
+  Renamed esbuild's collision-suffixed locals (`env2`->`env`,
+  `limits2`->`limits`, `count3`->`count`) back to their real names -
+  naming only, no behavior change. **Verified via a real, saved,
+  re-runnable test file** (`rate-limit.test.mjs`, 8 passing cases against
+  an in-memory fake KV - run with `node --test src/rate-limit.test.mjs`):
+  first-request accounting, decrementing remaining, exceeding the limit,
+  independent tracking per user and per operation, window-expiry reset,
+  fail-open behavior when the KV binding throws, and default limits.
 
 **Not yet done, and deliberately not attempted yet:** wiring this back
 into `weyland.worker.js` via a real esbuild step. That requires
