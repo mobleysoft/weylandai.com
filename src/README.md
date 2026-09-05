@@ -17,7 +17,19 @@ hand-edited ever since instead of being regenerated from real sources.
   signing, base64url encode/decode. **Verified correct in isolation**
   (2026-09-05): JWT round-trip, password-hash determinism, signed-URL
   round-trip, tampered-signature rejection, and `authenticateRequest`
-  against a real `Request` object all pass as real Node tests.
+  against a real `Request` object all pass as real Node tests (run ad
+  hoc, not yet saved as a test file - unlike cors-handler.js below, this
+  one should get a real `auth-module.test.mjs` in a future tick).
+- `cors-handler.js` — extracted from the segment tagged
+  `// cors-handler.js` (original file lines ~138248-138382). The
+  `CorsHandler` class: origin allow-listing (string or regex), preflight
+  OPTIONS handling, and `corsify()` to apply CORS headers to any
+  Response or plain object. **Verified via a real, saved, re-runnable
+  test file** (`cors-handler.test.mjs`, 13 passing cases - run with
+  `node --test src/cors-handler.test.mjs`): wildcard vs. restricted vs.
+  regex origin matching, preflight accept/reject, corsify wrapping both
+  a Response and a plain object, credentials-header logic, exposed-header
+  configuration.
 
 **Not yet done, and deliberately not attempted yet:** wiring this back
 into `weyland.worker.js` via a real esbuild step. That requires
@@ -31,7 +43,7 @@ exists to avoid.
 ## Real path forward (not a single tick's work)
 
 1. Extract each of the 298 `init_*` segments into its own real source
-   file the same way as `auth-module.js` — most are boilerplate Node
+   file the same way as `auth-module.js`/`cors-handler.js` — most are boilerplate Node
    polyfills (`init_process`, `init_console`, `init_tty`, etc.) that can
    likely be replaced wholesale by their real upstream `unenv`/Cloudflare
    packages as npm dependencies instead of hand-copied, once identified.
