@@ -1,0 +1,150 @@
+{
+  "_purpose": "Real, source-traceable prospect list for weylandai.com (SubX/TakeoffX/PropX/SightX) — general contractors and subcontractors who ACTUALLY submitted bids on real public-agency construction projects, extracted by hand from real bid-tabulation PDFs downloaded by tools/bid-tabulation-crawler.mjs. NOT contacted. NOT outreach. Compilation only, per task constraints.",
+  "_methodology": "Each source PDF was downloaded with a real GET (see tools/corpus/bid-tabulations/manifest.json for sha256/fetch timestamps) and its text extracted with pdftotext. Every row below was read directly off that extracted text by a human/agent, not produced by automated table-parsing — several of these bid-tab layouts are scanned/OCR'd or inconsistently formatted enough that generic regex extraction risks mis-attributing a name or dollar figure to the wrong row. 'role' is 'bidder-of-record' unless the source document itself states an award; where a company appears to be the lowest responsive bid, that is noted but NOT asserted as a confirmed award unless the document says so explicitly.",
+  "_generated_at": "2026-09-05",
+  "_compiled_by": "tools/bid-tabulation-crawler.mjs seeds, hand-transcribed",
+  "prospects": [
+    {
+      "company": "Benton Roofing",
+      "address": "814 Tracy Grove Road, Flat Rock, NC 28731",
+      "license_no": "46342",
+      "role": "bidder-of-record (apparent low bidder, not confirmed award)",
+      "bid_amount_total": "$359,330.00",
+      "project": "RFP #09.24 — Charles C. Bell Elementary School Partial Roof Replacement, Areas B/D2/D3",
+      "agency": "Buncombe County Schools, NC",
+      "bid_opening_date": "2025-03-06",
+      "source_url": "https://files-backend.assets.thrillshare.com/documents/asset/uploaded_file/3100/Bcs/66d7caf7-fb84-4e8d-983e-8a7509f77406/RFP_09.24-Bid_Tab.pdf",
+      "source_document": "Bid Tabulation, signed by Lisa Sharpe, Accounts Payable/Purchasing and Risk Control Manager, Buncombe County Board of Education"
+    },
+    {
+      "company": "J. Bartholomew Construction, LLC",
+      "address": "PO Box 2017, Hendersonville, NC 28793",
+      "license_no": "68658",
+      "role": "bidder-of-record",
+      "bid_amount_total": "$436,800.00",
+      "project": "RFP #09.24 — Charles C. Bell Elementary School Partial Roof Replacement, Areas B/D2/D3",
+      "agency": "Buncombe County Schools, NC",
+      "bid_opening_date": "2025-03-06",
+      "source_url": "https://files-backend.assets.thrillshare.com/documents/asset/uploaded_file/3100/Bcs/66d7caf7-fb84-4e8d-983e-8a7509f77406/RFP_09.24-Bid_Tab.pdf",
+      "source_document": "Bid Tabulation, signed by Lisa Sharpe, Accounts Payable/Purchasing and Risk Control Manager, Buncombe County Board of Education"
+    },
+    {
+      "company": "AAR of North Carolina, Inc.",
+      "address": "655 Peddycord Road, Kernersville, NC 27284",
+      "license_no": "21667",
+      "role": "bidder-of-record",
+      "bid_amount_total": "$461,900.00",
+      "project": "RFP #09.24 — Charles C. Bell Elementary School Partial Roof Replacement, Areas B/D2/D3",
+      "agency": "Buncombe County Schools, NC",
+      "bid_opening_date": "2025-03-06",
+      "source_url": "https://files-backend.assets.thrillshare.com/documents/asset/uploaded_file/3100/Bcs/66d7caf7-fb84-4e8d-983e-8a7509f77406/RFP_09.24-Bid_Tab.pdf",
+      "source_document": "Bid Tabulation, signed by Lisa Sharpe, Accounts Payable/Purchasing and Risk Control Manager, Buncombe County Board of Education"
+    },
+    {
+      "company": "Mar-Paul Company Inc.",
+      "role": "bidder-of-record (apparent low bidder on General Construction contract, not confirmed award)",
+      "bid_amount_total": "$758,000.00 (General Construction base bid)",
+      "line_item_note": "Bid included unit price for 'GC-1: Interior Door and Frame (per assembly)' at $2,500.00/assembly (8 assemblies = $20,000.00) — direct Division 08 door/frame relevance",
+      "project": "Library/Classroom Renovation Projects, Bid Package #2 (Hazle Twp. ELC, Heights Terrace ES/MS, Maple Manor ES/MS, West Hazleton ES/MS, Career Center MDF), SGA Project No. 19.016",
+      "agency": "Hazleton Area School District, PA",
+      "bid_opening_date": "2020-03-03",
+      "source_url": "https://files-backend.assets.thrillshare.com/documents/asset/uploaded_file/5321/Hasd/17c7ef28-a901-4c09-9ced-bd600f618c30/Library_Classroom_Renovation_Project_Bid__Tall(1).pdf",
+      "source_document": "Bid Tabulation prepared by SGA (Leverington Avenue, Philadelphia, PA — project architect), General Construction contract"
+    },
+    {
+      "company": "Multiscape",
+      "role": "bidder-of-record",
+      "bid_amount_total": "$993,399.00 (General Construction base bid)",
+      "line_item_note": "Bid included unit price for 'GC-1: Interior Door and Frame (per assembly)' at $2,000.00/assembly (8 assemblies = $16,000.00) — direct Division 08 door/frame relevance",
+      "project": "Library/Classroom Renovation Projects, Bid Package #2 (Hazle Twp. ELC, Heights Terrace ES/MS, Maple Manor ES/MS, West Hazleton ES/MS, Career Center MDF), SGA Project No. 19.016",
+      "agency": "Hazleton Area School District, PA",
+      "bid_opening_date": "2020-03-03",
+      "source_url": "https://files-backend.assets.thrillshare.com/documents/asset/uploaded_file/5321/Hasd/17c7ef28-a901-4c09-9ced-bd600f618c30/Library_Classroom_Renovation_Project_Bid__Tall(1).pdf",
+      "source_document": "Bid Tabulation prepared by SGA (Leverington Avenue, Philadelphia, PA — project architect), General Construction contract"
+    },
+    {
+      "company": "Joe E. Hall General Contractor",
+      "role": "bidder-of-record (apparent low bidder, not confirmed award)",
+      "bid_amount_total": "$153,300.00",
+      "mbe_status": "Y",
+      "project": "Exterior Painting Restoration, Douglas Byrd High School (+ two other schools)",
+      "agency": "Cumberland County Schools, NC",
+      "bid_opening_date": "2025-04-01",
+      "source_url": "https://files-backend.assets.thrillshare.com/documents/asset/uploaded_file/4929/Ccs/edfd167d-05b3-46a2-87c9-113193be402e/Bid-Tab-Exterior-Painting-at-DBHS-2025.pdf",
+      "source_document": "Bid Tabulation, certified by John Gordon, Project Manager; agency address 810 Gillespie Street, Fayetteville, NC 28306"
+    },
+    {
+      "company": "Danny Durden Painting",
+      "role": "bidder-of-record",
+      "bid_amount_total": "$261,500.00",
+      "mbe_status": "Y",
+      "project": "Exterior Painting Restoration, Douglas Byrd High School (+ two other schools)",
+      "agency": "Cumberland County Schools, NC",
+      "bid_opening_date": "2025-04-01",
+      "source_url": "https://files-backend.assets.thrillshare.com/documents/asset/uploaded_file/4929/Ccs/edfd167d-05b3-46a2-87c9-113193be402e/Bid-Tab-Exterior-Painting-at-DBHS-2025.pdf",
+      "source_document": "Bid Tabulation, certified by John Gordon, Project Manager; agency address 810 Gillespie Street, Fayetteville, NC 28306"
+    },
+    {
+      "company": "L&L Drywall & Construction",
+      "role": "bidder-of-record",
+      "bid_amount_total": "$207,290.00",
+      "mbe_status": "Y",
+      "project": "Exterior Painting Restoration, Douglas Byrd High School (+ two other schools)",
+      "agency": "Cumberland County Schools, NC",
+      "bid_opening_date": "2025-04-01",
+      "source_url": "https://files-backend.assets.thrillshare.com/documents/asset/uploaded_file/4929/Ccs/edfd167d-05b3-46a2-87c9-113193be402e/Bid-Tab-Exterior-Painting-at-DBHS-2025.pdf",
+      "source_document": "Bid Tabulation, certified by John Gordon, Project Manager; agency address 810 Gillespie Street, Fayetteville, NC 28306"
+    },
+    {
+      "company": "Mac Brothers Painting",
+      "role": "bidder-of-record (withdrew bid)",
+      "bid_amount_total": null,
+      "note": "Listed on the bid tabulation but withdrew its bid — included for completeness/traceability, not a live prospect signal.",
+      "project": "Exterior Painting Restoration, Douglas Byrd High School (+ two other schools)",
+      "agency": "Cumberland County Schools, NC",
+      "bid_opening_date": "2025-04-01",
+      "source_url": "https://files-backend.assets.thrillshare.com/documents/asset/uploaded_file/4929/Ccs/edfd167d-05b3-46a2-87c9-113193be402e/Bid-Tab-Exterior-Painting-at-DBHS-2025.pdf",
+      "source_document": "Bid Tabulation, certified by John Gordon, Project Manager; agency address 810 Gillespie Street, Fayetteville, NC 28306"
+    },
+    {
+      "company": "Environmental Landscape Solutions",
+      "role": "bidder-of-record (apparent low bidder, not confirmed award)",
+      "bid_amount_total": "$94,775.00",
+      "project": "832.1201 — King Softball Field Replacement",
+      "agency": "Berkeley Unified School District, CA",
+      "bid_opening_date": "2012-05-10",
+      "source_url": "https://www.berkeleyschools.net/wp-content/uploads/2012/06/8321201BidResults.pdf",
+      "source_document": "Bid Tabulation Form, Berkeley USD Purchasing Office, 1720 Oregon Street, Berkeley, CA 94703",
+      "caveat": "Source PDF is a scanned/OCR'd document with degraded text quality; company name and bid amount were legible and cross-checked, but this is an older (2012) record — verify the company is still active before any use."
+    },
+    {
+      "company": "Cleary Bros Landscape",
+      "role": "bidder-of-record",
+      "bid_amount_total": "$126,000.00",
+      "project": "832.1201 — King Softball Field Replacement",
+      "agency": "Berkeley Unified School District, CA",
+      "bid_opening_date": "2012-05-10",
+      "source_url": "https://www.berkeleyschools.net/wp-content/uploads/2012/06/8321201BidResults.pdf",
+      "source_document": "Bid Tabulation Form, Berkeley USD Purchasing Office, 1720 Oregon Street, Berkeley, CA 94703",
+      "caveat": "Source PDF is a scanned/OCR'd document with degraded text quality; company name and bid amount were legible and cross-checked, but this is an older (2012) record — verify the company is still active before any use."
+    },
+    {
+      "company": "Suarez & Munoz Construction",
+      "role": "bidder-of-record",
+      "bid_amount_total": "$199,000.00",
+      "project": "832.1201 — King Softball Field Replacement",
+      "agency": "Berkeley Unified School District, CA",
+      "bid_opening_date": "2012-05-10",
+      "source_url": "https://www.berkeleyschools.net/wp-content/uploads/2012/06/8321201BidResults.pdf",
+      "source_document": "Bid Tabulation Form, Berkeley USD Purchasing Office, 1720 Oregon Street, Berkeley, CA 94703",
+      "caveat": "Source PDF is a scanned/OCR'd document with degraded text quality; company name and bid amount were legible and cross-checked, but this is an older (2012) record — verify the company is still active before any use. Of the three companies on this source, this is the only one that is a general contractor rather than a landscaping specialist, so it is the closest fit to weylandai's core GC/subcontractor target."
+    }
+  ],
+  "limitations": [
+    "This is a small, hand-verified list (12 entries across 4 real bid-tabulation documents), not a scaled prospect pipeline. Scaling would require either a much larger seed list of known bid-tab URLs or solving the harder problem of reliably parsing heterogeneous bid-tab table layouts without fabricating structure that isn't really there.",
+    "Only 2 of the 12 entries (Mar-Paul Company Inc., Multiscape) are on a project with direct Division 08 (door/hardware) line items — the rest are general-construction/roofing/painting/landscape bidders on public K-12 work, which is still weylandai's target buyer profile (GCs and subs who respond to formal public bid packages) but not door-schedule-specific.",
+    "Most public agency bid postings do NOT publish bid tabulations at a stable, discoverable URL — of 6 search targets investigated (Rockford IL, Christina SD DE, Berryessa CA — the original door-schedule seeds — plus Winnacunnet NH and SPPS MN), only the 4 seeds in this crawler yielded a real, fetchable bid-tab PDF with named bidders. The Rockford/Christina/Berryessa results (searched again this session) still could not be located, consistent with the 2026-09-03 finding.",
+    "'Apparent low bidder' labels are informed guesses based on the lowest bid amount on a tabulation sheet, not a confirmed contract award — no seed document explicitly states 'AWARDED TO: ...'. Treat those labels as bidding activity, not proof of a signed contract.",
+    "No contact information (phone, email, named individual) was collected for any company — per task constraints, this is a compilation of company name + project + source, not an outreach-ready contact list."
+  ]
+}
