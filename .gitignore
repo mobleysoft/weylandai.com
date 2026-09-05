@@ -1,5 +1,7 @@
 node_modules/
 dist/
+.wrangler/
+*.bak-*
 .env
 .env.local
 *.log

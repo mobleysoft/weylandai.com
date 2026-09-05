@@ -1,0 +1,61 @@
+{
+  "updated_at": "2026-09-02T14:04:16.658Z",
+  "documents": [
+    {
+      "filename": "dd339f57b51538ed.pdf",
+      "sha256": "dd339f57b51538ed362f6fd1c1d9f460fe2dacc6699b5e424d69304bb351265b",
+      "source_url": "https://www.berryessa.k12.ca.us/documents/MEASURE%20U%20BOND%20PROJECTS%202023-24/BID%20B-09-2023-24%20INTERIOR%20DOOR%20REPLACE%203%20SCHOOLS/PROJECT-MANUAL-DRAWINGS-BID-B-09-2023-24-INTERIOR-DOOR-REPLACEMENT-THREE-ELEMENTARY-SCHOOLS.pdf",
+      "source_label": "Berryessa Union School District — Bid B-09-2023-24 Interior Door Replacement (3 elementary schools)",
+      "bytes": 5789186,
+      "fetched_at": "2026-09-02T13:46:06.643Z"
+    },
+    {
+      "filename": "4e600acf05b8c943.pdf",
+      "sha256": "4e600acf05b8c9432277b0c3e1c32544077be16090a39d25505ecc97836eace5",
+      "source_url": "https://core-docs.s3.us-east-1.amazonaws.com/documents/asset/uploaded_file/4629/rps/4532913/24-59_Add._No._1.pdf",
+      "source_label": "Rockford Board of Education — Bid 24-59 Addendum No. 1 (updates Door Schedule 119.2, adds exterior door 126.1.1)",
+      "bytes": 1045373,
+      "fetched_at": "2026-09-02T14:04:06.132Z"
+    },
+    {
+      "filename": "a03cdcca2934ca5a.pdf",
+      "sha256": "a03cdcca2934ca5ad23d1db272bb2348ba860e3dc1666bbc1173e8bb9bb5705a",
+      "source_url": "https://core-docs.s3.us-east-1.amazonaws.com/documents/asset/uploaded_file/4629/rps/4532798/24-46_Add._No._1.pdf",
+      "source_label": "Rockford Board of Education — Bid 24-46 Addendum No. 1",
+      "bytes": 1612886,
+      "fetched_at": "2026-09-02T14:04:06.403Z"
+    },
+    {
+      "filename": "f0e863d88ea688ff.pdf",
+      "sha256": "f0e863d88ea688fffdb625132383d48130afb8a50ae4546fd4627281e2648c59",
+      "source_url": "https://files-backend.assets.thrillshare.com/documents/asset/uploaded_file/4629/Rps/bfc49a08-a8c7-4373-8d6d-ca10a1218fa5/26-27-Addendum-One-COMPLETE.pdf",
+      "source_label": "Rockford Board of Education — Bid 26-27 Addendum One (complete)",
+      "bytes": 6803216,
+      "fetched_at": "2026-09-02T14:04:08.022Z"
+    },
+    {
+      "filename": "3613c8cf8793a451.pdf",
+      "sha256": "3613c8cf8793a451210f2d5e481490c64b0ce5fee47d34195ae9e1f668bb8444",
+      "source_url": "https://bidcondocs.delaware.gov/CHR/CHR23024-BRENCONST-specs.pdf",
+      "source_label": "Christina School District (DE) — Bid CHR23024 Brennen School Renovations specs",
+      "bytes": 3391468,
+      "fetched_at": "2026-09-02T14:04:09.899Z"
+    },
+    {
+      "filename": "525dc0b72011077a.pdf",
+      "sha256": "525dc0b72011077a6781aeaed3c325ce249a416be42803906d81f4fcbc992eba",
+      "source_url": "https://bidcondocs.delaware.gov/CHR/CHR23018-CHSGVEST-specs.pdf",
+      "source_label": "Christina School District (DE) — Bid CHR23018 Christiana HS G-Building Secure Vestibule (entry door + hardware replacement)",
+      "bytes": 5921486,
+      "fetched_at": "2026-09-02T14:04:12.548Z"
+    },
+    {
+      "filename": "698d75cbfa43c61e.pdf",
+      "sha256": "698d75cbfa43c61ece71e6c053cc93a6b4ca10905a40fedfb7e413e91565e95c",
+      "source_url": "https://bidcondocs.delaware.gov/CHR/CHR_19038At_specs_pt1.pdf",
+      "source_label": "Christina School District (DE) — Bid CHR_19038At specs pt1",
+      "bytes": 8124951,
+      "fetched_at": "2026-09-02T14:04:16.658Z"
+    }
+  ]
+}
