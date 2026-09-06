@@ -44,6 +44,26 @@ hand-edited ever since instead of being regenerated from real sources.
   first-request accounting, decrementing remaining, exceeding the limit,
   independent tracking per user and per operation, window-expiry reset,
   fail-open behavior when the KV binding throws, and default limits.
+- `error-utilities.js` — extracted from the segment tagged
+  `// error-utilities.js` (original file lines ~143917-144203).
+  `ErrorCodes`, `classifyError()`, `createErrorResponse()`,
+  `jsonErrorResponse()`, the `ErrorMetrics` class (KV-backed error/latency
+  counters), and `performHealthCheck()` (DB/CACHE/OCR_SERVICE binding
+  checks). This is the most heavily-reused cluster extracted so far -
+  real call sites across PDF extraction, submittal processing, and the
+  health endpoint, not a single-use utility. Renamed esbuild's
+  collision-suffixed locals (`error4`->`error`, `context3`->`context`,
+  `count3`->`count`, `env2`->`env`) back to their real names - naming
+  only, no behavior change. **Verified via a real, saved, re-runnable
+  test file** (`error-utilities.test.mjs`, 21 passing cases - run with
+  `node --test src/error-utilities.test.mjs`): every `classifyError()`
+  branch (circuit breaker, timeout, validation, rate limit, 5xx, auth,
+  payload-too-large, DB constraint, generic DB, network, fallback),
+  `createErrorResponse()`/`jsonErrorResponse()` shaping and status-code
+  mapping, `ErrorMetrics` against an in-memory fake KV (including
+  fail-open when CACHE is missing), and `performHealthCheck()` against
+  faked DB/CACHE/OCR_SERVICE bindings (healthy, degraded-DB,
+  missing-OCR-binding cases).
 
 **Not yet done, and deliberately not attempted yet:** wiring this back
 into `weyland.worker.js` via a real esbuild step. That requires
