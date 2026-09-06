@@ -9,6 +9,23 @@ then re-run this script. Everything outside the page-serving section (all
 the real backend business logic - PDF generation, cut-sheet matching, auth,
 etc.) is left completely untouched.
 
+*** DO NOT RUN THIS BLINDLY - confirmed 2026-09-06 unsafe as-is. ***
+Running it during Loop J silently reverted 5 live production pages
+(investors, careers, onboarding, progress, venturedeck) to stale
+src/pages/*.html content, wiping out real hand-patches that had been
+applied directly to weyland.worker.js after the last build and never
+copied back into src/pages/ or routes_manifest.json (e.g. onboarding,
+progress, and venturedeck had all been turned into real redirects to fix
+a "truncated mid-edit" bug - this script silently un-fixed all three by
+re-serving the broken stale HTML). serve_investors wasn't in the manifest
+at all and was deleted outright. Caught and reverted the same session by
+diffing every serve_* function against the pre-build git HEAD before
+trusting the rebuild - see that commit's message for the recovery.
+Before running this again: audit EVERY route in the current deployed
+weyland.worker.js against src/pages/*.html + routes_manifest.json and
+reconcile any drift (copy the real hand-patched content back into the
+source files/manifest) first, or this will repeat the same regression.
+
 Usage: python3 build.py
 """
 import json
