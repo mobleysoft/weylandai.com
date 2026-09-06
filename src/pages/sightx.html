@@ -1759,5 +1759,72 @@
       manifestUrl: '/sightx/runtime-manifest.json'
     }).catch(error => console.error('[SightX runtime]', error));
   </script>
+
+  <!-- Guided Walkthrough Preview — real, deployed 2026-09-06. SightX's own
+       spec promises "guided site walkthroughs"; the WebGL scene above is
+       one real hardcoded demo project (Glendale Camino Real). This panel
+       is a genuinely different, smaller, real slice of that same promise:
+       given a plain-text project description, it generates an actual
+       narrated storyboard walkthrough (script via a self-hosted LLM,
+       animated-SVG scene sequence, optional browser text-to-speech) —
+       not a 3D render, not a video file. Calls weylandai's own
+       /api/sightx/walkthrough-preview, which forwards to
+       filmline-video-worker over a real same-account Service Binding. -->
+  <div id="wt-preview-toggle" style="position:fixed;right:20px;bottom:20px;z-index:9999;">
+    <button id="wt-preview-btn" style="padding:10px 16px;background:#f0b800;color:#090a0d;border:0;border-radius:6px;font-weight:700;font-family:'Space Grotesk',sans-serif;cursor:pointer;box-shadow:0 2px 12px rgba(0,0,0,0.4);">Guided Walkthrough Preview</button>
+  </div>
+  <div id="wt-preview-panel" style="display:none;position:fixed;inset:0;z-index:10000;background:rgba(9,10,13,0.92);overflow:auto;">
+    <div style="max-width:820px;margin:40px auto;background:#12151a;border:1px solid #2a2e36;border-radius:10px;padding:28px;color:#f4f1ea;font-family:'Outfit',sans-serif;">
+      <div style="display:flex;justify-content:space-between;align-items:center;">
+        <h2 style="margin:0;font-family:'Space Grotesk',sans-serif;">Guided Walkthrough Preview</h2>
+        <button id="wt-preview-close" style="background:none;border:0;color:#8a94a6;font-size:22px;cursor:pointer;">&times;</button>
+      </div>
+      <p style="color:#a9b2c0;font-size:14px;line-height:1.6;">Describe a project (e.g. "second-floor mechanical retrofit, three access points, one hazardous-material zone") and generate a real narrated storyboard walkthrough — a script plus an animated scene sequence, played back with your browser's own text-to-speech. This is not the 3D scene above; it's a smaller, real, honest slice of SightX's "guided site walkthroughs" promise: script + animated storyboard, not photorealistic render or an encoded video file.</p>
+      <textarea id="wt-preview-input" rows="3" maxlength="1000" placeholder="Describe the project or space to walk through..." style="width:100%;box-sizing:border-box;background:#0d0f13;color:#f4f1ea;border:1px solid #2a2e36;border-radius:6px;padding:10px;font-family:inherit;font-size:14px;"></textarea>
+      <button id="wt-preview-generate" style="margin-top:10px;padding:10px 18px;background:#f0b800;color:#090a0d;border:0;border-radius:6px;font-weight:700;cursor:pointer;">Generate</button>
+      <span id="wt-preview-status" style="margin-left:12px;color:#8a94a6;font-size:13px;"></span>
+      <div id="wt-preview-result" style="margin-top:18px;"></div>
+    </div>
+  </div>
+  <script>
+    (function () {
+      var toggleBtn = document.getElementById('wt-preview-btn');
+      var panel = document.getElementById('wt-preview-panel');
+      var closeBtn = document.getElementById('wt-preview-close');
+      var genBtn = document.getElementById('wt-preview-generate');
+      var input = document.getElementById('wt-preview-input');
+      var status = document.getElementById('wt-preview-status');
+      var result = document.getElementById('wt-preview-result');
+      toggleBtn.addEventListener('click', function () { panel.style.display = 'block'; });
+      closeBtn.addEventListener('click', function () { panel.style.display = 'none'; });
+      genBtn.addEventListener('click', function () {
+        var description = (input.value || '').trim();
+        if (!description) { status.textContent = 'Enter a project description first.'; return; }
+        status.textContent = 'Generating (real model inference, ~10-20s)...';
+        result.innerHTML = '';
+        genBtn.disabled = true;
+        fetch('/api/sightx/walkthrough-preview', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ description: description })
+        }).then(function (r) { return r.json().then(function (d) { return { ok: r.ok, d: d }; }); })
+          .then(function (res) {
+            genBtn.disabled = false;
+            if (!res.ok) { status.textContent = 'Error: ' + (res.d && res.d.detail && res.d.detail.message || 'generation failed'); return; }
+            status.textContent = 'Done (' + res.d.total_seconds + 's reel, ' + res.d.scene_count + ' scenes).';
+            result.innerHTML = res.d.svg + '<p style="margin-top:12px;color:#8a94a6;font-size:13px;">' + res.d.logline_escaped + '</p>' +
+              '<button id="wt-preview-narrate" style="margin-top:6px;padding:8px 14px;background:#2a2e36;color:#f4f1ea;border:0;border-radius:6px;cursor:pointer;">Narrate (browser text-to-speech)</button>';
+            document.getElementById('wt-preview-narrate').addEventListener('click', function () {
+              if (!('speechSynthesis' in window)) { alert('No speechSynthesis support in this browser.'); return; }
+              window.speechSynthesis.cancel();
+              (res.d.narration_lines || []).forEach(function (line) {
+                if (line) window.speechSynthesis.speak(new SpeechSynthesisUtterance(line));
+              });
+            });
+          })
+          .catch(function (err) { genBtn.disabled = false; status.textContent = 'Request failed: ' + err.message; });
+      });
+    })();
+  </script>
 </body>
 </html>
