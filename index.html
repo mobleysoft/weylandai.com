@@ -65,6 +65,9 @@
     .status-badge{font:800 9px ui-monospace,monospace;padding:5px 10px;border-radius:99px;display:inline-block;letter-spacing:.08em}
     .status-matched{background:rgba(97,223,160,.15);color:var(--green);border:1px solid rgba(97,223,160,.35)}
     .status-pending{background:rgba(240,184,0,.15);color:var(--gold);border:1px solid rgba(240,184,0,.35)}
+    tr.row-matched{cursor:pointer}
+    tr.row-matched:focus-visible{outline:2px solid var(--purple);outline-offset:-2px}
+    tr.row-matched.seen td:first-child{box-shadow:inset 3px 0 0 var(--green)}
 
     .note-card{background:rgba(18,20,25,.9);border:1px solid var(--line);border-radius:14px;padding:22px;color:var(--muted);font-size:14px;line-height:1.6;margin-bottom:20px}
     .note-card b{color:var(--text)}
@@ -115,7 +118,8 @@
 
     <div class="note-card">
       <b>The WeylandAI Building</b> &middot; New Corporate Headquarters, 4400 Bluestem Parkway, Austin, TX &middot; 6 floors, 118,000 sq ft (invented example project)<br>
-      Hardware schedule extracted from architectural door schedule sheets A9.01&ndash;A9.03, matched against a manufacturer cut-sheet catalogue by CutsheetX. Every match keeps its source citation attached in the real product.
+      Hardware schedule extracted from architectural door schedule sheets A9.01&ndash;A9.03, matched against a manufacturer cut-sheet catalogue by CutsheetX. Every match keeps its source citation attached in the real product.<br>
+      <span style="color:var(--muted)">Click a <b style="color:var(--green)">MATCHED</b> row below to acknowledge it.</span>
     </div>
 
     <div class="metrics-row">
@@ -135,15 +139,15 @@
           <tr><th>Door</th><th>Location</th><th>Hardware Set</th><th>Manufacturer / Part No.</th><th>Status</th></tr>
         </thead>
         <tbody>
-          <tr><td class="door-cell">D-101</td><td>Main Lobby Entry</td><td>HW-01 &middot; Storefront exit + closer</td><td class="part-cell">Von Duprin 98-NL-OP &middot; LCN 4040XP-EDA</td><td><span class="status-badge status-matched">MATCHED</span></td></tr>
-          <tr><td class="door-cell">D-114</td><td>Conference Rm A</td><td>HW-04 &middot; Lever + hinges</td><td class="part-cell">Schlage ND70PD RHO 626</td><td><span class="status-badge status-matched">MATCHED</span></td></tr>
-          <tr><td class="door-cell">D-118A</td><td>IT / Server Room</td><td>HW-07 &middot; Electrified lever + mag lock</td><td class="part-cell">Schlage ND96PD EL RHO &middot; Securitron M62</td><td><span class="status-badge status-matched">MATCHED</span></td></tr>
+          <tr class="row-matched" data-door="D-101" tabindex="0" role="button" aria-label="Acknowledge matched item D-101"><td class="door-cell">D-101</td><td>Main Lobby Entry</td><td>HW-01 &middot; Storefront exit + closer</td><td class="part-cell">Von Duprin 98-NL-OP &middot; LCN 4040XP-EDA</td><td><span class="status-badge status-matched">MATCHED</span></td></tr>
+          <tr class="row-matched" data-door="D-114" tabindex="0" role="button" aria-label="Acknowledge matched item D-114"><td class="door-cell">D-114</td><td>Conference Rm A</td><td>HW-04 &middot; Lever + hinges</td><td class="part-cell">Schlage ND70PD RHO 626</td><td><span class="status-badge status-matched">MATCHED</span></td></tr>
+          <tr class="row-matched" data-door="D-118A" tabindex="0" role="button" aria-label="Acknowledge matched item D-118A"><td class="door-cell">D-118A</td><td>IT / Server Room</td><td>HW-07 &middot; Electrified lever + mag lock</td><td class="part-cell">Schlage ND96PD EL RHO &middot; Securitron M62</td><td><span class="status-badge status-matched">MATCHED</span></td></tr>
           <tr><td class="door-cell">D-122</td><td>Stairwell 1</td><td>HW-02 &middot; Fire-rated closer + panic</td><td class="part-cell">Von Duprin 33A-EO &middot; LCN 4111</td><td><span class="status-badge status-pending">PENDING</span></td></tr>
-          <tr><td class="door-cell">D-201</td><td>Executive Suite</td><td>HW-05 &middot; Privacy lever</td><td class="part-cell">Corbin Russwin ML2057 LWA 626</td><td><span class="status-badge status-matched">MATCHED</span></td></tr>
+          <tr class="row-matched" data-door="D-201" tabindex="0" role="button" aria-label="Acknowledge matched item D-201"><td class="door-cell">D-201</td><td>Executive Suite</td><td>HW-05 &middot; Privacy lever</td><td class="part-cell">Corbin Russwin ML2057 LWA 626</td><td><span class="status-badge status-matched">MATCHED</span></td></tr>
           <tr><td class="door-cell">D-207</td><td>Break Room</td><td>HW-03 &middot; Passage lever</td><td class="part-cell">Sargent 10-Line 8205 LNL</td><td><span class="status-badge status-pending">PENDING</span></td></tr>
           <tr><td class="door-cell">D-214B</td><td>Mechanical Room</td><td>HW-08 &middot; Cylindrical lock + kick plate</td><td class="part-cell">Hager 3400 US32D &middot; Rockwood K1050</td><td><span class="status-badge status-pending">PENDING</span></td></tr>
           <tr><td class="door-cell">D-305</td><td>Roof Access</td><td>HW-09 &middot; Weatherstripped panic hardware</td><td class="part-cell">Von Duprin 22-EO &middot; Pemko 303AS</td><td><span class="status-badge status-pending">PENDING</span></td></tr>
-          <tr><td class="door-cell">D-310</td><td>Data Closet, 3rd Fl</td><td>HW-07 &middot; Electrified lever + mag lock</td><td class="part-cell">Schlage ND96PD EL RHO &middot; Securitron M62</td><td><span class="status-badge status-matched">MATCHED</span></td></tr>
+          <tr class="row-matched" data-door="D-310" tabindex="0" role="button" aria-label="Acknowledge matched item D-310"><td class="door-cell">D-310</td><td>Data Closet, 3rd Fl</td><td>HW-07 &middot; Electrified lever + mag lock</td><td class="part-cell">Schlage ND96PD EL RHO &middot; Securitron M62</td><td><span class="status-badge status-matched">MATCHED</span></td></tr>
           <tr><td class="door-cell">D-B02</td><td>Loading Dock</td><td>HW-10 &middot; Heavy-duty closer + threshold</td><td class="part-cell">LCN 4111 EDA &middot; Pemko 2005AT</td><td><span class="status-badge status-pending">PENDING</span></td></tr>
         </tbody>
       </table>
