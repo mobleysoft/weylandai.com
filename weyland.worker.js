@@ -165574,7 +165574,6 @@ var SovereignWeylandRoutes = (function() {
     meetingx: "MEETX",
     qtext: "QTEXT",
     whyweyland: "WHY WEYLAND",
-    venturedeck: "VENTURE DECK",
     careers: "CAREERS"
   };
   function renderNav(current) {
