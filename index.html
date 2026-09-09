@@ -124,53 +124,44 @@
     <div id="view-subx">
     <div class="titlebar">
       <div>
-        <div class="eyebrow">SUBMITTAL AUTOMATION &middot; LIVE DEMO</div>
+        <div class="eyebrow">SUBMITTAL AUTOMATION &middot; TRY IT NOW</div>
         <h1>SubX</h1>
-        <p>You're looking at the real SubX interface, pre-loaded with an invented demo project so you can see the product working without signing in first. No data below is being processed for you &mdash; it's a fixed example, not a live session.</p>
+        <p>You're already using the real SubX interface, working against a real project - no account required. "The WeylandAI Building" is a shared example project anyone can explore; sign in to run SubX on your own drawings and export a finished submittal package.</p>
       </div>
-      <span class="demo-badge">DEMO PROJECT</span>
+      <span class="demo-badge" id="session-badge">CONNECTING&hellip;</span>
     </div>
 
     <div class="note-card">
-      <b>The WeylandAI Building</b> &middot; New Corporate Headquarters, 4400 Bluestem Parkway, Austin, TX &middot; 6 floors, 118,000 sq ft (invented example project)<br>
-      Hardware schedule extracted from architectural door schedule sheets A9.01&ndash;A9.03, matched against a manufacturer cut-sheet catalogue by CutsheetX. Every match keeps its source citation attached in the real product.<br>
+      <b>The WeylandAI Building</b> &middot; New Corporate Headquarters, 4400 Bluestem Parkway, Austin, TX (shared example project, not a real customer)<br>
+      Hardware schedule extracted from a real architectural door schedule, matched against manufacturer hardware sets. <span id="source-note">Loading&hellip;</span><br>
       <span style="color:var(--muted)">Click a <b style="color:var(--green)">MATCHED</b> row below to acknowledge it.</span>
     </div>
 
     <div class="metrics-row">
-      <div class="metric-card"><span>Schedule Lines</span><strong>10</strong></div>
-      <div class="metric-card"><span>Matched</span><strong class="g">5</strong></div>
-      <div class="metric-card"><span>Pending Review</span><strong class="p">5</strong></div>
-      <div class="metric-card"><span>Hardware Sets</span><strong>7</strong></div>
+      <div class="metric-card"><span>Schedule Lines</span><strong id="stat-total">&mdash;</strong></div>
+      <div class="metric-card"><span>Matched</span><strong class="g" id="stat-matched">&mdash;</strong></div>
+      <div class="metric-card"><span>Pending Review</span><strong class="p" id="stat-pending">&mdash;</strong></div>
+      <div class="metric-card"><span>Hardware Sets</span><strong id="stat-sets">&mdash;</strong></div>
     </div>
 
     <div class="table-card">
       <div class="card-head">
         <h3>Door &amp; Hardware Schedule</h3>
-        <span>SOURCE: A9.01&ndash;A9.03 &middot; THE WEYLANDAI BUILDING (DEMO)</span>
+        <span id="table-source-label">LOADING REAL PROJECT DATA&hellip;</span>
       </div>
       <table>
         <thead>
-          <tr><th>Door</th><th>Location</th><th>Hardware Set</th><th>Manufacturer / Part No.</th><th>Status</th></tr>
+          <tr><th>Door</th><th>Location</th><th>Door Type</th><th>Hardware Set</th><th>Status</th></tr>
         </thead>
-        <tbody>
-          <tr class="row-matched" data-door="D-101" tabindex="0" role="button" aria-label="Acknowledge matched item D-101"><td class="door-cell">D-101</td><td>Main Lobby Entry</td><td>HW-01 &middot; Storefront exit + closer</td><td class="part-cell">Von Duprin 98-NL-OP &middot; LCN 4040XP-EDA</td><td><span class="status-badge status-matched">MATCHED</span></td></tr>
-          <tr class="row-matched" data-door="D-114" tabindex="0" role="button" aria-label="Acknowledge matched item D-114"><td class="door-cell">D-114</td><td>Conference Rm A</td><td>HW-04 &middot; Lever + hinges</td><td class="part-cell">Schlage ND70PD RHO 626</td><td><span class="status-badge status-matched">MATCHED</span></td></tr>
-          <tr class="row-matched" data-door="D-118A" tabindex="0" role="button" aria-label="Acknowledge matched item D-118A"><td class="door-cell">D-118A</td><td>IT / Server Room</td><td>HW-07 &middot; Electrified lever + mag lock</td><td class="part-cell">Schlage ND96PD EL RHO &middot; Securitron M62</td><td><span class="status-badge status-matched">MATCHED</span></td></tr>
-          <tr><td class="door-cell">D-122</td><td>Stairwell 1</td><td>HW-02 &middot; Fire-rated closer + panic</td><td class="part-cell">Von Duprin 33A-EO &middot; LCN 4111</td><td><span class="status-badge status-pending">PENDING</span></td></tr>
-          <tr class="row-matched" data-door="D-201" tabindex="0" role="button" aria-label="Acknowledge matched item D-201"><td class="door-cell">D-201</td><td>Executive Suite</td><td>HW-05 &middot; Privacy lever</td><td class="part-cell">Corbin Russwin ML2057 LWA 626</td><td><span class="status-badge status-matched">MATCHED</span></td></tr>
-          <tr><td class="door-cell">D-207</td><td>Break Room</td><td>HW-03 &middot; Passage lever</td><td class="part-cell">Sargent 10-Line 8205 LNL</td><td><span class="status-badge status-pending">PENDING</span></td></tr>
-          <tr><td class="door-cell">D-214B</td><td>Mechanical Room</td><td>HW-08 &middot; Cylindrical lock + kick plate</td><td class="part-cell">Hager 3400 US32D &middot; Rockwood K1050</td><td><span class="status-badge status-pending">PENDING</span></td></tr>
-          <tr><td class="door-cell">D-305</td><td>Roof Access</td><td>HW-09 &middot; Weatherstripped panic hardware</td><td class="part-cell">Von Duprin 22-EO &middot; Pemko 303AS</td><td><span class="status-badge status-pending">PENDING</span></td></tr>
-          <tr class="row-matched" data-door="D-310" tabindex="0" role="button" aria-label="Acknowledge matched item D-310"><td class="door-cell">D-310</td><td>Data Closet, 3rd Fl</td><td>HW-07 &middot; Electrified lever + mag lock</td><td class="part-cell">Schlage ND96PD EL RHO &middot; Securitron M62</td><td><span class="status-badge status-matched">MATCHED</span></td></tr>
-          <tr><td class="door-cell">D-B02</td><td>Loading Dock</td><td>HW-10 &middot; Heavy-duty closer + threshold</td><td class="part-cell">LCN 4111 EDA &middot; Pemko 2005AT</td><td><span class="status-badge status-pending">PENDING</span></td></tr>
+        <tbody id="door-schedule-tbody">
+          <tr><td colspan="5" style="color:var(--muted);text-align:center;padding:24px">Connecting to a real trial session&hellip;</td></tr>
         </tbody>
       </table>
     </div>
 
     <div class="note-card">
-      This demo project is fixed and invented for illustration &mdash; "The WeylandAI Building" is not a real customer or a real address on file. Sign in to run SubX on your own project's real drawings, or see <code>/pricing</code> for standalone and bundled licensing.
-      <div style="margin-top:14px"><a class="button primary" href="/login?redirect=/subx">SIGN IN TO START A REAL SUBMITTAL</a></div>
+      This is a real, shared example project - anyone visiting sees and can interact with the same live data. Sign in to run SubX on your own project's real drawings and export a finished submittal package, or see <code>/pricing</code> for standalone and bundled licensing.
+      <div style="margin-top:14px"><a class="button primary" href="/login?redirect=/subx">SIGN IN TO WORK ON YOUR OWN PROJECT</a></div>
     </div>
     </div><!-- /view-subx -->
 
@@ -274,9 +265,9 @@
   <text x="90" y="672" font-family="Helvetica, Arial, sans-serif" font-size="15" fill="#8a94a6">WeylandAI: The Building — 4 scenes — 18.00s reel — filmline.cc</text>
 </svg>`;
 
-    var MATCHED_DOORS = ["D-101","D-114","D-118A","D-201","D-310"];
     var IDLE_MS = 4000;
     var STORAGE_KEY = "weylandai_subx_demo_v1";
+    var EPHEMERAL_TOKEN_KEY = "weylandai_ephemeral_token_v1";
 
     function loadState(){
       try {
@@ -293,6 +284,11 @@
     }
 
     var state = loadState();
+    // Populated once real data loads (see loadRealTrial below) - the
+    // MATCHED_DOORS full_house threshold and the row-click handlers both
+    // need to know the real door set, which doesn't exist until the API
+    // responds. Empty until then, not a hardcoded guess.
+    var MATCHED_DOORS = [];
 
     var viewSubx = document.getElementById("view-subx");
     var viewAmbient = document.getElementById("view-ambient");
@@ -300,6 +296,14 @@
     var btnReturn = document.getElementById("btn-return-subx");
     var badgeTray = document.getElementById("badge-tray");
     var toastEl = document.getElementById("badge-toast");
+    var tbody = document.getElementById("door-schedule-tbody");
+    var sessionBadge = document.getElementById("session-badge");
+    var sourceNote = document.getElementById("source-note");
+    var tableSourceLabel = document.getElementById("table-source-label");
+    var statTotal = document.getElementById("stat-total");
+    var statMatched = document.getElementById("stat-matched");
+    var statPending = document.getElementById("stat-pending");
+    var statSets = document.getElementById("stat-sets");
 
     var BADGE_DEFS = [
       { key: "first_match", label: "First Match" },
@@ -343,12 +347,10 @@
         saveState();
       }
       if (!state.badges.first_match) awardBadge("first_match", "First Match");
-      if (state.matches.length >= MATCHED_DOORS.length) awardBadge("full_house", "Full House");
+      if (MATCHED_DOORS.length && state.matches.length >= MATCHED_DOORS.length) awardBadge("full_house", "Full House");
     }
 
-    // Restore already-acknowledged rows on reload (real persisted state,
-    // not reset every visit).
-    document.querySelectorAll("tr.row-matched").forEach(function(row){
+    function wireMatchRow(row){
       var door = row.getAttribute("data-door");
       if (state.matches.indexOf(door) !== -1) row.classList.add("seen");
       function ack(){ markMatchSeen(door, row); }
@@ -356,9 +358,113 @@
       row.addEventListener("keydown", function(e){
         if (e.key === "Enter" || e.key === " ") { e.preventDefault(); ack(); }
       });
-    });
+    }
 
     renderBadges();
+
+    // --- Real trial session: silently get an AuthFor ephemeral token, ---
+    // --- clone the seed demo project so this visitor has their own    ---
+    // --- private copy, then render the real returned data. No login,  ---
+    // --- no click required - this IS the landing experience.          ---
+    function esc(s){ return String(s == null ? "" : s).replace(/[&<>"']/g, function(c){ return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]; }); }
+
+    function ephemeralToken(){
+      try {
+        var existing = window.sessionStorage.getItem(EPHEMERAL_TOKEN_KEY);
+        if (existing) return Promise.resolve(existing);
+      } catch (e) { /* sessionStorage unavailable - fall through, request a fresh token every time */ }
+      return fetch("https://authfor.com/api/v1/ephemeral/create", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ ventureName: "weylandai.com", displayName: "Landing visitor" })
+      }).then(function(r){
+        if (!r.ok) throw new Error("ephemeral token request failed (" + r.status + ")");
+        return r.json();
+      }).then(function(d){
+        try { window.sessionStorage.setItem(EPHEMERAL_TOKEN_KEY, d.token); } catch (e) {}
+        return d.token;
+      });
+    }
+
+    function showTableError(msg){
+      tbody.innerHTML = '<tr><td colspan="5" style="color:var(--red);text-align:center;padding:24px">' + esc(msg) + "</td></tr>";
+      tableSourceLabel.textContent = "UNABLE TO LOAD";
+      sessionBadge.textContent = "OFFLINE";
+    }
+
+    function renderRealDoorRows(byHardwareSet){
+      var rows = [];
+      Object.keys(byHardwareSet).forEach(function(setNum){
+        byHardwareSet[setNum].forEach(function(d){
+          rows.push({
+            door_number: d.door_number,
+            door_location: d.door_location,
+            door_type: d.door_type,
+            hardware_set: setNum,
+            verified: !!d.verified
+          });
+        });
+      });
+      rows.sort(function(a, b){ return a.door_number.localeCompare(b.door_number, undefined, { numeric: true }); });
+
+      MATCHED_DOORS = rows.filter(function(r){ return r.verified; }).map(function(r){ return r.door_number; });
+
+      tbody.innerHTML = rows.map(function(r){
+        if (r.verified) {
+          return '<tr class="row-matched" data-door="' + esc(r.door_number) + '" tabindex="0" role="button" aria-label="Acknowledge matched item ' + esc(r.door_number) + '">' +
+            '<td class="door-cell">' + esc(r.door_number) + "</td><td>" + esc(r.door_location) + "</td><td>" + esc(r.door_type) + "</td><td>" + esc(r.hardware_set) +
+            '</td><td><span class="status-badge status-matched">MATCHED</span></td></tr>';
+        }
+        return '<tr><td class="door-cell">' + esc(r.door_number) + "</td><td>" + esc(r.door_location) + "</td><td>" + esc(r.door_type) + "</td><td>" + esc(r.hardware_set) +
+          '</td><td><span class="status-badge status-pending">PENDING</span></td></tr>';
+      }).join("");
+
+      document.querySelectorAll("tr.row-matched").forEach(wireMatchRow);
+
+      var matchedCount = MATCHED_DOORS.length;
+      statTotal.textContent = String(rows.length);
+      statMatched.textContent = String(matchedCount);
+      statPending.textContent = String(rows.length - matchedCount);
+      statSets.textContent = String(Object.keys(byHardwareSet).length);
+    }
+
+    function loadRealTrial(){
+      var token;
+      ephemeralToken().then(function(t){
+        token = t;
+        return fetch("/api/demo/weyland-building/session", {
+          method: "POST",
+          headers: { "Authorization": "Bearer " + token }
+        });
+      }).then(function(r){
+        if (!r.ok) throw new Error("trial session request failed (" + r.status + ")");
+        return r.json();
+      }).then(function(session){
+        return fetch("/api/hardware-schedule/session/" + encodeURIComponent(session.session_id) + "/door-index", {
+          headers: { "Authorization": "Bearer " + token }
+        }).then(function(r){
+          if (!r.ok) throw new Error("door schedule request failed (" + r.status + ")");
+          return r.json();
+        }).then(function(doorIndex){
+          return { session: session, doorIndex: doorIndex };
+        });
+      }).then(function(result){
+        renderRealDoorRows(result.doorIndex.by_hardware_set);
+        sessionBadge.textContent = result.session.reused ? "YOUR SESSION" : "LIVE — JUST FOR YOU";
+        sourceNote.textContent = "Every match keeps its source citation attached in the real product. This is your own private copy of the example project — nothing you do here affects other visitors.";
+        tableSourceLabel.textContent = "THE WEYLANDAI BUILDING · YOUR TRIAL SESSION";
+        // Restore already-acknowledged rows from a prior visit now that
+        // MATCHED_DOORS (and the rendered rows) reflect real data.
+        document.querySelectorAll("tr.row-matched").forEach(function(row){
+          if (state.matches.indexOf(row.getAttribute("data-door")) !== -1) row.classList.add("seen");
+        });
+      }).catch(function(err){
+        console.error("[Trial] load failed:", err);
+        showTableError("Unable to connect to a live trial session right now (" + err.message + "). Refresh to retry, or sign in to use SubX directly.");
+      });
+    }
+
+    loadRealTrial();
 
     // --- Idle timer: after 4s with no interaction, fade to the ambient
     // reveal. Any interaction (mouse, touch, key, scroll, click) resets
