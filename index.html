@@ -56,7 +56,8 @@
     .table-card .card-head{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:18px 20px;border-bottom:1px solid var(--line);flex-wrap:wrap}
     .table-card .card-head h3{margin:0;font-size:15px;letter-spacing:.02em}
     .table-card .card-head span{color:var(--muted);font:700 10px/1 ui-monospace,monospace;letter-spacing:.06em}
-    table{width:100%;border-collapse:collapse;font-size:14px}
+    .table-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch}
+    table{width:100%;min-width:640px;border-collapse:collapse;font-size:14px}
     th{text-align:left;color:var(--muted);font:750 10px/1 ui-monospace,monospace;letter-spacing:.1em;padding:16px 20px;background:#0d0f14;border-bottom:2px solid var(--line)}
     td{padding:14px 20px;border-bottom:1px solid #1f232b;vertical-align:middle}
     tr:hover td{background:rgba(167,139,242,.04)}
@@ -149,6 +150,7 @@
         <h3>Door &amp; Hardware Schedule</h3>
         <span id="table-source-label">LOADING REAL PROJECT DATA&hellip;</span>
       </div>
+      <div class="table-scroll">
       <table>
         <thead>
           <tr><th>Door</th><th>Location</th><th>Door Type</th><th>Hardware Set</th><th>Status</th></tr>
@@ -157,6 +159,7 @@
           <tr><td colspan="5" style="color:var(--muted);text-align:center;padding:24px">Connecting to a real trial session&hellip;</td></tr>
         </tbody>
       </table>
+      </div>
     </div>
 
     <div class="note-card">
