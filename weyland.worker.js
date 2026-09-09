@@ -2277,6 +2277,79 @@ function registerProjectRoutes(router2, { transformDoorEntriesToHardwareSets: tr
   });
 }
 
+// src/routes/demo-trial.js
+var SEED_PROJECT_ID = "eabd5ff6-e19f-4e6b-acfc-9a250445dfa8";
+var SEED_SESSION_ID = "cc961a0b-471b-4229-9e0e-deb503e50d3a";
+var CLONE_TTL_SECONDS = 24 * 60 * 60;
+function registerDemoTrialRoutes(router2) {
+  router2.post("/api/demo/weyland-building/session", async (request2, env2) => {
+    const { error: error4, user } = await authenticate(request2, env2);
+    if (error4) return error4;
+    try {
+      const callerKey = user.ephemeral ? `eph:${user.id}` : `user:${user.userId}`;
+      const cacheKey = `demo-clone:${callerKey}`;
+      const cached = await env2.CACHE.get(cacheKey, "json");
+      if (cached && cached.project_id && cached.session_id) {
+        return jsonResponse3({ project_id: cached.project_id, session_id: cached.session_id, reused: true });
+      }
+      const seedProject = await env2.DB.prepare("SELECT * FROM projects WHERE id = ?").bind(SEED_PROJECT_ID).first();
+      if (!seedProject) {
+        return jsonResponse3({ error: "Demo seed project not found - it may have been removed" }, 500);
+      }
+      const seedDoorRows = await env2.DB.prepare(
+        "SELECT door_number, door_location, door_type, hardware_set_number, source_page, source_type, extraction_confidence, verified FROM door_hardware_matrix WHERE session_id = ?"
+      ).bind(SEED_SESSION_ID).all();
+      const now = (/* @__PURE__ */ new Date()).toISOString();
+      const newProjectId = crypto.randomUUID();
+      const newSessionId = crypto.randomUUID();
+      const ownerUserId = user.ephemeral ? null : user.userId;
+      const tenantId = user.tenantId || user.tenant_id || "ven_weyland";
+      await env2.DB.prepare(`
+        INSERT INTO projects (id, tenant_id, name, project_type, status, client_name, project_address, architect, created_at, updated_at, created_by)
+        VALUES (?, ?, ?, ?, 'active', ?, ?, ?, ?, ?, ?)
+      `).bind(
+        newProjectId,
+        tenantId,
+        seedProject.name,
+        seedProject.project_type,
+        seedProject.client_name,
+        seedProject.project_address,
+        seedProject.architect,
+        now,
+        now,
+        ownerUserId
+      ).run();
+      await env2.DB.prepare(`
+        INSERT INTO hardware_extraction_sessions (id, user_id, project_name, filename, file_buffer_key, total_pages, status, created_at)
+        VALUES (?, ?, ?, ?, ?, 1, 'completed', ?)
+      `).bind(newSessionId, seedProject.created_by, seedProject.name, "weyland_building_schedule.pdf", `demo-clone/${newSessionId}`, now).run();
+      const rows = seedDoorRows.results || [];
+      for (const row of rows) {
+        await env2.DB.prepare(`
+          INSERT INTO door_hardware_matrix (id, session_id, door_number, door_location, door_type, hardware_set_number, source_page, source_type, extraction_confidence, verified)
+          VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+        `).bind(
+          crypto.randomUUID(),
+          newSessionId,
+          row.door_number,
+          row.door_location,
+          row.door_type,
+          row.hardware_set_number,
+          row.source_page,
+          row.source_type,
+          row.extraction_confidence,
+          row.verified
+        ).run();
+      }
+      await env2.CACHE.put(cacheKey, JSON.stringify({ project_id: newProjectId, session_id: newSessionId }), { expirationTtl: CLONE_TTL_SECONDS });
+      return jsonResponse3({ project_id: newProjectId, session_id: newSessionId, reused: false, door_count: rows.length }, 201);
+    } catch (err) {
+      console.error("[Demo Trial] Clone error:", err);
+      return jsonResponse3({ error: "Failed to start trial session: " + err.message }, 500);
+    }
+  });
+}
+
 // src/legacy-monolith.js
 import { Writable } from "node:stream";
 import { Socket } from "node:net";
@@ -157174,6 +157247,7 @@ function getUnaffirmReason(item, type) {
 }
 __name(getUnaffirmReason, "getUnaffirmReason");
 registerProjectRoutes(router, { transformDoorEntriesToHardwareSets, materializeDseToLineItems });
+registerDemoTrialRoutes(router);
 router.get("/api/vendor-profile", async (request2, env2) => {
   const { error: error4, user } = await authenticate(request2, env2);
   if (error4)

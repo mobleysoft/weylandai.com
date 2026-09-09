@@ -25,6 +25,7 @@ import { authenticate, authenticateCps, requireActiveSubscription, requireProduc
 import { jsonResponse3 } from "./lib/json-response.js";
 import { registerDocumentGeneratorRoutes } from "./routes/document-generators.js";
 import { registerProjectRoutes } from "./routes/projects.js";
+import { registerDemoTrialRoutes } from "./routes/demo-trial.js";
 var __create = Object.create;
 var __defProp = Object.defineProperty;
 var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
@@ -153206,6 +153207,7 @@ function getUnaffirmReason(item, type) {
 }
 __name(getUnaffirmReason, "getUnaffirmReason");
 registerProjectRoutes(router, { transformDoorEntriesToHardwareSets, materializeDseToLineItems });
+registerDemoTrialRoutes(router);
 router.get("/api/vendor-profile", async (request2, env2) => {
   const { error: error4, user } = await authenticate(request2, env2);
   if (error4)
