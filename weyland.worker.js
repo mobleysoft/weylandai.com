@@ -205,16 +205,19 @@ async function authenticateViaAuthFor(request2, env2) {
       const identity2 = await verifyResp.json();
       if (identity2 && identity2.email) {
         const localUser = await env2.DB.prepare(
-          "SELECT id, email, name FROM users WHERE email = ?"
+          "SELECT id, email, name, tenant_id FROM users WHERE email = ?"
         ).bind(identity2.email).first();
         if (localUser) {
+          const tenantId = localUser.tenant_id || "ven_weyland";
           return {
             user: {
               sub: localUser.id,
               userId: localUser.id,
               id: localUser.id,
               email: localUser.email,
-              name: localUser.name || identity2.name
+              name: localUser.name || identity2.name,
+              tenantId,
+              tenant_id: tenantId
             }
           };
         }

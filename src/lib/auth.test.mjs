@@ -114,6 +114,41 @@ test("authenticate(): real AuthFor Bearer-token path (mechanism #3) verifies aga
   }
 });
 
+test("authenticate(): AuthFor-bridged user gets a real tenantId, not undefined - regression test for a real production 500", async () => {
+  // Found 2026-09-09 while seeding a real demo project: this path used to
+  // return a user with no tenantId/tenant_id at all, so POST /api/projects
+  // (which INSERTs into a NOT NULL tenant_id column) threw a real
+  // D1_TYPE_ERROR for every AuthFor-authenticated customer. Confirmed live
+  // against production before this fix, then again after.
+  const originalFetch = globalThis.fetch;
+  globalThis.fetch = async () => ({
+    ok: true,
+    json: async () => ({ email: "no-tenant@example.com", name: "No Tenant Row" }),
+  });
+  try {
+    const envNullTenant = {
+      DB: makeFakeDb({
+        userByEmail: { id: "user_3", email: "no-tenant@example.com", name: "No Tenant Row", tenant_id: null },
+      }),
+    };
+    const req1 = makeRequest({ bearer: "token-1" });
+    const result1 = await authenticate(req1, envNullTenant);
+    assert.equal(result1.user.tenantId, "ven_weyland", "falls back to the same default legacy-local-session.js uses");
+    assert.equal(result1.user.tenant_id, "ven_weyland");
+
+    const envRealTenant = {
+      DB: makeFakeDb({
+        userByEmail: { id: "user_4", email: "no-tenant@example.com", name: "Has Tenant", tenant_id: "tenant-abc123" },
+      }),
+    };
+    const req2 = makeRequest({ bearer: "token-2" });
+    const result2 = await authenticate(req2, envRealTenant);
+    assert.equal(result2.user.tenantId, "tenant-abc123", "uses the real stored tenant_id when one exists, not the fallback");
+  } finally {
+    globalThis.fetch = originalFetch;
+  }
+});
+
 test("authenticate(): AuthFor verifies identity but no local account exists yet -> explicit 404, not a silent fall-through", async () => {
   const originalFetch = globalThis.fetch;
   globalThis.fetch = async () => ({

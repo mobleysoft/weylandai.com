@@ -45,16 +45,30 @@ export async function authenticateViaAuthFor(request2, env2) {
       const identity = await verifyResp.json();
       if (identity && identity.email) {
         const localUser = await env2.DB.prepare(
-          "SELECT id, email, name FROM users WHERE email = ?"
+          "SELECT id, email, name, tenant_id FROM users WHERE email = ?"
         ).bind(identity.email).first();
         if (localUser) {
+          // Fixed 2026-09-09: this returned user objects with no
+          // tenantId/tenant_id at all, so any route that used it (e.g.
+          // POST /api/projects, which INSERTs into a NOT NULL tenant_id
+          // column) got a real D1_TYPE_ERROR "Type 'undefined' not
+          // supported" - a 500 for every real AuthFor-authenticated
+          // customer trying to create a project, found while seeding a
+          // real demo project through this exact path. users.tenant_id
+          // is nullable and usually unset (nothing else in this codebase
+          // populates it for AuthFor-bridged accounts either) - default to
+          // "ven_weyland", the same fallback the local-session path
+          // (legacy-local-session.js) already uses for the same reason.
+          const tenantId = localUser.tenant_id || "ven_weyland";
           return {
             user: {
               sub: localUser.id,
               userId: localUser.id,
               id: localUser.id,
               email: localUser.email,
-              name: localUser.name || identity.name
+              name: localUser.name || identity.name,
+              tenantId,
+              tenant_id: tenantId
             }
           };
         }
