@@ -12,7 +12,7 @@
 
 import { test } from "node:test";
 import assert from "node:assert/strict";
-import { authenticate, requireProductAccess } from "./auth.js";
+import { authenticate, requireProductAccess, requireActiveSubscription } from "./auth.js";
 
 // Minimal fake D1 database: dispatches on a substring of the SQL text,
 // same style as a hand-rolled stand-in - real enough to exercise
@@ -162,4 +162,78 @@ test("requireProductAccess(): standalone product not enabled -> 402 PRODUCT_NOT_
   assert.equal(result.status, 402);
   const body = await result.json();
   assert.equal(body.error.code, "PRODUCT_NOT_ENABLED");
+});
+
+// --- Ephemeral (guest trial) session tests, added 2026-09-09 ---
+
+test("authenticate(): AuthFor /verify rejects the token, but AuthFor /ephemeral/verify accepts it -> real ephemeral guest user, no local DB row needed", async () => {
+  const originalFetch = globalThis.fetch;
+  const calledUrls = [];
+  globalThis.fetch = async (url, opts) => {
+    calledUrls.push(url);
+    if (url === "https://authfor.com/api/v1/verify") {
+      return { ok: false, json: async () => ({}) };
+    }
+    if (url === "https://authfor.com/api/v1/ephemeral/verify") {
+      const body = JSON.parse(opts.body);
+      assert.equal(body.token, "real-ephemeral-token");
+      return {
+        ok: true,
+        json: async () => ({ id: "abc123", ventureName: "weylandai.com", displayName: "Guest Visitor", upgraded: false }),
+      };
+    }
+    throw new Error("unexpected fetch to " + url);
+  };
+  try {
+    const env = { DB: makeFakeDb({}) };
+    const req = makeRequest({ bearer: "real-ephemeral-token" });
+    const result = await authenticate(req, env);
+    assert.equal(result.error, undefined);
+    assert.equal(result.user.ephemeral, true);
+    assert.equal(result.user.userId, null);
+    assert.equal(result.user.name, "Guest Visitor");
+    assert.deepEqual(calledUrls, ["https://authfor.com/api/v1/verify", "https://authfor.com/api/v1/ephemeral/verify"]);
+  } finally {
+    globalThis.fetch = originalFetch;
+  }
+});
+
+test("authenticate(): neither /verify nor /ephemeral/verify recognize the token -> falls through to 401, not a crash", async () => {
+  const originalFetch = globalThis.fetch;
+  globalThis.fetch = async () => ({ ok: false, json: async () => ({}) });
+  try {
+    const env = { DB: makeFakeDb({}) };
+    const req = makeRequest({ bearer: "garbage-token" });
+    const result = await authenticate(req, env);
+    assert.ok(result.error instanceof Response);
+    assert.equal(result.error.status, 401);
+  } finally {
+    globalThis.fetch = originalFetch;
+  }
+});
+
+test("requireProductAccess(): ephemeral guest gets real access to the four named trial products, no local DB lookup", async () => {
+  const env = { DB: makeFakeDb({}) }; // no rows configured - would throw/return null if this code path touched the DB at all
+  const guest = { ephemeral: true, userId: null };
+  for (const slug of ["subx", "takeoffx", "cutsheetx", "sightx"]) {
+    const result = await requireProductAccess(guest, env, slug);
+    assert.equal(result, null, `expected ${slug} to be trial-accessible`);
+  }
+});
+
+test("requireProductAccess(): ephemeral guest denied a non-trial product with a real upgrade prompt, not a generic 401", async () => {
+  const env = { DB: makeFakeDb({}) };
+  const guest = { ephemeral: true, userId: null };
+  const result = await requireProductAccess(guest, env, "cps-admin");
+  assert.ok(result instanceof Response);
+  assert.equal(result.status, 402);
+  const body = await result.json();
+  assert.equal(body.error.code, "EPHEMERAL_PRODUCT_NOT_AVAILABLE");
+  assert.equal(body.upgradeUrl, "/pricing");
+});
+
+test("requireActiveSubscription(): ephemeral guest passes unconditionally (no local row to check)", async () => {
+  const env = { DB: makeFakeDb({}) };
+  const result = await requireActiveSubscription({ ephemeral: true, userId: null }, env);
+  assert.equal(result, null);
 });

@@ -224,7 +224,35 @@ async function authenticateViaAuthFor(request2, env2) {
   } catch (e) {
     console.log("[Auth] AuthFor verify error:", e.message);
   }
-  return null;
+  return authenticateViaEphemeral(token, env2);
+}
+async function authenticateViaEphemeral(token, env2) {
+  if (!token) return null;
+  try {
+    const verifyResp = await fetch("https://authfor.com/api/v1/ephemeral/verify", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ token })
+    });
+    if (!verifyResp.ok) return null;
+    const ephemeral = await verifyResp.json();
+    if (!ephemeral || !ephemeral.id) return null;
+    return {
+      user: {
+        ephemeral: true,
+        sub: `eph_${ephemeral.id}`,
+        userId: null,
+        id: `eph_${ephemeral.id}`,
+        email: null,
+        name: ephemeral.displayName || "Guest",
+        ephemeralToken: token,
+        upgraded: !!ephemeral.upgraded
+      }
+    };
+  } catch (e) {
+    console.log("[Auth] AuthFor ephemeral verify error:", e.message);
+    return null;
+  }
 }
 async function checkSignedUrlAccess(url, env2) {
   const hasSigParams = url.searchParams.has("expires") && url.searchParams.has("sig");
@@ -287,6 +315,7 @@ async function authenticateCps(request2, env2) {
   return authenticate(request2, env2);
 }
 async function requireActiveSubscription(user, env2) {
+  if (user?.ephemeral) return null;
   if (!user?.userId) {
     return jsonResponse3({
       success: false,
@@ -344,7 +373,19 @@ async function requireActiveSubscription(user, env2) {
   }
   return null;
 }
+var EPHEMERAL_TRIAL_PRODUCTS = /* @__PURE__ */ new Set(["subx", "takeoffx", "cutsheetx", "sightx"]);
 async function requireProductAccess(user, env2, productSlug) {
+  if (user?.ephemeral) {
+    if (EPHEMERAL_TRIAL_PRODUCTS.has(productSlug)) return null;
+    return jsonResponse3({
+      success: false,
+      error: {
+        code: "EPHEMERAL_PRODUCT_NOT_AVAILABLE",
+        message: `Trying ${productSlug} requires a real account - see /pricing, or /login to create one.`
+      },
+      upgradeUrl: "/pricing"
+    }, 402);
+  }
   const subError = await requireActiveSubscription(user, env2);
   if (subError) return subError;
   const row = await env2.DB.prepare(

@@ -115,6 +115,16 @@ export async function authenticateCps(request2, env2) {
 // usage limit. Called directly by some routes and indirectly via
 // requireProductAccess below.
 export async function requireActiveSubscription(user, env2) {
+  // Ephemeral guests have no local `users` row to check subscription/usage
+  // against - requireProductAccess above applies the real, separate trial
+  // policy (the EPHEMERAL_TRIAL_PRODUCTS allowlist) for routes that call
+  // it. For the smaller number of routes that call this function directly
+  // without going through requireProductAccess, an ephemeral guest passes
+  // here unconditionally - this function's job is "is this a legitimate,
+  // currently-usable session", which is true for a live ephemeral session
+  // by definition (AuthFor already verified the token is real and
+  // unexpired before this is ever reached).
+  if (user?.ephemeral) return null;
   if (!user?.userId) {
     return jsonResponse3({
       success: false,
@@ -173,12 +183,36 @@ export async function requireActiveSubscription(user, env2) {
   return null;
 }
 
+// Added 2026-09-09: the real, honest scope of AuthFor ephemeral-session
+// trial access. Only these four (what was actually asked for) - not every
+// product, and not decided per-product by guessing at what's "demo-safe".
+// A guest gets FULL functional access to these while their ephemeral
+// session is live (AuthFor's own EPHEMERAL_TTL_SECONDS governs that, not
+// this code) - there is deliberately NO usage-count limiting in this pass.
+// That's a real, stated gap: before this is exposed to real public traffic
+// at scale, rate-limiting per ephemeral id needs to exist (see rate-limit.js
+// for the existing real limiter this could reuse) - not built here because
+// it needs a real per-product decision about what the limit should be, not
+// an invented number.
+export const EPHEMERAL_TRIAL_PRODUCTS = new Set(["subx", "takeoffx", "cutsheetx", "sightx"]);
+
 // Per-product entitlement (TakeoffX, CutsheetX, ...) layered on top of the
 // blanket subscription check above. 'subconp' tier (the full suite) always
 // passes; a standalone purchase adds its product slug to
 // users.products_enabled (comma-separated) via the checkout webhook.
 // ~40 call sites across every product vertical (map §2).
 export async function requireProductAccess(user, env2, productSlug) {
+  if (user?.ephemeral) {
+    if (EPHEMERAL_TRIAL_PRODUCTS.has(productSlug)) return null;
+    return jsonResponse3({
+      success: false,
+      error: {
+        code: "EPHEMERAL_PRODUCT_NOT_AVAILABLE",
+        message: `Trying ${productSlug} requires a real account - see /pricing, or /login to create one.`
+      },
+      upgradeUrl: "/pricing"
+    }, 402);
+  }
   const subError = await requireActiveSubscription(user, env2);
   if (subError) return subError;
   const row = await env2.DB.prepare(

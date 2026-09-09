@@ -64,7 +64,57 @@ export async function authenticateViaAuthFor(request2, env2) {
   } catch (e) {
     console.log("[Auth] AuthFor verify error:", e.message);
   }
-  return null;
+  // Not a real account token (or /verify rejected it) - try AuthFor's
+  // separate ephemeral-session system before giving up. A real account
+  // token and an ephemeral token are different AuthFor KV records verified
+  // by different endpoints, so this is a real second check, not a retry.
+  return authenticateViaEphemeral(token, env2);
+}
+
+// Added 2026-09-09: lets a visitor try the real product routes (SubX,
+// TakeoffX, CutsheetX, SightX - see EPHEMERAL_TRIAL_PRODUCTS in
+// json-response.js's sibling export below) without full signup, via
+// AuthFor's real POST /api/v1/ephemeral/create + /api/v1/ephemeral/verify.
+// Frontend flow (not yet wired into any product page - that's the next
+// step, tracked separately, not done in this pass): call
+// /api/v1/ephemeral/create with {ventureName: "weylandai.com"}, get back
+// {token}, send that token as this app's normal Authorization Bearer
+// header from then on. This function is what makes that token actually
+// work once a page starts sending one.
+//
+// Returns an ephemeral user object (no local `users` row - there isn't
+// one) with `ephemeral: true` so requireProductAccess can apply the
+// separate, more limited trial policy instead of the real-subscription
+// check. Returns null (not an error) for a token AuthFor doesn't
+// recognize as ephemeral either, so the caller falls through to signed-URL
+// access same as before this existed.
+export async function authenticateViaEphemeral(token, env2) {
+  if (!token) return null;
+  try {
+    const verifyResp = await fetch("https://authfor.com/api/v1/ephemeral/verify", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ token })
+    });
+    if (!verifyResp.ok) return null;
+    const ephemeral = await verifyResp.json();
+    if (!ephemeral || !ephemeral.id) return null;
+    return {
+      user: {
+        ephemeral: true,
+        sub: `eph_${ephemeral.id}`,
+        userId: null,
+        id: `eph_${ephemeral.id}`,
+        email: null,
+        name: ephemeral.displayName || "Guest",
+        ephemeralToken: token,
+        upgraded: !!ephemeral.upgraded
+      }
+    };
+  } catch (e) {
+    console.log("[Auth] AuthFor ephemeral verify error:", e.message);
+    return null;
+  }
 }
 
 // Mechanism #4: signed resource-URL access (?expires=&sig=). Not an
