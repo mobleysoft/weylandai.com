@@ -75,6 +75,18 @@
     footer{color:var(--muted);font-size:12px;text-align:center;padding-top:20px;border-top:1px solid var(--line);margin-top:10px}
     footer a{color:var(--muted)}
     @media(max-width:900px){.titlebar{flex-direction:column;align-items:flex-start}.metrics-row{grid-template-columns:repeat(2,1fr)}.suite-hero{height:auto;padding-bottom:14px}.suite-pane.takeoffx,.suite-pane.cutsheetx{clip-path:none;width:100%;opacity:.5}}
+
+    #view-subx,#view-ambient{transition:opacity .35s ease}
+    #reel-mount svg{width:100%;height:auto;display:block;border-radius:12px;border:1px solid var(--line)}
+
+    #badge-tray{display:flex;flex-wrap:wrap;justify-content:flex-end;gap:8px;margin:-10px 0 20px}
+    .badge-pill{display:flex;align-items:center;gap:8px;border-radius:99px;padding:8px 14px 8px 10px;font:800 10px/1 ui-monospace,monospace;letter-spacing:.06em;background:rgba(18,20,25,.92);border:1px solid var(--line);color:var(--muted);opacity:.55;transition:all .3s ease;backdrop-filter:blur(6px)}
+    .badge-pill .dot{width:8px;height:8px;border-radius:50%;background:var(--muted);flex:none}
+    .badge-pill.unlocked{opacity:1;color:var(--gold);border-color:rgba(240,184,0,.5);box-shadow:0 0 14px rgba(240,184,0,.18)}
+    .badge-pill.unlocked .dot{background:var(--gold);box-shadow:0 0 8px var(--gold)}
+
+    #badge-toast{position:fixed;top:16px;left:50%;transform:translate(-50%,-140%);background:rgba(18,20,25,.96);border:1px solid rgba(240,184,0,.5);color:var(--gold);font:800 11px/1 ui-monospace,monospace;letter-spacing:.06em;padding:12px 20px;border-radius:99px;z-index:50;transition:transform .35s ease;box-shadow:0 10px 30px rgba(0,0,0,.35)}
+    #badge-toast.show{transform:translate(-50%,0)}
   </style>
 </head>
 <body>
@@ -90,6 +102,8 @@
         <a class="button primary" href="/login?redirect=/subx">Sign In</a>
       </nav>
     </header>
+
+    <div id="badge-tray" aria-live="polite"></div>
 
     <div class="suite-hero" aria-hidden="false">
       <div class="suite-pane takeoffx"></div>
@@ -107,6 +121,7 @@
       </div>
     </div>
 
+    <div id="view-subx">
     <div class="titlebar">
       <div>
         <div class="eyebrow">SUBMITTAL AUTOMATION &middot; LIVE DEMO</div>
@@ -157,10 +172,247 @@
       This demo project is fixed and invented for illustration &mdash; "The WeylandAI Building" is not a real customer or a real address on file. Sign in to run SubX on your own project's real drawings, or see <code>/pricing</code> for standalone and bundled licensing.
       <div style="margin-top:14px"><a class="button primary" href="/login?redirect=/subx">SIGN IN TO START A REAL SUBMITTAL</a></div>
     </div>
+    </div><!-- /view-subx -->
+
+    <div id="view-ambient" style="display:none">
+      <div class="titlebar">
+        <div>
+          <div class="eyebrow">SIGHTX &middot; AMBIENT REVEAL</div>
+          <h1>Guided Walkthrough Preview</h1>
+          <p>A short animated storyboard reel for the same demo project, narrated scene-by-scene. This is a real output of WeylandAI's SightX walkthrough-preview pipeline &mdash; not a navigable 3D model and not a live per-visit generation (see note below).</p>
+        </div>
+        <span class="demo-badge" style="border-color:rgba(102,212,255,.5);color:var(--blue);background:rgba(102,212,255,.1)">STORYBOARD REEL</span>
+      </div>
+      <div class="note-card">
+        <b>What this actually is:</b> a real animated SVG storyboard generated once by SightX's live <code>/api/sightx/walkthrough-preview</code> endpoint (filmline-video-worker &rarr; the local Qwen3-8B story-treatment model) for this demo project's description, captured 2026-09-08 and embedded here as a fixed asset &mdash; it is <b>not</b> regenerated per visit, and it is <b>not</b> a navigable 3D model. SightX's real WebGL 3D viewer today is a single hardcoded demo of a different real address, not a generator for arbitrary buildings, so nothing here claims 3D spatial navigation of &ldquo;The WeylandAI Building.&rdquo;
+      </div>
+      <div class="table-card" style="padding:18px">
+        <div id="reel-mount" style="max-width:960px;margin:0 auto"></div>
+      </div>
+      <div class="note-card" style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:14px">
+        <span>This view appears automatically after a few idle seconds. Move your mouse, tap, scroll, or click a row to come back.</span>
+        <button class="button primary" id="btn-return-subx" type="button">View in SubX</button>
+      </div>
+    </div><!-- /view-ambient -->
+
+    <div id="badge-toast" role="status"></div>
 
     <footer>
       WeylandAI &middot; Construction Document Automation &middot; <a href="/pricing/">Pricing</a> &middot; <a href="/subx/">SubX</a> &middot; <a href="/takeoffx/">TakeOffX</a> &middot; <a href="/cutsheetx/">CutsheetX</a>
     </footer>
   </div>
+
+  <script>
+  (function(){
+    "use strict";
+
+    // Real animated-SVG storyboard reel, captured 2026-09-08 via a live
+    // POST to https://weylandai.com/api/sightx/walkthrough-preview
+    // (filmline-video-worker -> mobley-venture-fleet-a /api/story-treatment,
+    // the local Qwen3-8B model) for this demo project's description.
+    // Embedded here as a fixed asset, not regenerated per visit -
+    // that live call took ~18s, too slow to trigger per idle-timeout on a
+    // public marketing page. Self-contained SVG SMIL animation, no JS
+    // needed to animate it, no external references. REEL_SECONDS below
+    // (18) is the real total_seconds value that same response returned -
+    // used to time the "Building Explorer" badge honestly against how
+    // long the reel actually runs, not an invented number.
+    var REEL_SECONDS = 18;
+    var REEL_SVG = `<svg viewBox="0 0 1280 720" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="WeylandAI: The Building">
+  <title>WeylandAI: The Building</title>
+  <desc>A guided tour through the sleek, high-tech corporate headquarters of WeylandAI, revealing the hidden layers of innovation and control beneath its polished surface.</desc>
+  <rect width="1280" height="720" fill="#10151c" />
+  <g>
+  <g opacity="0">
+    <animate attributeName="opacity" values="0;1;1;0" keyTimes="0;0.06;0.9;1"
+      begin="0.00s" dur="4.5s" fill="freeze" repeatCount="1" />
+    <rect width="1280" height="720" fill="#1b2735" />
+    <circle cx="1150" cy="130" r="90" fill="#f0b800" opacity="0.14">
+      <animateTransform attributeName="transform" type="rotate" from="0 1150 130" to="360 1150 130"
+        begin="0.00s" dur="10.80s" repeatCount="indefinite" />
+    </circle>
+    <text x="90" y="110" font-family="Georgia, 'Times New Roman', serif" font-size="20" fill="#f0b800" letter-spacing="4">SCENE 1 / 4</text>
+    <text x="90" y="320" font-family="Georgia, 'Times New Roman', serif" font-size="38" font-weight="700" fill="#f4f1ea"><tspan x="90" dy="0">The tour begins in the grand lobby,</tspan><tspan x="90" dy="34">where visitors are greeted by a digital</tspan><tspan x="90" dy="34">concierge and a massive holographic</tspan><tspan x="90" dy="34">display showcasing the company&apos;s</tspan><tspan x="90" dy="34">mission.</tspan></text>
+  </g>
+
+  <g opacity="0">
+    <animate attributeName="opacity" values="0;1;1;0" keyTimes="0;0.06;0.9;1"
+      begin="4.50s" dur="4.5s" fill="freeze" repeatCount="1" />
+    <rect width="1280" height="720" fill="#22314a" />
+    <circle cx="1150" cy="130" r="90" fill="#f0b800" opacity="0.14">
+      <animateTransform attributeName="transform" type="rotate" from="0 1150 130" to="360 1150 130"
+        begin="4.50s" dur="10.80s" repeatCount="indefinite" />
+    </circle>
+    <text x="90" y="110" font-family="Georgia, 'Times New Roman', serif" font-size="20" fill="#f0b800" letter-spacing="4">SCENE 2 / 4</text>
+    <text x="90" y="320" font-family="Georgia, 'Times New Roman', serif" font-size="38" font-weight="700" fill="#f4f1ea"><tspan x="90" dy="0">Guided through the executive suite, the</tspan><tspan x="90" dy="34">tour highlights the seamless integration</tspan><tspan x="90" dy="34">of AI in daily operations, from smart</tspan><tspan x="90" dy="34">glass windows to voice-activated meeting</tspan><tspan x="90" dy="34">systems.</tspan></text>
+  </g>
+
+  <g opacity="0">
+    <animate attributeName="opacity" values="0;1;1;0" keyTimes="0;0.06;0.9;1"
+      begin="9.00s" dur="4.5s" fill="freeze" repeatCount="1" />
+    <rect width="1280" height="720" fill="#2b3f5c" />
+    <circle cx="1150" cy="130" r="90" fill="#f0b800" opacity="0.14">
+      <animateTransform attributeName="transform" type="rotate" from="0 1150 130" to="360 1150 130"
+        begin="9.00s" dur="10.80s" repeatCount="indefinite" />
+    </circle>
+    <text x="90" y="110" font-family="Georgia, 'Times New Roman', serif" font-size="20" fill="#f0b800" letter-spacing="4">SCENE 3 / 4</text>
+    <text x="90" y="320" font-family="Georgia, 'Times New Roman', serif" font-size="38" font-weight="700" fill="#f4f1ea"><tspan x="90" dy="0">The IT server room is revealed as a</tspan><tspan x="90" dy="34">high-security, climate-controlled space</tspan><tspan x="90" dy="34">with rows of servers and AI-driven</tspan><tspan x="90" dy="34">monitoring systems, hinting at the</tspan><tspan x="90" dy="34">building&apos;s true purpose.</tspan></text>
+  </g>
+
+  <g opacity="0">
+    <animate attributeName="opacity" values="0;1;1;0" keyTimes="0;0.06;0.9;1"
+      begin="13.50s" dur="4.5s" fill="freeze" repeatCount="1" />
+    <rect width="1280" height="720" fill="#33495f" />
+    <circle cx="1150" cy="130" r="90" fill="#f0b800" opacity="0.14">
+      <animateTransform attributeName="transform" type="rotate" from="0 1150 130" to="360 1150 130"
+        begin="13.50s" dur="10.80s" repeatCount="indefinite" />
+    </circle>
+    <text x="90" y="110" font-family="Georgia, 'Times New Roman', serif" font-size="20" fill="#f0b800" letter-spacing="4">SCENE 4 / 4</text>
+    <text x="90" y="320" font-family="Georgia, 'Times New Roman', serif" font-size="38" font-weight="700" fill="#f4f1ea"><tspan x="90" dy="0">The tour concludes at the loading dock,</tspan><tspan x="90" dy="34">where the contrast between the</tspan><tspan x="90" dy="34">building&apos;s polished exterior and the</tspan><tspan x="90" dy="34">industrial infrastructure beneath it</tspan><tspan x="90" dy="34">becomes starkly apparent.</tspan></text>
+  </g>
+  </g>
+  <text x="90" y="672" font-family="Helvetica, Arial, sans-serif" font-size="15" fill="#8a94a6">WeylandAI: The Building — 4 scenes — 18.00s reel — filmline.cc</text>
+</svg>`;
+
+    var MATCHED_DOORS = ["D-101","D-114","D-118A","D-201","D-310"];
+    var IDLE_MS = 4000;
+    var STORAGE_KEY = "weylandai_subx_demo_v1";
+
+    function loadState(){
+      try {
+        var raw = window.localStorage.getItem(STORAGE_KEY);
+        if (raw) {
+          var parsed = JSON.parse(raw);
+          if (parsed && parsed.badges && parsed.matches) return parsed;
+        }
+      } catch (e) { /* localStorage unavailable (private mode etc.) - fall through */ }
+      return { badges: { first_match: false, full_house: false, explorer: false }, matches: [] };
+    }
+    function saveState(){
+      try { window.localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); } catch (e) { /* best-effort only */ }
+    }
+
+    var state = loadState();
+
+    var viewSubx = document.getElementById("view-subx");
+    var viewAmbient = document.getElementById("view-ambient");
+    var reelMount = document.getElementById("reel-mount");
+    var btnReturn = document.getElementById("btn-return-subx");
+    var badgeTray = document.getElementById("badge-tray");
+    var toastEl = document.getElementById("badge-toast");
+
+    var BADGE_DEFS = [
+      { key: "first_match", label: "First Match" },
+      { key: "full_house", label: "Full House" },
+      { key: "explorer", label: "Building Explorer" }
+    ];
+
+    function renderBadges(){
+      badgeTray.innerHTML = "";
+      BADGE_DEFS.forEach(function(b){
+        var pill = document.createElement("div");
+        pill.className = "badge-pill" + (state.badges[b.key] ? " unlocked" : "");
+        var dot = document.createElement("span");
+        dot.className = "dot";
+        pill.appendChild(dot);
+        pill.appendChild(document.createTextNode(b.label));
+        badgeTray.appendChild(pill);
+      });
+    }
+
+    var toastTimer = null;
+    function showToast(msg){
+      toastEl.textContent = msg;
+      toastEl.classList.add("show");
+      clearTimeout(toastTimer);
+      toastTimer = setTimeout(function(){ toastEl.classList.remove("show"); }, 3200);
+    }
+
+    function awardBadge(key, label){
+      if (state.badges[key]) return;
+      state.badges[key] = true;
+      saveState();
+      renderBadges();
+      showToast("Badge unlocked: " + label);
+    }
+
+    function markMatchSeen(door, rowEl){
+      if (rowEl) rowEl.classList.add("seen");
+      if (state.matches.indexOf(door) === -1) {
+        state.matches.push(door);
+        saveState();
+      }
+      if (!state.badges.first_match) awardBadge("first_match", "First Match");
+      if (state.matches.length >= MATCHED_DOORS.length) awardBadge("full_house", "Full House");
+    }
+
+    // Restore already-acknowledged rows on reload (real persisted state,
+    // not reset every visit).
+    document.querySelectorAll("tr.row-matched").forEach(function(row){
+      var door = row.getAttribute("data-door");
+      if (state.matches.indexOf(door) !== -1) row.classList.add("seen");
+      function ack(){ markMatchSeen(door, row); }
+      row.addEventListener("click", ack);
+      row.addEventListener("keydown", function(e){
+        if (e.key === "Enter" || e.key === " ") { e.preventDefault(); ack(); }
+      });
+    });
+
+    renderBadges();
+
+    // --- Idle timer: after 4s with no interaction, fade to the ambient
+    // reveal. Any interaction (mouse, touch, key, scroll, click) resets
+    // the timer back to the SubX view. ---
+    var lastActivity = Date.now();
+    var ambientShowing = false;
+    var explorerTimer = null;
+
+    function crossfade(hideEl, showEl){
+      hideEl.style.opacity = "0";
+      setTimeout(function(){
+        hideEl.style.display = "none";
+        showEl.style.display = "block";
+        showEl.style.opacity = "0";
+        void showEl.offsetWidth; // force reflow so the transition below runs
+        showEl.style.opacity = "1";
+      }, 350);
+    }
+
+    function showAmbient(){
+      if (ambientShowing) return;
+      ambientShowing = true;
+      reelMount.innerHTML = REEL_SVG; // fresh insertion -> SMIL restarts at 0s
+      crossfade(viewSubx, viewAmbient);
+      clearTimeout(explorerTimer);
+      explorerTimer = setTimeout(function(){
+        awardBadge("explorer", "Building Explorer");
+      }, REEL_SECONDS * 1000 + 300);
+    }
+
+    function hideAmbient(){
+      if (!ambientShowing) return;
+      ambientShowing = false;
+      clearTimeout(explorerTimer);
+      crossfade(viewAmbient, viewSubx);
+      setTimeout(function(){ reelMount.innerHTML = ""; }, 400);
+      lastActivity = Date.now();
+    }
+
+    function onActivity(){
+      lastActivity = Date.now();
+      if (ambientShowing) hideAmbient();
+    }
+
+    ["mousemove","mousedown","touchstart","keydown","wheel","scroll","click"].forEach(function(evt){
+      window.addEventListener(evt, onActivity, { passive: true });
+    });
+
+    if (btnReturn) btnReturn.addEventListener("click", hideAmbient);
+
+    setInterval(function(){
+      if (!ambientShowing && Date.now() - lastActivity >= IDLE_MS) showAmbient();
+    }, 500);
+  })();
+  </script>
 </body>
 </html>
