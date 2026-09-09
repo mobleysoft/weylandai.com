@@ -461,6 +461,14 @@
       }).catch(function(err){
         console.error("[Trial] load failed:", err);
         showTableError("Unable to connect to a live trial session right now (" + err.message + "). Refresh to retry, or sign in to use SubX directly.");
+      }).then(function(){
+        // Runs after either the success or the catch branch above (a
+        // second .then on the same chain always fires, regardless of
+        // which path resolved it) - real data (or a real error state) is
+        // now on screen either way, so idle-detection can safely arm
+        // starting from this moment.
+        trialDataLoaded = true;
+        lastActivity = Date.now();
       });
     }
 
@@ -472,6 +480,20 @@
     var lastActivity = Date.now();
     var ambientShowing = false;
     var explorerTimer = null;
+    // Fixed 2026-09-09: found live via headless-browser verification -
+    // the real ephemeral+clone+door-index fetch chain can take well over
+    // IDLE_MS (a cold visitor's first clone does 12+ real D1 writes; a
+    // real Playwright run against production took 20+ real seconds).
+    // Before this flag, the idle timer didn't care whether real data had
+    // ever loaded, so a slow connection would idle-reveal the ambient
+    // SightX view (and silently award the "Building Explorer" badge)
+    // before the visitor had seen their own real trial data even once.
+    // The idle/ambient system now only arms once loadRealTrial's fetch
+    // chain has actually settled (success or failure - see its .then/
+    // .catch below), and that settling moment itself counts as fresh
+    // activity so a slow load doesn't start the 4s countdown already
+    // half-elapsed.
+    var trialDataLoaded = false;
 
     function crossfade(hideEl, showEl){
       hideEl.style.opacity = "0";
@@ -516,7 +538,7 @@
     if (btnReturn) btnReturn.addEventListener("click", hideAmbient);
 
     setInterval(function(){
-      if (!ambientShowing && Date.now() - lastActivity >= IDLE_MS) showAmbient();
+      if (trialDataLoaded && !ambientShowing && Date.now() - lastActivity >= IDLE_MS) showAmbient();
     }, 500);
   })();
   </script>
