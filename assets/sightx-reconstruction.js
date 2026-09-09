@@ -1,4 +1,5 @@
 import * as pdfjs from './pdfjs/pdf.min.mjs';
+import gofaineatWallpatch from './gofaineat-wallpatch.js';
 
 pdfjs.GlobalWorkerOptions.workerSrc = '/assets/pdfjs/pdf.worker.min.mjs';
 
@@ -106,7 +107,23 @@ function dataUrlFromCanvas(canvas, type = 'image/webp', quality = 0.9) {
   return canvas.toDataURL(type, quality);
 }
 
-function localFallbackMask(sourceCanvas) {
+// GOFAINEAT (GOFAI-NEAT): a genetic-algorithm-evolved condition->action
+// rule population over local pixel features (window mean/variance,
+// gradient magnitude, 4-directional run-length/thickness, distance-
+// weighted neighborhood darkness) — NOT a neural net, NOT a server
+// call. Runs entirely client-side, zero network, zero dependency. See
+// /Users/johnmobley/gofaineats/pilot/gofaineat_wallpatch_wall_classification.iife.js
+// for the canonical compiled artifact (embedded provenance: corpus
+// size, GA generation count, held-out accuracy) and
+// /Users/johnmobley/gofaineats/pilot/wallpatch_*.mjs for the full
+// train/test/compile/verify pipeline that produced it. Trained and
+// verified ONLY against a procedurally-generated synthetic floor-plan
+// corpus (see the imported module's `.provenance` for exact numbers);
+// generalization to real, hand-drawn, or scanned architectural
+// drawings beyond that synthetic corpus is unproven — a known,
+// disclosed limitation, not a hidden one (surfaced in the UI's
+// provenance panel below, not just in this comment).
+function gofaineatWallMask(sourceCanvas) {
   const width = Math.min(640, sourceCanvas.width);
   const height = Math.max(96, Math.round(sourceCanvas.height * width / sourceCanvas.width));
   const work = document.createElement('canvas');
@@ -115,35 +132,12 @@ function localFallbackMask(sourceCanvas) {
   const context = work.getContext('2d', { willReadFrequently: true });
   context.drawImage(sourceCanvas, 0, 0, width, height);
   const image = context.getImageData(0, 0, width, height);
-  const dark = new Uint8Array(width * height);
-  for (let index = 0; index < dark.length; index += 1) {
+  const gray = new Uint8Array(width * height);
+  for (let index = 0; index < gray.length; index += 1) {
     const offset = index * 4;
-    dark[index] = (image.data[offset] + image.data[offset + 1] + image.data[offset + 2]) / 3 < 95 ? 1 : 0;
+    gray[index] = Math.round((image.data[offset] + image.data[offset + 1] + image.data[offset + 2]) / 3);
   }
-  const mask = new Uint8Array(dark.length);
-  const minimum = Math.max(12, Math.round(width / 34));
-  for (let y = 0; y < height; y += 1) {
-    let start = -1;
-    for (let x = 0; x <= width; x += 1) {
-      const active = x < width && dark[y * width + x];
-      if (active && start < 0) start = x;
-      if (!active && start >= 0) {
-        if (x - start >= minimum) for (let px = start; px < x; px += 1) mask[y * width + px] = 1;
-        start = -1;
-      }
-    }
-  }
-  for (let x = 0; x < width; x += 1) {
-    let start = -1;
-    for (let y = 0; y <= height; y += 1) {
-      const active = y < height && dark[y * width + x];
-      if (active && start < 0) start = y;
-      if (!active && start >= 0) {
-        if (y - start >= minimum) for (let py = start; py < y; py += 1) mask[py * width + x] = 1;
-        start = -1;
-      }
-    }
-  }
+  const mask = gofaineatWallpatch(gray, width, height);
   const output = document.createElement('canvas');
   output.width = width;
   output.height = height;
@@ -359,36 +353,23 @@ function cropCanvas() {
   return result;
 }
 
-async function requestSemanticMask(source) {
-  const blob = await new Promise(resolve => source.toBlob(resolve, 'image/png'));
-  const form = new FormData();
-  form.append('file', blob, 'selected-plan.png');
-  const response = await fetch('/api/sightx/reconstruct', { method: 'POST', body: form });
-  if (!response.ok) throw new Error(`semantic compiler returned HTTP ${response.status}`);
-  return response.json();
-}
-
 async function reconstructUpload() {
   if (!state.upload.file) return;
   const source = cropCanvas();
   const planWidth = Math.max(3, Math.min(500, Number(refs.width.value) || 30));
   const bounds = [-planWidth / 2, -(planWidth * source.height / source.width) / 2, planWidth / 2, (planWidth * source.height / source.width) / 2];
-  status('Running wall, door, and window segmentation on the selected drawing...');
-  let maskImage;
-  let semanticUrl = '';
-  let method = 'SEMANTIC AI';
-  try {
-    const result = await requestSemanticMask(source);
-    maskImage = await loadImage(result.wallMask);
-    semanticUrl = result.semanticPreview;
-    refs.provenance.innerHTML = `<b>UPLOADED SOURCE</b><br>${state.upload.file.name}, page ${state.upload.page}; processed ephemerally.<br><b>INFERRED</b><br>${result.method}; ${result.status}.`;
-  } catch (error) {
-    const fallback = localFallbackMask(source);
-    maskImage = await loadImage(dataUrlFromCanvas(fallback, 'image/png'));
-    semanticUrl = dataUrlFromCanvas(fallback, 'image/png');
-    method = 'CV FALLBACK';
-    refs.provenance.innerHTML = `<b>FALLBACK ACTIVE</b><br>${error.message}. Geometry is a line-based hypothesis and requires manual review.`;
-  }
+  status('Classifying wall patches locally (GOFAINEAT, evolved client-side classifier, zero network call)...');
+  // No server tier for this feature: the wall-mask classification step
+  // runs entirely in-browser via the compiled GOFAINEAT classifier.
+  // There is deliberately no fetch/try-catch-fallback shape here — that
+  // would imply a server path exists, and it does not.
+  const method = 'GOFAINEAT';
+  const prov = gofaineatWallpatch.provenance;
+  const fallback = gofaineatWallMask(source);
+  const semanticUrl = dataUrlFromCanvas(fallback, 'image/png');
+  const maskImage = await loadImage(semanticUrl);
+  const heldOutPct = (prov.held_out_test_accuracy * 100).toFixed(1);
+  refs.provenance.innerHTML = `<b>UPLOADED SOURCE</b><br>${state.upload.file.name}, page ${state.upload.page}; processed entirely client-side, zero network call.<br><b>INFERRED</b><br>GOFAINEAT evolved classifier (genetic-algorithm rule population, not a neural net): ${prov.ga_generations_run} generations, ${heldOutPct}% held-out accuracy on a ${prov.corpus_generation_params.n_synthetic_plans}-plan synthetic floor-plan corpus. Generalization to real hand-drawn or scanned drawings beyond that synthetic corpus is unproven — treat geometry as a hypothesis requiring manual review.`;
   const compiled = imageMaskToSdf(maskImage, bounds);
   const spawn = chooseSpawn(compiled, bounds);
   window.SightXPlanRenderer.load({ ...compiled, bounds, wallHeight: 3.2, spawn, sourceImage: source, label: state.upload.file.name });
@@ -398,7 +379,7 @@ async function reconstructUpload() {
   refs.cropBox.hidden = true;
   refs.method.textContent = method;
   trigger.querySelector('span').textContent = `UPLOAD / ${state.upload.file.name}`;
-  status(`${state.upload.file.name} reconstructed. Source dimensions are unverified until a drawing scale is confirmed.`, method === 'SEMANTIC AI' ? 'ok' : 'error');
+  status(`${state.upload.file.name} reconstructed via GOFAINEAT (client-side, ${heldOutPct}% held-out accuracy on synthetic test data). Source dimensions are unverified until a drawing scale is confirmed.`, 'ok');
 }
 
 trigger.addEventListener('click', () => openPanel(true));
