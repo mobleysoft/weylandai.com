@@ -3,7 +3,7 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "build": "esbuild src/worker-entry.js --bundle --format=esm --platform=neutral --target=es2022 --outfile=weyland.worker.js --external:cloudflare:workers --external:node:async_hooks"
+    "build": "esbuild src/worker-entry.js --bundle --format=esm --platform=neutral --target=es2022 --outfile=weyland.worker.js --external:cloudflare:workers --external:node:*"
   },
   "dependencies": {
     "@cloudflare/puppeteer": "1.0.4"
