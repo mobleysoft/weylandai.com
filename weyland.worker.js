@@ -138673,7 +138673,7 @@ async function extractSinglePage(pdfBuffer, pageNumber, env2) {
   const startTime = Date.now();
   try {
     console.log(`[Hardware Extractor] Using ISOLATED PDF mode (true page isolation)...`);
-    return await extractWithIsolatedPdfMode(pdfBuffer, pageNumber, env2);
+    return await extractWithIsolatedPdfMode(pdfBuffer.slice(0), pageNumber, env2);
   } catch (isolationError) {
     console.error(`[Hardware Extractor] Isolated PDF mode failed:`, {
       message: isolationError.message,
@@ -138688,14 +138688,14 @@ async function extractSinglePage(pdfBuffer, pageNumber, env2) {
   if (renderer) {
     try {
       console.log(`[Hardware Extractor] Using image render mode...`);
-      return await extractWithImageMode(pdfBuffer, pageNumber, env2, renderer);
+      return await extractWithImageMode(pdfBuffer.slice(0), pageNumber, env2, renderer);
     } catch (renderError) {
       console.warn(`[Hardware Extractor] Image render failed: ${renderError.message}`);
       console.log(`[Hardware Extractor] Falling back to legacy full PDF mode...`);
     }
   }
   console.log(`[Hardware Extractor] WARNING: Using LEGACY full PDF mode (not recommended)...`);
-  return await extractWithDirectPdfMode(pdfBuffer, pageNumber, env2);
+  return await extractWithDirectPdfMode(pdfBuffer.slice(0), pageNumber, env2);
 }
 async function extractWithImageMode(pdfBuffer, pageNumber, env2, renderer) {
   const renderStartTime = Date.now();

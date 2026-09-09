@@ -134827,9 +134827,21 @@ async function extractSinglePage(pdfBuffer, pageNumber, env2) {
   console.log(`[Hardware Extractor] EXTRACTING PAGE ${pageNumber} (ISOLATED MODE)`);
   console.log(`[Hardware Extractor] \u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550`);
   const startTime = Date.now();
+  // Fixed 2026-09-09: each fallback below used to be handed the SAME
+  // pdfBuffer object. Found live (not theoretical) via a real production
+  // 500: "Cannot perform Construct on a detached ArrayBuffer". The
+  // isolated-PDF-mode attempt's WASM PDF library detaches the buffer it's
+  // given as a side effect of slicing out a single page; when that attempt
+  // then failed for an unrelated reason and this function fell through to
+  // image-render mode, it tried to reuse the now-detached original buffer.
+  // ArrayBuffer.slice() always returns an independent copy regardless of
+  // whether the source was later detached, so each attempt below now gets
+  // its own - the minimal, safe fix given the actual failure mode, without
+  // needing to also fix (or fully understand) exactly how the WASM layer
+  // detaches its input.
   try {
     console.log(`[Hardware Extractor] Using ISOLATED PDF mode (true page isolation)...`);
-    return await extractWithIsolatedPdfMode(pdfBuffer, pageNumber, env2);
+    return await extractWithIsolatedPdfMode(pdfBuffer.slice(0), pageNumber, env2);
   } catch (isolationError) {
     console.error(`[Hardware Extractor] Isolated PDF mode failed:`, {
       message: isolationError.message,
@@ -134844,14 +134856,14 @@ async function extractSinglePage(pdfBuffer, pageNumber, env2) {
   if (renderer) {
     try {
       console.log(`[Hardware Extractor] Using image render mode...`);
-      return await extractWithImageMode(pdfBuffer, pageNumber, env2, renderer);
+      return await extractWithImageMode(pdfBuffer.slice(0), pageNumber, env2, renderer);
     } catch (renderError) {
       console.warn(`[Hardware Extractor] Image render failed: ${renderError.message}`);
       console.log(`[Hardware Extractor] Falling back to legacy full PDF mode...`);
     }
   }
   console.log(`[Hardware Extractor] WARNING: Using LEGACY full PDF mode (not recommended)...`);
-  return await extractWithDirectPdfMode(pdfBuffer, pageNumber, env2);
+  return await extractWithDirectPdfMode(pdfBuffer.slice(0), pageNumber, env2);
 }
 async function extractWithImageMode(pdfBuffer, pageNumber, env2, renderer) {
   const renderStartTime = Date.now();
