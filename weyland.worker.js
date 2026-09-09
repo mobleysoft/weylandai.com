@@ -151968,8 +151968,9 @@ router.post("/api/webhooks/subscription", async (request2, env2) => {
         } catch (e) {
           console.error("[Webhook] line_items lookup failed:", e.message);
         }
+        let authforSession = null;
         try {
-          await fetch("https://authfor.com/api/v1/register", {
+          const registerResp = await fetch("https://authfor.com/api/v1/register", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
@@ -151980,6 +151981,12 @@ router.post("/api/webhooks/subscription", async (request2, env2) => {
               venture_id: "weylandai.com"
             })
           });
+          if (registerResp.ok) {
+            const registerData = await registerResp.json();
+            if (registerData && registerData.session_id) {
+              authforSession = { session_id: registerData.session_id, token: registerData.token };
+            }
+          }
         } catch (e) {
           console.error("[Webhook] AuthFor register call failed:", e.message);
         }
@@ -152012,7 +152019,12 @@ router.post("/api/webhooks/subscription", async (request2, env2) => {
         await env2.DB.prepare(`
           INSERT INTO weyland_sessions (id, user_id, email, player_json, expires_at)
           VALUES (?, ?, ?, ?, ?)
-        `).bind(sessionId, userId, email, JSON.stringify({ name: obj.customer_details?.name || email, role: "member" }), expiresAt).run();
+        `).bind(sessionId, userId, email, JSON.stringify({
+          name: obj.customer_details?.name || email,
+          role: "member",
+          authfor_session_id: authforSession?.session_id || null,
+          authfor_backed: !!authforSession
+        }), expiresAt).run();
         if (env2.CACHE) {
           await env2.CACHE.put(`checkout_status:${obj.id}`, JSON.stringify({
             status: "active",

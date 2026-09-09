@@ -148399,9 +148399,29 @@ router.post("/api/webhooks/subscription", async (request2, env2) => {
           console.error("[Webhook] line_items lookup failed:", e.message);
         }
 
-        // Real AuthFor identity - tolerate "already registered" for returning customers.
+        // Real AuthFor identity. /api/v1/register returns a real
+        // {token, session_id, refresh_token} in the same response for a
+        // brand-new account - capture it and use it below instead of
+        // discarding it and self-minting an unrelated local session, which
+        // is what this code did until 2026-09-09.
+        //
+        // Known real limitation, not silently papered over: for a
+        // RETURNING customer, register fails with USER_EXISTS (their real
+        // AuthFor password isn't this freshly-generated random one, and
+        // AuthFor has no passwordless service-to-service session-issuance
+        // endpoint today - /api/v1/sso/issue requires the caller to already
+        // hold a valid AuthFor token, which this webhook doesn't have, and
+        // /api/v1/auth/magic-link requires an email round-trip, not a
+        // synchronous webhook response). Returning customers still fall
+        // back to a local-only session below. The real fix is a genuine
+        // AuthFor platform capability - a trusted-service session-issuance
+        // endpoint for a venture backend that has already verified the
+        // customer by other means (here, a completed Stripe payment) - not
+        // a weylandai-local workaround. Tracked as a real open item, not
+        // fixed in this pass.
+        let authforSession = null;
         try {
-          await fetch("https://authfor.com/api/v1/register", {
+          const registerResp = await fetch("https://authfor.com/api/v1/register", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
@@ -148412,6 +148432,12 @@ router.post("/api/webhooks/subscription", async (request2, env2) => {
               venture_id: "weylandai.com"
             })
           });
+          if (registerResp.ok) {
+            const registerData = await registerResp.json();
+            if (registerData && registerData.session_id) {
+              authforSession = { session_id: registerData.session_id, token: registerData.token };
+            }
+          }
         } catch (e) {
           console.error("[Webhook] AuthFor register call failed:", e.message);
         }
@@ -148450,14 +148476,26 @@ router.post("/api/webhooks/subscription", async (request2, env2) => {
           `).bind(userId, email, obj.customer_details?.name || email, newTier, newProductsEnabled, quantity * 50, obj.customer || null, now, now).run();
         }
 
-        // Real local session so the existing cookie-based authenticate() path
-        // works unmodified - separate random id, never the exposed cs_ value.
+        // Local session cache so the existing cookie-based authenticate()
+        // path works unmodified - separate random id, never the exposed
+        // cs_ value. When authforSession is set (new account this purchase),
+        // this row is a real cache OF a genuine AuthFor session, not a
+        // disconnected local identity - the AuthFor session_id/token are
+        // embedded in player_json so this is traceable/revocable against
+        // AuthFor, not just locally. When authforSession is null (returning
+        // customer, see the comment above), this remains local-only - a
+        // known, stated limitation, not fixed by this change.
         const sessionId = crypto.randomUUID();
         const expiresAt = new Date(Date.now() + 30 * 24 * 3600 * 1e3).toISOString();
         await env2.DB.prepare(`
           INSERT INTO weyland_sessions (id, user_id, email, player_json, expires_at)
           VALUES (?, ?, ?, ?, ?)
-        `).bind(sessionId, userId, email, JSON.stringify({ name: obj.customer_details?.name || email, role: "member" }), expiresAt).run();
+        `).bind(sessionId, userId, email, JSON.stringify({
+          name: obj.customer_details?.name || email,
+          role: "member",
+          authfor_session_id: authforSession?.session_id || null,
+          authfor_backed: !!authforSession
+        }), expiresAt).run();
 
         if (env2.CACHE) {
           await env2.CACHE.put(`checkout_status:${obj.id}`, JSON.stringify({
