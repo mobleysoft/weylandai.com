@@ -2277,6 +2277,44 @@ function registerProjectRoutes(router2, { transformDoorEntriesToHardwareSets: tr
   });
 }
 
+// src/rate-limit.js
+async function checkRateLimit(userId, operation, env2, limits2 = { requests: 10, windowSeconds: 60 }) {
+  const key = `ratelimit:${operation}:${userId}`;
+  const now = Date.now();
+  try {
+    const data = await env2.CACHE.get(key, "json");
+    if (data) {
+      const { count: count3, resetAt } = data;
+      if (now > resetAt) {
+        await env2.CACHE.put(key, JSON.stringify({ count: 1, resetAt: now + limits2.windowSeconds * 1e3 }), {
+          expirationTtl: limits2.windowSeconds
+        });
+        return { limited: false, remaining: limits2.requests - 1 };
+      }
+      if (count3 >= limits2.requests) {
+        const retryAfter = Math.ceil((resetAt - now) / 1e3);
+        return {
+          limited: true,
+          retryAfter,
+          remaining: 0
+        };
+      }
+      await env2.CACHE.put(key, JSON.stringify({ count: count3 + 1, resetAt }), {
+        expirationTtl: limits2.windowSeconds
+      });
+      return { limited: false, remaining: limits2.requests - (count3 + 1) };
+    } else {
+      await env2.CACHE.put(key, JSON.stringify({ count: 1, resetAt: now + limits2.windowSeconds * 1e3 }), {
+        expirationTtl: limits2.windowSeconds
+      });
+      return { limited: false, remaining: limits2.requests - 1 };
+    }
+  } catch (error4) {
+    console.error("[Rate Limiting] Error:", error4);
+    return { limited: false, remaining: limits2.requests };
+  }
+}
+
 // src/routes/demo-trial.js
 var SEED_PROJECT_ID = "eabd5ff6-e19f-4e6b-acfc-9a250445dfa8";
 var SEED_SESSION_ID = "cc961a0b-471b-4229-9e0e-deb503e50d3a";
@@ -2285,6 +2323,15 @@ function registerDemoTrialRoutes(router2) {
   router2.post("/api/demo/weyland-building/session", async (request2, env2) => {
     const { error: error4, user } = await authenticate(request2, env2);
     if (error4) return error4;
+    const rawIp = request2.headers.get("CF-Connecting-IP") || "unknown";
+    const clientIp = rawIp.includes(":") ? rawIp.split(":").slice(0, 4).join(":") + "::/64" : rawIp;
+    const rateCheck = await checkRateLimit(clientIp, "demo-trial-clone", env2, { requests: 20, windowSeconds: 600 });
+    if (rateCheck.limited) {
+      return jsonResponse3({
+        error: "Too many trial session requests from this network. Please try again shortly.",
+        retryAfter: rateCheck.retryAfter
+      }, 429);
+    }
     try {
       const callerKey = user.ephemeral ? `eph:${user.id}` : `user:${user.userId}`;
       const cacheKey = `demo-clone:${callerKey}`;
@@ -142646,7 +142693,7 @@ init_auth_module();
 init_virtual_unenv_global_polyfill_cloudflare_unenv_preset_node_process();
 init_virtual_unenv_global_polyfill_cloudflare_unenv_preset_node_console();
 init_performance2();
-async function checkRateLimit(userId, operation, env2, limits2 = { requests: 10, windowSeconds: 60 }) {
+async function checkRateLimit2(userId, operation, env2, limits2 = { requests: 10, windowSeconds: 60 }) {
   const key = `ratelimit:${operation}:${userId}`;
   const now = Date.now();
   try {
@@ -142682,7 +142729,7 @@ async function checkRateLimit(userId, operation, env2, limits2 = { requests: 10,
     return { limited: false, remaining: limits2.requests };
   }
 }
-__name(checkRateLimit, "checkRateLimit");
+__name(checkRateLimit2, "checkRateLimit");
 init_hardware_schedule_extractor();
 init_virtual_unenv_global_polyfill_cloudflare_unenv_preset_node_process();
 init_virtual_unenv_global_polyfill_cloudflare_unenv_preset_node_console();
@@ -156988,7 +157035,7 @@ router.post("/api/hardware-schedule/session/:sessionId/enrich", async (request2,
   const { error: error4, user } = await authenticate(request2, env2);
   if (error4)
     return error4;
-  const rateLimit = await checkRateLimit(user.userId, "enrichment", env2, { requests: 10, windowSeconds: 60 });
+  const rateLimit = await checkRateLimit2(user.userId, "enrichment", env2, { requests: 10, windowSeconds: 60 });
   if (rateLimit.limited) {
     return jsonResponse3({
       error: "Rate limit exceeded",
@@ -167283,11 +167330,6 @@ async function checkSession(env2, request2) {
 __name(checkSession, "checkSession");
 var monolith = {
   async fetch(request2, env2, ctx) {
-    if (!env2._kv_shimmed && env2.DB) {
-      env2.CACHE = new D1KVShim(env2.DB, "CACHE", { logConversions: true });
-      env2.DEMO_REQUESTS = new D1KVShim(env2.DB, "DEMO_REQUESTS", { logConversions: true });
-      env2._kv_shimmed = true;
-    }
     const requestId = crypto.randomUUID();
     const startTime = Date.now();
     const url = new URL(request2.url);

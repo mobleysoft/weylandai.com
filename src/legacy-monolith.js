@@ -163246,11 +163246,26 @@ async function checkSession(env2, request2) {
 __name(checkSession, "checkSession");
 var monolith = {
   async fetch(request2, env2, ctx) {
-    if (!env2._kv_shimmed && env2.DB) {
-      env2.CACHE = new D1KVShim(env2.DB, "CACHE", { logConversions: true });
-      env2.DEMO_REQUESTS = new D1KVShim(env2.DB, "DEMO_REQUESTS", { logConversions: true });
-      env2._kv_shimmed = true;
-    }
+    // Fixed 2026-09-09: this unconditionally overwrote env2.CACHE and
+    // env2.DEMO_REQUESTS - both real, working Cloudflare KV namespace
+    // bindings (confirmed in wrangler.toml: CACHE id 80a77dcf...,
+    // DEMO_REQUESTS id 090d0771...) - with a D1KVShim on EVERY single
+    // request. Found while a newly-added rate limiter silently never
+    // triggered: D1KVShim falls through to a generic `kv_compat` D1 table
+    // for any unmapped key (this call site passed no `mappings`, so that's
+    // every key), and that table does not exist in the real database -
+    // confirmed via a direct query. checkRateLimit's own "fail open on any
+    // CACHE error" design (a deliberate, documented choice for real users)
+    // meant this broke completely silently: no error surfaced anywhere,
+    // rate limiting (and by extension all 23 other real env2.CACHE call
+    // sites in this file - hardware-session file buffering, checkout-
+    // status caching, discovery-queue dedup, and more) simply never
+    // worked, with nothing indicating why. D1KVShim itself is left
+    // defined, not deleted - it may represent real, intentional
+    // in-progress migration work (its own logging/"PENDING"/"CONVERTED"
+    // states suggest that) - but its automatic, blanket activation here is
+    // removed since a broken shim silently replacing a real, working
+    // binding is strictly worse than just using the real binding.
     const requestId = crypto.randomUUID();
     const startTime = Date.now();
     const url = new URL(request2.url);

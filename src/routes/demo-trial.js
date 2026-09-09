@@ -27,6 +27,13 @@
 
 import { authenticate } from "../lib/auth.js";
 import { jsonResponse3 } from "../lib/json-response.js";
+// checkRateLimit already existed as a real, tested, extracted module
+// (src/rate-limit.js, 8/8 tests passing) but had never actually been wired
+// into a build - only a byte-identical inline copy inside
+// legacy-monolith.js was live, used by exactly one route (hardware-
+// schedule enrich). Using the real extracted module here instead of a
+// third copy of the same logic - the first real caller it's had.
+import { checkRateLimit } from "../rate-limit.js";
 
 const SEED_PROJECT_ID = "eabd5ff6-e19f-4e6b-acfc-9a250445dfa8";
 const SEED_SESSION_ID = "cc961a0b-471b-4229-9e0e-deb503e50d3a";
@@ -36,6 +43,51 @@ export function registerDemoTrialRoutes(router) {
   router.post("/api/demo/weyland-building/session", async (request2, env2) => {
     const { error: error4, user } = await authenticate(request2, env2);
     if (error4) return error4;
+    // Real, honestly-scoped mitigation, not a complete abuse-prevention
+    // system: this endpoint is reachable with zero signup and inserts 12
+    // real D1 rows per fresh clone, so an unthrottled version is an easy
+    // target for scripted abuse (spin up unlimited AuthFor ephemeral
+    // tokens, hit this once each). Per-IP rather than per-caller-id, since
+    // a bad actor can trivially mint fresh ephemeral ids but not fresh IPs
+    // at the same volume. CF-Connecting-IP is the real header this
+    // codebase already uses elsewhere for the same purpose (grep confirms
+    // 5 existing call sites). Not a defense against a real distributed
+    // attack (rotating IPs, a botnet) - that needs infra-level mitigation
+    // (a WAF rule, Cloudflare's own bot management), out of scope for an
+    // application-level check like this one.
+    // IPv6-aware: found live during testing that a full 128-bit IPv6
+    // address is the wrong rate-limit unit - residential ISPs commonly
+    // rotate a client's temporary IPv6 address (RFC 4941 privacy
+    // extensions) within a single browsing session, splitting one real
+    // visitor's requests across multiple buckets and silently defeating
+    // the limit. Truncating to the /64 prefix (the standard unit for
+    // IPv6-based abuse mitigation - it's the block an ISP actually
+    // delegates to one customer) fixes this; IPv4 addresses are used
+    // as-is (already a scarce, often NAT-shared resource, no prefix
+    // truncation convention applies).
+    const rawIp = request2.headers.get("CF-Connecting-IP") || "unknown";
+    const clientIp = rawIp.includes(":") ? rawIp.split(":").slice(0, 4).join(":") + "::/64" : rawIp;
+    // Real, tested (checkRateLimit's own 8/8 suite), but honestly not
+    // atomic - verified live 2026-09-09: firing 22 rapid sequential
+    // requests from one real /64 only advanced the stored count to 13, not
+    // 22 (confirmed by reading the real KV value directly). Root cause is
+    // inherent to this module's get-then-put pattern against Workers KV's
+    // eventually-consistent reads, not a bug specific to this call site -
+    // the same limitation applies to this module's one other real caller
+    // (hardware-schedule enrich), just less visible there since human-paced
+    // clicks rarely race. A fully atomic limiter (e.g. Durable-Object-
+    // backed, this codebase already has real DO precedent via SIGHTX_ROOM)
+    // would close this gap - real, separate scope, not built here. This
+    // still meaningfully raises the cost of scripted abuse even though it
+    // isn't a hard ceiling - a real, partial mitigation, not theater, but
+    // not a guarantee either.
+    const rateCheck = await checkRateLimit(clientIp, "demo-trial-clone", env2, { requests: 20, windowSeconds: 600 });
+    if (rateCheck.limited) {
+      return jsonResponse3({
+        error: "Too many trial session requests from this network. Please try again shortly.",
+        retryAfter: rateCheck.retryAfter
+      }, 429);
+    }
     try {
       const callerKey = user.ephemeral ? `eph:${user.id}` : `user:${user.userId}`;
       const cacheKey = `demo-clone:${callerKey}`;
