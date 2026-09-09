@@ -754,6 +754,7 @@ CREATE TABLE manufacturers (
   id TEXT PRIMARY KEY,
   name TEXT NOT NULL,
   slug TEXT NOT NULL,
+  trade TEXT NOT NULL DEFAULT 'doors',
   website TEXT,
   api_endpoint TEXT,
   api_key_encrypted TEXT,
@@ -990,6 +991,7 @@ CREATE TABLE product_variants (
 CREATE TABLE products (
   id TEXT PRIMARY KEY,
   manufacturer_id TEXT NOT NULL,
+  trade TEXT NOT NULL DEFAULT 'doors',
   product_series TEXT NOT NULL,
   product_family TEXT NOT NULL,
   base_model TEXT NOT NULL,
@@ -1707,6 +1709,64 @@ CREATE TABLE user_preferences (user_id TEXT PRIMARY KEY, prefs_json TEXT NOT NUL
 CREATE UNIQUE INDEX idx_access_requests_email_venture ON access_requests(email, venture_code);
 
 CREATE INDEX idx_access_requests_status ON access_requests(status);
+
+-- Multi-trade bid support foundation (see MULTI_TRADE_BID_SUPPORT.md and
+-- migrations/20260909_multi_trade_foundation.sql). manufacturers.trade and
+-- products.trade columns above were added by that migration, backfilled
+-- to 'doors' for all pre-existing rows.
+
+CREATE TABLE trades (
+  id TEXT PRIMARY KEY,
+  slug TEXT UNIQUE NOT NULL,
+  display_name TEXT NOT NULL,
+  status TEXT NOT NULL DEFAULT 'planned' CHECK (status IN ('active', 'planned')),
+  created_at TEXT DEFAULT (datetime('now'))
+);
+
+CREATE INDEX idx_manufacturers_trade ON manufacturers(trade);
+CREATE INDEX idx_products_trade ON products(trade);
+
+-- Generalized schedule tables for plumbing/electrical (and future trades)
+-- to build against. Doors keeps its existing door_entries/
+-- door_schedule_entries/door_hardware_matrix tables as its own reference
+-- implementation, unmigrated -- see MULTI_TRADE_BID_SUPPORT.md for why.
+
+CREATE TABLE schedule_entries (
+  id TEXT PRIMARY KEY,
+  session_id TEXT NOT NULL,
+  tenant_id TEXT,
+  trade TEXT NOT NULL,
+  page_number INTEGER NOT NULL,
+  mark TEXT NOT NULL,
+  entry_type TEXT,
+  spec_json TEXT NOT NULL DEFAULT '{}',
+  notes TEXT,
+  extraction_confidence REAL,
+  validated INTEGER DEFAULT 0,
+  validated_by TEXT,
+  validated_at TEXT,
+  validation_status TEXT DEFAULT 'pending',
+  created_at TEXT DEFAULT (datetime('now')),
+  updated_at TEXT DEFAULT (datetime('now'))
+);
+
+CREATE INDEX idx_schedule_entries_session ON schedule_entries(session_id);
+CREATE INDEX idx_schedule_entries_trade ON schedule_entries(trade);
+
+CREATE TABLE schedule_line_item_matches (
+  id TEXT PRIMARY KEY,
+  schedule_entry_id TEXT NOT NULL,
+  product_id TEXT,
+  match_confidence REAL,
+  match_type TEXT,
+  verified BOOLEAN DEFAULT 0,
+  verified_at TEXT,
+  verified_by TEXT,
+  created_at TEXT DEFAULT (datetime('now')),
+  FOREIGN KEY (schedule_entry_id) REFERENCES schedule_entries(id) ON DELETE CASCADE
+);
+
+CREATE INDEX idx_schedule_line_item_matches_entry ON schedule_line_item_matches(schedule_entry_id);
 
 CREATE INDEX idx_access_requests_trade ON access_requests(trade);
 

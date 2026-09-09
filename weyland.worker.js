@@ -156133,7 +156133,7 @@ function enrichComponent(component) {
   };
 }
 __name(enrichComponent, "enrichComponent");
-async function matchProductFromDb(component, env2) {
+async function matchProductFromDb(component, env2, trade = "doors") {
   const db = env2.DB;
   const { manufacturer, model, catalog_number } = component;
   const modelSearch = (model || catalog_number || "").toUpperCase().trim();
@@ -156146,10 +156146,10 @@ async function matchProductFromDb(component, env2) {
         SELECT p.*, m.name as manufacturer_name, m.slug as manufacturer_slug
         FROM products p
         JOIN manufacturers m ON p.manufacturer_id = m.id
-        WHERE UPPER(p.base_model) = ?
+        WHERE p.trade = ? AND UPPER(p.base_model) = ?
           AND (UPPER(m.name) LIKE ? OR UPPER(m.slug) LIKE ?)
         LIMIT 1
-      `).bind(modelSearch, `%${mfgSearch}%`, `%${mfgSearch}%`).first();
+      `).bind(trade, modelSearch, `%${mfgSearch}%`, `%${mfgSearch}%`).first();
       if (exact) {
         return { product: exact, confidence: "high", matchType: "exact" };
       }
@@ -156159,33 +156159,35 @@ async function matchProductFromDb(component, env2) {
         SELECT p.*, m.name as manufacturer_name, m.slug as manufacturer_slug
         FROM products p
         JOIN manufacturers m ON p.manufacturer_id = m.id
-        WHERE UPPER(p.base_model) LIKE ?
-           OR UPPER(p.product_series) LIKE ?
+        WHERE p.trade = ? AND (UPPER(p.base_model) LIKE ?
+           OR UPPER(p.product_series) LIKE ?)
         ORDER BY LENGTH(p.base_model) ASC
         LIMIT 1
-      `).bind(`${modelSearch}%`, `%${modelSearch}%`).first();
+      `).bind(trade, `${modelSearch}%`, `%${modelSearch}%`).first();
       if (partial) {
         return { product: partial, confidence: "medium", matchType: "partial" };
       }
     }
-    const categoryPatterns = [
-      { pattern: /^5BB/i, category: "Hinges" },
-      { pattern: /^L9/i, category: "Locks" },
-      { pattern: /^4[0-9]{3}/i, category: "Closers" },
-      { pattern: /^8[0-9]{3}/i, category: "Seals" },
-      { pattern: /^9[0-9]{3}/i, category: "Exit Devices" }
-    ];
-    for (const { pattern, category } of categoryPatterns) {
-      if (pattern.test(modelSearch)) {
-        const categoryMatch = await db.prepare(`
-          SELECT p.*, m.name as manufacturer_name, m.slug as manufacturer_slug
-          FROM products p
-          JOIN manufacturers m ON p.manufacturer_id = m.id
-          WHERE p.category_level_1 = ?
-          LIMIT 1
-        `).bind(category).first();
-        if (categoryMatch) {
-          return { product: categoryMatch, confidence: "low", matchType: "category" };
+    if (trade === "doors") {
+      const categoryPatterns = [
+        { pattern: /^5BB/i, category: "Hinges" },
+        { pattern: /^L9/i, category: "Locks" },
+        { pattern: /^4[0-9]{3}/i, category: "Closers" },
+        { pattern: /^8[0-9]{3}/i, category: "Seals" },
+        { pattern: /^9[0-9]{3}/i, category: "Exit Devices" }
+      ];
+      for (const { pattern, category } of categoryPatterns) {
+        if (pattern.test(modelSearch)) {
+          const categoryMatch = await db.prepare(`
+            SELECT p.*, m.name as manufacturer_name, m.slug as manufacturer_slug
+            FROM products p
+            JOIN manufacturers m ON p.manufacturer_id = m.id
+            WHERE p.trade = 'doors' AND p.category_level_1 = ?
+            LIMIT 1
+          `).bind(category).first();
+          if (categoryMatch) {
+            return { product: categoryMatch, confidence: "low", matchType: "category" };
+          }
         }
       }
     }
