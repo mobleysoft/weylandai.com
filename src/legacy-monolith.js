@@ -148346,21 +148346,73 @@ async function verifyStripeWebhookSignature(rawBody, sigHeader, secret) {
 __name(verifyStripeWebhookSignature, "verifyStripeWebhookSignature");
 const encoder2 = new TextEncoder();
 
+// Verifies vendyai.com's forwarding signature scheme - matches its real
+// hmacSha256Base64Url exactly (base64url, X-Webhook-Signature +
+// X-Webhook-Timestamp headers, not Stripe's own Stripe-Signature format).
+// Fixed 2026-09-09: checkout session CREATION was migrated to route through
+// vendyai on 2026-09-03 ("all ventures sell through vendyai"), but this
+// handler was never updated to match - it still only checked
+// Stripe-Signature, which vendyai's forward never sends. Every real
+// completed purchase since that migration would have been rejected with
+// 401 here (hadn't happened yet only because no real purchase had gone
+// through the new path in that window - caught before it could matter).
+async function verifyVendyaiForwardSignature(rawBody, timestamp, signature, secret) {
+  if (!timestamp || !signature) return { valid: false, reason: "malformed_signature_header" };
+  const age = Math.floor(Date.now() / 1e3) - parseInt(timestamp, 10);
+  if (isNaN(age) || age > 300) return { valid: false, reason: "expired" };
+  const key = await crypto.subtle.importKey(
+    "raw", encoder2.encode(secret), { name: "HMAC", hash: "SHA-256" }, false, ["sign"]
+  );
+  const sigBuf = await crypto.subtle.sign("HMAC", key, encoder2.encode(`${timestamp}.${rawBody}`));
+  const binary = String.fromCharCode(...new Uint8Array(sigBuf));
+  const expected = btoa(binary).replace(/\+/g, "-").replace(/\//g, "_").replace(/=/g, "");
+  if (expected !== signature) return { valid: false, reason: "signature_mismatch" };
+  return { valid: true };
+}
+__name(verifyVendyaiForwardSignature, "verifyVendyaiForwardSignature");
+
 router.post("/api/webhooks/subscription", async (request2, env2) => {
   try {
     const rawBody = await request2.text();
-    const sigHeader = request2.headers.get("Stripe-Signature") || "";
-    if (env2.STRIPE_WEBHOOK_SECRET) {
-      const check = await verifyStripeWebhookSignature(rawBody, sigHeader, env2.STRIPE_WEBHOOK_SECRET);
+    const vendyaiSig = request2.headers.get("X-Webhook-Signature") || "";
+    const vendyaiTs = request2.headers.get("X-Webhook-Timestamp") || "";
+    const stripeSig = request2.headers.get("Stripe-Signature") || "";
+    if (vendyaiSig) {
+      // Real traffic path since the 2026-09-03 vendyai migration: Stripe
+      // calls vendyai.com, vendyai forwards here with its own signature.
+      if (!env2.SUBSCRIPTION_WEBHOOK_SECRET) {
+        console.warn("[Webhook] SUBSCRIPTION_WEBHOOK_SECRET not configured - rejecting unverifiable vendyai forward");
+        return jsonResponse3({ error: "Webhook verification not configured" }, 500);
+      }
+      const check = await verifyVendyaiForwardSignature(rawBody, vendyaiTs, vendyaiSig, env2.SUBSCRIPTION_WEBHOOK_SECRET);
+      if (!check.valid) {
+        console.warn("[Webhook] Invalid vendyai forward signature:", check.reason);
+        return jsonResponse3({ error: "Invalid signature", reason: check.reason }, 401);
+      }
+    } else if (stripeSig) {
+      // Legacy/fallback path - Stripe calling this endpoint directly, in
+      // case that's ever reconfigured. Kept working, not removed.
+      if (!env2.STRIPE_WEBHOOK_SECRET) {
+        console.warn("[Webhook] STRIPE_WEBHOOK_SECRET not configured - rejecting unverifiable webhook");
+        return jsonResponse3({ error: "Webhook verification not configured" }, 500);
+      }
+      const check = await verifyStripeWebhookSignature(rawBody, stripeSig, env2.STRIPE_WEBHOOK_SECRET);
       if (!check.valid) {
         console.warn("[Webhook] Invalid Stripe signature:", check.reason);
         return jsonResponse3({ error: "Invalid signature", reason: check.reason }, 401);
       }
     } else {
-      console.warn("[Webhook] STRIPE_WEBHOOK_SECRET not configured - rejecting unverifiable webhook");
-      return jsonResponse3({ error: "Webhook verification not configured" }, 500);
+      console.warn("[Webhook] No recognized signature header present - rejecting");
+      return jsonResponse3({ error: "Missing signature" }, 401);
     }
-    const event = JSON.parse(rawBody);
+    // vendyai's forward body is { type, data }, mirroring Stripe's own
+    // { type, data: { object } } shape closely enough that the rest of
+    // this handler (which reads event.type and event.data.object) works
+    // for both without further branching - data.object below covers the
+    // vendyai-forward's `data` itself since vendyai already forwards the
+    // session fields flat under `data`.
+    const parsedBody = JSON.parse(rawBody);
+    const event = vendyaiSig ? { type: parsedBody.type, data: { object: parsedBody.data } } : parsedBody;
     const eventType = event.type;
     const obj = event.data?.object || {};
     console.log(`[Webhook] Received: ${eventType} (${obj.id || "no-id"})`);
@@ -148391,13 +148443,15 @@ router.post("/api/webhooks/subscription", async (request2, env2) => {
           console.error("[Webhook] checkout.session.completed with no email:", obj.id);
           break;
         }
-        let quantity = 1;
-        try {
-          const items = await stripeRequest(env2, "GET", `/checkout/sessions/${obj.id}/line_items`);
-          quantity = items.data?.[0]?.quantity || 1;
-        } catch (e) {
-          console.error("[Webhook] line_items lookup failed:", e.message);
-        }
+        // Fixed 2026-09-09: this used to make its own direct Stripe API
+        // call (stripeRequest, this worker's own STRIPE_SECRET_KEY) just to
+        // learn the seat quantity - redundant and a real direct-Stripe
+        // dependency this worker shouldn't have at all now that checkout
+        // creation routes through vendyai. checkout/create already stamps
+        // metadata.seats at session-creation time (see
+        // router.post("/api/billing/checkout/create")) - it was sitting
+        // right there in the same event unused.
+        const quantity = Number.parseInt(obj.metadata?.seats, 10) || 1;
 
         // Real AuthFor identity. /api/v1/register returns a real
         // {token, session_id, refresh_token} in the same response for a
