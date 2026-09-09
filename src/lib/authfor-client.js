@@ -122,7 +122,17 @@ export async function authenticateViaEphemeral(token, env2) {
         email: null,
         name: ephemeral.displayName || "Guest",
         ephemeralToken: token,
-        upgraded: !!ephemeral.upgraded
+        upgraded: !!ephemeral.upgraded,
+        // Added 2026-09-09: found live via GET /api/projects/:id
+        // returning D1_TYPE_ERROR for a real ephemeral session - that
+        // route scopes by "WHERE tenant_id = ?" using user.tenantId,
+        // which was undefined here. Same "ven_weyland" default the
+        // AuthFor-account bridge (above in this file) and the local-
+        // session path both already use, so an ephemeral guest can read
+        // real, shared, tenant-scoped data (e.g. the seeded demo
+        // project) the same way a real signed-in weylandai user does.
+        tenantId: "ven_weyland",
+        tenant_id: "ven_weyland"
       }
     };
   } catch (e) {
