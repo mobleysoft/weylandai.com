@@ -1,6 +1,10 @@
 # Multi-trade bid support: feasibility and design
 
-**Status:** Design document — real audit of current coupling plus a proposed architecture. Not implemented. Per direct instruction, this is scoped as its own initiative with its own design pass (same rigor as GOFAINEAT and the successor architecture), not something to bolt onto the existing door-hardware pipeline ad hoc.
+**Status (updated 2026-09-09):** Real audit + design below is done. The shared foundation is now implemented and live: a `trades` reference table, `trade` columns on `manufacturers`/`products` (backfilled to `'doors'` for all pre-existing rows), and real seeded catalogs for two additional trades — plumbing (8 manufacturers, 12 products: Kohler, Moen, Sloan, Zurn, Watts, American Standard, Bradley, A.O. Smith) and electrical (5 manufacturers, 11 products: Square D, Eaton, Leviton, Hubbell, Lutron) — all real, sourced, well-documented products, not fabricated. `matchProductFromDb()` now filters by trade. Generic `schedule_entries`/`schedule_line_item_matches` tables exist for plumbing/electrical to build extraction against, alongside (not replacing) doors' existing tables. See `migrations/20260909_multi_trade_foundation.sql` and `migrations/20260909_plumbing_electrical_catalog_seed.sql`.
+
+**Real finding that changed this document's original plan:** the audit below assumed a new generalized catalog table would be needed. It wasn't — `products`/`manufacturers` were already structurally trade-agnostic in their columns (category_level_1/2/3, manufacturer_id, no door-specific fields); every row in them just happened to be door hardware in practice. Tagging beat rebuilding.
+
+**Not yet done, real and tracked, not silently dropped:** per-trade GOFAINEAT extraction pilots (plumbing/electrical schedule pages still have no extraction pipeline at all — the seeded catalog alone doesn't extract anything from a real submitted schedule document), the UI trade selector, and `projects.project_type` still isn't read/branched on anywhere in the extraction code. Building a real extraction pilot for even one trade is its own multi-day GOFAINEAT effort (see the feasibility assessment below, unchanged) — the two catalogs above make that the next real bottleneck, not the schema.
 
 ## Problem restated
 
@@ -56,7 +60,9 @@ A dropdown/selector on the project view that switches which trade's bid is activ
 
 ## What this document does not yet resolve
 
-- Exact schema for the generalized `schedule_entries`/`trades` tables — real implementation-phase decision.
-- Which second trade to build first — a real product decision for the project owner, not made unilaterally here.
-- Whether/how the existing door-hardware tables get migrated into the generalized schema vs. staying as "doors' own implementation" alongside it — both are real options, not decided here.
-- Real per-trade product catalogs (plumbing fixtures, electrical panel components, etc.) — need to be sourced for real, same as the original 101-entry door catalog was, not fabricated.
+- ~~Exact schema for the generalized `schedule_entries`/`trades` tables~~ — done, see status note above.
+- ~~Which second trade to build first~~ — resolved by direct instruction: plumbing and electrical, built together rather than sequenced one-at-a-time as this document originally recommended (a deliberate override of that recommendation, not an oversight).
+- ~~Whether/how the existing door-hardware tables get migrated~~ — decided: they stay as-is, generic tables sit alongside.
+- ~~Real per-trade product catalogs~~ — done, see status note above.
+- **Still open:** the real extraction pipeline for plumbing/electrical schedule documents (GOFAINEAT pilot per trade, per the design in section 2 above) — this is the genuinely hard, unbuilt part; a seeded catalog with nothing yet extracting real schedule data against it.
+- **Still open:** the UI trade selector (section 3) and wiring `projects.project_type` into actual branching logic.
