@@ -150207,28 +150207,27 @@ body{font-family:'Barlow',sans-serif;background:var(--navy);color:var(--text);mi
 router.post("/api/auth/session", async (request2, env2) => {
   try {
     const body = await request2.json();
-    const fleetToken = body.token || body.fleet_token || (request2.headers.get("Authorization") || "").replace(/^Bearer\s+/i, "").trim();
-    if (!fleetToken) {
-      return jsonResponse3({ error: "fleet_token_required", message: "A verified fleet token is required to establish a session. Please sign in again." }, 401);
+    const authforToken = body.token || body.fleet_token || (request2.headers.get("Authorization") || "").replace(/^Bearer\s+/i, "").trim();
+    if (!authforToken) {
+      return jsonResponse3({ error: "authfor_token_required", message: "A verified AuthFor token is required to establish a session. Please sign in again." }, 401);
     }
     let _claims;
     try {
-      const _ir = await fetch("https://auth-onamerica.ron-helms.workers.dev/api/auth/introspect", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ token: fleetToken })
+      const _ir = await fetch("https://authfor.com/api/v1/verify", {
+        method: "GET",
+        headers: { "Authorization": `Bearer ${authforToken}` }
       });
       _claims = await _ir.json().catch(() => ({}));
-      if (!_ir.ok || !_claims || _claims.valid !== true || !_claims.email) {
-        return jsonResponse3({ error: "invalid_fleet_token", message: "Your sign-in token is invalid or expired \u2014 please sign in again." }, 401);
+      if (!_ir.ok || !_claims || !_claims.email) {
+        return jsonResponse3({ error: "invalid_authfor_token", message: "Your sign-in token is invalid or expired \u2014 please sign in again." }, 401);
       }
     } catch (e) {
-      return jsonResponse3({ error: "introspection_unavailable", message: "Sign-in verification is temporarily unavailable. Please retry." }, 503);
+      return jsonResponse3({ error: "verification_unavailable", message: "Sign-in verification is temporarily unavailable. Please retry." }, 503);
     }
     const node = {
       email: _claims.email,
       mhsId: _claims.mhs || "",
-      name: body.node && body.node.name || "",
+      name: body.node && body.node.name || _claims.name || "",
       role: "member",
       tenants: []
     };
@@ -150298,7 +150297,7 @@ router.post("/api/auth/authfor-exchange", async (request2, env2) => {
     if (!authfor_token) {
       return jsonResponse3({ error: "authfor_token required" }, 400);
     }
-    const userInfoResp = await fetch("https://auth-onamerica.ron-helms.workers.dev/api/auth/role/", {
+    const userInfoResp = await fetch("https://authfor.com/api/v1/verify", {
       headers: { "Authorization": `Bearer ${authfor_token}` }
     });
     if (!userInfoResp.ok) {

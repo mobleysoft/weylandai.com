@@ -146473,41 +146473,44 @@ body{font-family:'Barlow',sans-serif;background:var(--navy);color:var(--text);mi
 router.post("/api/auth/session", async (request2, env2) => {
   try {
     const body = await request2.json();
-    const fleetToken = body.token || body.fleet_token || (request2.headers.get("Authorization") || "").replace(/^Bearer\s+/i, "").trim();
-    if (!fleetToken) {
-      return jsonResponse3({ error: "fleet_token_required", message: "A verified fleet token is required to establish a session. Please sign in again." }, 401);
+    const authforToken = body.token || body.fleet_token || (request2.headers.get("Authorization") || "").replace(/^Bearer\s+/i, "").trim();
+    if (!authforToken) {
+      return jsonResponse3({ error: "authfor_token_required", message: "A verified AuthFor token is required to establish a session. Please sign in again." }, 401);
     }
     let _claims;
     try {
-      const _ir = await fetch("https://auth-onamerica.ron-helms.workers.dev/api/auth/introspect", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ token: fleetToken })
+      // Fixed 2026-09-09: this called auth-onamerica.ron-helms.workers.dev
+      // (Ron's rejected fleet-auth mesh, a one-off for weylandai.com's
+      // first customer, never the real architecture) despite the route
+      // name and every local variable implying AuthFor. AuthFor is the
+      // conglomerate's real identity provider - this now actually calls it.
+      const _ir = await fetch("https://authfor.com/api/v1/verify", {
+        method: "GET",
+        headers: { "Authorization": `Bearer ${authforToken}` }
       });
       _claims = await _ir.json().catch(() => ({}));
-      if (!_ir.ok || !_claims || _claims.valid !== true || !_claims.email) {
-        return jsonResponse3({ error: "invalid_fleet_token", message: "Your sign-in token is invalid or expired \u2014 please sign in again." }, 401);
+      if (!_ir.ok || !_claims || !_claims.email) {
+        return jsonResponse3({ error: "invalid_authfor_token", message: "Your sign-in token is invalid or expired \u2014 please sign in again." }, 401);
       }
     } catch (e) {
-      return jsonResponse3({ error: "introspection_unavailable", message: "Sign-in verification is temporarily unavailable. Please retry." }, 503);
+      return jsonResponse3({ error: "verification_unavailable", message: "Sign-in verification is temporarily unavailable. Please retry." }, 503);
     }
     const node = {
       email: _claims.email,
       mhsId: _claims.mhs || "",
-      name: body.node && body.node.name || "",
+      name: body.node && body.node.name || _claims.name || "",
       role: "member",
       tenants: []
     };
     if (!node || !node.email) {
       return jsonResponse3({ error: "Node identity required" }, 400);
     }
-    // Introspect only confirms the token is a *valid Fleet Auth identity
-    // somewhere in the mesh* - it doesn't establish this identity was ever
-    // granted weyland access specifically (couldn't verify the claims shape
-    // enforces venture scoping; see task #17). Rather than guess, require
-    // the email to already be a real weylandai.com account - same rule the
-    // AuthFor bridge in authenticate() already applies - instead of
-    // auto-provisioning a free trial for any mesh-wide identity.
+    // AuthFor verify only confirms the token is a *valid AuthFor identity*
+    // - it doesn't establish this identity was ever granted weyland access
+    // specifically. Rather than guess, require the email to already be a
+    // real weylandai.com account - same rule the AuthFor bridge in
+    // authenticate() already applies - instead of auto-provisioning a free
+    // trial for any conglomerate-wide AuthFor identity.
     const existingUser = await env2.DB.prepare("SELECT id FROM users WHERE email = ?").bind(node.email).first();
     if (!existingUser) {
       return jsonResponse3({ error: "no_weyland_account", message: "No WeylandAI account for this identity yet — subscribe at /pricing" }, 404);
@@ -146571,7 +146574,11 @@ router.post("/api/auth/authfor-exchange", async (request2, env2) => {
     if (!authfor_token) {
       return jsonResponse3({ error: "authfor_token required" }, 400);
     }
-    const userInfoResp = await fetch("https://auth-onamerica.ron-helms.workers.dev/api/auth/role/", {
+    // Fixed 2026-09-09: this called auth-onamerica.ron-helms.workers.dev's
+    // /api/auth/role/ despite being named authfor-exchange and marking
+    // provisioned accounts with password_hash "AUTHFOR_SSO" below - it was
+    // never actually calling authfor.com. Now it genuinely does.
+    const userInfoResp = await fetch("https://authfor.com/api/v1/verify", {
       headers: { "Authorization": `Bearer ${authfor_token}` }
     });
     if (!userInfoResp.ok) {
