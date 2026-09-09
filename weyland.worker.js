@@ -165272,12 +165272,18 @@ var monolith = {
   // Cron trigger handler (runs at 2 AM UTC daily)
   async scheduled(event, env2, ctx) {
     console.log("Cron trigger fired:", new Date(event.scheduledTime).toISOString());
-    try {
-      const deleted = await cleanupExpiredTokens(env2);
-      console.log(`[Cron] Cleaned up ${deleted} expired password reset tokens`);
-    } catch (error4) {
-      console.error("[Cron] Token cleanup failed:", error4);
-    }
+    // Removed 2026-09-09: called cleanupExpiredTokens(env2), a function that
+    // was never defined anywhere in this file - threw a ReferenceError every
+    // day, silently swallowed by this try/catch. Root cause: the real
+    // password-reset flow already delegates to AuthFor (see the
+    // fetch("https://authfor.com/api/v1/password/reset-request") call
+    // elsewhere in this file), so the local `password_reset_tokens` D1 table
+    // this was meant to clean up is never actually written to by anything in
+    // this worker. Deleting the dead call rather than implementing a working
+    // cleanup query for a table nothing populates - that table and its
+    // cron entry are leftover local-auth surface area from before/parallel
+    // to the AuthFor migration and should be resolved (dropped, or wired to
+    // AuthFor for real) during the auth module extraction, not patched here.
     try {
       const metrics = new ErrorMetrics(env2);
       console.log("[Cron] Metrics cleanup not required (auto-expiration enabled)");
@@ -165424,6 +165430,11 @@ function renderBlueprintHeader() {
 import { serve_onboarding } from "./pages/onboarding.js";
 import { serve_progress } from "./pages/progress.js";
 var SovereignWeylandRoutes = (function() {
+  // Consolidated 2026-09-09: this was 5 duplicate var ROUTE_LABELS / function
+  // renderNav pairs in this same function scope (var hoisting meant only the
+  // last, smallest copy actually took effect for every page - 18 live routes
+  // had no nav link anywhere on the site as a result). This single copy is
+  // the union of every key that appeared in any of the 5 originals.
   var ROUTE_LABELS = {
     onboarding: "ONBOARDING",
     huntx: "HUNTX",
@@ -165436,144 +165447,22 @@ var SovereignWeylandRoutes = (function() {
     qtext: "QTEXT",
     whyweyland: "WHY WEYLAND",
     investors: "INVESTORS",
-    lienx: "LIENX",
-    bidx: "BIDX",
-    coa: "COA",
-    rfax: "RFAX",
-    changeordx: "CHANGEORDX",
-    permitx: "PERMITX",
-    closex: "CLOSEX",
-    notesx: "NOTESX",
-    inspecx: "INSPECX",
-    safetyx: "SAFETYX",
-    survx: "SURVX",
-    specx: "SPECX",
-    drawx: "DRAWX",
-    asbuiltx: "ASBUILTX",
-    leadx: "LEADX",
-    careers: "CAREERS"
-  };
-  function renderNav(current) {
-    var selfAliases = { meetingx: ["meetingx", "meetx"] };
-    var exclude = selfAliases[current] || [current];
-    var links = "";
-    for (var key in ROUTE_LABELS) {
-      if (exclude.indexOf(key) !== -1) continue;
-      links += "<a href=\"/" + key + "/\">" + ROUTE_LABELS[key] + "</a>";
-    }
-    return links;
-  }
-  var ROUTE_LABELS = {
-    onboarding: "ONBOARDING",
-    huntx: "HUNTX",
-    takeoffx: "TAKEOFFX",
-    subx: "SUBX",
-    cutsheetx: "CUTSHEETX",
-    propx: "PROPX",
-    sightx: "SIGHTX",
-    meetingx: "MEETX",
-    qtext: "QTEXT",
-    whyweyland: "WHY WEYLAND",
-    investors: "INVESTORS",
-    lienx: "LIENX",
-    bidx: "BIDX",
-    coa: "COA",
-    rfax: "RFAX",
-    changeordx: "CHANGEORDX",
-    permitx: "PERMITX",
-    closex: "CLOSEX",
-    notesx: "NOTESX",
-    inspecx: "INSPECX",
-    safetyx: "SAFETYX",
-    survx: "SURVX",
-    specx: "SPECX",
-    drawx: "DRAWX",
-    asbuiltx: "ASBUILTX",
-    leadx: "LEADX",
-    careers: "CAREERS"
-  };
-  function renderNav(current) {
-    var selfAliases = { meetingx: ["meetingx", "meetx"] };
-    var exclude = selfAliases[current] || [current];
-    var links = "";
-    for (var key in ROUTE_LABELS) {
-      if (exclude.indexOf(key) !== -1) continue;
-      links += "<a href=\"/" + key + "/\">" + ROUTE_LABELS[key] + "</a>";
-    }
-    return links;
-  }
-  var ROUTE_LABELS = {
-    onboarding: "ONBOARDING",
-    huntx: "HUNTX",
-    takeoffx: "TAKEOFFX",
-    subx: "SUBX",
-    cutsheetx: "CUTSHEETX",
-    propx: "PROPX",
-    sightx: "SIGHTX",
-    meetingx: "MEETX",
-    qtext: "QTEXT",
-    whyweyland: "WHY WEYLAND",
-    investors: "INVESTORS",
-    lienx: "LIENX",
-    bidx: "BIDX",
-    coa: "COA",
-    rfax: "RFAX",
-    changeordx: "CHANGEORDX",
-    permitx: "PERMITX",
-    closex: "CLOSEX",
-    notesx: "NOTESX",
-    inspecx: "INSPECX",
-    safetyx: "SAFETYX",
-    survx: "SURVX",
-    specx: "SPECX",
-    drawx: "DRAWX",
-    asbuiltx: "ASBUILTX",
-    leadx: "LEADX",
-    careers: "CAREERS"
-  };
-  function renderNav(current) {
-    var selfAliases = { meetingx: ["meetingx", "meetx"] };
-    var exclude = selfAliases[current] || [current];
-    var links = "";
-    for (var key in ROUTE_LABELS) {
-      if (exclude.indexOf(key) !== -1) continue;
-      links += "<a href=\"/" + key + "/\">" + ROUTE_LABELS[key] + "</a>";
-    }
-    return links;
-  }
-  var ROUTE_LABELS = {
-    onboarding: "ONBOARDING",
-    huntx: "HUNTX",
-    takeoffx: "TAKEOFFX",
-    subx: "SUBX",
-    propx: "PROPX",
-    sightx: "SIGHTX",
-    meetingx: "MEETX",
-    qtext: "QTEXT",
-    whyweyland: "WHY WEYLAND",
     venturedeck: "VENTURE DECK",
-    careers: "CAREERS"
-  };
-  function renderNav(current) {
-    var selfAliases = { meetingx: ["meetingx", "meetx"] };
-    var exclude = selfAliases[current] || [current];
-    var links = "";
-    for (var key in ROUTE_LABELS) {
-      if (exclude.indexOf(key) !== -1) continue;
-      links += "<a href=\"/" + key + "/\">" + ROUTE_LABELS[key] + "</a>";
-    }
-    return links;
-  }
-  var ROUTE_LABELS = {
-    onboarding: "ONBOARDING",
-    huntx: "HUNTX",
-    takeoffx: "TAKEOFFX",
-    subx: "SUBX",
-    propx: "PROPX",
-    sightx: "SIGHTX",
-    meetingx: "MEETX",
-    qtext: "QTEXT",
-    whyweyland: "WHY WEYLAND",
+    lienx: "LIENX",
+    bidx: "BIDX",
+    coa: "COA",
+    rfax: "RFAX",
+    changeordx: "CHANGEORDX",
+    permitx: "PERMITX",
+    closex: "CLOSEX",
+    notesx: "NOTESX",
+    inspecx: "INSPECX",
+    safetyx: "SAFETYX",
+    survx: "SURVX",
+    specx: "SPECX",
+    drawx: "DRAWX",
+    asbuiltx: "ASBUILTX",
+    leadx: "LEADX",
     careers: "CAREERS"
   };
   function renderNav(current) {
