@@ -645,11 +645,16 @@ observable behavior change ever." Order:
      LOCAL_CATALOGUE_INDEX (~46-entry data constant) injected rather
      than moved/duplicated - both have real remaining uses elsewhere
      still-inline.
-   - Still inline: the whole `/api/catalogue/products*` and
-     `/api/catalogue/documents*` CRUD families, `catalogue/bulk-import`,
-     and the pdf-lib-dependent render route. Re-run a full route scan
-     before picking the next piece; line numbers everywhere in §5 are
-     stale.
+   - ✅ done (2026-09-10): `routes/catalogue-products.js` - 6 routes
+     (GET products w/ filters+pagination, GET products/search,
+     GET products/:id w/ documents+variants, POST products, PUT
+     products/:id w/ allowlisted fields, DELETE products/:id cascading
+     to product_documents+product_variants). authenticate the only
+     dep - fully self-contained.
+   - Still inline: the `/api/catalogue/documents*` CRUD family,
+     `catalogue/bulk-import`, and the pdf-lib-dependent render route.
+     Re-run a full route scan before picking the next piece; line
+     numbers everywhere in §5 are stale.
 
 For every step, "verified behaviorally identical" concretely means: run the
 extracted module inline via `wrangler dev` against a copy of the worker with
