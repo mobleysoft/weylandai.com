@@ -94,6 +94,7 @@ import { registerLoginPageRoutes } from "./routes/login-page.js";
 import { registerAppJsRoutes } from "./routes/app-js.js";
 import { registerRootRoutes } from "./routes/root.js";
 import { registerDemoRoutes } from "./routes/demo.js";
+import { registerAthenaIntegrationRoutes } from "./routes/athena-integration.js";
 import { authenticate, authenticateCps, requireActiveSubscription, requireProductAccess } from "./lib/auth.js";
 
 /**
@@ -164,6 +165,11 @@ import { authenticate, authenticateCps, requireActiveSubscription, requireProduc
  *   getAssemblyStatus: Function,
  *   StandardFonts: object,
  *   rgb: Function,
+ *   matchComponentToCutSheet: Function,
+ *   batchMatchSessionComponents: Function,
+ *   retryFailedDiscoveries: Function,
+ *   discoverWithRetry: Function,
+ *   RETRY_CONFIG: object,
  * }} deps
  *   Real dependencies still owned by legacy-monolith.js (not yet their
  *   own modules) that some of these routes need injected. renderHtmlToPdf/
@@ -318,6 +324,31 @@ export function registerExtractedModules(router, deps) {
     authenticate,
     matchComponentToCutSheets: deps.matchComponentToCutSheets,
     queueForDiscovery: deps.queueForDiscovery,
+  });
+  // Must register before registerSessionsAssembleRoutes below: both
+  // register "POST /api/sessions/:sessionId/assemble" and
+  // NativeRouter's route table is a Map keyed by "METHOD:path" (last
+  // registration for a given key wins) - this order preserves the
+  // exact production behavior from before this extraction, where
+  // registerAthenaRoutes ran first in legacy-monolith.js's top-level
+  // execution order and registerExtractedModules() (which is what
+  // calls registerSessionsAssembleRoutes) ran after, so
+  // sessions-assemble.js's handler always won. See
+  // routes/athena-integration.js's header comment for the full finding.
+  registerAthenaIntegrationRoutes(router, {
+    authenticate,
+    persistSessionMatches: deps.persistSessionMatches,
+    matchComponentToCutSheet: deps.matchComponentToCutSheet,
+    batchMatchSessionComponents: deps.batchMatchSessionComponents,
+    queueForDiscovery: deps.queueForDiscovery,
+    retryFailedDiscoveries: deps.retryFailedDiscoveries,
+    discoverWithRetry: deps.discoverWithRetry,
+    RETRY_CONFIG: deps.RETRY_CONFIG,
+    assembleSubmittalPackage: deps.assembleSubmittalPackage,
+    getAssemblyStatus: deps.getAssemblyStatus,
+    PDFDocument: deps.PDFDocument,
+    StandardFonts: deps.StandardFonts,
+    rgb: deps.rgb,
   });
   registerSessionsAssembleRoutes(router, {
     authenticate,

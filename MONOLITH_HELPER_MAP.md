@@ -64,7 +64,47 @@ cluster *names* and *relationships* are the durable part.
    `cacheReadiness`) — extract together. Do this first: it's small,
    closes the real routing gap, and exercises this phase's discipline
    on a low-risk piece before the harder clusters.
-   - Status: not started.
+   - **Status: ✅ done (2026-09-10).** Extracted to
+     `src/routes/athena-integration.js` +
+     `src/routes/athena-integration.test.mjs` (17 real tests), wired
+     through `module-registry.js`. `legacy-monolith.js` shrank
+     147,992 → 147,353 lines (639 lines removed: the two esbuild
+     module bodies plus the `registerAthenaRoutes(router, authenticate)`
+     call site; the harmless esbuild init-stub comment blocks for both
+     modules were left in place, same as every other extraction in
+     this effort). `jsonResponse2` retired in favor of `jsonResponse3`
+     (lib/json-response.js); `generateId2` kept local, renamed
+     `generateId`.
+     - **Real finding made during extraction, not anticipated by the
+       cataloguing pass**: `registerAthenaRoutes` registered
+       `POST /api/sessions/:sessionId/assemble` - the *same path*
+       `routes/sessions-assemble.js` (extracted earlier in this whole
+       effort) already owns. `NativeRouter`'s route table is a `Map`
+       keyed by `"METHOD:path"` (`src/lib/router.js` `addRoute` -
+       `this.routes.set(key, ...)`), so registration order decides
+       which handler answers - last write wins. Because
+       `registerAthenaRoutes(router, authenticate)` ran *before*
+       `registerExtractedModules()` in legacy-monolith.js's original
+       top-level execution order, the Athena assemble handler was
+       always silently shadowed in production; sessions-assemble.js's
+       handler has been the real one all along. Preserved that exact
+       effective behavior (not a silent fix, not a silent deletion):
+       the dead handler was extracted verbatim into
+       `athena-integration.js` and `module-registry.js` registers it
+       *before* `registerSessionsAssembleRoutes`, keeping the same
+       Map-overwrite outcome. Documented in both files' comments.
+     - **Second real finding, surfaced by live verification, not
+       anticipated by the cataloguing pass**: `GET /api/learned-patterns`
+       returns a live `500 D1_ERROR: no such column: success_rate` in
+       production - the query (`ORDER BY success_rate DESC, times_used
+       DESC`) was extracted byte-exact and reproduces the same error
+       pre- and post-extraction, confirming this is a genuine
+       pre-existing schema mismatch (the `learned_url_patterns` D1
+       table doesn't have a `success_rate` column), not a regression
+       from this extraction. Left as-is per this phase's scope
+       (mechanical extraction, not a bug-fixing pass) - flagged here
+       for a real follow-up decision (add the column via migration, or
+       fix the query) rather than silently patched.
 2. **Internal plumbing (Cluster F, ~215 lines).** `WORKER_VERSION`
    (already injected elsewhere - just needs its source moved),
    `detectFileType`, `ERROR_CODES`/`errorResponse`, `generateId3`,
