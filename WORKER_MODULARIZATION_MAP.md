@@ -706,11 +706,17 @@ observable behavior change ever." Order:
      (POST discover-cut-sheets, GET cut-sheet-coverage). authenticate,
      matchComponentToCutSheets, and queueForDiscovery all reuse
      already-injected deps from earlier extractions - no new deps.
-   - Still inline: the other 10 `/api/sessions/*` routes -
+   - ✅ done (2026-09-10): `routes/sessions-assemble.js` - 3 routes
+     (POST assemble, GET assemble/status, GET submittal/download).
+     authenticate injected as usual; persistSessionMatches/
+     assembleSubmittalPackage/getAssemblyStatus stay injected (real
+     call sites remain in the still-inline auto-generate route);
+     PDFDocument/StandardFonts/rgb also injected - same vendored-
+     pdf-lib pattern as cps-page-render.js.
+   - Still inline: the other 7 `/api/sessions/*` routes -
      queue-extraction, extraction-route (GET+POST), finalize-from-job,
-     recent, auto-generate, preview, assemble, assemble/status,
-     submittal/download. Re-scan before picking the next piece - these
-     are scattered non-contiguously, not one block.
+     recent, auto-generate, preview. Re-scan before picking the next
+     piece - these are scattered non-contiguously, not one block.
 
 ### Additional tracked items (brainstormed 2026-09-10, not yet scheduled)
 
