@@ -46,6 +46,7 @@ import { registerHardwareScheduleGenerateRoutes } from "./routes/hardware-schedu
 import { registerHardwareSchedulePageExtractRoutes } from "./routes/hardware-schedule-page-extract.js";
 import { registerHardwareScheduleFinalizeImageRoutes } from "./routes/hardware-schedule-finalize-image.js";
 import { registerHardwareScheduleExtractRoutes } from "./routes/hardware-schedule-extract.js";
+import { registerCutSheetMatchRoutes } from "./routes/cut-sheet-match.js";
 import { authenticate, authenticateCps, requireActiveSubscription, requireProductAccess } from "./lib/auth.js";
 
 /**
@@ -208,4 +209,5 @@ export function registerExtractedModules(router, deps) {
     logTelemetryEvent: deps.logTelemetryEvent,
     detectTextLayer2: deps.detectTextLayer2,
   });
+  registerCutSheetMatchRoutes(router, { authenticate, requireProductAccess });
 }

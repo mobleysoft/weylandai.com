@@ -11689,426 +11689,6 @@ function registerHardwareScheduleExtractRoutes(router2, {
   });
 }
 
-// src/module-registry.js
-function registerExtractedModules(router2, deps) {
-  registerHardwareScheduleExportRoutes(router2);
-  registerProjectRoutes(router2, {
-    transformDoorEntriesToHardwareSets: deps.transformDoorEntriesToHardwareSets,
-    materializeDseToLineItems: deps.materializeDseToLineItems
-  });
-  registerDemoTrialRoutes(router2);
-  registerAccessRequestRoutes(router2, {
-    requireOperator: makeOperatorGate(),
-    invite: inviteViaAuthFor,
-    ventureCode: "weyland"
-  });
-  registerSightXWalkthroughRoutes(router2);
-  registerCrossReferenceRoutes(router2, { authenticate });
-  registerVendorProfileRoutes(router2, { authenticate });
-  registerHuntLeadsRoutes(router2, {
-    authenticate,
-    requireProductAccess,
-    renderHtmlToPdf: deps.renderHtmlToPdf,
-    storeDocumentPdf: deps.storeDocumentPdf,
-    makeDocumentDownloadRoute: deps.makeDocumentDownloadRoute
-  });
-  registerQuoteTemplatesRoutes(router2, { authenticate });
-  registerPricingRoutes(router2, { authenticate, authenticateCps });
-  registerTakeoffDataRoutes(router2, { authenticate, requireProductAccess });
-  registerTakeoffLineItemsRoutes(router2, { authenticate, requireProductAccess });
-  registerQuotesViewRoutes(router2, { authenticate });
-  registerQuotesGenerateRoutes(router2, {
-    authenticate,
-    requireProductAccess,
-    puppeteer: deps.puppeteer
-  });
-  registerHardwareScheduleCandidatesRoutes(router2, {
-    authenticate,
-    getSessionStatus: deps.getSessionStatus,
-    getOrRenderPage: deps.getOrRenderPage
-  });
-  registerHardwareScheduleEnrichmentRoutes(router2, {
-    authenticate,
-    checkRateLimit: deps.checkRateLimit,
-    enrichComponent: deps.enrichComponent,
-    getUnaffirmReason: deps.getUnaffirmReason,
-    storeHardwareExtraction: deps.storeHardwareExtraction
-  });
-  registerHardwareSchedulePageAffirmRoutes(router2, {
-    authenticate,
-    getSessionStatus: deps.getSessionStatus,
-    extractFromPageImage: deps.extractFromPageImage,
-    materializeAffirmedGroup: deps.materializeAffirmedGroup,
-    unaffirmMaterializedGroup: deps.unaffirmMaterializedGroup,
-    pdfBufferOrNull: deps.pdfBufferOrNull,
-    generateR2StreamUrl: deps.generateR2StreamUrl,
-    isPageInRange: deps.isPageInRange,
-    renderRegionAt600DPI2: deps.renderRegionAt600DPI2
-  });
-  registerHardwareScheduleGenerateRoutes(router2, {
-    authenticate,
-    requireActiveSubscription,
-    getSessionStatus: deps.getSessionStatus,
-    generateR2StreamUrl: deps.generateR2StreamUrl,
-    isPageInRange: deps.isPageInRange,
-    pdfBufferOrNull: deps.pdfBufferOrNull,
-    renderRegionAt600DPI2: deps.renderRegionAt600DPI2,
-    callEdge: deps.callEdge,
-    generateSubmittalHTML: deps.generateSubmittalHTML,
-    incrementSubmittalsUsed: deps.incrementSubmittalsUsed,
-    matchComponentToCutSheets: deps.matchComponentToCutSheets,
-    queuePageExtractionJob: deps.queuePageExtractionJob,
-    routeExtraction: deps.routeExtraction,
-    transformDoorEntriesToHardwareSets: deps.transformDoorEntriesToHardwareSets,
-    materializeDseToLineItems: deps.materializeDseToLineItems
-  });
-  registerHardwareSchedulePageExtractRoutes(router2, {
-    authenticate,
-    getSessionStatus: deps.getSessionStatus,
-    isPageInRange: deps.isPageInRange,
-    extractFromPageImage: deps.extractFromPageImage,
-    queuePageExtractionJob: deps.queuePageExtractionJob,
-    approvePageExtraction: deps.approvePageExtraction,
-    extractSinglePage: deps.extractSinglePage,
-    resolveExtractionContract: deps.resolveExtractionContract,
-    savePageExtraction2: deps.savePageExtraction2
-  });
-  registerHardwareScheduleFinalizeImageRoutes(router2, {
-    authenticate,
-    callEdge: deps.callEdge,
-    materializeDseToLineItems: deps.materializeDseToLineItems,
-    transformDoorEntriesToHardwareSets: deps.transformDoorEntriesToHardwareSets,
-    savePageExtraction2: deps.savePageExtraction2,
-    buildExtractionResultFromVision: deps.buildExtractionResultFromVision,
-    persistDoorScheduleResponse: deps.persistDoorScheduleResponse
-  });
-  registerHardwareScheduleExtractRoutes(router2, {
-    authenticate,
-    requireActiveSubscription,
-    getSessionStatus: deps.getSessionStatus,
-    extractHardwareSchedule: deps.extractHardwareSchedule,
-    storeHardwareExtraction: deps.storeHardwareExtraction,
-    getHardwareGroupForReview: deps.getHardwareGroupForReview,
-    updateHardwareGroup: deps.updateHardwareGroup,
-    detectFileType: deps.detectFileType,
-    extractPdfBookmarks2: deps.extractPdfBookmarks2,
-    detectSchedulePages: deps.detectSchedulePages,
-    createExtractionSession: deps.createExtractionSession,
-    logTelemetryEvent: deps.logTelemetryEvent,
-    detectTextLayer2: deps.detectTextLayer2
-  });
-}
-
-// src/lib/cors.js
-var DEFAULT_CORS_ORIGINS = [
-  "https://weylandai.com",
-  "https://subx.weylandai.com",
-  "https://submittalexpress.pages.dev"
-];
-var CorsHandler = class {
-  constructor(options = {}) {
-    this.origins = options.origins || ["*"];
-    this.methods = options.methods || ["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"];
-    this.allowedHeaders = options.allowedHeaders || [
-      "Content-Type",
-      "Authorization",
-      "X-Requested-With",
-      "Accept",
-      "Origin"
-    ];
-    this.exposedHeaders = options.exposedHeaders || [];
-    this.credentials = options.credentials !== void 0 ? options.credentials : true;
-    this.maxAge = options.maxAge || 86400;
-    this.additionalHeaders = options.headers || {};
-  }
-  /**
-   * Check if origin is allowed
-   * Supports string origins and regex patterns
-   */
-  isOriginAllowed(origin) {
-    if (!origin)
-      return true;
-    if (this.origins.includes("*"))
-      return true;
-    for (const allowed of this.origins) {
-      if (allowed instanceof RegExp) {
-        if (allowed.test(origin))
-          return true;
-      } else if (typeof allowed === "string") {
-        if (allowed === origin)
-          return true;
-      }
-    }
-    return false;
-  }
-  /**
-   * Get CORS headers for response
-   */
-  getCorsHeaders(request2) {
-    const origin = request2.headers.get("Origin");
-    const requestMethod = request2.headers.get("Access-Control-Request-Method");
-    const requestHeaders = request2.headers.get("Access-Control-Request-Headers");
-    const headers = {
-      "Access-Control-Allow-Origin": this.getAllowedOrigin(origin),
-      "Access-Control-Allow-Methods": this.methods.join(", "),
-      "Access-Control-Max-Age": String(this.maxAge),
-      "Vary": "Origin",
-      ...this.additionalHeaders
-    };
-    if (this.credentials && origin && origin !== "*") {
-      headers["Access-Control-Allow-Credentials"] = "true";
-    }
-    if (requestHeaders) {
-      headers["Access-Control-Allow-Headers"] = requestHeaders;
-    } else {
-      headers["Access-Control-Allow-Headers"] = this.allowedHeaders.join(", ");
-    }
-    if (this.exposedHeaders.length > 0) {
-      headers["Access-Control-Expose-Headers"] = this.exposedHeaders.join(", ");
-    }
-    return headers;
-  }
-  /**
-   * Get the allowed origin for response
-   */
-  getAllowedOrigin(origin) {
-    if (!origin) {
-      return "*";
-    }
-    if (this.origins.includes("*")) {
-      return this.credentials ? origin : "*";
-    }
-    if (this.isOriginAllowed(origin)) {
-      return origin;
-    }
-    const firstStringOrigin = this.origins.find((o) => typeof o === "string" && o !== "*");
-    return firstStringOrigin || "*";
-  }
-  /**
-   * Handle preflight OPTIONS request
-   */
-  preflight(request2) {
-    if (request2.method !== "OPTIONS") {
-      return null;
-    }
-    const origin = request2.headers.get("Origin");
-    if (origin && !this.isOriginAllowed(origin)) {
-      return new Response("Origin not allowed", {
-        status: 403,
-        statusText: "Forbidden"
-      });
-    }
-    return new Response(null, {
-      status: 204,
-      statusText: "No Content",
-      headers: this.getCorsHeaders(request2)
-    });
-  }
-  /**
-   * Apply CORS headers to existing response
-   */
-  corsify(response, request2) {
-    if (!response) {
-      return response;
-    }
-    if (!(response instanceof Response)) {
-      response = new Response(JSON.stringify(response), {
-        status: 200,
-        headers: { "Content-Type": "application/json" }
-      });
-    }
-    const corsHeaders = this.getCorsHeaders(request2);
-    const newHeaders = new Headers(response.headers);
-    Object.entries(corsHeaders).forEach(([key, value]) => {
-      newHeaders.set(key, value);
-    });
-    return new Response(response.body, {
-      status: response.status,
-      statusText: response.statusText,
-      headers: newHeaders
-    });
-  }
-  /**
-   * Middleware function for router integration
-   */
-  middleware() {
-    return (request2) => this.preflight(request2);
-  }
-};
-function createCorsHandler(env2) {
-  let origins;
-  if (env2?.CORS_ORIGINS) {
-    if (env2.CORS_ORIGINS === "*") {
-      origins = ["*"];
-    } else {
-      origins = env2.CORS_ORIGINS.split(",").map((o) => o.trim()).filter((o) => o.length > 0);
-      origins.push(/https:\/\/[a-z0-9]+\.submittalexpress\.pages\.dev/);
-    }
-  } else {
-    origins = [
-      ...DEFAULT_CORS_ORIGINS,
-      /https:\/\/[a-z0-9]+\.submittalexpress\.pages\.dev/,
-      "http://localhost:8787",
-      "http://localhost:3000",
-      "http://127.0.0.1:8787"
-    ];
-  }
-  return new CorsHandler({
-    origins,
-    methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
-    credentials: true,
-    maxAge: 86400
-  });
-}
-
-// src/lib/router.js
-var NativeRouter = class _NativeRouter {
-  constructor() {
-    this.routes = /* @__PURE__ */ new Map();
-    this.middlewares = [];
-    this.errorHandler = null;
-  }
-  /**
-   * Add a route to the router
-   * @param {string} method - HTTP method
-   * @param {string} path - Route path with optional params (:id)
-   * @param {Function} handler - Request handler function
-   */
-  addRoute(method, path, handler) {
-    const key = `${method}:${path}`;
-    this.routes.set(key, {
-      path,
-      handler,
-      regex: this.pathToRegex(path),
-      params: this.extractParamNames(path)
-    });
-  }
-  /**
-   * Convert path pattern to regex
-   * Supports :param and * wildcards
-   */
-  pathToRegex(path) {
-    const pattern = path.replace(/\//g, "\\/").replace(/:(\w+)/g, "(?<$1>[^\\/]+)").replace(/\*/g, ".*");
-    return new RegExp(`^${pattern}$`);
-  }
-  /**
-   * Extract parameter names from path
-   */
-  extractParamNames(path) {
-    const matches = path.matchAll(/:(\w+)/g);
-    return Array.from(matches, (m) => m[1]);
-  }
-  /** Register GET route */
-  get(path, handler) {
-    this.addRoute("GET", path, handler);
-    return this;
-  }
-  /** Register POST route */
-  post(path, handler) {
-    this.addRoute("POST", path, handler);
-    return this;
-  }
-  /** Register PUT route */
-  put(path, handler) {
-    this.addRoute("PUT", path, handler);
-    return this;
-  }
-  /** Register DELETE route */
-  delete(path, handler) {
-    this.addRoute("DELETE", path, handler);
-    return this;
-  }
-  /** Register PATCH route */
-  patch(path, handler) {
-    this.addRoute("PATCH", path, handler);
-    return this;
-  }
-  /** Register OPTIONS route */
-  options(path, handler) {
-    this.addRoute("OPTIONS", path, handler);
-    return this;
-  }
-  /** Register middleware or catch-all route */
-  all(path, handler) {
-    if (path === "*") {
-      this.middlewares.push(handler);
-    } else {
-      ["GET", "POST", "PUT", "DELETE", "PATCH", "HEAD", "OPTIONS"].forEach((method) => {
-        this.addRoute(method, path, handler);
-      });
-    }
-    return this;
-  }
-  /** Register error handler */
-  catch(handler) {
-    this.errorHandler = handler;
-    return this;
-  }
-  /**
-   * Handle incoming request
-   * @param {Request} request - Cloudflare Workers Request object
-   * @param {Object} env - Environment bindings
-   * @param {Object} ctx - Execution context
-   */
-  async handle(request2, env2, ctx) {
-    try {
-      const url = new URL(request2.url);
-      const method = request2.method;
-      for (const middleware of this.middlewares) {
-        const result = await middleware(request2, env2, ctx);
-        if (result instanceof Response) {
-          return result;
-        }
-      }
-      const exactKey = `${method}:${url.pathname}`;
-      if (this.routes.has(exactKey)) {
-        const route = this.routes.get(exactKey);
-        request2.params = {};
-        return await route.handler(request2, env2, ctx);
-      }
-      for (const [key, route] of this.routes) {
-        if (key.startsWith(`${method}:`)) {
-          const match = url.pathname.match(route.regex);
-          if (match) {
-            request2.params = match.groups || {};
-            if (!match.groups && route.params.length > 0) {
-              request2.params = {};
-              route.params.forEach((param, index) => {
-                request2.params[param] = match[index + 1];
-              });
-            }
-            return await route.handler(request2, env2, ctx);
-          }
-        }
-      }
-      return new Response(JSON.stringify({
-        error: "Not found",
-        path: url.pathname,
-        method
-      }), {
-        status: 404,
-        headers: { "Content-Type": "application/json" }
-      });
-    } catch (error4) {
-      if (this.errorHandler) {
-        return await this.errorHandler(error4, request2, env2, ctx);
-      }
-      console.error("Router error:", error4);
-      return new Response(JSON.stringify({
-        error: "Internal server error",
-        message: error4.message
-      }), {
-        status: 500,
-        headers: { "Content-Type": "application/json" }
-      });
-    }
-  }
-  /** Convenience method to create a router instance */
-  static create() {
-    return new _NativeRouter();
-  }
-};
-
 // src/lib/product-database.js
 var PRODUCT_DATABASE = [
   // Schlage Locks
@@ -12471,6 +12051,504 @@ async function matchComponentToCutSheets(component, env2) {
     matchType: match.matchType
   };
 }
+
+// src/routes/cut-sheet-match.js
+function registerCutSheetMatchRoutes(router2, { authenticate: authenticate2, requireProductAccess: requireProductAccess2 }) {
+  router2.post("/api/cut-sheets/match", async (request2, env2) => {
+    const { error: error4, user } = await authenticate2(request2, env2);
+    if (error4)
+      return error4;
+    {
+      const _prodErr = await requireProductAccess2(user, env2, "cutsheetx");
+      if (_prodErr) return _prodErr;
+    }
+    try {
+      const body = await request2.json();
+      const { manufacturer, model, catalog_number, component_type } = body;
+      if (!model && !catalog_number) {
+        return new Response(JSON.stringify({
+          error: "Missing required field: model or catalog_number"
+        }), { status: 400, headers: { "Content-Type": "application/json" } });
+      }
+      const result = await matchComponentToCutSheets({
+        manufacturer,
+        model,
+        catalog_number,
+        component_type
+      }, env2);
+      return new Response(JSON.stringify(result), {
+        status: 200,
+        headers: { "Content-Type": "application/json" }
+      });
+    } catch (err) {
+      return new Response(JSON.stringify({ error: err.message }), {
+        status: 500,
+        headers: { "Content-Type": "application/json" }
+      });
+    }
+  });
+  router2.post("/api/cut-sheets/batch-match", async (request2, env2) => {
+    const { error: error4, user } = await authenticate2(request2, env2);
+    if (error4)
+      return error4;
+    {
+      const _prodErr = await requireProductAccess2(user, env2, "cutsheetx");
+      if (_prodErr) return _prodErr;
+    }
+    try {
+      const body = await request2.json();
+      const { components } = body;
+      if (!Array.isArray(components) || components.length === 0) {
+        return new Response(JSON.stringify({
+          error: "Missing or empty components array"
+        }), { status: 400, headers: { "Content-Type": "application/json" } });
+      }
+      const maxBatch = 50;
+      const batch = components.slice(0, maxBatch);
+      const results = await Promise.all(
+        batch.map((comp) => matchComponentToCutSheets(comp, env2))
+      );
+      const matched = results.filter((r) => r.matched);
+      const unmatched = results.filter((r) => !r.matched);
+      return new Response(JSON.stringify({
+        total: batch.length,
+        matched: matched.length,
+        unmatched: unmatched.length,
+        results,
+        truncated: components.length > maxBatch
+      }), {
+        status: 200,
+        headers: { "Content-Type": "application/json" }
+      });
+    } catch (err) {
+      return new Response(JSON.stringify({ error: err.message }), {
+        status: 500,
+        headers: { "Content-Type": "application/json" }
+      });
+    }
+  });
+}
+
+// src/module-registry.js
+function registerExtractedModules(router2, deps) {
+  registerHardwareScheduleExportRoutes(router2);
+  registerProjectRoutes(router2, {
+    transformDoorEntriesToHardwareSets: deps.transformDoorEntriesToHardwareSets,
+    materializeDseToLineItems: deps.materializeDseToLineItems
+  });
+  registerDemoTrialRoutes(router2);
+  registerAccessRequestRoutes(router2, {
+    requireOperator: makeOperatorGate(),
+    invite: inviteViaAuthFor,
+    ventureCode: "weyland"
+  });
+  registerSightXWalkthroughRoutes(router2);
+  registerCrossReferenceRoutes(router2, { authenticate });
+  registerVendorProfileRoutes(router2, { authenticate });
+  registerHuntLeadsRoutes(router2, {
+    authenticate,
+    requireProductAccess,
+    renderHtmlToPdf: deps.renderHtmlToPdf,
+    storeDocumentPdf: deps.storeDocumentPdf,
+    makeDocumentDownloadRoute: deps.makeDocumentDownloadRoute
+  });
+  registerQuoteTemplatesRoutes(router2, { authenticate });
+  registerPricingRoutes(router2, { authenticate, authenticateCps });
+  registerTakeoffDataRoutes(router2, { authenticate, requireProductAccess });
+  registerTakeoffLineItemsRoutes(router2, { authenticate, requireProductAccess });
+  registerQuotesViewRoutes(router2, { authenticate });
+  registerQuotesGenerateRoutes(router2, {
+    authenticate,
+    requireProductAccess,
+    puppeteer: deps.puppeteer
+  });
+  registerHardwareScheduleCandidatesRoutes(router2, {
+    authenticate,
+    getSessionStatus: deps.getSessionStatus,
+    getOrRenderPage: deps.getOrRenderPage
+  });
+  registerHardwareScheduleEnrichmentRoutes(router2, {
+    authenticate,
+    checkRateLimit: deps.checkRateLimit,
+    enrichComponent: deps.enrichComponent,
+    getUnaffirmReason: deps.getUnaffirmReason,
+    storeHardwareExtraction: deps.storeHardwareExtraction
+  });
+  registerHardwareSchedulePageAffirmRoutes(router2, {
+    authenticate,
+    getSessionStatus: deps.getSessionStatus,
+    extractFromPageImage: deps.extractFromPageImage,
+    materializeAffirmedGroup: deps.materializeAffirmedGroup,
+    unaffirmMaterializedGroup: deps.unaffirmMaterializedGroup,
+    pdfBufferOrNull: deps.pdfBufferOrNull,
+    generateR2StreamUrl: deps.generateR2StreamUrl,
+    isPageInRange: deps.isPageInRange,
+    renderRegionAt600DPI2: deps.renderRegionAt600DPI2
+  });
+  registerHardwareScheduleGenerateRoutes(router2, {
+    authenticate,
+    requireActiveSubscription,
+    getSessionStatus: deps.getSessionStatus,
+    generateR2StreamUrl: deps.generateR2StreamUrl,
+    isPageInRange: deps.isPageInRange,
+    pdfBufferOrNull: deps.pdfBufferOrNull,
+    renderRegionAt600DPI2: deps.renderRegionAt600DPI2,
+    callEdge: deps.callEdge,
+    generateSubmittalHTML: deps.generateSubmittalHTML,
+    incrementSubmittalsUsed: deps.incrementSubmittalsUsed,
+    matchComponentToCutSheets: deps.matchComponentToCutSheets,
+    queuePageExtractionJob: deps.queuePageExtractionJob,
+    routeExtraction: deps.routeExtraction,
+    transformDoorEntriesToHardwareSets: deps.transformDoorEntriesToHardwareSets,
+    materializeDseToLineItems: deps.materializeDseToLineItems
+  });
+  registerHardwareSchedulePageExtractRoutes(router2, {
+    authenticate,
+    getSessionStatus: deps.getSessionStatus,
+    isPageInRange: deps.isPageInRange,
+    extractFromPageImage: deps.extractFromPageImage,
+    queuePageExtractionJob: deps.queuePageExtractionJob,
+    approvePageExtraction: deps.approvePageExtraction,
+    extractSinglePage: deps.extractSinglePage,
+    resolveExtractionContract: deps.resolveExtractionContract,
+    savePageExtraction2: deps.savePageExtraction2
+  });
+  registerHardwareScheduleFinalizeImageRoutes(router2, {
+    authenticate,
+    callEdge: deps.callEdge,
+    materializeDseToLineItems: deps.materializeDseToLineItems,
+    transformDoorEntriesToHardwareSets: deps.transformDoorEntriesToHardwareSets,
+    savePageExtraction2: deps.savePageExtraction2,
+    buildExtractionResultFromVision: deps.buildExtractionResultFromVision,
+    persistDoorScheduleResponse: deps.persistDoorScheduleResponse
+  });
+  registerHardwareScheduleExtractRoutes(router2, {
+    authenticate,
+    requireActiveSubscription,
+    getSessionStatus: deps.getSessionStatus,
+    extractHardwareSchedule: deps.extractHardwareSchedule,
+    storeHardwareExtraction: deps.storeHardwareExtraction,
+    getHardwareGroupForReview: deps.getHardwareGroupForReview,
+    updateHardwareGroup: deps.updateHardwareGroup,
+    detectFileType: deps.detectFileType,
+    extractPdfBookmarks2: deps.extractPdfBookmarks2,
+    detectSchedulePages: deps.detectSchedulePages,
+    createExtractionSession: deps.createExtractionSession,
+    logTelemetryEvent: deps.logTelemetryEvent,
+    detectTextLayer2: deps.detectTextLayer2
+  });
+  registerCutSheetMatchRoutes(router2, { authenticate, requireProductAccess });
+}
+
+// src/lib/cors.js
+var DEFAULT_CORS_ORIGINS = [
+  "https://weylandai.com",
+  "https://subx.weylandai.com",
+  "https://submittalexpress.pages.dev"
+];
+var CorsHandler = class {
+  constructor(options = {}) {
+    this.origins = options.origins || ["*"];
+    this.methods = options.methods || ["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"];
+    this.allowedHeaders = options.allowedHeaders || [
+      "Content-Type",
+      "Authorization",
+      "X-Requested-With",
+      "Accept",
+      "Origin"
+    ];
+    this.exposedHeaders = options.exposedHeaders || [];
+    this.credentials = options.credentials !== void 0 ? options.credentials : true;
+    this.maxAge = options.maxAge || 86400;
+    this.additionalHeaders = options.headers || {};
+  }
+  /**
+   * Check if origin is allowed
+   * Supports string origins and regex patterns
+   */
+  isOriginAllowed(origin) {
+    if (!origin)
+      return true;
+    if (this.origins.includes("*"))
+      return true;
+    for (const allowed of this.origins) {
+      if (allowed instanceof RegExp) {
+        if (allowed.test(origin))
+          return true;
+      } else if (typeof allowed === "string") {
+        if (allowed === origin)
+          return true;
+      }
+    }
+    return false;
+  }
+  /**
+   * Get CORS headers for response
+   */
+  getCorsHeaders(request2) {
+    const origin = request2.headers.get("Origin");
+    const requestMethod = request2.headers.get("Access-Control-Request-Method");
+    const requestHeaders = request2.headers.get("Access-Control-Request-Headers");
+    const headers = {
+      "Access-Control-Allow-Origin": this.getAllowedOrigin(origin),
+      "Access-Control-Allow-Methods": this.methods.join(", "),
+      "Access-Control-Max-Age": String(this.maxAge),
+      "Vary": "Origin",
+      ...this.additionalHeaders
+    };
+    if (this.credentials && origin && origin !== "*") {
+      headers["Access-Control-Allow-Credentials"] = "true";
+    }
+    if (requestHeaders) {
+      headers["Access-Control-Allow-Headers"] = requestHeaders;
+    } else {
+      headers["Access-Control-Allow-Headers"] = this.allowedHeaders.join(", ");
+    }
+    if (this.exposedHeaders.length > 0) {
+      headers["Access-Control-Expose-Headers"] = this.exposedHeaders.join(", ");
+    }
+    return headers;
+  }
+  /**
+   * Get the allowed origin for response
+   */
+  getAllowedOrigin(origin) {
+    if (!origin) {
+      return "*";
+    }
+    if (this.origins.includes("*")) {
+      return this.credentials ? origin : "*";
+    }
+    if (this.isOriginAllowed(origin)) {
+      return origin;
+    }
+    const firstStringOrigin = this.origins.find((o) => typeof o === "string" && o !== "*");
+    return firstStringOrigin || "*";
+  }
+  /**
+   * Handle preflight OPTIONS request
+   */
+  preflight(request2) {
+    if (request2.method !== "OPTIONS") {
+      return null;
+    }
+    const origin = request2.headers.get("Origin");
+    if (origin && !this.isOriginAllowed(origin)) {
+      return new Response("Origin not allowed", {
+        status: 403,
+        statusText: "Forbidden"
+      });
+    }
+    return new Response(null, {
+      status: 204,
+      statusText: "No Content",
+      headers: this.getCorsHeaders(request2)
+    });
+  }
+  /**
+   * Apply CORS headers to existing response
+   */
+  corsify(response, request2) {
+    if (!response) {
+      return response;
+    }
+    if (!(response instanceof Response)) {
+      response = new Response(JSON.stringify(response), {
+        status: 200,
+        headers: { "Content-Type": "application/json" }
+      });
+    }
+    const corsHeaders = this.getCorsHeaders(request2);
+    const newHeaders = new Headers(response.headers);
+    Object.entries(corsHeaders).forEach(([key, value]) => {
+      newHeaders.set(key, value);
+    });
+    return new Response(response.body, {
+      status: response.status,
+      statusText: response.statusText,
+      headers: newHeaders
+    });
+  }
+  /**
+   * Middleware function for router integration
+   */
+  middleware() {
+    return (request2) => this.preflight(request2);
+  }
+};
+function createCorsHandler(env2) {
+  let origins;
+  if (env2?.CORS_ORIGINS) {
+    if (env2.CORS_ORIGINS === "*") {
+      origins = ["*"];
+    } else {
+      origins = env2.CORS_ORIGINS.split(",").map((o) => o.trim()).filter((o) => o.length > 0);
+      origins.push(/https:\/\/[a-z0-9]+\.submittalexpress\.pages\.dev/);
+    }
+  } else {
+    origins = [
+      ...DEFAULT_CORS_ORIGINS,
+      /https:\/\/[a-z0-9]+\.submittalexpress\.pages\.dev/,
+      "http://localhost:8787",
+      "http://localhost:3000",
+      "http://127.0.0.1:8787"
+    ];
+  }
+  return new CorsHandler({
+    origins,
+    methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
+    credentials: true,
+    maxAge: 86400
+  });
+}
+
+// src/lib/router.js
+var NativeRouter = class _NativeRouter {
+  constructor() {
+    this.routes = /* @__PURE__ */ new Map();
+    this.middlewares = [];
+    this.errorHandler = null;
+  }
+  /**
+   * Add a route to the router
+   * @param {string} method - HTTP method
+   * @param {string} path - Route path with optional params (:id)
+   * @param {Function} handler - Request handler function
+   */
+  addRoute(method, path, handler) {
+    const key = `${method}:${path}`;
+    this.routes.set(key, {
+      path,
+      handler,
+      regex: this.pathToRegex(path),
+      params: this.extractParamNames(path)
+    });
+  }
+  /**
+   * Convert path pattern to regex
+   * Supports :param and * wildcards
+   */
+  pathToRegex(path) {
+    const pattern = path.replace(/\//g, "\\/").replace(/:(\w+)/g, "(?<$1>[^\\/]+)").replace(/\*/g, ".*");
+    return new RegExp(`^${pattern}$`);
+  }
+  /**
+   * Extract parameter names from path
+   */
+  extractParamNames(path) {
+    const matches = path.matchAll(/:(\w+)/g);
+    return Array.from(matches, (m) => m[1]);
+  }
+  /** Register GET route */
+  get(path, handler) {
+    this.addRoute("GET", path, handler);
+    return this;
+  }
+  /** Register POST route */
+  post(path, handler) {
+    this.addRoute("POST", path, handler);
+    return this;
+  }
+  /** Register PUT route */
+  put(path, handler) {
+    this.addRoute("PUT", path, handler);
+    return this;
+  }
+  /** Register DELETE route */
+  delete(path, handler) {
+    this.addRoute("DELETE", path, handler);
+    return this;
+  }
+  /** Register PATCH route */
+  patch(path, handler) {
+    this.addRoute("PATCH", path, handler);
+    return this;
+  }
+  /** Register OPTIONS route */
+  options(path, handler) {
+    this.addRoute("OPTIONS", path, handler);
+    return this;
+  }
+  /** Register middleware or catch-all route */
+  all(path, handler) {
+    if (path === "*") {
+      this.middlewares.push(handler);
+    } else {
+      ["GET", "POST", "PUT", "DELETE", "PATCH", "HEAD", "OPTIONS"].forEach((method) => {
+        this.addRoute(method, path, handler);
+      });
+    }
+    return this;
+  }
+  /** Register error handler */
+  catch(handler) {
+    this.errorHandler = handler;
+    return this;
+  }
+  /**
+   * Handle incoming request
+   * @param {Request} request - Cloudflare Workers Request object
+   * @param {Object} env - Environment bindings
+   * @param {Object} ctx - Execution context
+   */
+  async handle(request2, env2, ctx) {
+    try {
+      const url = new URL(request2.url);
+      const method = request2.method;
+      for (const middleware of this.middlewares) {
+        const result = await middleware(request2, env2, ctx);
+        if (result instanceof Response) {
+          return result;
+        }
+      }
+      const exactKey = `${method}:${url.pathname}`;
+      if (this.routes.has(exactKey)) {
+        const route = this.routes.get(exactKey);
+        request2.params = {};
+        return await route.handler(request2, env2, ctx);
+      }
+      for (const [key, route] of this.routes) {
+        if (key.startsWith(`${method}:`)) {
+          const match = url.pathname.match(route.regex);
+          if (match) {
+            request2.params = match.groups || {};
+            if (!match.groups && route.params.length > 0) {
+              request2.params = {};
+              route.params.forEach((param, index) => {
+                request2.params[param] = match[index + 1];
+              });
+            }
+            return await route.handler(request2, env2, ctx);
+          }
+        }
+      }
+      return new Response(JSON.stringify({
+        error: "Not found",
+        path: url.pathname,
+        method
+      }), {
+        status: 404,
+        headers: { "Content-Type": "application/json" }
+      });
+    } catch (error4) {
+      if (this.errorHandler) {
+        return await this.errorHandler(error4, request2, env2, ctx);
+      }
+      console.error("Router error:", error4);
+      return new Response(JSON.stringify({
+        error: "Internal server error",
+        message: error4.message
+      }), {
+        status: 500,
+        headers: { "Content-Type": "application/json" }
+      });
+    }
+  }
+  /** Convenience method to create a router instance */
+  static create() {
+    return new _NativeRouter();
+  }
+};
 
 // src/legacy-monolith.js
 import { Writable } from "node:stream";
@@ -161844,79 +161922,6 @@ async function savePageExtraction22(sessionId, pageNumber, extractionResult, env
   return saved;
 }
 __name(savePageExtraction22, "savePageExtraction");
-router.post("/api/cut-sheets/match", async (request2, env2) => {
-  const { error: error4, user } = await authenticate(request2, env2);
-  if (error4)
-    return error4;
-  {
-    const _prodErr = await requireProductAccess(user, env2, "cutsheetx");
-    if (_prodErr) return _prodErr;
-  }
-  try {
-    const body = await request2.json();
-    const { manufacturer, model, catalog_number, component_type } = body;
-    if (!model && !catalog_number) {
-      return new Response(JSON.stringify({
-        error: "Missing required field: model or catalog_number"
-      }), { status: 400, headers: { "Content-Type": "application/json" } });
-    }
-    const result = await matchComponentToCutSheets({
-      manufacturer,
-      model,
-      catalog_number,
-      component_type
-    }, env2);
-    return new Response(JSON.stringify(result), {
-      status: 200,
-      headers: { "Content-Type": "application/json" }
-    });
-  } catch (err) {
-    return new Response(JSON.stringify({ error: err.message }), {
-      status: 500,
-      headers: { "Content-Type": "application/json" }
-    });
-  }
-});
-router.post("/api/cut-sheets/batch-match", async (request2, env2) => {
-  const { error: error4, user } = await authenticate(request2, env2);
-  if (error4)
-    return error4;
-  {
-    const _prodErr = await requireProductAccess(user, env2, "cutsheetx");
-    if (_prodErr) return _prodErr;
-  }
-  try {
-    const body = await request2.json();
-    const { components } = body;
-    if (!Array.isArray(components) || components.length === 0) {
-      return new Response(JSON.stringify({
-        error: "Missing or empty components array"
-      }), { status: 400, headers: { "Content-Type": "application/json" } });
-    }
-    const maxBatch = 50;
-    const batch = components.slice(0, maxBatch);
-    const results = await Promise.all(
-      batch.map((comp) => matchComponentToCutSheets(comp, env2))
-    );
-    const matched = results.filter((r) => r.matched);
-    const unmatched = results.filter((r) => !r.matched);
-    return new Response(JSON.stringify({
-      total: batch.length,
-      matched: matched.length,
-      unmatched: unmatched.length,
-      results,
-      truncated: components.length > maxBatch
-    }), {
-      status: 200,
-      headers: { "Content-Type": "application/json" }
-    });
-  } catch (err) {
-    return new Response(JSON.stringify({ error: err.message }), {
-      status: 500,
-      headers: { "Content-Type": "application/json" }
-    });
-  }
-});
 router.put("/api/hardware-components/:componentId/select-price", async (request2, env2) => {
   const { error: error4, user } = await authenticate(request2, env2);
   if (error4)
