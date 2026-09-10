@@ -12129,6 +12129,200 @@ function registerCutSheetMatchRoutes(router2, { authenticate: authenticate2, req
   });
 }
 
+// src/routes/cps-import-prices.js
+function scrubModelTokens(text) {
+  if (typeof text !== "string")
+    return text;
+  return text.split(/\s+/).filter((t) => t && !/^(None|null|NULL|undefined)$/.test(t)).join(" ");
+}
+function registerCpsImportPricesRoutes(router2, { authenticateCps: authenticateCps2 }) {
+  router2.post("/api/cps/import-prices", async (request2, env2) => {
+    const { error: error4, user } = await authenticateCps2(request2, env2);
+    if (error4)
+      return error4;
+    try {
+      const body = await request2.json();
+      const { variants } = body;
+      if (!Array.isArray(variants) || variants.length === 0) {
+        return jsonResponse3({ error: "variants array required" }, 400);
+      }
+      let imported = 0;
+      let updated = 0;
+      let productsCreated = 0;
+      let errors = [];
+      for (const v of variants.slice(0, 500)) {
+        if (typeof v.full_model_number === "string") {
+          v.full_model_number = scrubModelTokens(v.full_model_number);
+        }
+        if (!v.product_id || !v.full_model_number) {
+          errors.push({ model: v.full_model_number, error: "missing product_id or full_model_number" });
+          continue;
+        }
+        try {
+          const productExists = await env2.DB.prepare(
+            "SELECT id FROM products WHERE id = ?"
+          ).bind(v.product_id).first();
+          if (!productExists) {
+            const mfgSlug = (v.manufacturer_slug || "").toLowerCase();
+            const mfr = mfgSlug ? await env2.DB.prepare(
+              "SELECT id FROM manufacturers WHERE slug = ?"
+            ).bind(mfgSlug).first() : null;
+            const baseModel = v.base_model || v.manufacturer_part_number || v.full_model_number;
+            let mfrIdResolved = mfr?.id || null;
+            if (!mfrIdResolved) {
+              const idSlug = (String(v.product_id).match(/^prod-([a-z0-9]+)-/) || [])[1];
+              if (idSlug) {
+                const bySlug = await env2.DB.prepare(
+                  "SELECT id FROM manufacturers WHERE slug = ? OR id = ?"
+                ).bind(idSlug, "mfr-" + idSlug).first();
+                mfrIdResolved = bySlug?.id || null;
+              }
+            }
+            if (!mfrIdResolved) {
+              errors.push({ model: v.full_model_number, error: "manufacturer unresolved for " + v.product_id });
+              continue;
+            }
+            await env2.DB.prepare(`
+            INSERT OR IGNORE INTO products
+            (id, manufacturer_id, base_model, product_series, product_family, display_name, created_at, updated_at)
+            VALUES (?, ?, ?, ?, ?, ?, datetime('now'), datetime('now'))
+          `).bind(
+              v.product_id,
+              mfrIdResolved,
+              baseModel,
+              v.product_series || "General",
+              v.product_family || baseModel,
+              v.display_name || v.manufacturer_part_number || v.full_model_number
+            ).run();
+            productsCreated++;
+          }
+        } catch (prodErr) {
+          console.warn("[CPS Import] Product auto-create failed for", v.product_id, prodErr.message);
+        }
+        const id = v.id || `var-${v.full_model_number.toLowerCase().replace(/[^a-z0-9]/g, "-")}-${Date.now()}`;
+        let existing;
+        try {
+          existing = await env2.DB.prepare(
+            "SELECT id FROM product_variants WHERE full_model_number = ? AND product_id = ? AND COALESCE(price_uom, 'EA') = ?"
+          ).bind(v.full_model_number, v.product_id, (v.price_uom || "EA").toUpperCase()).first();
+        } catch (uomErr) {
+          if (!/no such column/i.test(uomErr.message || ""))
+            throw uomErr;
+          existing = await env2.DB.prepare(
+            "SELECT id FROM product_variants WHERE full_model_number = ? AND product_id = ?"
+          ).bind(v.full_model_number, v.product_id).first();
+        }
+        const priceUom = (v.price_uom || "EA").toUpperCase();
+        if (existing) {
+          try {
+            await env2.DB.prepare(`
+            UPDATE product_variants
+            SET list_price = COALESCE(?, list_price),
+                unit_price = COALESCE(?, unit_price),
+                finish_code = COALESCE(?, finish_code),
+                finish_description = COALESCE(?, finish_description),
+                stock_status = COALESCE(?, stock_status),
+                lead_time_weeks = COALESCE(?, lead_time_weeks),
+                price_uom = ?,
+                active = 1,
+                updated_at = datetime('now')
+            WHERE id = ?
+          `).bind(
+              v.list_price ?? null,
+              v.unit_price ?? null,
+              v.finish_code ?? null,
+              v.finish_description ?? null,
+              v.stock_status ?? null,
+              v.lead_time_weeks ?? null,
+              priceUom,
+              existing.id
+            ).run();
+          } catch (uomErr) {
+            if (!/no such column/i.test(uomErr.message || ""))
+              throw uomErr;
+            await env2.DB.prepare(`
+            UPDATE product_variants
+            SET list_price = COALESCE(?, list_price),
+                unit_price = COALESCE(?, unit_price),
+                finish_code = COALESCE(?, finish_code),
+                finish_description = COALESCE(?, finish_description),
+                stock_status = COALESCE(?, stock_status),
+                lead_time_weeks = COALESCE(?, lead_time_weeks),
+                active = 1,
+                updated_at = datetime('now')
+            WHERE id = ?
+          `).bind(
+              v.list_price ?? null,
+              v.unit_price ?? null,
+              v.finish_code ?? null,
+              v.finish_description ?? null,
+              v.stock_status ?? null,
+              v.lead_time_weeks ?? null,
+              existing.id
+            ).run();
+          }
+          updated++;
+        } else {
+          try {
+            await env2.DB.prepare(`
+            INSERT INTO product_variants
+            (id, product_id, full_model_number, manufacturer_part_number,
+             finish_code, finish_description, list_price, unit_price,
+             stock_status, lead_time_weeks, price_uom, active, created_at, updated_at)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 1, datetime('now'), datetime('now'))
+          `).bind(
+              id,
+              v.product_id,
+              v.full_model_number,
+              v.manufacturer_part_number || v.full_model_number,
+              v.finish_code ?? null,
+              v.finish_description ?? null,
+              v.list_price ?? null,
+              v.unit_price ?? null,
+              v.stock_status || "in_stock",
+              v.lead_time_weeks ?? null,
+              priceUom
+            ).run();
+          } catch (uomErr) {
+            if (!/no such column/i.test(uomErr.message || ""))
+              throw uomErr;
+            await env2.DB.prepare(`
+            INSERT INTO product_variants
+            (id, product_id, full_model_number, manufacturer_part_number,
+             finish_code, finish_description, list_price, unit_price,
+             stock_status, lead_time_weeks, active, created_at, updated_at)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 1, datetime('now'), datetime('now'))
+          `).bind(
+              id,
+              v.product_id,
+              v.full_model_number,
+              v.manufacturer_part_number || v.full_model_number,
+              v.finish_code ?? null,
+              v.finish_description ?? null,
+              v.list_price ?? null,
+              v.unit_price ?? null,
+              v.stock_status || "in_stock",
+              v.lead_time_weeks ?? null
+            ).run();
+          }
+          imported++;
+        }
+      }
+      return jsonResponse3({
+        success: true,
+        imported,
+        updated,
+        productsCreated,
+        errors: errors.length > 0 ? errors : void 0,
+        total: variants.length
+      });
+    } catch (err) {
+      console.error("[CPS Import Prices] Error:", err);
+      return jsonResponse3({ error: "Failed to import prices", details: err.message }, 500);
+    }
+  });
+}
+
 // src/module-registry.js
 function registerExtractedModules(router2, deps) {
   registerHardwareScheduleExportRoutes(router2);
@@ -12238,6 +12432,7 @@ function registerExtractedModules(router2, deps) {
     detectTextLayer2: deps.detectTextLayer2
   });
   registerCutSheetMatchRoutes(router2, { authenticate, requireProductAccess });
+  registerCpsImportPricesRoutes(router2, { authenticateCps });
 }
 
 // src/lib/cors.js
@@ -158431,12 +158626,6 @@ async function logTelemetryEvent(env2, params) {
   }
 }
 __name(logTelemetryEvent, "logTelemetryEvent");
-function scrubModelTokens(text) {
-  if (typeof text !== "string")
-    return text;
-  return text.split(/\s+/).filter((t) => t && !/^(None|null|NULL|undefined)$/.test(t)).join(" ");
-}
-__name(scrubModelTokens, "scrubModelTokens");
 async function incrementSubmittalsUsed(userId, env2) {
   await env2.DB.prepare(
     "UPDATE users SET submittals_used = submittals_used + 1, updated_at = ? WHERE id = ?"
@@ -161965,191 +162154,6 @@ router.put("/api/hardware-components/:componentId/select-price", async (request2
   } catch (err) {
     console.error("[CPS Select Price] Error:", err);
     return jsonResponse3({ error: "Failed to select price", details: err.message }, 500);
-  }
-});
-router.post("/api/cps/import-prices", async (request2, env2) => {
-  const { error: error4, user } = await authenticateCps(request2, env2);
-  if (error4)
-    return error4;
-  try {
-    const body = await request2.json();
-    const { variants } = body;
-    if (!Array.isArray(variants) || variants.length === 0) {
-      return jsonResponse3({ error: "variants array required" }, 400);
-    }
-    let imported = 0;
-    let updated = 0;
-    let productsCreated = 0;
-    let errors = [];
-    for (const v of variants.slice(0, 500)) {
-      if (typeof v.full_model_number === "string") {
-        v.full_model_number = scrubModelTokens(v.full_model_number);
-      }
-      if (!v.product_id || !v.full_model_number) {
-        errors.push({ model: v.full_model_number, error: "missing product_id or full_model_number" });
-        continue;
-      }
-      try {
-        const productExists = await env2.DB.prepare(
-          "SELECT id FROM products WHERE id = ?"
-        ).bind(v.product_id).first();
-        if (!productExists) {
-          const mfgSlug = (v.manufacturer_slug || "").toLowerCase();
-          const mfr = mfgSlug ? await env2.DB.prepare(
-            "SELECT id FROM manufacturers WHERE slug = ?"
-          ).bind(mfgSlug).first() : null;
-          const baseModel = v.base_model || v.manufacturer_part_number || v.full_model_number;
-          let mfrIdResolved = mfr?.id || null;
-          if (!mfrIdResolved) {
-            const idSlug = (String(v.product_id).match(/^prod-([a-z0-9]+)-/) || [])[1];
-            if (idSlug) {
-              const bySlug = await env2.DB.prepare(
-                "SELECT id FROM manufacturers WHERE slug = ? OR id = ?"
-              ).bind(idSlug, "mfr-" + idSlug).first();
-              mfrIdResolved = bySlug?.id || null;
-            }
-          }
-          if (!mfrIdResolved) {
-            errors.push({ model: v.full_model_number, error: "manufacturer unresolved for " + v.product_id });
-            continue;
-          }
-          await env2.DB.prepare(`
-            INSERT OR IGNORE INTO products
-            (id, manufacturer_id, base_model, product_series, product_family, display_name, created_at, updated_at)
-            VALUES (?, ?, ?, ?, ?, ?, datetime('now'), datetime('now'))
-          `).bind(
-            v.product_id,
-            mfrIdResolved,
-            baseModel,
-            v.product_series || "General",
-            v.product_family || baseModel,
-            v.display_name || v.manufacturer_part_number || v.full_model_number
-          ).run();
-          productsCreated++;
-        }
-      } catch (prodErr) {
-        console.warn("[CPS Import] Product auto-create failed for", v.product_id, prodErr.message);
-      }
-      const id = v.id || `var-${v.full_model_number.toLowerCase().replace(/[^a-z0-9]/g, "-")}-${Date.now()}`;
-      let existing;
-      try {
-        existing = await env2.DB.prepare(
-          "SELECT id FROM product_variants WHERE full_model_number = ? AND product_id = ? AND COALESCE(price_uom, 'EA') = ?"
-        ).bind(v.full_model_number, v.product_id, (v.price_uom || "EA").toUpperCase()).first();
-      } catch (uomErr) {
-        if (!/no such column/i.test(uomErr.message || ""))
-          throw uomErr;
-        existing = await env2.DB.prepare(
-          "SELECT id FROM product_variants WHERE full_model_number = ? AND product_id = ?"
-        ).bind(v.full_model_number, v.product_id).first();
-      }
-      const priceUom = (v.price_uom || "EA").toUpperCase();
-      if (existing) {
-        try {
-          await env2.DB.prepare(`
-            UPDATE product_variants
-            SET list_price = COALESCE(?, list_price),
-                unit_price = COALESCE(?, unit_price),
-                finish_code = COALESCE(?, finish_code),
-                finish_description = COALESCE(?, finish_description),
-                stock_status = COALESCE(?, stock_status),
-                lead_time_weeks = COALESCE(?, lead_time_weeks),
-                price_uom = ?,
-                active = 1,
-                updated_at = datetime('now')
-            WHERE id = ?
-          `).bind(
-            v.list_price ?? null,
-            v.unit_price ?? null,
-            v.finish_code ?? null,
-            v.finish_description ?? null,
-            v.stock_status ?? null,
-            v.lead_time_weeks ?? null,
-            priceUom,
-            existing.id
-          ).run();
-        } catch (uomErr) {
-          if (!/no such column/i.test(uomErr.message || ""))
-            throw uomErr;
-          await env2.DB.prepare(`
-            UPDATE product_variants
-            SET list_price = COALESCE(?, list_price),
-                unit_price = COALESCE(?, unit_price),
-                finish_code = COALESCE(?, finish_code),
-                finish_description = COALESCE(?, finish_description),
-                stock_status = COALESCE(?, stock_status),
-                lead_time_weeks = COALESCE(?, lead_time_weeks),
-                active = 1,
-                updated_at = datetime('now')
-            WHERE id = ?
-          `).bind(
-            v.list_price ?? null,
-            v.unit_price ?? null,
-            v.finish_code ?? null,
-            v.finish_description ?? null,
-            v.stock_status ?? null,
-            v.lead_time_weeks ?? null,
-            existing.id
-          ).run();
-        }
-        updated++;
-      } else {
-        try {
-          await env2.DB.prepare(`
-            INSERT INTO product_variants
-            (id, product_id, full_model_number, manufacturer_part_number,
-             finish_code, finish_description, list_price, unit_price,
-             stock_status, lead_time_weeks, price_uom, active, created_at, updated_at)
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 1, datetime('now'), datetime('now'))
-          `).bind(
-            id,
-            v.product_id,
-            v.full_model_number,
-            v.manufacturer_part_number || v.full_model_number,
-            v.finish_code ?? null,
-            v.finish_description ?? null,
-            v.list_price ?? null,
-            v.unit_price ?? null,
-            v.stock_status || "in_stock",
-            v.lead_time_weeks ?? null,
-            priceUom
-          ).run();
-        } catch (uomErr) {
-          if (!/no such column/i.test(uomErr.message || ""))
-            throw uomErr;
-          await env2.DB.prepare(`
-            INSERT INTO product_variants
-            (id, product_id, full_model_number, manufacturer_part_number,
-             finish_code, finish_description, list_price, unit_price,
-             stock_status, lead_time_weeks, active, created_at, updated_at)
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 1, datetime('now'), datetime('now'))
-          `).bind(
-            id,
-            v.product_id,
-            v.full_model_number,
-            v.manufacturer_part_number || v.full_model_number,
-            v.finish_code ?? null,
-            v.finish_description ?? null,
-            v.list_price ?? null,
-            v.unit_price ?? null,
-            v.stock_status || "in_stock",
-            v.lead_time_weeks ?? null
-          ).run();
-        }
-        imported++;
-      }
-    }
-    return jsonResponse3({
-      success: true,
-      imported,
-      updated,
-      productsCreated,
-      errors: errors.length > 0 ? errors : void 0,
-      total: variants.length
-    });
-  } catch (err) {
-    console.error("[CPS Import Prices] Error:", err);
-    return jsonResponse3({ error: "Failed to import prices", details: err.message }, 500);
   }
 });
 router.get("/api/cut-sheets/for-set/:setId", async (request2, env2) => {

@@ -47,6 +47,7 @@ import { registerHardwareSchedulePageExtractRoutes } from "./routes/hardware-sch
 import { registerHardwareScheduleFinalizeImageRoutes } from "./routes/hardware-schedule-finalize-image.js";
 import { registerHardwareScheduleExtractRoutes } from "./routes/hardware-schedule-extract.js";
 import { registerCutSheetMatchRoutes } from "./routes/cut-sheet-match.js";
+import { registerCpsImportPricesRoutes } from "./routes/cps-import-prices.js";
 import { authenticate, authenticateCps, requireActiveSubscription, requireProductAccess } from "./lib/auth.js";
 
 /**
@@ -210,4 +211,5 @@ export function registerExtractedModules(router, deps) {
     detectTextLayer2: deps.detectTextLayer2,
   });
   registerCutSheetMatchRoutes(router, { authenticate, requireProductAccess });
+  registerCpsImportPricesRoutes(router, { authenticateCps });
 }
