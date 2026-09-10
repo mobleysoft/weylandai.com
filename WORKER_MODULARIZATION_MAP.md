@@ -432,16 +432,29 @@ observable behavior change ever." Order:
      as injected deps (still defined in legacy-monolith.js — real fan-out
      across routes not yet extracted, so extracting them now would force
      touching the whole remaining cluster at once).
+   - ✅ done (2026-09-10): `src/rate-limit.js` — a real extraction from a
+     *prior* session (2026-09-05) that had never actually been wired into
+     the build — finally imported for real, dropping legacy-monolith.js's
+     inline vendored duplicate. Plus `routes/hardware-schedule-enrichment.js`
+     (enrich/backfill/affirm-status, 3 routes). `enrichComponent` (CPS
+     PRODUCT_DATABASE matching, step 8) and `storeHardwareExtraction` (an
+     esbuild lazy-`__esm` reference only resolvable inside
+     legacy-monolith.js's bundled scope) left as injected deps for the
+     same reason as `getSessionStatus` above. `getUnaffirmReason` also
+     stays injected — still used by the not-yet-extracted component/group
+     affirm routes below.
    - Still inline: extract/start/detect-schedules/status/set-page-range/
-     set-table-pages/batch-extract (~148000-149172), the `page/:pageNum`
-     family (extract-image/extraction-contract/extract-result/approve/
-     extract-region/component-affirm/group-affirm/group-replace/
-     affirm-all/extraction-delete, ~149873-152074), enrich/backfill/
-     affirm-status (~151060-151466), generate-submittal/generate-package/
-     extract-affirmed (~152167-152600), and finalize-image (146198,
-     isolated from the rest by the ~1,756-line Stripe/HuntX/econ-data gap
-     noted above — likely belongs with a PDF-pipeline module instead of
-     here). Whoever picks this back up should re-run a full route scan
+     set-table-pages/batch-extract (~148000-149172 — the group with ~20
+     unscoped PDF-pipeline dependencies, e.g. extractHardwareSchedule/
+     routeExtraction/queuePageExtractionJob; deliberately deferred rather
+     than rushed), the `page/:pageNum` family (extract-image/extraction-
+     contract/extract-result/approve/extract-region/component-affirm/
+     group-affirm/group-replace/affirm-all/extraction-delete,
+     ~149170-151470), generate-submittal/generate-package/extract-affirmed
+     (~151470-151900), and finalize-image (146198, isolated from the rest
+     by the ~1,756-line Stripe/HuntX/econ-data gap noted above — likely
+     belongs with a PDF-pipeline module instead of here). Whoever picks
+     this back up should re-run a full route scan
      first rather than trusting this list's line numbers, which will have
      shifted with every extraction since.
 8. **The CPS/cut-sheet cluster last** (12 files, ~9,000–10,000 lines) —
