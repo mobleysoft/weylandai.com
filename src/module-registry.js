@@ -24,6 +24,8 @@ import { registerAccessRequestRoutes } from "./routes/access-requests.js";
 import { makeOperatorGate } from "./lib/operator-gate.js";
 import { inviteViaAuthFor } from "./lib/authfor-invite.js";
 import { registerSightXWalkthroughRoutes } from "./routes/sightx-walkthrough.js";
+import { registerCrossReferenceRoutes } from "./routes/cross-reference.js";
+import { authenticate } from "./lib/auth.js";
 
 /**
  * @param {object} router - the shared NativeRouter instance legacy-monolith.js owns.
@@ -44,4 +46,5 @@ export function registerExtractedModules(router, deps) {
     ventureCode: "weyland",
   });
   registerSightXWalkthroughRoutes(router);
+  registerCrossReferenceRoutes(router, { authenticate });
 }
