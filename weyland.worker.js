@@ -14895,6 +14895,70 @@ function registerCutSheetVerifiedRoutes(router2, { authenticate: authenticate2, 
   });
 }
 
+// src/routes/cut-sheet-local.js
+function registerCutSheetLocalRoutes(router2, { authenticate: authenticate2, requireProductAccess: requireProductAccess2, searchLocalCatalogue: searchLocalCatalogue2, LOCAL_CATALOGUE_INDEX: LOCAL_CATALOGUE_INDEX2 }) {
+  router2.get("/api/cut-sheets/local-search", async (request2, env2) => {
+    const { error: error4, user } = await authenticate2(request2, env2);
+    if (error4)
+      return error4;
+    {
+      const _prodErr = await requireProductAccess2(user, env2, "cutsheetx");
+      if (_prodErr) return _prodErr;
+    }
+    try {
+      const url = new URL(request2.url);
+      const manufacturer = url.searchParams.get("manufacturer");
+      const model = url.searchParams.get("model");
+      const series = url.searchParams.get("series");
+      if (!manufacturer) {
+        return jsonResponse3({ error: "manufacturer parameter is required" }, 400);
+      }
+      const result = await searchLocalCatalogue2(manufacturer, model, series, env2);
+      if (result) {
+        return jsonResponse3({
+          found: true,
+          source: "local_catalogue",
+          ...result
+        });
+      } else {
+        return jsonResponse3({
+          found: false,
+          source: "local_catalogue",
+          message: "No match in local catalogue",
+          searchedFor: { manufacturer, model, series }
+        });
+      }
+    } catch (err) {
+      return jsonResponse3({ error: "Local catalogue search failed: " + err.message }, 500);
+    }
+  });
+  router2.get("/api/cut-sheets/local-index", async (request2, env2) => {
+    const { error: error4, user } = await authenticate2(request2, env2);
+    if (error4)
+      return error4;
+    {
+      const _prodErr = await requireProductAccess2(user, env2, "cutsheetx");
+      if (_prodErr) return _prodErr;
+    }
+    try {
+      const manufacturers = [...new Set(LOCAL_CATALOGUE_INDEX2.files.map((f) => f.manufacturer))];
+      const parentCompanies = [...new Set(LOCAL_CATALOGUE_INDEX2.files.map((f) => f.parent_company))];
+      return jsonResponse3({
+        version: LOCAL_CATALOGUE_INDEX2.version,
+        totalFiles: LOCAL_CATALOGUE_INDEX2.files.length,
+        manufacturers,
+        parentCompanies,
+        manufacturerCounts: manufacturers.reduce((acc, mfr) => {
+          acc[mfr] = LOCAL_CATALOGUE_INDEX2.files.filter((f) => f.manufacturer === mfr).length;
+          return acc;
+        }, {})
+      });
+    } catch (err) {
+      return jsonResponse3({ error: "Failed to get local index: " + err.message }, 500);
+    }
+  });
+}
+
 // src/module-registry.js
 function registerExtractedModules(router2, deps) {
   registerHardwareScheduleExportRoutes(router2);
@@ -15025,6 +15089,12 @@ function registerExtractedModules(router2, deps) {
     getManufacturerDomains: deps.getManufacturerDomains
   });
   registerCutSheetVerifiedRoutes(router2, { authenticate, requireProductAccess });
+  registerCutSheetLocalRoutes(router2, {
+    authenticate,
+    requireProductAccess,
+    searchLocalCatalogue: deps.searchLocalCatalogue,
+    LOCAL_CATALOGUE_INDEX: deps.LOCAL_CATALOGUE_INDEX
+  });
 }
 
 // src/lib/cors.js
@@ -164472,7 +164542,9 @@ registerExtractedModules(router, {
   detectTextLayer2,
   getDiscoveryConfig,
   getManufacturerDomains,
-  queueForDiscovery
+  queueForDiscovery,
+  searchLocalCatalogue,
+  LOCAL_CATALOGUE_INDEX
 });
 async function fetchTxdotOpportunities() {
   const url = "https://data.texas.gov/resource/qh8x-rm8r.json?" + new URLSearchParams({
@@ -167161,66 +167233,6 @@ router.delete("/api/catalogue/documents/:id", async (request2, env2) => {
     return jsonResponse3({ message: "Document deleted successfully" });
   } catch (err) {
     return jsonResponse3({ error: "Failed to delete document: " + err.message }, 500);
-  }
-});
-router.get("/api/cut-sheets/local-search", async (request2, env2) => {
-  const { error: error4, user } = await authenticate(request2, env2);
-  if (error4)
-    return error4;
-  {
-    const _prodErr = await requireProductAccess(user, env2, "cutsheetx");
-    if (_prodErr) return _prodErr;
-  }
-  try {
-    const url = new URL(request2.url);
-    const manufacturer = url.searchParams.get("manufacturer");
-    const model = url.searchParams.get("model");
-    const series = url.searchParams.get("series");
-    if (!manufacturer) {
-      return jsonResponse3({ error: "manufacturer parameter is required" }, 400);
-    }
-    const result = await searchLocalCatalogue(manufacturer, model, series, env2);
-    if (result) {
-      return jsonResponse3({
-        found: true,
-        source: "local_catalogue",
-        ...result
-      });
-    } else {
-      return jsonResponse3({
-        found: false,
-        source: "local_catalogue",
-        message: "No match in local catalogue",
-        searchedFor: { manufacturer, model, series }
-      });
-    }
-  } catch (err) {
-    return jsonResponse3({ error: "Local catalogue search failed: " + err.message }, 500);
-  }
-});
-router.get("/api/cut-sheets/local-index", async (request2, env2) => {
-  const { error: error4, user } = await authenticate(request2, env2);
-  if (error4)
-    return error4;
-  {
-    const _prodErr = await requireProductAccess(user, env2, "cutsheetx");
-    if (_prodErr) return _prodErr;
-  }
-  try {
-    const manufacturers = [...new Set(LOCAL_CATALOGUE_INDEX.files.map((f) => f.manufacturer))];
-    const parentCompanies = [...new Set(LOCAL_CATALOGUE_INDEX.files.map((f) => f.parent_company))];
-    return jsonResponse3({
-      version: LOCAL_CATALOGUE_INDEX.version,
-      totalFiles: LOCAL_CATALOGUE_INDEX.files.length,
-      manufacturers,
-      parentCompanies,
-      manufacturerCounts: manufacturers.reduce((acc, mfr) => {
-        acc[mfr] = LOCAL_CATALOGUE_INDEX.files.filter((f) => f.manufacturer === mfr).length;
-        return acc;
-      }, {})
-    });
-  } catch (err) {
-    return jsonResponse3({ error: "Failed to get local index: " + err.message }, 500);
   }
 });
 router.post("/api/catalogue/bulk-import", async (request2, env2) => {

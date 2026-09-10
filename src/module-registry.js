@@ -60,6 +60,7 @@ import { registerDoorScheduleMarksRoutes } from "./routes/door-schedule-marks.js
 import { registerCutSheetIntelligenceRoutes } from "./routes/cut-sheet-intelligence.js";
 import { registerCutSheetDiscoveriesRoutes } from "./routes/cut-sheet-discoveries.js";
 import { registerCutSheetVerifiedRoutes } from "./routes/cut-sheet-verified.js";
+import { registerCutSheetLocalRoutes } from "./routes/cut-sheet-local.js";
 import { authenticate, authenticateCps, requireActiveSubscription, requireProductAccess } from "./lib/auth.js";
 
 /**
@@ -108,6 +109,8 @@ import { authenticate, authenticateCps, requireActiveSubscription, requireProduc
  *   getDiscoveryConfig: Function,
  *   getManufacturerDomains: Function,
  *   queueForDiscovery: Function,
+ *   searchLocalCatalogue: Function,
+ *   LOCAL_CATALOGUE_INDEX: object,
  * }} deps
  *   Real dependencies still owned by legacy-monolith.js (not yet their
  *   own modules) that some of these routes need injected. renderHtmlToPdf/
@@ -247,4 +250,10 @@ export function registerExtractedModules(router, deps) {
     getManufacturerDomains: deps.getManufacturerDomains,
   });
   registerCutSheetVerifiedRoutes(router, { authenticate, requireProductAccess });
+  registerCutSheetLocalRoutes(router, {
+    authenticate,
+    requireProductAccess,
+    searchLocalCatalogue: deps.searchLocalCatalogue,
+    LOCAL_CATALOGUE_INDEX: deps.LOCAL_CATALOGUE_INDEX,
+  });
 }
