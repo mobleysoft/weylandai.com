@@ -763,7 +763,17 @@ observable behavior change ever." Order:
     `/bundle.zip`). Will be split into 2-3 logical route files (not one
     13-route file) matching this sub-grouping, same granularity as
     steps 8-9's clusters.
-    - Not yet started.
+    - ✅ done (2026-09-10): `routes/auth-session.js` - 5 routes
+      (POST session, GET session/check, POST logout, POST
+      authfor-exchange, GET me). generateJWT/hashPassword imported
+      directly from auth-module.js. errorResponse (real hoisted
+      function, 6 other call sites remaining) newly promoted to an
+      injected dep. sanitizeDisplayName had exactly 2 call sites, both
+      inside this extraction - fully orphaned, so inlined locally and
+      its dead original deleted from legacy-monolith.js.
+    - Remaining in step 10: the `/api/me/bridge/*` + `/api/me/jobs`
+      cluster (5 routes) and the `/api/install/device-auth/*` +
+      `/bundle.zip` cluster (5 routes).
 
 ### Additional tracked items (brainstormed 2026-09-10, not yet scheduled)
 
