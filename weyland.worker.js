@@ -23797,6 +23797,132 @@ async function persistSessionMatches(sessionId, env2) {
   return matchResults;
 }
 
+// src/lib/stripe-billing.js
+var WEYLAND_SUBCONP_PRICE_ID = "price_1UAh7DLWTxUJi5AVaNKljKc7";
+var WEYLAND_SUBCONP_PRODUCT_ID = "weyland-subconp-seat";
+var WEYLAND_PRODUCTS = {
+  [WEYLAND_SUBCONP_PRODUCT_ID]: { priceId: WEYLAND_SUBCONP_PRICE_ID, tier: null },
+  "weyland-cutsheetx-seat": { priceId: "price_1UAqxkLWTxUJi5AVk2l5N4Cg", tier: "cutsheetx" },
+  "weyland-takeoffx-seat": { priceId: "price_1UAqxsLWTxUJi5AV6aJjh5Nc", tier: "takeoffx" },
+  "weyland-propx-seat": { priceId: "price_1UAwDiLWTxUJi5AV42EqaRXi", tier: "propx" },
+  "weyland-huntx-seat": { priceId: "price_1UAtsgLWTxUJi5AVmc9hxKTG", tier: "huntx" },
+  "weyland-subx-seat": { priceId: "price_1UAuLJLWTxUJi5AVeQGMZegU", tier: "subx" },
+  "weyland-meetingx-seat": { priceId: "price_1UAwDiLWTxUJi5AV3zx4ZMgp", tier: "meetingx" },
+  "weyland-sightx-seat": { priceId: "price_1UAwEmLWTxUJi5AVnfVmPSPq", tier: "sightx" },
+  // PropX Pro family - real live-mode Stripe objects (same account as everything
+  // above). NOT wired to any real backend route yet - do not surface these on
+  // /pricing or any checkout UI until #26/#27/#28 (real LienX/BidX/CoA routes)
+  // are built. A live, chargeable price with no product behind it is worse than
+  // not having the SKU at all.
+  "weyland-lienx-seat": { priceId: "price_1UAxoNLWTxUJi5AV7ysXAvxm", tier: "lienx" },
+  "weyland-bidx-seat": { priceId: "price_1UAxoOLWTxUJi5AVrw6I89f6", tier: "bidx" },
+  "weyland-coa-seat": { priceId: "price_1UAxoOLWTxUJi5AVtRLsCXPq", tier: "coa" },
+  // TakeoffX Pro, SubX Pro, HuntX Pro, SightX Pro - real live-mode Stripe
+  // objects, but NONE of these 24 have a real backend route or page yet
+  // (unlike lienx/bidx/coa above, which do). Registered here only so the
+  // catalog endpoint and future checkout wiring have something real to
+  // point at - do not surface any of these on /pricing or any nav until
+  // each has actual working functionality behind it.
+  "weyland-drawx-seat": { priceId: "price_1UAzFFLWTxUJi5AVqu5Mo8oi", tier: "drawx" },
+  "weyland-asbuiltx-seat": { priceId: "price_1UAzEuLWTxUJi5AVYYpFhmov", tier: "asbuiltx" },
+  "weyland-specx-seat": { priceId: "price_1UAzEvLWTxUJi5AV7GooVFVv", tier: "specx" },
+  "weyland-rfax-seat": { priceId: "price_1UAzEwLWTxUJi5AVbt7di7am", tier: "rfax" },
+  "weyland-changeordx-seat": { priceId: "price_1UAzEwLWTxUJi5AVEGEBbCzB", tier: "changeordx" },
+  "weyland-permitx-seat": { priceId: "price_1UAzExLWTxUJi5AVNnusMWUs", tier: "permitx" },
+  "weyland-safetyx-seat": { priceId: "price_1UAzExLWTxUJi5AVbuYnJgWq", tier: "safetyx" },
+  "weyland-closex-seat": { priceId: "price_1UAzEyLWTxUJi5AVe8R5mxaa", tier: "closex" },
+  "weyland-notesx-seat": { priceId: "price_1UAzEyLWTxUJi5AVA2LBoSfw", tier: "notesx" },
+  "weyland-leadx-seat": { priceId: "price_1UAzEzLWTxUJi5AVgEKlta57", tier: "leadx" },
+  "weyland-marketx-seat": { priceId: "price_1UAzF0LWTxUJi5AVmpyVEvLb", tier: "marketx" },
+  "weyland-compx-seat": { priceId: "price_1UAzF0LWTxUJi5AV6GptNE42", tier: "compx" },
+  "weyland-pricex-seat": { priceId: "price_1UAzF1LWTxUJi5AVuRxlbnaL", tier: "pricex" },
+  "weyland-zoningx-seat": { priceId: "price_1UAzF1LWTxUJi5AVBIA2woi4", tier: "zoningx" },
+  "weyland-riskx-seat": { priceId: "price_1UAzF2LWTxUJi5AV73PrQvi7", tier: "riskx" },
+  "weyland-forecastx-seat": { priceId: "price_1UAzF3LWTxUJi5AVxp0lAbAH", tier: "forecastx" },
+  "weyland-geox-seat": { priceId: "price_1UAzF3LWTxUJi5AVNz5ZtV4j", tier: "geox" },
+  "weyland-sitex-seat": { priceId: "price_1UAzF4LWTxUJi5AVhLWKTCI3", tier: "sitex" },
+  "weyland-dronex-seat": { priceId: "price_1UAzF4LWTxUJi5AV4VnC6MVh", tier: "dronex" },
+  "weyland-photox-seat": { priceId: "price_1UAzF5LWTxUJi5AVRa52dt1u", tier: "photox" },
+  "weyland-inspecx-seat": { priceId: "price_1UAzF6LWTxUJi5AVeycqwHkE", tier: "inspecx" },
+  "weyland-survx-seat": { priceId: "price_1UAzF6LWTxUJi5AVURjQkscV", tier: "survx" },
+  "weyland-mobilex-seat": { priceId: "price_1UAzF7LWTxUJi5AVbjF6Yzqg", tier: "mobilex" },
+  "weyland-weatherx-seat": { priceId: "price_1UAzF7LWTxUJi5AVV0rfO1Rl", tier: "weatherx" }
+};
+var CHECKOUT_READY_PRODUCTS = /* @__PURE__ */ new Set([
+  WEYLAND_SUBCONP_PRODUCT_ID,
+  "weyland-cutsheetx-seat",
+  "weyland-takeoffx-seat",
+  "weyland-propx-seat",
+  "weyland-huntx-seat",
+  "weyland-subx-seat",
+  "weyland-meetingx-seat",
+  "weyland-sightx-seat",
+  "weyland-marketx-seat",
+  "weyland-pricex-seat",
+  "weyland-compx-seat",
+  "weyland-weatherx-seat",
+  "weyland-forecastx-seat",
+  "weyland-geox-seat"
+]);
+async function stripeRequest(env2, method, path, params) {
+  const body = params ? Object.entries(params).map(([k, v]) => `${encodeURIComponent(k)}=${encodeURIComponent(v)}`).join("&") : void 0;
+  const resp = await fetch(`https://api.stripe.com/v1${path}`, {
+    method,
+    headers: {
+      "Authorization": "Basic " + btoa(env2.STRIPE_SECRET_KEY + ":"),
+      "Content-Type": "application/x-www-form-urlencoded"
+    },
+    body
+  });
+  const data = await resp.json();
+  if (!resp.ok) {
+    const err = new Error(data.error?.message || `Stripe ${resp.status}`);
+    err.stripeError = data.error;
+    throw err;
+  }
+  return data;
+}
+async function verifyStripeWebhookSignature(rawBody, sigHeader, secret) {
+  const parts = Object.fromEntries(
+    (sigHeader || "").split(",").map((p) => p.split("=")).filter((p) => p.length === 2)
+  );
+  const timestamp = parts.t;
+  const v1 = parts.v1;
+  if (!timestamp || !v1) return { valid: false, reason: "malformed_signature_header" };
+  const age = Math.floor(Date.now() / 1e3) - parseInt(timestamp, 10);
+  if (isNaN(age) || age > 300) return { valid: false, reason: "expired" };
+  const signedPayload = `${timestamp}.${rawBody}`;
+  const key = await crypto.subtle.importKey(
+    "raw",
+    encoder2.encode(secret),
+    { name: "HMAC", hash: "SHA-256" },
+    false,
+    ["sign"]
+  );
+  const sigBuf = await crypto.subtle.sign("HMAC", key, encoder2.encode(signedPayload));
+  const expectedHex = Array.from(new Uint8Array(sigBuf)).map((b) => b.toString(16).padStart(2, "0")).join("");
+  if (expectedHex !== v1) return { valid: false, reason: "signature_mismatch" };
+  return { valid: true };
+}
+var encoder2 = new TextEncoder();
+async function verifyVendyaiForwardSignature(rawBody, timestamp, signature, secret) {
+  if (!timestamp || !signature) return { valid: false, reason: "malformed_signature_header" };
+  const age = Math.floor(Date.now() / 1e3) - parseInt(timestamp, 10);
+  if (isNaN(age) || age > 300) return { valid: false, reason: "expired" };
+  const key = await crypto.subtle.importKey(
+    "raw",
+    encoder2.encode(secret),
+    { name: "HMAC", hash: "SHA-256" },
+    false,
+    ["sign"]
+  );
+  const sigBuf = await crypto.subtle.sign("HMAC", key, encoder2.encode(`${timestamp}.${rawBody}`));
+  const binary = String.fromCharCode(...new Uint8Array(sigBuf));
+  const expected = btoa(binary).replace(/\+/g, "-").replace(/\//g, "_").replace(/=/g, "");
+  if (expected !== signature) return { valid: false, reason: "signature_mismatch" };
+  return { valid: true };
+}
+
 // src/legacy-monolith.js
 import { Writable } from "node:stream";
 import { Socket } from "node:net";
@@ -167492,133 +167618,6 @@ async function generateR2StreamUrl2(bufferKey, env2) {
   return `${origin}/api/internal/r2-stream?token=${encodeURIComponent(token)}`;
 }
 __name(generateR2StreamUrl2, "generateR2StreamUrl");
-var WEYLAND_SUBCONP_PRICE_ID = "price_1UAh7DLWTxUJi5AVaNKljKc7";
-var WEYLAND_SUBCONP_PRODUCT_ID = "weyland-subconp-seat";
-var WEYLAND_PRODUCTS = {
-  [WEYLAND_SUBCONP_PRODUCT_ID]: { priceId: WEYLAND_SUBCONP_PRICE_ID, tier: null },
-  "weyland-cutsheetx-seat": { priceId: "price_1UAqxkLWTxUJi5AVk2l5N4Cg", tier: "cutsheetx" },
-  "weyland-takeoffx-seat": { priceId: "price_1UAqxsLWTxUJi5AV6aJjh5Nc", tier: "takeoffx" },
-  "weyland-propx-seat": { priceId: "price_1UAwDiLWTxUJi5AV42EqaRXi", tier: "propx" },
-  "weyland-huntx-seat": { priceId: "price_1UAtsgLWTxUJi5AVmc9hxKTG", tier: "huntx" },
-  "weyland-subx-seat": { priceId: "price_1UAuLJLWTxUJi5AVeQGMZegU", tier: "subx" },
-  "weyland-meetingx-seat": { priceId: "price_1UAwDiLWTxUJi5AV3zx4ZMgp", tier: "meetingx" },
-  "weyland-sightx-seat": { priceId: "price_1UAwEmLWTxUJi5AVnfVmPSPq", tier: "sightx" },
-  // PropX Pro family - real live-mode Stripe objects (same account as everything
-  // above). NOT wired to any real backend route yet - do not surface these on
-  // /pricing or any checkout UI until #26/#27/#28 (real LienX/BidX/CoA routes)
-  // are built. A live, chargeable price with no product behind it is worse than
-  // not having the SKU at all.
-  "weyland-lienx-seat": { priceId: "price_1UAxoNLWTxUJi5AV7ysXAvxm", tier: "lienx" },
-  "weyland-bidx-seat": { priceId: "price_1UAxoOLWTxUJi5AVrw6I89f6", tier: "bidx" },
-  "weyland-coa-seat": { priceId: "price_1UAxoOLWTxUJi5AVtRLsCXPq", tier: "coa" },
-  // TakeoffX Pro, SubX Pro, HuntX Pro, SightX Pro - real live-mode Stripe
-  // objects, but NONE of these 24 have a real backend route or page yet
-  // (unlike lienx/bidx/coa above, which do). Registered here only so the
-  // catalog endpoint and future checkout wiring have something real to
-  // point at - do not surface any of these on /pricing or any nav until
-  // each has actual working functionality behind it.
-  "weyland-drawx-seat": { priceId: "price_1UAzFFLWTxUJi5AVqu5Mo8oi", tier: "drawx" },
-  "weyland-asbuiltx-seat": { priceId: "price_1UAzEuLWTxUJi5AVYYpFhmov", tier: "asbuiltx" },
-  "weyland-specx-seat": { priceId: "price_1UAzEvLWTxUJi5AV7GooVFVv", tier: "specx" },
-  "weyland-rfax-seat": { priceId: "price_1UAzEwLWTxUJi5AVbt7di7am", tier: "rfax" },
-  "weyland-changeordx-seat": { priceId: "price_1UAzEwLWTxUJi5AVEGEBbCzB", tier: "changeordx" },
-  "weyland-permitx-seat": { priceId: "price_1UAzExLWTxUJi5AVNnusMWUs", tier: "permitx" },
-  "weyland-safetyx-seat": { priceId: "price_1UAzExLWTxUJi5AVbuYnJgWq", tier: "safetyx" },
-  "weyland-closex-seat": { priceId: "price_1UAzEyLWTxUJi5AVe8R5mxaa", tier: "closex" },
-  "weyland-notesx-seat": { priceId: "price_1UAzEyLWTxUJi5AVA2LBoSfw", tier: "notesx" },
-  "weyland-leadx-seat": { priceId: "price_1UAzEzLWTxUJi5AVgEKlta57", tier: "leadx" },
-  "weyland-marketx-seat": { priceId: "price_1UAzF0LWTxUJi5AVmpyVEvLb", tier: "marketx" },
-  "weyland-compx-seat": { priceId: "price_1UAzF0LWTxUJi5AV6GptNE42", tier: "compx" },
-  "weyland-pricex-seat": { priceId: "price_1UAzF1LWTxUJi5AVuRxlbnaL", tier: "pricex" },
-  "weyland-zoningx-seat": { priceId: "price_1UAzF1LWTxUJi5AVBIA2woi4", tier: "zoningx" },
-  "weyland-riskx-seat": { priceId: "price_1UAzF2LWTxUJi5AV73PrQvi7", tier: "riskx" },
-  "weyland-forecastx-seat": { priceId: "price_1UAzF3LWTxUJi5AVxp0lAbAH", tier: "forecastx" },
-  "weyland-geox-seat": { priceId: "price_1UAzF3LWTxUJi5AVNz5ZtV4j", tier: "geox" },
-  "weyland-sitex-seat": { priceId: "price_1UAzF4LWTxUJi5AVhLWKTCI3", tier: "sitex" },
-  "weyland-dronex-seat": { priceId: "price_1UAzF4LWTxUJi5AV4VnC6MVh", tier: "dronex" },
-  "weyland-photox-seat": { priceId: "price_1UAzF5LWTxUJi5AVRa52dt1u", tier: "photox" },
-  "weyland-inspecx-seat": { priceId: "price_1UAzF6LWTxUJi5AVeycqwHkE", tier: "inspecx" },
-  "weyland-survx-seat": { priceId: "price_1UAzF6LWTxUJi5AVURjQkscV", tier: "survx" },
-  "weyland-mobilex-seat": { priceId: "price_1UAzF7LWTxUJi5AVbjF6Yzqg", tier: "mobilex" },
-  "weyland-weatherx-seat": { priceId: "price_1UAzF7LWTxUJi5AVV0rfO1Rl", tier: "weatherx" }
-};
-var CHECKOUT_READY_PRODUCTS = /* @__PURE__ */ new Set([
-  WEYLAND_SUBCONP_PRODUCT_ID,
-  "weyland-cutsheetx-seat",
-  "weyland-takeoffx-seat",
-  "weyland-propx-seat",
-  "weyland-huntx-seat",
-  "weyland-subx-seat",
-  "weyland-meetingx-seat",
-  "weyland-sightx-seat",
-  "weyland-marketx-seat",
-  "weyland-pricex-seat",
-  "weyland-compx-seat",
-  "weyland-weatherx-seat",
-  "weyland-forecastx-seat",
-  "weyland-geox-seat"
-]);
-async function stripeRequest(env2, method, path, params) {
-  const body = params ? Object.entries(params).map(([k, v]) => `${encodeURIComponent(k)}=${encodeURIComponent(v)}`).join("&") : void 0;
-  const resp = await fetch(`https://api.stripe.com/v1${path}`, {
-    method,
-    headers: {
-      "Authorization": "Basic " + btoa(env2.STRIPE_SECRET_KEY + ":"),
-      "Content-Type": "application/x-www-form-urlencoded"
-    },
-    body
-  });
-  const data = await resp.json();
-  if (!resp.ok) {
-    const err = new Error(data.error?.message || `Stripe ${resp.status}`);
-    err.stripeError = data.error;
-    throw err;
-  }
-  return data;
-}
-__name(stripeRequest, "stripeRequest");
-async function verifyStripeWebhookSignature(rawBody, sigHeader, secret) {
-  const parts = Object.fromEntries(
-    (sigHeader || "").split(",").map((p) => p.split("=")).filter((p) => p.length === 2)
-  );
-  const timestamp = parts.t;
-  const v1 = parts.v1;
-  if (!timestamp || !v1) return { valid: false, reason: "malformed_signature_header" };
-  const age = Math.floor(Date.now() / 1e3) - parseInt(timestamp, 10);
-  if (isNaN(age) || age > 300) return { valid: false, reason: "expired" };
-  const signedPayload = `${timestamp}.${rawBody}`;
-  const key = await crypto.subtle.importKey(
-    "raw",
-    encoder2.encode(secret),
-    { name: "HMAC", hash: "SHA-256" },
-    false,
-    ["sign"]
-  );
-  const sigBuf = await crypto.subtle.sign("HMAC", key, encoder2.encode(signedPayload));
-  const expectedHex = Array.from(new Uint8Array(sigBuf)).map((b) => b.toString(16).padStart(2, "0")).join("");
-  if (expectedHex !== v1) return { valid: false, reason: "signature_mismatch" };
-  return { valid: true };
-}
-__name(verifyStripeWebhookSignature, "verifyStripeWebhookSignature");
-var encoder2 = new TextEncoder();
-async function verifyVendyaiForwardSignature(rawBody, timestamp, signature, secret) {
-  if (!timestamp || !signature) return { valid: false, reason: "malformed_signature_header" };
-  const age = Math.floor(Date.now() / 1e3) - parseInt(timestamp, 10);
-  if (isNaN(age) || age > 300) return { valid: false, reason: "expired" };
-  const key = await crypto.subtle.importKey(
-    "raw",
-    encoder2.encode(secret),
-    { name: "HMAC", hash: "SHA-256" },
-    false,
-    ["sign"]
-  );
-  const sigBuf = await crypto.subtle.sign("HMAC", key, encoder2.encode(`${timestamp}.${rawBody}`));
-  const binary = String.fromCharCode(...new Uint8Array(sigBuf));
-  const expected = btoa(binary).replace(/\+/g, "-").replace(/\//g, "_").replace(/=/g, "");
-  if (expected !== signature) return { valid: false, reason: "signature_mismatch" };
-  return { valid: true };
-}
-__name(verifyVendyaiForwardSignature, "verifyVendyaiForwardSignature");
 async function autoEnrichSessionOnSave(sessionId, env2) {
   const compsResult = await env2.DB.prepare(`
     SELECT hc.id, hc.manufacturer, hc.model, hc.finish, hc.catalog_number,

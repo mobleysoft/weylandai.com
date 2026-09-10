@@ -197,7 +197,22 @@ cluster *names* and *relationships* are the durable part.
    live payment code. Same live-deploy-verification discipline as the
    original billing/webhook extraction: verify against real Stripe
    test-mode signing, not just unit-test math.
-   - Status: not started.
+   - **Status: ✅ done (2026-09-10).** Extracted to
+     `src/lib/stripe-billing.js` + `src/lib/stripe-billing.test.mjs`
+     (17 real tests, including HMAC signatures computed independently
+     in the test file rather than imported from the module under test,
+     so a broken verify function can't accidentally validate itself),
+     imported directly into `legacy-monolith.js`. `legacy-monolith.js`
+     shrank 145,641 → 145,453 lines (188 lines, byte-diff-verified
+     identical modulo `export` keywords and stripped `__name(...)`
+     calls). Same extra-care discipline as the earlier billing.js/
+     webhooks-subscription.js route extractions. Live-verified via
+     `GET /api/billing/catalog` (real product list derived from the
+     extracted `WEYLAND_PRODUCTS`/`CHECKOUT_READY_PRODUCTS`) and
+     `POST /api/webhooks/subscription` with no signature header (real
+     401 `Missing signature` rejection from the extracted verify
+     functions' entry gate) - did not trigger an actual Stripe
+     checkout session against live-mode keys.
 6. **R2/CORS/static-asset dispatch plumbing (Cluster I, ~320 lines).**
    `MIME_MAP`, `serveR2`, `checkSession`, the `monolith` object (the
    real `/api/*` dispatcher wrapping `router.handle(...)` with CORS +
