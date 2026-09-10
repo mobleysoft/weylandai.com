@@ -3055,6 +3055,49 @@ async function inviteViaAuthFor(env2, { email, name, role, operatorToken } = {},
   return { ok: false, status: resp.status, data: { error: data && data.error || `AuthFor register failed (${resp.status})` } };
 }
 
+// src/routes/sightx-walkthrough.js
+function escapeHtmlText(s) {
+  return String(s || "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&apos;" })[c]);
+}
+function registerSightXWalkthroughRoutes(router2) {
+  router2.post("/api/sightx/walkthrough-preview", async (request2, env2) => {
+    let body;
+    try {
+      body = await request2.json();
+    } catch {
+      return jsonResponse3({ detail: { message: "invalid JSON body" } }, 400);
+    }
+    const description = typeof body?.description === "string" ? body.description.trim().slice(0, 1e3) : "";
+    if (!description) return jsonResponse3({ detail: { message: "description is required" } }, 400);
+    if (!env2.FILMLINE_VIDEO) {
+      return jsonResponse3({ detail: { message: "FILMLINE_VIDEO binding not configured on this Worker" } }, 500);
+    }
+    try {
+      const upstream = await env2.FILMLINE_VIDEO.fetch("https://filmline-video-worker/api/generate", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ premise: description, accent: "#f0b800" })
+      });
+      const data = await upstream.json();
+      if (!upstream.ok || !data?.video?.svg) {
+        return jsonResponse3({ detail: { message: "walkthrough generation failed upstream", upstream: data } }, 502);
+      }
+      return jsonResponse3({
+        title: data.title,
+        logline_escaped: escapeHtmlText(data.logline),
+        scene_count: (data.scenes || []).length,
+        total_seconds: data.video.total_seconds,
+        svg: data.video.svg,
+        narration_lines: [data.logline, ...(data.scenes || []).map((s) => s.description)].filter(Boolean),
+        source: "Service Binding -> filmline-video-worker /api/generate -> mobley-venture-fleet-a /api/story-treatment"
+      });
+    } catch (err) {
+      console.error("[SightX walkthrough-preview] error:", err.message);
+      return jsonResponse3({ detail: { message: `FILMLINE_VIDEO call failed: ${err.message}` } }, 502);
+    }
+  });
+}
+
 // src/module-registry.js
 function registerExtractedModules(router2, deps) {
   registerHardwareScheduleExportRoutes(router2);
@@ -3068,6 +3111,7 @@ function registerExtractedModules(router2, deps) {
     invite: inviteViaAuthFor,
     ventureCode: "weyland"
   });
+  registerSightXWalkthroughRoutes(router2);
 }
 
 // src/lib/cors.js
@@ -152988,46 +153032,6 @@ router.get("/api/geox/lookup", async (request2, env2) => {
   } catch (err) {
     console.error("[GeoX] lookup error:", err.message);
     return jsonResponse3({ detail: { message: err.message } }, 502);
-  }
-});
-function escapeHtmlText(s) {
-  return String(s || "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&apos;" })[c]);
-}
-__name(escapeHtmlText, "escapeHtmlText");
-router.post("/api/sightx/walkthrough-preview", async (request2, env2) => {
-  let body;
-  try {
-    body = await request2.json();
-  } catch {
-    return jsonResponse3({ detail: { message: "invalid JSON body" } }, 400);
-  }
-  const description = typeof body?.description === "string" ? body.description.trim().slice(0, 1e3) : "";
-  if (!description) return jsonResponse3({ detail: { message: "description is required" } }, 400);
-  if (!env2.FILMLINE_VIDEO) {
-    return jsonResponse3({ detail: { message: "FILMLINE_VIDEO binding not configured on this Worker" } }, 500);
-  }
-  try {
-    const upstream = await env2.FILMLINE_VIDEO.fetch("https://filmline-video-worker/api/generate", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ premise: description, accent: "#f0b800" })
-    });
-    const data = await upstream.json();
-    if (!upstream.ok || !data?.video?.svg) {
-      return jsonResponse3({ detail: { message: "walkthrough generation failed upstream", upstream: data } }, 502);
-    }
-    return jsonResponse3({
-      title: data.title,
-      logline_escaped: escapeHtmlText(data.logline),
-      scene_count: (data.scenes || []).length,
-      total_seconds: data.video.total_seconds,
-      svg: data.video.svg,
-      narration_lines: [data.logline, ...(data.scenes || []).map((s) => s.description)].filter(Boolean),
-      source: "Service Binding -> filmline-video-worker /api/generate -> mobley-venture-fleet-a /api/story-treatment"
-    });
-  } catch (err) {
-    console.error("[SightX walkthrough-preview] error:", err.message);
-    return jsonResponse3({ detail: { message: `FILMLINE_VIDEO call failed: ${err.message}` } }, 502);
   }
 });
 async function stripeRequest(env2, method, path, params) {
