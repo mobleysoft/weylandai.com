@@ -635,7 +635,7 @@ deferral (closed by step 10).
 
 | Name(s) | Location(s) (as of 2026-09-10) | Verdict |
 |---|---|---|
-| `arrayBufferToBase642` / `arrayBufferToBase644` | legacy-monolith.js:112254 / :135224 (2 of the original 3-4 collision-renamed copies remain inline; a 3rd, real, un-renamed `arrayBufferToBase64` is a legitimate separate function imported from `auth-module.js`, not a duplicate) | Still real and unresolved - collapse the 2 remaining inline copies into one export when their surrounding region gets extracted. |
+| `arrayBufferToBase642` | legacy-monolith.js:112254 (the only one left - `...644` was resolved 2026-09-10 during the second vision-adapter extraction: confirmed byte-for-byte identical to the real `arrayBufferToBase64` import from `auth-module.js`, deleted outright rather than exported under a new name) | Still real and unresolved - delete on extraction the same way `...644` was, once its surrounding region moves. |
 | `D1KVShim` class | now `export var D1KVShim` in `lib/edge-dispatch.js:46` (moved by step 7/Cluster I, not deleted) | Still open - dead since the 2026-09-09 fix, explicitly flagged in-code as possibly-intentional in-progress work. **Still needs a human decision** (finish the migration vs. remove), just relocated, not resolved. |
 | Second Claude-vision-adapter region (`EXTRACTION_PROMPT_TEMPLATE`, `viaApiDirect`, `viaSabpClaudeCode`, `viaLocalSubprocess`, `adaptersForEdition`, `dispatchVisionExtraction`, `parseAndValidateExtraction`, ~825 lines) | legacy-monolith.js, starts at line 134541 (`EXTRACTION_PROMPT_TEMPLATE`), right after Cluster E's `getDiscoveryConfig` and before Cluster K's former `router` line | Wholly separate from Cluster A's already-extracted vision-adapter region (`callClaudeVision` etc.) despite the similar naming; untouched by any step so far. Now numbered as section 4, step 1 below. |
 
@@ -730,14 +730,55 @@ scope. Real, first-party app code (not vendored), much smaller than
 section 3's project - reasonable to close out before starting on the
 vendored-library work.
 
-1. **Second Claude-vision-adapter region** (`EXTRACTION_PROMPT_TEMPLATE`,
-   `viaApiDirect`, `viaSabpClaudeCode`, `viaLocalSubprocess`,
-   `adaptersForEdition`, `dispatchVisionExtraction`,
-   `parseAndValidateExtraction`, ~825 lines, legacy-monolith.js:134541
-   onward). Same discipline as every step in section 1: 3-way
-   verification (function-boundary scan, vendored-bundle entanglement
-   check, full-identifier sweep) before writing an extraction, real
-   tests, live verification, one commit.
+1. **Second Claude-vision-adapter region** - **done (2026-09-10).**
+   Extracted to `src/lib/hardware-extraction-vision-dispatch.js` (833
+   lines, 28 real-behavior tests): `EXTRACTION_PROMPT_TEMPLATE`,
+   `viaApiDirect`, `parseAndValidateExtraction`, `viaSabpClaudeCode`,
+   `viaLocalSubprocess`, `adaptersForEdition`, `dispatchVisionExtraction`,
+   `pdfBufferOrNull`, `generateR2StreamUrl`, `getUnaffirmReason`.
+   `legacy-monolith.js`: 136,634 → 135,792 lines.
+   - **The real region was 13 functions, not the 7 originally named** -
+     found via the standard boundary scan. 5 extra functions
+     (`pdfBufferOrNull`, `generateR2StreamUrl`, `autoEnrichSessionOnSave`,
+     `savePageExtraction2`, `getUnaffirmReason`) turned out to be real,
+     already-wired-via-`module-registry.js` session-save/review helpers
+     sitting in the same physical region, not part of the vision-
+     dispatch theme at all by name - confirmed via grep that
+     `getUnaffirmReason`/`pdfBufferOrNull`/`generateR2StreamUrl` are
+     real `deps.X` consumers in already-extracted route files
+     (`hardware-schedule-enrichment.js`, `hardware-schedule-extract.js`,
+     `hardware-schedule-page-affirm.js`, `hardware-schedule-generate.js`).
+   - **Resolved the `arrayBufferToBase642`/`...644` dead-code register
+     item for real, not just relocated it**: `arrayBufferToBase644`
+     turned out to be a byte-for-byte functional duplicate of the
+     already-imported `arrayBufferToBase64` from `auth-module.js` (same
+     algorithm, one just inlines the helper the other calls) - its 3
+     call sites were repointed to the real shared function and the
+     duplicate definition deleted outright, not exported under a new
+     name. (`arrayBufferToBase642`, the other still-open duplicate, is
+     untouched - it lives in a different region, not this one.)
+   - **Left inline, correctly**: `savePageExtraction2` and
+     `autoEnrichSessionOnSave` - `savePageExtraction2` calls the
+     original inline `savePageExtraction` (one of Cluster A sub-step
+     (d)'s vendored-bundle-entangled leftovers), and
+     `autoEnrichSessionOnSave`'s only caller is `savePageExtraction2` -
+     both join the sub-step (d) follow-up group (section 4 step 3)
+     rather than being force-extracted via DI for two small functions.
+   - **New real discovery, not previously catalogued**: right after
+     this region (legacy-monolith.js, was ~135505-135801 pre-extraction)
+     sits a third, wholly separate uncatalogued region -
+     `transformDoorEntriesToHardwareSets`, `materializeDseToLineItems`,
+     `generateSubmittalHTML` - confirmed real and already wired via
+     `module-registry.js`/`deps.X` in `sessions-finalize-from-job.js`.
+     Not touched by this step (different theme entirely - door-schedule-
+     to-hardware-line-item materialization, not vision dispatch). Real
+     follow-up, not yet numbered into this section's ordered list.
+   - Live-verified via `GET /`, `GET /api/health` (200), `GET
+     /api/sessions/readiness/list` (200), and `POST
+     /api/submittals/:id/retry` + `GET /api/submittals` (both real 401s,
+     auth-gated correctly, not 500s) - the two routes that inject
+     `dispatchVisionExtraction`/`parseAndValidateExtraction` via
+     `module-registry.js`.
 2. **`pdf-metadata.js` extraction** (~1,250 lines, legacy-monolith.js
    starting ~line 23992 - a real, self-contained, never-catalogued
    hand-written PDF xref/page-tree parser found during Cluster A
@@ -757,8 +798,17 @@ vendored-library work.
    real dependencies having stable sovereign module paths instead of
    reaching into the vendored-bundle region being extracted out from
    under them.
-4. **`arrayBufferToBase642`/`arrayBufferToBase644` consolidation** -
-   collapse the 2 remaining inline duplicates into whichever real
-   module they end up naturally belonging to once steps 1-3 land (both
-   currently sit inside regions this list already covers - no separate
-   extraction needed, just don't lose track of them during 1-3).
+4. **`arrayBufferToBase642` consolidation** - resolve the same way
+   `...644` was resolved in step 1 (2026-09-10): check whether it's
+   also a byte-for-byte duplicate of the real `arrayBufferToBase64`
+   import before extracting it under a new name - delete outright if
+   so. Sits inside a region step 3 (Cluster A sub-step (d)) already
+   covers - no separate extraction needed.
+5. **Third uncatalogued region**: `transformDoorEntriesToHardwareSets`,
+   `materializeDseToLineItems`, `generateSubmittalHTML` (legacy-
+   monolith.js, sits right after step 1's former region) - found during
+   step 1's extraction, real and already wired via `module-registry.js`/
+   `deps.X` in `sessions-finalize-from-job.js`. Not yet boundary-scanned
+   or entanglement-checked - needs the same 3-way verification as every
+   other step before an extraction attempt, not assumed clean from
+   proximity to step 1's now-done region.
