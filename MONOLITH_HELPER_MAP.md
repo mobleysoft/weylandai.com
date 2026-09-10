@@ -779,13 +779,65 @@ vendored-library work.
      auth-gated correctly, not 500s) - the two routes that inject
      `dispatchVisionExtraction`/`parseAndValidateExtraction` via
      `module-registry.js`.
-2. **`pdf-metadata.js` extraction** (~1,250 lines, legacy-monolith.js
-   starting ~line 23992 - a real, self-contained, never-catalogued
-   hand-written PDF xref/page-tree parser found during Cluster A
-   sub-step (c)'s full-sweep check). Extracting this now also directly
-   feeds section 3 step 5 (the sovereign PDF rasterizer can build on
-   this instead of duplicating its xref/trailer-parsing work) - real
-   synergy, do this before starting section 3.
+2. **`pdf-metadata.js` extraction** - **done (2026-09-10).** Extracted
+   to `src/lib/pdf-metadata.js` (732 lines, 24 real-behavior tests): a
+   hand-written PDF xref/page-tree/bookmark parser - `skip`, `findStr`,
+   `decodeStr`, `inflate`, `unpredict`, `pv`/`pvDict`/`pvArr`/`pvName`/
+   `pvLitStr`/`pvHex`/`pvNumRef`, `readObjAt`, `readStream`,
+   `findStartXref`, `parseClassicXref`, `parseXrefStream`,
+   `buildXrefMap`, `resolve`, `resolveRef`, `readFromObjStm`,
+   `getPageCount`, `buildPageList`, `refMatch`, `getBookmarks`,
+   `checkPageText`, `extractPdfBookmarks`, `detectTextLayer`, plus the
+   `WS`/`DL`/`TEXT_OPS` constants. Real span was 770 lines
+   (23994-24763), not the ~1,250 estimate. `legacy-monolith.js`:
+   135,792 → 135,021 lines. Zero vendored-bundle entanglement (confirmed
+   by the standard check) - genuinely sovereign, hand-written parsing
+   code with no dependency on pdfjs-dist despite sitting immediately
+   before its vendored region in the file.
+   - Tests built a real, byte-offset-correct minimal PDF (classic xref
+     table, catalog/pages/page/content-stream objects, computed offsets
+     rather than hand-counted) and ran the parser end-to-end against
+     it - not just unit tests of the low-level tokenizers in isolation.
+   - **Real near-miss, caught by `wrangler deploy`'s bundle validation,
+     not shipped**: a stray `init_pdf_metadata();` call survived at
+     legacy-monolith.js:133557 (inside the still-inline
+     `hardware-schedule-extractor.js` region's own `__esm` wrapper,
+     part of Cluster A sub-step (d)'s vendored-entangled leftovers) -
+     a leftover call to the original lazy-init function this
+     extraction removed. `node --check` and the full local test suite
+     both passed regardless (same failure class as the Cluster A
+     sub-step (b) and Cluster E near-misses: a call to a name that no
+     longer exists in scope isn't a syntax error). First deploy attempt
+     failed cleanly with `Uncaught ReferenceError: init_pdf_metadata is
+     not defined`; fixed by deleting the stray call (no longer needed -
+     the real ES import at the top of the file now guarantees
+     `detectTextLayer`/`extractPdfBookmarks` are available before any
+     code runs, which is what the lazy-init call used to ensure),
+     rebuilt, redeployed successfully. **Added to the standing
+     checklist**: after any extraction that removes an `__esm` wrapper
+     entirely (not just strips `__name()` calls from inside one), grep
+     the whole file for `init_<removed-module-name>` before deploying,
+     not just within the extracted region.
+   - Only 2 of the 28 exports (`detectTextLayer`, `extractPdfBookmarks`)
+     have real external callers - confirmed via a full-file grep
+     against every export name (all other apparent matches were
+     unrelated same-named methods deep inside the vendored pdf-lib/
+     pako/puppeteer bundles, e.g. pdf-lib's own `PDFDocument.
+     getPageCount()`). `legacy-monolith.js`'s import was trimmed to
+     just those 2 names rather than importing all 28 - the other 26 are
+     purely internal to this module's own call graph.
+   - This extraction makes 3 already-inline wrapper functions
+     (`detectTextLayer2`, `getPdfPageCount`, `extractPdfBookmarks2` -
+     left in place during Cluster A sub-step (c) specifically because
+     this module didn't exist yet) resolve to real imports instead of
+     locally-scoped functions, with zero changes needed to the wrappers
+     themselves or their `module-registry.js` wiring.
+   - Live-verified via `GET /`, `GET /api/health`,
+     `GET /api/sessions/readiness/list` (all 200), and the two routes
+     that directly inject `extractPdfBookmarks2`/`detectTextLayer2` -
+     `POST /api/hardware-schedule/start` and `POST
+     /api/hardware-schedule/extract` (both real 401s, auth-gated
+     correctly, not 500s).
 3. **Cluster A sub-step (d)**: the 8 functions left inline during
    Cluster A because they're transitively entangled with vendored-
    bundle internals (`loadRenderer`, `extractIsolatedPage`,
