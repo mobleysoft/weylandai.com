@@ -597,15 +597,22 @@ observable behavior change ever." Order:
      directly into the file rather than a real npm import, which is a
      separate untangling problem (install pdf-lib as a real dependency,
      or inject the vendored symbol) from a plain route extraction.
+   - ✅ done (2026-09-10): `routes/cps-admin.js` - POST
+     admin/normalize-search-text (batched search-text normalization w/
+     dry_run support), GET admin/normalization-status (progress stats +
+     graceful fallback when the trigram FTS table doesn't exist yet).
+     2 routes, authenticate the only injected dep; normalizeSearchText
+     inlined locally (its one real call site was here) and its orphaned
+     original definition deleted.
    - Still inline: everything else - the rest of the CPS/cut-sheet route
-     surface (~13 more `/api/cut-sheets/*` and `/api/cps/*` routes alone
+     surface (~11 more `/api/cut-sheets/*` and `/api/cps/*` routes alone
      per the last full scan - the pdf-lib-dependent render route,
-     discoveries, domains/verify, intelligence metrics/config, admin
-     normalize, catalogue-products/documents/bulk-import,
-     cut-sheet-discovery, door-schedule-marks, session-assembly, and
-     more per §5's original proposed layout - re-read that section and
-     re-run a full route scan before picking individual pieces, since
-     none of its line numbers are current anymore).
+     discoveries, domains/verify, intelligence metrics/config,
+     catalogue-products/documents/bulk-import, cut-sheet-discovery,
+     door-schedule-marks, session-assembly, and more per §5's original
+     proposed layout - re-read that section and re-run a full route
+     scan before picking individual pieces, since none of its line
+     numbers are current anymore).
 
 For every step, "verified behaviorally identical" concretely means: run the
 extracted module inline via `wrangler dev` against a copy of the worker with
