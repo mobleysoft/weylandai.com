@@ -702,12 +702,15 @@ observable behavior change ever." Order:
      ../auth-module.js (a real top-level export, same pattern as
      createHmacSignature/arrayBufferToBase64 in earlier extractions)
      rather than injected.
-   - Still inline: the other 12 `/api/sessions/*` routes -
+   - ✅ done (2026-09-10): `routes/sessions-cutsheets.js` - 2 routes
+     (POST discover-cut-sheets, GET cut-sheet-coverage). authenticate,
+     matchComponentToCutSheets, and queueForDiscovery all reuse
+     already-injected deps from earlier extractions - no new deps.
+   - Still inline: the other 10 `/api/sessions/*` routes -
      queue-extraction, extraction-route (GET+POST), finalize-from-job,
-     recent, auto-generate, discover-cut-sheets, cut-sheet-coverage,
-     preview, assemble, assemble/status, submittal/download. Re-scan
-     before picking the next piece - these are scattered
-     non-contiguously, not one block.
+     recent, auto-generate, preview, assemble, assemble/status,
+     submittal/download. Re-scan before picking the next piece - these
+     are scattered non-contiguously, not one block.
 
 ### Additional tracked items (brainstormed 2026-09-10, not yet scheduled)
 
