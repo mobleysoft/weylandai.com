@@ -25,6 +25,7 @@ import { makeOperatorGate } from "./lib/operator-gate.js";
 import { inviteViaAuthFor } from "./lib/authfor-invite.js";
 import { registerSightXWalkthroughRoutes } from "./routes/sightx-walkthrough.js";
 import { registerCrossReferenceRoutes } from "./routes/cross-reference.js";
+import { registerVendorProfileRoutes } from "./routes/vendor-profile.js";
 import { authenticate } from "./lib/auth.js";
 
 /**
@@ -47,4 +48,5 @@ export function registerExtractedModules(router, deps) {
   });
   registerSightXWalkthroughRoutes(router);
   registerCrossReferenceRoutes(router, { authenticate });
+  registerVendorProfileRoutes(router, { authenticate });
 }
