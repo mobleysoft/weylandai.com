@@ -564,9 +564,15 @@ observable behavior change ever." Order:
      Weyland-Discovery) + POST cps/search-component (multi-field
      weighted scoring search). 2 routes, authenticate is the only
      injected dep; expandSearchQuery stayed a local nested helper.
+   - ✅ done (2026-09-10): `routes/cps-drafts.js` - PUT cps/drafts
+     (upsert with a 7-day TTL and ON CONFLICT update), GET
+     cps/drafts/:componentId (fetch, with real expired-draft
+     lazy-delete), DELETE cps/drafts/:componentId, GET cps/drafts (list
+     live, non-expired drafts). 4 routes, authenticate is the only
+     injected dep.
    - Still inline: everything else - the rest of the CPS/cut-sheet route
-     surface (~28 more `/api/cut-sheets/*` and `/api/cps/*` routes alone
-     per the last full scan - drafts, mappings, queue/extractions/render,
+     surface (~24 more `/api/cut-sheets/*` and `/api/cps/*` routes alone
+     per the last full scan - mappings, queue/extractions/render,
      discoveries, domains/verify, intelligence metrics/config, admin
      normalize, catalogue-products/documents/bulk-import,
      cut-sheet-discovery, user-cutsheets, door-schedule-marks,
