@@ -63,6 +63,7 @@ import { registerCutSheetVerifiedRoutes } from "./routes/cut-sheet-verified.js";
 import { registerCutSheetLocalRoutes } from "./routes/cut-sheet-local.js";
 import { registerCatalogueProductsRoutes } from "./routes/catalogue-products.js";
 import { registerCatalogueDocumentsRoutes } from "./routes/catalogue-documents.js";
+import { registerCpsPageRenderRoutes } from "./routes/cps-page-render.js";
 import { authenticate, authenticateCps, requireActiveSubscription, requireProductAccess } from "./lib/auth.js";
 
 /**
@@ -113,6 +114,7 @@ import { authenticate, authenticateCps, requireActiveSubscription, requireProduc
  *   queueForDiscovery: Function,
  *   searchLocalCatalogue: Function,
  *   LOCAL_CATALOGUE_INDEX: object,
+ *   PDFDocument: Function,
  * }} deps
  *   Real dependencies still owned by legacy-monolith.js (not yet their
  *   own modules) that some of these routes need injected. renderHtmlToPdf/
@@ -260,4 +262,5 @@ export function registerExtractedModules(router, deps) {
   });
   registerCatalogueProductsRoutes(router, { authenticate });
   registerCatalogueDocumentsRoutes(router, { authenticate });
+  registerCpsPageRenderRoutes(router, { authenticate, PDFDocument: deps.PDFDocument });
 }
