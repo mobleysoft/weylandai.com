@@ -419,7 +419,80 @@ cluster *names* and *relationships* are the durable part.
    after Cluster A (shares D1/session primitives). Consider merging
    `MANUFACTURER_ALIASES` (Cluster B) and `ALLEGION_BRAND_REGISTRY`
    (here) into one config module - they overlap conceptually.
-   - Status: not started.
+   - Status: done (Phase 2b step 8). Extracted 41 of 42 real
+     functions/constants into `src/lib/cutsheet-discovery.js` (2,475
+     lines, 50 real-behavior tests, no fake-success mocks): PDF
+     download/hash/dedup/Claude-analysis/scoring (`downloadPdf`,
+     `calculateHash`, `checkDuplicate`, `storeInTempStorage`,
+     `analyzePdfWithClaude`, `calculateMatchScore`, `validatePdf`,
+     `validateCandidates`), URL-pattern generation
+     (`EXPANDED_URL_PATTERNS`, `generateSmartUrls`, the Allegion
+     registry + `generateAllegionUrls`/`findBrandByAlias`/
+     `isAllegionBrand`), caching/catalogue lookups
+     (`logDiscoveryTelemetry`, `checkUserAffirmedCache`,
+     `searchCPSCatalogue`, `LOCAL_CATALOGUE_INDEX`/
+     `searchLocalCatalogue`), robots/Cloudflare-protection checks
+     (`isAllowedByRobots`, `isCloudflareProtected`), the live-discovery
+     orchestration layer (`checkVerifiedUrls`, `trySmartDirectUrls`,
+     `verifyPdfWithPuppeteer`, `tryAllegionEnumerationWithPuppeteer`,
+     `searchManufacturerSite`, `googleSiteSearch`, `discoverCutSheets`,
+     `processDiscoveryMessage`), and the retry/backoff subsystem
+     (`RETRY_CONFIG`, `calculateBackoffDelay`, `sleep`,
+     `isPermanentError`, `shouldSwitchStrategy`, `discoverWithRetry`,
+     `logRetryAttempt`, `retryFailedDiscoveries`,
+     `getManufacturerDomains`, `queueForDiscovery`,
+     `getDiscoveryConfig`). Only real dependency needed from elsewhere
+     was already-extracted `cps-matching.js`
+     (`normalizeManufacturerKey`/`parseModelString`/
+     `generateSearchVariants`/`generateSearchQueries`); `analyzePdfWithClaude`
+     calls the Anthropic API directly via `fetch`, no dependency on the
+     Cluster A vision adapters.
+     - **Correctly left inline** (genuinely entangled, matches this
+       document's own risk assessment): `discovery_engine_default`
+       (the queue consumer's `.queue()` handler) is the one place in
+       this cluster that touches the vendored `@cloudflare/puppeteer`
+       bundle directly (`puppeteer_cloudflare_default.launch(...)`,
+       twice) rather than receiving a `browser` param like every other
+       function here - same category as Cluster A sub-step (d)'s 8
+       vendored-bundle-entangled leftovers. It now imports
+       `trySmartDirectUrls`/`processDiscoveryMessage` from the new lib
+       file to keep working.
+     - **Real near-miss, caught before writing the extraction, not
+       shipped**: the initial 3,200-line boundary scan for this
+       cluster overshot into a wholly separate, later region
+       (`EXTRACTION_PROMPT_TEMPLATE`/`viaApiDirect`/
+       `parseAndValidateExtraction`, a *second* Claude-vision-adapter
+       layer distinct from Cluster A's, plus `var router = new
+       NativeRouter()` which is Cluster K territory) - narrowed by
+       reading the actual source between the scan's last plausible
+       Cluster E name (`getDiscoveryConfig`) and the first clearly
+       foreign one (`router`), confirming the real boundary sits right
+       before the `// weyland-worker.js` comment at the original
+       line 137050. That still-untouched second vision-adapter region
+       is a new, separate real follow-up, not part of this cluster or
+       of Cluster A's original 3 sub-steps.
+     - **Real bug caught by the (now-standard) full-identifier sweep,
+       before it ever reached a build**: the extracted file initially
+       carried three stray bundler artifact blocks mid-body (comment +
+       `init_virtual_unenv_global_polyfill_cloudflare_unenv_preset_node_*()`/
+       `init_performance2()` calls, e.g. `// url-patterns.js`,
+       `// allegion-registry.js`) left over from the byte-range copy.
+       `node --check` passed regardless (syntactically valid calls to
+       undefined names look fine to a parser); caught by grepping the
+       new file for any remaining `init_`/module-boundary-comment
+       lines before wiring it back in, and stripped. This is the same
+       failure class as the Cluster A sub-step (b) near-miss
+       (something syntax-valid but referencing a name that doesn't
+       exist in the new file's scope) - now added to the standard
+       checklist for every extraction: after writing a new lib file,
+       grep it for `init_` and `__name(` before running `node
+       --check`, don't rely on the checker to catch it.
+     - Live-verified via `GET /` (200), `GET /api/health` (200), and 4
+       Cluster-E-backed routes returning a real 401 (auth-gated, not a
+       500/crash) rather than an error: `GET
+       /api/cut-sheets/local-search`, `GET /api/cut-sheets/domains`,
+       `GET /api/cut-sheets/intelligence/config`, `POST
+       /api/cut-sheets/queue`.
 9. **SovereignWeylandRoutes - hand-built marketing/product page CMS
    (Cluster J, ~2,169 lines).** A large IIFE (`{ dispatch(pathname)
    {...} }`) serving ~36 product/marketing pages
@@ -461,6 +534,8 @@ cluster *names* and *relationships* are the durable part.
 | `ERROR_CODES`/`errorResponse` vs. `error-utilities.js`'s `ErrorCodes`/`jsonErrorResponse` | ~143,104 vs. already-extracted | Two parallel, unreconciled error-response conventions; real consolidation decision needed, not a silent merge |
 | `matchComponentToCutSheet` (singular) vs. `matchComponentToCutSheets` (plural, already extracted) | ~138,358 vs. `lib/product-database.js` | Confusingly similar names, genuinely different functions; rename on extraction |
 | `D1KVShim` class | ~142,834 | Dead since the 2026-09-09 fix, but explicitly flagged in-code as possibly-intentional in-progress work; **ask the human before deleting** |
+| Second Claude-vision-adapter region (`EXTRACTION_PROMPT_TEMPLATE`, `viaApiDirect`, `viaSabpClaudeCode`, `viaLocalSubprocess`, `adaptersForEdition`, `dispatchVisionExtraction`, `parseAndValidateExtraction`, ~825 lines) | starts right after Cluster E, before Cluster K's `router` | Wholly separate from Cluster A's already-extracted vision-adapter region (`callClaudeVision` etc.) despite the similar naming; untouched by any sub-step so far; found only while narrowing Cluster E's true end boundary. Real follow-up, own extraction step, not yet numbered/ordered in section 1. |
+| `monolith` dispatcher object (deferred in step 7/Cluster I) | ~ inline, depends on `discovery_engine_default`/`getDiscoveryConfig` | Cluster E (step 8) is now done, which was the blocker this deferral was waiting on - `monolith` is now unblocked and should be revisited before/alongside Cluster K per this document's own original guidance ("extract `monolith` last among the small clusters"). |
 
 ## 3. Vendored-library follow-up (separate, smaller effort - not this phase)
 
