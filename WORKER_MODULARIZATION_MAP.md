@@ -743,7 +743,27 @@ observable behavior change ever." Order:
      remaining) newly promoted to an injected dep, same pattern as
      resolveInferenceContract/parseAndValidateExtraction - not renamed,
      no existing duplicate to consolidate against.
-   - Still inline: the last `/api/sessions/*` route - preview.
+   - ✅ done (2026-09-10): `routes/sessions-preview.js` - GET preview.
+     authenticate the only dep - fully self-contained, same pattern as
+     sessions-recent.js/sessions-cutsheets.js.
+   - **Step 9 complete**: all 21 `/api/sessions/*` routes extracted.
+
+10. **Step 10 (new, post-step-9 scan result, 2026-09-10): the
+    `/api/auth` + `/api/me` + `/api/install` device-bridge cluster.** A
+    fresh full-file route-prefix scan after step 9 found this is now
+    the largest remaining route family: 13 routes, fully contiguous
+    (lines ~144338-145010 at scan time, right after the login-page HTML
+    route and right before `/api/metrics/errors`) - session auth
+    (`/api/auth/session`, `/session/check`, `/logout`,
+    `/authfor-exchange`, `/me`), the MHS device-bridge (`/api/me/bridge/
+    status`, `/bridge/token`, `/me/jobs`, `/bridge/launcher.ps1`,
+    `/bridge/launcher.sh` - the launcher routes emit large inline
+    shell/PowerShell script templates), and device-auth pairing
+    (`/api/install/device-auth/init`, `/poll`, `/approve`, `/deny`,
+    `/bundle.zip`). Will be split into 2-3 logical route files (not one
+    13-route file) matching this sub-grouping, same granularity as
+    steps 8-9's clusters.
+    - Not yet started.
 
 ### Additional tracked items (brainstormed 2026-09-10, not yet scheduled)
 
