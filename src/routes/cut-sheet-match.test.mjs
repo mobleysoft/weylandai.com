@@ -3,10 +3,18 @@ import assert from "node:assert/strict";
 import { NativeRouter } from "../lib/router.js";
 import { registerCutSheetMatchRoutes } from "./cut-sheet-match.js";
 
-function makeFakeDb() {
+function makeFakeDb({ components = [] } = {}) {
   return {
-    prepare() {
-      return { bind: () => ({ async first() { return null; } }) };
+    prepare(sql) {
+      return {
+        bind: () => ({
+          async first() { return null; },
+          async all() {
+            if (sql.includes("FROM hardware_components")) return { results: components };
+            return { results: [] };
+          },
+        }),
+      };
     },
   };
 }
@@ -15,10 +23,10 @@ const authOk = async () => ({ user: { userId: "u1" } });
 const authFail = async () => ({ error: new Response("no", { status: 401 }) });
 const prodOk = async () => null;
 
-function setup({ authenticate = authOk, requireProductAccess = prodOk } = {}) {
+function setup({ authenticate = authOk, requireProductAccess = prodOk, db } = {}) {
   const router = new NativeRouter();
   registerCutSheetMatchRoutes(router, { authenticate, requireProductAccess });
-  return { router, env: { DB: makeFakeDb() } };
+  return { router, env: { DB: db || makeFakeDb() } };
 }
 
 test("POST /api/cut-sheets/match: auth failure short-circuits", async () => {
@@ -61,4 +69,21 @@ test("POST /api/cut-sheets/batch-match: real batch matching with a real matched/
   assert.equal(body.truncated, true);
   assert.equal(body.matched, 0);
   assert.equal(body.unmatched, 50);
+});
+
+test("GET /api/cut-sheets/for-set/:setId: 404 when the set has no components", async () => {
+  const { router, env } = setup({ db: makeFakeDb({ components: [] }) });
+  const res = await router.handle(new Request("https://example.com/api/cut-sheets/for-set/s1"), env, {});
+  assert.equal(res.status, 404);
+});
+
+test("GET /api/cut-sheets/for-set/:setId: real happy path returns componentCount/matchedCount even with no matches", async () => {
+  const db = makeFakeDb({ components: [{ id: "c1", manufacturer: "NotReal", model: "X1" }, { id: "c2", manufacturer: "NotReal", model: "X2" }] });
+  const { router, env } = setup({ db });
+  const res = await router.handle(new Request("https://example.com/api/cut-sheets/for-set/s1"), env, {});
+  assert.equal(res.status, 200);
+  const body = await res.json();
+  assert.equal(body.componentCount, 2);
+  assert.equal(body.matchedCount, 0);
+  assert.deepEqual(body.cutSheets, []);
 });

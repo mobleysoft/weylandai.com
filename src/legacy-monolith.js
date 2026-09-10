@@ -147707,66 +147707,6 @@ router.put("/api/hardware-components/:componentId/select-price", async (request2
     return jsonResponse3({ error: "Failed to select price", details: err.message }, 500);
   }
 });
-router.get("/api/cut-sheets/for-set/:setId", async (request2, env2) => {
-  const { error: error4, user } = await authenticate(request2, env2);
-  if (error4)
-    return error4;
-  {
-    const _prodErr = await requireProductAccess(user, env2, "cutsheetx");
-    if (_prodErr) return _prodErr;
-  }
-  try {
-    const { setId } = request2.params;
-    const components = await env2.DB.prepare(`
-      SELECT id, component_type, manufacturer, model, catalog_number,
-             dhi_category, sequence_order
-      FROM hardware_components
-      WHERE set_id = ?
-      ORDER BY sequence_order
-    `).bind(setId).all();
-    if (!components.results || components.results.length === 0) {
-      return new Response(JSON.stringify({
-        error: "Hardware set not found or has no components",
-        setId
-      }), { status: 404, headers: { "Content-Type": "application/json" } });
-    }
-    const results = await Promise.all(
-      components.results.map((comp) => matchComponentToCutSheets(comp, env2))
-    );
-    const seenSheets = /* @__PURE__ */ new Set();
-    const uniqueCutSheets = [];
-    for (const result of results) {
-      for (const sheet of result.cutSheets) {
-        if (!seenSheets.has(sheet.id)) {
-          seenSheets.add(sheet.id);
-          uniqueCutSheets.push({
-            ...sheet,
-            forComponents: [result.component.id]
-          });
-        } else {
-          const existing = uniqueCutSheets.find((s) => s.id === sheet.id);
-          if (existing)
-            existing.forComponents.push(result.component.id);
-        }
-      }
-    }
-    return new Response(JSON.stringify({
-      setId,
-      componentCount: components.results.length,
-      matchedCount: results.filter((r) => r.matched).length,
-      cutSheets: uniqueCutSheets,
-      componentMatches: results
-    }), {
-      status: 200,
-      headers: { "Content-Type": "application/json" }
-    });
-  } catch (err) {
-    return new Response(JSON.stringify({ error: err.message }), {
-      status: 500,
-      headers: { "Content-Type": "application/json" }
-    });
-  }
-});
 function getUnaffirmReason(item, type) {
   if (type === "group") {
     if (!item.group_number && !item.groupNumber)
