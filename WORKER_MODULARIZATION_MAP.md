@@ -845,6 +845,20 @@ observable behavior change ever." Order:
       covered by a regression test.
     - **Step 12 complete**: all 7 submittals/upload routes extracted.
 
+13. **Step 13 (new, post-step-12 scan result, 2026-09-10): the
+    `/api/billing/*` cluster.** A fresh scan after step 12 found only
+    30 route registrations remain in the whole file - `/api/billing`
+    is now the largest remaining family at 3 routes (GET catalog, POST
+    checkout/create, GET checkout/status/:session_id), contiguous but
+    with `/api/webhooks/subscription` (a related but separate Stripe
+    webhook handler, not part of this cluster) sitting in between
+    checkout/create and checkout/status. Uses `stripeRequest`,
+    `WEYLAND_PRODUCTS`, `CHECKOUT_READY_PRODUCTS` - real financial/
+    billing code, higher review care than most remaining clusters.
+    - Not yet started.
+
+### Additional tracked items (brainstormed 2026-09-10, not yet scheduled)
+
 Found while extracting steps 8-9; real, verified duplication/gaps, not
 speculative:
 
