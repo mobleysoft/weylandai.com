@@ -90,6 +90,7 @@ import { registerMiscUtilityRoutes } from "./routes/misc-utility.js";
 import { registerWebhooksSubscriptionRoutes } from "./routes/webhooks-subscription.js";
 import { registerSubmittalChatRoutes } from "./routes/submittal-chat.js";
 import { registerHardwareComponentPriceRoutes } from "./routes/hardware-component-price.js";
+import { registerLoginPageRoutes } from "./routes/login-page.js";
 import { authenticate, authenticateCps, requireActiveSubscription, requireProductAccess } from "./lib/auth.js";
 
 /**
@@ -387,4 +388,5 @@ export function registerExtractedModules(router, deps) {
   });
   registerSubmittalChatRoutes(router, { authenticate, logClaudeAPICall: deps.logClaudeAPICall });
   registerHardwareComponentPriceRoutes(router, { authenticate });
+  registerLoginPageRoutes(router);
 }
