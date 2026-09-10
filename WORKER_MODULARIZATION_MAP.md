@@ -965,6 +965,24 @@ observable behavior change ever." Order:
       isDefault closure stripped.
     - **Step 19 complete**: all 3 misc-utility routes extracted.
 
+20. **Step 20 (new, post-step-19 scan result, 2026-09-10): the
+    `/api/webhooks/subscription` financial webhook.** The deliberately-
+    deferred piece from step 19 - real Stripe/vendyai financial code,
+    given the same extra-care treatment as step 13's billing.js.
+    - ✅ done (2026-09-10): `routes/webhooks-subscription.js` - the
+      one route (223 lines: checkout.session.completed user
+      provisioning, subscription status updates/cancellation, event
+      dedup). WEYLAND_PRODUCTS reuses billing.js's dep.
+      WEYLAND_SUBCONP_PRODUCT_ID stays injected (2 other real call
+      sites remain in legacy-monolith.js). verifyVendyaiForwardSignature/
+      verifyStripeWebhookSignature (HMAC verification) both fully
+      orphaned but deliberately kept injected rather than inlined -
+      security-critical code, re-transcribing it risks silently
+      defeating signature checking. Live-verified: missing/forged
+      signature both correctly 401 before any DB mutation, no real
+      webhook data submitted.
+    - **Step 20 complete**: the webhooks-subscription route extracted.
+
 ### Additional tracked items (brainstormed 2026-09-10, not yet scheduled)
 
 Found while extracting steps 8-9; real, verified duplication/gaps, not
