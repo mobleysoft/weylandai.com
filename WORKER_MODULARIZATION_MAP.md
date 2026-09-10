@@ -827,9 +827,23 @@ observable behavior change ever." Order:
       non-trivial, so it was promoted to a new injected dep instead,
       same treatment as other complex multi-dependency helpers
       (extractSinglePage, matchComponentToCutSheets).
-    - Remaining in step 12: the `/api/upload/*` cluster (init, part,
-      complete - 3 routes, contiguous, immediately follows where
-      submittals.js's source used to be).
+    - ✅ done (2026-09-10): `routes/upload.js` - all 3 `/api/upload/*`
+      routes (init, part, complete). Reused all 6 already-injected
+      deps, no new injections. **Real live bug found and fixed in
+      passing**: `/api/upload/complete`'s fallback page-count path
+      called `countPdfPagesRaw(fileBuffer)`, a name that had been
+      silently broken (ReferenceError, masked by the route's own
+      try/catch as a generic 500) since the earlier
+      hardware-schedule-extract.js extraction made the only
+      definition module-private - that extraction's own header
+      comment wrongly claimed all real call sites were internal to
+      it. Confirmed in the built bundle before fixing (two names:
+      `countPdfPagesRaw2` used correctly, and a dangling
+      `countPdfPagesRaw` with zero matching definition). Fixed by
+      exporting the real implementation from
+      hardware-schedule-extract.js and importing it into upload.js;
+      covered by a regression test.
+    - **Step 12 complete**: all 7 submittals/upload routes extracted.
 
 Found while extracting steps 8-9; real, verified duplication/gaps, not
 speculative:
