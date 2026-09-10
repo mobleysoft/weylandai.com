@@ -49,6 +49,7 @@ import { registerHardwareScheduleExtractRoutes } from "./routes/hardware-schedul
 import { registerCutSheetMatchRoutes } from "./routes/cut-sheet-match.js";
 import { registerCpsImportPricesRoutes } from "./routes/cps-import-prices.js";
 import { registerCutSheetDocumentsRoutes } from "./routes/cut-sheet-documents.js";
+import { registerCpsCataloguesRoutes } from "./routes/cps-catalogues.js";
 import { authenticate, authenticateCps, requireActiveSubscription, requireProductAccess } from "./lib/auth.js";
 
 /**
@@ -214,4 +215,5 @@ export function registerExtractedModules(router, deps) {
   registerCutSheetMatchRoutes(router, { authenticate, requireProductAccess });
   registerCpsImportPricesRoutes(router, { authenticateCps });
   registerCutSheetDocumentsRoutes(router, { authenticate, requireProductAccess });
+  registerCpsCataloguesRoutes(router, { authenticate });
 }
