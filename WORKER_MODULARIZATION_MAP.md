@@ -408,11 +408,42 @@ observable behavior change ever." Order:
    `quotes-view.js`, `quotes-generate.js`) — moderate size, some shared
    pricing logic (`pricing/resolve`) worth extracting into `lib/` alongside
    this step rather than duplicating it into two route files.
-7. **The hardware-schedule cluster** (5 files, ~5,000 lines total) — larger,
-   more internal cross-references between extract → candidates → page-review
-   → export → affirm → submittal stages (they share session state via D1, not
-   via JS references, so the coupling is data-shaped, not code-shaped — safer
-   than it looks, but there's a lot of it to read carefully).
+7. **The hardware-schedule cluster** — **correction, 2026-09-10, after actually
+   reading it**: this is bigger and more entangled than the estimate above.
+   A full route scan (not just grepping `/api/hardware-schedule` at known
+   prefixes) found **36 routes spanning ~6,400 lines** (146198-152514+ at
+   the time of this note), not cleanly contiguous. The gaps between routes
+   contain both real shared hardware-schedule helpers (`getSessionStatus`,
+   14+ call sites across the whole cluster; `getOrRenderPage`;
+   `detectAndPersistRegionConflicts`) *and* entirely unrelated interleaved
+   systems (Stripe billing, HuntX opportunity fetching, economic-data
+   feeds) *and* — this is the important part — a real chunk of the CPS/
+   cut-sheet cluster's own core matching logic (`PRODUCT_DATABASE`,
+   `validateProductDatabase`, `findProductMatch`, `matchProductFromDb`,
+   `enrichComponent`, `getCutSheetsForProduct`) sitting physically inside
+   what looked like step 7's territory. Steps 7 and 8 are more entangled
+   than this ordering implies — treat that as real signal, not something
+   to extract around. Do this cluster as several smaller, independently
+   verified pieces, not one atomic pass:
+   - ✅ done (2026-09-10): `lib/region-conflicts.js` (shared conflict-
+     detection helper) + `routes/hardware-schedule-candidates.js` (10-route
+     region-candidate review workflow: list/create/update/delete/validate/
+     preview/affirm/reject/undo). `getSessionStatus`/`getOrRenderPage` left
+     as injected deps (still defined in legacy-monolith.js — real fan-out
+     across routes not yet extracted, so extracting them now would force
+     touching the whole remaining cluster at once).
+   - Still inline: extract/start/detect-schedules/status/set-page-range/
+     set-table-pages/batch-extract (~148000-149172), the `page/:pageNum`
+     family (extract-image/extraction-contract/extract-result/approve/
+     extract-region/component-affirm/group-affirm/group-replace/
+     affirm-all/extraction-delete, ~149873-152074), enrich/backfill/
+     affirm-status (~151060-151466), generate-submittal/generate-package/
+     extract-affirmed (~152167-152600), and finalize-image (146198,
+     isolated from the rest by the ~1,756-line Stripe/HuntX/econ-data gap
+     noted above — likely belongs with a PDF-pipeline module instead of
+     here). Whoever picks this back up should re-run a full route scan
+     first rather than trusting this list's line numbers, which will have
+     shifted with every extraction since.
 8. **The CPS/cut-sheet cluster last** (12 files, ~9,000–10,000 lines) —
    highest line count, most shared data tables
    (`PRODUCT_DATABASE`/`MFR_CODE_MAP`), the only cluster this pass could not
