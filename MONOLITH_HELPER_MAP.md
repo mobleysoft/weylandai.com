@@ -273,7 +273,52 @@ cluster *names* and *relationships* are the durable part.
      a real wrapper adding `autoEnrichSessionOnSave`; give it a real
      name (`savePageExtractionAndEnrich`) on extraction, don't just
      rename to match the esbuild artifact.
-   - Status: not started.
+   - **Status: 🟡 sub-step (a) of 3 done (2026-09-10).** Extracted the
+     pure, zero-I/O half (35 functions + 5 constants: prompt builders,
+     response parsers, normalization/classification helpers - verified
+     via static analysis that none touch `await`/`fetch(`/`.prepare(`/
+     take an `env2` parameter) to `src/lib/hardware-extraction-prompts.js`
+     + `src/lib/hardware-extraction-prompts.test.mjs` (59 real tests).
+     `legacy-monolith.js` shrank 145,160 → 143,500 lines. The
+     remaining ~44 impure functions (Claude-call adapters + the
+     stateful save/approve/resolve-contract pipeline, sub-steps (b)
+     and (c)) stay inline for now, still working unchanged via the new
+     import.
+     - Unwrapped esbuild's lazy `__esm(...)` CJS-interop pattern for
+       the 5 extracted constants (`DEFAULT_MOUNTING_HEIGHTS`,
+       `DEFAULT_PROJECTIONS`, `DEFAULT_MOUNTING_SIDES`,
+       `SCHEDULE_TYPE_REGISTRY`, `DOOR_SCHEDULE_ALLOWED_FIELDS`) into
+       plain top-level `export const` - safe because the lazy
+       initializer was already called unconditionally, once, at
+       original module load time (`init_hardware_schedule_extractor()`),
+       so real effective timing is unchanged. `renderPdfPageToImage2`/
+       `CircuitBreaker`/`claudeCircuitBreaker`/`_HASCOM_EDGE_URL` stay
+       forward-declared and lazily assigned in legacy-monolith.js -
+       needed by the still-inline impure functions in sub-steps (b)/(c).
+     - **Real bug caught by tests, not by the diff check**: 4 of these
+       functions build small helper closures inline via esbuild's
+       `const f = /* @__PURE__ */ __name((args) => {...}, "f")`
+       anonymous-function-naming pattern - not a top-level statement,
+       so the usual "strip lines starting with `__name(`" pass missed
+       it. `__name` isn't a real export anywhere; left as-is this
+       would have thrown a live `ReferenceError` the first time
+       `buildPromptFromConstraints` or `buildDoorScheduleExtractionPrompt`
+       actually ran. Caught by the test suite (not the byte-diff
+       verification, which doesn't run the code), fixed by unwrapping
+       to plain `const f = (args) => {...};` - safe since JS's own
+       name-inference already gives `f.name === "f"` for a `const`
+       arrow function, making the wrapper redundant even in the
+       original bundle. Worth remembering for sub-steps (b)/(c): this
+       cluster's `__name(...)` calls are NOT reliably confined to
+       their own top-level statement lines the way every earlier
+       extracted cluster's were - re-check for inline occurrences
+       before trusting a line-anchored strip regex.
+     - Verified via 59 tests (including the two functions above,
+       exercising the exact code paths that were broken), full suite,
+       build, deploy, and live curl of `/api/health`, `/api/version`,
+       `/` (unaffected baseline checks) and `POST /api/upload/init`
+       (real 401, confirming the route wiring into `detectSchedulePages`/
+       `isPageInRange` as deps still works).
 8. **Manufacturer cut-sheet web-discovery engine (Cluster E, ~2,609
    lines).** PDF validation/download/dedup, URL-pattern generation, an
    Allegion-brand-specific registry, robots.txt/Cloudflare-protection
