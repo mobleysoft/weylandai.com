@@ -81,6 +81,7 @@ import { registerTelemetryRoutes } from "./routes/telemetry.js";
 import { registerSubmittalsRoutes } from "./routes/submittals.js";
 import { registerUploadRoutes } from "./routes/upload.js";
 import { registerBillingRoutes } from "./routes/billing.js";
+import { registerInternalRoutes } from "./routes/internal.js";
 import { authenticate, authenticateCps, requireActiveSubscription, requireProductAccess } from "./lib/auth.js";
 
 /**
@@ -355,4 +356,5 @@ export function registerExtractedModules(router, deps) {
     CHECKOUT_READY_PRODUCTS: deps.CHECKOUT_READY_PRODUCTS,
     stripeRequest: deps.stripeRequest,
   });
+  registerInternalRoutes(router);
 }
