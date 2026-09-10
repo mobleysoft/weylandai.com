@@ -935,6 +935,22 @@ observable behavior change ever." Order:
     - **Step 17 complete**: all 6 market-intelligence routes
       extracted.
 
+18. **Step 18 (new, post-step-17 scan result, 2026-09-10): the
+    `/api/health` + `/api/version` + `/api/metrics/errors` cluster.**
+    A contiguity-based re-scan (all remaining `router.*` line numbers
+    listed and checked for adjacency, not just grouped by prefix -
+    the fix from step 17's lesson) found this 3-route, 50-line
+    contiguous block, immediately followed by `/login` (a large HTML
+    page route, out of scope).
+    - ✅ done (2026-09-10): `routes/system-status.js` - all 3 routes.
+      jsonErrorResponse/ErrorMetrics/performHealthCheck imported
+      directly from error-utilities.js (real top-level exports).
+      WORKER_VERSION (real string constant, 1 other call site
+      remaining in the `/` root route) newly promoted to an injected
+      dep. Live-verified against real production health/version data
+      post-deploy.
+    - **Step 18 complete**: all 3 system-status routes extracted.
+
 ### Additional tracked items (brainstormed 2026-09-10, not yet scheduled)
 
 Found while extracting steps 8-9; real, verified duplication/gaps, not
