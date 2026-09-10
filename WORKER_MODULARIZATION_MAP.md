@@ -514,13 +514,33 @@ observable behavior change ever." Order:
      logTelemetryEvent, detectTextLayer2 - none extracted themselves,
      each with real fan-out into core PDF-processing internals or step
      8's CPS cluster territory.
-8. **The CPS/cut-sheet cluster last** (12 files, ~9,000–10,000 lines) —
-   highest line count, most shared data tables
-   (`PRODUCT_DATABASE`/`MFR_CODE_MAP`), the only cluster this pass could not
-   confidently assert is safe to split into fully-independent files (§5). Do
-   this after the smaller extractions have established a working pattern and
+8. **The CPS/cut-sheet cluster last** (real §5 count is closer to 15-17
+   route files once the original proposed layout is re-read, not 12;
+   ~9,000–10,000 lines), the only cluster this pass could not confidently
+   assert is safe to split into fully-independent files (§5). Do this
+   after the smaller extractions have established a working pattern and
    after someone has read the CPS cluster's internals closely enough to
-   confirm which of the 12 proposed files can truly stand alone.
+   confirm which files can truly stand alone. **In progress, started
+   2026-09-10, same pattern as step 7 - foundational lib/ layer first:**
+   - ✅ done (2026-09-10): `lib/product-database.js` - `PRODUCT_DATABASE`
+     (the hand-curated in-memory array; distinct from `MFR_CODE_MAP`,
+     already extracted into lib/pricing.js in step 6),
+     `validateProductDatabase`, `findProductMatch`, `enrichComponent`,
+     `matchProductFromDb`, `getCutSheetsForProduct`,
+     `matchComponentToCutSheets`. `matchComponentToCutSheets` and
+     `enrichComponent` both still have real call sites in still-inline
+     CPS routes - imported back in. `MFR_CODE_MAP` is NOT duplicated
+     here; this file's matching approach (simple substring match against
+     a small array) is genuinely distinct from lib/pricing.js's tokenized
+     D1-catalogue matcher, not the same logic twice.
+   - Still inline: everything else - the full CPS/cut-sheet route
+     surface (cut-sheets/match+batch-match, cps-enrich family,
+     catalogue-products/documents/bulk-import, cut-sheet-discovery,
+     cps-search/drafts/mappings/queue-admin, user-cutsheets,
+     door-schedule-marks, session-assembly, and more per §5's original
+     proposed layout - re-read that section and re-run a full route scan
+     before picking individual pieces, since none of its line numbers
+     are current anymore).
 
 For every step, "verified behaviorally identical" concretely means: run the
 extracted module inline via `wrangler dev` against a copy of the worker with
