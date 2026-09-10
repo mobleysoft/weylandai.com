@@ -66,6 +66,7 @@ import { registerCatalogueDocumentsRoutes } from "./routes/catalogue-documents.j
 import { registerCpsPageRenderRoutes } from "./routes/cps-page-render.js";
 import { registerSessionsListRoutes } from "./routes/sessions-list.js";
 import { registerSessionsDetailRoutes } from "./routes/sessions-detail.js";
+import { registerSessionsCutSheetsRoutes } from "./routes/sessions-cutsheets.js";
 import { authenticate, authenticateCps, requireActiveSubscription, requireProductAccess } from "./lib/auth.js";
 
 /**
@@ -267,4 +268,9 @@ export function registerExtractedModules(router, deps) {
   registerCpsPageRenderRoutes(router, { authenticate, PDFDocument: deps.PDFDocument });
   registerSessionsListRoutes(router, { authenticate });
   registerSessionsDetailRoutes(router, { authenticate });
+  registerSessionsCutSheetsRoutes(router, {
+    authenticate,
+    matchComponentToCutSheets: deps.matchComponentToCutSheets,
+    queueForDiscovery: deps.queueForDiscovery,
+  });
 }
