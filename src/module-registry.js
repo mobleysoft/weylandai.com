@@ -41,6 +41,7 @@ import { registerQuotesViewRoutes } from "./routes/quotes-view.js";
 import { registerQuotesGenerateRoutes } from "./routes/quotes-generate.js";
 import { registerHardwareScheduleCandidatesRoutes } from "./routes/hardware-schedule-candidates.js";
 import { registerHardwareScheduleEnrichmentRoutes } from "./routes/hardware-schedule-enrichment.js";
+import { registerHardwareSchedulePageAffirmRoutes } from "./routes/hardware-schedule-page-affirm.js";
 import { authenticate, authenticateCps, requireProductAccess } from "./lib/auth.js";
 
 /**
@@ -58,6 +59,13 @@ import { authenticate, authenticateCps, requireProductAccess } from "./lib/auth.
  *   enrichComponent: Function,
  *   getUnaffirmReason: Function,
  *   storeHardwareExtraction: Function,
+ *   extractFromPageImage: Function,
+ *   materializeAffirmedGroup: Function,
+ *   unaffirmMaterializedGroup: Function,
+ *   pdfBufferOrNull: Function,
+ *   generateR2StreamUrl: Function,
+ *   isPageInRange: Function,
+ *   renderRegionAt600DPI2: Function,
  * }} deps
  *   Real dependencies still owned by legacy-monolith.js (not yet their
  *   own modules) that some of these routes need injected. renderHtmlToPdf/
@@ -111,5 +119,16 @@ export function registerExtractedModules(router, deps) {
     enrichComponent: deps.enrichComponent,
     getUnaffirmReason: deps.getUnaffirmReason,
     storeHardwareExtraction: deps.storeHardwareExtraction,
+  });
+  registerHardwareSchedulePageAffirmRoutes(router, {
+    authenticate,
+    getSessionStatus: deps.getSessionStatus,
+    extractFromPageImage: deps.extractFromPageImage,
+    materializeAffirmedGroup: deps.materializeAffirmedGroup,
+    unaffirmMaterializedGroup: deps.unaffirmMaterializedGroup,
+    pdfBufferOrNull: deps.pdfBufferOrNull,
+    generateR2StreamUrl: deps.generateR2StreamUrl,
+    isPageInRange: deps.isPageInRange,
+    renderRegionAt600DPI2: deps.renderRegionAt600DPI2,
   });
 }
