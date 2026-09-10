@@ -1520,5 +1520,5 @@ router.post("/api/asbuilt-diffs/analyze", async (request2, env2) => {
 });
 router.get("/api/asbuilt-diffs/:id/download", makeDocumentDownloadRoute("asbuilt_diffs", "asbuiltx", "AsBuiltDiff"));
 
-  return { makeDocumentDownloadRoute };
+  return { makeDocumentDownloadRoute, renderHtmlToPdf, storeDocumentPdf };
 }

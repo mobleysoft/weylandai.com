@@ -16,6 +16,12 @@
 // here risked a real execution-order break for a refactor that's about
 // future extensibility, not touching working code. It stays exactly
 // where it is.
+//
+// registerExtractedModules() itself is now called AFTER
+// registerDocumentGeneratorRoutes() in legacy-monolith.js (moved
+// 2026-09-10) so that renderHtmlToPdf/storeDocumentPdf/
+// makeDocumentDownloadRoute - real nested closures only returned by that
+// call - exist in time to be passed down into registerHuntLeadsRoutes().
 
 import { registerProjectRoutes } from "./routes/projects.js";
 import { registerDemoTrialRoutes } from "./routes/demo-trial.js";
@@ -26,13 +32,22 @@ import { inviteViaAuthFor } from "./lib/authfor-invite.js";
 import { registerSightXWalkthroughRoutes } from "./routes/sightx-walkthrough.js";
 import { registerCrossReferenceRoutes } from "./routes/cross-reference.js";
 import { registerVendorProfileRoutes } from "./routes/vendor-profile.js";
-import { authenticate } from "./lib/auth.js";
+import { registerHuntLeadsRoutes } from "./routes/hunt-leads.js";
+import { authenticate, requireProductAccess } from "./lib/auth.js";
 
 /**
  * @param {object} router - the shared NativeRouter instance legacy-monolith.js owns.
- * @param {{ transformDoorEntriesToHardwareSets: Function, materializeDseToLineItems: Function }} deps
+ * @param {{
+ *   transformDoorEntriesToHardwareSets: Function,
+ *   materializeDseToLineItems: Function,
+ *   renderHtmlToPdf: Function,
+ *   storeDocumentPdf: Function,
+ *   makeDocumentDownloadRoute: Function,
+ * }} deps
  *   Real dependencies still owned by legacy-monolith.js (not yet their
- *   own modules) that some of these routes need injected.
+ *   own modules) that some of these routes need injected. The last three
+ *   come from registerDocumentGeneratorRoutes()'s return value, which is
+ *   why this function is now called after that one (see header comment).
  */
 export function registerExtractedModules(router, deps) {
   registerHardwareScheduleExportRoutes(router);
@@ -49,4 +64,11 @@ export function registerExtractedModules(router, deps) {
   registerSightXWalkthroughRoutes(router);
   registerCrossReferenceRoutes(router, { authenticate });
   registerVendorProfileRoutes(router, { authenticate });
+  registerHuntLeadsRoutes(router, {
+    authenticate,
+    requireProductAccess,
+    renderHtmlToPdf: deps.renderHtmlToPdf,
+    storeDocumentPdf: deps.storeDocumentPdf,
+    makeDocumentDownloadRoute: deps.makeDocumentDownloadRoute,
+  });
 }
