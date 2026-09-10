@@ -86,6 +86,7 @@ import { registerHuntRoutes } from "./routes/hunt.js";
 import { registerSubscriptionRoutes } from "./routes/subscription.js";
 import { registerMarketIntelligenceRoutes } from "./routes/market-intelligence.js";
 import { registerSystemStatusRoutes } from "./routes/system-status.js";
+import { registerMiscUtilityRoutes } from "./routes/misc-utility.js";
 import { authenticate, authenticateCps, requireActiveSubscription, requireProductAccess } from "./lib/auth.js";
 
 /**
@@ -366,4 +367,9 @@ export function registerExtractedModules(router, deps) {
   registerSubscriptionRoutes(router, { authenticate, errorResponse: deps.errorResponse });
   registerMarketIntelligenceRoutes(router);
   registerSystemStatusRoutes(router, { authenticate, WORKER_VERSION: deps.WORKER_VERSION });
+  registerMiscUtilityRoutes(router, {
+    authenticate,
+    callEdge: deps.callEdge,
+    errorResponse: deps.errorResponse,
+  });
 }

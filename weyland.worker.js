@@ -19557,6 +19557,51 @@ function registerSystemStatusRoutes(router2, { authenticate: authenticate2, WORK
   });
 }
 
+// src/routes/misc-utility.js
+function registerMiscUtilityRoutes(router2, { authenticate: authenticate2, callEdge: callEdge3, errorResponse: errorResponse2 }) {
+  router2.get("/api/test/sabp-marker-xyz", async (request2, env2) => {
+    return jsonResponse3({ marker: "sabp-route-active", timestamp: Date.now() }, 200);
+  });
+  router2.get("/api/jobs/:jobId", async (request2, env2) => {
+    const { error: error4, user } = await authenticate2(request2, env2);
+    if (error4)
+      return error4;
+    const res = await callEdge3("GET", `/ai/v1/jobs/${request2.params.jobId}`, env2);
+    return jsonResponse3(res.body, res.status);
+  });
+  router2.get("/api/user/tenants", async (request2, env2) => {
+    const { error: error4, user } = await authenticate2(request2, env2);
+    if (error4)
+      return error4;
+    try {
+      const tenants = Array.isArray(user.tenants) ? user.tenants : [];
+      if (tenants.length === 0) {
+        return jsonResponse3({
+          tenants: [],
+          current_tenant_id: null,
+          warning: "NO_TENANT_ACCESS",
+          message: "User has no tenant assignments. Contact administrator."
+        });
+      }
+      const isDefault = (t) => t.is_default === 1 || t.is_default === true;
+      const defaultTenant = tenants.find(isDefault);
+      const currentTenantId = defaultTenant ? defaultTenant.id : tenants[0].id;
+      return jsonResponse3({
+        tenants: tenants.map((t) => ({
+          id: t.id,
+          code: t.code,
+          name: t.name,
+          role: t.role,
+          is_default: isDefault(t)
+        })),
+        current_tenant_id: currentTenantId
+      });
+    } catch (error5) {
+      return errorResponse2("SESSION_ERROR", "Failed to read tenants from session: " + error5.message);
+    }
+  });
+}
+
 // src/module-registry.js
 function registerExtractedModules(router2, deps) {
   registerHardwareScheduleExportRoutes(router2);
@@ -19762,6 +19807,11 @@ function registerExtractedModules(router2, deps) {
   registerSubscriptionRoutes(router2, { authenticate, errorResponse: deps.errorResponse });
   registerMarketIntelligenceRoutes(router2);
   registerSystemStatusRoutes(router2, { authenticate, WORKER_VERSION: deps.WORKER_VERSION });
+  registerMiscUtilityRoutes(router2, {
+    authenticate,
+    callEdge: deps.callEdge,
+    errorResponse: deps.errorResponse
+  });
 }
 
 // src/lib/cors.js
@@ -166204,47 +166254,6 @@ async function callEdge2(method, path, env2, body) {
   return { status: resp.status, body: data };
 }
 __name(callEdge2, "callEdge");
-router.get("/api/test/sabp-marker-xyz", async (request2, env2) => {
-  return jsonResponse3({ marker: "sabp-route-active", timestamp: Date.now() }, 200);
-});
-router.get("/api/jobs/:jobId", async (request2, env2) => {
-  const { error: error4, user } = await authenticate(request2, env2);
-  if (error4)
-    return error4;
-  const res = await callEdge2("GET", `/ai/v1/jobs/${request2.params.jobId}`, env2);
-  return jsonResponse3(res.body, res.status);
-});
-router.get("/api/user/tenants", async (request2, env2) => {
-  const { error: error4, user } = await authenticate(request2, env2);
-  if (error4)
-    return error4;
-  try {
-    const tenants = Array.isArray(user.tenants) ? user.tenants : [];
-    if (tenants.length === 0) {
-      return jsonResponse3({
-        tenants: [],
-        current_tenant_id: null,
-        warning: "NO_TENANT_ACCESS",
-        message: "User has no tenant assignments. Contact administrator."
-      });
-    }
-    const isDefault = /* @__PURE__ */ __name((t) => t.is_default === 1 || t.is_default === true, "isDefault");
-    const defaultTenant = tenants.find(isDefault);
-    const currentTenantId = defaultTenant ? defaultTenant.id : tenants[0].id;
-    return jsonResponse3({
-      tenants: tenants.map((t) => ({
-        id: t.id,
-        code: t.code,
-        name: t.name,
-        role: t.role,
-        is_default: isDefault(t)
-      })),
-      current_tenant_id: currentTenantId
-    });
-  } catch (error5) {
-    return errorResponse("SESSION_ERROR", "Failed to read tenants from session: " + error5.message);
-  }
-});
 var WEYLAND_SUBCONP_PRICE_ID = "price_1UAh7DLWTxUJi5AVaNKljKc7";
 var WEYLAND_SUBCONP_PRODUCT_ID = "weyland-subconp-seat";
 var WEYLAND_PRODUCTS = {
