@@ -640,14 +640,16 @@ observable behavior change ever." Order:
      verified (verified cut_sheet product_documents, filterable by
      productId/manufacturer). authenticate + requireProductAccess
      ("cutsheetx") injected, both already-real top-level deps.
-   - Still inline: `/api/cut-sheets/local-search` + `local-index` (both
-     depend on LOCAL_CATALOGUE_INDEX, a ~46-entry data constant, and
-     searchLocalCatalogue, which has a real call site elsewhere still
-     inline - inject both rather than duplicate the data), the whole
-     `/api/catalogue/products*` and `/api/catalogue/documents*` CRUD
-     families, `catalogue/bulk-import`, and the pdf-lib-dependent render
-     route. Re-run a full route scan before picking the next piece;
-     line numbers everywhere in §5 are stale.
+   - ✅ done (2026-09-10): `routes/cut-sheet-local.js` - GET
+     local-search + local-index. searchLocalCatalogue and
+     LOCAL_CATALOGUE_INDEX (~46-entry data constant) injected rather
+     than moved/duplicated - both have real remaining uses elsewhere
+     still-inline.
+   - Still inline: the whole `/api/catalogue/products*` and
+     `/api/catalogue/documents*` CRUD families, `catalogue/bulk-import`,
+     and the pdf-lib-dependent render route. Re-run a full route scan
+     before picking the next piece; line numbers everywhere in §5 are
+     stale.
 
 For every step, "verified behaviorally identical" concretely means: run the
 extracted module inline via `wrangler dev` against a copy of the worker with
