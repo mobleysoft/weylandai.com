@@ -16,13 +16,15 @@ risk first, most-tangled/highest-consequence last.
 
 **Status (2026-09-10): all 10 originally-numbered clusters in section 1
 are done.** `legacy-monolith.js` went from 147,992 lines at the start of
-this phase to 136,634. This is not the end of real extractable content -
-section 2's dead-code register and section 3's vendored-library
-follow-up are still open, and step 8's own writeup found a wholly
-separate, never-catalogued second Claude-vision-adapter region
-(`EXTRACTION_PROMPT_TEMPLATE`/`viaApiDirect`/etc., ~825 lines) that no
-step here has touched. Real remaining work, not yet numbered into this
-section's ordered list.
+this phase to 136,634. Two further phases are now scoped and ordered:
+section 4 (first-party follow-ups - second vision-adapter region,
+`pdf-metadata.js`, Cluster A sub-step (d), a small duplicate cleanup;
+smaller, do this first) and section 3 (full sovereign replacement of
+`pdfjs-dist`/`pdf-lib`/`@cloudflare/puppeteer`, 131,569 of the file's
+136,634 lines - a genuine multi-phase engineering effort, not a
+refactor; real per-library usage audit and ordered plan both in
+section 3). Section 2's `D1KVShim` fate is still a real, open, human
+decision.
 
 ## 0. Orientation — the file is NOT 148K lines of app code
 
@@ -621,24 +623,142 @@ cluster *names* and *relationships* are the durable part.
         binding configured; pre-existing, not something this extraction
         broke.
 
-## 2. Duplicate/dead-code register (found during cataloguing, not yet fixed)
+## 2. Duplicate/dead-code register (updated 2026-09-10 - most items below resolved as a side effect of steps 1-10; only the genuinely open ones remain)
+
+Resolved and removed from this table (verified via direct grep against
+the current file, not assumed from old step numbers): `jsonResponse2`,
+`calculateClaudeCost2`, the `ERROR_CODES`/`errorResponse` duplicate
+(both now the single real export from `lib/edge-telemetry.js`),
+`matchComponentToCutSheet` (singular, inline copy - gone, only the real
+one in `lib/product-database.js` remains), and the `monolith` dispatcher
+deferral (closed by step 10).
 
 | Name(s) | Location(s) (as of 2026-09-10) | Verdict |
 |---|---|---|
-| `arrayBufferToBase642`/`...643`/`...644` | ~112,243 / ~134,088 / ~143,919 | 3 esbuild-collision-renamed duplicates; collapse to one `lib/base64.js` export when Cluster A moves |
-| `jsonResponse2` | ~142,457, inside still-inline `registerAthenaRoutes` | Duplicate of already-extracted `jsonResponse3`; retire when step 1 (Athena routes) lands |
-| `calculateClaudeCost2` | ~143,157 | Orphaned rename, no surviving sibling; just rename to `calculateClaudeCost` when Cluster F moves |
-| `ERROR_CODES`/`errorResponse` vs. `error-utilities.js`'s `ErrorCodes`/`jsonErrorResponse` | ~143,104 vs. already-extracted | Two parallel, unreconciled error-response conventions; real consolidation decision needed, not a silent merge |
-| `matchComponentToCutSheet` (singular) vs. `matchComponentToCutSheets` (plural, already extracted) | ~138,358 vs. `lib/product-database.js` | Confusingly similar names, genuinely different functions; rename on extraction |
-| `D1KVShim` class | ~142,834 | Dead since the 2026-09-09 fix, but explicitly flagged in-code as possibly-intentional in-progress work; **ask the human before deleting** |
-| Second Claude-vision-adapter region (`EXTRACTION_PROMPT_TEMPLATE`, `viaApiDirect`, `viaSabpClaudeCode`, `viaLocalSubprocess`, `adaptersForEdition`, `dispatchVisionExtraction`, `parseAndValidateExtraction`, ~825 lines) | starts right after Cluster E, before Cluster K's `router` | Wholly separate from Cluster A's already-extracted vision-adapter region (`callClaudeVision` etc.) despite the similar naming; untouched by any sub-step so far; found only while narrowing Cluster E's true end boundary. Real follow-up, own extraction step, not yet numbered/ordered in section 1. |
-| `monolith` dispatcher object (deferred in step 7/Cluster I) | ~ inline, depends on `discovery_engine_default`/`getDiscoveryConfig` | Cluster E (step 8) is now done, which was the blocker this deferral was waiting on - `monolith` is now unblocked and should be revisited before/alongside Cluster K per this document's own original guidance ("extract `monolith` last among the small clusters"). |
+| `arrayBufferToBase642` / `arrayBufferToBase644` | legacy-monolith.js:112254 / :135224 (2 of the original 3-4 collision-renamed copies remain inline; a 3rd, real, un-renamed `arrayBufferToBase64` is a legitimate separate function imported from `auth-module.js`, not a duplicate) | Still real and unresolved - collapse the 2 remaining inline copies into one export when their surrounding region gets extracted. |
+| `D1KVShim` class | now `export var D1KVShim` in `lib/edge-dispatch.js:46` (moved by step 7/Cluster I, not deleted) | Still open - dead since the 2026-09-09 fix, explicitly flagged in-code as possibly-intentional in-progress work. **Still needs a human decision** (finish the migration vs. remove), just relocated, not resolved. |
+| Second Claude-vision-adapter region (`EXTRACTION_PROMPT_TEMPLATE`, `viaApiDirect`, `viaSabpClaudeCode`, `viaLocalSubprocess`, `adaptersForEdition`, `dispatchVisionExtraction`, `parseAndValidateExtraction`, ~825 lines) | legacy-monolith.js, starts at line 134541 (`EXTRACTION_PROMPT_TEMPLATE`), right after Cluster E's `getDiscoveryConfig` and before Cluster K's former `router` line | Wholly separate from Cluster A's already-extracted vision-adapter region (`callClaudeVision` etc.) despite the similar naming; untouched by any step so far. Now numbered as section 4, step 1 below. |
 
-## 3. Vendored-library follow-up (separate, smaller effort - not this phase)
+## 3. Vendored-library sovereignty (full replacement, ordered) - separate phase from section 1
 
-~113,000 lines of `pdf-lib`, `pdfjs-dist`, RxJS, `ws`, and
-`@cloudflare/puppeteer` internals are hand-bundled into
-`legacy-monolith.js` instead of being real `npm` dependencies declared
-in `package.json`. Not in scope for this document's step ordering -
-tracked here as a known, real, much-lower-effort follow-up for
-whenever it's prioritized.
+Real, precise count as of 2026-09-10 (computed from esbuild's own
+`// node_modules/<pkg>/...` module-boundary comments, not an estimate):
+**131,569 of the file's 136,634 lines (96%) are vendored.** The prior
+version of this section's "~113,000 lines... RxJS" note was an
+unverified guess and is corrected here - there is no RxJS in this file.
+
+| Package | Lines | Real first-party usage |
+|---|---|---|
+| `pdfjs-dist` | 87,010 | Rasterizing a PDF page/region to a bitmap at a given DPI, via `pdf-renderer-cloudflare.js` (line 111774) - `getDocument → getPage → getViewport → render(canvas)`. No `getTextContent()`, no annotations/forms/outline API used. |
+| `@cloudflare/puppeteer` | 20,855 | Headless-browser site verification/scraping in the cut-sheet discovery engine (`lib/cutsheet-discovery.js`) - `launch(env.BROWSER)`, `newPage`, `goto`, request/response interception, `evaluate`, `content()`. `env.BROWSER` is Cloudflare's own managed remote Chromium - **the browser engine itself was never vendored**, only the CDP client/driver code bundled here. |
+| `pdf-lib` | 16,172 | Programmatic PDF generation/merge in `lib/submittal-assembler.js` - `PDFDocument.create/load`, `addPage`, `embedFont` (std-14 only), `drawText/drawRectangle/drawLine`, `copyPages`, `save`. No forms, no encryption, no custom fonts, no image embedding. |
+| `pako` | 4,332 | Transitive DEFLATE/zlib dependency of pdf-lib and pdfjs-dist; not called directly by any first-party code. |
+| `@pdf-lib/upng` | 1,537 | Transitive PNG dependency of pdf-lib; not called directly (first-party code never embeds images into generated PDFs per the audit above). |
+| `unenv` + `@cloudflare/unenv-preset` | 1,271 | Cloudflare's own Node-compatibility shim for the Workers runtime - not a product dependency, this is what makes `process`/`console` work in a Worker at all. Not a sovereignty target. |
+| `@pdf-lib/standard-fonts` | 328 | Std-14 PDF font metrics (Helvetica etc.), a pdf-lib dependency. Public AFM-derived data, not proprietary - trivial to reproduce directly. |
+| `wrangler` | 49 | Incidental build-time pull-in, not a real runtime dependency. |
+| `ws` | 15 | Apparently vestigial - `SightXRoom` uses the native Workers `WebSocketPair`, not this. |
+
+Full audit (call-site counts, exact API surface per library) done
+2026-09-10 via a dedicated Explore-agent pass over
+`pdf-renderer-cloudflare.js`, `lib/submittal-assembler.js`, and
+`lib/cutsheet-discovery.js` - not re-derived here, available in this
+session's transcript if needed again.
+
+### Ordered replacement plan
+
+1. **Delete the two incidental/unused stubs.** `ws` (15 lines) and
+   `wrangler` (49 lines) - confirm zero real call sites (not just zero
+   in the audited wrapper files - a full-file grep), then delete
+   outright. No design work, no risk. Do this first, independent of
+   everything else below.
+2. **Sovereign DEFLATE/zlib** (replaces `pako`, unblocks both PDF
+   phases below for reading/writing compressed PDF streams). RFC 1951
+   is a fully specified, deterministic algorithm - real, tractable,
+   exhaustively testable against known vectors before it ever touches
+   a real document. Inflate (decompression, needed to *read* existing
+   PDFs/xref streams) matters more than deflate (compression, only
+   needed for *writing* compact output - "store uncompressed" is a
+   valid, correct fallback to ship first and optimize later).
+3. **Sovereign PDF generator** (replaces `pdf-lib` + its `@pdf-lib/upng`/
+   `@pdf-lib/standard-fonts` dependents, since neither is called
+   directly and both go with it). Narrow, real scope per the audit:
+   page tree + content-stream writer, `drawText`/`drawRectangle`/
+   `drawLine`, std-14 font metrics (reproduce directly - public data),
+   `copyPages`-style merge, xref writer, `save()`. No parser needed
+   beyond enough to read pages out of an existing PDF for merge - the
+   app never loads arbitrary third-party PDFs through pdf-lib, only
+   ones it or a known upstream step produced. The most tractable of
+   the three "big" replacements - a real, scoped, buildable project.
+4. **Sovereign CDP client** (replaces `@cloudflare/puppeteer`'s bundled
+   client code - not a browser engine, `env.BROWSER` stays Cloudflare's
+   managed Chromium either way). Chrome DevTools Protocol is Google's
+   own open, versioned, documented WebSocket JSON-RPC protocol. Real
+   scope per the audit: launch/connect handshake, navigate, request/
+   response interception, `evaluate`, read rendered content. Can
+   proceed in parallel with step 3 - no shared dependency.
+5. **Sovereign PDF rasterizer** (replaces `pdfjs-dist`). **The hardest,
+   riskiest, highest-effort phase by far** - not comparable in scope to
+   1-4. `pdf-metadata.js` (already sovereign, hand-written, no pdfjs
+   dependency) already solves the structural side: xref/trailer
+   parsing, page tree, bookmarks, Info dict - real synergy to extend
+   rather than duplicate. What's still needed and hard: PDF content-
+   stream tokenizing/interpretation (path construction, fill/stroke,
+   text-positioning operators), embedded font parsing (TrueType/Type1/
+   CFF) and glyph rasterization, and a software rasterizer (anti-
+   aliased path filling + compositing) producing a correct 600 DPI
+   bitmap for arbitrary real-world submitted door-schedule PDFs, not
+   just app-generated ones - meaning it has to handle whatever fonts/
+   producer quirks show up in real customer uploads, not a controlled
+   input set. Recommend: do NOT plan this as a single cutover. Scope
+   it as its own multi-milestone sub-project - start against the
+   actual fonts/PDF producers observed in real submitted documents,
+   keep `pdfjs-dist` as an explicit fallback for anything the sovereign
+   renderer can't yet handle, and retire the fallback only once real
+   coverage is measured, not assumed.
+
+Steps 2-5 are a genuine multi-phase engineering effort, not a
+refactor - flagging here rather than understating it, since 103,182 of
+the 131,569 vendored lines (pdfjs-dist + pdf-lib) are mature,
+security-relevant format-parsing/rendering code accumulated over years
+of real-world edge cases.
+
+## 4. First-party extraction follow-ups (ordered) - smaller and faster than section 3, do these first
+
+All discovered during steps 1-10 but out of those steps' original
+scope. Real, first-party app code (not vendored), much smaller than
+section 3's project - reasonable to close out before starting on the
+vendored-library work.
+
+1. **Second Claude-vision-adapter region** (`EXTRACTION_PROMPT_TEMPLATE`,
+   `viaApiDirect`, `viaSabpClaudeCode`, `viaLocalSubprocess`,
+   `adaptersForEdition`, `dispatchVisionExtraction`,
+   `parseAndValidateExtraction`, ~825 lines, legacy-monolith.js:134541
+   onward). Same discipline as every step in section 1: 3-way
+   verification (function-boundary scan, vendored-bundle entanglement
+   check, full-identifier sweep) before writing an extraction, real
+   tests, live verification, one commit.
+2. **`pdf-metadata.js` extraction** (~1,250 lines, legacy-monolith.js
+   starting ~line 23992 - a real, self-contained, never-catalogued
+   hand-written PDF xref/page-tree parser found during Cluster A
+   sub-step (c)'s full-sweep check). Extracting this now also directly
+   feeds section 3 step 5 (the sovereign PDF rasterizer can build on
+   this instead of duplicating its xref/trailer-parsing work) - real
+   synergy, do this before starting section 3.
+3. **Cluster A sub-step (d)**: the 8 functions left inline during
+   Cluster A because they're transitively entangled with vendored-
+   bundle internals (`loadRenderer`, `extractIsolatedPage`,
+   `extractSinglePage`, `extractWithIsolatedPdfMode`,
+   `savePageExtraction`, `renderRegionAt600DPI2`,
+   `getOrRenderRegionAt600DPI`, `extractCore`). These call directly
+   into `pdf-renderer-cloudflare.js`/pdfjs-dist and `PDFDocument_default`
+   (pdf-lib) - **do this after section 3's steps 3 and 5 land**, not
+   before, since a clean extraction here depends on those functions'
+   real dependencies having stable sovereign module paths instead of
+   reaching into the vendored-bundle region being extracted out from
+   under them.
+4. **`arrayBufferToBase642`/`arrayBufferToBase644` consolidation** -
+   collapse the 2 remaining inline duplicates into whichever real
+   module they end up naturally belonging to once steps 1-3 land (both
+   currently sit inside regions this list already covers - no separate
+   extraction needed, just don't lose track of them during 1-3).
