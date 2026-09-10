@@ -1,0 +1,26 @@
+name = "weyland-document-generators-worker"
+main = "src/index.js"
+compatibility_date = "2025-10-31"
+compatibility_flags = ["nodejs_compat"]
+
+# Phase 2 of WEYLAND_SUCCESSOR_ARCHITECTURE.md: the first real peeled-off
+# module (WORKER_MODULARIZATION_MAP.md's own pick for lowest blast
+# radius - nothing outside its original line range called into it, and
+# it calls nothing product-specific elsewhere). Deliberately no public
+# `routes` here - binding-only, reachable only via weyland-gateway's
+# Service Binding (env.DOCUMENT_GENERATORS there), per the auth-boundary
+# decision in gateway/wrangler.toml's own comment. Not yet wired into
+# the gateway's fallback - that's the next real step, once this is
+# proven live on its own workers.dev URL.
+
+[[d1_databases]]
+binding = "DB"
+database_name = "weyland_db"
+database_id = "5729f77e-d7e3-4577-ab43-3c064fa90ca5"
+
+[[r2_buckets]]
+binding = "OUTPUTS"
+bucket_name = "subx-outputs"
+
+[browser]
+binding = "BROWSER"
