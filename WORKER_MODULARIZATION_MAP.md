@@ -713,10 +713,13 @@ observable behavior change ever." Order:
      call sites remain in the still-inline auto-generate route);
      PDFDocument/StandardFonts/rgb also injected - same vendored-
      pdf-lib pattern as cps-page-render.js.
-   - Still inline: the other 7 `/api/sessions/*` routes -
+   - ✅ done (2026-09-10): `routes/sessions-recent.js` - GET
+     /api/sessions/recent. authenticate the only dep - fully
+     self-contained.
+   - Still inline: the other 6 `/api/sessions/*` routes -
      queue-extraction, extraction-route (GET+POST), finalize-from-job,
-     recent, auto-generate, preview. Re-scan before picking the next
-     piece - these are scattered non-contiguously, not one block.
+     auto-generate, preview. Re-scan before picking the next piece -
+     these are scattered non-contiguously, not one block.
 
 ### Additional tracked items (brainstormed 2026-09-10, not yet scheduled)
 
