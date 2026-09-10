@@ -88,6 +88,7 @@ import { registerMarketIntelligenceRoutes } from "./routes/market-intelligence.j
 import { registerSystemStatusRoutes } from "./routes/system-status.js";
 import { registerMiscUtilityRoutes } from "./routes/misc-utility.js";
 import { registerWebhooksSubscriptionRoutes } from "./routes/webhooks-subscription.js";
+import { registerSubmittalChatRoutes } from "./routes/submittal-chat.js";
 import { authenticate, authenticateCps, requireActiveSubscription, requireProductAccess } from "./lib/auth.js";
 
 /**
@@ -135,6 +136,7 @@ import { authenticate, authenticateCps, requireActiveSubscription, requireProduc
  *   WEYLAND_SUBCONP_PRODUCT_ID: string,
  *   verifyVendyaiForwardSignature: Function,
  *   verifyStripeWebhookSignature: Function,
+ *   logClaudeAPICall: Function,
  *   buildExtractionResultFromVision: Function,
  *   persistDoorScheduleResponse: Function,
  *   extractHardwareSchedule: Function,
@@ -382,4 +384,5 @@ export function registerExtractedModules(router, deps) {
     verifyVendyaiForwardSignature: deps.verifyVendyaiForwardSignature,
     verifyStripeWebhookSignature: deps.verifyStripeWebhookSignature,
   });
+  registerSubmittalChatRoutes(router, { authenticate, logClaudeAPICall: deps.logClaudeAPICall });
 }
