@@ -983,6 +983,22 @@ observable behavior change ever." Order:
       webhook data submitted.
     - **Step 20 complete**: the webhooks-subscription route extracted.
 
+21. **Step 21 (new, post-step-20 scan result, 2026-09-10): the
+    `/api/submittal/validate` + `/api/chat` cluster.** Only 7 route
+    registrations remain in the whole file now. These 2 are
+    contiguous with each other; their 3 supporting helper functions
+    (buildSubmittalValidationPrompt/validateWithClaudeVision/
+    validateSubmittalStructure) sit further down, after the unrelated
+    generateSubmittalHTML function.
+    - ✅ done (2026-09-10): `routes/submittal-chat.js` - both routes
+      plus their 3 helpers (all fully orphaned, single call site
+      each, inlined locally). logClaudeAPICall (2 other real call
+      sites remaining) newly promoted to an injected dep.
+    - **Step 21 complete**: both submittal-chat routes extracted.
+      Remaining: `/login`, `/app.js`, `/` (all large page-serving
+      routes, likely each its own dedicated piece going forward), and
+      `/api/hardware-components/:componentId/select-price`.
+
 ### Additional tracked items (brainstormed 2026-09-10, not yet scheduled)
 
 Found while extracting steps 8-9; real, verified duplication/gaps, not
