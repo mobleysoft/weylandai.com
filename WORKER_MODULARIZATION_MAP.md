@@ -855,6 +855,27 @@ observable behavior change ever." Order:
     checkout/create and checkout/status. Uses `stripeRequest`,
     `WEYLAND_PRODUCTS`, `CHECKOUT_READY_PRODUCTS` - real financial/
     billing code, higher review care than most remaining clusters.
+    - ✅ done (2026-09-10): `routes/billing.js` - all 3 routes. None
+      call authenticate() - genuinely public by design (pricing,
+      checkout init, checkout-status polling all need to work
+      pre-login). WEYLAND_PRODUCTS stays injected (1 other call site
+      remains, inside /api/webhooks/subscription). CHECKOUT_READY_PRODUCTS
+      and stripeRequest both have zero remaining monolith call sites
+      but were deliberately kept injected rather than inlined -
+      re-deriving a live Stripe product-ID Set or the Stripe-auth
+      helper by hand is exactly where a transcription error would
+      matter. Live-verified against real production Stripe data
+      post-deploy (real prices returned unchanged).
+    - **Step 13 complete**: all 3 billing routes extracted.
+
+14. **Step 14 (new, post-step-13 scan result, 2026-09-10): the
+    `/api/internal/*` cluster.** A fresh scan after step 13 found only
+    27 route registrations remain in the whole file - `/api/internal`
+    is now the largest remaining family at 4 registrations, fully
+    contiguous (HEAD + OPTIONS + GET on `/api/internal/r2-stream` - a
+    JWT-token-gated R2 byte-range streaming proxy, plus GET
+    `/api/internal/pdf-render-shell`), immediately followed by
+    `/api/health`.
     - Not yet started.
 
 ### Additional tracked items (brainstormed 2026-09-10, not yet scheduled)
