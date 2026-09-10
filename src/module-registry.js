@@ -67,6 +67,7 @@ import { registerCpsPageRenderRoutes } from "./routes/cps-page-render.js";
 import { registerSessionsListRoutes } from "./routes/sessions-list.js";
 import { registerSessionsDetailRoutes } from "./routes/sessions-detail.js";
 import { registerSessionsCutSheetsRoutes } from "./routes/sessions-cutsheets.js";
+import { registerSessionsAssembleRoutes } from "./routes/sessions-assemble.js";
 import { authenticate, authenticateCps, requireActiveSubscription, requireProductAccess } from "./lib/auth.js";
 
 /**
@@ -118,6 +119,11 @@ import { authenticate, authenticateCps, requireActiveSubscription, requireProduc
  *   searchLocalCatalogue: Function,
  *   LOCAL_CATALOGUE_INDEX: object,
  *   PDFDocument: Function,
+ *   persistSessionMatches: Function,
+ *   assembleSubmittalPackage: Function,
+ *   getAssemblyStatus: Function,
+ *   StandardFonts: object,
+ *   rgb: Function,
  * }} deps
  *   Real dependencies still owned by legacy-monolith.js (not yet their
  *   own modules) that some of these routes need injected. renderHtmlToPdf/
@@ -272,5 +278,14 @@ export function registerExtractedModules(router, deps) {
     authenticate,
     matchComponentToCutSheets: deps.matchComponentToCutSheets,
     queueForDiscovery: deps.queueForDiscovery,
+  });
+  registerSessionsAssembleRoutes(router, {
+    authenticate,
+    persistSessionMatches: deps.persistSessionMatches,
+    assembleSubmittalPackage: deps.assembleSubmittalPackage,
+    getAssemblyStatus: deps.getAssemblyStatus,
+    PDFDocument: deps.PDFDocument,
+    StandardFonts: deps.StandardFonts,
+    rgb: deps.rgb,
   });
 }
