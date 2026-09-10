@@ -480,21 +480,26 @@ observable behavior change ever." Order:
      approvePageExtraction, extractSinglePage, resolveExtractionContract,
      savePageExtraction2 — plus reuse of getSessionStatus/isPageInRange/
      extractFromPageImage/queuePageExtractionJob from prior pieces.
-   - Still inline: extract/start/detect-schedules/status/set-page-range/
-     set-table-pages/batch-extract (~148000-149172 — the group with ~20
-     unscoped PDF-pipeline dependencies, e.g. extractHardwareSchedule/
-     routeExtraction/queuePageExtractionJob; deliberately deferred rather
-     than rushed), and finalize-image (146158ish, isolated from the rest
-     by the ~1,756-line Stripe/HuntX/econ-data gap noted above — likely
-     belongs with a PDF-pipeline module instead of here). This is now
-     genuinely the last piece of step 7. Whoever picks this back up
-     should re-run a full route scan first rather than trusting this
-     list's line numbers, which will have shifted with every extraction
-     since — and should expect the ~20-dependency group to need either a
-     wider injected-deps list than anything tried so far, or a decision
-     to extract some of those ~20 PDF-pipeline helpers into their own
-     lib/ module(s) first, the way pricing.js and region-conflicts.js
-     were pulled out ahead of their route groups.
+   - ✅ done (2026-09-10): `routes/hardware-schedule-finalize-image.js`
+     (finalize-image — 1 route). Confirmed genuinely isolated from the
+     rest of the cluster by the ~1,756-line Stripe/HuntX/econ-data gap
+     noted above — clean boundary on both sides. Two more helpers
+     injected: `buildExtractionResultFromVision`,
+     `persistDoorScheduleResponse` — plus reuse of `callEdge`/
+     `materializeDseToLineItems`/`transformDoorEntriesToHardwareSets`/
+     `savePageExtraction2` from prior pieces.
+   - Still inline (the last piece of step 7): extract/start/
+     detect-schedules/status/set-page-range/set-table-pages/batch-extract
+     (~9 routes; re-run a full route scan before touching this, since
+     every prior extraction has shifted these line numbers). This is the
+     group with ~20 unscoped PDF-pipeline dependencies (e.g.
+     extractHardwareSchedule/routeExtraction/queuePageExtractionJob),
+     deliberately deferred through every pass so far rather than rushed.
+     Expect it to need either a wider injected-deps list than anything
+     tried so far, or a decision to extract some of those ~20 PDF-
+     pipeline helpers into their own lib/ module(s) first, the way
+     pricing.js and region-conflicts.js were pulled out ahead of their
+     route groups.
 8. **The CPS/cut-sheet cluster last** (12 files, ~9,000–10,000 lines) —
    highest line count, most shared data tables
    (`PRODUCT_DATABASE`/`MFR_CODE_MAP`), the only cluster this pass could not
