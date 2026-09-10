@@ -623,15 +623,25 @@ observable behavior change ever." Order:
      updateDiscoveryConfig, addManufacturerDomain, and
      verifyManufacturerDomain inlined locally (single call site each),
      orphaned originals deleted.
-   - Still inline: everything else - the rest of the CPS/cut-sheet route
-     surface (a much larger remaining set than earlier estimates
-     suggested - a fresh scan turned up `/api/cut-sheets/queue`,
-     `queue/batch`, `discoveries` (list/pending/:id/manual/approve/
-     reject), `verified`, `local-search`, `local-index`, plus the whole
-     `/api/catalogue/products*` and `/api/catalogue/documents*` CRUD
-     families and `catalogue/bulk-import` - the pdf-lib-dependent render
-     route also still inline. Re-run a full route scan before picking
-     the next piece; line numbers everywhere in §5 are stale.).
+   - ✅ done (2026-09-10): `routes/cut-sheet-discoveries.js` - 8 routes
+     (POST queue + queue/batch, GET discoveries + pending + :id, POST
+     discoveries/manual + :id/approve + :id/reject). authenticate
+     injected as usual; queueForDiscovery and getManufacturerDomains
+     stay injected (real call sites remain elsewhere still-inline);
+     getPendingDiscoveries, getDiscoveryForReview, approveDiscovery,
+     rejectDiscovery, submitManualDiscovery, isAuthorizedDomain
+     inlined locally. Real fix made here: submitManualDiscovery had to
+     gain an explicit getManufacturerDomains parameter since it's a
+     module-top-level function, not a closure, so it can't see an
+     injected dep as a free identifier the way it could inside the
+     monolith's single scope - caught by a real failing test, not
+     inspection.
+   - Still inline: everything else - `/api/cut-sheets/verified`,
+     `local-search`, `local-index`, the whole `/api/catalogue/products*`
+     and `/api/catalogue/documents*` CRUD families,
+     `catalogue/bulk-import`, and the pdf-lib-dependent render route.
+     Re-run a full route scan before picking the next piece; line
+     numbers everywhere in §5 are stale.
 
 For every step, "verified behaviorally identical" concretely means: run the
 extracted module inline via `wrangler dev` against a copy of the worker with
