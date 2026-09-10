@@ -716,10 +716,13 @@ observable behavior change ever." Order:
    - ✅ done (2026-09-10): `routes/sessions-recent.js` - GET
      /api/sessions/recent. authenticate the only dep - fully
      self-contained.
-   - Still inline: the other 6 `/api/sessions/*` routes -
-     queue-extraction, extraction-route (GET+POST), finalize-from-job,
-     auto-generate, preview. Re-scan before picking the next piece -
-     these are scattered non-contiguously, not one block.
+   - ✅ done (2026-09-10): `routes/sessions-extraction-route.js` - GET+
+     POST extraction-route. authenticate the only dep;
+     EXTRACTION_ROUTE_VALID (small Set constant) inlined locally.
+   - Still inline: the other 4 `/api/sessions/*` routes -
+     queue-extraction, finalize-from-job, auto-generate, preview.
+     Re-scan before picking the next piece - these are scattered
+     non-contiguously, not one block.
 
 ### Additional tracked items (brainstormed 2026-09-10, not yet scheduled)
 
