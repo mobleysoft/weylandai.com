@@ -453,14 +453,23 @@ observable behavior change ever." Order:
      `unaffirmMaterializedGroup`, `pdfBufferOrNull`, `generateR2StreamUrl`,
      `isPageInRange`, `renderRegionAt600DPI2` — each has real call sites
      in routes still inline below.
+   - ✅ done (2026-09-10): `routes/hardware-schedule-generate.js`
+     (generate-submittal, generate-package, extract-affirmed — 3 routes).
+     `arrayBufferToBase64` turned out to be another real auth-module.js
+     export (same situation as createHmacSignature) — imported directly
+     rather than injected. Six more shared helpers injected: `callEdge`,
+     `generateSubmittalHTML`, `incrementSubmittalsUsed`,
+     `matchComponentToCutSheets` (CPS cluster, step 8),
+     `queuePageExtractionJob`, `routeExtraction` — plus reuse of
+     `getSessionStatus`/`generateR2StreamUrl`/`isPageInRange`/
+     `pdfBufferOrNull`/`renderRegionAt600DPI2` from the prior piece.
    - Still inline: extract/start/detect-schedules/status/set-page-range/
      set-table-pages/batch-extract (~148000-149172 — the group with ~20
      unscoped PDF-pipeline dependencies, e.g. extractHardwareSchedule/
      routeExtraction/queuePageExtractionJob; deliberately deferred rather
      than rushed), the rest of the `page/:pageNum` family (extract-image/
-     extraction-contract/extract-result/approve, ~149170-149690),
-     generate-submittal/generate-package/extract-affirmed
-     (~151470-151900), and finalize-image (146198, isolated from the rest
+     extraction-contract/extract-result/approve, ~149170-149690), and
+     finalize-image (146198, isolated from the rest
      by the ~1,756-line Stripe/HuntX/econ-data gap noted above — likely
      belongs with a PDF-pipeline module instead of here). Whoever picks
      this back up should re-run a full route scan
