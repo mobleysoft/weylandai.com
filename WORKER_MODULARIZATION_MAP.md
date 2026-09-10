@@ -587,15 +587,25 @@ observable behavior change ever." Order:
      4 routes, authenticate the only injected dep; componentHash
      inlined locally (its only 2 real call sites were both here) and
      its orphaned original definition deleted from legacy-monolith.js.
+   - ✅ done (2026-09-10): `routes/cps-queue.js` - GET queue (pending
+     affirmation-queue items joined with mapping + catalogue data,
+     paginated), GET extractions/:catalogueId/:cacheKey (KV-first,
+     D1-fallback extraction lookup). 2 routes, authenticate the only
+     injected dep. Deliberately left GET
+     .../pages/:pageNum/render inline in legacy-monolith.js - it
+     depends on `PDFDocument_default`, a full pdf-lib copy vendored
+     directly into the file rather than a real npm import, which is a
+     separate untangling problem (install pdf-lib as a real dependency,
+     or inject the vendored symbol) from a plain route extraction.
    - Still inline: everything else - the rest of the CPS/cut-sheet route
-     surface (~15 more `/api/cut-sheets/*` and `/api/cps/*` routes alone
-     per the last full scan - queue/extractions/render, discoveries,
-     domains/verify, intelligence metrics/config, admin normalize,
-     catalogue-products/documents/bulk-import, cut-sheet-discovery,
-     door-schedule-marks, session-assembly, and more per §5's original
-     proposed layout - re-read that section and re-run a full route
-     scan before picking individual pieces, since none of its line
-     numbers are current anymore).
+     surface (~13 more `/api/cut-sheets/*` and `/api/cps/*` routes alone
+     per the last full scan - the pdf-lib-dependent render route,
+     discoveries, domains/verify, intelligence metrics/config, admin
+     normalize, catalogue-products/documents/bulk-import,
+     cut-sheet-discovery, door-schedule-marks, session-assembly, and
+     more per §5's original proposed layout - re-read that section and
+     re-run a full route scan before picking individual pieces, since
+     none of its line numbers are current anymore).
 
 For every step, "verified behaviorally identical" concretely means: run the
 extracted module inline via `wrangler dev` against a copy of the worker with
