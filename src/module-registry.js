@@ -33,6 +33,7 @@ import { registerSightXWalkthroughRoutes } from "./routes/sightx-walkthrough.js"
 import { registerCrossReferenceRoutes } from "./routes/cross-reference.js";
 import { registerVendorProfileRoutes } from "./routes/vendor-profile.js";
 import { registerHuntLeadsRoutes } from "./routes/hunt-leads.js";
+import { registerQuoteTemplatesRoutes } from "./routes/quote-templates.js";
 import { authenticate, requireProductAccess } from "./lib/auth.js";
 
 /**
@@ -71,4 +72,5 @@ export function registerExtractedModules(router, deps) {
     storeDocumentPdf: deps.storeDocumentPdf,
     makeDocumentDownloadRoute: deps.makeDocumentDownloadRoute,
   });
+  registerQuoteTemplatesRoutes(router, { authenticate });
 }
