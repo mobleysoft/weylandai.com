@@ -24,12 +24,7 @@
 import { authenticate, authenticateCps, requireActiveSubscription, requireProductAccess } from "./lib/auth.js";
 import { jsonResponse3 } from "./lib/json-response.js";
 import { registerDocumentGeneratorRoutes } from "./routes/document-generators.js";
-import { registerProjectRoutes } from "./routes/projects.js";
-import { registerDemoTrialRoutes } from "./routes/demo-trial.js";
-import { registerHardwareScheduleExportRoutes } from "./routes/hardware-schedule-export.js";
-import { registerAccessRequestRoutes } from "./routes/access-requests.js";
-import { makeFleetKeyOperatorGate } from "./lib/operator-gate.js";
-import { inviteViaAuthFor } from "./lib/authfor-invite.js";
+import { registerExtractedModules } from "./module-registry.js";
 var __create = Object.create;
 var __defProp = Object.defineProperty;
 var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
@@ -151468,7 +151463,6 @@ router.post("/api/hardware-schedule/session/:sessionId/page/:pageNum/extract-res
     return jsonResponse3({ error: "Failed to store extraction result", details: err.message }, 500);
   }
 });
-registerHardwareScheduleExportRoutes(router);
 var PRODUCT_DATABASE = [
   // Schlage Locks
   { manufacturer: "Schlage", code: ["SCH", "SCHLAGE"], models: ["L9080P", "L9080", "L9080-P"], productName: "Schlage L9080P Passage Mortise Lock", category: "Locks & Locksets", specs: 'ANSI/BHMA Grade 1, Heavy Duty Commercial, 2-3/4" Backset', fireRating: "3 Hour", ada: true, standards: "ANSI/BHMA A156.13, UL10C", priceRange: "$340-485" },
@@ -152883,9 +152877,7 @@ function getUnaffirmReason(item, type) {
   return "Unknown";
 }
 __name(getUnaffirmReason, "getUnaffirmReason");
-registerProjectRoutes(router, { transformDoorEntriesToHardwareSets, materializeDseToLineItems });
-registerDemoTrialRoutes(router);
-registerAccessRequestRoutes(router, { requireOperator: makeFleetKeyOperatorGate(), invite: inviteViaAuthFor, ventureCode: "weyland" });
+registerExtractedModules(router, { transformDoorEntriesToHardwareSets, materializeDseToLineItems });
 router.get("/api/vendor-profile", async (request2, env2) => {
   const { error: error4, user } = await authenticate(request2, env2);
   if (error4)

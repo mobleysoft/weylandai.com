@@ -3055,6 +3055,21 @@ async function inviteViaAuthFor(env2, { email, name, role, operatorToken } = {},
   return { ok: false, status: resp.status, data: { error: data && data.error || `AuthFor register failed (${resp.status})` } };
 }
 
+// src/module-registry.js
+function registerExtractedModules(router2, deps) {
+  registerHardwareScheduleExportRoutes(router2);
+  registerProjectRoutes(router2, {
+    transformDoorEntriesToHardwareSets: deps.transformDoorEntriesToHardwareSets,
+    materializeDseToLineItems: deps.materializeDseToLineItems
+  });
+  registerDemoTrialRoutes(router2);
+  registerAccessRequestRoutes(router2, {
+    requireOperator: makeFleetKeyOperatorGate(),
+    invite: inviteViaAuthFor,
+    ventureCode: "weyland"
+  });
+}
+
 // src/legacy-monolith.js
 import { Writable } from "node:stream";
 import { Socket } from "node:net";
@@ -156215,7 +156230,6 @@ router.post("/api/hardware-schedule/session/:sessionId/page/:pageNum/extract-res
     return jsonResponse3({ error: "Failed to store extraction result", details: err.message }, 500);
   }
 });
-registerHardwareScheduleExportRoutes(router);
 var PRODUCT_DATABASE = [
   // Schlage Locks
   { manufacturer: "Schlage", code: ["SCH", "SCHLAGE"], models: ["L9080P", "L9080", "L9080-P"], productName: "Schlage L9080P Passage Mortise Lock", category: "Locks & Locksets", specs: 'ANSI/BHMA Grade 1, Heavy Duty Commercial, 2-3/4" Backset', fireRating: "3 Hour", ada: true, standards: "ANSI/BHMA A156.13, UL10C", priceRange: "$340-485" },
@@ -157626,9 +157640,7 @@ function getUnaffirmReason(item, type) {
   return "Unknown";
 }
 __name(getUnaffirmReason, "getUnaffirmReason");
-registerProjectRoutes(router, { transformDoorEntriesToHardwareSets, materializeDseToLineItems });
-registerDemoTrialRoutes(router);
-registerAccessRequestRoutes(router, { requireOperator: makeFleetKeyOperatorGate(), invite: inviteViaAuthFor, ventureCode: "weyland" });
+registerExtractedModules(router, { transformDoorEntriesToHardwareSets, materializeDseToLineItems });
 router.get("/api/vendor-profile", async (request2, env2) => {
   const { error: error4, user } = await authenticate(request2, env2);
   if (error4)
