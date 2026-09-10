@@ -78,6 +78,7 @@ import { registerAuthSessionRoutes } from "./routes/auth-session.js";
 import { registerInstallDeviceAuthRoutes } from "./routes/install-device-auth.js";
 import { registerMeBridgeRoutes } from "./routes/me-bridge.js";
 import { registerTelemetryRoutes } from "./routes/telemetry.js";
+import { registerSubmittalsRoutes } from "./routes/submittals.js";
 import { authenticate, authenticateCps, requireActiveSubscription, requireProductAccess } from "./lib/auth.js";
 
 /**
@@ -117,6 +118,7 @@ import { authenticate, authenticateCps, requireActiveSubscription, requireProduc
  *   generateId3: Function,
  *   errorResponse: Function,
  *   HASCOM_EDGE: string,
+ *   dispatchVisionExtraction: Function,
  *   buildExtractionResultFromVision: Function,
  *   persistDoorScheduleResponse: Function,
  *   extractHardwareSchedule: Function,
@@ -330,4 +332,9 @@ export function registerExtractedModules(router, deps) {
   registerInstallDeviceAuthRoutes(router, { authenticate, callEdge: deps.callEdge });
   registerMeBridgeRoutes(router, { authenticate, callEdge: deps.callEdge, HASCOM_EDGE: deps.HASCOM_EDGE });
   registerTelemetryRoutes(router, { authenticate });
+  registerSubmittalsRoutes(router, {
+    authenticate,
+    logTelemetryEvent: deps.logTelemetryEvent,
+    dispatchVisionExtraction: deps.dispatchVisionExtraction,
+  });
 }
