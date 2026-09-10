@@ -35,6 +35,10 @@ import { registerVendorProfileRoutes } from "./routes/vendor-profile.js";
 import { registerHuntLeadsRoutes } from "./routes/hunt-leads.js";
 import { registerQuoteTemplatesRoutes } from "./routes/quote-templates.js";
 import { registerPricingRoutes } from "./routes/pricing.js";
+import { registerTakeoffDataRoutes } from "./routes/takeoff-data.js";
+import { registerTakeoffLineItemsRoutes } from "./routes/takeoff-line-items.js";
+import { registerQuotesViewRoutes } from "./routes/quotes-view.js";
+import { registerQuotesGenerateRoutes } from "./routes/quotes-generate.js";
 import { authenticate, authenticateCps, requireProductAccess } from "./lib/auth.js";
 
 /**
@@ -45,11 +49,16 @@ import { authenticate, authenticateCps, requireProductAccess } from "./lib/auth.
  *   renderHtmlToPdf: Function,
  *   storeDocumentPdf: Function,
  *   makeDocumentDownloadRoute: Function,
+ *   puppeteer: object,
  * }} deps
  *   Real dependencies still owned by legacy-monolith.js (not yet their
- *   own modules) that some of these routes need injected. The last three
- *   come from registerDocumentGeneratorRoutes()'s return value, which is
- *   why this function is now called after that one (see header comment).
+ *   own modules) that some of these routes need injected. renderHtmlToPdf/
+ *   storeDocumentPdf/makeDocumentDownloadRoute come from
+ *   registerDocumentGeneratorRoutes()'s return value, which is why this
+ *   function is now called after that one (see header comment). puppeteer
+ *   is the same @cloudflare/puppeteer client (legacy-monolith.js's
+ *   puppeteer_cloudflare_default) that quotes-generate.js uses for its
+ *   own inline PDF rendering, independent of document-generators.js.
  */
 export function registerExtractedModules(router, deps) {
   registerHardwareScheduleExportRoutes(router);
@@ -75,4 +84,12 @@ export function registerExtractedModules(router, deps) {
   });
   registerQuoteTemplatesRoutes(router, { authenticate });
   registerPricingRoutes(router, { authenticate, authenticateCps });
+  registerTakeoffDataRoutes(router, { authenticate, requireProductAccess });
+  registerTakeoffLineItemsRoutes(router, { authenticate, requireProductAccess });
+  registerQuotesViewRoutes(router, { authenticate });
+  registerQuotesGenerateRoutes(router, {
+    authenticate,
+    requireProductAccess,
+    puppeteer: deps.puppeteer,
+  });
 }
