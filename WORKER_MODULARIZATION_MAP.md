@@ -539,14 +539,21 @@ observable behavior change ever." Order:
      deps beyond authenticate/requireProductAccess (accepted as deps for
      testability, matching every other module's convention, even though
      both are always the same top-level lib/auth.js import in practice).
+   - ✅ done (2026-09-10): `routes/cps-import-prices.js` - bulk
+     product-variant price import (1 route), with a real preserved
+     defensive fallback for a rolling `price_uom` column migration.
+     `scrubModelTokens` inlined as a local helper (its one real call
+     site was inside this route).
    - Still inline: everything else - the rest of the CPS/cut-sheet route
-     surface (cps-enrich family,
+     surface (~37 more `/api/cut-sheets/*` and `/api/cps/*` routes alone
+     per the last full scan - catalogues, search/search-component,
+     drafts, mappings, queue/extractions/render, discoveries,
+     domains/verify, intelligence metrics/config, admin normalize,
      catalogue-products/documents/bulk-import, cut-sheet-discovery,
-     cps-search/drafts/mappings/queue-admin, user-cutsheets,
-     door-schedule-marks, session-assembly, and more per §5's original
-     proposed layout - re-read that section and re-run a full route scan
-     before picking individual pieces, since none of its line numbers
-     are current anymore).
+     user-cutsheets, door-schedule-marks, session-assembly, and more per
+     §5's original proposed layout - re-read that section and re-run a
+     full route scan before picking individual pieces, since none of
+     its line numbers are current anymore).
 
 For every step, "verified behaviorally identical" concretely means: run the
 extracted module inline via `wrangler dev` against a copy of the worker with
