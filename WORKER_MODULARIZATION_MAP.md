@@ -736,9 +736,14 @@ observable behavior change ever." Order:
      parseAndValidateExtraction (real hoisted function, 2 other call
      sites remaining) newly promoted to an injected dep, same pattern
      as resolveInferenceContract in the prior extraction.
-   - Still inline: the other 2 `/api/sessions/*` routes -
-     auto-generate, preview. Re-scan before picking the next piece -
-     these are scattered non-contiguously, not one block.
+   - ✅ done (2026-09-10): `routes/sessions-auto-generate.js` - POST
+     auto-generate (the "ZERO-TOUCH" full-PDF pipeline). authenticate,
+     extractPdfBookmarks2, extractSinglePage all reuse already-injected
+     deps. generateId3 (real hoisted function, 1 other call site
+     remaining) newly promoted to an injected dep, same pattern as
+     resolveInferenceContract/parseAndValidateExtraction - not renamed,
+     no existing duplicate to consolidate against.
+   - Still inline: the last `/api/sessions/*` route - preview.
 
 ### Additional tracked items (brainstormed 2026-09-10, not yet scheduled)
 
