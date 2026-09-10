@@ -804,9 +804,32 @@ observable behavior change ever." Order:
     GET telemetry/claude-api/recent), immediately followed by the
     still-inline `generateSubmittalHTML` function (not part of this
     extraction).
-    - Not yet started.
+    - ✅ done (2026-09-10): `routes/telemetry.js` - all 5 routes.
+      authenticate the only injected dep. POST /api/telemetry
+      deliberately does not require auth (failure is caught and
+      treated as anonymous) - preserved as-is and covered by a test.
+    - **Step 11 complete**: all 5 telemetry routes extracted.
 
-### Additional tracked items (brainstormed 2026-09-10, not yet scheduled)
+12. **Step 12 (new, post-step-11 scan result, 2026-09-10): the
+    `/api/submittals/*` + `/api/upload/*` cluster.** A fresh scan after
+    step 11 found only 37 route registrations remain in the whole
+    file - these two families sit fully contiguous back-to-back (7
+    routes total: submittals upload/list/retry/get, then upload
+    init/part/complete), immediately followed by
+    `/api/hardware-components/:componentId/select-price`.
+    - ✅ done (2026-09-10): `routes/submittals.js` - all 4
+      `/api/submittals*` routes (upload, list, :id/retry, :id).
+      requireProductAccess imported directly from lib/auth.js;
+      logTelemetryEvent reuses an already-injected dep.
+      dispatchVisionExtraction had all 3 of its call sites inside this
+      extraction (zero remain in the monolith) but was NOT inlined -
+      its own dependency chain through adaptersForEdition is
+      non-trivial, so it was promoted to a new injected dep instead,
+      same treatment as other complex multi-dependency helpers
+      (extractSinglePage, matchComponentToCutSheets).
+    - Remaining in step 12: the `/api/upload/*` cluster (init, part,
+      complete - 3 routes, contiguous, immediately follows where
+      submittals.js's source used to be).
 
 Found while extracting steps 8-9; real, verified duplication/gaps, not
 speculative:
