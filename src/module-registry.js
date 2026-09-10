@@ -59,6 +59,7 @@ import { registerCpsAdminRoutes } from "./routes/cps-admin.js";
 import { registerDoorScheduleMarksRoutes } from "./routes/door-schedule-marks.js";
 import { registerCutSheetIntelligenceRoutes } from "./routes/cut-sheet-intelligence.js";
 import { registerCutSheetDiscoveriesRoutes } from "./routes/cut-sheet-discoveries.js";
+import { registerCutSheetVerifiedRoutes } from "./routes/cut-sheet-verified.js";
 import { authenticate, authenticateCps, requireActiveSubscription, requireProductAccess } from "./lib/auth.js";
 
 /**
@@ -245,4 +246,5 @@ export function registerExtractedModules(router, deps) {
     queueForDiscovery: deps.queueForDiscovery,
     getManufacturerDomains: deps.getManufacturerDomains,
   });
+  registerCutSheetVerifiedRoutes(router, { authenticate, requireProductAccess });
 }
