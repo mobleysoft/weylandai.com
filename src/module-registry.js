@@ -39,6 +39,7 @@ import { registerTakeoffDataRoutes } from "./routes/takeoff-data.js";
 import { registerTakeoffLineItemsRoutes } from "./routes/takeoff-line-items.js";
 import { registerQuotesViewRoutes } from "./routes/quotes-view.js";
 import { registerQuotesGenerateRoutes } from "./routes/quotes-generate.js";
+import { registerHardwareScheduleCandidatesRoutes } from "./routes/hardware-schedule-candidates.js";
 import { authenticate, authenticateCps, requireProductAccess } from "./lib/auth.js";
 
 /**
@@ -50,6 +51,8 @@ import { authenticate, authenticateCps, requireProductAccess } from "./lib/auth.
  *   storeDocumentPdf: Function,
  *   makeDocumentDownloadRoute: Function,
  *   puppeteer: object,
+ *   getSessionStatus: Function,
+ *   getOrRenderPage: Function,
  * }} deps
  *   Real dependencies still owned by legacy-monolith.js (not yet their
  *   own modules) that some of these routes need injected. renderHtmlToPdf/
@@ -91,5 +94,10 @@ export function registerExtractedModules(router, deps) {
     authenticate,
     requireProductAccess,
     puppeteer: deps.puppeteer,
+  });
+  registerHardwareScheduleCandidatesRoutes(router, {
+    authenticate,
+    getSessionStatus: deps.getSessionStatus,
+    getOrRenderPage: deps.getOrRenderPage,
   });
 }
