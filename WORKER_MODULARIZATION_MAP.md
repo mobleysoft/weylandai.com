@@ -651,10 +651,23 @@ observable behavior change ever." Order:
      products/:id w/ allowlisted fields, DELETE products/:id cascading
      to product_documents+product_variants). authenticate the only
      dep - fully self-contained.
-   - Still inline: the `/api/catalogue/documents*` CRUD family,
-     `catalogue/bulk-import`, and the pdf-lib-dependent render route.
-     Re-run a full route scan before picking the next piece; line
-     numbers everywhere in §5 are stale.
+   - ✅ done (2026-09-10): `routes/catalogue-documents.js` - 5 routes
+     (GET documents w/ product_id/document_type filters, POST
+     documents requiring document_url or r2_object_key, PUT
+     documents/:id w/ allowlisted fields, DELETE documents/:id
+     deleting the R2 object then the D1 row, POST bulk-import up to
+     100 entries/call matching-or-creating manufacturer/product/
+     document rows). authenticate the only dep - fully self-contained.
+   - **Step 8 essentially complete.** A full route scan confirms only
+     one CPS/cut-sheet/catalogue route remains inline:
+     `GET /api/cps/catalogues/:catalogueId/pages/:pageNum/render`,
+     blocked on `PDFDocument_default` - a full pdf-lib copy vendored
+     directly into legacy-monolith.js rather than a real npm import
+     (flagged back in the `cps-queue.js` extraction). Untangling that
+     is its own piece: either install `pdf-lib` as a real dependency
+     and re-point this route at it, or inject the vendored symbol like
+     any other still-inline helper. Do that next, then re-scan the
+     whole file for what step 9 (or a renumbered next step) should be.
 
 For every step, "verified behaviorally identical" concretely means: run the
 extracted module inline via `wrangler dev` against a copy of the worker with
