@@ -369,6 +369,43 @@ cluster *names* and *relationships* are the durable part.
      - Verified via 24 tests, full suite, build, `wrangler deploy`
        (failed once, fixed, redeployed clean), and live curl of
        `/api/health`, `/api/version`, `/`, and `POST /api/upload/init`.
+   - **Sub-step (c) of 3 done (2026-09-10) - Cluster A extraction
+     complete for this phase's scope.** Extracted 21 of the remaining
+     32 functions (the stateful save/approve/resolve-contract pipeline)
+     to `src/lib/hardware-extraction-pipeline.js` + `.test.mjs` (31
+     real tests). `legacy-monolith.js`: 142,950 → 141,533 lines.
+     Applying the process fix from sub-step (b)'s near-miss, every
+     function boundary was computed from a verified sorted list of all
+     remaining function-start lines (never manually read), cross-
+     checked with a call-graph transitive-closure script, AND
+     cross-checked against every real top-level name still in
+     `legacy-monolith.js` (not an assumed "known available" list) -
+     the third check caught a real gap the other two would have
+     missed (see below). The full all-79-names sweep ran *before* the
+     first build attempt this time, not after a caught failure.
+     - **11 of the 32 remaining functions stay inline**, two genuinely
+       different reasons: (1) 8 functions transitively entangled with
+       vendored-bundle internals (`PDFDocument_default`, lazy
+       puppeteer/pdf-renderer `__esm` loaders) or with
+       `materializeAffirmedGroup` (a real still-inline function from a
+       different, uncatalogued region) - `loadRenderer`,
+       `extractIsolatedPage`, `extractSinglePage`,
+       `extractWithIsolatedPdfMode`, `savePageExtraction`,
+       `renderRegionAt600DPI2`, `getOrRenderRegionAt600DPI`,
+       `extractCore`; (2) 3 more - `detectTextLayer2`,
+       `getPdfPageCount`, `extractPdfBookmarks2` - found only by the
+       third verification pass: they're thin wrappers around real
+       functions (`detectTextLayer`, `extractPdfBookmarks`) belonging
+       to a substantial, self-contained, never-catalogued
+       "pdf-metadata.js" region (~23502-24752, its own PDF xref/page-
+       tree parser). Both groups are real follow-ups (informally
+       "sub-step (d)" and a separate "pdf-metadata.js extraction"),
+       not force-extracted with awkward dependency injection for names
+       that have no real exports to import.
+     - Live-verified via `/api/health`, `/api/version`, `/`,
+       `POST /api/upload/init` (401, route wiring intact), and
+       `GET /api/sessions/readiness/list` (200, exercises the D1-backed
+       session query path this cluster's functions also use).
 8. **Manufacturer cut-sheet web-discovery engine (Cluster E, ~2,609
    lines).** PDF validation/download/dedup, URL-pattern generation, an
    Allegion-brand-specific registry, robots.txt/Cloudflare-protection
