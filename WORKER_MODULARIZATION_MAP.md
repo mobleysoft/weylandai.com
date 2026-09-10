@@ -578,15 +578,24 @@ observable behavior change ever." Order:
      related draft), POST mappings/affirm-batch (bulk-affirms up to 30
      pages for a component, clears its draft). 5 routes, authenticate is
      the only injected dep.
+   - ✅ done (2026-09-10): `routes/user-cutsheets.js` - GET
+     cutsheets/check (per-user component-hash cache lookup), GET
+     cutsheets/:id/image (streams cached PNG/PDF from R2 w/ ownership
+     check), POST cutsheets (stores a user-affirmed cutsheet from
+     base64 pngData, a copied cached catalogue page PDF, or
+     metadata-only), GET cutsheets (paginated list w/ trade filter).
+     4 routes, authenticate the only injected dep; componentHash
+     inlined locally (its only 2 real call sites were both here) and
+     its orphaned original definition deleted from legacy-monolith.js.
    - Still inline: everything else - the rest of the CPS/cut-sheet route
-     surface (~19 more `/api/cut-sheets/*` and `/api/cps/*` routes alone
+     surface (~15 more `/api/cut-sheets/*` and `/api/cps/*` routes alone
      per the last full scan - queue/extractions/render, discoveries,
      domains/verify, intelligence metrics/config, admin normalize,
      catalogue-products/documents/bulk-import, cut-sheet-discovery,
-     user-cutsheets, door-schedule-marks, session-assembly, and more per
-     §5's original proposed layout - re-read that section and re-run a
-     full route scan before picking individual pieces, since none of its
-     line numbers are current anymore).
+     door-schedule-marks, session-assembly, and more per §5's original
+     proposed layout - re-read that section and re-run a full route
+     scan before picking individual pieces, since none of its line
+     numbers are current anymore).
 
 For every step, "verified behaviorally identical" concretely means: run the
 extracted module inline via `wrangler dev` against a copy of the worker with
