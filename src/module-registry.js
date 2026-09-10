@@ -92,6 +92,7 @@ import { registerSubmittalChatRoutes } from "./routes/submittal-chat.js";
 import { registerHardwareComponentPriceRoutes } from "./routes/hardware-component-price.js";
 import { registerLoginPageRoutes } from "./routes/login-page.js";
 import { registerAppJsRoutes } from "./routes/app-js.js";
+import { registerRootRoutes } from "./routes/root.js";
 import { authenticate, authenticateCps, requireActiveSubscription, requireProductAccess } from "./lib/auth.js";
 
 /**
@@ -391,4 +392,5 @@ export function registerExtractedModules(router, deps) {
   registerHardwareComponentPriceRoutes(router, { authenticate });
   registerLoginPageRoutes(router);
   registerAppJsRoutes(router);
+  registerRootRoutes(router, { WORKER_VERSION: deps.WORKER_VERSION });
 }
