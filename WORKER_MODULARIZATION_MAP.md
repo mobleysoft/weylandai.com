@@ -675,6 +675,34 @@ observable behavior change ever." Order:
      current anymore, so that section needs a full rewrite before it
      can guide further work, not just individual line-number patches.
 
+9. **Step 9 (new, un-numbered in §5 - post-step-8 scan result,
+   2026-09-10): `/api/sessions/*` cluster.** A full-file prefix scan
+   after step 8 found `/api/sessions/*` is now the largest remaining
+   route family: 21 routes, spread non-contiguously across the file
+   (interleaved with hardware-schedule/CPS code from earlier steps).
+   - ✅ done (2026-09-10): `routes/sessions-list.js` - 4 routes (GET
+     sessions list w/ pagination, GET sessions/:sessionId w/ pages +
+     summary, GET sessions/:sessionId/pages/:pageNumber w/ cost
+     estimate, GET sessions/:sessionId/pdf w/ legacy-key R2 fallback).
+     authenticate the only injected dep; listSessions,
+     getSessionWithPages, getExtractedPage, getSessionPdf, and
+     calculateClaudeCost (all single-call-site helpers) inlined
+     locally. Real deliberate non-literal change made here: these 4
+     functions called a bare `jsonResponse(...)` - a second,
+     functionally-identical duplicate of jsonResponse3 that esbuild's
+     bundler produced from duplicate-module inlining, already flagged
+     in lib/json-response.js's own header comment as "real but
+     separate cleanup, not attempted" - all 16 real call sites were
+     mechanically rewritten to the already-imported jsonResponse3
+     instead of carrying a third duplicate into the new module.
+   - Still inline: the other 17 `/api/sessions/*` routes -
+     queue-extraction, extraction-route (GET+POST), finalize-from-job,
+     recent, auto-generate, signed-urls, door-matrix, nomenclature
+     (PUT), position (PUT), door-matrix/:mappingId/verify,
+     discover-cut-sheets, cut-sheet-coverage, preview, assemble,
+     assemble/status, submittal/download. Re-scan before picking the
+     next piece - these are scattered non-contiguously, not one block.
+
 For every step, "verified behaviorally identical" concretely means: run the
 extracted module inline via `wrangler dev` against a copy of the worker with
 only that line range replaced by an import, fire the same representative
