@@ -44,6 +44,7 @@ import { registerHardwareScheduleEnrichmentRoutes } from "./routes/hardware-sche
 import { registerHardwareSchedulePageAffirmRoutes } from "./routes/hardware-schedule-page-affirm.js";
 import { registerHardwareScheduleGenerateRoutes } from "./routes/hardware-schedule-generate.js";
 import { registerHardwareSchedulePageExtractRoutes } from "./routes/hardware-schedule-page-extract.js";
+import { registerHardwareScheduleFinalizeImageRoutes } from "./routes/hardware-schedule-finalize-image.js";
 import { authenticate, authenticateCps, requireActiveSubscription, requireProductAccess } from "./lib/auth.js";
 
 /**
@@ -78,6 +79,8 @@ import { authenticate, authenticateCps, requireActiveSubscription, requireProduc
  *   extractSinglePage: Function,
  *   resolveExtractionContract: Function,
  *   savePageExtraction2: Function,
+ *   buildExtractionResultFromVision: Function,
+ *   persistDoorScheduleResponse: Function,
  * }} deps
  *   Real dependencies still owned by legacy-monolith.js (not yet their
  *   own modules) that some of these routes need injected. renderHtmlToPdf/
@@ -170,5 +173,14 @@ export function registerExtractedModules(router, deps) {
     extractSinglePage: deps.extractSinglePage,
     resolveExtractionContract: deps.resolveExtractionContract,
     savePageExtraction2: deps.savePageExtraction2,
+  });
+  registerHardwareScheduleFinalizeImageRoutes(router, {
+    authenticate,
+    callEdge: deps.callEdge,
+    materializeDseToLineItems: deps.materializeDseToLineItems,
+    transformDoorEntriesToHardwareSets: deps.transformDoorEntriesToHardwareSets,
+    savePageExtraction2: deps.savePageExtraction2,
+    buildExtractionResultFromVision: deps.buildExtractionResultFromVision,
+    persistDoorScheduleResponse: deps.persistDoorScheduleResponse,
   });
 }
