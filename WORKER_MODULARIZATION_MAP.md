@@ -1008,6 +1008,16 @@ observable behavior change ever." Order:
       (HTML/JS content, not API logic - different risk profile than
       everything extracted so far this session).
 
+23. **Step 23 (new, post-step-22, 2026-09-10): `/login` page.**
+    - ✅ done (2026-09-10): `routes/login-page.js` - GET /login (101
+      lines, pure HTML template with an AuthForStandard sign-in
+      widget). Zero injected deps - only `new URL()` and a redirect
+      allowlist regex. Tests include 3 real security-regression cases
+      locking in the same-origin-only open-redirect fix the route's
+      own comments describe.
+    - **Step 23 complete**. Only 2 route registrations remain in the
+      whole file: `/app.js` and `/` (root).
+
 ### Additional tracked items (brainstormed 2026-09-10, not yet scheduled)
 
 Found while extracting steps 8-9; real, verified duplication/gaps, not
