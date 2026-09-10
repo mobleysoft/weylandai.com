@@ -443,14 +443,23 @@ observable behavior change ever." Order:
      same reason as `getSessionStatus` above. `getUnaffirmReason` also
      stays injected — still used by the not-yet-extracted component/group
      affirm routes below.
+   - ✅ done (2026-09-10): `routes/hardware-schedule-page-affirm.js`
+     (component-affirm, group-affirm, extraction-delete "26L Delete-the-
+     Loser", extract-region "26M", group-replace, affirm-all — 6 routes).
+     `validateComponentForAffirm` extracted as a local helper (both real
+     call sites were inside this file's own routes). Seven more shared
+     cluster-wide helpers left as injected deps, same reasoning as
+     `getSessionStatus`: `extractFromPageImage`, `materializeAffirmedGroup`,
+     `unaffirmMaterializedGroup`, `pdfBufferOrNull`, `generateR2StreamUrl`,
+     `isPageInRange`, `renderRegionAt600DPI2` — each has real call sites
+     in routes still inline below.
    - Still inline: extract/start/detect-schedules/status/set-page-range/
      set-table-pages/batch-extract (~148000-149172 — the group with ~20
      unscoped PDF-pipeline dependencies, e.g. extractHardwareSchedule/
      routeExtraction/queuePageExtractionJob; deliberately deferred rather
-     than rushed), the `page/:pageNum` family (extract-image/extraction-
-     contract/extract-result/approve/extract-region/component-affirm/
-     group-affirm/group-replace/affirm-all/extraction-delete,
-     ~149170-151470), generate-submittal/generate-package/extract-affirmed
+     than rushed), the rest of the `page/:pageNum` family (extract-image/
+     extraction-contract/extract-result/approve, ~149170-149690),
+     generate-submittal/generate-package/extract-affirmed
      (~151470-151900), and finalize-image (146198, isolated from the rest
      by the ~1,756-line Stripe/HuntX/econ-data gap noted above — likely
      belongs with a PDF-pipeline module instead of here). Whoever picks
