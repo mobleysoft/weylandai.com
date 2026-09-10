@@ -80,6 +80,7 @@ import { registerMeBridgeRoutes } from "./routes/me-bridge.js";
 import { registerTelemetryRoutes } from "./routes/telemetry.js";
 import { registerSubmittalsRoutes } from "./routes/submittals.js";
 import { registerUploadRoutes } from "./routes/upload.js";
+import { registerBillingRoutes } from "./routes/billing.js";
 import { authenticate, authenticateCps, requireActiveSubscription, requireProductAccess } from "./lib/auth.js";
 
 /**
@@ -120,6 +121,9 @@ import { authenticate, authenticateCps, requireActiveSubscription, requireProduc
  *   errorResponse: Function,
  *   HASCOM_EDGE: string,
  *   dispatchVisionExtraction: Function,
+ *   WEYLAND_PRODUCTS: object,
+ *   CHECKOUT_READY_PRODUCTS: Set,
+ *   stripeRequest: Function,
  *   buildExtractionResultFromVision: Function,
  *   persistDoorScheduleResponse: Function,
  *   extractHardwareSchedule: Function,
@@ -345,5 +349,10 @@ export function registerExtractedModules(router, deps) {
     detectSchedulePages: deps.detectSchedulePages,
     createExtractionSession: deps.createExtractionSession,
     logTelemetryEvent: deps.logTelemetryEvent,
+  });
+  registerBillingRoutes(router, {
+    WEYLAND_PRODUCTS: deps.WEYLAND_PRODUCTS,
+    CHECKOUT_READY_PRODUCTS: deps.CHECKOUT_READY_PRODUCTS,
+    stripeRequest: deps.stripeRequest,
   });
 }

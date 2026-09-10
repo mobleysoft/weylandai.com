@@ -18830,6 +18830,87 @@ function registerUploadRoutes(router2, { authenticate: authenticate2, detectFile
   });
 }
 
+// src/routes/billing.js
+function registerBillingRoutes(router2, { WEYLAND_PRODUCTS: WEYLAND_PRODUCTS2, CHECKOUT_READY_PRODUCTS: CHECKOUT_READY_PRODUCTS2, stripeRequest: stripeRequest2 }) {
+  router2.get("/api/billing/catalog", async (request2, env2) => {
+    const products = [];
+    for (const [productId, cfg] of Object.entries(WEYLAND_PRODUCTS2)) {
+      try {
+        const price = await stripeRequest2(env2, "GET", `/prices/${cfg.priceId}`);
+        products.push({
+          id: productId,
+          checkout_ready: price.active === true,
+          price_id: price.id,
+          unit_amount: price.unit_amount,
+          currency: price.currency,
+          trial_period_days: price.recurring?.trial_period_days ?? null,
+          livemode: price.livemode
+        });
+      } catch (err) {
+        console.error("[Billing] catalog error:", productId, err.message);
+        products.push({ id: productId, checkout_ready: false, blockers: [err.message] });
+      }
+    }
+    return jsonResponse3({ products });
+  });
+  router2.post("/api/billing/checkout/create", async (request2, env2) => {
+    try {
+      const body = await request2.json().catch(() => ({}));
+      const productCfg = WEYLAND_PRODUCTS2[body.product_id];
+      if (!productCfg) {
+        return jsonResponse3({ detail: { message: `unknown product_id: ${body.product_id}` } }, 400);
+      }
+      if (!CHECKOUT_READY_PRODUCTS2.has(body.product_id)) {
+        return jsonResponse3({ detail: { message: `${body.product_id} isn't available for self-checkout yet - email hello@weylandai.com` } }, 409);
+      }
+      const quantity = Math.max(1, Math.min(250, Number.parseInt(body.quantity, 10) || 1));
+      const baseUrl = "https://weylandai.com";
+      const vendyaiResp = await env2.VENDYAI.fetch("https://vendyai-com-worker.internal/api/checkout/sessions", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          venture_id: "weylandai",
+          mode: "subscription",
+          success_url: `${baseUrl}/subscribe?checkout=success&session_id={CHECKOUT_SESSION_ID}`,
+          cancel_url: `${baseUrl}/subscribe?checkout=cancelled`,
+          line_items: [{ price: productCfg.priceId, quantity }],
+          metadata: { product_id: body.product_id, seats: String(quantity) }
+        })
+      });
+      const vendyaiData = await vendyaiResp.json();
+      if (!vendyaiResp.ok) {
+        console.error("[Billing] vendyai checkout create error:", JSON.stringify(vendyaiData));
+        return jsonResponse3({ detail: { message: vendyaiData?.error?.message || "checkout session creation failed" } }, 502);
+      }
+      return jsonResponse3({ checkout_url: vendyaiData.session.url, session_id: vendyaiData.session.id }, 201);
+    } catch (err) {
+      console.error("[Billing] checkout create error:", err.message);
+      return jsonResponse3({ detail: { message: err.message } }, 502);
+    }
+  });
+  router2.get("/api/billing/checkout/status/:session_id", async (request2, env2) => {
+    const sessionId = request2.params?.session_id;
+    if (!sessionId) return jsonResponse3({ status: "unknown" }, 400);
+    try {
+      if (env2.CACHE) {
+        const cached = await env2.CACHE.get(`checkout_status:${sessionId}`);
+        if (cached) {
+          const parsed = JSON.parse(cached);
+          const headers = { "Content-Type": "application/json" };
+          if (parsed.status === "active" && parsed.session_id) {
+            headers["Set-Cookie"] = `weyland_session=${parsed.session_id}; Path=/; Max-Age=2592000; Secure; HttpOnly; SameSite=Lax`;
+          }
+          return new Response(JSON.stringify({ status: parsed.status, quantity: parsed.quantity }), { status: 200, headers });
+        }
+      }
+      return jsonResponse3({ status: "pending" });
+    } catch (err) {
+      console.error("[Billing] status lookup error:", err.message);
+      return jsonResponse3({ status: "pending" });
+    }
+  });
+}
+
 // src/module-registry.js
 function registerExtractedModules(router2, deps) {
   registerHardwareScheduleExportRoutes(router2);
@@ -19024,6 +19105,11 @@ function registerExtractedModules(router2, deps) {
     detectSchedulePages: deps.detectSchedulePages,
     createExtractionSession: deps.createExtractionSession,
     logTelemetryEvent: deps.logTelemetryEvent
+  });
+  registerBillingRoutes(router2, {
+    WEYLAND_PRODUCTS: deps.WEYLAND_PRODUCTS,
+    CHECKOUT_READY_PRODUCTS: deps.CHECKOUT_READY_PRODUCTS,
+    stripeRequest: deps.stripeRequest
   });
 }
 
@@ -166055,62 +166141,6 @@ async function stripeRequest(env2, method, path, params) {
   return data;
 }
 __name(stripeRequest, "stripeRequest");
-router.get("/api/billing/catalog", async (request2, env2) => {
-  const products = [];
-  for (const [productId, cfg] of Object.entries(WEYLAND_PRODUCTS)) {
-    try {
-      const price = await stripeRequest(env2, "GET", `/prices/${cfg.priceId}`);
-      products.push({
-        id: productId,
-        checkout_ready: price.active === true,
-        price_id: price.id,
-        unit_amount: price.unit_amount,
-        currency: price.currency,
-        trial_period_days: price.recurring?.trial_period_days ?? null,
-        livemode: price.livemode
-      });
-    } catch (err) {
-      console.error("[Billing] catalog error:", productId, err.message);
-      products.push({ id: productId, checkout_ready: false, blockers: [err.message] });
-    }
-  }
-  return jsonResponse3({ products });
-});
-router.post("/api/billing/checkout/create", async (request2, env2) => {
-  try {
-    const body = await request2.json().catch(() => ({}));
-    const productCfg = WEYLAND_PRODUCTS[body.product_id];
-    if (!productCfg) {
-      return jsonResponse3({ detail: { message: `unknown product_id: ${body.product_id}` } }, 400);
-    }
-    if (!CHECKOUT_READY_PRODUCTS.has(body.product_id)) {
-      return jsonResponse3({ detail: { message: `${body.product_id} isn't available for self-checkout yet - email hello@weylandai.com` } }, 409);
-    }
-    const quantity = Math.max(1, Math.min(250, Number.parseInt(body.quantity, 10) || 1));
-    const baseUrl = "https://weylandai.com";
-    const vendyaiResp = await env2.VENDYAI.fetch("https://vendyai-com-worker.internal/api/checkout/sessions", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        venture_id: "weylandai",
-        mode: "subscription",
-        success_url: `${baseUrl}/subscribe?checkout=success&session_id={CHECKOUT_SESSION_ID}`,
-        cancel_url: `${baseUrl}/subscribe?checkout=cancelled`,
-        line_items: [{ price: productCfg.priceId, quantity }],
-        metadata: { product_id: body.product_id, seats: String(quantity) }
-      })
-    });
-    const vendyaiData = await vendyaiResp.json();
-    if (!vendyaiResp.ok) {
-      console.error("[Billing] vendyai checkout create error:", JSON.stringify(vendyaiData));
-      return jsonResponse3({ detail: { message: vendyaiData?.error?.message || "checkout session creation failed" } }, 502);
-    }
-    return jsonResponse3({ checkout_url: vendyaiData.session.url, session_id: vendyaiData.session.id }, 201);
-  } catch (err) {
-    console.error("[Billing] checkout create error:", err.message);
-    return jsonResponse3({ detail: { message: err.message } }, 502);
-  }
-});
 router.post("/api/subscription/portal", async (request2, env2) => {
   const { error: error4, user } = await authenticate(request2, env2);
   if (error4)
@@ -166339,27 +166369,6 @@ router.post("/api/webhooks/subscription", async (request2, env2) => {
     return jsonResponse3({ error: "Webhook processing failed" }, 500);
   }
 });
-router.get("/api/billing/checkout/status/:session_id", async (request2, env2) => {
-  const sessionId = request2.params?.session_id;
-  if (!sessionId) return jsonResponse3({ status: "unknown" }, 400);
-  try {
-    if (env2.CACHE) {
-      const cached = await env2.CACHE.get(`checkout_status:${sessionId}`);
-      if (cached) {
-        const parsed = JSON.parse(cached);
-        const headers = { "Content-Type": "application/json" };
-        if (parsed.status === "active" && parsed.session_id) {
-          headers["Set-Cookie"] = `weyland_session=${parsed.session_id}; Path=/; Max-Age=2592000; Secure; HttpOnly; SameSite=Lax`;
-        }
-        return new Response(JSON.stringify({ status: parsed.status, quantity: parsed.quantity }), { status: 200, headers });
-      }
-    }
-    return jsonResponse3({ status: "pending" });
-  } catch (err) {
-    console.error("[Billing] status lookup error:", err.message);
-    return jsonResponse3({ status: "pending" });
-  }
-});
 async function autoEnrichSessionOnSave(sessionId, env2) {
   const compsResult = await env2.DB.prepare(`
     SELECT hc.id, hc.manufacturer, hc.model, hc.finish, hc.catalog_number,
@@ -166490,6 +166499,9 @@ registerExtractedModules(router, {
   errorResponse,
   HASCOM_EDGE,
   dispatchVisionExtraction,
+  WEYLAND_PRODUCTS,
+  CHECKOUT_READY_PRODUCTS,
+  stripeRequest,
   buildExtractionResultFromVision,
   persistDoorScheduleResponse,
   extractHardwareSchedule,
