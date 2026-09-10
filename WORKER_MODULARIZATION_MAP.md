@@ -951,6 +951,20 @@ observable behavior change ever." Order:
       post-deploy.
     - **Step 18 complete**: all 3 system-status routes extracted.
 
+19. **Step 19 (new, post-step-18 scan result, 2026-09-10): the
+    `/api/test/sabp-marker-xyz` + `/api/jobs/:jobId` +
+    `/api/user/tenants` cluster.** Another contiguity-based find (3
+    unrelated-by-name but physically adjacent routes, 41 lines),
+    immediately followed by the WEYLAND_PRODUCTS/stripeRequest/
+    webhook-signature-verification block leading into
+    `/api/webhooks/subscription` (deliberately not touched here - real
+    financial webhook code, same caution as step 13).
+    - ✅ done (2026-09-10): `routes/misc-utility.js` - all 3 routes.
+      authenticate/callEdge/errorResponse all reuse already-injected
+      deps. esbuild's cosmetic `__name(...)` wrapper around the inline
+      isDefault closure stripped.
+    - **Step 19 complete**: all 3 misc-utility routes extracted.
+
 ### Additional tracked items (brainstormed 2026-09-10, not yet scheduled)
 
 Found while extracting steps 8-9; real, verified duplication/gaps, not
