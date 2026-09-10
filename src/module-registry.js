@@ -89,6 +89,7 @@ import { registerSystemStatusRoutes } from "./routes/system-status.js";
 import { registerMiscUtilityRoutes } from "./routes/misc-utility.js";
 import { registerWebhooksSubscriptionRoutes } from "./routes/webhooks-subscription.js";
 import { registerSubmittalChatRoutes } from "./routes/submittal-chat.js";
+import { registerHardwareComponentPriceRoutes } from "./routes/hardware-component-price.js";
 import { authenticate, authenticateCps, requireActiveSubscription, requireProductAccess } from "./lib/auth.js";
 
 /**
@@ -385,4 +386,5 @@ export function registerExtractedModules(router, deps) {
     verifyStripeWebhookSignature: deps.verifyStripeWebhookSignature,
   });
   registerSubmittalChatRoutes(router, { authenticate, logClaudeAPICall: deps.logClaudeAPICall });
+  registerHardwareComponentPriceRoutes(router, { authenticate });
 }
