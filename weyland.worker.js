@@ -29999,14 +29999,6 @@ async function getDiscoveryConfig(env2) {
   return config3;
 }
 
-// src/legacy-monolith.js
-import { Writable } from "node:stream";
-import { Socket } from "node:net";
-import { Socket as Socket2 } from "node:net";
-import { EventEmitter } from "node:events";
-import { Buffer as Buffer2 } from "node:buffer";
-import { Buffer as Buffer3 } from "node:buffer";
-
 // pages/onboarding.js
 function serve_onboarding() {
   return Response.redirect("https://weylandai.com/subscribe", 302);
@@ -30017,7 +30009,5315 @@ function serve_progress() {
   return Response.redirect("https://weylandai.com/", 302);
 }
 
+// src/lib/marketing-pages.js
+var SovereignWeylandRoutes = /* @__PURE__ */ (function() {
+  var ROUTE_LABELS = {
+    onboarding: "ONBOARDING",
+    huntx: "HUNTX",
+    takeoffx: "TAKEOFFX",
+    subx: "SUBX",
+    cutsheetx: "CUTSHEETX",
+    propx: "PROPX",
+    sightx: "SIGHTX",
+    meetingx: "MEETX",
+    qtext: "QTEXT",
+    whyweyland: "WHY WEYLAND",
+    investors: "INVESTORS",
+    venturedeck: "VENTURE DECK",
+    lienx: "LIENX",
+    bidx: "BIDX",
+    coa: "COA",
+    rfax: "RFAX",
+    changeordx: "CHANGEORDX",
+    permitx: "PERMITX",
+    closex: "CLOSEX",
+    notesx: "NOTESX",
+    inspecx: "INSPECX",
+    safetyx: "SAFETYX",
+    survx: "SURVX",
+    specx: "SPECX",
+    drawx: "DRAWX",
+    asbuiltx: "ASBUILTX",
+    leadx: "LEADX",
+    careers: "CAREERS"
+  };
+  function renderNav(current) {
+    var selfAliases = { meetingx: ["meetingx", "meetx"] };
+    var exclude = selfAliases[current] || [current];
+    var links = "";
+    for (var key in ROUTE_LABELS) {
+      if (exclude.indexOf(key) !== -1) continue;
+      links += '<a href="/' + key + '/">' + ROUTE_LABELS[key] + "</a>";
+    }
+    return links;
+  }
+  function serve_huntx() {
+    return new Response('<!doctype html>\n<html lang="en">\n<head>\n  <meta charset="utf-8">\n  <meta name="viewport" content="width=device-width,initial-scale=1">\n  <meta name="theme-color" content="#090a0d">\n  <title>HuntX | Public Construction Opportunity Discovery</title>\n  <style>\n    :root{--bg:#090a0d;--panel:#121419;--panel2:#181b21;--line:#2c3139;--text:#edf0f1;--muted:#9299a3;--gold:#f0b800;--green:#61dfa0;--blue:#66d4ff;--red:#ff756e;--purple:#a78bfa}\n    *{box-sizing:border-box}html,body{margin:0;min-height:100%;background:var(--bg);color:var(--text);font-family:"Avenir Next","Helvetica Neue",sans-serif}\n    body:before{content:"";position:fixed;inset:0;pointer-events:none;background:radial-gradient(circle at 85% 15%,rgba(102,212,255,.12),transparent 28rem),linear-gradient(rgba(255,255,255,.015) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.015) 1px,transparent 1px);background-size:auto,30px 30px,30px 30px}\n    .shell{position:relative;max-width:1500px;margin:auto;padding:20px clamp(16px,3vw,40px) 60px}\n    header{display:flex;align-items:center;justify-content:space-between;gap:15px;margin-bottom:24px}\n    .brand{display:flex;align-items:center;gap:12px;color:var(--text);text-decoration:none}\n    .mark{width:42px;height:42px;display:grid;place-items:center;background:var(--blue);color:var(--bg);font-weight:900}\n    .brand b{display:block;letter-spacing:.16em}\n    .brand small{display:block;color:var(--muted);font:700 9px/1.5 ui-monospace,monospace;letter-spacing:.11em}\n    .nav{display:flex;gap:8px;flex-wrap:wrap}\n    .nav a,.button{border:1px solid var(--line);border-radius:99px;padding:9px 14px;color:var(--text);text-decoration:none;background:transparent;font:750 10px/1 ui-monospace,monospace;letter-spacing:.06em;cursor:pointer;transition:all .2s}\n    .nav a:hover,.button:hover{border-color:var(--blue);color:var(--blue);box-shadow:0 0 15px rgba(102,212,255,.2)}\n    .button.primary{background:var(--blue);border-color:var(--blue);color:var(--bg);font-weight:900}\n    .button:disabled{opacity:.5;cursor:not-allowed}\n    .titlebar{display:flex;justify-content:space-between;align-items:end;gap:25px;margin:35px 0 25px}\n    .eyebrow{color:var(--blue);font:800 11px/1 ui-monospace,monospace;letter-spacing:.18em;text-transform:uppercase}\n    .titlebar h1{font-size:clamp(34px,4.5vw,64px);letter-spacing:-.05em;line-height:1.02;margin:12px 0}\n    .titlebar p{max-width:680px;color:var(--muted);line-height:1.6;margin:0;font-size:16px}\n    .pill{border:1px solid rgba(102,212,255,.4);color:var(--blue);border-radius:99px;padding:10px 15px;font:800 10px/1 ui-monospace,monospace;letter-spacing:.1em;background:rgba(102,212,255,.1)}\n    .filter-bar{display:flex;gap:15px;margin-bottom:24px;flex-wrap:wrap;background:#0e1117;padding:18px 24px;border:1px solid var(--line);border-radius:16px;align-items:center}\n    .search-input{flex:1;min-width:280px;background:#161920;border:1px solid var(--line);border-radius:10px;padding:12px 18px;color:#fff;font-size:15px}\n    .search-input:focus{outline:none;border-color:var(--blue)}\n    select{background:#161920;border:1px solid var(--line);border-radius:10px;padding:12px 18px;color:#fff;font-size:14px;cursor:pointer}\n    .metrics-row{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:28px}\n    .metric-card{background:rgba(18,20,25,.9);border:1px solid var(--line);border-radius:14px;padding:20px}\n    .metric-card span{color:var(--muted);font:700 10px/1 ui-monospace,monospace;letter-spacing:.1em;text-transform:uppercase;display:block}\n    .metric-card strong{font-size:32px;font-weight:900;color:var(--text);margin-top:8px;display:block}\n    .table-card{background:rgba(18,20,25,.94);border:1px solid var(--line);border-radius:18px;overflow:hidden;box-shadow:0 25px 70px rgba(0,0,0,.25);overflow-x:auto}\n    table{width:100%;border-collapse:collapse;font-size:13px}\n    th{text-align:left;color:var(--muted);font:750 10px/1 ui-monospace,monospace;letter-spacing:.1em;padding:16px 20px;background:#0d0f14;border-bottom:2px solid var(--line)}\n    td{padding:14px 20px;border-bottom:1px solid #1f232b;vertical-align:middle}\n    tr:hover td{background:rgba(102,212,255,.04)}\n    .status-badge{font:800 9px ui-monospace,monospace;padding:5px 10px;border-radius:99px;display:inline-block;letter-spacing:.08em;background:rgba(102,212,255,.15);color:var(--blue);border:1px solid rgba(102,212,255,.35)}\n    .val-cell{font-weight:800;color:var(--blue);font-size:14px}\n    .note-card{color:var(--muted);font-size:14px;line-height:1.6}\n    .note-card code{background:#161920;padding:2px 6px;border-radius:4px;color:var(--blue);font-size:13px}\n    @media(max-width:900px){.metrics-row{grid-template-columns:repeat(2,1fr)}.titlebar{flex-direction:column;align-items:flex-start}}\n  </style>\n</head>\n<body>\n  <div class="shell">\n    <header>\n      <a class="brand" href="/"><span class="mark">HX</span><span><b>HUNTX</b><small>OPPORTUNITY DISCOVERY</small></span></a>\n      <nav class="nav">' + renderNav("huntx") + `</nav>
+    </header>
+    <div class="titlebar">
+      <div>
+        <div class="eyebrow">OPPORTUNITY DISCOVERY</div>
+        <h1>HuntX</h1>
+        <p>Pulls live public construction leads directly from state open-data APIs - Texas DOT
+        construction lettings and California school-facility funding releases today, more
+        sources added over time. Every row traces back to its real public source.</p>
+      </div>
+      <a class="button primary" id="signin-btn" href="/login?redirect=/huntx" style="display:none">SIGN IN TO VIEW OPPORTUNITIES</a>
+    </div>
+
+    <div id="app" style="display:none">
+      <div class="filter-bar">
+        <input id="hx-search" class="search-input" type="text" placeholder="Search title, agency, or location...">
+        <select id="hx-source">
+          <option value="">All sources</option>
+          <option value="txdot">Texas DOT (highway/bridge)</option>
+          <option value="ca_opsc">CA school construction funding</option>
+        </select>
+        <button id="hx-refresh-btn" class="button primary">REFRESH FROM SOURCES</button>
+        <span id="hx-status" style="color:var(--muted);font-size:12px"></span>
+      </div>
+      <div class="metrics-row">
+        <div class="metric-card"><span>OPPORTUNITIES LISTED</span><strong id="hx-count">0</strong></div>
+        <div class="metric-card"><span>LAST REFRESHED</span><strong id="hx-last-fetch" style="font-size:16px">Never</strong></div>
+        <div class="metric-card"><span>LIVE SOURCES</span><strong style="font-size:16px">2</strong></div>
+      </div>
+      <div class="table-card">
+        <table>
+          <thead><tr><th>OPPORTUNITY</th><th>AGENCY</th><th>LOCATION</th><th>KEY DATE</th><th>EST. VALUE</th><th>SOURCE</th></tr></thead>
+          <tbody id="hx-body"><tr><td colspan="6" style="color:var(--muted)">Loading...</td></tr></tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="card note-card" id="guest-note" style="background:rgba(18,20,25,.9);border:1px solid var(--line);border-radius:18px;padding:22px">
+      HuntX is available standalone at $799/mo or as part of the SubConP suite. See
+      <code>/pricing</code> for licensing, or sign in above if you already have access.
+    </div>
+  </div>
+  <script src="/assets/authfor-integration-standard.js"></script>
+  <script>
+    const auth = new AuthForStandard({ clientId: 'af_weyland_login', ventureName: 'weylandai.com' });
+    function authHeaders(json) {
+      const t = auth.getToken();
+      const h = t ? { 'Authorization': 'Bearer ' + t } : {};
+      if (json) h['Content-Type'] = 'application/json';
+      return h;
+    }
+    function esc(s) { return String(s == null ? '' : s).replace(/[<>&]/g, c => ({'<':'&lt;','>':'&gt;','&':'&amp;'}[c])); }
+    const SOURCE_LABEL = { txdot: 'TXDOT', ca_opsc: 'CA OPSC' };
+    function fmtMoney(v) { return v ? '$' + Number(v).toLocaleString(undefined, {maximumFractionDigits:0}) : '\u2014'; }
+    function fmtDate(v) { if (!v) return '\u2014'; try { return new Date(v).toLocaleDateString(); } catch(e) { return v; } }
+
+    async function loadOpportunities() {
+      const body = document.getElementById('hx-body');
+      const q = document.getElementById('hx-search').value.trim();
+      const source = document.getElementById('hx-source').value;
+      const params = new URLSearchParams();
+      if (q) params.set('q', q);
+      if (source) params.set('source', source);
+      const res = await fetch('/api/hunt/opportunities?' + params.toString(), { headers: authHeaders() });
+      if (!res.ok) { body.innerHTML = '<tr><td colspan="6" style="color:var(--muted)">Failed to load.</td></tr>'; return; }
+      const data = await res.json();
+      const rows = data.opportunities || [];
+      document.getElementById('hx-count').textContent = rows.length;
+      document.getElementById('hx-last-fetch').textContent = data.lastFetchedAt ? new Date(data.lastFetchedAt).toLocaleString() : 'Never - click Refresh';
+      body.innerHTML = rows.length ? rows.map(r => \`<tr>
+          <td>\${r.detail_url ? \`<a href="\${esc(r.detail_url)}" target="_blank" style="color:var(--text);text-decoration:none">\${esc(r.title)}</a>\` : esc(r.title)}</td>
+          <td>\${esc(r.agency)}</td>
+          <td>\${esc(r.location)}</td>
+          <td>\${fmtDate(r.key_date)}</td>
+          <td class="val-cell">\${fmtMoney(r.estimated_value)}</td>
+          <td><span class="status-badge">\${SOURCE_LABEL[r.source] || esc(r.source)}</span></td>
+        </tr>\`).join('') : '<tr><td colspan="6" style="color:var(--muted)">No opportunities yet - click REFRESH FROM SOURCES.</td></tr>';
+    }
+
+    document.getElementById('hx-refresh-btn').addEventListener('click', async () => {
+      const btn = document.getElementById('hx-refresh-btn');
+      const status = document.getElementById('hx-status');
+      btn.disabled = true;
+      status.textContent = 'Pulling from live public sources...';
+      try {
+        const res = await fetch('/api/hunt/refresh', { method: 'POST', headers: authHeaders(true) });
+        const data = await res.json();
+        if (!res.ok) { status.textContent = 'Error: ' + (data.error || 'refresh failed'); btn.disabled = false; return; }
+        status.textContent = data.upserted + ' opportunities updated.';
+        await loadOpportunities();
+      } catch (e) {
+        status.textContent = 'Error: ' + e.message;
+      }
+      btn.disabled = false;
+    });
+    document.getElementById('hx-search').addEventListener('input', () => { clearTimeout(window._hxT); window._hxT = setTimeout(loadOpportunities, 300); });
+    document.getElementById('hx-source').addEventListener('change', loadOpportunities);
+
+    (async () => {
+      try {
+        const probe = await fetch('/api/hunt/opportunities', { headers: authHeaders() });
+        if (probe.status === 401 || probe.status === 403) {
+          document.getElementById('signin-btn').style.display = 'inline-block';
+          return;
+        }
+        if (probe.status === 402) {
+          document.getElementById('guest-note').innerHTML = 'You\\'re signed in, but your plan doesn\\'t include HuntX yet. See <code>/pricing</code> to add it.';
+          return;
+        }
+        document.getElementById('app').style.display = 'block';
+        document.getElementById('guest-note').style.display = 'none';
+        loadOpportunities();
+      } catch (e) {
+        document.getElementById('signin-btn').style.display = 'inline-block';
+      }
+    })();
+  </script>
+</body>
+</html>
+`, { headers: { "Content-Type": "text/html; charset=UTF-8", "Cache-Control": "public, max-age=60" } });
+  }
+  function serve_takeoffx() {
+    return new Response('<!doctype html>\n<html lang="en">\n<head>\n  <meta charset="utf-8">\n  <meta name="viewport" content="width=device-width,initial-scale=1">\n  <meta name="theme-color" content="#090a0d">\n  <title>TakeoffX | Machine-Vision Vector Blueprint Quantification</title>\n  <style>\n    :root{--bg:#090a0d;--panel:#121419;--panel2:#181b21;--line:#2c3139;--text:#edf0f1;--muted:#9299a3;--gold:#f0b800;--green:#61dfa0;--blue:#66d4ff;--red:#ff756e;--purple:#a78bfa}\n    *{box-sizing:border-box}html,body{margin:0;min-height:100%;background:var(--bg);color:var(--text);font-family:"Avenir Next","Helvetica Neue",sans-serif}\n    body:before{content:"";position:fixed;inset:0;pointer-events:none;background:radial-gradient(circle at 50% 20%,rgba(97,223,160,.12),transparent 28rem),linear-gradient(rgba(255,255,255,.015) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.015) 1px,transparent 1px);background-size:auto,30px 30px,30px 30px}\n    .shell{position:relative;max-width:1500px;margin:auto;padding:20px clamp(16px,3vw,40px) 60px}\n    header{display:flex;align-items:center;justify-content:space-between;gap:15px;margin-bottom:24px}\n    .brand{display:flex;align-items:center;gap:12px;color:var(--text);text-decoration:none}\n    .mark{width:42px;height:42px;display:grid;place-items:center;background:var(--green);color:var(--bg);font-weight:900}\n    .brand b{display:block;letter-spacing:.16em}\n    .brand small{display:block;color:var(--muted);font:700 9px/1.5 ui-monospace,monospace;letter-spacing:.11em}\n    .nav{display:flex;gap:8px;flex-wrap:wrap}\n    .nav a,.button{border:1px solid var(--line);border-radius:99px;padding:9px 14px;color:var(--text);text-decoration:none;background:transparent;font:750 10px/1 ui-monospace,monospace;letter-spacing:.06em;cursor:pointer;transition:all .2s}\n    .nav a:hover,.button:hover{border-color:var(--green);color:var(--green);box-shadow:0 0 15px rgba(97,223,160,.2)}\n    .button.primary{background:var(--green);border-color:var(--green);color:var(--bg);font-weight:900}\n    .titlebar{display:flex;justify-content:space-between;align-items:end;gap:25px;margin:35px 0 25px}\n    .eyebrow{color:var(--green);font:800 11px/1 ui-monospace,monospace;letter-spacing:.18em;text-transform:uppercase}\n    .titlebar h1{font-size:clamp(34px,4.5vw,64px);letter-spacing:-.05em;line-height:1.02;margin:12px 0}\n    .titlebar p{max-width:680px;color:var(--muted);line-height:1.6;margin:0;font-size:16px}\n    .pill{border:1px solid rgba(97,223,160,.4);color:var(--green);border-radius:99px;padding:10px 15px;font:800 10px/1 ui-monospace,monospace;letter-spacing:.1em;background:rgba(97,223,160,.1)}\n    \n    .workspace-grid{display:grid;grid-template-columns:minmax(380px,1.2fr) minmax(320px,.8fr);gap:22px;margin-top:28px}\n    .canvas-card{background:#0b0d12;border:1px solid var(--line);border-radius:18px;padding:22px;box-shadow:0 25px 70px rgba(0,0,0,.3);display:flex;flex-direction:column}\n    .canvas-header{display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid var(--line);padding-bottom:14px;margin-bottom:18px}\n    .canvas-viewport{background:linear-gradient(145deg,#11151d,#0a0c10);border:1px solid #1f2531;border-radius:12px;min-height:480px;position:relative;overflow:hidden;display:flex;align-items:center;justify-content:center;flex:1}\n    \n    .blueprint-grid{position:absolute;inset:0;background-size:40px 40px;background-image:linear-gradient(to right,rgba(97,223,160,.05) 1px,transparent 1px),linear-gradient(to bottom,rgba(97,223,160,.05) 1px,transparent 1px);pointer-events:none}\n    .vector-overlay{z-index:2;width:90%;height:85%;border:2px dashed rgba(97,223,160,.35);border-radius:8px;padding:20px;position:relative;display:grid;grid-template-columns:1fr 1fr;gap:20px}\n    .zone-box{background:rgba(97,223,160,.07);border:1px solid rgba(97,223,160,.3);border-radius:8px;padding:16px;position:relative;transition:all .2s;cursor:pointer}\n    .zone-box:hover{background:rgba(97,223,160,.16);box-shadow:0 0 20px rgba(97,223,160,.25)}\n    .zone-tag{font:800 10px ui-monospace,monospace;color:var(--green);position:absolute;top:10px;right:10px;background:#090a0d;padding:4px 8px;border-radius:4px;border:1px solid var(--green)}\n    \n    .ledger-card{background:rgba(18,20,25,.94);border:1px solid var(--line);border-radius:18px;padding:22px;display:flex;flex-direction:column;justify-content:space-between}\n    .ledger-row{display:flex;justify-content:space-between;padding:14px 0;border-bottom:1px solid #1f232b;align-items:center}\n    .ledger-row span{color:var(--muted);font-size:14px}\n    .ledger-row strong{color:#fff;font-size:15px;font-weight:700}\n    \n    @media(max-width:1000px){.workspace-grid{grid-template-columns:1fr}}\n  </style>\n</head>\n<body>\n  <div class="shell">\n    <header>\n      <a class="brand" href="/"><span class="mark">TX</span><span><b>TAKEOFFX</b><small>MACHINE-VISION TAKEOFF</small></span></a>\n      <nav class="nav">' + renderNav("takeoffx") + '</nav>\n    </header>\n    <div class="titlebar">\n      <div>\n        <div class="eyebrow">MACHINE-VISION TAKEOFF</div>\n        <h1>TakeoffX</h1>\n        <p>Reads door schedules and hardware requirements directly from uploaded project\n        drawings, with confidence scoring and a review step before anything is written to your\n        project record - built to be checked, not blindly trusted.</p>\n      </div>\n      <a class="button primary" href="/login?redirect=/">SIGN IN TO START A TAKEOFF</a>\n    </div>\n    <div class="note-card">\n      TakeoffX is part of the SubConP suite. See <code>/pricing</code> for standalone and bundled\n      licensing, or sign in above if you already have access.\n    </div>\n  </div>\n</body>\n</html>', { headers: { "Content-Type": "text/html; charset=UTF-8", "Cache-Control": "public, max-age=60" } });
+  }
+  function serve_subx() {
+    return new Response('<!doctype html>\n<html lang="en">\n<head>\n  <meta charset="utf-8">\n  <meta name="viewport" content="width=device-width,initial-scale=1">\n  <meta name="theme-color" content="#090a0d">\n  <title>SubX | Cut-Sheet Matching &amp; Submittal Package Automation</title>\n  <style>\n    :root{--bg:#090a0d;--panel:#121419;--panel2:#181b21;--line:#2c3139;--text:#edf0f1;--muted:#9299a3;--gold:#f0b800;--green:#61dfa0;--blue:#66d4ff;--red:#ff756e;--purple:#a78bfa}\n    *{box-sizing:border-box}html,body{margin:0;min-height:100%;background:var(--bg);color:var(--text);font-family:"Avenir Next","Helvetica Neue",sans-serif}\n    body:before{content:"";position:fixed;inset:0;pointer-events:none;background:radial-gradient(circle at 20% 20%,rgba(167,139,242,.12),transparent 28rem),linear-gradient(rgba(255,255,255,.015) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.015) 1px,transparent 1px);background-size:auto,30px 30px,30px 30px}\n    .shell{position:relative;max-width:1500px;margin:auto;padding:20px clamp(16px,3vw,40px) 60px}\n    header{display:flex;align-items:center;justify-content:space-between;gap:15px;margin-bottom:24px}\n    .brand{display:flex;align-items:center;gap:12px;color:var(--text);text-decoration:none}\n    .mark{width:42px;height:42px;display:grid;place-items:center;background:var(--purple);color:var(--bg);font-weight:900}\n    .brand b{display:block;letter-spacing:.16em}\n    .brand small{display:block;color:var(--muted);font:700 9px/1.5 ui-monospace,monospace;letter-spacing:.11em}\n    .nav{display:flex;gap:8px;flex-wrap:wrap}\n    .nav a,.button{border:1px solid var(--line);border-radius:99px;padding:9px 14px;color:var(--text);text-decoration:none;background:transparent;font:750 10px/1 ui-monospace,monospace;letter-spacing:.06em;cursor:pointer;transition:all .2s}\n    .nav a:hover,.button:hover{border-color:var(--purple);color:var(--purple);box-shadow:0 0 15px rgba(167,139,242,.2)}\n    .button.primary{background:var(--purple);border-color:var(--purple);color:var(--bg);font-weight:900}\n    .titlebar{display:flex;justify-content:space-between;align-items:end;gap:25px;margin:35px 0 25px}\n    .eyebrow{color:var(--purple);font:800 11px/1 ui-monospace,monospace;letter-spacing:.18em;text-transform:uppercase}\n    .titlebar h1{font-size:clamp(34px,4.5vw,64px);letter-spacing:-.05em;line-height:1.02;margin:12px 0}\n    .titlebar p{max-width:680px;color:var(--muted);line-height:1.6;margin:0;font-size:16px}\n    .pill{border:1px solid rgba(167,139,242,.4);color:var(--purple);border-radius:99px;padding:10px 15px;font:800 10px/1 ui-monospace,monospace;letter-spacing:.1em;background:rgba(167,139,242,.1)}\n    .table-card{background:rgba(18,20,25,.94);border:1px solid var(--line);border-radius:18px;overflow:hidden;box-shadow:0 25px 70px rgba(0,0,0,.25);margin-bottom:24px}\n    table{width:100%;border-collapse:collapse;font-size:14px}\n    th{text-align:left;color:var(--muted);font:750 10px/1 ui-monospace,monospace;letter-spacing:.1em;padding:16px 20px;background:#0d0f14;border-bottom:2px solid var(--line)}\n    td{padding:16px 20px;border-bottom:1px solid #1f232b;vertical-align:middle}\n    tr:hover td{background:rgba(167,139,242,.04)}\n    .status-badge{font:800 9px ui-monospace,monospace;padding:5px 10px;border-radius:99px;display:inline-block;letter-spacing:.08em}\n    .status-matched{background:rgba(97,223,160,.15);color:var(--green);border:1px solid rgba(97,223,160,.35)}\n    .status-pending{background:rgba(240,184,0,.15);color:var(--gold);border:1px solid rgba(240,184,0,.35)}\n    .note-card{background:rgba(18,20,25,.9);border:1px solid var(--line);border-radius:14px;padding:22px;color:var(--muted);font-size:14px;line-height:1.6}\n    .note-card code{background:#161920;padding:2px 6px;border-radius:4px;color:var(--purple);font-size:13px}\n    @media(max-width:900px){.titlebar{flex-direction:column;align-items:flex-start}}\n  </style>\n</head>\n<body>\n  <div class="shell">\n    <header>\n      <a class="brand" href="/"><span class="mark">SX</span><span><b>SUBX</b><small>CUT-SHEET MATCHING & SUBMITTALS</small></span></a>\n      <nav class="nav">' + renderNav("subx") + '</nav>\n    </header>\n    <div class="titlebar">\n      <div>\n        <div class="eyebrow">SUBMITTAL AUTOMATION</div>\n        <h1>SubX</h1>\n        <p>Extracts hardware and submittal requirements straight from project manuals and\n        specifications, matches them against a real manufacturer cut-sheet catalogue, and\n        assembles a complete submittal compliance package for review before it goes out.\n        Every match keeps its source citation attached.</p>\n      </div>\n      <a class="button primary" href="/login?redirect=/">SIGN IN TO START A SUBMITTAL</a>\n    </div>\n    <div class="note-card">\n      SubX is part of the SubConP suite. See <code>/pricing</code> for standalone and bundled\n      licensing, or sign in above if you already have access.\n    </div>\n  </div>\n</body>\n</html>', { headers: { "Content-Type": "text/html; charset=UTF-8", "Cache-Control": "public, max-age=60" } });
+  }
+  function serve_propx() {
+    return new Response('<!doctype html>\n<html lang="en">\n<head>\n  <meta charset="utf-8">\n  <meta name="viewport" content="width=device-width,initial-scale=1">\n  <meta name="theme-color" content="#090a0d">\n  <title>PropX | WeylandAI</title>\n  <style>\n    :root{--bg:#090a0d;--panel:#121419;--panel2:#181b21;--line:#2c3139;--text:#edf0f1;--muted:#9299a3;--gold:#f0b800;--green:#61dfa0;--blue:#66d4ff;--red:#ff756e}*{box-sizing:border-box}html,body{margin:0;min-height:100%;background:var(--bg);color:var(--text);font-family:"Avenir Next","Helvetica Neue",sans-serif}body:before{content:"";position:fixed;inset:0;pointer-events:none;background:radial-gradient(circle at 10% 5%,rgba(240,184,0,.12),transparent 27rem),linear-gradient(rgba(255,255,255,.014) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.014) 1px,transparent 1px);background-size:auto,30px 30px,30px 30px}.shell{position:relative;max-width:1500px;margin:auto;padding:18px clamp(14px,2.5vw,34px) 40px}header{display:flex;align-items:center;justify-content:space-between;gap:15px;margin-bottom:18px}.brand{display:flex;align-items:center;gap:12px;color:var(--text);text-decoration:none}.mark{width:42px;height:42px;display:grid;place-items:center;background:var(--gold);color:var(--bg);font-weight:900}.brand b{display:block;letter-spacing:.16em}.brand small{display:block;color:var(--muted);font:700 9px/1.5 ui-monospace,monospace;letter-spacing:.11em}.nav{display:flex;gap:7px;flex-wrap:wrap}.nav a,.button{border:1px solid var(--line);border-radius:99px;padding:9px 12px;color:var(--text);text-decoration:none;background:transparent;font:750 10px/1 ui-monospace,monospace;letter-spacing:.06em;cursor:pointer}.nav a:hover,.button:hover{border-color:var(--gold);color:var(--gold)}.button.primary{background:var(--gold);border-color:var(--gold);color:var(--bg)}.titlebar{display:flex;justify-content:space-between;align-items:end;gap:25px;margin:28px 0 18px}.eyebrow{color:var(--gold);font:800 10px/1 ui-monospace,monospace;letter-spacing:.17em}.titlebar h1{font-size:clamp(36px,5vw,72px);letter-spacing:-.055em;line-height:.93;margin:11px 0}.titlebar p{max-width:700px;color:var(--muted);line-height:1.6;margin:0}.pill{white-space:nowrap;border:1px solid rgba(97,223,160,.35);color:var(--green);border-radius:99px;padding:10px 13px;font:800 9px/1 ui-monospace,monospace;letter-spacing:.09em}.layout{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(320px,.65fr);gap:18px}.card{background:rgba(18,20,25,.94);border:1px solid var(--line);border-radius:18px;padding:20px;box-shadow:0 25px 70px rgba(0,0,0,.22)}.card-head{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:16px}.card h2{font-size:17px;margin:0}.meta{color:var(--muted);font:700 9px/1 ui-monospace,monospace;letter-spacing:.08em}.proposal-head{padding:22px;border:1px solid var(--line);background:#0d0f12;border-radius:14px;margin-bottom:14px}.proposal-head h2{font-size:30px;margin:5px 0}.proposal-head p{color:var(--muted);margin:4px 0;font-size:13px}.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:14px}.fact{border-top:1px solid var(--line);padding-top:10px}.fact span{display:block;color:var(--muted);font:700 9px/1.4 ui-monospace,monospace}.fact strong{display:block;font-size:13px;margin-top:3px}table{width:100%;border-collapse:collapse;font-size:12px}th{text-align:left;color:var(--muted);font:750 9px/1 ui-monospace,monospace;letter-spacing:.08em;padding:10px 8px;border-bottom:1px solid var(--line)}td{padding:11px 8px;border-bottom:1px solid #20242a;vertical-align:top}td:last-child,th:last-child{text-align:right}.source{display:block;color:var(--blue);font:700 9px/1.4 ui-monospace,monospace;margin-top:4px}.money{width:95px;background:#0b0d10;color:var(--text);border:1px solid var(--line);border-radius:7px;padding:7px;text-align:right}.total{margin-left:auto;width:min(100%,340px);padding-top:15px}.total div{display:flex;justify-content:space-between;padding:7px 0;color:var(--muted);font-size:13px}.total .grand{border-top:1px solid var(--gold);color:var(--text);font-size:20px;font-weight:800}.warning{margin-top:14px;border-left:2px solid var(--gold);padding:10px 13px;color:var(--muted);font-size:12px;line-height:1.55;background:rgba(240,184,0,.04)}.stack{display:grid;gap:10px}.step{border:1px solid var(--line);border-radius:12px;padding:12px;display:grid;grid-template-columns:31px 1fr;gap:10px}.step b{display:grid;place-items:center;width:30px;height:30px;background:rgba(240,184,0,.11);color:var(--gold);border-radius:8px;font:800 10px ui-monospace,monospace}.step strong{font-size:13px}.step small{display:block;color:var(--muted);margin-top:3px}.source-list{display:grid;gap:8px}.source-item{border:1px solid var(--line);border-radius:11px;padding:11px}.source-item strong{font-size:12px}.source-item span{display:block;color:var(--blue);font:700 9px/1.5 ui-monospace,monospace}.source-item p{color:var(--muted);font-size:11px;line-height:1.45;margin:5px 0 0}.actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:16px}.audit{margin-top:15px;padding-top:14px;border-top:1px solid var(--line);color:var(--muted);font:700 9px/1.7 ui-monospace,monospace}.loading{padding:50px;text-align:center;color:var(--muted)}@media(max-width:900px){.layout{grid-template-columns:1fr}.titlebar{align-items:flex-start;flex-direction:column}.grid{grid-template-columns:1fr}.nav a:nth-child(-n+2){display:none}}@media print{body:before,header,.titlebar,.side,.actions,.warning{display:none!important}.shell{padding:0}.layout{display:block}.card{border:0;box-shadow:none;padding:0}.proposal-head{border:0;padding:0}body{background:#fff;color:#111}td,th{border-color:#ddd}.source,.proposal-head p,.fact span{color:#555}.money{border:0;color:#111;background:#fff}.total div{color:#333}}\n  </style>\n</head>\n<body>\n  <div class="shell">\n    <header><a class="brand" href="/"><span class="mark">PX</span><span><b>PROPX</b><small>PROPOSAL INTELLIGENCE</small></span></a><nav class="nav">' + renderNav("propx") + '</nav>\n    </header>\n    <div class="titlebar">\n      <div>\n        <div class="eyebrow">PROPOSAL INTELLIGENCE</div>\n        <h1>PropX</h1>\n        <p>Builds commercial bid and quote packages from live catalogue pricing and material\n        data, with automated markup and margin protection, so a proposal reflects real supplier\n        pricing instead of a stale spreadsheet.</p>\n      </div>\n      <a class="button primary" href="/login?redirect=/">SIGN IN TO START A PROPOSAL</a>\n    </div>\n    <div class="note-card">\n      PropX is part of the SubConP suite. See <code>/pricing</code> for standalone and bundled\n      licensing, or sign in above if you already have access.\n    </div>\n  </div>\n</body>\n</html>', { headers: { "Content-Type": "text/html; charset=UTF-8", "Cache-Control": "public, max-age=60" } });
+  }
+  function serve_whyweyland() {
+    return new Response('<!doctype html>\n<html lang="en">\n<head>\n  <meta charset="utf-8">\n  <meta name="viewport" content="width=device-width,initial-scale=1">\n  <meta name="theme-color" content="#090a0d">\n  <title>Why WeylandAI? | Sovereign Architecture & Competitive Superiority</title>\n  <style>\n    :root{--bg:#090a0d;--panel:#121419;--line:#2c3139;--text:#edf0f1;--muted:#9299a3;--gold:#f0b800;--green:#61dfa0;--blue:#66d4ff;--red:#ff756e}\n    *{box-sizing:border-box}html,body{margin:0;min-height:100%;background:var(--bg);color:var(--text);font-family:"Avenir Next","Helvetica Neue",sans-serif}\n    body:before{content:"";position:fixed;inset:0;pointer-events:none;background:radial-gradient(circle at 30% 30%,rgba(0,242,255,.1),transparent 30rem),linear-gradient(rgba(255,255,255,.015) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.015) 1px,transparent 1px);background-size:auto,30px 30px,30px 30px}\n    .shell{position:relative;max-width:1400px;margin:auto;padding:20px clamp(16px,3vw,40px) 70px}\n    header{display:flex;align-items:center;justify-content:space-between;gap:15px;margin-bottom:24px}\n    .brand{display:flex;align-items:center;gap:12px;color:var(--text);text-decoration:none}\n    .mark{width:42px;height:42px;display:grid;place-items:center;background:var(--blue);color:var(--bg);font-weight:900}\n    .brand b{display:block;letter-spacing:.16em}\n    .brand small{display:block;color:var(--muted);font:700 9px/1.5 ui-monospace,monospace;letter-spacing:.11em}\n    .nav{display:flex;gap:8px;flex-wrap:wrap}\n    .nav a,.button{border:1px solid var(--line);border-radius:99px;padding:9px 14px;color:var(--text);text-decoration:none;background:transparent;font:750 10px/1 ui-monospace,monospace;letter-spacing:.06em;cursor:pointer;transition:all .2s}\n    .nav a:hover,.button:hover{border-color:var(--blue);color:var(--blue)}\n    .button.primary{background:var(--blue);border-color:var(--blue);color:var(--bg);font-weight:900}\n    \n    .titlebar{text-align:center;margin:45px 0 55px}\n    .eyebrow{color:var(--blue);font:800 11px/1 ui-monospace,monospace;letter-spacing:.18em;text-transform:uppercase}\n    .titlebar h1{font-size:clamp(36px,5vw,64px);letter-spacing:-.05em;line-height:1.05;margin:14px 0}\n    .titlebar p{max-width:760px;color:var(--muted);line-height:1.6;margin:0 auto;font-size:18px}\n\n    .matrix-card{background:rgba(18,20,25,.94);border:1px solid var(--line);border-radius:22px;overflow:hidden;box-shadow:0 30px 80px rgba(0,0,0,.35);margin-bottom:50px}\n    table{width:100%;border-collapse:collapse;font-size:15px}\n    th{text-align:left;padding:20px 24px;background:#0e1117;border-bottom:2px solid var(--line);color:var(--muted);font:800 11px/1 ui-monospace,monospace;letter-spacing:.12em}\n    td{padding:22px 24px;border-bottom:1px solid #1e222b;vertical-align:top;line-height:1.5}\n    tr:hover td{background:rgba(255,255,255,.02)}\n    .weyland-col{background:rgba(0,242,255,.05);border-left:1px solid rgba(0,242,255,.2);border-right:1px solid rgba(0,242,255,.2);font-weight:600}\n    \n    .check-yes{color:var(--green);font-weight:900;font-size:18px;margin-right:8px}\n    .check-no{color:var(--red);font-weight:900;font-size:18px;margin-right:8px}\n    .pill-win{background:rgba(97,223,160,.15);color:var(--green);border:1px solid rgba(97,223,160,.35);padding:4px 10px;border-radius:99px;font:800 9px ui-monospace,monospace;display:inline-block;margin-top:6px}\n\n    .cta-banner{background:linear-gradient(135deg,#12161f,#0a0d14);border:2px solid var(--gold);border-radius:20px;padding:40px;text-align:center;box-shadow:0 0 50px rgba(240,184,0,.2)}\n    .cta-banner h2{font-size:36px;margin:0 0 12px;color:#fff}\n    .cta-banner p{color:var(--muted);max-width:620px;margin:0 auto 26px;font-size:16px}\n  </style>\n</head>\n<body>\n  <div class="shell">\n    <header>\n      <a class="brand" href="/"><span class="mark">WW</span><span><b>WEYLANDAI</b><small>COMPETITIVE SUPERIORITY</small></span></a>\n      <nav class="nav">' + renderNav("whyweyland") + '</nav>\n    </header>\n    <div class="titlebar">\n      <div class="eyebrow">WHY WEYLANDAI</div>\n      <h1>One project spine. Five operating engines.</h1>\n      <p>SubConP is the Subcontractor Operating Package: project discovery, submittals, takeoffs, cut sheets, and proposals operating on one shared project record instead of five disconnected tools.</p>\n    </div>\n    <div class="pill">TAKEOFFX VS. TOGAL.AI ($299/MO, MANUAL COUNTING ONLY)</div>\n    <div class="pill">HUNTX VS. DODGE / CONSTRUCTCONNECT ($6K&ndash;$12K/YEAR)</div>\n    <div class="pill">SIGHTX VS. LUMION PRO / BIM 360 ENTERPRISE</div>\n    <p style="margin-top:30px"><a class="button primary" href="/pricing">SEE FULL PRICING</a></p>\n  </div>\n</body>\n</html>\n', { headers: { "Content-Type": "text/html; charset=UTF-8", "Cache-Control": "public, max-age=60" } });
+  }
+  function serve_venturedeck() {
+    return Response.redirect("https://deck.weyland.onamerica.org", 302);
+  }
+  function serve_investors() {
+    return new Response(`<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#090a0d">
+  <title>Investors | WeylandAI</title>
+  <style>
+    :root{--bg:#090a0d;--panel:#121419;--line:#2c3139;--text:#edf0f1;--muted:#9299a3;--gold:#f0b800;--green:#61dfa0;--blue:#66d4ff;--purple:#a78bfa}
+    *{box-sizing:border-box}html,body{margin:0;min-height:100%;background:var(--bg);color:var(--text);font-family:"Avenir Next","Helvetica Neue",sans-serif}
+    body:before{content:"";position:fixed;inset:0;pointer-events:none;background:radial-gradient(circle at 80% 80%,rgba(102,212,255,.12),transparent 30rem),linear-gradient(rgba(255,255,255,.015) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.015) 1px,transparent 1px);background-size:auto,30px 30px,30px 30px}
+    .shell{position:relative;max-width:1000px;margin:auto;padding:20px clamp(16px,3vw,40px) 60px}
+    header{display:flex;align-items:center;justify-content:space-between;gap:15px;margin-bottom:24px}
+    .brand{display:flex;align-items:center;gap:12px;color:var(--text);text-decoration:none}
+    .mark{width:42px;height:42px;display:grid;place-items:center;background:var(--blue);color:var(--bg);font-weight:900}
+    .brand b{display:block;letter-spacing:.16em}
+    .brand small{display:block;color:var(--muted);font:700 9px/1.5 ui-monospace,monospace;letter-spacing:.11em}
+    .nav{display:flex;gap:8px;flex-wrap:wrap}
+    .nav a,.button{border:1px solid var(--line);border-radius:99px;padding:9px 14px;color:var(--text);text-decoration:none;background:transparent;font:750 10px/1 ui-monospace,monospace;letter-spacing:.06em;cursor:pointer;transition:all .2s}
+    .nav a:hover,.button:hover{border-color:var(--blue);color:var(--blue)}
+    .button.primary{background:var(--blue);border-color:var(--blue);color:var(--bg);font-weight:900}
+    .titlebar{text-align:center;margin:45px 0 50px}
+    .eyebrow{color:var(--blue);font:800 11px/1 ui-monospace,monospace;letter-spacing:.18em;text-transform:uppercase}
+    .titlebar h1{font-size:clamp(32px,4.5vw,52px);letter-spacing:-.04em;line-height:1.08;margin:14px 0}
+    .titlebar p{max-width:700px;color:var(--muted);line-height:1.6;margin:0 auto;font-size:16px}
+    section{margin-top:56px}
+    section h2{font-size:22px;margin:0 0 8px}
+    section > p{color:var(--muted);line-height:1.65;font-size:15px;max-width:680px}
+    .stack-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin-top:22px}
+    .stack-card{background:rgba(18,20,25,.92);border:1px solid var(--line);border-radius:14px;padding:18px 20px}
+    .stack-card .sc-name{font-size:16px;font-weight:800}
+    .stack-card .sc-desc{color:var(--muted);font-size:13px;line-height:1.5;margin-top:6px}
+    .stack-card .sc-price{margin-top:10px;font:800 13px ui-monospace,monospace;color:var(--blue)}
+    .fig-row{display:flex;flex-wrap:wrap;gap:24px;margin-top:22px}
+    .fig{border-left:2px solid var(--blue);padding-left:14px}
+    .fig strong{display:block;font-size:26px;font-weight:900}
+    .fig span{color:var(--muted);font:700 11px/1.6 ui-monospace,monospace;letter-spacing:.04em;text-transform:uppercase}
+    .note{margin-top:14px;color:var(--muted);font-size:13px;line-height:1.6;border-left:2px solid var(--line);padding-left:14px}
+  </style>
+</head>
+<body>
+  <div class="shell">
+    <header>
+      <a class="brand" href="/"><span class="mark">IX</span><span><b>WEYLANDAI</b><small>FOR INVESTORS</small></span></a>
+      <nav class="nav">${renderNav("investors")}</nav>
+    </header>
+    <div class="titlebar">
+      <div class="eyebrow">FOR INVESTORS</div>
+      <h1>Construction bids, generated automatically.</h1>
+      <p>WeylandAI is a small, founder-led team building construction document automation: seven live products that take a project from RFP to submitted bid on one shared project record &mdash; HuntX finds the opportunity, SubX and TakeoffX read the drawings, CutsheetX matches real hardware, PropX drafts the proposal, SightX visualizes the result.</p>
+      <p style="margin-top:24px"><a class="button primary" href="mailto:hello@weylandai.com?subject=Investor%20Inquiry">EMAIL HELLO@WEYLANDAI.COM</a></p>
+    </div>
+
+    <section>
+      <h2>What's live today</h2>
+      <p>Every product below has a working page, a real Stripe price, and can be bought standalone or as the $2,000/mo SubConP bundle.</p>
+      <div class="stack-grid">
+        <div class="stack-card"><div class="sc-name">SightX</div><div class="sc-desc">Spatial project intelligence &amp; 3D walkthrough</div><div class="sc-price">$999/mo</div></div>
+        <div class="stack-card"><div class="sc-name">HuntX</div><div class="sc-desc">Live RFP &amp; permit opportunity crawler</div><div class="sc-price">$799/mo</div></div>
+        <div class="stack-card"><div class="sc-name">SubX</div><div class="sc-desc">Submittal &amp; door-hardware extraction</div><div class="sc-price">$599/mo</div></div>
+        <div class="stack-card"><div class="sc-name">TakeoffX</div><div class="sc-desc">Machine-vision quantity takeoff</div><div class="sc-price">$499/mo</div></div>
+        <div class="stack-card"><div class="sc-name">PropX</div><div class="sc-desc">Submittal-to-proposal generator</div><div class="sc-price">$299/mo</div></div>
+        <div class="stack-card"><div class="sc-name">MeetX</div><div class="sc-desc">Live avatars &amp; chat inside SightX</div><div class="sc-price">$299/mo</div></div>
+        <div class="stack-card"><div class="sc-name">CutsheetX</div><div class="sc-desc">Hardware product &amp; cut-sheet matching</div><div class="sc-price">$199/mo</div></div>
+      </div>
+    </section>
+
+    <section>
+      <h2>The technical bet</h2>
+      <p>TakeoffX's extraction runs on the customer's own Claude Code subscription through a downloadable bridge, not our API meter &mdash; no per-page inference cost on our side, and the customer's drawings never leave their machine except as the results they choose to send back. That's a real cost-structure difference from a per-seat SaaS tool billing every API call.</p>
+    </section>
+
+    <section>
+      <h2>Roadmap: reuse, not reinvention</h2>
+      <p>72 products are scoped across the full platform. Of those, 27 are direct extensions of a live product's existing engine &mdash; same document pipeline, one more document type &mdash; grouped into five packages: SubX Pro (8 extensions), SightX Pro (8), HuntX Pro (4), TakeoffX Pro (1), PropX Pro (1). The rest are genuinely new verticals, not yet built.</p>
+      <div class="fig-row">
+        <div class="fig"><strong>5</strong><span>Live core engines</span></div>
+        <div class="fig"><strong>27</strong><span>Scoped near-term extensions</span></div>
+        <div class="fig"><strong>72</strong><span>Full roadmap</span></div>
+      </div>
+    </section>
+
+    <p class="note">Early-stage: this page intentionally doesn't cite revenue, customer counts, or a valuation &mdash; ask directly and we'll give you the real numbers, not rounded ones.</p>
+  </div>
+</body>
+</html>`, { headers: { "Content-Type": "text/html; charset=UTF-8", "Cache-Control": "public, max-age=60" } });
+  }
+  function renderDocFormPage(cfg) {
+    const fieldsHtml = cfg.fields.map((f) => {
+      const label = `<label>${f.label}</label>`;
+      if (f.type === "textarea") return `<div style="grid-column:1/-1"><label>${f.label}</label><textarea id="df-${f.id}" placeholder="${f.placeholder || ""}"></textarea></div>`;
+      if (f.type === "checkbox") return `<div class="checkline"><input id="df-${f.id}" type="checkbox"><label style="margin:0" for="df-${f.id}">${f.label}</label></div>`;
+      return `<div>${label}<input id="df-${f.id}" type="${f.type || "text"}" placeholder="${f.placeholder || ""}"></div>`;
+    }).join("");
+    return new Response(`<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#090a0d">
+  <title>${cfg.title} | ${cfg.subtitle}</title>
+  <style>
+    :root{--bg:#090a0d;--panel:#121419;--panel2:#181b21;--line:#2c3139;--text:#edf0f1;--muted:#9299a3;--gold:#f0b800;--green:#61dfa0;--blue:#66d4ff;--red:#ff756e;--purple:#a78bfa;--accent:var(--${cfg.accent})}
+    *{box-sizing:border-box}html,body{margin:0;min-height:100%;background:var(--bg);color:var(--text);font-family:"Avenir Next","Helvetica Neue",sans-serif}
+    .shell{position:relative;max-width:900px;margin:auto;padding:20px clamp(16px,3vw,40px) 60px}
+    header{display:flex;align-items:center;justify-content:space-between;gap:15px;margin-bottom:24px}
+    .brand{display:flex;align-items:center;gap:12px;color:var(--text);text-decoration:none}
+    .mark{width:42px;height:42px;display:grid;place-items:center;background:var(--accent);color:var(--bg);font-weight:900}
+    .brand b{display:block;letter-spacing:.16em}
+    .brand small{display:block;color:var(--muted);font:700 9px/1.5 ui-monospace,monospace;letter-spacing:.11em}
+    .nav{display:flex;gap:8px;flex-wrap:wrap}
+    .nav a,.button{border:1px solid var(--line);border-radius:99px;padding:9px 14px;color:var(--text);text-decoration:none;background:transparent;font:750 10px/1 ui-monospace,monospace;letter-spacing:.06em;cursor:pointer;transition:all .2s}
+    .nav a:hover,.button:hover{border-color:var(--accent);color:var(--accent)}
+    .button.primary{background:var(--accent);border-color:var(--accent);color:var(--bg);font-weight:900}
+    .button:disabled{opacity:.5;cursor:not-allowed}
+    .titlebar{margin:35px 0 25px}
+    .eyebrow{color:var(--accent);font:800 11px/1 ui-monospace,monospace;letter-spacing:.18em;text-transform:uppercase}
+    .titlebar h1{font-size:clamp(30px,4.5vw,48px);letter-spacing:-.04em;margin:12px 0}
+    .titlebar p{max-width:640px;color:var(--muted);line-height:1.6;margin:0;font-size:15px}
+    .card{background:rgba(18,20,25,.94);border:1px solid var(--line);border-radius:16px;padding:22px;margin-bottom:18px}
+    .form-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px}
+    label{display:block;color:var(--muted);font:750 10px/1 ui-monospace,monospace;letter-spacing:.08em;margin-bottom:8px}
+    input,textarea{width:100%;padding:11px;background:var(--panel2);border:1px solid var(--line);border-radius:8px;color:var(--text);font-size:14px;box-sizing:border-box;font-family:inherit}
+    textarea{min-height:70px;resize:vertical}
+    input:focus,textarea:focus{outline:none;border-color:var(--accent)}
+    .checkline{display:flex;align-items:center;gap:8px;grid-column:1/-1}
+    .checkline input{width:auto}
+    .step-log{margin-top:14px;color:var(--muted);font-size:13px}
+    .step-log .ok{color:var(--green)}
+    .step-log .err{color:var(--red)}
+    .note-card{color:var(--muted);font-size:14px;line-height:1.6}
+    .note-card code{background:#161920;padding:2px 6px;border-radius:4px;color:var(--accent);font-size:13px}
+    .result-row{display:flex;justify-content:space-between;align-items:center;gap:14px;flex-wrap:wrap}
+  </style>
+</head>
+<body>
+  <div class="shell">
+    <header>
+      <a class="brand" href="/"><span class="mark">${cfg.markInitials}</span><span><b>${cfg.productName}</b><small>${cfg.subtitle}</small></span></a>
+      <nav class="nav">${renderNav(cfg.slug)}</nav>
+    </header>
+    <div class="titlebar">
+      <div class="eyebrow">${cfg.subtitle}</div>
+      <h1>${cfg.title}</h1>
+      <p>${cfg.description}</p>
+      <a class="button primary" id="signin-btn" href="/login?redirect=/${cfg.slug}" style="display:none">SIGN IN</a>
+    </div>
+
+    <div id="app" style="display:none">
+      <div class="card">
+        <div class="form-grid">${fieldsHtml}</div>
+        <button id="df-generate-btn" class="button primary" style="height:42px;margin-top:16px">${cfg.buttonLabel || "GENERATE"}</button>
+        <div class="step-log" id="df-log"></div>
+      </div>
+      <div class="card" id="df-result" style="display:none">
+        <div class="result-row">
+          <span>Generated.</span>
+          <a id="df-download" class="button primary" href="#" target="_blank">DOWNLOAD PDF</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="card note-card" id="guest-note">${cfg.priceNote}</div>
+  </div>
+  <script src="/assets/authfor-integration-standard.js"></script>
+  <script>
+    const auth = new AuthForStandard({ clientId: 'af_weyland_login', ventureName: 'weylandai.com' });
+    function authHeaders(json) {
+      const t = auth.getToken();
+      const h = t ? { 'Authorization': 'Bearer ' + t } : {};
+      if (json) h['Content-Type'] = 'application/json';
+      return h;
+    }
+    const FIELD_IDS = ${JSON.stringify(cfg.fields.map((f) => ({ id: f.id, type: f.type || "text" })))};
+    const REQUIRED = ${JSON.stringify(cfg.required || [])};
+    const log = document.getElementById('df-log');
+    function logLine(msg, cls) { const d = document.createElement('div'); if (cls) d.className = cls; d.textContent = msg; log.appendChild(d); }
+
+    document.getElementById('df-generate-btn').addEventListener('click', async () => {
+      const btn = document.getElementById('df-generate-btn');
+      log.innerHTML = '';
+      document.getElementById('df-result').style.display = 'none';
+      const payload = {};
+      FIELD_IDS.forEach(f => {
+        const el = document.getElementById('df-' + f.id);
+        payload[f.id] = f.type === 'checkbox' ? el.checked : el.value.trim();
+      });
+      const missing = REQUIRED.filter(id => !payload[id]);
+      if (missing.length) { logLine('Required: ' + missing.join(', '), 'err'); return; }
+      btn.disabled = true;
+      logLine('Generating...');
+      try {
+        const res = await fetch('${cfg.apiPath}', { method: 'POST', headers: authHeaders(true), body: JSON.stringify(payload) });
+        const data = await res.json();
+        if (!res.ok) { logLine('Error: ' + (data.error && (data.error.message || data.error) || 'generation failed'), 'err'); btn.disabled = false; return; }
+        logLine('Done.', 'ok');
+        document.getElementById('df-download').href = data.downloadUrl;
+        document.getElementById('df-result').style.display = 'block';
+      } catch (e) {
+        logLine('Error: ' + e.message, 'err');
+      }
+      btn.disabled = false;
+    });
+
+    (async () => {
+      try {
+        const probe = await fetch('${cfg.apiPath}', { method: 'POST', headers: authHeaders(true), body: JSON.stringify({}) });
+        if (probe.status === 401 || probe.status === 403) {
+          document.getElementById('signin-btn').style.display = 'inline-block';
+          return;
+        }
+        if (probe.status === 402) {
+          document.getElementById('guest-note').innerHTML = 'You\\'re signed in, but your plan doesn\\'t include ${cfg.title} yet. See <code>/pricing</code> to add it.';
+          return;
+        }
+        document.getElementById('app').style.display = 'block';
+        document.getElementById('guest-note').style.display = 'none';
+      } catch (e) {
+        document.getElementById('signin-btn').style.display = 'inline-block';
+      }
+    })();
+  </script>
+</body>
+</html>`, { headers: { "Content-Type": "text/html; charset=UTF-8", "Cache-Control": "public, max-age=60" } });
+  }
+  function serve_lienx() {
+    return new Response(`<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#090a0d">
+  <title>LienX | Lien Waiver Generator</title>
+  <style>
+    :root{--bg:#090a0d;--panel:#121419;--panel2:#181b21;--line:#2c3139;--text:#edf0f1;--muted:#9299a3;--gold:#f0b800;--green:#61dfa0;--blue:#66d4ff;--red:#ff756e}
+    *{box-sizing:border-box}html,body{margin:0;min-height:100%;background:var(--bg);color:var(--text);font-family:"Avenir Next","Helvetica Neue",sans-serif}
+    .shell{position:relative;max-width:900px;margin:auto;padding:20px clamp(16px,3vw,40px) 60px}
+    header{display:flex;align-items:center;justify-content:space-between;gap:15px;margin-bottom:24px}
+    .brand{display:flex;align-items:center;gap:12px;color:var(--text);text-decoration:none}
+    .mark{width:42px;height:42px;display:grid;place-items:center;background:var(--red);color:var(--bg);font-weight:900}
+    .brand b{display:block;letter-spacing:.16em}
+    .brand small{display:block;color:var(--muted);font:700 9px/1.5 ui-monospace,monospace;letter-spacing:.11em}
+    .nav{display:flex;gap:8px;flex-wrap:wrap}
+    .nav a,.button{border:1px solid var(--line);border-radius:99px;padding:9px 14px;color:var(--text);text-decoration:none;background:transparent;font:750 10px/1 ui-monospace,monospace;letter-spacing:.06em;cursor:pointer;transition:all .2s}
+    .nav a:hover,.button:hover{border-color:var(--red);color:var(--red)}
+    .button.primary{background:var(--red);border-color:var(--red);color:var(--bg);font-weight:900}
+    .button:disabled{opacity:.5;cursor:not-allowed}
+    .titlebar{margin:35px 0 25px}
+    .eyebrow{color:var(--red);font:800 11px/1 ui-monospace,monospace;letter-spacing:.18em;text-transform:uppercase}
+    .titlebar h1{font-size:clamp(30px,4.5vw,48px);letter-spacing:-.04em;margin:12px 0}
+    .titlebar p{max-width:620px;color:var(--muted);line-height:1.6;margin:0;font-size:15px}
+    .card{background:rgba(18,20,25,.94);border:1px solid var(--line);border-radius:16px;padding:22px;margin-bottom:18px}
+    .form-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px}
+    label{display:block;color:var(--muted);font:750 10px/1 ui-monospace,monospace;letter-spacing:.08em;margin-bottom:8px}
+    input,select,textarea{width:100%;padding:11px;background:var(--panel2);border:1px solid var(--line);border-radius:8px;color:var(--text);font-size:14px;box-sizing:border-box;font-family:inherit}
+    textarea{min-height:60px;resize:vertical}
+    input:focus,select:focus,textarea:focus{outline:none;border-color:var(--red)}
+    .step-log{margin-top:14px;color:var(--muted);font-size:13px}
+    .step-log .ok{color:var(--green)}
+    .step-log .err{color:var(--red)}
+    .note-card{color:var(--muted);font-size:14px;line-height:1.6}
+    .note-card code{background:#161920;padding:2px 6px;border-radius:4px;color:var(--red);font-size:13px}
+    .result-row{display:flex;justify-content:space-between;align-items:center;gap:14px;flex-wrap:wrap}
+  </style>
+</head>
+<body>
+  <div class="shell">
+    <header>
+      <a class="brand" href="/"><span class="mark">LX</span><span><b>LIENX</b><small>LIEN WAIVER GENERATOR</small></span></a>
+      <nav class="nav">${renderNav("lienx")}</nav>
+    </header>
+    <div class="titlebar">
+      <div class="eyebrow">LIEN WAIVER GENERATOR</div>
+      <h1>LienX</h1>
+      <p>Generates a general-form lien waiver from real project and payment details. Not a substitute for your state's exact statutory form &mdash; the generated PDF says so.</p>
+      <a class="button primary" id="signin-btn" href="/login?redirect=/lienx" style="display:none">SIGN IN</a>
+    </div>
+
+    <div id="app" style="display:none">
+      <div class="card">
+        <div class="form-grid">
+          <div>
+            <label>WAIVER TYPE</label>
+            <select id="lx-type">
+              <option value="conditional_progress">Conditional &mdash; Progress Payment</option>
+              <option value="unconditional_progress">Unconditional &mdash; Progress Payment</option>
+              <option value="conditional_final">Conditional &mdash; Final Payment</option>
+              <option value="unconditional_final">Unconditional &mdash; Final Payment</option>
+            </select>
+          </div>
+          <div><label>AMOUNT</label><input id="lx-amount" type="number" min="0" step="0.01" placeholder="0.00"></div>
+          <div><label>THROUGH DATE</label><input id="lx-through-date" type="date"></div>
+        </div>
+        <div class="form-grid" style="margin-top:14px">
+          <div><label>CLAIMANT (YOU)</label><input id="lx-claimant-name" type="text" placeholder="Your company name"></div>
+          <div><label>CLAIMANT ADDRESS</label><input id="lx-claimant-address" type="text"></div>
+        </div>
+        <div class="form-grid" style="margin-top:14px">
+          <div><label>OWNER</label><input id="lx-owner-name" type="text" placeholder="Property owner / GC"></div>
+          <div><label>PROJECT NAME</label><input id="lx-project-name" type="text"></div>
+        </div>
+        <div style="margin-top:14px">
+          <label>PROJECT ADDRESS</label>
+          <input id="lx-project-address" type="text" placeholder="Job site address">
+        </div>
+        <div style="margin-top:14px">
+          <label>EXCEPTIONS (OPTIONAL)</label>
+          <textarea id="lx-exceptions" placeholder="Any disputed amounts or items excluded from this waiver"></textarea>
+        </div>
+        <button id="lx-generate-btn" class="button primary" style="height:42px;margin-top:16px">GENERATE WAIVER</button>
+        <div class="step-log" id="lx-log"></div>
+      </div>
+
+      <div class="card" id="lx-result" style="display:none">
+        <div class="result-row">
+          <span>Waiver generated.</span>
+          <a id="lx-download" class="button primary" href="#" target="_blank">DOWNLOAD PDF</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="card note-card" id="guest-note">
+      LienX is available standalone at $99/mo or as part of PropX Pro. See
+      <code>/pricing</code> for licensing, or sign in above if you already have access.
+    </div>
+  </div>
+  <script src="/assets/authfor-integration-standard.js"></script>
+  <script>
+    const auth = new AuthForStandard({ clientId: 'af_weyland_login', ventureName: 'weylandai.com' });
+    function authHeaders(json) {
+      const t = auth.getToken();
+      const h = t ? { 'Authorization': 'Bearer ' + t } : {};
+      if (json) h['Content-Type'] = 'application/json';
+      return h;
+    }
+    const log = document.getElementById('lx-log');
+    function logLine(msg, cls) { const d = document.createElement('div'); if (cls) d.className = cls; d.textContent = msg; log.appendChild(d); }
+
+    document.getElementById('lx-generate-btn').addEventListener('click', async () => {
+      const btn = document.getElementById('lx-generate-btn');
+      log.innerHTML = '';
+      document.getElementById('lx-result').style.display = 'none';
+      const payload = {
+        waiverType: document.getElementById('lx-type').value,
+        amount: Number(document.getElementById('lx-amount').value) || 0,
+        throughDate: document.getElementById('lx-through-date').value,
+        claimantName: document.getElementById('lx-claimant-name').value.trim(),
+        claimantAddress: document.getElementById('lx-claimant-address').value.trim(),
+        ownerName: document.getElementById('lx-owner-name').value.trim(),
+        projectName: document.getElementById('lx-project-name').value.trim(),
+        projectAddress: document.getElementById('lx-project-address').value.trim(),
+        exceptionsText: document.getElementById('lx-exceptions').value.trim()
+      };
+      if (!payload.claimantName || !payload.projectAddress) { logLine('Claimant name and project address are required.', 'err'); return; }
+      btn.disabled = true;
+      logLine('Generating waiver...');
+      try {
+        const res = await fetch('/api/lien-waivers/generate', { method: 'POST', headers: authHeaders(true), body: JSON.stringify(payload) });
+        const data = await res.json();
+        if (!res.ok) { logLine('Error: ' + (data.error && (data.error.message || data.error) || 'generation failed'), 'err'); btn.disabled = false; return; }
+        logLine('Done.', 'ok');
+        document.getElementById('lx-download').href = data.downloadUrl;
+        document.getElementById('lx-result').style.display = 'block';
+      } catch (e) {
+        logLine('Error: ' + e.message, 'err');
+      }
+      btn.disabled = false;
+    });
+
+    (async () => {
+      try {
+        const probe = await fetch('/api/lien-waivers/generate', { method: 'POST', headers: authHeaders(true), body: JSON.stringify({}) });
+        if (probe.status === 401 || probe.status === 403) {
+          document.getElementById('signin-btn').style.display = 'inline-block';
+          return;
+        }
+        if (probe.status === 402) {
+          document.getElementById('guest-note').innerHTML = 'You\\'re signed in, but your plan doesn\\'t include LienX yet. See <code>/pricing</code> to add it.';
+          return;
+        }
+        document.getElementById('app').style.display = 'block';
+        document.getElementById('guest-note').style.display = 'none';
+      } catch (e) {
+        document.getElementById('signin-btn').style.display = 'inline-block';
+      }
+    })();
+  </script>
+</body>
+</html>`, { headers: { "Content-Type": "text/html; charset=UTF-8", "Cache-Control": "public, max-age=60" } });
+  }
+  function serve_bidx() {
+    return new Response(`<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#090a0d">
+  <title>BidX | Bid Package Assembler</title>
+  <style>
+    :root{--bg:#090a0d;--panel:#121419;--panel2:#181b21;--line:#2c3139;--text:#edf0f1;--muted:#9299a3;--gold:#f0b800;--green:#61dfa0;--blue:#66d4ff;--red:#ff756e}
+    *{box-sizing:border-box}html,body{margin:0;min-height:100%;background:var(--bg);color:var(--text);font-family:"Avenir Next","Helvetica Neue",sans-serif}
+    .shell{position:relative;max-width:1000px;margin:auto;padding:20px clamp(16px,3vw,40px) 60px}
+    header{display:flex;align-items:center;justify-content:space-between;gap:15px;margin-bottom:24px}
+    .brand{display:flex;align-items:center;gap:12px;color:var(--text);text-decoration:none}
+    .mark{width:42px;height:42px;display:grid;place-items:center;background:var(--blue);color:var(--bg);font-weight:900}
+    .brand b{display:block;letter-spacing:.16em}
+    .brand small{display:block;color:var(--muted);font:700 9px/1.5 ui-monospace,monospace;letter-spacing:.11em}
+    .nav{display:flex;gap:8px;flex-wrap:wrap}
+    .nav a,.button{border:1px solid var(--line);border-radius:99px;padding:9px 14px;color:var(--text);text-decoration:none;background:transparent;font:750 10px/1 ui-monospace,monospace;letter-spacing:.06em;cursor:pointer;transition:all .2s}
+    .nav a:hover,.button:hover{border-color:var(--blue);color:var(--blue)}
+    .button.primary{background:var(--blue);border-color:var(--blue);color:var(--bg);font-weight:900}
+    .button:disabled{opacity:.5;cursor:not-allowed}
+    .titlebar{margin:35px 0 25px}
+    .eyebrow{color:var(--blue);font:800 11px/1 ui-monospace,monospace;letter-spacing:.18em;text-transform:uppercase}
+    .titlebar h1{font-size:clamp(30px,4.5vw,48px);letter-spacing:-.04em;margin:12px 0}
+    .titlebar p{max-width:660px;color:var(--muted);line-height:1.6;margin:0;font-size:15px}
+    .card{background:rgba(18,20,25,.94);border:1px solid var(--line);border-radius:16px;padding:22px;margin-bottom:18px}
+    .section-label{color:var(--blue);font:800 10px/1 ui-monospace,monospace;letter-spacing:.1em;text-transform:uppercase;margin-bottom:14px;display:block}
+    .form-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px}
+    label{display:block;color:var(--muted);font:750 10px/1 ui-monospace,monospace;letter-spacing:.08em;margin-bottom:8px}
+    input,select,textarea{width:100%;padding:11px;background:var(--panel2);border:1px solid var(--line);border-radius:8px;color:var(--text);font-size:14px;box-sizing:border-box;font-family:inherit}
+    textarea{min-height:60px;resize:vertical}
+    input:focus,select:focus,textarea:focus{outline:none;border-color:var(--blue)}
+    .checkline{display:flex;align-items:center;gap:8px;margin-top:6px}
+    .checkline input{width:auto}
+    table{width:100%;border-collapse:collapse;font-size:13px;margin-top:6px}
+    th{text-align:left;color:var(--muted);font:750 9px/1 ui-monospace,monospace;letter-spacing:.08em;padding:8px 6px;border-bottom:1px solid var(--line)}
+    td{padding:6px;border-bottom:1px solid #20242a}
+    .li-remove{background:none;border:1px solid var(--line);color:var(--red);border-radius:6px;width:28px;height:28px;cursor:pointer}
+    .totals-preview{display:flex;justify-content:flex-end;gap:22px;margin-top:14px;font-size:13px;color:var(--muted)}
+    .totals-preview b{color:var(--text);font-size:15px}
+    .step-log{margin-top:14px;color:var(--muted);font-size:13px}
+    .step-log .ok{color:var(--green)}
+    .step-log .err{color:var(--red)}
+    .note-card{color:var(--muted);font-size:14px;line-height:1.6}
+    .note-card code{background:#161920;padding:2px 6px;border-radius:4px;color:var(--blue);font-size:13px}
+    .result-row{display:flex;justify-content:space-between;align-items:center;gap:14px;flex-wrap:wrap}
+    .quote-total{font-size:20px;font-weight:900;color:var(--green)}
+  </style>
+</head>
+<body>
+  <div class="shell">
+    <header>
+      <a class="brand" href="/"><span class="mark">BX</span><span><b>BIDX</b><small>BID PACKAGE ASSEMBLER</small></span></a>
+      <nav class="nav">${renderNav("bidx")}</nav>
+    </header>
+    <div class="titlebar">
+      <div class="eyebrow">BID PACKAGE ASSEMBLER</div>
+      <h1>BidX</h1>
+      <p>Assembles a priced bid package &mdash; scope, bid bond, addenda acknowledgment, and terms &mdash; into a signature-ready PDF. Works with or without a SubX submittal behind it.</p>
+      <a class="button primary" id="signin-btn" href="/login?redirect=/bidx" style="display:none">SIGN IN</a>
+    </div>
+
+    <div id="app" style="display:none">
+      <div class="card">
+        <span class="section-label">PROJECT &amp; OWNER</span>
+        <div class="form-grid">
+          <div><label>OWNER / AWARDING AUTHORITY</label><input id="bx-owner" type="text"></div>
+          <div><label>PROJECT NAME</label><input id="bx-project-name" type="text"></div>
+          <div><label>BID DUE DATE</label><input id="bx-bid-due" type="date"></div>
+        </div>
+        <div style="margin-top:14px"><label>PROJECT ADDRESS</label><input id="bx-project-address" type="text"></div>
+      </div>
+
+      <div class="card">
+        <span class="section-label">PRICED SCOPE</span>
+        <table id="bx-li-table">
+          <thead><tr><th>Description</th><th>Qty</th><th>Unit Price</th><th>Amount</th><th></th></tr></thead>
+          <tbody id="bx-li-body"></tbody>
+        </table>
+        <button id="bx-li-add" class="button" type="button" style="margin-top:10px">+ ADD LINE</button>
+        <div class="totals-preview"><div>SUBTOTAL <b id="bx-subtotal-preview">$0.00</b></div></div>
+      </div>
+
+      <div class="card">
+        <span class="section-label">BID REQUIREMENTS &amp; TERMS</span>
+        <div class="form-grid">
+          <div><label>TAX RATE (%)</label><input id="bx-tax-rate" type="number" value="0" min="0" step="0.01"></div>
+          <div><label>BID BOND %</label><input id="bx-bond-percent" type="number" min="0" step="0.1" placeholder="e.g. 10"></div>
+          <div><label>ADDENDA ACKNOWLEDGED</label><input id="bx-addenda" type="text" placeholder="e.g. Addendum 1, 2"></div>
+        </div>
+        <div class="checkline"><input id="bx-bond-required" type="checkbox"><label style="margin:0" for="bx-bond-required">Bid bond required by this solicitation</label></div>
+        <div style="margin-top:14px"><label>EXCLUSIONS / TERMS (OPTIONAL)</label><textarea id="bx-exclusions"></textarea></div>
+        <button id="bx-generate-btn" class="button primary" style="height:42px;margin-top:16px">GENERATE BID PACKAGE</button>
+        <div class="step-log" id="bx-log"></div>
+      </div>
+
+      <div class="card" id="bx-result" style="display:none">
+        <div class="result-row">
+          <div id="bx-summary"></div>
+          <a id="bx-download" class="button primary" href="#" target="_blank">DOWNLOAD PDF</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="card note-card" id="guest-note">
+      BidX is available standalone at $249/mo or as part of PropX Pro. See
+      <code>/pricing</code> for licensing, or sign in above if you already have access.
+    </div>
+  </div>
+  <script src="/assets/authfor-integration-standard.js"></script>
+  <script>
+    const auth = new AuthForStandard({ clientId: 'af_weyland_login', ventureName: 'weylandai.com' });
+    function authHeaders(json) {
+      const t = auth.getToken();
+      const h = t ? { 'Authorization': 'Bearer ' + t } : {};
+      if (json) h['Content-Type'] = 'application/json';
+      return h;
+    }
+    function esc(s) { return String(s == null ? '' : s).replace(/[<>&]/g, c => ({'<':'&lt;','>':'&gt;','&':'&amp;'}[c])); }
+    const log = document.getElementById('bx-log');
+    function logLine(msg, cls) { const d = document.createElement('div'); if (cls) d.className = cls; d.textContent = msg; log.appendChild(d); }
+
+    function addLiRow() {
+      const tbody = document.getElementById('bx-li-body');
+      const tr = document.createElement('tr');
+      tr.innerHTML = \`
+        <td><input class="li-desc" type="text"></td>
+        <td><input class="li-qty" type="number" min="0" value="1" style="width:64px"></td>
+        <td><input class="li-price" type="number" min="0" step="0.01" value="0" style="width:90px"></td>
+        <td class="li-amount">$0.00</td>
+        <td><button class="li-remove" type="button">&times;</button></td>\`;
+      tbody.appendChild(tr);
+      tr.querySelector('.li-remove').addEventListener('click', () => { tr.remove(); recalcTotals(); });
+      tr.querySelectorAll('.li-qty, .li-price').forEach(inp => inp.addEventListener('input', recalcTotals));
+      recalcTotals();
+    }
+    function recalcTotals() {
+      let subtotal = 0;
+      document.querySelectorAll('#bx-li-body tr').forEach(tr => {
+        const qty = Number(tr.querySelector('.li-qty').value) || 0;
+        const price = Number(tr.querySelector('.li-price').value) || 0;
+        const amount = qty * price;
+        tr.querySelector('.li-amount').textContent = '$' + amount.toLocaleString(undefined, {minimumFractionDigits:2, maximumFractionDigits:2});
+        subtotal += amount;
+      });
+      document.getElementById('bx-subtotal-preview').textContent = '$' + subtotal.toLocaleString(undefined, {minimumFractionDigits:2, maximumFractionDigits:2});
+    }
+    document.getElementById('bx-li-add').addEventListener('click', addLiRow);
+
+    document.getElementById('bx-generate-btn').addEventListener('click', async () => {
+      const btn = document.getElementById('bx-generate-btn');
+      log.innerHTML = '';
+      document.getElementById('bx-result').style.display = 'none';
+      const lineItems = Array.from(document.querySelectorAll('#bx-li-body tr')).map(tr => ({
+        description: tr.querySelector('.li-desc').value,
+        quantity: Number(tr.querySelector('.li-qty').value) || 0,
+        unitPrice: Number(tr.querySelector('.li-price').value) || 0
+      }));
+      const payload = {
+        ownerName: document.getElementById('bx-owner').value.trim(),
+        projectName: document.getElementById('bx-project-name').value.trim(),
+        projectAddress: document.getElementById('bx-project-address').value.trim(),
+        bidDueDate: document.getElementById('bx-bid-due').value,
+        taxRate: (Number(document.getElementById('bx-tax-rate').value) || 0) / 100,
+        bidBondRequired: document.getElementById('bx-bond-required').checked,
+        bidBondPercent: Number(document.getElementById('bx-bond-percent').value) || 0,
+        addendaAcknowledged: document.getElementById('bx-addenda').value.trim(),
+        exclusionsText: document.getElementById('bx-exclusions').value.trim(),
+        lineItems
+      };
+      if (!payload.projectName || !payload.projectAddress) { logLine('Project name and address are required.', 'err'); return; }
+      btn.disabled = true;
+      logLine('Assembling bid package...');
+      try {
+        const res = await fetch('/api/bid-packages/generate', { method: 'POST', headers: authHeaders(true), body: JSON.stringify(payload) });
+        const data = await res.json();
+        if (!res.ok) { logLine('Error: ' + (data.error && (data.error.message || data.error) || 'generation failed'), 'err'); btn.disabled = false; return; }
+        logLine('Done.', 'ok');
+        document.getElementById('bx-summary').innerHTML = \`<span class="quote-total">$\${Number(data.grandTotal||0).toLocaleString(undefined,{minimumFractionDigits:2,maximumFractionDigits:2})}</span> total bid\`;
+        document.getElementById('bx-download').href = data.downloadUrl;
+        document.getElementById('bx-result').style.display = 'block';
+      } catch (e) {
+        logLine('Error: ' + e.message, 'err');
+      }
+      btn.disabled = false;
+    });
+
+    (async () => {
+      try {
+        const probe = await fetch('/api/bid-packages/generate', { method: 'POST', headers: authHeaders(true), body: JSON.stringify({}) });
+        if (probe.status === 401 || probe.status === 403) {
+          document.getElementById('signin-btn').style.display = 'inline-block';
+          return;
+        }
+        if (probe.status === 402) {
+          document.getElementById('guest-note').innerHTML = 'You\\'re signed in, but your plan doesn\\'t include BidX yet. See <code>/pricing</code> to add it.';
+          return;
+        }
+        document.getElementById('app').style.display = 'block';
+        document.getElementById('guest-note').style.display = 'none';
+        addLiRow();
+      } catch (e) {
+        document.getElementById('signin-btn').style.display = 'inline-block';
+      }
+    })();
+  </script>
+</body>
+</html>`, { headers: { "Content-Type": "text/html; charset=UTF-8", "Cache-Control": "public, max-age=60" } });
+  }
+  function serve_coa() {
+    return new Response(`<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#090a0d">
+  <title>CoA | Certificate of Occupancy Application Package</title>
+  <style>
+    :root{--bg:#090a0d;--panel:#121419;--panel2:#181b21;--line:#2c3139;--text:#edf0f1;--muted:#9299a3;--gold:#f0b800;--green:#61dfa0;--blue:#66d4ff;--red:#ff756e}
+    *{box-sizing:border-box}html,body{margin:0;min-height:100%;background:var(--bg);color:var(--text);font-family:"Avenir Next","Helvetica Neue",sans-serif}
+    .shell{position:relative;max-width:900px;margin:auto;padding:20px clamp(16px,3vw,40px) 60px}
+    header{display:flex;align-items:center;justify-content:space-between;gap:15px;margin-bottom:24px}
+    .brand{display:flex;align-items:center;gap:12px;color:var(--text);text-decoration:none}
+    .mark{width:42px;height:42px;display:grid;place-items:center;background:var(--green);color:var(--bg);font-weight:900}
+    .brand b{display:block;letter-spacing:.16em}
+    .brand small{display:block;color:var(--muted);font:700 9px/1.5 ui-monospace,monospace;letter-spacing:.11em}
+    .nav{display:flex;gap:8px;flex-wrap:wrap}
+    .nav a,.button{border:1px solid var(--line);border-radius:99px;padding:9px 14px;color:var(--text);text-decoration:none;background:transparent;font:750 10px/1 ui-monospace,monospace;letter-spacing:.06em;cursor:pointer;transition:all .2s}
+    .nav a:hover,.button:hover{border-color:var(--green);color:var(--green)}
+    .button.primary{background:var(--green);border-color:var(--green);color:var(--bg);font-weight:900}
+    .button:disabled{opacity:.5;cursor:not-allowed}
+    .titlebar{margin:35px 0 25px}
+    .eyebrow{color:var(--green);font:800 11px/1 ui-monospace,monospace;letter-spacing:.18em;text-transform:uppercase}
+    .titlebar h1{font-size:clamp(28px,4.5vw,44px);letter-spacing:-.04em;margin:12px 0}
+    .titlebar p{max-width:640px;color:var(--muted);line-height:1.6;margin:0;font-size:15px}
+    .titlebar .caveat{margin-top:10px;color:var(--gold);font-size:12.5px}
+    .card{background:rgba(18,20,25,.94);border:1px solid var(--line);border-radius:16px;padding:22px;margin-bottom:18px}
+    .form-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px}
+    label{display:block;color:var(--muted);font:750 10px/1 ui-monospace,monospace;letter-spacing:.08em;margin-bottom:8px}
+    input,textarea{width:100%;padding:11px;background:var(--panel2);border:1px solid var(--line);border-radius:8px;color:var(--text);font-size:14px;box-sizing:border-box;font-family:inherit}
+    textarea{min-height:60px;resize:vertical}
+    input:focus,textarea:focus{outline:none;border-color:var(--green)}
+    .checklist{margin-top:10px;display:flex;flex-direction:column;gap:8px}
+    .checkline{display:flex;align-items:center;gap:8px;font-size:13px}
+    .checkline input{width:auto}
+    .step-log{margin-top:14px;color:var(--muted);font-size:13px}
+    .step-log .ok{color:var(--green)}
+    .step-log .err{color:var(--red)}
+    .note-card{color:var(--muted);font-size:14px;line-height:1.6}
+    .note-card code{background:#161920;padding:2px 6px;border-radius:4px;color:var(--green);font-size:13px}
+    .result-row{display:flex;justify-content:space-between;align-items:center;gap:14px;flex-wrap:wrap}
+  </style>
+</head>
+<body>
+  <div class="shell">
+    <header>
+      <a class="brand" href="/"><span class="mark">CA</span><span><b>COA</b><small>OCCUPANCY APPLICATION PACKAGE</small></span></a>
+      <nav class="nav">${renderNav("coa")}</nav>
+    </header>
+    <div class="titlebar">
+      <div class="eyebrow">CERTIFICATE OF OCCUPANCY APPLICATION PACKAGE</div>
+      <h1>CoA</h1>
+      <p>Assembles the cover letter and supporting-document checklist you submit to the Authority Having Jurisdiction to request a Certificate of Occupancy.</p>
+      <p class="caveat">This generates a submission package, not the Certificate of Occupancy itself &mdash; only your local building authority can issue that.</p>
+      <a class="button primary" id="signin-btn" href="/login?redirect=/coa" style="display:none">SIGN IN</a>
+    </div>
+
+    <div id="app" style="display:none">
+      <div class="card">
+        <div class="form-grid">
+          <div><label>AUTHORITY HAVING JURISDICTION</label><input id="ca-ahj" type="text" placeholder="e.g. City of Springfield Building Dept."></div>
+          <div><label>PERMIT NUMBER</label><input id="ca-permit" type="text"></div>
+        </div>
+        <div class="form-grid" style="margin-top:14px">
+          <div><label>PROJECT NAME</label><input id="ca-project-name" type="text"></div>
+          <div><label>PROJECT ADDRESS</label><input id="ca-project-address" type="text"></div>
+        </div>
+        <div class="form-grid" style="margin-top:14px">
+          <div><label>CONTACT NAME</label><input id="ca-contact-name" type="text"></div>
+          <div><label>CONTACT PHONE</label><input id="ca-contact-phone" type="text"></div>
+          <div><label>CONTACT EMAIL</label><input id="ca-contact-email" type="email"></div>
+        </div>
+        <div style="margin-top:16px">
+          <label>SUPPORTING DOCUMENTATION</label>
+          <div class="checklist" id="ca-checklist"></div>
+        </div>
+        <div style="margin-top:14px"><label>NOTES (OPTIONAL)</label><textarea id="ca-notes"></textarea></div>
+        <button id="ca-generate-btn" class="button primary" style="height:42px;margin-top:16px">GENERATE APPLICATION PACKAGE</button>
+        <div class="step-log" id="ca-log"></div>
+      </div>
+
+      <div class="card" id="ca-result" style="display:none">
+        <div class="result-row">
+          <span>Package generated.</span>
+          <a id="ca-download" class="button primary" href="#" target="_blank">DOWNLOAD PDF</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="card note-card" id="guest-note">
+      CoA is available standalone at $99/mo or as part of PropX Pro. See
+      <code>/pricing</code> for licensing, or sign in above if you already have access.
+    </div>
+  </div>
+  <script src="/assets/authfor-integration-standard.js"></script>
+  <script>
+    const auth = new AuthForStandard({ clientId: 'af_weyland_login', ventureName: 'weylandai.com' });
+    function authHeaders(json) {
+      const t = auth.getToken();
+      const h = t ? { 'Authorization': 'Bearer ' + t } : {};
+      if (json) h['Content-Type'] = 'application/json';
+      return h;
+    }
+    const CHECKLIST_ITEMS = [
+      "Final building inspection sign-off",
+      "Final electrical inspection sign-off",
+      "Final plumbing inspection sign-off",
+      "Final mechanical/HVAC inspection sign-off",
+      "Fire marshal / fire alarm system approval",
+      "ADA / accessibility compliance sign-off",
+      "As-built drawings (if required by permit)",
+      "Utility connection confirmations (water, sewer, gas, electric)"
+    ];
+    const listEl = document.getElementById('ca-checklist');
+    CHECKLIST_ITEMS.forEach((item, i) => {
+      const div = document.createElement('div');
+      div.className = 'checkline';
+      div.innerHTML = \`<input type="checkbox" id="ca-item-\${i}" checked><label style="margin:0" for="ca-item-\${i}">\${item}</label>\`;
+      listEl.appendChild(div);
+    });
+
+    const log = document.getElementById('ca-log');
+    function logLine(msg, cls) { const d = document.createElement('div'); if (cls) d.className = cls; d.textContent = msg; log.appendChild(d); }
+
+    document.getElementById('ca-generate-btn').addEventListener('click', async () => {
+      const btn = document.getElementById('ca-generate-btn');
+      log.innerHTML = '';
+      document.getElementById('ca-result').style.display = 'none';
+      const checklist = CHECKLIST_ITEMS.filter((item, i) => document.getElementById('ca-item-' + i).checked);
+      const payload = {
+        ahjName: document.getElementById('ca-ahj').value.trim(),
+        permitNumber: document.getElementById('ca-permit').value.trim(),
+        projectName: document.getElementById('ca-project-name').value.trim(),
+        projectAddress: document.getElementById('ca-project-address').value.trim(),
+        contactName: document.getElementById('ca-contact-name').value.trim(),
+        contactPhone: document.getElementById('ca-contact-phone').value.trim(),
+        contactEmail: document.getElementById('ca-contact-email').value.trim(),
+        notes: document.getElementById('ca-notes').value.trim(),
+        checklist
+      };
+      if (!payload.projectName || !payload.projectAddress) { logLine('Project name and address are required.', 'err'); return; }
+      btn.disabled = true;
+      logLine('Assembling application package...');
+      try {
+        const res = await fetch('/api/coa-packages/generate', { method: 'POST', headers: authHeaders(true), body: JSON.stringify(payload) });
+        const data = await res.json();
+        if (!res.ok) { logLine('Error: ' + (data.error && (data.error.message || data.error) || 'generation failed'), 'err'); btn.disabled = false; return; }
+        logLine('Done.', 'ok');
+        document.getElementById('ca-download').href = data.downloadUrl;
+        document.getElementById('ca-result').style.display = 'block';
+      } catch (e) {
+        logLine('Error: ' + e.message, 'err');
+      }
+      btn.disabled = false;
+    });
+
+    (async () => {
+      try {
+        const probe = await fetch('/api/coa-packages/generate', { method: 'POST', headers: authHeaders(true), body: JSON.stringify({}) });
+        if (probe.status === 401 || probe.status === 403) {
+          document.getElementById('signin-btn').style.display = 'inline-block';
+          return;
+        }
+        if (probe.status === 402) {
+          document.getElementById('guest-note').innerHTML = 'You\\'re signed in, but your plan doesn\\'t include CoA yet. See <code>/pricing</code> to add it.';
+          return;
+        }
+        document.getElementById('app').style.display = 'block';
+        document.getElementById('guest-note').style.display = 'none';
+      } catch (e) {
+        document.getElementById('signin-btn').style.display = 'inline-block';
+      }
+    })();
+  </script>
+</body>
+</html>`, { headers: { "Content-Type": "text/html; charset=UTF-8", "Cache-Control": "public, max-age=60" } });
+  }
+  function serve_rfax() {
+    return renderDocFormPage({
+      slug: "rfax",
+      markInitials: "RA",
+      productName: "RFAX",
+      subtitle: "RFI/RFA GENERATOR",
+      accent: "gold",
+      title: "RFaX",
+      description: "Generates a formatted Request for Information / Action from a project question, ready to submit to the owner or architect and track a response.",
+      apiPath: "/api/rfas/generate",
+      priceNote: "RFaX is available standalone at $199/mo or as part of SubX Pro. See <code>/pricing</code> for licensing, or sign in above if you already have access.",
+      required: ["subject", "question", "projectAddress"],
+      fields: [
+        { id: "rfaNumber", label: "RFA NUMBER" },
+        { id: "dateSubmitted", label: "DATE SUBMITTED", type: "date" },
+        { id: "responseNeededBy", label: "RESPONSE NEEDED BY", type: "date" },
+        { id: "ownerName", label: "OWNER / RECIPIENT" },
+        { id: "projectName", label: "PROJECT NAME" },
+        { id: "projectAddress", label: "PROJECT ADDRESS" },
+        { id: "subject", label: "SUBJECT" },
+        { id: "question", label: "QUESTION / INFORMATION REQUESTED", type: "textarea" },
+        { id: "distributionList", label: "DISTRIBUTION (OPTIONAL)" }
+      ]
+    });
+  }
+  function serve_changeordx() {
+    return renderDocFormPage({
+      slug: "changeordx",
+      markInitials: "CO",
+      productName: "CHANGEORDX",
+      subtitle: "CHANGE ORDER GENERATOR",
+      accent: "purple",
+      title: "ChangeOrdX",
+      description: "Turns a scope change into a formatted change order with cost and schedule impact, ready for owner/architect approval.",
+      apiPath: "/api/change-orders/generate",
+      priceNote: "ChangeOrdX is available standalone at $199/mo or as part of SubX Pro. See <code>/pricing</code> for licensing, or sign in above if you already have access.",
+      required: ["description", "projectAddress"],
+      fields: [
+        { id: "changeOrderNumber", label: "CHANGE ORDER #" },
+        { id: "ownerName", label: "OWNER" },
+        { id: "projectName", label: "PROJECT NAME" },
+        { id: "projectAddress", label: "PROJECT ADDRESS" },
+        { id: "description", label: "DESCRIPTION OF CHANGE", type: "textarea" },
+        { id: "reason", label: "REASON", type: "textarea" },
+        { id: "costImpact", label: "COST IMPACT ($)", type: "number" },
+        { id: "scheduleImpactDays", label: "SCHEDULE IMPACT (DAYS)", type: "number" }
+      ]
+    });
+  }
+  function serve_permitx() {
+    return renderDocFormPage({
+      slug: "permitx",
+      markInitials: "PX",
+      productName: "PERMITX",
+      subtitle: "PERMIT APPLICATION PACKAGE",
+      accent: "blue",
+      title: "PermitX",
+      description: "Assembles the application package you submit to the Authority Having Jurisdiction to request a permit. Not the permit itself - only the AHJ can issue that.",
+      apiPath: "/api/permit-packages/generate",
+      priceNote: "PermitX is available standalone at $149/mo or as part of SubX Pro. See <code>/pricing</code> for licensing, or sign in above if you already have access.",
+      required: ["projectAddress", "scopeDescription"],
+      fields: [
+        { id: "permitType", label: "PERMIT TYPE" },
+        { id: "ahjName", label: "AUTHORITY HAVING JURISDICTION" },
+        { id: "projectName", label: "PROJECT NAME" },
+        { id: "projectAddress", label: "PROJECT ADDRESS" },
+        { id: "applicantName", label: "APPLICANT" },
+        { id: "applicantContact", label: "APPLICANT CONTACT" },
+        { id: "scopeDescription", label: "SCOPE OF WORK", type: "textarea" }
+      ]
+    });
+  }
+  function serve_closex() {
+    return renderDocFormPage({
+      slug: "closex",
+      markInitials: "CX",
+      productName: "CLOSEX",
+      subtitle: "PROJECT CLOSEOUT PACKAGE",
+      accent: "green",
+      title: "CloseX",
+      description: "Assembles the closeout package - completion status, warranty terms, and an 8-item checklist - ready to hand the owner at project end.",
+      apiPath: "/api/closeout-packages/generate",
+      priceNote: "CloseX is available standalone at $199/mo or as part of SubX Pro. See <code>/pricing</code> for licensing, or sign in above if you already have access.",
+      required: ["projectName", "projectAddress"],
+      fields: [
+        { id: "ownerName", label: "OWNER" },
+        { id: "projectName", label: "PROJECT NAME" },
+        { id: "projectAddress", label: "PROJECT ADDRESS" },
+        { id: "completionDate", label: "COMPLETION DATE", type: "date" },
+        { id: "warrantyPeriod", label: "WARRANTY PERIOD", placeholder: "e.g. 1 year from substantial completion" },
+        { id: "notes", label: "NOTES (OPTIONAL)", type: "textarea" }
+      ]
+    });
+  }
+  function serve_notesx() {
+    return renderDocFormPage({
+      slug: "notesx",
+      markInitials: "NX",
+      productName: "NOTESX",
+      subtitle: "MEETING MINUTES GENERATOR",
+      accent: "red",
+      title: "NotesX",
+      description: "Turns attendees, agenda, and action items into formatted meeting minutes, ready to distribute.",
+      apiPath: "/api/meeting-notes/generate",
+      priceNote: "NotesX is available standalone at $49/mo or as part of SubX Pro. See <code>/pricing</code> for licensing, or sign in above if you already have access.",
+      required: ["projectName", "meetingDate"],
+      fields: [
+        { id: "projectName", label: "PROJECT NAME" },
+        { id: "meetingDate", label: "MEETING DATE", type: "date" },
+        { id: "nextMeetingDate", label: "NEXT MEETING DATE", type: "date" },
+        { id: "attendees", label: "ATTENDEES (COMMA-SEPARATED)", type: "textarea" },
+        { id: "agendaItems", label: "AGENDA ITEMS (ONE PER LINE)", type: "textarea" },
+        { id: "actionItems", label: "ACTION ITEMS (ONE PER LINE)", type: "textarea" }
+      ]
+    });
+  }
+  function serve_inspecx() {
+    return new Response(`<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#090a0d">
+  <title>InspecX | Inspection Report Processor</title>
+  <style>
+    :root{--bg:#090a0d;--panel:#121419;--panel2:#181b21;--line:#2c3139;--text:#edf0f1;--muted:#9299a3;--gold:#f0b800;--green:#61dfa0;--blue:#66d4ff;--red:#ff756e}
+    *{box-sizing:border-box}html,body{margin:0;min-height:100%;background:var(--bg);color:var(--text);font-family:"Avenir Next","Helvetica Neue",sans-serif}
+    .shell{position:relative;max-width:900px;margin:auto;padding:20px clamp(16px,3vw,40px) 60px}
+    header{display:flex;align-items:center;justify-content:space-between;gap:15px;margin-bottom:24px}
+    .brand{display:flex;align-items:center;gap:12px;color:var(--text);text-decoration:none}
+    .mark{width:42px;height:42px;display:grid;place-items:center;background:var(--blue);color:var(--bg);font-weight:900}
+    .brand b{display:block;letter-spacing:.16em}
+    .brand small{display:block;color:var(--muted);font:700 9px/1.5 ui-monospace,monospace;letter-spacing:.11em}
+    .nav{display:flex;gap:8px;flex-wrap:wrap}
+    .nav a,.button{border:1px solid var(--line);border-radius:99px;padding:9px 14px;color:var(--text);text-decoration:none;background:transparent;font:750 10px/1 ui-monospace,monospace;letter-spacing:.06em;cursor:pointer;transition:all .2s}
+    .nav a:hover,.button:hover{border-color:var(--blue);color:var(--blue)}
+    .button.primary{background:var(--blue);border-color:var(--blue);color:var(--bg);font-weight:900}
+    .button:disabled{opacity:.5;cursor:not-allowed}
+    .titlebar{margin:35px 0 25px}
+    .eyebrow{color:var(--blue);font:800 11px/1 ui-monospace,monospace;letter-spacing:.18em;text-transform:uppercase}
+    .titlebar h1{font-size:clamp(30px,4.5vw,48px);letter-spacing:-.04em;margin:12px 0}
+    .titlebar p{max-width:640px;color:var(--muted);line-height:1.6;margin:0;font-size:15px}
+    .titlebar .caveat{margin-top:10px;color:var(--gold);font-size:12.5px}
+    .card{background:rgba(18,20,25,.94);border:1px solid var(--line);border-radius:16px;padding:22px;margin-bottom:18px}
+    .form-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px}
+    label{display:block;color:var(--muted);font:750 10px/1 ui-monospace,monospace;letter-spacing:.08em;margin-bottom:8px}
+    input{width:100%;padding:11px;background:var(--panel2);border:1px solid var(--line);border-radius:8px;color:var(--text);font-size:14px;box-sizing:border-box;font-family:inherit}
+    input:focus{outline:none;border-color:var(--blue)}
+    .step-log{margin-top:14px;color:var(--muted);font-size:13px}
+    .step-log .ok{color:var(--green)}
+    .step-log .err{color:var(--red)}
+    .note-card{color:var(--muted);font-size:14px;line-height:1.6}
+    .note-card code{background:#161920;padding:2px 6px;border-radius:4px;color:var(--blue);font-size:13px}
+    .result-row{display:flex;justify-content:space-between;align-items:center;gap:14px;flex-wrap:wrap}
+    .stat-row{display:flex;gap:20px;color:var(--muted);font-size:13px}
+    .stat-row b{color:var(--text);font-size:18px;display:block}
+  </style>
+</head>
+<body>
+  <div class="shell">
+    <header>
+      <a class="brand" href="/"><span class="mark">IX</span><span><b>INSPECX</b><small>INSPECTION REPORT PROCESSOR</small></span></a>
+      <nav class="nav">${renderNav("inspecx")}</nav>
+    </header>
+    <div class="titlebar">
+      <div class="eyebrow">INSPECTION REPORT PROCESSOR</div>
+      <h1>InspecX</h1>
+      <p>Uploads an inspection report PDF, OCRs it with a real on-worker engine (PDFium + Tesseract, no external API), and flags lines matching fail/deficiency language.</p>
+      <p class="caveat">Flagging is keyword-based, not an AI reading for meaning &mdash; review the source document for anything it might miss.</p>
+      <a class="button primary" id="signin-btn" href="/login?redirect=/inspecx" style="display:none">SIGN IN</a>
+    </div>
+
+    <div id="app" style="display:none">
+      <div class="card">
+        <div class="form-grid">
+          <div><label>PROJECT NAME</label><input id="ix-project" type="text"></div>
+          <div><label>INSPECTION TYPE</label><input id="ix-type" type="text" placeholder="e.g. Fire/Life Safety"></div>
+          <div><label>INSPECTOR</label><input id="ix-inspector" type="text"></div>
+          <div><label>INSPECTION DATE</label><input id="ix-date" type="date"></div>
+          <div style="grid-column:1/-1"><label>INSPECTION REPORT (PDF)</label><input id="ix-file" type="file" accept="application/pdf"></div>
+        </div>
+        <button id="ix-analyze-btn" class="button primary" style="height:42px;margin-top:16px">ANALYZE REPORT</button>
+        <div class="step-log" id="ix-log"></div>
+      </div>
+      <div class="card" id="ix-result" style="display:none">
+        <div class="result-row">
+          <div class="stat-row" id="ix-stats"></div>
+          <a id="ix-download" class="button primary" href="#" target="_blank">DOWNLOAD SUMMARY PDF</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="card note-card" id="guest-note">
+      InspecX is available standalone at $199/mo or as part of SightX Pro. See
+      <code>/pricing</code> for licensing, or sign in above if you already have access.
+    </div>
+  </div>
+  <script src="/assets/authfor-integration-standard.js"></script>
+  <script>
+    const auth = new AuthForStandard({ clientId: 'af_weyland_login', ventureName: 'weylandai.com' });
+    function authHeaders(json) {
+      const t = auth.getToken();
+      const h = t ? { 'Authorization': 'Bearer ' + t } : {};
+      if (json) h['Content-Type'] = 'application/json';
+      return h;
+    }
+    const log = document.getElementById('ix-log');
+    function logLine(msg, cls) { const d = document.createElement('div'); if (cls) d.className = cls; d.textContent = msg; log.appendChild(d); }
+
+    document.getElementById('ix-analyze-btn').addEventListener('click', async () => {
+      const btn = document.getElementById('ix-analyze-btn');
+      const fileInput = document.getElementById('ix-file');
+      log.innerHTML = '';
+      document.getElementById('ix-result').style.display = 'none';
+      if (!fileInput.files.length) { logLine('Choose a PDF first.', 'err'); return; }
+      const fd = new FormData();
+      fd.append('file', fileInput.files[0]);
+      fd.append('projectName', document.getElementById('ix-project').value.trim());
+      fd.append('inspectionType', document.getElementById('ix-type').value.trim());
+      fd.append('inspectorName', document.getElementById('ix-inspector').value.trim());
+      fd.append('inspectionDate', document.getElementById('ix-date').value);
+      btn.disabled = true;
+      logLine('Uploading and running OCR...');
+      try {
+        const res = await fetch('/api/inspections/analyze', { method: 'POST', headers: authHeaders(false), body: fd });
+        const data = await res.json();
+        if (!res.ok) { logLine('Error: ' + (data.error && (data.error.message || data.error) || 'analysis failed'), 'err'); btn.disabled = false; return; }
+        logLine('Done - ' + data.pageCount + ' page(s) scanned.', 'ok');
+        document.getElementById('ix-stats').innerHTML = '<div><b>' + data.pageCount + '</b>PAGES</div><div><b>' + data.passCount + '</b>PASS LINES</div><div><b>' + data.failCount + '</b>FLAGGED</div>';
+        document.getElementById('ix-download').href = data.downloadUrl;
+        document.getElementById('ix-result').style.display = 'block';
+      } catch (e) {
+        logLine('Error: ' + e.message, 'err');
+      }
+      btn.disabled = false;
+    });
+
+    (async () => {
+      try {
+        const probe = await fetch('/api/inspections/analyze', { method: 'POST', headers: authHeaders(true), body: JSON.stringify({}) });
+        if (probe.status === 401 || probe.status === 403) {
+          document.getElementById('signin-btn').style.display = 'inline-block';
+          return;
+        }
+        if (probe.status === 402) {
+          document.getElementById('guest-note').innerHTML = 'You\\'re signed in, but your plan doesn\\'t include InspecX yet. See <code>/pricing</code> to add it.';
+          return;
+        }
+        document.getElementById('app').style.display = 'block';
+        document.getElementById('guest-note').style.display = 'none';
+      } catch (e) {
+        document.getElementById('signin-btn').style.display = 'inline-block';
+      }
+    })();
+  </script>
+</body>
+</html>`, { headers: { "Content-Type": "text/html; charset=UTF-8", "Cache-Control": "public, max-age=60" } });
+  }
+  function serve_safetyx() {
+    return new Response(`<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#090a0d">
+  <title>SafetyX | Safety Report Processor</title>
+  <style>
+    :root{--bg:#090a0d;--panel:#121419;--panel2:#181b21;--line:#2c3139;--text:#edf0f1;--muted:#9299a3;--gold:#f0b800;--green:#61dfa0;--blue:#66d4ff;--red:#ff756e}
+    *{box-sizing:border-box}html,body{margin:0;min-height:100%;background:var(--bg);color:var(--text);font-family:"Avenir Next","Helvetica Neue",sans-serif}
+    .shell{position:relative;max-width:900px;margin:auto;padding:20px clamp(16px,3vw,40px) 60px}
+    header{display:flex;align-items:center;justify-content:space-between;gap:15px;margin-bottom:24px}
+    .brand{display:flex;align-items:center;gap:12px;color:var(--text);text-decoration:none}
+    .mark{width:42px;height:42px;display:grid;place-items:center;background:var(--gold);color:var(--bg);font-weight:900}
+    .brand b{display:block;letter-spacing:.16em}
+    .brand small{display:block;color:var(--muted);font:700 9px/1.5 ui-monospace,monospace;letter-spacing:.11em}
+    .nav{display:flex;gap:8px;flex-wrap:wrap}
+    .nav a,.button{border:1px solid var(--line);border-radius:99px;padding:9px 14px;color:var(--text);text-decoration:none;background:transparent;font:750 10px/1 ui-monospace,monospace;letter-spacing:.06em;cursor:pointer;transition:all .2s}
+    .nav a:hover,.button:hover{border-color:var(--gold);color:var(--gold)}
+    .button.primary{background:var(--gold);border-color:var(--gold);color:var(--bg);font-weight:900}
+    .button:disabled{opacity:.5;cursor:not-allowed}
+    .titlebar{margin:35px 0 25px}
+    .eyebrow{color:var(--gold);font:800 11px/1 ui-monospace,monospace;letter-spacing:.18em;text-transform:uppercase}
+    .titlebar h1{font-size:clamp(30px,4.5vw,48px);letter-spacing:-.04em;margin:12px 0}
+    .titlebar p{max-width:640px;color:var(--muted);line-height:1.6;margin:0;font-size:15px}
+    .titlebar .caveat{margin-top:10px;color:var(--red);font-size:12.5px}
+    .card{background:rgba(18,20,25,.94);border:1px solid var(--line);border-radius:16px;padding:22px;margin-bottom:18px}
+    .form-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px}
+    label{display:block;color:var(--muted);font:750 10px/1 ui-monospace,monospace;letter-spacing:.08em;margin-bottom:8px}
+    input{width:100%;padding:11px;background:var(--panel2);border:1px solid var(--line);border-radius:8px;color:var(--text);font-size:14px;box-sizing:border-box;font-family:inherit}
+    input:focus{outline:none;border-color:var(--gold)}
+    .step-log{margin-top:14px;color:var(--muted);font-size:13px}
+    .step-log .ok{color:var(--green)}
+    .step-log .err{color:var(--red)}
+    .note-card{color:var(--muted);font-size:14px;line-height:1.6}
+    .note-card code{background:#161920;padding:2px 6px;border-radius:4px;color:var(--gold);font-size:13px}
+    .result-row{display:flex;justify-content:space-between;align-items:center;gap:14px;flex-wrap:wrap}
+    .stat-row{display:flex;gap:20px;color:var(--muted);font-size:13px}
+    .stat-row b{color:var(--text);font-size:18px;display:block}
+  </style>
+</head>
+<body>
+  <div class="shell">
+    <header>
+      <a class="brand" href="/"><span class="mark">SX</span><span><b>SAFETYX</b><small>SAFETY REPORT PROCESSOR</small></span></a>
+      <nav class="nav">${renderNav("safetyx")}</nav>
+    </header>
+    <div class="titlebar">
+      <div class="eyebrow">SAFETY REPORT PROCESSOR</div>
+      <h1>SafetyX</h1>
+      <p>Uploads a safety report or incident log PDF, OCRs it with the same on-worker engine InspecX uses (PDFium + Tesseract, no external API), and flags lines matching incident/hazard language.</p>
+      <p class="caveat">Flagging is keyword-based, not an AI reading for meaning, and is not an OSHA recordability determination.</p>
+      <a class="button primary" id="signin-btn" href="/login?redirect=/safetyx" style="display:none">SIGN IN</a>
+    </div>
+
+    <div id="app" style="display:none">
+      <div class="card">
+        <div class="form-grid">
+          <div><label>PROJECT NAME</label><input id="sx-project" type="text"></div>
+          <div><label>REPORT TYPE</label><input id="sx-type" type="text" placeholder="e.g. Weekly Site Safety Log"></div>
+          <div><label>REPORTED BY</label><input id="sx-by" type="text"></div>
+          <div><label>REPORT DATE</label><input id="sx-date" type="date"></div>
+          <div style="grid-column:1/-1"><label>SAFETY REPORT (PDF)</label><input id="sx-file" type="file" accept="application/pdf"></div>
+        </div>
+        <button id="sx-analyze-btn" class="button primary" style="height:42px;margin-top:16px">ANALYZE REPORT</button>
+        <div class="step-log" id="sx-log"></div>
+      </div>
+      <div class="card" id="sx-result" style="display:none">
+        <div class="result-row">
+          <div class="stat-row" id="sx-stats"></div>
+          <a id="sx-download" class="button primary" href="#" target="_blank">DOWNLOAD SUMMARY PDF</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="card note-card" id="guest-note">
+      SafetyX is available standalone at $149/mo or as part of SubX Pro. See
+      <code>/pricing</code> for licensing, or sign in above if you already have access.
+    </div>
+  </div>
+  <script src="/assets/authfor-integration-standard.js"></script>
+  <script>
+    const auth = new AuthForStandard({ clientId: 'af_weyland_login', ventureName: 'weylandai.com' });
+    function authHeaders(json) {
+      const t = auth.getToken();
+      const h = t ? { 'Authorization': 'Bearer ' + t } : {};
+      if (json) h['Content-Type'] = 'application/json';
+      return h;
+    }
+    const log = document.getElementById('sx-log');
+    function logLine(msg, cls) { const d = document.createElement('div'); if (cls) d.className = cls; d.textContent = msg; log.appendChild(d); }
+
+    document.getElementById('sx-analyze-btn').addEventListener('click', async () => {
+      const btn = document.getElementById('sx-analyze-btn');
+      const fileInput = document.getElementById('sx-file');
+      log.innerHTML = '';
+      document.getElementById('sx-result').style.display = 'none';
+      if (!fileInput.files.length) { logLine('Choose a PDF first.', 'err'); return; }
+      const fd = new FormData();
+      fd.append('file', fileInput.files[0]);
+      fd.append('projectName', document.getElementById('sx-project').value.trim());
+      fd.append('reportType', document.getElementById('sx-type').value.trim());
+      fd.append('reportedBy', document.getElementById('sx-by').value.trim());
+      fd.append('reportDate', document.getElementById('sx-date').value);
+      btn.disabled = true;
+      logLine('Uploading and running OCR...');
+      try {
+        const res = await fetch('/api/safety-reports/analyze', { method: 'POST', headers: authHeaders(false), body: fd });
+        const data = await res.json();
+        if (!res.ok) { logLine('Error: ' + (data.error && (data.error.message || data.error) || 'analysis failed'), 'err'); btn.disabled = false; return; }
+        logLine('Done - ' + data.pageCount + ' page(s) scanned.', 'ok');
+        document.getElementById('sx-stats').innerHTML = '<div><b>' + data.pageCount + '</b>PAGES</div><div><b>' + data.clearCount + '</b>RESOLVED/COMPLIANT</div><div><b>' + data.incidentCount + '</b>FLAGGED</div>';
+        document.getElementById('sx-download').href = data.downloadUrl;
+        document.getElementById('sx-result').style.display = 'block';
+      } catch (e) {
+        logLine('Error: ' + e.message, 'err');
+      }
+      btn.disabled = false;
+    });
+
+    (async () => {
+      try {
+        const probe = await fetch('/api/safety-reports/analyze', { method: 'POST', headers: authHeaders(true), body: JSON.stringify({}) });
+        if (probe.status === 401 || probe.status === 403) {
+          document.getElementById('signin-btn').style.display = 'inline-block';
+          return;
+        }
+        if (probe.status === 402) {
+          document.getElementById('guest-note').innerHTML = 'You\\'re signed in, but your plan doesn\\'t include SafetyX yet. See <code>/pricing</code> to add it.';
+          return;
+        }
+        document.getElementById('app').style.display = 'block';
+        document.getElementById('guest-note').style.display = 'none';
+      } catch (e) {
+        document.getElementById('signin-btn').style.display = 'inline-block';
+      }
+    })();
+  </script>
+</body>
+</html>`, { headers: { "Content-Type": "text/html; charset=UTF-8", "Cache-Control": "public, max-age=60" } });
+  }
+  function serve_survx() {
+    return new Response(`<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#090a0d">
+  <title>SurvX | Site Survey Data Processor</title>
+  <style>
+    :root{--bg:#090a0d;--panel:#121419;--panel2:#181b21;--line:#2c3139;--text:#edf0f1;--muted:#9299a3;--gold:#f0b800;--green:#61dfa0;--blue:#66d4ff;--red:#ff756e;--purple:#a78bfa}
+    *{box-sizing:border-box}html,body{margin:0;min-height:100%;background:var(--bg);color:var(--text);font-family:"Avenir Next","Helvetica Neue",sans-serif}
+    .shell{position:relative;max-width:900px;margin:auto;padding:20px clamp(16px,3vw,40px) 60px}
+    header{display:flex;align-items:center;justify-content:space-between;gap:15px;margin-bottom:24px}
+    .brand{display:flex;align-items:center;gap:12px;color:var(--text);text-decoration:none}
+    .mark{width:42px;height:42px;display:grid;place-items:center;background:var(--purple);color:var(--bg);font-weight:900}
+    .brand b{display:block;letter-spacing:.16em}
+    .brand small{display:block;color:var(--muted);font:700 9px/1.5 ui-monospace,monospace;letter-spacing:.11em}
+    .nav{display:flex;gap:8px;flex-wrap:wrap}
+    .nav a,.button{border:1px solid var(--line);border-radius:99px;padding:9px 14px;color:var(--text);text-decoration:none;background:transparent;font:750 10px/1 ui-monospace,monospace;letter-spacing:.06em;cursor:pointer;transition:all .2s}
+    .nav a:hover,.button:hover{border-color:var(--purple);color:var(--purple)}
+    .button.primary{background:var(--purple);border-color:var(--purple);color:var(--bg);font-weight:900}
+    .button:disabled{opacity:.5;cursor:not-allowed}
+    .titlebar{margin:35px 0 25px}
+    .eyebrow{color:var(--purple);font:800 11px/1 ui-monospace,monospace;letter-spacing:.18em;text-transform:uppercase}
+    .titlebar h1{font-size:clamp(30px,4.5vw,48px);letter-spacing:-.04em;margin:12px 0}
+    .titlebar p{max-width:640px;color:var(--muted);line-height:1.6;margin:0;font-size:15px}
+    .titlebar .caveat{margin-top:10px;color:var(--red);font-size:12.5px}
+    .card{background:rgba(18,20,25,.94);border:1px solid var(--line);border-radius:16px;padding:22px;margin-bottom:18px}
+    .form-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px}
+    label{display:block;color:var(--muted);font:750 10px/1 ui-monospace,monospace;letter-spacing:.08em;margin-bottom:8px}
+    input{width:100%;padding:11px;background:var(--panel2);border:1px solid var(--line);border-radius:8px;color:var(--text);font-size:14px;box-sizing:border-box;font-family:inherit}
+    input:focus{outline:none;border-color:var(--purple)}
+    .step-log{margin-top:14px;color:var(--muted);font-size:13px}
+    .step-log .ok{color:var(--green)}
+    .step-log .err{color:var(--red)}
+    .note-card{color:var(--muted);font-size:14px;line-height:1.6}
+    .note-card code{background:#161920;padding:2px 6px;border-radius:4px;color:var(--purple);font-size:13px}
+    .result-row{display:flex;justify-content:space-between;align-items:center;gap:14px;flex-wrap:wrap}
+    .stat-row{display:flex;gap:20px;color:var(--muted);font-size:13px}
+    .stat-row b{color:var(--text);font-size:18px;display:block}
+  </style>
+</head>
+<body>
+  <div class="shell">
+    <header>
+      <a class="brand" href="/"><span class="mark">SV</span><span><b>SURVX</b><small>SITE SURVEY DATA PROCESSOR</small></span></a>
+      <nav class="nav">${renderNav("survx")}</nav>
+    </header>
+    <div class="titlebar">
+      <div class="eyebrow">SITE SURVEY DATA PROCESSOR</div>
+      <h1>SurvX</h1>
+      <p>Uploads a site survey PDF, OCRs it with the same on-worker engine InspecX/SafetyX use (PDFium + Tesseract, no external API), and flags lines matching unresolved-condition language.</p>
+      <p class="caveat">Flagging is keyword-based, not an AI reading for meaning - have a licensed surveyor confirm anything this list might miss or mis-flag.</p>
+      <a class="button primary" id="signin-btn" href="/login?redirect=/survx" style="display:none">SIGN IN</a>
+    </div>
+
+    <div id="app" style="display:none">
+      <div class="card">
+        <div class="form-grid">
+          <div><label>PROJECT NAME</label><input id="sv-project" type="text"></div>
+          <div><label>SURVEY TYPE</label><input id="sv-type" type="text" placeholder="e.g. Topographic, Boundary, ALTA"></div>
+          <div><label>SURVEYOR</label><input id="sv-surveyor" type="text"></div>
+          <div><label>SURVEY DATE</label><input id="sv-date" type="date"></div>
+          <div style="grid-column:1/-1"><label>SURVEY DOCUMENT (PDF)</label><input id="sv-file" type="file" accept="application/pdf"></div>
+        </div>
+        <button id="sv-analyze-btn" class="button primary" style="height:42px;margin-top:16px">ANALYZE SURVEY</button>
+        <div class="step-log" id="sv-log"></div>
+      </div>
+      <div class="card" id="sv-result" style="display:none">
+        <div class="result-row">
+          <div class="stat-row" id="sv-stats"></div>
+          <a id="sv-download" class="button primary" href="#" target="_blank">DOWNLOAD SUMMARY PDF</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="card note-card" id="guest-note">
+      SurvX is available standalone at $199/mo or as part of SightX Pro. See
+      <code>/pricing</code> for licensing, or sign in above if you already have access.
+    </div>
+  </div>
+  <script src="/assets/authfor-integration-standard.js"></script>
+  <script>
+    const auth = new AuthForStandard({ clientId: 'af_weyland_login', ventureName: 'weylandai.com' });
+    function authHeaders(json) {
+      const t = auth.getToken();
+      const h = t ? { 'Authorization': 'Bearer ' + t } : {};
+      if (json) h['Content-Type'] = 'application/json';
+      return h;
+    }
+    const log = document.getElementById('sv-log');
+    function logLine(msg, cls) { const d = document.createElement('div'); if (cls) d.className = cls; d.textContent = msg; log.appendChild(d); }
+
+    document.getElementById('sv-analyze-btn').addEventListener('click', async () => {
+      const btn = document.getElementById('sv-analyze-btn');
+      const fileInput = document.getElementById('sv-file');
+      log.innerHTML = '';
+      document.getElementById('sv-result').style.display = 'none';
+      if (!fileInput.files.length) { logLine('Choose a PDF first.', 'err'); return; }
+      const fd = new FormData();
+      fd.append('file', fileInput.files[0]);
+      fd.append('projectName', document.getElementById('sv-project').value.trim());
+      fd.append('surveyType', document.getElementById('sv-type').value.trim());
+      fd.append('surveyorName', document.getElementById('sv-surveyor').value.trim());
+      fd.append('surveyDate', document.getElementById('sv-date').value);
+      btn.disabled = true;
+      logLine('Uploading and running OCR...');
+      try {
+        const res = await fetch('/api/survey-reports/analyze', { method: 'POST', headers: authHeaders(false), body: fd });
+        const data = await res.json();
+        if (!res.ok) { logLine('Error: ' + (data.error && (data.error.message || data.error) || 'analysis failed'), 'err'); btn.disabled = false; return; }
+        logLine('Done - ' + data.pageCount + ' page(s) scanned.', 'ok');
+        document.getElementById('sv-stats').innerHTML = '<div><b>' + data.pageCount + '</b>PAGES</div><div><b>' + data.clearCount + '</b>VERIFIED</div><div><b>' + data.flaggedCount + '</b>FLAGGED</div>';
+        document.getElementById('sv-download').href = data.downloadUrl;
+        document.getElementById('sv-result').style.display = 'block';
+      } catch (e) {
+        logLine('Error: ' + e.message, 'err');
+      }
+      btn.disabled = false;
+    });
+
+    (async () => {
+      try {
+        const probe = await fetch('/api/survey-reports/analyze', { method: 'POST', headers: authHeaders(true), body: JSON.stringify({}) });
+        if (probe.status === 401 || probe.status === 403) {
+          document.getElementById('signin-btn').style.display = 'inline-block';
+          return;
+        }
+        if (probe.status === 402) {
+          document.getElementById('guest-note').innerHTML = 'You\\'re signed in, but your plan doesn\\'t include SurvX yet. See <code>/pricing</code> to add it.';
+          return;
+        }
+        document.getElementById('app').style.display = 'block';
+        document.getElementById('guest-note').style.display = 'none';
+      } catch (e) {
+        document.getElementById('signin-btn').style.display = 'inline-block';
+      }
+    })();
+  </script>
+</body>
+</html>`, { headers: { "Content-Type": "text/html; charset=UTF-8", "Cache-Control": "public, max-age=60" } });
+  }
+  function serve_specx() {
+    return new Response(`<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#090a0d">
+  <title>SpecX | Spec Section Parser</title>
+  <style>
+    :root{--bg:#090a0d;--panel:#121419;--panel2:#181b21;--line:#2c3139;--text:#edf0f1;--muted:#9299a3;--gold:#f0b800;--green:#61dfa0;--blue:#66d4ff;--red:#ff756e}
+    *{box-sizing:border-box}html,body{margin:0;min-height:100%;background:var(--bg);color:var(--text);font-family:"Avenir Next","Helvetica Neue",sans-serif}
+    .shell{position:relative;max-width:900px;margin:auto;padding:20px clamp(16px,3vw,40px) 60px}
+    header{display:flex;align-items:center;justify-content:space-between;gap:15px;margin-bottom:24px}
+    .brand{display:flex;align-items:center;gap:12px;color:var(--text);text-decoration:none}
+    .mark{width:42px;height:42px;display:grid;place-items:center;background:var(--green);color:var(--bg);font-weight:900}
+    .brand b{display:block;letter-spacing:.16em}
+    .brand small{display:block;color:var(--muted);font:700 9px/1.5 ui-monospace,monospace;letter-spacing:.11em}
+    .nav{display:flex;gap:8px;flex-wrap:wrap}
+    .nav a,.button{border:1px solid var(--line);border-radius:99px;padding:9px 14px;color:var(--text);text-decoration:none;background:transparent;font:750 10px/1 ui-monospace,monospace;letter-spacing:.06em;cursor:pointer;transition:all .2s}
+    .nav a:hover,.button:hover{border-color:var(--green);color:var(--green)}
+    .button.primary{background:var(--green);border-color:var(--green);color:var(--bg);font-weight:900}
+    .button:disabled{opacity:.5;cursor:not-allowed}
+    .titlebar{margin:35px 0 25px}
+    .eyebrow{color:var(--green);font:800 11px/1 ui-monospace,monospace;letter-spacing:.18em;text-transform:uppercase}
+    .titlebar h1{font-size:clamp(30px,4.5vw,48px);letter-spacing:-.04em;margin:12px 0}
+    .titlebar p{max-width:640px;color:var(--muted);line-height:1.6;margin:0;font-size:15px}
+    .titlebar .caveat{margin-top:10px;color:var(--red);font-size:12.5px}
+    .card{background:rgba(18,20,25,.94);border:1px solid var(--line);border-radius:16px;padding:22px;margin-bottom:18px}
+    .form-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px}
+    label{display:block;color:var(--muted);font:750 10px/1 ui-monospace,monospace;letter-spacing:.08em;margin-bottom:8px}
+    input{width:100%;padding:11px;background:var(--panel2);border:1px solid var(--line);border-radius:8px;color:var(--text);font-size:14px;box-sizing:border-box;font-family:inherit}
+    input:focus{outline:none;border-color:var(--green)}
+    .step-log{margin-top:14px;color:var(--muted);font-size:13px}
+    .step-log .ok{color:var(--green)}
+    .step-log .err{color:var(--red)}
+    .note-card{color:var(--muted);font-size:14px;line-height:1.6}
+    .note-card code{background:#161920;padding:2px 6px;border-radius:4px;color:var(--green);font-size:13px}
+    .result-row{display:flex;justify-content:space-between;align-items:center;gap:14px;flex-wrap:wrap}
+    .stat-row{display:flex;gap:20px;color:var(--muted);font-size:13px}
+    .stat-row b{color:var(--text);font-size:18px;display:block}
+  </style>
+</head>
+<body>
+  <div class="shell">
+    <header>
+      <a class="brand" href="/"><span class="mark">SP</span><span><b>SPECX</b><small>SPEC SECTION PARSER</small></span></a>
+      <nav class="nav">${renderNav("specx")}</nav>
+    </header>
+    <div class="titlebar">
+      <div class="eyebrow">SPEC SECTION PARSER</div>
+      <h1>SpecX</h1>
+      <p>Uploads a spec document PDF, OCRs it (PDFium + Tesseract, no external API), and detects CSI MasterFormat-style section numbers (DD SS SS) to build a section index, flagging unusually short sections by word count.</p>
+      <p class="caveat">This is a section index and completeness heuristic, not a code-compliance check.</p>
+      <a class="button primary" id="sp-signin-btn" href="/login?redirect=/specx" style="display:none">SIGN IN</a>
+    </div>
+
+    <div id="app" style="display:none">
+      <div class="card">
+        <div class="form-grid">
+          <div><label>PROJECT NAME</label><input id="sp-project" type="text"></div>
+          <div><label>SPEC DATE</label><input id="sp-date" type="date"></div>
+          <div style="grid-column:1/-1"><label>SPEC DOCUMENT (PDF)</label><input id="sp-file" type="file" accept="application/pdf"></div>
+        </div>
+        <button id="sp-analyze-btn" class="button primary" style="height:42px;margin-top:16px">ANALYZE SPEC</button>
+        <div class="step-log" id="sp-log"></div>
+      </div>
+      <div class="card" id="sp-result" style="display:none">
+        <div class="result-row">
+          <div class="stat-row" id="sp-stats"></div>
+          <a id="sp-download" class="button primary" href="#" target="_blank">DOWNLOAD SECTION INDEX PDF</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="card note-card" id="guest-note">
+      SpecX is available standalone at $149/mo or as part of SubX Pro. See
+      <code>/pricing</code> for licensing, or sign in above if you already have access.
+    </div>
+  </div>
+  <script src="/assets/authfor-integration-standard.js"></script>
+  <script>
+    const auth = new AuthForStandard({ clientId: 'af_weyland_login', ventureName: 'weylandai.com' });
+    function authHeaders(json) {
+      const t = auth.getToken();
+      const h = t ? { 'Authorization': 'Bearer ' + t } : {};
+      if (json) h['Content-Type'] = 'application/json';
+      return h;
+    }
+    const log = document.getElementById('sp-log');
+    function logLine(msg, cls) { const d = document.createElement('div'); if (cls) d.className = cls; d.textContent = msg; log.appendChild(d); }
+
+    document.getElementById('sp-analyze-btn').addEventListener('click', async () => {
+      const btn = document.getElementById('sp-analyze-btn');
+      const fileInput = document.getElementById('sp-file');
+      log.innerHTML = '';
+      document.getElementById('sp-result').style.display = 'none';
+      if (!fileInput.files.length) { logLine('Choose a PDF first.', 'err'); return; }
+      const fd = new FormData();
+      fd.append('file', fileInput.files[0]);
+      fd.append('projectName', document.getElementById('sp-project').value.trim());
+      fd.append('specDate', document.getElementById('sp-date').value);
+      btn.disabled = true;
+      logLine('Uploading and running OCR...');
+      try {
+        const res = await fetch('/api/spec-sections/analyze', { method: 'POST', headers: authHeaders(false), body: fd });
+        const data = await res.json();
+        if (!res.ok) { logLine('Error: ' + (data.error && (data.error.message || data.error) || 'analysis failed'), 'err'); btn.disabled = false; return; }
+        logLine('Done - ' + data.pageCount + ' page(s) scanned.', 'ok');
+        document.getElementById('sp-stats').innerHTML = '<div><b>' + data.pageCount + '</b>PAGES</div><div><b>' + data.sectionCount + '</b>SECTIONS</div><div><b>' + data.shortCount + '</b>SHORT</div>';
+        document.getElementById('sp-download').href = data.downloadUrl;
+        document.getElementById('sp-result').style.display = 'block';
+      } catch (e) {
+        logLine('Error: ' + e.message, 'err');
+      }
+      btn.disabled = false;
+    });
+
+    (async () => {
+      try {
+        const probe = await fetch('/api/spec-sections/analyze', { method: 'POST', headers: authHeaders(true), body: JSON.stringify({}) });
+        if (probe.status === 401 || probe.status === 403) {
+          document.getElementById('sp-signin-btn').style.display = 'inline-block';
+          return;
+        }
+        if (probe.status === 402) {
+          document.getElementById('guest-note').innerHTML = 'You\\'re signed in, but your plan doesn\\'t include SpecX yet. See <code>/pricing</code> to add it.';
+          return;
+        }
+        document.getElementById('app').style.display = 'block';
+        document.getElementById('guest-note').style.display = 'none';
+      } catch (e) {
+        document.getElementById('sp-signin-btn').style.display = 'inline-block';
+      }
+    })();
+  </script>
+</body>
+</html>`, { headers: { "Content-Type": "text/html; charset=UTF-8", "Cache-Control": "public, max-age=60" } });
+  }
+  function serve_drawx() {
+    return new Response(`<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#090a0d">
+  <title>DrawX | Drawing Set Sheet Index</title>
+  <style>
+    :root{--bg:#090a0d;--panel:#121419;--panel2:#181b21;--line:#2c3139;--text:#edf0f1;--muted:#9299a3;--gold:#f0b800;--green:#61dfa0;--blue:#66d4ff;--red:#ff756e}
+    *{box-sizing:border-box}html,body{margin:0;min-height:100%;background:var(--bg);color:var(--text);font-family:"Avenir Next","Helvetica Neue",sans-serif}
+    .shell{position:relative;max-width:900px;margin:auto;padding:20px clamp(16px,3vw,40px) 60px}
+    header{display:flex;align-items:center;justify-content:space-between;gap:15px;margin-bottom:24px}
+    .brand{display:flex;align-items:center;gap:12px;color:var(--text);text-decoration:none}
+    .mark{width:42px;height:42px;display:grid;place-items:center;background:var(--blue);color:var(--bg);font-weight:900}
+    .brand b{display:block;letter-spacing:.16em}
+    .brand small{display:block;color:var(--muted);font:700 9px/1.5 ui-monospace,monospace;letter-spacing:.11em}
+    .nav{display:flex;gap:8px;flex-wrap:wrap}
+    .nav a,.button{border:1px solid var(--line);border-radius:99px;padding:9px 14px;color:var(--text);text-decoration:none;background:transparent;font:750 10px/1 ui-monospace,monospace;letter-spacing:.06em;cursor:pointer;transition:all .2s}
+    .nav a:hover,.button:hover{border-color:var(--blue);color:var(--blue)}
+    .button.primary{background:var(--blue);border-color:var(--blue);color:var(--bg);font-weight:900}
+    .button:disabled{opacity:.5;cursor:not-allowed}
+    .titlebar{margin:35px 0 25px}
+    .eyebrow{color:var(--blue);font:800 11px/1 ui-monospace,monospace;letter-spacing:.18em;text-transform:uppercase}
+    .titlebar h1{font-size:clamp(30px,4.5vw,48px);letter-spacing:-.04em;margin:12px 0}
+    .titlebar p{max-width:640px;color:var(--muted);line-height:1.6;margin:0;font-size:15px}
+    .titlebar .caveat{margin-top:10px;color:var(--red);font-size:12.5px}
+    .card{background:rgba(18,20,25,.94);border:1px solid var(--line);border-radius:16px;padding:22px;margin-bottom:18px}
+    .form-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px}
+    label{display:block;color:var(--muted);font:750 10px/1 ui-monospace,monospace;letter-spacing:.08em;margin-bottom:8px}
+    input{width:100%;padding:11px;background:var(--panel2);border:1px solid var(--line);border-radius:8px;color:var(--text);font-size:14px;box-sizing:border-box;font-family:inherit}
+    input:focus{outline:none;border-color:var(--blue)}
+    .step-log{margin-top:14px;color:var(--muted);font-size:13px}
+    .step-log .ok{color:var(--green)}
+    .step-log .err{color:var(--red)}
+    .note-card{color:var(--muted);font-size:14px;line-height:1.6}
+    .note-card code{background:#161920;padding:2px 6px;border-radius:4px;color:var(--blue);font-size:13px}
+    .result-row{display:flex;justify-content:space-between;align-items:center;gap:14px;flex-wrap:wrap}
+    .stat-row{display:flex;gap:20px;color:var(--muted);font-size:13px}
+    .stat-row b{color:var(--text);font-size:18px;display:block}
+  </style>
+</head>
+<body>
+  <div class="shell">
+    <header>
+      <a class="brand" href="/"><span class="mark">DX</span><span><b>DRAWX</b><small>DRAWING SET SHEET INDEX</small></span></a>
+      <nav class="nav">${renderNav("drawx")}</nav>
+    </header>
+    <div class="titlebar">
+      <div class="eyebrow">DRAWING SET SHEET INDEX</div>
+      <h1>DrawX</h1>
+      <p>Uploads a drawing set PDF, OCRs title blocks and notes (PDFium + Tesseract, no external API), and detects sheet numbers (A-101, M-1.1, etc.) to build a sheet index.</p>
+      <p class="caveat">This indexes sheet numbers and titles from text - it doesn't read lines, symbols, or dimensions on the drawing itself.</p>
+      <a class="button primary" id="dx-signin-btn" href="/login?redirect=/drawx" style="display:none">SIGN IN</a>
+    </div>
+
+    <div id="app" style="display:none">
+      <div class="card">
+        <div class="form-grid">
+          <div><label>PROJECT NAME</label><input id="dx-project" type="text"></div>
+          <div><label>DRAWING SET DATE</label><input id="dx-date" type="date"></div>
+          <div style="grid-column:1/-1"><label>DRAWING SET (PDF)</label><input id="dx-file" type="file" accept="application/pdf"></div>
+        </div>
+        <button id="dx-analyze-btn" class="button primary" style="height:42px;margin-top:16px">BUILD SHEET INDEX</button>
+        <div class="step-log" id="dx-log"></div>
+      </div>
+      <div class="card" id="dx-result" style="display:none">
+        <div class="result-row">
+          <div class="stat-row" id="dx-stats"></div>
+          <a id="dx-download" class="button primary" href="#" target="_blank">DOWNLOAD SHEET INDEX PDF</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="card note-card" id="guest-note">
+      DrawX is available standalone at $399/mo or as part of TakeoffX Pro. See
+      <code>/pricing</code> for licensing, or sign in above if you already have access.
+    </div>
+  </div>
+  <script src="/assets/authfor-integration-standard.js"></script>
+  <script>
+    const auth = new AuthForStandard({ clientId: 'af_weyland_login', ventureName: 'weylandai.com' });
+    function authHeaders(json) {
+      const t = auth.getToken();
+      const h = t ? { 'Authorization': 'Bearer ' + t } : {};
+      if (json) h['Content-Type'] = 'application/json';
+      return h;
+    }
+    const log = document.getElementById('dx-log');
+    function logLine(msg, cls) { const d = document.createElement('div'); if (cls) d.className = cls; d.textContent = msg; log.appendChild(d); }
+
+    document.getElementById('dx-analyze-btn').addEventListener('click', async () => {
+      const btn = document.getElementById('dx-analyze-btn');
+      const fileInput = document.getElementById('dx-file');
+      log.innerHTML = '';
+      document.getElementById('dx-result').style.display = 'none';
+      if (!fileInput.files.length) { logLine('Choose a PDF first.', 'err'); return; }
+      const fd = new FormData();
+      fd.append('file', fileInput.files[0]);
+      fd.append('projectName', document.getElementById('dx-project').value.trim());
+      fd.append('drawingSetDate', document.getElementById('dx-date').value);
+      btn.disabled = true;
+      logLine('Uploading and running OCR...');
+      try {
+        const res = await fetch('/api/drawing-index/analyze', { method: 'POST', headers: authHeaders(false), body: fd });
+        const data = await res.json();
+        if (!res.ok) { logLine('Error: ' + (data.error && (data.error.message || data.error) || 'analysis failed'), 'err'); btn.disabled = false; return; }
+        logLine('Done - ' + data.pageCount + ' page(s) scanned.', 'ok');
+        document.getElementById('dx-stats').innerHTML = '<div><b>' + data.pageCount + '</b>PAGES</div><div><b>' + data.sheetCount + '</b>SHEETS</div>';
+        document.getElementById('dx-download').href = data.downloadUrl;
+        document.getElementById('dx-result').style.display = 'block';
+      } catch (e) {
+        logLine('Error: ' + e.message, 'err');
+      }
+      btn.disabled = false;
+    });
+
+    (async () => {
+      try {
+        const probe = await fetch('/api/drawing-index/analyze', { method: 'POST', headers: authHeaders(true), body: JSON.stringify({}) });
+        if (probe.status === 401 || probe.status === 403) {
+          document.getElementById('dx-signin-btn').style.display = 'inline-block';
+          return;
+        }
+        if (probe.status === 402) {
+          document.getElementById('guest-note').innerHTML = 'You\\'re signed in, but your plan doesn\\'t include DrawX yet. See <code>/pricing</code> to add it.';
+          return;
+        }
+        document.getElementById('app').style.display = 'block';
+        document.getElementById('guest-note').style.display = 'none';
+      } catch (e) {
+        document.getElementById('dx-signin-btn').style.display = 'inline-block';
+      }
+    })();
+  </script>
+</body>
+</html>`, { headers: { "Content-Type": "text/html; charset=UTF-8", "Cache-Control": "public, max-age=60" } });
+  }
+  function serve_asbuiltx() {
+    return new Response(`<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#090a0d">
+  <title>AsBuiltX | As-Built vs. Original Diff</title>
+  <style>
+    :root{--bg:#090a0d;--panel:#121419;--panel2:#181b21;--line:#2c3139;--text:#edf0f1;--muted:#9299a3;--gold:#f0b800;--green:#61dfa0;--blue:#66d4ff;--red:#ff756e}
+    *{box-sizing:border-box}html,body{margin:0;min-height:100%;background:var(--bg);color:var(--text);font-family:"Avenir Next","Helvetica Neue",sans-serif}
+    .shell{position:relative;max-width:900px;margin:auto;padding:20px clamp(16px,3vw,40px) 60px}
+    header{display:flex;align-items:center;justify-content:space-between;gap:15px;margin-bottom:24px}
+    .brand{display:flex;align-items:center;gap:12px;color:var(--text);text-decoration:none}
+    .mark{width:42px;height:42px;display:grid;place-items:center;background:var(--red);color:var(--bg);font-weight:900}
+    .brand b{display:block;letter-spacing:.16em}
+    .brand small{display:block;color:var(--muted);font:700 9px/1.5 ui-monospace,monospace;letter-spacing:.11em}
+    .nav{display:flex;gap:8px;flex-wrap:wrap}
+    .nav a,.button{border:1px solid var(--line);border-radius:99px;padding:9px 14px;color:var(--text);text-decoration:none;background:transparent;font:750 10px/1 ui-monospace,monospace;letter-spacing:.06em;cursor:pointer;transition:all .2s}
+    .nav a:hover,.button:hover{border-color:var(--red);color:var(--red)}
+    .button.primary{background:var(--red);border-color:var(--red);color:var(--bg);font-weight:900}
+    .button:disabled{opacity:.5;cursor:not-allowed}
+    .titlebar{margin:35px 0 25px}
+    .eyebrow{color:var(--red);font:800 11px/1 ui-monospace,monospace;letter-spacing:.18em;text-transform:uppercase}
+    .titlebar h1{font-size:clamp(30px,4.5vw,48px);letter-spacing:-.04em;margin:12px 0}
+    .titlebar p{max-width:640px;color:var(--muted);line-height:1.6;margin:0;font-size:15px}
+    .titlebar .caveat{margin-top:10px;color:var(--gold);font-size:12.5px}
+    .card{background:rgba(18,20,25,.94);border:1px solid var(--line);border-radius:16px;padding:22px;margin-bottom:18px}
+    .form-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px}
+    label{display:block;color:var(--muted);font:750 10px/1 ui-monospace,monospace;letter-spacing:.08em;margin-bottom:8px}
+    input{width:100%;padding:11px;background:var(--panel2);border:1px solid var(--line);border-radius:8px;color:var(--text);font-size:14px;box-sizing:border-box;font-family:inherit}
+    input:focus{outline:none;border-color:var(--red)}
+    .step-log{margin-top:14px;color:var(--muted);font-size:13px}
+    .step-log .ok{color:var(--green)}
+    .step-log .err{color:var(--red)}
+    .note-card{color:var(--muted);font-size:14px;line-height:1.6}
+    .note-card code{background:#161920;padding:2px 6px;border-radius:4px;color:var(--red);font-size:13px}
+    .result-row{display:flex;justify-content:space-between;align-items:center;gap:14px;flex-wrap:wrap}
+  </style>
+</head>
+<body>
+  <div class="shell">
+    <header>
+      <a class="brand" href="/"><span class="mark">AB</span><span><b>ASBUILTX</b><small>AS-BUILT VS. ORIGINAL DIFF</small></span></a>
+      <nav class="nav">${renderNav("asbuiltx")}</nav>
+    </header>
+    <div class="titlebar">
+      <div class="eyebrow">AS-BUILT VS. ORIGINAL DIFF</div>
+      <h1>AsBuiltX</h1>
+      <p>Uploads an original drawing sheet and its as-built revision, renders both pages, and computes a real pixel-level difference heatmap between them - no external API, same PDFium engine used elsewhere.</p>
+      <p class="caveat">This is raw pixel comparison, not markup/redline recognition - it flags where pixels differ, not what changed. Scan misalignment will also show up.</p>
+      <a class="button primary" id="ax-signin-btn" href="/login?redirect=/asbuiltx" style="display:none">SIGN IN</a>
+    </div>
+
+    <div id="app" style="display:none">
+      <div class="card">
+        <div class="form-grid">
+          <div><label>PROJECT NAME</label><input id="ax-project" type="text"></div>
+          <div><label>SHEET LABEL</label><input id="ax-sheet" type="text" placeholder="e.g. A-101"></div>
+          <div><label>PAGE NUMBER</label><input id="ax-page" type="number" value="1" min="1"></div>
+          <div><label>ORIGINAL DRAWING (PDF)</label><input id="ax-original" type="file" accept="application/pdf"></div>
+          <div><label>AS-BUILT / REVISED (PDF)</label><input id="ax-revised" type="file" accept="application/pdf"></div>
+        </div>
+        <button id="ax-analyze-btn" class="button primary" style="height:42px;margin-top:16px">COMPUTE DIFF</button>
+        <div class="step-log" id="ax-log"></div>
+      </div>
+      <div class="card" id="ax-result" style="display:none">
+        <div class="result-row">
+          <span id="ax-summary"></span>
+          <a id="ax-download" class="button primary" href="#" target="_blank">DOWNLOAD HEATMAP PDF</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="card note-card" id="guest-note">
+      AsBuiltX is available standalone at $199/mo or as part of TakeoffX Pro. See
+      <code>/pricing</code> for licensing, or sign in above if you already have access.
+    </div>
+  </div>
+  <script src="/assets/authfor-integration-standard.js"></script>
+  <script>
+    const auth = new AuthForStandard({ clientId: 'af_weyland_login', ventureName: 'weylandai.com' });
+    function authHeaders(json) {
+      const t = auth.getToken();
+      const h = t ? { 'Authorization': 'Bearer ' + t } : {};
+      if (json) h['Content-Type'] = 'application/json';
+      return h;
+    }
+    const log = document.getElementById('ax-log');
+    function logLine(msg, cls) { const d = document.createElement('div'); if (cls) d.className = cls; d.textContent = msg; log.appendChild(d); }
+
+    document.getElementById('ax-analyze-btn').addEventListener('click', async () => {
+      const btn = document.getElementById('ax-analyze-btn');
+      const originalInput = document.getElementById('ax-original');
+      const revisedInput = document.getElementById('ax-revised');
+      log.innerHTML = '';
+      document.getElementById('ax-result').style.display = 'none';
+      if (!originalInput.files.length || !revisedInput.files.length) { logLine('Choose both PDFs first.', 'err'); return; }
+      const fd = new FormData();
+      fd.append('original', originalInput.files[0]);
+      fd.append('revised', revisedInput.files[0]);
+      fd.append('projectName', document.getElementById('ax-project').value.trim());
+      fd.append('sheetLabel', document.getElementById('ax-sheet').value.trim());
+      fd.append('page', document.getElementById('ax-page').value || '1');
+      btn.disabled = true;
+      logLine('Rendering pages and computing diff...');
+      try {
+        const res = await fetch('/api/asbuilt-diffs/analyze', { method: 'POST', headers: authHeaders(false), body: fd });
+        const data = await res.json();
+        if (!res.ok) { logLine('Error: ' + (data.error && (data.error.message || data.error) || 'diff failed'), 'err'); btn.disabled = false; return; }
+        logLine('Done.', 'ok');
+        document.getElementById('ax-summary').textContent = data.overallDiffPercent + '% overall pixel difference';
+        document.getElementById('ax-download').href = data.downloadUrl;
+        document.getElementById('ax-result').style.display = 'block';
+      } catch (e) {
+        logLine('Error: ' + e.message, 'err');
+      }
+      btn.disabled = false;
+    });
+
+    (async () => {
+      try {
+        const probe = await fetch('/api/asbuilt-diffs/analyze', { method: 'POST', headers: authHeaders(true), body: JSON.stringify({}) });
+        if (probe.status === 401 || probe.status === 403) {
+          document.getElementById('ax-signin-btn').style.display = 'inline-block';
+          return;
+        }
+        if (probe.status === 402) {
+          document.getElementById('guest-note').innerHTML = 'You\\'re signed in, but your plan doesn\\'t include AsBuiltX yet. See <code>/pricing</code> to add it.';
+          return;
+        }
+        document.getElementById('app').style.display = 'block';
+        document.getElementById('guest-note').style.display = 'none';
+      } catch (e) {
+        document.getElementById('ax-signin-btn').style.display = 'inline-block';
+      }
+    })();
+  </script>
+</body>
+</html>`, { headers: { "Content-Type": "text/html; charset=UTF-8", "Cache-Control": "public, max-age=60" } });
+  }
+  function serve_leadx() {
+    return new Response(`<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#090a0d">
+  <title>LeadX | Lead Qualification Engine</title>
+  <style>
+    :root{--bg:#090a0d;--panel:#121419;--panel2:#181b21;--line:#2c3139;--text:#edf0f1;--muted:#9299a3;--gold:#f0b800;--green:#61dfa0;--blue:#66d4ff;--red:#ff756e}
+    *{box-sizing:border-box}html,body{margin:0;min-height:100%;background:var(--bg);color:var(--text);font-family:"Avenir Next","Helvetica Neue",sans-serif}
+    .shell{position:relative;max-width:900px;margin:auto;padding:20px clamp(16px,3vw,40px) 60px}
+    header{display:flex;align-items:center;justify-content:space-between;gap:15px;margin-bottom:24px}
+    .brand{display:flex;align-items:center;gap:12px;color:var(--text);text-decoration:none}
+    .mark{width:42px;height:42px;display:grid;place-items:center;background:var(--gold);color:var(--bg);font-weight:900}
+    .brand b{display:block;letter-spacing:.16em}
+    .brand small{display:block;color:var(--muted);font:700 9px/1.5 ui-monospace,monospace;letter-spacing:.11em}
+    .nav{display:flex;gap:8px;flex-wrap:wrap}
+    .nav a,.button{border:1px solid var(--line);border-radius:99px;padding:9px 14px;color:var(--text);text-decoration:none;background:transparent;font:750 10px/1 ui-monospace,monospace;letter-spacing:.06em;cursor:pointer;transition:all .2s}
+    .nav a:hover,.button:hover{border-color:var(--gold);color:var(--gold)}
+    .button.primary{background:var(--gold);border-color:var(--gold);color:var(--bg);font-weight:900}
+    .button:disabled{opacity:.5;cursor:not-allowed}
+    .titlebar{margin:35px 0 25px}
+    .eyebrow{color:var(--gold);font:800 11px/1 ui-monospace,monospace;letter-spacing:.18em;text-transform:uppercase}
+    .titlebar h1{font-size:clamp(30px,4.5vw,48px);letter-spacing:-.04em;margin:12px 0}
+    .titlebar p{max-width:640px;color:var(--muted);line-height:1.6;margin:0;font-size:15px}
+    .titlebar .caveat{margin-top:10px;color:var(--red);font-size:12.5px}
+    .card{background:rgba(18,20,25,.94);border:1px solid var(--line);border-radius:16px;padding:22px;margin-bottom:18px}
+    .section-label{color:var(--gold);font:800 10px/1 ui-monospace,monospace;letter-spacing:.1em;text-transform:uppercase;margin-bottom:14px;display:block}
+    .form-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px}
+    label{display:block;color:var(--muted);font:750 10px/1 ui-monospace,monospace;letter-spacing:.08em;margin-bottom:8px}
+    input{width:100%;padding:11px;background:var(--panel2);border:1px solid var(--line);border-radius:8px;color:var(--text);font-size:14px;box-sizing:border-box;font-family:inherit}
+    input:focus{outline:none;border-color:var(--gold)}
+    .step-log{margin-top:14px;color:var(--muted);font-size:13px}
+    .step-log .ok{color:var(--green)}
+    .step-log .err{color:var(--red)}
+    .note-card{color:var(--muted);font-size:14px;line-height:1.6}
+    .note-card code{background:#161920;padding:2px 6px;border-radius:4px;color:var(--gold);font-size:13px}
+    .result-row{display:flex;justify-content:space-between;align-items:center;gap:14px;flex-wrap:wrap}
+    .stat-row{display:flex;gap:20px;color:var(--muted);font-size:13px}
+    .stat-row b{color:var(--text);font-size:18px;display:block}
+  </style>
+</head>
+<body>
+  <div class="shell">
+    <header>
+      <a class="brand" href="/"><span class="mark">LX</span><span><b>LEADX</b><small>LEAD QUALIFICATION ENGINE</small></span></a>
+      <nav class="nav">${renderNav("leadx")}</nav>
+    </header>
+    <div class="titlebar">
+      <div class="eyebrow">LEAD QUALIFICATION ENGINE</div>
+      <h1>LeadX</h1>
+      <p>Scores the live opportunities HuntX already crawls (TXDOT + CA OPSC open data) against your saved criteria - minimum value, keywords, and locations - and generates a qualified-leads report.</p>
+      <p class="caveat">Scoring is three simple, explainable rules, not an AI judgment of project quality or win probability.</p>
+      <a class="button primary" id="lx-signin-btn" href="/login?redirect=/leadx" style="display:none">SIGN IN</a>
+    </div>
+
+    <div id="app" style="display:none">
+      <div class="card">
+        <span class="section-label">QUALIFICATION CRITERIA</span>
+        <div class="form-grid">
+          <div><label>MINIMUM VALUE ($)</label><input id="lx-min-value" type="number" min="0" placeholder="e.g. 500000"></div>
+          <div><label>KEYWORDS (COMMA-SEPARATED)</label><input id="lx-keywords" type="text" placeholder="e.g. door, hardware, school"></div>
+          <div><label>LOCATIONS (COMMA-SEPARATED)</label><input id="lx-locations" type="text" placeholder="e.g. Travis, Harris, CA"></div>
+        </div>
+        <button id="lx-save-btn" class="button" style="margin-top:14px">SAVE CRITERIA</button>
+        <button id="lx-qualify-btn" class="button primary" style="height:42px;margin-top:14px">RUN QUALIFICATION</button>
+        <div class="step-log" id="lx-log"></div>
+      </div>
+      <div class="card" id="lx-result" style="display:none">
+        <div class="result-row">
+          <div class="stat-row" id="lx-stats"></div>
+          <a id="lx-download" class="button primary" href="#" target="_blank">DOWNLOAD REPORT PDF</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="card note-card" id="guest-note">
+      LeadX is available standalone at $249/mo or as part of HuntX Pro. See
+      <code>/pricing</code> for licensing, or sign in above if you already have access. Requires an active HuntX seat for opportunity data.
+    </div>
+  </div>
+  <script src="/assets/authfor-integration-standard.js"></script>
+  <script>
+    const auth = new AuthForStandard({ clientId: 'af_weyland_login', ventureName: 'weylandai.com' });
+    function authHeaders(json) {
+      const t = auth.getToken();
+      const h = t ? { 'Authorization': 'Bearer ' + t } : {};
+      if (json) h['Content-Type'] = 'application/json';
+      return h;
+    }
+    const log = document.getElementById('lx-log');
+    function logLine(msg, cls) { const d = document.createElement('div'); if (cls) d.className = cls; d.textContent = msg; log.appendChild(d); }
+
+    async function loadCriteria() {
+      try {
+        const res = await fetch('/api/leads/criteria', { headers: authHeaders() });
+        const data = await res.json();
+        if (data.criteria) {
+          document.getElementById('lx-min-value').value = data.criteria.min_value || '';
+          document.getElementById('lx-keywords').value = data.criteria.keywords || '';
+          document.getElementById('lx-locations').value = data.criteria.locations || '';
+        }
+      } catch (e) {}
+    }
+
+    document.getElementById('lx-save-btn').addEventListener('click', async () => {
+      logLine('Saving criteria...');
+      try {
+        const res = await fetch('/api/leads/criteria', { method: 'POST', headers: authHeaders(true), body: JSON.stringify({
+          minValue: document.getElementById('lx-min-value').value,
+          keywords: document.getElementById('lx-keywords').value.trim(),
+          locations: document.getElementById('lx-locations').value.trim()
+        }) });
+        if (!res.ok) { logLine('Error saving criteria.', 'err'); return; }
+        logLine('Criteria saved.', 'ok');
+      } catch (e) {
+        logLine('Error: ' + e.message, 'err');
+      }
+    });
+
+    document.getElementById('lx-qualify-btn').addEventListener('click', async () => {
+      const btn = document.getElementById('lx-qualify-btn');
+      log.innerHTML = '';
+      document.getElementById('lx-result').style.display = 'none';
+      btn.disabled = true;
+      logLine('Scoring current HuntX opportunities...');
+      try {
+        const res = await fetch('/api/leads/qualify', { method: 'POST', headers: authHeaders(true), body: JSON.stringify({}) });
+        const data = await res.json();
+        if (!res.ok) { logLine('Error: ' + (data.error && (data.error.message || data.error) || 'qualification failed'), 'err'); btn.disabled = false; return; }
+        logLine('Done.', 'ok');
+        document.getElementById('lx-stats').innerHTML = '<div><b>' + data.totalScanned + '</b>SCANNED</div><div><b>' + data.qualifiedCount + '</b>QUALIFIED</div>';
+        document.getElementById('lx-download').href = data.downloadUrl;
+        document.getElementById('lx-result').style.display = 'block';
+      } catch (e) {
+        logLine('Error: ' + e.message, 'err');
+      }
+      btn.disabled = false;
+    });
+
+    (async () => {
+      try {
+        const probe = await fetch('/api/leads/criteria', { headers: authHeaders() });
+        if (probe.status === 401 || probe.status === 403) {
+          document.getElementById('lx-signin-btn').style.display = 'inline-block';
+          return;
+        }
+        if (probe.status === 402) {
+          document.getElementById('guest-note').innerHTML = 'You\\'re signed in, but your plan doesn\\'t include LeadX yet. See <code>/pricing</code> to add it.';
+          return;
+        }
+        document.getElementById('app').style.display = 'block';
+        document.getElementById('guest-note').style.display = 'none';
+        loadCriteria();
+      } catch (e) {
+        document.getElementById('lx-signin-btn').style.display = 'inline-block';
+      }
+    })();
+  </script>
+</body>
+</html>`, { headers: { "Content-Type": "text/html; charset=UTF-8", "Cache-Control": "public, max-age=60" } });
+  }
+  function serve_careers() {
+    return new Response('<!doctype html>\n<html lang="en">\n<head>\n  <meta charset="utf-8">\n  <meta name="viewport" content="width=device-width,initial-scale=1">\n  <meta name="theme-color" content="#090a0d">\n  <title>Careers | WeylandAI</title>\n  <style>\n    :root{--bg:#090a0d;--panel:#121419;--line:#2c3139;--text:#edf0f1;--muted:#9299a3;--gold:#f0b800;--green:#61dfa0;--blue:#66d4ff;--purple:#a78bfa}\n    *{box-sizing:border-box}html,body{margin:0;min-height:100%;background:var(--bg);color:var(--text);font-family:"Avenir Next","Helvetica Neue",sans-serif}\n    body:before{content:"";position:fixed;inset:0;pointer-events:none;background:radial-gradient(circle at 80% 80%,rgba(167,139,242,.12),transparent 30rem),linear-gradient(rgba(255,255,255,.015) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.015) 1px,transparent 1px);background-size:auto,30px 30px,30px 30px}\n    .shell{position:relative;max-width:1300px;margin:auto;padding:20px clamp(16px,3vw,40px) 60px}\n    header{display:flex;align-items:center;justify-content:space-between;gap:15px;margin-bottom:24px}\n    .brand{display:flex;align-items:center;gap:12px;color:var(--text);text-decoration:none}\n    .mark{width:42px;height:42px;display:grid;place-items:center;background:var(--purple);color:var(--bg);font-weight:900}\n    .brand b{display:block;letter-spacing:.16em}\n    .brand small{display:block;color:var(--muted);font:700 9px/1.5 ui-monospace,monospace;letter-spacing:.11em}\n    .nav{display:flex;gap:8px;flex-wrap:wrap}\n    .nav a,.button{border:1px solid var(--line);border-radius:99px;padding:9px 14px;color:var(--text);text-decoration:none;background:transparent;font:750 10px/1 ui-monospace,monospace;letter-spacing:.06em;cursor:pointer;transition:all .2s}\n    .nav a:hover,.button:hover{border-color:var(--purple);color:var(--purple)}\n    .button.primary{background:var(--purple);border-color:var(--purple);color:var(--bg);font-weight:900}\n    \n    .titlebar{text-align:center;margin:45px 0 50px}\n    .eyebrow{color:var(--purple);font:800 11px/1 ui-monospace,monospace;letter-spacing:.18em;text-transform:uppercase}\n    .titlebar h1{font-size:clamp(36px,5vw,62px);letter-spacing:-.05em;line-height:1.05;margin:14px 0}\n    .titlebar p{max-width:700px;color:var(--muted);line-height:1.6;margin:0 auto;font-size:17px}\n    \n    .req-grid{display:grid;gap:20px;margin-top:30px}\n    .req-card{background:rgba(18,20,25,.92);border:1px solid var(--line);border-radius:16px;padding:26px;display:flex;justify-content:space-between;align-items:center;transition:all .2s;flex-wrap:wrap;gap:20px}\n    .req-card:hover{border-color:var(--purple);transform:translateY(-2px);box-shadow:0 15px 40px rgba(0,0,0,.3)}\n    .req-meta span{font:800 10px ui-monospace,monospace;color:var(--purple);display:inline-block;margin-right:12px;text-transform:uppercase}\n    .req-title{font-size:22px;font-weight:800;color:#fff;margin:8px 0 6px}\n    .req-desc{color:var(--muted);font-size:14px;line-height:1.5;max-width:680px;margin:0}\n    .salary-box{text-align:right}\n    .salary-box strong{font-size:20px;color:var(--green);display:block;font-weight:900}\n    .salary-box small{color:var(--muted);font-size:12px;display:block;margin-top:2px}\n    \n    @media(max-width:800px){.req-card{flex-direction:column;align-items:flex-start}.salary-box{text-align:left;width:100%}}\n  </style>\n</head>\n<body>\n  <div class="shell">\n    <header>\n      <a class="brand" href="/"><span class="mark">CR</span><span><b>WEYLANDAI</b><small>THE FECUNDITY TALENT VECTOR</small></span></a>\n      <nav class="nav">' + renderNav("careers") + `</nav>
+    </header>
+    <div class="titlebar">
+      <div class="eyebrow">JOIN THE TEAM</div>
+      <h1>We're not hiring through a job board yet.</h1>
+      <p>WeylandAI is a small, early-stage team building construction document automation \u2014 HuntX, SubX, TakeoffX, PropX, and SightX on one shared project record. If you want to work on real construction AI with a founder-led team, reach out directly with what you'd want to build and why.</p>
+      <p style="margin-top:24px"><a class="button primary" href="mailto:hello@weylandai.com?subject=Interested%20in%20WeylandAI">EMAIL HELLO@WEYLANDAI.COM</a></p>
+    </div>
+  </div>
+</body>
+</html>
+`, { headers: { "Content-Type": "text/html; charset=UTF-8", "Cache-Control": "public, max-age=60" } });
+  }
+  function serve_sightx() {
+    return new Response(`<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SightX | WeylandAI Site Vision Demonstrator</title>
+  <meta name="description" content="Explore the SightX construction-vision demonstrator: a navigable WeylandAI facility with automated openings and site intelligence overlays.">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><rect width='64' height='64' fill='%23f0b800'/><path d='M13 16h8l6 28h-8zm15 0h8l4 17 4-17h8l-8 28h-8z' fill='%23090a0d'/></svg>">
+  
+  <!-- Premium Typography -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;700&family=Outfit:wght@300;400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/assets/sightx-controls.css?v=20260729-3">
+  <link rel="stylesheet" href="/assets/sightx-experience.css?v=20260729-3">
+  <link rel="stylesheet" href="/assets/sightx-ingest.css?v=20260729-3">
+  <link rel="stylesheet" href="/assets/sightx-reconstruction.css?v=20260729-1">
+  <link rel="stylesheet" href="/assets/sightx-runtime.css?v=20260813-1">
+  
+  <style>
+    :root {
+      --color-primary: #f0b800;
+      --color-accent: #d9e2e8;
+      --void-glow: rgba(240, 184, 0, 0.24);
+    }
+    
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    
+    body {
+      font-family: 'Outfit', sans-serif;
+      background: #030305;
+      color: #f0f0f5;
+      overflow-x: hidden;
+      min-height: 100vh;
+    }
+    
+    #bg-canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      z-index: 1;
+      transition: filter 1.0s cubic-bezier(0.4, 0, 0.2, 1);
+      filter: brightness(0.45) blur(4px);
+    }
+    
+    #bg-canvas.interactive {
+      filter: brightness(1.0) blur(0px);
+      cursor: crosshair;
+    }
+
+    body.sightx-demo #bg-canvas {
+      filter: brightness(1.0) blur(0px);
+      cursor: crosshair;
+    }
+
+    body.sightx-demo #app-container {
+      display: none;
+    }
+    
+    #app-container {
+      position: relative;
+      z-index: 2;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+      backdrop-filter: blur(8px);
+      transition: opacity 0.5s cubic-bezier(0.4, 0, 0.2, 1), transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+      opacity: 1;
+      transform: scale(1);
+    }
+    
+    #app-container.hidden {
+      opacity: 0;
+      pointer-events: none;
+      transform: scale(0.98);
+    }
+    
+    header {
+      padding: 25px 40px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    }
+    
+    .logo {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 24px;
+      font-weight: 700;
+      color: var(--color-primary);
+      text-shadow: 0 0 10px var(--void-glow);
+      letter-spacing: 2px;
+    }
+    
+    .logo span {
+      color: rgba(217, 226, 232, 0.58);
+      font-weight: 300;
+      letter-spacing: 1px;
+    }
+    
+    .status-badge {
+      background: rgba(240, 184, 0, 0.05);
+      border: 1px solid rgba(240, 184, 0, 0.2);
+      padding: 8px 16px;
+      border-radius: 20px;
+      font-size: 13px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-family: 'Space Grotesk', sans-serif;
+    }
+    
+    .status-dot {
+      width: 8px;
+      height: 8px;
+      background: var(--color-primary);
+      border-radius: 50%;
+      box-shadow: 0 0 8px var(--color-primary);
+    }
+    
+    main {
+      flex: 1;
+      max-width: 800px;
+      margin: 0 auto;
+      width: 100%;
+      padding: 40px 20px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+    
+    .slideshow-container {
+      position: relative;
+      background: rgba(10, 10, 15, 0.85);
+      border: 1px solid rgba(240, 184, 0, 0.15);
+      border-radius: 20px;
+      padding: 40px;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.6);
+      min-height: 380px;
+      display: flex;
+      flex-direction: column;
+    }
+    
+    .slide {
+      display: none;
+      flex-direction: column;
+      flex: 1;
+      animation: fadeIn 0.4s ease-out forwards;
+    }
+    
+    .slide.active {
+      display: flex;
+    }
+    
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(5px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    
+    .category-label {
+      display: inline-block;
+      padding: 6px 12px;
+      background: rgba(240, 184, 0, 0.08);
+      border: 1px solid var(--color-primary);
+      color: var(--color-primary);
+      border-radius: 30px;
+      font-size: 11px;
+      font-weight: 600;
+      margin-bottom: 20px;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      align-self: flex-start;
+      font-family: 'Space Grotesk', sans-serif;
+    }
+    
+    h1 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 38px;
+      margin-bottom: 18px;
+      line-height: 1.1;
+      color: #fff;
+    }
+    
+    .purpose-text {
+      font-size: 16px;
+      line-height: 1.6;
+      color: #b0b0c5;
+      margin-bottom: 25px;
+    }
+    
+    .product-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 15px;
+      margin-top: 10px;
+    }
+    
+    .product-box {
+      background: rgba(255,255,255,0.01);
+      border: 1px solid rgba(255,255,255,0.04);
+      border-radius: 12px;
+      padding: 16px;
+      transition: all 0.2s;
+    }
+    
+    .product-box:hover {
+      border-color: rgba(240, 184, 0, 0.2);
+      background: rgba(240, 184, 0, 0.02);
+    }
+    
+    .product-title {
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 700;
+      color: var(--color-primary);
+      font-size: 15px;
+      margin-bottom: 6px;
+    }
+    
+    .product-desc {
+      font-size: 12px;
+      color: #808095;
+      line-height: 1.4;
+    }
+    
+    /* Interactive Widget */
+    .widget-title {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 18px;
+      font-weight: 700;
+      margin-bottom: 15px;
+      color: var(--color-primary);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    
+    .console-box {
+      flex: 1;
+      background: #020204;
+      border: 1px solid rgba(240,184,0,0.1);
+      border-radius: 10px;
+      padding: 15px;
+      font-family: 'Space Grotesk', monospace;
+      font-size: 13px;
+      color: var(--color-primary);
+      min-height: 180px;
+      overflow-y: auto;
+      margin-bottom: 15px;
+      box-shadow: inset 0 0 10px rgba(0,0,0,0.8);
+    }
+    
+    .console-input-row {
+      display: flex;
+      gap: 10px;
+    }
+    
+    .console-input {
+      flex: 1;
+      background: #020204;
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 8px;
+      padding: 10px 14px;
+      color: #fff;
+      font-family: monospace;
+      outline: none;
+      font-size: 13px;
+    }
+    
+    .console-input:focus {
+      border-color: var(--color-primary);
+    }
+    
+    .console-btn {
+      background: var(--color-primary);
+      border: none;
+      color: #000;
+      padding: 10px 20px;
+      border-radius: 8px;
+      font-weight: 700;
+      cursor: pointer;
+      font-family: 'Space Grotesk', sans-serif;
+      transition: all 0.2s;
+    }
+    
+    .console-btn:hover {
+      box-shadow: 0 0 12px var(--color-primary);
+    }
+    
+    .portal-trigger {
+      margin-top: 15px;
+      text-align: center;
+    }
+    
+    .portal-btn {
+      display: inline-block;
+      text-decoration: none;
+      color: #808095;
+      font-size: 12px;
+      padding: 8px 16px;
+      border-radius: 30px;
+      border: 1px solid rgba(255,255,255,0.1);
+      transition: all 0.2s;
+    }
+    
+    .portal-btn:hover {
+      color: #fff;
+      border-color: var(--color-accent);
+    }
+    
+    /* Product Footer Browser styling */
+    .product-footer-browser {
+      margin-top: 30px;
+      border-top: 1px solid rgba(255, 255, 255, 0.05);
+      padding-top: 20px;
+      display: flex;
+      justify-content: center;
+    }
+    
+    .product-tabs {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+    
+    .product-tab {
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      color: #808095;
+      padding: 10px 20px;
+      border-radius: 8px;
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 1px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    
+    .product-tab:hover {
+      border-color: var(--color-primary);
+      color: #fff;
+    }
+    
+    .product-tab.active {
+      background: var(--color-primary);
+      color: #000;
+      border-color: var(--color-primary);
+      box-shadow: 0 0 10px rgba(240, 184, 0, 0.2);
+    }
+    
+    /* Fleet browser drawer */
+    .fleet-browser-container {
+      position: relative;
+      width: 100%;
+    }
+    
+    .fleet-drawer {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 100vw;
+      background: rgba(6, 6, 9, 0.97);
+      border-top: 1px solid var(--color-primary);
+      box-shadow: 0 -10px 40px rgba(0, 0, 0, 0.8);
+      z-index: 998;
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+      backdrop-filter: blur(15px);
+    }
+    
+    .fleet-drawer.open {
+      max-height: 280px;
+    }
+    
+    .fleet-drawer-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 15px 40px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    }
+    
+    .fleet-drawer-title {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 13px;
+      letter-spacing: 2px;
+      color: var(--color-accent);
+      font-weight: 700;
+      text-transform: uppercase;
+    }
+    
+    .close-drawer-btn {
+      background: none;
+      border: none;
+      color: #808095;
+      font-size: 18px;
+      cursor: pointer;
+      transition: color 0.2s;
+    }
+    
+    .close-drawer-btn:hover {
+      color: #fff;
+    }
+    
+    .fleet-links-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 10px;
+      padding: 20px 40px;
+      overflow-y: auto;
+      max-height: 200px;
+    }
+    
+    .fleet-link {
+      color: #808095;
+      text-decoration: none;
+      font-size: 12px;
+      padding: 10px 14px;
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      border-radius: 8px;
+      transition: all 0.2s;
+      font-family: 'Space Grotesk', sans-serif;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      overflow: hidden;
+      text-align: left;
+    }
+    
+    .fleet-link:hover {
+      background: rgba(240, 184, 0, 0.08);
+      border-color: var(--color-primary);
+      color: #fff;
+      transform: translateY(-2px);
+    }
+    
+    .cat-chips {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 6px;
+    }
+    
+    .cat-chip {
+      display: inline-block;
+      font-size: 11px;
+      padding: 6px 12px;
+      background: rgba(255,255,255,0.02);
+      border: 1px solid rgba(255,255,255,0.05);
+      color: #808095;
+      border-radius: 30px;
+      cursor: pointer;
+      transition: all 0.2s;
+      font-family: 'Space Grotesk', sans-serif;
+    }
+    
+    .cat-chip:hover, .cat-chip.active {
+      background: rgba(240, 184, 0, 0.08);
+      color: var(--color-primary);
+      border-color: var(--color-primary);
+    }
+    
+    footer {
+      border-top: 1px solid rgba(255, 255, 255, 0.05);
+      padding: 30px 40px;
+      background: rgba(5,5,8,0.9);
+      text-align: center;
+    }
+    
+    .footer-text {
+      color: #606075;
+      font-size: 12px;
+      line-height: 1.6;
+    }
+    
+    /* Play Mode HUD Hints */
+    #hint {
+      position: fixed;
+      top: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 10;
+      background: rgba(0, 0, 0, 0.85);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      padding: 8px 16px;
+      border-radius: 20px;
+      font-family: 'Space Grotesk', monospace;
+      font-size: 11px;
+      letter-spacing: 1px;
+      color: #888;
+      pointer-events: none;
+      transition: opacity 0.3s;
+    }
+    
+    /* High-tech HUD Hardware Proximity Modal */
+    .hud-modal {
+      position: fixed;
+      bottom: 40px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 5;
+      background: linear-gradient(180deg, rgba(9, 9, 11, 0.95) 0%, rgba(3, 3, 5, 0.98) 100%);
+      border: 1px solid var(--color-primary);
+      box-shadow: 0 0 25px rgba(240, 184, 0, 0.25);
+      padding: 22px;
+      border-radius: 12px;
+      width: 90%;
+      max-width: 450px;
+      font-family: 'Space Grotesk', monospace;
+      color: #fff;
+      backdrop-filter: blur(10px);
+      animation: hud-reveal 0.3s cubic-bezier(0.19, 1, 0.22, 1);
+    }
+    
+    @keyframes hud-reveal {
+      from { transform: translate(-50%, 20px); opacity: 0; }
+      to { transform: translate(-50%, 0); opacity: 1; }
+    }
+    
+    .hud-scanner {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 2px;
+      background: var(--color-primary);
+      box-shadow: 0 0 8px var(--color-primary);
+      animation: scan 1.5s linear infinite;
+    }
+    
+    @keyframes scan {
+      0% { top: 0%; opacity: 0; }
+      10% { opacity: 1; }
+      90% { opacity: 1; }
+      100% { top: 100%; opacity: 0; }
+    }
+    
+    .hud-header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      border-bottom: 1px solid rgba(240, 184, 0, 0.2);
+      padding-bottom: 10px;
+      margin-bottom: 12px;
+    }
+    
+    .hud-icon {
+      font-size: 18px;
+    }
+    
+    .hud-title {
+      font-weight: 700;
+      color: var(--color-primary);
+      letter-spacing: 1px;
+      font-size: 14px;
+    }
+    
+    .hud-body {
+      font-size: 13px;
+      line-height: 1.5;
+    }
+    
+    .hud-label {
+      color: #808095;
+      margin-bottom: 5px;
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    
+    .hud-value {
+      color: #f0f0f5;
+      margin-bottom: 10px;
+    }
+    
+    .hud-sub {
+      color: var(--color-accent);
+      font-size: 11px;
+      border-top: 1px solid rgba(255, 255, 255, 0.05);
+      padding-top: 12px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    
+    .hud-sub a {
+      color: var(--color-accent);
+      text-decoration: none;
+      border: 1px solid var(--color-accent);
+      padding: 3px 8px;
+      border-radius: 4px;
+      background: rgba(0, 229, 255, 0.05);
+      transition: all 0.2s;
+    }
+    
+    .hud-sub a:hover {
+      color: #fff;
+      border-color: #fff;
+      background: rgba(0, 229, 255, 0.15);
+      box-shadow: 0 0 8px var(--color-accent);
+    }
+    
+    /* Login Screen Modal Overlay */
+    #os-login-modal {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(3, 3, 5, 0.95);
+      z-index: 999;
+      display: none;
+      justify-content: center;
+      align-items: center;
+      backdrop-filter: blur(15px);
+    }
+    
+    .login-box {
+      width: 100%;
+      max-width: 400px;
+      background: rgba(10, 10, 15, 0.85);
+      border: 1px solid rgba(240, 184, 0, 0.2);
+      border-radius: 20px;
+      padding: 40px;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.8);
+      text-align: center;
+    }
+    
+    .login-box h2 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 30px;
+      margin-bottom: 10px;
+      color: var(--color-primary);
+    }
+    
+    .login-box p {
+      color: #808095;
+      font-size: 13px;
+      margin-bottom: 30px;
+    }
+    
+    .login-input {
+      width: 100%;
+      background: #020204;
+      border: 1px solid rgba(240,184,0,0.2);
+      border-radius: 10px;
+      padding: 12px 16px;
+      color: #fff;
+      font-size: 15px;
+      margin-bottom: 15px;
+      outline: none;
+      font-family: monospace;
+    }
+    
+    .login-input:focus {
+      border-color: var(--color-accent);
+    }
+    
+    .login-button {
+      width: 100%;
+      background: var(--color-primary);
+      color: #000;
+      border: none;
+      padding: 12px 20px;
+      border-radius: 10px;
+      font-size: 16px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.2s;
+      font-family: 'Space Grotesk', sans-serif;
+    }
+    
+    .login-button:hover {
+      box-shadow: 0 0 15px var(--color-primary);
+    }
+    
+    .close-modal {
+      margin-top: 15px;
+      font-size: 13px;
+      color: #606075;
+      cursor: pointer;
+    }
+    
+    .close-modal:hover {
+      color: #fff;
+    }
+
+    /* Mobile media queries */
+    @media (max-width: 600px) {
+      header {
+        padding: 15px 20px;
+      }
+      .logo {
+        font-size: 20px;
+      }
+      h1 {
+        font-size: 28px;
+      }
+      .purpose-text {
+        font-size: 14px;
+        line-height: 1.5;
+      }
+      .slideshow-container {
+        padding: 20px;
+        min-height: auto;
+      }
+      .product-grid {
+        grid-template-columns: 1fr;
+      }
+      .product-tab {
+        padding: 8px 12px;
+        font-size: 10px;
+      }
+      .hud-modal {
+        bottom: 20px;
+        padding: 15px;
+      }
+      .fleet-drawer-header { padding: 15px 20px; }
+      .fleet-links-grid { padding: 15px 20px; grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body class="sightx-demo">
+  
+  <!-- The Playable WebGL Canvas -->
+  <canvas id="bg-canvas"></canvas>
+  
+  <div id="hint">CLICK to capture mouse</div>
+  
+  <!-- High-tech HUD Hardware Proximity Modal -->
+  <div id="hardware-modal" class="hud-modal" style="display: none;">
+    <div class="hud-scanner"></div>
+    <div class="hud-header">
+      <span class="hud-icon">SX</span>
+      <span class="hud-title" id="hud-door-name">DOORWAY PROXIMITY SIGNAL</span>
+    </div>
+    <div class="hud-body">
+      <div class="hud-label">Hardware Schedule:</div>
+      <div class="hud-value" id="hud-door-hardware">Extracting specifications...</div>
+      <div class="hud-sub">
+        <span>Verified via SubX Platform</span>
+        <a href="https://precisionautodoors.com" target="_blank">Precision Auto Doors</a>
+      </div>
+    </div>
+  </div>
+  
+  <div id="app-container">
+    <header>
+      <div class="logo">WEYLAND<span>AI</span></div>
+      <div class="status-badge">
+        <div class="status-dot"></div>
+        <span>Build Network Online</span>
+      </div>
+    </header>
+    
+    <main>
+      <div class="slideshow-container" id="slideshow">
+        
+        <!-- Slide 0: Overview -->
+        <div class="slide active">
+          <div class="category-label">Autonomous Construction</div>
+          <h1>Build at machine scale.</h1>
+          <p class="purpose-text">WeylandAI unifies project intelligence, computer vision, autonomous equipment, and robotic trade crews in one construction operating system. We take a build from opportunity discovery through verified completion with less delay, waste, and coordination loss.</p>
+        </div>
+        
+        <!-- Slide 1: Project intelligence -->
+        <div class="slide">
+          <div class="category-label">Project Intelligence</div>
+          <h1>See the work before it begins.</h1>
+          <p class="purpose-text">Our intelligence pipeline discovers viable projects, maps subcontractor capacity, reads plans and imagery, quantifies scope, and turns uncertainty into an executable construction plan.</p>
+          <div class="product-grid">
+            <div class="product-box">
+              <div class="product-title">HuntX + SubX</div>
+              <div class="product-desc">Opportunity discovery, qualification, capacity mapping, and subcontractor intelligence.</div>
+            </div>
+            <div class="product-box">
+              <div class="product-title">SightX + TakeoffX</div>
+              <div class="product-desc">Site vision, dimension extraction, material quantities, hazards, and automated estimates.</div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Slide 2: Robotics -->
+        <div class="slide">
+          <div class="category-label">Robotic Field Systems</div>
+          <h1>Autonomous crews. Coordinated as one.</h1>
+          <p class="purpose-text">WeylandAI coordinates earthwork, concrete, framing, masonry, roofing, electrical, and plumbing systems against the same live model, schedule, safety envelope, and quality record.</p>
+          <div class="product-grid">
+            <div class="product-box">
+              <div class="product-title">Earthwork Fleet</div>
+              <div class="product-desc">GPS/RTK-guided excavation, grading, trenching, telemetry, and obstacle avoidance.</div>
+            </div>
+            <div class="product-box">
+              <div class="product-title">Trade Crews</div>
+              <div class="product-desc">Repeatable robotic installation with code, tolerance, and quality verification.</div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Slide 3: Computing -->
+        <div class="slide">
+          <div class="category-label">Construction Operating System</div>
+          <h1>One control plane for every site.</h1>
+          <p class="purpose-text">A shared digital thread connects plans, bids, equipment, crews, progress evidence, safety findings, and client reporting. Every completed project makes the next project faster and more predictable.</p>
+        </div>
+        
+        <!-- Slide 4: Secure Console -->
+        <div class="slide">
+          <div class="widget-card">
+            <div class="widget-title">
+              <span>&gt;_</span> Project Console
+            </div>
+            <div class="console-box" id="console-display">
+              System initialized.<br>
+              Category: Construction / Automation<br>
+              Status: READY<br>
+              Type 'help' to begin...<br>
+              <br>
+              &gt;
+            </div>
+            <div class="console-input-row">
+              <input type="text" class="console-input" id="console-cmd" placeholder="Type a command...">
+              <button class="console-btn" onclick="executeCommand()">Run</button>
+            </div>
+            <div class="portal-trigger">
+              <a href="#" class="portal-btn" onclick="openLoginModal()">Access Client Workspace</a>
+            </div>
+          </div>
+        </div>
+        
+      </div>
+      
+      <!-- Product Footer Browser (SPA tabs) -->
+      <div class="product-footer-browser">
+        <div class="product-tabs">
+          <button class="product-tab active" onclick="goToSlide(0)">OVERVIEW</button>
+          <button class="product-tab" onclick="goToSlide(1)">INTELLIGENCE</button>
+          <button class="product-tab" onclick="goToSlide(2)">FIELD FLEET</button>
+          <button class="product-tab" onclick="goToSlide(3)">BUILD OS</button>
+          <button class="product-tab" onclick="goToSlide(4)">CLIENT CONSOLE</button>
+        </div>
+      </div>
+    </main>
+    
+    <footer>
+      <div class="footer-text">
+        <div class="fleet-browser-container">
+          <div class="fleet-drawer" id="fleet-drawer">
+            <div class="fleet-drawer-header">
+              <div class="fleet-drawer-title" id="fleet-drawer-title">Explore Fleet Category</div>
+              <button class="close-drawer-btn" onclick="closeFleetDrawer()">\u2715</button>
+            </div>
+            <div class="fleet-links-grid" id="fleet-links-grid"></div>
+          </div>
+          
+          <div class="network-tray" style="margin-bottom: 25px;">
+            <div class="network-tray-title">Explore the MobCorp Venture Fleet</div>
+            <div class="cat-chips">
+              <span class="cat-chip" onclick="toggleFleetCategory('AI')">AI</span> <span class="cat-chip" onclick="toggleFleetCategory('Agents')">Agents</span> <span class="cat-chip" onclick="toggleFleetCategory('Business')">Business</span> <span class="cat-chip" onclick="toggleFleetCategory('Corporate')">Corporate</span> <span class="cat-chip" onclick="toggleFleetCategory('Defense')">Defense</span> <span class="cat-chip" onclick="toggleFleetCategory('Dev Tools')">Dev Tools</span> <span class="cat-chip" onclick="toggleFleetCategory('Education')">Education</span> <span class="cat-chip" onclick="toggleFleetCategory('Finance')">Finance</span> <span class="cat-chip" onclick="toggleFleetCategory('Health')">Health</span> <span class="cat-chip" onclick="toggleFleetCategory('Media')">Media</span> <span class="cat-chip" onclick="toggleFleetCategory('Science')">Science</span> 
+            </div>
+          </div>
+        </div>
+        
+        <p>This venture is a canonical node of the MobCorp Autonomous Network. All rights reserved.</p>
+      </div>
+    </footer>
+  </div>
+
+  <!-- The Login Screen Modal Overlay -->
+  <div id="os-login-modal">
+    <div class="login-box">
+      <h2>WeylandAI Client Workspace</h2>
+      <p>Projects, sites, crews, and evidence in one operating view.</p>
+      <input type="email" class="login-input" id="modal-email" placeholder="Email / Username">
+      <input type="password" class="login-input" id="modal-pass" placeholder="Authorization Code">
+      <button class="login-button" onclick="submitAuth()">Sign In</button>
+      <div class="close-modal" onclick="closeLoginModal()">Cancel</div>
+    </div>
+  </div>
+
+  <script src="/assets/sightx-controls.js?v=20260729-3"></script>
+  <script src="/assets/sightx-experience.js?v=20260729-3"></script>
+  <script src="/assets/sightx-ingest.js?v=20260729-3"></script>
+  <script src="/assets/sightx-runtime.js?v=20260813-1"></script>
+  <script>
+    // \u2500\u2500 Slideshow SPA Navigation \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500
+    let currentSlide = 0;
+    const slides = document.querySelectorAll('.slide');
+    const tabs = document.querySelectorAll('.product-tab');
+    
+    function goToSlide(index) {
+      slides[currentSlide].classList.remove('active');
+      tabs[currentSlide].classList.remove('active');
+      currentSlide = (index + slides.length) % slides.length;
+      slides[currentSlide].classList.add('active');
+      tabs[currentSlide].classList.add('active');
+      resetIdleTimer();
+    }
+
+    // Keyboard navigation for Weyland slides (when console isn't focused)
+    document.addEventListener('keydown', (e) => {
+      if (document.pointerLockElement) return;
+      if (document.activeElement.tagName === 'INPUT' || document.activeElement.tagName === 'TEXTAREA') return;
+      if (e.key === 'ArrowLeft') {
+        goToSlide(currentSlide - 1);
+      } else if (e.key === 'ArrowRight') {
+        goToSlide(currentSlide + 1);
+      }
+    });
+
+    // \u2500\u2500 Console Simulator \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500
+    const consoleDisplay = document.getElementById('console-display');
+    const consoleCmd = document.getElementById('console-cmd');
+    
+    consoleCmd.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') executeCommand();
+    });
+
+    function executeCommand() {
+      const cmd = consoleCmd.value.trim().toLowerCase();
+      if (!cmd) return;
+      
+      let response = '';
+      if (cmd === 'help') {
+        response = 'Available commands:\\
+' +
+                   '  status   - View current system status\\
+' +
+                   '  fleet    - Check autonomous crew status\\
+' +
+                   '  projects - List active project sites\\
+' +
+                   '  clear    - Clear console screen';
+      } else if (cmd === 'status') {
+        response = 'System: weylandai.com\\
+' +
+                   'Status: ONLINE\\
+' +
+                   'Category: Construction / Automation\\
+' +
+                   'Operational Integrity: 100% (READY)\\
+' +
+                   'Pipeline: HuntX > SubX > SightX > TakeoffX > PropX > QText';
+      } else if (cmd === 'fleet') {
+        response = 'Autonomous Crew Status:\\
+' +
+                   '  - Earthwork systems: READY\\
+' +
+                   '  - Concrete and framing systems: READY\\
+' +
+                   '  - Trade installation systems: READY\\
+' +
+                   'All telemetry channels operational.';
+      } else if (cmd === 'projects') {
+        response = 'Project Network:\\
+' +
+                   '  - Site intelligence: ACTIVE\\
+' +
+                   '  - Estimation pipeline: ACTIVE\\
+' +
+                   '  - Field coordination: ACTIVE';
+      } else if (cmd === 'clear') {
+        consoleDisplay.innerHTML = '&gt; ';
+        consoleCmd.value = '';
+        return;
+      } else {
+        response = 'Unknown command: "' + cmd + '". Type "help" for a list of commands.';
+      }
+      
+      consoleDisplay.innerHTML += cmd + '<br>' + response.replace(/\\
+/g, '<br>') + '<br><br>&gt; ';
+      consoleDisplay.scrollTop = consoleDisplay.scrollHeight;
+      consoleCmd.value = '';
+    }
+
+    function openLoginModal() {
+      document.getElementById('os-login-modal').style.display = 'flex';
+    }
+    
+    function closeLoginModal() {
+      document.getElementById('os-login-modal').style.display = 'none';
+    }
+    
+    function submitAuth() {
+      const email = document.getElementById('modal-email').value;
+      const pass = document.getElementById('modal-pass').value;
+      if (!email || !pass) {
+        alert('Credentials required.');
+        return;
+      }
+      alert('Secure Portal connection timed out. Please check your credentials and try again.');
+    }
+
+    // \u2500\u2500 Fleet Browser Logic \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500
+    const FLEET_DATA = {"Defense": [{"domain": "abstergo.cc", "name": "abstergo_cc"}, {"domain": "areshiva.com", "name": "areshiva_com"}, {"domain": "draknir.com", "name": "draknir_com"}, {"domain": "draugr.cc", "name": "draugr_cc"}, {"domain": "malathor.com", "name": "malathor_com"}, {"domain": "valdring.com", "name": "valdring_com"}, {"domain": "valkrai.com", "name": "valkrai_com"}, {"domain": "ventraleye.com", "name": "ventraleye_com"}, {"domain": "watchforce.cc", "name": "watchforce_cc"}], "Finance": [{"domain": "accountdrac.com", "name": "accountdrac_com"}, {"domain": "bitdoggo.com", "name": "bitdoggo_com"}, {"domain": "bondwright.com", "name": "bondwright_com"}, {"domain": "bookeepr.cc", "name": "bookeepr_cc"}, {"domain": "cryptosmart.cc", "name": "cryptosmart_cc"}, {"domain": "encoverai.com", "name": "encoverai_com"}, {"domain": "equifiant.com", "name": "equifiant_com"}, {"domain": "fedbank.cc", "name": "fedbank_cc"}, {"domain": "fundyai.com", "name": "fundyai_com"}, {"domain": "greenhandcapital.com", "name": "greenhandcapital_com"}, {"domain": "mobcoin.cc", "name": "mobcoin_cc"}, {"domain": "quanticfork.com", "name": "quanticfork_com"}, {"domain": "selfcoin.cc", "name": "selfcoin_cc"}, {"domain": "vendyai.com", "name": "vendyai_com"}], "Agents": [{"domain": "agentropi.com", "name": "agentropi_com"}, {"domain": "agentzaar.com", "name": "agentzaar_com"}, {"domain": "consenta.cc", "name": "consenta_cc"}, {"domain": "entoolize.com", "name": "entoolize_com"}, {"domain": "mailguyai.com", "name": "mailguyai_com"}, {"domain": "marketingium.com", "name": "marketingium_com"}, {"domain": "rebrief.me", "name": "rebrief_me"}, {"domain": "salesfactorai.com", "name": "salesfactorai_com"}, {"domain": "taskgridai.com", "name": "taskgridai_com"}], "Health": [{"domain": "agewinder.com", "name": "agewinder_com"}, {"domain": "healspell.com", "name": "healspell_com"}, {"domain": "lovemaint.com", "name": "lovemaint_com"}, {"domain": "meeva.io", "name": "meeva_io"}, {"domain": "newgameplus.cc", "name": "newgameplus_cc"}, {"domain": "recovai.com", "name": "recovai_com"}, {"domain": "sanctuaryui.com", "name": "sanctuaryui_com"}, {"domain": "talkingmind.cc", "name": "talkingmind_cc"}, {"domain": "workshrinker.com", "name": "workshrinker_com"}, {"domain": "youthmend.com", "name": "youthmend_com"}], "AI": [{"domain": "aicossic.com", "name": "aicossic_com"}, {"domain": "americanagi.cc", "name": "americanagi_cc"}, {"domain": "americnagi.cc", "name": "americnagi_cc"}, {"domain": "bloomagi.cc", "name": "bloomagi_cc"}, {"domain": "greybeardai.com", "name": "greybeardai_com"}, {"domain": "intfer.cc", "name": "intfer_cc"}, {"domain": "legibleweights.com", "name": "legibleweights_com"}, {"domain": "legionicai.com", "name": "legionicai_com"}, {"domain": "scalarflux.com", "name": "scalarflux_com"}, {"domain": "sentiantai.com", "name": "sentiantai_com"}, {"domain": "singularityui.com", "name": "singularityui_com"}, {"domain": "transcendantai.com", "name": "transcendantai_com"}], "Science": [{"domain": "aiopencommerce.com", "name": "aiopencommerce_com"}, {"domain": "anattar.com", "name": "anattar_com"}, {"domain": "conseiv.com", "name": "conseiv_com"}, {"domain": "ecofixai.com", "name": "ecofixai_com"}, {"domain": "emissionhub.cc", "name": "emissionhub_cc"}, {"domain": "enablinghomes.com", "name": "enablinghomes_com"}, {"domain": "femptocom.com", "name": "femptocom_com"}, {"domain": "galadul.com", "name": "galadul_com"}, {"domain": "tenancyai.com", "name": "tenancyai_com"}, {"domain": "weylandai.com", "name": "weylandai_com"}, {"domain": "yutaniai.com", "name": "yutaniai_com"}], "Media": [{"domain": "alhena.cc", "name": "alhena_cc"}, {"domain": "animetrope.com", "name": "animetrope_com"}, {"domain": "audiovizai.com", "name": "audiovizai_com"}, {"domain": "book2film.cc", "name": "book2film_cc"}, {"domain": "bookclubs.cc", "name": "bookclubs_cc"}, {"domain": "danzoa.com", "name": "danzoa_com"}, {"domain": "fedtalent.cc", "name": "fedtalent_cc"}, {"domain": "filmline.cc", "name": "filmline_cc"}, {"domain": "gamegob.com", "name": "gamegob_com"}, {"domain": "glyphyai.com", "name": "glyphyai_com"}, {"domain": "kubaki.cc", "name": "kubaki_cc"}, {"domain": "literacraft.com", "name": "literacraft_com"}, {"domain": "mobleybooks.com", "name": "mobleybooks_com"}, {"domain": "paintedwhore.cc", "name": "paintedwhore_cc"}, {"domain": "pandorachat.cc", "name": "pandorachat_cc"}], "Dev Tools": [{"domain": "authfor.com", "name": "authfor_com"}, {"domain": "devducky.com", "name": "devducky_com"}, {"domain": "devtoolai.com", "name": "devtoolai_com"}, {"domain": "devtoolbx.com", "name": "devtoolbx_com"}, {"domain": "extraterran.com", "name": "extraterran_com"}, {"domain": "fystz.com", "name": "fystz_com"}, {"domain": "gravnova.com", "name": "gravnova_com"}, {"domain": "halside.com", "name": "halside_com"}, {"domain": "helmdir.com", "name": "helmdir_com"}, {"domain": "powerhost.cc", "name": "powerhost_cc"}, {"domain": "syncropy.com", "name": "syncropy_com"}, {"domain": "warpdrive.cc", "name": "warpdrive_cc"}], "Education": [{"domain": "bignice.cc", "name": "bignice_cc"}, {"domain": "brynhildai.com", "name": "brynhildai_com"}, {"domain": "gurukle.com", "name": "gurukle_com"}, {"domain": "leadersclub.cc", "name": "leadersclub_cc"}, {"domain": "ownschool.cc", "name": "ownschool_cc"}, {"domain": "reasontodate.com", "name": "reasontodate_com"}], "Business": [{"domain": "dofura.com", "name": "dofura_com"}, {"domain": "domainwombat.com", "name": "domainwombat_com"}, {"domain": "firmcreate.com", "name": "firmcreate_com"}, {"domain": "glcx.cc", "name": "glcx_cc"}, {"domain": "helmcorp.cc", "name": "helmcorp_cc"}, {"domain": "hildrai.com", "name": "hildrai_com"}, {"domain": "industrize.com", "name": "industrize_com"}, {"domain": "lawyik.com", "name": "lawyik_com"}, {"domain": "patentkin.com", "name": "patentkin_com"}, {"domain": "traceformer.com", "name": "traceformer_com"}], "Corporate": [{"domain": "golfcad.cc", "name": "golfcad_cc"}, {"domain": "golfdad.cc", "name": "golfdad_cc"}, {"domain": "golflink.cc", "name": "golflink_cc"}, {"domain": "golfmind.cc", "name": "golfmind_cc"}, {"domain": "helmscorp.cc", "name": "helmscorp_cc"}, {"domain": "instantiability.com", "name": "instantiability_com"}, {"domain": "mobcorp.cc", "name": "mobcorp_cc"}, {"domain": "mobleyhelms.com", "name": "mobleyhelms_com"}, {"domain": "mobleymetal.com", "name": "mobleymetal_com"}, {"domain": "mobleyreport.com", "name": "mobleyreport_com"}, {"domain": "mobleysoft.com", "name": "mobleysoft_com"}, {"domain": "roncorp.cc", "name": "roncorp_cc"}, {"domain": "ronhelms.cc", "name": "ronhelms_cc"}]};
+    const fleetDrawer = document.getElementById('fleet-drawer');
+    const fleetDrawerTitle = document.getElementById('fleet-drawer-title');
+    const fleetLinksGrid = document.getElementById('fleet-links-grid');
+    let activeFleetCat = null;
+
+    function toggleFleetCategory(cat) {
+      if (activeFleetCat === cat) {
+        closeFleetDrawer();
+        return;
+      }
+      
+      activeFleetCat = cat;
+      document.querySelectorAll('.cat-chip').forEach(c => {
+        c.classList.toggle('active', c.textContent.trim() === cat);
+      });
+
+      fleetDrawerTitle.textContent = \`\${cat.toUpperCase()} FLEET SITES\`;
+      fleetLinksGrid.innerHTML = '';
+      
+      const sites = FLEET_DATA[cat] || [];
+      sites.forEach(s => {
+        const a = document.createElement('a');
+        a.href = \`https://\${s.domain}/\`;
+        a.target = '_blank';
+        a.className = 'fleet-link';
+        a.textContent = s.name.replace(/_/g, ' ').toUpperCase();
+        fleetLinksGrid.appendChild(a);
+      });
+      
+      fleetDrawer.classList.add('open');
+      resetIdleTimer();
+    }
+    
+    function closeFleetDrawer() {
+      if (!fleetDrawer) return;
+      fleetDrawer.classList.remove('open');
+      activeFleetCat = null;
+      document.querySelectorAll('.cat-chip').forEach(c => c.classList.remove('active'));
+    }
+
+    // Close fleet drawer on outside click
+    document.addEventListener('click', (e) => {
+      if (fleetDrawer && !fleetDrawer.contains(e.target) && !e.target.classList.contains('cat-chip')) {
+        closeFleetDrawer();
+      }
+    });
+
+    // \u2500\u2500 Interaction & Idle Show/Hide \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500
+    const appContainer = document.getElementById('app-container');
+    const canvas = document.getElementById('bg-canvas');
+    let idleTimer = null;
+    
+    function showUI() {
+      // If pointer is captured (playing SightX), keep UI hidden
+      if (document.pointerLockElement === canvas) return;
+      
+      appContainer.classList.remove('hidden');
+      canvas.classList.remove('interactive');
+      resetIdleTimer();
+    }
+    
+    function hideUI() {
+      appContainer.classList.add('hidden');
+      canvas.classList.add('interactive');
+      closeFleetDrawer();
+    }
+    
+    // Start showing overlay, then let it fade
+    function resetIdleTimer() {
+      clearTimeout(idleTimer);
+      idleTimer = setTimeout(hideUI, 5000); // Hide after 5 seconds idle
+    }
+    
+    // Wire up events
+    document.addEventListener('mousemove', showUI);
+    document.addEventListener('click', showUI);
+    document.addEventListener('keydown', showUI);
+    document.addEventListener('touchstart', showUI);
+    
+    // Prevent hiding while interacting with the overlay
+    appContainer.addEventListener('mousemove', (e) => { e.stopPropagation(); resetIdleTimer(); });
+    appContainer.addEventListener('click', (e) => { e.stopPropagation(); resetIdleTimer(); });
+    appContainer.addEventListener('keydown', (e) => { e.stopPropagation(); resetIdleTimer(); });
+    
+    // SightX is a dedicated, unoccluded product demonstrator.
+    if (document.body.classList.contains('sightx-demo')) {
+      hideUI();
+    } else {
+      resetIdleTimer();
+    }
+
+    // \u2500\u2500 WebGL Setup (SightX playable background corridor) \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500
+    const gl = canvas.getContext('webgl2');
+    let sightxExperience = null;
+    
+    function resize() {
+      const scale = sightxExperience ? sightxExperience.renderScale : Math.min(window.devicePixelRatio, 1.25);
+      canvas.width = Math.floor(window.innerWidth * scale);
+      canvas.height = Math.floor(window.innerHeight * scale);
+      canvas.style.width = window.innerWidth + 'px';
+      canvas.style.height = window.innerHeight + 'px';
+      gl.viewport(0, 0, canvas.width, canvas.height);
+    }
+    window.addEventListener('resize', resize);
+    resize();
+    
+    const VS = \`#version 300 es
+    in vec2 a;
+    void main(){ gl_Position = vec4(a, 0, 1); }\`;
+    
+    const FS = \`#version 300 es
+    precision highp float;
+    out vec4 fragColor;
+    uniform vec2  u_res;
+    uniform float u_t;
+    uniform vec3  u_cam;
+    uniform vec3  u_dir;
+    uniform float u_scan;
+    uniform vec3  u_target;
+    uniform sampler2D u_planSdf;
+    uniform sampler2D u_planSource;
+    uniform int u_planMode;
+    uniform vec4 u_planBounds;
+    uniform float u_planHeight;
+
+    float hash(vec3 p){ return fract(sin(dot(p,vec3(127.1,311.7,74.7)))*43758.5); }
+    float noise(vec3 p){
+      vec3 i=floor(p), f=fract(p);
+      f=f*f*(3.-2.*f);
+      return mix(mix(mix(hash(i),hash(i+vec3(1,0,0)),f.x),
+                     mix(hash(i+vec3(0,1,0)),hash(i+vec3(1,1,0)),f.x),f.y),
+                 mix(mix(hash(i+vec3(0,0,1)),hash(i+vec3(1,0,1)),f.x),
+                     mix(hash(i+vec3(0,1,1)),hash(i+vec3(1,1,1)),f.x),f.y),f.z);
+    }
+
+    float sdBox(vec3 p, vec3 b){ vec3 q=abs(p)-b; return length(max(q,0.))+min(max(q.x,max(q.y,q.z)),0.); }
+    float sdCyl(vec3 p, float r, float h){ vec2 d=abs(vec2(length(p.xz),p.y))-vec2(r,h); return min(max(d.x,d.y),0.)+length(max(d,0.)); }
+    float sdSphere(vec3 p, float r){ return length(p)-r; }
+
+    vec2 put(vec2 scene, float distance, float material){
+      return distance < scene.x ? vec2(distance, material) : scene;
+    }
+
+    float sdDoorOpening(vec3 q, float w, float h){
+      return sdBox(q-vec3(0.0,h*.5,0.0),vec3(w,h*.5,0.30));
+    }
+
+    float sdDoorFrame(vec3 q, float w, float h){
+      float rail=0.065, depth=0.10;
+      float head = sdBox(q-vec3(0.0,h+rail,0.0),vec3(w+rail,rail,depth));
+      float left = sdBox(q-vec3(-w-rail,h*.5,0.0),vec3(rail,h*.5+rail,depth));
+      float right= sdBox(q-vec3( w+rail,h*.5,0.0),vec3(rail,h*.5+rail,depth));
+      return min(head,min(left,right));
+    }
+
+    float sdDoorPanels(vec3 q, float w, float h, float open){
+      float halfPanel=w*.48;
+      float travel=open*w*.72;
+      float left =sdBox(q-vec3(-w*.5-travel,h*.5,0.0),vec3(halfPanel,h*.5-.08,.026));
+      float right=sdBox(q-vec3( w*.5+travel,h*.5,0.0),vec3(halfPanel,h*.5-.08,.026));
+      return min(left,right);
+    }
+
+    float doorOpen(vec2 position){
+      return 1.0-smoothstep(0.85,2.5,length(u_cam.xz-position));
+    }
+
+    // Local door coordinates: X runs across the opening, Y is vertical, Z is
+    // perpendicular to its host wall. This keeps every panel correctly oriented.
+    vec3 sideDoorSpace(vec3 p, float wallX, float doorZ){
+      return vec3(p.z-doorZ,p.y,p.x-wallX);
+    }
+
+    float sdPlanWall(vec3 p){
+      vec2 span=max(u_planBounds.zw-u_planBounds.xy,vec2(.001));
+      vec2 uv=(p.xz-u_planBounds.xy)/span;
+      vec2 outside=max(max(-uv,uv-1.0)*span,0.0);
+      if(any(lessThan(uv,vec2(0.0)))||any(greaterThan(uv,vec2(1.0)))) return length(outside)+1.0;
+      float plan=texture(u_planSdf,vec2(uv.x,1.0-uv.y)).r;
+      float vertical=abs(p.y-u_planHeight*.5)-u_planHeight*.5;
+      vec2 d=vec2(plan,vertical);
+      return min(max(d.x,d.y),0.0)+length(max(d,0.0));
+    }
+
+    vec2 map(vec3 p){
+      if(u_planMode==1){
+        vec2 planResult=vec2(p.y,8.0);
+        planResult=put(planResult,sdPlanWall(p),1.0);
+        return planResult;
+      }
+      float path = 1.0-smoothstep(2.7,3.1,abs(p.x));
+      float groundMaterial = 7.0;
+      if((abs(p.x)<7.04 && p.z>0.0 && p.z<16.0) || (path>.5 && p.z<.2)) groundMaterial=8.0;
+      vec2 res=vec2(p.y,groundMaterial);
+
+      // Finite facility shell: 14.4m wide, 16m deep, with a real exterior.
+      float outerWest=sdBox(p-vec3(-7.2,1.7,8.0),vec3(.16,1.7,8.0));
+      float outerEast=sdBox(p-vec3( 7.2,1.7,8.0),vec3(.16,1.7,8.0));
+      float rear=sdBox(p-vec3(0.0,1.7,16.0),vec3(7.2,1.7,.16));
+      float front=sdBox(p-vec3(0.0,1.7,0.0),vec3(7.2,1.7,.16));
+      front=max(front,-sdDoorOpening(p,1.30,2.45));
+      float roof=sdBox(p-vec3(0.0,3.45,8.0),vec3(7.36,.14,8.16));
+      res=put(res,outerWest,1.0); res=put(res,outerEast,1.0);
+      res=put(res,rear,1.0);      res=put(res,front,1.0);
+      res=put(res,roof,5.0);
+
+      // Corridor walls host four automatic double-sliding doors per side.
+      float westWall=sdBox(p-vec3(-2.0,1.6,8.0),vec3(.10,1.6,8.0));
+      float eastWall=sdBox(p-vec3( 2.0,1.6,8.0),vec3(.10,1.6,8.0));
+      for(int i=0;i<4;i++){
+        float z=2.0+float(i)*4.0;
+        westWall=max(westWall,-sdDoorOpening(sideDoorSpace(p,-2.0,z),.68,2.35));
+        eastWall=max(eastWall,-sdDoorOpening(sideDoorSpace(p, 2.0,z),.68,2.35));
+      }
+      res=put(res,westWall,1.0); res=put(res,eastWall,1.0);
+
+      // Four rooms in each wing, separated from one another but connected to
+      // the central circulation spine through the modeled door openings.
+      for(int i=0;i<3;i++){
+        float z=4.0+float(i)*4.0;
+        res=put(res,sdBox(p-vec3(-4.6,1.6,z),vec3(2.5,1.6,.10)),1.0);
+        res=put(res,sdBox(p-vec3( 4.6,1.6,z),vec3(2.5,1.6,.10)),1.0);
+      }
+
+      // Room program. Each controlled opening now leads to a recognizable,
+      // navigable construction workspace rather than an empty shell.
+      res=put(res,sdBox(p-vec3(-5.45,.76, 2.0),vec3(1.05,.07,.52)),12.0); // Project office desk
+      res=put(res,sdBox(p-vec3(-5.45,1.12,2.0),vec3(.42,.27,.035)),13.0); // Project display
+      res=put(res,sdBox(p-vec3(-6.55,.92,3.15),vec3(.30,.92,.58)),13.0); // Drawing storage
+
+      res=put(res,sdBox(p-vec3( 4.70,.76, 2.0),vec3(1.25,.07,.58)),12.0); // Conference table
+      res=put(res,sdBox(p-vec3( 4.70,.42, 1.18),vec3(.95,.40,.28)),2.0);
+      res=put(res,sdBox(p-vec3( 4.70,.42, 2.82),vec3(.95,.40,.28)),2.0);
+
+      res=put(res,sdBox(p-vec3(-4.55,.76, 6.0),vec3(1.05,.07,.58)),12.0); // Materials review table
+      res=put(res,sdBox(p-vec3(-6.55,1.08,6.0),vec3(.30,1.08,1.15)),13.0); // Sample rack
+      res=put(res,sdBox(p-vec3(-4.85,.96,6.0),vec3(.48,.12,.35)),14.0); // Reviewed sample
+
+      res=put(res,sdBox(p-vec3( 5.45,1.10,5.35),vec3(.48,1.10,.42)),13.0); // Telecom rack A
+      res=put(res,sdBox(p-vec3( 5.45,1.10,6.65),vec3(.48,1.10,.42)),13.0); // Telecom rack B
+
+      res=put(res,sdBox(p-vec3(-4.65,.78,10.0),vec3(1.30,.06,.72)),12.0); // Plan review table
+      res=put(res,sdBox(p-vec3(-6.92,1.68,10.0),vec3(.035,.68,1.10)),14.0); // Plan board
+
+      res=put(res,sdBox(p-vec3( 6.68,1.12,10.0),vec3(.24,1.12,1.18)),13.0); // Electrical switchgear
+      res=put(res,sdBox(p-vec3( 5.85,.18,10.0),vec3(.62,.018,1.35)),14.0); // Service clearance
+
+      res=put(res,sdBox(p-vec3(-5.25,.88,14.0),vec3(1.05,.88,.62)),13.0); // Air-handling unit
+      res=put(res,sdCyl(p-vec3(-6.45,1.55,14.0),.13,1.55),2.0); // Mechanical riser
+
+      res=put(res,sdBox(p-vec3( 5.35,.76,14.0),vec3(1.05,.07,.52)),12.0); // Facilities workstation
+      res=put(res,sdBox(p-vec3( 6.55,.92,14.9),vec3(.30,.92,.58)),13.0); // Facilities storage
+
+      // Main entrance: a centered, sensor-driven double sliding assembly.
+      float entryOpen=doorOpen(vec2(0.0,0.0));
+      res=put(res,sdDoorFrame(p,1.30,2.45),2.0);
+      res=put(res,sdDoorPanels(p,1.30,2.45,entryOpen),3.0);
+
+      float hardware=1e9;
+      for(int i=0;i<4;i++){
+        float z=2.0+float(i)*4.0;
+        vec3 westQ=sideDoorSpace(p,-2.0,z);
+        vec3 eastQ=sideDoorSpace(p, 2.0,z);
+        float westOpen=doorOpen(vec2(-2.0,z));
+        float eastOpen=doorOpen(vec2( 2.0,z));
+        res=put(res,sdDoorFrame(westQ,.68,2.35),2.0);
+        res=put(res,sdDoorPanels(westQ,.68,2.35,westOpen),3.0);
+        res=put(res,sdDoorFrame(eastQ,.68,2.35),2.0);
+        res=put(res,sdDoorPanels(eastQ,.68,2.35,eastOpen),3.0);
+        hardware=min(hardware,sdBox(westQ-vec3(.42,1.32,-.12),vec3(.08,.12,.025)));
+        hardware=min(hardware,sdBox(eastQ-vec3(.42,1.32,-.12),vec3(.08,.12,.025)));
+      }
+      res=put(res,hardware,4.0);
+
+      // Entrance canopy, structural columns, glazing, and interior luminaires.
+      res=put(res,sdBox(p-vec3(0.0,3.02,-1.8),vec3(3.0,.12,1.8)),5.0);
+      res=put(res,sdBox(p-vec3(-2.72,1.5,-2.2),vec3(.12,1.5,.12)),2.0);
+      res=put(res,sdBox(p-vec3( 2.72,1.5,-2.2),vec3(.12,1.5,.12)),2.0);
+      res=put(res,sdBox(p-vec3(-4.45,1.65,-.19),vec3(1.35,1.02,.025)),3.0);
+      res=put(res,sdBox(p-vec3( 4.45,1.65,-.19),vec3(1.35,1.02,.025)),3.0);
+      for(int i=0;i<4;i++){
+        float z=2.0+float(i)*4.0;
+        res=put(res,sdBox(p-vec3(0.0,3.25,z),vec3(.42,.07,.42)),6.0);
+        res=put(res,sdBox(p-vec3(-4.6,3.25,z),vec3(.50,.07,.36)),6.0);
+        res=put(res,sdBox(p-vec3( 4.6,3.25,z),vec3(.50,.07,.36)),6.0);
+      }
+
+      // Wider Weyland campus: low service annexes and approach lighting make
+      // the facility legible as a building in a world, not an isolated box.
+      res=put(res,sdBox(p-vec3(-14.0,2.0,10.0),vec3(4.2,2.0,5.4)),9.0);
+      res=put(res,sdBox(p-vec3( 15.0,1.7,13.0),vec3(4.8,1.7,6.0)),9.0);
+      res=put(res,sdBox(p-vec3(-14.0,4.12,10.0),vec3(4.45,.12,5.65)),5.0);
+      res=put(res,sdBox(p-vec3( 15.0,3.52,13.0),vec3(5.05,.12,6.25)),5.0);
+      float poles=min(sdCyl(p-vec3(-4.6,2.6,-7.0),.07,2.6),sdCyl(p-vec3(4.6,2.6,-7.0),.07,2.6));
+      res=put(res,poles,2.0);
+      res=put(res,sdBox(p-vec3(-4.6,5.18,-7.0),vec3(.38,.06,.16)),6.0);
+      res=put(res,sdBox(p-vec3( 4.6,5.18,-7.0),vec3(.38,.06,.16)),6.0);
+
+      // Arrival landscape and illuminated campus marker establish a deliberate
+      // public face without obstructing the central accessible approach.
+      res=put(res,sdBox(p-vec3(-5.35,.82,-3.15),vec3(1.42,.72,.09)),10.0);
+      res=put(res,sdBox(p-vec3(-5.35,.10,-3.15),vec3(1.62,.10,.30)),2.0);
+      for(int i=0;i<2;i++){
+        float x=-5.5+float(i)*11.0;
+        res=put(res,sdBox(p-vec3(x,.28,-1.85),vec3(.72,.28,.52)),2.0);
+        res=put(res,sdSphere(p-vec3(x,.78,-1.85),.58),11.0);
+      }
+      for(int i=0;i<2;i++){
+        float x=3.0+float(i)*3.0;
+        res=put(res,sdBox(p-vec3( x,2.05,-.25),vec3(.035,1.15,.08)),2.0);
+        res=put(res,sdBox(p-vec3(-x,2.05,-.25),vec3(.035,1.15,.08)),2.0);
+      }
+      return res;
+    }
+
+    vec2 march(vec3 ro, vec3 rd){
+      float t=0.001; float id=0.;
+      for(int i=0;i<112;i++){
+        vec2 h=map(ro+rd*t);
+        if(h.x<0.002) return vec2(t,h.y);
+        t+=h.x*.85;
+        if(t>72.) break;
+      }
+      return vec2(-1.,0.);
+    }
+
+    vec3 normal(vec3 p){
+      float e=.001;
+      return normalize(vec3(
+        map(p+vec3(e,0,0)).x-map(p-vec3(e,0,0)).x,
+        map(p+vec3(0,e,0)).x-map(p-vec3(0,e,0)).x,
+        map(p+vec3(0,0,e)).x-map(p-vec3(0,0,e)).x));
+    }
+
+    float ao(vec3 p, vec3 n){
+      float s=0.; float w=1.;
+      for(int i=1;i<=5;i++){
+        float d=float(i)*.08;
+        s+=w*(d-map(p+n*d).x);
+        w*=.6;
+      }
+      return clamp(1.-s*2.2,0.,1.);
+    }
+
+    vec3 sky(vec3 rd){
+      vec3 sunDir = normalize(vec3(0.55, 0.16, 0.45));
+      vec3 betaR  = vec3(5.8e-6, 9.0e-6, 1.4e-5);
+      float betaM = 6.5e-5;
+      float HR=8000., HM=1200.;
+      float elev    = max(rd.y,0.01);
+      float sunElev = max(sunDir.y,0.02);
+      vec3  tauR = betaR*HR*(1./elev+1./sunElev);
+      float tauM = betaM*HM*(1./elev+1./sunElev);
+      vec3  T    = exp(-tauR-tauM);
+      float mu   = dot(rd,sunDir);
+      float phR  = .75*(1.+mu*mu);
+      float phM  = .5*(1.-(.76*.76))/pow(1.+.76*.76-2.*.76*mu,1.5);
+      vec3 planck= vec3(1.0,0.82,0.52);
+      vec3 s     = (phR*betaR*HR/elev+phM*betaM*HM/elev)*T*planck*3.2;
+      float sunDot=max(dot(rd,sunDir),0.);
+      if(sunDot>0.9998 && sunDir.y>-0.05){
+        float limb=1.-smoothstep(.9998,.99995,sunDot);
+        s += planck*limb*90.*max(0.,sunDir.y+0.08);
+      }
+      s += vec3(1.0,0.92,0.70)*pow(max(0.,1.-abs(rd.y)),6.)*0.18;
+      return clamp(s,0.,1.);
+    }
+
+    vec3 shade(vec3 albedo, float metal, float rough,
+               vec3 N, vec3 V, vec3 L, vec3 lc, float shadow){
+      vec3 H = normalize(V+L);
+      float NdL=max(dot(N,L),0.), NdV=max(dot(N,V),0.01), NdH=max(dot(N,H),0.);
+      float a=rough*rough;
+      float D=a*a/(3.14159*pow(NdH*NdH*(a*a-1.)+1.,2.));
+      float k=(rough+1.)*(rough+1.)/8.;
+      float G=NdL/(NdL*(1.-k)+k)*NdV/(NdV*(1.-k)+k);
+      vec3 F0=mix(vec3(.04),albedo,metal);
+      vec3 F=F0+(1.-F0)*pow(1.-max(dot(H,V),0.),5.);
+      vec3 spec=D*G*F/(4.*NdV*NdL+.001);
+      vec3 diff=albedo*(1.-metal)*(1.-F)/3.14159;
+      return (diff+spec)*lc*NdL*shadow;
+    }
+
+    void main(){
+      vec2 uv = (gl_FragCoord.xy/u_res*2.-1.)*vec2(u_res.x/u_res.y,1.);
+      vec3 ro    = u_cam;
+      vec3 fwd   = normalize(u_dir);
+      vec3 right = normalize(cross(vec3(0,1,0), fwd));
+      vec3 up    = cross(fwd, right);
+      vec3 rd    = normalize(fwd + right*uv.x*0.62 + up*uv.y*0.62);
+
+      vec2 hit = march(ro, rd);
+      vec3 col;
+
+      vec3 sunDir = normalize(vec3(0.55, 0.16, 0.45));
+      vec3 sunCol = vec3(1.0, 0.78, 0.45)*4.8;
+
+      if(hit.x > 0.){
+        vec3 p = ro + rd*hit.x;
+        vec3 N = normal(p);
+        vec3 V = -rd;
+        float matID = hit.y;
+        vec3  albedo; float metal=0., rough=0.7;
+        vec3  emissive = vec3(0.0);
+
+        if(matID < 1.5){
+          albedo = vec3(0.82,0.79,0.74)+noise(p*14.)*0.025 - noise(p*40.)*0.018;
+          rough  = 0.84;
+          if(N.y > 0.8){
+            albedo = vec3(0.52,0.50,0.46)+noise(p*6.)*0.03;
+            rough  = 0.76;
+          }
+        } else if(matID < 2.5){
+          albedo = vec3(0.18,0.12,0.07)+noise(p*22.)*0.02;
+          metal  = 0.72; rough = 0.42;
+        } else if(matID < 3.5){
+          albedo = vec3(0.08,0.13,0.15)+noise(p*30.)*0.012;
+          metal  = 0.58; rough = 0.22;
+        } else if(matID < 4.5){
+          albedo = vec3(0.06,0.06,0.07);
+          metal  = 0.28; rough = 0.38;
+        } else if(matID < 5.5){
+          albedo = vec3(0.05,0.05,0.06);
+          rough  = 0.9;
+        } else if(matID < 6.5){
+          // Ceiling and campus light fixtures
+          albedo = vec3(1.0);
+          rough = 0.1;
+          emissive = vec3(1.0, 0.88, 0.65) * 4.5;
+        } else if(matID < 7.5){
+          albedo = vec3(0.13,0.18,0.075)+noise(p*3.0)*0.075;
+          rough = 0.96;
+        } else if(matID < 8.5){
+          float seam=min(abs(fract(p.x*.25)-.5),abs(fract(p.z*.25)-.5));
+          albedo = vec3(0.29,0.28,0.25)+noise(p*8.0)*0.025-step(seam,.012)*.06;
+          if(u_planMode==1){
+            vec2 span=max(u_planBounds.zw-u_planBounds.xy,vec2(.001));
+            vec2 planUv=(p.xz-u_planBounds.xy)/span;
+            if(all(greaterThanEqual(planUv,vec2(0.0)))&&all(lessThanEqual(planUv,vec2(1.0)))){
+              vec3 drawing=texture(u_planSource,vec2(planUv.x,1.0-planUv.y)).rgb;
+              float ink=1.0-dot(drawing,vec3(.299,.587,.114));
+              albedo=mix(vec3(.34,.33,.30),vec3(.13,.19,.22),smoothstep(.08,.62,ink));
+            }
+          }
+          rough = 0.88;
+        } else if(matID < 9.5){
+          albedo = vec3(0.20,0.21,0.19)+noise(p*9.0)*0.035;
+          metal = 0.18; rough = 0.72;
+        } else if(matID < 10.5){
+          albedo = vec3(0.035,0.032,0.026);
+          metal = 0.35; rough = 0.28;
+          float markerLine = smoothstep(.42,.49,abs(fract(p.y*3.6)-.5));
+          emissive = vec3(1.0,.52,.035)*markerLine*1.35;
+        } else if(matID < 11.5){
+          albedo = vec3(0.055,0.16,0.045)+noise(p*5.5)*0.07;
+          rough = 0.98;
+        } else if(matID < 12.5){
+          albedo = vec3(0.31,0.19,0.095)+noise(p*9.0)*0.035;
+          rough = 0.72;
+        } else if(matID < 13.5){
+          albedo = vec3(0.10,0.12,0.13)+noise(p*18.0)*0.018;
+          metal = 0.55; rough = 0.38;
+        } else {
+          albedo = vec3(0.82,0.80,0.72);
+          rough = 0.68;
+        }
+
+        float shadow = 1.0;
+        vec3 sp = p + N*0.015;
+        float st = 0.1;
+        for(int i=0;i<24;i++){
+          float sd = map(sp+sunDir*st).x;
+          shadow = min(shadow, 8.*sd/st);
+          st += max(sd, 0.04);
+          if(st>12.||shadow<0.01) break;
+        }
+        shadow = clamp(shadow,0.,1.);
+        float occ = ao(p,N);
+
+        vec3 lighting = shade(albedo,metal,rough,N,V,sunDir,sunCol,shadow);
+        vec3 skyL = vec3(0.40,0.28,0.14)*0.30;
+        lighting += albedo*(1.-metal)*skyL*(0.5+0.5*max(N.y,0.));
+        lighting += albedo*(1.-metal)*vec3(0.14,0.10,0.05)*max(-N.y,0.)*0.25;
+        lighting += albedo*(1.-metal)*vec3(0.08,0.06,0.04)*(0.5+0.5*N.y);
+
+        vec3 workPos[4];
+        workPos[0]=vec3( 0.,3.0, 2.5);
+        workPos[1]=vec3( 0.,3.0, 6.5);
+        workPos[2]=vec3( 0.,3.0,10.5);
+        workPos[3]=vec3( 0.,3.0,13.5);
+        vec3 warmL = vec3(1.0,0.82,0.56);
+        for(int i=0;i<4;i++){
+          vec3 lv  = workPos[i]-p;
+          float ld = length(lv);
+          vec3 ldir= lv/ld;
+          float att= 7.0/(1.+ld*ld*0.15);
+          float spot= smoothstep(.1,.8,dot(ldir,vec3(0.,-1.,0.)));
+          lighting += shade(albedo,metal,rough,N,V,ldir,warmL*att*(0.35+0.65*spot),1.);
+        }
+
+        lighting *= mix(occ,1.,0.35);
+        lighting += emissive;
+        float targetField = exp(-length(p-u_target)*0.82);
+        float scanBand = pow(max(0.,sin((p.y+p.z*.045-u_t*2.2)*15.0)),18.0);
+        float scanRim = pow(1.-abs(dot(N,V)),3.0);
+        lighting += vec3(1.0,.57,.045)*u_scan*targetField*(.22+scanBand*1.25+scanRim*.35);
+        float fog = 1.-exp(-hit.x*0.022);
+        vec3 fogCol = mix(vec3(0.30,0.23,0.14),sky(normalize(vec3(rd.x,max(rd.y,.04),rd.z))),.62);
+        if(p.z>0.0 && p.z<16.0 && abs(p.x)<7.15) fogCol=vec3(0.045,0.032,0.018);
+        col = mix(lighting, fogCol, fog);
+
+      } else {
+        col = sky(rd);
+        col = mix(col, vec3(0.35,0.28,0.18)*0.6, 0.15);
+      }
+
+      vec2 vp = gl_FragCoord.xy/u_res;
+      vec2 vig = vp*(1.-vp.yx);
+      col *= pow(vig.x*vig.y*15.,0.14);
+
+      col = col*(2.51*col+0.03)/(col*(2.43*col+0.59)+0.14);
+      col = pow(clamp(col,0.,1.), vec3(0.4545));
+      fragColor = vec4(col,1.);
+    }\`;
+    
+    function compile(type, src){
+      const s = gl.createShader(type);
+      gl.shaderSource(s, src);
+      gl.compileShader(s);
+      if(!gl.getShaderParameter(s, gl.COMPILE_STATUS)){
+        console.error('Shader error:', gl.getShaderInfoLog(s));
+        return null;
+      }
+      return s;
+    }
+    
+    const prog = gl.createProgram();
+    gl.attachShader(prog, compile(gl.VERTEX_SHADER, VS));
+    gl.attachShader(prog, compile(gl.FRAGMENT_SHADER, FS));
+    gl.linkProgram(prog);
+    gl.useProgram(prog);
+    
+    const buf = gl.createBuffer();
+    gl.bindBuffer(gl.ARRAY_BUFFER, buf);
+    gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1,-1,3,-1,-1,3]), gl.STATIC_DRAW);
+    const aLoc = gl.getAttribLocation(prog, 'a');
+    gl.enableVertexAttribArray(aLoc);
+    gl.vertexAttribPointer(aLoc, 2, gl.FLOAT, false, 0, 0);
+    
+    const uRes = gl.getUniformLocation(prog, 'u_res');
+    const uT   = gl.getUniformLocation(prog, 'u_t');
+    const uCam = gl.getUniformLocation(prog, 'u_cam');
+    const uDir = gl.getUniformLocation(prog, 'u_dir');
+    const uScan = gl.getUniformLocation(prog, 'u_scan');
+    const uTarget = gl.getUniformLocation(prog, 'u_target');
+    const uPlanSdf = gl.getUniformLocation(prog, 'u_planSdf');
+    const uPlanSource = gl.getUniformLocation(prog, 'u_planSource');
+    const uPlanMode = gl.getUniformLocation(prog, 'u_planMode');
+    const uPlanBounds = gl.getUniformLocation(prog, 'u_planBounds');
+    const uPlanHeight = gl.getUniformLocation(prog, 'u_planHeight');
+
+    const planSdfTexture = gl.createTexture();
+    gl.activeTexture(gl.TEXTURE0);
+    gl.bindTexture(gl.TEXTURE_2D, planSdfTexture);
+    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
+    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
+    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
+    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
+    gl.texImage2D(gl.TEXTURE_2D,0,gl.R32F,1,1,0,gl.RED,gl.FLOAT,new Float32Array([100]));
+    const planSourceTexture = gl.createTexture();
+    gl.activeTexture(gl.TEXTURE1);
+    gl.bindTexture(gl.TEXTURE_2D, planSourceTexture);
+    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
+    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
+    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
+    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
+    gl.texImage2D(gl.TEXTURE_2D,0,gl.RGBA,1,1,0,gl.RGBA,gl.UNSIGNED_BYTE,new Uint8Array([255,255,255,255]));
+    gl.uniform1i(uPlanSdf,0);
+    gl.uniform1i(uPlanSource,1);
+    let activePlanModel=null;
+    
+    // Proximity doorways in XZ plane
+    const doorways = [
+      { x: 0.0, z: 0.0, side: "South", name: "Weyland Main Automatic Entrance (S1)", hardware: "Dual-panel sensor-driven sliding entrance, presence safety curtain, monitored access controller" },
+      { x: -2.0, z: 2.0, side: "West", name: "Project Office Automatic Opening (W1)", hardware: "Horton Series 2000 automatic sliding assembly, Schlage AD-Series access control, Pemko gasketing" },
+      { x: 2.0, z: 2.0, side: "East", name: "Conference Room Automatic Opening (E1)", hardware: "Besam SW200 automatic operator, monitored presence sensor, Rixson concealed support" },
+      { x: -2.0, z: 6.0, side: "West", name: "Materials Review Automatic Opening (W2)", hardware: "Automatic double-slide leaf set, wireless access lock, perimeter gasketing" },
+      { x: 2.0, z: 6.0, side: "East", name: "IT and Telecom Room Opening (E2)", hardware: "Fail-secure automatic operator, request-to-exit sensor, monitored latch interface" },
+      { x: -2.0, z: 10.0, side: "West", name: "Plan Review Room Automatic Opening (W3)", hardware: "Sensor-driven sliding assembly, monitored access control, perimeter gasketing" },
+      { x: 2.0, z: 10.0, side: "East", name: "Electrical Room Controlled Opening (E3)", hardware: "Automatic sliding assembly, occupancy sensing, emergency breakout leaves" },
+      { x: -2.0, z: 14.0, side: "West", name: "Mechanical Room Controlled Opening (W4)", hardware: "Automatic operator, dual-channel safety edge, keycard access controller" },
+      { x: 2.0, z: 14.0, side: "East", name: "Facilities Office Automatic Opening (E4)", hardware: "Automatic double-slide assembly, badge reader, monitored egress" }
+    ];
+
+    const scanTargets = doorways.map((door, index) => ({
+      id: index === 0 ? 'entrance' : \`opening-\${door.side.toLowerCase()}-\${door.z}\`,
+      type: index === 0 ? 'AUTOMATIC ENTRANCE' : 'CONTROLLED OPENING',
+      name: door.name,
+      summary: door.hardware,
+      dimensions: index === 0 ? '2.60 W x 2.45 H m clear' : '1.36 W x 2.35 H m clear',
+      material: 'Aluminum / laminated safety glass',
+      hazard: index === 0 ? 'Validate presence curtain and breakout path' : 'Validate safety sensor before turnover',
+      status: index === 0 ? 'COMMISSIONING READY' : 'SPEC LINKED',
+      position: [door.x, 1.25, door.z],
+      radius: index === 0 ? 1.55 : 0.82,
+      maxRange: index === 0 ? 25 : 12,
+      tags: index === 0 ? ['exterior', 'opening'] : ['interior', 'opening']
+    }));
+    scanTargets.push(
+      { id: 'entrance-canopy', type: 'STRUCTURAL ASSEMBLY', name: 'Cantilevered Arrival Canopy', summary: 'Steel canopy, paired columns, integrated warm-white luminaires, and protected passenger loading zone.', dimensions: '6.00 W x 3.60 D m', material: 'Painted structural steel / membrane roof', hazard: 'Confirm drainage fall and column protection', status: 'MODEL COORDINATED', position: [0, 2.95, -1.8], radius: 2.6, maxRange: 20, tags: ['exterior', 'structure'] },
+      { id: 'approach-light-west', type: 'ELECTRICAL FIXTURE', name: 'West Approach Luminaire', summary: 'Site lighting pole with shielded LED head, photometric zone assignment, and underground feeder.', dimensions: '5.20 m mounting height', material: 'Powder-coated steel / LED optical head', hazard: 'Confirm footing cover and underground locate', status: 'CIRCUIT LINKED', position: [-4.6, 4.9, -7], radius: 0.75, maxRange: 16, tags: ['exterior', 'electrical'] },
+      { id: 'annex-west', type: 'FACILITY ZONE', name: 'West Service Annex', summary: 'Low-rise service annex linked to site logistics, utilities, and access-control models.', dimensions: '8.40 W x 10.80 D x 4.00 H m', material: 'Composite rainscreen / steel frame', hazard: 'Confirm delivery route and exterior drainage coordination', status: 'DIGITAL TWIN ONLINE', position: [-14, 2.0, 10], radius: 4.2, maxRange: 30, tags: ['exterior', 'facility'] },
+      { id: 'annex-east', type: 'FACILITY ZONE', name: 'East Operations Annex', summary: 'Operations annex with coordinated structure, envelope, equipment clearances, and work-package ownership.', dimensions: '9.60 W x 12.00 D x 3.40 H m', material: 'Insulated metal panel / steel frame', hazard: 'Maintain service access clearances', status: 'DIGITAL TWIN ONLINE', position: [15, 1.7, 13], radius: 4.8, maxRange: 32, tags: ['exterior', 'facility'] },
+      { id: 'corridor-light-2', type: 'ELECTRICAL FIXTURE', name: 'Corridor Luminaire L2', summary: 'Interior area light linked to reflected ceiling plan, circuit schedule, controls sequence, and commissioning test.', dimensions: '0.84 W x 0.84 D m', material: 'Aluminum housing / diffuse lens', hazard: 'Verify emergency circuit designation', status: 'CIRCUIT LINKED', position: [0, 3.15, 6], radius: 0.65, maxRange: 10, tags: ['interior', 'electrical'] }
+    );
+    sightxExperience = window.SightXExperience.create({ targets: scanTargets });
+    const sightxIngest = window.SightXSiteGenome.mount({ experience: sightxExperience });
+    resize();
+    
+    const sideDoorZ = [2, 6, 10, 14];
+    const roomFixtures = [
+      [-5.45, 2.0, 1.18, 0.67], [-6.55, 3.15, 0.42, 0.70],
+      [4.70, 2.0, 1.38, 0.74],
+      [-4.55, 6.0, 1.18, 0.72], [-6.55, 6.0, 0.42, 1.27],
+      [5.45, 5.35, 0.60, 0.54], [5.45, 6.65, 0.60, 0.54],
+      [-4.65, 10.0, 1.43, 0.85], [6.68, 10.0, 0.37, 1.31],
+      [-5.25, 14.0, 1.18, 0.75], [5.35, 14.0, 1.18, 0.67],
+      [6.55, 14.9, 0.42, 0.70]
+    ];
+
+    function nearSideOpening(z) {
+      return sideDoorZ.some(doorZ => Math.abs(z - doorZ) < 0.72);
+    }
+
+    function positionBlocked(x, z) {
+      if(activePlanModel){
+        const [minX,minZ,maxX,maxZ]=activePlanModel.bounds;
+        const u=(x-minX)/(maxX-minX), v=(z-minZ)/(maxZ-minZ);
+        if(u<0||u>1||v<0||v>1) return false;
+        const px=Math.max(0,Math.min(activePlanModel.width-1,Math.round(u*(activePlanModel.width-1))));
+        const py=Math.max(0,Math.min(activePlanModel.height-1,Math.round(v*(activePlanModel.height-1))));
+        return activePlanModel.sdf[py*activePlanModel.width+px]<0.32;
+      }
+      const ax = Math.abs(x);
+      if (Math.abs(x + 5.35) < 1.68 && Math.abs(z + 3.15) < 0.42) return true;
+      if ([ -5.5, 5.5 ].some(planterX => Math.abs(x - planterX) < 0.88 && Math.abs(z + 1.85) < 0.68)) return true;
+      if (z > -0.22 && z < 16.22 && ax > 7.0 && ax < 7.42) return true;
+      if (Math.abs(z) < 0.24 && ax < 7.3 && ax > 1.18) return true;
+      if (Math.abs(z - 16.0) < 0.26 && ax < 7.35) return true;
+      if (z > 0.0 && z < 16.0 && Math.abs(ax - 2.0) < 0.22 && !nearSideOpening(z)) return true;
+      if (ax > 2.08 && ax < 7.0 && [4, 8, 12].some(wallZ => Math.abs(z - wallZ) < 0.22)) return true;
+      if (roomFixtures.some(([fx, fz, hx, hz]) => Math.abs(x - fx) < hx && Math.abs(z - fz) < hz)) return true;
+      return false;
+    }
+
+    function checkDoorwayProximity(position, radius = 1.15) {
+      if(activePlanModel){
+        document.getElementById('hardware-modal').style.display='none';
+        return;
+      }
+      const px = position[0];
+      const pz = position[2];
+      let nearDoor = null;
+      for (const door of doorways) {
+        const dist = Math.hypot(px - door.x, pz - door.z);
+        if (dist < radius) {
+          nearDoor = door;
+          break;
+        }
+      }
+      
+      const modal = document.getElementById('hardware-modal');
+      if (nearDoor) {
+        document.getElementById('hud-door-name').textContent = nearDoor.name.toUpperCase();
+        document.getElementById('hud-door-hardware').textContent = nearDoor.hardware;
+        modal.style.display = 'block';
+        modal.dataset.doorId = nearDoor.z;
+      } else {
+        modal.style.display = 'none';
+      }
+    }
+
+    const sightxControls = window.SightXControls.mount({
+      canvas,
+      hint: document.getElementById('hint'),
+      initialPosition: [0, 1.72, -9.0],
+      initialYaw: 0,
+      initialPitch: 0,
+      collision: positionBlocked,
+      onMove: position => checkDoorwayProximity(position),
+      onScan: (active, position) => {
+        sightxExperience.setScanning(active);
+        checkDoorwayProximity(position, active ? 2.75 : 1.15);
+      },
+      onTourToggle: () => sightxExperience.toggleTour(),
+      onSettingsToggle: () => sightxExperience.toggleSettings(),
+      onReportToggle: () => sightxExperience.toggleReport(),
+      onCapture: hideUI,
+      onRelease: () => {
+        if (!document.body.classList.contains('sightx-demo')) showUI();
+      }
+    });
+    sightxExperience.attachControls(sightxControls);
+
+    window.SightXPlanRenderer=Object.freeze({
+      load(model){
+        if(!model||!model.sdf||!model.width||!model.height) throw new Error('A compiled plan SDF is required.');
+        activePlanModel=model;
+        gl.activeTexture(gl.TEXTURE0);
+        gl.bindTexture(gl.TEXTURE_2D,planSdfTexture);
+        gl.pixelStorei(gl.UNPACK_ALIGNMENT,1);
+        gl.texImage2D(gl.TEXTURE_2D,0,gl.R32F,model.width,model.height,0,gl.RED,gl.FLOAT,model.sdf);
+        if(model.sourceImage){
+          gl.activeTexture(gl.TEXTURE1);
+          gl.bindTexture(gl.TEXTURE_2D,planSourceTexture);
+          gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL,false);
+          gl.texImage2D(gl.TEXTURE_2D,0,gl.RGBA,gl.RGBA,gl.UNSIGNED_BYTE,model.sourceImage);
+        }
+        document.body.classList.add('sx-reconstructed');
+        const spawn=model.spawn||[0,1.72,0];
+        sightxControls.setPose(spawn,Number(model.yaw)||0,0);
+        sightxExperience.notify(\`\${model.label||'PDF PLAN'} / RECONSTRUCTED LOCALLY\`);
+      },
+      clear(){ activePlanModel=null; document.body.classList.remove('sx-reconstructed'); },
+      get active(){ return activePlanModel; }
+    });
+    
+    let last = 0;
+    function frame(ts){
+      const dt = Math.min((ts-last)/1000, 0.05); last = ts;
+      sightxControls.update(dt);
+      sightxExperience.update(ts, sightxControls);
+      if (sightxExperience.consumeResizeRequest()) resize();
+      const camPos = sightxControls.position;
+      const fwd = sightxControls.forward;
+      const scanTarget = sightxExperience.targetPosition;
+      gl.uniform2f(uRes, canvas.width, canvas.height);
+      gl.uniform1f(uT, ts*0.001);
+      gl.uniform3f(uCam, camPos[0], camPos[1], camPos[2]);
+      gl.uniform3f(uDir, fwd[0], fwd[1], fwd[2]);
+      gl.uniform1f(uScan, sightxExperience.scanAmount);
+      gl.uniform3f(uTarget, scanTarget[0], scanTarget[1], scanTarget[2]);
+      gl.uniform1i(uPlanMode,activePlanModel?1:0);
+      if(activePlanModel){
+        gl.uniform4f(uPlanBounds,...activePlanModel.bounds);
+        gl.uniform1f(uPlanHeight,activePlanModel.wallHeight||3.2);
+      }
+      gl.drawArrays(gl.TRIANGLES, 0, 3);
+      requestAnimationFrame(frame);
+    }
+    requestAnimationFrame(frame);
+  </script>
+  <script type="module" src="/assets/sightx-reconstruction.js?v=20260729-1"></script>
+  <script>
+    window.SightXRuntime.mount({
+      manifestUrl: '/sightx/runtime-manifest.json'
+    }).catch(error => console.error('[SightX runtime]', error));
+  </script>
+  <style>
+    #mx-toggle{position:fixed;bottom:24px;right:24px;z-index:9000;background:#12141988;backdrop-filter:blur(10px);border:1px solid #2c3139;color:#edf0f1;border-radius:99px;padding:12px 18px;font:750 11px/1 ui-monospace,monospace;letter-spacing:.06em;cursor:pointer}
+    #mx-toggle:hover{border-color:#f0b800;color:#f0b800}
+    #mx-panel{position:fixed;bottom:24px;right:24px;z-index:9001;width:300px;max-width:calc(100vw - 48px);background:#0d0f14ee;backdrop-filter:blur(14px);border:1px solid #2c3139;border-radius:16px;box-shadow:0 25px 70px rgba(0,0,0,.5);display:none;flex-direction:column;overflow:hidden;font-family:"Avenir Next","Helvetica Neue",sans-serif}
+    #mx-panel.open{display:flex}
+    #mx-head{display:flex;justify-content:space-between;align-items:center;padding:12px 14px;border-bottom:1px solid #2c3139}
+    #mx-head b{color:#edf0f1;font-size:12px;letter-spacing:.06em}
+    #mx-close{background:none;border:0;color:#9299a3;cursor:pointer;font-size:16px}
+    #mx-roster{display:flex;gap:6px;flex-wrap:wrap;padding:10px 14px;border-bottom:1px solid #2c3139}
+    .mx-avatar{width:26px;height:26px;border-radius:50%;display:grid;place-items:center;font:800 10px ui-monospace,monospace;color:#090a0d}
+    #mx-messages{flex:1;max-height:220px;overflow-y:auto;padding:10px 14px;display:flex;flex-direction:column;gap:8px;font-size:12px;color:#edf0f1}
+    .mx-msg b{color:#f0b800;margin-right:4px}
+    .mx-sys{color:#9299a3;font-style:italic}
+    #mx-input-row{display:flex;gap:6px;padding:10px 14px;border-top:1px solid #2c3139}
+    #mx-input{flex:1;background:#161920;border:1px solid #2c3139;border-radius:8px;padding:8px 10px;color:#fff;font-size:12px}
+    #mx-voice-btn{background:none;border:1px solid #2c3139;color:#9299a3;border-radius:8px;padding:8px 10px;cursor:pointer;font-size:13px}
+    #mx-voice-btn.active{background:#61dfa0;border-color:#61dfa0;color:#090a0d}
+    #mx-gate{padding:16px;font-size:12px;color:#9299a3;line-height:1.6}
+    #mx-gate a{color:#f0b800}
+  </style>
+  <button id="mx-toggle">\u{1F465} COLLABORATE</button>
+  <div id="mx-panel">
+    <div id="mx-head"><b>MEETINGX LIVE</b><button id="mx-close">\u2715</button></div>
+    <div id="mx-roster"></div>
+    <div id="mx-messages"></div>
+    <div id="mx-input-row">
+      <button id="mx-voice-btn" title="Toggle voice">\u{1F3A4}</button>
+      <input id="mx-input" type="text" placeholder="Message..." maxlength="2000">
+    </div>
+  </div>
+  <script>
+  (function(){
+    const PROJECT_ID = 'glendale-camino-real';
+    let ws = null, joined = false, myId = null, peers = {}, localStream = null;
+    const $ = (id) => document.getElementById(id);
+    function addMsg(html, cls) { const d = document.createElement('div'); d.className = 'mx-msg' + (cls ? ' ' + cls : ''); d.innerHTML = html; const box = $('mx-messages'); box.appendChild(d); box.scrollTop = box.scrollHeight; }
+    function esc(s) { return String(s == null ? '' : s).replace(/[<>&]/g, c => ({'<':'&lt;','>':'&gt;','&':'&amp;'}[c])); }
+    function renderRoster(users) { $('mx-roster').innerHTML = users.map(u => \`<span class="mx-avatar" style="background:\${u.color}" title="\${esc(u.name)}">\${esc((u.name||'?').slice(0,1).toUpperCase())}</span>\`).join(''); }
+    let roster = [];
+    function connect() {
+      ws = new WebSocket((location.protocol === 'https:' ? 'wss://' : 'ws://') + location.host + '/api/sight/room/' + PROJECT_ID);
+      ws.onopen = () => { joined = true; };
+      ws.onclose = () => {
+        const neverJoined = !joined;
+        joined = false;
+        if (neverJoined) {
+          $('mx-panel').innerHTML = '<div id="mx-gate">Sign in and add MeetingX to collaborate live in this walkthrough. See <a href="/pricing">/pricing</a>.</div>';
+        }
+      };
+      ws.onerror = () => {};
+      ws.onmessage = (evt) => {
+        let msg; try { msg = JSON.parse(evt.data); } catch (e) { return; }
+        if (msg.type === 'roster') { roster = msg.users; myId = msg.you; renderRoster(roster); addMsg('Connected. ' + roster.length + ' present.', 'mx-sys'); }
+        else if (msg.type === 'join') { roster.push(msg.user); renderRoster(roster); addMsg(esc(msg.user.name) + ' joined', 'mx-sys'); if (localStream) callPeer(msg.user.userId); }
+        else if (msg.type === 'leave') { roster = roster.filter(u => u.userId !== msg.userId); renderRoster(roster); if (peers[msg.userId]) { peers[msg.userId].pc.close(); delete peers[msg.userId]; } }
+        else if (msg.type === 'chat') { addMsg('<b>' + esc(msg.user.name) + ':</b> ' + esc(msg.text)); }
+        else if (msg.type === 'signal') { handleSignal(msg); }
+      };
+    }
+    function sendSignal(to, payload) { ws.send(JSON.stringify({ type: 'signal', to, payload })); }
+    function makePeerConnection(peerId) {
+      const pc = new RTCPeerConnection({ iceServers: [{ urls: 'stun:stun.l.google.com:19302' }] });
+      if (localStream) localStream.getTracks().forEach(t => pc.addTrack(t, localStream));
+      pc.onicecandidate = (e) => { if (e.candidate) sendSignal(peerId, { candidate: e.candidate }); };
+      pc.ontrack = (e) => {
+        let audio = document.getElementById('mx-audio-' + peerId);
+        if (!audio) { audio = document.createElement('audio'); audio.id = 'mx-audio-' + peerId; audio.autoplay = true; document.body.appendChild(audio); }
+        audio.srcObject = e.streams[0];
+      };
+      peers[peerId] = { pc };
+      return pc;
+    }
+    async function callPeer(peerId) {
+      const pc = makePeerConnection(peerId);
+      const offer = await pc.createOffer();
+      await pc.setLocalDescription(offer);
+      sendSignal(peerId, { sdp: offer });
+    }
+    async function handleSignal(msg) {
+      const peerId = msg.from;
+      let entry = peers[peerId];
+      const pc = entry ? entry.pc : makePeerConnection(peerId);
+      if (msg.payload.sdp) {
+        await pc.setRemoteDescription(new RTCSessionDescription(msg.payload.sdp));
+        if (msg.payload.sdp.type === 'offer') {
+          const answer = await pc.createAnswer();
+          await pc.setLocalDescription(answer);
+          sendSignal(peerId, { sdp: answer });
+        }
+      } else if (msg.payload.candidate) {
+        try { await pc.addIceCandidate(msg.payload.candidate); } catch (e) {}
+      }
+    }
+    $('mx-toggle').addEventListener('click', () => {
+      $('mx-panel').classList.toggle('open');
+      if (!ws) connect();
+    });
+    $('mx-close').addEventListener('click', () => $('mx-panel').classList.remove('open'));
+    $('mx-input').addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' && ws && joined && e.target.value.trim()) {
+        ws.send(JSON.stringify({ type: 'chat', text: e.target.value.trim() }));
+        e.target.value = '';
+      }
+    });
+    $('mx-voice-btn').addEventListener('click', async () => {
+      const btn = $('mx-voice-btn');
+      if (!localStream) {
+        try {
+          localStream = await navigator.mediaDevices.getUserMedia({ audio: true });
+          btn.classList.add('active');
+          roster.filter(u => u.userId !== myId).forEach(u => callPeer(u.userId));
+        } catch (e) { addMsg('Mic access denied.', 'mx-sys'); }
+      } else {
+        localStream.getTracks().forEach(t => t.stop());
+        localStream = null;
+        Object.values(peers).forEach(p => p.pc.close());
+        peers = {};
+        btn.classList.remove('active');
+      }
+    });
+  })();
+  </script>
+
+
+  <!-- Guided Walkthrough Preview -- real, deployed 2026-09-06. SightX's own
+       spec promises "guided site walkthroughs"; the WebGL scene above is
+       one real hardcoded demo project (Glendale Camino Real). This panel
+       is a genuinely different, smaller, real slice of that same promise:
+       given a plain-text project description, it generates an actual
+       narrated storyboard walkthrough (script via a self-hosted LLM,
+       animated-SVG scene sequence, optional browser text-to-speech) --
+       not a 3D render, not a video file. Calls weylandai's own
+       /api/sightx/walkthrough-preview, which forwards to
+       filmline-video-worker over a real same-account Service Binding. -->
+  <div id="wt-preview-toggle" style="position:fixed;right:20px;bottom:20px;z-index:9999;">
+    <button id="wt-preview-btn" style="padding:10px 16px;background:#f0b800;color:#090a0d;border:0;border-radius:6px;font-weight:700;font-family:'Space Grotesk',sans-serif;cursor:pointer;box-shadow:0 2px 12px rgba(0,0,0,0.4);">Guided Walkthrough Preview</button>
+  </div>
+  <div id="wt-preview-panel" style="display:none;position:fixed;inset:0;z-index:10000;background:rgba(9,10,13,0.92);overflow:auto;">
+    <div style="max-width:820px;margin:40px auto;background:#12151a;border:1px solid #2a2e36;border-radius:10px;padding:28px;color:#f4f1ea;font-family:'Outfit',sans-serif;">
+      <div style="display:flex;justify-content:space-between;align-items:center;">
+        <h2 style="margin:0;font-family:'Space Grotesk',sans-serif;">Guided Walkthrough Preview</h2>
+        <button id="wt-preview-close" style="background:none;border:0;color:#8a94a6;font-size:22px;cursor:pointer;">&times;</button>
+      </div>
+      <p style="color:#a9b2c0;font-size:14px;line-height:1.6;">Describe a project (e.g. "second-floor mechanical retrofit, three access points, one hazardous-material zone") and generate a real narrated storyboard walkthrough -- a script plus an animated scene sequence, played back with your browser's own text-to-speech. This is not the 3D scene above; it's a smaller, real, honest slice of SightX's "guided site walkthroughs" promise: script + animated storyboard, not photorealistic render or an encoded video file.</p>
+      <textarea id="wt-preview-input" rows="3" maxlength="1000" placeholder="Describe the project or space to walk through..." style="width:100%;box-sizing:border-box;background:#0d0f13;color:#f4f1ea;border:1px solid #2a2e36;border-radius:6px;padding:10px;font-family:inherit;font-size:14px;"></textarea>
+      <button id="wt-preview-generate" style="margin-top:10px;padding:10px 18px;background:#f0b800;color:#090a0d;border:0;border-radius:6px;font-weight:700;cursor:pointer;">Generate</button>
+      <span id="wt-preview-status" style="margin-left:12px;color:#8a94a6;font-size:13px;"></span>
+      <div id="wt-preview-result" style="margin-top:18px;"></div>
+    </div>
+  </div>
+  <script>
+    (function () {
+      var toggleBtn = document.getElementById('wt-preview-btn');
+      var panel = document.getElementById('wt-preview-panel');
+      var closeBtn = document.getElementById('wt-preview-close');
+      var genBtn = document.getElementById('wt-preview-generate');
+      var input = document.getElementById('wt-preview-input');
+      var status = document.getElementById('wt-preview-status');
+      var result = document.getElementById('wt-preview-result');
+      toggleBtn.addEventListener('click', function () { panel.style.display = 'block'; });
+      closeBtn.addEventListener('click', function () { panel.style.display = 'none'; });
+      genBtn.addEventListener('click', function () {
+        var description = (input.value || '').trim();
+        if (!description) { status.textContent = 'Enter a project description first.'; return; }
+        status.textContent = 'Generating (real model inference, ~10-20s)...';
+        result.innerHTML = '';
+        genBtn.disabled = true;
+        fetch('/api/sightx/walkthrough-preview', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ description: description })
+        }).then(function (r) { return r.json().then(function (d) { return { ok: r.ok, d: d }; }); })
+          .then(function (res) {
+            genBtn.disabled = false;
+            if (!res.ok) { status.textContent = 'Error: ' + (res.d && res.d.detail && res.d.detail.message || 'generation failed'); return; }
+            status.textContent = 'Done (' + res.d.total_seconds + 's reel, ' + res.d.scene_count + ' scenes).';
+            result.innerHTML = res.d.svg + '<p style="margin-top:12px;color:#8a94a6;font-size:13px;">' + res.d.logline_escaped + '</p>' +
+              '<button id="wt-preview-narrate" style="margin-top:6px;padding:8px 14px;background:#2a2e36;color:#f4f1ea;border:0;border-radius:6px;cursor:pointer;">Narrate (browser text-to-speech)</button>';
+            document.getElementById('wt-preview-narrate').addEventListener('click', function () {
+              if (!('speechSynthesis' in window)) { alert('No speechSynthesis support in this browser.'); return; }
+              window.speechSynthesis.cancel();
+              (res.d.narration_lines || []).forEach(function (line) {
+                if (line) window.speechSynthesis.speak(new SpeechSynthesisUtterance(line));
+              });
+            });
+          })
+          .catch(function (err) { genBtn.disabled = false; status.textContent = 'Request failed: ' + err.message; });
+      });
+    })();
+  </script>
+</body>
+</html>
+`, { headers: { "Content-Type": "text/html; charset=UTF-8", "Cache-Control": "public, max-age=60" } });
+  }
+  function serve_meetingx() {
+    return new Response(`<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#090a0d">
+  <title>MeetingX | WeylandAI</title>
+  <meta name="description" content="MeetingX turns live construction conversations into decisions, action items, and project intelligence.">
+  <style>
+    :root{--ink:#090a0d;--panel:#111318;--panel2:#171a20;--line:#2b3038;--paper:#eef1f2;--muted:#9299a3;--gold:#f0b800;--gold2:#ffd950;--green:#68e0a0;--red:#ff716b;--blue:#6ed8ff;--r:18px}
+    *{box-sizing:border-box}html,body{margin:0;min-height:100%;background:var(--ink);color:var(--paper);font-family:"Avenir Next","Helvetica Neue",sans-serif}body{overflow-x:hidden}
+    body:before{content:"";position:fixed;inset:0;pointer-events:none;background:radial-gradient(circle at 12% 8%,rgba(240,184,0,.14),transparent 24rem),radial-gradient(circle at 87% 83%,rgba(110,216,255,.08),transparent 28rem),linear-gradient(rgba(255,255,255,.015) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.015) 1px,transparent 1px);background-size:auto,auto,32px 32px,32px 32px}
+    button,input,textarea{font:inherit}.shell{position:relative;max-width:1540px;margin:auto;padding:20px clamp(14px,2.5vw,36px) 40px}
+    header{display:flex;align-items:center;justify-content:space-between;gap:18px;margin-bottom:20px}.brand{display:flex;align-items:center;gap:13px;text-decoration:none;color:var(--paper)}.mark{width:42px;height:42px;display:grid;place-items:center;background:var(--gold);color:var(--ink);font-weight:900;letter-spacing:-.08em}.brand strong{display:block;letter-spacing:.14em;font-size:14px}.brand small{display:block;color:var(--muted);font:600 9px/1.5 ui-monospace,monospace;letter-spacing:.15em}.top-actions{display:flex;align-items:center;gap:8px;flex-wrap:wrap}.status{display:flex;align-items:center;gap:7px;border:1px solid var(--line);border-radius:99px;padding:8px 12px;color:var(--muted);font:700 10px/1 ui-monospace,monospace;letter-spacing:.09em}.dot{width:7px;height:7px;border-radius:50%;background:var(--green);box-shadow:0 0 14px var(--green)}.link{color:var(--paper);text-decoration:none;border:1px solid var(--line);border-radius:99px;padding:8px 12px;font:700 10px/1 ui-monospace,monospace;letter-spacing:.08em}.link:hover{border-color:var(--gold);color:var(--gold)}
+    .intro{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(290px,.65fr);gap:18px;margin-bottom:18px}.hero,.brief,.card{background:rgba(17,19,24,.91);border:1px solid var(--line);border-radius:var(--r);box-shadow:0 24px 80px rgba(0,0,0,.25)}
+    .hero{position:relative;min-height:470px;overflow:hidden}.hero video{width:100%;height:100%;min-height:470px;object-fit:cover;background:#050609;display:block}.hero-placeholder{position:absolute;inset:0;display:grid;place-items:center;text-align:center;padding:40px;background:radial-gradient(circle at 50% 43%,rgba(240,184,0,.12),transparent 22%),linear-gradient(145deg,#11151b,#07080b)}.hero-placeholder.hidden{display:none}.orb{width:110px;height:110px;border:1px solid rgba(240,184,0,.45);transform:rotate(45deg);margin:0 auto 38px;position:relative;animation:turn 16s linear infinite}.orb:before,.orb:after{content:"";position:absolute;inset:15px;border:1px solid rgba(240,184,0,.33)}.orb:after{inset:32px;background:var(--gold);box-shadow:0 0 50px rgba(240,184,0,.3)}@keyframes turn{to{transform:rotate(405deg)}}
+    .hero-placeholder h1{font-size:clamp(34px,5vw,72px);line-height:.95;margin:0 0 14px;letter-spacing:-.05em}.hero-placeholder h1 span{color:var(--gold)}.hero-placeholder p{max-width:620px;color:var(--muted);margin:0 auto;line-height:1.65}.live-tag{position:absolute;top:16px;left:16px;background:rgba(9,10,13,.75);backdrop-filter:blur(14px);border:1px solid var(--line);border-radius:99px;padding:9px 12px;font:800 10px/1 ui-monospace,monospace;letter-spacing:.1em}.timer{position:absolute;top:16px;right:16px;background:rgba(9,10,13,.75);backdrop-filter:blur(14px);border:1px solid var(--line);border-radius:99px;padding:9px 12px;font:700 11px/1 ui-monospace,monospace}.controls{position:absolute;left:50%;bottom:18px;transform:translateX(-50%);display:flex;gap:8px;background:rgba(9,10,13,.78);border:1px solid var(--line);border-radius:99px;padding:7px;backdrop-filter:blur(16px)}
+    .control{border:0;border-radius:99px;background:var(--panel2);color:var(--paper);padding:11px 14px;cursor:pointer;font:750 10px/1 ui-monospace,monospace;letter-spacing:.04em;white-space:nowrap}.control:hover,.control.active{background:var(--gold);color:var(--ink)}.control.danger:hover{background:var(--red)}
+    .brief{padding:23px;display:flex;flex-direction:column}.eyebrow{color:var(--gold);font:800 10px/1 ui-monospace,monospace;letter-spacing:.16em;text-transform:uppercase}.brief h2{font-size:30px;line-height:1.05;letter-spacing:-.035em;margin:13px 0 9px}.brief>p{color:var(--muted);line-height:1.55;margin:0 0 20px}.flow{display:grid;gap:8px;margin:4px 0 20px}.flow-row{display:grid;grid-template-columns:32px 1fr;gap:11px;align-items:center;padding:11px;border:1px solid var(--line);border-radius:12px;background:rgba(255,255,255,.018)}.flow-row b{display:grid;place-items:center;width:30px;height:30px;border-radius:9px;background:rgba(240,184,0,.12);color:var(--gold);font:800 11px ui-monospace,monospace}.flow-row strong{font-size:13px}.flow-row small{display:block;color:var(--muted);margin-top:2px;line-height:1.35}.metrics{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:auto}.metric{padding:12px;border:1px solid var(--line);border-radius:12px}.metric strong{display:block;color:var(--gold);font-size:22px}.metric span{color:var(--muted);font:700 9px/1.3 ui-monospace,monospace;letter-spacing:.07em}
+    .workspace{display:grid;grid-template-columns:1.2fr .8fr .8fr;gap:18px}.card{padding:20px;min-height:300px}.card-head{display:flex;justify-content:space-between;gap:12px;align-items:center;margin-bottom:15px}.card h3{margin:0;font-size:17px}.badge{color:var(--muted);font:700 9px/1 ui-monospace,monospace;border:1px solid var(--line);border-radius:99px;padding:6px 8px}.transcript{height:260px;overflow:auto;padding:13px;border:1px solid var(--line);border-radius:12px;background:#0b0c0f;color:#cbd0d5;font:13px/1.65 ui-monospace,monospace;white-space:pre-wrap}.interim{color:var(--muted)}
+    .list{display:grid;gap:8px;max-height:230px;overflow:auto}.item{border:1px solid var(--line);border-radius:11px;padding:11px 12px;background:rgba(255,255,255,.018);font-size:13px;line-height:1.45}.item small{display:block;color:var(--muted);font:700 9px/1.4 ui-monospace,monospace;margin-top:5px}.empty{color:var(--muted);font-size:13px;line-height:1.6}.add{width:100%;margin-top:10px;border:1px dashed #454b54;background:transparent;color:var(--muted);border-radius:11px;padding:10px;cursor:pointer}.add:hover{border-color:var(--gold);color:var(--gold)}
+    .ask{display:flex;gap:8px;margin-top:10px}.ask input{min-width:0;flex:1;background:#0b0c0f;color:var(--paper);border:1px solid var(--line);border-radius:10px;padding:11px;outline:none}.ask input:focus{border-color:var(--gold)}.ask button{border:0;background:var(--gold);color:var(--ink);font-weight:800;border-radius:10px;padding:0 14px;cursor:pointer}.answer{min-height:145px;border-left:2px solid var(--gold);padding:3px 0 3px 13px;color:#cbd0d5;font-size:13px;line-height:1.6}.footerbar{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-top:18px;color:var(--muted);font:700 9px/1.5 ui-monospace,monospace;letter-spacing:.05em}.footerbar button{border:1px solid var(--line);background:transparent;color:var(--paper);border-radius:10px;padding:9px 12px;cursor:pointer}.footerbar button:hover{border-color:var(--gold);color:var(--gold)}
+    @media(max-width:1050px){.intro{grid-template-columns:1fr}.workspace{grid-template-columns:1fr 1fr}.workspace .card:first-child{grid-column:1/-1}}
+    @media(max-width:700px){.shell{padding:12px}.brand small,.top-actions .link{display:none}.hero,.hero video{min-height:55vh}.controls{width:calc(100% - 24px);overflow-x:auto;justify-content:flex-start}.workspace{grid-template-columns:1fr}.workspace .card:first-child{grid-column:auto}.brief{padding:18px}.footerbar{align-items:flex-start;flex-direction:column}}
+  </style>
+</head>
+<body>
+  <div class="shell">
+    <header>
+      <a class="brand" href="/"><span class="mark">WX</span><span><strong>MEETINGX</strong><small>WEYLAND COLLABORATION INTELLIGENCE</small></span></a>
+      <div class="top-actions"><span class="status"><i class="dot"></i> LIVE BETA</span><a class="link" href="/sightx/">SIGHTX</a><a class="link" href="/">WEYLAND</a></div>
+    </header>
+
+    <section class="intro">
+      <div class="hero">
+        <video id="stage" autoplay playsinline muted></video>
+        <div class="hero-placeholder" id="placeholder">
+          <div><div class="orb"></div><h1>Meet inside the<br><span>project model.</span></h1><p>MeetingX converts live conversation into a durable project record: transcript, decisions, actions, and the Weyland product context needed to act.</p></div>
+        </div>
+        <span class="live-tag" id="media-status">LOCAL FACILITATION SURFACE</span>
+        <span class="timer" id="timer">00:00:00</span>
+        <div class="controls">
+          <button class="control" id="media-btn">CAM + MIC</button>
+          <button class="control" id="share-btn">SHARE SCREEN</button>
+          <button class="control" id="record-btn">TRANSCRIBE</button>
+          <button class="control" id="decision-btn">DECISION</button>
+          <button class="control" id="action-btn">ACTION</button>
+        </div>
+      </div>
+
+      <aside class="brief">
+        <span class="eyebrow">Capital Meeting Brief</span>
+        <h2>One data spine.<br>Four revenue surfaces.</h2>
+        <p>The profitable wedge is not a list of disconnected products. It is one project intelligence flow sold at the points where construction loses the most time.</p>
+        <div class="flow">
+          <div class="flow-row"><b>01</b><div><strong>SubX</strong><small>Documents, specifications, submittals, and subcontractor intelligence.</small></div></div>
+          <div class="flow-row"><b>02</b><div><strong>TakeoffX</strong><small>Quantities, costs, labor, and estimate-ready scope.</small></div></div>
+          <div class="flow-row"><b>03</b><div><strong>PropX</strong><small>Bundles verified outputs into a reviewable proposal.</small></div></div>
+          <div class="flow-row"><b>04</b><div><strong>SightX</strong><small>Makes the same project data spatial, explorable, and explainable.</small></div></div>
+        </div>
+        <div class="metrics"><div class="metric"><strong>$2K</strong><span>SUBCONP ACTIVE SEAT / MONTH</span></div><div class="metric"><strong>$10M</strong><span>TARGET SEED ROUND</span></div></div>
+      </aside>
+    </section>
+
+    <section class="workspace">
+      <article class="card">
+        <div class="card-head"><h3>Live Transcript</h3><span class="badge" id="speech-status">READY</span></div>
+        <div class="transcript" id="transcript">MeetingX ready. Start transcription to create a local meeting record.</div>
+      </article>
+      <article class="card">
+        <div class="card-head"><h3>Decisions</h3><span class="badge" id="decision-count">0 CAPTURED</span></div>
+        <div class="list" id="decisions"><p class="empty">Capture the commitments that change the project or company.</p></div>
+        <button class="add" data-add="decision">+ Record decision</button>
+      </article>
+      <article class="card">
+        <div class="card-head"><h3>Actions</h3><span class="badge" id="action-count">0 OPEN</span></div>
+        <div class="list" id="actions"><p class="empty">Turn conversation into an owner, outcome, and next step.</p></div>
+        <button class="add" data-add="action">+ Add action</button>
+      </article>
+      <article class="card" style="grid-column:1/-1;min-height:220px">
+        <div class="card-head"><h3>Ask Weyland</h3><span class="badge">MEETING CONTEXT</span></div>
+        <div class="answer" id="answer">Ask about the product flow, the commercial wedge, the raise, or what should be demonstrated. MeetingX answers from the verified meeting brief rather than the public web.</div>
+        <form class="ask" id="ask-form"><input id="ask-input" autocomplete="off" placeholder="What is the clearest way to explain SubX and TakeoffX?"><button>ASK</button></form>
+      </article>
+    </section>
+
+    <div class="footerbar"><span>MEETINGX BETA \xB7 MEDIA AND NOTES STAY IN THIS BROWSER \xB7 MULTI-PARTY TRANSPORT NOT YET CLAIMED</span><button id="export-btn">EXPORT MEETING RECORD</button></div>
+  </div>
+
+  <script>
+    const state={started:Date.now(),transcript:[],decisions:[],actions:[],camera:null,display:null,recognition:null,recording:false};
+    const $=id=>document.getElementById(id);
+    const clock=()=>{const s=Math.floor((Date.now()-state.started)/1000);$('timer').textContent=[s/3600,s/60%60,s%60].map(v=>String(Math.floor(v)).padStart(2,'0')).join(':')};setInterval(clock,1000);clock();
+    function showStream(stream,label){$('stage').srcObject=stream;$('placeholder').classList.add('hidden');$('media-status').textContent=label}
+    async function startMedia(){try{if(!state.camera)state.camera=await navigator.mediaDevices.getUserMedia({video:{width:{ideal:1280},height:{ideal:720}},audio:{echoCancellation:true,noiseSuppression:true}});showStream(state.camera,'CAMERA + MICROPHONE READY');$('media-btn').classList.add('active')}catch(e){$('media-status').textContent='MEDIA PERMISSION REQUIRED';alert('Allow camera and microphone access to activate the MeetingX stage.') }}
+    async function shareScreen(){try{state.display=await navigator.mediaDevices.getDisplayMedia({video:true,audio:true});showStream(state.display,'SCREEN SHARE ACTIVE');$('share-btn').classList.add('active');state.display.getVideoTracks()[0].addEventListener('ended',()=>{state.display=null;$('share-btn').classList.remove('active');if(state.camera)showStream(state.camera,'CAMERA + MICROPHONE READY');else{$('stage').srcObject=null;$('placeholder').classList.remove('hidden')}})}catch(e){if(e.name!=='NotAllowedError')alert('Screen sharing could not start: '+e.message)}}
+    function initSpeech(){const SR=window.SpeechRecognition||window.webkitSpeechRecognition;if(!SR)return null;const r=new SR();r.continuous=true;r.interimResults=true;r.lang='en-US';r.onresult=e=>{let interim='';for(let i=e.resultIndex;i<e.results.length;i++){const text=e.results[i][0].transcript.trim();if(e.results[i].isFinal){state.transcript.push({at:new Date().toISOString(),text});}else interim=text}renderTranscript(interim)};r.onend=()=>{if(state.recording){try{r.start()}catch(_){}}};r.onerror=e=>{$('speech-status').textContent=e.error.toUpperCase()};return r}
+    function renderTranscript(interim=''){$('transcript').innerHTML=(state.transcript.length?state.transcript.map(x=>\`<div>\${escapeHtml(x.text)}</div>\`).join(''):'<span class="interim">Listening\u2026</span>')+(interim?\`<div class="interim">\${escapeHtml(interim)}</div>\`:'');$('transcript').scrollTop=$('transcript').scrollHeight}
+    function toggleSpeech(){if(!state.recognition)state.recognition=initSpeech();if(!state.recognition){$('speech-status').textContent='UNSUPPORTED';alert('Live browser transcription is not available in this browser. Camera, notes, decisions, and export still work.');return}state.recording=!state.recording;if(state.recording){state.recognition.start();$('record-btn').classList.add('active');$('speech-status').textContent='LISTENING'}else{state.recognition.stop();$('record-btn').classList.remove('active');$('speech-status').textContent='PAUSED'}}
+    function escapeHtml(v){return String(v).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+    function add(kind){const label=kind==='decision'?'Decision':'Action and owner';const value=prompt(label+':');if(!value)return;state[kind+'s'].push({text:value,at:new Date().toISOString()});renderList(kind)}
+    function renderList(kind){const values=state[kind+'s'],node=$(kind+'s');node.innerHTML=values.length?values.map((x,i)=>\`<div class="item">\${escapeHtml(x.text)}<small>\${new Date(x.at).toLocaleTimeString([], {hour:'2-digit',minute:'2-digit'})} \xB7 \${kind.toUpperCase()} \${i+1}</small></div>\`).join(''):\`<p class="empty">Nothing captured yet.</p>\`;$(kind+'-count').textContent=\`\${values.length} \${kind==='action'?'OPEN':'CAPTURED'}\`}
+    function answer(q){const s=q.toLowerCase();if(/price|cost|2k|2,000/.test(s))return 'SubConP, the Subcontractor Operating Package, is $2,000 per active operator seat per month. It includes HuntX, SubX, TakeoffX, CutsheetX, PropX, and SightX.';if(/flow|together|pipeline|product|subconp/.test(s))return 'Explain one project record across six products: HuntX finds the opportunity; SubX prepares submittals; TakeoffX quantifies drawings; CutsheetX assembles product data; PropX produces the reviewed proposal; SightX makes the same record spatial.';if(/takeoff/.test(s))return 'TakeoffX, or Takeoff Express, is the estimating wedge: quantify scope, connect current cost and labor assumptions, and move an estimator from tracing plans to reviewing a machine-produced result.';if(/subx|submittal/.test(s))return 'SubX means Submittal Express. It reduces document handling and submittal preparation from hours or days to a professional review cycle.';if(/raise|10m|capital|fund/.test(s))return 'The deck asks for $10M and frames five years of runway with 60% engineering, 30% staffing, and 10% operations. The strongest proof is the revenue-producing SubX and TakeoffX workflow, not the count of future products.';if(/demo|show|present/.test(s))return 'Show three things: the Weyland homepage for the platform thesis, SightX for spatial comprehension, and MeetingX for conversation-to-action. Describe SubConP as six products operating on one shared project record.';if(/meetingx|meetx/.test(s))return 'MeetingX is the canonical name. This beta proves local media, screen sharing, transcription, decisions, actions, export, and context-aware facilitation. Multi-party conferencing still requires a signaling and TURN layer and is not being claimed today.';return 'Anchor the answer to SubConP: less manual construction work, faster quote and approval cycles, and one project record reused across HuntX, SubX, TakeoffX, CutsheetX, PropX, and SightX.'}
+    function exportRecord(){const payload={product:'MeetingX',schema_version:1,started_at:new Date(state.started).toISOString(),exported_at:new Date().toISOString(),transcript:state.transcript,decisions:state.decisions,actions:state.actions};const blob=new Blob([JSON.stringify(payload,null,2)],{type:'application/json'}),a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=\`meetingx-\${new Date().toISOString().replace(/[:.]/g,'-')}.json\`;a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1000)}
+    $('media-btn').onclick=startMedia;$('share-btn').onclick=shareScreen;$('record-btn').onclick=toggleSpeech;$('decision-btn').onclick=()=>add('decision');$('action-btn').onclick=()=>add('action');document.querySelectorAll('[data-add]').forEach(b=>b.onclick=()=>add(b.dataset.add));$('export-btn').onclick=exportRecord;
+    $('ask-form').onsubmit=e=>{e.preventDefault();const q=$('ask-input').value.trim();if(!q)return;$('answer').textContent=answer(q);$('ask-input').value=''};
+  </script>
+</body>
+</html>
+`, { headers: { "Content-Type": "text/html; charset=UTF-8", "Cache-Control": "public, max-age=60" } });
+  }
+  function serve_sightx_runtime_manifest_json() {
+    return new Response('{\n  "$schema": "/sightx/runtime-manifest.schema.json",\n  "schema": "weyland.sightx.runtime-manifest.v1",\n  "scene": {\n    "id": "weyland-facility-01",\n    "name": "Weyland Facility 01",\n    "coordinateSystem": "site-local",\n    "units": "m",\n    "siteGenomeUrl": "/sightx/projects/glendale-camino-real/catalog.json"\n  },\n  "runtimes": {\n    "web": {\n      "kind": "browser-webgl",\n      "status": "available",\n      "mount": "#bg-canvas"\n    },\n    "unreal": {\n      "kind": "unreal-pixel-streaming",\n      "status": "requires-endpoint",\n      "frontendUrl": null,\n      "healthUrl": null,\n      "transport": "webrtc"\n    }\n  },\n  "bridge": {\n    "schema": "weyland.sightx.runtime-bridge.v1",\n    "pageToRuntime": [\n      "sightx:scene:load",\n      "sightx:settings:update"\n    ],\n    "runtimeToPage": [\n      "sightx:runtime:ready",\n      "sightx:field-record"\n    ]\n  }\n}\n', { headers: { "Content-Type": "application/json; charset=UTF-8", "Cache-Control": "public, max-age=60" } });
+  }
+  function serve_sightx_runtime_manifest_schema_json() {
+    return new Response('{\n  "$schema": "https://json-schema.org/draft/2020-12/schema",\n  "$id": "https://weylandai.com/sightx/runtime-manifest.schema.json",\n  "title": "SightX Runtime Manifest",\n  "type": "object",\n  "required": ["schema", "scene", "runtimes", "bridge"],\n  "properties": {\n    "schema": { "const": "weyland.sightx.runtime-manifest.v1" },\n    "scene": {\n      "type": "object",\n      "required": ["id", "name", "coordinateSystem", "units"],\n      "properties": {\n        "id": { "type": "string", "minLength": 1 },\n        "name": { "type": "string", "minLength": 1 },\n        "coordinateSystem": { "enum": ["site-local", "source-unmapped"] },\n        "units": { "enum": ["m", "ft"] },\n        "siteGenomeUrl": { "type": ["string", "null"] }\n      },\n      "additionalProperties": true\n    },\n    "runtimes": {\n      "type": "object",\n      "required": ["web", "unreal"],\n      "properties": {\n        "web": {\n          "type": "object",\n          "required": ["kind", "status", "mount"]\n        },\n        "unreal": {\n          "type": "object",\n          "required": ["kind", "status", "frontendUrl", "transport"],\n          "properties": {\n            "frontendUrl": { "type": ["string", "null"] },\n            "healthUrl": { "type": ["string", "null"] },\n            "transport": { "const": "webrtc" }\n          },\n          "additionalProperties": true\n        }\n      },\n      "additionalProperties": false\n    },\n    "bridge": {\n      "type": "object",\n      "required": ["schema", "pageToRuntime", "runtimeToPage"]\n    }\n  },\n  "additionalProperties": true\n}\n', { headers: { "Content-Type": "application/json; charset=UTF-8", "Cache-Control": "public, max-age=60" } });
+  }
+  function serve_sightx_projects_glendale_camino_real_catalog_json() {
+    return new Response('{\n  "schema": "sightx.project-catalog.v1",\n  "projects": [\n    {\n      "id": "glendale-camino-real",\n      "name": "Glendale Community College - Camino Real Building Renovation",\n      "address": "1500 N. Verdugo Rd, Glendale, CA 91208",\n      "source": {\n        "file": "GCCFullDoorSchedule.pdf",\n        "url": "GCCFullDoorSchedule.pdf",\n        "sha256": "36d5c352b26db0ef5ba56eca4b3254e95bc782afae9e0bae7305b860b8bef0e1",\n        "pages": 4,\n        "title": "Architectural Sheets"\n      },\n      "levels": [\n        {\n          "id": "first-floor",\n          "label": "First Floor / A-201",\n          "page": 1,\n          "sheet": "A-201",\n          "crop": [\n            0.18,\n            0.235,\n            0.57,\n            0.35\n          ],\n          "elevationM": 0.0,\n          "heightM": 3.35,\n          "widthM": 58.0,\n          "sourcePreview": "first-floor-source.webp",\n          "wallMask": "first-floor-walls.png",\n          "semanticPreview": "first-floor-semantic.png",\n          "modelInputPreview": "first-floor-model-input.webp",\n          "texture": {\n            "width": 768,\n            "height": 364\n          },\n          "boundsM": [\n            -29.0,\n            -13.744791666666666,\n            29.0,\n            13.744791666666666\n          ],\n          "extraction": {\n            "method": "floorplan-unet-resnet34-cubicasa-v1",\n            "wallPixels": 29632,\n            "doorPixels": 36727,\n            "windowPixels": 75740,\n            "status": "machine-derived-requires-review"\n          }\n        },\n        {\n          "id": "second-floor",\n          "label": "Second Floor / A-202",\n          "page": 2,\n          "sheet": "A-202",\n          "crop": [\n            0.19,\n            0.22,\n            0.56,\n            0.36\n          ],\n          "elevationM": 3.35,\n          "heightM": 3.35,\n          "widthM": 58.0,\n          "sourcePreview": "second-floor-source.webp",\n          "wallMask": "second-floor-walls.png",\n          "semanticPreview": "second-floor-semantic.png",\n          "modelInputPreview": "second-floor-model-input.webp",\n          "texture": {\n            "width": 768,\n            "height": 382\n          },\n          "boundsM": [\n            -29.0,\n            -14.424479166666666,\n            29.0,\n            14.424479166666666\n          ],\n          "extraction": {\n            "method": "floorplan-unet-resnet34-cubicasa-v1",\n            "wallPixels": 36428,\n            "doorPixels": 10274,\n            "windowPixels": 68460,\n            "status": "machine-derived-requires-review"\n          }\n        },\n        {\n          "id": "attic",\n          "label": "Attic / A-203",\n          "page": 3,\n          "sheet": "A-203.1",\n          "crop": [\n            0.215,\n            0.075,\n            0.56,\n            0.35\n          ],\n          "elevationM": 6.7,\n          "heightM": 2.75,\n          "widthM": 58.0,\n          "sourcePreview": "attic-source.webp",\n          "wallMask": "attic-walls.png",\n          "semanticPreview": "attic-semantic.png",\n          "modelInputPreview": "attic-model-input.webp",\n          "texture": {\n            "width": 768,\n            "height": 371\n          },\n          "boundsM": [\n            -29.0,\n            -14.009114583333334,\n            29.0,\n            14.009114583333334\n          ],\n          "extraction": {\n            "method": "floorplan-unet-resnet34-cubicasa-v1",\n            "wallPixels": 40720,\n            "doorPixels": 12588,\n            "windowPixels": 45707,\n            "status": "machine-derived-requires-review"\n          }\n        },\n        {\n          "id": "roof",\n          "label": "Roof / A-203",\n          "page": 3,\n          "sheet": "A-203.2",\n          "crop": [\n            0.285,\n            0.43,\n            0.59,\n            0.33\n          ],\n          "elevationM": 9.45,\n          "heightM": 0.35,\n          "widthM": 58.0,\n          "sourcePreview": "roof-source.webp",\n          "wallMask": "roof-walls.png",\n          "semanticPreview": "roof-semantic.png",\n          "modelInputPreview": "roof-model-input.webp",\n          "texture": {\n            "width": 768,\n            "height": 332\n          },\n          "boundsM": [\n            -29.0,\n            -12.536458333333334,\n            29.0,\n            12.536458333333334\n          ],\n          "extraction": {\n            "method": "floorplan-unet-resnet34-cubicasa-v1",\n            "wallPixels": 26418,\n            "doorPixels": 4157,\n            "windowPixels": 142766,\n            "status": "machine-derived-requires-review"\n          }\n        },\n        {\n          "id": "basement",\n          "label": "Basement / A-203",\n          "page": 3,\n          "sheet": "A-203.3",\n          "crop": [\n            0.055,\n            0.52,\n            0.25,\n            0.23\n          ],\n          "elevationM": -3.0,\n          "heightM": 3.0,\n          "widthM": 15.0,\n          "sourcePreview": "basement-source.webp",\n          "wallMask": "basement-walls.png",\n          "semanticPreview": "basement-semantic.png",\n          "modelInputPreview": "basement-model-input.webp",\n          "texture": {\n            "width": 768,\n            "height": 546\n          },\n          "boundsM": [\n            -7.5,\n            -5.33203125,\n            7.5,\n            5.33203125\n          ],\n          "extraction": {\n            "method": "floorplan-unet-resnet34-cubicasa-v1",\n            "wallPixels": 43345,\n            "doorPixels": 3492,\n            "windowPixels": 6137,\n            "status": "machine-derived-requires-review"\n          }\n        }\n      ],\n      "context": {\n        "provider": "Google Maps",\n        "mapsUrl": "https://www.google.com/maps/search/?api=1&query=1500+N+Verdugo+Rd%2C+Glendale%2C+CA+91208",\n        "embedUrl": "https://www.google.com/maps?q=1500+N+Verdugo+Rd%2C+Glendale%2C+CA+91208&output=embed",\n        "status": "live-provider-context"\n      }\n    }\n  ]\n}\n', { headers: { "Content-Type": "application/json; charset=UTF-8", "Cache-Control": "public, max-age=60" } });
+  }
+  function serve_qtext() {
+    return new Response(`<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#090a0d">
+  <title>QText | WeylandAI</title>
+  <style>
+    :root{--bg:#090a0d;--panel:#121419;--line:#2d323a;--text:#edf0f1;--muted:#9199a3;--gold:#f0b800;--blue:#67d4ff;--green:#61dfa0}*{box-sizing:border-box}html,body{margin:0;min-height:100%;background:var(--bg);color:var(--text);font-family:"Avenir Next","Helvetica Neue",sans-serif}body:before{content:"";position:fixed;inset:0;pointer-events:none;background:radial-gradient(circle at 90% 0,rgba(103,212,255,.11),transparent 27rem),radial-gradient(circle at 10% 90%,rgba(240,184,0,.08),transparent 26rem),linear-gradient(rgba(255,255,255,.014) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.014) 1px,transparent 1px);background-size:auto,auto,30px 30px,30px 30px}.shell{position:relative;max-width:1440px;margin:auto;padding:18px clamp(14px,2.5vw,34px) 40px}header{display:flex;align-items:center;justify-content:space-between;gap:14px;margin-bottom:25px}.brand{display:flex;align-items:center;gap:12px;color:var(--text);text-decoration:none}.mark{width:42px;height:42px;display:grid;place-items:center;background:var(--blue);color:var(--bg);font-weight:900}.brand b{display:block;letter-spacing:.16em}.brand small{display:block;color:var(--muted);font:700 9px/1.5 ui-monospace,monospace;letter-spacing:.11em}.nav{display:flex;gap:7px;flex-wrap:wrap}.nav a{border:1px solid var(--line);border-radius:99px;padding:9px 12px;color:var(--text);text-decoration:none;font:750 10px/1 ui-monospace,monospace}.nav a:hover{border-color:var(--blue);color:var(--blue)}.hero{display:grid;grid-template-columns:1.35fr .65fr;gap:25px;align-items:end;margin:32px 0 20px}.eyebrow{color:var(--blue);font:800 10px/1 ui-monospace,monospace;letter-spacing:.17em}.hero h1{font-size:clamp(38px,6vw,78px);letter-spacing:-.06em;line-height:.92;margin:12px 0}.hero p{max-width:730px;color:var(--muted);line-height:1.65;margin:0}.statline{display:grid;grid-template-columns:1fr 1fr;gap:8px}.stat{border:1px solid var(--line);border-radius:13px;padding:13px}.stat strong{display:block;color:var(--blue);font-size:24px}.stat span{color:var(--muted);font:700 9px/1.4 ui-monospace,monospace}.ask{display:grid;grid-template-columns:1fr auto;gap:8px;background:rgba(18,20,25,.94);border:1px solid var(--line);border-radius:18px;padding:9px;margin-bottom:10px}.ask input{min-width:0;border:0;outline:0;background:transparent;color:var(--text);font-size:17px;padding:10px}.ask button,.button{border:0;border-radius:11px;background:var(--blue);color:var(--bg);font-weight:850;padding:0 19px;cursor:pointer}.chips{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:18px}.chip{border:1px solid var(--line);background:transparent;color:var(--muted);border-radius:99px;padding:8px 11px;cursor:pointer;font-size:11px}.chip:hover{border-color:var(--blue);color:var(--blue)}.layout{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(310px,.65fr);gap:18px}.card{background:rgba(18,20,25,.94);border:1px solid var(--line);border-radius:18px;padding:20px;box-shadow:0 25px 70px rgba(0,0,0,.2)}.card-head{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:16px}.card h2{font-size:17px;margin:0}.badge{border:1px solid var(--line);border-radius:99px;padding:6px 9px;color:var(--muted);font:700 9px/1 ui-monospace,monospace}.answer{min-height:330px}.answer h3{font-size:26px;line-height:1.15;margin:2px 0 14px}.answer p{color:#cad0d5;line-height:1.7;font-size:14px}.citation{display:grid;grid-template-columns:68px 1fr;gap:12px;border-top:1px solid var(--line);padding:13px 0}.citation b{color:var(--blue);font:800 10px/1.5 ui-monospace,monospace}.citation strong{font-size:12px}.citation p{color:var(--muted);font-size:11px;line-height:1.5;margin:4px 0 0}.empty{display:grid;place-items:center;min-height:300px;text-align:center;color:var(--muted);line-height:1.7}.sources{display:grid;gap:8px}.source{border:1px solid var(--line);border-radius:11px;padding:11px}.source strong{font-size:12px}.source span{display:block;color:var(--blue);font:700 9px/1.5 ui-monospace,monospace}.source p{font-size:11px;line-height:1.45;color:var(--muted);margin:5px 0 0}.upload{display:block;margin-top:12px;border:1px dashed #454c56;border-radius:11px;text-align:center;padding:11px;color:var(--muted);font-size:11px;cursor:pointer}.upload:hover{border-color:var(--blue);color:var(--blue)}.upload input{display:none}.audit{margin-top:15px;padding-top:14px;border-top:1px solid var(--line);color:var(--muted);font:700 9px/1.7 ui-monospace,monospace}@media(max-width:900px){.hero,.layout{grid-template-columns:1fr}.nav a:nth-child(-n+2){display:none}}@media(max-width:560px){.ask{grid-template-columns:1fr}.ask button{min-height:44px}.statline{grid-template-columns:1fr}.hero h1{font-size:44px}}
+  </style>
+</head>
+<body>
+  <div class="shell">
+    <header><a class="brand" href="/"><span class="mark">QT</span><span><b>QTEXT</b><small>SOURCE-GROUNDED PROJECT INTELLIGENCE</small></span></a><nav class="nav"><a href="/propx/">PROPX</a><a href="/sightx/">SIGHTX</a><a href="/meetingx/">MEETINGX</a><a href="/">WEYLAND</a></nav></header>
+    <section class="hero"><div><span class="eyebrow">THE PROJECT CAN ANSWER BACK</span><h1>Ask the drawings.<br>Trace the answer.</h1><p>QText retrieves from the same source package that drives SubX, TakeoffX, PropX, and SightX. Every answer keeps its evidence attached.</p></div><div class="statline"><div class="stat"><strong id="source-total">0</strong><span>INDEXED SOURCES</span></div><div class="stat"><strong id="scope-total">0</strong><span>TRACED SCOPE ITEMS</span></div></div></section>
+    <form class="ask" id="ask"><input id="question" autocomplete="off" placeholder="What automatic-door hardware is specified?"><button>ASK PROJECT</button></form>
+    <div class="chips"><button class="chip">What automatic-door hardware is specified?</button><button class="chip">What is included in commissioning?</button><button class="chip">Which items require field verification?</button><button class="chip">What does PropX include?</button></div>
+    <main class="layout">
+      <section class="card answer" id="answer"><div class="empty">Ask a project question to retrieve an answer with source locators.<br><small>This investor demo searches the Project Omega evidence package locally.</small></div></section>
+      <aside class="card"><div class="card-head"><h2>Source Package</h2><span class="badge" id="index-state">LOADING</span></div><div class="sources" id="sources"></div><label class="upload">+ ADD A TEXT SOURCE<input id="file" type="file" accept=".txt,.md,.json,text/plain,application/json"></label><div class="audit" id="audit">SourceX index initializing\u2026</div></aside>
+    </main>
+  </div>
+  <script>
+    let data=null,extra=[];const $=id=>document.getElementById(id),esc=v=>String(v).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+    const words=s=>new Set(String(s).toLowerCase().replace(/[^a-z0-9]+/g,' ').split(' ').filter(x=>x.length>2&&!['what','which','does','with','from','that','this','into','project'].includes(x)));
+    async function boot(){data=await (await fetch('/data/project-omega.json',{cache:'no-store'})).json();renderSources();$('source-total').textContent=data.sources.length;$('scope-total').textContent=data.scope.length;$('index-state').textContent='INDEX READY';$('audit').textContent=\`SourceX \xB7 \${new Date().toLocaleTimeString()} \xB7 \${data.sources.length} sources hydrated \xB7 \${data.scope.length} scope relationships available\`;}
+    function corpus(){return [...data.sources,...extra].map(s=>({...s,body:[s.name,s.type,s.locator,s.excerpt].join(' ')}))}
+    function search(q){const qw=words(q);return corpus().map(s=>{const sw=words(s.body),score=[...qw].reduce((n,w)=>n+(sw.has(w)?3:[...sw].some(x=>x.includes(w)||w.includes(x))?1:0),0);return {...s,score}}).sort((a,b)=>b.score-a.score).filter(x=>x.score>0).slice(0,3)}
+    function synthesize(q,hits){const s=q.toLowerCase();if(/hardware|door|automatic|operator|access/.test(s))return 'The evidence package specifies Horton Series 2000 automatic sliding entrance assemblies coordinated with sensors and controls, plus Schlage AD-Series access-control integration and Pemko perimeter gasketing.';if(/commission|training|startup/.test(s))return 'The scope includes field verification, startup, commissioning, and owner training as a lump-sum line item. Final completion remains tied to approved submittals and field conditions.';if(/field|verify|verification/.test(s))return 'Final quantities and opening conditions require field verification. The opening-protection notes also connect verification to startup, commissioning, and owner training.';if(/propx|proposal|include/.test(s))return 'PropX receives the quantified TakeoffX scope, preserves SourceX citations, applies estimator-reviewed pricing, and produces the reviewable proposal. The demo includes two automatic entrances, access-control integration, gasketing, commissioning, and training.';if(hits.length)return \`The strongest matching evidence is \${hits.map(x=>x.name).join(', ')}. Review the cited excerpts below before using the answer commercially.\`;return 'No grounded answer was found in the current source package. Add a text source or revise the question; QText will not invent a project answer without evidence.'}
+    function answer(q){const hits=search(q),body=synthesize(q,hits);$('answer').innerHTML=\`<div class="card-head"><h2>Grounded Answer</h2><span class="badge">\${hits.length} CITATIONS</span></div><h3>\${esc(q)}</h3><p>\${esc(body)}</p>\${hits.map(x=>\`<div class="citation"><b>\${esc(x.id)}</b><div><strong>\${esc(x.name)} \xB7 \${esc(x.locator||'uploaded text')}</strong><p>\${esc(x.excerpt)}</p></div></div>\`).join('')}\`;}
+    function renderSources(){$('sources').innerHTML=corpus().map(x=>\`<div class="source"><strong>\${esc(x.name)}</strong><span>\${esc(x.id)} \xB7 \${esc(x.locator||'uploaded text')}</span><p>\${esc(x.excerpt).slice(0,180)}</p></div>\`).join('');$('source-total').textContent=corpus().length;}
+    $('ask').onsubmit=e=>{e.preventDefault();const q=$('question').value.trim();if(q)answer(q)};document.querySelectorAll('.chip').forEach(b=>b.onclick=()=>{$('question').value=b.textContent;answer(b.textContent)});$('file').onchange=async e=>{const f=e.target.files[0];if(!f)return;const text=await f.text();extra.push({id:\`UP-\${String(extra.length+1).padStart(3,'0')}\`,name:f.name,type:'uploaded text',locator:'local browser session',excerpt:text.slice(0,1200)});renderSources();$('index-state').textContent='SOURCE ADDED';$('audit').textContent=\`SourceX \xB7 \${new Date().toLocaleTimeString()} \xB7 \${f.name} indexed locally; no upload performed\`;};boot().catch(e=>$('index-state').textContent='INDEX ERROR');
+  </script>
+</body>
+</html>
+`, { headers: { "Content-Type": "text/html; charset=UTF-8", "Cache-Control": "public, max-age=60" } });
+  }
+  function serve_subscribe() {
+    return new Response('<!doctype html>\n<html lang="en">\n<head>\n  <meta charset="utf-8">\n  <meta name="viewport" content="width=device-width, initial-scale=1">\n  <meta name="description" content="Subscribe to WeylandAI SubConP, the Subcontractor Operating Package.">\n  <title>SubConP / WeylandAI</title>\n  <link rel="stylesheet" href="/assets/subscribe.css?v=20260729-1">\n</head>\n<body>\n  <div class="field" aria-hidden="true"></div>\n  <header>\n    <a class="brand" href="/"><b>W</b><span>WEYLAND<br>ARTIFICIAL INTELLIGENCE</span></a>\n    <nav><a href="/sightx/">SightX</a></nav>\n    <span class="status" data-auth-status style="margin-right: 1rem;">CHECKING IDENTITY</span>\n    <span class="status" data-service-status>CHECKING PAYMENT RAIL</span>\n  </header>\n\n  <main>\n    <section class="copy">\n      <p class="eyebrow">SUBCONTRACTOR OPERATING PACKAGE / 01</p>\n      <h1>Run the back office.<br><em>Keep the field moving.</em></h1>\n      <p class="lede"><b>SubConP is the Subcontractor Operating Package:</b> project discovery, submittals, takeoffs, cut sheets, proposals, and spatial review operating on one shared project record.</p>\n      <ol class="products" aria-label="Products included in SubConP">\n        <li><b>HuntX</b><span>Opportunity discovery.</span></li>\n        <li><b>SubX</b><span>Submittal Express.</span></li>\n        <li><b>TakeoffX</b><span>Takeoff Express.</span></li>\n        <li><b>CutsheetX</b><span>Cut Sheet Express.</span></li>\n        <li><b>PropX</b><span>Proposal Express.</span></li>\n        <li><b>SightX</b><span>Spatial project intelligence.</span></li>\n      </ol>\n      <p class="boundary"><b>Commercial boundary:</b> $2,000 per active operator seat, billed monthly. Implementation scope, data migration, custom integrations, and usage above the included policy are quoted separately.</p>\n    </section>\n\n    <aside class="checkout" aria-labelledby="checkout-title">\n      <span class="card-index">SUBCONP / MONTHLY</span>\n      <h2 id="checkout-title">Activate operator seats</h2>\n      <div class="trial-note" style="color:#e7b92d;font:700 11px/1.4 var(--mono,ui-monospace,monospace);letter-spacing:.08em;text-transform:uppercase;margin-top:24px">$0 for the first 30 days, then</div>\n      <div class="price"><strong>$2,000</strong><span>USD<br>PER SEAT / MONTH</span></div>\n      <label for="seat-count">Active seats</label>\n      <div class="seat-control">\n        <button type="button" data-seat-step="-1" aria-label="Remove one seat">\u2212</button>\n        <input id="seat-count" type="number" min="1" max="250" value="1" inputmode="numeric">\n        <button type="button" data-seat-step="1" aria-label="Add one seat">+</button>\n      </div>\n      <div class="total"><span>Monthly subscription</span><b data-total>$2,000</b></div>\n      <button class="primary" type="button" data-checkout>CONTINUE TO SECURE CHECKOUT</button>\n      <p class="checkout-note" data-checkout-note>Checkout is processed by VendyAI using Stripe. No card data touches this server.</p>\n      <div class="result" data-result hidden></div>\n    </aside>\n  </main>\n\n  <footer><span>WEYLANDAI / SUBCONP</span><p>One project spine. Six operating tools. Human approval at every commercial boundary.</p><a href="mailto:hello@weylandai.com">hello@weylandai.com</a></footer>\n  <script type="module" src="/assets/subscribe.js?v=20260729-1"></script>\n</body>\n</html>\n', { headers: { "Content-Type": "text/html; charset=UTF-8", "Cache-Control": "public, max-age=60" } });
+  }
+  function serve_financials() {
+    return new Response('<!doctype html>\n<html lang="en">\n<head>\n  <meta charset="utf-8">\n  <meta name="viewport" content="width=device-width, initial-scale=1">\n  <meta name="robots" content="noindex,nofollow">\n  <meta name="description" content="Weyland investor diligence readiness, funding scenarios, and evidence register.">\n  <title>Financials / Weyland AI</title>\n  <link rel="stylesheet" href="/assets/financials.css?v=20260729-1">\n</head>\n<body>\n  <div class="grid-field" aria-hidden="true"></div>\n  <header class="masthead">\n    <a class="wordmark" href="/" aria-label="Weyland AI home"><b>W</b><span>WEYLAND<br>ARTIFICIAL INTELLIGENCE</span></a>\n    <nav><a href="/deck/">Deck</a><a href="/sightx/">SightX</a><a href="#manifest">Manifest</a></nav>\n    <span class="classification">PUBLIC SUMMARY / NOINDEX</span>\n  </header>\n\n  <main>\n    <section class="hero">\n      <div class="hero-index">DILIGENCE CONTROL / 01</div>\n      <p class="eyebrow">Financial truth before financial theater</p>\n      <h1>Show the math.<br><em>Expose the gaps.</em></h1>\n      <p class="lede">A live, source-aware view of capitalization, runway, traction, market logic, and diligence readiness. Missing evidence stays visibly missing.</p>\n      <div class="hero-meta">\n        <span><small>AS OF</small><b data-as-of>Loading</b></span>\n        <span><small>EVIDENCE MODEL</small><b>Observed / Claimed / Assumed / Missing</b></span>\n        <span><small>DATA POLICY</small><b>Restricted records are never published here</b></span>\n      </div>\n      <div class="hero-mark" aria-hidden="true"><i></i><i></i><i></i><i></i></div>\n    </section>\n\n    <section class="alert-strip" aria-label="Critical financial decision">\n      <span class="pulse"></span>\n      <b>OPEN DECISION</b>\n      <p>The live deck and bottoms-up model describe different rounds. Reconcile them before formal diligence.</p>\n      <a href="#funding">Inspect both models</a>\n    </section>\n\n    <section class="section" id="funding">\n      <header class="section-head">\n        <div><span>02 / CAPITAL PLAN</span><h2>Two asks.<br>One decision required.</h2></div>\n        <p>These models are displayed side by side because silently merging them would create false precision. Select either scenario to drive the runway calculator.</p>\n      </header>\n      <div class="scenario-grid" data-funding-models></div>\n\n      <div class="runway-lab">\n        <div class="runway-readout">\n          <span class="kicker">LIVE RUNWAY MODEL</span>\n          <strong data-runway-months>--</strong>\n          <p>months of runway</p>\n          <div class="runway-track"><i data-runway-track></i></div>\n          <small data-runway-note>Choose a scenario or change an input.</small>\n        </div>\n        <form class="runway-controls" onsubmit="return false">\n          <label><span>Raise</span><input data-calc="raise" type="number" min="0" step="50000"></label>\n          <label><span>Gross monthly burn</span><input data-calc="burn" type="number" min="0" step="5000"></label>\n          <label><span>Monthly revenue offset</span><input data-calc="revenue" type="number" min="0" step="5000" value="0"></label>\n          <label><span>Cash held as reserve</span><input data-calc="reserve" type="range" min="0" max="40" step="1"><output data-reserve-output>0%</output></label>\n        </form>\n        <div class="allocation" data-allocation></div>\n      </div>\n    </section>\n\n    <section class="section section-ink" id="capitalization">\n      <header class="section-head">\n        <div><span>03 / OWNERSHIP</span><h2>The cap table is a gate,<br>not an appendix.</h2></div>\n        <p data-cap-summary>Loading capitalization evidence...</p>\n      </header>\n      <div class="cap-layout">\n        <div class="empty-ledger">\n          <div class="empty-symbol">?</div>\n          <div><b>AUTHORITATIVE OWNERSHIP LEDGER NOT FOUND</b><p>Do not estimate founder or investor percentages from memory. Rebuild from signed issuance, financing, option, and debt records.</p></div>\n        </div>\n        <ol class="required-list" data-cap-required></ol>\n      </div>\n      <a class="download-primary" href="/financials/downloads/cap-table-template.csv">Download canonical cap table template</a>\n    </section>\n\n    <section class="section" id="traction">\n      <header class="section-head">\n        <div><span>04 / COMMERCIAL EVIDENCE</span><h2>Traction is a ledger,<br>not a collection of names.</h2></div>\n        <p>Every customer and pipeline assertion needs a date, amount, stage, owner, and primary record. The evidence state below is intentionally strict.</p>\n      </header>\n      <div class="metric-grid" data-traction></div>\n    </section>\n\n    <section class="section twin-section" id="market">\n      <div class="market-panel">\n        <header><span>05 / MARKET MODEL</span><h2>Bottom-up before broad.</h2></header>\n        <div class="market-number"><strong data-sam>--</strong><span>planning-assumption firms in initial SAM</span></div>\n        <div class="market-number"><strong data-acv>--</strong><span>assumed annual contract value</span></div>\n        <p class="warning" data-market-warning></p>\n        <div class="som-path" data-som></div>\n      </div>\n      <div class="moat-panel">\n        <header><span>06 / DEFENSIBILITY</span><h2>A moat must survive a test.</h2></header>\n        <div data-moat></div>\n      </div>\n    </section>\n\n    <section class="section" id="milestones">\n      <header class="section-head">\n        <div><span>07 / RUNWAY OUTPUT</span><h2>Capital buys milestones,<br>not time alone.</h2></div>\n        <p>The recovered hiring plan reaches seven people by month twelve. It remains a planning assumption until compensation, sequencing, and accountable owners are approved.</p>\n      </header>\n      <div class="hiring-band" data-hiring></div>\n      <div class="milestone-list" data-milestones></div>\n    </section>\n\n    <section class="section section-ink" id="manifest">\n      <header class="section-head">\n        <div><span>08 / DATA ROOM</span><h2>The diligence manifest.</h2></div>\n        <p>This public surface exposes readiness and summaries only. Formation records, signatures, contracts, account data, and personally identifying information belong in an authenticated data room.</p>\n      </header>\n      <div class="manifest-toolbar">\n        <div class="progress-ring" data-progress-ring><strong data-progress>--</strong><span>ready or draft</span></div>\n        <div class="filter-set" role="group" aria-label="Filter diligence artifacts">\n          <button class="active" data-filter="all">All</button>\n          <button data-filter="missing">Missing</button>\n          <button data-filter="draft">Draft</button>\n          <button data-filter="available">Available</button>\n        </div>\n      </div>\n      <div class="manifest" data-artifacts></div>\n      <div class="download-grid" data-downloads></div>\n    </section>\n  </main>\n\n  <footer>\n    <a class="wordmark" href="/"><b>W</b><span>WEYLAND<br>ARTIFICIAL INTELLIGENCE</span></a>\n    <p>Investor diligence should accelerate truth, not decorate uncertainty.</p>\n    <span>FINANCIALS / EVIDENCE REGISTER</span>\n  </footer>\n\n  <script type="module" src="/assets/financials.js?v=20260729-1"></script>\n</body>\n</html>\n', { headers: { "Content-Type": "text/html; charset=UTF-8", "Cache-Control": "public, max-age=60" } });
+  }
+  function serve_pricing() {
+    return new Response(`<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="WeylandAI SubConP Commercial Pricing & Standalone A La Carte Component Licensing. Run the back office and keep the field moving with automated construction AI tools.">
+  <meta name="theme-color" content="#090a0d">
+  <title>Pricing & Licensing | WeylandAI SubConP Suite</title>
+  <style>
+    :root {
+      --bg: #090a0d;
+      --panel: rgba(18, 20, 25, 0.85);
+      --panel-hover: rgba(24, 27, 33, 0.95);
+      --line: #2c3139;
+      --text: #edf0f1;
+      --muted: #9299a3;
+      --gold: #f0b800;
+      --green: #61dfa0;
+      --blue: #66d4ff;
+      --purple: #a78bfa;
+      --red: #ff756e;
+    }
+    * { box-sizing: border-box; }
+    html, body { margin: 0; min-height: 100%; background: var(--bg); color: var(--text); font-family: "Avenir Next", "Helvetica Neue", sans-serif; overflow-x: hidden; }
+    
+    /* Subtle geometric grid background with glowing radial attractor */
+    body:before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background: radial-gradient(circle at 50% 10%, rgba(240, 184, 0, 0.12), transparent 35rem),
+                  radial-gradient(circle at 85% 60%, rgba(97, 223, 160, 0.08), transparent 30rem),
+                  linear-gradient(rgba(255, 255, 255, 0.015) 1px, transparent 1px),
+                  linear-gradient(90deg, rgba(255, 255, 255, 0.015) 1px, transparent 1px);
+      background-size: auto, auto, 30px 30px, 30px 30px;
+      z-index: -1;
+    }
+
+    .shell { position: relative; max-width: 1400px; margin: auto; padding: 25px clamp(16px, 4vw, 48px) 80px; }
+    
+    /* Navigation Bar */
+    header { display: flex; align-items: center; justify-content: space-between; gap: 15px; margin-bottom: 40px; flex-wrap: wrap; }
+    .brand { display: flex; align-items: center; gap: 12px; color: var(--text); text-decoration: none; }
+    .mark { width: 44px; height: 44px; display: grid; place-items: center; background: var(--gold); color: var(--bg); font-weight: 900; border-radius: 6px; box-shadow: 0 0 20px rgba(240, 184, 0, 0.3); }
+    .brand b { display: block; letter-spacing: 0.16em; font-size: 15px; }
+    .brand small { display: block; color: var(--muted); font: 700 9px/1.5 ui-monospace, monospace; letter-spacing: 0.11em; }
+    .nav { display: flex; gap: 8px; flex-wrap: wrap; }
+    .nav a, .button { border: 1px solid var(--line); border-radius: 99px; padding: 10px 16px; color: var(--text); text-decoration: none; background: transparent; font: 750 11px/1 ui-monospace, monospace; letter-spacing: 0.08em; cursor: pointer; transition: all 0.25s ease; }
+    .nav a:hover, .button:hover { border-color: var(--gold); color: var(--gold); box-shadow: 0 0 18px rgba(240, 184, 0, 0.25); transform: translateY(-1px); }
+    .nav a.active { border-color: var(--gold); color: var(--gold); background: rgba(240, 184, 0, 0.08); }
+    
+    .button.primary { background: var(--gold); border-color: var(--gold); color: var(--bg); font-weight: 900; }
+    .button.primary:hover { transform: scale(1.03); box-shadow: 0 0 30px rgba(240, 184, 0, 0.5); color: #000; }
+    .button.green { background: var(--green); border-color: var(--green); color: var(--bg); font-weight: 900; }
+    .button.green:hover { transform: scale(1.03); box-shadow: 0 0 30px rgba(97, 223, 160, 0.5); color: #000; }
+
+    /* Titlebar */
+    .titlebar { text-align: center; margin: 50px 0 50px; }
+    .eyebrow { color: var(--gold); font: 800 12px/1.2 ui-monospace, monospace; letter-spacing: 0.2em; text-transform: uppercase; }
+    .titlebar h1 { font-size: clamp(38px, 5vw, 72px); letter-spacing: -0.05em; line-height: 1.05; margin: 16px 0 18px; font-weight: 900; }
+    .titlebar p { max-width: 780px; color: var(--muted); line-height: 1.65; margin: 0 auto; font-size: 18px; }
+
+    /* Interactive Calculator Container */
+    .calc-banner {
+      background: linear-gradient(135deg, rgba(24, 27, 33, 0.9), rgba(13, 15, 19, 0.95));
+      border: 1px solid var(--line);
+      border-radius: 20px;
+      padding: 24px 32px;
+      margin-bottom: 60px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 20px;
+      flex-wrap: wrap;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+      backdrop-filter: blur(12px);
+    }
+    .calc-left { flex: 1; min-width: 300px; }
+    .calc-left h3 { margin: 0 0 6px; font-size: 20px; letter-spacing: -0.02em; color: #fff; }
+    .calc-left p { margin: 0; color: var(--muted); font-size: 14px; line-height: 1.5; }
+    .calc-right { display: flex; align-items: center; gap: 24px; flex-wrap: wrap; }
+    .calc-stat { text-align: right; }
+    .calc-stat label { display: block; font: 700 10px ui-monospace, monospace; color: var(--muted); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 4px; }
+    .calc-stat .val { font-size: 32px; font-weight: 900; color: var(--green); letter-spacing: -0.02em; }
+    .calc-stat .old-val { text-decoration: line-through; color: var(--red); font-size: 20px; margin-right: 8px; font-weight: 700; }
+    
+    /* Section Headers */
+    .section-head { text-align: center; margin: 70px 0 32px; }
+    .section-head h2 { font-size: 40px; letter-spacing: -0.04em; margin: 0 0 12px; font-weight: 900; }
+    .section-head p { color: var(--muted); max-width: 720px; margin: 0 auto; font-size: 16px; line-height: 1.6; }
+
+    /* The SubConP Suite Attractor Box */
+    .suite-box {
+      max-width: 900px;
+      margin: 0 auto 80px;
+      background: linear-gradient(145deg, rgba(26, 30, 38, 0.96), rgba(16, 18, 24, 0.98));
+      border: 2px solid var(--gold);
+      border-radius: 24px;
+      padding: 42px;
+      box-shadow: 0 0 65px rgba(240, 184, 0, 0.28);
+      position: relative;
+      overflow: hidden;
+      transition: all 0.3s ease;
+    }
+    .suite-box:hover { box-shadow: 0 0 85px rgba(240, 184, 0, 0.38); border-color: #ffca28; }
+    .badge-bar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 22px; flex-wrap: wrap; gap: 12px; }
+    .pill-gold { border: 1px solid rgba(240, 184, 0, 0.6); color: var(--gold); border-radius: 99px; padding: 8px 16px; font: 800 11px/1 ui-monospace, monospace; letter-spacing: 0.1em; background: rgba(240, 184, 0, 0.18); box-shadow: 0 0 12px rgba(240, 184, 0, 0.2); }
+    .pill-save { border: 1px solid rgba(97, 223, 160, 0.5); color: var(--green); border-radius: 99px; padding: 8px 16px; font: 800 11px/1 ui-monospace, monospace; letter-spacing: 0.08em; background: rgba(97, 223, 160, 0.12); box-shadow: 0 0 12px rgba(97, 223, 160, 0.2); }
+    
+    .price-tag { font-size: 64px; font-weight: 900; color: #fff; margin: 12px 0 6px; letter-spacing: -0.04em; display: flex; align-items: baseline; gap: 6px; }
+    .price-tag span.unit { font-size: 20px; color: var(--muted); font-weight: 600; letter-spacing: 0; }
+    .price-sub { font-size: 14px; color: var(--muted); margin-bottom: 24px; font-style: italic; }
+    
+    .slider-box { margin: 28px 0; padding: 26px; background: rgba(10, 12, 16, 0.85); border-radius: 16px; border: 1px solid var(--line); }
+    .slider-label { display: flex; justify-content: space-between; align-items: center; font-weight: 700; font-size: 16px; margin-bottom: 16px; color: #fff; }
+    .slider-label span.gold-text { color: var(--gold); font: 800 16px ui-monospace, monospace; }
+    input[type=range] { width: 100%; accent-color: var(--gold); cursor: pointer; height: 8px; border-radius: 4px; background: #2c3139; outline: none; transition: background 0.2s; }
+
+    .feature-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(380px, 1fr)); gap: 18px; margin: 32px 0; }
+    .feature-item { display: flex; align-items: flex-start; gap: 14px; font-size: 15px; color: #d1d5db; line-height: 1.5; background: rgba(255, 255, 255, 0.02); padding: 12px 16px; border-radius: 10px; border: 1px solid rgba(255, 255, 255, 0.04); }
+    .chk { color: var(--green); font-weight: 900; font-size: 18px; line-height: 1; margin-top: 2px; }
+    .feature-item strong { color: #fff; margin-right: 4px; }
+    .feature-item em { color: var(--gold); font-style: normal; font-size: 13px; font-family: ui-monospace, monospace; display: block; margin-top: 2px; }
+
+    /* A La Carte Grid */
+    .alacarte-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 24px; margin-top: 36px; }
+    .card { background: var(--panel); border: 1px solid var(--line); border-radius: 20px; padding: 30px; display: flex; flex-direction: column; justify-content: space-between; transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1); box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4); backdrop-filter: blur(8px); position: relative; }
+    .card:hover { transform: translateY(-6px); border-color: rgba(97, 223, 160, 0.5); background: var(--panel-hover); box-shadow: 0 22px 50px rgba(97, 223, 160, 0.15); }
+    
+    .sku-cat { color: var(--blue); font: 800 11px/1 ui-monospace, monospace; letter-spacing: 0.14em; text-transform: uppercase; }
+    .card h3 { font-size: 26px; margin: 14px 0 6px; letter-spacing: -0.02em; color: #fff; font-weight: 800; }
+    .sku-price { font-size: 38px; font-weight: 900; color: var(--green); margin: 12px 0 4px; letter-spacing: -0.03em; }
+    .sku-price span { font-size: 16px; color: var(--muted); font-weight: 600; letter-spacing: 0; }
+    .sku-edge { font-size: 13px; color: var(--gold); margin-bottom: 20px; font-weight: 600; background: rgba(240, 184, 0, 0.1); padding: 6px 10px; border-radius: 6px; display: inline-block; border: 1px solid rgba(240, 184, 0, 0.2); }
+    .card p { color: var(--muted); font-size: 15px; line-height: 1.6; margin: 0 0 30px; flex-grow: 1; }
+    
+    /* Standalone vs Bundle Summary Footer Banner */
+    .summary-box { max-width: 1000px; margin: 70px auto 40px; border: 1px solid var(--line); background: rgba(18, 20, 25, 0.9); border-radius: 20px; padding: 36px; text-align: center; }
+    .summary-box h3 { font-size: 28px; margin: 0 0 12px; color: #fff; }
+    .summary-box p { color: var(--muted); font-size: 16px; line-height: 1.6; max-width: 760px; margin: 0 auto 24px; }
+
+    footer { border-top: 1px solid var(--line); margin-top: 90px; padding-top: 32px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 20px; font-size: 13px; color: var(--muted); }
+    footer a { color: var(--gold); text-decoration: none; font-family: ui-monospace, monospace; }
+    footer a:hover { text-decoration: underline; }
+
+    @media (max-width: 768px) {
+      .feature-grid { grid-template-columns: 1fr; }
+      .calc-banner { flex-direction: column; align-items: flex-start; }
+      .calc-right { width: 100%; justify-content: space-between; }
+      .price-tag { font-size: 48px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="shell">
+    <header>
+      <a class="brand" href="/" id="homeLink"><span class="mark">WY</span><span><b>WEYLAND<br>AI</b><small>COMMERCIAL PRICING</small></span></a>
+      <nav class="nav">
+        <a href="/whyweyland/" id="navWhy">WHY WEYLAND</a>
+        <a href="/pricing/" class="active" id="navPricing">PRICING</a>
+        <a href="/onboarding/" id="navOnboarding">ONBOARDING</a>
+        <a href="/huntx/" id="navHunt">HUNTX</a>
+        <a href="/takeoffx/" id="navTakeoff">TAKEOFFX</a>
+        <a href="/propx/" id="navProp">PROPX</a>
+        <a href="/meetingx/" id="navMeet">MEETINGX</a>
+        <a href="/sightx/" id="navSight">SIGHTX</a>
+      </nav>
+      <button class="button primary" onclick="window.location.href='/subscribe/';" id="btnHeaderDeploy">DEPLOY SUITE ($2,000/MO)</button>
+    </header>
+
+    <section class="titlebar">
+      <p class="eyebrow">ONE PROJECT SPINE \xB7 SEVEN OPERATING ENGINES</p>
+      <h1>Run the back office.<br><em style="color:var(--gold);font-style:normal;">Keep the field moving.</em></h1>
+      <p>Deploy standalone point solutions A La Carte to immediately resolve administrative bottlenecks, or license the complete SubConP suite to operate your entire estimating and field pipeline on a single shared project record.</p>
+    </section>
+
+    <!-- LIVE COMPARISON BANNER -->
+    <div class="calc-banner">
+      <div class="calc-left">
+        <h3>SubConP Enterprise Economics</h3>
+        <p>Deploying all 7 operating engines separately totals <strong>$3,693/mo</strong> per active seat. By licensing the integrated SubConP suite, your organization unlocks massive economies of scale while preserving cryptographic data provenance.</p>
+      </div>
+      <div class="calc-right">
+        <div class="calc-stat">
+          <label>A La Carte Sum of Parts</label>
+          <span class="old-val">$3,693 / mo</span>
+        </div>
+        <div class="calc-stat">
+          <label>SubConP All-Inclusive Rate</label>
+          <span class="val" id="topVal">$2,000 / mo</span>
+        </div>
+        <button onclick="document.getElementById('suiteAnchor').scrollIntoView({behavior: 'smooth'});" class="button green" id="btnScrollSuite">VIEW 46% SAVINGS BUNDLE</button>
+      </div>
+    </div>
+
+    <!-- STANDALONE A LA CARTE MENU -->
+    <div class="section-head" id="alacarteSection">
+      <h2>Standalone Point Solutions</h2>
+      <p>Targeted AI firepower designed to pay for itself in administrative hours saved during your very first bid cycle. Each component operates independently with human review at every commercial boundary.</p>
+    </div>
+
+    <div class="alacarte-grid">
+      <!-- 1. CUTSHEETX -->
+      <div class="card" id="cardCutsheet">
+        <div>
+          <span class="sku-cat">PRODUCT DATA ENGINE</span>
+          <h3>CutsheetX</h3>
+          <div class="sku-price">$199 <span class="unit">/ mo</span></div>
+          <div class="sku-edge">Pays for itself in 2 hours of engineering lookup</div>
+          <p>Instantaneous product technical specification assembly and automated distributor cut-sheet packaging. Eliminates tedious manual PDF searches across supplier catalogs.</p>
+        </div>
+        <button onclick="triggerCheckout('weyland-cutsheetx-seat', 1, 'CutsheetX ($199/mo)')" class="button" id="btnBuyCutsheet" style="width:100%;text-align:center;">ACTIVATE STANDALONE SEAT</button>
+      </div>
+
+      <!-- 2. SUBX -->
+      <div class="card" id="cardSub">
+        <div>
+          <span class="sku-cat">SUBMITTAL AUTOMATION</span>
+          <h3>SubX</h3>
+          <div class="sku-price">$599 <span class="unit">/ mo</span></div>
+          <div class="sku-edge">The extraction engine PropX and CutsheetX matching build on</div>
+          <p>Submittal Express. Automatically extracts technical specification requirements directly from project manuals and assembles complete, professional submittal compliance packages.</p>
+        </div>
+        <button onclick="triggerCheckout('weyland-subx-seat', 1, 'SubX ($599/mo)')" class="button" id="btnBuySub" style="width:100%;text-align:center;">ACTIVATE STANDALONE SEAT</button>
+      </div>
+
+      <!-- 3. PROPX -->
+      <div class="card" id="cardProp">
+        <div>
+          <span class="sku-cat">SUBX ADD-ON</span>
+          <h3>PropX</h3>
+          <div class="sku-price">$299 <span class="unit">/ mo</span></div>
+          <div class="sku-edge">Requires SubX &middot; turns a submittal into a priced, sendable proposal</div>
+          <p>Proposal Express. Builds a complete, priced proposal - client info, scope, terms, signature block - directly from a SubX submittal's real extracted door schedule.</p>
+        </div>
+        <button onclick="triggerCheckout('weyland-propx-seat', 1, 'PropX ($299/mo)')" class="button" id="btnBuyProp" style="width:100%;text-align:center;">ACTIVATE STANDALONE SEAT</button>
+      </div>
+
+      <!-- 4. TAKEOFFX -->
+      <div class="card" id="cardTakeoff">
+        <div>
+          <span class="sku-cat">MACHINE-VISION TAKEOFF</span>
+          <h3>TakeoffX</h3>
+          <div class="sku-price">$499 <span class="unit">/ mo</span></div>
+          <div class="sku-edge">vs. Togal.AI ($299/mo for manual counting only)</div>
+          <p>Takeoff Express. Sub-second machine-vision structural drawing quantification and vector blueprint takeoff engine. Moves estimators from manually tracing lines to reviewing verified results.</p>
+        </div>
+        <button onclick="triggerCheckout('weyland-takeoffx-seat', 1, 'TakeoffX ($499/mo)')" class="button" id="btnBuyTakeoff" style="width:100%;text-align:center;">ACTIVATE STANDALONE SEAT</button>
+      </div>
+
+      <!-- 5. MEETINGX -->
+      <div class="card" id="cardMeet">
+        <div>
+          <span class="sku-cat">SIGHTX ADD-ON</span>
+          <h3>MeetingX</h3>
+          <div class="sku-price">$299 <span class="unit">/ mo</span></div>
+          <div class="sku-edge">Requires SightX &middot; live avatars, text & voice chat inside the walkthrough</div>
+          <p>Meeting Intelligence isn't a separate app - it's real-time collaboration layered directly into the SightX 3D walkthrough. Multiple reviewers join the same scene as avatars, talk and type in context, with decisions logged where they happened.</p>
+        </div>
+        <button onclick="triggerCheckout('weyland-meetingx-seat', 1, 'MeetingX ($599/mo)')" class="button" id="btnBuyMeet" style="width:100%;text-align:center;">ACTIVATE STANDALONE SEAT</button>
+      </div>
+
+      <!-- 6. HUNTX -->
+      <div class="card" id="cardHunt">
+        <div>
+          <span class="sku-cat">LEAD RECONNAISSANCE</span>
+          <h3>HuntX</h3>
+          <div class="sku-price">$799 <span class="unit">/ mo</span></div>
+          <div class="sku-edge">vs. Dodge / ConstructConnect ($6k-$12k/year)</div>
+          <p>Opportunity Discovery. Autonomous municipal permit ledger spider and commercial general contractor RFP reconnaissance engine. Uncovers high-margin bidding opportunities before the competition.</p>
+        </div>
+        <button onclick="triggerCheckout('weyland-huntx-seat', 1, 'HuntX ($799/mo)')" class="button" id="btnBuyHunt" style="width:100%;text-align:center;">ACTIVATE STANDALONE SEAT</button>
+      </div>
+
+      <!-- 7. SIGHTX -->
+      <div class="card" id="cardSight">
+        <div>
+          <span class="sku-cat">3D SPATIAL SIMULATION</span>
+          <h3>SightX</h3>
+          <div class="sku-price">$999 <span class="unit">/ mo</span></div>
+          <div class="sku-edge">vs. Lumion Pro / BIM 360 Enterprise Licenses</div>
+          <p>Spatial Project Intelligence. Transforms standard 2D flat architectural blueprints, MEP schematics, and structural schedules into interactive 3D virtual job-site simulations that prevent costly rework.</p>
+        </div>
+        <button onclick="triggerCheckout('weyland-sightx-seat', 1, 'SightX ($999/mo)')" class="button" id="btnBuySight" style="width:100%;text-align:center;">ACTIVATE STANDALONE SEAT</button>
+      </div>
+
+      <!-- 8. MARKETX -->
+      <div class="card" id="cardMarket">
+        <div>
+          <span class="sku-cat">MARKET INTELLIGENCE</span>
+          <h3>MarketX</h3>
+          <div class="sku-price">$249 <span class="unit">/ mo</span></div>
+          <div class="sku-edge">Live construction spending, housing starts &amp; materials trend - real FRED data</div>
+          <p>Market Trend Analyzer. Live U.S. construction-market indicators sourced directly from the Federal Reserve's public FRED data, refreshed on every load - know whether the market is expanding or contracting before you commit to a bid cycle.</p>
+        </div>
+        <button onclick="triggerCheckout('weyland-marketx-seat', 1, 'MarketX ($249/mo)')" class="button" id="btnBuyMarket" style="width:100%;text-align:center;">ACTIVATE STANDALONE SEAT</button>
+      </div>
+
+      <!-- 9. PRICEX -->
+      <div class="card" id="cardPrice">
+        <div>
+          <span class="sku-cat">MATERIAL PRICING</span>
+          <h3>PriceX</h3>
+          <div class="sku-price">$149 <span class="unit">/ mo</span></div>
+          <div class="sku-edge">Live lumber, metals &amp; materials PPI - real FRED data, MoM/YoY change</div>
+          <p>Material Pricing Tracker. Live Producer Price Index data for lumber, metals, and the broader construction-materials basket - see material cost movement before you price a bid, not after.</p>
+        </div>
+        <button onclick="triggerCheckout('weyland-pricex-seat', 1, 'PriceX ($149/mo)')" class="button" id="btnBuyPrice" style="width:100%;text-align:center;">ACTIVATE STANDALONE SEAT</button>
+      </div>
+
+      <!-- 10. COMPX -->
+      <div class="card" id="cardComp">
+        <div>
+          <span class="sku-cat">COMPETITOR INTELLIGENCE</span>
+          <h3>CompX</h3>
+          <div class="sku-price">$199 <span class="unit">/ mo</span></div>
+          <div class="sku-edge">Real TXDOT bid-tabulation history - win rate &amp; total won value per vendor</div>
+          <p>See who else is bidding - and winning. Search any contractor name against real Texas DOT bid tabulation history: total bids, win rate, total won value, sourced live from data.texas.gov.</p>
+        </div>
+        <button onclick="triggerCheckout('weyland-compx-seat', 1, 'CompX ($199/mo)')" class="button" id="btnBuyComp" style="width:100%;text-align:center;">ACTIVATE STANDALONE SEAT</button>
+      </div>
+
+      <!-- 11. WEATHERX -->
+      <div class="card" id="cardWeather">
+        <div>
+          <span class="sku-cat">WEATHER-DELAY CALCULATOR</span>
+          <h3>WeatherX</h3>
+          <div class="sku-price">$149 <span class="unit">/ mo</span></div>
+          <div class="sku-edge">Real NWS 7-day forecast, classified by delay risk</div>
+          <p>Know which days threaten your schedule. Live National Weather Service forecast for any US jobsite, classified into high/moderate/low delay risk by precipitation odds, severe conditions, and wind speed.</p>
+        </div>
+        <button onclick="triggerCheckout('weyland-weatherx-seat', 1, 'WeatherX ($149/mo)')" class="button" id="btnBuyWeather" style="width:100%;text-align:center;">ACTIVATE STANDALONE SEAT</button>
+      </div>
+
+      <!-- 12. FORECASTX -->
+      <div class="card" id="cardForecast">
+        <div>
+          <span class="sku-cat">CASH FLOW FORECASTING</span>
+          <h3>ForecastX</h3>
+          <div class="sku-price">$249 <span class="unit">/ mo</span></div>
+          <div class="sku-edge">Month-by-month billing, retainage &amp; cash-receipt projection</div>
+          <p>See your cash position before you sign. Enter a contract's real terms - value, duration, retainage, payment terms - and get a full month-by-month cash flow projection, including exactly when retainage comes back.</p>
+        </div>
+        <button onclick="triggerCheckout('weyland-forecastx-seat', 1, 'ForecastX ($249/mo)')" class="button" id="btnBuyForecast" style="width:100%;text-align:center;">ACTIVATE STANDALONE SEAT</button>
+      </div>
+
+      <!-- 13. GEOX -->
+      <div class="card" id="cardGeo">
+        <div>
+          <span class="sku-cat">GEOSPATIAL LOOKUP</span>
+          <h3>GeoX</h3>
+          <div class="sku-price">$149 <span class="unit">/ mo</span></div>
+          <div class="sku-edge">Real Census county/state/tract FIPS lookup, not just a map pin</div>
+          <p>Know the jurisdiction, not just the pin. Look up any US project address against the Census Bureau's real geocoder - coordinates plus actual county, state, and census tract FIPS codes for jurisdiction-based compliance and reporting.</p>
+        </div>
+        <button onclick="triggerCheckout('weyland-geox-seat', 1, 'GeoX ($149/mo)')" class="button" id="btnBuyGeo" style="width:100%;text-align:center;">ACTIVATE STANDALONE SEAT</button>
+      </div>
+    </div>
+
+    <!-- THE SUBCONP SUITE BUNDLE -->
+    <div class="section-head" id="suiteAnchor" style="margin-top: 100px;">
+      <p class="eyebrow">THE RECOMMENDED ENTERPRISE ARCHITECTURE</p>
+      <h2>SubConP Operating Package</h2>
+      <p>Why purchase single tools when you can run your entire commercial pipeline on a single interlocked project record? Unlock all 7 operating engines and save 46% monthly.</p>
+    </div>
+
+    <div class="suite-box" id="subconpSuiteCard">
+      <div class="badge-bar">
+        <span class="pill-gold">\u2605 RECOMMENDED ALL-INCLUSIVE SUITE</span>
+        <span class="pill-save">SAVE $1,693/MO (46% OFF STANDALONE VALUE)</span>
+      </div>
+      <div class="price-tag">
+        $<span id="suiteMonthlyTotal">2,000</span><span class="unit">USD / SEAT / MONTH</span>
+      </div>
+      <div class="price-sub">Billed monthly. Includes all 7 autonomous engines operating seamlessly on one project spine.</div>
+      
+      <div class="slider-box">
+        <div class="slider-label">
+          <span>Active Operator Seats:</span>
+          <span class="gold-text" id="seatCountLabel">1 Seat ($2,000 / mo)</span>
+        </div>
+        <input type="range" id="suiteSeats" min="1" max="50" value="1" oninput="updateSuiteCalculation(this.value)">
+      </div>
+      
+      <div class="feature-grid">
+        <div class="feature-item">
+          <span class="chk">\u2713</span>
+          <div><strong>HuntX</strong> Opportunity discovery & permit crawler. <em>$799/mo standalone value</em></div>
+        </div>
+        <div class="feature-item">
+          <span class="chk">\u2713</span>
+          <div><strong>SubX</strong> Submittal Express spec compliance packages. <em>$599/mo standalone value</em></div>
+        </div>
+        <div class="feature-item">
+          <span class="chk">\u2713</span>
+          <div><strong>TakeoffX</strong> Machine-vision blueprint quantification. <em>$499/mo standalone value</em></div>
+        </div>
+        <div class="feature-item">
+          <span class="chk">\u2713</span>
+          <div><strong>CutsheetX</strong> Instant technical product specification data. <em>$199/mo standalone value</em></div>
+        </div>
+        <div class="feature-item">
+          <span class="chk">\u2713</span>
+          <div><strong>PropX</strong> Proposal Express commercial bid generator. <em>$299/mo standalone value</em></div>
+        </div>
+        <div class="feature-item">
+          <span class="chk">\u2713</span>
+          <div><strong>SightX</strong> Interactive 3D structural simulation visualizer. <em>$999/mo standalone value</em></div>
+        </div>
+        <div class="feature-item">
+          <span class="chk">\u2713</span>
+          <div><strong>MeetingX</strong> Spatial 3D meeting intelligence & action items. <em>$299/mo standalone value</em></div>
+        </div>
+        <div class="feature-item">
+          <span class="chk">\u2713</span>
+          <div><strong>Sovereign Compute</strong> Local Apple Silicon Metal inference & Cloudflare edge distribution. <em>$0.00 / Token Variable Overhead</em></div>
+        </div>
+      </div>
+      
+      <button onclick="triggerCheckout('weyland-subconp-suite-seat', document.getElementById('suiteSeats').value, 'SubConP All-Inclusive Suite')" class="button primary" id="btnActivateSuite" style="width:100%;padding:20px;font-size:17px;letter-spacing:0.08em;margin-top:14px;box-shadow: 0 0 35px rgba(240, 184, 0, 0.4);">
+        ACTIVATE SUBCONP SUITE ($<span id="btnSuiteTotal">2,000</span> / MO)
+      </button>
+    </div>
+
+    <!-- COMMERCIAL BOUNDARY NOTE -->
+    <div class="summary-box">
+      <h3>Sovereign Commercial Boundaries</h3>
+      <p>Human estimator approval is strictly enforced at every commercial boundary. Implementation scope, historical enterprise data migrations, custom ERP integrations, and high-density compute usage exceeding standard policy thresholds are quoted separately as modular operational enhancements.</p>
+      <p style="font-size:13px;color:var(--gold);margin-bottom:0;font-family:ui-monospace,monospace;">
+        \u26A1 CHECKOUT SECURELY PROCESSED VIA STRIPE. NO CARD DATA TOUCHES WEYLANDAI SERVERS.
+      </p>
+    </div>
+
+    <footer>
+      <span>WEYLAND ARTIFICIAL INTELLIGENCE / SUBCONP SUITE</span>
+      <p style="margin:0;">One project spine. Seven operating engines. Zero simulated compute.</p>
+      <a href="mailto:hello@weylandai.com" id="footerContact">hello@weylandai.com</a>
+    </footer>
+  </div>
+
+  <script>
+    const moneyFormatter = new Intl.NumberFormat('en-US');
+    
+    function updateSuiteCalculation(val) {
+      const seats = parseInt(val, 10);
+      const total = seats * 2000;
+      document.getElementById('seatCountLabel').textContent = seats + (seats === 1 ? ' Seat ($2,000 / mo)' : ' Seats ($' + moneyFormatter.format(total) + ' / mo)');
+      document.getElementById('suiteMonthlyTotal').textContent = moneyFormatter.format(total);
+      document.getElementById('btnSuiteTotal').textContent = moneyFormatter.format(total);
+    }
+
+    async function triggerCheckout(sku, quantity, name) {
+      // /subscribe's own checkout button is hardcoded to the suite product
+      // and ignores query params, so route the suite purchase through it
+      // unchanged. All 7 components are now real, separately-priced Stripe
+      // products - call checkout/create directly for all of them. Note:
+      // buying SightX alone activates billing but the viewer itself stays
+      // a public, ungated demo (no per-customer project ingestion yet) -
+      // see /sightx and MeetingX's own gate for what SightX access actually
+      // changes today.
+      if (sku === 'weyland-subconp-suite-seat') {
+        window.location.href = '/subscribe/?checkout=init&sku=' + encodeURIComponent(sku) + '&qty=' + quantity + '&plan=' + encodeURIComponent(name);
+        return;
+      }
+      if (sku === 'weyland-cutsheetx-seat' || sku === 'weyland-takeoffx-seat' || sku === 'weyland-propx-seat' || sku === 'weyland-huntx-seat' || sku === 'weyland-subx-seat' || sku === 'weyland-meetingx-seat' || sku === 'weyland-sightx-seat' || sku === 'weyland-marketx-seat' || sku === 'weyland-pricex-seat' || sku === 'weyland-compx-seat' || sku === 'weyland-weatherx-seat' || sku === 'weyland-forecastx-seat' || sku === 'weyland-geox-seat') {
+        const btn = event && event.target;
+        if (btn) { btn.disabled = true; btn.textContent = 'REDIRECTING TO CHECKOUT...'; }
+        try {
+          const res = await fetch('/api/billing/checkout/create', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ product_id: sku, quantity: quantity || 1 })
+          });
+          const data = await res.json();
+          if (!res.ok || !data.checkout_url) throw new Error((data.detail && data.detail.message) || 'Checkout unavailable');
+          window.location.href = data.checkout_url;
+        } catch (e) {
+          if (btn) { btn.disabled = false; btn.textContent = 'CONTACT TO ACTIVATE'; }
+          alert('Checkout error: ' + e.message + ' - email hello@weylandai.com instead.');
+        }
+        return;
+      }
+      window.location.href = 'mailto:hello@weylandai.com?subject=' + encodeURIComponent(name + ' standalone seat') + '&body=' + encodeURIComponent('I would like to activate ' + name + ' as a standalone seat. Instant self-checkout for this tier isn\\'t live yet - please set up billing for my account.');
+    }
+  </script>
+</body>
+</html>
+`, { headers: { "Content-Type": "text/html; charset=UTF-8", "Cache-Control": "public, max-age=60" } });
+  }
+  function serve_marketx() {
+    return new Response(`<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#090a0d">
+<title>MarketX | Construction Market Trend Analyzer</title>
+<style>
+:root{--bg:#090a0d;--panel:#121419;--line:#2c3139;--text:#edf0f1;--muted:#9299a3;--gold:#f0b800;--green:#61dfa0;--blue:#66d4ff;--red:#ff756e}
+*{box-sizing:border-box}html,body{margin:0;min-height:100%;background:var(--bg);color:var(--text);font-family:"Avenir Next","Helvetica Neue",sans-serif}
+.shell{max-width:1100px;margin:auto;padding:20px clamp(16px,3vw,40px) 60px}
+header{display:flex;align-items:center;justify-content:space-between;gap:15px;margin-bottom:24px;flex-wrap:wrap}
+.brand{display:flex;align-items:center;gap:12px;color:var(--text);text-decoration:none}
+.mark{width:42px;height:42px;display:grid;place-items:center;background:var(--gold);color:var(--bg);font-weight:900;border-radius:6px}
+.nav{display:flex;gap:8px;flex-wrap:wrap}
+.nav a,.button{border:1px solid var(--line);border-radius:99px;padding:9px 14px;color:var(--text);text-decoration:none;background:transparent;font:750 10px/1 ui-monospace,monospace;letter-spacing:.06em;cursor:pointer}
+.nav a:hover,.button:hover{border-color:var(--gold);color:var(--gold)}
+.button.primary{background:var(--gold);border-color:var(--gold);color:var(--bg);font-weight:900}
+.titlebar{margin:40px 0 32px}
+.eyebrow{color:var(--gold);font:800 11px/1.2 ui-monospace,monospace;letter-spacing:.18em;text-transform:uppercase}
+.titlebar h1{font-size:clamp(30px,4vw,48px);letter-spacing:-.03em;margin:12px 0}
+.titlebar p{color:var(--muted);max-width:640px;line-height:1.6}
+.source-note{font:600 11px ui-monospace,monospace;color:var(--muted);margin-bottom:28px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:18px;margin-bottom:36px}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:22px}
+.card h3{margin:0 0 10px;font-size:15px;letter-spacing:-.01em;color:#fff}
+.big{font-size:32px;font-weight:900;letter-spacing:-.02em;margin:6px 0}
+.trend{font:800 11px/1 ui-monospace,monospace;letter-spacing:.05em;padding:4px 9px;border-radius:99px;display:inline-block}
+.trend.rising{background:rgba(255,117,110,.15);color:var(--red)}
+.trend.falling{background:rgba(97,223,160,.15);color:var(--green)}
+.trend.flat{background:rgba(146,153,163,.15);color:var(--muted)}
+.meta{color:var(--muted);font-size:12px;margin-top:8px}
+.err{color:var(--red);font-size:13px}
+.card.cta{background:linear-gradient(145deg,rgba(26,30,38,.96),rgba(16,18,24,.98));border:1px solid var(--gold);text-align:center;padding:32px}
+</style>
+</head>
+<body>
+<div class="shell">
+<header>
+<a class="brand" href="/"><span class="mark">WY</span><b>WEYLAND AI</b></a>
+<nav class="nav"><a href="/pricing/">PRICING</a><a href="/huntx/">HUNTX</a><a href="/pricex/">PRICEX</a></nav>
+</header>
+<section class="titlebar">
+<p class="eyebrow">MARKET TREND ANALYZER</p>
+<h1>Where the construction market is headed.</h1>
+<p>Live U.S. construction spending, housing starts, and materials-cost trend, sourced directly from the Federal Reserve's public FRED data - not a static report, refreshed on every load.</p>
+</section>
+<div class="source-note" id="sourceNote">Loading live data from FRED...</div>
+<div class="grid" id="trendGrid"></div>
+<div class="card cta">
+<h3 style="margin-bottom:6px">MarketX Pro</h3>
+<p style="color:var(--muted);margin:0 0 18px">$249/mo standalone, or included in select SubConP tiers - contact to activate.</p>
+<a class="button primary" href="mailto:hello@weylandai.com?subject=MarketX%20activation">CONTACT TO ACTIVATE</a>
+</div>
+</div>
+<script>
+function fmt(n){return n===null||n===undefined?'--':new Intl.NumberFormat('en-US',{maximumFractionDigits:1}).format(n)}
+function trendClass(t){return t==='rising'?'rising':t==='falling'?'falling':'flat'}
+fetch('/api/marketx/trends').then(r=>r.json()).then(d=>{
+  if(d.detail){document.getElementById('sourceNote').innerHTML='<span class="err">'+d.detail.message+'</span>';return}
+  document.getElementById('sourceNote').textContent='SOURCE: '+d.source+' - fetched '+new Date(d.fetched_at).toLocaleString();
+  document.getElementById('trendGrid').innerHTML = d.indicators.map(i=>
+    '<div class="card"><h3>'+i.label+'</h3><div class="big">'+fmt(i.latest_value)+'</div>'+
+    '<span class="trend '+trendClass(i.trend)+'">'+i.trend.toUpperCase()+(i.yoy_pct_change!==null?' '+(i.yoy_pct_change>0?'+':'')+i.yoy_pct_change+'% YOY':'')+'</span>'+
+    '<div class="meta">As of '+i.latest_date+' &middot; MoM '+(i.mom_pct_change!==null?(i.mom_pct_change>0?'+':'')+i.mom_pct_change+'%':'n/a')+' &middot; FRED series '+i.series_id+'</div></div>'
+  ).join('');
+}).catch(e=>{document.getElementById('sourceNote').innerHTML='<span class="err">Failed to load live data: '+e.message+'</span>'});
+</script>
+</body>
+</html>
+`, { headers: { "Content-Type": "text/html; charset=UTF-8", "Cache-Control": "public, max-age=60" } });
+  }
+  function serve_pricex() {
+    return new Response(`<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#090a0d">
+<title>PriceX | Material Pricing Tracker</title>
+<style>
+:root{--bg:#090a0d;--panel:#121419;--line:#2c3139;--text:#edf0f1;--muted:#9299a3;--gold:#f0b800;--green:#61dfa0;--blue:#66d4ff;--red:#ff756e}
+*{box-sizing:border-box}html,body{margin:0;min-height:100%;background:var(--bg);color:var(--text);font-family:"Avenir Next","Helvetica Neue",sans-serif}
+.shell{max-width:1100px;margin:auto;padding:20px clamp(16px,3vw,40px) 60px}
+header{display:flex;align-items:center;justify-content:space-between;gap:15px;margin-bottom:24px;flex-wrap:wrap}
+.brand{display:flex;align-items:center;gap:12px;color:var(--text);text-decoration:none}
+.mark{width:42px;height:42px;display:grid;place-items:center;background:var(--gold);color:var(--bg);font-weight:900;border-radius:6px}
+.nav{display:flex;gap:8px;flex-wrap:wrap}
+.nav a,.button{border:1px solid var(--line);border-radius:99px;padding:9px 14px;color:var(--text);text-decoration:none;background:transparent;font:750 10px/1 ui-monospace,monospace;letter-spacing:.06em;cursor:pointer}
+.nav a:hover,.button:hover{border-color:var(--gold);color:var(--gold)}
+.button.primary{background:var(--gold);border-color:var(--gold);color:var(--bg);font-weight:900}
+.titlebar{margin:40px 0 32px}
+.eyebrow{color:var(--gold);font:800 11px/1.2 ui-monospace,monospace;letter-spacing:.18em;text-transform:uppercase}
+.titlebar h1{font-size:clamp(30px,4vw,48px);letter-spacing:-.03em;margin:12px 0}
+.titlebar p{color:var(--muted);max-width:640px;line-height:1.6}
+.source-note{font:600 11px ui-monospace,monospace;color:var(--muted);margin-bottom:28px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:18px;margin-bottom:36px}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:22px}
+.card h3{margin:0 0 10px;font-size:15px;letter-spacing:-.01em;color:#fff}
+.big{font-size:32px;font-weight:900;letter-spacing:-.02em;margin:6px 0}
+.chg{font:800 11px/1 ui-monospace,monospace;letter-spacing:.05em;padding:4px 9px;border-radius:99px;display:inline-block;margin-right:6px}
+.chg.up{background:rgba(255,117,110,.15);color:var(--red)}
+.chg.down{background:rgba(97,223,160,.15);color:var(--green)}
+.chg.flat{background:rgba(146,153,163,.15);color:var(--muted)}
+.meta{color:var(--muted);font-size:12px;margin-top:8px}
+.err{color:var(--red);font-size:13px}
+.card.cta{background:linear-gradient(145deg,rgba(26,30,38,.96),rgba(16,18,24,.98));border:1px solid var(--gold);text-align:center;padding:32px}
+</style>
+</head>
+<body>
+<div class="shell">
+<header>
+<a class="brand" href="/"><span class="mark">WY</span><b>WEYLAND AI</b></a>
+<nav class="nav"><a href="/pricing/">PRICING</a><a href="/huntx/">HUNTX</a><a href="/marketx/">MARKETX</a></nav>
+</header>
+<section class="titlebar">
+<p class="eyebrow">MATERIAL PRICING TRACKER</p>
+<h1>Know material cost movement before you price a bid.</h1>
+<p>Live Producer Price Index data for lumber, metals, and the broader construction-materials basket, sourced directly from the Federal Reserve's public FRED data - refreshed on every load, not a cached report.</p>
+</section>
+<div class="source-note" id="sourceNote">Loading live data from FRED...</div>
+<div class="grid" id="materialGrid"></div>
+<div class="card cta">
+<h3 style="margin-bottom:6px">PriceX Pro</h3>
+<p style="color:var(--muted);margin:0 0 18px">$149/mo standalone, or included in select SubConP tiers - contact to activate.</p>
+<a class="button primary" href="mailto:hello@weylandai.com?subject=PriceX%20activation">CONTACT TO ACTIVATE</a>
+</div>
+</div>
+<script>
+function fmt(n){return n===null||n===undefined?'--':new Intl.NumberFormat('en-US',{maximumFractionDigits:1}).format(n)}
+function chgClass(v){return v===null?'flat':v>0?'up':v<0?'down':'flat'}
+fetch('/api/pricex/materials').then(r=>r.json()).then(d=>{
+  if(d.detail){document.getElementById('sourceNote').innerHTML='<span class="err">'+d.detail.message+'</span>';return}
+  document.getElementById('sourceNote').textContent='SOURCE: '+d.source+' - fetched '+new Date(d.fetched_at).toLocaleString();
+  document.getElementById('materialGrid').innerHTML = d.materials.map(m=>
+    '<div class="card"><h3>'+m.label+'</h3><div class="big">'+fmt(m.latest_value)+' <span style="font-size:14px;color:var(--muted);font-weight:600">(1982=100)</span></div>'+
+    '<span class="chg '+chgClass(m.mom_pct_change)+'">MoM '+(m.mom_pct_change!==null?(m.mom_pct_change>0?'+':'')+m.mom_pct_change+'%':'n/a')+'</span>'+
+    '<span class="chg '+chgClass(m.yoy_pct_change)+'">YoY '+(m.yoy_pct_change!==null?(m.yoy_pct_change>0?'+':'')+m.yoy_pct_change+'%':'n/a')+'</span>'+
+    '<div class="meta">As of '+m.latest_date+' &middot; FRED series '+m.series_id+'</div></div>'
+  ).join('');
+}).catch(e=>{document.getElementById('sourceNote').innerHTML='<span class="err">Failed to load live data: '+e.message+'</span>'});
+</script>
+</body>
+</html>
+`, { headers: { "Content-Type": "text/html; charset=UTF-8", "Cache-Control": "public, max-age=60" } });
+  }
+  function serve_compx() {
+    return new Response(`<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#090a0d">
+<title>CompX | Competitor Bid Intelligence</title>
+<style>
+:root{--bg:#090a0d;--panel:#121419;--line:#2c3139;--text:#edf0f1;--muted:#9299a3;--gold:#f0b800;--green:#61dfa0;--blue:#66d4ff;--red:#ff756e}
+*{box-sizing:border-box}html,body{margin:0;min-height:100%;background:var(--bg);color:var(--text);font-family:"Avenir Next","Helvetica Neue",sans-serif}
+.shell{max-width:1100px;margin:auto;padding:20px clamp(16px,3vw,40px) 60px}
+header{display:flex;align-items:center;justify-content:space-between;gap:15px;margin-bottom:24px;flex-wrap:wrap}
+.brand{display:flex;align-items:center;gap:12px;color:var(--text);text-decoration:none}
+.mark{width:42px;height:42px;display:grid;place-items:center;background:var(--gold);color:var(--bg);font-weight:900;border-radius:6px}
+.nav{display:flex;gap:8px;flex-wrap:wrap}
+.nav a,.button{border:1px solid var(--line);border-radius:99px;padding:9px 14px;color:var(--text);text-decoration:none;background:transparent;font:750 10px/1 ui-monospace,monospace;letter-spacing:.06em;cursor:pointer}
+.nav a:hover,.button:hover{border-color:var(--gold);color:var(--gold)}
+.button.primary{background:var(--gold);border-color:var(--gold);color:var(--bg);font-weight:900}
+.titlebar{margin:40px 0 24px}
+.eyebrow{color:var(--gold);font:800 11px/1.2 ui-monospace,monospace;letter-spacing:.18em;text-transform:uppercase}
+.titlebar h1{font-size:clamp(30px,4vw,48px);letter-spacing:-.03em;margin:12px 0}
+.titlebar p{color:var(--muted);max-width:660px;line-height:1.6}
+.search-bar{display:flex;gap:10px;margin-bottom:28px}
+.search-bar input{flex:1;background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:14px 18px;color:#fff;font-size:15px}
+.search-bar input:focus{outline:none;border-color:var(--gold)}
+.source-note{font:600 11px ui-monospace,monospace;color:var(--muted);margin-bottom:20px}
+.vgrid{display:flex;flex-direction:column;gap:16px}
+.vcard{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:22px}
+.vcard h3{margin:0 0 12px;font-size:18px;color:#fff}
+.stat-row{display:flex;gap:28px;flex-wrap:wrap;margin-bottom:16px}
+.stat{}
+.stat label{display:block;font:700 10px ui-monospace,monospace;color:var(--muted);letter-spacing:.08em;text-transform:uppercase;margin-bottom:3px}
+.stat .v{font-size:22px;font-weight:900}
+.stat .v.green{color:var(--green)}
+proj-list{list-style:none;margin:0;padding:0}
+.proj{display:flex;justify-content:space-between;gap:12px;padding:8px 0;border-top:1px solid var(--line);font-size:13px;color:var(--muted)}
+.proj .won{color:var(--green);font-weight:800}
+.err{color:var(--red);font-size:13px}
+.card.cta{background:linear-gradient(145deg,rgba(26,30,38,.96),rgba(16,18,24,.98));border:1px solid var(--gold);text-align:center;padding:32px;border-radius:14px;margin-top:28px}
+</style>
+</head>
+<body>
+<div class="shell">
+<header>
+<a class="brand" href="/"><span class="mark">WY</span><b>WEYLAND AI</b></a>
+<nav class="nav"><a href="/pricing/">PRICING</a><a href="/huntx/">HUNTX</a><a href="/marketx/">MARKETX</a></nav>
+</header>
+<section class="titlebar">
+<p class="eyebrow">COMPETITOR BID INTELLIGENCE</p>
+<h1>See who else is bidding - and winning.</h1>
+<p>Search real Texas DOT bid-tabulation history for any contractor name: total bids, win rate, and total won value, sourced live from data.texas.gov - not a static report.</p>
+</section>
+<div class="search-bar"><input id="cx-q" type="text" placeholder="Search a contractor/vendor name, e.g. Garret Shields"><button class="button primary" id="cx-search-btn">SEARCH</button></div>
+<div class="source-note" id="sourceNote">Enter a name and search live TXDOT bid history.</div>
+<div class="vgrid" id="vgrid"></div>
+<div class="card cta">
+<h3 style="margin-bottom:6px">CompX Pro</h3>
+<p style="color:var(--muted);margin:0 0 18px">$199/mo standalone, or included in select SubConP tiers - contact to activate.</p>
+<a class="button primary" href="mailto:hello@weylandai.com?subject=CompX%20activation">CONTACT TO ACTIVATE</a>
+</div>
+</div>
+<script>
+function esc(s){return String(s==null?'':s).replace(/[<>&]/g,c=>({'<':'&lt;','>':'&gt;','&':'&amp;'}[c]))}
+function money(n){return '$'+Number(n).toLocaleString(undefined,{maximumFractionDigits:0})}
+async function runSearch(){
+  const q = document.getElementById('cx-q').value.trim();
+  if(!q) return;
+  document.getElementById('sourceNote').textContent = 'Querying live TXDOT bid history...';
+  document.getElementById('vgrid').innerHTML = '';
+  try {
+    const res = await fetch('/api/compx/vendors?q='+encodeURIComponent(q));
+    const d = await res.json();
+    if(!res.ok){document.getElementById('sourceNote').innerHTML='<span class="err">'+(d.detail&&d.detail.message||'Search failed')+'</span>';return}
+    document.getElementById('sourceNote').textContent='SOURCE: '+d.source+' - '+d.vendors.length+' vendor(s) matched "'+d.query+'"';
+    if(!d.vendors.length){document.getElementById('vgrid').innerHTML='<div class="vcard">No vendors matched. Try a shorter or different name fragment.</div>';return}
+    document.getElementById('vgrid').innerHTML = d.vendors.map(v=>
+      '<div class="vcard"><h3>'+esc(v.vendor_name)+'</h3>'+
+      '<div class="stat-row">'+
+      '<div class="stat"><label>Total Bids</label><div class="v">'+v.total_bids+'</div></div>'+
+      '<div class="stat"><label>Wins</label><div class="v green">'+v.wins+'</div></div>'+
+      '<div class="stat"><label>Win Rate</label><div class="v">'+v.win_rate_pct+'%</div></div>'+
+      '<div class="stat"><label>Total Won Value</label><div class="v green">'+money(v.total_win_value)+'</div></div>'+
+      '</div>'+
+      v.recent_projects.map(p=>'<div class="proj"><span>'+esc(p.project_name)+' ('+esc(p.county)+' County)</span><span class="'+(p.won?'won':'')+'">'+(p.won?'WON ':'')+money(p.bid_amount)+'</span></div>').join('')+
+      '</div>'
+    ).join('');
+  } catch(e) {
+    document.getElementById('sourceNote').innerHTML='<span class="err">Failed to load live data: '+e.message+'</span>';
+  }
+}
+document.getElementById('cx-search-btn').addEventListener('click', runSearch);
+document.getElementById('cx-q').addEventListener('keydown', e=>{if(e.key==='Enter')runSearch()});
+</script>
+</body>
+</html>
+`, { headers: { "Content-Type": "text/html; charset=UTF-8", "Cache-Control": "public, max-age=60" } });
+  }
+  function serve_geox() {
+    return new Response(`<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#090a0d">
+<title>GeoX | Project Geospatial Lookup</title>
+<style>
+:root{--bg:#090a0d;--panel:#121419;--line:#2c3139;--text:#edf0f1;--muted:#9299a3;--gold:#f0b800;--green:#61dfa0;--blue:#66d4ff;--red:#ff756e}
+*{box-sizing:border-box}html,body{margin:0;min-height:100%;background:var(--bg);color:var(--text);font-family:"Avenir Next","Helvetica Neue",sans-serif}
+.shell{max-width:1000px;margin:auto;padding:20px clamp(16px,3vw,40px) 60px}
+header{display:flex;align-items:center;justify-content:space-between;gap:15px;margin-bottom:24px;flex-wrap:wrap}
+.brand{display:flex;align-items:center;gap:12px;color:var(--text);text-decoration:none}
+.mark{width:42px;height:42px;display:grid;place-items:center;background:var(--gold);color:var(--bg);font-weight:900;border-radius:6px}
+.nav{display:flex;gap:8px;flex-wrap:wrap}
+.nav a,.button{border:1px solid var(--line);border-radius:99px;padding:9px 14px;color:var(--text);text-decoration:none;background:transparent;font:750 10px/1 ui-monospace,monospace;letter-spacing:.06em;cursor:pointer}
+.nav a:hover,.button:hover{border-color:var(--gold);color:var(--gold)}
+.button.primary{background:var(--gold);border-color:var(--gold);color:var(--bg);font-weight:900}
+.titlebar{margin:40px 0 24px}
+.eyebrow{color:var(--gold);font:800 11px/1.2 ui-monospace,monospace;letter-spacing:.18em;text-transform:uppercase}
+.titlebar h1{font-size:clamp(30px,4vw,48px);letter-spacing:-.03em;margin:12px 0}
+.titlebar p{color:var(--muted);max-width:660px;line-height:1.6}
+.search-bar{display:flex;gap:10px;margin-bottom:28px;flex-wrap:wrap}
+.search-bar input{flex:1;min-width:260px;background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:14px 18px;color:#fff;font-size:15px}
+.search-bar input:focus{outline:none;border-color:var(--gold)}
+.source-note{font:600 11px ui-monospace,monospace;color:var(--muted);margin-bottom:20px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin-bottom:36px}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:18px}
+.card label{display:block;font:700 10px ui-monospace,monospace;color:var(--muted);letter-spacing:.06em;text-transform:uppercase;margin-bottom:6px}
+.card .v{font-size:19px;font-weight:800}
+.err{color:var(--red);font-size:13px}
+.card.cta{background:linear-gradient(145deg,rgba(26,30,38,.96),rgba(16,18,24,.98));border:1px solid var(--gold);text-align:center;padding:32px}
+</style>
+</head>
+<body>
+<div class="shell">
+<header>
+<a class="brand" href="/"><span class="mark">WY</span><b>WEYLAND AI</b></a>
+<nav class="nav"><a href="/pricing/">PRICING</a><a href="/huntx/">HUNTX</a><a href="/compx/">COMPX</a></nav>
+</header>
+<section class="titlebar">
+<p class="eyebrow">PROJECT GEOSPATIAL LOOKUP</p>
+<h1>Know the jurisdiction, not just the pin.</h1>
+<p>Look up any US project address against the Census Bureau's real geocoder - coordinates plus the actual county, state, and census tract FIPS codes, useful for jurisdiction-based compliance and reporting, not just a map marker.</p>
+</section>
+<div class="search-bar"><input id="gx-addr" type="text" placeholder="1600 Pennsylvania Ave NW, Washington, DC"><button class="button primary" id="gx-search-btn">LOOK UP</button></div>
+<div class="source-note" id="sourceNote">Enter a US project address and look it up.</div>
+<div class="grid" id="gx-grid"></div>
+<div class="card cta">
+<h3 style="margin-bottom:6px">GeoX Pro</h3>
+<p style="color:var(--muted);margin:0 0 18px">$149/mo standalone, or included in select SubConP tiers - contact to activate.</p>
+<a class="button primary" href="mailto:hello@weylandai.com?subject=GeoX%20activation">CONTACT TO ACTIVATE</a>
+</div>
+</div>
+<script>
+async function runLookup(){
+  const address = document.getElementById('gx-addr').value.trim();
+  if(!address) return;
+  document.getElementById('sourceNote').textContent = 'Querying Census geocoder...';
+  document.getElementById('gx-grid').innerHTML = '';
+  try {
+    const res = await fetch('/api/geox/lookup?address=' + encodeURIComponent(address));
+    const d = await res.json();
+    if(!res.ok){ document.getElementById('sourceNote').innerHTML = '<span class="err">' + (d.detail && d.detail.message) + '</span>'; return; }
+    document.getElementById('sourceNote').textContent = 'SOURCE: ' + d.source + ' - matched: ' + d.matched_address;
+    document.getElementById('gx-grid').innerHTML =
+      '<div class="card"><label>Coordinates</label><div class="v">' + d.latitude.toFixed(5) + ', ' + d.longitude.toFixed(5) + '</div></div>' +
+      '<div class="card"><label>County</label><div class="v">' + (d.county_name||'\u2014') + '</div></div>' +
+      '<div class="card"><label>State</label><div class="v">' + (d.state_name||'\u2014') + '</div></div>' +
+      '<div class="card"><label>County FIPS</label><div class="v">' + (d.county_geoid||'\u2014') + '</div></div>' +
+      '<div class="card"><label>Census Tract GEOID</label><div class="v">' + (d.census_tract_geoid||'\u2014') + '</div></div>';
+  } catch(e) {
+    document.getElementById('sourceNote').innerHTML = '<span class="err">Failed: ' + e.message + '</span>';
+  }
+}
+document.getElementById('gx-search-btn').addEventListener('click', runLookup);
+document.getElementById('gx-addr').addEventListener('keydown', e=>{if(e.key==='Enter')runLookup()});
+</script>
+</body>
+</html>
+`, { headers: { "Content-Type": "text/html; charset=UTF-8", "Cache-Control": "public, max-age=60" } });
+  }
+  function serve_forecastx() {
+    return new Response(`<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#090a0d">
+<title>ForecastX | Project Cash Flow Forecaster</title>
+<style>
+:root{--bg:#090a0d;--panel:#121419;--line:#2c3139;--text:#edf0f1;--muted:#9299a3;--gold:#f0b800;--green:#61dfa0;--blue:#66d4ff;--red:#ff756e}
+*{box-sizing:border-box}html,body{margin:0;min-height:100%;background:var(--bg);color:var(--text);font-family:"Avenir Next","Helvetica Neue",sans-serif}
+.shell{max-width:1100px;margin:auto;padding:20px clamp(16px,3vw,40px) 60px}
+header{display:flex;align-items:center;justify-content:space-between;gap:15px;margin-bottom:24px;flex-wrap:wrap}
+.brand{display:flex;align-items:center;gap:12px;color:var(--text);text-decoration:none}
+.mark{width:42px;height:42px;display:grid;place-items:center;background:var(--gold);color:var(--bg);font-weight:900;border-radius:6px}
+.nav{display:flex;gap:8px;flex-wrap:wrap}
+.nav a,.button{border:1px solid var(--line);border-radius:99px;padding:9px 14px;color:var(--text);text-decoration:none;background:transparent;font:750 10px/1 ui-monospace,monospace;letter-spacing:.06em;cursor:pointer}
+.nav a:hover,.button:hover{border-color:var(--gold);color:var(--gold)}
+.button.primary{background:var(--gold);border-color:var(--gold);color:var(--bg);font-weight:900}
+.titlebar{margin:40px 0 24px}
+.eyebrow{color:var(--gold);font:800 11px/1.2 ui-monospace,monospace;letter-spacing:.18em;text-transform:uppercase}
+.titlebar h1{font-size:clamp(30px,4vw,48px);letter-spacing:-.03em;margin:12px 0}
+.titlebar p{color:var(--muted);max-width:660px;line-height:1.6}
+.form-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:14px;margin-bottom:20px;background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:22px}
+.form-grid label{display:block;font:700 10px ui-monospace,monospace;color:var(--muted);letter-spacing:.06em;text-transform:uppercase;margin-bottom:6px}
+.form-grid input{width:100%;background:#0d0f14;border:1px solid var(--line);border-radius:8px;padding:10px 12px;color:#fff;font-size:14px;box-sizing:border-box}
+.form-grid input:focus{outline:none;border-color:var(--gold)}
+.source-note{font:600 11px ui-monospace,monospace;color:var(--muted);margin-bottom:20px}
+.summary-row{display:flex;gap:16px;margin-bottom:24px;flex-wrap:wrap}
+.sumcard{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:16px 20px}
+.sumcard label{display:block;font:700 10px ui-monospace,monospace;color:var(--muted);letter-spacing:.08em;text-transform:uppercase;margin-bottom:4px}
+.sumcard .v{font-size:22px;font-weight:900}
+.table-wrap{overflow-x:auto;background:var(--panel);border:1px solid var(--line);border-radius:14px}
+table{width:100%;border-collapse:collapse;font-size:13px}
+th{text-align:left;color:var(--muted);font:750 10px/1 ui-monospace,monospace;letter-spacing:.08em;padding:12px 16px;background:#0d0f14;border-bottom:2px solid var(--line);white-space:nowrap}
+td{padding:10px 16px;border-bottom:1px solid #1f232b;white-space:nowrap}
+.err{color:var(--red);font-size:13px}
+.card.cta{background:linear-gradient(145deg,rgba(26,30,38,.96),rgba(16,18,24,.98));border:1px solid var(--gold);text-align:center;padding:32px;border-radius:14px;margin-top:28px}
+</style>
+</head>
+<body>
+<div class="shell">
+<header>
+<a class="brand" href="/"><span class="mark">WY</span><b>WEYLAND AI</b></a>
+<nav class="nav"><a href="/pricing/">PRICING</a><a href="/huntx/">HUNTX</a><a href="/marketx/">MARKETX</a></nav>
+</header>
+<section class="titlebar">
+<p class="eyebrow">PROJECT CASH FLOW FORECASTER</p>
+<h1>See your cash position before you sign.</h1>
+<p>Enter a contract's real terms - value, duration, retainage, payment terms - and get a month-by-month billing and cash-receipt projection, including when retainage actually comes back.</p>
+</section>
+<div class="form-grid">
+<div><label>CONTRACT VALUE ($)</label><input id="fx-value" type="number" placeholder="e.g. 500000"></div>
+<div><label>START DATE</label><input id="fx-start" type="date"></div>
+<div><label>DURATION (MONTHS)</label><input id="fx-duration" type="number" placeholder="e.g. 8"></div>
+<div><label>RETAINAGE (%)</label><input id="fx-retainage" type="number" value="10"></div>
+<div><label>PAYMENT TERMS (DAYS)</label><input id="fx-terms" type="number" value="30"></div>
+</div>
+<button class="button primary" id="fx-run-btn" style="margin-bottom:20px">RUN PROJECTION</button>
+<div class="source-note" id="sourceNote">Enter contract terms and run the projection - pure calculation, no external data source.</div>
+<div class="summary-row" id="summaryRow"></div>
+<div class="table-wrap"><table><thead><tr><th>MONTH</th><th>BILL DATE</th><th>BILLED</th><th>RETAINAGE HELD</th><th>NET PAYMENT</th><th>EXPECTED PAID</th><th>CUM. CASH RECEIVED</th></tr></thead><tbody id="fx-body"></tbody></table></div>
+<div class="card cta">
+<h3 style="margin-bottom:6px">ForecastX Pro</h3>
+<p style="color:var(--muted);margin:0 0 18px">$249/mo standalone, or included in select SubConP tiers - contact to activate.</p>
+<a class="button primary" href="mailto:hello@weylandai.com?subject=ForecastX%20activation">CONTACT TO ACTIVATE</a>
+</div>
+</div>
+<script>
+function money(n){return '$'+Number(n).toLocaleString(undefined,{maximumFractionDigits:0})}
+document.getElementById('fx-start').valueAsDate = new Date();
+async function runProjection(){
+  const body = {
+    contract_value: parseFloat(document.getElementById('fx-value').value),
+    start_date: document.getElementById('fx-start').value,
+    duration_months: parseInt(document.getElementById('fx-duration').value, 10),
+    retainage_pct: parseFloat(document.getElementById('fx-retainage').value),
+    payment_terms_days: parseInt(document.getElementById('fx-terms').value, 10)
+  };
+  document.getElementById('sourceNote').textContent = 'Calculating...';
+  try {
+    const res = await fetch('/api/forecastx/project', { method: 'POST', headers: {'Content-Type':'application/json'}, body: JSON.stringify(body) });
+    const d = await res.json();
+    if(!res.ok){document.getElementById('sourceNote').innerHTML='<span class="err">'+(d.detail&&d.detail.message||'Failed')+'</span>';return}
+    document.getElementById('sourceNote').textContent = 'Monthly billing: '+money(d.projection.monthly_billing)+' | Peak retainage held: '+money(d.projection.total_retainage_held_at_peak)+' | Retainage released: '+d.projection.retainage_release_date;
+    document.getElementById('summaryRow').innerHTML =
+      '<div class="sumcard"><label>Monthly Billing</label><div class="v">'+money(d.projection.monthly_billing)+'</div></div>'+
+      '<div class="sumcard"><label>Peak Retainage Held</label><div class="v" style="color:var(--gold)">'+money(d.projection.total_retainage_held_at_peak)+'</div></div>'+
+      '<div class="sumcard"><label>Retainage Release Date</label><div class="v" style="font-size:16px">'+d.projection.retainage_release_date+'</div></div>';
+    document.getElementById('fx-body').innerHTML = d.projection.months.map(m=>
+      '<tr><td>'+m.month_index+'</td><td>'+m.bill_date+'</td><td>'+money(m.billed_amount)+'</td><td>'+money(m.retainage_held)+'</td><td>'+money(m.net_payment)+'</td><td>'+m.expected_payment_date+'</td><td style="color:var(--green)">'+money(m.cumulative_cash_received)+'</td></tr>'
+    ).join('');
+  } catch(e) {
+    document.getElementById('sourceNote').innerHTML='<span class="err">Failed: '+e.message+'</span>';
+  }
+}
+document.getElementById('fx-run-btn').addEventListener('click', runProjection);
+</script>
+</body>
+</html>
+`, { headers: { "Content-Type": "text/html; charset=UTF-8", "Cache-Control": "public, max-age=60" } });
+  }
+  function serve_weatherx() {
+    return new Response(`<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#090a0d">
+<title>WeatherX | Weather-Delay Impact Calculator</title>
+<style>
+:root{--bg:#090a0d;--panel:#121419;--line:#2c3139;--text:#edf0f1;--muted:#9299a3;--gold:#f0b800;--green:#61dfa0;--blue:#66d4ff;--red:#ff756e}
+*{box-sizing:border-box}html,body{margin:0;min-height:100%;background:var(--bg);color:var(--text);font-family:"Avenir Next","Helvetica Neue",sans-serif}
+.shell{max-width:1100px;margin:auto;padding:20px clamp(16px,3vw,40px) 60px}
+header{display:flex;align-items:center;justify-content:space-between;gap:15px;margin-bottom:24px;flex-wrap:wrap}
+.brand{display:flex;align-items:center;gap:12px;color:var(--text);text-decoration:none}
+.mark{width:42px;height:42px;display:grid;place-items:center;background:var(--gold);color:var(--bg);font-weight:900;border-radius:6px}
+.nav{display:flex;gap:8px;flex-wrap:wrap}
+.nav a,.button{border:1px solid var(--line);border-radius:99px;padding:9px 14px;color:var(--text);text-decoration:none;background:transparent;font:750 10px/1 ui-monospace,monospace;letter-spacing:.06em;cursor:pointer}
+.nav a:hover,.button:hover{border-color:var(--gold);color:var(--gold)}
+.button.primary{background:var(--gold);border-color:var(--gold);color:var(--bg);font-weight:900}
+.titlebar{margin:40px 0 24px}
+.eyebrow{color:var(--gold);font:800 11px/1.2 ui-monospace,monospace;letter-spacing:.18em;text-transform:uppercase}
+.titlebar h1{font-size:clamp(30px,4vw,48px);letter-spacing:-.03em;margin:12px 0}
+.titlebar p{color:var(--muted);max-width:660px;line-height:1.6}
+.search-bar{display:flex;gap:10px;margin-bottom:12px;flex-wrap:wrap}
+.search-bar input{flex:1;min-width:140px;background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:14px 18px;color:#fff;font-size:15px}
+.search-bar input:focus{outline:none;border-color:var(--gold)}
+.presets{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:24px}
+.preset{border:1px solid var(--line);border-radius:99px;padding:6px 12px;font:700 10px ui-monospace,monospace;color:var(--muted);cursor:pointer;background:none}
+.preset:hover{border-color:var(--gold);color:var(--gold)}
+.source-note{font:600 11px ui-monospace,monospace;color:var(--muted);margin-bottom:20px}
+.summary-row{display:flex;gap:16px;margin-bottom:24px;flex-wrap:wrap}
+.sumcard{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:16px 20px}
+.sumcard label{display:block;font:700 10px ui-monospace,monospace;color:var(--muted);letter-spacing:.08em;text-transform:uppercase;margin-bottom:4px}
+.sumcard .v{font-size:26px;font-weight:900}
+.pgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:12px}
+.pcard{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:14px}
+.pcard.high{border-color:var(--red)}
+.pcard.moderate{border-color:var(--gold)}
+.pcard h4{margin:0 0 6px;font-size:13px;color:#fff}
+.risk-tag{font:800 9px/1 ui-monospace,monospace;letter-spacing:.06em;padding:3px 7px;border-radius:99px;display:inline-block;margin-bottom:6px}
+.risk-tag.high{background:rgba(255,117,110,.18);color:var(--red)}
+.risk-tag.moderate{background:rgba(240,184,0,.18);color:var(--gold)}
+.risk-tag.low{background:rgba(97,223,160,.15);color:var(--green)}
+.pcard p{margin:0;color:var(--muted);font-size:12px;line-height:1.5}
+.err{color:var(--red);font-size:13px}
+.card.cta{background:linear-gradient(145deg,rgba(26,30,38,.96),rgba(16,18,24,.98));border:1px solid var(--gold);text-align:center;padding:32px;border-radius:14px;margin-top:28px}
+</style>
+</head>
+<body>
+<div class="shell">
+<header>
+<a class="brand" href="/"><span class="mark">WY</span><b>WEYLAND AI</b></a>
+<nav class="nav"><a href="/pricing/">PRICING</a><a href="/huntx/">HUNTX</a><a href="/compx/">COMPX</a></nav>
+</header>
+<section class="titlebar">
+<p class="eyebrow">WEATHER-DELAY IMPACT CALCULATOR</p>
+<h1>Know which days threaten your schedule.</h1>
+<p>Live 7-day forecast from the National Weather Service, classified into delay risk (precipitation odds, severe conditions, wind speed) for any US jobsite - real government forecast data, not a generic weather widget.</p>
+</section>
+<div class="search-bar"><input id="wx-lat" type="text" placeholder="Latitude, e.g. 29.7604"><input id="wx-lon" type="text" placeholder="Longitude, e.g. -95.3698"><button class="button primary" id="wx-search-btn">CHECK FORECAST</button></div>
+<div class="presets">
+<button class="preset" data-lat="29.7604" data-lon="-95.3698">Houston, TX</button>
+<button class="preset" data-lat="32.7767" data-lon="-96.7970">Dallas, TX</button>
+<button class="preset" data-lat="30.2672" data-lon="-97.7431">Austin, TX</button>
+<button class="preset" data-lat="34.0522" data-lon="-118.2437">Los Angeles, CA</button>
+<button class="preset" data-lat="33.4484" data-lon="-112.0740">Phoenix, AZ</button>
+</div>
+<div class="source-note" id="sourceNote">Enter jobsite coordinates or pick a preset market.</div>
+<div class="summary-row" id="summaryRow"></div>
+<div class="pgrid" id="pgrid"></div>
+<div class="card cta">
+<h3 style="margin-bottom:6px">WeatherX Pro</h3>
+<p style="color:var(--muted);margin:0 0 18px">$149/mo standalone, or included in select SubConP tiers - contact to activate.</p>
+<a class="button primary" href="mailto:hello@weylandai.com?subject=WeatherX%20activation">CONTACT TO ACTIVATE</a>
+</div>
+</div>
+<script>
+async function runCheck(){
+  const lat = document.getElementById('wx-lat').value.trim();
+  const lon = document.getElementById('wx-lon').value.trim();
+  if(!lat||!lon)return;
+  document.getElementById('sourceNote').textContent = 'Fetching live NWS forecast...';
+  document.getElementById('summaryRow').innerHTML='';
+  document.getElementById('pgrid').innerHTML='';
+  try {
+    const res = await fetch('/api/weatherx/delay-risk?lat='+encodeURIComponent(lat)+'&lon='+encodeURIComponent(lon));
+    const d = await res.json();
+    if(!res.ok){document.getElementById('sourceNote').innerHTML='<span class="err">'+(d.detail&&d.detail.message||'Failed')+'</span>';return}
+    document.getElementById('sourceNote').textContent='SOURCE: '+d.source+' - NWS office '+d.office+' - fetched '+new Date(d.fetched_at).toLocaleString();
+    document.getElementById('summaryRow').innerHTML =
+      '<div class="sumcard"><label>High-Risk Periods</label><div class="v" style="color:var(--red)">'+d.summary.high_risk_periods+'</div></div>'+
+      '<div class="sumcard"><label>Moderate-Risk Periods</label><div class="v" style="color:var(--gold)">'+d.summary.moderate_risk_periods+'</div></div>'+
+      '<div class="sumcard"><label>Total Forecast Periods</label><div class="v">'+d.summary.total_periods+'</div></div>';
+    document.getElementById('pgrid').innerHTML = d.periods.map(p=>
+      '<div class="pcard '+p.delay_risk+'"><h4>'+p.name+'</h4><span class="risk-tag '+p.delay_risk+'">'+p.delay_risk.toUpperCase()+' RISK</span>'+
+      '<p>'+p.short_forecast+'<br>'+p.temperature+p.temperature_unit+' &middot; '+(p.precipitation_probability_pct!==null?p.precipitation_probability_pct+'% precip':'')+' &middot; wind '+p.wind_speed+'</p></div>'
+    ).join('');
+  } catch(e) {
+    document.getElementById('sourceNote').innerHTML='<span class="err">Failed to load live data: '+e.message+'</span>';
+  }
+}
+document.getElementById('wx-search-btn').addEventListener('click', runCheck);
+document.querySelectorAll('.preset').forEach(btn=>btn.addEventListener('click',()=>{document.getElementById('wx-lat').value=btn.dataset.lat;document.getElementById('wx-lon').value=btn.dataset.lon;runCheck()}));
+</script>
+</body>
+</html>
+`, { headers: { "Content-Type": "text/html; charset=UTF-8", "Cache-Control": "public, max-age=60" } });
+  }
+  function serve_cutsheetx() {
+    return Response.redirect("https://weylandai.com/pricing", 302);
+  }
+  var map2 = {
+    "onboarding": serve_onboarding,
+    "huntx": serve_huntx,
+    "marketx": serve_marketx,
+    "pricex": serve_pricex,
+    "compx": serve_compx,
+    "weatherx": serve_weatherx,
+    "forecastx": serve_forecastx,
+    "geox": serve_geox,
+    "takeoffx": serve_takeoffx,
+    "subx": serve_subx,
+    "cutsheetx": serve_cutsheetx,
+    "propx": serve_propx,
+    "": serve_whyweyland,
+    "whyweyland": serve_whyweyland,
+    "venturedeck": serve_venturedeck,
+    "investors": serve_investors,
+    "lienx": serve_lienx,
+    "bidx": serve_bidx,
+    "coa": serve_coa,
+    "rfax": serve_rfax,
+    "changeordx": serve_changeordx,
+    "permitx": serve_permitx,
+    "closex": serve_closex,
+    "notesx": serve_notesx,
+    "inspecx": serve_inspecx,
+    "safetyx": serve_safetyx,
+    "survx": serve_survx,
+    "specx": serve_specx,
+    "drawx": serve_drawx,
+    "asbuiltx": serve_asbuiltx,
+    "leadx": serve_leadx,
+    "careers": serve_careers,
+    "progress": serve_progress,
+    "sightx": serve_sightx,
+    "meetingx": serve_meetingx,
+    "sightx/runtime-manifest.json": serve_sightx_runtime_manifest_json,
+    "sightx/runtime-manifest.schema.json": serve_sightx_runtime_manifest_schema_json,
+    "sightx/projects/glendale-camino-real/catalog.json": serve_sightx_projects_glendale_camino_real_catalog_json,
+    "qtext": serve_qtext,
+    "subscribe": serve_subscribe,
+    "financials": serve_financials,
+    "pricing": serve_pricing
+  };
+  return {
+    dispatch: function(pathname) {
+      var clean = pathname.toLowerCase().replace(/^\/|\/$/g, "");
+      if (clean === "deck") clean = "venturedeck";
+      if (clean === "index.html" || clean === "index") clean = "";
+      if (map2[clean]) return map2[clean]();
+      return null;
+    }
+  };
+})();
+
 // src/legacy-monolith.js
+import { Writable } from "node:stream";
+import { Socket } from "node:net";
+import { Socket as Socket2 } from "node:net";
+import { EventEmitter } from "node:events";
+import { Buffer as Buffer2 } from "node:buffer";
+import { Buffer as Buffer3 } from "node:buffer";
 var __create = Object.create;
 var __defProp = Object.defineProperty;
 var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
@@ -167900,5306 +173200,6 @@ var BLUEPRINT_HEADER_CSS = `
     }
 `;
 var BLUEPRINT_TOKENS_CSS = BLUEPRINT_BODY_CSS + BLUEPRINT_HEADER_CSS;
-var SovereignWeylandRoutes = /* @__PURE__ */ (function() {
-  var ROUTE_LABELS = {
-    onboarding: "ONBOARDING",
-    huntx: "HUNTX",
-    takeoffx: "TAKEOFFX",
-    subx: "SUBX",
-    cutsheetx: "CUTSHEETX",
-    propx: "PROPX",
-    sightx: "SIGHTX",
-    meetingx: "MEETX",
-    qtext: "QTEXT",
-    whyweyland: "WHY WEYLAND",
-    investors: "INVESTORS",
-    venturedeck: "VENTURE DECK",
-    lienx: "LIENX",
-    bidx: "BIDX",
-    coa: "COA",
-    rfax: "RFAX",
-    changeordx: "CHANGEORDX",
-    permitx: "PERMITX",
-    closex: "CLOSEX",
-    notesx: "NOTESX",
-    inspecx: "INSPECX",
-    safetyx: "SAFETYX",
-    survx: "SURVX",
-    specx: "SPECX",
-    drawx: "DRAWX",
-    asbuiltx: "ASBUILTX",
-    leadx: "LEADX",
-    careers: "CAREERS"
-  };
-  function renderNav(current) {
-    var selfAliases = { meetingx: ["meetingx", "meetx"] };
-    var exclude = selfAliases[current] || [current];
-    var links = "";
-    for (var key in ROUTE_LABELS) {
-      if (exclude.indexOf(key) !== -1) continue;
-      links += '<a href="/' + key + '/">' + ROUTE_LABELS[key] + "</a>";
-    }
-    return links;
-  }
-  function serve_huntx() {
-    return new Response('<!doctype html>\n<html lang="en">\n<head>\n  <meta charset="utf-8">\n  <meta name="viewport" content="width=device-width,initial-scale=1">\n  <meta name="theme-color" content="#090a0d">\n  <title>HuntX | Public Construction Opportunity Discovery</title>\n  <style>\n    :root{--bg:#090a0d;--panel:#121419;--panel2:#181b21;--line:#2c3139;--text:#edf0f1;--muted:#9299a3;--gold:#f0b800;--green:#61dfa0;--blue:#66d4ff;--red:#ff756e;--purple:#a78bfa}\n    *{box-sizing:border-box}html,body{margin:0;min-height:100%;background:var(--bg);color:var(--text);font-family:"Avenir Next","Helvetica Neue",sans-serif}\n    body:before{content:"";position:fixed;inset:0;pointer-events:none;background:radial-gradient(circle at 85% 15%,rgba(102,212,255,.12),transparent 28rem),linear-gradient(rgba(255,255,255,.015) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.015) 1px,transparent 1px);background-size:auto,30px 30px,30px 30px}\n    .shell{position:relative;max-width:1500px;margin:auto;padding:20px clamp(16px,3vw,40px) 60px}\n    header{display:flex;align-items:center;justify-content:space-between;gap:15px;margin-bottom:24px}\n    .brand{display:flex;align-items:center;gap:12px;color:var(--text);text-decoration:none}\n    .mark{width:42px;height:42px;display:grid;place-items:center;background:var(--blue);color:var(--bg);font-weight:900}\n    .brand b{display:block;letter-spacing:.16em}\n    .brand small{display:block;color:var(--muted);font:700 9px/1.5 ui-monospace,monospace;letter-spacing:.11em}\n    .nav{display:flex;gap:8px;flex-wrap:wrap}\n    .nav a,.button{border:1px solid var(--line);border-radius:99px;padding:9px 14px;color:var(--text);text-decoration:none;background:transparent;font:750 10px/1 ui-monospace,monospace;letter-spacing:.06em;cursor:pointer;transition:all .2s}\n    .nav a:hover,.button:hover{border-color:var(--blue);color:var(--blue);box-shadow:0 0 15px rgba(102,212,255,.2)}\n    .button.primary{background:var(--blue);border-color:var(--blue);color:var(--bg);font-weight:900}\n    .button:disabled{opacity:.5;cursor:not-allowed}\n    .titlebar{display:flex;justify-content:space-between;align-items:end;gap:25px;margin:35px 0 25px}\n    .eyebrow{color:var(--blue);font:800 11px/1 ui-monospace,monospace;letter-spacing:.18em;text-transform:uppercase}\n    .titlebar h1{font-size:clamp(34px,4.5vw,64px);letter-spacing:-.05em;line-height:1.02;margin:12px 0}\n    .titlebar p{max-width:680px;color:var(--muted);line-height:1.6;margin:0;font-size:16px}\n    .pill{border:1px solid rgba(102,212,255,.4);color:var(--blue);border-radius:99px;padding:10px 15px;font:800 10px/1 ui-monospace,monospace;letter-spacing:.1em;background:rgba(102,212,255,.1)}\n    .filter-bar{display:flex;gap:15px;margin-bottom:24px;flex-wrap:wrap;background:#0e1117;padding:18px 24px;border:1px solid var(--line);border-radius:16px;align-items:center}\n    .search-input{flex:1;min-width:280px;background:#161920;border:1px solid var(--line);border-radius:10px;padding:12px 18px;color:#fff;font-size:15px}\n    .search-input:focus{outline:none;border-color:var(--blue)}\n    select{background:#161920;border:1px solid var(--line);border-radius:10px;padding:12px 18px;color:#fff;font-size:14px;cursor:pointer}\n    .metrics-row{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:28px}\n    .metric-card{background:rgba(18,20,25,.9);border:1px solid var(--line);border-radius:14px;padding:20px}\n    .metric-card span{color:var(--muted);font:700 10px/1 ui-monospace,monospace;letter-spacing:.1em;text-transform:uppercase;display:block}\n    .metric-card strong{font-size:32px;font-weight:900;color:var(--text);margin-top:8px;display:block}\n    .table-card{background:rgba(18,20,25,.94);border:1px solid var(--line);border-radius:18px;overflow:hidden;box-shadow:0 25px 70px rgba(0,0,0,.25);overflow-x:auto}\n    table{width:100%;border-collapse:collapse;font-size:13px}\n    th{text-align:left;color:var(--muted);font:750 10px/1 ui-monospace,monospace;letter-spacing:.1em;padding:16px 20px;background:#0d0f14;border-bottom:2px solid var(--line)}\n    td{padding:14px 20px;border-bottom:1px solid #1f232b;vertical-align:middle}\n    tr:hover td{background:rgba(102,212,255,.04)}\n    .status-badge{font:800 9px ui-monospace,monospace;padding:5px 10px;border-radius:99px;display:inline-block;letter-spacing:.08em;background:rgba(102,212,255,.15);color:var(--blue);border:1px solid rgba(102,212,255,.35)}\n    .val-cell{font-weight:800;color:var(--blue);font-size:14px}\n    .note-card{color:var(--muted);font-size:14px;line-height:1.6}\n    .note-card code{background:#161920;padding:2px 6px;border-radius:4px;color:var(--blue);font-size:13px}\n    @media(max-width:900px){.metrics-row{grid-template-columns:repeat(2,1fr)}.titlebar{flex-direction:column;align-items:flex-start}}\n  </style>\n</head>\n<body>\n  <div class="shell">\n    <header>\n      <a class="brand" href="/"><span class="mark">HX</span><span><b>HUNTX</b><small>OPPORTUNITY DISCOVERY</small></span></a>\n      <nav class="nav">' + renderNav("huntx") + `</nav>
-    </header>
-    <div class="titlebar">
-      <div>
-        <div class="eyebrow">OPPORTUNITY DISCOVERY</div>
-        <h1>HuntX</h1>
-        <p>Pulls live public construction leads directly from state open-data APIs - Texas DOT
-        construction lettings and California school-facility funding releases today, more
-        sources added over time. Every row traces back to its real public source.</p>
-      </div>
-      <a class="button primary" id="signin-btn" href="/login?redirect=/huntx" style="display:none">SIGN IN TO VIEW OPPORTUNITIES</a>
-    </div>
-
-    <div id="app" style="display:none">
-      <div class="filter-bar">
-        <input id="hx-search" class="search-input" type="text" placeholder="Search title, agency, or location...">
-        <select id="hx-source">
-          <option value="">All sources</option>
-          <option value="txdot">Texas DOT (highway/bridge)</option>
-          <option value="ca_opsc">CA school construction funding</option>
-        </select>
-        <button id="hx-refresh-btn" class="button primary">REFRESH FROM SOURCES</button>
-        <span id="hx-status" style="color:var(--muted);font-size:12px"></span>
-      </div>
-      <div class="metrics-row">
-        <div class="metric-card"><span>OPPORTUNITIES LISTED</span><strong id="hx-count">0</strong></div>
-        <div class="metric-card"><span>LAST REFRESHED</span><strong id="hx-last-fetch" style="font-size:16px">Never</strong></div>
-        <div class="metric-card"><span>LIVE SOURCES</span><strong style="font-size:16px">2</strong></div>
-      </div>
-      <div class="table-card">
-        <table>
-          <thead><tr><th>OPPORTUNITY</th><th>AGENCY</th><th>LOCATION</th><th>KEY DATE</th><th>EST. VALUE</th><th>SOURCE</th></tr></thead>
-          <tbody id="hx-body"><tr><td colspan="6" style="color:var(--muted)">Loading...</td></tr></tbody>
-        </table>
-      </div>
-    </div>
-
-    <div class="card note-card" id="guest-note" style="background:rgba(18,20,25,.9);border:1px solid var(--line);border-radius:18px;padding:22px">
-      HuntX is available standalone at $799/mo or as part of the SubConP suite. See
-      <code>/pricing</code> for licensing, or sign in above if you already have access.
-    </div>
-  </div>
-  <script src="/assets/authfor-integration-standard.js"></script>
-  <script>
-    const auth = new AuthForStandard({ clientId: 'af_weyland_login', ventureName: 'weylandai.com' });
-    function authHeaders(json) {
-      const t = auth.getToken();
-      const h = t ? { 'Authorization': 'Bearer ' + t } : {};
-      if (json) h['Content-Type'] = 'application/json';
-      return h;
-    }
-    function esc(s) { return String(s == null ? '' : s).replace(/[<>&]/g, c => ({'<':'&lt;','>':'&gt;','&':'&amp;'}[c])); }
-    const SOURCE_LABEL = { txdot: 'TXDOT', ca_opsc: 'CA OPSC' };
-    function fmtMoney(v) { return v ? '$' + Number(v).toLocaleString(undefined, {maximumFractionDigits:0}) : '\u2014'; }
-    function fmtDate(v) { if (!v) return '\u2014'; try { return new Date(v).toLocaleDateString(); } catch(e) { return v; } }
-
-    async function loadOpportunities() {
-      const body = document.getElementById('hx-body');
-      const q = document.getElementById('hx-search').value.trim();
-      const source = document.getElementById('hx-source').value;
-      const params = new URLSearchParams();
-      if (q) params.set('q', q);
-      if (source) params.set('source', source);
-      const res = await fetch('/api/hunt/opportunities?' + params.toString(), { headers: authHeaders() });
-      if (!res.ok) { body.innerHTML = '<tr><td colspan="6" style="color:var(--muted)">Failed to load.</td></tr>'; return; }
-      const data = await res.json();
-      const rows = data.opportunities || [];
-      document.getElementById('hx-count').textContent = rows.length;
-      document.getElementById('hx-last-fetch').textContent = data.lastFetchedAt ? new Date(data.lastFetchedAt).toLocaleString() : 'Never - click Refresh';
-      body.innerHTML = rows.length ? rows.map(r => \`<tr>
-          <td>\${r.detail_url ? \`<a href="\${esc(r.detail_url)}" target="_blank" style="color:var(--text);text-decoration:none">\${esc(r.title)}</a>\` : esc(r.title)}</td>
-          <td>\${esc(r.agency)}</td>
-          <td>\${esc(r.location)}</td>
-          <td>\${fmtDate(r.key_date)}</td>
-          <td class="val-cell">\${fmtMoney(r.estimated_value)}</td>
-          <td><span class="status-badge">\${SOURCE_LABEL[r.source] || esc(r.source)}</span></td>
-        </tr>\`).join('') : '<tr><td colspan="6" style="color:var(--muted)">No opportunities yet - click REFRESH FROM SOURCES.</td></tr>';
-    }
-
-    document.getElementById('hx-refresh-btn').addEventListener('click', async () => {
-      const btn = document.getElementById('hx-refresh-btn');
-      const status = document.getElementById('hx-status');
-      btn.disabled = true;
-      status.textContent = 'Pulling from live public sources...';
-      try {
-        const res = await fetch('/api/hunt/refresh', { method: 'POST', headers: authHeaders(true) });
-        const data = await res.json();
-        if (!res.ok) { status.textContent = 'Error: ' + (data.error || 'refresh failed'); btn.disabled = false; return; }
-        status.textContent = data.upserted + ' opportunities updated.';
-        await loadOpportunities();
-      } catch (e) {
-        status.textContent = 'Error: ' + e.message;
-      }
-      btn.disabled = false;
-    });
-    document.getElementById('hx-search').addEventListener('input', () => { clearTimeout(window._hxT); window._hxT = setTimeout(loadOpportunities, 300); });
-    document.getElementById('hx-source').addEventListener('change', loadOpportunities);
-
-    (async () => {
-      try {
-        const probe = await fetch('/api/hunt/opportunities', { headers: authHeaders() });
-        if (probe.status === 401 || probe.status === 403) {
-          document.getElementById('signin-btn').style.display = 'inline-block';
-          return;
-        }
-        if (probe.status === 402) {
-          document.getElementById('guest-note').innerHTML = 'You\\'re signed in, but your plan doesn\\'t include HuntX yet. See <code>/pricing</code> to add it.';
-          return;
-        }
-        document.getElementById('app').style.display = 'block';
-        document.getElementById('guest-note').style.display = 'none';
-        loadOpportunities();
-      } catch (e) {
-        document.getElementById('signin-btn').style.display = 'inline-block';
-      }
-    })();
-  </script>
-</body>
-</html>
-`, { headers: { "Content-Type": "text/html; charset=UTF-8", "Cache-Control": "public, max-age=60" } });
-  }
-  function serve_takeoffx() {
-    return new Response('<!doctype html>\n<html lang="en">\n<head>\n  <meta charset="utf-8">\n  <meta name="viewport" content="width=device-width,initial-scale=1">\n  <meta name="theme-color" content="#090a0d">\n  <title>TakeoffX | Machine-Vision Vector Blueprint Quantification</title>\n  <style>\n    :root{--bg:#090a0d;--panel:#121419;--panel2:#181b21;--line:#2c3139;--text:#edf0f1;--muted:#9299a3;--gold:#f0b800;--green:#61dfa0;--blue:#66d4ff;--red:#ff756e;--purple:#a78bfa}\n    *{box-sizing:border-box}html,body{margin:0;min-height:100%;background:var(--bg);color:var(--text);font-family:"Avenir Next","Helvetica Neue",sans-serif}\n    body:before{content:"";position:fixed;inset:0;pointer-events:none;background:radial-gradient(circle at 50% 20%,rgba(97,223,160,.12),transparent 28rem),linear-gradient(rgba(255,255,255,.015) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.015) 1px,transparent 1px);background-size:auto,30px 30px,30px 30px}\n    .shell{position:relative;max-width:1500px;margin:auto;padding:20px clamp(16px,3vw,40px) 60px}\n    header{display:flex;align-items:center;justify-content:space-between;gap:15px;margin-bottom:24px}\n    .brand{display:flex;align-items:center;gap:12px;color:var(--text);text-decoration:none}\n    .mark{width:42px;height:42px;display:grid;place-items:center;background:var(--green);color:var(--bg);font-weight:900}\n    .brand b{display:block;letter-spacing:.16em}\n    .brand small{display:block;color:var(--muted);font:700 9px/1.5 ui-monospace,monospace;letter-spacing:.11em}\n    .nav{display:flex;gap:8px;flex-wrap:wrap}\n    .nav a,.button{border:1px solid var(--line);border-radius:99px;padding:9px 14px;color:var(--text);text-decoration:none;background:transparent;font:750 10px/1 ui-monospace,monospace;letter-spacing:.06em;cursor:pointer;transition:all .2s}\n    .nav a:hover,.button:hover{border-color:var(--green);color:var(--green);box-shadow:0 0 15px rgba(97,223,160,.2)}\n    .button.primary{background:var(--green);border-color:var(--green);color:var(--bg);font-weight:900}\n    .titlebar{display:flex;justify-content:space-between;align-items:end;gap:25px;margin:35px 0 25px}\n    .eyebrow{color:var(--green);font:800 11px/1 ui-monospace,monospace;letter-spacing:.18em;text-transform:uppercase}\n    .titlebar h1{font-size:clamp(34px,4.5vw,64px);letter-spacing:-.05em;line-height:1.02;margin:12px 0}\n    .titlebar p{max-width:680px;color:var(--muted);line-height:1.6;margin:0;font-size:16px}\n    .pill{border:1px solid rgba(97,223,160,.4);color:var(--green);border-radius:99px;padding:10px 15px;font:800 10px/1 ui-monospace,monospace;letter-spacing:.1em;background:rgba(97,223,160,.1)}\n    \n    .workspace-grid{display:grid;grid-template-columns:minmax(380px,1.2fr) minmax(320px,.8fr);gap:22px;margin-top:28px}\n    .canvas-card{background:#0b0d12;border:1px solid var(--line);border-radius:18px;padding:22px;box-shadow:0 25px 70px rgba(0,0,0,.3);display:flex;flex-direction:column}\n    .canvas-header{display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid var(--line);padding-bottom:14px;margin-bottom:18px}\n    .canvas-viewport{background:linear-gradient(145deg,#11151d,#0a0c10);border:1px solid #1f2531;border-radius:12px;min-height:480px;position:relative;overflow:hidden;display:flex;align-items:center;justify-content:center;flex:1}\n    \n    .blueprint-grid{position:absolute;inset:0;background-size:40px 40px;background-image:linear-gradient(to right,rgba(97,223,160,.05) 1px,transparent 1px),linear-gradient(to bottom,rgba(97,223,160,.05) 1px,transparent 1px);pointer-events:none}\n    .vector-overlay{z-index:2;width:90%;height:85%;border:2px dashed rgba(97,223,160,.35);border-radius:8px;padding:20px;position:relative;display:grid;grid-template-columns:1fr 1fr;gap:20px}\n    .zone-box{background:rgba(97,223,160,.07);border:1px solid rgba(97,223,160,.3);border-radius:8px;padding:16px;position:relative;transition:all .2s;cursor:pointer}\n    .zone-box:hover{background:rgba(97,223,160,.16);box-shadow:0 0 20px rgba(97,223,160,.25)}\n    .zone-tag{font:800 10px ui-monospace,monospace;color:var(--green);position:absolute;top:10px;right:10px;background:#090a0d;padding:4px 8px;border-radius:4px;border:1px solid var(--green)}\n    \n    .ledger-card{background:rgba(18,20,25,.94);border:1px solid var(--line);border-radius:18px;padding:22px;display:flex;flex-direction:column;justify-content:space-between}\n    .ledger-row{display:flex;justify-content:space-between;padding:14px 0;border-bottom:1px solid #1f232b;align-items:center}\n    .ledger-row span{color:var(--muted);font-size:14px}\n    .ledger-row strong{color:#fff;font-size:15px;font-weight:700}\n    \n    @media(max-width:1000px){.workspace-grid{grid-template-columns:1fr}}\n  </style>\n</head>\n<body>\n  <div class="shell">\n    <header>\n      <a class="brand" href="/"><span class="mark">TX</span><span><b>TAKEOFFX</b><small>MACHINE-VISION TAKEOFF</small></span></a>\n      <nav class="nav">' + renderNav("takeoffx") + '</nav>\n    </header>\n    <div class="titlebar">\n      <div>\n        <div class="eyebrow">MACHINE-VISION TAKEOFF</div>\n        <h1>TakeoffX</h1>\n        <p>Reads door schedules and hardware requirements directly from uploaded project\n        drawings, with confidence scoring and a review step before anything is written to your\n        project record - built to be checked, not blindly trusted.</p>\n      </div>\n      <a class="button primary" href="/login?redirect=/">SIGN IN TO START A TAKEOFF</a>\n    </div>\n    <div class="note-card">\n      TakeoffX is part of the SubConP suite. See <code>/pricing</code> for standalone and bundled\n      licensing, or sign in above if you already have access.\n    </div>\n  </div>\n</body>\n</html>', { headers: { "Content-Type": "text/html; charset=UTF-8", "Cache-Control": "public, max-age=60" } });
-  }
-  function serve_subx() {
-    return new Response('<!doctype html>\n<html lang="en">\n<head>\n  <meta charset="utf-8">\n  <meta name="viewport" content="width=device-width,initial-scale=1">\n  <meta name="theme-color" content="#090a0d">\n  <title>SubX | Cut-Sheet Matching &amp; Submittal Package Automation</title>\n  <style>\n    :root{--bg:#090a0d;--panel:#121419;--panel2:#181b21;--line:#2c3139;--text:#edf0f1;--muted:#9299a3;--gold:#f0b800;--green:#61dfa0;--blue:#66d4ff;--red:#ff756e;--purple:#a78bfa}\n    *{box-sizing:border-box}html,body{margin:0;min-height:100%;background:var(--bg);color:var(--text);font-family:"Avenir Next","Helvetica Neue",sans-serif}\n    body:before{content:"";position:fixed;inset:0;pointer-events:none;background:radial-gradient(circle at 20% 20%,rgba(167,139,242,.12),transparent 28rem),linear-gradient(rgba(255,255,255,.015) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.015) 1px,transparent 1px);background-size:auto,30px 30px,30px 30px}\n    .shell{position:relative;max-width:1500px;margin:auto;padding:20px clamp(16px,3vw,40px) 60px}\n    header{display:flex;align-items:center;justify-content:space-between;gap:15px;margin-bottom:24px}\n    .brand{display:flex;align-items:center;gap:12px;color:var(--text);text-decoration:none}\n    .mark{width:42px;height:42px;display:grid;place-items:center;background:var(--purple);color:var(--bg);font-weight:900}\n    .brand b{display:block;letter-spacing:.16em}\n    .brand small{display:block;color:var(--muted);font:700 9px/1.5 ui-monospace,monospace;letter-spacing:.11em}\n    .nav{display:flex;gap:8px;flex-wrap:wrap}\n    .nav a,.button{border:1px solid var(--line);border-radius:99px;padding:9px 14px;color:var(--text);text-decoration:none;background:transparent;font:750 10px/1 ui-monospace,monospace;letter-spacing:.06em;cursor:pointer;transition:all .2s}\n    .nav a:hover,.button:hover{border-color:var(--purple);color:var(--purple);box-shadow:0 0 15px rgba(167,139,242,.2)}\n    .button.primary{background:var(--purple);border-color:var(--purple);color:var(--bg);font-weight:900}\n    .titlebar{display:flex;justify-content:space-between;align-items:end;gap:25px;margin:35px 0 25px}\n    .eyebrow{color:var(--purple);font:800 11px/1 ui-monospace,monospace;letter-spacing:.18em;text-transform:uppercase}\n    .titlebar h1{font-size:clamp(34px,4.5vw,64px);letter-spacing:-.05em;line-height:1.02;margin:12px 0}\n    .titlebar p{max-width:680px;color:var(--muted);line-height:1.6;margin:0;font-size:16px}\n    .pill{border:1px solid rgba(167,139,242,.4);color:var(--purple);border-radius:99px;padding:10px 15px;font:800 10px/1 ui-monospace,monospace;letter-spacing:.1em;background:rgba(167,139,242,.1)}\n    .table-card{background:rgba(18,20,25,.94);border:1px solid var(--line);border-radius:18px;overflow:hidden;box-shadow:0 25px 70px rgba(0,0,0,.25);margin-bottom:24px}\n    table{width:100%;border-collapse:collapse;font-size:14px}\n    th{text-align:left;color:var(--muted);font:750 10px/1 ui-monospace,monospace;letter-spacing:.1em;padding:16px 20px;background:#0d0f14;border-bottom:2px solid var(--line)}\n    td{padding:16px 20px;border-bottom:1px solid #1f232b;vertical-align:middle}\n    tr:hover td{background:rgba(167,139,242,.04)}\n    .status-badge{font:800 9px ui-monospace,monospace;padding:5px 10px;border-radius:99px;display:inline-block;letter-spacing:.08em}\n    .status-matched{background:rgba(97,223,160,.15);color:var(--green);border:1px solid rgba(97,223,160,.35)}\n    .status-pending{background:rgba(240,184,0,.15);color:var(--gold);border:1px solid rgba(240,184,0,.35)}\n    .note-card{background:rgba(18,20,25,.9);border:1px solid var(--line);border-radius:14px;padding:22px;color:var(--muted);font-size:14px;line-height:1.6}\n    .note-card code{background:#161920;padding:2px 6px;border-radius:4px;color:var(--purple);font-size:13px}\n    @media(max-width:900px){.titlebar{flex-direction:column;align-items:flex-start}}\n  </style>\n</head>\n<body>\n  <div class="shell">\n    <header>\n      <a class="brand" href="/"><span class="mark">SX</span><span><b>SUBX</b><small>CUT-SHEET MATCHING & SUBMITTALS</small></span></a>\n      <nav class="nav">' + renderNav("subx") + '</nav>\n    </header>\n    <div class="titlebar">\n      <div>\n        <div class="eyebrow">SUBMITTAL AUTOMATION</div>\n        <h1>SubX</h1>\n        <p>Extracts hardware and submittal requirements straight from project manuals and\n        specifications, matches them against a real manufacturer cut-sheet catalogue, and\n        assembles a complete submittal compliance package for review before it goes out.\n        Every match keeps its source citation attached.</p>\n      </div>\n      <a class="button primary" href="/login?redirect=/">SIGN IN TO START A SUBMITTAL</a>\n    </div>\n    <div class="note-card">\n      SubX is part of the SubConP suite. See <code>/pricing</code> for standalone and bundled\n      licensing, or sign in above if you already have access.\n    </div>\n  </div>\n</body>\n</html>', { headers: { "Content-Type": "text/html; charset=UTF-8", "Cache-Control": "public, max-age=60" } });
-  }
-  function serve_propx() {
-    return new Response('<!doctype html>\n<html lang="en">\n<head>\n  <meta charset="utf-8">\n  <meta name="viewport" content="width=device-width,initial-scale=1">\n  <meta name="theme-color" content="#090a0d">\n  <title>PropX | WeylandAI</title>\n  <style>\n    :root{--bg:#090a0d;--panel:#121419;--panel2:#181b21;--line:#2c3139;--text:#edf0f1;--muted:#9299a3;--gold:#f0b800;--green:#61dfa0;--blue:#66d4ff;--red:#ff756e}*{box-sizing:border-box}html,body{margin:0;min-height:100%;background:var(--bg);color:var(--text);font-family:"Avenir Next","Helvetica Neue",sans-serif}body:before{content:"";position:fixed;inset:0;pointer-events:none;background:radial-gradient(circle at 10% 5%,rgba(240,184,0,.12),transparent 27rem),linear-gradient(rgba(255,255,255,.014) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.014) 1px,transparent 1px);background-size:auto,30px 30px,30px 30px}.shell{position:relative;max-width:1500px;margin:auto;padding:18px clamp(14px,2.5vw,34px) 40px}header{display:flex;align-items:center;justify-content:space-between;gap:15px;margin-bottom:18px}.brand{display:flex;align-items:center;gap:12px;color:var(--text);text-decoration:none}.mark{width:42px;height:42px;display:grid;place-items:center;background:var(--gold);color:var(--bg);font-weight:900}.brand b{display:block;letter-spacing:.16em}.brand small{display:block;color:var(--muted);font:700 9px/1.5 ui-monospace,monospace;letter-spacing:.11em}.nav{display:flex;gap:7px;flex-wrap:wrap}.nav a,.button{border:1px solid var(--line);border-radius:99px;padding:9px 12px;color:var(--text);text-decoration:none;background:transparent;font:750 10px/1 ui-monospace,monospace;letter-spacing:.06em;cursor:pointer}.nav a:hover,.button:hover{border-color:var(--gold);color:var(--gold)}.button.primary{background:var(--gold);border-color:var(--gold);color:var(--bg)}.titlebar{display:flex;justify-content:space-between;align-items:end;gap:25px;margin:28px 0 18px}.eyebrow{color:var(--gold);font:800 10px/1 ui-monospace,monospace;letter-spacing:.17em}.titlebar h1{font-size:clamp(36px,5vw,72px);letter-spacing:-.055em;line-height:.93;margin:11px 0}.titlebar p{max-width:700px;color:var(--muted);line-height:1.6;margin:0}.pill{white-space:nowrap;border:1px solid rgba(97,223,160,.35);color:var(--green);border-radius:99px;padding:10px 13px;font:800 9px/1 ui-monospace,monospace;letter-spacing:.09em}.layout{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(320px,.65fr);gap:18px}.card{background:rgba(18,20,25,.94);border:1px solid var(--line);border-radius:18px;padding:20px;box-shadow:0 25px 70px rgba(0,0,0,.22)}.card-head{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:16px}.card h2{font-size:17px;margin:0}.meta{color:var(--muted);font:700 9px/1 ui-monospace,monospace;letter-spacing:.08em}.proposal-head{padding:22px;border:1px solid var(--line);background:#0d0f12;border-radius:14px;margin-bottom:14px}.proposal-head h2{font-size:30px;margin:5px 0}.proposal-head p{color:var(--muted);margin:4px 0;font-size:13px}.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:14px}.fact{border-top:1px solid var(--line);padding-top:10px}.fact span{display:block;color:var(--muted);font:700 9px/1.4 ui-monospace,monospace}.fact strong{display:block;font-size:13px;margin-top:3px}table{width:100%;border-collapse:collapse;font-size:12px}th{text-align:left;color:var(--muted);font:750 9px/1 ui-monospace,monospace;letter-spacing:.08em;padding:10px 8px;border-bottom:1px solid var(--line)}td{padding:11px 8px;border-bottom:1px solid #20242a;vertical-align:top}td:last-child,th:last-child{text-align:right}.source{display:block;color:var(--blue);font:700 9px/1.4 ui-monospace,monospace;margin-top:4px}.money{width:95px;background:#0b0d10;color:var(--text);border:1px solid var(--line);border-radius:7px;padding:7px;text-align:right}.total{margin-left:auto;width:min(100%,340px);padding-top:15px}.total div{display:flex;justify-content:space-between;padding:7px 0;color:var(--muted);font-size:13px}.total .grand{border-top:1px solid var(--gold);color:var(--text);font-size:20px;font-weight:800}.warning{margin-top:14px;border-left:2px solid var(--gold);padding:10px 13px;color:var(--muted);font-size:12px;line-height:1.55;background:rgba(240,184,0,.04)}.stack{display:grid;gap:10px}.step{border:1px solid var(--line);border-radius:12px;padding:12px;display:grid;grid-template-columns:31px 1fr;gap:10px}.step b{display:grid;place-items:center;width:30px;height:30px;background:rgba(240,184,0,.11);color:var(--gold);border-radius:8px;font:800 10px ui-monospace,monospace}.step strong{font-size:13px}.step small{display:block;color:var(--muted);margin-top:3px}.source-list{display:grid;gap:8px}.source-item{border:1px solid var(--line);border-radius:11px;padding:11px}.source-item strong{font-size:12px}.source-item span{display:block;color:var(--blue);font:700 9px/1.5 ui-monospace,monospace}.source-item p{color:var(--muted);font-size:11px;line-height:1.45;margin:5px 0 0}.actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:16px}.audit{margin-top:15px;padding-top:14px;border-top:1px solid var(--line);color:var(--muted);font:700 9px/1.7 ui-monospace,monospace}.loading{padding:50px;text-align:center;color:var(--muted)}@media(max-width:900px){.layout{grid-template-columns:1fr}.titlebar{align-items:flex-start;flex-direction:column}.grid{grid-template-columns:1fr}.nav a:nth-child(-n+2){display:none}}@media print{body:before,header,.titlebar,.side,.actions,.warning{display:none!important}.shell{padding:0}.layout{display:block}.card{border:0;box-shadow:none;padding:0}.proposal-head{border:0;padding:0}body{background:#fff;color:#111}td,th{border-color:#ddd}.source,.proposal-head p,.fact span{color:#555}.money{border:0;color:#111;background:#fff}.total div{color:#333}}\n  </style>\n</head>\n<body>\n  <div class="shell">\n    <header><a class="brand" href="/"><span class="mark">PX</span><span><b>PROPX</b><small>PROPOSAL INTELLIGENCE</small></span></a><nav class="nav">' + renderNav("propx") + '</nav>\n    </header>\n    <div class="titlebar">\n      <div>\n        <div class="eyebrow">PROPOSAL INTELLIGENCE</div>\n        <h1>PropX</h1>\n        <p>Builds commercial bid and quote packages from live catalogue pricing and material\n        data, with automated markup and margin protection, so a proposal reflects real supplier\n        pricing instead of a stale spreadsheet.</p>\n      </div>\n      <a class="button primary" href="/login?redirect=/">SIGN IN TO START A PROPOSAL</a>\n    </div>\n    <div class="note-card">\n      PropX is part of the SubConP suite. See <code>/pricing</code> for standalone and bundled\n      licensing, or sign in above if you already have access.\n    </div>\n  </div>\n</body>\n</html>', { headers: { "Content-Type": "text/html; charset=UTF-8", "Cache-Control": "public, max-age=60" } });
-  }
-  function serve_whyweyland() {
-    return new Response('<!doctype html>\n<html lang="en">\n<head>\n  <meta charset="utf-8">\n  <meta name="viewport" content="width=device-width,initial-scale=1">\n  <meta name="theme-color" content="#090a0d">\n  <title>Why WeylandAI? | Sovereign Architecture & Competitive Superiority</title>\n  <style>\n    :root{--bg:#090a0d;--panel:#121419;--line:#2c3139;--text:#edf0f1;--muted:#9299a3;--gold:#f0b800;--green:#61dfa0;--blue:#66d4ff;--red:#ff756e}\n    *{box-sizing:border-box}html,body{margin:0;min-height:100%;background:var(--bg);color:var(--text);font-family:"Avenir Next","Helvetica Neue",sans-serif}\n    body:before{content:"";position:fixed;inset:0;pointer-events:none;background:radial-gradient(circle at 30% 30%,rgba(0,242,255,.1),transparent 30rem),linear-gradient(rgba(255,255,255,.015) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.015) 1px,transparent 1px);background-size:auto,30px 30px,30px 30px}\n    .shell{position:relative;max-width:1400px;margin:auto;padding:20px clamp(16px,3vw,40px) 70px}\n    header{display:flex;align-items:center;justify-content:space-between;gap:15px;margin-bottom:24px}\n    .brand{display:flex;align-items:center;gap:12px;color:var(--text);text-decoration:none}\n    .mark{width:42px;height:42px;display:grid;place-items:center;background:var(--blue);color:var(--bg);font-weight:900}\n    .brand b{display:block;letter-spacing:.16em}\n    .brand small{display:block;color:var(--muted);font:700 9px/1.5 ui-monospace,monospace;letter-spacing:.11em}\n    .nav{display:flex;gap:8px;flex-wrap:wrap}\n    .nav a,.button{border:1px solid var(--line);border-radius:99px;padding:9px 14px;color:var(--text);text-decoration:none;background:transparent;font:750 10px/1 ui-monospace,monospace;letter-spacing:.06em;cursor:pointer;transition:all .2s}\n    .nav a:hover,.button:hover{border-color:var(--blue);color:var(--blue)}\n    .button.primary{background:var(--blue);border-color:var(--blue);color:var(--bg);font-weight:900}\n    \n    .titlebar{text-align:center;margin:45px 0 55px}\n    .eyebrow{color:var(--blue);font:800 11px/1 ui-monospace,monospace;letter-spacing:.18em;text-transform:uppercase}\n    .titlebar h1{font-size:clamp(36px,5vw,64px);letter-spacing:-.05em;line-height:1.05;margin:14px 0}\n    .titlebar p{max-width:760px;color:var(--muted);line-height:1.6;margin:0 auto;font-size:18px}\n\n    .matrix-card{background:rgba(18,20,25,.94);border:1px solid var(--line);border-radius:22px;overflow:hidden;box-shadow:0 30px 80px rgba(0,0,0,.35);margin-bottom:50px}\n    table{width:100%;border-collapse:collapse;font-size:15px}\n    th{text-align:left;padding:20px 24px;background:#0e1117;border-bottom:2px solid var(--line);color:var(--muted);font:800 11px/1 ui-monospace,monospace;letter-spacing:.12em}\n    td{padding:22px 24px;border-bottom:1px solid #1e222b;vertical-align:top;line-height:1.5}\n    tr:hover td{background:rgba(255,255,255,.02)}\n    .weyland-col{background:rgba(0,242,255,.05);border-left:1px solid rgba(0,242,255,.2);border-right:1px solid rgba(0,242,255,.2);font-weight:600}\n    \n    .check-yes{color:var(--green);font-weight:900;font-size:18px;margin-right:8px}\n    .check-no{color:var(--red);font-weight:900;font-size:18px;margin-right:8px}\n    .pill-win{background:rgba(97,223,160,.15);color:var(--green);border:1px solid rgba(97,223,160,.35);padding:4px 10px;border-radius:99px;font:800 9px ui-monospace,monospace;display:inline-block;margin-top:6px}\n\n    .cta-banner{background:linear-gradient(135deg,#12161f,#0a0d14);border:2px solid var(--gold);border-radius:20px;padding:40px;text-align:center;box-shadow:0 0 50px rgba(240,184,0,.2)}\n    .cta-banner h2{font-size:36px;margin:0 0 12px;color:#fff}\n    .cta-banner p{color:var(--muted);max-width:620px;margin:0 auto 26px;font-size:16px}\n  </style>\n</head>\n<body>\n  <div class="shell">\n    <header>\n      <a class="brand" href="/"><span class="mark">WW</span><span><b>WEYLANDAI</b><small>COMPETITIVE SUPERIORITY</small></span></a>\n      <nav class="nav">' + renderNav("whyweyland") + '</nav>\n    </header>\n    <div class="titlebar">\n      <div class="eyebrow">WHY WEYLANDAI</div>\n      <h1>One project spine. Five operating engines.</h1>\n      <p>SubConP is the Subcontractor Operating Package: project discovery, submittals, takeoffs, cut sheets, and proposals operating on one shared project record instead of five disconnected tools.</p>\n    </div>\n    <div class="pill">TAKEOFFX VS. TOGAL.AI ($299/MO, MANUAL COUNTING ONLY)</div>\n    <div class="pill">HUNTX VS. DODGE / CONSTRUCTCONNECT ($6K&ndash;$12K/YEAR)</div>\n    <div class="pill">SIGHTX VS. LUMION PRO / BIM 360 ENTERPRISE</div>\n    <p style="margin-top:30px"><a class="button primary" href="/pricing">SEE FULL PRICING</a></p>\n  </div>\n</body>\n</html>\n', { headers: { "Content-Type": "text/html; charset=UTF-8", "Cache-Control": "public, max-age=60" } });
-  }
-  function serve_venturedeck() {
-    return Response.redirect("https://deck.weyland.onamerica.org", 302);
-  }
-  function serve_investors() {
-    return new Response(`<!doctype html>
-<html lang="en">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <meta name="theme-color" content="#090a0d">
-  <title>Investors | WeylandAI</title>
-  <style>
-    :root{--bg:#090a0d;--panel:#121419;--line:#2c3139;--text:#edf0f1;--muted:#9299a3;--gold:#f0b800;--green:#61dfa0;--blue:#66d4ff;--purple:#a78bfa}
-    *{box-sizing:border-box}html,body{margin:0;min-height:100%;background:var(--bg);color:var(--text);font-family:"Avenir Next","Helvetica Neue",sans-serif}
-    body:before{content:"";position:fixed;inset:0;pointer-events:none;background:radial-gradient(circle at 80% 80%,rgba(102,212,255,.12),transparent 30rem),linear-gradient(rgba(255,255,255,.015) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.015) 1px,transparent 1px);background-size:auto,30px 30px,30px 30px}
-    .shell{position:relative;max-width:1000px;margin:auto;padding:20px clamp(16px,3vw,40px) 60px}
-    header{display:flex;align-items:center;justify-content:space-between;gap:15px;margin-bottom:24px}
-    .brand{display:flex;align-items:center;gap:12px;color:var(--text);text-decoration:none}
-    .mark{width:42px;height:42px;display:grid;place-items:center;background:var(--blue);color:var(--bg);font-weight:900}
-    .brand b{display:block;letter-spacing:.16em}
-    .brand small{display:block;color:var(--muted);font:700 9px/1.5 ui-monospace,monospace;letter-spacing:.11em}
-    .nav{display:flex;gap:8px;flex-wrap:wrap}
-    .nav a,.button{border:1px solid var(--line);border-radius:99px;padding:9px 14px;color:var(--text);text-decoration:none;background:transparent;font:750 10px/1 ui-monospace,monospace;letter-spacing:.06em;cursor:pointer;transition:all .2s}
-    .nav a:hover,.button:hover{border-color:var(--blue);color:var(--blue)}
-    .button.primary{background:var(--blue);border-color:var(--blue);color:var(--bg);font-weight:900}
-    .titlebar{text-align:center;margin:45px 0 50px}
-    .eyebrow{color:var(--blue);font:800 11px/1 ui-monospace,monospace;letter-spacing:.18em;text-transform:uppercase}
-    .titlebar h1{font-size:clamp(32px,4.5vw,52px);letter-spacing:-.04em;line-height:1.08;margin:14px 0}
-    .titlebar p{max-width:700px;color:var(--muted);line-height:1.6;margin:0 auto;font-size:16px}
-    section{margin-top:56px}
-    section h2{font-size:22px;margin:0 0 8px}
-    section > p{color:var(--muted);line-height:1.65;font-size:15px;max-width:680px}
-    .stack-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin-top:22px}
-    .stack-card{background:rgba(18,20,25,.92);border:1px solid var(--line);border-radius:14px;padding:18px 20px}
-    .stack-card .sc-name{font-size:16px;font-weight:800}
-    .stack-card .sc-desc{color:var(--muted);font-size:13px;line-height:1.5;margin-top:6px}
-    .stack-card .sc-price{margin-top:10px;font:800 13px ui-monospace,monospace;color:var(--blue)}
-    .fig-row{display:flex;flex-wrap:wrap;gap:24px;margin-top:22px}
-    .fig{border-left:2px solid var(--blue);padding-left:14px}
-    .fig strong{display:block;font-size:26px;font-weight:900}
-    .fig span{color:var(--muted);font:700 11px/1.6 ui-monospace,monospace;letter-spacing:.04em;text-transform:uppercase}
-    .note{margin-top:14px;color:var(--muted);font-size:13px;line-height:1.6;border-left:2px solid var(--line);padding-left:14px}
-  </style>
-</head>
-<body>
-  <div class="shell">
-    <header>
-      <a class="brand" href="/"><span class="mark">IX</span><span><b>WEYLANDAI</b><small>FOR INVESTORS</small></span></a>
-      <nav class="nav">${renderNav("investors")}</nav>
-    </header>
-    <div class="titlebar">
-      <div class="eyebrow">FOR INVESTORS</div>
-      <h1>Construction bids, generated automatically.</h1>
-      <p>WeylandAI is a small, founder-led team building construction document automation: seven live products that take a project from RFP to submitted bid on one shared project record &mdash; HuntX finds the opportunity, SubX and TakeoffX read the drawings, CutsheetX matches real hardware, PropX drafts the proposal, SightX visualizes the result.</p>
-      <p style="margin-top:24px"><a class="button primary" href="mailto:hello@weylandai.com?subject=Investor%20Inquiry">EMAIL HELLO@WEYLANDAI.COM</a></p>
-    </div>
-
-    <section>
-      <h2>What's live today</h2>
-      <p>Every product below has a working page, a real Stripe price, and can be bought standalone or as the $2,000/mo SubConP bundle.</p>
-      <div class="stack-grid">
-        <div class="stack-card"><div class="sc-name">SightX</div><div class="sc-desc">Spatial project intelligence &amp; 3D walkthrough</div><div class="sc-price">$999/mo</div></div>
-        <div class="stack-card"><div class="sc-name">HuntX</div><div class="sc-desc">Live RFP &amp; permit opportunity crawler</div><div class="sc-price">$799/mo</div></div>
-        <div class="stack-card"><div class="sc-name">SubX</div><div class="sc-desc">Submittal &amp; door-hardware extraction</div><div class="sc-price">$599/mo</div></div>
-        <div class="stack-card"><div class="sc-name">TakeoffX</div><div class="sc-desc">Machine-vision quantity takeoff</div><div class="sc-price">$499/mo</div></div>
-        <div class="stack-card"><div class="sc-name">PropX</div><div class="sc-desc">Submittal-to-proposal generator</div><div class="sc-price">$299/mo</div></div>
-        <div class="stack-card"><div class="sc-name">MeetX</div><div class="sc-desc">Live avatars &amp; chat inside SightX</div><div class="sc-price">$299/mo</div></div>
-        <div class="stack-card"><div class="sc-name">CutsheetX</div><div class="sc-desc">Hardware product &amp; cut-sheet matching</div><div class="sc-price">$199/mo</div></div>
-      </div>
-    </section>
-
-    <section>
-      <h2>The technical bet</h2>
-      <p>TakeoffX's extraction runs on the customer's own Claude Code subscription through a downloadable bridge, not our API meter &mdash; no per-page inference cost on our side, and the customer's drawings never leave their machine except as the results they choose to send back. That's a real cost-structure difference from a per-seat SaaS tool billing every API call.</p>
-    </section>
-
-    <section>
-      <h2>Roadmap: reuse, not reinvention</h2>
-      <p>72 products are scoped across the full platform. Of those, 27 are direct extensions of a live product's existing engine &mdash; same document pipeline, one more document type &mdash; grouped into five packages: SubX Pro (8 extensions), SightX Pro (8), HuntX Pro (4), TakeoffX Pro (1), PropX Pro (1). The rest are genuinely new verticals, not yet built.</p>
-      <div class="fig-row">
-        <div class="fig"><strong>5</strong><span>Live core engines</span></div>
-        <div class="fig"><strong>27</strong><span>Scoped near-term extensions</span></div>
-        <div class="fig"><strong>72</strong><span>Full roadmap</span></div>
-      </div>
-    </section>
-
-    <p class="note">Early-stage: this page intentionally doesn't cite revenue, customer counts, or a valuation &mdash; ask directly and we'll give you the real numbers, not rounded ones.</p>
-  </div>
-</body>
-</html>`, { headers: { "Content-Type": "text/html; charset=UTF-8", "Cache-Control": "public, max-age=60" } });
-  }
-  function renderDocFormPage(cfg) {
-    const fieldsHtml = cfg.fields.map((f) => {
-      const label = `<label>${f.label}</label>`;
-      if (f.type === "textarea") return `<div style="grid-column:1/-1"><label>${f.label}</label><textarea id="df-${f.id}" placeholder="${f.placeholder || ""}"></textarea></div>`;
-      if (f.type === "checkbox") return `<div class="checkline"><input id="df-${f.id}" type="checkbox"><label style="margin:0" for="df-${f.id}">${f.label}</label></div>`;
-      return `<div>${label}<input id="df-${f.id}" type="${f.type || "text"}" placeholder="${f.placeholder || ""}"></div>`;
-    }).join("");
-    return new Response(`<!doctype html>
-<html lang="en">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <meta name="theme-color" content="#090a0d">
-  <title>${cfg.title} | ${cfg.subtitle}</title>
-  <style>
-    :root{--bg:#090a0d;--panel:#121419;--panel2:#181b21;--line:#2c3139;--text:#edf0f1;--muted:#9299a3;--gold:#f0b800;--green:#61dfa0;--blue:#66d4ff;--red:#ff756e;--purple:#a78bfa;--accent:var(--${cfg.accent})}
-    *{box-sizing:border-box}html,body{margin:0;min-height:100%;background:var(--bg);color:var(--text);font-family:"Avenir Next","Helvetica Neue",sans-serif}
-    .shell{position:relative;max-width:900px;margin:auto;padding:20px clamp(16px,3vw,40px) 60px}
-    header{display:flex;align-items:center;justify-content:space-between;gap:15px;margin-bottom:24px}
-    .brand{display:flex;align-items:center;gap:12px;color:var(--text);text-decoration:none}
-    .mark{width:42px;height:42px;display:grid;place-items:center;background:var(--accent);color:var(--bg);font-weight:900}
-    .brand b{display:block;letter-spacing:.16em}
-    .brand small{display:block;color:var(--muted);font:700 9px/1.5 ui-monospace,monospace;letter-spacing:.11em}
-    .nav{display:flex;gap:8px;flex-wrap:wrap}
-    .nav a,.button{border:1px solid var(--line);border-radius:99px;padding:9px 14px;color:var(--text);text-decoration:none;background:transparent;font:750 10px/1 ui-monospace,monospace;letter-spacing:.06em;cursor:pointer;transition:all .2s}
-    .nav a:hover,.button:hover{border-color:var(--accent);color:var(--accent)}
-    .button.primary{background:var(--accent);border-color:var(--accent);color:var(--bg);font-weight:900}
-    .button:disabled{opacity:.5;cursor:not-allowed}
-    .titlebar{margin:35px 0 25px}
-    .eyebrow{color:var(--accent);font:800 11px/1 ui-monospace,monospace;letter-spacing:.18em;text-transform:uppercase}
-    .titlebar h1{font-size:clamp(30px,4.5vw,48px);letter-spacing:-.04em;margin:12px 0}
-    .titlebar p{max-width:640px;color:var(--muted);line-height:1.6;margin:0;font-size:15px}
-    .card{background:rgba(18,20,25,.94);border:1px solid var(--line);border-radius:16px;padding:22px;margin-bottom:18px}
-    .form-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px}
-    label{display:block;color:var(--muted);font:750 10px/1 ui-monospace,monospace;letter-spacing:.08em;margin-bottom:8px}
-    input,textarea{width:100%;padding:11px;background:var(--panel2);border:1px solid var(--line);border-radius:8px;color:var(--text);font-size:14px;box-sizing:border-box;font-family:inherit}
-    textarea{min-height:70px;resize:vertical}
-    input:focus,textarea:focus{outline:none;border-color:var(--accent)}
-    .checkline{display:flex;align-items:center;gap:8px;grid-column:1/-1}
-    .checkline input{width:auto}
-    .step-log{margin-top:14px;color:var(--muted);font-size:13px}
-    .step-log .ok{color:var(--green)}
-    .step-log .err{color:var(--red)}
-    .note-card{color:var(--muted);font-size:14px;line-height:1.6}
-    .note-card code{background:#161920;padding:2px 6px;border-radius:4px;color:var(--accent);font-size:13px}
-    .result-row{display:flex;justify-content:space-between;align-items:center;gap:14px;flex-wrap:wrap}
-  </style>
-</head>
-<body>
-  <div class="shell">
-    <header>
-      <a class="brand" href="/"><span class="mark">${cfg.markInitials}</span><span><b>${cfg.productName}</b><small>${cfg.subtitle}</small></span></a>
-      <nav class="nav">${renderNav(cfg.slug)}</nav>
-    </header>
-    <div class="titlebar">
-      <div class="eyebrow">${cfg.subtitle}</div>
-      <h1>${cfg.title}</h1>
-      <p>${cfg.description}</p>
-      <a class="button primary" id="signin-btn" href="/login?redirect=/${cfg.slug}" style="display:none">SIGN IN</a>
-    </div>
-
-    <div id="app" style="display:none">
-      <div class="card">
-        <div class="form-grid">${fieldsHtml}</div>
-        <button id="df-generate-btn" class="button primary" style="height:42px;margin-top:16px">${cfg.buttonLabel || "GENERATE"}</button>
-        <div class="step-log" id="df-log"></div>
-      </div>
-      <div class="card" id="df-result" style="display:none">
-        <div class="result-row">
-          <span>Generated.</span>
-          <a id="df-download" class="button primary" href="#" target="_blank">DOWNLOAD PDF</a>
-        </div>
-      </div>
-    </div>
-
-    <div class="card note-card" id="guest-note">${cfg.priceNote}</div>
-  </div>
-  <script src="/assets/authfor-integration-standard.js"></script>
-  <script>
-    const auth = new AuthForStandard({ clientId: 'af_weyland_login', ventureName: 'weylandai.com' });
-    function authHeaders(json) {
-      const t = auth.getToken();
-      const h = t ? { 'Authorization': 'Bearer ' + t } : {};
-      if (json) h['Content-Type'] = 'application/json';
-      return h;
-    }
-    const FIELD_IDS = ${JSON.stringify(cfg.fields.map((f) => ({ id: f.id, type: f.type || "text" })))};
-    const REQUIRED = ${JSON.stringify(cfg.required || [])};
-    const log = document.getElementById('df-log');
-    function logLine(msg, cls) { const d = document.createElement('div'); if (cls) d.className = cls; d.textContent = msg; log.appendChild(d); }
-
-    document.getElementById('df-generate-btn').addEventListener('click', async () => {
-      const btn = document.getElementById('df-generate-btn');
-      log.innerHTML = '';
-      document.getElementById('df-result').style.display = 'none';
-      const payload = {};
-      FIELD_IDS.forEach(f => {
-        const el = document.getElementById('df-' + f.id);
-        payload[f.id] = f.type === 'checkbox' ? el.checked : el.value.trim();
-      });
-      const missing = REQUIRED.filter(id => !payload[id]);
-      if (missing.length) { logLine('Required: ' + missing.join(', '), 'err'); return; }
-      btn.disabled = true;
-      logLine('Generating...');
-      try {
-        const res = await fetch('${cfg.apiPath}', { method: 'POST', headers: authHeaders(true), body: JSON.stringify(payload) });
-        const data = await res.json();
-        if (!res.ok) { logLine('Error: ' + (data.error && (data.error.message || data.error) || 'generation failed'), 'err'); btn.disabled = false; return; }
-        logLine('Done.', 'ok');
-        document.getElementById('df-download').href = data.downloadUrl;
-        document.getElementById('df-result').style.display = 'block';
-      } catch (e) {
-        logLine('Error: ' + e.message, 'err');
-      }
-      btn.disabled = false;
-    });
-
-    (async () => {
-      try {
-        const probe = await fetch('${cfg.apiPath}', { method: 'POST', headers: authHeaders(true), body: JSON.stringify({}) });
-        if (probe.status === 401 || probe.status === 403) {
-          document.getElementById('signin-btn').style.display = 'inline-block';
-          return;
-        }
-        if (probe.status === 402) {
-          document.getElementById('guest-note').innerHTML = 'You\\'re signed in, but your plan doesn\\'t include ${cfg.title} yet. See <code>/pricing</code> to add it.';
-          return;
-        }
-        document.getElementById('app').style.display = 'block';
-        document.getElementById('guest-note').style.display = 'none';
-      } catch (e) {
-        document.getElementById('signin-btn').style.display = 'inline-block';
-      }
-    })();
-  </script>
-</body>
-</html>`, { headers: { "Content-Type": "text/html; charset=UTF-8", "Cache-Control": "public, max-age=60" } });
-  }
-  function serve_lienx() {
-    return new Response(`<!doctype html>
-<html lang="en">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <meta name="theme-color" content="#090a0d">
-  <title>LienX | Lien Waiver Generator</title>
-  <style>
-    :root{--bg:#090a0d;--panel:#121419;--panel2:#181b21;--line:#2c3139;--text:#edf0f1;--muted:#9299a3;--gold:#f0b800;--green:#61dfa0;--blue:#66d4ff;--red:#ff756e}
-    *{box-sizing:border-box}html,body{margin:0;min-height:100%;background:var(--bg);color:var(--text);font-family:"Avenir Next","Helvetica Neue",sans-serif}
-    .shell{position:relative;max-width:900px;margin:auto;padding:20px clamp(16px,3vw,40px) 60px}
-    header{display:flex;align-items:center;justify-content:space-between;gap:15px;margin-bottom:24px}
-    .brand{display:flex;align-items:center;gap:12px;color:var(--text);text-decoration:none}
-    .mark{width:42px;height:42px;display:grid;place-items:center;background:var(--red);color:var(--bg);font-weight:900}
-    .brand b{display:block;letter-spacing:.16em}
-    .brand small{display:block;color:var(--muted);font:700 9px/1.5 ui-monospace,monospace;letter-spacing:.11em}
-    .nav{display:flex;gap:8px;flex-wrap:wrap}
-    .nav a,.button{border:1px solid var(--line);border-radius:99px;padding:9px 14px;color:var(--text);text-decoration:none;background:transparent;font:750 10px/1 ui-monospace,monospace;letter-spacing:.06em;cursor:pointer;transition:all .2s}
-    .nav a:hover,.button:hover{border-color:var(--red);color:var(--red)}
-    .button.primary{background:var(--red);border-color:var(--red);color:var(--bg);font-weight:900}
-    .button:disabled{opacity:.5;cursor:not-allowed}
-    .titlebar{margin:35px 0 25px}
-    .eyebrow{color:var(--red);font:800 11px/1 ui-monospace,monospace;letter-spacing:.18em;text-transform:uppercase}
-    .titlebar h1{font-size:clamp(30px,4.5vw,48px);letter-spacing:-.04em;margin:12px 0}
-    .titlebar p{max-width:620px;color:var(--muted);line-height:1.6;margin:0;font-size:15px}
-    .card{background:rgba(18,20,25,.94);border:1px solid var(--line);border-radius:16px;padding:22px;margin-bottom:18px}
-    .form-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px}
-    label{display:block;color:var(--muted);font:750 10px/1 ui-monospace,monospace;letter-spacing:.08em;margin-bottom:8px}
-    input,select,textarea{width:100%;padding:11px;background:var(--panel2);border:1px solid var(--line);border-radius:8px;color:var(--text);font-size:14px;box-sizing:border-box;font-family:inherit}
-    textarea{min-height:60px;resize:vertical}
-    input:focus,select:focus,textarea:focus{outline:none;border-color:var(--red)}
-    .step-log{margin-top:14px;color:var(--muted);font-size:13px}
-    .step-log .ok{color:var(--green)}
-    .step-log .err{color:var(--red)}
-    .note-card{color:var(--muted);font-size:14px;line-height:1.6}
-    .note-card code{background:#161920;padding:2px 6px;border-radius:4px;color:var(--red);font-size:13px}
-    .result-row{display:flex;justify-content:space-between;align-items:center;gap:14px;flex-wrap:wrap}
-  </style>
-</head>
-<body>
-  <div class="shell">
-    <header>
-      <a class="brand" href="/"><span class="mark">LX</span><span><b>LIENX</b><small>LIEN WAIVER GENERATOR</small></span></a>
-      <nav class="nav">${renderNav("lienx")}</nav>
-    </header>
-    <div class="titlebar">
-      <div class="eyebrow">LIEN WAIVER GENERATOR</div>
-      <h1>LienX</h1>
-      <p>Generates a general-form lien waiver from real project and payment details. Not a substitute for your state's exact statutory form &mdash; the generated PDF says so.</p>
-      <a class="button primary" id="signin-btn" href="/login?redirect=/lienx" style="display:none">SIGN IN</a>
-    </div>
-
-    <div id="app" style="display:none">
-      <div class="card">
-        <div class="form-grid">
-          <div>
-            <label>WAIVER TYPE</label>
-            <select id="lx-type">
-              <option value="conditional_progress">Conditional &mdash; Progress Payment</option>
-              <option value="unconditional_progress">Unconditional &mdash; Progress Payment</option>
-              <option value="conditional_final">Conditional &mdash; Final Payment</option>
-              <option value="unconditional_final">Unconditional &mdash; Final Payment</option>
-            </select>
-          </div>
-          <div><label>AMOUNT</label><input id="lx-amount" type="number" min="0" step="0.01" placeholder="0.00"></div>
-          <div><label>THROUGH DATE</label><input id="lx-through-date" type="date"></div>
-        </div>
-        <div class="form-grid" style="margin-top:14px">
-          <div><label>CLAIMANT (YOU)</label><input id="lx-claimant-name" type="text" placeholder="Your company name"></div>
-          <div><label>CLAIMANT ADDRESS</label><input id="lx-claimant-address" type="text"></div>
-        </div>
-        <div class="form-grid" style="margin-top:14px">
-          <div><label>OWNER</label><input id="lx-owner-name" type="text" placeholder="Property owner / GC"></div>
-          <div><label>PROJECT NAME</label><input id="lx-project-name" type="text"></div>
-        </div>
-        <div style="margin-top:14px">
-          <label>PROJECT ADDRESS</label>
-          <input id="lx-project-address" type="text" placeholder="Job site address">
-        </div>
-        <div style="margin-top:14px">
-          <label>EXCEPTIONS (OPTIONAL)</label>
-          <textarea id="lx-exceptions" placeholder="Any disputed amounts or items excluded from this waiver"></textarea>
-        </div>
-        <button id="lx-generate-btn" class="button primary" style="height:42px;margin-top:16px">GENERATE WAIVER</button>
-        <div class="step-log" id="lx-log"></div>
-      </div>
-
-      <div class="card" id="lx-result" style="display:none">
-        <div class="result-row">
-          <span>Waiver generated.</span>
-          <a id="lx-download" class="button primary" href="#" target="_blank">DOWNLOAD PDF</a>
-        </div>
-      </div>
-    </div>
-
-    <div class="card note-card" id="guest-note">
-      LienX is available standalone at $99/mo or as part of PropX Pro. See
-      <code>/pricing</code> for licensing, or sign in above if you already have access.
-    </div>
-  </div>
-  <script src="/assets/authfor-integration-standard.js"></script>
-  <script>
-    const auth = new AuthForStandard({ clientId: 'af_weyland_login', ventureName: 'weylandai.com' });
-    function authHeaders(json) {
-      const t = auth.getToken();
-      const h = t ? { 'Authorization': 'Bearer ' + t } : {};
-      if (json) h['Content-Type'] = 'application/json';
-      return h;
-    }
-    const log = document.getElementById('lx-log');
-    function logLine(msg, cls) { const d = document.createElement('div'); if (cls) d.className = cls; d.textContent = msg; log.appendChild(d); }
-
-    document.getElementById('lx-generate-btn').addEventListener('click', async () => {
-      const btn = document.getElementById('lx-generate-btn');
-      log.innerHTML = '';
-      document.getElementById('lx-result').style.display = 'none';
-      const payload = {
-        waiverType: document.getElementById('lx-type').value,
-        amount: Number(document.getElementById('lx-amount').value) || 0,
-        throughDate: document.getElementById('lx-through-date').value,
-        claimantName: document.getElementById('lx-claimant-name').value.trim(),
-        claimantAddress: document.getElementById('lx-claimant-address').value.trim(),
-        ownerName: document.getElementById('lx-owner-name').value.trim(),
-        projectName: document.getElementById('lx-project-name').value.trim(),
-        projectAddress: document.getElementById('lx-project-address').value.trim(),
-        exceptionsText: document.getElementById('lx-exceptions').value.trim()
-      };
-      if (!payload.claimantName || !payload.projectAddress) { logLine('Claimant name and project address are required.', 'err'); return; }
-      btn.disabled = true;
-      logLine('Generating waiver...');
-      try {
-        const res = await fetch('/api/lien-waivers/generate', { method: 'POST', headers: authHeaders(true), body: JSON.stringify(payload) });
-        const data = await res.json();
-        if (!res.ok) { logLine('Error: ' + (data.error && (data.error.message || data.error) || 'generation failed'), 'err'); btn.disabled = false; return; }
-        logLine('Done.', 'ok');
-        document.getElementById('lx-download').href = data.downloadUrl;
-        document.getElementById('lx-result').style.display = 'block';
-      } catch (e) {
-        logLine('Error: ' + e.message, 'err');
-      }
-      btn.disabled = false;
-    });
-
-    (async () => {
-      try {
-        const probe = await fetch('/api/lien-waivers/generate', { method: 'POST', headers: authHeaders(true), body: JSON.stringify({}) });
-        if (probe.status === 401 || probe.status === 403) {
-          document.getElementById('signin-btn').style.display = 'inline-block';
-          return;
-        }
-        if (probe.status === 402) {
-          document.getElementById('guest-note').innerHTML = 'You\\'re signed in, but your plan doesn\\'t include LienX yet. See <code>/pricing</code> to add it.';
-          return;
-        }
-        document.getElementById('app').style.display = 'block';
-        document.getElementById('guest-note').style.display = 'none';
-      } catch (e) {
-        document.getElementById('signin-btn').style.display = 'inline-block';
-      }
-    })();
-  </script>
-</body>
-</html>`, { headers: { "Content-Type": "text/html; charset=UTF-8", "Cache-Control": "public, max-age=60" } });
-  }
-  function serve_bidx() {
-    return new Response(`<!doctype html>
-<html lang="en">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <meta name="theme-color" content="#090a0d">
-  <title>BidX | Bid Package Assembler</title>
-  <style>
-    :root{--bg:#090a0d;--panel:#121419;--panel2:#181b21;--line:#2c3139;--text:#edf0f1;--muted:#9299a3;--gold:#f0b800;--green:#61dfa0;--blue:#66d4ff;--red:#ff756e}
-    *{box-sizing:border-box}html,body{margin:0;min-height:100%;background:var(--bg);color:var(--text);font-family:"Avenir Next","Helvetica Neue",sans-serif}
-    .shell{position:relative;max-width:1000px;margin:auto;padding:20px clamp(16px,3vw,40px) 60px}
-    header{display:flex;align-items:center;justify-content:space-between;gap:15px;margin-bottom:24px}
-    .brand{display:flex;align-items:center;gap:12px;color:var(--text);text-decoration:none}
-    .mark{width:42px;height:42px;display:grid;place-items:center;background:var(--blue);color:var(--bg);font-weight:900}
-    .brand b{display:block;letter-spacing:.16em}
-    .brand small{display:block;color:var(--muted);font:700 9px/1.5 ui-monospace,monospace;letter-spacing:.11em}
-    .nav{display:flex;gap:8px;flex-wrap:wrap}
-    .nav a,.button{border:1px solid var(--line);border-radius:99px;padding:9px 14px;color:var(--text);text-decoration:none;background:transparent;font:750 10px/1 ui-monospace,monospace;letter-spacing:.06em;cursor:pointer;transition:all .2s}
-    .nav a:hover,.button:hover{border-color:var(--blue);color:var(--blue)}
-    .button.primary{background:var(--blue);border-color:var(--blue);color:var(--bg);font-weight:900}
-    .button:disabled{opacity:.5;cursor:not-allowed}
-    .titlebar{margin:35px 0 25px}
-    .eyebrow{color:var(--blue);font:800 11px/1 ui-monospace,monospace;letter-spacing:.18em;text-transform:uppercase}
-    .titlebar h1{font-size:clamp(30px,4.5vw,48px);letter-spacing:-.04em;margin:12px 0}
-    .titlebar p{max-width:660px;color:var(--muted);line-height:1.6;margin:0;font-size:15px}
-    .card{background:rgba(18,20,25,.94);border:1px solid var(--line);border-radius:16px;padding:22px;margin-bottom:18px}
-    .section-label{color:var(--blue);font:800 10px/1 ui-monospace,monospace;letter-spacing:.1em;text-transform:uppercase;margin-bottom:14px;display:block}
-    .form-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px}
-    label{display:block;color:var(--muted);font:750 10px/1 ui-monospace,monospace;letter-spacing:.08em;margin-bottom:8px}
-    input,select,textarea{width:100%;padding:11px;background:var(--panel2);border:1px solid var(--line);border-radius:8px;color:var(--text);font-size:14px;box-sizing:border-box;font-family:inherit}
-    textarea{min-height:60px;resize:vertical}
-    input:focus,select:focus,textarea:focus{outline:none;border-color:var(--blue)}
-    .checkline{display:flex;align-items:center;gap:8px;margin-top:6px}
-    .checkline input{width:auto}
-    table{width:100%;border-collapse:collapse;font-size:13px;margin-top:6px}
-    th{text-align:left;color:var(--muted);font:750 9px/1 ui-monospace,monospace;letter-spacing:.08em;padding:8px 6px;border-bottom:1px solid var(--line)}
-    td{padding:6px;border-bottom:1px solid #20242a}
-    .li-remove{background:none;border:1px solid var(--line);color:var(--red);border-radius:6px;width:28px;height:28px;cursor:pointer}
-    .totals-preview{display:flex;justify-content:flex-end;gap:22px;margin-top:14px;font-size:13px;color:var(--muted)}
-    .totals-preview b{color:var(--text);font-size:15px}
-    .step-log{margin-top:14px;color:var(--muted);font-size:13px}
-    .step-log .ok{color:var(--green)}
-    .step-log .err{color:var(--red)}
-    .note-card{color:var(--muted);font-size:14px;line-height:1.6}
-    .note-card code{background:#161920;padding:2px 6px;border-radius:4px;color:var(--blue);font-size:13px}
-    .result-row{display:flex;justify-content:space-between;align-items:center;gap:14px;flex-wrap:wrap}
-    .quote-total{font-size:20px;font-weight:900;color:var(--green)}
-  </style>
-</head>
-<body>
-  <div class="shell">
-    <header>
-      <a class="brand" href="/"><span class="mark">BX</span><span><b>BIDX</b><small>BID PACKAGE ASSEMBLER</small></span></a>
-      <nav class="nav">${renderNav("bidx")}</nav>
-    </header>
-    <div class="titlebar">
-      <div class="eyebrow">BID PACKAGE ASSEMBLER</div>
-      <h1>BidX</h1>
-      <p>Assembles a priced bid package &mdash; scope, bid bond, addenda acknowledgment, and terms &mdash; into a signature-ready PDF. Works with or without a SubX submittal behind it.</p>
-      <a class="button primary" id="signin-btn" href="/login?redirect=/bidx" style="display:none">SIGN IN</a>
-    </div>
-
-    <div id="app" style="display:none">
-      <div class="card">
-        <span class="section-label">PROJECT &amp; OWNER</span>
-        <div class="form-grid">
-          <div><label>OWNER / AWARDING AUTHORITY</label><input id="bx-owner" type="text"></div>
-          <div><label>PROJECT NAME</label><input id="bx-project-name" type="text"></div>
-          <div><label>BID DUE DATE</label><input id="bx-bid-due" type="date"></div>
-        </div>
-        <div style="margin-top:14px"><label>PROJECT ADDRESS</label><input id="bx-project-address" type="text"></div>
-      </div>
-
-      <div class="card">
-        <span class="section-label">PRICED SCOPE</span>
-        <table id="bx-li-table">
-          <thead><tr><th>Description</th><th>Qty</th><th>Unit Price</th><th>Amount</th><th></th></tr></thead>
-          <tbody id="bx-li-body"></tbody>
-        </table>
-        <button id="bx-li-add" class="button" type="button" style="margin-top:10px">+ ADD LINE</button>
-        <div class="totals-preview"><div>SUBTOTAL <b id="bx-subtotal-preview">$0.00</b></div></div>
-      </div>
-
-      <div class="card">
-        <span class="section-label">BID REQUIREMENTS &amp; TERMS</span>
-        <div class="form-grid">
-          <div><label>TAX RATE (%)</label><input id="bx-tax-rate" type="number" value="0" min="0" step="0.01"></div>
-          <div><label>BID BOND %</label><input id="bx-bond-percent" type="number" min="0" step="0.1" placeholder="e.g. 10"></div>
-          <div><label>ADDENDA ACKNOWLEDGED</label><input id="bx-addenda" type="text" placeholder="e.g. Addendum 1, 2"></div>
-        </div>
-        <div class="checkline"><input id="bx-bond-required" type="checkbox"><label style="margin:0" for="bx-bond-required">Bid bond required by this solicitation</label></div>
-        <div style="margin-top:14px"><label>EXCLUSIONS / TERMS (OPTIONAL)</label><textarea id="bx-exclusions"></textarea></div>
-        <button id="bx-generate-btn" class="button primary" style="height:42px;margin-top:16px">GENERATE BID PACKAGE</button>
-        <div class="step-log" id="bx-log"></div>
-      </div>
-
-      <div class="card" id="bx-result" style="display:none">
-        <div class="result-row">
-          <div id="bx-summary"></div>
-          <a id="bx-download" class="button primary" href="#" target="_blank">DOWNLOAD PDF</a>
-        </div>
-      </div>
-    </div>
-
-    <div class="card note-card" id="guest-note">
-      BidX is available standalone at $249/mo or as part of PropX Pro. See
-      <code>/pricing</code> for licensing, or sign in above if you already have access.
-    </div>
-  </div>
-  <script src="/assets/authfor-integration-standard.js"></script>
-  <script>
-    const auth = new AuthForStandard({ clientId: 'af_weyland_login', ventureName: 'weylandai.com' });
-    function authHeaders(json) {
-      const t = auth.getToken();
-      const h = t ? { 'Authorization': 'Bearer ' + t } : {};
-      if (json) h['Content-Type'] = 'application/json';
-      return h;
-    }
-    function esc(s) { return String(s == null ? '' : s).replace(/[<>&]/g, c => ({'<':'&lt;','>':'&gt;','&':'&amp;'}[c])); }
-    const log = document.getElementById('bx-log');
-    function logLine(msg, cls) { const d = document.createElement('div'); if (cls) d.className = cls; d.textContent = msg; log.appendChild(d); }
-
-    function addLiRow() {
-      const tbody = document.getElementById('bx-li-body');
-      const tr = document.createElement('tr');
-      tr.innerHTML = \`
-        <td><input class="li-desc" type="text"></td>
-        <td><input class="li-qty" type="number" min="0" value="1" style="width:64px"></td>
-        <td><input class="li-price" type="number" min="0" step="0.01" value="0" style="width:90px"></td>
-        <td class="li-amount">$0.00</td>
-        <td><button class="li-remove" type="button">&times;</button></td>\`;
-      tbody.appendChild(tr);
-      tr.querySelector('.li-remove').addEventListener('click', () => { tr.remove(); recalcTotals(); });
-      tr.querySelectorAll('.li-qty, .li-price').forEach(inp => inp.addEventListener('input', recalcTotals));
-      recalcTotals();
-    }
-    function recalcTotals() {
-      let subtotal = 0;
-      document.querySelectorAll('#bx-li-body tr').forEach(tr => {
-        const qty = Number(tr.querySelector('.li-qty').value) || 0;
-        const price = Number(tr.querySelector('.li-price').value) || 0;
-        const amount = qty * price;
-        tr.querySelector('.li-amount').textContent = '$' + amount.toLocaleString(undefined, {minimumFractionDigits:2, maximumFractionDigits:2});
-        subtotal += amount;
-      });
-      document.getElementById('bx-subtotal-preview').textContent = '$' + subtotal.toLocaleString(undefined, {minimumFractionDigits:2, maximumFractionDigits:2});
-    }
-    document.getElementById('bx-li-add').addEventListener('click', addLiRow);
-
-    document.getElementById('bx-generate-btn').addEventListener('click', async () => {
-      const btn = document.getElementById('bx-generate-btn');
-      log.innerHTML = '';
-      document.getElementById('bx-result').style.display = 'none';
-      const lineItems = Array.from(document.querySelectorAll('#bx-li-body tr')).map(tr => ({
-        description: tr.querySelector('.li-desc').value,
-        quantity: Number(tr.querySelector('.li-qty').value) || 0,
-        unitPrice: Number(tr.querySelector('.li-price').value) || 0
-      }));
-      const payload = {
-        ownerName: document.getElementById('bx-owner').value.trim(),
-        projectName: document.getElementById('bx-project-name').value.trim(),
-        projectAddress: document.getElementById('bx-project-address').value.trim(),
-        bidDueDate: document.getElementById('bx-bid-due').value,
-        taxRate: (Number(document.getElementById('bx-tax-rate').value) || 0) / 100,
-        bidBondRequired: document.getElementById('bx-bond-required').checked,
-        bidBondPercent: Number(document.getElementById('bx-bond-percent').value) || 0,
-        addendaAcknowledged: document.getElementById('bx-addenda').value.trim(),
-        exclusionsText: document.getElementById('bx-exclusions').value.trim(),
-        lineItems
-      };
-      if (!payload.projectName || !payload.projectAddress) { logLine('Project name and address are required.', 'err'); return; }
-      btn.disabled = true;
-      logLine('Assembling bid package...');
-      try {
-        const res = await fetch('/api/bid-packages/generate', { method: 'POST', headers: authHeaders(true), body: JSON.stringify(payload) });
-        const data = await res.json();
-        if (!res.ok) { logLine('Error: ' + (data.error && (data.error.message || data.error) || 'generation failed'), 'err'); btn.disabled = false; return; }
-        logLine('Done.', 'ok');
-        document.getElementById('bx-summary').innerHTML = \`<span class="quote-total">$\${Number(data.grandTotal||0).toLocaleString(undefined,{minimumFractionDigits:2,maximumFractionDigits:2})}</span> total bid\`;
-        document.getElementById('bx-download').href = data.downloadUrl;
-        document.getElementById('bx-result').style.display = 'block';
-      } catch (e) {
-        logLine('Error: ' + e.message, 'err');
-      }
-      btn.disabled = false;
-    });
-
-    (async () => {
-      try {
-        const probe = await fetch('/api/bid-packages/generate', { method: 'POST', headers: authHeaders(true), body: JSON.stringify({}) });
-        if (probe.status === 401 || probe.status === 403) {
-          document.getElementById('signin-btn').style.display = 'inline-block';
-          return;
-        }
-        if (probe.status === 402) {
-          document.getElementById('guest-note').innerHTML = 'You\\'re signed in, but your plan doesn\\'t include BidX yet. See <code>/pricing</code> to add it.';
-          return;
-        }
-        document.getElementById('app').style.display = 'block';
-        document.getElementById('guest-note').style.display = 'none';
-        addLiRow();
-      } catch (e) {
-        document.getElementById('signin-btn').style.display = 'inline-block';
-      }
-    })();
-  </script>
-</body>
-</html>`, { headers: { "Content-Type": "text/html; charset=UTF-8", "Cache-Control": "public, max-age=60" } });
-  }
-  function serve_coa() {
-    return new Response(`<!doctype html>
-<html lang="en">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <meta name="theme-color" content="#090a0d">
-  <title>CoA | Certificate of Occupancy Application Package</title>
-  <style>
-    :root{--bg:#090a0d;--panel:#121419;--panel2:#181b21;--line:#2c3139;--text:#edf0f1;--muted:#9299a3;--gold:#f0b800;--green:#61dfa0;--blue:#66d4ff;--red:#ff756e}
-    *{box-sizing:border-box}html,body{margin:0;min-height:100%;background:var(--bg);color:var(--text);font-family:"Avenir Next","Helvetica Neue",sans-serif}
-    .shell{position:relative;max-width:900px;margin:auto;padding:20px clamp(16px,3vw,40px) 60px}
-    header{display:flex;align-items:center;justify-content:space-between;gap:15px;margin-bottom:24px}
-    .brand{display:flex;align-items:center;gap:12px;color:var(--text);text-decoration:none}
-    .mark{width:42px;height:42px;display:grid;place-items:center;background:var(--green);color:var(--bg);font-weight:900}
-    .brand b{display:block;letter-spacing:.16em}
-    .brand small{display:block;color:var(--muted);font:700 9px/1.5 ui-monospace,monospace;letter-spacing:.11em}
-    .nav{display:flex;gap:8px;flex-wrap:wrap}
-    .nav a,.button{border:1px solid var(--line);border-radius:99px;padding:9px 14px;color:var(--text);text-decoration:none;background:transparent;font:750 10px/1 ui-monospace,monospace;letter-spacing:.06em;cursor:pointer;transition:all .2s}
-    .nav a:hover,.button:hover{border-color:var(--green);color:var(--green)}
-    .button.primary{background:var(--green);border-color:var(--green);color:var(--bg);font-weight:900}
-    .button:disabled{opacity:.5;cursor:not-allowed}
-    .titlebar{margin:35px 0 25px}
-    .eyebrow{color:var(--green);font:800 11px/1 ui-monospace,monospace;letter-spacing:.18em;text-transform:uppercase}
-    .titlebar h1{font-size:clamp(28px,4.5vw,44px);letter-spacing:-.04em;margin:12px 0}
-    .titlebar p{max-width:640px;color:var(--muted);line-height:1.6;margin:0;font-size:15px}
-    .titlebar .caveat{margin-top:10px;color:var(--gold);font-size:12.5px}
-    .card{background:rgba(18,20,25,.94);border:1px solid var(--line);border-radius:16px;padding:22px;margin-bottom:18px}
-    .form-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px}
-    label{display:block;color:var(--muted);font:750 10px/1 ui-monospace,monospace;letter-spacing:.08em;margin-bottom:8px}
-    input,textarea{width:100%;padding:11px;background:var(--panel2);border:1px solid var(--line);border-radius:8px;color:var(--text);font-size:14px;box-sizing:border-box;font-family:inherit}
-    textarea{min-height:60px;resize:vertical}
-    input:focus,textarea:focus{outline:none;border-color:var(--green)}
-    .checklist{margin-top:10px;display:flex;flex-direction:column;gap:8px}
-    .checkline{display:flex;align-items:center;gap:8px;font-size:13px}
-    .checkline input{width:auto}
-    .step-log{margin-top:14px;color:var(--muted);font-size:13px}
-    .step-log .ok{color:var(--green)}
-    .step-log .err{color:var(--red)}
-    .note-card{color:var(--muted);font-size:14px;line-height:1.6}
-    .note-card code{background:#161920;padding:2px 6px;border-radius:4px;color:var(--green);font-size:13px}
-    .result-row{display:flex;justify-content:space-between;align-items:center;gap:14px;flex-wrap:wrap}
-  </style>
-</head>
-<body>
-  <div class="shell">
-    <header>
-      <a class="brand" href="/"><span class="mark">CA</span><span><b>COA</b><small>OCCUPANCY APPLICATION PACKAGE</small></span></a>
-      <nav class="nav">${renderNav("coa")}</nav>
-    </header>
-    <div class="titlebar">
-      <div class="eyebrow">CERTIFICATE OF OCCUPANCY APPLICATION PACKAGE</div>
-      <h1>CoA</h1>
-      <p>Assembles the cover letter and supporting-document checklist you submit to the Authority Having Jurisdiction to request a Certificate of Occupancy.</p>
-      <p class="caveat">This generates a submission package, not the Certificate of Occupancy itself &mdash; only your local building authority can issue that.</p>
-      <a class="button primary" id="signin-btn" href="/login?redirect=/coa" style="display:none">SIGN IN</a>
-    </div>
-
-    <div id="app" style="display:none">
-      <div class="card">
-        <div class="form-grid">
-          <div><label>AUTHORITY HAVING JURISDICTION</label><input id="ca-ahj" type="text" placeholder="e.g. City of Springfield Building Dept."></div>
-          <div><label>PERMIT NUMBER</label><input id="ca-permit" type="text"></div>
-        </div>
-        <div class="form-grid" style="margin-top:14px">
-          <div><label>PROJECT NAME</label><input id="ca-project-name" type="text"></div>
-          <div><label>PROJECT ADDRESS</label><input id="ca-project-address" type="text"></div>
-        </div>
-        <div class="form-grid" style="margin-top:14px">
-          <div><label>CONTACT NAME</label><input id="ca-contact-name" type="text"></div>
-          <div><label>CONTACT PHONE</label><input id="ca-contact-phone" type="text"></div>
-          <div><label>CONTACT EMAIL</label><input id="ca-contact-email" type="email"></div>
-        </div>
-        <div style="margin-top:16px">
-          <label>SUPPORTING DOCUMENTATION</label>
-          <div class="checklist" id="ca-checklist"></div>
-        </div>
-        <div style="margin-top:14px"><label>NOTES (OPTIONAL)</label><textarea id="ca-notes"></textarea></div>
-        <button id="ca-generate-btn" class="button primary" style="height:42px;margin-top:16px">GENERATE APPLICATION PACKAGE</button>
-        <div class="step-log" id="ca-log"></div>
-      </div>
-
-      <div class="card" id="ca-result" style="display:none">
-        <div class="result-row">
-          <span>Package generated.</span>
-          <a id="ca-download" class="button primary" href="#" target="_blank">DOWNLOAD PDF</a>
-        </div>
-      </div>
-    </div>
-
-    <div class="card note-card" id="guest-note">
-      CoA is available standalone at $99/mo or as part of PropX Pro. See
-      <code>/pricing</code> for licensing, or sign in above if you already have access.
-    </div>
-  </div>
-  <script src="/assets/authfor-integration-standard.js"></script>
-  <script>
-    const auth = new AuthForStandard({ clientId: 'af_weyland_login', ventureName: 'weylandai.com' });
-    function authHeaders(json) {
-      const t = auth.getToken();
-      const h = t ? { 'Authorization': 'Bearer ' + t } : {};
-      if (json) h['Content-Type'] = 'application/json';
-      return h;
-    }
-    const CHECKLIST_ITEMS = [
-      "Final building inspection sign-off",
-      "Final electrical inspection sign-off",
-      "Final plumbing inspection sign-off",
-      "Final mechanical/HVAC inspection sign-off",
-      "Fire marshal / fire alarm system approval",
-      "ADA / accessibility compliance sign-off",
-      "As-built drawings (if required by permit)",
-      "Utility connection confirmations (water, sewer, gas, electric)"
-    ];
-    const listEl = document.getElementById('ca-checklist');
-    CHECKLIST_ITEMS.forEach((item, i) => {
-      const div = document.createElement('div');
-      div.className = 'checkline';
-      div.innerHTML = \`<input type="checkbox" id="ca-item-\${i}" checked><label style="margin:0" for="ca-item-\${i}">\${item}</label>\`;
-      listEl.appendChild(div);
-    });
-
-    const log = document.getElementById('ca-log');
-    function logLine(msg, cls) { const d = document.createElement('div'); if (cls) d.className = cls; d.textContent = msg; log.appendChild(d); }
-
-    document.getElementById('ca-generate-btn').addEventListener('click', async () => {
-      const btn = document.getElementById('ca-generate-btn');
-      log.innerHTML = '';
-      document.getElementById('ca-result').style.display = 'none';
-      const checklist = CHECKLIST_ITEMS.filter((item, i) => document.getElementById('ca-item-' + i).checked);
-      const payload = {
-        ahjName: document.getElementById('ca-ahj').value.trim(),
-        permitNumber: document.getElementById('ca-permit').value.trim(),
-        projectName: document.getElementById('ca-project-name').value.trim(),
-        projectAddress: document.getElementById('ca-project-address').value.trim(),
-        contactName: document.getElementById('ca-contact-name').value.trim(),
-        contactPhone: document.getElementById('ca-contact-phone').value.trim(),
-        contactEmail: document.getElementById('ca-contact-email').value.trim(),
-        notes: document.getElementById('ca-notes').value.trim(),
-        checklist
-      };
-      if (!payload.projectName || !payload.projectAddress) { logLine('Project name and address are required.', 'err'); return; }
-      btn.disabled = true;
-      logLine('Assembling application package...');
-      try {
-        const res = await fetch('/api/coa-packages/generate', { method: 'POST', headers: authHeaders(true), body: JSON.stringify(payload) });
-        const data = await res.json();
-        if (!res.ok) { logLine('Error: ' + (data.error && (data.error.message || data.error) || 'generation failed'), 'err'); btn.disabled = false; return; }
-        logLine('Done.', 'ok');
-        document.getElementById('ca-download').href = data.downloadUrl;
-        document.getElementById('ca-result').style.display = 'block';
-      } catch (e) {
-        logLine('Error: ' + e.message, 'err');
-      }
-      btn.disabled = false;
-    });
-
-    (async () => {
-      try {
-        const probe = await fetch('/api/coa-packages/generate', { method: 'POST', headers: authHeaders(true), body: JSON.stringify({}) });
-        if (probe.status === 401 || probe.status === 403) {
-          document.getElementById('signin-btn').style.display = 'inline-block';
-          return;
-        }
-        if (probe.status === 402) {
-          document.getElementById('guest-note').innerHTML = 'You\\'re signed in, but your plan doesn\\'t include CoA yet. See <code>/pricing</code> to add it.';
-          return;
-        }
-        document.getElementById('app').style.display = 'block';
-        document.getElementById('guest-note').style.display = 'none';
-      } catch (e) {
-        document.getElementById('signin-btn').style.display = 'inline-block';
-      }
-    })();
-  </script>
-</body>
-</html>`, { headers: { "Content-Type": "text/html; charset=UTF-8", "Cache-Control": "public, max-age=60" } });
-  }
-  function serve_rfax() {
-    return renderDocFormPage({
-      slug: "rfax",
-      markInitials: "RA",
-      productName: "RFAX",
-      subtitle: "RFI/RFA GENERATOR",
-      accent: "gold",
-      title: "RFaX",
-      description: "Generates a formatted Request for Information / Action from a project question, ready to submit to the owner or architect and track a response.",
-      apiPath: "/api/rfas/generate",
-      priceNote: "RFaX is available standalone at $199/mo or as part of SubX Pro. See <code>/pricing</code> for licensing, or sign in above if you already have access.",
-      required: ["subject", "question", "projectAddress"],
-      fields: [
-        { id: "rfaNumber", label: "RFA NUMBER" },
-        { id: "dateSubmitted", label: "DATE SUBMITTED", type: "date" },
-        { id: "responseNeededBy", label: "RESPONSE NEEDED BY", type: "date" },
-        { id: "ownerName", label: "OWNER / RECIPIENT" },
-        { id: "projectName", label: "PROJECT NAME" },
-        { id: "projectAddress", label: "PROJECT ADDRESS" },
-        { id: "subject", label: "SUBJECT" },
-        { id: "question", label: "QUESTION / INFORMATION REQUESTED", type: "textarea" },
-        { id: "distributionList", label: "DISTRIBUTION (OPTIONAL)" }
-      ]
-    });
-  }
-  function serve_changeordx() {
-    return renderDocFormPage({
-      slug: "changeordx",
-      markInitials: "CO",
-      productName: "CHANGEORDX",
-      subtitle: "CHANGE ORDER GENERATOR",
-      accent: "purple",
-      title: "ChangeOrdX",
-      description: "Turns a scope change into a formatted change order with cost and schedule impact, ready for owner/architect approval.",
-      apiPath: "/api/change-orders/generate",
-      priceNote: "ChangeOrdX is available standalone at $199/mo or as part of SubX Pro. See <code>/pricing</code> for licensing, or sign in above if you already have access.",
-      required: ["description", "projectAddress"],
-      fields: [
-        { id: "changeOrderNumber", label: "CHANGE ORDER #" },
-        { id: "ownerName", label: "OWNER" },
-        { id: "projectName", label: "PROJECT NAME" },
-        { id: "projectAddress", label: "PROJECT ADDRESS" },
-        { id: "description", label: "DESCRIPTION OF CHANGE", type: "textarea" },
-        { id: "reason", label: "REASON", type: "textarea" },
-        { id: "costImpact", label: "COST IMPACT ($)", type: "number" },
-        { id: "scheduleImpactDays", label: "SCHEDULE IMPACT (DAYS)", type: "number" }
-      ]
-    });
-  }
-  function serve_permitx() {
-    return renderDocFormPage({
-      slug: "permitx",
-      markInitials: "PX",
-      productName: "PERMITX",
-      subtitle: "PERMIT APPLICATION PACKAGE",
-      accent: "blue",
-      title: "PermitX",
-      description: "Assembles the application package you submit to the Authority Having Jurisdiction to request a permit. Not the permit itself - only the AHJ can issue that.",
-      apiPath: "/api/permit-packages/generate",
-      priceNote: "PermitX is available standalone at $149/mo or as part of SubX Pro. See <code>/pricing</code> for licensing, or sign in above if you already have access.",
-      required: ["projectAddress", "scopeDescription"],
-      fields: [
-        { id: "permitType", label: "PERMIT TYPE" },
-        { id: "ahjName", label: "AUTHORITY HAVING JURISDICTION" },
-        { id: "projectName", label: "PROJECT NAME" },
-        { id: "projectAddress", label: "PROJECT ADDRESS" },
-        { id: "applicantName", label: "APPLICANT" },
-        { id: "applicantContact", label: "APPLICANT CONTACT" },
-        { id: "scopeDescription", label: "SCOPE OF WORK", type: "textarea" }
-      ]
-    });
-  }
-  function serve_closex() {
-    return renderDocFormPage({
-      slug: "closex",
-      markInitials: "CX",
-      productName: "CLOSEX",
-      subtitle: "PROJECT CLOSEOUT PACKAGE",
-      accent: "green",
-      title: "CloseX",
-      description: "Assembles the closeout package - completion status, warranty terms, and an 8-item checklist - ready to hand the owner at project end.",
-      apiPath: "/api/closeout-packages/generate",
-      priceNote: "CloseX is available standalone at $199/mo or as part of SubX Pro. See <code>/pricing</code> for licensing, or sign in above if you already have access.",
-      required: ["projectName", "projectAddress"],
-      fields: [
-        { id: "ownerName", label: "OWNER" },
-        { id: "projectName", label: "PROJECT NAME" },
-        { id: "projectAddress", label: "PROJECT ADDRESS" },
-        { id: "completionDate", label: "COMPLETION DATE", type: "date" },
-        { id: "warrantyPeriod", label: "WARRANTY PERIOD", placeholder: "e.g. 1 year from substantial completion" },
-        { id: "notes", label: "NOTES (OPTIONAL)", type: "textarea" }
-      ]
-    });
-  }
-  function serve_notesx() {
-    return renderDocFormPage({
-      slug: "notesx",
-      markInitials: "NX",
-      productName: "NOTESX",
-      subtitle: "MEETING MINUTES GENERATOR",
-      accent: "red",
-      title: "NotesX",
-      description: "Turns attendees, agenda, and action items into formatted meeting minutes, ready to distribute.",
-      apiPath: "/api/meeting-notes/generate",
-      priceNote: "NotesX is available standalone at $49/mo or as part of SubX Pro. See <code>/pricing</code> for licensing, or sign in above if you already have access.",
-      required: ["projectName", "meetingDate"],
-      fields: [
-        { id: "projectName", label: "PROJECT NAME" },
-        { id: "meetingDate", label: "MEETING DATE", type: "date" },
-        { id: "nextMeetingDate", label: "NEXT MEETING DATE", type: "date" },
-        { id: "attendees", label: "ATTENDEES (COMMA-SEPARATED)", type: "textarea" },
-        { id: "agendaItems", label: "AGENDA ITEMS (ONE PER LINE)", type: "textarea" },
-        { id: "actionItems", label: "ACTION ITEMS (ONE PER LINE)", type: "textarea" }
-      ]
-    });
-  }
-  function serve_inspecx() {
-    return new Response(`<!doctype html>
-<html lang="en">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <meta name="theme-color" content="#090a0d">
-  <title>InspecX | Inspection Report Processor</title>
-  <style>
-    :root{--bg:#090a0d;--panel:#121419;--panel2:#181b21;--line:#2c3139;--text:#edf0f1;--muted:#9299a3;--gold:#f0b800;--green:#61dfa0;--blue:#66d4ff;--red:#ff756e}
-    *{box-sizing:border-box}html,body{margin:0;min-height:100%;background:var(--bg);color:var(--text);font-family:"Avenir Next","Helvetica Neue",sans-serif}
-    .shell{position:relative;max-width:900px;margin:auto;padding:20px clamp(16px,3vw,40px) 60px}
-    header{display:flex;align-items:center;justify-content:space-between;gap:15px;margin-bottom:24px}
-    .brand{display:flex;align-items:center;gap:12px;color:var(--text);text-decoration:none}
-    .mark{width:42px;height:42px;display:grid;place-items:center;background:var(--blue);color:var(--bg);font-weight:900}
-    .brand b{display:block;letter-spacing:.16em}
-    .brand small{display:block;color:var(--muted);font:700 9px/1.5 ui-monospace,monospace;letter-spacing:.11em}
-    .nav{display:flex;gap:8px;flex-wrap:wrap}
-    .nav a,.button{border:1px solid var(--line);border-radius:99px;padding:9px 14px;color:var(--text);text-decoration:none;background:transparent;font:750 10px/1 ui-monospace,monospace;letter-spacing:.06em;cursor:pointer;transition:all .2s}
-    .nav a:hover,.button:hover{border-color:var(--blue);color:var(--blue)}
-    .button.primary{background:var(--blue);border-color:var(--blue);color:var(--bg);font-weight:900}
-    .button:disabled{opacity:.5;cursor:not-allowed}
-    .titlebar{margin:35px 0 25px}
-    .eyebrow{color:var(--blue);font:800 11px/1 ui-monospace,monospace;letter-spacing:.18em;text-transform:uppercase}
-    .titlebar h1{font-size:clamp(30px,4.5vw,48px);letter-spacing:-.04em;margin:12px 0}
-    .titlebar p{max-width:640px;color:var(--muted);line-height:1.6;margin:0;font-size:15px}
-    .titlebar .caveat{margin-top:10px;color:var(--gold);font-size:12.5px}
-    .card{background:rgba(18,20,25,.94);border:1px solid var(--line);border-radius:16px;padding:22px;margin-bottom:18px}
-    .form-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px}
-    label{display:block;color:var(--muted);font:750 10px/1 ui-monospace,monospace;letter-spacing:.08em;margin-bottom:8px}
-    input{width:100%;padding:11px;background:var(--panel2);border:1px solid var(--line);border-radius:8px;color:var(--text);font-size:14px;box-sizing:border-box;font-family:inherit}
-    input:focus{outline:none;border-color:var(--blue)}
-    .step-log{margin-top:14px;color:var(--muted);font-size:13px}
-    .step-log .ok{color:var(--green)}
-    .step-log .err{color:var(--red)}
-    .note-card{color:var(--muted);font-size:14px;line-height:1.6}
-    .note-card code{background:#161920;padding:2px 6px;border-radius:4px;color:var(--blue);font-size:13px}
-    .result-row{display:flex;justify-content:space-between;align-items:center;gap:14px;flex-wrap:wrap}
-    .stat-row{display:flex;gap:20px;color:var(--muted);font-size:13px}
-    .stat-row b{color:var(--text);font-size:18px;display:block}
-  </style>
-</head>
-<body>
-  <div class="shell">
-    <header>
-      <a class="brand" href="/"><span class="mark">IX</span><span><b>INSPECX</b><small>INSPECTION REPORT PROCESSOR</small></span></a>
-      <nav class="nav">${renderNav("inspecx")}</nav>
-    </header>
-    <div class="titlebar">
-      <div class="eyebrow">INSPECTION REPORT PROCESSOR</div>
-      <h1>InspecX</h1>
-      <p>Uploads an inspection report PDF, OCRs it with a real on-worker engine (PDFium + Tesseract, no external API), and flags lines matching fail/deficiency language.</p>
-      <p class="caveat">Flagging is keyword-based, not an AI reading for meaning &mdash; review the source document for anything it might miss.</p>
-      <a class="button primary" id="signin-btn" href="/login?redirect=/inspecx" style="display:none">SIGN IN</a>
-    </div>
-
-    <div id="app" style="display:none">
-      <div class="card">
-        <div class="form-grid">
-          <div><label>PROJECT NAME</label><input id="ix-project" type="text"></div>
-          <div><label>INSPECTION TYPE</label><input id="ix-type" type="text" placeholder="e.g. Fire/Life Safety"></div>
-          <div><label>INSPECTOR</label><input id="ix-inspector" type="text"></div>
-          <div><label>INSPECTION DATE</label><input id="ix-date" type="date"></div>
-          <div style="grid-column:1/-1"><label>INSPECTION REPORT (PDF)</label><input id="ix-file" type="file" accept="application/pdf"></div>
-        </div>
-        <button id="ix-analyze-btn" class="button primary" style="height:42px;margin-top:16px">ANALYZE REPORT</button>
-        <div class="step-log" id="ix-log"></div>
-      </div>
-      <div class="card" id="ix-result" style="display:none">
-        <div class="result-row">
-          <div class="stat-row" id="ix-stats"></div>
-          <a id="ix-download" class="button primary" href="#" target="_blank">DOWNLOAD SUMMARY PDF</a>
-        </div>
-      </div>
-    </div>
-
-    <div class="card note-card" id="guest-note">
-      InspecX is available standalone at $199/mo or as part of SightX Pro. See
-      <code>/pricing</code> for licensing, or sign in above if you already have access.
-    </div>
-  </div>
-  <script src="/assets/authfor-integration-standard.js"></script>
-  <script>
-    const auth = new AuthForStandard({ clientId: 'af_weyland_login', ventureName: 'weylandai.com' });
-    function authHeaders(json) {
-      const t = auth.getToken();
-      const h = t ? { 'Authorization': 'Bearer ' + t } : {};
-      if (json) h['Content-Type'] = 'application/json';
-      return h;
-    }
-    const log = document.getElementById('ix-log');
-    function logLine(msg, cls) { const d = document.createElement('div'); if (cls) d.className = cls; d.textContent = msg; log.appendChild(d); }
-
-    document.getElementById('ix-analyze-btn').addEventListener('click', async () => {
-      const btn = document.getElementById('ix-analyze-btn');
-      const fileInput = document.getElementById('ix-file');
-      log.innerHTML = '';
-      document.getElementById('ix-result').style.display = 'none';
-      if (!fileInput.files.length) { logLine('Choose a PDF first.', 'err'); return; }
-      const fd = new FormData();
-      fd.append('file', fileInput.files[0]);
-      fd.append('projectName', document.getElementById('ix-project').value.trim());
-      fd.append('inspectionType', document.getElementById('ix-type').value.trim());
-      fd.append('inspectorName', document.getElementById('ix-inspector').value.trim());
-      fd.append('inspectionDate', document.getElementById('ix-date').value);
-      btn.disabled = true;
-      logLine('Uploading and running OCR...');
-      try {
-        const res = await fetch('/api/inspections/analyze', { method: 'POST', headers: authHeaders(false), body: fd });
-        const data = await res.json();
-        if (!res.ok) { logLine('Error: ' + (data.error && (data.error.message || data.error) || 'analysis failed'), 'err'); btn.disabled = false; return; }
-        logLine('Done - ' + data.pageCount + ' page(s) scanned.', 'ok');
-        document.getElementById('ix-stats').innerHTML = '<div><b>' + data.pageCount + '</b>PAGES</div><div><b>' + data.passCount + '</b>PASS LINES</div><div><b>' + data.failCount + '</b>FLAGGED</div>';
-        document.getElementById('ix-download').href = data.downloadUrl;
-        document.getElementById('ix-result').style.display = 'block';
-      } catch (e) {
-        logLine('Error: ' + e.message, 'err');
-      }
-      btn.disabled = false;
-    });
-
-    (async () => {
-      try {
-        const probe = await fetch('/api/inspections/analyze', { method: 'POST', headers: authHeaders(true), body: JSON.stringify({}) });
-        if (probe.status === 401 || probe.status === 403) {
-          document.getElementById('signin-btn').style.display = 'inline-block';
-          return;
-        }
-        if (probe.status === 402) {
-          document.getElementById('guest-note').innerHTML = 'You\\'re signed in, but your plan doesn\\'t include InspecX yet. See <code>/pricing</code> to add it.';
-          return;
-        }
-        document.getElementById('app').style.display = 'block';
-        document.getElementById('guest-note').style.display = 'none';
-      } catch (e) {
-        document.getElementById('signin-btn').style.display = 'inline-block';
-      }
-    })();
-  </script>
-</body>
-</html>`, { headers: { "Content-Type": "text/html; charset=UTF-8", "Cache-Control": "public, max-age=60" } });
-  }
-  function serve_safetyx() {
-    return new Response(`<!doctype html>
-<html lang="en">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <meta name="theme-color" content="#090a0d">
-  <title>SafetyX | Safety Report Processor</title>
-  <style>
-    :root{--bg:#090a0d;--panel:#121419;--panel2:#181b21;--line:#2c3139;--text:#edf0f1;--muted:#9299a3;--gold:#f0b800;--green:#61dfa0;--blue:#66d4ff;--red:#ff756e}
-    *{box-sizing:border-box}html,body{margin:0;min-height:100%;background:var(--bg);color:var(--text);font-family:"Avenir Next","Helvetica Neue",sans-serif}
-    .shell{position:relative;max-width:900px;margin:auto;padding:20px clamp(16px,3vw,40px) 60px}
-    header{display:flex;align-items:center;justify-content:space-between;gap:15px;margin-bottom:24px}
-    .brand{display:flex;align-items:center;gap:12px;color:var(--text);text-decoration:none}
-    .mark{width:42px;height:42px;display:grid;place-items:center;background:var(--gold);color:var(--bg);font-weight:900}
-    .brand b{display:block;letter-spacing:.16em}
-    .brand small{display:block;color:var(--muted);font:700 9px/1.5 ui-monospace,monospace;letter-spacing:.11em}
-    .nav{display:flex;gap:8px;flex-wrap:wrap}
-    .nav a,.button{border:1px solid var(--line);border-radius:99px;padding:9px 14px;color:var(--text);text-decoration:none;background:transparent;font:750 10px/1 ui-monospace,monospace;letter-spacing:.06em;cursor:pointer;transition:all .2s}
-    .nav a:hover,.button:hover{border-color:var(--gold);color:var(--gold)}
-    .button.primary{background:var(--gold);border-color:var(--gold);color:var(--bg);font-weight:900}
-    .button:disabled{opacity:.5;cursor:not-allowed}
-    .titlebar{margin:35px 0 25px}
-    .eyebrow{color:var(--gold);font:800 11px/1 ui-monospace,monospace;letter-spacing:.18em;text-transform:uppercase}
-    .titlebar h1{font-size:clamp(30px,4.5vw,48px);letter-spacing:-.04em;margin:12px 0}
-    .titlebar p{max-width:640px;color:var(--muted);line-height:1.6;margin:0;font-size:15px}
-    .titlebar .caveat{margin-top:10px;color:var(--red);font-size:12.5px}
-    .card{background:rgba(18,20,25,.94);border:1px solid var(--line);border-radius:16px;padding:22px;margin-bottom:18px}
-    .form-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px}
-    label{display:block;color:var(--muted);font:750 10px/1 ui-monospace,monospace;letter-spacing:.08em;margin-bottom:8px}
-    input{width:100%;padding:11px;background:var(--panel2);border:1px solid var(--line);border-radius:8px;color:var(--text);font-size:14px;box-sizing:border-box;font-family:inherit}
-    input:focus{outline:none;border-color:var(--gold)}
-    .step-log{margin-top:14px;color:var(--muted);font-size:13px}
-    .step-log .ok{color:var(--green)}
-    .step-log .err{color:var(--red)}
-    .note-card{color:var(--muted);font-size:14px;line-height:1.6}
-    .note-card code{background:#161920;padding:2px 6px;border-radius:4px;color:var(--gold);font-size:13px}
-    .result-row{display:flex;justify-content:space-between;align-items:center;gap:14px;flex-wrap:wrap}
-    .stat-row{display:flex;gap:20px;color:var(--muted);font-size:13px}
-    .stat-row b{color:var(--text);font-size:18px;display:block}
-  </style>
-</head>
-<body>
-  <div class="shell">
-    <header>
-      <a class="brand" href="/"><span class="mark">SX</span><span><b>SAFETYX</b><small>SAFETY REPORT PROCESSOR</small></span></a>
-      <nav class="nav">${renderNav("safetyx")}</nav>
-    </header>
-    <div class="titlebar">
-      <div class="eyebrow">SAFETY REPORT PROCESSOR</div>
-      <h1>SafetyX</h1>
-      <p>Uploads a safety report or incident log PDF, OCRs it with the same on-worker engine InspecX uses (PDFium + Tesseract, no external API), and flags lines matching incident/hazard language.</p>
-      <p class="caveat">Flagging is keyword-based, not an AI reading for meaning, and is not an OSHA recordability determination.</p>
-      <a class="button primary" id="signin-btn" href="/login?redirect=/safetyx" style="display:none">SIGN IN</a>
-    </div>
-
-    <div id="app" style="display:none">
-      <div class="card">
-        <div class="form-grid">
-          <div><label>PROJECT NAME</label><input id="sx-project" type="text"></div>
-          <div><label>REPORT TYPE</label><input id="sx-type" type="text" placeholder="e.g. Weekly Site Safety Log"></div>
-          <div><label>REPORTED BY</label><input id="sx-by" type="text"></div>
-          <div><label>REPORT DATE</label><input id="sx-date" type="date"></div>
-          <div style="grid-column:1/-1"><label>SAFETY REPORT (PDF)</label><input id="sx-file" type="file" accept="application/pdf"></div>
-        </div>
-        <button id="sx-analyze-btn" class="button primary" style="height:42px;margin-top:16px">ANALYZE REPORT</button>
-        <div class="step-log" id="sx-log"></div>
-      </div>
-      <div class="card" id="sx-result" style="display:none">
-        <div class="result-row">
-          <div class="stat-row" id="sx-stats"></div>
-          <a id="sx-download" class="button primary" href="#" target="_blank">DOWNLOAD SUMMARY PDF</a>
-        </div>
-      </div>
-    </div>
-
-    <div class="card note-card" id="guest-note">
-      SafetyX is available standalone at $149/mo or as part of SubX Pro. See
-      <code>/pricing</code> for licensing, or sign in above if you already have access.
-    </div>
-  </div>
-  <script src="/assets/authfor-integration-standard.js"></script>
-  <script>
-    const auth = new AuthForStandard({ clientId: 'af_weyland_login', ventureName: 'weylandai.com' });
-    function authHeaders(json) {
-      const t = auth.getToken();
-      const h = t ? { 'Authorization': 'Bearer ' + t } : {};
-      if (json) h['Content-Type'] = 'application/json';
-      return h;
-    }
-    const log = document.getElementById('sx-log');
-    function logLine(msg, cls) { const d = document.createElement('div'); if (cls) d.className = cls; d.textContent = msg; log.appendChild(d); }
-
-    document.getElementById('sx-analyze-btn').addEventListener('click', async () => {
-      const btn = document.getElementById('sx-analyze-btn');
-      const fileInput = document.getElementById('sx-file');
-      log.innerHTML = '';
-      document.getElementById('sx-result').style.display = 'none';
-      if (!fileInput.files.length) { logLine('Choose a PDF first.', 'err'); return; }
-      const fd = new FormData();
-      fd.append('file', fileInput.files[0]);
-      fd.append('projectName', document.getElementById('sx-project').value.trim());
-      fd.append('reportType', document.getElementById('sx-type').value.trim());
-      fd.append('reportedBy', document.getElementById('sx-by').value.trim());
-      fd.append('reportDate', document.getElementById('sx-date').value);
-      btn.disabled = true;
-      logLine('Uploading and running OCR...');
-      try {
-        const res = await fetch('/api/safety-reports/analyze', { method: 'POST', headers: authHeaders(false), body: fd });
-        const data = await res.json();
-        if (!res.ok) { logLine('Error: ' + (data.error && (data.error.message || data.error) || 'analysis failed'), 'err'); btn.disabled = false; return; }
-        logLine('Done - ' + data.pageCount + ' page(s) scanned.', 'ok');
-        document.getElementById('sx-stats').innerHTML = '<div><b>' + data.pageCount + '</b>PAGES</div><div><b>' + data.clearCount + '</b>RESOLVED/COMPLIANT</div><div><b>' + data.incidentCount + '</b>FLAGGED</div>';
-        document.getElementById('sx-download').href = data.downloadUrl;
-        document.getElementById('sx-result').style.display = 'block';
-      } catch (e) {
-        logLine('Error: ' + e.message, 'err');
-      }
-      btn.disabled = false;
-    });
-
-    (async () => {
-      try {
-        const probe = await fetch('/api/safety-reports/analyze', { method: 'POST', headers: authHeaders(true), body: JSON.stringify({}) });
-        if (probe.status === 401 || probe.status === 403) {
-          document.getElementById('signin-btn').style.display = 'inline-block';
-          return;
-        }
-        if (probe.status === 402) {
-          document.getElementById('guest-note').innerHTML = 'You\\'re signed in, but your plan doesn\\'t include SafetyX yet. See <code>/pricing</code> to add it.';
-          return;
-        }
-        document.getElementById('app').style.display = 'block';
-        document.getElementById('guest-note').style.display = 'none';
-      } catch (e) {
-        document.getElementById('signin-btn').style.display = 'inline-block';
-      }
-    })();
-  </script>
-</body>
-</html>`, { headers: { "Content-Type": "text/html; charset=UTF-8", "Cache-Control": "public, max-age=60" } });
-  }
-  function serve_survx() {
-    return new Response(`<!doctype html>
-<html lang="en">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <meta name="theme-color" content="#090a0d">
-  <title>SurvX | Site Survey Data Processor</title>
-  <style>
-    :root{--bg:#090a0d;--panel:#121419;--panel2:#181b21;--line:#2c3139;--text:#edf0f1;--muted:#9299a3;--gold:#f0b800;--green:#61dfa0;--blue:#66d4ff;--red:#ff756e;--purple:#a78bfa}
-    *{box-sizing:border-box}html,body{margin:0;min-height:100%;background:var(--bg);color:var(--text);font-family:"Avenir Next","Helvetica Neue",sans-serif}
-    .shell{position:relative;max-width:900px;margin:auto;padding:20px clamp(16px,3vw,40px) 60px}
-    header{display:flex;align-items:center;justify-content:space-between;gap:15px;margin-bottom:24px}
-    .brand{display:flex;align-items:center;gap:12px;color:var(--text);text-decoration:none}
-    .mark{width:42px;height:42px;display:grid;place-items:center;background:var(--purple);color:var(--bg);font-weight:900}
-    .brand b{display:block;letter-spacing:.16em}
-    .brand small{display:block;color:var(--muted);font:700 9px/1.5 ui-monospace,monospace;letter-spacing:.11em}
-    .nav{display:flex;gap:8px;flex-wrap:wrap}
-    .nav a,.button{border:1px solid var(--line);border-radius:99px;padding:9px 14px;color:var(--text);text-decoration:none;background:transparent;font:750 10px/1 ui-monospace,monospace;letter-spacing:.06em;cursor:pointer;transition:all .2s}
-    .nav a:hover,.button:hover{border-color:var(--purple);color:var(--purple)}
-    .button.primary{background:var(--purple);border-color:var(--purple);color:var(--bg);font-weight:900}
-    .button:disabled{opacity:.5;cursor:not-allowed}
-    .titlebar{margin:35px 0 25px}
-    .eyebrow{color:var(--purple);font:800 11px/1 ui-monospace,monospace;letter-spacing:.18em;text-transform:uppercase}
-    .titlebar h1{font-size:clamp(30px,4.5vw,48px);letter-spacing:-.04em;margin:12px 0}
-    .titlebar p{max-width:640px;color:var(--muted);line-height:1.6;margin:0;font-size:15px}
-    .titlebar .caveat{margin-top:10px;color:var(--red);font-size:12.5px}
-    .card{background:rgba(18,20,25,.94);border:1px solid var(--line);border-radius:16px;padding:22px;margin-bottom:18px}
-    .form-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px}
-    label{display:block;color:var(--muted);font:750 10px/1 ui-monospace,monospace;letter-spacing:.08em;margin-bottom:8px}
-    input{width:100%;padding:11px;background:var(--panel2);border:1px solid var(--line);border-radius:8px;color:var(--text);font-size:14px;box-sizing:border-box;font-family:inherit}
-    input:focus{outline:none;border-color:var(--purple)}
-    .step-log{margin-top:14px;color:var(--muted);font-size:13px}
-    .step-log .ok{color:var(--green)}
-    .step-log .err{color:var(--red)}
-    .note-card{color:var(--muted);font-size:14px;line-height:1.6}
-    .note-card code{background:#161920;padding:2px 6px;border-radius:4px;color:var(--purple);font-size:13px}
-    .result-row{display:flex;justify-content:space-between;align-items:center;gap:14px;flex-wrap:wrap}
-    .stat-row{display:flex;gap:20px;color:var(--muted);font-size:13px}
-    .stat-row b{color:var(--text);font-size:18px;display:block}
-  </style>
-</head>
-<body>
-  <div class="shell">
-    <header>
-      <a class="brand" href="/"><span class="mark">SV</span><span><b>SURVX</b><small>SITE SURVEY DATA PROCESSOR</small></span></a>
-      <nav class="nav">${renderNav("survx")}</nav>
-    </header>
-    <div class="titlebar">
-      <div class="eyebrow">SITE SURVEY DATA PROCESSOR</div>
-      <h1>SurvX</h1>
-      <p>Uploads a site survey PDF, OCRs it with the same on-worker engine InspecX/SafetyX use (PDFium + Tesseract, no external API), and flags lines matching unresolved-condition language.</p>
-      <p class="caveat">Flagging is keyword-based, not an AI reading for meaning - have a licensed surveyor confirm anything this list might miss or mis-flag.</p>
-      <a class="button primary" id="signin-btn" href="/login?redirect=/survx" style="display:none">SIGN IN</a>
-    </div>
-
-    <div id="app" style="display:none">
-      <div class="card">
-        <div class="form-grid">
-          <div><label>PROJECT NAME</label><input id="sv-project" type="text"></div>
-          <div><label>SURVEY TYPE</label><input id="sv-type" type="text" placeholder="e.g. Topographic, Boundary, ALTA"></div>
-          <div><label>SURVEYOR</label><input id="sv-surveyor" type="text"></div>
-          <div><label>SURVEY DATE</label><input id="sv-date" type="date"></div>
-          <div style="grid-column:1/-1"><label>SURVEY DOCUMENT (PDF)</label><input id="sv-file" type="file" accept="application/pdf"></div>
-        </div>
-        <button id="sv-analyze-btn" class="button primary" style="height:42px;margin-top:16px">ANALYZE SURVEY</button>
-        <div class="step-log" id="sv-log"></div>
-      </div>
-      <div class="card" id="sv-result" style="display:none">
-        <div class="result-row">
-          <div class="stat-row" id="sv-stats"></div>
-          <a id="sv-download" class="button primary" href="#" target="_blank">DOWNLOAD SUMMARY PDF</a>
-        </div>
-      </div>
-    </div>
-
-    <div class="card note-card" id="guest-note">
-      SurvX is available standalone at $199/mo or as part of SightX Pro. See
-      <code>/pricing</code> for licensing, or sign in above if you already have access.
-    </div>
-  </div>
-  <script src="/assets/authfor-integration-standard.js"></script>
-  <script>
-    const auth = new AuthForStandard({ clientId: 'af_weyland_login', ventureName: 'weylandai.com' });
-    function authHeaders(json) {
-      const t = auth.getToken();
-      const h = t ? { 'Authorization': 'Bearer ' + t } : {};
-      if (json) h['Content-Type'] = 'application/json';
-      return h;
-    }
-    const log = document.getElementById('sv-log');
-    function logLine(msg, cls) { const d = document.createElement('div'); if (cls) d.className = cls; d.textContent = msg; log.appendChild(d); }
-
-    document.getElementById('sv-analyze-btn').addEventListener('click', async () => {
-      const btn = document.getElementById('sv-analyze-btn');
-      const fileInput = document.getElementById('sv-file');
-      log.innerHTML = '';
-      document.getElementById('sv-result').style.display = 'none';
-      if (!fileInput.files.length) { logLine('Choose a PDF first.', 'err'); return; }
-      const fd = new FormData();
-      fd.append('file', fileInput.files[0]);
-      fd.append('projectName', document.getElementById('sv-project').value.trim());
-      fd.append('surveyType', document.getElementById('sv-type').value.trim());
-      fd.append('surveyorName', document.getElementById('sv-surveyor').value.trim());
-      fd.append('surveyDate', document.getElementById('sv-date').value);
-      btn.disabled = true;
-      logLine('Uploading and running OCR...');
-      try {
-        const res = await fetch('/api/survey-reports/analyze', { method: 'POST', headers: authHeaders(false), body: fd });
-        const data = await res.json();
-        if (!res.ok) { logLine('Error: ' + (data.error && (data.error.message || data.error) || 'analysis failed'), 'err'); btn.disabled = false; return; }
-        logLine('Done - ' + data.pageCount + ' page(s) scanned.', 'ok');
-        document.getElementById('sv-stats').innerHTML = '<div><b>' + data.pageCount + '</b>PAGES</div><div><b>' + data.clearCount + '</b>VERIFIED</div><div><b>' + data.flaggedCount + '</b>FLAGGED</div>';
-        document.getElementById('sv-download').href = data.downloadUrl;
-        document.getElementById('sv-result').style.display = 'block';
-      } catch (e) {
-        logLine('Error: ' + e.message, 'err');
-      }
-      btn.disabled = false;
-    });
-
-    (async () => {
-      try {
-        const probe = await fetch('/api/survey-reports/analyze', { method: 'POST', headers: authHeaders(true), body: JSON.stringify({}) });
-        if (probe.status === 401 || probe.status === 403) {
-          document.getElementById('signin-btn').style.display = 'inline-block';
-          return;
-        }
-        if (probe.status === 402) {
-          document.getElementById('guest-note').innerHTML = 'You\\'re signed in, but your plan doesn\\'t include SurvX yet. See <code>/pricing</code> to add it.';
-          return;
-        }
-        document.getElementById('app').style.display = 'block';
-        document.getElementById('guest-note').style.display = 'none';
-      } catch (e) {
-        document.getElementById('signin-btn').style.display = 'inline-block';
-      }
-    })();
-  </script>
-</body>
-</html>`, { headers: { "Content-Type": "text/html; charset=UTF-8", "Cache-Control": "public, max-age=60" } });
-  }
-  function serve_specx() {
-    return new Response(`<!doctype html>
-<html lang="en">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <meta name="theme-color" content="#090a0d">
-  <title>SpecX | Spec Section Parser</title>
-  <style>
-    :root{--bg:#090a0d;--panel:#121419;--panel2:#181b21;--line:#2c3139;--text:#edf0f1;--muted:#9299a3;--gold:#f0b800;--green:#61dfa0;--blue:#66d4ff;--red:#ff756e}
-    *{box-sizing:border-box}html,body{margin:0;min-height:100%;background:var(--bg);color:var(--text);font-family:"Avenir Next","Helvetica Neue",sans-serif}
-    .shell{position:relative;max-width:900px;margin:auto;padding:20px clamp(16px,3vw,40px) 60px}
-    header{display:flex;align-items:center;justify-content:space-between;gap:15px;margin-bottom:24px}
-    .brand{display:flex;align-items:center;gap:12px;color:var(--text);text-decoration:none}
-    .mark{width:42px;height:42px;display:grid;place-items:center;background:var(--green);color:var(--bg);font-weight:900}
-    .brand b{display:block;letter-spacing:.16em}
-    .brand small{display:block;color:var(--muted);font:700 9px/1.5 ui-monospace,monospace;letter-spacing:.11em}
-    .nav{display:flex;gap:8px;flex-wrap:wrap}
-    .nav a,.button{border:1px solid var(--line);border-radius:99px;padding:9px 14px;color:var(--text);text-decoration:none;background:transparent;font:750 10px/1 ui-monospace,monospace;letter-spacing:.06em;cursor:pointer;transition:all .2s}
-    .nav a:hover,.button:hover{border-color:var(--green);color:var(--green)}
-    .button.primary{background:var(--green);border-color:var(--green);color:var(--bg);font-weight:900}
-    .button:disabled{opacity:.5;cursor:not-allowed}
-    .titlebar{margin:35px 0 25px}
-    .eyebrow{color:var(--green);font:800 11px/1 ui-monospace,monospace;letter-spacing:.18em;text-transform:uppercase}
-    .titlebar h1{font-size:clamp(30px,4.5vw,48px);letter-spacing:-.04em;margin:12px 0}
-    .titlebar p{max-width:640px;color:var(--muted);line-height:1.6;margin:0;font-size:15px}
-    .titlebar .caveat{margin-top:10px;color:var(--red);font-size:12.5px}
-    .card{background:rgba(18,20,25,.94);border:1px solid var(--line);border-radius:16px;padding:22px;margin-bottom:18px}
-    .form-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px}
-    label{display:block;color:var(--muted);font:750 10px/1 ui-monospace,monospace;letter-spacing:.08em;margin-bottom:8px}
-    input{width:100%;padding:11px;background:var(--panel2);border:1px solid var(--line);border-radius:8px;color:var(--text);font-size:14px;box-sizing:border-box;font-family:inherit}
-    input:focus{outline:none;border-color:var(--green)}
-    .step-log{margin-top:14px;color:var(--muted);font-size:13px}
-    .step-log .ok{color:var(--green)}
-    .step-log .err{color:var(--red)}
-    .note-card{color:var(--muted);font-size:14px;line-height:1.6}
-    .note-card code{background:#161920;padding:2px 6px;border-radius:4px;color:var(--green);font-size:13px}
-    .result-row{display:flex;justify-content:space-between;align-items:center;gap:14px;flex-wrap:wrap}
-    .stat-row{display:flex;gap:20px;color:var(--muted);font-size:13px}
-    .stat-row b{color:var(--text);font-size:18px;display:block}
-  </style>
-</head>
-<body>
-  <div class="shell">
-    <header>
-      <a class="brand" href="/"><span class="mark">SP</span><span><b>SPECX</b><small>SPEC SECTION PARSER</small></span></a>
-      <nav class="nav">${renderNav("specx")}</nav>
-    </header>
-    <div class="titlebar">
-      <div class="eyebrow">SPEC SECTION PARSER</div>
-      <h1>SpecX</h1>
-      <p>Uploads a spec document PDF, OCRs it (PDFium + Tesseract, no external API), and detects CSI MasterFormat-style section numbers (DD SS SS) to build a section index, flagging unusually short sections by word count.</p>
-      <p class="caveat">This is a section index and completeness heuristic, not a code-compliance check.</p>
-      <a class="button primary" id="sp-signin-btn" href="/login?redirect=/specx" style="display:none">SIGN IN</a>
-    </div>
-
-    <div id="app" style="display:none">
-      <div class="card">
-        <div class="form-grid">
-          <div><label>PROJECT NAME</label><input id="sp-project" type="text"></div>
-          <div><label>SPEC DATE</label><input id="sp-date" type="date"></div>
-          <div style="grid-column:1/-1"><label>SPEC DOCUMENT (PDF)</label><input id="sp-file" type="file" accept="application/pdf"></div>
-        </div>
-        <button id="sp-analyze-btn" class="button primary" style="height:42px;margin-top:16px">ANALYZE SPEC</button>
-        <div class="step-log" id="sp-log"></div>
-      </div>
-      <div class="card" id="sp-result" style="display:none">
-        <div class="result-row">
-          <div class="stat-row" id="sp-stats"></div>
-          <a id="sp-download" class="button primary" href="#" target="_blank">DOWNLOAD SECTION INDEX PDF</a>
-        </div>
-      </div>
-    </div>
-
-    <div class="card note-card" id="guest-note">
-      SpecX is available standalone at $149/mo or as part of SubX Pro. See
-      <code>/pricing</code> for licensing, or sign in above if you already have access.
-    </div>
-  </div>
-  <script src="/assets/authfor-integration-standard.js"></script>
-  <script>
-    const auth = new AuthForStandard({ clientId: 'af_weyland_login', ventureName: 'weylandai.com' });
-    function authHeaders(json) {
-      const t = auth.getToken();
-      const h = t ? { 'Authorization': 'Bearer ' + t } : {};
-      if (json) h['Content-Type'] = 'application/json';
-      return h;
-    }
-    const log = document.getElementById('sp-log');
-    function logLine(msg, cls) { const d = document.createElement('div'); if (cls) d.className = cls; d.textContent = msg; log.appendChild(d); }
-
-    document.getElementById('sp-analyze-btn').addEventListener('click', async () => {
-      const btn = document.getElementById('sp-analyze-btn');
-      const fileInput = document.getElementById('sp-file');
-      log.innerHTML = '';
-      document.getElementById('sp-result').style.display = 'none';
-      if (!fileInput.files.length) { logLine('Choose a PDF first.', 'err'); return; }
-      const fd = new FormData();
-      fd.append('file', fileInput.files[0]);
-      fd.append('projectName', document.getElementById('sp-project').value.trim());
-      fd.append('specDate', document.getElementById('sp-date').value);
-      btn.disabled = true;
-      logLine('Uploading and running OCR...');
-      try {
-        const res = await fetch('/api/spec-sections/analyze', { method: 'POST', headers: authHeaders(false), body: fd });
-        const data = await res.json();
-        if (!res.ok) { logLine('Error: ' + (data.error && (data.error.message || data.error) || 'analysis failed'), 'err'); btn.disabled = false; return; }
-        logLine('Done - ' + data.pageCount + ' page(s) scanned.', 'ok');
-        document.getElementById('sp-stats').innerHTML = '<div><b>' + data.pageCount + '</b>PAGES</div><div><b>' + data.sectionCount + '</b>SECTIONS</div><div><b>' + data.shortCount + '</b>SHORT</div>';
-        document.getElementById('sp-download').href = data.downloadUrl;
-        document.getElementById('sp-result').style.display = 'block';
-      } catch (e) {
-        logLine('Error: ' + e.message, 'err');
-      }
-      btn.disabled = false;
-    });
-
-    (async () => {
-      try {
-        const probe = await fetch('/api/spec-sections/analyze', { method: 'POST', headers: authHeaders(true), body: JSON.stringify({}) });
-        if (probe.status === 401 || probe.status === 403) {
-          document.getElementById('sp-signin-btn').style.display = 'inline-block';
-          return;
-        }
-        if (probe.status === 402) {
-          document.getElementById('guest-note').innerHTML = 'You\\'re signed in, but your plan doesn\\'t include SpecX yet. See <code>/pricing</code> to add it.';
-          return;
-        }
-        document.getElementById('app').style.display = 'block';
-        document.getElementById('guest-note').style.display = 'none';
-      } catch (e) {
-        document.getElementById('sp-signin-btn').style.display = 'inline-block';
-      }
-    })();
-  </script>
-</body>
-</html>`, { headers: { "Content-Type": "text/html; charset=UTF-8", "Cache-Control": "public, max-age=60" } });
-  }
-  function serve_drawx() {
-    return new Response(`<!doctype html>
-<html lang="en">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <meta name="theme-color" content="#090a0d">
-  <title>DrawX | Drawing Set Sheet Index</title>
-  <style>
-    :root{--bg:#090a0d;--panel:#121419;--panel2:#181b21;--line:#2c3139;--text:#edf0f1;--muted:#9299a3;--gold:#f0b800;--green:#61dfa0;--blue:#66d4ff;--red:#ff756e}
-    *{box-sizing:border-box}html,body{margin:0;min-height:100%;background:var(--bg);color:var(--text);font-family:"Avenir Next","Helvetica Neue",sans-serif}
-    .shell{position:relative;max-width:900px;margin:auto;padding:20px clamp(16px,3vw,40px) 60px}
-    header{display:flex;align-items:center;justify-content:space-between;gap:15px;margin-bottom:24px}
-    .brand{display:flex;align-items:center;gap:12px;color:var(--text);text-decoration:none}
-    .mark{width:42px;height:42px;display:grid;place-items:center;background:var(--blue);color:var(--bg);font-weight:900}
-    .brand b{display:block;letter-spacing:.16em}
-    .brand small{display:block;color:var(--muted);font:700 9px/1.5 ui-monospace,monospace;letter-spacing:.11em}
-    .nav{display:flex;gap:8px;flex-wrap:wrap}
-    .nav a,.button{border:1px solid var(--line);border-radius:99px;padding:9px 14px;color:var(--text);text-decoration:none;background:transparent;font:750 10px/1 ui-monospace,monospace;letter-spacing:.06em;cursor:pointer;transition:all .2s}
-    .nav a:hover,.button:hover{border-color:var(--blue);color:var(--blue)}
-    .button.primary{background:var(--blue);border-color:var(--blue);color:var(--bg);font-weight:900}
-    .button:disabled{opacity:.5;cursor:not-allowed}
-    .titlebar{margin:35px 0 25px}
-    .eyebrow{color:var(--blue);font:800 11px/1 ui-monospace,monospace;letter-spacing:.18em;text-transform:uppercase}
-    .titlebar h1{font-size:clamp(30px,4.5vw,48px);letter-spacing:-.04em;margin:12px 0}
-    .titlebar p{max-width:640px;color:var(--muted);line-height:1.6;margin:0;font-size:15px}
-    .titlebar .caveat{margin-top:10px;color:var(--red);font-size:12.5px}
-    .card{background:rgba(18,20,25,.94);border:1px solid var(--line);border-radius:16px;padding:22px;margin-bottom:18px}
-    .form-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px}
-    label{display:block;color:var(--muted);font:750 10px/1 ui-monospace,monospace;letter-spacing:.08em;margin-bottom:8px}
-    input{width:100%;padding:11px;background:var(--panel2);border:1px solid var(--line);border-radius:8px;color:var(--text);font-size:14px;box-sizing:border-box;font-family:inherit}
-    input:focus{outline:none;border-color:var(--blue)}
-    .step-log{margin-top:14px;color:var(--muted);font-size:13px}
-    .step-log .ok{color:var(--green)}
-    .step-log .err{color:var(--red)}
-    .note-card{color:var(--muted);font-size:14px;line-height:1.6}
-    .note-card code{background:#161920;padding:2px 6px;border-radius:4px;color:var(--blue);font-size:13px}
-    .result-row{display:flex;justify-content:space-between;align-items:center;gap:14px;flex-wrap:wrap}
-    .stat-row{display:flex;gap:20px;color:var(--muted);font-size:13px}
-    .stat-row b{color:var(--text);font-size:18px;display:block}
-  </style>
-</head>
-<body>
-  <div class="shell">
-    <header>
-      <a class="brand" href="/"><span class="mark">DX</span><span><b>DRAWX</b><small>DRAWING SET SHEET INDEX</small></span></a>
-      <nav class="nav">${renderNav("drawx")}</nav>
-    </header>
-    <div class="titlebar">
-      <div class="eyebrow">DRAWING SET SHEET INDEX</div>
-      <h1>DrawX</h1>
-      <p>Uploads a drawing set PDF, OCRs title blocks and notes (PDFium + Tesseract, no external API), and detects sheet numbers (A-101, M-1.1, etc.) to build a sheet index.</p>
-      <p class="caveat">This indexes sheet numbers and titles from text - it doesn't read lines, symbols, or dimensions on the drawing itself.</p>
-      <a class="button primary" id="dx-signin-btn" href="/login?redirect=/drawx" style="display:none">SIGN IN</a>
-    </div>
-
-    <div id="app" style="display:none">
-      <div class="card">
-        <div class="form-grid">
-          <div><label>PROJECT NAME</label><input id="dx-project" type="text"></div>
-          <div><label>DRAWING SET DATE</label><input id="dx-date" type="date"></div>
-          <div style="grid-column:1/-1"><label>DRAWING SET (PDF)</label><input id="dx-file" type="file" accept="application/pdf"></div>
-        </div>
-        <button id="dx-analyze-btn" class="button primary" style="height:42px;margin-top:16px">BUILD SHEET INDEX</button>
-        <div class="step-log" id="dx-log"></div>
-      </div>
-      <div class="card" id="dx-result" style="display:none">
-        <div class="result-row">
-          <div class="stat-row" id="dx-stats"></div>
-          <a id="dx-download" class="button primary" href="#" target="_blank">DOWNLOAD SHEET INDEX PDF</a>
-        </div>
-      </div>
-    </div>
-
-    <div class="card note-card" id="guest-note">
-      DrawX is available standalone at $399/mo or as part of TakeoffX Pro. See
-      <code>/pricing</code> for licensing, or sign in above if you already have access.
-    </div>
-  </div>
-  <script src="/assets/authfor-integration-standard.js"></script>
-  <script>
-    const auth = new AuthForStandard({ clientId: 'af_weyland_login', ventureName: 'weylandai.com' });
-    function authHeaders(json) {
-      const t = auth.getToken();
-      const h = t ? { 'Authorization': 'Bearer ' + t } : {};
-      if (json) h['Content-Type'] = 'application/json';
-      return h;
-    }
-    const log = document.getElementById('dx-log');
-    function logLine(msg, cls) { const d = document.createElement('div'); if (cls) d.className = cls; d.textContent = msg; log.appendChild(d); }
-
-    document.getElementById('dx-analyze-btn').addEventListener('click', async () => {
-      const btn = document.getElementById('dx-analyze-btn');
-      const fileInput = document.getElementById('dx-file');
-      log.innerHTML = '';
-      document.getElementById('dx-result').style.display = 'none';
-      if (!fileInput.files.length) { logLine('Choose a PDF first.', 'err'); return; }
-      const fd = new FormData();
-      fd.append('file', fileInput.files[0]);
-      fd.append('projectName', document.getElementById('dx-project').value.trim());
-      fd.append('drawingSetDate', document.getElementById('dx-date').value);
-      btn.disabled = true;
-      logLine('Uploading and running OCR...');
-      try {
-        const res = await fetch('/api/drawing-index/analyze', { method: 'POST', headers: authHeaders(false), body: fd });
-        const data = await res.json();
-        if (!res.ok) { logLine('Error: ' + (data.error && (data.error.message || data.error) || 'analysis failed'), 'err'); btn.disabled = false; return; }
-        logLine('Done - ' + data.pageCount + ' page(s) scanned.', 'ok');
-        document.getElementById('dx-stats').innerHTML = '<div><b>' + data.pageCount + '</b>PAGES</div><div><b>' + data.sheetCount + '</b>SHEETS</div>';
-        document.getElementById('dx-download').href = data.downloadUrl;
-        document.getElementById('dx-result').style.display = 'block';
-      } catch (e) {
-        logLine('Error: ' + e.message, 'err');
-      }
-      btn.disabled = false;
-    });
-
-    (async () => {
-      try {
-        const probe = await fetch('/api/drawing-index/analyze', { method: 'POST', headers: authHeaders(true), body: JSON.stringify({}) });
-        if (probe.status === 401 || probe.status === 403) {
-          document.getElementById('dx-signin-btn').style.display = 'inline-block';
-          return;
-        }
-        if (probe.status === 402) {
-          document.getElementById('guest-note').innerHTML = 'You\\'re signed in, but your plan doesn\\'t include DrawX yet. See <code>/pricing</code> to add it.';
-          return;
-        }
-        document.getElementById('app').style.display = 'block';
-        document.getElementById('guest-note').style.display = 'none';
-      } catch (e) {
-        document.getElementById('dx-signin-btn').style.display = 'inline-block';
-      }
-    })();
-  </script>
-</body>
-</html>`, { headers: { "Content-Type": "text/html; charset=UTF-8", "Cache-Control": "public, max-age=60" } });
-  }
-  function serve_asbuiltx() {
-    return new Response(`<!doctype html>
-<html lang="en">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <meta name="theme-color" content="#090a0d">
-  <title>AsBuiltX | As-Built vs. Original Diff</title>
-  <style>
-    :root{--bg:#090a0d;--panel:#121419;--panel2:#181b21;--line:#2c3139;--text:#edf0f1;--muted:#9299a3;--gold:#f0b800;--green:#61dfa0;--blue:#66d4ff;--red:#ff756e}
-    *{box-sizing:border-box}html,body{margin:0;min-height:100%;background:var(--bg);color:var(--text);font-family:"Avenir Next","Helvetica Neue",sans-serif}
-    .shell{position:relative;max-width:900px;margin:auto;padding:20px clamp(16px,3vw,40px) 60px}
-    header{display:flex;align-items:center;justify-content:space-between;gap:15px;margin-bottom:24px}
-    .brand{display:flex;align-items:center;gap:12px;color:var(--text);text-decoration:none}
-    .mark{width:42px;height:42px;display:grid;place-items:center;background:var(--red);color:var(--bg);font-weight:900}
-    .brand b{display:block;letter-spacing:.16em}
-    .brand small{display:block;color:var(--muted);font:700 9px/1.5 ui-monospace,monospace;letter-spacing:.11em}
-    .nav{display:flex;gap:8px;flex-wrap:wrap}
-    .nav a,.button{border:1px solid var(--line);border-radius:99px;padding:9px 14px;color:var(--text);text-decoration:none;background:transparent;font:750 10px/1 ui-monospace,monospace;letter-spacing:.06em;cursor:pointer;transition:all .2s}
-    .nav a:hover,.button:hover{border-color:var(--red);color:var(--red)}
-    .button.primary{background:var(--red);border-color:var(--red);color:var(--bg);font-weight:900}
-    .button:disabled{opacity:.5;cursor:not-allowed}
-    .titlebar{margin:35px 0 25px}
-    .eyebrow{color:var(--red);font:800 11px/1 ui-monospace,monospace;letter-spacing:.18em;text-transform:uppercase}
-    .titlebar h1{font-size:clamp(30px,4.5vw,48px);letter-spacing:-.04em;margin:12px 0}
-    .titlebar p{max-width:640px;color:var(--muted);line-height:1.6;margin:0;font-size:15px}
-    .titlebar .caveat{margin-top:10px;color:var(--gold);font-size:12.5px}
-    .card{background:rgba(18,20,25,.94);border:1px solid var(--line);border-radius:16px;padding:22px;margin-bottom:18px}
-    .form-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px}
-    label{display:block;color:var(--muted);font:750 10px/1 ui-monospace,monospace;letter-spacing:.08em;margin-bottom:8px}
-    input{width:100%;padding:11px;background:var(--panel2);border:1px solid var(--line);border-radius:8px;color:var(--text);font-size:14px;box-sizing:border-box;font-family:inherit}
-    input:focus{outline:none;border-color:var(--red)}
-    .step-log{margin-top:14px;color:var(--muted);font-size:13px}
-    .step-log .ok{color:var(--green)}
-    .step-log .err{color:var(--red)}
-    .note-card{color:var(--muted);font-size:14px;line-height:1.6}
-    .note-card code{background:#161920;padding:2px 6px;border-radius:4px;color:var(--red);font-size:13px}
-    .result-row{display:flex;justify-content:space-between;align-items:center;gap:14px;flex-wrap:wrap}
-  </style>
-</head>
-<body>
-  <div class="shell">
-    <header>
-      <a class="brand" href="/"><span class="mark">AB</span><span><b>ASBUILTX</b><small>AS-BUILT VS. ORIGINAL DIFF</small></span></a>
-      <nav class="nav">${renderNav("asbuiltx")}</nav>
-    </header>
-    <div class="titlebar">
-      <div class="eyebrow">AS-BUILT VS. ORIGINAL DIFF</div>
-      <h1>AsBuiltX</h1>
-      <p>Uploads an original drawing sheet and its as-built revision, renders both pages, and computes a real pixel-level difference heatmap between them - no external API, same PDFium engine used elsewhere.</p>
-      <p class="caveat">This is raw pixel comparison, not markup/redline recognition - it flags where pixels differ, not what changed. Scan misalignment will also show up.</p>
-      <a class="button primary" id="ax-signin-btn" href="/login?redirect=/asbuiltx" style="display:none">SIGN IN</a>
-    </div>
-
-    <div id="app" style="display:none">
-      <div class="card">
-        <div class="form-grid">
-          <div><label>PROJECT NAME</label><input id="ax-project" type="text"></div>
-          <div><label>SHEET LABEL</label><input id="ax-sheet" type="text" placeholder="e.g. A-101"></div>
-          <div><label>PAGE NUMBER</label><input id="ax-page" type="number" value="1" min="1"></div>
-          <div><label>ORIGINAL DRAWING (PDF)</label><input id="ax-original" type="file" accept="application/pdf"></div>
-          <div><label>AS-BUILT / REVISED (PDF)</label><input id="ax-revised" type="file" accept="application/pdf"></div>
-        </div>
-        <button id="ax-analyze-btn" class="button primary" style="height:42px;margin-top:16px">COMPUTE DIFF</button>
-        <div class="step-log" id="ax-log"></div>
-      </div>
-      <div class="card" id="ax-result" style="display:none">
-        <div class="result-row">
-          <span id="ax-summary"></span>
-          <a id="ax-download" class="button primary" href="#" target="_blank">DOWNLOAD HEATMAP PDF</a>
-        </div>
-      </div>
-    </div>
-
-    <div class="card note-card" id="guest-note">
-      AsBuiltX is available standalone at $199/mo or as part of TakeoffX Pro. See
-      <code>/pricing</code> for licensing, or sign in above if you already have access.
-    </div>
-  </div>
-  <script src="/assets/authfor-integration-standard.js"></script>
-  <script>
-    const auth = new AuthForStandard({ clientId: 'af_weyland_login', ventureName: 'weylandai.com' });
-    function authHeaders(json) {
-      const t = auth.getToken();
-      const h = t ? { 'Authorization': 'Bearer ' + t } : {};
-      if (json) h['Content-Type'] = 'application/json';
-      return h;
-    }
-    const log = document.getElementById('ax-log');
-    function logLine(msg, cls) { const d = document.createElement('div'); if (cls) d.className = cls; d.textContent = msg; log.appendChild(d); }
-
-    document.getElementById('ax-analyze-btn').addEventListener('click', async () => {
-      const btn = document.getElementById('ax-analyze-btn');
-      const originalInput = document.getElementById('ax-original');
-      const revisedInput = document.getElementById('ax-revised');
-      log.innerHTML = '';
-      document.getElementById('ax-result').style.display = 'none';
-      if (!originalInput.files.length || !revisedInput.files.length) { logLine('Choose both PDFs first.', 'err'); return; }
-      const fd = new FormData();
-      fd.append('original', originalInput.files[0]);
-      fd.append('revised', revisedInput.files[0]);
-      fd.append('projectName', document.getElementById('ax-project').value.trim());
-      fd.append('sheetLabel', document.getElementById('ax-sheet').value.trim());
-      fd.append('page', document.getElementById('ax-page').value || '1');
-      btn.disabled = true;
-      logLine('Rendering pages and computing diff...');
-      try {
-        const res = await fetch('/api/asbuilt-diffs/analyze', { method: 'POST', headers: authHeaders(false), body: fd });
-        const data = await res.json();
-        if (!res.ok) { logLine('Error: ' + (data.error && (data.error.message || data.error) || 'diff failed'), 'err'); btn.disabled = false; return; }
-        logLine('Done.', 'ok');
-        document.getElementById('ax-summary').textContent = data.overallDiffPercent + '% overall pixel difference';
-        document.getElementById('ax-download').href = data.downloadUrl;
-        document.getElementById('ax-result').style.display = 'block';
-      } catch (e) {
-        logLine('Error: ' + e.message, 'err');
-      }
-      btn.disabled = false;
-    });
-
-    (async () => {
-      try {
-        const probe = await fetch('/api/asbuilt-diffs/analyze', { method: 'POST', headers: authHeaders(true), body: JSON.stringify({}) });
-        if (probe.status === 401 || probe.status === 403) {
-          document.getElementById('ax-signin-btn').style.display = 'inline-block';
-          return;
-        }
-        if (probe.status === 402) {
-          document.getElementById('guest-note').innerHTML = 'You\\'re signed in, but your plan doesn\\'t include AsBuiltX yet. See <code>/pricing</code> to add it.';
-          return;
-        }
-        document.getElementById('app').style.display = 'block';
-        document.getElementById('guest-note').style.display = 'none';
-      } catch (e) {
-        document.getElementById('ax-signin-btn').style.display = 'inline-block';
-      }
-    })();
-  </script>
-</body>
-</html>`, { headers: { "Content-Type": "text/html; charset=UTF-8", "Cache-Control": "public, max-age=60" } });
-  }
-  function serve_leadx() {
-    return new Response(`<!doctype html>
-<html lang="en">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <meta name="theme-color" content="#090a0d">
-  <title>LeadX | Lead Qualification Engine</title>
-  <style>
-    :root{--bg:#090a0d;--panel:#121419;--panel2:#181b21;--line:#2c3139;--text:#edf0f1;--muted:#9299a3;--gold:#f0b800;--green:#61dfa0;--blue:#66d4ff;--red:#ff756e}
-    *{box-sizing:border-box}html,body{margin:0;min-height:100%;background:var(--bg);color:var(--text);font-family:"Avenir Next","Helvetica Neue",sans-serif}
-    .shell{position:relative;max-width:900px;margin:auto;padding:20px clamp(16px,3vw,40px) 60px}
-    header{display:flex;align-items:center;justify-content:space-between;gap:15px;margin-bottom:24px}
-    .brand{display:flex;align-items:center;gap:12px;color:var(--text);text-decoration:none}
-    .mark{width:42px;height:42px;display:grid;place-items:center;background:var(--gold);color:var(--bg);font-weight:900}
-    .brand b{display:block;letter-spacing:.16em}
-    .brand small{display:block;color:var(--muted);font:700 9px/1.5 ui-monospace,monospace;letter-spacing:.11em}
-    .nav{display:flex;gap:8px;flex-wrap:wrap}
-    .nav a,.button{border:1px solid var(--line);border-radius:99px;padding:9px 14px;color:var(--text);text-decoration:none;background:transparent;font:750 10px/1 ui-monospace,monospace;letter-spacing:.06em;cursor:pointer;transition:all .2s}
-    .nav a:hover,.button:hover{border-color:var(--gold);color:var(--gold)}
-    .button.primary{background:var(--gold);border-color:var(--gold);color:var(--bg);font-weight:900}
-    .button:disabled{opacity:.5;cursor:not-allowed}
-    .titlebar{margin:35px 0 25px}
-    .eyebrow{color:var(--gold);font:800 11px/1 ui-monospace,monospace;letter-spacing:.18em;text-transform:uppercase}
-    .titlebar h1{font-size:clamp(30px,4.5vw,48px);letter-spacing:-.04em;margin:12px 0}
-    .titlebar p{max-width:640px;color:var(--muted);line-height:1.6;margin:0;font-size:15px}
-    .titlebar .caveat{margin-top:10px;color:var(--red);font-size:12.5px}
-    .card{background:rgba(18,20,25,.94);border:1px solid var(--line);border-radius:16px;padding:22px;margin-bottom:18px}
-    .section-label{color:var(--gold);font:800 10px/1 ui-monospace,monospace;letter-spacing:.1em;text-transform:uppercase;margin-bottom:14px;display:block}
-    .form-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px}
-    label{display:block;color:var(--muted);font:750 10px/1 ui-monospace,monospace;letter-spacing:.08em;margin-bottom:8px}
-    input{width:100%;padding:11px;background:var(--panel2);border:1px solid var(--line);border-radius:8px;color:var(--text);font-size:14px;box-sizing:border-box;font-family:inherit}
-    input:focus{outline:none;border-color:var(--gold)}
-    .step-log{margin-top:14px;color:var(--muted);font-size:13px}
-    .step-log .ok{color:var(--green)}
-    .step-log .err{color:var(--red)}
-    .note-card{color:var(--muted);font-size:14px;line-height:1.6}
-    .note-card code{background:#161920;padding:2px 6px;border-radius:4px;color:var(--gold);font-size:13px}
-    .result-row{display:flex;justify-content:space-between;align-items:center;gap:14px;flex-wrap:wrap}
-    .stat-row{display:flex;gap:20px;color:var(--muted);font-size:13px}
-    .stat-row b{color:var(--text);font-size:18px;display:block}
-  </style>
-</head>
-<body>
-  <div class="shell">
-    <header>
-      <a class="brand" href="/"><span class="mark">LX</span><span><b>LEADX</b><small>LEAD QUALIFICATION ENGINE</small></span></a>
-      <nav class="nav">${renderNav("leadx")}</nav>
-    </header>
-    <div class="titlebar">
-      <div class="eyebrow">LEAD QUALIFICATION ENGINE</div>
-      <h1>LeadX</h1>
-      <p>Scores the live opportunities HuntX already crawls (TXDOT + CA OPSC open data) against your saved criteria - minimum value, keywords, and locations - and generates a qualified-leads report.</p>
-      <p class="caveat">Scoring is three simple, explainable rules, not an AI judgment of project quality or win probability.</p>
-      <a class="button primary" id="lx-signin-btn" href="/login?redirect=/leadx" style="display:none">SIGN IN</a>
-    </div>
-
-    <div id="app" style="display:none">
-      <div class="card">
-        <span class="section-label">QUALIFICATION CRITERIA</span>
-        <div class="form-grid">
-          <div><label>MINIMUM VALUE ($)</label><input id="lx-min-value" type="number" min="0" placeholder="e.g. 500000"></div>
-          <div><label>KEYWORDS (COMMA-SEPARATED)</label><input id="lx-keywords" type="text" placeholder="e.g. door, hardware, school"></div>
-          <div><label>LOCATIONS (COMMA-SEPARATED)</label><input id="lx-locations" type="text" placeholder="e.g. Travis, Harris, CA"></div>
-        </div>
-        <button id="lx-save-btn" class="button" style="margin-top:14px">SAVE CRITERIA</button>
-        <button id="lx-qualify-btn" class="button primary" style="height:42px;margin-top:14px">RUN QUALIFICATION</button>
-        <div class="step-log" id="lx-log"></div>
-      </div>
-      <div class="card" id="lx-result" style="display:none">
-        <div class="result-row">
-          <div class="stat-row" id="lx-stats"></div>
-          <a id="lx-download" class="button primary" href="#" target="_blank">DOWNLOAD REPORT PDF</a>
-        </div>
-      </div>
-    </div>
-
-    <div class="card note-card" id="guest-note">
-      LeadX is available standalone at $249/mo or as part of HuntX Pro. See
-      <code>/pricing</code> for licensing, or sign in above if you already have access. Requires an active HuntX seat for opportunity data.
-    </div>
-  </div>
-  <script src="/assets/authfor-integration-standard.js"></script>
-  <script>
-    const auth = new AuthForStandard({ clientId: 'af_weyland_login', ventureName: 'weylandai.com' });
-    function authHeaders(json) {
-      const t = auth.getToken();
-      const h = t ? { 'Authorization': 'Bearer ' + t } : {};
-      if (json) h['Content-Type'] = 'application/json';
-      return h;
-    }
-    const log = document.getElementById('lx-log');
-    function logLine(msg, cls) { const d = document.createElement('div'); if (cls) d.className = cls; d.textContent = msg; log.appendChild(d); }
-
-    async function loadCriteria() {
-      try {
-        const res = await fetch('/api/leads/criteria', { headers: authHeaders() });
-        const data = await res.json();
-        if (data.criteria) {
-          document.getElementById('lx-min-value').value = data.criteria.min_value || '';
-          document.getElementById('lx-keywords').value = data.criteria.keywords || '';
-          document.getElementById('lx-locations').value = data.criteria.locations || '';
-        }
-      } catch (e) {}
-    }
-
-    document.getElementById('lx-save-btn').addEventListener('click', async () => {
-      logLine('Saving criteria...');
-      try {
-        const res = await fetch('/api/leads/criteria', { method: 'POST', headers: authHeaders(true), body: JSON.stringify({
-          minValue: document.getElementById('lx-min-value').value,
-          keywords: document.getElementById('lx-keywords').value.trim(),
-          locations: document.getElementById('lx-locations').value.trim()
-        }) });
-        if (!res.ok) { logLine('Error saving criteria.', 'err'); return; }
-        logLine('Criteria saved.', 'ok');
-      } catch (e) {
-        logLine('Error: ' + e.message, 'err');
-      }
-    });
-
-    document.getElementById('lx-qualify-btn').addEventListener('click', async () => {
-      const btn = document.getElementById('lx-qualify-btn');
-      log.innerHTML = '';
-      document.getElementById('lx-result').style.display = 'none';
-      btn.disabled = true;
-      logLine('Scoring current HuntX opportunities...');
-      try {
-        const res = await fetch('/api/leads/qualify', { method: 'POST', headers: authHeaders(true), body: JSON.stringify({}) });
-        const data = await res.json();
-        if (!res.ok) { logLine('Error: ' + (data.error && (data.error.message || data.error) || 'qualification failed'), 'err'); btn.disabled = false; return; }
-        logLine('Done.', 'ok');
-        document.getElementById('lx-stats').innerHTML = '<div><b>' + data.totalScanned + '</b>SCANNED</div><div><b>' + data.qualifiedCount + '</b>QUALIFIED</div>';
-        document.getElementById('lx-download').href = data.downloadUrl;
-        document.getElementById('lx-result').style.display = 'block';
-      } catch (e) {
-        logLine('Error: ' + e.message, 'err');
-      }
-      btn.disabled = false;
-    });
-
-    (async () => {
-      try {
-        const probe = await fetch('/api/leads/criteria', { headers: authHeaders() });
-        if (probe.status === 401 || probe.status === 403) {
-          document.getElementById('lx-signin-btn').style.display = 'inline-block';
-          return;
-        }
-        if (probe.status === 402) {
-          document.getElementById('guest-note').innerHTML = 'You\\'re signed in, but your plan doesn\\'t include LeadX yet. See <code>/pricing</code> to add it.';
-          return;
-        }
-        document.getElementById('app').style.display = 'block';
-        document.getElementById('guest-note').style.display = 'none';
-        loadCriteria();
-      } catch (e) {
-        document.getElementById('lx-signin-btn').style.display = 'inline-block';
-      }
-    })();
-  </script>
-</body>
-</html>`, { headers: { "Content-Type": "text/html; charset=UTF-8", "Cache-Control": "public, max-age=60" } });
-  }
-  function serve_careers() {
-    return new Response('<!doctype html>\n<html lang="en">\n<head>\n  <meta charset="utf-8">\n  <meta name="viewport" content="width=device-width,initial-scale=1">\n  <meta name="theme-color" content="#090a0d">\n  <title>Careers | WeylandAI</title>\n  <style>\n    :root{--bg:#090a0d;--panel:#121419;--line:#2c3139;--text:#edf0f1;--muted:#9299a3;--gold:#f0b800;--green:#61dfa0;--blue:#66d4ff;--purple:#a78bfa}\n    *{box-sizing:border-box}html,body{margin:0;min-height:100%;background:var(--bg);color:var(--text);font-family:"Avenir Next","Helvetica Neue",sans-serif}\n    body:before{content:"";position:fixed;inset:0;pointer-events:none;background:radial-gradient(circle at 80% 80%,rgba(167,139,242,.12),transparent 30rem),linear-gradient(rgba(255,255,255,.015) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.015) 1px,transparent 1px);background-size:auto,30px 30px,30px 30px}\n    .shell{position:relative;max-width:1300px;margin:auto;padding:20px clamp(16px,3vw,40px) 60px}\n    header{display:flex;align-items:center;justify-content:space-between;gap:15px;margin-bottom:24px}\n    .brand{display:flex;align-items:center;gap:12px;color:var(--text);text-decoration:none}\n    .mark{width:42px;height:42px;display:grid;place-items:center;background:var(--purple);color:var(--bg);font-weight:900}\n    .brand b{display:block;letter-spacing:.16em}\n    .brand small{display:block;color:var(--muted);font:700 9px/1.5 ui-monospace,monospace;letter-spacing:.11em}\n    .nav{display:flex;gap:8px;flex-wrap:wrap}\n    .nav a,.button{border:1px solid var(--line);border-radius:99px;padding:9px 14px;color:var(--text);text-decoration:none;background:transparent;font:750 10px/1 ui-monospace,monospace;letter-spacing:.06em;cursor:pointer;transition:all .2s}\n    .nav a:hover,.button:hover{border-color:var(--purple);color:var(--purple)}\n    .button.primary{background:var(--purple);border-color:var(--purple);color:var(--bg);font-weight:900}\n    \n    .titlebar{text-align:center;margin:45px 0 50px}\n    .eyebrow{color:var(--purple);font:800 11px/1 ui-monospace,monospace;letter-spacing:.18em;text-transform:uppercase}\n    .titlebar h1{font-size:clamp(36px,5vw,62px);letter-spacing:-.05em;line-height:1.05;margin:14px 0}\n    .titlebar p{max-width:700px;color:var(--muted);line-height:1.6;margin:0 auto;font-size:17px}\n    \n    .req-grid{display:grid;gap:20px;margin-top:30px}\n    .req-card{background:rgba(18,20,25,.92);border:1px solid var(--line);border-radius:16px;padding:26px;display:flex;justify-content:space-between;align-items:center;transition:all .2s;flex-wrap:wrap;gap:20px}\n    .req-card:hover{border-color:var(--purple);transform:translateY(-2px);box-shadow:0 15px 40px rgba(0,0,0,.3)}\n    .req-meta span{font:800 10px ui-monospace,monospace;color:var(--purple);display:inline-block;margin-right:12px;text-transform:uppercase}\n    .req-title{font-size:22px;font-weight:800;color:#fff;margin:8px 0 6px}\n    .req-desc{color:var(--muted);font-size:14px;line-height:1.5;max-width:680px;margin:0}\n    .salary-box{text-align:right}\n    .salary-box strong{font-size:20px;color:var(--green);display:block;font-weight:900}\n    .salary-box small{color:var(--muted);font-size:12px;display:block;margin-top:2px}\n    \n    @media(max-width:800px){.req-card{flex-direction:column;align-items:flex-start}.salary-box{text-align:left;width:100%}}\n  </style>\n</head>\n<body>\n  <div class="shell">\n    <header>\n      <a class="brand" href="/"><span class="mark">CR</span><span><b>WEYLANDAI</b><small>THE FECUNDITY TALENT VECTOR</small></span></a>\n      <nav class="nav">' + renderNav("careers") + `</nav>
-    </header>
-    <div class="titlebar">
-      <div class="eyebrow">JOIN THE TEAM</div>
-      <h1>We're not hiring through a job board yet.</h1>
-      <p>WeylandAI is a small, early-stage team building construction document automation \u2014 HuntX, SubX, TakeoffX, PropX, and SightX on one shared project record. If you want to work on real construction AI with a founder-led team, reach out directly with what you'd want to build and why.</p>
-      <p style="margin-top:24px"><a class="button primary" href="mailto:hello@weylandai.com?subject=Interested%20in%20WeylandAI">EMAIL HELLO@WEYLANDAI.COM</a></p>
-    </div>
-  </div>
-</body>
-</html>
-`, { headers: { "Content-Type": "text/html; charset=UTF-8", "Cache-Control": "public, max-age=60" } });
-  }
-  function serve_sightx() {
-    return new Response(`<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>SightX | WeylandAI Site Vision Demonstrator</title>
-  <meta name="description" content="Explore the SightX construction-vision demonstrator: a navigable WeylandAI facility with automated openings and site intelligence overlays.">
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><rect width='64' height='64' fill='%23f0b800'/><path d='M13 16h8l6 28h-8zm15 0h8l4 17 4-17h8l-8 28h-8z' fill='%23090a0d'/></svg>">
-  
-  <!-- Premium Typography -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;700&family=Outfit:wght@300;400;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="/assets/sightx-controls.css?v=20260729-3">
-  <link rel="stylesheet" href="/assets/sightx-experience.css?v=20260729-3">
-  <link rel="stylesheet" href="/assets/sightx-ingest.css?v=20260729-3">
-  <link rel="stylesheet" href="/assets/sightx-reconstruction.css?v=20260729-1">
-  <link rel="stylesheet" href="/assets/sightx-runtime.css?v=20260813-1">
-  
-  <style>
-    :root {
-      --color-primary: #f0b800;
-      --color-accent: #d9e2e8;
-      --void-glow: rgba(240, 184, 0, 0.24);
-    }
-    
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
-    
-    body {
-      font-family: 'Outfit', sans-serif;
-      background: #030305;
-      color: #f0f0f5;
-      overflow-x: hidden;
-      min-height: 100vh;
-    }
-    
-    #bg-canvas {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100vw;
-      height: 100vh;
-      z-index: 1;
-      transition: filter 1.0s cubic-bezier(0.4, 0, 0.2, 1);
-      filter: brightness(0.45) blur(4px);
-    }
-    
-    #bg-canvas.interactive {
-      filter: brightness(1.0) blur(0px);
-      cursor: crosshair;
-    }
-
-    body.sightx-demo #bg-canvas {
-      filter: brightness(1.0) blur(0px);
-      cursor: crosshair;
-    }
-
-    body.sightx-demo #app-container {
-      display: none;
-    }
-    
-    #app-container {
-      position: relative;
-      z-index: 2;
-      display: flex;
-      flex-direction: column;
-      min-height: 100vh;
-      backdrop-filter: blur(8px);
-      transition: opacity 0.5s cubic-bezier(0.4, 0, 0.2, 1), transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-      opacity: 1;
-      transform: scale(1);
-    }
-    
-    #app-container.hidden {
-      opacity: 0;
-      pointer-events: none;
-      transform: scale(0.98);
-    }
-    
-    header {
-      padding: 25px 40px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-    }
-    
-    .logo {
-      font-family: 'Space Grotesk', sans-serif;
-      font-size: 24px;
-      font-weight: 700;
-      color: var(--color-primary);
-      text-shadow: 0 0 10px var(--void-glow);
-      letter-spacing: 2px;
-    }
-    
-    .logo span {
-      color: rgba(217, 226, 232, 0.58);
-      font-weight: 300;
-      letter-spacing: 1px;
-    }
-    
-    .status-badge {
-      background: rgba(240, 184, 0, 0.05);
-      border: 1px solid rgba(240, 184, 0, 0.2);
-      padding: 8px 16px;
-      border-radius: 20px;
-      font-size: 13px;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      font-family: 'Space Grotesk', sans-serif;
-    }
-    
-    .status-dot {
-      width: 8px;
-      height: 8px;
-      background: var(--color-primary);
-      border-radius: 50%;
-      box-shadow: 0 0 8px var(--color-primary);
-    }
-    
-    main {
-      flex: 1;
-      max-width: 800px;
-      margin: 0 auto;
-      width: 100%;
-      padding: 40px 20px;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-    }
-    
-    .slideshow-container {
-      position: relative;
-      background: rgba(10, 10, 15, 0.85);
-      border: 1px solid rgba(240, 184, 0, 0.15);
-      border-radius: 20px;
-      padding: 40px;
-      box-shadow: 0 20px 40px rgba(0,0,0,0.6);
-      min-height: 380px;
-      display: flex;
-      flex-direction: column;
-    }
-    
-    .slide {
-      display: none;
-      flex-direction: column;
-      flex: 1;
-      animation: fadeIn 0.4s ease-out forwards;
-    }
-    
-    .slide.active {
-      display: flex;
-    }
-    
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(5px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-    
-    .category-label {
-      display: inline-block;
-      padding: 6px 12px;
-      background: rgba(240, 184, 0, 0.08);
-      border: 1px solid var(--color-primary);
-      color: var(--color-primary);
-      border-radius: 30px;
-      font-size: 11px;
-      font-weight: 600;
-      margin-bottom: 20px;
-      text-transform: uppercase;
-      letter-spacing: 1.5px;
-      align-self: flex-start;
-      font-family: 'Space Grotesk', sans-serif;
-    }
-    
-    h1 {
-      font-family: 'Space Grotesk', sans-serif;
-      font-size: 38px;
-      margin-bottom: 18px;
-      line-height: 1.1;
-      color: #fff;
-    }
-    
-    .purpose-text {
-      font-size: 16px;
-      line-height: 1.6;
-      color: #b0b0c5;
-      margin-bottom: 25px;
-    }
-    
-    .product-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 15px;
-      margin-top: 10px;
-    }
-    
-    .product-box {
-      background: rgba(255,255,255,0.01);
-      border: 1px solid rgba(255,255,255,0.04);
-      border-radius: 12px;
-      padding: 16px;
-      transition: all 0.2s;
-    }
-    
-    .product-box:hover {
-      border-color: rgba(240, 184, 0, 0.2);
-      background: rgba(240, 184, 0, 0.02);
-    }
-    
-    .product-title {
-      font-family: 'Space Grotesk', sans-serif;
-      font-weight: 700;
-      color: var(--color-primary);
-      font-size: 15px;
-      margin-bottom: 6px;
-    }
-    
-    .product-desc {
-      font-size: 12px;
-      color: #808095;
-      line-height: 1.4;
-    }
-    
-    /* Interactive Widget */
-    .widget-title {
-      font-family: 'Space Grotesk', sans-serif;
-      font-size: 18px;
-      font-weight: 700;
-      margin-bottom: 15px;
-      color: var(--color-primary);
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-    
-    .console-box {
-      flex: 1;
-      background: #020204;
-      border: 1px solid rgba(240,184,0,0.1);
-      border-radius: 10px;
-      padding: 15px;
-      font-family: 'Space Grotesk', monospace;
-      font-size: 13px;
-      color: var(--color-primary);
-      min-height: 180px;
-      overflow-y: auto;
-      margin-bottom: 15px;
-      box-shadow: inset 0 0 10px rgba(0,0,0,0.8);
-    }
-    
-    .console-input-row {
-      display: flex;
-      gap: 10px;
-    }
-    
-    .console-input {
-      flex: 1;
-      background: #020204;
-      border: 1px solid rgba(255,255,255,0.1);
-      border-radius: 8px;
-      padding: 10px 14px;
-      color: #fff;
-      font-family: monospace;
-      outline: none;
-      font-size: 13px;
-    }
-    
-    .console-input:focus {
-      border-color: var(--color-primary);
-    }
-    
-    .console-btn {
-      background: var(--color-primary);
-      border: none;
-      color: #000;
-      padding: 10px 20px;
-      border-radius: 8px;
-      font-weight: 700;
-      cursor: pointer;
-      font-family: 'Space Grotesk', sans-serif;
-      transition: all 0.2s;
-    }
-    
-    .console-btn:hover {
-      box-shadow: 0 0 12px var(--color-primary);
-    }
-    
-    .portal-trigger {
-      margin-top: 15px;
-      text-align: center;
-    }
-    
-    .portal-btn {
-      display: inline-block;
-      text-decoration: none;
-      color: #808095;
-      font-size: 12px;
-      padding: 8px 16px;
-      border-radius: 30px;
-      border: 1px solid rgba(255,255,255,0.1);
-      transition: all 0.2s;
-    }
-    
-    .portal-btn:hover {
-      color: #fff;
-      border-color: var(--color-accent);
-    }
-    
-    /* Product Footer Browser styling */
-    .product-footer-browser {
-      margin-top: 30px;
-      border-top: 1px solid rgba(255, 255, 255, 0.05);
-      padding-top: 20px;
-      display: flex;
-      justify-content: center;
-    }
-    
-    .product-tabs {
-      display: flex;
-      gap: 10px;
-      flex-wrap: wrap;
-      justify-content: center;
-    }
-    
-    .product-tab {
-      background: rgba(255, 255, 255, 0.02);
-      border: 1px solid rgba(255, 255, 255, 0.08);
-      color: #808095;
-      padding: 10px 20px;
-      border-radius: 8px;
-      font-family: 'Space Grotesk', sans-serif;
-      font-size: 11px;
-      font-weight: 600;
-      letter-spacing: 1px;
-      cursor: pointer;
-      transition: all 0.2s;
-    }
-    
-    .product-tab:hover {
-      border-color: var(--color-primary);
-      color: #fff;
-    }
-    
-    .product-tab.active {
-      background: var(--color-primary);
-      color: #000;
-      border-color: var(--color-primary);
-      box-shadow: 0 0 10px rgba(240, 184, 0, 0.2);
-    }
-    
-    /* Fleet browser drawer */
-    .fleet-browser-container {
-      position: relative;
-      width: 100%;
-    }
-    
-    .fleet-drawer {
-      position: fixed;
-      bottom: 0;
-      left: 0;
-      width: 100vw;
-      background: rgba(6, 6, 9, 0.97);
-      border-top: 1px solid var(--color-primary);
-      box-shadow: 0 -10px 40px rgba(0, 0, 0, 0.8);
-      z-index: 998;
-      max-height: 0;
-      overflow: hidden;
-      transition: max-height 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-      backdrop-filter: blur(15px);
-    }
-    
-    .fleet-drawer.open {
-      max-height: 280px;
-    }
-    
-    .fleet-drawer-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 15px 40px;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-    }
-    
-    .fleet-drawer-title {
-      font-family: 'Space Grotesk', sans-serif;
-      font-size: 13px;
-      letter-spacing: 2px;
-      color: var(--color-accent);
-      font-weight: 700;
-      text-transform: uppercase;
-    }
-    
-    .close-drawer-btn {
-      background: none;
-      border: none;
-      color: #808095;
-      font-size: 18px;
-      cursor: pointer;
-      transition: color 0.2s;
-    }
-    
-    .close-drawer-btn:hover {
-      color: #fff;
-    }
-    
-    .fleet-links-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-      gap: 10px;
-      padding: 20px 40px;
-      overflow-y: auto;
-      max-height: 200px;
-    }
-    
-    .fleet-link {
-      color: #808095;
-      text-decoration: none;
-      font-size: 12px;
-      padding: 10px 14px;
-      background: rgba(255, 255, 255, 0.02);
-      border: 1px solid rgba(255, 255, 255, 0.05);
-      border-radius: 8px;
-      transition: all 0.2s;
-      font-family: 'Space Grotesk', sans-serif;
-      text-overflow: ellipsis;
-      white-space: nowrap;
-      overflow: hidden;
-      text-align: left;
-    }
-    
-    .fleet-link:hover {
-      background: rgba(240, 184, 0, 0.08);
-      border-color: var(--color-primary);
-      color: #fff;
-      transform: translateY(-2px);
-    }
-    
-    .cat-chips {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 6px;
-    }
-    
-    .cat-chip {
-      display: inline-block;
-      font-size: 11px;
-      padding: 6px 12px;
-      background: rgba(255,255,255,0.02);
-      border: 1px solid rgba(255,255,255,0.05);
-      color: #808095;
-      border-radius: 30px;
-      cursor: pointer;
-      transition: all 0.2s;
-      font-family: 'Space Grotesk', sans-serif;
-    }
-    
-    .cat-chip:hover, .cat-chip.active {
-      background: rgba(240, 184, 0, 0.08);
-      color: var(--color-primary);
-      border-color: var(--color-primary);
-    }
-    
-    footer {
-      border-top: 1px solid rgba(255, 255, 255, 0.05);
-      padding: 30px 40px;
-      background: rgba(5,5,8,0.9);
-      text-align: center;
-    }
-    
-    .footer-text {
-      color: #606075;
-      font-size: 12px;
-      line-height: 1.6;
-    }
-    
-    /* Play Mode HUD Hints */
-    #hint {
-      position: fixed;
-      top: 20px;
-      left: 50%;
-      transform: translateX(-50%);
-      z-index: 10;
-      background: rgba(0, 0, 0, 0.85);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      padding: 8px 16px;
-      border-radius: 20px;
-      font-family: 'Space Grotesk', monospace;
-      font-size: 11px;
-      letter-spacing: 1px;
-      color: #888;
-      pointer-events: none;
-      transition: opacity 0.3s;
-    }
-    
-    /* High-tech HUD Hardware Proximity Modal */
-    .hud-modal {
-      position: fixed;
-      bottom: 40px;
-      left: 50%;
-      transform: translateX(-50%);
-      z-index: 5;
-      background: linear-gradient(180deg, rgba(9, 9, 11, 0.95) 0%, rgba(3, 3, 5, 0.98) 100%);
-      border: 1px solid var(--color-primary);
-      box-shadow: 0 0 25px rgba(240, 184, 0, 0.25);
-      padding: 22px;
-      border-radius: 12px;
-      width: 90%;
-      max-width: 450px;
-      font-family: 'Space Grotesk', monospace;
-      color: #fff;
-      backdrop-filter: blur(10px);
-      animation: hud-reveal 0.3s cubic-bezier(0.19, 1, 0.22, 1);
-    }
-    
-    @keyframes hud-reveal {
-      from { transform: translate(-50%, 20px); opacity: 0; }
-      to { transform: translate(-50%, 0); opacity: 1; }
-    }
-    
-    .hud-scanner {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 2px;
-      background: var(--color-primary);
-      box-shadow: 0 0 8px var(--color-primary);
-      animation: scan 1.5s linear infinite;
-    }
-    
-    @keyframes scan {
-      0% { top: 0%; opacity: 0; }
-      10% { opacity: 1; }
-      90% { opacity: 1; }
-      100% { top: 100%; opacity: 0; }
-    }
-    
-    .hud-header {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      border-bottom: 1px solid rgba(240, 184, 0, 0.2);
-      padding-bottom: 10px;
-      margin-bottom: 12px;
-    }
-    
-    .hud-icon {
-      font-size: 18px;
-    }
-    
-    .hud-title {
-      font-weight: 700;
-      color: var(--color-primary);
-      letter-spacing: 1px;
-      font-size: 14px;
-    }
-    
-    .hud-body {
-      font-size: 13px;
-      line-height: 1.5;
-    }
-    
-    .hud-label {
-      color: #808095;
-      margin-bottom: 5px;
-      font-size: 11px;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-    }
-    
-    .hud-value {
-      color: #f0f0f5;
-      margin-bottom: 10px;
-    }
-    
-    .hud-sub {
-      color: var(--color-accent);
-      font-size: 11px;
-      border-top: 1px solid rgba(255, 255, 255, 0.05);
-      padding-top: 12px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-    
-    .hud-sub a {
-      color: var(--color-accent);
-      text-decoration: none;
-      border: 1px solid var(--color-accent);
-      padding: 3px 8px;
-      border-radius: 4px;
-      background: rgba(0, 229, 255, 0.05);
-      transition: all 0.2s;
-    }
-    
-    .hud-sub a:hover {
-      color: #fff;
-      border-color: #fff;
-      background: rgba(0, 229, 255, 0.15);
-      box-shadow: 0 0 8px var(--color-accent);
-    }
-    
-    /* Login Screen Modal Overlay */
-    #os-login-modal {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100vw;
-      height: 100vh;
-      background: rgba(3, 3, 5, 0.95);
-      z-index: 999;
-      display: none;
-      justify-content: center;
-      align-items: center;
-      backdrop-filter: blur(15px);
-    }
-    
-    .login-box {
-      width: 100%;
-      max-width: 400px;
-      background: rgba(10, 10, 15, 0.85);
-      border: 1px solid rgba(240, 184, 0, 0.2);
-      border-radius: 20px;
-      padding: 40px;
-      box-shadow: 0 20px 40px rgba(0,0,0,0.8);
-      text-align: center;
-    }
-    
-    .login-box h2 {
-      font-family: 'Space Grotesk', sans-serif;
-      font-size: 30px;
-      margin-bottom: 10px;
-      color: var(--color-primary);
-    }
-    
-    .login-box p {
-      color: #808095;
-      font-size: 13px;
-      margin-bottom: 30px;
-    }
-    
-    .login-input {
-      width: 100%;
-      background: #020204;
-      border: 1px solid rgba(240,184,0,0.2);
-      border-radius: 10px;
-      padding: 12px 16px;
-      color: #fff;
-      font-size: 15px;
-      margin-bottom: 15px;
-      outline: none;
-      font-family: monospace;
-    }
-    
-    .login-input:focus {
-      border-color: var(--color-accent);
-    }
-    
-    .login-button {
-      width: 100%;
-      background: var(--color-primary);
-      color: #000;
-      border: none;
-      padding: 12px 20px;
-      border-radius: 10px;
-      font-size: 16px;
-      font-weight: 700;
-      cursor: pointer;
-      transition: all 0.2s;
-      font-family: 'Space Grotesk', sans-serif;
-    }
-    
-    .login-button:hover {
-      box-shadow: 0 0 15px var(--color-primary);
-    }
-    
-    .close-modal {
-      margin-top: 15px;
-      font-size: 13px;
-      color: #606075;
-      cursor: pointer;
-    }
-    
-    .close-modal:hover {
-      color: #fff;
-    }
-
-    /* Mobile media queries */
-    @media (max-width: 600px) {
-      header {
-        padding: 15px 20px;
-      }
-      .logo {
-        font-size: 20px;
-      }
-      h1 {
-        font-size: 28px;
-      }
-      .purpose-text {
-        font-size: 14px;
-        line-height: 1.5;
-      }
-      .slideshow-container {
-        padding: 20px;
-        min-height: auto;
-      }
-      .product-grid {
-        grid-template-columns: 1fr;
-      }
-      .product-tab {
-        padding: 8px 12px;
-        font-size: 10px;
-      }
-      .hud-modal {
-        bottom: 20px;
-        padding: 15px;
-      }
-      .fleet-drawer-header { padding: 15px 20px; }
-      .fleet-links-grid { padding: 15px 20px; grid-template-columns: 1fr; }
-    }
-  </style>
-</head>
-<body class="sightx-demo">
-  
-  <!-- The Playable WebGL Canvas -->
-  <canvas id="bg-canvas"></canvas>
-  
-  <div id="hint">CLICK to capture mouse</div>
-  
-  <!-- High-tech HUD Hardware Proximity Modal -->
-  <div id="hardware-modal" class="hud-modal" style="display: none;">
-    <div class="hud-scanner"></div>
-    <div class="hud-header">
-      <span class="hud-icon">SX</span>
-      <span class="hud-title" id="hud-door-name">DOORWAY PROXIMITY SIGNAL</span>
-    </div>
-    <div class="hud-body">
-      <div class="hud-label">Hardware Schedule:</div>
-      <div class="hud-value" id="hud-door-hardware">Extracting specifications...</div>
-      <div class="hud-sub">
-        <span>Verified via SubX Platform</span>
-        <a href="https://precisionautodoors.com" target="_blank">Precision Auto Doors</a>
-      </div>
-    </div>
-  </div>
-  
-  <div id="app-container">
-    <header>
-      <div class="logo">WEYLAND<span>AI</span></div>
-      <div class="status-badge">
-        <div class="status-dot"></div>
-        <span>Build Network Online</span>
-      </div>
-    </header>
-    
-    <main>
-      <div class="slideshow-container" id="slideshow">
-        
-        <!-- Slide 0: Overview -->
-        <div class="slide active">
-          <div class="category-label">Autonomous Construction</div>
-          <h1>Build at machine scale.</h1>
-          <p class="purpose-text">WeylandAI unifies project intelligence, computer vision, autonomous equipment, and robotic trade crews in one construction operating system. We take a build from opportunity discovery through verified completion with less delay, waste, and coordination loss.</p>
-        </div>
-        
-        <!-- Slide 1: Project intelligence -->
-        <div class="slide">
-          <div class="category-label">Project Intelligence</div>
-          <h1>See the work before it begins.</h1>
-          <p class="purpose-text">Our intelligence pipeline discovers viable projects, maps subcontractor capacity, reads plans and imagery, quantifies scope, and turns uncertainty into an executable construction plan.</p>
-          <div class="product-grid">
-            <div class="product-box">
-              <div class="product-title">HuntX + SubX</div>
-              <div class="product-desc">Opportunity discovery, qualification, capacity mapping, and subcontractor intelligence.</div>
-            </div>
-            <div class="product-box">
-              <div class="product-title">SightX + TakeoffX</div>
-              <div class="product-desc">Site vision, dimension extraction, material quantities, hazards, and automated estimates.</div>
-            </div>
-          </div>
-        </div>
-        
-        <!-- Slide 2: Robotics -->
-        <div class="slide">
-          <div class="category-label">Robotic Field Systems</div>
-          <h1>Autonomous crews. Coordinated as one.</h1>
-          <p class="purpose-text">WeylandAI coordinates earthwork, concrete, framing, masonry, roofing, electrical, and plumbing systems against the same live model, schedule, safety envelope, and quality record.</p>
-          <div class="product-grid">
-            <div class="product-box">
-              <div class="product-title">Earthwork Fleet</div>
-              <div class="product-desc">GPS/RTK-guided excavation, grading, trenching, telemetry, and obstacle avoidance.</div>
-            </div>
-            <div class="product-box">
-              <div class="product-title">Trade Crews</div>
-              <div class="product-desc">Repeatable robotic installation with code, tolerance, and quality verification.</div>
-            </div>
-          </div>
-        </div>
-        
-        <!-- Slide 3: Computing -->
-        <div class="slide">
-          <div class="category-label">Construction Operating System</div>
-          <h1>One control plane for every site.</h1>
-          <p class="purpose-text">A shared digital thread connects plans, bids, equipment, crews, progress evidence, safety findings, and client reporting. Every completed project makes the next project faster and more predictable.</p>
-        </div>
-        
-        <!-- Slide 4: Secure Console -->
-        <div class="slide">
-          <div class="widget-card">
-            <div class="widget-title">
-              <span>&gt;_</span> Project Console
-            </div>
-            <div class="console-box" id="console-display">
-              System initialized.<br>
-              Category: Construction / Automation<br>
-              Status: READY<br>
-              Type 'help' to begin...<br>
-              <br>
-              &gt;
-            </div>
-            <div class="console-input-row">
-              <input type="text" class="console-input" id="console-cmd" placeholder="Type a command...">
-              <button class="console-btn" onclick="executeCommand()">Run</button>
-            </div>
-            <div class="portal-trigger">
-              <a href="#" class="portal-btn" onclick="openLoginModal()">Access Client Workspace</a>
-            </div>
-          </div>
-        </div>
-        
-      </div>
-      
-      <!-- Product Footer Browser (SPA tabs) -->
-      <div class="product-footer-browser">
-        <div class="product-tabs">
-          <button class="product-tab active" onclick="goToSlide(0)">OVERVIEW</button>
-          <button class="product-tab" onclick="goToSlide(1)">INTELLIGENCE</button>
-          <button class="product-tab" onclick="goToSlide(2)">FIELD FLEET</button>
-          <button class="product-tab" onclick="goToSlide(3)">BUILD OS</button>
-          <button class="product-tab" onclick="goToSlide(4)">CLIENT CONSOLE</button>
-        </div>
-      </div>
-    </main>
-    
-    <footer>
-      <div class="footer-text">
-        <div class="fleet-browser-container">
-          <div class="fleet-drawer" id="fleet-drawer">
-            <div class="fleet-drawer-header">
-              <div class="fleet-drawer-title" id="fleet-drawer-title">Explore Fleet Category</div>
-              <button class="close-drawer-btn" onclick="closeFleetDrawer()">\u2715</button>
-            </div>
-            <div class="fleet-links-grid" id="fleet-links-grid"></div>
-          </div>
-          
-          <div class="network-tray" style="margin-bottom: 25px;">
-            <div class="network-tray-title">Explore the MobCorp Venture Fleet</div>
-            <div class="cat-chips">
-              <span class="cat-chip" onclick="toggleFleetCategory('AI')">AI</span> <span class="cat-chip" onclick="toggleFleetCategory('Agents')">Agents</span> <span class="cat-chip" onclick="toggleFleetCategory('Business')">Business</span> <span class="cat-chip" onclick="toggleFleetCategory('Corporate')">Corporate</span> <span class="cat-chip" onclick="toggleFleetCategory('Defense')">Defense</span> <span class="cat-chip" onclick="toggleFleetCategory('Dev Tools')">Dev Tools</span> <span class="cat-chip" onclick="toggleFleetCategory('Education')">Education</span> <span class="cat-chip" onclick="toggleFleetCategory('Finance')">Finance</span> <span class="cat-chip" onclick="toggleFleetCategory('Health')">Health</span> <span class="cat-chip" onclick="toggleFleetCategory('Media')">Media</span> <span class="cat-chip" onclick="toggleFleetCategory('Science')">Science</span> 
-            </div>
-          </div>
-        </div>
-        
-        <p>This venture is a canonical node of the MobCorp Autonomous Network. All rights reserved.</p>
-      </div>
-    </footer>
-  </div>
-
-  <!-- The Login Screen Modal Overlay -->
-  <div id="os-login-modal">
-    <div class="login-box">
-      <h2>WeylandAI Client Workspace</h2>
-      <p>Projects, sites, crews, and evidence in one operating view.</p>
-      <input type="email" class="login-input" id="modal-email" placeholder="Email / Username">
-      <input type="password" class="login-input" id="modal-pass" placeholder="Authorization Code">
-      <button class="login-button" onclick="submitAuth()">Sign In</button>
-      <div class="close-modal" onclick="closeLoginModal()">Cancel</div>
-    </div>
-  </div>
-
-  <script src="/assets/sightx-controls.js?v=20260729-3"></script>
-  <script src="/assets/sightx-experience.js?v=20260729-3"></script>
-  <script src="/assets/sightx-ingest.js?v=20260729-3"></script>
-  <script src="/assets/sightx-runtime.js?v=20260813-1"></script>
-  <script>
-    // \u2500\u2500 Slideshow SPA Navigation \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500
-    let currentSlide = 0;
-    const slides = document.querySelectorAll('.slide');
-    const tabs = document.querySelectorAll('.product-tab');
-    
-    function goToSlide(index) {
-      slides[currentSlide].classList.remove('active');
-      tabs[currentSlide].classList.remove('active');
-      currentSlide = (index + slides.length) % slides.length;
-      slides[currentSlide].classList.add('active');
-      tabs[currentSlide].classList.add('active');
-      resetIdleTimer();
-    }
-
-    // Keyboard navigation for Weyland slides (when console isn't focused)
-    document.addEventListener('keydown', (e) => {
-      if (document.pointerLockElement) return;
-      if (document.activeElement.tagName === 'INPUT' || document.activeElement.tagName === 'TEXTAREA') return;
-      if (e.key === 'ArrowLeft') {
-        goToSlide(currentSlide - 1);
-      } else if (e.key === 'ArrowRight') {
-        goToSlide(currentSlide + 1);
-      }
-    });
-
-    // \u2500\u2500 Console Simulator \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500
-    const consoleDisplay = document.getElementById('console-display');
-    const consoleCmd = document.getElementById('console-cmd');
-    
-    consoleCmd.addEventListener('keydown', (e) => {
-      if (e.key === 'Enter') executeCommand();
-    });
-
-    function executeCommand() {
-      const cmd = consoleCmd.value.trim().toLowerCase();
-      if (!cmd) return;
-      
-      let response = '';
-      if (cmd === 'help') {
-        response = 'Available commands:\\
-' +
-                   '  status   - View current system status\\
-' +
-                   '  fleet    - Check autonomous crew status\\
-' +
-                   '  projects - List active project sites\\
-' +
-                   '  clear    - Clear console screen';
-      } else if (cmd === 'status') {
-        response = 'System: weylandai.com\\
-' +
-                   'Status: ONLINE\\
-' +
-                   'Category: Construction / Automation\\
-' +
-                   'Operational Integrity: 100% (READY)\\
-' +
-                   'Pipeline: HuntX > SubX > SightX > TakeoffX > PropX > QText';
-      } else if (cmd === 'fleet') {
-        response = 'Autonomous Crew Status:\\
-' +
-                   '  - Earthwork systems: READY\\
-' +
-                   '  - Concrete and framing systems: READY\\
-' +
-                   '  - Trade installation systems: READY\\
-' +
-                   'All telemetry channels operational.';
-      } else if (cmd === 'projects') {
-        response = 'Project Network:\\
-' +
-                   '  - Site intelligence: ACTIVE\\
-' +
-                   '  - Estimation pipeline: ACTIVE\\
-' +
-                   '  - Field coordination: ACTIVE';
-      } else if (cmd === 'clear') {
-        consoleDisplay.innerHTML = '&gt; ';
-        consoleCmd.value = '';
-        return;
-      } else {
-        response = 'Unknown command: "' + cmd + '". Type "help" for a list of commands.';
-      }
-      
-      consoleDisplay.innerHTML += cmd + '<br>' + response.replace(/\\
-/g, '<br>') + '<br><br>&gt; ';
-      consoleDisplay.scrollTop = consoleDisplay.scrollHeight;
-      consoleCmd.value = '';
-    }
-
-    function openLoginModal() {
-      document.getElementById('os-login-modal').style.display = 'flex';
-    }
-    
-    function closeLoginModal() {
-      document.getElementById('os-login-modal').style.display = 'none';
-    }
-    
-    function submitAuth() {
-      const email = document.getElementById('modal-email').value;
-      const pass = document.getElementById('modal-pass').value;
-      if (!email || !pass) {
-        alert('Credentials required.');
-        return;
-      }
-      alert('Secure Portal connection timed out. Please check your credentials and try again.');
-    }
-
-    // \u2500\u2500 Fleet Browser Logic \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500
-    const FLEET_DATA = {"Defense": [{"domain": "abstergo.cc", "name": "abstergo_cc"}, {"domain": "areshiva.com", "name": "areshiva_com"}, {"domain": "draknir.com", "name": "draknir_com"}, {"domain": "draugr.cc", "name": "draugr_cc"}, {"domain": "malathor.com", "name": "malathor_com"}, {"domain": "valdring.com", "name": "valdring_com"}, {"domain": "valkrai.com", "name": "valkrai_com"}, {"domain": "ventraleye.com", "name": "ventraleye_com"}, {"domain": "watchforce.cc", "name": "watchforce_cc"}], "Finance": [{"domain": "accountdrac.com", "name": "accountdrac_com"}, {"domain": "bitdoggo.com", "name": "bitdoggo_com"}, {"domain": "bondwright.com", "name": "bondwright_com"}, {"domain": "bookeepr.cc", "name": "bookeepr_cc"}, {"domain": "cryptosmart.cc", "name": "cryptosmart_cc"}, {"domain": "encoverai.com", "name": "encoverai_com"}, {"domain": "equifiant.com", "name": "equifiant_com"}, {"domain": "fedbank.cc", "name": "fedbank_cc"}, {"domain": "fundyai.com", "name": "fundyai_com"}, {"domain": "greenhandcapital.com", "name": "greenhandcapital_com"}, {"domain": "mobcoin.cc", "name": "mobcoin_cc"}, {"domain": "quanticfork.com", "name": "quanticfork_com"}, {"domain": "selfcoin.cc", "name": "selfcoin_cc"}, {"domain": "vendyai.com", "name": "vendyai_com"}], "Agents": [{"domain": "agentropi.com", "name": "agentropi_com"}, {"domain": "agentzaar.com", "name": "agentzaar_com"}, {"domain": "consenta.cc", "name": "consenta_cc"}, {"domain": "entoolize.com", "name": "entoolize_com"}, {"domain": "mailguyai.com", "name": "mailguyai_com"}, {"domain": "marketingium.com", "name": "marketingium_com"}, {"domain": "rebrief.me", "name": "rebrief_me"}, {"domain": "salesfactorai.com", "name": "salesfactorai_com"}, {"domain": "taskgridai.com", "name": "taskgridai_com"}], "Health": [{"domain": "agewinder.com", "name": "agewinder_com"}, {"domain": "healspell.com", "name": "healspell_com"}, {"domain": "lovemaint.com", "name": "lovemaint_com"}, {"domain": "meeva.io", "name": "meeva_io"}, {"domain": "newgameplus.cc", "name": "newgameplus_cc"}, {"domain": "recovai.com", "name": "recovai_com"}, {"domain": "sanctuaryui.com", "name": "sanctuaryui_com"}, {"domain": "talkingmind.cc", "name": "talkingmind_cc"}, {"domain": "workshrinker.com", "name": "workshrinker_com"}, {"domain": "youthmend.com", "name": "youthmend_com"}], "AI": [{"domain": "aicossic.com", "name": "aicossic_com"}, {"domain": "americanagi.cc", "name": "americanagi_cc"}, {"domain": "americnagi.cc", "name": "americnagi_cc"}, {"domain": "bloomagi.cc", "name": "bloomagi_cc"}, {"domain": "greybeardai.com", "name": "greybeardai_com"}, {"domain": "intfer.cc", "name": "intfer_cc"}, {"domain": "legibleweights.com", "name": "legibleweights_com"}, {"domain": "legionicai.com", "name": "legionicai_com"}, {"domain": "scalarflux.com", "name": "scalarflux_com"}, {"domain": "sentiantai.com", "name": "sentiantai_com"}, {"domain": "singularityui.com", "name": "singularityui_com"}, {"domain": "transcendantai.com", "name": "transcendantai_com"}], "Science": [{"domain": "aiopencommerce.com", "name": "aiopencommerce_com"}, {"domain": "anattar.com", "name": "anattar_com"}, {"domain": "conseiv.com", "name": "conseiv_com"}, {"domain": "ecofixai.com", "name": "ecofixai_com"}, {"domain": "emissionhub.cc", "name": "emissionhub_cc"}, {"domain": "enablinghomes.com", "name": "enablinghomes_com"}, {"domain": "femptocom.com", "name": "femptocom_com"}, {"domain": "galadul.com", "name": "galadul_com"}, {"domain": "tenancyai.com", "name": "tenancyai_com"}, {"domain": "weylandai.com", "name": "weylandai_com"}, {"domain": "yutaniai.com", "name": "yutaniai_com"}], "Media": [{"domain": "alhena.cc", "name": "alhena_cc"}, {"domain": "animetrope.com", "name": "animetrope_com"}, {"domain": "audiovizai.com", "name": "audiovizai_com"}, {"domain": "book2film.cc", "name": "book2film_cc"}, {"domain": "bookclubs.cc", "name": "bookclubs_cc"}, {"domain": "danzoa.com", "name": "danzoa_com"}, {"domain": "fedtalent.cc", "name": "fedtalent_cc"}, {"domain": "filmline.cc", "name": "filmline_cc"}, {"domain": "gamegob.com", "name": "gamegob_com"}, {"domain": "glyphyai.com", "name": "glyphyai_com"}, {"domain": "kubaki.cc", "name": "kubaki_cc"}, {"domain": "literacraft.com", "name": "literacraft_com"}, {"domain": "mobleybooks.com", "name": "mobleybooks_com"}, {"domain": "paintedwhore.cc", "name": "paintedwhore_cc"}, {"domain": "pandorachat.cc", "name": "pandorachat_cc"}], "Dev Tools": [{"domain": "authfor.com", "name": "authfor_com"}, {"domain": "devducky.com", "name": "devducky_com"}, {"domain": "devtoolai.com", "name": "devtoolai_com"}, {"domain": "devtoolbx.com", "name": "devtoolbx_com"}, {"domain": "extraterran.com", "name": "extraterran_com"}, {"domain": "fystz.com", "name": "fystz_com"}, {"domain": "gravnova.com", "name": "gravnova_com"}, {"domain": "halside.com", "name": "halside_com"}, {"domain": "helmdir.com", "name": "helmdir_com"}, {"domain": "powerhost.cc", "name": "powerhost_cc"}, {"domain": "syncropy.com", "name": "syncropy_com"}, {"domain": "warpdrive.cc", "name": "warpdrive_cc"}], "Education": [{"domain": "bignice.cc", "name": "bignice_cc"}, {"domain": "brynhildai.com", "name": "brynhildai_com"}, {"domain": "gurukle.com", "name": "gurukle_com"}, {"domain": "leadersclub.cc", "name": "leadersclub_cc"}, {"domain": "ownschool.cc", "name": "ownschool_cc"}, {"domain": "reasontodate.com", "name": "reasontodate_com"}], "Business": [{"domain": "dofura.com", "name": "dofura_com"}, {"domain": "domainwombat.com", "name": "domainwombat_com"}, {"domain": "firmcreate.com", "name": "firmcreate_com"}, {"domain": "glcx.cc", "name": "glcx_cc"}, {"domain": "helmcorp.cc", "name": "helmcorp_cc"}, {"domain": "hildrai.com", "name": "hildrai_com"}, {"domain": "industrize.com", "name": "industrize_com"}, {"domain": "lawyik.com", "name": "lawyik_com"}, {"domain": "patentkin.com", "name": "patentkin_com"}, {"domain": "traceformer.com", "name": "traceformer_com"}], "Corporate": [{"domain": "golfcad.cc", "name": "golfcad_cc"}, {"domain": "golfdad.cc", "name": "golfdad_cc"}, {"domain": "golflink.cc", "name": "golflink_cc"}, {"domain": "golfmind.cc", "name": "golfmind_cc"}, {"domain": "helmscorp.cc", "name": "helmscorp_cc"}, {"domain": "instantiability.com", "name": "instantiability_com"}, {"domain": "mobcorp.cc", "name": "mobcorp_cc"}, {"domain": "mobleyhelms.com", "name": "mobleyhelms_com"}, {"domain": "mobleymetal.com", "name": "mobleymetal_com"}, {"domain": "mobleyreport.com", "name": "mobleyreport_com"}, {"domain": "mobleysoft.com", "name": "mobleysoft_com"}, {"domain": "roncorp.cc", "name": "roncorp_cc"}, {"domain": "ronhelms.cc", "name": "ronhelms_cc"}]};
-    const fleetDrawer = document.getElementById('fleet-drawer');
-    const fleetDrawerTitle = document.getElementById('fleet-drawer-title');
-    const fleetLinksGrid = document.getElementById('fleet-links-grid');
-    let activeFleetCat = null;
-
-    function toggleFleetCategory(cat) {
-      if (activeFleetCat === cat) {
-        closeFleetDrawer();
-        return;
-      }
-      
-      activeFleetCat = cat;
-      document.querySelectorAll('.cat-chip').forEach(c => {
-        c.classList.toggle('active', c.textContent.trim() === cat);
-      });
-
-      fleetDrawerTitle.textContent = \`\${cat.toUpperCase()} FLEET SITES\`;
-      fleetLinksGrid.innerHTML = '';
-      
-      const sites = FLEET_DATA[cat] || [];
-      sites.forEach(s => {
-        const a = document.createElement('a');
-        a.href = \`https://\${s.domain}/\`;
-        a.target = '_blank';
-        a.className = 'fleet-link';
-        a.textContent = s.name.replace(/_/g, ' ').toUpperCase();
-        fleetLinksGrid.appendChild(a);
-      });
-      
-      fleetDrawer.classList.add('open');
-      resetIdleTimer();
-    }
-    
-    function closeFleetDrawer() {
-      if (!fleetDrawer) return;
-      fleetDrawer.classList.remove('open');
-      activeFleetCat = null;
-      document.querySelectorAll('.cat-chip').forEach(c => c.classList.remove('active'));
-    }
-
-    // Close fleet drawer on outside click
-    document.addEventListener('click', (e) => {
-      if (fleetDrawer && !fleetDrawer.contains(e.target) && !e.target.classList.contains('cat-chip')) {
-        closeFleetDrawer();
-      }
-    });
-
-    // \u2500\u2500 Interaction & Idle Show/Hide \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500
-    const appContainer = document.getElementById('app-container');
-    const canvas = document.getElementById('bg-canvas');
-    let idleTimer = null;
-    
-    function showUI() {
-      // If pointer is captured (playing SightX), keep UI hidden
-      if (document.pointerLockElement === canvas) return;
-      
-      appContainer.classList.remove('hidden');
-      canvas.classList.remove('interactive');
-      resetIdleTimer();
-    }
-    
-    function hideUI() {
-      appContainer.classList.add('hidden');
-      canvas.classList.add('interactive');
-      closeFleetDrawer();
-    }
-    
-    // Start showing overlay, then let it fade
-    function resetIdleTimer() {
-      clearTimeout(idleTimer);
-      idleTimer = setTimeout(hideUI, 5000); // Hide after 5 seconds idle
-    }
-    
-    // Wire up events
-    document.addEventListener('mousemove', showUI);
-    document.addEventListener('click', showUI);
-    document.addEventListener('keydown', showUI);
-    document.addEventListener('touchstart', showUI);
-    
-    // Prevent hiding while interacting with the overlay
-    appContainer.addEventListener('mousemove', (e) => { e.stopPropagation(); resetIdleTimer(); });
-    appContainer.addEventListener('click', (e) => { e.stopPropagation(); resetIdleTimer(); });
-    appContainer.addEventListener('keydown', (e) => { e.stopPropagation(); resetIdleTimer(); });
-    
-    // SightX is a dedicated, unoccluded product demonstrator.
-    if (document.body.classList.contains('sightx-demo')) {
-      hideUI();
-    } else {
-      resetIdleTimer();
-    }
-
-    // \u2500\u2500 WebGL Setup (SightX playable background corridor) \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500
-    const gl = canvas.getContext('webgl2');
-    let sightxExperience = null;
-    
-    function resize() {
-      const scale = sightxExperience ? sightxExperience.renderScale : Math.min(window.devicePixelRatio, 1.25);
-      canvas.width = Math.floor(window.innerWidth * scale);
-      canvas.height = Math.floor(window.innerHeight * scale);
-      canvas.style.width = window.innerWidth + 'px';
-      canvas.style.height = window.innerHeight + 'px';
-      gl.viewport(0, 0, canvas.width, canvas.height);
-    }
-    window.addEventListener('resize', resize);
-    resize();
-    
-    const VS = \`#version 300 es
-    in vec2 a;
-    void main(){ gl_Position = vec4(a, 0, 1); }\`;
-    
-    const FS = \`#version 300 es
-    precision highp float;
-    out vec4 fragColor;
-    uniform vec2  u_res;
-    uniform float u_t;
-    uniform vec3  u_cam;
-    uniform vec3  u_dir;
-    uniform float u_scan;
-    uniform vec3  u_target;
-    uniform sampler2D u_planSdf;
-    uniform sampler2D u_planSource;
-    uniform int u_planMode;
-    uniform vec4 u_planBounds;
-    uniform float u_planHeight;
-
-    float hash(vec3 p){ return fract(sin(dot(p,vec3(127.1,311.7,74.7)))*43758.5); }
-    float noise(vec3 p){
-      vec3 i=floor(p), f=fract(p);
-      f=f*f*(3.-2.*f);
-      return mix(mix(mix(hash(i),hash(i+vec3(1,0,0)),f.x),
-                     mix(hash(i+vec3(0,1,0)),hash(i+vec3(1,1,0)),f.x),f.y),
-                 mix(mix(hash(i+vec3(0,0,1)),hash(i+vec3(1,0,1)),f.x),
-                     mix(hash(i+vec3(0,1,1)),hash(i+vec3(1,1,1)),f.x),f.y),f.z);
-    }
-
-    float sdBox(vec3 p, vec3 b){ vec3 q=abs(p)-b; return length(max(q,0.))+min(max(q.x,max(q.y,q.z)),0.); }
-    float sdCyl(vec3 p, float r, float h){ vec2 d=abs(vec2(length(p.xz),p.y))-vec2(r,h); return min(max(d.x,d.y),0.)+length(max(d,0.)); }
-    float sdSphere(vec3 p, float r){ return length(p)-r; }
-
-    vec2 put(vec2 scene, float distance, float material){
-      return distance < scene.x ? vec2(distance, material) : scene;
-    }
-
-    float sdDoorOpening(vec3 q, float w, float h){
-      return sdBox(q-vec3(0.0,h*.5,0.0),vec3(w,h*.5,0.30));
-    }
-
-    float sdDoorFrame(vec3 q, float w, float h){
-      float rail=0.065, depth=0.10;
-      float head = sdBox(q-vec3(0.0,h+rail,0.0),vec3(w+rail,rail,depth));
-      float left = sdBox(q-vec3(-w-rail,h*.5,0.0),vec3(rail,h*.5+rail,depth));
-      float right= sdBox(q-vec3( w+rail,h*.5,0.0),vec3(rail,h*.5+rail,depth));
-      return min(head,min(left,right));
-    }
-
-    float sdDoorPanels(vec3 q, float w, float h, float open){
-      float halfPanel=w*.48;
-      float travel=open*w*.72;
-      float left =sdBox(q-vec3(-w*.5-travel,h*.5,0.0),vec3(halfPanel,h*.5-.08,.026));
-      float right=sdBox(q-vec3( w*.5+travel,h*.5,0.0),vec3(halfPanel,h*.5-.08,.026));
-      return min(left,right);
-    }
-
-    float doorOpen(vec2 position){
-      return 1.0-smoothstep(0.85,2.5,length(u_cam.xz-position));
-    }
-
-    // Local door coordinates: X runs across the opening, Y is vertical, Z is
-    // perpendicular to its host wall. This keeps every panel correctly oriented.
-    vec3 sideDoorSpace(vec3 p, float wallX, float doorZ){
-      return vec3(p.z-doorZ,p.y,p.x-wallX);
-    }
-
-    float sdPlanWall(vec3 p){
-      vec2 span=max(u_planBounds.zw-u_planBounds.xy,vec2(.001));
-      vec2 uv=(p.xz-u_planBounds.xy)/span;
-      vec2 outside=max(max(-uv,uv-1.0)*span,0.0);
-      if(any(lessThan(uv,vec2(0.0)))||any(greaterThan(uv,vec2(1.0)))) return length(outside)+1.0;
-      float plan=texture(u_planSdf,vec2(uv.x,1.0-uv.y)).r;
-      float vertical=abs(p.y-u_planHeight*.5)-u_planHeight*.5;
-      vec2 d=vec2(plan,vertical);
-      return min(max(d.x,d.y),0.0)+length(max(d,0.0));
-    }
-
-    vec2 map(vec3 p){
-      if(u_planMode==1){
-        vec2 planResult=vec2(p.y,8.0);
-        planResult=put(planResult,sdPlanWall(p),1.0);
-        return planResult;
-      }
-      float path = 1.0-smoothstep(2.7,3.1,abs(p.x));
-      float groundMaterial = 7.0;
-      if((abs(p.x)<7.04 && p.z>0.0 && p.z<16.0) || (path>.5 && p.z<.2)) groundMaterial=8.0;
-      vec2 res=vec2(p.y,groundMaterial);
-
-      // Finite facility shell: 14.4m wide, 16m deep, with a real exterior.
-      float outerWest=sdBox(p-vec3(-7.2,1.7,8.0),vec3(.16,1.7,8.0));
-      float outerEast=sdBox(p-vec3( 7.2,1.7,8.0),vec3(.16,1.7,8.0));
-      float rear=sdBox(p-vec3(0.0,1.7,16.0),vec3(7.2,1.7,.16));
-      float front=sdBox(p-vec3(0.0,1.7,0.0),vec3(7.2,1.7,.16));
-      front=max(front,-sdDoorOpening(p,1.30,2.45));
-      float roof=sdBox(p-vec3(0.0,3.45,8.0),vec3(7.36,.14,8.16));
-      res=put(res,outerWest,1.0); res=put(res,outerEast,1.0);
-      res=put(res,rear,1.0);      res=put(res,front,1.0);
-      res=put(res,roof,5.0);
-
-      // Corridor walls host four automatic double-sliding doors per side.
-      float westWall=sdBox(p-vec3(-2.0,1.6,8.0),vec3(.10,1.6,8.0));
-      float eastWall=sdBox(p-vec3( 2.0,1.6,8.0),vec3(.10,1.6,8.0));
-      for(int i=0;i<4;i++){
-        float z=2.0+float(i)*4.0;
-        westWall=max(westWall,-sdDoorOpening(sideDoorSpace(p,-2.0,z),.68,2.35));
-        eastWall=max(eastWall,-sdDoorOpening(sideDoorSpace(p, 2.0,z),.68,2.35));
-      }
-      res=put(res,westWall,1.0); res=put(res,eastWall,1.0);
-
-      // Four rooms in each wing, separated from one another but connected to
-      // the central circulation spine through the modeled door openings.
-      for(int i=0;i<3;i++){
-        float z=4.0+float(i)*4.0;
-        res=put(res,sdBox(p-vec3(-4.6,1.6,z),vec3(2.5,1.6,.10)),1.0);
-        res=put(res,sdBox(p-vec3( 4.6,1.6,z),vec3(2.5,1.6,.10)),1.0);
-      }
-
-      // Room program. Each controlled opening now leads to a recognizable,
-      // navigable construction workspace rather than an empty shell.
-      res=put(res,sdBox(p-vec3(-5.45,.76, 2.0),vec3(1.05,.07,.52)),12.0); // Project office desk
-      res=put(res,sdBox(p-vec3(-5.45,1.12,2.0),vec3(.42,.27,.035)),13.0); // Project display
-      res=put(res,sdBox(p-vec3(-6.55,.92,3.15),vec3(.30,.92,.58)),13.0); // Drawing storage
-
-      res=put(res,sdBox(p-vec3( 4.70,.76, 2.0),vec3(1.25,.07,.58)),12.0); // Conference table
-      res=put(res,sdBox(p-vec3( 4.70,.42, 1.18),vec3(.95,.40,.28)),2.0);
-      res=put(res,sdBox(p-vec3( 4.70,.42, 2.82),vec3(.95,.40,.28)),2.0);
-
-      res=put(res,sdBox(p-vec3(-4.55,.76, 6.0),vec3(1.05,.07,.58)),12.0); // Materials review table
-      res=put(res,sdBox(p-vec3(-6.55,1.08,6.0),vec3(.30,1.08,1.15)),13.0); // Sample rack
-      res=put(res,sdBox(p-vec3(-4.85,.96,6.0),vec3(.48,.12,.35)),14.0); // Reviewed sample
-
-      res=put(res,sdBox(p-vec3( 5.45,1.10,5.35),vec3(.48,1.10,.42)),13.0); // Telecom rack A
-      res=put(res,sdBox(p-vec3( 5.45,1.10,6.65),vec3(.48,1.10,.42)),13.0); // Telecom rack B
-
-      res=put(res,sdBox(p-vec3(-4.65,.78,10.0),vec3(1.30,.06,.72)),12.0); // Plan review table
-      res=put(res,sdBox(p-vec3(-6.92,1.68,10.0),vec3(.035,.68,1.10)),14.0); // Plan board
-
-      res=put(res,sdBox(p-vec3( 6.68,1.12,10.0),vec3(.24,1.12,1.18)),13.0); // Electrical switchgear
-      res=put(res,sdBox(p-vec3( 5.85,.18,10.0),vec3(.62,.018,1.35)),14.0); // Service clearance
-
-      res=put(res,sdBox(p-vec3(-5.25,.88,14.0),vec3(1.05,.88,.62)),13.0); // Air-handling unit
-      res=put(res,sdCyl(p-vec3(-6.45,1.55,14.0),.13,1.55),2.0); // Mechanical riser
-
-      res=put(res,sdBox(p-vec3( 5.35,.76,14.0),vec3(1.05,.07,.52)),12.0); // Facilities workstation
-      res=put(res,sdBox(p-vec3( 6.55,.92,14.9),vec3(.30,.92,.58)),13.0); // Facilities storage
-
-      // Main entrance: a centered, sensor-driven double sliding assembly.
-      float entryOpen=doorOpen(vec2(0.0,0.0));
-      res=put(res,sdDoorFrame(p,1.30,2.45),2.0);
-      res=put(res,sdDoorPanels(p,1.30,2.45,entryOpen),3.0);
-
-      float hardware=1e9;
-      for(int i=0;i<4;i++){
-        float z=2.0+float(i)*4.0;
-        vec3 westQ=sideDoorSpace(p,-2.0,z);
-        vec3 eastQ=sideDoorSpace(p, 2.0,z);
-        float westOpen=doorOpen(vec2(-2.0,z));
-        float eastOpen=doorOpen(vec2( 2.0,z));
-        res=put(res,sdDoorFrame(westQ,.68,2.35),2.0);
-        res=put(res,sdDoorPanels(westQ,.68,2.35,westOpen),3.0);
-        res=put(res,sdDoorFrame(eastQ,.68,2.35),2.0);
-        res=put(res,sdDoorPanels(eastQ,.68,2.35,eastOpen),3.0);
-        hardware=min(hardware,sdBox(westQ-vec3(.42,1.32,-.12),vec3(.08,.12,.025)));
-        hardware=min(hardware,sdBox(eastQ-vec3(.42,1.32,-.12),vec3(.08,.12,.025)));
-      }
-      res=put(res,hardware,4.0);
-
-      // Entrance canopy, structural columns, glazing, and interior luminaires.
-      res=put(res,sdBox(p-vec3(0.0,3.02,-1.8),vec3(3.0,.12,1.8)),5.0);
-      res=put(res,sdBox(p-vec3(-2.72,1.5,-2.2),vec3(.12,1.5,.12)),2.0);
-      res=put(res,sdBox(p-vec3( 2.72,1.5,-2.2),vec3(.12,1.5,.12)),2.0);
-      res=put(res,sdBox(p-vec3(-4.45,1.65,-.19),vec3(1.35,1.02,.025)),3.0);
-      res=put(res,sdBox(p-vec3( 4.45,1.65,-.19),vec3(1.35,1.02,.025)),3.0);
-      for(int i=0;i<4;i++){
-        float z=2.0+float(i)*4.0;
-        res=put(res,sdBox(p-vec3(0.0,3.25,z),vec3(.42,.07,.42)),6.0);
-        res=put(res,sdBox(p-vec3(-4.6,3.25,z),vec3(.50,.07,.36)),6.0);
-        res=put(res,sdBox(p-vec3( 4.6,3.25,z),vec3(.50,.07,.36)),6.0);
-      }
-
-      // Wider Weyland campus: low service annexes and approach lighting make
-      // the facility legible as a building in a world, not an isolated box.
-      res=put(res,sdBox(p-vec3(-14.0,2.0,10.0),vec3(4.2,2.0,5.4)),9.0);
-      res=put(res,sdBox(p-vec3( 15.0,1.7,13.0),vec3(4.8,1.7,6.0)),9.0);
-      res=put(res,sdBox(p-vec3(-14.0,4.12,10.0),vec3(4.45,.12,5.65)),5.0);
-      res=put(res,sdBox(p-vec3( 15.0,3.52,13.0),vec3(5.05,.12,6.25)),5.0);
-      float poles=min(sdCyl(p-vec3(-4.6,2.6,-7.0),.07,2.6),sdCyl(p-vec3(4.6,2.6,-7.0),.07,2.6));
-      res=put(res,poles,2.0);
-      res=put(res,sdBox(p-vec3(-4.6,5.18,-7.0),vec3(.38,.06,.16)),6.0);
-      res=put(res,sdBox(p-vec3( 4.6,5.18,-7.0),vec3(.38,.06,.16)),6.0);
-
-      // Arrival landscape and illuminated campus marker establish a deliberate
-      // public face without obstructing the central accessible approach.
-      res=put(res,sdBox(p-vec3(-5.35,.82,-3.15),vec3(1.42,.72,.09)),10.0);
-      res=put(res,sdBox(p-vec3(-5.35,.10,-3.15),vec3(1.62,.10,.30)),2.0);
-      for(int i=0;i<2;i++){
-        float x=-5.5+float(i)*11.0;
-        res=put(res,sdBox(p-vec3(x,.28,-1.85),vec3(.72,.28,.52)),2.0);
-        res=put(res,sdSphere(p-vec3(x,.78,-1.85),.58),11.0);
-      }
-      for(int i=0;i<2;i++){
-        float x=3.0+float(i)*3.0;
-        res=put(res,sdBox(p-vec3( x,2.05,-.25),vec3(.035,1.15,.08)),2.0);
-        res=put(res,sdBox(p-vec3(-x,2.05,-.25),vec3(.035,1.15,.08)),2.0);
-      }
-      return res;
-    }
-
-    vec2 march(vec3 ro, vec3 rd){
-      float t=0.001; float id=0.;
-      for(int i=0;i<112;i++){
-        vec2 h=map(ro+rd*t);
-        if(h.x<0.002) return vec2(t,h.y);
-        t+=h.x*.85;
-        if(t>72.) break;
-      }
-      return vec2(-1.,0.);
-    }
-
-    vec3 normal(vec3 p){
-      float e=.001;
-      return normalize(vec3(
-        map(p+vec3(e,0,0)).x-map(p-vec3(e,0,0)).x,
-        map(p+vec3(0,e,0)).x-map(p-vec3(0,e,0)).x,
-        map(p+vec3(0,0,e)).x-map(p-vec3(0,0,e)).x));
-    }
-
-    float ao(vec3 p, vec3 n){
-      float s=0.; float w=1.;
-      for(int i=1;i<=5;i++){
-        float d=float(i)*.08;
-        s+=w*(d-map(p+n*d).x);
-        w*=.6;
-      }
-      return clamp(1.-s*2.2,0.,1.);
-    }
-
-    vec3 sky(vec3 rd){
-      vec3 sunDir = normalize(vec3(0.55, 0.16, 0.45));
-      vec3 betaR  = vec3(5.8e-6, 9.0e-6, 1.4e-5);
-      float betaM = 6.5e-5;
-      float HR=8000., HM=1200.;
-      float elev    = max(rd.y,0.01);
-      float sunElev = max(sunDir.y,0.02);
-      vec3  tauR = betaR*HR*(1./elev+1./sunElev);
-      float tauM = betaM*HM*(1./elev+1./sunElev);
-      vec3  T    = exp(-tauR-tauM);
-      float mu   = dot(rd,sunDir);
-      float phR  = .75*(1.+mu*mu);
-      float phM  = .5*(1.-(.76*.76))/pow(1.+.76*.76-2.*.76*mu,1.5);
-      vec3 planck= vec3(1.0,0.82,0.52);
-      vec3 s     = (phR*betaR*HR/elev+phM*betaM*HM/elev)*T*planck*3.2;
-      float sunDot=max(dot(rd,sunDir),0.);
-      if(sunDot>0.9998 && sunDir.y>-0.05){
-        float limb=1.-smoothstep(.9998,.99995,sunDot);
-        s += planck*limb*90.*max(0.,sunDir.y+0.08);
-      }
-      s += vec3(1.0,0.92,0.70)*pow(max(0.,1.-abs(rd.y)),6.)*0.18;
-      return clamp(s,0.,1.);
-    }
-
-    vec3 shade(vec3 albedo, float metal, float rough,
-               vec3 N, vec3 V, vec3 L, vec3 lc, float shadow){
-      vec3 H = normalize(V+L);
-      float NdL=max(dot(N,L),0.), NdV=max(dot(N,V),0.01), NdH=max(dot(N,H),0.);
-      float a=rough*rough;
-      float D=a*a/(3.14159*pow(NdH*NdH*(a*a-1.)+1.,2.));
-      float k=(rough+1.)*(rough+1.)/8.;
-      float G=NdL/(NdL*(1.-k)+k)*NdV/(NdV*(1.-k)+k);
-      vec3 F0=mix(vec3(.04),albedo,metal);
-      vec3 F=F0+(1.-F0)*pow(1.-max(dot(H,V),0.),5.);
-      vec3 spec=D*G*F/(4.*NdV*NdL+.001);
-      vec3 diff=albedo*(1.-metal)*(1.-F)/3.14159;
-      return (diff+spec)*lc*NdL*shadow;
-    }
-
-    void main(){
-      vec2 uv = (gl_FragCoord.xy/u_res*2.-1.)*vec2(u_res.x/u_res.y,1.);
-      vec3 ro    = u_cam;
-      vec3 fwd   = normalize(u_dir);
-      vec3 right = normalize(cross(vec3(0,1,0), fwd));
-      vec3 up    = cross(fwd, right);
-      vec3 rd    = normalize(fwd + right*uv.x*0.62 + up*uv.y*0.62);
-
-      vec2 hit = march(ro, rd);
-      vec3 col;
-
-      vec3 sunDir = normalize(vec3(0.55, 0.16, 0.45));
-      vec3 sunCol = vec3(1.0, 0.78, 0.45)*4.8;
-
-      if(hit.x > 0.){
-        vec3 p = ro + rd*hit.x;
-        vec3 N = normal(p);
-        vec3 V = -rd;
-        float matID = hit.y;
-        vec3  albedo; float metal=0., rough=0.7;
-        vec3  emissive = vec3(0.0);
-
-        if(matID < 1.5){
-          albedo = vec3(0.82,0.79,0.74)+noise(p*14.)*0.025 - noise(p*40.)*0.018;
-          rough  = 0.84;
-          if(N.y > 0.8){
-            albedo = vec3(0.52,0.50,0.46)+noise(p*6.)*0.03;
-            rough  = 0.76;
-          }
-        } else if(matID < 2.5){
-          albedo = vec3(0.18,0.12,0.07)+noise(p*22.)*0.02;
-          metal  = 0.72; rough = 0.42;
-        } else if(matID < 3.5){
-          albedo = vec3(0.08,0.13,0.15)+noise(p*30.)*0.012;
-          metal  = 0.58; rough = 0.22;
-        } else if(matID < 4.5){
-          albedo = vec3(0.06,0.06,0.07);
-          metal  = 0.28; rough = 0.38;
-        } else if(matID < 5.5){
-          albedo = vec3(0.05,0.05,0.06);
-          rough  = 0.9;
-        } else if(matID < 6.5){
-          // Ceiling and campus light fixtures
-          albedo = vec3(1.0);
-          rough = 0.1;
-          emissive = vec3(1.0, 0.88, 0.65) * 4.5;
-        } else if(matID < 7.5){
-          albedo = vec3(0.13,0.18,0.075)+noise(p*3.0)*0.075;
-          rough = 0.96;
-        } else if(matID < 8.5){
-          float seam=min(abs(fract(p.x*.25)-.5),abs(fract(p.z*.25)-.5));
-          albedo = vec3(0.29,0.28,0.25)+noise(p*8.0)*0.025-step(seam,.012)*.06;
-          if(u_planMode==1){
-            vec2 span=max(u_planBounds.zw-u_planBounds.xy,vec2(.001));
-            vec2 planUv=(p.xz-u_planBounds.xy)/span;
-            if(all(greaterThanEqual(planUv,vec2(0.0)))&&all(lessThanEqual(planUv,vec2(1.0)))){
-              vec3 drawing=texture(u_planSource,vec2(planUv.x,1.0-planUv.y)).rgb;
-              float ink=1.0-dot(drawing,vec3(.299,.587,.114));
-              albedo=mix(vec3(.34,.33,.30),vec3(.13,.19,.22),smoothstep(.08,.62,ink));
-            }
-          }
-          rough = 0.88;
-        } else if(matID < 9.5){
-          albedo = vec3(0.20,0.21,0.19)+noise(p*9.0)*0.035;
-          metal = 0.18; rough = 0.72;
-        } else if(matID < 10.5){
-          albedo = vec3(0.035,0.032,0.026);
-          metal = 0.35; rough = 0.28;
-          float markerLine = smoothstep(.42,.49,abs(fract(p.y*3.6)-.5));
-          emissive = vec3(1.0,.52,.035)*markerLine*1.35;
-        } else if(matID < 11.5){
-          albedo = vec3(0.055,0.16,0.045)+noise(p*5.5)*0.07;
-          rough = 0.98;
-        } else if(matID < 12.5){
-          albedo = vec3(0.31,0.19,0.095)+noise(p*9.0)*0.035;
-          rough = 0.72;
-        } else if(matID < 13.5){
-          albedo = vec3(0.10,0.12,0.13)+noise(p*18.0)*0.018;
-          metal = 0.55; rough = 0.38;
-        } else {
-          albedo = vec3(0.82,0.80,0.72);
-          rough = 0.68;
-        }
-
-        float shadow = 1.0;
-        vec3 sp = p + N*0.015;
-        float st = 0.1;
-        for(int i=0;i<24;i++){
-          float sd = map(sp+sunDir*st).x;
-          shadow = min(shadow, 8.*sd/st);
-          st += max(sd, 0.04);
-          if(st>12.||shadow<0.01) break;
-        }
-        shadow = clamp(shadow,0.,1.);
-        float occ = ao(p,N);
-
-        vec3 lighting = shade(albedo,metal,rough,N,V,sunDir,sunCol,shadow);
-        vec3 skyL = vec3(0.40,0.28,0.14)*0.30;
-        lighting += albedo*(1.-metal)*skyL*(0.5+0.5*max(N.y,0.));
-        lighting += albedo*(1.-metal)*vec3(0.14,0.10,0.05)*max(-N.y,0.)*0.25;
-        lighting += albedo*(1.-metal)*vec3(0.08,0.06,0.04)*(0.5+0.5*N.y);
-
-        vec3 workPos[4];
-        workPos[0]=vec3( 0.,3.0, 2.5);
-        workPos[1]=vec3( 0.,3.0, 6.5);
-        workPos[2]=vec3( 0.,3.0,10.5);
-        workPos[3]=vec3( 0.,3.0,13.5);
-        vec3 warmL = vec3(1.0,0.82,0.56);
-        for(int i=0;i<4;i++){
-          vec3 lv  = workPos[i]-p;
-          float ld = length(lv);
-          vec3 ldir= lv/ld;
-          float att= 7.0/(1.+ld*ld*0.15);
-          float spot= smoothstep(.1,.8,dot(ldir,vec3(0.,-1.,0.)));
-          lighting += shade(albedo,metal,rough,N,V,ldir,warmL*att*(0.35+0.65*spot),1.);
-        }
-
-        lighting *= mix(occ,1.,0.35);
-        lighting += emissive;
-        float targetField = exp(-length(p-u_target)*0.82);
-        float scanBand = pow(max(0.,sin((p.y+p.z*.045-u_t*2.2)*15.0)),18.0);
-        float scanRim = pow(1.-abs(dot(N,V)),3.0);
-        lighting += vec3(1.0,.57,.045)*u_scan*targetField*(.22+scanBand*1.25+scanRim*.35);
-        float fog = 1.-exp(-hit.x*0.022);
-        vec3 fogCol = mix(vec3(0.30,0.23,0.14),sky(normalize(vec3(rd.x,max(rd.y,.04),rd.z))),.62);
-        if(p.z>0.0 && p.z<16.0 && abs(p.x)<7.15) fogCol=vec3(0.045,0.032,0.018);
-        col = mix(lighting, fogCol, fog);
-
-      } else {
-        col = sky(rd);
-        col = mix(col, vec3(0.35,0.28,0.18)*0.6, 0.15);
-      }
-
-      vec2 vp = gl_FragCoord.xy/u_res;
-      vec2 vig = vp*(1.-vp.yx);
-      col *= pow(vig.x*vig.y*15.,0.14);
-
-      col = col*(2.51*col+0.03)/(col*(2.43*col+0.59)+0.14);
-      col = pow(clamp(col,0.,1.), vec3(0.4545));
-      fragColor = vec4(col,1.);
-    }\`;
-    
-    function compile(type, src){
-      const s = gl.createShader(type);
-      gl.shaderSource(s, src);
-      gl.compileShader(s);
-      if(!gl.getShaderParameter(s, gl.COMPILE_STATUS)){
-        console.error('Shader error:', gl.getShaderInfoLog(s));
-        return null;
-      }
-      return s;
-    }
-    
-    const prog = gl.createProgram();
-    gl.attachShader(prog, compile(gl.VERTEX_SHADER, VS));
-    gl.attachShader(prog, compile(gl.FRAGMENT_SHADER, FS));
-    gl.linkProgram(prog);
-    gl.useProgram(prog);
-    
-    const buf = gl.createBuffer();
-    gl.bindBuffer(gl.ARRAY_BUFFER, buf);
-    gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1,-1,3,-1,-1,3]), gl.STATIC_DRAW);
-    const aLoc = gl.getAttribLocation(prog, 'a');
-    gl.enableVertexAttribArray(aLoc);
-    gl.vertexAttribPointer(aLoc, 2, gl.FLOAT, false, 0, 0);
-    
-    const uRes = gl.getUniformLocation(prog, 'u_res');
-    const uT   = gl.getUniformLocation(prog, 'u_t');
-    const uCam = gl.getUniformLocation(prog, 'u_cam');
-    const uDir = gl.getUniformLocation(prog, 'u_dir');
-    const uScan = gl.getUniformLocation(prog, 'u_scan');
-    const uTarget = gl.getUniformLocation(prog, 'u_target');
-    const uPlanSdf = gl.getUniformLocation(prog, 'u_planSdf');
-    const uPlanSource = gl.getUniformLocation(prog, 'u_planSource');
-    const uPlanMode = gl.getUniformLocation(prog, 'u_planMode');
-    const uPlanBounds = gl.getUniformLocation(prog, 'u_planBounds');
-    const uPlanHeight = gl.getUniformLocation(prog, 'u_planHeight');
-
-    const planSdfTexture = gl.createTexture();
-    gl.activeTexture(gl.TEXTURE0);
-    gl.bindTexture(gl.TEXTURE_2D, planSdfTexture);
-    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
-    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
-    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
-    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
-    gl.texImage2D(gl.TEXTURE_2D,0,gl.R32F,1,1,0,gl.RED,gl.FLOAT,new Float32Array([100]));
-    const planSourceTexture = gl.createTexture();
-    gl.activeTexture(gl.TEXTURE1);
-    gl.bindTexture(gl.TEXTURE_2D, planSourceTexture);
-    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
-    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
-    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
-    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
-    gl.texImage2D(gl.TEXTURE_2D,0,gl.RGBA,1,1,0,gl.RGBA,gl.UNSIGNED_BYTE,new Uint8Array([255,255,255,255]));
-    gl.uniform1i(uPlanSdf,0);
-    gl.uniform1i(uPlanSource,1);
-    let activePlanModel=null;
-    
-    // Proximity doorways in XZ plane
-    const doorways = [
-      { x: 0.0, z: 0.0, side: "South", name: "Weyland Main Automatic Entrance (S1)", hardware: "Dual-panel sensor-driven sliding entrance, presence safety curtain, monitored access controller" },
-      { x: -2.0, z: 2.0, side: "West", name: "Project Office Automatic Opening (W1)", hardware: "Horton Series 2000 automatic sliding assembly, Schlage AD-Series access control, Pemko gasketing" },
-      { x: 2.0, z: 2.0, side: "East", name: "Conference Room Automatic Opening (E1)", hardware: "Besam SW200 automatic operator, monitored presence sensor, Rixson concealed support" },
-      { x: -2.0, z: 6.0, side: "West", name: "Materials Review Automatic Opening (W2)", hardware: "Automatic double-slide leaf set, wireless access lock, perimeter gasketing" },
-      { x: 2.0, z: 6.0, side: "East", name: "IT and Telecom Room Opening (E2)", hardware: "Fail-secure automatic operator, request-to-exit sensor, monitored latch interface" },
-      { x: -2.0, z: 10.0, side: "West", name: "Plan Review Room Automatic Opening (W3)", hardware: "Sensor-driven sliding assembly, monitored access control, perimeter gasketing" },
-      { x: 2.0, z: 10.0, side: "East", name: "Electrical Room Controlled Opening (E3)", hardware: "Automatic sliding assembly, occupancy sensing, emergency breakout leaves" },
-      { x: -2.0, z: 14.0, side: "West", name: "Mechanical Room Controlled Opening (W4)", hardware: "Automatic operator, dual-channel safety edge, keycard access controller" },
-      { x: 2.0, z: 14.0, side: "East", name: "Facilities Office Automatic Opening (E4)", hardware: "Automatic double-slide assembly, badge reader, monitored egress" }
-    ];
-
-    const scanTargets = doorways.map((door, index) => ({
-      id: index === 0 ? 'entrance' : \`opening-\${door.side.toLowerCase()}-\${door.z}\`,
-      type: index === 0 ? 'AUTOMATIC ENTRANCE' : 'CONTROLLED OPENING',
-      name: door.name,
-      summary: door.hardware,
-      dimensions: index === 0 ? '2.60 W x 2.45 H m clear' : '1.36 W x 2.35 H m clear',
-      material: 'Aluminum / laminated safety glass',
-      hazard: index === 0 ? 'Validate presence curtain and breakout path' : 'Validate safety sensor before turnover',
-      status: index === 0 ? 'COMMISSIONING READY' : 'SPEC LINKED',
-      position: [door.x, 1.25, door.z],
-      radius: index === 0 ? 1.55 : 0.82,
-      maxRange: index === 0 ? 25 : 12,
-      tags: index === 0 ? ['exterior', 'opening'] : ['interior', 'opening']
-    }));
-    scanTargets.push(
-      { id: 'entrance-canopy', type: 'STRUCTURAL ASSEMBLY', name: 'Cantilevered Arrival Canopy', summary: 'Steel canopy, paired columns, integrated warm-white luminaires, and protected passenger loading zone.', dimensions: '6.00 W x 3.60 D m', material: 'Painted structural steel / membrane roof', hazard: 'Confirm drainage fall and column protection', status: 'MODEL COORDINATED', position: [0, 2.95, -1.8], radius: 2.6, maxRange: 20, tags: ['exterior', 'structure'] },
-      { id: 'approach-light-west', type: 'ELECTRICAL FIXTURE', name: 'West Approach Luminaire', summary: 'Site lighting pole with shielded LED head, photometric zone assignment, and underground feeder.', dimensions: '5.20 m mounting height', material: 'Powder-coated steel / LED optical head', hazard: 'Confirm footing cover and underground locate', status: 'CIRCUIT LINKED', position: [-4.6, 4.9, -7], radius: 0.75, maxRange: 16, tags: ['exterior', 'electrical'] },
-      { id: 'annex-west', type: 'FACILITY ZONE', name: 'West Service Annex', summary: 'Low-rise service annex linked to site logistics, utilities, and access-control models.', dimensions: '8.40 W x 10.80 D x 4.00 H m', material: 'Composite rainscreen / steel frame', hazard: 'Confirm delivery route and exterior drainage coordination', status: 'DIGITAL TWIN ONLINE', position: [-14, 2.0, 10], radius: 4.2, maxRange: 30, tags: ['exterior', 'facility'] },
-      { id: 'annex-east', type: 'FACILITY ZONE', name: 'East Operations Annex', summary: 'Operations annex with coordinated structure, envelope, equipment clearances, and work-package ownership.', dimensions: '9.60 W x 12.00 D x 3.40 H m', material: 'Insulated metal panel / steel frame', hazard: 'Maintain service access clearances', status: 'DIGITAL TWIN ONLINE', position: [15, 1.7, 13], radius: 4.8, maxRange: 32, tags: ['exterior', 'facility'] },
-      { id: 'corridor-light-2', type: 'ELECTRICAL FIXTURE', name: 'Corridor Luminaire L2', summary: 'Interior area light linked to reflected ceiling plan, circuit schedule, controls sequence, and commissioning test.', dimensions: '0.84 W x 0.84 D m', material: 'Aluminum housing / diffuse lens', hazard: 'Verify emergency circuit designation', status: 'CIRCUIT LINKED', position: [0, 3.15, 6], radius: 0.65, maxRange: 10, tags: ['interior', 'electrical'] }
-    );
-    sightxExperience = window.SightXExperience.create({ targets: scanTargets });
-    const sightxIngest = window.SightXSiteGenome.mount({ experience: sightxExperience });
-    resize();
-    
-    const sideDoorZ = [2, 6, 10, 14];
-    const roomFixtures = [
-      [-5.45, 2.0, 1.18, 0.67], [-6.55, 3.15, 0.42, 0.70],
-      [4.70, 2.0, 1.38, 0.74],
-      [-4.55, 6.0, 1.18, 0.72], [-6.55, 6.0, 0.42, 1.27],
-      [5.45, 5.35, 0.60, 0.54], [5.45, 6.65, 0.60, 0.54],
-      [-4.65, 10.0, 1.43, 0.85], [6.68, 10.0, 0.37, 1.31],
-      [-5.25, 14.0, 1.18, 0.75], [5.35, 14.0, 1.18, 0.67],
-      [6.55, 14.9, 0.42, 0.70]
-    ];
-
-    function nearSideOpening(z) {
-      return sideDoorZ.some(doorZ => Math.abs(z - doorZ) < 0.72);
-    }
-
-    function positionBlocked(x, z) {
-      if(activePlanModel){
-        const [minX,minZ,maxX,maxZ]=activePlanModel.bounds;
-        const u=(x-minX)/(maxX-minX), v=(z-minZ)/(maxZ-minZ);
-        if(u<0||u>1||v<0||v>1) return false;
-        const px=Math.max(0,Math.min(activePlanModel.width-1,Math.round(u*(activePlanModel.width-1))));
-        const py=Math.max(0,Math.min(activePlanModel.height-1,Math.round(v*(activePlanModel.height-1))));
-        return activePlanModel.sdf[py*activePlanModel.width+px]<0.32;
-      }
-      const ax = Math.abs(x);
-      if (Math.abs(x + 5.35) < 1.68 && Math.abs(z + 3.15) < 0.42) return true;
-      if ([ -5.5, 5.5 ].some(planterX => Math.abs(x - planterX) < 0.88 && Math.abs(z + 1.85) < 0.68)) return true;
-      if (z > -0.22 && z < 16.22 && ax > 7.0 && ax < 7.42) return true;
-      if (Math.abs(z) < 0.24 && ax < 7.3 && ax > 1.18) return true;
-      if (Math.abs(z - 16.0) < 0.26 && ax < 7.35) return true;
-      if (z > 0.0 && z < 16.0 && Math.abs(ax - 2.0) < 0.22 && !nearSideOpening(z)) return true;
-      if (ax > 2.08 && ax < 7.0 && [4, 8, 12].some(wallZ => Math.abs(z - wallZ) < 0.22)) return true;
-      if (roomFixtures.some(([fx, fz, hx, hz]) => Math.abs(x - fx) < hx && Math.abs(z - fz) < hz)) return true;
-      return false;
-    }
-
-    function checkDoorwayProximity(position, radius = 1.15) {
-      if(activePlanModel){
-        document.getElementById('hardware-modal').style.display='none';
-        return;
-      }
-      const px = position[0];
-      const pz = position[2];
-      let nearDoor = null;
-      for (const door of doorways) {
-        const dist = Math.hypot(px - door.x, pz - door.z);
-        if (dist < radius) {
-          nearDoor = door;
-          break;
-        }
-      }
-      
-      const modal = document.getElementById('hardware-modal');
-      if (nearDoor) {
-        document.getElementById('hud-door-name').textContent = nearDoor.name.toUpperCase();
-        document.getElementById('hud-door-hardware').textContent = nearDoor.hardware;
-        modal.style.display = 'block';
-        modal.dataset.doorId = nearDoor.z;
-      } else {
-        modal.style.display = 'none';
-      }
-    }
-
-    const sightxControls = window.SightXControls.mount({
-      canvas,
-      hint: document.getElementById('hint'),
-      initialPosition: [0, 1.72, -9.0],
-      initialYaw: 0,
-      initialPitch: 0,
-      collision: positionBlocked,
-      onMove: position => checkDoorwayProximity(position),
-      onScan: (active, position) => {
-        sightxExperience.setScanning(active);
-        checkDoorwayProximity(position, active ? 2.75 : 1.15);
-      },
-      onTourToggle: () => sightxExperience.toggleTour(),
-      onSettingsToggle: () => sightxExperience.toggleSettings(),
-      onReportToggle: () => sightxExperience.toggleReport(),
-      onCapture: hideUI,
-      onRelease: () => {
-        if (!document.body.classList.contains('sightx-demo')) showUI();
-      }
-    });
-    sightxExperience.attachControls(sightxControls);
-
-    window.SightXPlanRenderer=Object.freeze({
-      load(model){
-        if(!model||!model.sdf||!model.width||!model.height) throw new Error('A compiled plan SDF is required.');
-        activePlanModel=model;
-        gl.activeTexture(gl.TEXTURE0);
-        gl.bindTexture(gl.TEXTURE_2D,planSdfTexture);
-        gl.pixelStorei(gl.UNPACK_ALIGNMENT,1);
-        gl.texImage2D(gl.TEXTURE_2D,0,gl.R32F,model.width,model.height,0,gl.RED,gl.FLOAT,model.sdf);
-        if(model.sourceImage){
-          gl.activeTexture(gl.TEXTURE1);
-          gl.bindTexture(gl.TEXTURE_2D,planSourceTexture);
-          gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL,false);
-          gl.texImage2D(gl.TEXTURE_2D,0,gl.RGBA,gl.RGBA,gl.UNSIGNED_BYTE,model.sourceImage);
-        }
-        document.body.classList.add('sx-reconstructed');
-        const spawn=model.spawn||[0,1.72,0];
-        sightxControls.setPose(spawn,Number(model.yaw)||0,0);
-        sightxExperience.notify(\`\${model.label||'PDF PLAN'} / RECONSTRUCTED LOCALLY\`);
-      },
-      clear(){ activePlanModel=null; document.body.classList.remove('sx-reconstructed'); },
-      get active(){ return activePlanModel; }
-    });
-    
-    let last = 0;
-    function frame(ts){
-      const dt = Math.min((ts-last)/1000, 0.05); last = ts;
-      sightxControls.update(dt);
-      sightxExperience.update(ts, sightxControls);
-      if (sightxExperience.consumeResizeRequest()) resize();
-      const camPos = sightxControls.position;
-      const fwd = sightxControls.forward;
-      const scanTarget = sightxExperience.targetPosition;
-      gl.uniform2f(uRes, canvas.width, canvas.height);
-      gl.uniform1f(uT, ts*0.001);
-      gl.uniform3f(uCam, camPos[0], camPos[1], camPos[2]);
-      gl.uniform3f(uDir, fwd[0], fwd[1], fwd[2]);
-      gl.uniform1f(uScan, sightxExperience.scanAmount);
-      gl.uniform3f(uTarget, scanTarget[0], scanTarget[1], scanTarget[2]);
-      gl.uniform1i(uPlanMode,activePlanModel?1:0);
-      if(activePlanModel){
-        gl.uniform4f(uPlanBounds,...activePlanModel.bounds);
-        gl.uniform1f(uPlanHeight,activePlanModel.wallHeight||3.2);
-      }
-      gl.drawArrays(gl.TRIANGLES, 0, 3);
-      requestAnimationFrame(frame);
-    }
-    requestAnimationFrame(frame);
-  </script>
-  <script type="module" src="/assets/sightx-reconstruction.js?v=20260729-1"></script>
-  <script>
-    window.SightXRuntime.mount({
-      manifestUrl: '/sightx/runtime-manifest.json'
-    }).catch(error => console.error('[SightX runtime]', error));
-  </script>
-  <style>
-    #mx-toggle{position:fixed;bottom:24px;right:24px;z-index:9000;background:#12141988;backdrop-filter:blur(10px);border:1px solid #2c3139;color:#edf0f1;border-radius:99px;padding:12px 18px;font:750 11px/1 ui-monospace,monospace;letter-spacing:.06em;cursor:pointer}
-    #mx-toggle:hover{border-color:#f0b800;color:#f0b800}
-    #mx-panel{position:fixed;bottom:24px;right:24px;z-index:9001;width:300px;max-width:calc(100vw - 48px);background:#0d0f14ee;backdrop-filter:blur(14px);border:1px solid #2c3139;border-radius:16px;box-shadow:0 25px 70px rgba(0,0,0,.5);display:none;flex-direction:column;overflow:hidden;font-family:"Avenir Next","Helvetica Neue",sans-serif}
-    #mx-panel.open{display:flex}
-    #mx-head{display:flex;justify-content:space-between;align-items:center;padding:12px 14px;border-bottom:1px solid #2c3139}
-    #mx-head b{color:#edf0f1;font-size:12px;letter-spacing:.06em}
-    #mx-close{background:none;border:0;color:#9299a3;cursor:pointer;font-size:16px}
-    #mx-roster{display:flex;gap:6px;flex-wrap:wrap;padding:10px 14px;border-bottom:1px solid #2c3139}
-    .mx-avatar{width:26px;height:26px;border-radius:50%;display:grid;place-items:center;font:800 10px ui-monospace,monospace;color:#090a0d}
-    #mx-messages{flex:1;max-height:220px;overflow-y:auto;padding:10px 14px;display:flex;flex-direction:column;gap:8px;font-size:12px;color:#edf0f1}
-    .mx-msg b{color:#f0b800;margin-right:4px}
-    .mx-sys{color:#9299a3;font-style:italic}
-    #mx-input-row{display:flex;gap:6px;padding:10px 14px;border-top:1px solid #2c3139}
-    #mx-input{flex:1;background:#161920;border:1px solid #2c3139;border-radius:8px;padding:8px 10px;color:#fff;font-size:12px}
-    #mx-voice-btn{background:none;border:1px solid #2c3139;color:#9299a3;border-radius:8px;padding:8px 10px;cursor:pointer;font-size:13px}
-    #mx-voice-btn.active{background:#61dfa0;border-color:#61dfa0;color:#090a0d}
-    #mx-gate{padding:16px;font-size:12px;color:#9299a3;line-height:1.6}
-    #mx-gate a{color:#f0b800}
-  </style>
-  <button id="mx-toggle">\u{1F465} COLLABORATE</button>
-  <div id="mx-panel">
-    <div id="mx-head"><b>MEETINGX LIVE</b><button id="mx-close">\u2715</button></div>
-    <div id="mx-roster"></div>
-    <div id="mx-messages"></div>
-    <div id="mx-input-row">
-      <button id="mx-voice-btn" title="Toggle voice">\u{1F3A4}</button>
-      <input id="mx-input" type="text" placeholder="Message..." maxlength="2000">
-    </div>
-  </div>
-  <script>
-  (function(){
-    const PROJECT_ID = 'glendale-camino-real';
-    let ws = null, joined = false, myId = null, peers = {}, localStream = null;
-    const $ = (id) => document.getElementById(id);
-    function addMsg(html, cls) { const d = document.createElement('div'); d.className = 'mx-msg' + (cls ? ' ' + cls : ''); d.innerHTML = html; const box = $('mx-messages'); box.appendChild(d); box.scrollTop = box.scrollHeight; }
-    function esc(s) { return String(s == null ? '' : s).replace(/[<>&]/g, c => ({'<':'&lt;','>':'&gt;','&':'&amp;'}[c])); }
-    function renderRoster(users) { $('mx-roster').innerHTML = users.map(u => \`<span class="mx-avatar" style="background:\${u.color}" title="\${esc(u.name)}">\${esc((u.name||'?').slice(0,1).toUpperCase())}</span>\`).join(''); }
-    let roster = [];
-    function connect() {
-      ws = new WebSocket((location.protocol === 'https:' ? 'wss://' : 'ws://') + location.host + '/api/sight/room/' + PROJECT_ID);
-      ws.onopen = () => { joined = true; };
-      ws.onclose = () => {
-        const neverJoined = !joined;
-        joined = false;
-        if (neverJoined) {
-          $('mx-panel').innerHTML = '<div id="mx-gate">Sign in and add MeetingX to collaborate live in this walkthrough. See <a href="/pricing">/pricing</a>.</div>';
-        }
-      };
-      ws.onerror = () => {};
-      ws.onmessage = (evt) => {
-        let msg; try { msg = JSON.parse(evt.data); } catch (e) { return; }
-        if (msg.type === 'roster') { roster = msg.users; myId = msg.you; renderRoster(roster); addMsg('Connected. ' + roster.length + ' present.', 'mx-sys'); }
-        else if (msg.type === 'join') { roster.push(msg.user); renderRoster(roster); addMsg(esc(msg.user.name) + ' joined', 'mx-sys'); if (localStream) callPeer(msg.user.userId); }
-        else if (msg.type === 'leave') { roster = roster.filter(u => u.userId !== msg.userId); renderRoster(roster); if (peers[msg.userId]) { peers[msg.userId].pc.close(); delete peers[msg.userId]; } }
-        else if (msg.type === 'chat') { addMsg('<b>' + esc(msg.user.name) + ':</b> ' + esc(msg.text)); }
-        else if (msg.type === 'signal') { handleSignal(msg); }
-      };
-    }
-    function sendSignal(to, payload) { ws.send(JSON.stringify({ type: 'signal', to, payload })); }
-    function makePeerConnection(peerId) {
-      const pc = new RTCPeerConnection({ iceServers: [{ urls: 'stun:stun.l.google.com:19302' }] });
-      if (localStream) localStream.getTracks().forEach(t => pc.addTrack(t, localStream));
-      pc.onicecandidate = (e) => { if (e.candidate) sendSignal(peerId, { candidate: e.candidate }); };
-      pc.ontrack = (e) => {
-        let audio = document.getElementById('mx-audio-' + peerId);
-        if (!audio) { audio = document.createElement('audio'); audio.id = 'mx-audio-' + peerId; audio.autoplay = true; document.body.appendChild(audio); }
-        audio.srcObject = e.streams[0];
-      };
-      peers[peerId] = { pc };
-      return pc;
-    }
-    async function callPeer(peerId) {
-      const pc = makePeerConnection(peerId);
-      const offer = await pc.createOffer();
-      await pc.setLocalDescription(offer);
-      sendSignal(peerId, { sdp: offer });
-    }
-    async function handleSignal(msg) {
-      const peerId = msg.from;
-      let entry = peers[peerId];
-      const pc = entry ? entry.pc : makePeerConnection(peerId);
-      if (msg.payload.sdp) {
-        await pc.setRemoteDescription(new RTCSessionDescription(msg.payload.sdp));
-        if (msg.payload.sdp.type === 'offer') {
-          const answer = await pc.createAnswer();
-          await pc.setLocalDescription(answer);
-          sendSignal(peerId, { sdp: answer });
-        }
-      } else if (msg.payload.candidate) {
-        try { await pc.addIceCandidate(msg.payload.candidate); } catch (e) {}
-      }
-    }
-    $('mx-toggle').addEventListener('click', () => {
-      $('mx-panel').classList.toggle('open');
-      if (!ws) connect();
-    });
-    $('mx-close').addEventListener('click', () => $('mx-panel').classList.remove('open'));
-    $('mx-input').addEventListener('keydown', (e) => {
-      if (e.key === 'Enter' && ws && joined && e.target.value.trim()) {
-        ws.send(JSON.stringify({ type: 'chat', text: e.target.value.trim() }));
-        e.target.value = '';
-      }
-    });
-    $('mx-voice-btn').addEventListener('click', async () => {
-      const btn = $('mx-voice-btn');
-      if (!localStream) {
-        try {
-          localStream = await navigator.mediaDevices.getUserMedia({ audio: true });
-          btn.classList.add('active');
-          roster.filter(u => u.userId !== myId).forEach(u => callPeer(u.userId));
-        } catch (e) { addMsg('Mic access denied.', 'mx-sys'); }
-      } else {
-        localStream.getTracks().forEach(t => t.stop());
-        localStream = null;
-        Object.values(peers).forEach(p => p.pc.close());
-        peers = {};
-        btn.classList.remove('active');
-      }
-    });
-  })();
-  </script>
-
-
-  <!-- Guided Walkthrough Preview -- real, deployed 2026-09-06. SightX's own
-       spec promises "guided site walkthroughs"; the WebGL scene above is
-       one real hardcoded demo project (Glendale Camino Real). This panel
-       is a genuinely different, smaller, real slice of that same promise:
-       given a plain-text project description, it generates an actual
-       narrated storyboard walkthrough (script via a self-hosted LLM,
-       animated-SVG scene sequence, optional browser text-to-speech) --
-       not a 3D render, not a video file. Calls weylandai's own
-       /api/sightx/walkthrough-preview, which forwards to
-       filmline-video-worker over a real same-account Service Binding. -->
-  <div id="wt-preview-toggle" style="position:fixed;right:20px;bottom:20px;z-index:9999;">
-    <button id="wt-preview-btn" style="padding:10px 16px;background:#f0b800;color:#090a0d;border:0;border-radius:6px;font-weight:700;font-family:'Space Grotesk',sans-serif;cursor:pointer;box-shadow:0 2px 12px rgba(0,0,0,0.4);">Guided Walkthrough Preview</button>
-  </div>
-  <div id="wt-preview-panel" style="display:none;position:fixed;inset:0;z-index:10000;background:rgba(9,10,13,0.92);overflow:auto;">
-    <div style="max-width:820px;margin:40px auto;background:#12151a;border:1px solid #2a2e36;border-radius:10px;padding:28px;color:#f4f1ea;font-family:'Outfit',sans-serif;">
-      <div style="display:flex;justify-content:space-between;align-items:center;">
-        <h2 style="margin:0;font-family:'Space Grotesk',sans-serif;">Guided Walkthrough Preview</h2>
-        <button id="wt-preview-close" style="background:none;border:0;color:#8a94a6;font-size:22px;cursor:pointer;">&times;</button>
-      </div>
-      <p style="color:#a9b2c0;font-size:14px;line-height:1.6;">Describe a project (e.g. "second-floor mechanical retrofit, three access points, one hazardous-material zone") and generate a real narrated storyboard walkthrough -- a script plus an animated scene sequence, played back with your browser's own text-to-speech. This is not the 3D scene above; it's a smaller, real, honest slice of SightX's "guided site walkthroughs" promise: script + animated storyboard, not photorealistic render or an encoded video file.</p>
-      <textarea id="wt-preview-input" rows="3" maxlength="1000" placeholder="Describe the project or space to walk through..." style="width:100%;box-sizing:border-box;background:#0d0f13;color:#f4f1ea;border:1px solid #2a2e36;border-radius:6px;padding:10px;font-family:inherit;font-size:14px;"></textarea>
-      <button id="wt-preview-generate" style="margin-top:10px;padding:10px 18px;background:#f0b800;color:#090a0d;border:0;border-radius:6px;font-weight:700;cursor:pointer;">Generate</button>
-      <span id="wt-preview-status" style="margin-left:12px;color:#8a94a6;font-size:13px;"></span>
-      <div id="wt-preview-result" style="margin-top:18px;"></div>
-    </div>
-  </div>
-  <script>
-    (function () {
-      var toggleBtn = document.getElementById('wt-preview-btn');
-      var panel = document.getElementById('wt-preview-panel');
-      var closeBtn = document.getElementById('wt-preview-close');
-      var genBtn = document.getElementById('wt-preview-generate');
-      var input = document.getElementById('wt-preview-input');
-      var status = document.getElementById('wt-preview-status');
-      var result = document.getElementById('wt-preview-result');
-      toggleBtn.addEventListener('click', function () { panel.style.display = 'block'; });
-      closeBtn.addEventListener('click', function () { panel.style.display = 'none'; });
-      genBtn.addEventListener('click', function () {
-        var description = (input.value || '').trim();
-        if (!description) { status.textContent = 'Enter a project description first.'; return; }
-        status.textContent = 'Generating (real model inference, ~10-20s)...';
-        result.innerHTML = '';
-        genBtn.disabled = true;
-        fetch('/api/sightx/walkthrough-preview', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ description: description })
-        }).then(function (r) { return r.json().then(function (d) { return { ok: r.ok, d: d }; }); })
-          .then(function (res) {
-            genBtn.disabled = false;
-            if (!res.ok) { status.textContent = 'Error: ' + (res.d && res.d.detail && res.d.detail.message || 'generation failed'); return; }
-            status.textContent = 'Done (' + res.d.total_seconds + 's reel, ' + res.d.scene_count + ' scenes).';
-            result.innerHTML = res.d.svg + '<p style="margin-top:12px;color:#8a94a6;font-size:13px;">' + res.d.logline_escaped + '</p>' +
-              '<button id="wt-preview-narrate" style="margin-top:6px;padding:8px 14px;background:#2a2e36;color:#f4f1ea;border:0;border-radius:6px;cursor:pointer;">Narrate (browser text-to-speech)</button>';
-            document.getElementById('wt-preview-narrate').addEventListener('click', function () {
-              if (!('speechSynthesis' in window)) { alert('No speechSynthesis support in this browser.'); return; }
-              window.speechSynthesis.cancel();
-              (res.d.narration_lines || []).forEach(function (line) {
-                if (line) window.speechSynthesis.speak(new SpeechSynthesisUtterance(line));
-              });
-            });
-          })
-          .catch(function (err) { genBtn.disabled = false; status.textContent = 'Request failed: ' + err.message; });
-      });
-    })();
-  </script>
-</body>
-</html>
-`, { headers: { "Content-Type": "text/html; charset=UTF-8", "Cache-Control": "public, max-age=60" } });
-  }
-  function serve_meetingx() {
-    return new Response(`<!doctype html>
-<html lang="en">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-  <meta name="theme-color" content="#090a0d">
-  <title>MeetingX | WeylandAI</title>
-  <meta name="description" content="MeetingX turns live construction conversations into decisions, action items, and project intelligence.">
-  <style>
-    :root{--ink:#090a0d;--panel:#111318;--panel2:#171a20;--line:#2b3038;--paper:#eef1f2;--muted:#9299a3;--gold:#f0b800;--gold2:#ffd950;--green:#68e0a0;--red:#ff716b;--blue:#6ed8ff;--r:18px}
-    *{box-sizing:border-box}html,body{margin:0;min-height:100%;background:var(--ink);color:var(--paper);font-family:"Avenir Next","Helvetica Neue",sans-serif}body{overflow-x:hidden}
-    body:before{content:"";position:fixed;inset:0;pointer-events:none;background:radial-gradient(circle at 12% 8%,rgba(240,184,0,.14),transparent 24rem),radial-gradient(circle at 87% 83%,rgba(110,216,255,.08),transparent 28rem),linear-gradient(rgba(255,255,255,.015) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.015) 1px,transparent 1px);background-size:auto,auto,32px 32px,32px 32px}
-    button,input,textarea{font:inherit}.shell{position:relative;max-width:1540px;margin:auto;padding:20px clamp(14px,2.5vw,36px) 40px}
-    header{display:flex;align-items:center;justify-content:space-between;gap:18px;margin-bottom:20px}.brand{display:flex;align-items:center;gap:13px;text-decoration:none;color:var(--paper)}.mark{width:42px;height:42px;display:grid;place-items:center;background:var(--gold);color:var(--ink);font-weight:900;letter-spacing:-.08em}.brand strong{display:block;letter-spacing:.14em;font-size:14px}.brand small{display:block;color:var(--muted);font:600 9px/1.5 ui-monospace,monospace;letter-spacing:.15em}.top-actions{display:flex;align-items:center;gap:8px;flex-wrap:wrap}.status{display:flex;align-items:center;gap:7px;border:1px solid var(--line);border-radius:99px;padding:8px 12px;color:var(--muted);font:700 10px/1 ui-monospace,monospace;letter-spacing:.09em}.dot{width:7px;height:7px;border-radius:50%;background:var(--green);box-shadow:0 0 14px var(--green)}.link{color:var(--paper);text-decoration:none;border:1px solid var(--line);border-radius:99px;padding:8px 12px;font:700 10px/1 ui-monospace,monospace;letter-spacing:.08em}.link:hover{border-color:var(--gold);color:var(--gold)}
-    .intro{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(290px,.65fr);gap:18px;margin-bottom:18px}.hero,.brief,.card{background:rgba(17,19,24,.91);border:1px solid var(--line);border-radius:var(--r);box-shadow:0 24px 80px rgba(0,0,0,.25)}
-    .hero{position:relative;min-height:470px;overflow:hidden}.hero video{width:100%;height:100%;min-height:470px;object-fit:cover;background:#050609;display:block}.hero-placeholder{position:absolute;inset:0;display:grid;place-items:center;text-align:center;padding:40px;background:radial-gradient(circle at 50% 43%,rgba(240,184,0,.12),transparent 22%),linear-gradient(145deg,#11151b,#07080b)}.hero-placeholder.hidden{display:none}.orb{width:110px;height:110px;border:1px solid rgba(240,184,0,.45);transform:rotate(45deg);margin:0 auto 38px;position:relative;animation:turn 16s linear infinite}.orb:before,.orb:after{content:"";position:absolute;inset:15px;border:1px solid rgba(240,184,0,.33)}.orb:after{inset:32px;background:var(--gold);box-shadow:0 0 50px rgba(240,184,0,.3)}@keyframes turn{to{transform:rotate(405deg)}}
-    .hero-placeholder h1{font-size:clamp(34px,5vw,72px);line-height:.95;margin:0 0 14px;letter-spacing:-.05em}.hero-placeholder h1 span{color:var(--gold)}.hero-placeholder p{max-width:620px;color:var(--muted);margin:0 auto;line-height:1.65}.live-tag{position:absolute;top:16px;left:16px;background:rgba(9,10,13,.75);backdrop-filter:blur(14px);border:1px solid var(--line);border-radius:99px;padding:9px 12px;font:800 10px/1 ui-monospace,monospace;letter-spacing:.1em}.timer{position:absolute;top:16px;right:16px;background:rgba(9,10,13,.75);backdrop-filter:blur(14px);border:1px solid var(--line);border-radius:99px;padding:9px 12px;font:700 11px/1 ui-monospace,monospace}.controls{position:absolute;left:50%;bottom:18px;transform:translateX(-50%);display:flex;gap:8px;background:rgba(9,10,13,.78);border:1px solid var(--line);border-radius:99px;padding:7px;backdrop-filter:blur(16px)}
-    .control{border:0;border-radius:99px;background:var(--panel2);color:var(--paper);padding:11px 14px;cursor:pointer;font:750 10px/1 ui-monospace,monospace;letter-spacing:.04em;white-space:nowrap}.control:hover,.control.active{background:var(--gold);color:var(--ink)}.control.danger:hover{background:var(--red)}
-    .brief{padding:23px;display:flex;flex-direction:column}.eyebrow{color:var(--gold);font:800 10px/1 ui-monospace,monospace;letter-spacing:.16em;text-transform:uppercase}.brief h2{font-size:30px;line-height:1.05;letter-spacing:-.035em;margin:13px 0 9px}.brief>p{color:var(--muted);line-height:1.55;margin:0 0 20px}.flow{display:grid;gap:8px;margin:4px 0 20px}.flow-row{display:grid;grid-template-columns:32px 1fr;gap:11px;align-items:center;padding:11px;border:1px solid var(--line);border-radius:12px;background:rgba(255,255,255,.018)}.flow-row b{display:grid;place-items:center;width:30px;height:30px;border-radius:9px;background:rgba(240,184,0,.12);color:var(--gold);font:800 11px ui-monospace,monospace}.flow-row strong{font-size:13px}.flow-row small{display:block;color:var(--muted);margin-top:2px;line-height:1.35}.metrics{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:auto}.metric{padding:12px;border:1px solid var(--line);border-radius:12px}.metric strong{display:block;color:var(--gold);font-size:22px}.metric span{color:var(--muted);font:700 9px/1.3 ui-monospace,monospace;letter-spacing:.07em}
-    .workspace{display:grid;grid-template-columns:1.2fr .8fr .8fr;gap:18px}.card{padding:20px;min-height:300px}.card-head{display:flex;justify-content:space-between;gap:12px;align-items:center;margin-bottom:15px}.card h3{margin:0;font-size:17px}.badge{color:var(--muted);font:700 9px/1 ui-monospace,monospace;border:1px solid var(--line);border-radius:99px;padding:6px 8px}.transcript{height:260px;overflow:auto;padding:13px;border:1px solid var(--line);border-radius:12px;background:#0b0c0f;color:#cbd0d5;font:13px/1.65 ui-monospace,monospace;white-space:pre-wrap}.interim{color:var(--muted)}
-    .list{display:grid;gap:8px;max-height:230px;overflow:auto}.item{border:1px solid var(--line);border-radius:11px;padding:11px 12px;background:rgba(255,255,255,.018);font-size:13px;line-height:1.45}.item small{display:block;color:var(--muted);font:700 9px/1.4 ui-monospace,monospace;margin-top:5px}.empty{color:var(--muted);font-size:13px;line-height:1.6}.add{width:100%;margin-top:10px;border:1px dashed #454b54;background:transparent;color:var(--muted);border-radius:11px;padding:10px;cursor:pointer}.add:hover{border-color:var(--gold);color:var(--gold)}
-    .ask{display:flex;gap:8px;margin-top:10px}.ask input{min-width:0;flex:1;background:#0b0c0f;color:var(--paper);border:1px solid var(--line);border-radius:10px;padding:11px;outline:none}.ask input:focus{border-color:var(--gold)}.ask button{border:0;background:var(--gold);color:var(--ink);font-weight:800;border-radius:10px;padding:0 14px;cursor:pointer}.answer{min-height:145px;border-left:2px solid var(--gold);padding:3px 0 3px 13px;color:#cbd0d5;font-size:13px;line-height:1.6}.footerbar{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-top:18px;color:var(--muted);font:700 9px/1.5 ui-monospace,monospace;letter-spacing:.05em}.footerbar button{border:1px solid var(--line);background:transparent;color:var(--paper);border-radius:10px;padding:9px 12px;cursor:pointer}.footerbar button:hover{border-color:var(--gold);color:var(--gold)}
-    @media(max-width:1050px){.intro{grid-template-columns:1fr}.workspace{grid-template-columns:1fr 1fr}.workspace .card:first-child{grid-column:1/-1}}
-    @media(max-width:700px){.shell{padding:12px}.brand small,.top-actions .link{display:none}.hero,.hero video{min-height:55vh}.controls{width:calc(100% - 24px);overflow-x:auto;justify-content:flex-start}.workspace{grid-template-columns:1fr}.workspace .card:first-child{grid-column:auto}.brief{padding:18px}.footerbar{align-items:flex-start;flex-direction:column}}
-  </style>
-</head>
-<body>
-  <div class="shell">
-    <header>
-      <a class="brand" href="/"><span class="mark">WX</span><span><strong>MEETINGX</strong><small>WEYLAND COLLABORATION INTELLIGENCE</small></span></a>
-      <div class="top-actions"><span class="status"><i class="dot"></i> LIVE BETA</span><a class="link" href="/sightx/">SIGHTX</a><a class="link" href="/">WEYLAND</a></div>
-    </header>
-
-    <section class="intro">
-      <div class="hero">
-        <video id="stage" autoplay playsinline muted></video>
-        <div class="hero-placeholder" id="placeholder">
-          <div><div class="orb"></div><h1>Meet inside the<br><span>project model.</span></h1><p>MeetingX converts live conversation into a durable project record: transcript, decisions, actions, and the Weyland product context needed to act.</p></div>
-        </div>
-        <span class="live-tag" id="media-status">LOCAL FACILITATION SURFACE</span>
-        <span class="timer" id="timer">00:00:00</span>
-        <div class="controls">
-          <button class="control" id="media-btn">CAM + MIC</button>
-          <button class="control" id="share-btn">SHARE SCREEN</button>
-          <button class="control" id="record-btn">TRANSCRIBE</button>
-          <button class="control" id="decision-btn">DECISION</button>
-          <button class="control" id="action-btn">ACTION</button>
-        </div>
-      </div>
-
-      <aside class="brief">
-        <span class="eyebrow">Capital Meeting Brief</span>
-        <h2>One data spine.<br>Four revenue surfaces.</h2>
-        <p>The profitable wedge is not a list of disconnected products. It is one project intelligence flow sold at the points where construction loses the most time.</p>
-        <div class="flow">
-          <div class="flow-row"><b>01</b><div><strong>SubX</strong><small>Documents, specifications, submittals, and subcontractor intelligence.</small></div></div>
-          <div class="flow-row"><b>02</b><div><strong>TakeoffX</strong><small>Quantities, costs, labor, and estimate-ready scope.</small></div></div>
-          <div class="flow-row"><b>03</b><div><strong>PropX</strong><small>Bundles verified outputs into a reviewable proposal.</small></div></div>
-          <div class="flow-row"><b>04</b><div><strong>SightX</strong><small>Makes the same project data spatial, explorable, and explainable.</small></div></div>
-        </div>
-        <div class="metrics"><div class="metric"><strong>$2K</strong><span>SUBCONP ACTIVE SEAT / MONTH</span></div><div class="metric"><strong>$10M</strong><span>TARGET SEED ROUND</span></div></div>
-      </aside>
-    </section>
-
-    <section class="workspace">
-      <article class="card">
-        <div class="card-head"><h3>Live Transcript</h3><span class="badge" id="speech-status">READY</span></div>
-        <div class="transcript" id="transcript">MeetingX ready. Start transcription to create a local meeting record.</div>
-      </article>
-      <article class="card">
-        <div class="card-head"><h3>Decisions</h3><span class="badge" id="decision-count">0 CAPTURED</span></div>
-        <div class="list" id="decisions"><p class="empty">Capture the commitments that change the project or company.</p></div>
-        <button class="add" data-add="decision">+ Record decision</button>
-      </article>
-      <article class="card">
-        <div class="card-head"><h3>Actions</h3><span class="badge" id="action-count">0 OPEN</span></div>
-        <div class="list" id="actions"><p class="empty">Turn conversation into an owner, outcome, and next step.</p></div>
-        <button class="add" data-add="action">+ Add action</button>
-      </article>
-      <article class="card" style="grid-column:1/-1;min-height:220px">
-        <div class="card-head"><h3>Ask Weyland</h3><span class="badge">MEETING CONTEXT</span></div>
-        <div class="answer" id="answer">Ask about the product flow, the commercial wedge, the raise, or what should be demonstrated. MeetingX answers from the verified meeting brief rather than the public web.</div>
-        <form class="ask" id="ask-form"><input id="ask-input" autocomplete="off" placeholder="What is the clearest way to explain SubX and TakeoffX?"><button>ASK</button></form>
-      </article>
-    </section>
-
-    <div class="footerbar"><span>MEETINGX BETA \xB7 MEDIA AND NOTES STAY IN THIS BROWSER \xB7 MULTI-PARTY TRANSPORT NOT YET CLAIMED</span><button id="export-btn">EXPORT MEETING RECORD</button></div>
-  </div>
-
-  <script>
-    const state={started:Date.now(),transcript:[],decisions:[],actions:[],camera:null,display:null,recognition:null,recording:false};
-    const $=id=>document.getElementById(id);
-    const clock=()=>{const s=Math.floor((Date.now()-state.started)/1000);$('timer').textContent=[s/3600,s/60%60,s%60].map(v=>String(Math.floor(v)).padStart(2,'0')).join(':')};setInterval(clock,1000);clock();
-    function showStream(stream,label){$('stage').srcObject=stream;$('placeholder').classList.add('hidden');$('media-status').textContent=label}
-    async function startMedia(){try{if(!state.camera)state.camera=await navigator.mediaDevices.getUserMedia({video:{width:{ideal:1280},height:{ideal:720}},audio:{echoCancellation:true,noiseSuppression:true}});showStream(state.camera,'CAMERA + MICROPHONE READY');$('media-btn').classList.add('active')}catch(e){$('media-status').textContent='MEDIA PERMISSION REQUIRED';alert('Allow camera and microphone access to activate the MeetingX stage.') }}
-    async function shareScreen(){try{state.display=await navigator.mediaDevices.getDisplayMedia({video:true,audio:true});showStream(state.display,'SCREEN SHARE ACTIVE');$('share-btn').classList.add('active');state.display.getVideoTracks()[0].addEventListener('ended',()=>{state.display=null;$('share-btn').classList.remove('active');if(state.camera)showStream(state.camera,'CAMERA + MICROPHONE READY');else{$('stage').srcObject=null;$('placeholder').classList.remove('hidden')}})}catch(e){if(e.name!=='NotAllowedError')alert('Screen sharing could not start: '+e.message)}}
-    function initSpeech(){const SR=window.SpeechRecognition||window.webkitSpeechRecognition;if(!SR)return null;const r=new SR();r.continuous=true;r.interimResults=true;r.lang='en-US';r.onresult=e=>{let interim='';for(let i=e.resultIndex;i<e.results.length;i++){const text=e.results[i][0].transcript.trim();if(e.results[i].isFinal){state.transcript.push({at:new Date().toISOString(),text});}else interim=text}renderTranscript(interim)};r.onend=()=>{if(state.recording){try{r.start()}catch(_){}}};r.onerror=e=>{$('speech-status').textContent=e.error.toUpperCase()};return r}
-    function renderTranscript(interim=''){$('transcript').innerHTML=(state.transcript.length?state.transcript.map(x=>\`<div>\${escapeHtml(x.text)}</div>\`).join(''):'<span class="interim">Listening\u2026</span>')+(interim?\`<div class="interim">\${escapeHtml(interim)}</div>\`:'');$('transcript').scrollTop=$('transcript').scrollHeight}
-    function toggleSpeech(){if(!state.recognition)state.recognition=initSpeech();if(!state.recognition){$('speech-status').textContent='UNSUPPORTED';alert('Live browser transcription is not available in this browser. Camera, notes, decisions, and export still work.');return}state.recording=!state.recording;if(state.recording){state.recognition.start();$('record-btn').classList.add('active');$('speech-status').textContent='LISTENING'}else{state.recognition.stop();$('record-btn').classList.remove('active');$('speech-status').textContent='PAUSED'}}
-    function escapeHtml(v){return String(v).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
-    function add(kind){const label=kind==='decision'?'Decision':'Action and owner';const value=prompt(label+':');if(!value)return;state[kind+'s'].push({text:value,at:new Date().toISOString()});renderList(kind)}
-    function renderList(kind){const values=state[kind+'s'],node=$(kind+'s');node.innerHTML=values.length?values.map((x,i)=>\`<div class="item">\${escapeHtml(x.text)}<small>\${new Date(x.at).toLocaleTimeString([], {hour:'2-digit',minute:'2-digit'})} \xB7 \${kind.toUpperCase()} \${i+1}</small></div>\`).join(''):\`<p class="empty">Nothing captured yet.</p>\`;$(kind+'-count').textContent=\`\${values.length} \${kind==='action'?'OPEN':'CAPTURED'}\`}
-    function answer(q){const s=q.toLowerCase();if(/price|cost|2k|2,000/.test(s))return 'SubConP, the Subcontractor Operating Package, is $2,000 per active operator seat per month. It includes HuntX, SubX, TakeoffX, CutsheetX, PropX, and SightX.';if(/flow|together|pipeline|product|subconp/.test(s))return 'Explain one project record across six products: HuntX finds the opportunity; SubX prepares submittals; TakeoffX quantifies drawings; CutsheetX assembles product data; PropX produces the reviewed proposal; SightX makes the same record spatial.';if(/takeoff/.test(s))return 'TakeoffX, or Takeoff Express, is the estimating wedge: quantify scope, connect current cost and labor assumptions, and move an estimator from tracing plans to reviewing a machine-produced result.';if(/subx|submittal/.test(s))return 'SubX means Submittal Express. It reduces document handling and submittal preparation from hours or days to a professional review cycle.';if(/raise|10m|capital|fund/.test(s))return 'The deck asks for $10M and frames five years of runway with 60% engineering, 30% staffing, and 10% operations. The strongest proof is the revenue-producing SubX and TakeoffX workflow, not the count of future products.';if(/demo|show|present/.test(s))return 'Show three things: the Weyland homepage for the platform thesis, SightX for spatial comprehension, and MeetingX for conversation-to-action. Describe SubConP as six products operating on one shared project record.';if(/meetingx|meetx/.test(s))return 'MeetingX is the canonical name. This beta proves local media, screen sharing, transcription, decisions, actions, export, and context-aware facilitation. Multi-party conferencing still requires a signaling and TURN layer and is not being claimed today.';return 'Anchor the answer to SubConP: less manual construction work, faster quote and approval cycles, and one project record reused across HuntX, SubX, TakeoffX, CutsheetX, PropX, and SightX.'}
-    function exportRecord(){const payload={product:'MeetingX',schema_version:1,started_at:new Date(state.started).toISOString(),exported_at:new Date().toISOString(),transcript:state.transcript,decisions:state.decisions,actions:state.actions};const blob=new Blob([JSON.stringify(payload,null,2)],{type:'application/json'}),a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=\`meetingx-\${new Date().toISOString().replace(/[:.]/g,'-')}.json\`;a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1000)}
-    $('media-btn').onclick=startMedia;$('share-btn').onclick=shareScreen;$('record-btn').onclick=toggleSpeech;$('decision-btn').onclick=()=>add('decision');$('action-btn').onclick=()=>add('action');document.querySelectorAll('[data-add]').forEach(b=>b.onclick=()=>add(b.dataset.add));$('export-btn').onclick=exportRecord;
-    $('ask-form').onsubmit=e=>{e.preventDefault();const q=$('ask-input').value.trim();if(!q)return;$('answer').textContent=answer(q);$('ask-input').value=''};
-  </script>
-</body>
-</html>
-`, { headers: { "Content-Type": "text/html; charset=UTF-8", "Cache-Control": "public, max-age=60" } });
-  }
-  function serve_sightx_runtime_manifest_json() {
-    return new Response('{\n  "$schema": "/sightx/runtime-manifest.schema.json",\n  "schema": "weyland.sightx.runtime-manifest.v1",\n  "scene": {\n    "id": "weyland-facility-01",\n    "name": "Weyland Facility 01",\n    "coordinateSystem": "site-local",\n    "units": "m",\n    "siteGenomeUrl": "/sightx/projects/glendale-camino-real/catalog.json"\n  },\n  "runtimes": {\n    "web": {\n      "kind": "browser-webgl",\n      "status": "available",\n      "mount": "#bg-canvas"\n    },\n    "unreal": {\n      "kind": "unreal-pixel-streaming",\n      "status": "requires-endpoint",\n      "frontendUrl": null,\n      "healthUrl": null,\n      "transport": "webrtc"\n    }\n  },\n  "bridge": {\n    "schema": "weyland.sightx.runtime-bridge.v1",\n    "pageToRuntime": [\n      "sightx:scene:load",\n      "sightx:settings:update"\n    ],\n    "runtimeToPage": [\n      "sightx:runtime:ready",\n      "sightx:field-record"\n    ]\n  }\n}\n', { headers: { "Content-Type": "application/json; charset=UTF-8", "Cache-Control": "public, max-age=60" } });
-  }
-  function serve_sightx_runtime_manifest_schema_json() {
-    return new Response('{\n  "$schema": "https://json-schema.org/draft/2020-12/schema",\n  "$id": "https://weylandai.com/sightx/runtime-manifest.schema.json",\n  "title": "SightX Runtime Manifest",\n  "type": "object",\n  "required": ["schema", "scene", "runtimes", "bridge"],\n  "properties": {\n    "schema": { "const": "weyland.sightx.runtime-manifest.v1" },\n    "scene": {\n      "type": "object",\n      "required": ["id", "name", "coordinateSystem", "units"],\n      "properties": {\n        "id": { "type": "string", "minLength": 1 },\n        "name": { "type": "string", "minLength": 1 },\n        "coordinateSystem": { "enum": ["site-local", "source-unmapped"] },\n        "units": { "enum": ["m", "ft"] },\n        "siteGenomeUrl": { "type": ["string", "null"] }\n      },\n      "additionalProperties": true\n    },\n    "runtimes": {\n      "type": "object",\n      "required": ["web", "unreal"],\n      "properties": {\n        "web": {\n          "type": "object",\n          "required": ["kind", "status", "mount"]\n        },\n        "unreal": {\n          "type": "object",\n          "required": ["kind", "status", "frontendUrl", "transport"],\n          "properties": {\n            "frontendUrl": { "type": ["string", "null"] },\n            "healthUrl": { "type": ["string", "null"] },\n            "transport": { "const": "webrtc" }\n          },\n          "additionalProperties": true\n        }\n      },\n      "additionalProperties": false\n    },\n    "bridge": {\n      "type": "object",\n      "required": ["schema", "pageToRuntime", "runtimeToPage"]\n    }\n  },\n  "additionalProperties": true\n}\n', { headers: { "Content-Type": "application/json; charset=UTF-8", "Cache-Control": "public, max-age=60" } });
-  }
-  function serve_sightx_projects_glendale_camino_real_catalog_json() {
-    return new Response('{\n  "schema": "sightx.project-catalog.v1",\n  "projects": [\n    {\n      "id": "glendale-camino-real",\n      "name": "Glendale Community College - Camino Real Building Renovation",\n      "address": "1500 N. Verdugo Rd, Glendale, CA 91208",\n      "source": {\n        "file": "GCCFullDoorSchedule.pdf",\n        "url": "GCCFullDoorSchedule.pdf",\n        "sha256": "36d5c352b26db0ef5ba56eca4b3254e95bc782afae9e0bae7305b860b8bef0e1",\n        "pages": 4,\n        "title": "Architectural Sheets"\n      },\n      "levels": [\n        {\n          "id": "first-floor",\n          "label": "First Floor / A-201",\n          "page": 1,\n          "sheet": "A-201",\n          "crop": [\n            0.18,\n            0.235,\n            0.57,\n            0.35\n          ],\n          "elevationM": 0.0,\n          "heightM": 3.35,\n          "widthM": 58.0,\n          "sourcePreview": "first-floor-source.webp",\n          "wallMask": "first-floor-walls.png",\n          "semanticPreview": "first-floor-semantic.png",\n          "modelInputPreview": "first-floor-model-input.webp",\n          "texture": {\n            "width": 768,\n            "height": 364\n          },\n          "boundsM": [\n            -29.0,\n            -13.744791666666666,\n            29.0,\n            13.744791666666666\n          ],\n          "extraction": {\n            "method": "floorplan-unet-resnet34-cubicasa-v1",\n            "wallPixels": 29632,\n            "doorPixels": 36727,\n            "windowPixels": 75740,\n            "status": "machine-derived-requires-review"\n          }\n        },\n        {\n          "id": "second-floor",\n          "label": "Second Floor / A-202",\n          "page": 2,\n          "sheet": "A-202",\n          "crop": [\n            0.19,\n            0.22,\n            0.56,\n            0.36\n          ],\n          "elevationM": 3.35,\n          "heightM": 3.35,\n          "widthM": 58.0,\n          "sourcePreview": "second-floor-source.webp",\n          "wallMask": "second-floor-walls.png",\n          "semanticPreview": "second-floor-semantic.png",\n          "modelInputPreview": "second-floor-model-input.webp",\n          "texture": {\n            "width": 768,\n            "height": 382\n          },\n          "boundsM": [\n            -29.0,\n            -14.424479166666666,\n            29.0,\n            14.424479166666666\n          ],\n          "extraction": {\n            "method": "floorplan-unet-resnet34-cubicasa-v1",\n            "wallPixels": 36428,\n            "doorPixels": 10274,\n            "windowPixels": 68460,\n            "status": "machine-derived-requires-review"\n          }\n        },\n        {\n          "id": "attic",\n          "label": "Attic / A-203",\n          "page": 3,\n          "sheet": "A-203.1",\n          "crop": [\n            0.215,\n            0.075,\n            0.56,\n            0.35\n          ],\n          "elevationM": 6.7,\n          "heightM": 2.75,\n          "widthM": 58.0,\n          "sourcePreview": "attic-source.webp",\n          "wallMask": "attic-walls.png",\n          "semanticPreview": "attic-semantic.png",\n          "modelInputPreview": "attic-model-input.webp",\n          "texture": {\n            "width": 768,\n            "height": 371\n          },\n          "boundsM": [\n            -29.0,\n            -14.009114583333334,\n            29.0,\n            14.009114583333334\n          ],\n          "extraction": {\n            "method": "floorplan-unet-resnet34-cubicasa-v1",\n            "wallPixels": 40720,\n            "doorPixels": 12588,\n            "windowPixels": 45707,\n            "status": "machine-derived-requires-review"\n          }\n        },\n        {\n          "id": "roof",\n          "label": "Roof / A-203",\n          "page": 3,\n          "sheet": "A-203.2",\n          "crop": [\n            0.285,\n            0.43,\n            0.59,\n            0.33\n          ],\n          "elevationM": 9.45,\n          "heightM": 0.35,\n          "widthM": 58.0,\n          "sourcePreview": "roof-source.webp",\n          "wallMask": "roof-walls.png",\n          "semanticPreview": "roof-semantic.png",\n          "modelInputPreview": "roof-model-input.webp",\n          "texture": {\n            "width": 768,\n            "height": 332\n          },\n          "boundsM": [\n            -29.0,\n            -12.536458333333334,\n            29.0,\n            12.536458333333334\n          ],\n          "extraction": {\n            "method": "floorplan-unet-resnet34-cubicasa-v1",\n            "wallPixels": 26418,\n            "doorPixels": 4157,\n            "windowPixels": 142766,\n            "status": "machine-derived-requires-review"\n          }\n        },\n        {\n          "id": "basement",\n          "label": "Basement / A-203",\n          "page": 3,\n          "sheet": "A-203.3",\n          "crop": [\n            0.055,\n            0.52,\n            0.25,\n            0.23\n          ],\n          "elevationM": -3.0,\n          "heightM": 3.0,\n          "widthM": 15.0,\n          "sourcePreview": "basement-source.webp",\n          "wallMask": "basement-walls.png",\n          "semanticPreview": "basement-semantic.png",\n          "modelInputPreview": "basement-model-input.webp",\n          "texture": {\n            "width": 768,\n            "height": 546\n          },\n          "boundsM": [\n            -7.5,\n            -5.33203125,\n            7.5,\n            5.33203125\n          ],\n          "extraction": {\n            "method": "floorplan-unet-resnet34-cubicasa-v1",\n            "wallPixels": 43345,\n            "doorPixels": 3492,\n            "windowPixels": 6137,\n            "status": "machine-derived-requires-review"\n          }\n        }\n      ],\n      "context": {\n        "provider": "Google Maps",\n        "mapsUrl": "https://www.google.com/maps/search/?api=1&query=1500+N+Verdugo+Rd%2C+Glendale%2C+CA+91208",\n        "embedUrl": "https://www.google.com/maps?q=1500+N+Verdugo+Rd%2C+Glendale%2C+CA+91208&output=embed",\n        "status": "live-provider-context"\n      }\n    }\n  ]\n}\n', { headers: { "Content-Type": "application/json; charset=UTF-8", "Cache-Control": "public, max-age=60" } });
-  }
-  function serve_qtext() {
-    return new Response(`<!doctype html>
-<html lang="en">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <meta name="theme-color" content="#090a0d">
-  <title>QText | WeylandAI</title>
-  <style>
-    :root{--bg:#090a0d;--panel:#121419;--line:#2d323a;--text:#edf0f1;--muted:#9199a3;--gold:#f0b800;--blue:#67d4ff;--green:#61dfa0}*{box-sizing:border-box}html,body{margin:0;min-height:100%;background:var(--bg);color:var(--text);font-family:"Avenir Next","Helvetica Neue",sans-serif}body:before{content:"";position:fixed;inset:0;pointer-events:none;background:radial-gradient(circle at 90% 0,rgba(103,212,255,.11),transparent 27rem),radial-gradient(circle at 10% 90%,rgba(240,184,0,.08),transparent 26rem),linear-gradient(rgba(255,255,255,.014) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.014) 1px,transparent 1px);background-size:auto,auto,30px 30px,30px 30px}.shell{position:relative;max-width:1440px;margin:auto;padding:18px clamp(14px,2.5vw,34px) 40px}header{display:flex;align-items:center;justify-content:space-between;gap:14px;margin-bottom:25px}.brand{display:flex;align-items:center;gap:12px;color:var(--text);text-decoration:none}.mark{width:42px;height:42px;display:grid;place-items:center;background:var(--blue);color:var(--bg);font-weight:900}.brand b{display:block;letter-spacing:.16em}.brand small{display:block;color:var(--muted);font:700 9px/1.5 ui-monospace,monospace;letter-spacing:.11em}.nav{display:flex;gap:7px;flex-wrap:wrap}.nav a{border:1px solid var(--line);border-radius:99px;padding:9px 12px;color:var(--text);text-decoration:none;font:750 10px/1 ui-monospace,monospace}.nav a:hover{border-color:var(--blue);color:var(--blue)}.hero{display:grid;grid-template-columns:1.35fr .65fr;gap:25px;align-items:end;margin:32px 0 20px}.eyebrow{color:var(--blue);font:800 10px/1 ui-monospace,monospace;letter-spacing:.17em}.hero h1{font-size:clamp(38px,6vw,78px);letter-spacing:-.06em;line-height:.92;margin:12px 0}.hero p{max-width:730px;color:var(--muted);line-height:1.65;margin:0}.statline{display:grid;grid-template-columns:1fr 1fr;gap:8px}.stat{border:1px solid var(--line);border-radius:13px;padding:13px}.stat strong{display:block;color:var(--blue);font-size:24px}.stat span{color:var(--muted);font:700 9px/1.4 ui-monospace,monospace}.ask{display:grid;grid-template-columns:1fr auto;gap:8px;background:rgba(18,20,25,.94);border:1px solid var(--line);border-radius:18px;padding:9px;margin-bottom:10px}.ask input{min-width:0;border:0;outline:0;background:transparent;color:var(--text);font-size:17px;padding:10px}.ask button,.button{border:0;border-radius:11px;background:var(--blue);color:var(--bg);font-weight:850;padding:0 19px;cursor:pointer}.chips{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:18px}.chip{border:1px solid var(--line);background:transparent;color:var(--muted);border-radius:99px;padding:8px 11px;cursor:pointer;font-size:11px}.chip:hover{border-color:var(--blue);color:var(--blue)}.layout{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(310px,.65fr);gap:18px}.card{background:rgba(18,20,25,.94);border:1px solid var(--line);border-radius:18px;padding:20px;box-shadow:0 25px 70px rgba(0,0,0,.2)}.card-head{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:16px}.card h2{font-size:17px;margin:0}.badge{border:1px solid var(--line);border-radius:99px;padding:6px 9px;color:var(--muted);font:700 9px/1 ui-monospace,monospace}.answer{min-height:330px}.answer h3{font-size:26px;line-height:1.15;margin:2px 0 14px}.answer p{color:#cad0d5;line-height:1.7;font-size:14px}.citation{display:grid;grid-template-columns:68px 1fr;gap:12px;border-top:1px solid var(--line);padding:13px 0}.citation b{color:var(--blue);font:800 10px/1.5 ui-monospace,monospace}.citation strong{font-size:12px}.citation p{color:var(--muted);font-size:11px;line-height:1.5;margin:4px 0 0}.empty{display:grid;place-items:center;min-height:300px;text-align:center;color:var(--muted);line-height:1.7}.sources{display:grid;gap:8px}.source{border:1px solid var(--line);border-radius:11px;padding:11px}.source strong{font-size:12px}.source span{display:block;color:var(--blue);font:700 9px/1.5 ui-monospace,monospace}.source p{font-size:11px;line-height:1.45;color:var(--muted);margin:5px 0 0}.upload{display:block;margin-top:12px;border:1px dashed #454c56;border-radius:11px;text-align:center;padding:11px;color:var(--muted);font-size:11px;cursor:pointer}.upload:hover{border-color:var(--blue);color:var(--blue)}.upload input{display:none}.audit{margin-top:15px;padding-top:14px;border-top:1px solid var(--line);color:var(--muted);font:700 9px/1.7 ui-monospace,monospace}@media(max-width:900px){.hero,.layout{grid-template-columns:1fr}.nav a:nth-child(-n+2){display:none}}@media(max-width:560px){.ask{grid-template-columns:1fr}.ask button{min-height:44px}.statline{grid-template-columns:1fr}.hero h1{font-size:44px}}
-  </style>
-</head>
-<body>
-  <div class="shell">
-    <header><a class="brand" href="/"><span class="mark">QT</span><span><b>QTEXT</b><small>SOURCE-GROUNDED PROJECT INTELLIGENCE</small></span></a><nav class="nav"><a href="/propx/">PROPX</a><a href="/sightx/">SIGHTX</a><a href="/meetingx/">MEETINGX</a><a href="/">WEYLAND</a></nav></header>
-    <section class="hero"><div><span class="eyebrow">THE PROJECT CAN ANSWER BACK</span><h1>Ask the drawings.<br>Trace the answer.</h1><p>QText retrieves from the same source package that drives SubX, TakeoffX, PropX, and SightX. Every answer keeps its evidence attached.</p></div><div class="statline"><div class="stat"><strong id="source-total">0</strong><span>INDEXED SOURCES</span></div><div class="stat"><strong id="scope-total">0</strong><span>TRACED SCOPE ITEMS</span></div></div></section>
-    <form class="ask" id="ask"><input id="question" autocomplete="off" placeholder="What automatic-door hardware is specified?"><button>ASK PROJECT</button></form>
-    <div class="chips"><button class="chip">What automatic-door hardware is specified?</button><button class="chip">What is included in commissioning?</button><button class="chip">Which items require field verification?</button><button class="chip">What does PropX include?</button></div>
-    <main class="layout">
-      <section class="card answer" id="answer"><div class="empty">Ask a project question to retrieve an answer with source locators.<br><small>This investor demo searches the Project Omega evidence package locally.</small></div></section>
-      <aside class="card"><div class="card-head"><h2>Source Package</h2><span class="badge" id="index-state">LOADING</span></div><div class="sources" id="sources"></div><label class="upload">+ ADD A TEXT SOURCE<input id="file" type="file" accept=".txt,.md,.json,text/plain,application/json"></label><div class="audit" id="audit">SourceX index initializing\u2026</div></aside>
-    </main>
-  </div>
-  <script>
-    let data=null,extra=[];const $=id=>document.getElementById(id),esc=v=>String(v).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-    const words=s=>new Set(String(s).toLowerCase().replace(/[^a-z0-9]+/g,' ').split(' ').filter(x=>x.length>2&&!['what','which','does','with','from','that','this','into','project'].includes(x)));
-    async function boot(){data=await (await fetch('/data/project-omega.json',{cache:'no-store'})).json();renderSources();$('source-total').textContent=data.sources.length;$('scope-total').textContent=data.scope.length;$('index-state').textContent='INDEX READY';$('audit').textContent=\`SourceX \xB7 \${new Date().toLocaleTimeString()} \xB7 \${data.sources.length} sources hydrated \xB7 \${data.scope.length} scope relationships available\`;}
-    function corpus(){return [...data.sources,...extra].map(s=>({...s,body:[s.name,s.type,s.locator,s.excerpt].join(' ')}))}
-    function search(q){const qw=words(q);return corpus().map(s=>{const sw=words(s.body),score=[...qw].reduce((n,w)=>n+(sw.has(w)?3:[...sw].some(x=>x.includes(w)||w.includes(x))?1:0),0);return {...s,score}}).sort((a,b)=>b.score-a.score).filter(x=>x.score>0).slice(0,3)}
-    function synthesize(q,hits){const s=q.toLowerCase();if(/hardware|door|automatic|operator|access/.test(s))return 'The evidence package specifies Horton Series 2000 automatic sliding entrance assemblies coordinated with sensors and controls, plus Schlage AD-Series access-control integration and Pemko perimeter gasketing.';if(/commission|training|startup/.test(s))return 'The scope includes field verification, startup, commissioning, and owner training as a lump-sum line item. Final completion remains tied to approved submittals and field conditions.';if(/field|verify|verification/.test(s))return 'Final quantities and opening conditions require field verification. The opening-protection notes also connect verification to startup, commissioning, and owner training.';if(/propx|proposal|include/.test(s))return 'PropX receives the quantified TakeoffX scope, preserves SourceX citations, applies estimator-reviewed pricing, and produces the reviewable proposal. The demo includes two automatic entrances, access-control integration, gasketing, commissioning, and training.';if(hits.length)return \`The strongest matching evidence is \${hits.map(x=>x.name).join(', ')}. Review the cited excerpts below before using the answer commercially.\`;return 'No grounded answer was found in the current source package. Add a text source or revise the question; QText will not invent a project answer without evidence.'}
-    function answer(q){const hits=search(q),body=synthesize(q,hits);$('answer').innerHTML=\`<div class="card-head"><h2>Grounded Answer</h2><span class="badge">\${hits.length} CITATIONS</span></div><h3>\${esc(q)}</h3><p>\${esc(body)}</p>\${hits.map(x=>\`<div class="citation"><b>\${esc(x.id)}</b><div><strong>\${esc(x.name)} \xB7 \${esc(x.locator||'uploaded text')}</strong><p>\${esc(x.excerpt)}</p></div></div>\`).join('')}\`;}
-    function renderSources(){$('sources').innerHTML=corpus().map(x=>\`<div class="source"><strong>\${esc(x.name)}</strong><span>\${esc(x.id)} \xB7 \${esc(x.locator||'uploaded text')}</span><p>\${esc(x.excerpt).slice(0,180)}</p></div>\`).join('');$('source-total').textContent=corpus().length;}
-    $('ask').onsubmit=e=>{e.preventDefault();const q=$('question').value.trim();if(q)answer(q)};document.querySelectorAll('.chip').forEach(b=>b.onclick=()=>{$('question').value=b.textContent;answer(b.textContent)});$('file').onchange=async e=>{const f=e.target.files[0];if(!f)return;const text=await f.text();extra.push({id:\`UP-\${String(extra.length+1).padStart(3,'0')}\`,name:f.name,type:'uploaded text',locator:'local browser session',excerpt:text.slice(0,1200)});renderSources();$('index-state').textContent='SOURCE ADDED';$('audit').textContent=\`SourceX \xB7 \${new Date().toLocaleTimeString()} \xB7 \${f.name} indexed locally; no upload performed\`;};boot().catch(e=>$('index-state').textContent='INDEX ERROR');
-  </script>
-</body>
-</html>
-`, { headers: { "Content-Type": "text/html; charset=UTF-8", "Cache-Control": "public, max-age=60" } });
-  }
-  function serve_subscribe() {
-    return new Response('<!doctype html>\n<html lang="en">\n<head>\n  <meta charset="utf-8">\n  <meta name="viewport" content="width=device-width, initial-scale=1">\n  <meta name="description" content="Subscribe to WeylandAI SubConP, the Subcontractor Operating Package.">\n  <title>SubConP / WeylandAI</title>\n  <link rel="stylesheet" href="/assets/subscribe.css?v=20260729-1">\n</head>\n<body>\n  <div class="field" aria-hidden="true"></div>\n  <header>\n    <a class="brand" href="/"><b>W</b><span>WEYLAND<br>ARTIFICIAL INTELLIGENCE</span></a>\n    <nav><a href="/sightx/">SightX</a></nav>\n    <span class="status" data-auth-status style="margin-right: 1rem;">CHECKING IDENTITY</span>\n    <span class="status" data-service-status>CHECKING PAYMENT RAIL</span>\n  </header>\n\n  <main>\n    <section class="copy">\n      <p class="eyebrow">SUBCONTRACTOR OPERATING PACKAGE / 01</p>\n      <h1>Run the back office.<br><em>Keep the field moving.</em></h1>\n      <p class="lede"><b>SubConP is the Subcontractor Operating Package:</b> project discovery, submittals, takeoffs, cut sheets, proposals, and spatial review operating on one shared project record.</p>\n      <ol class="products" aria-label="Products included in SubConP">\n        <li><b>HuntX</b><span>Opportunity discovery.</span></li>\n        <li><b>SubX</b><span>Submittal Express.</span></li>\n        <li><b>TakeoffX</b><span>Takeoff Express.</span></li>\n        <li><b>CutsheetX</b><span>Cut Sheet Express.</span></li>\n        <li><b>PropX</b><span>Proposal Express.</span></li>\n        <li><b>SightX</b><span>Spatial project intelligence.</span></li>\n      </ol>\n      <p class="boundary"><b>Commercial boundary:</b> $2,000 per active operator seat, billed monthly. Implementation scope, data migration, custom integrations, and usage above the included policy are quoted separately.</p>\n    </section>\n\n    <aside class="checkout" aria-labelledby="checkout-title">\n      <span class="card-index">SUBCONP / MONTHLY</span>\n      <h2 id="checkout-title">Activate operator seats</h2>\n      <div class="trial-note" style="color:#e7b92d;font:700 11px/1.4 var(--mono,ui-monospace,monospace);letter-spacing:.08em;text-transform:uppercase;margin-top:24px">$0 for the first 30 days, then</div>\n      <div class="price"><strong>$2,000</strong><span>USD<br>PER SEAT / MONTH</span></div>\n      <label for="seat-count">Active seats</label>\n      <div class="seat-control">\n        <button type="button" data-seat-step="-1" aria-label="Remove one seat">\u2212</button>\n        <input id="seat-count" type="number" min="1" max="250" value="1" inputmode="numeric">\n        <button type="button" data-seat-step="1" aria-label="Add one seat">+</button>\n      </div>\n      <div class="total"><span>Monthly subscription</span><b data-total>$2,000</b></div>\n      <button class="primary" type="button" data-checkout>CONTINUE TO SECURE CHECKOUT</button>\n      <p class="checkout-note" data-checkout-note>Checkout is processed by VendyAI using Stripe. No card data touches this server.</p>\n      <div class="result" data-result hidden></div>\n    </aside>\n  </main>\n\n  <footer><span>WEYLANDAI / SUBCONP</span><p>One project spine. Six operating tools. Human approval at every commercial boundary.</p><a href="mailto:hello@weylandai.com">hello@weylandai.com</a></footer>\n  <script type="module" src="/assets/subscribe.js?v=20260729-1"></script>\n</body>\n</html>\n', { headers: { "Content-Type": "text/html; charset=UTF-8", "Cache-Control": "public, max-age=60" } });
-  }
-  function serve_financials() {
-    return new Response('<!doctype html>\n<html lang="en">\n<head>\n  <meta charset="utf-8">\n  <meta name="viewport" content="width=device-width, initial-scale=1">\n  <meta name="robots" content="noindex,nofollow">\n  <meta name="description" content="Weyland investor diligence readiness, funding scenarios, and evidence register.">\n  <title>Financials / Weyland AI</title>\n  <link rel="stylesheet" href="/assets/financials.css?v=20260729-1">\n</head>\n<body>\n  <div class="grid-field" aria-hidden="true"></div>\n  <header class="masthead">\n    <a class="wordmark" href="/" aria-label="Weyland AI home"><b>W</b><span>WEYLAND<br>ARTIFICIAL INTELLIGENCE</span></a>\n    <nav><a href="/deck/">Deck</a><a href="/sightx/">SightX</a><a href="#manifest">Manifest</a></nav>\n    <span class="classification">PUBLIC SUMMARY / NOINDEX</span>\n  </header>\n\n  <main>\n    <section class="hero">\n      <div class="hero-index">DILIGENCE CONTROL / 01</div>\n      <p class="eyebrow">Financial truth before financial theater</p>\n      <h1>Show the math.<br><em>Expose the gaps.</em></h1>\n      <p class="lede">A live, source-aware view of capitalization, runway, traction, market logic, and diligence readiness. Missing evidence stays visibly missing.</p>\n      <div class="hero-meta">\n        <span><small>AS OF</small><b data-as-of>Loading</b></span>\n        <span><small>EVIDENCE MODEL</small><b>Observed / Claimed / Assumed / Missing</b></span>\n        <span><small>DATA POLICY</small><b>Restricted records are never published here</b></span>\n      </div>\n      <div class="hero-mark" aria-hidden="true"><i></i><i></i><i></i><i></i></div>\n    </section>\n\n    <section class="alert-strip" aria-label="Critical financial decision">\n      <span class="pulse"></span>\n      <b>OPEN DECISION</b>\n      <p>The live deck and bottoms-up model describe different rounds. Reconcile them before formal diligence.</p>\n      <a href="#funding">Inspect both models</a>\n    </section>\n\n    <section class="section" id="funding">\n      <header class="section-head">\n        <div><span>02 / CAPITAL PLAN</span><h2>Two asks.<br>One decision required.</h2></div>\n        <p>These models are displayed side by side because silently merging them would create false precision. Select either scenario to drive the runway calculator.</p>\n      </header>\n      <div class="scenario-grid" data-funding-models></div>\n\n      <div class="runway-lab">\n        <div class="runway-readout">\n          <span class="kicker">LIVE RUNWAY MODEL</span>\n          <strong data-runway-months>--</strong>\n          <p>months of runway</p>\n          <div class="runway-track"><i data-runway-track></i></div>\n          <small data-runway-note>Choose a scenario or change an input.</small>\n        </div>\n        <form class="runway-controls" onsubmit="return false">\n          <label><span>Raise</span><input data-calc="raise" type="number" min="0" step="50000"></label>\n          <label><span>Gross monthly burn</span><input data-calc="burn" type="number" min="0" step="5000"></label>\n          <label><span>Monthly revenue offset</span><input data-calc="revenue" type="number" min="0" step="5000" value="0"></label>\n          <label><span>Cash held as reserve</span><input data-calc="reserve" type="range" min="0" max="40" step="1"><output data-reserve-output>0%</output></label>\n        </form>\n        <div class="allocation" data-allocation></div>\n      </div>\n    </section>\n\n    <section class="section section-ink" id="capitalization">\n      <header class="section-head">\n        <div><span>03 / OWNERSHIP</span><h2>The cap table is a gate,<br>not an appendix.</h2></div>\n        <p data-cap-summary>Loading capitalization evidence...</p>\n      </header>\n      <div class="cap-layout">\n        <div class="empty-ledger">\n          <div class="empty-symbol">?</div>\n          <div><b>AUTHORITATIVE OWNERSHIP LEDGER NOT FOUND</b><p>Do not estimate founder or investor percentages from memory. Rebuild from signed issuance, financing, option, and debt records.</p></div>\n        </div>\n        <ol class="required-list" data-cap-required></ol>\n      </div>\n      <a class="download-primary" href="/financials/downloads/cap-table-template.csv">Download canonical cap table template</a>\n    </section>\n\n    <section class="section" id="traction">\n      <header class="section-head">\n        <div><span>04 / COMMERCIAL EVIDENCE</span><h2>Traction is a ledger,<br>not a collection of names.</h2></div>\n        <p>Every customer and pipeline assertion needs a date, amount, stage, owner, and primary record. The evidence state below is intentionally strict.</p>\n      </header>\n      <div class="metric-grid" data-traction></div>\n    </section>\n\n    <section class="section twin-section" id="market">\n      <div class="market-panel">\n        <header><span>05 / MARKET MODEL</span><h2>Bottom-up before broad.</h2></header>\n        <div class="market-number"><strong data-sam>--</strong><span>planning-assumption firms in initial SAM</span></div>\n        <div class="market-number"><strong data-acv>--</strong><span>assumed annual contract value</span></div>\n        <p class="warning" data-market-warning></p>\n        <div class="som-path" data-som></div>\n      </div>\n      <div class="moat-panel">\n        <header><span>06 / DEFENSIBILITY</span><h2>A moat must survive a test.</h2></header>\n        <div data-moat></div>\n      </div>\n    </section>\n\n    <section class="section" id="milestones">\n      <header class="section-head">\n        <div><span>07 / RUNWAY OUTPUT</span><h2>Capital buys milestones,<br>not time alone.</h2></div>\n        <p>The recovered hiring plan reaches seven people by month twelve. It remains a planning assumption until compensation, sequencing, and accountable owners are approved.</p>\n      </header>\n      <div class="hiring-band" data-hiring></div>\n      <div class="milestone-list" data-milestones></div>\n    </section>\n\n    <section class="section section-ink" id="manifest">\n      <header class="section-head">\n        <div><span>08 / DATA ROOM</span><h2>The diligence manifest.</h2></div>\n        <p>This public surface exposes readiness and summaries only. Formation records, signatures, contracts, account data, and personally identifying information belong in an authenticated data room.</p>\n      </header>\n      <div class="manifest-toolbar">\n        <div class="progress-ring" data-progress-ring><strong data-progress>--</strong><span>ready or draft</span></div>\n        <div class="filter-set" role="group" aria-label="Filter diligence artifacts">\n          <button class="active" data-filter="all">All</button>\n          <button data-filter="missing">Missing</button>\n          <button data-filter="draft">Draft</button>\n          <button data-filter="available">Available</button>\n        </div>\n      </div>\n      <div class="manifest" data-artifacts></div>\n      <div class="download-grid" data-downloads></div>\n    </section>\n  </main>\n\n  <footer>\n    <a class="wordmark" href="/"><b>W</b><span>WEYLAND<br>ARTIFICIAL INTELLIGENCE</span></a>\n    <p>Investor diligence should accelerate truth, not decorate uncertainty.</p>\n    <span>FINANCIALS / EVIDENCE REGISTER</span>\n  </footer>\n\n  <script type="module" src="/assets/financials.js?v=20260729-1"></script>\n</body>\n</html>\n', { headers: { "Content-Type": "text/html; charset=UTF-8", "Cache-Control": "public, max-age=60" } });
-  }
-  function serve_pricing() {
-    return new Response(`<!doctype html>
-<html lang="en">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="WeylandAI SubConP Commercial Pricing & Standalone A La Carte Component Licensing. Run the back office and keep the field moving with automated construction AI tools.">
-  <meta name="theme-color" content="#090a0d">
-  <title>Pricing & Licensing | WeylandAI SubConP Suite</title>
-  <style>
-    :root {
-      --bg: #090a0d;
-      --panel: rgba(18, 20, 25, 0.85);
-      --panel-hover: rgba(24, 27, 33, 0.95);
-      --line: #2c3139;
-      --text: #edf0f1;
-      --muted: #9299a3;
-      --gold: #f0b800;
-      --green: #61dfa0;
-      --blue: #66d4ff;
-      --purple: #a78bfa;
-      --red: #ff756e;
-    }
-    * { box-sizing: border-box; }
-    html, body { margin: 0; min-height: 100%; background: var(--bg); color: var(--text); font-family: "Avenir Next", "Helvetica Neue", sans-serif; overflow-x: hidden; }
-    
-    /* Subtle geometric grid background with glowing radial attractor */
-    body:before {
-      content: "";
-      position: fixed;
-      inset: 0;
-      pointer-events: none;
-      background: radial-gradient(circle at 50% 10%, rgba(240, 184, 0, 0.12), transparent 35rem),
-                  radial-gradient(circle at 85% 60%, rgba(97, 223, 160, 0.08), transparent 30rem),
-                  linear-gradient(rgba(255, 255, 255, 0.015) 1px, transparent 1px),
-                  linear-gradient(90deg, rgba(255, 255, 255, 0.015) 1px, transparent 1px);
-      background-size: auto, auto, 30px 30px, 30px 30px;
-      z-index: -1;
-    }
-
-    .shell { position: relative; max-width: 1400px; margin: auto; padding: 25px clamp(16px, 4vw, 48px) 80px; }
-    
-    /* Navigation Bar */
-    header { display: flex; align-items: center; justify-content: space-between; gap: 15px; margin-bottom: 40px; flex-wrap: wrap; }
-    .brand { display: flex; align-items: center; gap: 12px; color: var(--text); text-decoration: none; }
-    .mark { width: 44px; height: 44px; display: grid; place-items: center; background: var(--gold); color: var(--bg); font-weight: 900; border-radius: 6px; box-shadow: 0 0 20px rgba(240, 184, 0, 0.3); }
-    .brand b { display: block; letter-spacing: 0.16em; font-size: 15px; }
-    .brand small { display: block; color: var(--muted); font: 700 9px/1.5 ui-monospace, monospace; letter-spacing: 0.11em; }
-    .nav { display: flex; gap: 8px; flex-wrap: wrap; }
-    .nav a, .button { border: 1px solid var(--line); border-radius: 99px; padding: 10px 16px; color: var(--text); text-decoration: none; background: transparent; font: 750 11px/1 ui-monospace, monospace; letter-spacing: 0.08em; cursor: pointer; transition: all 0.25s ease; }
-    .nav a:hover, .button:hover { border-color: var(--gold); color: var(--gold); box-shadow: 0 0 18px rgba(240, 184, 0, 0.25); transform: translateY(-1px); }
-    .nav a.active { border-color: var(--gold); color: var(--gold); background: rgba(240, 184, 0, 0.08); }
-    
-    .button.primary { background: var(--gold); border-color: var(--gold); color: var(--bg); font-weight: 900; }
-    .button.primary:hover { transform: scale(1.03); box-shadow: 0 0 30px rgba(240, 184, 0, 0.5); color: #000; }
-    .button.green { background: var(--green); border-color: var(--green); color: var(--bg); font-weight: 900; }
-    .button.green:hover { transform: scale(1.03); box-shadow: 0 0 30px rgba(97, 223, 160, 0.5); color: #000; }
-
-    /* Titlebar */
-    .titlebar { text-align: center; margin: 50px 0 50px; }
-    .eyebrow { color: var(--gold); font: 800 12px/1.2 ui-monospace, monospace; letter-spacing: 0.2em; text-transform: uppercase; }
-    .titlebar h1 { font-size: clamp(38px, 5vw, 72px); letter-spacing: -0.05em; line-height: 1.05; margin: 16px 0 18px; font-weight: 900; }
-    .titlebar p { max-width: 780px; color: var(--muted); line-height: 1.65; margin: 0 auto; font-size: 18px; }
-
-    /* Interactive Calculator Container */
-    .calc-banner {
-      background: linear-gradient(135deg, rgba(24, 27, 33, 0.9), rgba(13, 15, 19, 0.95));
-      border: 1px solid var(--line);
-      border-radius: 20px;
-      padding: 24px 32px;
-      margin-bottom: 60px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 20px;
-      flex-wrap: wrap;
-      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
-      backdrop-filter: blur(12px);
-    }
-    .calc-left { flex: 1; min-width: 300px; }
-    .calc-left h3 { margin: 0 0 6px; font-size: 20px; letter-spacing: -0.02em; color: #fff; }
-    .calc-left p { margin: 0; color: var(--muted); font-size: 14px; line-height: 1.5; }
-    .calc-right { display: flex; align-items: center; gap: 24px; flex-wrap: wrap; }
-    .calc-stat { text-align: right; }
-    .calc-stat label { display: block; font: 700 10px ui-monospace, monospace; color: var(--muted); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 4px; }
-    .calc-stat .val { font-size: 32px; font-weight: 900; color: var(--green); letter-spacing: -0.02em; }
-    .calc-stat .old-val { text-decoration: line-through; color: var(--red); font-size: 20px; margin-right: 8px; font-weight: 700; }
-    
-    /* Section Headers */
-    .section-head { text-align: center; margin: 70px 0 32px; }
-    .section-head h2 { font-size: 40px; letter-spacing: -0.04em; margin: 0 0 12px; font-weight: 900; }
-    .section-head p { color: var(--muted); max-width: 720px; margin: 0 auto; font-size: 16px; line-height: 1.6; }
-
-    /* The SubConP Suite Attractor Box */
-    .suite-box {
-      max-width: 900px;
-      margin: 0 auto 80px;
-      background: linear-gradient(145deg, rgba(26, 30, 38, 0.96), rgba(16, 18, 24, 0.98));
-      border: 2px solid var(--gold);
-      border-radius: 24px;
-      padding: 42px;
-      box-shadow: 0 0 65px rgba(240, 184, 0, 0.28);
-      position: relative;
-      overflow: hidden;
-      transition: all 0.3s ease;
-    }
-    .suite-box:hover { box-shadow: 0 0 85px rgba(240, 184, 0, 0.38); border-color: #ffca28; }
-    .badge-bar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 22px; flex-wrap: wrap; gap: 12px; }
-    .pill-gold { border: 1px solid rgba(240, 184, 0, 0.6); color: var(--gold); border-radius: 99px; padding: 8px 16px; font: 800 11px/1 ui-monospace, monospace; letter-spacing: 0.1em; background: rgba(240, 184, 0, 0.18); box-shadow: 0 0 12px rgba(240, 184, 0, 0.2); }
-    .pill-save { border: 1px solid rgba(97, 223, 160, 0.5); color: var(--green); border-radius: 99px; padding: 8px 16px; font: 800 11px/1 ui-monospace, monospace; letter-spacing: 0.08em; background: rgba(97, 223, 160, 0.12); box-shadow: 0 0 12px rgba(97, 223, 160, 0.2); }
-    
-    .price-tag { font-size: 64px; font-weight: 900; color: #fff; margin: 12px 0 6px; letter-spacing: -0.04em; display: flex; align-items: baseline; gap: 6px; }
-    .price-tag span.unit { font-size: 20px; color: var(--muted); font-weight: 600; letter-spacing: 0; }
-    .price-sub { font-size: 14px; color: var(--muted); margin-bottom: 24px; font-style: italic; }
-    
-    .slider-box { margin: 28px 0; padding: 26px; background: rgba(10, 12, 16, 0.85); border-radius: 16px; border: 1px solid var(--line); }
-    .slider-label { display: flex; justify-content: space-between; align-items: center; font-weight: 700; font-size: 16px; margin-bottom: 16px; color: #fff; }
-    .slider-label span.gold-text { color: var(--gold); font: 800 16px ui-monospace, monospace; }
-    input[type=range] { width: 100%; accent-color: var(--gold); cursor: pointer; height: 8px; border-radius: 4px; background: #2c3139; outline: none; transition: background 0.2s; }
-
-    .feature-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(380px, 1fr)); gap: 18px; margin: 32px 0; }
-    .feature-item { display: flex; align-items: flex-start; gap: 14px; font-size: 15px; color: #d1d5db; line-height: 1.5; background: rgba(255, 255, 255, 0.02); padding: 12px 16px; border-radius: 10px; border: 1px solid rgba(255, 255, 255, 0.04); }
-    .chk { color: var(--green); font-weight: 900; font-size: 18px; line-height: 1; margin-top: 2px; }
-    .feature-item strong { color: #fff; margin-right: 4px; }
-    .feature-item em { color: var(--gold); font-style: normal; font-size: 13px; font-family: ui-monospace, monospace; display: block; margin-top: 2px; }
-
-    /* A La Carte Grid */
-    .alacarte-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 24px; margin-top: 36px; }
-    .card { background: var(--panel); border: 1px solid var(--line); border-radius: 20px; padding: 30px; display: flex; flex-direction: column; justify-content: space-between; transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1); box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4); backdrop-filter: blur(8px); position: relative; }
-    .card:hover { transform: translateY(-6px); border-color: rgba(97, 223, 160, 0.5); background: var(--panel-hover); box-shadow: 0 22px 50px rgba(97, 223, 160, 0.15); }
-    
-    .sku-cat { color: var(--blue); font: 800 11px/1 ui-monospace, monospace; letter-spacing: 0.14em; text-transform: uppercase; }
-    .card h3 { font-size: 26px; margin: 14px 0 6px; letter-spacing: -0.02em; color: #fff; font-weight: 800; }
-    .sku-price { font-size: 38px; font-weight: 900; color: var(--green); margin: 12px 0 4px; letter-spacing: -0.03em; }
-    .sku-price span { font-size: 16px; color: var(--muted); font-weight: 600; letter-spacing: 0; }
-    .sku-edge { font-size: 13px; color: var(--gold); margin-bottom: 20px; font-weight: 600; background: rgba(240, 184, 0, 0.1); padding: 6px 10px; border-radius: 6px; display: inline-block; border: 1px solid rgba(240, 184, 0, 0.2); }
-    .card p { color: var(--muted); font-size: 15px; line-height: 1.6; margin: 0 0 30px; flex-grow: 1; }
-    
-    /* Standalone vs Bundle Summary Footer Banner */
-    .summary-box { max-width: 1000px; margin: 70px auto 40px; border: 1px solid var(--line); background: rgba(18, 20, 25, 0.9); border-radius: 20px; padding: 36px; text-align: center; }
-    .summary-box h3 { font-size: 28px; margin: 0 0 12px; color: #fff; }
-    .summary-box p { color: var(--muted); font-size: 16px; line-height: 1.6; max-width: 760px; margin: 0 auto 24px; }
-
-    footer { border-top: 1px solid var(--line); margin-top: 90px; padding-top: 32px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 20px; font-size: 13px; color: var(--muted); }
-    footer a { color: var(--gold); text-decoration: none; font-family: ui-monospace, monospace; }
-    footer a:hover { text-decoration: underline; }
-
-    @media (max-width: 768px) {
-      .feature-grid { grid-template-columns: 1fr; }
-      .calc-banner { flex-direction: column; align-items: flex-start; }
-      .calc-right { width: 100%; justify-content: space-between; }
-      .price-tag { font-size: 48px; }
-    }
-  </style>
-</head>
-<body>
-  <div class="shell">
-    <header>
-      <a class="brand" href="/" id="homeLink"><span class="mark">WY</span><span><b>WEYLAND<br>AI</b><small>COMMERCIAL PRICING</small></span></a>
-      <nav class="nav">
-        <a href="/whyweyland/" id="navWhy">WHY WEYLAND</a>
-        <a href="/pricing/" class="active" id="navPricing">PRICING</a>
-        <a href="/onboarding/" id="navOnboarding">ONBOARDING</a>
-        <a href="/huntx/" id="navHunt">HUNTX</a>
-        <a href="/takeoffx/" id="navTakeoff">TAKEOFFX</a>
-        <a href="/propx/" id="navProp">PROPX</a>
-        <a href="/meetingx/" id="navMeet">MEETINGX</a>
-        <a href="/sightx/" id="navSight">SIGHTX</a>
-      </nav>
-      <button class="button primary" onclick="window.location.href='/subscribe/';" id="btnHeaderDeploy">DEPLOY SUITE ($2,000/MO)</button>
-    </header>
-
-    <section class="titlebar">
-      <p class="eyebrow">ONE PROJECT SPINE \xB7 SEVEN OPERATING ENGINES</p>
-      <h1>Run the back office.<br><em style="color:var(--gold);font-style:normal;">Keep the field moving.</em></h1>
-      <p>Deploy standalone point solutions A La Carte to immediately resolve administrative bottlenecks, or license the complete SubConP suite to operate your entire estimating and field pipeline on a single shared project record.</p>
-    </section>
-
-    <!-- LIVE COMPARISON BANNER -->
-    <div class="calc-banner">
-      <div class="calc-left">
-        <h3>SubConP Enterprise Economics</h3>
-        <p>Deploying all 7 operating engines separately totals <strong>$3,693/mo</strong> per active seat. By licensing the integrated SubConP suite, your organization unlocks massive economies of scale while preserving cryptographic data provenance.</p>
-      </div>
-      <div class="calc-right">
-        <div class="calc-stat">
-          <label>A La Carte Sum of Parts</label>
-          <span class="old-val">$3,693 / mo</span>
-        </div>
-        <div class="calc-stat">
-          <label>SubConP All-Inclusive Rate</label>
-          <span class="val" id="topVal">$2,000 / mo</span>
-        </div>
-        <button onclick="document.getElementById('suiteAnchor').scrollIntoView({behavior: 'smooth'});" class="button green" id="btnScrollSuite">VIEW 46% SAVINGS BUNDLE</button>
-      </div>
-    </div>
-
-    <!-- STANDALONE A LA CARTE MENU -->
-    <div class="section-head" id="alacarteSection">
-      <h2>Standalone Point Solutions</h2>
-      <p>Targeted AI firepower designed to pay for itself in administrative hours saved during your very first bid cycle. Each component operates independently with human review at every commercial boundary.</p>
-    </div>
-
-    <div class="alacarte-grid">
-      <!-- 1. CUTSHEETX -->
-      <div class="card" id="cardCutsheet">
-        <div>
-          <span class="sku-cat">PRODUCT DATA ENGINE</span>
-          <h3>CutsheetX</h3>
-          <div class="sku-price">$199 <span class="unit">/ mo</span></div>
-          <div class="sku-edge">Pays for itself in 2 hours of engineering lookup</div>
-          <p>Instantaneous product technical specification assembly and automated distributor cut-sheet packaging. Eliminates tedious manual PDF searches across supplier catalogs.</p>
-        </div>
-        <button onclick="triggerCheckout('weyland-cutsheetx-seat', 1, 'CutsheetX ($199/mo)')" class="button" id="btnBuyCutsheet" style="width:100%;text-align:center;">ACTIVATE STANDALONE SEAT</button>
-      </div>
-
-      <!-- 2. SUBX -->
-      <div class="card" id="cardSub">
-        <div>
-          <span class="sku-cat">SUBMITTAL AUTOMATION</span>
-          <h3>SubX</h3>
-          <div class="sku-price">$599 <span class="unit">/ mo</span></div>
-          <div class="sku-edge">The extraction engine PropX and CutsheetX matching build on</div>
-          <p>Submittal Express. Automatically extracts technical specification requirements directly from project manuals and assembles complete, professional submittal compliance packages.</p>
-        </div>
-        <button onclick="triggerCheckout('weyland-subx-seat', 1, 'SubX ($599/mo)')" class="button" id="btnBuySub" style="width:100%;text-align:center;">ACTIVATE STANDALONE SEAT</button>
-      </div>
-
-      <!-- 3. PROPX -->
-      <div class="card" id="cardProp">
-        <div>
-          <span class="sku-cat">SUBX ADD-ON</span>
-          <h3>PropX</h3>
-          <div class="sku-price">$299 <span class="unit">/ mo</span></div>
-          <div class="sku-edge">Requires SubX &middot; turns a submittal into a priced, sendable proposal</div>
-          <p>Proposal Express. Builds a complete, priced proposal - client info, scope, terms, signature block - directly from a SubX submittal's real extracted door schedule.</p>
-        </div>
-        <button onclick="triggerCheckout('weyland-propx-seat', 1, 'PropX ($299/mo)')" class="button" id="btnBuyProp" style="width:100%;text-align:center;">ACTIVATE STANDALONE SEAT</button>
-      </div>
-
-      <!-- 4. TAKEOFFX -->
-      <div class="card" id="cardTakeoff">
-        <div>
-          <span class="sku-cat">MACHINE-VISION TAKEOFF</span>
-          <h3>TakeoffX</h3>
-          <div class="sku-price">$499 <span class="unit">/ mo</span></div>
-          <div class="sku-edge">vs. Togal.AI ($299/mo for manual counting only)</div>
-          <p>Takeoff Express. Sub-second machine-vision structural drawing quantification and vector blueprint takeoff engine. Moves estimators from manually tracing lines to reviewing verified results.</p>
-        </div>
-        <button onclick="triggerCheckout('weyland-takeoffx-seat', 1, 'TakeoffX ($499/mo)')" class="button" id="btnBuyTakeoff" style="width:100%;text-align:center;">ACTIVATE STANDALONE SEAT</button>
-      </div>
-
-      <!-- 5. MEETINGX -->
-      <div class="card" id="cardMeet">
-        <div>
-          <span class="sku-cat">SIGHTX ADD-ON</span>
-          <h3>MeetingX</h3>
-          <div class="sku-price">$299 <span class="unit">/ mo</span></div>
-          <div class="sku-edge">Requires SightX &middot; live avatars, text & voice chat inside the walkthrough</div>
-          <p>Meeting Intelligence isn't a separate app - it's real-time collaboration layered directly into the SightX 3D walkthrough. Multiple reviewers join the same scene as avatars, talk and type in context, with decisions logged where they happened.</p>
-        </div>
-        <button onclick="triggerCheckout('weyland-meetingx-seat', 1, 'MeetingX ($599/mo)')" class="button" id="btnBuyMeet" style="width:100%;text-align:center;">ACTIVATE STANDALONE SEAT</button>
-      </div>
-
-      <!-- 6. HUNTX -->
-      <div class="card" id="cardHunt">
-        <div>
-          <span class="sku-cat">LEAD RECONNAISSANCE</span>
-          <h3>HuntX</h3>
-          <div class="sku-price">$799 <span class="unit">/ mo</span></div>
-          <div class="sku-edge">vs. Dodge / ConstructConnect ($6k-$12k/year)</div>
-          <p>Opportunity Discovery. Autonomous municipal permit ledger spider and commercial general contractor RFP reconnaissance engine. Uncovers high-margin bidding opportunities before the competition.</p>
-        </div>
-        <button onclick="triggerCheckout('weyland-huntx-seat', 1, 'HuntX ($799/mo)')" class="button" id="btnBuyHunt" style="width:100%;text-align:center;">ACTIVATE STANDALONE SEAT</button>
-      </div>
-
-      <!-- 7. SIGHTX -->
-      <div class="card" id="cardSight">
-        <div>
-          <span class="sku-cat">3D SPATIAL SIMULATION</span>
-          <h3>SightX</h3>
-          <div class="sku-price">$999 <span class="unit">/ mo</span></div>
-          <div class="sku-edge">vs. Lumion Pro / BIM 360 Enterprise Licenses</div>
-          <p>Spatial Project Intelligence. Transforms standard 2D flat architectural blueprints, MEP schematics, and structural schedules into interactive 3D virtual job-site simulations that prevent costly rework.</p>
-        </div>
-        <button onclick="triggerCheckout('weyland-sightx-seat', 1, 'SightX ($999/mo)')" class="button" id="btnBuySight" style="width:100%;text-align:center;">ACTIVATE STANDALONE SEAT</button>
-      </div>
-
-      <!-- 8. MARKETX -->
-      <div class="card" id="cardMarket">
-        <div>
-          <span class="sku-cat">MARKET INTELLIGENCE</span>
-          <h3>MarketX</h3>
-          <div class="sku-price">$249 <span class="unit">/ mo</span></div>
-          <div class="sku-edge">Live construction spending, housing starts &amp; materials trend - real FRED data</div>
-          <p>Market Trend Analyzer. Live U.S. construction-market indicators sourced directly from the Federal Reserve's public FRED data, refreshed on every load - know whether the market is expanding or contracting before you commit to a bid cycle.</p>
-        </div>
-        <button onclick="triggerCheckout('weyland-marketx-seat', 1, 'MarketX ($249/mo)')" class="button" id="btnBuyMarket" style="width:100%;text-align:center;">ACTIVATE STANDALONE SEAT</button>
-      </div>
-
-      <!-- 9. PRICEX -->
-      <div class="card" id="cardPrice">
-        <div>
-          <span class="sku-cat">MATERIAL PRICING</span>
-          <h3>PriceX</h3>
-          <div class="sku-price">$149 <span class="unit">/ mo</span></div>
-          <div class="sku-edge">Live lumber, metals &amp; materials PPI - real FRED data, MoM/YoY change</div>
-          <p>Material Pricing Tracker. Live Producer Price Index data for lumber, metals, and the broader construction-materials basket - see material cost movement before you price a bid, not after.</p>
-        </div>
-        <button onclick="triggerCheckout('weyland-pricex-seat', 1, 'PriceX ($149/mo)')" class="button" id="btnBuyPrice" style="width:100%;text-align:center;">ACTIVATE STANDALONE SEAT</button>
-      </div>
-
-      <!-- 10. COMPX -->
-      <div class="card" id="cardComp">
-        <div>
-          <span class="sku-cat">COMPETITOR INTELLIGENCE</span>
-          <h3>CompX</h3>
-          <div class="sku-price">$199 <span class="unit">/ mo</span></div>
-          <div class="sku-edge">Real TXDOT bid-tabulation history - win rate &amp; total won value per vendor</div>
-          <p>See who else is bidding - and winning. Search any contractor name against real Texas DOT bid tabulation history: total bids, win rate, total won value, sourced live from data.texas.gov.</p>
-        </div>
-        <button onclick="triggerCheckout('weyland-compx-seat', 1, 'CompX ($199/mo)')" class="button" id="btnBuyComp" style="width:100%;text-align:center;">ACTIVATE STANDALONE SEAT</button>
-      </div>
-
-      <!-- 11. WEATHERX -->
-      <div class="card" id="cardWeather">
-        <div>
-          <span class="sku-cat">WEATHER-DELAY CALCULATOR</span>
-          <h3>WeatherX</h3>
-          <div class="sku-price">$149 <span class="unit">/ mo</span></div>
-          <div class="sku-edge">Real NWS 7-day forecast, classified by delay risk</div>
-          <p>Know which days threaten your schedule. Live National Weather Service forecast for any US jobsite, classified into high/moderate/low delay risk by precipitation odds, severe conditions, and wind speed.</p>
-        </div>
-        <button onclick="triggerCheckout('weyland-weatherx-seat', 1, 'WeatherX ($149/mo)')" class="button" id="btnBuyWeather" style="width:100%;text-align:center;">ACTIVATE STANDALONE SEAT</button>
-      </div>
-
-      <!-- 12. FORECASTX -->
-      <div class="card" id="cardForecast">
-        <div>
-          <span class="sku-cat">CASH FLOW FORECASTING</span>
-          <h3>ForecastX</h3>
-          <div class="sku-price">$249 <span class="unit">/ mo</span></div>
-          <div class="sku-edge">Month-by-month billing, retainage &amp; cash-receipt projection</div>
-          <p>See your cash position before you sign. Enter a contract's real terms - value, duration, retainage, payment terms - and get a full month-by-month cash flow projection, including exactly when retainage comes back.</p>
-        </div>
-        <button onclick="triggerCheckout('weyland-forecastx-seat', 1, 'ForecastX ($249/mo)')" class="button" id="btnBuyForecast" style="width:100%;text-align:center;">ACTIVATE STANDALONE SEAT</button>
-      </div>
-
-      <!-- 13. GEOX -->
-      <div class="card" id="cardGeo">
-        <div>
-          <span class="sku-cat">GEOSPATIAL LOOKUP</span>
-          <h3>GeoX</h3>
-          <div class="sku-price">$149 <span class="unit">/ mo</span></div>
-          <div class="sku-edge">Real Census county/state/tract FIPS lookup, not just a map pin</div>
-          <p>Know the jurisdiction, not just the pin. Look up any US project address against the Census Bureau's real geocoder - coordinates plus actual county, state, and census tract FIPS codes for jurisdiction-based compliance and reporting.</p>
-        </div>
-        <button onclick="triggerCheckout('weyland-geox-seat', 1, 'GeoX ($149/mo)')" class="button" id="btnBuyGeo" style="width:100%;text-align:center;">ACTIVATE STANDALONE SEAT</button>
-      </div>
-    </div>
-
-    <!-- THE SUBCONP SUITE BUNDLE -->
-    <div class="section-head" id="suiteAnchor" style="margin-top: 100px;">
-      <p class="eyebrow">THE RECOMMENDED ENTERPRISE ARCHITECTURE</p>
-      <h2>SubConP Operating Package</h2>
-      <p>Why purchase single tools when you can run your entire commercial pipeline on a single interlocked project record? Unlock all 7 operating engines and save 46% monthly.</p>
-    </div>
-
-    <div class="suite-box" id="subconpSuiteCard">
-      <div class="badge-bar">
-        <span class="pill-gold">\u2605 RECOMMENDED ALL-INCLUSIVE SUITE</span>
-        <span class="pill-save">SAVE $1,693/MO (46% OFF STANDALONE VALUE)</span>
-      </div>
-      <div class="price-tag">
-        $<span id="suiteMonthlyTotal">2,000</span><span class="unit">USD / SEAT / MONTH</span>
-      </div>
-      <div class="price-sub">Billed monthly. Includes all 7 autonomous engines operating seamlessly on one project spine.</div>
-      
-      <div class="slider-box">
-        <div class="slider-label">
-          <span>Active Operator Seats:</span>
-          <span class="gold-text" id="seatCountLabel">1 Seat ($2,000 / mo)</span>
-        </div>
-        <input type="range" id="suiteSeats" min="1" max="50" value="1" oninput="updateSuiteCalculation(this.value)">
-      </div>
-      
-      <div class="feature-grid">
-        <div class="feature-item">
-          <span class="chk">\u2713</span>
-          <div><strong>HuntX</strong> Opportunity discovery & permit crawler. <em>$799/mo standalone value</em></div>
-        </div>
-        <div class="feature-item">
-          <span class="chk">\u2713</span>
-          <div><strong>SubX</strong> Submittal Express spec compliance packages. <em>$599/mo standalone value</em></div>
-        </div>
-        <div class="feature-item">
-          <span class="chk">\u2713</span>
-          <div><strong>TakeoffX</strong> Machine-vision blueprint quantification. <em>$499/mo standalone value</em></div>
-        </div>
-        <div class="feature-item">
-          <span class="chk">\u2713</span>
-          <div><strong>CutsheetX</strong> Instant technical product specification data. <em>$199/mo standalone value</em></div>
-        </div>
-        <div class="feature-item">
-          <span class="chk">\u2713</span>
-          <div><strong>PropX</strong> Proposal Express commercial bid generator. <em>$299/mo standalone value</em></div>
-        </div>
-        <div class="feature-item">
-          <span class="chk">\u2713</span>
-          <div><strong>SightX</strong> Interactive 3D structural simulation visualizer. <em>$999/mo standalone value</em></div>
-        </div>
-        <div class="feature-item">
-          <span class="chk">\u2713</span>
-          <div><strong>MeetingX</strong> Spatial 3D meeting intelligence & action items. <em>$299/mo standalone value</em></div>
-        </div>
-        <div class="feature-item">
-          <span class="chk">\u2713</span>
-          <div><strong>Sovereign Compute</strong> Local Apple Silicon Metal inference & Cloudflare edge distribution. <em>$0.00 / Token Variable Overhead</em></div>
-        </div>
-      </div>
-      
-      <button onclick="triggerCheckout('weyland-subconp-suite-seat', document.getElementById('suiteSeats').value, 'SubConP All-Inclusive Suite')" class="button primary" id="btnActivateSuite" style="width:100%;padding:20px;font-size:17px;letter-spacing:0.08em;margin-top:14px;box-shadow: 0 0 35px rgba(240, 184, 0, 0.4);">
-        ACTIVATE SUBCONP SUITE ($<span id="btnSuiteTotal">2,000</span> / MO)
-      </button>
-    </div>
-
-    <!-- COMMERCIAL BOUNDARY NOTE -->
-    <div class="summary-box">
-      <h3>Sovereign Commercial Boundaries</h3>
-      <p>Human estimator approval is strictly enforced at every commercial boundary. Implementation scope, historical enterprise data migrations, custom ERP integrations, and high-density compute usage exceeding standard policy thresholds are quoted separately as modular operational enhancements.</p>
-      <p style="font-size:13px;color:var(--gold);margin-bottom:0;font-family:ui-monospace,monospace;">
-        \u26A1 CHECKOUT SECURELY PROCESSED VIA STRIPE. NO CARD DATA TOUCHES WEYLANDAI SERVERS.
-      </p>
-    </div>
-
-    <footer>
-      <span>WEYLAND ARTIFICIAL INTELLIGENCE / SUBCONP SUITE</span>
-      <p style="margin:0;">One project spine. Seven operating engines. Zero simulated compute.</p>
-      <a href="mailto:hello@weylandai.com" id="footerContact">hello@weylandai.com</a>
-    </footer>
-  </div>
-
-  <script>
-    const moneyFormatter = new Intl.NumberFormat('en-US');
-    
-    function updateSuiteCalculation(val) {
-      const seats = parseInt(val, 10);
-      const total = seats * 2000;
-      document.getElementById('seatCountLabel').textContent = seats + (seats === 1 ? ' Seat ($2,000 / mo)' : ' Seats ($' + moneyFormatter.format(total) + ' / mo)');
-      document.getElementById('suiteMonthlyTotal').textContent = moneyFormatter.format(total);
-      document.getElementById('btnSuiteTotal').textContent = moneyFormatter.format(total);
-    }
-
-    async function triggerCheckout(sku, quantity, name) {
-      // /subscribe's own checkout button is hardcoded to the suite product
-      // and ignores query params, so route the suite purchase through it
-      // unchanged. All 7 components are now real, separately-priced Stripe
-      // products - call checkout/create directly for all of them. Note:
-      // buying SightX alone activates billing but the viewer itself stays
-      // a public, ungated demo (no per-customer project ingestion yet) -
-      // see /sightx and MeetingX's own gate for what SightX access actually
-      // changes today.
-      if (sku === 'weyland-subconp-suite-seat') {
-        window.location.href = '/subscribe/?checkout=init&sku=' + encodeURIComponent(sku) + '&qty=' + quantity + '&plan=' + encodeURIComponent(name);
-        return;
-      }
-      if (sku === 'weyland-cutsheetx-seat' || sku === 'weyland-takeoffx-seat' || sku === 'weyland-propx-seat' || sku === 'weyland-huntx-seat' || sku === 'weyland-subx-seat' || sku === 'weyland-meetingx-seat' || sku === 'weyland-sightx-seat' || sku === 'weyland-marketx-seat' || sku === 'weyland-pricex-seat' || sku === 'weyland-compx-seat' || sku === 'weyland-weatherx-seat' || sku === 'weyland-forecastx-seat' || sku === 'weyland-geox-seat') {
-        const btn = event && event.target;
-        if (btn) { btn.disabled = true; btn.textContent = 'REDIRECTING TO CHECKOUT...'; }
-        try {
-          const res = await fetch('/api/billing/checkout/create', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ product_id: sku, quantity: quantity || 1 })
-          });
-          const data = await res.json();
-          if (!res.ok || !data.checkout_url) throw new Error((data.detail && data.detail.message) || 'Checkout unavailable');
-          window.location.href = data.checkout_url;
-        } catch (e) {
-          if (btn) { btn.disabled = false; btn.textContent = 'CONTACT TO ACTIVATE'; }
-          alert('Checkout error: ' + e.message + ' - email hello@weylandai.com instead.');
-        }
-        return;
-      }
-      window.location.href = 'mailto:hello@weylandai.com?subject=' + encodeURIComponent(name + ' standalone seat') + '&body=' + encodeURIComponent('I would like to activate ' + name + ' as a standalone seat. Instant self-checkout for this tier isn\\'t live yet - please set up billing for my account.');
-    }
-  </script>
-</body>
-</html>
-`, { headers: { "Content-Type": "text/html; charset=UTF-8", "Cache-Control": "public, max-age=60" } });
-  }
-  function serve_marketx() {
-    return new Response(`<!doctype html>
-<html lang="en">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="theme-color" content="#090a0d">
-<title>MarketX | Construction Market Trend Analyzer</title>
-<style>
-:root{--bg:#090a0d;--panel:#121419;--line:#2c3139;--text:#edf0f1;--muted:#9299a3;--gold:#f0b800;--green:#61dfa0;--blue:#66d4ff;--red:#ff756e}
-*{box-sizing:border-box}html,body{margin:0;min-height:100%;background:var(--bg);color:var(--text);font-family:"Avenir Next","Helvetica Neue",sans-serif}
-.shell{max-width:1100px;margin:auto;padding:20px clamp(16px,3vw,40px) 60px}
-header{display:flex;align-items:center;justify-content:space-between;gap:15px;margin-bottom:24px;flex-wrap:wrap}
-.brand{display:flex;align-items:center;gap:12px;color:var(--text);text-decoration:none}
-.mark{width:42px;height:42px;display:grid;place-items:center;background:var(--gold);color:var(--bg);font-weight:900;border-radius:6px}
-.nav{display:flex;gap:8px;flex-wrap:wrap}
-.nav a,.button{border:1px solid var(--line);border-radius:99px;padding:9px 14px;color:var(--text);text-decoration:none;background:transparent;font:750 10px/1 ui-monospace,monospace;letter-spacing:.06em;cursor:pointer}
-.nav a:hover,.button:hover{border-color:var(--gold);color:var(--gold)}
-.button.primary{background:var(--gold);border-color:var(--gold);color:var(--bg);font-weight:900}
-.titlebar{margin:40px 0 32px}
-.eyebrow{color:var(--gold);font:800 11px/1.2 ui-monospace,monospace;letter-spacing:.18em;text-transform:uppercase}
-.titlebar h1{font-size:clamp(30px,4vw,48px);letter-spacing:-.03em;margin:12px 0}
-.titlebar p{color:var(--muted);max-width:640px;line-height:1.6}
-.source-note{font:600 11px ui-monospace,monospace;color:var(--muted);margin-bottom:28px}
-.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:18px;margin-bottom:36px}
-.card{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:22px}
-.card h3{margin:0 0 10px;font-size:15px;letter-spacing:-.01em;color:#fff}
-.big{font-size:32px;font-weight:900;letter-spacing:-.02em;margin:6px 0}
-.trend{font:800 11px/1 ui-monospace,monospace;letter-spacing:.05em;padding:4px 9px;border-radius:99px;display:inline-block}
-.trend.rising{background:rgba(255,117,110,.15);color:var(--red)}
-.trend.falling{background:rgba(97,223,160,.15);color:var(--green)}
-.trend.flat{background:rgba(146,153,163,.15);color:var(--muted)}
-.meta{color:var(--muted);font-size:12px;margin-top:8px}
-.err{color:var(--red);font-size:13px}
-.card.cta{background:linear-gradient(145deg,rgba(26,30,38,.96),rgba(16,18,24,.98));border:1px solid var(--gold);text-align:center;padding:32px}
-</style>
-</head>
-<body>
-<div class="shell">
-<header>
-<a class="brand" href="/"><span class="mark">WY</span><b>WEYLAND AI</b></a>
-<nav class="nav"><a href="/pricing/">PRICING</a><a href="/huntx/">HUNTX</a><a href="/pricex/">PRICEX</a></nav>
-</header>
-<section class="titlebar">
-<p class="eyebrow">MARKET TREND ANALYZER</p>
-<h1>Where the construction market is headed.</h1>
-<p>Live U.S. construction spending, housing starts, and materials-cost trend, sourced directly from the Federal Reserve's public FRED data - not a static report, refreshed on every load.</p>
-</section>
-<div class="source-note" id="sourceNote">Loading live data from FRED...</div>
-<div class="grid" id="trendGrid"></div>
-<div class="card cta">
-<h3 style="margin-bottom:6px">MarketX Pro</h3>
-<p style="color:var(--muted);margin:0 0 18px">$249/mo standalone, or included in select SubConP tiers - contact to activate.</p>
-<a class="button primary" href="mailto:hello@weylandai.com?subject=MarketX%20activation">CONTACT TO ACTIVATE</a>
-</div>
-</div>
-<script>
-function fmt(n){return n===null||n===undefined?'--':new Intl.NumberFormat('en-US',{maximumFractionDigits:1}).format(n)}
-function trendClass(t){return t==='rising'?'rising':t==='falling'?'falling':'flat'}
-fetch('/api/marketx/trends').then(r=>r.json()).then(d=>{
-  if(d.detail){document.getElementById('sourceNote').innerHTML='<span class="err">'+d.detail.message+'</span>';return}
-  document.getElementById('sourceNote').textContent='SOURCE: '+d.source+' - fetched '+new Date(d.fetched_at).toLocaleString();
-  document.getElementById('trendGrid').innerHTML = d.indicators.map(i=>
-    '<div class="card"><h3>'+i.label+'</h3><div class="big">'+fmt(i.latest_value)+'</div>'+
-    '<span class="trend '+trendClass(i.trend)+'">'+i.trend.toUpperCase()+(i.yoy_pct_change!==null?' '+(i.yoy_pct_change>0?'+':'')+i.yoy_pct_change+'% YOY':'')+'</span>'+
-    '<div class="meta">As of '+i.latest_date+' &middot; MoM '+(i.mom_pct_change!==null?(i.mom_pct_change>0?'+':'')+i.mom_pct_change+'%':'n/a')+' &middot; FRED series '+i.series_id+'</div></div>'
-  ).join('');
-}).catch(e=>{document.getElementById('sourceNote').innerHTML='<span class="err">Failed to load live data: '+e.message+'</span>'});
-</script>
-</body>
-</html>
-`, { headers: { "Content-Type": "text/html; charset=UTF-8", "Cache-Control": "public, max-age=60" } });
-  }
-  function serve_pricex() {
-    return new Response(`<!doctype html>
-<html lang="en">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="theme-color" content="#090a0d">
-<title>PriceX | Material Pricing Tracker</title>
-<style>
-:root{--bg:#090a0d;--panel:#121419;--line:#2c3139;--text:#edf0f1;--muted:#9299a3;--gold:#f0b800;--green:#61dfa0;--blue:#66d4ff;--red:#ff756e}
-*{box-sizing:border-box}html,body{margin:0;min-height:100%;background:var(--bg);color:var(--text);font-family:"Avenir Next","Helvetica Neue",sans-serif}
-.shell{max-width:1100px;margin:auto;padding:20px clamp(16px,3vw,40px) 60px}
-header{display:flex;align-items:center;justify-content:space-between;gap:15px;margin-bottom:24px;flex-wrap:wrap}
-.brand{display:flex;align-items:center;gap:12px;color:var(--text);text-decoration:none}
-.mark{width:42px;height:42px;display:grid;place-items:center;background:var(--gold);color:var(--bg);font-weight:900;border-radius:6px}
-.nav{display:flex;gap:8px;flex-wrap:wrap}
-.nav a,.button{border:1px solid var(--line);border-radius:99px;padding:9px 14px;color:var(--text);text-decoration:none;background:transparent;font:750 10px/1 ui-monospace,monospace;letter-spacing:.06em;cursor:pointer}
-.nav a:hover,.button:hover{border-color:var(--gold);color:var(--gold)}
-.button.primary{background:var(--gold);border-color:var(--gold);color:var(--bg);font-weight:900}
-.titlebar{margin:40px 0 32px}
-.eyebrow{color:var(--gold);font:800 11px/1.2 ui-monospace,monospace;letter-spacing:.18em;text-transform:uppercase}
-.titlebar h1{font-size:clamp(30px,4vw,48px);letter-spacing:-.03em;margin:12px 0}
-.titlebar p{color:var(--muted);max-width:640px;line-height:1.6}
-.source-note{font:600 11px ui-monospace,monospace;color:var(--muted);margin-bottom:28px}
-.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:18px;margin-bottom:36px}
-.card{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:22px}
-.card h3{margin:0 0 10px;font-size:15px;letter-spacing:-.01em;color:#fff}
-.big{font-size:32px;font-weight:900;letter-spacing:-.02em;margin:6px 0}
-.chg{font:800 11px/1 ui-monospace,monospace;letter-spacing:.05em;padding:4px 9px;border-radius:99px;display:inline-block;margin-right:6px}
-.chg.up{background:rgba(255,117,110,.15);color:var(--red)}
-.chg.down{background:rgba(97,223,160,.15);color:var(--green)}
-.chg.flat{background:rgba(146,153,163,.15);color:var(--muted)}
-.meta{color:var(--muted);font-size:12px;margin-top:8px}
-.err{color:var(--red);font-size:13px}
-.card.cta{background:linear-gradient(145deg,rgba(26,30,38,.96),rgba(16,18,24,.98));border:1px solid var(--gold);text-align:center;padding:32px}
-</style>
-</head>
-<body>
-<div class="shell">
-<header>
-<a class="brand" href="/"><span class="mark">WY</span><b>WEYLAND AI</b></a>
-<nav class="nav"><a href="/pricing/">PRICING</a><a href="/huntx/">HUNTX</a><a href="/marketx/">MARKETX</a></nav>
-</header>
-<section class="titlebar">
-<p class="eyebrow">MATERIAL PRICING TRACKER</p>
-<h1>Know material cost movement before you price a bid.</h1>
-<p>Live Producer Price Index data for lumber, metals, and the broader construction-materials basket, sourced directly from the Federal Reserve's public FRED data - refreshed on every load, not a cached report.</p>
-</section>
-<div class="source-note" id="sourceNote">Loading live data from FRED...</div>
-<div class="grid" id="materialGrid"></div>
-<div class="card cta">
-<h3 style="margin-bottom:6px">PriceX Pro</h3>
-<p style="color:var(--muted);margin:0 0 18px">$149/mo standalone, or included in select SubConP tiers - contact to activate.</p>
-<a class="button primary" href="mailto:hello@weylandai.com?subject=PriceX%20activation">CONTACT TO ACTIVATE</a>
-</div>
-</div>
-<script>
-function fmt(n){return n===null||n===undefined?'--':new Intl.NumberFormat('en-US',{maximumFractionDigits:1}).format(n)}
-function chgClass(v){return v===null?'flat':v>0?'up':v<0?'down':'flat'}
-fetch('/api/pricex/materials').then(r=>r.json()).then(d=>{
-  if(d.detail){document.getElementById('sourceNote').innerHTML='<span class="err">'+d.detail.message+'</span>';return}
-  document.getElementById('sourceNote').textContent='SOURCE: '+d.source+' - fetched '+new Date(d.fetched_at).toLocaleString();
-  document.getElementById('materialGrid').innerHTML = d.materials.map(m=>
-    '<div class="card"><h3>'+m.label+'</h3><div class="big">'+fmt(m.latest_value)+' <span style="font-size:14px;color:var(--muted);font-weight:600">(1982=100)</span></div>'+
-    '<span class="chg '+chgClass(m.mom_pct_change)+'">MoM '+(m.mom_pct_change!==null?(m.mom_pct_change>0?'+':'')+m.mom_pct_change+'%':'n/a')+'</span>'+
-    '<span class="chg '+chgClass(m.yoy_pct_change)+'">YoY '+(m.yoy_pct_change!==null?(m.yoy_pct_change>0?'+':'')+m.yoy_pct_change+'%':'n/a')+'</span>'+
-    '<div class="meta">As of '+m.latest_date+' &middot; FRED series '+m.series_id+'</div></div>'
-  ).join('');
-}).catch(e=>{document.getElementById('sourceNote').innerHTML='<span class="err">Failed to load live data: '+e.message+'</span>'});
-</script>
-</body>
-</html>
-`, { headers: { "Content-Type": "text/html; charset=UTF-8", "Cache-Control": "public, max-age=60" } });
-  }
-  function serve_compx() {
-    return new Response(`<!doctype html>
-<html lang="en">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="theme-color" content="#090a0d">
-<title>CompX | Competitor Bid Intelligence</title>
-<style>
-:root{--bg:#090a0d;--panel:#121419;--line:#2c3139;--text:#edf0f1;--muted:#9299a3;--gold:#f0b800;--green:#61dfa0;--blue:#66d4ff;--red:#ff756e}
-*{box-sizing:border-box}html,body{margin:0;min-height:100%;background:var(--bg);color:var(--text);font-family:"Avenir Next","Helvetica Neue",sans-serif}
-.shell{max-width:1100px;margin:auto;padding:20px clamp(16px,3vw,40px) 60px}
-header{display:flex;align-items:center;justify-content:space-between;gap:15px;margin-bottom:24px;flex-wrap:wrap}
-.brand{display:flex;align-items:center;gap:12px;color:var(--text);text-decoration:none}
-.mark{width:42px;height:42px;display:grid;place-items:center;background:var(--gold);color:var(--bg);font-weight:900;border-radius:6px}
-.nav{display:flex;gap:8px;flex-wrap:wrap}
-.nav a,.button{border:1px solid var(--line);border-radius:99px;padding:9px 14px;color:var(--text);text-decoration:none;background:transparent;font:750 10px/1 ui-monospace,monospace;letter-spacing:.06em;cursor:pointer}
-.nav a:hover,.button:hover{border-color:var(--gold);color:var(--gold)}
-.button.primary{background:var(--gold);border-color:var(--gold);color:var(--bg);font-weight:900}
-.titlebar{margin:40px 0 24px}
-.eyebrow{color:var(--gold);font:800 11px/1.2 ui-monospace,monospace;letter-spacing:.18em;text-transform:uppercase}
-.titlebar h1{font-size:clamp(30px,4vw,48px);letter-spacing:-.03em;margin:12px 0}
-.titlebar p{color:var(--muted);max-width:660px;line-height:1.6}
-.search-bar{display:flex;gap:10px;margin-bottom:28px}
-.search-bar input{flex:1;background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:14px 18px;color:#fff;font-size:15px}
-.search-bar input:focus{outline:none;border-color:var(--gold)}
-.source-note{font:600 11px ui-monospace,monospace;color:var(--muted);margin-bottom:20px}
-.vgrid{display:flex;flex-direction:column;gap:16px}
-.vcard{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:22px}
-.vcard h3{margin:0 0 12px;font-size:18px;color:#fff}
-.stat-row{display:flex;gap:28px;flex-wrap:wrap;margin-bottom:16px}
-.stat{}
-.stat label{display:block;font:700 10px ui-monospace,monospace;color:var(--muted);letter-spacing:.08em;text-transform:uppercase;margin-bottom:3px}
-.stat .v{font-size:22px;font-weight:900}
-.stat .v.green{color:var(--green)}
-proj-list{list-style:none;margin:0;padding:0}
-.proj{display:flex;justify-content:space-between;gap:12px;padding:8px 0;border-top:1px solid var(--line);font-size:13px;color:var(--muted)}
-.proj .won{color:var(--green);font-weight:800}
-.err{color:var(--red);font-size:13px}
-.card.cta{background:linear-gradient(145deg,rgba(26,30,38,.96),rgba(16,18,24,.98));border:1px solid var(--gold);text-align:center;padding:32px;border-radius:14px;margin-top:28px}
-</style>
-</head>
-<body>
-<div class="shell">
-<header>
-<a class="brand" href="/"><span class="mark">WY</span><b>WEYLAND AI</b></a>
-<nav class="nav"><a href="/pricing/">PRICING</a><a href="/huntx/">HUNTX</a><a href="/marketx/">MARKETX</a></nav>
-</header>
-<section class="titlebar">
-<p class="eyebrow">COMPETITOR BID INTELLIGENCE</p>
-<h1>See who else is bidding - and winning.</h1>
-<p>Search real Texas DOT bid-tabulation history for any contractor name: total bids, win rate, and total won value, sourced live from data.texas.gov - not a static report.</p>
-</section>
-<div class="search-bar"><input id="cx-q" type="text" placeholder="Search a contractor/vendor name, e.g. Garret Shields"><button class="button primary" id="cx-search-btn">SEARCH</button></div>
-<div class="source-note" id="sourceNote">Enter a name and search live TXDOT bid history.</div>
-<div class="vgrid" id="vgrid"></div>
-<div class="card cta">
-<h3 style="margin-bottom:6px">CompX Pro</h3>
-<p style="color:var(--muted);margin:0 0 18px">$199/mo standalone, or included in select SubConP tiers - contact to activate.</p>
-<a class="button primary" href="mailto:hello@weylandai.com?subject=CompX%20activation">CONTACT TO ACTIVATE</a>
-</div>
-</div>
-<script>
-function esc(s){return String(s==null?'':s).replace(/[<>&]/g,c=>({'<':'&lt;','>':'&gt;','&':'&amp;'}[c]))}
-function money(n){return '$'+Number(n).toLocaleString(undefined,{maximumFractionDigits:0})}
-async function runSearch(){
-  const q = document.getElementById('cx-q').value.trim();
-  if(!q) return;
-  document.getElementById('sourceNote').textContent = 'Querying live TXDOT bid history...';
-  document.getElementById('vgrid').innerHTML = '';
-  try {
-    const res = await fetch('/api/compx/vendors?q='+encodeURIComponent(q));
-    const d = await res.json();
-    if(!res.ok){document.getElementById('sourceNote').innerHTML='<span class="err">'+(d.detail&&d.detail.message||'Search failed')+'</span>';return}
-    document.getElementById('sourceNote').textContent='SOURCE: '+d.source+' - '+d.vendors.length+' vendor(s) matched "'+d.query+'"';
-    if(!d.vendors.length){document.getElementById('vgrid').innerHTML='<div class="vcard">No vendors matched. Try a shorter or different name fragment.</div>';return}
-    document.getElementById('vgrid').innerHTML = d.vendors.map(v=>
-      '<div class="vcard"><h3>'+esc(v.vendor_name)+'</h3>'+
-      '<div class="stat-row">'+
-      '<div class="stat"><label>Total Bids</label><div class="v">'+v.total_bids+'</div></div>'+
-      '<div class="stat"><label>Wins</label><div class="v green">'+v.wins+'</div></div>'+
-      '<div class="stat"><label>Win Rate</label><div class="v">'+v.win_rate_pct+'%</div></div>'+
-      '<div class="stat"><label>Total Won Value</label><div class="v green">'+money(v.total_win_value)+'</div></div>'+
-      '</div>'+
-      v.recent_projects.map(p=>'<div class="proj"><span>'+esc(p.project_name)+' ('+esc(p.county)+' County)</span><span class="'+(p.won?'won':'')+'">'+(p.won?'WON ':'')+money(p.bid_amount)+'</span></div>').join('')+
-      '</div>'
-    ).join('');
-  } catch(e) {
-    document.getElementById('sourceNote').innerHTML='<span class="err">Failed to load live data: '+e.message+'</span>';
-  }
-}
-document.getElementById('cx-search-btn').addEventListener('click', runSearch);
-document.getElementById('cx-q').addEventListener('keydown', e=>{if(e.key==='Enter')runSearch()});
-</script>
-</body>
-</html>
-`, { headers: { "Content-Type": "text/html; charset=UTF-8", "Cache-Control": "public, max-age=60" } });
-  }
-  function serve_geox() {
-    return new Response(`<!doctype html>
-<html lang="en">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="theme-color" content="#090a0d">
-<title>GeoX | Project Geospatial Lookup</title>
-<style>
-:root{--bg:#090a0d;--panel:#121419;--line:#2c3139;--text:#edf0f1;--muted:#9299a3;--gold:#f0b800;--green:#61dfa0;--blue:#66d4ff;--red:#ff756e}
-*{box-sizing:border-box}html,body{margin:0;min-height:100%;background:var(--bg);color:var(--text);font-family:"Avenir Next","Helvetica Neue",sans-serif}
-.shell{max-width:1000px;margin:auto;padding:20px clamp(16px,3vw,40px) 60px}
-header{display:flex;align-items:center;justify-content:space-between;gap:15px;margin-bottom:24px;flex-wrap:wrap}
-.brand{display:flex;align-items:center;gap:12px;color:var(--text);text-decoration:none}
-.mark{width:42px;height:42px;display:grid;place-items:center;background:var(--gold);color:var(--bg);font-weight:900;border-radius:6px}
-.nav{display:flex;gap:8px;flex-wrap:wrap}
-.nav a,.button{border:1px solid var(--line);border-radius:99px;padding:9px 14px;color:var(--text);text-decoration:none;background:transparent;font:750 10px/1 ui-monospace,monospace;letter-spacing:.06em;cursor:pointer}
-.nav a:hover,.button:hover{border-color:var(--gold);color:var(--gold)}
-.button.primary{background:var(--gold);border-color:var(--gold);color:var(--bg);font-weight:900}
-.titlebar{margin:40px 0 24px}
-.eyebrow{color:var(--gold);font:800 11px/1.2 ui-monospace,monospace;letter-spacing:.18em;text-transform:uppercase}
-.titlebar h1{font-size:clamp(30px,4vw,48px);letter-spacing:-.03em;margin:12px 0}
-.titlebar p{color:var(--muted);max-width:660px;line-height:1.6}
-.search-bar{display:flex;gap:10px;margin-bottom:28px;flex-wrap:wrap}
-.search-bar input{flex:1;min-width:260px;background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:14px 18px;color:#fff;font-size:15px}
-.search-bar input:focus{outline:none;border-color:var(--gold)}
-.source-note{font:600 11px ui-monospace,monospace;color:var(--muted);margin-bottom:20px}
-.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin-bottom:36px}
-.card{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:18px}
-.card label{display:block;font:700 10px ui-monospace,monospace;color:var(--muted);letter-spacing:.06em;text-transform:uppercase;margin-bottom:6px}
-.card .v{font-size:19px;font-weight:800}
-.err{color:var(--red);font-size:13px}
-.card.cta{background:linear-gradient(145deg,rgba(26,30,38,.96),rgba(16,18,24,.98));border:1px solid var(--gold);text-align:center;padding:32px}
-</style>
-</head>
-<body>
-<div class="shell">
-<header>
-<a class="brand" href="/"><span class="mark">WY</span><b>WEYLAND AI</b></a>
-<nav class="nav"><a href="/pricing/">PRICING</a><a href="/huntx/">HUNTX</a><a href="/compx/">COMPX</a></nav>
-</header>
-<section class="titlebar">
-<p class="eyebrow">PROJECT GEOSPATIAL LOOKUP</p>
-<h1>Know the jurisdiction, not just the pin.</h1>
-<p>Look up any US project address against the Census Bureau's real geocoder - coordinates plus the actual county, state, and census tract FIPS codes, useful for jurisdiction-based compliance and reporting, not just a map marker.</p>
-</section>
-<div class="search-bar"><input id="gx-addr" type="text" placeholder="1600 Pennsylvania Ave NW, Washington, DC"><button class="button primary" id="gx-search-btn">LOOK UP</button></div>
-<div class="source-note" id="sourceNote">Enter a US project address and look it up.</div>
-<div class="grid" id="gx-grid"></div>
-<div class="card cta">
-<h3 style="margin-bottom:6px">GeoX Pro</h3>
-<p style="color:var(--muted);margin:0 0 18px">$149/mo standalone, or included in select SubConP tiers - contact to activate.</p>
-<a class="button primary" href="mailto:hello@weylandai.com?subject=GeoX%20activation">CONTACT TO ACTIVATE</a>
-</div>
-</div>
-<script>
-async function runLookup(){
-  const address = document.getElementById('gx-addr').value.trim();
-  if(!address) return;
-  document.getElementById('sourceNote').textContent = 'Querying Census geocoder...';
-  document.getElementById('gx-grid').innerHTML = '';
-  try {
-    const res = await fetch('/api/geox/lookup?address=' + encodeURIComponent(address));
-    const d = await res.json();
-    if(!res.ok){ document.getElementById('sourceNote').innerHTML = '<span class="err">' + (d.detail && d.detail.message) + '</span>'; return; }
-    document.getElementById('sourceNote').textContent = 'SOURCE: ' + d.source + ' - matched: ' + d.matched_address;
-    document.getElementById('gx-grid').innerHTML =
-      '<div class="card"><label>Coordinates</label><div class="v">' + d.latitude.toFixed(5) + ', ' + d.longitude.toFixed(5) + '</div></div>' +
-      '<div class="card"><label>County</label><div class="v">' + (d.county_name||'\u2014') + '</div></div>' +
-      '<div class="card"><label>State</label><div class="v">' + (d.state_name||'\u2014') + '</div></div>' +
-      '<div class="card"><label>County FIPS</label><div class="v">' + (d.county_geoid||'\u2014') + '</div></div>' +
-      '<div class="card"><label>Census Tract GEOID</label><div class="v">' + (d.census_tract_geoid||'\u2014') + '</div></div>';
-  } catch(e) {
-    document.getElementById('sourceNote').innerHTML = '<span class="err">Failed: ' + e.message + '</span>';
-  }
-}
-document.getElementById('gx-search-btn').addEventListener('click', runLookup);
-document.getElementById('gx-addr').addEventListener('keydown', e=>{if(e.key==='Enter')runLookup()});
-</script>
-</body>
-</html>
-`, { headers: { "Content-Type": "text/html; charset=UTF-8", "Cache-Control": "public, max-age=60" } });
-  }
-  function serve_forecastx() {
-    return new Response(`<!doctype html>
-<html lang="en">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="theme-color" content="#090a0d">
-<title>ForecastX | Project Cash Flow Forecaster</title>
-<style>
-:root{--bg:#090a0d;--panel:#121419;--line:#2c3139;--text:#edf0f1;--muted:#9299a3;--gold:#f0b800;--green:#61dfa0;--blue:#66d4ff;--red:#ff756e}
-*{box-sizing:border-box}html,body{margin:0;min-height:100%;background:var(--bg);color:var(--text);font-family:"Avenir Next","Helvetica Neue",sans-serif}
-.shell{max-width:1100px;margin:auto;padding:20px clamp(16px,3vw,40px) 60px}
-header{display:flex;align-items:center;justify-content:space-between;gap:15px;margin-bottom:24px;flex-wrap:wrap}
-.brand{display:flex;align-items:center;gap:12px;color:var(--text);text-decoration:none}
-.mark{width:42px;height:42px;display:grid;place-items:center;background:var(--gold);color:var(--bg);font-weight:900;border-radius:6px}
-.nav{display:flex;gap:8px;flex-wrap:wrap}
-.nav a,.button{border:1px solid var(--line);border-radius:99px;padding:9px 14px;color:var(--text);text-decoration:none;background:transparent;font:750 10px/1 ui-monospace,monospace;letter-spacing:.06em;cursor:pointer}
-.nav a:hover,.button:hover{border-color:var(--gold);color:var(--gold)}
-.button.primary{background:var(--gold);border-color:var(--gold);color:var(--bg);font-weight:900}
-.titlebar{margin:40px 0 24px}
-.eyebrow{color:var(--gold);font:800 11px/1.2 ui-monospace,monospace;letter-spacing:.18em;text-transform:uppercase}
-.titlebar h1{font-size:clamp(30px,4vw,48px);letter-spacing:-.03em;margin:12px 0}
-.titlebar p{color:var(--muted);max-width:660px;line-height:1.6}
-.form-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:14px;margin-bottom:20px;background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:22px}
-.form-grid label{display:block;font:700 10px ui-monospace,monospace;color:var(--muted);letter-spacing:.06em;text-transform:uppercase;margin-bottom:6px}
-.form-grid input{width:100%;background:#0d0f14;border:1px solid var(--line);border-radius:8px;padding:10px 12px;color:#fff;font-size:14px;box-sizing:border-box}
-.form-grid input:focus{outline:none;border-color:var(--gold)}
-.source-note{font:600 11px ui-monospace,monospace;color:var(--muted);margin-bottom:20px}
-.summary-row{display:flex;gap:16px;margin-bottom:24px;flex-wrap:wrap}
-.sumcard{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:16px 20px}
-.sumcard label{display:block;font:700 10px ui-monospace,monospace;color:var(--muted);letter-spacing:.08em;text-transform:uppercase;margin-bottom:4px}
-.sumcard .v{font-size:22px;font-weight:900}
-.table-wrap{overflow-x:auto;background:var(--panel);border:1px solid var(--line);border-radius:14px}
-table{width:100%;border-collapse:collapse;font-size:13px}
-th{text-align:left;color:var(--muted);font:750 10px/1 ui-monospace,monospace;letter-spacing:.08em;padding:12px 16px;background:#0d0f14;border-bottom:2px solid var(--line);white-space:nowrap}
-td{padding:10px 16px;border-bottom:1px solid #1f232b;white-space:nowrap}
-.err{color:var(--red);font-size:13px}
-.card.cta{background:linear-gradient(145deg,rgba(26,30,38,.96),rgba(16,18,24,.98));border:1px solid var(--gold);text-align:center;padding:32px;border-radius:14px;margin-top:28px}
-</style>
-</head>
-<body>
-<div class="shell">
-<header>
-<a class="brand" href="/"><span class="mark">WY</span><b>WEYLAND AI</b></a>
-<nav class="nav"><a href="/pricing/">PRICING</a><a href="/huntx/">HUNTX</a><a href="/marketx/">MARKETX</a></nav>
-</header>
-<section class="titlebar">
-<p class="eyebrow">PROJECT CASH FLOW FORECASTER</p>
-<h1>See your cash position before you sign.</h1>
-<p>Enter a contract's real terms - value, duration, retainage, payment terms - and get a month-by-month billing and cash-receipt projection, including when retainage actually comes back.</p>
-</section>
-<div class="form-grid">
-<div><label>CONTRACT VALUE ($)</label><input id="fx-value" type="number" placeholder="e.g. 500000"></div>
-<div><label>START DATE</label><input id="fx-start" type="date"></div>
-<div><label>DURATION (MONTHS)</label><input id="fx-duration" type="number" placeholder="e.g. 8"></div>
-<div><label>RETAINAGE (%)</label><input id="fx-retainage" type="number" value="10"></div>
-<div><label>PAYMENT TERMS (DAYS)</label><input id="fx-terms" type="number" value="30"></div>
-</div>
-<button class="button primary" id="fx-run-btn" style="margin-bottom:20px">RUN PROJECTION</button>
-<div class="source-note" id="sourceNote">Enter contract terms and run the projection - pure calculation, no external data source.</div>
-<div class="summary-row" id="summaryRow"></div>
-<div class="table-wrap"><table><thead><tr><th>MONTH</th><th>BILL DATE</th><th>BILLED</th><th>RETAINAGE HELD</th><th>NET PAYMENT</th><th>EXPECTED PAID</th><th>CUM. CASH RECEIVED</th></tr></thead><tbody id="fx-body"></tbody></table></div>
-<div class="card cta">
-<h3 style="margin-bottom:6px">ForecastX Pro</h3>
-<p style="color:var(--muted);margin:0 0 18px">$249/mo standalone, or included in select SubConP tiers - contact to activate.</p>
-<a class="button primary" href="mailto:hello@weylandai.com?subject=ForecastX%20activation">CONTACT TO ACTIVATE</a>
-</div>
-</div>
-<script>
-function money(n){return '$'+Number(n).toLocaleString(undefined,{maximumFractionDigits:0})}
-document.getElementById('fx-start').valueAsDate = new Date();
-async function runProjection(){
-  const body = {
-    contract_value: parseFloat(document.getElementById('fx-value').value),
-    start_date: document.getElementById('fx-start').value,
-    duration_months: parseInt(document.getElementById('fx-duration').value, 10),
-    retainage_pct: parseFloat(document.getElementById('fx-retainage').value),
-    payment_terms_days: parseInt(document.getElementById('fx-terms').value, 10)
-  };
-  document.getElementById('sourceNote').textContent = 'Calculating...';
-  try {
-    const res = await fetch('/api/forecastx/project', { method: 'POST', headers: {'Content-Type':'application/json'}, body: JSON.stringify(body) });
-    const d = await res.json();
-    if(!res.ok){document.getElementById('sourceNote').innerHTML='<span class="err">'+(d.detail&&d.detail.message||'Failed')+'</span>';return}
-    document.getElementById('sourceNote').textContent = 'Monthly billing: '+money(d.projection.monthly_billing)+' | Peak retainage held: '+money(d.projection.total_retainage_held_at_peak)+' | Retainage released: '+d.projection.retainage_release_date;
-    document.getElementById('summaryRow').innerHTML =
-      '<div class="sumcard"><label>Monthly Billing</label><div class="v">'+money(d.projection.monthly_billing)+'</div></div>'+
-      '<div class="sumcard"><label>Peak Retainage Held</label><div class="v" style="color:var(--gold)">'+money(d.projection.total_retainage_held_at_peak)+'</div></div>'+
-      '<div class="sumcard"><label>Retainage Release Date</label><div class="v" style="font-size:16px">'+d.projection.retainage_release_date+'</div></div>';
-    document.getElementById('fx-body').innerHTML = d.projection.months.map(m=>
-      '<tr><td>'+m.month_index+'</td><td>'+m.bill_date+'</td><td>'+money(m.billed_amount)+'</td><td>'+money(m.retainage_held)+'</td><td>'+money(m.net_payment)+'</td><td>'+m.expected_payment_date+'</td><td style="color:var(--green)">'+money(m.cumulative_cash_received)+'</td></tr>'
-    ).join('');
-  } catch(e) {
-    document.getElementById('sourceNote').innerHTML='<span class="err">Failed: '+e.message+'</span>';
-  }
-}
-document.getElementById('fx-run-btn').addEventListener('click', runProjection);
-</script>
-</body>
-</html>
-`, { headers: { "Content-Type": "text/html; charset=UTF-8", "Cache-Control": "public, max-age=60" } });
-  }
-  function serve_weatherx() {
-    return new Response(`<!doctype html>
-<html lang="en">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="theme-color" content="#090a0d">
-<title>WeatherX | Weather-Delay Impact Calculator</title>
-<style>
-:root{--bg:#090a0d;--panel:#121419;--line:#2c3139;--text:#edf0f1;--muted:#9299a3;--gold:#f0b800;--green:#61dfa0;--blue:#66d4ff;--red:#ff756e}
-*{box-sizing:border-box}html,body{margin:0;min-height:100%;background:var(--bg);color:var(--text);font-family:"Avenir Next","Helvetica Neue",sans-serif}
-.shell{max-width:1100px;margin:auto;padding:20px clamp(16px,3vw,40px) 60px}
-header{display:flex;align-items:center;justify-content:space-between;gap:15px;margin-bottom:24px;flex-wrap:wrap}
-.brand{display:flex;align-items:center;gap:12px;color:var(--text);text-decoration:none}
-.mark{width:42px;height:42px;display:grid;place-items:center;background:var(--gold);color:var(--bg);font-weight:900;border-radius:6px}
-.nav{display:flex;gap:8px;flex-wrap:wrap}
-.nav a,.button{border:1px solid var(--line);border-radius:99px;padding:9px 14px;color:var(--text);text-decoration:none;background:transparent;font:750 10px/1 ui-monospace,monospace;letter-spacing:.06em;cursor:pointer}
-.nav a:hover,.button:hover{border-color:var(--gold);color:var(--gold)}
-.button.primary{background:var(--gold);border-color:var(--gold);color:var(--bg);font-weight:900}
-.titlebar{margin:40px 0 24px}
-.eyebrow{color:var(--gold);font:800 11px/1.2 ui-monospace,monospace;letter-spacing:.18em;text-transform:uppercase}
-.titlebar h1{font-size:clamp(30px,4vw,48px);letter-spacing:-.03em;margin:12px 0}
-.titlebar p{color:var(--muted);max-width:660px;line-height:1.6}
-.search-bar{display:flex;gap:10px;margin-bottom:12px;flex-wrap:wrap}
-.search-bar input{flex:1;min-width:140px;background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:14px 18px;color:#fff;font-size:15px}
-.search-bar input:focus{outline:none;border-color:var(--gold)}
-.presets{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:24px}
-.preset{border:1px solid var(--line);border-radius:99px;padding:6px 12px;font:700 10px ui-monospace,monospace;color:var(--muted);cursor:pointer;background:none}
-.preset:hover{border-color:var(--gold);color:var(--gold)}
-.source-note{font:600 11px ui-monospace,monospace;color:var(--muted);margin-bottom:20px}
-.summary-row{display:flex;gap:16px;margin-bottom:24px;flex-wrap:wrap}
-.sumcard{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:16px 20px}
-.sumcard label{display:block;font:700 10px ui-monospace,monospace;color:var(--muted);letter-spacing:.08em;text-transform:uppercase;margin-bottom:4px}
-.sumcard .v{font-size:26px;font-weight:900}
-.pgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:12px}
-.pcard{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:14px}
-.pcard.high{border-color:var(--red)}
-.pcard.moderate{border-color:var(--gold)}
-.pcard h4{margin:0 0 6px;font-size:13px;color:#fff}
-.risk-tag{font:800 9px/1 ui-monospace,monospace;letter-spacing:.06em;padding:3px 7px;border-radius:99px;display:inline-block;margin-bottom:6px}
-.risk-tag.high{background:rgba(255,117,110,.18);color:var(--red)}
-.risk-tag.moderate{background:rgba(240,184,0,.18);color:var(--gold)}
-.risk-tag.low{background:rgba(97,223,160,.15);color:var(--green)}
-.pcard p{margin:0;color:var(--muted);font-size:12px;line-height:1.5}
-.err{color:var(--red);font-size:13px}
-.card.cta{background:linear-gradient(145deg,rgba(26,30,38,.96),rgba(16,18,24,.98));border:1px solid var(--gold);text-align:center;padding:32px;border-radius:14px;margin-top:28px}
-</style>
-</head>
-<body>
-<div class="shell">
-<header>
-<a class="brand" href="/"><span class="mark">WY</span><b>WEYLAND AI</b></a>
-<nav class="nav"><a href="/pricing/">PRICING</a><a href="/huntx/">HUNTX</a><a href="/compx/">COMPX</a></nav>
-</header>
-<section class="titlebar">
-<p class="eyebrow">WEATHER-DELAY IMPACT CALCULATOR</p>
-<h1>Know which days threaten your schedule.</h1>
-<p>Live 7-day forecast from the National Weather Service, classified into delay risk (precipitation odds, severe conditions, wind speed) for any US jobsite - real government forecast data, not a generic weather widget.</p>
-</section>
-<div class="search-bar"><input id="wx-lat" type="text" placeholder="Latitude, e.g. 29.7604"><input id="wx-lon" type="text" placeholder="Longitude, e.g. -95.3698"><button class="button primary" id="wx-search-btn">CHECK FORECAST</button></div>
-<div class="presets">
-<button class="preset" data-lat="29.7604" data-lon="-95.3698">Houston, TX</button>
-<button class="preset" data-lat="32.7767" data-lon="-96.7970">Dallas, TX</button>
-<button class="preset" data-lat="30.2672" data-lon="-97.7431">Austin, TX</button>
-<button class="preset" data-lat="34.0522" data-lon="-118.2437">Los Angeles, CA</button>
-<button class="preset" data-lat="33.4484" data-lon="-112.0740">Phoenix, AZ</button>
-</div>
-<div class="source-note" id="sourceNote">Enter jobsite coordinates or pick a preset market.</div>
-<div class="summary-row" id="summaryRow"></div>
-<div class="pgrid" id="pgrid"></div>
-<div class="card cta">
-<h3 style="margin-bottom:6px">WeatherX Pro</h3>
-<p style="color:var(--muted);margin:0 0 18px">$149/mo standalone, or included in select SubConP tiers - contact to activate.</p>
-<a class="button primary" href="mailto:hello@weylandai.com?subject=WeatherX%20activation">CONTACT TO ACTIVATE</a>
-</div>
-</div>
-<script>
-async function runCheck(){
-  const lat = document.getElementById('wx-lat').value.trim();
-  const lon = document.getElementById('wx-lon').value.trim();
-  if(!lat||!lon)return;
-  document.getElementById('sourceNote').textContent = 'Fetching live NWS forecast...';
-  document.getElementById('summaryRow').innerHTML='';
-  document.getElementById('pgrid').innerHTML='';
-  try {
-    const res = await fetch('/api/weatherx/delay-risk?lat='+encodeURIComponent(lat)+'&lon='+encodeURIComponent(lon));
-    const d = await res.json();
-    if(!res.ok){document.getElementById('sourceNote').innerHTML='<span class="err">'+(d.detail&&d.detail.message||'Failed')+'</span>';return}
-    document.getElementById('sourceNote').textContent='SOURCE: '+d.source+' - NWS office '+d.office+' - fetched '+new Date(d.fetched_at).toLocaleString();
-    document.getElementById('summaryRow').innerHTML =
-      '<div class="sumcard"><label>High-Risk Periods</label><div class="v" style="color:var(--red)">'+d.summary.high_risk_periods+'</div></div>'+
-      '<div class="sumcard"><label>Moderate-Risk Periods</label><div class="v" style="color:var(--gold)">'+d.summary.moderate_risk_periods+'</div></div>'+
-      '<div class="sumcard"><label>Total Forecast Periods</label><div class="v">'+d.summary.total_periods+'</div></div>';
-    document.getElementById('pgrid').innerHTML = d.periods.map(p=>
-      '<div class="pcard '+p.delay_risk+'"><h4>'+p.name+'</h4><span class="risk-tag '+p.delay_risk+'">'+p.delay_risk.toUpperCase()+' RISK</span>'+
-      '<p>'+p.short_forecast+'<br>'+p.temperature+p.temperature_unit+' &middot; '+(p.precipitation_probability_pct!==null?p.precipitation_probability_pct+'% precip':'')+' &middot; wind '+p.wind_speed+'</p></div>'
-    ).join('');
-  } catch(e) {
-    document.getElementById('sourceNote').innerHTML='<span class="err">Failed to load live data: '+e.message+'</span>';
-  }
-}
-document.getElementById('wx-search-btn').addEventListener('click', runCheck);
-document.querySelectorAll('.preset').forEach(btn=>btn.addEventListener('click',()=>{document.getElementById('wx-lat').value=btn.dataset.lat;document.getElementById('wx-lon').value=btn.dataset.lon;runCheck()}));
-</script>
-</body>
-</html>
-`, { headers: { "Content-Type": "text/html; charset=UTF-8", "Cache-Control": "public, max-age=60" } });
-  }
-  function serve_cutsheetx() {
-    return Response.redirect("https://weylandai.com/pricing", 302);
-  }
-  var map2 = {
-    "onboarding": serve_onboarding,
-    "huntx": serve_huntx,
-    "marketx": serve_marketx,
-    "pricex": serve_pricex,
-    "compx": serve_compx,
-    "weatherx": serve_weatherx,
-    "forecastx": serve_forecastx,
-    "geox": serve_geox,
-    "takeoffx": serve_takeoffx,
-    "subx": serve_subx,
-    "cutsheetx": serve_cutsheetx,
-    "propx": serve_propx,
-    "": serve_whyweyland,
-    "whyweyland": serve_whyweyland,
-    "venturedeck": serve_venturedeck,
-    "investors": serve_investors,
-    "lienx": serve_lienx,
-    "bidx": serve_bidx,
-    "coa": serve_coa,
-    "rfax": serve_rfax,
-    "changeordx": serve_changeordx,
-    "permitx": serve_permitx,
-    "closex": serve_closex,
-    "notesx": serve_notesx,
-    "inspecx": serve_inspecx,
-    "safetyx": serve_safetyx,
-    "survx": serve_survx,
-    "specx": serve_specx,
-    "drawx": serve_drawx,
-    "asbuiltx": serve_asbuiltx,
-    "leadx": serve_leadx,
-    "careers": serve_careers,
-    "progress": serve_progress,
-    "sightx": serve_sightx,
-    "meetingx": serve_meetingx,
-    "sightx/runtime-manifest.json": serve_sightx_runtime_manifest_json,
-    "sightx/runtime-manifest.schema.json": serve_sightx_runtime_manifest_schema_json,
-    "sightx/projects/glendale-camino-real/catalog.json": serve_sightx_projects_glendale_camino_real_catalog_json,
-    "qtext": serve_qtext,
-    "subscribe": serve_subscribe,
-    "financials": serve_financials,
-    "pricing": serve_pricing
-  };
-  return {
-    dispatch: function(pathname) {
-      var clean = pathname.toLowerCase().replace(/^\/|\/$/g, "");
-      if (clean === "deck") clean = "venturedeck";
-      if (clean === "index.html" || clean === "index") clean = "";
-      if (map2[clean]) return map2[clean]();
-      return null;
-    }
-  };
-})();
 var weyland_worker_default = {
   async fetch(request2, env2, ctx) {
     const url = new URL(request2.url);
