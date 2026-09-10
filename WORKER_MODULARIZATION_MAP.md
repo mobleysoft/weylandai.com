@@ -771,9 +771,19 @@ observable behavior change ever." Order:
       injected dep. sanitizeDisplayName had exactly 2 call sites, both
       inside this extraction - fully orphaned, so inlined locally and
       its dead original deleted from legacy-monolith.js.
+    - ✅ done (2026-09-10): `routes/install-device-auth.js` - 5 routes
+      (POST device-auth/init, GET device-auth/poll, POST
+      device-auth/approve, POST device-auth/deny, GET bundle.zip).
+      authenticate/callEdge reuse already-injected deps.
+      arrayBufferToHex had exactly 1 call site, inside this
+      extraction - fully orphaned, so inlined locally and its dead
+      original deleted. esbuild's cosmetic `__name(...)` wrapper
+      around the pickChar closure stripped (no global outside the
+      bundle, no behavioral effect) - caught by a real failing test
+      first, not a silent deviation.
     - Remaining in step 10: the `/api/me/bridge/*` + `/api/me/jobs`
-      cluster (5 routes) and the `/api/install/device-auth/*` +
-      `/bundle.zip` cluster (5 routes).
+      cluster (5 routes, non-contiguous - scattered around the
+      device-auth block just extracted).
 
 ### Additional tracked items (brainstormed 2026-09-10, not yet scheduled)
 
