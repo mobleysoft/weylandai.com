@@ -23,9 +23,10 @@
 // seams are exactly where the prototype and this codebase legitimately
 // differ:
 //   requireOperator(request, env) -> Response | null
-//       Who may read/approve/deny the queue. The prototype gates on
-//       X-Fleet-Key against env.FLEET_API_KEY; the caller decides what an
-//       operator is here.
+//       Who may read/approve/deny the queue. This edition gates on
+//       X-Operator-Key against its own env.ACCESS_QUEUE_OPERATOR_KEY (not
+//       reused from FLEET_API_KEY - see lib/operator-gate.js for why);
+//       the caller decides what an operator is here.
 //   invite(env, { email, name, role, operatorToken }) -> { ok, status, data }
 //       The identity provider's invite. The prototype calls its fleet auth
 //       worker; in this codebase identity is AuthFor's job (see

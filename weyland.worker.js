@@ -3001,7 +3001,7 @@ function registerAccessRequestRoutes(router2, {
 }
 
 // src/lib/operator-gate.js
-function fleetKeyEqual2(provided, expected) {
+function constantTimeEqual(provided, expected) {
   if (typeof provided !== "string" || typeof expected !== "string") return false;
   if (!provided.length || !expected.length) return false;
   const a = new TextEncoder().encode(provided);
@@ -3011,11 +3011,11 @@ function fleetKeyEqual2(provided, expected) {
   for (let i2 = 0; i2 < a.length; i2++) diff |= a[i2] ^ b[i2];
   return diff === 0;
 }
-function makeFleetKeyOperatorGate() {
+function makeOperatorGate() {
   return async function requireOperator(request2, env2) {
-    const provided = request2.headers.get("X-Fleet-Key");
-    if (provided && env2 && fleetKeyEqual2(provided, env2.FLEET_API_KEY)) return null;
-    return jsonResponse3({ success: false, error: { code: "AUTH_REQUIRED", message: "X-Fleet-Key required" } }, 401);
+    const provided = request2.headers.get("X-Operator-Key");
+    if (provided && env2 && constantTimeEqual(provided, env2.ACCESS_QUEUE_OPERATOR_KEY)) return null;
+    return jsonResponse3({ success: false, error: { code: "AUTH_REQUIRED", message: "X-Operator-Key required" } }, 401);
   };
 }
 
@@ -3064,7 +3064,7 @@ function registerExtractedModules(router2, deps) {
   });
   registerDemoTrialRoutes(router2);
   registerAccessRequestRoutes(router2, {
-    requireOperator: makeFleetKeyOperatorGate(),
+    requireOperator: makeOperatorGate(),
     invite: inviteViaAuthFor,
     ventureCode: "weyland"
   });

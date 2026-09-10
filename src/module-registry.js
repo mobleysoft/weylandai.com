@@ -21,7 +21,7 @@ import { registerProjectRoutes } from "./routes/projects.js";
 import { registerDemoTrialRoutes } from "./routes/demo-trial.js";
 import { registerHardwareScheduleExportRoutes } from "./routes/hardware-schedule-export.js";
 import { registerAccessRequestRoutes } from "./routes/access-requests.js";
-import { makeFleetKeyOperatorGate } from "./lib/operator-gate.js";
+import { makeOperatorGate } from "./lib/operator-gate.js";
 import { inviteViaAuthFor } from "./lib/authfor-invite.js";
 
 /**
@@ -38,7 +38,7 @@ export function registerExtractedModules(router, deps) {
   });
   registerDemoTrialRoutes(router);
   registerAccessRequestRoutes(router, {
-    requireOperator: makeFleetKeyOperatorGate(),
+    requireOperator: makeOperatorGate(),
     invite: inviteViaAuthFor,
     ventureCode: "weyland",
   });
