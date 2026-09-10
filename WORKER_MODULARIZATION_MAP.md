@@ -898,6 +898,22 @@ observable behavior change ever." Order:
       stripped for both.
     - **Step 15 complete**: both hunt routes extracted.
 
+16. **Step 16 (new, post-step-15 scan result, 2026-09-10): the
+    `/api/subscription/*` cluster.** A fresh scan after step 15 found
+    only 23 route registrations remain in the whole file -
+    `/api/subscription` is the last multi-route family (status,
+    portal - non-contiguous, separated by the webhooks/billing block
+    from step 13). Every other remaining route is now a standalone
+    single.
+    - ✅ done (2026-09-10): `routes/subscription.js` - both routes.
+      authenticate/errorResponse both reuse already-injected deps -
+      no new injections.
+    - **Step 16 complete**: both subscription routes extracted. All
+      remaining route registrations in legacy-monolith.js are now
+      standalone singles (no more multi-route clusters) - a fresh
+      scan before the next piece should re-check this before assuming
+      grouping opportunities exist.
+
 ### Additional tracked items (brainstormed 2026-09-10, not yet scheduled)
 
 Found while extracting steps 8-9; real, verified duplication/gaps, not
