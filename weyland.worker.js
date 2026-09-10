@@ -16504,6 +16504,52 @@ function registerSessionsAssembleRoutes(router2, { authenticate: authenticate2, 
   });
 }
 
+// src/routes/sessions-recent.js
+function registerSessionsRecentRoutes(router2, { authenticate: authenticate2 }) {
+  router2.get("/api/sessions/recent", async (request2, env2) => {
+    const { error: error4, user } = await authenticate2(request2, env2);
+    if (error4)
+      return error4;
+    try {
+      const url = new URL(request2.url);
+      const limit = Math.min(parseInt(url.searchParams.get("limit") || "50"), 50);
+      const userId = user.userId || user.id;
+      console.log("[Sessions] Fetching recent sessions for user:", userId);
+      const result = await env2.DB.prepare(`
+        SELECT
+          s.id,
+          s.project_name,
+          s.filename,
+          s.total_pages,
+          s.pages_processed,
+          s.pages_approved,
+          s.status,
+          s.total_sets_extracted,
+          s.total_components_extracted,
+          s.project_id,
+          s.created_at,
+          s.updated_at,
+          (SELECT COUNT(*) FROM hardware_page_extractions WHERE session_id = s.id) as extracted_count
+        FROM hardware_extraction_sessions s
+        WHERE s.user_id = ?
+        ORDER BY s.updated_at DESC
+        LIMIT ?
+      `).bind(userId, limit).all();
+      return jsonResponse3({
+        success: true,
+        count: result.results.length,
+        sessions: result.results.map((s) => ({
+          ...s,
+          progress_percent: s.total_pages > 0 ? Math.round(s.pages_processed / s.total_pages * 100) : 0
+        }))
+      }, 200);
+    } catch (error5) {
+      console.error("[Sessions] Recent query failed:", error5);
+      return jsonResponse3({ error: "Failed to retrieve recent sessions", details: error5.message }, 500);
+    }
+  });
+}
+
 // src/module-registry.js
 function registerExtractedModules(router2, deps) {
   registerHardwareScheduleExportRoutes(router2);
@@ -16659,6 +16705,7 @@ function registerExtractedModules(router2, deps) {
     StandardFonts: deps.StandardFonts,
     rgb: deps.rgb
   });
+  registerSessionsRecentRoutes(router2, { authenticate });
 }
 
 // src/lib/cors.js
@@ -166400,48 +166447,6 @@ router.get("/api/telemetry/claude-api/recent", async (request2, env2) => {
   } catch (error5) {
     console.error("[Telemetry] Claude API query failed:", error5);
     return jsonResponse3({ error: "Failed to retrieve Claude API logs", details: error5.message }, 500);
-  }
-});
-router.get("/api/sessions/recent", async (request2, env2) => {
-  const { error: error4, user } = await authenticate(request2, env2);
-  if (error4)
-    return error4;
-  try {
-    const url = new URL(request2.url);
-    const limit = Math.min(parseInt(url.searchParams.get("limit") || "50"), 50);
-    const userId = user.userId || user.id;
-    console.log("[Sessions] Fetching recent sessions for user:", userId);
-    const result = await env2.DB.prepare(`
-      SELECT
-        s.id,
-        s.project_name,
-        s.filename,
-        s.total_pages,
-        s.pages_processed,
-        s.pages_approved,
-        s.status,
-        s.total_sets_extracted,
-        s.total_components_extracted,
-        s.project_id,
-        s.created_at,
-        s.updated_at,
-        (SELECT COUNT(*) FROM hardware_page_extractions WHERE session_id = s.id) as extracted_count
-      FROM hardware_extraction_sessions s
-      WHERE s.user_id = ?
-      ORDER BY s.updated_at DESC
-      LIMIT ?
-    `).bind(userId, limit).all();
-    return jsonResponse3({
-      success: true,
-      count: result.results.length,
-      sessions: result.results.map((s) => ({
-        ...s,
-        progress_percent: s.total_pages > 0 ? Math.round(s.pages_processed / s.total_pages * 100) : 0
-      }))
-    }, 200);
-  } catch (error5) {
-    console.error("[Sessions] Recent query failed:", error5);
-    return jsonResponse3({ error: "Failed to retrieve recent sessions", details: error5.message }, 500);
   }
 });
 function generateSubmittalHTML(submittal) {

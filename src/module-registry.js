@@ -68,6 +68,7 @@ import { registerSessionsListRoutes } from "./routes/sessions-list.js";
 import { registerSessionsDetailRoutes } from "./routes/sessions-detail.js";
 import { registerSessionsCutSheetsRoutes } from "./routes/sessions-cutsheets.js";
 import { registerSessionsAssembleRoutes } from "./routes/sessions-assemble.js";
+import { registerSessionsRecentRoutes } from "./routes/sessions-recent.js";
 import { authenticate, authenticateCps, requireActiveSubscription, requireProductAccess } from "./lib/auth.js";
 
 /**
@@ -288,4 +289,5 @@ export function registerExtractedModules(router, deps) {
     StandardFonts: deps.StandardFonts,
     rgb: deps.rgb,
   });
+  registerSessionsRecentRoutes(router, { authenticate });
 }
