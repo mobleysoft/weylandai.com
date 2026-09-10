@@ -14,6 +14,16 @@ live `curl` verification against production, then a precise git commit
 listing only the touched files. One piece at a time, smallest/lowest-
 risk first, most-tangled/highest-consequence last.
 
+**Status (2026-09-10): all 10 originally-numbered clusters in section 1
+are done.** `legacy-monolith.js` went from 147,992 lines at the start of
+this phase to 136,634. This is not the end of real extractable content -
+section 2's dead-code register and section 3's vendored-library
+follow-up are still open, and step 8's own writeup found a wholly
+separate, never-catalogued second Claude-vision-adapter region
+(`EXTRACTION_PROMPT_TEMPLATE`/`viaApiDirect`/etc., ~825 lines) that no
+step here has touched. Real remaining work, not yet numbered into this
+section's ordered list.
+
 ## 0. Orientation — the file is NOT 148K lines of app code
 
 A cataloguing pass (2026-09-10, recorded in full at
@@ -553,7 +563,63 @@ cluster *names* and *relationships* are the durable part.
     inline here, not via the normal `NativeRouter` pipeline (CORS
     wrapping would break the upgrade handshake) - a second, parallel
     auth-enforcement path worth remembering in any future auth work.
-    - Status: not started.
+    - Status: done (Phase 2b step 10, closing out Phase 2b's clusters 1-10).
+      Extracted `weyland_worker_default` + `SightXRoom` **and** the
+      previously-deferred `monolith` dispatcher object together, into
+      `src/lib/weyland-entry.js` (319 lines, 19 real-behavior tests).
+      `monolith` was deferred back in step 7 (Cluster I) specifically
+      pending this step, since `weyland_worker_default.fetch` is
+      `monolith`'s only caller - extracting them separately would have
+      meant threading `monolith` through an awkward intermediate DI
+      layer for no reason.
+      - **Real dependency-injection design, not a plain import**:
+        `monolith` needs `router` (the live `NativeRouter` instance,
+        populated by 2 registration calls still in `legacy-monolith.js`)
+        and `discoveryEngine` (`discovery_engine_default`, left inline
+        by Cluster E since it touches the vendored `@cloudflare/puppeteer`
+        bundle directly) - neither can be a static ES import, since
+        both are live instances built imperatively at
+        `legacy-monolith.js`'s module-scope, not pure values. Exported
+        `createMonolith({ router, discoveryEngine })` and
+        `createWeylandWorker({ monolith })` as factory functions instead;
+        `legacy-monolith.js` now reads `const monolith =
+        createMonolith({ router, discoveryEngine: discovery_engine_default
+        }); const weyland_worker_default = createWeylandWorker({ monolith
+        });` right before its `export` statement - same live-binding
+        correctness as the original, just as a constructor call instead
+        of an object literal.
+      - **Two real, pre-existing findings, preserved as-is (not
+        introduced by this extraction, not silently fixed)**: (1)
+        `monolith.fetch`'s session gate (`publicPaths` includes `"/"`,
+        checked via `pathname.startsWith(p)`) is dead code - every path
+        starts with `/`, so `isPublic` is `true` unconditionally and the
+        302-redirect-to-login branch beneath it can never fire; (2)
+        confirmed via `src/worker-entry.js`'s own header comment that
+        `monolith.scheduled`/`monolith.queue` (the cron cleanup and
+        cut-sheet-discovery queue consumer) are never actually wired to
+        the Workers runtime - only `fetch` is exported, and
+        `wrangler.toml` has no `[triggers.crons]` or queue-consumer
+        config at all. Real, unwired capability; not something this
+        phase introduced or is positioned to fix.
+      - The `BLUEPRINT_*`/`renderBlueprintHeader` design-system block
+        (~100 lines, sits between `monolith` and `weyland_worker_default`
+        in the file) was deliberately left inline - confirmed via grep
+        that nothing calls `renderBlueprintHeader` anywhere in the file
+        (its own comment says "not yet wired into any monolith-served
+        page"); moving genuinely-dead-for-now code added no value here.
+      - `legacy-monolith.js`: 136,945 → 136,634 lines.
+      - Live-verified via `GET /` and `/api/health` (200), a real
+        `http://` → `https://` upgrade (301) confirming the top-level
+        protocol check still runs first, `/huntx/` (200, via
+        `SovereignWeylandRoutes`), `https://huntx.weylandai.com/` → a
+        real 301 to `https://weylandai.com/huntx` (the legacy-subdomain
+        redirect), `GET /api/sessions/readiness/list` (200, real
+        `router.handle` dispatch through `monolith.fetch`), and `GET
+        /api/debug/r2` returning its own structured `{ok:false,
+        error:"...reading 'list'"}` - confirmed this matches
+        `wrangler deploy`'s own binding list, which has no `ASSETS`
+        binding configured; pre-existing, not something this extraction
+        broke.
 
 ## 2. Duplicate/dead-code register (found during cataloguing, not yet fixed)
 
