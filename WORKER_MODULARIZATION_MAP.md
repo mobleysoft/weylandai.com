@@ -781,9 +781,30 @@ observable behavior change ever." Order:
       around the pickChar closure stripped (no global outside the
       bundle, no behavioral effect) - caught by a real failing test
       first, not a silent deviation.
-    - Remaining in step 10: the `/api/me/bridge/*` + `/api/me/jobs`
-      cluster (5 routes, non-contiguous - scattered around the
-      device-auth block just extracted).
+    - ✅ done (2026-09-10): `routes/me-bridge.js` - 5 routes (GET
+      bridge/status, POST bridge/token, GET me/jobs, GET
+      bridge/launcher.ps1, GET bridge/launcher.sh), non-contiguous -
+      interleaved with /api/jobs/:jobId and /api/test/sabp-marker-xyz
+      which stay in the monolith. authenticate/callEdge reuse
+      already-injected deps. HASCOM_EDGE (real top-level string
+      constant, 1 other call site remaining inside callEdge) newly
+      promoted to an injected dep. Real behavior difference caught by
+      tests: bridge/status falls back to userId when mhsId is absent;
+      bridge/token and me/jobs do not.
+    - **Step 10 complete**: all 13 auth/me/install device-bridge
+      routes extracted.
+
+11. **Step 11 (new, post-step-10 scan result, 2026-09-10): the
+    `/api/telemetry/*` cluster.** A fresh full-file route-prefix scan
+    after step 10 found only 42 `router.*` route registrations remain
+    in the whole file (down from far more at the start of this
+    session's work) - `/api/telemetry` is now the largest remaining
+    family at 5 routes, fully contiguous (POST telemetry, GET
+    telemetry/recent, GET telemetry/errors, POST telemetry/claude-api,
+    GET telemetry/claude-api/recent), immediately followed by the
+    still-inline `generateSubmittalHTML` function (not part of this
+    extraction).
+    - Not yet started.
 
 ### Additional tracked items (brainstormed 2026-09-10, not yet scheduled)
 
