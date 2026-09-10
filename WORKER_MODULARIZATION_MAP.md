@@ -614,15 +614,24 @@ observable behavior change ever." Order:
      confidence_threshold, PATCH mark/:markId/resolve-hardware).
      authenticate the only injected dep - fully self-contained
      otherwise.
+   - ✅ done (2026-09-10): `routes/cut-sheet-intelligence.js` - 6 routes
+     (GET/PUT intelligence/metrics+config, GET/POST domains,
+     POST domains/:domainId/verify). authenticate injected as usual;
+     getDiscoveryConfig and getManufacturerDomains stay injected (real
+     call sites remain elsewhere still-inline: the cron handler and
+     submitManualDiscovery respectively); getDiscoveryMetrics,
+     updateDiscoveryConfig, addManufacturerDomain, and
+     verifyManufacturerDomain inlined locally (single call site each),
+     orphaned originals deleted.
    - Still inline: everything else - the rest of the CPS/cut-sheet route
-     surface (~11 more `/api/cut-sheets/*` and `/api/cps/*` routes alone
-     per the last full scan - the pdf-lib-dependent render route,
-     discoveries, domains/verify, intelligence metrics/config,
-     catalogue-products/documents/bulk-import, cut-sheet-discovery,
-     session-assembly, and more per §5's original proposed layout -
-     re-read that section and re-run a full route scan before picking
-     individual pieces, since none of its line numbers are current
-     anymore).
+     surface (a much larger remaining set than earlier estimates
+     suggested - a fresh scan turned up `/api/cut-sheets/queue`,
+     `queue/batch`, `discoveries` (list/pending/:id/manual/approve/
+     reject), `verified`, `local-search`, `local-index`, plus the whole
+     `/api/catalogue/products*` and `/api/catalogue/documents*` CRUD
+     families and `catalogue/bulk-import` - the pdf-lib-dependent render
+     route also still inline. Re-run a full route scan before picking
+     the next piece; line numbers everywhere in §5 are stale.).
 
 For every step, "verified behaviorally identical" concretely means: run the
 extracted module inline via `wrangler dev` against a copy of the worker with
