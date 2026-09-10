@@ -56,6 +56,7 @@ import { registerCpsMappingsRoutes } from "./routes/cps-mappings.js";
 import { registerUserCutsheetsRoutes } from "./routes/user-cutsheets.js";
 import { registerCpsQueueRoutes } from "./routes/cps-queue.js";
 import { registerCpsAdminRoutes } from "./routes/cps-admin.js";
+import { registerDoorScheduleMarksRoutes } from "./routes/door-schedule-marks.js";
 import { authenticate, authenticateCps, requireActiveSubscription, requireProductAccess } from "./lib/auth.js";
 
 /**
@@ -228,4 +229,5 @@ export function registerExtractedModules(router, deps) {
   registerUserCutsheetsRoutes(router, { authenticate });
   registerCpsQueueRoutes(router, { authenticate });
   registerCpsAdminRoutes(router, { authenticate });
+  registerDoorScheduleMarksRoutes(router, { authenticate });
 }
