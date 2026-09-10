@@ -1018,7 +1018,16 @@ observable behavior change ever." Order:
     - **Step 23 complete**. Only 2 route registrations remain in the
       whole file: `/app.js` and `/` (root).
 
-### Additional tracked items (brainstormed 2026-09-10, not yet scheduled)
+24. **Step 24 (new, post-step-23, 2026-09-10): `/app.js`.**
+    - ✅ done (2026-09-10): `routes/app-js.js` - GET /app.js (615
+      lines, the client-side application JavaScript served as text).
+      Zero injected deps - confirmed zero `${}` interpolations before
+      extraction (pure static content). Tests include a real
+      `new Function(text)` syntax-validity check on the served script,
+      not just substring matching.
+    - **Step 24 complete**. Only 1 route registration remains in the
+      whole file: `/` (root) - the last piece of the modularization
+      pass.
 
 Found while extracting steps 8-9; real, verified duplication/gaps, not
 speculative:
