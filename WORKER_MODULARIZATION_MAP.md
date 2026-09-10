@@ -533,8 +533,14 @@ observable behavior change ever." Order:
      here; this file's matching approach (simple substring match against
      a small array) is genuinely distinct from lib/pricing.js's tokenized
      D1-catalogue matcher, not the same logic twice.
-   - Still inline: everything else - the full CPS/cut-sheet route
-     surface (cut-sheets/match+batch-match, cps-enrich family,
+   - ✅ done (2026-09-10): `routes/cut-sheet-match.js` - cut-sheets/match
+     + cut-sheets/batch-match (2 routes), thin wrappers around
+     lib/product-database.js's matchComponentToCutSheets. No injected
+     deps beyond authenticate/requireProductAccess (accepted as deps for
+     testability, matching every other module's convention, even though
+     both are always the same top-level lib/auth.js import in practice).
+   - Still inline: everything else - the rest of the CPS/cut-sheet route
+     surface (cps-enrich family,
      catalogue-products/documents/bulk-import, cut-sheet-discovery,
      cps-search/drafts/mappings/queue-admin, user-cutsheets,
      door-schedule-marks, session-assembly, and more per §5's original
