@@ -1029,6 +1029,31 @@ observable behavior change ever." Order:
       whole file: `/` (root) - the last piece of the modularization
       pass.
 
+25. **Step 25 (2026-09-10): `/` (root) + `/api/demo`.**
+    - ✅ done: `routes/root.js` - GET / (94 lines, JSON API-discovery
+      document). WORKER_VERSION reuses the established dep. **Real
+      finding, not a regression**: monolith.fetch() (untouched by
+      this extraction) has its own earlier static-asset-serving block
+      using the real `env2.ASSETS` binding that intercepts GET / with
+      index.html *before* router.handle() is ever called - this route
+      was already shadowed/unreachable in normal operation before
+      this extraction, confirmed via code inspection. It remains a
+      real fallback if the ASSETS lookup ever fails.
+    - ✅ done: `routes/demo.js` - POST /api/demo (22 lines). Missed in
+      the same-day scan that found root.js "the final piece" - caught
+      immediately by re-running the route-count grep after that
+      commit and finding 1, not 0.
+    - **🏁 Step 25 complete - route-extraction effort finished.**
+      `grep -c 'router\.(get|post|put|delete|patch|addRoute|options)('
+      src/legacy-monolith.js` returns **0**. Every route this worker
+      serves now lives in its own `src/routes/*.js` module, wired
+      through the single `src/module-registry.js`. This closes out
+      the entire route-extraction pass this map document has tracked
+      since step 1. legacy-monolith.js still contains substantial
+      non-route code (helper functions, the top-level fetch handler,
+      static-asset serving, etc. per §2/§5) - that is out of scope for
+      this pass and untouched.
+
 Found while extracting steps 8-9; real, verified duplication/gaps, not
 speculative:
 
