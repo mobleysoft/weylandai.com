@@ -570,16 +570,23 @@ observable behavior change ever." Order:
      lazy-delete), DELETE cps/drafts/:componentId, GET cps/drafts (list
      live, non-expired drafts). 4 routes, authenticate is the only
      injected dep.
+   - ✅ done (2026-09-10): `routes/cps-mappings.js` - GET mappings (list
+     w/ catalogue_id+status filters and pagination), POST mappings
+     (create, auto-queues low-confidence matches for affirmation), PUT
+     mappings/:id/affirm (affirms an existing mapping or creates+affirms
+     a new one), PUT mappings/:id/reject (rejects, logs, clears any
+     related draft), POST mappings/affirm-batch (bulk-affirms up to 30
+     pages for a component, clears its draft). 5 routes, authenticate is
+     the only injected dep.
    - Still inline: everything else - the rest of the CPS/cut-sheet route
-     surface (~24 more `/api/cut-sheets/*` and `/api/cps/*` routes alone
-     per the last full scan - mappings, queue/extractions/render,
-     discoveries, domains/verify, intelligence metrics/config, admin
-     normalize, catalogue-products/documents/bulk-import,
-     cut-sheet-discovery, user-cutsheets, door-schedule-marks,
-     session-assembly, and more per §5's original proposed layout -
-     re-read that section and re-run a full route scan before picking
-     individual pieces, since none of its line numbers are current
-     anymore).
+     surface (~19 more `/api/cut-sheets/*` and `/api/cps/*` routes alone
+     per the last full scan - queue/extractions/render, discoveries,
+     domains/verify, intelligence metrics/config, admin normalize,
+     catalogue-products/documents/bulk-import, cut-sheet-discovery,
+     user-cutsheets, door-schedule-marks, session-assembly, and more per
+     §5's original proposed layout - re-read that section and re-run a
+     full route scan before picking individual pieces, since none of its
+     line numbers are current anymore).
 
 For every step, "verified behaviorally identical" concretely means: run the
 extracted module inline via `wrangler dev` against a copy of the worker with
