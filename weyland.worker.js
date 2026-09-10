@@ -12383,6 +12383,79 @@ function registerCpsImportPricesRoutes(router2, { authenticateCps: authenticateC
   });
 }
 
+// src/routes/cut-sheet-documents.js
+function registerCutSheetDocumentsRoutes(router2, { authenticate: authenticate2, requireProductAccess: requireProductAccess2 }) {
+  router2.get("/api/cut-sheets/documents/:docId", async (request2, env2) => {
+    const { error: error4, user } = await authenticate2(request2, env2);
+    if (error4)
+      return error4;
+    {
+      const _prodErr = await requireProductAccess2(user, env2, "cutsheetx");
+      if (_prodErr) return _prodErr;
+    }
+    try {
+      const docId = request2.params.docId;
+      const doc = await env2.DB.prepare(`
+      SELECT id, product_id, document_type, document_title, file_name,
+             r2_object_key, r2_bucket, file_size_bytes, page_count,
+             source_url, source_domain, verified, verified_by, verified_at,
+             created_at, updated_at
+      FROM product_documents
+      WHERE id = ?
+    `).bind(docId).first();
+      if (!doc) {
+        return jsonResponse3({ error: "Document not found" }, 404);
+      }
+      return jsonResponse3(doc);
+    } catch (error5) {
+      console.error("[Cut Sheet Document] Error:", error5);
+      return jsonResponse3({ error: "Failed to retrieve document: " + error5.message }, 500);
+    }
+  });
+  router2.get("/api/cut-sheets/download/:docId", async (request2, env2) => {
+    const { error: error4, user } = await authenticate2(request2, env2);
+    if (error4)
+      return error4;
+    {
+      const _prodErr = await requireProductAccess2(user, env2, "cutsheetx");
+      if (_prodErr) return _prodErr;
+    }
+    try {
+      const docId = request2.params.docId;
+      const doc = await env2.DB.prepare(`
+      SELECT id, product_id, document_title, r2_object_key, r2_bucket
+      FROM product_documents
+      WHERE id = ?
+    `).bind(docId).first();
+      if (!doc) {
+        return jsonResponse3({ error: "Document not found" }, 404);
+      }
+      const bucket = doc.r2_bucket === "product-docs" ? env2.OUTPUTS : env2.UPLOADS;
+      const object = await bucket.get(doc.r2_object_key);
+      if (!object) {
+        return jsonResponse3({
+          error: "Document file not found in storage",
+          r2Key: doc.r2_object_key,
+          available: false
+        }, 404);
+      }
+      return new Response(object.body, {
+        headers: {
+          "Content-Type": "application/pdf",
+          "Content-Disposition": `inline; filename="${doc.document_title || "cut_sheet"}.pdf"`,
+          "Cache-Control": "private, max-age=3600"
+        }
+      });
+    } catch (error5) {
+      console.error("[Cut Sheet Download] Error:", error5);
+      return jsonResponse3({
+        error: "Failed to retrieve document",
+        details: error5.message
+      }, 500);
+    }
+  });
+}
+
 // src/module-registry.js
 function registerExtractedModules(router2, deps) {
   registerHardwareScheduleExportRoutes(router2);
@@ -12493,6 +12566,7 @@ function registerExtractedModules(router2, deps) {
   });
   registerCutSheetMatchRoutes(router2, { authenticate, requireProductAccess });
   registerCpsImportPricesRoutes(router2, { authenticateCps });
+  registerCutSheetDocumentsRoutes(router2, { authenticate, requireProductAccess });
 }
 
 // src/lib/cors.js
@@ -162613,75 +162687,6 @@ async function materializeDseToLineItems2(sessionId, env2) {
   return { doorsCreated, framesCreated, totalMarks: entries.length };
 }
 __name(materializeDseToLineItems2, "materializeDseToLineItems");
-router.get("/api/cut-sheets/documents/:docId", async (request2, env2) => {
-  const { error: error4, user } = await authenticate(request2, env2);
-  if (error4)
-    return error4;
-  {
-    const _prodErr = await requireProductAccess(user, env2, "cutsheetx");
-    if (_prodErr) return _prodErr;
-  }
-  try {
-    const docId = request2.params.docId;
-    const doc = await env2.DB.prepare(`
-      SELECT id, product_id, document_type, document_title, file_name,
-             r2_object_key, r2_bucket, file_size_bytes, page_count,
-             source_url, source_domain, verified, verified_by, verified_at,
-             created_at, updated_at
-      FROM product_documents
-      WHERE id = ?
-    `).bind(docId).first();
-    if (!doc) {
-      return jsonResponse3({ error: "Document not found" }, 404);
-    }
-    return jsonResponse3(doc);
-  } catch (error5) {
-    console.error("[Cut Sheet Document] Error:", error5);
-    return jsonResponse3({ error: "Failed to retrieve document: " + error5.message }, 500);
-  }
-});
-router.get("/api/cut-sheets/download/:docId", async (request2, env2) => {
-  const { error: error4, user } = await authenticate(request2, env2);
-  if (error4)
-    return error4;
-  {
-    const _prodErr = await requireProductAccess(user, env2, "cutsheetx");
-    if (_prodErr) return _prodErr;
-  }
-  try {
-    const docId = request2.params.docId;
-    const doc = await env2.DB.prepare(`
-      SELECT id, product_id, document_title, r2_object_key, r2_bucket
-      FROM product_documents
-      WHERE id = ?
-    `).bind(docId).first();
-    if (!doc) {
-      return jsonResponse3({ error: "Document not found" }, 404);
-    }
-    const bucket = doc.r2_bucket === "product-docs" ? env2.OUTPUTS : env2.UPLOADS;
-    const object = await bucket.get(doc.r2_object_key);
-    if (!object) {
-      return jsonResponse3({
-        error: "Document file not found in storage",
-        r2Key: doc.r2_object_key,
-        available: false
-      }, 404);
-    }
-    return new Response(object.body, {
-      headers: {
-        "Content-Type": "application/pdf",
-        "Content-Disposition": `inline; filename="${doc.document_title || "cut_sheet"}.pdf"`,
-        "Cache-Control": "private, max-age=3600"
-      }
-    });
-  } catch (error5) {
-    console.error("[Cut Sheet Download] Error:", error5);
-    return jsonResponse3({
-      error: "Failed to retrieve document",
-      details: error5.message
-    }, 500);
-  }
-});
 router.post("/api/submittal/validate", async (request2, env2) => {
   const { error: error4, user } = await authenticate(request2, env2);
   if (error4)
