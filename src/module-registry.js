@@ -51,6 +51,7 @@ import { registerCpsImportPricesRoutes } from "./routes/cps-import-prices.js";
 import { registerCutSheetDocumentsRoutes } from "./routes/cut-sheet-documents.js";
 import { registerCpsCataloguesRoutes } from "./routes/cps-catalogues.js";
 import { registerCpsSearchRoutes } from "./routes/cps-search.js";
+import { registerCpsDraftsRoutes } from "./routes/cps-drafts.js";
 import { authenticate, authenticateCps, requireActiveSubscription, requireProductAccess } from "./lib/auth.js";
 
 /**
@@ -218,4 +219,5 @@ export function registerExtractedModules(router, deps) {
   registerCutSheetDocumentsRoutes(router, { authenticate, requireProductAccess });
   registerCpsCataloguesRoutes(router, { authenticate });
   registerCpsSearchRoutes(router, { authenticate });
+  registerCpsDraftsRoutes(router, { authenticate });
 }
