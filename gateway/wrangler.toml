@@ -1,0 +1,18 @@
+name = "weyland-gateway-worker"
+main = "src/index.js"
+compatibility_date = "2025-10-31"
+compatibility_flags = ["nodejs_compat"]
+
+# Phase 1 of WEYLAND_SUCCESSOR_ARCHITECTURE.md: the real front door,
+# starting as a pure passthrough to the existing monolith worker via a
+# same-account Service Binding (same zero-network-hop pattern already
+# used for OCR_SERVICE/VENDYAI/MASCOM_EDGE in the root wrangler.toml).
+# Zero behavior change today - every module peeled out of the monolith
+# (per WORKER_MODULARIZATION_MAP.md's extraction order) gets its own
+# binding added here and its own routes carved out of the fallback,
+# one at a time, each independently verified. Not yet bound to the real
+# weylandai.com domain route - deploys to its own workers.dev URL only
+# until proven identical to hitting the monolith directly.
+[[services]]
+binding = "ORIGIN"
+service = "weylandai-com-worker"
