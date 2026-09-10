@@ -604,15 +604,25 @@ observable behavior change ever." Order:
      2 routes, authenticate the only injected dep; normalizeSearchText
      inlined locally (its one real call site was here) and its orphaned
      original definition deleted.
+   - ✅ done (2026-09-10): `routes/door-schedule-marks.js` - 7 routes
+     (GET session/:sessionId/marks w/ filters+summary, PATCH
+     mark/:markId/affirm w/ duplicate-MARK guard, PATCH
+     mark/:markId/reject w/ validated reason enum, DELETE mark/:markId
+     w/ session-ownership check, PATCH mark/:markId/correct w/
+     allowlisted fields + original-value tracking, POST
+     session/:sessionId/marks/batch-affirm by mark_ids or
+     confidence_threshold, PATCH mark/:markId/resolve-hardware).
+     authenticate the only injected dep - fully self-contained
+     otherwise.
    - Still inline: everything else - the rest of the CPS/cut-sheet route
      surface (~11 more `/api/cut-sheets/*` and `/api/cps/*` routes alone
      per the last full scan - the pdf-lib-dependent render route,
      discoveries, domains/verify, intelligence metrics/config,
      catalogue-products/documents/bulk-import, cut-sheet-discovery,
-     door-schedule-marks, session-assembly, and more per §5's original
-     proposed layout - re-read that section and re-run a full route
-     scan before picking individual pieces, since none of its line
-     numbers are current anymore).
+     session-assembly, and more per §5's original proposed layout -
+     re-read that section and re-run a full route scan before picking
+     individual pieces, since none of its line numbers are current
+     anymore).
 
 For every step, "verified behaviorally identical" concretely means: run the
 extracted module inline via `wrangler dev` against a copy of the worker with
