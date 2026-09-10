@@ -34,6 +34,7 @@ import { detectAndPersistRegionConflicts } from "./lib/region-conflicts.js";
 import { checkRateLimit } from "./rate-limit.js";
 import { enrichComponent, matchComponentToCutSheets } from "./lib/product-database.js";
 import { ErrorCodes, classifyError, createErrorResponse, jsonErrorResponse, ErrorMetrics, performHealthCheck } from "./error-utilities.js";
+import { WORKER_VERSION, detectFileType, ERROR_CODES, errorResponse, generateId3, CLAUDE_PRICING, calculateClaudeCost, logClaudeAPICall, logTelemetryEvent, incrementSubmittalsUsed, HASCOM_EDGE, mintInternalToken, callEdge } from "./lib/edge-telemetry.js";
 var __create = Object.create;
 var __defProp = Object.defineProperty;
 var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
@@ -142432,163 +142433,10 @@ var D1KVShim = class {
 __name(D1KVShim, "D1KVShim");
 
 // weyland-worker.js
-var WORKER_VERSION = "2.10.0";
 var router = new NativeRouter();
 router.all("*", (request2, env2) => {
   return createCorsHandler(env2).preflight(request2);
 });
-function detectFileType(buffer) {
-  const bytes = new Uint8Array(buffer.slice(0, 12));
-  if (bytes[0] === 37 && bytes[1] === 80 && bytes[2] === 68 && bytes[3] === 70) {
-    return { type: "pdf", mimeType: "application/pdf", extension: "pdf" };
-  }
-  if (bytes[0] === 137 && bytes[1] === 80 && bytes[2] === 78 && bytes[3] === 71) {
-    return { type: "image", mimeType: "image/png", extension: "png" };
-  }
-  if (bytes[0] === 255 && bytes[1] === 216 && bytes[2] === 255) {
-    return { type: "image", mimeType: "image/jpeg", extension: "jpg" };
-  }
-  if (bytes[0] === 82 && bytes[1] === 73 && bytes[2] === 70 && bytes[3] === 70 && bytes[8] === 87 && bytes[9] === 69 && bytes[10] === 66 && bytes[11] === 80) {
-    return { type: "image", mimeType: "image/webp", extension: "webp" };
-  }
-  if (bytes[0] === 71 && bytes[1] === 73 && bytes[2] === 70 && bytes[3] === 56) {
-    return { type: "image", mimeType: "image/gif", extension: "gif" };
-  }
-  return { type: "unknown", mimeType: null, extension: null };
-}
-__name(detectFileType, "detectFileType");
-var ERROR_CODES = {
-  // Authentication (4xx)
-  AUTH_REQUIRED: { code: "AUTH_REQUIRED", status: 401, message: "Authentication required" },
-  AUTH_EXPIRED: { code: "AUTH_EXPIRED", status: 401, message: "Authentication token expired" },
-  AUTH_INVALID: { code: "AUTH_INVALID", status: 401, message: "Invalid authentication credentials" },
-  FORBIDDEN: { code: "FORBIDDEN", status: 403, message: "Access denied" },
-  // Validation (400)
-  VALIDATION_ERROR: { code: "VALIDATION_ERROR", status: 400, message: "Invalid input" },
-  MISSING_FIELD: { code: "MISSING_FIELD", status: 400, message: "Required field missing" },
-  INVALID_FORMAT: { code: "INVALID_FORMAT", status: 400, message: "Invalid format" },
-  // Resources (4xx)
-  NOT_FOUND: { code: "NOT_FOUND", status: 404, message: "Resource not found" },
-  CONFLICT: { code: "CONFLICT", status: 409, message: "Resource conflict" },
-  RATE_LIMITED: { code: "RATE_LIMITED", status: 429, message: "Too many requests" },
-  // Server errors (5xx)
-  INTERNAL_ERROR: { code: "INTERNAL_ERROR", status: 500, message: "Internal server error" },
-  DATABASE_ERROR: { code: "DATABASE_ERROR", status: 500, message: "Database operation failed" },
-  EXTERNAL_API_ERROR: { code: "EXTERNAL_API_ERROR", status: 502, message: "External service error" },
-  TIMEOUT: { code: "TIMEOUT", status: 504, message: "Request timeout" },
-  // Domain-specific
-  EXTRACTION_FAILED: { code: "EXTRACTION_FAILED", status: 500, message: "Hardware extraction failed" },
-  UPLOAD_FAILED: { code: "UPLOAD_FAILED", status: 500, message: "File upload failed" },
-  PDF_INVALID: { code: "PDF_INVALID", status: 400, message: "Invalid PDF file" }
-};
-function errorResponse(codeOrError, customMessage = null, details = null) {
-  const errorDef = typeof codeOrError === "string" ? ERROR_CODES[codeOrError] || ERROR_CODES.INTERNAL_ERROR : codeOrError;
-  const response = {
-    success: false,
-    error: {
-      code: errorDef.code,
-      message: customMessage || errorDef.message
-    },
-    timestamp: (/* @__PURE__ */ new Date()).toISOString()
-  };
-  if (details && typeof ENVIRONMENT !== "undefined" && ENVIRONMENT !== "production") {
-    response.error.details = details;
-  }
-  return jsonResponse3(response, errorDef.status);
-}
-__name(errorResponse, "errorResponse");
-function generateId3(prefix) {
-  return `${prefix}_${Date.now()}_${Math.random().toString(36).substring(2, 11)}`;
-}
-__name(generateId3, "generateId");
-var CLAUDE_PRICING = {
-  "claude-3-sonnet-20240229": { input: 3, output: 15 },
-  "claude-3-5-sonnet-20240620": { input: 3, output: 15 },
-  "claude-3-5-sonnet-20241022": { input: 3, output: 15 },
-  "claude-3-haiku-20240307": { input: 0.25, output: 1.25 },
-  "claude-3-5-haiku-20241022": { input: 0.25, output: 1.25 },
-  "claude-3-opus-20240229": { input: 15, output: 75 },
-  "claude-opus-4-6": { input: 15, output: 75 }
-};
-function calculateClaudeCost2(model, inputTokens, outputTokens) {
-  const pricing = CLAUDE_PRICING[model] || CLAUDE_PRICING["claude-3-sonnet-20240229"];
-  const inputCost = inputTokens / 1e6 * pricing.input;
-  const outputCost = outputTokens / 1e6 * pricing.output;
-  return inputCost + outputCost;
-}
-__name(calculateClaudeCost2, "calculateClaudeCost");
-async function logClaudeAPICall(env2, params) {
-  try {
-    const id = crypto.randomUUID();
-    const inputTokens = params.inputTokens || 0;
-    const outputTokens = params.outputTokens || 0;
-    const totalTokens = inputTokens + outputTokens;
-    const estimatedCost = calculateClaudeCost2(params.model, inputTokens, outputTokens);
-    await env2.DB.prepare(`
-      INSERT INTO claude_api_logs (
-        id, session_id, user_id, api_type, endpoint, model,
-        request_timestamp, response_timestamp, error_message,
-        input_tokens, output_tokens, total_tokens, latency_ms,
-        estimated_cost_usd, page_number, correlation_id
-      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-    `).bind(
-      id,
-      params.sessionId || null,
-      params.userId || null,
-      params.apiType,
-      params.endpoint,
-      params.model,
-      params.requestTimestamp,
-      params.responseTimestamp || null,
-      params.errorMessage || null,
-      inputTokens,
-      outputTokens,
-      totalTokens,
-      params.latencyMs || null,
-      estimatedCost,
-      params.pageNumber || null,
-      params.correlationId || null
-    ).run();
-    console.log(`[Telemetry] Logged Claude ${params.apiType} call: ${params.model}, ${totalTokens} tokens, $${estimatedCost.toFixed(6)}`);
-  } catch (error4) {
-    console.error("[Telemetry] Failed to log Claude API call:", error4.message);
-  }
-}
-__name(logClaudeAPICall, "logClaudeAPICall");
-async function logTelemetryEvent(env2, params) {
-  try {
-    const id = crypto.randomUUID();
-    await env2.DB.prepare(`
-      INSERT INTO client_telemetry (
-        id, user_id, session_id, event_type, event_name,
-        severity, message, context, client_timestamp
-      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
-    `).bind(
-      id,
-      params.userId || null,
-      params.sessionId || null,
-      params.eventType,
-      params.eventName,
-      params.severity || "info",
-      params.message || null,
-      params.context ? JSON.stringify(params.context) : null,
-      (/* @__PURE__ */ new Date()).toISOString()
-    ).run();
-  } catch (error4) {
-    console.error("[Telemetry] Failed to log event:", error4.message);
-  }
-}
-__name(logTelemetryEvent, "logTelemetryEvent");
-async function incrementSubmittalsUsed(userId, env2) {
-  await env2.DB.prepare(
-    "UPDATE users SET submittals_used = submittals_used + 1, updated_at = ? WHERE id = ?"
-  ).bind((/* @__PURE__ */ new Date()).toISOString(), userId).run();
-  const row = await env2.DB.prepare(
-    "SELECT submittals_used FROM users WHERE id = ?"
-  ).bind(userId).first();
-  return row?.submittals_used || 0;
-}
-__name(incrementSubmittalsUsed, "incrementSubmittalsUsed");
 var EXTRACTION_PROMPT_TEMPLATE = `\u{1F6A8}\u{1F6A8}\u{1F6A8} CRITICAL: STOP AND READ THIS FIRST \u{1F6A8}\u{1F6A8}\u{1F6A8}
 
 YOU WILL FAIL THIS TASK IF YOU DON'T READ THIS SECTION CAREFULLY.
@@ -143414,49 +143262,6 @@ async function generateR2StreamUrl(bufferKey, env2) {
   return `${origin}/api/internal/r2-stream?token=${encodeURIComponent(token)}`;
 }
 __name(generateR2StreamUrl, "generateR2StreamUrl");
-var HASCOM_EDGE = "https://hascom-edge.ron-helms.workers.dev";
-async function mintInternalToken(env2) {
-  if (env2.AUTH_ONAMERICA && env2.PASETO_INTERNAL_KEY_REF) {
-    try {
-      const r = await env2.AUTH_ONAMERICA.fetch("https://internal/api/auth/mint-paseto", {
-        method: "POST",
-        body: JSON.stringify({ venture: "weyland", ttl_seconds: 60 })
-      });
-      if (r.ok) {
-        const { token } = await r.json();
-        return { "Authorization": `Bearer ${token}`, "X-Surface": "internal-paseto" };
-      }
-    } catch (_) {
-    }
-  }
-  return { "Authorization": `Bearer ${env2.FLEET_API_KEY}`, "X-Fleet-Key": env2.FLEET_API_KEY || "", "X-Surface": "internal-fallback-jwt" };
-}
-__name(mintInternalToken, "mintInternalToken");
-async function callEdge(method, path, env2, body) {
-  const authHeaders = await mintInternalToken(env2);
-  const headers = {
-    "Content-Type": "application/json",
-    "Accept": "application/json",
-    ...authHeaders
-  };
-  const init = { method, headers, body: body ? JSON.stringify(body) : void 0 };
-  let resp;
-  if (env2.HASCOM_EDGE) {
-    resp = await env2.HASCOM_EDGE.fetch(new Request(`https://hascom-edge.internal${path}`, init));
-  } else {
-    headers["User-Agent"] = "Mozilla/5.0 (compatible; weyland-sabp-proxy/1.0)";
-    resp = await fetch(`${HASCOM_EDGE}${path}`, init);
-  }
-  const text = await resp.text();
-  let data;
-  try {
-    data = JSON.parse(text);
-  } catch {
-    data = { raw: text, http_status: resp.status };
-  }
-  return { status: resp.status, body: data };
-}
-__name(callEdge, "callEdge");
 // Real billing routes matching what subscribe.js actually calls. Built
 // 2026-08-31 after discovering /api/subscription/checkout (below) proxies
 // through VendyAI's checkout API, which has no working implementation

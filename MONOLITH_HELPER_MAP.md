@@ -123,7 +123,23 @@ cluster *names* and *relationships* are the durable part.
      simultaneously. Worth a real decision (reconcile into one, or
      document why two conventions are intentional) when this cluster
      moves - not a silent merge.
-   - Status: not started.
+   - **Status: ✅ done (2026-09-10).** Extracted to
+     `src/lib/edge-telemetry.js` + `src/lib/edge-telemetry.test.mjs`
+     (21 real tests), imported directly into `legacy-monolith.js`
+     (this cluster has no route registrations, so it's a lib import,
+     not a module-registry.js wire-up). `legacy-monolith.js` shrank
+     147,353 → 147,158 lines (195 lines: the two non-contiguous
+     regions this cluster actually spans, minus `var WORKER_VERSION`
+     and `var router = new NativeRouter(); router.all("*", ...)`,
+     which turned out to be interleaved with the first region and were
+     correctly left in place - they're live monolith orchestration,
+     not cluster content, despite WORKER_VERSION being listed in this
+     cluster's original description). `calculateClaudeCost2` renamed
+     to `calculateClaudeCost` (confirmed orphaned, single internal
+     caller, no external call sites to update). Live-verified via
+     `/api/version` (returns the extracted `WORKER_VERSION`),
+     `/api/health`, and `/api/install/device-auth/init` (exercises
+     `callEdge`/`mintInternalToken`).
 3. **PDF package assembly (Cluster C, ~864 lines).** `drawTable`,
    `truncateText`, `generateCoverPage`, `generateTableOfContents`,
    `generateHardwareSetPage`, `mergePdfs`, `assembleSubmittalPackage`,
