@@ -319,6 +319,56 @@ cluster *names* and *relationships* are the durable part.
        `/` (unaffected baseline checks) and `POST /api/upload/init`
        (real 401, confirming the route wiring into `detectSchedulePages`/
        `isPageInRange` as deps still works).
+   - **Sub-step (b) of 3 done (2026-09-10).** Extracted the 8
+     Claude-vision call adapters (`callClaudeVision`,
+     `callClaudeVisionWithImage`, `_callClaudeVisionWithImage_sabp`,
+     `_callClaudeVisionWithImage_localSubprocess`,
+     `_imageSourceForQueue`, `_callClaudeVisionWithImage_apiDirect`,
+     `callClaudeWithPdf`, `resolveInferenceContract`) plus their
+     `CircuitBreaker` class and `claudeCircuitBreaker` singleton to
+     `src/lib/hardware-extraction-vision-adapters.js` + `.test.mjs`
+     (24 real tests, mocking `fetch` - no real Claude API calls).
+     `legacy-monolith.js`: 143,500 → 142,950 lines net (after a
+     correction, see below). `resolveInferenceContract` was
+     originally catalogued as sub-step (c) territory but moved here
+     instead since 2 of these adapters need it and it's trivially
+     pure. `CircuitBreaker`/`claudeCircuitBreaker` moved here too (not
+     left inline as sub-step (a) assumed) after confirming via grep
+     their only 2 real call sites are both in this file.
+     - **Real consolidation, not just a move**: the module had its own
+       private `_mintInternalToken`/`_callEdge`/`_HASCOM_EDGE_URL`,
+       confirmed byte-identical in logic to the already-extracted
+       `mintInternalToken`/`callEdge`/`HASCOM_EDGE` in Cluster F's
+       `lib/edge-telemetry.js`. Deleted the duplicates; this file and
+       the one other real call site (`queuePageExtractionJob`, still
+       inline) now use the shared versions.
+     - **Same `__name(...)` inline-wrapper bug as sub-step (a)**, one
+       more occurrence: `_callClaudeVisionWithImage_sabp` builds a
+       `queueOnce` retry closure the same way - unwrapped the same way.
+     - **Real bug self-caught before it reached production**: the
+       byte-range for `callClaudeVision` was computed wrong and
+       accidentally swallowed the entire next function,
+       `storeHardwareExtraction` (~229 lines, a real stateful D1-write
+       function belonging to sub-step (c), not this one) - it ended up
+       both duplicated inside the new adapters file AND deleted from
+       `legacy-monolith.js`. Node's syntax check and the full local
+       test suite both passed regardless (the duplicate was valid,
+       unreferenced JS; nothing in the test suite happens to call the
+       now-undefined `storeHardwareExtraction`). **Caught by `wrangler
+       deploy`'s own bundle validation** ("Uncaught ReferenceError:
+       storeHardwareExtraction is not defined"), which refused to ship
+       it - production never saw this bug. Fixed by moving the
+       byte-exact block back to `legacy-monolith.js` and re-verified
+       with a systematic sweep (every one of Cluster A's ~79 original
+       function names checked for exactly one definition across the
+       monolith + both extracted files) before redeploying. Real
+       process gap this exposes: for clusters this tangled, a
+       manually-read "next function" boundary isn't reliable - the
+       systematic all-79-names sweep should run *before* every deploy
+       in sub-step (c) too, not just after catching a failure.
+     - Verified via 24 tests, full suite, build, `wrangler deploy`
+       (failed once, fixed, redeployed clean), and live curl of
+       `/api/health`, `/api/version`, `/`, and `POST /api/upload/init`.
 8. **Manufacturer cut-sheet web-discovery engine (Cluster E, ~2,609
    lines).** PDF validation/download/dedup, URL-pattern generation, an
    Allegion-brand-specific registry, robots.txt/Cloudflare-protection
