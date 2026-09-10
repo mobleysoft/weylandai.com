@@ -42,7 +42,8 @@ import { registerQuotesGenerateRoutes } from "./routes/quotes-generate.js";
 import { registerHardwareScheduleCandidatesRoutes } from "./routes/hardware-schedule-candidates.js";
 import { registerHardwareScheduleEnrichmentRoutes } from "./routes/hardware-schedule-enrichment.js";
 import { registerHardwareSchedulePageAffirmRoutes } from "./routes/hardware-schedule-page-affirm.js";
-import { authenticate, authenticateCps, requireProductAccess } from "./lib/auth.js";
+import { registerHardwareScheduleGenerateRoutes } from "./routes/hardware-schedule-generate.js";
+import { authenticate, authenticateCps, requireActiveSubscription, requireProductAccess } from "./lib/auth.js";
 
 /**
  * @param {object} router - the shared NativeRouter instance legacy-monolith.js owns.
@@ -66,6 +67,12 @@ import { authenticate, authenticateCps, requireProductAccess } from "./lib/auth.
  *   generateR2StreamUrl: Function,
  *   isPageInRange: Function,
  *   renderRegionAt600DPI2: Function,
+ *   callEdge: Function,
+ *   generateSubmittalHTML: Function,
+ *   incrementSubmittalsUsed: Function,
+ *   matchComponentToCutSheets: Function,
+ *   queuePageExtractionJob: Function,
+ *   routeExtraction: Function,
  * }} deps
  *   Real dependencies still owned by legacy-monolith.js (not yet their
  *   own modules) that some of these routes need injected. renderHtmlToPdf/
@@ -130,5 +137,22 @@ export function registerExtractedModules(router, deps) {
     generateR2StreamUrl: deps.generateR2StreamUrl,
     isPageInRange: deps.isPageInRange,
     renderRegionAt600DPI2: deps.renderRegionAt600DPI2,
+  });
+  registerHardwareScheduleGenerateRoutes(router, {
+    authenticate,
+    requireActiveSubscription,
+    getSessionStatus: deps.getSessionStatus,
+    generateR2StreamUrl: deps.generateR2StreamUrl,
+    isPageInRange: deps.isPageInRange,
+    pdfBufferOrNull: deps.pdfBufferOrNull,
+    renderRegionAt600DPI2: deps.renderRegionAt600DPI2,
+    callEdge: deps.callEdge,
+    generateSubmittalHTML: deps.generateSubmittalHTML,
+    incrementSubmittalsUsed: deps.incrementSubmittalsUsed,
+    matchComponentToCutSheets: deps.matchComponentToCutSheets,
+    queuePageExtractionJob: deps.queuePageExtractionJob,
+    routeExtraction: deps.routeExtraction,
+    transformDoorEntriesToHardwareSets: deps.transformDoorEntriesToHardwareSets,
+    materializeDseToLineItems: deps.materializeDseToLineItems,
   });
 }
