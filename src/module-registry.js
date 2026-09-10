@@ -72,6 +72,7 @@ import { registerSessionsRecentRoutes } from "./routes/sessions-recent.js";
 import { registerSessionsExtractionRouteRoutes } from "./routes/sessions-extraction-route.js";
 import { registerSessionsQueueExtractionRoutes } from "./routes/sessions-queue-extraction.js";
 import { registerSessionsFinalizeFromJobRoutes } from "./routes/sessions-finalize-from-job.js";
+import { registerSessionsAutoGenerateRoutes } from "./routes/sessions-auto-generate.js";
 import { authenticate, authenticateCps, requireActiveSubscription, requireProductAccess } from "./lib/auth.js";
 
 /**
@@ -108,6 +109,7 @@ import { authenticate, authenticateCps, requireActiveSubscription, requireProduc
  *   resolveInferenceContract: Function,
  *   savePageExtraction2: Function,
  *   parseAndValidateExtraction: Function,
+ *   generateId3: Function,
  *   buildExtractionResultFromVision: Function,
  *   persistDoorScheduleResponse: Function,
  *   extractHardwareSchedule: Function,
@@ -309,5 +311,11 @@ export function registerExtractedModules(router, deps) {
     transformDoorEntriesToHardwareSets: deps.transformDoorEntriesToHardwareSets,
     materializeDseToLineItems: deps.materializeDseToLineItems,
     parseAndValidateExtraction: deps.parseAndValidateExtraction,
+  });
+  registerSessionsAutoGenerateRoutes(router, {
+    authenticate,
+    generateId3: deps.generateId3,
+    extractPdfBookmarks2: deps.extractPdfBookmarks2,
+    extractSinglePage: deps.extractSinglePage,
   });
 }
