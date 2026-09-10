@@ -548,8 +548,12 @@ observable behavior change ever." Order:
      existing `routes/cut-sheet-match.js` (not a new file - same real
      deps/gate as match+batch-match). Matches every component in a
      whole hardware set, returns a deduplicated cut-sheet list.
+   - ✅ done (2026-09-10): `routes/cut-sheet-documents.js` -
+     cut-sheets/documents/:docId (metadata) + cut-sheets/download/:docId
+     (real PDF streaming from R2, env.OUTPUTS for "product-docs" vs.
+     env.UPLOADS otherwise).
    - Still inline: everything else - the rest of the CPS/cut-sheet route
-     surface (~36 more `/api/cut-sheets/*` and `/api/cps/*` routes alone
+     surface (~34 more `/api/cut-sheets/*` and `/api/cps/*` routes alone
      per the last full scan - catalogues, search/search-component,
      drafts, mappings, queue/extractions/render, discoveries,
      domains/verify, intelligence metrics/config, admin normalize,
