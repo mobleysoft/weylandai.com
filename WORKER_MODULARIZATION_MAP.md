@@ -695,13 +695,61 @@ observable behavior change ever." Order:
      separate cleanup, not attempted" - all 16 real call sites were
      mechanically rewritten to the already-imported jsonResponse3
      instead of carrying a third duplicate into the new module.
-   - Still inline: the other 17 `/api/sessions/*` routes -
+   - ✅ done (2026-09-10): `routes/sessions-detail.js` - 5 routes (POST
+     signed-urls, GET door-matrix, PUT nomenclature, PUT position,
+     POST door-matrix/:mappingId/verify). authenticate injected as
+     usual; generateSignedResourceUrl imported directly from
+     ../auth-module.js (a real top-level export, same pattern as
+     createHmacSignature/arrayBufferToBase64 in earlier extractions)
+     rather than injected.
+   - Still inline: the other 12 `/api/sessions/*` routes -
      queue-extraction, extraction-route (GET+POST), finalize-from-job,
-     recent, auto-generate, signed-urls, door-matrix, nomenclature
-     (PUT), position (PUT), door-matrix/:mappingId/verify,
-     discover-cut-sheets, cut-sheet-coverage, preview, assemble,
-     assemble/status, submittal/download. Re-scan before picking the
-     next piece - these are scattered non-contiguously, not one block.
+     recent, auto-generate, discover-cut-sheets, cut-sheet-coverage,
+     preview, assemble, assemble/status, submittal/download. Re-scan
+     before picking the next piece - these are scattered
+     non-contiguously, not one block.
+
+### Additional tracked items (brainstormed 2026-09-10, not yet scheduled)
+
+Found while extracting steps 8-9; real, verified duplication/gaps, not
+speculative:
+
+- **`jsonResponse2` consolidation** - a second, real duplicate of
+  `jsonResponse3` still inline in legacy-monolith.js with **38 call
+  sites** (confirmed via grep). Same esbuild-duplication pattern
+  already eliminated for the bare `jsonResponse` during the
+  `sessions-list.js` extraction - fold the `jsonResponse2` fix into
+  whichever future extraction's call sites happen to touch it, same
+  opportunistic pattern used for `componentHash`/`normalizeSearchText`.
+- **`calculateClaudeCost2` reconciliation** - a genuinely *different*
+  cost-calculation implementation (takes a `model` param, looks up
+  `CLAUDE_PRICING`) from the `calculateClaudeCost` already inlined into
+  `sessions-list.js` (hardcodes Sonnet pricing). Two functions computing
+  the same real-money estimate differently is a correctness risk, not
+  just duplication - worth a `lib/claude-pricing.js` that reconciles
+  both into one correct implementation when its call sites get extracted.
+- **Session-ownership guard** - the `SELECT ... WHERE id = ? AND
+  user_id = ?` → `if (!x) 404/403` pattern appears in 9+ already-
+  extracted route files (`document-generators.js`,
+  `door-schedule-marks.js`, `hardware-schedule-extract.js`,
+  `hardware-schedule-page-affirm.js`, `projects.js`,
+  `quotes-generate.js`, `sessions-list.js`, `sessions-detail.js`,
+  `user-cutsheets.js`) plus 4 remaining monolith spots. A
+  `requireSessionOwnership(sessionId, userId, env)` helper in `lib/`
+  would fix ownership-check bugs in one place instead of N - a real
+  candidate for a dedicated consolidation pass once step 9 wraps,
+  not something to retrofit into individual extractions mid-stream.
+- **Pagination helper** - the `limit/offset/total` clamp-and-shape
+  pattern is duplicated in 9 already-extracted files.
+- **Allowlisted-update builder** - the "allowed fields array → loop →
+  `UPDATE SET` clause" pattern appears in 4 PUT routes
+  (`catalogue-products.js`, `catalogue-documents.js`,
+  `door-schedule-marks.js`, `cps-mappings.js`).
+- **Still-undone lib/ modules from §5's original list**:
+  `d1-kv-shim.js`, `r2.js` (`generateR2StreamUrl`/`serveR2`),
+  `stripe.js` (`stripeRequest`), `pdf-render.js`, `document-store.js` -
+  none started yet, easy to lose track of since §5 predates most of
+  this session's real progress.
 
 For every step, "verified behaviorally identical" concretely means: run the
 extracted module inline via `wrangler dev` against a copy of the worker with
