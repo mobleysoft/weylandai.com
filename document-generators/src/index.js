@@ -28,6 +28,9 @@ export default {
     const preflight = cors.preflight(request);
     if (preflight) return preflight;
     const response = await router.handle(request, env, ctx);
-    return cors.corsify(response, request);
+    const corsified = cors.corsify(response, request);
+    const headers = new Headers(corsified.headers);
+    headers.set("X-Served-By", "weyland-document-generators-worker");
+    return new Response(corsified.body, { status: corsified.status, statusText: corsified.statusText, headers });
   },
 };

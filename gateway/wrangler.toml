@@ -16,3 +16,10 @@ compatibility_flags = ["nodejs_compat"]
 [[services]]
 binding = "ORIGIN"
 service = "weylandai-com-worker"
+
+# First real peeled-off module (Phase 2) - document-generators.js's 15
+# generate/download route pairs are carved out of the ORIGIN fallback
+# in src/index.js's route table and sent here instead.
+[[services]]
+binding = "DOCUMENT_GENERATORS"
+service = "weyland-document-generators-worker"
