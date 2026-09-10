@@ -34,7 +34,8 @@ import { registerCrossReferenceRoutes } from "./routes/cross-reference.js";
 import { registerVendorProfileRoutes } from "./routes/vendor-profile.js";
 import { registerHuntLeadsRoutes } from "./routes/hunt-leads.js";
 import { registerQuoteTemplatesRoutes } from "./routes/quote-templates.js";
-import { authenticate, requireProductAccess } from "./lib/auth.js";
+import { registerPricingRoutes } from "./routes/pricing.js";
+import { authenticate, authenticateCps, requireProductAccess } from "./lib/auth.js";
 
 /**
  * @param {object} router - the shared NativeRouter instance legacy-monolith.js owns.
@@ -73,4 +74,5 @@ export function registerExtractedModules(router, deps) {
     makeDocumentDownloadRoute: deps.makeDocumentDownloadRoute,
   });
   registerQuoteTemplatesRoutes(router, { authenticate });
+  registerPricingRoutes(router, { authenticate, authenticateCps });
 }
