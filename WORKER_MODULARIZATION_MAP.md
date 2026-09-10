@@ -876,7 +876,27 @@ observable behavior change ever." Order:
     JWT-token-gated R2 byte-range streaming proxy, plus GET
     `/api/internal/pdf-render-shell`), immediately followed by
     `/api/health`.
-    - Not yet started.
+    - ✅ done (2026-09-10): `routes/internal.js` - all 4
+      registrations. verifyJWT imported directly from auth-module.js.
+      r2StreamContentType/R2_STREAM_CT had both real call sites
+      inside this extraction - fully orphaned, inlined locally, dead
+      originals deleted. No injected deps needed.
+    - **Step 14 complete**: all 4 internal registrations extracted.
+
+15. **Step 15 (new, post-step-14 scan result, 2026-09-10): the
+    `/api/hunt/*` cluster.** A fresh scan after step 14 found only 25
+    route registrations remain in the whole file - `/api/hunt` is now
+    the largest remaining family at 2 routes (POST refresh, GET
+    opportunities - the HuntX construction-bid-opportunity aggregator,
+    fully contiguous with its 2 adjacent single-call-site helper
+    functions fetchTxdotOpportunities/fetchCaOpscOpportunities).
+    - ✅ done (2026-09-10): `routes/hunt.js` - both routes.
+      requireProductAccess imported directly from lib/auth.js.
+      fetchTxdotOpportunities/fetchCaOpscOpportunities both fully
+      orphaned (single call site each, inside this extraction) -
+      inlined locally, esbuild's cosmetic `__name(...)` calls
+      stripped for both.
+    - **Step 15 complete**: both hunt routes extracted.
 
 ### Additional tracked items (brainstormed 2026-09-10, not yet scheduled)
 
