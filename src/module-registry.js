@@ -55,6 +55,7 @@ import { registerCpsDraftsRoutes } from "./routes/cps-drafts.js";
 import { registerCpsMappingsRoutes } from "./routes/cps-mappings.js";
 import { registerUserCutsheetsRoutes } from "./routes/user-cutsheets.js";
 import { registerCpsQueueRoutes } from "./routes/cps-queue.js";
+import { registerCpsAdminRoutes } from "./routes/cps-admin.js";
 import { authenticate, authenticateCps, requireActiveSubscription, requireProductAccess } from "./lib/auth.js";
 
 /**
@@ -226,4 +227,5 @@ export function registerExtractedModules(router, deps) {
   registerCpsMappingsRoutes(router, { authenticate });
   registerUserCutsheetsRoutes(router, { authenticate });
   registerCpsQueueRoutes(router, { authenticate });
+  registerCpsAdminRoutes(router, { authenticate });
 }
