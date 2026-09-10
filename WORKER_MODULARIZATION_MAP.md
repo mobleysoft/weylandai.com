@@ -719,10 +719,20 @@ observable behavior change ever." Order:
    - ✅ done (2026-09-10): `routes/sessions-extraction-route.js` - GET+
      POST extraction-route. authenticate the only dep;
      EXTRACTION_ROUTE_VALID (small Set constant) inlined locally.
-   - Still inline: the other 4 `/api/sessions/*` routes -
-     queue-extraction, finalize-from-job, auto-generate, preview.
-     Re-scan before picking the next piece - these are scattered
-     non-contiguously, not one block.
+   - ✅ done (2026-09-10): `routes/sessions-queue-extraction.js` - POST
+     queue-extraction. authenticate, resolveExtractionContract, and
+     callEdge reuse already-injected deps; resolveInferenceContract
+     (real hoisted function, 5 other call sites remaining) newly
+     promoted to an injected dep. arrayBufferToBase644 call site
+     rewritten to import the real arrayBufferToBase64 directly from
+     auth-module.js (verified byte-identical duplicate, same
+     consolidation precedent as sessions-detail.js's
+     generateSignedResourceUrl) - arrayBufferToBase644's own
+     definition still has 3 other call sites and was left in place.
+   - Still inline: the other 3 `/api/sessions/*` routes -
+     finalize-from-job, auto-generate, preview. Re-scan before picking
+     the next piece - these are scattered non-contiguously, not one
+     block.
 
 ### Additional tracked items (brainstormed 2026-09-10, not yet scheduled)
 
