@@ -463,18 +463,38 @@ observable behavior change ever." Order:
      `queuePageExtractionJob`, `routeExtraction` — plus reuse of
      `getSessionStatus`/`generateR2StreamUrl`/`isPageInRange`/
      `pdfBufferOrNull`/`renderRegionAt600DPI2` from the prior piece.
+   - ✅ done (2026-09-10, mid-piece): wired `src/error-utilities.js` into
+     the build — another real, tested (21 passing cases), never-wired-in
+     extraction from a prior session, same situation as rate-limit.js.
+     Its own README calls it "the most heavily-reused cluster extracted
+     so far"; legacy-monolith.js's own fan-in confirmed it (13-7 real
+     references per identifier). Inline vendored duplicate deleted,
+     replaced with a real import of ErrorCodes/classifyError/
+     createErrorResponse/jsonErrorResponse/ErrorMetrics/performHealthCheck.
+   - ✅ done (2026-09-10): `routes/hardware-schedule-page-extract.js`
+     (page/:pageNum GET, approve, extract-image, extraction-contract,
+     extract-result — 5 routes). Real end-to-end proof the
+     error-utilities.js wiring above works: this file's error path is a
+     genuine classifyError -> ErrorMetrics.recordError -> jsonErrorResponse
+     chain, exercised by a real test. Four more shared helpers injected:
+     approvePageExtraction, extractSinglePage, resolveExtractionContract,
+     savePageExtraction2 — plus reuse of getSessionStatus/isPageInRange/
+     extractFromPageImage/queuePageExtractionJob from prior pieces.
    - Still inline: extract/start/detect-schedules/status/set-page-range/
      set-table-pages/batch-extract (~148000-149172 — the group with ~20
      unscoped PDF-pipeline dependencies, e.g. extractHardwareSchedule/
      routeExtraction/queuePageExtractionJob; deliberately deferred rather
-     than rushed), the rest of the `page/:pageNum` family (extract-image/
-     extraction-contract/extract-result/approve, ~149170-149690), and
-     finalize-image (146198, isolated from the rest
+     than rushed), and finalize-image (146158ish, isolated from the rest
      by the ~1,756-line Stripe/HuntX/econ-data gap noted above — likely
-     belongs with a PDF-pipeline module instead of here). Whoever picks
-     this back up should re-run a full route scan
-     first rather than trusting this list's line numbers, which will have
-     shifted with every extraction since.
+     belongs with a PDF-pipeline module instead of here). This is now
+     genuinely the last piece of step 7. Whoever picks this back up
+     should re-run a full route scan first rather than trusting this
+     list's line numbers, which will have shifted with every extraction
+     since — and should expect the ~20-dependency group to need either a
+     wider injected-deps list than anything tried so far, or a decision
+     to extract some of those ~20 PDF-pipeline helpers into their own
+     lib/ module(s) first, the way pricing.js and region-conflicts.js
+     were pulled out ahead of their route groups.
 8. **The CPS/cut-sheet cluster last** (12 files, ~9,000–10,000 lines) —
    highest line count, most shared data tables
    (`PRODUCT_DATABASE`/`MFR_CODE_MAP`), the only cluster this pass could not
