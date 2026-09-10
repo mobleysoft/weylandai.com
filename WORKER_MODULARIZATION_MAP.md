@@ -1043,16 +1043,23 @@ observable behavior change ever." Order:
       the same-day scan that found root.js "the final piece" - caught
       immediately by re-running the route-count grep after that
       commit and finding 1, not 0.
-    - **🏁 Step 25 complete - route-extraction effort finished.**
-      `grep -c 'router\.(get|post|put|delete|patch|addRoute|options)('
-      src/legacy-monolith.js` returns **0**. Every route this worker
-      serves now lives in its own `src/routes/*.js` module, wired
-      through the single `src/module-registry.js`. This closes out
-      the entire route-extraction pass this map document has tracked
-      since step 1. legacy-monolith.js still contains substantial
-      non-route code (helper functions, the top-level fetch handler,
-      static-asset serving, etc. per §2/§5) - that is out of scope for
-      this pass and untouched.
+    - **🏁 Step 25 "complete" - CORRECTED 2026-09-10.** The
+      `grep -c 'router\.(get|post|put|delete|patch|addRoute|options)('`
+      check returning 0 only proves no *flat* `router.get(...)` call
+      remains at the top level. A follow-up cataloguing pass (see
+      `MONOLITH_HELPER_MAP.md`) found **one real exception**:
+      `registerAthenaRoutes(router2, authenticate2)` (~line 142,471,
+      called at ~143,080) is a genuine, live route-registration
+      *function* - it calls `router2.get/.post(...)` 5 times inside a
+      wrapper, so it evaded the flat-call-style grep the extraction
+      pass was built around. It registers `/api/sessions/:sessionId/
+      readiness` and 4 related match/discovery-trigger endpoints, and
+      is scheduled as the first step of the new phase
+      (`MONOLITH_HELPER_MAP.md` step 1). Everything else in this
+      document (steps 1-24, and the rest of step 25) is still accurate
+      - every *flat* route call is extracted. The route-extraction
+      pass is 99% done, not 100%; the last piece is tracked in the new
+      document, not here.
 
 Found while extracting steps 8-9; real, verified duplication/gaps, not
 speculative:
