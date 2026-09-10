@@ -53,6 +53,7 @@ import { registerCpsCataloguesRoutes } from "./routes/cps-catalogues.js";
 import { registerCpsSearchRoutes } from "./routes/cps-search.js";
 import { registerCpsDraftsRoutes } from "./routes/cps-drafts.js";
 import { registerCpsMappingsRoutes } from "./routes/cps-mappings.js";
+import { registerUserCutsheetsRoutes } from "./routes/user-cutsheets.js";
 import { authenticate, authenticateCps, requireActiveSubscription, requireProductAccess } from "./lib/auth.js";
 
 /**
@@ -222,4 +223,5 @@ export function registerExtractedModules(router, deps) {
   registerCpsSearchRoutes(router, { authenticate });
   registerCpsDraftsRoutes(router, { authenticate });
   registerCpsMappingsRoutes(router, { authenticate });
+  registerUserCutsheetsRoutes(router, { authenticate });
 }
