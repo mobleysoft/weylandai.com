@@ -79,6 +79,7 @@ import { registerInstallDeviceAuthRoutes } from "./routes/install-device-auth.js
 import { registerMeBridgeRoutes } from "./routes/me-bridge.js";
 import { registerTelemetryRoutes } from "./routes/telemetry.js";
 import { registerSubmittalsRoutes } from "./routes/submittals.js";
+import { registerUploadRoutes } from "./routes/upload.js";
 import { authenticate, authenticateCps, requireActiveSubscription, requireProductAccess } from "./lib/auth.js";
 
 /**
@@ -336,5 +337,13 @@ export function registerExtractedModules(router, deps) {
     authenticate,
     logTelemetryEvent: deps.logTelemetryEvent,
     dispatchVisionExtraction: deps.dispatchVisionExtraction,
+  });
+  registerUploadRoutes(router, {
+    authenticate,
+    detectFileType: deps.detectFileType,
+    extractPdfBookmarks2: deps.extractPdfBookmarks2,
+    detectSchedulePages: deps.detectSchedulePages,
+    createExtractionSession: deps.createExtractionSession,
+    logTelemetryEvent: deps.logTelemetryEvent,
   });
 }

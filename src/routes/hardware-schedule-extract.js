@@ -17,8 +17,16 @@
 // distinct concern and were deliberately left in place rather than
 // dragged into this file's scope).
 //
-// countPdfPagesRaw has both its real call sites (start, batch-extract)
-// inside this file's own routes, so it stays local/private here.
+// countPdfPagesRaw: CORRECTED 2026-09-10 (routes/submittals.js's sibling
+// extraction, routes/upload.js) - this comment previously claimed both
+// its real call sites were inside this file's own routes (start,
+// batch-extract), so it stayed local/private. That was wrong: a third
+// call site remained in legacy-monolith.js's /api/upload/complete
+// (now routes/upload.js), which had been silently broken (a
+// ReferenceError, caught only by that route's own outer try/catch and
+// surfaced as a generic 500) since this file's own extraction made
+// this function module-private. Now exported so upload.js can import
+// the real implementation instead of duplicating it.
 //
 // This file has by far the largest injected-dependency list of any
 // piece extracted this session (matches WORKER_MODULARIZATION_MAP.md's
@@ -39,7 +47,7 @@ import { jsonResponse3 } from "../lib/json-response.js";
 import { detectAndPersistRegionConflicts } from "../lib/region-conflicts.js";
 import { arrayBufferToBase64 } from "../auth-module.js";
 
-function countPdfPagesRaw(buffer) {
+export function countPdfPagesRaw(buffer) {
   try {
     const txt = new TextDecoder("latin1").decode(buffer);
     const pageObjs = (txt.match(/\/Type\s*\/Page(?![s\w])/g) || []).length;
