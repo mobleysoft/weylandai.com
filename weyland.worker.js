@@ -1847,7 +1847,7 @@ function registerDocumentGeneratorRoutes(router2, { generateQuoteHtml: generateQ
 }
 
 // src/routes/projects.js
-function registerProjectRoutes(router2, { transformDoorEntriesToHardwareSets: transformDoorEntriesToHardwareSets2, materializeDseToLineItems: materializeDseToLineItems2 }) {
+function registerProjectRoutes(router2, { transformDoorEntriesToHardwareSets: transformDoorEntriesToHardwareSets3, materializeDseToLineItems: materializeDseToLineItems3 }) {
   router2.get("/api/projects", async (request2, env2) => {
     const { error: error4, user } = await authenticate(request2, env2);
     if (error4)
@@ -2229,10 +2229,10 @@ function registerProjectRoutes(router2, { transformDoorEntriesToHardwareSets: tr
       let totalMarks = 0;
       for (const session of sessionsToBackfill) {
         try {
-          const result = await transformDoorEntriesToHardwareSets2(session.id, user.userId, env2);
+          const result = await transformDoorEntriesToHardwareSets3(session.id, user.userId, env2);
           let matResult = { doorsCreated: 0, framesCreated: 0 };
           try {
-            matResult = await materializeDseToLineItems2(session.id, env2);
+            matResult = await materializeDseToLineItems3(session.id, env2);
           } catch (matErr) {
             console.warn(`[Backfill Bridge] Auto-materialize failed for ${session.id}: ${matErr.message}`);
           }
@@ -8291,10 +8291,10 @@ function registerHardwareSchedulePageAffirmRoutes(router2, {
   extractFromPageImage: extractFromPageImage2,
   materializeAffirmedGroup: materializeAffirmedGroup2,
   unaffirmMaterializedGroup: unaffirmMaterializedGroup2,
-  pdfBufferOrNull: pdfBufferOrNull2,
-  generateR2StreamUrl: generateR2StreamUrl2,
+  pdfBufferOrNull: pdfBufferOrNull3,
+  generateR2StreamUrl: generateR2StreamUrl3,
   isPageInRange: isPageInRange2,
-  renderRegionAt600DPI2: renderRegionAt600DPI22
+  renderRegionAt600DPI2: renderRegionAt600DPI23
 }) {
   router2.patch("/api/hardware-schedule/session/:sessionId/page/:pageNum/component/:componentIndex/affirm", async (request2, env2) => {
     const { error: error4, user } = await authenticate2(request2, env2);
@@ -8740,15 +8740,15 @@ function registerHardwareSchedulePageAffirmRoutes(router2, {
         }
       }
       const bufferKey = session.file_buffer_key || "uploads/" + sessionId + ".pdf";
-      let fileBuffer = pdfBufferOrNull2(await env2.CACHE.get(bufferKey, { type: "arrayBuffer" }), bufferKey);
+      let fileBuffer = pdfBufferOrNull3(await env2.CACHE.get(bufferKey, { type: "arrayBuffer" }), bufferKey);
       let pdfStreamUrl = null;
       if (fileBuffer && fileBuffer.byteLength > 20 * 1024 * 1024 && env2.UPLOADS) {
         console.log(`[26M Extract Region] KV returned ${(fileBuffer.byteLength / 1024 / 1024).toFixed(1)}MB \u2014 switching to R2 streaming to avoid OOM`);
         fileBuffer = null;
-        pdfStreamUrl = await generateR2StreamUrl2(bufferKey, env2);
+        pdfStreamUrl = await generateR2StreamUrl3(bufferKey, env2);
       } else if (!fileBuffer && env2.UPLOADS) {
         console.log("[26M Extract Region] KV miss, generating R2 stream URL: " + bufferKey);
-        pdfStreamUrl = await generateR2StreamUrl2(bufferKey, env2);
+        pdfStreamUrl = await generateR2StreamUrl3(bufferKey, env2);
       }
       if (!fileBuffer && !pdfStreamUrl) {
         return jsonResponse3({ error: "PDF not found in storage" }, 404);
@@ -8762,7 +8762,7 @@ function registerHardwareSchedulePageAffirmRoutes(router2, {
         return jsonResponse3({ error: "bounding_box_percent or bounding_box_pixels required" }, 400);
       }
       console.log(`[26M Extract Region] Rendering region at 600 DPI...`);
-      const rendered = await renderRegionAt600DPI22(
+      const rendered = await renderRegionAt600DPI23(
         fileBuffer,
         pageNumber,
         renderBoundingBox,
@@ -8995,18 +8995,18 @@ function registerHardwareScheduleGenerateRoutes(router2, {
   authenticate: authenticate2,
   requireActiveSubscription: requireActiveSubscription2,
   getSessionStatus: getSessionStatus2,
-  generateR2StreamUrl: generateR2StreamUrl2,
+  generateR2StreamUrl: generateR2StreamUrl3,
   isPageInRange: isPageInRange2,
-  pdfBufferOrNull: pdfBufferOrNull2,
-  renderRegionAt600DPI2: renderRegionAt600DPI22,
-  callEdge: callEdge2,
+  pdfBufferOrNull: pdfBufferOrNull3,
+  renderRegionAt600DPI2: renderRegionAt600DPI23,
+  callEdge: callEdge3,
   generateSubmittalHTML: generateSubmittalHTML2,
   incrementSubmittalsUsed: incrementSubmittalsUsed2,
   matchComponentToCutSheets: matchComponentToCutSheets2,
-  queuePageExtractionJob: queuePageExtractionJob2,
-  routeExtraction: routeExtraction2,
-  transformDoorEntriesToHardwareSets: transformDoorEntriesToHardwareSets2,
-  materializeDseToLineItems: materializeDseToLineItems2
+  queuePageExtractionJob: queuePageExtractionJob3,
+  routeExtraction: routeExtraction3,
+  transformDoorEntriesToHardwareSets: transformDoorEntriesToHardwareSets3,
+  materializeDseToLineItems: materializeDseToLineItems3
 }) {
   router2.post("/api/hardware-schedule/session/:sessionId/generate-submittal", async (request2, env2) => {
     const { error: error4, user } = await authenticate2(request2, env2);
@@ -9382,15 +9382,15 @@ function registerHardwareScheduleGenerateRoutes(router2, {
         }
       }
       const bufferKey = session.file_buffer_key || "uploads/" + sessionId + ".pdf";
-      let fileBuffer = pdfBufferOrNull2(await env2.CACHE.get(bufferKey, { type: "arrayBuffer" }), bufferKey);
+      let fileBuffer = pdfBufferOrNull3(await env2.CACHE.get(bufferKey, { type: "arrayBuffer" }), bufferKey);
       let pdfStreamUrl = null;
       if (fileBuffer && fileBuffer.byteLength > 20 * 1024 * 1024 && env2.UPLOADS) {
         console.log(`[Extract Affirmed] KV returned ${(fileBuffer.byteLength / 1024 / 1024).toFixed(1)}MB \u2014 switching to R2 streaming to avoid OOM`);
         fileBuffer = null;
-        pdfStreamUrl = await generateR2StreamUrl2(bufferKey, env2);
+        pdfStreamUrl = await generateR2StreamUrl3(bufferKey, env2);
       } else if (!fileBuffer && env2.UPLOADS) {
         console.log("[Extract Affirmed] KV miss, generating R2 stream URL: " + bufferKey);
-        pdfStreamUrl = await generateR2StreamUrl2(bufferKey, env2);
+        pdfStreamUrl = await generateR2StreamUrl3(bufferKey, env2);
       }
       if (!fileBuffer && !pdfStreamUrl) {
         return jsonResponse3({ error: "PDF not found in storage" }, 404);
@@ -9448,7 +9448,7 @@ function registerHardwareScheduleGenerateRoutes(router2, {
       if (_sessRoute === "claude_code_local") {
         const _ownerForCheck = user.mhsId || user.mhs_id || null;
         try {
-          const bs = await callEdge2("GET", `/ai/v1/bridge/status?owner_id=${encodeURIComponent(_ownerForCheck || "")}`, env2);
+          const bs = await callEdge3("GET", `/ai/v1/bridge/status?owner_id=${encodeURIComponent(_ownerForCheck || "")}`, env2);
           if (bs.status === 200 && bs.body && bs.body.online === false) {
             await Promise.all(candidates.map((c) => env2.DB.prepare(
               `UPDATE schedule_region_candidates SET status='affirmed', updated_at=datetime('now') WHERE id=?`
@@ -9477,8 +9477,8 @@ function registerHardwareScheduleGenerateRoutes(router2, {
             if (candidate.schedule_type === "door_schedule") {
               boundingBox = { ...boundingBox, pad_w_percent: 0.05, pad_h_percent: 0.04 };
             }
-            const rendered = await renderRegionAt600DPI22(pdfBuffer, candidate.page_number, boundingBox, env2, candidate.extraction_dpi || 600, pdfStreamUrl);
-            const q = await queuePageExtractionJob2(arrayBufferToBase64(rendered.imageBuffer), env2, {
+            const rendered = await renderRegionAt600DPI23(pdfBuffer, candidate.page_number, boundingBox, env2, candidate.extraction_dpi || 600, pdfStreamUrl);
+            const q = await queuePageExtractionJob3(arrayBufferToBase64(rendered.imageBuffer), env2, {
               pageNumber: candidate.page_number,
               totalPages: session.page_count || session.total_pages || 1,
               sessionId,
@@ -9567,7 +9567,7 @@ function registerHardwareScheduleGenerateRoutes(router2, {
             boundingBox = { ...boundingBox, pad_w_percent: 0.05, pad_h_percent: 0.04 };
           }
           const candidateDpi = candidate.extraction_dpi || 600;
-          const rendered = await renderRegionAt600DPI22(
+          const rendered = await renderRegionAt600DPI23(
             pdfBuffer,
             candidate.page_number,
             boundingBox,
@@ -9595,7 +9595,7 @@ function registerHardwareScheduleGenerateRoutes(router2, {
           } catch (_ledgerErr) {
             console.warn("[Extract Affirmed] ledger packet create failed:", _ledgerErr.message);
           }
-          const extractionResult = await routeExtraction2(
+          const extractionResult = await routeExtraction3(
             candidate.schedule_type,
             rendered.imageBuffer,
             {
@@ -9686,7 +9686,7 @@ function registerHardwareScheduleGenerateRoutes(router2, {
       let transformResult = null;
       if (extractedCount > 0) {
         try {
-          transformResult = await transformDoorEntriesToHardwareSets2(
+          transformResult = await transformDoorEntriesToHardwareSets3(
             sessionId,
             user?.id || user?.email || "anonymous",
             env2
@@ -9697,7 +9697,7 @@ function registerHardwareScheduleGenerateRoutes(router2, {
           transformResult = { error: transformError.message, setsCreated: 0 };
         }
         try {
-          const matResult = await materializeDseToLineItems2(sessionId, env2);
+          const matResult = await materializeDseToLineItems3(sessionId, env2);
           console.log(`[Extract Affirmed] Auto-materialize: ${matResult.doorsCreated} door groups, ${matResult.framesCreated} frame groups`);
         } catch (matError) {
           console.error("[Extract Affirmed] Auto-materialize failed (non-blocking):", matError.message);
@@ -10017,11 +10017,11 @@ function registerHardwareSchedulePageExtractRoutes(router2, {
   getSessionStatus: getSessionStatus2,
   isPageInRange: isPageInRange2,
   extractFromPageImage: extractFromPageImage2,
-  queuePageExtractionJob: queuePageExtractionJob2,
+  queuePageExtractionJob: queuePageExtractionJob3,
   approvePageExtraction: approvePageExtraction2,
   extractSinglePage: extractSinglePage2,
   resolveExtractionContract: resolveExtractionContract2,
-  savePageExtraction2: savePageExtraction22
+  savePageExtraction2: savePageExtraction23
 }) {
   router2.get("/api/hardware-schedule/session/:sessionId/page/:pageNum", async (request2, env2) => {
     const { error: error4, user } = await authenticate2(request2, env2);
@@ -10097,7 +10097,7 @@ function registerHardwareSchedulePageExtractRoutes(router2, {
       const extractionLatency = Date.now() - extractionStartTime;
       await metrics.recordLatency("claude_extraction", extractionLatency, true);
       console.log(`[Hardware Page] Claude Vision extraction completed in ${extractionLatency}ms`);
-      await savePageExtraction22(sessionId, pageNum, extractionResult, env2);
+      await savePageExtraction23(sessionId, pageNum, extractionResult, env2);
       console.log(`[Hardware Page] Extracted page ${pageNum}: ${extractionResult.hardware_groups.length} sets found`);
       const totalLatency = Date.now() - startTime;
       await metrics.recordLatency("page_extraction_full", totalLatency, true);
@@ -10238,7 +10238,7 @@ function registerHardwareSchedulePageExtractRoutes(router2, {
       }
       if (_route === "claude_code_local") {
         const _schedType = session.document_type === "door_schedule" ? "door_schedule" : null;
-        const q = await queuePageExtractionJob2(data.imageBase64, env2, {
+        const q = await queuePageExtractionJob3(data.imageBase64, env2, {
           pageNumber: pageNum,
           totalPages: data.totalPages,
           sessionId,
@@ -10297,7 +10297,7 @@ function registerHardwareSchedulePageExtractRoutes(router2, {
         extractionOptions
       );
       console.log(`[Hardware Extract Image] Saving extraction to database...`);
-      await savePageExtraction22(sessionId, pageNum, extractionResult, env2);
+      await savePageExtraction23(sessionId, pageNum, extractionResult, env2);
       const totalTime = Date.now() - startTime;
       const matrixCount = extractionResult.door_hardware_matrix?.length || 0;
       console.log(`[Hardware Extract Image] \u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550`);
@@ -10431,7 +10431,7 @@ function registerHardwareSchedulePageExtractRoutes(router2, {
           isolation_method: "operator_local_render"
         }
       };
-      await savePageExtraction22(sessionId, pageNumber, extractionResult, env2);
+      await savePageExtraction23(sessionId, pageNumber, extractionResult, env2);
       const componentCount = extraction.hardware_groups.reduce((s, g) => s + (g.components?.length || 0), 0);
       console.log(`[Vision Bridge] Stored operator-local extraction: session ${sessionId} p${pageNumber}, provider ${provider.name}, ${extraction.hardware_groups.length} groups / ${componentCount} components`);
       return jsonResponse3({
@@ -10454,10 +10454,10 @@ function registerHardwareSchedulePageExtractRoutes(router2, {
 // src/routes/hardware-schedule-finalize-image.js
 function registerHardwareScheduleFinalizeImageRoutes(router2, {
   authenticate: authenticate2,
-  callEdge: callEdge2,
-  materializeDseToLineItems: materializeDseToLineItems2,
-  transformDoorEntriesToHardwareSets: transformDoorEntriesToHardwareSets2,
-  savePageExtraction2: savePageExtraction22,
+  callEdge: callEdge3,
+  materializeDseToLineItems: materializeDseToLineItems3,
+  transformDoorEntriesToHardwareSets: transformDoorEntriesToHardwareSets3,
+  savePageExtraction2: savePageExtraction23,
   buildExtractionResultFromVision: buildExtractionResultFromVision2,
   persistDoorScheduleResponse: persistDoorScheduleResponse2
 }) {
@@ -10478,7 +10478,7 @@ function registerHardwareScheduleFinalizeImageRoutes(router2, {
     if (packet && packet.connection_id !== sessionId) {
       return jsonResponse3({ error: "job_session_mismatch" }, 409);
     }
-    const r = await callEdge2("GET", `/ai/v1/jobs/${encodeURIComponent(jobId)}`, env2);
+    const r = await callEdge3("GET", `/ai/v1/jobs/${encodeURIComponent(jobId)}`, env2);
     if (r.status !== 200)
       return jsonResponse3({ error: "edge_fetch_failed", detail: r.body }, 502);
     if (r.body.status !== "completed")
@@ -10544,11 +10544,11 @@ function registerHardwareScheduleFinalizeImageRoutes(router2, {
         console.warn("[finalize-image][door] ledger advance failed:", e.message);
       }
       try {
-        await transformDoorEntriesToHardwareSets2(sessionId, user.email || user.userId, env2);
+        await transformDoorEntriesToHardwareSets3(sessionId, user.email || user.userId, env2);
       } catch (e) {
       }
       try {
-        await materializeDseToLineItems2(sessionId, env2);
+        await materializeDseToLineItems3(sessionId, env2);
       } catch (e) {
       }
       try {
@@ -10592,7 +10592,7 @@ function registerHardwareScheduleFinalizeImageRoutes(router2, {
       mergeThisPage = (siblingDelivered?.n || 0) > 0;
     } catch (e) {
     }
-    await savePageExtraction22(sessionId, pageNumber, extractionResult, env2, { merge: mergeThisPage });
+    await savePageExtraction23(sessionId, pageNumber, extractionResult, env2, { merge: mergeThisPage });
     const groups = extractionResult.hardware_groups || [];
     const compCount = groups.reduce((s, g) => s + (g.components?.length || 0), 0);
     if (packet) {
@@ -10610,11 +10610,11 @@ function registerHardwareScheduleFinalizeImageRoutes(router2, {
       }
     }
     try {
-      await transformDoorEntriesToHardwareSets2(sessionId, user.email || user.userId, env2);
+      await transformDoorEntriesToHardwareSets3(sessionId, user.email || user.userId, env2);
     } catch (e) {
     }
     try {
-      await materializeDseToLineItems2(sessionId, env2);
+      await materializeDseToLineItems3(sessionId, env2);
     } catch (e) {
     }
     try {
@@ -10638,6 +10638,1054 @@ function registerHardwareScheduleFinalizeImageRoutes(router2, {
       components: groups.reduce((s, g) => s + (g.components?.length || 0), 0),
       next_step: `Review and approve: POST /api/hardware-schedule/session/${sessionId}/page/${pageNumber}/approve`
     });
+  });
+}
+
+// src/routes/hardware-schedule-extract.js
+function countPdfPagesRaw2(buffer) {
+  try {
+    const txt = new TextDecoder("latin1").decode(buffer);
+    const pageObjs = (txt.match(/\/Type\s*\/Page(?![s\w])/g) || []).length;
+    if (pageObjs > 0)
+      return pageObjs;
+    let maxCount = 0;
+    const re = /\/Count\s+(\d+)/g;
+    let m;
+    while ((m = re.exec(txt)) !== null) {
+      const n = parseInt(m[1], 10);
+      if (n > maxCount)
+        maxCount = n;
+    }
+    return maxCount;
+  } catch (e) {
+    return 0;
+  }
+}
+function registerHardwareScheduleExtractRoutes(router2, {
+  authenticate: authenticate2,
+  requireActiveSubscription: requireActiveSubscription2,
+  getSessionStatus: getSessionStatus2,
+  extractHardwareSchedule: extractHardwareSchedule2,
+  storeHardwareExtraction: storeHardwareExtraction2,
+  getHardwareGroupForReview: getHardwareGroupForReview2,
+  updateHardwareGroup: updateHardwareGroup2,
+  detectFileType: detectFileType2,
+  extractPdfBookmarks2: extractPdfBookmarks22,
+  detectSchedulePages: detectSchedulePages2,
+  createExtractionSession: createExtractionSession2,
+  logTelemetryEvent: logTelemetryEvent2,
+  detectTextLayer2: detectTextLayer22
+}) {
+  router2.post("/api/hardware-schedule/extract", async (request2, env2) => {
+    const { error: error4, user } = await authenticate2(request2, env2);
+    if (error4)
+      return error4;
+    try {
+      const formData = await request2.formData();
+      const file = formData.get("file");
+      const projectName = formData.get("projectName") || "Hardware Schedule";
+      const submittalId = formData.get("submittalId") || null;
+      if (!file) {
+        return jsonResponse3({ error: "No file provided" }, 400);
+      }
+      if (!file.type.includes("pdf") && !file.name.endsWith(".pdf")) {
+        return jsonResponse3({ error: "Only PDF files are supported" }, 400);
+      }
+      const jobId = crypto.randomUUID();
+      const userId = user.userId;
+      console.log(`[Hardware Extract] Starting extraction job ${jobId} for user ${userId}`);
+      const fileBuffer = await file.arrayBuffer();
+      const fileBufferKey = `hardware-schedules/${userId}/${jobId}`;
+      await env2.CACHE.put(fileBufferKey, fileBuffer, {
+        expirationTtl: 86400 * 7
+        // 7 days
+      });
+      if (env2.UPLOADS) {
+        await env2.UPLOADS.put(fileBufferKey, fileBuffer);
+        console.log(`[Hardware Extract] PDF stored in R2: ${fileBufferKey}`);
+      }
+      const extractionResult = await extractHardwareSchedule2(fileBuffer, env2);
+      console.log(`[Hardware Extract] Extraction complete: ${extractionResult.hardware_groups.length} sets found`);
+      const dbResult = await storeHardwareExtraction2(extractionResult, env2, userId);
+      await env2.DB.prepare(`
+      INSERT INTO hardware_extraction_jobs
+      (id, user_id, submittal_id, project_name, filename, file_buffer_key,
+       total_sets, sets_approved, sets_rejected, status, created_at)
+      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+    `).bind(
+        jobId,
+        userId,
+        submittalId,
+        projectName,
+        file.name,
+        fileBufferKey,
+        extractionResult.hardware_groups.length,
+        0,
+        // sets_approved
+        0,
+        // sets_rejected
+        "pending_review",
+        (/* @__PURE__ */ new Date()).toISOString()
+      ).run().catch((err) => {
+        console.warn("[Hardware Extract] Could not create job record (table may not exist):", err.message);
+      });
+      return jsonResponse3({
+        jobId,
+        projectName,
+        filename: file.name,
+        extraction: {
+          total_sets: extractionResult.hardware_groups.length,
+          sets: extractionResult.hardware_groups.map((s) => ({
+            set_number: s.group_number || s.set_number,
+            set_name: s.group_name || s.set_name || s.description,
+            component_count: s.components.length
+          }))
+        },
+        database: {
+          sets_inserted: dbResult.sets_inserted,
+          components_inserted: dbResult.components_inserted
+        },
+        usage: extractionResult.usage,
+        next_step: "Review each hardware group at /api/hardware-schedule/review/:groupNumber"
+      }, 201);
+    } catch (error5) {
+      console.error("[Hardware Extract] Error:", error5);
+      return jsonResponse3({
+        error: "Failed to extract hardware schedule",
+        details: error5.message
+      }, 500);
+    }
+  });
+  router2.get("/api/hardware-schedule/review/:groupNumber", async (request2, env2) => {
+    const { error: error4, user } = await authenticate2(request2, env2);
+    if (error4)
+      return error4;
+    try {
+      const groupNumber = request2.params.groupNumber;
+      if (!groupNumber) {
+        return jsonResponse3({ error: "Set number is required" }, 400);
+      }
+      const hardwareGroup = await getHardwareGroupForReview2(groupNumber, env2);
+      if (!hardwareGroup) {
+        return jsonResponse3({ error: `Hardware group ${groupNumber} not found` }, 404);
+      }
+      console.log(`[Hardware Review] Retrieved set ${groupNumber} with ${hardwareGroup.components.length} components`);
+      return jsonResponse3({
+        hardware_group: hardwareGroup
+      });
+    } catch (error5) {
+      console.error("[Hardware Review] Error:", error5);
+      return jsonResponse3({
+        error: "Failed to retrieve hardware group",
+        details: error5.message
+      }, 500);
+    }
+  });
+  router2.post("/api/hardware-schedule/approve/:groupNumber", async (request2, env2) => {
+    const { error: error4, user } = await authenticate2(request2, env2);
+    if (error4)
+      return error4;
+    try {
+      const groupNumber = request2.params.groupNumber;
+      const data = await request2.json();
+      if (!groupNumber) {
+        return jsonResponse3({ error: "Set number is required" }, 400);
+      }
+      console.log(`[Hardware Approve] Processing approval for set ${groupNumber}`);
+      const result = await updateHardwareGroup2(groupNumber, data, env2);
+      if (data.jobId) {
+        await env2.DB.prepare(`
+        UPDATE hardware_extraction_jobs
+        SET sets_approved = sets_approved + 1,
+            updated_at = ?
+        WHERE id = ?
+      `).bind((/* @__PURE__ */ new Date()).toISOString(), data.jobId).run().catch((err) => {
+          console.warn("[Hardware Approve] Could not update job record:", err.message);
+        });
+      }
+      console.log(`[Hardware Approve] Set ${groupNumber} approved and updated`);
+      return jsonResponse3({
+        success: true,
+        set_number: groupNumber,
+        message: `Hardware group ${groupNumber} has been approved and saved`
+      });
+    } catch (error5) {
+      console.error("[Hardware Approve] Error:", error5);
+      return jsonResponse3({
+        error: "Failed to approve hardware group",
+        details: error5.message
+      }, 500);
+    }
+  });
+  router2.post("/api/hardware-schedule/start", async (request2, env2) => {
+    const { error: error4, user } = await authenticate2(request2, env2);
+    if (error4)
+      return error4;
+    const subError = await requireActiveSubscription2(user, env2);
+    if (subError)
+      return subError;
+    try {
+      const formData = await request2.formData();
+      const file = formData.get("file");
+      const projectName = formData.get("projectName") || "Hardware Schedule";
+      const submittalId = formData.get("submittalId") || null;
+      const totalPages = parseInt(formData.get("totalPages") || "0", 10);
+      const documentType = formData.get("document_type") || "hardware_schedule";
+      const tenantId = formData.get("tenant_id") || (request2?.user?.tenant_id || "ven_weyland");
+      if (!file) {
+        return jsonResponse3({ error: "No file provided" }, 400);
+      }
+      const validDocumentTypes = ["door_schedule", "hardware_schedule", "finish_schedule", "frame_schedule"];
+      if (!validDocumentTypes.includes(documentType)) {
+        return jsonResponse3({
+          error: "Invalid document_type",
+          valid_types: validDocumentTypes
+        }, 400);
+      }
+      const fileBuffer = await file.arrayBuffer();
+      const fileInfo = detectFileType2(fileBuffer);
+      if (fileInfo.type === "unknown") {
+        return jsonResponse3({
+          success: false,
+          error: "UNSUPPORTED_FILE_TYPE",
+          message: "Please upload a PDF or image file (PNG, JPEG, WebP, GIF)"
+        }, 400);
+      }
+      const userId = user.userId;
+      let pageCount;
+      let sourceType;
+      let documentOutline = null;
+      if (fileInfo.type === "image") {
+        pageCount = 1;
+        sourceType = "image";
+        console.log(`[Hardware Session] Image upload detected (${fileInfo.mimeType}) for user ${userId}`);
+      } else {
+        sourceType = "pdf";
+        const pdfInfo = await extractPdfBookmarks22(fileBuffer);
+        pageCount = totalPages > 0 ? totalPages : pdfInfo.numPages;
+        documentOutline = pdfInfo.bookmarks;
+        if (!(pageCount > 1)) {
+          const rawCount = countPdfPagesRaw2(fileBuffer);
+          if (rawCount > (pageCount || 0))
+            pageCount = rawCount;
+        }
+        console.log(`[Hardware Session] PDF upload detected (${pageCount} pages) for user ${userId}`);
+      }
+      const fileBufferKey = `hardware-sessions/${userId}/${crypto.randomUUID()}`;
+      if (fileBuffer.byteLength <= 25 * 1024 * 1024) {
+        await env2.CACHE.put(fileBufferKey, fileBuffer, {
+          expirationTtl: 86400 * 7
+          // 7 days
+        });
+      } else {
+        console.log(`[Hardware Session] Skipping KV cache \u2014 file ${(fileBuffer.byteLength / 1024 / 1024).toFixed(1)}MB exceeds 25MB KV limit. R2-only storage.`);
+      }
+      if (env2.UPLOADS) {
+        await env2.UPLOADS.put(fileBufferKey, fileBuffer);
+        console.log(`[Hardware Session] File stored in R2: ${fileBufferKey} (${sourceType})`);
+      }
+      let detectedSchedulePages = null;
+      if (documentOutline) {
+        detectedSchedulePages = detectSchedulePages2(documentOutline, documentType);
+      }
+      const sessionId = await createExtractionSession2({
+        userId,
+        submittalId,
+        projectName,
+        filename: file.name,
+        fileBufferKey,
+        totalPages: pageCount,
+        sourceType,
+        // 'pdf' or 'image' - file format routing
+        documentType,
+        // 'door_schedule' or 'hardware_schedule' - schedule type routing
+        tenantId,
+        // CH-2026-0120-UI-001: tenant context for constraints
+        documentOutline,
+        // 27A: PDF bookmark tree
+        detectedSchedulePages
+        // 27A: auto-detected schedule pages
+      }, env2);
+      console.log(`[Hardware Session] Created session ${sessionId} with ${pageCount} pages (${sourceType}, ${documentType})`);
+      await logTelemetryEvent2(env2, {
+        eventType: "session",
+        eventName: "hardware_session_created",
+        severity: "info",
+        message: `Hardware extraction session created: ${projectName}`,
+        context: {
+          session_id: sessionId,
+          project_name: projectName,
+          filename: file.name,
+          total_pages: pageCount,
+          file_size_bytes: fileBuffer.byteLength,
+          submittal_id: submittalId,
+          source_type: sourceType,
+          // 'pdf' or 'image'
+          document_type: documentType
+          // 'door_schedule' or 'hardware_schedule'
+        },
+        userId: user.userId,
+        sessionId
+      });
+      return jsonResponse3({
+        sessionId,
+        projectName,
+        filename: file.name,
+        totalPages: pageCount,
+        sourceType,
+        // Include in response for client awareness
+        documentType,
+        // FX-2026-0121-UI-003: Include document type for client routing
+        documentOutline,
+        // 27A: PDF bookmark tree
+        detectedSchedulePages,
+        // 27A: auto-detected schedule pages
+        status: "active",
+        message: sourceType === "image" ? `Image session created (${documentType}). Ready for extraction.` : `Session created (${documentType}). Start extracting pages 1-${pageCount}`,
+        next_step: `GET /api/hardware-schedule/session/${sessionId}/page/1`
+      }, 201);
+    } catch (error5) {
+      console.error("[Hardware Session] Error:", error5);
+      await logTelemetryEvent2(env2, {
+        eventType: "session",
+        eventName: "hardware_session_failed",
+        severity: "error",
+        message: `Hardware extraction session creation failed`,
+        context: {
+          error_message: error5.message
+        },
+        userId: user.userId
+      });
+      return jsonResponse3({
+        error: "Failed to start extraction session",
+        details: error5.message
+      }, 500);
+    }
+  });
+  router2.post("/api/hardware-schedule/session/:sessionId/detect-schedules", async (request2, env2) => {
+    const { error: error4, user } = await authenticate2(request2, env2);
+    if (error4)
+      return error4;
+    const startTime = Date.now();
+    try {
+      const sessionId = request2.params.sessionId;
+      const body = await request2.json().catch(() => ({}));
+      const pages = body.pages || "all";
+      const forceVision = body.force_vision === true;
+      console.log(`[Detect Schedules] Starting detection for session ${sessionId}, force_vision=${forceVision}`);
+      const session = await env2.DB.prepare(`
+      SELECT id, user_id, project_name, file_buffer_key, total_pages, status, detection_status
+      FROM hardware_extraction_sessions
+      WHERE id = ?
+    `).bind(sessionId).first();
+      if (!session) {
+        return jsonResponse3({ error: "Session not found" }, 404);
+      }
+      if (session.user_id !== user.userId) {
+        return jsonResponse3({ error: "Access denied" }, 403);
+      }
+      if (session.detection_status === "complete") {
+        console.log(`[Detect Schedules] Detection already complete for session ${sessionId}`);
+        const existingCandidates = await env2.DB.prepare(`
+        SELECT id, page_number, schedule_type, detection_confidence, bounding_box,
+               detection_hints_found, row_count_estimate, detection_method, status
+        FROM schedule_region_candidates
+        WHERE session_id = ?
+        ORDER BY page_number, detection_confidence DESC
+      `).bind(sessionId).all();
+        const candidates2 = (existingCandidates.results || []).map((c) => ({
+          id: c.id,
+          page_number: c.page_number,
+          schedule_type: c.schedule_type,
+          confidence: c.detection_confidence,
+          detection_method: c.detection_method,
+          detected_headers: c.detection_hints_found ? JSON.parse(c.detection_hints_found) : [],
+          bounding_box: c.bounding_box ? JSON.parse(c.bounding_box) : null,
+          status: c.status
+        }));
+        return jsonResponse3({
+          success: true,
+          session_id: sessionId,
+          detection_summary: {
+            pages_scanned: session.total_pages,
+            routing_decision: session.detection_method || "unknown",
+            text_items_found: 0,
+            // Not stored from previous run
+            candidates_created: candidates2.length
+          },
+          candidates: candidates2,
+          next_step: candidates2.length > 0 ? { action: "affirm_candidates", endpoint: `/api/hardware-schedule/session/${sessionId}/candidates` } : { action: "user_region_selection", reason: "No candidates detected", endpoint: `/api/hardware-schedule/session/${sessionId}/candidates` },
+          cached: true
+        });
+      }
+      const uploadKey = session.file_buffer_key;
+      let pdfBuffer = null;
+      if (env2.UPLOADS) {
+        const pdfObject = await env2.UPLOADS.get(uploadKey);
+        if (pdfObject) {
+          pdfBuffer = await pdfObject.arrayBuffer();
+          console.log(`[Detect Schedules] PDF retrieved from R2: ${uploadKey} (${pdfBuffer.byteLength} bytes)`);
+        }
+      }
+      if (!pdfBuffer && env2.CACHE) {
+        pdfBuffer = await env2.CACHE.get(uploadKey, { type: "arrayBuffer" });
+        if (pdfBuffer) {
+          console.log(`[Detect Schedules] PDF retrieved from KV cache: ${uploadKey}`);
+        }
+      }
+      if (!pdfBuffer) {
+        return jsonResponse3({
+          error: "PDF not found",
+          details: "The PDF file has expired or was not uploaded. Please re-upload the document."
+        }, 404);
+      }
+      let textLayerResult;
+      let routingDecision;
+      if (forceVision) {
+        routingDecision = "vision-primary";
+        textLayerResult = {
+          hasTextLayer: false,
+          textItemCount: 0,
+          route: "vision-primary",
+          sampledPages: 0,
+          avgItemsPerPage: 0,
+          totalPages: session.total_pages,
+          forced: true
+        };
+        console.log(`[Detect Schedules] Vision-primary forced by user request`);
+      } else {
+        textLayerResult = await detectTextLayer22(pdfBuffer);
+        routingDecision = textLayerResult.route;
+        console.log(`[Detect Schedules] Text layer detection result: ${routingDecision}, ${textLayerResult.textItemCount} items`);
+      }
+      let candidates = [];
+      if (routingDecision === "text-extractable") {
+        console.log(`[Detect Schedules] Text-extractable route - creating candidates from text analysis`);
+      } else {
+        console.log(`[Detect Schedules] Vision-primary route - calling weyland-ocr-worker`);
+        try {
+          if (!env2.OCR_SERVICE) throw new Error("OCR_SERVICE binding not configured");
+          const ocrResp = await env2.OCR_SERVICE.fetch("https://weyland-ocr-worker/detect-schedules", {
+            method: "POST",
+            headers: { "X-Session-Id": sessionId, "X-Total-Pages": String(session.total_pages) },
+            body: pdfBuffer
+          });
+          if (!ocrResp.ok) {
+            const errBody = await ocrResp.text().catch(() => "");
+            throw new Error(`OCR service returned ${ocrResp.status}: ${errBody.slice(0, 300)}`);
+          }
+          const visionResult = await ocrResp.json();
+          candidates = (visionResult.candidates || []).map((c) => ({
+            id: `cand_${sessionId}_${c.pageNumber}_${crypto.randomUUID().slice(0, 8)}`,
+            session_id: sessionId,
+            page_number: c.pageNumber,
+            schedule_type: c.scheduleType,
+            detection_confidence: null,
+            // Full-page candidate - this pipeline detects candidate PAGES, not
+            // sub-regions within a page. Real dimensions aren't known here
+            // (the ocr-worker doesn't return them); recorded as null rather
+            // than fabricated.
+            bounding_box: JSON.stringify({ x: 0, y: 0, width: null, height: null }),
+            detection_hints_found: null,
+            row_count_estimate: null,
+            detection_method: "ocr_title_scan_pdfium",
+            status: "pending"
+          }));
+          if (candidates.length > 0) {
+            const stmt = env2.DB.prepare(`
+            INSERT INTO schedule_region_candidates
+              (id, session_id, page_number, schedule_type, detection_confidence, bounding_box,
+               detection_hints_found, row_count_estimate, detection_method, status)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+          `);
+            await env2.DB.batch(candidates.map((c) => stmt.bind(
+              c.id,
+              c.session_id,
+              c.page_number,
+              c.schedule_type,
+              c.detection_confidence,
+              c.bounding_box,
+              c.detection_hints_found,
+              c.row_count_estimate,
+              c.detection_method,
+              c.status
+            )));
+          }
+          console.log(`[Detect Schedules] OCR detection found ${candidates.length} candidates (${visionResult.pagesWithNoOcrText} pages with no OCR text, ${(visionResult.unresolved || []).length} unresolved)`);
+        } catch (visionError) {
+          console.error(`[Detect Schedules] OCR detection failed, falling back to manual selection:`, visionError.message);
+        }
+      }
+      await env2.DB.prepare(`
+      UPDATE hardware_extraction_sessions
+      SET detection_status = 'complete',
+          detection_method = ?,
+          text_extraction_viable = ?,
+          candidates_count = ?,
+          detection_completed_at = datetime('now'),
+          updated_at = datetime('now')
+      WHERE id = ?
+    `).bind(
+        routingDecision,
+        routingDecision === "text-extractable" ? 1 : 0,
+        candidates.length,
+        sessionId
+      ).run();
+      const elapsedMs = Date.now() - startTime;
+      console.log(`[Detect Schedules] Detection complete in ${elapsedMs}ms: ${routingDecision}, ${candidates.length} candidates`);
+      await logTelemetryEvent2(env2, {
+        eventType: "detection",
+        eventName: "schedule_detection_complete",
+        severity: "info",
+        message: `Schedule detection complete: ${routingDecision}`,
+        context: {
+          session_id: sessionId,
+          routing_decision: routingDecision,
+          text_items_found: textLayerResult.textItemCount,
+          candidates_created: candidates.length,
+          pages_scanned: textLayerResult.sampledPages || textLayerResult.totalPages,
+          detection_time_ms: elapsedMs,
+          force_vision: forceVision
+        },
+        userId: user.userId,
+        sessionId
+      });
+      const response = {
+        success: true,
+        session_id: sessionId,
+        detection_summary: {
+          pages_scanned: textLayerResult.totalPages || session.total_pages,
+          routing_decision: routingDecision,
+          text_items_found: textLayerResult.textItemCount,
+          candidates_created: candidates.length,
+          detection_time_ms: elapsedMs
+        },
+        next_step: routingDecision === "vision-primary" ? {
+          action: "user_region_selection",
+          reason: "No text layer detected - document requires human-guided region selection",
+          endpoint: `/api/hardware-schedule/session/${sessionId}/candidates`
+        } : candidates.length > 0 ? {
+          action: "affirm_candidates",
+          endpoint: `/api/hardware-schedule/session/${sessionId}/candidates`
+        } : {
+          action: "user_region_selection",
+          reason: "Text layer detected but no schedule tables found - please identify regions manually",
+          endpoint: `/api/hardware-schedule/session/${sessionId}/candidates`
+        }
+      };
+      if (candidates.length > 0) {
+        response.candidates = candidates;
+      }
+      return jsonResponse3(response);
+    } catch (error5) {
+      console.error("[Detect Schedules] Error:", error5);
+      await logTelemetryEvent2(env2, {
+        eventType: "detection",
+        eventName: "schedule_detection_failed",
+        severity: "error",
+        message: `Schedule detection failed: ${error5.message}`,
+        context: {
+          session_id: request2.params?.sessionId,
+          error_message: error5.message,
+          error_stack: error5.stack?.substring(0, 500)
+        },
+        userId: user.userId
+      });
+      return jsonResponse3({
+        error: "Detection failed",
+        details: error5.message
+      }, 500);
+    }
+  });
+  router2.get("/api/hardware-schedule/session/:sessionId/status", async (request2, env2) => {
+    const { error: error4, user } = await authenticate2(request2, env2);
+    if (error4)
+      return error4;
+    try {
+      const sessionId = request2.params.sessionId;
+      const status = await getSessionStatus2(sessionId, env2);
+      if (!status) {
+        return jsonResponse3({ error: "Session not found" }, 404);
+      }
+      return jsonResponse3({
+        session: status
+      });
+    } catch (error5) {
+      console.error("[Hardware Session] Error:", error5);
+      return jsonResponse3({
+        error: "Failed to get session status",
+        details: error5.message
+      }, 500);
+    }
+  });
+  router2.post("/api/hardware-schedule/session/:sessionId/set-page-range", async (request2, env2) => {
+    const { error: error4, user } = await authenticate2(request2, env2);
+    if (error4)
+      return error4;
+    try {
+      const sessionId = request2.params.sessionId;
+      const body = await request2.json();
+      const { extraction_page_range } = body;
+      const session = await env2.DB.prepare(`
+      SELECT id, user_id FROM hardware_extraction_sessions WHERE id = ? AND user_id = ?
+    `).bind(sessionId, user.userId).first();
+      if (!session) {
+        return jsonResponse3({ error: "Session not found", message: "Session not found" }, 404);
+      }
+      if (extraction_page_range !== null) {
+        const ranges = Array.isArray(extraction_page_range) ? extraction_page_range : [extraction_page_range];
+        for (const r of ranges) {
+          if (!r || !r.start || !r.end || r.start < 1 || r.end < r.start) {
+            return jsonResponse3({
+              error: "Invalid page range",
+              message: "Each range requires {start, end} where start >= 1 and end >= start"
+            }, 400);
+          }
+        }
+      }
+      await env2.DB.prepare(`
+      UPDATE hardware_extraction_sessions SET extraction_page_range = ? WHERE id = ?
+    `).bind(
+        extraction_page_range ? JSON.stringify(extraction_page_range) : null,
+        sessionId
+      ).run();
+      console.log(`[27A Page Range] Session ${sessionId}: ${extraction_page_range ? JSON.stringify(extraction_page_range) : "cleared"}`);
+      return jsonResponse3({
+        success: true,
+        extraction_page_range
+      });
+    } catch (error5) {
+      console.error("[27A Page Range] Error:", error5);
+      return jsonResponse3({
+        error: "Failed to set page range",
+        message: "Failed to set page range: " + error5.message,
+        details: error5.message
+      }, 500);
+    }
+  });
+  router2.post("/api/hardware-schedule/session/:sessionId/set-table-pages", async (request2, env2) => {
+    const { error: error4, user } = await authenticate2(request2, env2);
+    if (error4)
+      return error4;
+    try {
+      const sessionId = request2.params.sessionId;
+      const body = await request2.json();
+      const { schedule_table_pages } = body;
+      const session = await env2.DB.prepare(`
+      SELECT id, user_id FROM hardware_extraction_sessions WHERE id = ? AND user_id = ?
+    `).bind(sessionId, user.userId).first();
+      if (!session) {
+        return jsonResponse3({ error: "Session not found", message: "Session not found" }, 404);
+      }
+      if (schedule_table_pages !== null) {
+        if (!Array.isArray(schedule_table_pages) || schedule_table_pages.some((p) => typeof p !== "number" || p < 1 || !Number.isInteger(p))) {
+          return jsonResponse3({
+            error: "Invalid table pages",
+            message: "schedule_table_pages must be an array of positive integers"
+          }, 400);
+        }
+      }
+      await env2.DB.prepare(`
+      UPDATE hardware_extraction_sessions SET schedule_table_pages = ? WHERE id = ?
+    `).bind(
+        schedule_table_pages ? JSON.stringify(schedule_table_pages) : null,
+        sessionId
+      ).run();
+      console.log(`[27A Table Pages] Session ${sessionId}: ${schedule_table_pages ? schedule_table_pages.join(", ") : "cleared"}`);
+      return jsonResponse3({
+        success: true,
+        schedule_table_pages
+      });
+    } catch (error5) {
+      console.error("[27A Table Pages] Error:", error5);
+      return jsonResponse3({
+        error: "Failed to set table pages",
+        message: "Failed to set table pages: " + error5.message
+      }, 500);
+    }
+  });
+  router2.post("/api/hardware-schedule/session/:sessionId/batch-extract", async (request2, env2) => {
+    const { error: error4, user } = await authenticate2(request2, env2);
+    if (error4)
+      return error4;
+    try {
+      const { sessionId } = request2.params;
+      const body = await request2.json();
+      const { pages, dpi = 600, auto_affirm_tables = false } = body;
+      const userId = user?.email || user?.id || "anonymous";
+      const useAffirmed = body.use_affirmed === true || Array.isArray(body.candidate_ids) && body.candidate_ids.length > 0;
+      if (!useAffirmed && (!pages || !Array.isArray(pages) || pages.length === 0)) {
+        return jsonResponse3({ error: "pages array required" }, 400);
+      }
+      const session = await getSessionStatus2(sessionId, env2);
+      if (!session) {
+        return jsonResponse3({ error: "Session not found" }, 404);
+      }
+      let routeForSession = env2.WEYLAND_EDITION === "local" ? "claude_code_subprocess" : "claude_code_local";
+      try {
+        const _rr = await env2.DB.prepare(
+          `SELECT extraction_route FROM hardware_extraction_sessions WHERE id = ?`
+        ).bind(sessionId).first();
+        if (_rr?.extraction_route)
+          routeForSession = _rr.extraction_route;
+      } catch (e) {
+      }
+      const scheduleType = session.document_type || "hardware_schedule";
+      let tablePages = [];
+      const autoAffirmPages = [];
+      let candidateIds = [];
+      let extractingPageNums = [];
+      const fullPageBox = JSON.stringify({ x: 0, y: 0, width: 9999, height: 9999 });
+      if (useAffirmed) {
+        await detectAndPersistRegionConflicts(sessionId, env2);
+        let q = `SELECT id, page_number, review_status, conflict_reason FROM schedule_region_candidates WHERE session_id = ? AND status = 'affirmed'`;
+        const qp = [sessionId];
+        if (Array.isArray(body.candidate_ids) && body.candidate_ids.length > 0) {
+          q += ` AND id IN (${body.candidate_ids.map(() => "?").join(",")})`;
+          qp.push(...body.candidate_ids);
+        }
+        q += ` ORDER BY COALESCE(parse_order, 999999), page_number`;
+        const { results: affirmed } = await env2.DB.prepare(q).bind(...qp).all();
+        const blocked = (affirmed || []).filter((c) => c.review_status === "conflict");
+        if (blocked.length > 0) {
+          return jsonResponse3({
+            error: "conflicts_unresolved",
+            message: "Resolve flagged region conflicts before extracting.",
+            conflicts: blocked.map((c) => ({ candidate_id: c.id, page: c.page_number, reason: c.conflict_reason }))
+          }, 409);
+        }
+        candidateIds = (affirmed || []).map((c) => c.id);
+        extractingPageNums = (affirmed || []).map((c) => c.page_number);
+        if (candidateIds.length === 0) {
+          return jsonResponse3({ error: "no_affirmed_candidates", message: "No affirmed regions to extract. Draw and affirm at least one region." }, 400);
+        }
+        console.log(`[Batch Extract] Session ${sessionId}: multi-region use_affirmed -> ${candidateIds.length} affirmed candidates (parse_order)`);
+      } else {
+        let detectedLookup = {};
+        if (session.detected_schedule_pages) {
+          try {
+            const detected = typeof session.detected_schedule_pages === "string" ? JSON.parse(session.detected_schedule_pages) : session.detected_schedule_pages;
+            for (const d of detected) {
+              detectedLookup[d.page] = d;
+            }
+          } catch (e) {
+          }
+        }
+        for (const pageNum of pages) {
+          const detected = detectedLookup[pageNum];
+          if (!auto_affirm_tables && detected && detected.page_type === "schedule_table") {
+            tablePages.push({ page: pageNum, title: detected.title || "", confidence: detected.confidence });
+          } else {
+            autoAffirmPages.push(pageNum);
+          }
+        }
+        if (autoAffirmPages.length === 0 && tablePages.length > 0) {
+          for (const tp of tablePages)
+            autoAffirmPages.push(tp.page);
+          tablePages = [];
+        }
+        for (const pageNum of autoAffirmPages) {
+          const candidateId = crypto.randomUUID();
+          await env2.DB.prepare(`
+          INSERT INTO schedule_region_candidates
+            (id, session_id, page_number, schedule_type, bounding_box, detection_method, status, affirmed_by, affirmed_at, extraction_dpi, created_at, updated_at)
+          VALUES (?, ?, ?, ?, ?, 'batch-extract', 'affirmed', ?, datetime('now'), ?, datetime('now'), datetime('now'))
+        `).bind(candidateId, sessionId, pageNum, scheduleType, fullPageBox, userId, dpi).run();
+          candidateIds.push(candidateId);
+        }
+        extractingPageNums = autoAffirmPages;
+        console.log(`[Batch Extract] Session ${sessionId}: ${autoAffirmPages.length} auto-affirmed, ${tablePages.length} table pages awaiting region selection`);
+      }
+      let extractionResult = null;
+      if (candidateIds.length > 0) {
+        const bufferKey = session.file_buffer_key || "uploads/" + sessionId + ".pdf";
+        let fileBuffer = pdfBufferOrNull(await env2.CACHE.get(bufferKey, { type: "arrayBuffer" }), bufferKey);
+        let pdfStreamUrl = null;
+        if (fileBuffer && fileBuffer.byteLength > 20 * 1024 * 1024 && env2.UPLOADS) {
+          console.log(`[Batch Extract] KV returned ${(fileBuffer.byteLength / 1024 / 1024).toFixed(1)}MB \u2014 switching to R2 streaming to avoid OOM`);
+          fileBuffer = null;
+          pdfStreamUrl = await generateR2StreamUrl(bufferKey, env2);
+        } else if (!fileBuffer && env2.UPLOADS) {
+          pdfStreamUrl = await generateR2StreamUrl(bufferKey, env2);
+          console.log("[Batch Extract] Using R2 stream URL (avoiding OOM for large PDFs)");
+        }
+        if ((fileBuffer || pdfStreamUrl) && routeForSession === "claude_code_local") {
+          const packets = [];
+          const _projRow = await env2.DB.prepare("SELECT project_id FROM hardware_extraction_sessions WHERE id = ?").bind(sessionId).first();
+          const projectId = _projRow?.project_id || null;
+          const ownerForCheck = user.mhsId || user.mhs_id || null;
+          try {
+            const bs = await callEdge("GET", `/ai/v1/bridge/status?owner_id=${encodeURIComponent(ownerForCheck || "")}`, env2);
+            if (bs.status === 200 && bs.body && bs.body.online === false) {
+              return jsonResponse3({
+                error: "bridge_offline",
+                message: "Your Claude Code bridge is not running. Start it (Download launcher) and retry.",
+                owner_id: ownerForCheck,
+                has_token: !!bs.body.has_token
+              }, 409);
+            }
+          } catch (e) {
+          }
+          for (const cId of candidateIds) {
+            const candidate = await env2.DB.prepare("SELECT * FROM schedule_region_candidates WHERE id = ?").bind(cId).first();
+            if (!candidate)
+              continue;
+            try {
+              const _pctBox = (() => {
+                try {
+                  const p = JSON.parse(candidate.bounding_box_percent || "null");
+                  return p && typeof p.x_percent === "number" ? p : null;
+                } catch (e) {
+                  return null;
+                }
+              })();
+              let boundingBox = _pctBox || JSON.parse(candidate.user_adjusted_bounding_box || candidate.bounding_box);
+              if (candidate.schedule_type === "door_schedule") {
+                boundingBox = { ...boundingBox, pad_w_percent: 0.05, pad_h_percent: 0.04 };
+              }
+              const candidateDpi = candidate.extraction_dpi || 600;
+              const rendered = await renderRegionAt600DPI2(fileBuffer, candidate.page_number, boundingBox, env2, candidateDpi, pdfStreamUrl);
+              const imageBase64 = arrayBufferToBase64(rendered.imageBuffer);
+              const q = await queuePageExtractionJob(imageBase64, env2, {
+                pageNumber: candidate.page_number,
+                totalPages: session.page_count || 1,
+                sessionId,
+                tenantId: session.tenant_id || "ven_weyland",
+                ownerMhsId: user.mhsId || user.mhs_id || null,
+                // WO-2026-0623-WEYLAND-003 (decision A): carry operator guidance + cross-ref ties
+                operatorNotes: candidate.user_notes || null,
+                crossRefGuidance: candidate.cross_ref || null,
+                // CH-2026-0706 STEP 2: door regions queue with the PROVEN door prompt
+                scheduleType: candidate.schedule_type || null
+              });
+              const kuId = crypto.randomUUID();
+              await env2.DB.prepare(`
+              INSERT OR REPLACE INTO kdp_packets
+                (id, connection_id, project_id, candidate_id, page_number, sequence, unit_type, job_id, route, owner_id, state, attempts, created_at, updated_at)
+              VALUES (?, ?, ?, ?, ?, ?, ?, ?, 'claude_code_local', ?, 'in_flight', 1, datetime('now'), datetime('now'))
+            `).bind(
+                kuId,
+                sessionId,
+                projectId,
+                cId,
+                candidate.page_number,
+                candidate.page_number,
+                candidate.schedule_type === "door_schedule" ? "door_mark" : "hardware_set",
+                q.job_id,
+                q.owner_id
+              ).run();
+              await env2.DB.prepare(`UPDATE schedule_region_candidates SET status = 'extracting', extraction_started_at = datetime('now'), updated_at = datetime('now') WHERE id = ?`).bind(cId).run();
+              packets.push({
+                ku_id: kuId,
+                candidate_id: cId,
+                page: candidate.page_number,
+                job_id: q.job_id,
+                poll_url: `/api/jobs/${q.job_id}`,
+                finalize_url: `/api/hardware-schedule/session/${sessionId}/page/${candidate.page_number}/finalize-image/${q.job_id}`
+              });
+            } catch (qErr) {
+              console.error(`[Batch Extract][async] queue failed page ${candidate.page_number}:`, qErr.message);
+              await env2.DB.prepare(`UPDATE schedule_region_candidates SET status = 'failed', extraction_error = ?, updated_at = datetime('now') WHERE id = ?`).bind(String(qErr.message).slice(0, 500), cId).run();
+              packets.push({ candidate_id: cId, page: candidate.page_number, error: qErr.message });
+            }
+          }
+          return jsonResponse3({
+            success: true,
+            async: true,
+            session_id: sessionId,
+            auto_affirmed_count: autoAffirmPages.length,
+            table_pages: tablePages,
+            table_pages_count: tablePages.length,
+            packets,
+            message: "Queued to your bridge. Poll each job, then finalize per page."
+          });
+        }
+        if (fileBuffer || pdfStreamUrl) {
+          const results = [];
+          const context3 = {
+            sessionId,
+            tenantId: session.tenant_id || "ven_weyland",
+            industryId: session.industry_id || "ind_doors"
+          };
+          const priorExtractions = {
+            groups: [],
+            matrixEntries: [],
+            nomenclature: null,
+            pagesExtracted: [],
+            pageTypes: {}
+          };
+          try {
+            const existingHpe = await env2.DB.prepare(
+              "SELECT page_number, extracted_data FROM hardware_page_extractions WHERE session_id = ?"
+            ).bind(sessionId).all();
+            const extractingPages = new Set(extractingPageNums);
+            for (const row of existingHpe.results || []) {
+              if (extractingPages.has(row.page_number))
+                continue;
+              try {
+                const data = JSON.parse(row.extracted_data);
+                const groups = data.hardware_groups || [];
+                for (const g of groups) {
+                  priorExtractions.groups.push({ groupNumber: g.group_number, groupName: g.group_name || "", page: row.page_number, componentCount: (g.components || []).length, assignedDoors: g.assigned_doors || [] });
+                }
+                for (const m of data.door_hardware_matrix || []) {
+                  priorExtractions.matrixEntries.push({ doorNumber: m.door_number, hardwareSetNumber: m.hardware_set_number, page: row.page_number });
+                }
+                if (!priorExtractions.nomenclature && data.detected_nomenclature) {
+                  priorExtractions.nomenclature = { hardwareUnitTerm: data.detected_nomenclature.hardware_unit_term || "group", doorIdentifierTerm: data.detected_nomenclature.door_identifier_term || "door" };
+                }
+                priorExtractions.pagesExtracted.push(row.page_number);
+                priorExtractions.pageTypes[row.page_number] = groups.length > 0 ? "schedule" : (data.door_hardware_matrix || []).length > 0 ? "door_matrix" : "other";
+              } catch (e) {
+              }
+            }
+            if (priorExtractions.pagesExtracted.length > 0) {
+              console.log(`[Batch Extract] Seeded context: ${priorExtractions.groups.length} groups from ${priorExtractions.pagesExtracted.length} prior pages`);
+            }
+          } catch (e) {
+          }
+          const pagesWrittenThisRun = /* @__PURE__ */ new Set();
+          for (const cId of candidateIds) {
+            const candidate = await env2.DB.prepare(
+              "SELECT * FROM schedule_region_candidates WHERE id = ?"
+            ).bind(cId).first();
+            if (!candidate)
+              continue;
+            try {
+              await env2.DB.prepare(`
+              UPDATE schedule_region_candidates SET status = 'extracting', extraction_started_at = datetime('now'), updated_at = datetime('now') WHERE id = ?
+            `).bind(cId).run();
+              const _pctBox = (() => {
+                try {
+                  const p = JSON.parse(candidate.bounding_box_percent || "null");
+                  return p && typeof p.x_percent === "number" ? p : null;
+                } catch (e) {
+                  return null;
+                }
+              })();
+              const boundingBox = _pctBox || JSON.parse(candidate.user_adjusted_bounding_box || candidate.bounding_box);
+              const candidateDpi = candidate.extraction_dpi || 600;
+              const rendered = await renderRegionAt600DPI2(fileBuffer, candidate.page_number, boundingBox, env2, candidateDpi, pdfStreamUrl);
+              const extractionRes = await routeExtraction(
+                candidate.schedule_type,
+                rendered.imageBuffer,
+                {
+                  ...context3,
+                  candidateId: cId,
+                  pageNumber: candidate.page_number,
+                  totalPages: session.page_count || 1,
+                  priorExtractions,
+                  operatorNotes: candidate.user_notes || null,
+                  crossRefGuidance: candidate.cross_ref || null
+                },
+                env2
+              );
+              if (extractionRes && extractionRes.success !== false) {
+                const hpeData = extractionRes.hardware_groups ? extractionRes : { hardware_groups: extractionRes.entries || [], ...extractionRes };
+                const mergeThisPage = pagesWrittenThisRun.has(candidate.page_number);
+                await savePageExtraction2(sessionId, candidate.page_number, hpeData, env2, { merge: mergeThisPage });
+                pagesWrittenThisRun.add(candidate.page_number);
+                const hwGroups = hpeData.hardware_groups || [];
+                for (const g of hwGroups) {
+                  priorExtractions.groups.push({ groupNumber: g.group_number, groupName: g.group_name || "", page: candidate.page_number, componentCount: (g.components || []).length, assignedDoors: g.assigned_doors || [] });
+                }
+                for (const m of hpeData.door_hardware_matrix || []) {
+                  priorExtractions.matrixEntries.push({ doorNumber: m.door_number, hardwareSetNumber: m.hardware_set_number, page: candidate.page_number });
+                }
+                if (!priorExtractions.nomenclature && hpeData.detected_nomenclature) {
+                  priorExtractions.nomenclature = { hardwareUnitTerm: hpeData.detected_nomenclature.hardware_unit_term || "group", doorIdentifierTerm: hpeData.detected_nomenclature.door_identifier_term || "door" };
+                }
+                priorExtractions.pagesExtracted.push(candidate.page_number);
+                priorExtractions.pageTypes[candidate.page_number] = hwGroups.length > 0 ? "schedule" : (hpeData.door_hardware_matrix || []).length > 0 ? "door_matrix" : "other";
+              }
+              await env2.DB.prepare(`
+              UPDATE schedule_region_candidates SET status = 'extracted', extraction_completed_at = datetime('now'), extraction_entry_count = ?, updated_at = datetime('now') WHERE id = ?
+            `).bind(extractionRes.entry_count || 0, cId).run();
+              results.push({
+                candidate_id: cId,
+                page: candidate.page_number,
+                status: "extracted",
+                entry_count: extractionRes.entry_count || 0,
+                _debug: {
+                  schedule_type: candidate.schedule_type,
+                  has_hw_groups: !!extractionRes.hardware_groups,
+                  hw_group_count: (extractionRes.hardware_groups || []).length,
+                  has_entries: !!extractionRes.entries,
+                  entry_arr_count: (extractionRes.entries || []).length,
+                  config_used: extractionRes.config_used || null,
+                  fallback_reason: extractionRes.fallback_reason || null,
+                  raw_preview: extractionRes._raw_preview || null,
+                  prior_context_pages: priorExtractions.pagesExtracted.length
+                }
+              });
+            } catch (exErr) {
+              console.error(`[Batch Extract] Failed page ${candidate.page_number}:`, exErr);
+              await env2.DB.prepare(`
+              UPDATE schedule_region_candidates SET status = 'failed', updated_at = datetime('now') WHERE id = ?
+            `).bind(cId).run();
+              results.push({ candidate_id: cId, page: candidate.page_number, status: "failed", error: exErr.message });
+            }
+          }
+          extractionResult = results;
+        }
+      }
+      if (extractionResult && extractionResult.length > 0) {
+        const extractedCount = extractionResult.filter((r) => r.status === "extracted").length;
+        if (extractedCount > 0) {
+          try {
+            const transformResult = await transformDoorEntriesToHardwareSets(sessionId, userId, env2);
+            console.log(`[Batch Extract] Bridge: ${transformResult.setsCreated} hardware_sets from ${transformResult.totalMarks} entries`);
+          } catch (transformError) {
+            console.error("[Batch Extract] Bridge failed (non-blocking):", transformError.message);
+          }
+          try {
+            const matResult = await materializeDseToLineItems(sessionId, env2);
+            console.log(`[Batch Extract] Materialize: ${matResult.doorsCreated} door groups, ${matResult.framesCreated} frame groups`);
+          } catch (matError) {
+            console.error("[Batch Extract] Materialize failed (non-blocking):", matError.message);
+          }
+        }
+      }
+      const pageDataMap = {};
+      if (extractionResult && extractionResult.length > 0) {
+        const extractedPageNums = extractionResult.filter((r) => r.status === "extracted").map((r) => r.page);
+        if (extractedPageNums.length > 0) {
+          const placeholders = extractedPageNums.map(() => "?").join(",");
+          const hpeRows = await env2.DB.prepare(`
+          SELECT page_number, extracted_data, affirm_state
+          FROM hardware_page_extractions
+          WHERE session_id = ? AND page_number IN (${placeholders})
+          ORDER BY page_number
+        `).bind(sessionId, ...extractedPageNums).all();
+          for (const row of hpeRows.results || []) {
+            try {
+              const data = JSON.parse(row.extracted_data);
+              pageDataMap[row.page_number] = {
+                groups: data.hardware_groups || data.hardwareGroups || [],
+                affirm_state: row.affirm_state || "pending_review"
+              };
+            } catch (e) {
+            }
+          }
+        }
+      }
+      const _extractedOk = (extractionResult || []).filter((r) => r.status === "extracted").length;
+      return jsonResponse3({
+        success: true,
+        session_id: sessionId,
+        use_affirmed: useAffirmed,
+        candidate_count: candidateIds.length,
+        auto_affirmed_count: autoAffirmPages.length,
+        table_pages: tablePages,
+        table_pages_count: tablePages.length,
+        extraction_results: extractionResult,
+        page_data: pageDataMap,
+        message: useAffirmed ? `${_extractedOk} of ${candidateIds.length} affirmed region(s) extracted.` : tablePages.length > 0 ? `${autoAffirmPages.length} pages extracted. ${tablePages.length} table pages ready for targeted region selection.` : `${autoAffirmPages.length} pages extracted via Path C.`
+      });
+    } catch (error5) {
+      console.error("[Batch Extract] Error:", error5);
+      return jsonResponse3({ error: "Batch extraction failed", details: error5.message }, 500);
+    }
   });
 }
 
@@ -10733,6 +11781,21 @@ function registerExtractedModules(router2, deps) {
     savePageExtraction2: deps.savePageExtraction2,
     buildExtractionResultFromVision: deps.buildExtractionResultFromVision,
     persistDoorScheduleResponse: deps.persistDoorScheduleResponse
+  });
+  registerHardwareScheduleExtractRoutes(router2, {
+    authenticate,
+    requireActiveSubscription,
+    getSessionStatus: deps.getSessionStatus,
+    extractHardwareSchedule: deps.extractHardwareSchedule,
+    storeHardwareExtraction: deps.storeHardwareExtraction,
+    getHardwareGroupForReview: deps.getHardwareGroupForReview,
+    updateHardwareGroup: deps.updateHardwareGroup,
+    detectFileType: deps.detectFileType,
+    extractPdfBookmarks2: deps.extractPdfBookmarks2,
+    detectSchedulePages: deps.detectSchedulePages,
+    createExtractionSession: deps.createExtractionSession,
+    logTelemetryEvent: deps.logTelemetryEvent,
+    detectTextLayer2: deps.detectTextLayer2
   });
 }
 
@@ -146560,13 +147623,13 @@ __export(hardware_schedule_extractor_exports, {
   loadRenderer: () => loadRenderer,
   logConstraintExecution: () => logConstraintExecution,
   persistDoorScheduleResponse: () => persistDoorScheduleResponse,
-  queuePageExtractionJob: () => queuePageExtractionJob,
-  renderRegionAt600DPI: () => renderRegionAt600DPI2,
+  queuePageExtractionJob: () => queuePageExtractionJob2,
+  renderRegionAt600DPI: () => renderRegionAt600DPI22,
   resolveConstraints: () => resolveConstraints,
   resolveDoorScheduleConstraints: () => resolveDoorScheduleConstraints,
   resolveExtractionContract: () => resolveExtractionContract,
   resolveInferenceContract: () => resolveInferenceContract,
-  routeExtraction: () => routeExtraction,
+  routeExtraction: () => routeExtraction2,
   savePageExtraction: () => savePageExtraction,
   storeHardwareExtraction: () => storeHardwareExtraction,
   updateHardwareGroup: () => updateHardwareGroup
@@ -147673,7 +148736,7 @@ async function _imageSourceForQueue(imageBase64, env2) {
   console.log(`[Image Sidecar] ${(bytes.length / 1024).toFixed(0)}KB -> R2 ${key} (signed URL, full fidelity)`);
   return { type: "url", url: `${origin}/api/internal/r2-stream?token=${encodeURIComponent(token)}` };
 }
-async function queuePageExtractionJob(imageBase64, env2, opts = {}) {
+async function queuePageExtractionJob2(imageBase64, env2, opts = {}) {
   const { pageNumber, totalPages, sessionId, tenantId, ownerMhsId, operatorNotes, crossRefGuidance, scheduleType = null } = opts;
   let ownerId = ownerMhsId || null;
   if (!ownerId && sessionId && env2.DB) {
@@ -149223,7 +150286,7 @@ async function extractDoorScheduleHGSE(imageBuffer, prompt, context3, env2) {
   }
   return result;
 }
-async function routeExtraction(scheduleType, imageBuffer, context3, env2) {
+async function routeExtraction2(scheduleType, imageBuffer, context3, env2) {
   const startTime = Date.now();
   console.log(`[Schedule Router] \u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550`);
   console.log(`[Schedule Router] ROUTING EXTRACTION - Type: ${scheduleType}`);
@@ -150202,7 +151265,7 @@ async function persistDoorScheduleResponse(sessionId, apiResponse, tenantId, pag
     };
   }
 }
-async function renderRegionAt600DPI2(pdfBuffer, pageNumber, boundingBox, env2 = null, dpi = 600, pdfUrl = null) {
+async function renderRegionAt600DPI22(pdfBuffer, pageNumber, boundingBox, env2 = null, dpi = 600, pdfUrl = null) {
   const DPI = dpi;
   const SCALE = DPI / 72;
   console.log("[Region Renderer 600DPI] " + "=".repeat(50));
@@ -150423,7 +151486,7 @@ async function getOrRenderRegionAt600DPI(sessionId, candidateId, pdfBuffer, page
   }
   if (!env2 || !env2.OUTPUTS) {
     console.warn("[Region Renderer 600DPI] No OUTPUTS R2 bucket, rendering without cache");
-    const rendered2 = await renderRegionAt600DPI2(pdfBuffer, pageNumber, boundingBox, env2);
+    const rendered2 = await renderRegionAt600DPI22(pdfBuffer, pageNumber, boundingBox, env2);
     return { ...rendered2, cacheHit: false, cacheKey: null };
   }
   const cacheKey = `regions/${sessionId}/${candidateId}_600dpi.png`;
@@ -150444,7 +151507,7 @@ async function getOrRenderRegionAt600DPI(sessionId, candidateId, pdfBuffer, page
     console.warn(`[Region Renderer 600DPI] Cache check failed:`, cacheError.message);
   }
   console.log(`[Region Renderer 600DPI] Cache MISS for ${cacheKey}, rendering...`);
-  const rendered = await renderRegionAt600DPI2(pdfBuffer, pageNumber, boundingBox, env2);
+  const rendered = await renderRegionAt600DPI22(pdfBuffer, pageNumber, boundingBox, env2);
   try {
     await env2.OUTPUTS.put(cacheKey, rendered.imageBuffer, {
       httpMetadata: { contentType: "image/png" }
@@ -150641,7 +151704,7 @@ async function extractCore(sessionId, pages, options, env2) {
     const pageStart = Date.now();
     console.log(`[extractCore] \u2500\u2500\u2500 Page ${pageNum} (${results.length + 1}/${validPages.length}) \u2500\u2500\u2500`);
     const bbox = boundingBoxes[pageNum] || { x: 0, y: 0, width: 1, height: 1 };
-    const rendered = await renderRegionAt600DPI2(
+    const rendered = await renderRegionAt600DPI22(
       pdfBuffer,
       pageNum,
       bbox,
@@ -150956,7 +152019,7 @@ var init_hardware_schedule_extractor = __esm({
     __name(_callClaudeVisionWithImage_sabp, "_callClaudeVisionWithImage_sabp");
     __name(_callClaudeVisionWithImage_localSubprocess, "_callClaudeVisionWithImage_localSubprocess");
     __name(_imageSourceForQueue, "_imageSourceForQueue");
-    __name(queuePageExtractionJob, "queuePageExtractionJob");
+    __name(queuePageExtractionJob2, "queuePageExtractionJob");
     __name(buildExtractionResultFromVision, "buildExtractionResultFromVision");
     __name(_callClaudeVisionWithImage_apiDirect, "_callClaudeVisionWithImage_apiDirect");
     __name(extractSinglePage, "extractSinglePage");
@@ -150985,7 +152048,7 @@ var init_hardware_schedule_extractor = __esm({
     __name(resolveInferenceContract, "resolveInferenceContract");
     __name(resolveExtractionContract, "resolveExtractionContract");
     __name(extractDoorScheduleHGSE, "extractDoorScheduleHGSE");
-    __name(routeExtraction, "routeExtraction");
+    __name(routeExtraction2, "routeExtraction");
     __name(extractGenericSchedule, "extractGenericSchedule");
     __name(buildGenericExtractionPrompt, "buildGenericExtractionPrompt");
     __name(parseGenericExtractionResult, "parseGenericExtractionResult");
@@ -151024,7 +152087,7 @@ var init_hardware_schedule_extractor = __esm({
     __name(parseDoorScheduleExtractionResult, "parseDoorScheduleExtractionResult");
     __name(extractDoorSchedule, "extractDoorSchedule");
     __name(persistDoorScheduleResponse, "persistDoorScheduleResponse");
-    __name(renderRegionAt600DPI2, "renderRegionAt600DPI");
+    __name(renderRegionAt600DPI22, "renderRegionAt600DPI");
     __name(getOrRenderRegionAt600DPI, "getOrRenderRegionAt600DPI");
     __name(_buildPriorContextSection, "_buildPriorContextSection");
     __name(buildContextAwareExtractionPrompt, "buildContextAwareExtractionPrompt");
@@ -157666,7 +158729,7 @@ async function viaSabpClaudeCode(sessionId, pdfBuffer, env2, ctx = {}) {
       { type: "text", text: contract.prompt }
     ]
   }];
-  const r = await callEdge("POST", "/ai/v1/jobs/queue", env2, {
+  const r = await callEdge2("POST", "/ai/v1/jobs/queue", env2, {
     owner_id: session.mhs_id,
     venture_code: "weyland",
     model_hint: _inf.model,
@@ -157747,7 +158810,7 @@ async function dispatchVisionExtraction(sessionId, pdfBuffer, env2, ctx = {}) {
   return result;
 }
 __name(dispatchVisionExtraction, "dispatchVisionExtraction");
-function pdfBufferOrNull(buf, keyForLog) {
+function pdfBufferOrNull2(buf, keyForLog) {
   if (!buf)
     return null;
   try {
@@ -157761,13 +158824,13 @@ function pdfBufferOrNull(buf, keyForLog) {
   }
   return null;
 }
-__name(pdfBufferOrNull, "pdfBufferOrNull");
-async function generateR2StreamUrl(bufferKey, env2) {
+__name(pdfBufferOrNull2, "pdfBufferOrNull");
+async function generateR2StreamUrl2(bufferKey, env2) {
   const token = await generateJWT({ key: bufferKey }, env2.JWT_SECRET, 3e5);
   const origin = env2.APP_URL || "https://weyland.onamerica.org";
   return `${origin}/api/internal/r2-stream?token=${encodeURIComponent(token)}`;
 }
-__name(generateR2StreamUrl, "generateR2StreamUrl");
+__name(generateR2StreamUrl2, "generateR2StreamUrl");
 var R2_STREAM_CT = { ".pdf": "application/pdf", ".jpg": "image/jpeg", ".jpeg": "image/jpeg", ".png": "image/png", ".webp": "image/webp", ".gif": "image/gif" };
 function r2StreamContentType(key, headObj) {
   const ext = (key.match(/\.[^.\/]+$/) || [""])[0].toLowerCase();
@@ -158225,7 +159288,7 @@ async function mintInternalToken(env2) {
   return { "Authorization": `Bearer ${env2.FLEET_API_KEY}`, "X-Fleet-Key": env2.FLEET_API_KEY || "", "X-Surface": "internal-fallback-jwt" };
 }
 __name(mintInternalToken, "mintInternalToken");
-async function callEdge(method, path, env2, body) {
+async function callEdge2(method, path, env2, body) {
   const authHeaders = await mintInternalToken(env2);
   const headers = {
     "Content-Type": "application/json",
@@ -158249,7 +159312,7 @@ async function callEdge(method, path, env2, body) {
   }
   return { status: resp.status, body: data };
 }
-__name(callEdge, "callEdge");
+__name(callEdge2, "callEdge");
 router.get("/api/test/sabp-marker-xyz", async (request2, env2) => {
   return jsonResponse3({ marker: "sabp-route-active", timestamp: Date.now() }, 200);
 });
@@ -158260,7 +159323,7 @@ router.get("/api/me/bridge/status", async (request2, env2) => {
   const ownerId = user.mhsId || user.userId;
   if (!ownerId)
     return jsonResponse3({ error: "No MHS ID for current user" }, 400);
-  const res = await callEdge("GET", `/ai/v1/bridge/status?owner_id=${encodeURIComponent(ownerId)}`, env2);
+  const res = await callEdge2("GET", `/ai/v1/bridge/status?owner_id=${encodeURIComponent(ownerId)}`, env2);
   return jsonResponse3(res.body, res.status);
 });
 router.post("/api/me/bridge/token", async (request2, env2) => {
@@ -158279,7 +159342,7 @@ router.post("/api/me/bridge/token", async (request2, env2) => {
     body = await request2.json();
   } catch {
   }
-  const res = await callEdge("POST", "/ai/v1/bridge/token", env2, {
+  const res = await callEdge2("POST", "/ai/v1/bridge/token", env2, {
     owner_id: ownerId,
     owner_email: user.email,
     label: body.label || `Bridge for ${user.name || user.email}`,
@@ -158384,7 +159447,7 @@ router.post("/api/install/device-auth/approve", async (request2, env2) => {
     await env2.DB.prepare(`UPDATE install_device_auth SET status = 'expired' WHERE device_code = ?`).bind(row.device_code).run();
     return jsonResponse3({ error: "expired" }, 410);
   }
-  const tokenRes = await callEdge("POST", "/ai/v1/bridge/token", env2, {
+  const tokenRes = await callEdge2("POST", "/ai/v1/bridge/token", env2, {
     owner_id: user.mhsId,
     owner_email: user.email,
     label: `Bridge for ${user.name || user.email} (${body.hostname || "unknown host"})`,
@@ -158525,7 +159588,7 @@ router.post("/api/sessions/:sessionId/queue-extraction", async (request2, env2) 
     return jsonResponse3({ error: "messages array required (Anthropic Messages format), or pass use_session_pdf:true" }, 400);
   }
   const _qInf = resolveInferenceContract(env2);
-  const res = await callEdge("POST", "/ai/v1/jobs/queue", env2, {
+  const res = await callEdge2("POST", "/ai/v1/jobs/queue", env2, {
     owner_id: ownerId,
     venture_code: "weyland",
     model_hint: body.model_hint || _qInf.model,
@@ -158556,7 +159619,7 @@ router.get("/api/jobs/:jobId", async (request2, env2) => {
   const { error: error4, user } = await authenticate(request2, env2);
   if (error4)
     return error4;
-  const res = await callEdge("GET", `/ai/v1/jobs/${request2.params.jobId}`, env2);
+  const res = await callEdge2("GET", `/ai/v1/jobs/${request2.params.jobId}`, env2);
   return jsonResponse3(res.body, res.status);
 });
 router.get("/api/me/jobs", async (request2, env2) => {
@@ -158570,7 +159633,7 @@ router.get("/api/me/jobs", async (request2, env2) => {
   let path = `/ai/v1/bridge/jobs?owner_id=${encodeURIComponent(ownerId)}&limit=100`;
   if (jobId)
     path += `&job_id=${encodeURIComponent(jobId)}`;
-  const res = await callEdge("GET", path, env2);
+  const res = await callEdge2("GET", path, env2);
   return jsonResponse3(res.body, res.status);
 });
 router.get("/api/me/bridge/launcher.ps1", async (request2, env2) => {
@@ -158580,7 +159643,7 @@ router.get("/api/me/bridge/launcher.ps1", async (request2, env2) => {
   const ownerId = user.mhsId;
   if (!ownerId)
     return jsonResponse3({ error: "MHS ID required" }, 400);
-  const tokenRes = await callEdge("POST", "/ai/v1/bridge/token", env2, {
+  const tokenRes = await callEdge2("POST", "/ai/v1/bridge/token", env2, {
     owner_id: ownerId,
     owner_email: user.email,
     label: `Bridge for ${user.name || user.email}`,
@@ -158678,7 +159741,7 @@ router.get("/api/me/bridge/launcher.sh", async (request2, env2) => {
   const ownerId = user.mhsId;
   if (!ownerId)
     return jsonResponse3({ error: "MHS ID required" }, 400);
-  const tokenRes = await callEdge("POST", "/ai/v1/bridge/token", env2, {
+  const tokenRes = await callEdge2("POST", "/ai/v1/bridge/token", env2, {
     owner_id: ownerId,
     owner_email: user.email,
     label: `Bridge for ${user.name || user.email}`,
@@ -158838,7 +159901,7 @@ router.post("/api/sessions/:sessionId/finalize-from-job/:jobId", async (request2
     return jsonResponse3({ error: "session_not_found" }, 404);
   if (sess.pending_job_id !== request2.params.jobId)
     return jsonResponse3({ error: "job_not_associated_with_session" }, 409);
-  const r = await callEdge("GET", `/ai/v1/jobs/${request2.params.jobId}`, env2);
+  const r = await callEdge2("GET", `/ai/v1/jobs/${request2.params.jobId}`, env2);
   if (r.status !== 200)
     return jsonResponse3({ error: "edge_fetch_failed", detail: r.body }, 502);
   if (r.body.status !== "completed")
@@ -158862,11 +159925,11 @@ router.post("/api/sessions/:sessionId/finalize-from-job/:jobId", async (request2
       `UPDATE hardware_extraction_sessions SET pending_job_id = NULL, extraction_completed_at = ? WHERE id = ? AND pending_job_id = ?`
     ).bind((/* @__PURE__ */ new Date()).toISOString(), request2.params.sessionId, request2.params.jobId).run();
     try {
-      await transformDoorEntriesToHardwareSets(request2.params.sessionId, user.email || user.userId, env2);
+      await transformDoorEntriesToHardwareSets2(request2.params.sessionId, user.email || user.userId, env2);
     } catch (e) {
     }
     try {
-      await materializeDseToLineItems(request2.params.sessionId, env2);
+      await materializeDseToLineItems2(request2.params.sessionId, env2);
     } catch (e) {
     }
     return jsonResponse3({
@@ -160196,147 +161259,6 @@ router.get("/api/submittals/:id", async (request2, env2) => {
     return jsonResponse3({ error: "Failed to fetch submittal: " + error5.message }, 500);
   }
 });
-router.post("/api/hardware-schedule/extract", async (request2, env2) => {
-  const { error: error4, user } = await authenticate(request2, env2);
-  if (error4)
-    return error4;
-  try {
-    const formData = await request2.formData();
-    const file = formData.get("file");
-    const projectName = formData.get("projectName") || "Hardware Schedule";
-    const submittalId = formData.get("submittalId") || null;
-    if (!file) {
-      return jsonResponse3({ error: "No file provided" }, 400);
-    }
-    if (!file.type.includes("pdf") && !file.name.endsWith(".pdf")) {
-      return jsonResponse3({ error: "Only PDF files are supported" }, 400);
-    }
-    const jobId = crypto.randomUUID();
-    const userId = user.userId;
-    console.log(`[Hardware Extract] Starting extraction job ${jobId} for user ${userId}`);
-    const fileBuffer = await file.arrayBuffer();
-    const fileBufferKey = `hardware-schedules/${userId}/${jobId}`;
-    await env2.CACHE.put(fileBufferKey, fileBuffer, {
-      expirationTtl: 86400 * 7
-      // 7 days
-    });
-    if (env2.UPLOADS) {
-      await env2.UPLOADS.put(fileBufferKey, fileBuffer);
-      console.log(`[Hardware Extract] PDF stored in R2: ${fileBufferKey}`);
-    }
-    const extractionResult = await extractHardwareSchedule(fileBuffer, env2);
-    console.log(`[Hardware Extract] Extraction complete: ${extractionResult.hardware_groups.length} sets found`);
-    const dbResult = await storeHardwareExtraction(extractionResult, env2, userId);
-    await env2.DB.prepare(`
-      INSERT INTO hardware_extraction_jobs
-      (id, user_id, submittal_id, project_name, filename, file_buffer_key,
-       total_sets, sets_approved, sets_rejected, status, created_at)
-      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-    `).bind(
-      jobId,
-      userId,
-      submittalId,
-      projectName,
-      file.name,
-      fileBufferKey,
-      extractionResult.hardware_groups.length,
-      0,
-      // sets_approved
-      0,
-      // sets_rejected
-      "pending_review",
-      (/* @__PURE__ */ new Date()).toISOString()
-    ).run().catch((err) => {
-      console.warn("[Hardware Extract] Could not create job record (table may not exist):", err.message);
-    });
-    return jsonResponse3({
-      jobId,
-      projectName,
-      filename: file.name,
-      extraction: {
-        total_sets: extractionResult.hardware_groups.length,
-        sets: extractionResult.hardware_groups.map((s) => ({
-          set_number: s.group_number || s.set_number,
-          set_name: s.group_name || s.set_name || s.description,
-          component_count: s.components.length
-        }))
-      },
-      database: {
-        sets_inserted: dbResult.sets_inserted,
-        components_inserted: dbResult.components_inserted
-      },
-      usage: extractionResult.usage,
-      next_step: "Review each hardware group at /api/hardware-schedule/review/:groupNumber"
-    }, 201);
-  } catch (error5) {
-    console.error("[Hardware Extract] Error:", error5);
-    return jsonResponse3({
-      error: "Failed to extract hardware schedule",
-      details: error5.message
-    }, 500);
-  }
-});
-router.get("/api/hardware-schedule/review/:groupNumber", async (request2, env2) => {
-  const { error: error4, user } = await authenticate(request2, env2);
-  if (error4)
-    return error4;
-  try {
-    const groupNumber = request2.params.groupNumber;
-    if (!groupNumber) {
-      return jsonResponse3({ error: "Set number is required" }, 400);
-    }
-    const hardwareGroup = await getHardwareGroupForReview(groupNumber, env2);
-    if (!hardwareGroup) {
-      return jsonResponse3({ error: `Hardware group ${groupNumber} not found` }, 404);
-    }
-    console.log(`[Hardware Review] Retrieved set ${groupNumber} with ${hardwareGroup.components.length} components`);
-    return jsonResponse3({
-      hardware_group: hardwareGroup
-    });
-  } catch (error5) {
-    console.error("[Hardware Review] Error:", error5);
-    return jsonResponse3({
-      error: "Failed to retrieve hardware group",
-      details: error5.message
-    }, 500);
-  }
-});
-router.post("/api/hardware-schedule/approve/:groupNumber", async (request2, env2) => {
-  const { error: error4, user } = await authenticate(request2, env2);
-  if (error4)
-    return error4;
-  try {
-    const groupNumber = request2.params.groupNumber;
-    const data = await request2.json();
-    if (!groupNumber) {
-      return jsonResponse3({ error: "Set number is required" }, 400);
-    }
-    console.log(`[Hardware Approve] Processing approval for set ${groupNumber}`);
-    const result = await updateHardwareGroup(groupNumber, data, env2);
-    if (data.jobId) {
-      await env2.DB.prepare(`
-        UPDATE hardware_extraction_jobs
-        SET sets_approved = sets_approved + 1,
-            updated_at = ?
-        WHERE id = ?
-      `).bind((/* @__PURE__ */ new Date()).toISOString(), data.jobId).run().catch((err) => {
-        console.warn("[Hardware Approve] Could not update job record:", err.message);
-      });
-    }
-    console.log(`[Hardware Approve] Set ${groupNumber} approved and updated`);
-    return jsonResponse3({
-      success: true,
-      set_number: groupNumber,
-      message: `Hardware group ${groupNumber} has been approved and saved`
-    });
-  } catch (error5) {
-    console.error("[Hardware Approve] Error:", error5);
-    return jsonResponse3({
-      error: "Failed to approve hardware group",
-      details: error5.message
-    }, 500);
-  }
-});
 router.post("/api/upload/init", async (request2, env2) => {
   const { error: error4, user } = await authenticate(request2, env2);
   if (error4)
@@ -160402,26 +161324,6 @@ router.put("/api/upload/part", async (request2, env2) => {
     return jsonResponse3({ error: "Failed to upload chunk", details: error5.message }, 500);
   }
 });
-function countPdfPagesRaw(buffer) {
-  try {
-    const txt = new TextDecoder("latin1").decode(buffer);
-    const pageObjs = (txt.match(/\/Type\s*\/Page(?![s\w])/g) || []).length;
-    if (pageObjs > 0)
-      return pageObjs;
-    let maxCount = 0;
-    const re = /\/Count\s+(\d+)/g;
-    let m;
-    while ((m = re.exec(txt)) !== null) {
-      const n = parseInt(m[1], 10);
-      if (n > maxCount)
-        maxCount = n;
-    }
-    return maxCount;
-  } catch (e) {
-    return 0;
-  }
-}
-__name(countPdfPagesRaw, "countPdfPagesRaw");
 router.post("/api/upload/complete", async (request2, env2) => {
   const { error: error4, user } = await authenticate(request2, env2);
   if (error4)
@@ -160550,876 +161452,6 @@ router.post("/api/upload/complete", async (request2, env2) => {
       userId: user.userId
     });
     return jsonResponse3({ error: "Failed to complete upload", details: error5.message }, 500);
-  }
-});
-router.post("/api/hardware-schedule/start", async (request2, env2) => {
-  const { error: error4, user } = await authenticate(request2, env2);
-  if (error4)
-    return error4;
-  const subError = await requireActiveSubscription(user, env2);
-  if (subError)
-    return subError;
-  try {
-    const formData = await request2.formData();
-    const file = formData.get("file");
-    const projectName = formData.get("projectName") || "Hardware Schedule";
-    const submittalId = formData.get("submittalId") || null;
-    const totalPages = parseInt(formData.get("totalPages") || "0", 10);
-    const documentType = formData.get("document_type") || "hardware_schedule";
-    const tenantId = formData.get("tenant_id") || (request2?.user?.tenant_id || "ven_weyland");
-    if (!file) {
-      return jsonResponse3({ error: "No file provided" }, 400);
-    }
-    const validDocumentTypes = ["door_schedule", "hardware_schedule", "finish_schedule", "frame_schedule"];
-    if (!validDocumentTypes.includes(documentType)) {
-      return jsonResponse3({
-        error: "Invalid document_type",
-        valid_types: validDocumentTypes
-      }, 400);
-    }
-    const fileBuffer = await file.arrayBuffer();
-    const fileInfo = detectFileType(fileBuffer);
-    if (fileInfo.type === "unknown") {
-      return jsonResponse3({
-        success: false,
-        error: "UNSUPPORTED_FILE_TYPE",
-        message: "Please upload a PDF or image file (PNG, JPEG, WebP, GIF)"
-      }, 400);
-    }
-    const userId = user.userId;
-    let pageCount;
-    let sourceType;
-    let documentOutline = null;
-    if (fileInfo.type === "image") {
-      pageCount = 1;
-      sourceType = "image";
-      console.log(`[Hardware Session] Image upload detected (${fileInfo.mimeType}) for user ${userId}`);
-    } else {
-      sourceType = "pdf";
-      const pdfInfo = await extractPdfBookmarks2(fileBuffer);
-      pageCount = totalPages > 0 ? totalPages : pdfInfo.numPages;
-      documentOutline = pdfInfo.bookmarks;
-      if (!(pageCount > 1)) {
-        const rawCount = countPdfPagesRaw(fileBuffer);
-        if (rawCount > (pageCount || 0))
-          pageCount = rawCount;
-      }
-      console.log(`[Hardware Session] PDF upload detected (${pageCount} pages) for user ${userId}`);
-    }
-    const fileBufferKey = `hardware-sessions/${userId}/${crypto.randomUUID()}`;
-    if (fileBuffer.byteLength <= 25 * 1024 * 1024) {
-      await env2.CACHE.put(fileBufferKey, fileBuffer, {
-        expirationTtl: 86400 * 7
-        // 7 days
-      });
-    } else {
-      console.log(`[Hardware Session] Skipping KV cache \u2014 file ${(fileBuffer.byteLength / 1024 / 1024).toFixed(1)}MB exceeds 25MB KV limit. R2-only storage.`);
-    }
-    if (env2.UPLOADS) {
-      await env2.UPLOADS.put(fileBufferKey, fileBuffer);
-      console.log(`[Hardware Session] File stored in R2: ${fileBufferKey} (${sourceType})`);
-    }
-    let detectedSchedulePages = null;
-    if (documentOutline) {
-      detectedSchedulePages = detectSchedulePages(documentOutline, documentType);
-    }
-    const sessionId = await createExtractionSession({
-      userId,
-      submittalId,
-      projectName,
-      filename: file.name,
-      fileBufferKey,
-      totalPages: pageCount,
-      sourceType,
-      // 'pdf' or 'image' - file format routing
-      documentType,
-      // 'door_schedule' or 'hardware_schedule' - schedule type routing
-      tenantId,
-      // CH-2026-0120-UI-001: tenant context for constraints
-      documentOutline,
-      // 27A: PDF bookmark tree
-      detectedSchedulePages
-      // 27A: auto-detected schedule pages
-    }, env2);
-    console.log(`[Hardware Session] Created session ${sessionId} with ${pageCount} pages (${sourceType}, ${documentType})`);
-    await logTelemetryEvent(env2, {
-      eventType: "session",
-      eventName: "hardware_session_created",
-      severity: "info",
-      message: `Hardware extraction session created: ${projectName}`,
-      context: {
-        session_id: sessionId,
-        project_name: projectName,
-        filename: file.name,
-        total_pages: pageCount,
-        file_size_bytes: fileBuffer.byteLength,
-        submittal_id: submittalId,
-        source_type: sourceType,
-        // 'pdf' or 'image'
-        document_type: documentType
-        // 'door_schedule' or 'hardware_schedule'
-      },
-      userId: user.userId,
-      sessionId
-    });
-    return jsonResponse3({
-      sessionId,
-      projectName,
-      filename: file.name,
-      totalPages: pageCount,
-      sourceType,
-      // Include in response for client awareness
-      documentType,
-      // FX-2026-0121-UI-003: Include document type for client routing
-      documentOutline,
-      // 27A: PDF bookmark tree
-      detectedSchedulePages,
-      // 27A: auto-detected schedule pages
-      status: "active",
-      message: sourceType === "image" ? `Image session created (${documentType}). Ready for extraction.` : `Session created (${documentType}). Start extracting pages 1-${pageCount}`,
-      next_step: `GET /api/hardware-schedule/session/${sessionId}/page/1`
-    }, 201);
-  } catch (error5) {
-    console.error("[Hardware Session] Error:", error5);
-    await logTelemetryEvent(env2, {
-      eventType: "session",
-      eventName: "hardware_session_failed",
-      severity: "error",
-      message: `Hardware extraction session creation failed`,
-      context: {
-        error_message: error5.message
-      },
-      userId: user.userId
-    });
-    return jsonResponse3({
-      error: "Failed to start extraction session",
-      details: error5.message
-    }, 500);
-  }
-});
-router.post("/api/hardware-schedule/session/:sessionId/detect-schedules", async (request2, env2) => {
-  const { error: error4, user } = await authenticate(request2, env2);
-  if (error4)
-    return error4;
-  const startTime = Date.now();
-  try {
-    const sessionId = request2.params.sessionId;
-    const body = await request2.json().catch(() => ({}));
-    const pages = body.pages || "all";
-    const forceVision = body.force_vision === true;
-    console.log(`[Detect Schedules] Starting detection for session ${sessionId}, force_vision=${forceVision}`);
-    const session = await env2.DB.prepare(`
-      SELECT id, user_id, project_name, file_buffer_key, total_pages, status, detection_status
-      FROM hardware_extraction_sessions
-      WHERE id = ?
-    `).bind(sessionId).first();
-    if (!session) {
-      return jsonResponse3({ error: "Session not found" }, 404);
-    }
-    if (session.user_id !== user.userId) {
-      return jsonResponse3({ error: "Access denied" }, 403);
-    }
-    if (session.detection_status === "complete") {
-      console.log(`[Detect Schedules] Detection already complete for session ${sessionId}`);
-      const existingCandidates = await env2.DB.prepare(`
-        SELECT id, page_number, schedule_type, detection_confidence, bounding_box,
-               detection_hints_found, row_count_estimate, detection_method, status
-        FROM schedule_region_candidates
-        WHERE session_id = ?
-        ORDER BY page_number, detection_confidence DESC
-      `).bind(sessionId).all();
-      const candidates2 = (existingCandidates.results || []).map((c) => ({
-        id: c.id,
-        page_number: c.page_number,
-        schedule_type: c.schedule_type,
-        confidence: c.detection_confidence,
-        detection_method: c.detection_method,
-        detected_headers: c.detection_hints_found ? JSON.parse(c.detection_hints_found) : [],
-        bounding_box: c.bounding_box ? JSON.parse(c.bounding_box) : null,
-        status: c.status
-      }));
-      return jsonResponse3({
-        success: true,
-        session_id: sessionId,
-        detection_summary: {
-          pages_scanned: session.total_pages,
-          routing_decision: session.detection_method || "unknown",
-          text_items_found: 0,
-          // Not stored from previous run
-          candidates_created: candidates2.length
-        },
-        candidates: candidates2,
-        next_step: candidates2.length > 0 ? { action: "affirm_candidates", endpoint: `/api/hardware-schedule/session/${sessionId}/candidates` } : { action: "user_region_selection", reason: "No candidates detected", endpoint: `/api/hardware-schedule/session/${sessionId}/candidates` },
-        cached: true
-      });
-    }
-    const uploadKey = session.file_buffer_key;
-    let pdfBuffer = null;
-    if (env2.UPLOADS) {
-      const pdfObject = await env2.UPLOADS.get(uploadKey);
-      if (pdfObject) {
-        pdfBuffer = await pdfObject.arrayBuffer();
-        console.log(`[Detect Schedules] PDF retrieved from R2: ${uploadKey} (${pdfBuffer.byteLength} bytes)`);
-      }
-    }
-    if (!pdfBuffer && env2.CACHE) {
-      pdfBuffer = await env2.CACHE.get(uploadKey, { type: "arrayBuffer" });
-      if (pdfBuffer) {
-        console.log(`[Detect Schedules] PDF retrieved from KV cache: ${uploadKey}`);
-      }
-    }
-    if (!pdfBuffer) {
-      return jsonResponse3({
-        error: "PDF not found",
-        details: "The PDF file has expired or was not uploaded. Please re-upload the document."
-      }, 404);
-    }
-    let textLayerResult;
-    let routingDecision;
-    if (forceVision) {
-      routingDecision = "vision-primary";
-      textLayerResult = {
-        hasTextLayer: false,
-        textItemCount: 0,
-        route: "vision-primary",
-        sampledPages: 0,
-        avgItemsPerPage: 0,
-        totalPages: session.total_pages,
-        forced: true
-      };
-      console.log(`[Detect Schedules] Vision-primary forced by user request`);
-    } else {
-      textLayerResult = await detectTextLayer2(pdfBuffer);
-      routingDecision = textLayerResult.route;
-      console.log(`[Detect Schedules] Text layer detection result: ${routingDecision}, ${textLayerResult.textItemCount} items`);
-    }
-    let candidates = [];
-    if (routingDecision === "text-extractable") {
-      console.log(`[Detect Schedules] Text-extractable route - creating candidates from text analysis`);
-    } else {
-      console.log(`[Detect Schedules] Vision-primary route - calling weyland-ocr-worker`);
-      try {
-        if (!env2.OCR_SERVICE) throw new Error("OCR_SERVICE binding not configured");
-        const ocrResp = await env2.OCR_SERVICE.fetch("https://weyland-ocr-worker/detect-schedules", {
-          method: "POST",
-          headers: { "X-Session-Id": sessionId, "X-Total-Pages": String(session.total_pages) },
-          body: pdfBuffer
-        });
-        if (!ocrResp.ok) {
-          const errBody = await ocrResp.text().catch(() => "");
-          throw new Error(`OCR service returned ${ocrResp.status}: ${errBody.slice(0, 300)}`);
-        }
-        const visionResult = await ocrResp.json();
-        candidates = (visionResult.candidates || []).map((c) => ({
-          id: `cand_${sessionId}_${c.pageNumber}_${crypto.randomUUID().slice(0, 8)}`,
-          session_id: sessionId,
-          page_number: c.pageNumber,
-          schedule_type: c.scheduleType,
-          detection_confidence: null,
-          // Full-page candidate - this pipeline detects candidate PAGES, not
-          // sub-regions within a page. Real dimensions aren't known here
-          // (the ocr-worker doesn't return them); recorded as null rather
-          // than fabricated.
-          bounding_box: JSON.stringify({ x: 0, y: 0, width: null, height: null }),
-          detection_hints_found: null,
-          row_count_estimate: null,
-          detection_method: "ocr_title_scan_pdfium",
-          status: "pending"
-        }));
-        if (candidates.length > 0) {
-          const stmt = env2.DB.prepare(`
-            INSERT INTO schedule_region_candidates
-              (id, session_id, page_number, schedule_type, detection_confidence, bounding_box,
-               detection_hints_found, row_count_estimate, detection_method, status)
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-          `);
-          await env2.DB.batch(candidates.map((c) => stmt.bind(
-            c.id,
-            c.session_id,
-            c.page_number,
-            c.schedule_type,
-            c.detection_confidence,
-            c.bounding_box,
-            c.detection_hints_found,
-            c.row_count_estimate,
-            c.detection_method,
-            c.status
-          )));
-        }
-        console.log(`[Detect Schedules] OCR detection found ${candidates.length} candidates (${visionResult.pagesWithNoOcrText} pages with no OCR text, ${(visionResult.unresolved || []).length} unresolved)`);
-      } catch (visionError) {
-        console.error(`[Detect Schedules] OCR detection failed, falling back to manual selection:`, visionError.message);
-      }
-    }
-    await env2.DB.prepare(`
-      UPDATE hardware_extraction_sessions
-      SET detection_status = 'complete',
-          detection_method = ?,
-          text_extraction_viable = ?,
-          candidates_count = ?,
-          detection_completed_at = datetime('now'),
-          updated_at = datetime('now')
-      WHERE id = ?
-    `).bind(
-      routingDecision,
-      routingDecision === "text-extractable" ? 1 : 0,
-      candidates.length,
-      sessionId
-    ).run();
-    const elapsedMs = Date.now() - startTime;
-    console.log(`[Detect Schedules] Detection complete in ${elapsedMs}ms: ${routingDecision}, ${candidates.length} candidates`);
-    await logTelemetryEvent(env2, {
-      eventType: "detection",
-      eventName: "schedule_detection_complete",
-      severity: "info",
-      message: `Schedule detection complete: ${routingDecision}`,
-      context: {
-        session_id: sessionId,
-        routing_decision: routingDecision,
-        text_items_found: textLayerResult.textItemCount,
-        candidates_created: candidates.length,
-        pages_scanned: textLayerResult.sampledPages || textLayerResult.totalPages,
-        detection_time_ms: elapsedMs,
-        force_vision: forceVision
-      },
-      userId: user.userId,
-      sessionId
-    });
-    const response = {
-      success: true,
-      session_id: sessionId,
-      detection_summary: {
-        pages_scanned: textLayerResult.totalPages || session.total_pages,
-        routing_decision: routingDecision,
-        text_items_found: textLayerResult.textItemCount,
-        candidates_created: candidates.length,
-        detection_time_ms: elapsedMs
-      },
-      next_step: routingDecision === "vision-primary" ? {
-        action: "user_region_selection",
-        reason: "No text layer detected - document requires human-guided region selection",
-        endpoint: `/api/hardware-schedule/session/${sessionId}/candidates`
-      } : candidates.length > 0 ? {
-        action: "affirm_candidates",
-        endpoint: `/api/hardware-schedule/session/${sessionId}/candidates`
-      } : {
-        action: "user_region_selection",
-        reason: "Text layer detected but no schedule tables found - please identify regions manually",
-        endpoint: `/api/hardware-schedule/session/${sessionId}/candidates`
-      }
-    };
-    if (candidates.length > 0) {
-      response.candidates = candidates;
-    }
-    return jsonResponse3(response);
-  } catch (error5) {
-    console.error("[Detect Schedules] Error:", error5);
-    await logTelemetryEvent(env2, {
-      eventType: "detection",
-      eventName: "schedule_detection_failed",
-      severity: "error",
-      message: `Schedule detection failed: ${error5.message}`,
-      context: {
-        session_id: request2.params?.sessionId,
-        error_message: error5.message,
-        error_stack: error5.stack?.substring(0, 500)
-      },
-      userId: user.userId
-    });
-    return jsonResponse3({
-      error: "Detection failed",
-      details: error5.message
-    }, 500);
-  }
-});
-router.get("/api/hardware-schedule/session/:sessionId/status", async (request2, env2) => {
-  const { error: error4, user } = await authenticate(request2, env2);
-  if (error4)
-    return error4;
-  try {
-    const sessionId = request2.params.sessionId;
-    const status = await getSessionStatus(sessionId, env2);
-    if (!status) {
-      return jsonResponse3({ error: "Session not found" }, 404);
-    }
-    return jsonResponse3({
-      session: status
-    });
-  } catch (error5) {
-    console.error("[Hardware Session] Error:", error5);
-    return jsonResponse3({
-      error: "Failed to get session status",
-      details: error5.message
-    }, 500);
-  }
-});
-router.post("/api/hardware-schedule/session/:sessionId/set-page-range", async (request2, env2) => {
-  const { error: error4, user } = await authenticate(request2, env2);
-  if (error4)
-    return error4;
-  try {
-    const sessionId = request2.params.sessionId;
-    const body = await request2.json();
-    const { extraction_page_range } = body;
-    const session = await env2.DB.prepare(`
-      SELECT id, user_id FROM hardware_extraction_sessions WHERE id = ? AND user_id = ?
-    `).bind(sessionId, user.userId).first();
-    if (!session) {
-      return jsonResponse3({ error: "Session not found", message: "Session not found" }, 404);
-    }
-    if (extraction_page_range !== null) {
-      const ranges = Array.isArray(extraction_page_range) ? extraction_page_range : [extraction_page_range];
-      for (const r of ranges) {
-        if (!r || !r.start || !r.end || r.start < 1 || r.end < r.start) {
-          return jsonResponse3({
-            error: "Invalid page range",
-            message: "Each range requires {start, end} where start >= 1 and end >= start"
-          }, 400);
-        }
-      }
-    }
-    await env2.DB.prepare(`
-      UPDATE hardware_extraction_sessions SET extraction_page_range = ? WHERE id = ?
-    `).bind(
-      extraction_page_range ? JSON.stringify(extraction_page_range) : null,
-      sessionId
-    ).run();
-    console.log(`[27A Page Range] Session ${sessionId}: ${extraction_page_range ? JSON.stringify(extraction_page_range) : "cleared"}`);
-    return jsonResponse3({
-      success: true,
-      extraction_page_range
-    });
-  } catch (error5) {
-    console.error("[27A Page Range] Error:", error5);
-    return jsonResponse3({
-      error: "Failed to set page range",
-      message: "Failed to set page range: " + error5.message,
-      details: error5.message
-    }, 500);
-  }
-});
-router.post("/api/hardware-schedule/session/:sessionId/set-table-pages", async (request2, env2) => {
-  const { error: error4, user } = await authenticate(request2, env2);
-  if (error4)
-    return error4;
-  try {
-    const sessionId = request2.params.sessionId;
-    const body = await request2.json();
-    const { schedule_table_pages } = body;
-    const session = await env2.DB.prepare(`
-      SELECT id, user_id FROM hardware_extraction_sessions WHERE id = ? AND user_id = ?
-    `).bind(sessionId, user.userId).first();
-    if (!session) {
-      return jsonResponse3({ error: "Session not found", message: "Session not found" }, 404);
-    }
-    if (schedule_table_pages !== null) {
-      if (!Array.isArray(schedule_table_pages) || schedule_table_pages.some((p) => typeof p !== "number" || p < 1 || !Number.isInteger(p))) {
-        return jsonResponse3({
-          error: "Invalid table pages",
-          message: "schedule_table_pages must be an array of positive integers"
-        }, 400);
-      }
-    }
-    await env2.DB.prepare(`
-      UPDATE hardware_extraction_sessions SET schedule_table_pages = ? WHERE id = ?
-    `).bind(
-      schedule_table_pages ? JSON.stringify(schedule_table_pages) : null,
-      sessionId
-    ).run();
-    console.log(`[27A Table Pages] Session ${sessionId}: ${schedule_table_pages ? schedule_table_pages.join(", ") : "cleared"}`);
-    return jsonResponse3({
-      success: true,
-      schedule_table_pages
-    });
-  } catch (error5) {
-    console.error("[27A Table Pages] Error:", error5);
-    return jsonResponse3({
-      error: "Failed to set table pages",
-      message: "Failed to set table pages: " + error5.message
-    }, 500);
-  }
-});
-router.post("/api/hardware-schedule/session/:sessionId/batch-extract", async (request2, env2) => {
-  const { error: error4, user } = await authenticate(request2, env2);
-  if (error4)
-    return error4;
-  try {
-    const { sessionId } = request2.params;
-    const body = await request2.json();
-    const { pages, dpi = 600, auto_affirm_tables = false } = body;
-    const userId = user?.email || user?.id || "anonymous";
-    const useAffirmed = body.use_affirmed === true || Array.isArray(body.candidate_ids) && body.candidate_ids.length > 0;
-    if (!useAffirmed && (!pages || !Array.isArray(pages) || pages.length === 0)) {
-      return jsonResponse3({ error: "pages array required" }, 400);
-    }
-    const session = await getSessionStatus(sessionId, env2);
-    if (!session) {
-      return jsonResponse3({ error: "Session not found" }, 404);
-    }
-    let routeForSession = env2.WEYLAND_EDITION === "local" ? "claude_code_subprocess" : "claude_code_local";
-    try {
-      const _rr = await env2.DB.prepare(
-        `SELECT extraction_route FROM hardware_extraction_sessions WHERE id = ?`
-      ).bind(sessionId).first();
-      if (_rr?.extraction_route)
-        routeForSession = _rr.extraction_route;
-    } catch (e) {
-    }
-    const scheduleType = session.document_type || "hardware_schedule";
-    let tablePages = [];
-    const autoAffirmPages = [];
-    let candidateIds = [];
-    let extractingPageNums = [];
-    const fullPageBox = JSON.stringify({ x: 0, y: 0, width: 9999, height: 9999 });
-    if (useAffirmed) {
-      await detectAndPersistRegionConflicts(sessionId, env2);
-      let q = `SELECT id, page_number, review_status, conflict_reason FROM schedule_region_candidates WHERE session_id = ? AND status = 'affirmed'`;
-      const qp = [sessionId];
-      if (Array.isArray(body.candidate_ids) && body.candidate_ids.length > 0) {
-        q += ` AND id IN (${body.candidate_ids.map(() => "?").join(",")})`;
-        qp.push(...body.candidate_ids);
-      }
-      q += ` ORDER BY COALESCE(parse_order, 999999), page_number`;
-      const { results: affirmed } = await env2.DB.prepare(q).bind(...qp).all();
-      const blocked = (affirmed || []).filter((c) => c.review_status === "conflict");
-      if (blocked.length > 0) {
-        return jsonResponse3({
-          error: "conflicts_unresolved",
-          message: "Resolve flagged region conflicts before extracting.",
-          conflicts: blocked.map((c) => ({ candidate_id: c.id, page: c.page_number, reason: c.conflict_reason }))
-        }, 409);
-      }
-      candidateIds = (affirmed || []).map((c) => c.id);
-      extractingPageNums = (affirmed || []).map((c) => c.page_number);
-      if (candidateIds.length === 0) {
-        return jsonResponse3({ error: "no_affirmed_candidates", message: "No affirmed regions to extract. Draw and affirm at least one region." }, 400);
-      }
-      console.log(`[Batch Extract] Session ${sessionId}: multi-region use_affirmed -> ${candidateIds.length} affirmed candidates (parse_order)`);
-    } else {
-      let detectedLookup = {};
-      if (session.detected_schedule_pages) {
-        try {
-          const detected = typeof session.detected_schedule_pages === "string" ? JSON.parse(session.detected_schedule_pages) : session.detected_schedule_pages;
-          for (const d of detected) {
-            detectedLookup[d.page] = d;
-          }
-        } catch (e) {
-        }
-      }
-      for (const pageNum of pages) {
-        const detected = detectedLookup[pageNum];
-        if (!auto_affirm_tables && detected && detected.page_type === "schedule_table") {
-          tablePages.push({ page: pageNum, title: detected.title || "", confidence: detected.confidence });
-        } else {
-          autoAffirmPages.push(pageNum);
-        }
-      }
-      if (autoAffirmPages.length === 0 && tablePages.length > 0) {
-        for (const tp of tablePages)
-          autoAffirmPages.push(tp.page);
-        tablePages = [];
-      }
-      for (const pageNum of autoAffirmPages) {
-        const candidateId = crypto.randomUUID();
-        await env2.DB.prepare(`
-          INSERT INTO schedule_region_candidates
-            (id, session_id, page_number, schedule_type, bounding_box, detection_method, status, affirmed_by, affirmed_at, extraction_dpi, created_at, updated_at)
-          VALUES (?, ?, ?, ?, ?, 'batch-extract', 'affirmed', ?, datetime('now'), ?, datetime('now'), datetime('now'))
-        `).bind(candidateId, sessionId, pageNum, scheduleType, fullPageBox, userId, dpi).run();
-        candidateIds.push(candidateId);
-      }
-      extractingPageNums = autoAffirmPages;
-      console.log(`[Batch Extract] Session ${sessionId}: ${autoAffirmPages.length} auto-affirmed, ${tablePages.length} table pages awaiting region selection`);
-    }
-    let extractionResult = null;
-    if (candidateIds.length > 0) {
-      const bufferKey = session.file_buffer_key || "uploads/" + sessionId + ".pdf";
-      let fileBuffer = pdfBufferOrNull(await env2.CACHE.get(bufferKey, { type: "arrayBuffer" }), bufferKey);
-      let pdfStreamUrl = null;
-      if (fileBuffer && fileBuffer.byteLength > 20 * 1024 * 1024 && env2.UPLOADS) {
-        console.log(`[Batch Extract] KV returned ${(fileBuffer.byteLength / 1024 / 1024).toFixed(1)}MB \u2014 switching to R2 streaming to avoid OOM`);
-        fileBuffer = null;
-        pdfStreamUrl = await generateR2StreamUrl(bufferKey, env2);
-      } else if (!fileBuffer && env2.UPLOADS) {
-        pdfStreamUrl = await generateR2StreamUrl(bufferKey, env2);
-        console.log("[Batch Extract] Using R2 stream URL (avoiding OOM for large PDFs)");
-      }
-      if ((fileBuffer || pdfStreamUrl) && routeForSession === "claude_code_local") {
-        const packets = [];
-        const _projRow = await env2.DB.prepare("SELECT project_id FROM hardware_extraction_sessions WHERE id = ?").bind(sessionId).first();
-        const projectId = _projRow?.project_id || null;
-        const ownerForCheck = user.mhsId || user.mhs_id || null;
-        try {
-          const bs = await callEdge("GET", `/ai/v1/bridge/status?owner_id=${encodeURIComponent(ownerForCheck || "")}`, env2);
-          if (bs.status === 200 && bs.body && bs.body.online === false) {
-            return jsonResponse3({
-              error: "bridge_offline",
-              message: "Your Claude Code bridge is not running. Start it (Download launcher) and retry.",
-              owner_id: ownerForCheck,
-              has_token: !!bs.body.has_token
-            }, 409);
-          }
-        } catch (e) {
-        }
-        for (const cId of candidateIds) {
-          const candidate = await env2.DB.prepare("SELECT * FROM schedule_region_candidates WHERE id = ?").bind(cId).first();
-          if (!candidate)
-            continue;
-          try {
-            const _pctBox = (() => {
-              try {
-                const p = JSON.parse(candidate.bounding_box_percent || "null");
-                return p && typeof p.x_percent === "number" ? p : null;
-              } catch (e) {
-                return null;
-              }
-            })();
-            let boundingBox = _pctBox || JSON.parse(candidate.user_adjusted_bounding_box || candidate.bounding_box);
-            if (candidate.schedule_type === "door_schedule") {
-              boundingBox = { ...boundingBox, pad_w_percent: 0.05, pad_h_percent: 0.04 };
-            }
-            const candidateDpi = candidate.extraction_dpi || 600;
-            const rendered = await renderRegionAt600DPI2(fileBuffer, candidate.page_number, boundingBox, env2, candidateDpi, pdfStreamUrl);
-            const imageBase64 = arrayBufferToBase644(rendered.imageBuffer);
-            const q = await queuePageExtractionJob(imageBase64, env2, {
-              pageNumber: candidate.page_number,
-              totalPages: session.page_count || 1,
-              sessionId,
-              tenantId: session.tenant_id || "ven_weyland",
-              ownerMhsId: user.mhsId || user.mhs_id || null,
-              // WO-2026-0623-WEYLAND-003 (decision A): carry operator guidance + cross-ref ties
-              operatorNotes: candidate.user_notes || null,
-              crossRefGuidance: candidate.cross_ref || null,
-              // CH-2026-0706 STEP 2: door regions queue with the PROVEN door prompt
-              scheduleType: candidate.schedule_type || null
-            });
-            const kuId = crypto.randomUUID();
-            await env2.DB.prepare(`
-              INSERT OR REPLACE INTO kdp_packets
-                (id, connection_id, project_id, candidate_id, page_number, sequence, unit_type, job_id, route, owner_id, state, attempts, created_at, updated_at)
-              VALUES (?, ?, ?, ?, ?, ?, ?, ?, 'claude_code_local', ?, 'in_flight', 1, datetime('now'), datetime('now'))
-            `).bind(
-              kuId,
-              sessionId,
-              projectId,
-              cId,
-              candidate.page_number,
-              candidate.page_number,
-              candidate.schedule_type === "door_schedule" ? "door_mark" : "hardware_set",
-              q.job_id,
-              q.owner_id
-            ).run();
-            await env2.DB.prepare(`UPDATE schedule_region_candidates SET status = 'extracting', extraction_started_at = datetime('now'), updated_at = datetime('now') WHERE id = ?`).bind(cId).run();
-            packets.push({
-              ku_id: kuId,
-              candidate_id: cId,
-              page: candidate.page_number,
-              job_id: q.job_id,
-              poll_url: `/api/jobs/${q.job_id}`,
-              finalize_url: `/api/hardware-schedule/session/${sessionId}/page/${candidate.page_number}/finalize-image/${q.job_id}`
-            });
-          } catch (qErr) {
-            console.error(`[Batch Extract][async] queue failed page ${candidate.page_number}:`, qErr.message);
-            await env2.DB.prepare(`UPDATE schedule_region_candidates SET status = 'failed', extraction_error = ?, updated_at = datetime('now') WHERE id = ?`).bind(String(qErr.message).slice(0, 500), cId).run();
-            packets.push({ candidate_id: cId, page: candidate.page_number, error: qErr.message });
-          }
-        }
-        return jsonResponse3({
-          success: true,
-          async: true,
-          session_id: sessionId,
-          auto_affirmed_count: autoAffirmPages.length,
-          table_pages: tablePages,
-          table_pages_count: tablePages.length,
-          packets,
-          message: "Queued to your bridge. Poll each job, then finalize per page."
-        });
-      }
-      if (fileBuffer || pdfStreamUrl) {
-        const results = [];
-        const context3 = {
-          sessionId,
-          tenantId: session.tenant_id || "ven_weyland",
-          industryId: session.industry_id || "ind_doors"
-        };
-        const priorExtractions = {
-          groups: [],
-          matrixEntries: [],
-          nomenclature: null,
-          pagesExtracted: [],
-          pageTypes: {}
-        };
-        try {
-          const existingHpe = await env2.DB.prepare(
-            "SELECT page_number, extracted_data FROM hardware_page_extractions WHERE session_id = ?"
-          ).bind(sessionId).all();
-          const extractingPages = new Set(extractingPageNums);
-          for (const row of existingHpe.results || []) {
-            if (extractingPages.has(row.page_number))
-              continue;
-            try {
-              const data = JSON.parse(row.extracted_data);
-              const groups = data.hardware_groups || [];
-              for (const g of groups) {
-                priorExtractions.groups.push({ groupNumber: g.group_number, groupName: g.group_name || "", page: row.page_number, componentCount: (g.components || []).length, assignedDoors: g.assigned_doors || [] });
-              }
-              for (const m of data.door_hardware_matrix || []) {
-                priorExtractions.matrixEntries.push({ doorNumber: m.door_number, hardwareSetNumber: m.hardware_set_number, page: row.page_number });
-              }
-              if (!priorExtractions.nomenclature && data.detected_nomenclature) {
-                priorExtractions.nomenclature = { hardwareUnitTerm: data.detected_nomenclature.hardware_unit_term || "group", doorIdentifierTerm: data.detected_nomenclature.door_identifier_term || "door" };
-              }
-              priorExtractions.pagesExtracted.push(row.page_number);
-              priorExtractions.pageTypes[row.page_number] = groups.length > 0 ? "schedule" : (data.door_hardware_matrix || []).length > 0 ? "door_matrix" : "other";
-            } catch (e) {
-            }
-          }
-          if (priorExtractions.pagesExtracted.length > 0) {
-            console.log(`[Batch Extract] Seeded context: ${priorExtractions.groups.length} groups from ${priorExtractions.pagesExtracted.length} prior pages`);
-          }
-        } catch (e) {
-        }
-        const pagesWrittenThisRun = /* @__PURE__ */ new Set();
-        for (const cId of candidateIds) {
-          const candidate = await env2.DB.prepare(
-            "SELECT * FROM schedule_region_candidates WHERE id = ?"
-          ).bind(cId).first();
-          if (!candidate)
-            continue;
-          try {
-            await env2.DB.prepare(`
-              UPDATE schedule_region_candidates SET status = 'extracting', extraction_started_at = datetime('now'), updated_at = datetime('now') WHERE id = ?
-            `).bind(cId).run();
-            const _pctBox = (() => {
-              try {
-                const p = JSON.parse(candidate.bounding_box_percent || "null");
-                return p && typeof p.x_percent === "number" ? p : null;
-              } catch (e) {
-                return null;
-              }
-            })();
-            const boundingBox = _pctBox || JSON.parse(candidate.user_adjusted_bounding_box || candidate.bounding_box);
-            const candidateDpi = candidate.extraction_dpi || 600;
-            const rendered = await renderRegionAt600DPI2(fileBuffer, candidate.page_number, boundingBox, env2, candidateDpi, pdfStreamUrl);
-            const extractionRes = await routeExtraction(
-              candidate.schedule_type,
-              rendered.imageBuffer,
-              {
-                ...context3,
-                candidateId: cId,
-                pageNumber: candidate.page_number,
-                totalPages: session.page_count || 1,
-                priorExtractions,
-                operatorNotes: candidate.user_notes || null,
-                crossRefGuidance: candidate.cross_ref || null
-              },
-              env2
-            );
-            if (extractionRes && extractionRes.success !== false) {
-              const hpeData = extractionRes.hardware_groups ? extractionRes : { hardware_groups: extractionRes.entries || [], ...extractionRes };
-              const mergeThisPage = pagesWrittenThisRun.has(candidate.page_number);
-              await savePageExtraction2(sessionId, candidate.page_number, hpeData, env2, { merge: mergeThisPage });
-              pagesWrittenThisRun.add(candidate.page_number);
-              const hwGroups = hpeData.hardware_groups || [];
-              for (const g of hwGroups) {
-                priorExtractions.groups.push({ groupNumber: g.group_number, groupName: g.group_name || "", page: candidate.page_number, componentCount: (g.components || []).length, assignedDoors: g.assigned_doors || [] });
-              }
-              for (const m of hpeData.door_hardware_matrix || []) {
-                priorExtractions.matrixEntries.push({ doorNumber: m.door_number, hardwareSetNumber: m.hardware_set_number, page: candidate.page_number });
-              }
-              if (!priorExtractions.nomenclature && hpeData.detected_nomenclature) {
-                priorExtractions.nomenclature = { hardwareUnitTerm: hpeData.detected_nomenclature.hardware_unit_term || "group", doorIdentifierTerm: hpeData.detected_nomenclature.door_identifier_term || "door" };
-              }
-              priorExtractions.pagesExtracted.push(candidate.page_number);
-              priorExtractions.pageTypes[candidate.page_number] = hwGroups.length > 0 ? "schedule" : (hpeData.door_hardware_matrix || []).length > 0 ? "door_matrix" : "other";
-            }
-            await env2.DB.prepare(`
-              UPDATE schedule_region_candidates SET status = 'extracted', extraction_completed_at = datetime('now'), extraction_entry_count = ?, updated_at = datetime('now') WHERE id = ?
-            `).bind(extractionRes.entry_count || 0, cId).run();
-            results.push({
-              candidate_id: cId,
-              page: candidate.page_number,
-              status: "extracted",
-              entry_count: extractionRes.entry_count || 0,
-              _debug: {
-                schedule_type: candidate.schedule_type,
-                has_hw_groups: !!extractionRes.hardware_groups,
-                hw_group_count: (extractionRes.hardware_groups || []).length,
-                has_entries: !!extractionRes.entries,
-                entry_arr_count: (extractionRes.entries || []).length,
-                config_used: extractionRes.config_used || null,
-                fallback_reason: extractionRes.fallback_reason || null,
-                raw_preview: extractionRes._raw_preview || null,
-                prior_context_pages: priorExtractions.pagesExtracted.length
-              }
-            });
-          } catch (exErr) {
-            console.error(`[Batch Extract] Failed page ${candidate.page_number}:`, exErr);
-            await env2.DB.prepare(`
-              UPDATE schedule_region_candidates SET status = 'failed', updated_at = datetime('now') WHERE id = ?
-            `).bind(cId).run();
-            results.push({ candidate_id: cId, page: candidate.page_number, status: "failed", error: exErr.message });
-          }
-        }
-        extractionResult = results;
-      }
-    }
-    if (extractionResult && extractionResult.length > 0) {
-      const extractedCount = extractionResult.filter((r) => r.status === "extracted").length;
-      if (extractedCount > 0) {
-        try {
-          const transformResult = await transformDoorEntriesToHardwareSets(sessionId, userId, env2);
-          console.log(`[Batch Extract] Bridge: ${transformResult.setsCreated} hardware_sets from ${transformResult.totalMarks} entries`);
-        } catch (transformError) {
-          console.error("[Batch Extract] Bridge failed (non-blocking):", transformError.message);
-        }
-        try {
-          const matResult = await materializeDseToLineItems(sessionId, env2);
-          console.log(`[Batch Extract] Materialize: ${matResult.doorsCreated} door groups, ${matResult.framesCreated} frame groups`);
-        } catch (matError) {
-          console.error("[Batch Extract] Materialize failed (non-blocking):", matError.message);
-        }
-      }
-    }
-    const pageDataMap = {};
-    if (extractionResult && extractionResult.length > 0) {
-      const extractedPageNums = extractionResult.filter((r) => r.status === "extracted").map((r) => r.page);
-      if (extractedPageNums.length > 0) {
-        const placeholders = extractedPageNums.map(() => "?").join(",");
-        const hpeRows = await env2.DB.prepare(`
-          SELECT page_number, extracted_data, affirm_state
-          FROM hardware_page_extractions
-          WHERE session_id = ? AND page_number IN (${placeholders})
-          ORDER BY page_number
-        `).bind(sessionId, ...extractedPageNums).all();
-        for (const row of hpeRows.results || []) {
-          try {
-            const data = JSON.parse(row.extracted_data);
-            pageDataMap[row.page_number] = {
-              groups: data.hardware_groups || data.hardwareGroups || [],
-              affirm_state: row.affirm_state || "pending_review"
-            };
-          } catch (e) {
-          }
-        }
-      }
-    }
-    const _extractedOk = (extractionResult || []).filter((r) => r.status === "extracted").length;
-    return jsonResponse3({
-      success: true,
-      session_id: sessionId,
-      use_affirmed: useAffirmed,
-      candidate_count: candidateIds.length,
-      auto_affirmed_count: autoAffirmPages.length,
-      table_pages: tablePages,
-      table_pages_count: tablePages.length,
-      extraction_results: extractionResult,
-      page_data: pageDataMap,
-      message: useAffirmed ? `${_extractedOk} of ${candidateIds.length} affirmed region(s) extracted.` : tablePages.length > 0 ? `${autoAffirmPages.length} pages extracted. ${tablePages.length} table pages ready for targeted region selection.` : `${autoAffirmPages.length} pages extracted via Path C.`
-    });
-  } catch (error5) {
-    console.error("[Batch Extract] Error:", error5);
-    return jsonResponse3({ error: "Batch extraction failed", details: error5.message }, 500);
   }
 });
 var PRODUCT_DATABASE = [
@@ -161766,7 +161798,7 @@ async function autoEnrichSessionOnSave(sessionId, env2) {
   return { enriched: results.enriched, skipped: results.skipped, total: components.length };
 }
 __name(autoEnrichSessionOnSave, "autoEnrichSessionOnSave");
-async function savePageExtraction2(sessionId, pageNumber, extractionResult, env2, options) {
+async function savePageExtraction22(sessionId, pageNumber, extractionResult, env2, options) {
   const saved = await savePageExtraction(sessionId, pageNumber, extractionResult, env2, options);
   try {
     await autoEnrichSessionOnSave(sessionId, env2);
@@ -161775,7 +161807,7 @@ async function savePageExtraction2(sessionId, pageNumber, extractionResult, env2
   }
   return saved;
 }
-__name(savePageExtraction2, "savePageExtraction");
+__name(savePageExtraction22, "savePageExtraction");
 async function matchComponentToCutSheets(component, env2) {
   const match = await matchProductFromDb(component, env2);
   if (!match) {
@@ -162199,8 +162231,8 @@ function getUnaffirmReason(item, type) {
 __name(getUnaffirmReason, "getUnaffirmReason");
 var { makeDocumentDownloadRoute, renderHtmlToPdf, storeDocumentPdf } = registerDocumentGeneratorRoutes(router, { generateQuoteHtml, puppeteer: puppeteer_cloudflare_default });
 registerExtractedModules(router, {
-  transformDoorEntriesToHardwareSets,
-  materializeDseToLineItems,
+  transformDoorEntriesToHardwareSets: transformDoorEntriesToHardwareSets2,
+  materializeDseToLineItems: materializeDseToLineItems2,
   renderHtmlToPdf,
   storeDocumentPdf,
   makeDocumentDownloadRoute,
@@ -162217,22 +162249,31 @@ registerExtractedModules(router, {
   extractFromPageImage,
   materializeAffirmedGroup,
   unaffirmMaterializedGroup,
-  pdfBufferOrNull,
-  generateR2StreamUrl,
+  pdfBufferOrNull: pdfBufferOrNull2,
+  generateR2StreamUrl: generateR2StreamUrl2,
   isPageInRange,
-  renderRegionAt600DPI2,
-  callEdge,
+  renderRegionAt600DPI2: renderRegionAt600DPI22,
+  callEdge: callEdge2,
   generateSubmittalHTML,
   incrementSubmittalsUsed,
   matchComponentToCutSheets,
-  queuePageExtractionJob,
-  routeExtraction,
+  queuePageExtractionJob: queuePageExtractionJob2,
+  routeExtraction: routeExtraction2,
   approvePageExtraction,
   extractSinglePage,
   resolveExtractionContract,
-  savePageExtraction2,
+  savePageExtraction2: savePageExtraction22,
   buildExtractionResultFromVision,
-  persistDoorScheduleResponse
+  persistDoorScheduleResponse,
+  extractHardwareSchedule,
+  getHardwareGroupForReview,
+  updateHardwareGroup,
+  detectFileType,
+  extractPdfBookmarks2,
+  detectSchedulePages,
+  createExtractionSession,
+  logTelemetryEvent,
+  detectTextLayer2
 });
 async function fetchTxdotOpportunities() {
   const url = "https://data.texas.gov/resource/qh8x-rm8r.json?" + new URLSearchParams({
@@ -162369,7 +162410,7 @@ router.get("/api/hunt/opportunities", async (request2, env2) => {
     return jsonResponse3({ error: "Failed to list opportunities", details: error5.message }, 500);
   }
 });
-async function transformDoorEntriesToHardwareSets(sessionId, userId, env2) {
+async function transformDoorEntriesToHardwareSets2(sessionId, userId, env2) {
   console.log(`[Door\u2192Takeoff Bridge] Starting transformation for session ${sessionId}`);
   const { results: entries } = await env2.DB.prepare(
     "SELECT mark, hardware_group, fire_rating, page_number FROM door_schedule_entries WHERE session_id = ?"
@@ -162480,8 +162521,8 @@ async function transformDoorEntriesToHardwareSets(sessionId, userId, env2) {
     )
   };
 }
-__name(transformDoorEntriesToHardwareSets, "transformDoorEntriesToHardwareSets");
-async function materializeDseToLineItems(sessionId, env2) {
+__name(transformDoorEntriesToHardwareSets2, "transformDoorEntriesToHardwareSets");
+async function materializeDseToLineItems2(sessionId, env2) {
   const dseResult = await env2.DB.prepare(`
     SELECT mark, hardware_group, width, height, door_type, door_material,
            frame_type, frame_material, fire_rating, panic, thickness
@@ -162566,7 +162607,7 @@ async function materializeDseToLineItems(sessionId, env2) {
   console.log(`[Auto-Materialize DSE] Session ${sessionId}: ${doorsCreated} door groups, ${framesCreated} frame groups from ${entries.length} marks`);
   return { doorsCreated, framesCreated, totalMarks: entries.length };
 }
-__name(materializeDseToLineItems, "materializeDseToLineItems");
+__name(materializeDseToLineItems2, "materializeDseToLineItems");
 router.get("/api/cut-sheets/documents/:docId", async (request2, env2) => {
   const { error: error4, user } = await authenticate(request2, env2);
   if (error4)

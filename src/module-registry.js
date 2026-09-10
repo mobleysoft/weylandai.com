@@ -45,6 +45,7 @@ import { registerHardwareSchedulePageAffirmRoutes } from "./routes/hardware-sche
 import { registerHardwareScheduleGenerateRoutes } from "./routes/hardware-schedule-generate.js";
 import { registerHardwareSchedulePageExtractRoutes } from "./routes/hardware-schedule-page-extract.js";
 import { registerHardwareScheduleFinalizeImageRoutes } from "./routes/hardware-schedule-finalize-image.js";
+import { registerHardwareScheduleExtractRoutes } from "./routes/hardware-schedule-extract.js";
 import { authenticate, authenticateCps, requireActiveSubscription, requireProductAccess } from "./lib/auth.js";
 
 /**
@@ -81,6 +82,15 @@ import { authenticate, authenticateCps, requireActiveSubscription, requireProduc
  *   savePageExtraction2: Function,
  *   buildExtractionResultFromVision: Function,
  *   persistDoorScheduleResponse: Function,
+ *   extractHardwareSchedule: Function,
+ *   getHardwareGroupForReview: Function,
+ *   updateHardwareGroup: Function,
+ *   detectFileType: Function,
+ *   extractPdfBookmarks2: Function,
+ *   detectSchedulePages: Function,
+ *   createExtractionSession: Function,
+ *   logTelemetryEvent: Function,
+ *   detectTextLayer2: Function,
  * }} deps
  *   Real dependencies still owned by legacy-monolith.js (not yet their
  *   own modules) that some of these routes need injected. renderHtmlToPdf/
@@ -182,5 +192,20 @@ export function registerExtractedModules(router, deps) {
     savePageExtraction2: deps.savePageExtraction2,
     buildExtractionResultFromVision: deps.buildExtractionResultFromVision,
     persistDoorScheduleResponse: deps.persistDoorScheduleResponse,
+  });
+  registerHardwareScheduleExtractRoutes(router, {
+    authenticate,
+    requireActiveSubscription,
+    getSessionStatus: deps.getSessionStatus,
+    extractHardwareSchedule: deps.extractHardwareSchedule,
+    storeHardwareExtraction: deps.storeHardwareExtraction,
+    getHardwareGroupForReview: deps.getHardwareGroupForReview,
+    updateHardwareGroup: deps.updateHardwareGroup,
+    detectFileType: deps.detectFileType,
+    extractPdfBookmarks2: deps.extractPdfBookmarks2,
+    detectSchedulePages: deps.detectSchedulePages,
+    createExtractionSession: deps.createExtractionSession,
+    logTelemetryEvent: deps.logTelemetryEvent,
+    detectTextLayer2: deps.detectTextLayer2,
   });
 }
