@@ -2727,6 +2727,334 @@ function registerHardwareScheduleExportRoutes(router2) {
   }
 }
 
+// src/lib/access-request.js
+var TRADES = ["doors_glazing", "plumbing", "hvac", "electrical", "other"];
+var ACCESS_REQUEST_LIMITS = {
+  email: 254,
+  name: 120,
+  company: 160,
+  role: 80,
+  trade_other: 80,
+  message: 1e3
+};
+var EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+function cleanRequestText(v, max) {
+  if (v === null || v === void 0) return null;
+  const s = String(v).replace(/[\x00-\x1f\x7f]/g, "").replace(/[<>]/g, "").replace(/\s+/g, " ").trim();
+  if (!s) return null;
+  return s.length > max ? "__TOO_LONG__" : s;
+}
+function validateAccessRequest(body) {
+  const errors = {};
+  const value = { email: null, name: null, company: null, role: null, trade: null, trade_other: null, message: null };
+  if (!body || typeof body !== "object") {
+    return { ok: false, errors: { body: "JSON object required" }, value };
+  }
+  const emailRaw = typeof body.email === "string" ? body.email.trim().toLowerCase() : "";
+  if (!emailRaw || emailRaw.length > ACCESS_REQUEST_LIMITS.email || !EMAIL_RE.test(emailRaw)) {
+    errors.email = "A valid email address is required";
+  } else {
+    value.email = emailRaw;
+  }
+  if (typeof body.trade !== "string" || !TRADES.includes(body.trade)) {
+    errors.trade = `trade must be one of: ${TRADES.join(", ")}`;
+  } else {
+    value.trade = body.trade;
+  }
+  for (const f of ["name", "company", "role", "message"]) {
+    const c = cleanRequestText(body[f], ACCESS_REQUEST_LIMITS[f]);
+    if (c === "__TOO_LONG__") errors[f] = `${f} is limited to ${ACCESS_REQUEST_LIMITS[f]} characters`;
+    else value[f] = c;
+  }
+  if (value.trade === "other") {
+    const c = cleanRequestText(body.trade_other, ACCESS_REQUEST_LIMITS.trade_other);
+    if (c === "__TOO_LONG__") errors.trade_other = `trade_other is limited to ${ACCESS_REQUEST_LIMITS.trade_other} characters`;
+    else if (!c) errors.trade_other = "Tell us your trade when choosing 'other'";
+    else value.trade_other = c;
+  } else {
+    value.trade_other = null;
+  }
+  return { ok: Object.keys(errors).length === 0, errors, value };
+}
+function makeRateLimiter({ limit = 5, windowMs = 6e4, now = () => Date.now() } = {}) {
+  const hits = /* @__PURE__ */ new Map();
+  return function allow(key) {
+    const t = now();
+    const arr = (hits.get(key) || []).filter((ts) => t - ts < windowMs);
+    if (arr.length >= limit) {
+      hits.set(key, arr);
+      return false;
+    }
+    arr.push(t);
+    hits.set(key, arr);
+    if (hits.size > 5e3) hits.clear();
+    return true;
+  };
+}
+
+// src/routes/access-requests.js
+var NO_SUCH_TABLE = /no such table/i;
+var ACCESS_REQUEST_COLUMNS = "id, email, name, company, role, trade, trade_other, message, source, venture_code, status, approved_by, approved_at, invited_mhs_id, created_at, updated_at";
+function tableMissing(e) {
+  return NO_SUCH_TABLE.test(e && e.message || "");
+}
+function notProvisioned() {
+  return jsonResponse3({ success: false, error: {
+    code: "ACCESS_QUEUE_NOT_PROVISIONED",
+    message: "Request-access queue is not provisioned on this edition (migration 20260909_access_requests)."
+  } }, 503);
+}
+async function sha256Hex16(s) {
+  const buf = await crypto.subtle.digest("SHA-256", new TextEncoder().encode(s));
+  return Array.from(new Uint8Array(buf)).slice(0, 8).map((b) => b.toString(16).padStart(2, "0")).join("");
+}
+function idFromRequest(request2, params) {
+  return params && params.id || new URL(request2.url).pathname.split("/")[4];
+}
+function registerAccessRequestRoutes(router2, {
+  requireOperator,
+  invite,
+  ventureCode = "weyland",
+  rateLimiter = makeRateLimiter({ limit: 5, windowMs: 6e4 }),
+  hashIp = sha256Hex16
+}) {
+  if (typeof requireOperator !== "function" || typeof invite !== "function") {
+    throw new TypeError("registerAccessRequestRoutes: requireOperator and invite must be injected");
+  }
+  router2.post("/api/access/request", async (request2, env2) => {
+    const body = await request2.json().catch(() => null);
+    const v = validateAccessRequest(body);
+    if (!v.ok) {
+      return jsonResponse3({ success: false, error: {
+        code: "VALIDATION_ERROR",
+        message: "Please check the highlighted fields.",
+        fields: v.errors
+      } }, 400);
+    }
+    const ip = request2.headers.get("CF-Connecting-IP") || request2.headers.get("X-Forwarded-For") || "";
+    const ipHash = await hashIp(ip);
+    if (!rateLimiter(`${v.value.email}|${ipHash}`)) {
+      return jsonResponse3({ success: false, error: {
+        code: "RATE_LIMITED",
+        message: "Too many requests \u2014 please try again in a minute."
+      } }, 429);
+    }
+    const id = "areq_" + crypto.randomUUID();
+    const source2 = (body && typeof body.source === "string" ? body.source : "portal").slice(0, 40);
+    try {
+      await env2.DB.prepare(
+        `INSERT INTO access_requests (id, email, name, company, role, trade, trade_other, message, source, venture_code, request_ip_hash)
+         VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+         ON CONFLICT(email, venture_code) DO UPDATE SET
+           name = COALESCE(excluded.name, access_requests.name),
+           company = COALESCE(excluded.company, access_requests.company),
+           role = COALESCE(excluded.role, access_requests.role),
+           trade = excluded.trade,
+           trade_other = excluded.trade_other,
+           message = COALESCE(excluded.message, access_requests.message),
+           source = excluded.source,
+           request_ip_hash = excluded.request_ip_hash,
+           updated_at = datetime('now')`
+      ).bind(
+        id,
+        v.value.email,
+        v.value.name,
+        v.value.company,
+        v.value.role,
+        v.value.trade,
+        v.value.trade_other,
+        v.value.message,
+        source2,
+        ventureCode,
+        ipHash
+      ).run();
+      const row = await env2.DB.prepare("SELECT id, status FROM access_requests WHERE email = ? AND venture_code = ?").bind(v.value.email, ventureCode).first();
+      return jsonResponse3({
+        ok: true,
+        id: row.id,
+        status: row.status,
+        message: row.status === "approved" ? "You already have access \u2014 sign in with your email." : "Request received \u2014 we'll be in touch."
+      });
+    } catch (e) {
+      if (tableMissing(e)) return notProvisioned();
+      console.error("[Access] request failed:", e.message);
+      return jsonResponse3({ success: false, error: { code: "INTERNAL_ERROR", message: "Could not record the request." } }, 500);
+    }
+  });
+  router2.get("/api/access/requests", async (request2, env2) => {
+    const denied = await requireOperator(request2, env2);
+    if (denied) return denied;
+    const url = new URL(request2.url);
+    const status = url.searchParams.get("status");
+    const email = (url.searchParams.get("email") || "").trim().toLowerCase();
+    const where = ["venture_code = ?"];
+    const binds = [ventureCode];
+    if (status) {
+      where.push("status = ?");
+      binds.push(status);
+    }
+    if (email) {
+      where.push("email = ?");
+      binds.push(email);
+    }
+    try {
+      const rs = await env2.DB.prepare(
+        `SELECT ${ACCESS_REQUEST_COLUMNS} FROM access_requests WHERE ${where.join(" AND ")} ORDER BY created_at DESC LIMIT 200`
+      ).bind(...binds).all();
+      return jsonResponse3({ requests: rs.results || [] });
+    } catch (e) {
+      if (tableMissing(e)) return notProvisioned();
+      return jsonResponse3({ success: false, error: { code: "DATABASE_ERROR", message: e.message } }, 500);
+    }
+  });
+  router2.get("/api/access/rollup", async (request2, env2) => {
+    const denied = await requireOperator(request2, env2);
+    if (denied) return denied;
+    try {
+      const rs = await env2.DB.prepare(
+        `SELECT trade, COUNT(*) AS count,
+                SUM(CASE WHEN status = 'requested' THEN 1 ELSE 0 END) AS requested,
+                SUM(CASE WHEN status = 'approved' THEN 1 ELSE 0 END) AS approved,
+                SUM(CASE WHEN status = 'denied' THEN 1 ELSE 0 END) AS denied
+         FROM access_requests WHERE venture_code = ? GROUP BY trade ORDER BY count DESC`
+      ).bind(ventureCode).all();
+      const byTrade = rs.results || [];
+      const others = await env2.DB.prepare(
+        `SELECT trade_other, COUNT(*) AS count FROM access_requests
+         WHERE venture_code = ? AND trade = 'other' AND trade_other IS NOT NULL
+         GROUP BY trade_other ORDER BY count DESC LIMIT 50`
+      ).bind(ventureCode).all();
+      return jsonResponse3({
+        venture: ventureCode,
+        total: byTrade.reduce((n, r) => n + (r.count || 0), 0),
+        by_trade: byTrade,
+        other_trades: others.results || []
+      });
+    } catch (e) {
+      if (tableMissing(e)) return notProvisioned();
+      return jsonResponse3({ success: false, error: { code: "DATABASE_ERROR", message: e.message } }, 500);
+    }
+  });
+  router2.post("/api/access/requests/:id/approve", async (request2, env2, ctx, params) => {
+    const denied = await requireOperator(request2, env2);
+    if (denied) return denied;
+    const id = idFromRequest(request2, params);
+    const body = await request2.json().catch(() => ({}));
+    const approvedBy = typeof body.approved_by === "string" ? body.approved_by.trim().slice(0, 254) : "";
+    const operatorToken = request2.headers.get("X-Operator-Token") || "";
+    if (!approvedBy) return jsonResponse3({ success: false, error: { code: "VALIDATION_ERROR", message: "approved_by required" } }, 400);
+    try {
+      const row = await env2.DB.prepare(`SELECT ${ACCESS_REQUEST_COLUMNS} FROM access_requests WHERE id = ? AND venture_code = ?`).bind(id, ventureCode).first();
+      if (!row) return jsonResponse3({ success: false, error: { code: "NOT_FOUND", message: "No such request" } }, 404);
+      if (row.status === "approved") {
+        return jsonResponse3({ ok: true, already: true, status: "approved", id: row.id, invited_mhs_id: row.invited_mhs_id });
+      }
+      if (!operatorToken) {
+        return jsonResponse3({ success: false, error: {
+          code: "VALIDATION_ERROR",
+          message: "X-Operator-Token (the approving operator's identity token) required"
+        } }, 400);
+      }
+      const result = await invite(env2, { email: row.email, name: row.name, role: body.role || "member", operatorToken });
+      if (!result || !result.ok) {
+        const data = result && result.data || {};
+        console.warn("[Access] invite failed:", result && result.status, JSON.stringify(data).slice(0, 200));
+        return jsonResponse3({ success: false, error: {
+          code: "INVITE_FAILED",
+          message: data.error || `identity invite failed (${result && result.status})`,
+          auth_status: result && result.status
+        } }, 502);
+      }
+      await env2.DB.prepare(
+        "UPDATE access_requests SET status = 'approved', approved_by = ?, approved_at = datetime('now'), invited_mhs_id = ?, updated_at = datetime('now') WHERE id = ?"
+      ).bind(approvedBy, result.data.mhs_id || null, id).run();
+      return jsonResponse3({
+        ok: true,
+        status: "approved",
+        id,
+        invite: { ok: true, mhs_id: result.data.mhs_id, email_sent: !!result.data.email_sent, already_member: !!result.data.already_member }
+      });
+    } catch (e) {
+      if (tableMissing(e)) return notProvisioned();
+      console.error("[Access] approve failed:", e.message);
+      return jsonResponse3({ success: false, error: { code: "INTERNAL_ERROR", message: "Approve failed: " + e.message } }, 500);
+    }
+  });
+  router2.post("/api/access/requests/:id/deny", async (request2, env2, ctx, params) => {
+    const denied = await requireOperator(request2, env2);
+    if (denied) return denied;
+    const id = idFromRequest(request2, params);
+    const body = await request2.json().catch(() => ({}));
+    const approvedBy = typeof body.approved_by === "string" ? body.approved_by.trim().slice(0, 254) : "";
+    if (!approvedBy) return jsonResponse3({ success: false, error: { code: "VALIDATION_ERROR", message: "approved_by required" } }, 400);
+    try {
+      const r = await env2.DB.prepare(
+        "UPDATE access_requests SET status = 'denied', approved_by = ?, approved_at = datetime('now'), updated_at = datetime('now') WHERE id = ? AND venture_code = ?"
+      ).bind(approvedBy, id, ventureCode).run();
+      if (!r.meta || !r.meta.changes) return jsonResponse3({ success: false, error: { code: "NOT_FOUND", message: "No such request" } }, 404);
+      return jsonResponse3({ ok: true, status: "denied", id });
+    } catch (e) {
+      if (tableMissing(e)) return notProvisioned();
+      return jsonResponse3({ success: false, error: { code: "DATABASE_ERROR", message: e.message } }, 500);
+    }
+  });
+}
+
+// src/lib/operator-gate.js
+function fleetKeyEqual2(provided, expected) {
+  if (typeof provided !== "string" || typeof expected !== "string") return false;
+  if (!provided.length || !expected.length) return false;
+  const a = new TextEncoder().encode(provided);
+  const b = new TextEncoder().encode(expected);
+  if (a.length !== b.length) return false;
+  let diff = 0;
+  for (let i2 = 0; i2 < a.length; i2++) diff |= a[i2] ^ b[i2];
+  return diff === 0;
+}
+function makeFleetKeyOperatorGate() {
+  return async function requireOperator(request2, env2) {
+    const provided = request2.headers.get("X-Fleet-Key");
+    if (provided && env2 && fleetKeyEqual2(provided, env2.FLEET_API_KEY)) return null;
+    return jsonResponse3({ success: false, error: { code: "AUTH_REQUIRED", message: "X-Fleet-Key required" } }, 401);
+  };
+}
+
+// src/lib/authfor-invite.js
+var AUTHFOR_REGISTER = "https://authfor.com/api/v1/register";
+async function inviteViaAuthFor(env2, { email, name, role, operatorToken } = {}, { fetchImpl = fetch } = {}) {
+  void role;
+  void operatorToken;
+  let resp;
+  try {
+    resp = await fetchImpl(AUTHFOR_REGISTER, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        email,
+        password: crypto.randomUUID() + crypto.randomUUID(),
+        name: name || email,
+        client_id: "af_weyland_subscribe",
+        venture_id: "weylandai.com"
+      })
+    });
+  } catch (e) {
+    return { ok: false, status: 0, data: { error: `AuthFor register call failed: ${e.message}` } };
+  }
+  let data = {};
+  try {
+    data = await resp.json();
+  } catch (e) {
+  }
+  if (resp.ok) {
+    const mhsId = data && (data.user?.id || data.user_id || data.id) || null;
+    return { ok: true, status: resp.status, data: { ok: true, mhs_id: mhsId, email_sent: false, already_member: false } };
+  }
+  if (data && data.error === "USER_EXISTS") {
+    return { ok: true, status: resp.status, data: { ok: true, mhs_id: null, email_sent: false, already_member: true } };
+  }
+  return { ok: false, status: resp.status, data: { error: data && data.error || `AuthFor register failed (${resp.status})` } };
+}
+
 // src/legacy-monolith.js
 import { Writable } from "node:stream";
 import { Socket } from "node:net";
@@ -157300,6 +157628,7 @@ function getUnaffirmReason(item, type) {
 __name(getUnaffirmReason, "getUnaffirmReason");
 registerProjectRoutes(router, { transformDoorEntriesToHardwareSets, materializeDseToLineItems });
 registerDemoTrialRoutes(router);
+registerAccessRequestRoutes(router, { requireOperator: makeFleetKeyOperatorGate(), invite: inviteViaAuthFor, ventureCode: "weyland" });
 router.get("/api/vendor-profile", async (request2, env2) => {
   const { error: error4, user } = await authenticate(request2, env2);
   if (error4)

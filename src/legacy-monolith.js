@@ -27,6 +27,9 @@ import { registerDocumentGeneratorRoutes } from "./routes/document-generators.js
 import { registerProjectRoutes } from "./routes/projects.js";
 import { registerDemoTrialRoutes } from "./routes/demo-trial.js";
 import { registerHardwareScheduleExportRoutes } from "./routes/hardware-schedule-export.js";
+import { registerAccessRequestRoutes } from "./routes/access-requests.js";
+import { makeFleetKeyOperatorGate } from "./lib/operator-gate.js";
+import { inviteViaAuthFor } from "./lib/authfor-invite.js";
 var __create = Object.create;
 var __defProp = Object.defineProperty;
 var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
@@ -152882,6 +152885,7 @@ function getUnaffirmReason(item, type) {
 __name(getUnaffirmReason, "getUnaffirmReason");
 registerProjectRoutes(router, { transformDoorEntriesToHardwareSets, materializeDseToLineItems });
 registerDemoTrialRoutes(router);
+registerAccessRequestRoutes(router, { requireOperator: makeFleetKeyOperatorGate(), invite: inviteViaAuthFor, ventureCode: "weyland" });
 router.get("/api/vendor-profile", async (request2, env2) => {
   const { error: error4, user } = await authenticate(request2, env2);
   if (error4)
