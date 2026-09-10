@@ -70,6 +70,7 @@ import { registerSessionsCutSheetsRoutes } from "./routes/sessions-cutsheets.js"
 import { registerSessionsAssembleRoutes } from "./routes/sessions-assemble.js";
 import { registerSessionsRecentRoutes } from "./routes/sessions-recent.js";
 import { registerSessionsExtractionRouteRoutes } from "./routes/sessions-extraction-route.js";
+import { registerSessionsQueueExtractionRoutes } from "./routes/sessions-queue-extraction.js";
 import { authenticate, authenticateCps, requireActiveSubscription, requireProductAccess } from "./lib/auth.js";
 
 /**
@@ -103,6 +104,7 @@ import { authenticate, authenticateCps, requireActiveSubscription, requireProduc
  *   approvePageExtraction: Function,
  *   extractSinglePage: Function,
  *   resolveExtractionContract: Function,
+ *   resolveInferenceContract: Function,
  *   savePageExtraction2: Function,
  *   buildExtractionResultFromVision: Function,
  *   persistDoorScheduleResponse: Function,
@@ -292,4 +294,10 @@ export function registerExtractedModules(router, deps) {
   });
   registerSessionsRecentRoutes(router, { authenticate });
   registerSessionsExtractionRouteRoutes(router, { authenticate });
+  registerSessionsQueueExtractionRoutes(router, {
+    authenticate,
+    resolveExtractionContract: deps.resolveExtractionContract,
+    resolveInferenceContract: deps.resolveInferenceContract,
+    callEdge: deps.callEdge,
+  });
 }
