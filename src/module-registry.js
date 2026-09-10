@@ -73,6 +73,7 @@ import { registerSessionsExtractionRouteRoutes } from "./routes/sessions-extract
 import { registerSessionsQueueExtractionRoutes } from "./routes/sessions-queue-extraction.js";
 import { registerSessionsFinalizeFromJobRoutes } from "./routes/sessions-finalize-from-job.js";
 import { registerSessionsAutoGenerateRoutes } from "./routes/sessions-auto-generate.js";
+import { registerSessionsPreviewRoutes } from "./routes/sessions-preview.js";
 import { authenticate, authenticateCps, requireActiveSubscription, requireProductAccess } from "./lib/auth.js";
 
 /**
@@ -318,4 +319,5 @@ export function registerExtractedModules(router, deps) {
     extractPdfBookmarks2: deps.extractPdfBookmarks2,
     extractSinglePage: deps.extractSinglePage,
   });
+  registerSessionsPreviewRoutes(router, { authenticate });
 }
