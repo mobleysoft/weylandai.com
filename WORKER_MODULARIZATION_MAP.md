@@ -408,7 +408,18 @@ observable behavior change ever." Order:
    `quotes-view.js`, `quotes-generate.js`) — moderate size, some shared
    pricing logic (`pricing/resolve`) worth extracting into `lib/` alongside
    this step rather than duplicating it into two route files.
-7. **The hardware-schedule cluster** — **correction, 2026-09-10, after actually
+7. **The hardware-schedule cluster** — **✅ step complete, 2026-09-10.** All
+   36 routes (plus 2 real pre-existing-but-never-wired extractions found
+   along the way, rate-limit.js and error-utilities.js) are now real
+   modules or real imports; nothing hardware-schedule-specific remains
+   inline in legacy-monolith.js except the 3 unrelated `/api/upload/*`
+   routes deliberately left alone. See the individual "✅ done" notes
+   below for what landed in which file and which shared helpers stayed
+   as injected dependencies (there are a lot of them - this cluster's
+   real fan-out into the still-unextracted CPS cluster, Stripe billing,
+   and the core PDF-processing pipeline was consistently more entangled
+   than the plan below implies, confirmed at every step). —
+   **correction, 2026-09-10, after actually
    reading it**: this is bigger and more entangled than the estimate above.
    A full route scan (not just grepping `/api/hardware-schedule` at known
    prefixes) found **36 routes spanning ~6,400 lines** (146198-152514+ at
@@ -488,18 +499,21 @@ observable behavior change ever." Order:
      `persistDoorScheduleResponse` — plus reuse of `callEdge`/
      `materializeDseToLineItems`/`transformDoorEntriesToHardwareSets`/
      `savePageExtraction2` from prior pieces.
-   - Still inline (the last piece of step 7): extract/start/
-     detect-schedules/status/set-page-range/set-table-pages/batch-extract
-     (~9 routes; re-run a full route scan before touching this, since
-     every prior extraction has shifted these line numbers). This is the
-     group with ~20 unscoped PDF-pipeline dependencies (e.g.
-     extractHardwareSchedule/routeExtraction/queuePageExtractionJob),
-     deliberately deferred through every pass so far rather than rushed.
-     Expect it to need either a wider injected-deps list than anything
-     tried so far, or a decision to extract some of those ~20 PDF-
-     pipeline helpers into their own lib/ module(s) first, the way
-     pricing.js and region-conflicts.js were pulled out ahead of their
-     route groups.
+   - ✅ done (2026-09-10): `routes/hardware-schedule-extract.js` - the
+     final piece. 9 routes (the legacy job-based extract/review/approve
+     trio, start, detect-schedules, status, set-page-range,
+     set-table-pages, batch-extract), non-contiguous - 3 unrelated
+     `/api/upload/*` routes sit interleaved between approve/:groupNumber
+     and start, deliberately left in place. `countPdfPagesRaw` moved to
+     a local helper (both real call sites - start, batch-extract - were
+     inside this file). By far the largest injected-dependency list of
+     any piece this session, matching the "~20 unscoped PDF-pipeline
+     dependencies" estimate: extractHardwareSchedule,
+     getHardwareGroupForReview, updateHardwareGroup, detectFileType,
+     extractPdfBookmarks2, detectSchedulePages, createExtractionSession,
+     logTelemetryEvent, detectTextLayer2 - none extracted themselves,
+     each with real fan-out into core PDF-processing internals or step
+     8's CPS cluster territory.
 8. **The CPS/cut-sheet cluster last** (12 files, ~9,000–10,000 lines) —
    highest line count, most shared data tables
    (`PRODUCT_DATABASE`/`MFR_CODE_MAP`), the only cluster this pass could not
