@@ -19602,6 +19602,164 @@ function registerMiscUtilityRoutes(router2, { authenticate: authenticate2, callE
   });
 }
 
+// src/routes/webhooks-subscription.js
+function registerWebhooksSubscriptionRoutes(router2, { WEYLAND_PRODUCTS: WEYLAND_PRODUCTS2, WEYLAND_SUBCONP_PRODUCT_ID: WEYLAND_SUBCONP_PRODUCT_ID2, verifyVendyaiForwardSignature: verifyVendyaiForwardSignature2, verifyStripeWebhookSignature: verifyStripeWebhookSignature2 }) {
+  router2.post("/api/webhooks/subscription", async (request2, env2) => {
+    try {
+      const rawBody = await request2.text();
+      const vendyaiSig = request2.headers.get("X-Webhook-Signature") || "";
+      const vendyaiTs = request2.headers.get("X-Webhook-Timestamp") || "";
+      const stripeSig = request2.headers.get("Stripe-Signature") || "";
+      if (vendyaiSig) {
+        if (!env2.SUBSCRIPTION_WEBHOOK_SECRET) {
+          console.warn("[Webhook] SUBSCRIPTION_WEBHOOK_SECRET not configured - rejecting unverifiable vendyai forward");
+          return jsonResponse3({ error: "Webhook verification not configured" }, 500);
+        }
+        const check = await verifyVendyaiForwardSignature2(rawBody, vendyaiTs, vendyaiSig, env2.SUBSCRIPTION_WEBHOOK_SECRET);
+        if (!check.valid) {
+          console.warn("[Webhook] Invalid vendyai forward signature:", check.reason);
+          return jsonResponse3({ error: "Invalid signature", reason: check.reason }, 401);
+        }
+      } else if (stripeSig) {
+        if (!env2.STRIPE_WEBHOOK_SECRET) {
+          console.warn("[Webhook] STRIPE_WEBHOOK_SECRET not configured - rejecting unverifiable webhook");
+          return jsonResponse3({ error: "Webhook verification not configured" }, 500);
+        }
+        const check = await verifyStripeWebhookSignature2(rawBody, stripeSig, env2.STRIPE_WEBHOOK_SECRET);
+        if (!check.valid) {
+          console.warn("[Webhook] Invalid Stripe signature:", check.reason);
+          return jsonResponse3({ error: "Invalid signature", reason: check.reason }, 401);
+        }
+      } else {
+        console.warn("[Webhook] No recognized signature header present - rejecting");
+        return jsonResponse3({ error: "Missing signature" }, 401);
+      }
+      const parsedBody = JSON.parse(rawBody);
+      const event = vendyaiSig ? { type: parsedBody.type, data: { object: parsedBody.data } } : parsedBody;
+      const eventType = event.type;
+      const obj = event.data?.object || {};
+      console.log(`[Webhook] Received: ${eventType} (${obj.id || "no-id"})`);
+      if (event.id) {
+        const dedupe = await env2.DB.prepare(
+          "INSERT OR IGNORE INTO processed_webhook_events (event_id, event_type) VALUES (?, ?)"
+        ).bind(event.id, eventType).run();
+        if (dedupe.meta.changes === 0) {
+          console.log(`[Webhook] Duplicate event ${event.id} (${eventType}) - already processed, skipping.`);
+          return jsonResponse3({ received: true, duplicate: true });
+        }
+      } else {
+        console.warn("[Webhook] Event has no id - cannot dedupe, processing anyway:", eventType);
+      }
+      switch (eventType) {
+        case "checkout.session.completed": {
+          if (obj.mode !== "subscription") break;
+          const email = obj.customer_details?.email || obj.customer_email;
+          if (!email) {
+            console.error("[Webhook] checkout.session.completed with no email:", obj.id);
+            break;
+          }
+          const quantity = Number.parseInt(obj.metadata?.seats, 10) || 1;
+          let authforSession = null;
+          try {
+            const registerResp = await fetch("https://authfor.com/api/v1/register", {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({
+                email,
+                password: crypto.randomUUID() + crypto.randomUUID(),
+                name: obj.customer_details?.name || email,
+                client_id: "af_weyland_subscribe",
+                venture_id: "weylandai.com"
+              })
+            });
+            if (registerResp.ok) {
+              const registerData = await registerResp.json();
+              if (registerData && registerData.session_id) {
+                authforSession = { session_id: registerData.session_id, token: registerData.token };
+              }
+            }
+          } catch (e) {
+            console.error("[Webhook] AuthFor register call failed:", e.message);
+          }
+          const purchasedProductId = obj.metadata?.product_id || WEYLAND_SUBCONP_PRODUCT_ID2;
+          const purchasedCfg = WEYLAND_PRODUCTS2[purchasedProductId] || WEYLAND_PRODUCTS2[WEYLAND_SUBCONP_PRODUCT_ID2];
+          const isSuite = purchasedCfg.tier === null;
+          const now = (/* @__PURE__ */ new Date()).toISOString();
+          const existing = await env2.DB.prepare("SELECT id, subscription_tier, products_enabled FROM users WHERE email = ?").bind(email).first();
+          const userId = existing?.id || crypto.randomUUID();
+          const newTier = isSuite ? "subconp" : existing?.subscription_tier === "subconp" ? "subconp" : "standalone";
+          let newProductsEnabled = existing?.products_enabled || "";
+          if (!isSuite) {
+            const set = new Set(newProductsEnabled.split(",").map((s) => s.trim()).filter(Boolean));
+            set.add(purchasedCfg.tier);
+            newProductsEnabled = Array.from(set).join(",");
+          }
+          if (existing) {
+            await env2.DB.prepare(`
+              UPDATE users SET subscription_status='active', subscription_tier=?, products_enabled=?,
+                submittals_limit=?, stripe_customer_id=?, updated_at=? WHERE id=?
+            `).bind(newTier, newProductsEnabled, quantity * 50, obj.customer || null, now, userId).run();
+          } else {
+            await env2.DB.prepare(`
+              INSERT INTO users (id, email, name, subscription_tier, subscription_status, products_enabled, submittals_limit, stripe_customer_id, created_at, updated_at)
+              VALUES (?, ?, ?, ?, 'active', ?, ?, ?, ?, ?)
+            `).bind(userId, email, obj.customer_details?.name || email, newTier, newProductsEnabled, quantity * 50, obj.customer || null, now, now).run();
+          }
+          const sessionId = crypto.randomUUID();
+          const expiresAt = new Date(Date.now() + 30 * 24 * 3600 * 1e3).toISOString();
+          await env2.DB.prepare(`
+            INSERT INTO weyland_sessions (id, user_id, email, player_json, expires_at)
+            VALUES (?, ?, ?, ?, ?)
+          `).bind(sessionId, userId, email, JSON.stringify({
+            name: obj.customer_details?.name || email,
+            role: "member",
+            authfor_session_id: authforSession?.session_id || null,
+            authfor_backed: !!authforSession
+          }), expiresAt).run();
+          if (env2.CACHE) {
+            await env2.CACHE.put(`checkout_status:${obj.id}`, JSON.stringify({
+              status: "active",
+              quantity,
+              session_id: sessionId
+            }), { expirationTtl: 3600 });
+          }
+          console.log(`[Webhook] Provisioned user ${userId} (${email}) for checkout ${obj.id}, ${quantity} seat(s)`);
+          break;
+        }
+        case "customer.subscription.updated": {
+          const stripeCustomerId = obj.customer;
+          if (!stripeCustomerId) break;
+          const statusMap = { active: "active", past_due: "past_due", canceled: "cancelled", unpaid: "past_due", trialing: "trial" };
+          const newStatus = statusMap[obj.status] || obj.status;
+          await env2.DB.prepare(`UPDATE users SET subscription_status=?, updated_at=? WHERE stripe_customer_id=?`).bind(newStatus, (/* @__PURE__ */ new Date()).toISOString(), stripeCustomerId).run();
+          console.log(`[Webhook] Updated subscription status to ${newStatus} for customer ${stripeCustomerId}`);
+          break;
+        }
+        case "customer.subscription.deleted": {
+          const stripeCustomerId = obj.customer;
+          if (!stripeCustomerId) break;
+          await env2.DB.prepare(`UPDATE users SET subscription_status='cancelled', updated_at=? WHERE stripe_customer_id=?`).bind((/* @__PURE__ */ new Date()).toISOString(), stripeCustomerId).run();
+          console.log(`[Webhook] Cancelled subscription for customer ${stripeCustomerId}`);
+          break;
+        }
+        case "invoice.payment_failed": {
+          const stripeCustomerId = obj.customer;
+          if (!stripeCustomerId) break;
+          await env2.DB.prepare(`UPDATE users SET subscription_status='past_due', updated_at=? WHERE stripe_customer_id=?`).bind((/* @__PURE__ */ new Date()).toISOString(), stripeCustomerId).run();
+          console.log(`[Webhook] Payment failed for customer ${stripeCustomerId}`);
+          break;
+        }
+        default:
+          console.log(`[Webhook] Unhandled event type: ${eventType}`);
+      }
+      return jsonResponse3({ received: true });
+    } catch (err) {
+      console.error("[Webhook] Processing error:", err);
+      return jsonResponse3({ error: "Webhook processing failed" }, 500);
+    }
+  });
+}
+
 // src/module-registry.js
 function registerExtractedModules(router2, deps) {
   registerHardwareScheduleExportRoutes(router2);
@@ -19811,6 +19969,12 @@ function registerExtractedModules(router2, deps) {
     authenticate,
     callEdge: deps.callEdge,
     errorResponse: deps.errorResponse
+  });
+  registerWebhooksSubscriptionRoutes(router2, {
+    WEYLAND_PRODUCTS: deps.WEYLAND_PRODUCTS,
+    WEYLAND_SUBCONP_PRODUCT_ID: deps.WEYLAND_SUBCONP_PRODUCT_ID,
+    verifyVendyaiForwardSignature: deps.verifyVendyaiForwardSignature,
+    verifyStripeWebhookSignature: deps.verifyStripeWebhookSignature
   });
 }
 
@@ -166381,160 +166545,6 @@ async function verifyVendyaiForwardSignature(rawBody, timestamp, signature, secr
   return { valid: true };
 }
 __name(verifyVendyaiForwardSignature, "verifyVendyaiForwardSignature");
-router.post("/api/webhooks/subscription", async (request2, env2) => {
-  try {
-    const rawBody = await request2.text();
-    const vendyaiSig = request2.headers.get("X-Webhook-Signature") || "";
-    const vendyaiTs = request2.headers.get("X-Webhook-Timestamp") || "";
-    const stripeSig = request2.headers.get("Stripe-Signature") || "";
-    if (vendyaiSig) {
-      if (!env2.SUBSCRIPTION_WEBHOOK_SECRET) {
-        console.warn("[Webhook] SUBSCRIPTION_WEBHOOK_SECRET not configured - rejecting unverifiable vendyai forward");
-        return jsonResponse3({ error: "Webhook verification not configured" }, 500);
-      }
-      const check = await verifyVendyaiForwardSignature(rawBody, vendyaiTs, vendyaiSig, env2.SUBSCRIPTION_WEBHOOK_SECRET);
-      if (!check.valid) {
-        console.warn("[Webhook] Invalid vendyai forward signature:", check.reason);
-        return jsonResponse3({ error: "Invalid signature", reason: check.reason }, 401);
-      }
-    } else if (stripeSig) {
-      if (!env2.STRIPE_WEBHOOK_SECRET) {
-        console.warn("[Webhook] STRIPE_WEBHOOK_SECRET not configured - rejecting unverifiable webhook");
-        return jsonResponse3({ error: "Webhook verification not configured" }, 500);
-      }
-      const check = await verifyStripeWebhookSignature(rawBody, stripeSig, env2.STRIPE_WEBHOOK_SECRET);
-      if (!check.valid) {
-        console.warn("[Webhook] Invalid Stripe signature:", check.reason);
-        return jsonResponse3({ error: "Invalid signature", reason: check.reason }, 401);
-      }
-    } else {
-      console.warn("[Webhook] No recognized signature header present - rejecting");
-      return jsonResponse3({ error: "Missing signature" }, 401);
-    }
-    const parsedBody = JSON.parse(rawBody);
-    const event = vendyaiSig ? { type: parsedBody.type, data: { object: parsedBody.data } } : parsedBody;
-    const eventType = event.type;
-    const obj = event.data?.object || {};
-    console.log(`[Webhook] Received: ${eventType} (${obj.id || "no-id"})`);
-    if (event.id) {
-      const dedupe = await env2.DB.prepare(
-        "INSERT OR IGNORE INTO processed_webhook_events (event_id, event_type) VALUES (?, ?)"
-      ).bind(event.id, eventType).run();
-      if (dedupe.meta.changes === 0) {
-        console.log(`[Webhook] Duplicate event ${event.id} (${eventType}) - already processed, skipping.`);
-        return jsonResponse3({ received: true, duplicate: true });
-      }
-    } else {
-      console.warn("[Webhook] Event has no id - cannot dedupe, processing anyway:", eventType);
-    }
-    switch (eventType) {
-      case "checkout.session.completed": {
-        if (obj.mode !== "subscription") break;
-        const email = obj.customer_details?.email || obj.customer_email;
-        if (!email) {
-          console.error("[Webhook] checkout.session.completed with no email:", obj.id);
-          break;
-        }
-        const quantity = Number.parseInt(obj.metadata?.seats, 10) || 1;
-        let authforSession = null;
-        try {
-          const registerResp = await fetch("https://authfor.com/api/v1/register", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({
-              email,
-              password: crypto.randomUUID() + crypto.randomUUID(),
-              name: obj.customer_details?.name || email,
-              client_id: "af_weyland_subscribe",
-              venture_id: "weylandai.com"
-            })
-          });
-          if (registerResp.ok) {
-            const registerData = await registerResp.json();
-            if (registerData && registerData.session_id) {
-              authforSession = { session_id: registerData.session_id, token: registerData.token };
-            }
-          }
-        } catch (e) {
-          console.error("[Webhook] AuthFor register call failed:", e.message);
-        }
-        const purchasedProductId = obj.metadata?.product_id || WEYLAND_SUBCONP_PRODUCT_ID;
-        const purchasedCfg = WEYLAND_PRODUCTS[purchasedProductId] || WEYLAND_PRODUCTS[WEYLAND_SUBCONP_PRODUCT_ID];
-        const isSuite = purchasedCfg.tier === null;
-        const now = (/* @__PURE__ */ new Date()).toISOString();
-        const existing = await env2.DB.prepare("SELECT id, subscription_tier, products_enabled FROM users WHERE email = ?").bind(email).first();
-        const userId = existing?.id || crypto.randomUUID();
-        const newTier = isSuite ? "subconp" : existing?.subscription_tier === "subconp" ? "subconp" : "standalone";
-        let newProductsEnabled = existing?.products_enabled || "";
-        if (!isSuite) {
-          const set = new Set(newProductsEnabled.split(",").map((s) => s.trim()).filter(Boolean));
-          set.add(purchasedCfg.tier);
-          newProductsEnabled = Array.from(set).join(",");
-        }
-        if (existing) {
-          await env2.DB.prepare(`
-            UPDATE users SET subscription_status='active', subscription_tier=?, products_enabled=?,
-              submittals_limit=?, stripe_customer_id=?, updated_at=? WHERE id=?
-          `).bind(newTier, newProductsEnabled, quantity * 50, obj.customer || null, now, userId).run();
-        } else {
-          await env2.DB.prepare(`
-            INSERT INTO users (id, email, name, subscription_tier, subscription_status, products_enabled, submittals_limit, stripe_customer_id, created_at, updated_at)
-            VALUES (?, ?, ?, ?, 'active', ?, ?, ?, ?, ?)
-          `).bind(userId, email, obj.customer_details?.name || email, newTier, newProductsEnabled, quantity * 50, obj.customer || null, now, now).run();
-        }
-        const sessionId = crypto.randomUUID();
-        const expiresAt = new Date(Date.now() + 30 * 24 * 3600 * 1e3).toISOString();
-        await env2.DB.prepare(`
-          INSERT INTO weyland_sessions (id, user_id, email, player_json, expires_at)
-          VALUES (?, ?, ?, ?, ?)
-        `).bind(sessionId, userId, email, JSON.stringify({
-          name: obj.customer_details?.name || email,
-          role: "member",
-          authfor_session_id: authforSession?.session_id || null,
-          authfor_backed: !!authforSession
-        }), expiresAt).run();
-        if (env2.CACHE) {
-          await env2.CACHE.put(`checkout_status:${obj.id}`, JSON.stringify({
-            status: "active",
-            quantity,
-            session_id: sessionId
-          }), { expirationTtl: 3600 });
-        }
-        console.log(`[Webhook] Provisioned user ${userId} (${email}) for checkout ${obj.id}, ${quantity} seat(s)`);
-        break;
-      }
-      case "customer.subscription.updated": {
-        const stripeCustomerId = obj.customer;
-        if (!stripeCustomerId) break;
-        const statusMap = { active: "active", past_due: "past_due", canceled: "cancelled", unpaid: "past_due", trialing: "trial" };
-        const newStatus = statusMap[obj.status] || obj.status;
-        await env2.DB.prepare(`UPDATE users SET subscription_status=?, updated_at=? WHERE stripe_customer_id=?`).bind(newStatus, (/* @__PURE__ */ new Date()).toISOString(), stripeCustomerId).run();
-        console.log(`[Webhook] Updated subscription status to ${newStatus} for customer ${stripeCustomerId}`);
-        break;
-      }
-      case "customer.subscription.deleted": {
-        const stripeCustomerId = obj.customer;
-        if (!stripeCustomerId) break;
-        await env2.DB.prepare(`UPDATE users SET subscription_status='cancelled', updated_at=? WHERE stripe_customer_id=?`).bind((/* @__PURE__ */ new Date()).toISOString(), stripeCustomerId).run();
-        console.log(`[Webhook] Cancelled subscription for customer ${stripeCustomerId}`);
-        break;
-      }
-      case "invoice.payment_failed": {
-        const stripeCustomerId = obj.customer;
-        if (!stripeCustomerId) break;
-        await env2.DB.prepare(`UPDATE users SET subscription_status='past_due', updated_at=? WHERE stripe_customer_id=?`).bind((/* @__PURE__ */ new Date()).toISOString(), stripeCustomerId).run();
-        console.log(`[Webhook] Payment failed for customer ${stripeCustomerId}`);
-        break;
-      }
-      default:
-        console.log(`[Webhook] Unhandled event type: ${eventType}`);
-    }
-    return jsonResponse3({ received: true });
-  } catch (err) {
-    console.error("[Webhook] Processing error:", err);
-    return jsonResponse3({ error: "Webhook processing failed" }, 500);
-  }
-});
 async function autoEnrichSessionOnSave(sessionId, env2) {
   const compsResult = await env2.DB.prepare(`
     SELECT hc.id, hc.manufacturer, hc.model, hc.finish, hc.catalog_number,
@@ -166669,6 +166679,9 @@ registerExtractedModules(router, {
   CHECKOUT_READY_PRODUCTS,
   stripeRequest,
   WORKER_VERSION,
+  WEYLAND_SUBCONP_PRODUCT_ID,
+  verifyVendyaiForwardSignature,
+  verifyStripeWebhookSignature,
   buildExtractionResultFromVision,
   persistDoorScheduleResponse,
   extractHardwareSchedule,

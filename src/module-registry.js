@@ -87,6 +87,7 @@ import { registerSubscriptionRoutes } from "./routes/subscription.js";
 import { registerMarketIntelligenceRoutes } from "./routes/market-intelligence.js";
 import { registerSystemStatusRoutes } from "./routes/system-status.js";
 import { registerMiscUtilityRoutes } from "./routes/misc-utility.js";
+import { registerWebhooksSubscriptionRoutes } from "./routes/webhooks-subscription.js";
 import { authenticate, authenticateCps, requireActiveSubscription, requireProductAccess } from "./lib/auth.js";
 
 /**
@@ -131,6 +132,9 @@ import { authenticate, authenticateCps, requireActiveSubscription, requireProduc
  *   CHECKOUT_READY_PRODUCTS: Set,
  *   stripeRequest: Function,
  *   WORKER_VERSION: string,
+ *   WEYLAND_SUBCONP_PRODUCT_ID: string,
+ *   verifyVendyaiForwardSignature: Function,
+ *   verifyStripeWebhookSignature: Function,
  *   buildExtractionResultFromVision: Function,
  *   persistDoorScheduleResponse: Function,
  *   extractHardwareSchedule: Function,
@@ -371,5 +375,11 @@ export function registerExtractedModules(router, deps) {
     authenticate,
     callEdge: deps.callEdge,
     errorResponse: deps.errorResponse,
+  });
+  registerWebhooksSubscriptionRoutes(router, {
+    WEYLAND_PRODUCTS: deps.WEYLAND_PRODUCTS,
+    WEYLAND_SUBCONP_PRODUCT_ID: deps.WEYLAND_SUBCONP_PRODUCT_ID,
+    verifyVendyaiForwardSignature: deps.verifyVendyaiForwardSignature,
+    verifyStripeWebhookSignature: deps.verifyStripeWebhookSignature,
   });
 }
