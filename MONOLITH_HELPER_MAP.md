@@ -145,7 +145,23 @@ cluster *names* and *relationships* are the durable part.
    `generateHardwareSetPage`, `mergePdfs`, `assembleSubmittalPackage`,
    `getAssemblyStatus`. Self-contained; only external dep is vendored
    `pdf-lib` (region 1, already imported by name elsewhere).
-   - Status: not started.
+   - **Status: ✅ done (2026-09-10).** Extracted to
+     `src/lib/submittal-assembler.js` +
+     `src/lib/submittal-assembler.test.mjs` (19 real tests, using a
+     small hand-written fake of the pdf-lib surface these functions
+     call rather than the vendored bundle), imported directly into
+     `legacy-monolith.js`. `legacy-monolith.js` shrank 147,159 →
+     146,242 lines (917 lines - the full cluster, byte-diff-verified
+     identical modulo `export` keywords and stripped `__name(...)`
+     calls). `BHMA_FINISH_LOOKUP` was attributed to Cluster B in the
+     original cataloguing pass's line-range estimate, but both of its
+     real call sites are inside `generateHardwareSetPage` in this
+     cluster - moved here instead, where it's actually used; Cluster
+     B's own entry below no longer references it. Live-verified via
+     `GET /api/sessions/:id/assembly-status` (the unauthenticated
+     Athena-integration path, returns the real `{"status":"not_found"}`
+     from `getAssemblyStatus` for a nonexistent session) and
+     `GET /api/health`.
 4. **CPS manufacturer matching (Cluster B, ~607 lines).**
    `normalizeManufacturerKey`, `parseModelString`,
    `generateSearchVariants/Queries`, `MANUFACTURER_ALIASES`,
