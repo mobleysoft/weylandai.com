@@ -61,6 +61,7 @@ import { registerCutSheetIntelligenceRoutes } from "./routes/cut-sheet-intellige
 import { registerCutSheetDiscoveriesRoutes } from "./routes/cut-sheet-discoveries.js";
 import { registerCutSheetVerifiedRoutes } from "./routes/cut-sheet-verified.js";
 import { registerCutSheetLocalRoutes } from "./routes/cut-sheet-local.js";
+import { registerCatalogueProductsRoutes } from "./routes/catalogue-products.js";
 import { authenticate, authenticateCps, requireActiveSubscription, requireProductAccess } from "./lib/auth.js";
 
 /**
@@ -256,4 +257,5 @@ export function registerExtractedModules(router, deps) {
     searchLocalCatalogue: deps.searchLocalCatalogue,
     LOCAL_CATALOGUE_INDEX: deps.LOCAL_CATALOGUE_INDEX,
   });
+  registerCatalogueProductsRoutes(router, { authenticate });
 }
