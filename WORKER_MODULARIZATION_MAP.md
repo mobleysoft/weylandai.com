@@ -729,10 +729,16 @@ observable behavior change ever." Order:
      consolidation precedent as sessions-detail.js's
      generateSignedResourceUrl) - arrayBufferToBase644's own
      definition still has 3 other call sites and was left in place.
-   - Still inline: the other 3 `/api/sessions/*` routes -
-     finalize-from-job, auto-generate, preview. Re-scan before picking
-     the next piece - these are scattered non-contiguously, not one
-     block.
+   - ✅ done (2026-09-10): `routes/sessions-finalize-from-job.js` - POST
+     finalize-from-job/:jobId. authenticate, callEdge,
+     persistDoorScheduleResponse, transformDoorEntriesToHardwareSets,
+     materializeDseToLineItems all reuse already-injected deps.
+     parseAndValidateExtraction (real hoisted function, 2 other call
+     sites remaining) newly promoted to an injected dep, same pattern
+     as resolveInferenceContract in the prior extraction.
+   - Still inline: the other 2 `/api/sessions/*` routes -
+     auto-generate, preview. Re-scan before picking the next piece -
+     these are scattered non-contiguously, not one block.
 
 ### Additional tracked items (brainstormed 2026-09-10, not yet scheduled)
 
