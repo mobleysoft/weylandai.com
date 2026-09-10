@@ -75,6 +75,7 @@ import { registerSessionsFinalizeFromJobRoutes } from "./routes/sessions-finaliz
 import { registerSessionsAutoGenerateRoutes } from "./routes/sessions-auto-generate.js";
 import { registerSessionsPreviewRoutes } from "./routes/sessions-preview.js";
 import { registerAuthSessionRoutes } from "./routes/auth-session.js";
+import { registerInstallDeviceAuthRoutes } from "./routes/install-device-auth.js";
 import { authenticate, authenticateCps, requireActiveSubscription, requireProductAccess } from "./lib/auth.js";
 
 /**
@@ -323,4 +324,5 @@ export function registerExtractedModules(router, deps) {
   });
   registerSessionsPreviewRoutes(router, { authenticate });
   registerAuthSessionRoutes(router, { authenticate, errorResponse: deps.errorResponse });
+  registerInstallDeviceAuthRoutes(router, { authenticate, callEdge: deps.callEdge });
 }
