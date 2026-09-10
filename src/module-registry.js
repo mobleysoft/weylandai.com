@@ -71,6 +71,7 @@ import { registerSessionsAssembleRoutes } from "./routes/sessions-assemble.js";
 import { registerSessionsRecentRoutes } from "./routes/sessions-recent.js";
 import { registerSessionsExtractionRouteRoutes } from "./routes/sessions-extraction-route.js";
 import { registerSessionsQueueExtractionRoutes } from "./routes/sessions-queue-extraction.js";
+import { registerSessionsFinalizeFromJobRoutes } from "./routes/sessions-finalize-from-job.js";
 import { authenticate, authenticateCps, requireActiveSubscription, requireProductAccess } from "./lib/auth.js";
 
 /**
@@ -106,6 +107,7 @@ import { authenticate, authenticateCps, requireActiveSubscription, requireProduc
  *   resolveExtractionContract: Function,
  *   resolveInferenceContract: Function,
  *   savePageExtraction2: Function,
+ *   parseAndValidateExtraction: Function,
  *   buildExtractionResultFromVision: Function,
  *   persistDoorScheduleResponse: Function,
  *   extractHardwareSchedule: Function,
@@ -299,5 +301,13 @@ export function registerExtractedModules(router, deps) {
     resolveExtractionContract: deps.resolveExtractionContract,
     resolveInferenceContract: deps.resolveInferenceContract,
     callEdge: deps.callEdge,
+  });
+  registerSessionsFinalizeFromJobRoutes(router, {
+    authenticate,
+    callEdge: deps.callEdge,
+    persistDoorScheduleResponse: deps.persistDoorScheduleResponse,
+    transformDoorEntriesToHardwareSets: deps.transformDoorEntriesToHardwareSets,
+    materializeDseToLineItems: deps.materializeDseToLineItems,
+    parseAndValidateExtraction: deps.parseAndValidateExtraction,
   });
 }
