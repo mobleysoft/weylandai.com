@@ -19503,6 +19503,60 @@ function registerMarketIntelligenceRoutes(router2) {
   });
 }
 
+// src/routes/system-status.js
+function registerSystemStatusRoutes(router2, { authenticate: authenticate2, WORKER_VERSION: WORKER_VERSION2 }) {
+  router2.get("/api/health", async (request2, env2) => {
+    try {
+      const health = await performHealthCheck(env2);
+      return jsonResponse3({
+        ...health,
+        service: "SubX API",
+        version: WORKER_VERSION2,
+        environment: env2.ENVIRONMENT || "production",
+        dependencies: 0,
+        ocr: "pdfium_tesseract_wasm",
+        deployment: "weylandai-com-worker",
+        organization: "Mobley Helms Systems LP"
+      }, health.status === "healthy" ? 200 : 503);
+    } catch (error4) {
+      console.error("[Health Check] Error:", error4);
+      return jsonResponse3({
+        status: "unhealthy",
+        error: error4.message,
+        timestamp: (/* @__PURE__ */ new Date()).toISOString()
+      }, 503);
+    }
+  });
+  router2.get("/api/version", (request2, env2) => {
+    return jsonResponse3({
+      version: WORKER_VERSION2,
+      environment: env2.ENVIRONMENT || "production",
+      build_date: "2026-05-18",
+      service: "SubX API",
+      edition: env2.WEYLAND_EDITION || "cloud"
+    });
+  });
+  router2.get("/api/metrics/errors", async (request2, env2) => {
+    const { error: error4, user } = await authenticate2(request2, env2);
+    if (error4)
+      return error4;
+    try {
+      const metrics = new ErrorMetrics(env2);
+      const days = parseInt(new URL(request2.url).searchParams.get("days") || "7", 10);
+      const stats = await metrics.getErrorStats(Math.min(days, 30));
+      return jsonResponse3({
+        success: true,
+        period_days: days,
+        error_statistics: stats,
+        timestamp: (/* @__PURE__ */ new Date()).toISOString()
+      });
+    } catch (error5) {
+      console.error("[Metrics] Error retrieving stats:", error5);
+      return jsonErrorResponse(error5);
+    }
+  });
+}
+
 // src/module-registry.js
 function registerExtractedModules(router2, deps) {
   registerHardwareScheduleExportRoutes(router2);
@@ -19707,6 +19761,7 @@ function registerExtractedModules(router2, deps) {
   registerHuntRoutes(router2, { authenticate });
   registerSubscriptionRoutes(router2, { authenticate, errorResponse: deps.errorResponse });
   registerMarketIntelligenceRoutes(router2);
+  registerSystemStatusRoutes(router2, { authenticate, WORKER_VERSION: deps.WORKER_VERSION });
 }
 
 // src/lib/cors.js
@@ -166023,56 +166078,6 @@ async function generateR2StreamUrl2(bufferKey, env2) {
   return `${origin}/api/internal/r2-stream?token=${encodeURIComponent(token)}`;
 }
 __name(generateR2StreamUrl2, "generateR2StreamUrl");
-router.get("/api/health", async (request2, env2) => {
-  try {
-    const health = await performHealthCheck(env2);
-    return jsonResponse3({
-      ...health,
-      service: "SubX API",
-      version: WORKER_VERSION,
-      environment: env2.ENVIRONMENT || "production",
-      dependencies: 0,
-      ocr: "pdfium_tesseract_wasm",
-      deployment: "weylandai-com-worker",
-      organization: "Mobley Helms Systems LP"
-    }, health.status === "healthy" ? 200 : 503);
-  } catch (error4) {
-    console.error("[Health Check] Error:", error4);
-    return jsonResponse3({
-      status: "unhealthy",
-      error: error4.message,
-      timestamp: (/* @__PURE__ */ new Date()).toISOString()
-    }, 503);
-  }
-});
-router.get("/api/version", (request2, env2) => {
-  return jsonResponse3({
-    version: WORKER_VERSION,
-    environment: env2.ENVIRONMENT || "production",
-    build_date: "2026-05-18",
-    service: "SubX API",
-    edition: env2.WEYLAND_EDITION || "cloud"
-  });
-});
-router.get("/api/metrics/errors", async (request2, env2) => {
-  const { error: error4, user } = await authenticate(request2, env2);
-  if (error4)
-    return error4;
-  try {
-    const metrics = new ErrorMetrics(env2);
-    const days = parseInt(new URL(request2.url).searchParams.get("days") || "7", 10);
-    const stats = await metrics.getErrorStats(Math.min(days, 30));
-    return jsonResponse3({
-      success: true,
-      period_days: days,
-      error_statistics: stats,
-      timestamp: (/* @__PURE__ */ new Date()).toISOString()
-    });
-  } catch (error5) {
-    console.error("[Metrics] Error retrieving stats:", error5);
-    return jsonErrorResponse(error5);
-  }
-});
 router.get("/login", async (request2, env2) => {
   const url = new URL(request2.url);
   const rawRedirect = url.searchParams.get("redirect") || "/subx";
@@ -166654,6 +166659,7 @@ registerExtractedModules(router, {
   WEYLAND_PRODUCTS,
   CHECKOUT_READY_PRODUCTS,
   stripeRequest,
+  WORKER_VERSION,
   buildExtractionResultFromVision,
   persistDoorScheduleResponse,
   extractHardwareSchedule,

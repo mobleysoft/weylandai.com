@@ -85,6 +85,7 @@ import { registerInternalRoutes } from "./routes/internal.js";
 import { registerHuntRoutes } from "./routes/hunt.js";
 import { registerSubscriptionRoutes } from "./routes/subscription.js";
 import { registerMarketIntelligenceRoutes } from "./routes/market-intelligence.js";
+import { registerSystemStatusRoutes } from "./routes/system-status.js";
 import { authenticate, authenticateCps, requireActiveSubscription, requireProductAccess } from "./lib/auth.js";
 
 /**
@@ -128,6 +129,7 @@ import { authenticate, authenticateCps, requireActiveSubscription, requireProduc
  *   WEYLAND_PRODUCTS: object,
  *   CHECKOUT_READY_PRODUCTS: Set,
  *   stripeRequest: Function,
+ *   WORKER_VERSION: string,
  *   buildExtractionResultFromVision: Function,
  *   persistDoorScheduleResponse: Function,
  *   extractHardwareSchedule: Function,
@@ -363,4 +365,5 @@ export function registerExtractedModules(router, deps) {
   registerHuntRoutes(router, { authenticate });
   registerSubscriptionRoutes(router, { authenticate, errorResponse: deps.errorResponse });
   registerMarketIntelligenceRoutes(router);
+  registerSystemStatusRoutes(router, { authenticate, WORKER_VERSION: deps.WORKER_VERSION });
 }
