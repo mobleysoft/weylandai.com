@@ -544,8 +544,12 @@ observable behavior change ever." Order:
      defensive fallback for a rolling `price_uom` column migration.
      `scrubModelTokens` inlined as a local helper (its one real call
      site was inside this route).
+   - ✅ done (2026-09-10): cut-sheets/for-set/:setId added into the
+     existing `routes/cut-sheet-match.js` (not a new file - same real
+     deps/gate as match+batch-match). Matches every component in a
+     whole hardware set, returns a deduplicated cut-sheet list.
    - Still inline: everything else - the rest of the CPS/cut-sheet route
-     surface (~37 more `/api/cut-sheets/*` and `/api/cps/*` routes alone
+     surface (~36 more `/api/cut-sheets/*` and `/api/cps/*` routes alone
      per the last full scan - catalogues, search/search-component,
      drafts, mappings, queue/extractions/render, discoveries,
      domains/verify, intelligence metrics/config, admin normalize,
