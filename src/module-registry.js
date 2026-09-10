@@ -40,6 +40,7 @@ import { registerTakeoffLineItemsRoutes } from "./routes/takeoff-line-items.js";
 import { registerQuotesViewRoutes } from "./routes/quotes-view.js";
 import { registerQuotesGenerateRoutes } from "./routes/quotes-generate.js";
 import { registerHardwareScheduleCandidatesRoutes } from "./routes/hardware-schedule-candidates.js";
+import { registerHardwareScheduleEnrichmentRoutes } from "./routes/hardware-schedule-enrichment.js";
 import { authenticate, authenticateCps, requireProductAccess } from "./lib/auth.js";
 
 /**
@@ -53,6 +54,10 @@ import { authenticate, authenticateCps, requireProductAccess } from "./lib/auth.
  *   puppeteer: object,
  *   getSessionStatus: Function,
  *   getOrRenderPage: Function,
+ *   checkRateLimit: Function,
+ *   enrichComponent: Function,
+ *   getUnaffirmReason: Function,
+ *   storeHardwareExtraction: Function,
  * }} deps
  *   Real dependencies still owned by legacy-monolith.js (not yet their
  *   own modules) that some of these routes need injected. renderHtmlToPdf/
@@ -99,5 +104,12 @@ export function registerExtractedModules(router, deps) {
     authenticate,
     getSessionStatus: deps.getSessionStatus,
     getOrRenderPage: deps.getOrRenderPage,
+  });
+  registerHardwareScheduleEnrichmentRoutes(router, {
+    authenticate,
+    checkRateLimit: deps.checkRateLimit,
+    enrichComponent: deps.enrichComponent,
+    getUnaffirmReason: deps.getUnaffirmReason,
+    storeHardwareExtraction: deps.storeHardwareExtraction,
   });
 }

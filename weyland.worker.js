@@ -8029,6 +8029,253 @@ function registerHardwareScheduleCandidatesRoutes(router2, { authenticate: authe
   });
 }
 
+// src/routes/hardware-schedule-enrichment.js
+function registerHardwareScheduleEnrichmentRoutes(router2, { authenticate: authenticate2, checkRateLimit: checkRateLimit2, enrichComponent: enrichComponent2, getUnaffirmReason: getUnaffirmReason2, storeHardwareExtraction: storeHardwareExtraction2 }) {
+  router2.post("/api/hardware-schedule/session/:sessionId/enrich", async (request2, env2) => {
+    const { error: error4, user } = await authenticate2(request2, env2);
+    if (error4)
+      return error4;
+    const rateLimit = await checkRateLimit2(user.userId, "enrichment", env2, { requests: 10, windowSeconds: 60 });
+    if (rateLimit.limited) {
+      return jsonResponse3({
+        error: "Rate limit exceeded",
+        message: "Too many enrichment requests. Please wait before trying again.",
+        retryAfter: rateLimit.retryAfter
+      }, 429, {
+        "Retry-After": rateLimit.retryAfter.toString(),
+        "X-RateLimit-Limit": "10",
+        "X-RateLimit-Remaining": "0",
+        "X-RateLimit-Reset": (Date.now() + rateLimit.retryAfter * 1e3).toString()
+      });
+    }
+    try {
+      const sessionId = request2.params.sessionId;
+      console.log(`[Product Enrichment] Enriching session ${sessionId} (Rate Limit: ${rateLimit.remaining} remaining)`);
+      const session = await env2.DB.prepare(`
+      SELECT * FROM hardware_extraction_sessions WHERE id = ?
+    `).bind(sessionId).first();
+      if (!session) {
+        return jsonResponse3({ error: "Session not found" }, 404);
+      }
+      if (session.user_id !== user.userId) {
+        return jsonResponse3({ error: "Unauthorized" }, 403);
+      }
+      const components = await env2.DB.prepare(`
+      SELECT hc.*, hs.set_number
+      FROM hardware_components hc
+      JOIN hardware_sets hs ON hc.set_id = hs.id
+      WHERE hs.session_id = ?
+    `).bind(sessionId).all();
+      if (!components.results || components.results.length === 0) {
+        return jsonResponse3({
+          enriched: 0,
+          message: "No components found to enrich"
+        }, 200);
+      }
+      let enrichedCount = 0;
+      const enrichmentResults = [];
+      for (const component of components.results) {
+        const enriched = enrichComponent2(component);
+        if (enriched._enriched) {
+          await env2.DB.prepare(`
+          UPDATE hardware_components
+          SET
+            component_description = COALESCE(component_description, ?),
+            compliance = COALESCE(compliance, ?),
+            notes = COALESCE(notes, '')
+          WHERE id = ?
+        `).bind(
+            enriched.component_description,
+            enriched.compliance,
+            component.id
+          ).run();
+          enrichedCount++;
+          enrichmentResults.push({
+            set_number: component.set_number,
+            component_type: component.component_type,
+            matched_product: enriched._matched_product,
+            confidence: enriched._enrichment_confidence
+          });
+        }
+      }
+      console.log(`[Product Enrichment] Enriched ${enrichedCount}/${components.results.length} components`);
+      return jsonResponse3({
+        enriched: enrichedCount,
+        total: components.results.length,
+        enrichment_rate: Math.round(enrichedCount / components.results.length * 100),
+        results: enrichmentResults
+      }, 200);
+    } catch (error5) {
+      console.error("[Product Enrichment] Error:", error5);
+      return jsonResponse3({
+        error: "Failed to enrich hardware schedule",
+        details: error5.message
+      }, 500);
+    }
+  });
+  router2.post("/api/hardware-schedule/backfill", async (request2, env2) => {
+    const { error: error4, user } = await authenticate2(request2, env2);
+    if (error4)
+      return error4;
+    try {
+      console.log("[Backfill] Starting hardware data backfill...");
+      const pendingPages = await env2.DB.prepare(`
+      SELECT
+        hpe.id,
+        hpe.session_id,
+        hpe.page_number,
+        hpe.extracted_data,
+        hes.user_id
+      FROM hardware_page_extractions hpe
+      JOIN hardware_extraction_sessions hes ON hpe.session_id = hes.id
+      WHERE hpe.status = 'pending_review'
+      ORDER BY hpe.session_id, hpe.page_number
+    `).all();
+      console.log(`[Backfill] Found ${pendingPages.results.length} pages to process`);
+      let totalSets = 0;
+      let totalComponents = 0;
+      const results = [];
+      for (const page of pendingPages.results) {
+        try {
+          const extractedData = JSON.parse(page.extracted_data);
+          const hardwareGroups = extractedData.hardware_groups || extractedData.hardwareGroups || [];
+          if (hardwareGroups.length === 0) {
+            results.push({
+              session_id: page.session_id,
+              page_number: page.page_number,
+              status: "skipped",
+              reason: "No hardware groups"
+            });
+            continue;
+          }
+          const result = await storeHardwareExtraction2(extractedData, env2, page.user_id, {
+            sessionId: page.session_id,
+            pageNumber: page.page_number,
+            pageExtractionId: page.id
+          });
+          totalSets += result.groups_inserted;
+          totalComponents += result.components_inserted;
+          await env2.DB.prepare(`
+          UPDATE hardware_page_extractions
+          SET status = 'approved',
+              reviewed_at = ?,
+              reviewed_by = ?
+          WHERE id = ?
+        `).bind((/* @__PURE__ */ new Date()).toISOString(), user.userId, page.id).run();
+          results.push({
+            session_id: page.session_id,
+            page_number: page.page_number,
+            status: "processed",
+            sets: result.groups_inserted,
+            components: result.components_inserted
+          });
+        } catch (pageError) {
+          console.error(`[Backfill] Error processing page ${page.page_number}:`, pageError.message);
+          results.push({
+            session_id: page.session_id,
+            page_number: page.page_number,
+            status: "error",
+            error: pageError.message
+          });
+        }
+      }
+      console.log(`[Backfill] Complete: ${totalSets} sets, ${totalComponents} components`);
+      return jsonResponse3({
+        success: true,
+        pages_processed: pendingPages.results.length,
+        total_sets_inserted: totalSets,
+        total_components_inserted: totalComponents,
+        results
+      });
+    } catch (error5) {
+      console.error("[Backfill] Error:", error5);
+      return jsonResponse3({
+        error: "Backfill failed",
+        details: error5.message
+      }, 500);
+    }
+  });
+  router2.get("/api/hardware-schedule/session/:sessionId/affirm-status", async (request2, env2) => {
+    const { error: error4, user } = await authenticate2(request2, env2);
+    if (error4)
+      return error4;
+    try {
+      const sessionId = request2.params.sessionId;
+      const pages = await env2.DB.prepare(`
+      SELECT id, page_number, extracted_data, affirm_state
+      FROM hardware_page_extractions
+      WHERE session_id = ? AND status != 'rejected'
+      ORDER BY page_number
+    `).bind(sessionId).all();
+      let totalGroups = 0;
+      let affirmedGroups = 0;
+      let totalComponents = 0;
+      let affirmedComponents = 0;
+      const unaffirmedItems = [];
+      for (const page of pages.results) {
+        const extractedData = JSON.parse(page.extracted_data || "{}");
+        const affirmState = JSON.parse(page.affirm_state || "{}");
+        const groups = extractedData.hardware_groups || extractedData.hardwareGroups || [];
+        for (const group3 of groups) {
+          totalGroups++;
+          const groupAffirmData = affirmState.groups?.find((g) => g.id === group3.id || g.group_number === group3.group_number);
+          const groupAffirmed = groupAffirmData?.affirmed || false;
+          if (groupAffirmed) {
+            affirmedGroups++;
+          } else {
+            unaffirmedItems.push({
+              type: "group",
+              pageNumber: page.page_number,
+              groupNumber: group3.group_number,
+              groupName: group3.group_name || group3.description,
+              reason: getUnaffirmReason2(group3, "group")
+            });
+          }
+          const components = group3.components || [];
+          for (let i2 = 0; i2 < components.length; i2++) {
+            const comp = components[i2];
+            totalComponents++;
+            const compAffirmData = groupAffirmData?.components?.find((c) => c.index === i2);
+            const compAffirmed = compAffirmData?.affirmed || false;
+            if (compAffirmed) {
+              affirmedComponents++;
+            } else {
+              unaffirmedItems.push({
+                type: "component",
+                pageNumber: page.page_number,
+                groupNumber: group3.group_number,
+                componentIndex: i2,
+                componentType: comp.type || comp.component_type,
+                reason: getUnaffirmReason2(comp, "component")
+              });
+            }
+          }
+        }
+      }
+      const allAffirmed = affirmedGroups === totalGroups && affirmedComponents === totalComponents && totalGroups > 0;
+      return jsonResponse3({
+        success: true,
+        sessionId,
+        summary: {
+          totalGroups,
+          affirmedGroups,
+          totalComponents,
+          affirmedComponents,
+          totalItems: totalGroups + totalComponents,
+          affirmedItems: affirmedGroups + affirmedComponents,
+          allAffirmed,
+          canGenerateSubmittal: allAffirmed
+        },
+        unaffirmedItems: unaffirmedItems.slice(0, 50)
+        // Limit for performance
+      });
+    } catch (error5) {
+      console.error("[Affirm Status] Error:", error5);
+      return jsonResponse3({ error: "Failed to get affirm status", details: error5.message }, 500);
+    }
+  });
+}
+
 // src/module-registry.js
 function registerExtractedModules(router2, deps) {
   registerHardwareScheduleExportRoutes(router2);
@@ -8066,6 +8313,13 @@ function registerExtractedModules(router2, deps) {
     authenticate,
     getSessionStatus: deps.getSessionStatus,
     getOrRenderPage: deps.getOrRenderPage
+  });
+  registerHardwareScheduleEnrichmentRoutes(router2, {
+    authenticate,
+    checkRateLimit: deps.checkRateLimit,
+    enrichComponent: deps.enrichComponent,
+    getUnaffirmReason: deps.getUnaffirmReason,
+    storeHardwareExtraction: deps.storeHardwareExtraction
   });
 }
 
@@ -148370,46 +148624,6 @@ init_virtual_unenv_global_polyfill_cloudflare_unenv_preset_node_process();
 init_virtual_unenv_global_polyfill_cloudflare_unenv_preset_node_console();
 init_performance2();
 init_auth_module();
-init_virtual_unenv_global_polyfill_cloudflare_unenv_preset_node_process();
-init_virtual_unenv_global_polyfill_cloudflare_unenv_preset_node_console();
-init_performance2();
-async function checkRateLimit2(userId, operation, env2, limits2 = { requests: 10, windowSeconds: 60 }) {
-  const key = `ratelimit:${operation}:${userId}`;
-  const now = Date.now();
-  try {
-    const data = await env2.CACHE.get(key, "json");
-    if (data) {
-      const { count: count3, resetAt } = data;
-      if (now > resetAt) {
-        await env2.CACHE.put(key, JSON.stringify({ count: 1, resetAt: now + limits2.windowSeconds * 1e3 }), {
-          expirationTtl: limits2.windowSeconds
-        });
-        return { limited: false, remaining: limits2.requests - 1 };
-      }
-      if (count3 >= limits2.requests) {
-        const retryAfter = Math.ceil((resetAt - now) / 1e3);
-        return {
-          limited: true,
-          retryAfter,
-          remaining: 0
-        };
-      }
-      await env2.CACHE.put(key, JSON.stringify({ count: count3 + 1, resetAt }), {
-        expirationTtl: limits2.windowSeconds
-      });
-      return { limited: false, remaining: limits2.requests - (count3 + 1) };
-    } else {
-      await env2.CACHE.put(key, JSON.stringify({ count: 1, resetAt: now + limits2.windowSeconds * 1e3 }), {
-        expirationTtl: limits2.windowSeconds
-      });
-      return { limited: false, remaining: limits2.requests - 1 };
-    }
-  } catch (error4) {
-    console.error("[Rate Limiting] Error:", error4);
-    return { limited: false, remaining: limits2.requests };
-  }
-}
-__name(checkRateLimit2, "checkRateLimit");
 init_hardware_schedule_extractor();
 init_virtual_unenv_global_polyfill_cloudflare_unenv_preset_node_process();
 init_virtual_unenv_global_polyfill_cloudflare_unenv_preset_node_console();
@@ -160442,250 +160656,6 @@ router.get("/api/cut-sheets/for-set/:setId", async (request2, env2) => {
     });
   }
 });
-router.post("/api/hardware-schedule/session/:sessionId/enrich", async (request2, env2) => {
-  const { error: error4, user } = await authenticate(request2, env2);
-  if (error4)
-    return error4;
-  const rateLimit = await checkRateLimit2(user.userId, "enrichment", env2, { requests: 10, windowSeconds: 60 });
-  if (rateLimit.limited) {
-    return jsonResponse3({
-      error: "Rate limit exceeded",
-      message: "Too many enrichment requests. Please wait before trying again.",
-      retryAfter: rateLimit.retryAfter
-    }, 429, {
-      "Retry-After": rateLimit.retryAfter.toString(),
-      "X-RateLimit-Limit": "10",
-      "X-RateLimit-Remaining": "0",
-      "X-RateLimit-Reset": (Date.now() + rateLimit.retryAfter * 1e3).toString()
-    });
-  }
-  try {
-    const sessionId = request2.params.sessionId;
-    console.log(`[Product Enrichment] Enriching session ${sessionId} (Rate Limit: ${rateLimit.remaining} remaining)`);
-    const session = await env2.DB.prepare(`
-      SELECT * FROM hardware_extraction_sessions WHERE id = ?
-    `).bind(sessionId).first();
-    if (!session) {
-      return jsonResponse3({ error: "Session not found" }, 404);
-    }
-    if (session.user_id !== user.userId) {
-      return jsonResponse3({ error: "Unauthorized" }, 403);
-    }
-    const components = await env2.DB.prepare(`
-      SELECT hc.*, hs.set_number
-      FROM hardware_components hc
-      JOIN hardware_sets hs ON hc.set_id = hs.id
-      WHERE hs.session_id = ?
-    `).bind(sessionId).all();
-    if (!components.results || components.results.length === 0) {
-      return jsonResponse3({
-        enriched: 0,
-        message: "No components found to enrich"
-      }, 200);
-    }
-    let enrichedCount = 0;
-    const enrichmentResults = [];
-    for (const component of components.results) {
-      const enriched = enrichComponent(component);
-      if (enriched._enriched) {
-        await env2.DB.prepare(`
-          UPDATE hardware_components
-          SET
-            component_description = COALESCE(component_description, ?),
-            compliance = COALESCE(compliance, ?),
-            notes = COALESCE(notes, '')
-          WHERE id = ?
-        `).bind(
-          enriched.component_description,
-          enriched.compliance,
-          component.id
-        ).run();
-        enrichedCount++;
-        enrichmentResults.push({
-          set_number: component.set_number,
-          component_type: component.component_type,
-          matched_product: enriched._matched_product,
-          confidence: enriched._enrichment_confidence
-        });
-      }
-    }
-    console.log(`[Product Enrichment] Enriched ${enrichedCount}/${components.results.length} components`);
-    return jsonResponse3({
-      enriched: enrichedCount,
-      total: components.results.length,
-      enrichment_rate: Math.round(enrichedCount / components.results.length * 100),
-      results: enrichmentResults
-    }, 200);
-  } catch (error5) {
-    console.error("[Product Enrichment] Error:", error5);
-    return jsonResponse3({
-      error: "Failed to enrich hardware schedule",
-      details: error5.message
-    }, 500);
-  }
-});
-router.post("/api/hardware-schedule/backfill", async (request2, env2) => {
-  const { error: error4, user } = await authenticate(request2, env2);
-  if (error4)
-    return error4;
-  try {
-    console.log("[Backfill] Starting hardware data backfill...");
-    const pendingPages = await env2.DB.prepare(`
-      SELECT
-        hpe.id,
-        hpe.session_id,
-        hpe.page_number,
-        hpe.extracted_data,
-        hes.user_id
-      FROM hardware_page_extractions hpe
-      JOIN hardware_extraction_sessions hes ON hpe.session_id = hes.id
-      WHERE hpe.status = 'pending_review'
-      ORDER BY hpe.session_id, hpe.page_number
-    `).all();
-    console.log(`[Backfill] Found ${pendingPages.results.length} pages to process`);
-    let totalSets = 0;
-    let totalComponents = 0;
-    const results = [];
-    for (const page of pendingPages.results) {
-      try {
-        const extractedData = JSON.parse(page.extracted_data);
-        const hardwareGroups = extractedData.hardware_groups || extractedData.hardwareGroups || [];
-        if (hardwareGroups.length === 0) {
-          results.push({
-            session_id: page.session_id,
-            page_number: page.page_number,
-            status: "skipped",
-            reason: "No hardware groups"
-          });
-          continue;
-        }
-        const { storeHardwareExtraction: storeHardwareExtraction2 } = await Promise.resolve().then(() => (init_hardware_schedule_extractor(), hardware_schedule_extractor_exports));
-        const result = await storeHardwareExtraction2(extractedData, env2, page.user_id, {
-          sessionId: page.session_id,
-          pageNumber: page.page_number,
-          pageExtractionId: page.id
-        });
-        totalSets += result.groups_inserted;
-        totalComponents += result.components_inserted;
-        await env2.DB.prepare(`
-          UPDATE hardware_page_extractions
-          SET status = 'approved',
-              reviewed_at = ?,
-              reviewed_by = ?
-          WHERE id = ?
-        `).bind((/* @__PURE__ */ new Date()).toISOString(), user.userId, page.id).run();
-        results.push({
-          session_id: page.session_id,
-          page_number: page.page_number,
-          status: "processed",
-          sets: result.groups_inserted,
-          components: result.components_inserted
-        });
-      } catch (pageError) {
-        console.error(`[Backfill] Error processing page ${page.page_number}:`, pageError.message);
-        results.push({
-          session_id: page.session_id,
-          page_number: page.page_number,
-          status: "error",
-          error: pageError.message
-        });
-      }
-    }
-    console.log(`[Backfill] Complete: ${totalSets} sets, ${totalComponents} components`);
-    return jsonResponse3({
-      success: true,
-      pages_processed: pendingPages.results.length,
-      total_sets_inserted: totalSets,
-      total_components_inserted: totalComponents,
-      results
-    });
-  } catch (error5) {
-    console.error("[Backfill] Error:", error5);
-    return jsonResponse3({
-      error: "Backfill failed",
-      details: error5.message
-    }, 500);
-  }
-});
-router.get("/api/hardware-schedule/session/:sessionId/affirm-status", async (request2, env2) => {
-  const { error: error4, user } = await authenticate(request2, env2);
-  if (error4)
-    return error4;
-  try {
-    const sessionId = request2.params.sessionId;
-    const pages = await env2.DB.prepare(`
-      SELECT id, page_number, extracted_data, affirm_state
-      FROM hardware_page_extractions
-      WHERE session_id = ? AND status != 'rejected'
-      ORDER BY page_number
-    `).bind(sessionId).all();
-    let totalGroups = 0;
-    let affirmedGroups = 0;
-    let totalComponents = 0;
-    let affirmedComponents = 0;
-    const unaffirmedItems = [];
-    for (const page of pages.results) {
-      const extractedData = JSON.parse(page.extracted_data || "{}");
-      const affirmState = JSON.parse(page.affirm_state || "{}");
-      const groups = extractedData.hardware_groups || extractedData.hardwareGroups || [];
-      for (const group3 of groups) {
-        totalGroups++;
-        const groupAffirmData = affirmState.groups?.find((g) => g.id === group3.id || g.group_number === group3.group_number);
-        const groupAffirmed = groupAffirmData?.affirmed || false;
-        if (groupAffirmed) {
-          affirmedGroups++;
-        } else {
-          unaffirmedItems.push({
-            type: "group",
-            pageNumber: page.page_number,
-            groupNumber: group3.group_number,
-            groupName: group3.group_name || group3.description,
-            reason: getUnaffirmReason(group3, "group")
-          });
-        }
-        const components = group3.components || [];
-        for (let i2 = 0; i2 < components.length; i2++) {
-          const comp = components[i2];
-          totalComponents++;
-          const compAffirmData = groupAffirmData?.components?.find((c) => c.index === i2);
-          const compAffirmed = compAffirmData?.affirmed || false;
-          if (compAffirmed) {
-            affirmedComponents++;
-          } else {
-            unaffirmedItems.push({
-              type: "component",
-              pageNumber: page.page_number,
-              groupNumber: group3.group_number,
-              componentIndex: i2,
-              componentType: comp.type || comp.component_type,
-              reason: getUnaffirmReason(comp, "component")
-            });
-          }
-        }
-      }
-    }
-    const allAffirmed = affirmedGroups === totalGroups && affirmedComponents === totalComponents && totalGroups > 0;
-    return jsonResponse3({
-      success: true,
-      sessionId,
-      summary: {
-        totalGroups,
-        affirmedGroups,
-        totalComponents,
-        affirmedComponents,
-        totalItems: totalGroups + totalComponents,
-        affirmedItems: affirmedGroups + affirmedComponents,
-        allAffirmed,
-        canGenerateSubmittal: allAffirmed
-      },
-      unaffirmedItems: unaffirmedItems.slice(0, 50)
-      // Limit for performance
-    });
-  } catch (error5) {
-    console.error("[Affirm Status] Error:", error5);
-    return jsonResponse3({ error: "Failed to get affirm status", details: error5.message }, 500);
-  }
-});
 function getUnaffirmReason(item, type) {
   if (type === "group") {
     if (!item.group_number && !item.groupNumber)
@@ -160713,7 +160683,14 @@ registerExtractedModules(router, {
   makeDocumentDownloadRoute,
   puppeteer: puppeteer_cloudflare_default,
   getSessionStatus,
-  getOrRenderPage
+  getOrRenderPage,
+  checkRateLimit,
+  enrichComponent,
+  getUnaffirmReason,
+  storeHardwareExtraction: async (...args) => {
+    const { storeHardwareExtraction: fn } = await Promise.resolve().then(() => (init_hardware_schedule_extractor(), hardware_schedule_extractor_exports));
+    return fn(...args);
+  }
 });
 async function fetchTxdotOpportunities() {
   const url = "https://data.texas.gov/resource/qh8x-rm8r.json?" + new URLSearchParams({
