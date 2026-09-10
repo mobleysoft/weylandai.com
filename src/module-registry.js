@@ -57,6 +57,7 @@ import { registerUserCutsheetsRoutes } from "./routes/user-cutsheets.js";
 import { registerCpsQueueRoutes } from "./routes/cps-queue.js";
 import { registerCpsAdminRoutes } from "./routes/cps-admin.js";
 import { registerDoorScheduleMarksRoutes } from "./routes/door-schedule-marks.js";
+import { registerCutSheetIntelligenceRoutes } from "./routes/cut-sheet-intelligence.js";
 import { authenticate, authenticateCps, requireActiveSubscription, requireProductAccess } from "./lib/auth.js";
 
 /**
@@ -102,6 +103,8 @@ import { authenticate, authenticateCps, requireActiveSubscription, requireProduc
  *   createExtractionSession: Function,
  *   logTelemetryEvent: Function,
  *   detectTextLayer2: Function,
+ *   getDiscoveryConfig: Function,
+ *   getManufacturerDomains: Function,
  * }} deps
  *   Real dependencies still owned by legacy-monolith.js (not yet their
  *   own modules) that some of these routes need injected. renderHtmlToPdf/
@@ -230,4 +233,9 @@ export function registerExtractedModules(router, deps) {
   registerCpsQueueRoutes(router, { authenticate });
   registerCpsAdminRoutes(router, { authenticate });
   registerDoorScheduleMarksRoutes(router, { authenticate });
+  registerCutSheetIntelligenceRoutes(router, {
+    authenticate,
+    getDiscoveryConfig: deps.getDiscoveryConfig,
+    getManufacturerDomains: deps.getManufacturerDomains,
+  });
 }
