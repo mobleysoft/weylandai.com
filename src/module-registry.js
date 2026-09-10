@@ -77,6 +77,7 @@ import { registerSessionsPreviewRoutes } from "./routes/sessions-preview.js";
 import { registerAuthSessionRoutes } from "./routes/auth-session.js";
 import { registerInstallDeviceAuthRoutes } from "./routes/install-device-auth.js";
 import { registerMeBridgeRoutes } from "./routes/me-bridge.js";
+import { registerTelemetryRoutes } from "./routes/telemetry.js";
 import { authenticate, authenticateCps, requireActiveSubscription, requireProductAccess } from "./lib/auth.js";
 
 /**
@@ -328,4 +329,5 @@ export function registerExtractedModules(router, deps) {
   registerAuthSessionRoutes(router, { authenticate, errorResponse: deps.errorResponse });
   registerInstallDeviceAuthRoutes(router, { authenticate, callEdge: deps.callEdge });
   registerMeBridgeRoutes(router, { authenticate, callEdge: deps.callEdge, HASCOM_EDGE: deps.HASCOM_EDGE });
+  registerTelemetryRoutes(router, { authenticate });
 }
