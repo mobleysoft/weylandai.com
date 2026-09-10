@@ -9748,6 +9748,709 @@ function registerHardwareScheduleGenerateRoutes(router2, {
   });
 }
 
+// src/error-utilities.js
+var ErrorCodes = {
+  // Validation errors (4xx - client errors)
+  VALIDATION_ERROR: "VALIDATION_ERROR",
+  INVALID_REQUEST: "INVALID_REQUEST",
+  UNAUTHORIZED: "UNAUTHORIZED",
+  FORBIDDEN: "FORBIDDEN",
+  NOT_FOUND: "NOT_FOUND",
+  PDF_TOO_LARGE: "PDF_TOO_LARGE",
+  INVALID_PDF: "INVALID_PDF",
+  // Claude API errors (5xx or external service errors)
+  CLAUDE_API_ERROR: "CLAUDE_API_ERROR",
+  CLAUDE_TIMEOUT: "CLAUDE_TIMEOUT",
+  CLAUDE_RATE_LIMIT: "CLAUDE_RATE_LIMIT",
+  CIRCUIT_BREAKER_OPEN: "CIRCUIT_BREAKER_OPEN",
+  // Database errors
+  DATABASE_ERROR: "DATABASE_ERROR",
+  DATABASE_CONSTRAINT_ERROR: "DATABASE_CONSTRAINT_ERROR",
+  // Internal errors
+  INTERNAL_ERROR: "INTERNAL_ERROR",
+  TIMEOUT: "TIMEOUT",
+  NETWORK_ERROR: "NETWORK_ERROR",
+  // Business logic errors
+  EXTRACTION_FAILED: "EXTRACTION_FAILED",
+  SESSION_NOT_FOUND: "SESSION_NOT_FOUND",
+  INVALID_STATE: "INVALID_STATE"
+};
+function classifyError(error4) {
+  if (error4.message && error4.message.includes("Circuit breaker is OPEN")) {
+    return {
+      code: ErrorCodes.CIRCUIT_BREAKER_OPEN,
+      statusCode: 503,
+      retryable: true,
+      userMessage: "Service temporarily unavailable. Please try again in a few moments.",
+      category: "service_unavailable"
+    };
+  }
+  if (error4.timeout || error4.message?.includes("timeout")) {
+    return {
+      code: ErrorCodes.CLAUDE_TIMEOUT,
+      statusCode: 504,
+      retryable: true,
+      userMessage: "Request timed out. This PDF may be too complex. Please try again or contact support.",
+      category: "timeout"
+    };
+  }
+  if (error4.validationErrors || error4.retryable === false) {
+    return {
+      code: ErrorCodes.VALIDATION_ERROR,
+      statusCode: 400,
+      retryable: false,
+      userMessage: "Invalid request. Please check your input and try again.",
+      category: "validation"
+    };
+  }
+  if (error4.statusCode) {
+    if (error4.statusCode === 429) {
+      return {
+        code: ErrorCodes.CLAUDE_RATE_LIMIT,
+        statusCode: 429,
+        retryable: true,
+        userMessage: "Rate limit exceeded. Please wait a moment and try again.",
+        category: "rate_limit"
+      };
+    }
+    if (error4.statusCode >= 500) {
+      return {
+        code: ErrorCodes.CLAUDE_API_ERROR,
+        statusCode: error4.statusCode,
+        retryable: true,
+        userMessage: "External service error. Please try again.",
+        category: "external_service"
+      };
+    }
+    if (error4.statusCode === 401 || error4.statusCode === 403) {
+      return {
+        code: ErrorCodes.UNAUTHORIZED,
+        statusCode: error4.statusCode,
+        retryable: false,
+        userMessage: "Authentication failed. Please contact support.",
+        category: "auth"
+      };
+    }
+    if (error4.statusCode === 413) {
+      return {
+        code: ErrorCodes.PDF_TOO_LARGE,
+        statusCode: 413,
+        retryable: false,
+        userMessage: "PDF file is too large. Maximum size is 24MB.",
+        category: "validation"
+      };
+    }
+  }
+  if (error4.message?.includes("UNIQUE constraint") || error4.message?.includes("FOREIGN KEY constraint")) {
+    return {
+      code: ErrorCodes.DATABASE_CONSTRAINT_ERROR,
+      statusCode: 409,
+      retryable: false,
+      userMessage: "Data conflict. This record may already exist.",
+      category: "database"
+    };
+  }
+  if (error4.message?.includes("database") || error4.message?.includes("SQL")) {
+    return {
+      code: ErrorCodes.DATABASE_ERROR,
+      statusCode: 500,
+      retryable: true,
+      userMessage: "Database error. Please try again.",
+      category: "database"
+    };
+  }
+  if (error4.message?.includes("fetch") || error4.message?.includes("network")) {
+    return {
+      code: ErrorCodes.NETWORK_ERROR,
+      statusCode: 503,
+      retryable: true,
+      userMessage: "Network error. Please check your connection and try again.",
+      category: "network"
+    };
+  }
+  return {
+    code: ErrorCodes.INTERNAL_ERROR,
+    statusCode: 500,
+    retryable: false,
+    userMessage: "An unexpected error occurred. Please contact support.",
+    category: "internal"
+  };
+}
+function createErrorResponse(error4, context3 = {}) {
+  const classification = classifyError(error4);
+  const errorResponse2 = {
+    success: false,
+    error: {
+      code: classification.code,
+      message: classification.userMessage,
+      details: error4.message,
+      retryable: classification.retryable,
+      timestamp: (/* @__PURE__ */ new Date()).toISOString(),
+      category: classification.category
+    }
+  };
+  if (context3.userId) errorResponse2.error.userId = context3.userId;
+  if (context3.sessionId) errorResponse2.error.sessionId = context3.sessionId;
+  if (context3.pageNumber) errorResponse2.error.pageNumber = context3.pageNumber;
+  if (context3.requestId) errorResponse2.error.requestId = context3.requestId;
+  if (error4.validationErrors) {
+    errorResponse2.error.validationErrors = error4.validationErrors;
+  }
+  const logDetails = {
+    ...errorResponse2,
+    _internal: {
+      originalError: error4.message,
+      stack: error4.stack,
+      errorDetails: error4.errorDetails,
+      attempts: error4.attempts
+    }
+  };
+  console.error(`[Error Handler] ${classification.code}:`, JSON.stringify(logDetails, null, 2));
+  return errorResponse2;
+}
+function jsonErrorResponse(error4, context3 = {}) {
+  const errorResponse2 = createErrorResponse(error4, context3);
+  const classification = classifyError(error4);
+  return new Response(JSON.stringify(errorResponse2), {
+    status: classification.statusCode,
+    headers: { "Content-Type": "application/json" }
+  });
+}
+var ErrorMetrics = class {
+  constructor(env2) {
+    this.env = env2;
+  }
+  // Uses CACHE binding (not KV) per wrangler.toml configuration
+  async recordError(errorCode, context3 = {}) {
+    try {
+      const key = `error_metrics:${errorCode}:${(/* @__PURE__ */ new Date()).toISOString().split("T")[0]}`;
+      if (this.env.CACHE) {
+        const current = await this.env.CACHE.get(key);
+        const count3 = current ? parseInt(current, 10) + 1 : 1;
+        await this.env.CACHE.put(key, count3.toString(), { expirationTtl: 604800 });
+      }
+      console.log(`[Metrics] Error recorded: ${errorCode}`, context3);
+    } catch (err) {
+      console.error("[Metrics] Failed to record error metric:", err.message);
+    }
+  }
+  async recordLatency(operation, latencyMs, success = true) {
+    try {
+      const timestamp = (/* @__PURE__ */ new Date()).toISOString();
+      const key = `latency:${operation}:${timestamp.split("T")[0]}`;
+      console.log(`[Metrics] ${operation} - ${latencyMs}ms - ${success ? "SUCCESS" : "FAILURE"}`);
+      if (this.env.CACHE) {
+        const data = { operation, latencyMs, success, timestamp };
+        await this.env.CACHE.put(`${key}:${Date.now()}`, JSON.stringify(data), { expirationTtl: 604800 });
+      }
+    } catch (err) {
+      console.error("[Metrics] Failed to record latency metric:", err.message);
+    }
+  }
+  async getErrorStats(days = 7) {
+    try {
+      if (!this.env.CACHE) return null;
+      const stats = {};
+      const today = /* @__PURE__ */ new Date();
+      for (let i2 = 0; i2 < days; i2++) {
+        const date = new Date(today);
+        date.setDate(date.getDate() - i2);
+        const dateStr = date.toISOString().split("T")[0];
+        for (const code of Object.values(ErrorCodes)) {
+          const key = `error_metrics:${code}:${dateStr}`;
+          const count3 = await this.env.CACHE.get(key);
+          if (count3) {
+            if (!stats[code]) stats[code] = {};
+            stats[code][dateStr] = parseInt(count3, 10);
+          }
+        }
+      }
+      return stats;
+    } catch (err) {
+      console.error("[Metrics] Failed to get error stats:", err.message);
+      return null;
+    }
+  }
+};
+async function performHealthCheck(env2) {
+  const health = {
+    status: "healthy",
+    timestamp: (/* @__PURE__ */ new Date()).toISOString(),
+    checks: {}
+  };
+  try {
+    await env2.DB.prepare("SELECT 1").first();
+    health.checks.database = { status: "healthy" };
+  } catch (error4) {
+    health.checks.database = { status: "unhealthy", error: error4.message };
+    health.status = "degraded";
+  }
+  try {
+    await env2.CACHE.put("health_check", Date.now().toString(), { expirationTtl: 60 });
+    health.checks.kv = { status: "healthy" };
+  } catch (error4) {
+    health.checks.kv = { status: "unhealthy", error: error4.message };
+    health.status = "degraded";
+  }
+  try {
+    if (!env2.OCR_SERVICE) {
+      throw new Error("OCR_SERVICE binding not configured");
+    }
+    const ocrResp = await env2.OCR_SERVICE.fetch("https://weyland-ocr-worker/health");
+    health.checks.ocr_service = {
+      status: ocrResp.ok ? "healthy" : "degraded",
+      note: ocrResp.ok ? "pure-JS OCR (PDFium + tesseract-wasm), no external API" : `HTTP ${ocrResp.status}`
+    };
+    if (!ocrResp.ok) {
+      health.status = "degraded";
+    }
+  } catch (error4) {
+    health.checks.ocr_service = { status: "unhealthy", error: error4.message };
+    health.status = "degraded";
+  }
+  return health;
+}
+
+// src/routes/hardware-schedule-page-extract.js
+function registerHardwareSchedulePageExtractRoutes(router2, {
+  authenticate: authenticate2,
+  getSessionStatus: getSessionStatus2,
+  isPageInRange: isPageInRange2,
+  extractFromPageImage: extractFromPageImage2,
+  queuePageExtractionJob: queuePageExtractionJob2,
+  approvePageExtraction: approvePageExtraction2,
+  extractSinglePage: extractSinglePage2,
+  resolveExtractionContract: resolveExtractionContract2,
+  savePageExtraction2: savePageExtraction22
+}) {
+  router2.get("/api/hardware-schedule/session/:sessionId/page/:pageNum", async (request2, env2) => {
+    const { error: error4, user } = await authenticate2(request2, env2);
+    if (error4)
+      return error4;
+    const startTime = Date.now();
+    const metrics = new ErrorMetrics(env2);
+    try {
+      const sessionId = request2.params.sessionId;
+      const pageNum = parseInt(request2.params.pageNum, 10);
+      if (!pageNum || pageNum < 1) {
+        const validationError = new Error("Invalid page number");
+        validationError.retryable = false;
+        throw validationError;
+      }
+      console.log(`[Hardware Page] Extracting page ${pageNum} for session ${sessionId}`);
+      const session = await getSessionStatus2(sessionId, env2);
+      if (!session) {
+        const notFoundError = new Error("Session not found");
+        notFoundError.retryable = false;
+        notFoundError.statusCode = 404;
+        throw notFoundError;
+      }
+      if (pageNum > session.total_pages) {
+        const validationError = new Error(`Page ${pageNum} exceeds total pages (${session.total_pages})`);
+        validationError.retryable = false;
+        throw validationError;
+      }
+      const cached = await env2.DB.prepare(`
+      SELECT extracted_data, status
+      FROM hardware_page_extractions
+      WHERE session_id = ? AND page_number = ?
+    `).bind(sessionId, pageNum).first();
+      if (cached) {
+        console.log(`[Hardware Page] Returning cached extraction for page ${pageNum}`);
+        const latency = Date.now() - startTime;
+        await metrics.recordLatency("page_extraction_cached", latency, true);
+        return jsonResponse3({
+          success: true,
+          sessionId,
+          pageNumber: pageNum,
+          status: cached.status,
+          data: JSON.parse(cached.extracted_data),
+          cached: true
+        });
+      }
+      console.log(`[Hardware Page] Retrieving PDF from KV: ${session.file_buffer_key}`);
+      let fileBuffer = await env2.CACHE.get(session.file_buffer_key, { type: "arrayBuffer" });
+      if (!fileBuffer && env2.UPLOADS) {
+        console.log(`[Hardware Page] KV expired, trying R2 fallback: ${session.file_buffer_key}`);
+        const r2Object = await env2.UPLOADS.get(session.file_buffer_key);
+        if (r2Object) {
+          fileBuffer = await r2Object.arrayBuffer();
+          console.log(`[Hardware Page] PDF retrieved from R2 (${fileBuffer.byteLength} bytes)`);
+          await env2.CACHE.put(session.file_buffer_key, fileBuffer, {
+            expirationTtl: 86400 * 7
+            // 7 days
+          });
+          console.log(`[Hardware Page] PDF re-cached in KV`);
+        }
+      }
+      if (!fileBuffer) {
+        console.error(`[Hardware Page] PDF not found in KV or R2: ${session.file_buffer_key}`);
+        const notFoundError = new Error("PDF file not found. Please re-upload the document.");
+        notFoundError.retryable = false;
+        notFoundError.statusCode = 404;
+        throw notFoundError;
+      }
+      console.log(`[Hardware Page] PDF retrieved successfully (${fileBuffer.byteLength} bytes)`);
+      console.log(`[Hardware Page] Starting Claude Vision extraction for page ${pageNum}`);
+      const extractionStartTime = Date.now();
+      const extractionResult = await extractSinglePage2(fileBuffer, pageNum, env2);
+      const extractionLatency = Date.now() - extractionStartTime;
+      await metrics.recordLatency("claude_extraction", extractionLatency, true);
+      console.log(`[Hardware Page] Claude Vision extraction completed in ${extractionLatency}ms`);
+      await savePageExtraction22(sessionId, pageNum, extractionResult, env2);
+      console.log(`[Hardware Page] Extracted page ${pageNum}: ${extractionResult.hardware_groups.length} sets found`);
+      const totalLatency = Date.now() - startTime;
+      await metrics.recordLatency("page_extraction_full", totalLatency, true);
+      return jsonResponse3({
+        success: true,
+        sessionId,
+        pageNumber: pageNum,
+        status: "pending_review",
+        data: extractionResult,
+        cached: false,
+        performance: {
+          total_ms: totalLatency,
+          extraction_ms: extractionLatency
+        }
+      });
+    } catch (error5) {
+      const latency = Date.now() - startTime;
+      console.error(`[Hardware Page] Error after ${latency}ms:`, error5);
+      const classification = classifyError(error5);
+      await metrics.recordError(classification.code, {
+        sessionId: request2.params.sessionId,
+        pageNumber: request2.params.pageNum,
+        userId: user.userId,
+        latency
+      });
+      return jsonErrorResponse(error5, {
+        sessionId: request2.params.sessionId,
+        pageNumber: request2.params.pageNum,
+        userId: user.userId
+      });
+    }
+  });
+  router2.post("/api/hardware-schedule/session/:sessionId/page/:pageNum/approve", async (request2, env2) => {
+    const { error: error4, user } = await authenticate2(request2, env2);
+    if (error4)
+      return error4;
+    try {
+      const sessionId = request2.params.sessionId;
+      const pageNum = parseInt(request2.params.pageNum, 10);
+      const data = await request2.json();
+      console.log(`[Hardware Approve Page] Approving page ${pageNum} for session ${sessionId}`);
+      console.log(`[Hardware Approve Page] Received ${data.hardwareGroups?.length || 0} groups from frontend`);
+      const corrections = data.hardwareGroups ? { hardware_groups: data.hardwareGroups } : data.corrections || null;
+      const result = await approvePageExtraction2(
+        sessionId,
+        pageNum,
+        corrections,
+        user.userId,
+        env2
+      );
+      const status = await getSessionStatus2(sessionId, env2);
+      if (status.pages_approved === status.total_pages) {
+        await env2.DB.prepare(`
+        UPDATE hardware_extraction_sessions
+        SET status = ?, completed_at = ?
+        WHERE id = ?
+      `).bind("completed", (/* @__PURE__ */ new Date()).toISOString(), sessionId).run();
+        status.status = "completed";
+      }
+      console.log(`[Hardware Approve Page] Page ${pageNum} approved: ${result.sets_inserted} sets, ${result.components_inserted} components`);
+      return jsonResponse3({
+        success: true,
+        sessionId,
+        pageNumber: pageNum,
+        result,
+        session_status: {
+          pages_approved: status.pages_approved,
+          total_pages: status.total_pages,
+          progress_percent: status.progress_percent,
+          completed: status.status === "completed"
+        },
+        next_step: status.status === "completed" ? "All pages complete! Hardware schedule imported." : `Review page ${pageNum + 1}`
+      });
+    } catch (error5) {
+      console.error("[Hardware Approve Page] Error:", error5);
+      return jsonResponse3({
+        error: "Failed to approve page",
+        details: error5.message
+      }, 500);
+    }
+  });
+  router2.post("/api/hardware-schedule/session/:sessionId/page/:pageNum/extract-image", async (request2, env2) => {
+    const { error: error4, user } = await authenticate2(request2, env2);
+    if (error4)
+      return error4;
+    const startTime = Date.now();
+    try {
+      const sessionId = request2.params.sessionId;
+      const pageNum = parseInt(request2.params.pageNum, 10);
+      const data = await request2.json();
+      console.log(`[Hardware Extract Image] \u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550`);
+      console.log(`[Hardware Extract Image] Session: ${sessionId}, Page: ${pageNum}`);
+      console.log(`[Hardware Extract Image] Image size: ${(data.imageBase64?.length / 1024).toFixed(1)}KB base64`);
+      console.log(`[Hardware Extract Image] Dimensions: ${data.width}x${data.height}`);
+      console.log(`[Hardware Extract Image] \u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550`);
+      if (!data.imageBase64) {
+        return jsonResponse3({ error: "Missing imageBase64 in request body" }, 400);
+      }
+      if (!data.totalPages || data.totalPages < 1) {
+        return jsonResponse3({ error: "Missing or invalid totalPages in request body" }, 400);
+      }
+      if (isNaN(pageNum) || pageNum < 1) {
+        return jsonResponse3({ error: "Invalid page number" }, 400);
+      }
+      const session = await env2.DB.prepare(`
+      SELECT * FROM hardware_extraction_sessions WHERE id = ?
+    `).bind(sessionId).first();
+      if (!session) {
+        return jsonResponse3({ error: "Session not found" }, 404);
+      }
+      if (session.user_id !== user.userId) {
+        return jsonResponse3({ error: "Unauthorized access to session" }, 403);
+      }
+      if (session.extraction_page_range) {
+        try {
+          const rangeData = typeof session.extraction_page_range === "string" ? JSON.parse(session.extraction_page_range) : session.extraction_page_range;
+          if (rangeData && !isPageInRange2(pageNum, rangeData)) {
+            console.log(`[27A Page Range] Skipping page ${pageNum} (outside extraction ranges)`);
+            return jsonResponse3({
+              status: "skipped",
+              message: `Page ${pageNum} outside extraction range`,
+              page_number: pageNum,
+              extraction_page_range: rangeData
+            });
+          }
+        } catch (rangeErr) {
+          console.warn(`[27A Page Range] Could not parse range: ${rangeErr.message}`);
+        }
+      }
+      let _route = env2.WEYLAND_EDITION === "local" ? "claude_code_subprocess" : "claude_code_local";
+      try {
+        const _rr = await env2.DB.prepare(
+          `SELECT extraction_route FROM hardware_extraction_sessions WHERE id = ?`
+        ).bind(sessionId).first();
+        if (_rr?.extraction_route)
+          _route = _rr.extraction_route;
+      } catch (e) {
+      }
+      if (_route === "claude_code_local") {
+        const _schedType = session.document_type === "door_schedule" ? "door_schedule" : null;
+        const q = await queuePageExtractionJob2(data.imageBase64, env2, {
+          pageNumber: pageNum,
+          totalPages: data.totalPages,
+          sessionId,
+          tenantId: data.tenantId || session.tenant_id || null,
+          ownerMhsId: user.mhsId || user.mhs_id || null,
+          scheduleType: _schedType
+        });
+        const kuId = crypto.randomUUID();
+        try {
+          await env2.DB.prepare(`
+          INSERT OR REPLACE INTO kdp_packets
+            (id, connection_id, project_id, candidate_id, page_number, sequence, unit_type, job_id, route, owner_id, state, attempts, created_at, updated_at)
+          VALUES (?, ?, ?, ?, ?, ?, ?, ?, 'claude_code_local', ?, 'in_flight', 1, datetime('now'), datetime('now'))
+        `).bind(
+            kuId,
+            sessionId,
+            session.project_id || null,
+            `page:${sessionId}:${pageNum}`,
+            pageNum,
+            pageNum,
+            _schedType === "door_schedule" ? "door_mark" : "hardware_set",
+            q.job_id,
+            q.owner_id
+          ).run();
+        } catch (e) {
+        }
+        return jsonResponse3({
+          success: true,
+          async: true,
+          ku_id: kuId,
+          job_id: q.job_id,
+          page_number: pageNum,
+          provider: "claude_code_local",
+          poll_url: `/api/jobs/${q.job_id}`,
+          finalize_url: `/api/hardware-schedule/session/${sessionId}/page/${pageNum}/finalize-image/${q.job_id}`,
+          message: "Extraction queued to your bridge. Poll job, then finalize to persist."
+        });
+      }
+      const extractionOptions = {
+        tenantId: data.tenantId || null,
+        sessionId,
+        // WO-2026-0616: SABP bridge jobs must route to the owner's bridge token,
+        // which is minted from the authenticated identity (user.mhsId). Thread it
+        // so the adapter never re-derives from a stale node row.
+        ownerMhsId: user.mhsId || user.mhs_id || null
+      };
+      console.log(`[Hardware Extract Image] Calling extractFromPageImage...`);
+      if (extractionOptions.tenantId) {
+        console.log(`[Hardware Extract Image] CONSTRAINT MODE: tenantId=${extractionOptions.tenantId}`);
+      }
+      const extractionResult = await extractFromPageImage2(
+        data.imageBase64,
+        pageNum,
+        data.totalPages,
+        env2,
+        extractionOptions
+      );
+      console.log(`[Hardware Extract Image] Saving extraction to database...`);
+      await savePageExtraction22(sessionId, pageNum, extractionResult, env2);
+      const totalTime = Date.now() - startTime;
+      const matrixCount = extractionResult.door_hardware_matrix?.length || 0;
+      console.log(`[Hardware Extract Image] \u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550`);
+      console.log(`[Hardware Extract Image] EXTRACTION COMPLETE`);
+      console.log(`[Hardware Extract Image] Groups: ${extractionResult.hardware_groups.length}`);
+      console.log(`[Hardware Extract Image] Door-Matrix Entries: ${matrixCount}`);
+      console.log(`[Hardware Extract Image] Total time: ${totalTime}ms`);
+      console.log(`[Hardware Extract Image] \u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550`);
+      return jsonResponse3({
+        success: true,
+        sessionId,
+        pageNumber: pageNum,
+        hardware_groups: extractionResult.hardware_groups,
+        metadata: {
+          ...extractionResult.metadata,
+          extraction_method: "frontend_canvas_capture",
+          page_isolated: true
+        },
+        timing: {
+          extraction_time_ms: extractionResult.extraction_time_ms,
+          total_time_ms: totalTime
+        },
+        usage: extractionResult.usage,
+        next_step: `Review and approve: POST /api/hardware-schedule/session/${sessionId}/page/${pageNum}/approve`
+      });
+    } catch (error5) {
+      console.error("[Hardware Extract Image] Error:", error5);
+      return jsonResponse3({
+        error: "Failed to extract hardware data from image",
+        details: error5.message
+      }, 500);
+    }
+  });
+  router2.get("/api/hardware-schedule/session/:sessionId/page/:pageNum/extraction-contract", async (request2, env2) => {
+    const { error: error4, user } = await authenticate2(request2, env2);
+    if (error4)
+      return error4;
+    try {
+      const { sessionId, pageNum } = request2.params;
+      const pageNumber = parseInt(pageNum, 10);
+      const url = new URL(request2.url);
+      const tenantId = url.searchParams.get("tenant_id") || null;
+      const session = await env2.DB.prepare(
+        "SELECT * FROM hardware_extraction_sessions WHERE id = ?"
+      ).bind(sessionId).first();
+      if (!session)
+        return jsonResponse3({ error: "Session not found" }, 404);
+      if (session.user_id !== user.userId)
+        return jsonResponse3({ error: "Unauthorized access to session" }, 403);
+      const contract = await resolveExtractionContract2(env2, {
+        sessionId,
+        pageNumber,
+        totalPages: session.page_count || session.total_pages || 1,
+        tenantId
+      });
+      const constraintsMeta = contract.constraints ? {
+        spec_version: contract.constraints.spec_version,
+        scope_chain: contract.constraints.scope_chain,
+        field_count: contract.constraints.fields.length
+      } : null;
+      return jsonResponse3({
+        success: true,
+        sessionId,
+        pageNumber,
+        totalPages: contract.totalPages,
+        document_type: session.document_type || "hardware_schedule",
+        prompt: contract.prompt,
+        constraints: constraintsMeta,
+        provenance: contract.provenance,
+        result_contract: {
+          required: {
+            hardware_groups: "array \u2014 as specified in the prompt JSON schema",
+            door_hardware_matrix: "array \u2014 REQUIRED when door/MARK-to-set relationships are visible (bylines or matrix); [] otherwise"
+          },
+          optional: ["detected_nomenclature", "metadata"],
+          submit_to: `POST /api/hardware-schedule/session/${sessionId}/page/${pageNumber}/extract-result`,
+          recommended_dpi: 300
+        }
+      });
+    } catch (err) {
+      return jsonResponse3({ error: "Failed to build extraction contract", details: err.message }, 500);
+    }
+  });
+  router2.post("/api/hardware-schedule/session/:sessionId/page/:pageNum/extract-result", async (request2, env2) => {
+    const { error: error4, user } = await authenticate2(request2, env2);
+    if (error4)
+      return error4;
+    try {
+      const { sessionId, pageNum } = request2.params;
+      const pageNumber = parseInt(pageNum, 10);
+      const body = await request2.json();
+      const { extraction, provider } = body;
+      if (!extraction || typeof extraction !== "object") {
+        return jsonResponse3({ error: "extraction object required" }, 400);
+      }
+      if (!Array.isArray(extraction.hardware_groups)) {
+        return jsonResponse3({ error: "extraction.hardware_groups must be an array (see extraction-contract)" }, 400);
+      }
+      for (const g of extraction.hardware_groups) {
+        if (!g || typeof g !== "object") {
+          return jsonResponse3({ error: "each hardware_group must be an object" }, 400);
+        }
+        if (g.components !== void 0 && !Array.isArray(g.components)) {
+          return jsonResponse3({ error: "hardware_group.components must be an array when present" }, 400);
+        }
+      }
+      if (!provider || !provider.name) {
+        return jsonResponse3({ error: "provider.name required (e.g. operator-local-claude-code) \u2014 engine attribution is part of the trust substrate" }, 400);
+      }
+      const session = await env2.DB.prepare(
+        "SELECT * FROM hardware_extraction_sessions WHERE id = ?"
+      ).bind(sessionId).first();
+      if (!session)
+        return jsonResponse3({ error: "Session not found" }, 404);
+      if (session.user_id !== user.userId)
+        return jsonResponse3({ error: "Unauthorized access to session" }, 403);
+      const totalPages = session.page_count || session.total_pages || 1;
+      const extractionResult = {
+        page_number: pageNumber,
+        total_pages: totalPages,
+        hardware_groups: extraction.hardware_groups,
+        door_hardware_matrix: extraction.door_hardware_matrix || [],
+        detected_nomenclature: extraction.detected_nomenclature || null,
+        metadata: {
+          ...extraction.metadata || {},
+          extraction_provider: provider.name,
+          extraction_model: provider.model || null,
+          extraction_client: provider.client || null,
+          submitted_by: user.email || user.userId,
+          page_isolated: true,
+          isolation_method: "operator_local_render"
+        }
+      };
+      await savePageExtraction22(sessionId, pageNumber, extractionResult, env2);
+      const componentCount = extraction.hardware_groups.reduce((s, g) => s + (g.components?.length || 0), 0);
+      console.log(`[Vision Bridge] Stored operator-local extraction: session ${sessionId} p${pageNumber}, provider ${provider.name}, ${extraction.hardware_groups.length} groups / ${componentCount} components`);
+      return jsonResponse3({
+        success: true,
+        sessionId,
+        pageNumber,
+        provider: provider.name,
+        hardware_groups: extraction.hardware_groups.length,
+        components: componentCount,
+        matrix_entries: (extraction.door_hardware_matrix || []).length,
+        next_step: `Review and approve: POST /api/hardware-schedule/session/${sessionId}/page/${pageNumber}/approve`
+      });
+    } catch (err) {
+      console.error("[Vision Bridge] Error:", err);
+      return jsonResponse3({ error: "Failed to store extraction result", details: err.message }, 500);
+    }
+  });
+}
+
 // src/module-registry.js
 function registerExtractedModules(router2, deps) {
   registerHardwareScheduleExportRoutes(router2);
@@ -9820,6 +10523,17 @@ function registerExtractedModules(router2, deps) {
     routeExtraction: deps.routeExtraction,
     transformDoorEntriesToHardwareSets: deps.transformDoorEntriesToHardwareSets,
     materializeDseToLineItems: deps.materializeDseToLineItems
+  });
+  registerHardwareSchedulePageExtractRoutes(router2, {
+    authenticate,
+    getSessionStatus: deps.getSessionStatus,
+    isPageInRange: deps.isPageInRange,
+    extractFromPageImage: deps.extractFromPageImage,
+    queuePageExtractionJob: deps.queuePageExtractionJob,
+    approvePageExtraction: deps.approvePageExtraction,
+    extractSinglePage: deps.extractSinglePage,
+    resolveExtractionContract: deps.resolveExtractionContract,
+    savePageExtraction2: deps.savePageExtraction2
   });
 }
 
@@ -10132,269 +10846,6 @@ var NativeRouter = class _NativeRouter {
     return new _NativeRouter();
   }
 };
-
-// src/error-utilities.js
-var ErrorCodes = {
-  // Validation errors (4xx - client errors)
-  VALIDATION_ERROR: "VALIDATION_ERROR",
-  INVALID_REQUEST: "INVALID_REQUEST",
-  UNAUTHORIZED: "UNAUTHORIZED",
-  FORBIDDEN: "FORBIDDEN",
-  NOT_FOUND: "NOT_FOUND",
-  PDF_TOO_LARGE: "PDF_TOO_LARGE",
-  INVALID_PDF: "INVALID_PDF",
-  // Claude API errors (5xx or external service errors)
-  CLAUDE_API_ERROR: "CLAUDE_API_ERROR",
-  CLAUDE_TIMEOUT: "CLAUDE_TIMEOUT",
-  CLAUDE_RATE_LIMIT: "CLAUDE_RATE_LIMIT",
-  CIRCUIT_BREAKER_OPEN: "CIRCUIT_BREAKER_OPEN",
-  // Database errors
-  DATABASE_ERROR: "DATABASE_ERROR",
-  DATABASE_CONSTRAINT_ERROR: "DATABASE_CONSTRAINT_ERROR",
-  // Internal errors
-  INTERNAL_ERROR: "INTERNAL_ERROR",
-  TIMEOUT: "TIMEOUT",
-  NETWORK_ERROR: "NETWORK_ERROR",
-  // Business logic errors
-  EXTRACTION_FAILED: "EXTRACTION_FAILED",
-  SESSION_NOT_FOUND: "SESSION_NOT_FOUND",
-  INVALID_STATE: "INVALID_STATE"
-};
-function classifyError(error4) {
-  if (error4.message && error4.message.includes("Circuit breaker is OPEN")) {
-    return {
-      code: ErrorCodes.CIRCUIT_BREAKER_OPEN,
-      statusCode: 503,
-      retryable: true,
-      userMessage: "Service temporarily unavailable. Please try again in a few moments.",
-      category: "service_unavailable"
-    };
-  }
-  if (error4.timeout || error4.message?.includes("timeout")) {
-    return {
-      code: ErrorCodes.CLAUDE_TIMEOUT,
-      statusCode: 504,
-      retryable: true,
-      userMessage: "Request timed out. This PDF may be too complex. Please try again or contact support.",
-      category: "timeout"
-    };
-  }
-  if (error4.validationErrors || error4.retryable === false) {
-    return {
-      code: ErrorCodes.VALIDATION_ERROR,
-      statusCode: 400,
-      retryable: false,
-      userMessage: "Invalid request. Please check your input and try again.",
-      category: "validation"
-    };
-  }
-  if (error4.statusCode) {
-    if (error4.statusCode === 429) {
-      return {
-        code: ErrorCodes.CLAUDE_RATE_LIMIT,
-        statusCode: 429,
-        retryable: true,
-        userMessage: "Rate limit exceeded. Please wait a moment and try again.",
-        category: "rate_limit"
-      };
-    }
-    if (error4.statusCode >= 500) {
-      return {
-        code: ErrorCodes.CLAUDE_API_ERROR,
-        statusCode: error4.statusCode,
-        retryable: true,
-        userMessage: "External service error. Please try again.",
-        category: "external_service"
-      };
-    }
-    if (error4.statusCode === 401 || error4.statusCode === 403) {
-      return {
-        code: ErrorCodes.UNAUTHORIZED,
-        statusCode: error4.statusCode,
-        retryable: false,
-        userMessage: "Authentication failed. Please contact support.",
-        category: "auth"
-      };
-    }
-    if (error4.statusCode === 413) {
-      return {
-        code: ErrorCodes.PDF_TOO_LARGE,
-        statusCode: 413,
-        retryable: false,
-        userMessage: "PDF file is too large. Maximum size is 24MB.",
-        category: "validation"
-      };
-    }
-  }
-  if (error4.message?.includes("UNIQUE constraint") || error4.message?.includes("FOREIGN KEY constraint")) {
-    return {
-      code: ErrorCodes.DATABASE_CONSTRAINT_ERROR,
-      statusCode: 409,
-      retryable: false,
-      userMessage: "Data conflict. This record may already exist.",
-      category: "database"
-    };
-  }
-  if (error4.message?.includes("database") || error4.message?.includes("SQL")) {
-    return {
-      code: ErrorCodes.DATABASE_ERROR,
-      statusCode: 500,
-      retryable: true,
-      userMessage: "Database error. Please try again.",
-      category: "database"
-    };
-  }
-  if (error4.message?.includes("fetch") || error4.message?.includes("network")) {
-    return {
-      code: ErrorCodes.NETWORK_ERROR,
-      statusCode: 503,
-      retryable: true,
-      userMessage: "Network error. Please check your connection and try again.",
-      category: "network"
-    };
-  }
-  return {
-    code: ErrorCodes.INTERNAL_ERROR,
-    statusCode: 500,
-    retryable: false,
-    userMessage: "An unexpected error occurred. Please contact support.",
-    category: "internal"
-  };
-}
-function createErrorResponse(error4, context3 = {}) {
-  const classification = classifyError(error4);
-  const errorResponse2 = {
-    success: false,
-    error: {
-      code: classification.code,
-      message: classification.userMessage,
-      details: error4.message,
-      retryable: classification.retryable,
-      timestamp: (/* @__PURE__ */ new Date()).toISOString(),
-      category: classification.category
-    }
-  };
-  if (context3.userId) errorResponse2.error.userId = context3.userId;
-  if (context3.sessionId) errorResponse2.error.sessionId = context3.sessionId;
-  if (context3.pageNumber) errorResponse2.error.pageNumber = context3.pageNumber;
-  if (context3.requestId) errorResponse2.error.requestId = context3.requestId;
-  if (error4.validationErrors) {
-    errorResponse2.error.validationErrors = error4.validationErrors;
-  }
-  const logDetails = {
-    ...errorResponse2,
-    _internal: {
-      originalError: error4.message,
-      stack: error4.stack,
-      errorDetails: error4.errorDetails,
-      attempts: error4.attempts
-    }
-  };
-  console.error(`[Error Handler] ${classification.code}:`, JSON.stringify(logDetails, null, 2));
-  return errorResponse2;
-}
-function jsonErrorResponse(error4, context3 = {}) {
-  const errorResponse2 = createErrorResponse(error4, context3);
-  const classification = classifyError(error4);
-  return new Response(JSON.stringify(errorResponse2), {
-    status: classification.statusCode,
-    headers: { "Content-Type": "application/json" }
-  });
-}
-var ErrorMetrics = class {
-  constructor(env2) {
-    this.env = env2;
-  }
-  // Uses CACHE binding (not KV) per wrangler.toml configuration
-  async recordError(errorCode, context3 = {}) {
-    try {
-      const key = `error_metrics:${errorCode}:${(/* @__PURE__ */ new Date()).toISOString().split("T")[0]}`;
-      if (this.env.CACHE) {
-        const current = await this.env.CACHE.get(key);
-        const count3 = current ? parseInt(current, 10) + 1 : 1;
-        await this.env.CACHE.put(key, count3.toString(), { expirationTtl: 604800 });
-      }
-      console.log(`[Metrics] Error recorded: ${errorCode}`, context3);
-    } catch (err) {
-      console.error("[Metrics] Failed to record error metric:", err.message);
-    }
-  }
-  async recordLatency(operation, latencyMs, success = true) {
-    try {
-      const timestamp = (/* @__PURE__ */ new Date()).toISOString();
-      const key = `latency:${operation}:${timestamp.split("T")[0]}`;
-      console.log(`[Metrics] ${operation} - ${latencyMs}ms - ${success ? "SUCCESS" : "FAILURE"}`);
-      if (this.env.CACHE) {
-        const data = { operation, latencyMs, success, timestamp };
-        await this.env.CACHE.put(`${key}:${Date.now()}`, JSON.stringify(data), { expirationTtl: 604800 });
-      }
-    } catch (err) {
-      console.error("[Metrics] Failed to record latency metric:", err.message);
-    }
-  }
-  async getErrorStats(days = 7) {
-    try {
-      if (!this.env.CACHE) return null;
-      const stats = {};
-      const today = /* @__PURE__ */ new Date();
-      for (let i2 = 0; i2 < days; i2++) {
-        const date = new Date(today);
-        date.setDate(date.getDate() - i2);
-        const dateStr = date.toISOString().split("T")[0];
-        for (const code of Object.values(ErrorCodes)) {
-          const key = `error_metrics:${code}:${dateStr}`;
-          const count3 = await this.env.CACHE.get(key);
-          if (count3) {
-            if (!stats[code]) stats[code] = {};
-            stats[code][dateStr] = parseInt(count3, 10);
-          }
-        }
-      }
-      return stats;
-    } catch (err) {
-      console.error("[Metrics] Failed to get error stats:", err.message);
-      return null;
-    }
-  }
-};
-async function performHealthCheck(env2) {
-  const health = {
-    status: "healthy",
-    timestamp: (/* @__PURE__ */ new Date()).toISOString(),
-    checks: {}
-  };
-  try {
-    await env2.DB.prepare("SELECT 1").first();
-    health.checks.database = { status: "healthy" };
-  } catch (error4) {
-    health.checks.database = { status: "unhealthy", error: error4.message };
-    health.status = "degraded";
-  }
-  try {
-    await env2.CACHE.put("health_check", Date.now().toString(), { expirationTtl: 60 });
-    health.checks.kv = { status: "healthy" };
-  } catch (error4) {
-    health.checks.kv = { status: "unhealthy", error: error4.message };
-    health.status = "degraded";
-  }
-  try {
-    if (!env2.OCR_SERVICE) {
-      throw new Error("OCR_SERVICE binding not configured");
-    }
-    const ocrResp = await env2.OCR_SERVICE.fetch("https://weyland-ocr-worker/health");
-    health.checks.ocr_service = {
-      status: ocrResp.ok ? "healthy" : "degraded",
-      note: ocrResp.ok ? "pure-JS OCR (PDFium + tesseract-wasm), no external API" : `HTTP ${ocrResp.status}`
-    };
-    if (!ocrResp.ok) {
-      health.status = "degraded";
-    }
-  } catch (error4) {
-    health.checks.ocr_service = { status: "unhealthy", error: error4.message };
-    health.status = "degraded";
-  }
-  return health;
-}
 
 // src/legacy-monolith.js
 import { Writable } from "node:stream";
@@ -160950,432 +161401,6 @@ router.post("/api/hardware-schedule/session/:sessionId/batch-extract", async (re
     return jsonResponse3({ error: "Batch extraction failed", details: error5.message }, 500);
   }
 });
-router.get("/api/hardware-schedule/session/:sessionId/page/:pageNum", async (request2, env2) => {
-  const { error: error4, user } = await authenticate(request2, env2);
-  if (error4)
-    return error4;
-  const startTime = Date.now();
-  const metrics = new ErrorMetrics(env2);
-  try {
-    const sessionId = request2.params.sessionId;
-    const pageNum = parseInt(request2.params.pageNum, 10);
-    if (!pageNum || pageNum < 1) {
-      const validationError = new Error("Invalid page number");
-      validationError.retryable = false;
-      throw validationError;
-    }
-    console.log(`[Hardware Page] Extracting page ${pageNum} for session ${sessionId}`);
-    const session = await getSessionStatus(sessionId, env2);
-    if (!session) {
-      const notFoundError = new Error("Session not found");
-      notFoundError.retryable = false;
-      notFoundError.statusCode = 404;
-      throw notFoundError;
-    }
-    if (pageNum > session.total_pages) {
-      const validationError = new Error(`Page ${pageNum} exceeds total pages (${session.total_pages})`);
-      validationError.retryable = false;
-      throw validationError;
-    }
-    const cached = await env2.DB.prepare(`
-      SELECT extracted_data, status
-      FROM hardware_page_extractions
-      WHERE session_id = ? AND page_number = ?
-    `).bind(sessionId, pageNum).first();
-    if (cached) {
-      console.log(`[Hardware Page] Returning cached extraction for page ${pageNum}`);
-      const latency = Date.now() - startTime;
-      await metrics.recordLatency("page_extraction_cached", latency, true);
-      return jsonResponse3({
-        success: true,
-        sessionId,
-        pageNumber: pageNum,
-        status: cached.status,
-        data: JSON.parse(cached.extracted_data),
-        cached: true
-      });
-    }
-    console.log(`[Hardware Page] Retrieving PDF from KV: ${session.file_buffer_key}`);
-    let fileBuffer = await env2.CACHE.get(session.file_buffer_key, { type: "arrayBuffer" });
-    if (!fileBuffer && env2.UPLOADS) {
-      console.log(`[Hardware Page] KV expired, trying R2 fallback: ${session.file_buffer_key}`);
-      const r2Object = await env2.UPLOADS.get(session.file_buffer_key);
-      if (r2Object) {
-        fileBuffer = await r2Object.arrayBuffer();
-        console.log(`[Hardware Page] PDF retrieved from R2 (${fileBuffer.byteLength} bytes)`);
-        await env2.CACHE.put(session.file_buffer_key, fileBuffer, {
-          expirationTtl: 86400 * 7
-          // 7 days
-        });
-        console.log(`[Hardware Page] PDF re-cached in KV`);
-      }
-    }
-    if (!fileBuffer) {
-      console.error(`[Hardware Page] PDF not found in KV or R2: ${session.file_buffer_key}`);
-      const notFoundError = new Error("PDF file not found. Please re-upload the document.");
-      notFoundError.retryable = false;
-      notFoundError.statusCode = 404;
-      throw notFoundError;
-    }
-    console.log(`[Hardware Page] PDF retrieved successfully (${fileBuffer.byteLength} bytes)`);
-    console.log(`[Hardware Page] Starting Claude Vision extraction for page ${pageNum}`);
-    const extractionStartTime = Date.now();
-    const extractionResult = await extractSinglePage(fileBuffer, pageNum, env2);
-    const extractionLatency = Date.now() - extractionStartTime;
-    await metrics.recordLatency("claude_extraction", extractionLatency, true);
-    console.log(`[Hardware Page] Claude Vision extraction completed in ${extractionLatency}ms`);
-    await savePageExtraction2(sessionId, pageNum, extractionResult, env2);
-    console.log(`[Hardware Page] Extracted page ${pageNum}: ${extractionResult.hardware_groups.length} sets found`);
-    const totalLatency = Date.now() - startTime;
-    await metrics.recordLatency("page_extraction_full", totalLatency, true);
-    return jsonResponse3({
-      success: true,
-      sessionId,
-      pageNumber: pageNum,
-      status: "pending_review",
-      data: extractionResult,
-      cached: false,
-      performance: {
-        total_ms: totalLatency,
-        extraction_ms: extractionLatency
-      }
-    });
-  } catch (error5) {
-    const latency = Date.now() - startTime;
-    console.error(`[Hardware Page] Error after ${latency}ms:`, error5);
-    const classification = classifyError(error5);
-    await metrics.recordError(classification.code, {
-      sessionId: request2.params.sessionId,
-      pageNumber: request2.params.pageNum,
-      userId: user.userId,
-      latency
-    });
-    return jsonErrorResponse(error5, {
-      sessionId: request2.params.sessionId,
-      pageNumber: request2.params.pageNum,
-      userId: user.userId
-    });
-  }
-});
-router.post("/api/hardware-schedule/session/:sessionId/page/:pageNum/approve", async (request2, env2) => {
-  const { error: error4, user } = await authenticate(request2, env2);
-  if (error4)
-    return error4;
-  try {
-    const sessionId = request2.params.sessionId;
-    const pageNum = parseInt(request2.params.pageNum, 10);
-    const data = await request2.json();
-    console.log(`[Hardware Approve Page] Approving page ${pageNum} for session ${sessionId}`);
-    console.log(`[Hardware Approve Page] Received ${data.hardwareGroups?.length || 0} groups from frontend`);
-    const corrections = data.hardwareGroups ? { hardware_groups: data.hardwareGroups } : data.corrections || null;
-    const result = await approvePageExtraction(
-      sessionId,
-      pageNum,
-      corrections,
-      user.userId,
-      env2
-    );
-    const status = await getSessionStatus(sessionId, env2);
-    if (status.pages_approved === status.total_pages) {
-      await env2.DB.prepare(`
-        UPDATE hardware_extraction_sessions
-        SET status = ?, completed_at = ?
-        WHERE id = ?
-      `).bind("completed", (/* @__PURE__ */ new Date()).toISOString(), sessionId).run();
-      status.status = "completed";
-    }
-    console.log(`[Hardware Approve Page] Page ${pageNum} approved: ${result.sets_inserted} sets, ${result.components_inserted} components`);
-    return jsonResponse3({
-      success: true,
-      sessionId,
-      pageNumber: pageNum,
-      result,
-      session_status: {
-        pages_approved: status.pages_approved,
-        total_pages: status.total_pages,
-        progress_percent: status.progress_percent,
-        completed: status.status === "completed"
-      },
-      next_step: status.status === "completed" ? "All pages complete! Hardware schedule imported." : `Review page ${pageNum + 1}`
-    });
-  } catch (error5) {
-    console.error("[Hardware Approve Page] Error:", error5);
-    return jsonResponse3({
-      error: "Failed to approve page",
-      details: error5.message
-    }, 500);
-  }
-});
-router.post("/api/hardware-schedule/session/:sessionId/page/:pageNum/extract-image", async (request2, env2) => {
-  const { error: error4, user } = await authenticate(request2, env2);
-  if (error4)
-    return error4;
-  const startTime = Date.now();
-  try {
-    const sessionId = request2.params.sessionId;
-    const pageNum = parseInt(request2.params.pageNum, 10);
-    const data = await request2.json();
-    console.log(`[Hardware Extract Image] \u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550`);
-    console.log(`[Hardware Extract Image] Session: ${sessionId}, Page: ${pageNum}`);
-    console.log(`[Hardware Extract Image] Image size: ${(data.imageBase64?.length / 1024).toFixed(1)}KB base64`);
-    console.log(`[Hardware Extract Image] Dimensions: ${data.width}x${data.height}`);
-    console.log(`[Hardware Extract Image] \u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550`);
-    if (!data.imageBase64) {
-      return jsonResponse3({ error: "Missing imageBase64 in request body" }, 400);
-    }
-    if (!data.totalPages || data.totalPages < 1) {
-      return jsonResponse3({ error: "Missing or invalid totalPages in request body" }, 400);
-    }
-    if (isNaN(pageNum) || pageNum < 1) {
-      return jsonResponse3({ error: "Invalid page number" }, 400);
-    }
-    const session = await env2.DB.prepare(`
-      SELECT * FROM hardware_extraction_sessions WHERE id = ?
-    `).bind(sessionId).first();
-    if (!session) {
-      return jsonResponse3({ error: "Session not found" }, 404);
-    }
-    if (session.user_id !== user.userId) {
-      return jsonResponse3({ error: "Unauthorized access to session" }, 403);
-    }
-    if (session.extraction_page_range) {
-      try {
-        const rangeData = typeof session.extraction_page_range === "string" ? JSON.parse(session.extraction_page_range) : session.extraction_page_range;
-        if (rangeData && !isPageInRange(pageNum, rangeData)) {
-          console.log(`[27A Page Range] Skipping page ${pageNum} (outside extraction ranges)`);
-          return jsonResponse3({
-            status: "skipped",
-            message: `Page ${pageNum} outside extraction range`,
-            page_number: pageNum,
-            extraction_page_range: rangeData
-          });
-        }
-      } catch (rangeErr) {
-        console.warn(`[27A Page Range] Could not parse range: ${rangeErr.message}`);
-      }
-    }
-    let _route = env2.WEYLAND_EDITION === "local" ? "claude_code_subprocess" : "claude_code_local";
-    try {
-      const _rr = await env2.DB.prepare(
-        `SELECT extraction_route FROM hardware_extraction_sessions WHERE id = ?`
-      ).bind(sessionId).first();
-      if (_rr?.extraction_route)
-        _route = _rr.extraction_route;
-    } catch (e) {
-    }
-    if (_route === "claude_code_local") {
-      const _schedType = session.document_type === "door_schedule" ? "door_schedule" : null;
-      const q = await queuePageExtractionJob(data.imageBase64, env2, {
-        pageNumber: pageNum,
-        totalPages: data.totalPages,
-        sessionId,
-        tenantId: data.tenantId || session.tenant_id || null,
-        ownerMhsId: user.mhsId || user.mhs_id || null,
-        scheduleType: _schedType
-      });
-      const kuId = crypto.randomUUID();
-      try {
-        await env2.DB.prepare(`
-          INSERT OR REPLACE INTO kdp_packets
-            (id, connection_id, project_id, candidate_id, page_number, sequence, unit_type, job_id, route, owner_id, state, attempts, created_at, updated_at)
-          VALUES (?, ?, ?, ?, ?, ?, ?, ?, 'claude_code_local', ?, 'in_flight', 1, datetime('now'), datetime('now'))
-        `).bind(
-          kuId,
-          sessionId,
-          session.project_id || null,
-          `page:${sessionId}:${pageNum}`,
-          pageNum,
-          pageNum,
-          _schedType === "door_schedule" ? "door_mark" : "hardware_set",
-          q.job_id,
-          q.owner_id
-        ).run();
-      } catch (e) {
-      }
-      return jsonResponse3({
-        success: true,
-        async: true,
-        ku_id: kuId,
-        job_id: q.job_id,
-        page_number: pageNum,
-        provider: "claude_code_local",
-        poll_url: `/api/jobs/${q.job_id}`,
-        finalize_url: `/api/hardware-schedule/session/${sessionId}/page/${pageNum}/finalize-image/${q.job_id}`,
-        message: "Extraction queued to your bridge. Poll job, then finalize to persist."
-      });
-    }
-    const extractionOptions = {
-      tenantId: data.tenantId || null,
-      sessionId,
-      // WO-2026-0616: SABP bridge jobs must route to the owner's bridge token,
-      // which is minted from the authenticated identity (user.mhsId). Thread it
-      // so the adapter never re-derives from a stale node row.
-      ownerMhsId: user.mhsId || user.mhs_id || null
-    };
-    console.log(`[Hardware Extract Image] Calling extractFromPageImage...`);
-    if (extractionOptions.tenantId) {
-      console.log(`[Hardware Extract Image] CONSTRAINT MODE: tenantId=${extractionOptions.tenantId}`);
-    }
-    const extractionResult = await extractFromPageImage(
-      data.imageBase64,
-      pageNum,
-      data.totalPages,
-      env2,
-      extractionOptions
-    );
-    console.log(`[Hardware Extract Image] Saving extraction to database...`);
-    await savePageExtraction2(sessionId, pageNum, extractionResult, env2);
-    const totalTime = Date.now() - startTime;
-    const matrixCount = extractionResult.door_hardware_matrix?.length || 0;
-    console.log(`[Hardware Extract Image] \u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550`);
-    console.log(`[Hardware Extract Image] EXTRACTION COMPLETE`);
-    console.log(`[Hardware Extract Image] Groups: ${extractionResult.hardware_groups.length}`);
-    console.log(`[Hardware Extract Image] Door-Matrix Entries: ${matrixCount}`);
-    console.log(`[Hardware Extract Image] Total time: ${totalTime}ms`);
-    console.log(`[Hardware Extract Image] \u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550`);
-    return jsonResponse3({
-      success: true,
-      sessionId,
-      pageNumber: pageNum,
-      hardware_groups: extractionResult.hardware_groups,
-      metadata: {
-        ...extractionResult.metadata,
-        extraction_method: "frontend_canvas_capture",
-        page_isolated: true
-      },
-      timing: {
-        extraction_time_ms: extractionResult.extraction_time_ms,
-        total_time_ms: totalTime
-      },
-      usage: extractionResult.usage,
-      next_step: `Review and approve: POST /api/hardware-schedule/session/${sessionId}/page/${pageNum}/approve`
-    });
-  } catch (error5) {
-    console.error("[Hardware Extract Image] Error:", error5);
-    return jsonResponse3({
-      error: "Failed to extract hardware data from image",
-      details: error5.message
-    }, 500);
-  }
-});
-router.get("/api/hardware-schedule/session/:sessionId/page/:pageNum/extraction-contract", async (request2, env2) => {
-  const { error: error4, user } = await authenticate(request2, env2);
-  if (error4)
-    return error4;
-  try {
-    const { sessionId, pageNum } = request2.params;
-    const pageNumber = parseInt(pageNum, 10);
-    const url = new URL(request2.url);
-    const tenantId = url.searchParams.get("tenant_id") || null;
-    const session = await env2.DB.prepare(
-      "SELECT * FROM hardware_extraction_sessions WHERE id = ?"
-    ).bind(sessionId).first();
-    if (!session)
-      return jsonResponse3({ error: "Session not found" }, 404);
-    if (session.user_id !== user.userId)
-      return jsonResponse3({ error: "Unauthorized access to session" }, 403);
-    const contract = await resolveExtractionContract(env2, {
-      sessionId,
-      pageNumber,
-      totalPages: session.page_count || session.total_pages || 1,
-      tenantId
-    });
-    const constraintsMeta = contract.constraints ? {
-      spec_version: contract.constraints.spec_version,
-      scope_chain: contract.constraints.scope_chain,
-      field_count: contract.constraints.fields.length
-    } : null;
-    return jsonResponse3({
-      success: true,
-      sessionId,
-      pageNumber,
-      totalPages: contract.totalPages,
-      document_type: session.document_type || "hardware_schedule",
-      prompt: contract.prompt,
-      constraints: constraintsMeta,
-      provenance: contract.provenance,
-      result_contract: {
-        required: {
-          hardware_groups: "array \u2014 as specified in the prompt JSON schema",
-          door_hardware_matrix: "array \u2014 REQUIRED when door/MARK-to-set relationships are visible (bylines or matrix); [] otherwise"
-        },
-        optional: ["detected_nomenclature", "metadata"],
-        submit_to: `POST /api/hardware-schedule/session/${sessionId}/page/${pageNumber}/extract-result`,
-        recommended_dpi: 300
-      }
-    });
-  } catch (err) {
-    return jsonResponse3({ error: "Failed to build extraction contract", details: err.message }, 500);
-  }
-});
-router.post("/api/hardware-schedule/session/:sessionId/page/:pageNum/extract-result", async (request2, env2) => {
-  const { error: error4, user } = await authenticate(request2, env2);
-  if (error4)
-    return error4;
-  try {
-    const { sessionId, pageNum } = request2.params;
-    const pageNumber = parseInt(pageNum, 10);
-    const body = await request2.json();
-    const { extraction, provider } = body;
-    if (!extraction || typeof extraction !== "object") {
-      return jsonResponse3({ error: "extraction object required" }, 400);
-    }
-    if (!Array.isArray(extraction.hardware_groups)) {
-      return jsonResponse3({ error: "extraction.hardware_groups must be an array (see extraction-contract)" }, 400);
-    }
-    for (const g of extraction.hardware_groups) {
-      if (!g || typeof g !== "object") {
-        return jsonResponse3({ error: "each hardware_group must be an object" }, 400);
-      }
-      if (g.components !== void 0 && !Array.isArray(g.components)) {
-        return jsonResponse3({ error: "hardware_group.components must be an array when present" }, 400);
-      }
-    }
-    if (!provider || !provider.name) {
-      return jsonResponse3({ error: "provider.name required (e.g. operator-local-claude-code) \u2014 engine attribution is part of the trust substrate" }, 400);
-    }
-    const session = await env2.DB.prepare(
-      "SELECT * FROM hardware_extraction_sessions WHERE id = ?"
-    ).bind(sessionId).first();
-    if (!session)
-      return jsonResponse3({ error: "Session not found" }, 404);
-    if (session.user_id !== user.userId)
-      return jsonResponse3({ error: "Unauthorized access to session" }, 403);
-    const totalPages = session.page_count || session.total_pages || 1;
-    const extractionResult = {
-      page_number: pageNumber,
-      total_pages: totalPages,
-      hardware_groups: extraction.hardware_groups,
-      door_hardware_matrix: extraction.door_hardware_matrix || [],
-      detected_nomenclature: extraction.detected_nomenclature || null,
-      metadata: {
-        ...extraction.metadata || {},
-        extraction_provider: provider.name,
-        extraction_model: provider.model || null,
-        extraction_client: provider.client || null,
-        submitted_by: user.email || user.userId,
-        page_isolated: true,
-        isolation_method: "operator_local_render"
-      }
-    };
-    await savePageExtraction2(sessionId, pageNumber, extractionResult, env2);
-    const componentCount = extraction.hardware_groups.reduce((s, g) => s + (g.components?.length || 0), 0);
-    console.log(`[Vision Bridge] Stored operator-local extraction: session ${sessionId} p${pageNumber}, provider ${provider.name}, ${extraction.hardware_groups.length} groups / ${componentCount} components`);
-    return jsonResponse3({
-      success: true,
-      sessionId,
-      pageNumber,
-      provider: provider.name,
-      hardware_groups: extraction.hardware_groups.length,
-      components: componentCount,
-      matrix_entries: (extraction.door_hardware_matrix || []).length,
-      next_step: `Review and approve: POST /api/hardware-schedule/session/${sessionId}/page/${pageNumber}/approve`
-    });
-  } catch (err) {
-    console.error("[Vision Bridge] Error:", err);
-    return jsonResponse3({ error: "Failed to store extraction result", details: err.message }, 500);
-  }
-});
 var PRODUCT_DATABASE = [
   // Schlage Locks
   { manufacturer: "Schlage", code: ["SCH", "SCHLAGE"], models: ["L9080P", "L9080", "L9080-P"], productName: "Schlage L9080P Passage Mortise Lock", category: "Locks & Locksets", specs: 'ANSI/BHMA Grade 1, Heavy Duty Commercial, 2-3/4" Backset', fireRating: "3 Hour", ada: true, standards: "ANSI/BHMA A156.13, UL10C", priceRange: "$340-485" },
@@ -162180,7 +162205,11 @@ registerExtractedModules(router, {
   incrementSubmittalsUsed,
   matchComponentToCutSheets,
   queuePageExtractionJob,
-  routeExtraction
+  routeExtraction,
+  approvePageExtraction,
+  extractSinglePage,
+  resolveExtractionContract,
+  savePageExtraction2
 });
 async function fetchTxdotOpportunities() {
   const url = "https://data.texas.gov/resource/qh8x-rm8r.json?" + new URLSearchParams({

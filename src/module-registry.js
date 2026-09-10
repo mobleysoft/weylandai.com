@@ -43,6 +43,7 @@ import { registerHardwareScheduleCandidatesRoutes } from "./routes/hardware-sche
 import { registerHardwareScheduleEnrichmentRoutes } from "./routes/hardware-schedule-enrichment.js";
 import { registerHardwareSchedulePageAffirmRoutes } from "./routes/hardware-schedule-page-affirm.js";
 import { registerHardwareScheduleGenerateRoutes } from "./routes/hardware-schedule-generate.js";
+import { registerHardwareSchedulePageExtractRoutes } from "./routes/hardware-schedule-page-extract.js";
 import { authenticate, authenticateCps, requireActiveSubscription, requireProductAccess } from "./lib/auth.js";
 
 /**
@@ -73,6 +74,10 @@ import { authenticate, authenticateCps, requireActiveSubscription, requireProduc
  *   matchComponentToCutSheets: Function,
  *   queuePageExtractionJob: Function,
  *   routeExtraction: Function,
+ *   approvePageExtraction: Function,
+ *   extractSinglePage: Function,
+ *   resolveExtractionContract: Function,
+ *   savePageExtraction2: Function,
  * }} deps
  *   Real dependencies still owned by legacy-monolith.js (not yet their
  *   own modules) that some of these routes need injected. renderHtmlToPdf/
@@ -154,5 +159,16 @@ export function registerExtractedModules(router, deps) {
     routeExtraction: deps.routeExtraction,
     transformDoorEntriesToHardwareSets: deps.transformDoorEntriesToHardwareSets,
     materializeDseToLineItems: deps.materializeDseToLineItems,
+  });
+  registerHardwareSchedulePageExtractRoutes(router, {
+    authenticate,
+    getSessionStatus: deps.getSessionStatus,
+    isPageInRange: deps.isPageInRange,
+    extractFromPageImage: deps.extractFromPageImage,
+    queuePageExtractionJob: deps.queuePageExtractionJob,
+    approvePageExtraction: deps.approvePageExtraction,
+    extractSinglePage: deps.extractSinglePage,
+    resolveExtractionContract: deps.resolveExtractionContract,
+    savePageExtraction2: deps.savePageExtraction2,
   });
 }
