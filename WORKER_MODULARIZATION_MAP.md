@@ -658,16 +658,22 @@ observable behavior change ever." Order:
      deleting the R2 object then the D1 row, POST bulk-import up to
      100 entries/call matching-or-creating manufacturer/product/
      document rows). authenticate the only dep - fully self-contained.
-   - **Step 8 essentially complete.** A full route scan confirms only
-     one CPS/cut-sheet/catalogue route remains inline:
-     `GET /api/cps/catalogues/:catalogueId/pages/:pageNum/render`,
-     blocked on `PDFDocument_default` - a full pdf-lib copy vendored
-     directly into legacy-monolith.js rather than a real npm import
-     (flagged back in the `cps-queue.js` extraction). Untangling that
-     is its own piece: either install `pdf-lib` as a real dependency
-     and re-point this route at it, or inject the vendored symbol like
-     any other still-inline helper. Do that next, then re-scan the
-     whole file for what step 9 (or a renumbered next step) should be.
+   - ✅ done (2026-09-10): `routes/cps-page-render.js` - GET
+     catalogues/:catalogueId/pages/:pageNum/render. authenticate
+     injected as usual; PDFDocument_default (the vendored pdf-lib copy
+     flagged in the cps-queue.js extraction) injected as `PDFDocument`
+     rather than moved/duplicated - it has real remaining call sites
+     still inline (extractIsolatedPage, the session-assembly PDFLib
+     usage), and both already reference it directly with no lazy-
+     resolution wrapper, confirming esbuild's __esm init chain for
+     pdf-lib runs unconditionally at module-evaluation time.
+   - **✅ STEP 8 COMPLETE (2026-09-10).** A full route scan confirms
+     zero remaining `/api/cut-sheets/*`, `/api/cps/*`, or
+     `/api/catalogue/*` routes inline in legacy-monolith.js. Next: a
+     fresh full-file route scan to define what comes after step 8 -
+     none of the line numbers anywhere in this document's §5 layout are
+     current anymore, so that section needs a full rewrite before it
+     can guide further work, not just individual line-number patches.
 
 For every step, "verified behaviorally identical" concretely means: run the
 extracted module inline via `wrangler dev` against a copy of the worker with
