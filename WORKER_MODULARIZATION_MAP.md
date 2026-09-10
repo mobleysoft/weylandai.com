@@ -914,6 +914,27 @@ observable behavior change ever." Order:
       scan before the next piece should re-check this before assuming
       grouping opportunities exist.
 
+17. **Step 17 (new, post-step-16 scan result, 2026-09-10): the
+    "X-tool" market-intelligence cluster.** Step 16's "all standalone
+    singles" claim was itself an artifact of scanning by first-path-
+    segment prefix - `/api/pricex`, `/api/marketx`, `/api/compx`,
+    `/api/weatherx`, `/api/forecastx`, `/api/geox` are 6 *different*
+    prefixes (so the per-prefix count tool showed each as "1"), but
+    they sit fully physically contiguous in the file (311 lines) and
+    share 4 real helper functions, making them a genuine single
+    logical cluster the prefix scan missed. Lesson for future scans:
+    check physical contiguity, not just prefix grouping, before
+    concluding "no clusters left."
+    - ✅ done (2026-09-10): `routes/market-intelligence.js` - all 6
+      routes (pricex/materials, marketx/trends, compx/vendors,
+      weatherx/delay-risk, forecastx/project, geox/lookup).
+      compxVendorSearch/FRED_SERIES/fredObservations/pctChange all
+      fully orphaned (every real call site inside this extraction) -
+      inlined locally. No injected deps needed. Live-verified against
+      real external APIs post-deploy (FRED pricing data unchanged).
+    - **Step 17 complete**: all 6 market-intelligence routes
+      extracted.
+
 ### Additional tracked items (brainstormed 2026-09-10, not yet scheduled)
 
 Found while extracting steps 8-9; real, verified duplication/gaps, not
