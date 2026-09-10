@@ -995,9 +995,18 @@ observable behavior change ever." Order:
       each, inlined locally). logClaudeAPICall (2 other real call
       sites remaining) newly promoted to an injected dep.
     - **Step 21 complete**: both submittal-chat routes extracted.
-      Remaining: `/login`, `/app.js`, `/` (all large page-serving
-      routes, likely each its own dedicated piece going forward), and
-      `/api/hardware-components/:componentId/select-price`.
+
+22. **Step 22 (new, post-step-21 scan result, 2026-09-10): the last
+    standalone API route.** `/api/hardware-components/:componentId/
+    select-price` (45 lines).
+    - ✅ done (2026-09-10): `routes/hardware-component-price.js` - the
+      one route. authenticate the only injected dep, fully
+      self-contained.
+    - **Step 22 complete**. Only 3 route registrations remain in the
+      whole file: `/login`, `/app.js`, `/` (root) - all large
+      page-serving routes, each likely its own dedicated future piece
+      (HTML/JS content, not API logic - different risk profile than
+      everything extracted so far this session).
 
 ### Additional tracked items (brainstormed 2026-09-10, not yet scheduled)
 
