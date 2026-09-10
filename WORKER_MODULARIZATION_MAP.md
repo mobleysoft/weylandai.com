@@ -552,11 +552,17 @@ observable behavior change ever." Order:
      cut-sheets/documents/:docId (metadata) + cut-sheets/download/:docId
      (real PDF streaming from R2, env.OUTPUTS for "product-docs" vs.
      env.UPLOADS otherwise).
+   - ✅ done (2026-09-10): `routes/cps-catalogues.js` - GET
+     cps/catalogues (list, paginated), GET cps/catalogues/:id (detail +
+     pages + mapping_stats), POST cps/catalogues (create), POST
+     cps/catalogues/:id/pages (bulk page upload, batched inserts w/
+     inserted/skipped counts). 4 routes, cleanly self-contained -
+     authenticate is the only dependency.
    - Still inline: everything else - the rest of the CPS/cut-sheet route
-     surface (~34 more `/api/cut-sheets/*` and `/api/cps/*` routes alone
-     per the last full scan - catalogues, search/search-component,
-     drafts, mappings, queue/extractions/render, discoveries,
-     domains/verify, intelligence metrics/config, admin normalize,
+     surface (~30 more `/api/cut-sheets/*` and `/api/cps/*` routes alone
+     per the last full scan - search/search-component, drafts, mappings,
+     queue/extractions/render, discoveries, domains/verify, intelligence
+     metrics/config, admin normalize,
      catalogue-products/documents/bulk-import, cut-sheet-discovery,
      user-cutsheets, door-schedule-marks, session-assembly, and more per
      §5's original proposed layout - re-read that section and re-run a
