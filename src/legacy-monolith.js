@@ -144718,28 +144718,6 @@ function generateSubmittalHTML(submittal) {
   return html;
 }
 __name(generateSubmittalHTML, "generateSubmittalHTML");
-router.post("/api/demo", async (request2, env2) => {
-  try {
-    const data = await request2.json();
-    const requestId = crypto.randomUUID();
-    await env2.DEMO_REQUESTS.put(
-      requestId,
-      JSON.stringify({
-        ...data,
-        timestamp: (/* @__PURE__ */ new Date()).toISOString(),
-        ip: request2.headers.get("CF-Connecting-IP")
-      }),
-      { expirationTtl: 2592e3 }
-      // 30 days
-    );
-    return jsonResponse3({
-      requestId,
-      message: "Demo request received. We will contact you within 24 hours."
-    }, 201);
-  } catch (error4) {
-    return jsonResponse3({ error: "Failed to submit demo request: " + error4.message }, 500);
-  }
-});
 var MIME_MAP = { ".html": "text/html;charset=utf-8", ".js": "application/javascript;charset=utf-8", ".css": "text/css;charset=utf-8", ".json": "application/json", ".png": "image/png", ".jpg": "image/jpeg", ".svg": "image/svg+xml", ".ico": "image/x-icon", ".pdf": "application/pdf", ".woff2": "font/woff2", ".py": "text/plain; charset=utf-8", ".txt": "text/plain; charset=utf-8" };
 async function serveR2(env2, pathname) {
   const keys = [];

@@ -93,6 +93,7 @@ import { registerHardwareComponentPriceRoutes } from "./routes/hardware-componen
 import { registerLoginPageRoutes } from "./routes/login-page.js";
 import { registerAppJsRoutes } from "./routes/app-js.js";
 import { registerRootRoutes } from "./routes/root.js";
+import { registerDemoRoutes } from "./routes/demo.js";
 import { authenticate, authenticateCps, requireActiveSubscription, requireProductAccess } from "./lib/auth.js";
 
 /**
@@ -393,4 +394,5 @@ export function registerExtractedModules(router, deps) {
   registerLoginPageRoutes(router);
   registerAppJsRoutes(router);
   registerRootRoutes(router, { WORKER_VERSION: deps.WORKER_VERSION });
+  registerDemoRoutes(router);
 }
