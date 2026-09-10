@@ -171,7 +171,20 @@ cluster *names* and *relationships* are the durable part.
    confusion), `batchMatchSessionComponents`, `persistSessionMatches`,
    `SERIES_FAMILIES`/`FINISH_CODES`/`BHMA_FINISH_LOOKUP`. Mostly pure
    string-normalization + lookup tables, plus 2 D1-touching async fns.
-   - Status: not started.
+   - **Status: ✅ done (2026-09-10).** Extracted to
+     `src/lib/cps-matching.js` + `src/lib/cps-matching.test.mjs`
+     (18 real tests), imported directly into `legacy-monolith.js`.
+     `legacy-monolith.js` shrank 146,243 → 145,640 lines (603 lines,
+     byte-diff-verified identical modulo `export` keywords and
+     stripped `__name(...)` calls). `generateSearchVariants`/
+     `generateSearchQueries` are also called from Cluster E (the
+     not-yet-extracted discovery engine) - those call sites keep
+     resolving unchanged via the new import, same as every
+     cross-cluster reference in this phase. `BHMA_FINISH_LOOKUP`,
+     originally attributed here, was correctly extracted with Cluster
+     C instead (see that entry) since both its real call sites live
+     there. Live-verified via `POST /api/match-component` (real
+     `matched:false` response, not an error) and `GET /api/health`.
 5. **Stripe billing / webhook signature verification (Cluster G,
    ~180 lines) - FINANCIAL/SECURITY, extra care.**
    `WEYLAND_SUBCONP_PRICE_ID`/`PRODUCT_ID`, `WEYLAND_PRODUCTS`,
