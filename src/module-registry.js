@@ -74,6 +74,7 @@ import { registerSessionsQueueExtractionRoutes } from "./routes/sessions-queue-e
 import { registerSessionsFinalizeFromJobRoutes } from "./routes/sessions-finalize-from-job.js";
 import { registerSessionsAutoGenerateRoutes } from "./routes/sessions-auto-generate.js";
 import { registerSessionsPreviewRoutes } from "./routes/sessions-preview.js";
+import { registerAuthSessionRoutes } from "./routes/auth-session.js";
 import { authenticate, authenticateCps, requireActiveSubscription, requireProductAccess } from "./lib/auth.js";
 
 /**
@@ -111,6 +112,7 @@ import { authenticate, authenticateCps, requireActiveSubscription, requireProduc
  *   savePageExtraction2: Function,
  *   parseAndValidateExtraction: Function,
  *   generateId3: Function,
+ *   errorResponse: Function,
  *   buildExtractionResultFromVision: Function,
  *   persistDoorScheduleResponse: Function,
  *   extractHardwareSchedule: Function,
@@ -320,4 +322,5 @@ export function registerExtractedModules(router, deps) {
     extractSinglePage: deps.extractSinglePage,
   });
   registerSessionsPreviewRoutes(router, { authenticate });
+  registerAuthSessionRoutes(router, { authenticate, errorResponse: deps.errorResponse });
 }
