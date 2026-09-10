@@ -558,16 +558,22 @@ observable behavior change ever." Order:
      cps/catalogues/:id/pages (bulk page upload, batched inserts w/
      inserted/skipped counts). 4 routes, cleanly self-contained -
      authenticate is the only dependency.
+   - ✅ done (2026-09-10): `routes/cps-search.js` - GET cps/search
+     (trigram-then-FTS5-expanded catalogue text search, graceful "index
+     not yet available" fallback, internal X-Internal-API bypass for
+     Weyland-Discovery) + POST cps/search-component (multi-field
+     weighted scoring search). 2 routes, authenticate is the only
+     injected dep; expandSearchQuery stayed a local nested helper.
    - Still inline: everything else - the rest of the CPS/cut-sheet route
-     surface (~30 more `/api/cut-sheets/*` and `/api/cps/*` routes alone
-     per the last full scan - search/search-component, drafts, mappings,
-     queue/extractions/render, discoveries, domains/verify, intelligence
-     metrics/config, admin normalize,
-     catalogue-products/documents/bulk-import, cut-sheet-discovery,
-     user-cutsheets, door-schedule-marks, session-assembly, and more per
-     §5's original proposed layout - re-read that section and re-run a
-     full route scan before picking individual pieces, since none of
-     its line numbers are current anymore).
+     surface (~28 more `/api/cut-sheets/*` and `/api/cps/*` routes alone
+     per the last full scan - drafts, mappings, queue/extractions/render,
+     discoveries, domains/verify, intelligence metrics/config, admin
+     normalize, catalogue-products/documents/bulk-import,
+     cut-sheet-discovery, user-cutsheets, door-schedule-marks,
+     session-assembly, and more per §5's original proposed layout -
+     re-read that section and re-run a full route scan before picking
+     individual pieces, since none of its line numbers are current
+     anymore).
 
 For every step, "verified behaviorally identical" concretely means: run the
 extracted module inline via `wrangler dev` against a copy of the worker with
