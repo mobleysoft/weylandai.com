@@ -224,7 +224,31 @@ cluster *names* and *relationships* are the durable part.
    every request), but its own in-code comment says it may represent
    real in-progress migration work. **Ask before deleting - this is a
    human decision, not an extraction-time cleanup call.**
-   - Status: not started.
+   - **Status: 🟡 partially done (2026-09-10).** `D1KVShim`, `MIME_MAP`,
+     `serveR2`, `checkSession` extracted to `src/lib/edge-dispatch.js`
+     + `src/lib/edge-dispatch.test.mjs` (18 real tests), imported
+     directly into `legacy-monolith.js`. `legacy-monolith.js` shrank
+     145,454 → 145,160 lines (294 lines, byte-diff-verified identical
+     modulo `export` keywords and stripped `__name(...)` calls). The
+     `monolith` dispatcher object itself was **not** extracted -
+     confirmed it depends on `discovery_engine_default`/
+     `getDiscoveryConfig` (Cluster E, still inline) and the module-level
+     `router` instance, so moving it now would mean threading a factory
+     function through partially-migrated dependencies. Deferred to
+     after Cluster E, matching this document's own original guidance
+     ("`monolith` itself should be extracted last among the small
+     clusters since it touches almost everything").
+     - `D1KVShim`'s fate (finish the migration vs. remove) was already
+       decided in-repo on 2026-09-09 - left defined, not deleted, not
+       re-litigated by this extraction (see the file's own header
+       comment for the reasoning already on record).
+     - **Real new finding**: `checkSession` is dead code with zero call
+       sites anywhere in `legacy-monolith.js` - the still-inline
+       `monolith.fetch` handler has its own separate, duplicate inline
+       session-check logic instead of calling this function. Not
+       previously documented; kept, not deleted.
+     - Live-verified via `GET /` (200, static asset serving path),
+       `GET /assets/weyland-logo.png` (200), and `GET /api/health`.
 7. **Claude-vision hardware/door-schedule extraction engine (Cluster
    A, ~5,336 lines total: ~4,511 at `hardware_schedule_extractor_exports`
    + ~825 for the vision-call adapters/dispatch). The big one.**
