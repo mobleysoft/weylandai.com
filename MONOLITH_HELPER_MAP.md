@@ -1017,6 +1017,33 @@ session's transcript if needed again.
    client change needs live re-verification. Removed in `src/routes/internal.js`
    and `src/routes/internal.test.mjs`; full suite re-run clean after
    removal (11/11 in `internal.test.mjs`, 35/35 in `sovereign-cdp.test.mjs`).
+
+   **Independently re-verified at HEAD `d6426da` (2026-09-11), 8 commits
+   after step 4's own commits** - the verification recorded above was
+   done at `2a8e661`/`e034bbf`, and section 4 item 5 plus step 5's first
+   three milestones have landed since, so the wiring was actually
+   re-checked rather than assumed to have survived. `src/lib/sovereign-cdp.js`
+   + `.test.mjs` present, 35/35 tests pass; full suite 1127 tests / 1122
+   pass, the only 4 failures still the pre-existing
+   `submittal-assembler.test.mjs` ones (step 3's scope, unrelated to this
+   step). Grep confirms the real call sites still resolve to the
+   sovereign client: `launchBrowser` imported at `legacy-monolith.js:28`,
+   called directly at the 2 `discovery_engine_default` queue-consumer
+   sites, and injected as `const sovereignPuppeteer = { launch:
+   launchBrowser }` into both `registerDocumentGeneratorRoutes` and
+   `registerExtractedModules`'s `puppeteer` dep. The single remaining
+   first-party `puppeteer2.launch(env2.BROWSER)` anywhere in `src/` is
+   `renderRegionAt600DPI2`'s - the documented, deliberate deferral, not
+   drift. `npm run build` reproduces the committed `weyland.worker.js`
+   with zero diff, so the deployed bundle really is the wired version.
+   Live curls against production: `https://weylandai.com/` and
+   `/api/health` 200; `POST /api/proposals/generate` and `GET
+   /api/cut-sheets/domains` real 401s (auth gate, not 500s);
+   `/api/internal/cdp-selftest` a real 404, confirming the removal above
+   is genuinely live and not only source-level. **No further work is open
+   on step 4** - its one honest gap (a full authenticated HTTP round trip
+   to a real generated proposal PDF) is a test-data availability
+   constraint, unchanged and not closeable by re-testing.
 5. **Sovereign PDF rasterizer** (replaces `pdfjs-dist`). **The hardest,
    riskiest, highest-effort phase by far** - not comparable in scope to
    1-4. `pdf-metadata.js` (already sovereign, hand-written, no pdfjs
