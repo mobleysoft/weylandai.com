@@ -1065,10 +1065,28 @@ session's transcript if needed again.
    claim made in conversation before checking, corrected here rather
    than left standing.
 
+   **Milestone 2 - 2D affine matrix math: DONE (2026-09-11)**.
+   `src/lib/pdf-matrix.js` - `compose`/`applyToPoint`/`applyToVector`/
+   `invert` plus `translationMatrix`/`scaleMatrix`/`rotationMatrix`
+   constructors. The foundation every remaining piece (path construction
+   under `cm`, text positioning under `Tm`/`Td`, eventual rasterization)
+   needs to compose transforms correctly. Real bug caught before it
+   shipped: `if` used as a variable name in `invert()` - a reserved JS
+   word, immediate `SyntaxError`. Pinned down the one genuinely
+   easy-to-get-backwards detail with a hand-derived test: PDF32000-1:2008
+   §8.3.4's `cm` composes as `CTM_new = operand * CTM_old`, not the
+   reverse - verified with a concrete translate-under-translate case, not
+   trusted by algebra alone. Real mistake caught while writing that same
+   test: the first draft tried to prove argument order matters using two
+   pure translations, which are commutative - so the check was silently
+   verifying nothing; fixed with a non-commuting scale+translate pair.
+   11 tests.
+
    Still needed: content-stream *interpretation* (turning the tokenized
-   op list into an actual graphics-state machine - path construction,
-   fill/stroke, text positioning), embedded font parsing, glyph
-   rasterization, and the software rasterizer itself. Not started.
+   op list into an actual graphics-state machine consuming this matrix
+   module - path construction, fill/stroke, text positioning), embedded
+   font parsing, glyph rasterization, and the software rasterizer itself.
+   Not started.
 
 Steps 2-5 are a genuine multi-phase engineering effort, not a
 refactor - flagging here rather than understating it, since 103,182 of
