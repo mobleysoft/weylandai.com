@@ -1082,9 +1082,38 @@ session's transcript if needed again.
    verifying nothing; fixed with a non-commuting scale+translate pair.
    11 tests.
 
-   Still needed: content-stream *interpretation* (turning the tokenized
-   op list into an actual graphics-state machine consuming this matrix
-   module - path construction, fill/stroke, text positioning), embedded
+   **Milestone 3 - graphics-state interpreter (path construction +
+   fill/stroke): DONE (2026-09-11)**. `src/lib/pdf-graphics-state.js` -
+   consumes the tokenizer + matrix modules, turns `q`/`Q`/`cm`/`m`/`l`/
+   `c`/`v`/`y`/`re`/`h` and the paint operators (`f`/`F`/`f*`/`S`/`s`/
+   `B`/`B*`/`b`/`b*`/`n`) plus `rg`/`RG`/`g`/`G`/`w` into real
+   device-space paint events. Deliberately scoped: text positioning
+   (`BT`/`Tf`/`Td`/`Tm`/`Tj`/`TJ`) is real, separate work with its own
+   coordinate rules - next milestone, not silently half-done here. CMYK
+   (`k`/`K`) produces a real warning, not a silent misrender. Points are
+   transformed to device space at path-CONSTRUCTION time (matching
+   §8.5.2.1's actual rule), not deferred to paint time. 13 tests.
+
+   **Real bug this milestone's own cross-validation test caught in an
+   EARLIER, already-deployed module** (`sovereign-pdf.js`, step 3, fixed
+   in commit `fb38798`): `colorComponents()` silently wrote literal
+   `"NaN NaN NaN rg"` into a generated PDF's content stream when given a
+   wrong-shaped color object (`{r,g,b}` instead of the real
+   `{red,green,blue}`/`rgb()` shape), since `Math.max/min` on `undefined`
+   produces `NaN`, and `NaN.toFixed(4)` returns the string `"NaN"`
+   instead of throwing. Verified this was NOT live in production first -
+   `submittal-assembler.js`'s real call sites all correctly use the real
+   `rgb()` helper - the bug only reproduced in this milestone's own new
+   test (and, once found, in an earlier test file with the identical
+   latent mistake that had just never asserted on color). Hardened
+   `colorComponents()` to throw a clear error regardless, since it's a
+   real, easy-to-hit footgun for any future caller - failing loudly beats
+   a silent corrupted document. Real, concrete proof the "test against
+   real generated output, not hand fixtures" discipline this whole step
+   has followed since the tokenizer catches bugs in already-shipped code,
+   not just new code.
+
+   Still needed: text positioning (`BT`/`Tf`/`Td`/`Tm`/`Tj`/`TJ`), embedded
    font parsing, glyph rasterization, and the software rasterizer itself.
    Not started.
 
