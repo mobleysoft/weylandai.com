@@ -1176,11 +1176,30 @@ vendored-library work.
    import before extracting it under a new name - delete outright if
    so. Sits inside a region step 3 (Cluster A sub-step (d)) already
    covers - no separate extraction needed.
-5. **Third uncatalogued region**: `transformDoorEntriesToHardwareSets`,
-   `materializeDseToLineItems`, `generateSubmittalHTML` (legacy-
-   monolith.js, sits right after step 1's former region) - found during
-   step 1's extraction, real and already wired via `module-registry.js`/
-   `deps.X` in `sessions-finalize-from-job.js`. Not yet boundary-scanned
-   or entanglement-checked - needs the same 3-way verification as every
-   other step before an extraction attempt, not assumed clean from
-   proximity to step 1's now-done region.
+5. **Third uncatalogued region - DONE (2026-09-11)**.
+   `transformDoorEntriesToHardwareSets`, `materializeDseToLineItems`,
+   `generateSubmittalHTML` extracted to real
+   `src/lib/submittal-transforms.js`, confirmed still wired via
+   `registerExtractedModules()`/`module-registry.js` into
+   `sessions-finalize-from-job.js`, unchanged behavior. The boundary
+   scan found 5 more real symbols the original 3-function estimate
+   missed: an entire "BLUEPRINT DESIGN SYSTEM" block
+   (`BLUEPRINT_BODY_CSS`/`BLUEPRINT_HEADER_CSS`/`BLUEPRINT_TOKENS_CSS`/
+   `BLUEPRINT_NAV_LINKS`/`renderBlueprintHeader`) sitting immediately
+   after - confirmed via full-`src/`-tree grep to have **zero**
+   references anywhere, matching its own original comment ("not yet
+   wired into any monolith-served page"). Extracted to
+   `src/lib/blueprint-design-system.js` as a real module rather than
+   deleted, since the comment framed it as deliberate future-reuse code,
+   not accidental cruft. 13 new real-behavior tests (fake-D1-recording
+   style for the transforms, structural HTML assertions for both
+   modules). `legacy-monolith.js`: 135,015 → 134,626 lines. Also deleted
+   an unrelated pre-existing stale test (`src/cors-handler.test.mjs`,
+   pointed at a module deleted back in commit `087dce9`, found while
+   running the full suite - confirmed via `git stash` it predates this
+   change). Full suite: 1108 tests, 1103 pass (the same 4 pre-existing
+   `submittal-assembler.test.mjs` failures, step 3's scope, untouched).
+   Rebuilt `weyland.worker.js`, deployed, live-verified (baseline 200s,
+   `POST /api/proposals/generate` and
+   `/api/takeoff/session/:id/generate-quote` still real 401s not 500s).
+   Commits: `3ad329d`, `5f66287`, `5edc211`, `0a9f3f6`.
