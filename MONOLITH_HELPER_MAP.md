@@ -1001,6 +1001,22 @@ session's transcript if needed again.
    `[[queues.consumers]]` in `wrangler.toml`) - real, pre-existing dead
    code, not something this step introduced or could fix by testing
    harder.
+
+   **`cdp-selftest` removed (2026-09-11)**, real decision not a default:
+   it was publicly reachable (no network-level restriction on
+   `/api/internal/*`, only the single `CDP_SELFTEST_SECRET`), and every
+   successful call launched a real, billed Cloudflare Browser Rendering
+   session - a secret leak would have been a real cost-drain vector on
+   the flagship revenue system, unlike `r2-stream` (JWT-scoped to one R2
+   key) or `pdf-render-shell` (static content, no billed action) which
+   share the `/api/internal/*` prefix but don't share that risk. Its
+   verification purpose is already permanently recorded above and in
+   commits `65f46a5`/`43f19d4`/`2a8e661` - removing the live endpoint
+   doesn't lose that evidence, and the endpoint (with its 3 auth-gating
+   tests) is trivially restorable from git history if a future CDP
+   client change needs live re-verification. Removed in `src/routes/internal.js`
+   and `src/routes/internal.test.mjs`; full suite re-run clean after
+   removal (11/11 in `internal.test.mjs`, 35/35 in `sovereign-cdp.test.mjs`).
 5. **Sovereign PDF rasterizer** (replaces `pdfjs-dist`). **The hardest,
    riskiest, highest-effort phase by far** - not comparable in scope to
    1-4. `pdf-metadata.js` (already sovereign, hand-written, no pdfjs
