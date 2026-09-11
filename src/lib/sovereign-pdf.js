@@ -76,6 +76,25 @@ export function rgb(red, green, blue) {
 
 function colorComponents(color) {
   if (!color) return null;
+  // Real, hardening fix (2026-09-11): found via a real cross-validation
+  // test in pdf-graphics-state.test.mjs (a different sovereign PDF
+  // module, not this one) that passing a wrong-shaped color object
+  // (e.g. {r,g,b} instead of the real {red,green,blue} this module and
+  // its own rgb() helper use) silently produced literal "NaN" text in
+  // the generated PDF's content stream - Math.max/min on undefined
+  // yields NaN, and NaN.toFixed(4) returns the string "NaN" rather than
+  // throwing, so a malformed color would have corrupted real PDF output
+  // with zero error or warning anywhere. Not a bug in this module's real
+  // callers (submittal-assembler.js correctly uses the real rgb()
+  // helper throughout, verified via grep before writing this comment),
+  // but a real, easy-to-hit footgun for anything written against this
+  // API later - failing loudly here is strictly better than a silent
+  // "NaN NaN NaN rg" in a customer-facing document.
+  for (const [key, val] of [["red", color.red], ["green", color.green], ["blue", color.blue]]) {
+    if (typeof val !== "number" || !Number.isFinite(val)) {
+      throw new Error(`sovereign-pdf: color.${key} must be a finite number, got ${JSON.stringify(val)} (color object: ${JSON.stringify(color)}) - use the real {red, green, blue} shape (see the rgb() helper), not {r, g, b}`);
+    }
+  }
   const clamp = (v) => Math.max(0, Math.min(1, v)).toFixed(4);
   return [clamp(color.red), clamp(color.green), clamp(color.blue)];
 }

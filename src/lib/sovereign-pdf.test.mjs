@@ -115,3 +115,33 @@ test("drawRectangle with no color/borderColor defaults to a black fill (matches 
   const text = decode(bytes);
   assert.ok(text.includes("0 0 0 rg\n0 0 10 10 re f"));
 });
+
+test("a malformed color object throws a clear error instead of silently writing 'NaN' into the PDF - real regression test for a bug found via cross-validation in pdf-graphics-state.test.mjs", async () => {
+  const doc = await PDFDocument.create();
+  const page = doc.addPage([100, 100]);
+  // The real mistake this guards against: {r, g, b} instead of the
+  // real {red, green, blue} shape this module and its own rgb() helper
+  // use. Before the fix, this silently wrote "NaN NaN NaN rg" into the
+  // content stream with no error anywhere.
+  assert.throws(
+    () => page.drawRectangle({ x: 0, y: 0, width: 10, height: 10, color: { r: 1, g: 0, b: 0 } }),
+    /color\.red must be a finite number/
+  );
+  assert.throws(
+    () => page.drawText("x", { x: 0, y: 0, size: 12, font: null, color: { r: 1, g: 0, b: 0 } }),
+    /drawText requires a font/, // font check runs first - real, correct precedence
+  );
+  const font = await doc.embedFont(StandardFonts.Helvetica);
+  assert.throws(
+    () => page.drawText("x", { x: 0, y: 0, size: 12, font, color: { r: 1, g: 0, b: 0 } }),
+    /color\.red must be a finite number/
+  );
+  assert.throws(
+    () => page.drawLine({ start: { x: 0, y: 0 }, end: { x: 1, y: 1 }, color: { r: 1, g: 0, b: 0 } }),
+    /color\.red must be a finite number/
+  );
+  // The real, correct API still works exactly as before.
+  page.drawRectangle({ x: 0, y: 0, width: 10, height: 10, color: rgb(1, 0, 0) });
+  const bytes = await doc.save();
+  assert.match(decode(bytes), /1\.0000 0\.0000 0\.0000 rg/);
+});

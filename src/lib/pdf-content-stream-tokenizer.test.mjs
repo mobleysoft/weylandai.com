@@ -1,7 +1,7 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
 import { tokenizeContentStream } from "./pdf-content-stream-tokenizer.js";
-import { PDFDocument, StandardFonts } from "./sovereign-pdf.js";
+import { PDFDocument, StandardFonts, rgb } from "./sovereign-pdf.js";
 import { buildXrefMap, resolve, readObjAt, readStream } from "./pdf-metadata.js";
 
 function bytes(str) {
@@ -119,9 +119,9 @@ test("REAL cross-validation: tokenizes sovereign-pdf.js's own generated content 
   const doc = await PDFDocument.create();
   const page = doc.addPage([300, 300]);
   const font = await doc.embedFont(StandardFonts.Helvetica);
-  page.drawText("Cross-validation", { x: 20, y: 250, size: 14, font, color: { r: 0, g: 0, b: 0 } });
-  page.drawRectangle({ x: 20, y: 100, width: 100, height: 40, color: { r: 1, g: 0, b: 0 } });
-  page.drawLine({ start: { x: 0, y: 0 }, end: { x: 50, y: 50 }, thickness: 2, color: { r: 0, g: 0, b: 1 } });
+  page.drawText("Cross-validation", { x: 20, y: 250, size: 14, font, color: rgb(0, 0, 0) });
+  page.drawRectangle({ x: 20, y: 100, width: 100, height: 40, color: rgb(1, 0, 0) });
+  page.drawLine({ start: { x: 0, y: 0 }, end: { x: 50, y: 50 }, thickness: 2, color: rgb(0, 0, 1) });
   const pdfBytes = await doc.save();
 
   // Independent extraction path: pdf-metadata.js's own xref/object parser
