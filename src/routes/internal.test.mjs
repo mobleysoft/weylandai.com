@@ -106,3 +106,34 @@ test("GET /api/internal/pdf-render-shell: real happy path returns the pdf.js boo
   const text = await res.text();
   assert.match(text, /pdfjsLib/);
 });
+
+// GET /api/internal/cdp-selftest - the real live-verification harness for
+// src/lib/sovereign-cdp.js (MONOLITH_HELPER_MAP.md section 3 step 4).
+// Only its auth-gating is locally testable without a real env.BROWSER
+// session; the actual CDP round trip was verified live against
+// production (see the plan doc for that record, not fabricated here).
+
+test("GET /api/internal/cdp-selftest: 401 when the secret is missing or wrong", async () => {
+  const { router } = setup();
+  const env = { JWT_SECRET, UPLOADS: makeFakeUploads(), CDP_SELFTEST_SECRET: "real-secret", BROWSER: {} };
+  const res1 = await router.handle(new Request("https://example.com/api/internal/cdp-selftest"), env, {});
+  assert.equal(res1.status, 401);
+  const res2 = await router.handle(new Request("https://example.com/api/internal/cdp-selftest?key=wrong"), env, {});
+  assert.equal(res2.status, 401);
+});
+
+test("GET /api/internal/cdp-selftest: 401 when CDP_SELFTEST_SECRET isn't configured, even with a key supplied", async () => {
+  const { router } = setup();
+  const env = { JWT_SECRET, UPLOADS: makeFakeUploads(), BROWSER: {} };
+  const res = await router.handle(new Request("https://example.com/api/internal/cdp-selftest?key=anything"), env, {});
+  assert.equal(res.status, 401);
+});
+
+test("GET /api/internal/cdp-selftest: 500 when env.BROWSER isn't bound, even with a correct secret", async () => {
+  const { router } = setup();
+  const env = { JWT_SECRET, UPLOADS: makeFakeUploads(), CDP_SELFTEST_SECRET: "real-secret" };
+  const res = await router.handle(new Request("https://example.com/api/internal/cdp-selftest?key=real-secret"), env, {});
+  assert.equal(res.status, 500);
+  const body = await res.json();
+  assert.match(body.error, /BROWSER/);
+});

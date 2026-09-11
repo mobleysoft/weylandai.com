@@ -18911,6 +18911,531 @@ function registerBillingRoutes(router2, { WEYLAND_PRODUCTS: WEYLAND_PRODUCTS2, C
   });
 }
 
+// src/lib/sovereign-cdp.js
+var CHUNK_HEADER_SIZE = 4;
+var MAX_CHUNK_MESSAGE_SIZE = 1048575;
+var FIRST_CHUNK_DATA_SIZE = MAX_CHUNK_MESSAGE_SIZE - CHUNK_HEADER_SIZE;
+function encodeChunks(jsonString) {
+  const encoder = new TextEncoder();
+  const encoded = encoder.encode(jsonString);
+  const firstChunk = new Uint8Array(
+    Math.min(MAX_CHUNK_MESSAGE_SIZE, CHUNK_HEADER_SIZE + encoded.length)
+  );
+  const view = new DataView(firstChunk.buffer);
+  view.setUint32(0, encoded.length, true);
+  firstChunk.set(encoded.slice(0, FIRST_CHUNK_DATA_SIZE), CHUNK_HEADER_SIZE);
+  const chunks = [firstChunk];
+  for (let i2 = FIRST_CHUNK_DATA_SIZE; i2 < encoded.length; i2 += MAX_CHUNK_MESSAGE_SIZE) {
+    chunks.push(encoded.slice(i2, i2 + MAX_CHUNK_MESSAGE_SIZE));
+  }
+  return chunks;
+}
+function decodeChunks(chunks) {
+  if (chunks.length === 0) return null;
+  const empty = new Uint8Array(0);
+  const firstChunk = chunks[0] || empty;
+  if (firstChunk.length < CHUNK_HEADER_SIZE) return null;
+  const view = new DataView(firstChunk.buffer, firstChunk.byteOffset, firstChunk.byteLength);
+  const expectedBytes = view.getUint32(0, true);
+  let totalBytes = -CHUNK_HEADER_SIZE;
+  for (let i2 = 0; i2 < chunks.length; i2++) {
+    const cur = chunks[i2] || empty;
+    totalBytes += cur.length;
+    if (totalBytes > expectedBytes) {
+      throw new Error("Received more bytes than the chunked message header declared");
+    }
+    if (totalBytes === expectedBytes) {
+      const consumed = chunks.splice(0, i2 + 1);
+      consumed[0] = firstChunk.subarray(CHUNK_HEADER_SIZE);
+      const combined = new Uint8Array(expectedBytes);
+      let offset = 0;
+      for (const c of consumed) {
+        combined.set(c, offset);
+        offset += c.length;
+      }
+      return new TextDecoder().decode(combined);
+    }
+  }
+  return null;
+}
+var CF_BROWSER_RENDERING_HOST = "https://fake.host";
+var CLIENT_ID = "sovereign-cdp-client/1.0";
+async function acquireBrowserSession(endpoint, options = {}) {
+  const params = new URLSearchParams();
+  if (options.keepAlive) params.set("keep_alive", String(options.keepAlive));
+  if (options.location) params.set("location", options.location);
+  const url = `${CF_BROWSER_RENDERING_HOST}/v1/acquire?${params.toString()}`;
+  const res = await endpoint.fetch(url);
+  const text = await res.text();
+  if (res.status !== 200) {
+    throw new Error(`Unable to acquire browser session: ${res.status}: ${text}`);
+  }
+  return JSON.parse(text);
+}
+var ChunkedWebSocketTransport = class _ChunkedWebSocketTransport {
+  static async create(endpoint, sessionId) {
+    const path = `${CF_BROWSER_RENDERING_HOST}/v1/connectDevtools?browser_session=${sessionId}`;
+    const res = await endpoint.fetch(path, {
+      headers: { Upgrade: "websocket", "cf-brapi-client": CLIENT_ID }
+    });
+    if (!res.webSocket) {
+      throw new Error(`Failed to upgrade to websocket for session ${sessionId}: HTTP ${res.status}`);
+    }
+    res.webSocket.accept();
+    return new _ChunkedWebSocketTransport(res.webSocket, sessionId);
+  }
+  constructor(ws, sessionId) {
+    this.ws = ws;
+    this.sessionId = sessionId;
+    this.chunks = [];
+    this.onmessage = null;
+    this.onclose = null;
+    this.pingInterval = setInterval(() => {
+      try {
+        this.ws.send("ping");
+      } catch {
+      }
+    }, 1e3);
+    this.ws.addEventListener("message", (event) => {
+      this.chunks.push(new Uint8Array(event.data));
+      const message = decodeChunks(this.chunks);
+      if (message !== null && this.onmessage) this.onmessage(message);
+    });
+    this.ws.addEventListener("close", () => {
+      clearInterval(this.pingInterval);
+      if (this.onclose) this.onclose();
+    });
+    this.ws.addEventListener("error", () => {
+      clearInterval(this.pingInterval);
+    });
+  }
+  send(jsonString) {
+    for (const chunk of encodeChunks(jsonString)) this.ws.send(chunk);
+  }
+  close() {
+    clearInterval(this.pingInterval);
+    try {
+      this.ws.close();
+    } catch {
+    }
+  }
+};
+var CDPConnection = class {
+  constructor(transport) {
+    this._transport = transport;
+    this._lastId = 0;
+    this._callbacks = /* @__PURE__ */ new Map();
+    this._listeners = /* @__PURE__ */ new Map();
+    transport.onmessage = (raw) => this._onMessage(raw);
+    transport.onclose = () => this._onClose();
+  }
+  send(method, params = {}, sessionId) {
+    const id = ++this._lastId;
+    const message = { id, method, params };
+    if (sessionId) message.sessionId = sessionId;
+    return new Promise((resolve2, reject) => {
+      this._callbacks.set(id, { resolve: resolve2, reject });
+      this._transport.send(JSON.stringify(message));
+    });
+  }
+  on(sessionId, method, fn) {
+    const key = `${sessionId || ""}:${method}`;
+    if (!this._listeners.has(key)) this._listeners.set(key, /* @__PURE__ */ new Set());
+    this._listeners.get(key).add(fn);
+    return () => this._listeners.get(key)?.delete(fn);
+  }
+  _onMessage(raw) {
+    let object;
+    try {
+      object = JSON.parse(raw);
+    } catch {
+      return;
+    }
+    if (Object.prototype.hasOwnProperty.call(object, "id")) {
+      const cb = this._callbacks.get(object.id);
+      if (!cb) return;
+      this._callbacks.delete(object.id);
+      if (object.error) {
+        cb.reject(new Error(object.error.message || "CDP error"));
+      } else {
+        cb.resolve(object.result);
+      }
+      return;
+    }
+    if (object.method) {
+      const key = `${object.sessionId || ""}:${object.method}`;
+      const set = this._listeners.get(key);
+      if (set) for (const fn of set) fn(object.params || {});
+    }
+  }
+  _onClose() {
+    for (const [, cb] of this._callbacks) {
+      cb.reject(new Error("CDP connection closed"));
+    }
+    this._callbacks.clear();
+  }
+  close() {
+    this._transport.close();
+  }
+};
+async function connectBrowser(endpoint, sessionId) {
+  const transport = await ChunkedWebSocketTransport.create(endpoint, sessionId);
+  const connection = new CDPConnection(transport);
+  await connection.send("Target.setAutoAttach", {
+    autoAttach: true,
+    waitForDebuggerOnStart: false,
+    flatten: true
+  });
+  return connection;
+}
+async function launchBrowser(endpoint, options = {}) {
+  const { sessionId } = await acquireBrowserSession(endpoint, options);
+  const connection = await connectBrowser(endpoint, sessionId);
+  return new Browser(connection);
+}
+var LIFECYCLE_EVENT_NAMES = {
+  load: "load",
+  domcontentloaded: "DOMContentLoaded",
+  networkidle0: "networkIdle",
+  networkidle2: "networkAlmostIdle"
+};
+var Browser = class {
+  constructor(connection) {
+    this._connection = connection;
+    this._attachedSessions = /* @__PURE__ */ new Map();
+    this._attachWaiters = /* @__PURE__ */ new Map();
+    this._connection.on(void 0, "Target.attachedToTarget", (params) => {
+      const targetId = params.targetInfo && params.targetInfo.targetId;
+      if (!targetId) return;
+      this._attachedSessions.set(targetId, params.sessionId);
+      const waiters = this._attachWaiters.get(targetId);
+      if (waiters) {
+        this._attachWaiters.delete(targetId);
+        for (const resolve2 of waiters) resolve2(params.sessionId);
+      }
+    });
+  }
+  _waitForAttachedSession(targetId, timeoutMs = 3e4) {
+    if (this._attachedSessions.has(targetId)) {
+      return Promise.resolve(this._attachedSessions.get(targetId));
+    }
+    return new Promise((resolve2, reject) => {
+      const onAttach = (sessionId) => {
+        clearTimeout(timer2);
+        resolve2(sessionId);
+      };
+      const timer2 = setTimeout(() => {
+        const list = this._attachWaiters.get(targetId);
+        if (list) {
+          const idx2 = list.indexOf(onAttach);
+          if (idx2 >= 0) list.splice(idx2, 1);
+          if (list.length === 0) this._attachWaiters.delete(targetId);
+        }
+        reject(new Error(`Timed out waiting for Target.attachedToTarget for ${targetId}`));
+      }, timeoutMs);
+      if (!this._attachWaiters.has(targetId)) this._attachWaiters.set(targetId, []);
+      this._attachWaiters.get(targetId).push(onAttach);
+    });
+  }
+  async newPage() {
+    const { targetId } = await this._connection.send("Target.createTarget", {
+      url: "about:blank"
+    });
+    const sessionId = await this._waitForAttachedSession(targetId);
+    const page = new Page(this._connection, sessionId, targetId);
+    await page._initialize();
+    return page;
+  }
+  async close() {
+    try {
+      await this._connection.send("Browser.close");
+    } catch {
+    }
+    this._connection.close();
+  }
+};
+var Request2 = class {
+  constructor(connection, sessionId, event) {
+    this._connection = connection;
+    this._sessionId = sessionId;
+    this._event = event;
+  }
+  url() {
+    return this._event.request.url;
+  }
+  async continue() {
+    await this._connection.send(
+      "Fetch.continueRequest",
+      { requestId: this._event.requestId },
+      this._sessionId
+    );
+  }
+};
+var Response2 = class {
+  constructor(url, status, headers) {
+    this._url = url;
+    this._status = status;
+    this._headers = {};
+    for (const [k, v] of Object.entries(headers || {})) {
+      this._headers[k.toLowerCase()] = v;
+    }
+  }
+  url() {
+    return this._url;
+  }
+  status() {
+    return this._status;
+  }
+  headers() {
+    return this._headers;
+  }
+};
+var Page = class {
+  constructor(connection, sessionId, targetId) {
+    this._connection = connection;
+    this._sessionId = sessionId;
+    this._targetId = targetId;
+    this._url = "about:blank";
+    this._executionContextId = null;
+    this._requestInterceptionEnabled = false;
+    this._listeners = { request: [], response: [] };
+    this._offHandlers = [];
+    this._offHandlers.push(
+      connection.on(sessionId, "Runtime.executionContextCreated", (params) => {
+        this._executionContextId = params.context.id;
+      }),
+      connection.on(sessionId, "Page.frameNavigated", (params) => {
+        if (params.frame && !params.frame.parentId) this._url = params.frame.url;
+      }),
+      connection.on(sessionId, "Fetch.requestPaused", (event) => {
+        const req = new Request2(connection, sessionId, event);
+        for (const fn of this._listeners.request) fn(req);
+      }),
+      connection.on(sessionId, "Network.responseReceived", (event) => {
+        const res = new Response2(event.response.url, event.response.status, event.response.headers);
+        for (const fn of this._listeners.response) fn(res);
+        if (event.type === "Document" && event.frameId === this._targetId) {
+          this._pendingNavigationResponse = res;
+        }
+      })
+    );
+  }
+  async _initialize() {
+    await this._connection.send("Page.enable", {}, this._sessionId);
+    await this._connection.send("Page.setLifecycleEventsEnabled", { enabled: true }, this._sessionId);
+    await this._connection.send("Network.enable", {}, this._sessionId);
+    await this._connection.send("Runtime.enable", {}, this._sessionId);
+  }
+  on(event, fn) {
+    if (!this._listeners[event]) throw new Error(`Unsupported page event: ${event}`);
+    this._listeners[event].push(fn);
+  }
+  url() {
+    return this._url;
+  }
+  async setUserAgent(userAgent) {
+    await this._connection.send("Network.setUserAgentOverride", { userAgent }, this._sessionId);
+  }
+  async setRequestInterception(value) {
+    this._requestInterceptionEnabled = value;
+    if (value) {
+      await this._connection.send(
+        "Fetch.enable",
+        { handleAuthRequests: true, patterns: [{ urlPattern: "*" }] },
+        this._sessionId
+      );
+      await this._connection.send("Network.setCacheDisabled", { cacheDisabled: true }, this._sessionId);
+    } else {
+      await this._connection.send("Fetch.disable", {}, this._sessionId);
+      await this._connection.send("Network.setCacheDisabled", { cacheDisabled: false }, this._sessionId);
+    }
+  }
+  /** Real lifecycle wait, driven by Chrome's own Page.lifecycleEvent -
+   * not a reimplemented network-idle heuristic. Returns a cancellable
+   * controller rather than a bare promise: callers that bail out early
+   * (a navigate error, an evaluate() throw) must cancel the pending
+   * listener/timer explicitly, or leak a timer and produce an
+   * unhandled rejection once the timeout eventually fires on a promise
+   * nobody is still awaiting. */
+  _watchLifecycle(waitUntil, loaderId, timeoutMs) {
+    const wanted = new Set(
+      (Array.isArray(waitUntil) ? waitUntil : [waitUntil]).map((v) => {
+        const mapped = LIFECYCLE_EVENT_NAMES[v];
+        if (!mapped) throw new Error(`Unknown waitUntil value: ${v}`);
+        return mapped;
+      })
+    );
+    const seen = /* @__PURE__ */ new Set();
+    let off2 = () => {
+    };
+    let timer2;
+    let settled = false;
+    const promise = new Promise((resolve2, reject) => {
+      timer2 = setTimeout(() => {
+        settled = true;
+        off2();
+        reject(new Error(`Navigation timeout of ${timeoutMs}ms exceeded`));
+      }, timeoutMs);
+      off2 = this._connection.on(this._sessionId, "Page.lifecycleEvent", (event) => {
+        if (loaderId && event.loaderId !== loaderId) return;
+        seen.add(event.name);
+        for (const w of wanted) {
+          if (!seen.has(w)) return;
+        }
+        settled = true;
+        clearTimeout(timer2);
+        off2();
+        resolve2();
+      });
+    });
+    promise.catch(() => {
+    });
+    return {
+      promise,
+      cancel() {
+        if (settled) return;
+        settled = true;
+        clearTimeout(timer2);
+        off2();
+      }
+    };
+  }
+  async goto(url, options = {}) {
+    const { waitUntil = "load", timeout: timeout2 = 3e4 } = options;
+    this._pendingNavigationResponse = void 0;
+    const navResult = await this._connection.send("Page.navigate", { url }, this._sessionId);
+    if (navResult.errorText) {
+      throw new Error(`Navigation to ${url} failed: ${navResult.errorText}`);
+    }
+    const lifecycle = this._watchLifecycle(waitUntil, navResult.loaderId, timeout2);
+    await lifecycle.promise;
+    return this._pendingNavigationResponse || null;
+  }
+  async setContent(html, options = {}) {
+    const { waitUntil = "load", timeout: timeout2 = 3e4 } = options;
+    const lifecycle = this._watchLifecycle(waitUntil, void 0, timeout2);
+    try {
+      await this.evaluate(
+        (content) => {
+          document.open();
+          document.write(content);
+          document.close();
+        },
+        html
+      );
+    } catch (err) {
+      lifecycle.cancel();
+      throw err;
+    }
+    await lifecycle.promise;
+  }
+  async content() {
+    return this.evaluate(() => {
+      const doctype = document.doctype ? `<!DOCTYPE ${document.doctype.name}>` : "";
+      return doctype + document.documentElement.outerHTML;
+    });
+  }
+  async evaluate(fn, ...args) {
+    if (this._executionContextId === null) {
+      const { result: result2, exceptionDetails: exceptionDetails2 } = await this._connection.send(
+        "Runtime.evaluate",
+        { expression: buildCallExpression(fn, args), returnByValue: true, awaitPromise: true },
+        this._sessionId
+      );
+      return unwrapEvaluateResult(result2, exceptionDetails2);
+    }
+    const { result, exceptionDetails } = await this._connection.send(
+      "Runtime.callFunctionOn",
+      {
+        functionDeclaration: fn.toString(),
+        arguments: args.map((value) => ({ value })),
+        executionContextId: this._executionContextId,
+        returnByValue: true,
+        awaitPromise: true
+      },
+      this._sessionId
+    );
+    return unwrapEvaluateResult(result, exceptionDetails);
+  }
+  async pdf(options = {}) {
+    const params = buildPrintToPdfParams(options);
+    const { data } = await this._connection.send("Page.printToPDF", params, this._sessionId);
+    return base64ToUint8Array(data);
+  }
+  async close() {
+    for (const off2 of this._offHandlers) off2();
+    await this._connection.send("Target.closeTarget", { targetId: this._targetId });
+  }
+};
+function buildCallExpression(fn, args) {
+  const serializedArgs = args.map((a) => JSON.stringify(a)).join(",");
+  return `(${fn.toString()})(${serializedArgs})`;
+}
+function unwrapEvaluateResult(result, exceptionDetails) {
+  if (exceptionDetails) {
+    const message = exceptionDetails.exception?.description || exceptionDetails.text || "Evaluation failed";
+    throw new Error(message);
+  }
+  return result ? result.value : void 0;
+}
+var PAPER_FORMATS = {
+  letter: { width: 8.5, height: 11 },
+  legal: { width: 8.5, height: 14 },
+  tabloid: { width: 11, height: 17 },
+  ledger: { width: 17, height: 11 },
+  a0: { width: 33.1, height: 46.8 },
+  a1: { width: 23.4, height: 33.1 },
+  a2: { width: 16.54, height: 23.4 },
+  a3: { width: 11.7, height: 16.54 },
+  a4: { width: 8.27, height: 11.7 },
+  a5: { width: 5.83, height: 8.27 },
+  a6: { width: 4.13, height: 5.83 }
+};
+var UNITS_PER_INCH = { in: 1, px: 96, cm: 2.54, mm: 25.4 };
+function parseInches(value) {
+  if (value === void 0 || value === null) return void 0;
+  if (typeof value === "number") return value;
+  const text = String(value).trim().toLowerCase();
+  const unit = text.slice(-2);
+  const divisor = UNITS_PER_INCH[unit];
+  if (divisor === void 0) {
+    throw new Error(`Unsupported print length unit in "${value}"`);
+  }
+  const num = parseFloat(text.slice(0, -2));
+  if (Number.isNaN(num)) throw new Error(`Unsupported print length value "${value}"`);
+  return num / divisor;
+}
+function buildPrintToPdfParams(options = {}) {
+  let width = 8.5;
+  let height = 11;
+  if (options.format) {
+    const format = PAPER_FORMATS[String(options.format).toLowerCase()];
+    if (!format) throw new Error(`Unknown paper format: ${options.format}`);
+    width = format.width;
+    height = format.height;
+  } else {
+    width = parseInches(options.width) ?? width;
+    height = parseInches(options.height) ?? height;
+  }
+  const margin = options.margin || {};
+  return {
+    paperWidth: width,
+    paperHeight: height,
+    printBackground: !!options.printBackground,
+    landscape: !!options.landscape,
+    marginTop: parseInches(margin.top) || 0,
+    marginBottom: parseInches(margin.bottom) || 0,
+    marginLeft: parseInches(margin.left) || 0,
+    marginRight: parseInches(margin.right) || 0
+  };
+}
+function base64ToUint8Array(base64) {
+  const binary = atob(base64);
+  const bytes = new Uint8Array(binary.length);
+  for (let i2 = 0; i2 < binary.length; i2++) bytes[i2] = binary.charCodeAt(i2);
+  return bytes;
+}
+
 // src/routes/internal.js
 function registerInternalRoutes(router2) {
   const R2_STREAM_CT = { ".pdf": "application/pdf", ".jpg": "image/jpeg", ".jpeg": "image/jpeg", ".png": "image/png", ".webp": "image/webp", ".gif": "image/gif" };
@@ -19015,6 +19540,82 @@ function registerInternalRoutes(router2) {
     } catch (err) {
       console.error("[R2 Stream] Error:", err.message);
       return jsonResponse3({ error: "Stream failed: " + err.message }, 403);
+    }
+  });
+  router2.get("/api/internal/cdp-selftest", async (request2, env2) => {
+    const url = new URL(request2.url);
+    const key = url.searchParams.get("key") || request2.headers.get("X-Debug-Key");
+    if (!env2.CDP_SELFTEST_SECRET || key !== env2.CDP_SELFTEST_SECRET) {
+      return jsonResponse3({ error: "Unauthorized" }, 401);
+    }
+    if (!env2.BROWSER) {
+      return jsonResponse3({ error: "env.BROWSER binding not configured" }, 500);
+    }
+    const steps = [];
+    let browser;
+    try {
+      browser = await launchBrowser(env2.BROWSER);
+      steps.push({ step: "launchBrowser", ok: true });
+      const page = await browser.newPage();
+      steps.push({ step: "newPage", ok: true });
+      const requestsSeen = [];
+      const responsesSeen = [];
+      await page.setRequestInterception(true);
+      page.on("request", (req) => {
+        requestsSeen.push(req.url());
+        req.continue();
+      });
+      page.on("response", (res) => {
+        responsesSeen.push({ url: res.url(), status: res.status() });
+      });
+      const gotoResponse = await page.goto("https://example.com/", { waitUntil: "load", timeout: 2e4 });
+      steps.push({
+        step: "goto",
+        ok: !!gotoResponse,
+        status: gotoResponse ? gotoResponse.status() : null,
+        contentType: gotoResponse ? gotoResponse.headers()["content-type"] || null : null,
+        requestsIntercepted: requestsSeen.length,
+        responsesObserved: responsesSeen.length
+      });
+      await page.setUserAgent("SovereignCDP-SelfTest/1.0");
+      steps.push({ step: "setUserAgent", ok: true });
+      await page.setContent("<!DOCTYPE html><html><head><title>selftest</title></head><body><p>hello sovereign cdp</p></body></html>", { waitUntil: "load" });
+      const content = await page.content();
+      steps.push({
+        step: "setContent+content",
+        ok: content.includes("hello sovereign cdp"),
+        contentLength: content.length
+      });
+      const evalResult = await page.evaluate(() => document.title);
+      steps.push({ step: "evaluate", ok: evalResult === "selftest", value: evalResult });
+      const pdfBytes = await page.pdf({ format: "Letter", printBackground: true, margin: { top: "0in", right: "0in", bottom: "0in", left: "0in" } });
+      const pdfHeader = new TextDecoder().decode(pdfBytes.slice(0, 5));
+      const pdfStep = { step: "pdf", ok: pdfHeader === "%PDF-", byteLength: pdfBytes.length, header: pdfHeader };
+      if (url.searchParams.get("includePdf") === "1") {
+        let binary = "";
+        for (let i2 = 0; i2 < pdfBytes.length; i2 += 8192) {
+          binary += String.fromCharCode.apply(null, pdfBytes.subarray(i2, Math.min(i2 + 8192, pdfBytes.length)));
+        }
+        pdfStep.pdfBase64 = btoa(binary);
+      }
+      steps.push(pdfStep);
+      await page.close();
+      steps.push({ step: "page.close", ok: true });
+      const page2 = await browser.newPage();
+      const goto2 = await page2.goto("https://example.com/", { waitUntil: "load", timeout: 2e4 });
+      await page2.close();
+      steps.push({ step: "second newPage on same browser", ok: !!goto2 && goto2.status() === 200 });
+      await browser.close();
+      steps.push({ step: "browser.close", ok: true });
+      const allOk = steps.every((s) => s.ok);
+      return jsonResponse3({ ok: allOk, steps }, allOk ? 200 : 500);
+    } catch (err) {
+      steps.push({ step: "error", ok: false, message: err.message, stack: err.stack });
+      try {
+        if (browser) await browser.close();
+      } catch (_) {
+      }
+      return jsonResponse3({ ok: false, steps }, 500);
     }
   });
   router2.get("/api/internal/pdf-render-shell", async (request2, env2) => {
@@ -69843,7 +70444,7 @@ var DatasetXMLParser;
 var DatasetReader;
 var XRef;
 var LETTER_SIZE_MEDIABOX;
-var Page;
+var Page2;
 var PDF_HEADER_SIGNATURE;
 var STARTXREF_SIGNATURE;
 var ENDOBJ_SIGNATURE;
@@ -121235,7 +121836,7 @@ var init_pdf_worker = __esm({
     };
     __name(XRef, "XRef");
     LETTER_SIZE_MEDIABOX = [0, 0, 612, 792];
-    Page = class {
+    Page2 = class {
       constructor({
         pdfManager,
         xref,
@@ -121748,7 +122349,7 @@ var init_pdf_worker = __esm({
         return shadow(this, "jsActions", actions);
       }
     };
-    __name(Page, "Page");
+    __name(Page2, "Page");
     PDF_HEADER_SIGNATURE = new Uint8Array([37, 80, 68, 70, 45]);
     STARTXREF_SIGNATURE = new Uint8Array([115, 116, 97, 114, 116, 120, 114, 101, 102]);
     ENDOBJ_SIGNATURE = new Uint8Array([101, 110, 100, 111, 98, 106]);
@@ -122309,7 +122910,7 @@ var init_pdf_worker = __esm({
           promise = catalog.getPageDict(pageIndex);
         }
         promise = promise.then(([pageDict, ref]) => {
-          return new Page({
+          return new Page2({
             pdfManager: this.pdfManager,
             xref: this.xref,
             pageIndex,
@@ -122388,7 +122989,7 @@ var init_pdf_worker = __esm({
               promise.catch(() => {
               });
             } else {
-              promise = Promise.resolve(new Page({
+              promise = Promise.resolve(new Page2({
                 pdfManager,
                 xref: this.xref,
                 pageIndex,
@@ -154682,7 +155283,7 @@ var init_EventEmitter = __esm({
   }
 });
 var WEB_PERMISSION_TO_PROTOCOL_PERMISSION;
-var Browser;
+var Browser2;
 var init_Browser = __esm({
   "node_modules/@cloudflare/puppeteer/lib/esm/puppeteer/api/Browser.js"() {
     init_virtual_unenv_global_polyfill_cloudflare_unenv_preset_node_process();
@@ -154715,7 +155316,7 @@ var init_Browser = __esm({
       // chrome-specific permissions we have.
       ["midi-sysex", "midiSysex"]
     ]);
-    Browser = class extends EventEmitter2 {
+    Browser2 = class extends EventEmitter2 {
       /**
        * @internal
        */
@@ -154798,7 +155399,7 @@ var init_Browser = __esm({
         throw new Error("Not implemented");
       }
     };
-    __name(Browser, "Browser");
+    __name(Browser2, "Browser");
   }
 });
 var CDPSessionEvent;
@@ -156456,7 +157057,7 @@ var __runInitializers;
 var __esDecorate;
 var __addDisposableResource4;
 var __disposeResources4;
-var Page2;
+var Page22;
 var supportedMetrics;
 var init_Page = __esm({
   "node_modules/@cloudflare/puppeteer/lib/esm/puppeteer/api/Page.js"() {
@@ -156578,7 +157179,7 @@ var init_Page = __esm({
       return e.name = "SuppressedError", e.error = error4, e.suppressed = suppressed, e;
     });
     __name(setDefaultScreenshotOptions, "setDefaultScreenshotOptions");
-    Page2 = (() => {
+    Page22 = (() => {
       let _classSuper = EventEmitter2;
       let _instanceExtraInitializers = [];
       let _screenshot_decorators;
@@ -168293,7 +168894,7 @@ var init_Page2 = __esm({
       return e.name = "SuppressedError", e.error = error4, e.suppressed = suppressed, e;
     });
     __name(convertConsoleMessageLevel, "convertConsoleMessageLevel");
-    CdpPage = class extends Page2 {
+    CdpPage = class extends Page22 {
       static async _create(client, target, defaultViewport) {
         const page = new CdpPage(client, target);
         await page.#initialize();
@@ -169606,7 +170207,7 @@ var init_Browser2 = __esm({
     init_ChromeTargetManager();
     init_FirefoxTargetManager();
     init_Target2();
-    CdpBrowser = class extends Browser {
+    CdpBrowser = class extends Browser2 {
       protocol = "cdp";
       static async _create(product, connection, contextIds, ignoreHTTPSErrors, defaultViewport, process3, closeCallback, targetFilterCallback, isPageTargetCallback, waitForInitiallyDiscoveredTargets = true, sessionId) {
         const browser = new CdpBrowser(product, connection, contextIds, defaultViewport, process3, closeCallback, targetFilterCallback, isPageTargetCallback, waitForInitiallyDiscoveredTargets, sessionId);
@@ -170135,7 +170736,7 @@ var init_utils6 = __esm({
 });
 var HEADER_SIZE;
 var MAX_MESSAGE_SIZE;
-var FIRST_CHUNK_DATA_SIZE;
+var FIRST_CHUNK_DATA_SIZE2;
 var messageToChunks;
 var chunksToMessage;
 var init_chunking = __esm({
@@ -170145,16 +170746,16 @@ var init_chunking = __esm({
     init_performance2();
     HEADER_SIZE = 4;
     MAX_MESSAGE_SIZE = 1048575;
-    FIRST_CHUNK_DATA_SIZE = MAX_MESSAGE_SIZE - HEADER_SIZE;
+    FIRST_CHUNK_DATA_SIZE2 = MAX_MESSAGE_SIZE - HEADER_SIZE;
     messageToChunks = /* @__PURE__ */ __name((data) => {
       const encoder = new TextEncoder();
       const encodedUint8Array = encoder.encode(data);
       const firstChunk = new Uint8Array(Math.min(MAX_MESSAGE_SIZE, HEADER_SIZE + encodedUint8Array.length));
       const view = new DataView(firstChunk.buffer);
       view.setUint32(0, encodedUint8Array.length, true);
-      firstChunk.set(encodedUint8Array.slice(0, FIRST_CHUNK_DATA_SIZE), HEADER_SIZE);
+      firstChunk.set(encodedUint8Array.slice(0, FIRST_CHUNK_DATA_SIZE2), HEADER_SIZE);
       const chunks = [firstChunk];
-      for (let i2 = FIRST_CHUNK_DATA_SIZE; i2 < data.length; i2 += MAX_MESSAGE_SIZE) {
+      for (let i2 = FIRST_CHUNK_DATA_SIZE2; i2 < data.length; i2 += MAX_MESSAGE_SIZE) {
         chunks.push(encodedUint8Array.slice(i2, i2 + MAX_MESSAGE_SIZE));
       }
       return chunks;
@@ -172159,7 +172760,7 @@ var puppeteer_cloudflare_exports = {};
 __export(puppeteer_cloudflare_exports, {
   AsyncDisposableStack: () => AsyncDisposableStack,
   AsyncIterableUtil: () => AsyncIterableUtil,
-  Browser: () => Browser,
+  Browser: () => Browser2,
   BrowserContext: () => BrowserContext,
   BrowserWebSocketTransport: () => BrowserWebSocketTransport,
   CDPSession: () => CDPSession,
@@ -172199,7 +172800,7 @@ __export(puppeteer_cloudflare_exports, {
   NodeLocator: () => NodeLocator,
   PQueryHandler: () => PQueryHandler,
   PUPPETEER_REVISIONS: () => PUPPETEER_REVISIONS,
-  Page: () => Page2,
+  Page: () => Page22,
   PierceQueryHandler: () => PierceQueryHandler,
   ProtocolError: () => ProtocolError,
   Puppeteer: () => Puppeteer,
@@ -173220,7 +173821,7 @@ var discovery_engine_default = {
           const needsBrowser = allegionBrands.includes(mfrKey);
           if (needsBrowser && !browser && env2.BROWSER) {
             console.log(`[Discovery] Launching browser for ${mfrKey}...`);
-            browser = await puppeteer_cloudflare_default.launch(env2.BROWSER);
+            browser = await launchBrowser(env2.BROWSER);
           }
           const directResult = await trySmartDirectUrls(
             component.manufacturer,
@@ -173266,7 +173867,7 @@ var discovery_engine_default = {
           }
           if (!browser && env2.BROWSER) {
             console.log(`[Discovery] Launching browser for full search...`);
-            browser = await puppeteer_cloudflare_default.launch(env2.BROWSER);
+            browser = await launchBrowser(env2.BROWSER);
           }
           const result = await processDiscoveryMessage(message.body, browser, env2);
           if (result.success) {
@@ -173334,14 +173935,15 @@ async function savePageExtraction22(sessionId, pageNumber, extractionResult, env
   return saved;
 }
 __name(savePageExtraction22, "savePageExtraction");
-var { makeDocumentDownloadRoute, renderHtmlToPdf, storeDocumentPdf } = registerDocumentGeneratorRoutes(router, { generateQuoteHtml, puppeteer: puppeteer_cloudflare_default });
+var sovereignPuppeteer = { launch: launchBrowser };
+var { makeDocumentDownloadRoute, renderHtmlToPdf, storeDocumentPdf } = registerDocumentGeneratorRoutes(router, { generateQuoteHtml, puppeteer: sovereignPuppeteer });
 registerExtractedModules(router, {
   transformDoorEntriesToHardwareSets: transformDoorEntriesToHardwareSets2,
   materializeDseToLineItems: materializeDseToLineItems2,
   renderHtmlToPdf,
   storeDocumentPdf,
   makeDocumentDownloadRoute,
-  puppeteer: puppeteer_cloudflare_default,
+  puppeteer: sovereignPuppeteer,
   getSessionStatus,
   getOrRenderPage,
   checkRateLimit,

@@ -25,6 +25,7 @@ import { authenticate, authenticateCps, requireActiveSubscription, requireProduc
 import { jsonResponse3 } from "./lib/json-response.js";
 import { registerDocumentGeneratorRoutes } from "./routes/document-generators.js";
 import { registerExtractedModules } from "./module-registry.js";
+import { launchBrowser } from "./lib/sovereign-cdp.js";
 import { createCorsHandler } from "./lib/cors.js";
 import { esc, fmtDate } from "./lib/html-format.js";
 import { generateQuoteHtml } from "./lib/quote-html.js";
@@ -133655,7 +133656,7 @@ var discovery_engine_default = {
           const needsBrowser = allegionBrands.includes(mfrKey);
           if (needsBrowser && !browser && env2.BROWSER) {
             console.log(`[Discovery] Launching browser for ${mfrKey}...`);
-            browser = await puppeteer_cloudflare_default.launch(env2.BROWSER);
+            browser = await launchBrowser(env2.BROWSER);
           }
           const directResult = await trySmartDirectUrls(
             component.manufacturer,
@@ -133701,7 +133702,7 @@ var discovery_engine_default = {
           }
           if (!browser && env2.BROWSER) {
             console.log(`[Discovery] Launching browser for full search...`);
-            browser = await puppeteer_cloudflare_default.launch(env2.BROWSER);
+            browser = await launchBrowser(env2.BROWSER);
           }
           const result = await processDiscoveryMessage(message.body, browser, env2);
           if (result.success) {
@@ -133788,7 +133789,15 @@ __name(savePageExtraction2, "savePageExtraction");
 // client are still defined/resolved in this file (see that module's own
 // header comment for why they're passed in explicitly instead of imported
 // back from here - avoids a circular import between the two files).
-const { makeDocumentDownloadRoute, renderHtmlToPdf, storeDocumentPdf } = registerDocumentGeneratorRoutes(router, { generateQuoteHtml, puppeteer: puppeteer_cloudflare_default });
+//
+// MONOLITH_HELPER_MAP.md section 3 step 4: `puppeteer` here is now the
+// sovereign CDP client (src/lib/sovereign-cdp.js), not the vendored
+// @cloudflare/puppeteer bundle - `sovereignPuppeteer.launch` has the
+// exact same `(endpoint, options) => Promise<Browser>` shape real call
+// sites use (newPage/setContent/pdf/close), live-verified against
+// env.BROWSER (see that file's header + the plan doc for what/how).
+const sovereignPuppeteer = { launch: launchBrowser };
+const { makeDocumentDownloadRoute, renderHtmlToPdf, storeDocumentPdf } = registerDocumentGeneratorRoutes(router, { generateQuoteHtml, puppeteer: sovereignPuppeteer });
 
 // Moved here (was originally called earlier in this file, before
 // registerDocumentGeneratorRoutes existed) because hunt-leads.js's routes
@@ -133802,7 +133811,7 @@ registerExtractedModules(router, {
   renderHtmlToPdf,
   storeDocumentPdf,
   makeDocumentDownloadRoute,
-  puppeteer: puppeteer_cloudflare_default,
+  puppeteer: sovereignPuppeteer,
   getSessionStatus,
   getOrRenderPage,
   checkRateLimit,
