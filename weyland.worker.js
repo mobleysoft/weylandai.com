@@ -169376,19 +169376,6 @@ var init_BrowserConnector = __esm({
     __name(_connectToCdpBrowser, "_connectToCdpBrowser");
   }
 });
-var require_browser = __commonJS({
-  "node_modules/ws/browser.js"(exports, module) {
-    "use strict";
-    init_virtual_unenv_global_polyfill_cloudflare_unenv_preset_node_process();
-    init_virtual_unenv_global_polyfill_cloudflare_unenv_preset_node_console();
-    init_performance2();
-    module.exports = function() {
-      throw new Error(
-        "ws does not work in the browser. Browser clients must use the native WebSocket object"
-      );
-    };
-  }
-});
 var NodeWebSocketTransport_exports = {};
 __export(NodeWebSocketTransport_exports, {
   NodeWebSocketTransport: () => NodeWebSocketTransport

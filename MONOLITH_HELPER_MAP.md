@@ -667,29 +667,27 @@ session's transcript if needed again.
 
 ### Ordered replacement plan
 
-1. **`ws` deletion - premise corrected 2026-09-10, NOT safe to delete
-   outright as originally written.** A full-file grep found a real call
-   site: `@cloudflare/puppeteer`'s generic transport-selection code
-   (`isNode ? NodeWebSocketTransport : BrowserWebSocketTransport`, line
-   ~130403) picks `NodeWebSocketTransport`, which constructs
-   `import_ws.default` - the `ws` stub, whose entire module body is
-   `throw new Error("ws does not work in the browser...")`. Checked
-   `isNode`'s real value against the actual Cloudflare edge (`npx
-   wrangler dev --remote` with a one-line diagnostic Worker, not
-   assumed): `process.version` is truthy (`v22.19.0`) and `isNode`
-   evaluates **true** in this bundle's real runtime - the opposite of
-   what "browser environment, ws is irrelevant" would predict. Still
-   unresolved: whether `@cloudflare/puppeteer`'s actual entry point used
-   here (`launch(env.BROWSER)`) ever reaches this generic transport-
-   selection branch at all, or uses its own binding-specific connection
-   that bypasses it entirely - that requires tracing `launch()`'s real
-   call path through the bundle (or a live integration check against
-   `lib/cutsheet-discovery.js`'s actual browser automation), not
-   completed yet. **Do not delete `ws` until that's resolved** - if this
-   branch really is live, cutsheet-discovery.js's browser automation may
-   already be throwing in production every time it connects, which
-   would be a real, higher-priority bug independent of any sovereignty
-   work.
+1. **`ws` deletion - resolved and done (2026-09-10).** Traced the real
+   call chain instead of assuming: `puppeteer_cloudflare_default.launch`
+   (the only entry point real first-party code calls -
+   `src/legacy-monolith.js:133153,133657,133703`, always as
+   `.launch(env2.BROWSER)`) resolves to `PuppeteerWorkers.launch()` →
+   `acquire()` (gets a real `sessionId` from Cloudflare's binding) →
+   `connect(endpoint, sessionId)`, which - since `sessionId` is always
+   truthy on this path - always takes the `WorkersWebSocketTransport`
+   branch (`endpoint.fetch(path, {Upgrade: "websocket"})`, Cloudflare's
+   native fetch-based WebSocket upgrade). The generic
+   `isNode ? NodeWebSocketTransport : BrowserWebSocketTransport`
+   selection code (confirmed live-reachable in principle, since `isNode`
+   is really `true` on this runtime) only exists on puppeteer-core's
+   separate, generic `.connect(url)` path, which `PuppeteerWorkers`
+   never calls when a session was successfully acquired - which it
+   always is, in real usage. Real call sites checked, real transport
+   class read line-by-line, no assumption left unverified. Deleted the
+   15-line `ws` stub (`src/legacy-monolith.js`, was lines 130217-130231),
+   rebuilt (`npm run build`, 135020 -> 135005 lines), deployed
+   (`wrangler deploy`), and live-verified (`https://weylandai.com/`
+   still 200 post-deploy).
    `wrangler` (49 lines): the two `node_modules/wrangler/...` boundary
    markers in this file are actually the `unenv`/`@cloudflare/unenv-
    preset` Node/console polyfills (real, needed, already correctly
