@@ -23022,6 +23022,11 @@ function rgb(red, green, blue) {
 }
 function colorComponents(color) {
   if (!color) return null;
+  for (const [key, val] of [["red", color.red], ["green", color.green], ["blue", color.blue]]) {
+    if (typeof val !== "number" || !Number.isFinite(val)) {
+      throw new Error(`sovereign-pdf: color.${key} must be a finite number, got ${JSON.stringify(val)} (color object: ${JSON.stringify(color)}) - use the real {red, green, blue} shape (see the rgb() helper), not {r, g, b}`);
+    }
+  }
   const clamp = (v) => Math.max(0, Math.min(1, v)).toFixed(4);
   return [clamp(color.red), clamp(color.green), clamp(color.blue)];
 }
