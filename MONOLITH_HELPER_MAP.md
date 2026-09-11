@@ -696,14 +696,60 @@ session's transcript if needed again.
    grep. The original "49 lines, incidental, delete" claim doesn't
    correspond to anything found on disk; treat as unconfirmed until a
    real block is located, not as a to-do.
-2. **Sovereign DEFLATE/zlib** (replaces `pako`, unblocks both PDF
-   phases below for reading/writing compressed PDF streams). RFC 1951
-   is a fully specified, deterministic algorithm - real, tractable,
-   exhaustively testable against known vectors before it ever touches
-   a real document. Inflate (decompression, needed to *read* existing
-   PDFs/xref streams) matters more than deflate (compression, only
-   needed for *writing* compact output - "store uncompressed" is a
-   valid, correct fallback to ship first and optimize later).
+2. **Sovereign DEFLATE/zlib - scope corrected 2026-09-10, partially
+   done.** The premise ("unblocks both PDF phases... reading/writing")
+   was wrong in an important way, found by tracing real call sites
+   instead of assuming: **`pdfjs-dist` never uses pako at all** - it
+   ships its own hand-written inflate (`FlateStream2`, ~280 lines,
+   `node_modules/pdfjs-dist/legacy/build/pdf.mjs`). **`pdf-lib` also has
+   its own independent inflate** for reading existing PDFs
+   (`node_modules/pdf-lib/es/core/streams/FlateStream.js`, zero pako
+   references). Every real `pako` call site (4 total, all inside
+   `pdf-lib`/its dependents, none first-party) turned out to be
+   **compression-only**: `PDFFlateStream.computeContents` and
+   `PDFContext.flateStream` (both compress a stream when *writing* a
+   generated PDF - the real, default-on path, since
+   `PDFContentStream.of()` defaults `encode` to `true`), plus
+   `@pdf-lib/standard-fonts`'s one-time decompression of its own bundled
+   font-metric data (goes away for free once step 3 reproduces std-14
+   metrics directly) and `@pdf-lib/upng`'s PNG compression fallback
+   (irrelevant - no image embedding per the audit). So inflate was never
+   actually needed as new work; only deflate was, and only for 2 call
+   sites.
+
+   Real first-party code (`src/lib/submittal-assembler.js`) only touches
+   pdf-lib's public API (`drawText`/`drawRectangle`/`addPage`) with no
+   exposed way to pass `encode: false` through to disable compression -
+   that default lives deep in pdf-lib's own internals. Patching that
+   default in-place across multiple internal call sites was judged more
+   fragile than replacing the one function it delegates to.
+
+   **Done**: `src/lib/sovereign-deflate.js` - a real, spec-compliant
+   RFC 1951 encoder using **stored blocks only** (section 3.2.4 - zero
+   Huffman coding required, still a fully valid, standards-compliant
+   DEFLATE stream that any real decoder, including this app's own two
+   vendored inflate implementations, reads identically to a "real"
+   compressed one, just larger on disk) wrapped in an RFC 1950 zlib
+   header/Adler-32 trailer to match pako's exact output format. This
+   *is* the plan's own blessed "store uncompressed... ship first, optimize
+   later" fallback - not a shortcut around it, just implemented without
+   needing to touch pdf-lib's internal default at all. 8 real tests,
+   round-tripped through Node's own independent `zlib.inflateSync`
+   (empty input, all-256-byte-values, exactly-one-block and
+   multi-block-boundary data, realistic PDF content-stream text, and an
+   independently-computed Adler-32 check) - all passing. Wired into both
+   real call sites (`PDFFlateStream.computeContents`,
+   `PDFContext.flateStream`), rebuilt, deployed, basic live health
+   checked. **Not yet fully end-to-end verified**: a real submittal PDF
+   generated through the actual app route (not just the unit-level
+   deflate/inflate round-trip) hasn't been pulled and independently
+   re-opened - `assembleSubmittalPackage`'s real HTTP trigger lives in
+   an already-extracted route file this pass didn't trace down, flagged
+   here rather than skipped silently.
+
+   `pako` itself is NOT yet deletable - the font-metrics inflate and
+   UPNG compression call sites still reference it (both expected to
+   disappear as a side effect of step 3, not removed here).
 3. **Sovereign PDF generator** (replaces `pdf-lib` + its `@pdf-lib/upng`/
    `@pdf-lib/standard-fonts` dependents, since neither is called
    directly and both go with it). Narrow, real scope per the audit:

@@ -44,6 +44,7 @@ import { MIME_MAP, serveR2, checkSession } from "./lib/edge-dispatch.js";
 import { DEFAULT_MOUNTING_HEIGHTS, DEFAULT_PROJECTIONS, DEFAULT_MOUNTING_SIDES, SCHEDULE_TYPE_REGISTRY, DOOR_SCHEDULE_ALLOWED_FIELDS, applyMountingDefaults, applyMountingDefaultsToExtraction, buildHardwareExtractionPrompt, validateClaudeRequest, getClaudeTimeout, parseHardwareExtractionResult, arrayBufferToBase643, normalizeComponentType, mapToDhiCategory, extractGrade, detectImageMediaType, buildIsolatedPageExtractionPrompt, buildDirectPdfExtractionPrompt, buildPageSpecificExtractionPrompt, classifyPageType, isPageInRange, detectSchedulePages, applyConstraintOverride, rowToConstraintField, buildPromptFromConstraints, getScheduleTypeConfig, listScheduleTypes, buildGenericExtractionPrompt, parseGenericExtractionResult, buildDoorScheduleExtractionPrompt, parseDimensionToInches, normalizeFireRating, sanitizeDoorScheduleField, parseDoorScheduleEntry, calculateEntryConfidence, parseDoorScheduleExtractionResult, _buildPriorContextSection, buildContextAwareExtractionPrompt, _accumulateContext, _buildCrossReference } from "./lib/hardware-extraction-prompts.js";
 import { downloadPdf, calculateHash, checkDuplicate, storeInTempStorage, analyzePdfWithClaude, calculateMatchScore, validatePdf, validateCandidates, EXPANDED_URL_PATTERNS, generateSmartUrls, ALLEGION_CDN_BASE, ALLEGION_BRAND_REGISTRY, generateAllegionUrls, findBrandByAlias, isAllegionBrand, logDiscoveryTelemetry, checkUserAffirmedCache, searchCPSCatalogue, LOCAL_CATALOGUE_INDEX, searchLocalCatalogue, isAllowedByRobots, CLOUDFLARE_PROTECTED_DOMAINS, isCloudflareProtected, checkVerifiedUrls, trySmartDirectUrls, verifyPdfWithPuppeteer, tryAllegionEnumerationWithPuppeteer, searchManufacturerSite, googleSiteSearch, discoverCutSheets, processDiscoveryMessage, RETRY_CONFIG, calculateBackoffDelay, sleep, isPermanentError, shouldSwitchStrategy, discoverWithRetry, logRetryAttempt, retryFailedDiscoveries, getManufacturerDomains, queueForDiscovery, getDiscoveryConfig } from "./lib/cutsheet-discovery.js";
 import { SovereignWeylandRoutes } from "./lib/marketing-pages.js";
+import { deflate as sovereignDeflate } from "./lib/sovereign-deflate.js";
 import { createMonolith, createWeylandWorker, SightXRoom } from "./lib/weyland-entry.js";
 import { EXTRACTION_PROMPT_TEMPLATE, viaApiDirect, parseAndValidateExtraction, viaSabpClaudeCode, viaLocalSubprocess, adaptersForEdition, dispatchVisionExtraction, pdfBufferOrNull, generateR2StreamUrl, getUnaffirmReason } from "./lib/hardware-extraction-vision-dispatch.js";
 import { extractPdfBookmarks, detectTextLayer } from "./lib/pdf-metadata.js";
@@ -8636,7 +8637,7 @@ var init_PDFFlateStream = __esm({
         var _this = _super.call(this, dict) || this;
         _this.computeContents = function() {
           var unencodedContents = _this.getUnencodedContents();
-          return _this.encode ? import_pako2.default.deflate(unencodedContents) : unencodedContents;
+          return _this.encode ? sovereignDeflate(unencodedContents) : unencodedContents;
         };
         _this.encode = encode;
         if (encode)
@@ -8909,7 +8910,7 @@ var init_PDFContext = __esm({
         if (dict === void 0) {
           dict = {};
         }
-        return this.stream(import_pako3.default.deflate(typedArrayFor(contents)), __assign(__assign({}, dict), { Filter: "FlateDecode" }));
+        return this.stream(sovereignDeflate(typedArrayFor(contents)), __assign(__assign({}, dict), { Filter: "FlateDecode" }));
       };
       PDFContext2.prototype.contentStream = function(operators2, dict) {
         if (dict === void 0) {

@@ -35311,6 +35311,75 @@ document.querySelectorAll('.preset').forEach(btn=>btn.addEventListener('click',(
   };
 })();
 
+// src/lib/sovereign-deflate.js
+var MAX_STORED_BLOCK_SIZE = 65535;
+function adler32(data) {
+  let a = 1;
+  let b = 0;
+  const MOD_ADLER = 65521;
+  for (let i2 = 0; i2 < data.length; i2++) {
+    a = (a + data[i2]) % MOD_ADLER;
+    b = (b + a) % MOD_ADLER;
+  }
+  return (b << 16 | a) >>> 0;
+}
+function deflate(data) {
+  if (!(data instanceof Uint8Array)) {
+    data = new Uint8Array(data);
+  }
+  const blocks = [];
+  let offset = 0;
+  if (data.length === 0) {
+    blocks.push(encodeStoredBlock(new Uint8Array(0), true));
+  }
+  while (offset < data.length) {
+    const remaining = data.length - offset;
+    const chunkSize2 = Math.min(remaining, MAX_STORED_BLOCK_SIZE);
+    const isFinal = offset + chunkSize2 >= data.length;
+    const chunk = data.subarray(offset, offset + chunkSize2);
+    blocks.push(encodeStoredBlock(chunk, isFinal));
+    offset += chunkSize2;
+  }
+  const deflateBody = concatBytes(blocks);
+  const checksum = adler32(data);
+  const CMF = 120;
+  const FLG = 1;
+  const out = new Uint8Array(2 + deflateBody.length + 4);
+  out[0] = CMF;
+  out[1] = FLG;
+  out.set(deflateBody, 2);
+  const trailerOffset = 2 + deflateBody.length;
+  out[trailerOffset] = checksum >>> 24 & 255;
+  out[trailerOffset + 1] = checksum >>> 16 & 255;
+  out[trailerOffset + 2] = checksum >>> 8 & 255;
+  out[trailerOffset + 3] = checksum & 255;
+  return out;
+}
+function encodeStoredBlock(chunk, isFinal) {
+  const header = isFinal ? 1 : 0;
+  const len2 = chunk.length;
+  const nlen = ~len2 & 65535;
+  const out = new Uint8Array(1 + 4 + len2);
+  out[0] = header;
+  out[1] = len2 & 255;
+  out[2] = len2 >>> 8 & 255;
+  out[3] = nlen & 255;
+  out[4] = nlen >>> 8 & 255;
+  out.set(chunk, 5);
+  return out;
+}
+function concatBytes(chunks) {
+  let total = 0;
+  for (const c of chunks) total += c.length;
+  const out = new Uint8Array(total);
+  let offset = 0;
+  for (const c of chunks) {
+    out.set(c, offset);
+    offset += c.length;
+  }
+  return out;
+}
+
 // src/lib/weyland-entry.js
 function createMonolith({ router: router2, discoveryEngine }) {
   return {
@@ -40232,7 +40301,7 @@ var require_adler32 = __commonJS({
     init_virtual_unenv_global_polyfill_cloudflare_unenv_preset_node_process();
     init_virtual_unenv_global_polyfill_cloudflare_unenv_preset_node_console();
     init_performance2();
-    function adler32(adler, buf, len2, pos) {
+    function adler322(adler, buf, len2, pos) {
       var s1 = adler & 65535 | 0, s2 = adler >>> 16 & 65535 | 0, n = 0;
       while (len2 !== 0) {
         n = len2 > 2e3 ? 2e3 : len2;
@@ -40246,8 +40315,8 @@ var require_adler32 = __commonJS({
       }
       return s1 | s2 << 16 | 0;
     }
-    __name(adler32, "adler32");
-    module.exports = adler32;
+    __name(adler322, "adler32");
+    module.exports = adler322;
   }
 });
 var require_crc32 = __commonJS({
@@ -40317,7 +40386,7 @@ var require_deflate = __commonJS({
     init_performance2();
     var utils = require_common();
     var trees = require_trees();
-    var adler32 = require_adler32();
+    var adler322 = require_adler32();
     var crc32 = require_crc32();
     var msg = require_messages();
     var Z_NO_FLUSH = 0;
@@ -40426,7 +40495,7 @@ var require_deflate = __commonJS({
       strm.avail_in -= len2;
       utils.arraySet(buf, strm.input, strm.next_in, len2, start);
       if (strm.state.wrap === 1) {
-        strm.adler = adler32(strm.adler, buf, len2, start);
+        strm.adler = adler322(strm.adler, buf, len2, start);
       } else if (strm.state.wrap === 2) {
         strm.adler = crc32(strm.adler, buf, len2, start);
       }
@@ -41042,7 +41111,7 @@ var require_deflate = __commonJS({
       return deflateInit2(strm, level, Z_DEFLATED, MAX_WBITS, DEF_MEM_LEVEL, Z_DEFAULT_STRATEGY);
     }
     __name(deflateInit, "deflateInit");
-    function deflate(strm, flush) {
+    function deflate2(strm, flush) {
       var old_flush, s;
       var beg, val;
       if (!strm || !strm.state || flush > Z_BLOCK || flush < 0) {
@@ -41294,7 +41363,7 @@ var require_deflate = __commonJS({
       }
       return s.pending !== 0 ? Z_OK : Z_STREAM_END;
     }
-    __name(deflate, "deflate");
+    __name(deflate2, "deflate");
     function deflateEnd(strm) {
       var status;
       if (!strm || !strm.state) {
@@ -41326,7 +41395,7 @@ var require_deflate = __commonJS({
         return Z_STREAM_ERROR;
       }
       if (wrap === 1) {
-        strm.adler = adler32(strm.adler, dictionary, dictLength, 0);
+        strm.adler = adler322(strm.adler, dictionary, dictLength, 0);
       }
       s.wrap = 0;
       if (dictLength >= s.w_size) {
@@ -41379,7 +41448,7 @@ var require_deflate = __commonJS({
     exports.deflateReset = deflateReset;
     exports.deflateResetKeep = deflateResetKeep;
     exports.deflateSetHeader = deflateSetHeader;
-    exports.deflate = deflate;
+    exports.deflate = deflate2;
     exports.deflateEnd = deflateEnd;
     exports.deflateSetDictionary = deflateSetDictionary;
     exports.deflateInfo = "pako deflate (from Nodeca project)";
@@ -41693,7 +41762,7 @@ var require_deflate2 = __commonJS({
       this.err = status;
       this.msg = this.strm.msg;
     };
-    function deflate(input, options) {
+    function deflate2(input, options) {
       var deflator = new Deflate(options);
       deflator.push(input, true);
       if (deflator.err) {
@@ -41701,21 +41770,21 @@ var require_deflate2 = __commonJS({
       }
       return deflator.result;
     }
-    __name(deflate, "deflate");
+    __name(deflate2, "deflate");
     function deflateRaw(input, options) {
       options = options || {};
       options.raw = true;
-      return deflate(input, options);
+      return deflate2(input, options);
     }
     __name(deflateRaw, "deflateRaw");
     function gzip(input, options) {
       options = options || {};
       options.gzip = true;
-      return deflate(input, options);
+      return deflate2(input, options);
     }
     __name(gzip, "gzip");
     exports.Deflate = Deflate;
-    exports.deflate = deflate;
+    exports.deflate = deflate2;
     exports.deflateRaw = deflateRaw;
     exports.gzip = gzip;
   }
@@ -42274,7 +42343,7 @@ var require_inflate = __commonJS({
     init_virtual_unenv_global_polyfill_cloudflare_unenv_preset_node_console();
     init_performance2();
     var utils = require_common();
-    var adler32 = require_adler32();
+    var adler322 = require_adler32();
     var crc32 = require_crc32();
     var inflate_fast = require_inffast();
     var inflate_table = require_inftrees();
@@ -43359,7 +43428,7 @@ var require_inflate = __commonJS({
                 state.total += _out;
                 if (_out) {
                   strm.adler = state.check = /*UPDATE(state.check, put - _out, _out);*/
-                  state.flags ? crc32(state.check, output, _out, put - _out) : adler32(state.check, output, _out, put - _out);
+                  state.flags ? crc32(state.check, output, _out, put - _out) : adler322(state.check, output, _out, put - _out);
                 }
                 _out = left;
                 if ((state.flags ? hold : zswap32(hold)) !== state.check) {
@@ -43422,7 +43491,7 @@ var require_inflate = __commonJS({
       state.total += _out;
       if (state.wrap && _out) {
         strm.adler = state.check = /*UPDATE(state.check, strm.next_out - _out, _out);*/
-        state.flags ? crc32(state.check, output, _out, strm.next_out - _out) : adler32(state.check, output, _out, strm.next_out - _out);
+        state.flags ? crc32(state.check, output, _out, strm.next_out - _out) : adler322(state.check, output, _out, strm.next_out - _out);
       }
       strm.data_type = state.bits + (state.last ? 64 : 0) + (state.mode === TYPE ? 128 : 0) + (state.mode === LEN_ || state.mode === COPY_ ? 256 : 0);
       if ((_in === 0 && _out === 0 || flush === Z_FINISH) && ret === Z_OK) {
@@ -43471,7 +43540,7 @@ var require_inflate = __commonJS({
       }
       if (state.mode === DICT) {
         dictid = 1;
-        dictid = adler32(dictid, dictionary, dictLength, 0);
+        dictid = adler322(dictid, dictionary, dictLength, 0);
         if (dictid !== state.check) {
           return Z_DATA_ERROR;
         }
@@ -43753,11 +43822,11 @@ var require_pako = __commonJS({
     init_virtual_unenv_global_polyfill_cloudflare_unenv_preset_node_console();
     init_performance2();
     var assign = require_common().assign;
-    var deflate = require_deflate2();
+    var deflate2 = require_deflate2();
     var inflate2 = require_inflate2();
     var constants = require_constants();
     var pako5 = {};
-    assign(pako5, deflate, inflate2, constants);
+    assign(pako5, deflate2, inflate2, constants);
     module.exports = pako5;
   }
 });
@@ -45901,7 +45970,7 @@ var init_PDFFlateStream = __esm({
         var _this = _super.call(this, dict) || this;
         _this.computeContents = function() {
           var unencodedContents = _this.getUnencodedContents();
-          return _this.encode ? import_pako2.default.deflate(unencodedContents) : unencodedContents;
+          return _this.encode ? deflate(unencodedContents) : unencodedContents;
         };
         _this.encode = encode;
         if (encode)
@@ -46172,7 +46241,7 @@ var init_PDFContext = __esm({
         if (dict === void 0) {
           dict = {};
         }
-        return this.stream(import_pako3.default.deflate(typedArrayFor(contents)), __assign(__assign({}, dict), { Filter: "FlateDecode" }));
+        return this.stream(deflate(typedArrayFor(contents)), __assign(__assign({}, dict), { Filter: "FlateDecode" }));
       };
       PDFContext2.prototype.contentStream = function(operators2, dict) {
         if (dict === void 0) {
