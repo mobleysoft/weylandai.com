@@ -826,13 +826,181 @@ session's transcript if needed again.
    verification, not a full live HTTP round trip - a real, structural
    gap in test data availability, not something this step could have
    closed differently.
-4. **Sovereign CDP client** (replaces `@cloudflare/puppeteer`'s bundled
-   client code - not a browser engine, `env.BROWSER` stays Cloudflare's
-   managed Chromium either way). Chrome DevTools Protocol is Google's
-   own open, versioned, documented WebSocket JSON-RPC protocol. Real
-   scope per the audit: launch/connect handshake, navigate, request/
-   response interception, `evaluate`, read rendered content. Can
-   proceed in parallel with step 3 - no shared dependency.
+4. **Sovereign CDP client - DONE (2026-09-11)**, real, live-verified
+   against production `env.BROWSER`, and wired into every real call site
+   this scope covers.
+
+   **Re-verified the scope audit first, found one correction**: the
+   prior claim of "4 real launch call sites" in
+   `document-generators.js`/`quotes-generate.js` was off by one - a
+   direct re-grep found 5 (`document-generators.js:183,265`;
+   `quotes-generate.js:183,352,679`), all byte-identical in pattern
+   (`browser.newPage()` → `page.setContent(html,{waitUntil:'load'})` →
+   `page.pdf({format:'Letter',printBackground,margin})` →
+   `browser.close()`). `cutsheet-discovery.js`'s audited surface
+   (`newPage`, `setRequestInterception`, `request`/`response` events,
+   `goto` w/ `.status()`/`.headers()`, `content()`, `url()`,
+   `setUserAgent()`, zero-arg `evaluate()`, `close()`) matched exactly.
+   Of `legacy-monolith.js`'s 3 inline sites: 2 (`discovery_engine_default`'s
+   queue consumer, lines ~133659/133705) need nothing beyond
+   `launch()`/`close()` - they hand `browser` to already-covered
+   `cutsheet-discovery.js` functions. The 3rd (`renderRegionAt600DPI2`,
+   ~line 133154) turned out to need a materially bigger surface than
+   audited - `page.waitForFunction()` plus an `evaluate()` closure that
+   loads pdf.js from a CDN *inside the browser* and rasterizes via
+   `OffscreenCanvas` - but it's exactly Cluster A sub-step (d)'s
+   already-deferred, vendored-bundle-entangled leftover (section 4 step
+   3: "do this after section 3's steps 3 AND 5 land"), and is
+   functionally step-5-shaped work (PDF rasterization) wearing a
+   puppeteer call - correctly left untouched, not wired to the new
+   client, consistent with the plan's own existing guidance rather than
+   a new decision made here.
+
+   **Real protocol detail, read directly out of the vendored bundle still
+   in `legacy-monolith.js`, not guessed from generic CDP docs** (so the
+   new client interoperates with Cloudflare's real endpoints
+   byte-for-byte): the `/v1/acquire` → `/v1/connectDevtools` handshake
+   and its 4-byte-length-prefixed WebSocket chunking format (~130489-130770),
+   the `waitUntil` → real `Page.lifecycleEvent` name mapping
+   (`load`/`DOMContentLoaded`/`networkIdle`/`networkAlmostIdle`,
+   ~125025-125100 - CDP's own backend computes network-idle, not a
+   reimplemented heuristic), `Fetch.enable({handleAuthRequests:true,
+   patterns:[{urlPattern:'*'}]})` as the real shape behind
+   `setRequestInterception(true)` (~126714-126749), and the real
+   paper-format/margin-unit conversion `page.pdf()` needs (~114027-114442).
+
+   **Built**: `src/lib/sovereign-cdp.js` - message chunking codec,
+   `CDPConnection` (JSON-RPC id/response matching + method+sessionId-scoped
+   event dispatch), `Browser`/`Page` classes covering exactly the audited
+   surface above, `buildPrintToPdfParams`/`parseInches` for `Page.printToPDF`.
+   Deliberate, documented scope narrowings in the file's own header: no
+   `Runtime.runIfWaitingForDebugger` handshake (not needed - no
+   preload-script call sites), `Page.printToPDF` without
+   `transferMode:'ReturnAsStream'`/`IO.read` chunking (fine for this
+   app's quote/proposal-sized PDFs, would need revisiting for very large
+   documents), `content()` serializes via `doctype` + `outerHTML` rather
+   than the real client's per-childNode `XMLSerializer` walk (equivalent
+   for every real caller).
+
+   **3 real bugs a test-writing pass caught before any live traffic
+   touched them, not found by inspection**:
+   1. `goto()`/`setContent()` left a dangling, still-armed lifecycle
+      listener + live timer if navigation errored or `evaluate()` threw
+      before the lifecycle promise was ever awaited - an unhandled
+      rejection and timer leak. Fixed by making the lifecycle watcher a
+      cancellable `{promise, cancel()}` controller instead of a bare
+      promise.
+   2. `Browser.newPage()` registered its `Target.attachedToTarget`
+      listener only *after* awaiting `Target.createTarget`'s own
+      response - but CDP does not guarantee that ordering; the attach
+      event can arrive first, and the first version of this file hung
+      forever if it did (caught immediately - the corresponding test
+      timed out at 30s rather than passing in milliseconds). Fixed the
+      same way the real client's own architecture does: a single
+      persistent, connection-level attach listener registered once at
+      `Browser` construction, feeding a map `newPage()` checks/waits on,
+      not a listener registered per-call.
+   3. `goto()` called its lifecycle watcher with `loaderId: undefined`
+      always - the real per-navigation loaderId was only known *after*
+      `Page.navigate`'s response, but the watcher had already been armed
+      before that with a hardcoded `undefined`, silently defeating the
+      stale-event filter entirely (a stale lifecycle event from a
+      previous navigation would have resolved a fresh one). Fixed by
+      waiting for `Page.navigate`'s response first, then arming the
+      watcher with the real loaderId - safe ordering-wise since both are
+      messages on the same ordered per-session CDP stream.
+   (A 4th, minor bug - `parseInches('96px')` returning
+   `0.9999999999999999` instead of `1` from pre-computing `1/96` and
+   multiplying instead of dividing by 96 directly - was also caught and
+   fixed, floating-point correctness only, not a protocol issue.)
+
+   **Tested**: `src/lib/sovereign-cdp.test.mjs`, 35 real-behavior tests
+   against a fake transport (no real socket, but real JSON-RPC framing
+   and real CDP message shapes) - chunk encode/decode round-trips
+   including a corrupted-length-header rejection case, id/response
+   matching and out-of-order replies, session+method-scoped event
+   dispatch, the `Browser.newPage()` attach race (both orderings), full
+   `goto()` lifecycle-event-driven waits (single + array `waitUntil`,
+   stale-loaderId rejection, navigation-error and timeout paths),
+   `evaluate()`'s both code paths (`Runtime.callFunctionOn` once a
+   context is known, the `Runtime.evaluate` fallback before one is),
+   request interception + `request.continue()`, `pdf()`'s real
+   `Page.printToPDF` param shape and base64 decode, and `page.close()`'s
+   listener teardown. Full existing suite re-run clean after every
+   change (1049 tests, same 4 pre-existing `submittal-assembler.test.mjs`
+   failures as before this step - step 3's scope, not touched, not
+   caused by this work).
+
+   **Live-verified against real production `env.BROWSER` - not
+   fabricated, an actual CDP session was exercised**: added a gated
+   internal diagnostic, `GET /api/internal/cdp-selftest` (`src/routes/internal.js`,
+   protected by a real, dedicated Cloudflare secret -
+   `CDP_SELFTEST_SECRET`, provisioned this pass via `wrangler secret put`
+   - not a public route), that runs `launchBrowser` → `newPage()` →
+   `setRequestInterception(true)` + `request.continue()` +
+   response-listener → `goto('https://example.com/')` → `setUserAgent()`
+   → `setContent()` → `content()` → `evaluate()` → `pdf()` → a *second*
+   `newPage()` on the same browser session (the exact multi-page-per-browser
+   pattern `cutsheet-discovery.js` relies on) → `close()`, all against a
+   real Cloudflare Browser Rendering session, deployed via real
+   `wrangler deploy`. Curled twice against `https://weylandai.com/`
+   (before and after the call-site wiring below) - both real 200s with
+   every step reporting `ok:true`: real `200`/`text/html` from
+   `https://example.com/`, a real 9009-byte PDF starting with the real
+   `%PDF-` signature. That PDF was pulled down and independently opened
+   with Python's `pypdf` (same independent-tool discipline step 3 used) -
+   1 page, extracted text `"hello sovereign cdp"` matching exactly what
+   `setContent()` wrote, confirming the whole `printToPDF` round trip
+   produces a real, correctly-structured PDF, not just a 200 with bytes
+   in it.
+
+   **Wired into the real call sites**: `document-generators.js` and
+   `registerExtractedModules`'s `puppeteer` dep (both in
+   `legacy-monolith.js`, feeding `quotes-generate.js`) now receive
+   `{ launch: launchBrowser }` instead of `puppeteer_cloudflare_default` -
+   a drop-in swap needing zero changes to either route file, since both
+   only ever call `puppeteer.launch(env2.BROWSER)`. `discovery_engine_default`'s
+   2 queue-consumer launch sites now call `launchBrowser(env2.BROWSER)`
+   directly. `cutsheet-discovery.js` itself needed **no changes at all** -
+   it never imports puppeteer, only receives `browser` as a parameter, so
+   swapping what `discovery_engine_default` hands it was sufficient for
+   its whole call chain (`trySmartDirectUrls`, `verifyPdfWithPuppeteer`,
+   `searchManufacturerSite`, `googleSiteSearch`, `processDiscoveryMessage`)
+   to run on the sovereign client. `renderRegionAt600DPI2` still uses
+   `puppeteer_cloudflare_default` on purpose (see above).
+
+   **Post-wiring live verification**: real `wrangler deploy`, then real
+   curls against production - `/` and `/api/health` (200, baseline),
+   the `cdp-selftest` endpoint again (still all `ok:true`, confirming the
+   wiring change didn't disturb the client itself), and the actual
+   now-rewired routes: `POST /api/proposals/generate` (401, real
+   auth-gate, not a 500/crash), `POST /api/takeoff/session/:id/generate-quote`
+   (401), `POST /q/:quoteId/:accessToken/accept` (403, real
+   token-validation gate) - all confirm the modules load and the
+   sovereign-client wiring doesn't crash at any point before the auth
+   gate, matching this plan's established "real 401, not 500" discipline
+   from the Stripe/billing extraction. `cutsheet-discovery.js`-backed
+   routes (`/api/cut-sheets/local-search`, `/api/cut-sheets/domains`)
+   also still real-401, unchanged.
+
+   **Known, real, honestly-stated limit, not fabricated past**: a full
+   HTTP round trip through real auth + real D1 data all the way to an
+   actual generated proposal/quote PDF was **not** exercised this pass -
+   no real authenticated session/business records were available in this
+   environment, the same class of gap step 3 already documented for
+   `assembleSubmittalPackage` (empty `hardware_sets`/`door_schedule_entries`
+   in production D1). What *was* verified live is the exact underlying
+   `launch→newPage→setContent→pdf→close` method sequence these routes
+   now run, via the self-test endpoint calling the identical code path -
+   real CDP session, real Chromium, real PDF, independently re-opened -
+   just not triggered through the production HTTP route's own auth+D1
+   path. `discovery_engine_default`'s queue consumer specifically
+   couldn't be live-exercised via HTTP at all for a structural reason
+   unrelated to this step: Cluster K's own extraction already found
+   `monolith.queue` is never wired to the Workers runtime (no
+   `[[queues.consumers]]` in `wrangler.toml`) - real, pre-existing dead
+   code, not something this step introduced or could fix by testing
+   harder.
 5. **Sovereign PDF rasterizer** (replaces `pdfjs-dist`). **The hardest,
    riskiest, highest-effort phase by far** - not comparable in scope to
    1-4. `pdf-metadata.js` (already sovereign, hand-written, no pdfjs
