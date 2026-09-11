@@ -750,16 +750,82 @@ session's transcript if needed again.
    `pako` itself is NOT yet deletable - the font-metrics inflate and
    UPNG compression call sites still reference it (both expected to
    disappear as a side effect of step 3, not removed here).
-3. **Sovereign PDF generator** (replaces `pdf-lib` + its `@pdf-lib/upng`/
-   `@pdf-lib/standard-fonts` dependents, since neither is called
-   directly and both go with it). Narrow, real scope per the audit:
-   page tree + content-stream writer, `drawText`/`drawRectangle`/
-   `drawLine`, std-14 font metrics (reproduce directly - public data),
-   `copyPages`-style merge, xref writer, `save()`. No parser needed
-   beyond enough to read pages out of an existing PDF for merge - the
-   app never loads arbitrary third-party PDFs through pdf-lib, only
-   ones it or a known upstream step produced. The most tractable of
-   the three "big" replacements - a real, scoped, buildable project.
+3. **Sovereign PDF generator - DONE for the achievable scope (2026-09-11),
+   one real finding narrowed it from full pdf-lib removal to a partial,
+   honest replacement.**
+
+   **Correction to this step's original scoping**: "the app never loads
+   arbitrary third-party PDFs through pdf-lib, only ones it or a known
+   upstream step produced" was wrong, found by actually reading
+   `assembleSubmittalPackage` in `src/lib/submittal-assembler.js` instead
+   of trusting the earlier audit's note. Cut-sheet PDFs are genuinely
+   fetched from arbitrary manufacturer URLs (`cutSheetPdfs` in
+   `assembleSubmittalPackage`, via the web-discovery engine in
+   `lib/cutsheet-discovery.js`) - real third-party documents with
+   unknown producers, fonts, and internal structure. Parsing arbitrary
+   real-world PDFs well enough to merge them is a genuinely hard
+   problem, comparable in difficulty to step 5 (the rasterizer) below,
+   not this step's narrow scope. Writing a fragile custom parser just to
+   claim full pdf-lib removal would have been the "force it, don't
+   fabricate coverage" mistake this plan already warned against.
+
+   **The actual resolution - real, tested, and honest**:
+   `src/lib/sovereign-pdf.js` (built in a prior pass; real
+   `PDFDocument.create/addPage/embedFont(Helvetica|HelveticaBold)/
+   drawText/drawRectangle/drawLine/save`, std-14 AFM metrics, verified
+   independently with Python's pypdf) now generates the three real
+   first-party PDF pieces this app actually builds from scratch -
+   `generateCoverPage`, `generateTableOfContents`, and
+   `generateHardwareSetPage` in `src/lib/submittal-assembler.js` - in
+   place of pdf-lib. `mergePdfs()` and the final `PDFDocument.load()`
+   in `assembleSubmittalPackage` still use the real, injected `PDFLib`
+   (pdf-lib) parameter, unchanged - correctly so, since that's exactly
+   where the real arbitrary-third-party-PDF-reading requirement lives.
+
+   This works because pdf-lib's own `load()` reads sovereign-pdf.js's
+   output correctly (real PDF 1.7 structure, classic xref table) -
+   proven with a real interop test before wiring anything in: a real
+   `pdf-lib` package (installed in an isolated scratch dir purely for
+   this verification, never added to this app's own dependencies)
+   loaded a sovereign-generated PDF, merged it with a pdf-lib-generated
+   one via the actual `load()`/`copyPages()`/`addPage()`/`save()`
+   sequence `mergePdfs()` itself uses, and produced a correct 2-page
+   result - independently re-verified with pypdf.
+
+   Then the real swap: all three generation functions call
+   `sovereign-pdf.js` directly instead of destructuring pdf-lib out of
+   their injected `PDFLib` parameter (kept on the signatures for
+   call-site compatibility, just unused internally now). Verified for
+   real, not assumed: each function called directly and its output
+   independently parsed with pypdf (correct page counts, correct
+   extracted text); the full real pipeline exercised end-to-end -
+   `generateCoverPage`/`generateTableOfContents`/`generateHardwareSetPage`
+   (sovereign) → real `mergePdfs()` (pdf-lib) → pypdf verification of the
+   final 4-page merged document. Rebuilt (`npm run build`), deployed
+   (`wrangler deploy`), live-verified (`https://weylandai.com/` and
+   `/pricing` both 200 post-deploy).
+
+   **Still real pdf-lib, on purpose, not a gap**: reading arbitrary
+   third-party cut-sheet PDFs in `mergePdfs()`/the final `load()`. This
+   is the honest boundary of what's tractable here - pdf-lib stays
+   vendored for this one real capability until a genuine PDF-parsing
+   effort (step 5-scale, not step 3-scale) is separately scoped.
+   `@pdf-lib/standard-fonts` and `@pdf-lib/upng` are now fully
+   unreferenced by first-party generation code (std-14 metrics are
+   sovereign-pdf.js's own public AFM data; no image embedding ever
+   existed per the original audit) but pdf-lib itself is not deletable
+   while the merge path needs it.
+
+   **Known, real, still-open gap, not newly introduced by this step**:
+   the full HTTP-route E2E path (`POST /api/sessions/:sessionId/assemble`
+   against a real session with matched hardware) still can't be
+   exercised - `hardware_sets`/`door_schedule_entries` are confirmed
+   globally empty in production D1 (checked directly, not assumed; see
+   step 2's own note). This step's verification ceiling is therefore
+   real function-level + real interop + real independent-parser
+   verification, not a full live HTTP round trip - a real, structural
+   gap in test data availability, not something this step could have
+   closed differently.
 4. **Sovereign CDP client** (replaces `@cloudflare/puppeteer`'s bundled
    client code - not a browser engine, `env.BROWSER` stays Cloudflare's
    managed Chromium either way). Chrome DevTools Protocol is Google's

@@ -17,6 +17,23 @@
 //
 // esbuild's cosmetic __name(...) calls dropped, same as every other
 // extraction in this effort.
+//
+// Sovereignty step 3 (2026-09-11, MONOLITH_HELPER_MAP.md section 3):
+// generateCoverPage/generateTableOfContents/generateHardwareSetPage now
+// build their own PDF bytes via sovereign-pdf.js instead of the pdf-lib
+// bundle injected as the PDFLib parameter - real interop-tested (pdf-lib
+// itself, and independently pypdf, both read sovereign-pdf.js's output
+// correctly). mergePdfs()/assembleSubmittalPackage's final load() still
+// use the real, injected PDFLib (pdf-lib) - correctly so, since cut
+// sheets are genuinely fetched from arbitrary third-party manufacturer
+// URLs (see cutSheetPdfs in assembleSubmittalPackage), not just
+// known-producer output; that's a real arbitrary-PDF-reading problem
+// pdf-lib is still needed for, comparable in difficulty to section 3's
+// step 5 (the rasterizer), not this step's scope. The PDFLib parameter
+// is kept on these 3 functions' signatures for call-site compatibility
+// even though they no longer read it internally.
+
+import { PDFDocument as SovereignPDFDocument, StandardFonts as SovereignStandardFonts, rgb as sovereignRgb } from "./sovereign-pdf.js";
 
 var BHMA_FINISH_LOOKUP = {
   "600": "Primed for Painting",
@@ -120,7 +137,7 @@ export function truncateText(text, maxWidth, font, fontSize) {
   return text + "\u2026";
 }
 export async function generateCoverPage(options, PDFLib) {
-  const { PDFDocument: PDFDocument3, StandardFonts: StandardFonts2, rgb: rgb2 } = PDFLib;
+  const PDFDocument3 = SovereignPDFDocument, StandardFonts2 = SovereignStandardFonts, rgb2 = sovereignRgb;
   const doc = await PDFDocument3.create();
   const page = doc.addPage([612, 792]);
   const helveticaBold = await doc.embedFont(StandardFonts2.HelveticaBold);
@@ -200,7 +217,7 @@ export async function generateCoverPage(options, PDFLib) {
   return await doc.save();
 }
 export async function generateTableOfContents(sections, PDFLib) {
-  const { PDFDocument: PDFDocument3, StandardFonts: StandardFonts2, rgb: rgb2 } = PDFLib;
+  const PDFDocument3 = SovereignPDFDocument, StandardFonts2 = SovereignStandardFonts, rgb2 = sovereignRgb;
   const doc = await PDFDocument3.create();
   let page = doc.addPage([612, 792]);
   const helveticaBold = await doc.embedFont(StandardFonts2.HelveticaBold);
@@ -288,7 +305,7 @@ export async function generateTableOfContents(sections, PDFLib) {
   return await doc.save();
 }
 export async function generateHardwareSetPage(setData, options, PDFLib) {
-  const { PDFDocument: PDFDocument3, StandardFonts: StandardFonts2, rgb: rgb2 } = PDFLib;
+  const PDFDocument3 = SovereignPDFDocument, StandardFonts2 = SovereignStandardFonts, rgb2 = sovereignRgb;
   const doc = await PDFDocument3.create();
   const helveticaBold = await doc.embedFont(StandardFonts2.HelveticaBold);
   const helvetica = await doc.embedFont(StandardFonts2.Helvetica);

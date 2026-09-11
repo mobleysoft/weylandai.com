@@ -16372,7 +16372,7 @@ function registerSessionsCutSheetsRoutes(router2, { authenticate: authenticate2,
 }
 
 // src/routes/sessions-assemble.js
-function registerSessionsAssembleRoutes(router2, { authenticate: authenticate2, persistSessionMatches: persistSessionMatches2, assembleSubmittalPackage: assembleSubmittalPackage2, getAssemblyStatus: getAssemblyStatus2, PDFDocument: PDFDocument3, StandardFonts: StandardFonts2, rgb: rgb2 }) {
+function registerSessionsAssembleRoutes(router2, { authenticate: authenticate2, persistSessionMatches: persistSessionMatches2, assembleSubmittalPackage: assembleSubmittalPackage2, getAssemblyStatus: getAssemblyStatus2, PDFDocument: PDFDocument3, StandardFonts: StandardFonts3, rgb: rgb3 }) {
   router2.post("/api/sessions/:sessionId/assemble", async (request2, env2) => {
     const { error: error4, user } = await authenticate2(request2, env2);
     if (error4)
@@ -16421,7 +16421,7 @@ function registerSessionsAssembleRoutes(router2, { authenticate: authenticate2, 
       };
       await persistSessionMatches2(sessionId, env2);
       console.log(`[Assembly] Starting assembly for session ${sessionId}`);
-      const PDFLib = { PDFDocument: PDFDocument3, StandardFonts: StandardFonts2, rgb: rgb2 };
+      const PDFLib = { PDFDocument: PDFDocument3, StandardFonts: StandardFonts3, rgb: rgb3 };
       const result = await assembleSubmittalPackage2(sessionId, options, env2, PDFLib);
       if (!result.success) {
         return jsonResponse3({
@@ -21261,8 +21261,8 @@ function registerAthenaIntegrationRoutes(router2, {
   assembleSubmittalPackage: assembleSubmittalPackage2,
   getAssemblyStatus: getAssemblyStatus2,
   PDFDocument: PDFDocument3,
-  StandardFonts: StandardFonts2,
-  rgb: rgb2
+  StandardFonts: StandardFonts3,
+  rgb: rgb3
 }) {
   router2.get("/api/sessions/:sessionId/readiness", async (request2, env2) => {
     try {
@@ -21420,7 +21420,7 @@ function registerAthenaIntegrationRoutes(router2, {
         }, 400);
       }
       const body = await request2.json().catch(() => ({}));
-      const PDFLib = { PDFDocument: PDFDocument3, StandardFonts: StandardFonts2, rgb: rgb2 };
+      const PDFLib = { PDFDocument: PDFDocument3, StandardFonts: StandardFonts3, rgb: rgb3 };
       await persistSessionMatches2(sessionId, env2);
       console.log(`[Assembly] Starting assembly for session ${sessionId}`);
       const result = await assembleSubmittalPackage2(sessionId, {
@@ -22293,6 +22293,414 @@ async function callEdge2(method, path, env2, body) {
   return { status: resp.status, body: data };
 }
 
+// src/lib/sovereign-pdf.js
+var HELVETICA_WIDTHS = {
+  32: 278,
+  33: 278,
+  34: 355,
+  35: 556,
+  36: 556,
+  37: 889,
+  38: 667,
+  39: 191,
+  40: 333,
+  41: 333,
+  42: 389,
+  43: 584,
+  44: 278,
+  45: 333,
+  46: 278,
+  47: 278,
+  48: 556,
+  49: 556,
+  50: 556,
+  51: 556,
+  52: 556,
+  53: 556,
+  54: 556,
+  55: 556,
+  56: 556,
+  57: 556,
+  58: 278,
+  59: 278,
+  60: 584,
+  61: 584,
+  62: 584,
+  63: 556,
+  64: 1015,
+  65: 667,
+  66: 667,
+  67: 722,
+  68: 722,
+  69: 667,
+  70: 611,
+  71: 778,
+  72: 722,
+  73: 278,
+  74: 500,
+  75: 667,
+  76: 556,
+  77: 833,
+  78: 722,
+  79: 778,
+  80: 667,
+  81: 778,
+  82: 722,
+  83: 667,
+  84: 611,
+  85: 722,
+  86: 667,
+  87: 944,
+  88: 667,
+  89: 667,
+  90: 611,
+  91: 278,
+  92: 278,
+  93: 278,
+  94: 469,
+  95: 556,
+  96: 333,
+  97: 556,
+  98: 556,
+  99: 500,
+  100: 556,
+  101: 556,
+  102: 278,
+  103: 556,
+  104: 556,
+  105: 222,
+  106: 222,
+  107: 500,
+  108: 222,
+  109: 833,
+  110: 556,
+  111: 556,
+  112: 556,
+  113: 556,
+  114: 333,
+  115: 500,
+  116: 278,
+  117: 556,
+  118: 500,
+  119: 722,
+  120: 500,
+  121: 500,
+  122: 500,
+  123: 334,
+  124: 260,
+  125: 334,
+  126: 584
+};
+var HELVETICA_BOLD_WIDTHS = {
+  32: 278,
+  33: 333,
+  34: 474,
+  35: 556,
+  36: 556,
+  37: 889,
+  38: 722,
+  39: 238,
+  40: 333,
+  41: 333,
+  42: 389,
+  43: 584,
+  44: 278,
+  45: 333,
+  46: 278,
+  47: 278,
+  48: 556,
+  49: 556,
+  50: 556,
+  51: 556,
+  52: 556,
+  53: 556,
+  54: 556,
+  55: 556,
+  56: 556,
+  57: 556,
+  58: 333,
+  59: 333,
+  60: 584,
+  61: 584,
+  62: 584,
+  63: 611,
+  64: 975,
+  65: 722,
+  66: 722,
+  67: 722,
+  68: 722,
+  69: 667,
+  70: 611,
+  71: 778,
+  72: 722,
+  73: 278,
+  74: 556,
+  75: 722,
+  76: 611,
+  77: 833,
+  78: 722,
+  79: 778,
+  80: 667,
+  81: 778,
+  82: 722,
+  83: 667,
+  84: 611,
+  85: 722,
+  86: 667,
+  87: 944,
+  88: 667,
+  89: 667,
+  90: 611,
+  91: 333,
+  92: 278,
+  93: 333,
+  94: 584,
+  95: 556,
+  96: 333,
+  97: 556,
+  98: 611,
+  99: 556,
+  100: 611,
+  101: 556,
+  102: 333,
+  103: 611,
+  104: 611,
+  105: 278,
+  106: 278,
+  107: 556,
+  108: 278,
+  109: 889,
+  110: 611,
+  111: 611,
+  112: 611,
+  113: 611,
+  114: 389,
+  115: 556,
+  116: 333,
+  117: 611,
+  118: 556,
+  119: 778,
+  120: 556,
+  121: 556,
+  122: 500,
+  123: 389,
+  124: 280,
+  125: 389,
+  126: 584
+};
+var StandardFonts = {
+  Helvetica: "Helvetica",
+  HelveticaBold: "Helvetica-Bold"
+};
+function rgb(red, green, blue) {
+  return { type: "RGB", red, green, blue };
+}
+function colorComponents(color) {
+  if (!color) return null;
+  const clamp = (v) => Math.max(0, Math.min(1, v)).toFixed(4);
+  return [clamp(color.red), clamp(color.green), clamp(color.blue)];
+}
+function pdfLiteralString(text) {
+  let out = "";
+  for (const ch of String(text)) {
+    const code = ch.codePointAt(0);
+    if (code === 92 || code === 40 || code === 41) {
+      out += "\\" + ch;
+    } else if (code < 256) {
+      out += ch;
+    } else {
+      out += "?";
+    }
+  }
+  return out;
+}
+var SovereignPDFFont = class {
+  constructor(baseFontName, widths, resourceName) {
+    this.name = baseFontName;
+    this._widths = widths;
+    this.resourceName = resourceName;
+  }
+  widthOfTextAtSize(text, size) {
+    let total = 0;
+    for (const ch of String(text)) {
+      const code = ch.codePointAt(0);
+      const w = this._widths[code] !== void 0 ? this._widths[code] : this._widths[32];
+      total += w;
+    }
+    return total * size / 1e3;
+  }
+};
+var SovereignPDFPage = class {
+  constructor(width, height) {
+    this.width = width;
+    this.height = height;
+    this._ops = [];
+  }
+  getSize() {
+    return { width: this.width, height: this.height };
+  }
+  drawText(text, { x = 0, y = 0, size = 12, font, color } = {}) {
+    if (!font || !font.resourceName) {
+      throw new Error("sovereign-pdf: drawText requires a font from doc.embedFont()");
+    }
+    const rgbc = colorComponents(color);
+    let ops = "";
+    if (rgbc) ops += `${rgbc[0]} ${rgbc[1]} ${rgbc[2]} rg
+`;
+    ops += `BT /${font.resourceName} ${size} Tf ${x} ${y} Td (${pdfLiteralString(text)}) Tj ET
+`;
+    this._ops.push(ops);
+  }
+  drawRectangle({ x = 0, y = 0, width = 0, height = 0, color, borderColor, borderWidth = 1 } = {}) {
+    let ops = "";
+    const fillc = colorComponents(color);
+    if (fillc) {
+      ops += `${fillc[0]} ${fillc[1]} ${fillc[2]} rg
+${x} ${y} ${width} ${height} re f
+`;
+    }
+    const borderc = colorComponents(borderColor);
+    if (borderc) {
+      ops += `${borderc[0]} ${borderc[1]} ${borderc[2]} RG
+${borderWidth} w
+${x} ${y} ${width} ${height} re S
+`;
+    }
+    if (!fillc && !borderc) {
+      ops += `0 0 0 rg
+${x} ${y} ${width} ${height} re f
+`;
+    }
+    this._ops.push(ops);
+  }
+  drawLine({ start, end, thickness = 1, color } = {}) {
+    const rgbc = colorComponents(color) || ["0.0000", "0.0000", "0.0000"];
+    const ops = `${rgbc[0]} ${rgbc[1]} ${rgbc[2]} RG
+${thickness} w
+${start.x} ${start.y} m ${end.x} ${end.y} l S
+`;
+    this._ops.push(ops);
+  }
+  _content() {
+    return this._ops.join("");
+  }
+};
+var PDFDocument = class _PDFDocument {
+  constructor() {
+    this.pages = [];
+    this._fonts = /* @__PURE__ */ new Map();
+  }
+  static async create() {
+    return new _PDFDocument();
+  }
+  addPage(size = [612, 792]) {
+    const [w, h] = size;
+    const page = new SovereignPDFPage(w, h);
+    this.pages.push(page);
+    return page;
+  }
+  async embedFont(baseFontName) {
+    if (this._fonts.has(baseFontName)) return this._fonts.get(baseFontName);
+    const widths = baseFontName === StandardFonts.HelveticaBold ? HELVETICA_BOLD_WIDTHS : HELVETICA_WIDTHS;
+    const resourceName = `F${this._fonts.size + 1}`;
+    const font = new SovereignPDFFont(baseFontName, widths, resourceName);
+    this._fonts.set(baseFontName, font);
+    return font;
+  }
+  getPageCount() {
+    return this.pages.length;
+  }
+  // Serializes the whole document to a real PDF 1.7 byte stream: header,
+  // one indirect object per font/page/content-stream, a Pages tree, a
+  // Catalog, a classic (non-compressed) xref table, and a trailer.
+  async save() {
+    const enc = new TextEncoder();
+    const chunks = [];
+    let offset = 0;
+    const push = (str) => {
+      const bytes = enc.encode(str);
+      chunks.push(bytes);
+      offset += bytes.length;
+    };
+    const objOffsets = [];
+    const beginObj = (num) => {
+      objOffsets[num - 1] = offset;
+      push(`${num} 0 obj
+`);
+    };
+    const endObj = () => push("endobj\n");
+    push("%PDF-1.7\n%\xE2\xE3\xCF\xD3\n");
+    const fonts = [...this._fonts.values()];
+    const pageCount = this.pages.length;
+    const pageObjNum = (i2) => 3 + i2 * 2;
+    const contentObjNum = (i2) => 4 + i2 * 2;
+    const fontObjNumBase = 3 + pageCount * 2;
+    const totalObjects = fontObjNumBase + fonts.length - 1;
+    beginObj(1);
+    push(`<< /Type /Catalog /Pages 2 0 R >>
+`);
+    endObj();
+    beginObj(2);
+    const kids = this.pages.map((_, i2) => `${pageObjNum(i2)} 0 R`).join(" ");
+    push(`<< /Type /Pages /Kids [${kids}] /Count ${pageCount} >>
+`);
+    endObj();
+    const fontResourceDict = fonts.length ? `<< ${fonts.map((f, idx2) => `/${f.resourceName} ${fontObjNumBase + idx2} 0 R`).join(" ")} >>` : "<< >>";
+    this.pages.forEach((page, i2) => {
+      beginObj(pageObjNum(i2));
+      push(
+        `<< /Type /Page /Parent 2 0 R /MediaBox [0 0 ${page.width} ${page.height}] /Resources << /Font ${fontResourceDict} >> /Contents ${contentObjNum(i2)} 0 R >>
+`
+      );
+      endObj();
+      const content = page._content();
+      const contentBytes = enc.encode(content);
+      beginObj(contentObjNum(i2));
+      push(`<< /Length ${contentBytes.length} >>
+stream
+`);
+      chunks.push(contentBytes);
+      offset += contentBytes.length;
+      push(`
+endstream
+`);
+      endObj();
+    });
+    fonts.forEach((font, i2) => {
+      beginObj(fontObjNumBase + i2);
+      push(
+        `<< /Type /Font /Subtype /Type1 /BaseFont /${font.name} /Encoding /WinAnsiEncoding >>
+`
+      );
+      endObj();
+    });
+    const xrefOffset = offset;
+    push(`xref
+0 ${totalObjects + 1}
+`);
+    push(`0000000000 65535 f 
+`);
+    for (let i2 = 0; i2 < totalObjects; i2++) {
+      const off2 = objOffsets[i2];
+      push(`${String(off2).padStart(10, "0")} 00000 n 
+`);
+    }
+    push(`trailer
+<< /Size ${totalObjects + 1} /Root 1 0 R >>
+startxref
+${xrefOffset}
+%%EOF`);
+    const total = chunks.reduce((sum2, c) => sum2 + c.length, 0);
+    const out = new Uint8Array(total);
+    let pos = 0;
+    for (const c of chunks) {
+      out.set(c, pos);
+      pos += c.length;
+    }
+    return out;
+  }
+};
+
 // src/lib/submittal-assembler.js
 var BHMA_FINISH_LOOKUP = {
   "600": "Primed for Painting",
@@ -22322,7 +22730,7 @@ function drawTable(page, opts) {
     headerFont,
     fontSize = 9,
     headerFontSize = 9,
-    rgb: rgb2,
+    rgb: rgb22,
     rowHeight = 18,
     headerRowHeight = 22,
     minY = 60
@@ -22334,7 +22742,7 @@ function drawTable(page, opts) {
     y: curY - headerRowHeight,
     width: tableWidth,
     height: headerRowHeight,
-    color: rgb2(0.2, 0.4, 0.6)
+    color: rgb22(0.2, 0.4, 0.6)
   });
   let colX = x;
   for (let c = 0; c < headers.length; c++) {
@@ -22344,7 +22752,7 @@ function drawTable(page, opts) {
       y: curY - headerRowHeight + 6,
       size: headerFontSize,
       font: headerFont,
-      color: rgb2(1, 1, 1)
+      color: rgb22(1, 1, 1)
     });
     colX += colWidths[c];
   }
@@ -22359,7 +22767,7 @@ function drawTable(page, opts) {
         y: curY - rowHeight,
         width: tableWidth,
         height: rowHeight,
-        color: rgb2(0.95, 0.96, 0.98)
+        color: rgb22(0.95, 0.96, 0.98)
       });
     }
     colX = x;
@@ -22370,7 +22778,7 @@ function drawTable(page, opts) {
         y: curY - rowHeight + 5,
         size: fontSize,
         font,
-        color: rgb2(0.1, 0.1, 0.1)
+        color: rgb22(0.1, 0.1, 0.1)
       });
       colX += colWidths[c];
     }
@@ -22378,7 +22786,7 @@ function drawTable(page, opts) {
       start: { x, y: curY - rowHeight },
       end: { x: x + tableWidth, y: curY - rowHeight },
       thickness: 0.5,
-      color: rgb2(0.85, 0.85, 0.85)
+      color: rgb22(0.85, 0.85, 0.85)
     });
     curY -= rowHeight;
     rowsDrawn++;
@@ -22396,11 +22804,11 @@ function truncateText(text, maxWidth, font, fontSize) {
   return text + "\u2026";
 }
 async function generateCoverPage(options, PDFLib) {
-  const { PDFDocument: PDFDocument3, StandardFonts: StandardFonts2, rgb: rgb2 } = PDFLib;
+  const PDFDocument3 = PDFDocument, StandardFonts22 = StandardFonts, rgb22 = rgb;
   const doc = await PDFDocument3.create();
   const page = doc.addPage([612, 792]);
-  const helveticaBold = await doc.embedFont(StandardFonts2.HelveticaBold);
-  const helvetica = await doc.embedFont(StandardFonts2.Helvetica);
+  const helveticaBold = await doc.embedFont(StandardFonts22.HelveticaBold);
+  const helvetica = await doc.embedFont(StandardFonts22.Helvetica);
   const { width, height } = page.getSize();
   const centerX = width / 2;
   page.drawText("HARDWARE SCHEDULE", {
@@ -22408,20 +22816,20 @@ async function generateCoverPage(options, PDFLib) {
     y: height - 180,
     size: 28,
     font: helveticaBold,
-    color: rgb2(0.1, 0.1, 0.1)
+    color: rgb22(0.1, 0.1, 0.1)
   });
   page.drawText("SUBMITTAL", {
     x: centerX - helveticaBold.widthOfTextAtSize("SUBMITTAL", 28) / 2,
     y: height - 220,
     size: 28,
     font: helveticaBold,
-    color: rgb2(0.1, 0.1, 0.1)
+    color: rgb22(0.1, 0.1, 0.1)
   });
   page.drawLine({
     start: { x: 100, y: height - 260 },
     end: { x: width - 100, y: height - 260 },
     thickness: 2,
-    color: rgb2(0.2, 0.4, 0.6)
+    color: rgb22(0.2, 0.4, 0.6)
   });
   const infoStartY = height - 320;
   const lineHeight = 28;
@@ -22449,14 +22857,14 @@ async function generateCoverPage(options, PDFLib) {
       y,
       size: 12,
       font: helveticaBold,
-      color: rgb2(0.3, 0.3, 0.3)
+      color: rgb22(0.3, 0.3, 0.3)
     });
     page.drawText(line.value, {
       x: 250,
       y,
       size: 12,
       font: helvetica,
-      color: rgb2(0.1, 0.1, 0.1)
+      color: rgb22(0.1, 0.1, 0.1)
     });
   });
   page.drawText("Generated by Weyland Hardware Submittal System", {
@@ -22464,23 +22872,23 @@ async function generateCoverPage(options, PDFLib) {
     y: 80,
     size: 10,
     font: helvetica,
-    color: rgb2(0.5, 0.5, 0.5)
+    color: rgb22(0.5, 0.5, 0.5)
   });
   page.drawText("weyland.onamerica.org", {
     x: centerX - helvetica.widthOfTextAtSize("weyland.onamerica.org", 10) / 2,
     y: 65,
     size: 10,
     font: helvetica,
-    color: rgb2(0.4, 0.5, 0.6)
+    color: rgb22(0.4, 0.5, 0.6)
   });
   return await doc.save();
 }
 async function generateTableOfContents(sections, PDFLib) {
-  const { PDFDocument: PDFDocument3, StandardFonts: StandardFonts2, rgb: rgb2 } = PDFLib;
+  const PDFDocument3 = PDFDocument, StandardFonts22 = StandardFonts, rgb22 = rgb;
   const doc = await PDFDocument3.create();
   let page = doc.addPage([612, 792]);
-  const helveticaBold = await doc.embedFont(StandardFonts2.HelveticaBold);
-  const helvetica = await doc.embedFont(StandardFonts2.Helvetica);
+  const helveticaBold = await doc.embedFont(StandardFonts22.HelveticaBold);
+  const helvetica = await doc.embedFont(StandardFonts22.Helvetica);
   const { width, height } = page.getSize();
   let currentY = height - 80;
   const lineHeight = 24;
@@ -22491,7 +22899,7 @@ async function generateTableOfContents(sections, PDFLib) {
     y: currentY,
     size: 18,
     font: helveticaBold,
-    color: rgb2(0.1, 0.1, 0.1)
+    color: rgb22(0.1, 0.1, 0.1)
   });
   currentY = contentStartY;
   for (let i2 = 0; i2 < sections.length; i2++) {
@@ -22504,7 +22912,7 @@ async function generateTableOfContents(sections, PDFLib) {
         y: currentY,
         size: 14,
         font: helveticaBold,
-        color: rgb2(0.3, 0.3, 0.3)
+        color: rgb22(0.3, 0.3, 0.3)
       });
       currentY = contentStartY;
     }
@@ -22514,7 +22922,7 @@ async function generateTableOfContents(sections, PDFLib) {
       y: currentY,
       size: 11,
       font: helveticaBold,
-      color: rgb2(0.2, 0.2, 0.2)
+      color: rgb22(0.2, 0.2, 0.2)
     });
     const titleMaxWidth = 350;
     let title2 = section.title || "Untitled Section";
@@ -22529,7 +22937,7 @@ async function generateTableOfContents(sections, PDFLib) {
       y: currentY,
       size: 11,
       font: helvetica,
-      color: rgb2(0.1, 0.1, 0.1)
+      color: rgb22(0.1, 0.1, 0.1)
     });
     const titleEndX = 100 + helvetica.widthOfTextAtSize(title2, 11) + 10;
     const pageNumX = width - 72 - helvetica.widthOfTextAtSize(String(section.pageNumber), 11);
@@ -22540,7 +22948,7 @@ async function generateTableOfContents(sections, PDFLib) {
         y: currentY,
         size: 11,
         font: helvetica,
-        color: rgb2(0.6, 0.6, 0.6)
+        color: rgb22(0.6, 0.6, 0.6)
       });
     }
     page.drawText(String(section.pageNumber), {
@@ -22548,7 +22956,7 @@ async function generateTableOfContents(sections, PDFLib) {
       y: currentY,
       size: 11,
       font: helveticaBold,
-      color: rgb2(0.2, 0.2, 0.2)
+      color: rgb22(0.2, 0.2, 0.2)
     });
     if (section.type === "cut_sheet") {
       page.drawText("[CUT SHEET]", {
@@ -22556,7 +22964,7 @@ async function generateTableOfContents(sections, PDFLib) {
         y: currentY - 12,
         size: 7,
         font: helvetica,
-        color: rgb2(0.5, 0.5, 0.5)
+        color: rgb22(0.5, 0.5, 0.5)
       });
     }
     currentY -= lineHeight;
@@ -22564,10 +22972,10 @@ async function generateTableOfContents(sections, PDFLib) {
   return await doc.save();
 }
 async function generateHardwareSetPage(setData, options, PDFLib) {
-  const { PDFDocument: PDFDocument3, StandardFonts: StandardFonts2, rgb: rgb2 } = PDFLib;
+  const PDFDocument3 = PDFDocument, StandardFonts22 = StandardFonts, rgb22 = rgb;
   const doc = await PDFDocument3.create();
-  const helveticaBold = await doc.embedFont(StandardFonts2.HelveticaBold);
-  const helvetica = await doc.embedFont(StandardFonts2.Helvetica);
+  const helveticaBold = await doc.embedFont(StandardFonts22.HelveticaBold);
+  const helvetica = await doc.embedFont(StandardFonts22.Helvetica);
   const pageW = 612, pageH = 792;
   const margin = 72;
   const contentWidth = pageW - margin * 2;
@@ -22583,11 +22991,11 @@ async function generateHardwareSetPage(setData, options, PDFLib) {
     y: curY,
     size: 16,
     font: helveticaBold,
-    color: rgb2(0.2, 0.4, 0.6)
+    color: rgb22(0.2, 0.4, 0.6)
   });
   curY -= 20;
   const badgeText = isAffirmed ? "AFFIRMED" : "PENDING REVIEW";
-  const badgeColor = isAffirmed ? rgb2(0.13, 0.55, 0.13) : rgb2(0.8, 0.5, 0);
+  const badgeColor = isAffirmed ? rgb22(0.13, 0.55, 0.13) : rgb22(0.8, 0.5, 0);
   const badgeW = helveticaBold.widthOfTextAtSize(badgeText, 8);
   page.drawRectangle({
     x: pageW / 2 - (badgeW + 12) / 2,
@@ -22601,14 +23009,14 @@ async function generateHardwareSetPage(setData, options, PDFLib) {
     y: curY,
     size: 8,
     font: helveticaBold,
-    color: rgb2(1, 1, 1)
+    color: rgb22(1, 1, 1)
   });
   curY -= 24;
   page.drawLine({
     start: { x: margin, y: curY },
     end: { x: pageW - margin, y: curY },
     thickness: 1.5,
-    color: rgb2(0.2, 0.4, 0.6)
+    color: rgb22(0.2, 0.4, 0.6)
   });
   curY -= 18;
   const metaFields = [
@@ -22637,14 +23045,14 @@ async function generateHardwareSetPage(setData, options, PDFLib) {
       y: curY,
       size: 10,
       font: helveticaBold,
-      color: rgb2(0.3, 0.3, 0.3)
+      color: rgb22(0.3, 0.3, 0.3)
     });
     page.drawText(value, {
       x: margin + 90,
       y: curY,
       size: 10,
       font: helvetica,
-      color: rgb2(0.1, 0.1, 0.1)
+      color: rgb22(0.1, 0.1, 0.1)
     });
     curY -= 16;
   }
@@ -22653,7 +23061,7 @@ async function generateHardwareSetPage(setData, options, PDFLib) {
     start: { x: margin, y: curY },
     end: { x: pageW - margin, y: curY },
     thickness: 0.5,
-    color: rgb2(0.8, 0.8, 0.8)
+    color: rgb22(0.8, 0.8, 0.8)
   });
   curY -= 16;
   const doorsTitle = `Doors Using Set ${set.set_number} (${doors.length} door${doors.length !== 1 ? "s" : ""})`;
@@ -22662,7 +23070,7 @@ async function generateHardwareSetPage(setData, options, PDFLib) {
     y: curY,
     size: 11,
     font: helveticaBold,
-    color: rgb2(0.2, 0.4, 0.6)
+    color: rgb22(0.2, 0.4, 0.6)
   });
   curY -= 18;
   if (doors.length === 0) {
@@ -22671,7 +23079,7 @@ async function generateHardwareSetPage(setData, options, PDFLib) {
       y: curY,
       size: 9,
       font: helvetica,
-      color: rgb2(0.5, 0.5, 0.5)
+      color: rgb22(0.5, 0.5, 0.5)
     });
     curY -= 20;
   } else {
@@ -22692,7 +23100,7 @@ async function generateHardwareSetPage(setData, options, PDFLib) {
       colWidths: doorColWidths,
       font: helvetica,
       headerFont: helveticaBold,
-      rgb: rgb2,
+      rgb: rgb22,
       minY: 60
     });
     curY = doorResult.endY;
@@ -22706,7 +23114,7 @@ async function generateHardwareSetPage(setData, options, PDFLib) {
         y: curY,
         size: 11,
         font: helveticaBold,
-        color: rgb2(0.2, 0.4, 0.6)
+        color: rgb22(0.2, 0.4, 0.6)
       });
       curY -= 18;
       const overflowDoorResult = drawTable(page, {
@@ -22717,7 +23125,7 @@ async function generateHardwareSetPage(setData, options, PDFLib) {
         colWidths: doorColWidths,
         font: helvetica,
         headerFont: helveticaBold,
-        rgb: rgb2,
+        rgb: rgb22,
         minY: 60
       });
       curY = overflowDoorResult.endY;
@@ -22731,7 +23139,7 @@ async function generateHardwareSetPage(setData, options, PDFLib) {
     y: curY,
     size: 11,
     font: helveticaBold,
-    color: rgb2(0.2, 0.4, 0.6)
+    color: rgb22(0.2, 0.4, 0.6)
   });
   curY -= 18;
   if (components.length === 0) {
@@ -22740,7 +23148,7 @@ async function generateHardwareSetPage(setData, options, PDFLib) {
       y: curY,
       size: 9,
       font: helvetica,
-      color: rgb2(0.5, 0.5, 0.5)
+      color: rgb22(0.5, 0.5, 0.5)
     });
     curY -= 20;
   } else {
@@ -22760,7 +23168,7 @@ async function generateHardwareSetPage(setData, options, PDFLib) {
       colWidths: compColWidths,
       font: helvetica,
       headerFont: helveticaBold,
-      rgb: rgb2,
+      rgb: rgb22,
       minY: 60
     });
     curY = compResult.endY;
@@ -22774,7 +23182,7 @@ async function generateHardwareSetPage(setData, options, PDFLib) {
         y: curY,
         size: 11,
         font: helveticaBold,
-        color: rgb2(0.2, 0.4, 0.6)
+        color: rgb22(0.2, 0.4, 0.6)
       });
       curY -= 18;
       const overflowResult = drawTable(page, {
@@ -22785,7 +23193,7 @@ async function generateHardwareSetPage(setData, options, PDFLib) {
         colWidths: compColWidths,
         font: helvetica,
         headerFont: helveticaBold,
-        rgb: rgb2,
+        rgb: rgb22,
         minY: 60
       });
       curY = overflowResult.endY;
@@ -22798,7 +23206,7 @@ async function generateHardwareSetPage(setData, options, PDFLib) {
     y: 40,
     size: 8,
     font: helvetica,
-    color: rgb2(0.6, 0.6, 0.6)
+    color: rgb22(0.6, 0.6, 0.6)
   });
   page = doc.addPage([pageW, pageH]);
   curY = pageH - 60;
@@ -22808,7 +23216,7 @@ async function generateHardwareSetPage(setData, options, PDFLib) {
     y: curY,
     size: 14,
     font: helveticaBold,
-    color: rgb2(0.2, 0.4, 0.6)
+    color: rgb22(0.2, 0.4, 0.6)
   });
   curY -= 30;
   page.drawText("Keying Information", {
@@ -22816,7 +23224,7 @@ async function generateHardwareSetPage(setData, options, PDFLib) {
     y: curY,
     size: 12,
     font: helveticaBold,
-    color: rgb2(0.1, 0.1, 0.1)
+    color: rgb22(0.1, 0.1, 0.1)
   });
   curY -= 20;
   const keyingInfo = set.notes || null;
@@ -22828,7 +23236,7 @@ async function generateHardwareSetPage(setData, options, PDFLib) {
         y: curY,
         size: 10,
         font: helvetica,
-        color: rgb2(0.15, 0.15, 0.15)
+        color: rgb22(0.15, 0.15, 0.15)
       });
       curY -= 16;
     }
@@ -22838,7 +23246,7 @@ async function generateHardwareSetPage(setData, options, PDFLib) {
       y: curY,
       size: 10,
       font: helvetica,
-      color: rgb2(0.5, 0.5, 0.5)
+      color: rgb22(0.5, 0.5, 0.5)
     });
     curY -= 16;
   }
@@ -22848,7 +23256,7 @@ async function generateHardwareSetPage(setData, options, PDFLib) {
     y: curY,
     size: 12,
     font: helveticaBold,
-    color: rgb2(0.1, 0.1, 0.1)
+    color: rgb22(0.1, 0.1, 0.1)
   });
   curY -= 20;
   const certifications = /* @__PURE__ */ new Set();
@@ -22882,7 +23290,7 @@ async function generateHardwareSetPage(setData, options, PDFLib) {
       y: curY,
       size: 10,
       font: helvetica,
-      color: rgb2(0.5, 0.5, 0.5)
+      color: rgb22(0.5, 0.5, 0.5)
     });
     curY -= 16;
   } else {
@@ -22892,7 +23300,7 @@ async function generateHardwareSetPage(setData, options, PDFLib) {
         y: curY,
         size: 10,
         font: helvetica,
-        color: rgb2(0.15, 0.15, 0.15)
+        color: rgb22(0.15, 0.15, 0.15)
       });
       curY -= 16;
     }
@@ -22902,7 +23310,7 @@ async function generateHardwareSetPage(setData, options, PDFLib) {
     y: 40,
     size: 8,
     font: helvetica,
-    color: rgb2(0.6, 0.6, 0.6)
+    color: rgb22(0.6, 0.6, 0.6)
   });
   return await doc.save();
 }
@@ -55180,7 +55588,7 @@ var init_operators = __esm({
 });
 var ColorTypes;
 var grayscale;
-var rgb;
+var rgb2;
 var cmyk;
 var Grayscale;
 var RGB;
@@ -55205,7 +55613,7 @@ var init_colors = __esm({
       assertRange(gray, "gray", 0, 1);
       return { type: ColorTypes.Grayscale, gray };
     }, "grayscale");
-    rgb = /* @__PURE__ */ __name(function(red, green, blue) {
+    rgb2 = /* @__PURE__ */ __name(function(red, green, blue) {
       assertRange(red, "red", 0, 1);
       assertRange(green, "green", 0, 1);
       assertRange(blue, "blue", 0, 1);
@@ -55231,7 +55639,7 @@ var init_colors = __esm({
       if (scale2 === void 0) {
         scale2 = 1;
       }
-      return (comps === null || comps === void 0 ? void 0 : comps.length) === 1 ? grayscale(comps[0] * scale2) : (comps === null || comps === void 0 ? void 0 : comps.length) === 3 ? rgb(comps[0] * scale2, comps[1] * scale2, comps[2] * scale2) : (comps === null || comps === void 0 ? void 0 : comps.length) === 4 ? cmyk(comps[0] * scale2, comps[1] * scale2, comps[2] * scale2, comps[3] * scale2) : void 0;
+      return (comps === null || comps === void 0 ? void 0 : comps.length) === 1 ? grayscale(comps[0] * scale2) : (comps === null || comps === void 0 ? void 0 : comps.length) === 3 ? rgb2(comps[0] * scale2, comps[1] * scale2, comps[2] * scale2) : (comps === null || comps === void 0 ? void 0 : comps.length) === 4 ? cmyk(comps[0] * scale2, comps[1] * scale2, comps[2] * scale2, comps[3] * scale2) : void 0;
     }, "componentsToColor");
     colorToComponents = /* @__PURE__ */ __name(function(color) {
       return color.type === Grayscale ? [color.gray] : color.type === RGB ? [color.red, color.green, color.blue] : color.type === CMYK ? [color.cyan, color.magenta, color.yellow, color.key] : error3("Invalid color: " + JSON.stringify(color));
@@ -56545,7 +56953,7 @@ var init_appearances = __esm({
         return grayscale(Number(c1));
       }
       if (colorSpace === "rg" && c1 && c2 && c3) {
-        return rgb(Number(c1), Number(c2), Number(c3));
+        return rgb2(Number(c1), Number(c2), Number(c3));
       }
       if (colorSpace === "k" && c1 && c2 && c3 && c4) {
         return cmyk(Number(c1), Number(c2), Number(c3), Number(c4));
@@ -56574,7 +56982,7 @@ var init_appearances = __esm({
       var rotation = reduceRotation(ap === null || ap === void 0 ? void 0 : ap.getRotation());
       var _d = adjustDimsForRotation(rectangle2, rotation), width = _d.width, height = _d.height;
       var rotate = rotateInPlace(__assign(__assign({}, rectangle2), { rotation }));
-      var black = rgb(0, 0, 0);
+      var black = rgb2(0, 0, 0);
       var borderColor = (_b = componentsToColor(ap === null || ap === void 0 ? void 0 : ap.getBorderColor())) !== null && _b !== void 0 ? _b : black;
       var normalBackgroundColor = componentsToColor(ap === null || ap === void 0 ? void 0 : ap.getBackgroundColor());
       var downBackgroundColor = componentsToColor(ap === null || ap === void 0 ? void 0 : ap.getBackgroundColor(), 0.8);
@@ -56616,7 +57024,7 @@ var init_appearances = __esm({
       var rotation = reduceRotation(ap === null || ap === void 0 ? void 0 : ap.getRotation());
       var _d = adjustDimsForRotation(rectangle2, rotation), width = _d.width, height = _d.height;
       var rotate = rotateInPlace(__assign(__assign({}, rectangle2), { rotation }));
-      var black = rgb(0, 0, 0);
+      var black = rgb2(0, 0, 0);
       var borderColor = (_b = componentsToColor(ap === null || ap === void 0 ? void 0 : ap.getBorderColor())) !== null && _b !== void 0 ? _b : black;
       var normalBackgroundColor = componentsToColor(ap === null || ap === void 0 ? void 0 : ap.getBackgroundColor());
       var downBackgroundColor = componentsToColor(ap === null || ap === void 0 ? void 0 : ap.getBackgroundColor(), 0.8);
@@ -56662,7 +57070,7 @@ var init_appearances = __esm({
       var rotation = reduceRotation(ap === null || ap === void 0 ? void 0 : ap.getRotation());
       var _f = adjustDimsForRotation(rectangle2, rotation), width = _f.width, height = _f.height;
       var rotate = rotateInPlace(__assign(__assign({}, rectangle2), { rotation }));
-      var black = rgb(0, 0, 0);
+      var black = rgb2(0, 0, 0);
       var borderColor = componentsToColor(ap === null || ap === void 0 ? void 0 : ap.getBorderColor());
       var normalBackgroundColor = componentsToColor(ap === null || ap === void 0 ? void 0 : ap.getBackgroundColor());
       var downBackgroundColor = componentsToColor(ap === null || ap === void 0 ? void 0 : ap.getBackgroundColor(), 0.8);
@@ -56721,7 +57129,7 @@ var init_appearances = __esm({
       var rotation = reduceRotation(ap === null || ap === void 0 ? void 0 : ap.getRotation());
       var _e = adjustDimsForRotation(rectangle2, rotation), width = _e.width, height = _e.height;
       var rotate = rotateInPlace(__assign(__assign({}, rectangle2), { rotation }));
-      var black = rgb(0, 0, 0);
+      var black = rgb2(0, 0, 0);
       var borderColor = componentsToColor(ap === null || ap === void 0 ? void 0 : ap.getBorderColor());
       var normalBackgroundColor = componentsToColor(ap === null || ap === void 0 ? void 0 : ap.getBackgroundColor());
       var textLines;
@@ -56797,7 +57205,7 @@ var init_appearances = __esm({
       var rotation = reduceRotation(ap === null || ap === void 0 ? void 0 : ap.getRotation());
       var _d = adjustDimsForRotation(rectangle2, rotation), width = _d.width, height = _d.height;
       var rotate = rotateInPlace(__assign(__assign({}, rectangle2), { rotation }));
-      var black = rgb(0, 0, 0);
+      var black = rgb2(0, 0, 0);
       var borderColor = componentsToColor(ap === null || ap === void 0 ? void 0 : ap.getBorderColor());
       var normalBackgroundColor = componentsToColor(ap === null || ap === void 0 ? void 0 : ap.getBackgroundColor());
       var padding = 1;
@@ -56848,7 +57256,7 @@ var init_appearances = __esm({
       var rotation = reduceRotation(ap === null || ap === void 0 ? void 0 : ap.getRotation());
       var _c = adjustDimsForRotation(rectangle2, rotation), width = _c.width, height = _c.height;
       var rotate = rotateInPlace(__assign(__assign({}, rectangle2), { rotation }));
-      var black = rgb(0, 0, 0);
+      var black = rgb2(0, 0, 0);
       var borderColor = componentsToColor(ap === null || ap === void 0 ? void 0 : ap.getBorderColor());
       var normalBackgroundColor = componentsToColor(ap === null || ap === void 0 ? void 0 : ap.getBackgroundColor());
       var options = optionList.getOptions();
@@ -56880,7 +57288,7 @@ var init_appearances = __esm({
         if (selected.includes(line.text))
           selectedLines.push(idx2);
       }
-      var blue = rgb(153 / 255, 193 / 255, 218 / 255);
+      var blue = rgb2(153 / 255, 193 / 255, 218 / 255);
       var textColor = (_b = widgetColor !== null && widgetColor !== void 0 ? widgetColor : fieldColor) !== null && _b !== void 0 ? _b : black;
       if (widgetColor || widgetFontSize !== void 0) {
         updateDefaultAppearance(widget, textColor, font, fontSize);
@@ -57427,11 +57835,11 @@ var init_PDFCheckBox = __esm({
         if (!options)
           options = {};
         if (!("textColor" in options))
-          options.textColor = rgb(0, 0, 0);
+          options.textColor = rgb2(0, 0, 0);
         if (!("backgroundColor" in options))
-          options.backgroundColor = rgb(1, 1, 1);
+          options.backgroundColor = rgb2(1, 1, 1);
         if (!("borderColor" in options))
-          options.borderColor = rgb(0, 0, 0);
+          options.borderColor = rgb2(0, 0, 0);
         if (!("borderWidth" in options))
           options.borderWidth = 1;
         var widget = this.createWidget({
@@ -57648,11 +58056,11 @@ var init_PDFDropdown = __esm({
         if (!options)
           options = {};
         if (!("textColor" in options))
-          options.textColor = rgb(0, 0, 0);
+          options.textColor = rgb2(0, 0, 0);
         if (!("backgroundColor" in options))
-          options.backgroundColor = rgb(1, 1, 1);
+          options.backgroundColor = rgb2(1, 1, 1);
         if (!("borderColor" in options))
-          options.borderColor = rgb(0, 0, 0);
+          options.borderColor = rgb2(0, 0, 0);
         if (!("borderWidth" in options))
           options.borderWidth = 1;
         var widget = this.createWidget({
@@ -57844,11 +58252,11 @@ var init_PDFOptionList = __esm({
         if (!options)
           options = {};
         if (!("textColor" in options))
-          options.textColor = rgb(0, 0, 0);
+          options.textColor = rgb2(0, 0, 0);
         if (!("backgroundColor" in options))
-          options.backgroundColor = rgb(1, 1, 1);
+          options.backgroundColor = rgb2(1, 1, 1);
         if (!("borderColor" in options))
-          options.borderColor = rgb(0, 0, 0);
+          options.borderColor = rgb2(0, 0, 0);
         if (!("borderWidth" in options))
           options.borderWidth = 1;
         var widget = this.createWidget({
@@ -58020,9 +58428,9 @@ var init_PDFRadioGroup = __esm({
           y: (_b = options === null || options === void 0 ? void 0 : options.y) !== null && _b !== void 0 ? _b : 0,
           width: (_c = options === null || options === void 0 ? void 0 : options.width) !== null && _c !== void 0 ? _c : 50,
           height: (_d = options === null || options === void 0 ? void 0 : options.height) !== null && _d !== void 0 ? _d : 50,
-          textColor: (_e = options === null || options === void 0 ? void 0 : options.textColor) !== null && _e !== void 0 ? _e : rgb(0, 0, 0),
-          backgroundColor: (_f = options === null || options === void 0 ? void 0 : options.backgroundColor) !== null && _f !== void 0 ? _f : rgb(1, 1, 1),
-          borderColor: (_g = options === null || options === void 0 ? void 0 : options.borderColor) !== null && _g !== void 0 ? _g : rgb(0, 0, 0),
+          textColor: (_e = options === null || options === void 0 ? void 0 : options.textColor) !== null && _e !== void 0 ? _e : rgb2(0, 0, 0),
+          backgroundColor: (_f = options === null || options === void 0 ? void 0 : options.backgroundColor) !== null && _f !== void 0 ? _f : rgb2(1, 1, 1),
+          borderColor: (_g = options === null || options === void 0 ? void 0 : options.borderColor) !== null && _g !== void 0 ? _g : rgb2(0, 0, 0),
           borderWidth: (_h = options === null || options === void 0 ? void 0 : options.borderWidth) !== null && _h !== void 0 ? _h : 1,
           rotate: (_j = options === null || options === void 0 ? void 0 : options.rotate) !== null && _j !== void 0 ? _j : degrees(0),
           hidden: options === null || options === void 0 ? void 0 : options.hidden,
@@ -58285,11 +58693,11 @@ var init_PDFTextField = __esm({
         if (!options)
           options = {};
         if (!("textColor" in options))
-          options.textColor = rgb(0, 0, 0);
+          options.textColor = rgb2(0, 0, 0);
         if (!("backgroundColor" in options))
-          options.backgroundColor = rgb(1, 1, 1);
+          options.backgroundColor = rgb2(1, 1, 1);
         if (!("borderColor" in options))
-          options.borderColor = rgb(0, 0, 0);
+          options.borderColor = rgb2(0, 0, 0);
         if (!("borderWidth" in options))
           options.borderWidth = 1;
         var widget = this.createWidget({
@@ -58351,28 +58759,28 @@ var init_PDFTextField = __esm({
     PDFTextField_default = PDFTextField;
   }
 });
-var StandardFonts;
+var StandardFonts2;
 var init_StandardFonts = __esm({
   "node_modules/pdf-lib/es/api/StandardFonts.js"() {
     init_virtual_unenv_global_polyfill_cloudflare_unenv_preset_node_process();
     init_virtual_unenv_global_polyfill_cloudflare_unenv_preset_node_console();
     init_performance2();
-    (function(StandardFonts2) {
-      StandardFonts2["Courier"] = "Courier";
-      StandardFonts2["CourierBold"] = "Courier-Bold";
-      StandardFonts2["CourierOblique"] = "Courier-Oblique";
-      StandardFonts2["CourierBoldOblique"] = "Courier-BoldOblique";
-      StandardFonts2["Helvetica"] = "Helvetica";
-      StandardFonts2["HelveticaBold"] = "Helvetica-Bold";
-      StandardFonts2["HelveticaOblique"] = "Helvetica-Oblique";
-      StandardFonts2["HelveticaBoldOblique"] = "Helvetica-BoldOblique";
-      StandardFonts2["TimesRoman"] = "Times-Roman";
-      StandardFonts2["TimesRomanBold"] = "Times-Bold";
-      StandardFonts2["TimesRomanItalic"] = "Times-Italic";
-      StandardFonts2["TimesRomanBoldItalic"] = "Times-BoldItalic";
-      StandardFonts2["Symbol"] = "Symbol";
-      StandardFonts2["ZapfDingbats"] = "ZapfDingbats";
-    })(StandardFonts || (StandardFonts = {}));
+    (function(StandardFonts22) {
+      StandardFonts22["Courier"] = "Courier";
+      StandardFonts22["CourierBold"] = "Courier-Bold";
+      StandardFonts22["CourierOblique"] = "Courier-Oblique";
+      StandardFonts22["CourierBoldOblique"] = "Courier-BoldOblique";
+      StandardFonts22["Helvetica"] = "Helvetica";
+      StandardFonts22["HelveticaBold"] = "Helvetica-Bold";
+      StandardFonts22["HelveticaOblique"] = "Helvetica-Oblique";
+      StandardFonts22["HelveticaBoldOblique"] = "Helvetica-BoldOblique";
+      StandardFonts22["TimesRoman"] = "Times-Roman";
+      StandardFonts22["TimesRomanBold"] = "Times-Bold";
+      StandardFonts22["TimesRomanItalic"] = "Times-Italic";
+      StandardFonts22["TimesRomanBoldItalic"] = "Times-BoldItalic";
+      StandardFonts22["Symbol"] = "Symbol";
+      StandardFonts22["ZapfDingbats"] = "ZapfDingbats";
+    })(StandardFonts2 || (StandardFonts2 = {}));
   }
 });
 var PDFForm;
@@ -58406,7 +58814,7 @@ var init_PDFForm = __esm({
       function PDFForm2(acroForm, doc) {
         var _this = this;
         this.embedDefaultFont = function() {
-          return _this.doc.embedStandardFont(StandardFonts.Helvetica);
+          return _this.doc.embedStandardFont(StandardFonts2.Helvetica);
         };
         assertIs(acroForm, "acroForm", [[PDFAcroForm_default, "PDFAcroForm"]]);
         assertIs(doc, "doc", [[PDFDocument_default, "PDFDocument"]]);
@@ -59012,7 +59420,7 @@ function assertIsLiteralOrHexString(pdfObject) {
     throw new UnexpectedObjectTypeError([PDFHexString_default, PDFString_default], pdfObject);
   }
 }
-var PDFDocument;
+var PDFDocument2;
 var PDFDocument_default;
 var init_PDFDocument = __esm({
   "node_modules/pdf-lib/es/api/PDFDocument.js"() {
@@ -59034,7 +59442,7 @@ var init_PDFDocument = __esm({
     init_PDFEmbeddedFile();
     init_PDFJavaScript();
     init_JavaScriptEmbedder();
-    PDFDocument = /** @class */
+    PDFDocument2 = /** @class */
     (function() {
       function PDFDocument3(context3, ignoreEncryption, updateMetadata) {
         var _this = this;
@@ -59717,7 +60125,7 @@ var init_PDFDocument = __esm({
       };
       return PDFDocument3;
     })();
-    PDFDocument_default = PDFDocument;
+    PDFDocument_default = PDFDocument2;
     __name(assertIsLiteralOrHexString, "assertIsLiteralOrHexString");
   }
 });
@@ -59767,7 +60175,7 @@ var init_PDFPage = __esm({
     (function() {
       function PDFPage2(leafNode, ref, doc) {
         this.fontSize = 24;
-        this.fontColor = rgb(0, 0, 0);
+        this.fontColor = rgb2(0, 0, 0);
         this.lineHeight = 24;
         this.x = 0;
         this.y = 0;
@@ -60154,7 +60562,7 @@ var init_PDFPage = __esm({
           blendMode: options.blendMode
         });
         if (!("color" in options) && !("borderColor" in options)) {
-          options.borderColor = rgb(0, 0, 0);
+          options.borderColor = rgb2(0, 0, 0);
         }
         var contentStream = this.getContentStream();
         contentStream.push.apply(contentStream, drawSvgPath(path, {
@@ -60195,7 +60603,7 @@ var init_PDFPage = __esm({
           blendMode: options.blendMode
         });
         if (!("color" in options)) {
-          options.color = rgb(0, 0, 0);
+          options.color = rgb2(0, 0, 0);
         }
         var contentStream = this.getContentStream();
         contentStream.push.apply(contentStream, drawLine({
@@ -60242,7 +60650,7 @@ var init_PDFPage = __esm({
           blendMode: options.blendMode
         });
         if (!("color" in options) && !("borderColor" in options)) {
-          options.color = rgb(0, 0, 0);
+          options.color = rgb2(0, 0, 0);
         }
         var contentStream = this.getContentStream();
         contentStream.push.apply(contentStream, drawRectangle({
@@ -60301,7 +60709,7 @@ var init_PDFPage = __esm({
           blendMode: options.blendMode
         });
         if (!("color" in options) && !("borderColor" in options)) {
-          options.color = rgb(0, 0, 0);
+          options.color = rgb2(0, 0, 0);
         }
         var contentStream = this.getContentStream();
         contentStream.push.apply(contentStream, drawEllipse({
@@ -60340,7 +60748,7 @@ var init_PDFPage = __esm({
       };
       PDFPage2.prototype.getFont = function() {
         if (!this.font || !this.fontKey) {
-          var font = this.doc.embedStandardFont(StandardFonts.Helvetica);
+          var font = this.doc.embedStandardFont(StandardFonts2.Helvetica);
           this.setFont(font);
         }
         return [this.font, this.fontKey];
@@ -60470,8 +60878,8 @@ var init_PDFButton = __esm({
           y: ((_c = options === null || options === void 0 ? void 0 : options.y) !== null && _c !== void 0 ? _c : 0) - ((_d = options === null || options === void 0 ? void 0 : options.borderWidth) !== null && _d !== void 0 ? _d : 0) / 2,
           width: (_e = options === null || options === void 0 ? void 0 : options.width) !== null && _e !== void 0 ? _e : 100,
           height: (_f = options === null || options === void 0 ? void 0 : options.height) !== null && _f !== void 0 ? _f : 50,
-          textColor: (_g = options === null || options === void 0 ? void 0 : options.textColor) !== null && _g !== void 0 ? _g : rgb(0, 0, 0),
-          backgroundColor: (_h = options === null || options === void 0 ? void 0 : options.backgroundColor) !== null && _h !== void 0 ? _h : rgb(0.75, 0.75, 0.75),
+          textColor: (_g = options === null || options === void 0 ? void 0 : options.textColor) !== null && _g !== void 0 ? _g : rgb2(0, 0, 0),
+          backgroundColor: (_h = options === null || options === void 0 ? void 0 : options.backgroundColor) !== null && _h !== void 0 ? _h : rgb2(0.75, 0.75, 0.75),
           borderColor: options === null || options === void 0 ? void 0 : options.borderColor,
           borderWidth: (_j = options === null || options === void 0 ? void 0 : options.borderWidth) !== null && _j !== void 0 ? _j : 0,
           rotate: (_k = options === null || options === void 0 ? void 0 : options.rotate) !== null && _k !== void 0 ? _k : degrees(0),
@@ -60715,7 +61123,7 @@ __export(es_exports, {
   StalledParserError: () => StalledParserError,
   StandardFontEmbedder: () => StandardFontEmbedder_default,
   StandardFontValues: () => StandardFontValues,
-  StandardFonts: () => StandardFonts,
+  StandardFonts: () => StandardFonts2,
   TextAlignment: () => TextAlignment,
   TextRenderingMode: () => TextRenderingMode,
   UnbalancedParenthesisError: () => UnbalancedParenthesisError,
@@ -60844,7 +61252,7 @@ __export(es_exports, {
   reduceRotation: () => reduceRotation,
   restoreDashPattern: () => restoreDashPattern,
   reverseArray: () => reverseArray,
-  rgb: () => rgb,
+  rgb: () => rgb2,
   rotateAndSkewTextDegreesAndTranslate: () => rotateAndSkewTextDegreesAndTranslate,
   rotateAndSkewTextRadiansAndTranslate: () => rotateAndSkewTextRadiansAndTranslate,
   rotateDegrees: () => rotateDegrees,
@@ -69439,7 +69847,7 @@ var Page;
 var PDF_HEADER_SIGNATURE;
 var STARTXREF_SIGNATURE;
 var ENDOBJ_SIGNATURE;
-var PDFDocument2;
+var PDFDocument22;
 var BasePdfManager;
 var LocalPdfManager;
 var NetworkPdfManager;
@@ -74728,9 +75136,9 @@ var init_pdf_worker = __esm({
         this.numComps = numComps;
       }
       getRgb(src, srcOffset) {
-        const rgb2 = new Uint8ClampedArray(3);
-        this.getRgbItem(src, srcOffset, rgb2, 0);
-        return rgb2;
+        const rgb22 = new Uint8ClampedArray(3);
+        this.getRgbItem(src, srcOffset, rgb22, 0);
+        return rgb22;
       }
       getRgbItem(src, srcOffset, dest, destOffset) {
         unreachable("Should not call ColorSpace.getRgbItem");
@@ -121345,7 +121753,7 @@ var init_pdf_worker = __esm({
     STARTXREF_SIGNATURE = new Uint8Array([115, 116, 97, 114, 116, 120, 114, 101, 102]);
     ENDOBJ_SIGNATURE = new Uint8Array([101, 110, 100, 111, 98, 106]);
     __name(find, "find");
-    PDFDocument2 = class {
+    PDFDocument22 = class {
       constructor(pdfManager, stream2) {
         if (stream2.length <= 0) {
           throw new InvalidPDFException("The PDF file is empty, i.e. its size is zero bytes.");
@@ -122126,7 +122534,7 @@ var init_pdf_worker = __esm({
         return shadow(this, "annotationGlobals", AnnotationFactory.createGlobals(this.pdfManager));
       }
     };
-    __name(PDFDocument2, "PDFDocument");
+    __name(PDFDocument22, "PDFDocument");
     __name(parseDocBaseUrl, "parseDocBaseUrl");
     BasePdfManager = class {
       constructor(args) {
@@ -122201,7 +122609,7 @@ var init_pdf_worker = __esm({
       constructor(args) {
         super(args);
         const stream2 = new Stream2(args.source);
-        this.pdfDocument = new PDFDocument2(this, stream2);
+        this.pdfDocument = new PDFDocument22(this, stream2);
         this._loadedStreamPromise = Promise.resolve(stream2);
       }
       async ensure(obj, prop, args) {
@@ -122230,7 +122638,7 @@ var init_pdf_worker = __esm({
           disableAutoFetch: args.disableAutoFetch,
           rangeChunkSize: args.rangeChunkSize
         });
-        this.pdfDocument = new PDFDocument2(this, this.streamManager.getStream());
+        this.pdfDocument = new PDFDocument22(this, this.streamManager.getStream());
       }
       async ensure(obj, prop, args) {
         try {
@@ -131122,23 +131530,23 @@ var init_pdf = __esm({
         return shadow2(this, "_colors", colors);
       }
       convert(color) {
-        const rgb2 = getRGB(color);
+        const rgb22 = getRGB(color);
         if (!window.matchMedia("(forced-colors: active)").matches) {
-          return rgb2;
+          return rgb22;
         }
         for (const [name, RGB2] of this._colors) {
-          if (RGB2.every((x, i2) => x === rgb2[i2])) {
+          if (RGB2.every((x, i2) => x === rgb22[i2])) {
             return _ColorManager._colorsMapping.get(name);
           }
         }
-        return rgb2;
+        return rgb22;
       }
       getHexCode(name) {
-        const rgb2 = this._colors.get(name);
-        if (!rgb2) {
+        const rgb22 = this._colors.get(name);
+        if (!rgb22) {
           return name;
         }
-        return Util2.makeHexColor(...rgb2);
+        return Util2.makeHexColor(...rgb22);
       }
     };
     ColorManager = _ColorManager;
@@ -141669,8 +142077,8 @@ var init_pdf = __esm({
         return [scaleAndClamp(1 - Math.min(1, c + k)), scaleAndClamp(1 - Math.min(1, m + k)), scaleAndClamp(1 - Math.min(1, y + k))];
       }
       static CMYK_HTML(components) {
-        const rgb2 = this.CMYK_RGB(components).slice(1);
-        return this.RGB_HTML(rgb2);
+        const rgb22 = this.CMYK_RGB(components).slice(1);
+        return this.RGB_HTML(rgb22);
       }
       static RGB_CMYK([r, g, b]) {
         const c = 1 - r;
@@ -172994,8 +173402,8 @@ registerExtractedModules(router, {
   persistSessionMatches,
   assembleSubmittalPackage,
   getAssemblyStatus,
-  StandardFonts,
-  rgb,
+  StandardFonts: StandardFonts2,
+  rgb: rgb2,
   matchComponentToCutSheet,
   batchMatchSessionComponents,
   retryFailedDiscoveries,
