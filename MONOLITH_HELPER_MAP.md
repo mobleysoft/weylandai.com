@@ -1037,6 +1037,39 @@ session's transcript if needed again.
    renderer can't yet handle, and retire the fallback only once real
    coverage is measured, not assumed.
 
+   **Milestone 1 - content-stream tokenizer: DONE (2026-09-11)**.
+   `src/lib/pdf-content-stream-tokenizer.js` - turns real decompressed
+   content-stream bytes into a flat `[{op, args}]` list per PDF
+   32000-1:2008 §7.2/§7.8.2. Reuses `pdf-metadata.js`'s `pv()` as the
+   single operand parser (numbers/names/strings/hex/arrays/dicts) rather
+   than reimplementing it - the real synergy this section's intro
+   already called out. Real, honest gap stated up front: inline images
+   (`BI...ID...EI`) are recognized and skipped over, not actually
+   decoded - not needed for this venture's real door-schedule PDFs. 10
+   tests, including a genuine cross-validation (not a hand-fixture): a
+   real PDF generated via `sovereign-pdf.js`, its content-stream bytes
+   independently extracted via `pdf-metadata.js`'s own xref/object
+   parser (a separate code path), tokenized, and the real `Tj`/`re`/`f`/
+   `m`/`l`/`S` operators + exact arguments (drawn text, rectangle
+   geometry) confirmed to round-trip correctly.
+
+   **Real correction found while scoping this**: `@cloudflare/puppeteer`
+   and `pako` (pdf-lib's internal compression dependency) are NOT
+   independently deletable dead code, despite having been fully replaced
+   at their *known* call sites by steps 2 and 4 - `puppeteer_cloudflare_default`
+   is still genuinely called by `renderRegionAt600DPI2` (already
+   documented as deferred pending this step), and `pako` is nested
+   inside `pdf-lib`'s own require graph, not something removable without
+   replacing `pdf-lib` itself. Both vendored chunks are transitively
+   gated behind this step's completion, not separate quick wins - a
+   claim made in conversation before checking, corrected here rather
+   than left standing.
+
+   Still needed: content-stream *interpretation* (turning the tokenized
+   op list into an actual graphics-state machine - path construction,
+   fill/stroke, text positioning), embedded font parsing, glyph
+   rasterization, and the software rasterizer itself. Not started.
+
 Steps 2-5 are a genuine multi-phase engineering effort, not a
 refactor - flagging here rather than understating it, since 103,182 of
 the 131,569 vendored lines (pdfjs-dist + pdf-lib) are mature,
