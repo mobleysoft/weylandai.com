@@ -667,11 +667,37 @@ session's transcript if needed again.
 
 ### Ordered replacement plan
 
-1. **Delete the two incidental/unused stubs.** `ws` (15 lines) and
-   `wrangler` (49 lines) - confirm zero real call sites (not just zero
-   in the audited wrapper files - a full-file grep), then delete
-   outright. No design work, no risk. Do this first, independent of
-   everything else below.
+1. **`ws` deletion - premise corrected 2026-09-10, NOT safe to delete
+   outright as originally written.** A full-file grep found a real call
+   site: `@cloudflare/puppeteer`'s generic transport-selection code
+   (`isNode ? NodeWebSocketTransport : BrowserWebSocketTransport`, line
+   ~130403) picks `NodeWebSocketTransport`, which constructs
+   `import_ws.default` - the `ws` stub, whose entire module body is
+   `throw new Error("ws does not work in the browser...")`. Checked
+   `isNode`'s real value against the actual Cloudflare edge (`npx
+   wrangler dev --remote` with a one-line diagnostic Worker, not
+   assumed): `process.version` is truthy (`v22.19.0`) and `isNode`
+   evaluates **true** in this bundle's real runtime - the opposite of
+   what "browser environment, ws is irrelevant" would predict. Still
+   unresolved: whether `@cloudflare/puppeteer`'s actual entry point used
+   here (`launch(env.BROWSER)`) ever reaches this generic transport-
+   selection branch at all, or uses its own binding-specific connection
+   that bypasses it entirely - that requires tracing `launch()`'s real
+   call path through the bundle (or a live integration check against
+   `lib/cutsheet-discovery.js`'s actual browser automation), not
+   completed yet. **Do not delete `ws` until that's resolved** - if this
+   branch really is live, cutsheet-discovery.js's browser automation may
+   already be throwing in production every time it connects, which
+   would be a real, higher-priority bug independent of any sovereignty
+   work.
+   `wrangler` (49 lines): the two `node_modules/wrangler/...` boundary
+   markers in this file are actually the `unenv`/`@cloudflare/unenv-
+   preset` Node/console polyfills (real, needed, already correctly
+   flagged as "not a sovereignty target" in the table above) - no
+   separate, genuinely-incidental 49-line `wrangler` block was found by
+   grep. The original "49 lines, incidental, delete" claim doesn't
+   correspond to anything found on disk; treat as unconfirmed until a
+   real block is located, not as a to-do.
 2. **Sovereign DEFLATE/zlib** (replaces `pako`, unblocks both PDF
    phases below for reading/writing compressed PDF streams). RFC 1951
    is a fully specified, deterministic algorithm - real, tractable,
