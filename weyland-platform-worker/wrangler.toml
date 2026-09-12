@@ -1,0 +1,136 @@
+name = "weyland-platform-worker"
+main = "src/index.js"
+compatibility_date = "2025-10-31"
+
+# Explicitly kept on (see weyland-huntx-worker/wrangler.toml for the real
+# incident this comment documents: adding [[routes]] makes Wrangler
+# disable the workers.dev subdomain by default on deploy).
+workers_dev = true
+
+# No `compatibility_flags = ["nodejs_compat"]` - this Worker's real
+# dependency closure (router.js, json-response.js, errors.js, auth.js,
+# legacy-local-session.js, authfor-client.js, auth-module.js,
+# stripe-billing.js, marketing-pages.js, and the 7 forked route files)
+# imports no node:* built-in or npm package - confirmed by grep, not
+# assumed. Pure WebCrypto/fetch/D1/KV/Service-Binding.
+#
+# Per the 2026-09-12 microservices push convention: no bundler for new
+# Worker code - plain native ESM, `wrangler deploy` resolves the import
+# graph directly from src/index.js.
+
+# ── D1 Database ──────────────────────────────────────────────
+# SAME weyland_db, same database_id, as the monolith's own
+# [[d1_databases]] block in ../wrangler.toml - NOT a new/separate
+# database. This Worker's authenticate()/authfor-exchange/webhook-
+# provisioning routes read/write the real, shared `users` and
+# `weyland_sessions` tables, and the webhook handler reads/writes the
+# real `processed_webhook_events` idempotency table too.
+[[d1_databases]]
+binding = "DB"
+database_name = "weyland_db"
+database_id = "5729f77e-d7e3-4577-ab43-3c064fa90ca5"
+
+# ── KV Namespaces ────────────────────────────────────────────
+# Same IDs as ../wrangler.toml. CACHE: checkout-status polling
+# (routes/billing.js's GET /api/billing/checkout/status/:id) and the
+# webhook handler's checkout_status:<session_id> write. DEMO_REQUESTS:
+# routes/demo.js's POST /api/demo.
+[[kv_namespaces]]
+binding = "CACHE"
+id = "80a77dcf4f5f4e8588c172f2ecef95fb"
+
+[[kv_namespaces]]
+binding = "DEMO_REQUESTS"
+id = "090d0771923a4c40b6c37dadf6e8f067"
+
+# ── Service Bindings ─────────────────────────────────────────
+# vendyai-com-worker: the conglomerate's single point of direct Stripe
+# integration (per John's 2026-09-03 directive: all ventures sell through
+# vendyai, authenticate through AuthFor). Real call sites in this Worker:
+# routes/billing.js's POST /api/billing/checkout/create and
+# routes/subscription.js's POST /api/subscription/portal. Same-account
+# service binding, zero network hop - same pattern as ../wrangler.toml's
+# own VENDYAI binding.
+[[services]]
+binding = "VENDYAI"
+service = "vendyai-com-worker"
+
+# mascom-edge: real GitHub-Pages pull-through cache for the homepage "/"
+# only (see src/index.js's fetch handler) - same binding/service name as
+# ../wrangler.toml's own MASCOM_EDGE, falls back automatically to the
+# bundled serve_whyweyland() page on any error/miss.
+[[services]]
+binding = "MASCOM_EDGE"
+service = "mascom-edge"
+
+# ── Secrets (set via `wrangler secret put <NAME> --name weyland-platform-worker`) ──
+# NOT yet provisioned on this Worker as of this extraction - see the
+# extraction report for exactly what that blocks:
+#   STRIPE_SECRET_KEY            - GET /api/billing/catalog only (direct
+#                                   Stripe read). Checkout CREATION does
+#                                   NOT need this - it routes through the
+#                                   VENDYAI binding above.
+#   STRIPE_WEBHOOK_SECRET        - legacy direct-Stripe webhook signature
+#                                   path in routes/webhooks-subscription.js
+#   SUBSCRIPTION_WEBHOOK_SECRET  - the real vendyai-forward webhook
+#                                   signature path (the actual live
+#                                   traffic path since 2026-09-03)
+# JWT_SECRET is deliberately NOT listed here: it is also unset on the
+# real production weylandai-com-worker today (confirmed via
+# `wrangler secret list --name weylandai-com-worker`) - leaving it unset
+# here matches real current production behavior exactly rather than
+# silently diverging from it.
+#
+# ── Cloudflare Worker Routes (staged cutover) ──────────────────
+# Per the task's explicit instruction to sequence cutover narrowly:
+# marketing pages first, then login/session, then billing/webhook last.
+#
+# STAGE 1 (added below, live): root "/" and "/pricing" - the lowest-risk,
+# most-visible-if-broken pair. Verified byte-identical against real
+# production immediately before adding these (curl diff of both pages,
+# 0 diff lines - see the extraction report for the full record) using
+# the same most-specific-pattern-wins mechanism established by
+# ../weyland-huntx-worker/wrangler.toml (monolith's weylandai.com/*
+# catch-all untouched, still serves everything not matched here).
+[[routes]]
+pattern = "weylandai.com/"
+zone_name = "weylandai.com"
+
+[[routes]]
+pattern = "weylandai.com/pricing"
+zone_name = "weylandai.com"
+
+# STAGE 2 (added below, live): /login and /api/auth/* - verified via a
+# real fixture users+weyland_sessions round trip against the real shared
+# D1 (temporary rows, deleted immediately after): GET /api/auth/me,
+# GET /api/auth/session/check, and GET /api/subscription/status all
+# correctly recognized the real session cookie and returned the real
+# user's data; POST /api/auth/logout correctly deleted the real session
+# row, confirmed by a subsequent session/check reporting invalid. Every
+# negative-path case (no token, bad token, no cookie) already matched
+# production byte-for-byte before this stage was added too. The one
+# untested leg is the live https://authfor.com/api/v1/verify network
+# call itself with a REAL AuthFor bearer token (mechanism #3 in
+# ../lib/auth.js) - not simulable headlessly from here (requires
+# completing a real interactive AuthFor sign-in), but it is a plain
+# external HTTPS fetch with no Cloudflare account-scoped binding, so
+# there is no structural reason for it to behave differently from this
+# Worker than from the monolith. /login itself is separately confirmed
+# byte-identical to production (0 diff).
+[[routes]]
+pattern = "weylandai.com/login"
+zone_name = "weylandai.com"
+
+[[routes]]
+pattern = "weylandai.com/api/auth/*"
+zone_name = "weylandai.com"
+
+# STAGE 3 (/subscribe, /api/billing/*, /api/subscription/*,
+# /api/webhooks/subscription) is NOT added yet - see the extraction
+# report for exactly what's verified vs. still pending. Blocked on
+# provisioning STRIPE_WEBHOOK_SECRET / SUBSCRIPTION_WEBHOOK_SECRET on
+# this Worker for real before its webhook route can be safely cut over -
+# a real behavioral discrepancy (webhook signature verification would
+# fail closed) that this pass could not resolve without those secret
+# values, which are not readable back from Cloudflare/Stripe by design
+# and were not found in any local key store searched.

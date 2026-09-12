@@ -1,0 +1,11 @@
+{
+  "name": "weyland-platform-worker",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test": "echo \"no test suite ported yet - route logic tested via the source src/routes/*.test.mjs files; see extraction report\" && exit 0"
+  },
+  "devDependencies": {
+    "wrangler": "^4.129.1"
+  }
+}
