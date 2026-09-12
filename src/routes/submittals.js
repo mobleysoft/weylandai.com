@@ -46,7 +46,20 @@ export function registerSubmittalsRoutes(router, { authenticate, logTelemetryEve
           continue;
         }
         const submittalId = crypto.randomUUID();
-        const userId = user.userId;
+        // Fixed 2026-09-12: an AuthFor ephemeral trial guest (subx IS in
+        // EPHEMERAL_TRIAL_PRODUCTS) has user.userId === null by design
+        // (src/lib/authfor-client.js's authenticateViaEphemeral) but a
+        // real, stable per-guest id at user.id (`eph_<ephemeral.id>`).
+        // The INSERT below binds userId into submittals.user_id, a NOT
+        // NULL column with no ephemeral fallback - binding null 500'd
+        // with "NOT NULL constraint failed: submittals.user_id" for
+        // every anonymous trial upload. Same fallback pattern already
+        // used elsewhere in this codebase for the same reason (see
+        // cps-drafts.js, cps-mappings.js, sessions-recent.js,
+        // user-cutsheets.js) - identical no-op for a real signed-in user
+        // (user.id === user.userId there), and gives an ephemeral guest
+        // a real, stable identifier to own their own upload under.
+        const userId = user.userId || user.id;
         const fileBufferKey = `file-buffers/${userId}/${submittalId}`;
         const fileBuffer = await file.arrayBuffer();
         const fileSizeBytes = fileBuffer.byteLength;
@@ -333,7 +346,12 @@ export function registerSubmittalsRoutes(router, { authenticate, logTelemetryEve
          WHERE user_id = ?
          ORDER BY created_at DESC
          LIMIT 50`
-      ).bind(user.userId).all();
+      // Fixed 2026-09-12 alongside the upload NOT NULL fix: an ephemeral
+      // guest's own upload is now stored under user.id (see upload
+      // handler above), so this list query must key by the same
+      // fallback or their own submittals would never come back (WHERE
+      // user_id = NULL never matches a row in SQL, even a NULL row).
+      ).bind(user.userId || user.id).all();
       return jsonResponse3({ submittals: submittals.results });
     } catch (error5) {
       return jsonResponse3({ error: "Failed to fetch submittals: " + error5.message }, 500);
@@ -356,7 +374,10 @@ export function registerSubmittalsRoutes(router, { authenticate, logTelemetryEve
       }
       const submittal = await env2.DB.prepare(
         "SELECT * FROM submittals WHERE id = ? AND user_id = ?"
-      ).bind(submittalId, user.userId).first();
+      // Same ephemeral-fallback fix as the upload/list handlers above -
+      // an ephemeral guest's own submittal is owned by user.id, not the
+      // null user.userId, or this lookup would always 404 for them.
+      ).bind(submittalId, user.userId || user.id).first();
       if (!submittal) {
         return jsonResponse3({ error: "Submittal not found" }, 404);
       }
@@ -469,7 +490,11 @@ export function registerSubmittalsRoutes(router, { authenticate, logTelemetryEve
       }
       const submittal = await env2.DB.prepare(
         "SELECT * FROM submittals WHERE id = ? AND user_id = ?"
-      ).bind(submittalId, user.userId).first();
+      // Same ephemeral-fallback fix as the upload/list/retry handlers
+      // above - an ephemeral guest's own submittal is owned by user.id,
+      // not the null user.userId, or this lookup would always 404 for
+      // them (e.g. PropX's submittal-picker reading a SubX guest upload).
+      ).bind(submittalId, user.userId || user.id).first();
       if (!submittal) {
         return jsonResponse3({ error: "Submittal not found" }, 404);
       }

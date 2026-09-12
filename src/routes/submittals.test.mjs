@@ -5,6 +5,12 @@ import { registerSubmittalsRoutes } from "./submittals.js";
 
 const authOk = async () => ({ user: { userId: "u1" } });
 const authFail = async () => ({ error: new Response("no", { status: 401 }) });
+// Real shape of an AuthFor ephemeral trial guest (src/lib/authfor-client.js's
+// authenticateViaEphemeral): userId is null by design, id is the real stable
+// per-guest identifier. requireProductAccess (imported for real, not mocked,
+// by submittals.js) treats subx as ephemeral-trial-accessible with no
+// ephemeralToken/consenta.cc call needed, so this needs no fetch mocking.
+const authEphemeral = async () => ({ user: { ephemeral: true, userId: null, id: "eph_guest123" } });
 
 const PERMISSIVE_USER_ROW = { subscription_tier: "subconp", subscription_status: "active", products_enabled: "subx,propx" };
 
@@ -85,6 +91,35 @@ test("POST /api/submittals/upload: real happy path processes a PDF and reports r
   assert.equal(body.results[0].doorCount, 1);
 });
 
+test("POST /api/submittals/upload: ephemeral trial guest (null userId) succeeds and stores the submittal under their ephemeral id, not null", async () => {
+  const boundInsertArgs = [];
+  const db = {
+    prepare(sql) {
+      return {
+        bind: (...args) => {
+          if (sql.includes("INSERT INTO submittals")) boundInsertArgs.push(args);
+          return {
+            async first() { return null; },
+            async all() { return { results: [] }; },
+            async run() { return { success: true }; },
+          };
+        },
+      };
+    },
+  };
+  const { router, env } = setup({ authenticate: authEphemeral, db });
+  const res = await router.handle(pdfFormRequest(), env, {});
+  // Before the 2026-09-12 fix, binding the null user.userId here 500'd with
+  // "D1_ERROR: NOT NULL constraint failed: submittals.user_id" (submittals
+  // table schema: user_id TEXT NOT NULL). This must now succeed.
+  assert.equal(res.status, 201);
+  const body = await res.json();
+  assert.equal(body.results[0].status, "review");
+  assert.equal(boundInsertArgs.length, 1);
+  const insertedUserId = boundInsertArgs[0][1]; // INSERT INTO submittals (id, user_id, ...)
+  assert.equal(insertedUserId, "eph_guest123", "must fall back to user.id, never bind null into the NOT NULL user_id column");
+});
+
 test("POST /api/submittals/upload: an async (queued) dispatch reports queued status", async () => {
   const { router, env } = setup({
     dispatchVisionExtraction: async () => ({ sync: false, job_id: "j1" }),
@@ -107,6 +142,32 @@ test("GET /api/submittals: real happy path lists the user's submittals", async (
   assert.equal(res.status, 200);
   const body = await res.json();
   assert.equal(body.submittals.length, 1);
+});
+
+test("GET /api/submittals: ephemeral trial guest's list query keys off their ephemeral id, not their null userId", async () => {
+  const boundListArgs = [];
+  const db = {
+    prepare(sql) {
+      return {
+        bind: (...args) => {
+          if (sql.includes("FROM submittals")) boundListArgs.push(args);
+          return {
+            async first() { return PERMISSIVE_USER_ROW; },
+            async all() { return { results: [{ id: "s1" }] }; },
+            async run() { return { success: true }; },
+          };
+        },
+      };
+    },
+  };
+  const { router, env } = setup({ authenticate: authEphemeral, db });
+  const res = await router.handle(new Request("https://example.com/api/submittals"), env, {});
+  assert.equal(res.status, 200);
+  // Before the fix this bound `null` (user.userId), which never matches any
+  // row in SQL ("WHERE user_id = NULL" is always false) - an ephemeral
+  // guest's own uploads would silently vanish from their own list even once
+  // the upload itself stopped 500ing.
+  assert.equal(boundListArgs[0][0], "eph_guest123");
 });
 
 test("POST /api/submittals/:id/retry: 404 when submittal not found", async () => {
