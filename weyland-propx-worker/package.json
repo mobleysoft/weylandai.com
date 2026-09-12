@@ -1,0 +1,12 @@
+{
+  "name": "weyland-propx-worker",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "wrangler dev",
+    "deploy": "wrangler deploy"
+  },
+  "dependencies": {
+    "@cloudflare/puppeteer": "1.0.4"
+  }
+}

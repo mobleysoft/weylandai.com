@@ -1,0 +1,83 @@
+name = "weyland-propx-worker"
+main = "src/index.js"
+compatibility_date = "2025-10-31"
+compatibility_flags = ["nodejs_compat"]
+
+# Explicitly kept on, same reasoning as weyland-huntx-worker's own
+# wrangler.toml comment: adding [[routes]] below makes Wrangler disable
+# the workers.dev subdomain by default on deploy. Keeping it on
+# preserves the standalone https://weyland-propx-worker.<account>.workers.dev
+# endpoint this extraction's own parity/round-trip testing depends on.
+workers_dev = true
+
+# PropX extracted out of weylandai.com's monolith (src/routes/document-
+# generators.js's two self-contained proposals routes - see
+# src/routes/proposals.js's own header for exactly which lines and why
+# only those two, not the other 13 "form -> templated PDF" verticals
+# bundled in that same file) per the 2026-09-12 microservices push
+# (MICROSERVICES_PUSH.md) and the same Service-Binding pattern already
+# proven live by weyland-ocr-worker, weyland-market-intelligence-worker,
+# weyland-huntx-worker, and weyland-subx-worker.
+#
+# Same live production D1 database, same ID, as the monolith's own
+# wrangler.toml - NOT a new/separate database, no migration. PropX's
+# routes read the real, shared submittals/door_entries/vendor_profile
+# tables and insert into the real, shared proposals table.
+[[d1_databases]]
+binding = "DB"
+database_name = "weyland_db"
+database_id = "5729f77e-d7e3-4577-ab43-3c064fa90ca5"
+
+# Needed for /api/proposals/generate's PDF render (puppeteer.launch(env.BROWSER),
+# ported verbatim from the monolith - same Browser Rendering binding the
+# monolith itself needed to add for this exact route, per its own
+# wrangler.toml comment: "Needed for quote/proposal PDF generation").
+[browser]
+binding = "BROWSER"
+
+# Same real R2 bucket the monolith uses for proposals/lien-waivers/bid-
+# packages/etc (bucket name predates PropX - see the monolith's own
+# wrangler.toml comment - not renamed here to avoid implying a new/
+# separate bucket that doesn't exist).
+[[r2_buckets]]
+binding = "UPLOADS"
+bucket_name = "subx-uploads"
+
+# Cloudflare Worker Routes on the weylandai.com zone - enabled after this
+# Worker was deployed standalone to its own *.workers.dev subdomain and
+# curl-verified for real parity against the monolith's existing behavior:
+# identical unauth 401 body on both /api/proposals/generate and
+# /api/proposals/:id/download, a real authenticated round trip (temporary
+# weyland_sessions + users + submittals + door_entries test fixture rows,
+# all deleted afterward - see PROPX_EXTRACTION.md) that produced a real
+# 2-page PDF via Cloudflare Browser Rendering, correctly grouped 2 real
+# door_entries rows into 1 auto-priced line item at $0/unit (never
+# invented a price), a manual-lineItems override that produced correct
+# real totals ($901 subtotal, 8% tax, $973.08 grand total), and a
+# real 404 "Submittal not found" when a session tried to read a
+# submittal it doesn't own (proves the WHERE user_id = ? scoping still
+# works after extraction, not just before).
+#
+# Both patterns are strictly more specific than the monolith's
+# `weylandai.com/*` catch-all (still pointing at weylandai-com-worker,
+# untouched, not modified by this extraction), so Cloudflare's
+# route-precedence rule sends exactly these two path shapes here and
+# nothing else. /api/submittals/* is deliberately NOT claimed here -
+# PropX's UI reads it (for the submittal picker) but does not own it; it
+# stays served by the monolith (not yet migrated to weyland-subx-worker's
+# own zone routes either, as of this pass).
+[[routes]]
+pattern = "weylandai.com/api/proposals/*"
+zone_name = "weylandai.com"
+
+[[routes]]
+pattern = "weylandai.com/propx-app"
+zone_name = "weylandai.com"
+
+# *.html pages (src/pages/propx-app.html) imported as raw text in
+# src/index.js - a real Wrangler built-in module rule, not a custom
+# bundler step (per 2026-09-12 "no bundler for new work" instruction).
+[[rules]]
+type = "Text"
+globs = ["**/*.html"]
+fallthrough = true
