@@ -1,0 +1,29 @@
+name = "weyland-market-intelligence-worker"
+main = "src/index.js"
+compatibility_date = "2025-10-31"
+compatibility_flags = ["nodejs_compat"]
+
+# First real microservices-push extraction out of the weylandai.com
+# monolith (weyland.worker.js / src/legacy-monolith.js), per
+# WEYLAND_SUCCESSOR_ARCHITECTURE.md's strangler-fig migration plan and
+# the same Service Binding pattern already proven live by
+# weyland-ocr-worker. Owns the 6 "X-tool" market-intelligence routes
+# (PriceX materials, MarketX trends, CompX vendor search, WeatherX
+# delay-risk, ForecastX cash-flow, GeoX geocoding) - chosen over
+# pricing.js/PriceX-adjacent CPS routes because this cluster is
+# genuinely stateless: zero D1 access, zero auth dependency, pure
+# request-in/response-out plus public external APIs (FRED, TXDOT open
+# data, api.weather.gov, US Census geocoder) and one secret
+# (FRED_API_KEY). Verified by reading the actual route code before
+# picking this candidate - see MICROSERVICES_PUSH.md for the full
+# rationale, including why pricing.js was ruled out (it queries
+# hardware_sets/hardware_components directly, the tables the same-day
+# completeness audit found are globally empty in production - not
+# actually the safe, dependency-free candidate its name suggests).
+#
+# No D1, no KV, no R2, no Durable Objects, no auth binding needed.
+# FRED_API_KEY must be set here independently via `wrangler secret put
+# FRED_API_KEY --name weyland-market-intelligence-worker` - Cloudflare
+# service bindings invoke the target Worker with ITS OWN env bindings,
+# not the caller's, so this is not inherited from the main worker's
+# copy of the same secret name.
