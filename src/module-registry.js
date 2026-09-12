@@ -84,7 +84,7 @@ import { registerBillingRoutes } from "./routes/billing.js";
 import { registerInternalRoutes } from "./routes/internal.js";
 import { registerHuntRoutes } from "./routes/hunt.js";
 import { registerSubscriptionRoutes } from "./routes/subscription.js";
-import { registerMarketIntelligenceRoutes } from "./routes/market-intelligence.js";
+import { registerMarketIntelligenceProxyRoutes } from "./routes/market-intelligence-proxy.js";
 import { registerSystemStatusRoutes } from "./routes/system-status.js";
 import { registerMiscUtilityRoutes } from "./routes/misc-utility.js";
 import { registerWebhooksSubscriptionRoutes } from "./routes/webhooks-subscription.js";
@@ -407,7 +407,13 @@ export function registerExtractedModules(router, deps) {
   registerInternalRoutes(router);
   registerHuntRoutes(router, { authenticate });
   registerSubscriptionRoutes(router, { authenticate, errorResponse: deps.errorResponse });
-  registerMarketIntelligenceRoutes(router);
+  // Real microservice extraction (2026-09-12, MICROSERVICES_PUSH.md):
+  // was registerMarketIntelligenceRoutes(router) running the route logic
+  // in-process; now proxies to weyland-market-intelligence-worker via the
+  // MARKET_INTELLIGENCE Service Binding (see root wrangler.toml). The
+  // route logic itself moved to
+  // ../weyland-market-intelligence-worker/src/routes/market-intelligence.js.
+  registerMarketIntelligenceProxyRoutes(router);
   registerSystemStatusRoutes(router, { authenticate, WORKER_VERSION: deps.WORKER_VERSION });
   registerMiscUtilityRoutes(router, {
     authenticate,

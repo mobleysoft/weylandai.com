@@ -61,6 +61,19 @@ service = "vendyai-com-worker"
 binding = "MASCOM_EDGE"
 service = "mascom-edge"
 
+# weyland-market-intelligence-worker: real, independently-deployed
+# Worker owning the 6 "X-tool" market-intelligence routes (pricex,
+# marketx, compx, weatherx, forecastx, geox) - the first extraction of
+# the 2026-09-12 microservices push (see MICROSERVICES_PUSH.md). Same
+# same-account, zero-network-hop Service Binding pattern as OCR_SERVICE
+# above, verified end-to-end 2026-09-12 (4 of 6 routes byte/structurally
+# identical pre/post; the 2 FRED-backed routes were already failing in
+# production before this change - see MICROSERVICES_PUSH.md for the
+# pre-existing bug this did not introduce or fix).
+[[services]]
+binding = "MARKET_INTELLIGENCE"
+service = "weyland-market-intelligence-worker"
+
 # ── Browser Rendering ────────────────────────────────────────
 # Needed for quote/proposal PDF generation (puppeteer_cloudflare_default.
 # launch(env2.BROWSER)) - was never bound, so every PDF-producing endpoint
