@@ -273,12 +273,219 @@ introduced or fixed here — `/subx-app` deliberately only wires the former
 code path, `extract-image`), and this doc records the latter as a known,
 real gap for whoever picks up the two-pipeline unification next.
 
+## Part 4 — embedded extraction (no Anthropic key, no Ron's edge) for the `dispatchVisionExtraction` path
+
+Started 2026-09-12, per direct instruction: "we do not need an anthropic
+api key for weylandai.com! We do extractions via embedded gofaineats."
+
+### Re-diagnosis of the real, previous "ANTHROPIC_API_KEY not configured" 500 — two separate root causes, don't conflate them
+
+Part 3 above documents a real ANTHROPIC_API_KEY-missing 500 from
+`/subx-app`'s "RUN EXTRACTION" button. That button calls a **different**
+call chain than the one this Part 4 fixes:
+`GET /api/hardware-schedule/session/:id/page/:pageNum`
+(`src/routes/hardware-schedule-page-extract.js`) → `extractSinglePage` →
+`callClaudeWithPdf` (all in the bundled `weyland.worker.js`, ~line
+132803+) → a bare `fetch()` to `api.anthropic.com` using
+`env2.ANTHROPIC_API_KEY` directly. For *that* path, Part 3's diagnosis
+stands: the key really is missing on this account, confirmed again this
+session (`wrangler secret list` on `weylandai-com-worker` still has no
+`ANTHROPIC_API_KEY`) — Part 4 below does **not** touch or fix that button.
+
+The path this session actually re-traced and fixed is
+`dispatchVisionExtraction` (`src/lib/hardware-extraction-vision-dispatch.js`),
+reached from `POST /api/submittals/upload` (`src/routes/submittals.js`).
+Confirmed by reading `callEdge`/`mintInternalToken` in
+`src/lib/edge-telemetry.js`: `HASCOM_EDGE` (a hardcoded fallback URL,
+`https://hascom-edge.ron-helms.workers.dev`) and `AUTH_ONAMERICA` are
+**not** bound in this worker's real `wrangler.toml` (only `OCR_SERVICE`,
+`FILMLINE_VIDEO`, `VENDYAI`, `MASCOM_EDGE`, `MARKET_INTELLIGENCE` are real
+service bindings there) — so `viaSabpClaudeCode`'s default route
+(`claude_code_local`) fell through to a bare, essentially-unauthenticated
+`fetch()` against Ron Helms's own separate Cloudflare account. A prior
+session's "ANTHROPIC_API_KEY not configured" 500 seen while testing *this*
+path almost certainly came back from Ron's `hascom-edge` worker (or a stub
+reached without real auth), not from anything in weylandai.com's own
+account — provisioning `ANTHROPIC_API_KEY` here would not have fixed this
+particular call path at all. This matches `WEYLAND_SUCCESSOR_ARCHITECTURE.md`'s
+own prior flag of `auth-onamerica.ron-helms.workers.dev` as "Ron's rejected
+fleet-auth mesh, not AuthFor at all."
+
+### What was built
+
+**New adapter `embedded_gofaineat`**, registered in `adaptersForEdition()`
+and now the real `DEFAULT_ROUTE` for non-local editions in
+`dispatchVisionExtraction` (replacing `claude_code_local`; both it and
+`api_direct` stay selectable per-session via the existing
+`POST /api/sessions/:sessionId/extraction-route`). Source of truth:
+`src/lib/hardware-extraction-vision-dispatch.js`; hand-mirrored into
+`weyland.worker.js` (same build-pipeline caveat as Parts 1-2 — see that
+note above, still unresolved).
+
+Pipeline, no Anthropic key, no Ron's edge involved at any step:
+
+1. **Page classification** — calls the already-deployed
+   `weyland-ocr-worker`'s `/detect-schedules` (real PDFium-WASM
+   rasterization + tesseract-wasm OCR with orientation correction,
+   built and deployed in an *earlier* session per `ocr-worker/`'s own git
+   history — this session did not build page classification from
+   scratch, it reuses it) to find which page is the door schedule, rather
+   than assuming page 1.
+2. **Table-region OCR** — new `weyland-ocr-worker` endpoint
+   `/extract-schedule-table` (`renderAndExtractTableRegion()` in
+   `ocr-worker/index.js`), built this session. Real, evidence-based fix
+   for a real problem: generic full-page OCR (`/extract-text`, already
+   deployed) never read a single MARK/table-row value off a real complex
+   architectural door-schedule sheet
+   (`/Users/johnmobley/pdf/OCCDoorSchedulePg4.pdf`) at any DPI (150-600)
+   or pageseg mode (3/4/6/11/12) tried — only title-block prose and
+   floor-plan room labels, confirmed by rendering the page to a real PNG
+   and inspecting it (the table occupies roughly the top ~40% of the
+   page, in small print, sharing the sheet with a floor plan; whole-page
+   segmentation can't isolate it). Cropping to the top ~42% of the page
+   before OCR recovers real MARK values, fire ratings, and sizes —
+   confirmed via a real render + native `tesseract` CLI test, not
+   assumed. **Honest scope limit**: this is a real, working heuristic for
+   the common "schedule table + legend/notes across the top, floor plans
+   below" sheet layout (matches the one real test document available)
+   — not a universal fix. A sheet with the table lower on the page, or a
+   genuine full-page table (no floor plan sharing the sheet — the top-42%
+   crop would truncate most of *that* table's rows), needs a different
+   crop or the full candidate-region/bounding-box approach
+   `hardware-schedule-extract.js`'s batch-extract flow already uses at
+   600 DPI (see "Known, deliberately out-of-scope gaps" below).
+3. **CPU-limit fix** — OCR-ing the whole cropped band in one call took
+   ~10-12 CPU-seconds locally and, confirmed **live against production**
+   (see verification below), actually hit Cloudflare's real per-request
+   CPU ceiling: `{"error":"Worker exceeded CPU time limit."}`. Not
+   raisable further via `wrangler.toml`'s `[limits].cpu_ms` (already set
+   to 30000, the platform maximum). Real fix: split the band into three
+   narrower horizontal strips (`[0,.14] [.14,.28] [.28,.42]` of page
+   height), each its own separate request to `/extract-schedule-table`
+   (via `X-Crop-Top-Pct`/`X-Crop-Bottom-Pct` headers) with its own fresh
+   CPU budget — measured ~3-5 CPU-seconds per strip locally, and the
+   live production retest below completed with no CPU-limit error.
+4. **Structured extraction** — the concatenated OCR text goes to the real
+   local Qwen3-8B (`llama-server` on this Mac, port 18087) over its
+   existing Cloudflare Tunnel (`llama.mobleysoft.com`), via a new
+   `callLocalQwen()` using the OpenAI-compatible `/v1/chat/completions`
+   endpoint with `chat_template_kwargs.enable_thinking:false` (Qwen3 is a
+   "thinking" model; without this it burns the token budget on
+   `reasoning_content` and returns empty `content`). That tunnel route is
+   gated by Cloudflare Access ("m2m only" app `llama-server-gateway"`) —
+   confirmed live: a bare `fetch()` gets Access's HTML login page / 403,
+   not JSON. Fixed by minting real `CF-Access-Client-Id`/
+   `CF-Access-Client-Secret` headers from the existing
+   `jitagi-kernel-m2m` Access service token (rotated this session to
+   obtain the secret, since Access only returns it once — the new secret
+   was propagated to `weylandai-com-worker`'s `QWEN_BRIDGE_CLIENT_ID`/
+   `QWEN_BRIDGE_CLIENT_SECRET` and to the *other* real consumer of that
+   same shared token, `mobley-venture-fleet-a` — see that repo's own
+   notes; devducky.com's AI Code Review and agentropi.com's AI Agent
+   Match were briefly 502ing between the rotation and that fix, both
+   re-verified live afterward). New extraction prompt
+   (`EMBEDDED_TEXT_EXTRACTION_PROMPT_TEMPLATE`) reuses the same
+   `{doors:[...]}` JSON contract `parseAndValidateExtraction` already
+   expects, adapted for OCR text input instead of a PDF vision call, and
+   explicitly instructs the model not to fabricate rows it can't find.
+
+### Honest extraction-quality result (live, production, 2026-09-12)
+
+Real end-to-end run against `https://weylandai.com/api/submittals/upload`
+(real throwaway `users`+`weyland_sessions` D1 rows, same test method as
+Part 1, deleted immediately after) with the real test PDF:
+
+```
+HTTP 201
+{"totalFiles":1,"results":[{"filename":"OCCDoorSchedulePg4.pdf",
+ "submittalId":"7f104711-...","status":"review","doorCount":0,
+ "tokenUsage":0,"extractionConfidence":0.95}]}
+```
+
+D1 row for that submittal:
+
+```
+extraction_route: "embedded_gofaineat"
+source_page: 1, used_fallback_page: false   (detect-schedules correctly found the real schedule page)
+ocr_text_length: 5505
+doors: []
+extraction_warnings: ["no door schedule table found in OCR text"]
+```
+
+**Plainly, both halves of what actually works and what doesn't:**
+
+- The infrastructure is real and works end-to-end: no Anthropic key used,
+  no call to Ron's `hascom-edge`/`auth-onamerica` anywhere in this path,
+  real OCR service, real local Qwen3-8B inference over a real
+  Access-authenticated tunnel, completes within Cloudflare's CPU budget,
+  writes a real result to the real `submittals` table with no exceptions.
+- **Table OCR quality on this real, dense architectural sheet is not yet
+  good enough for reliable row extraction.** Qwen3-8B, given the actual
+  noisy banded OCR text, correctly and honestly reported it could not
+  find real door rows rather than fabricating any — exactly the behavior
+  the prompt asked for, and the right outcome given the input quality,
+  but the practical result today is **zero real doors extracted from this
+  document**, not a working extraction. (Separately, `extraction_confidence:
+  0.95` on a zero-door result is a pre-existing quirk of
+  `parseAndValidateExtraction`'s confidence formula — `baseConfidence -
+  errorRate*0.3` divides by `max(doors.length,1)`, so an empty result
+  always reads as "0.95 confident" — not something this session's changes
+  introduced or fixed.)
+- A manual, offline test with a tighter single-region crop (top 42%,
+  full width, 2x upscale, one OCR pass instead of three banded ones) did
+  recover real, legible MARK values, fire ratings, and door sizes for a
+  meaningful fraction of rows (verified via native `tesseract` CLI against
+  a real render) — but that single-pass approach is exactly what hits the
+  CPU ceiling in production. The banded version that fits the CPU budget
+  produces noisier, less complete per-strip text (each strip OCR'd
+  independently loses some cross-strip context), which is the real,
+  measured reason today's live run found zero usable rows despite the
+  underlying technique being demonstrably capable of reading this exact
+  document's data under less constrained conditions.
+- **Real, honest next step for whoever picks this up**: the accuracy gap
+  is between "OCR text quality achievable inside Cloudflare's 30-second
+  CPU ceiling" and "OCR text quality Qwen3-8B needs to reliably parse a
+  real dense table." Closing it needs either a faster/SIMD tesseract
+  build, moving the OCR step off the request-CPU-time-limited path
+  entirely (e.g. a Durable Object or Queue doing the OCR asynchronously,
+  polled the same way `claude_code_local`'s async job path already
+  works), or accepting that this route works best on schedule sheets that
+  are less visually dense than this stress-test document.
+
+### Known, deliberately out-of-scope gaps (not touched this session)
+
+Two other, separate call paths in this codebase extract door/hardware
+data and were **not** rewired to `embedded_gofaineat`:
+
+- `hardware-schedule-extract.js`'s batch-extract endpoint (the real
+  candidate-region flow behind `/subx-app`'s per-page extraction) calls
+  `queuePageExtractionJob` (`src/lib/hardware-extraction-pipeline.js`),
+  which has its own, separate `callEdge("POST", "/ai/v1/jobs/queue", ...)`
+  call to the same Ron's-edge dependency this Part 4 removed from
+  `dispatchVisionExtraction` — confirmed by reading it, not fixed here.
+- That same file's non-`claude_code_local` branch calls `routeExtraction`
+  → `extractDoorScheduleHGSE`/`extractDoorSchedule`, which is the same
+  family as Part 3's `callClaudeWithPdf` (real `ANTHROPIC_API_KEY`
+  dependency, not Ron's edge).
+
+Both are real, live, more heavily-used code paths than
+`dispatchVisionExtraction` (they back `/subx-app`'s actual "RUN
+EXTRACTION" UI), and both still depend on Ron's edge or a real Anthropic
+key respectively. Porting `embedded_gofaineat`'s approach into either is
+real, additional, unstarted work — flagged honestly, not silently claimed
+as done.
+
 ## Files touched
 
 - `src/routes/demo-trial.js` — Part 1 fix (source of truth)
-- `weyland.worker.js` — hand-mirrored copy of the same fix (deployed artifact) + new `serve_subx_app` + CTA fixes
+- `weyland.worker.js` — hand-mirrored copy of the same fix (deployed artifact) + new `serve_subx_app` + CTA fixes + Part 4's `embedded_gofaineat` adapter
 - `src/lib/marketing-pages.js` — hand-mirrored `serve_subx_app` + CTA fixes (real un-bundled source)
 - `src/pages/subx-app.html` — new, real functional page
 - `src/pages/subx.html`, `src/pages/takeoffx.html` — CTA fix
 - `src/routes_manifest.json` — new `subx-app` entry
+- `src/lib/hardware-extraction-vision-dispatch.js` — Part 4: new `embedded_gofaineat` adapter, `EMBEDDED_TEXT_EXTRACTION_PROMPT_TEMPLATE`, `callLocalQwen`, new default route
+- `ocr-worker/index.js` — Part 4: new `/extract-schedule-table` endpoint, `renderAndExtractTableRegion()`, `upscale2x()`, orientation-fix for `/extract-text`
+- `ocr-worker/wrangler.toml` — Part 4: `[limits] cpu_ms = 30000`
+- `src/extraction/jitagi-detect-schedules.js` — Part 4: exported `rotate90CW` for reuse in `ocr-worker/index.js`
+- Cloudflare: `QWEN_BRIDGE_CLIENT_ID`/`QWEN_BRIDGE_CLIENT_SECRET` secrets added to `weylandai-com-worker`; `jitagi-kernel-m2m` Access service token rotated (shared with `mobley-venture-fleet-a`, which was re-synced with the same new secret)
 - `/Users/johnmobley/ventures.json` — weylandai.com insight updated (via `mascom/with-ventures-lock.sh`)

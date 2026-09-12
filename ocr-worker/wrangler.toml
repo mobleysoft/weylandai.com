@@ -13,3 +13,13 @@ compatibility_flags = ["nodejs_compat"]
 type = "Data"
 globs = ["assets/*.bin"]
 fallthrough = true
+
+# Real, measured requirement, not a defensive guess: OCR-ing a dense real
+# door-schedule table (tessedit_pageseg_mode 6 over a ~3300x1070 cropped,
+# 2x-upscaled region) took ~10-12 CPU-seconds locally on this Mac when
+# testing against /Users/johnmobley/pdf/OCCDoorSchedulePg4.pdf. The
+# platform default CPU limit was not enough - confirmed live via a real
+# HTTP 503 (Cloudflare error 1102, "Worker exceeded resource limits")
+# before this was raised.
+[limits]
+cpu_ms = 30000

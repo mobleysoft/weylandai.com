@@ -52,6 +52,14 @@ const SCHEDULE_TYPE_REGISTRY = {
   finish_schedule: { status: 'not_implemented', pageClassifiers: ['finish schedule', 'finish hardware'] },
   ada_compliance: { status: 'not_implemented', pageClassifiers: ['ada compliance', 'accessibility'] },
   municipal_requirements: { status: 'not_implemented', pageClassifiers: ['municipal', 'code requirements'] },
+  // Added 2026-09-09 for multi-trade support (MULTI_TRADE_BID_SUPPORT.md).
+  // status stays 'not_implemented': page-type detection alone doesn't help
+  // without a real row-extraction pipeline behind it, which is the actual
+  // GOFAINEAT pilot being built next - see gofaineats/pilot/panelschedule_*.
+  // Not mirrored into Ron's own schedule-router.ts (a separate personal
+  // repo, github.com/argo147/hascom) - that file's own comment already
+  // notes the two are kept in sync by hand, not automatically.
+  electrical_schedule: { status: 'not_implemented', pageClassifiers: ['panel schedule', 'panelboard schedule', 'electrical schedule', 'circuit schedule'] },
 };
 
 function classifyPageType(title) {
@@ -118,7 +126,7 @@ function raceAgainstDeadline(workPromise, deadlineMs) {
 // construction loads the ~1.8MB WASM module, don't pay that cost per page).
 // modelBytes: the trained data (e.g. eng.traineddata), loaded once by the caller.
 
-function rotate90CW(img) {
+export function rotate90CW(img) {
   const { width: w, height: h, data } = img;
   const out = new Uint8ClampedArray(w * h * 4);
   for (let y = 0; y < h; y++) {

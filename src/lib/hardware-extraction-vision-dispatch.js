@@ -739,6 +739,221 @@ export async function viaSabpClaudeCode(sessionId, pdfBuffer, env2, ctx = {}) {
   ).bind(r.body.job_id, (/* @__PURE__ */ new Date()).toISOString(), sessionId).run();
   return { sync: false, job_id: r.body.job_id };
 }
+// ─────────────────────────────────────────────────────────────────────────
+// embedded_gofaineat: real, no-Anthropic-key, no-Ron's-edge extraction route.
+//
+// Built 2026-09-12 to replace the default claude_code_local route, which
+// (when HASCOM_EDGE/AUTH_ONAMERICA aren't bound - true for this worker's
+// real wrangler.toml) fell through to a bare, effectively-unauthenticated
+// fetch() against Ron Helms's own separate Cloudflare account
+// (hascom-edge.ron-helms.workers.dev, see HASCOM_EDGE/callEdge above in
+// edge-telemetry.js). That's the real reason a prior session's extraction
+// test hit "ANTHROPIC_API_KEY not configured" - the 500 was almost
+// certainly coming back from Ron's worker/stub, not from anything in this
+// account. Provisioning ANTHROPIC_API_KEY on weylandai-com-worker would not
+// have fixed that call path at all.
+//
+// This route needs neither: it rasterizes+OCRs the real page via the
+// already-deployed weyland-ocr-worker (env.OCR_SERVICE, PDFium WASM +
+// tesseract-wasm, see ocr-worker/index.js and
+// src/extraction/jitagi-detect-schedules.js), then turns the OCR'd table
+// text into the same {doors:[...]} JSON contract via the real local
+// Qwen3-8B (llama-server on this Mac, 127.0.0.1:18087) reached over its
+// Cloudflare Tunnel (llama.mobleysoft.com) - the same bridge
+// jitagi/kernel/llm_client.mjs uses locally, extended here with the
+// CF-Access-Client-Id/Secret headers a Worker (not localhost) needs to get
+// past the tunnel's Cloudflare Access "m2m only" gate (confirmed live
+// 2026-09-12: bare fetch() from off-Mac gets Access's HTML login page /
+// 403, not JSON - the service token below is what actually gets through).
+const QWEN_BRIDGE_URL = "https://llama.mobleysoft.com";
+
+export function EMBEDDED_TEXT_EXTRACTION_PROMPT_TEMPLATE(ocrText) {
+  return `You are extracting a door schedule table from OCR text of a scanned construction PDF page. The OCR is imperfect (a real WASM tesseract pass over a rasterized scan, not a clean text layer) - expect misread characters, merged columns, and noisy whitespace. Work with what's actually here; do not invent doors that aren't backed by real text below.
+
+RAW OCR TEXT:
+"""
+${ocrText.slice(0, 6000)}
+"""
+
+Find the door schedule table in this text. The MARK (sometimes "DOOR NO.", "DOOR #", or "NO.") column is the primary door identifier - real door marks are usually alphanumeric (G3, 101, 137A) and NOT a clean sequential count. Column headers commonly seen: MARK, SIZE/WIDTH/HT, THICKNESS, TYPE, MATERIAL/MAT, FRAME, GLAZING/GLASS, HARDWARE/HDW, FIRE RATING, NOTES.
+
+Convert dimensions to inches (3'-0" -> 36, 7'-0" -> 84, 1-3/4" -> 1.75).
+
+Output ONLY a JSON object (no other prose, no markdown fences), in exactly this shape:
+{
+  "doors": [
+    {
+      "door_number": "101",
+      "size": "3'-0 x 7'-0",
+      "width_inches": 36,
+      "height_inches": 84,
+      "type": "A",
+      "material": "HM",
+      "frame": "A",
+      "glazing": null,
+      "hardware": "1",
+      "fire_rating": null,
+      "door_notes_refs": [],
+      "glazing_notes_refs": [],
+      "thickness_inches": 1.75,
+      "remarks": null
+    }
+  ],
+  "metadata": { "total_doors_extracted": 1, "pages_with_schedule": "1", "extraction_warnings": [] }
+}
+
+If a field isn't present in the text, use null - do not fabricate values. If you cannot find any door schedule rows at all in this text, output {"doors": [], "metadata": {"total_doors_extracted": 0, "pages_with_schedule": "", "extraction_warnings": ["no door schedule table found in OCR text"]}}.
+
+Output the JSON object now:`;
+}
+
+async function callLocalQwen(env2, messages, opts = {}) {
+  const { maxTokens = 4e3, temperature = 0.1 } = opts;
+  const clientId = env2.QWEN_BRIDGE_CLIENT_ID;
+  const clientSecret = env2.QWEN_BRIDGE_CLIENT_SECRET;
+  if (!clientId || !clientSecret) {
+    throw new Error("QWEN_BRIDGE_CLIENT_ID/QWEN_BRIDGE_CLIENT_SECRET not configured on this worker - the embedded route needs the Cloudflare Access service-token credentials for llama.mobleysoft.com (Access app 'llama-server-gateway (m2m only)', service token 'jitagi-kernel-m2m')");
+  }
+  const base = env2.QWEN_BRIDGE_URL || QWEN_BRIDGE_URL;
+  const controller = new AbortController();
+  const timeout = setTimeout(() => controller.abort(), 45e3);
+  let res;
+  try {
+    res = await fetch(`${base}/v1/chat/completions`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "CF-Access-Client-Id": clientId,
+        "CF-Access-Client-Secret": clientSecret
+      },
+      body: JSON.stringify({
+        model: "qwen3-8b",
+        messages,
+        max_tokens: maxTokens,
+        temperature,
+        chat_template_kwargs: { enable_thinking: false }
+      }),
+      signal: controller.signal
+    });
+  } finally {
+    clearTimeout(timeout);
+  }
+  const text = await res.text();
+  let data;
+  try {
+    data = JSON.parse(text);
+  } catch {
+    throw new Error(`Qwen bridge returned non-JSON (HTTP ${res.status}): ${text.slice(0, 300)}`);
+  }
+  if (!res.ok || data.error) {
+    throw new Error(`Qwen bridge error (HTTP ${res.status}): ${data.error?.message || text.slice(0, 300)}`);
+  }
+  return data.choices?.[0]?.message?.content || "";
+}
+
+export async function viaEmbeddedGofaineat(sessionId, pdfBuffer, env2, ctx = {}) {
+  if (!env2.OCR_SERVICE) {
+    return { sync: true, error: "ocr_service_not_configured", detail: "OCR_SERVICE binding missing - can't rasterize/OCR without weyland-ocr-worker" };
+  }
+  const session = await env2.DB.prepare(
+    `SELECT total_pages FROM hardware_extraction_sessions WHERE id = ?`
+  ).bind(sessionId).first();
+  const totalPages = ctx.totalPages || session?.total_pages || 1;
+  let targetPage = ctx.pageNumber || null;
+  let detection = null;
+  if (!targetPage) {
+    try {
+      const detectResp = await env2.OCR_SERVICE.fetch("https://weyland-ocr-worker/detect-schedules", {
+        method: "POST",
+        headers: { "X-Session-Id": sessionId, "X-Total-Pages": String(totalPages) },
+        body: pdfBuffer
+      });
+      detection = await detectResp.json();
+      const doorCandidate = (detection.candidates || []).find((c) => c.scheduleType === "door_schedule") || (detection.candidates || [])[0];
+      targetPage = doorCandidate?.pageNumber || null;
+    } catch (e) {
+      detection = { error: e.message };
+    }
+  }
+  // Honest fallback, not a guess dressed as certainty: real door-schedule
+  // sheets are very commonly the last page of the set. If the OCR-based
+  // classifier above didn't resolve a candidate, we still try the last
+  // page rather than silently failing - but detection_fallback below
+  // records that this happened so it's visible, not hidden.
+  const usedFallbackPage = !targetPage;
+  if (!targetPage) targetPage = totalPages;
+
+  // Uses /extract-schedule-table, not the generic /extract-text: verified
+  // live 2026-09-12 against a real complex door-schedule sheet
+  // (/Users/johnmobley/pdf/OCCDoorSchedulePg4.pdf) that generic full-page
+  // OCR (any DPI 150-600, any pageseg mode) reads title-block prose and
+  // floor-plan room labels but NEVER the actual MARK/table rows - the
+  // table is dense small print sharing the page with a floor plan, and
+  // whole-page segmentation can't isolate it. /extract-schedule-table
+  // crops to the top ~42% of the page (where schedule tables/legends
+  // commonly sit, floor plans below) before OCR - confirmed via a real
+  // render + native tesseract test to actually recover MARK values,
+  // fire ratings, and sizes that full-page OCR missed entirely. See
+  // ocr-worker/index.js's renderAndExtractTableRegion() for the honest
+  // scope note: this is a real, working heuristic for that common sheet
+  // layout, not a universal fix for every schedule sheet's layout.
+  //
+  // Fetched as three separate band requests, not one: OCR-ing the full
+  // 42%-height band in a single call took ~10-12 CPU-seconds locally and,
+  // confirmed live against production (POST /api/submittals/upload with a
+  // real session and this same real PDF), actually hit Cloudflare's real
+  // per-request CPU ceiling ("Worker exceeded CPU time limit" - a genuine
+  // platform limit, not something raisable further via wrangler.toml
+  // [limits].cpu_ms, which was already tried). Each narrower band is a
+  // fresh request with its own fresh CPU budget - measured ~3-5 CPU-seconds
+  // per band locally, safely under the limit.
+  const BANDS = [[0, 0.14], [0.14, 0.28], [0.28, 0.42]];
+  const ocrTexts = [];
+  for (const [topPct, botPct] of BANDS) {
+    const bandResp = await env2.OCR_SERVICE.fetch("https://weyland-ocr-worker/extract-schedule-table", {
+      method: "POST",
+      headers: {
+        "X-Page-Number": String(targetPage),
+        "X-Crop-Top-Pct": String(topPct),
+        "X-Crop-Bottom-Pct": String(botPct)
+      },
+      body: pdfBuffer
+    });
+    if (!bandResp.ok) {
+      const errText = await bandResp.text();
+      return { sync: true, error: "ocr_failed", detail: errText.slice(0, 500), page: targetPage, band: [topPct, botPct] };
+    }
+    const bandResult = await bandResp.json();
+    ocrTexts.push(bandResult.text || "");
+  }
+  const pageText = ocrTexts.join("\n");
+  if (!pageText.trim()) {
+    return { sync: true, error: "ocr_produced_no_text", detail: `Page ${targetPage} OCR returned empty text across all bands`, page: targetPage };
+  }
+
+  const prompt = EMBEDDED_TEXT_EXTRACTION_PROMPT_TEMPLATE(pageText);
+  let content;
+  try {
+    content = await callLocalQwen(env2, [{ role: "user", content: prompt }], { maxTokens: 4e3, temperature: 0.1 });
+  } catch (e) {
+    return { sync: true, error: "qwen_bridge_failed", detail: e.message, page: targetPage, ocr_text_length: pageText.length };
+  }
+  let parsed;
+  try {
+    parsed = parseAndValidateExtraction(content);
+  } catch (e) {
+    return { sync: true, error: "parse_failed", detail: e.message, page: targetPage, raw_model_output: content.slice(0, 1000) };
+  }
+  return {
+    sync: true,
+    ...parsed,
+    extraction_route: "embedded_gofaineat",
+    source_page: targetPage,
+    used_fallback_page: usedFallbackPage,
+    ocr_text_length: pageText.length
+  };
+}
+
 export async function viaLocalSubprocess(sessionId, pdfBuffer, env2, ctx = {}) {
   const messages = [{
     role: "user",
@@ -773,6 +988,7 @@ export function adaptersForEdition(env2) {
   const isLocal = env2.WEYLAND_EDITION === "local";
   return {
     api_direct: viaApiDirect,
+    embedded_gofaineat: viaEmbeddedGofaineat,
     ...!isLocal && { claude_code_local: viaSabpClaudeCode },
     ...isLocal && { claude_code_subprocess: viaLocalSubprocess }
   };
@@ -782,7 +998,13 @@ export async function dispatchVisionExtraction(sessionId, pdfBuffer, env2, ctx =
     `SELECT extraction_route FROM hardware_extraction_sessions WHERE id = ?`
   ).bind(sessionId).first();
   const ADAPTERS = adaptersForEdition(env2);
-  const DEFAULT_ROUTE = env2.WEYLAND_EDITION === "local" ? "claude_code_subprocess" : "claude_code_local";
+  // embedded_gofaineat is now the real default for non-local editions: it
+  // needs neither an Anthropic API key nor Ron's hascom-edge/auth-onamerica
+  // (see the route's own doc comment above for why claude_code_local was
+  // silently depending on both). claude_code_local/api_direct stay
+  // selectable per-session via PATCH /api/sessions/:sessionId/extraction-route
+  // for a customer with their own real SABP bridge or Anthropic key.
+  const DEFAULT_ROUTE = env2.WEYLAND_EDITION === "local" ? "claude_code_subprocess" : "embedded_gofaineat";
   const route = row?.extraction_route in ADAPTERS ? row.extraction_route : DEFAULT_ROUTE in ADAPTERS ? DEFAULT_ROUTE : "api_direct";
   const result = await ADAPTERS[route](sessionId, pdfBuffer, env2, ctx);
   if (row && result?.sync !== false && !result?.error) {

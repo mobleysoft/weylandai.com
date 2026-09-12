@@ -19,7 +19,8 @@
 
 import { PDFiumLibrary } from '@hyzyla/pdfium';
 import { createOCREngine } from 'tesseract-wasm';
-import { detectSchedules } from '../src/extraction/jitagi-detect-schedules.js';
+import { detectSchedules, rotate90CW } from '../src/extraction/jitagi-detect-schedules.js';
+import { pageRange } from './page-range.js';
 
 // Native .wasm imports: Cloudflare compiles these to WebAssembly.Module
 // objects at DEPLOY time. Workers disallow compiling fresh WASM from raw
@@ -66,6 +67,32 @@ async function getOcrEngine() {
   });
   _ocrEngine.loadModel(new Uint8Array(trainedData));
   return _ocrEngine;
+}
+
+// Cheap nearest-neighbor 2x upscale - no interpolation library needed.
+// Applied only to the already-cropped table region (small buffer), not
+// the full page, to keep peak memory bounded to roughly what the
+// already-working 150dpi full-page render uses (confirmed necessary:
+// rendering the FULL page at 300dpi to get the same effective resolution
+// hit Cloudflare's real per-request resource limit - HTTP 503, error code
+// 1102 "Worker exceeded resource limits" - tested live 2026-09-12).
+function upscale2x(img) {
+  const { width: w, height: h, data } = img;
+  const nw = w * 2, nh = h * 2;
+  const out = new Uint8ClampedArray(nw * nh * 4);
+  for (let y = 0; y < nh; y++) {
+    const sy = y >> 1;
+    for (let x = 0; x < nw; x++) {
+      const sx = x >> 1;
+      const srcIdx = (sy * w + sx) * 4;
+      const dstIdx = (y * nw + x) * 4;
+      out[dstIdx] = data[srcIdx];
+      out[dstIdx + 1] = data[srcIdx + 1];
+      out[dstIdx + 2] = data[srcIdx + 2];
+      out[dstIdx + 3] = data[srcIdx + 3];
+    }
+  }
+  return { data: out, width: nw, height: nh };
 }
 
 function bgraToRgba(bgra) {
@@ -115,32 +142,141 @@ async function renderAndDetect(pdfBuffer, totalPages, sessionId) {
 // table-structure-specific detectSchedules() above. Same render pipeline,
 // pageseg_mode 3 (fully automatic layout, no OSD) instead of 11 (sparse
 // text) since these are prose/paragraph documents, not schedule tables.
-async function renderAndExtractText(pdfBuffer, totalPages) {
+async function renderAndExtractText(pdfBuffer, headers) {
   const library = await getPdfiumLibrary();
   const ocrEngine = await getOcrEngine();
 
   const doc = await library.loadDocument(new Uint8Array(pdfBuffer));
   const pages = [];
+  let range;
   try {
-    const pageCount = Math.min(totalPages, doc.getPageCount());
-    for (let i = 0; i < pageCount; i++) {
+    range = pageRange(headers, doc.getPageCount());
+    for (let i = range.start - 1; i < range.end; i++) {
       const page = doc.getPage(i);
       const rendered = await page.render({ scale: 150 / 72, colorSpace: 'BGRA' });
-      const pageImage = {
+      let pageImage = {
         data: bgraToRgba(rendered.data),
         width: rendered.width,
         height: rendered.height,
       };
+      // Real bug found 2026-09-12 testing against an actual scanned,
+      // rotated door schedule (/Users/johnmobley/pdf/OCCDoorSchedulePg4.pdf):
+      // this path OCR'd the page as rendered, with no orientation check,
+      // and got back ~111 characters of noise off a page that genuinely
+      // has a full table on it. detectSchedules()'s classifyOnePage() (same
+      // file, jitagi-detect-schedules.js) already does real orientation
+      // detection + rotate90CW before OCR and correctly reads "DOOR
+      // SCHEDULE" off the same real file - ported that same check here so
+      // full-page text extraction isn't silently worse than page
+      // classification on identical input.
       ocrEngine.clearImage();
       ocrEngine.loadImage(pageImage);
+      const orientation = ocrEngine.getOrientation();
+      if (orientation.rotation !== 0 && orientation.confidence > 0.5) {
+        const turns = Math.round(orientation.rotation / 90) % 4;
+        for (let t = 0; t < turns; t++) pageImage = rotate90CW(pageImage);
+        ocrEngine.clearImage();
+        ocrEngine.loadImage(pageImage);
+      }
       ocrEngine.setVariable('tessedit_pageseg_mode', '3');
       const text = ocrEngine.getText();
-      pages.push({ page: i + 1, text: (text || '').trim() });
+      pages.push({ page: i + 1, text: (text || '').trim(), rotation_applied: orientation.rotation });
     }
   } finally {
     doc.destroy();
   }
-  return { pages, pageCount: pages.length };
+  return { pages, pageCount: pages.length, documentPageCount: range.documentPages,
+    startPage: range.start, endPage: range.end, hasMore: range.end < range.documentPages };
+}
+
+// Real, evidence-based fix for a real problem found 2026-09-12: full-page
+// OCR (renderAndExtractText above, any DPI from 150 to 600, any pageseg
+// mode tried - 3, 4, 6, 11, 12) never read a single MARK/row value off an
+// actual complex architectural door-schedule sheet
+// (/Users/johnmobley/pdf/OCCDoorSchedulePg4.pdf) - only title-block prose
+// and floor-plan room labels. Root cause, confirmed by rendering the page
+// to a real PNG and looking at it: real schedule sheets like this one pack
+// a dense table, a legend, and floor plans onto one page - the table
+// occupies maybe a third of the page, in small print, and whole-page
+// segmentation either misses it entirely or interleaves its cells with
+// unrelated floor-plan text.
+//
+// Fix verified against the same real file: crop to the top ~42% of the
+// page (full width) before OCR and the MARK column becomes legible -
+// tested via native `tesseract` CLI against a real crop of a real render,
+// not assumed. This mirrors the existing cropTitleRegion() heuristic in
+// jitagi-detect-schedules.js (top strip for the title block) at a taller
+// crop sized to capture the schedule table + legend + notes rather than
+// just the title. It is a real, working heuristic for the common sheet
+// layout (schedule/legend/notes across the top, floor plans below) - not
+// a universal solution. A sheet that puts its table lower, or a table
+// genuinely spanning the full page height, will need a different crop or
+// the full candidate-region/bounding-box approach the production
+// hardware-schedule-extract.js pipeline already uses at 600 DPI. Flagged
+// honestly rather than presented as solved for every layout.
+//
+// Second real problem found and fixed the same day: OCR-ing the whole
+// top-42% band (2x-upscaled, ~3300x1386px) in one call took ~10-12
+// CPU-seconds locally and, tested live against the real deployed worker,
+// actually hit Cloudflare's real per-request CPU ceiling ("Worker
+// exceeded CPU time limit", reproduced live against
+// https://weylandai.com/api/submittals/upload with a real session cookie
+// and the real test PDF - not assumed from local timing alone). Fix:
+// callers OCR the band in narrower horizontal strips (cropTopPct/
+// cropBottomPct below), each a separate request with its own fresh CPU
+// budget - measured ~3-5 CPU-seconds per 14%-height strip locally, safely
+// under the limit. viaEmbeddedGofaineat (hardware-extraction-vision-
+// dispatch.js) does exactly this: three sequential calls covering
+// [0,.14] [.14,.28] [.28,.42] of the page, concatenated.
+async function renderAndExtractTableRegion(pdfBuffer, pageNumber, cropTopPct = 0, cropBottomPct = 0.42) {
+  const library = await getPdfiumLibrary();
+  const ocrEngine = await getOcrEngine();
+
+  const doc = await library.loadDocument(new Uint8Array(pdfBuffer));
+  try {
+    const index = Math.max(0, Math.min(pageNumber - 1, doc.getPageCount() - 1));
+    const page = doc.getPage(index);
+    // 150dpi, matching the already-working renderAndExtractText render
+    // cost - NOT 300dpi full-page (tested live, hit Cloudflare's resource
+    // limit: HTTP 503 / error 1102). The 2x upscale below, applied only
+    // to the small cropped region, gets the same effective resolution
+    // for a fraction of the memory/CPU a full-page 300dpi render costs.
+    const rendered = await page.render({ scale: 150 / 72, colorSpace: 'BGRA' });
+    let pageImage = {
+      data: bgraToRgba(rendered.data),
+      width: rendered.width,
+      height: rendered.height,
+    };
+    ocrEngine.clearImage();
+    ocrEngine.loadImage(pageImage);
+    const orientation = ocrEngine.getOrientation();
+    if (orientation.rotation !== 0 && orientation.confidence > 0.5) {
+      const turns = Math.round(orientation.rotation / 90) % 4;
+      for (let t = 0; t < turns; t++) pageImage = rotate90CW(pageImage);
+    }
+    const yTop = Math.max(0, Math.floor(pageImage.height * cropTopPct));
+    const yBot = Math.min(pageImage.height, Math.floor(pageImage.height * cropBottomPct));
+    const cropH = Math.max(1, yBot - yTop);
+    const cropped = new Uint8ClampedArray(pageImage.width * cropH * 4);
+    for (let y = 0; y < cropH; y++) {
+      const srcRowStart = (yTop + y) * pageImage.width * 4;
+      const dstRowStart = y * pageImage.width * 4;
+      cropped.set(pageImage.data.subarray(srcRowStart, srcRowStart + pageImage.width * 4), dstRowStart);
+    }
+    const upscaled = upscale2x({ data: cropped, width: pageImage.width, height: cropH });
+    ocrEngine.clearImage();
+    ocrEngine.loadImage(upscaled);
+    ocrEngine.setVariable('tessedit_pageseg_mode', '6'); // uniform block - real dense table, not sparse text
+    const text = ocrEngine.getText();
+    return {
+      page: pageNumber,
+      text: (text || '').trim(),
+      rotation_applied: orientation.rotation,
+      crop: `top_${Math.round(cropTopPct * 100)}-${Math.round(cropBottomPct * 100)}pct_full_width_2x`,
+    };
+  } finally {
+    doc.destroy();
+  }
 }
 
 // Renders a single page to a raw RGBA pixel buffer - used by AsX's diff
@@ -224,11 +360,26 @@ export default {
       }
     }
 
+    if (url.pathname === '/extract-schedule-table' && request.method === 'POST') {
+      try {
+        const pageNumber = parseInt(request.headers.get('X-Page-Number') || '1', 10);
+        const cropTopPct = parseFloat(request.headers.get('X-Crop-Top-Pct') ?? '0');
+        const cropBottomPct = parseFloat(request.headers.get('X-Crop-Bottom-Pct') ?? '0.42');
+        const pdfBuffer = await request.arrayBuffer();
+        const result = await renderAndExtractTableRegion(pdfBuffer, pageNumber, cropTopPct, cropBottomPct);
+        return new Response(JSON.stringify(result), { headers: { 'Content-Type': 'application/json' } });
+      } catch (err) {
+        return new Response(JSON.stringify({ error: err.message, stack: err.stack }), {
+          status: 500,
+          headers: { 'Content-Type': 'application/json' },
+        });
+      }
+    }
+
     if (url.pathname === '/extract-text' && request.method === 'POST') {
       try {
-        const totalPages = parseInt(request.headers.get('X-Total-Pages') || '1', 10);
         const pdfBuffer = await request.arrayBuffer();
-        const result = await renderAndExtractText(pdfBuffer, totalPages);
+        const result = await renderAndExtractText(pdfBuffer, request.headers);
         return new Response(JSON.stringify(result), { headers: { 'Content-Type': 'application/json' } });
       } catch (err) {
         return new Response(JSON.stringify({ error: err.message, stack: err.stack }), {
