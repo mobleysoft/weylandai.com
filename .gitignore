@@ -10,3 +10,4 @@ dist/
 .idea/
 storage-service/.storage_issuer_private.pem
 storage-service/.env.local
+tools/user-simulation/reports/
