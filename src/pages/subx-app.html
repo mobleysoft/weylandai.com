@@ -1,0 +1,361 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#090a0d">
+  <title>SubX Workspace | WeylandAI</title>
+  <style>
+    :root{--bg:#090a0d;--panel:#121419;--panel2:#181b21;--line:#2c3139;--text:#edf0f1;--muted:#9299a3;--gold:#f0b800;--green:#61dfa0;--blue:#66d4ff;--red:#ff756e;--purple:#a78bfa}
+    *{box-sizing:border-box}html,body{margin:0;min-height:100%;background:var(--bg);color:var(--text);font-family:"Avenir Next","Helvetica Neue",sans-serif}
+    body:before{content:"";position:fixed;inset:0;pointer-events:none;background:radial-gradient(circle at 20% 20%,rgba(167,139,242,.12),transparent 28rem),linear-gradient(rgba(255,255,255,.015) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.015) 1px,transparent 1px);background-size:auto,30px 30px,30px 30px}
+    .shell{position:relative;max-width:1200px;margin:auto;padding:20px clamp(16px,3vw,40px) 60px}
+    header{display:flex;align-items:center;justify-content:space-between;gap:15px;margin-bottom:24px}
+    .brand{display:flex;align-items:center;gap:12px;color:var(--text);text-decoration:none}
+    .mark{width:42px;height:42px;display:grid;place-items:center;background:var(--purple);color:var(--bg);font-weight:900}
+    .brand b{display:block;letter-spacing:.16em}
+    .brand small{display:block;color:var(--muted);font:700 9px/1.5 ui-monospace,monospace;letter-spacing:.11em}
+    .nav{display:flex;gap:8px;flex-wrap:wrap}
+    .nav a,.button,button{border:1px solid var(--line);border-radius:99px;padding:9px 14px;color:var(--text);text-decoration:none;background:transparent;font:750 10px/1 ui-monospace,monospace;letter-spacing:.06em;cursor:pointer;transition:all .2s}
+    .nav a:hover,.button:hover,button:hover{border-color:var(--purple);color:var(--purple);box-shadow:0 0 15px rgba(167,139,242,.2)}
+    .button.primary,button.primary{background:var(--purple);border-color:var(--purple);color:var(--bg);font-weight:900}
+    .button.primary:hover,button.primary:hover{color:var(--bg);box-shadow:0 0 15px rgba(167,139,242,.4)}
+    button:disabled{opacity:.5;cursor:not-allowed}
+    .eyebrow{color:var(--purple);font:800 11px/1 ui-monospace,monospace;letter-spacing:.18em;text-transform:uppercase}
+    h1{font-size:clamp(28px,4vw,44px);letter-spacing:-.04em;line-height:1.05;margin:10px 0 6px}
+    .lede{max-width:680px;color:var(--muted);line-height:1.6;margin:0 0 28px;font-size:15px}
+    .card{background:rgba(18,20,25,.94);border:1px solid var(--line);border-radius:18px;padding:22px;margin-bottom:22px;box-shadow:0 25px 70px rgba(0,0,0,.25)}
+    .card h2{font-size:16px;margin:0 0 4px;letter-spacing:.02em}
+    .card .sub{color:var(--muted);font-size:12.5px;margin:0 0 16px;line-height:1.5}
+    .grid2{display:grid;grid-template-columns:1fr 1fr;gap:22px}
+    @media(max-width:860px){.grid2{grid-template-columns:1fr}}
+    label{display:block;font:700 10px/1 ui-monospace,monospace;letter-spacing:.08em;color:var(--muted);margin:14px 0 6px;text-transform:uppercase}
+    label:first-child{margin-top:0}
+    input[type=text],input[type=file],select{width:100%;background:#0d0f14;border:1px solid var(--line);border-radius:8px;padding:10px 12px;color:var(--text);font-size:14px;font-family:inherit}
+    input[type=text]:focus,select:focus{outline:none;border-color:var(--purple)}
+    table{width:100%;border-collapse:collapse;font-size:13.5px}
+    th{text-align:left;color:var(--muted);font:750 10px/1 ui-monospace,monospace;letter-spacing:.08em;padding:10px 12px;background:#0d0f14;border-bottom:2px solid var(--line)}
+    td{padding:12px;border-bottom:1px solid #1f232b;vertical-align:middle}
+    tr.selected td{background:rgba(167,139,242,.08)}
+    tr.clickable{cursor:pointer}
+    tr.clickable:hover td{background:rgba(167,139,242,.05)}
+    .status-badge{font:800 9px ui-monospace,monospace;padding:5px 10px;border-radius:99px;display:inline-block;letter-spacing:.08em}
+    .status-ok{background:rgba(97,223,160,.15);color:var(--green);border:1px solid rgba(97,223,160,.35)}
+    .status-pending{background:rgba(240,184,0,.15);color:var(--gold);border:1px solid rgba(240,184,0,.35)}
+    .status-err{background:rgba(255,117,110,.15);color:var(--red);border:1px solid rgba(255,117,110,.35)}
+    .note-card{background:rgba(18,20,25,.9);border:1px solid var(--line);border-radius:14px;padding:16px 18px;color:var(--muted);font-size:13px;line-height:1.6;margin-top:6px}
+    .note-card code{background:#161920;padding:2px 6px;border-radius:4px;color:var(--purple);font-size:12px}
+    .error-box{background:rgba(255,117,110,.08);border:1px solid rgba(255,117,110,.4);border-radius:10px;padding:12px 14px;color:var(--red);font-size:13px;line-height:1.5;margin-top:12px;white-space:pre-wrap;font-family:ui-monospace,monospace}
+    .ok-box{background:rgba(97,223,160,.08);border:1px solid rgba(97,223,160,.4);border-radius:10px;padding:12px 14px;color:var(--green);font-size:13px;line-height:1.5;margin-top:12px;white-space:pre-wrap;font-family:ui-monospace,monospace}
+    pre.raw{background:#0b0d12;border:1px solid var(--line);border-radius:10px;padding:14px;font-size:11.5px;line-height:1.5;color:#c8ccd4;overflow:auto;max-height:340px}
+    .route-choice{display:flex;gap:10px;flex-wrap:wrap;margin-top:8px}
+    .route-choice button{flex:1;min-width:180px;text-align:left;padding:12px 14px}
+    .route-choice button.active{border-color:var(--purple);color:var(--purple);box-shadow:0 0 12px rgba(167,139,242,.25)}
+    .route-choice .rc-title{font:800 11px ui-monospace,monospace;letter-spacing:.06em}
+    .route-choice .rc-desc{display:block;color:var(--muted);font:600 10px/1.4 ui-monospace,monospace;margin-top:4px;letter-spacing:0;text-transform:none}
+    #login-ui{max-width:420px;margin:60px auto}
+    .muted-small{color:var(--muted);font-size:12px}
+    .empty{color:var(--muted);font-size:13px;padding:20px;text-align:center}
+    .actions-row{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
+    .spin{display:inline-block;width:11px;height:11px;border:2px solid rgba(255,255,255,.25);border-top-color:var(--purple);border-radius:50%;animation:spin .7s linear infinite;vertical-align:middle;margin-right:6px}
+    @keyframes spin{to{transform:rotate(360deg)}}
+  </style>
+</head>
+<body>
+  <div class="shell">
+    <header>
+      <a class="brand" href="/"><span class="mark">SX</span><span><b>SUBX</b><small>WORKSPACE</small></span></a>
+      <nav class="nav">
+        <a href="/subx">PRODUCT PAGE</a>
+        <a href="/pricing">PRICING</a>
+        <a href="#" id="logout-link" style="display:none">SIGN OUT</a>
+      </nav>
+    </header>
+
+    <div class="eyebrow">SUBMITTAL AUTOMATION &middot; REAL SESSIONS</div>
+    <h1>Your extraction workspace</h1>
+    <p class="lede">Upload a door-hardware schedule, watch a real Claude Vision extraction run against it, and pick which extraction route processes your account's sessions. This is the actual pipeline behind SubX/TakeoffX &mdash; not a mockup, and it will tell you plainly if a step isn't working yet rather than hang silently.</p>
+
+    <div id="login-ui"></div>
+
+    <div id="app" style="display:none">
+
+      <div class="card">
+        <h2>Start a new extraction</h2>
+        <p class="sub">Uploads straight to your account via <code>POST /api/hardware-schedule/start</code>. PDF only.</p>
+        <form id="upload-form">
+          <label>Project name</label>
+          <input type="text" id="f-project" placeholder="e.g. 500 Main St &mdash; Door Hardware">
+          <label>Document type</label>
+          <select id="f-doctype">
+            <option value="hardware_schedule">Hardware schedule</option>
+            <option value="door_schedule">Door schedule</option>
+            <option value="finish_schedule">Finish schedule</option>
+            <option value="frame_schedule">Frame schedule</option>
+          </select>
+          <label>PDF file</label>
+          <input type="file" id="f-file" accept="application/pdf">
+          <div class="actions-row">
+            <button type="submit" class="primary" id="upload-btn">UPLOAD &amp; CREATE SESSION</button>
+          </div>
+        </form>
+        <div id="upload-result"></div>
+      </div>
+
+      <div class="card">
+        <h2>Your sessions</h2>
+        <p class="sub">Real rows from <code>GET /api/sessions</code>. Click one to manage its extraction route and run a page extraction.</p>
+        <div id="sessions-list"><div class="empty">Loading&hellip;</div></div>
+      </div>
+
+      <div class="card" id="session-detail-card" style="display:none">
+        <h2 id="sd-title">Session</h2>
+        <p class="sub" id="sd-sub"></p>
+
+        <label>Extraction route</label>
+        <p class="muted-small" id="route-current">Loading current route&hellip;</p>
+        <div class="route-choice">
+          <button type="button" data-route="claude_code_local" id="route-btn-bridge">
+            <span class="rc-title">CLAUDE CODE (BRIDGE)</span>
+            <span class="rc-desc">Runs on your own linked Claude Code / SABP bridge subscription. Requires that bridge to be connected.</span>
+          </button>
+          <button type="button" data-route="api_direct" id="route-btn-api">
+            <span class="rc-title">WEYLANDAI MANAGED API</span>
+            <span class="rc-desc">Runs on WeylandAI's own metered Anthropic key, server-side. No bridge needed on your end.</span>
+          </button>
+        </div>
+        <div id="route-result"></div>
+        <div class="note-card">
+          Honest scope note: the single-page extraction button below (<code>GET /api/hardware-schedule/session/:id/page/1</code>) always calls this server's own Anthropic credentials directly &mdash; it does not yet branch on the route selected above. If that credential isn't provisioned on this deployment, the button below will show a real error, not a silent hang. The route selector above genuinely governs a separate part of this pipeline (the SABP-bridge/queue path) and is wired here so you can set it for when that path is used.
+        </div>
+
+        <div class="actions-row">
+          <button type="button" class="primary" id="extract-btn">RUN EXTRACTION (PAGE 1)</button>
+          <button type="button" id="doorindex-btn">VIEW DOOR INDEX</button>
+          <button type="button" id="export-btn">VIEW EXPORT (JSON)</button>
+        </div>
+        <div id="extract-result"></div>
+        <pre class="raw" id="raw-output" style="display:none"></pre>
+      </div>
+
+      <div class="note-card">
+        New here and just want to see it work first? The <a href="/" style="color:var(--purple)">WeylandAI homepage</a> gives every visitor an instant, private demo session with real matched hardware &mdash; no signup required.
+      </div>
+    </div>
+  </div>
+
+  <script src="/assets/authfor-integration-standard.js"></script>
+  <script>
+    (function(){
+      var TOKEN_KEY = '_authfor_token';
+      function token(){ try { return localStorage.getItem(TOKEN_KEY); } catch(e){ return null; } }
+      function authHeaders(json){
+        var h = { 'Authorization': 'Bearer ' + token() };
+        if (json) h['Content-Type'] = 'application/json';
+        return h;
+      }
+      function esc(s){ return String(s == null ? '' : s).replace(/[&<>"']/g, function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]; }); }
+      // Real API error shapes in this codebase vary by route: some return
+      // {error:"string", details:"..."}, others (routes using
+      // error-utilities.js's jsonErrorResponse) return
+      // {error:{code,message,details,...}}. Both are unwrapped here so the
+      // MOST SPECIFIC real reason (details, e.g. "ANTHROPIC_API_KEY not
+      // configured") is shown instead of a generic wrapper message -
+      // honest error surfacing is the whole point of this page.
+      function apiErrorText(data){
+        if (!data) return 'Unknown error';
+        var e = data.error;
+        var parts = [];
+        if (e && typeof e === 'object') {
+          if (e.message) parts.push(e.message);
+          if (e.details && e.details !== e.message) parts.push(e.details);
+        } else if (e) {
+          parts.push(String(e));
+        }
+        if (data.details && parts.indexOf(String(data.details)) === -1) parts.push(String(data.details));
+        if (parts.length === 0) parts.push(JSON.stringify(data));
+        return parts.join(' — ');
+      }
+
+      var currentSessionId = null;
+
+      function showApp(){
+        document.getElementById('login-ui').style.display = 'none';
+        document.getElementById('app').style.display = 'block';
+        document.getElementById('logout-link').style.display = 'inline-block';
+        loadSessions();
+      }
+
+      var auth = new AuthForStandard({ clientId: 'af_weyland_subx_app', ventureName: 'weylandai.com', loginUISelector: '#login-ui' });
+      window.addEventListener('authfor-success', showApp);
+      document.getElementById('logout-link').addEventListener('click', function(e){ e.preventDefault(); auth.logout(); });
+
+      auth.init().then(function(result){
+        if (result && result.authenticated) showApp();
+      });
+
+      function loadSessions(){
+        var box = document.getElementById('sessions-list');
+        fetch('/api/sessions?limit=25', { headers: authHeaders() })
+          .then(function(r){ return r.json().then(function(d){ return { ok: r.ok, status: r.status, data: d }; }); })
+          .then(function(res){
+            if (!res.ok) {
+              box.innerHTML = '<div class="error-box">Failed to load sessions (HTTP ' + res.status + '): ' + esc(apiErrorText(res.data)) + '</div>';
+              return;
+            }
+            var sessions = res.data.sessions || [];
+            if (sessions.length === 0) {
+              box.innerHTML = '<div class="empty">No sessions yet &mdash; upload a PDF above to create your first one.</div>';
+              return;
+            }
+            var rows = sessions.map(function(s){
+              var badge = s.status === 'completed'
+                ? '<span class="status-badge status-ok">COMPLETED</span>'
+                : (s.status === 'failed' ? '<span class="status-badge status-err">FAILED</span>' : '<span class="status-badge status-pending">' + esc((s.status||'active').toUpperCase()) + '</span>');
+              return '<tr class="clickable" data-session="' + esc(s.sessionId) + '">' +
+                '<td>' + esc(s.projectName) + '<div class="muted-small">' + esc(s.filename) + '</div></td>' +
+                '<td>' + (s.pagesProcessed||0) + ' / ' + (s.totalPages||'?') + ' pages</td>' +
+                '<td>' + (s.hardwareSets||0) + '</td>' +
+                '<td>' + badge + '</td>' +
+                '<td>' + esc((s.createdAt||'').replace('T',' ').slice(0,16)) + '</td>' +
+              '</tr>';
+            }).join('');
+            box.innerHTML = '<table><thead><tr><th>Project</th><th>Progress</th><th>Hardware sets</th><th>Status</th><th>Created</th></tr></thead><tbody>' + rows + '</tbody></table>';
+            box.querySelectorAll('tr[data-session]').forEach(function(row){
+              row.addEventListener('click', function(){ selectSession(row.getAttribute('data-session'), row); });
+            });
+          })
+          .catch(function(err){ box.innerHTML = '<div class="error-box">Network error loading sessions: ' + esc(err.message) + '</div>'; });
+      }
+
+      function selectSession(sessionId, rowEl){
+        currentSessionId = sessionId;
+        document.querySelectorAll('#sessions-list tr').forEach(function(r){ r.classList.remove('selected'); });
+        if (rowEl) rowEl.classList.add('selected');
+        var card = document.getElementById('session-detail-card');
+        card.style.display = 'block';
+        document.getElementById('sd-title').textContent = 'Session ' + sessionId.slice(0, 8) + '…';
+        document.getElementById('sd-sub').textContent = 'Managing extraction route + running real extraction for this session.';
+        document.getElementById('extract-result').innerHTML = '';
+        document.getElementById('route-result').innerHTML = '';
+        document.getElementById('raw-output').style.display = 'none';
+        loadRoute(sessionId);
+        card.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+
+      function loadRoute(sessionId){
+        fetch('/api/sessions/' + encodeURIComponent(sessionId) + '/extraction-route', { headers: authHeaders() })
+          .then(function(r){ return r.json().then(function(d){ return { ok: r.ok, status: r.status, data: d }; }); })
+          .then(function(res){
+            document.getElementById('route-btn-bridge').classList.remove('active');
+            document.getElementById('route-btn-api').classList.remove('active');
+            if (!res.ok) {
+              document.getElementById('route-current').textContent = 'Could not load route (HTTP ' + res.status + '): ' + apiErrorText(res.data);
+              return;
+            }
+            if (res.data.route === 'claude_code_local') document.getElementById('route-btn-bridge').classList.add('active');
+            else if (res.data.route === 'api_direct') document.getElementById('route-btn-api').classList.add('active');
+            document.getElementById('route-current').textContent = res.data.route
+              ? ('Current route: ' + res.data.route + (res.data.affirmed_by ? ' (set by ' + res.data.affirmed_by + ')' : ''))
+              : 'No route selected yet for this session (a default will be used).';
+          })
+          .catch(function(err){ document.getElementById('route-current').textContent = 'Network error: ' + err.message; });
+      }
+
+      document.querySelectorAll('.route-choice button').forEach(function(btn){
+        btn.addEventListener('click', function(){
+          if (!currentSessionId) return;
+          var route = btn.getAttribute('data-route');
+          var out = document.getElementById('route-result');
+          out.innerHTML = '<span class="spin"></span>Setting route&hellip;';
+          fetch('/api/sessions/' + encodeURIComponent(currentSessionId) + '/extraction-route', {
+            method: 'POST', headers: authHeaders(true), body: JSON.stringify({ route: route })
+          })
+            .then(function(r){ return r.json().then(function(d){ return { ok: r.ok, status: r.status, data: d }; }); })
+            .then(function(res){
+              if (!res.ok) { out.innerHTML = '<div class="error-box">Failed to set route (HTTP ' + res.status + '): ' + esc(apiErrorText(res.data)) + '</div>'; return; }
+              out.innerHTML = '<div class="ok-box">Route set to ' + esc(res.data.route) + ' at ' + esc(res.data.affirmed_at) + '.</div>';
+              loadRoute(currentSessionId);
+            })
+            .catch(function(err){ out.innerHTML = '<div class="error-box">Network error: ' + esc(err.message) + '</div>'; });
+        });
+      });
+
+      document.getElementById('extract-btn').addEventListener('click', function(){
+        if (!currentSessionId) return;
+        var out = document.getElementById('extract-result');
+        var raw = document.getElementById('raw-output');
+        out.innerHTML = '<span class="spin"></span>Calling the real extraction endpoint &mdash; this invokes Claude Vision synchronously and can take up to a minute&hellip;';
+        raw.style.display = 'none';
+        fetch('/api/hardware-schedule/session/' + encodeURIComponent(currentSessionId) + '/page/1', { headers: authHeaders() })
+          .then(function(r){ return r.json().then(function(d){ return { ok: r.ok, status: r.status, data: d }; }); })
+          .then(function(res){
+            if (!res.ok) {
+              var msg = res.data ? apiErrorText(res.data) : ('HTTP ' + res.status);
+              out.innerHTML = '<div class="error-box">Extraction failed honestly (HTTP ' + res.status + '):\n' + esc(msg) + '</div>';
+              return;
+            }
+            var groups = (res.data.data && res.data.data.hardware_groups) || [];
+            out.innerHTML = '<div class="ok-box">Extraction succeeded: ' + groups.length + ' hardware group(s) found on page 1.</div>';
+            raw.textContent = JSON.stringify(res.data, null, 2);
+            raw.style.display = 'block';
+          })
+          .catch(function(err){ out.innerHTML = '<div class="error-box">Network error: ' + esc(err.message) + '</div>'; });
+      });
+
+      document.getElementById('doorindex-btn').addEventListener('click', function(){
+        if (!currentSessionId) return;
+        var raw = document.getElementById('raw-output');
+        raw.style.display = 'block';
+        raw.textContent = 'Loading…';
+        fetch('/api/hardware-schedule/session/' + encodeURIComponent(currentSessionId) + '/door-index', { headers: authHeaders() })
+          .then(function(r){ return r.json(); })
+          .then(function(d){ raw.textContent = JSON.stringify(d, null, 2); })
+          .catch(function(err){ raw.textContent = 'Network error: ' + err.message; });
+      });
+
+      document.getElementById('export-btn').addEventListener('click', function(){
+        if (!currentSessionId) return;
+        var raw = document.getElementById('raw-output');
+        raw.style.display = 'block';
+        raw.textContent = 'Loading…';
+        fetch('/api/hardware-schedule/session/' + encodeURIComponent(currentSessionId) + '/export', { headers: Object.assign({ 'Accept': 'application/json' }, authHeaders()) })
+          .then(function(r){ return r.json().then(function(d){ return { ok: r.ok, status: r.status, data: d }; }); })
+          .then(function(res){ raw.textContent = res.ok ? JSON.stringify(res.data, null, 2) : ('HTTP ' + res.status + ': ' + JSON.stringify(res.data, null, 2)); })
+          .catch(function(err){ raw.textContent = 'Network error: ' + err.message; });
+      });
+
+      document.getElementById('upload-form').addEventListener('submit', function(e){
+        e.preventDefault();
+        var fileInput = document.getElementById('f-file');
+        var out = document.getElementById('upload-result');
+        if (!fileInput.files || fileInput.files.length === 0) {
+          out.innerHTML = '<div class="error-box">Choose a PDF file first.</div>';
+          return;
+        }
+        var btn = document.getElementById('upload-btn');
+        btn.disabled = true;
+        out.innerHTML = '<span class="spin"></span>Uploading and creating session&hellip;';
+        var fd = new FormData();
+        fd.append('file', fileInput.files[0]);
+        fd.append('projectName', document.getElementById('f-project').value || fileInput.files[0].name);
+        fd.append('document_type', document.getElementById('f-doctype').value);
+        fetch('/api/hardware-schedule/start', { method: 'POST', headers: authHeaders(false), body: fd })
+          .then(function(r){ return r.json().then(function(d){ return { ok: r.ok, status: r.status, data: d }; }); })
+          .then(function(res){
+            btn.disabled = false;
+            if (!res.ok) {
+              var msg = res.data ? apiErrorText(res.data) : ('HTTP ' + res.status);
+              out.innerHTML = '<div class="error-box">Upload failed honestly (HTTP ' + res.status + '):\n' + esc(msg) + (res.data && res.data.upgradeUrl ? ('\nSee ' + res.data.upgradeUrl) : '') + '</div>';
+              return;
+            }
+            out.innerHTML = '<div class="ok-box">Session created: ' + esc(res.data.sessionId) + ' (' + res.data.totalPages + ' page(s)). ' + esc(res.data.message || '') + '</div>';
+            document.getElementById('upload-form').reset();
+            loadSessions();
+          })
+          .catch(function(err){ btn.disabled = false; out.innerHTML = '<div class="error-box">Network error: ' + esc(err.message) + '</div>'; });
+      });
+    })();
+  </script>
+</body>
+</html>

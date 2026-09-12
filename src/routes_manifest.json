@@ -15,6 +15,10 @@
     "file": "subx.html",
     "type": "templated_with_nav"
   },
+  "subx-app": {
+    "file": "subx-app.html",
+    "type": "raw"
+  },
   "propx": {
     "file": "propx.html",
     "type": "templated_with_nav"
