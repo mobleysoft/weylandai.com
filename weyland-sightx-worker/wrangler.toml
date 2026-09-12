@@ -1,0 +1,72 @@
+name = "weyland-sightx-worker"
+main = "src/index.js"
+compatibility_date = "2025-10-31"
+
+# Explicitly kept on, same reasoning as weyland-huntx-worker's and
+# weyland-propx-worker's own wrangler.toml comments: adding [[routes]]
+# below makes Wrangler disable the workers.dev subdomain by default on
+# deploy. Keeping it on preserves the standalone
+# https://weyland-sightx-worker.<account>.workers.dev endpoint this
+# extraction's own parity/round-trip testing depends on.
+workers_dev = true
+
+# No `compatibility_flags = ["nodejs_compat"]` and no D1/R2/BROWSER
+# bindings - confirmed by reading the real dependency closure (router.js,
+# json-response.js, routes/sightx-walkthrough.js), not assumed. SightX's
+# own real route surface is genuinely stateless: the walkthrough-preview
+# route only proxies to FILMLINE_VIDEO, and the /sightx page is a static
+# text asset. This is the simplest of the five extractions so far - no
+# database, no auth, no Durable Object.
+#
+# Per direct instruction (2026-09-12): no bundler for new Worker code.
+# This deploys as plain native ESM - `wrangler deploy` resolves the
+# import graph directly from src/index.js, no build step, no esbuild.
+
+# Fifth extraction of the 2026-09-12 microservices push (see
+# ../MICROSERVICES_PUSH.md) - SightX (GET /sightx marketing/demo page,
+# POST /api/sightx/walkthrough-preview). Same real Service Binding to
+# filmline-video-worker the monolith's own wrangler.toml already declares
+# for this exact route (comment there: "Same-account Service Binding,
+# same pattern as OCR_SERVICE above").
+[[services]]
+binding = "FILMLINE_VIDEO"
+service = "filmline-video-worker"
+
+# SIGHTX_ROOM Durable Object - deliberately NOT bound here. See
+# src/index.js's file header for the real, checked (not assumed)
+# relationship: it's a MeetingX concern that only shares SightX's name,
+# gated on requireProductAccess(user, env, "meetingx") at its one real
+# call site (weyland-entry.js), not "sightx". This Worker's routes never
+# reference it, so it stays on the monolith untouched.
+
+# Cloudflare Worker Routes on the weylandai.com zone - added AFTER this
+# Worker was deployed standalone to its own *.workers.dev subdomain and
+# curl-verified for real behavioral parity against live production,
+# including the walkthrough-preview route's genuine dynamism (two
+# different project descriptions producing two genuinely different
+# generated titles/storyboards - see SIGHTX_EXTRACTION.md for the actual
+# before/after record). Both patterns below are strictly more specific
+# than the monolith's existing `weylandai.com/*` catch-all route (still
+# pointing at weylandai-com-worker, untouched), so Cloudflare's
+# route-precedence rule (most-specific pattern wins) sends exactly these
+# two path shapes here and nothing else - the monolith keeps serving
+# every other path on the zone, including /api/sight/room/* (the
+# MeetingX-gated SIGHTX_ROOM WebSocket endpoint the ported sightx.html
+# page's embedded COLLABORATE widget still calls by same-origin relative
+# URL) and its own still-registered (not yet removed) copies of these two
+# routes, which simply stop being reachable rather than being deleted.
+[[routes]]
+pattern = "weylandai.com/api/sightx/*"
+zone_name = "weylandai.com"
+
+[[routes]]
+pattern = "weylandai.com/sightx"
+zone_name = "weylandai.com"
+
+# *.html pages (src/pages/sightx.html) imported as raw text in
+# src/index.js - a real Wrangler built-in module rule, not a custom
+# bundler step (per 2026-09-12 "no bundler for new work" instruction).
+[[rules]]
+type = "Text"
+globs = ["**/*.html"]
+fallthrough = true
