@@ -291,6 +291,24 @@ export function pvNumRef(b, i) {
 }
 export function readObjAt(b, off2) {
   let i = off2;
+  // Real, honest bug found and fixed 2026-09-12 (weylandai.com/pdf-render.js
+  // sovereign-rasterizer task, cross-validated against the real test PDF
+  // /Users/johnmobley/pdf/OCCDoorSchedulePg4.pdf): some real-world PDF
+  // producers write xref offsets pointing at the newline immediately
+  // BEFORE "N G obj" rather than at the "N" digit itself (both point to
+  // "the start of the object" in the producer's own accounting, but only
+  // the latter is what this function's digit-skipping loops below assume).
+  // Without this skip(), that one-byte-early offset silently shifts every
+  // subsequent field by one position (the object number gets consumed as
+  // if it were the generation number, "obj" is never matched, and pv()
+  // ends up parsing "0" - the generation digit - as if it were the whole
+  // object, returning a wrong plain number instead of throwing) - a real,
+  // silent misparse this specific file's Catalog object (1 0 obj) hit
+  // before this fix, confirmed by reading the raw bytes at the xref-table
+  // offset directly. skip() is a safe no-op when the offset is already
+  // exactly at the object-number digit (the common case), so this fixes
+  // the real quirk without changing behavior for well-formed offsets.
+  i = skip(b, i);
   while (i < b.length && b[i] >= 48 && b[i] <= 57)
     i++;
   i = skip(b, i);
@@ -669,6 +687,172 @@ export async function extractPdfBookmarks(pdfBuffer) {
     return { bookmarks: null, numPages: 1 };
   }
 }
+// --- Added 2026-09-12 (weylandai.com/pdf-render.js sovereign-rasterizer
+// task): page-content/resource helpers needed to get from "a page object"
+// to "the actual bytes a content-stream interpreter and image decoder
+// need" - the real gap between this file's existing structural parsing
+// (xref/pages/bookmarks) and rendering a page to pixels. Kept here rather
+// than in pdf-render.js because they're still pure PDF-object-graph
+// operations (inheritance walking, stream concatenation, XObject lookup),
+// not rendering logic - matching this file's existing charter.
+
+// MediaBox and Resources are real, spec-legal (§7.7.3.4) INHERITABLE
+// page attributes - a Page node need not carry them directly if an
+// ancestor Pages node does. Walks Parent refs (bounded depth - a
+// real, cheap guard against a malformed cyclic tree) until found.
+export async function getInheritedPageAttr(b, xref, pageDict, attrName) {
+  let node = pageDict;
+  for (let depth = 0; depth < 64 && node; depth++) {
+    if (node[attrName] !== void 0) return await resolve(node[attrName], b, xref);
+    if (!node.Parent) return null;
+    node = await resolve(node.Parent, b, xref);
+  }
+  return null;
+}
+
+// Resolves a page's real Resources dict (walking inheritance).
+export async function getPageResources(b, xref, pageDict) {
+  return await getInheritedPageAttr(b, xref, pageDict, "Resources") || {};
+}
+
+// Resolves a page's real MediaBox (walking inheritance), falling back to
+// US Letter only if truly absent anywhere in the ancestor chain (a
+// real-world PDF missing this entirely is malformed, but a renderer
+// still needs *some* honest default rather than throwing).
+export async function getPageMediaBox(b, xref, pageDict) {
+  const mb = await getInheritedPageAttr(b, xref, pageDict, "MediaBox");
+  if (Array.isArray(mb) && mb.length === 4) return mb.map((v) => (typeof v === "number" ? v : Number(v) || 0));
+  return [0, 0, 612, 792];
+}
+
+// Reads a single content-stream object (by ref or already-resolved dict
+// location) and returns its real decoded bytes - decompressing
+// FlateDecode (the only content-stream filter this venture's real PDFs
+// and every producer observed so far actually use), passing bytes
+// through unchanged for no filter, and reporting (not silently eating)
+// any other/unsupported filter honestly via a thrown error the caller
+// can catch per-stream.
+async function readContentStreamBytes(b, xref, ref) {
+  if (!ref || !ref._ref) return new Uint8Array(0);
+  const entry = xref.get(ref.num);
+  if (!entry || entry.type !== 1) return new Uint8Array(0);
+  const { v: dict, i: afterDict } = readObjAt(b, entry.offset);
+  if (!dict) return new Uint8Array(0);
+  const raw = readStream(b, afterDict, dict, xref);
+  if (!raw) return new Uint8Array(0);
+  const filter = dict.Filter;
+  const filters = filter == null ? [] : Array.isArray(filter) ? filter : [filter];
+  if (filters.length === 0) return raw;
+  if (filters.length === 1 && filters[0] === "FlateDecode") {
+    const out = await inflate(raw);
+    if (!out) throw new Error("FlateDecode content stream failed to inflate");
+    return out;
+  }
+  throw new Error(`unsupported content-stream filter chain: ${JSON.stringify(filters)}`);
+}
+
+// Resolves a page's real /Contents (a single stream ref OR, per
+// §7.8.2, an array of them meant to be treated as ONE logical stream)
+// into one concatenated, fully-decoded byte array. Per spec, array
+// entries must be joined with at least one whitespace byte so a token
+// split across stream boundaries by a producer doesn't glue two
+// operators together - a real, observed pattern in this exact venture's
+// own real test PDF (`OCCDoorSchedulePg4.pdf` splits one page's content
+// across 87 separate stream objects). Any single stream that fails to
+// decode is reported in `errors` and skipped rather than aborting the
+// whole page - a partial real render beats none.
+export async function getPageContentBytes(b, xref, pageDict) {
+  let contents = pageDict.Contents;
+  if (!contents) return { bytes: new Uint8Array(0), errors: [] };
+  if (!Array.isArray(contents)) contents = [contents];
+  const chunks = [];
+  const errors = [];
+  let total = 0;
+  for (const ref of contents) {
+    try {
+      const decoded = await readContentStreamBytes(b, xref, ref);
+      chunks.push(decoded);
+      total += decoded.length + 1;
+    } catch (e) {
+      errors.push(e.message);
+    }
+  }
+  const out = new Uint8Array(total);
+  let pos = 0;
+  for (const chunk of chunks) {
+    out.set(chunk, pos);
+    pos += chunk.length;
+    out[pos] = 32; // whitespace separator between concatenated streams
+    pos += 1;
+  }
+  return { bytes: out.subarray(0, Math.max(0, pos - 1)), errors };
+}
+
+// Real, terminal image filters browsers can decode natively with zero
+// third-party code - DCTDecode (baseline/progressive JPEG) via
+// createImageBitmap on a Blob, per this venture's real test PDF
+// (OCCDoorSchedulePg4.pdf uses DCTDecode for all 11 of its embedded
+// image XObjects, confirmed by inspection, not assumed). CCITTFaxDecode
+// and JBIG2Decode are real, common scanned-PDF encodings with NO native
+// browser decode support - flagged honestly as unsupported below rather
+// than silently mis-decoded or pulling in a third-party decoder.
+export const NATIVE_DECODABLE_IMAGE_FILTERS = new Set(["DCTDecode", "JPXDecode"]);
+export const KNOWN_UNSUPPORTED_IMAGE_FILTERS = new Set(["CCITTFaxDecode", "JBIG2Decode"]);
+
+// Resolves one named XObject from a Resources dict to real image
+// metadata + bytes, per §7.8.3/§8.9.5. Returns a real, honest shape:
+// - `subtype`: "Image" | "Form" | other - caller must branch, this
+//   function does not itself know how to render a Form XObject (nested
+//   content stream, real separate work).
+// - For Image: `width`/`height`/`bitsPerComponent`/`colorSpace`, the
+//   LAST filter in the chain (`terminalFilter` - the one that actually
+//   determines pixel decoding; earlier filters, if any, are pre-applied
+//   below), and `bytes` - either final decoded raw samples (if the only
+//   filter was FlateDecode, i.e. an uncompressed raster image) or the
+//   still-encoded bytes for a native-decodable filter (DCTDecode/
+//   JPXDecode, for the caller to hand to createImageBitmap directly), or
+//   raw bytes plus `unsupported: true` for CCITTFaxDecode/JBIG2Decode -
+//   never fabricated pixels.
+export async function resolveXObject(b, xref, resources, name) {
+  const xobjDict = resources && resources.XObject ? await resolve(resources.XObject, b, xref) : null;
+  const ref = xobjDict ? xobjDict[name] : null;
+  if (!ref || !ref._ref) return null;
+  const entry = xref.get(ref.num);
+  if (!entry || entry.type !== 1) return null;
+  const { v: dict, i: afterDict } = readObjAt(b, entry.offset);
+  if (!dict) return null;
+  const subtype = dict.Subtype || null;
+  if (subtype !== "Image") {
+    return { subtype, dict };
+  }
+  const raw = readStream(b, afterDict, dict, xref);
+  if (!raw) return null;
+  let filters = dict.Filter == null ? [] : Array.isArray(dict.Filter) ? dict.Filter : [dict.Filter];
+  let bytes = raw;
+  // Pre-apply any leading FlateDecode (common: Flate-compressed raw
+  // samples, or Flate-then-DCT for some producers) - leave the terminal
+  // image codec (if any) encoded for the caller/browser to decode.
+  while (filters.length > 0 && filters[0] === "FlateDecode") {
+    const inflated = await inflate(bytes);
+    if (!inflated) throw new Error(`XObject ${name}: FlateDecode layer failed to inflate`);
+    bytes = inflated;
+    filters = filters.slice(1);
+  }
+  const terminalFilter = filters.length > 0 ? filters[filters.length - 1] : null;
+  const colorSpace = await resolve(dict.ColorSpace, b, xref);
+  return {
+    subtype: "Image",
+    width: dict.Width || 0,
+    height: dict.Height || 0,
+    bitsPerComponent: dict.BitsPerComponent || 8,
+    colorSpace,
+    terminalFilter,
+    unsupported: terminalFilter != null && KNOWN_UNSUPPORTED_IMAGE_FILTERS.has(terminalFilter),
+    nativeDecodable: terminalFilter == null || NATIVE_DECODABLE_IMAGE_FILTERS.has(terminalFilter),
+    bytes,
+  };
+}
+
 export async function detectTextLayer(pdfBuffer) {
   const startTime = Date.now();
   try {

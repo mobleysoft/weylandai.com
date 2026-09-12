@@ -13,6 +13,23 @@
 // g/G, w) - CMYK (k/K), ICC-based color spaces, and patterns are real,
 // honest gaps, not claimed.
 //
+// Added 2026-09-12 (weylandai.com/pdf-render.js sovereign-rasterizer
+// task): `Do` (XObject invocation) now emits a real `{type:'image', name,
+// ctm}` event carrying the device-space CTM in effect at the moment of
+// invocation, per PDF32000-1:2008 §8.10.1 (an image XObject paints into
+// the unit square [0,1]x[0,1] of the current user space). This module
+// deliberately does NOT resolve the XObject name against a Resources
+// dict or decode any image bytes - it has no PDF-object-graph or
+// filter-decoding knowledge (that's pdf-metadata.js's / pdf-render.js's
+// job, matching this module's existing separation of concerns) - it only
+// captures the real transform at the real moment the operator ran, which
+// a caller cannot reconstruct after the fact once q/Q has moved on. Form
+// XObjects (Subtype /Form, nested content streams) are a real, separate,
+// not-yet-handled gap: this emits the same 'image' event shape for any
+// Do regardless of XObject subtype, and a caller that resolves the name
+// to a Form (not an Image) must handle that itself - not silently
+// mis-rendered here, just not disambiguated at this layer.
+//
 // Per PDF32000-1:2008 §8.5.2.1: path-construction operators specify
 // coordinates in the CURRENT user space, i.e. transformed by whatever
 // CTM is in effect at the moment each operator executes - NOT the CTM
@@ -55,6 +72,25 @@ function flattenCubicBezier(p0, p1, p2, p3, out) {
     const y = mt * mt * mt * p0[1] + 3 * mt * mt * t * p1[1] + 3 * mt * t * t * p2[1] + t * t * t * p3[1];
     out.push([x, y]);
   }
+}
+
+// Added 2026-09-12 (weylandai.com/pdf-render.js sovereign-rasterizer
+// task): real stroke line width needs to be reported in DEVICE space to
+// be usable by a canvas-based painter, since path points are already
+// transformed to device space at construction time (this module's own
+// documented rule, see file header) - `state.lineWidth` alone is still
+// the raw PDF-user-space value from the `w` operator. Per §8.4.3.2, line
+// width is genuinely subject to the CTM in effect at stroke time; a
+// non-uniform CTM technically produces an elliptical pen, which this
+// (like real-world renderers commonly do) approximates with a single
+// scalar: sqrt(|det(CTM)|), the CTM's area-scale factor. Exact for the
+// uniform-scale-plus-flip CTMs this venture's real PDFs actually use
+// (confirmed: OCCDoorSchedulePg4.pdf's own `cm` operators are all
+// uniform scale, e.g. "0.75 0 0 -0.75 0 792 cm"), an honest approximation
+// for a genuinely skewed/rotated CTM.
+function effectiveScale(ctm) {
+  const [a, b, c, d] = ctm;
+  return Math.sqrt(Math.abs(a * d - b * c));
 }
 
 function colorFromArgs(args, kind) {
@@ -185,19 +221,19 @@ export function interpretGraphicsOps(ops, initialCtm = IDENTITY) {
         clearPath();
         break;
       case "S":
-        if (subpaths.length) events.push({ type: "stroke", subpaths, color: state.strokeColor, lineWidth: state.lineWidth });
+        if (subpaths.length) events.push({ type: "stroke", subpaths, color: state.strokeColor, lineWidth: state.lineWidth, lineWidthDevice: state.lineWidth * effectiveScale(state.ctm) });
         clearPath();
         break;
       case "s":
         closePath();
-        if (subpaths.length) events.push({ type: "stroke", subpaths, color: state.strokeColor, lineWidth: state.lineWidth });
+        if (subpaths.length) events.push({ type: "stroke", subpaths, color: state.strokeColor, lineWidth: state.lineWidth, lineWidthDevice: state.lineWidth * effectiveScale(state.ctm) });
         clearPath();
         break;
       case "B":
       case "B*":
         if (subpaths.length) {
           events.push({ type: "fill", subpaths, color: state.fillColor, evenOdd: op === "B*" });
-          events.push({ type: "stroke", subpaths, color: state.strokeColor, lineWidth: state.lineWidth });
+          events.push({ type: "stroke", subpaths, color: state.strokeColor, lineWidth: state.lineWidth, lineWidthDevice: state.lineWidth * effectiveScale(state.ctm) });
         }
         clearPath();
         break;
@@ -206,12 +242,20 @@ export function interpretGraphicsOps(ops, initialCtm = IDENTITY) {
         closePath();
         if (subpaths.length) {
           events.push({ type: "fill", subpaths, color: state.fillColor, evenOdd: op === "b*" });
-          events.push({ type: "stroke", subpaths, color: state.strokeColor, lineWidth: state.lineWidth });
+          events.push({ type: "stroke", subpaths, color: state.strokeColor, lineWidth: state.lineWidth, lineWidthDevice: state.lineWidth * effectiveScale(state.ctm) });
         }
         clearPath();
         break;
       case "n":
         clearPath();
+        break;
+
+      case "Do":
+        if (args.length === 1 && typeof args[0] === "string") {
+          events.push({ type: "image", name: args[0], ctm: state.ctm });
+        } else {
+          warnings.push(`Do expected 1 name arg, got ${JSON.stringify(args)}`);
+        }
         break;
 
       // Text operators (BT/ET/Tf/Td/Tm/Tj/TJ/etc.) intentionally not

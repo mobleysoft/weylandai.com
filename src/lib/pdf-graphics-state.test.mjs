@@ -116,6 +116,32 @@ test("unknown/text operators (BT, Tf, Tj, etc.) are safely ignored by this miles
   assert.equal(events.length, 1);
 });
 
+test("stroke lineWidthDevice: real device-space line width under a non-identity uniform-scale CTM (2026-09-12 addition)", () => {
+  const { events } = runOps("3 0 0 3 0 0 cm\n2 w\n0 0 m\n10 10 l\nS\n");
+  const ev = events[0];
+  assert.equal(ev.lineWidth, 2, "raw PDF-user-space width unchanged");
+  assert.ok(Math.abs(ev.lineWidthDevice - 6) < 1e-9, "device width = user width * CTM scale (2 * 3 = 6)");
+});
+
+test("Do emits a real image event carrying the name and the device-space CTM at invocation time (2026-09-12 addition)", () => {
+  const { events, warnings } = runOps("q\n2 0 0 2 5 5 cm\n/Image1 Do\nQ\n/Image2 Do\n");
+  assert.deepEqual(warnings, []);
+  assert.equal(events.length, 2);
+  assert.equal(events[0].type, "image");
+  assert.equal(events[0].name, "Image1");
+  assert.deepEqual(events[0].ctm, [2, 0, 0, 2, 5, 5], "CTM captured at the moment Do ran, inside the q/Q scale+translate");
+  assert.equal(events[1].type, "image");
+  assert.equal(events[1].name, "Image2");
+  assert.deepEqual(events[1].ctm, [1, 0, 0, 1, 0, 0], "after Q, back to identity - the second Do does not see the popped cm");
+});
+
+test("Do with a malformed operand (not exactly one name) produces a real warning, not a crash", () => {
+  const { events, warnings } = runOps("1 2 Do\n");
+  assert.equal(events.length, 0);
+  assert.equal(warnings.length, 1);
+  assert.match(warnings[0], /Do expected 1 name arg/);
+});
+
 test("REAL cross-validation: interprets sovereign-pdf.js's own generated content stream via the real tokenizer, geometry matches exactly what was drawn", async () => {
   const doc = await PDFDocument.create();
   const page = doc.addPage([300, 300]);
