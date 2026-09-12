@@ -64,17 +64,49 @@ binding = "MASCOM_EDGE"
 service = "mascom-edge"
 
 # ── Secrets (set via `wrangler secret put <NAME> --name weyland-platform-worker`) ──
-# NOT yet provisioned on this Worker as of this extraction - see the
-# extraction report for exactly what that blocks:
+# STRIPE_SECRET_KEY and STRIPE_WEBHOOK_SECRET provisioned for real on this
+# Worker 2026-09-12 (real values from this machine's global shell env,
+# matching the exact secret names already live on weylandai-com-worker
+# confirmed via `wrangler secret list`; durably recorded in
+# mascom/MASCOM/keys.mobdbt via mascom/provision-secret.sh - never in this
+# file or any tracked source). Verified live post-provisioning: GET
+# /api/billing/catalog returns real live-mode Stripe price data, 0-diff
+# byte-identical against production; a synthetic correctly-HMAC-signed
+# Stripe-Signature payload was accepted (200) and a tampered one rejected
+# (401) against the real webhook handler on this Worker's own
+# *.workers.dev subdomain.
 #   STRIPE_SECRET_KEY            - GET /api/billing/catalog only (direct
 #                                   Stripe read). Checkout CREATION does
 #                                   NOT need this - it routes through the
-#                                   VENDYAI binding above.
+#                                   VENDYAI binding above. NOW PROVISIONED.
 #   STRIPE_WEBHOOK_SECRET        - legacy direct-Stripe webhook signature
 #                                   path in routes/webhooks-subscription.js
+#                                   (the Stripe-Signature fallback branch).
+#                                   NOW PROVISIONED AND VERIFIED, but see
+#                                   note below - this alone does not
+#                                   unblock the webhook ROUTE.
 #   SUBSCRIPTION_WEBHOOK_SECRET  - the real vendyai-forward webhook
 #                                   signature path (the actual live
-#                                   traffic path since 2026-09-03)
+#                                   traffic path since 2026-09-03) -
+#                                   STILL NOT PROVISIONED. Genuinely
+#                                   unrecoverable (not in any local env or
+#                                   key store as of 2026-09-12) - not
+#                                   fabricated or guessed. Because both
+#                                   the vendyai-forward path AND the
+#                                   legacy Stripe-Signature fallback share
+#                                   the SAME route (POST
+#                                   /api/webhooks/subscription) and
+#                                   Cloudflare routes can't branch on which
+#                                   header a request carries, having
+#                                   STRIPE_WEBHOOK_SECRET alone is NOT
+#                                   enough to safely cut this route over -
+#                                   real vendyai-forwarded traffic would
+#                                   hit this Worker and fail closed
+#                                   (env.SUBSCRIPTION_WEBHOOK_SECRET
+#                                   missing -> 500) instead of being
+#                                   processed. This route deliberately
+#                                   stays on the monolith - see STAGE 3
+#                                   below.
 # JWT_SECRET is deliberately NOT listed here: it is also unset on the
 # real production weylandai-com-worker today (confirmed via
 # `wrangler secret list --name weylandai-com-worker`) - leaving it unset
@@ -125,12 +157,51 @@ zone_name = "weylandai.com"
 pattern = "weylandai.com/api/auth/*"
 zone_name = "weylandai.com"
 
-# STAGE 3 (/subscribe, /api/billing/*, /api/subscription/*,
-# /api/webhooks/subscription) is NOT added yet - see the extraction
-# report for exactly what's verified vs. still pending. Blocked on
-# provisioning STRIPE_WEBHOOK_SECRET / SUBSCRIPTION_WEBHOOK_SECRET on
-# this Worker for real before its webhook route can be safely cut over -
-# a real behavioral discrepancy (webhook signature verification would
-# fail closed) that this pass could not resolve without those secret
-# values, which are not readable back from Cloudflare/Stripe by design
-# and were not found in any local key store searched.
+# STAGE 3a (added below, live 2026-09-12): /subscribe, /api/billing/*,
+# /api/subscription/* - the sub-paths that were only blocked by the now-
+# provisioned STRIPE_SECRET_KEY (catalog's direct Stripe read) or needed
+# no Stripe secret at all (checkout/create + /api/subscription/portal
+# route through the real env.VENDYAI binding, not a direct Stripe call;
+# checkout/status polls env.CACHE; subscription/status reads env.DB).
+# Verified before cutover, all against this Worker's own *.workers.dev:
+# GET /api/billing/catalog - real live-mode Stripe prices, 0-diff
+#   byte-identical against production.
+# POST /api/billing/checkout/create - real cs_live_ Stripe Checkout
+#   session + URL returned (via VENDYAI), payment never completed;
+#   negative paths (unknown product_id, not-checkout-ready product_id)
+#   0-diff byte-identical against production.
+# GET /api/billing/checkout/status/:id - 0-diff byte-identical against
+#   production (unknown id -> "pending").
+# GET /api/subscription/status - negative path (no cookie) 0-diff
+#   byte-identical against production; positive path verified against a
+#   real temporary fixture user+session row inserted into the real
+#   shared D1 and deleted immediately after (same pattern STAGE 2 used).
+# POST /api/subscription/portal - negative paths (no cookie; fixture
+#   user with no stripe_customer_id) 0-diff byte-identical against
+#   production. No real user has a stripe_customer_id populated yet
+#   (checked: 0 rows) so the real-Stripe-portal-session positive path
+#   could not be exercised without fabricating a Stripe customer id -
+#   not done; the identical env.VENDYAI binding call shape is already
+#   proven live by checkout/create's real session above.
+[[routes]]
+pattern = "weylandai.com/subscribe"
+zone_name = "weylandai.com"
+
+[[routes]]
+pattern = "weylandai.com/api/billing/*"
+zone_name = "weylandai.com"
+
+[[routes]]
+pattern = "weylandai.com/api/subscription/*"
+zone_name = "weylandai.com"
+
+# STAGE 3b (/api/webhooks/subscription) is DELIBERATELY NOT added - see
+# the SUBSCRIPTION_WEBHOOK_SECRET note above. Real traffic (Stripe ->
+# vendyai -> this endpoint's X-Webhook-Signature branch) would fail
+# closed on this Worker without that secret. Stays routed to
+# weylandai-com-worker via the zone's existing weylandai.com/* catch-all
+# (confirmed live via the Cloudflare API's zone routes listing,
+# 2026-09-12: weylandai-com-worker still owns weylandai.com/* since no
+# more-specific route for /api/webhooks/subscription exists). Revisit
+# once SUBSCRIPTION_WEBHOOK_SECRET is genuinely recovered/rotated - do
+# not fabricate a value to force this cutover.
