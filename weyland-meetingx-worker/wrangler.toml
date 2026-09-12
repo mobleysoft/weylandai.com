@@ -1,0 +1,95 @@
+name = "weyland-meetingx-worker"
+main = "src/index.js"
+compatibility_date = "2025-10-31"
+compatibility_flags = ["nodejs_compat"]
+
+# Explicitly kept on, same reasoning as every prior extraction's own
+# wrangler.toml comment: adding [[routes]] below makes Wrangler disable
+# the workers.dev subdomain by default on deploy. Keeping it on preserves
+# the standalone https://weyland-meetingx-worker.<account>.workers.dev
+# endpoint this extraction's own parity/round-trip testing depends on -
+# including the real two-connection WebSocket broadcast test done BEFORE
+# any weylandai.com zone route was added (see MEETINGX_EXTRACTION notes
+# in the commit message for the actual verified transcript).
+workers_dev = true
+
+# Same live production D1 database, same ID, as the monolith's own
+# wrangler.toml - NOT a new/separate database, no migration. MeetingX's
+# route needs it only indirectly: authenticate() (lib/legacy-local-
+# session.js) reads the shared `weyland_sessions`/`users` tables, and
+# requireProductAccess() reads `users.subscription_tier`/`products_enabled`
+# - both real, shared tables, not MeetingX-specific ones.
+[[d1_databases]]
+binding = "DB"
+database_name = "weyland_db"
+database_id = "5729f77e-d7e3-4577-ab43-3c064fa90ca5"
+
+# ── Durable Object: SIGHTX_ROOM (cross-script binding, NOT a fork) ──────
+#
+# SightXRoom is a real, already-deployed, real-time multi-party WebSocket
+# relay (join room -> receive roster, broadcast join/leave/chat, and a
+# `signal` message routed to one named peer for WebRTC signaling). Read in
+# full from src/lib/weyland-entry.js (the monolith's own un-bundled
+# source) before deciding how to extract it - it holds ONLY in-memory
+# state (`this.sessions = new Map()`), no `state.storage` calls anywhere
+# in the class, so there is no persisted room history/state to lose either
+# way. What *is* real and worth protecting is the class's live migration
+# record (`tag = "v1"`, `new_sqlite_classes = ["SightXRoom"]`) already
+# committed in the monolith's own wrangler.toml, and its currently-live
+# in-memory sessions for anyone mid-meeting right now.
+#
+# Deliberately NOT re-declaring the class here and NOT adding a new
+# [[migrations]] block. Cloudflare Durable Objects support binding to a
+# class owned and migrated by a DIFFERENT Worker script via `script_name`
+# - the class stays defined and migrated exactly once, in the monolith
+# (weylandai-com-worker), and this Worker just gets a namespace binding to
+# it, identical in behavior to a same-script binding from the caller's
+# point of view (env.SIGHTX_ROOM.idFromName(...)/.get(...) work exactly
+# the same). This is the safe default per the task's own instruction:
+# forking the class definition + a second migration tag into a second
+# Worker would create two independent DO namespaces (Cloudflare scopes DO
+# identity to the owning script), silently splitting any live room's
+# participants across two disconnected relays depending on which Worker
+# handled their handshake - a real risk to the one thing here that IS
+# live (active connections), for zero benefit, since there's no
+# persisted state a "real" migration would be moving anyway.
+[[durable_objects.bindings]]
+name = "SIGHTX_ROOM"
+class_name = "SightXRoom"
+script_name = "weylandai-com-worker"
+
+# Cloudflare Worker Routes on the weylandai.com zone - added AFTER this
+# Worker was deployed standalone to its own *.workers.dev subdomain and a
+# real two-connection WebSocket round trip was verified against the
+# cross-script DO binding: two authenticated sessions (temporary
+# weyland_sessions + users fixture rows, subscription_tier='subconp',
+# products_enabled='meetingx', both deleted immediately after) joined the
+# same room, got a correct 2-participant roster, and a chat message sent
+# by one connection was received by the other (real broadcast, not an
+# echo) - plus join/leave presence events. See this commit's message for
+# the full verified transcript.
+#
+# Both patterns are strictly more specific than the monolith's
+# `weylandai.com/*` catch-all (still pointing at weylandai-com-worker,
+# untouched, not modified by this extraction), so Cloudflare's
+# route-precedence rule sends exactly these path shapes here and nothing
+# else.
+[[routes]]
+pattern = "weylandai.com/meetingx"
+zone_name = "weylandai.com"
+
+[[routes]]
+pattern = "weylandai.com/meetx"
+zone_name = "weylandai.com"
+
+[[routes]]
+pattern = "weylandai.com/api/sight/room/*"
+zone_name = "weylandai.com"
+
+# *.html pages (src/pages/meetingx.html) imported as raw text in
+# src/index.js - a real Wrangler built-in module rule, not a custom
+# bundler step (per the 2026-09-12 "no bundler for new work" instruction).
+[[rules]]
+type = "Text"
+globs = ["**/*.html"]
+fallthrough = true
