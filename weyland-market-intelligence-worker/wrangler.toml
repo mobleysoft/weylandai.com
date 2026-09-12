@@ -9,40 +9,60 @@ compatibility_flags = ["nodejs_compat"]
 # the same Service Binding pattern already proven live by
 # weyland-ocr-worker. Owns the 6 "X-tool" market-intelligence routes
 # (PriceX materials, MarketX trends, CompX vendor search, WeatherX
-# delay-risk, ForecastX cash-flow, GeoX geocoding) - chosen over
-# pricing.js/PriceX-adjacent CPS routes because this cluster is
-# genuinely stateless: zero auth dependency, pure request-in/response-out
-# plus public external data sources (FRED, TXDOT open data,
-# api.weather.gov, US Census geocoder). (2026-09-12: PriceX/MarketX gained
-# a D1 cache - see below - so "zero D1 access" no longer holds for this
-# worker as a whole, though CompX/WeatherX/ForecastX/GeoX remain exactly
-# as stateless as described here.) Verified by reading the actual route code before
-# picking this candidate - see MICROSERVICES_PUSH.md for the full
-# rationale, including why pricing.js was ruled out (it queries
-# hardware_sets/hardware_components directly, the tables the same-day
-# completeness audit found are globally empty in production - not
-# actually the safe, dependency-free candidate its name suggests).
+# delay-risk, ForecastX cash-flow, GeoX geocoding). CompX/WeatherX/
+# ForecastX/GeoX remain genuinely stateless (no D1, live public keyless
+# calls or pure math). PriceX/MarketX's original design note here ("chosen
+# because this cluster is genuinely stateless... pricing.js was ruled out
+# because hardware_sets/hardware_components are globally empty in
+# production") is now stale on two counts - see the 2026-09-12 history
+# below: PriceX is no longer stateless (it now reads weyland_db directly),
+# and hardware_sets/hardware_components/product_variants are NOT empty
+# anymore (real catalog ingestion since populated 59,998 product_variants
+# rows with real prices) - re-verify claims like this against a live query
+# before trusting an old comment, this file included.
 #
 # No KV, no R2, no Durable Objects, no auth binding needed.
 #
-# 2026-09-12: FRED_API_KEY removed. John's directive: the product should
-# not depend on a live external API key at request time for slow-changing
-# public data. Root cause of the PriceX/MarketX 502s was a dead/unregistered
-# FRED_API_KEY secret calling the keyed api.stlouisfed.org JSON API live,
-# per-request - fixed architecturally, not by rotating the key: PriceX and
-# MarketX now read from the fred_series_cache D1 table below, populated by
-# the scheduled() cron handler in src/index.js from FRED's free, keyless
-# fredgraph.csv export endpoint (https://fred.stlouisfed.org/graph/fredgraph.csv?id=<series>).
-# PPI/construction/housing data is only published monthly by BLS/FRED
-# anyway, so a live per-request call was never buying real freshness.
+# 2026-09-12 history (same day, two corrections in sequence):
+# (1) FRED_API_KEY removed - root cause of PriceX/MarketX 502s was a
+#     dead/unregistered secret calling the keyed api.stlouisfed.org JSON
+#     API live, per-request. First fix attempt cached FRED's free,
+#     keyless fredgraph.csv export in D1 on a weekly refresh instead.
+# (2) That first fix was itself reverted the same day on John's direct,
+#     broader correction: "Depending on competitor API's in any way at
+#     all is a non starter for us" - meaning ANY external party's
+#     service, even a free, keyless, government one like FRED. PriceX now
+#     reads ONLY this account's own first-party door-hardware catalog
+#     data (weyland_db's products/product_variants tables - real
+#     manufacturer catalog data weylandai.com's own extraction pipeline
+#     already ingested, not fetched from anywhere at request time).
+#     MarketX has no first-party equivalent for macro construction/
+#     housing trend data (takeoff_quotes/quotes are still 0 rows in
+#     production - no real customer transaction history exists yet to
+#     build a real market-trend signal from) and is honestly retired
+#     (501, not faked, not silently 404'd) until that changes.
 [[d1_databases]]
 binding = "DB"
 database_name = "weyland-market-intelligence-db"
 database_id = "987411cc-07a5-43ae-848c-e18e4f2cec35"
 
-# Weekly refresh (Monday 13:00 UTC) - matches the data's real update
-# cadence (monthly BLS/FRED releases) with margin for a few days of
-# lag after release day, without hammering FRED's endpoint daily for
-# data that isn't changing daily.
+# Read-only (SELECT-only in this worker's own code) second D1 binding to
+# the main weylandai.com monolith's real production database, so PriceX
+# can compute its pricing index from the account's own real catalog data
+# instead of any external source. Same database, same binding name (DB)
+# convention as weylandai-com-worker's own wrangler.toml - see that
+# file's [[d1_databases]] block for the primary/write-capable binding.
+[[d1_databases]]
+binding = "WEYLAND_DB"
+database_name = "weyland_db"
+database_id = "5729f77e-d7e3-4577-ab43-3c064fa90ca5"
+
+# Weekly (Monday 13:00 UTC) - computes and stores one price_index_snapshots
+# row per real, sufficiently-sampled hardware category from our own
+# catalog data. Weekly is arbitrary but reasonable: the catalog itself
+# only changes when new manufacturer data is ingested (not continuously),
+# and this is what accumulates the real trend history over time - the
+# more weeks of real snapshots exist, the more genuine a MoM/YoY signal
+# PriceX can eventually compute, entirely from first-party data.
 [triggers]
 crons = ["0 13 * * 1"]

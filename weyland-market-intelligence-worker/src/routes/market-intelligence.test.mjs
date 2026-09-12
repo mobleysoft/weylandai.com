@@ -1,44 +1,53 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
 import { NativeRouter } from "../lib/router.js";
-import { registerMarketIntelligenceRoutes, refreshFredCache, FRED_SERIES } from "./market-intelligence.js";
+import { registerMarketIntelligenceRoutes, computePriceIndexSnapshot } from "./market-intelligence.js";
 
-// Minimal fake D1 binding: fred_series_cache only, matching the real
-// migrations/0001_fred_series_cache.sql schema (series_id, date, value,
-// fetched_at) closely enough to exercise the real cachedObservations()/
-// refreshFredCache() query shapes without needing an actual D1 instance.
-function makeFakeD1() {
-  const rows = []; // { series_id, date, value, fetched_at }
+// Minimal fake D1 for this worker's own price_index_snapshots table
+// (env.DB) - matches migrations/0002_retire_fred_cache_add_price_index_snapshots.sql.
+function makeFakeSnapshotsD1() {
+  const rows = []; // { category, snapshot_date, sample_count, avg_unit_price, min_unit_price, max_unit_price, computed_at }
   return {
     rows,
     prepare(sql) {
-      const isInsert = /^INSERT INTO fred_series_cache/i.test(sql);
-      const isSelect = /^SELECT date, value, fetched_at FROM fred_series_cache/i.test(sql);
+      const isInsert = /^INSERT INTO price_index_snapshots/i.test(sql);
+      const isDistinctDates = /^SELECT DISTINCT snapshot_date/i.test(sql);
+      const isLatestByDate = /^SELECT category, snapshot_date, sample_count, avg_unit_price, min_unit_price, max_unit_price, computed_at/i.test(sql);
+      const isPriorAvg = /^SELECT category, avg_unit_price FROM price_index_snapshots/i.test(sql);
+      const makeExecutor = (args) => ({
+        async run() {
+          if (isInsert) {
+            const [category, snapshot_date, sample_count, avg_unit_price, min_unit_price, max_unit_price, computed_at] = args;
+            const existing = rows.find((r) => r.category === category && r.snapshot_date === snapshot_date);
+            if (existing) Object.assign(existing, { sample_count, avg_unit_price, min_unit_price, max_unit_price, computed_at });
+            else rows.push({ category, snapshot_date, sample_count, avg_unit_price, min_unit_price, max_unit_price, computed_at });
+          }
+          return { success: true };
+        },
+        async all() {
+          if (isDistinctDates) {
+            const dates = [...new Set(rows.map((r) => r.snapshot_date))].sort().reverse().slice(0, 2);
+            return { results: dates.map((snapshot_date) => ({ snapshot_date })) };
+          }
+          if (isLatestByDate) {
+            const [snapshot_date] = args;
+            return { results: rows.filter((r) => r.snapshot_date === snapshot_date).sort((a, b) => a.category.localeCompare(b.category)) };
+          }
+          if (isPriorAvg) {
+            const [snapshot_date] = args;
+            return { results: rows.filter((r) => r.snapshot_date === snapshot_date).map(({ category, avg_unit_price }) => ({ category, avg_unit_price })) };
+          }
+          return { results: [] };
+        },
+      });
       return {
+        // Real D1 prepared statements support .all()/.run() directly
+        // (no params) as well as after .bind(...args) - the real
+        // latestPriceIndexSnapshots() calls the no-bind form for its
+        // parameterless DISTINCT query, so the fake must too.
+        ...makeExecutor([]),
         bind(...args) {
-          return {
-            async run() {
-              if (isInsert) {
-                const [series_id, date, value, fetched_at] = args;
-                const existing = rows.find((r) => r.series_id === series_id && r.date === date);
-                if (existing) { existing.value = value; existing.fetched_at = fetched_at; }
-                else rows.push({ series_id, date, value, fetched_at });
-              }
-              return { success: true };
-            },
-            async all() {
-              if (isSelect) {
-                const [series_id, limit] = args;
-                const results = rows
-                  .filter((r) => r.series_id === series_id)
-                  .sort((a, b) => (a.date < b.date ? 1 : -1))
-                  .slice(0, limit)
-                  .map(({ date, value, fetched_at }) => ({ date, value, fetched_at }));
-                return { results };
-              }
-              return { results: [] };
-            },
-          };
+          return makeExecutor(args);
         },
       };
     },
@@ -49,70 +58,87 @@ function makeFakeD1() {
   };
 }
 
-function setup() {
-  const router = new NativeRouter();
-  registerMarketIntelligenceRoutes(router);
-  return { router, env: { DB: makeFakeD1() } };
+// Minimal fake D1 for the read-only weyland_db binding (env.WEYLAND_DB) -
+// only needs to answer computePriceIndexSnapshot's one GROUP BY query.
+function makeFakeWeylandDb(categoryRows) {
+  return {
+    prepare(sql) {
+      const isCategoryQuery = /FROM products p\s+JOIN product_variants pv/i.test(sql);
+      return {
+        bind() {
+          return { async all() { return { results: isCategoryQuery ? categoryRows : [] }; } };
+        },
+      };
+    },
+  };
 }
 
-/** Seed the fake D1 cache directly with 13 months of one series' data. */
-function seedSeries(env, seriesId, values, fetchedAt = "2026-09-12T00:00:00.000Z") {
-  values.forEach((v, i) => {
-    const monthsAgo = values.length - 1 - i;
-    const d = new Date(Date.UTC(2026, 8 - monthsAgo, 1)); // count back from Sept 2026
-    env.DB.rows.push({ series_id: seriesId, date: d.toISOString().slice(0, 10), value: v, fetched_at: fetchedAt });
-  });
+function setup(weylandDbRows = []) {
+  const router = new NativeRouter();
+  registerMarketIntelligenceRoutes(router);
+  return { router, env: { DB: makeFakeSnapshotsD1(), WEYLAND_DB: makeFakeWeylandDb(weylandDbRows) } };
 }
 
 let originalFetch;
 test.beforeEach(() => { originalFetch = globalThis.fetch; });
 test.afterEach(() => { globalThis.fetch = originalFetch; });
 
-test("GET /api/pricex/materials: real happy path returns cached FRED material pricing (no live external call)", async () => {
-  globalThis.fetch = async () => { throw new Error("must not call external fetch from a customer request path"); };
+test("GET /api/pricex/materials: real happy path returns a pricing index computed from our own catalog (no external call at all)", async () => {
+  globalThis.fetch = async () => { throw new Error("must not call any external service from a customer request path"); };
   const { router, env } = setup();
-  for (const key of ["construction_materials", "lumber", "metals"]) {
-    seedSeries(env, FRED_SERIES[key].id, Array.from({ length: 13 }, (_, i) => 100 + i).reverse());
-  }
+  env.DB.rows.push(
+    { category: "Exit Devices", snapshot_date: "2026-09-12", sample_count: 5377, avg_unit_price: 4587.6, min_unit_price: 65, max_unit_price: 7464, computed_at: "2026-09-12T00:00:00.000Z" },
+    { category: "Locks", snapshot_date: "2026-09-12", sample_count: 852, avg_unit_price: 2383.17, min_unit_price: 2.47, max_unit_price: 3814, computed_at: "2026-09-12T00:00:00.000Z" }
+  );
   const res = await router.handle(new Request("https://example.com/api/pricex/materials"), env, {});
   assert.equal(res.status, 200);
   const body = await res.json();
-  assert.equal(body.materials.length, 3);
-  assert.match(body.source, /D1 cache/);
-  assert.equal(body.materials[0].latest_value, 100);
-  assert.equal(body.materials[0].cache_fetched_at, "2026-09-12T00:00:00.000Z");
+  assert.equal(body.materials.length, 2);
+  assert.match(body.source, /first-party/);
+  assert.equal(body.materials[0].label, "Exit Devices");
+  assert.equal(body.materials[0].avg_unit_price_usd, 4587.6);
+  assert.equal(body.materials[0].wow_pct_change, null);
+  assert.match(body.materials[0].trend_note, /no prior weekly snapshot/);
 });
 
-test("GET /api/pricex/materials: an empty cache (refresh never ran) surfaces as a real 503, not fabricated data", async () => {
+test("GET /api/pricex/materials: a second week's snapshot produces a real wow_pct_change from our own data", async () => {
+  const { router, env } = setup();
+  env.DB.rows.push(
+    { category: "Locks", snapshot_date: "2026-09-05", sample_count: 850, avg_unit_price: 2300, min_unit_price: 2.47, max_unit_price: 3800, computed_at: "2026-09-05T00:00:00.000Z" },
+    { category: "Locks", snapshot_date: "2026-09-12", sample_count: 852, avg_unit_price: 2383.17, min_unit_price: 2.47, max_unit_price: 3814, computed_at: "2026-09-12T00:00:00.000Z" }
+  );
+  const res = await router.handle(new Request("https://example.com/api/pricex/materials"), env, {});
+  assert.equal(res.status, 200);
+  const body = await res.json();
+  assert.equal(body.materials[0].wow_pct_change, 3.6);
+});
+
+test("GET /api/pricex/materials: no snapshot yet surfaces a real 503, not fabricated data", async () => {
   const { router, env } = setup();
   const res = await router.handle(new Request("https://example.com/api/pricex/materials"), env, {});
   assert.equal(res.status, 503);
 });
 
-test("GET /api/marketx/trends: real happy path classifies trend direction from cached data", async () => {
+test("GET /api/marketx/trends: honestly retired (501), not faked and not silently 404'd", async () => {
   const { router, env } = setup();
-  for (const key of ["construction_spending", "housing_starts", "construction_materials"]) {
-    seedSeries(env, FRED_SERIES[key].id, [110, 105, ...Array(10).fill(90), 100].reverse());
-  }
   const res = await router.handle(new Request("https://example.com/api/marketx/trends"), env, {});
-  assert.equal(res.status, 200);
+  assert.equal(res.status, 501);
   const body = await res.json();
-  assert.equal(body.indicators.length, 3);
-  assert.ok(["rising", "falling", "flat", "unknown"].includes(body.indicators[0].trend));
+  assert.equal(body.status, "not_yet_viable");
+  assert.match(body.detail.message, /first-party/);
 });
 
-test("refreshFredCache: pulls all 5 series from the keyless fredgraph.csv endpoint and upserts into D1", async () => {
-  globalThis.fetch = async (url) => {
-    assert.match(url, /fred\.stlouisfed\.org\/graph\/fredgraph\.csv/);
-    assert.doesNotMatch(url, /api_key/);
-    const csv = "observation_date,X\n2026-07-01,100.5\n2026-08-01,101.2\n";
-    return new Response(csv, { status: 200 });
-  };
-  const env = { DB: makeFakeD1() };
-  const result = await refreshFredCache(env);
-  assert.equal(result.series_refreshed.length, Object.keys(FRED_SERIES).length);
-  assert.equal(env.DB.rows.length, Object.keys(FRED_SERIES).length * 2);
-  assert.equal(env.DB.rows[0].value, 100.5);
+test("computePriceIndexSnapshot: queries only this account's own weyland_db (env.WEYLAND_DB), zero external fetch, and upserts into price_index_snapshots (env.DB)", async () => {
+  globalThis.fetch = async () => { throw new Error("must not call any external service - this is first-party data only"); };
+  const categoryRows = [
+    { category: "Closers", sample_count: 606, avg_unit_price: 750.1, min_unit_price: 10, max_unit_price: 1933 },
+  ];
+  const env = { DB: makeFakeSnapshotsD1(), WEYLAND_DB: makeFakeWeylandDb(categoryRows) };
+  const result = await computePriceIndexSnapshot(env);
+  assert.equal(result.categories_snapshotted, 1);
+  assert.equal(env.DB.rows.length, 1);
+  assert.equal(env.DB.rows[0].category, "Closers");
+  assert.equal(env.DB.rows[0].avg_unit_price, 750.1);
 });
 
 test("GET /api/compx/vendors: 400 when q param missing", async () => {

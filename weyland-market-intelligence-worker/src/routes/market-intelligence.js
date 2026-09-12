@@ -1,116 +1,115 @@
 import { jsonResponse3 } from "../lib/json-response.js";
 
 /**
- * The "X-tool" public-data-driven market-intelligence routes:
- * pricex/marketx (FRED economic data), compx (TXDOT open-data vendor
- * bid history), weatherx (National Weather Service), forecastx (pure
- * deterministic cash-flow math, no external API), geox (US Census
- * Bureau geocoder). compxVendorSearch and pctChange are local private
- * helpers, inlined here since every real call site landed inside this
- * extraction. FRED_SERIES/refreshFredCache/fetchFredCsv are module-level
+ * The "X-tool" public-data-driven market-intelligence routes: pricex
+ * (first-party door-hardware catalog pricing), marketx (honestly retired,
+ * see below), compx (TXDOT open-data vendor bid history), weatherx
+ * (National Weather Service), forecastx (pure deterministic cash-flow
+ * math, no external API), geox (US Census Bureau geocoder).
+ * compxVendorSearch and pctChange are local private helpers, inlined here
+ * since every real call site landed inside this extraction.
+ * computePriceIndexSnapshot/latestPriceIndexSnapshots are module-level
  * exports (not inlined) so src/index.js's scheduled() cron handler can
- * call refreshFredCache directly without going through the router.
+ * call computePriceIndexSnapshot directly without going through the router.
  *
  * @param {object} router
  */
 
-// MarketX/PriceX both run on real public economic data from the St. Louis
-// Fed (FRED), same trust tier as HuntX's TXDOT/CA-OPSC open data.
+// PriceX/MarketX history, 2026-09-12 (two corrections the same day - see
+// wrangler.toml's top comment for the full account):
+// (1) Both routes originally called FRED's keyed api.stlouisfed.org API
+//     live, per-request; a dead FRED_API_KEY secret 502'd both in
+//     production.
+// (2) First fix attempt cached FRED's free, keyless fredgraph.csv export
+//     in D1 instead - itself reverted the same day on John's direct,
+//     broader correction: no dependency on ANY external party's service,
+//     not even a free keyless government one.
+// PriceX now computes a real pricing index from ONLY this account's own
+// first-party door-hardware catalog data - weyland_db's products/
+// product_variants tables (bound here as env.WEYLAND_DB, read-only),
+// real manufacturer catalog data weylandai.com's own catalog-extraction
+// pipeline already ingested (59,998 product_variants rows, each with a
+// real unit_price, verified live 2026-09-12 - NOT empty, correcting an
+// older comment elsewhere in this repo that assumed hardware_sets/
+// hardware_components were still globally empty). Categories with fewer
+// than MIN_SAMPLE_SIZE priced variants are excluded as statistically too
+// thin to report honestly.
 //
-// 2026-09-12: switched off the keyed api.stlouisfed.org JSON API (whose
-// FRED_API_KEY secret was dead/unregistered in production, 502ing both
-// routes) and off live per-request external calls entirely, per John's
-// directive that the product not depend on a live external key for
-// slow-changing public data. These 5 series are now served from the
-// fred_series_cache D1 table, populated by the scheduled() cron handler
-// in src/index.js (weekly, see wrangler.toml) using FRED's free, keyless
-// fredgraph.csv export (https://fred.stlouisfed.org/graph/fredgraph.csv?id=<series>) -
-// verified live, no key, 2026-09-12. PPI/construction/housing data is
-// only published monthly by BLS/FRED anyway, so the live per-request call
-// this replaces was never buying real freshness.
-//
-// Module-level (not inside registerMarketIntelligenceRoutes) so that
-// refreshFredCache can be imported and called directly by src/index.js's
-// scheduled() cron handler, independent of route registration.
-export const FRED_SERIES = {
-  construction_materials: { id: "WPUSI012011", label: "Construction Materials (PPI aggregate)" },
-  lumber: { id: "WPU081", label: "Lumber and Wood Products" },
-  metals: { id: "WPU10", label: "Metals and Metal Products" },
-  construction_spending: { id: "TTLCONS", label: "Total Construction Spending (US, $M)" },
-  housing_starts: { id: "HOUST", label: "New Housing Starts (US, thousands of units)" }
-};
-
-const ALL_FRED_SERIES_IDS = Object.values(FRED_SERIES).map((s) => s.id);
+// MarketX (originally construction spending / housing starts, both
+// FRED-only concepts) has NO first-party equivalent anywhere in
+// weylandai.com's real schema - takeoff_quotes and quotes are still 0
+// rows in production, so there is no real customer transaction history
+// to build a genuine market-trend signal from. Rather than fabricate one
+// or quietly keep an external dependency, MarketX is honestly retired
+// (real 501, not a silent 404 or invented numbers) until real first-party
+// data exists to build it from.
+const MIN_SAMPLE_SIZE = 5;
 
 /**
- * Fetch a series from FRED's free, keyless fredgraph.csv export - NOT the
- * keyed api.stlouisfed.org JSON API. Used only by refreshFredCache (the
- * scheduled cron job / manual seed), never in a customer request path.
- * `cosd` (chart observation start date) keeps the payload small - we only
- * need enough trailing history for a 12-month YoY comparison, not the
- * full series back to the 1940s.
+ * Compute this week's real pricing snapshot straight from weyland_db's own
+ * catalog tables and upsert one row per sufficiently-sampled category into
+ * price_index_snapshots. Runs on a schedule (or a manual one-off call),
+ * independent of any customer request. Exported so both scheduled()
+ * (src/index.js) and a manual seed script can call the exact same logic.
+ * Zero external network calls anywhere in this function - env.WEYLAND_DB
+ * is this same Cloudflare account's own production database.
  */
-async function fetchFredCsv(seriesId, cosd) {
-  const url = `https://fred.stlouisfed.org/graph/fredgraph.csv?${new URLSearchParams({ id: seriesId, cosd })}`;
-  const resp = await fetch(url);
-  if (!resp.ok) throw new Error(`fredgraph.csv ${resp.status} for ${seriesId}`);
-  const text = await resp.text();
-  const lines = text.trim().split("\n").slice(1); // drop header row
-  return lines
-    .map((line) => {
-      const [date, raw] = line.split(",");
-      return { date, value: Number.parseFloat(raw) };
-    })
-    .filter((o) => o.date && Number.isFinite(o.value));
-}
+export async function computePriceIndexSnapshot(env2) {
+  const computedAt = new Date().toISOString();
+  const snapshotDate = computedAt.slice(0, 10);
 
-/**
- * Re-pull all 5 FRED series from the keyless CSV endpoint and upsert them
- * into fred_series_cache. This is the "continuously improve/keep current"
- * half of the no-external-key architecture: it runs on a schedule (or a
- * manual one-off call), independent of any customer request, so a slow or
- * briefly-unavailable FRED endpoint never breaks a live /api/pricex or
- * /api/marketx call. Exported so both scheduled() (src/index.js) and a
- * manual seed script can call the exact same logic.
- */
-export async function refreshFredCache(env2) {
-  const fetchedAt = new Date().toISOString();
-  const twoYearsAgo = new Date();
-  twoYearsAgo.setUTCMonth(twoYearsAgo.getUTCMonth() - 24);
-  const cosd = twoYearsAgo.toISOString().slice(0, 10);
+  const { results: categories } = await env2.WEYLAND_DB.prepare(
+    `SELECT p.category_level_1 AS category,
+            COUNT(*) AS sample_count,
+            AVG(pv.unit_price) AS avg_unit_price,
+            MIN(pv.unit_price) AS min_unit_price,
+            MAX(pv.unit_price) AS max_unit_price
+     FROM products p
+     JOIN product_variants pv ON pv.product_id = p.id
+     WHERE p.category_level_1 IS NOT NULL AND pv.unit_price IS NOT NULL
+     GROUP BY p.category_level_1
+     HAVING COUNT(*) >= ?`
+  ).bind(MIN_SAMPLE_SIZE).all();
 
-  const perSeries = await Promise.all(
-    ALL_FRED_SERIES_IDS.map(async (seriesId) => {
-      const obs = await fetchFredCsv(seriesId, cosd);
-      return { seriesId, obs };
-    })
+  const statements = (categories || []).map((c) =>
+    env2.DB.prepare(
+      `INSERT INTO price_index_snapshots (category, snapshot_date, sample_count, avg_unit_price, min_unit_price, max_unit_price, computed_at)
+       VALUES (?, ?, ?, ?, ?, ?, ?)
+       ON CONFLICT(category, snapshot_date) DO UPDATE SET
+         sample_count = excluded.sample_count, avg_unit_price = excluded.avg_unit_price,
+         min_unit_price = excluded.min_unit_price, max_unit_price = excluded.max_unit_price,
+         computed_at = excluded.computed_at`
+    ).bind(c.category, snapshotDate, c.sample_count, c.avg_unit_price, c.min_unit_price, c.max_unit_price, computedAt)
   );
-
-  const statements = [];
-  for (const { seriesId, obs } of perSeries) {
-    for (const { date, value } of obs) {
-      statements.push(
-        env2.DB.prepare(
-          `INSERT INTO fred_series_cache (series_id, date, value, fetched_at) VALUES (?, ?, ?, ?)
-           ON CONFLICT(series_id, date) DO UPDATE SET value = excluded.value, fetched_at = excluded.fetched_at`
-        ).bind(seriesId, date, value, fetchedAt)
-      );
-    }
-  }
   if (statements.length) await env2.DB.batch(statements);
 
-  return {
-    fetched_at: fetchedAt,
-    series_refreshed: perSeries.map((p) => ({ series_id: p.seriesId, observations: p.obs.length })),
-  };
+  return { computed_at: computedAt, snapshot_date: snapshotDate, categories_snapshotted: (categories || []).length };
 }
 
-/** Read cached observations for one series back out of D1, most-recent-first. */
-async function cachedObservations(env2, seriesId, limit = 13) {
-  const { results } = await env2.DB.prepare(
-    `SELECT date, value, fetched_at FROM fred_series_cache WHERE series_id = ? ORDER BY date DESC LIMIT ?`
-  ).bind(seriesId, limit).all();
-  return results || [];
+/**
+ * Read the latest and (if it exists) prior weekly snapshot for every
+ * category currently in price_index_snapshots, straight from this
+ * worker's own D1 (env.DB) - no external call, no cross-worker call.
+ */
+async function latestPriceIndexSnapshots(env2) {
+  const { results: dates } = await env2.DB.prepare(
+    `SELECT DISTINCT snapshot_date FROM price_index_snapshots ORDER BY snapshot_date DESC LIMIT 2`
+  ).all();
+  if (!dates || dates.length === 0) return { latest: [], priorByCategory: new Map() };
+
+  const { results: latest } = await env2.DB.prepare(
+    `SELECT category, snapshot_date, sample_count, avg_unit_price, min_unit_price, max_unit_price, computed_at
+     FROM price_index_snapshots WHERE snapshot_date = ? ORDER BY category`
+  ).bind(dates[0].snapshot_date).all();
+
+  const priorByCategory = new Map();
+  if (dates[1]) {
+    const { results: prior } = await env2.DB.prepare(
+      `SELECT category, avg_unit_price FROM price_index_snapshots WHERE snapshot_date = ?`
+    ).bind(dates[1].snapshot_date).all();
+    for (const row of prior || []) priorByCategory.set(row.category, row.avg_unit_price);
+  }
+  return { latest: latest || [], priorByCategory };
 }
 
 function pctChange(latest, prior) {
@@ -150,41 +149,33 @@ export function registerMarketIntelligenceRoutes(router) {
     return [...byVendor.values()].map((v) => ({ ...v, win_rate_pct: v.total_bids ? Math.round((v.wins / v.total_bids) * 1000) / 10 : 0 }));
   }
 
-  /** Read cached observations for one series back out of D1, most-recent-first. */
-  async function cachedObservations(env2, seriesId, limit = 13) {
-    const { results } = await env2.DB.prepare(
-      `SELECT date, value, fetched_at FROM fred_series_cache WHERE series_id = ? ORDER BY date DESC LIMIT ?`
-    ).bind(seriesId, limit).all();
-    return results || [];
-  }
-
   router.get("/api/pricex/materials", async (request2, env2) => {
     try {
-      const keys = ["construction_materials", "lumber", "metals"];
-      const results = await Promise.all(
-        keys.map(async (key) => {
-          const { id, label } = FRED_SERIES[key];
-          const obs = await cachedObservations(env2, id, 13); // 13 months: latest + 1mo-ago + 12mo-ago
-          const latest = obs[0];
-          const monthAgo = obs[1];
-          const yearAgo = obs[12];
-          return {
-            key,
-            label,
-            series_id: id,
-            latest_value: latest?.value ?? null,
-            latest_date: latest?.date ?? null,
-            mom_pct_change: monthAgo ? pctChange(latest.value, monthAgo.value) : null,
-            yoy_pct_change: yearAgo ? pctChange(latest.value, yearAgo.value) : null,
-            cache_fetched_at: latest?.fetched_at ?? null,
-            history: obs.map(({ date, value }) => ({ date, value })).slice(0, 13).reverse()
-          };
-        })
-      );
-      if (results.every((r) => r.latest_value === null)) {
-        return jsonResponse3({ detail: { message: "fred_series_cache is empty - the scheduled refresh hasn't run yet or the manual seed hasn't been applied" } }, 503);
+      const { latest, priorByCategory } = await latestPriceIndexSnapshots(env2);
+      if (latest.length === 0) {
+        return jsonResponse3({ detail: { message: "price_index_snapshots is empty - the scheduled snapshot job hasn't run yet or the manual seed hasn't been applied" } }, 503);
       }
-      return jsonResponse3({ source: "FRED (Federal Reserve Bank of St. Louis), served from local D1 cache - no live external call, no API key", fetched_at: new Date().toISOString(), materials: results });
+      const materials = latest.map((row) => {
+        const prior = priorByCategory.get(row.category);
+        return {
+          key: row.category.toLowerCase().replace(/[^a-z0-9]+/g, "_"),
+          label: row.category,
+          sample_count: row.sample_count,
+          avg_unit_price_usd: Math.round(row.avg_unit_price * 100) / 100,
+          min_unit_price_usd: row.min_unit_price,
+          max_unit_price_usd: row.max_unit_price,
+          wow_pct_change: prior !== undefined ? pctChange(row.avg_unit_price, prior) : null,
+          trend_note: prior === undefined ? "no prior weekly snapshot yet - trend will appear once at least 2 weeks of real snapshots exist" : null,
+          snapshot_date: row.snapshot_date,
+          computed_at: row.computed_at,
+        };
+      });
+      return jsonResponse3({
+        source: "weylandai.com's own real door-hardware catalog (weyland_db products/product_variants) - first-party data, zero external API calls, zero external dependency of any kind",
+        min_sample_size: MIN_SAMPLE_SIZE,
+        fetched_at: new Date().toISOString(),
+        materials,
+      });
     } catch (err) {
       console.error("[PriceX] materials error:", err.message);
       return jsonResponse3({ detail: { message: err.message } }, 502);
@@ -192,38 +183,21 @@ export function registerMarketIntelligenceRoutes(router) {
   });
 
   router.get("/api/marketx/trends", async (request2, env2) => {
-    try {
-      const keys = ["construction_spending", "housing_starts", "construction_materials"];
-      const results = await Promise.all(
-        keys.map(async (key) => {
-          const { id, label } = FRED_SERIES[key];
-          const obs = await cachedObservations(env2, id, 13);
-          const latest = obs[0];
-          const monthAgo = obs[1];
-          const yearAgo = obs[12];
-          const yoy = yearAgo ? pctChange(latest.value, yearAgo.value) : null;
-          return {
-            key,
-            label,
-            series_id: id,
-            latest_value: latest?.value ?? null,
-            latest_date: latest?.date ?? null,
-            mom_pct_change: monthAgo ? pctChange(latest.value, monthAgo.value) : null,
-            yoy_pct_change: yoy,
-            trend: yoy === null ? "unknown" : yoy > 1 ? "rising" : yoy < -1 ? "falling" : "flat",
-            cache_fetched_at: latest?.fetched_at ?? null,
-            history: obs.map(({ date, value }) => ({ date, value })).slice(0, 13).reverse()
-          };
-        })
-      );
-      if (results.every((r) => r.latest_value === null)) {
-        return jsonResponse3({ detail: { message: "fred_series_cache is empty - the scheduled refresh hasn't run yet or the manual seed hasn't been applied" } }, 503);
-      }
-      return jsonResponse3({ source: "FRED (Federal Reserve Bank of St. Louis), served from local D1 cache - no live external call, no API key", fetched_at: new Date().toISOString(), indicators: results });
-    } catch (err) {
-      console.error("[MarketX] trends error:", err.message);
-      return jsonResponse3({ detail: { message: err.message } }, 502);
-    }
+    // Honestly retired 2026-09-12, not faked and not silently 404'd. See
+    // this file's top comment for the full history: MarketX's original
+    // scope (construction spending / housing starts) has no first-party
+    // data anywhere in weylandai.com's real schema - the tables a real
+    // signal would come from (takeoff_quotes, quotes) are still 0 rows in
+    // production, so there is no real customer transaction history yet.
+    // Building it on FRED (or any other external party's data) is
+    // explicitly ruled out per John's direct correction. This route
+    // returns 501 until real first-party data exists to build it from.
+    return jsonResponse3({
+      status: "not_yet_viable",
+      detail: {
+        message: "MarketX is retired pending real first-party data. It previously depended on FRED (Federal Reserve economic data), which is no longer allowed for this product (no dependency on any external party's service, per direct correction 2026-09-12). No first-party substitute exists yet: weyland_db's takeoff_quotes and quotes tables (the real source a genuine market-trend signal would need) are still 0 rows in production. This route will be rebuilt once real customer quote/transaction volume exists to compute a trend from - not before."
+      },
+    }, 501);
   });
 
   router.get("/api/compx/vendors", async (request2, env2) => {
