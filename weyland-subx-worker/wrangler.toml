@@ -1,0 +1,60 @@
+name = "weyland-subx-worker"
+main = "src/index.js"
+compatibility_date = "2025-10-31"
+compatibility_flags = ["nodejs_compat"]
+
+# SubX + TakeoffX extracted out of weylandai.com's monolith
+# (src/legacy-monolith.js / weyland.worker.js) as their own standalone
+# Worker, per the 2026-09-12 microservices push (MICROSERVICES_PUSH.md)
+# and the same Service-Binding pattern already proven live by
+# weyland-ocr-worker and weyland-market-intelligence-worker. No build
+# step - plain ESM, `wrangler deploy` directly from source.
+#
+# D1/R2/KV bindings below point at the SAME live production resources
+# weylandai-com-worker uses (same binding names, same IDs, taken directly
+# from that worker's own wrangler.toml) - this worker reads/writes the
+# real submittals/hardware_extraction_sessions/hardware_sets/etc. tables
+# (including the real 59,998-row product_variants table this pipeline
+# depends on), not a copy. No new database, no migration.
+
+[[d1_databases]]
+binding = "DB"
+database_name = "weyland_db"
+database_id = "5729f77e-d7e3-4577-ab43-3c064fa90ca5"
+
+[[kv_namespaces]]
+binding = "CACHE"
+id = "80a77dcf4f5f4e8588c172f2ecef95fb"
+
+# Same-account, zero-network-hop Service Binding to the already-deployed
+# weyland-ocr-worker (PDFium + tesseract, no external API) - used by
+# hardware-schedule-extract.js's detect-schedules route and
+# hardware-extraction-vision-dispatch.js's embedded_gofaineat path.
+[[services]]
+binding = "OCR_SERVICE"
+service = "weyland-ocr-worker"
+
+# Needed by hardware-extraction-region-render.js's renderRegionAt600DPI2
+# (region-zoom rendering for hardware-schedule-page-affirm.js's
+# extract-region and hardware-schedule-generate.js).
+[browser]
+binding = "BROWSER"
+
+# Same real R2 buckets weylandai-com-worker uses for SubX uploads/outputs
+# (bucket names literally say so) - not new buckets, not a copy.
+[[r2_buckets]]
+binding = "UPLOADS"
+bucket_name = "subx-uploads"
+
+[[r2_buckets]]
+binding = "OUTPUTS"
+bucket_name = "subx-outputs"
+
+# *.html pages (src/pages/subx-app.html, subx.html, takeoffx.html) are
+# imported as raw text in src/index.js - a real Wrangler built-in module
+# rule, not a custom bundler step (per 2026-09-12 "no bundler for new
+# work" instruction).
+[[rules]]
+type = "Text"
+globs = ["**/*.html"]
+fallthrough = true

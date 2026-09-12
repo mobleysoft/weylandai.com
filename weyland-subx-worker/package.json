@@ -1,0 +1,13 @@
+{
+  "name": "weyland-subx-worker",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "wrangler dev",
+    "deploy": "wrangler deploy"
+  },
+  "dependencies": {
+    "@cloudflare/puppeteer": "1.0.4",
+    "pdf-lib": "^1.17.1"
+  }
+}
