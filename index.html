@@ -371,7 +371,30 @@
     // --- no click required - this IS the landing experience.          ---
     function esc(s){ return String(s == null ? "" : s).replace(/[&<>"']/g, function(c){ return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]; }); }
 
+    // Added alongside the conglomerate-wide trial-invite-emails capability
+    // (mascom/flagged_next_steps_backlog.json): a person who clicked a real
+    // pitch-email claim link lands here with ?trial_token=<AuthFor ephemeral
+    // invite token> already in the URL (consenta.cc's /claim page appends
+    // it after the real consent step - see that repo's worker.js). That
+    // token is tied to an identity (their email) and a real trial
+    // entitlement (see consenta.cc's /api/v1/trials), unlike the anonymous
+    // token this function mints by default for a plain landing-page visit -
+    // so an incoming trial_token always wins over both sessionStorage and
+    // minting a fresh anonymous one, and is written into sessionStorage so
+    // the rest of this page's existing flow (loadRealTrial, etc.) picks it
+    // up completely unchanged from here on.
+    function incomingTrialToken(){
+      try {
+        return new URLSearchParams(window.location.search).get("trial_token");
+      } catch (e) { return null; }
+    }
+
     function ephemeralToken(){
+      var incoming = incomingTrialToken();
+      if (incoming) {
+        try { window.sessionStorage.setItem(EPHEMERAL_TOKEN_KEY, incoming); } catch (e) {}
+        return Promise.resolve(incoming);
+      }
       try {
         var existing = window.sessionStorage.getItem(EPHEMERAL_TOKEN_KEY);
         if (existing) return Promise.resolve(existing);

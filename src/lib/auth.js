@@ -196,6 +196,38 @@ export async function requireActiveSubscription(user, env2) {
 // an invented number.
 export const EPHEMERAL_TRIAL_PRODUCTS = new Set(["subx", "takeoffx", "cutsheetx", "sightx"]);
 
+// Closes the gap the comment above documents, added alongside the
+// conglomerate-wide trial-invite-emails capability
+// (mascom/flagged_next_steps_backlog.json id
+// conglomerate-wide-trial-invite-emails): consenta.cc's real
+// /api/v1/trials/:token/consume endpoint (co-located there with the real
+// consent-capture flow this same feature already wired into AuthFor's
+// ephemeral-invite claim - see consenta.cc/worker.js's /claim route and
+// this repo's index.html ephemeralToken(), which now honors an incoming
+// ?trial_token=). ONLY an ephemeral session that was actually invited
+// with a real trial_limit (a row exists on consenta.cc for this exact
+// token) gets metered - a plain anonymous landing-page visitor (no
+// invite, no row) gets today's unchanged unmetered behavior, and a
+// consenta.cc outage fails OPEN to the same unmetered behavior rather
+// than breaking the existing no-login landing demo.
+async function checkEphemeralTrialEntitlement(ephemeralToken2, productSlug) {
+  if (!ephemeralToken2) return { limited: false };
+  try {
+    const resp = await fetch(`https://consenta.cc/api/v1/trials/${encodeURIComponent(ephemeralToken2)}/consume`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ amount: 1 })
+    });
+    const result = await resp.json().catch(() => null);
+    if (!result || result.reason === "NOT_FOUND") return { limited: false };
+    if (result.ok) return { limited: false };
+    return { limited: true, reason: result.reason };
+  } catch (e) {
+    console.log("[requireProductAccess] consenta.cc trial-entitlement check failed, failing open:", e?.message);
+    return { limited: false };
+  }
+}
+
 // Per-product entitlement (TakeoffX, CutsheetX, ...) layered on top of the
 // blanket subscription check above. 'subconp' tier (the full suite) always
 // passes; a standalone purchase adds its product slug to
@@ -203,15 +235,30 @@ export const EPHEMERAL_TRIAL_PRODUCTS = new Set(["subx", "takeoffx", "cutsheetx"
 // ~40 call sites across every product vertical (map §2).
 export async function requireProductAccess(user, env2, productSlug) {
   if (user?.ephemeral) {
-    if (EPHEMERAL_TRIAL_PRODUCTS.has(productSlug)) return null;
-    return jsonResponse3({
-      success: false,
-      error: {
-        code: "EPHEMERAL_PRODUCT_NOT_AVAILABLE",
-        message: `Trying ${productSlug} requires a real account - see /pricing, or /login to create one.`
-      },
-      upgradeUrl: "/pricing"
-    }, 402);
+    if (!EPHEMERAL_TRIAL_PRODUCTS.has(productSlug)) {
+      return jsonResponse3({
+        success: false,
+        error: {
+          code: "EPHEMERAL_PRODUCT_NOT_AVAILABLE",
+          message: `Trying ${productSlug} requires a real account - see /pricing, or /login to create one.`
+        },
+        upgradeUrl: "/pricing"
+      }, 402);
+    }
+    const trialCheck = await checkEphemeralTrialEntitlement(user.ephemeralToken, productSlug);
+    if (trialCheck.limited) {
+      return jsonResponse3({
+        success: false,
+        error: {
+          code: "TRIAL_LIMIT_REACHED",
+          message: trialCheck.reason === "NOT_ACTIVATED"
+            ? "Your trial hasn't been claimed yet - use the claim link from your invite email."
+            : `Your invited trial limit has been reached. Subscribe to keep using ${productSlug}.`
+        },
+        upgradeUrl: "/pricing"
+      }, 402);
+    }
+    return null;
   }
   const subError = await requireActiveSubscription(user, env2);
   if (subError) return subError;

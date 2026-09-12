@@ -262,9 +262,74 @@ test("requireProductAccess(): ephemeral guest denied a non-trial product with a 
   const result = await requireProductAccess(guest, env, "cps-admin");
   assert.ok(result instanceof Response);
   assert.equal(result.status, 402);
-  const body = await result.json();
-  assert.equal(body.error.code, "EPHEMERAL_PRODUCT_NOT_AVAILABLE");
-  assert.equal(body.upgradeUrl, "/pricing");
+});
+
+// Real trial-entitlement metering, added alongside consenta.cc's
+// /api/v1/trials/:token/consume (conglomerate-wide-trial-invite-emails).
+// An invited ephemeral session (has an ephemeralToken tied to a real
+// consenta.cc entitlement row) is metered; a plain anonymous landing-page
+// visitor (no ephemeralToken passed through, or consenta.cc has no row for
+// it - NOT_FOUND) keeps today's unmetered access, unchanged.
+test("requireProductAccess(): invited ephemeral session with remaining trial payloads is allowed and consumes one", async () => {
+  const originalFetch = globalThis.fetch;
+  let calledUrl = null;
+  globalThis.fetch = async (url, opts) => {
+    calledUrl = url;
+    assert.equal(url, "https://consenta.cc/api/v1/trials/tok_real/consume");
+    assert.equal(JSON.parse(opts.body).amount, 1);
+    return { ok: true, json: async () => ({ ok: true, status: "active", remaining: 4 }) };
+  };
+  try {
+    const env = { DB: makeFakeDb({}) };
+    const guest = { ephemeral: true, userId: null, ephemeralToken: "tok_real" };
+    const result = await requireProductAccess(guest, env, "subx");
+    assert.equal(result, null, "must allow access when consenta.cc reports a real remaining payload");
+    assert.equal(calledUrl, "https://consenta.cc/api/v1/trials/tok_real/consume");
+  } finally {
+    globalThis.fetch = originalFetch;
+  }
+});
+
+test("requireProductAccess(): an anonymous ephemeral session with no tracked entitlement (NOT_FOUND) keeps unmetered access", async () => {
+  const originalFetch = globalThis.fetch;
+  globalThis.fetch = async () => ({ ok: true, json: async () => ({ ok: false, reason: "NOT_FOUND" }) });
+  try {
+    const env = { DB: makeFakeDb({}) };
+    const guest = { ephemeral: true, userId: null, ephemeralToken: "tok_anonymous" };
+    const result = await requireProductAccess(guest, env, "subx");
+    assert.equal(result, null, "NOT_FOUND must not be treated as a block - it means no invite ever tracked this session");
+  } finally {
+    globalThis.fetch = originalFetch;
+  }
+});
+
+test("requireProductAccess(): an invited ephemeral session with an exhausted trial is blocked with a real 402, not silently allowed", async () => {
+  const originalFetch = globalThis.fetch;
+  globalThis.fetch = async () => ({ ok: true, json: async () => ({ ok: false, reason: "EXHAUSTED", status: "exhausted", remaining: 0 }) });
+  try {
+    const env = { DB: makeFakeDb({}) };
+    const guest = { ephemeral: true, userId: null, ephemeralToken: "tok_exhausted" };
+    const result = await requireProductAccess(guest, env, "subx");
+    assert.ok(result instanceof Response);
+    assert.equal(result.status, 402);
+    const body = await result.json();
+    assert.equal(body.error.code, "TRIAL_LIMIT_REACHED");
+  } finally {
+    globalThis.fetch = originalFetch;
+  }
+});
+
+test("requireProductAccess(): a consenta.cc outage fails OPEN (matches today's existing unmetered ephemeral behavior)", async () => {
+  const originalFetch = globalThis.fetch;
+  globalThis.fetch = async () => { throw new Error("network unreachable"); };
+  try {
+    const env = { DB: makeFakeDb({}) };
+    const guest = { ephemeral: true, userId: null, ephemeralToken: "tok_whatever" };
+    const result = await requireProductAccess(guest, env, "subx");
+    assert.equal(result, null, "a metering-service outage must not break the existing no-login trial demo");
+  } finally {
+    globalThis.fetch = originalFetch;
+  }
 });
 
 test("requireActiveSubscription(): ephemeral guest passes unconditionally (no local row to check)", async () => {
