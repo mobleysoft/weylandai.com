@@ -11,19 +11,38 @@ compatibility_flags = ["nodejs_compat"]
 # (PriceX materials, MarketX trends, CompX vendor search, WeatherX
 # delay-risk, ForecastX cash-flow, GeoX geocoding) - chosen over
 # pricing.js/PriceX-adjacent CPS routes because this cluster is
-# genuinely stateless: zero D1 access, zero auth dependency, pure
-# request-in/response-out plus public external APIs (FRED, TXDOT open
-# data, api.weather.gov, US Census geocoder) and one secret
-# (FRED_API_KEY). Verified by reading the actual route code before
+# genuinely stateless: zero auth dependency, pure request-in/response-out
+# plus public external data sources (FRED, TXDOT open data,
+# api.weather.gov, US Census geocoder). (2026-09-12: PriceX/MarketX gained
+# a D1 cache - see below - so "zero D1 access" no longer holds for this
+# worker as a whole, though CompX/WeatherX/ForecastX/GeoX remain exactly
+# as stateless as described here.) Verified by reading the actual route code before
 # picking this candidate - see MICROSERVICES_PUSH.md for the full
 # rationale, including why pricing.js was ruled out (it queries
 # hardware_sets/hardware_components directly, the tables the same-day
 # completeness audit found are globally empty in production - not
 # actually the safe, dependency-free candidate its name suggests).
 #
-# No D1, no KV, no R2, no Durable Objects, no auth binding needed.
-# FRED_API_KEY must be set here independently via `wrangler secret put
-# FRED_API_KEY --name weyland-market-intelligence-worker` - Cloudflare
-# service bindings invoke the target Worker with ITS OWN env bindings,
-# not the caller's, so this is not inherited from the main worker's
-# copy of the same secret name.
+# No KV, no R2, no Durable Objects, no auth binding needed.
+#
+# 2026-09-12: FRED_API_KEY removed. John's directive: the product should
+# not depend on a live external API key at request time for slow-changing
+# public data. Root cause of the PriceX/MarketX 502s was a dead/unregistered
+# FRED_API_KEY secret calling the keyed api.stlouisfed.org JSON API live,
+# per-request - fixed architecturally, not by rotating the key: PriceX and
+# MarketX now read from the fred_series_cache D1 table below, populated by
+# the scheduled() cron handler in src/index.js from FRED's free, keyless
+# fredgraph.csv export endpoint (https://fred.stlouisfed.org/graph/fredgraph.csv?id=<series>).
+# PPI/construction/housing data is only published monthly by BLS/FRED
+# anyway, so a live per-request call was never buying real freshness.
+[[d1_databases]]
+binding = "DB"
+database_name = "weyland-market-intelligence-db"
+database_id = "987411cc-07a5-43ae-848c-e18e4f2cec35"
+
+# Weekly refresh (Monday 13:00 UTC) - matches the data's real update
+# cadence (monthly BLS/FRED releases) with margin for a few days of
+# lag after release day, without hammering FRED's endpoint daily for
+# data that isn't changing daily.
+[triggers]
+crons = ["0 13 * * 1"]

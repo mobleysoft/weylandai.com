@@ -1,53 +1,118 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
 import { NativeRouter } from "../lib/router.js";
-import { registerMarketIntelligenceRoutes } from "./market-intelligence.js";
+import { registerMarketIntelligenceRoutes, refreshFredCache, FRED_SERIES } from "./market-intelligence.js";
+
+// Minimal fake D1 binding: fred_series_cache only, matching the real
+// migrations/0001_fred_series_cache.sql schema (series_id, date, value,
+// fetched_at) closely enough to exercise the real cachedObservations()/
+// refreshFredCache() query shapes without needing an actual D1 instance.
+function makeFakeD1() {
+  const rows = []; // { series_id, date, value, fetched_at }
+  return {
+    rows,
+    prepare(sql) {
+      const isInsert = /^INSERT INTO fred_series_cache/i.test(sql);
+      const isSelect = /^SELECT date, value, fetched_at FROM fred_series_cache/i.test(sql);
+      return {
+        bind(...args) {
+          return {
+            async run() {
+              if (isInsert) {
+                const [series_id, date, value, fetched_at] = args;
+                const existing = rows.find((r) => r.series_id === series_id && r.date === date);
+                if (existing) { existing.value = value; existing.fetched_at = fetched_at; }
+                else rows.push({ series_id, date, value, fetched_at });
+              }
+              return { success: true };
+            },
+            async all() {
+              if (isSelect) {
+                const [series_id, limit] = args;
+                const results = rows
+                  .filter((r) => r.series_id === series_id)
+                  .sort((a, b) => (a.date < b.date ? 1 : -1))
+                  .slice(0, limit)
+                  .map(({ date, value, fetched_at }) => ({ date, value, fetched_at }));
+                return { results };
+              }
+              return { results: [] };
+            },
+          };
+        },
+      };
+    },
+    async batch(statements) {
+      for (const stmt of statements) await stmt.run();
+      return statements.map(() => ({ success: true }));
+    },
+  };
+}
 
 function setup() {
   const router = new NativeRouter();
   registerMarketIntelligenceRoutes(router);
-  return { router, env: { FRED_API_KEY: "test-key" } };
+  return { router, env: { DB: makeFakeD1() } };
+}
+
+/** Seed the fake D1 cache directly with 13 months of one series' data. */
+function seedSeries(env, seriesId, values, fetchedAt = "2026-09-12T00:00:00.000Z") {
+  values.forEach((v, i) => {
+    const monthsAgo = values.length - 1 - i;
+    const d = new Date(Date.UTC(2026, 8 - monthsAgo, 1)); // count back from Sept 2026
+    env.DB.rows.push({ series_id: seriesId, date: d.toISOString().slice(0, 10), value: v, fetched_at: fetchedAt });
+  });
 }
 
 let originalFetch;
 test.beforeEach(() => { originalFetch = globalThis.fetch; });
 test.afterEach(() => { globalThis.fetch = originalFetch; });
 
-function fredObsResponse(values) {
-  return new Response(JSON.stringify({
-    observations: values.map((v, i) => ({ date: `2026-0${(i % 9) + 1}-01`, value: String(v) })),
-  }), { status: 200 });
-}
-
-test("GET /api/pricex/materials: real happy path returns FRED-derived material pricing", async () => {
-  globalThis.fetch = async (url) => {
-    assert.match(url, /api\.stlouisfed\.org/);
-    return fredObsResponse(Array.from({ length: 13 }, (_, i) => 100 + i));
-  };
+test("GET /api/pricex/materials: real happy path returns cached FRED material pricing (no live external call)", async () => {
+  globalThis.fetch = async () => { throw new Error("must not call external fetch from a customer request path"); };
   const { router, env } = setup();
+  for (const key of ["construction_materials", "lumber", "metals"]) {
+    seedSeries(env, FRED_SERIES[key].id, Array.from({ length: 13 }, (_, i) => 100 + i).reverse());
+  }
   const res = await router.handle(new Request("https://example.com/api/pricex/materials"), env, {});
   assert.equal(res.status, 200);
   const body = await res.json();
   assert.equal(body.materials.length, 3);
-  assert.equal(body.source, "FRED (Federal Reserve Bank of St. Louis)");
+  assert.match(body.source, /D1 cache/);
   assert.equal(body.materials[0].latest_value, 100);
+  assert.equal(body.materials[0].cache_fetched_at, "2026-09-12T00:00:00.000Z");
 });
 
-test("GET /api/pricex/materials: a FRED fetch failure surfaces as a real 502", async () => {
-  globalThis.fetch = async () => new Response(JSON.stringify({ error_code: 400, error_message: "bad series" }), { status: 400 });
+test("GET /api/pricex/materials: an empty cache (refresh never ran) surfaces as a real 503, not fabricated data", async () => {
   const { router, env } = setup();
   const res = await router.handle(new Request("https://example.com/api/pricex/materials"), env, {});
-  assert.equal(res.status, 502);
+  assert.equal(res.status, 503);
 });
 
-test("GET /api/marketx/trends: real happy path classifies trend direction", async () => {
-  globalThis.fetch = async () => fredObsResponse([110, 105, ...Array(10).fill(90), 100]);
+test("GET /api/marketx/trends: real happy path classifies trend direction from cached data", async () => {
   const { router, env } = setup();
+  for (const key of ["construction_spending", "housing_starts", "construction_materials"]) {
+    seedSeries(env, FRED_SERIES[key].id, [110, 105, ...Array(10).fill(90), 100].reverse());
+  }
   const res = await router.handle(new Request("https://example.com/api/marketx/trends"), env, {});
   assert.equal(res.status, 200);
   const body = await res.json();
   assert.equal(body.indicators.length, 3);
   assert.ok(["rising", "falling", "flat", "unknown"].includes(body.indicators[0].trend));
+});
+
+test("refreshFredCache: pulls all 5 series from the keyless fredgraph.csv endpoint and upserts into D1", async () => {
+  globalThis.fetch = async (url) => {
+    assert.match(url, /fred\.stlouisfed\.org\/graph\/fredgraph\.csv/);
+    assert.doesNotMatch(url, /api_key/);
+    const csv = "observation_date,X\n2026-07-01,100.5\n2026-08-01,101.2\n";
+    return new Response(csv, { status: 200 });
+  };
+  const env = { DB: makeFakeD1() };
+  const result = await refreshFredCache(env);
+  assert.equal(result.series_refreshed.length, Object.keys(FRED_SERIES).length);
+  assert.equal(env.DB.rows.length, Object.keys(FRED_SERIES).length * 2);
+  assert.equal(env.DB.rows[0].value, 100.5);
 });
 
 test("GET /api/compx/vendors: 400 when q param missing", async () => {
