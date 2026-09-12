@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <meta name="theme-color" content="#090a0d">
-  <title>HuntX | Municipal RFP & Permit Reconnaissance Spider</title>
+  <title>HuntX | Public Construction Opportunity Discovery</title>
   <style>
     :root{--bg:#090a0d;--panel:#121419;--panel2:#181b21;--line:#2c3139;--text:#edf0f1;--muted:#9299a3;--gold:#f0b800;--green:#61dfa0;--blue:#66d4ff;--red:#ff756e;--purple:#a78bfa}
     *{box-sizing:border-box}html,body{margin:0;min-height:100%;background:var(--bg);color:var(--text);font-family:"Avenir Next","Helvetica Neue",sans-serif}
@@ -19,37 +19,152 @@
     .nav a,.button{border:1px solid var(--line);border-radius:99px;padding:9px 14px;color:var(--text);text-decoration:none;background:transparent;font:750 10px/1 ui-monospace,monospace;letter-spacing:.06em;cursor:pointer;transition:all .2s}
     .nav a:hover,.button:hover{border-color:var(--blue);color:var(--blue);box-shadow:0 0 15px rgba(102,212,255,.2)}
     .button.primary{background:var(--blue);border-color:var(--blue);color:var(--bg);font-weight:900}
+    .button:disabled{opacity:.5;cursor:not-allowed}
     .titlebar{display:flex;justify-content:space-between;align-items:end;gap:25px;margin:35px 0 25px}
     .eyebrow{color:var(--blue);font:800 11px/1 ui-monospace,monospace;letter-spacing:.18em;text-transform:uppercase}
     .titlebar h1{font-size:clamp(34px,4.5vw,64px);letter-spacing:-.05em;line-height:1.02;margin:12px 0}
     .titlebar p{max-width:680px;color:var(--muted);line-height:1.6;margin:0;font-size:16px}
     .pill{border:1px solid rgba(102,212,255,.4);color:var(--blue);border-radius:99px;padding:10px 15px;font:800 10px/1 ui-monospace,monospace;letter-spacing:.1em;background:rgba(102,212,255,.1)}
-    
     .filter-bar{display:flex;gap:15px;margin-bottom:24px;flex-wrap:wrap;background:#0e1117;padding:18px 24px;border:1px solid var(--line);border-radius:16px;align-items:center}
     .search-input{flex:1;min-width:280px;background:#161920;border:1px solid var(--line);border-radius:10px;padding:12px 18px;color:#fff;font-size:15px}
     .search-input:focus{outline:none;border-color:var(--blue)}
     select{background:#161920;border:1px solid var(--line);border-radius:10px;padding:12px 18px;color:#fff;font-size:14px;cursor:pointer}
-    
-    .metrics-row{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:28px}
+    .metrics-row{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:28px}
     .metric-card{background:rgba(18,20,25,.9);border:1px solid var(--line);border-radius:14px;padding:20px}
     .metric-card span{color:var(--muted);font:700 10px/1 ui-monospace,monospace;letter-spacing:.1em;text-transform:uppercase;display:block}
     .metric-card strong{font-size:32px;font-weight:900;color:var(--text);margin-top:8px;display:block}
-    
-    .table-card{background:rgba(18,20,25,.94);border:1px solid var(--line);border-radius:18px;overflow:hidden;box-shadow:0 25px 70px rgba(0,0,0,.25)}
-    table{width:100%;border-collapse:collapse;font-size:14px}
+    .table-card{background:rgba(18,20,25,.94);border:1px solid var(--line);border-radius:18px;overflow:hidden;box-shadow:0 25px 70px rgba(0,0,0,.25);overflow-x:auto}
+    table{width:100%;border-collapse:collapse;font-size:13px}
     th{text-align:left;color:var(--muted);font:750 10px/1 ui-monospace,monospace;letter-spacing:.1em;padding:16px 20px;background:#0d0f14;border-bottom:2px solid var(--line)}
-    td{padding:16px 20px;border-bottom:1px solid #1f232b;vertical-align:middle}
+    td{padding:14px 20px;border-bottom:1px solid #1f232b;vertical-align:middle}
     tr:hover td{background:rgba(102,212,255,.04)}
-    .status-badge{font:800 9px ui-monospace,monospace;padding:5px 10px;border-radius:99px;display:inline-block;letter-spacing:.08em}
-    .status-open{background:rgba(97,223,160,.15);color:var(--green);border:1px solid rgba(97,223,160,.35)}
-    .status-urgent{background:rgba(255,117,110,.15);color:var(--red);border:1px solid rgba(255,117,110,.35)}
-    .val-cell{font-weight:800;color:var(--blue);font-size:15px}
-    
+    .status-badge{font:800 9px ui-monospace,monospace;padding:5px 10px;border-radius:99px;display:inline-block;letter-spacing:.08em;background:rgba(102,212,255,.15);color:var(--blue);border:1px solid rgba(102,212,255,.35)}
+    .val-cell{font-weight:800;color:var(--blue);font-size:14px}
+    .note-card{color:var(--muted);font-size:14px;line-height:1.6}
+    .note-card code{background:#161920;padding:2px 6px;border-radius:4px;color:var(--blue);font-size:13px}
     @media(max-width:900px){.metrics-row{grid-template-columns:repeat(2,1fr)}.titlebar{flex-direction:column;align-items:flex-start}}
   </style>
 </head>
 <body>
   <div class="shell">
     <header>
-      <a class="brand" href="/"><span class="mark">HX</span><span><b>HUNTX</b><small>MUNICIPAL RFP SPIDER</small></span></a>
-      <nav class="nav">{{NAV}}) + 
+      <a class="brand" href="/"><span class="mark">HX</span><span><b>HUNTX</b><small>OPPORTUNITY DISCOVERY</small></span></a>
+      <nav class="nav">{{NAV}}</nav>
+    </header>
+    <div class="titlebar">
+      <div>
+        <div class="eyebrow">OPPORTUNITY DISCOVERY</div>
+        <h1>HuntX</h1>
+        <p>Pulls live public construction leads directly from state open-data APIs - Texas DOT
+        construction lettings and California school-facility funding releases today, more
+        sources added over time. Every row traces back to its real public source.</p>
+      </div>
+      <a class="button primary" id="signin-btn" href="/login?redirect=/huntx" style="display:none">SIGN IN TO VIEW OPPORTUNITIES</a>
+    </div>
+
+    <div id="app" style="display:none">
+      <div class="filter-bar">
+        <input id="hx-search" class="search-input" type="text" placeholder="Search title, agency, or location...">
+        <select id="hx-source">
+          <option value="">All sources</option>
+          <option value="txdot">Texas DOT (highway/bridge)</option>
+          <option value="ca_opsc">CA school construction funding</option>
+        </select>
+        <button id="hx-refresh-btn" class="button primary">REFRESH FROM SOURCES</button>
+        <span id="hx-status" style="color:var(--muted);font-size:12px"></span>
+      </div>
+      <div class="metrics-row">
+        <div class="metric-card"><span>OPPORTUNITIES LISTED</span><strong id="hx-count">0</strong></div>
+        <div class="metric-card"><span>LAST REFRESHED</span><strong id="hx-last-fetch" style="font-size:16px">Never</strong></div>
+        <div class="metric-card"><span>LIVE SOURCES</span><strong style="font-size:16px">2</strong></div>
+      </div>
+      <div class="table-card">
+        <table>
+          <thead><tr><th>OPPORTUNITY</th><th>AGENCY</th><th>LOCATION</th><th>KEY DATE</th><th>EST. VALUE</th><th>SOURCE</th></tr></thead>
+          <tbody id="hx-body"><tr><td colspan="6" style="color:var(--muted)">Loading...</td></tr></tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="card note-card" id="guest-note" style="background:rgba(18,20,25,.9);border:1px solid var(--line);border-radius:18px;padding:22px">
+      HuntX is available standalone at $799/mo or as part of the SubConP suite. See
+      <code>/pricing</code> for licensing, or sign in above if you already have access.
+    </div>
+  </div>
+  <script src="/assets/authfor-integration-standard.js"></script>
+  <script>
+    const auth = new AuthForStandard({ clientId: 'af_weyland_login', ventureName: 'weylandai.com' });
+    function authHeaders(json) {
+      const t = auth.getToken();
+      const h = t ? { 'Authorization': 'Bearer ' + t } : {};
+      if (json) h['Content-Type'] = 'application/json';
+      return h;
+    }
+    function esc(s) { return String(s == null ? '' : s).replace(/[<>&]/g, c => ({'<':'&lt;','>':'&gt;','&':'&amp;'}[c])); }
+    const SOURCE_LABEL = { txdot: 'TXDOT', ca_opsc: 'CA OPSC' };
+    function fmtMoney(v) { return v ? '$' + Number(v).toLocaleString(undefined, {maximumFractionDigits:0}) : '—'; }
+    function fmtDate(v) { if (!v) return '—'; try { return new Date(v).toLocaleDateString(); } catch(e) { return v; } }
+
+    async function loadOpportunities() {
+      const body = document.getElementById('hx-body');
+      const q = document.getElementById('hx-search').value.trim();
+      const source = document.getElementById('hx-source').value;
+      const params = new URLSearchParams();
+      if (q) params.set('q', q);
+      if (source) params.set('source', source);
+      const res = await fetch('/api/hunt/opportunities?' + params.toString(), { headers: authHeaders() });
+      if (!res.ok) { body.innerHTML = '<tr><td colspan="6" style="color:var(--muted)">Failed to load.</td></tr>'; return; }
+      const data = await res.json();
+      const rows = data.opportunities || [];
+      document.getElementById('hx-count').textContent = rows.length;
+      document.getElementById('hx-last-fetch').textContent = data.lastFetchedAt ? new Date(data.lastFetchedAt).toLocaleString() : 'Never - click Refresh';
+      body.innerHTML = rows.length ? rows.map(r => `<tr>
+          <td>${r.detail_url ? `<a href="${esc(r.detail_url)}" target="_blank" style="color:var(--text);text-decoration:none">${esc(r.title)}</a>` : esc(r.title)}</td>
+          <td>${esc(r.agency)}</td>
+          <td>${esc(r.location)}</td>
+          <td>${fmtDate(r.key_date)}</td>
+          <td class="val-cell">${fmtMoney(r.estimated_value)}</td>
+          <td><span class="status-badge">${SOURCE_LABEL[r.source] || esc(r.source)}</span></td>
+        </tr>`).join('') : '<tr><td colspan="6" style="color:var(--muted)">No opportunities yet - click REFRESH FROM SOURCES.</td></tr>';
+    }
+
+    document.getElementById('hx-refresh-btn').addEventListener('click', async () => {
+      const btn = document.getElementById('hx-refresh-btn');
+      const status = document.getElementById('hx-status');
+      btn.disabled = true;
+      status.textContent = 'Pulling from live public sources...';
+      try {
+        const res = await fetch('/api/hunt/refresh', { method: 'POST', headers: authHeaders(true) });
+        const data = await res.json();
+        if (!res.ok) { status.textContent = 'Error: ' + (data.error || 'refresh failed'); btn.disabled = false; return; }
+        status.textContent = data.upserted + ' opportunities updated.';
+        await loadOpportunities();
+      } catch (e) {
+        status.textContent = 'Error: ' + e.message;
+      }
+      btn.disabled = false;
+    });
+    document.getElementById('hx-search').addEventListener('input', () => { clearTimeout(window._hxT); window._hxT = setTimeout(loadOpportunities, 300); });
+    document.getElementById('hx-source').addEventListener('change', loadOpportunities);
+
+    (async () => {
+      try {
+        const probe = await fetch('/api/hunt/opportunities', { headers: authHeaders() });
+        if (probe.status === 401 || probe.status === 403) {
+          document.getElementById('signin-btn').style.display = 'inline-block';
+          return;
+        }
+        if (probe.status === 402) {
+          document.getElementById('guest-note').innerHTML = 'You\'re signed in, but your plan doesn\'t include HuntX yet. See <code>/pricing</code> to add it.';
+          return;
+        }
+        document.getElementById('app').style.display = 'block';
+        document.getElementById('guest-note').style.display = 'none';
+        loadOpportunities();
+      } catch (e) {
+        document.getElementById('signin-btn').style.display = 'inline-block';
+      }
+    })();
+  </script>
+</body>
+</html>
