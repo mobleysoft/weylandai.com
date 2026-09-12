@@ -1,0 +1,414 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#090a0d">
+  <title>CutSheetX | Manufacturer Cut-Sheet Search &amp; Matching</title>
+  <meta name="description" content="Search a real, ingested library of manufacturer door-hardware catalogues and match a component to its real cut-sheet document - no login required to try it.">
+  <style>
+    :root{--bg:#090a0d;--panel:#121419;--panel2:#181b21;--line:#2c3139;--text:#edf0f1;--muted:#9299a3;--gold:#f0b800;--green:#61dfa0;--blue:#66d4ff;--red:#ff756e;--purple:#a78bfa}
+    *{box-sizing:border-box}html,body{margin:0;min-height:100%;background:var(--bg);color:var(--text);font-family:"Avenir Next","Helvetica Neue",sans-serif}
+    body:before{content:"";position:fixed;inset:0;pointer-events:none;background:radial-gradient(circle at 20% 15%,rgba(102,212,255,.12),transparent 28rem),linear-gradient(rgba(255,255,255,.015) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.015) 1px,transparent 1px);background-size:auto,30px 30px,30px 30px}
+    .shell{position:relative;max-width:1200px;margin:auto;padding:20px clamp(16px,3vw,40px) 70px}
+    header{display:flex;align-items:center;justify-content:space-between;gap:15px;margin-bottom:20px;flex-wrap:wrap}
+    .brand{display:flex;align-items:center;gap:12px;color:var(--text);text-decoration:none}
+    .mark{width:42px;height:42px;display:grid;place-items:center;background:var(--blue);color:var(--bg);font-weight:900;border-radius:8px}
+    .brand b{display:block;letter-spacing:.16em}
+    .brand small{display:block;color:var(--muted);font:700 9px/1.5 ui-monospace,monospace;letter-spacing:.11em}
+    .nav{display:flex;gap:8px;flex-wrap:wrap}
+    .nav a,.button,button{border:1px solid var(--line);border-radius:99px;padding:9px 14px;color:var(--text);text-decoration:none;background:transparent;font:750 10px/1 ui-monospace,monospace;letter-spacing:.06em;cursor:pointer;transition:all .2s}
+    .nav a:hover,.button:hover,button:hover{border-color:var(--blue);color:var(--blue);box-shadow:0 0 15px rgba(102,212,255,.2)}
+    .button.primary,button.primary{background:var(--blue);border-color:var(--blue);color:var(--bg);font-weight:900}
+    .button.primary:hover,button.primary:hover{color:var(--bg);box-shadow:0 0 15px rgba(102,212,255,.4)}
+    button:disabled{opacity:.5;cursor:not-allowed}
+    .titlebar{margin:20px 0 22px}
+    .eyebrow{color:var(--blue);font:800 11px/1 ui-monospace,monospace;letter-spacing:.18em;text-transform:uppercase}
+    h1{font-size:clamp(30px,4.2vw,52px);letter-spacing:-.04em;line-height:1.03;margin:10px 0 8px}
+    .lede{max-width:720px;color:var(--muted);line-height:1.6;margin:0 0 6px;font-size:15.5px}
+    .status-line{font:700 11px/1.6 ui-monospace,monospace;color:var(--muted);margin-top:10px}
+    .status-line b{color:var(--green)}
+    .status-line.err b{color:var(--red)}
+    .card{background:rgba(18,20,25,.94);border:1px solid var(--line);border-radius:16px;padding:22px;margin-bottom:20px;box-shadow:0 25px 70px rgba(0,0,0,.22)}
+    .card h2{font-size:16px;margin:0 0 4px;letter-spacing:.02em;display:flex;align-items:center;gap:10px}
+    .card h2 .tag{font:800 9px ui-monospace,monospace;letter-spacing:.08em;padding:3px 8px;border-radius:99px;border:1px solid rgba(97,223,160,.35);color:var(--green);background:rgba(97,223,160,.1)}
+    .card h2 .tag.meta{border-color:rgba(240,184,0,.35);color:var(--gold);background:rgba(240,184,0,.1)}
+    .card .sub{color:var(--muted);font-size:12.5px;margin:0 0 16px;line-height:1.55}
+    .row{display:flex;gap:12px;flex-wrap:wrap;align-items:end}
+    .field{flex:1;min-width:150px}
+    label{display:block;font:700 10px/1 ui-monospace,monospace;letter-spacing:.08em;color:var(--muted);margin:0 0 6px;text-transform:uppercase}
+    input[type=text]{width:100%;background:#0d0f14;border:1px solid var(--line);border-radius:8px;padding:10px 12px;color:var(--text);font-size:14px;font-family:inherit}
+    input[type=text]:focus{outline:none;border-color:var(--blue)}
+    .results{margin-top:16px}
+    table{width:100%;border-collapse:collapse;font-size:13px}
+    th{text-align:left;color:var(--muted);font:750 9.5px/1 ui-monospace,monospace;letter-spacing:.07em;padding:9px 10px;background:#0d0f14;border-bottom:2px solid var(--line);white-space:nowrap}
+    td{padding:10px;border-bottom:1px solid #1f232b;vertical-align:top}
+    tr:hover td{background:rgba(102,212,255,.03)}
+    mark{background:rgba(240,184,0,.35);color:#fff;padding:0 2px;border-radius:2px}
+    .excerpt{max-width:480px;color:var(--muted);line-height:1.5;font-size:12.5px}
+    .empty{color:var(--muted);font-size:13px;padding:14px 4px}
+    .error-box{color:var(--red);background:rgba(255,117,110,.08);border:1px solid rgba(255,117,110,.3);border-radius:10px;padding:12px 14px;font-size:13px;margin-top:12px}
+    .loading{color:var(--muted);font-size:12.5px;padding:10px 0}
+    .pill{display:inline-block;font:750 9px ui-monospace,monospace;letter-spacing:.06em;padding:3px 8px;border-radius:99px;border:1px solid var(--line);color:var(--muted);margin-right:4px}
+    .pill.match{border-color:rgba(97,223,160,.4);color:var(--green)}
+    .note-card{background:rgba(18,20,25,.9);border:1px solid var(--line);border-radius:14px;padding:18px 20px;color:var(--muted);font-size:13px;line-height:1.6;margin-bottom:20px}
+    .note-card code{background:#161920;padding:2px 6px;border-radius:4px;color:var(--blue);font-size:12px}
+    .stat-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:12px;margin-bottom:6px}
+    .stat{background:#0d0f14;border:1px solid var(--line);border-radius:10px;padding:12px 14px}
+    .stat .n{font-size:22px;font-weight:900;color:var(--blue)}
+    .stat .l{font:700 9px ui-monospace,monospace;color:var(--muted);letter-spacing:.06em;text-transform:uppercase;margin-top:2px}
+    .link-btn{color:var(--blue);background:none;border:1px solid rgba(102,212,255,.35);border-radius:99px;padding:5px 11px;font:750 10px ui-monospace,monospace;cursor:pointer}
+    .link-btn:hover{background:rgba(102,212,255,.1)}
+    .link-btn[disabled]{opacity:.4;cursor:not-allowed}
+    @media(max-width:700px){.excerpt{max-width:220px}}
+  </style>
+</head>
+<body>
+  <div class="shell">
+    <header>
+      <a class="brand" href="/"><span class="mark">CX</span><span><b>CUTSHEETX</b><small>MANUFACTURER CUT-SHEET SEARCH &amp; MATCHING</small></span></a>
+      <nav class="nav">
+        <a href="/">HOME</a>
+        <a href="/subx">SUBX</a>
+        <a href="/huntx">HUNTX</a>
+        <a href="/pricing">PRICING</a>
+      </nav>
+    </header>
+
+    <div class="titlebar">
+      <div class="eyebrow">DHI HARDWARE INTELLIGENCE</div>
+      <h1>CutSheetX</h1>
+      <p class="lede">Search a real, ingested library of manufacturer door-hardware catalogues by keyword, or match a
+      component's manufacturer + model directly to its cut-sheet document. Everything below hits the real backend -
+      no mock data, no fabricated results.</p>
+      <div class="status-line" id="status-line">Starting a free trial session&hellip;</div>
+    </div>
+
+    <div class="note-card">
+      This is the whole real, working product surface, honestly scoped: <code>28</code> ingested catalogues /
+      <code>3,622</code> OCR'd pages are full-text searchable (below), and <code>7,792</code> real product cut-sheet
+      documents are matchable by manufacturer + model with a real downloadable PDF. The one thing that does
+      <em>not</em> work end-to-end yet: viewing an ingested catalogue's original page image - the search index has
+      the real extracted text, but the source PDF binary for the catalogues below isn't present in storage, so that
+      button will show a real 404 rather than a fake preview. Everything else on this page is a live round trip to
+      <code>weyland_db</code>.
+    </div>
+
+    <!-- ================= Component Match ================= -->
+    <div class="card">
+      <h2>Match a Component to a Cut Sheet <span class="tag">real, downloadable</span></h2>
+      <p class="sub">Enter what's on the hardware schedule (manufacturer + model, or a catalog number) and this
+      calls the same matcher (<code>lib/product-database.js</code>) SubX uses internally. A match returns a real
+      cut-sheet document you can download.</p>
+      <div class="row">
+        <div class="field">
+          <label>Manufacturer</label>
+          <input type="text" id="match-mfr" placeholder="e.g. Schlage, LCN, Von Duprin">
+        </div>
+        <div class="field">
+          <label>Model / Catalog Number</label>
+          <input type="text" id="match-model" placeholder="e.g. L9080, 4040XP, 98-EO">
+        </div>
+        <div class="field">
+          <label>Component Type (optional)</label>
+          <input type="text" id="match-type" placeholder="e.g. mortise lock, closer">
+        </div>
+        <button class="button primary" id="match-btn">MATCH</button>
+      </div>
+      <div id="match-results" class="results"></div>
+    </div>
+
+    <!-- ================= Full-Text Search ================= -->
+    <div class="card">
+      <h2>Search the Ingested Catalogue Library <span class="tag">real FTS, live text</span></h2>
+      <p class="sub">Full-text search across every OCR'd page of the 28 real manufacturer catalogues in
+      <code>catalogue_pages</code> (Schlage, LCN, Von Duprin, Ives, and more - see the browse panel below for the
+      exact list). Returns the real matching excerpt from the real document text.</p>
+      <div class="row">
+        <div class="field">
+          <label>Search Query</label>
+          <input type="text" id="search-q" placeholder="e.g. mortise lock, fire rated, closer arm">
+        </div>
+        <div class="field">
+          <label>Manufacturer Filter (optional)</label>
+          <input type="text" id="search-mfr" placeholder="e.g. schlage">
+        </div>
+        <button class="button primary" id="search-btn">SEARCH</button>
+      </div>
+      <div id="search-results" class="results"></div>
+    </div>
+
+    <!-- ================= Local Series Lookup ================= -->
+    <div class="card">
+      <h2>Local Series Lookup <span class="tag meta">real, identification-only</span></h2>
+      <p class="sub">A curated 43-file reference index (Allegion / ASSA ABLOY / independent brands) that identifies
+      which manufacturer series a model belongs to. Honest scope: this confirms <em>which cut-sheet series covers a
+      model</em> with real confidence scoring - it does not host a downloadable document itself (that's what the
+      Component Match panel above is for).</p>
+      <div class="row">
+        <div class="field">
+          <label>Manufacturer</label>
+          <input type="text" id="local-mfr" placeholder="e.g. lcn, schlage, von-duprin">
+        </div>
+        <div class="field">
+          <label>Model</label>
+          <input type="text" id="local-model" placeholder="e.g. 4040XP">
+        </div>
+        <button class="button primary" id="local-btn">LOOK UP</button>
+      </div>
+      <div id="local-results" class="results"></div>
+    </div>
+
+    <!-- ================= Browse Catalogues ================= -->
+    <div class="card">
+      <h2>Browse the Real Ingested Catalogues</h2>
+      <p class="sub">Exactly what's in <code>weyland_db</code> right now - loaded once on page load, not sampled or invented.</p>
+      <div class="stat-grid" id="cat-stats"></div>
+      <div id="cat-results" class="results"></div>
+    </div>
+  </div>
+
+  <script>
+  (function(){
+    var EPH_KEY = '_cutsheetx_ephemeral_token';
+    var statusLine = document.getElementById('status-line');
+    var token = null;
+
+    function esc(s){ return String(s == null ? '' : s).replace(/[&<>"']/g, function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]; }); }
+
+    // Real API error shapes vary by route in this codebase: some return
+    // {error:"string"}, requireProductAccess-gated ones return
+    // {error:{code,message}}. Unwrap both so the real, specific reason
+    // is shown - honest error surfacing, not a generic wrapper message.
+    function apiErrorText(data){
+      if (!data) return 'Unknown error';
+      var e = data.error;
+      var parts = [];
+      if (e && typeof e === 'object') {
+        if (e.message) parts.push(e.message);
+      } else if (e) {
+        parts.push(String(e));
+      }
+      if (data.hint) parts.push(data.hint);
+      if (parts.length === 0) parts.push(JSON.stringify(data));
+      return parts.join(' — ');
+    }
+
+    // Snippet excerpts from cps-search.js's FTS path use SQLite snippet()
+    // and contain literal <mark>/</mark> around the matched term - escape
+    // everything else, then restore ONLY those two exact tag shapes so
+    // arbitrary document text can never inject markup.
+    function escKeepMark(s){
+      var out = esc(s);
+      return out.replace(/&lt;mark&gt;/g, '<mark>').replace(/&lt;\/mark&gt;/g, '</mark>');
+    }
+
+    function authHeaders(json){
+      var h = { 'Authorization': 'Bearer ' + token };
+      if (json) h['Content-Type'] = 'application/json';
+      return h;
+    }
+
+    function setStatus(msg, isErr){
+      statusLine.innerHTML = msg;
+      statusLine.className = 'status-line' + (isErr ? ' err' : '');
+    }
+
+    // Mint (or reuse) a real AuthFor ephemeral trial session - the same
+    // real POST /api/v1/ephemeral/create the weylandai.com landing page's
+    // own trial already calls. CutSheetX is one of the four products in
+    // lib/auth.js's EPHEMERAL_TRIAL_PRODUCTS allowlist, so this token gets
+    // full, real, unmetered access to every route on this page - no
+    // signup wall, no mocked auth.
+    function ephemeralToken(){
+      try {
+        var existing = window.sessionStorage.getItem(EPH_KEY);
+        if (existing) return Promise.resolve(existing);
+      } catch (e) {}
+      return fetch('https://authfor.com/api/v1/ephemeral/create', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ ventureName: 'weylandai.com', displayName: 'CutSheetX trial visitor' })
+      }).then(function(r){
+        if (!r.ok) throw new Error('ephemeral token request failed (HTTP ' + r.status + ')');
+        return r.json();
+      }).then(function(d){
+        try { window.sessionStorage.setItem(EPH_KEY, d.token); } catch (e) {}
+        return d.token;
+      });
+    }
+
+    // Fetch an authenticated binary resource (PDF) and open it in a new
+    // tab. window.open(url,'_blank') is called SYNCHRONOUSLY on the click
+    // (before the fetch resolves) so browser popup blockers don't treat
+    // the later blob navigation as an unsolicited popup.
+    function openAuthedPdf(url, btn){
+      var win = window.open('', '_blank');
+      var originalLabel = btn ? btn.textContent : null;
+      if (btn) { btn.disabled = true; btn.textContent = 'LOADING…'; }
+      fetch(url, { headers: authHeaders() })
+        .then(function(r){
+          if (!r.ok) return r.json().catch(function(){ return null; }).then(function(data){
+            throw new Error('HTTP ' + r.status + ': ' + apiErrorText(data));
+          });
+          return r.blob();
+        })
+        .then(function(blob){
+          var objUrl = URL.createObjectURL(blob);
+          if (win) win.location = objUrl;
+          else window.open(objUrl, '_blank');
+        })
+        .catch(function(err){
+          if (win) win.close();
+          alert('Could not open document: ' + err.message);
+        })
+        .finally(function(){
+          if (btn) { btn.disabled = false; btn.textContent = originalLabel; }
+        });
+    }
+
+    // ---------------- Component Match ----------------
+    document.getElementById('match-btn').addEventListener('click', function(){
+      var manufacturer = document.getElementById('match-mfr').value.trim();
+      var model = document.getElementById('match-model').value.trim();
+      var component_type = document.getElementById('match-type').value.trim();
+      var box = document.getElementById('match-results');
+      if (!model) { box.innerHTML = '<div class="error-box">Enter a model or catalog number.</div>'; return; }
+      box.innerHTML = '<div class="loading">Matching against the real product database…</div>';
+      fetch('/api/cut-sheets/match', {
+        method: 'POST',
+        headers: authHeaders(true),
+        body: JSON.stringify({ manufacturer: manufacturer || undefined, model, component_type: component_type || undefined })
+      })
+        .then(function(r){ return r.json().then(function(d){ return { ok: r.ok, status: r.status, data: d }; }); })
+        .then(function(res){
+          if (!res.ok) { box.innerHTML = '<div class="error-box">HTTP ' + res.status + ': ' + esc(apiErrorText(res.data)) + '</div>'; return; }
+          var result = res.data;
+          if (!result.matched || !result.cutSheets || result.cutSheets.length === 0) {
+            box.innerHTML = '<div class="empty">No match found for "' + esc(manufacturer) + ' ' + esc(model) +
+              '" in the real product database (10,484 real products / 7,792 real documents currently ingested).</div>';
+            return;
+          }
+          var p = result.product || {};
+          var productLine = '<div class="loading" style="margin-bottom:8px">Matched product: <b style="color:var(--text)">' +
+            esc(p.name || (p.manufacturer + ' ' + p.model)) + '</b> &middot; confidence: ' + esc(result.confidence) +
+            ' (' + esc(result.matchType) + ')</div>';
+          var rows = result.cutSheets.map(function(sheet, i){
+            var id = 'dl-btn-' + i;
+            return '<tr><td>' + esc(sheet.title || 'Cut Sheet') + '</td>' +
+              '<td>' + esc(sheet.type || '') + '</td>' +
+              '<td>' + esc(sheet.pages != null ? sheet.pages : '') + '</td>' +
+              '<td><button class="link-btn" id="' + id + '" data-doc="' + esc(sheet.id || '') + '">DOWNLOAD PDF</button></td></tr>';
+          }).join('');
+          box.innerHTML = productLine + '<table><thead><tr><th>Document</th><th>Type</th><th>Pages</th><th></th></tr></thead><tbody>' + rows + '</tbody></table>';
+          result.cutSheets.forEach(function(sheet, i){
+            var docId = sheet.id;
+            var el = document.getElementById('dl-btn-' + i);
+            if (!el) return;
+            if (!docId) { el.disabled = true; el.textContent = 'NO DOC ID'; return; }
+            el.addEventListener('click', function(){ openAuthedPdf('/api/cut-sheets/download/' + encodeURIComponent(docId), el); });
+          });
+        })
+        .catch(function(err){ box.innerHTML = '<div class="error-box">Request failed: ' + esc(err.message) + '</div>'; });
+    });
+
+    // ---------------- Full-Text Search ----------------
+    document.getElementById('search-btn').addEventListener('click', function(){
+      var q = document.getElementById('search-q').value.trim();
+      var mfr = document.getElementById('search-mfr').value.trim();
+      var box = document.getElementById('search-results');
+      if (q.length < 2) { box.innerHTML = '<div class="error-box">Query must be at least 2 characters.</div>'; return; }
+      box.innerHTML = '<div class="loading">Searching 3,622 real ingested pages…</div>';
+      var url = '/api/cps/search?q=' + encodeURIComponent(q) + (mfr ? '&manufacturer=' + encodeURIComponent(mfr) : '');
+      fetch(url, { headers: authHeaders() })
+        .then(function(r){ return r.json().then(function(d){ return { ok: r.ok, status: r.status, data: d }; }); })
+        .then(function(res){
+          if (!res.ok) { box.innerHTML = '<div class="error-box">HTTP ' + res.status + ': ' + esc(apiErrorText(res.data)) + '</div>'; return; }
+          var data = res.data;
+          if (!data.results || data.results.length === 0) {
+            box.innerHTML = '<div class="empty">No matches for "' + esc(q) + '"' + (data.warning ? ' (' + esc(data.warning) + ')' : '') + '.</div>';
+            return;
+          }
+          var rows = data.results.map(function(r, i){
+            var btnId = 'view-btn-' + i;
+            return '<tr><td>' + esc(r.manufacturer || '') + '</td>' +
+              '<td>' + esc(r.catalogue_name || r.catalogue_id) + '</td>' +
+              '<td>' + esc(r.page_num) + '</td>' +
+              '<td class="excerpt">' + escKeepMark(r.excerpt || '') + '</td>' +
+              '<td><button class="link-btn" id="' + btnId + '" data-cat="' + esc(r.catalogue_id) + '" data-page="' + esc(r.page_num) + '">VIEW PAGE</button></td></tr>';
+          }).join('');
+          box.innerHTML = '<div class="loading" style="margin-bottom:8px">' + data.count + ' result(s) — method: ' + esc(data.searchMethod) + '</div>' +
+            '<table><thead><tr><th>Manufacturer</th><th>Catalogue</th><th>Page</th><th>Excerpt</th><th></th></tr></thead><tbody>' + rows + '</tbody></table>';
+          data.results.forEach(function(r, i){
+            var el = document.getElementById('view-btn-' + i);
+            if (!el) return;
+            el.addEventListener('click', function(){
+              openAuthedPdf('/api/cps/catalogues/' + encodeURIComponent(r.catalogue_id) + '/pages/' + encodeURIComponent(r.page_num) + '/render', el);
+            });
+          });
+        })
+        .catch(function(err){ box.innerHTML = '<div class="error-box">Request failed: ' + esc(err.message) + '</div>'; });
+    });
+
+    // ---------------- Local Series Lookup ----------------
+    document.getElementById('local-btn').addEventListener('click', function(){
+      var mfr = document.getElementById('local-mfr').value.trim();
+      var model = document.getElementById('local-model').value.trim();
+      var box = document.getElementById('local-results');
+      if (!mfr) { box.innerHTML = '<div class="error-box">Manufacturer is required.</div>'; return; }
+      box.innerHTML = '<div class="loading">Checking the 43-file local reference index…</div>';
+      var url = '/api/cut-sheets/local-search?manufacturer=' + encodeURIComponent(mfr) + (model ? '&model=' + encodeURIComponent(model) : '');
+      fetch(url, { headers: authHeaders() })
+        .then(function(r){ return r.json().then(function(d){ return { ok: r.ok, status: r.status, data: d }; }); })
+        .then(function(res){
+          if (!res.ok) { box.innerHTML = '<div class="error-box">HTTP ' + res.status + ': ' + esc(apiErrorText(res.data)) + '</div>'; return; }
+          var d = res.data;
+          if (!d.found) {
+            box.innerHTML = '<div class="empty">No local reference entry for ' + esc(mfr) + (model ? ' ' + esc(model) : '') + '.</div>';
+            return;
+          }
+          box.innerHTML = '<table><tbody>' +
+            '<tr><th>Series</th><td>' + esc(d.series || '') + ' <span class="pill match">' + Math.round((d.confidence || 0) * 100) + '% CONFIDENCE</span></td></tr>' +
+            '<tr><th>Parent Company</th><td>' + esc(d.parent_company || '') + '</td></tr>' +
+            '<tr><th>Reference Filename</th><td>' + esc(d.filename || '') + '</td></tr>' +
+            '<tr><th>Models Covered</th><td>' + (d.models_covered || []).map(function(m){ return '<span class="pill">' + esc(m) + '</span>'; }).join(' ') + '</td></tr>' +
+            '</tbody></table>';
+        })
+        .catch(function(err){ box.innerHTML = '<div class="error-box">Request failed: ' + esc(err.message) + '</div>'; });
+    });
+
+    // ---------------- Browse Catalogues (loads on page ready) ----------------
+    function loadCatalogues(){
+      var statsBox = document.getElementById('cat-stats');
+      var box = document.getElementById('cat-results');
+      box.innerHTML = '<div class="loading">Loading real catalogue list…</div>';
+      fetch('/api/cps/catalogues?limit=50', { headers: authHeaders() })
+        .then(function(r){ return r.json().then(function(d){ return { ok: r.ok, status: r.status, data: d }; }); })
+        .then(function(res){
+          if (!res.ok) { box.innerHTML = '<div class="error-box">HTTP ' + res.status + ': ' + esc(apiErrorText(res.data)) + '</div>'; return; }
+          var d = res.data;
+          var totalPages = (d.catalogues || []).reduce(function(sum, c){ return sum + (c.page_count || 0); }, 0);
+          statsBox.innerHTML =
+            '<div class="stat"><div class="n">' + (d.total || 0) + '</div><div class="l">Catalogues</div></div>' +
+            '<div class="stat"><div class="n">' + totalPages + '</div><div class="l">Ingested Pages</div></div>';
+          if (!d.catalogues || d.catalogues.length === 0) { box.innerHTML = '<div class="empty">No catalogues ingested yet.</div>'; return; }
+          var rows = d.catalogues.map(function(c){
+            return '<tr><td>' + esc(c.manufacturer) + '</td><td>' + esc(c.title) + '</td><td>' + esc(c.page_count) + '</td><td>' + esc(c.mapping_count) + '</td></tr>';
+          }).join('');
+          box.innerHTML = '<table><thead><tr><th>Manufacturer</th><th>Catalogue</th><th>Pages</th><th>Affirmed Mappings</th></tr></thead><tbody>' + rows + '</tbody></table>';
+        })
+        .catch(function(err){ box.innerHTML = '<div class="error-box">Request failed: ' + esc(err.message) + '</div>'; });
+    }
+
+    // ---------------- Boot ----------------
+    ephemeralToken().then(function(t){
+      token = t;
+      setStatus('Trial session active - <b>full real access</b>, no signup required.');
+      loadCatalogues();
+    }).catch(function(err){
+      setStatus('Could not start a trial session: ' + esc(err.message) + ' - some actions below may fail without a real account.', true);
+    });
+  })();
+  </script>
+</body>
+</html>

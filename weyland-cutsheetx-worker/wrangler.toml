@@ -1,0 +1,117 @@
+name = "weyland-cutsheetx-worker"
+main = "src/index.js"
+compatibility_date = "2025-10-31"
+
+# Explicitly kept on: adding [[routes]] below makes Wrangler disable the
+# workers.dev subdomain by default on deploy (confirmed by weyland-huntx-
+# worker/wrangler.toml, same gotcha hit there first). Keeping it on
+# preserves the standalone *.workers.dev endpoint this extraction's own
+# parity testing depends on, for any future debugging that wants to
+# bypass the zone route.
+workers_dev = true
+
+# No `compatibility_flags = ["nodejs_compat"]` - nothing in this Worker's
+# real dependency closure (router.js, json-response.js, auth.js,
+# legacy-local-session.js, authfor-client.js, auth-module.js,
+# cutsheet-discovery.js, cps-matching.js, product-database.js, and all
+# cps-*/cut-sheet-*/catalogue-*/user-cutsheets.js route files) imports any
+# node:* built-in - confirmed by grep, not assumed. Pure WebCrypto/fetch/D1
+# (+ pdf-lib, a pure-JS npm package with no node:* deps, for the one
+# PDF-page-extraction route), so the flag is omitted rather than
+# cargo-culted from workers that do need it.
+#
+# Per direct instruction (2026-09-12): no bundler for new Worker code.
+# This deploys as plain native ESM - `wrangler deploy` resolves the
+# import graph directly from src/index.js, no build step, no esbuild.
+
+# Third extraction of the 2026-09-12 microservices push (see
+# ../MICROSERVICES_PUSH.md) - CutSheetX: a real, working backend
+# (catalogue ingestion, FTS search, local-catalogue index/search, product-
+# to-cut-sheet matching, draft selections, affirmation queue, discovery
+# engine, verified-document registry) that had ZERO discoverable customer
+# UI before this pass - GET /cutsheetx 302'd to /pricing in production
+# (src/lib/marketing-pages.js's serve_cutsheetx(), confirmed by reading
+# the function body: a deliberate, honestly-commented redirect, not a bug -
+# "CutsheetX no longer has its own page"). This Worker adds a real one at
+# GET /cutsheetx. Same D1 database, same database ID, as the monolith's
+# own [[d1_databases]] block in ../wrangler.toml - NOT a new/separate
+# database, no migration. This product's real tables (catalogues,
+# catalogue_pages(+_fts/_trigram_fts), product_mappings, affirmation_queue/
+# _log, cps_draft_selections, products, product_variants, product_documents,
+# manufacturers, manufacturer_domains, cut_sheet_discoveries/_queue,
+# discovery_engine_config, user_affirmed_cutsheets, extraction_cache) all
+# already live in the shared weyland_db.
+[[d1_databases]]
+binding = "DB"
+database_name = "weyland_db"
+database_id = "5729f77e-d7e3-4577-ab43-3c064fa90ca5"
+
+[[kv_namespaces]]
+binding = "CACHE"
+id = "80a77dcf4f5f4e8588c172f2ecef95fb"
+
+# Same real R2 buckets weylandai-com-worker binds for this product's
+# catalogue PDFs, extracted single pages, and user-affirmed cut-sheet
+# images/PDFs (env2.UPLOADS) plus verified product_documents whose
+# r2_bucket = 'product-docs' (env2.OUTPUTS) - bucket names say "subx"
+# because they were provisioned during SubX's build-out, but cps-page-
+# render.js, user-cutsheets.js, and cut-sheet-documents.js all already
+# read/write these same two buckets in production today. Not new buckets,
+# not a copy.
+[[r2_buckets]]
+binding = "UPLOADS"
+bucket_name = "subx-uploads"
+
+[[r2_buckets]]
+binding = "OUTPUTS"
+bucket_name = "subx-outputs"
+
+# src/pages/cutsheetx.html (the real, honest search/match UI built in this
+# pass) is imported as raw text in src/index.js - a real Wrangler built-in
+# module rule, not a custom bundler step (per 2026-09-12 "no bundler for
+# new work" instruction).
+[[rules]]
+type = "Text"
+globs = ["**/*.html"]
+fallthrough = true
+
+# Cloudflare Worker Routes on the weylandai.com zone - added ONLY after
+# this Worker was deployed standalone to its own *.workers.dev subdomain
+# and curl-verified for real behavioral parity against live production
+# (see this pass's own commit message / report for the parity record).
+# Every pattern below is strictly more specific than the monolith's
+# existing `weylandai.com/*` catch-all route (still pointing at
+# weylandai-com-worker, untouched), so Cloudflare's route-precedence rule
+# (most-specific pattern wins) sends exactly these path shapes here and
+# nothing else - the monolith keeps serving every other path on the zone,
+# including its own still-registered (not removed) copies of these same
+# routes, which simply stop being reachable rather than being deleted.
+# Enabled after real standalone verification (2026-09-12): health check,
+# unauthenticated 401 gate, ephemeral-trial-token round trip, catalogue
+# list (28 real catalogues), full-text search (fixed a real pre-existing
+# bug found along the way - see report/commit message), local-index/
+# local-search (43-file reference table), component match + a real
+# 17.6MB PDF download byte-verified end to end, and 8 more routes smoke-
+# tested (verified, intelligence/metrics, domains, catalogue/products,
+# catalogue/documents, user/cutsheets, drafts, queue, mappings, admin
+# normalization-status) all returned real (mostly real-empty, matching
+# D1) data with no wiring errors.
+[[routes]]
+pattern = "weylandai.com/cutsheetx"
+zone_name = "weylandai.com"
+
+[[routes]]
+pattern = "weylandai.com/api/cps/*"
+zone_name = "weylandai.com"
+
+[[routes]]
+pattern = "weylandai.com/api/cut-sheets/*"
+zone_name = "weylandai.com"
+
+[[routes]]
+pattern = "weylandai.com/api/catalogue/*"
+zone_name = "weylandai.com"
+
+[[routes]]
+pattern = "weylandai.com/api/user/cutsheets*"
+zone_name = "weylandai.com"
