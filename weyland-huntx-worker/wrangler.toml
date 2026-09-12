@@ -1,0 +1,69 @@
+name = "weyland-huntx-worker"
+main = "src/index.js"
+compatibility_date = "2025-10-31"
+
+# Explicitly kept on: adding [[routes]] below makes Wrangler disable the
+# workers.dev subdomain by default on deploy (confirmed live - the first
+# `wrangler deploy` after adding [[routes]] silently 404'd
+# https://weyland-huntx-worker.johnmobley99.workers.dev, caught by a
+# real curl, not assumed). Keeping it on preserves the standalone
+# *.workers.dev endpoint this extraction's own parity testing depended
+# on, for any future debugging that wants to bypass the zone route.
+workers_dev = true
+
+# No `compatibility_flags = ["nodejs_compat"]` - unlike weyland-ocr-worker
+# and weyland-market-intelligence-worker, nothing in this Worker's real
+# dependency closure (router.js, json-response.js, auth.js,
+# legacy-local-session.js, authfor-client.js, auth-module.js, hunt.js,
+# huntx.js) imports any node:* built-in or npm package - confirmed by
+# grep, not assumed. Pure WebCrypto/fetch/D1, so the flag is omitted
+# rather than cargo-culted from the other two Workers.
+#
+# Per direct instruction (2026-09-12): no bundler for new Worker code.
+# This deploys as plain native ESM - `wrangler deploy` resolves the
+# import graph directly from src/index.js, no build step, no esbuild.
+
+# Second extraction of the 2026-09-12 microservices push (see
+# ../MICROSERVICES_PUSH.md) - HuntX (POST /api/hunt/refresh,
+# GET /api/hunt/opportunities, GET/HEAD /huntx marketing page), the first
+# extraction that genuinely needs auth + D1 (weyland-market-intelligence-
+# worker's 6 routes are public, no D1). Same D1 database, same database
+# ID, as the monolith's own [[d1_databases]] block in ../wrangler.toml -
+# NOT a new/separate database. This is deliberate and load-bearing:
+# HuntX's authenticate()/requireProductAccess() chain reads the real,
+# shared `users` and `weyland_sessions` tables, and its own routes read/
+# write the real, shared `opportunities` table (59,998+ real rows across
+# the DB; `opportunities` itself holds the real ~300-row TxDOT + CA OPSC
+# feed the monolith already upserts into today) - splitting the Worker
+# without splitting the data, per the task's explicit instruction not to
+# touch/migrate/recreate weyland_db.
+[[d1_databases]]
+binding = "DB"
+database_name = "weyland_db"
+database_id = "5729f77e-d7e3-4577-ab43-3c064fa90ca5"
+
+# Cloudflare Worker Routes on the weylandai.com zone - added 2026-09-12
+# AFTER this Worker was deployed standalone to its own *.workers.dev
+# subdomain and curl-verified for real behavioral parity against live
+# production (see MICROSERVICES_PUSH.md for the full before/after
+# record, including a real authenticated GET /api/hunt/opportunities via
+# a temporary weyland_sessions row, byte-identical to production, and a
+# real POST /api/hunt/refresh scrape+upsert of 300 live TxDOT + CA OPSC
+# opportunities into the shared weyland_db, confirmed visible from
+# weylandai.com's own endpoint immediately after). Both patterns below
+# are strictly more specific than the monolith's existing
+# `weylandai.com/*` catch-all route (still pointing at
+# weylandai-com-worker, untouched, confirmed via the zone's
+# /workers/routes API before this change), so Cloudflare's
+# route-precedence rule (most-specific pattern wins) sends exactly these
+# two path shapes here and nothing else - the monolith keeps serving
+# every other path on the zone, including its own still-registered (not
+# yet removed) copies of these same three routes, which simply stop
+# being reachable rather than being deleted.
+[[routes]]
+pattern = "weylandai.com/api/hunt/*"
+zone_name = "weylandai.com"
+
+[[routes]]
+pattern = "weylandai.com/huntx"
+zone_name = "weylandai.com"

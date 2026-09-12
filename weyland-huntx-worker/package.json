@@ -1,0 +1,11 @@
+{
+  "name": "weyland-huntx-worker",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test": "node --test src/routes/hunt.test.mjs"
+  },
+  "devDependencies": {
+    "wrangler": "^4.129.1"
+  }
+}
