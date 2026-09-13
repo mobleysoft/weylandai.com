@@ -41,6 +41,7 @@ import { extractWithDirectPdfMode } from "./hardware-extraction-pipeline.js";
 import { detectTextLayer, extractPdfBookmarks } from "./pdf-metadata.js";
 import { materializeAffirmedGroup } from "./hardware-extraction-materialize.js";
 import { enrichComponentsWithPricing } from "./pricing.js";
+import { extractHardwareGroupsViaEmbeddedGofaineat } from "./hardware-extraction-vision-dispatch.js";
 
 // Tier 2 disabled - see file header. Kept as a function (not inlined
 // `null`) so extractSinglePage's real call-and-check shape below is
@@ -107,8 +108,50 @@ async function extractWithIsolatedPdfMode(pdfBuffer, pageNumber, env2) {
   };
 }
 
+// extractWithEmbeddedGofaineatMode: the real, no-Anthropic-key path (OCR
+// via weyland-ocr-worker + structuring via the local Qwen3-8B bridge -
+// see hardware-extraction-vision-dispatch.js's
+// extractHardwareGroupsViaEmbeddedGofaineat for the full pipeline and its
+// header comment for why this is a separate prompt/contract from the
+// door-schedule embedded_gofaineat adapter). Added 2026-09-13
+// (EXTRACTION_PIPELINE_CUSTOMER_PATH.md Part 5) to fix the real, live
+// "ANTHROPIC_API_KEY not configured" 500 that every real click of
+// /subx-app's "RUN EXTRACTION" button was hitting - confirmed live before
+// this fix, both of the tiers below (isolated-PDF, direct-PDF) depend on
+// callClaudeWithPdf, which throws that exact error since
+// ANTHROPIC_API_KEY is not, and per direct instruction will not be,
+// provisioned on this account ("we do not need an anthropic api key for
+// weylandai.com! We do extractions via embedded gofaineats").
+//
+// No page isolation needed here (unlike the Claude tiers below): the OCR
+// step renders the target page directly off the full pdfBuffer via
+// weyland-ocr-worker's PDFium rasterizer, given just the page number.
+async function extractWithEmbeddedGofaineatMode(pdfBuffer, pageNumber, env2) {
+  const totalPages = (await PDFDocument.load(pdfBuffer)).getPageCount();
+  if (pageNumber < 1 || pageNumber > totalPages) {
+    throw new Error(`Page ${pageNumber} out of range (PDF has ${totalPages} pages)`);
+  }
+  console.log(`[Hardware Extractor] Using EMBEDDED_GOFAINEAT mode (OCR + local Qwen, no Anthropic key) for page ${pageNumber}/${totalPages}...`);
+  return await extractHardwareGroupsViaEmbeddedGofaineat(pdfBuffer, pageNumber, totalPages, env2);
+}
+
 export async function extractSinglePage(pdfBuffer, pageNumber, env2) {
-  console.log(`[Hardware Extractor] EXTRACTING PAGE ${pageNumber} (ISOLATED MODE)`);
+  console.log(`[Hardware Extractor] EXTRACTING PAGE ${pageNumber}`);
+  // Real account state today (and, per direct instruction, permanently
+  // going forward): ANTHROPIC_API_KEY is not configured on this worker,
+  // so both Claude-vision tiers below (isolated-PDF, direct-PDF) would
+  // just throw "ANTHROPIC_API_KEY not configured" immediately - that WAS
+  // this function's real live behavior until this fix. Route straight to
+  // the working local pipeline instead of paying for a guaranteed-failing
+  // attempt first. If a real ANTHROPIC_API_KEY is ever configured on this
+  // worker in the future (a real credential decision this session isn't
+  // making), the original higher-fidelity Claude-vision tiers stay intact
+  // below and are used automatically - this only changes routing, it
+  // doesn't delete the Claude-vision code path.
+  if (!env2.ANTHROPIC_API_KEY) {
+    return await extractWithEmbeddedGofaineatMode(pdfBuffer.slice(0), pageNumber, env2);
+  }
+  console.log(`[Hardware Extractor] ANTHROPIC_API_KEY configured - using Claude vision (ISOLATED MODE)`);
   // Fixed 2026-09-09 upstream (see header): each fallback gets its own
   // ArrayBuffer.slice() copy since the isolated-PDF-mode WASM library
   // detaches the buffer it's given as a side effect.

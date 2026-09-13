@@ -2,6 +2,7 @@ import { logClaudeAPICall, callEdge } from "./edge-telemetry.js";
 import { resolveExtractionContract } from "./hardware-extraction-pipeline.js";
 import { resolveInferenceContract } from "./hardware-extraction-vision-adapters.js";
 import { generateJWT, arrayBufferToBase64 } from "../auth-module.js";
+import { parseHardwareExtractionResult } from "./hardware-extraction-prompts.js";
 
 export var EXTRACTION_PROMPT_TEMPLATE = `\u{1F6A8}\u{1F6A8}\u{1F6A8} CRITICAL: STOP AND READ THIS FIRST \u{1F6A8}\u{1F6A8}\u{1F6A8}
 
@@ -851,6 +852,72 @@ async function callLocalQwen(env2, messages, opts = {}) {
   return data.choices?.[0]?.message?.content || "";
 }
 
+// ocrScheduleTableBanded: the real, CPU-budget-safe OCR step shared by
+// every embedded_gofaineat-family adapter. Factored out unchanged from
+// viaEmbeddedGofaineat's own inline version (2026-09-12) when
+// extractHardwareGroupsViaEmbeddedGofaineat below (2026-09-13, the
+// /subx-app "RUN EXTRACTION" single-page fix - see
+// EXTRACTION_PIPELINE_CUSTOMER_PATH.md Part 5) needed the identical
+// technique for a different downstream JSON contract (hardware_groups
+// instead of doors) - same OCR, same CPU-ceiling workaround, genuinely
+// shared rather than copy-pasted a second time.
+//
+// Uses /extract-schedule-table, not the generic /extract-text: verified
+// live 2026-09-12 against a real complex door-schedule sheet
+// (/Users/johnmobley/pdf/OCCDoorSchedulePg4.pdf) that generic full-page
+// OCR (any DPI 150-600, any pageseg mode) reads title-block prose and
+// floor-plan room labels but NEVER the actual MARK/table rows - the
+// table is dense small print sharing the page with a floor plan, and
+// whole-page segmentation can't isolate it. /extract-schedule-table
+// crops to the top ~42% of the page (where schedule tables/legends
+// commonly sit, floor plans below) before OCR - confirmed via a real
+// render + native tesseract test to actually recover MARK values,
+// fire ratings, and sizes that full-page OCR missed entirely. See
+// ocr-worker/index.js's renderAndExtractTableRegion() for the honest
+// scope note: this is a real, working heuristic for that common sheet
+// layout, not a universal fix for every schedule sheet's layout.
+//
+// Fetched as three separate band requests, not one: OCR-ing the full
+// 42%-height band in a single call took ~10-12 CPU-seconds locally and,
+// confirmed live against production (POST /api/submittals/upload with a
+// real session and this same real PDF), actually hit Cloudflare's real
+// per-request CPU ceiling ("Worker exceeded CPU time limit" - a genuine
+// platform limit, not something raisable further via wrangler.toml
+// [limits].cpu_ms, which was already tried). Each narrower band is a
+// fresh request with its own fresh CPU budget - measured ~3-5 CPU-seconds
+// per band locally, safely under the limit.
+//
+// Returns { pageText } on success, or { error, detail, ... } (same shape
+// callers already return directly) on any real failure - callers check
+// `result.error` rather than a thrown exception, matching this file's
+// existing convention.
+async function ocrScheduleTableBanded(pdfBuffer, targetPage, env2) {
+  const BANDS = [[0, 0.14], [0.14, 0.28], [0.28, 0.42]];
+  const ocrTexts = [];
+  for (const [topPct, botPct] of BANDS) {
+    const bandResp = await env2.OCR_SERVICE.fetch("https://weyland-ocr-worker/extract-schedule-table", {
+      method: "POST",
+      headers: {
+        "X-Page-Number": String(targetPage),
+        "X-Crop-Top-Pct": String(topPct),
+        "X-Crop-Bottom-Pct": String(botPct)
+      },
+      body: pdfBuffer
+    });
+    if (!bandResp.ok) {
+      const errText = await bandResp.text();
+      return { error: "ocr_failed", detail: errText.slice(0, 500), page: targetPage, band: [topPct, botPct] };
+    }
+    const bandResult = await bandResp.json();
+    ocrTexts.push(bandResult.text || "");
+  }
+  const pageText = ocrTexts.join("\n");
+  if (!pageText.trim()) {
+    return { error: "ocr_produced_no_text", detail: `Page ${targetPage} OCR returned empty text across all bands`, page: targetPage };
+  }
+  return { pageText };
+}
+
 export async function viaEmbeddedGofaineat(sessionId, pdfBuffer, env2, ctx = {}) {
   if (!env2.OCR_SERVICE) {
     return { sync: true, error: "ocr_service_not_configured", detail: "OCR_SERVICE binding missing - can't rasterize/OCR without weyland-ocr-worker" };
@@ -883,53 +950,11 @@ export async function viaEmbeddedGofaineat(sessionId, pdfBuffer, env2, ctx = {})
   const usedFallbackPage = !targetPage;
   if (!targetPage) targetPage = totalPages;
 
-  // Uses /extract-schedule-table, not the generic /extract-text: verified
-  // live 2026-09-12 against a real complex door-schedule sheet
-  // (/Users/johnmobley/pdf/OCCDoorSchedulePg4.pdf) that generic full-page
-  // OCR (any DPI 150-600, any pageseg mode) reads title-block prose and
-  // floor-plan room labels but NEVER the actual MARK/table rows - the
-  // table is dense small print sharing the page with a floor plan, and
-  // whole-page segmentation can't isolate it. /extract-schedule-table
-  // crops to the top ~42% of the page (where schedule tables/legends
-  // commonly sit, floor plans below) before OCR - confirmed via a real
-  // render + native tesseract test to actually recover MARK values,
-  // fire ratings, and sizes that full-page OCR missed entirely. See
-  // ocr-worker/index.js's renderAndExtractTableRegion() for the honest
-  // scope note: this is a real, working heuristic for that common sheet
-  // layout, not a universal fix for every schedule sheet's layout.
-  //
-  // Fetched as three separate band requests, not one: OCR-ing the full
-  // 42%-height band in a single call took ~10-12 CPU-seconds locally and,
-  // confirmed live against production (POST /api/submittals/upload with a
-  // real session and this same real PDF), actually hit Cloudflare's real
-  // per-request CPU ceiling ("Worker exceeded CPU time limit" - a genuine
-  // platform limit, not something raisable further via wrangler.toml
-  // [limits].cpu_ms, which was already tried). Each narrower band is a
-  // fresh request with its own fresh CPU budget - measured ~3-5 CPU-seconds
-  // per band locally, safely under the limit.
-  const BANDS = [[0, 0.14], [0.14, 0.28], [0.28, 0.42]];
-  const ocrTexts = [];
-  for (const [topPct, botPct] of BANDS) {
-    const bandResp = await env2.OCR_SERVICE.fetch("https://weyland-ocr-worker/extract-schedule-table", {
-      method: "POST",
-      headers: {
-        "X-Page-Number": String(targetPage),
-        "X-Crop-Top-Pct": String(topPct),
-        "X-Crop-Bottom-Pct": String(botPct)
-      },
-      body: pdfBuffer
-    });
-    if (!bandResp.ok) {
-      const errText = await bandResp.text();
-      return { sync: true, error: "ocr_failed", detail: errText.slice(0, 500), page: targetPage, band: [topPct, botPct] };
-    }
-    const bandResult = await bandResp.json();
-    ocrTexts.push(bandResult.text || "");
+  const ocrResult = await ocrScheduleTableBanded(pdfBuffer, targetPage, env2);
+  if (ocrResult.error) {
+    return { sync: true, ...ocrResult };
   }
-  const pageText = ocrTexts.join("\n");
-  if (!pageText.trim()) {
-    return { sync: true, error: "ocr_produced_no_text", detail: `Page ${targetPage} OCR returned empty text across all bands`, page: targetPage };
-  }
+  const { pageText } = ocrResult;
 
   const prompt = EMBEDDED_TEXT_EXTRACTION_PROMPT_TEMPLATE(pageText);
   let content;
@@ -951,6 +976,147 @@ export async function viaEmbeddedGofaineat(sessionId, pdfBuffer, env2, ctx = {})
     source_page: targetPage,
     used_fallback_page: usedFallbackPage,
     ocr_text_length: pageText.length
+  };
+}
+
+// EMBEDDED_HARDWARE_GROUPS_EXTRACTION_PROMPT_TEMPLATE +
+// extractHardwareGroupsViaEmbeddedGofaineat: the /subx-app single-page
+// "RUN EXTRACTION" button's real embedded_gofaineat port.
+//
+// Built 2026-09-13 (EXTRACTION_PIPELINE_CUSTOMER_PATH.md Part 5), per
+// direct instruction: "we do not need an anthropic api key for
+// weylandai.com! We do extractions via embedded gofaineats" - the same
+// instruction Part 4 above already acted on for dispatchVisionExtraction
+// (POST /api/submittals/upload). This is the OTHER real call chain that
+// was still hard-dependent on ANTHROPIC_API_KEY: GET
+// /api/hardware-schedule/session/:id/page/:pageNum
+// (routes/hardware-schedule-page-extract.js) -> extractSinglePage
+// (hardware-extraction-single-page.js) -> callClaudeWithPdf
+// (hardware-extraction-vision-adapters.js), confirmed live-broken with
+// "ANTHROPIC_API_KEY not configured" on both of extractSinglePage's real
+// fallback tiers (isolated-PDF and direct-PDF both call callClaudeWithPdf
+// - see that file's own header comment). Part 4's own honest scope note
+// flagged this exact gap as real, separate, unstarted work - this is
+// that work, not a re-do of Part 4.
+//
+// Genuinely different JSON contract than viaEmbeddedGofaineat above:
+// that adapter (and its EMBEDDED_TEXT_EXTRACTION_PROMPT_TEMPLATE) targets
+// a DOOR SCHEDULE ({doors:[...]} - sizes/materials/fire-ratings per door
+// MARK). This route's real, existing prompt family
+// (buildIsolatedPageExtractionPrompt et al. in
+// hardware-extraction-prompts.js) targets a HARDWARE SCHEDULE
+// ({hardware_groups:[...], door_hardware_matrix:[...]} - hinge/lockset/
+// closer components per numbered hardware set/group) - a different real
+// document type this platform also handles. Reusing the doors-shaped
+// adapter here would silently misparse a real hardware-schedule page, so
+// this is a parallel prompt + contract, not the same one - but the OCR
+// step (ocrScheduleTableBanded above) and the Qwen bridge call
+// (callLocalQwen) ARE the identical shared primitives, not duplicated.
+//
+// Output is fed through the same parseHardwareExtractionResult
+// (hardware-extraction-prompts.js) the real Claude-vision path already
+// used - it expects a Claude-message-shaped {content:[{text}], usage}
+// object, so Qwen's raw text is wrapped into that exact shape rather than
+// writing a second, parallel validator/mounting-defaults pass.
+export function EMBEDDED_HARDWARE_GROUPS_EXTRACTION_PROMPT_TEMPLATE(ocrText, pageNumber, totalPages) {
+  return `You are extracting a HARDWARE SCHEDULE table from OCR text of page ${pageNumber} of ${totalPages} of a scanned construction PDF. The OCR is imperfect (a real WASM tesseract pass over a rasterized scan, not a clean text layer) - expect misread characters, merged columns, and noisy whitespace. Work with what's actually here; do not invent groups or components that aren't backed by real text below.
+
+RAW OCR TEXT:
+"""
+${ocrText.slice(0, 6000)}
+"""
+
+Hardware schedules organize components into numbered "groups" or "sets" (e.g., "Set 1", "Group 2", "HW-17"). Each group/set contains multiple components (hinges, locks, closers, kick plates, exit devices, etc.) with a type, quantity, manufacturer, model number, and finish code. A group's assigned doors are often listed as a byline (e.g. "DOORS: 101, 102, 103" or "FOR MARKS: A1, A2"). A separate door-to-hardware matrix table (columns like "Door Number"/"MARK" and "HW Set"/"Group") may also appear, mapping doors to the hardware set number that applies to them.
+
+If no unit of measure is given for a component, default to "EA". Hinges are commonly "PR" (pairs), locksets/closers commonly "SET" or "EA".
+
+Output ONLY a JSON object (no other prose, no markdown fences), in exactly this shape:
+{
+  "hardware_groups": [
+    {
+      "group_number": "HW-1",
+      "group_name": null,
+      "assigned_doors": ["101", "102"],
+      "components": [
+        {
+          "component_type": "HINGE",
+          "quantity": 3,
+          "uom": "PR",
+          "manufacturer": null,
+          "model_number": null,
+          "finish": null,
+          "notes": null
+        }
+      ]
+    }
+  ],
+  "door_hardware_matrix": [
+    { "door_number": "101", "hardware_set_number": "HW-1", "confidence": 0.9 }
+  ],
+  "detected_nomenclature": { "hardware_unit_term": "set", "door_identifier_term": "door" },
+  "page_metadata": { "page_number": ${pageNumber}, "groups_on_page": 0, "door_matrix_entries": 0 }
+}
+
+If a field isn't present in the text, use null - do not fabricate values. If you cannot find any hardware groups or door-matrix rows at all in this text, output {"hardware_groups": [], "door_hardware_matrix": [], "detected_nomenclature": null, "page_metadata": {"page_number": ${pageNumber}, "groups_on_page": 0, "door_matrix_entries": 0}}.
+
+Output the JSON object now:`;
+}
+
+export async function extractHardwareGroupsViaEmbeddedGofaineat(pdfBuffer, pageNumber, totalPages, env2) {
+  const overallStartTime = Date.now();
+  if (!env2.OCR_SERVICE) {
+    const e = new Error("OCR_SERVICE binding missing - can't rasterize/OCR without weyland-ocr-worker (embedded_gofaineat route)");
+    e.retryable = false;
+    throw e;
+  }
+  const ocrResult = await ocrScheduleTableBanded(pdfBuffer, pageNumber, env2);
+  if (ocrResult.error) {
+    const e = new Error(`embedded_gofaineat OCR step failed (${ocrResult.error}): ${ocrResult.detail || ""}`);
+    e.retryable = ocrResult.error !== "ocr_produced_no_text";
+    throw e;
+  }
+  const { pageText } = ocrResult;
+  const extractionStartTime = Date.now();
+
+  const prompt = EMBEDDED_HARDWARE_GROUPS_EXTRACTION_PROMPT_TEMPLATE(pageText, pageNumber, totalPages);
+  let content;
+  try {
+    content = await callLocalQwen(env2, [{ role: "user", content: prompt }], { maxTokens: 4e3, temperature: 0.1 });
+  } catch (e) {
+    const err = new Error(`embedded_gofaineat local-Qwen structuring step failed: ${e.message}`);
+    err.retryable = true;
+    err.ocr_text_length = pageText.length;
+    throw err;
+  }
+  const extractionTime = Date.now() - extractionStartTime;
+
+  // parseHardwareExtractionResult (hardware-extraction-prompts.js) expects
+  // the same shape the real Claude Messages API returns - wrapping Qwen's
+  // raw text this way reuses its existing JSON-extraction, hardware_groups
+  // validation, and mounting-position-defaults logic verbatim instead of
+  // writing and maintaining a second parallel validator.
+  const fakeApiResponse = {
+    content: [{ text: content }],
+    usage: { input_tokens: 0, output_tokens: 0 }
+  };
+  const parsedResult = parseHardwareExtractionResult(fakeApiResponse);
+  const totalTime = Date.now() - overallStartTime;
+  return {
+    page_number: pageNumber,
+    total_pages: totalPages,
+    hardware_groups: parsedResult.hardware_groups || [],
+    door_hardware_matrix: parsedResult.door_hardware_matrix || [],
+    detected_nomenclature: parsedResult.detected_nomenclature || null,
+    metadata: {
+      ...parsedResult.metadata || {},
+      extraction_mode: "embedded_gofaineat",
+      extraction_route: "embedded_gofaineat",
+      page_isolated: false,
+      ocr_text_length: pageText.length
+    },
+    usage: parsedResult.usage,
+    extraction_time_ms: extractionTime,
+    total_time_ms: totalTime
   };
 }
 

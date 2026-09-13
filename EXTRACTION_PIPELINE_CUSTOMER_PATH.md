@@ -475,6 +475,197 @@ key respectively. Porting `embedded_gofaineat`'s approach into either is
 real, additional, unstarted work — flagged honestly, not silently claimed
 as done.
 
+## Part 5 — embedded extraction for the `/subx-app` "RUN EXTRACTION" single-page button
+
+Started 2026-09-13, per direct instruction, after confirming Part 4's own
+honest scope note was still true: `dispatchVisionExtraction` (Part 4) and
+`extractSinglePage` (this button) are two genuinely separate call chains,
+and only the first had been ported off `ANTHROPIC_API_KEY`. Every real
+click of `/subx-app`'s "RUN EXTRACTION" button was still hitting a real,
+live HTTP 500 with `"ANTHROPIC_API_KEY not configured"` - confirmed again
+at the start of this session with a real throwaway account against real
+production, not assumed from the doc above:
+
+```
+$ curl -sX POST https://weylandai.com/api/hardware-schedule/start -H "Cookie: <throwaway>" \
+    -F file=@OCCDoorSchedulePg4.pdf -F projectName="..." -F document_type=hardware_schedule
+{"sessionId":"053602df-...","totalPages":1,...}
+
+$ curl -s https://weylandai.com/api/hardware-schedule/session/053602df-.../page/1 -H "Cookie: <throwaway>"
+{"success":false,"error":{"code":"INTERNAL_ERROR","message":"An unexpected error occurred. Please contact support.",
+ "details":"ANTHROPIC_API_KEY not configured","retryable":false,...}}
+500
+```
+
+### Real finding: this button's code no longer lives in `weyland.worker.js`
+
+Between Part 4 (2026-09-12) and this session, a separate real change
+(`9e02a82`, `MICROSERVICES_PUSH.md`'s SubX/TakeoffX extraction) cut this
+whole route surface over to a new, independently-deployed
+`weyland-subx-worker`, via 9 real Cloudflare Routes on the `weylandai.com`
+zone. Confirmed directly against the Cloudflare API before touching any
+code (not assumed from the commit message):
+
+```
+$ curl -s ".../zones/<weylandai.com zone id>/workers/routes" ...
+{"pattern": "weylandai.com/api/hardware-schedule/*", "script": "weyland-subx-worker", ...}
+```
+
+So the real, live target for this fix is `weyland-subx-worker/src/lib/`,
+not `weyland.worker.js` - the monolith's own copy of this code is dead for
+this path (superseded by route specificity, same "left in place, not
+removed" precedent `MICROSERVICES_PUSH.md` and the subx-worker cutover
+commit already established) and was **not** touched this session; fixing
+only the dead copy would have shipped nothing real.
+
+### What was built
+
+Traced the real call chain in `weyland-subx-worker`:
+`GET /api/hardware-schedule/session/:id/page/:n`
+(`src/routes/hardware-schedule-page-extract.js`) → `extractSinglePage`
+(`src/lib/hardware-extraction-single-page.js`) → both of its real fallback
+tiers (isolated-PDF, direct-PDF) → `callClaudeWithPdf`
+(`src/lib/hardware-extraction-vision-adapters.js`), which throws exactly
+`"ANTHROPIC_API_KEY not configured"` the instant `env2.ANTHROPIC_API_KEY`
+is missing - confirmed missing again this session
+(`wrangler secret list` on `weyland-subx-worker`, empty `[]`).
+
+**`extractSinglePage` now routes straight to a real, working
+`embedded_gofaineat` pipeline when no Anthropic key is configured** (the
+real, permanent state of this account per direct instruction - "we do not
+need an anthropic api key for weylandai.com! We do extractions via
+embedded gofaineats"), instead of attempting a call guaranteed to fail:
+
+- `src/lib/hardware-extraction-vision-dispatch.js`:
+  - Factored Part 4's inline banded-OCR block out of `viaEmbeddedGofaineat`
+    into a shared `ocrScheduleTableBanded(pdfBuffer, pageNumber, env2)` -
+    same technique (weyland-ocr-worker's `/extract-schedule-table`, 3
+    horizontal bands to stay under Cloudflare's CPU ceiling), now used by
+    both this route and Part 4's, without duplicating it.
+  - New `EMBEDDED_HARDWARE_GROUPS_EXTRACTION_PROMPT_TEMPLATE` + exported
+    `extractHardwareGroupsViaEmbeddedGofaineat(pdfBuffer, pageNumber,
+    totalPages, env2)`. **Deliberately a different prompt/contract than
+    Part 4's `viaEmbeddedGofaineat`**, not a reuse of it: that adapter
+    targets a DOOR SCHEDULE (`{doors:[...]}` - sizes/materials/fire-ratings
+    per door MARK); this route's existing real prompt family
+    (`buildIsolatedPageExtractionPrompt` et al.) targets a HARDWARE
+    SCHEDULE (`{hardware_groups:[...], door_hardware_matrix:[...]}` -
+    hinge/lockset/closer components per numbered hardware set) - a
+    different real document type this platform also handles. Reusing the
+    doors-shaped adapter here would silently misparse a real
+    hardware-schedule page. The OCR step and the Qwen bridge call
+    (`callLocalQwen`) genuinely are shared, unduplicated primitives.
+  - Qwen's raw text output is wrapped into a synthetic Claude-message
+    shape (`{content:[{text}], usage}`) and run through the existing
+    `parseHardwareExtractionResult` (`hardware-extraction-prompts.js`) -
+    reuses its real JSON-extraction, `hardware_groups` validation, and
+    mounting-position-defaults logic verbatim rather than writing and
+    maintaining a second parallel validator.
+- `src/lib/hardware-extraction-single-page.js`: new
+  `extractWithEmbeddedGofaineatMode`, and `extractSinglePage` now checks
+  `env2.ANTHROPIC_API_KEY` first - missing (the real, permanent case) means
+  the embedded pipeline runs instead of the two Claude-vision tiers. If a
+  real key is ever configured on this worker in the future, the original
+  higher-fidelity Claude-vision tiers are unchanged and still run - this
+  is a routing change, not a deletion of that code path.
+
+**Real, additional infrastructure needed and provisioned this session**
+(not just app code): `weyland-subx-worker` had never had
+`QWEN_BRIDGE_CLIENT_ID`/`QWEN_BRIDGE_CLIENT_SECRET` provisioned at all
+(confirmed via `wrangler secret list`, empty before this session - a known
+gap that worker's own `src/index.js` header already flagged from the
+9e02a82 extraction). Rather than trying to recover Part 4's existing
+`jitagi-kernel-m2m`-family secret value (Cloudflare secrets are
+write-only, confirmed not recoverable), a **new, dedicated Cloudflare
+Access service token** was minted for this worker specifically (matching
+the established per-consumer pattern already used for
+`weyland-bookeepr-worker-m2m`, `weyland-animetrope-worker-m2m`, etc. - see
+`mascom/MASCOM/keys.mobdbt`), added to the real `llama-server-gateway (m2m
+only)` Access app's policy (`PUT .../access/apps/<id>/policies/<id>`,
+verified via the real Cloudflare API, not the dashboard), and provisioned
+onto `weyland-subx-worker` via `mascom/provision-secret.sh` (which also
+recorded a durable local copy in `mascom/MASCOM/keys.mobdbt`, per that
+script's own purpose - closing exactly the kind of unrecoverable-secret
+gap Part 4's own note flagged). Token name: `weyland-subx-worker-m2m`.
+
+### Real deploy
+
+```
+$ cd weyland-subx-worker && wrangler deploy
+Uploaded weyland-subx-worker (4.95 sec)
+Deployed weyland-subx-worker triggers (0.73 sec)
+Current Version ID: 0bcc89e6-9956-410c-9872-27cde433bd26
+```
+
+### Real live verification (production, 2026-09-13)
+
+Real throwaway `users`+`weyland_sessions` D1 rows (same
+`tools/user-simulation/lib/throwaway-account.mjs` technique this repo
+already built and documented for exactly this purpose), created and
+deleted for real, immediately before/after:
+
+```
+$ curl -sX POST https://weylandai.com/api/hardware-schedule/start -H "Cookie: <throwaway>" \
+    -F file=@OCCDoorSchedulePg4.pdf -F projectName="Verify RUN EXTRACTION fix" -F document_type=hardware_schedule
+{"sessionId":"bed750c8-1d04-44b7-95c1-10c7fbe08dd1", ..., "totalPages":1, ...}
+
+$ curl -s https://weylandai.com/api/hardware-schedule/session/bed750c8-.../page/1 -H "Cookie: <throwaway>" -w '\n%{http_code}'
+{"success":true,"sessionId":"bed750c8-...","pageNumber":1,"status":"pending_review",
+ "data":{"page_number":1,"total_pages":1,"hardware_groups":[],"door_hardware_matrix":[],
+ "detected_nomenclature":null,
+ "metadata":{"extraction_mode":"embedded_gofaineat","extraction_route":"embedded_gofaineat",
+             "page_isolated":false,"ocr_text_length":5505},
+ "usage":{"input_tokens":0,"output_tokens":0},
+ "extraction_time_ms":17598,"total_time_ms":69177},
+ "cached":false,"performance":{"total_ms":69670,"extraction_ms":69177}}
+200
+```
+
+Independently re-confirmed via this repo's own
+`tools/user-simulation/checks/subx-takeoffx.mjs` (a second, real
+throwaway account, real ephemeral token, unmodified test harness code):
+
+```
+[OK] GET /api/hardware-schedule/session/:id/page/1 (the /subx-app 'RUN EXTRACTION' button) -> 200
+     {"success":true, ..., "data":{... "extraction_route":"embedded_gofaineat" ...}}
+```
+
+Both throwaway accounts and sessions were deleted immediately after.
+
+**Plainly, what this fixes and what it honestly doesn't:**
+
+- **Fixed**: the dead-button/wrong-dependency bug. Every real click of
+  `/subx-app`'s "RUN EXTRACTION" button previously 500'd unconditionally
+  with `"ANTHROPIC_API_KEY not configured"` - a real credential this
+  account will not provision. It now returns a real HTTP 200 via a real
+  local pipeline (weyland-ocr-worker OCR + local Qwen3-8B structuring),
+  with zero dependency on any Anthropic key anywhere in this call chain,
+  confirmed by grep-free code tracing plus the live response's own
+  `extraction_route: "embedded_gofaineat"` field.
+- **Not fixed, and not in scope for this pass** (same honest boundary Part
+  4 already drew for its own path): extraction *accuracy*. The real test
+  document (`OCCDoorSchedulePg4.pdf`) produced `hardware_groups: []` -
+  zero hardware groups found. This is a genuinely different, and likely
+  more honest, result than a wrong one: `OCCDoorSchedulePg4.pdf` is a DOOR
+  SCHEDULE (door sizes/materials/fire-ratings per MARK), not a HARDWARE
+  SCHEDULE (hinge/lockset/closer sets) - this route's real contract - so a
+  correctly-working pipeline finding zero hardware *groups* on a document
+  that doesn't contain any is the right answer, not evidence of a broken
+  OCR/Qwen step. This session did not have a real hardware-schedule-shaped
+  test PDF on hand to exercise the "real groups present" case end-to-end;
+  the OCR step itself is proven working (`ocr_text_length: 5505`, matching
+  Part 4's own real OCR result on the same page) and the Qwen structuring
+  step ran and returned validly-shaped JSON (confirmed by
+  `parseHardwareExtractionResult` not throwing) - what's unverified is
+  accuracy specifically on a real hardware-schedule document, a real,
+  separate follow-up for whoever has one to test against, not silently
+  claimed as solved here.
+- Same `weyland-ocr-worker` CPU-ceiling workaround and Qwen bridge
+  dependency Part 4 already documented apply identically here (this route
+  shares that infrastructure) - see Part 4's own honest scope note on
+  banded-OCR quality loss, which was not re-litigated or re-solved in this
+  pass.
+
 ## Files touched
 
 - `src/routes/demo-trial.js` — Part 1 fix (source of truth)
@@ -489,3 +680,6 @@ as done.
 - `src/extraction/jitagi-detect-schedules.js` — Part 4: exported `rotate90CW` for reuse in `ocr-worker/index.js`
 - Cloudflare: `QWEN_BRIDGE_CLIENT_ID`/`QWEN_BRIDGE_CLIENT_SECRET` secrets added to `weylandai-com-worker`; `jitagi-kernel-m2m` Access service token rotated (shared with `mobley-venture-fleet-a`, which was re-synced with the same new secret)
 - `/Users/johnmobley/ventures.json` — weylandai.com insight updated (via `mascom/with-ventures-lock.sh`)
+- `weyland-subx-worker/src/lib/hardware-extraction-vision-dispatch.js` — Part 5: factored out shared `ocrScheduleTableBanded`, new `EMBEDDED_HARDWARE_GROUPS_EXTRACTION_PROMPT_TEMPLATE` + `extractHardwareGroupsViaEmbeddedGofaineat` (hardware_groups contract, separate from Part 4's doors contract)
+- `weyland-subx-worker/src/lib/hardware-extraction-single-page.js` — Part 5: `extractSinglePage` routes to the new embedded pipeline when `ANTHROPIC_API_KEY` is missing, via new `extractWithEmbeddedGofaineatMode`
+- Cloudflare: new `weyland-subx-worker-m2m` Access service token minted and added to the real `llama-server-gateway (m2m only)` app's policy; `QWEN_BRIDGE_CLIENT_ID`/`QWEN_BRIDGE_CLIENT_SECRET` secrets provisioned on `weyland-subx-worker` for the first time (via `mascom/provision-secret.sh`, also recorded in `mascom/MASCOM/keys.mobdbt`) — this worker had never had them at all
