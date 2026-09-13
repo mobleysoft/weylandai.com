@@ -87,26 +87,45 @@ service = "mascom-edge"
 #                                   unblock the webhook ROUTE.
 #   SUBSCRIPTION_WEBHOOK_SECRET  - the real vendyai-forward webhook
 #                                   signature path (the actual live
-#                                   traffic path since 2026-09-03) -
-#                                   STILL NOT PROVISIONED. Genuinely
-#                                   unrecoverable (not in any local env or
-#                                   key store as of 2026-09-12) - not
-#                                   fabricated or guessed. Because both
-#                                   the vendyai-forward path AND the
-#                                   legacy Stripe-Signature fallback share
-#                                   the SAME route (POST
+#                                   traffic path since 2026-09-03).
+#                                   NOW PROVISIONED (2026-09-13): not
+#                                   guessed or freshly minted - read
+#                                   directly (read-only D1 query, zero
+#                                   writes) from vendyai_ledger's own
+#                                   venture_webhook_endpoints row for
+#                                   venture_id='weylandai' (the same,
+#                                   already-live secret the monolith
+#                                   itself has been verifying real
+#                                   traffic with since the 2026-09-03
+#                                   migration - not a rotation, so
+#                                   nothing on vendyai's or the
+#                                   monolith's side was touched or put at
+#                                   risk). Verified live against this
+#                                   Worker's own *.workers.dev subdomain:
+#                                   a real X-Webhook-Signature/
+#                                   X-Webhook-Timestamp payload signed
+#                                   with that same secret was accepted
+#                                   (200 {"received":true}); a tampered
+#                                   signature was rejected (401
+#                                   signature_mismatch). Recorded in
+#                                   mascom/MASCOM/keys.mobdbt via
+#                                   mascom/provision-secret.sh, never in
+#                                   this file.
+#                                   Because both the vendyai-forward path
+#                                   AND the legacy Stripe-Signature
+#                                   fallback share the SAME route (POST
 #                                   /api/webhooks/subscription) and
-#                                   Cloudflare routes can't branch on which
-#                                   header a request carries, having
-#                                   STRIPE_WEBHOOK_SECRET alone is NOT
-#                                   enough to safely cut this route over -
-#                                   real vendyai-forwarded traffic would
-#                                   hit this Worker and fail closed
-#                                   (env.SUBSCRIPTION_WEBHOOK_SECRET
-#                                   missing -> 500) instead of being
-#                                   processed. This route deliberately
-#                                   stays on the monolith - see STAGE 3
-#                                   below.
+#                                   Cloudflare routes can't branch on
+#                                   which header a request carries, this
+#                                   secret alone unblocks the ROUTE cutover
+#                                   but does not perform it - STAGE 3b
+#                                   below is still deliberately not added
+#                                   pending a real cutover pass (repoint
+#                                   vendyai's webhook_url for
+#                                   venture_id='weylandai' + add the
+#                                   [[routes]] entry + a live end-to-end
+#                                   Stripe-test-mode delivery check), not
+#                                   a secret-provisioning problem anymore.
 # JWT_SECRET is deliberately NOT listed here: it is also unset on the
 # real production weylandai-com-worker today (confirmed via
 # `wrangler secret list --name weylandai-com-worker`) - leaving it unset
@@ -195,13 +214,18 @@ zone_name = "weylandai.com"
 pattern = "weylandai.com/api/subscription/*"
 zone_name = "weylandai.com"
 
-# STAGE 3b (/api/webhooks/subscription) is DELIBERATELY NOT added - see
-# the SUBSCRIPTION_WEBHOOK_SECRET note above. Real traffic (Stripe ->
-# vendyai -> this endpoint's X-Webhook-Signature branch) would fail
-# closed on this Worker without that secret. Stays routed to
-# weylandai-com-worker via the zone's existing weylandai.com/* catch-all
-# (confirmed live via the Cloudflare API's zone routes listing,
-# 2026-09-12: weylandai-com-worker still owns weylandai.com/* since no
-# more-specific route for /api/webhooks/subscription exists). Revisit
-# once SUBSCRIPTION_WEBHOOK_SECRET is genuinely recovered/rotated - do
-# not fabricate a value to force this cutover.
+# STAGE 3b (/api/webhooks/subscription) is DELIBERATELY NOT added, even
+# though SUBSCRIPTION_WEBHOOK_SECRET is now provisioned and verified
+# above (2026-09-13) - this Worker can correctly verify real traffic now,
+# but vendyai's own venture_webhook_endpoints row for venture_id=
+# 'weylandai' still points webhook_url at weylandai.com (the monolith),
+# so real Stripe events keep flowing there regardless of this Worker's
+# route table. Stays routed to weylandai-com-worker via the zone's
+# existing weylandai.com/* catch-all (confirmed live via the Cloudflare
+# API's zone routes listing, 2026-09-12: weylandai-com-worker still owns
+# weylandai.com/* since no more-specific route for
+# /api/webhooks/subscription exists). Cutting over for real needs a
+# deliberate follow-up pass: repoint vendyai's webhook_url to this
+# Worker, add the [[routes]] entry below, and verify a live end-to-end
+# delivery - not something to do incidentally as part of provisioning a
+# secret.
