@@ -46,6 +46,24 @@
 import { jsonResponse3 } from "../lib/json-response.js";
 import { detectAndPersistRegionConflicts } from "../lib/region-conflicts.js";
 import { arrayBufferToBase64 } from "../auth-module.js";
+import { queuePageExtractionJob, routeExtraction, runEmbeddedGofaineatExtraction } from "../lib/hardware-extraction-pipeline.js";
+import { renderRegionAt600DPI2 } from "../lib/hardware-extraction-region-render.js";
+import { pdfBufferOrNull, generateR2StreamUrl } from "../lib/hardware-extraction-vision-dispatch.js";
+import { transformDoorEntriesToHardwareSets, materializeDseToLineItems } from "../lib/submittal-transforms.js";
+import { savePageExtraction2 } from "../lib/hardware-extraction-single-page.js";
+//
+// 2026-09-13 (EXTRACTION_PIPELINE_CUSTOMER_PATH.md Part 6): the five
+// imports above were MISSING entirely - this route referenced
+// queuePageExtractionJob/routeExtraction/renderRegionAt600DPI2/
+// pdfBufferOrNull/generateR2StreamUrl/transformDoorEntriesToHardwareSets/
+// materializeDseToLineItems/savePageExtraction2 without importing them or
+// receiving them as injected deps from index.js, so batch-extract 500'd
+// with a real, live-confirmed "pdfBufferOrNull is not defined"
+// ReferenceError before ever reaching the Ron's-edge-dependent code this
+// session was asked to fix - a real, more basic, blocking bug found while
+// tracing the call graph, fixed here as a prerequisite. See Part 6 for the
+// live curl that found it and the fix that followed (routeForSession's new
+// embedded_gofaineat default + branch, below).
 
 export function countPdfPagesRaw(buffer) {
   try {
@@ -719,7 +737,16 @@ router.post("/api/hardware-schedule/session/:sessionId/batch-extract", async (re
     if (!session) {
       return jsonResponse3({ error: "Session not found" }, 404);
     }
-    let routeForSession = env2.WEYLAND_EDITION === "local" ? "claude_code_subprocess" : "claude_code_local";
+    // embedded_gofaineat is the real default for non-local editions, same
+    // as dispatchVisionExtraction's own DEFAULT_ROUTE (Part 4) and
+    // extractSinglePage's ANTHROPIC_API_KEY-gated fallback (Part 5): it
+    // needs neither a real Anthropic key nor Ron's hascom-edge/
+    // auth-onamerica. claude_code_local/api_direct stay selectable per
+    // session via POST /api/sessions/:sessionId/extraction-route for a
+    // customer with their own real SABP bridge or Anthropic key - but no
+    // real customer lands on claude_code_local by default anymore (see
+    // Part 6: that default was the actual live, confirmed Ron's-edge bug).
+    let routeForSession = env2.WEYLAND_EDITION === "local" ? "claude_code_subprocess" : "embedded_gofaineat";
     try {
       const _rr = await env2.DB.prepare(
         `SELECT extraction_route FROM hardware_extraction_sessions WHERE id = ?`
@@ -953,31 +980,51 @@ router.post("/api/hardware-schedule/session/:sessionId/batch-extract", async (re
             await env2.DB.prepare(`
               UPDATE schedule_region_candidates SET status = 'extracting', extraction_started_at = datetime('now'), updated_at = datetime('now') WHERE id = ?
             `).bind(cId).run();
-            const _pctBox = (() => {
-              try {
-                const p = JSON.parse(candidate.bounding_box_percent || "null");
-                return p && typeof p.x_percent === "number" ? p : null;
-              } catch (e) {
-                return null;
-              }
-            })();
-            const boundingBox = _pctBox || JSON.parse(candidate.user_adjusted_bounding_box || candidate.bounding_box);
-            const candidateDpi = candidate.extraction_dpi || 600;
-            const rendered = await renderRegionAt600DPI2(fileBuffer, candidate.page_number, boundingBox, env2, candidateDpi, pdfStreamUrl);
-            const extractionRes = await routeExtraction(
-              candidate.schedule_type,
-              rendered.imageBuffer,
-              {
-                ...context3,
-                candidateId: cId,
-                pageNumber: candidate.page_number,
-                totalPages: session.page_count || 1,
-                priorExtractions,
-                operatorNotes: candidate.user_notes || null,
-                crossRefGuidance: candidate.cross_ref || null
-              },
-              env2
-            );
+            let extractionRes;
+            if (routeForSession === "embedded_gofaineat") {
+              // No Anthropic key, no Ron's edge: OCR (weyland-ocr-worker)
+              // + local Qwen3-8B, straight from the real PDF bytes - no
+              // 600 DPI region render needed (the OCR worker does its own
+              // page rasterization internally), so skip renderRegionAt600DPI2
+              // entirely for this route (real CPU/time saved, not just
+              // dead code left in place).
+              extractionRes = await runEmbeddedGofaineatExtraction(
+                candidate.schedule_type,
+                sessionId,
+                session.tenant_id || "ven_weyland",
+                fileBuffer,
+                pdfStreamUrl,
+                candidate.page_number,
+                session.page_count || session.total_pages || 1,
+                env2
+              );
+            } else {
+              const _pctBox = (() => {
+                try {
+                  const p = JSON.parse(candidate.bounding_box_percent || "null");
+                  return p && typeof p.x_percent === "number" ? p : null;
+                } catch (e) {
+                  return null;
+                }
+              })();
+              const boundingBox = _pctBox || JSON.parse(candidate.user_adjusted_bounding_box || candidate.bounding_box);
+              const candidateDpi = candidate.extraction_dpi || 600;
+              const rendered = await renderRegionAt600DPI2(fileBuffer, candidate.page_number, boundingBox, env2, candidateDpi, pdfStreamUrl);
+              extractionRes = await routeExtraction(
+                candidate.schedule_type,
+                rendered.imageBuffer,
+                {
+                  ...context3,
+                  candidateId: cId,
+                  pageNumber: candidate.page_number,
+                  totalPages: session.page_count || 1,
+                  priorExtractions,
+                  operatorNotes: candidate.user_notes || null,
+                  crossRefGuidance: candidate.cross_ref || null
+                },
+                env2
+              );
+            }
             if (extractionRes && extractionRes.success !== false) {
               const hpeData = extractionRes.hardware_groups ? extractionRes : { hardware_groups: extractionRes.entries || [], ...extractionRes };
               const mergeThisPage = pagesWrittenThisRun.has(candidate.page_number);

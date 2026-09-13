@@ -683,3 +683,264 @@ Both throwaway accounts and sessions were deleted immediately after.
 - `weyland-subx-worker/src/lib/hardware-extraction-vision-dispatch.js` — Part 5: factored out shared `ocrScheduleTableBanded`, new `EMBEDDED_HARDWARE_GROUPS_EXTRACTION_PROMPT_TEMPLATE` + `extractHardwareGroupsViaEmbeddedGofaineat` (hardware_groups contract, separate from Part 4's doors contract)
 - `weyland-subx-worker/src/lib/hardware-extraction-single-page.js` — Part 5: `extractSinglePage` routes to the new embedded pipeline when `ANTHROPIC_API_KEY` is missing, via new `extractWithEmbeddedGofaineatMode`
 - Cloudflare: new `weyland-subx-worker-m2m` Access service token minted and added to the real `llama-server-gateway (m2m only)` app's policy; `QWEN_BRIDGE_CLIENT_ID`/`QWEN_BRIDGE_CLIENT_SECRET` secrets provisioned on `weyland-subx-worker` for the first time (via `mascom/provision-secret.sh`, also recorded in `mascom/MASCOM/keys.mobdbt`) — this worker had never had them at all
+
+## Part 6 — embedded extraction for the multi-page batch-extract / extract-affirmed flows (`hardware-extraction-pipeline.js`)
+
+Started 2026-09-13, per direct instruction, immediately after Part 5: the
+same "ANTHROPIC_API_KEY not configured"/Ron's-edge class of bug, this time
+in the multi-page batch/candidate-region extraction flow behind
+`/subx-app`'s per-page extraction UI - `POST /api/hardware-schedule/session/
+:sessionId/batch-extract` (`weyland-subx-worker/src/routes/hardware-schedule-extract.js`)
+and its sibling `POST /api/hardware-schedule/session/:sessionId/extract-affirmed`
+(`weyland-subx-worker/src/routes/hardware-schedule-generate.js`), both of
+which call `queuePageExtractionJob`/`routeExtraction`
+(`weyland-subx-worker/src/lib/hardware-extraction-pipeline.js`) - flagged as
+real, separate, unstarted work by Part 4's own "Known, deliberately
+out-of-scope gaps" note.
+
+### Real finding #1: the confirmed bug wasn't the first bug hit
+
+The instruction's own diagnosis (`queuePageExtractionJob` -> `callEdge` ->
+Ron's unauthenticated `hascom-edge.ron-helms.workers.dev`, confirmed via a
+direct `curl` against Ron's edge itself returning a real 401) is accurate as
+far as it goes, but a real end-to-end `curl` of `batch-extract` itself
+(throwaway account + session, deleted after) found a **more basic, more
+blocking bug in front of it**:
+
+```
+$ curl -sX POST https://weylandai.com/api/hardware-schedule/session/<id>/batch-extract \
+    -H "Cookie: <throwaway>" -d '{"pages":[1]}'
+{"error":"Batch extraction failed","details":"pdfBufferOrNull is not defined"}
+```
+
+`hardware-schedule-extract.js` referenced `queuePageExtractionJob`,
+`routeExtraction`, `renderRegionAt600DPI2`, `pdfBufferOrNull`,
+`generateR2StreamUrl`, `transformDoorEntriesToHardwareSets`,
+`materializeDseToLineItems`, and `savePageExtraction2` throughout
+`batch-extract` without importing any of them or receiving them as injected
+deps from `index.js`'s `registerHardwareScheduleExtractRoutes(router, {...})`
+call (confirmed by reading both - the deps object there only lists
+`authenticate`, `requireActiveSubscription`, `getSessionStatus`, and six
+other names, none of the eight above). A real, live, blocking bug,
+independent of Ron's edge, that would have made this session's actual fix
+untestable without also fixing it - so it's fixed here as a real
+prerequisite, not silently worked around.
+
+A second, separate instance of the same missing-import class was found
+while live-verifying the sibling `extract-affirmed` route in
+`hardware-schedule-generate.js`: `SCHEDULE_TYPE_REGISTRY` was referenced in
+that route's own result-shaping code (`target_table = SCHEDULE_TYPE_REGISTRY
+[candidate.schedule_type]?.target_table`) without being imported - every
+real `extract-affirmed` call failed with `"SCHEDULE_TYPE_REGISTRY is not
+defined"`, independent of Ron's edge or this session's embedded-extraction
+work. Fixed with a one-line import (`hardware-extraction-prompts.js` already
+exports it) since it directly blocked verifying this session's actual fix in
+the same file.
+
+### Real finding #2: the "async" `claude_code_local` contract has no working poll endpoint on this worker
+
+Before changing anything, traced the full call graph `queuePageExtractionJob`
+sits in. Its real callers (`batch-extract`, `extract-affirmed`, and
+`hardware-schedule-page-extract.js`'s `extract-image` route) all build the
+same response shape when `routeForSession === "claude_code_local"`:
+`{async: true, packets: [{job_id, poll_url: "/api/jobs/${job_id}", ...}]}`,
+implying a customer's own separately-running "Claude Code bridge" polls
+that `poll_url` until the job completes. **`weyland-subx-worker` has no
+`/api/jobs/:id` route at all** (confirmed via `grep` across `src/index.js`
+and every route file) - that path was never real on this worker; the actual
+job queue/poll target was always Ron's edge directly. This means
+`claude_code_local`'s real contract was two things bundled together: (1) a
+genuine, real product feature (a customer who runs their own Claude Code
+CLI against their own Anthropic subscription, for extraction quality this
+platform's own embedded pipeline can't match), structurally coupled to (2)
+Ron's edge as the only real message broker between this worker and that
+customer's bridge. Per this session's non-negotiable instruction, (2) has
+to go entirely - which means (1) cannot be "fixed" in place, only kept
+selectable for a customer who explicitly opts in and understands it needs
+external infra this venture doesn't control. This is why the fix below is a
+**default change**, not a patch to `queuePageExtractionJob`/`routeExtraction`
+themselves (both are left in place, functionally unchanged, real code paths
+for that opt-in case) - matching the exact same pattern Part 4/5 already
+used for `dispatchVisionExtraction`'s `DEFAULT_ROUTE` and
+`extractSinglePage`'s `ANTHROPIC_API_KEY` check.
+
+### What was built
+
+`weyland-subx-worker/src/lib/hardware-extraction-vision-dispatch.js`:
+new `extractDoorScheduleViaEmbeddedGofaineat(sessionId, tenantId, pdfBuffer,
+pageNumber, totalPages, env2)` - the DOOR SCHEDULE contract sibling of
+Part 5's `extractHardwareGroupsViaEmbeddedGofaineat`. Reuses the identical
+`ocrScheduleTableBanded` OCR-banding step, `callLocalQwen` bridge call, and
+`{doors:[...]}` contract (`EMBEDDED_TEXT_EXTRACTION_PROMPT_TEMPLATE`,
+`parseAndValidateExtraction`) Part 4 already proved live - genuinely the
+same door-schedule shape, not a new one - but persists directly into
+`door_schedule_entries` (this flow's real target table per
+`SCHEDULE_TYPE_REGISTRY`), using the same `INSERT ... ON CONFLICT(session_id,
+mark)` shape `persistDoorScheduleResponse` already uses for a real
+Claude-vision extraction, so downstream readers (`cross-reference.js`,
+`door-schedule-marks.js`, `hardware-schedule-export.js`,
+`hardware-schedule-generate.js`) see identically-shaped rows regardless of
+which route produced them. **Honest, real scope narrowing**: this uses a
+fixed field set (mark, hardware_group, fire_rating, width/height/thickness,
+door_type/material/frame_material, remarks -> notes), not the full
+per-tenant constraint-driven dynamic field set `persistDoorScheduleResponse`'s
+real Claude-vision path resolves via `resolveDoorScheduleConstraints` -
+tenant-specific custom fields configured via `prompt_specifications` are not
+honored by this route.
+
+`weyland-subx-worker/src/lib/hardware-extraction-pipeline.js`: new
+`runEmbeddedGofaineatExtraction(scheduleType, sessionId, tenantId, pdfBuffer,
+pdfStreamUrl, pageNumber, totalPages, env2)` - the real dispatcher these two
+routes now call instead of `queuePageExtractionJob`/`routeExtraction` when
+`routeForSession === "embedded_gofaineat"`. Routes by `scheduleType` to
+whichever contract the call site actually needs: `door_schedule` ->
+`extractDoorScheduleViaEmbeddedGofaineat` (new, above); anything else
+(`hardware_schedule` is the real, common case and this pipeline's own
+existing fallback default) -> `extractHardwareGroupsViaEmbeddedGofaineat`
+(Part 5), wrapped to add the `success`/`entry_count`/`entries` fields the
+callers' existing generic result-handling code already expects. Handles the
+real >20MB-PDF edge case (`pdfBuffer` null, only an R2 `pdfStreamUrl`
+generated) by fetching the stream URL directly for real bytes, since OCR
+needs actual PDF bytes unlike a Claude-vision call that can stream a
+pre-rendered image; if that also fails, returns an honest
+`pdf_unavailable_for_embedded_ocr` result rather than crashing.
+
+`weyland-subx-worker/src/routes/hardware-schedule-extract.js`
+(`batch-extract`) and `weyland-subx-worker/src/routes/hardware-schedule-generate.js`
+(`extract-affirmed`): both changed their `routeForSession`/`_sessRoute`
+default from `"claude_code_local"` to `"embedded_gofaineat"` for non-local
+editions (matching `dispatchVisionExtraction`'s established
+`DEFAULT_ROUTE` precedent) - real customers who never call
+`POST /api/sessions/:sessionId/extraction-route` (i.e., everyone who hasn't
+explicitly opted into their own SABP bridge) now get the embedded pipeline
+by default instead of silently landing on Ron's edge. In both files' inner
+per-candidate loop, added a branch: when `routeForSession ===
+"embedded_gofaineat"`, call `runEmbeddedGofaineatExtraction` directly with
+the real PDF bytes/page number instead of first rendering a 600 DPI region
+image and calling `routeExtraction` - the OCR worker rasterizes internally
+from the raw PDF, so the render step is real, avoidable CPU/time cost for
+this route, not dead code left in place. `queuePageExtractionJob` and
+`routeExtraction` are otherwise untouched - still the real code path for a
+session that explicitly sets `extraction_route` to `claude_code_local` (an
+opt-in customer with their own bridge; note Real finding #2 above about that
+contract's real, pre-existing, unrelated gap) or `api_direct` (needs a real
+`ANTHROPIC_API_KEY`, Part 3's already-documented gap).
+
+**Honest, real limitation carried over from Part 4/5, not re-solved here**:
+`ocrScheduleTableBanded` OCRs a fixed top-42%-of-page crop, independent of
+whatever custom bounding box a candidate region carries
+(`schedule_region_candidates.bounding_box`/`bounding_box_percent`, drawn by
+a human via `/subx-app`'s region-selection UI). The embedded route does not
+honor a candidate's specific drawn region - a real, documented gap for a
+sheet where the schedule table isn't in the top 42% of the page, same
+honest boundary Part 4 already drew.
+
+### Real deploy
+
+```
+$ cd weyland-subx-worker && npx wrangler deploy
+Current Version ID: cf0ab292-6f69-431c-8c54-21e1c8f1f3d4   (batch-extract fix)
+Current Version ID: 56c18842-1f7b-47e1-915e-b8c84da621ad   (extract-affirmed wiring)
+Current Version ID: 1b471a87-2bb1-4bf3-bbc1-26be1aa3eed8   (SCHEDULE_TYPE_REGISTRY import fix)
+```
+
+### Real live verification (production, 2026-09-13)
+
+Real throwaway `users`+`weyland_sessions` D1 rows (same technique as Parts
+1/5), created and deleted immediately after, against the real test PDF
+(`/Users/johnmobley/pdf/OCCDoorSchedulePg4.pdf`):
+
+**Before the fix** (confirmed once, at the start of this session):
+```
+$ curl -sX POST .../api/hardware-schedule/session/<id>/batch-extract -d '{"pages":[1]}'
+{"error":"Batch extraction failed","details":"pdfBufferOrNull is not defined"}
+```
+500, and - independently confirmed by reading `queuePageExtractionJob`/
+`callEdge` - had this ReferenceError not existed, the very next line reached
+would have been the real, live 401 from `hascom-edge.ron-helms.workers.dev`.
+
+**After the fix**, `hardware_schedule` document type:
+```
+$ curl -sX POST .../api/hardware-schedule/start -F document_type=hardware_schedule -F file=@OCCDoorSchedulePg4.pdf ...
+{"sessionId":"a9f30fdc-...", "totalPages":1, ...}
+
+$ curl -sX POST .../api/hardware-schedule/session/a9f30fdc-.../batch-extract -d '{"pages":[1]}'
+{"success":true, ..., "extraction_results":[{"status":"extracted","entry_count":0,
+  "_debug":{"schedule_type":"hardware_schedule","has_hw_groups":true, ...}}], ...}
+200
+```
+D1 row for that page: `"extraction_route":"embedded_gofaineat"`,
+`"ocr_text_length":5505` (matches Part 4/5's own real OCR result on this
+same page, confirming the OCR step genuinely ran) - real infrastructure,
+zero dependency on Ron's edge or an Anthropic key.
+
+**After the fix**, `door_schedule` document type (separate throwaway
+session):
+```
+$ curl -sX POST .../api/hardware-schedule/session/6ef62551-.../batch-extract -d '{"pages":[1]}'
+{"success":true, ..., "extraction_results":[{"status":"extracted","entry_count":0,
+  "_debug":{"schedule_type":"door_schedule", ...}}], ...}
+200
+```
+`hardware_page_extractions` row: `"extraction_route":"embedded_gofaineat"`,
+`"target_table":"door_schedule_entries"`, `"ocr_text_length":5505` - real,
+same embedded pipeline, correctly dispatched to the door-schedule contract.
+
+**`extract-affirmed`** (`hardware-schedule-generate.js`), same session's
+already-created candidate, flipped back to `status='affirmed'` in D1 to
+re-exercise the route without a second upload:
+```
+$ curl -sX POST .../api/hardware-schedule/session/a9f30fdc-.../extract-affirmed -d '{}'
+{"success":true,"extractions_completed":1,"extractions_failed":0,
+ "results":[{"status":"extracted","entry_count":0,"target_table":"hardware_components"}], ...}
+200
+```
+D1 confirms `"extraction_route":"embedded_gofaineat"` on this row too - the
+same fix, verified on both real call sites.
+
+Live-tailed the worker (`wrangler tail`) during a fresh `batch-extract` call
+and grepped the real-time log for `hascom`/`ron-helms`/`callEdge`/`/ai/v1/jobs`
+- zero matches, confirming no call to Ron's edge happens anywhere in this
+call path for the new default. All throwaway sessions, candidates, page
+extractions, and accounts (2 users, 2 sessions, 3 hardware_extraction_sessions,
+associated schedule_region_candidates/hardware_page_extractions/client_telemetry
+rows) were deleted immediately after verification; `hardware_sets`/
+`hardware_components` were confirmed to have zero rows for these sessions
+(nothing to clean up there - zero groups were ever extracted).
+
+**Plainly, what this fixes and what it honestly doesn't:**
+
+- **Fixed**: the real, live, confirmed Ron's-edge dependency in the
+  multi-page batch-extract/extract-affirmed flows' default path, for both
+  document types this platform handles (`door_schedule`, `hardware_schedule`).
+  Also fixed, as real prerequisites found while verifying: `batch-extract`'s
+  missing imports (`pdfBufferOrNull` et al. - the route couldn't run *at
+  all* before this) and `extract-affirmed`'s missing `SCHEDULE_TYPE_REGISTRY`
+  import (same class of bug, same file family).
+- **Not fixed, and not silently claimed as solved**: extraction accuracy.
+  Both real test runs against this session's real dense door-schedule PDF
+  returned zero groups/doors - the same honest, already-documented banded-OCR
+  accuracy limitation from Part 4/5 (CPU-ceiling-safe OCR bands are noisier
+  than a single unconstrained pass), not a new regression and not something
+  this pass attempted to solve.
+- **Not touched**: `hardware-schedule-page-extract.js`'s `extract-image`
+  route (`POST .../page/:pageNum/extract-image`) still defaults to
+  `claude_code_local` and still depends on Ron's edge. That route receives
+  an already-rendered image from the *browser* (client-side PDF rendering),
+  not the raw PDF bytes weyland-ocr-worker's endpoints require - a real
+  , structurally different problem (no server-side PDF bytes to OCR) than
+  the PDF-buffer-holding routes fixed in this Part, genuinely out of scope
+  for this pass and flagged here, not silently left broken without mention.
+- `queuePageExtractionJob`/`routeExtraction` themselves are unmodified -
+  still real, live code, still real for a customer who explicitly opts into
+  `claude_code_local` (own SABP bridge, subject to Real finding #2's
+  no-real-poll-endpoint caveat) or `api_direct` (needs a real
+  `ANTHROPIC_API_KEY`, per Part 3).
+
+### Files touched (Part 6)
+
+- `weyland-subx-worker/src/lib/hardware-extraction-vision-dispatch.js` — new `extractDoorScheduleViaEmbeddedGofaineat` (doors contract, persists to `door_schedule_entries`)
+- `weyland-subx-worker/src/lib/hardware-extraction-pipeline.js` — new `runEmbeddedGofaineatExtraction` (dispatches by scheduleType), new import from vision-dispatch.js
+- `weyland-subx-worker/src/routes/hardware-schedule-extract.js` — fixed missing imports (`queuePageExtractionJob`, `routeExtraction`, `runEmbeddedGofaineatExtraction`, `renderRegionAt600DPI2`, `pdfBufferOrNull`, `generateR2StreamUrl`, `transformDoorEntriesToHardwareSets`, `materializeDseToLineItems`, `savePageExtraction2` - a real, separate, blocking ReferenceError bug); `batch-extract`'s `routeForSession` default changed to `embedded_gofaineat`; sync loop branches to the embedded pipeline
+- `weyland-subx-worker/src/routes/hardware-schedule-generate.js` — fixed missing `SCHEDULE_TYPE_REGISTRY` import (separate pre-existing bug); `extract-affirmed`'s `_sessRoute` default changed to `embedded_gofaineat`; sync loop branches to the embedded pipeline; `runEmbeddedGofaineatExtraction` added to its injected deps
+- `weyland-subx-worker/src/index.js` — imports `runEmbeddedGofaineatExtraction` from `hardware-extraction-pipeline.js`, passes it into `registerHardwareScheduleGenerateRoutes`

@@ -70,6 +70,9 @@ import {
   resolveInferenceContract,
 } from "./hardware-extraction-vision-adapters.js";
 import { callEdge } from "./edge-telemetry.js";
+import {
+  extractHardwareGroupsViaEmbeddedGofaineat, extractDoorScheduleViaEmbeddedGofaineat,
+} from "./hardware-extraction-vision-dispatch.js";
 
 export async function extractHardwareSchedule(pdfBuffer, env2) {
   console.log("[Hardware Extractor] Starting hardware schedule extraction");
@@ -372,6 +375,85 @@ export async function queuePageExtractionJob(imageBase64, env2, opts = {}) {
   } catch (e) {
   }
   return { job_id: queueRes.body.job_id, owner_id: ownerId };
+}
+
+// runEmbeddedGofaineatExtraction: the real, no-Anthropic-key,
+// no-Ron's-edge replacement for the multi-page batch-extract /
+// "extract affirmed" flows' async queuePageExtractionJob call
+// (EXTRACTION_PIPELINE_CUSTOMER_PATH.md Part 6). Confirmed live 2026-09-13:
+// queuePageExtractionJob's callEdge("POST", "/ai/v1/jobs/queue", ...) falls
+// through (HASCOM_EDGE/AUTH_ONAMERICA not bound on this worker) to a bare,
+// unauthenticated fetch() against Ron Helms's own separate account
+// (hascom-edge.ron-helms.workers.dev - real 401 confirmed live) - the same
+// root cause Part 4/5 already removed from dispatchVisionExtraction and
+// extractSinglePage.
+//
+// Unlike queuePageExtractionJob (which only ever receives an
+// already-rendered region image, base64-encoded - the shape a Claude
+// vision message needs), the embedded_gofaineat pipeline needs the RAW PDF
+// bytes: weyland-ocr-worker's /extract-schedule-table does its own
+// PDFium rendering internally from a page number + crop percentages, not
+// from a pre-cropped image. That's a real signature mismatch, not
+// cosmetic - it's why this is a new function callers switch to for the
+// embedded_gofaineat route, rather than a patch inside
+// queuePageExtractionJob itself. queuePageExtractionJob and routeExtraction
+// are left in place, unmodified, for a customer who explicitly opts into
+// "claude_code_local" (their own real SABP bridge) via
+// POST /api/sessions/:sessionId/extraction-route - this function is what
+// real customers get by DEFAULT instead (see hardware-schedule-extract.js's
+// batch-extract and hardware-schedule-generate.js's extract-affirmed route,
+// both changed to default routeForSession to "embedded_gofaineat").
+//
+// Dispatches by scheduleType to whichever contract this call site actually
+// needs (SCHEDULE_TYPE_REGISTRY): door_schedule -> the {doors:[...]}
+// contract + door_schedule_entries persistence (extractDoorScheduleViaEmbeddedGofaineat);
+// anything else (hardware_schedule is the real, common case, and this
+// pipeline's own existing fallback default - see batch-extract's own
+// `scheduleType = session.document_type || "hardware_schedule"`) -> the
+// {hardware_groups:[...], door_hardware_matrix:[...]} contract
+// (extractHardwareGroupsViaEmbeddedGofaineat, already proven live in Part 5).
+//
+// pdfBuffer may be null when the source PDF was too large for KV and only
+// an R2 stream URL was generated (batch-extract's own >20MB fallback) - in
+// that real case this fetches the stream URL directly to get real bytes,
+// since the OCR step needs actual PDF bytes, not a stream reference.
+export async function runEmbeddedGofaineatExtraction(scheduleType, sessionId, tenantId, pdfBuffer, pdfStreamUrl, pageNumber, totalPages, env2) {
+  let buf = pdfBuffer;
+  if (!buf && pdfStreamUrl) {
+    try {
+      const r = await fetch(pdfStreamUrl);
+      if (r.ok) buf = await r.arrayBuffer();
+    } catch (e) {
+      console.warn(`[Embedded Router] Could not fetch PDF via R2 stream URL for embedded OCR: ${e.message}`);
+    }
+  }
+  if (!buf) {
+    return {
+      success: false, error: "pdf_unavailable_for_embedded_ocr",
+      detail: "No PDF bytes available (KV expired and R2 stream fetch failed/unavailable) - the embedded OCR pipeline needs real PDF bytes, unlike a Claude-vision call which can stream a pre-rendered image.",
+      entries: [], entry_count: 0, hardware_groups: [], door_hardware_matrix: [],
+      schedule_type: scheduleType,
+    };
+  }
+  if (scheduleType === "door_schedule") {
+    const result = await extractDoorScheduleViaEmbeddedGofaineat(sessionId, tenantId, buf, pageNumber, totalPages, env2);
+    return { ...result, schedule_type: scheduleType, target_table: "door_schedule_entries" };
+  }
+  // hardware_schedule (and the same generic fallback the rest of this
+  // pipeline already uses for any other/undefined schedule type).
+  const raw = await extractHardwareGroupsViaEmbeddedGofaineat(buf, pageNumber, totalPages, env2);
+  return {
+    success: true,
+    hardware_groups: raw.hardware_groups,
+    hardwareGroups: raw.hardware_groups,
+    door_hardware_matrix: raw.door_hardware_matrix || [],
+    entry_count: raw.hardware_groups.length,
+    entries: raw.hardware_groups,
+    usage: raw.usage,
+    metadata: raw.metadata,
+    schedule_type: scheduleType,
+    target_table: "hardware_components",
+  };
 }
 
 export function buildExtractionResultFromVision(visionResult, pageNumber, totalPages) {

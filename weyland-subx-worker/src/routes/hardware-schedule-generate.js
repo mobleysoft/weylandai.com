@@ -32,6 +32,14 @@
 import { jsonResponse3 } from "../lib/json-response.js";
 import { detectAndPersistRegionConflicts } from "../lib/region-conflicts.js";
 import { arrayBufferToBase64 } from "../auth-module.js";
+import { SCHEDULE_TYPE_REGISTRY } from "../lib/hardware-extraction-prompts.js";
+// 2026-09-13 (EXTRACTION_PIPELINE_CUSTOMER_PATH.md Part 6): SCHEDULE_TYPE_REGISTRY
+// was referenced below (extract-affirmed's own result-shaping code) without
+// being imported - a real, separate, pre-existing "X is not defined"
+// ReferenceError found while live-verifying this file's embedded_gofaineat
+// fix (every real extract-affirmed call failed with it, independent of
+// Ron's edge). Fixed here since it directly blocked verifying the fix this
+// session was asked to make in this same file.
 
 export function registerHardwareScheduleGenerateRoutes(router, {
   authenticate,
@@ -47,6 +55,7 @@ export function registerHardwareScheduleGenerateRoutes(router, {
   matchComponentToCutSheets,
   queuePageExtractionJob,
   routeExtraction,
+  runEmbeddedGofaineatExtraction,
   transformDoorEntriesToHardwareSets,
   materializeDseToLineItems,
 }) {
@@ -486,7 +495,14 @@ router.post("/api/hardware-schedule/session/:sessionId/extract-affirmed", async 
       }
     }
     const _sessRouteRow = await env2.DB.prepare("SELECT extraction_route, project_id FROM hardware_extraction_sessions WHERE id = ?").bind(sessionId).first();
-    const _sessRoute = _sessRouteRow?.extraction_route || (env2.WEYLAND_EDITION === "local" ? "claude_code_subprocess" : "claude_code_local");
+    // embedded_gofaineat is the real default for non-local editions - same
+    // fix as hardware-schedule-extract.js's batch-extract (Part 6): the
+    // old "claude_code_local" default silently sent every real customer
+    // through queuePageExtractionJob -> callEdge -> Ron Helms's separate,
+    // unauthenticated hascom-edge account (confirmed live 401).
+    // claude_code_local/api_direct stay selectable via
+    // POST /api/sessions/:sessionId/extraction-route.
+    const _sessRoute = _sessRouteRow?.extraction_route || (env2.WEYLAND_EDITION === "local" ? "claude_code_subprocess" : "embedded_gofaineat");
     if (_sessRoute === "claude_code_local") {
       const _ownerForCheck = user.mhsId || user.mhs_id || null;
       try {
@@ -604,20 +620,6 @@ router.post("/api/hardware-schedule/session/:sessionId/extract-affirmed", async 
             return null;
           }
         })();
-        let boundingBox = _pctBox || JSON.parse(candidate.user_adjusted_bounding_box || candidate.bounding_box);
-        if (candidate.schedule_type === "door_schedule") {
-          boundingBox = { ...boundingBox, pad_w_percent: 0.05, pad_h_percent: 0.04 };
-        }
-        const candidateDpi = candidate.extraction_dpi || 600;
-        const rendered = await renderRegionAt600DPI2(
-          pdfBuffer,
-          candidate.page_number,
-          boundingBox,
-          env2,
-          candidateDpi,
-          pdfStreamUrl
-        );
-        console.log(`[Extract Affirmed] Rendered region: ${rendered.width}x${rendered.height}px`);
         _kuId = crypto.randomUUID();
         try {
           await env2.DB.prepare(`
@@ -637,19 +639,51 @@ router.post("/api/hardware-schedule/session/:sessionId/extract-affirmed", async 
         } catch (_ledgerErr) {
           console.warn("[Extract Affirmed] ledger packet create failed:", _ledgerErr.message);
         }
-        const extractionResult = await routeExtraction(
-          candidate.schedule_type,
-          rendered.imageBuffer,
-          {
-            ...context3,
-            candidateId: candidate.id,
-            pageNumber: candidate.page_number,
-            totalPages: session.page_count || 1,
-            operatorNotes: candidate.user_notes || null,
-            crossRefGuidance: candidate.cross_ref || null
-          },
-          env2
-        );
+        let extractionResult;
+        if (_sessRoute === "embedded_gofaineat") {
+          // No Anthropic key, no Ron's edge - OCR (weyland-ocr-worker) +
+          // local Qwen3-8B straight from the real PDF bytes. No 600 DPI
+          // region render needed (the OCR worker rasterizes internally),
+          // so skip renderRegionAt600DPI2 for this route.
+          extractionResult = await runEmbeddedGofaineatExtraction(
+            candidate.schedule_type,
+            sessionId,
+            session.tenant_id || "ven_weyland",
+            pdfBuffer,
+            pdfStreamUrl,
+            candidate.page_number,
+            session.page_count || session.total_pages || 1,
+            env2
+          );
+        } else {
+          let boundingBox = _pctBox || JSON.parse(candidate.user_adjusted_bounding_box || candidate.bounding_box);
+          if (candidate.schedule_type === "door_schedule") {
+            boundingBox = { ...boundingBox, pad_w_percent: 0.05, pad_h_percent: 0.04 };
+          }
+          const candidateDpi = candidate.extraction_dpi || 600;
+          const rendered = await renderRegionAt600DPI2(
+            pdfBuffer,
+            candidate.page_number,
+            boundingBox,
+            env2,
+            candidateDpi,
+            pdfStreamUrl
+          );
+          console.log(`[Extract Affirmed] Rendered region: ${rendered.width}x${rendered.height}px`);
+          extractionResult = await routeExtraction(
+            candidate.schedule_type,
+            rendered.imageBuffer,
+            {
+              ...context3,
+              candidateId: candidate.id,
+              pageNumber: candidate.page_number,
+              totalPages: session.page_count || 1,
+              operatorNotes: candidate.user_notes || null,
+              crossRefGuidance: candidate.cross_ref || null
+            },
+            env2
+          );
+        }
         const _extrOk = extractionResult && extractionResult.success !== false;
         const _extrCnt = extractionResult && (extractionResult.entry_count ?? extractionResult.entries_count) || 0;
         await env2.DB.prepare(`

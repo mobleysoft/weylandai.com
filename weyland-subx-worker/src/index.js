@@ -64,7 +64,7 @@ import {
   extractHardwareSchedule, storeHardwareExtraction, getHardwareGroupForReview, updateHardwareGroup,
   queuePageExtractionJob, buildExtractionResultFromVision, extractFromPageImage, createExtractionSession,
   getSessionStatus, approvePageExtraction, resolveExtractionContract, routeExtraction,
-  persistDoorScheduleResponse,
+  persistDoorScheduleResponse, runEmbeddedGofaineatExtraction,
 } from "./lib/hardware-extraction-pipeline.js";
 import { resolveInferenceContract } from "./lib/hardware-extraction-vision-adapters.js";
 import {
@@ -180,6 +180,7 @@ registerHardwareScheduleGenerateRoutes(router, {
   matchComponentToCutSheets,
   queuePageExtractionJob,
   routeExtraction,
+  runEmbeddedGofaineatExtraction,
   transformDoorEntriesToHardwareSets,
   materializeDseToLineItems,
 });

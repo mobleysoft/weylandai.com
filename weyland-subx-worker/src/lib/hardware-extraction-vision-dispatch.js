@@ -1120,6 +1120,178 @@ export async function extractHardwareGroupsViaEmbeddedGofaineat(pdfBuffer, pageN
   };
 }
 
+// extractDoorScheduleViaEmbeddedGofaineat: the DOOR SCHEDULE contract
+// sibling of extractHardwareGroupsViaEmbeddedGofaineat above.
+//
+// Built 2026-09-13 (EXTRACTION_PIPELINE_CUSTOMER_PATH.md Part 6) for the
+// multi-page batch-extract / "extract affirmed" flow's real, confirmed
+// live bug: hardware-extraction-pipeline.js's queuePageExtractionJob and
+// routeExtraction (-> extractDoorScheduleHGSE/extractHardwareSchedule ->
+// callClaudeVisionWithImage's "claude_code_local" default) both funnel
+// into callEdge("POST", "/ai/v1/jobs/queue", ...) against Ron Helms's
+// separate hascom-edge.ron-helms.workers.dev account, unauthenticated,
+// confirmed 401 live. Same root cause Part 4/5 already fixed for
+// dispatchVisionExtraction and extractSinglePage - this is the third and
+// last real call chain that needed the same treatment.
+//
+// Reuses the IDENTICAL OCR-banding (ocrScheduleTableBanded) + Qwen-bridge
+// (callLocalQwen) + {doors:[...]} contract (EMBEDDED_TEXT_EXTRACTION_
+// PROMPT_TEMPLATE, parseAndValidateExtraction) that viaEmbeddedGofaineat
+// (Part 4) already proved live - genuinely the same door-schedule shape,
+// not a new one. What's new here is persistence: this flow's real target
+// table for door_schedule is door_schedule_entries (confirmed via
+// SCHEDULE_TYPE_REGISTRY's door_schedule.target_table in
+// hardware-extraction-prompts.js), not the submittals-table row Part 4
+// writes to. Writes with the same INSERT/ON-CONFLICT(session_id, mark)
+// shape hardware-extraction-pipeline.js's own persistDoorScheduleResponse
+// already uses for a real Claude-vision extraction, so downstream readers
+// (cross-reference.js, door-schedule-marks.js, hardware-schedule-export.js,
+// hardware-schedule-generate.js) see identically-shaped rows regardless of
+// which extraction route produced them.
+//
+// Honest, real scope narrowing (not hidden): persistDoorScheduleResponse's
+// real path resolves a per-tenant CONSTRAINT-DRIVEN dynamic field set
+// (resolveDoorScheduleConstraints) built from a real Claude Vision call
+// against the full page image. This embedded route uses a fixed field set
+// instead (mark, hardware_group, fire_rating, width/height/thickness,
+// door_type/material/frame_material, remarks -> notes) matching the same
+// {doors:[...]} contract Part 4 already ships - tenant-specific custom
+// fields configured via prompt_specifications are not honored by this
+// route. Real, documented, not a silent downgrade.
+export async function extractDoorScheduleViaEmbeddedGofaineat(sessionId, tenantId, pdfBuffer, pageNumber, totalPages, env2) {
+  const startTime = Date.now();
+  if (!env2.OCR_SERVICE) {
+    return { success: false, entries_count: 0, entry_count: 0, entries: [], low_confidence_count: 0, error: "ocr_service_not_configured", duration_ms: Date.now() - startTime };
+  }
+  const ocrResult = await ocrScheduleTableBanded(pdfBuffer, pageNumber, env2);
+  if (ocrResult.error) {
+    return { success: false, entries_count: 0, entry_count: 0, entries: [], low_confidence_count: 0, error: `embedded_gofaineat OCR step failed (${ocrResult.error}): ${ocrResult.detail || ""}`, duration_ms: Date.now() - startTime };
+  }
+  const { pageText } = ocrResult;
+  let content;
+  try {
+    content = await callLocalQwen(env2, [{ role: "user", content: EMBEDDED_TEXT_EXTRACTION_PROMPT_TEMPLATE(pageText) }], { maxTokens: 4e3, temperature: 0.1 });
+  } catch (e) {
+    return { success: false, entries_count: 0, entry_count: 0, entries: [], low_confidence_count: 0, error: `embedded_gofaineat Qwen structuring failed: ${e.message}`, ocr_text_length: pageText.length, duration_ms: Date.now() - startTime };
+  }
+  let parsed;
+  try {
+    parsed = parseAndValidateExtraction(content);
+  } catch (e) {
+    return { success: false, entries_count: 0, entry_count: 0, entries: [], low_confidence_count: 0, error: `embedded_gofaineat parse failed: ${e.message}`, ocr_text_length: pageText.length, duration_ms: Date.now() - startTime };
+  }
+  const isLowConf = (parsed.extraction_confidence || 0) < 0.7;
+  const processedEntries = [];
+  let insertedCount = 0;
+  for (let i = 0; i < parsed.doors.length; i++) {
+    const door = parsed.doors[i];
+    if (!door.door_number) continue;
+    const fullEntry = {
+      id: `dse_${sessionId}_${door.door_number}_${Date.now()}_${i}`,
+      session_id: sessionId,
+      tenant_id: tenantId,
+      page_number: pageNumber,
+      mark: door.door_number,
+      hardware_group: door.hardware_group,
+      fire_rating: door.fire_rating,
+      width: door.size,
+      height: null,
+      width_inches: door.width_inches,
+      height_inches: door.height_inches,
+      door_type: door.door_type,
+      door_material: door.material_code,
+      frame_type: null,
+      frame_material: door.frame_material,
+      panic: null,
+      thickness: null,
+      thickness_inches: door.thickness_inches,
+      door_finish: null,
+      stc_rating: null,
+      frame_finish: null,
+      head_detail: null,
+      jamb_detail: null,
+      sill_detail: null,
+      notes: door.remarks,
+      extraction_confidence: parsed.extraction_confidence,
+      field_confidence_json: null,
+      low_confidence_fields: isLowConf ? "extraction_confidence" : ""
+    };
+    processedEntries.push(fullEntry);
+    try {
+      await env2.DB.prepare(`
+        INSERT INTO door_schedule_entries (
+          id, session_id, tenant_id, page_number,
+          mark, hardware_group,
+          fire_rating, width, height, width_inches, height_inches,
+          door_type, door_material, frame_type, frame_material, panic,
+          thickness, thickness_inches, door_finish, stc_rating,
+          frame_finish, head_detail, jamb_detail, sill_detail, notes,
+          extraction_confidence, field_confidence_json, low_confidence_fields,
+          created_at
+        ) VALUES (
+          ?, ?, ?, ?,
+          ?, ?,
+          ?, ?, ?, ?, ?,
+          ?, ?, ?, ?, ?,
+          ?, ?, ?, ?,
+          ?, ?, ?, ?, ?,
+          ?, ?, ?,
+          datetime('now')
+        )
+        ON CONFLICT(session_id, mark) DO UPDATE SET
+          hardware_group = excluded.hardware_group,
+          fire_rating = excluded.fire_rating,
+          width = excluded.width, height = excluded.height,
+          width_inches = excluded.width_inches, height_inches = excluded.height_inches,
+          door_type = excluded.door_type, door_material = excluded.door_material,
+          frame_type = excluded.frame_type, frame_material = excluded.frame_material,
+          panic = excluded.panic,
+          extraction_confidence = excluded.extraction_confidence,
+          field_confidence_json = excluded.field_confidence_json,
+          low_confidence_fields = excluded.low_confidence_fields,
+          updated_at = datetime('now')
+      `).bind(
+        fullEntry.id, fullEntry.session_id, fullEntry.tenant_id, fullEntry.page_number,
+        fullEntry.mark, fullEntry.hardware_group,
+        fullEntry.fire_rating, fullEntry.width, fullEntry.height, fullEntry.width_inches, fullEntry.height_inches,
+        fullEntry.door_type, fullEntry.door_material, fullEntry.frame_type, fullEntry.frame_material, fullEntry.panic,
+        fullEntry.thickness, fullEntry.thickness_inches, fullEntry.door_finish, fullEntry.stc_rating,
+        fullEntry.frame_finish, fullEntry.head_detail, fullEntry.jamb_detail, fullEntry.sill_detail, fullEntry.notes,
+        fullEntry.extraction_confidence, fullEntry.field_confidence_json, fullEntry.low_confidence_fields
+      ).run();
+      insertedCount++;
+    } catch (insertError) {
+      console.error(`[Embedded Door Schedule] Failed to insert entry ${fullEntry.mark}:`, insertError.message);
+    }
+  }
+  if (processedEntries.length > 0 && insertedCount === 0) {
+    return { success: false, entries_count: 0, entry_count: 0, entries: [], low_confidence_count: 0, error: `door write failure: parsed ${processedEntries.length} entries, inserted 0`, duration_ms: Date.now() - startTime };
+  }
+  try {
+    await env2.DB.prepare(`
+      UPDATE hardware_extraction_sessions
+      SET door_schedule_extracted = 1,
+          door_entries_count = door_entries_count + ?,
+          pages_processed = pages_processed + 1,
+          door_schedule_extracted_at = datetime('now'),
+          updated_at = datetime('now')
+      WHERE id = ?
+    `).bind(insertedCount, sessionId).run();
+  } catch (e) {
+    console.warn("[Embedded Door Schedule] session flag update failed (non-blocking):", e.message);
+  }
+  return {
+    success: true,
+    entries_count: insertedCount,
+    entry_count: insertedCount,
+    entries: processedEntries,
+    low_confidence_count: isLowConf ? processedEntries.length : 0,
+    extraction_route: "embedded_gofaineat",
+    ocr_text_length: pageText.length,
+    duration_ms: Date.now() - startTime
+  };
+}
+
 // structureDoorScheduleFromText: the text-to-JSON structuring HALF of
 // viaEmbeddedGofaineat above, factored out so it can be called directly
 // with OCR text that was already produced somewhere OTHER than
