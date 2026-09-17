@@ -909,6 +909,7 @@ async function ocrScheduleTableBanded(pdfBuffer, targetPage, env2) {
       return { error: "ocr_failed", detail: errText.slice(0, 500), page: targetPage, band: [topPct, botPct] };
     }
     const bandResult = await bandResp.json();
+    console.log(`[ocrScheduleTableBanded] page ${targetPage} band [${topPct}-${botPct}]: ${(bandResult.text || "").length} chars: ${JSON.stringify((bandResult.text || "").slice(0, 200))}`);
     ocrTexts.push(bandResult.text || "");
   }
   const pageText = ocrTexts.join("\n");
@@ -1076,6 +1077,7 @@ export async function extractHardwareGroupsViaEmbeddedGofaineat(pdfBuffer, pageN
     throw e;
   }
   const { pageText } = ocrResult;
+  console.log(`[embedded_gofaineat_hardware] page ${pageNumber}: OCR produced ${pageText.length} chars. First 400: ${JSON.stringify(pageText.slice(0, 400))}`);
   const extractionStartTime = Date.now();
 
   const prompt = EMBEDDED_HARDWARE_GROUPS_EXTRACTION_PROMPT_TEMPLATE(pageText, pageNumber, totalPages);

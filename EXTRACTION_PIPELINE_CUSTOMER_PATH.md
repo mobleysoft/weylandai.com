@@ -944,3 +944,96 @@ rows) were deleted immediately after verification; `hardware_sets`/
 - `weyland-subx-worker/src/routes/hardware-schedule-extract.js` — fixed missing imports (`queuePageExtractionJob`, `routeExtraction`, `runEmbeddedGofaineatExtraction`, `renderRegionAt600DPI2`, `pdfBufferOrNull`, `generateR2StreamUrl`, `transformDoorEntriesToHardwareSets`, `materializeDseToLineItems`, `savePageExtraction2` - a real, separate, blocking ReferenceError bug); `batch-extract`'s `routeForSession` default changed to `embedded_gofaineat`; sync loop branches to the embedded pipeline
 - `weyland-subx-worker/src/routes/hardware-schedule-generate.js` — fixed missing `SCHEDULE_TYPE_REGISTRY` import (separate pre-existing bug); `extract-affirmed`'s `_sessRoute` default changed to `embedded_gofaineat`; sync loop branches to the embedded pipeline; `runEmbeddedGofaineatExtraction` added to its injected deps
 - `weyland-subx-worker/src/index.js` — imports `runEmbeddedGofaineatExtraction` from `hardware-extraction-pipeline.js`, passes it into `registerHardwareScheduleGenerateRoutes`
+
+## Part 7 (2026-09-17): the real, actual root cause of "0 groups every time" — and the first genuine accuracy verification
+
+John's direct instruction after Part 6 reported plumbing fixed but accuracy
+still unverified: build a real test document with KNOWN ground truth and
+run it through the actual pipeline, "so we know if it is right or not" -
+not another 0-result run against a document type the route wasn't built
+for.
+
+**Built**: a synthetic two-hardware-set door-hardware-schedule PDF
+(`reportlab`, real vector-rendered PDF, not a scan) with a fully known
+answer - HW-1 (3 Hinges/Hager/BB1279, 1 Lockset/Schlage/ND80PD, 1
+Closer/LCN/4111, doors: 2), HW-2 (3 Hinges/Hager/BB1168, 1
+Lockset/Schlage/ND53PD, doors: 5).
+
+**First real finding**: `EMBEDDED_HARDWARE_GROUPS_EXTRACTION_PROMPT_TEMPLATE`
++ the local Qwen3-8B structuring step (Part 5's real, deployed prompt,
+copied verbatim into a standalone test, not reinvented) extracts this
+ground-truth document **perfectly** when given clean OCR text - every
+quantity, manufacturer, model, and finish correct. This had never actually
+been checked; Part 5/6's "accuracy unverified" was really "never tested
+against the right document type at all," not "tested and inconclusive."
+
+**Second, bigger real finding - the actual root cause of every 0-result
+run in Parts 4-6**: ran the real ground-truth PDF through the live
+`weyland-subx-worker` end-to-end (real throwaway account via
+`tools/user-simulation/lib/throwaway-account.mjs`, real `/api/hardware-
+schedule/start` + `/page/1` calls) and got 0 groups again -
+`ocr_text_length: 299`, and `wrangler tail` showed the OCR text itself was
+pure noise (`"<= 2° UO\n<= —_ ==\n..."`), not the real table text. This is
+not "banded OCR is noisier than a single pass" (Part 4/5's working
+assumption) - it's a specific, reproducible bug: `getOrientation()` in
+`ocr-worker/index.js`'s `renderAndExtractTableRegion` reported
+`{rotation: 90, confidence: 1.0}` - the MAXIMUM possible confidence - as a
+false positive on this clean, upright, vector-rendered page, and the
+existing `confidence > 0.5` gate rotated a correctly-oriented page 90°
+before cropping. A horizontal band crop of sideways text is exactly the
+kind of input that produces OCR noise, not real characters. Reproduced
+standalone (real `@hyzyla/pdfium` + `tesseract-wasm` packages, same WASM
+assets, outside the Worker) and got byte-identical garbage to production
+once the same rotation was applied - confirming this, not something else,
+is the real cause.
+
+The original rotation-correction logic (added 2026-09-12) is not wrong to
+exist - it was built against a real scanned, genuinely-rotated document
+(`OCCDoorSchedulePg4.pdf`) and is still needed for real scans. The bug is
+trusting a single orientation heuristic's own confidence score
+unconditionally, with no check that rotating actually helps.
+
+**Fix** (`ocr-worker/index.js`, `renderAndExtractTableRegion`): when
+`getOrientation()` proposes a rotation, empirically compare mean per-word
+OCR confidence (`getTextBoxes('word')`) of the SAME target band in both
+the unrotated and rotated candidate images, and only commit to rotating if
+it's a clear win (`rotatedConf > unrotatedConf + 0.1`). Verified locally
+before deploying: unrotated confidence 0.95 vs rotated 0.4-0.5 on the
+ground-truth PDF (correctly declines to rotate); still rotates for a real
+genuinely-sideways scan since that case's unrotated confidence is the
+near-zero one. Extracted `cropBand()` as a shared helper (was inlined
+twice) so the confidence-check crop and the real extraction crop use
+identical math.
+
+**Verified live, for real, after the fix**: same throwaway-account
+end-to-end run, same ground-truth PDF -> `HTTP 200`,
+`extraction_route: "embedded_gofaineat"`, **2 hardware_groups, all 4
+components, every quantity/manufacturer/model/finish exactly correct**
+(HW-1 total qty 5, HW-2 total qty 4, both matching ground truth). This is
+the first time this pipeline has been shown to produce a CORRECT
+extraction, not just a non-erroring one. `hinge_positions`/
+`mounting_height_inches`/etc. came back correctly labeled
+`"...source": "default"` (not fabricated as "extracted") since the test
+PDF didn't specify them - the existing `applyMountingDefaultsToExtraction`
+honesty behavior held up under a real test.
+
+One minor, honest imperfection found in the same run: the model read the
+test PDF's "(Doors: 2)" annotation as `assigned_doors: ["2"]` (a door
+NUMBER) rather than a door COUNT - a phrasing ambiguity in this specific
+synthetic test document (real schedules typically list actual door
+numbers like "101, 102", not a bare count), not a defect in the extraction
+logic itself. Not fixed - noted honestly, low-priority, cosmetic to this
+one test fixture.
+
+All throwaway D1 rows (`hardware_extraction_sessions`,
+`hardware_page_extractions`, `hardware_sets`, `schedule_region_candidates`)
+across all 3 test runs (2 before the fix, 1 after) deleted immediately
+after verification, same discipline as Parts 4-6. `users`/`weyland_sessions`
+rows deleted via `deleteThrowawayAccount`. KV-cached test PDF blobs left to
+their existing 7-day TTL (small, non-sensitive, not worth manual KV
+deletion without a list-by-prefix wrangler command available).
+
+### Files touched (Part 7)
+
+- `ocr-worker/index.js` — added `cropBand()`/`meanWordConfidence()` helpers; `renderAndExtractTableRegion` now empirically compares rotated-vs-unrotated confidence instead of trusting `getOrientation()` unconditionally
+- `weyland-subx-worker/src/lib/hardware-extraction-vision-dispatch.js` — added diagnostic `console.log` lines (OCR text length/preview per band) to `ocrScheduleTableBanded`/`extractHardwareGroupsViaEmbeddedGofaineat`, left in place as ongoing low-noise diagnostics

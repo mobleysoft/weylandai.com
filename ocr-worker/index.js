@@ -95,6 +95,34 @@ function upscale2x(img) {
   return { data: out, width: nw, height: nh };
 }
 
+// Crops a horizontal band [topPct, botPct] of an image's height, full
+// width - shared by renderAndExtractTableRegion's real extraction crop
+// and its rotation-confidence check below (same crop math, one place).
+function cropBand(img, topPct, botPct) {
+  const yTop = Math.max(0, Math.floor(img.height * topPct));
+  const yBot = Math.min(img.height, Math.floor(img.height * botPct));
+  const cropH = Math.max(1, yBot - yTop);
+  const cropped = new Uint8ClampedArray(img.width * cropH * 4);
+  for (let y = 0; y < cropH; y++) {
+    const srcRowStart = (yTop + y) * img.width * 4;
+    const dstRowStart = y * img.width * 4;
+    cropped.set(img.data.subarray(srcRowStart, srcRowStart + img.width * 4), dstRowStart);
+  }
+  return { data: cropped, width: img.width, height: cropH };
+}
+
+// Mean per-word OCR confidence for an already-loaded-ready image, used
+// to empirically pick between orientation candidates below instead of
+// trusting getOrientation() alone.
+function meanWordConfidence(ocrEngine, image) {
+  ocrEngine.clearImage();
+  ocrEngine.loadImage(image);
+  ocrEngine.setVariable('tessedit_pageseg_mode', '6');
+  const words = ocrEngine.getTextBoxes('word');
+  if (!words.length) return 0;
+  return words.reduce((sum, w) => sum + w.confidence, 0) / words.length;
+}
+
 function bgraToRgba(bgra) {
   const rgba = new Uint8ClampedArray(bgra.length);
   for (let i = 0; i < bgra.length; i += 4) {
@@ -250,20 +278,32 @@ async function renderAndExtractTableRegion(pdfBuffer, pageNumber, cropTopPct = 0
     ocrEngine.clearImage();
     ocrEngine.loadImage(pageImage);
     const orientation = ocrEngine.getOrientation();
+    let rotationApplied = 0;
+    // Real bug found 2026-09-17: getOrientation() alone is not reliable
+    // enough to trust blindly - confirmed false positive (rotation=90,
+    // confidence=1.0, the maximum) on a clean, upright, vector-rendered
+    // PDF. Unconditionally rotating on that signal turned correctly
+    // -oriented text sideways, and OCR-ing a horizontal band of sideways
+    // text produces pure noise - byte-identical to garbled output seen in
+    // production, reproduced standalone against a synthetic ground-truth
+    // PDF before this fix (see EXTRACTION_PIPELINE_CUSTOMER_PATH.md).
+    // Fix: empirically compare mean per-word OCR confidence of THIS
+    // band in both orientations and only commit to rotating if it's a
+    // clear win - keeps the original, real fix (genuinely rotated scans
+    // like OCCDoorSchedulePg4.pdf) working while no longer trusting a
+    // single heuristic on documents where it's wrong.
     if (orientation.rotation !== 0 && orientation.confidence > 0.5) {
       const turns = Math.round(orientation.rotation / 90) % 4;
-      for (let t = 0; t < turns; t++) pageImage = rotate90CW(pageImage);
+      let rotatedImage = pageImage;
+      for (let t = 0; t < turns; t++) rotatedImage = rotate90CW(rotatedImage);
+      const unrotatedConf = meanWordConfidence(ocrEngine, upscale2x(cropBand(pageImage, cropTopPct, cropBottomPct)));
+      const rotatedConf = meanWordConfidence(ocrEngine, upscale2x(cropBand(rotatedImage, cropTopPct, cropBottomPct)));
+      if (rotatedConf > unrotatedConf + 0.1) {
+        pageImage = rotatedImage;
+        rotationApplied = orientation.rotation;
+      }
     }
-    const yTop = Math.max(0, Math.floor(pageImage.height * cropTopPct));
-    const yBot = Math.min(pageImage.height, Math.floor(pageImage.height * cropBottomPct));
-    const cropH = Math.max(1, yBot - yTop);
-    const cropped = new Uint8ClampedArray(pageImage.width * cropH * 4);
-    for (let y = 0; y < cropH; y++) {
-      const srcRowStart = (yTop + y) * pageImage.width * 4;
-      const dstRowStart = y * pageImage.width * 4;
-      cropped.set(pageImage.data.subarray(srcRowStart, srcRowStart + pageImage.width * 4), dstRowStart);
-    }
-    const upscaled = upscale2x({ data: cropped, width: pageImage.width, height: cropH });
+    const upscaled = upscale2x(cropBand(pageImage, cropTopPct, cropBottomPct));
     ocrEngine.clearImage();
     ocrEngine.loadImage(upscaled);
     ocrEngine.setVariable('tessedit_pageseg_mode', '6'); // uniform block - real dense table, not sparse text
@@ -271,7 +311,7 @@ async function renderAndExtractTableRegion(pdfBuffer, pageNumber, cropTopPct = 0
     return {
       page: pageNumber,
       text: (text || '').trim(),
-      rotation_applied: orientation.rotation,
+      rotation_applied: rotationApplied,
       crop: `top_${Math.round(cropTopPct * 100)}-${Math.round(cropBottomPct * 100)}pct_full_width_2x`,
     };
   } finally {
