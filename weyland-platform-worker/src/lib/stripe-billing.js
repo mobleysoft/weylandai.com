@@ -124,7 +124,13 @@ export const CHECKOUT_READY_PRODUCTS = new Set([
   "weyland-subx-seat",
   "weyland-meetingx-seat",
   "weyland-sightx-seat",
-  "weyland-marketx-seat",
+  // weyland-marketx-seat deliberately excluded (fixed 2026-09-20): its own
+  // backend route (GET /api/marketx/trends) intentionally returns a real
+  // HTTP 501 "retired pending real first-party data" - no working feature
+  // exists behind this price yet, so it must not be self-checkout-able
+  // even though it's still a valid, active, checkout_ready:false-flagged
+  // Stripe price (kept in WEYLAND_PRODUCTS above so /api/billing/catalog
+  // can still report on it honestly).
   "weyland-pricex-seat",
   "weyland-compx-seat",
   "weyland-weatherx-seat",

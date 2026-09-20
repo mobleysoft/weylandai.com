@@ -28509,7 +28509,6 @@ var CHECKOUT_READY_PRODUCTS = /* @__PURE__ */ new Set([
   "weyland-subx-seat",
   "weyland-meetingx-seat",
   "weyland-sightx-seat",
-  "weyland-marketx-seat",
   "weyland-pricex-seat",
   "weyland-compx-seat",
   "weyland-weatherx-seat",
