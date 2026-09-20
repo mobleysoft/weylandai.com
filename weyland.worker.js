@@ -18937,7 +18937,7 @@ function registerBillingRoutes(router2, { WEYLAND_PRODUCTS: WEYLAND_PRODUCTS2, C
         const price = await stripeRequest2(env2, "GET", `/prices/${cfg.priceId}`);
         products.push({
           id: productId,
-          checkout_ready: price.active === true,
+          checkout_ready: price.active === true && CHECKOUT_READY_PRODUCTS2.has(productId),
           price_id: price.id,
           unit_amount: price.unit_amount,
           currency: price.currency,

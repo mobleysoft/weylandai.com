@@ -36,7 +36,7 @@ export function registerBillingRoutes(router, { WEYLAND_PRODUCTS, CHECKOUT_READY
         const price = await stripeRequest(env2, "GET", `/prices/${cfg.priceId}`);
         products.push({
           id: productId,
-          checkout_ready: price.active === true,
+          checkout_ready: price.active === true && CHECKOUT_READY_PRODUCTS.has(productId),
           price_id: price.id,
           unit_amount: price.unit_amount,
           currency: price.currency,
