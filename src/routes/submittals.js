@@ -3,9 +3,9 @@ import { requireProductAccess } from "../lib/auth.js";
 
 /**
  * @param {object} router
- * @param {{ authenticate: Function, logTelemetryEvent: Function, dispatchVisionExtraction: Function }} deps
+ * @param {{ authenticate: Function, logTelemetryEvent: Function, dispatchVisionExtraction: Function, structureDoorScheduleFromText: Function }} deps
  */
-export function registerSubmittalsRoutes(router, { authenticate, logTelemetryEvent, dispatchVisionExtraction }) {
+export function registerSubmittalsRoutes(router, { authenticate, logTelemetryEvent, dispatchVisionExtraction, structureDoorScheduleFromText }) {
   router.post("/api/submittals/upload", async (request2, env2) => {
     const { error: error4, user } = await authenticate(request2, env2);
     if (error4)
@@ -515,6 +515,42 @@ export function registerSubmittalsRoutes(router, { authenticate, logTelemetryEve
       });
     } catch (error5) {
       return jsonResponse3({ error: "Failed to fetch submittal: " + error5.message }, 500);
+    }
+  });
+
+  // POST /api/submittals/extract-from-text: the structuring HALF of the
+  // embedded_gofaineat pipeline, callable directly with OCR text produced
+  // client-side (src/pages/subx-app.html, tesseract-wasm in the customer's
+  // own browser) instead of via weyland-ocr-worker's CPU-budgeted
+  // /extract-schedule-table. No PDF, no OCR_SERVICE binding touched here -
+  // this endpoint only does the text-to-{doors:[...]}-JSON step (real
+  // local Qwen3-8B over the existing llama.mobleysoft.com bridge). Built
+  // 2026-09-12 after the architecture was corrected away from moving OCR
+  // to John's Mac (see structureDoorScheduleFromText's own doc comment in
+  // hardware-extraction-vision-dispatch.js for the full reasoning) - OCR
+  // itself now runs entirely in userspace, in the browser, with no
+  // per-request CPU ceiling and no dependency on any single machine.
+  router.post("/api/submittals/extract-from-text", async (request2, env2) => {
+    const { error: error4, user } = await authenticate(request2, env2);
+    if (error4)
+      return error4;
+    {
+      const _prodErr = await requireProductAccess(user, env2, "subx");
+      if (_prodErr) return _prodErr;
+    }
+    try {
+      const body = await request2.json();
+      const ocrText = typeof body.text === "string" ? body.text : "";
+      if (!ocrText.trim()) {
+        return jsonResponse3({ error: "text field (client-side OCR output) is required and must be non-empty" }, 400);
+      }
+      const result = await structureDoorScheduleFromText(ocrText, env2);
+      if (result.error) {
+        return jsonResponse3(result, 502);
+      }
+      return jsonResponse3({ success: true, ...result });
+    } catch (err) {
+      return jsonResponse3({ error: "Failed to structure OCR text", details: err.message }, 500);
     }
   });
 }

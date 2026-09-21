@@ -135,6 +135,7 @@ import { authenticate, authenticateCps, requireActiveSubscription, requireProduc
  *   errorResponse: Function,
  *   HASCOM_EDGE: string,
  *   dispatchVisionExtraction: Function,
+ *   structureDoorScheduleFromText: Function,
  *   WEYLAND_PRODUCTS: object,
  *   CHECKOUT_READY_PRODUCTS: Set,
  *   stripeRequest: Function,
@@ -390,6 +391,7 @@ export function registerExtractedModules(router, deps) {
     authenticate,
     logTelemetryEvent: deps.logTelemetryEvent,
     dispatchVisionExtraction: deps.dispatchVisionExtraction,
+    structureDoorScheduleFromText: deps.structureDoorScheduleFromText,
   });
   registerUploadRoutes(router, {
     authenticate,
