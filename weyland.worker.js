@@ -28513,7 +28513,25 @@ var CHECKOUT_READY_PRODUCTS = /* @__PURE__ */ new Set([
   "weyland-compx-seat",
   "weyland-weatherx-seat",
   "weyland-forecastx-seat",
-  "weyland-geox-seat"
+  "weyland-geox-seat",
+  // Added 2026-09-23 (single-venture depth audit, real underclaiming gap fixed,
+  // same fix as weyland-platform-worker/src/lib/stripe-billing.js): 14 real
+  // requireProductAccess-gated document-generator routes + real marketing
+  // pages exist for these (verified live) but this gate was never updated.
+  "weyland-lienx-seat",
+  "weyland-bidx-seat",
+  "weyland-coa-seat",
+  "weyland-drawx-seat",
+  "weyland-asbuiltx-seat",
+  "weyland-specx-seat",
+  "weyland-rfax-seat",
+  "weyland-changeordx-seat",
+  "weyland-permitx-seat",
+  "weyland-safetyx-seat",
+  "weyland-closex-seat",
+  "weyland-notesx-seat",
+  "weyland-inspecx-seat",
+  "weyland-survx-seat"
 ]);
 async function stripeRequest(env2, method, path, params) {
   const body = params ? Object.entries(params).map(([k, v]) => `${encodeURIComponent(k)}=${encodeURIComponent(v)}`).join("&") : void 0;

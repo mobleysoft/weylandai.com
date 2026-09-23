@@ -67,19 +67,22 @@ export const WEYLAND_PRODUCTS = {
   "weyland-meetingx-seat": { priceId: "price_1UAwDiLWTxUJi5AV3zx4ZMgp", tier: "meetingx" },
   "weyland-sightx-seat": { priceId: "price_1UAwEmLWTxUJi5AVnfVmPSPq", tier: "sightx" },
   // PropX Pro family - real live-mode Stripe objects (same account as everything
-  // above). NOT wired to any real backend route yet - do not surface these on
-  // /pricing or any checkout UI until #26/#27/#28 (real LienX/BidX/CoA routes)
-  // are built. A live, chargeable price with no product behind it is worse than
-  // not having the SKU at all.
+  // above). Backend routes were built 2026-09-17/21 (src/routes/document-generators.js:
+  // POST/GET lien-waivers, bid-packages, coa-packages, all requireProductAccess-gated,
+  // real end-to-end test passing) - moved to CHECKOUT_READY_PRODUCTS below, see that
+  // comment for the 2026-09-23 depth-audit correction.
   "weyland-lienx-seat": { priceId: "price_1UAxoNLWTxUJi5AV7ysXAvxm", tier: "lienx" },
   "weyland-bidx-seat": { priceId: "price_1UAxoOLWTxUJi5AVrw6I89f6", tier: "bidx" },
   "weyland-coa-seat": { priceId: "price_1UAxoOLWTxUJi5AVtRLsCXPq", tier: "coa" },
-  // TakeoffX Pro, SubX Pro, HuntX Pro, SightX Pro - real live-mode Stripe
-  // objects, but NONE of these 24 have a real backend route or page yet
-  // (unlike lienx/bidx/coa above, which do). Registered here only so the
-  // catalog endpoint and future checkout wiring have something real to
-  // point at - do not surface any of these on /pricing or any nav until
-  // each has actual working functionality behind it.
+  // TakeoffX Pro, SubX Pro, HuntX Pro, SightX Pro family - real live-mode Stripe
+  // objects. 14 of these (drawx/asbuiltx/specx/rfax/changeordx/permitx/safetyx/
+  // closex/notesx/inspecx/survx above the marketx line, and coa/lienx/bidx above)
+  // got real requireProductAccess-gated backend routes + a real marketing page
+  // in src/routes/document-generators.js and src/lib/marketing-pages.js since this
+  // comment was written - moved to CHECKOUT_READY_PRODUCTS 2026-09-23. The
+  // remaining ones here (leadx, marketx [deliberately retired, see below],
+  // zoningx, riskx, sitex, dronex, photox, mobilex) still have no real backend
+  // route or page - do not surface those on /pricing or any nav until they do.
   "weyland-drawx-seat": { priceId: "price_1UAzFFLWTxUJi5AVqu5Mo8oi", tier: "drawx" },
   "weyland-asbuiltx-seat": { priceId: "price_1UAzEuLWTxUJi5AVYYpFhmov", tier: "asbuiltx" },
   "weyland-specx-seat": { priceId: "price_1UAzEvLWTxUJi5AV7GooVFVv", tier: "specx" },
@@ -106,7 +109,7 @@ export const WEYLAND_PRODUCTS = {
   "weyland-weatherx-seat": { priceId: "price_1UAzF7LWTxUJi5AVV0rfO1Rl", tier: "weatherx" }
 };
 
-// The 7 products with a real route/page/functionality behind them, plus the
+// The products with a real route/page/functionality behind them, plus the
 // suite bundle - the only ones a real customer should be able to complete
 // checkout for. Everything else in WEYLAND_PRODUCTS above is a real,
 // live-mode Stripe price (so /api/billing/catalog can report on it) but has
@@ -135,7 +138,35 @@ export const CHECKOUT_READY_PRODUCTS = new Set([
   "weyland-compx-seat",
   "weyland-weatherx-seat",
   "weyland-forecastx-seat",
-  "weyland-geox-seat"
+  "weyland-geox-seat",
+  // Added 2026-09-23 (single-venture depth audit, real underclaiming gap
+  // fixed): these 14 all have real requireProductAccess-gated generate+
+  // download routes in src/routes/document-generators.js (confirmed via
+  // node --test src/routes/document-generators.test.mjs, a real passing
+  // end-to-end test through authenticate -> requireProductAccess ->
+  // renderHtmlToPdf -> storeDocumentPdf -> D1 insert for the lien-waivers
+  // route) and a real dedicated marketing page each (verified live,
+  // e.g. GET https://weylandai.com/lienx -> 200, real title/form/JS) -
+  // the CHECKOUT_READY_PRODUCTS gate here was just never updated after
+  // that backend work landed, so real customers were hitting a 409
+  // ("isn't available for self-checkout yet - email hello@weylandai.com")
+  // for a product that actually works. /pricing's own card grid and
+  // triggerCheckout() allowlist were updated in the same pass so a real
+  // checkout button now exists for each, not just this server-side flag.
+  "weyland-lienx-seat",
+  "weyland-bidx-seat",
+  "weyland-coa-seat",
+  "weyland-drawx-seat",
+  "weyland-asbuiltx-seat",
+  "weyland-specx-seat",
+  "weyland-rfax-seat",
+  "weyland-changeordx-seat",
+  "weyland-permitx-seat",
+  "weyland-safetyx-seat",
+  "weyland-closex-seat",
+  "weyland-notesx-seat",
+  "weyland-inspecx-seat",
+  "weyland-survx-seat"
 ]);
 
 // CompX reuses HuntX's own real data source directly - the TXDOT bid
