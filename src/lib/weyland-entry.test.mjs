@@ -152,12 +152,30 @@ test("createWeylandWorker.fetch: real behavior upgrades http requests to https w
   assert.equal(resp.headers.get("Location"), "https://weylandai.com/pricing");
 });
 
-test("createWeylandWorker.fetch: real behavior 301-redirects a legacy product subdomain to the path route", async () => {
+test("createWeylandWorker.fetch: real behavior 301-redirects a legacy product subdomain's bare root to the path route", async () => {
   const worker = createWeylandWorker({ monolith: createMonolith({ router: fakeRouter(), discoveryEngine: fakeDiscoveryEngine() }) });
   const req = new Request("https://huntx.weylandai.com/");
   const resp = await worker.fetch(req, fakeEnv(), {});
   assert.equal(resp.status, 301);
   assert.equal(resp.headers.get("Location"), "https://weylandai.com/huntx");
+});
+
+test("createWeylandWorker.fetch: real behavior forwards a legacy subdomain's real quote share link unprefixed (regression check, 2026-09-25 fix)", async () => {
+  const worker = createWeylandWorker({ monolith: createMonolith({ router: fakeRouter(), discoveryEngine: fakeDiscoveryEngine() }) });
+  const req = new Request("https://subx.weylandai.com/q/quote123/tok456");
+  const resp = await worker.fetch(req, fakeEnv(), {});
+  assert.equal(resp.status, 301);
+  // Previously rewrote this to https://weylandai.com/subx/q/quote123/tok456,
+  // a path that doesn't exist - the real route is /q/:id/:token, unprefixed.
+  assert.equal(resp.headers.get("Location"), "https://weylandai.com/q/quote123/tok456");
+});
+
+test("createWeylandWorker.fetch: real behavior forwards a legacy subdomain's API path unprefixed", async () => {
+  const worker = createWeylandWorker({ monolith: createMonolith({ router: fakeRouter(), discoveryEngine: fakeDiscoveryEngine() }) });
+  const req = new Request("https://subx.weylandai.com/api/billing/checkout/create", { method: "POST" });
+  const resp = await worker.fetch(req, fakeEnv(), {});
+  assert.equal(resp.status, 301);
+  assert.equal(resp.headers.get("Location"), "https://weylandai.com/api/billing/checkout/create");
 });
 
 test("createWeylandWorker.fetch: real behavior dispatches a marketing-page path via SovereignWeylandRoutes", async () => {
