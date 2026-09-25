@@ -4,6 +4,7 @@
   "type": "module",
   "dependencies": {
     "@hyzyla/pdfium": "^2.1.13",
+    "jpeg-js": "^0.4.4",
     "tesseract-wasm": "^0.11.0"
   }
 }

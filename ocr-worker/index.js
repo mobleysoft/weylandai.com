@@ -19,6 +19,7 @@
 
 import { PDFiumLibrary } from '@hyzyla/pdfium';
 import { createOCREngine } from 'tesseract-wasm';
+import jpeg from 'jpeg-js';
 import { detectSchedules, rotate90CW } from '../src/extraction/jitagi-detect-schedules.js';
 import { pageRange } from './page-range.js';
 
@@ -134,6 +135,50 @@ function bgraToRgba(bgra) {
   return rgba;
 }
 
+// Real gap closed 2026-09-24 (accountdrac.com depth audit): every caller of
+// this worker only ever sent PDFs - a photographed receipt (JPG straight off
+// a phone camera roll) was a disclosed, unhandled case. tesseract-wasm's
+// loadImage() only needs decoded {data, width, height} RGBA pixels - the
+// same shape PDFium rendering already produces - so a JPEG never needed
+// PDFium at all, just a decoder. jpeg-js is pure JS (no WASM, no native
+// bindings), decodes straight to RGBA via {useTArray: true}, and is small
+// enough not to threaten this worker's already-tight ~10MB WASM/asset
+// budget (see file header). PNG intentionally not added yet - the DEFLATE
+// decode it needs would be its own real chunk of work, not a two-line addition.
+function isJpeg(buffer) {
+  const b = new Uint8Array(buffer.slice(0, 3));
+  return b.length === 3 && b[0] === 0xff && b[1] === 0xd8 && b[2] === 0xff;
+}
+
+async function extractTextFromJpeg(imageBuffer) {
+  const ocrEngine = await getOcrEngine();
+  const decoded = jpeg.decode(new Uint8Array(imageBuffer), { useTArray: true });
+  let pageImage = { data: decoded.data, width: decoded.width, height: decoded.height };
+
+  // Same orientation-correction pattern as the PDF path below (a phone
+  // photo is at least as likely to be sideways as a scanned page) -
+  // reusing the identical check rather than inventing a second one.
+  ocrEngine.clearImage();
+  ocrEngine.loadImage(pageImage);
+  const orientation = ocrEngine.getOrientation();
+  if (orientation.rotation !== 0 && orientation.confidence > 0.5) {
+    const turns = Math.round(orientation.rotation / 90) % 4;
+    for (let t = 0; t < turns; t++) pageImage = rotate90CW(pageImage);
+    ocrEngine.clearImage();
+    ocrEngine.loadImage(pageImage);
+  }
+  ocrEngine.setVariable('tessedit_pageseg_mode', '3');
+  const text = (ocrEngine.getText() || '').trim();
+  return {
+    pages: [{ page: 1, text, rotation_applied: orientation.rotation }],
+    pageCount: 1,
+    documentPageCount: 1,
+    startPage: 1,
+    endPage: 1,
+    hasMore: false,
+  };
+}
+
 async function renderAndDetect(pdfBuffer, totalPages, sessionId) {
   const library = await getPdfiumLibrary();
   const ocrEngine = await getOcrEngine();
@@ -171,6 +216,8 @@ async function renderAndDetect(pdfBuffer, totalPages, sessionId) {
 // pageseg_mode 3 (fully automatic layout, no OSD) instead of 11 (sparse
 // text) since these are prose/paragraph documents, not schedule tables.
 async function renderAndExtractText(pdfBuffer, headers) {
+  if (isJpeg(pdfBuffer)) return extractTextFromJpeg(pdfBuffer);
+
   const library = await getPdfiumLibrary();
   const ocrEngine = await getOcrEngine();
 
