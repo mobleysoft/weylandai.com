@@ -205,7 +205,22 @@ export function createWeylandWorker({ monolith }) {
     const LEGACY_PRODUCT_SUBDOMAINS = ["subx", "takeoffx", "propx", "cutsheetx", "huntx", "sightx"];
     const subdomainMatch = url.hostname.match(/^([a-z]+)\.weylandai\.com$/);
     if (subdomainMatch && LEGACY_PRODUCT_SUBDOMAINS.includes(subdomainMatch[1])) {
-      const target = `https://weylandai.com/${subdomainMatch[1]}${url.pathname === "/" ? "" : url.pathname}${url.search}`;
+      // Only the bare root path maps to the product's own marketing page
+      // (https://weylandai.com/<product>). Any other path - an API route,
+      // a static asset, or a customer-facing share link like PropX's real
+      // quote links (quotes-generate.js: https://subx.weylandai.com/q/:id/
+      // :token, sent to actual prospects) - is already a fully-qualified
+      // route on the root domain and must be forwarded unprefixed, or it
+      // 404s. Found 2026-09-25 (depth audit): the unconditional prefix was
+      // rewriting /q/:id/:token to the nonexistent /subx/q/:id/:token,
+      // silently breaking every real quote-acceptance link ever sent from
+      // this subdomain, plus any same-origin /api/* call a page on this
+      // subdomain made (cors.js's DEFAULT_CORS_ORIGINS explicitly expects
+      // subx.weylandai.com to call the API - the redirect made that
+      // impossible for GET/HEAD requests that follow the 301).
+      const target = url.pathname === "/"
+        ? `https://weylandai.com/${subdomainMatch[1]}${url.search}`
+        : `https://weylandai.com${url.pathname}${url.search}`;
       return Response.redirect(target, 301);
     }
     if (request2.method === "GET" || request2.method === "HEAD") {

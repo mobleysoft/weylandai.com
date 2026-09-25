@@ -36649,7 +36649,18 @@ function createWeylandWorker({ monolith: monolith2 }) {
       const LEGACY_PRODUCT_SUBDOMAINS = ["subx", "takeoffx", "propx", "cutsheetx", "huntx", "sightx"];
       const subdomainMatch = url.hostname.match(/^([a-z]+)\.weylandai\.com$/);
       if (subdomainMatch && LEGACY_PRODUCT_SUBDOMAINS.includes(subdomainMatch[1])) {
-        const target = `https://weylandai.com/${subdomainMatch[1]}${url.pathname === "/" ? "" : url.pathname}${url.search}`;
+        // Only the bare root path maps to the product's own marketing page.
+        // Any other path (an API route, or a customer-facing share link
+        // like PropX's real quote links at .../q/:id/:token) is already a
+        // fully-qualified route on the root domain and must be forwarded
+        // unprefixed, or it 404s. Fixed 2026-09-25 (depth audit) - same fix
+        // applied to src/lib/weyland-entry.js, kept in sync here since this
+        // file is currently the actually-deployed copy (weyland.worker.js
+        // has drifted from a fresh `npm run build` of src/worker-entry.js -
+        // rebuilding was not attempted in this pass, see repo notes).
+        const target = url.pathname === "/"
+          ? `https://weylandai.com/${subdomainMatch[1]}${url.search}`
+          : `https://weylandai.com${url.pathname}${url.search}`;
         return Response.redirect(target, 301);
       }
       if (request2.method === "GET" || request2.method === "HEAD") {
