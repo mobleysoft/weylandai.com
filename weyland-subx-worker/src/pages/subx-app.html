@@ -138,7 +138,7 @@
         </div>
         <div id="route-result"></div>
         <div class="note-card">
-          Honest scope note: the single-page extraction button below (<code>GET /api/hardware-schedule/session/:id/page/1</code>) always calls this server's own Anthropic credentials directly &mdash; it does not yet branch on the route selected above. If that credential isn't provisioned on this deployment, the button below will show a real error, not a silent hang. The route selector above genuinely governs a separate part of this pipeline (the SABP-bridge/queue path) and is wired here so you can set it for when that path is used.
+          Honest scope note: the single-page extraction button below (<code>GET /api/hardware-schedule/session/:id/page/1</code>) always calls this server's own Anthropic credentials directly if one is configured &mdash; it does not yet branch on the route selected above. This deployment has no Anthropic key provisioned (by permanent account decision, not an oversight), so in practice every real click here runs the embedded_gofaineat pipeline instead: OCR via weyland-ocr-worker plus structuring via the local Qwen3-8B bridge, no external LLM API call. Extraction accuracy on a real hardware-schedule sheet through that fallback is still unverified beyond a synthetic test case &mdash; that's the real open gap, not a missing-credential error. The route selector above genuinely governs a separate part of this pipeline (the SABP-bridge/queue path) and is wired here so you can set it for when that path is used.
         </div>
 
         <div class="actions-row">
