@@ -79,16 +79,23 @@ export function registerCpsCataloguesRoutes(router, { authenticate }) {
       return error4;
     try {
       const body = await request2.json();
-      const { manufacturer, title: title2, source_filename, version: version3, storage_path, page_count, file_size_bytes, source_hash } = body;
+      const { manufacturer, title: title2, source_filename, version: version3, storage_path, page_count, file_size_bytes, source_hash, source_url, price_effective_date } = body;
       if (!manufacturer || !title2) {
         return jsonResponse3({ error: "manufacturer and title are required" }, 400);
       }
+      // source_url/price_effective_date added 2026-09-29 - real citation
+      // trail (which live page this price book came from, and when its
+      // prices actually take effect), not fabricated if the caller
+      // doesn't have one. Optional: a manual staff upload may genuinely
+      // not have a URL (e.g. an emailed PDF); an honest NULL beats a
+      // guessed one.
       const catalogueId = source_hash ? source_hash.substring(0, 16) : crypto.randomUUID().replace(/-/g, "").substring(0, 16);
       const now = (/* @__PURE__ */ new Date()).toISOString();
       await env2.DB.prepare(`
         INSERT INTO catalogues (catalogue_id, source_filename, source_hash_sha256, file_size_bytes,
-                                page_count, manufacturer, title, version, ingested_at, ingested_by, storage_path)
-        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                                page_count, manufacturer, title, version, ingested_at, ingested_by, storage_path,
+                                source_url, price_effective_date)
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
       `).bind(
         catalogueId,
         source_filename || null,
@@ -100,7 +107,9 @@ export function registerCpsCataloguesRoutes(router, { authenticate }) {
         version3 || null,
         now,
         user.userId || user.id,
-        storage_path || null
+        storage_path || null,
+        source_url || null,
+        price_effective_date || null
       ).run();
       return jsonResponse3({ catalogue_id: catalogueId, message: "Catalogue created successfully" }, 201);
     } catch (err) {

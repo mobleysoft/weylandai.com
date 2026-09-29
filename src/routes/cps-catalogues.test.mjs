@@ -7,6 +7,7 @@ const authOk = async () => ({ user: { userId: "u1" } });
 const authFail = async () => ({ error: new Response("no", { status: 401 }) });
 
 function makeFakeDb({ catalogues = [], total = 0, catalogue = null, pages = [], mappingStats = [], batchResults = [] } = {}) {
+  const capturedBinds = [];
   const handlers = {
     async first() {
       if (sql.includes("SELECT COUNT(*) as total FROM catalogues")) return { total };
@@ -26,9 +27,10 @@ function makeFakeDb({ catalogues = [], total = 0, catalogue = null, pages = [], 
   };
   let sql = "";
   return {
+    capturedBinds,
     prepare(s) {
       sql = s;
-      return { bind: (...args) => handlers, ...handlers };
+      return { bind: (...args) => { capturedBinds.push({ sql, args }); return handlers; }, ...handlers };
     },
     async batch() {
       return batchResults;
@@ -96,6 +98,31 @@ test("POST /api/cps/catalogues: real happy path creates a catalogue with a deriv
   assert.equal(res.status, 201);
   const body = await res.json();
   assert.equal(body.catalogue_id, "abcdef0123456789");
+});
+
+test("POST /api/cps/catalogues: real source_url/price_effective_date persist when provided, real NULL when not", async () => {
+  const { router, env } = setup();
+  await router.handle(new Request("https://example.com/api/cps/catalogues", {
+    method: "POST",
+    body: JSON.stringify({
+      manufacturer: "Schlage", title: "L Series", source_hash: "abcdef0123456789abcdef",
+      source_url: "https://us.allegion.com/content/dam/schlage-l-series.pdf",
+      price_effective_date: "2026-06-01",
+    }),
+  }), env, {});
+  const insert = env.DB.capturedBinds.find((b) => b.sql.includes("INSERT INTO catalogues"));
+  assert.ok(insert, "expected an INSERT INTO catalogues call");
+  assert.equal(insert.args.at(-2), "https://us.allegion.com/content/dam/schlage-l-series.pdf");
+  assert.equal(insert.args.at(-1), "2026-06-01");
+
+  const { router: router2, env: env2 } = setup();
+  await router2.handle(new Request("https://example.com/api/cps/catalogues", {
+    method: "POST",
+    body: JSON.stringify({ manufacturer: "Schlage", title: "L Series" }),
+  }), env2, {});
+  const insertNoCitation = env2.DB.capturedBinds.find((b) => b.sql.includes("INSERT INTO catalogues"));
+  assert.equal(insertNoCitation.args.at(-2), null);
+  assert.equal(insertNoCitation.args.at(-1), null);
 });
 
 test("POST /api/cps/catalogues/:id/pages: missing pages array is a real 400", async () => {
