@@ -1,0 +1,41 @@
+{
+  "updated_at": "2026-09-05T19:16:20.538Z",
+  "documents": [
+    {
+      "filename": "buncombe-09-24-roof--028ff28d1296.pdf",
+      "seed_id": "buncombe-09-24-roof",
+      "sha256": "028ff28d1296a0ab063a9b3a6caccc011f5105a54025d7d181d2430967581ad7",
+      "source_url": "https://files-backend.assets.thrillshare.com/documents/asset/uploaded_file/3100/Bcs/66d7caf7-fb84-4e8d-983e-8a7509f77406/RFP_09.24-Bid_Tab.pdf",
+      "source_label": "Buncombe County Schools (NC) — RFP #09.24 Charles C. Bell ES Partial Roof Replacement, Bid Tabulation",
+      "bytes": 96719,
+      "fetched_at": "2026-09-05T19:16:15.907Z"
+    },
+    {
+      "filename": "hasd-19016-library-renovation--7319724135c0.pdf",
+      "seed_id": "hasd-19016-library-renovation",
+      "sha256": "7319724135c0cc71f6fdc683519f43d2ebd6e038c5ae2b05282e10180b09efef",
+      "source_url": "https://files-backend.assets.thrillshare.com/documents/asset/uploaded_file/5321/Hasd/17c7ef28-a901-4c09-9ced-bd600f618c30/Library_Classroom_Renovation_Project_Bid__Tall(1).pdf",
+      "source_label": "Hazleton Area School District (PA) — Library/Classroom Renovation Projects Bid Package #2, Bid Tabulation (SGA Project 19.016)",
+      "bytes": 177612,
+      "fetched_at": "2026-09-05T19:16:16.057Z"
+    },
+    {
+      "filename": "cumberland-dbhs-painting-2025--98ead8978cc0.pdf",
+      "seed_id": "cumberland-dbhs-painting-2025",
+      "sha256": "98ead8978cc0a862e354f3a8b4784e3ca24fc76efd68dce52919b3100e44f537",
+      "source_url": "https://files-backend.assets.thrillshare.com/documents/asset/uploaded_file/4929/Ccs/edfd167d-05b3-46a2-87c9-113193be402e/Bid-Tab-Exterior-Painting-at-DBHS-2025.pdf",
+      "source_label": "Cumberland County Schools (NC) — Exterior Painting Restoration, Douglas Byrd HS + two other schools, Bid Tabulation",
+      "bytes": 12810,
+      "fetched_at": "2026-09-05T19:16:16.117Z"
+    },
+    {
+      "filename": "berkeley-832-1201-king-softball--440c0b4bf7fd.pdf",
+      "seed_id": "berkeley-832-1201-king-softball",
+      "sha256": "440c0b4bf7fd6abe2342e9b892d12fbd8038396d8c0667340a2d3246b037960d",
+      "source_url": "https://www.berkeleyschools.net/wp-content/uploads/2012/06/8321201BidResults.pdf",
+      "source_label": "Berkeley Unified School District (CA) — 832.1201 King Softball Field, Bid Tabulation Form",
+      "bytes": 170045,
+      "fetched_at": "2026-09-05T19:16:16.698Z"
+    }
+  ]
+}

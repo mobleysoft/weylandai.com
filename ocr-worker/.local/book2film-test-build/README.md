@@ -1,0 +1,1 @@
+This folder contains the built output assets for the worker "weyland-ocr-worker" generated at 2026-09-07T21:28:20.887Z.

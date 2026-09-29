@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex,nofollow">
+  <meta name="description" content="Weyland investor diligence readiness, funding scenarios, and evidence register.">
+  <title>Financials / Weyland AI</title>
+  <link rel="stylesheet" href="/assets/financials.css?v=20260729-1">
+</head>
+<body>
+  <div class="grid-field" aria-hidden="true"></div>
+  <header class="masthead">
+    <a class="wordmark" href="/" aria-label="Weyland AI home"><b>W</b><span>WEYLAND<br>ARTIFICIAL INTELLIGENCE</span></a>
+    <nav><a href="/deck/">Deck</a><a href="/sightx/">SightX</a><a href="#manifest">Manifest</a></nav>
+    <span class="classification">PUBLIC SUMMARY / NOINDEX</span>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="hero-index">DILIGENCE CONTROL / 01</div>
+      <p class="eyebrow">Financial truth before financial theater</p>
+      <h1>Show the math.<br><em>Expose the gaps.</em></h1>
+      <p class="lede">A live, source-aware view of capitalization, runway, traction, market logic, and diligence readiness. Missing evidence stays visibly missing.</p>
+      <div class="hero-meta">
+        <span><small>AS OF</small><b data-as-of>Loading</b></span>
+        <span><small>EVIDENCE MODEL</small><b>Observed / Claimed / Assumed / Missing</b></span>
+        <span><small>DATA POLICY</small><b>Restricted records are never published here</b></span>
+      </div>
+      <div class="hero-mark" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
+    </section>
+
+    <section class="alert-strip" aria-label="Critical financial decision">
+      <span class="pulse"></span>
+      <b>OPEN DECISION</b>
+      <p>The live deck and bottoms-up model describe different rounds. Reconcile them before formal diligence.</p>
+      <a href="#funding">Inspect both models</a>
+    </section>
+
+    <section class="section" id="funding">
+      <header class="section-head">
+        <div><span>02 / CAPITAL PLAN</span><h2>Two asks.<br>One decision required.</h2></div>
+        <p>These models are displayed side by side because silently merging them would create false precision. Select either scenario to drive the runway calculator.</p>
+      </header>
+      <div class="scenario-grid" data-funding-models></div>
+
+      <div class="runway-lab">
+        <div class="runway-readout">
+          <span class="kicker">LIVE RUNWAY MODEL</span>
+          <strong data-runway-months>--</strong>
+          <p>months of runway</p>
+          <div class="runway-track"><i data-runway-track></i></div>
+          <small data-runway-note>Choose a scenario or change an input.</small>
+        </div>
+        <form class="runway-controls" onsubmit="return false">
+          <label><span>Raise</span><input data-calc="raise" type="number" min="0" step="50000"></label>
+          <label><span>Gross monthly burn</span><input data-calc="burn" type="number" min="0" step="5000"></label>
+          <label><span>Monthly revenue offset</span><input data-calc="revenue" type="number" min="0" step="5000" value="0"></label>
+          <label><span>Cash held as reserve</span><input data-calc="reserve" type="range" min="0" max="40" step="1"><output data-reserve-output>0%</output></label>
+        </form>
+        <div class="allocation" data-allocation></div>
+      </div>
+    </section>
+
+    <section class="section section-ink" id="capitalization">
+      <header class="section-head">
+        <div><span>03 / OWNERSHIP</span><h2>The cap table is a gate,<br>not an appendix.</h2></div>
+        <p data-cap-summary>Loading capitalization evidence...</p>
+      </header>
+      <div class="cap-layout">
+        <div class="empty-ledger">
+          <div class="empty-symbol">?</div>
+          <div><b>AUTHORITATIVE OWNERSHIP LEDGER NOT FOUND</b><p>Do not estimate founder or investor percentages from memory. Rebuild from signed issuance, financing, option, and debt records.</p></div>
+        </div>
+        <ol class="required-list" data-cap-required></ol>
+      </div>
+      <a class="download-primary" href="/financials/downloads/cap-table-template.csv">Download canonical cap table template</a>
+    </section>
+
+    <section class="section" id="traction">
+      <header class="section-head">
+        <div><span>04 / COMMERCIAL EVIDENCE</span><h2>Traction is a ledger,<br>not a collection of names.</h2></div>
+        <p>Every customer and pipeline assertion needs a date, amount, stage, owner, and primary record. The evidence state below is intentionally strict.</p>
+      </header>
+      <div class="metric-grid" data-traction></div>
+    </section>
+
+    <section class="section twin-section" id="market">
+      <div class="market-panel">
+        <header><span>05 / MARKET MODEL</span><h2>Bottom-up before broad.</h2></header>
+        <div class="market-number"><strong data-sam>--</strong><span>planning-assumption firms in initial SAM</span></div>
+        <div class="market-number"><strong data-acv>--</strong><span>assumed annual contract value</span></div>
+        <p class="warning" data-market-warning></p>
+        <div class="som-path" data-som></div>
+      </div>
+      <div class="moat-panel">
+        <header><span>06 / DEFENSIBILITY</span><h2>A moat must survive a test.</h2></header>
+        <div data-moat></div>
+      </div>
+    </section>
+
+    <section class="section" id="milestones">
+      <header class="section-head">
+        <div><span>07 / RUNWAY OUTPUT</span><h2>Capital buys milestones,<br>not time alone.</h2></div>
+        <p>The recovered hiring plan reaches seven people by month twelve. It remains a planning assumption until compensation, sequencing, and accountable owners are approved.</p>
+      </header>
+      <div class="hiring-band" data-hiring></div>
+      <div class="milestone-list" data-milestones></div>
+    </section>
+
+    <section class="section section-ink" id="manifest">
+      <header class="section-head">
+        <div><span>08 / DATA ROOM</span><h2>The diligence manifest.</h2></div>
+        <p>This public surface exposes readiness and summaries only. Formation records, signatures, contracts, account data, and personally identifying information belong in an authenticated data room.</p>
+      </header>
+      <div class="manifest-toolbar">
+        <div class="progress-ring" data-progress-ring><strong data-progress>--</strong><span>ready or draft</span></div>
+        <div class="filter-set" role="group" aria-label="Filter diligence artifacts">
+          <button class="active" data-filter="all">All</button>
+          <button data-filter="missing">Missing</button>
+          <button data-filter="draft">Draft</button>
+          <button data-filter="available">Available</button>
+        </div>
+      </div>
+      <div class="manifest" data-artifacts></div>
+      <div class="download-grid" data-downloads></div>
+    </section>
+  </main>
+
+  <footer>
+    <a class="wordmark" href="/"><b>W</b><span>WEYLAND<br>ARTIFICIAL INTELLIGENCE</span></a>
+    <p>Investor diligence should accelerate truth, not decorate uncertainty.</p>
+    <span>FINANCIALS / EVIDENCE REGISTER</span>
+  </footer>
+
+  <script type="module" src="/assets/financials.js?v=20260729-1"></script>
+</body>
+</html>

@@ -1,0 +1,96 @@
+<!-- Captured 2026-09-06 from the live deployed weyland.worker.js (which had
+     serve_investors hand-added post-build, never in this src/ tree or in
+     routes_manifest.json - build.py's regeneration deleted the route
+     outright until this was found and the deployed worker.js was restored
+     from git history). NOT currently wired into routes_manifest.json - do
+     not assume running build.py will pick this up. This file exists so
+     the real content is captured somewhere version-controlled; wiring it
+     back into the build (manifest entry + type "templated_with_nav",
+     {{NAV}} placeholder already present below) is real follow-up work,
+     not done here to keep this fix scoped to the regression it caused. -->
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#090a0d">
+  <title>Investors | WeylandAI</title>
+  <style>
+    :root{--bg:#090a0d;--panel:#121419;--line:#2c3139;--text:#edf0f1;--muted:#9299a3;--gold:#f0b800;--green:#61dfa0;--blue:#66d4ff;--purple:#a78bfa}
+    *{box-sizing:border-box}html,body{margin:0;min-height:100%;background:var(--bg);color:var(--text);font-family:"Avenir Next","Helvetica Neue",sans-serif}
+    body:before{content:"";position:fixed;inset:0;pointer-events:none;background:radial-gradient(circle at 80% 80%,rgba(102,212,255,.12),transparent 30rem),linear-gradient(rgba(255,255,255,.015) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.015) 1px,transparent 1px);background-size:auto,30px 30px,30px 30px}
+    .shell{position:relative;max-width:1000px;margin:auto;padding:20px clamp(16px,3vw,40px) 60px}
+    header{display:flex;align-items:center;justify-content:space-between;gap:15px;margin-bottom:24px}
+    .brand{display:flex;align-items:center;gap:12px;color:var(--text);text-decoration:none}
+    .mark{width:42px;height:42px;display:grid;place-items:center;background:var(--blue);color:var(--bg);font-weight:900}
+    .brand b{display:block;letter-spacing:.16em}
+    .brand small{display:block;color:var(--muted);font:700 9px/1.5 ui-monospace,monospace;letter-spacing:.11em}
+    .nav{display:flex;gap:8px;flex-wrap:wrap}
+    .nav a,.button{border:1px solid var(--line);border-radius:99px;padding:9px 14px;color:var(--text);text-decoration:none;background:transparent;font:750 10px/1 ui-monospace,monospace;letter-spacing:.06em;cursor:pointer;transition:all .2s}
+    .nav a:hover,.button:hover{border-color:var(--blue);color:var(--blue)}
+    .button.primary{background:var(--blue);border-color:var(--blue);color:var(--bg);font-weight:900}
+    .titlebar{text-align:center;margin:45px 0 50px}
+    .eyebrow{color:var(--blue);font:800 11px/1 ui-monospace,monospace;letter-spacing:.18em;text-transform:uppercase}
+    .titlebar h1{font-size:clamp(32px,4.5vw,52px);letter-spacing:-.04em;line-height:1.08;margin:14px 0}
+    .titlebar p{max-width:700px;color:var(--muted);line-height:1.6;margin:0 auto;font-size:16px}
+    section{margin-top:56px}
+    section h2{font-size:22px;margin:0 0 8px}
+    section > p{color:var(--muted);line-height:1.65;font-size:15px;max-width:680px}
+    .stack-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin-top:22px}
+    .stack-card{background:rgba(18,20,25,.92);border:1px solid var(--line);border-radius:14px;padding:18px 20px}
+    .stack-card .sc-name{font-size:16px;font-weight:800}
+    .stack-card .sc-desc{color:var(--muted);font-size:13px;line-height:1.5;margin-top:6px}
+    .stack-card .sc-price{margin-top:10px;font:800 13px ui-monospace,monospace;color:var(--blue)}
+    .fig-row{display:flex;flex-wrap:wrap;gap:24px;margin-top:22px}
+    .fig{border-left:2px solid var(--blue);padding-left:14px}
+    .fig strong{display:block;font-size:26px;font-weight:900}
+    .fig span{color:var(--muted);font:700 11px/1.6 ui-monospace,monospace;letter-spacing:.04em;text-transform:uppercase}
+    .note{margin-top:14px;color:var(--muted);font-size:13px;line-height:1.6;border-left:2px solid var(--line);padding-left:14px}
+  </style>
+</head>
+<body>
+  <div class="shell">
+    <header>
+      <a class="brand" href="/"><span class="mark">IX</span><span><b>WEYLANDAI</b><small>FOR INVESTORS</small></span></a>
+      <nav class="nav">{{NAV}}</nav>
+    </header>
+    <div class="titlebar">
+      <div class="eyebrow">FOR INVESTORS</div>
+      <h1>Construction bids, generated automatically.</h1>
+      <p>WeylandAI is a small, founder-led team building construction document automation: seven live products that take a project from RFP to submitted bid on one shared project record &mdash; HuntX finds the opportunity, SubX and TakeoffX read the drawings, CutsheetX matches real hardware, PropX drafts the proposal, SightX visualizes the result.</p>
+      <p style="margin-top:24px"><a class="button primary" href="mailto:hello@weylandai.com?subject=Investor%20Inquiry">EMAIL HELLO@WEYLANDAI.COM</a></p>
+    </div>
+
+    <section>
+      <h2>What's live today</h2>
+      <p>Every product below has a working page, a real Stripe price, and can be bought standalone or as the $2,000/mo SubConP bundle.</p>
+      <div class="stack-grid">
+        <div class="stack-card"><div class="sc-name">SightX</div><div class="sc-desc">Spatial project intelligence &amp; 3D walkthrough</div><div class="sc-price">$999/mo</div></div>
+        <div class="stack-card"><div class="sc-name">HuntX</div><div class="sc-desc">Live RFP &amp; permit opportunity crawler</div><div class="sc-price">$799/mo</div></div>
+        <div class="stack-card"><div class="sc-name">SubX</div><div class="sc-desc">Submittal &amp; door-hardware extraction</div><div class="sc-price">$599/mo</div></div>
+        <div class="stack-card"><div class="sc-name">TakeoffX</div><div class="sc-desc">Machine-vision quantity takeoff</div><div class="sc-price">$499/mo</div></div>
+        <div class="stack-card"><div class="sc-name">PropX</div><div class="sc-desc">Submittal-to-proposal generator</div><div class="sc-price">$299/mo</div></div>
+        <div class="stack-card"><div class="sc-name">MeetX</div><div class="sc-desc">Live avatars &amp; chat inside SightX</div><div class="sc-price">$299/mo</div></div>
+        <div class="stack-card"><div class="sc-name">CutsheetX</div><div class="sc-desc">Hardware product &amp; cut-sheet matching</div><div class="sc-price">$199/mo</div></div>
+      </div>
+    </section>
+
+    <section>
+      <h2>The technical bet</h2>
+      <p>TakeoffX's extraction runs on the customer's own Claude Code subscription through a downloadable bridge, not our API meter &mdash; no per-page inference cost on our side, and the customer's drawings never leave their machine except as the results they choose to send back. That's a real cost-structure difference from a per-seat SaaS tool billing every API call.</p>
+    </section>
+
+    <section>
+      <h2>Roadmap: reuse, not reinvention</h2>
+      <p>72 products are scoped across the full platform. Of those, 27 are direct extensions of a live product's existing engine &mdash; same document pipeline, one more document type &mdash; grouped into five packages: SubX Pro (8 extensions), SightX Pro (8), HuntX Pro (4), TakeoffX Pro (1), PropX Pro (1). The rest are genuinely new verticals, not yet built.</p>
+      <div class="fig-row">
+        <div class="fig"><strong>5</strong><span>Live core engines</span></div>
+        <div class="fig"><strong>27</strong><span>Scoped near-term extensions</span></div>
+        <div class="fig"><strong>72</strong><span>Full roadmap</span></div>
+      </div>
+    </section>
+
+    <p class="note">Early-stage: this page intentionally doesn't cite revenue, customer counts, or a valuation &mdash; ask directly and we'll give you the real numbers, not rounded ones.</p>
+  </div>
+</body>
+</html>

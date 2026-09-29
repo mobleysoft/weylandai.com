@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WeylandAI - Sovereign Sigil Renders</title>
+    <style>
+        body {
+            background-color: #050505;
+            color: #fff;
+            font-family: 'Inter', serif;
+            margin: 0;
+            padding: 50px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        h1 {
+            font-size: 24px;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            color: #fff;
+            margin-bottom: 20px;
+        }
+        .manifesto {
+            max-width: 800px;
+            text-align: center;
+            color: #888;
+            line-height: 1.6;
+            margin-bottom: 60px;
+            font-size: 14px;
+        }
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 50px;
+            width: 100%;
+            max-width: 1200px;
+        }
+        .card {
+            background: #0a0a0a;
+            border: 1px solid #222;
+            padding: 50px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            transition: all 0.3s ease;
+        }
+        .card:hover {
+            border-color: #fff;
+            background: #000;
+        }
+        .card h2 {
+            font-size: 14px;
+            color: #fff;
+            margin-top: 40px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+        .card p {
+            font-size: 11px;
+            color: #666;
+            text-align: center;
+            margin-top: 10px;
+            line-height: 1.4;
+        }
+        .sigil-img {
+            width: 150px;
+            height: 150px;
+            object-fit: contain;
+            transition: all 0.5s ease;
+            filter: drop-shadow(0 0 10px rgba(255,255,255,0.2));
+        }
+        .card:hover .sigil-img {
+            transform: scale(1.05);
+            filter: drop-shadow(0 0 20px rgba(255,255,255,0.5));
+        }
+    </style>
+</head>
+<body>
+    <h1>The Sovereign Inference Renderings</h1>
+    <div class="manifesto">
+        These sigils were rendered locally by the MLX Sovereign Visual Cortex without external API calls. They adhere to the Darkworks axioms: Multi-Stable Pareidolia, Scale Invariance, and Bilateral Brutalism.
+    </div>
+    
+    <div class="grid">
+        <div class="card">
+            <img src="/Users/johnmobley/mascom/visual_cortex_output/sigil_01_trident.png" class="sigil-img" alt="The Trident" />
+            <h2>01. The Trident</h2>
+            <p>A 'W' that doubles as an apex spearhead or a crown. Aggressive, forward-moving geometry.</p>
+        </div>
+        
+        <div class="card">
+            <img src="/Users/johnmobley/mascom/visual_cortex_output/sigil_02_crest.png" class="sigil-img" alt="The Crest" />
+            <h2>02. The Crest</h2>
+            <p>A 'W' bound by a rigid top-bar. It evokes the silhouette of an automotive emblem or a military crest.</p>
+        </div>
+
+        <div class="card">
+            <img src="/Users/johnmobley/mascom/visual_cortex_output/sigil_03_winged.png" class="sigil-img" alt="The Winged Intellect" />
+            <h2>03. The Winged Intellect</h2>
+            <p>A 'W' that plays with negative space to reveal a mechanical owl or a set of spread wings.</p>
+        </div>
+    </div>
+</body>
+</html>

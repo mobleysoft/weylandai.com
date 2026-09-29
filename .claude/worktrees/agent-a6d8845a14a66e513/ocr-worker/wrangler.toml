@@ -1,0 +1,15 @@
+name = "weyland-ocr-worker"
+main = "index.js"
+compatibility_date = "2025-10-31"
+compatibility_flags = ["nodejs_compat"]
+
+# .wasm files use Cloudflare's default handling: compiled to a
+# WebAssembly.Module at DEPLOY time, not at request time. Workers disallow
+# WASM code generation from raw bytes at runtime (V8's
+# AllowWasmCodeGenerationCallback is off here) - confirmed by testing, not
+# assumed. The trained-data file isn't WASM, just a binary blob the OCR
+# engine reads as raw bytes, so it stays a Data import.
+[[rules]]
+type = "Data"
+globs = ["assets/*.bin"]
+fallthrough = true
