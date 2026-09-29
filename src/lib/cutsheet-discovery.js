@@ -125,6 +125,138 @@ export async function storeInTempStorage(buffer, hash, env2) {
   console.log(`[PDF Validator] Stored in temp: ${key}`);
   return key;
 }
+// analyzePdfWithGofaineat: real, no-LLM-at-all validation route, added
+// 2026-09-29 to replace analyzePdfWithClaude below as the default. That
+// function required ANTHROPIC_API_KEY - correctly never provisioned for
+// this venture by standing policy - so it always returned
+// {analyzed: false}, and calculateMatchScore() hard-codes `return 0`
+// whenever `!metadata.analyzed`. Every discovered candidate PDF scored
+// exactly 0 as a direct result, regardless of how good a match it
+// actually was - this was the real, single, universal cause of "0%
+// accuracy" on the discovery/validation pipeline.
+//
+// Per direct instruction: this should not need an LLM bridge call either
+// (Qwen included) - "we just embed tiny neural networks and classifiers."
+// This is exactly that: OCR the downloaded PDF via the already-deployed
+// weyland-ocr-worker (env2.OCR_SERVICE, PDFium + tesseract-wasm, no
+// external API, no secrets to provision), then run real deterministic
+// pattern matching against the OCR'd text using the SAME manufacturer/
+// model-parsing utilities already built for this exact domain in
+// cps-matching.js (normalizeManufacturerKey, generateSearchVariants) -
+// these were sitting unused for this purpose. Populates the identical
+// metadata shape analyzePdfWithClaude produced (manufacturer,
+// modelNumbers, productCategory, documentType, matchesExpectedProduct,
+// matchConfidence) so the existing, already-tested calculateMatchScore()
+// below needs zero changes - it just gets real, non-zero inputs now.
+const CATEGORY_KEYWORDS = {
+  hinge: ["hinge", "pivot", "ball bearing"],
+  lock: ["lock", "lockset", "latch", "mortise", "cylindrical lock"],
+  closer: ["closer", "door closer"],
+  exit_device: ["exit device", "panic", "crash bar", "push bar"],
+  weatherstrip: ["weatherstrip", "seal", "gasket", "threshold", "weather seal"],
+  kick_plate: ["kick plate", "protection plate", "armor plate"],
+};
+
+function classifyDocumentType(text) {
+  const lower = text.toLowerCase();
+  if (/\bcut\s*sheet\b/.test(lower)) return "cut_sheet";
+  if (/\bspec(?:ification)?\s*sheet\b|\bsubmittal data\b/.test(lower)) return "spec_sheet";
+  if (/\binstallation\s+(?:instructions|guide)\b/.test(lower)) return "installation_guide";
+  const priceMatches = lower.match(/\$\s?\d/g) || [];
+  const modelLikeMatches = lower.match(/\b[a-z]{1,4}\d{2,5}[a-z]{0,2}\b/g) || [];
+  if (priceMatches.length >= 3 && modelLikeMatches.length >= 3) return "catalog_page";
+  return "unknown";
+}
+
+function classifyCategory(text) {
+  const lower = text.toLowerCase();
+  let best = null;
+  let bestCount = 0;
+  for (const [category, keywords] of Object.entries(CATEGORY_KEYWORDS)) {
+    const count = keywords.reduce((n, kw) => n + (lower.includes(kw) ? 1 : 0), 0);
+    if (count > bestCount) {
+      best = category;
+      bestCount = count;
+    }
+  }
+  return best;
+}
+
+function manufacturerAppearsIn(text, manufacturer) {
+  if (!manufacturer) return null;
+  const lower = text.toLowerCase();
+  const raw = manufacturer.toLowerCase().trim();
+  if (raw && lower.includes(raw)) return manufacturer;
+  // normalizeManufacturerKey handles common 3-letter schedule codes (SCH,
+  // IVE, VD, ...) - check the canonical name too since a real cut sheet
+  // almost always spells the manufacturer out in full, not the code a
+  // hardware schedule abbreviated it to.
+  const canonical = normalizeManufacturerKey(manufacturer);
+  if (canonical && canonical !== "unknown" && lower.includes(canonical)) return canonical;
+  return null;
+}
+
+export async function analyzePdfWithGofaineat(buffer, component, env2) {
+  if (!env2.OCR_SERVICE) {
+    return { analyzed: false, reason: "OCR_SERVICE not configured" };
+  }
+  let ocrResult;
+  try {
+    const resp = await env2.OCR_SERVICE.fetch("https://weyland-ocr-worker/extract-text", {
+      method: "POST",
+      headers: { "X-Page-Range": "1-4" },
+      body: buffer,
+    });
+    if (!resp.ok) {
+      return { analyzed: false, reason: `OCR error: ${resp.status}` };
+    }
+    ocrResult = await resp.json();
+  } catch (e) {
+    return { analyzed: false, reason: `OCR request failed: ${e.message}` };
+  }
+  const text = (ocrResult.pages || []).map((p) => p.text || "").join("\n");
+  if (!text.trim()) {
+    return { analyzed: false, reason: "OCR produced no text" };
+  }
+
+  const manufacturerMatch = manufacturerAppearsIn(text, component.manufacturer);
+  const modelVariants = generateSearchVariants(
+    component.model || component.catalog_number || "",
+    component.manufacturer || ""
+  );
+  const foundModel = modelVariants.find((v) => {
+    // Whole-token match against the OCR text, not a bare substring - a
+    // 2-3 character model fragment (real variants can be this short,
+    // see generateSearchVariants' own >=2-length filter) would otherwise
+    // false-positive inside unrelated longer numbers/words constantly.
+    const escaped = v.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+    return new RegExp(`(?:^|[^A-Z0-9])${escaped}(?:[^A-Z0-9]|$)`, "i").test(text);
+  });
+  const documentType = classifyDocumentType(text);
+  const productCategory = classifyCategory(text);
+
+  const metadata = {
+    analyzed: true,
+    documentType,
+    manufacturer: manufacturerMatch,
+    modelNumbers: foundModel ? [foundModel] : [],
+    productCategory,
+    matchesExpectedProduct: Boolean(manufacturerMatch) && Boolean(foundModel),
+    matchConfidence: manufacturerMatch && foundModel ? 0.85 : manufacturerMatch || foundModel ? 0.4 : 0.1,
+    matchReason: manufacturerMatch && foundModel
+      ? `Found manufacturer "${manufacturerMatch}" and model variant "${foundModel}" in OCR'd text`
+      : manufacturerMatch
+      ? `Found manufacturer "${manufacturerMatch}" but no model-number variant matched`
+      : foundModel
+      ? `Found model variant "${foundModel}" but manufacturer not confirmed in text`
+      : "Neither manufacturer nor model confirmed in OCR'd text",
+    extractionRoute: "embedded_gofaineat",
+    ocrTextLength: text.length,
+  };
+  console.log(`[PDF Validator] gofaineat analysis complete: ${metadata.matchesExpectedProduct ? "MATCH" : "NO MATCH"} (${metadata.matchConfidence})`);
+  return metadata;
+}
+
 export async function analyzePdfWithClaude(buffer, component, env2) {
   if (!env2.ANTHROPIC_API_KEY) {
     console.warn("[PDF Validator] No ANTHROPIC_API_KEY, skipping Claude analysis");
@@ -327,7 +459,15 @@ export async function validatePdf(url, component, env2) {
   } catch (storageError) {
     console.error("[PDF Validator] Storage error:", storageError);
   }
-  const metadata = await analyzePdfWithClaude(download.buffer, component, env2);
+  // gofaineat (OCR + deterministic classifier) is the real default - see
+  // analyzePdfWithGofaineat's own comment for why analyzePdfWithClaude
+  // always scored 0. Falls through to the Claude route only if a caller's
+  // env explicitly opts in (WEYLAND_PDF_VALIDATION_ROUTE="claude") AND has
+  // a real ANTHROPIC_API_KEY - neither is true for this venture today, so
+  // this is a real behavior change for every caller, not a flag nobody sets.
+  const metadata = env2.WEYLAND_PDF_VALIDATION_ROUTE === "claude"
+    ? await analyzePdfWithClaude(download.buffer, component, env2)
+    : await analyzePdfWithGofaineat(download.buffer, component, env2);
   const matchScore = calculateMatchScore(metadata, component);
   const elapsed = Date.now() - startTime;
   console.log(`[PDF Validator] Validation complete in ${elapsed}ms - Score: ${matchScore}`);

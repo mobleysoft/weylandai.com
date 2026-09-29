@@ -9,6 +9,7 @@ import {
   checkDuplicate,
   storeInTempStorage,
   analyzePdfWithClaude,
+  analyzePdfWithGofaineat,
   calculateMatchScore,
   validatePdf,
   validateCandidates,
@@ -215,6 +216,58 @@ test("analyzePdfWithClaude: real happy path parses the JSON block from Claude's 
   } finally {
     restore();
   }
+});
+
+// --- analyzePdfWithGofaineat ---
+
+function fakeOcrService(pages) {
+  return { fetch: async () => ({ ok: true, json: async () => ({ pages }) }) };
+}
+
+test("analyzePdfWithGofaineat: real behavior when OCR_SERVICE is not configured", async () => {
+  const result = await analyzePdfWithGofaineat(new ArrayBuffer(4), {}, {});
+  assert.equal(result.analyzed, false);
+  assert.equal(result.reason, "OCR_SERVICE not configured");
+});
+
+test("analyzePdfWithGofaineat: real match when both manufacturer and model appear in OCR'd text, no LLM call involved", async () => {
+  const env2 = {
+    OCR_SERVICE: fakeOcrService([
+      { page: 1, text: "Schlage L9050 Office/Entry Mortise Lock\nCUT SHEET\nANSI/BHMA Grade 1, Heavy Duty Commercial" },
+    ]),
+  };
+  const result = await analyzePdfWithGofaineat(new ArrayBuffer(4), { manufacturer: "Schlage", model: "L9050" }, env2);
+  assert.equal(result.analyzed, true);
+  assert.equal(result.extractionRoute, "embedded_gofaineat");
+  assert.equal(result.documentType, "cut_sheet");
+  assert.equal(result.manufacturer, "Schlage");
+  assert.deepEqual(result.modelNumbers, ["L9050"]);
+  assert.equal(result.matchesExpectedProduct, true);
+  assert.ok(result.matchConfidence > 0.5);
+});
+
+test("analyzePdfWithGofaineat: real no-match when neither manufacturer nor model appear in OCR'd text", async () => {
+  const env2 = { OCR_SERVICE: fakeOcrService([{ page: 1, text: "Von Duprin 98 Series Rim Exit Device" }]) };
+  const result = await analyzePdfWithGofaineat(new ArrayBuffer(4), { manufacturer: "Schlage", model: "L9050" }, env2);
+  assert.equal(result.analyzed, true);
+  assert.equal(result.matchesExpectedProduct, false);
+  assert.ok(result.matchConfidence < 0.5);
+});
+
+test("analyzePdfWithGofaineat: a short model fragment doesn't false-positive against unrelated longer numbers", async () => {
+  // "25" is a real Von Duprin model (see PRODUCT_DATABASE in
+  // product-database.js) - a naive substring check would match it inside
+  // "125-page", "$2500", etc. The whole-token boundary regex must not.
+  const env2 = { OCR_SERVICE: fakeOcrService([{ page: 1, text: "Total price: $12500.00, part 125-A on page 25000" }]) };
+  const result = await analyzePdfWithGofaineat(new ArrayBuffer(4), { manufacturer: "Von Duprin", model: "25" }, env2);
+  assert.equal(result.modelNumbers.length, 0);
+});
+
+test("analyzePdfWithGofaineat: real failure when OCR produces no text", async () => {
+  const env2 = { OCR_SERVICE: fakeOcrService([{ page: 1, text: "" }]) };
+  const result = await analyzePdfWithGofaineat(new ArrayBuffer(4), { manufacturer: "Schlage", model: "L9050" }, env2);
+  assert.equal(result.analyzed, false);
+  assert.equal(result.reason, "OCR produced no text");
 });
 
 // --- calculateMatchScore ---
