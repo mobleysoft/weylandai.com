@@ -53,6 +53,41 @@ test("resolveCataloguePrices(): real exact tokenized match against a catalogue r
   assert.equal(results[0].finish_matched, true);
 });
 
+test("resolveCataloguePrices(): BEA components match a catalogue row that carries the real 10-series prefix the schedule dropped", async () => {
+  const db = makeFakeDb({
+    aliases: [{ alias: "BEA", manufacturer_id: "mfr-bea" }],
+    variants: [{
+      variant_id: "v-bea1", product_id: "p-bea1", full_model_number: "10BR3X",
+      finish_code: null, finish_description: null, unit_price: 153.93, list_price: 153.93,
+      price_uom: null, currency: "USD", catalog_section: null, catalog_page: null,
+      price_effective_date: null, manufacturer_id: "mfr-bea",
+    }],
+  });
+  const results = await resolveCataloguePrices({ DB: db }, [
+    { manufacturer: "BEA", model: "BR3X" },
+  ]);
+  assert.equal(results.length, 1);
+  assert.equal(results[0].price, 153.93);
+  assert.equal(results[0].matched_model, "10BR3X");
+  assert.equal(results[0].method, "catalogue_exact");
+});
+
+test("resolveCataloguePrices(): a non-BEA manufacturer's bare model does NOT get the BEA prefix treatment", async () => {
+  const db = makeFakeDb({
+    aliases: [{ alias: "SCHLAGE", manufacturer_id: "mfr-schlage" }],
+    variants: [{
+      variant_id: "v-s1", product_id: "p-s1", full_model_number: "10BR3X",
+      finish_code: null, finish_description: null, unit_price: 999, list_price: 999,
+      price_uom: null, currency: "USD", catalog_section: null, catalog_page: null,
+      price_effective_date: null, manufacturer_id: "mfr-schlage",
+    }],
+  });
+  const results = await resolveCataloguePrices({ DB: db }, [
+    { manufacturer: "SCHLAGE", model: "BR3X" },
+  ]);
+  assert.equal(results[0], null);
+});
+
 test("resolveCataloguePrices(): unknown manufacturer alias yields a real null (no match), not a throw", async () => {
   const db = makeFakeDb({ aliases: [], variants: [] });
   const results = await resolveCataloguePrices({ DB: db }, [{ manufacturer: "UNKNOWN BRAND", model: "X1" }]);

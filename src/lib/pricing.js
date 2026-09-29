@@ -339,7 +339,32 @@ async function resolveCataloguePrices(env2, components) {
       return e.uom === "FT" && compLenFt != null;
     };
     let hit = null, method = null, pool3 = null;
-    const exactRows = (byJoined[compJoined] || []).filter((e) => e.row.manufacturer_id === mfrId && uomOk(e));
+    // BEA real-catalogue quirk, found 2026-09-29 tracing real customer
+    // components that had a clean manufacturer+model extraction (BR3X,
+    // FLATSCAN-PR) but never priced: BEA's own price book keys every real
+    // variant with a 2-digit series prefix (10BR3X, 10LZRFLATSCAN...) that
+    // hardware schedules/submittals commonly drop. tokMatches() only
+    // tolerates a SUFFIX difference (one string starting with the other),
+    // not a prepended prefix, so "BR3X" never matched "10BR3X" even though
+    // it's the same real product. BEA_SERIES_PREFIXES are the actual
+    // distinct prefixes present in this venture's own real catalogue data
+    // (queried directly, not guessed) - tried only for the exact-match
+    // tier (byJoined hash lookup, the highest-confidence/lowest-risk tier)
+    // so this can't introduce a new fuzzy false-positive for BEA or any
+    // other manufacturer; if no prefix yields an exact hit, behavior is
+    // unchanged and falls through to the existing base_model/variant_floor
+    // tiers using the bare (unprefixed) tokens as before.
+    const BEA_SERIES_PREFIXES = ["10", "70", "20", "35", "50", "15", "41", "30"];
+    let exactRows = (byJoined[compJoined] || []).filter((e) => e.row.manufacturer_id === mfrId && uomOk(e));
+    if (!exactRows.length && mfrId === "mfr-bea" && !BEA_SERIES_PREFIXES.some((p) => compJoined.startsWith(p))) {
+      for (const prefix of BEA_SERIES_PREFIXES) {
+        const prefixed = (byJoined[prefix + compJoined] || []).filter((e) => e.row.manufacturer_id === mfrId && uomOk(e));
+        if (prefixed.length) {
+          exactRows = prefixed;
+          break;
+        }
+      }
+    }
     if (exactRows.length) {
       pool3 = exactRows;
       hit = rank(exactRows, mfrId, finish, compTokSet)[0];
