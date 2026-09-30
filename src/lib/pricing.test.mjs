@@ -53,6 +53,47 @@ test("resolveCataloguePrices(): real exact tokenized match against a catalogue r
   assert.equal(results[0].finish_matched, true);
 });
 
+test("resolveCataloguePrices(): a bracket-style finish-code catalogue row (real Schlage ND80 convention) matches a bare component model", async () => {
+  const db = makeFakeDb({
+    aliases: [{ alias: "SCH", manufacturer_id: "mfr-schlage" }],
+    variants: [{
+      variant_id: "v-nd80", product_id: "p-nd80", full_model_number: "ND80 [626]",
+      finish_code: "626", finish_description: null, unit_price: 1010, list_price: 1010,
+      price_uom: null, currency: "USD", catalog_section: null, catalog_page: null,
+      price_effective_date: null, manufacturer_id: "mfr-schlage",
+    }],
+  });
+  const results = await resolveCataloguePrices({ DB: db }, [
+    { manufacturer: "SCH", model: "ND80", finish: "626" },
+  ]);
+  assert.equal(results[0].price, 1010);
+  assert.equal(results[0].finish_matched, true);
+});
+
+test("resolveCataloguePrices(): a Tier-differentiated bracket (genuinely different real prices per tier) is left unmatchable, not floated in as a false match", async () => {
+  const db = makeFakeDb({
+    aliases: [{ alias: "TEST", manufacturer_id: "mfr-test" }],
+    variants: [
+      {
+        variant_id: "v-tier1", product_id: "p-t", full_model_number: "250DT-P177 [Tier 1]",
+        finish_code: "", finish_description: null, unit_price: 50, list_price: 50,
+        price_uom: null, currency: "USD", catalog_section: null, catalog_page: null,
+        price_effective_date: null, manufacturer_id: "mfr-test",
+      },
+      {
+        variant_id: "v-tier2", product_id: "p-t", full_model_number: "250DT-P177 [Tier 2]",
+        finish_code: "", finish_description: null, unit_price: 90, list_price: 90,
+        price_uom: null, currency: "USD", catalog_section: null, catalog_page: null,
+        price_effective_date: null, manufacturer_id: "mfr-test",
+      },
+    ],
+  });
+  const results = await resolveCataloguePrices({ DB: db }, [
+    { manufacturer: "TEST", model: "250DT-P177" },
+  ]);
+  assert.equal(results[0], null);
+});
+
 test("resolveCataloguePrices(): BEA components match a catalogue row that carries the real 10-series prefix the schedule dropped", async () => {
   const db = makeFakeDb({
     aliases: [{ alias: "BEA", manufacturer_id: "mfr-bea" }],

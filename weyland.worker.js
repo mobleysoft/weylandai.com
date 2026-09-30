@@ -4466,7 +4466,12 @@ async function resolveCataloguePrices2(env2, components) {
     `).all().catch(() => null);
   }
   const catRows = catRes?.results || [];
-  const tokenize2 = (s) => String(s || "").toUpperCase().replace(/(\d+(?:\.\d+)?)["”]?\s*X\s*(\d+(?:\.\d+)?)["”]?/g, "$1X$2").split(/[\s\-\/,()]+/).filter((t) => t.length > 0);
+  const FINISH_BRACKET_PART = /^(?:ROSE\s+)?\d{3}[A-Z]{0,2}$/;
+  const unwrapFinishBrackets = (s) => s.replace(/\[([^\]]*)\]/g, (whole, inner) => {
+    const parts = inner.split(/[,\/]/).map((p) => p.trim()).filter(Boolean);
+    return parts.length && parts.every((p) => FINISH_BRACKET_PART.test(p)) ? ` ${inner} ` : whole;
+  });
+  const tokenize2 = (s) => unwrapFinishBrackets(String(s || "").toUpperCase()).replace(/(\d+(?:\.\d+)?)["”]?\s*X\s*(\d+(?:\.\d+)?)["”]?/g, "$1X$2").split(/[\s\-\/,()]+/).filter((t) => t.length > 0);
   const BARE_FINISH_ANCHOR_OK = /* @__PURE__ */ new Set(["mfr-ngp", "mfr-zero"]);
   const dimShaped = (t) => /^\d+(?:\.\d+)?X\d+(?:\.\d+)?$/.test(t) || t.includes('"');
   const finishShaped = (t) => /^6\d{2}[A-Z]?$/.test(t) || /^US\d+[A-Z]?$/.test(t) || t === "USP" || /^SP\d+$/.test(t) || t === "NRP" || t === "BLK" || t === "NONE";
@@ -4515,7 +4520,8 @@ async function resolveCataloguePrices2(env2, components) {
     if (finishShaped(anchor) && !BARE_FINISH_ANCHOR_OK.has(row.manufacturer_id))
       continue;
     const joined = toks.join("");
-    const entry = { row, toks, joined, anchor, uom: rowUom(row) };
+    const hasUnsafeBracket = /\[/.test(unwrapFinishBrackets(String(row.full_model_number || "").toUpperCase()));
+    const entry = { row, toks, joined, anchor, uom: rowUom(row), hasUnsafeBracket };
     entries.push(entry);
     (byJoined[joined] = byJoined[joined] || []).push(entry);
   }
@@ -4590,7 +4596,7 @@ async function resolveCataloguePrices2(env2, components) {
     }
     if (!hit) {
       const compAnchor = strongestTok(compToks);
-      const covered = scoped.filter((e) => uomOk(e) && compToks.every((t) => tokMatches(t, e.toks)) && tokMatches(compAnchor, e.toks));
+      const covered = scoped.filter((e) => uomOk(e) && !e.hasUnsafeBracket && compToks.every((t) => tokMatches(t, e.toks)) && tokMatches(compAnchor, e.toks));
       if (covered.length) {
         pool3 = covered;
         hit = rank(covered, mfrId, finish, compTokSet)[0];
