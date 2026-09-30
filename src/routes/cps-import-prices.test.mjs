@@ -1,7 +1,7 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
 import { NativeRouter } from "../lib/router.js";
-import { registerCpsImportPricesRoutes } from "./cps-import-prices.js";
+import { registerCpsImportPricesRoutes, importPriceVariants } from "./cps-import-prices.js";
 
 const authCpsOk = async () => ({ user: { userId: "u1" } });
 const authCpsFail = async () => ({ error: new Response("no", { status: 401 }) });
@@ -97,4 +97,37 @@ test("POST /api/cps/import-prices: real scrubModelTokens normalization strips a 
   await res.json();
   const insertVariant = db.runs.find((r) => r.sql.includes("INSERT INTO product_variants"));
   assert.equal(insertVariant.binds[2], "L9080 06");
+});
+
+test("importPriceVariants(): a real sourceCatalogueId is persisted on INSERT - the citation link the original route silently dropped", async () => {
+  const db = makeFakeDb({ existingProduct: { id: "prod-1" }, existingVariant: null });
+  const result = await importPriceVariants(
+    { DB: db },
+    [{ product_id: "prod-1", full_model_number: "L9080 06", list_price: 500 }],
+    "cat-schlage-20260930"
+  );
+  assert.equal(result.imported, 1);
+  const insertVariant = db.runs.find((r) => r.sql.includes("INSERT INTO product_variants"));
+  assert.ok(insertVariant.sql.includes("source_catalogue_id"));
+  assert.ok(insertVariant.binds.includes("cat-schlage-20260930"));
+});
+
+test("importPriceVariants(): a real sourceCatalogueId is persisted on UPDATE too", async () => {
+  const db = makeFakeDb({ existingProduct: { id: "prod-1" }, existingVariant: { id: "var-1" } });
+  await importPriceVariants(
+    { DB: db },
+    [{ id: "var-1", product_id: "prod-1", full_model_number: "L9080 06", list_price: 550 }],
+    "cat-schlage-20260930"
+  );
+  const updateVariant = db.runs.find((r) => r.sql.includes("UPDATE product_variants"));
+  assert.ok(updateVariant.sql.includes("source_catalogue_id"));
+  assert.ok(updateVariant.binds.includes("cat-schlage-20260930"));
+});
+
+test("importPriceVariants(): omitting sourceCatalogueId (existing manual callers) still works, binds null", async () => {
+  const db = makeFakeDb({ existingProduct: { id: "prod-1" }, existingVariant: null });
+  const result = await importPriceVariants({ DB: db }, [{ product_id: "prod-1", full_model_number: "L9080 06", list_price: 500 }]);
+  assert.equal(result.imported, 1);
+  const insertVariant = db.runs.find((r) => r.sql.includes("INSERT INTO product_variants"));
+  assert.ok(insertVariant.binds.includes(null));
 });

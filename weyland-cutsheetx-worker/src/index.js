@@ -99,6 +99,7 @@ import { registerCpsMappingsRoutes } from "./routes/cps-mappings.js";
 import { registerCpsQueueRoutes } from "./routes/cps-queue.js";
 import { registerCpsAdminRoutes } from "./routes/cps-admin.js";
 import { registerCpsImportPricesRoutes } from "./routes/cps-import-prices.js";
+import { registerCpsPriceCandidatesRoutes } from "./routes/cps-price-candidates.js";
 import { registerCpsPageRenderRoutes } from "./routes/cps-page-render.js";
 import { registerCutSheetMatchRoutes } from "./routes/cut-sheet-match.js";
 import { registerCutSheetDocumentsRoutes } from "./routes/cut-sheet-documents.js";
@@ -137,6 +138,7 @@ registerCpsMappingsRoutes(router, { authenticate });
 registerCpsQueueRoutes(router, { authenticate });
 registerCpsAdminRoutes(router, { authenticate });
 registerCpsImportPricesRoutes(router, { authenticateCps });
+registerCpsPriceCandidatesRoutes(router, { authenticate });
 registerCpsPageRenderRoutes(router, { authenticate, PDFDocument });
 
 registerCutSheetMatchRoutes(router, { authenticate, requireProductAccess });

@@ -22,17 +22,21 @@ function scrubModelTokens(text) {
   return text.split(/\s+/).filter((t) => t && !/^(None|null|NULL|undefined)$/.test(t)).join(" ");
 }
 
-export function registerCpsImportPricesRoutes(router, { authenticateCps }) {
-router.post("/api/cps/import-prices", async (request2, env2) => {
-  const { error: error4, user } = await authenticateCps(request2, env2);
-  if (error4)
-    return error4;
-  try {
-    const body = await request2.json();
-    const { variants } = body;
-    if (!Array.isArray(variants) || variants.length === 0) {
-      return jsonResponse3({ error: "variants array required" }, 400);
-    }
+// importPriceVariants: extracted 2026-09-30 from this route's own inline
+// upsert loop so the new catalogue-price-candidates "promote" flow
+// (src/routes/cps-price-candidates.js) can reuse the exact same
+// dedup/auto-create-product/price_uom-migration-fallback logic instead of
+// re-deriving it. Zero behavior change to the existing route below, which
+// now just calls this with its request body's `variants`.
+//
+// sourceCatalogueId is new (optional) - the original route never set
+// product_variants.source_catalogue_id at all, silently dropping the
+// citation link even though the column has existed since this session's
+// earlier catalogue-citation work (1f3c6d1). Manual callers of
+// /api/cps/import-prices simply omit it and get the old behavior;
+// callers that DO have a real catalogue_id (the promote flow always does)
+// get the citation persisted.
+export async function importPriceVariants(env2, variants, sourceCatalogueId = null) {
     let imported = 0;
     let updated = 0;
     let productsCreated = 0;
@@ -111,6 +115,7 @@ router.post("/api/cps/import-prices", async (request2, env2) => {
                 stock_status = COALESCE(?, stock_status),
                 lead_time_weeks = COALESCE(?, lead_time_weeks),
                 price_uom = ?,
+                source_catalogue_id = COALESCE(?, source_catalogue_id),
                 active = 1,
                 updated_at = datetime('now')
             WHERE id = ?
@@ -122,6 +127,7 @@ router.post("/api/cps/import-prices", async (request2, env2) => {
             v.stock_status ?? null,
             v.lead_time_weeks ?? null,
             priceUom,
+            sourceCatalogueId,
             existing.id
           ).run();
         } catch (uomErr) {
@@ -135,6 +141,7 @@ router.post("/api/cps/import-prices", async (request2, env2) => {
                 finish_description = COALESCE(?, finish_description),
                 stock_status = COALESCE(?, stock_status),
                 lead_time_weeks = COALESCE(?, lead_time_weeks),
+                source_catalogue_id = COALESCE(?, source_catalogue_id),
                 active = 1,
                 updated_at = datetime('now')
             WHERE id = ?
@@ -145,6 +152,7 @@ router.post("/api/cps/import-prices", async (request2, env2) => {
             v.finish_description ?? null,
             v.stock_status ?? null,
             v.lead_time_weeks ?? null,
+            sourceCatalogueId,
             existing.id
           ).run();
         }
@@ -155,7 +163,30 @@ router.post("/api/cps/import-prices", async (request2, env2) => {
             INSERT INTO product_variants
             (id, product_id, full_model_number, manufacturer_part_number,
              finish_code, finish_description, list_price, unit_price,
-             stock_status, lead_time_weeks, price_uom, active, created_at, updated_at)
+             stock_status, lead_time_weeks, price_uom, source_catalogue_id, active, created_at, updated_at)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 1, datetime('now'), datetime('now'))
+          `).bind(
+            id,
+            v.product_id,
+            v.full_model_number,
+            v.manufacturer_part_number || v.full_model_number,
+            v.finish_code ?? null,
+            v.finish_description ?? null,
+            v.list_price ?? null,
+            v.unit_price ?? null,
+            v.stock_status || "in_stock",
+            v.lead_time_weeks ?? null,
+            priceUom,
+            sourceCatalogueId
+          ).run();
+        } catch (uomErr) {
+          if (!/no such column/i.test(uomErr.message || ""))
+            throw uomErr;
+          await env2.DB.prepare(`
+            INSERT INTO product_variants
+            (id, product_id, full_model_number, manufacturer_part_number,
+             finish_code, finish_description, list_price, unit_price,
+             stock_status, lead_time_weeks, source_catalogue_id, active, created_at, updated_at)
             VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 1, datetime('now'), datetime('now'))
           `).bind(
             id,
@@ -168,33 +199,27 @@ router.post("/api/cps/import-prices", async (request2, env2) => {
             v.unit_price ?? null,
             v.stock_status || "in_stock",
             v.lead_time_weeks ?? null,
-            priceUom
-          ).run();
-        } catch (uomErr) {
-          if (!/no such column/i.test(uomErr.message || ""))
-            throw uomErr;
-          await env2.DB.prepare(`
-            INSERT INTO product_variants
-            (id, product_id, full_model_number, manufacturer_part_number,
-             finish_code, finish_description, list_price, unit_price,
-             stock_status, lead_time_weeks, active, created_at, updated_at)
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 1, datetime('now'), datetime('now'))
-          `).bind(
-            id,
-            v.product_id,
-            v.full_model_number,
-            v.manufacturer_part_number || v.full_model_number,
-            v.finish_code ?? null,
-            v.finish_description ?? null,
-            v.list_price ?? null,
-            v.unit_price ?? null,
-            v.stock_status || "in_stock",
-            v.lead_time_weeks ?? null
+            sourceCatalogueId
           ).run();
         }
         imported++;
       }
     }
+  return { imported, updated, productsCreated, errors };
+}
+
+export function registerCpsImportPricesRoutes(router, { authenticateCps }) {
+router.post("/api/cps/import-prices", async (request2, env2) => {
+  const { error: error4, user } = await authenticateCps(request2, env2);
+  if (error4)
+    return error4;
+  try {
+    const body = await request2.json();
+    const { variants } = body;
+    if (!Array.isArray(variants) || variants.length === 0) {
+      return jsonResponse3({ error: "variants array required" }, 400);
+    }
+    const { imported, updated, productsCreated, errors } = await importPriceVariants(env2, variants);
     return jsonResponse3({
       success: true,
       imported,

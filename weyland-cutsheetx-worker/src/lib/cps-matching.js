@@ -24,7 +24,7 @@
 // esbuild's cosmetic __name(...) calls dropped, same as every other
 // extraction in this effort.
 
-var FINISH_CODES = /* @__PURE__ */ new Set([
+export var FINISH_CODES = /* @__PURE__ */ new Set([
   // Schlage/Allegion finishes
   "605",
   "606",
