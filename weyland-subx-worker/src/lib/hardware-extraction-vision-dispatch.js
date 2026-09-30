@@ -3,6 +3,7 @@ import { resolveExtractionContract } from "./hardware-extraction-pipeline.js";
 import { resolveInferenceContract } from "./hardware-extraction-vision-adapters.js";
 import { generateJWT, arrayBufferToBase64 } from "../auth-module.js";
 import { parseHardwareExtractionResult } from "./hardware-extraction-prompts.js";
+import { callLocalQwen } from "./qwen-bridge.js";
 
 export var EXTRACTION_PROMPT_TEMPLATE = `\u{1F6A8}\u{1F6A8}\u{1F6A8} CRITICAL: STOP AND READ THIS FIRST \u{1F6A8}\u{1F6A8}\u{1F6A8}
 
@@ -760,13 +761,10 @@ export async function viaSabpClaudeCode(sessionId, pdfBuffer, env2, ctx = {}) {
 // src/extraction/jitagi-detect-schedules.js), then turns the OCR'd table
 // text into the same {doors:[...]} JSON contract via the real local
 // Qwen3-8B (llama-server on this Mac, 127.0.0.1:18087) reached over its
-// Cloudflare Tunnel (llama.mobleysoft.com) - the same bridge
-// jitagi/kernel/llm_client.mjs uses locally, extended here with the
-// CF-Access-Client-Id/Secret headers a Worker (not localhost) needs to get
-// past the tunnel's Cloudflare Access "m2m only" gate (confirmed live
-// 2026-09-12: bare fetch() from off-Mac gets Access's HTML login page /
-// 403, not JSON - the service token below is what actually gets through).
-const QWEN_BRIDGE_URL = "https://llama.mobleysoft.com";
+// Cloudflare Tunnel (llama.mobleysoft.com) - see qwen-bridge.js for the
+// actual bridge implementation (extracted there 2026-09-30 so the
+// catalogue price-extraction pipeline can reuse the same self-hosted,
+// policy-compliant LLM path instead of duplicating it).
 
 export function EMBEDDED_TEXT_EXTRACTION_PROMPT_TEMPLATE(ocrText) {
   return `You are extracting a door schedule table from OCR text of a scanned construction PDF page. The OCR is imperfect (a real WASM tesseract pass over a rasterized scan, not a clean text layer) - expect misread characters, merged columns, and noisy whitespace. Work with what's actually here; do not invent doors that aren't backed by real text below.
@@ -806,50 +804,6 @@ Output ONLY a JSON object (no other prose, no markdown fences), in exactly this 
 If a field isn't present in the text, use null - do not fabricate values. If you cannot find any door schedule rows at all in this text, output {"doors": [], "metadata": {"total_doors_extracted": 0, "pages_with_schedule": "", "extraction_warnings": ["no door schedule table found in OCR text"]}}.
 
 Output the JSON object now:`;
-}
-
-async function callLocalQwen(env2, messages, opts = {}) {
-  const { maxTokens = 4e3, temperature = 0.1 } = opts;
-  const clientId = env2.QWEN_BRIDGE_CLIENT_ID;
-  const clientSecret = env2.QWEN_BRIDGE_CLIENT_SECRET;
-  if (!clientId || !clientSecret) {
-    throw new Error("QWEN_BRIDGE_CLIENT_ID/QWEN_BRIDGE_CLIENT_SECRET not configured on this worker - the embedded route needs the Cloudflare Access service-token credentials for llama.mobleysoft.com (Access app 'llama-server-gateway (m2m only)', service token 'jitagi-kernel-m2m')");
-  }
-  const base = env2.QWEN_BRIDGE_URL || QWEN_BRIDGE_URL;
-  const controller = new AbortController();
-  const timeout = setTimeout(() => controller.abort(), 45e3);
-  let res;
-  try {
-    res = await fetch(`${base}/v1/chat/completions`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "CF-Access-Client-Id": clientId,
-        "CF-Access-Client-Secret": clientSecret
-      },
-      body: JSON.stringify({
-        model: "qwen3-8b",
-        messages,
-        max_tokens: maxTokens,
-        temperature,
-        chat_template_kwargs: { enable_thinking: false }
-      }),
-      signal: controller.signal
-    });
-  } finally {
-    clearTimeout(timeout);
-  }
-  const text = await res.text();
-  let data;
-  try {
-    data = JSON.parse(text);
-  } catch {
-    throw new Error(`Qwen bridge returned non-JSON (HTTP ${res.status}): ${text.slice(0, 300)}`);
-  }
-  if (!res.ok || data.error) {
-    throw new Error(`Qwen bridge error (HTTP ${res.status}): ${data.error?.message || text.slice(0, 300)}`);
-  }
-  return data.choices?.[0]?.message?.content || "";
 }
 
 // ocrScheduleTableBanded: the real, CPU-budget-safe OCR step shared by
