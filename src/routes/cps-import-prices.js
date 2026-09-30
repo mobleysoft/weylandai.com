@@ -6,9 +6,18 @@
 // "prod-<slug>-..." id-prefix convention as a fallback). Real
 // defensive handling for a rolling `price_uom` column migration: every
 // UPDATE/SELECT/INSERT that touches `price_uom` has a fallback path for
-// "no such column" that retries without it, preserved exactly as
-// written. Extracted 2026-09-10 from legacy-monolith.js (previously
-// inline, lines 147716-147900).
+// a missing column that retries without it. Extracted 2026-09-10 from
+// legacy-monolith.js (previously inline, lines 147716-147900).
+//
+// Real bug found and fixed 2026-09-30: confirmed live that
+// product_variants.price_uom does NOT exist in production, so this
+// fallback path fires on every real INSERT/UPDATE, not just during some
+// hypothetical migration window - but the original regex only matched
+// SQLite's SELECT-context error wording ("no such column: X"), never
+// its INSERT/UPDATE-context wording ("table T has no column named X").
+// The INSERT/UPDATE fallback branches were therefore silently dead code
+// in real production; every call fell through to an uncaught throw
+// instead. Now matches both real SQLite phrasings.
 //
 // scrubModelTokens (single real call site, fully self-contained - no
 // deps beyond its own string argument) is inlined as a local helper
@@ -97,7 +106,7 @@ export async function importPriceVariants(env2, variants, sourceCatalogueId = nu
           "SELECT id FROM product_variants WHERE full_model_number = ? AND product_id = ? AND COALESCE(price_uom, 'EA') = ?"
         ).bind(v.full_model_number, v.product_id, (v.price_uom || "EA").toUpperCase()).first();
       } catch (uomErr) {
-        if (!/no such column/i.test(uomErr.message || ""))
+        if (!/no such column|has no column named/i.test(uomErr.message || ""))
           throw uomErr;
         existing = await env2.DB.prepare(
           "SELECT id FROM product_variants WHERE full_model_number = ? AND product_id = ?"
@@ -131,7 +140,7 @@ export async function importPriceVariants(env2, variants, sourceCatalogueId = nu
             existing.id
           ).run();
         } catch (uomErr) {
-          if (!/no such column/i.test(uomErr.message || ""))
+          if (!/no such column|has no column named/i.test(uomErr.message || ""))
             throw uomErr;
           await env2.DB.prepare(`
             UPDATE product_variants
@@ -180,7 +189,7 @@ export async function importPriceVariants(env2, variants, sourceCatalogueId = nu
             sourceCatalogueId
           ).run();
         } catch (uomErr) {
-          if (!/no such column/i.test(uomErr.message || ""))
+          if (!/no such column|has no column named/i.test(uomErr.message || ""))
             throw uomErr;
           await env2.DB.prepare(`
             INSERT INTO product_variants
