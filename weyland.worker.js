@@ -12843,7 +12843,7 @@ async function importPriceVariants(env2, variants, sourceCatalogueId = null) {
         "SELECT id FROM product_variants WHERE full_model_number = ? AND product_id = ? AND COALESCE(price_uom, 'EA') = ?"
       ).bind(v.full_model_number, v.product_id, (v.price_uom || "EA").toUpperCase()).first();
     } catch (uomErr) {
-      if (!/no such column/i.test(uomErr.message || ""))
+      if (!/no such column|has no column named/i.test(uomErr.message || ""))
         throw uomErr;
       existing = await env2.DB.prepare(
         "SELECT id FROM product_variants WHERE full_model_number = ? AND product_id = ?"
@@ -12877,7 +12877,7 @@ async function importPriceVariants(env2, variants, sourceCatalogueId = null) {
           existing.id
         ).run();
       } catch (uomErr) {
-        if (!/no such column/i.test(uomErr.message || ""))
+        if (!/no such column|has no column named/i.test(uomErr.message || ""))
           throw uomErr;
         await env2.DB.prepare(`
             UPDATE product_variants
@@ -12926,7 +12926,7 @@ async function importPriceVariants(env2, variants, sourceCatalogueId = null) {
           sourceCatalogueId
         ).run();
       } catch (uomErr) {
-        if (!/no such column/i.test(uomErr.message || ""))
+        if (!/no such column|has no column named/i.test(uomErr.message || ""))
           throw uomErr;
         await env2.DB.prepare(`
             INSERT INTO product_variants
