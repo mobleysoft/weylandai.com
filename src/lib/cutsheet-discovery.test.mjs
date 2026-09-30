@@ -525,6 +525,31 @@ test("discoverWithRetry: real exhaustion path returns success:false after maxAtt
   }
 });
 
+test("discoverWithRetry: real bug fix - a non-throwing failed strategy (verified_db's stub) still advances to the NEXT strategy, not stuck retrying the same one", async () => {
+  // Real bug found 2026-09-30 running a live discovery pass: "verified_db"
+  // always returns {success:false} WITHOUT throwing (it's a stub - "DB check
+  // handled externally"), and strategy-advancement used to live only inside
+  // the catch block for thrown exceptions. With the default 3 attempts, every
+  // real call retried "verified_db" three times and never reached
+  // "smart_direct" (or any real search strategy) at all - this locks in the
+  // fix. "schlage" has real EXPANDED_URL_PATTERNS, so smart_direct's real
+  // attempt is observable (and made to fail via the mocked fetch, so we can
+  // see it was actually tried, not skipped).
+  const restore = fakeFetchOnce(async () => ({ ok: false, status: 404, statusText: "not found" }));
+  const db = { prepare: () => ({ bind: () => ({ run: async () => {} }) }) };
+  try {
+    const result = await discoverWithRetry(
+      { manufacturer: "schlage", model: "L9080" },
+      { DB: db },
+      { maxAttempts: 2 },
+    );
+    assert.equal(result.retryLog[0].strategy, "verified_db");
+    assert.equal(result.retryLog[1].strategy, "smart_direct", "must advance past verified_db's non-throwing failure, not retry it");
+  } finally {
+    restore();
+  }
+});
+
 test("logRetryAttempt: no-op with no DB binding (does not throw)", async () => {
   await logRetryAttempt({}, { manufacturer: "x", model: "y" }, { attempt: 1, strategy: "google_search" });
 });

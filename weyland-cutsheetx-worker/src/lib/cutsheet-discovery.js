@@ -2395,6 +2395,19 @@ export async function discoverWithRetry(component, env2, options = {}) {
       logEntry.errorMessage = result.error || "No URL found";
       retryLog.push(logEntry);
       lastError = new Error(logEntry.errorMessage);
+      // Real bug found 2026-09-30 running a live discovery pass: "verified_db"
+      // (and any other strategy) returning a normal {success:false} object -
+      // not throwing - never advanced currentStrategyIndex, because that only
+      // happened inside the catch block below. With the default maxAttempts=3
+      // and "verified_db" always returning a non-throwing failure (it's a
+      // stub - "DB check handled externally"), every real call exhausted all
+      // its attempts retrying strategy index 0 and NEVER reached smart_direct/
+      // site_search/google_search at all. Advance on a non-throwing failure
+      // too, same bound as the exception path.
+      if (currentStrategyIndex < RETRY_CONFIG.strategyOrder.length - 1) {
+        currentStrategyIndex++;
+        console.log(`[Retry] Switching to strategy: ${RETRY_CONFIG.strategyOrder[currentStrategyIndex]}`);
+      }
     } catch (error4) {
       logEntry.durationMs = Date.now() - attemptStart;
       logEntry.errorMessage = error4.message;
