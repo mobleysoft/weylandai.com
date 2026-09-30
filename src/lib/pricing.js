@@ -394,15 +394,38 @@ async function resolveCataloguePrices(env2, components) {
       let finishMatched = !!(finish && String(hit.row.finish_code || "").toUpperCase().trim() === finish);
       let floorized = false;
       if (finish && hit.row.finish_code && !finishMatched) {
-        const BASE_FINISHES = new Set(["626", "628", "652", "689", "600"]);
+        // Door-hardware manufacturers (Ives confirmed via real catalogue
+        // query 2026-09-30: 1,955 of 4,510 real active variants, 43%) use
+        // an empty finish_code "" as their own real convention for a
+        // generic/unspecified-finish base row, not a data gap - this is
+        // the same "already-real-precedent empty string" pattern already
+        // used for product_variants.finish_code in the plumbing/electrical
+        // migration. Without "" here, any component whose only cheaper
+        // same-model catalogue row has finish_code="" was silently
+        // discarded instead of floored, even though that's exactly the
+        // base-price row this fallback exists to find.
+        const BASE_FINISHES = new Set(["626", "628", "652", "689", "600", ""]);
         const byPrice = (a, b) => (a.row.unit_price != null ? a.row.unit_price : a.row.list_price != null ? a.row.list_price : Infinity) - (b.row.unit_price != null ? b.row.unit_price : b.row.list_price != null ? b.row.list_price : Infinity);
         const sameModel = pool3.filter((e) => e.joined === hit.joined).sort(byPrice);
-        const cheapest = sameModel[0];
-        if (!cheapest || !BASE_FINISHES.has(String(cheapest.row.finish_code || "").toUpperCase().trim())) {
-          continue;
+        // Real bug found 2026-09-30 tracing Ives 7215F SET (a real customer
+        // component with a clean exact model match that still priced null):
+        // when a joined model has only ONE real catalogue row at all - no
+        // competing finish variant exists to choose between - this used to
+        // `continue` (discard) whenever that lone row's finish_code (e.g.
+        // "500", not a real BHMA/ANSI code - a catalogue data artifact)
+        // didn't match the requested finish and wasn't in BASE_FINISHES.
+        // That's backwards: with no alternative to floor to, the sole real
+        // priced row IS the correct citation, just with an unconfirmed
+        // finish match. Only require a BASE_FINISHES floor substitute when
+        // there's an actual competing finish option to choose between.
+        if (sameModel.length > 1) {
+          const cheapest = sameModel[0];
+          if (!cheapest || !BASE_FINISHES.has(String(cheapest.row.finish_code || "").toUpperCase().trim())) {
+            continue;
+          }
+          hit = cheapest;
+          floorized = true;
         }
-        hit = cheapest;
-        floorized = true;
       }
       const CONF = {
         catalogue_exact: [0.95, 0.85],

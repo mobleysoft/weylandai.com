@@ -88,6 +88,48 @@ test("resolveCataloguePrices(): a non-BEA manufacturer's bare model does NOT get
   assert.equal(results[0], null);
 });
 
+test("resolveCataloguePrices(): a component's finish mismatches the catalogue's ONLY variant for that model - real price returned anyway (nothing to floor to)", async () => {
+  const db = makeFakeDb({
+    aliases: [{ alias: "IVE", manufacturer_id: "mfr-ives" }],
+    variants: [{
+      variant_id: "v-ives1", product_id: "p-ives1", full_model_number: "7215F SET",
+      finish_code: "500", finish_description: null, unit_price: 1298.9, list_price: 1298.9,
+      price_uom: null, currency: "USD", catalog_section: "Ives Price Book 17", catalog_page: "42",
+      price_effective_date: "2026-05-29", manufacturer_id: "mfr-ives",
+    }],
+  });
+  const results = await resolveCataloguePrices({ DB: db }, [
+    { manufacturer: "IVE", model: "7215F SET", finish: "643E/716" },
+  ]);
+  assert.equal(results.length, 1);
+  assert.equal(results[0].price, 1298.9);
+  assert.equal(results[0].finish_matched, false);
+});
+
+test("resolveCataloguePrices(): a component's finish mismatches AND a cheaper non-base-finish alternative exists - still discarded, not floored to the wrong finish", async () => {
+  const db = makeFakeDb({
+    aliases: [{ alias: "IVE", manufacturer_id: "mfr-ives" }],
+    variants: [
+      {
+        variant_id: "v-ives-a", product_id: "p-ives1", full_model_number: "7215F SET",
+        finish_code: "500", finish_description: null, unit_price: 1298.9, list_price: 1298.9,
+        price_uom: null, currency: "USD", catalog_section: null, catalog_page: null,
+        price_effective_date: null, manufacturer_id: "mfr-ives",
+      },
+      {
+        variant_id: "v-ives-b", product_id: "p-ives1", full_model_number: "7215F SET",
+        finish_code: "710", finish_description: null, unit_price: 999, list_price: 999,
+        price_uom: null, currency: "USD", catalog_section: null, catalog_page: null,
+        price_effective_date: null, manufacturer_id: "mfr-ives",
+      },
+    ],
+  });
+  const results = await resolveCataloguePrices({ DB: db }, [
+    { manufacturer: "IVE", model: "7215F SET", finish: "643E/716" },
+  ]);
+  assert.equal(results[0], null);
+});
+
 test("resolveCataloguePrices(): unknown manufacturer alias yields a real null (no match), not a throw", async () => {
   const db = makeFakeDb({ aliases: [], variants: [] });
   const results = await resolveCataloguePrices({ DB: db }, [{ manufacturer: "UNKNOWN BRAND", model: "X1" }]);
