@@ -243,7 +243,28 @@ async function resolveCataloguePrices(env2, components) {
     `).all().catch(() => null);
   }
   const catRows = catRes?.results || [];
-  const tokenize2 = (s) => String(s || "").toUpperCase().replace(/(\d+(?:\.\d+)?)["”]?\s*X\s*(\d+(?:\.\d+)?)["”]?/g, "$1X$2").split(/[\s\-\/,()]+/).filter((t) => t.length > 0);
+  // Real bug found 2026-09-30 tracing Schlage ND80/L9485 (both have a real
+  // active bracket-style row like "ND80 [626]" or "ND80 [605, 606, 612,
+  // 619, 622, 625, 643e]" - a real convention covering 28,106 of the
+  // catalogue's 40,968 active priced variants (68%), not an edge case).
+  // The old split regex never treated '[' ']' as delimiters, so the
+  // bracket characters stayed glued onto the token ("ND80[626]"), which
+  // can never equal a plain component token ("ND80") - every bracketed
+  // row was silently unmatchable. Only unwrap brackets whose ENTIRE
+  // content is a comma/slash-separated list of bare finish-code-shaped
+  // tokens (e.g. "626", "643E", "ROSE 613") - real catalogue brackets also
+  // carry genuinely different-priced distinctions ("[Tier 1]" vs "[Tier
+  // 2]", "[53/4\"-57/8\"]" size ranges, "[HSLR 630]" function variants,
+  // "[ALX Series]" family variants) where collapsing the bracket would let
+  // a lower tier confidently float in as a false match for a different
+  // real price - left those untouched, unmatchable as before, rather than
+  // risk a wrong price.
+  const FINISH_BRACKET_PART = /^(?:ROSE\s+)?\d{3}[A-Z]{0,2}$/;
+  const unwrapFinishBrackets = (s) => s.replace(/\[([^\]]*)\]/g, (whole, inner) => {
+    const parts = inner.split(/[,\/]/).map((p) => p.trim()).filter(Boolean);
+    return parts.length && parts.every((p) => FINISH_BRACKET_PART.test(p)) ? ` ${inner} ` : whole;
+  });
+  const tokenize2 = (s) => unwrapFinishBrackets(String(s || "").toUpperCase()).replace(/(\d+(?:\.\d+)?)["”]?\s*X\s*(\d+(?:\.\d+)?)["”]?/g, "$1X$2").split(/[\s\-\/,()]+/).filter((t) => t.length > 0);
   const BARE_FINISH_ANCHOR_OK = new Set(["mfr-ngp", "mfr-zero"]);
   const dimShaped = (t) => /^\d+(?:\.\d+)?X\d+(?:\.\d+)?$/.test(t) || t.includes('"');
   const finishShaped = (t) => /^6\d{2}[A-Z]?$/.test(t) || /^US\d+[A-Z]?$/.test(t) || t === "USP" || /^SP\d+$/.test(t) || t === "NRP" || t === "BLK" || t === "NONE";
@@ -292,7 +313,20 @@ async function resolveCataloguePrices(env2, components) {
     if (finishShaped(anchor) && !BARE_FINISH_ANCHOR_OK.has(row.manufacturer_id))
       continue;
     const joined = toks.join("");
-    const entry = { row, toks, joined, anchor, uom: rowUom(row) };
+    // Real bug found 2026-09-30 alongside the bracket-unwrap fix above,
+    // pre-existing and independent of it: catalogue_variant_floor only
+    // requires the COMPONENT's tokens to be found within the catalogue
+    // row's tokens (the reverse of catalogue_base_model's stricter
+    // every-catalogue-token check), so a row with extra unstripped
+    // qualifier tokens - genuinely different-priced tiers ("[Tier 1]" vs
+    // "[Tier 2]"), size ranges, or function variants that
+    // unwrapFinishBrackets correctly refused to unwrap - could still
+    // silently floor-match a bare component to an arbitrary one of those
+    // real-but-different prices. hasUnsafeBracket flags any row whose
+    // bracket survived unwrapping (i.e. isn't a pure finish-code list) so
+    // catalogue_variant_floor can exclude it below.
+    const hasUnsafeBracket = /\[/.test(unwrapFinishBrackets(String(row.full_model_number || "").toUpperCase()));
+    const entry = { row, toks, joined, anchor, uom: rowUom(row), hasUnsafeBracket };
     entries.push(entry);
     (byJoined[joined] = byJoined[joined] || []).push(entry);
   }
@@ -382,7 +416,7 @@ async function resolveCataloguePrices(env2, components) {
     }
     if (!hit) {
       const compAnchor = strongestTok(compToks);
-      const covered = scoped.filter((e) => uomOk(e) && compToks.every((t) => tokMatches(t, e.toks)) && tokMatches(compAnchor, e.toks));
+      const covered = scoped.filter((e) => uomOk(e) && !e.hasUnsafeBracket && compToks.every((t) => tokMatches(t, e.toks)) && tokMatches(compAnchor, e.toks));
       if (covered.length) {
         pool3 = covered;
         hit = rank(covered, mfrId, finish, compTokSet)[0];
