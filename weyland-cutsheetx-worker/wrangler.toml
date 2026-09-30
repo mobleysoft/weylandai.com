@@ -46,6 +46,17 @@ binding = "DB"
 database_name = "weyland_db"
 database_id = "5729f77e-d7e3-4577-ab43-3c064fa90ca5"
 
+# Same-account, zero-network-hop Service Binding to the already-deployed
+# weyland-ocr-worker (PDFium + tesseract, no external API), same as
+# weyland-subx-worker's own binding. Added 2026-09-29 so
+# cutsheet-discovery.js's PDF validation step can OCR a downloaded
+# candidate cut sheet locally instead of needing ANTHROPIC_API_KEY (never
+# provisioned for this venture by standing policy - see
+# analyzePdfWithGofaineat below, replacing analyzePdfWithClaude).
+[[services]]
+binding = "OCR_SERVICE"
+service = "weyland-ocr-worker"
+
 [[kv_namespaces]]
 binding = "CACHE"
 id = "80a77dcf4f5f4e8588c172f2ecef95fb"
