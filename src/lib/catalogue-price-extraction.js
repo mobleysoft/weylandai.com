@@ -26,6 +26,26 @@
 // against the real OCR text in parseAndValidatePriceRows() below - no
 // reason to spend a shrinking token budget asking the model to echo text
 // it already read.
+//
+// IMPORTANT, found 2026-10-01 against a real Von Duprin multi-finish
+// price-matrix page: the LLM path above is NOT reliable for a table where
+// one row carries several finish/price pairs in a fixed column order. Two
+// failure modes confirmed live: (1) a chunk missing the column-header
+// context systematically attached every price to the wrong finish code
+// (every number real, every mapping wrong) - fixed below by carrying
+// header context into every chunk, but that surfaced (2) incomplete
+// per-row fan-out (the model often emits 1 of 9 expected pairs) and the
+// prompt's own few-shot example occasionally got echoed back as fabricated
+// data (caught by the existing verified_in_source_text check, but still
+// junk in the review queue). For this exact table shape - stable N-column
+// header, N dollar amounts per row in the same order - use
+// extractPriceRowsPositionally() instead: a deterministic positional zip,
+// no LLM call, verified live to produce zero transposition errors across
+// every row tested (vs. systematic wrong-column mapping from the LLM
+// path). Reserve the LLM path above for tables that don't have this rigid
+// structure (e.g. Schlage's one-price-per-row case it was validated
+// against). Prefer the positional path when detectColumnHeaderCodes()
+// finds >=3 codes; fall back to the LLM path otherwise.
 
 import { callLocalQwen } from "./qwen-bridge.js";
 import { FINISH_CODES } from "./cps-matching.js";
@@ -42,14 +62,68 @@ export function chunkOcrTextByLines(ocrText, chunkLines = CHUNK_LINES) {
   return chunks;
 }
 
-export function buildPriceTableExtractionPrompt(ocrTextChunk, context = {}) {
+// A line with 2+ dollar amounts is a real multi-finish price-matrix data
+// row (one model, several finish/price pairs). Everything before the first
+// such line is treated as the table's column-header/finish-code legend.
+// Single-price-per-row pages (no line ever has 2+ "$") fall through with no
+// split at all - behavior-preserving for that already-validated case.
+const MULTI_PRICE_ROW_RE = /(\$[\d,]+(?:\.\d{2})?.*?){2,}/;
+
+// Found 2026-10-01: a naive line-count chunker separates a multi-finish
+// data row from the header line defining its column order (the header
+// lives near the top of the page, the data rows can be dozens of lines
+// later), so a late chunk has no way to know which price belongs to which
+// finish code and falls back on generic priors instead of this specific
+// document's real layout - confirmed live against a real von-duprin
+// XP98/XP99 price-matrix page: every extracted price was real, but
+// systematically attached to the wrong finish (a one-column shift).
+// Splitting header from data and re-attaching the header to every chunk
+// fixes this without changing chunkOcrTextByLines's own contract.
+export function splitHeaderAndDataLines(ocrText) {
+  const lines = String(ocrText || "").split("\n");
+  const splitIdx = lines.findIndex((l) => MULTI_PRICE_ROW_RE.test(l));
+  if (splitIdx <= 0) return { headerLines: "", dataLines: String(ocrText || "") };
+  return {
+    headerLines: lines.slice(0, splitIdx).join("\n").trim(),
+    dataLines: lines.slice(splitIdx).join("\n"),
+  };
+}
+
+// CHUNK_LINES=12 was calibrated for single-price-per-row tables (12 lines =
+// 12 output row-objects, comfortably inside the completion-token budget).
+// Confirmed live 2026-10-01: for a 9-column multi-finish table, 12 lines
+// means up to 108 requested output objects - far more than fits in 1200
+// completion tokens, so 3 of 7 real chunks truncated mid-JSON and parsed as
+// nothing. Scale chunk size down by real table width (average price count
+// per data line) so every chunk's expected output stays bounded regardless
+// of how wide the table is. Narrow tables (avg <= 1) keep the original 12.
+function pickChunkLineCount(dataLines, maxRowObjectsPerChunk = 15) {
+  const priceLines = String(dataLines || "")
+    .split("\n")
+    .map((l) => (l.match(/\$[\d,]+(?:\.\d{2})?/g) || []).length)
+    .filter((n) => n > 0);
+  if (!priceLines.length) return CHUNK_LINES;
+  const avgPricesPerLine = priceLines.reduce((a, b) => a + b, 0) / priceLines.length;
+  if (avgPricesPerLine <= 1) return CHUNK_LINES;
+  return Math.max(1, Math.floor(maxRowObjectsPerChunk / avgPricesPerLine));
+}
+
+export function buildPriceTableExtractionPrompt(ocrTextChunk, context = {}, headerContext = "") {
   const { manufacturer, trade } = context;
+  const headerBlock = headerContext
+    ? `COLUMN HEADER / FINISH-CODE LEGEND FOR THIS TABLE (defines which finish code each price position below corresponds to - use this to map prices to the correct finish, don't guess a conventional ordering):
+"""
+${String(headerContext).slice(0, 1500)}
+"""
+
+`
+    : "";
   return `You are extracting a PRICE TABLE from OCR text of a manufacturer catalog/price-book page.
 The OCR is imperfect - expect misread digits, merged columns, and noisy whitespace.
 Manufacturer (if known): ${manufacturer || "unknown - read from text if visible"}
 Trade: ${trade || "unknown"}
 
-RAW OCR TEXT:
+${headerBlock}RAW OCR TEXT:
 """
 ${String(ocrTextChunk || "").slice(0, 3000)}
 """
@@ -161,13 +235,108 @@ export function parseAndValidatePriceRows(content, ocrTextChunk, context = {}) {
   return { rows, rejectedCount, warnings };
 }
 
+// A multi-finish price-matrix table (one row, N finish/price pairs in a
+// fixed left-to-right column order) doesn't need an LLM at all - it's a
+// deterministic positional-zip problem: find the header line that lists the
+// N finish codes in column order, then for each data row pair its N dollar
+// amounts with those same N codes by position. Built 2026-10-01 after live
+// testing found the LLM-per-row approach unreliable on this exact table
+// shape (systematic cross-column transposition, then incomplete per-row
+// fan-out after a chunking fix) - a real narrow, enumerable task gofaineat's
+// own design pattern is meant for, not a generation task.
+//
+// Safe-by-construction: if the detected header's token count doesn't match
+// a row's price count, that row is SKIPPED, never guessed - an honest gap
+// (needs human review or higher-res OCR) beats a confident wrong mapping.
+// Real OCR-quality note: a 200 DPI render of a real von-duprin price-matrix
+// page dropped 2 of 9 header tokens entirely (unrecoverable from text alone
+// - the character was never there); re-rendering at 400 DPI recovered all
+// 9. Low column-token coverage here is a real signal to re-OCR at higher
+// resolution, not a parser bug to work around.
+const FINISH_TOKEN_RE = /\b\d{2,4}[A-Za-z%]{0,2}\b/g;
+const PRICE_TOKEN_RE = /\$[\d,]+(?:\.\d{2})?/g;
+
+function cleanFinishToken(tok) {
+  return String(tok).replace(/[^0-9A-Za-z]/g, "").toUpperCase();
+}
+
+export function detectColumnHeaderCodes(headerLines) {
+  // The line that actually defines THIS table's column order sits closest
+  // to the data rows, not the one with the most tokens - a manufacturer's
+  // full finish-code legend (every code it offers, anywhere) typically
+  // appears higher up the page and has MORE tokens than the specific
+  // subset of columns this particular table actually uses. Picking by
+  // max-count instead of proximity-to-data was a real bug caught live: it
+  // selected von-duprin's 12-code legend over the real 9-column header,
+  // producing a 12-vs-9 count mismatch that correctly (if uselessly)
+  // skipped every row rather than silently mismapping them.
+  const lines = String(headerLines || "").split("\n");
+  for (let i = lines.length - 1; i >= 0; i--) {
+    const matches = lines[i].match(FINISH_TOKEN_RE) || [];
+    if (matches.length >= 3) return matches.map(cleanFinishToken);
+  }
+  return [];
+}
+
+export function extractPriceRowsPositionally(ocrText, context = {}) {
+  const { headerLines, dataLines } = splitHeaderAndDataLines(ocrText);
+  const columnCodes = detectColumnHeaderCodes(headerLines);
+  const rows = [];
+  const warnings = [];
+  if (columnCodes.length < 3) {
+    return { rows, warnings: ["no multi-column header detected - not a positional-matrix table"], columnCodes };
+  }
+  for (const line of String(dataLines || "").split("\n")) {
+    const priceMatches = line.match(PRICE_TOKEN_RE) || [];
+    if (priceMatches.length < 2) continue; // not a multi-price data row
+    if (priceMatches.length !== columnCodes.length) {
+      warnings.push(`row skipped - ${priceMatches.length} prices vs ${columnCodes.length} header columns (counts must match exactly, not guessed): "${line.trim().slice(0, 80)}"`);
+      continue;
+    }
+    const fullModel = line.slice(0, line.indexOf(priceMatches[0])).trim();
+    if (!fullModel) continue;
+    for (let i = 0; i < columnCodes.length; i++) {
+      const price = Number(priceMatches[i].replace(/[$,]/g, ""));
+      rows.push({
+        full_model_number: fullModel,
+        finish_code: columnCodes[i],
+        finish_description: null,
+        list_price: price,
+        unit_price: null,
+        price_uom: "EA",
+        manufacturer: context.manufacturer || null,
+        trade: context.trade || "doors",
+        // Deterministic positional zip against real OCR digits, not a model
+        // guess - treated as verified by construction (the price came
+        // straight out of the source text at this exact position).
+        verified_in_source_text: 1,
+        extraction_confidence: 0.85,
+      });
+    }
+  }
+  return { rows, warnings, columnCodes };
+}
+
 export async function extractPriceRowsFromOcrText(env2, ocrText, context = {}) {
-  const chunks = chunkOcrTextByLines(ocrText);
+  // Prefer the deterministic positional path whenever this page has a
+  // detectable N-column finish-code header - verified live to be strictly
+  // more reliable than the LLM path for that exact table shape (see the
+  // file-header note above), and it costs zero LLM calls. Only fall back
+  // to per-chunk LLM extraction when no such header is found (e.g. a
+  // single-price-per-row table like the Schlage page this was originally
+  // validated against).
+  const positional = extractPriceRowsPositionally(ocrText, context);
+  if (positional.columnCodes.length >= 3 && positional.rows.length > 0) {
+    return { rows: positional.rows, rejectedCount: 0, warnings: positional.warnings, chunksProcessed: 0 };
+  }
+
+  const { headerLines, dataLines } = splitHeaderAndDataLines(ocrText);
+  const chunks = chunkOcrTextByLines(dataLines, pickChunkLineCount(dataLines));
   const allRows = [];
   const allWarnings = [];
   let totalRejected = 0;
   for (const chunk of chunks) {
-    const prompt = buildPriceTableExtractionPrompt(chunk, context);
+    const prompt = buildPriceTableExtractionPrompt(chunk, context, headerLines);
     let content;
     try {
       content = await callLocalQwen(env2, [{ role: "user", content: prompt }], { maxTokens: 1200, temperature: 0.1 });
@@ -175,7 +344,10 @@ export async function extractPriceRowsFromOcrText(env2, ocrText, context = {}) {
       allWarnings.push(`qwen call failed for a chunk: ${e.message}`);
       continue;
     }
-    const { rows, rejectedCount, warnings } = parseAndValidatePriceRows(content, chunk, context);
+    // Verify against header+chunk together - a finish code named only in the
+    // header (not repeated on the data row itself) must still be able to
+    // verify.
+    const { rows, rejectedCount, warnings } = parseAndValidatePriceRows(content, `${headerLines}\n${chunk}`, context);
     allRows.push(...rows);
     totalRejected += rejectedCount;
     allWarnings.push(...warnings);

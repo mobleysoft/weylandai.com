@@ -5,6 +5,9 @@ import {
   buildPriceTableExtractionPrompt,
   parseAndValidatePriceRows,
   extractPriceRowsFromOcrText,
+  splitHeaderAndDataLines,
+  detectColumnHeaderCodes,
+  extractPriceRowsPositionally,
 } from "./catalogue-price-extraction.js";
 
 // Real OCR text captured 2026-09-30 from a live weyland-ocr-worker pass over
@@ -140,6 +143,68 @@ test("extractPriceRowsFromOcrText: chunks real multi-line OCR text and issues on
     assert.equal(result.chunksProcessed, 3);
     assert.equal(callCount, 3, "one Qwen call per chunk, not one giant call");
     assert.equal(result.rows.length, 3);
+  } finally {
+    globalThis.fetch = originalFetch;
+  }
+});
+
+// Real OCR text captured 2026-10-01 (400 DPI tesseract pass) from page 66 of
+// a real Von Duprin price book (XP98/XP99 Series rim devices, a genuine
+// multi-finish price-matrix table: one model per row, 9 finish/price pairs
+// each). Ground truth for the TP-F row below was independently verified by
+// eye against the real catalog page image before this test was written.
+const REAL_MATRIX_OCR = `a ec ff G6 = &Y 626 628 630 710 612 606 643e 711 613 as x
+EXIT HARDWARE 3' DEVICE PRICING SHOWN. 4' ADD $30.00 LIST.
+XP[98/99]. TP .F.[].[] $3,375 $3,148 $3,440 $3,291 $3,440 $3,418 $3,845 $4,444 $3,829 990TP-R/V`;
+
+test("detectColumnHeaderCodes: picks the table's own 9-column order, not an unrelated longer finish-code legend", () => {
+  const withDistractorLegend = `605 606 611 612 613 619 622 625 626 626AM 628 629
+${REAL_MATRIX_OCR}`;
+  const codes = detectColumnHeaderCodes(splitHeaderAndDataLines(withDistractorLegend).headerLines);
+  assert.deepEqual(codes, ["626", "628", "630", "710", "612", "606", "643E", "711", "613"]);
+});
+
+test("extractPriceRowsPositionally: real multi-finish matrix row - every price lands on its correct finish, zero transposition", () => {
+  const { rows, warnings } = extractPriceRowsPositionally(REAL_MATRIX_OCR, { manufacturer: "von-duprin", trade: "doors" });
+  assert.deepEqual(warnings, []);
+  assert.equal(rows.length, 9);
+  const byFinish = Object.fromEntries(rows.map((r) => [r.finish_code, r.list_price]));
+  assert.deepEqual(byFinish, {
+    "626": 3375, "628": 3148, "630": 3440, "710": 3291, "612": 3440,
+    "606": 3418, "643E": 3845, "711": 4444, "613": 3829,
+  });
+  assert.ok(rows.every((r) => r.full_model_number.includes("TP")));
+  assert.ok(rows.every((r) => r.verified_in_source_text === 1));
+});
+
+test("extractPriceRowsPositionally: a row whose price count doesn't match the header is skipped, never guessed", () => {
+  const mismatched = `${REAL_MATRIX_OCR}
+XP[98/99] . EO-SHORT . [] $2,468 $2,241 990EO-SHORT`;
+  const { rows, warnings } = extractPriceRowsPositionally(mismatched, {});
+  assert.equal(rows.length, 9, "only the well-formed row contributes rows");
+  assert.equal(warnings.length, 1);
+  assert.match(warnings[0], /2 prices vs 9 header columns/);
+});
+
+test("extractPriceRowsPositionally: no multi-column header present - correctly reports not a matrix table rather than fabricating one", () => {
+  const { rows, warnings } = extractPriceRowsPositionally(REAL_OCR_CHUNK, {});
+  assert.equal(rows.length, 0);
+  assert.match(warnings[0], /not a positional-matrix table/);
+});
+
+test("extractPriceRowsFromOcrText: prefers the positional path for a matrix table and never calls the LLM at all", async () => {
+  const originalFetch = globalThis.fetch;
+  let callCount = 0;
+  globalThis.fetch = async () => {
+    callCount++;
+    throw new Error("LLM should not have been called for a detectable matrix table");
+  };
+  try {
+    const env2 = { QWEN_BRIDGE_CLIENT_ID: "id", QWEN_BRIDGE_CLIENT_SECRET: "secret" };
+    const result = await extractPriceRowsFromOcrText(env2, REAL_MATRIX_OCR, { manufacturer: "von-duprin", trade: "doors" });
+    assert.equal(callCount, 0, "positional path needs zero LLM calls");
+    assert.equal(result.rows.length, 9);
+    assert.equal(result.rows.find((r) => r.finish_code === "626")?.list_price, 3375);
   } finally {
     globalThis.fetch = originalFetch;
   }
