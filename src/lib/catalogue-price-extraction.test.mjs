@@ -8,6 +8,7 @@ import {
   splitHeaderAndDataLines,
   detectColumnHeaderCodes,
   extractPriceRowsPositionally,
+  extractPriceRowsSingleColumn,
 } from "./catalogue-price-extraction.js";
 
 // Real OCR text captured 2026-09-30 from a live weyland-ocr-worker pass over
@@ -137,7 +138,12 @@ test("extractPriceRowsFromOcrText: chunks real multi-line OCR text and issues on
     };
   };
   try {
-    const bigOcrText = Array.from({ length: 30 }, () => "1 door license, basic access control, 2 year license PAC-1-2Y {Site] [Time] [Email] $200.00").join("\n");
+    // No "$" anywhere in this fixture on purpose - this test exercises the
+    // LLM-chunking mechanism itself, so the input must NOT be one of the
+    // two shapes (matrix / single-column) that now resolve deterministically
+    // with zero LLM calls (verified live 2026-10-01 - both real document
+    // shapes this module has ever been tested against now decompose fully).
+    const bigOcrText = Array.from({ length: 30 }, () => "1 door license, basic access control, 2 year license PAC-1-2Y {Site] [Time] [Email] price not visible, call rep").join("\n");
     const env2 = { QWEN_BRIDGE_CLIENT_ID: "id", QWEN_BRIDGE_CLIENT_SECRET: "secret" };
     const result = await extractPriceRowsFromOcrText(env2, bigOcrText, { manufacturer: "Schlage", trade: "doors" });
     assert.equal(result.chunksProcessed, 3);
@@ -192,6 +198,25 @@ test("extractPriceRowsPositionally: no multi-column header present - correctly r
   assert.match(warnings[0], /not a positional-matrix table/);
 });
 
+test("extractPriceRowsSingleColumn: real single-price-per-row license text - every real model+price pair recovered, zero LLM calls", () => {
+  const { rows, warnings } = extractPriceRowsSingleColumn(REAL_OCR_CHUNK, { manufacturer: "Schlage", trade: "doors" });
+  assert.deepEqual(warnings, []);
+  assert.equal(rows.length, 5, "5 real priced rows - the Call-for-quote line correctly contributes none");
+  const byModel = Object.fromEntries(rows.map((r) => [r.full_model_number, r.list_price]));
+  assert.deepEqual(byModel, {
+    "PAC-1-2Y": 200, "PAC-1-3Y": 300, "PAC-1-5-2Y": 980,
+    "PAC-2I-50-3Y": 5550, "PAC-SI100-2Y": 4900,
+  });
+  assert.ok(!("PAC-XXX-2Y" in byModel), "Call for quote must never produce a fabricated price");
+  // Real OCR noise preserved verbatim, not "corrected":
+  assert.ok("PAC-2I-50-3Y" in byModel && "PAC-SI100-2Y" in byModel);
+});
+
+test("extractPriceRowsSingleColumn: bracket-wrapped placeholder fields before the price are never mistaken for the model number", () => {
+  const { rows } = extractPriceRowsSingleColumn("Widget kit {Site] [Time] [Email] $50.00", {});
+  assert.equal(rows.length, 0, "no real part-number token (with a digit) precedes the price here, so nothing is emitted");
+});
+
 test("extractPriceRowsFromOcrText: prefers the positional path for a matrix table and never calls the LLM at all", async () => {
   const originalFetch = globalThis.fetch;
   let callCount = 0;
@@ -205,6 +230,23 @@ test("extractPriceRowsFromOcrText: prefers the positional path for a matrix tabl
     assert.equal(callCount, 0, "positional path needs zero LLM calls");
     assert.equal(result.rows.length, 9);
     assert.equal(result.rows.find((r) => r.finish_code === "626")?.list_price, 3375);
+  } finally {
+    globalThis.fetch = originalFetch;
+  }
+});
+
+test("extractPriceRowsFromOcrText: prefers the single-column path for a license-tier table and never calls the LLM at all", async () => {
+  const originalFetch = globalThis.fetch;
+  let callCount = 0;
+  globalThis.fetch = async () => {
+    callCount++;
+    throw new Error("LLM should not have been called - this shape decomposes deterministically");
+  };
+  try {
+    const env2 = { QWEN_BRIDGE_CLIENT_ID: "id", QWEN_BRIDGE_CLIENT_SECRET: "secret" };
+    const result = await extractPriceRowsFromOcrText(env2, REAL_OCR_CHUNK, { manufacturer: "Schlage", trade: "doors" });
+    assert.equal(callCount, 0, "single-column path needs zero LLM calls");
+    assert.equal(result.rows.length, 5);
   } finally {
     globalThis.fetch = originalFetch;
   }
@@ -228,7 +270,7 @@ test("extractPriceRowsFromOcrText: a single chunk's Qwen failure doesn't abort t
     };
   };
   try {
-    const bigOcrText = Array.from({ length: 24 }, () => "1 door license, basic access control, 2 year license PAC-1-2Y {Site] [Time] [Email] $200.00").join("\n");
+    const bigOcrText = Array.from({ length: 24 }, () => "1 door license, basic access control, 2 year license PAC-1-2Y {Site] [Time] [Email] price not visible, call rep").join("\n");
     const env2 = { QWEN_BRIDGE_CLIENT_ID: "id", QWEN_BRIDGE_CLIENT_SECRET: "secret" };
     const result = await extractPriceRowsFromOcrText(env2, bigOcrText, {});
     assert.equal(result.chunksProcessed, 2);

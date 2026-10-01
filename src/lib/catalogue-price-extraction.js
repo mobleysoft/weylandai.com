@@ -317,6 +317,45 @@ export function extractPriceRowsPositionally(ocrText, context = {}) {
   return { rows, warnings, columnCodes };
 }
 
+// Single-price-per-row tables (the Schlage case this module was originally
+// validated against) ALSO decompose fully deterministically - confirmed
+// live 2026-10-01, per John's explicit direction the same day ("we don't
+// need hosted inference ever, we need further gofaineat-style
+// decomposition"): no model/finish-code header needed, just the first
+// price token on a line and the real part-number token immediately before
+// it. Bracket-wrapped placeholder fields (e.g. real OCR text like "{Site]
+// [Time] [Email]" preceding the price in license-tier price books) are
+// skipped so they can't be mistaken for the model number.
+const PLACEHOLDER_TOKEN_RE = /^[\[{][^\]}]*[\]}][:,.]?$/;
+
+export function extractPriceRowsSingleColumn(ocrText, context = {}) {
+  const rows = [];
+  for (const line of String(ocrText || "").split("\n")) {
+    const priceMatches = line.match(PRICE_TOKEN_RE) || [];
+    if (priceMatches.length !== 1) continue; // 0 = no price (e.g. "Call for quote"); 2+ = a matrix row, not this function's job
+    const pre = line.slice(0, line.indexOf(priceMatches[0])).trim().split(/\s+/).filter(Boolean);
+    const candidates = pre.filter((t) => !PLACEHOLDER_TOKEN_RE.test(t));
+    const fullModel = candidates[candidates.length - 1];
+    // A real part/model number has a digit in it - "requires" or "quote"
+    // (ordinary description words) must never pass as a model number.
+    if (!fullModel || !/\d/.test(fullModel)) continue;
+    const price = Number(priceMatches[0].replace(/[$,]/g, ""));
+    rows.push({
+      full_model_number: fullModel,
+      finish_code: "",
+      finish_description: null,
+      list_price: price,
+      unit_price: null,
+      price_uom: "EA",
+      manufacturer: context.manufacturer || null,
+      trade: context.trade || "doors",
+      verified_in_source_text: 1,
+      extraction_confidence: 0.85,
+    });
+  }
+  return { rows, warnings: [] };
+}
+
 export async function extractPriceRowsFromOcrText(env2, ocrText, context = {}) {
   // Prefer the deterministic positional path whenever this page has a
   // detectable N-column finish-code header - verified live to be strictly
@@ -328,6 +367,14 @@ export async function extractPriceRowsFromOcrText(env2, ocrText, context = {}) {
   const positional = extractPriceRowsPositionally(ocrText, context);
   if (positional.columnCodes.length >= 3 && positional.rows.length > 0) {
     return { rows: positional.rows, rejectedCount: 0, warnings: positional.warnings, chunksProcessed: 0 };
+  }
+
+  // Second deterministic preference: no multi-column header, but rows
+  // still decompose as single model+price pairs (verified live against
+  // the real Schlage license-tier page) - no LLM call needed here either.
+  const singleColumn = extractPriceRowsSingleColumn(ocrText, context);
+  if (singleColumn.rows.length > 0) {
+    return { rows: singleColumn.rows, rejectedCount: 0, warnings: singleColumn.warnings, chunksProcessed: 0 };
   }
 
   const { headerLines, dataLines } = splitHeaderAndDataLines(ocrText);
