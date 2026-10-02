@@ -248,5 +248,9 @@ pattern = "weylandai.com/wire"
 zone_name = "weylandai.com"
 
 [[routes]]
+pattern = "weylandai.com/news"
+zone_name = "weylandai.com"
+
+[[routes]]
 pattern = "weylandai.com/api/wire/*"
 zone_name = "weylandai.com"
