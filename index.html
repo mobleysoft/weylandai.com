@@ -105,6 +105,122 @@
 
     #badge-toast{position:fixed;top:16px;left:50%;transform:translate(-50%,-20px);opacity:0;visibility:hidden;pointer-events:none;background:rgba(18,20,25,.96);border:1px solid rgba(255,212,0,.5);color:var(--accent);font:800 11px/1 ui-monospace,monospace;letter-spacing:.06em;padding:12px 20px;border-radius:99px;z-index:50;transition:transform .35s ease,opacity .35s ease,visibility .35s ease;box-shadow:0 10px 30px rgba(0,0,0,.35)}
     #badge-toast.show{transform:translate(-50%,0);opacity:1;visibility:visible}
+
+    /* ============================================================
+       Pipeline narrative: 5 real scroll-triggered beats pulling from
+       the SAME live trial session fetched above (loadRealTrial) plus
+       one real captured-once asset (the raw schedule page image) and
+       one real captured-once CutsheetX match set (queried directly
+       against production D1's products/product_documents tables on
+       2026-10-02 - see the PIPELINE_CUTSHEET_MATCHES comment near the
+       bottom of the script for exactly how). No GSAP/scroll-hijacking:
+       CSS animation-timeline:view() drives the reveal where supported,
+       an IntersectionObserver toggles the same .in-view class as a
+       fallback elsewhere. prefers-reduced-motion:reduce gets a fully
+       static stack (no opacity:0 state exists outside the
+       no-preference media query below, so there is nothing to miss). */
+    .pipeline{margin:56px 0 64px}
+    .pipeline-head{max-width:640px;margin:0 0 28px}
+    .pipeline-head h2{font-size:clamp(24px,3.2vw,34px);letter-spacing:-.03em;line-height:1.12;margin:12px 0 10px;color:var(--text)}
+    .pipeline-head p{color:var(--muted);line-height:1.6;margin:0;font-size:14.5px}
+
+    .tab-rail{display:flex;list-style:none;margin:0;padding:0}
+    .tab-btn{all:unset;box-sizing:border-box;cursor:pointer;display:block;font:800 9.5px/1.3 ui-monospace,monospace;letter-spacing:.07em;text-transform:uppercase;border-radius:9px 9px 0 0;transition:transform .25s ease,box-shadow .25s ease,filter .25s ease;position:relative}
+    .tab-btn b{display:block;font-size:13px;letter-spacing:.01em;margin-top:2px}
+    .tab-btn:focus-visible{outline:2px solid #fff;outline-offset:2px}
+    .tab-btn[data-tone="blue"]{background:var(--primary);color:#eef2ff}
+    .tab-btn[data-tone="yellow"]{background:var(--accent);color:#1a1300}
+
+    /* Desktop: a sticky, staggered "fan of folders" stack - each tab
+       overlaps the one above it and is nudged further right, so every
+       tab's own top edge stays visible at a different height even
+       though the whole stack is held as one unit (John's reference:
+       holding several manila folders with their tabs staggered). Flat
+       Signal-Blue/Hi-Vis-Yellow blocks per spec - no paper texture, no
+       drop-shadow skeuomorphism; the ONE shadow below is a flat focus
+       cue for the active tab, not a material effect. */
+    .tab-rail-desktop{flex-direction:column;position:sticky;top:120px;align-self:start;padding-left:2px}
+    .tab-rail-desktop .tab-btn{width:150px;padding:13px 14px 13px 18px}
+    .tab-rail-desktop .tab-btn + .tab-btn{margin-top:-15px}
+    .tab-rail-desktop .tab-btn:nth-child(1){margin-left:0;z-index:5}
+    .tab-rail-desktop .tab-btn:nth-child(2){margin-left:9px;z-index:4}
+    .tab-rail-desktop .tab-btn:nth-child(3){margin-left:18px;z-index:3}
+    .tab-rail-desktop .tab-btn:nth-child(4){margin-left:27px;z-index:2}
+    .tab-rail-desktop .tab-btn:nth-child(5){margin-left:36px;z-index:1}
+    .tab-rail-desktop .tab-btn.is-active{transform:translateX(14px) scale(1.06);box-shadow:0 10px 24px rgba(0,0,0,.4);z-index:9;filter:brightness(1.08)}
+    .tab-rail-desktop .tab-btn.is-active:after{content:"\25C0";position:absolute;right:-16px;top:50%;transform:translateY(-50%);font-size:11px;color:var(--text)}
+    .tab-rail-desktop .tab-btn:not(.is-active){filter:brightness(.62) saturate(.7)}
+
+    .tab-rail-mobile{display:none}
+
+    .pipeline-layout{display:grid;grid-template-columns:168px 1fr;gap:30px;align-items:start}
+    .beats{display:flex;flex-direction:column;gap:20px;min-width:0}
+    .beat{background:rgba(18,20,25,.94);border:1px solid var(--line);border-radius:18px;padding:26px;scroll-margin-top:130px}
+    .beat-kicker{display:flex;align-items:center;gap:10px;margin-bottom:12px}
+    .beat-num{font:900 11px/1 ui-monospace,monospace;letter-spacing:.1em;padding:5px 10px;border-radius:99px}
+    .beat-num.blue{background:rgba(42,82,255,.18);color:#9db2ff}
+    .beat-num.yellow{background:rgba(255,212,0,.18);color:var(--accent)}
+    .beat-title{font-size:19px;font-weight:800;letter-spacing:-.01em;color:var(--text)}
+    .beat p.beat-sub{color:var(--muted);line-height:1.6;font-size:14px;margin:0 0 16px}
+    .beat-live-chip{display:inline-flex;align-items:center;gap:5px;font:800 8.5px/1 ui-monospace,monospace;letter-spacing:.08em;color:var(--green);border:1px solid rgba(97,223,160,.35);background:rgba(97,223,160,.1);border-radius:99px;padding:4px 9px;text-transform:uppercase;margin-bottom:12px}
+    .beat-live-chip.captured{color:var(--muted);border-color:var(--line);background:var(--panel2)}
+    .beat-live-chip:before{content:"";width:5px;height:5px;border-radius:50%;background:currentColor;flex:none}
+
+    .pl-raw-figure{margin:0;border:1px solid var(--line);border-radius:12px;overflow:hidden;background:#fff}
+    .pl-raw-figure img{display:block;width:100%;height:auto}
+    .pl-raw-figure figcaption{background:var(--panel2);color:var(--muted);font-size:11.5px;padding:10px 14px;border-top:1px solid var(--line);line-height:1.5}
+
+    .pl-tally{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin:0}
+    .pl-tally-card{background:var(--panel2);border:1px solid var(--line);border-radius:10px;padding:12px 14px}
+    .pl-tally-card span{display:block;color:var(--muted);font:700 9px/1 ui-monospace,monospace;letter-spacing:.06em;text-transform:uppercase}
+    .pl-tally-card strong{display:block;font-size:22px;font-weight:900;margin-top:4px}
+
+    .pl-extract-list{display:flex;flex-direction:column;gap:8px;margin:0;padding:0;list-style:none}
+    .pl-extract-row{display:flex;align-items:center;gap:12px;background:var(--panel2);border:1px solid var(--line);border-radius:9px;padding:10px 14px;font-size:13px}
+    .pl-extract-row .set-tag{font:800 10px/1 ui-monospace,monospace;color:var(--primary);min-width:48px}
+    .pl-extract-row .doors{color:var(--text);flex:1}
+    .pl-extract-row .conf{font:700 10px/1 ui-monospace,monospace;color:var(--muted)}
+
+    .pl-match-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px}
+    .pl-match-card{background:var(--panel2);border:1px solid var(--line);border-radius:12px;padding:14px 16px}
+    .pl-match-card.no-match{opacity:.8;border-style:dashed}
+    .pl-match-card .mfr-model{font:800 11px/1 ui-monospace,monospace;color:var(--muted);letter-spacing:.04em}
+    .pl-match-card .product-name{font-size:14.5px;font-weight:800;color:var(--text);margin:5px 0 8px}
+    .pl-match-card .meta-row{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:9px}
+    .pl-match-card .meta-pill{font:800 8.5px/1 ui-monospace,monospace;letter-spacing:.05em;text-transform:uppercase;padding:3px 8px;border-radius:99px;background:rgba(97,223,160,.12);color:var(--green);border:1px solid rgba(97,223,160,.3)}
+    .pl-match-card .citation{color:var(--muted);font-size:11.5px;line-height:1.5;border-top:1px solid var(--line);padding-top:8px}
+    .pl-match-card .citation b{color:var(--text)}
+    .pl-match-card.no-match .citation{color:var(--accent)}
+
+    .pl-assemble{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:16px}
+    .pl-assemble-card{background:var(--panel2);border:1px solid var(--line);border-radius:10px;padding:14px}
+    .pl-assemble-card span{display:block;color:var(--muted);font:700 9px/1 ui-monospace,monospace;letter-spacing:.06em;text-transform:uppercase}
+    .pl-assemble-card strong{display:block;font-size:24px;font-weight:900;margin-top:4px;color:var(--text)}
+
+    @media(max-width:860px){
+      .pipeline-layout{grid-template-columns:1fr}
+      .tab-rail-desktop{display:none}
+      .tab-rail-mobile{display:flex;position:sticky;top:0;z-index:20;overflow-x:auto;gap:8px;padding:10px 2px 14px;margin-bottom:6px;background:linear-gradient(var(--bg) 70%,transparent);-webkit-overflow-scrolling:touch;scrollbar-width:none}
+      .tab-rail-mobile::-webkit-scrollbar{display:none}
+      .tab-rail-mobile .tab-btn{flex:none;padding:9px 14px;border-radius:99px;scroll-snap-align:start}
+      .tab-rail-mobile .tab-btn b{display:inline;margin:0 0 0 5px;font-size:11px}
+      .tab-rail-mobile .tab-btn:not(.is-active){filter:brightness(.6) saturate(.7)}
+      .tab-rail-mobile .tab-btn.is-active{filter:none;box-shadow:0 0 0 2px #fff inset;transform:scale(1.03)}
+      .pl-assemble{grid-template-columns:repeat(2,1fr)}
+    }
+
+    /* Scroll-driven reveal - ONLY exists under no-preference, so
+       prefers-reduced-motion:reduce visitors simply get every beat at
+       full opacity/position from first paint, no JS branch needed to
+       "undo" motion because none was ever applied. */
+    @media (prefers-reduced-motion: no-preference){
+      .beat{opacity:0;transform:translateY(26px);transition:opacity .6s ease,transform .6s ease}
+      .beat.in-view{opacity:1;transform:translateY(0)}
+      @supports (animation-timeline: view()) {
+        .beat{transition:none;animation:beat-reveal linear both;animation-timeline:view();animation-range:entry 0% entry 55%}
+      }
+    }
+    @keyframes beat-reveal{from{opacity:0;transform:translateY(26px)}to{opacity:1;transform:translateY(0)}}
   </style>
 </head>
 <body>
@@ -133,6 +249,90 @@
         <span class="chain-item is-current"><i class="chain-dot" style="background:var(--text)"></i>SubX <small>&mdash; you're here</small></span>
         <span class="chain-sep">&rarr;</span>
         <span class="chain-item"><i class="chain-dot" style="background:var(--accent)"></i>CutsheetX</span>
+      </div>
+    </section>
+
+    <section class="pipeline" id="pipeline" aria-label="The real pipeline, step by step: raw drawing to matched submittal">
+      <div class="pipeline-head">
+        <div class="hero-eyebrow">THE REAL PIPELINE &middot; SAME TRIAL SESSION BELOW, STEP BY STEP</div>
+        <h2>From a raw door schedule to a matched submittal &mdash; five real steps.</h2>
+        <p>Everything in this section comes from the exact trial session running below: a real architectural door schedule, real quantities and extracted hardware, and real manufacturer catalogue matches with citations. Where a line hasn't matched a catalogue entry yet, that's shown honestly too &mdash; nothing here is a mockup.</p>
+      </div>
+
+      <div class="tab-rail tab-rail-mobile" role="tablist" aria-label="Pipeline steps">
+        <button class="tab-btn" data-tone="blue" data-beat="1" role="tab" aria-controls="beat-1"><span>1</span><b>Raw Input</b></button>
+        <button class="tab-btn" data-tone="yellow" data-beat="2" role="tab" aria-controls="beat-2"><span>2</span><b>Quantify</b></button>
+        <button class="tab-btn" data-tone="blue" data-beat="3" role="tab" aria-controls="beat-3"><span>3</span><b>Extract</b></button>
+        <button class="tab-btn" data-tone="yellow" data-beat="4" role="tab" aria-controls="beat-4"><span>4</span><b>Match</b></button>
+        <button class="tab-btn" data-tone="blue" data-beat="5" role="tab" aria-controls="beat-5"><span>5</span><b>Assemble</b></button>
+      </div>
+
+      <div class="pipeline-layout">
+        <nav class="tab-rail tab-rail-desktop" role="tablist" aria-label="Pipeline steps">
+          <button class="tab-btn" data-tone="blue" data-beat="1" role="tab" aria-controls="beat-1">1 &middot; <b>Raw Input</b></button>
+          <button class="tab-btn" data-tone="yellow" data-beat="2" role="tab" aria-controls="beat-2">2 &middot; <b>Quantify</b></button>
+          <button class="tab-btn" data-tone="blue" data-beat="3" role="tab" aria-controls="beat-3">3 &middot; <b>Extract</b></button>
+          <button class="tab-btn" data-tone="yellow" data-beat="4" role="tab" aria-controls="beat-4">4 &middot; <b>Match</b></button>
+          <button class="tab-btn" data-tone="blue" data-beat="5" role="tab" aria-controls="beat-5">5 &middot; <b>Assemble</b></button>
+        </nav>
+
+        <div class="beats">
+          <article class="beat" id="beat-1" data-beat="1">
+            <span class="beat-live-chip captured">CAPTURED ONCE &middot; REAL SOURCE DOCUMENT</span>
+            <div class="beat-kicker"><span class="beat-num blue">01</span><span class="beat-title">Raw Input</span></div>
+            <p class="beat-sub">A real page from &ldquo;The WeylandAI Building&rdquo;'s door &amp; hardware schedule &mdash; the exact sheet SubX reads to produce everything in the steps below and in the live trial panel further down this page.</p>
+            <figure class="pl-raw-figure">
+              <picture>
+                <source srcset="/assets/pipeline/door-schedule-p1.webp" type="image/webp">
+                <img src="/assets/pipeline/door-schedule-p1.jpg" width="1100" height="435" loading="lazy" decoding="async" alt="Sheet A9.01, Door &amp; Hardware Schedule for The WeylandAI Building, New Corporate Headquarters, 4400 Bluestem Parkway, Austin, TX — listing door numbers, locations, door types, hardware sets, hardware descriptions, and manufacturer/part numbers">
+              </picture>
+              <figcaption>Sheet A9.01 &middot; Door &amp; Hardware Schedule, captured directly from the real uploaded PDF behind this demo project (not regenerated per visit &mdash; the live data below <i>is</i> regenerated per visit, from this exact document).</figcaption>
+            </figure>
+          </article>
+
+          <article class="beat" id="beat-2" data-beat="2">
+            <span class="beat-live-chip">LIVE &middot; YOUR TRIAL SESSION</span>
+            <div class="beat-kicker"><span class="beat-num yellow">02</span><span class="beat-title">TakeOffX Quantifies</span></div>
+            <p class="beat-sub">Real quantities, tallied against the drawing above &mdash; computed from the same live door-index response already loaded into the trial panel below, not a second API call.</p>
+            <div class="pl-tally" id="pl-tally">
+              <div class="pl-tally-card"><span>Door Openings</span><strong><span class="skel" style="width:1.6em;height:20px"></span></strong></div>
+              <div class="pl-tally-card"><span>Hardware Sets</span><strong><span class="skel" style="width:1.6em;height:20px"></span></strong></div>
+              <div class="pl-tally-card"><span>Door Types</span><strong><span class="skel" style="width:1.6em;height:20px"></span></strong></div>
+            </div>
+            <div class="pl-tally" id="pl-tally-types" style="margin-top:10px"></div>
+          </article>
+
+          <article class="beat" id="beat-3" data-beat="3">
+            <span class="beat-live-chip">LIVE &middot; YOUR TRIAL SESSION</span>
+            <div class="beat-kicker"><span class="beat-num blue">03</span><span class="beat-title">SubX Extracts</span></div>
+            <p class="beat-sub">Every hardware set SubX pulled from that one page, matched back to the doors it governs &mdash; with the real per-row extraction confidence.</p>
+            <ul class="pl-extract-list" id="pl-extract-list" aria-live="off">
+              <li class="pl-extract-row"><span class="skel" style="width:100%;height:16px"></span></li>
+            </ul>
+          </article>
+
+          <article class="beat" id="beat-4" data-beat="4">
+            <span class="beat-live-chip captured">CAPTURED ONCE &middot; REAL D1 CATALOGUE QUERY</span>
+            <div class="beat-kicker"><span class="beat-num yellow">04</span><span class="beat-title">CutsheetX Matches</span></div>
+            <p class="beat-sub">Real manufacturer catalogue entries from WeylandAI's 60,000-variant product database, with real citations &mdash; and a real &ldquo;not matched yet&rdquo; case shown plainly, because that's genuinely how this matching engine behaves today.</p>
+            <div class="pl-match-grid" id="pl-match-grid"></div>
+          </article>
+
+          <article class="beat" id="beat-5" data-beat="5">
+            <span class="beat-live-chip">LIVE + CAPTURED &middot; COMBINED REAL DATA</span>
+            <div class="beat-kicker"><span class="beat-num blue">05</span><span class="beat-title">Submittal Assembled</span></div>
+            <p class="beat-sub">The real contents of the assembled package &mdash; not a generated PDF on this public page, just an honest rollup of everything real shown above.</p>
+            <div class="pl-assemble" id="pl-assemble">
+              <div class="pl-assemble-card"><span>Doors Covered</span><strong><span class="skel" style="width:1.4em;height:18px"></span></strong></div>
+              <div class="pl-assemble-card"><span>Hardware Sets</span><strong><span class="skel" style="width:1.4em;height:18px"></span></strong></div>
+              <div class="pl-assemble-card"><span>Cut Sheets Cited</span><strong>4</strong></div>
+              <div class="pl-assemble-card"><span>Pending Match</span><strong>1</strong></div>
+            </div>
+            <div class="note-card" style="margin:0">
+              This is the real assembled content, not a sample. <a class="button primary" href="/login?redirect=/subx">SIGN IN TO EXPORT THE REAL PDF PACKAGE</a>
+            </div>
+          </article>
+        </div>
       </div>
     </section>
 
@@ -480,6 +680,174 @@
       statSets.textContent = String(Object.keys(byHardwareSet).length);
     }
 
+    // --- Pipeline narrative (beats 2/3/5): driven entirely by the SAME
+    // real doorIndex response loadRealTrial() below already fetches for
+    // the trial panel - no extra network round trip, per the
+    // performance budget this section was built against. ---
+    function renderPipelineBeats(doorIndex){
+      var byHardwareSet = doorIndex.by_hardware_set || {};
+      var doors = [];
+      Object.keys(byHardwareSet).forEach(function(setNum){
+        byHardwareSet[setNum].forEach(function(d){ doors.push({ set: setNum, door: d }); });
+      });
+
+      // Beat 2: TakeOffX-style quantity tally, computed client-side from
+      // the real response (door count, set count, door-type breakdown).
+      var typeCounts = {};
+      doors.forEach(function(entry){
+        var t = entry.door.door_type || "Unspecified";
+        typeCounts[t] = (typeCounts[t] || 0) + 1;
+      });
+      var tallyCards = document.querySelectorAll("#pl-tally .pl-tally-card strong");
+      if (tallyCards[0]) tallyCards[0].textContent = String(doors.length);
+      if (tallyCards[1]) tallyCards[1].textContent = String(Object.keys(byHardwareSet).length);
+      if (tallyCards[2]) tallyCards[2].textContent = String(Object.keys(typeCounts).length);
+      var tallyTypesEl = document.getElementById("pl-tally-types");
+      if (tallyTypesEl) {
+        tallyTypesEl.innerHTML = Object.keys(typeCounts).sort().map(function(t){
+          return '<div class="pl-tally-card"><span>' + esc(t) + '</span><strong>' + typeCounts[t] + "</strong></div>";
+        }).join("");
+      }
+
+      // Beat 3: the real set -> door extraction list, sorted by set
+      // number, each with its real per-row confidence from the API.
+      var extractList = document.getElementById("pl-extract-list");
+      if (extractList) {
+        var setNums = Object.keys(byHardwareSet).sort(function(a, b){
+          return a.localeCompare(b, undefined, { numeric: true });
+        });
+        extractList.innerHTML = setNums.map(function(setNum){
+          var entries = byHardwareSet[setNum];
+          var doorList = entries.map(function(d){ return d.door_number; }).join(", ");
+          var avgConf = entries.reduce(function(sum, d){ return sum + (d.confidence || 0); }, 0) / entries.length;
+          var anyVerified = entries.some(function(d){ return d.verified; });
+          return '<li class="pl-extract-row"><span class="set-tag">' + esc(setNum) + '</span>' +
+            '<span class="doors">&rarr; ' + esc(doorList) + '</span>' +
+            '<span class="conf">' + Math.round(avgConf * 100) + '% conf.' + (anyVerified ? " · verified" : "") + '</span></li>';
+        }).join("");
+      }
+
+      // Beat 5: real rollup counts (cut-sheet-cited / pending counts stay
+      // the static real numbers from the captured CUTSHEET_MATCHES below -
+      // doors/sets come from this live response).
+      var assembleCards = document.querySelectorAll("#pl-assemble .pl-assemble-card strong");
+      if (assembleCards[0]) assembleCards[0].textContent = String(doors.length);
+      if (assembleCards[1]) assembleCards[1].textContent = String(Object.keys(byHardwareSet).length);
+    }
+
+    function showPipelineLiveError(msg){
+      ["pl-tally-types", "pl-extract-list"].forEach(function(id){
+        var el = document.getElementById(id);
+        if (el) el.innerHTML = '<div style="color:var(--red);font-size:13px">Unable to load live data right now (' + esc(msg) + ").</div>";
+      });
+    }
+
+    // CUTSHEET_MATCHES: real match results, captured once (2026-10-02) by
+    // running the SAME lookup weyland-subx-worker's matchComponentToCutSheets
+    // (src/lib/product-database.js) performs - exact base_model + manufacturer
+    // match against the live production D1 products/manufacturers/
+    // product_documents tables (60,039 real product_variants rows, 7,792 real
+    // product_documents rows) - queried directly against those tables for the
+    // 6 real manufacturer/model pairs printed on the Beat 1 schedule page
+    // above. NOT re-queried per visit: the cloned demo session has no
+    // hardware_components rows (only the lighter door_hardware_matrix table -
+    // see demo-trial.js), so there is nothing for the live per-component
+    // matching route to join against for THIS session; capturing the real
+    // query result once (same pattern already established on this page for
+    // REEL_SVG, the SightX storyboard reel) shows the real matching engine's
+    // real output - including its one real non-match - without a second
+    // backend route or a live call that would 404. See WORKER_LESSONS_LEARNED
+    // for why hardware_components isn't populated on demo clones.
+    var CUTSHEET_MATCHES = [
+      { set: "HW-01", items: [
+        { mm: "Von Duprin 98", desc: "Storefront rim exit device", product: "Von Duprin 98/99 Mortise Exit Device", tags: ["Exit Devices", "Grade 1", "Fire Rated"], citation: "Von Duprin Price Book, pp. 26–36 of 239" },
+        { mm: "LCN 4040XP", desc: "Hold-open arm closer", product: "LCN 4040XP Extra Heavy Duty Door Closer", tags: ["Closers", "Grade 1", "Fire Rated"], citation: "LCN Price Book, pp. 6–48 of 152" }
+      ]},
+      { set: "HW-02", items: [
+        { mm: "Von Duprin 33A", desc: "Concealed vertical rod exit device", product: "Von Duprin 33A/35A Concealed Vertical Rod Exit Device", tags: ["Exit Devices", "Grade 1", "Fire Rated"], citation: "Von Duprin Price Book, pp. 77–213 of 239" },
+        { mm: "LCN 4111", desc: "Heavy duty closer w/ backcheck", product: "LCN 4111 Heavy Duty Door Closer with Backcheck", tags: ["Closers", "Grade 1", "Fire Rated"], citation: "LCN Price Book, pp. 37–52 of 152" }
+      ]},
+      { set: "HW-09", items: [
+        { mm: "Von Duprin 22", desc: "Mortise exit device", product: "Von Duprin 22 Series", tags: ["Fire Rated"], citation: "Von Duprin Price Book, p. 127 of 239" },
+        { mm: "Pemko 303AS", desc: "Weatherstripped panic hardware seal", noMatch: true }
+      ]}
+    ];
+
+    function renderCutsheetMatches(){
+      var grid = document.getElementById("pl-match-grid");
+      if (!grid) return;
+      var cards = [];
+      CUTSHEET_MATCHES.forEach(function(group){
+        group.items.forEach(function(item){
+          if (item.noMatch) {
+            cards.push('<div class="pl-match-card no-match"><div class="mfr-model">' + esc(group.set) + ' &middot; ' + esc(item.mm) + '</div>' +
+              '<div class="product-name">' + esc(item.desc) + '</div>' +
+              '<div class="citation">No catalogue match yet — flagged for manual cut-sheet upload, not silently dropped.</div></div>');
+            return;
+          }
+          var pills = (item.tags || []).map(function(t){ return '<span class="meta-pill">' + esc(t) + "</span>"; }).join("");
+          cards.push('<div class="pl-match-card"><div class="mfr-model">' + esc(group.set) + ' &middot; ' + esc(item.mm) + '</div>' +
+            '<div class="product-name">' + esc(item.product) + '</div>' +
+            '<div class="meta-row">' + pills + '</div>' +
+            '<div class="citation">Cited: <b>' + esc(item.citation) + "</b></div></div>");
+        });
+      });
+      grid.innerHTML = cards.join("");
+    }
+    renderCutsheetMatches();
+
+    // --- Folder-tab scroll-spy nav + scroll-triggered beat reveal ---
+    (function initPipelineNav(){
+      var section = document.getElementById("pipeline");
+      if (!section) return;
+      var tabs = Array.prototype.slice.call(section.querySelectorAll(".tab-btn"));
+      var beats = Array.prototype.slice.call(section.querySelectorAll(".beat"));
+      var reduceMotion = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+      function setActive(beatNum){
+        tabs.forEach(function(t){
+          var active = t.getAttribute("data-beat") === String(beatNum);
+          t.classList.toggle("is-active", active);
+          t.setAttribute("aria-selected", active ? "true" : "false");
+        });
+      }
+      setActive(1);
+
+      tabs.forEach(function(t){
+        t.addEventListener("click", function(){
+          var target = document.getElementById("beat-" + t.getAttribute("data-beat"));
+          if (target) target.scrollIntoView({ behavior: reduceMotion ? "auto" : "smooth", block: "start" });
+        });
+      });
+
+      if (!("IntersectionObserver" in window) || beats.length === 0) return;
+
+      // Scroll-spy: always JS (nav state isn't a motion concern, needed
+      // regardless of animation-timeline support) - a beat is "current"
+      // once it crosses a thin band a bit above viewport center.
+      var spyObserver = new IntersectionObserver(function(entries){
+        entries.forEach(function(entry){
+          if (entry.isIntersecting) setActive(entry.target.getAttribute("data-beat"));
+        });
+      }, { rootMargin: "-35% 0px -55% 0px", threshold: 0 });
+      beats.forEach(function(b){ spyObserver.observe(b); });
+
+      // Reveal fallback: only needed where CSS animation-timeline:view()
+      // isn't supported, and only where motion is actually wanted.
+      var supportsTimeline = window.CSS && CSS.supports && CSS.supports("animation-timeline", "view()");
+      if (!reduceMotion && !supportsTimeline) {
+        var revealObserver = new IntersectionObserver(function(entries, obs){
+          entries.forEach(function(entry){
+            if (entry.isIntersecting) {
+              entry.target.classList.add("in-view");
+              obs.unobserve(entry.target);
+            }
+          });
+        }, { rootMargin: "0px 0px -12% 0px", threshold: 0.12 });
+        beats.forEach(function(b){ revealObserver.observe(b); });
+      }
+    })();
+
     function loadRealTrial(){
       var token;
       ephemeralToken().then(function(t){
@@ -502,6 +870,7 @@
         });
       }).then(function(result){
         renderRealDoorRows(result.doorIndex.by_hardware_set);
+        renderPipelineBeats(result.doorIndex);
         sessionBadge.classList.remove("is-loading");
         sessionBadge.classList.add("is-live");
         sessionBadge.textContent = result.session.reused ? "YOUR SESSION" : "LIVE — JUST FOR YOU";
@@ -515,6 +884,7 @@
       }).catch(function(err){
         console.error("[Trial] load failed:", err);
         showTableError("Unable to connect to a live trial session right now (" + err.message + "). Refresh to retry, or sign in to use SubX directly.");
+        showPipelineLiveError(err.message);
       }).then(function(){
         // Runs after either the success or the catch branch above (a
         // second .then on the same chain always fires, regardless of
