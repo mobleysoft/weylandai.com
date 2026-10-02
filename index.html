@@ -325,8 +325,8 @@
             <div class="pl-assemble" id="pl-assemble">
               <div class="pl-assemble-card"><span>Doors Covered</span><strong><span class="skel" style="width:1.4em;height:18px"></span></strong></div>
               <div class="pl-assemble-card"><span>Hardware Sets</span><strong><span class="skel" style="width:1.4em;height:18px"></span></strong></div>
-              <div class="pl-assemble-card"><span>Cut Sheets Cited</span><strong>4</strong></div>
-              <div class="pl-assemble-card"><span>Pending Match</span><strong>1</strong></div>
+              <div class="pl-assemble-card"><span>Cut Sheets Cited</span><strong id="pl-cited-count"><span class="skel" style="width:1.4em;height:18px"></span></strong></div>
+              <div class="pl-assemble-card"><span>Pending Match</span><strong id="pl-pending-count"><span class="skel" style="width:1.4em;height:18px"></span></strong></div>
             </div>
             <div class="note-card" style="margin:0">
               This is the real assembled content, not a sample. <a class="button primary" href="/login?redirect=/subx">SIGN IN TO EXPORT THE REAL PDF PACKAGE</a>
@@ -777,14 +777,17 @@
       var grid = document.getElementById("pl-match-grid");
       if (!grid) return;
       var cards = [];
+      var matchedCount = 0, noMatchCount = 0;
       CUTSHEET_MATCHES.forEach(function(group){
         group.items.forEach(function(item){
           if (item.noMatch) {
+            noMatchCount++;
             cards.push('<div class="pl-match-card no-match"><div class="mfr-model">' + esc(group.set) + ' &middot; ' + esc(item.mm) + '</div>' +
               '<div class="product-name">' + esc(item.desc) + '</div>' +
               '<div class="citation">No catalogue match yet — flagged for manual cut-sheet upload, not silently dropped.</div></div>');
             return;
           }
+          matchedCount++;
           var pills = (item.tags || []).map(function(t){ return '<span class="meta-pill">' + esc(t) + "</span>"; }).join("");
           cards.push('<div class="pl-match-card"><div class="mfr-model">' + esc(group.set) + ' &middot; ' + esc(item.mm) + '</div>' +
             '<div class="product-name">' + esc(item.product) + '</div>' +
@@ -793,6 +796,10 @@
         });
       });
       grid.innerHTML = cards.join("");
+      var citedEl = document.getElementById("pl-cited-count");
+      var pendingEl = document.getElementById("pl-pending-count");
+      if (citedEl) citedEl.textContent = String(matchedCount);
+      if (pendingEl) pendingEl.textContent = String(noMatchCount);
     }
     renderCutsheetMatches();
 
