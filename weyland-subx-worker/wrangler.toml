@@ -58,3 +58,17 @@ bucket_name = "subx-outputs"
 type = "Text"
 globs = ["**/*.html"]
 fallthrough = true
+
+# Client-side OCR/grid-extraction assets (pdf.js for rendering, tesseract-wasm
+# for OCR - both real, vendored, not new deps) served to the browser so
+# hardware_schedule/door_schedule extraction runs entirely in the customer's
+# own tab: zero Cloudflare CPU spent on rendering/OCR, no per-page CPU
+# ceiling, works in a field/disconnected environment once the page is
+# loaded. All renamed to .bin - Wrangler's built-in module handling silently
+# claims .wasm/.mjs/.pdf-shaped extensions even with an explicit custom rule
+# targeting them (confirmed live 2026-10-01: produced a 0-byte response with
+# no error) - .bin has no built-in meaning and is the proven-reliable fix.
+[[rules]]
+type = "Data"
+globs = ["assets/client-ocr/*.bin"]
+fallthrough = true

@@ -29,7 +29,7 @@
 
 import puppeteer from "@cloudflare/puppeteer";
 
-export async function renderRegionAt600DPI2(pdfBuffer, pageNumber, boundingBox, env2 = null, dpi = 600, pdfUrl = null) {
+export async function renderRegionAt600DPI2(pdfBuffer, pageNumber, boundingBox, env2 = null, dpi = 600, pdfUrl = null, overlay = null) {
   const DPI = dpi;
   const SCALE = DPI / 72;
   console.log("[Region Renderer 600DPI] " + "=".repeat(50));
@@ -80,7 +80,7 @@ export async function renderRegionAt600DPI2(pdfBuffer, pageNumber, boundingBox, 
     }
     await page.waitForFunction("window.__pdfjsReady === true", { timeout: 15e3 });
     console.log("[Region Renderer 600DPI] PDF.js loaded in browser context");
-    const result = await page.evaluate(async (pdfB64, pdfFetchUrl, pgNum, bbox, scale2) => {
+    const result = await page.evaluate(async (pdfB64, pdfFetchUrl, pgNum, bbox, scale2, overlayArg) => {
       try {
         let doc;
         if (pdfFetchUrl) {
@@ -137,6 +137,37 @@ export async function renderRegionAt600DPI2(pdfBuffer, pageNumber, boundingBox, 
         fullCtx.fillStyle = "#FFFFFF";
         fullCtx.fillRect(0, 0, fullW, fullH);
         await pg.render({ canvasContext: fullCtx, viewport, intent: "print" }).promise;
+        // Real bug fixed 2026-10-02: getOrRenderPage's page-preview flow
+        // needs an optional highlight rectangle drawn on the page (the
+        // candidate region it's previewing) - the OLD standalone
+        // drawBoundingBoxOverlay helper (hardware-schedule-candidates.js)
+        // tried to do this with `new OffscreenCanvas(...)` in the bare
+        // Workers isolate, which doesn't have it at all (confirmed live:
+        // "ReferenceError: OffscreenCanvas is not defined"). Drawing it
+        // HERE instead, inside this function's real headless-browser
+        // context (where OffscreenCanvas genuinely exists), avoids that
+        // entirely - same real rendering pass, not a second broken one.
+        if (overlayArg && overlayArg.box) {
+          let ob = overlayArg.box;
+          if (typeof ob.x_percent === "number") {
+            ob = { x: ob.x_percent * fullW, y: ob.y_percent * fullH, width: ob.width_percent * fullW, height: ob.height_percent * fullH };
+          } else if (ob.unit === "pdf_points_72dpi") {
+            // Raw x/y/width/height with no enforced DPI convention from
+            // whatever caller created the candidate - scale2 (this
+            // function's own render scale, e.g. 600/72 at the default
+            // dpi=600) converts real PDF-point coordinates into this
+            // render's actual pixel space, matching the one real
+            // precedent for this field (the old, never-successfully-
+            // exercised overlay code used the same 600/72 assumption).
+            ob = { x: ob.x * scale2, y: ob.y * scale2, width: ob.width * scale2, height: ob.height * scale2 };
+          }
+          fullCtx.strokeStyle = overlayArg.color || "#6B7280";
+          fullCtx.lineWidth = 4;
+          fullCtx.setLineDash([15, 10]);
+          fullCtx.strokeRect(ob.x, ob.y, ob.width, ob.height);
+          fullCtx.fillStyle = (overlayArg.color || "#6B7280") + "1A";
+          fullCtx.fillRect(ob.x, ob.y, ob.width, ob.height);
+        }
         const x = Math.max(0, Math.min(Math.floor(bbox.x), fullW - 1));
         const y = Math.max(0, Math.min(Math.floor(bbox.y), fullH - 1));
         const w = Math.max(10, Math.min(Math.floor(bbox.width), fullW - x));
@@ -205,7 +236,7 @@ export async function renderRegionAt600DPI2(pdfBuffer, pageNumber, boundingBox, 
       } catch (err) {
         return { error: err.message || String(err) };
       }
-    }, pdfBase64, pdfUrl, pageNumber, boundingBox, SCALE);
+    }, pdfBase64, pdfUrl, pageNumber, boundingBox, SCALE, overlay);
     if (result.error) {
       throw new Error("Browser rendering failed: " + result.error);
     }

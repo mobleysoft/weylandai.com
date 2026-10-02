@@ -42,6 +42,7 @@ import { detectTextLayer, extractPdfBookmarks } from "./pdf-metadata.js";
 import { materializeAffirmedGroup } from "./hardware-extraction-materialize.js";
 import { enrichComponentsWithPricing } from "./pricing.js";
 import { extractHardwareGroupsViaEmbeddedGofaineat } from "./hardware-extraction-vision-dispatch.js";
+import { runEmbeddedGofaineatExtraction, getSessionStatus } from "./hardware-extraction-pipeline.js";
 
 // Tier 2 disabled - see file header. Kept as a function (not inlined
 // `null`) so extractSinglePage's real call-and-check shape below is
@@ -126,16 +127,72 @@ async function extractWithIsolatedPdfMode(pdfBuffer, pageNumber, env2) {
 // No page isolation needed here (unlike the Claude tiers below): the OCR
 // step renders the target page directly off the full pdfBuffer via
 // weyland-ocr-worker's PDFium rasterizer, given just the page number.
-async function extractWithEmbeddedGofaineatMode(pdfBuffer, pageNumber, env2) {
+//
+// REAL BUG FIXED 2026-10-01: this function used to call
+// extractHardwareGroupsViaEmbeddedGofaineat() unconditionally, regardless
+// of what kind of schedule the session actually was - meaning the real,
+// live /api/hardware-schedule/session/:id/page/:pageNum endpoint (the one
+// Mobley's subx_virtual_user.py validated against) NEVER reached the
+// door-schedule contract (extractDoorScheduleViaEmbeddedGofaineat / the
+// new deterministic grid extractor), even for a real door-schedule PDF
+// (GCCFullDoorSchedule.pdf) - every page failed, confirmed live. Fixed by
+// reusing the SAME scheduleType dispatch hardware-extraction-pipeline.js's
+// runEmbeddedGofaineatExtraction() already does correctly for the
+// batch-extract/extract-affirmed flows.
+//
+// Schedule-type resolution, in priority order (per direct instruction to
+// prefer the existing real per-page detector over a manual global flag):
+//   1. schedule_region_candidates row for THIS exact page_number - real,
+//      per-page auto-detection from POST .../detect-schedules (an OCR
+//      title-scan via weyland-ocr-worker, see hardware-schedule-extract.js
+//      lines ~486-512) - more accurate than a single session-wide dropdown
+//      value, and correct even for a mixed document (e.g. a door schedule
+//      on page 4 of an otherwise non-schedule set). Its bounding_box is
+//      honestly a full-page placeholder today (detection_method:
+//      "ocr_title_scan_pdfium" never populated real sub-page coordinates -
+//      see that route's own comment), so this only uses the per-page
+//      schedule_type, not a crop region - there isn't a real one yet.
+//   2. session.document_type - the manual dropdown on subx-app.html's
+//      upload form (default "hardware_schedule"), used as a fallback for
+//      sessions that never ran /detect-schedules (the single-page route
+//      doesn't require that step - it's meant for ad hoc one-page pulls).
+async function resolvePageScheduleType(sessionId, pageNumber, session, env2) {
+  try {
+    const candidate = await env2.DB.prepare(`
+      SELECT schedule_type FROM schedule_region_candidates
+      WHERE session_id = ? AND page_number = ?
+      ORDER BY detection_confidence DESC
+      LIMIT 1
+    `).bind(sessionId, pageNumber).first();
+    if (candidate && candidate.schedule_type) {
+      return { scheduleType: candidate.schedule_type, source: "detected_candidate" };
+    }
+  } catch (e) {
+    console.warn(`[Hardware Extractor] schedule_region_candidates lookup failed (non-blocking): ${e.message}`);
+  }
+  return { scheduleType: (session && session.document_type) || "hardware_schedule", source: "session_document_type" };
+}
+
+async function extractWithEmbeddedGofaineatMode(pdfBuffer, pageNumber, env2, sessionId, startRow = 0) {
   const totalPages = (await PDFDocument.load(pdfBuffer)).getPageCount();
   if (pageNumber < 1 || pageNumber > totalPages) {
     throw new Error(`Page ${pageNumber} out of range (PDF has ${totalPages} pages)`);
   }
-  console.log(`[Hardware Extractor] Using EMBEDDED_GOFAINEAT mode (OCR + local Qwen, no Anthropic key) for page ${pageNumber}/${totalPages}...`);
+  if (sessionId) {
+    const session = await getSessionStatus(sessionId, env2);
+    const { scheduleType, source } = await resolvePageScheduleType(sessionId, pageNumber, session, env2);
+    const tenantId = session && session.tenant_id;
+    console.log(`[Hardware Extractor] Using EMBEDDED_GOFAINEAT mode (schedule_type=${scheduleType}, source=${source}, startRow=${startRow}) for page ${pageNumber}/${totalPages}...`);
+    return await runEmbeddedGofaineatExtraction(scheduleType, sessionId, tenantId, pdfBuffer, null, pageNumber, totalPages, env2, startRow);
+  }
+  // No sessionId available (a caller outside the session-based page route) -
+  // fall back to the original hardware-groups-only behavior rather than
+  // guessing a schedule type with no session row to read it from.
+  console.log(`[Hardware Extractor] Using EMBEDDED_GOFAINEAT mode (OCR + local Qwen, no Anthropic key, no sessionId - defaulting to hardware_schedule) for page ${pageNumber}/${totalPages}...`);
   return await extractHardwareGroupsViaEmbeddedGofaineat(pdfBuffer, pageNumber, totalPages, env2);
 }
 
-export async function extractSinglePage(pdfBuffer, pageNumber, env2) {
+export async function extractSinglePage(pdfBuffer, pageNumber, env2, sessionId, startRow = 0) {
   console.log(`[Hardware Extractor] EXTRACTING PAGE ${pageNumber}`);
   // Real account state today (and, per direct instruction, permanently
   // going forward): ANTHROPIC_API_KEY is not configured on this worker,
@@ -149,7 +206,7 @@ export async function extractSinglePage(pdfBuffer, pageNumber, env2) {
   // below and are used automatically - this only changes routing, it
   // doesn't delete the Claude-vision code path.
   if (!env2.ANTHROPIC_API_KEY) {
-    return await extractWithEmbeddedGofaineatMode(pdfBuffer.slice(0), pageNumber, env2);
+    return await extractWithEmbeddedGofaineatMode(pdfBuffer.slice(0), pageNumber, env2, sessionId, startRow);
   }
   console.log(`[Hardware Extractor] ANTHROPIC_API_KEY configured - using Claude vision (ISOLATED MODE)`);
   // Fixed 2026-09-09 upstream (see header): each fallback gets its own

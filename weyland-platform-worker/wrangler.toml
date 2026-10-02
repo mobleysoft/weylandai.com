@@ -229,3 +229,24 @@ zone_name = "weylandai.com"
 # Worker, add the [[routes]] entry below, and verify a live end-to-end
 # delivery - not something to do incidentally as part of provisioning a
 # secret.
+
+# STAGE 4 (added 2026-10-02, live): /wire and /api/wire/* - WeylandAI
+# Wire, the first real pilot tenant of mobleyreport.com's
+# "provenance-first wire" template (see src/routes/wire.js's own header
+# and src/lib/wire-tenant.js for the real RSS feeds / deterministic
+# briefing engine / reports-wire content this serves). Checkout for its
+# $49.00/mo real recurring Stripe price reuses STAGE 3a's existing
+# POST /api/billing/checkout/create (already covered by the
+# weylandai.com/api/billing/* route above) via the "weyland-wire-seat"
+# catalog entry - no new billing route needed, only the page/data routes
+# below. GET /api/wire/verify checks entitlement directly against
+# vendyai (same pattern as mobley-venture-fleet-a's own verifyPurchase())
+# rather than depending on STAGE 3b's not-yet-cut-over webhook/KV-cache
+# path - deliberately decoupled from that gap.
+[[routes]]
+pattern = "weylandai.com/wire"
+zone_name = "weylandai.com"
+
+[[routes]]
+pattern = "weylandai.com/api/wire/*"
+zone_name = "weylandai.com"

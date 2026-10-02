@@ -35,6 +35,7 @@ export function registerHardwareSchedulePageExtractRoutes(router, {
   extractSinglePage,
   resolveExtractionContract,
   savePageExtraction2,
+  writeDoorScheduleEntries,
 }) {
 router.get("/api/hardware-schedule/session/:sessionId/page/:pageNum", async (request2, env2) => {
   const { error: error4, user } = await authenticate(request2, env2);
@@ -50,7 +51,19 @@ router.get("/api/hardware-schedule/session/:sessionId/page/:pageNum", async (req
       validationError.retryable = false;
       throw validationError;
     }
-    console.log(`[Hardware Page] Extracting page ${pageNum} for session ${sessionId}`);
+    // startRow paginates a dense table's per-row OCR loop across multiple
+    // requests (real fix 2026-10-02 for Cloudflare's hard 30s CPU ceiling
+    // on a real 39-row door schedule - see hardware-extraction-vision-
+    // dispatch.js's extractGridDoors header comment). A continuation call
+    // (startRow > 0) must bypass the "already extracted this page" cache
+    // below - that cache predates pagination and would otherwise just
+    // replay the FIRST batch's stale result instead of fetching more rows.
+    // The real door rows themselves already accumulate correctly across
+    // calls via door_schedule_entries' own ON CONFLICT upsert, independent
+    // of this cache.
+    const url = new URL(request2.url);
+    const startRow = parseInt(url.searchParams.get("startRow") || "0", 10) || 0;
+    console.log(`[Hardware Page] Extracting page ${pageNum} for session ${sessionId} (startRow=${startRow})`);
     const session = await getSessionStatus(sessionId, env2);
     if (!session) {
       const notFoundError = new Error("Session not found");
@@ -63,7 +76,7 @@ router.get("/api/hardware-schedule/session/:sessionId/page/:pageNum", async (req
       validationError.retryable = false;
       throw validationError;
     }
-    const cached = await env2.DB.prepare(`
+    const cached = startRow > 0 ? null : await env2.DB.prepare(`
       SELECT extracted_data, status
       FROM hardware_page_extractions
       WHERE session_id = ? AND page_number = ?
@@ -106,21 +119,57 @@ router.get("/api/hardware-schedule/session/:sessionId/page/:pageNum", async (req
     console.log(`[Hardware Page] PDF retrieved successfully (${fileBuffer.byteLength} bytes)`);
     console.log(`[Hardware Page] Starting Claude Vision extraction for page ${pageNum}`);
     const extractionStartTime = Date.now();
-    const extractionResult = await extractSinglePage(fileBuffer, pageNum, env2);
+    const extractionResult = await extractSinglePage(fileBuffer, pageNum, env2, sessionId, startRow);
     const extractionLatency = Date.now() - extractionStartTime;
     await metrics.recordLatency("claude_extraction", extractionLatency, true);
     console.log(`[Hardware Page] Claude Vision extraction completed in ${extractionLatency}ms`);
-    await savePageExtraction2(sessionId, pageNum, extractionResult, env2);
-    console.log(`[Hardware Page] Extracted page ${pageNum}: ${extractionResult.hardware_groups.length} sets found`);
+    // Real bug fixed 2026-10-02: this route always returned HTTP success
+    // regardless of extractionResult.success, so a real failure (e.g.
+    // runEmbeddedGofaineatExtraction's "schedule_type_not_implemented" for
+    // finish_schedule/frame_schedule) got silently wrapped as
+    // status:"pending_review" with 0 results saved - looked exactly like
+    // "ran fine, found nothing" instead of "didn't run at all."
+    if (extractionResult.success === false) {
+      return jsonResponse3({
+        success: false,
+        sessionId,
+        pageNumber: pageNum,
+        error: extractionResult.error || "extraction_failed",
+        detail: extractionResult.detail || null,
+      }, 422);
+    }
+    // A paginated door-schedule result (done===false) means more rows
+    // remain - only cache the "fully extracted this page" record once the
+    // last batch completes, so a later plain GET doesn't replay a partial
+    // result as if it were the finished extraction.
+    const isPartial = extractionResult.done === false;
+    if (!isPartial) {
+      await savePageExtraction2(sessionId, pageNum, extractionResult, env2);
+    }
+    // extractionResult shape depends on the session's real schedule_type -
+    // door_schedule yields {entries:[...], entry_count}, hardware_schedule
+    // yields {hardware_groups:[...]} - log whichever is actually present
+    // rather than assuming hardware_groups always exists (it doesn't for a
+    // real door schedule, see hardware-extraction-single-page.js's
+    // 2026-10-01 fix).
+    const isDoorSchedule = extractionResult.schedule_type === "door_schedule";
+    const foundCount = isDoorSchedule
+      ? (extractionResult.entry_count ?? (extractionResult.entries || []).length)
+      : (extractionResult.hardware_groups || []).length;
+    console.log(`[Hardware Page] Extracted page ${pageNum}: ${foundCount} ${isDoorSchedule ? "doors" : "sets"} found (done=${extractionResult.done})`);
     const totalLatency = Date.now() - startTime;
     await metrics.recordLatency("page_extraction_full", totalLatency, true);
     return jsonResponse3({
       success: true,
       sessionId,
       pageNumber: pageNum,
-      status: "pending_review",
+      status: isPartial ? "extracting" : "pending_review",
       data: extractionResult,
       cached: false,
+      next_step: isPartial ? {
+        action: "continue_extraction",
+        endpoint: `/api/hardware-schedule/session/${sessionId}/page/${pageNum}?startRow=${extractionResult.next_start_row}`,
+      } : null,
       performance: {
         total_ms: totalLatency,
         extraction_ms: extractionLatency
@@ -406,17 +455,6 @@ router.post("/api/hardware-schedule/session/:sessionId/page/:pageNum/extract-res
     if (!extraction || typeof extraction !== "object") {
       return jsonResponse3({ error: "extraction object required" }, 400);
     }
-    if (!Array.isArray(extraction.hardware_groups)) {
-      return jsonResponse3({ error: "extraction.hardware_groups must be an array (see extraction-contract)" }, 400);
-    }
-    for (const g of extraction.hardware_groups) {
-      if (!g || typeof g !== "object") {
-        return jsonResponse3({ error: "each hardware_group must be an object" }, 400);
-      }
-      if (g.components !== void 0 && !Array.isArray(g.components)) {
-        return jsonResponse3({ error: "hardware_group.components must be an array when present" }, 400);
-      }
-    }
     if (!provider || !provider.name) {
       return jsonResponse3({ error: "provider.name required (e.g. operator-local-claude-code) \u2014 engine attribution is part of the trust substrate" }, 400);
     }
@@ -427,6 +465,44 @@ router.post("/api/hardware-schedule/session/:sessionId/page/:pageNum/extract-res
       return jsonResponse3({ error: "Session not found" }, 404);
     if (session.user_id !== user.userId)
       return jsonResponse3({ error: "Unauthorized access to session" }, 403);
+
+    // door_schedule's client-side (browser pdf.js + tesseract-wasm) grid
+    // extraction submits {doors:[...]} - a genuinely different real shape
+    // than hardware_schedule's {hardware_groups:[...]}, same real
+    // distinction EMBEDDED_HARDWARE_GROUPS_EXTRACTION_PROMPT_TEMPLATE's own
+    // header comment documents for the server-side Qwen-bridge paths this
+    // mirrors. Writes through writeDoorScheduleEntries - the SAME
+    // door_schedule_entries upsert the server-side grid pipeline
+    // (extractDoorScheduleViaEmbeddedGofaineat) already uses, not a second
+    // parallel write path.
+    if (Array.isArray(extraction.doors)) {
+      const written = await writeDoorScheduleEntries(sessionId, session.tenant_id || null, pageNumber, extraction.doors, extraction.extraction_confidence || 0.85, env2);
+      if (!written.success) {
+        return jsonResponse3({ error: "Failed to store door-schedule result", details: written.error }, 500);
+      }
+      console.log(`[Vision Bridge] Stored client-side door_schedule extraction: session ${sessionId} p${pageNumber}, provider ${provider.name}, ${written.entries_count} doors`);
+      return jsonResponse3({
+        success: true,
+        sessionId,
+        pageNumber,
+        provider: provider.name,
+        schedule_type: "door_schedule",
+        doors: written.entries_count,
+        next_step: `Review door index: GET /api/hardware-schedule/session/${sessionId}/door-index`
+      });
+    }
+
+    if (!Array.isArray(extraction.hardware_groups)) {
+      return jsonResponse3({ error: "extraction.hardware_groups or extraction.doors must be an array (see extraction-contract)" }, 400);
+    }
+    for (const g of extraction.hardware_groups) {
+      if (!g || typeof g !== "object") {
+        return jsonResponse3({ error: "each hardware_group must be an object" }, 400);
+      }
+      if (g.components !== void 0 && !Array.isArray(g.components)) {
+        return jsonResponse3({ error: "hardware_group.components must be an array when present" }, 400);
+      }
+    }
     const totalPages = session.page_count || session.total_pages || 1;
     const extractionResult = {
       page_number: pageNumber,

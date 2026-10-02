@@ -71,7 +71,8 @@ import {
 } from "./hardware-extraction-vision-adapters.js";
 import { callEdge } from "./edge-telemetry.js";
 import {
-  extractHardwareGroupsViaEmbeddedGofaineat, extractDoorScheduleViaEmbeddedGofaineat,
+  extractDoorScheduleViaEmbeddedGofaineat,
+  extractHardwareGroupsViaGrid,
 } from "./hardware-extraction-vision-dispatch.js";
 
 export async function extractHardwareSchedule(pdfBuffer, env2) {
@@ -417,7 +418,7 @@ export async function queuePageExtractionJob(imageBase64, env2, opts = {}) {
 // an R2 stream URL was generated (batch-extract's own >20MB fallback) - in
 // that real case this fetches the stream URL directly to get real bytes,
 // since the OCR step needs actual PDF bytes, not a stream reference.
-export async function runEmbeddedGofaineatExtraction(scheduleType, sessionId, tenantId, pdfBuffer, pdfStreamUrl, pageNumber, totalPages, env2) {
+export async function runEmbeddedGofaineatExtraction(scheduleType, sessionId, tenantId, pdfBuffer, pdfStreamUrl, pageNumber, totalPages, env2, startRow = 0) {
   let buf = pdfBuffer;
   if (!buf && pdfStreamUrl) {
     try {
@@ -436,12 +437,43 @@ export async function runEmbeddedGofaineatExtraction(scheduleType, sessionId, te
     };
   }
   if (scheduleType === "door_schedule") {
-    const result = await extractDoorScheduleViaEmbeddedGofaineat(sessionId, tenantId, buf, pageNumber, totalPages, env2);
+    const result = await extractDoorScheduleViaEmbeddedGofaineat(sessionId, tenantId, buf, pageNumber, totalPages, env2, startRow);
     return { ...result, schedule_type: scheduleType, target_table: "door_schedule_entries" };
   }
-  // hardware_schedule (and the same generic fallback the rest of this
-  // pipeline already uses for any other/undefined schedule type).
-  const raw = await extractHardwareGroupsViaEmbeddedGofaineat(buf, pageNumber, totalPages, env2);
+  // Real bug fixed 2026-10-02: any scheduleType OTHER than door_schedule
+  // silently fell into the hardware_schedule branch below - including
+  // finish_schedule and frame_schedule, both real, selectable options in
+  // subx-app.html's upload form (f-doctype) and both accepted by
+  // hardware-schedule-extract.js's own validDocumentTypes list. finish_schedule
+  // is already honestly marked status:"not_implemented" in
+  // SCHEDULE_TYPE_REGISTRY (hardware-extraction-prompts.js); frame_schedule
+  // isn't even IN that registry. Neither has a real extractor - running
+  // hardware_schedule's grid/group logic against finish/frame-schedule
+  // content doesn't error, it silently produces plausible-looking-but-
+  // meaningless hardware_groups output, which is worse than an honest
+  // failure. Only door_schedule and hardware_schedule are real,
+  // implemented, validated extraction paths today.
+  if (scheduleType !== "hardware_schedule") {
+    return {
+      success: false,
+      error: "schedule_type_not_implemented",
+      detail: `"${scheduleType}" has no real extraction pipeline yet (only door_schedule and hardware_schedule do) - not routing to the hardware_schedule extractor to avoid producing meaningless output.`,
+      entries: [], entry_count: 0, hardware_groups: [], door_hardware_matrix: [],
+      schedule_type: scheduleType,
+    };
+  }
+  // hardware_schedule (the real, implemented default).
+  // Real fix 2026-10-02: hardware_schedule is a ruled grid table exactly
+  // like door_schedule (confirmed live against 525dc0b72011077a.pdf p219 -
+  // "Hardware Set: 01.../Door# 100B": Qty|Description|Product Number|Fin|Man
+  // columns, variable widths, multi-line wrapped cells) - it decomposes
+  // fully into weyland-ocr-worker's deterministic grid extractor the same
+  // way door_schedule already does, so it gets the same zero-LLM treatment
+  // instead of the Qwen-bridge path (extractHardwareGroupsViaEmbeddedGofaineat,
+  // kept below for the no-sessionId fallback call site only). See
+  // extractHardwareGroupsViaGrid's own header comment (hardware-extraction-
+  // vision-dispatch.js) for the full real validation history.
+  const raw = await extractHardwareGroupsViaGrid(sessionId, buf, pageNumber, totalPages, env2, startRow);
   return {
     success: true,
     hardware_groups: raw.hardware_groups,
@@ -453,6 +485,11 @@ export async function runEmbeddedGofaineatExtraction(scheduleType, sessionId, te
     metadata: raw.metadata,
     schedule_type: scheduleType,
     target_table: "hardware_components",
+    extraction_route: "grid_deterministic",
+    row_count: raw.row_count,
+    done: raw.done,
+    next_start_row: raw.next_start_row,
+    total_data_rows: raw.total_data_rows,
   };
 }
 

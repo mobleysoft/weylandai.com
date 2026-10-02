@@ -24,14 +24,18 @@
 //
 // KNOWN, DOCUMENTED GAPS (do not silently paper over these - see each
 // file's own header for detail):
-//   1. hardware-schedule-candidates.js's two /preview endpoints
-//      (getOrRenderPage) return a real 500 with a clear "not yet ported"
-//      message - the monolith's own MONOLITH_HELPER_MAP.md independently
-//      found and excluded this same ~2,500-line vendored pdfjs-dist +
-//      OffscreenCanvas rendering engine from an earlier extraction pass,
-//      for the same reason (genuinely entangled, no standalone export to
-//      import). Every other route in that file (list/create/patch/
-//      validate/delete/affirm/reject/undo) is real and works.
+//   1. [FIXED 2026-10-02] hardware-schedule-candidates.js's two /preview
+//      endpoints used to be a hard stub ("not yet ported"). Real fix:
+//      getOrRenderPage (hardware-schedule-page-preview.js) reuses
+//      renderRegionAt600DPI2's existing real Browser Rendering pipeline
+//      (env.BROWSER + @cloudflare/puppeteer, already proven live for
+//      region-extraction/submittal-generation) instead of the excluded
+//      vendored engine - no new rendering infrastructure needed. Also
+//      fixed a second, independent bug found while wiring this up: the
+//      old drawBoundingBoxOverlay helper called `new OffscreenCanvas(...)`
+//      directly in this Worker's bare isolate, which doesn't exist here at
+//      all (confirmed live) - overlay drawing now happens inside the real
+//      headless-browser render pass instead.
 //   2. extractSinglePage (hardware-extraction-single-page.js) only ports
 //      2 of the monolith's 3 fallback tiers (isolated-PDF via pdf-lib,
 //      and direct-PDF) - tier 2 (image-render via the same excluded
@@ -69,13 +73,14 @@ import {
 import { resolveInferenceContract } from "./lib/hardware-extraction-vision-adapters.js";
 import {
   pdfBufferOrNull, generateR2StreamUrl, getUnaffirmReason, dispatchVisionExtraction,
-  structureDoorScheduleFromText,
+  structureDoorScheduleFromText, writeDoorScheduleEntries,
 } from "./lib/hardware-extraction-vision-dispatch.js";
 import { materializeAffirmedGroup, unaffirmMaterializedGroup } from "./lib/hardware-extraction-materialize.js";
 import {
   extractSinglePage, savePageExtraction2, detectTextLayer2, extractPdfBookmarks2,
 } from "./lib/hardware-extraction-single-page.js";
 import { renderRegionAt600DPI2 } from "./lib/hardware-extraction-region-render.js";
+import { getOrRenderPage } from "./lib/hardware-schedule-page-preview.js";
 
 import { registerSubmittalsRoutes } from "./routes/submittals.js";
 import { registerHardwareScheduleExportRoutes } from "./routes/hardware-schedule-export.js";
@@ -86,28 +91,13 @@ import { registerHardwareScheduleGenerateRoutes } from "./routes/hardware-schedu
 import { registerHardwareSchedulePageExtractRoutes } from "./routes/hardware-schedule-page-extract.js";
 import { registerHardwareScheduleFinalizeImageRoutes } from "./routes/hardware-schedule-finalize-image.js";
 import { registerHardwareScheduleExtractRoutes } from "./routes/hardware-schedule-extract.js";
+import { registerHardwareScheduleClientOcrAssetRoutes } from "./routes/hardware-schedule-client-ocr-assets.js";
 import { registerTakeoffDataRoutes } from "./routes/takeoff-data.js";
 import { registerTakeoffLineItemsRoutes } from "./routes/takeoff-line-items.js";
 
 import subxAppHtml from "./pages/subx-app.html";
 import subxHtml from "./pages/subx.html";
 import takeoffxHtml from "./pages/takeoffx.html";
-
-// getOrRenderPage: the one real, reported blocker (see header comment
-// #1 above). Throws a clear, honest error instead of silently 404ing or
-// fabricating a rendered image - caught by hardware-schedule-candidates.js's
-// own existing try/catch, surfaced as a real 500 with this exact message.
-async function getOrRenderPageNotYetPorted() {
-  throw new Error(
-    "Server-side PDF page rendering (getOrRenderPage) not yet ported from " +
-    "legacy-monolith.js to weyland-subx-worker - it depends on a ~2,500-line " +
-    "vendored pdfjs-dist + OffscreenCanvas rendering engine that is still " +
-    "fully inline in the monolith (never extracted into its own lib module; " +
-    "MONOLITH_HELPER_MAP.md independently excluded this same cluster from an " +
-    "earlier extraction pass for the same reason). Every other endpoint in " +
-    "this route file works. See MICROSERVICES_PUSH.md for the tracked gap."
-  );
-}
 
 const router = new NativeRouter();
 
@@ -143,7 +133,7 @@ registerHardwareScheduleExportRoutes(router);
 registerHardwareScheduleCandidatesRoutes(router, {
   authenticate,
   getSessionStatus,
-  getOrRenderPage: getOrRenderPageNotYetPorted,
+  getOrRenderPage,
 });
 
 registerHardwareScheduleEnrichmentRoutes(router, {
@@ -185,6 +175,7 @@ registerHardwareScheduleGenerateRoutes(router, {
   materializeDseToLineItems,
 });
 
+
 registerHardwareSchedulePageExtractRoutes(router, {
   authenticate,
   getSessionStatus,
@@ -195,6 +186,7 @@ registerHardwareSchedulePageExtractRoutes(router, {
   extractSinglePage,
   resolveExtractionContract,
   savePageExtraction2,
+  writeDoorScheduleEntries,
 });
 
 registerHardwareScheduleFinalizeImageRoutes(router, {
@@ -222,6 +214,8 @@ registerHardwareScheduleExtractRoutes(router, {
   logTelemetryEvent,
   detectTextLayer2,
 });
+
+registerHardwareScheduleClientOcrAssetRoutes(router);
 
 registerTakeoffDataRoutes(router, { authenticate, requireProductAccess });
 registerTakeoffLineItemsRoutes(router, { authenticate, requireProductAccess });

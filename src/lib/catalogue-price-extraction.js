@@ -49,6 +49,7 @@
 
 import { callLocalQwen } from "./qwen-bridge.js";
 import { FINISH_CODES } from "./cps-matching.js";
+import gofaineatPriceRowType from "./gofaineat-pricerowtype.js";
 
 const CHUNK_LINES = 12;
 
@@ -378,7 +379,39 @@ export async function extractPriceRowsFromOcrText(env2, ocrText, context = {}) {
   }
 
   const { headerLines, dataLines } = splitHeaderAndDataLines(ocrText);
-  const chunks = chunkOcrTextByLines(dataLines, pickChunkLineCount(dataLines));
+
+  // GOFAINEAT Stage 1 pre-filter (price_row_type), added 2026-10-02 - see
+  // /Users/johnmobley/gofaineats/pilot/pricerowtype_*.mjs and
+  // /Users/johnmobley/weylandai.com/GOFAINEAT_CANDIDATE_SURFACES.md
+  // candidate #1. Before chunking dataLines for the LLM below, classify
+  // each OCR line as priced_data_row / header_or_noise / call_for_quote
+  // (GA-evolved rule classifier, held-out test accuracy 25/25 = 1.0000 vs
+  // a 0.44 naive baseline on pricerowtype_corpus_v1 - see
+  // gofaineat-pricerowtype.js's own .provenance for the full real record)
+  // and drop header_or_noise/call_for_quote lines before they ever reach
+  // callLocalQwen - they only ever wasted completion-token budget or got
+  // misread, never contributed a real row. headerLines is threaded through
+  // UNCHANGED (still needed for finish-code mapping context in the prompt
+  // below) - this pre-filter only touches dataLines.
+  //
+  // HONEST SCOPE: this REDUCES, it does NOT ELIMINATE, the Qwen dependency
+  // in this fallback path. Lines that survive the filter as
+  // priced_data_row still go through the exact same unchanged LLM
+  // extraction below. Stage 2 (finish-code format classification) and
+  // Stage 3 (final constrained extraction) - the rest of the 3-stage
+  // cascade sketched in GOFAINEAT_CANDIDATE_SURFACES.md - are NOT built
+  // here; this is Stage 1 only.
+  const dataLineArray = String(dataLines || "").split("\n");
+  const priceRowTypeCounts = { priced_data_row: 0, header_or_noise: 0, call_for_quote: 0 };
+  const keptDataLines = [];
+  for (const line of dataLineArray) {
+    const rowType = gofaineatPriceRowType(line);
+    priceRowTypeCounts[rowType] = (priceRowTypeCounts[rowType] || 0) + 1;
+    if (rowType === "priced_data_row") keptDataLines.push(line);
+  }
+  const filteredDataLines = keptDataLines.join("\n");
+
+  const chunks = chunkOcrTextByLines(filteredDataLines, pickChunkLineCount(filteredDataLines));
   const allRows = [];
   const allWarnings = [];
   let totalRejected = 0;
@@ -399,5 +432,14 @@ export async function extractPriceRowsFromOcrText(env2, ocrText, context = {}) {
     totalRejected += rejectedCount;
     allWarnings.push(...warnings);
   }
-  return { rows: allRows, rejectedCount: totalRejected, warnings: allWarnings, chunksProcessed: chunks.length };
+  return {
+    rows: allRows,
+    rejectedCount: totalRejected,
+    warnings: allWarnings,
+    chunksProcessed: chunks.length,
+    // GOFAINEAT Stage 1 pre-filter observability - how many of this page's
+    // data-section lines were actually sent to the LLM vs dropped before
+    // ever reaching it. See the pre-filter comment above for provenance.
+    priceRowTypeFilter: priceRowTypeCounts,
+  };
 }

@@ -84,6 +84,7 @@ import { registerSubscriptionRoutes } from "./routes/subscription.js";
 import { registerWebhooksSubscriptionRoutes } from "./routes/webhooks-subscription.js";
 import { registerDemoRoutes } from "./routes/demo.js";
 import { registerRootRoutes } from "./routes/root.js";
+import { registerWireRoutes } from "./routes/wire.js";
 
 const router = new NativeRouter();
 
@@ -104,6 +105,12 @@ registerWebhooksSubscriptionRoutes(router, {
   verifyStripeWebhookSignature
 });
 registerDemoRoutes(router);
+// WeylandAI Wire - the first real pilot tenant of mobleyreport.com's
+// "provenance-first wire" template (see routes/wire.js's own header).
+// Reuses this Worker's existing WEYLAND_PRODUCTS/CHECKOUT_READY_PRODUCTS
+// catalog and env.VENDYAI binding for checkout - no new Stripe/vendyai
+// wiring needed beyond the "weyland-wire-seat" catalog entry above.
+registerWireRoutes(router);
 // Real production behavior: this only ever fires as a last-resort
 // fallback under the dispatch below (both env.MASCOM_EDGE and
 // SovereignPlatformRoutes.dispatch("") have to miss first) - see

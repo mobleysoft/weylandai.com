@@ -1114,33 +1114,91 @@ export async function extractHardwareGroupsViaEmbeddedGofaineat(pdfBuffer, pageN
 // {doors:[...]} contract Part 4 already ships - tenant-specific custom
 // fields configured via prompt_specifications are not honored by this
 // route. Real, documented, not a silent downgrade.
-export async function extractDoorScheduleViaEmbeddedGofaineat(sessionId, tenantId, pdfBuffer, pageNumber, totalPages, env2) {
-  const startTime = Date.now();
-  if (!env2.OCR_SERVICE) {
-    return { success: false, entries_count: 0, entry_count: 0, entries: [], low_confidence_count: 0, error: "ocr_service_not_configured", duration_ms: Date.now() - startTime };
+// parseArchDimension: best-effort architectural feet-inches (3'-0", 7'-11")
+// or fractional-inches (1 3/4") string to decimal inches. Real OCR noise
+// means the leading apostrophe is often dropped ("3-0\"") - tolerated
+// here, same "transcribe what's really there, don't guess past it"
+// principle as the rest of this file: returns null (never a fabricated
+// number) for anything that doesn't cleanly match one of these two real,
+// observed shapes.
+function parseArchDimension(text) {
+  const t = String(text || "").trim();
+  if (!t) return null;
+  const feetInches = t.match(/^(\d+)'?-?\s*(\d{1,2})"?$/);
+  if (feetInches) return parseInt(feetInches[1], 10) * 12 + parseInt(feetInches[2], 10);
+  const fractional = t.match(/^(\d+)\s+(\d)\/(\d)"?$/);
+  if (fractional) return parseInt(fractional[1], 10) + parseInt(fractional[2], 10) / parseInt(fractional[3], 10);
+  const wholeInches = t.match(/^(\d+)"$/);
+  if (wholeInches) return parseInt(wholeInches[1], 10);
+  return null;
+}
+
+// extractDoorScheduleViaGrid: the real, zero-LLM replacement for the OCR
+// (ocrScheduleTableBanded) + Qwen-structuring pair below, for door
+// schedules specifically - this document type is a ruled, columnar table
+// (confirmed live 2026-10-01 against a real DSA-submittal door schedule,
+// GCCFullDoorSchedule.pdf sheet A-801), so it decomposes fully into
+// weyland-ocr-worker's deterministic grid extractor
+// (/extract-schedule-grid: pixel-darkness gridline detection + per-row
+// OCR + positional column assignment - see that file's own header
+// comment for the full real validation history). No LLM call anywhere in
+// this path. Per John's explicit direction 2026-10-01: hosted/local LLM
+// inference is never the fix for an extraction task that genuinely
+// decomposes - only further decomposition is.
+// startRow paginates the per-row OCR loop across multiple separate Worker
+// invocations - real fix 2026-10-02 for a real 39-row door schedule
+// exceeding Cloudflare's hard 30s-per-request CPU ceiling (a client-side
+// rewrite was attempted and shelved after hitting a separate rendering
+// gap in the Sovereign PDF Rasterizer - see ocr-worker/index.js's
+// extractGridTable header comment). done/next_start_row/total_data_rows
+// are threaded through so the caller knows whether to request another
+// page of rows.
+async function extractGridDoors(pdfBuffer, pageNumber, env2, startRow = 0) {
+  const resp = await env2.OCR_SERVICE.fetch("https://weyland-ocr-worker/extract-schedule-grid", {
+    method: "POST",
+    headers: { "X-Page-Number": String(pageNumber), "X-Start-Row": String(startRow) },
+    body: pdfBuffer
+  });
+  if (!resp.ok) {
+    const errText = await resp.text();
+    return { error: "grid_extraction_failed", detail: errText.slice(0, 500) };
   }
-  const ocrResult = await ocrScheduleTableBanded(pdfBuffer, pageNumber, env2);
-  if (ocrResult.error) {
-    return { success: false, entries_count: 0, entry_count: 0, entries: [], low_confidence_count: 0, error: `embedded_gofaineat OCR step failed (${ocrResult.error}): ${ocrResult.detail || ""}`, duration_ms: Date.now() - startTime };
-  }
-  const { pageText } = ocrResult;
-  let content;
-  try {
-    content = await callLocalQwen(env2, [{ role: "user", content: EMBEDDED_TEXT_EXTRACTION_PROMPT_TEMPLATE(pageText) }], { maxTokens: 4e3, temperature: 0.1 });
-  } catch (e) {
-    return { success: false, entries_count: 0, entry_count: 0, entries: [], low_confidence_count: 0, error: `embedded_gofaineat Qwen structuring failed: ${e.message}`, ocr_text_length: pageText.length, duration_ms: Date.now() - startTime };
-  }
-  let parsed;
-  try {
-    parsed = parseAndValidateExtraction(content);
-  } catch (e) {
-    return { success: false, entries_count: 0, entry_count: 0, entries: [], low_confidence_count: 0, error: `embedded_gofaineat parse failed: ${e.message}`, ocr_text_length: pageText.length, duration_ms: Date.now() - startTime };
-  }
-  const isLowConf = (parsed.extraction_confidence || 0) < 0.7;
+  const result = await resp.json();
+  if (result.error) return result;
+  const doors = result.rows.map((row) => ({
+    door_number: row.mark || null,
+    hardware_group: row.hardware_group || null,
+    fire_rating: row.fire_rating || null,
+    size: [row.width, row.height].filter(Boolean).join(" x ") || null,
+    width_inches: parseArchDimension(row.width),
+    height_inches: parseArchDimension(row.height),
+    thickness_inches: parseArchDimension(row.thickness),
+    door_type: row.door_type || null,
+    material_code: row.door_material || null,
+    frame_material: row.frame_material || null,
+    remarks: row.notes || null
+  })).filter((d) => d.door_number);
+  return {
+    doors, extraction_confidence: 0.85, row_count: result.row_count, header_fields: result.header_fields,
+    done: result.done, next_start_row: result.next_start_row, total_data_rows: result.total_data_rows,
+  };
+}
+
+// writeDoorScheduleEntries: the real door_schedule_entries persistence,
+// factored out so BOTH the server-side grid pipeline below AND the
+// client-side (browser pdf.js + tesseract-wasm) extraction path's result
+// submission (hardware-schedule-page-extract.js's /extract-result route)
+// write through the exact same ON-CONFLICT(session_id, mark) upsert - one
+// real write path, not two parallel copies that could silently drift.
+// `doors` is the same {door_number, hardware_group, fire_rating, size,
+// width_inches, height_inches, thickness_inches, door_type, material_code,
+// frame_material, remarks} shape extractGridDoors already produces.
+export async function writeDoorScheduleEntries(sessionId, tenantId, pageNumber, doors, extractionConfidence, env2) {
+  const isLowConf = (extractionConfidence || 0) < 0.7;
   const processedEntries = [];
   let insertedCount = 0;
-  for (let i = 0; i < parsed.doors.length; i++) {
-    const door = parsed.doors[i];
+  for (let i = 0; i < doors.length; i++) {
+    const door = doors[i];
     if (!door.door_number) continue;
     const fullEntry = {
       id: `dse_${sessionId}_${door.door_number}_${Date.now()}_${i}`,
@@ -1168,7 +1226,7 @@ export async function extractDoorScheduleViaEmbeddedGofaineat(sessionId, tenantI
       jamb_detail: null,
       sill_detail: null,
       notes: door.remarks,
-      extraction_confidence: parsed.extraction_confidence,
+      extraction_confidence: extractionConfidence,
       field_confidence_json: null,
       low_confidence_fields: isLowConf ? "extraction_confidence" : ""
     };
@@ -1221,7 +1279,7 @@ export async function extractDoorScheduleViaEmbeddedGofaineat(sessionId, tenantI
     }
   }
   if (processedEntries.length > 0 && insertedCount === 0) {
-    return { success: false, entries_count: 0, entry_count: 0, entries: [], low_confidence_count: 0, error: `door write failure: parsed ${processedEntries.length} entries, inserted 0`, duration_ms: Date.now() - startTime };
+    return { success: false, entries_count: 0, entry_count: 0, entries: [], low_confidence_count: 0, error: `door write failure: parsed ${processedEntries.length} entries, inserted 0` };
   }
   try {
     await env2.DB.prepare(`
@@ -1242,9 +1300,204 @@ export async function extractDoorScheduleViaEmbeddedGofaineat(sessionId, tenantI
     entry_count: insertedCount,
     entries: processedEntries,
     low_confidence_count: isLowConf ? processedEntries.length : 0,
-    extraction_route: "embedded_gofaineat",
-    ocr_text_length: pageText.length,
+  };
+}
+
+export async function extractDoorScheduleViaEmbeddedGofaineat(sessionId, tenantId, pdfBuffer, pageNumber, totalPages, env2, startRow = 0) {
+  const startTime = Date.now();
+  if (!env2.OCR_SERVICE) {
+    return { success: false, entries_count: 0, entry_count: 0, entries: [], low_confidence_count: 0, error: "ocr_service_not_configured", duration_ms: Date.now() - startTime };
+  }
+  const parsed = await extractGridDoors(pdfBuffer, pageNumber, env2, startRow);
+  if (parsed.error) {
+    return { success: false, entries_count: 0, entry_count: 0, entries: [], low_confidence_count: 0, error: `grid door-schedule extraction failed (${parsed.error}): ${parsed.detail || ""}`, duration_ms: Date.now() - startTime };
+  }
+  const written = await writeDoorScheduleEntries(sessionId, tenantId, pageNumber, parsed.doors, parsed.extraction_confidence, env2);
+  if (!written.success) {
+    return { ...written, duration_ms: Date.now() - startTime };
+  }
+  return {
+    ...written,
+    extraction_route: "grid_deterministic",
+    row_count: parsed.row_count,
+    done: parsed.done,
+    next_start_row: parsed.next_start_row,
+    total_data_rows: parsed.total_data_rows,
     duration_ms: Date.now() - startTime
+  };
+}
+
+// extractHardwareScheduleGrid / extractHardwareGroupsViaGrid: the
+// hardware_schedule sibling of extractGridDoors / extractDoorScheduleViaEmbeddedGofaineat
+// above - same real, zero-LLM decomposition (weyland-ocr-worker's
+// deterministic /extract-schedule-grid, with X-Table-Type: hardware_schedule
+// selecting detectGridLinesHardware + PSM-6 multi-line row OCR there), for
+// the OTHER real document type this platform handles (hardware-set
+// component tables: Qty | Description | Product Number | Fin | Man,
+// confirmed live 2026-10-02 against 525dc0b72011077a.pdf p219 - "Hardware
+// Set: 01.../Door# 100B"). Replaces extractHardwareGroupsViaEmbeddedGofaineat
+// (the Qwen-bridge path above) as the default per John's standing
+// direction: no shipped extraction path depends on a hosted/local LLM when
+// the task genuinely decomposes - only further decomposition is the fix.
+//
+// A hardware-schedule page interleaves full-width "Hardware Set: {n}" /
+// "Door# {n}" structural rows with real ruled component rows THROUGHOUT
+// the table (not just once at the top, unlike door_schedule's single
+// header) - weyland-ocr-worker classifies each row (classifyHardwareRow)
+// and returns one of three shapes per row: {row_type:'hardware_set_header',
+// group_number}, {row_type:'door_assignment', assigned_doors:[...]}, or
+// {row_type:'component', quantity, description, product_number, finish,
+// manufacturer}. This function walks that flat row list maintaining an
+// "open group" (the hardware set currently being accumulated), closing it
+// into hardware_groups whenever a new header row appears or the table ends.
+//
+// Pagination (startRow/maxRows, same real Cloudflare 30s-CPU-ceiling fix as
+// door_schedule - see ocr-worker/index.js's extractGridTable header
+// comment) means a single hardware set's components can legitimately span
+// MULTIPLE separate Worker invocations with no header row in later
+// batches - the open-group state has to survive across those calls despite
+// each being a stateless Worker request. Rather than threading that state
+// through hardware_page_extractions (which runs provisional-materialize +
+// non-idempotent door_hardware_matrix inserts on every save - safe to run
+// ONCE at the end, not safe to run per-batch), this uses the CACHE KV
+// namespace already bound to this worker for an ephemeral, narrowly-scoped
+// continuation record - same pattern already used elsewhere in this
+// codebase for session PDF-buffer caching, just keyed per (session, page)
+// instead. Cleared once the page is fully extracted.
+const GRID_CONTINUATION_TTL_SECONDS = 3600;
+
+function gridContinuationKey(sessionId, pageNumber) {
+  return `hw_grid_continuation:${sessionId}:${pageNumber}`;
+}
+
+async function loadGridContinuationState(sessionId, pageNumber, env2) {
+  if (!env2.CACHE) return { groups: [], matrix: [], openGroup: null };
+  const raw = await env2.CACHE.get(gridContinuationKey(sessionId, pageNumber));
+  if (!raw) return { groups: [], matrix: [], openGroup: null };
+  try {
+    const parsed = JSON.parse(raw);
+    return { groups: parsed.groups || [], matrix: parsed.matrix || [], openGroup: parsed.openGroup || null };
+  } catch (e) {
+    return { groups: [], matrix: [], openGroup: null };
+  }
+}
+
+async function saveGridContinuationState(sessionId, pageNumber, state, env2) {
+  if (!env2.CACHE) return;
+  await env2.CACHE.put(gridContinuationKey(sessionId, pageNumber), JSON.stringify(state), {
+    expirationTtl: GRID_CONTINUATION_TTL_SECONDS
+  });
+}
+
+async function clearGridContinuationState(sessionId, pageNumber, env2) {
+  if (!env2.CACHE) return;
+  await env2.CACHE.delete(gridContinuationKey(sessionId, pageNumber));
+}
+
+// Closes the currently-open group (if any) into `groups`/`matrix` - shared
+// by both "a new Hardware Set header appeared" and "the table ended" exit
+// points so door-matrix entries are only ever built from a FINISHED group's
+// real assigned_doors list, never a partial one.
+function closeOpenGroup(state) {
+  if (!state.openGroup) return;
+  state.groups.push(state.openGroup);
+  for (const doorNumber of state.openGroup.assigned_doors) {
+    if (doorNumber) {
+      state.matrix.push({ door_number: doorNumber, hardware_set_number: state.openGroup.group_number, confidence: 0.85 });
+    }
+  }
+  state.openGroup = null;
+}
+
+async function extractHardwareScheduleGrid(pdfBuffer, pageNumber, env2, startRow = 0) {
+  const resp = await env2.OCR_SERVICE.fetch("https://weyland-ocr-worker/extract-schedule-grid", {
+    method: "POST",
+    headers: { "X-Page-Number": String(pageNumber), "X-Start-Row": String(startRow), "X-Table-Type": "hardware_schedule" },
+    body: pdfBuffer
+  });
+  if (!resp.ok) {
+    const errText = await resp.text();
+    return { error: "grid_extraction_failed", detail: errText.slice(0, 500) };
+  }
+  return resp.json();
+}
+
+export async function extractHardwareGroupsViaGrid(sessionId, pdfBuffer, pageNumber, totalPages, env2, startRow = 0) {
+  const overallStartTime = Date.now();
+  if (!env2.OCR_SERVICE) {
+    const e = new Error("OCR_SERVICE binding missing - can't rasterize/OCR without weyland-ocr-worker (grid_deterministic hardware route)");
+    e.retryable = false;
+    throw e;
+  }
+  const gridResult = await extractHardwareScheduleGrid(pdfBuffer, pageNumber, env2, startRow);
+  if (gridResult.error) {
+    const e = new Error(`hardware grid extraction failed (${gridResult.error}): ${gridResult.detail || ""}`);
+    e.retryable = gridResult.error !== "no_grid_detected" && gridResult.error !== "no_data_rows";
+    throw e;
+  }
+
+  const state = startRow > 0
+    ? await loadGridContinuationState(sessionId, pageNumber, env2)
+    : { groups: [], matrix: [], openGroup: null };
+
+  for (const row of gridResult.rows) {
+    if (row.row_type === "hardware_set_header") {
+      closeOpenGroup(state);
+      state.openGroup = { group_number: row.group_number || null, group_name: null, assigned_doors: [], components: [] };
+    } else if (row.row_type === "door_assignment") {
+      if (!state.openGroup) state.openGroup = { group_number: null, group_name: null, assigned_doors: [], components: [] };
+      state.openGroup.assigned_doors.push(...(row.assigned_doors || []));
+    } else {
+      // A real component row, OR a row the header-field mapping couldn't
+      // place at all (both arrive with row_type:'component' from the OCR
+      // worker - see classifyHardwareRow/ocr-worker's data-row loop). Never
+      // fabricate a group for an orphaned component row with no group seen
+      // yet (shouldn't happen on a real document, but "drop it, don't
+      // guess" beats inventing a null-numbered group that would silently
+      // merge unrelated components together).
+      if (!state.openGroup) continue;
+      const qty = parseInt(row.quantity, 10);
+      state.openGroup.components.push({
+        component_type: row.description || null,
+        quantity: Number.isFinite(qty) && qty > 0 ? qty : 1,
+        uom: "EA",
+        manufacturer: row.manufacturer || null,
+        model_number: row.product_number || null,
+        finish: row.finish || null,
+        notes: null
+      });
+    }
+  }
+
+  const done = gridResult.done;
+  if (done) {
+    closeOpenGroup(state);
+    await clearGridContinuationState(sessionId, pageNumber, env2);
+  } else {
+    await saveGridContinuationState(sessionId, pageNumber, state, env2);
+  }
+
+  const totalTime = Date.now() - overallStartTime;
+  return {
+    page_number: pageNumber,
+    total_pages: totalPages,
+    hardware_groups: state.groups,
+    door_hardware_matrix: state.matrix,
+    detected_nomenclature: null,
+    metadata: {
+      extraction_mode: "grid_deterministic",
+      extraction_route: "grid_deterministic",
+      page_isolated: false,
+      header_fields: gridResult.header_fields,
+      row_count: gridResult.row_count
+    },
+    usage: { input_tokens: 0, output_tokens: 0 },
+    extraction_time_ms: totalTime,
+    total_time_ms: totalTime,
+    row_count: gridResult.row_count,
+    done,
+    next_start_row: gridResult.next_start_row,
+    total_data_rows: gridResult.total_data_rows
   };
 }
 

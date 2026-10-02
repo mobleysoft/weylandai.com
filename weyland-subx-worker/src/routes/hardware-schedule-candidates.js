@@ -8,58 +8,34 @@
 // candidates. Extracted 2026-09-10 from legacy-monolith.js (previously
 // inline, lines 149172-149872 minus the two functions below/imported).
 //
-// getSessionStatus and getOrRenderPage are real shared helpers used
-// across the WHOLE hardware-schedule cluster (getSessionStatus alone
-// has 14+ call sites spanning routes not yet extracted) - injected as
-// deps rather than extracted themselves, since extracting them properly
-// would mean touching the entire ~6,400-line cluster in one pass. They
-// stay defined in legacy-monolith.js until a future extraction reaches
-// them.
-//
-// drawBoundingBoxOverlay (below) has exactly one call site, entirely
-// within this file's own routes, so it stays local/private here rather
-// than going into a lib/ module.
+// getSessionStatus is a real shared helper used across the WHOLE
+// hardware-schedule cluster (14+ call sites spanning routes not yet
+// extracted) - injected as a dep rather than extracted itself, since doing
+// that properly would mean touching the entire ~6,400-line cluster in one
+// pass. getOrRenderPage, by contrast, is real and fully owned by this
+// worker (hardware-schedule-page-preview.js) as of 2026-10-02 - injected
+// the same way purely for testability/consistency with the rest of this
+// file's dependency style, not because it still lives in the monolith.
 
 import { jsonResponse3 } from "../lib/json-response.js";
 import { detectAndPersistRegionConflicts } from "../lib/region-conflicts.js";
 
-async function drawBoundingBoxOverlay(imageBuffer, boundingBox, scheduleType) {
-  const blob = new Blob([imageBuffer], { type: "image/png" });
-  const bitmap = await createImageBitmap(blob);
-  const canvas = new OffscreenCanvas(bitmap.width, bitmap.height);
-  const ctx = canvas.getContext("2d");
-  ctx.drawImage(bitmap, 0, 0);
-  const scale2 = 600 / 72;
-  const x = boundingBox.x * scale2;
-  const y = boundingBox.y * scale2;
-  const width = boundingBox.width * scale2;
-  const height = boundingBox.height * scale2;
-  const colors = {
-    "door_schedule": "#3B82F6",
-    // Blue
-    "hardware_schedule": "#10B981",
-    // Green
-    "finish_schedule": "#F59E0B",
-    // Amber
-    "ada_compliance": "#8B5CF6",
-    // Purple
-    "municipal_requirements": "#EF4444",
-    // Red
-    "user_identified": "#6366F1",
-    // Indigo
-    "unknown_schedule": "#6B7280"
-    // Gray
-  };
-  const color = colors[scheduleType] || "#6B7280";
-  ctx.strokeStyle = color;
-  ctx.lineWidth = 4;
-  ctx.setLineDash([15, 10]);
-  ctx.strokeRect(x, y, width, height);
-  ctx.fillStyle = color + "1A";
-  ctx.fillRect(x, y, width, height);
-  const resultBlob = await canvas.convertToBlob({ type: "image/png" });
-  return await resultBlob.arrayBuffer();
-}
+// Real bug fixed 2026-10-02: this used to draw the overlay itself via
+// `new OffscreenCanvas(...)`, which doesn't exist in this Worker's bare
+// isolate (confirmed live: "ReferenceError: OffscreenCanvas is not
+// defined") - would have crashed on its very first real call. Overlay
+// drawing now happens inside getOrRenderPage's real headless-browser render
+// pass (hardware-schedule-page-preview.js -> renderRegionAt600DPI2's
+// overlay param) - this file just resolves which color to use.
+const OVERLAY_COLORS = {
+  door_schedule: "#3B82F6", // Blue
+  hardware_schedule: "#10B981", // Green
+  finish_schedule: "#F59E0B", // Amber
+  ada_compliance: "#8B5CF6", // Purple
+  municipal_requirements: "#EF4444", // Red
+  user_identified: "#6366F1", // Indigo
+  unknown_schedule: "#6B7280", // Gray
+};
 
 export function registerHardwareScheduleCandidatesRoutes(router, { authenticate, getSessionStatus, getOrRenderPage }) {
 router.get("/api/hardware-schedule/session/:sessionId/candidates", async (request2, env2) => {
@@ -364,17 +340,37 @@ router.get("/api/hardware-schedule/session/:sessionId/candidates/:candidateId/pr
     if (!pdfBuffer) {
       return jsonResponse3({ error: "PDF file not found. Please re-upload the document." }, 404);
     }
-    const rendered = await getOrRenderPage(sessionId, candidate.page_number, pdfBuffer, env2);
-    let imageBuffer = rendered.imageBuffer;
-    if (withOverlay && candidate.bounding_box) {
-      const boundingBox = JSON.parse(candidate.bounding_box);
-      imageBuffer = await drawBoundingBoxOverlay(
-        imageBuffer,
-        boundingBox,
-        candidate.schedule_type
-      );
+    // Prefer bounding_box_percent when the candidate has one - a real,
+    // already-existing DPI-independent field (unlike raw bounding_box,
+    // whose x/y/width/height units depend entirely on whatever caller
+    // created the candidate, with no enforced convention - the OLD, never-
+    // actually-exercised overlay code assumed raw PDF points at 72dpi;
+    // that assumption is preserved as the fallback below, but percent is
+    // safer whenever it's actually present).
+    let overlayBox = null;
+    if (candidate.bounding_box_percent) {
+      const p = JSON.parse(candidate.bounding_box_percent);
+      if (typeof p.x_percent === "number") overlayBox = p;
     }
-    const contentType = format === "jpeg" ? "image/jpeg" : "image/png";
+    if (!overlayBox && candidate.bounding_box) {
+      overlayBox = { ...JSON.parse(candidate.bounding_box), unit: "pdf_points_72dpi" };
+    }
+    const overlayOpts = (withOverlay && overlayBox)
+      ? { box: overlayBox, color: OVERLAY_COLORS[candidate.schedule_type] || OVERLAY_COLORS.unknown_schedule, candidateId }
+      : null;
+    const rendered = await getOrRenderPage(sessionId, candidate.page_number, pdfBuffer, env2, overlayOpts);
+    const imageBuffer = rendered.imageBuffer;
+    // Real bug fixed 2026-10-02: this used to trust the `format` query
+    // param (default "png") for the Content-Type header regardless of what
+    // bytes were actually served - getOrRenderPage/renderRegionAt600DPI2
+    // always encode JPEG (confirmed live: real JPEG magic bytes, 5100x6600
+    // at 600dpi), so a request with no explicit format param was lying
+    // about the real content type. Always honest now; `format=png` isn't
+    // supported (no real PNG encoder in this pipeline - see
+    // hardware-extraction-region-render.js) and is silently ignored rather
+    // than mislabeling real JPEG bytes.
+    void format;
+    const contentType = "image/jpeg";
     console.log(`[Preview] Serving ${contentType} image (${imageBuffer.byteLength} bytes), page ${candidate.page_number}`);
     return new Response(imageBuffer, {
       headers: {
@@ -440,7 +436,17 @@ router.get("/api/hardware-schedule/session/:sessionId/page/:pageNumber/preview",
       return jsonResponse3({ error: "PDF file not found. Please re-upload the document." }, 404);
     }
     const rendered = await getOrRenderPage(sessionId, pageNum, pdfBuffer, env2);
-    const contentType = format === "jpeg" ? "image/jpeg" : "image/png";
+    // Real bug fixed 2026-10-02: this used to trust the `format` query
+    // param (default "png") for the Content-Type header regardless of what
+    // bytes were actually served - getOrRenderPage/renderRegionAt600DPI2
+    // always encode JPEG (confirmed live: real JPEG magic bytes, 5100x6600
+    // at 600dpi), so a request with no explicit format param was lying
+    // about the real content type. Always honest now; `format=png` isn't
+    // supported (no real PNG encoder in this pipeline - see
+    // hardware-extraction-region-render.js) and is silently ignored rather
+    // than mislabeling real JPEG bytes.
+    void format;
+    const contentType = "image/jpeg";
     console.log(`[Preview] Serving ${contentType} page image (${rendered.imageBuffer.byteLength} bytes), page ${pageNum}`);
     return new Response(rendered.imageBuffer, {
       headers: {

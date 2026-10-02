@@ -49,6 +49,8 @@
 
 import { callLocalQwen } from "./qwen-bridge.js";
 import { FINISH_CODES } from "./cps-matching.js";
+import gofaineatPriceRowType from "./gofaineat-pricerowtype.js";
+import classifyPriceFinishFormat from "./gofaineat-pricefinishformat.js";
 
 const CHUNK_LINES = 12;
 
@@ -356,6 +358,180 @@ export function extractPriceRowsSingleColumn(ocrText, context = {}) {
   return { rows, warnings: [] };
 }
 
+// ============================================================================
+// GOFAINEAT price-book-extraction cascade, stages 1-3 - added 2026-10-02.
+// See /Users/johnmobley/weylandai.com/GOFAINEAT_CANDIDATE_SURFACES.md
+// (candidate #1) and /Users/johnmobley/gofaineats/GOFAINEAT_CASCADE_DESIGN_PATTERN.md
+// for the full design. Real provenance for each stage lives in the
+// compiled artifacts themselves (classifyPriceRowType.provenance /
+// classifyPriceFinishFormat.provenance, imported above) - summarized
+// here, not duplicated by hand:
+//   Stage 1 (gofaineat-pricerowtype.js, pilot "pricerowtype"):
+//     classifies a line as priced_data_row / header_or_noise /
+//     call_for_quote. 100% held-out accuracy (25/25 test rows).
+//   Stage 2 (gofaineat-pricefinishformat.js, pilot "pricefinishformat"):
+//     given a confirmed priced_data_row, classifies which finish-code
+//     format it uses: bhma_3digit / us_letter / word_or_abbrev /
+//     bhma_2digit_variant / none_present. 100% held-out accuracy
+//     (74/74 test rows).
+//   Stage 3 (extractModelFinishPriceDeterministic below, NOT a GA
+//     pilot - per the design doc's own explicit guidance, checked and
+//     confirmed deterministic extraction is sufficient here): given a
+//     confirmed data row + known finish format, extracts model/finish/
+//     price with plain token filtering - reusing this file's own
+//     PRICE_TOKEN_RE and PLACEHOLDER_TOKEN_RE conventions. No model
+//     call, no GA - just token exclusion once the format is known.
+//
+// Together these three stages replace the Qwen fallback ENTIRELY for
+// any line where stage 1 confirms a real data row, the row has exactly
+// one price token (the population this cascade targets - multi-price
+// matrix rows are already handled upstream by
+// extractPriceRowsPositionally(), never reach here), and stage 3 can
+// resolve the model/finish split without ambiguity. The real, honest
+// residual: a priced_data_row whose finish-code token (per stage 2's
+// format) doesn't actually appear as its own token on the line, or
+// where more than one token of that format appears with no way to
+// pick a winner - both logged plainly as "unresolved" and sent to the
+// EXISTING Qwen path below, never guessed.
+
+// Derives a finish code's format category directly from the real
+// FINISH_CODES Set (cps-matching.js) by shape - NOT a second hardcoded
+// vocabulary, so there is no drift risk between this cascade and
+// isKnownFinishCode()/FINISH_CODES: if a code is added to FINISH_CODES
+// upstream, it is automatically categorized correctly here too.
+function classifyFinishCodeCategory(code) {
+  const upper = String(code || "").toUpperCase();
+  if (!FINISH_CODES.has(upper) && !FINISH_CODES.has(code)) return null;
+  if (/^US\d/.test(upper)) return "us_letter";
+  if (/^\d{3}[A-Z]?$/.test(upper)) return "bhma_3digit";
+  if (/^\d{2}[A-Z]?$/.test(upper)) return "bhma_2digit_variant";
+  return "word_or_abbrev";
+}
+
+function cleanFinishCandidateToken(tok) {
+  return String(tok).replace(/[^0-9A-Za-z]/g, "").toUpperCase();
+}
+
+// Stage 3: given a line already confirmed (by stage 1) to be a real
+// priced_data_row, and a finish-code format already classified (by
+// stage 2), extract the model number, finish code, and price with
+// plain deterministic token filtering - no model call. Structurally
+// the same shape as extractPriceRowsSingleColumn() above (same
+// PLACEHOLDER_TOKEN_RE handling, same "must contain a digit" rule for
+// the model), extended to ALSO exclude whichever token stage 2 says is
+// the finish code before picking the model - this is the real fix for
+// the gap extractPriceRowsSingleColumn() has on its own: that function
+// takes only the LAST pre-price token as "the model", so on a line
+// like "L9050 US10B $412.00" it would mis-extract the model as
+// "US10B" (the finish code) instead of "L9050". Stage 3 fixes exactly
+// this by removing the known finish-format token first, then joining
+// whatever real model tokens remain (plural - a real catalog number is
+// often 2 tokens, e.g. "L9050 06L", which extractPriceRowsSingleColumn
+// also drops today by keeping only the last token).
+export function extractModelFinishPriceDeterministic(line, finishFormat) {
+  const text = String(line || "");
+  const priceMatches = text.match(PRICE_TOKEN_RE) || [];
+  if (priceMatches.length !== 1) {
+    return { resolved: false, reason: `expected exactly 1 price token for deterministic stage-3 extraction, found ${priceMatches.length}` };
+  }
+  const priceToken = priceMatches[0];
+  const preText = text.slice(0, text.indexOf(priceToken)).trim();
+  const preTokens = preText.split(/\s+/).filter(Boolean);
+  const candidates = preTokens.filter((t) => !PLACEHOLDER_TOKEN_RE.test(t));
+
+  let finishCode = "";
+  let modelTokens = candidates;
+  if (finishFormat && finishFormat !== "none_present") {
+    const matches = candidates.filter((t) => classifyFinishCodeCategory(cleanFinishCandidateToken(t)) === finishFormat);
+    if (matches.length === 0) {
+      return {
+        resolved: false,
+        reason: `stage 2 classified finish format as "${finishFormat}" but no token on the line actually matches that format - residual ambiguity, not guessed`,
+      };
+    }
+    if (matches.length > 1) {
+      return {
+        resolved: false,
+        reason: `multiple candidate "${finishFormat}"-format finish tokens on one line (${matches.join(", ")}) - no clear winner, residual ambiguity, not guessed`,
+      };
+    }
+    finishCode = cleanFinishCandidateToken(matches[0]);
+    modelTokens = candidates.filter((t) => t !== matches[0]);
+  }
+
+  if (!modelTokens.length || !modelTokens.some((t) => /\d/.test(t))) {
+    return { resolved: false, reason: "no real model/part-number token remains once placeholder and finish-code tokens are excluded - residual ambiguity, not guessed" };
+  }
+
+  const price = Number(priceToken.replace(/[$,]/g, ""));
+  return {
+    resolved: true,
+    full_model_number: modelTokens.join(" "),
+    finish_code: finishCode,
+    list_price: price,
+  };
+}
+
+// Runs the full stage-1 -> stage-2 -> stage-3 cascade over a block of
+// OCR'd lines (typically catalogue-price-extraction.js's own
+// dataLines, after header/data split). Returns rows that resolved
+// fully deterministically PLUS the (hopefully small) list of lines
+// that genuinely need the existing Qwen fallback - never silently
+// drops an unresolved line, and never emits a row for anything stage 1
+// classified as header_or_noise/call_for_quote.
+export function runPriceExtractionCascade(dataLines, context = {}) {
+  const rows = [];
+  const residualLines = [];
+  const warnings = [];
+  const stats = { totalLines: 0, headerOrNoise: 0, callForQuote: 0, cascadeResolved: 0, residual: 0 };
+
+  for (const rawLine of String(dataLines || "").split("\n")) {
+    const line = rawLine.trim();
+    if (!line) continue;
+    stats.totalLines += 1;
+
+    const rowType = gofaineatPriceRowType(line);
+    if (rowType === "header_or_noise") {
+      stats.headerOrNoise += 1;
+      continue;
+    }
+    if (rowType === "call_for_quote") {
+      stats.callForQuote += 1;
+      continue; // never fabricate a price for a call-for-quote line
+    }
+
+    const finishFormat = classifyPriceFinishFormat(line);
+    const extracted = extractModelFinishPriceDeterministic(line, finishFormat);
+    if (extracted.resolved) {
+      stats.cascadeResolved += 1;
+      rows.push({
+        full_model_number: extracted.full_model_number,
+        finish_code: extracted.finish_code,
+        finish_description: null,
+        list_price: extracted.list_price,
+        unit_price: null,
+        price_uom: "EA",
+        manufacturer: context.manufacturer || null,
+        trade: context.trade || "doors",
+        // Deterministic token extraction against real OCR text (stage
+        // 1 confirmed this is a real data row, stage 2 confirmed the
+        // finish format, stage 3 excluded exactly that token) - not a
+        // model guess, treated as verified by construction, same as
+        // extractPriceRowsPositionally()'s equivalent field above.
+        verified_in_source_text: 1,
+        extraction_confidence: 0.92,
+        stage2_finish_format: finishFormat,
+      });
+    } else {
+      stats.residual += 1;
+      residualLines.push(line);
+      warnings.push(`cascade residual (sent to Qwen fallback): "${line.slice(0, 80)}" - ${extracted.reason}`);
+    }
+  }
+
+  return { rows, residualLines, warnings, stats };
+}
+
 export async function extractPriceRowsFromOcrText(env2, ocrText, context = {}) {
   // Prefer the deterministic positional path whenever this page has a
   // detectable N-column finish-code header - verified live to be strictly
@@ -369,18 +545,117 @@ export async function extractPriceRowsFromOcrText(env2, ocrText, context = {}) {
     return { rows: positional.rows, rejectedCount: 0, warnings: positional.warnings, chunksProcessed: 0 };
   }
 
-  // Second deterministic preference: no multi-column header, but rows
-  // still decompose as single model+price pairs (verified live against
-  // the real Schlage license-tier page) - no LLM call needed here either.
-  const singleColumn = extractPriceRowsSingleColumn(ocrText, context);
-  if (singleColumn.rows.length > 0) {
-    return { rows: singleColumn.rows, rejectedCount: 0, warnings: singleColumn.warnings, chunksProcessed: 0 };
+  // GOFAINEAT cascade (stages 1+2+3), added 2026-10-02 - see
+  // /Users/johnmobley/gofaineats/pilot/pricerowtype_*.mjs,
+  // pricefinishformat_*.mjs, and
+  // /Users/johnmobley/weylandai.com/GOFAINEAT_CANDIDATE_SURFACES.md
+  // candidate #1. Runs BEFORE extractPriceRowsSingleColumn() now (it used
+  // to run only in the final LLM-fallback branch, with
+  // extractPriceRowsSingleColumn() as the second-priority path) because
+  // extractPriceRowsSingleColumn() has a real, confirmed bug this cascade
+  // exists specifically to fix: it blindly takes the LAST pre-price token
+  // as "the model", so on a line like "L9050 US10B $412.00" it
+  // mis-extracts the model as "US10B" (the finish code) instead of
+  // "L9050" - and because that function returns non-empty for ANY page
+  // with at least one finish-free row, it was pre-empting this cascade
+  // entirely before this fix (confirmed live this session: a synthetic
+  // test page with real trailing-finish-code rows had its model numbers
+  // silently replaced by finish codes until this reorder).
+  //
+  // Stage 1 (gofaineat-pricerowtype.js, 25/25 held-out accuracy) classifies
+  // every line as priced_data_row / header_or_noise / call_for_quote -
+  // only a confirmed priced_data_row proceeds. Stage 2
+  // (gofaineat-pricefinishformat.js, 74/74 held-out accuracy) classifies
+  // which finish-code format (if any) that line uses. Stage 3
+  // (extractModelFinishPriceDeterministic() above - plain token
+  // filtering, NOT a GA pilot, confirmed sufficient by direct testing per
+  // the design doc's own "check per-product before assuming it needs a
+  // model" guidance) extracts model/finish/price with zero model call,
+  // explicitly excluding whichever token Stage 2 identified as the finish
+  // code - the real fix for the bug above. A line Stage 3 genuinely
+  // cannot resolve (its finish token doesn't actually appear on the line,
+  // or multiple same-format tokens tie) is a real, small, honestly
+  // reported residual - sent to the unchanged callLocalQwen path below,
+  // never guessed.
+  const priceRowTypeCounts = { priced_data_row: 0, header_or_noise: 0, call_for_quote: 0 };
+  const keptDataLines = [];
+  for (const line of String(ocrText || "").split("\n")) {
+    const rowType = gofaineatPriceRowType(line);
+    priceRowTypeCounts[rowType] = (priceRowTypeCounts[rowType] || 0) + 1;
+    if (rowType === "priced_data_row") keptDataLines.push(line);
   }
 
-  const { headerLines, dataLines } = splitHeaderAndDataLines(ocrText);
-  const chunks = chunkOcrTextByLines(dataLines, pickChunkLineCount(dataLines));
-  const allRows = [];
-  const allWarnings = [];
+  const cascadeRows = [];
+  const cascadeWarnings = [];
+  const residualLines = [];
+  for (const rawLine of keptDataLines) {
+    const line = rawLine.trim();
+    if (!line) continue;
+    const finishFormat = classifyPriceFinishFormat(line);
+    const extracted = extractModelFinishPriceDeterministic(line, finishFormat);
+    if (extracted.resolved) {
+      cascadeRows.push({
+        full_model_number: extracted.full_model_number,
+        finish_code: extracted.finish_code,
+        finish_description: null,
+        list_price: extracted.list_price,
+        unit_price: null,
+        price_uom: "EA",
+        manufacturer: context.manufacturer || null,
+        trade: context.trade || "doors",
+        verified_in_source_text: 1,
+        extraction_confidence: 0.92,
+        stage2_finish_format: finishFormat,
+      });
+    } else {
+      residualLines.push(rawLine);
+      cascadeWarnings.push(`stage 2+3 residual (sent to Qwen fallback): "${line.slice(0, 80)}" - ${extracted.reason}`);
+    }
+  }
+
+  // Common case: stage 1 found real data rows on this page and stages
+  // 2+3 resolved every single one of them deterministically - return
+  // immediately, zero LLM calls, zero reliance on the older
+  // extractPriceRowsSingleColumn() heuristic this supersedes for this case.
+  if (cascadeRows.length > 0 && residualLines.length === 0) {
+    return {
+      rows: cascadeRows,
+      rejectedCount: 0,
+      warnings: [],
+      chunksProcessed: 0,
+      priceRowTypeFilter: priceRowTypeCounts,
+      cascadeStats: { priced_data_row_lines: keptDataLines.filter((l) => l.trim()).length, resolved_by_stage2_3: cascadeRows.length, residual_sent_to_qwen: 0 },
+    };
+  }
+
+  // Stage 1 found NO real data rows at all on this page (a real
+  // generalization-risk case for its classifier, or a page shape this
+  // cascade's target population - single-price rows - doesn't cover,
+  // e.g. one already handled by extractPriceRowsPositionally above) -
+  // fall back to the legacy single-column heuristic as an honest safety
+  // net rather than silently producing nothing. This preserves the
+  // pre-cascade behavior for whatever page shapes stage 1 doesn't
+  // recognize, instead of only ever falling further to the LLM.
+  if (cascadeRows.length === 0 && residualLines.length === 0) {
+    const singleColumn = extractPriceRowsSingleColumn(ocrText, context);
+    if (singleColumn.rows.length > 0) {
+      return {
+        rows: singleColumn.rows,
+        rejectedCount: 0,
+        warnings: singleColumn.warnings,
+        chunksProcessed: 0,
+        priceRowTypeFilter: priceRowTypeCounts,
+        cascadeStats: { priced_data_row_lines: 0, resolved_by_stage2_3: 0, residual_sent_to_qwen: 0, note: "stage 1 found no priced_data_row lines on this page - fell back to legacy extractPriceRowsSingleColumn()" },
+      };
+    }
+  }
+
+  const { headerLines } = splitHeaderAndDataLines(ocrText);
+  const filteredDataLines = residualLines.join("\n");
+
+  const chunks = chunkOcrTextByLines(filteredDataLines, pickChunkLineCount(filteredDataLines));
+  const allRows = [...cascadeRows];
+  const allWarnings = [...cascadeWarnings];
   let totalRejected = 0;
   for (const chunk of chunks) {
     const prompt = buildPriceTableExtractionPrompt(chunk, context, headerLines);
@@ -399,5 +674,20 @@ export async function extractPriceRowsFromOcrText(env2, ocrText, context = {}) {
     totalRejected += rejectedCount;
     allWarnings.push(...warnings);
   }
-  return { rows: allRows, rejectedCount: totalRejected, warnings: allWarnings, chunksProcessed: chunks.length };
+  return {
+    rows: allRows,
+    rejectedCount: totalRejected,
+    warnings: allWarnings,
+    chunksProcessed: chunks.length,
+    // GOFAINEAT cascade observability - how many of this page's
+    // data-section lines were dropped by stage 1, resolved fully
+    // deterministically by stages 2+3, vs. genuinely needed the Qwen
+    // fallback. See the comments above for full provenance.
+    priceRowTypeFilter: priceRowTypeCounts,
+    cascadeStats: {
+      priced_data_row_lines: keptDataLines.filter((l) => l.trim()).length,
+      resolved_by_stage2_3: cascadeRows.length,
+      residual_sent_to_qwen: residualLines.length,
+    },
+  };
 }

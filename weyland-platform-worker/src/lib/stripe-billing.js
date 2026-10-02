@@ -106,7 +106,16 @@ export const WEYLAND_PRODUCTS = {
   "weyland-inspecx-seat": { priceId: "price_1UAzF6LWTxUJi5AVeycqwHkE", tier: "inspecx" },
   "weyland-survx-seat": { priceId: "price_1UAzF6LWTxUJi5AVURjQkscV", tier: "survx" },
   "weyland-mobilex-seat": { priceId: "price_1UAzF7LWTxUJi5AVbjF6Yzqg", tier: "mobilex" },
-  "weyland-weatherx-seat": { priceId: "price_1UAzF7LWTxUJi5AVV0rfO1Rl", tier: "weatherx" }
+  "weyland-weatherx-seat": { priceId: "price_1UAzF7LWTxUJi5AVV0rfO1Rl", tier: "weatherx" },
+  // weyland-wire-seat: added 2026-10-02, the first real pilot tenant of
+  // mobleyreport.com's "provenance-first wire" template
+  // (routes/wire.js/lib/wire-tenant.js) - WeylandAI selling access to its
+  // own construction-trade-press wire + its own real audited
+  // price-extraction reports as a trust signal. $49.00/mo real recurring
+  // Stripe price (sk_live_... Product+Price created directly against the
+  // same Stripe account every other entry above lives in, not fabricated
+  // - see lib/wire-tenant.js's own header for the creation record).
+  "weyland-wire-seat": { priceId: "price_1UMD5fLWTxUJi5AVF6xGy8mK", tier: "wire" }
 };
 
 // The products with a real route/page/functionality behind them, plus the
@@ -166,7 +175,13 @@ export const CHECKOUT_READY_PRODUCTS = new Set([
   "weyland-closex-seat",
   "weyland-notesx-seat",
   "weyland-inspecx-seat",
-  "weyland-survx-seat"
+  "weyland-survx-seat",
+  // Added 2026-10-02 alongside the WEYLAND_PRODUCTS entry above - the
+  // real backend (routes/wire.js: GET /wire, GET /api/wire/news,
+  // /api/wire/synthesis, /api/wire/reports) is live, so this is
+  // self-checkout-ready like every other real product here, not a
+  // teaser price with no feature behind it.
+  "weyland-wire-seat"
 ]);
 
 // CompX reuses HuntX's own real data source directly - the TXDOT bid

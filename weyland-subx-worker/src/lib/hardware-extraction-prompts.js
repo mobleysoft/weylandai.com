@@ -164,6 +164,22 @@ export const SCHEDULE_TYPE_REGISTRY = {
     color: "#F59E0B",
     status: "not_implemented"
   },
+  // Real, selectable option in subx-app.html's upload form (f-doctype) and
+  // validDocumentTypes - added here 2026-10-02 so it's honestly flagged
+  // the same way finish_schedule already was, instead of being absent from
+  // this registry entirely (which let it silently fall through to the
+  // hardware_schedule extractor - see runEmbeddedGofaineatExtraction's own
+  // fix for the real bug this caused).
+  "frame_schedule": {
+    field_group: "frame_schedule",
+    extraction_function: "extractFrameSchedule",
+    target_table: "frame_schedule_entries",
+    constraint_scope: "global",
+    icon: "square",
+    display_name: "Frame Schedule",
+    color: "#6366F1",
+    status: "not_implemented"
+  },
   "ada_compliance": {
     field_group: "ada_compliance",
     extraction_function: "extractADACompliance",
