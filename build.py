@@ -50,6 +50,7 @@ ROUTE_LABELS = {
     "meetingx": "MEETX",
     "qtext": "QTEXT",
     "whyweyland": "WHY WEYLAND",
+    "wire": "WIRE",
     "venturedeck": "VENTURE DECK",
     "careers": "CAREERS",
 }

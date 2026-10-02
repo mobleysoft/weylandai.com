@@ -6,22 +6,22 @@
   <meta name="theme-color" content="#090a0d">
   <title>SubX Workspace | WeylandAI</title>
   <style>
-    :root{--bg:#090a0d;--panel:#121419;--panel2:#181b21;--line:#2c3139;--text:#edf0f1;--muted:#9299a3;--gold:#f0b800;--green:#61dfa0;--blue:#66d4ff;--red:#ff756e;--purple:#a78bfa}
+    :root{--bg:#090a0d;--panel:#121419;--panel2:#181b21;--line:#2c3139;--text:#edf0f1;--muted:#9299a3;--gold:#f0b800;--green:#61dfa0;--blue:#66d4ff;--red:#ff756e;--purple:#a78bfa;--primary:#2a52ff;--accent:#ffd400}
     *{box-sizing:border-box}html,body{margin:0;min-height:100%;background:var(--bg);color:var(--text);font-family:"Avenir Next","Helvetica Neue",sans-serif}
-    body:before{content:"";position:fixed;inset:0;pointer-events:none;background:radial-gradient(circle at 20% 20%,rgba(167,139,242,.12),transparent 28rem),linear-gradient(rgba(255,255,255,.015) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.015) 1px,transparent 1px);background-size:auto,30px 30px,30px 30px}
+    body:before{content:"";position:fixed;inset:0;pointer-events:none;background:radial-gradient(circle at 20% 20%,rgba(42,82,255,.12),transparent 28rem),linear-gradient(rgba(255,255,255,.015) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.015) 1px,transparent 1px);background-size:auto,30px 30px,30px 30px}
     .shell{position:relative;max-width:1200px;margin:auto;padding:20px clamp(16px,3vw,40px) 60px}
     header{display:flex;align-items:center;justify-content:space-between;gap:15px;margin-bottom:24px}
     .brand{display:flex;align-items:center;gap:12px;color:var(--text);text-decoration:none}
-    .mark{width:42px;height:42px;display:grid;place-items:center;background:var(--purple);color:var(--bg);font-weight:900}
+    .mark{width:42px;height:42px;display:grid;place-items:center;background:var(--primary);color:var(--bg);font-weight:900}
     .brand b{display:block;letter-spacing:.16em}
     .brand small{display:block;color:var(--muted);font:700 9px/1.5 ui-monospace,monospace;letter-spacing:.11em}
     .nav{display:flex;gap:8px;flex-wrap:wrap}
     .nav a,.button,button{border:1px solid var(--line);border-radius:99px;padding:9px 14px;color:var(--text);text-decoration:none;background:transparent;font:750 10px/1 ui-monospace,monospace;letter-spacing:.06em;cursor:pointer;transition:all .2s}
-    .nav a:hover,.button:hover,button:hover{border-color:var(--purple);color:var(--purple);box-shadow:0 0 15px rgba(167,139,242,.2)}
-    .button.primary,button.primary{background:var(--purple);border-color:var(--purple);color:var(--bg);font-weight:900}
-    .button.primary:hover,button.primary:hover{color:var(--bg);box-shadow:0 0 15px rgba(167,139,242,.4)}
+    .nav a:hover,.button:hover,button:hover{border-color:var(--primary);color:var(--primary);box-shadow:0 0 15px rgba(42,82,255,.2)}
+    .button.primary,button.primary{background:var(--primary);border-color:var(--primary);color:var(--bg);font-weight:900}
+    .button.primary:hover,button.primary:hover{color:var(--bg);box-shadow:0 0 15px rgba(42,82,255,.4)}
     button:disabled{opacity:.5;cursor:not-allowed}
-    .eyebrow{color:var(--purple);font:800 11px/1 ui-monospace,monospace;letter-spacing:.18em;text-transform:uppercase}
+    .eyebrow{color:var(--primary);font:800 11px/1 ui-monospace,monospace;letter-spacing:.18em;text-transform:uppercase}
     h1{font-size:clamp(28px,4vw,44px);letter-spacing:-.04em;line-height:1.05;margin:10px 0 6px}
     .lede{max-width:680px;color:var(--muted);line-height:1.6;margin:0 0 28px;font-size:15px}
     .card{background:rgba(18,20,25,.94);border:1px solid var(--line);border-radius:18px;padding:22px;margin-bottom:22px;box-shadow:0 25px 70px rgba(0,0,0,.25)}
@@ -32,7 +32,7 @@
     label{display:block;font:700 10px/1 ui-monospace,monospace;letter-spacing:.08em;color:var(--muted);margin:14px 0 6px;text-transform:uppercase}
     label:first-child{margin-top:0}
     input[type=text],input[type=file],select{width:100%;background:#0d0f14;border:1px solid var(--line);border-radius:8px;padding:10px 12px;color:var(--text);font-size:14px;font-family:inherit}
-    input[type=text]:focus,select:focus{outline:none;border-color:var(--purple)}
+    input[type=text]:focus,select:focus{outline:none;border-color:var(--primary)}
     table{width:100%;border-collapse:collapse;font-size:13.5px}
     th{text-align:left;color:var(--muted);font:750 10px/1 ui-monospace,monospace;letter-spacing:.08em;padding:10px 12px;background:#0d0f14;border-bottom:2px solid var(--line)}
     td{padding:12px;border-bottom:1px solid #1f232b;vertical-align:middle}
@@ -44,20 +44,20 @@
     .status-pending{background:rgba(240,184,0,.15);color:var(--gold);border:1px solid rgba(240,184,0,.35)}
     .status-err{background:rgba(255,117,110,.15);color:var(--red);border:1px solid rgba(255,117,110,.35)}
     .note-card{background:rgba(18,20,25,.9);border:1px solid var(--line);border-radius:14px;padding:16px 18px;color:var(--muted);font-size:13px;line-height:1.6;margin-top:6px}
-    .note-card code{background:#161920;padding:2px 6px;border-radius:4px;color:var(--purple);font-size:12px}
+    .note-card code{background:#161920;padding:2px 6px;border-radius:4px;color:var(--primary);font-size:12px}
     .error-box{background:rgba(255,117,110,.08);border:1px solid rgba(255,117,110,.4);border-radius:10px;padding:12px 14px;color:var(--red);font-size:13px;line-height:1.5;margin-top:12px;white-space:pre-wrap;font-family:ui-monospace,monospace}
     .ok-box{background:rgba(97,223,160,.08);border:1px solid rgba(97,223,160,.4);border-radius:10px;padding:12px 14px;color:var(--green);font-size:13px;line-height:1.5;margin-top:12px;white-space:pre-wrap;font-family:ui-monospace,monospace}
     pre.raw{background:#0b0d12;border:1px solid var(--line);border-radius:10px;padding:14px;font-size:11.5px;line-height:1.5;color:#c8ccd4;overflow:auto;max-height:340px}
     .route-choice{display:flex;gap:10px;flex-wrap:wrap;margin-top:8px}
     .route-choice button{flex:1;min-width:180px;text-align:left;padding:12px 14px}
-    .route-choice button.active{border-color:var(--purple);color:var(--purple);box-shadow:0 0 12px rgba(167,139,242,.25)}
+    .route-choice button.active{border-color:var(--primary);color:var(--primary);box-shadow:0 0 12px rgba(42,82,255,.25)}
     .route-choice .rc-title{font:800 11px ui-monospace,monospace;letter-spacing:.06em}
     .route-choice .rc-desc{display:block;color:var(--muted);font:600 10px/1.4 ui-monospace,monospace;margin-top:4px;letter-spacing:0;text-transform:none}
     #login-ui{max-width:420px;margin:60px auto}
     .muted-small{color:var(--muted);font-size:12px}
     .empty{color:var(--muted);font-size:13px;padding:20px;text-align:center}
     .actions-row{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
-    .spin{display:inline-block;width:11px;height:11px;border:2px solid rgba(255,255,255,.25);border-top-color:var(--purple);border-radius:50%;animation:spin .7s linear infinite;vertical-align:middle;margin-right:6px}
+    .spin{display:inline-block;width:11px;height:11px;border:2px solid rgba(255,255,255,.25);border-top-color:var(--primary);border-radius:50%;animation:spin .7s linear infinite;vertical-align:middle;margin-right:6px}
     @keyframes spin{to{transform:rotate(360deg)}}
   </style>
 </head>
@@ -143,15 +143,19 @@
 
         <div class="actions-row">
           <button type="button" class="primary" id="extract-btn">RUN EXTRACTION (PAGE 1)</button>
+          <button type="button" class="primary" id="client-extract-btn">RUN EXTRACTION (CLIENT-SIDE, PAGE 1)</button>
           <button type="button" id="doorindex-btn">VIEW DOOR INDEX</button>
           <button type="button" id="export-btn">VIEW EXPORT (JSON)</button>
+        </div>
+        <div class="note-card">
+          The client-side button renders the page and runs OCR entirely in THIS browser tab (pdf.js + tesseract-wasm, real vendored libraries, no server-side Cloudflare CPU spent on rendering or OCR) and only sends the finished structured result back to the server. Works for hardware_schedule pages; see <code>hardware-grid-extraction-client.mjs</code>.
         </div>
         <div id="extract-result"></div>
         <pre class="raw" id="raw-output" style="display:none"></pre>
       </div>
 
       <div class="note-card">
-        New here and just want to see it work first? The <a href="/" style="color:var(--purple)">WeylandAI homepage</a> gives every visitor an instant, private demo session with real matched hardware &mdash; no signup required.
+        New here and just want to see it work first? The <a href="/" style="color:var(--primary)">WeylandAI homepage</a> gives every visitor an instant, private demo session with real matched hardware &mdash; no signup required.
       </div>
     </div>
   </div>
@@ -1730,6 +1734,8 @@ global.SovereignPdfRender = {
       }
 
       var currentSessionId = null;
+      var currentDocumentType = 'hardware_schedule';
+      var currentTotalPages = 1;
 
       function showApp(){
         document.getElementById('login-ui').style.display = 'none';
@@ -1782,6 +1788,7 @@ global.SovereignPdfRender = {
 
       function selectSession(sessionId, rowEl){
         currentSessionId = sessionId;
+        currentDocumentType = 'hardware_schedule';
         document.querySelectorAll('#sessions-list tr').forEach(function(r){ r.classList.remove('selected'); });
         if (rowEl) rowEl.classList.add('selected');
         var card = document.getElementById('session-detail-card');
@@ -1792,6 +1799,17 @@ global.SovereignPdfRender = {
         document.getElementById('route-result').innerHTML = '';
         document.getElementById('raw-output').style.display = 'none';
         loadRoute(sessionId);
+        // Real document_type for THIS session (hardware_schedule vs
+        // door_schedule) - reused from the existing extraction-contract
+        // endpoint rather than adding a new route, since it already
+        // returns this exact field for a different purpose.
+        fetch('/api/hardware-schedule/session/' + encodeURIComponent(sessionId) + '/page/1/extraction-contract', { headers: authHeaders() })
+          .then(function(r){ return r.json(); })
+          .then(function(d){
+            if (d && d.document_type) currentDocumentType = d.document_type;
+            if (d && d.totalPages) currentTotalPages = d.totalPages;
+          })
+          .catch(function(){});
         card.scrollIntoView({ behavior: 'smooth', block: 'start' });
       }
 
@@ -1853,6 +1871,93 @@ global.SovereignPdfRender = {
             raw.style.display = 'block';
           })
           .catch(function(err){ out.innerHTML = '<div class="error-box">Network error: ' + esc(err.message) + '</div>'; });
+      });
+
+      // Client-side extraction: real rendering (pdf.js) + real OCR
+      // (tesseract-wasm) in THIS browser tab, zero Cloudflare CPU spent -
+      // only the finished result is sent to the server, via the SAME
+      // extract-result endpoint the operator-local/Claude-vision path
+      // already uses. Per direct instruction 2026-10-02: no shipped
+      // extraction path should depend on server-side compute when it can
+      // run client-side instead.
+      document.getElementById('client-extract-btn').addEventListener('click', async function(){
+        if (!currentSessionId) return;
+        var fileInputEl = document.getElementById('f-file');
+        if (!fileInputEl.files || fileInputEl.files.length === 0) {
+          alert('Choose a PDF file first.');
+          return;
+        }
+        var out = document.getElementById('extract-result');
+        var raw = document.getElementById('raw-output');
+        var isDoorSchedule = currentDocumentType === 'door_schedule';
+        // Real bug fixed 2026-10-02: only door_schedule and hardware_schedule
+        // have real client-side extractors. finish_schedule/frame_schedule
+        // are real, selectable upload options with no extraction pipeline at
+        // all (same gap just fixed server-side in runEmbeddedGofaineatExtraction) -
+        // silently defaulting them to extractHardwareScheduleFromPdf would
+        // produce plausible-looking-but-meaningless output instead of an
+        // honest "not supported yet."
+        if (currentDocumentType !== 'door_schedule' && currentDocumentType !== 'hardware_schedule') {
+          out.innerHTML = '<div class="error-box">Client-side extraction isn\'t implemented for "' + esc(currentDocumentType) + '" yet - only door_schedule and hardware_schedule have real extractors.</div>';
+          return;
+        }
+        var totalPages = currentTotalPages || 1;
+        raw.style.display = 'none';
+        var btn = this;
+        btn.disabled = true;
+        try {
+          out.innerHTML = '<span class="spin"></span>Loading client-side extraction engine&hellip;';
+          var file = fileInputEl.files[0];
+          var bytes = await file.arrayBuffer();
+          var mod = await import('/api/hardware-schedule/client-ocr-assets/schedule-grid-extraction-client.mjs');
+
+          // Real multi-page loop - sequential (not parallel): tesseract-wasm's
+          // OCR engine instance is stateful/single-threaded per page, and
+          // sequential also keeps per-page progress readable rather than N
+          // simultaneous progress streams racing in the same status line.
+          var pageSummaries = [];
+          var allResults = [];
+          for (var p = 1; p <= totalPages; p++) {
+            var pageLabel = 'page ' + p + '/' + totalPages;
+            var progressCb = (function(label){
+              return function(msg){ out.innerHTML = '<span class="spin"></span>[' + label + '] ' + esc(msg); };
+            })(pageLabel);
+            var extraction = isDoorSchedule
+              ? await mod.extractDoorScheduleFromPdf(bytes, p, progressCb)
+              : await mod.extractHardwareScheduleFromPdf(bytes, p, progressCb);
+            out.innerHTML = '<span class="spin"></span>[' + pageLabel + '] Saving result to session&hellip;';
+            var r = await fetch('/api/hardware-schedule/session/' + encodeURIComponent(currentSessionId) + '/page/' + p + '/extract-result', {
+              method: 'POST',
+              headers: authHeaders(true),
+              body: JSON.stringify({
+                extraction: extraction,
+                provider: { name: 'client_grid_deterministic', model: null, client: 'browser_pdfjs_tesseract_wasm' }
+              })
+            });
+            var d = await r.json();
+            if (!r.ok) {
+              out.innerHTML = '<div class="error-box">[' + pageLabel + '] Save failed (HTTP ' + r.status + '): ' + esc(apiErrorText(d)) + '</div>';
+              btn.disabled = false;
+              return;
+            }
+            allResults.push({ page: p, extraction: extraction });
+            pageSummaries.push(isDoorSchedule
+              ? (p + ': ' + (extraction.doors || []).length + ' door(s)')
+              : (p + ': ' + (extraction.hardware_groups || []).length + ' group(s)'));
+          }
+
+          var totalCount = isDoorSchedule
+            ? allResults.reduce(function(s, r){ return s + (r.extraction.doors || []).length; }, 0)
+            : allResults.reduce(function(s, r){ return s + (r.extraction.hardware_groups || []).length; }, 0);
+          var noun = isDoorSchedule ? 'door(s)' : 'hardware group(s)';
+          out.innerHTML = '<div class="ok-box">Client-side extraction succeeded: ' + totalCount + ' ' + noun + ' total across ' + totalPages + ' page(s) (' + esc(pageSummaries.join(', ')) + '), computed entirely in this browser tab.</div>';
+          raw.textContent = JSON.stringify(allResults, null, 2);
+          raw.style.display = 'block';
+        } catch (err) {
+          out.innerHTML = '<div class="error-box">Client-side extraction error: ' + esc(err.message) + '</div>';
+        } finally {
+          btn.disabled = false;
+        }
       });
 
       document.getElementById('doorindex-btn').addEventListener('click', function(){
