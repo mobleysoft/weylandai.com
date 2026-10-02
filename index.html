@@ -86,8 +86,8 @@
     .badge-pill.unlocked{opacity:1;color:var(--gold);border-color:rgba(240,184,0,.5);box-shadow:0 0 14px rgba(240,184,0,.18)}
     .badge-pill.unlocked .dot{background:var(--gold);box-shadow:0 0 8px var(--gold)}
 
-    #badge-toast{position:fixed;top:16px;left:50%;transform:translate(-50%,-140%);background:rgba(18,20,25,.96);border:1px solid rgba(240,184,0,.5);color:var(--gold);font:800 11px/1 ui-monospace,monospace;letter-spacing:.06em;padding:12px 20px;border-radius:99px;z-index:50;transition:transform .35s ease;box-shadow:0 10px 30px rgba(0,0,0,.35)}
-    #badge-toast.show{transform:translate(-50%,0)}
+    #badge-toast{position:fixed;top:16px;left:50%;transform:translate(-50%,-20px);opacity:0;visibility:hidden;pointer-events:none;background:rgba(18,20,25,.96);border:1px solid rgba(240,184,0,.5);color:var(--gold);font:800 11px/1 ui-monospace,monospace;letter-spacing:.06em;padding:12px 20px;border-radius:99px;z-index:50;transition:transform .35s ease,opacity .35s ease,visibility .35s ease;box-shadow:0 10px 30px rgba(0,0,0,.35)}
+    #badge-toast.show{transform:translate(-50%,0);opacity:1;visibility:visible}
   </style>
 </head>
 <body>
