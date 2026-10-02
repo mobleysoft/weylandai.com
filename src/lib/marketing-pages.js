@@ -18,7 +18,7 @@ export var SovereignWeylandRoutes = (function() {
     meetingx: "MEETX",
     qtext: "QTEXT",
     whyweyland: "WHY WEYLAND",
-    wire: "WIRE",
+    news: "NEWS",
     investors: "INVESTORS",
     venturedeck: "VENTURE DECK",
     lienx: "LIENX",

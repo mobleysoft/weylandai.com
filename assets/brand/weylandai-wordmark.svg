@@ -2,6 +2,7 @@
   <title>WeylandAI wordmark — real vector trace, recolored badge</title>
   <rect x="0" y="0" width="536" height="145" rx="20" fill="#2A52FF"/>
   <g transform="translate(28,28)">
+    <g transform="translate(0,13.4) translate(58,66.3) scale(1.15) translate(-58,-66.3)">
     <g transform="translate(0.000000,89.000000) scale(0.100000,-0.100000)" fill="#FFD400" stroke="none">
       <path d="M50 801 c0 -33 4 -40 25 -45 18 -5 27 -17 35 -49 13 -45 19 -65 80
 -262 45 -148 45 -145 26 -145 -9 0 -16 14 -18 38 -6 47 -58 224 -69 237 -5 5
@@ -14,6 +15,7 @@ c40 -2 126 -2 190 0 l117 4 40 122 c21 66 47 147 56 179 9 31 19 57 23 57 4 0
 -151 -17 -74 -35 -140 -38 -147 -6 -11 -75 196 -113 341 l-10 37 -87 0 -86 0
 -60 -197 -59 -196 -17 59 c-60 213 -63 246 -29 254 20 5 26 13 28 43 l3 37
 -155 0 -156 0 0 -39z"/>
+    </g>
     </g>
     <g transform="translate(0.000000,89.000000) scale(0.100000,-0.100000)" fill="#F5F7FA" stroke="none">
       <path d="M2100 535 l0 -305 65 0 65 0 0 305 0 305 -65 0 -65 0 0 -305z"/>

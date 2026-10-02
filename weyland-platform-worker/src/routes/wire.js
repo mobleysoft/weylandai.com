@@ -70,7 +70,7 @@ export function registerWireRoutes(router) {
     return jsonResponse3({ active });
   });
 
-  router.get("/wire", () => new Response(WIRE_PAGE, {
+  router.get("/news", () => new Response(WIRE_PAGE, {
     status: 200,
     headers: {
       "Content-Type": "text/html; charset=utf-8",
@@ -79,6 +79,8 @@ export function registerWireRoutes(router) {
       "X-Content-Type-Options": "nosniff",
     },
   }));
+  // Old link kept working for anyone who already bookmarked/shared it.
+  router.get("/wire", () => Response.redirect("https://weylandai.com/news", 301));
 }
 
 const WIRE_PAGE = `<!doctype html>
@@ -196,21 +198,24 @@ const WIRE_PAGE = `<!doctype html>
     font-size: 11.5px; color: var(--ink-muted); line-height: 1.6;
   }
   .loading { font-size: 13px; color: var(--ink-muted); }
+  .back-link { display: inline-flex; align-items: center; gap: 6px; font-size: 12px; font-weight: 700; letter-spacing: .04em; color: var(--ink-muted); text-decoration: none; margin-bottom: 10px; }
+  .back-link:hover { color: var(--blue); }
 </style>
 </head>
 <body>
 <div class="wrap">
+  <a class="back-link" href="/">&larr; WeylandAI</a>
   <header class="masthead">
     ${WIRE_WORDMARK_SVG}
     <div style="flex:1 1 auto">
-      <div style="font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-muted)">Construction industry wire &amp; engineering-report desk</div>
+      <div style="font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-muted)">Construction industry news &amp; engineering-report desk</div>
       <div class="dek">Live headlines from Engineering News-Record &amp; Construction Dive, a deterministic Editor's Briefing that cites its own sources, and WeylandAI's own real, audited price-extraction validation history.</div>
     </div>
   </header>
   <hr class="rule-thick">
   <div class="dateline">
     <span id="dateline-date"></span>
-    <span>weylandai.com/wire</span>
+    <span>weylandai.com/news</span>
   </div>
 
   <div class="lead-grid">
