@@ -15,9 +15,11 @@
     .brand{display:flex;align-items:center;gap:12px;color:var(--text);text-decoration:none}
     .brand img.logo{height:34px;width:auto;display:block}
     .brand small{display:block;color:var(--muted);font:700 9px/1.5 ui-monospace,monospace;letter-spacing:.11em}
-    .nav{display:flex;gap:8px;flex-wrap:wrap}
-    .nav a,.button{border:1px solid var(--line);border-radius:99px;padding:9px 14px;color:var(--text);text-decoration:none;background:transparent;font:750 10px/1 ui-monospace,monospace;letter-spacing:.06em;cursor:pointer;transition:all .2s}
-    .nav a:hover,.button:hover{border-color:var(--purple);color:var(--purple);box-shadow:0 0 15px rgba(167,139,242,.2)}
+    .nav{display:flex;align-items:center;gap:20px;flex-wrap:wrap}
+    .nav a:not(.button){color:var(--muted);text-decoration:none;font:750 11px/1 ui-monospace,monospace;letter-spacing:.06em;cursor:pointer;transition:color .2s}
+    .nav a:not(.button):hover{color:var(--text)}
+    .button{border:1px solid var(--line);border-radius:99px;padding:9px 16px;color:var(--text);text-decoration:none;background:transparent;font:750 10px/1 ui-monospace,monospace;letter-spacing:.06em;cursor:pointer;transition:all .2s}
+    .button:hover{border-color:var(--purple);color:var(--purple);box-shadow:0 0 15px rgba(167,139,242,.2)}
     .button.primary{background:var(--purple);border-color:var(--purple);color:var(--bg);font-weight:900}
 
     /* Three-pane suite hero: SubX (purple, background) / TakeOffX (blue, left) /
@@ -35,6 +37,7 @@
     .suite-legend{position:relative;z-index:2;display:flex;gap:18px;padding:12px clamp(20px,4vw,48px) 0;flex-wrap:wrap}
     .suite-legend span{display:flex;align-items:center;gap:7px;font:800 9px/1 ui-monospace,monospace;letter-spacing:.08em;color:#0b0c10}
     .suite-legend i{width:10px;height:10px;border-radius:3px;display:inline-block}
+    .suite-copy .suite-chain{margin-top:12px;font:700 9px/1.4 ui-monospace,monospace;letter-spacing:.08em;color:#0b0c10;opacity:.55}
 
     .demo-badge{display:inline-flex;align-items:center;gap:6px;border:1px solid rgba(240,184,0,.5);color:var(--gold);background:rgba(240,184,0,.1);border-radius:99px;padding:6px 13px;font:800 10px/1 ui-monospace,monospace;letter-spacing:.12em}
     .demo-badge:before{content:"";width:6px;height:6px;border-radius:50%;background:var(--gold);box-shadow:0 0 8px var(--gold)}
@@ -80,7 +83,9 @@
     #view-subx,#view-ambient{transition:opacity .35s ease}
     #reel-mount svg{width:100%;height:auto;display:block;border-radius:12px;border:1px solid var(--line)}
 
-    #badge-tray{display:flex;flex-wrap:wrap;justify-content:flex-end;gap:8px;margin:-10px 0 20px}
+    .badge-tray-wrap{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin:0 0 28px}
+    .badge-tray-label{color:var(--muted);font:700 9px/1 ui-monospace,monospace;letter-spacing:.1em;text-transform:uppercase}
+    #badge-tray{display:flex;flex-wrap:wrap;gap:8px}
     .badge-pill{display:flex;align-items:center;gap:8px;border-radius:99px;padding:8px 14px 8px 10px;font:800 10px/1 ui-monospace,monospace;letter-spacing:.06em;background:rgba(18,20,25,.92);border:1px solid var(--line);color:var(--muted);opacity:.55;transition:all .3s ease;backdrop-filter:blur(6px)}
     .badge-pill .dot{width:8px;height:8px;border-radius:50%;background:var(--muted);flex:none}
     .badge-pill.unlocked{opacity:1;color:var(--gold);border-color:rgba(240,184,0,.5);box-shadow:0 0 14px rgba(240,184,0,.18)}
@@ -104,22 +109,26 @@
       </nav>
     </header>
 
-    <div id="badge-tray" aria-live="polite"></div>
-
     <div class="suite-hero" aria-hidden="false">
       <div class="suite-pane takeoffx"></div>
       <div class="suite-pane cutsheetx"></div>
       <div class="suite-pane subx"></div>
       <div class="suite-copy">
-        <div class="eyebrow">HUNTX &rarr; TAKEOFFX + SUBX + CUTSHEETX &rarr; PROPX / SIGHTX</div>
+        <div class="eyebrow">SUBMITTAL AUTOMATION FOR SUBCONTRACTORS</div>
         <h2>Three products, one project record.</h2>
         <p>TakeoffX quantifies the drawings. SubX extracts the hardware and submittal requirements. CutsheetX matches every line against a real manufacturer catalogue. Below is all three working the same demo project.</p>
+        <div class="suite-chain">HuntX &rarr; TakeOffX + SubX + CutsheetX &rarr; PropX / SightX</div>
       </div>
       <div class="suite-legend">
         <span><i style="background:var(--blue)"></i>TakeOffX</span>
         <span><i style="background:var(--purple)"></i>SubX</span>
         <span><i style="background:var(--gold)"></i>CutsheetX</span>
       </div>
+    </div>
+
+    <div class="badge-tray-wrap">
+      <span class="badge-tray-label">Explore the demo to unlock:</span>
+      <div id="badge-tray" aria-live="polite"></div>
     </div>
 
     <div id="view-subx">
