@@ -228,7 +228,7 @@
     // public marketing page. Self-contained SVG SMIL animation, no JS
     // needed to animate it, no external references. REEL_SECONDS below
     // (18) is the real total_seconds value that same response returned -
-    // used to time the "Building Explorer" badge honestly against how
+    // used to time the "Full Walkthrough Viewed" badge honestly against how
     // long the reel actually runs, not an invented number.
     var REEL_SECONDS = 18;
     var REEL_SVG = `<svg viewBox="0 0 1280 720" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="WeylandAI: The Building">
@@ -540,7 +540,7 @@
     // real Playwright run against production took 20+ real seconds).
     // Before this flag, the idle timer didn't care whether real data had
     // ever loaded, so a slow connection would idle-reveal the ambient
-    // SightX view (and silently award the "Building Explorer" badge)
+    // SightX view (and silently award the "Full Walkthrough Viewed" badge)
     // before the visitor had seen their own real trial data even once.
     // The idle/ambient system now only arms once loadRealTrial's fetch
     // chain has actually settled (success or failure - see its .then/
