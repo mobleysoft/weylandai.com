@@ -12,9 +12,6 @@
     body:before{content:"";position:fixed;inset:0;pointer-events:none;background:radial-gradient(circle at 15% 10%,rgba(42,82,255,.22),transparent 32rem),radial-gradient(circle at 92% 28%,rgba(255,212,0,.07),transparent 28rem),linear-gradient(rgba(255,255,255,.02) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.02) 1px,transparent 1px);background-size:auto,auto,30px 30px,30px 30px}
     .shell{position:relative;max-width:1500px;margin:auto;padding:20px clamp(16px,3vw,40px) 60px}
     header{display:flex;align-items:center;justify-content:space-between;gap:15px;margin-bottom:24px;flex-wrap:wrap}
-    .brand{display:flex;align-items:center;gap:12px;color:var(--text);text-decoration:none}
-    .brand img.logo{height:34px;width:auto;display:block}
-    .brand small{display:block;color:var(--muted);font:700 9px/1.5 ui-monospace,monospace;letter-spacing:.11em}
     .nav{display:flex;align-items:center;gap:20px;flex-wrap:wrap}
     .nav a:not(.button){color:var(--muted);text-decoration:none;font:750 11px/1 ui-monospace,monospace;letter-spacing:.06em;cursor:pointer;transition:color .2s}
     .nav a:not(.button):hover{color:var(--text)}
@@ -222,72 +219,65 @@
     }
     @keyframes beat-reveal{from{opacity:0;transform:translateY(26px)}to{opacity:1;transform:translateY(0)}}
 
-    /* Header product tabs: a fan of manila folders held in the hand, laid
-       out horizontally since this is a header, not a vertical stack - each
-       tab overlaps the last and peeks up/down at a different height, same
-       "staggered fan" structural idea as the pipeline section's tab-rail,
-       applied to actual product names instead of pipeline-step labels. */
+    /* Header product nav: a real stack of filing-cabinet folder tabs, every
+       one fully visible (none hidden behind another), tapered tops cut at
+       an angle like an actual manila folder tab, bottoms sharing one level
+       edge like folders resting in the same drawer. Color carries exactly
+       one meaning - "you are here" - never a decorative alternation: the
+       current location (home or whichever product you're on) is Signal
+       Blue, everything else is uniform Hi-Vis Yellow with a black outline
+       doing the job alternating hues used to do. */
     .product-tabs{display:flex;align-items:flex-end;gap:0;margin:0 18px;flex:0 0 auto}
     @media(max-width:1180px){
       .product-tabs{order:3;flex-basis:100%;margin:14px 0 0}
     }
-    /* Real manila folders in a drawer share one bottom edge (they rest on
-       the same surface) - only each folder's TAB (the little flag at the
-       top) sits at a different height. So the tab BODY is a uniform,
-       bottom-aligned bar (a proper nav bar), and the staggered "fan" look
-       lives entirely in a decorative flag above each one via ::before. */
     .product-tab{
       position:relative;
       display:flex;align-items:center;
-      height:34px;padding:0 14px;
-      margin-left:-10px;
-      border-radius:0 8px 0 0;
+      height:36px;padding:0 16px;
+      margin-left:-11px;
+      clip-path:polygon(13% 0%,87% 0%,100% 100%,0% 100%);
       font:750 11px/1 ui-monospace,monospace;letter-spacing:.04em;
       text-decoration:none;white-space:nowrap;
+      background:var(--accent);color:#0b0c10;
+      outline:1.5px solid #0b0c10;outline-offset:-1.5px;
       box-shadow:0 6px 10px -6px rgba(0,0,0,.35);
       transition:filter .15s ease,box-shadow .15s ease;
+      z-index:1;
     }
     .product-tab:first-child{margin-left:0}
-    .product-tab[data-tone="blue"]{background:var(--primary);color:#fff;z-index:1}
-    .product-tab[data-tone="yellow"]{background:var(--accent);color:#0b0c10;z-index:1}
-    /* The flag: a small tab-shaped peak above the bar, staggered per item
-       via --i so the row reads as folders fanned in a hand, while the bar
-       itself stays perfectly level. */
-    .product-tab:before{
-      content:"";position:absolute;left:10px;right:10px;
-      bottom:100%;
-      height:calc(6px + var(--i) * 4px);
-      background:inherit;
-      border-radius:6px 6px 0 0;
-    }
-    .product-tab:hover{filter:brightness(1.1)}
+    .product-tab:hover{filter:brightness(1.08)}
     .product-tab.is-current{
-      z-index:5;
+      z-index:5;background:var(--primary);color:var(--accent);
       box-shadow:0 10px 18px -8px rgba(0,0,0,.55);
     }
-    .product-tab.is-current:before{box-shadow:0 -2px 6px rgba(0,0,0,.2) inset}
-    .product-tab.is-current:after{
-      content:"";position:absolute;left:50%;top:calc(-6px - var(--i) * 4px - 5px);transform:translateX(-50%);
-      width:0;height:0;border-left:5px solid transparent;border-right:5px solid transparent;
-      border-top:5px solid #fff;
+    /* The home tab is the logo itself, occupying the lead position in the
+       stack rather than sitting beside it as a separate brand lockup. It
+       inverts together with whichever product tab is current: badge flips
+       yellow, W flips blue, lettering flips black - see the inverted SVG
+       asset swapped in via data-state below. */
+    .product-tab.home{
+      clip-path:polygon(0% 0%,87% 0%,100% 100%,0% 100%);
+      padding:0 18px 0 12px;z-index:6;
+      background:var(--primary);outline:none;
     }
+    .product-tab.home img.logo{height:24px;width:auto;display:block}
     @media(max-width:900px){.product-tabs{display:none}}
   </style>
 </head>
 <body>
   <div class="shell">
     <header>
-      <a class="brand" href="/">
-        <img class="logo" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA1MzYgMTQ1IiB3aWR0aD0iNTM2IiBoZWlnaHQ9IjE0NSI+CiAgPHRpdGxlPldleWxhbmRBSSB3b3JkbWFyayDigJQgcmVhbCB2ZWN0b3IgdHJhY2UsIHJlY29sb3JlZCBiYWRnZTwvdGl0bGU+CiAgPHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjUzNiIgaGVpZ2h0PSIxNDUiIHJ4PSIyMCIgZmlsbD0iIzJBNTJGRiIvPgogIDxnIHRyYW5zZm9ybT0idHJhbnNsYXRlKDI4LDI4KSI+CiAgICA8ZyB0cmFuc2Zvcm09InRyYW5zbGF0ZSgwLDg0KSBzY2FsZSgxLDEuMDIwMykgdHJhbnNsYXRlKDAsLTg0KSI+CiAgICA8ZyB0cmFuc2Zvcm09InRyYW5zbGF0ZSgtMi45LDUpIHNjYWxlKDEsMS4xMTkpIHRyYW5zbGF0ZSgyLjksLTUpIj4KICAgIDxnIHRyYW5zZm9ybT0idHJhbnNsYXRlKDAsOS4yKSB0cmFuc2xhdGUoNTgsNjYuMykgc2NhbGUoMS4xNSkgdHJhbnNsYXRlKC01OCwtNjYuMykiPgogICAgPGcgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoMC4wMDAwMDAsODkuMDAwMDAwKSBzY2FsZSgwLjEwMDAwMCwtMC4xMDAwMDApIiBmaWxsPSIjRkZENDAwIiBzdHJva2U9Im5vbmUiPgogICAgICA8cGF0aCBkPSJNIDgyLjksODQwLjAgTCA4Mi45LDgwMi4wIEwgMjE2LjAsMzAwLjAgTCAxOTguMCwzMzguMCBMIDEyNi45LDU5NS4zIEwgMTE0LjQsMzQzLjIgTCA3MS44LDI2MS42IEwgNzEuOCwyMjguMSBMIDQ1Ni41LDIyOC4xIEwgNTc4LjMsNjAwLjIgTCA3MDAuMSwyMjguMSBMIDEwNzguMiwyMjguMSBMIDEwNzguMiwyNjEuNiBMIDEwMzYuMywzNDIuMCBMIDEwMjMuNCw2MDEuMyBMIDk1MC4wLDMzMy4wIEwgOTI3LjUsMzA2LjAgTCAxMDYyLjksODAyLjAgTCAxMDYyLjksODQwLjAgTCA4MjEuNSw4NDAuMCBMIDgyMS41LDgwMi4wIEwgODA3LjUsMzkwLjYgTCA2NjguMCw4NDAuMCBMIDQ5NS4wLDg0MC4wIEwgMzUwLjIsMzc1LjMgTCAzMzUuNyw4MDIuMCBMIDMzNS43LDg0MC4wIFoiLz4KICAgIDwvZz4KICAgIDwvZz4KICAgIDwvZz4KICAgIDwvZz4KICAgIDxnIHRyYW5zZm9ybT0idHJhbnNsYXRlKDAsMi41KSI+CiAgICA8ZyB0cmFuc2Zvcm09InRyYW5zbGF0ZSgwLjAwMDAwMCw4OS4wMDAwMDApIHNjYWxlKDAuMTAwMDAwLC0wLjEwMDAwMCkiIGZpbGw9IiNGNUY3RkEiIHN0cm9rZT0ibm9uZSI+CiAgICAgIDxwYXRoIGQ9Ik0yMTAwIDUzNSBsMCAtMzA1IDY1IDAgNjUgMCAwIDMwNSAwIDMwNSAtNjUgMCAtNjUgMCAwIC0zMDV6Ii8+CiAgICAgIDxwYXRoIGQ9Ik0zNjEwIDcyOSBjMCAtOTggLTIgLTEwOSAtMTUgLTk2IC0yNSAyNiAtODQgNDAgLTEzOCAzNCAtMTExIC0xNAotMTcyIC05NSAtMTcxIC0yMjcgMCAtMTE0IDQzIC0xODMgMTMzIC0yMTUgNjEgLTIxIDk5IC0xOSAxNTAgMTAgNTIgMzAgNTEgMzAKNTEgNyAwIC0xNiA3IC0xOCA1OCAtMTYgbDU3IDMgMyAzMDUgMiAzMDYgLTY1IDAgLTY1IDAgMCAtMTExeiBtLTI3IC0xOTAgYzIzCi0yNSAyNyAtMzggMjcgLTkwIDAgLTkzIC0zMiAtMTM5IC05NyAtMTM5IC0xMTEgMCAtMTQzIDIxMCAtMzkgMjU2IDQxIDE4IDc1CjEwIDEwOSAtMjd6Ii8+CiAgICAgIDxwYXRoIGQ9Ik0xMzM1IDY2NSBjLTUgLTIgLTIyIC02IC0zOCAtOSAtNDEgLTkgLTEwMyAtNzEgLTEyMyAtMTIyIC0yNiAtNjcKLTE1IC0xNzMgMjIgLTIyNyA5MCAtMTMwIDMwOCAtMTI0IDM4MiAxMCBsMjIgNDEgLTQzIDYgYy01MSA4IC03MCAyIC0xMDMgLTMwCi0yNiAtMjcgLTk3IC0zMyAtMTI2IC0xMCAtMjIgMTYgLTQ5IDY3IC00MiA3OCAzIDQgNzQgOCAxNTkgOCA5MSAwIDE1NiA0IDE2MAoxMCAzIDUgMSAzNiAtNCA2NyAtMjEgMTEwIC05NyAxNzggLTIwNCAxODEgLTI5IDAgLTU2IC0xIC02MiAtM3ogbTg5IC05NSBjMjEKLTggNTYgLTU0IDU2IC03NSAwIC0zIC00MyAtNSAtOTUgLTUgLTg1IDAgLTk1IDIgLTk1IDE4IDAgMTAgMTAgMjggMjMgMzkgMzYKMzMgNjggNDAgMTExIDIzeiIvPgogICAgICA8cGF0aCBkPSJNMjQ0NSA2NjQgYy03OCAtMTkgLTEzNSAtNzEgLTEzNSAtMTIzIDAgLTE5IDUgLTIxIDYwIC0yMSA1NCAwIDYxIDIKNjkgMjQgMTEgMjggMjkgMzYgODEgMzYgMzggMCA3MCAtMjAgNzAgLTQzIC0xIC0yOCAtMjIgLTM5IC0xMDYgLTUyIC00OSAtOAotMTA2IC0yMiAtMTI2IC0zMSAtNjYgLTI5IC04NiAtMTE1IC00MyAtMTgxIDIwIC0yOSA4OCAtNjMgMTMwIC02MyAzNiAwIDEyMgoyNSAxNDEgNDEgMTEgOSAxNCA4IDE0IC00IDAgLTEyIDE1IC0xNiA2MyAtMTkgMzQgLTIgNjIgLTQgNjMgLTMgMCAwIC0yIDc5Ci02IDE3NSAtNyAxOTYgLTEzIDIxNSAtNzggMjQ2IC0zNiAxNyAtMTU2IDI4IC0xOTcgMTh6IG0xNDIgLTI4MSBjLTExIC03MAotODkgLTEwNiAtMTQ1IC02NyAtMjUgMTcgLTI4IDQyIC05IDY3IDEyIDE3IDc0IDM0IDEzMSAzNiAyOCAxIDI4IDAgMjMgLTM2eiIvPgogICAgICA8cGF0aCBkPSJNMjk5NiA2NjAgYy0xNiAtNSAtMzkgLTE5IC01MiAtMzEgbC0yNCAtMjIgMCAyNiBjMCAyNyAtMSAyNyAtNjUgMjcKbC02NSAwIDAgLTIxMyBjMCAtMTE4IDIgLTIxNiA0IC0yMTggMiAtMiAzNCAtMyA2OSAtMSBsNjYgNCAzIDE1MCBjMyAxNDQgNAoxNTEgMjcgMTY5IDI3IDIyIDc5IDI1IDEwNyA1IDE3IC0xMyAxOSAtMzAgMjIgLTE3MCA0IC0xNzMgLTEgLTE2NCA4MyAtMTU4Cmw0OSA0IDAgMTY0IGMwIDE0NCAtMiAxNzAgLTIwIDIwMyAtMzAgNjAgLTExOSA4NiAtMjA0IDYxeiIvPgogICAgICA8cGF0aCBkPSJNMTYwMCA2NTcgYzAgLTIgMzYgLTk1IDgxIC0yMDggNDUgLTExMiA4MSAtMjE0IDgxIC0yMjYgMCAtMTMgLTcKLTM0IC0xNiAtNDggLTE0IC0yMSAtMjQgLTI1IC02MSAtMjUgbC00NSAwIDAgLTUwIDAgLTUwIDU1IDAgYzY0IDAgMTEwIDE3CjE0MiA1MSAxMiAxMyA2MiAxMzIgMTEyIDI2NCA0OSAxMzIgOTQgMjUzIDEwMCAyNjggbDExIDI4IC02NyAtMyAtNjYgLTMgLTQ4Ci0xNDAgYy0yNiAtNzcgLTUwIC0xMzMgLTUzIC0xMjUgLTMgOCAtMjUgNzEgLTQ5IDE0MCBsLTQ0IDEyNSAtNjYgMyBjLTM3IDIKLTY3IDEgLTY3IC0xeiIvPgogICAgPC9nPgogICAgPC9nPgogICAgPGcgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoLTkuMywwKSI+CiAgICA8ZyB0cmFuc2Zvcm09InRyYW5zbGF0ZSgwLDg0KSBzY2FsZSgxLDEuMDIwMykgdHJhbnNsYXRlKDAsLTg0KSI+CiAgICA8ZyB0cmFuc2Zvcm09InRyYW5zbGF0ZSgzODkuOCw1KSBzY2FsZSgxLDEuMTE1OCkgdHJhbnNsYXRlKC0zODkuOCwtNSkiPgogICAgPGcgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoMzg5LjgsNSkgc2NhbGUoMS4xNSkgdHJhbnNsYXRlKC0zODkuOCwtNSkiPgogICAgPGcgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoMC4wMDAwMDAsODkuMDAwMDAwKSBzY2FsZSgwLjEwMDAwMCwtMC4xMDAwMDApIiBmaWxsPSIjRjVGN0ZBIiBzdHJva2U9Im5vbmUiPgogICAgICA8cGF0aCBkPSJNNDEzMCA4MTggYy02MCAtMTM5IC0yMzcgLTU4OSAtMjMyIC01OTEgNCAtMiAzOCAtMyA3NyAtMyA3NiAxIDc1IDAKMTA5IDg5IGwxNSAzNyAxMjQgMCAxMjMgMCAyNSAtNjIgMjQgLTYzIDc3IDAgYzQzIDAgNzggNCA3OCA5IDAgNCAtMzEgODMgLTY4CjE3NSAtMzggOTEgLTkzIDIyNiAtMTIyIDI5OSBsLTU0IDEzMiAtODMgMCBjLTc3IDAgLTg0IC0yIC05MyAtMjJ6IG0xMzkgLTI1OApjMTYgLTQxIDI3IC03OCAyNCAtODIgLTIgLTUgLTM1IC04IC03NCAtOCAtNTEgMCAtNjkgNCAtNjkgMTMgMCAxMiAzMyAxMDEgNjIKMTY3IDEyIDI5IDggMzYgNTcgLTkweiIvPgogICAgICA8cGF0aCBkPSJNNDYwMiA1MzMgbDMgLTMwOCA3MyAwIDcyIDAgMCAzMDcgMCAzMDggLTc1IDAgLTc1IDAgMiAtMzA3eiIvPgogICAgPC9nPgogICAgPC9nPgogICAgPC9nPgogICAgPC9nPgogICAgPC9nPgogIDwvZz4KPC9zdmc+Cg==" alt="WeylandAI">
-        <span><small>SUBCONTRACTOR OPERATING PACKAGE</small></span>
-      </a>
       <nav class="product-tabs" aria-label="Products">
-        <a href="/takeoffx/" class="product-tab" data-tone="blue" style="--i:0">TakeOffX</a>
-        <a href="/subx/" class="product-tab is-current" data-tone="yellow" style="--i:1" aria-current="page">SubX</a>
-        <a href="/cutsheetx/" class="product-tab" data-tone="blue" style="--i:2">CutsheetX</a>
-        <a href="/huntx/" class="product-tab" data-tone="yellow" style="--i:3">HuntX</a>
-        <a href="/meetingx/" class="product-tab" data-tone="blue" style="--i:4">MeetingX</a>
-        <a href="/propx-app/" class="product-tab" data-tone="yellow" style="--i:5">PropX</a>
+        <a href="/" class="product-tab home">
+          <img class="logo" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA1MzYgMTQ1IiB3aWR0aD0iNTM2IiBoZWlnaHQ9IjE0NSI+CiAgPHRpdGxlPldleWxhbmRBSSB3b3JkbWFyayDigJQgaW52ZXJ0ZWQg4oCUIGFjdGl2ZS1wcm9kdWN0IHN0YXRlPC90aXRsZT4KICA8cmVjdCB4PSIwIiB5PSIwIiB3aWR0aD0iNTM2IiBoZWlnaHQ9IjE0NSIgcng9IjIwIiBmaWxsPSIjRkZENDAwIi8+CiAgPGcgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoMjgsMjgpIj4KICAgIDxnIHRyYW5zZm9ybT0idHJhbnNsYXRlKDAsODQpIHNjYWxlKDEsMS4wMjAzKSB0cmFuc2xhdGUoMCwtODQpIj4KICAgIDxnIHRyYW5zZm9ybT0idHJhbnNsYXRlKC0yLjksNSkgc2NhbGUoMSwxLjExOSkgdHJhbnNsYXRlKDIuOSwtNSkiPgogICAgPGcgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoMCw5LjIpIHRyYW5zbGF0ZSg1OCw2Ni4zKSBzY2FsZSgxLjE1KSB0cmFuc2xhdGUoLTU4LC02Ni4zKSI+CiAgICA8ZyB0cmFuc2Zvcm09InRyYW5zbGF0ZSgwLjAwMDAwMCw4OS4wMDAwMDApIHNjYWxlKDAuMTAwMDAwLC0wLjEwMDAwMCkiIGZpbGw9IiMyQTUyRkYiIHN0cm9rZT0ibm9uZSI+CiAgICAgIDxwYXRoIGQ9Ik0gODIuOSw4NDAuMCBMIDgyLjksODAyLjAgTCAyMTYuMCwzMDAuMCBMIDE5OC4wLDMzOC4wIEwgMTI2LjksNTk1LjMgTCAxMTQuNCwzNDMuMiBMIDcxLjgsMjYxLjYgTCA3MS44LDIyOC4xIEwgNDU2LjUsMjI4LjEgTCA1NzguMyw2MDAuMiBMIDcwMC4xLDIyOC4xIEwgMTA3OC4yLDIyOC4xIEwgMTA3OC4yLDI2MS42IEwgMTAzNi4zLDM0Mi4wIEwgMTAyMy40LDYwMS4zIEwgOTUwLjAsMzMzLjAgTCA5MjcuNSwzMDYuMCBMIDEwNjIuOSw4MDIuMCBMIDEwNjIuOSw4NDAuMCBMIDgyMS41LDg0MC4wIEwgODIxLjUsODAyLjAgTCA4MDcuNSwzOTAuNiBMIDY2OC4wLDg0MC4wIEwgNDk1LjAsODQwLjAgTCAzNTAuMiwzNzUuMyBMIDMzNS43LDgwMi4wIEwgMzM1LjcsODQwLjAgWiIvPgogICAgPC9nPgogICAgPC9nPgogICAgPC9nPgogICAgPC9nPgogICAgPGcgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoMCwyLjUpIj4KICAgIDxnIHRyYW5zZm9ybT0idHJhbnNsYXRlKDAuMDAwMDAwLDg5LjAwMDAwMCkgc2NhbGUoMC4xMDAwMDAsLTAuMTAwMDAwKSIgZmlsbD0iIzBCMEMxMCIgc3Ryb2tlPSJub25lIj4KICAgICAgPHBhdGggZD0iTTIxMDAgNTM1IGwwIC0zMDUgNjUgMCA2NSAwIDAgMzA1IDAgMzA1IC02NSAwIC02NSAwIDAgLTMwNXoiLz4KICAgICAgPHBhdGggZD0iTTM2MTAgNzI5IGMwIC05OCAtMiAtMTA5IC0xNSAtOTYgLTI1IDI2IC04NCA0MCAtMTM4IDM0IC0xMTEgLTE0Ci0xNzIgLTk1IC0xNzEgLTIyNyAwIC0xMTQgNDMgLTE4MyAxMzMgLTIxNSA2MSAtMjEgOTkgLTE5IDE1MCAxMCA1MiAzMCA1MSAzMAo1MSA3IDAgLTE2IDcgLTE4IDU4IC0xNiBsNTcgMyAzIDMwNSAyIDMwNiAtNjUgMCAtNjUgMCAwIC0xMTF6IG0tMjcgLTE5MCBjMjMKLTI1IDI3IC0zOCAyNyAtOTAgMCAtOTMgLTMyIC0xMzkgLTk3IC0xMzkgLTExMSAwIC0xNDMgMjEwIC0zOSAyNTYgNDEgMTggNzUKMTAgMTA5IC0yN3oiLz4KICAgICAgPHBhdGggZD0iTTEzMzUgNjY1IGMtNSAtMiAtMjIgLTYgLTM4IC05IC00MSAtOSAtMTAzIC03MSAtMTIzIC0xMjIgLTI2IC02NwotMTUgLTE3MyAyMiAtMjI3IDkwIC0xMzAgMzA4IC0xMjQgMzgyIDEwIGwyMiA0MSAtNDMgNiBjLTUxIDggLTcwIDIgLTEwMyAtMzAKLTI2IC0yNyAtOTcgLTMzIC0xMjYgLTEwIC0yMiAxNiAtNDkgNjcgLTQyIDc4IDMgNCA3NCA4IDE1OSA4IDkxIDAgMTU2IDQgMTYwCjEwIDMgNSAxIDM2IC00IDY3IC0yMSAxMTAgLTk3IDE3OCAtMjA0IDE4MSAtMjkgMCAtNTYgLTEgLTYyIC0zeiBtODkgLTk1IGMyMQotOCA1NiAtNTQgNTYgLTc1IDAgLTMgLTQzIC01IC05NSAtNSAtODUgMCAtOTUgMiAtOTUgMTggMCAxMCAxMCAyOCAyMyAzOSAzNgozMyA2OCA0MCAxMTEgMjN6Ii8+CiAgICAgIDxwYXRoIGQ9Ik0yNDQ1IDY2NCBjLTc4IC0xOSAtMTM1IC03MSAtMTM1IC0xMjMgMCAtMTkgNSAtMjEgNjAgLTIxIDU0IDAgNjEgMgo2OSAyNCAxMSAyOCAyOSAzNiA4MSAzNiAzOCAwIDcwIC0yMCA3MCAtNDMgLTEgLTI4IC0yMiAtMzkgLTEwNiAtNTIgLTQ5IC04Ci0xMDYgLTIyIC0xMjYgLTMxIC02NiAtMjkgLTg2IC0xMTUgLTQzIC0xODEgMjAgLTI5IDg4IC02MyAxMzAgLTYzIDM2IDAgMTIyCjI1IDE0MSA0MSAxMSA5IDE0IDggMTQgLTQgMCAtMTIgMTUgLTE2IDYzIC0xOSAzNCAtMiA2MiAtNCA2MyAtMyAwIDAgLTIgNzkKLTYgMTc1IC03IDE5NiAtMTMgMjE1IC03OCAyNDYgLTM2IDE3IC0xNTYgMjggLTE5NyAxOHogbTE0MiAtMjgxIGMtMTEgLTcwCi04OSAtMTA2IC0xNDUgLTY3IC0yNSAxNyAtMjggNDIgLTkgNjcgMTIgMTcgNzQgMzQgMTMxIDM2IDI4IDEgMjggMCAyMyAtMzZ6Ii8+CiAgICAgIDxwYXRoIGQ9Ik0yOTk2IDY2MCBjLTE2IC01IC0zOSAtMTkgLTUyIC0zMSBsLTI0IC0yMiAwIDI2IGMwIDI3IC0xIDI3IC02NSAyNwpsLTY1IDAgMCAtMjEzIGMwIC0xMTggMiAtMjE2IDQgLTIxOCAyIC0yIDM0IC0zIDY5IC0xIGw2NiA0IDMgMTUwIGMzIDE0NCA0CjE1MSAyNyAxNjkgMjcgMjIgNzkgMjUgMTA3IDUgMTcgLTEzIDE5IC0zMCAyMiAtMTcwIDQgLTE3MyAtMSAtMTY0IDgzIC0xNTgKbDQ5IDQgMCAxNjQgYzAgMTQ0IC0yIDE3MCAtMjAgMjAzIC0zMCA2MCAtMTE5IDg2IC0yMDQgNjF6Ii8+CiAgICAgIDxwYXRoIGQ9Ik0xNjAwIDY1NyBjMCAtMiAzNiAtOTUgODEgLTIwOCA0NSAtMTEyIDgxIC0yMTQgODEgLTIyNiAwIC0xMyAtNwotMzQgLTE2IC00OCAtMTQgLTIxIC0yNCAtMjUgLTYxIC0yNSBsLTQ1IDAgMCAtNTAgMCAtNTAgNTUgMCBjNjQgMCAxMTAgMTcKMTQyIDUxIDEyIDEzIDYyIDEzMiAxMTIgMjY0IDQ5IDEzMiA5NCAyNTMgMTAwIDI2OCBsMTEgMjggLTY3IC0zIC02NiAtMyAtNDgKLTE0MCBjLTI2IC03NyAtNTAgLTEzMyAtNTMgLTEyNSAtMyA4IC0yNSA3MSAtNDkgMTQwIGwtNDQgMTI1IC02NiAzIGMtMzcgMgotNjcgMSAtNjcgLTF6Ii8+CiAgICA8L2c+CiAgICA8L2c+CiAgICA8ZyB0cmFuc2Zvcm09InRyYW5zbGF0ZSgtOS4zLDApIj4KICAgIDxnIHRyYW5zZm9ybT0idHJhbnNsYXRlKDAsODQpIHNjYWxlKDEsMS4wMjAzKSB0cmFuc2xhdGUoMCwtODQpIj4KICAgIDxnIHRyYW5zZm9ybT0idHJhbnNsYXRlKDM4OS44LDUpIHNjYWxlKDEsMS4xMTU4KSB0cmFuc2xhdGUoLTM4OS44LC01KSI+CiAgICA8ZyB0cmFuc2Zvcm09InRyYW5zbGF0ZSgzODkuOCw1KSBzY2FsZSgxLjE1KSB0cmFuc2xhdGUoLTM4OS44LC01KSI+CiAgICA8ZyB0cmFuc2Zvcm09InRyYW5zbGF0ZSgwLjAwMDAwMCw4OS4wMDAwMDApIHNjYWxlKDAuMTAwMDAwLC0wLjEwMDAwMCkiIGZpbGw9IiMwQjBDMTAiIHN0cm9rZT0ibm9uZSI+CiAgICAgIDxwYXRoIGQ9Ik00MTMwIDgxOCBjLTYwIC0xMzkgLTIzNyAtNTg5IC0yMzIgLTU5MSA0IC0yIDM4IC0zIDc3IC0zIDc2IDEgNzUgMAoxMDkgODkgbDE1IDM3IDEyNCAwIDEyMyAwIDI1IC02MiAyNCAtNjMgNzcgMCBjNDMgMCA3OCA0IDc4IDkgMCA0IC0zMSA4MyAtNjgKMTc1IC0zOCA5MSAtOTMgMjI2IC0xMjIgMjk5IGwtNTQgMTMyIC04MyAwIGMtNzcgMCAtODQgLTIgLTkzIC0yMnogbTEzOSAtMjU4CmMxNiAtNDEgMjcgLTc4IDI0IC04MiAtMiAtNSAtMzUgLTggLTc0IC04IC01MSAwIC02OSA0IC02OSAxMyAwIDEyIDMzIDEwMSA2MgoxNjcgMTIgMjkgOCAzNiA1NyAtOTB6Ii8+CiAgICAgIDxwYXRoIGQ9Ik00NjAyIDUzMyBsMyAtMzA4IDczIDAgNzIgMCAwIDMwNyAwIDMwOCAtNzUgMCAtNzUgMCAyIC0zMDd6Ii8+CiAgICA8L2c+CiAgICA8L2c+CiAgICA8L2c+CiAgICA8L2c+CiAgICA8L2c+CiAgPC9nPgo8L3N2Zz4K" alt="WeylandAI">
+        </a>
+        <a href="/takeoffx/" class="product-tab">TakeOffX</a>
+        <a href="/subx/" class="product-tab is-current" aria-current="page">SubX</a>
+        <a href="/cutsheetx/" class="product-tab">CutsheetX</a>
+        <a href="/huntx/" class="product-tab">HuntX</a>
+        <a href="/meetingx/" class="product-tab">MeetingX</a>
+        <a href="/propx-app/" class="product-tab">PropX</a>
       </nav>
       <nav class="nav">
         <a href="/pricing/">Pricing</a>
