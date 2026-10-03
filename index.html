@@ -108,14 +108,16 @@
       margin: clamp(10px, 2.4vw, 32px) auto;
       border-radius: 4px;
       box-shadow: 0 30px 90px rgba(0, 0, 0, 0.55);
-      /* The top-left miter (0,26px)->(8px,0) is deliberately NOT the same
-         45-degree cut as the other 3 corners - it's set to the exact same
-         slope as the logo tab's own left edge (15px run over its 50px
-         height, ~0.3 ratio) so the tab reads as literally the same cut
-         continuing down into the envelope's corner, not a coincidence of
-         two unrelated angles sitting next to each other. */
+      /* The top-left miter (0,55px)->(17px,0) is computed, not guessed -
+         it traces the EXACT same line as the logo tab's own bottom-left
+         corner: header's 1px top padding + the tab's own 54px height
+         (50px fill + 2px frame overhang each side) = 55px deep, at the
+         tab's own 15px-over-50px (~0.3) slope -> 0.3*55 ~= 17px. With
+         header's left padding removed (the ribbon now starts flush at
+         x:0, same as this notch), the two cuts form one continuous line
+         instead of two unrelated angles sitting near each other. */
       clip-path: polygon(
-        0 26px, 8px 0,
+        0 55px, 17px 0,
         calc(100% - 22px) 0, 100% 22px,
         100% calc(100% - 22px), calc(100% - 22px) 100%,
         22px 100%, 0 calc(100% - 22px)
@@ -139,26 +141,6 @@
        always sits exactly at the header's bottom edge (the seam between nav
        and content) regardless of header height, instead of a hardcoded
        viewport offset that could drift out of sync with the frame margin. */
-    /* The envelope's real protruding flap - a dedicated 28px strip, clipped
-       to a trapezoid peak (flat across the middle, sloped sides down to
-       the full-width base). This is a SEPARATE box from header/envelope-
-       frame specifically so the peak can reach this strip's own y:0 while
-       its flanks recede - giving the visual read of "sticking up" without
-       needing to render outside any element's own box, which clip-path
-       can never do. */
-    .envelope-flap {
-      height: 28px;
-      background:
-        linear-gradient(rgba(255, 255, 255, 0.035) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(255, 255, 255, 0.035) 1px, transparent 1px),
-        var(--bg);
-      background-size: 30px 30px, 30px 30px, auto;
-      clip-path: polygon(0 100%, 42% 0, 58% 0, 100% 100%);
-    }
-    @media (max-width: 640px) {
-      .envelope-flap { height: 16px; clip-path: polygon(0 100%, 38% 0, 62% 0, 100% 100%); }
-    }
-
     #scroll-progress {
       position: absolute;
       bottom: 0;
@@ -198,7 +180,12 @@
          bounding box, not a rectangle with solid-color margin showing
          above/below the tabs. A real envelope's tabs are cut out of the
          paper itself; there's no separate colored bar sitting behind them. */
-      padding: 1px clamp(16px, 3vw, 40px) 1px;
+      /* Left padding is 0, not clamp(...) - the ribbon must start flush at
+         x:0 so the logo tab's own left edge lines up exactly with the
+         envelope-frame's top-left notch (computed above to match it). Any
+         left inset here would leave a gap of solid header background
+         between the card's actual edge and the tab's visual edge. */
+      padding: 1px clamp(16px, 3vw, 40px) 1px 0;
       transition: background 0.3s ease;
       /* Always-visible baseline track for #scroll-progress (its child,
          absolutely positioned at bottom:0) - this IS the seam line between
@@ -212,7 +199,11 @@
       gap: 16px;
       flex-wrap: wrap;
       max-width: 1500px;
-      margin: 0 auto;
+      /* margin:0, not 0 auto - auto-centering here would reopen the exact
+         gap just closed on header's own left padding, on any screen wide
+         enough for max-width to bind before the viewport does. The ribbon
+         must start flush at x:0 unconditionally. */
+      margin: 0;
       width: 100%;
     }
     .wn-ribbon {
@@ -1357,13 +1348,6 @@
        thing - not separate borders per section, which would read as several
        floating cards instead of one envelope popping off the background. -->
   <div class="envelope-frame">
-
-  <!-- A real protruding flap - not just the header's reshaped top edge.
-       clip-path can only remove area from within an element's own box, it
-       can never render past it, so a flap that actually reads as "sticking
-       up" needs its own reserved strip of height with its OWN clip-path
-       (a trapezoid peak), separate from the header below it. -->
-  <div class="envelope-flap"></div>
 
   <!-- Sticky Scrollytelling Ribbon Header -->
   <header class="site-header" id="top-nav">
