@@ -1160,9 +1160,11 @@
     const consoleDisplay = document.getElementById('console-display');
     const consoleCmd = document.getElementById('console-cmd');
     
-    consoleCmd.addEventListener('keydown', (e) => {
-      if (e.key === 'Enter') executeCommand();
-    });
+    if (consoleCmd) {
+      consoleCmd.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter') executeCommand();
+      });
+    }
 
     function executeCommand() {
       const cmd = consoleCmd.value.trim().toLowerCase();
@@ -1279,16 +1281,16 @@
     
     function showUI() {
       // If pointer is captured (playing SightX), keep UI hidden
-      if (document.pointerLockElement === canvas) return;
+      if (canvas && document.pointerLockElement === canvas) return;
       
-      appContainer.classList.remove('hidden');
-      canvas.classList.remove('interactive');
+      if (appContainer) appContainer.classList.remove('hidden');
+      if (canvas) canvas.classList.remove('interactive');
       resetIdleTimer();
     }
     
     function hideUI() {
-      appContainer.classList.add('hidden');
-      canvas.classList.add('interactive');
+      if (appContainer) appContainer.classList.add('hidden');
+      if (canvas) canvas.classList.add('interactive');
       closeFleetDrawer();
     }
     
@@ -1305,9 +1307,11 @@
     document.addEventListener('touchstart', showUI);
     
     // Prevent hiding while interacting with the overlay
-    appContainer.addEventListener('mousemove', (e) => { e.stopPropagation(); resetIdleTimer(); });
-    appContainer.addEventListener('click', (e) => { e.stopPropagation(); resetIdleTimer(); });
-    appContainer.addEventListener('keydown', (e) => { e.stopPropagation(); resetIdleTimer(); });
+    if (appContainer) {
+      appContainer.addEventListener('mousemove', (e) => { e.stopPropagation(); resetIdleTimer(); });
+      appContainer.addEventListener('click', (e) => { e.stopPropagation(); resetIdleTimer(); });
+      appContainer.addEventListener('keydown', (e) => { e.stopPropagation(); resetIdleTimer(); });
+    }
     
     // SightX is a dedicated, unoccluded product demonstrator.
     if (document.body.classList.contains('sightx-demo')) {
