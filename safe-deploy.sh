@@ -39,6 +39,11 @@
 set -euo pipefail
 cd "$(dirname "${BASH_SOURCE[0]}")"
 export PATH="/Users/johnmobley/.nvm/versions/node/v22.23.2/bin:$PATH"
+eval "$(/usr/bin/python3 /Users/johnmobley/estate/bin/secretctl.py export-shell 2>/dev/null)"
+unset CF_API_KEY CF_ACCOUNT_ID CF_EMAIL CF_GLOBAL_KEY CLOUDFLARE_API_TOKEN
+export CLOUDFLARE_API_KEY="$CLOUDFLARE_GLOBAL_API_KEY"
+export CLOUDFLARE_EMAIL="$CF_PRIMARY_EMAIL"
+export CLOUDFLARE_ACCOUNT_ID="$CF_PRIMARY_ACCOUNT_ID"
 source /Users/johnmobley/mascom/safe-deploy-lib.sh
 
 REPO_ROOT="$(git rev-parse --show-toplevel)"
