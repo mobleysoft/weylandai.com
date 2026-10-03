@@ -219,112 +219,80 @@
     }
     @keyframes beat-reveal{from{opacity:0;transform:translateY(26px)}to{opacity:1;transform:translateY(0)}}
 
-    /* Header product nav: one cohesive physical object, not a row of
-       independently-floating chips. A single gradient "shelf" (the
-       envelope body, holding the WeylandAI mark) carries one unified
-       shadow; every product tab is a real, fully-legible flag that
-       emerges from BEHIND the shelf's top edge (tabs z-index above the
-       shelf, shelf pulled up underneath them via negative margin) so the
-       whole assembly reads as one object, not six. Sits on a light
-       checkerboard "stage" - the universal design-space backdrop - so it
-       visibly reads as a crafted object, not just a dark div. Color still
-       carries exactly one meaning: Signal Blue = "you are here" (shelf or
-       whichever tab is current), everything else is uniform Hi-Vis
-       Yellow. */
-    .tab-stage{
-      display:inline-block;flex:0 0 auto;margin:0 18px 0 0;
-      padding:16px 16px 0;border-radius:16px;
-      background-color:#e7e7ea;
-      background-image:
-        linear-gradient(45deg,#cfd1d6 25%,transparent 25%),
-        linear-gradient(-45deg,#cfd1d6 25%,transparent 25%),
-        linear-gradient(45deg,transparent 75%,#cfd1d6 75%),
-        linear-gradient(-45deg,transparent 75%,#cfd1d6 75%);
-      background-size:16px 16px;
-      background-position:0 0,0 8px,8px -8px,-8px 0px;
+    /* Header product nav (rebuilt 2026-10-03): a real connected ribbon of
+       angled "flag" tabs - the WeylandAI logo flag + the 6 real product
+       flags (TakeOffX/SubX/CutsheetX/HuntX/MeetingX/PropX) - replacing the
+       previous "fan of folders"/3D-envelope experiment below (that build
+       was never finished: it only ever shipped on THIS page, used a
+       different rounded-tab/checkerboard-stage look than the angled flags
+       John actually asked for, and depended on an uncommitted WebGL module
+       that never went live - see git history on this file). This exact
+       CSS/markup is now the single real design, byte-identical to
+       renderBrandHeader() in weyland.worker.js (src/lib/marketing-pages.js)
+       which generates the same ribbon server-side for every other page on
+       the site. No shared build step bundles a static GH-Pages file and
+       that Worker together, so keep the two in sync by hand if either
+       changes - that function is the documented source of truth.
+       Shapes are real CSS clip-path parallelograms: a black/blue "frame"
+       div sits behind a 2px-inset "fill" div whose clip-path is drawn
+       slightly smaller, giving a crisp outline that follows the angled
+       edge (a plain CSS border always follows the rectangular box, not a
+       clipped shape, so it can't do this). Color carries one meaning:
+       Signal Blue = "you are here" - active product tab, and ALSO the
+       logo tab inverts (blue/yellow swap) the moment any product page is
+       current, signalling "inside a product" vs "home". */
+    .wn-row{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;width:100%}
+    .wn-ribbon{display:flex;align-items:stretch}
+    .wn-flag{position:relative;height:40px;margin-left:-15px;text-decoration:none;display:block}
+    .wn-ribbon .wn-flag:first-child{margin-left:0}
+    .wn-flag-frame{position:absolute;inset:0;clip-path:polygon(15px 0,100% 0,calc(100% - 15px) 100%,0 100%)}
+    .wn-ribbon .wn-flag:first-child .wn-flag-frame{clip-path:polygon(0 0,100% 0,calc(100% - 15px) 100%,0 100%)}
+    .wn-flag-fill{position:absolute;inset:2px;clip-path:polygon(14px 0,100% 0,calc(100% - 14px) 100%,0 100%);display:flex;align-items:center;justify-content:center;padding:0 22px 0 24px;font:800 11px/1 ui-monospace,monospace;letter-spacing:.04em;white-space:nowrap;transition:filter .15s ease}
+    .wn-ribbon .wn-flag:first-child .wn-flag-fill{clip-path:polygon(0 0,100% 0,calc(100% - 14px) 100%,0 100%);padding-left:18px}
+    .wn-flag:hover .wn-flag-fill{filter:brightness(1.08)}
+    .wn-flag[data-tone="yellow"] .wn-flag-frame{background:#000}
+    .wn-flag[data-tone="yellow"] .wn-flag-fill{background:#ffd400;color:#0b0c10}
+    .wn-flag[data-tone="blue"] .wn-flag-frame{background:#2a52ff}
+    .wn-flag[data-tone="blue"] .wn-flag-fill{background:#2a52ff;color:#fff}
+    .wn-flag.wn-logo[data-tone="blue"] .wn-w{color:#ffd400}
+    .wn-flag.wn-logo[data-tone="yellow"] .wn-w{color:#2a52ff}
+    .wn-secondary{display:flex;align-items:center;gap:20px;flex-wrap:wrap}
+    .wn-secondary a:not(.wn-signin){color:var(--muted);text-decoration:none;font:750 11px/1 ui-monospace,monospace;letter-spacing:.06em}
+    .wn-secondary a:not(.wn-signin):hover{color:var(--text)}
+    .wn-signin{border:1px solid #2a52ff;border-radius:99px;padding:9px 16px;text-decoration:none;background:#2a52ff;color:#fff;font:800 10px/1 ui-monospace,monospace;letter-spacing:.06em}
+    .wn-signin:hover{box-shadow:0 0 15px rgba(42,82,255,.35)}
+    @media(max-width:860px){
+      .wn-flag{height:34px}
+      .wn-flag-fill{font-size:9.5px;padding:0 16px 0 18px}
+      .wn-ribbon .wn-flag:first-child .wn-flag-fill{padding-left:14px}
     }
-    @media(max-width:1180px){
-      .tab-stage{order:3;flex-basis:100%;margin:14px 0 0}
-    }
-    .tab-assembly{position:relative}
-    .tab-row{display:flex;gap:3px;position:relative;z-index:2}
-    .product-tab{
-      height:38px;padding:0 15px;
-      display:flex;align-items:center;
-      border-radius:7px 7px 0 0;
-      font:750 11px/1 ui-monospace,monospace;letter-spacing:.04em;
-      text-decoration:none;white-space:nowrap;
-      background:var(--accent);color:#0b0c10;
-      transition:filter .15s ease;
-    }
-    .product-tab:hover{filter:brightness(1.08)}
-    .product-tab.is-current{background:var(--primary);color:var(--accent)}
-    .shelf{
-      display:flex;align-items:center;
-      margin-top:-14px;padding:18px 20px 16px;
-      border-radius:0 16px 16px 16px;
-      background:linear-gradient(135deg,var(--primary) 0%,#0a1142 100%);
-      box-shadow:0 20px 36px -10px rgba(0,0,0,.5);
-      position:relative;z-index:1;text-decoration:none;
-    }
-    .shelf img.logo{height:26px;width:auto;display:block}
-    /* Mobile app-shell layout: the stage is pinned to the very top of the
-       viewport, the secondary nav (Pricing/Why/News/Sign In) becomes a
-       pinned bottom bar like a native app's tab bar, only the page
-       content between them scrolls. Tabs never hide - every name stays
-       fully legible, same shelf-and-flags object just at phone width. */
-    @media(max-width:900px){
-      header{display:block;margin-bottom:0}
-      .tab-stage{
-        position:fixed;top:0;left:0;right:0;z-index:50;
-        margin:0;padding:10px 12px 0;border-radius:0;
-        border-bottom:1px solid var(--line);
-      }
-      .tab-row{gap:2px}
-      .product-tab{height:32px;padding:0 12px;font-size:10px}
-      .shelf{margin-top:-10px;padding:12px 14px 10px;border-radius:0 12px 12px 0}
-      .shelf img.logo{height:22px}
-      /* Mobile shows only the three tools this page's demo actually walks
-         through (TakeOffX -> SubX -> CutsheetX, same trio as the hero's
-         own chain indicator) - the other three stay desktop-only here to
-         keep the pinned strip uncluttered. */
-      .product-tab[href="/huntx/"],
-      .product-tab[href="/meetingx/"],
-      .product-tab[href="/propx-app/"]{display:none}
-      .nav{
-        position:fixed;bottom:0;left:0;right:0;z-index:50;
-        margin:0;padding:10px 16px calc(10px + env(safe-area-inset-bottom));
-        background:var(--panel);border-top:1px solid var(--line);
-        justify-content:space-around;gap:10px;
-      }
-      .shell{padding-top:76px;padding-bottom:59px}
+    @media(max-width:620px){
+      .wn-row{gap:10px}
+      .wn-ribbon{overflow-x:auto;max-width:100%;-webkit-overflow-scrolling:touch}
+      .wn-secondary{gap:12px}
     }
   </style>
 </head>
 <body>
   <div class="shell">
     <header>
-      <div class="tab-stage">
-        <div class="tab-assembly">
-          <nav class="tab-row" aria-label="Products">
-            <a href="/takeoffx/" class="product-tab">TakeOffX</a>
-            <a href="/subx/" class="product-tab">SubX</a>
-            <a href="/cutsheetx/" class="product-tab">CutsheetX</a>
-            <a href="/huntx/" class="product-tab">HuntX</a>
-            <a href="/meetingx/" class="product-tab">MeetingX</a>
-            <a href="/propx-app/" class="product-tab">PropX</a>
-          </nav>
-          <a href="/" class="shelf" aria-current="page">
-            <img class="logo" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA1MzYgMTQ1IiB3aWR0aD0iNTM2IiBoZWlnaHQ9IjE0NSI+CiAgPHRpdGxlPldleWxhbmRBSSB3b3JkbWFyayDigJQgcmVhbCB2ZWN0b3IgdHJhY2UsIHJlY29sb3JlZCBiYWRnZTwvdGl0bGU+CiAgPHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjUzNiIgaGVpZ2h0PSIxNDUiIHJ4PSIyMCIgZmlsbD0iIzJBNTJGRiIvPgogIDxnIHRyYW5zZm9ybT0idHJhbnNsYXRlKDI4LDI4KSI+CiAgICA8ZyB0cmFuc2Zvcm09InRyYW5zbGF0ZSgwLDg0KSBzY2FsZSgxLDEuMDIwMykgdHJhbnNsYXRlKDAsLTg0KSI+CiAgICA8ZyB0cmFuc2Zvcm09InRyYW5zbGF0ZSgtMi45LDUpIHNjYWxlKDEsMS4xMTkpIHRyYW5zbGF0ZSgyLjksLTUpIj4KICAgIDxnIHRyYW5zZm9ybT0idHJhbnNsYXRlKDAsOS4yKSB0cmFuc2xhdGUoNTgsNjYuMykgc2NhbGUoMS4xNSkgdHJhbnNsYXRlKC01OCwtNjYuMykiPgogICAgPGcgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoMC4wMDAwMDAsODkuMDAwMDAwKSBzY2FsZSgwLjEwMDAwMCwtMC4xMDAwMDApIiBmaWxsPSIjRkZENDAwIiBzdHJva2U9Im5vbmUiPgogICAgICA8cGF0aCBkPSJNIDgyLjksODQwLjAgTCA4Mi45LDgwMi4wIEwgMjE2LjAsMzAwLjAgTCAxOTguMCwzMzguMCBMIDEyNi45LDU5NS4zIEwgMTE0LjQsMzQzLjIgTCA3MS44LDI2MS42IEwgNzEuOCwyMjguMSBMIDQ1Ni41LDIyOC4xIEwgNTc4LjMsNjAwLjIgTCA3MDAuMSwyMjguMSBMIDEwNzguMiwyMjguMSBMIDEwNzguMiwyNjEuNiBMIDEwMzYuMywzNDIuMCBMIDEwMjMuNCw2MDEuMyBMIDk1MC4wLDMzMy4wIEwgOTI3LjUsMzA2LjAgTCAxMDYyLjksODAyLjAgTCAxMDYyLjksODQwLjAgTCA4MjEuNSw4NDAuMCBMIDgyMS41LDgwMi4wIEwgODA3LjUsMzkwLjYgTCA2NjguMCw4NDAuMCBMIDQ5NS4wLDg0MC4wIEwgMzUwLjIsMzc1LjMgTCAzMzUuNyw4MDIuMCBMIDMzNS43LDg0MC4wIFoiLz4KICAgIDwvZz4KICAgIDwvZz4KICAgIDwvZz4KICAgIDwvZz4KICAgIDxnIHRyYW5zZm9ybT0idHJhbnNsYXRlKDAsMi41KSI+CiAgICA8ZyB0cmFuc2Zvcm09InRyYW5zbGF0ZSgwLjAwMDAwMCw4OS4wMDAwMDApIHNjYWxlKDAuMTAwMDAwLC0wLjEwMDAwMCkiIGZpbGw9IiNGNUY3RkEiIHN0cm9rZT0ibm9uZSI+CiAgICAgIDxwYXRoIGQ9Ik0yMTAwIDUzNSBsMCAtMzA1IDY1IDAgNjUgMCAwIDMwNSAwIDMwNSAtNjUgMCAtNjUgMCAwIC0zMDV6Ii8+CiAgICAgIDxwYXRoIGQ9Ik0zNjEwIDcyOSBjMCAtOTggLTIgLTEwOSAtMTUgLTk2IC0yNSAyNiAtODQgNDAgLTEzOCAzNCAtMTExIC0xNAotMTcyIC05NSAtMTcxIC0yMjcgMCAtMTE0IDQzIC0xODMgMTMzIC0yMTUgNjEgLTIxIDk5IC0xOSAxNTAgMTAgNTIgMzAgNTEgMzAKNTEgNyAwIC0xNiA3IC0xOCA1OCAtMTYgbDU3IDMgMyAzMDUgMiAzMDYgLTY1IDAgLTY1IDAgMCAtMTExeiBtLTI3IC0xOTAgYzIzCi0yNSAyNyAtMzggMjcgLTkwIDAgLTkzIC0zMiAtMTM5IC05NyAtMTM5IC0xMTEgMCAtMTQzIDIxMCAtMzkgMjU2IDQxIDE4IDc1CjEwIDEwOSAtMjd6Ii8+CiAgICAgIDxwYXRoIGQ9Ik0xMzM1IDY2NSBjLTUgLTIgLTIyIC02IC0zOCAtOSAtNDEgLTkgLTEwMyAtNzEgLTEyMyAtMTIyIC0yNiAtNjcKLTE1IC0xNzMgMjIgLTIyNyA5MCAtMTMwIDMwOCAtMTI0IDM4MiAxMCBsMjIgNDEgLTQzIDYgYy01MSA4IC03MCAyIC0xMDMgLTMwCi0yNiAtMjcgLTk3IC0zMyAtMTI2IC0xMCAtMjIgMTYgLTQ5IDY3IC00MiA3OCAzIDQgNzQgOCAxNTkgOCA5MSAwIDE1NiA0IDE2MAoxMCAzIDUgMSAzNiAtNCA2NyAtMjEgMTEwIC05NyAxNzggLTIwNCAxODEgLTI5IDAgLTU2IC0xIC02MiAtM3ogbTg5IC05NSBjMjEKLTggNTYgLTU0IDU2IC03NSAwIC0zIC00MyAtNSAtOTUgLTUgLTg1IDAgLTk1IDIgLTk1IDE4IDAgMTAgMTAgMjggMjMgMzkgMzYKMzMgNjggNDAgMTExIDIzeiIvPgogICAgICA8cGF0aCBkPSJNMjQ0NSA2NjQgYy03OCAtMTkgLTEzNSAtNzEgLTEzNSAtMTIzIDAgLTE5IDUgLTIxIDYwIC0yMSA1NCAwIDYxIDIKNjkgMjQgMTEgMjggMjkgMzYgODEgMzYgMzggMCA3MCAtMjAgNzAgLTQzIC0xIC0yOCAtMjIgLTM5IC0xMDYgLTUyIC00OSAtOAotMTA2IC0yMiAtMTI2IC0zMSAtNjYgLTI5IC04NiAtMTE1IC00MyAtMTgxIDIwIC0yOSA4OCAtNjMgMTMwIC02MyAzNiAwIDEyMgoyNSAxNDEgNDEgMTEgOSAxNCA4IDE0IC00IDAgLTEyIDE1IC0xNiA2MyAtMTkgMzQgLTIgNjIgLTQgNjMgLTMgMCAwIC0yIDc5Ci02IDE3NSAtNyAxOTYgLTEzIDIxNSAtNzggMjQ2IC0zNiAxNyAtMTU2IDI4IC0xOTcgMTh6IG0xNDIgLTI4MSBjLTExIC03MAotODkgLTEwNiAtMTQ1IC02NyAtMjUgMTcgLTI4IDQyIC05IDY3IDEyIDE3IDc0IDM0IDEzMSAzNiAyOCAxIDI4IDAgMjMgLTM2eiIvPgogICAgICA8cGF0aCBkPSJNMjk5NiA2NjAgYy0xNiAtNSAtMzkgLTE5IC01MiAtMzEgbC0yNCAtMjIgMCAyNiBjMCAyNyAtMSAyNyAtNjUgMjcKbC02NSAwIDAgLTIxMyBjMCAtMTE4IDIgLTIxNiA0IC0yMTggMiAtMiAzNCAtMyA2OSAtMSBsNjYgNCAzIDE1MCBjMyAxNDQgNAoxNTEgMjcgMTY5IDI3IDIyIDc5IDI1IDEwNyA1IDE3IC0xMyAxOSAtMzAgMjIgLTE3MCA0IC0xNzMgLTEgLTE2NCA4MyAtMTU4Cmw0OSA0IDAgMTY0IGMwIDE0NCAtMiAxNzAgLTIwIDIwMyAtMzAgNjAgLTExOSA4NiAtMjA0IDYxeiIvPgogICAgICA8cGF0aCBkPSJNMTYwMCA2NTcgYzAgLTIgMzYgLTk1IDgxIC0yMDggNDUgLTExMiA4MSAtMjE0IDgxIC0yMjYgMCAtMTMgLTcKLTM0IC0xNiAtNDggLTE0IC0yMSAtMjQgLTI1IC02MSAtMjUgbC00NSAwIDAgLTUwIDAgLTUwIDU1IDAgYzY0IDAgMTEwIDE3CjE0MiA1MSAxMiAxMyA2MiAxMzIgMTEyIDI2NCA0OSAxMzIgOTQgMjUzIDEwMCAyNjggbDExIDI4IC02NyAtMyAtNjYgLTMgLTQ4Ci0xNDAgYy0yNiAtNzcgLTUwIC0xMzMgLTUzIC0xMjUgLTMgOCAtMjUgNzEgLTQ5IDE0MCBsLTQ0IDEyNSAtNjYgMyBjLTM3IDIKLTY3IDEgLTY3IC0xeiIvPgogICAgPC9nPgogICAgPC9nPgogICAgPGcgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoLTkuMywwKSI+CiAgICA8ZyB0cmFuc2Zvcm09InRyYW5zbGF0ZSgwLDg0KSBzY2FsZSgxLDEuMDIwMykgdHJhbnNsYXRlKDAsLTg0KSI+CiAgICA8ZyB0cmFuc2Zvcm09InRyYW5zbGF0ZSgzODkuOCw1KSBzY2FsZSgxLDEuMTE1OCkgdHJhbnNsYXRlKC0zODkuOCwtNSkiPgogICAgPGcgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoMzg5LjgsNSkgc2NhbGUoMS4xNSkgdHJhbnNsYXRlKC0zODkuOCwtNSkiPgogICAgPGcgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoMC4wMDAwMDAsODkuMDAwMDAwKSBzY2FsZSgwLjEwMDAwMCwtMC4xMDAwMDApIiBmaWxsPSIjRjVGN0ZBIiBzdHJva2U9Im5vbmUiPgogICAgICA8cGF0aCBkPSJNNDEzMCA4MTggYy02MCAtMTM5IC0yMzcgLTU4OSAtMjMyIC01OTEgNCAtMiAzOCAtMyA3NyAtMyA3NiAxIDc1IDAKMTA5IDg5IGwxNSAzNyAxMjQgMCAxMjMgMCAyNSAtNjIgMjQgLTYzIDc3IDAgYzQzIDAgNzggNCA3OCA5IDAgNCAtMzEgODMgLTY4CjE3NSAtMzggOTEgLTkzIDIyNiAtMTIyIDI5OSBsLTU0IDEzMiAtODMgMCBjLTc3IDAgLTg0IC0yIC05MyAtMjJ6IG0xMzkgLTI1OApjMTYgLTQxIDI3IC03OCAyNCAtODIgLTIgLTUgLTM1IC04IC03NCAtOCAtNTEgMCAtNjkgNCAtNjkgMTMgMCAxMiAzMyAxMDEgNjIKMTY3IDEyIDI5IDggMzYgNTcgLTkweiIvPgogICAgICA8cGF0aCBkPSJNNDYwMiA1MzMgbDMgLTMwOCA3MyAwIDcyIDAgMCAzMDcgMCAzMDggLTc1IDAgLTc1IDAgMiAtMzA3eiIvPgogICAgPC9nPgogICAgPC9nPgogICAgPC9nPgogICAgPC9nPgogICAgPC9nPgogIDwvZz4KPC9zdmc+Cg==" alt="WeylandAI">
-          </a>
+      <div class="wn-row">
+        <div class="wn-ribbon">
+          <a href="/" class="wn-flag wn-logo" data-tone="blue" aria-label="WeylandAI home" aria-current="page"><span class="wn-flag-frame"></span><span class="wn-flag-fill"><b class="wn-w">W</b>eylandAI</span></a>
+          <a href="/takeoffx/" class="wn-flag" data-tone="yellow"><span class="wn-flag-frame"></span><span class="wn-flag-fill">TakeOffX</span></a>
+          <a href="/subx/" class="wn-flag" data-tone="yellow"><span class="wn-flag-frame"></span><span class="wn-flag-fill">SubX</span></a>
+          <a href="/cutsheetx/" class="wn-flag" data-tone="yellow"><span class="wn-flag-frame"></span><span class="wn-flag-fill">CutsheetX</span></a>
+          <a href="/huntx/" class="wn-flag" data-tone="yellow"><span class="wn-flag-frame"></span><span class="wn-flag-fill">HuntX</span></a>
+          <a href="/meetingx/" class="wn-flag" data-tone="yellow"><span class="wn-flag-frame"></span><span class="wn-flag-fill">MeetingX</span></a>
+          <a href="/propx/" class="wn-flag" data-tone="yellow"><span class="wn-flag-frame"></span><span class="wn-flag-fill">PropX</span></a>
         </div>
+        <nav class="wn-secondary">
+          <a href="/pricing/">Pricing</a>
+          <a href="/whyweyland/">Why WeylandAI</a>
+          <a href="/news">News</a>
+          <a class="wn-signin" href="/login?redirect=/subx">Sign In</a>
+        </nav>
       </div>
-      <nav class="nav">
-        <a href="/pricing/">Pricing</a>
-        <a href="/whyweyland/">Why WeylandAI</a>
-        <a href="/news">News</a>
-        <a class="button primary" href="/login?redirect=/subx">Sign In</a>
-      </nav>
     </header>
 
     <section class="hero">
