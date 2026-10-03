@@ -262,9 +262,31 @@
       background:var(--primary);outline:none;
     }
     .product-tab.home img.logo{height:24px;width:auto;display:block}
-    /* Collapse only the product row on narrow screens - the home/logo tab
-       lives in this same container now and must never disappear with it. */
-    @media(max-width:900px){.product-tab:not(.home){display:none}}
+    /* Mobile app-shell layout: the product-tab strip is pinned to the very
+       top of the viewport, the secondary nav (Pricing/Why/News/Sign In)
+       becomes a pinned bottom bar like a native app's tab bar, and only
+       the page content between them scrolls. Product tabs never hide -
+       the strip scrolls horizontally instead, logo pinned at its left
+       edge, so every product name stays fully legible (no clipping). */
+    @media(max-width:900px){
+      header{display:block;margin-bottom:0}
+      .product-tabs{
+        position:fixed;top:0;left:0;right:0;z-index:50;
+        margin:0;padding:10px 12px;gap:0;
+        background:var(--bg);border-bottom:1px solid var(--line);
+        overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none;
+      }
+      .product-tabs::-webkit-scrollbar{display:none}
+      .product-tab{flex:0 0 auto}
+      .product-tab.home{position:sticky;left:0}
+      .nav{
+        position:fixed;bottom:0;left:0;right:0;z-index:50;
+        margin:0;padding:10px 16px calc(10px + env(safe-area-inset-bottom));
+        background:var(--panel);border-top:1px solid var(--line);
+        justify-content:space-around;gap:10px;
+      }
+      .shell{padding-top:65px;padding-bottom:59px}
+    }
   </style>
 </head>
 <body>
