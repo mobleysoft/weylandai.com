@@ -178,10 +178,12 @@
          supposed to prevent. Solid var(--bg) actually masks it; blur over
          real transparency was cosmetic, not a mask. */
       background: var(--bg);
-      /* Bottom padding is a hairline (1px), not a full gap - the tabs should
-         sit right against the seam, with only the 1px border + the 3px
-         progress bar overlaying it as the visible divider, not a black band. */
-      padding: 12px clamp(16px, 3vw, 40px) 1px;
+      /* Both top AND bottom are now a 1px hairline, not a padded band - the
+         header's own visible footprint should be ~the tab ribbon's own
+         bounding box, not a rectangle with solid-color margin showing
+         above/below the tabs. A real envelope's tabs are cut out of the
+         paper itself; there's no separate colored bar sitting behind them. */
+      padding: 1px clamp(16px, 3vw, 40px) 1px;
       transition: background 0.3s ease;
       /* Always-visible baseline track for #scroll-progress (its child,
          absolutely positioned at bottom:0) - this IS the seam line between
@@ -2138,7 +2140,7 @@
     <footer class="site-footer">
       <div>
         <strong>WeylandAI</strong> &middot; Construction Document Automation &amp; Spatial Twin OS<br>
-        <span style="color:var(--muted);font-size:11px">A Mobley Soft &middot; Mascom Conglomerate Venture</span>
+        <span style="color:var(--muted);font-size:11px">A Mobley Helms Systems LP Company</span>
       </div>
       <div style="display:flex;gap:16px;flex-wrap:wrap">
         <a href="#hero">Top</a>
