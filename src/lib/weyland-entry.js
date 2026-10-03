@@ -224,9 +224,24 @@ export function createWeylandWorker({ monolith }) {
       return Response.redirect(target, 301);
     }
     if (request2.method === "GET" || request2.method === "HEAD") {
+      // Real SPA-router fragment requests (X-Skeletonking-Route: fragment,
+      // sent by the client router ported from skeletonking-v2.js - see
+      // src/lib/sk-router.js) must always reach SovereignWeylandRoutes.dispatch
+      // directly. MASCOM_EDGE only ever serves the full cached HTML document
+      // for "/" and knows nothing about the fragment JSON contract - letting
+      // a fragment request fall through to it would silently return a full
+      // document with no X-Skeletonking-Route header, which the client router
+      // already treats as a safe signal to fall back to a full page reload
+      // (see sk-router.js's own `!res.ok || header mismatch` fallback) - but
+      // that would needlessly degrade the real client-routed nav back to "/"
+      // into a full reload every time, for a page this worker can otherwise
+      // answer as a real fragment. Skip MASCOM_EDGE for fragment requests so
+      // the "/" <-> "/pricing" round trip stays genuinely SPA-routed in both
+      // directions.
+      const isFragmentRequest = request2.headers.get("X-Skeletonking-Route") === "fragment";
       const isHome = url.pathname === "/" || url.pathname === "/index.html";
       const isStaticAsset = url.pathname.startsWith("/assets/");
-      if ((isHome || isStaticAsset) && env2.MASCOM_EDGE) {
+      if ((isHome || isStaticAsset) && env2.MASCOM_EDGE && !isFragmentRequest) {
         try {
           const edgeUrl = isHome ? "https://weylandai.com/" : "https://weylandai.com" + url.pathname;
           const edgeResp = await env2.MASCOM_EDGE.fetch(edgeUrl);
@@ -245,7 +260,7 @@ export function createWeylandWorker({ monolith }) {
           console.log("[MASCOM_EDGE delegation failed, falling back to bundled page]", e.message);
         }
       }
-      var sovereignResponse = SovereignWeylandRoutes.dispatch(url.pathname);
+      var sovereignResponse = SovereignWeylandRoutes.dispatch(url.pathname, isFragmentRequest);
       if (sovereignResponse) return sovereignResponse;
     }
     if (url.hostname === "deck.weyland.onamerica.org" && (request2.method === "GET" || request2.method === "HEAD")) {
