@@ -144,6 +144,26 @@
        always sits exactly at the header's bottom edge (the seam between nav
        and content) regardless of header height, instead of a hardcoded
        viewport offset that could drift out of sync with the frame margin. */
+    /* The envelope's real protruding flap - a dedicated 28px strip, clipped
+       to a trapezoid peak (flat across the middle, sloped sides down to
+       the full-width base). This is a SEPARATE box from header/envelope-
+       frame specifically so the peak can reach this strip's own y:0 while
+       its flanks recede - giving the visual read of "sticking up" without
+       needing to render outside any element's own box, which clip-path
+       can never do. */
+    .envelope-flap {
+      height: 28px;
+      background:
+        linear-gradient(rgba(255, 255, 255, 0.035) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.035) 1px, transparent 1px),
+        var(--bg);
+      background-size: 30px 30px, 30px 30px, auto;
+      clip-path: polygon(0 100%, 42% 0, 58% 0, 100% 100%);
+    }
+    @media (max-width: 640px) {
+      .envelope-flap { height: 16px; clip-path: polygon(0 100%, 38% 0, 62% 0, 100% 100%); }
+    }
+
     #scroll-progress {
       position: absolute;
       bottom: 0;
@@ -1342,6 +1362,13 @@
        thing - not separate borders per section, which would read as several
        floating cards instead of one envelope popping off the background. -->
   <div class="envelope-frame">
+
+  <!-- A real protruding flap - not just the header's reshaped top edge.
+       clip-path can only remove area from within an element's own box, it
+       can never render past it, so a flap that actually reads as "sticking
+       up" needs its own reserved strip of height with its OWN clip-path
+       (a trapezoid peak), separate from the header below it. -->
+  <div class="envelope-flap"></div>
 
   <!-- Sticky Scrollytelling Ribbon Header -->
   <header class="site-header" id="top-nav">
