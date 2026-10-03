@@ -243,12 +243,12 @@
        current, signalling "inside a product" vs "home". */
     .wn-row{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;width:100%}
     .wn-ribbon{display:flex;align-items:stretch}
-    .wn-flag{position:relative;height:40px;margin-left:-15px;text-decoration:none;display:block}
+    .wn-flag{position:relative;display:block;margin-left:-15px;text-decoration:none}
     .wn-ribbon .wn-flag:first-child{margin-left:0}
-    .wn-flag-frame{position:absolute;inset:0;clip-path:polygon(15px 0,100% 0,calc(100% - 15px) 100%,0 100%)}
-    .wn-ribbon .wn-flag:first-child .wn-flag-frame{clip-path:polygon(0 0,100% 0,calc(100% - 15px) 100%,0 100%)}
-    .wn-flag-fill{position:absolute;inset:2px;clip-path:polygon(14px 0,100% 0,calc(100% - 14px) 100%,0 100%);display:flex;align-items:center;justify-content:center;padding:0 22px 0 24px;font:800 11px/1 ui-monospace,monospace;letter-spacing:.04em;white-space:nowrap;transition:filter .15s ease}
-    .wn-ribbon .wn-flag:first-child .wn-flag-fill{clip-path:polygon(0 0,100% 0,calc(100% - 14px) 100%,0 100%);padding-left:18px}
+    .wn-flag-frame{position:absolute;top:-2px;right:-2px;bottom:-2px;left:-2px;clip-path:polygon(17px 0,100% 0,calc(100% - 17px) 100%,0 100%)}
+    .wn-ribbon .wn-flag:first-child .wn-flag-frame{clip-path:polygon(0 0,100% 0,calc(100% - 17px) 100%,0 100%)}
+    .wn-flag-fill{position:relative;display:flex;align-items:center;justify-content:center;height:40px;padding:0 22px 0 24px;font:800 11px/1 ui-monospace,monospace;letter-spacing:.04em;white-space:nowrap;clip-path:polygon(15px 0,100% 0,calc(100% - 15px) 100%,0 100%);transition:filter .15s ease}
+    .wn-ribbon .wn-flag:first-child .wn-flag-fill{clip-path:polygon(0 0,100% 0,calc(100% - 15px) 100%,0 100%);padding-left:18px}
     .wn-flag:hover .wn-flag-fill{filter:brightness(1.08)}
     .wn-flag[data-tone="yellow"] .wn-flag-frame{background:#000}
     .wn-flag[data-tone="yellow"] .wn-flag-fill{background:#ffd400;color:#0b0c10}
@@ -262,8 +262,7 @@
     .wn-signin{border:1px solid #2a52ff;border-radius:99px;padding:9px 16px;text-decoration:none;background:#2a52ff;color:#fff;font:800 10px/1 ui-monospace,monospace;letter-spacing:.06em}
     .wn-signin:hover{box-shadow:0 0 15px rgba(42,82,255,.35)}
     @media(max-width:860px){
-      .wn-flag{height:34px}
-      .wn-flag-fill{font-size:9.5px;padding:0 16px 0 18px}
+      .wn-flag-fill{height:34px;font-size:9.5px;padding:0 16px 0 18px}
       .wn-ribbon .wn-flag:first-child .wn-flag-fill{padding-left:14px}
     }
     @media(max-width:620px){
