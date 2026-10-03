@@ -36,6 +36,7 @@
           <button type="button" data-sxe-action="ingest">INGEST SITE <kbd>I</kbd></button>
           <button type="button" data-sxe-action="report">FIELD RECORD <span class="sxe-report-count">0</span></button>
           <button type="button" data-sxe-action="settings">OPTIONS <kbd>O</kbd></button>
+          <button type="button" data-sxe-action="stress">STRESS VIEW</button>
         </nav>
       </header>
 
@@ -508,6 +509,7 @@
       const action = event.target.closest('[data-sxe-action]')?.dataset.sxeAction;
       if (action === 'tour') startTour();
       if (action === 'ingest') window.dispatchEvent(new CustomEvent('sightx:toggle-ingest'));
+      if (action === 'stress') window.dispatchEvent(new CustomEvent('sightx:toggle-stress'));
       if (action === 'report') toggleDrawer(refs.report);
       if (action === 'settings') { refreshSettings(); toggleDrawer(refs.settings); }
       if (action === 'reset' && state.controls) { state.controls.resetSettings(); refreshSettings(); state.resizeRequested = true; }

@@ -23,9 +23,24 @@
       tour: 'KeyT',
       settings: 'KeyO',
       report: 'KeyR',
+      view: 'KeyV',
       release: 'Escape'
     }),
-    movement: Object.freeze({ walk: 4.2, sprint: 8.0, collisionStep: 0.08, roll: 1.6 }),
+    // Real Newtonian zero-g thrust: these are ACCELERATIONS (m/s^2) applied
+    // while a direction is held, not velocities - see update() below.
+    // Vacuum has no medium to decelerate against, so there is deliberately
+    // no drag/damping term anywhere in this file; released velocity
+    // persists exactly until an opposing burst cancels it, the same way a
+    // real MMU/SAFER reaction-control pack behaves. Magnitudes are tuned
+    // for a responsive ~1-2s spin-up to cruise speed rather than a literal
+    // SAFER unit's real ~0.05 m/s^2 thrust (which would read as nearly
+    // motionless) - the same kind of disclosed playability trade-off this
+    // scene already makes for its orbital time-scale (see #orbit-hud).
+    // maxSpeed models the unit's finite RCS propellant budget (a real cap
+    // on accumulated delta-v, not an arbitrary speed limiter) - it only
+    // clips velocity AFTER a burst adds to it, it never decays existing
+    // velocity on its own.
+    movement: Object.freeze({ accel: 6.0, sprintAccel: 13.0, maxSpeed: 16.0, collisionStep: 0.08, roll: 1.6 }),
     look: Object.freeze({ mouse: 0.0022, touch: 0.0040 }),
     bounds: Object.freeze({ minX: -60, maxX: 60, minY: -20, maxY: 60, minZ: -60, maxZ: 60 })
   });
@@ -151,6 +166,11 @@
     const settings = preferences.settings;
     const bindings = preferences.bindings;
     const position = (options.initialPosition || [0, 1.72, -9]).slice();
+    // Real Newtonian zero-g state: thrust is an acceleration applied to
+    // this velocity (see update() below), never a position-setter, and
+    // there is no drag term anywhere that decays it - it persists exactly
+    // until an opposing thrust burst cancels it out.
+    const velocity = [0, 0, 0];
     let { fwd, up } = basisFromYawPitch(options.initialYaw || 0, options.initialPitch || 0);
     let locked = false;
     let inputEnabled = true;
@@ -230,7 +250,7 @@
     function setHint() {
       if (!options.hint) return;
       options.hint.textContent = locked
-        ? 'WASD - THRUST   MOUSE - PITCH/YAW   Q/E - ROLL   SPACE/CTRL - UP/DOWN   SHIFT - BOOST   F - SCAN   ESC - RELEASE'
+        ? 'WASD - THRUST   MOUSE - PITCH/YAW   Q/E - ROLL   SPACE/CTRL - UP/DOWN   SHIFT - BOOST   F - SCAN   V - VIEW   ESC - RELEASE'
         : 'CLICK TO CAPTURE MOUSE';
     }
 
@@ -265,6 +285,7 @@
       if (!event.repeat && event.code === profile.desktop.tour && options.onTourToggle) options.onTourToggle();
       if (!event.repeat && event.code === profile.desktop.settings && options.onSettingsToggle) options.onSettingsToggle();
       if (!event.repeat && event.code === profile.desktop.report && options.onReportToggle) options.onReportToggle();
+      if (!event.repeat && event.code === profile.desktop.view && options.onViewToggle) options.onViewToggle();
       if (!inputEnabled) return;
       keys[event.code] = true;
       if (event.code === profile.desktop.release && document.pointerLockElement) document.exitPointerLock();
@@ -413,7 +434,8 @@
 
       // Roll: Q/E spin the basis around the CURRENT local forward axis -
       // independent of translation input, same as a spacecraft's roll
-      // thrusters.
+      // thrusters. Attitude control, not translation, so it's unaffected
+      // by the momentum model below.
       let rollInput = 0;
       if (actionActive('rollLeft')) rollInput -= 1;
       if (actionActive('rollRight')) rollInput += 1;
@@ -433,30 +455,69 @@
       if (actionActive('down')) vertical -= 1;
       const inputLength = Math.hypot(forwardAmt, strafe, vertical);
       if (inputLength > 1) { forwardAmt /= inputLength; strafe /= inputLength; vertical /= inputLength; }
-      if (!forwardAmt && !strafe && !vertical) return;
-      signalInput('move');
+      const thrusting = Boolean(forwardAmt || strafe || vertical);
 
-      const sprinting = sprintHeld || actionActive('sprint');
-      const speed = (sprinting ? profile.movement.sprint : profile.movement.walk) * settings.moveScale;
-      // Thrust along the CRAFT's own current local axes (fwd/right/up),
-      // not world X/Z - this is the actual 6DOF behavior: "forward" always
-      // means wherever you're currently facing, in any orientation.
-      const right = normalize3(cross3(up, fwd));
-      const dx = (fwd[0] * forwardAmt + right[0] * strafe + up[0] * vertical) * speed * dt;
-      const dy = (fwd[1] * forwardAmt + right[1] * strafe + up[1] * vertical) * speed * dt;
-      const dz = (fwd[2] * forwardAmt + right[2] * strafe + up[2] * vertical) * speed * dt;
+      // Real Newtonian zero-g movement: a thrust key is a burst that
+      // CHANGES VELOCITY (acceleration), not a velocity-setter. There is
+      // deliberately no drag/damping term anywhere below - real vacuum
+      // has no medium to decelerate against, so once a burst stops,
+      // velocity is conserved exactly (Newton's first law) until an
+      // opposing burst cancels it. This replaced an earlier instant-
+      // velocity model (press key -> move at fixed speed, release ->
+      // stop dead), which was not real physics for a zero-g spacewalk.
+      if (thrusting) {
+        signalInput('move');
+        if (options.onThrust) options.onThrust(velocity);
+        const sprinting = sprintHeld || actionActive('sprint');
+        const accel = (sprinting ? profile.movement.sprintAccel : profile.movement.accel) * settings.moveScale;
+        // Thrust along the CRAFT's own current local axes (fwd/right/up),
+        // not world X/Z - "forward" always means wherever you're
+        // currently facing, in any orientation.
+        const right = normalize3(cross3(up, fwd));
+        velocity[0] += (fwd[0] * forwardAmt + right[0] * strafe + up[0] * vertical) * accel * dt;
+        velocity[1] += (fwd[1] * forwardAmt + right[1] * strafe + up[1] * vertical) * accel * dt;
+        velocity[2] += (fwd[2] * forwardAmt + right[2] * strafe + up[2] * vertical) * accel * dt;
+        // Finite RCS propellant budget: caps accumulated drift the same
+        // way a real SAFER unit's limited delta-v does. This only clips
+        // velocity AFTER a burst adds to it - it never decays existing
+        // velocity on its own, so it is not a drag term.
+        const builtSpeed = Math.hypot(velocity[0], velocity[1], velocity[2]);
+        if (builtSpeed > profile.movement.maxSpeed) {
+          const scale = profile.movement.maxSpeed / builtSpeed;
+          velocity[0] *= scale; velocity[1] *= scale; velocity[2] *= scale;
+        }
+      }
+
+      // Integrate position from velocity EVERY frame, independent of
+      // whether thrust was applied this frame - this is what makes the
+      // drift real: releasing every key keeps the astronaut moving at a
+      // constant velocity indefinitely, exactly like coasting in vacuum.
+      const speed = Math.hypot(velocity[0], velocity[1], velocity[2]);
+      if (speed < 1e-5) return;
+
+      const dx = velocity[0] * dt;
+      const dy = velocity[1] * dt;
+      const dz = velocity[2] * dt;
       const steps = Math.max(1, Math.ceil(Math.hypot(dx, dz) / profile.movement.collisionStep));
 
       for (let i = 0; i < steps; i += 1) {
         const nextX = position[0] + dx / steps;
         const nextZ = position[2] + dz / steps;
-        if (!options.collision || !options.collision(nextX, position[2])) position[0] = nextX;
-        if (!options.collision || !options.collision(position[0], nextZ)) position[2] = nextZ;
+        if (!options.collision || !options.collision(nextX, position[2])) { position[0] = nextX; } else { velocity[0] = 0; }
+        if (!options.collision || !options.collision(position[0], nextZ)) { position[2] = nextZ; } else { velocity[2] = 0; }
       }
       position[1] += dy;
-      position[0] = clamp(position[0], profile.bounds.minX, profile.bounds.maxX);
-      position[1] = clamp(position[1], profile.bounds.minY, profile.bounds.maxY);
-      position[2] = clamp(position[2], profile.bounds.minZ, profile.bounds.maxZ);
+      const clampedX = clamp(position[0], profile.bounds.minX, profile.bounds.maxX);
+      const clampedY = clamp(position[1], profile.bounds.minY, profile.bounds.maxY);
+      const clampedZ = clamp(position[2], profile.bounds.minZ, profile.bounds.maxZ);
+      // Hitting a world bound is an inelastic collision with the station's
+      // own hull/exclusion zone - it zeroes the clamped velocity component
+      // rather than leaving built-up velocity to fire the astronaut back
+      // across the scene the instant input changes.
+      if (clampedX !== position[0]) velocity[0] = 0;
+      if (clampedY !== position[1]) velocity[1] = 0;
+      if (clampedZ !== position[2]) velocity[2] = 0;
+      position[0] = clampedX; position[1] = clampedY; position[2] = clampedZ;
       if (options.onMove) options.onMove(position);
     }
 
@@ -489,6 +550,11 @@
         fwd = basis.fwd;
         up = basis.up;
       }
+      // A scripted teleport is not a physical motion - carrying stale
+      // drift velocity into the new position would otherwise have the
+      // astronaut keep "coasting" from wherever they were before the
+      // teleport, which reads as a bug, not real inertia.
+      velocity[0] = 0; velocity[1] = 0; velocity[2] = 0;
       if (options.onMove) options.onMove(position);
     }
 
@@ -518,6 +584,7 @@
       get bindings() { return { ...bindings }; },
       get forward() { return fwd.slice(); },
       get up() { return up.slice(); },
+      get velocity() { return velocity.slice(); },
       get right() { return normalize3(cross3(up, fwd)); },
       get yaw() { return Math.atan2(fwd[0], fwd[2]); },
       get pitch() { return Math.asin(clamp(fwd[1], -1, 1)); }

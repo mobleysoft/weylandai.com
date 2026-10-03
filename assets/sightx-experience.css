@@ -112,6 +112,15 @@
 .sxe-actions button:hover { color: var(--sxe-gold); background: rgba(240,184,0,.08); }
 .sxe-actions kbd { margin-left: 5px; opacity: .45; }
 .sxe-report-count { margin-left: 4px; color: var(--sxe-gold); }
+/* STRESS VIEW active state - FEA-red accent, distinct from the gold hover
+   used by every other HUD action, so the overlay's on/off state reads at
+   a glance. */
+.sxe-actions button.sxe-stress-active {
+  color: #ff6a4a;
+  background: rgba(255,90,60,.16);
+  border-left-color: rgba(255,90,60,.45);
+}
+.sxe-actions button.sxe-stress-active:hover { color: #ff6a4a; background: rgba(255,90,60,.22); }
 
 .sxe-mission {
   position: absolute;

@@ -63,6 +63,10 @@ zone_name = "weylandai.com"
 pattern = "weylandai.com/sightx"
 zone_name = "weylandai.com"
 
+[[routes]]
+pattern = "weylandai.com/sightx/*"
+zone_name = "weylandai.com"
+
 # *.html pages (src/pages/sightx.html) imported as raw text in
 # src/index.js - a real Wrangler built-in module rule, not a custom
 # bundler step (per 2026-09-12 "no bundler for new work" instruction).

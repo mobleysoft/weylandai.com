@@ -38,6 +38,7 @@
 
 set -euo pipefail
 cd "$(dirname "${BASH_SOURCE[0]}")"
+export PATH="/Users/johnmobley/.nvm/versions/node/v22.23.2/bin:$PATH"
 source /Users/johnmobley/mascom/safe-deploy-lib.sh
 
 REPO_ROOT="$(git rev-parse --show-toplevel)"

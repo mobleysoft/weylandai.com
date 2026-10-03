@@ -80,9 +80,16 @@ router.get("/health", () => jsonResponse3({
 // Not gated by any auth: the page loads for anyone (same convention as
 // subx-app.html/propx-app.html), and the one dynamic panel on it
 // (walkthrough-preview) calls a route that is itself public.
-router.get("/sightx", () => new Response(sightxHtml, {
-  headers: { "Content-Type": "text/html; charset=UTF-8", "Cache-Control": "public, max-age=60" },
-}));
+function serveSightX() {
+  return new Response(sightxHtml, {
+    headers: { "Content-Type": "text/html; charset=UTF-8", "Cache-Control": "public, max-age=60" },
+  });
+}
+
+router.get("/sightx", serveSightX);
+router.get("/sightx/", serveSightX);
+router.addRoute("HEAD", "/sightx", serveSightX);
+router.addRoute("HEAD", "/sightx/", serveSightX);
 
 registerSightXWalkthroughRoutes(router);
 
