@@ -262,7 +262,9 @@
       background:var(--primary);outline:none;
     }
     .product-tab.home img.logo{height:24px;width:auto;display:block}
-    @media(max-width:900px){.product-tabs{display:none}}
+    /* Collapse only the product row on narrow screens - the home/logo tab
+       lives in this same container now and must never disappear with it. */
+    @media(max-width:900px){.product-tab:not(.home){display:none}}
   </style>
 </head>
 <body>
