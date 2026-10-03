@@ -105,7 +105,6 @@
       overflow-y: auto;
       overflow-x: hidden;
       -webkit-overflow-scrolling: touch;
-      scrollbar-width: none;
       margin: clamp(10px, 2.4vw, 32px) auto;
       border-radius: 4px;
       box-shadow: 0 30px 90px rgba(0, 0, 0, 0.55);
@@ -132,10 +131,6 @@
         var(--bg);
       background-size: 30px 30px, 30px 30px, auto;
     }
-    /* Firefox uses scrollbar-width (set above); WebKit/Blink need this -
-       the scroll still works via wheel/trackpad/touch/keyboard, only the
-       chrome is hidden, matching the "masked card" look. */
-    .envelope-frame::-webkit-scrollbar { display: none; }
     @media (max-width: 640px) {
       .envelope-frame { width: calc(100% - 12px); height: calc(100vh - 12px); margin: 6px auto; clip-path: polygon(0 12px, 12px 0, calc(100% - 12px) 0, 100% 12px, 100% calc(100% - 12px), calc(100% - 12px) 100%, 12px 100%, 0 calc(100% - 12px)); }
     }
