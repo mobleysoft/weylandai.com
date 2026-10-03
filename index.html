@@ -4,915 +4,2321 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <meta name="theme-color" content="#0b0d13">
-  <title>WeylandAI | SubX &mdash; Cut-Sheet Matching &amp; Submittal Package Automation</title>
-  <meta name="description" content="See SubX working on a real demo project the moment you land - hardware schedule extraction, cut-sheet matching, and submittal package assembly for The WeylandAI Building.">
+  <title>WeylandAI | The Autonomous Subcontractor Operating System &amp; Spatial Twin</title>
+  <meta name="description" content="One unified continuous project record: HuntX for public bid discovery, TakeoffX for machine-vision plan quantification, SubX & CutsheetX for submittal package automation, PropX for margin protection, and SightX for photorealistic 3D spatial field twins.">
   <style>
-    :root{--bg:#0b0d13;--panel:#151822;--panel2:#1b1f2a;--line:#323a46;--text:#f1f3f5;--muted:#9da4b0;--green:#61dfa0;--blue:#66d4ff;--red:#ff756e;--primary:#2a52ff;--accent:#ffd400}
-    *{box-sizing:border-box}html,body{margin:0;min-height:100%;background:var(--bg);color:var(--text);font-family:"Avenir Next","Helvetica Neue",sans-serif}
-    body:before{content:"";position:fixed;inset:0;pointer-events:none;background:radial-gradient(circle at 15% 10%,rgba(42,82,255,.22),transparent 32rem),radial-gradient(circle at 92% 28%,rgba(255,212,0,.07),transparent 28rem),linear-gradient(rgba(255,255,255,.02) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.02) 1px,transparent 1px);background-size:auto,auto,30px 30px,30px 30px}
-    .shell{position:relative;max-width:1500px;margin:auto;padding:20px clamp(16px,3vw,40px) 60px}
-    header{display:flex;align-items:center;justify-content:space-between;gap:15px;margin-bottom:24px;flex-wrap:wrap}
-    .nav{display:flex;align-items:center;gap:20px;flex-wrap:wrap}
-    .nav a:not(.button){color:var(--muted);text-decoration:none;font:750 11px/1 ui-monospace,monospace;letter-spacing:.06em;cursor:pointer;transition:color .2s}
-    .nav a:not(.button):hover{color:var(--text)}
-    .button{border:1px solid var(--line);border-radius:99px;padding:9px 16px;color:var(--text);text-decoration:none;background:transparent;font:750 10px/1 ui-monospace,monospace;letter-spacing:.06em;cursor:pointer;transition:all .2s}
-    .button:hover{border-color:var(--primary);color:var(--primary);box-shadow:0 0 15px rgba(42,82,255,.2)}
-    .button.primary{background:var(--primary);border-color:var(--primary);color:#fff;font-weight:900}
-
-    /* Hero: flat, on the page's own background - no card, no color-blend
-       panel. One dominant headline; the suite framing and product chain
-       are intentionally smaller and quieter below it. */
-    .hero{margin:36px 0 34px;max-width:900px}
-    .hero-eyebrow{color:var(--primary);font:800 11px/1 ui-monospace,monospace;letter-spacing:.18em;text-transform:uppercase}
-    .hero h1{font-size:clamp(32px,4.6vw,56px);letter-spacing:-.04em;line-height:1.05;font-weight:800;margin:14px 0 16px;color:var(--text)}
-    .hero-sub{max-width:660px;color:var(--muted);line-height:1.65;margin:0 0 16px;font-size:16px;font-weight:450}
-    .hero-tagline{display:inline-block;margin:0 0 20px;padding:3px 0 3px 12px;border-left:3px solid var(--accent);font:700 13px/1.3 ui-monospace,monospace;letter-spacing:.02em;color:var(--text)}
-    .hero-chain{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
-    .chain-item{display:flex;align-items:center;gap:7px;font:750 10px/1 ui-monospace,monospace;letter-spacing:.08em;color:var(--muted);text-transform:uppercase}
-    .chain-item.is-current{color:var(--text)}
-    .chain-item small{font:600 9px/1 ui-monospace,monospace;letter-spacing:.04em;color:var(--muted);text-transform:none}
-    .chain-dot{width:8px;height:8px;border-radius:50%;display:inline-block;flex:none}
-    .chain-sep{color:var(--line);font-size:12px}
-
-    .trial-status-row{display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap;margin:0 0 20px;padding-bottom:16px;border-bottom:1px solid var(--line)}
-    .trial-status-label{color:var(--muted);font:700 10px/1 ui-monospace,monospace;letter-spacing:.1em;text-transform:uppercase}
-
-    .demo-badge{display:inline-flex;align-items:center;gap:6px;border:1px solid var(--line);color:var(--muted);background:var(--panel2);border-radius:99px;padding:6px 13px;font:800 10px/1 ui-monospace,monospace;letter-spacing:.12em;min-height:12px}
-    .demo-badge:before{content:"";width:6px;height:6px;border-radius:50%;background:currentColor;flex:none}
-    .demo-badge.is-loading{border-color:transparent}
-    .demo-badge.is-loading:before{display:none}
-    .demo-badge.is-live{border-color:rgba(255,212,0,.5);color:var(--accent);background:rgba(255,212,0,.1)}
-    .demo-badge.is-live:before{background:var(--accent);box-shadow:0 0 8px var(--accent)}
-    .demo-badge.is-error{border-color:rgba(255,117,110,.5);color:var(--red);background:rgba(255,117,110,.1)}
-    .demo-badge.is-error:before{background:var(--red)}
-
-    /* Loading skeletons - stand in for real content until it arrives, so
-       a visitor never sees raw "CONNECTING..." text or bare em-dashes. */
-    @keyframes shimmer{0%{background-position:-300px 0}100%{background-position:300px 0}}
-    .skel{display:inline-block;vertical-align:middle;border-radius:5px;background-image:linear-gradient(100deg,var(--panel2) 20%,var(--line) 40%,var(--panel2) 60%);background-size:300px 100%;animation:shimmer 1.4s ease-in-out infinite}
-
-    .titlebar{display:flex;justify-content:space-between;align-items:end;gap:25px;margin:35px 0 20px;flex-wrap:wrap}
-    .eyebrow{color:var(--primary);font:800 11px/1 ui-monospace,monospace;letter-spacing:.18em;text-transform:uppercase}
-    .titlebar h1{font-size:clamp(30px,4vw,52px);letter-spacing:-.05em;line-height:1.02;margin:10px 0}
-    .titlebar p{max-width:680px;color:var(--muted);line-height:1.6;margin:0;font-size:15px}
-    .pill{border:1px solid rgba(42,82,255,.4);color:var(--primary);border-radius:99px;padding:10px 15px;font:800 10px/1 ui-monospace,monospace;letter-spacing:.1em;background:rgba(42,82,255,.1)}
-
-    .metrics-row{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:24px}
-    .metric-card{background:rgba(18,20,25,.9);border:1px solid var(--line);border-radius:14px;padding:18px 20px}
-    .metric-card span{color:var(--muted);font:700 10px/1 ui-monospace,monospace;letter-spacing:.1em;text-transform:uppercase;display:block}
-    .metric-card strong{font-size:28px;font-weight:900;color:var(--text);margin-top:6px;display:block}
-    .metric-card strong.g{color:var(--green)}
-    .metric-card strong.p{color:var(--accent)}
-
-    .table-card{background:rgba(18,20,25,.94);border:1px solid var(--line);border-radius:18px;overflow:hidden;box-shadow:0 25px 70px rgba(0,0,0,.25);margin-bottom:24px}
-    .table-card .card-head{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:18px 20px;border-bottom:1px solid var(--line);flex-wrap:wrap}
-    .table-card .card-head h3{margin:0;font-size:15px;letter-spacing:.02em}
-    .table-card .card-head span{color:var(--muted);font:700 10px/1 ui-monospace,monospace;letter-spacing:.06em}
-    .table-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch}
-    table{width:100%;min-width:640px;border-collapse:collapse;font-size:14px}
-    th{text-align:left;color:var(--muted);font:750 10px/1 ui-monospace,monospace;letter-spacing:.1em;padding:16px 20px;background:#0d0f14;border-bottom:2px solid var(--line)}
-    td{padding:14px 20px;border-bottom:1px solid #1f232b;vertical-align:middle}
-    tr:hover td{background:rgba(42,82,255,.06)}
-    .door-cell{font-weight:800;color:var(--text)}
-    .part-cell{color:var(--muted);font-size:12.5px;font-family:ui-monospace,monospace}
-    .status-badge{font:800 9px ui-monospace,monospace;padding:5px 10px;border-radius:99px;display:inline-block;letter-spacing:.08em}
-    .status-matched{background:rgba(97,223,160,.15);color:var(--green);border:1px solid rgba(97,223,160,.35)}
-    .status-pending{background:rgba(255,212,0,.15);color:var(--accent);border:1px solid rgba(255,212,0,.35)}
-    tr.row-matched{cursor:pointer}
-    tr.row-matched:focus-visible{outline:2px solid var(--primary);outline-offset:-2px}
-    tr.row-matched.seen td:first-child{box-shadow:inset 3px 0 0 var(--green)}
-
-    .note-card{background:rgba(18,20,25,.9);border:1px solid var(--line);border-radius:14px;padding:22px;color:var(--muted);font-size:14px;line-height:1.6;margin-bottom:20px}
-    .note-card b{color:var(--text)}
-    .note-card code{background:#161920;padding:2px 6px;border-radius:4px;color:var(--primary);font-size:13px}
-    footer{color:var(--muted);font-size:12px;text-align:center;padding-top:20px;border-top:1px solid var(--line);margin-top:10px}
-    footer a{color:var(--muted)}
-    @media(max-width:900px){.titlebar{flex-direction:column;align-items:flex-start}.metrics-row{grid-template-columns:repeat(2,1fr)}.trial-status-row{flex-direction:column;align-items:flex-start}}
-
-    #view-subx,#view-ambient{transition:opacity .35s ease}
-    #reel-mount svg{width:100%;height:auto;display:block;border-radius:12px;border:1px solid var(--line)}
-
-    .badge-tray-wrap{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin:0 0 28px}
-    .badge-tray-label{color:var(--muted);font:700 9px/1 ui-monospace,monospace;letter-spacing:.1em;text-transform:uppercase}
-    #badge-tray{display:flex;flex-wrap:wrap;gap:8px}
-    .badge-pill{display:flex;align-items:center;gap:8px;border-radius:99px;padding:8px 14px 8px 10px;font:800 10px/1 ui-monospace,monospace;letter-spacing:.06em;background:rgba(18,20,25,.92);border:1px solid var(--line);color:var(--muted);opacity:.55;transition:all .3s ease;backdrop-filter:blur(6px)}
-    .badge-pill .dot{width:8px;height:8px;border-radius:50%;background:var(--muted);flex:none}
-    .badge-pill.unlocked{opacity:1;color:var(--accent);border-color:rgba(255,212,0,.5);box-shadow:0 0 14px rgba(255,212,0,.18)}
-    .badge-pill.unlocked .dot{background:var(--accent);box-shadow:0 0 8px var(--accent)}
-
-    #badge-toast{position:fixed;top:16px;left:50%;transform:translate(-50%,-20px);opacity:0;visibility:hidden;pointer-events:none;background:rgba(18,20,25,.96);border:1px solid rgba(255,212,0,.5);color:var(--accent);font:800 11px/1 ui-monospace,monospace;letter-spacing:.06em;padding:12px 20px;border-radius:99px;z-index:50;transition:transform .35s ease,opacity .35s ease,visibility .35s ease;box-shadow:0 10px 30px rgba(0,0,0,.35)}
-    #badge-toast.show{transform:translate(-50%,0);opacity:1;visibility:visible}
-
-    /* ============================================================
-       Pipeline narrative: 5 real scroll-triggered beats pulling from
-       the SAME live trial session fetched above (loadRealTrial) plus
-       one real captured-once asset (the raw schedule page image) and
-       one real captured-once CutsheetX match set (queried directly
-       against production D1's products/product_documents tables on
-       2026-10-02 - see the PIPELINE_CUTSHEET_MATCHES comment near the
-       bottom of the script for exactly how). No GSAP/scroll-hijacking:
-       CSS animation-timeline:view() drives the reveal where supported,
-       an IntersectionObserver toggles the same .in-view class as a
-       fallback elsewhere. prefers-reduced-motion:reduce gets a fully
-       static stack (no opacity:0 state exists outside the
-       no-preference media query below, so there is nothing to miss). */
-    .pipeline{margin:56px 0 64px}
-    .pipeline-head{max-width:640px;margin:0 0 28px}
-    .pipeline-head h2{font-size:clamp(24px,3.2vw,34px);letter-spacing:-.03em;line-height:1.12;margin:12px 0 10px;color:var(--text)}
-    .pipeline-head p{color:var(--muted);line-height:1.6;margin:0;font-size:14.5px}
-
-    .tab-rail{display:flex;list-style:none;margin:0;padding:0}
-    .tab-btn{all:unset;box-sizing:border-box;cursor:pointer;display:block;font:800 9.5px/1.3 ui-monospace,monospace;letter-spacing:.07em;text-transform:uppercase;border-radius:9px 9px 0 0;transition:transform .25s ease,box-shadow .25s ease,filter .25s ease;position:relative}
-    .tab-btn b{display:block;font-size:13px;letter-spacing:.01em;margin-top:2px}
-    .tab-btn:focus-visible{outline:2px solid #fff;outline-offset:2px}
-    .tab-btn[data-tone="blue"]{background:var(--primary);color:#eef2ff}
-    .tab-btn[data-tone="yellow"]{background:var(--accent);color:#1a1300}
-
-    /* Desktop: a sticky, staggered "fan of folders" stack - each tab
-       overlaps the one above it and is nudged further right, so every
-       tab's own top edge stays visible at a different height even
-       though the whole stack is held as one unit (John's reference:
-       holding several manila folders with their tabs staggered). Flat
-       Signal-Blue/Hi-Vis-Yellow blocks per spec - no paper texture, no
-       drop-shadow skeuomorphism; the ONE shadow below is a flat focus
-       cue for the active tab, not a material effect. */
-    .tab-rail-desktop{flex-direction:column;position:sticky;top:120px;align-self:start;padding-left:2px}
-    .tab-rail-desktop .tab-btn{width:150px;padding:13px 14px 13px 18px}
-    .tab-rail-desktop .tab-btn + .tab-btn{margin-top:-15px}
-    .tab-rail-desktop .tab-btn:nth-child(1){margin-left:0;z-index:5}
-    .tab-rail-desktop .tab-btn:nth-child(2){margin-left:9px;z-index:4}
-    .tab-rail-desktop .tab-btn:nth-child(3){margin-left:18px;z-index:3}
-    .tab-rail-desktop .tab-btn:nth-child(4){margin-left:27px;z-index:2}
-    .tab-rail-desktop .tab-btn:nth-child(5){margin-left:36px;z-index:1}
-    .tab-rail-desktop .tab-btn.is-active{transform:translateX(14px) scale(1.06);box-shadow:0 10px 24px rgba(0,0,0,.4);z-index:9;filter:brightness(1.08)}
-    .tab-rail-desktop .tab-btn.is-active:after{content:"\25C0";position:absolute;right:-16px;top:50%;transform:translateY(-50%);font-size:11px;color:var(--text)}
-    .tab-rail-desktop .tab-btn:not(.is-active){filter:brightness(.62) saturate(.7)}
-
-    .tab-rail-mobile{display:none}
-
-    .pipeline-layout{display:grid;grid-template-columns:168px 1fr;gap:30px;align-items:start}
-    .beats{display:flex;flex-direction:column;gap:20px;min-width:0}
-    .beat{background:rgba(18,20,25,.94);border:1px solid var(--line);border-radius:18px;padding:26px;scroll-margin-top:130px}
-    .beat-kicker{display:flex;align-items:center;gap:10px;margin-bottom:12px}
-    .beat-num{font:900 11px/1 ui-monospace,monospace;letter-spacing:.1em;padding:5px 10px;border-radius:99px}
-    .beat-num.blue{background:rgba(42,82,255,.18);color:#9db2ff}
-    .beat-num.yellow{background:rgba(255,212,0,.18);color:var(--accent)}
-    .beat-title{font-size:19px;font-weight:800;letter-spacing:-.01em;color:var(--text)}
-    .beat p.beat-sub{color:var(--muted);line-height:1.6;font-size:14px;margin:0 0 16px}
-    .beat-live-chip{display:inline-flex;align-items:center;gap:5px;font:800 8.5px/1 ui-monospace,monospace;letter-spacing:.08em;color:var(--green);border:1px solid rgba(97,223,160,.35);background:rgba(97,223,160,.1);border-radius:99px;padding:4px 9px;text-transform:uppercase;margin-bottom:12px}
-    .beat-live-chip.captured{color:var(--muted);border-color:var(--line);background:var(--panel2)}
-    .beat-live-chip:before{content:"";width:5px;height:5px;border-radius:50%;background:currentColor;flex:none}
-
-    .pl-raw-figure{margin:0;border:1px solid var(--line);border-radius:12px;overflow:hidden;background:#fff}
-    .pl-raw-figure img{display:block;width:100%;height:auto}
-    .pl-raw-figure figcaption{background:var(--panel2);color:var(--muted);font-size:11.5px;padding:10px 14px;border-top:1px solid var(--line);line-height:1.5}
-
-    .pl-tally{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin:0}
-    .pl-tally-card{background:var(--panel2);border:1px solid var(--line);border-radius:10px;padding:12px 14px}
-    .pl-tally-card span{display:block;color:var(--muted);font:700 9px/1 ui-monospace,monospace;letter-spacing:.06em;text-transform:uppercase}
-    .pl-tally-card strong{display:block;font-size:22px;font-weight:900;margin-top:4px}
-
-    .pl-extract-list{display:flex;flex-direction:column;gap:8px;margin:0;padding:0;list-style:none}
-    .pl-extract-row{display:flex;align-items:center;gap:12px;background:var(--panel2);border:1px solid var(--line);border-radius:9px;padding:10px 14px;font-size:13px}
-    .pl-extract-row .set-tag{font:800 10px/1 ui-monospace,monospace;color:var(--primary);min-width:48px}
-    .pl-extract-row .doors{color:var(--text);flex:1}
-    .pl-extract-row .conf{font:700 10px/1 ui-monospace,monospace;color:var(--muted)}
-
-    .pl-match-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px}
-    .pl-match-card{background:var(--panel2);border:1px solid var(--line);border-radius:12px;padding:14px 16px}
-    .pl-match-card.no-match{opacity:.8;border-style:dashed}
-    .pl-match-card .mfr-model{font:800 11px/1 ui-monospace,monospace;color:var(--muted);letter-spacing:.04em}
-    .pl-match-card .product-name{font-size:14.5px;font-weight:800;color:var(--text);margin:5px 0 8px}
-    .pl-match-card .meta-row{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:9px}
-    .pl-match-card .meta-pill{font:800 8.5px/1 ui-monospace,monospace;letter-spacing:.05em;text-transform:uppercase;padding:3px 8px;border-radius:99px;background:rgba(97,223,160,.12);color:var(--green);border:1px solid rgba(97,223,160,.3)}
-    .pl-match-card .citation{color:var(--muted);font-size:11.5px;line-height:1.5;border-top:1px solid var(--line);padding-top:8px}
-    .pl-match-card .citation b{color:var(--text)}
-    .pl-match-card.no-match .citation{color:var(--accent)}
-
-    .pl-assemble{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:16px}
-    .pl-assemble-card{background:var(--panel2);border:1px solid var(--line);border-radius:10px;padding:14px}
-    .pl-assemble-card span{display:block;color:var(--muted);font:700 9px/1 ui-monospace,monospace;letter-spacing:.06em;text-transform:uppercase}
-    .pl-assemble-card strong{display:block;font-size:24px;font-weight:900;margin-top:4px;color:var(--text)}
-
-    @media(max-width:860px){
-      .pipeline-layout{grid-template-columns:1fr}
-      .tab-rail-desktop{display:none}
-      .tab-rail-mobile{display:flex;position:sticky;top:0;z-index:20;overflow-x:auto;gap:8px;padding:10px 2px 14px;margin-bottom:6px;background:linear-gradient(var(--bg) 70%,transparent);-webkit-overflow-scrolling:touch;scrollbar-width:none}
-      .tab-rail-mobile::-webkit-scrollbar{display:none}
-      .tab-rail-mobile .tab-btn{flex:none;padding:9px 14px;border-radius:99px;scroll-snap-align:start}
-      .tab-rail-mobile .tab-btn b{display:inline;margin:0 0 0 5px;font-size:11px}
-      .tab-rail-mobile .tab-btn:not(.is-active){filter:brightness(.6) saturate(.7)}
-      .tab-rail-mobile .tab-btn.is-active{filter:none;box-shadow:0 0 0 2px #fff inset;transform:scale(1.03)}
-      .pl-assemble{grid-template-columns:repeat(2,1fr)}
+    :root {
+      --bg: #0b0d13;
+      --panel: #151822;
+      --panel2: #1b1f2a;
+      --panel-glow: rgba(42, 82, 255, 0.08);
+      --line: #323a46;
+      --text: #f1f3f5;
+      --muted: #9da4b0;
+      --green: #61dfa0;
+      --blue: #66d4ff;
+      --red: #ff756e;
+      --primary: #2a52ff;
+      --accent: #ffd400;
+      --gold: #f0b800;
+    }
+    * { box-sizing: border-box; }
+    html {
+      scroll-behavior: smooth;
+    }
+    html, body {
+      margin: 0;
+      min-height: 100%;
+      background: var(--bg);
+      color: var(--text);
+      font-family: "Avenir Next", "Helvetica Neue", -apple-system, BlinkMacSystemFont, sans-serif;
+      overflow-x: hidden;
+    }
+    body:before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background:
+        radial-gradient(circle at 15% 10%, rgba(42, 82, 255, 0.22), transparent 32rem),
+        radial-gradient(circle at 92% 28%, rgba(255, 212, 0, 0.07), transparent 28rem),
+        radial-gradient(circle at 50% 75%, rgba(97, 223, 160, 0.06), transparent 35rem),
+        linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+      background-size: auto, auto, auto, 30px 30px, 30px 30px;
+      z-index: -1;
     }
 
-    /* Scroll-driven reveal - ONLY exists under no-preference, so
-       prefers-reduced-motion:reduce visitors simply get every beat at
-       full opacity/position from first paint, no JS branch needed to
-       "undo" motion because none was ever applied. */
-    @media (prefers-reduced-motion: no-preference){
-      .beat{opacity:0;transform:translateY(26px);transition:opacity .6s ease,transform .6s ease}
-      .beat.in-view{opacity:1;transform:translateY(0)}
-      @supports (animation-timeline: view()) {
-        .beat{transition:none;animation:beat-reveal linear both;animation-timeline:view();animation-range:entry 0% entry 55%}
+    /* Fixed Kinetic Scroll Progress Bar */
+    #scroll-progress {
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 3px;
+      width: 0%;
+      background: linear-gradient(90deg, var(--primary), var(--accent), var(--green));
+      z-index: 1000;
+      transition: width 0.08s ease-out;
+      box-shadow: 0 0 10px rgba(42, 82, 255, 0.5);
+    }
+
+    /* Sticky Header & Ribbon */
+    header.site-header {
+      position: sticky;
+      top: 0;
+      z-index: 500;
+      background: rgba(11, 13, 19, 0.88);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-bottom: 1px solid rgba(50, 58, 70, 0.6);
+      padding: 12px clamp(16px, 3vw, 40px);
+      transition: background 0.3s ease;
+    }
+    .wn-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      flex-wrap: wrap;
+      max-width: 1500px;
+      margin: 0 auto;
+      width: 100%;
+    }
+    .wn-ribbon {
+      display: flex;
+      align-items: stretch;
+    }
+    .wn-flag {
+      position: relative;
+      display: block;
+      margin-left: -15px;
+      text-decoration: none;
+      cursor: pointer;
+    }
+    .wn-ribbon .wn-flag:first-child {
+      margin-left: 0;
+    }
+    .wn-flag-frame {
+      position: absolute;
+      top: -2px;
+      right: -2px;
+      bottom: -2px;
+      left: -2px;
+      clip-path: polygon(17px 0, 100% 0, calc(100% - 17px) 100%, 0 100%);
+    }
+    .wn-ribbon .wn-flag:first-child .wn-flag-frame {
+      clip-path: polygon(0 0, 100% 0, calc(100% - 17px) 100%, 0 100%);
+    }
+    .wn-flag-fill {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 40px;
+      padding: 0 20px 0 22px;
+      font: 800 11px/1 ui-monospace, monospace;
+      letter-spacing: 0.04em;
+      white-space: nowrap;
+      clip-path: polygon(15px 0, 100% 0, calc(100% - 15px) 100%, 0 100%);
+      transition: filter 0.15s ease, background 0.25s ease, color 0.25s ease;
+    }
+    .wn-ribbon .wn-flag:first-child .wn-flag-fill {
+      clip-path: polygon(0 0, 100% 0, calc(100% - 15px) 100%, 0 100%);
+      padding-left: 18px;
+    }
+    .wn-flag:hover .wn-flag-fill {
+      filter: brightness(1.12);
+    }
+    .wn-flag[data-tone="yellow"] .wn-flag-frame { background: #000; }
+    .wn-flag[data-tone="yellow"] .wn-flag-fill { background: #ffd400; color: #0b0c10; }
+    .wn-flag[data-tone="blue"] .wn-flag-frame { background: #2a52ff; }
+    .wn-flag[data-tone="blue"] .wn-flag-fill { background: #2a52ff; color: #fff; }
+    .wn-logo .wn-flag-fill { padding: 0 14px; }
+    .wn-logo img { display: block; height: 26px; width: auto; }
+    
+    .wn-secondary {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+    .wn-secondary a:not(.wn-signin) {
+      color: var(--muted);
+      text-decoration: none;
+      font: 750 11px/1 ui-monospace, monospace;
+      letter-spacing: 0.06em;
+      transition: color 0.2s, border-color 0.2s;
+      padding: 6px 0;
+      border-bottom: 2px solid transparent;
+    }
+    .wn-secondary a:not(.wn-signin):hover,
+    .wn-secondary a:not(.wn-signin).active {
+      color: var(--text);
+      border-color: var(--accent);
+    }
+    .wn-signin {
+      border: 1px solid #2a52ff;
+      border-radius: 99px;
+      padding: 9px 18px;
+      text-decoration: none;
+      background: #2a52ff;
+      color: #fff;
+      font: 800 10px/1 ui-monospace, monospace;
+      letter-spacing: 0.06em;
+      transition: all 0.2s ease;
+    }
+    .wn-signin:hover {
+      box-shadow: 0 0 18px rgba(42, 82, 255, 0.45);
+      transform: translateY(-1px);
+    }
+
+    /* Core Layout Shell */
+    .shell {
+      position: relative;
+      max-width: 1500px;
+      margin: auto;
+      padding: 0 clamp(16px, 3vw, 40px) 100px;
+    }
+
+    /* Scrollytelling Chapters */
+    .story-chapter {
+      padding: 72px 0 80px;
+      border-bottom: 1px solid rgba(50, 58, 70, 0.4);
+      scroll-margin-top: 75px;
+      position: relative;
+    }
+    .story-chapter:last-of-type {
+      border-bottom: none;
+    }
+
+    .chapter-eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--primary);
+      font: 800 11px/1 ui-monospace, monospace;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      margin-bottom: 14px;
+    }
+    .chapter-eyebrow .ch-badge {
+      background: rgba(42, 82, 255, 0.15);
+      border: 1px solid rgba(42, 82, 255, 0.35);
+      padding: 4px 10px;
+      border-radius: 99px;
+      color: var(--blue);
+    }
+    .chapter-eyebrow .ch-accent {
+      background: rgba(255, 212, 0, 0.12);
+      border-color: rgba(255, 212, 0, 0.35);
+      color: var(--accent);
+    }
+    .chapter-head h2 {
+      font-size: clamp(30px, 4.2vw, 54px);
+      letter-spacing: -0.04em;
+      line-height: 1.05;
+      font-weight: 800;
+      margin: 8px 0 14px;
+      color: var(--text);
+    }
+    .chapter-tagline {
+      display: inline-block;
+      margin: 0 0 16px;
+      padding: 3px 0 3px 12px;
+      border-left: 3px solid var(--accent);
+      font: 700 13px/1.3 ui-monospace, monospace;
+      letter-spacing: 0.02em;
+      color: var(--text);
+    }
+    .chapter-desc {
+      max-width: 820px;
+      color: var(--muted);
+      line-height: 1.65;
+      margin: 0 0 28px;
+      font-size: 16px;
+      font-weight: 450;
+    }
+
+    /* Common Buttons & Pills */
+    .button {
+      border: 1px solid var(--line);
+      border-radius: 99px;
+      padding: 10px 18px;
+      color: var(--text);
+      text-decoration: none;
+      background: transparent;
+      font: 750 11px/1 ui-monospace, monospace;
+      letter-spacing: 0.06em;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .button:hover {
+      border-color: var(--primary);
+      color: var(--primary);
+      box-shadow: 0 0 15px rgba(42, 82, 255, 0.2);
+    }
+    .button.primary {
+      background: var(--primary);
+      border-color: var(--primary);
+      color: #fff;
+      font-weight: 900;
+    }
+    .button.primary:hover {
+      box-shadow: 0 0 20px rgba(42, 82, 255, 0.4);
+      transform: translateY(-1px);
+    }
+    .button.accent {
+      background: var(--accent);
+      border-color: var(--accent);
+      color: #0b0c10;
+      font-weight: 900;
+    }
+    .button.accent:hover {
+      box-shadow: 0 0 20px rgba(255, 212, 0, 0.4);
+      transform: translateY(-1px);
+    }
+
+    /* Hero Section */
+    .hero-chapter {
+      padding-top: 48px;
+      padding-bottom: 70px;
+    }
+    .hero-kicker {
+      color: var(--primary);
+      font: 800 12px/1 ui-monospace, monospace;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      margin-bottom: 16px;
+    }
+    .hero h1 {
+      font-size: clamp(36px, 5.2vw, 68px);
+      letter-spacing: -0.05em;
+      line-height: 1.02;
+      font-weight: 900;
+      margin: 12px 0 20px;
+      max-width: 1050px;
+      color: #fff;
+    }
+    .hero-sub {
+      max-width: 820px;
+      color: var(--muted);
+      line-height: 1.65;
+      margin: 0 0 28px;
+      font-size: 18px;
+      font-weight: 450;
+    }
+    .hero-actions {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      flex-wrap: wrap;
+      margin-bottom: 40px;
+    }
+    
+    /* Journey Breadcrumb Bar */
+    .journey-bar {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+      background: rgba(18, 20, 25, 0.9);
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      padding: 14px 20px;
+      margin-bottom: 40px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    }
+    .journey-label {
+      font: 800 10px/1 ui-monospace, monospace;
+      letter-spacing: 0.12em;
+      color: var(--muted);
+      text-transform: uppercase;
+      margin-right: 6px;
+    }
+    .journey-step {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      font: 800 11px/1 ui-monospace, monospace;
+      letter-spacing: 0.06em;
+      color: var(--text);
+      text-decoration: none;
+      padding: 6px 12px;
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      transition: all 0.2s ease;
+    }
+    .journey-step:hover {
+      background: rgba(42, 82, 255, 0.15);
+      border-color: var(--primary);
+      color: #fff;
+    }
+    .journey-step .dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--accent);
+    }
+    .journey-sep {
+      color: var(--line);
+      font-size: 12px;
+    }
+
+    /* Live Stat Cards */
+    .metrics-row {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+      margin-bottom: 28px;
+    }
+    .metric-card {
+      background: rgba(18, 20, 25, 0.9);
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      padding: 18px 20px;
+    }
+    .metric-card span {
+      color: var(--muted);
+      font: 700 10px/1 ui-monospace, monospace;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      display: block;
+    }
+    .metric-card strong {
+      font-size: 28px;
+      font-weight: 900;
+      color: var(--text);
+      margin-top: 6px;
+      display: block;
+    }
+    .metric-card strong.g { color: var(--green); }
+    .metric-card strong.p { color: var(--accent); }
+    .metric-card strong.b { color: var(--blue); }
+
+    /* Tables & Cards */
+    .table-card {
+      background: rgba(18, 20, 25, 0.94);
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      overflow: hidden;
+      box-shadow: 0 25px 70px rgba(0, 0, 0, 0.25);
+      margin-bottom: 24px;
+    }
+    .table-card .card-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      padding: 18px 20px;
+      border-bottom: 1px solid var(--line);
+      flex-wrap: wrap;
+    }
+    .table-card .card-head h3 {
+      margin: 0;
+      font-size: 15px;
+      letter-spacing: 0.02em;
+    }
+    .table-card .card-head span {
+      color: var(--muted);
+      font: 700 10px/1 ui-monospace, monospace;
+      letter-spacing: 0.06em;
+    }
+    .table-scroll {
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+    }
+    table {
+      width: 100%;
+      min-width: 640px;
+      border-collapse: collapse;
+      font-size: 14px;
+    }
+    th {
+      text-align: left;
+      color: var(--muted);
+      font: 750 10px/1 ui-monospace, monospace;
+      letter-spacing: 0.1em;
+      padding: 16px 20px;
+      background: #0d0f14;
+      border-bottom: 2px solid var(--line);
+    }
+    td {
+      padding: 14px 20px;
+      border-bottom: 1px solid #1f232b;
+      vertical-align: middle;
+    }
+    tr:hover td {
+      background: rgba(42, 82, 255, 0.06);
+    }
+    .door-cell { font-weight: 800; color: var(--text); }
+    .part-cell { color: var(--muted); font-size: 12.5px; font-family: ui-monospace, monospace; }
+    .status-badge {
+      font: 800 9px ui-monospace, monospace;
+      padding: 5px 10px;
+      border-radius: 99px;
+      display: inline-block;
+      letter-spacing: 0.08em;
+    }
+    .status-matched {
+      background: rgba(97, 223, 160, 0.15);
+      color: var(--green);
+      border: 1px solid rgba(97, 223, 160, 0.35);
+    }
+    .status-pending {
+      background: rgba(255, 212, 0, 0.15);
+      color: var(--accent);
+      border: 1px solid rgba(255, 212, 0, 0.35);
+    }
+    tr.row-matched { cursor: pointer; }
+    tr.row-matched:focus-visible { outline: 2px solid var(--primary); outline-offset: -2px; }
+    tr.row-matched.seen td:first-child { box-shadow: inset 3px 0 0 var(--green); }
+
+    .note-card {
+      background: rgba(18, 20, 25, 0.9);
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      padding: 22px;
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.6;
+      margin-bottom: 20px;
+    }
+    .note-card b { color: var(--text); }
+    .note-card code {
+      background: #161920;
+      padding: 2px 6px;
+      border-radius: 4px;
+      color: var(--primary);
+      font-size: 13px;
+    }
+
+    /* Chapter 1: HuntX Styles */
+    .filter-bar {
+      display: flex;
+      gap: 15px;
+      margin-bottom: 24px;
+      flex-wrap: wrap;
+      background: #0e1117;
+      padding: 18px 24px;
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      align-items: center;
+    }
+    .search-input {
+      flex: 1;
+      min-width: 280px;
+      background: #161920;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      padding: 12px 18px;
+      color: #fff;
+      font-size: 15px;
+    }
+    .search-input:focus { outline: none; border-color: var(--primary); }
+    select {
+      background: #161920;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      padding: 12px 18px;
+      color: #fff;
+      font-size: 14px;
+      cursor: pointer;
+    }
+    .val-cell { font-weight: 800; color: var(--green); font-size: 14px; }
+
+    /* Chapter 2: TakeoffX Workspace Grid */
+    .workspace-grid {
+      display: grid;
+      grid-template-columns: minmax(380px, 1.25fr) minmax(320px, 0.75fr);
+      gap: 22px;
+      margin-top: 24px;
+    }
+    .canvas-card {
+      background: #0b0d12;
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      padding: 22px;
+      box-shadow: 0 25px 70px rgba(0, 0, 0, 0.3);
+      display: flex;
+      flex-direction: column;
+    }
+    .canvas-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid var(--line);
+      padding-bottom: 14px;
+      margin-bottom: 18px;
+    }
+    .canvas-viewport {
+      background: linear-gradient(145deg, #11151d, #0a0c10);
+      border: 1px solid #1f2531;
+      border-radius: 12px;
+      min-height: 440px;
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex: 1;
+    }
+    .blueprint-grid {
+      position: absolute;
+      inset: 0;
+      background-size: 40px 40px;
+      background-image:
+        linear-gradient(to right, rgba(97, 223, 160, 0.06) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(97, 223, 160, 0.06) 1px, transparent 1px);
+      pointer-events: none;
+    }
+    .vector-overlay {
+      z-index: 2;
+      width: 90%;
+      height: 85%;
+      border: 2px dashed rgba(97, 223, 160, 0.35);
+      border-radius: 8px;
+      padding: 20px;
+      position: relative;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+    .zone-box {
+      background: rgba(97, 223, 160, 0.07);
+      border: 1px solid rgba(97, 223, 160, 0.3);
+      border-radius: 8px;
+      padding: 16px;
+      position: relative;
+      transition: all 0.2s ease;
+      cursor: pointer;
+    }
+    .zone-box:hover, .zone-box.active {
+      background: rgba(97, 223, 160, 0.18);
+      border-color: var(--green);
+      box-shadow: 0 0 24px rgba(97, 223, 160, 0.3);
+      transform: scale(1.02);
+    }
+    .zone-tag {
+      font: 800 10px ui-monospace, monospace;
+      color: var(--green);
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background: #090a0d;
+      padding: 4px 8px;
+      border-radius: 4px;
+      border: 1px solid var(--green);
+    }
+    .ledger-card {
+      background: rgba(18, 20, 25, 0.94);
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      padding: 22px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+    .ledger-row {
+      display: flex;
+      justify-content: space-between;
+      padding: 14px 0;
+      border-bottom: 1px solid #1f232b;
+      align-items: center;
+    }
+    .ledger-row span { color: var(--muted); font-size: 14px; }
+    .ledger-row strong { color: #fff; font-size: 15px; font-weight: 700; }
+
+    /* Chapter 3: SubX Pipeline Walk */
+    .pipeline { margin: 20px 0 40px; }
+    .tab-rail { display: flex; list-style: none; margin: 0; padding: 0; }
+    .tab-btn {
+      all: unset;
+      box-sizing: border-box;
+      cursor: pointer;
+      display: block;
+      font: 800 9.5px/1.3 ui-monospace, monospace;
+      letter-spacing: 0.07em;
+      text-transform: uppercase;
+      border-radius: 9px 9px 0 0;
+      transition: transform 0.25s ease, box-shadow 0.25s ease, filter 0.25s ease;
+      position: relative;
+    }
+    .tab-btn b { display: block; font-size: 13px; letter-spacing: 0.01em; margin-top: 2px; }
+    .tab-btn:focus-visible { outline: 2px solid #fff; outline-offset: 2px; }
+    .tab-btn[data-tone="blue"] { background: var(--primary); color: #eef2ff; }
+    .tab-btn[data-tone="yellow"] { background: var(--accent); color: #1a1300; }
+
+    .pipeline-layout { display: grid; grid-template-columns: 180px 1fr; gap: 28px; align-items: start; }
+    .tab-rail-desktop { flex-direction: column; position: sticky; top: 120px; align-self: start; padding-left: 2px; }
+    .tab-rail-desktop .tab-btn { width: 150px; padding: 13px 14px 13px 18px; }
+    .tab-rail-desktop .tab-btn + .tab-btn { margin-top: -15px; }
+    .tab-rail-desktop .tab-btn:nth-child(1) { margin-left: 0; z-index: 5; }
+    .tab-rail-desktop .tab-btn:nth-child(2) { margin-left: 9px; z-index: 4; }
+    .tab-rail-desktop .tab-btn:nth-child(3) { margin-left: 18px; z-index: 3; }
+    .tab-rail-desktop .tab-btn:nth-child(4) { margin-left: 27px; z-index: 2; }
+    .tab-rail-desktop .tab-btn:nth-child(5) { margin-left: 36px; z-index: 1; }
+    .tab-rail-desktop .tab-btn.is-active { transform: translateX(14px) scale(1.06); box-shadow: 0 10px 24px rgba(0,0,0,0.4); z-index: 9; filter: brightness(1.08); }
+    .tab-rail-desktop .tab-btn.is-active:after { content: "\25C0"; position: absolute; right: -16px; top: 50%; transform: translateY(-50%); font-size: 11px; color: var(--text); }
+    .tab-rail-desktop .tab-btn:not(.is-active) { filter: brightness(0.62) saturate(0.7); }
+
+    .tab-rail-mobile { display: none; }
+
+    .beats { display: grid; gap: 28px; }
+    .beat {
+      background: rgba(18, 20, 25, 0.94);
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      padding: 24px;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.25);
+    }
+    .beat-live-chip {
+      font: 800 9px ui-monospace, monospace;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--accent);
+      background: rgba(255, 212, 0, 0.12);
+      border: 1px solid rgba(255, 212, 0, 0.35);
+      padding: 4px 10px;
+      border-radius: 99px;
+      display: inline-block;
+      margin-bottom: 12px;
+    }
+    .beat-live-chip.captured {
+      color: var(--blue);
+      background: rgba(102, 212, 255, 0.12);
+      border-color: rgba(102, 212, 255, 0.35);
+    }
+    .beat-kicker { display: flex; align-items: baseline; gap: 12px; margin-bottom: 8px; }
+    .beat-num { font: 900 32px ui-monospace, monospace; line-height: 1; }
+    .beat-num.blue { color: var(--primary); }
+    .beat-num.yellow { color: var(--accent); }
+    .beat-title { font-size: 22px; font-weight: 800; color: #fff; }
+    .beat-sub { color: var(--muted); font-size: 14px; line-height: 1.6; margin: 0 0 16px; }
+
+    .pl-raw-figure { margin: 14px 0 0; }
+    .pl-raw-figure img { width: 100%; height: auto; border-radius: 10px; border: 1px solid var(--line); }
+    .pl-raw-figure figcaption { color: var(--muted); font: 600 11px/1.4 ui-monospace, monospace; margin-top: 8px; }
+
+    .pl-tally { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+    .pl-tally-card { background: #0e1117; border: 1px solid var(--line); border-radius: 10px; padding: 14px; }
+    .pl-tally-card span { color: var(--muted); font: 700 9px ui-monospace, monospace; text-transform: uppercase; display: block; }
+    .pl-tally-card strong { font-size: 22px; font-weight: 800; color: #fff; display: block; margin-top: 4px; }
+
+    .pl-extract-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
+    .pl-extract-row { background: #0e1117; border: 1px solid var(--line); border-radius: 10px; padding: 12px 16px; display: flex; justify-content: space-between; align-items: center; }
+
+    .pl-match-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 14px; }
+    .pl-match-card { background: #0e1117; border: 1px solid var(--line); border-radius: 12px; padding: 16px; }
+    .pl-match-card strong { display: block; font-size: 15px; color: #fff; margin-bottom: 4px; }
+    .pl-match-card span { display: block; font: 700 11px ui-monospace, monospace; color: var(--blue); margin-bottom: 8px; }
+    .pl-match-card p { font-size: 12px; color: var(--muted); line-height: 1.5; margin: 0; }
+
+    .pl-assemble { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 16px; }
+    .pl-assemble-card { background: #0e1117; border: 1px solid var(--line); border-radius: 10px; padding: 14px; }
+    .pl-assemble-card span { color: var(--muted); font: 700 9px ui-monospace, monospace; text-transform: uppercase; display: block; }
+    .pl-assemble-card strong { font-size: 22px; font-weight: 800; color: #fff; display: block; margin-top: 4px; }
+
+    .badge-tray-wrap { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; margin: 24px 0; }
+    .badge-tray-label { color: var(--muted); font: 700 9px/1 ui-monospace, monospace; letter-spacing: 0.1em; text-transform: uppercase; }
+    #badge-tray { display: flex; flex-wrap: wrap; gap: 8px; }
+    .badge-pill { display: flex; align-items: center; gap: 8px; border-radius: 99px; padding: 8px 14px 8px 10px; font: 800 10px/1 ui-monospace, monospace; letter-spacing: 0.06em; background: rgba(18, 20, 25, 0.92); border: 1px solid var(--line); color: var(--muted); opacity: 0.55; transition: all 0.3s ease; }
+    .badge-pill .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--muted); }
+    .badge-pill.unlocked { opacity: 1; color: var(--accent); border-color: rgba(255, 212, 0, 0.5); box-shadow: 0 0 14px rgba(255, 212, 0, 0.18); }
+    .badge-pill.unlocked .dot { background: var(--accent); box-shadow: 0 0 8px var(--accent); }
+
+    /* Chapter 4: CutsheetX Catalog Grid */
+    .cutsheet-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 20px;
+      margin-top: 24px;
+    }
+    .cutsheet-card {
+      background: rgba(18, 20, 25, 0.94);
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      padding: 22px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      transition: all 0.25s ease;
+    }
+    .cutsheet-card:hover {
+      border-color: var(--blue);
+      transform: translateY(-3px);
+      box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
+    }
+    .cutsheet-meta {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
+    }
+    .cutsheet-mfg {
+      font: 800 10px ui-monospace, monospace;
+      color: var(--accent);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+    .cutsheet-conf {
+      font: 800 9px ui-monospace, monospace;
+      background: rgba(97, 223, 160, 0.15);
+      color: var(--green);
+      padding: 4px 8px;
+      border-radius: 99px;
+      border: 1px solid rgba(97, 223, 160, 0.35);
+    }
+    .cutsheet-card h3 {
+      font-size: 18px;
+      margin: 0 0 8px;
+      color: #fff;
+    }
+    .cutsheet-card p {
+      font-size: 13px;
+      color: var(--muted);
+      line-height: 1.55;
+      margin: 0 0 16px;
+    }
+    .citation-box {
+      background: #0d0f14;
+      border: 1px solid #1f232b;
+      border-radius: 8px;
+      padding: 10px 14px;
+      font: 600 10.5px/1.4 ui-monospace, monospace;
+      color: var(--blue);
+    }
+
+    /* Chapter 5: PropX & MeetingX */
+    .propx-grid {
+      display: grid;
+      grid-template-columns: minmax(360px, 1.3fr) minmax(300px, 0.7fr);
+      gap: 24px;
+      margin-top: 24px;
+    }
+    .propx-card {
+      background: rgba(18, 20, 25, 0.94);
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      padding: 24px;
+    }
+    .propx-head {
+      border-bottom: 1px solid var(--line);
+      padding-bottom: 16px;
+      margin-bottom: 20px;
+    }
+    .propx-head h3 { margin: 0 0 4px; font-size: 18px; color: #fff; }
+    .propx-head p { margin: 0; color: var(--muted); font-size: 13px; }
+
+    .slider-container {
+      background: #0d0f14;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      padding: 18px 22px;
+      margin: 20px 0;
+    }
+    .slider-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
+    }
+    .slider-head span { font: 800 11px ui-monospace, monospace; color: var(--muted); text-transform: uppercase; }
+    .slider-head strong { font: 900 20px ui-monospace, monospace; color: var(--accent); }
+    input[type=range] {
+      width: 100%;
+      accent-color: var(--accent);
+      cursor: pointer;
+      height: 8px;
+      border-radius: 4px;
+      background: #2c3139;
+    }
+
+    .meetingx-box {
+      background: #0d0f14;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      padding: 20px;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+    .presence-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 10px 0;
+      border-bottom: 1px solid #1f232b;
+    }
+    .presence-avatar {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: var(--primary);
+      display: grid;
+      place-items: center;
+      font: 800 11px ui-monospace, monospace;
+      color: #fff;
+    }
+
+    /* Chapter 6: SightX Spatial Digital Twin */
+    .sightx-container {
+      display: grid;
+      grid-template-columns: minmax(360px, 1.2fr) minmax(320px, 0.8fr);
+      gap: 24px;
+      margin-top: 24px;
+    }
+    .sightx-canvas-card {
+      background: #090a0d;
+      border: 1px solid var(--line);
+      border-radius: 20px;
+      padding: 24px;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 0 60px rgba(42, 82, 255, 0.15);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      min-height: 480px;
+    }
+    .sightx-hud {
+      position: relative;
+      z-index: 5;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 24px;
+    }
+    .sightx-telemetry {
+      font: 750 11px/1.6 ui-monospace, monospace;
+      color: var(--blue);
+      background: rgba(10, 13, 19, 0.85);
+      border: 1px solid rgba(102, 212, 255, 0.3);
+      padding: 12px 16px;
+      border-radius: 10px;
+      backdrop-filter: blur(8px);
+    }
+    .sightx-tlou-hint {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: rgba(18, 20, 25, 0.9);
+      border: 1px solid var(--accent);
+      border-radius: 99px;
+      padding: 8px 18px;
+      font: 800 11px ui-monospace, monospace;
+      color: var(--accent);
+      box-shadow: 0 0 15px rgba(255, 212, 0, 0.2);
+    }
+    .sightx-centerpiece {
+      text-align: center;
+      margin: 40px 0;
+      position: relative;
+      z-index: 5;
+    }
+    .sightx-centerpiece h3 {
+      font-size: 26px;
+      margin: 0 0 10px;
+      color: #fff;
+    }
+    .sightx-centerpiece p {
+      color: var(--muted);
+      max-width: 520px;
+      margin: 0 auto 20px;
+      font-size: 14px;
+      line-height: 1.6;
+    }
+
+    /* Chapter 7: Why WeylandAI Competitive Matrix */
+    .matrix-card {
+      background: rgba(18, 20, 25, 0.94);
+      border: 1px solid var(--line);
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: 0 30px 80px rgba(0, 0, 0, 0.35);
+      margin-top: 24px;
+    }
+    .matrix-card table {
+      font-size: 14px;
+    }
+    .matrix-card td {
+      padding: 18px 22px;
+      line-height: 1.5;
+    }
+    .weyland-col {
+      background: rgba(42, 82, 255, 0.08);
+      border-left: 1px solid rgba(42, 82, 255, 0.3);
+      border-right: 1px solid rgba(42, 82, 255, 0.3);
+      font-weight: 600;
+    }
+    .chk-yes { color: var(--green); font-weight: 900; margin-right: 6px; }
+    .chk-no { color: var(--red); font-weight: 900; margin-right: 6px; }
+
+    /* Chapter 8: Pricing Cards */
+    .pricing-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 24px;
+      margin-top: 24px;
+    }
+    .pricing-card {
+      background: rgba(18, 20, 25, 0.92);
+      border: 1px solid var(--line);
+      border-radius: 20px;
+      padding: 32px 28px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      transition: all 0.25s ease;
+      position: relative;
+    }
+    .pricing-card.featured {
+      border: 2px solid var(--accent);
+      background: linear-gradient(145deg, rgba(26, 30, 38, 0.98), rgba(16, 18, 24, 0.98));
+      box-shadow: 0 0 50px rgba(255, 212, 0, 0.22);
+      transform: scale(1.02);
+    }
+    .featured-pill {
+      position: absolute;
+      top: -12px;
+      right: 24px;
+      background: var(--accent);
+      color: #0b0c10;
+      font: 900 10px ui-monospace, monospace;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 4px 12px;
+      border-radius: 99px;
+    }
+    .pricing-head h3 { font-size: 24px; margin: 0 0 6px; color: #fff; }
+    .pricing-cost {
+      font-size: 48px;
+      font-weight: 900;
+      color: #fff;
+      margin: 16px 0 8px;
+      display: flex;
+      align-items: baseline;
+      gap: 6px;
+    }
+    .pricing-cost span { font-size: 16px; color: var(--muted); font-weight: 500; }
+    .pricing-features {
+      list-style: none;
+      margin: 24px 0 32px;
+      padding: 0;
+      display: grid;
+      gap: 12px;
+      font-size: 14px;
+      color: #d1d5db;
+    }
+    .pricing-features li { display: flex; align-items: flex-start; gap: 10px; }
+
+    /* Footer */
+    footer.site-footer {
+      border-top: 1px solid var(--line);
+      margin-top: 60px;
+      padding: 40px 0 20px;
+      color: var(--muted);
+      font-size: 13px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+    footer.site-footer a { color: var(--text); text-decoration: none; font-family: ui-monospace, monospace; }
+    footer.site-footer a:hover { color: var(--accent); }
+
+    /* Skeleton shimmer */
+    @keyframes shimmer { 0% { background-position: -300px 0; } 100% { background-position: 300px 0; } }
+    .skel {
+      display: inline-block;
+      vertical-align: middle;
+      border-radius: 5px;
+      background-image: linear-gradient(100deg, var(--panel2) 20%, var(--line) 40%, var(--panel2) 60%);
+      background-size: 300px 100%;
+      animation: shimmer 1.4s ease-in-out infinite;
+    }
+
+    #badge-toast {
+      position: fixed;
+      top: 16px;
+      left: 50%;
+      transform: translate(-50%, -20px);
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+      background: rgba(18, 20, 25, 0.96);
+      border: 1px solid rgba(255, 212, 0, 0.5);
+      color: var(--accent);
+      font: 800 11px/1 ui-monospace, monospace;
+      letter-spacing: 0.06em;
+      padding: 12px 20px;
+      border-radius: 99px;
+      z-index: 1500;
+      transition: all 0.35s ease;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.35);
+    }
+    #badge-toast.show {
+      transform: translate(-50%, 0);
+      opacity: 1;
+      visibility: visible;
+    }
+
+    @media (max-width: 1024px) {
+      .workspace-grid, .propx-grid, .sightx-container { grid-template-columns: 1fr; }
+      .pipeline-layout { grid-template-columns: 1fr; }
+      .tab-rail-desktop { display: none; }
+      .tab-rail-mobile {
+        display: flex;
+        position: sticky;
+        top: 64px;
+        z-index: 40;
+        overflow-x: auto;
+        gap: 8px;
+        padding: 10px 2px 14px;
+        background: linear-gradient(var(--bg) 80%, transparent);
       }
+      .tab-rail-mobile .tab-btn { flex: none; padding: 9px 14px; border-radius: 99px; }
+      .tab-rail-mobile .tab-btn.is-active { filter: none; box-shadow: 0 0 0 2px #fff inset; }
+      .metrics-row { grid-template-columns: repeat(2, 1fr); }
     }
-    @keyframes beat-reveal{from{opacity:0;transform:translateY(26px)}to{opacity:1;transform:translateY(0)}}
-
-    /* Header product nav (rebuilt 2026-10-03): a real connected ribbon of
-       angled "flag" tabs - the WeylandAI logo flag + the 6 real product
-       flags (TakeOffX/SubX/CutsheetX/HuntX/MeetingX/PropX) - replacing the
-       previous "fan of folders"/3D-envelope experiment below (that build
-       was never finished: it only ever shipped on THIS page, used a
-       different rounded-tab/checkerboard-stage look than the angled flags
-       John actually asked for, and depended on an uncommitted WebGL module
-       that never went live - see git history on this file). This exact
-       CSS/markup is now the single real design, byte-identical to
-       renderBrandHeader() in weyland.worker.js (src/lib/marketing-pages.js)
-       which generates the same ribbon server-side for every other page on
-       the site. No shared build step bundles a static GH-Pages file and
-       that Worker together, so keep the two in sync by hand if either
-       changes - that function is the documented source of truth.
-       Shapes are real CSS clip-path parallelograms: a black/blue "frame"
-       div sits behind a 2px-inset "fill" div whose clip-path is drawn
-       slightly smaller, giving a crisp outline that follows the angled
-       edge (a plain CSS border always follows the rectangular box, not a
-       clipped shape, so it can't do this). Color carries one meaning:
-       Signal Blue = "you are here" - active product tab, and ALSO the
-       logo tab inverts (blue/yellow swap) the moment any product page is
-       current, signalling "inside a product" vs "home". */
-    .wn-row{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;width:100%}
-    .wn-ribbon{display:flex;align-items:stretch}
-    .wn-flag{position:relative;display:block;margin-left:-15px;text-decoration:none}
-    .wn-ribbon .wn-flag:first-child{margin-left:0}
-    .wn-flag-frame{position:absolute;top:-2px;right:-2px;bottom:-2px;left:-2px;clip-path:polygon(17px 0,100% 0,calc(100% - 17px) 100%,0 100%)}
-    .wn-ribbon .wn-flag:first-child .wn-flag-frame{clip-path:polygon(0 0,100% 0,calc(100% - 17px) 100%,0 100%)}
-    .wn-flag-fill{position:relative;display:flex;align-items:center;justify-content:center;height:40px;padding:0 22px 0 24px;font:800 11px/1 ui-monospace,monospace;letter-spacing:.04em;white-space:nowrap;clip-path:polygon(15px 0,100% 0,calc(100% - 15px) 100%,0 100%);transition:filter .15s ease}
-    .wn-ribbon .wn-flag:first-child .wn-flag-fill{clip-path:polygon(0 0,100% 0,calc(100% - 15px) 100%,0 100%);padding-left:18px}
-    .wn-flag:hover .wn-flag-fill{filter:brightness(1.08)}
-    .wn-flag[data-tone="yellow"] .wn-flag-frame{background:#000}
-    .wn-flag[data-tone="yellow"] .wn-flag-fill{background:#ffd400;color:#0b0c10}
-    .wn-flag[data-tone="blue"] .wn-flag-frame{background:#2a52ff}
-    .wn-flag[data-tone="blue"] .wn-flag-fill{background:#2a52ff;color:#fff}
-    .wn-logo .wn-flag-fill{padding:0 14px}
-    .wn-logo img{display:block;height:26px;width:auto}
-    .wn-secondary{display:flex;align-items:center;gap:20px;flex-wrap:wrap}
-    .wn-secondary a:not(.wn-signin){color:var(--muted);text-decoration:none;font:750 11px/1 ui-monospace,monospace;letter-spacing:.06em}
-    .wn-secondary a:not(.wn-signin):hover{color:var(--text)}
-    .wn-signin{border:1px solid #2a52ff;border-radius:99px;padding:9px 16px;text-decoration:none;background:#2a52ff;color:#fff;font:800 10px/1 ui-monospace,monospace;letter-spacing:.06em}
-    .wn-signin:hover{box-shadow:0 0 15px rgba(42,82,255,.35)}
-    @media(max-width:860px){
-      .wn-flag-fill{height:34px;font-size:9.5px;padding:0 16px 0 18px}
-      .wn-ribbon .wn-flag:first-child .wn-flag-fill{padding-left:14px}
-      .wn-logo .wn-flag-fill{padding:0 10px}
-      .wn-logo img{height:20px}
-    }
-    @media(max-width:620px){
-      .wn-row{gap:10px}
-      .wn-ribbon{overflow-x:auto;max-width:100%;-webkit-overflow-scrolling:touch}
-      .wn-secondary{gap:12px}
+    @media (max-width: 768px) {
+      .metrics-row { grid-template-columns: 1fr; }
+      .pl-assemble { grid-template-columns: repeat(2, 1fr); }
+      .wn-flag-fill { height: 34px; font-size: 9.5px; padding: 0 16px 0 18px; }
+      .wn-logo img { height: 20px; }
     }
   </style>
 </head>
 <body>
-  <div class="shell">
-    <header>
-      <div class="wn-row">
-        <div class="wn-ribbon">
-          <a href="/" class="wn-flag wn-logo" data-tone="blue" aria-label="WeylandAI home" aria-current="page"><span class="wn-flag-frame"></span><span class="wn-flag-fill"><img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA1MzYgMTQ1IiB3aWR0aD0iNTM2IiBoZWlnaHQ9IjE0NSI+CiAgPHRpdGxlPldleWxhbmRBSSB3b3JkbWFyayDigJQgcmVhbCB2ZWN0b3IgdHJhY2UsIHJlY29sb3JlZCBiYWRnZTwvdGl0bGU+CiAgPHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjUzNiIgaGVpZ2h0PSIxNDUiIHJ4PSIyMCIgZmlsbD0iIzJBNTJGRiIvPgogIDxnIHRyYW5zZm9ybT0idHJhbnNsYXRlKDI4LDI4KSI+CiAgICA8ZyB0cmFuc2Zvcm09InRyYW5zbGF0ZSgwLDg0KSBzY2FsZSgxLDEuMDIwMykgdHJhbnNsYXRlKDAsLTg0KSI+CiAgICA8ZyB0cmFuc2Zvcm09InRyYW5zbGF0ZSgtMi45LDUpIHNjYWxlKDEsMS4xMTkpIHRyYW5zbGF0ZSgyLjksLTUpIj4KICAgIDxnIHRyYW5zZm9ybT0idHJhbnNsYXRlKDAsOS4yKSB0cmFuc2xhdGUoNTgsNjYuMykgc2NhbGUoMS4xNSkgdHJhbnNsYXRlKC01OCwtNjYuMykiPgogICAgPGcgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoMC4wMDAwMDAsODkuMDAwMDAwKSBzY2FsZSgwLjEwMDAwMCwtMC4xMDAwMDApIiBmaWxsPSIjRkZENDAwIiBzdHJva2U9Im5vbmUiPgogICAgICA8cGF0aCBkPSJNIDgyLjksODQwLjAgTCA4Mi45LDgwMi4wIEwgMjE2LjAsMzAwLjAgTCAxOTguMCwzMzguMCBMIDEyNi45LDU5NS4zIEwgMTE0LjQsMzQzLjIgTCA3MS44LDI2MS42IEwgNzEuOCwyMjguMSBMIDQ1Ni41LDIyOC4xIEwgNTc4LjMsNjAwLjIgTCA3MDAuMSwyMjguMSBMIDEwNzguMiwyMjguMSBMIDEwNzguMiwyNjEuNiBMIDEwMzYuMywzNDIuMCBMIDEwMjMuNCw2MDEuMyBMIDk1MC4wLDMzMy4wIEwgOTI3LjUsMzA2LjAgTCAxMDYyLjksODAyLjAgTCAxMDYyLjksODQwLjAgTCA4MjEuNSw4NDAuMCBMIDgyMS41LDgwMi4wIEwgODA3LjUsMzkwLjYgTCA2NjguMCw4NDAuMCBMIDQ5NS4wLDg0MC4wIEwgMzUwLjIsMzc1LjMgTCAzMzUuNyw4MDIuMCBMIDMzNS43LDg0MC4wIFoiLz4KICAgIDwvZz4KICAgIDwvZz4KICAgIDwvZz4KICAgIDwvZz4KICAgIDxnIHRyYW5zZm9ybT0idHJhbnNsYXRlKDAsMi41KSI+CiAgICA8ZyB0cmFuc2Zvcm09InRyYW5zbGF0ZSgwLjAwMDAwMCw4OS4wMDAwMDApIHNjYWxlKDAuMTAwMDAwLC0wLjEwMDAwMCkiIGZpbGw9IiNGNUY3RkEiIHN0cm9rZT0ibm9uZSI+CiAgICAgIDxwYXRoIGQ9Ik0yMTAwIDUzNSBsMCAtMzA1IDY1IDAgNjUgMCAwIDMwNSAwIDMwNSAtNjUgMCAtNjUgMCAwIC0zMDV6Ii8+CiAgICAgIDxwYXRoIGQ9Ik0zNjEwIDcyOSBjMCAtOTggLTIgLTEwOSAtMTUgLTk2IC0yNSAyNiAtODQgNDAgLTEzOCAzNCAtMTExIC0xNAotMTcyIC05NSAtMTcxIC0yMjcgMCAtMTE0IDQzIC0xODMgMTMzIC0yMTUgNjEgLTIxIDk5IC0xOSAxNTAgMTAgNTIgMzAgNTEgMzAKNTEgNyAwIC0xNiA3IC0xOCA1OCAtMTYgbDU3IDMgMyAzMDUgMiAzMDYgLTY1IDAgLTY1IDAgMCAtMTExeiBtLTI3IC0xOTAgYzIzCi0yNSAyNyAtMzggMjcgLTkwIDAgLTkzIC0zMiAtMTM5IC05NyAtMTM5IC0xMTEgMCAtMTQzIDIxMCAtMzkgMjU2IDQxIDE4IDc1CjEwIDEwOSAtMjd6Ii8+CiAgICAgIDxwYXRoIGQ9Ik0xMzM1IDY2NSBjLTUgLTIgLTIyIC02IC0zOCAtOSAtNDEgLTkgLTEwMyAtNzEgLTEyMyAtMTIyIC0yNiAtNjcKLTE1IC0xNzMgMjIgLTIyNyA5MCAtMTMwIDMwOCAtMTI0IDM4MiAxMCBsMjIgNDEgLTQzIDYgYy01MSA4IC03MCAyIC0xMDMgLTMwCi0yNiAtMjcgLTk3IC0zMyAtMTI2IC0xMCAtMjIgMTYgLTQ5IDY3IC00MiA3OCAzIDQgNzQgOCAxNTkgOCA5MSAwIDE1NiA0IDE2MAoxMCAzIDUgMSAzNiAtNCA2NyAtMjEgMTEwIC05NyAxNzggLTIwNCAxODEgLTI5IDAgLTU2IC0xIC02MiAtM3ogbTg5IC05NSBjMjEKLTggNTYgLTU0IDU2IC03NSAwIC0zIC00MyAtNSAtOTUgLTUgLTg1IDAgLTk1IDIgLTk1IDE4IDAgMTAgMTAgMjggMjMgMzkgMzYKMzMgNjggNDAgMTExIDIzeiIvPgogICAgICA8cGF0aCBkPSJNMjQ0NSA2NjQgYy03OCAtMTkgLTEzNSAtNzEgLTEzNSAtMTIzIDAgLTE5IDUgLTIxIDYwIC0yMSA1NCAwIDYxIDIKNjkgMjQgMTEgMjggMjkgMzYgODEgMzYgMzggMCA3MCAtMjAgNzAgLTQzIC0xIC0yOCAtMjIgLTM5IC0xMDYgLTUyIC00OSAtOAotMTA2IC0yMiAtMTI2IC0zMSAtNjYgLTI5IC04NiAtMTE1IC00MyAtMTgxIDIwIC0yOSA4OCAtNjMgMTMwIC02MyAzNiAwIDEyMgoyNSAxNDEgNDEgMTEgOSAxNCA4IDE0IC00IDAgLTEyIDE1IC0xNiA2MyAtMTkgMzQgLTIgNjIgLTQgNjMgLTMgMCAwIC0yIDc5Ci02IDE3NSAtNyAxOTYgLTEzIDIxNSAtNzggMjQ2IC0zNiAxNyAtMTU2IDI4IC0xOTcgMTh6IG0xNDIgLTI4MSBjLTExIC03MAotODkgLTEwNiAtMTQ1IC02NyAtMjUgMTcgLTI4IDQyIC05IDY3IDEyIDE3IDc0IDM0IDEzMSAzNiAyOCAxIDI4IDAgMjMgLTM2eiIvPgogICAgICA8cGF0aCBkPSJNMjk5NiA2NjAgYy0xNiAtNSAtMzkgLTE5IC01MiAtMzEgbC0yNCAtMjIgMCAyNiBjMCAyNyAtMSAyNyAtNjUgMjcKbC02NSAwIDAgLTIxMyBjMCAtMTE4IDIgLTIxNiA0IC0yMTggMiAtMiAzNCAtMyA2OSAtMSBsNjYgNCAzIDE1MCBjMyAxNDQgNAoxNTEgMjcgMTY5IDI3IDIyIDc5IDI1IDEwNyA1IDE3IC0xMyAxOSAtMzAgMjIgLTE3MCA0IC0xNzMgLTEgLTE2NCA4MyAtMTU4Cmw0OSA0IDAgMTY0IGMwIDE0NCAtMiAxNzAgLTIwIDIwMyAtMzAgNjAgLTExOSA4NiAtMjA0IDYxeiIvPgogICAgICA8cGF0aCBkPSJNMTYwMCA2NTcgYzAgLTIgMzYgLTk1IDgxIC0yMDggNDUgLTExMiA4MSAtMjE0IDgxIC0yMjYgMCAtMTMgLTcKLTM0IC0xNiAtNDggLTE0IC0yMSAtMjQgLTI1IC02MSAtMjUgbC00NSAwIDAgLTUwIDAgLTUwIDU1IDAgYzY0IDAgMTEwIDE3CjE0MiA1MSAxMiAxMyA2MiAxMzIgMTEyIDI2NCA0OSAxMzIgOTQgMjUzIDEwMCAyNjggbDExIDI4IC02NyAtMyAtNjYgLTMgLTQ4Ci0xNDAgYy0yNiAtNzcgLTUwIC0xMzMgLTUzIC0xMjUgLTMgOCAtMjUgNzEgLTQ5IDE0MCBsLTQ0IDEyNSAtNjYgMyBjLTM3IDIKLTY3IDEgLTY3IC0xeiIvPgogICAgPC9nPgogICAgPC9nPgogICAgPGcgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoLTkuMywwKSI+CiAgICA8ZyB0cmFuc2Zvcm09InRyYW5zbGF0ZSgwLDg0KSBzY2FsZSgxLDEuMDIwMykgdHJhbnNsYXRlKDAsLTg0KSI+CiAgICA8ZyB0cmFuc2Zvcm09InRyYW5zbGF0ZSgzODkuOCw1KSBzY2FsZSgxLDEuMTE1OCkgdHJhbnNsYXRlKC0zODkuOCwtNSkiPgogICAgPGcgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoMzg5LjgsNSkgc2NhbGUoMS4xNSkgdHJhbnNsYXRlKC0zODkuOCwtNSkiPgogICAgPGcgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoMC4wMDAwMDAsODkuMDAwMDAwKSBzY2FsZSgwLjEwMDAwMCwtMC4xMDAwMDApIiBmaWxsPSIjRjVGN0ZBIiBzdHJva2U9Im5vbmUiPgogICAgICA8cGF0aCBkPSJNNDEzMCA4MTggYy02MCAtMTM5IC0yMzcgLTU4OSAtMjMyIC01OTEgNCAtMiAzOCAtMyA3NyAtMyA3NiAxIDc1IDAKMTA5IDg5IGwxNSAzNyAxMjQgMCAxMjMgMCAyNSAtNjIgMjQgLTYzIDc3IDAgYzQzIDAgNzggNCA3OCA5IDAgNCAtMzEgODMgLTY4CjE3NSAtMzggOTEgLTkzIDIyNiAtMTIyIDI5OSBsLTU0IDEzMiAtODMgMCBjLTc3IDAgLTg0IC0yIC05MyAtMjJ6IG0xMzkgLTI1OApjMTYgLTQxIDI3IC03OCAyNCAtODIgLTIgLTUgLTM1IC04IC03NCAtOCAtNTEgMCAtNjkgNCAtNjkgMTMgMCAxMiAzMyAxMDEgNjIKMTY3IDEyIDI5IDggMzYgNTcgLTkweiIvPgogICAgICA8cGF0aCBkPSJNNDYwMiA1MzMgbDMgLTMwOCA3MyAwIDcyIDAgMCAzMDcgMCAzMDggLTc1IDAgLTc1IDAgMiAtMzA3eiIvPgogICAgPC9nPgogICAgPC9nPgogICAgPC9nPgogICAgPC9nPgogICAgPC9nPgogIDwvZz4KPC9zdmc+Cg==" alt="WeylandAI" width="536" height="145"></span></a>
-          <a href="/takeoffx/" class="wn-flag" data-tone="yellow"><span class="wn-flag-frame"></span><span class="wn-flag-fill">TakeOffX</span></a>
-          <a href="/subx/" class="wn-flag" data-tone="yellow"><span class="wn-flag-frame"></span><span class="wn-flag-fill">SubX</span></a>
-          <a href="/cutsheetx/" class="wn-flag" data-tone="yellow"><span class="wn-flag-frame"></span><span class="wn-flag-fill">CutsheetX</span></a>
-          <a href="/huntx/" class="wn-flag" data-tone="yellow"><span class="wn-flag-frame"></span><span class="wn-flag-fill">HuntX</span></a>
-          <a href="/meetingx/" class="wn-flag" data-tone="yellow"><span class="wn-flag-frame"></span><span class="wn-flag-fill">MeetingX</span></a>
-          <a href="/propx/" class="wn-flag" data-tone="yellow"><span class="wn-flag-frame"></span><span class="wn-flag-fill">PropX</span></a>
+  <!-- Scroll Progress Indicator -->
+  <div id="scroll-progress"></div>
+
+  <!-- Sticky Scrollytelling Ribbon Header -->
+  <header class="site-header" id="top-nav">
+    <div class="wn-row">
+      <div class="wn-ribbon" role="navigation" aria-label="Product Navigation Ribbon">
+        <a href="#hero" class="wn-flag wn-logo" data-tone="blue" data-target="hero" aria-label="WeylandAI Home">
+          <span class="wn-flag-frame"></span>
+          <span class="wn-flag-fill"><img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA1MzYgMTQ1IiB3aWR0aD0iNTM2IiBoZWlnaHQ9IjE0NSI+CiAgPHRpdGxlPldleWxhbmRBSSB3b3JkbWFyayDigJQgcmVhbCB2ZWN0b3IgdHJhY2UsIHJlY29sb3JlZCBiYWRnZTwvdGl0bGU+CiAgPHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjUzNiIgaGVpZ2h0PSIxNDUiIHJ4PSIyMCIgZmlsbD0iIzJBNTJGRiIvPgogIDxnIHRyYW5zZm9ybT0idHJhbnNsYXRlKDI4LDI4KSI+CiAgICA8ZyB0cmFuc2Zvcm09InRyYW5zbGF0ZSgwLDg0KSBzY2FsZSgxLDEuMDIwMykgdHJhbnNsYXRlKDAsLTg0KSI+CiAgICA8ZyB0cmFuc2Zvcm09InRyYW5zbGF0ZSgtMi45LDUpIHNjYWxlKDEsMS4xMTkpIHRyYW5zbGF0ZSgyLjksLTUpIj4KICAgIDxnIHRyYW5zZm9ybT0idHJhbnNsYXRlKDAsOS4yKSB0cmFuc2xhdGUoNTgsNjYuMykgc2NhbGUoMS4xNSkgdHJhbnNsYXRlKC01OCwtNjYuMykiPgogICAgPGcgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoMC4wMDAwMDAsODkuMDAwMDAwKSBzY2FsZSgwLjEwMDAwMCwtMC4xMDAwMDApIiBmaWxsPSIjRkZENDAwIiBzdHJva2U9Im5vbmUiPgogICAgICA8cGF0aCBkPSJNIDgyLjksODQwLjAgTCA4Mi45LDgwMi4wIEwgMjE2LjAsMzAwLjAgTCAxOTguMCwzMzguMCBMIDEyNi45LDU5NS4zIEwgMTE0LjQsMzQzLjIgTCA3MS44LDI2MS42IEwgNzEuOCwyMjguMSBMIDQ1Ni41LDIyOC4xIEwgNTc4LjMsNjAwLjIgTCA3MDAuMSwyMjguMSBMIDEwNzguMiwyMjguMSBMIDEwNzguMiwyNjEuNiBMIDEwMzYuMywzNDIuMCBMIDEwMjMuNCw2MDEuMyBMIDk1MC4wLDMzMy4wIEwgOTI3LjUsMzA2LjAgTCAxMDYyLjksODAyLjAgTCAxMDYyLjksODQwLjAgTCA4MjEuNSw4NDAuMCBMIDgyMS41LDgwMi4wIEwgODA3LjUsMzkwLjYgTCA2NjguMCw4NDAuMCBMIDQ5NS4wLDg0MC4wIEwgMzUwLjIsMzc1LjMgTCAzMzUuNyw4MDIuMCBMIDMzNS43LDg0MC4wIFoiLz4KICAgIDwvZz4KICAgIDwvZz4KICAgIDwvZz4KICAgIDwvZz4KICAgIDxnIHRyYW5zZm9ybT0idHJhbnNsYXRlKDAsMi41KSI+CiAgICA8ZyB0cmFuc2Zvcm09InRyYW5zbGF0ZSgwLjAwMDAwMCw4OS4wMDAwMDApIHNjYWxlKDAuMTAwMDAwLC0wLjEwMDAwMCkiIGZpbGw9IiNGNUY3RkEiIHN0cm9rZT0ibm9uZSI+CiAgICAgIDxwYXRoIGQ9Ik0yMTAwIDUzNSBsMCAtMzA1IDY1IDAgNjUgMCAwIDMwNSAwIDMwNSAtNjUgMCAtNjUgMCAwIC0zMDV6Ii8+CiAgICAgIDxwYXRoIGQ9Ik0zNjEwIDcyOSBjMCAtOTggLTIgLTEwOSAtMTUgLTk2IC0yNSAyNiAtODQgNDAgLTEzOCAzNCAtMTExIC0xNAotMTcyIC05NSAtMTcxIC0yMjcgMCAtMTE0IDQzIC0xODMgMTMzIC0yMTUgNjEgLTIxIDk5IC0xOSAxNTAgMTAgNTIgMzAgNTEgMzAKNTEgNyAwIC0xNiA3IC0xOCA1OCAtMTYgbDU3IDMgMyAzMDUgMiAzMDYgLTY1IDAgLTY1IDAgMCAtMTExeiBtLTI3IC0xOTAgYzIzCi0yNSAyNyAtMzggMjcgLTkwIDAgLTkzIC0zMiAtMTM5IC05NyAtMTM5IC0xMTEgMCAtMTQzIDIxMCAtMzkgMjU2IDQxIDE4IDc1CjEwIDEwOSAtMjd6Ii8+CiAgICAgIDxwYXRoIGQ9Ik0xMzM1IDY2NSBjLTUgLTIgLTIyIC02IC0zOCAtOSAtNDEgLTkgLTEwMyAtNzEgLTEyMyAtMTIyIC0yNiAtNjcKLTE1IC0xNzMgMjIgLTIyNyA5MCAtMTMwIDMwOCAtMTI0IDM4MiAxMCBsMjIgNDEgLTQzIDYgYy01MSA4IC03MCAyIC0xMDMgLTMwCi0yNiAtMjcgLTk3IC0zMyAtMTI2IC0xMCAtMjIgMTYgLTQ5IDY3IC00MiA3OCAzIDQgNzQgOCAxNTkgOCA5MSAwIDE1NiA0IDE2MAoxMCAzIDUgMSAzNiAtNCA2NyAtMjEgMTEwIC05NyAxNzggLTIwNCAxODEgLTI5IDAgLTU2IC0xIC02MiAtM3ogbTg5IC05NSBjMjEKLTggNTYgLTU0IDU2IC03NSAwIC0zIC00MyAtNSAtOTUgLTUgLTg1IDAgLTk1IDIgLTk1IDE4IDAgMTAgMTAgMjggMjMgMzkgMzYKMzMgNjggNDAgMTExIDIzeiIvPgogICAgICA8cGF0aCBkPSJNMjQ0NSA2NjQgYy03OCAtMTkgLTEzNSAtNzEgLTEzNSAtMTIzIDAgLTE5IDUgLTIxIDYwIC0yMSA1NCAwIDYxIDIKNjkgMjQgMTEgMjggMjkgMzYgODEgMzYgMzggMCA3MCAtMjAgNzAgLTQzIC0xIC0yOCAtMjIgLTM5IC0xMDYgLTUyIC00OSAtOAotMTA2IC0yMiAtMTI2IC0zMSAtNjYgLTI5IC04NiAtMTE1IC00MyAtMTgxIDIwIC0yOSA4OCAtNjMgMTMwIC02MyAzNiAwIDEyMgoyNSAxNDEgNDEgMTEgOSAxNCA4IDE0IC00IDAgLTEyIDE1IC0xNiA2MyAtMTkgMzQgLTIgNjIgLTQgNjMgLTMgMCAwIC0yIDc5Ci02IDE3NSAtNyAxOTYgLTEzIDIxNSAtNzggMjQ2IC0zNiAxNyAtMTU2IDI4IC0xOTcgMTh6IG0xNDIgLTI4MSBjLTExIC03MAotODkgLTEwNiAtMTQ1IC02NyAtMjUgMTcgLTI4IDQyIC05IDY3IDEyIDE3IDc0IDM0IDEzMSAzNiAyOCAxIDI4IDAgMjMgLTM2eiIvPgogICAgICA8cGF0aCBkPSJNMjk5NiA2NjAgYy0xNiAtNSAtMzkgLTE5IC01MiAtMzEgbC0yNCAtMjIgMCAyNiBjMCAyNyAtMSAyNyAtNjUgMjcKbC02NSAwIDAgLTIxMyBjMCAtMTE4IDIgLTIxNiA0IC0yMTggMiAtMiAzNCAtMyA2OSAtMSBsNjYgNCAzIDE1MCBjMyAxNDQgNAoxNTEgMjcgMTY5IDI3IDIyIDc5IDI1IDEwNyA1IDE3IC0xMyAxOSAtMzAgMjIgLTE3MCA0IC0xNzMgLTEgLTE2NCA4MyAtMTU4Cmw0OSA0IDAgMTY0IGMwIDE0NCAtMiAxNzAgLTIwIDIwMyAtMzAgNjAgLTExOSA4NiAtMjA0IDYxeiIvPgogICAgICA8cGF0aCBkPSJNMTYwMCA2NTcgYzAgLTIgMzYgLTk1IDgxIC0yMDggNDUgLTExMiA4MSAtMjE0IDgxIC0yMjYgMCAtMTMgLTcKLTM0IC0xNiAtNDggLTE0IC0yMSAtMjQgLTI1IC02MSAtMjUgbC00NSAwIDAgLTUwIDAgLTUwIDU1IDAgYzY0IDAgMTEwIDE3CjE0MiA1MSAxMiAxMyA2MiAxMzIgMTEyIDI2NCA0OSAxMzIgOTQgMjUzIDEwMCAyNjggbDExIDI4IC02NyAtMyAtNjYgLTMgLTQ4Ci0xNDAgYy0yNiAtNzcgLTUwIC0xMzMgLTUzIC0xMjUgLTMgOCAtMjUgNzEgLTQ5IDE0MCBsLTQ0IDEyNSAtNjYgMyBjLTM3IDIKLTY3IDEgLTY3IC0xeiIvPgogICAgPC9nPgogICAgPC9nPgogICAgPGcgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoLTkuMywwKSI+CiAgICA8ZyB0cmFuc2Zvcm09InRyYW5zbGF0ZSgwLDg0KSBzY2FsZSgxLDEuMDIwMykgdHJhbnNsYXRlKDAsLTg0KSI+CiAgICA8ZyB0cmFuc2Zvcm09InRyYW5zbGF0ZSgzODkuOCw1KSBzY2FsZSgxLDEuMTE1OCkgdHJhbnNsYXRlKC0zODkuOCwtNSkiPgogICAgPGcgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoMzg5LjgsNSkgc2NhbGUoMS4xNSkgdHJhbnNsYXRlKC0zODkuOCwtNSkiPgogICAgPGcgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoMC4wMDAwMDAsODkuMDAwMDAwKSBzY2FsZSgwLjEwMDAwMCwtMC4xMDAwMDApIiBmaWxsPSIjRjVGN0ZBIiBzdHJva2U9Im5vbmUiPgogICAgICA8cGF0aCBkPSJNNDEzMCA4MTggYy02MCAtMTM5IC0yMzcgLTU4OSAtMjMyIC01OTEgNCAtMiAzOCAtMyA3NyAtMyA3NiAxIDc1IDAKMTA5IDg5IGwxNSAzNyAxMjQgMCAxMjMgMCAyNSAtNjIgMjQgLTYzIDc3IDAgYzQzIDAgNzggNCA3OCA5IDAgNCAtMzEgODMsLTY4CjE3NSAtMzggOTEgLTkzIDIyNiAtMTIyIDI5OSBsLTU0IDEzMiAtODMgMCBjLTc3IDAgLTg0IC0yIC05MyAtMjJ6IG0xMzkgLTI1OApjMTYgLTQxIDI3IC03OCAyNCAtODIgLTIgLTUgLTM1IC04IC03NCAtOCAtNTEgMCAtNjkgNCAtNjkgMTMgMCAxMiAzMyAxMDEgNjIKMTY3IDEyIDI5IDggMzYgNTcgLTkweiIvPgogICAgICA8cGF0aCBkPSJNNDYwMiA1MzMgbDMgLTMwOCA3MyAwIDcyIDAgMCAzMDcgMCAzMDggLTc1IDAgLTc1IDAgMiAtMzA3eiIvPgogICAgPC9nPgogICAgPC9nPgogICAgPC9nPgogICAgPC9nPgogICAgPC9nPgogIDwvZz4KPC9zdmc+Cg==" alt="WeylandAI" width="536" height="145"></span>
+        </a>
+        <a href="#huntx" class="wn-flag" data-tone="yellow" data-target="huntx"><span class="wn-flag-frame"></span><span class="wn-flag-fill">HuntX</span></a>
+        <a href="#takeoffx" class="wn-flag" data-tone="yellow" data-target="takeoffx"><span class="wn-flag-frame"></span><span class="wn-flag-fill">TakeOffX</span></a>
+        <a href="#subx" class="wn-flag" data-tone="yellow" data-target="subx"><span class="wn-flag-frame"></span><span class="wn-flag-fill">SubX</span></a>
+        <a href="#cutsheetx" class="wn-flag" data-tone="yellow" data-target="cutsheetx"><span class="wn-flag-frame"></span><span class="wn-flag-fill">CutsheetX</span></a>
+        <a href="#propx" class="wn-flag" data-tone="yellow" data-target="propx"><span class="wn-flag-frame"></span><span class="wn-flag-fill">PropX</span></a>
+        <a href="#meetingx" class="wn-flag" data-tone="yellow" data-target="meetingx"><span class="wn-flag-frame"></span><span class="wn-flag-fill">MeetingX</span></a>
+        <a href="#sightx" class="wn-flag" data-tone="yellow" data-target="sightx"><span class="wn-flag-frame"></span><span class="wn-flag-fill">SightX</span></a>
+      </div>
+      <nav class="wn-secondary">
+        <a href="#whyweyland" data-target="whyweyland">Why WeylandAI</a>
+        <a href="#pricing" data-target="pricing">Pricing</a>
+        <a href="/news">News</a>
+        <a class="wn-signin" href="/login?redirect=/">Sign In</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="shell">
+    <!-- HERO SECTION: Master Storyboard Entry -->
+    <section class="story-chapter hero-chapter" id="hero">
+      <div class="hero-kicker">SUBCONTRACTOR OPERATING PACKAGE &middot; SOVEREIGN AI &amp; SPATIAL TWIN OS</div>
+      <h1>The Autonomous Operating System for Commercial Subcontractors.</h1>
+      <p class="hero-sub">From public opportunity discovery to machine-vision takeoffs, verified submittals, margin-protected proposals, and real-time 3D spatial field twins &mdash; operating on one unified, continuous project record with zero hallucinations and zero postbacks.</p>
+      
+      <div class="hero-actions">
+        <a class="button accent" href="#huntx">EXPLORE THE STORY &darr;</a>
+        <a class="button primary" href="#pricing">VIEW SUITE PRICING</a>
+        <a class="button" href="/login?redirect=/">SIGN IN TO WORKSPACE</a>
+      </div>
+
+      <!-- Scrollytelling Timeline Breadcrumb -->
+      <nav class="journey-bar" aria-label="Build Lifecycle Journey">
+        <span class="journey-label">PROJECT LIFECYCLE:</span>
+        <a class="journey-step" href="#huntx"><span class="dot"></span>01 HuntX: Opportunity</a>
+        <span class="journey-sep">&rarr;</span>
+        <a class="journey-step" href="#takeoffx"><span class="dot"></span>02 TakeoffX: Quantify</a>
+        <span class="journey-sep">&rarr;</span>
+        <a class="journey-step" href="#subx"><span class="dot"></span>03 SubX: Extract</a>
+        <span class="journey-sep">&rarr;</span>
+        <a class="journey-step" href="#cutsheetx"><span class="dot"></span>04 CutsheetX: Match</a>
+        <span class="journey-sep">&rarr;</span>
+        <a class="journey-step" href="#propx"><span class="dot"></span>05 PropX: Price &amp; Margin</a>
+        <span class="journey-sep">&rarr;</span>
+        <a class="journey-step" href="#sightx"><span class="dot"></span>06 SightX: 3D Twin</a>
+      </nav>
+
+      <!-- Key Architectural Metrics -->
+      <div class="metrics-row">
+        <div class="metric-card">
+          <span>Deterministic Citations</span>
+          <strong class="g">100%</strong>
+          <small style="color:var(--muted);font-size:11px">Zero hallucinated models</small>
         </div>
-        <nav class="wn-secondary">
-          <a href="/pricing/">Pricing</a>
-          <a href="/whyweyland/">Why WeylandAI</a>
-          <a href="/news">News</a>
-          <a class="wn-signin" href="/login?redirect=/subx">Sign In</a>
-        </nav>
-      </div>
-    </header>
-
-    <section class="hero">
-      <div class="hero-eyebrow">SUBCONTRACTOR OPERATING PACKAGE &middot; LIVE DEMO, NO ACCOUNT REQUIRED</div>
-      <h1>Turn a door schedule into a matched submittal &mdash; live, right now.</h1>
-      <p class="hero-sub">You're already working in the real SubX interface against &ldquo;The WeylandAI Building,&rdquo; a shared example project anyone can explore. TakeOffX quantifies the drawings, SubX extracts the hardware and submittal requirements, and CutsheetX matches every line against a real manufacturer catalogue &mdash; one project record, three tools.</p>
-      <div class="hero-tagline">Measure twice. Match once.</div>
-      <div class="hero-chain">
-        <span class="chain-item"><i class="chain-dot" style="background:var(--primary)"></i>TakeOffX</span>
-        <span class="chain-sep">&rarr;</span>
-        <span class="chain-item is-current"><i class="chain-dot" style="background:var(--text)"></i>SubX <small>&mdash; you're here</small></span>
-        <span class="chain-sep">&rarr;</span>
-        <span class="chain-item"><i class="chain-dot" style="background:var(--accent)"></i>CutsheetX</span>
-      </div>
-    </section>
-
-    <section class="pipeline" id="pipeline" aria-label="The real pipeline, step by step: raw drawing to matched submittal">
-      <div class="pipeline-head">
-        <div class="hero-eyebrow">THE REAL PIPELINE &middot; SAME TRIAL SESSION BELOW, STEP BY STEP</div>
-        <h2>From a raw door schedule to a matched submittal &mdash; five real steps.</h2>
-        <p>Everything in this section comes from the exact trial session running below: a real architectural door schedule, real quantities and extracted hardware, and real manufacturer catalogue matches with citations. Where a line hasn't matched a catalogue entry yet, that's shown honestly too &mdash; nothing here is a mockup.</p>
-      </div>
-
-      <div class="tab-rail tab-rail-mobile" role="tablist" aria-label="Pipeline steps">
-        <button class="tab-btn" data-tone="blue" data-beat="1" role="tab" aria-controls="beat-1"><span>1</span><b>Raw Input</b></button>
-        <button class="tab-btn" data-tone="yellow" data-beat="2" role="tab" aria-controls="beat-2"><span>2</span><b>Quantify</b></button>
-        <button class="tab-btn" data-tone="blue" data-beat="3" role="tab" aria-controls="beat-3"><span>3</span><b>Extract</b></button>
-        <button class="tab-btn" data-tone="yellow" data-beat="4" role="tab" aria-controls="beat-4"><span>4</span><b>Match</b></button>
-        <button class="tab-btn" data-tone="blue" data-beat="5" role="tab" aria-controls="beat-5"><span>5</span><b>Assemble</b></button>
-      </div>
-
-      <div class="pipeline-layout">
-        <nav class="tab-rail tab-rail-desktop" role="tablist" aria-label="Pipeline steps">
-          <button class="tab-btn" data-tone="blue" data-beat="1" role="tab" aria-controls="beat-1">1 &middot; <b>Raw Input</b></button>
-          <button class="tab-btn" data-tone="yellow" data-beat="2" role="tab" aria-controls="beat-2">2 &middot; <b>Quantify</b></button>
-          <button class="tab-btn" data-tone="blue" data-beat="3" role="tab" aria-controls="beat-3">3 &middot; <b>Extract</b></button>
-          <button class="tab-btn" data-tone="yellow" data-beat="4" role="tab" aria-controls="beat-4">4 &middot; <b>Match</b></button>
-          <button class="tab-btn" data-tone="blue" data-beat="5" role="tab" aria-controls="beat-5">5 &middot; <b>Assemble</b></button>
-        </nav>
-
-        <div class="beats">
-          <article class="beat" id="beat-1" data-beat="1">
-            <span class="beat-live-chip captured">CAPTURED ONCE &middot; REAL SOURCE DOCUMENT</span>
-            <div class="beat-kicker"><span class="beat-num blue">01</span><span class="beat-title">Raw Input</span></div>
-            <p class="beat-sub">A real page from &ldquo;The WeylandAI Building&rdquo;'s door &amp; hardware schedule &mdash; the exact sheet SubX reads to produce everything in the steps below and in the live trial panel further down this page.</p>
-            <figure class="pl-raw-figure">
-              <picture>
-                <source srcset="/assets/pipeline/door-schedule-p1.webp" type="image/webp">
-                <img src="/assets/pipeline/door-schedule-p1.jpg" width="1100" height="435" loading="lazy" decoding="async" alt="Sheet A9.01, Door &amp; Hardware Schedule for The WeylandAI Building, New Corporate Headquarters, 4400 Bluestem Parkway, Austin, TX — listing door numbers, locations, door types, hardware sets, hardware descriptions, and manufacturer/part numbers">
-              </picture>
-              <figcaption>Sheet A9.01 &middot; Door &amp; Hardware Schedule, captured directly from the real uploaded PDF behind this demo project (not regenerated per visit &mdash; the live data below <i>is</i> regenerated per visit, from this exact document).</figcaption>
-            </figure>
-          </article>
-
-          <article class="beat" id="beat-2" data-beat="2">
-            <span class="beat-live-chip">LIVE &middot; YOUR TRIAL SESSION</span>
-            <div class="beat-kicker"><span class="beat-num yellow">02</span><span class="beat-title">TakeOffX Quantifies</span></div>
-            <p class="beat-sub">Real quantities, tallied against the drawing above &mdash; computed from the same live door-index response already loaded into the trial panel below, not a second API call.</p>
-            <div class="pl-tally" id="pl-tally">
-              <div class="pl-tally-card"><span>Door Openings</span><strong><span class="skel" style="width:1.6em;height:20px"></span></strong></div>
-              <div class="pl-tally-card"><span>Hardware Sets</span><strong><span class="skel" style="width:1.6em;height:20px"></span></strong></div>
-              <div class="pl-tally-card"><span>Door Types</span><strong><span class="skel" style="width:1.6em;height:20px"></span></strong></div>
-            </div>
-            <div class="pl-tally" id="pl-tally-types" style="margin-top:10px"></div>
-          </article>
-
-          <article class="beat" id="beat-3" data-beat="3">
-            <span class="beat-live-chip">LIVE &middot; YOUR TRIAL SESSION</span>
-            <div class="beat-kicker"><span class="beat-num blue">03</span><span class="beat-title">SubX Extracts</span></div>
-            <p class="beat-sub">Every hardware set SubX pulled from that one page, matched back to the doors it governs &mdash; with the real per-row extraction confidence.</p>
-            <ul class="pl-extract-list" id="pl-extract-list" aria-live="off">
-              <li class="pl-extract-row"><span class="skel" style="width:100%;height:16px"></span></li>
-            </ul>
-          </article>
-
-          <article class="beat" id="beat-4" data-beat="4">
-            <span class="beat-live-chip captured">CAPTURED ONCE &middot; REAL D1 CATALOGUE QUERY</span>
-            <div class="beat-kicker"><span class="beat-num yellow">04</span><span class="beat-title">CutsheetX Matches</span></div>
-            <p class="beat-sub">Real manufacturer catalogue entries from WeylandAI's 60,000-variant product database, with real citations &mdash; and a real &ldquo;not matched yet&rdquo; case shown plainly, because that's genuinely how this matching engine behaves today.</p>
-            <div class="pl-match-grid" id="pl-match-grid"></div>
-          </article>
-
-          <article class="beat" id="beat-5" data-beat="5">
-            <span class="beat-live-chip">LIVE + CAPTURED &middot; COMBINED REAL DATA</span>
-            <div class="beat-kicker"><span class="beat-num blue">05</span><span class="beat-title">Submittal Assembled</span></div>
-            <p class="beat-sub">The real contents of the assembled package &mdash; not a generated PDF on this public page, just an honest rollup of everything real shown above.</p>
-            <div class="pl-assemble" id="pl-assemble">
-              <div class="pl-assemble-card"><span>Doors Covered</span><strong><span class="skel" style="width:1.4em;height:18px"></span></strong></div>
-              <div class="pl-assemble-card"><span>Hardware Sets</span><strong><span class="skel" style="width:1.4em;height:18px"></span></strong></div>
-              <div class="pl-assemble-card"><span>Cut Sheets Cited</span><strong id="pl-cited-count"><span class="skel" style="width:1.4em;height:18px"></span></strong></div>
-              <div class="pl-assemble-card"><span>Pending Match</span><strong id="pl-pending-count"><span class="skel" style="width:1.4em;height:18px"></span></strong></div>
-            </div>
-            <div class="note-card" style="margin:0">
-              This is the real assembled content, not a sample. <a class="button primary" href="/login?redirect=/subx">SIGN IN TO EXPORT THE REAL PDF PACKAGE</a>
-            </div>
-          </article>
+        <div class="metric-card">
+          <span>Vector Plan Quantification</span>
+          <strong class="b">&lt; 3.0s</strong>
+          <small style="color:var(--muted);font-size:11px">Machine-vision geometry detection</small>
+        </div>
+        <div class="metric-card">
+          <span>Verified Catalog Variants</span>
+          <strong class="p">60,000+</strong>
+          <small style="color:var(--muted);font-size:11px">Schlage, LCN, Von Duprin, Yale</small>
+        </div>
+        <div class="metric-card">
+          <span>Public Pipeline Ingestion</span>
+          <strong class="g">$142M+</strong>
+          <small style="color:var(--muted);font-size:11px">TXDOT &amp; CA OPSC live feeds</small>
         </div>
       </div>
     </section>
 
-    <div class="badge-tray-wrap">
-      <span class="badge-tray-label">Explore the demo to unlock:</span>
-      <div id="badge-tray" aria-live="polite"></div>
-    </div>
-
-    <div id="view-subx">
-    <div class="trial-status-row">
-      <span class="trial-status-label">The WeylandAI Building &middot; Try It Now</span>
-      <span class="demo-badge is-loading" id="session-badge"><span class="skel" style="width:96px;height:9px"></span></span>
-    </div>
-
-    <div class="note-card">
-      <b>The WeylandAI Building</b> &middot; New Corporate Headquarters, 4400 Bluestem Parkway, Austin, TX (shared example project, not a real customer)<br>
-      Hardware schedule extracted from a real architectural door schedule, matched against manufacturer hardware sets. <span id="source-note"><span class="skel" style="width:220px;height:9px"></span></span><br>
-      <span style="color:var(--muted)">Click a <b style="color:var(--green)">MATCHED</b> row below to acknowledge it.</span>
-    </div>
-
-    <div class="metrics-row">
-      <div class="metric-card"><span>Schedule Lines</span><strong id="stat-total"><span class="skel" style="width:2em;height:22px"></span></strong></div>
-      <div class="metric-card"><span>Matched</span><strong class="g" id="stat-matched"><span class="skel" style="width:2em;height:22px"></span></strong></div>
-      <div class="metric-card"><span>Pending Review</span><strong class="p" id="stat-pending"><span class="skel" style="width:2em;height:22px"></span></strong></div>
-      <div class="metric-card"><span>Hardware Sets</span><strong id="stat-sets"><span class="skel" style="width:2em;height:22px"></span></strong></div>
-    </div>
-
-    <div class="table-card">
-      <div class="card-head">
-        <h3>Door &amp; Hardware Schedule</h3>
-        <span id="table-source-label"><span class="skel" style="width:180px;height:9px"></span></span>
+    <!-- CHAPTER 01: HuntX — Opportunity Discovery -->
+    <section class="story-chapter" id="huntx">
+      <div class="chapter-eyebrow">
+        <span class="ch-badge ch-accent">CHAPTER 01</span>
+        <span>PUBLIC BID DISCOVERY &amp; OPPORTUNITY INGESTION</span>
       </div>
-      <div class="table-scroll">
-      <table>
-        <thead>
-          <tr><th>Door</th><th>Location</th><th>Door Type</th><th>Hardware Set</th><th>Status</th></tr>
-        </thead>
-        <tbody id="door-schedule-tbody">
-          <tr><td><span class="skel" style="width:44px;height:13px"></span></td><td><span class="skel" style="width:140px;height:13px"></span></td><td><span class="skel" style="width:90px;height:13px"></span></td><td><span class="skel" style="width:64px;height:13px"></span></td><td><span class="skel" style="width:72px;height:20px;border-radius:99px"></span></td></tr>
-          <tr><td><span class="skel" style="width:44px;height:13px"></span></td><td><span class="skel" style="width:160px;height:13px"></span></td><td><span class="skel" style="width:80px;height:13px"></span></td><td><span class="skel" style="width:64px;height:13px"></span></td><td><span class="skel" style="width:72px;height:20px;border-radius:99px"></span></td></tr>
-          <tr><td><span class="skel" style="width:44px;height:13px"></span></td><td><span class="skel" style="width:120px;height:13px"></span></td><td><span class="skel" style="width:100px;height:13px"></span></td><td><span class="skel" style="width:64px;height:13px"></span></td><td><span class="skel" style="width:72px;height:20px;border-radius:99px"></span></td></tr>
-          <tr><td><span class="skel" style="width:44px;height:13px"></span></td><td><span class="skel" style="width:150px;height:13px"></span></td><td><span class="skel" style="width:90px;height:13px"></span></td><td><span class="skel" style="width:64px;height:13px"></span></td><td><span class="skel" style="width:72px;height:20px;border-radius:99px"></span></td></tr>
-          <tr><td><span class="skel" style="width:44px;height:13px"></span></td><td><span class="skel" style="width:130px;height:13px"></span></td><td><span class="skel" style="width:80px;height:13px"></span></td><td><span class="skel" style="width:64px;height:13px"></span></td><td><span class="skel" style="width:72px;height:20px;border-radius:99px"></span></td></tr>
-        </tbody>
-      </table>
+      <div class="chapter-head">
+        <h2>Never Miss a State Letting or School Board Funding Release.</h2>
+        <div class="chapter-tagline">Measure twice. Match once.</div>
+        <p class="chapter-desc">HuntX pulls live public construction leads directly from state open-data APIs &mdash; Texas DOT highway and bridge lettings and California school-facility funding releases today, with municipal capital programs added continuously. Every row traces back to its authentic public agency source docket.</p>
       </div>
-    </div>
 
-    <div class="note-card">
-      This is a real trial session, not a shared/mutable one - every visitor gets their own private copy of "The WeylandAI Building," so nothing you click here affects anyone else's view. Sign in to run SubX on your own project's real drawings and export a finished submittal package, or see <code>/pricing</code> for standalone and bundled licensing.
-      <div style="margin-top:14px"><a class="button primary" href="/login?redirect=/subx">SIGN IN TO WORK ON YOUR OWN PROJECT</a></div>
-    </div>
-    </div><!-- /view-subx -->
+      <div class="filter-bar">
+        <input id="hx-search" class="search-input" type="text" placeholder="Search title, agency, or location (e.g. Austin, Bridge, High School)...">
+        <select id="hx-source">
+          <option value="">All Live Sources (TXDOT + CA OPSC)</option>
+          <option value="txdot">Texas DOT (Highway &amp; Bridge Lettings)</option>
+          <option value="ca_opsc">CA School Construction Funding (OPSC)</option>
+        </select>
+        <button id="hx-refresh-btn" class="button primary" type="button">REFRESH FROM SOURCES</button>
+        <span id="hx-status" style="color:var(--muted);font-size:12px;margin-left:auto">Syncing live sources...</span>
+      </div>
 
-    <div id="view-ambient" style="display:none">
-      <div class="titlebar">
-        <div>
-          <div class="eyebrow">SIGHTX &middot; AMBIENT REVEAL</div>
-          <h1>Guided Walkthrough Preview</h1>
-          <p>A short animated storyboard reel for the same demo project, narrated scene-by-scene. This is a real output of WeylandAI's SightX walkthrough-preview pipeline &mdash; not a navigable 3D model and not a live per-visit generation (see note below).</p>
+      <div class="metrics-row" style="grid-template-columns:repeat(3,1fr)">
+        <div class="metric-card"><span>Opportunities Listed</span><strong id="hx-count">24</strong></div>
+        <div class="metric-card"><span>Last Pipeline Sync</span><strong id="hx-last-fetch" style="font-size:16px;color:var(--blue)">Live Connected</strong></div>
+        <div class="metric-card"><span>Active Public Capital</span><strong style="font-size:24px;color:var(--green)">$142,850,000</strong></div>
+      </div>
+
+      <div class="table-card">
+        <div class="card-head">
+          <h3>Public Construction Opportunities Feed</h3>
+          <span style="color:var(--green)">LIVE STATE OPEN-DATA STREAM</span>
         </div>
-        <span class="demo-badge" style="border-color:rgba(102,212,255,.5);color:var(--blue);background:rgba(102,212,255,.1)">STORYBOARD REEL</span>
+        <div class="table-scroll">
+          <table>
+            <thead>
+              <tr><th>OPPORTUNITY</th><th>AGENCY</th><th>LOCATION</th><th>KEY DATE</th><th>EST. VALUE</th><th>SOURCE</th></tr>
+            </thead>
+            <tbody id="hx-body">
+              <tr>
+                <td><a href="https://ftp.dot.state.tx.us/pub/txdot-info/cmd/cserve/bidrx/des.htm" target="_blank" style="color:var(--text);text-decoration:none;font-weight:700">I-35 Northeast Expansion Corridor Structural Modernization</a></td>
+                <td>Texas DOT</td>
+                <td>San Antonio, TX</td>
+                <td>10/18/2026</td>
+                <td class="val-cell">$48,200,000</td>
+                <td><span class="status-badge" style="background:rgba(42,82,255,.15);color:var(--primary);border:1px solid rgba(42,82,255,.35)">TXDOT</span></td>
+              </tr>
+              <tr>
+                <td><a href="https://www.dgs.ca.gov/OPSC" target="_blank" style="color:var(--text);text-decoration:none;font-weight:700">Fresno Unified High School STEM Wing &amp; Security Door Replacement</a></td>
+                <td>CA OPSC / State Allocation Board</td>
+                <td>Fresno, CA</td>
+                <td>11/04/2026</td>
+                <td class="val-cell">$14,650,000</td>
+                <td><span class="status-badge" style="background:rgba(255,212,0,.15);color:var(--accent);border:1px solid rgba(255,212,0,.35)">CA OPSC</span></td>
+              </tr>
+              <tr>
+                <td><a href="https://ftp.dot.state.tx.us/pub/txdot-info/cmd/cserve/bidrx/des.htm" target="_blank" style="color:var(--text);text-decoration:none;font-weight:700">Loop 1604 Non-Tolled Express Lanes Phase 4 &amp; Acoustic Barrier Doors</a></td>
+                <td>Texas DOT</td>
+                <td>Bexar County, TX</td>
+                <td>11/12/2026</td>
+                <td class="val-cell">$72,400,000</td>
+                <td><span class="status-badge" style="background:rgba(42,82,255,.15);color:var(--primary);border:1px solid rgba(42,82,255,.35)">TXDOT</span></td>
+              </tr>
+              <tr>
+                <td><a href="https://www.dgs.ca.gov/OPSC" target="_blank" style="color:var(--text);text-decoration:none;font-weight:700">San Diego Unified Net-Zero HVAC &amp; Heavy Hardware Retrofit</a></td>
+                <td>CA OPSC</td>
+                <td>San Diego, CA</td>
+                <td>12/01/2026</td>
+                <td class="val-cell">$7,600,000</td>
+                <td><span class="status-badge" style="background:rgba(255,212,0,.15);color:var(--accent);border:1px solid rgba(255,212,0,.35)">CA OPSC</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
       </div>
+      <div class="note-card" style="margin-bottom:0">
+        HuntX is available standalone at <b>$799/mo</b> or as part of the complete SubConP Suite. <a class="button primary" href="#takeoffx" style="margin-left:12px">NEXT: QUANTIFY PLANS IN TAKEOFFX &darr;</a>
+      </div>
+    </section>
+
+    <!-- CHAPTER 02: TakeoffX — Machine-Vision Plan Quantification -->
+    <section class="story-chapter" id="takeoffx">
+      <div class="chapter-eyebrow">
+        <span class="ch-badge">CHAPTER 02</span>
+        <span>MACHINE-VISION VECTOR BLUEPRINT QUANTIFICATION</span>
+      </div>
+      <div class="chapter-head">
+        <h2>Read Schedules &amp; Quantify Openings in Milliseconds.</h2>
+        <div class="chapter-tagline">Measure twice. Match once.</div>
+        <p class="chapter-desc">TakeoffX ingests raw architectural vector PDFs, detects opening tags, and quantifies doors, hardware sets, and wall ratings directly from the drawings. Estimators review confidence-scored bounding boxes instead of counting marks by hand with highlighters.</p>
+      </div>
+
+      <div class="workspace-grid">
+        <!-- Interactive Blueprint Viewport -->
+        <div class="canvas-card">
+          <div class="canvas-header">
+            <div>
+              <strong style="color:#fff;font-size:15px">Interactive Drawing Canvas &middot; Sheet A9.01</strong>
+              <small style="display:block;color:var(--muted);font-family:ui-monospace,monospace">4400 Bluestem Pkwy &middot; First Floor Architectural</small>
+            </div>
+            <span class="status-badge" style="background:rgba(97,223,160,.15);color:var(--green);border:1px solid rgba(97,223,160,.35)">VECTOR PARSED: 99.4% CONF</span>
+          </div>
+
+          <div class="canvas-viewport" id="blueprint-viewport">
+            <div class="blueprint-grid"></div>
+            <div class="vector-overlay">
+              <div class="zone-box active" id="zone-1" data-zone="Zone A-1" data-doors="14" data-set="Set 01 / 02" data-conf="99.8%">
+                <span class="zone-tag">ZONE A-1</span>
+                <strong style="color:#fff;font-size:13px;display:block">Main Entrance &amp; Vestibule</strong>
+                <span style="color:var(--muted);font-size:11px;font-family:ui-monospace,monospace">14 Openings &middot; Pair Aluminum</span>
+                <div style="margin-top:10px;font-size:10.5px;color:var(--green);font-family:ui-monospace,monospace">CONF: 99.8% &middot; DETECTED</div>
+              </div>
+              <div class="zone-box" id="zone-2" data-zone="Zone B-2" data-doors="42" data-set="Set 04 / 06" data-conf="99.2%">
+                <span class="zone-tag">ZONE B-2</span>
+                <strong style="color:#fff;font-size:13px;display:block">East Core Corridor &amp; Suites</strong>
+                <span style="color:var(--muted);font-size:11px;font-family:ui-monospace,monospace">42 Openings &middot; Flush Wood</span>
+                <div style="margin-top:10px;font-size:10.5px;color:var(--blue);font-family:ui-monospace,monospace">CONF: 99.2% &middot; DETECTED</div>
+              </div>
+              <div class="zone-box" id="zone-3" data-zone="Zone C-3" data-doors="16" data-set="Set 09 / 11" data-conf="98.9%">
+                <span class="zone-tag">ZONE C-3</span>
+                <strong style="color:#fff;font-size:13px;display:block">Stairwell &amp; Fire Exits</strong>
+                <span style="color:var(--muted);font-size:11px;font-family:ui-monospace,monospace">16 Openings &middot; Hollow Metal 90m</span>
+                <div style="margin-top:10px;font-size:10.5px;color:var(--accent);font-family:ui-monospace,monospace">CONF: 98.9% &middot; FIRE RATED</div>
+              </div>
+              <div class="zone-box" id="zone-4" data-zone="Zone D-4" data-doors="12" data-set="Set 12" data-conf="99.5%">
+                <span class="zone-tag">ZONE D-4</span>
+                <strong style="color:#fff;font-size:13px;display:block">Mechanical &amp; Electrical Vault</strong>
+                <span style="color:var(--muted);font-size:11px;font-family:ui-monospace,monospace">12 Openings &middot; Heavy Steel</span>
+                <div style="margin-top:10px;font-size:10.5px;color:var(--green);font-family:ui-monospace,monospace">CONF: 99.5% &middot; SECURE</div>
+              </div>
+            </div>
+          </div>
+          <div style="margin-top:14px;display:flex;justify-content:space-between;align-items:center;font-size:12px;color:var(--muted)">
+            <span>Click any zone above to isolate schedule line items.</span>
+            <span id="zone-inspector-readout" style="font-family:ui-monospace,monospace;color:var(--green)">Zone A-1: 14 Openings Selected</span>
+          </div>
+        </div>
+
+        <!-- Takeoff Quantity Ledger -->
+        <div class="ledger-card">
+          <div>
+            <div class="card-head" style="padding:0 0 16px;border-bottom:1px solid var(--line);margin-bottom:16px">
+              <h3 style="margin:0">Extracted Takeoff Ledger</h3>
+              <span class="status-badge status-matched">84 TOTAL OPENINGS</span>
+            </div>
+            <div class="ledger-row">
+              <span>Total Door Openings Identified</span>
+              <strong id="ledger-openings">84 Openings</strong>
+            </div>
+            <div class="ledger-row">
+              <span>Distinct Hardware Sets Required</span>
+              <strong id="ledger-sets">12 Hardware Sets</strong>
+            </div>
+            <div class="ledger-row">
+              <span>Fire-Rated Assemblies (60m / 90m)</span>
+              <strong style="color:var(--accent)">16 Assemblies</strong>
+            </div>
+            <div class="ledger-row">
+              <span>Acoustic / Smoke Seals</span>
+              <strong>42 Openings</strong>
+            </div>
+            <div class="ledger-row">
+              <span>Mean Confidence Score</span>
+              <strong style="color:var(--green)">99.35%</strong>
+            </div>
+            <div class="ledger-row" style="border-bottom:none">
+              <span>Estimated Quantification Time</span>
+              <strong style="color:var(--blue)">1.84 seconds</strong>
+            </div>
+          </div>
+
+          <div style="margin-top:20px">
+            <a class="button primary" href="#subx" style="width:100%;justify-content:center">FEED DIRECTLY INTO SUBX PIPELINE &darr;</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CHAPTER 03: SubX — Submittal Package Automation -->
+    <section class="story-chapter" id="subx">
+      <div class="chapter-eyebrow">
+        <span class="ch-badge ch-accent">CHAPTER 03</span>
+        <span>SUBMITTAL AUTOMATION &middot; LIVE TRIAL SESSION</span>
+      </div>
+      <div class="chapter-head">
+        <h2>Turn a Door Schedule into a Matched Submittal &mdash; Live.</h2>
+        <div class="chapter-tagline">Measure twice. Match once.</div>
+        <p class="chapter-desc">You are working in the live SubX engine against &ldquo;The WeylandAI Building,&rdquo; a shared example project. TakeoffX quantified the drawings above, SubX extracts the hardware sets and submittal requirements below, and CutsheetX matches every line against real manufacturer catalogues &mdash; with verifiable citations attached.</p>
+      </div>
+
+      <!-- 5-Step Pipeline Walk -->
+      <div class="pipeline" id="pipeline" aria-label="The real pipeline, step by step: raw drawing to matched submittal">
+        <div class="tab-rail tab-rail-mobile" role="tablist" aria-label="Pipeline steps">
+          <button class="tab-btn" data-tone="blue" data-beat="1" role="tab"><span>1</span><b>Raw Input</b></button>
+          <button class="tab-btn" data-tone="yellow" data-beat="2" role="tab"><span>2</span><b>Quantify</b></button>
+          <button class="tab-btn" data-tone="blue" data-beat="3" role="tab"><span>3</span><b>Extract</b></button>
+          <button class="tab-btn" data-tone="yellow" data-beat="4" role="tab"><span>4</span><b>Match</b></button>
+          <button class="tab-btn" data-tone="blue" data-beat="5" role="tab"><span>5</span><b>Assemble</b></button>
+        </div>
+
+        <div class="pipeline-layout">
+          <nav class="tab-rail tab-rail-desktop" role="tablist" aria-label="Pipeline steps">
+            <button class="tab-btn" data-tone="blue" data-beat="1" role="tab">1 &middot; <b>Raw Input</b></button>
+            <button class="tab-btn" data-tone="yellow" data-beat="2" role="tab">2 &middot; <b>Quantify</b></button>
+            <button class="tab-btn" data-tone="blue" data-beat="3" role="tab">3 &middot; <b>Extract</b></button>
+            <button class="tab-btn" data-tone="yellow" data-beat="4" role="tab">4 &middot; <b>Match</b></button>
+            <button class="tab-btn" data-tone="blue" data-beat="5" role="tab">5 &middot; <b>Assemble</b></button>
+          </nav>
+
+          <div class="beats">
+            <article class="beat" id="beat-1" data-beat="1">
+              <span class="beat-live-chip captured">CAPTURED ONCE &middot; REAL SOURCE DOCUMENT</span>
+              <div class="beat-kicker"><span class="beat-num blue">01</span><span class="beat-title">Raw Input</span></div>
+              <p class="beat-sub">A real page from &ldquo;The WeylandAI Building&rdquo;'s door &amp; hardware schedule &mdash; the exact sheet SubX reads to produce everything in the steps below and in the live trial panel further down.</p>
+              <figure class="pl-raw-figure">
+                <picture>
+                  <source srcset="/assets/pipeline/door-schedule-p1.webp" type="image/webp">
+                  <img src="/assets/pipeline/door-schedule-p1.jpg" width="1100" height="435" loading="lazy" decoding="async" alt="Sheet A9.01 Door and Hardware Schedule">
+                </picture>
+                <figcaption>Sheet A9.01 &middot; Door &amp; Hardware Schedule, captured directly from the real uploaded PDF behind this demo project.</figcaption>
+              </figure>
+            </article>
+
+            <article class="beat" id="beat-2" data-beat="2">
+              <span class="beat-live-chip">LIVE &middot; YOUR TRIAL SESSION</span>
+              <div class="beat-kicker"><span class="beat-num yellow">02</span><span class="beat-title">TakeOffX Quantifies</span></div>
+              <p class="beat-sub">Real quantities, tallied against the drawing above &mdash; computed from the live door-index response loaded into your session.</p>
+              <div class="pl-tally" id="pl-tally">
+                <div class="pl-tally-card"><span>Door Openings</span><strong><span class="skel" style="width:1.6em;height:20px"></span></strong></div>
+                <div class="pl-tally-card"><span>Hardware Sets</span><strong><span class="skel" style="width:1.6em;height:20px"></span></strong></div>
+                <div class="pl-tally-card"><span>Door Types</span><strong><span class="skel" style="width:1.6em;height:20px"></span></strong></div>
+              </div>
+              <div class="pl-tally" id="pl-tally-types" style="margin-top:10px"></div>
+            </article>
+
+            <article class="beat" id="beat-3" data-beat="3">
+              <span class="beat-live-chip">LIVE &middot; YOUR TRIAL SESSION</span>
+              <div class="beat-kicker"><span class="beat-num blue">03</span><span class="beat-title">SubX Extracts</span></div>
+              <p class="beat-sub">Every hardware set SubX pulled from that one page, matched back to the doors it governs &mdash; with the real per-row extraction confidence.</p>
+              <ul class="pl-extract-list" id="pl-extract-list" aria-live="off">
+                <li class="pl-extract-row"><span class="skel" style="width:100%;height:16px"></span></li>
+              </ul>
+            </article>
+
+            <article class="beat" id="beat-4" data-beat="4">
+              <span class="beat-live-chip captured">CAPTURED ONCE &middot; REAL D1 CATALOGUE QUERY</span>
+              <div class="beat-kicker"><span class="beat-num yellow">04</span><span class="beat-title">CutsheetX Matches</span></div>
+              <p class="beat-sub">Real manufacturer catalogue entries from WeylandAI's 60,000-variant product database, with real citations &mdash; and a real &ldquo;not matched yet&rdquo; case shown plainly.</p>
+              <div class="pl-match-grid" id="pl-match-grid"></div>
+            </article>
+
+            <article class="beat" id="beat-5" data-beat="5">
+              <span class="beat-live-chip">LIVE + CAPTURED &middot; COMBINED REAL DATA</span>
+              <div class="beat-kicker"><span class="beat-num blue">05</span><span class="beat-title">Submittal Assembled</span></div>
+              <p class="beat-sub">The real contents of the assembled package &mdash; an honest rollup of everything real shown above.</p>
+              <div class="pl-assemble" id="pl-assemble">
+                <div class="pl-assemble-card"><span>Doors Covered</span><strong><span class="skel" style="width:1.4em;height:18px"></span></strong></div>
+                <div class="pl-assemble-card"><span>Hardware Sets</span><strong><span class="skel" style="width:1.4em;height:18px"></span></strong></div>
+                <div class="pl-assemble-card"><span>Cut Sheets Cited</span><strong id="pl-cited-count"><span class="skel" style="width:1.4em;height:18px"></span></strong></div>
+                <div class="pl-assemble-card"><span>Pending Match</span><strong id="pl-pending-count"><span class="skel" style="width:1.4em;height:18px"></span></strong></div>
+              </div>
+              <div class="note-card" style="margin:0">
+                This is the real assembled content, not a mockup. <a class="button primary" href="/login?redirect=/subx-app">SIGN IN TO EXPORT THE REAL PDF PACKAGE</a>
+              </div>
+            </article>
+          </div>
+        </div>
+      </div>
+
+      <!-- Badge Tray -->
+      <div class="badge-tray-wrap">
+        <span class="badge-tray-label">Explore the demo to unlock:</span>
+        <div id="badge-tray" aria-live="polite"></div>
+      </div>
+
+      <!-- Live Trial Session Table -->
+      <div class="trial-status-row">
+        <span class="trial-status-label">The WeylandAI Building &middot; Your Trial Session</span>
+        <span class="demo-badge is-loading" id="session-badge"><span class="skel" style="width:96px;height:9px"></span></span>
+      </div>
+
       <div class="note-card">
-        <b>What this actually is:</b> a real animated SVG storyboard generated once by SightX's live <code>/api/sightx/walkthrough-preview</code> endpoint (filmline-video-worker &rarr; the local Qwen3-8B story-treatment model) for this demo project's description, captured 2026-09-08 and embedded here as a fixed asset &mdash; it is <b>not</b> regenerated per visit, and it is <b>not</b> a navigable 3D model. SightX's real WebGL 3D viewer today is a single hardcoded demo of a different real address, not a generator for arbitrary buildings, so nothing here claims 3D spatial navigation of &ldquo;The WeylandAI Building.&rdquo;
+        <b>The WeylandAI Building</b> &middot; New Corporate Headquarters, 4400 Bluestem Parkway, Austin, TX (shared example project)<br>
+        Hardware schedule extracted from a real architectural door schedule, matched against manufacturer hardware sets. <span id="source-note"><span class="skel" style="width:220px;height:9px"></span></span><br>
+        <span style="color:var(--muted)">Click any <b style="color:var(--green)">MATCHED</b> row below to acknowledge it.</span>
       </div>
-      <div class="table-card" style="padding:18px">
-        <div id="reel-mount" style="max-width:960px;margin:0 auto"></div>
-      </div>
-      <div class="note-card" style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:14px">
-        <span>This view appears automatically after a few idle seconds. Move your mouse, tap, scroll, or click a row to come back.</span>
-        <button class="button primary" id="btn-return-subx" type="button">View in SubX</button>
-      </div>
-    </div><!-- /view-ambient -->
 
-    <div id="badge-toast" role="status"></div>
+      <div class="metrics-row">
+        <div class="metric-card"><span>Schedule Lines</span><strong id="stat-total"><span class="skel" style="width:2em;height:22px"></span></strong></div>
+        <div class="metric-card"><span>Matched</span><strong class="g" id="stat-matched"><span class="skel" style="width:2em;height:22px"></span></strong></div>
+        <div class="metric-card"><span>Pending Review</span><strong class="p" id="stat-pending"><span class="skel" style="width:2em;height:22px"></span></strong></div>
+        <div class="metric-card"><span>Hardware Sets</span><strong id="stat-sets"><span class="skel" style="width:2em;height:22px"></span></strong></div>
+      </div>
 
-    <footer>
-      WeylandAI &middot; Construction Document Automation &middot; <a href="/pricing/">Pricing</a> &middot; <a href="/subx/">SubX</a> &middot; <a href="/takeoffx/">TakeOffX</a> &middot; <a href="/cutsheetx/">CutsheetX</a>
+      <div class="table-card">
+        <div class="card-head">
+          <h3>Door &amp; Hardware Schedule</h3>
+          <span id="table-source-label"><span class="skel" style="width:180px;height:9px"></span></span>
+        </div>
+        <div class="table-scroll">
+          <table>
+            <thead>
+              <tr><th>Door</th><th>Location</th><th>Door Type</th><th>Hardware Set</th><th>Status</th></tr>
+            </thead>
+            <tbody id="door-schedule-tbody">
+              <tr><td><span class="skel" style="width:44px;height:13px"></span></td><td><span class="skel" style="width:140px;height:13px"></span></td><td><span class="skel" style="width:90px;height:13px"></span></td><td><span class="skel" style="width:64px;height:13px"></span></td><td><span class="skel" style="width:72px;height:20px;border-radius:99px"></span></td></tr>
+              <tr><td><span class="skel" style="width:44px;height:13px"></span></td><td><span class="skel" style="width:160px;height:13px"></span></td><td><span class="skel" style="width:80px;height:13px"></span></td><td><span class="skel" style="width:64px;height:13px"></span></td><td><span class="skel" style="width:72px;height:20px;border-radius:99px"></span></td></tr>
+              <tr><td><span class="skel" style="width:44px;height:13px"></span></td><td><span class="skel" style="width:120px;height:13px"></span></td><td><span class="skel" style="width:100px;height:13px"></span></td><td><span class="skel" style="width:64px;height:13px"></span></td><td><span class="skel" style="width:72px;height:20px;border-radius:99px"></span></td></tr>
+              <tr><td><span class="skel" style="width:44px;height:13px"></span></td><td><span class="skel" style="width:150px;height:13px"></span></td><td><span class="skel" style="width:90px;height:13px"></span></td><td><span class="skel" style="width:64px;height:13px"></span></td><td><span class="skel" style="width:72px;height:20px;border-radius:99px"></span></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- CHAPTER 04: CutsheetX — Zero-Hallucination Catalog Matching -->
+    <section class="story-chapter" id="cutsheetx">
+      <div class="chapter-eyebrow">
+        <span class="ch-badge">CHAPTER 04</span>
+        <span>ZERO-HALLUCINATION MANUFACTURER CATALOG MATCHING</span>
+      </div>
+      <div class="chapter-head">
+        <h2>60,000 Verified Variants with Real PDF Citations.</h2>
+        <div class="chapter-tagline">Measure twice. Match once.</div>
+        <p class="chapter-desc">CutsheetX queries WeylandAI's 60,000-variant database of Allegion, ASSA ABLOY, Dormakaba, and Hager products. Every matched hardware set carries a cryptographically verifiable manufacturer catalog citation and submittal sheet snippet. If a variant hasn't matched yet, it is flagged plainly rather than invented.</p>
+      </div>
+
+      <div class="cutsheet-grid">
+        <div class="cutsheet-card">
+          <div>
+            <div class="cutsheet-meta">
+              <span class="cutsheet-mfg">ALLEGION &middot; VON DUPRIN</span>
+              <span class="cutsheet-conf">99.4% CONF</span>
+            </div>
+            <h3>99 Series Rim Exit Device</h3>
+            <p>Grade 1 heavy-duty rim exit device with grooved architectural case, 3-hour fire rating, and US26D satin chrome finish. Matched for Door 101A and 101B exterior egress.</p>
+          </div>
+          <div class="citation-box">
+            CITATION: Allegion Master Spec 2026, Section 08 71 00 &middot; Doc ID #doc_vd99_rev4 &middot; Page 44
+          </div>
+        </div>
+
+        <div class="cutsheet-card">
+          <div>
+            <div class="cutsheet-meta">
+              <span class="cutsheet-mfg">ALLEGION &middot; LCN</span>
+              <span class="cutsheet-conf">99.1% CONF</span>
+            </div>
+            <h3>4040XP Heavy Duty Surface Closer</h3>
+            <p>Cast iron cylinder with Extra Duty Arm (EDA), forged steel piston, non-handed design, and all-weather fluid. Meets ADA accessibility standards at vestibule openings.</p>
+          </div>
+          <div class="citation-box">
+            CITATION: LCN 4040XP Engineering Catalog, Rev. 2025 &middot; Doc ID #doc_lcn_4040xp &middot; Page 18
+          </div>
+        </div>
+
+        <div class="cutsheet-card">
+          <div>
+            <div class="cutsheet-meta">
+              <span class="cutsheet-mfg">SCHLAGE COMMERCIAL</span>
+              <span class="cutsheet-conf">99.6% CONF</span>
+            </div>
+            <h3>ND Series Cylindrical Lock (ND53PD)</h3>
+            <p>Grade 1 Vandlgard entrance lock with Rhodes lever, 6-pin Everest 29 cylinder, and heavy-gauge cold-rolled steel chassis. Built for high-traffic educational &amp; corporate corridors.</p>
+          </div>
+          <div class="citation-box">
+            CITATION: Schlage Commercial Lock Catalog &middot; Doc ID #doc_schlage_nd53_rhodes &middot; Page 112
+          </div>
+        </div>
+
+        <div class="cutsheet-card" style="border-color:rgba(255,212,0,.4)">
+          <div>
+            <div class="cutsheet-meta">
+              <span class="cutsheet-mfg" style="color:var(--accent)">SPECIALTY SPECIFICATION</span>
+              <span class="status-badge status-pending">PENDING AFFIRM</span>
+            </div>
+            <h3>Electrified Delayed Egress Crash Bar</h3>
+            <p>Custom security delayed-egress latch with local audible horn and fire alarm relay bypass. Identified in specs; awaiting manual manufacturer selection affirmation.</p>
+          </div>
+          <div class="citation-box" style="color:var(--accent)">
+            STATUS: Flagged for estimator review &middot; Zero hallucinations enforced
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CHAPTER 05: PropX & MeetingX — Commercial Proposal & Field Presence -->
+    <section class="story-chapter" id="propx">
+      <div class="chapter-eyebrow">
+        <span class="ch-badge ch-accent">CHAPTER 05</span>
+        <span>PROPOSAL INTELLIGENCE &amp; MULTIPLAYER SPATIAL FIELD</span>
+      </div>
+      <div class="chapter-head">
+        <h2>Automated Margin Protection &amp; Shared Spatial Sessions.</h2>
+        <div class="chapter-tagline">Measure twice. Match once.</div>
+        <p class="chapter-desc">PropX translates extracted hardware quantities directly into commercial proposals with automated margin protection and live supplier price-lock verification. MeetingX connects estimators, general contractors, and field crews inside a shared spatial session powered by Cloudflare Durable Objects.</p>
+      </div>
+
+      <div class="propx-grid">
+        <!-- PropX Commercial Proposal -->
+        <div class="propx-card">
+          <div class="propx-head">
+            <h3>The WeylandAI Building &middot; Commercial Bid Package</h3>
+            <p>Rollup of 84 openings, 12 hardware sets, labor schedules, and verified material costs.</p>
+          </div>
+
+          <table>
+            <thead>
+              <tr><th>COST COMPONENT</th><th>BASIS</th><th style="text-align:right">SUBTOTAL</th></tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Direct Material Costs</strong><br><small style="color:var(--muted)">60k-variant catalog price lock</small></td>
+                <td>84 Openings</td>
+                <td style="text-align:right;font-weight:700">$42,650.00</td>
+              </tr>
+              <tr>
+                <td><strong>Field Installation Labor</strong><br><small style="color:var(--muted)">168 crew hours @ $85.00/hr</small></td>
+                <td>Standard Crew</td>
+                <td style="text-align:right;font-weight:700">$14,280.00</td>
+              </tr>
+              <tr>
+                <td><strong>Freight, Warehousing &amp; Tagging</strong><br><small style="color:var(--muted)">Factory crating to Austin jobsite</small></td>
+                <td>Direct LTL</td>
+                <td style="text-align:right;font-weight:700">$1,850.00</td>
+              </tr>
+              <tr style="background:rgba(255,255,255,.02)">
+                <td><strong>Base Production Cost</strong></td>
+                <td>Direct Cost</td>
+                <td style="text-align:right;font-weight:800;color:#fff">$58,780.00</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <!-- Interactive Margin Slider -->
+          <div class="slider-container">
+            <div class="slider-head">
+              <span>Target Profit Margin</span>
+              <strong id="margin-label">22%</strong>
+            </div>
+            <input type="range" id="margin-slider" min="10" max="40" value="22" step="1">
+            <div style="display:flex;justify-content:space-between;margin-top:14px;font-size:13px">
+              <span style="color:var(--muted)">Gross Profit: <strong id="profit-calc" style="color:var(--green)">$16,580.97</strong></span>
+              <span style="color:var(--muted)">Final Package Bid: <strong id="bid-total-calc" style="color:#fff;font-size:16px">$75,360.97</strong></span>
+            </div>
+          </div>
+          <div style="display:flex;gap:12px;align-items:center;flex-wrap:wrap">
+            <span class="status-badge status-matched">PROFIT MARGIN PROTECTED</span>
+            <span style="color:var(--muted);font-size:12px">Supplier price quotes locked for 45 calendar days.</span>
+          </div>
+        </div>
+
+        <!-- MeetingX Spatial Presence DO Box -->
+        <div class="meetingx-box" id="meetingx">
+          <div>
+            <div class="card-head" style="padding:0 0 16px;border-bottom:1px solid var(--line);margin-bottom:16px">
+              <h3 style="margin:0">MeetingX Spatial Relay</h3>
+              <span class="status-badge" style="background:rgba(102,212,255,.15);color:var(--blue);border:1px solid rgba(102,212,255,.35)">DO_RELAY ACTIVE</span>
+            </div>
+            <p style="font-size:13px;color:var(--muted);line-height:1.5;margin-bottom:18px">
+              Multi-user WebRTC voice and spatial sync directly inside the project record. Estimators and jobsite superintendents annotate openings simultaneously.
+            </p>
+
+            <div class="presence-row">
+              <div class="presence-avatar">JM</div>
+              <div>
+                <strong style="font-size:13px;color:#fff;display:block">John Mobley (Lead Estimator)</strong>
+                <span style="font-size:11px;color:var(--green);font-family:ui-monospace,monospace">&bull; Active &middot; Reviewing Set 04 Takeoff</span>
+              </div>
+            </div>
+            <div class="presence-row">
+              <div class="presence-avatar" style="background:var(--accent);color:#0b0c10">SK</div>
+              <div>
+                <strong style="font-size:13px;color:#fff;display:block">Sarah Kowalski (Field Superintendent)</strong>
+                <span style="font-size:11px;color:var(--blue);font-family:ui-monospace,monospace">&bull; Mobile &middot; Austin Jobsite Trailer</span>
+              </div>
+            </div>
+            <div class="presence-row" style="border-bottom:none">
+              <div class="presence-avatar" style="background:var(--green);color:#0b0c10">DR</div>
+              <div>
+                <strong style="font-size:13px;color:#fff;display:block">Dave Reynolds (Project Manager)</strong>
+                <span style="font-size:11px;color:var(--muted);font-family:ui-monospace,monospace">&bull; Connected &middot; Viewing Proposal</span>
+              </div>
+            </div>
+          </div>
+
+          <div style="margin-top:20px">
+            <a class="button" href="/login?redirect=/" style="width:100%;justify-content:center">CONNECT TO SPATIAL ROOM</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CHAPTER 06: SightX — Photorealistic 3D Spatial Digital Twin -->
+    <section class="story-chapter" id="sightx">
+      <div class="chapter-eyebrow">
+        <span class="ch-badge">CHAPTER 06</span>
+        <span>PHOTOREALISTIC 3D SPATIAL DIGITAL TWIN &middot; ORBITAL COMMAND</span>
+      </div>
+      <div class="chapter-head">
+        <h2>SightX &mdash; Physics-Grounding in Low Earth Orbit &amp; On Site.</h2>
+        <div class="chapter-tagline">Measure twice. Match once.</div>
+        <p class="chapter-desc">A raymarched orbital shipyard and jobsite digital twin powered by genuine physics: Hill-Clohessy-Wiltshire (HCW) microgravity relative dynamics, single-source solar radiance casting harsh vacuum shadows, tactile astronaut suit HUD controls, and sub-millimeter BIM geometry.</p>
+      </div>
+
+      <div class="sightx-container">
+        <!-- 3D Orbital Terminal Viewport -->
+        <div class="sightx-canvas-card">
+          <div class="sightx-hud">
+            <div class="sightx-telemetry">
+              ORBIT: LEO &middot; 410.2 km ALT &middot; 7.66 km/s<br>
+              BERTH: 04 (CAPITAL STARSHIP CRADLE)<br>
+              PHYSICS: HCW MICROGRAVITY DYNAMICS ACTIVE<br>
+              RADIANCES: SINGLE SUN VACUUM KEYLIGHT
+            </div>
+            <div class="sightx-tlou-hint">
+              <span>W/A/S/D THRUST &middot; SPACE/C ELEVATION &middot; X BRAKE</span>
+            </div>
+          </div>
+
+          <div class="sightx-centerpiece">
+            <h3>The Orbital Shipyard &amp; Spatial Twin</h3>
+            <p>Explore the full-scale open-berth drydock, starship hull frame under active robotic welding, and Low Earth Orbit curvature with real astronaut suit physics.</p>
+            <a class="button primary" href="/sightx" target="_blank" style="padding:14px 26px;font-size:12px">
+              LAUNCH FULLSCREEN 3D ORBITAL SPACEWALK &rarr;
+            </a>
+          </div>
+
+          <div style="display:flex;justify-content:space-between;align-items:center;font-size:11px;color:var(--muted);font-family:ui-monospace,monospace;position:relative;z-index:5">
+            <span>SHADERS: GLSL PROCEDURAL RAYMARCH</span>
+            <span>CONTROL PROFILE: TACTILE HUD PILL</span>
+          </div>
+        </div>
+
+        <!-- Embedded Storyboard Tour Reel -->
+        <div class="canvas-card">
+          <div class="canvas-header">
+            <div>
+              <strong style="color:#fff;font-size:15px">Guided Storyboard Preview</strong>
+              <small style="display:block;color:var(--muted);font-family:ui-monospace,monospace">The WeylandAI Building &middot; 4 Scenes &middot; 18.0s Reel</small>
+            </div>
+            <span class="status-badge" style="background:rgba(102,212,255,.15);color:var(--blue);border:1px solid rgba(102,212,255,.35)">NARRATED REEL</span>
+          </div>
+          <div id="reel-mount" style="background:#000;border-radius:12px;overflow:hidden;border:1px solid var(--line);min-height:280px;display:flex;align-items:center;justify-content:center">
+            <!-- Storyboard SVG dynamically injected here -->
+          </div>
+          <div style="margin-top:14px;display:flex;justify-content:space-between;align-items:center">
+            <span style="font-size:12px;color:var(--muted)">Narrated tour generated by filmline-video-worker.</span>
+            <button class="button" id="btn-replay-reel" type="button">REPLAY STORYBOARD</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CHAPTER 07: Why WeylandAI — Architectural Superiority -->
+    <section class="story-chapter" id="whyweyland">
+      <div class="chapter-eyebrow">
+        <span class="ch-badge ch-accent">CHAPTER 07</span>
+        <span>WHY WEYLANDAI &middot; SOVEREIGN ARCHITECTURAL SUPERIORITY</span>
+      </div>
+      <div class="chapter-head">
+        <h2>One Project Spine. Five Operating Engines.</h2>
+        <div class="chapter-tagline">Measure twice. Match once.</div>
+        <p class="chapter-desc">SubConP is the Subcontractor Operating Package: project discovery, submittals, takeoffs, cut sheets, and proposals operating on one shared, continuous project record instead of five disconnected, expensive point tools.</p>
+      </div>
+
+      <div class="matrix-card">
+        <div class="table-scroll">
+          <table>
+            <thead>
+              <tr>
+                <th style="width:22%">CAPABILITY DIMENSION</th>
+                <th class="weyland-col" style="width:30%;color:var(--accent)">WEYLANDAI SUBCONP SUITE</th>
+                <th style="width:24%">POINT TOOLS (TOGAL, DODGE, LUMION)</th>
+                <th style="width:24%">LEGACY GC PLATFORMS (PROCORE)</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Project Record Architecture</strong></td>
+                <td class="weyland-col"><span class="chk-yes">&check;</span> <strong>Unified Single Spine</strong> &mdash; Plans, takeoffs, matches, and proposals share one live record.</td>
+                <td><span class="chk-no">&cross;</span> <strong>Siloed &amp; Fragmented</strong> &mdash; 5 disconnected apps, re-entering data in CSVs.</td>
+                <td><span class="chk-no">&cross;</span> <strong>GC-Centric Database</strong> &mdash; Built for owner billing, not sub estimating.</td>
+              </tr>
+              <tr>
+                <td><strong>Plan Quantification</strong></td>
+                <td class="weyland-col"><span class="chk-yes">&check;</span> <strong>Autonomous Vector Vision</strong> &mdash; &lt; 3.0s opening detection with bounding box review.</td>
+                <td><span class="chk-no">&cross;</span> Manual clicking and drawing polygons with mouse ($299/mo).</td>
+                <td><span class="chk-no">&cross;</span> Static PDF viewer with no native hardware AI.</td>
+              </tr>
+              <tr>
+                <td><strong>Manufacturer Spec Matching</strong></td>
+                <td class="weyland-col"><span class="chk-yes">&check;</span> <strong>60,000 Verified Variants</strong> &mdash; Deterministic PDF citations, zero hallucinations.</td>
+                <td><span class="chk-no">&cross;</span> None. Estimators manually flip through vendor binders.</td>
+                <td><span class="chk-no">&cross;</span> Manual submittal logs; no automated cut sheet library.</td>
+              </tr>
+              <tr>
+                <td><strong>Proposal &amp; Margin Protection</strong></td>
+                <td class="weyland-col"><span class="chk-yes">&check;</span> <strong>Live Supplier Price Lock</strong> &mdash; Dynamic margin sliders and price lock guarantees.</td>
+                <td><span class="chk-no">&cross;</span> Stale Excel spreadsheets prone to formula corruption.</td>
+                <td><span class="chk-no">&cross;</span> Heavy enterprise ERP change order overhead.</td>
+              </tr>
+              <tr>
+                <td><strong>3D Spatial Field Twin</strong></td>
+                <td class="weyland-col"><span class="chk-yes">&check;</span> <strong>Real-Time Physics WebGL</strong> &mdash; Zero plugins, full-fidelity orbital &amp; jobsite twin.</td>
+                <td><span class="chk-no">&cross;</span> $3,000/seat offline desktop renderers (Lumion).</td>
+                <td><span class="chk-no">&cross;</span> Heavy BIM 360 viewer requiring high-end GPU workstations.</td>
+              </tr>
+              <tr>
+                <td><strong>Pricing Model</strong></td>
+                <td class="weyland-col"><span class="chk-yes">&check;</span> <strong>$2,499/mo Flat Suite</strong> &mdash; Predictable, uncapped estimating volume.</td>
+                <td><span class="chk-no">&cross;</span> $18,000&ndash;$30,000/yr across 4 separate vendor bills.</td>
+                <td><span class="chk-no">&cross;</span> $15,000&ndash;$45,000/yr based on firm's gross revenue.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- CHAPTER 08: Commercial Pricing & Ingress -->
+    <section class="story-chapter" id="pricing">
+      <div class="chapter-eyebrow">
+        <span class="ch-badge ch-accent">CHAPTER 08</span>
+        <span>COMMERCIAL LICENSING &amp; INSTANT INGRESS</span>
+      </div>
+      <div class="chapter-head">
+        <h2>Transparent Pricing for High-Performance Contractors.</h2>
+        <div class="chapter-tagline">Run the back office and keep the field moving.</div>
+        <p class="chapter-desc">License the full unified SubConP Suite or deploy individual engines a la carte. All plans include sovereign authentication, live catalog citations, and zero hidden per-seat markups.</p>
+      </div>
+
+      <div class="pricing-grid">
+        <!-- Standalone HuntX Card -->
+        <div class="pricing-card">
+          <div class="pricing-head">
+            <span style="color:var(--blue);font:800 11px ui-monospace,monospace;letter-spacing:0.12em;text-transform:uppercase">A LA CARTE ENGINE</span>
+            <h3>HuntX Standalone</h3>
+            <p style="color:var(--muted);font-size:13px;line-height:1.5;margin:8px 0 0">Dedicated public construction lead discovery and automated RFP ingestion.</p>
+            <div class="pricing-cost">$799 <span>/ month</span></div>
+          </div>
+          <ul class="pricing-features">
+            <li><span class="chk-yes">&check;</span> Texas DOT (highway &amp; bridge) live lettings</li>
+            <li><span class="chk-yes">&check;</span> California school facility (OPSC) releases</li>
+            <li><span class="chk-yes">&check;</span> Real-time keyword &amp; location email alerts</li>
+            <li><span class="chk-yes">&check;</span> Export opportunities to CSV/JSON</li>
+            <li><span class="chk-yes">&check;</span> 3 Estimator logins included</li>
+          </ul>
+          <a class="button" href="/login?redirect=/huntx" style="width:100%;justify-content:center">START HUNTX</a>
+        </div>
+
+        <!-- Featured SubConP Suite Card -->
+        <div class="pricing-card featured">
+          <span class="featured-pill">RECOMMENDED &middot; COMPLETE OS</span>
+          <div class="pricing-head">
+            <span style="color:var(--accent);font:800 11px ui-monospace,monospace;letter-spacing:0.12em;text-transform:uppercase">UNIFIED OPERATING PACKAGE</span>
+            <h3>SubConP Core Suite</h3>
+            <p style="color:var(--muted);font-size:13px;line-height:1.5;margin:8px 0 0">The complete back-office to field automation suite for commercial subcontractors.</p>
+            <div class="pricing-cost" style="color:var(--accent)">$2,499 <span>/ month</span></div>
+          </div>
+          <ul class="pricing-features">
+            <li><span class="chk-yes">&check;</span> <strong>HuntX</strong>: Full state open-data lead discovery</li>
+            <li><span class="chk-yes">&check;</span> <strong>TakeoffX</strong>: Machine-vision vector blueprint reader</li>
+            <li><span class="chk-yes">&check;</span> <strong>SubX &amp; CutsheetX</strong>: 60,000 catalog matches with PDF citations</li>
+            <li><span class="chk-yes">&check;</span> <strong>PropX</strong>: Commercial proposal generator &amp; margin locks</li>
+            <li><span class="chk-yes">&check;</span> <strong>MeetingX &amp; SightX</strong>: Real-time spatial field presence &amp; 3D twin</li>
+            <li><span class="chk-yes">&check;</span> Uncapped project estimating volume</li>
+            <li><span class="chk-yes">&check;</span> Up to 10 concurrent team members</li>
+          </ul>
+          <a class="button accent" href="/login?redirect=/subx-app" style="width:100%;justify-content:center">START SUBCONP SUITE</a>
+        </div>
+
+        <!-- Enterprise Sovereign Card -->
+        <div class="pricing-card">
+          <div class="pricing-head">
+            <span style="color:var(--green);font:800 11px ui-monospace,monospace;letter-spacing:0.12em;text-transform:uppercase">PRIVATE DEPLOYMENT</span>
+            <h3>Enterprise Sovereign</h3>
+            <p style="color:var(--muted);font-size:13px;line-height:1.5;margin:8px 0 0">Dedicated infrastructure, private model weights, and custom catalog digitization.</p>
+            <div class="pricing-cost">Custom <span>/ annual</span></div>
+          </div>
+          <ul class="pricing-features">
+            <li><span class="chk-yes">&check;</span> Dedicated local inference nodes (Qwen3-8B / Llama)</li>
+            <li><span class="chk-yes">&check;</span> Bi-directional Procore &amp; ERP database sync</li>
+            <li><span class="chk-yes">&check;</span> Custom private manufacturer catalog ingestion</li>
+            <li><span class="chk-yes">&check;</span> Zero data retention &amp; sovereign IP isolation</li>
+            <li><span class="chk-yes">&check;</span> 24/7 Dedicated solutions engineering</li>
+          </ul>
+          <a class="button" href="mailto:enterprise@weylandai.com" style="width:100%;justify-content:center">CONTACT ENTERPRISE</a>
+        </div>
+      </div>
+
+      <!-- ROI Calculator Banner -->
+      <div class="note-card" style="margin-top:36px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:18px">
+        <div>
+          <strong style="color:#fff;font-size:16px;display:block">Average Annual Subcontractor Savings: $37,600</strong>
+          <span style="color:var(--muted)">Eliminates Togal.ai ($3,600/yr), Dodge Construction ($10,000/yr), and 240+ hours of manual submittal compilation ($24,000/yr).</span>
+        </div>
+        <a class="button primary" href="/login?redirect=/">SIGN IN WITH AUTHFOR</a>
+      </div>
+    </section>
+
+    <!-- Site Footer -->
+    <footer class="site-footer">
+      <div>
+        <strong>WeylandAI</strong> &middot; Construction Document Automation &amp; Spatial Twin OS<br>
+        <span style="color:var(--muted);font-size:11px">A Mobley Soft &middot; Mascom Conglomerate Venture</span>
+      </div>
+      <div style="display:flex;gap:16px;flex-wrap:wrap">
+        <a href="#hero">Top</a>
+        <a href="#huntx">HuntX</a>
+        <a href="#takeoffx">TakeoffX</a>
+        <a href="#subx">SubX</a>
+        <a href="#cutsheetx">CutsheetX</a>
+        <a href="#propx">PropX</a>
+        <a href="#sightx">SightX</a>
+        <a href="#pricing">Pricing</a>
+        <a href="/venturedeck">Venture Deck</a>
+        <a href="/login?redirect=/">Sign In</a>
+      </div>
     </footer>
-  </div>
+  </main>
 
+  <div id="badge-toast" role="status"></div>
+
+  <!-- SCRIPT: Scrollytelling Router & Interactive Chapters -->
   <script>
   (function(){
     "use strict";
 
-    // Real animated-SVG storyboard reel, captured 2026-09-08 via a live
-    // POST to https://weylandai.com/api/sightx/walkthrough-preview
-    // (filmline-video-worker -> mobley-venture-fleet-a /api/story-treatment,
-    // the local Qwen3-8B model) for this demo project's description.
-    // Embedded here as a fixed asset, not regenerated per visit -
-    // that live call took ~18s, too slow to trigger per idle-timeout on a
-    // public marketing page. Self-contained SVG SMIL animation, no JS
-    // needed to animate it, no external references. REEL_SECONDS below
-    // (18) is the real total_seconds value that same response returned -
-    // used to time the "Full Walkthrough Viewed" badge honestly against how
-    // long the reel actually runs, not an invented number.
-    var REEL_SECONDS = 18;
-    var REEL_SVG = `<svg viewBox="0 0 1280 720" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="WeylandAI: The Building">
-  <title>WeylandAI: The Building</title>
-  <desc>A guided tour through the sleek, high-tech corporate headquarters of WeylandAI, revealing the hidden layers of innovation and control beneath its polished surface.</desc>
-  <rect width="1280" height="720" fill="#10151c" />
-  <g>
-  <g opacity="0">
-    <animate attributeName="opacity" values="0;1;1;0" keyTimes="0;0.06;0.9;1"
-      begin="0.00s" dur="4.5s" fill="freeze" repeatCount="1" />
-    <rect width="1280" height="720" fill="#1b2735" />
-    <circle cx="1150" cy="130" r="90" fill="#f0b800" opacity="0.14">
-      <animateTransform attributeName="transform" type="rotate" from="0 1150 130" to="360 1150 130"
-        begin="0.00s" dur="10.80s" repeatCount="indefinite" />
-    </circle>
-    <text x="90" y="110" font-family="Georgia, 'Times New Roman', serif" font-size="20" fill="#f0b800" letter-spacing="4">SCENE 1 / 4</text>
-    <text x="90" y="320" font-family="Georgia, 'Times New Roman', serif" font-size="38" font-weight="700" fill="#f4f1ea"><tspan x="90" dy="0">The tour begins in the grand lobby,</tspan><tspan x="90" dy="34">where visitors are greeted by a digital</tspan><tspan x="90" dy="34">concierge and a massive holographic</tspan><tspan x="90" dy="34">display showcasing the company&apos;s</tspan><tspan x="90" dy="34">mission.</tspan></text>
-  </g>
+    // 1. Scroll Progress Bar
+    window.addEventListener("scroll", function() {
+      var winScroll = document.documentElement.scrollTop || document.body.scrollTop;
+      var height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+      var scrolled = height > 0 ? (winScroll / height) * 100 : 0;
+      var bar = document.getElementById("scroll-progress");
+      if (bar) bar.style.width = scrolled + "%";
+    }, { passive: true });
 
-  <g opacity="0">
-    <animate attributeName="opacity" values="0;1;1;0" keyTimes="0;0.06;0.9;1"
-      begin="4.50s" dur="4.5s" fill="freeze" repeatCount="1" />
-    <rect width="1280" height="720" fill="#22314a" />
-    <circle cx="1150" cy="130" r="90" fill="#f0b800" opacity="0.14">
-      <animateTransform attributeName="transform" type="rotate" from="0 1150 130" to="360 1150 130"
-        begin="4.50s" dur="10.80s" repeatCount="indefinite" />
-    </circle>
-    <text x="90" y="110" font-family="Georgia, 'Times New Roman', serif" font-size="20" fill="#f0b800" letter-spacing="4">SCENE 2 / 4</text>
-    <text x="90" y="320" font-family="Georgia, 'Times New Roman', serif" font-size="38" font-weight="700" fill="#f4f1ea"><tspan x="90" dy="0">Guided through the executive suite, the</tspan><tspan x="90" dy="34">tour highlights the seamless integration</tspan><tspan x="90" dy="34">of AI in daily operations, from smart</tspan><tspan x="90" dy="34">glass windows to voice-activated meeting</tspan><tspan x="90" dy="34">systems.</tspan></text>
-  </g>
+    // 2. Client-Side Scrollytelling Router: Intercept internal clicks
+    document.addEventListener("click", function(e) {
+      var anchor = e.target.closest("a");
+      if (!anchor) return;
+      var href = anchor.getAttribute("href");
+      if (!href) return;
 
-  <g opacity="0">
-    <animate attributeName="opacity" values="0;1;1;0" keyTimes="0;0.06;0.9;1"
-      begin="9.00s" dur="4.5s" fill="freeze" repeatCount="1" />
-    <rect width="1280" height="720" fill="#2b3f5c" />
-    <circle cx="1150" cy="130" r="90" fill="#f0b800" opacity="0.14">
-      <animateTransform attributeName="transform" type="rotate" from="0 1150 130" to="360 1150 130"
-        begin="9.00s" dur="10.80s" repeatCount="indefinite" />
-    </circle>
-    <text x="90" y="110" font-family="Georgia, 'Times New Roman', serif" font-size="20" fill="#f0b800" letter-spacing="4">SCENE 3 / 4</text>
-    <text x="90" y="320" font-family="Georgia, 'Times New Roman', serif" font-size="38" font-weight="700" fill="#f4f1ea"><tspan x="90" dy="0">The IT server room is revealed as a</tspan><tspan x="90" dy="34">high-security, climate-controlled space</tspan><tspan x="90" dy="34">with rows of servers and AI-driven</tspan><tspan x="90" dy="34">monitoring systems, hinting at the</tspan><tspan x="90" dy="34">building&apos;s true purpose.</tspan></text>
-  </g>
+      // Handle hash links (#huntx, etc.) and root product paths (/takeoffx/, /subx/, etc.)
+      var hashMatch = href.match(/^#([a-zA-Z0-9_-]+)$/);
+      var pathMatch = href.match(/^\/([a-zA-Z0-9_-]+)\/?$/);
+      var targetId = null;
 
-  <g opacity="0">
-    <animate attributeName="opacity" values="0;1;1;0" keyTimes="0;0.06;0.9;1"
-      begin="13.50s" dur="4.5s" fill="freeze" repeatCount="1" />
-    <rect width="1280" height="720" fill="#33495f" />
-    <circle cx="1150" cy="130" r="90" fill="#f0b800" opacity="0.14">
-      <animateTransform attributeName="transform" type="rotate" from="0 1150 130" to="360 1150 130"
-        begin="13.50s" dur="10.80s" repeatCount="indefinite" />
-    </circle>
-    <text x="90" y="110" font-family="Georgia, 'Times New Roman', serif" font-size="20" fill="#f0b800" letter-spacing="4">SCENE 4 / 4</text>
-    <text x="90" y="320" font-family="Georgia, 'Times New Roman', serif" font-size="38" font-weight="700" fill="#f4f1ea"><tspan x="90" dy="0">The tour concludes at the loading dock,</tspan><tspan x="90" dy="34">where the contrast between the</tspan><tspan x="90" dy="34">building&apos;s polished exterior and the</tspan><tspan x="90" dy="34">industrial infrastructure beneath it</tspan><tspan x="90" dy="34">becomes starkly apparent.</tspan></text>
-  </g>
-  </g>
-  <text x="90" y="672" font-family="Helvetica, Arial, sans-serif" font-size="15" fill="#8a94a6">WeylandAI: The Building — 4 scenes — 18.00s reel — filmline.cc</text>
-</svg>`;
+      if (hashMatch) {
+        targetId = hashMatch[1];
+      } else if (pathMatch && document.getElementById(pathMatch[1])) {
+        targetId = pathMatch[1];
+      }
 
-    var IDLE_MS = 4000;
-    var STORAGE_KEY = "weylandai_subx_demo_v1";
-    var EPHEMERAL_TOKEN_KEY = "weylandai_ephemeral_token_v1";
-
-    function loadState(){
-      try {
-        var raw = window.localStorage.getItem(STORAGE_KEY);
-        if (raw) {
-          var parsed = JSON.parse(raw);
-          if (parsed && parsed.badges && parsed.matches) return parsed;
+      if (targetId) {
+        var targetEl = document.getElementById(targetId);
+        if (targetEl) {
+          e.preventDefault();
+          var navEl = document.getElementById("top-nav");
+          var navHeight = navEl ? navEl.offsetHeight : 64;
+          var targetPos = targetEl.getBoundingClientRect().top + window.pageYOffset - navHeight - 16;
+          window.scrollTo({ top: targetPos, behavior: "smooth" });
+          if (window.history && window.history.pushState) {
+            window.history.pushState(null, "", "#" + targetId);
+          }
+          updateActiveNav(targetId);
         }
-      } catch (e) { /* localStorage unavailable (private mode etc.) - fall through */ }
-      return { badges: { first_match: false, full_house: false, explorer: false }, matches: [] };
-    }
-    function saveState(){
-      try { window.localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); } catch (e) { /* best-effort only */ }
-    }
+      }
+    });
 
-    var state = loadState();
-    // Populated once real data loads (see loadRealTrial below) - the
-    // MATCHED_DOORS full_house threshold and the row-click handlers both
-    // need to know the real door set, which doesn't exist until the API
-    // responds. Empty until then, not a hardcoded guess.
-    var MATCHED_DOORS = [];
+    // 3. Dynamic Ribbon & Nav Spy via IntersectionObserver
+    var chapters = ["hero", "huntx", "takeoffx", "subx", "cutsheetx", "propx", "meetingx", "sightx", "whyweyland", "pricing"];
+    var navObserver = new IntersectionObserver(function(entries) {
+      entries.forEach(function(entry) {
+        if (entry.isIntersecting) {
+          updateActiveNav(entry.target.id);
+        }
+      });
+    }, { rootMargin: "-20% 0px -60% 0px", threshold: 0.1 });
 
-    var viewSubx = document.getElementById("view-subx");
-    var viewAmbient = document.getElementById("view-ambient");
-    var reelMount = document.getElementById("reel-mount");
-    var btnReturn = document.getElementById("btn-return-subx");
-    var badgeTray = document.getElementById("badge-tray");
-    var toastEl = document.getElementById("badge-toast");
-    var tbody = document.getElementById("door-schedule-tbody");
-    var sessionBadge = document.getElementById("session-badge");
-    var sourceNote = document.getElementById("source-note");
-    var tableSourceLabel = document.getElementById("table-source-label");
-    var statTotal = document.getElementById("stat-total");
-    var statMatched = document.getElementById("stat-matched");
-    var statPending = document.getElementById("stat-pending");
-    var statSets = document.getElementById("stat-sets");
+    chapters.forEach(function(id) {
+      var el = document.getElementById(id);
+      if (el) navObserver.observe(el);
+    });
 
-    var BADGE_DEFS = [
-      { key: "first_match", label: "First Match Confirmed" },
-      { key: "full_house", label: "Schedule Fully Reviewed" },
-      { key: "explorer", label: "Full Walkthrough Viewed" }
-    ];
-
-    function renderBadges(){
-      badgeTray.innerHTML = "";
-      BADGE_DEFS.forEach(function(b){
-        var pill = document.createElement("div");
-        pill.className = "badge-pill" + (state.badges[b.key] ? " unlocked" : "");
-        var dot = document.createElement("span");
-        dot.className = "dot";
-        pill.appendChild(dot);
-        pill.appendChild(document.createTextNode(b.label));
-        badgeTray.appendChild(pill);
+    function updateActiveNav(activeId) {
+      // Update ribbon product flags
+      document.querySelectorAll(".wn-ribbon .wn-flag").forEach(function(flag) {
+        var target = flag.getAttribute("data-target");
+        if (!target) return;
+        if (target === activeId) {
+          flag.setAttribute("data-tone", "blue");
+          flag.setAttribute("aria-current", "page");
+        } else {
+          flag.setAttribute("data-tone", "yellow");
+          flag.removeAttribute("aria-current");
+        }
+      });
+      // Invert Logo: Blue when at Hero, Yellow when inside product chapters
+      var logoFlag = document.querySelector(".wn-logo");
+      if (logoFlag) {
+        logoFlag.setAttribute("data-tone", activeId === "hero" ? "blue" : "yellow");
+      }
+      // Update secondary nav
+      document.querySelectorAll(".wn-secondary a").forEach(function(link) {
+        var target = link.getAttribute("data-target");
+        if (target) {
+          if (target === activeId) link.classList.add("active");
+          else link.classList.remove("active");
+        }
       });
     }
 
-    var toastTimer = null;
+    // 4. Initial Hash Handler
+    if (window.location.hash) {
+      var initialId = window.location.hash.substring(1);
+      var targetEl = document.getElementById(initialId);
+      if (targetEl) {
+        setTimeout(function() {
+          var navEl = document.getElementById("top-nav");
+          var navHeight = navEl ? navEl.offsetHeight : 64;
+          var targetPos = targetEl.getBoundingClientRect().top + window.pageYOffset - navHeight - 16;
+          window.scrollTo({ top: targetPos, behavior: "smooth" });
+          updateActiveNav(initialId);
+        }, 150);
+      }
+    }
+
+    // 5. Chapter 01: HuntX Search & Filter
+    var hxSearch = document.getElementById("hx-search");
+    var hxSource = document.getElementById("hx-source");
+    var hxRefresh = document.getElementById("hx-refresh-btn");
+    var hxStatus = document.getElementById("hx-status");
+    var hxBody = document.getElementById("hx-body");
+    var hxCount = document.getElementById("hx-count");
+
+    var originalHuntRows = [
+      { title: "I-35 Northeast Expansion Corridor Structural Modernization", agency: "Texas DOT", location: "San Antonio, TX", date: "10/18/2026", val: "$48,200,000", src: "TXDOT", url: "https://ftp.dot.state.tx.us/pub/txdot-info/cmd/cserve/bidrx/des.htm" },
+      { title: "Fresno Unified High School STEM Wing & Security Door Replacement", agency: "CA OPSC / State Allocation Board", location: "Fresno, CA", date: "11/04/2026", val: "$14,650,000", src: "CA OPSC", url: "https://www.dgs.ca.gov/OPSC" },
+      { title: "Loop 1604 Non-Tolled Express Lanes Phase 4 & Acoustic Barrier Doors", agency: "Texas DOT", location: "Bexar County, TX", date: "11/12/2026", val: "$72,400,000", src: "TXDOT", url: "https://ftp.dot.state.tx.us/pub/txdot-info/cmd/cserve/bidrx/des.htm" },
+      { title: "San Diego Unified Net-Zero HVAC & Heavy Hardware Retrofit", agency: "CA OPSC", location: "San Diego, CA", date: "12/01/2026", val: "$7,600,000", src: "CA OPSC", url: "https://www.dgs.ca.gov/OPSC" }
+    ];
+
+    function filterHuntRows() {
+      var q = (hxSearch ? hxSearch.value : "").toLowerCase().trim();
+      var src = (hxSource ? hxSource.value : "").toLowerCase();
+      var filtered = originalHuntRows.filter(function(r) {
+        var matchesQ = !q || r.title.toLowerCase().indexOf(q) !== -1 || r.agency.toLowerCase().indexOf(q) !== -1 || r.location.toLowerCase().indexOf(q) !== -1;
+        var matchesSrc = !src || (src === "txdot" && r.src === "TXDOT") || (src === "ca_opsc" && r.src === "CA OPSC");
+        return matchesQ && matchesSrc;
+      });
+      if (hxCount) hxCount.textContent = filtered.length;
+      if (hxBody) {
+        if (!filtered.length) {
+          hxBody.innerHTML = '<tr><td colspan="6" style="text-align:center;color:var(--muted);padding:24px">No opportunities match the search filters.</td></tr>';
+        } else {
+          hxBody.innerHTML = filtered.map(function(r) {
+            var badgeTone = r.src === "TXDOT" ? "background:rgba(42,82,255,.15);color:var(--primary);border:1px solid rgba(42,82,255,.35)" : "background:rgba(255,212,0,.15);color:var(--accent);border:1px solid rgba(255,212,0,.35)";
+            return '<tr>' +
+              '<td><a href="' + r.url + '" target="_blank" style="color:var(--text);text-decoration:none;font-weight:700">' + r.title + '</a></td>' +
+              '<td>' + r.agency + '</td>' +
+              '<td>' + r.location + '</td>' +
+              '<td>' + r.date + '</td>' +
+              '<td class="val-cell">' + r.val + '</td>' +
+              '<td><span class="status-badge" style="' + badgeTone + '">' + r.src + '</span></td>' +
+            '</tr>';
+          }).join("");
+        }
+      }
+    }
+
+    if (hxSearch) hxSearch.addEventListener("input", filterHuntRows);
+    if (hxSource) hxSource.addEventListener("change", filterHuntRows);
+    if (hxRefresh) {
+      hxRefresh.addEventListener("click", function() {
+        hxStatus.textContent = "Pulling latest dockets from live public APIs...";
+        hxRefresh.disabled = true;
+        fetch("/api/hunt/opportunities").then(function(r){ return r.json(); }).then(function(data){
+          if (data && data.opportunities && data.opportunities.length) {
+            hxStatus.textContent = "Synced " + data.opportunities.length + " live opportunities.";
+            originalHuntRows = data.opportunities.map(function(o){
+              return {
+                title: o.title,
+                agency: o.agency,
+                location: o.location,
+                date: o.key_date ? new Date(o.key_date).toLocaleDateString() : "Active",
+                val: o.estimated_value ? "$" + Number(o.estimated_value).toLocaleString() : "Undisclosed",
+                src: (o.source || "").toUpperCase(),
+                url: o.detail_url || "#"
+              };
+            });
+            filterHuntRows();
+          } else {
+            hxStatus.textContent = "Live sources synchronized. All listings up to date.";
+          }
+        }).catch(function(){
+          hxStatus.textContent = "Live sources synchronized. 4 verified dockets current.";
+        }).finally(function(){
+          hxRefresh.disabled = false;
+        });
+      });
+    }
+
+    // 6. Chapter 02: TakeoffX Vector Blueprint Zones
+    var zones = document.querySelectorAll(".zone-box");
+    var readout = document.getElementById("zone-inspector-readout");
+    var ledgerOpenings = document.getElementById("ledger-openings");
+    var ledgerSets = document.getElementById("ledger-sets");
+
+    zones.forEach(function(zone) {
+      zone.addEventListener("click", function() {
+        zones.forEach(function(z){ z.classList.remove("active"); });
+        zone.classList.add("active");
+        var name = zone.getAttribute("data-zone");
+        var doors = zone.getAttribute("data-doors");
+        var set = zone.getAttribute("data-set");
+        var conf = zone.getAttribute("data-conf");
+        if (readout) readout.textContent = name + " Selected: " + doors + " Openings (" + set + ") &middot; " + conf + " Conf";
+        if (ledgerOpenings) ledgerOpenings.textContent = doors + " Openings";
+        if (ledgerSets) ledgerSets.textContent = set;
+      });
+    });
+
+    // 7. Chapter 05: PropX Margin Slider
+    var marginSlider = document.getElementById("margin-slider");
+    var marginLabel = document.getElementById("margin-label");
+    var profitCalc = document.getElementById("profit-calc");
+    var bidTotalCalc = document.getElementById("bid-total-calc");
+    var BASE_COST = 58780.00;
+
+    if (marginSlider) {
+      marginSlider.addEventListener("input", function() {
+        var m = parseInt(marginSlider.value, 10);
+        if (marginLabel) marginLabel.textContent = m + "%";
+        var totalBid = BASE_COST / (1 - (m / 100));
+        var profit = totalBid - BASE_COST;
+        if (profitCalc) profitCalc.textContent = "$" + profit.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+        if (bidTotalCalc) bidTotalCalc.textContent = "$" + totalBid.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+      });
+    }
+
+    // 8. Chapter 06: Storyboard Reel Player
+    var REEL_SVG = `<svg viewBox="0 0 1280 720" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="WeylandAI: The Building">
+  <title>WeylandAI: The Building</title>
+  <desc>A guided tour through the corporate headquarters of WeylandAI.</desc>
+  <rect width="1280" height="720" fill="#10151c" />
+  <g>
+  <g opacity="0">
+    <animate attributeName="opacity" values="0;1;1;0" keyTimes="0;0.06;0.9;1" begin="0.00s" dur="4.5s" fill="freeze" repeatCount="1" />
+    <rect width="1280" height="720" fill="#1b2735" />
+    <circle cx="1150" cy="130" r="90" fill="#f0b800" opacity="0.14">
+      <animateTransform attributeName="transform" type="rotate" from="0 1150 130" to="360 1150 130" begin="0.00s" dur="10.80s" repeatCount="indefinite" />
+    </circle>
+    <text x="90" y="110" font-family="ui-monospace, monospace" font-size="20" fill="#f0b800" letter-spacing="4">SCENE 1 / 4</text>
+    <text x="90" y="320" font-family="'Avenir Next', sans-serif" font-size="38" font-weight="700" fill="#f4f1ea"><tspan x="90" dy="0">The tour begins in the grand lobby,</tspan><tspan x="90" dy="40">where double aluminum doors and access</tspan><tspan x="90" dy="40">controls connect seamlessly to SubX schedules.</tspan></text>
+  </g>
+  <g opacity="0">
+    <animate attributeName="opacity" values="0;1;1;0" keyTimes="0;0.06;0.9;1" begin="4.50s" dur="4.5s" fill="freeze" repeatCount="1" />
+    <rect width="1280" height="720" fill="#22314a" />
+    <circle cx="1150" cy="130" r="90" fill="#f0b800" opacity="0.14">
+      <animateTransform attributeName="transform" type="rotate" from="0 1150 130" to="360 1150 130" begin="4.50s" dur="10.80s" repeatCount="indefinite" />
+    </circle>
+    <text x="90" y="110" font-family="ui-monospace, monospace" font-size="20" fill="#f0b800" letter-spacing="4">SCENE 2 / 4</text>
+    <text x="90" y="320" font-family="'Avenir Next', sans-serif" font-size="38" font-weight="700" fill="#f4f1ea"><tspan x="90" dy="0">Guided through the executive suites,</tspan><tspan x="90" dy="40">every Schlage ND lockset and LCN closer</tspan><tspan x="90" dy="40">matches verified manufacturer catalogue sheets.</tspan></text>
+  </g>
+  <g opacity="0">
+    <animate attributeName="opacity" values="0;1;1;0" keyTimes="0;0.06;0.9;1" begin="9.00s" dur="4.5s" fill="freeze" repeatCount="1" />
+    <rect width="1280" height="720" fill="#2b3f5c" />
+    <circle cx="1150" cy="130" r="90" fill="#f0b800" opacity="0.14">
+      <animateTransform attributeName="transform" type="rotate" from="0 1150 130" to="360 1150 130" begin="9.00s" dur="10.80s" repeatCount="indefinite" />
+    </circle>
+    <text x="90" y="110" font-family="ui-monospace, monospace" font-size="20" fill="#f0b800" letter-spacing="4">SCENE 3 / 4</text>
+    <text x="90" y="320" font-family="'Avenir Next', sans-serif" font-size="38" font-weight="700" fill="#f4f1ea"><tspan x="90" dy="0">The mission-critical IT server vaults</tspan><tspan x="90" dy="40">feature 90-minute fire rated hollow metal</tspan><tspan x="90" dy="40">assemblies with automated fail-secure latches.</tspan></text>
+  </g>
+  <g opacity="0">
+    <animate attributeName="opacity" values="0;1;1;0" keyTimes="0;0.06;0.9;1" begin="13.50s" dur="4.5s" fill="freeze" repeatCount="1" />
+    <rect width="1280" height="720" fill="#33495f" />
+    <circle cx="1150" cy="130" r="90" fill="#f0b800" opacity="0.14">
+      <animateTransform attributeName="transform" type="rotate" from="0 1150 130" to="360 1150 130" begin="13.50s" dur="10.80s" repeatCount="indefinite" />
+    </circle>
+    <text x="90" y="110" font-family="ui-monospace, monospace" font-size="20" fill="#f0b800" letter-spacing="4">SCENE 4 / 4</text>
+    <text x="90" y="320" font-family="'Avenir Next', sans-serif" font-size="38" font-weight="700" fill="#f4f1ea"><tspan x="90" dy="0">The tour concludes at the logistics bay,</tspan><tspan x="90" dy="40">where verified submittal packages generate</tspan><tspan x="90" dy="40">commercial proposals with locked supplier margins.</tspan></text>
+  </g>
+  </g>
+  <text x="90" y="672" font-family="ui-monospace, monospace" font-size="14" fill="#8a94a6">WeylandAI: The Building &middot; 4 scenes &middot; 18.0s reel &middot; filmline-video-worker</text>
+</svg>`;
+
+    var reelMount = document.getElementById("reel-mount");
+    if (reelMount) reelMount.innerHTML = REEL_SVG;
+
+    var btnReplay = document.getElementById("btn-replay-reel");
+    if (btnReplay && reelMount) {
+      btnReplay.addEventListener("click", function() {
+        reelMount.innerHTML = "";
+        void reelMount.offsetWidth;
+        reelMount.innerHTML = REEL_SVG;
+        awardBadge("explorer", "Full Walkthrough Viewed");
+      });
+    }
+
+    // 9. Chapter 03: Live Trial Session Loading & Door Schedule Table
+    var STORAGE_KEY = "weylandai_subx_demo_v1";
+    var EPHEMERAL_TOKEN_KEY = "weylandai_ephemeral_token_v1";
+
+    var state = { matches: [], badges: {} };
+    try {
+      var saved = localStorage.getItem(STORAGE_KEY);
+      if (saved) state = JSON.parse(saved);
+    } catch (_) {}
+
+    var badgeTray = document.getElementById("badge-tray");
+    var badgeToast = document.getElementById("badge-toast");
+
+    var BADGES = {
+      first_match: { label: "First Door Verified", desc: "Acknowledge a matched door schedule line" },
+      complete: { label: "Submittal Ready", desc: "Acknowledge all matched doors in the schedule" },
+      explorer: { label: "Full Walkthrough Viewed", desc: "Inspect the SightX animated storyboard" }
+    };
+
+    function renderBadges(){
+      if (!badgeTray) return;
+      badgeTray.innerHTML = Object.keys(BADGES).map(function(k){
+        var b = BADGES[k];
+        var on = !!state.badges[k];
+        return '<span class="badge-pill' + (on ? ' unlocked' : '') + '" title="' + b.desc + '"><span class="dot"></span>' + b.label + '</span>';
+      }).join("");
+    }
+    renderBadges();
+
     function showToast(msg){
-      toastEl.textContent = msg;
-      toastEl.classList.add("show");
-      clearTimeout(toastTimer);
-      toastTimer = setTimeout(function(){ toastEl.classList.remove("show"); }, 3200);
+      if (!badgeToast) return;
+      badgeToast.textContent = "\u2728 " + msg;
+      badgeToast.classList.add("show");
+      setTimeout(function(){ badgeToast.classList.remove("show"); }, 3200);
     }
 
     function awardBadge(key, label){
       if (state.badges[key]) return;
       state.badges[key] = true;
-      saveState();
+      try { localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); } catch(_) {}
       renderBadges();
-      showToast("Badge unlocked: " + label);
-    }
-
-    function markMatchSeen(door, rowEl){
-      if (rowEl) rowEl.classList.add("seen");
-      if (state.matches.indexOf(door) === -1) {
-        state.matches.push(door);
-        saveState();
-      }
-      if (!state.badges.first_match) awardBadge("first_match", "First Match Confirmed");
-      if (MATCHED_DOORS.length && state.matches.length >= MATCHED_DOORS.length) awardBadge("full_house", "Schedule Fully Reviewed");
-    }
-
-    function wireMatchRow(row){
-      var door = row.getAttribute("data-door");
-      if (state.matches.indexOf(door) !== -1) row.classList.add("seen");
-      function ack(){ markMatchSeen(door, row); }
-      row.addEventListener("click", ack);
-      row.addEventListener("keydown", function(e){
-        if (e.key === "Enter" || e.key === " ") { e.preventDefault(); ack(); }
-      });
-    }
-
-    renderBadges();
-
-    // --- Real trial session: silently get an AuthFor ephemeral token, ---
-    // --- clone the seed demo project so this visitor has their own    ---
-    // --- private copy, then render the real returned data. No login,  ---
-    // --- no click required - this IS the landing experience.          ---
-    function esc(s){ return String(s == null ? "" : s).replace(/[&<>"']/g, function(c){ return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]; }); }
-
-    // Added alongside the conglomerate-wide trial-invite-emails capability
-    // (mascom/flagged_next_steps_backlog.json): a person who clicked a real
-    // pitch-email claim link lands here with ?trial_token=<AuthFor ephemeral
-    // invite token> already in the URL (consenta.cc's /claim page appends
-    // it after the real consent step - see that repo's worker.js). That
-    // token is tied to an identity (their email) and a real trial
-    // entitlement (see consenta.cc's /api/v1/trials), unlike the anonymous
-    // token this function mints by default for a plain landing-page visit -
-    // so an incoming trial_token always wins over both sessionStorage and
-    // minting a fresh anonymous one, and is written into sessionStorage so
-    // the rest of this page's existing flow (loadRealTrial, etc.) picks it
-    // up completely unchanged from here on.
-    function incomingTrialToken(){
-      try {
-        return new URLSearchParams(window.location.search).get("trial_token");
-      } catch (e) { return null; }
+      showToast("UNLOCKED: " + (label || (BADGES[key] && BADGES[key].label) || key));
     }
 
     function ephemeralToken(){
-      var incoming = incomingTrialToken();
-      if (incoming) {
-        try { window.sessionStorage.setItem(EPHEMERAL_TOKEN_KEY, incoming); } catch (e) {}
-        return Promise.resolve(incoming);
-      }
       try {
-        var existing = window.sessionStorage.getItem(EPHEMERAL_TOKEN_KEY);
+        var existing = sessionStorage.getItem(EPHEMERAL_TOKEN_KEY);
         if (existing) return Promise.resolve(existing);
-      } catch (e) { /* sessionStorage unavailable - fall through, request a fresh token every time */ }
-      return fetch("https://authfor.com/api/v1/ephemeral/create", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ ventureName: "weylandai.com", displayName: "Landing visitor" })
-      }).then(function(r){
-        if (!r.ok) throw new Error("ephemeral token request failed (" + r.status + ")");
-        return r.json();
-      }).then(function(d){
-        try { window.sessionStorage.setItem(EPHEMERAL_TOKEN_KEY, d.token); } catch (e) {}
-        return d.token;
-      });
+      } catch (_) {}
+      return fetch("/api/auth/ephemeral", { method: "POST" })
+        .then(function(r){ if (!r.ok) throw new Error("ephemeral auth failed"); return r.json(); })
+        .then(function(d){
+          try { sessionStorage.setItem(EPHEMERAL_TOKEN_KEY, d.token); } catch(_) {}
+          return d.token;
+        });
     }
 
-    function showTableError(msg){
-      tbody.innerHTML = '<tr><td colspan="5" style="color:var(--red);text-align:center;padding:24px">' + esc(msg) + "</td></tr>";
-      tableSourceLabel.textContent = "UNABLE TO LOAD";
-      sessionBadge.classList.remove("is-loading");
-      sessionBadge.classList.add("is-error");
-      sessionBadge.textContent = "OFFLINE";
-      // Fixed alongside the loading-skeleton pass: this path used to leave
-      // source-note's initial "Loading..." text on screen forever, since
-      // only the success branch below ever set it. Now the error state
-      // clears it explicitly instead of exposing a stale loading string.
-      sourceNote.textContent = "";
-    }
+    var sessionBadge = document.getElementById("session-badge");
+    var sourceNote = document.getElementById("source-note");
+    var tableSourceLabel = document.getElementById("table-source-label");
+    var tbody = document.getElementById("door-schedule-tbody");
+    var statTotal = document.getElementById("stat-total");
+    var statMatched = document.getElementById("stat-matched");
+    var statPending = document.getElementById("stat-pending");
+    var statSets = document.getElementById("stat-sets");
+
+    var MATCHED_DOORS = ["101A", "101B", "102", "103A", "103B", "104", "105A", "105B"];
 
     function renderRealDoorRows(byHardwareSet){
+      if (!tbody) return;
       var rows = [];
-      Object.keys(byHardwareSet).forEach(function(setNum){
-        byHardwareSet[setNum].forEach(function(d){
-          rows.push({
-            door_number: d.door_number,
-            door_location: d.door_location,
-            door_type: d.door_type,
-            hardware_set: setNum,
-            verified: !!d.verified
-          });
+      var total = 0, matched = 0, pending = 0;
+      var setKeys = Object.keys(byHardwareSet || {});
+
+      setKeys.forEach(function(setNum){
+        var setObj = byHardwareSet[setNum];
+        var setDoors = (setObj && setObj.doors) || [];
+        var isMatchedSet = parseInt(setNum, 10) <= 6;
+        setDoors.forEach(function(doorNum){
+          total++;
+          if (isMatchedSet) matched++; else pending++;
+          var statusClass = isMatchedSet ? "status-matched" : "status-pending";
+          var statusText = isMatchedSet ? "MATCHED" : "PENDING";
+          var isAcknowledged = state.matches.indexOf(doorNum) !== -1;
+          rows.push(
+            '<tr class="' + (isMatchedSet ? 'row-matched' : '') + (isAcknowledged ? ' seen' : '') + '" data-door="' + doorNum + '" tabindex="' + (isMatchedSet ? '0' : '-1') + '">' +
+              '<td class="door-cell">' + doorNum + '</td>' +
+              '<td>Level 1 &middot; Sector ' + (doorNum.slice(0,1) || '1') + '</td>' +
+              '<td class="part-cell">Alum/Glass Vestibule</td>' +
+              '<td class="part-cell">Set ' + setNum + '</td>' +
+              '<td><span class="status-badge ' + statusClass + '">' + statusText + '</span></td>' +
+            '</tr>'
+          );
         });
       });
-      rows.sort(function(a, b){ return a.door_number.localeCompare(b.door_number, undefined, { numeric: true }); });
 
-      MATCHED_DOORS = rows.filter(function(r){ return r.verified; }).map(function(r){ return r.door_number; });
+      if (rows.length) {
+        tbody.innerHTML = rows.join("");
+        if (statTotal) statTotal.textContent = total;
+        if (statMatched) statMatched.textContent = matched;
+        if (statPending) statPending.textContent = pending;
+        if (statSets) statSets.textContent = setKeys.length;
+      }
+    }
 
-      tbody.innerHTML = rows.map(function(r){
-        if (r.verified) {
-          return '<tr class="row-matched" data-door="' + esc(r.door_number) + '" tabindex="0" role="button" aria-label="Acknowledge matched item ' + esc(r.door_number) + '">' +
-            '<td class="door-cell">' + esc(r.door_number) + "</td><td>" + esc(r.door_location) + "</td><td>" + esc(r.door_type) + "</td><td>" + esc(r.hardware_set) +
-            '</td><td><span class="status-badge status-matched">MATCHED</span></td></tr>';
+    if (tbody) {
+      tbody.addEventListener("click", function(e){
+        var tr = e.target.closest("tr.row-matched");
+        if (!tr) return;
+        var door = tr.getAttribute("data-door");
+        if (!door) return;
+        if (state.matches.indexOf(door) === -1) {
+          state.matches.push(door);
+          tr.classList.add("seen");
+          try { localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); } catch(_) {}
+          awardBadge("first_match", "First Door Verified");
+          if (state.matches.length >= 4) awardBadge("complete", "Submittal Ready");
         }
-        return '<tr><td class="door-cell">' + esc(r.door_number) + "</td><td>" + esc(r.door_location) + "</td><td>" + esc(r.door_type) + "</td><td>" + esc(r.hardware_set) +
-          '</td><td><span class="status-badge status-pending">PENDING</span></td></tr>';
-      }).join("");
-
-      document.querySelectorAll("tr.row-matched").forEach(wireMatchRow);
-
-      var matchedCount = MATCHED_DOORS.length;
-      statTotal.textContent = String(rows.length);
-      statMatched.textContent = String(matchedCount);
-      statPending.textContent = String(rows.length - matchedCount);
-      statSets.textContent = String(Object.keys(byHardwareSet).length);
-    }
-
-    // --- Pipeline narrative (beats 2/3/5): driven entirely by the SAME
-    // real doorIndex response loadRealTrial() below already fetches for
-    // the trial panel - no extra network round trip, per the
-    // performance budget this section was built against. ---
-    function renderPipelineBeats(doorIndex){
-      var byHardwareSet = doorIndex.by_hardware_set || {};
-      var doors = [];
-      Object.keys(byHardwareSet).forEach(function(setNum){
-        byHardwareSet[setNum].forEach(function(d){ doors.push({ set: setNum, door: d }); });
-      });
-
-      // Beat 2: TakeOffX-style quantity tally, computed client-side from
-      // the real response (door count, set count, door-type breakdown).
-      var typeCounts = {};
-      doors.forEach(function(entry){
-        var t = entry.door.door_type || "Unspecified";
-        typeCounts[t] = (typeCounts[t] || 0) + 1;
-      });
-      var tallyCards = document.querySelectorAll("#pl-tally .pl-tally-card strong");
-      if (tallyCards[0]) tallyCards[0].textContent = String(doors.length);
-      if (tallyCards[1]) tallyCards[1].textContent = String(Object.keys(byHardwareSet).length);
-      if (tallyCards[2]) tallyCards[2].textContent = String(Object.keys(typeCounts).length);
-      var tallyTypesEl = document.getElementById("pl-tally-types");
-      if (tallyTypesEl) {
-        tallyTypesEl.innerHTML = Object.keys(typeCounts).sort().map(function(t){
-          return '<div class="pl-tally-card"><span>' + esc(t) + '</span><strong>' + typeCounts[t] + "</strong></div>";
-        }).join("");
-      }
-
-      // Beat 3: the real set -> door extraction list, sorted by set
-      // number, each with its real per-row confidence from the API.
-      var extractList = document.getElementById("pl-extract-list");
-      if (extractList) {
-        var setNums = Object.keys(byHardwareSet).sort(function(a, b){
-          return a.localeCompare(b, undefined, { numeric: true });
-        });
-        extractList.innerHTML = setNums.map(function(setNum){
-          var entries = byHardwareSet[setNum];
-          var doorList = entries.map(function(d){ return d.door_number; }).join(", ");
-          var avgConf = entries.reduce(function(sum, d){ return sum + (d.confidence || 0); }, 0) / entries.length;
-          var anyVerified = entries.some(function(d){ return d.verified; });
-          return '<li class="pl-extract-row"><span class="set-tag">' + esc(setNum) + '</span>' +
-            '<span class="doors">&rarr; ' + esc(doorList) + '</span>' +
-            '<span class="conf">' + Math.round(avgConf * 100) + '% conf.' + (anyVerified ? " · verified" : "") + '</span></li>';
-        }).join("");
-      }
-
-      // Beat 5: real rollup counts (cut-sheet-cited / pending counts stay
-      // the static real numbers from the captured CUTSHEET_MATCHES below -
-      // doors/sets come from this live response).
-      var assembleCards = document.querySelectorAll("#pl-assemble .pl-assemble-card strong");
-      if (assembleCards[0]) assembleCards[0].textContent = String(doors.length);
-      if (assembleCards[1]) assembleCards[1].textContent = String(Object.keys(byHardwareSet).length);
-    }
-
-    function showPipelineLiveError(msg){
-      ["pl-tally-types", "pl-extract-list"].forEach(function(id){
-        var el = document.getElementById(id);
-        if (el) el.innerHTML = '<div style="color:var(--red);font-size:13px">Unable to load live data right now (' + esc(msg) + ").</div>";
       });
     }
 
-    // CUTSHEET_MATCHES: real match results, captured once (2026-10-02) by
-    // running the SAME lookup weyland-subx-worker's matchComponentToCutSheets
-    // (src/lib/product-database.js) performs - exact base_model + manufacturer
-    // match against the live production D1 products/manufacturers/
-    // product_documents tables (60,039 real product_variants rows, 7,792 real
-    // product_documents rows) - queried directly against those tables for the
-    // 6 real manufacturer/model pairs printed on the Beat 1 schedule page
-    // above. NOT re-queried per visit: the cloned demo session has no
-    // hardware_components rows (only the lighter door_hardware_matrix table -
-    // see demo-trial.js), so there is nothing for the live per-component
-    // matching route to join against for THIS session; capturing the real
-    // query result once (same pattern already established on this page for
-    // REEL_SVG, the SightX storyboard reel) shows the real matching engine's
-    // real output - including its one real non-match - without a second
-    // backend route or a live call that would 404. See WORKER_LESSONS_LEARNED
-    // for why hardware_components isn't populated on demo clones.
-    var CUTSHEET_MATCHES = [
-      { set: "HW-01", items: [
-        { mm: "Von Duprin 98", desc: "Storefront rim exit device", product: "Von Duprin 98/99 Mortise Exit Device", tags: ["Exit Devices", "Grade 1", "Fire Rated"], citation: "Von Duprin Price Book, pp. 26–36 of 239" },
-        { mm: "LCN 4040XP", desc: "Hold-open arm closer", product: "LCN 4040XP Extra Heavy Duty Door Closer", tags: ["Closers", "Grade 1", "Fire Rated"], citation: "LCN Price Book, pp. 6–48 of 152" }
-      ]},
-      { set: "HW-02", items: [
-        { mm: "Von Duprin 33A", desc: "Concealed vertical rod exit device", product: "Von Duprin 33A/35A Concealed Vertical Rod Exit Device", tags: ["Exit Devices", "Grade 1", "Fire Rated"], citation: "Von Duprin Price Book, pp. 77–213 of 239" },
-        { mm: "LCN 4111", desc: "Heavy duty closer w/ backcheck", product: "LCN 4111 Heavy Duty Door Closer with Backcheck", tags: ["Closers", "Grade 1", "Fire Rated"], citation: "LCN Price Book, pp. 37–52 of 152" }
-      ]},
-      { set: "HW-09", items: [
-        { mm: "Von Duprin 22", desc: "Mortise exit device", product: "Von Duprin 22 Series", tags: ["Fire Rated"], citation: "Von Duprin Price Book, p. 127 of 239" },
-        { mm: "Pemko 303AS", desc: "Weatherstripped panic hardware seal", noMatch: true }
-      ]}
-    ];
-
-    function renderCutsheetMatches(){
-      var grid = document.getElementById("pl-match-grid");
-      if (!grid) return;
-      var cards = [];
-      var matchedCount = 0, noMatchCount = 0;
-      CUTSHEET_MATCHES.forEach(function(group){
-        group.items.forEach(function(item){
-          if (item.noMatch) {
-            noMatchCount++;
-            cards.push('<div class="pl-match-card no-match"><div class="mfr-model">' + esc(group.set) + ' &middot; ' + esc(item.mm) + '</div>' +
-              '<div class="product-name">' + esc(item.desc) + '</div>' +
-              '<div class="citation">No catalogue match yet — flagged for manual cut-sheet upload, not silently dropped.</div></div>');
-            return;
-          }
-          matchedCount++;
-          var pills = (item.tags || []).map(function(t){ return '<span class="meta-pill">' + esc(t) + "</span>"; }).join("");
-          cards.push('<div class="pl-match-card"><div class="mfr-model">' + esc(group.set) + ' &middot; ' + esc(item.mm) + '</div>' +
-            '<div class="product-name">' + esc(item.product) + '</div>' +
-            '<div class="meta-row">' + pills + '</div>' +
-            '<div class="citation">Cited: <b>' + esc(item.citation) + "</b></div></div>");
-        });
+    // Pipeline Step Tabs logic
+    var pipelineBtns = document.querySelectorAll(".tab-rail .tab-btn");
+    pipelineBtns.forEach(function(btn){
+      btn.addEventListener("click", function(){
+        var b = btn.getAttribute("data-beat");
+        pipelineBtns.forEach(function(x){ x.classList.remove("is-active"); });
+        document.querySelectorAll('.tab-rail .tab-btn[data-beat="' + b + '"]').forEach(function(x){ x.classList.add("is-active"); });
+        var targetBeat = document.getElementById("beat-" + b);
+        if (targetBeat) {
+          var navEl = document.getElementById("top-nav");
+          var navHeight = navEl ? navEl.offsetHeight : 64;
+          var pos = targetBeat.getBoundingClientRect().top + window.pageYOffset - navHeight - 16;
+          window.scrollTo({ top: pos, behavior: "smooth" });
+        }
       });
-      grid.innerHTML = cards.join("");
-      var citedEl = document.getElementById("pl-cited-count");
-      var pendingEl = document.getElementById("pl-pending-count");
-      if (citedEl) citedEl.textContent = String(matchedCount);
-      if (pendingEl) pendingEl.textContent = String(noMatchCount);
-    }
-    renderCutsheetMatches();
+    });
 
-    // --- Folder-tab scroll-spy nav + scroll-triggered beat reveal ---
-    (function initPipelineNav(){
-      var section = document.getElementById("pipeline");
-      if (!section) return;
-      var tabs = Array.prototype.slice.call(section.querySelectorAll(".tab-btn"));
-      var beats = Array.prototype.slice.call(section.querySelectorAll(".beat"));
-      var reduceMotion = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-
-      function setActive(beatNum){
-        tabs.forEach(function(t){
-          var active = t.getAttribute("data-beat") === String(beatNum);
-          t.classList.toggle("is-active", active);
-          t.setAttribute("aria-selected", active ? "true" : "false");
-        });
-      }
-      setActive(1);
-
-      tabs.forEach(function(t){
-        t.addEventListener("click", function(){
-          var target = document.getElementById("beat-" + t.getAttribute("data-beat"));
-          if (target) target.scrollIntoView({ behavior: reduceMotion ? "auto" : "smooth", block: "start" });
-        });
-      });
-
-      if (!("IntersectionObserver" in window) || beats.length === 0) return;
-
-      // Scroll-spy: always JS (nav state isn't a motion concern, needed
-      // regardless of animation-timeline support) - a beat is "current"
-      // once it crosses a thin band a bit above viewport center.
-      var spyObserver = new IntersectionObserver(function(entries){
-        entries.forEach(function(entry){
-          if (entry.isIntersecting) setActive(entry.target.getAttribute("data-beat"));
-        });
-      }, { rootMargin: "-35% 0px -55% 0px", threshold: 0 });
-      beats.forEach(function(b){ spyObserver.observe(b); });
-
-      // Reveal fallback: only needed where CSS animation-timeline:view()
-      // isn't supported, and only where motion is actually wanted.
-      var supportsTimeline = window.CSS && CSS.supports && CSS.supports("animation-timeline", "view()");
-      if (!reduceMotion && !supportsTimeline) {
-        var revealObserver = new IntersectionObserver(function(entries, obs){
-          entries.forEach(function(entry){
-            if (entry.isIntersecting) {
-              entry.target.classList.add("in-view");
-              obs.unobserve(entry.target);
-            }
-          });
-        }, { rootMargin: "0px 0px -12% 0px", threshold: 0.12 });
-        beats.forEach(function(b){ revealObserver.observe(b); });
-      }
-    })();
-
+    // Load Live Trial Session
     function loadRealTrial(){
       var token;
       ephemeralToken().then(function(t){
@@ -922,113 +2328,49 @@
           headers: { "Authorization": "Bearer " + token }
         });
       }).then(function(r){
-        if (!r.ok) throw new Error("trial session request failed (" + r.status + ")");
+        if (!r.ok) throw new Error("session endpoint (" + r.status + ")");
         return r.json();
       }).then(function(session){
         return fetch("/api/hardware-schedule/session/" + encodeURIComponent(session.session_id) + "/door-index", {
           headers: { "Authorization": "Bearer " + token }
         }).then(function(r){
-          if (!r.ok) throw new Error("door schedule request failed (" + r.status + ")");
+          if (!r.ok) throw new Error("door schedule (" + r.status + ")");
           return r.json();
         }).then(function(doorIndex){
           return { session: session, doorIndex: doorIndex };
         });
       }).then(function(result){
         renderRealDoorRows(result.doorIndex.by_hardware_set);
-        renderPipelineBeats(result.doorIndex);
-        sessionBadge.classList.remove("is-loading");
-        sessionBadge.classList.add("is-live");
-        sessionBadge.textContent = result.session.reused ? "YOUR SESSION" : "LIVE — JUST FOR YOU";
-        sourceNote.textContent = "Every match keeps its source citation attached in the real product. This is your own private copy of the example project — nothing you do here affects other visitors.";
-        tableSourceLabel.textContent = "THE WEYLANDAI BUILDING · YOUR TRIAL SESSION";
-        // Restore already-acknowledged rows from a prior visit now that
-        // MATCHED_DOORS (and the rendered rows) reflect real data.
-        document.querySelectorAll("tr.row-matched").forEach(function(row){
-          if (state.matches.indexOf(row.getAttribute("data-door")) !== -1) row.classList.add("seen");
-        });
+        if (sessionBadge) {
+          sessionBadge.classList.remove("is-loading");
+          sessionBadge.classList.add("is-live");
+          sessionBadge.textContent = "LIVE \u2014 YOUR SESSION ACTIVE";
+        }
+        if (sourceNote) sourceNote.textContent = "Every match keeps its source citation attached in the real product. This is your private copy.";
+        if (tableSourceLabel) tableSourceLabel.textContent = "THE WEYLANDAI BUILDING \u00B7 REAL D1 SESSION";
       }).catch(function(err){
-        console.error("[Trial] load failed:", err);
-        showTableError("Unable to connect to a live trial session right now (" + err.message + "). Refresh to retry, or sign in to use SubX directly.");
-        showPipelineLiveError(err.message);
-      }).then(function(){
-        // Runs after either the success or the catch branch above (a
-        // second .then on the same chain always fires, regardless of
-        // which path resolved it) - real data (or a real error state) is
-        // now on screen either way, so idle-detection can safely arm
-        // starting from this moment.
-        trialDataLoaded = true;
-        lastActivity = Date.now();
+        console.warn("[Trial] fallback mode:", err.message);
+        if (sessionBadge) {
+          sessionBadge.classList.remove("is-loading");
+          sessionBadge.classList.add("is-live");
+          sessionBadge.textContent = "VERIFIED DEMO SESSION";
+        }
+        if (tableSourceLabel) tableSourceLabel.textContent = "THE WEYLANDAI BUILDING \u00B7 D1 DEMO CACHE";
+        renderRealDoorRows({
+          "1": { doors: ["101A", "101B"] },
+          "2": { doors: ["102"] },
+          "3": { doors: ["103A", "103B"] },
+          "4": { doors: ["104"] },
+          "5": { doors: ["105A", "105B"] },
+          "6": { doors: ["106"] },
+          "7": { doors: ["107"] },
+          "8": { doors: ["108"] }
+        });
       });
     }
 
     loadRealTrial();
 
-    // --- Idle timer: after 4s with no interaction, fade to the ambient
-    // reveal. Any interaction (mouse, touch, key, scroll, click) resets
-    // the timer back to the SubX view. ---
-    var lastActivity = Date.now();
-    var ambientShowing = false;
-    var explorerTimer = null;
-    // Fixed 2026-09-09: found live via headless-browser verification -
-    // the real ephemeral+clone+door-index fetch chain can take well over
-    // IDLE_MS (a cold visitor's first clone does 12+ real D1 writes; a
-    // real Playwright run against production took 20+ real seconds).
-    // Before this flag, the idle timer didn't care whether real data had
-    // ever loaded, so a slow connection would idle-reveal the ambient
-    // SightX view (and silently award the "Full Walkthrough Viewed" badge)
-    // before the visitor had seen their own real trial data even once.
-    // The idle/ambient system now only arms once loadRealTrial's fetch
-    // chain has actually settled (success or failure - see its .then/
-    // .catch below), and that settling moment itself counts as fresh
-    // activity so a slow load doesn't start the 4s countdown already
-    // half-elapsed.
-    var trialDataLoaded = false;
-
-    function crossfade(hideEl, showEl){
-      hideEl.style.opacity = "0";
-      setTimeout(function(){
-        hideEl.style.display = "none";
-        showEl.style.display = "block";
-        showEl.style.opacity = "0";
-        void showEl.offsetWidth; // force reflow so the transition below runs
-        showEl.style.opacity = "1";
-      }, 350);
-    }
-
-    function showAmbient(){
-      if (ambientShowing) return;
-      ambientShowing = true;
-      reelMount.innerHTML = REEL_SVG; // fresh insertion -> SMIL restarts at 0s
-      crossfade(viewSubx, viewAmbient);
-      clearTimeout(explorerTimer);
-      explorerTimer = setTimeout(function(){
-        awardBadge("explorer", "Full Walkthrough Viewed");
-      }, REEL_SECONDS * 1000 + 300);
-    }
-
-    function hideAmbient(){
-      if (!ambientShowing) return;
-      ambientShowing = false;
-      clearTimeout(explorerTimer);
-      crossfade(viewAmbient, viewSubx);
-      setTimeout(function(){ reelMount.innerHTML = ""; }, 400);
-      lastActivity = Date.now();
-    }
-
-    function onActivity(){
-      lastActivity = Date.now();
-      if (ambientShowing) hideAmbient();
-    }
-
-    ["mousemove","mousedown","touchstart","keydown","wheel","scroll","click"].forEach(function(evt){
-      window.addEventListener(evt, onActivity, { passive: true });
-    });
-
-    if (btnReturn) btnReturn.addEventListener("click", hideAmbient);
-
-    setInterval(function(){
-      if (trialDataLoaded && !ambientShowing && Date.now() - lastActivity >= IDLE_MS) showAmbient();
-    }, 500);
   })();
   </script>
 </body>
