@@ -6,8 +6,16 @@
   <meta name="theme-color" content="#0b0d13">
   <title>WeylandAI | The Autonomous Subcontractor Operating System &amp; Spatial Twin</title>
   <meta name="description" content="One unified continuous project record: HuntX for public bid discovery, TakeoffX for machine-vision plan quantification, SubX & CutsheetX for submittal package automation, PropX for margin protection, and SightX for photorealistic 3D spatial field twins.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
   <style>
     :root {
+      /* Same pairing SightX's own HUD already uses - the card (device) and
+         the world behind it (SightX) now share one type system instead of
+         two unrelated ones. */
+      --font-display: 'Space Grotesk', sans-serif;
+      --font-body: 'Outfit', 'Avenir Next', 'Helvetica Neue', -apple-system, BlinkMacSystemFont, sans-serif;
       --bg: #0b0d13;
       --panel: #151822;
       --panel2: #1b1f2a;
@@ -30,7 +38,15 @@
       margin: 0;
       min-height: 100%;
       color: var(--text);
-      font-family: "Avenir Next", "Helvetica Neue", -apple-system, BlinkMacSystemFont, sans-serif;
+      font-family: var(--font-body);
+    }
+    /* Display face: headings, nav/tab labels, buttons, badges - everywhere
+       the site speaks rather than explains. Same face SightX's own HUD
+       already uses, so the card and the world behind it read as one system. */
+    h1, h2, h3,
+    .wn-flag-fill, .hero-kicker, .button,
+    .ch-badge, .chapter-eyebrow span {
+      font-family: var(--font-display);
     }
     /* Only html paints a solid background (the canvas fallback) - body must
        stay transparent, or its own in-flow box paints solid color over
