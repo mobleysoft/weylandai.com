@@ -134,7 +134,15 @@
       background-size: 30px 30px, 30px 30px, auto;
     }
     @media (max-width: 640px) {
-      .envelope-frame { width: calc(100% - 12px); height: calc(100vh - 12px); margin: 6px auto; clip-path: polygon(0 12px, 12px 0, calc(100% - 12px) 0, 100% 12px, 100% calc(100% - 12px), calc(100% - 12px) 100%, 12px 100%, 0 calc(100% - 12px)); }
+      /* Top-left corner recomputed for mobile, not reusing the generic
+         12px/12px corner - measured directly off the live DOM at 390px
+         width: the logo tab's frame (the visible colored edge, 2px larger
+         than its fill) bottoms out at 37px from envelope-frame's own top,
+         and its own clip-path slope is 17px run over 38px height (~0.447).
+         The old generic corner had no relationship to the tab's real
+         mobile-sized position at all, which is why it looked like an
+         unrelated artifact instead of a continuation of the tab's edge. */
+      .envelope-frame { width: calc(100% - 12px); height: calc(100vh - 12px); margin: 6px auto; clip-path: polygon(0 37px, 17px 0, calc(100% - 12px) 0, 100% 12px, 100% calc(100% - 12px), calc(100% - 12px) 100%, 12px 100%, 0 calc(100% - 12px)); }
     }
 
     /* Kinetic Scroll Progress Bar - a child of header.site-header now, so it
