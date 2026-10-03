@@ -3,23 +3,68 @@
 
   const profile = Object.freeze({
     id: 'weyland-sightx-standard',
-    version: '2.0.0',
+    version: '3.0.0',
+    // Free-flight (Descent-style) 6DOF scheme: this facility is in zero-g
+    // orbit, so ground-locked FPS movement never matched the setting.
+    // Mouse yaw/pitch, Q/E roll, WASD local-axis translate, Space/Ctrl
+    // local-axis vertical thrust. Scan moved off E/Space (now roll/thrust)
+    // onto F.
     desktop: Object.freeze({
       forward: Object.freeze(['KeyW', 'ArrowUp']),
       backward: Object.freeze(['KeyS', 'ArrowDown']),
       left: Object.freeze(['KeyA', 'ArrowLeft']),
       right: Object.freeze(['KeyD', 'ArrowRight']),
+      up: Object.freeze(['Space']),
+      down: Object.freeze(['ControlLeft', 'ControlRight']),
+      rollLeft: Object.freeze(['KeyQ']),
+      rollRight: Object.freeze(['KeyE']),
       sprint: Object.freeze(['ShiftLeft', 'ShiftRight']),
-      scan: Object.freeze(['KeyE', 'Space']),
+      scan: Object.freeze(['KeyF']),
       tour: 'KeyT',
       settings: 'KeyO',
       report: 'KeyR',
       release: 'Escape'
     }),
-    movement: Object.freeze({ walk: 4.2, sprint: 8.0, collisionStep: 0.08 }),
-    look: Object.freeze({ mouse: 0.0022, touch: 0.0040, minPitch: -1.4, maxPitch: 1.4 }),
-    bounds: Object.freeze({ minX: -28, maxX: 28, minZ: -30, maxZ: 42 })
+    movement: Object.freeze({ walk: 4.2, sprint: 8.0, collisionStep: 0.08, roll: 1.6 }),
+    look: Object.freeze({ mouse: 0.0022, touch: 0.0040 }),
+    bounds: Object.freeze({ minX: -60, maxX: 60, minY: -20, maxY: 60, minZ: -60, maxZ: 60 })
   });
+
+  // Rodrigues' rotation formula: rotate unit vector v around unit axis a by
+  // angle (radians). Used to update the flight basis incrementally every
+  // frame instead of storing Euler yaw/pitch/roll, so roll is a first-class
+  // rotation with no gimbal lock - the same approach a real spacecraft/
+  // Descent-style controller uses.
+  function rotateAroundAxis(v, a, angle) {
+    const cos = Math.cos(angle), sin = Math.sin(angle);
+    const dot = v[0] * a[0] + v[1] * a[1] + v[2] * a[2];
+    const cx = a[1] * v[2] - a[2] * v[1];
+    const cy = a[2] * v[0] - a[0] * v[2];
+    const cz = a[0] * v[1] - a[1] * v[0];
+    return [
+      v[0] * cos + cx * sin + a[0] * dot * (1 - cos),
+      v[1] * cos + cy * sin + a[1] * dot * (1 - cos),
+      v[2] * cos + cz * sin + a[2] * dot * (1 - cos)
+    ];
+  }
+  function normalize3(v) {
+    const length = Math.hypot(v[0], v[1], v[2]) || 1;
+    return [v[0] / length, v[1] / length, v[2] / length];
+  }
+  function cross3(a, b) {
+    return [a[1] * b[2] - a[2] * b[1], a[2] * b[0] - a[0] * b[2], a[0] * b[1] - a[1] * b[0]];
+  }
+  function basisFromYawPitch(yaw, pitch) {
+    const fwd = normalize3([Math.sin(yaw) * Math.cos(pitch), Math.sin(pitch), Math.cos(yaw) * Math.cos(pitch)]);
+    let up = [0, 1, 0];
+    let right = normalize3(cross3(up, fwd));
+    // Guard against fwd parallel to world-up (looking straight up/down).
+    if (!Number.isFinite(right[0]) || Math.hypot(right[0], right[1], right[2]) < 1e-5) {
+      right = [1, 0, 0];
+    }
+    up = normalize3(cross3(fwd, right));
+    return { fwd, up };
+  }
 
   const clamp = (value, min, max) => Math.max(min, Math.min(max, value));
   const includes = (codes, code) => codes.indexOf(code) !== -1;
@@ -37,7 +82,7 @@
   });
   const canonicalBindings = Object.freeze({
     forward: 'KeyW', backward: 'KeyS', left: 'KeyA', right: 'KeyD',
-    sprint: 'ShiftLeft', scan: 'KeyE'
+    sprint: 'ShiftLeft', scan: 'KeyF'
   });
 
   function loadPreferences() {
@@ -106,8 +151,7 @@
     const settings = preferences.settings;
     const bindings = preferences.bindings;
     const position = (options.initialPosition || [0, 1.72, -9]).slice();
-    let yaw = options.initialYaw || 0;
-    let pitch = options.initialPitch || 0;
+    let { fwd, up } = basisFromYawPitch(options.initialYaw || 0, options.initialPitch || 0);
     let locked = false;
     let inputEnabled = true;
     let sprintHeld = false;
@@ -161,13 +205,17 @@
     }
 
     function actionActive(action) {
-      if (keys[bindings[action]]) return true;
+      if (bindings[action] && keys[bindings[action]]) return true;
       if (action === 'forward') return keys.ArrowUp;
       if (action === 'backward') return keys.ArrowDown;
       if (action === 'left') return keys.ArrowLeft;
       if (action === 'right') return keys.ArrowRight;
       if (action === 'sprint') return keys.ShiftRight;
-      if (action === 'scan') return keys.Space;
+      if (action === 'up') return Boolean(keys.Space);
+      if (action === 'down') return Boolean(keys.ControlLeft || keys.ControlRight);
+      if (action === 'rollLeft') return Boolean(keys.KeyQ);
+      if (action === 'rollRight') return Boolean(keys.KeyE);
+      if (action === 'scan') return Boolean(keys.KeyF);
       return false;
     }
 
@@ -182,7 +230,7 @@
     function setHint() {
       if (!options.hint) return;
       options.hint.textContent = locked
-        ? 'WASD / ARROWS - MOVE   MOUSE - LOOK   SHIFT - SPRINT   E / SPACE - SCAN   ESC - RELEASE'
+        ? 'WASD - THRUST   MOUSE - PITCH/YAW   Q/E - ROLL   SPACE/CTRL - UP/DOWN   SHIFT - BOOST   F - SCAN   ESC - RELEASE'
         : 'CLICK TO CAPTURE MOUSE';
     }
 
@@ -220,13 +268,17 @@
       if (!inputEnabled) return;
       keys[event.code] = true;
       if (event.code === profile.desktop.release && document.pointerLockElement) document.exitPointerLock();
-      if (event.code === bindings.scan || event.code === 'Space') {
+      if (event.code === bindings.scan) {
         if (!desktopScanHeld) {
           desktopScanHeld = true;
           setScan(true);
         }
       }
-      if ([...profile.desktop.forward, ...profile.desktop.backward, ...profile.desktop.left, ...profile.desktop.right, bindings.scan, 'Space'].includes(event.code)) {
+      if ([
+        ...profile.desktop.forward, ...profile.desktop.backward, ...profile.desktop.left, ...profile.desktop.right,
+        ...profile.desktop.up, ...profile.desktop.down, ...profile.desktop.rollLeft, ...profile.desktop.rollRight,
+        bindings.scan
+      ].includes(event.code)) {
         event.preventDefault();
       }
     });
@@ -238,10 +290,18 @@
         setScan(false);
       }
     });
+    // Mouse look rotates the flight basis directly around its OWN current
+    // local axes (yaw around local up, pitch around local right) rather
+    // than accumulating world-frame Euler angles - this is what makes roll
+    // (from Q/E) persist correctly and compose with look instead of being
+    // fought by a world-up-relative yaw/pitch model.
     document.addEventListener('mousemove', event => {
       if (!locked || !inputEnabled) return;
-      yaw += event.movementX * settings.mouseSensitivity;
-      pitch = clamp(pitch - event.movementY * settings.mouseSensitivity, profile.look.minPitch, profile.look.maxPitch);
+      const right = normalize3(cross3(up, fwd));
+      if (event.movementX) fwd = rotateAroundAxis(fwd, up, -event.movementX * settings.mouseSensitivity);
+      if (event.movementY) fwd = rotateAroundAxis(fwd, right, -event.movementY * settings.mouseSensitivity);
+      fwd = normalize3(fwd);
+      up = normalize3(cross3(right, fwd));
       if (event.movementX || event.movementY) signalInput('look');
     });
 
@@ -313,8 +373,11 @@
       const dy = event.clientY - lookY;
       lookX = event.clientX;
       lookY = event.clientY;
-      yaw += dx * settings.touchSensitivity;
-      pitch = clamp(pitch - dy * settings.touchSensitivity, profile.look.minPitch, profile.look.maxPitch);
+      const right = normalize3(cross3(up, fwd));
+      if (dx) fwd = rotateAroundAxis(fwd, up, -dx * settings.touchSensitivity);
+      if (dy) fwd = rotateAroundAxis(fwd, right, -dy * settings.touchSensitivity);
+      fwd = normalize3(fwd);
+      up = normalize3(cross3(right, fwd));
       if (dx || dy) signalInput('look');
     });
     const resetLook = event => { if (!event || event.pointerId === lookPointer) lookPointer = null; };
@@ -347,25 +410,41 @@
 
     function update(dt) {
       if (!inputEnabled) return;
-      let forward = -stickAxis.y;
+
+      // Roll: Q/E spin the basis around the CURRENT local forward axis -
+      // independent of translation input, same as a spacecraft's roll
+      // thrusters.
+      let rollInput = 0;
+      if (actionActive('rollLeft')) rollInput -= 1;
+      if (actionActive('rollRight')) rollInput += 1;
+      if (rollInput) {
+        up = normalize3(rotateAroundAxis(up, fwd, rollInput * profile.movement.roll * dt));
+        signalInput('look');
+      }
+
+      let forwardAmt = -stickAxis.y;
       let strafe = stickAxis.x;
-      if (actionActive('forward')) forward += 1;
-      if (actionActive('backward')) forward -= 1;
+      let vertical = 0;
+      if (actionActive('forward')) forwardAmt += 1;
+      if (actionActive('backward')) forwardAmt -= 1;
       if (actionActive('right')) strafe += 1;
       if (actionActive('left')) strafe -= 1;
-      const inputLength = Math.hypot(forward, strafe);
-      if (inputLength > 1) { forward /= inputLength; strafe /= inputLength; }
-      if (!forward && !strafe) return;
+      if (actionActive('up')) vertical += 1;
+      if (actionActive('down')) vertical -= 1;
+      const inputLength = Math.hypot(forwardAmt, strafe, vertical);
+      if (inputLength > 1) { forwardAmt /= inputLength; strafe /= inputLength; vertical /= inputLength; }
+      if (!forwardAmt && !strafe && !vertical) return;
       signalInput('move');
 
       const sprinting = sprintHeld || actionActive('sprint');
       const speed = (sprinting ? profile.movement.sprint : profile.movement.walk) * settings.moveScale;
-      const fwdX = Math.sin(yaw);
-      const fwdZ = Math.cos(yaw);
-      const rightX = Math.cos(yaw);
-      const rightZ = -Math.sin(yaw);
-      const dx = (fwdX * forward + rightX * strafe) * speed * dt;
-      const dz = (fwdZ * forward + rightZ * strafe) * speed * dt;
+      // Thrust along the CRAFT's own current local axes (fwd/right/up),
+      // not world X/Z - this is the actual 6DOF behavior: "forward" always
+      // means wherever you're currently facing, in any orientation.
+      const right = normalize3(cross3(up, fwd));
+      const dx = (fwd[0] * forwardAmt + right[0] * strafe + up[0] * vertical) * speed * dt;
+      const dy = (fwd[1] * forwardAmt + right[1] * strafe + up[1] * vertical) * speed * dt;
+      const dz = (fwd[2] * forwardAmt + right[2] * strafe + up[2] * vertical) * speed * dt;
       const steps = Math.max(1, Math.ceil(Math.hypot(dx, dz) / profile.movement.collisionStep));
 
       for (let i = 0; i < steps; i += 1) {
@@ -374,7 +453,9 @@
         if (!options.collision || !options.collision(nextX, position[2])) position[0] = nextX;
         if (!options.collision || !options.collision(position[0], nextZ)) position[2] = nextZ;
       }
+      position[1] += dy;
       position[0] = clamp(position[0], profile.bounds.minX, profile.bounds.maxX);
+      position[1] = clamp(position[1], profile.bounds.minY, profile.bounds.maxY);
       position[2] = clamp(position[2], profile.bounds.minZ, profile.bounds.maxZ);
       if (options.onMove) options.onMove(position);
     }
@@ -398,8 +479,16 @@
         position[1] = Number(nextPosition[1]);
         position[2] = Number(nextPosition[2]);
       }
-      if (Number.isFinite(nextYaw)) yaw = nextYaw;
-      if (Number.isFinite(nextPitch)) pitch = clamp(nextPitch, profile.look.minPitch, profile.look.maxPitch);
+      // Scripted teleports (tour stops, PDF-twin spawn points) specify a
+      // level yaw/pitch with no roll, which is the right default for them.
+      if (Number.isFinite(nextYaw) || Number.isFinite(nextPitch)) {
+        const basis = basisFromYawPitch(
+          Number.isFinite(nextYaw) ? nextYaw : Math.atan2(fwd[0], fwd[2]),
+          Number.isFinite(nextPitch) ? nextPitch : Math.asin(clamp(fwd[1], -1, 1))
+        );
+        fwd = basis.fwd;
+        up = basis.up;
+      }
       if (options.onMove) options.onMove(position);
     }
 
@@ -427,11 +516,11 @@
       bindingLabel: action => labelForCode(bindings[action] || ''),
       get settings() { return { ...settings }; },
       get bindings() { return { ...bindings }; },
-      get forward() {
-        return [Math.sin(yaw) * Math.cos(pitch), Math.sin(pitch), Math.cos(yaw) * Math.cos(pitch)];
-      },
-      get yaw() { return yaw; },
-      get pitch() { return pitch; }
+      get forward() { return fwd.slice(); },
+      get up() { return up.slice(); },
+      get right() { return normalize3(cross3(up, fwd)); },
+      get yaw() { return Math.atan2(fwd[0], fwd[2]); },
+      get pitch() { return Math.asin(clamp(fwd[1], -1, 1)); }
     });
   }
 

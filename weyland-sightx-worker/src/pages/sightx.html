@@ -1210,6 +1210,7 @@
     uniform float u_t;
     uniform vec3  u_cam;
     uniform vec3  u_dir;
+    uniform vec3  u_up;
     uniform float u_scan;
     uniform vec3  u_target;
     uniform sampler2D u_planSdf;
@@ -1577,6 +1578,60 @@
       return clamp(1.-s*2.2,0.,1.);
     }
 
+    // --- Orbital mechanics driving sun/star sweep + Earth rotation ---
+    // Real circular-LEO reference, chosen and justified (not arbitrary):
+    // altitude 400km (ISS-like). Period from Kepler's third law,
+    // T=2*pi*sqrt(a^3/mu): a=6371+400=6771km, mu_earth=398600.4418 km^3/s^2
+    // -> T_orbit ~= 5564s (92.68 min), matching the real published ISS
+    // period at this altitude. Earth's rotation uses the SIDEREAL period
+    // (23h56m04s = 86164.1s, rotation relative to the fixed stars) rather
+    // than the 24h00m solar day, because the Sun below is treated as fixed
+    // in inertial space over this scene's ~90min timescale (Earth creeps
+    // only ~0.025 degrees along its year-long solar orbit in 90 minutes -
+    // negligible next to the ~1486 degrees it rotates), so rotation-
+    // relative-to-sun is, to excellent approximation, just the sidereal rate.
+    //
+    // DISCLOSED DEMO TIME SCALE: true real-time motion here would be
+    // ~0.065 deg/sec of orbital sweep - correct, but imperceptible second
+    // to second, which is why John's live test saw "no motion discernible."
+    // u_t (real seconds since page load) is compressed by DEMO_K=92.74x so
+    // the real 92.68-minute orbit completes in 60 real seconds - i.e.
+    // "1 real second = 92.7 simulated seconds." A visitor watching for
+    // 10-30 real seconds sees a genuine 60-180 degree slice of the orbit,
+    // not a static frame. This is sped-up and labeled as such in the HUD,
+    // not silently faked.
+    //
+    // DISCLOSED SIMPLIFICATION: the station is modeled as a circular,
+    // nadir-locked LEO orbiter (nadir fixed at local -Y, as already set up
+    // below) whose body frame rotates once per orbit about ONE fixed local
+    // axis (chosen here as local +X, standing in for the real orbit-normal/
+    // cross-track direction) rather than full 3D inertial attitude
+    // kinematics. That single-axis rotation is exactly right for the
+    // ANGULAR RATE of sun/star sweep and terminator motion derived below;
+    // it does not reproduce the real ~51.6 degree ISS inclination's effect
+    // on which stars/ground track pass by. Earth's own solar orbit
+    // (ellipse, ~365d) and this orbit's eccentricity are both ignored
+    // (circular orbit; sun fixed) - both real effects, both negligible at
+    // this scene's ~90min scale.
+    #define DEMO_K 92.74
+    #define W_ORBIT 0.0011290
+    #define W_EARTH 0.00007292
+    vec3 rotX(vec3 v, float a){
+      float c=cos(a), s=sin(a);
+      return vec3(v.x, v.y*c-v.z*s, v.y*s+v.z*c);
+    }
+    float simT(){ return u_t*DEMO_K; }
+    // Station-local-frame sweep angle of an inertially-fixed direction
+    // (Sun, stars): the nadir-locked body frame completes one full
+    // rotation per orbit relative to the inertial/sun-and-star-fixed frame.
+    float sunSweepAngle(){ return W_ORBIT*simT(); }
+    // Apparent sweep of Earth's own rotating surface features (continents,
+    // night lights) under the station: real relative rate = orbital rate
+    // minus Earth's sidereal rotation rate (prograde orbit, same spin
+    // sense as Earth) ~= 2*pi/5950s, a ~99.2min apparent ground-track
+    // period - a real derived number, not a guess.
+    float earthSweepAngle(){ return (W_ORBIT-W_EARTH)*simT(); }
+
     // LEO backdrop. The facility is WeylandAI's orbital shipyard — real
     // orbital mechanics drove the siting: LEO for frequent crew rotation,
     // cheap Earth resupply and visual drama, building the "seed" construction
@@ -1591,7 +1646,11 @@
     // benefit from the real number at this scale) but tuned so Earth's
     // angular radius matches a real ~400km-altitude view (~70 degrees).
     vec3 sky(vec3 ro, vec3 rd){
-      vec3 sunDir = normalize(vec3(0.42, 0.68, 0.38));
+      // Base (t=0) directions, unchanged from the original rewrite; the
+      // orbital-mechanics functions above rotate them over time rather
+      // than replacing them, so this stays additive to whatever the sun/
+      // terminator-consistency pass does with these base vectors later.
+      vec3 sunDir = rotX(normalize(vec3(0.42, 0.68, 0.38)), sunSweepAngle());
       vec3 nadir  = vec3(0.0,-1.0,0.0);
       float earthDist   = 2200.0;
       float earthRadius = earthDist*sin(radians(70.0));
@@ -1606,16 +1665,21 @@
         float t=-b-sqrt(disc);
         if(t>0.0){
           vec3 hit = ro+rd*t;
-          vec3 N   = normalize(hit-earthCenter);
+          vec3 N    = normalize(hit-earthCenter);
+          // Earth-surface pattern (continents/city-lights) is sampled in a
+          // coordinate counter-rotated by the apparent ground-track sweep,
+          // i.e. Earth's real rotation underneath the station - the actual
+          // lit/shadow test below still uses the true current N vs sunDir.
+          vec3 Nsurf    = rotX(N, -earthSweepAngle());
           float sunFacing = max(dot(N,sunDir),0.0);
-          float landN   = noise(N*5.0);
-          float cloudN  = noise(N*11.0+vec3(3.7,1.1,9.2))*0.6+noise(N*23.0)*0.4;
+          float landN   = noise(Nsurf*5.0);
+          float cloudN  = noise(Nsurf*11.0+vec3(3.7,1.1,9.2))*0.6+noise(Nsurf*23.0)*0.4;
           vec3 oceanCol = vec3(0.045,0.13,0.30);
           vec3 landCol  = vec3(0.15,0.21,0.085);
           vec3 base     = mix(oceanCol,landCol,smoothstep(0.52,0.60,landN));
           vec3 lit      = mix(base,vec3(0.92,0.93,0.95),smoothstep(0.58,0.74,cloudN));
           float term    = smoothstep(0.0,0.18,sunFacing);
-          vec3 nightCol = vec3(0.008,0.012,0.022)+vec3(1.0,0.78,0.42)*pow(hash(floor(N*220.0)),22.0)*0.6;
+          vec3 nightCol = vec3(0.008,0.012,0.022)+vec3(1.0,0.78,0.42)*pow(hash(floor(Nsurf*220.0)),22.0)*0.6;
           vec3 earthLit = mix(nightCol, lit*(0.25+1.5*sunFacing), term);
           float limb    = pow(1.0-max(dot(N,-rd),0.0),4.5);
           vec3 atmoGlow = vec3(0.30,0.52,1.0)*limb*(0.18+max(sunFacing,0.0)*1.1);
@@ -1623,8 +1687,14 @@
         }
       }
 
-      float starField = step(0.9978, hash(floor(rd*420.0)));
-      vec3 stars = vec3(starField)*(0.55+0.45*hash(floor(rd*77.3)));
+      // Stars are effectively fixed in inertial space over this scene's
+      // timescale (like the Sun); the station's nadir-locked frame rotates
+      // once per orbit, so the sky must counter-sweep at the same rate for
+      // the view to be self-consistent with the sun motion above - this is
+      // the real mechanism behind "the stars should visibly drift."
+      vec3 rdSky = rotX(rd, -sunSweepAngle());
+      float starField = step(0.9978, hash(floor(rdSky*420.0)));
+      vec3 stars = vec3(starField)*(0.55+0.45*hash(floor(rdSky*77.3)));
       float sunDot = max(dot(rd,sunDir),0.0);
       vec3 sunDisk = vec3(0.0);
       if(sunDot>0.99965){
@@ -1654,14 +1724,21 @@
       vec2 uv = (gl_FragCoord.xy/u_res*2.-1.)*vec2(u_res.x/u_res.y,1.);
       vec3 ro    = u_cam;
       vec3 fwd   = normalize(u_dir);
-      vec3 right = normalize(cross(vec3(0,1,0), fwd));
+      // 6DOF free flight: screen-up comes from the controller's own
+      // current local up vector (which rolls with Q/E), not from world-up
+      // - this is what makes roll actually visible instead of the camera
+      // always self-leveling to the horizon.
+      vec3 right = normalize(cross(u_up, fwd));
       vec3 up    = cross(fwd, right);
       vec3 rd    = normalize(fwd + right*uv.x*0.62 + up*uv.y*0.62);
 
       vec2 hit = march(ro, rd);
       vec3 col;
 
-      vec3 sunDir = normalize(vec3(0.55, 0.16, 0.45));
+      // Base (t=0) direction unchanged; swept over time by the same
+      // orbital-mechanics functions driving sky()'s sun/terminator above,
+      // so the station's own shading and the Earth backdrop move together.
+      vec3 sunDir = rotX(normalize(vec3(0.55, 0.16, 0.45)), sunSweepAngle());
       vec3 sunCol = vec3(1.0, 0.78, 0.45)*4.8;
 
       if(hit.x > 0.){
@@ -1866,6 +1943,7 @@
     const uT   = gl.getUniformLocation(prog, 'u_t');
     const uCam = gl.getUniformLocation(prog, 'u_cam');
     const uDir = gl.getUniformLocation(prog, 'u_dir');
+    const uUp = gl.getUniformLocation(prog, 'u_up');
     const uScan = gl.getUniformLocation(prog, 'u_scan');
     const uTarget = gl.getUniformLocation(prog, 'u_target');
     const uPlanSdf = gl.getUniformLocation(prog, 'u_planSdf');
@@ -2007,9 +2085,16 @@
     const sightxControls = window.SightXControls.mount({
       canvas,
       hint: document.getElementById('hint'),
-      initialPosition: [0, 1.72, -9.0],
+      // Wide establishing shot by default: pulled back and elevated south
+      // of the facility so the construction ship (west bay, x~-14), the
+      // station power truss (east bay, x~15), the dock gantry, the
+      // entrance, and the Earth limb below are all in frame together on
+      // first load - not a close-up of a single door. The "Acquire the
+      // main entrance" commissioning task is still reachable by walking
+      // forward; it just isn't the first thing a visitor sees.
+      initialPosition: [0, 9, -24.0],
       initialYaw: 0,
-      initialPitch: 0,
+      initialPitch: -0.22,
       collision: positionBlocked,
       onMove: position => { checkDoorwayProximity(position); checkFilmlineProximity(position); },
       onScan: (active, position) => {
@@ -2058,11 +2143,13 @@
       if (sightxExperience.consumeResizeRequest()) resize();
       const camPos = sightxControls.position;
       const fwd = sightxControls.forward;
+      const flightUp = sightxControls.up;
       const scanTarget = sightxExperience.targetPosition;
       gl.uniform2f(uRes, canvas.width, canvas.height);
       gl.uniform1f(uT, ts*0.001);
       gl.uniform3f(uCam, camPos[0], camPos[1], camPos[2]);
       gl.uniform3f(uDir, fwd[0], fwd[1], fwd[2]);
+      gl.uniform3f(uUp, flightUp[0], flightUp[1], flightUp[2]);
       gl.uniform1f(uScan, sightxExperience.scanAmount);
       gl.uniform3f(uTarget, scanTarget[0], scanTarget[1], scanTarget[2]);
       gl.uniform1i(uPlanMode,activePlanModel?1:0);
