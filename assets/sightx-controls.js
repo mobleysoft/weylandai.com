@@ -247,11 +247,60 @@
     const coarsePointer = matchMedia('(hover: none) and (pointer: coarse)').matches;
     if (isDedicatedDemo && coarsePointer) document.body.classList.add('sightx-playing');
 
+    // The Last of Us Style Contextual Control Hints
+    const hintEl = options.hint;
+    const hintState = {
+      hasLooked: false,
+      hasThrust: false,
+      hasBraked: false,
+      hasElevated: false,
+      hasScanned: false,
+      lookPixels: 0,
+      lastInput: performance.now(),
+      idleActive: false,
+      stage: 'START'
+    };
+
+    function renderTlouHint(keys, label, sub) {
+      if (!hintEl) return;
+      const keyList = Array.isArray(keys) ? keys : [keys];
+      const keysMarkup = keyList.map(k => `<span class="tlou-key">${k}</span>`).join('');
+      const subMarkup = sub ? `<span class="tlou-sub">${sub}</span>` : '';
+      hintEl.innerHTML = `<span class="tlou-keys">${keysMarkup}</span><span class="tlou-label">${label}</span>${subMarkup}`;
+      hintEl.classList.remove('fade-out');
+      hintEl.classList.add('visible');
+    }
+
+    function hideTlouHint() {
+      if (!hintEl) return;
+      hintEl.classList.remove('visible');
+      hintEl.classList.add('fade-out');
+    }
+
     function setHint() {
-      if (!options.hint) return;
-      options.hint.textContent = locked
-        ? 'WASD - THRUST   MOUSE - PITCH/YAW   Q/E - ROLL   SPACE/CTRL - UP/DOWN   X - BRAKE   SHIFT - BOOST   F - SCAN   V - VIEW   ESC - RELEASE'
-        : 'CLICK TO CAPTURE MOUSE';
+      if (!hintEl) return;
+      hintState.lastInput = performance.now();
+      if (!locked) {
+        renderTlouHint('CLICK', 'INITIATE EVA SPACEWALK', 'CAPTURE MOUSE');
+        return;
+      }
+      if (!hintState.hasLooked) {
+        renderTlouHint('MOUSE', 'LOOK AROUND', 'ORIENT ATTITUDE');
+      } else if (!hintState.hasThrust) {
+        renderTlouHint(['W', 'S'], 'EVA THRUST', 'FORWARD / REVERSE');
+      } else if (!hintState.hasBraked && Math.hypot(velocity[0], velocity[1], velocity[2]) > 0.35) {
+        renderTlouHint('X', 'INERTIAL BRAKE', 'DAMPEN DRIFT');
+      } else if (!hintState.hasElevated) {
+        renderTlouHint(['SPACE', 'C'], 'RCS ELEVATION', 'ASCEND / DESCEND');
+      } else {
+        hideTlouHint();
+      }
+    }
+
+    if (hintEl) {
+      hintEl.addEventListener('click', () => {
+        if (!locked && canvas) canvas.requestPointerLock();
+      });
     }
 
     function activate() {
@@ -335,7 +384,18 @@
       if (event.movementY) fwd = rotateAroundAxis(fwd, right, -event.movementY * settings.mouseSensitivity);
       fwd = normalize3(fwd);
       up = normalize3(cross3(right, fwd));
-      if (event.movementX || event.movementY) signalInput('look');
+      if (event.movementX || event.movementY) {
+        signalInput('look');
+        hintState.lastInput = performance.now();
+        hintState.lookPixels += Math.abs(event.movementX) + Math.abs(event.movementY);
+        if (hintState.lookPixels > 40 && !hintState.hasLooked) {
+          hintState.hasLooked = true;
+          setHint();
+        } else if (hintState.idleActive) {
+          hintState.idleActive = false;
+          hideTlouHint();
+        }
+      }
     });
 
     function updateStick(clientX, clientY) {
@@ -473,6 +533,14 @@
       // Real Newtonian zero-g thrust: acceleration applied along current local axes
       if (thrusting) {
         signalInput('move');
+        hintState.lastInput = performance.now();
+        if (!hintState.hasThrust) {
+          hintState.hasThrust = true;
+          setHint();
+        } else if (hintState.idleActive) {
+          hintState.idleActive = false;
+          hideTlouHint();
+        }
         if (options.onThrust) options.onThrust(velocity);
         const sprinting = sprintHeld || actionActive('sprint');
         const accel = (sprinting ? profile.movement.sprintAccel : profile.movement.accel) * settings.moveScale;
@@ -495,6 +563,14 @@
       // Active Flight Braking / Inertial Dampener (KeyX held)
       if (braking) {
         signalInput('move');
+        hintState.lastInput = performance.now();
+        if (!hintState.hasBraked) {
+          hintState.hasBraked = true;
+          setHint();
+        } else if (hintState.idleActive) {
+          hintState.idleActive = false;
+          hideTlouHint();
+        }
         const brakeFactor = Math.pow(0.01, dt);
         velocity[0] *= brakeFactor;
         velocity[1] *= brakeFactor;
@@ -516,6 +592,24 @@
           velocity[1] = 0;
           velocity[2] = 0;
         }
+
+        // Hill-Clohessy-Wiltshire (HCW) relative microgravity orbital drift in LEO (400km, omega ~ 0.001131 rad/s)
+        const omegaOrb = 0.001131;
+        velocity[1] += 3.0 * omegaOrb * omegaOrb * (position[1] - 1.72) * dt;
+        velocity[2] += -2.0 * omegaOrb * velocity[1] * dt;
+      }
+
+      // Check vertical elevation state for TLOU hint
+      if (vertical !== 0 && !hintState.hasElevated) {
+        hintState.hasElevated = true;
+        setHint();
+      }
+
+      // Idle reminder in TLOU style: if player has been idle for > 8s, show unobtrusive reminder
+      const now = performance.now();
+      if (locked && (now - hintState.lastInput > 8000) && !hintState.idleActive) {
+        hintState.idleActive = true;
+        renderTlouHint(['WASD', 'X', 'SPACE'], 'EVA MANEUVER', 'THRUSTER SUITE');
       }
 
       // Strict enforcement of altitude floor: cannot dip below facility into Earth

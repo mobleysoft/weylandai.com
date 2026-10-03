@@ -35819,23 +35819,80 @@ global.SovereignPdfRender = {
       line-height: 1.6;
     }
     
-    /* Play Mode HUD Hints */
+    /* The Last of Us Style Contextual HUD Hints */
     #hint {
       position: fixed;
-      top: 20px;
+      bottom: 40px;
       left: 50%;
-      transform: translateX(-50%);
-      z-index: 10;
-      background: rgba(0, 0, 0, 0.85);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      padding: 8px 16px;
-      border-radius: 20px;
-      font-family: 'Space Grotesk', monospace;
-      font-size: 11px;
-      letter-spacing: 1px;
-      color: #888;
+      transform: translateX(-50%) translateY(12px) scale(0.96);
+      z-index: 20;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: rgba(12, 15, 22, 0.85);
+      backdrop-filter: blur(16px) saturate(180%);
+      -webkit-backdrop-filter: blur(16px) saturate(180%);
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      border-radius: 999px;
+      padding: 9px 20px;
+      box-shadow: 0 12px 35px rgba(0, 0, 0, 0.65), inset 0 1px 0 rgba(255, 255, 255, 0.2);
+      pointer-events: auto;
+      cursor: pointer;
+      opacity: 0;
+      transition: opacity 0.35s cubic-bezier(0.16, 1, 0.3, 1), transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+      user-select: none;
+    }
+    #hint.visible {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0) scale(1);
+    }
+    #hint.fade-out {
+      opacity: 0;
+      transform: translateX(-50%) translateY(8px) scale(0.96);
       pointer-events: none;
-      transition: opacity 0.3s;
+    }
+    .tlou-keys {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+    }
+    .tlou-key {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 22px;
+      height: 22px;
+      padding: 0 7px;
+      background: linear-gradient(180deg, #323846 0%, #1a1e27 100%);
+      border: 1px solid rgba(255, 255, 255, 0.32);
+      border-bottom: 2px solid rgba(0, 0, 0, 0.7);
+      border-radius: 5px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.25);
+      font-family: 'Space Grotesk', ui-monospace, monospace;
+      font-size: 11px;
+      font-weight: 800;
+      color: #ffffff;
+      text-shadow: 0 1px 2px rgba(0, 0, 0, 0.9);
+      letter-spacing: 0.04em;
+    }
+    .tlou-label {
+      font-family: 'Space Grotesk', -apple-system, sans-serif;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: #e2e8f0;
+    }
+    .tlou-sub {
+      font-family: 'Space Grotesk', ui-monospace, monospace;
+      font-size: 9px;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #f0b800;
+      border-left: 1px solid rgba(255, 255, 255, 0.15);
+      padding-left: 8px;
+      margin-left: 2px;
     }
 
     /* First-person helmet HUD frame/visor edge - WeylandAI Signal Blue /
@@ -36229,7 +36286,7 @@ global.SovereignPdfRender = {
   <!-- The Playable WebGL Canvas -->
   <canvas id="bg-canvas"></canvas>
 
-  <div id="hint">CLICK to capture mouse</div>
+  <div id="hint" class="visible"><span class="tlou-keys"><span class="tlou-key">CLICK</span></span><span class="tlou-label">INITIATE EVA SPACEWALK</span><span class="tlou-sub">CAPTURE MOUSE</span></div>
 
   <!-- Astronaut spacewalk embodiment HUD: the helmet visor frame/edge
        (first-person only - see #visor-frame CSS above) and the MMU/SAFER
@@ -37800,6 +37857,27 @@ global.SovereignPdfRender = {
           float att= 7.0/(1.+ld*ld*0.15);
           float spot= smoothstep(.1,.8,dot(ldir,vec3(0.,-1.,0.)));
           lighting += shade(albedo,metal,rough,N,V,ldir,warmL*att*(0.35+0.65*spot),1.);
+        }
+
+        // Dynamic Robotic Welding Arc Point Lighting (Port: [-3.5, 3.2, 7.5], Starboard: [3.5, 4.5, 12.0])
+        float weldFlicker1 = step(0.40, fract(sin(u_t * 89.1) * 43758.5453)) * (0.6 + 0.4 * sin(u_t * 190.0));
+        vec3 weldPos1 = vec3(-3.5, 3.2, 7.5);
+        vec3 wlv1 = weldPos1 - p;
+        float wld1 = length(wlv1);
+        if(wld1 < 25.0 && weldFlicker1 > 0.05){
+          vec3 wldir1 = wlv1 / wld1;
+          float watt1 = (18.0 * weldFlicker1) / (1.0 + wld1 * wld1 * 0.35);
+          lighting += shade(albedo, metal, rough, N, V, wldir1, vec3(0.60, 0.82, 1.0) * watt1, 1.0);
+        }
+
+        float weldFlicker2 = step(0.40, fract(sin(u_t * 73.3) * 29481.1234)) * (0.5 + 0.5 * cos(u_t * 160.0));
+        vec3 weldPos2 = vec3(3.5, 4.5, 12.0);
+        vec3 wlv2 = weldPos2 - p;
+        float wld2 = length(wlv2);
+        if(wld2 < 25.0 && weldFlicker2 > 0.05){
+          vec3 wldir2 = wlv2 / wld2;
+          float watt2 = (18.0 * weldFlicker2) / (1.0 + wld2 * wld2 * 0.35);
+          lighting += shade(albedo, metal, rough, N, V, wldir2, vec3(0.55, 0.88, 1.0) * watt2, 1.0);
         }
 
         lighting *= mix(occ,1.,0.35);
