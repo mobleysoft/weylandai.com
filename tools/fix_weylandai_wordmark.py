@@ -47,8 +47,7 @@ import numpy as np
 
 sys.path.insert(0, "/Users/johnmobley/mobley-kernel/src")
 from mobley.glyph_cleanup import (  # noqa: E402
-    parse_path, CubicEl, LineEl, fit_line_tls, fit_mirrored_edge,
-    line_intersect, robust_corner, path_from_segments,
+    parse_path, CubicEl, fit_mirrored_edge, robust_corner, path_from_segments,
 )
 
 # The original, never-hand-edited potrace trace of the "W" glyph, as
