@@ -56,12 +56,11 @@
       background-size: auto, auto, auto, 30px 30px, 30px 30px;
       z-index: -1;
     }
-    /* Stage backdrop: a real element (not a pseudo-element) so it's a clean,
-       single swap point later - replace its background with a live SightX
-       <canvas>/<iframe> and the envelope frame above it needs no changes.
-       Classic design-tool transparency checkerboard: signals "this backdrop
-       is a placeholder / meant to be seen through," matching the real intent
-       (today: checkerboard: tomorrow: the SightX 3D world shows through here). */
+    /* Stage backdrop: a real element (not a pseudo-element), so the live
+       SightX iframe (injected by JS below, desktop + motion-ok only) can be
+       appended into it without touching the envelope frame above it. The
+       checkerboard stays painted as the base layer - fallback for mobile,
+       reduced-motion, and the brief moment before the iframe fades in. */
     #stage-backdrop {
       position: fixed;
       inset: 0;
@@ -74,6 +73,24 @@
         linear-gradient(-45deg, transparent 75%, #bbb 75%);
       background-size: 28px 28px;
       background-position: 0 0, 0 14px, 14px -14px, -14px 0px;
+    }
+    /* Live SightX world behind the envelope card (the Pip-Boy pattern: the
+       card is the handheld device, this is the world it's held up against).
+       Injected by JS only on desktop-class viewports without reduced-motion
+       - the checkerboard above stays as the base/fallback underneath it. */
+    #stage-backdrop iframe {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      border: 0;
+      display: block;
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity 1.2s ease;
+    }
+    #stage-backdrop iframe.is-loaded {
+      opacity: 1;
     }
     /* Envelope frame: the real site content (nav + scrollytelling body)
        lives inside this, inset from the viewport edge so the checkerboard
@@ -1346,8 +1363,10 @@
   </style>
 </head>
 <body>
-  <!-- Stage backdrop: checkerboard placeholder today, swappable for a live
-       SightX canvas later without touching anything inside .envelope-frame -->
+  <!-- Stage backdrop: the live SightX world (the Pip-Boy pattern - the
+       envelope card below is the handheld device, this is the world it's
+       held up against). Checkerboard is the fallback for mobile/reduced-
+       motion; see the iframe-injection script near the end of <body>. -->
   <div id="stage-backdrop"></div>
 
   <!-- Envelope frame: all real site content (nav + main + footer) lives
@@ -2683,6 +2702,29 @@
 
     loadRealTrial();
 
+  })();
+  </script>
+
+  <!-- Live SightX world as the stage backdrop (desktop + motion-ok only -
+       a full WebGL2 raymarched scene isn't worth the battery/bandwidth
+       cost on mobile for a purely ambient backdrop). -->
+  <script>
+  (function () {
+    try {
+      var reducedMotion = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      if (reducedMotion || window.innerWidth < 900) return;
+      var backdrop = document.getElementById("stage-backdrop");
+      if (!backdrop) return;
+      var frame = document.createElement("iframe");
+      frame.src = "/sightx?embed=bg";
+      frame.title = "";
+      frame.setAttribute("aria-hidden", "true");
+      frame.tabIndex = -1;
+      frame.addEventListener("load", function () {
+        frame.classList.add("is-loaded");
+      });
+      backdrop.appendChild(frame);
+    } catch (e) {}
   })();
   </script>
 </body>
