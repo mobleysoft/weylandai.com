@@ -29,9 +29,18 @@
     html, body {
       margin: 0;
       min-height: 100%;
-      background: var(--bg);
       color: var(--text);
       font-family: "Avenir Next", "Helvetica Neue", -apple-system, BlinkMacSystemFont, sans-serif;
+    }
+    /* Only html paints a solid background (the canvas fallback) - body must
+       stay transparent, or its own in-flow box paints solid color over
+       #stage-backdrop's checkerboard in .envelope-frame's side/bottom
+       margins. That's why only the TOP margin ever showed checkerboard:
+       body's box top gets pushed down by margin-collapsing with
+       .envelope-frame's own margin-top, so body's opaque box never
+       actually covers that strip - but it covers every other margin. */
+    html {
+      background: var(--bg);
     }
     body:before {
       content: "";
@@ -74,8 +83,14 @@
        background, buttons/text never sit in the cut area). */
     .envelope-frame {
       position: relative;
-      margin: clamp(10px, 2.4vw, 32px);
-      background: var(--bg);
+      /* A hard max-width (not just a margin) so the checkerboard gutter
+         actually grows on wide screens instead of staying a thin sliver -
+         width always reserves the same gutter the margin does, then the
+         cap kicks in and leftover space becomes equal left/right
+         checkerboard, matching what's already visible above/below. */
+      width: calc(100% - 2 * clamp(10px, 2.4vw, 32px));
+      max-width: 1600px;
+      margin: clamp(10px, 2.4vw, 32px) auto;
       border-radius: 4px;
       box-shadow: 0 30px 90px rgba(0, 0, 0, 0.55);
       clip-path: polygon(
@@ -84,9 +99,19 @@
         100% calc(100% - 22px), calc(100% - 22px) 100%,
         22px 100%, 0 calc(100% - 22px)
       );
+      /* Restores the thin content-area grid lines that used to show
+         through before this element had its own opaque fill painted on
+         top - scoped to (and clipped to the shape of) the envelope itself
+         rather than the whole page, so it reads as "inside the folder,"
+         not bleeding into the checkerboard gutters outside it. */
+      background:
+        linear-gradient(rgba(255, 255, 255, 0.035) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.035) 1px, transparent 1px),
+        var(--bg);
+      background-size: 30px 30px, 30px 30px, auto;
     }
     @media (max-width: 640px) {
-      .envelope-frame { margin: 6px; clip-path: polygon(0 12px, 12px 0, calc(100% - 12px) 0, 100% 12px, 100% calc(100% - 12px), calc(100% - 12px) 100%, 12px 100%, 0 calc(100% - 12px)); }
+      .envelope-frame { width: calc(100% - 12px); margin: 6px auto; clip-path: polygon(0 12px, 12px 0, calc(100% - 12px) 0, 100% 12px, 100% calc(100% - 12px), calc(100% - 12px) 100%, 12px 100%, 0 calc(100% - 12px)); }
       header.site-header { top: 6px; }
     }
 
@@ -145,6 +170,14 @@
     .wn-ribbon .wn-flag:first-child {
       margin-left: 0;
     }
+    /* Last tab in the ribbon tilts down slightly, like the bottom envelope
+       in a stack - pivoting on its own left edge (where it overlaps the
+       tab before it, so that seam stays flush) while the free right edge
+       visibly dips. */
+    .wn-ribbon .wn-flag:last-child {
+      transform: rotate(3deg);
+      transform-origin: left center;
+    }
     .wn-flag-frame {
       position: absolute;
       top: -2px;
@@ -153,25 +186,18 @@
       left: -2px;
       clip-path: polygon(17px 0, 100% 0, calc(100% - 17px) 100%, 0 100%);
     }
-    .wn-ribbon .wn-flag:first-child .wn-flag-frame {
-      clip-path: polygon(0 0, 100% 0, calc(100% - 17px) 100%, 0 100%);
-    }
     .wn-flag-fill {
       position: relative;
       display: flex;
       align-items: center;
       justify-content: center;
-      height: 40px;
+      height: 50px;
       padding: 0 20px 0 22px;
       font: 800 11px/1 ui-monospace, monospace;
       letter-spacing: 0.04em;
       white-space: nowrap;
       clip-path: polygon(15px 0, 100% 0, calc(100% - 15px) 100%, 0 100%);
       transition: filter 0.15s ease, background 0.25s ease, color 0.25s ease;
-    }
-    .wn-ribbon .wn-flag:first-child .wn-flag-fill {
-      clip-path: polygon(0 0, 100% 0, calc(100% - 15px) 100%, 0 100%);
-      padding-left: 18px;
     }
     .wn-flag:hover .wn-flag-fill {
       filter: brightness(1.12);
@@ -180,8 +206,12 @@
     .wn-flag[data-tone="yellow"] .wn-flag-fill { background: #ffd400; color: #0b0c10; }
     .wn-flag[data-tone="blue"] .wn-flag-frame { background: #2a52ff; }
     .wn-flag[data-tone="blue"] .wn-flag-fill { background: #2a52ff; color: #fff; }
-    .wn-logo .wn-flag-fill { padding: 0 14px; }
-    .wn-logo img { display: block; height: 26px; width: auto; }
+    /* Logo now uses the SAME slanted parallelogram as every other tab (no
+       more flat vertical left edge special-case) - a real manila tab, not
+       a one-off rectangle - and fills more of its own (unchanged-size)
+       container: less side padding, a bigger mark, same aspect ratio. */
+    .wn-logo .wn-flag-fill { padding: 0 10px; }
+    .wn-logo img { display: block; height: 36px; width: auto; }
     
     .wn-secondary {
       display: flex;
@@ -230,13 +260,36 @@
 
     /* Scrollytelling Chapters */
     .story-chapter {
-      padding: 72px 0 80px;
+      padding: 48px 0 40px;
       border-bottom: 1px solid rgba(50, 58, 70, 0.4);
       scroll-margin-top: 75px;
       position: relative;
     }
     .story-chapter:last-of-type {
       border-bottom: none;
+    }
+    /* Full-bleed folder-body gradient, restarted at the top of EVERY
+       chapter (not just the hero) - each section picks up the same blue
+       wash right where its own top border is, settling back into the
+       page's normal dark tone by mid-section, so the transition between
+       chapters reads as "the next page of the same folder," not a flat
+       black gap. */
+    .story-chapter:before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 50%;
+      width: 100vw;
+      transform: translateX(-50%);
+      height: 340px;
+      z-index: -1;
+      pointer-events: none;
+      background: linear-gradient(165deg,
+        rgba(58, 98, 255, 0.28) 0%,
+        rgba(42, 82, 255, 0.12) 22%,
+        rgba(42, 82, 255, 0.03) 50%,
+        rgba(11, 13, 19, 0) 78%
+      );
     }
 
     .chapter-eyebrow {
@@ -260,6 +313,26 @@
       background: rgba(255, 212, 0, 0.12);
       border-color: rgba(255, 212, 0, 0.35);
       color: var(--accent);
+    }
+    /* Same flag shape/weight as the nav ribbon tabs, scaled down - labels
+       each chapter with the real product mark it belongs to instead of
+       relying on the h2 copy alone to say which product this is. */
+    .chapter-product-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 14px;
+    }
+    .chapter-product-badge span {
+      display: inline-flex;
+      align-items: center;
+      height: 30px;
+      padding: 0 16px 0 18px;
+      background: #ffd400;
+      color: #0b0c10;
+      font: 800 12px/1 ui-monospace, monospace;
+      letter-spacing: 0.05em;
+      clip-path: polygon(12px 0, 100% 0, calc(100% - 12px) 100%, 0 100%);
     }
     .chapter-head h2 {
       font-size: clamp(30px, 4.2vw, 54px);
@@ -1161,6 +1234,12 @@
       .pl-assemble { grid-template-columns: repeat(2, 1fr); }
       .wn-flag-fill { height: 34px; font-size: 9.5px; padding: 0 16px 0 18px; }
       .wn-logo img { height: 20px; }
+      /* Why WeylandAI / Pricing / News / Sign In move to the footer on
+         mobile (which already lists Pricing + Sign In; Why WeylandAI and
+         News are added there) so the header is just the product-tab
+         ribbon, and the manila body reads as flowing straight down from
+         the blue logo tab, uninterrupted by a second nav row. */
+      .wn-secondary { display: none; }
     }
   </style>
 </head>
@@ -1266,6 +1345,7 @@
         <span>PUBLIC BID DISCOVERY &amp; OPPORTUNITY INGESTION</span>
       </div>
       <div class="chapter-head">
+        <div class="chapter-product-badge"><span>HuntX</span></div>
         <h2>Never Miss a State Letting or School Board Funding Release.</h2>
         <div class="chapter-tagline">Measure twice. Match once.</div>
         <p class="chapter-desc">HuntX pulls live public construction leads directly from state open-data APIs &mdash; Texas DOT highway and bridge lettings and California school-facility funding releases today, with municipal capital programs added continuously. Every row traces back to its authentic public agency source docket.</p>
@@ -1347,6 +1427,7 @@
         <span>MACHINE-VISION VECTOR BLUEPRINT QUANTIFICATION</span>
       </div>
       <div class="chapter-head">
+        <div class="chapter-product-badge"><span>TakeoffX</span></div>
         <h2>Read Schedules &amp; Quantify Openings in Milliseconds.</h2>
         <div class="chapter-tagline">Measure twice. Match once.</div>
         <p class="chapter-desc">TakeoffX ingests raw architectural vector PDFs, detects opening tags, and quantifies doors, hardware sets, and wall ratings directly from the drawings. Estimators review confidence-scored bounding boxes instead of counting marks by hand with highlighters.</p>
@@ -1445,6 +1526,7 @@
         <span>SUBMITTAL AUTOMATION &middot; LIVE TRIAL SESSION</span>
       </div>
       <div class="chapter-head">
+        <div class="chapter-product-badge"><span>SubX</span></div>
         <h2>Turn a Door Schedule into a Matched Submittal &mdash; Live.</h2>
         <div class="chapter-tagline">Measure twice. Match once.</div>
         <p class="chapter-desc">You are working in the live SubX engine against &ldquo;The WeylandAI Building,&rdquo; a shared example project. TakeoffX quantified the drawings above, SubX extracts the hardware sets and submittal requirements below, and CutsheetX matches every line against real manufacturer catalogues &mdash; with verifiable citations attached.</p>
@@ -1582,6 +1664,7 @@
         <span>ZERO-HALLUCINATION MANUFACTURER CATALOG MATCHING</span>
       </div>
       <div class="chapter-head">
+        <div class="chapter-product-badge"><span>CutsheetX</span></div>
         <h2>60,000 Verified Variants with Real PDF Citations.</h2>
         <div class="chapter-tagline">Measure twice. Match once.</div>
         <p class="chapter-desc">CutsheetX queries WeylandAI's 60,000-variant database of Allegion, ASSA ABLOY, Dormakaba, and Hager products. Every matched hardware set carries a cryptographically verifiable manufacturer catalog citation and submittal sheet snippet. If a variant hasn't matched yet, it is flagged plainly rather than invented.</p>
@@ -1653,6 +1736,7 @@
         <span>PROPOSAL INTELLIGENCE &amp; MULTIPLAYER SPATIAL FIELD</span>
       </div>
       <div class="chapter-head">
+        <div class="chapter-product-badge"><span>PropX</span><span>MeetingX</span></div>
         <h2>Automated Margin Protection &amp; Shared Spatial Sessions.</h2>
         <div class="chapter-tagline">Measure twice. Match once.</div>
         <p class="chapter-desc">PropX translates extracted hardware quantities directly into commercial proposals with automated margin protection and live supplier price-lock verification. MeetingX connects estimators, general contractors, and field crews inside a shared spatial session powered by Cloudflare Durable Objects.</p>
@@ -1760,6 +1844,7 @@
         <span>PHOTOREALISTIC 3D SPATIAL DIGITAL TWIN &middot; ORBITAL COMMAND</span>
       </div>
       <div class="chapter-head">
+        <div class="chapter-product-badge"><span>SightX</span></div>
         <h2>SightX &mdash; Physics-Grounding in Low Earth Orbit &amp; On Site.</h2>
         <div class="chapter-tagline">Measure twice. Match once.</div>
         <p class="chapter-desc">A raymarched orbital shipyard and jobsite digital twin powered by genuine physics: Hill-Clohessy-Wiltshire (HCW) microgravity relative dynamics, single-source solar radiance casting harsh vacuum shadows, tactile astronaut suit HUD controls, and sub-millimeter BIM geometry.</p>
@@ -1969,6 +2054,7 @@
       </div>
       <div style="display:flex;gap:16px;flex-wrap:wrap">
         <a href="#hero">Top</a>
+        <a href="#whyweyland">Why WeylandAI</a>
         <a href="#huntx">HuntX</a>
         <a href="#takeoffx">TakeoffX</a>
         <a href="#subx">SubX</a>
@@ -1976,6 +2062,7 @@
         <a href="#propx">PropX</a>
         <a href="#sightx">SightX</a>
         <a href="#pricing">Pricing</a>
+        <a href="/news">News</a>
         <a href="/venturedeck">Venture Deck</a>
         <a href="/login?redirect=/">Sign In</a>
       </div>
