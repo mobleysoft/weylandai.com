@@ -2247,13 +2247,24 @@
     // directly instead of the document/viewport.
     var scrollRoot = document.querySelector(".envelope-frame");
 
-    // 1. Scroll Progress Bar
+    // 1. Scroll Progress Bar + backdrop parallax (second signature
+    // interaction, same visual language as the scroll-mask itself: as the
+    // folder scrolls, the world visible through its edges shifts slightly,
+    // like tilting a held device against what's behind it. No-ops cleanly
+    // when the backdrop iframe doesn't exist - mobile/reduced-motion never
+    // got one injected in the first place.
+    var backdropFrame = null;
     scrollRoot.addEventListener("scroll", function() {
-      var scrolled = scrollRoot.scrollHeight > scrollRoot.clientHeight
-        ? (scrollRoot.scrollTop / (scrollRoot.scrollHeight - scrollRoot.clientHeight)) * 100
+      var fraction = scrollRoot.scrollHeight > scrollRoot.clientHeight
+        ? scrollRoot.scrollTop / (scrollRoot.scrollHeight - scrollRoot.clientHeight)
         : 0;
       var bar = document.getElementById("scroll-progress");
-      if (bar) bar.style.width = scrolled + "%";
+      if (bar) bar.style.width = (fraction * 100) + "%";
+
+      if (backdropFrame === null) backdropFrame = document.querySelector("#stage-backdrop iframe") || false;
+      if (backdropFrame) {
+        backdropFrame.style.transform = "translateY(-" + (fraction * 6) + "vh) scale(" + (1 + fraction * 0.03) + ")";
+      }
     }, { passive: true });
 
     // 2. Client-Side Scrollytelling Router: Intercept internal clicks
