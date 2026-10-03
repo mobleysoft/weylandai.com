@@ -20,6 +20,7 @@
       rollRight: Object.freeze(['KeyE']),
       sprint: Object.freeze(['ShiftLeft', 'ShiftRight']),
       scan: Object.freeze(['KeyF']),
+      brake: Object.freeze(['KeyX']),
       tour: 'KeyT',
       settings: 'KeyO',
       report: 'KeyR',
@@ -28,21 +29,17 @@
     }),
     // Real Newtonian zero-g thrust: these are ACCELERATIONS (m/s^2) applied
     // while a direction is held, not velocities - see update() below.
-    // Vacuum has no medium to decelerate against, so there is deliberately
-    // no drag/damping term anywhere in this file; released velocity
-    // persists exactly until an opposing burst cancels it, the same way a
-    // real MMU/SAFER reaction-control pack behaves. Magnitudes are tuned
-    // for a responsive ~1-2s spin-up to cruise speed rather than a literal
-    // SAFER unit's real ~0.05 m/s^2 thrust (which would read as nearly
-    // motionless) - the same kind of disclosed playability trade-off this
-    // scene already makes for its orbital time-scale (see #orbit-hud).
+    // Active flight braking (Inertial Dampener) on KeyX provides exponential
+    // deceleration to bring the astronaut to a full stop, while gentle
+    // natural stabilization damping prevents uncontrollable runaway drift
+    // when coasting without thrust.
     // maxSpeed models the unit's finite RCS propellant budget (a real cap
     // on accumulated delta-v, not an arbitrary speed limiter) - it only
     // clips velocity AFTER a burst adds to it, it never decays existing
     // velocity on its own.
     movement: Object.freeze({ accel: 6.0, sprintAccel: 13.0, maxSpeed: 16.0, collisionStep: 0.08, roll: 1.6 }),
     look: Object.freeze({ mouse: 0.0022, touch: 0.0040 }),
-    bounds: Object.freeze({ minX: -60, maxX: 60, minY: -20, maxY: 60, minZ: -60, maxZ: 60 })
+    bounds: Object.freeze({ minX: -50.0, maxX: 50.0, minY: 0.2, maxY: 30.0, minZ: -50.0, maxZ: 50.0 })
   });
 
   // Rodrigues' rotation formula: rotate unit vector v around unit axis a by
@@ -97,7 +94,7 @@
   });
   const canonicalBindings = Object.freeze({
     forward: 'KeyW', backward: 'KeyS', left: 'KeyA', right: 'KeyD',
-    sprint: 'ShiftLeft', scan: 'KeyF'
+    sprint: 'ShiftLeft', scan: 'KeyF', brake: 'KeyX'
   });
 
   function loadPreferences() {
@@ -166,10 +163,12 @@
     const settings = preferences.settings;
     const bindings = preferences.bindings;
     const position = (options.initialPosition || [0, 1.72, -9]).slice();
-    // Real Newtonian zero-g state: thrust is an acceleration applied to
-    // this velocity (see update() below), never a position-setter, and
-    // there is no drag term anywhere that decays it - it persists exactly
-    // until an opposing thrust burst cancels it out.
+    position[0] = clamp(position[0], profile.bounds.minX, profile.bounds.maxX);
+    position[1] = clamp(position[1], profile.bounds.minY, profile.bounds.maxY);
+    position[2] = clamp(position[2], profile.bounds.minZ, profile.bounds.maxZ);
+    // Real Newtonian zero-g state with active flight braking & inertial dampener:
+    // thrust applies acceleration, KeyX engages exponential braking, and gentle
+    // natural stabilization damping prevents uncontrollable runaway drift.
     const velocity = [0, 0, 0];
     let { fwd, up } = basisFromYawPitch(options.initialYaw || 0, options.initialPitch || 0);
     let locked = false;
@@ -236,6 +235,7 @@
       if (action === 'rollLeft') return Boolean(keys.KeyQ);
       if (action === 'rollRight') return Boolean(keys.KeyE);
       if (action === 'scan') return Boolean(keys.KeyF);
+      if (action === 'brake') return Boolean(keys.KeyX);
       return false;
     }
 
@@ -250,7 +250,7 @@
     function setHint() {
       if (!options.hint) return;
       options.hint.textContent = locked
-        ? 'WASD - THRUST   MOUSE - PITCH/YAW   Q/E - ROLL   SPACE/CTRL - UP/DOWN   SHIFT - BOOST   F - SCAN   V - VIEW   ESC - RELEASE'
+        ? 'WASD - THRUST   MOUSE - PITCH/YAW   Q/E - ROLL   SPACE/CTRL - UP/DOWN   X - BRAKE   SHIFT - BOOST   F - SCAN   V - VIEW   ESC - RELEASE'
         : 'CLICK TO CAPTURE MOUSE';
     }
 
@@ -278,8 +278,11 @@
       if (locked) activate(); else release();
     });
 
-    document.addEventListener('keydown', event => {
-      const formFocused = /^(INPUT|TEXTAREA|SELECT)$/.test(document.activeElement.tagName);
+    function onKeyDown(event) {
+      if (event._sxHandled) return;
+      event._sxHandled = true;
+      const activeEl = document.activeElement;
+      const formFocused = Boolean(activeEl && /^(INPUT|TEXTAREA|SELECT)$/i.test(activeEl.tagName));
       if (formFocused && !locked) return;
       if (!locked && !isDedicatedDemo) return;
       if (!event.repeat && event.code === profile.desktop.tour && options.onTourToggle) options.onTourToggle();
@@ -298,19 +301,28 @@
       if ([
         ...profile.desktop.forward, ...profile.desktop.backward, ...profile.desktop.left, ...profile.desktop.right,
         ...profile.desktop.up, ...profile.desktop.down, ...profile.desktop.rollLeft, ...profile.desktop.rollRight,
-        bindings.scan
+        ...profile.desktop.brake,
+        bindings.scan,
+        bindings.brake
       ].includes(event.code)) {
         event.preventDefault();
       }
-    });
+    }
 
-    document.addEventListener('keyup', event => {
+    function onKeyUp(event) {
+      if (event._sxHandledUp) return;
+      event._sxHandledUp = true;
       keys[event.code] = false;
       if (desktopScanHeld && !actionActive('scan')) {
         desktopScanHeld = false;
         setScan(false);
       }
-    });
+    }
+
+    document.addEventListener('keydown', onKeyDown);
+    window.addEventListener('keydown', onKeyDown);
+    document.addEventListener('keyup', onKeyUp);
+    window.addEventListener('keyup', onKeyUp);
     // Mouse look rotates the flight basis directly around its OWN current
     // local axes (yaw around local up, pitch around local right) rather
     // than accumulating world-frame Euler angles - this is what makes roll
@@ -456,15 +468,9 @@
       const inputLength = Math.hypot(forwardAmt, strafe, vertical);
       if (inputLength > 1) { forwardAmt /= inputLength; strafe /= inputLength; vertical /= inputLength; }
       const thrusting = Boolean(forwardAmt || strafe || vertical);
+      const braking = actionActive('brake');
 
-      // Real Newtonian zero-g movement: a thrust key is a burst that
-      // CHANGES VELOCITY (acceleration), not a velocity-setter. There is
-      // deliberately no drag/damping term anywhere below - real vacuum
-      // has no medium to decelerate against, so once a burst stops,
-      // velocity is conserved exactly (Newton's first law) until an
-      // opposing burst cancels it. This replaced an earlier instant-
-      // velocity model (press key -> move at fixed speed, release ->
-      // stop dead), which was not real physics for a zero-g spacewalk.
+      // Real Newtonian zero-g thrust: acceleration applied along current local axes
       if (thrusting) {
         signalInput('move');
         if (options.onThrust) options.onThrust(velocity);
@@ -478,9 +484,7 @@
         velocity[1] += (fwd[1] * forwardAmt + right[1] * strafe + up[1] * vertical) * accel * dt;
         velocity[2] += (fwd[2] * forwardAmt + right[2] * strafe + up[2] * vertical) * accel * dt;
         // Finite RCS propellant budget: caps accumulated drift the same
-        // way a real SAFER unit's limited delta-v does. This only clips
-        // velocity AFTER a burst adds to it - it never decays existing
-        // velocity on its own, so it is not a drag term.
+        // way a real SAFER unit's limited delta-v does.
         const builtSpeed = Math.hypot(velocity[0], velocity[1], velocity[2]);
         if (builtSpeed > profile.movement.maxSpeed) {
           const scale = profile.movement.maxSpeed / builtSpeed;
@@ -488,12 +492,47 @@
         }
       }
 
-      // Integrate position from velocity EVERY frame, independent of
-      // whether thrust was applied this frame - this is what makes the
-      // drift real: releasing every key keeps the astronaut moving at a
-      // constant velocity indefinitely, exactly like coasting in vacuum.
+      // Active Flight Braking / Inertial Dampener (KeyX held)
+      if (braking) {
+        signalInput('move');
+        const brakeFactor = Math.pow(0.01, dt);
+        velocity[0] *= brakeFactor;
+        velocity[1] *= brakeFactor;
+        velocity[2] *= brakeFactor;
+        if (Math.hypot(velocity[0], velocity[1], velocity[2]) < 0.02) {
+          velocity[0] = 0;
+          velocity[1] = 0;
+          velocity[2] = 0;
+        }
+      } else if (!thrusting) {
+        // Natural gentle stabilization damping when no thrust keys are held
+        // so release doesn't feel like an uncontrollable runaway rocket
+        const coastDamp = Math.pow(0.85, dt);
+        velocity[0] *= coastDamp;
+        velocity[1] *= coastDamp;
+        velocity[2] *= coastDamp;
+        if (Math.hypot(velocity[0], velocity[1], velocity[2]) < 0.001) {
+          velocity[0] = 0;
+          velocity[1] = 0;
+          velocity[2] = 0;
+        }
+      }
+
+      // Strict enforcement of altitude floor: cannot dip below facility into Earth
+      if (position[1] < profile.bounds.minY) {
+        position[1] = profile.bounds.minY;
+        if (velocity[1] < 0) velocity[1] = 0;
+      }
+
+      // Integrate position from velocity
       const speed = Math.hypot(velocity[0], velocity[1], velocity[2]);
-      if (speed < 1e-5) return;
+      if (speed < 1e-5) {
+        if (position[1] < profile.bounds.minY) {
+          position[1] = profile.bounds.minY;
+          if (options.onMove) options.onMove(position);
+        }
+        return;
+      }
 
       const dx = velocity[0] * dt;
       const dy = velocity[1] * dt;
@@ -517,7 +556,16 @@
       if (clampedX !== position[0]) velocity[0] = 0;
       if (clampedY !== position[1]) velocity[1] = 0;
       if (clampedZ !== position[2]) velocity[2] = 0;
-      position[0] = clampedX; position[1] = clampedY; position[2] = clampedZ;
+      position[0] = clampedX;
+      position[1] = clampedY;
+      position[2] = clampedZ;
+
+      // Absolute floor enforcement: strictly prevents camera from dipping below facility or into Earth
+      if (position[1] < profile.bounds.minY) {
+        position[1] = profile.bounds.minY;
+        if (velocity[1] < 0) velocity[1] = 0;
+      }
+
       if (options.onMove) options.onMove(position);
     }
 
@@ -536,9 +584,9 @@
 
     function setPose(nextPosition, nextYaw, nextPitch) {
       if (Array.isArray(nextPosition) && nextPosition.length >= 3) {
-        position[0] = Number(nextPosition[0]);
-        position[1] = Number(nextPosition[1]);
-        position[2] = Number(nextPosition[2]);
+        position[0] = clamp(Number(nextPosition[0]), profile.bounds.minX, profile.bounds.maxX);
+        position[1] = clamp(Number(nextPosition[1]), profile.bounds.minY, profile.bounds.maxY);
+        position[2] = clamp(Number(nextPosition[2]), profile.bounds.minZ, profile.bounds.maxZ);
       }
       // Scripted teleports (tour stops, PDF-twin spawn points) specify a
       // level yaw/pitch with no roll, which is the right default for them.

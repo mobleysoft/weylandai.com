@@ -29,7 +29,7 @@
     root.setAttribute('aria-label', 'SightX field intelligence');
     root.innerHTML = `
       <header class="sxe-command-bar">
-        <div class="sxe-identity"><span class="sxe-mark">SX</span><div><b>SIGHTX</b><small>SEMANTIC SITE TWIN / FACILITY 01</small></div></div>
+        <div class="sxe-identity"><span class="sxe-mark">SX</span><div><b>SIGHTX</b><small>ORBITAL DRYDOCK // FACILITY 01</small></div></div>
         <div class="sxe-system-state"><span class="sxe-live-dot"></span><span class="sxe-quality-label">ADAPTIVE / CALIBRATING</span></div>
         <nav class="sxe-actions" aria-label="SightX utilities">
           <button type="button" data-sxe-action="tour">GUIDED TOUR <kbd>T</kbd></button>
@@ -42,8 +42,8 @@
 
       <section class="sxe-mission" aria-live="polite">
         <div class="sxe-eyebrow"><span>LIVE COMMISSIONING RUN</span><b class="sxe-mission-progress">0 / 4</b></div>
-        <h2 class="sxe-mission-title">Acquire the main entrance</h2>
-        <p class="sxe-mission-copy">Center the automatic entrance in the reticle, then hold <kbd>E</kbd> or <kbd>SPACE</kbd> to inspect it.</p>
+        <h2 class="sxe-mission-title">Acquire the shipyard gantry</h2>
+        <p class="sxe-mission-copy">Center the gantry cradle in the reticle, then hold <kbd>E</kbd> or <kbd>SPACE</kbd> to inspect it.</p>
         <div class="sxe-progress-track"><i></i></div>
       </section>
 
@@ -136,10 +136,10 @@
     };
 
     const mission = [
-      { title: 'Acquire the main entrance', copy: 'Center the automatic entrance in the reticle, then hold E or SPACE to inspect it.', test: state => state.scannedIds.has('entrance') },
-      { title: 'Cross the threshold', copy: 'Enter the facility while SightX carries the exterior observation into the building twin.', test: state => state.position[2] > 0.8 && Math.abs(state.position[0]) < 1.45 },
-      { title: 'Inspect a controlled opening', copy: 'Aim at any interior doorway and complete a second semantic scan.', test: state => state.findings.some(item => item.tags && item.tags.includes('interior')) },
-      { title: 'Review the generated field record', copy: 'Open FIELD RECORD to see how spatial observations become reusable construction data.', test: state => state.reportReviewed }
+      { title: 'Acquire the shipyard gantry', copy: 'Center the gantry cradle in the reticle, then hold E or SPACE to inspect it.', test: state => state.scannedIds.has('entrance') || state.scannedIds.has('keel-spine') },
+      { title: 'Inspect starship construction bay', copy: 'Thrust along the keel into the primary assembly berth (Z > 2.0).', test: state => state.position[2] > 2.0 },
+      { title: 'Scan reactor or nacelle assembly', copy: 'Aim at the reactor core or plasma nacelles and complete a semantic scan.', test: state => state.findings.some(item => item.tags && (item.tags.includes('propulsion') || item.tags.includes('reactor') || item.tags.includes('interior'))) },
+      { title: 'Review the generated field record', copy: 'Open FIELD RECORD to inspect orbital telemetry, FEA structural stress, and assembly status.', test: state => state.reportReviewed }
     ];
 
     const state = {
@@ -157,7 +157,7 @@
       reportReviewed: false,
       position: [0, 1.72, -9],
       forward: [0, 0, 1],
-      siteName: 'Weyland Facility 01',
+      siteName: 'SightX Orbital Shipyard Facility',
       packages: [],
       markerEntries: [],
       lastTs: 0,

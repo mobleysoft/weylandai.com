@@ -35326,7 +35326,1961 @@ global.SovereignPdfRender = {
 `, { headers: { "Content-Type": "text/html; charset=UTF-8", "Cache-Control": "public, max-age=60" } });
   }
   function serve_sightx() {
-    return new Response("<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n  <meta charset=\"UTF-8\">\n  <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n  <title>SightX | WeylandAI Site Vision Demonstrator</title>\n  <meta name=\"description\" content=\"Explore the SightX construction-vision demonstrator: a navigable WeylandAI facility with automated openings and site intelligence overlays.\">\n  <link rel=\"icon\" href=\"data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><rect width='64' height='64' fill='%232a52ff'/><path d='M13 16h8l6 28h-8zm15 0h8l4 17 4-17h8l-8 28h-8z' fill='%23090a0d'/></svg>\">\n  \n  <!-- Premium Typography -->\n  <link rel=\"preconnect\" href=\"https://fonts.googleapis.com\">\n  <link rel=\"preconnect\" href=\"https://fonts.gstatic.com\" crossorigin>\n  <link href=\"https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;700&family=Outfit:wght@300;400;600&display=swap\" rel=\"stylesheet\">\n  <link rel=\"stylesheet\" href=\"/assets/sightx-controls.css?v=20260729-3\">\n  <link rel=\"stylesheet\" href=\"/assets/sightx-experience.css?v=20260729-3\">\n  <link rel=\"stylesheet\" href=\"/assets/sightx-ingest.css?v=20260729-3\">\n  <link rel=\"stylesheet\" href=\"/assets/sightx-reconstruction.css?v=20260729-1\">\n  <link rel=\"stylesheet\" href=\"/assets/sightx-runtime.css?v=20260813-1\">\n  \n  <style>\n    :root {\n      --color-primary: #2a52ff;\n      --color-accent: #d9e2e8;\n      --accent-hivis: #ffd400;\n      --void-glow: rgba(42, 82, 255, 0.24);\n    }\n    \n    * {\n      box-sizing: border-box;\n      margin: 0;\n      padding: 0;\n    }\n    \n    body {\n      font-family: 'Outfit', sans-serif;\n      background: #030305;\n      color: #f0f0f5;\n      overflow-x: hidden;\n      min-height: 100vh;\n    }\n    \n    #bg-canvas {\n      position: fixed;\n      top: 0;\n      left: 0;\n      width: 100vw;\n      height: 100vh;\n      z-index: 1;\n      transition: filter 1.0s cubic-bezier(0.4, 0, 0.2, 1);\n      filter: brightness(0.45) blur(4px);\n    }\n    \n    #bg-canvas.interactive {\n      filter: brightness(1.0) blur(0px);\n      cursor: crosshair;\n    }\n\n    body.sightx-demo #bg-canvas {\n      filter: brightness(1.0) blur(0px);\n      cursor: crosshair;\n    }\n\n    body.sightx-demo #app-container {\n      display: none;\n    }\n    \n    #app-container {\n      position: relative;\n      z-index: 2;\n      display: flex;\n      flex-direction: column;\n      min-height: 100vh;\n      backdrop-filter: blur(8px);\n      transition: opacity 0.5s cubic-bezier(0.4, 0, 0.2, 1), transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);\n      opacity: 1;\n      transform: scale(1);\n    }\n    \n    #app-container.hidden {\n      opacity: 0;\n      pointer-events: none;\n      transform: scale(0.98);\n    }\n    \n    header {\n      padding: 25px 40px;\n      display: flex;\n      justify-content: space-between;\n      align-items: center;\n      border-bottom: 1px solid rgba(255, 255, 255, 0.05);\n    }\n    \n    .logo {\n      font-family: 'Space Grotesk', sans-serif;\n      font-size: 24px;\n      font-weight: 700;\n      color: var(--color-primary);\n      text-shadow: 0 0 10px var(--void-glow);\n      letter-spacing: 2px;\n    }\n    \n    .logo span {\n      color: rgba(217, 226, 232, 0.58);\n      font-weight: 300;\n      letter-spacing: 1px;\n    }\n    \n    .status-badge {\n      background: rgba(42, 82, 255, 0.05);\n      border: 1px solid rgba(42, 82, 255, 0.2);\n      padding: 8px 16px;\n      border-radius: 20px;\n      font-size: 13px;\n      display: flex;\n      align-items: center;\n      gap: 8px;\n      font-family: 'Space Grotesk', sans-serif;\n    }\n    \n    .status-dot {\n      width: 8px;\n      height: 8px;\n      background: var(--color-primary);\n      border-radius: 50%;\n      box-shadow: 0 0 8px var(--color-primary);\n    }\n    \n    main {\n      flex: 1;\n      max-width: 800px;\n      margin: 0 auto;\n      width: 100%;\n      padding: 40px 20px;\n      display: flex;\n      flex-direction: column;\n      justify-content: center;\n    }\n    \n    .slideshow-container {\n      position: relative;\n      background: rgba(10, 10, 15, 0.85);\n      border: 1px solid rgba(42, 82, 255, 0.15);\n      border-radius: 20px;\n      padding: 40px;\n      box-shadow: 0 20px 40px rgba(0,0,0,0.6);\n      min-height: 380px;\n      display: flex;\n      flex-direction: column;\n    }\n    \n    .slide {\n      display: none;\n      flex-direction: column;\n      flex: 1;\n      animation: fadeIn 0.4s ease-out forwards;\n    }\n    \n    .slide.active {\n      display: flex;\n    }\n    \n    @keyframes fadeIn {\n      from { opacity: 0; transform: translateY(5px); }\n      to { opacity: 1; transform: translateY(0); }\n    }\n    \n    .category-label {\n      display: inline-block;\n      padding: 6px 12px;\n      background: rgba(42, 82, 255, 0.08);\n      border: 1px solid var(--color-primary);\n      color: var(--color-primary);\n      border-radius: 30px;\n      font-size: 11px;\n      font-weight: 600;\n      margin-bottom: 20px;\n      text-transform: uppercase;\n      letter-spacing: 1.5px;\n      align-self: flex-start;\n      font-family: 'Space Grotesk', sans-serif;\n    }\n    \n    h1 {\n      font-family: 'Space Grotesk', sans-serif;\n      font-size: 38px;\n      margin-bottom: 18px;\n      line-height: 1.1;\n      color: #fff;\n    }\n    \n    .tagline {\n      font-family: 'Space Grotesk', sans-serif;\n      margin: -8px 0 14px;\n      font-size: 16px;\n      font-weight: 700;\n      letter-spacing: -0.01em;\n      color: var(--color-primary);\n    }\n\n    .purpose-text {\n      font-size: 16px;\n      line-height: 1.6;\n      color: #b0b0c5;\n      margin-bottom: 25px;\n    }\n    \n    .product-grid {\n      display: grid;\n      grid-template-columns: 1fr 1fr;\n      gap: 15px;\n      margin-top: 10px;\n    }\n    \n    .product-box {\n      background: rgba(255,255,255,0.01);\n      border: 1px solid rgba(255,255,255,0.04);\n      border-radius: 12px;\n      padding: 16px;\n      transition: all 0.2s;\n    }\n    \n    .product-box:hover {\n      border-color: rgba(42, 82, 255, 0.2);\n      background: rgba(42, 82, 255, 0.02);\n    }\n    \n    .product-title {\n      font-family: 'Space Grotesk', sans-serif;\n      font-weight: 700;\n      color: var(--color-primary);\n      font-size: 15px;\n      margin-bottom: 6px;\n    }\n    \n    .product-desc {\n      font-size: 12px;\n      color: #808095;\n      line-height: 1.4;\n    }\n    \n    /* Interactive Widget */\n    .widget-title {\n      font-family: 'Space Grotesk', sans-serif;\n      font-size: 18px;\n      font-weight: 700;\n      margin-bottom: 15px;\n      color: var(--color-primary);\n      display: flex;\n      align-items: center;\n      gap: 10px;\n    }\n    \n    .console-box {\n      flex: 1;\n      background: #020204;\n      border: 1px solid rgba(42,82,255,0.1);\n      border-radius: 10px;\n      padding: 15px;\n      font-family: 'Space Grotesk', monospace;\n      font-size: 13px;\n      color: var(--color-primary);\n      min-height: 180px;\n      overflow-y: auto;\n      margin-bottom: 15px;\n      box-shadow: inset 0 0 10px rgba(0,0,0,0.8);\n    }\n    \n    .console-input-row {\n      display: flex;\n      gap: 10px;\n    }\n    \n    .console-input {\n      flex: 1;\n      background: #020204;\n      border: 1px solid rgba(255,255,255,0.1);\n      border-radius: 8px;\n      padding: 10px 14px;\n      color: #fff;\n      font-family: monospace;\n      outline: none;\n      font-size: 13px;\n    }\n    \n    .console-input:focus {\n      border-color: var(--color-primary);\n    }\n    \n    .console-btn {\n      background: var(--color-primary);\n      border: none;\n      color: #000;\n      padding: 10px 20px;\n      border-radius: 8px;\n      font-weight: 700;\n      cursor: pointer;\n      font-family: 'Space Grotesk', sans-serif;\n      transition: all 0.2s;\n    }\n    \n    .console-btn:hover {\n      box-shadow: 0 0 12px var(--color-primary);\n    }\n    \n    .portal-trigger {\n      margin-top: 15px;\n      text-align: center;\n    }\n    \n    .portal-btn {\n      display: inline-block;\n      text-decoration: none;\n      color: #808095;\n      font-size: 12px;\n      padding: 8px 16px;\n      border-radius: 30px;\n      border: 1px solid rgba(255,255,255,0.1);\n      transition: all 0.2s;\n    }\n    \n    .portal-btn:hover {\n      color: #fff;\n      border-color: var(--color-accent);\n    }\n    \n    /* Product Footer Browser styling */\n    .product-footer-browser {\n      margin-top: 30px;\n      border-top: 1px solid rgba(255, 255, 255, 0.05);\n      padding-top: 20px;\n      display: flex;\n      justify-content: center;\n    }\n    \n    .product-tabs {\n      display: flex;\n      gap: 10px;\n      flex-wrap: wrap;\n      justify-content: center;\n    }\n    \n    .product-tab {\n      background: rgba(255, 255, 255, 0.02);\n      border: 1px solid rgba(255, 255, 255, 0.08);\n      color: #808095;\n      padding: 10px 20px;\n      border-radius: 8px;\n      font-family: 'Space Grotesk', sans-serif;\n      font-size: 11px;\n      font-weight: 600;\n      letter-spacing: 1px;\n      cursor: pointer;\n      transition: all 0.2s;\n    }\n    \n    .product-tab:hover {\n      border-color: var(--color-primary);\n      color: #fff;\n    }\n    \n    .product-tab.active {\n      background: var(--color-primary);\n      color: #000;\n      border-color: var(--color-primary);\n      box-shadow: 0 0 10px rgba(42, 82, 255, 0.2);\n    }\n    \n    /* Fleet browser drawer */\n    .fleet-browser-container {\n      position: relative;\n      width: 100%;\n    }\n    \n    .fleet-drawer {\n      position: fixed;\n      bottom: 0;\n      left: 0;\n      width: 100vw;\n      background: rgba(6, 6, 9, 0.97);\n      border-top: 1px solid var(--color-primary);\n      box-shadow: 0 -10px 40px rgba(0, 0, 0, 0.8);\n      z-index: 998;\n      max-height: 0;\n      overflow: hidden;\n      transition: max-height 0.4s cubic-bezier(0.16, 1, 0.3, 1);\n      backdrop-filter: blur(15px);\n    }\n    \n    .fleet-drawer.open {\n      max-height: 280px;\n    }\n    \n    .fleet-drawer-header {\n      display: flex;\n      justify-content: space-between;\n      align-items: center;\n      padding: 15px 40px;\n      border-bottom: 1px solid rgba(255, 255, 255, 0.05);\n    }\n    \n    .fleet-drawer-title {\n      font-family: 'Space Grotesk', sans-serif;\n      font-size: 13px;\n      letter-spacing: 2px;\n      color: var(--color-accent);\n      font-weight: 700;\n      text-transform: uppercase;\n    }\n    \n    .close-drawer-btn {\n      background: none;\n      border: none;\n      color: #808095;\n      font-size: 18px;\n      cursor: pointer;\n      transition: color 0.2s;\n    }\n    \n    .close-drawer-btn:hover {\n      color: #fff;\n    }\n    \n    .fleet-links-grid {\n      display: grid;\n      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));\n      gap: 10px;\n      padding: 20px 40px;\n      overflow-y: auto;\n      max-height: 200px;\n    }\n    \n    .fleet-link {\n      color: #808095;\n      text-decoration: none;\n      font-size: 12px;\n      padding: 10px 14px;\n      background: rgba(255, 255, 255, 0.02);\n      border: 1px solid rgba(255, 255, 255, 0.05);\n      border-radius: 8px;\n      transition: all 0.2s;\n      font-family: 'Space Grotesk', sans-serif;\n      text-overflow: ellipsis;\n      white-space: nowrap;\n      overflow: hidden;\n      text-align: left;\n    }\n    \n    .fleet-link:hover {\n      background: rgba(42, 82, 255, 0.08);\n      border-color: var(--color-primary);\n      color: #fff;\n      transform: translateY(-2px);\n    }\n    \n    .cat-chips {\n      display: flex;\n      flex-wrap: wrap;\n      justify-content: center;\n      gap: 6px;\n    }\n    \n    .cat-chip {\n      display: inline-block;\n      font-size: 11px;\n      padding: 6px 12px;\n      background: rgba(255,255,255,0.02);\n      border: 1px solid rgba(255,255,255,0.05);\n      color: #808095;\n      border-radius: 30px;\n      cursor: pointer;\n      transition: all 0.2s;\n      font-family: 'Space Grotesk', sans-serif;\n    }\n    \n    .cat-chip:hover, .cat-chip.active {\n      background: rgba(42, 82, 255, 0.08);\n      color: var(--color-primary);\n      border-color: var(--color-primary);\n    }\n    \n    footer {\n      border-top: 1px solid rgba(255, 255, 255, 0.05);\n      padding: 30px 40px;\n      background: rgba(5,5,8,0.9);\n      text-align: center;\n    }\n    \n    .footer-text {\n      color: #606075;\n      font-size: 12px;\n      line-height: 1.6;\n    }\n    \n    /* Play Mode HUD Hints */\n    #hint {\n      position: fixed;\n      top: 20px;\n      left: 50%;\n      transform: translateX(-50%);\n      z-index: 10;\n      background: rgba(0, 0, 0, 0.85);\n      border: 1px solid rgba(255, 255, 255, 0.1);\n      padding: 8px 16px;\n      border-radius: 20px;\n      font-family: 'Space Grotesk', monospace;\n      font-size: 11px;\n      letter-spacing: 1px;\n      color: #888;\n      pointer-events: none;\n      transition: opacity 0.3s;\n    }\n\n    /* First-person helmet HUD frame/visor edge - WeylandAI Signal Blue /\n       Hi-Vis Yellow brand palette, not generic NASA white/orange. Hidden\n       automatically in third-person (V toggle) since the helmet itself\n       is drawn in-scene there instead. The gloved hands are real 3D SDF\n       geometry rendered inside the WebGL canvas (see handSdf() in the\n       shader), not part of this overlay. */\n    #visor-frame {\n      position: fixed;\n      inset: 0;\n      z-index: 8;\n      pointer-events: none;\n      opacity: 0;\n      transition: opacity 0.4s ease;\n    }\n    body.sightx-playing:not(.sightx-third-person) #visor-frame { opacity: 1; }\n    #visor-frame::before {\n      content: \"\";\n      position: absolute;\n      inset: 0;\n      background: radial-gradient(ellipse 72% 72% at 50% 54%, transparent 56%, rgba(3,4,8,0.5) 84%, rgba(3,4,8,0.9) 100%);\n    }\n    #visor-frame::after {\n      content: \"\";\n      position: absolute;\n      inset: 12px;\n      border-radius: 46% / 38%;\n      border: 2px solid rgba(42,82,255,0.5);\n      box-shadow: 0 0 0 1px rgba(255,212,0,0.2) inset, 0 0 46px rgba(42,82,255,0.16) inset;\n    }\n    .visor-tick {\n      position: absolute;\n      width: 22px;\n      height: 22px;\n      border: 2px solid var(--accent-hivis);\n      opacity: 0.7;\n    }\n    .visor-tick.tl { top: 20px; left: 20px; border-right: 0; border-bottom: 0; }\n    .visor-tick.tr { top: 20px; right: 20px; border-left: 0; border-bottom: 0; }\n    .visor-tick.bl { bottom: 20px; left: 20px; border-right: 0; border-top: 0; }\n    .visor-tick.br { bottom: 20px; right: 20px; border-left: 0; border-top: 0; }\n\n    /* MMU/SAFER booster-unit thrust feedback - a brief Hi-Vis Yellow glow\n       burst at the view edges (bottom corners, where the backpack's RCS\n       nozzles would be) each time a thrust key fires a burst. Restarted\n       every frame thrust is held (see onThrust in the script below), so\n       it stays lit continuously under sustained thrust and fades over\n       ~0.4s once released - a visual match for the discrete-burst\n       momentum physics (see sightx-controls.js), not continuous force. */\n    #thrust-glow {\n      position: fixed;\n      inset: 0;\n      z-index: 7;\n      pointer-events: none;\n      opacity: 0;\n    }\n    #thrust-glow.pulse { animation: sxThrustPulse 0.4s ease-out; }\n    @keyframes sxThrustPulse {\n      0%   { opacity: 0.85; }\n      100% { opacity: 0; }\n    }\n    #thrust-glow::before, #thrust-glow::after {\n      content: \"\";\n      position: absolute;\n      width: 220px;\n      height: 220px;\n      border-radius: 50%;\n      background: radial-gradient(circle, rgba(255,212,0,0.55), transparent 70%);\n      filter: blur(2px);\n    }\n    #thrust-glow::before { bottom: -60px; left: -40px; }\n    #thrust-glow::after  { bottom: -60px; right: -40px; }\n\n    /* Disclosed orbital demo time-scale readout - see sky()/main() comments\n       in the shader for the real orbital-mechanics numbers this reports. */\n    #orbit-hud {\n      position: fixed;\n      top: 20px;\n      right: 20px;\n      z-index: 10;\n      background: rgba(0, 0, 0, 0.75);\n      border: 1px solid rgba(255, 255, 255, 0.1);\n      padding: 7px 12px;\n      border-radius: 10px;\n      font-family: 'Space Grotesk', monospace;\n      font-size: 10px;\n      letter-spacing: 0.5px;\n      line-height: 1.5;\n      color: #8fb8d8;\n      pointer-events: none;\n      max-width: 230px;\n    }\n    #orbit-hud b { color: #cfe4f5; }\n\n    /* High-tech HUD Hardware Proximity Modal */\n    .hud-modal {\n      position: fixed;\n      bottom: 40px;\n      left: 50%;\n      transform: translateX(-50%);\n      z-index: 5;\n      background: linear-gradient(180deg, rgba(9, 9, 11, 0.95) 0%, rgba(3, 3, 5, 0.98) 100%);\n      border: 1px solid var(--color-primary);\n      box-shadow: 0 0 25px rgba(42, 82, 255, 0.25);\n      padding: 22px;\n      border-radius: 12px;\n      width: 90%;\n      max-width: 450px;\n      font-family: 'Space Grotesk', monospace;\n      color: #fff;\n      backdrop-filter: blur(10px);\n      animation: hud-reveal 0.3s cubic-bezier(0.19, 1, 0.22, 1);\n    }\n    \n    @keyframes hud-reveal {\n      from { transform: translate(-50%, 20px); opacity: 0; }\n      to { transform: translate(-50%, 0); opacity: 1; }\n    }\n    \n    .hud-scanner {\n      position: absolute;\n      top: 0;\n      left: 0;\n      width: 100%;\n      height: 2px;\n      background: var(--color-primary);\n      box-shadow: 0 0 8px var(--color-primary);\n      animation: scan 1.5s linear infinite;\n    }\n    \n    @keyframes scan {\n      0% { top: 0%; opacity: 0; }\n      10% { opacity: 1; }\n      90% { opacity: 1; }\n      100% { top: 100%; opacity: 0; }\n    }\n    \n    .hud-header {\n      display: flex;\n      align-items: center;\n      gap: 10px;\n      border-bottom: 1px solid rgba(42, 82, 255, 0.2);\n      padding-bottom: 10px;\n      margin-bottom: 12px;\n    }\n    \n    .hud-icon {\n      font-size: 18px;\n    }\n    \n    .hud-title {\n      font-weight: 700;\n      color: var(--color-primary);\n      letter-spacing: 1px;\n      font-size: 14px;\n    }\n    \n    .hud-body {\n      font-size: 13px;\n      line-height: 1.5;\n    }\n    \n    .hud-label {\n      color: #808095;\n      margin-bottom: 5px;\n      font-size: 11px;\n      text-transform: uppercase;\n      letter-spacing: 0.5px;\n    }\n    \n    .hud-value {\n      color: #f0f0f5;\n      margin-bottom: 10px;\n    }\n    \n    .hud-sub {\n      color: var(--color-accent);\n      font-size: 11px;\n      border-top: 1px solid rgba(255, 255, 255, 0.05);\n      padding-top: 12px;\n      display: flex;\n      justify-content: space-between;\n      align-items: center;\n    }\n    \n    .hud-sub a {\n      color: var(--color-accent);\n      text-decoration: none;\n      border: 1px solid var(--color-accent);\n      padding: 3px 8px;\n      border-radius: 4px;\n      background: rgba(0, 229, 255, 0.05);\n      transition: all 0.2s;\n    }\n    \n    .hud-sub a:hover {\n      color: #fff;\n      border-color: #fff;\n      background: rgba(0, 229, 255, 0.15);\n      box-shadow: 0 0 8px var(--color-accent);\n    }\n    \n    /* Login Screen Modal Overlay */\n    #os-login-modal {\n      position: fixed;\n      top: 0;\n      left: 0;\n      width: 100vw;\n      height: 100vh;\n      background: rgba(3, 3, 5, 0.95);\n      z-index: 999;\n      display: none;\n      justify-content: center;\n      align-items: center;\n      backdrop-filter: blur(15px);\n    }\n    \n    .login-box {\n      width: 100%;\n      max-width: 400px;\n      background: rgba(10, 10, 15, 0.85);\n      border: 1px solid rgba(42, 82, 255, 0.2);\n      border-radius: 20px;\n      padding: 40px;\n      box-shadow: 0 20px 40px rgba(0,0,0,0.8);\n      text-align: center;\n    }\n    \n    .login-box h2 {\n      font-family: 'Space Grotesk', sans-serif;\n      font-size: 30px;\n      margin-bottom: 10px;\n      color: var(--color-primary);\n    }\n    \n    .login-box p {\n      color: #808095;\n      font-size: 13px;\n      margin-bottom: 30px;\n    }\n    \n    .login-input {\n      width: 100%;\n      background: #020204;\n      border: 1px solid rgba(42,82,255,0.2);\n      border-radius: 10px;\n      padding: 12px 16px;\n      color: #fff;\n      font-size: 15px;\n      margin-bottom: 15px;\n      outline: none;\n      font-family: monospace;\n    }\n    \n    .login-input:focus {\n      border-color: var(--color-accent);\n    }\n    \n    .login-button {\n      width: 100%;\n      background: var(--color-primary);\n      color: #000;\n      border: none;\n      padding: 12px 20px;\n      border-radius: 10px;\n      font-size: 16px;\n      font-weight: 700;\n      cursor: pointer;\n      transition: all 0.2s;\n      font-family: 'Space Grotesk', sans-serif;\n    }\n    \n    .login-button:hover {\n      box-shadow: 0 0 15px var(--color-primary);\n    }\n    \n    .close-modal {\n      margin-top: 15px;\n      font-size: 13px;\n      color: #606075;\n      cursor: pointer;\n    }\n    \n    .close-modal:hover {\n      color: #fff;\n    }\n\n    /* PDF-to-twin bridge caption: explains that the scene on screen is a\n       sample output of the same PDF -> 3D walkable-building capability the\n       PDF TWIN trigger (bottom-left) opens, not an unrelated showcase. */\n    #pdf-bridge-caption {\n      position: fixed;\n      left: 22px;\n      bottom: 72px;\n      z-index: 85;\n      max-width: 340px;\n      padding: 10px 28px 10px 12px;\n      background: rgba(7, 9, 11, 0.88);\n      border: 1px solid rgba(240, 184, 0, 0.35);\n      border-radius: 4px;\n      color: #d9e2e8;\n      font-family: 'Outfit', sans-serif;\n      font-size: 11px;\n      line-height: 1.45;\n      backdrop-filter: blur(10px);\n      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);\n      transition: opacity 0.3s;\n    }\n\n    #pdf-bridge-caption b {\n      display: block;\n      font-family: 'Space Grotesk', sans-serif;\n      font-weight: 700;\n      font-size: 10px;\n      letter-spacing: 0.12em;\n      color: #f0b800;\n      margin-bottom: 4px;\n    }\n\n    #pdf-bridge-caption-close {\n      position: absolute;\n      top: 4px;\n      right: 8px;\n      background: none;\n      border: none;\n      color: #808095;\n      font-size: 15px;\n      line-height: 1;\n      cursor: pointer;\n      padding: 4px;\n    }\n\n    #pdf-bridge-caption-close:hover {\n      color: #fff;\n    }\n\n    /* Mobile media queries */\n    @media (max-width: 600px) {\n      header {\n        padding: 15px 20px;\n      }\n      .logo {\n        font-size: 20px;\n      }\n      h1 {\n        font-size: 28px;\n      }\n      .purpose-text {\n        font-size: 14px;\n        line-height: 1.5;\n      }\n      .slideshow-container {\n        padding: 20px;\n        min-height: auto;\n      }\n      .product-grid {\n        grid-template-columns: 1fr;\n      }\n      .product-tab {\n        padding: 8px 12px;\n        font-size: 10px;\n      }\n      .hud-modal {\n        bottom: 20px;\n        padding: 15px;\n      }\n      .fleet-drawer-header { padding: 15px 20px; }\n      .fleet-links-grid { padding: 15px 20px; grid-template-columns: 1fr; }\n      #pdf-bridge-caption { left: 12px; right: 12px; bottom: 128px; max-width: none; }\n    }\n  </style>\n</head>\n<body class=\"sightx-demo\">\n  <!-- Cosmic Evolution Logarithmic Timeline Intro (Big Crunch -> Ho'oleilana -> Bounce -> Big Bang -> LEO) -->\n  <div id=\"cx-overlay\" style=\"position:fixed;inset:0;z-index:9999;background:#000;display:none\">\n    <canvas id=\"cx-canvas\" style=\"position:absolute;inset:0;width:100%;height:100%;display:block\"></canvas>\n    <div id=\"cx-hud\" style=\"position:absolute;left:18px;bottom:18px;max-width:min(580px,86vw);font:600 12px/1.55 ui-monospace,monospace;color:#f1f3f5;background:rgba(10,11,14,.78);border:1px solid rgba(255,255,255,.2);border-radius:10px;padding:12px 16px;backdrop-filter:blur(8px);box-shadow:0 8px 32px rgba(0,0,0,.6)\">\n      <div id=\"cx-epoch\" style=\"font:800 13px/1.3 ui-monospace,monospace;letter-spacing:.05em;color:#f0b800;margin-bottom:4px\">COSMIC EVOLUTION</div>\n      <div id=\"cx-sub\" style=\"color:#b7bdc6\">Loading cosmological timeline...</div>\n      <div id=\"cx-disclosure\" style=\"display:none;margin-top:8px;padding-top:8px;border-top:1px solid rgba(255,255,255,.15);color:#ffb37a;font-size:11px;line-height:1.45\"></div>\n    </div>\n    <button id=\"cx-skip\" type=\"button\" style=\"position:absolute;top:18px;right:18px;z-index:2;border:1px solid rgba(255,255,255,.35);border-radius:99px;padding:10px 18px;background:rgba(10,11,14,.65);color:#f1f3f5;font:800 11px/1 ui-monospace,monospace;letter-spacing:.08em;cursor:pointer\">SKIP &#9656;</button>\n  </div>\n  \n  <!-- The Playable WebGL Canvas -->\n  <canvas id=\"bg-canvas\"></canvas>\n\n  <div id=\"hint\">CLICK to capture mouse</div>\n\n  <!-- Astronaut spacewalk embodiment HUD: the helmet visor frame/edge\n       (first-person only - see #visor-frame CSS above) and the MMU/SAFER\n       booster thrust glow (both views). The gloved hands themselves are\n       real 3D SDF geometry inside the WebGL canvas, not part of this\n       overlay - see handSdf() in the shader. -->\n  <div id=\"visor-frame\" aria-hidden=\"true\">\n    <span class=\"visor-tick tl\"></span>\n    <span class=\"visor-tick tr\"></span>\n    <span class=\"visor-tick bl\"></span>\n    <span class=\"visor-tick br\"></span>\n  </div>\n  <div id=\"thrust-glow\" aria-hidden=\"true\"></div>\n\n  <!-- Honest disclosure of the orbital-mechanics demo time-scale: real\n       orbital motion at this ~400km/92.68min LEO period is far too slow to\n       see second-to-second, so it's sped up 92.74x (full orbit in 60 real\n       seconds) rather than silently faked - see sky()/main() in the shader\n       for the Kepler-derived numbers behind this. -->\n  <div id=\"orbit-hud\"><b>ORBIT SIM</b> · 400km LEO, 92.68min period<br>1 real sec = 92.7 sim sec (~60s/orbit)</div>\n\n  <!-- Explains the relationship between this scene and the PDF TWIN tool:\n       this facility is a hand-built sample of what the PDF -> 3D\n       walkable-building capability produces, shown by default because a\n       first-time visitor hasn't uploaded a project yet. Honest framing:\n       this geometry was authored directly in the raymarch shader, not\n       literally generated by the PDF pipeline - it demonstrates the\n       capability rather than being its output. -->\n  <div id=\"pdf-bridge-caption\">\n    <b>SAMPLE WALKABLE TWIN</b>\n    This facility is a hand-built demonstration of WeylandAI's PDF&nbsp;&rarr;&nbsp;3D walkable-building capability &mdash; shown by default since you haven't uploaded a project yet. Use PDF TWIN below to reconstruct and walk your own building from a real project PDF.\n    <button id=\"pdf-bridge-caption-close\" type=\"button\" aria-label=\"Dismiss\" onclick=\"document.getElementById('pdf-bridge-caption').remove()\">&times;</button>\n  </div>\n\n  <!-- High-tech HUD Hardware Proximity Modal -->\n  <div id=\"hardware-modal\" class=\"hud-modal\" style=\"display: none;\">\n    <div class=\"hud-scanner\"></div>\n    <div class=\"hud-header\">\n      <span class=\"hud-icon\">SX</span>\n      <span class=\"hud-title\" id=\"hud-door-name\">DOORWAY PROXIMITY SIGNAL</span>\n    </div>\n    <div class=\"hud-body\">\n      <div class=\"hud-label\">Hardware Schedule:</div>\n      <div class=\"hud-value\" id=\"hud-door-hardware\">Extracting specifications...</div>\n      <div class=\"hud-sub\">\n        <span>Verified via SubX Platform</span>\n        <a href=\"https://precisionautodoors.com\" target=\"_blank\">Precision Auto Doors</a>\n      </div>\n    </div>\n  </div>\n  \n  <!-- FilmLine (filmline.cc) credit panel - same proximity-HUD pattern as\n       the door-hardware modal above, but for the Earth Relay Screening\n       Pavilion's real film-reel artifact and the real venture it stands in for. -->\n  <div id=\"filmline-modal\" class=\"hud-modal\" style=\"display: none;\">\n    <div class=\"hud-scanner\"></div>\n    <div class=\"hud-header\">\n      <span class=\"hud-icon\">FL</span>\n      <span class=\"hud-title\">FILMLINE SCREENING PAVILION</span>\n    </div>\n    <div class=\"hud-body\">\n      <div class=\"hud-label\">Venture on display:</div>\n      <div class=\"hud-value\">AI script-to-storyboard-reel generator for independent filmmakers. A one-line premise becomes an editable AI-written script, an animated storyboard reel, and a narrated preview page - real and live today, no signup.</div>\n      <div class=\"hud-sub\">\n        <span>Real venture, not set dressing</span>\n        <a href=\"https://filmline.cc\" target=\"_blank\">Open FilmLine.cc</a>\n      </div>\n    </div>\n  </div>\n\n  <!-- Docking HUD - same proximity-HUD pattern as the hardware/FilmLine\n       panels above, but tied to a real state change: pressing G within\n       range locks free-flight and snaps the camera onto the construction\n       ship's forward collar; pressing G again hands control back. -->\n  <div id=\"dock-modal\" class=\"hud-modal\" style=\"display: none;\">\n    <div class=\"hud-scanner\"></div>\n    <div class=\"hud-header\">\n      <span class=\"hud-icon\">DK</span>\n      <span class=\"hud-title\" id=\"dock-title\">SEED VESSEL / FORWARD COLLAR</span>\n    </div>\n    <div class=\"hud-body\">\n      <div class=\"hud-label\">Docking Status:</div>\n      <div class=\"hud-value\" id=\"dock-value\">Within docking range.</div>\n      <div class=\"hud-sub\">\n        <span id=\"dock-sub\">Press G to dock</span>\n      </div>\n    </div>\n  </div>\n\n  <div id=\"app-container\">\n    <header>\n      <div class=\"logo\">WEYLAND<span>AI</span></div>\n      <div class=\"status-badge\">\n        <div class=\"status-dot\"></div>\n        <span>Build Network Online</span>\n      </div>\n    </header>\n    \n    <main>\n      <div class=\"slideshow-container\" id=\"slideshow\">\n        \n        <!-- Slide 0: Overview -->\n        <div class=\"slide active\">\n          <div class=\"category-label\">Autonomous Construction</div>\n          <h1>Build at machine scale.</h1>\n          <div class=\"tagline\">Measure twice. Match once.</div>\n          <p class=\"purpose-text\">WeylandAI unifies project intelligence, computer vision, autonomous equipment, and robotic trade crews in one construction operating system. We take a build from opportunity discovery through verified completion with less delay, waste, and coordination loss.</p>\n        </div>\n        \n        <!-- Slide 1: Project intelligence -->\n        <div class=\"slide\">\n          <div class=\"category-label\">Project Intelligence</div>\n          <h1>See the work before it begins.</h1>\n          <p class=\"purpose-text\">Our intelligence pipeline discovers viable projects, maps subcontractor capacity, reads plans and imagery, quantifies scope, and turns uncertainty into an executable construction plan.</p>\n          <div class=\"product-grid\">\n            <div class=\"product-box\">\n              <div class=\"product-title\">HuntX + SubX</div>\n              <div class=\"product-desc\">Opportunity discovery, qualification, capacity mapping, and subcontractor intelligence.</div>\n            </div>\n            <div class=\"product-box\">\n              <div class=\"product-title\">SightX + TakeoffX</div>\n              <div class=\"product-desc\">Site vision, dimension extraction, material quantities, hazards, and automated estimates.</div>\n            </div>\n          </div>\n        </div>\n        \n        <!-- Slide 2: Robotics -->\n        <div class=\"slide\">\n          <div class=\"category-label\">Robotic Field Systems</div>\n          <h1>Autonomous crews. Coordinated as one.</h1>\n          <p class=\"purpose-text\">WeylandAI coordinates earthwork, concrete, framing, masonry, roofing, electrical, and plumbing systems against the same live model, schedule, safety envelope, and quality record.</p>\n          <div class=\"product-grid\">\n            <div class=\"product-box\">\n              <div class=\"product-title\">Earthwork Fleet</div>\n              <div class=\"product-desc\">GPS/RTK-guided excavation, grading, trenching, telemetry, and obstacle avoidance.</div>\n            </div>\n            <div class=\"product-box\">\n              <div class=\"product-title\">Trade Crews</div>\n              <div class=\"product-desc\">Repeatable robotic installation with code, tolerance, and quality verification.</div>\n            </div>\n          </div>\n        </div>\n        \n        <!-- Slide 3: Computing -->\n        <div class=\"slide\">\n          <div class=\"category-label\">Construction Operating System</div>\n          <h1>One control plane for every site.</h1>\n          <p class=\"purpose-text\">A shared digital thread connects plans, bids, equipment, crews, progress evidence, safety findings, and client reporting. Every completed project makes the next project faster and more predictable.</p>\n        </div>\n        \n        <!-- Slide 4: Secure Console -->\n        <div class=\"slide\">\n          <div class=\"widget-card\">\n            <div class=\"widget-title\">\n              <span>&gt;_</span> Project Console\n            </div>\n            <div class=\"console-box\" id=\"console-display\">\n              System initialized.<br>\n              Category: Construction / Automation<br>\n              Status: READY<br>\n              Type 'help' to begin...<br>\n              <br>\n              &gt;\n            </div>\n            <div class=\"console-input-row\">\n              <input type=\"text\" class=\"console-input\" id=\"console-cmd\" placeholder=\"Type a command...\">\n              <button class=\"console-btn\" onclick=\"executeCommand()\">Run</button>\n            </div>\n            <div class=\"portal-trigger\">\n              <a href=\"#\" class=\"portal-btn\" onclick=\"openLoginModal()\">Access Client Workspace</a>\n            </div>\n          </div>\n        </div>\n        \n      </div>\n      \n      <!-- Product Footer Browser (SPA tabs) -->\n      <div class=\"product-footer-browser\">\n        <div class=\"product-tabs\">\n          <button class=\"product-tab active\" onclick=\"goToSlide(0)\">OVERVIEW</button>\n          <button class=\"product-tab\" onclick=\"goToSlide(1)\">INTELLIGENCE</button>\n          <button class=\"product-tab\" onclick=\"goToSlide(2)\">FIELD FLEET</button>\n          <button class=\"product-tab\" onclick=\"goToSlide(3)\">BUILD OS</button>\n          <button class=\"product-tab\" onclick=\"goToSlide(4)\">CLIENT CONSOLE</button>\n        </div>\n      </div>\n    </main>\n    \n    <footer>\n      <div class=\"footer-text\">\n        <div class=\"fleet-browser-container\">\n          <div class=\"fleet-drawer\" id=\"fleet-drawer\">\n            <div class=\"fleet-drawer-header\">\n              <div class=\"fleet-drawer-title\" id=\"fleet-drawer-title\">Explore Fleet Category</div>\n              <button class=\"close-drawer-btn\" onclick=\"closeFleetDrawer()\">✕</button>\n            </div>\n            <div class=\"fleet-links-grid\" id=\"fleet-links-grid\"></div>\n          </div>\n          \n          <div class=\"network-tray\" style=\"margin-bottom: 25px;\">\n            <div class=\"network-tray-title\">Explore the MobCorp Venture Fleet</div>\n            <div class=\"cat-chips\">\n              <span class=\"cat-chip\" onclick=\"toggleFleetCategory('AI')\">AI</span> <span class=\"cat-chip\" onclick=\"toggleFleetCategory('Agents')\">Agents</span> <span class=\"cat-chip\" onclick=\"toggleFleetCategory('Business')\">Business</span> <span class=\"cat-chip\" onclick=\"toggleFleetCategory('Corporate')\">Corporate</span> <span class=\"cat-chip\" onclick=\"toggleFleetCategory('Defense')\">Defense</span> <span class=\"cat-chip\" onclick=\"toggleFleetCategory('Dev Tools')\">Dev Tools</span> <span class=\"cat-chip\" onclick=\"toggleFleetCategory('Education')\">Education</span> <span class=\"cat-chip\" onclick=\"toggleFleetCategory('Finance')\">Finance</span> <span class=\"cat-chip\" onclick=\"toggleFleetCategory('Health')\">Health</span> <span class=\"cat-chip\" onclick=\"toggleFleetCategory('Media')\">Media</span> <span class=\"cat-chip\" onclick=\"toggleFleetCategory('Science')\">Science</span> \n            </div>\n          </div>\n        </div>\n        \n        <p>This venture is a canonical node of the MobCorp Autonomous Network. All rights reserved.</p>\n      </div>\n    </footer>\n  </div>\n\n  <!-- The Login Screen Modal Overlay -->\n  <div id=\"os-login-modal\">\n    <div class=\"login-box\">\n      <h2>WeylandAI Client Workspace</h2>\n      <p>Projects, sites, crews, and evidence in one operating view.</p>\n      <input type=\"email\" class=\"login-input\" id=\"modal-email\" placeholder=\"Email / Username\">\n      <input type=\"password\" class=\"login-input\" id=\"modal-pass\" placeholder=\"Authorization Code\">\n      <button class=\"login-button\" onclick=\"submitAuth()\">Sign In</button>\n      <div class=\"close-modal\" onclick=\"closeLoginModal()\">Cancel</div>\n    </div>\n  </div>\n\n  <script src=\"/assets/sightx-controls.js?v=20260729-3\"></script>\n  <script src=\"/assets/sightx-experience.js?v=20260729-3\"></script>\n  <script src=\"/assets/sightx-ingest.js?v=20260729-3\"></script>\n  <script src=\"/assets/sightx-runtime.js?v=20260813-1\"></script>\n  <script>\n    // ── Slideshow SPA Navigation ─────────────────────────────────────────────\n    let currentSlide = 0;\n    const slides = document.querySelectorAll('.slide');\n    const tabs = document.querySelectorAll('.product-tab');\n    \n    function goToSlide(index) {\n      slides[currentSlide].classList.remove('active');\n      tabs[currentSlide].classList.remove('active');\n      currentSlide = (index + slides.length) % slides.length;\n      slides[currentSlide].classList.add('active');\n      tabs[currentSlide].classList.add('active');\n      resetIdleTimer();\n    }\n\n    // Keyboard navigation for Weyland slides (when console isn't focused)\n    document.addEventListener('keydown', (e) => {\n      if (document.pointerLockElement) return;\n      if (document.activeElement.tagName === 'INPUT' || document.activeElement.tagName === 'TEXTAREA') return;\n      if (e.key === 'ArrowLeft') {\n        goToSlide(currentSlide - 1);\n      } else if (e.key === 'ArrowRight') {\n        goToSlide(currentSlide + 1);\n      }\n    });\n\n    // ── Console Simulator ────────────────────────────────────────────────────\n    const consoleDisplay = document.getElementById('console-display');\n    const consoleCmd = document.getElementById('console-cmd');\n    \n    consoleCmd.addEventListener('keydown', (e) => {\n      if (e.key === 'Enter') executeCommand();\n    });\n\n    function executeCommand() {\n      const cmd = consoleCmd.value.trim().toLowerCase();\n      if (!cmd) return;\n      \n      let response = '';\n      if (cmd === 'help') {\n        response = 'Available commands:\\\n' +\n                   '  status   - View current system status\\\n' +\n                   '  fleet    - Check autonomous crew status\\\n' +\n                   '  projects - List active project sites\\\n' +\n                   '  clear    - Clear console screen';\n      } else if (cmd === 'status') {\n        response = 'System: weylandai.com\\\n' +\n                   'Status: ONLINE\\\n' +\n                   'Category: Construction / Automation\\\n' +\n                   'Operational Integrity: 100% (READY)\\\n' +\n                   'Pipeline: HuntX > SubX > SightX > TakeoffX > PropX > QText';\n      } else if (cmd === 'fleet') {\n        response = 'Autonomous Crew Status:\\\n' +\n                   '  - Earthwork systems: READY\\\n' +\n                   '  - Concrete and framing systems: READY\\\n' +\n                   '  - Trade installation systems: READY\\\n' +\n                   'All telemetry channels operational.';\n      } else if (cmd === 'projects') {\n        response = 'Project Network:\\\n' +\n                   '  - Site intelligence: ACTIVE\\\n' +\n                   '  - Estimation pipeline: ACTIVE\\\n' +\n                   '  - Field coordination: ACTIVE';\n      } else if (cmd === 'clear') {\n        consoleDisplay.innerHTML = '&gt; ';\n        consoleCmd.value = '';\n        return;\n      } else {\n        response = 'Unknown command: \"' + cmd + '\". Type \"help\" for a list of commands.';\n      }\n      \n      consoleDisplay.innerHTML += cmd + '<br>' + response.replace(/\\n/g, '<br>') + '<br><br>&gt; ';\n      consoleDisplay.scrollTop = consoleDisplay.scrollHeight;\n      consoleCmd.value = '';\n    }\n\n    function openLoginModal() {\n      document.getElementById('os-login-modal').style.display = 'flex';\n    }\n    \n    function closeLoginModal() {\n      document.getElementById('os-login-modal').style.display = 'none';\n    }\n    \n    function submitAuth() {\n      const email = document.getElementById('modal-email').value;\n      const pass = document.getElementById('modal-pass').value;\n      if (!email || !pass) {\n        alert('Credentials required.');\n        return;\n      }\n      alert('Secure Portal connection timed out. Please check your credentials and try again.');\n    }\n\n    // ── Fleet Browser Logic ──────────────────────────────────────────────────\n    const FLEET_DATA = {\"Defense\": [{\"domain\": \"abstergo.cc\", \"name\": \"abstergo_cc\"}, {\"domain\": \"areshiva.com\", \"name\": \"areshiva_com\"}, {\"domain\": \"draknir.com\", \"name\": \"draknir_com\"}, {\"domain\": \"draugr.cc\", \"name\": \"draugr_cc\"}, {\"domain\": \"malathor.com\", \"name\": \"malathor_com\"}, {\"domain\": \"valdring.com\", \"name\": \"valdring_com\"}, {\"domain\": \"valkrai.com\", \"name\": \"valkrai_com\"}, {\"domain\": \"ventraleye.com\", \"name\": \"ventraleye_com\"}, {\"domain\": \"watchforce.cc\", \"name\": \"watchforce_cc\"}], \"Finance\": [{\"domain\": \"accountdrac.com\", \"name\": \"accountdrac_com\"}, {\"domain\": \"bitdoggo.com\", \"name\": \"bitdoggo_com\"}, {\"domain\": \"bondwright.com\", \"name\": \"bondwright_com\"}, {\"domain\": \"bookeepr.cc\", \"name\": \"bookeepr_cc\"}, {\"domain\": \"cryptosmart.cc\", \"name\": \"cryptosmart_cc\"}, {\"domain\": \"encoverai.com\", \"name\": \"encoverai_com\"}, {\"domain\": \"equifiant.com\", \"name\": \"equifiant_com\"}, {\"domain\": \"fedbank.cc\", \"name\": \"fedbank_cc\"}, {\"domain\": \"fundyai.com\", \"name\": \"fundyai_com\"}, {\"domain\": \"greenhandcapital.com\", \"name\": \"greenhandcapital_com\"}, {\"domain\": \"mobcoin.cc\", \"name\": \"mobcoin_cc\"}, {\"domain\": \"quanticfork.com\", \"name\": \"quanticfork_com\"}, {\"domain\": \"selfcoin.cc\", \"name\": \"selfcoin_cc\"}, {\"domain\": \"vendyai.com\", \"name\": \"vendyai_com\"}], \"Agents\": [{\"domain\": \"agentropi.com\", \"name\": \"agentropi_com\"}, {\"domain\": \"agentzaar.com\", \"name\": \"agentzaar_com\"}, {\"domain\": \"consenta.cc\", \"name\": \"consenta_cc\"}, {\"domain\": \"entoolize.com\", \"name\": \"entoolize_com\"}, {\"domain\": \"mailguyai.com\", \"name\": \"mailguyai_com\"}, {\"domain\": \"marketingium.com\", \"name\": \"marketingium_com\"}, {\"domain\": \"rebrief.me\", \"name\": \"rebrief_me\"}, {\"domain\": \"salesfactorai.com\", \"name\": \"salesfactorai_com\"}, {\"domain\": \"taskgridai.com\", \"name\": \"taskgridai_com\"}], \"Health\": [{\"domain\": \"agewinder.com\", \"name\": \"agewinder_com\"}, {\"domain\": \"healspell.com\", \"name\": \"healspell_com\"}, {\"domain\": \"lovemaint.com\", \"name\": \"lovemaint_com\"}, {\"domain\": \"meeva.io\", \"name\": \"meeva_io\"}, {\"domain\": \"newgameplus.cc\", \"name\": \"newgameplus_cc\"}, {\"domain\": \"recovai.com\", \"name\": \"recovai_com\"}, {\"domain\": \"sanctuaryui.com\", \"name\": \"sanctuaryui_com\"}, {\"domain\": \"talkingmind.cc\", \"name\": \"talkingmind_cc\"}, {\"domain\": \"workshrinker.com\", \"name\": \"workshrinker_com\"}, {\"domain\": \"youthmend.com\", \"name\": \"youthmend_com\"}], \"AI\": [{\"domain\": \"aicossic.com\", \"name\": \"aicossic_com\"}, {\"domain\": \"americanagi.cc\", \"name\": \"americanagi_cc\"}, {\"domain\": \"americnagi.cc\", \"name\": \"americnagi_cc\"}, {\"domain\": \"bloomagi.cc\", \"name\": \"bloomagi_cc\"}, {\"domain\": \"greybeardai.com\", \"name\": \"greybeardai_com\"}, {\"domain\": \"intfer.cc\", \"name\": \"intfer_cc\"}, {\"domain\": \"legibleweights.com\", \"name\": \"legibleweights_com\"}, {\"domain\": \"legionicai.com\", \"name\": \"legionicai_com\"}, {\"domain\": \"scalarflux.com\", \"name\": \"scalarflux_com\"}, {\"domain\": \"sentiantai.com\", \"name\": \"sentiantai_com\"}, {\"domain\": \"singularityui.com\", \"name\": \"singularityui_com\"}, {\"domain\": \"transcendantai.com\", \"name\": \"transcendantai_com\"}], \"Science\": [{\"domain\": \"aiopencommerce.com\", \"name\": \"aiopencommerce_com\"}, {\"domain\": \"anattar.com\", \"name\": \"anattar_com\"}, {\"domain\": \"conseiv.com\", \"name\": \"conseiv_com\"}, {\"domain\": \"ecofixai.com\", \"name\": \"ecofixai_com\"}, {\"domain\": \"emissionhub.cc\", \"name\": \"emissionhub_cc\"}, {\"domain\": \"enablinghomes.com\", \"name\": \"enablinghomes_com\"}, {\"domain\": \"femptocom.com\", \"name\": \"femptocom_com\"}, {\"domain\": \"galadul.com\", \"name\": \"galadul_com\"}, {\"domain\": \"tenancyai.com\", \"name\": \"tenancyai_com\"}, {\"domain\": \"weylandai.com\", \"name\": \"weylandai_com\"}, {\"domain\": \"yutaniai.com\", \"name\": \"yutaniai_com\"}], \"Media\": [{\"domain\": \"alhena.cc\", \"name\": \"alhena_cc\"}, {\"domain\": \"animetrope.com\", \"name\": \"animetrope_com\"}, {\"domain\": \"audiovizai.com\", \"name\": \"audiovizai_com\"}, {\"domain\": \"book2film.cc\", \"name\": \"book2film_cc\"}, {\"domain\": \"bookclubs.cc\", \"name\": \"bookclubs_cc\"}, {\"domain\": \"danzoa.com\", \"name\": \"danzoa_com\"}, {\"domain\": \"fedtalent.cc\", \"name\": \"fedtalent_cc\"}, {\"domain\": \"filmline.cc\", \"name\": \"filmline_cc\"}, {\"domain\": \"gamegob.com\", \"name\": \"gamegob_com\"}, {\"domain\": \"glyphyai.com\", \"name\": \"glyphyai_com\"}, {\"domain\": \"kubaki.cc\", \"name\": \"kubaki_cc\"}, {\"domain\": \"literacraft.com\", \"name\": \"literacraft_com\"}, {\"domain\": \"mobleybooks.com\", \"name\": \"mobleybooks_com\"}, {\"domain\": \"paintedwhore.cc\", \"name\": \"paintedwhore_cc\"}, {\"domain\": \"pandorachat.cc\", \"name\": \"pandorachat_cc\"}], \"Dev Tools\": [{\"domain\": \"authfor.com\", \"name\": \"authfor_com\"}, {\"domain\": \"devducky.com\", \"name\": \"devducky_com\"}, {\"domain\": \"devtoolai.com\", \"name\": \"devtoolai_com\"}, {\"domain\": \"devtoolbx.com\", \"name\": \"devtoolbx_com\"}, {\"domain\": \"extraterran.com\", \"name\": \"extraterran_com\"}, {\"domain\": \"fystz.com\", \"name\": \"fystz_com\"}, {\"domain\": \"gravnova.com\", \"name\": \"gravnova_com\"}, {\"domain\": \"halside.com\", \"name\": \"halside_com\"}, {\"domain\": \"helmdir.com\", \"name\": \"helmdir_com\"}, {\"domain\": \"powerhost.cc\", \"name\": \"powerhost_cc\"}, {\"domain\": \"syncropy.com\", \"name\": \"syncropy_com\"}, {\"domain\": \"warpdrive.cc\", \"name\": \"warpdrive_cc\"}], \"Education\": [{\"domain\": \"bignice.cc\", \"name\": \"bignice_cc\"}, {\"domain\": \"brynhildai.com\", \"name\": \"brynhildai_com\"}, {\"domain\": \"gurukle.com\", \"name\": \"gurukle_com\"}, {\"domain\": \"leadersclub.cc\", \"name\": \"leadersclub_cc\"}, {\"domain\": \"ownschool.cc\", \"name\": \"ownschool_cc\"}, {\"domain\": \"reasontodate.com\", \"name\": \"reasontodate_com\"}], \"Business\": [{\"domain\": \"dofura.com\", \"name\": \"dofura_com\"}, {\"domain\": \"domainwombat.com\", \"name\": \"domainwombat_com\"}, {\"domain\": \"firmcreate.com\", \"name\": \"firmcreate_com\"}, {\"domain\": \"glcx.cc\", \"name\": \"glcx_cc\"}, {\"domain\": \"helmcorp.cc\", \"name\": \"helmcorp_cc\"}, {\"domain\": \"hildrai.com\", \"name\": \"hildrai_com\"}, {\"domain\": \"industrize.com\", \"name\": \"industrize_com\"}, {\"domain\": \"lawyik.com\", \"name\": \"lawyik_com\"}, {\"domain\": \"patentkin.com\", \"name\": \"patentkin_com\"}, {\"domain\": \"traceformer.com\", \"name\": \"traceformer_com\"}], \"Corporate\": [{\"domain\": \"golfcad.cc\", \"name\": \"golfcad_cc\"}, {\"domain\": \"golfdad.cc\", \"name\": \"golfdad_cc\"}, {\"domain\": \"golflink.cc\", \"name\": \"golflink_cc\"}, {\"domain\": \"golfmind.cc\", \"name\": \"golfmind_cc\"}, {\"domain\": \"helmscorp.cc\", \"name\": \"helmscorp_cc\"}, {\"domain\": \"instantiability.com\", \"name\": \"instantiability_com\"}, {\"domain\": \"mobcorp.cc\", \"name\": \"mobcorp_cc\"}, {\"domain\": \"mobleyhelms.com\", \"name\": \"mobleyhelms_com\"}, {\"domain\": \"mobleymetal.com\", \"name\": \"mobleymetal_com\"}, {\"domain\": \"mobleyreport.com\", \"name\": \"mobleyreport_com\"}, {\"domain\": \"mobleysoft.com\", \"name\": \"mobleysoft_com\"}, {\"domain\": \"roncorp.cc\", \"name\": \"roncorp_cc\"}, {\"domain\": \"ronhelms.cc\", \"name\": \"ronhelms_cc\"}]};\n    const fleetDrawer = document.getElementById('fleet-drawer');\n    const fleetDrawerTitle = document.getElementById('fleet-drawer-title');\n    const fleetLinksGrid = document.getElementById('fleet-links-grid');\n    let activeFleetCat = null;\n\n    function toggleFleetCategory(cat) {\n      if (activeFleetCat === cat) {\n        closeFleetDrawer();\n        return;\n      }\n      \n      activeFleetCat = cat;\n      document.querySelectorAll('.cat-chip').forEach(c => {\n        c.classList.toggle('active', c.textContent.trim() === cat);\n      });\n\n      fleetDrawerTitle.textContent = `${cat.toUpperCase()} FLEET SITES`;\n      fleetLinksGrid.innerHTML = '';\n      \n      const sites = FLEET_DATA[cat] || [];\n      sites.forEach(s => {\n        const a = document.createElement('a');\n        a.href = `https://${s.domain}/`;\n        a.target = '_blank';\n        a.className = 'fleet-link';\n        a.textContent = s.name.replace(/_/g, ' ').toUpperCase();\n        fleetLinksGrid.appendChild(a);\n      });\n      \n      fleetDrawer.classList.add('open');\n      resetIdleTimer();\n    }\n    \n    function closeFleetDrawer() {\n      if (!fleetDrawer) return;\n      fleetDrawer.classList.remove('open');\n      activeFleetCat = null;\n      document.querySelectorAll('.cat-chip').forEach(c => c.classList.remove('active'));\n    }\n\n    // Close fleet drawer on outside click\n    document.addEventListener('click', (e) => {\n      if (fleetDrawer && !fleetDrawer.contains(e.target) && !e.target.classList.contains('cat-chip')) {\n        closeFleetDrawer();\n      }\n    });\n\n    // ── Interaction & Idle Show/Hide ─────────────────────────────────────────\n    const appContainer = document.getElementById('app-container');\n    const canvas = document.getElementById('bg-canvas');\n    let idleTimer = null;\n    \n    function showUI() {\n      // If pointer is captured (playing SightX), keep UI hidden\n      if (document.pointerLockElement === canvas) return;\n      \n      appContainer.classList.remove('hidden');\n      canvas.classList.remove('interactive');\n      resetIdleTimer();\n    }\n    \n    function hideUI() {\n      appContainer.classList.add('hidden');\n      canvas.classList.add('interactive');\n      closeFleetDrawer();\n    }\n    \n    // Start showing overlay, then let it fade\n    function resetIdleTimer() {\n      clearTimeout(idleTimer);\n      idleTimer = setTimeout(hideUI, 5000); // Hide after 5 seconds idle\n    }\n    \n    // Wire up events\n    document.addEventListener('mousemove', showUI);\n    document.addEventListener('click', showUI);\n    document.addEventListener('keydown', showUI);\n    document.addEventListener('touchstart', showUI);\n    \n    // Prevent hiding while interacting with the overlay\n    appContainer.addEventListener('mousemove', (e) => { e.stopPropagation(); resetIdleTimer(); });\n    appContainer.addEventListener('click', (e) => { e.stopPropagation(); resetIdleTimer(); });\n    appContainer.addEventListener('keydown', (e) => { e.stopPropagation(); resetIdleTimer(); });\n    \n    // SightX is a dedicated, unoccluded product demonstrator.\n    if (document.body.classList.contains('sightx-demo')) {\n      hideUI();\n    } else {\n      resetIdleTimer();\n    }\n\n    // ── WebGL Setup (SightX playable background corridor) ─────────────────────\n    const gl = canvas.getContext('webgl2');\n    let sightxExperience = null;\n    let stressViewActive = false; // STRESS VIEW HUD toggle state, see u_stressView\n    \n    function resize() {\n      const scale = sightxExperience ? sightxExperience.renderScale : Math.min(window.devicePixelRatio, 1.25);\n      canvas.width = Math.floor(window.innerWidth * scale);\n      canvas.height = Math.floor(window.innerHeight * scale);\n      canvas.style.width = window.innerWidth + 'px';\n      canvas.style.height = window.innerHeight + 'px';\n      gl.viewport(0, 0, canvas.width, canvas.height);\n    }\n    window.addEventListener('resize', resize);\n    resize();\n    \n    const VS = `#version 300 es\n    in vec2 a;\n    void main(){ gl_Position = vec4(a, 0, 1); }`;\n    \n    const FS = `#version 300 es\n    precision highp float;\n    out vec4 fragColor;\n    uniform vec2  u_res;\n    uniform float u_t;\n    uniform vec3  u_cam;\n    uniform vec3  u_dir;\n    uniform vec3  u_up;\n    uniform float u_scan;\n    uniform vec3  u_target;\n    uniform sampler2D u_planSdf;\n    uniform sampler2D u_planSource;\n    // Real NASA public-domain Earth imagery (day/night), see loadEarthTexture()\n    // in the JS setup below for exact source URLs and licensing notes.\n    uniform sampler2D u_earthDay;\n    uniform sampler2D u_earthNight;\n    uniform sampler2D u_earthCloud;\n    uniform sampler2D u_moonTex;\n    uniform int u_planMode;\n    uniform vec4 u_planBounds;\n    uniform float u_planHeight;\n    // STRESS VIEW overlay toggle (0=off, default; 1=on) - see stressAt()\n    // and stressColor() below, driven by the \"STRESS VIEW\" HUD action.\n    uniform float u_stressView;\n    // Astronaut spacewalk embodiment (V toggles first/third-person) - see\n    // handSdf()/map() below for the camera-relative gloved hands and the\n    // third-person helmet+visor, and main()'s u_glitch block for the\n    // brief in-world correction effect on a real device-orientation change.\n    uniform float u_thirdPerson;\n    uniform vec3  u_astroPos;\n    uniform vec3  u_astroFwd;\n    uniform vec3  u_astroUp;\n    uniform float u_handsLowered;\n    uniform float u_glitch;\n\n    float hash(vec3 p){ return fract(sin(dot(p,vec3(127.1,311.7,74.7)))*43758.5); }\n    float noise(vec3 p){\n      vec3 i=floor(p), f=fract(p);\n      f=f*f*(3.-2.*f);\n      return mix(mix(mix(hash(i),hash(i+vec3(1,0,0)),f.x),\n                     mix(hash(i+vec3(0,1,0)),hash(i+vec3(1,1,0)),f.x),f.y),\n                 mix(mix(hash(i+vec3(0,0,1)),hash(i+vec3(1,0,1)),f.x),\n                     mix(hash(i+vec3(0,1,1)),hash(i+vec3(1,1,1)),f.x),f.y),f.z);\n    }\n\n    float sdBox(vec3 p, vec3 b){ vec3 q=abs(p)-b; return length(max(q,0.))+min(max(q.x,max(q.y,q.z)),0.); }\n    float sdCyl(vec3 p, float r, float h){ vec2 d=abs(vec2(length(p.xz),p.y))-vec2(r,h); return min(max(d.x,d.y),0.)+length(max(d,0.)); }\n    float sdCylZ(vec3 p, float r, float h){ return sdCyl(vec3(p.x,p.z,p.y), r, h); }\n    float sdSphere(vec3 p, float r){ return length(p)-r; }\n\n    // Moved up from its original spot further down (next to the orbital-\n    // mechanics sweep-angle helpers) - the astronaut-embodiment arm IK\n    // below calls rotX() before that later point in the file, which is a\n    // real GLSL ES 3.00 compile error (no forward declarations), so\n    // nothing in the scene rendered at all until this moved. Pure\n    // relocation, not a logic change - body is byte-identical to the\n    // original definition.\n    vec3 rotX(vec3 v, float a){\n      float c=cos(a), s=sin(a);\n      return vec3(v.x, v.y*c-v.z*s, v.y*s+v.z*c);\n    }\n    float sdCapsule(vec3 p, vec3 a, vec3 b, float r){\n      vec3 pa=p-a, ba=b-a;\n      float h=clamp(dot(pa,ba)/dot(ba,ba),0.,1.);\n      return length(pa-ba*h)-r;\n    }\n\n    // WeylandAI MMU/SAFER glove, built in the camera's own view-space\n    // (x=right, y=up, z=forward/depth from the eye) - real SDF finger and\n    // thumb geometry shaded through the same lighting pipeline as the\n    // rest of the scene (not a 2D screen overlay), so it carries real\n    // depth/parallax from the very first frame rather than a flat sprite.\n    // 'side' is -1 for the left hand, +1 for the right. 'portrait' picks\n    // the real device-holding ergonomics for the current viewport: a\n    // phone/tablet held in portrait is gripped with thumbs reaching up\n    // from the BOTTOM corners plus a fingertip peeking over the TOP edge\n    // from the back-gripping fingers; a wide landscape viewport is held\n    // by fingers wrapping the LEFT/RIGHT side bezels instead. 'lower'\n    // (0=raised at spawn, 1=lowered clear of frame) drives the reveal.\n    float handSdf(vec3 vp, float side, bool portrait, float lower){\n      vec3 off = vec3(0.0, -0.95*lower, 0.38*lower);\n      if(portrait){\n        float thumb   = sdCapsule(vp, vec3(side*0.34,-0.52,0.58)+off, vec3(side*0.16,-0.18,0.40)+off, 0.050);\n        float knuckle = sdCapsule(vp, vec3(side*0.30, 0.56,0.62)+off, vec3(side*0.22, 0.42,0.52)+off, 0.040);\n        return min(thumb, knuckle);\n      }\n      float finger1 = sdCapsule(vp, vec3(side*0.62, 0.10,0.55)+off, vec3(side*0.34, 0.06,0.42)+off, 0.042);\n      float finger2 = sdCapsule(vp, vec3(side*0.62,-0.06,0.55)+off, vec3(side*0.34,-0.10,0.42)+off, 0.042);\n      return min(finger1, finger2);\n    }\n\n    vec2 put(vec2 scene, float distance, float material){\n      return distance < scene.x ? vec2(distance, material) : scene;\n    }\n\n    float sdDoorOpening(vec3 q, float w, float h){\n      return sdBox(q-vec3(0.0,h*.5,0.0),vec3(w,h*.5,0.30));\n    }\n\n    float sdDoorFrame(vec3 q, float w, float h){\n      float rail=0.065, depth=0.10;\n      float head = sdBox(q-vec3(0.0,h+rail,0.0),vec3(w+rail,rail,depth));\n      float left = sdBox(q-vec3(-w-rail,h*.5,0.0),vec3(rail,h*.5+rail,depth));\n      float right= sdBox(q-vec3( w+rail,h*.5,0.0),vec3(rail,h*.5+rail,depth));\n      return min(head,min(left,right));\n    }\n\n    float sdDoorPanels(vec3 q, float w, float h, float open){\n      float halfPanel=w*.48;\n      float travel=open*w*.72;\n      float left =sdBox(q-vec3(-w*.5-travel,h*.5,0.0),vec3(halfPanel,h*.5-.08,.026));\n      float right=sdBox(q-vec3( w*.5+travel,h*.5,0.0),vec3(halfPanel,h*.5-.08,.026));\n      return min(left,right);\n    }\n\n    float doorOpen(vec2 position){\n      return 1.0-smoothstep(0.85,2.5,length(u_cam.xz-position));\n    }\n\n    // Local door coordinates: X runs across the opening, Y is vertical, Z is\n    // perpendicular to its host wall. This keeps every panel correctly oriented.\n    vec3 sideDoorSpace(vec3 p, float wallX, float doorZ){\n      return vec3(p.z-doorZ,p.y,p.x-wallX);\n    }\n\n    float sdPlanWall(vec3 p){\n      vec2 span=max(u_planBounds.zw-u_planBounds.xy,vec2(.001));\n      vec2 uv=(p.xz-u_planBounds.xy)/span;\n      vec2 outside=max(max(-uv,uv-1.0)*span,0.0);\n      if(any(lessThan(uv,vec2(0.0)))||any(greaterThan(uv,vec2(1.0)))) return length(outside)+1.0;\n      float plan=texture(u_planSdf,vec2(uv.x,1.0-uv.y)).r;\n      float vertical=abs(p.y-u_planHeight*.5)-u_planHeight*.5;\n      vec2 d=vec2(plan,vertical);\n      return min(max(d.x,d.y),0.0)+length(max(d,0.0));\n    }\n\n    vec2 map(vec3 p){\n      if(u_planMode==1){\n        vec2 planResult=vec2(p.y,8.0);\n        planResult=put(planResult,sdPlanWall(p),1.0);\n        return planResult;\n      }\n      // LEO shipyard: no ground campus. The only \"floor\" is the pressurized\n      // deck plating inside the facility's own finite footprint — bounded,\n      // not an infinite plane, so rays that miss it go straight to vacuum\n      // (sky() below) instead of an endless grass campus.\n      vec2 res=vec2(sdBox(p-vec3(0.0,-0.04,8.0),vec3(7.28,0.04,8.28)),8.0);\n\n      // Finite facility shell: 14.4m wide, 16m deep, with a real exterior.\n      float outerWest=sdBox(p-vec3(-7.2,1.7,8.0),vec3(.16,1.7,8.0));\n      float outerEast=sdBox(p-vec3( 7.2,1.7,8.0),vec3(.16,1.7,8.0));\n      float rear=sdBox(p-vec3(0.0,1.7,16.0),vec3(7.2,1.7,.16));\n      float front=sdBox(p-vec3(0.0,1.7,0.0),vec3(7.2,1.7,.16));\n      front=max(front,-sdDoorOpening(p,1.30,2.45));\n      float roof=sdBox(p-vec3(0.0,3.45,8.0),vec3(7.36,.14,8.16));\n      res=put(res,outerWest,1.0); res=put(res,outerEast,1.0);\n      res=put(res,rear,1.0);      res=put(res,front,1.0);\n      res=put(res,roof,5.0);\n\n      // Corridor walls host four automatic double-sliding doors per side.\n      float westWall=sdBox(p-vec3(-2.0,1.6,8.0),vec3(.10,1.6,8.0));\n      float eastWall=sdBox(p-vec3( 2.0,1.6,8.0),vec3(.10,1.6,8.0));\n      for(int i=0;i<4;i++){\n        float z=2.0+float(i)*4.0;\n        westWall=max(westWall,-sdDoorOpening(sideDoorSpace(p,-2.0,z),.68,2.35));\n        eastWall=max(eastWall,-sdDoorOpening(sideDoorSpace(p, 2.0,z),.68,2.35));\n      }\n      res=put(res,westWall,1.0); res=put(res,eastWall,1.0);\n\n      // Four rooms in each wing, separated from one another but connected to\n      // the central circulation spine through the modeled door openings.\n      for(int i=0;i<3;i++){\n        float z=4.0+float(i)*4.0;\n        res=put(res,sdBox(p-vec3(-4.6,1.6,z),vec3(2.5,1.6,.10)),1.0);\n        res=put(res,sdBox(p-vec3( 4.6,1.6,z),vec3(2.5,1.6,.10)),1.0);\n      }\n\n      // Room program. Each controlled opening now leads to a recognizable,\n      // navigable construction workspace rather than an empty shell.\n      res=put(res,sdBox(p-vec3(-5.45,.76, 2.0),vec3(1.05,.07,.52)),12.0); // Project office desk\n      res=put(res,sdBox(p-vec3(-5.45,1.12,2.0),vec3(.42,.27,.035)),13.0); // Project display\n      res=put(res,sdBox(p-vec3(-6.55,.92,3.15),vec3(.30,.92,.58)),13.0); // Drawing storage\n\n      // Manila folder pile — real geometry (not an overlay), sitting on the\n      // desk's front-left corner. Doubles as the WeylandAI site portal prop:\n      // raise it to leave this scene for the rest of weylandai.com, lower it\n      // to return, same non-pausing model as a Fallout Pip-Boy. Folder/tab\n      // proportions (1.264:1 width:depth, tab inset 4.6%, tab width 33.8%)\n      // measured from a real manila-folder reference photo earlier this\n      // session, not invented.\n      {\n        const float FW=.17, FD=.1345, FT=.009;\n        for(int fi=0; fi<6; fi++){\n          float i=float(fi);\n          float ang=(i-2.5)*.085+sin(i*1.7)*.03;\n          vec3 c=vec3(-5.9+sin(i*1.3)*.035, .83+FT*(i+.5)*1.05, 1.65+cos(i*2.1)*.03);\n          vec3 lp=p-c;\n          float cs=cos(ang), sn=sin(ang);\n          vec3 rp=vec3(lp.x*cs-lp.z*sn, lp.y, lp.x*sn+lp.z*cs);\n          res=put(res, sdBox(rp, vec3(FW*.5,FT*.5,FD*.5)), 15.0);\n          vec3 tp=rp-vec3(FW*-.285,0.0,FD*.53);\n          res=put(res, sdBox(tp, vec3(FW*.169,FT*.5,FD*.09)), 16.0);\n        }\n      }\n\n      res=put(res,sdBox(p-vec3( 4.70,.76, 2.0),vec3(1.25,.07,.58)),12.0); // Conference table\n      res=put(res,sdBox(p-vec3( 4.70,.42, 1.18),vec3(.95,.40,.28)),2.0);\n      res=put(res,sdBox(p-vec3( 4.70,.42, 2.82),vec3(.95,.40,.28)),2.0);\n\n      res=put(res,sdBox(p-vec3(-4.55,.76, 6.0),vec3(1.05,.07,.58)),12.0); // Materials review table\n      res=put(res,sdBox(p-vec3(-6.55,1.08,6.0),vec3(.30,1.08,1.15)),13.0); // Sample rack\n      res=put(res,sdBox(p-vec3(-4.85,.96,6.0),vec3(.48,.12,.35)),14.0); // Reviewed sample\n\n      res=put(res,sdBox(p-vec3( 5.45,1.10,5.35),vec3(.48,1.10,.42)),13.0); // Telecom rack A\n      res=put(res,sdBox(p-vec3( 5.45,1.10,6.65),vec3(.48,1.10,.42)),13.0); // Telecom rack B\n\n      res=put(res,sdBox(p-vec3(-4.65,.78,10.0),vec3(1.30,.06,.72)),12.0); // Plan review table\n      res=put(res,sdBox(p-vec3(-6.92,1.68,10.0),vec3(.035,.68,1.10)),14.0); // Plan board\n\n      res=put(res,sdBox(p-vec3( 6.68,1.12,10.0),vec3(.24,1.12,1.18)),13.0); // Electrical switchgear\n      res=put(res,sdBox(p-vec3( 5.85,.18,10.0),vec3(.62,.018,1.35)),14.0); // Service clearance\n\n      res=put(res,sdBox(p-vec3(-5.25,.88,14.0),vec3(1.05,.88,.62)),13.0); // Air-handling unit\n      res=put(res,sdCyl(p-vec3(-6.45,1.55,14.0),.13,1.55),2.0); // Mechanical riser\n\n      res=put(res,sdBox(p-vec3( 5.35,.76,14.0),vec3(1.05,.07,.52)),12.0); // Facilities workstation\n      res=put(res,sdBox(p-vec3( 6.55,.92,14.9),vec3(.30,.92,.58)),13.0); // Facilities storage\n\n      // Main entrance: a centered, sensor-driven double sliding assembly.\n      float entryOpen=doorOpen(vec2(0.0,0.0));\n      res=put(res,sdDoorFrame(p,1.30,2.45),2.0);\n      res=put(res,sdDoorPanels(p,1.30,2.45,entryOpen),3.0);\n\n      float hardware=1e9;\n      for(int i=0;i<4;i++){\n        float z=2.0+float(i)*4.0;\n        vec3 westQ=sideDoorSpace(p,-2.0,z);\n        vec3 eastQ=sideDoorSpace(p, 2.0,z);\n        float westOpen=doorOpen(vec2(-2.0,z));\n        float eastOpen=doorOpen(vec2( 2.0,z));\n        res=put(res,sdDoorFrame(westQ,.68,2.35),2.0);\n        res=put(res,sdDoorPanels(westQ,.68,2.35,westOpen),3.0);\n        res=put(res,sdDoorFrame(eastQ,.68,2.35),2.0);\n        res=put(res,sdDoorPanels(eastQ,.68,2.35,eastOpen),3.0);\n        hardware=min(hardware,sdBox(westQ-vec3(.42,1.32,-.12),vec3(.08,.12,.025)));\n        hardware=min(hardware,sdBox(eastQ-vec3(.42,1.32,-.12),vec3(.08,.12,.025)));\n      }\n      res=put(res,hardware,4.0);\n\n      // Entrance canopy, structural columns, glazing, and interior luminaires.\n      res=put(res,sdBox(p-vec3(0.0,3.02,-1.8),vec3(3.0,.12,1.8)),5.0);\n      res=put(res,sdBox(p-vec3(-2.72,1.5,-2.2),vec3(.12,1.5,.12)),2.0);\n      res=put(res,sdBox(p-vec3( 2.72,1.5,-2.2),vec3(.12,1.5,.12)),2.0);\n      res=put(res,sdBox(p-vec3(-4.45,1.65,-.19),vec3(1.35,1.02,.025)),3.0);\n      res=put(res,sdBox(p-vec3( 4.45,1.65,-.19),vec3(1.35,1.02,.025)),3.0);\n      for(int i=0;i<4;i++){\n        float z=2.0+float(i)*4.0;\n        res=put(res,sdBox(p-vec3(0.0,3.25,z),vec3(.42,.07,.42)),6.0);\n        res=put(res,sdBox(p-vec3(-4.6,3.25,z),vec3(.50,.07,.36)),6.0);\n        res=put(res,sdBox(p-vec3( 4.6,3.25,z),vec3(.50,.07,.36)),6.0);\n      }\n\n      // West bay: the actual product. A real construction ship under\n      // assembly — the \"seed\" vessel this LEO shipyard builds and later\n      // sends to Earth-Moon L5 to bootstrap the real generation-ship-scale\n      // yard there (see sky()'s header comment for why L5). Electric\n      // (Hall-effect) propulsion, not chemical: this is a one-time, patient,\n      // high-delta-v transfer with no crew aboard, exactly the case where\n      // ion thrusters' efficiency beats chemical thrust — the characteristic\n      // pale-blue xenon-plasma glow is a real signature of that choice, not\n      // a decorative light.\n      {\n        vec3 shipC = vec3(-14.0, 3.0, 10.0);\n        vec3 sp = p - shipC;\n        // Unfinished-hull tell: two skin panels carved out of the spine\n        // over the midsection, with bare structural crossbars exposed\n        // behind them — a shipyard's hull isn't finished, not a parked,\n        // completed vessel.\n        float spineHull = sdCylZ(sp, .55, 3.2);\n        float panelGapTop = sdBox(sp-vec3(0,.50,-.25), vec3(.42,.17,.55));\n        float panelGapBot = sdBox(sp-vec3(0,-.50,1.05), vec3(.32,.15,.42));\n        res=put(res, max(spineHull, -min(panelGapTop,panelGapBot)), 17.0); // spine/hull\n        res=put(res, sdCylZ(sp-vec3(0,0,-3.2), .75, .3), 20.0);          // forward docking collar\n        // Bow nose cone (anisotropically stretched sphere) + an off-axis\n        // bridge/sensor bump: breaks the plain-tube silhouette into\n        // something that reads as a ship's hull end-on — the single\n        // biggest \"real shipyard\" legibility cue both Star Wars- and Star\n        // Trek-style construction scenes lean on.\n        res=put(res, length((sp-vec3(0,0,3.55))*vec3(1.0,1.0,.62))-.52, 17.0); // bow nose cone\n        res=put(res, sdBox(sp-vec3(0,.60,2.35), vec3(.24,.15,.40)), 13.0);      // bridge/sensor bump\n        res=put(res, sdSphere(sp-vec3(0,.6,-.8), .42), 17.0);            // propellant tank\n        res=put(res, sdSphere(sp-vec3(0,.6, .8), .42), 17.0);            // propellant tank\n        res=put(res, sdBox(sp-vec3(0,.40,-.25), vec3(.03,.33,.03)), 20.0); // exposed crossbar (top gap)\n        res=put(res, sdBox(sp-vec3(0,.40,-.25), vec3(.33,.03,.03)), 20.0); // exposed crossbar (top gap)\n        res=put(res, sdBox(sp-vec3(0,-.38,1.05), vec3(.03,.24,.03)), 20.0); // exposed crossbar (bottom gap)\n        res=put(res, sdBox(sp-vec3(0,-.38,1.05), vec3(.24,.03,.03)), 20.0); // exposed crossbar (bottom gap)\n        for(int i=0;i<4;i++){\n          float ang = float(i)*1.5708 + .78;\n          vec3 tpos = vec3(cos(ang)*.38, sin(ang)*.38, 3.55);\n          res=put(res, sdCylZ(sp-tpos, .09, .22), 20.0);                 // thruster housing\n          float glow = sdCylZ(sp-tpos-vec3(0,0,.3), .055, .18);\n          res=put(res, glow, 19.0);                                     // ion exhaust glow\n        }\n        for(int i=0;i<2;i++){\n          float side = i<1 ? 1.0 : -1.0;\n          vec3 wingC = vec3(side*2.75, 0.0, .3);\n          res=put(res, sdBox(sp-wingC, vec3(2.05,.025,1.15)), 18.0);     // solar wing\n          res=put(res, sdBox(sp-vec3(side*.68,0,.3), vec3(.10,.07,1.0)), 20.0); // wing strut\n        }\n        // Two-joint manipulator arm (shoulder + elbow), animated with a\n        // real periodic reach/weld/retract cycle driven by the scene's own\n        // time uniform (u_t) — orbital construction actually relies on\n        // robotic manipulators like this (Canadarm-style), not static\n        // dressing. Mounted externally, swinging up off the hull surface.\n        {\n          float armCycle = fract(u_t/7.0);\n          float armReach = clamp(smoothstep(0.0,0.28,armCycle) - smoothstep(0.52,0.82,armCycle), 0.0, 1.0);\n          vec3 armBase = vec3(.70, .25, -1.55);\n          float shoulderA = mix(-1.45, -0.30, armReach);\n          float elbowA    = mix( 2.05,  0.45, armReach);\n          float seg1Len = .55, seg2Len = .48, armR = .045;\n          vec3 rel1 = rotX(sp-armBase, -shoulderA);\n          res=put(res, sdCylZ(rel1-vec3(0,0,seg1Len*.5), armR, seg1Len*.5), 20.0);      // upper arm segment\n          vec3 elbowPos = armBase + rotX(vec3(0,0,seg1Len), shoulderA);\n          float seg2A = shoulderA + elbowA;\n          vec3 rel2 = rotX(sp-elbowPos, -seg2A);\n          res=put(res, sdCylZ(rel2-vec3(0,0,seg2Len*.5), armR*.82, seg2Len*.5), 20.0);  // forearm segment\n          res=put(res, sdSphere(sp-armBase, armR*1.3), 13.0);                           // shoulder joint\n          res=put(res, sdSphere(sp-elbowPos, armR*1.2), 13.0);                          // elbow joint\n          vec3 tipPos = elbowPos + rotX(vec3(0,0,seg2Len), seg2A);\n          res=put(res, sdSphere(sp-tipPos, armR*1.35), 13.0);                           // gripper/tip\n          // Welding flare at the gripper tip, gated to near-full reach and\n          // flickering fast like a real arc rather than a smooth beacon.\n          float weldGate = smoothstep(0.80,0.92,armReach);\n          float weldFlicker = step(0.6, fract(sin(u_t*53.7)*91738.233)) * (0.55+0.45*sin(u_t*210.0));\n          float weldR = weldGate*max(0.0,weldFlicker)*.045 + 0.003;\n          res=put(res, sdSphere(sp-tipPos, weldR), 29.0);                               // weld arc\n        }\n      }\n\n      // East bay: the station's own power/thermal truss — real flat solar\n      // arrays plus dedicated white radiator panels (waste heat has nowhere\n      // to go but radiation in vacuum, so these are load-bearing, not set\n      // dressing), on an open gantry rather than a sealed building, since\n      // nothing out here needs weather protection.\n      {\n        vec3 stC = vec3(15.0, 2.2, 13.0);\n        vec3 tp = p - stC;\n        res=put(res, sdCylZ(tp, .22, 4.4), 20.0);                       // truss backbone\n        for(int i=0;i<2;i++){\n          float side = i<1 ? 1.0 : -1.0;\n          res=put(res, sdBox(tp-vec3(side*3.0,0,-1.6), vec3(2.6,.03,1.6)), 18.0); // solar array\n          res=put(res, sdBox(tp-vec3(side*.9,0,-1.6), vec3(.08,.07,1.5)), 20.0);   // array strut\n          res=put(res, sdBox(tp-vec3(side*2.1,0, 2.2), vec3(1.5,.45,.035)), 21.0); // radiator panel\n          res=put(res, sdBox(tp-vec3(side*.7,0, 2.2), vec3(.08,.07,.4)), 20.0);    // radiator strut\n        }\n      }\n\n      // Open dock gantry framing the construction bay — scaffold, not a\n      // sealed structure, consistent with assembling a ship in vacuum.\n      {\n        vec3 gC = vec3(-14.0, 3.0, 10.0);\n        for(int i=0;i<4;i++){\n          float sx = (i%2==0) ? -1.0 : 1.0;\n          float sz = (i<2) ? -1.0 : 1.0;\n          vec3 post = gC + vec3(sx*3.2, 0.0, sz*4.6);\n          res=put(res, sdCyl(p-post, .09, 3.0), 20.0);\n        }\n        res=put(res, sdBox(p-(gC+vec3(0,3.0,-4.6)), vec3(3.3,.09,.09)), 20.0);\n        res=put(res, sdBox(p-(gC+vec3(0,3.0, 4.6)), vec3(3.3,.09,.09)), 20.0);\n        res=put(res, sdBox(p-(gC+vec3(-3.2,3.0,0)), vec3(.09,.09,4.7)), 20.0);\n        res=put(res, sdBox(p-(gC+vec3( 3.2,3.0,0)), vec3(.09,.09,4.7)), 20.0);\n\n        // Tiny maintenance pod drifting through the open trusswork - a\n        // human/drone-scale silhouette against vast open scaffolding is\n        // the real \"this facility is huge\" cue (the same scale-contrast\n        // trick Star Wars/Star Trek shipyard shots use), not just another\n        // same-sized prop.\n        vec3 podC = gC + vec3(1.1+sin(u_t*0.07)*0.7, 1.7+sin(u_t*0.11)*0.12, -1.3+cos(u_t*0.05)*0.6);\n        vec3 pp = p - podC;\n        res=put(res, sdCylZ(vec3(pp.z,pp.y,pp.x), .045, .11), 20.0); // pod body\n        res=put(res, sdSphere(pp-vec3(.0,.0,.07), .035), 13.0);       // sensor head\n        res=put(res, sdSphere(pp-vec3(.0,.0,-.09), .016), 16.0);      // tail beacon\n      }\n\n      // South plaza: FilmLine Earth Relay Screening Pavilion - SightX's one\n      // deliberately non-orbital set piece. The facility above runs on real\n      // LEO orbital mechanics; this ground-level theater sits in the same\n      // stylized, not-to-scale coordinate space already used for the\n      // construction-ship and power-truss bays above (walkable in-scene,\n      // not a literal orbital-to-surface distance - same artistic license\n      // documented on those bays). It represents FilmLine's real product\n      // (filmline.cc): an AI script-to-storyboard-reel generator for\n      // independent filmmakers - a one-line premise becomes an editable\n      // script and a narrated animated-SVG storyboard reel, not a finished\n      // virtual-production stage - so this is dressed as one small\n      // single-screen house, not a studio backlot.\n      {\n        vec3 fc = vec3(0.0, 0.0, 30.0);\n        vec3 fp = p - fc;\n\n        // Lawn forecourt - the scene's one patch of real ground, reusing\n        // material 7 (the pre-LEO ground-campus grass, orphaned since the\n        // LEO rebuild removed the outdoor campus it used to color).\n        res=put(res, sdBox(fp-vec3(0.0,-0.05,2.6), vec3(6.0,0.05,3.8)), 7.0);\n        res=put(res, sdBox(fp-vec3(0.0,0.0,-4.2), vec3(3.3,0.02,3.3)), 8.0); // paved threshold + house floor\n\n        // Facade with an open entrance - a facade, not a powered sliding\n        // door, since nobody needs an airlock on Earth.\n        float thFront = sdBox(fp-vec3(0.0,1.7,-1.2), vec3(3.14,1.7,.14));\n        thFront = max(thFront, -sdDoorOpening(fp-vec3(0.0,0.0,-1.2), 1.0, 2.3));\n        res=put(res, thFront, 22.0);\n        res=put(res, sdBox(fp-vec3(0.0,1.7,-7.2), vec3(3.14,1.7,.14)), 22.0); // back wall (screen wall)\n        res=put(res, sdBox(fp-vec3(-3.0,1.7,-4.2), vec3(.14,1.7,3.14)), 22.0); // left wall\n        res=put(res, sdBox(fp-vec3( 3.0,1.7,-4.2), vec3(.14,1.7,3.14)), 22.0); // right wall\n        res=put(res, sdBox(fp-vec3(0.0,3.42,-4.2), vec3(3.28,.14,3.28)), 5.0); // roof\n\n        // Marquee canopy + backlit sign + pilasters - FilmLine's real\n        // wine/burgundy brand palette (#772230/#B71C1C), not a generic\n        // Hollywood-red stereotype.\n        res=put(res, sdBox(fp-vec3(0.0,2.55,0.05), vec3(1.35,.10,1.25)), 23.0); // marquee canopy\n        res=put(res, sdBox(fp-vec3(0.0,2.15,-1.05), vec3(1.0,.32,.03)), 24.0);  // backlit marquee sign\n        res=put(res, sdBox(fp-vec3(-1.15,1.15,-1.05), vec3(.08,1.15,.06)), 23.0); // left pilaster\n        res=put(res, sdBox(fp-vec3( 1.15,1.15,-1.05), vec3(.08,1.15,.06)), 23.0); // right pilaster\n\n        // Screen - soft projector glow on the back wall, seen through the\n        // open entrance from the forecourt.\n        res=put(res, sdBox(fp-vec3(0.0,2.0,-7.05), vec3(1.6,1.0,.03)), 28.0);\n\n        // The film reel - the actual artifact, standing where it's visible\n        // from the entrance: two brushed-aluminum flanges with sprocket\n        // cutouts around a wound celluloid core, a center hub, and a short\n        // loose tail of ribbon - real film-reel anatomy, not a flat sprite.\n        {\n          vec3 rp = fp - vec3(0.0,1.9,-4.6);\n          float flangeA = sdCylZ(rp-vec3(0,0,-0.12), 0.55, 0.015);\n          float flangeB = sdCylZ(rp-vec3(0,0, 0.12), 0.55, 0.015);\n          for(int i=0;i<6;i++){\n            float ang = float(i)*1.0472;\n            vec3 hp = rp - vec3(cos(ang)*0.32, sin(ang)*0.32, 0.0);\n            float hole = sdCylZ(hp, 0.07, 0.03);\n            flangeA = max(flangeA, -hole);\n            flangeB = max(flangeB, -hole);\n          }\n          res=put(res, flangeA, 25.0);\n          res=put(res, flangeB, 25.0);\n          res=put(res, sdCylZ(rp, 0.09, 0.14), 25.0);   // hub/axle\n          res=put(res, sdCylZ(rp, 0.46, 0.10), 26.0);   // wound film core\n          res=put(res, sdBox(rp-vec3(0.0,-0.62,0.0), vec3(0.09,.18,.012)), 26.0); // ribbon tail\n\n          // Small gold diamond accent on the hub - a tasteful nod to the\n          // star in FilmLine's real wordmark, not a literal logo decal.\n          vec3 starP = rp - vec3(0.0,0.0,-0.09);\n          vec2 srot = vec2(starP.x*0.7071 - starP.y*0.7071, starP.x*0.7071 + starP.y*0.7071);\n          res=put(res, sdBox(vec3(srot, starP.z), vec3(0.045,0.045,0.01)), 27.0);\n        }\n      }\n\n      // WeylandAI astronaut embodiment - gated so neither branch costs\n      // anything or can affect the station geometry above in the default\n      // state. First-person: gloved hands live ONLY in the camera's own\n      // local frame (attached to u_cam/u_dir/u_up, not a world position),\n      // so they read as your own hands near your face. Third-person: a\n      // simple helmet+visor sits at the astronaut's real world position/\n      // orientation for the pulled-back camera to see. Both are plain\n      // unions (put()) on top of everything already in res.\n      if(u_thirdPerson < 0.5){\n        vec3 cfwd   = normalize(u_dir);\n        vec3 cright = normalize(cross(u_up, cfwd));\n        vec3 cup    = cross(cfwd, cright);\n        vec3 rel    = p - u_cam;\n        vec3 vp = vec3(dot(rel,cright), dot(rel,cup), dot(rel,cfwd));\n        bool portrait = u_res.x < u_res.y;\n        float lower = clamp(u_handsLowered, 0.0, 1.0);\n        res = put(res, min(handSdf(vp,-1.0,portrait,lower), handSdf(vp,1.0,portrait,lower)), 30.0);\n      } else {\n        vec3 afwd   = normalize(u_astroFwd);\n        vec3 aright = normalize(cross(u_astroUp, afwd));\n        vec3 aup    = cross(afwd, aright);\n        vec3 arel   = p - u_astroPos;\n        vec3 al = vec3(dot(arel,aright), dot(arel,aup), dot(arel,afwd));\n        // Helmet shell: u_astroPos is the real first-person eye point, so\n        // the shell center is pulled back slightly along -forward to put\n        // that eye point near its front interior rather than dead center.\n        float helmet = sdSphere(al - vec3(0.0,0.0,-0.05), 0.26);\n        res = put(res, helmet, 31.0);\n        // Visor: a flattened lens bulging from the shell's front face,\n        // carved to the forward hemisphere only (visorMask) so it reads\n        // as a curved window rather than a second full sphere. main()\n        // reflects the view ray off this surface's normal and re-samples\n        // sky() in that direction for a real-time environment reflection.\n        vec3 visorP = (al - vec3(0.0,0.0,0.07)) * vec3(1.0,1.08,1.0);\n        float visor = length(visorP) - 0.215;\n        float visorMask = al.z - 0.05;\n        res = put(res, max(visor, -visorMask), 32.0);\n      }\n      return res;\n    }\n\n    vec2 march(vec3 ro, vec3 rd){\n      float t=0.001; float id=0.;\n      for(int i=0;i<112;i++){\n        vec2 h=map(ro+rd*t);\n        if(h.x<0.002) return vec2(t,h.y);\n        t+=h.x*.85;\n        if(t>72.) break;\n      }\n      return vec2(-1.,0.);\n    }\n\n    vec3 normal(vec3 p){\n      float e=.001;\n      return normalize(vec3(\n        map(p+vec3(e,0,0)).x-map(p-vec3(e,0,0)).x,\n        map(p+vec3(0,e,0)).x-map(p-vec3(0,e,0)).x,\n        map(p+vec3(0,0,e)).x-map(p-vec3(0,0,e)).x));\n    }\n\n    float ao(vec3 p, vec3 n){\n      float s=0.; float w=1.;\n      for(int i=1;i<=5;i++){\n        float d=float(i)*.08;\n        s+=w*(d-map(p+n*d).x);\n        w*=.6;\n      }\n      return clamp(1.-s*2.2,0.,1.);\n    }\n\n    // --- Orbital mechanics driving sun/star sweep + Earth rotation ---\n    // Real circular-LEO reference, chosen and justified (not arbitrary):\n    // altitude 400km (ISS-like). Period from Kepler's third law,\n    // T=2*pi*sqrt(a^3/mu): a=6371+400=6771km, mu_earth=398600.4418 km^3/s^2\n    // -> T_orbit ~= 5564s (92.68 min), matching the real published ISS\n    // period at this altitude. Earth's rotation uses the SIDEREAL period\n    // (23h56m04s = 86164.1s, rotation relative to the fixed stars) rather\n    // than the 24h00m solar day, because the Sun below is treated as fixed\n    // in inertial space over this scene's ~90min timescale (Earth creeps\n    // only ~0.025 degrees along its year-long solar orbit in 90 minutes -\n    // negligible next to the ~1486 degrees it rotates), so rotation-\n    // relative-to-sun is, to excellent approximation, just the sidereal rate.\n    //\n    // DISCLOSED DEMO TIME SCALE: true real-time motion here would be\n    // ~0.065 deg/sec of orbital sweep - correct, but imperceptible second\n    // to second, which is why John's live test saw \"no motion discernible.\"\n    // u_t (real seconds since page load) is compressed by DEMO_K=92.74x so\n    // the real 92.68-minute orbit completes in 60 real seconds - i.e.\n    // \"1 real second = 92.7 simulated seconds.\" A visitor watching for\n    // 10-30 real seconds sees a genuine 60-180 degree slice of the orbit,\n    // not a static frame. This is sped-up and labeled as such in the HUD,\n    // not silently faked.\n    //\n    // DISCLOSED SIMPLIFICATION: the station is modeled as a circular,\n    // nadir-locked LEO orbiter (nadir fixed at local -Y, as already set up\n    // below) whose body frame rotates once per orbit about ONE fixed local\n    // axis (chosen here as local +X, standing in for the real orbit-normal/\n    // cross-track direction) rather than full 3D inertial attitude\n    // kinematics. That single-axis rotation is exactly right for the\n    // ANGULAR RATE of sun/star sweep and terminator motion derived below;\n    // it does not reproduce the real ~51.6 degree ISS inclination's effect\n    // on which stars/ground track pass by. Earth's own solar orbit\n    // (ellipse, ~365d) and this orbit's eccentricity are both ignored\n    // (circular orbit; sun fixed) - both real effects, both negligible at\n    // this scene's ~90min scale.\n    #define DEMO_K 92.74\n    #define W_ORBIT 0.0011290\n    #define W_EARTH 0.00007292\n    // rotX() itself now lives up near the other basic SDF/vector helpers\n    // (see comment there) so the earlier astronaut-arm-IK code can call\n    // it; only the orbital-timing helpers that depend on u_t stay here.\n    float simT(){ return u_t*DEMO_K; }\n    // Station-local-frame sweep angle of an inertially-fixed direction\n    // (Sun, stars): the nadir-locked body frame completes one full\n    // rotation per orbit relative to the inertial/sun-and-star-fixed frame.\n    float sunSweepAngle(){ return W_ORBIT*simT(); }\n    // Apparent sweep of Earth's own rotating surface features (continents,\n    // night lights) under the station: real relative rate = orbital rate\n    // minus Earth's sidereal rotation rate (prograde orbit, same spin\n    // sense as Earth) ~= 2*pi/5950s, a ~99.2min apparent ground-track\n    // period - a real derived number, not a guess.\n    float earthSweepAngle(){ return (W_ORBIT-W_EARTH)*simT(); }\n\n    // === STRUCTURAL STRESS MODEL (toggleable STRESS VIEW overlay) ===========\n    // Deliberately simplified - approximated as a function of distance-from\n    // -mount x thermal-differential, NOT a full FEA solve - but the two load\n    // sources modeled are the two that are actually real for a truss in\n    // orbit (there is no self-weight to model in zero-g):\n    //\n    //   (1) THERMAL CYCLING. Real spacecraft structures take their worst\n    //       thermal stress not at local \"noon\"/\"midnight\" but AT the\n    //       sunlit/shadow terminator crossing, where insolation changes\n    //       fastest and the structure's own thermal mass can't keep up - a\n    //       real, well-documented effect. Modeled as the rate of change of\n    //       sun-facing, |d(N.sunDir)/dt|, finite-differenced using the same\n    //       orbital sweep driving the sun/terminator above - not a static\n    //       day/night brightness term.\n    //\n    //   (2) CANTILEVER / SIMPLY-SUPPORTED BENDING - basic beam theory,\n    //       matched to each member's actual boundary condition already\n    //       built into this scene's geometry:\n    //         - booms fixed at one end with a mass at the free end (ship\n    //           spine -> wing struts, station backbone -> array/radiator\n    //           struts): M(x) = F*(L-x), peak at the FIXED ROOT, ~0 at the\n    //           free tip - the real location of maximum cantilever stress.\n    //         - the station backbone carries BOTH side-struts' outboard\n    //           loads, summed per cross-section - a shared boom legitimately\n    //           sees compounded stress near its anchored end.\n    //         - dock-gantry rails, pinned at a post on each end (NOT\n    //           cantilevered): M(x) = w*x*(L-x)/2, peak at MIDSPAN, ~0 at\n    //           the posts - the correct beam theory for that support\n    //           condition, not the cantilever formula.\n    //       Relative load/mass magnitudes (e.g. \"a radiator panel is a\n    //       heavier attachment than a bare strut\") are illustrative\n    //       estimates of relative magnitude, not a certified mass budget.\n    //\n    // Nearest-member selection reuses this file's own put() \"closest SDF\n    // wins\" idea, so a surface point is scored by the member it actually\n    // belongs to rather than a neighbor. Returns a 0..~1 unitless scalar\n    // consumed by stressColor() below.\n    void considerStress(inout float dBest, inout float sBest, float d, float s){\n      if(d<dBest){ dBest=d; sBest=s; }\n    }\n    float cantileverFrac(float x, float L, float F){ // x measured from the fixed root\n      return F*max(L-x,0.0)/max(L,0.001);\n    }\n    float spanFrac(float x, float L, float w){ // x measured from one pinned support\n      return w*x*max(L-x,0.0)*0.5/max(L*L*0.125,0.001); // normalized to its own midspan max\n    }\n    float stressAt(vec3 p, vec3 N){\n      // Thermal transient term, shared by every member at this point.\n      float dt = 0.35;\n      vec3 s0 = rotX(normalize(vec3(0.55,0.16,0.45)), W_ORBIT*(u_t)*DEMO_K);\n      vec3 s1 = rotX(normalize(vec3(0.55,0.16,0.45)), W_ORBIT*(u_t-dt)*DEMO_K);\n      float thermal = abs(dot(N,s0)-dot(N,s1))/dt * 2.2;\n\n      float dBest=1e9, mech=0.0;\n\n      // Construction ship (west bay): booms fixed at the spine.\n      {\n        vec3 shipC=vec3(-14.0,3.0,10.0), sp=p-shipC;\n        float dCollar=sdCylZ(sp-vec3(0,0,-3.2), .75, .3);\n        considerStress(dBest, mech, dCollar, 0.30); // docking interface load, not a boom\n        for(int i=0;i<4;i++){\n          float ang=float(i)*1.5708+.78;\n          vec3 tpos=vec3(cos(ang)*.38, sin(ang)*.38, 3.55);\n          float dHouse=sdCylZ(sp-tpos,.09,.22);\n          considerStress(dBest, mech, dHouse, 0.30); // thruster mount + thrust reaction\n        }\n        for(int i=0;i<2;i++){\n          float side=i<1?1.0:-1.0;\n          float root=0.68, tip=2.75, L=tip-root;\n          float dStrut=sdBox(sp-vec3(side*.68,0,.3), vec3(.10,.07,1.0));\n          float x=clamp(abs(sp.x)-root,0.0,L);\n          considerStress(dBest, mech, dStrut, cantileverFrac(x,L,0.45));\n          float dWing=sdBox(sp-vec3(side*2.75,0.0,.3), vec3(2.05,.025,1.15));\n          considerStress(dBest, mech, dWing, 0.08); // free tip: low, passive panel flex\n        }\n      }\n\n      // Station power/thermal truss (east bay): backbone + its struts.\n      {\n        vec3 stC=vec3(15.0,2.2,13.0), tp=p-stC;\n        float dBackbone=sdCylZ(tp,.22,4.4);\n        if(dBackbone<dBest){\n          float root=-4.4, zp=tp.z;\n          float Farray=0.5, Frad=0.65;\n          float m1=Farray*max(-1.6-zp,0.0), m2=Frad*max(2.2-zp,0.0);\n          float denom=Farray*(-1.6-root)+Frad*(2.2-root);\n          considerStress(dBest, mech, dBackbone, clamp((m1+m2)/denom,0.0,1.0));\n        }\n        for(int i=0;i<2;i++){\n          float side=i<1?1.0:-1.0;\n          float rootA=0.9, tipA=3.0, LA=tipA-rootA;\n          float dArrStrut=sdBox(tp-vec3(side*.9,0,-1.6), vec3(.08,.07,1.5));\n          float xA=clamp(abs(tp.x)-rootA,0.0,LA);\n          considerStress(dBest, mech, dArrStrut, cantileverFrac(xA,LA,0.5));\n          float dArr=sdBox(tp-vec3(side*3.0,0,-1.6), vec3(2.6,.03,1.6));\n          considerStress(dBest, mech, dArr, 0.08);\n          float rootR=0.7, tipR=2.1, LR=tipR-rootR;\n          float dRadStrut=sdBox(tp-vec3(side*.7,0,2.2), vec3(.08,.07,.4));\n          float xR=clamp(abs(tp.x)-rootR,0.0,LR);\n          considerStress(dBest, mech, dRadStrut, cantileverFrac(xR,LR,0.65));\n          float dRad=sdBox(tp-vec3(side*2.1,0,2.2), vec3(1.5,.45,.035));\n          considerStress(dBest, mech, dRad, 0.12);\n        }\n      }\n\n      // Dock gantry: posts carry simple axial load only; the rails are\n      // pinned at a post on each end, so THEY peak at midspan, not at the\n      // posts (a different, correct beam-theory case from the booms above).\n      {\n        vec3 gC=vec3(-14.0,3.0,10.0), gp=p-gC;\n        for(int i=0;i<4;i++){\n          float sx=(i%2==0)?-1.0:1.0, sz=(i<2)?-1.0:1.0;\n          vec3 post=gC+vec3(sx*3.2,0.0,sz*4.6);\n          float dPost=sdCyl(p-post,.09,3.0);\n          considerStress(dBest, mech, dPost, 0.18);\n        }\n        float dRailN=sdBox(gp-vec3(0,3.0,-4.6), vec3(3.3,.09,.09));\n        considerStress(dBest, mech, dRailN, spanFrac(clamp(gp.x+3.2,0.0,6.4),6.4,1.0));\n        float dRailS=sdBox(gp-vec3(0,3.0, 4.6), vec3(3.3,.09,.09));\n        considerStress(dBest, mech, dRailS, spanFrac(clamp(gp.x+3.2,0.0,6.4),6.4,1.0));\n        float dRailW=sdBox(gp-vec3(-3.2,3.0,0), vec3(.09,.09,4.7));\n        considerStress(dBest, mech, dRailW, spanFrac(clamp(gp.z+4.6,0.0,9.2),9.2,1.0));\n        float dRailE=sdBox(gp-vec3( 3.2,3.0,0), vec3(.09,.09,4.7));\n        considerStress(dBest, mech, dRailE, spanFrac(clamp(gp.z+4.6,0.0,9.2),9.2,1.0));\n      }\n\n      return clamp(mech+thermal, 0.0, 1.4);\n    }\n    // Standard FEA-style blue -> green -> yellow -> red stress colormap.\n    vec3 stressColor(float s){\n      vec3 c;\n      if(s<0.33) c=mix(vec3(0.07,0.20,0.85), vec3(0.05,0.75,0.55), s/0.33);\n      else if(s<0.66) c=mix(vec3(0.05,0.75,0.55), vec3(0.95,0.85,0.10), (s-0.33)/0.33);\n      else c=mix(vec3(0.95,0.85,0.10), vec3(0.95,0.08,0.06), clamp((s-0.66)/0.34,0.0,1.0));\n      return c;\n    }\n\n    // LEO backdrop. The facility is WeylandAI's orbital shipyard — real\n    // orbital mechanics drove the siting: LEO for frequent crew rotation,\n    // cheap Earth resupply and visual drama, building the \"seed\" construction\n    // ship that will later bootstrap the real generation-ship-scale yard at\n    // Earth-Moon L5 (stable, continuous sun, no Van Allen exposure, pulls\n    // bulk material from the Moon's shallow well instead of Earth's deep\n    // one — wrong physics for a first facility, right physics for the\n    // follow-on). Earth is a real ray-sphere intersection, not a texture\n    // card, so its limb curvature and terminator fall out of the geometry\n    // instead of being faked. Distance/radius are stylized against this\n    // scene's meter-scale geometry rather than true 6371km (no precision\n    // benefit from the real number at this scale) but tuned so Earth's\n    // angular radius matches a real ~400km-altitude view (~70 degrees).\n    // Equirectangular lon/lat UV for the real NASA day/night texture\n    // lookups in sky() below: longitude from atan2(z,x), latitude from\n    // asin(y), standard full-sphere unwrap. This scene's Earth normal is\n    // stylized geometry, not true geodetic coordinates, so continent\n    // placement relative to the station is illustrative rather than a\n    // real ground-track - the imagery itself is the real, sourced part.\n    vec2 earthUV(vec3 n){\n      float lon = atan(n.z, n.x);\n      float lat = asin(clamp(n.y, -1.0, 1.0));\n      return vec2(lon*(1.0/6.2831853)+0.5, 0.5 - lat*(1.0/3.1415926));\n    }\n\n    // Simplified single-scattering atmosphere limb glow. Conceptually\n    // referencing Eric Bruneton's \"Precomputed Atmospheric Scattering\"\n    // (BSD-licensed technique writeup, not copied code) but deliberately\n    // NOT implementing the full precomputed multi-scattering LUTs that\n    // paper describes - that's real overkill for one rim term on a single\n    // raymarched sphere. What's real physics here: Rayleigh scattering\n    // goes as ~1/lambda^4, so blue light scatters far more than red - the\n    // three channel weights below are that ratio (relative, not literal\n    // physical units). Near the terminator the real atmosphere reddens\n    // (same mechanism as a sunset: a longer in-atmosphere path length\n    // preferentially scatters blue out of the line of sight) - approximated\n    // by blending toward a warm tint as sunFacing drops near grazing\n    // incidence rather than through an actual path-length integral.\n    vec3 atmosphereRim(vec3 N, vec3 rd, float sunFacing){\n      float grazing  = 1.0 - max(dot(N,-rd),0.0);\n      float limbSoft = pow(grazing, 4.5);\n      float limbCore = pow(grazing, 14.0);\n      vec3 rayleigh  = vec3(0.237, 0.482, 1.000);\n      vec3 duskTint  = vec3(1.0, 0.42, 0.18);\n      float dusk     = smoothstep(0.35, 0.0, sunFacing) * smoothstep(0.0, 0.5, sunFacing + 0.3);\n      vec3 rimCol    = mix(rayleigh, duskTint, dusk*0.55);\n      return rimCol * (limbSoft*0.55 + limbCore*0.9) * (0.15 + max(sunFacing,0.0)*1.15);\n    }\n\n    // Real bright-star catalog: 43 of Earth's actual brightest\n    // stars (Yale Bright Star Catalog / Hipparcos RA/Dec/V-magnitude/B-V -\n    // public astronomical data), converted offline to unit direction\n    // vectors in this scene's inertial frame and to real blackbody-\n    // derived colors from each star's B-V index (hot blue-white stars vs.\n    // cool orange/red ones - real stars are not all pure white). The\n    // field's overall orientation anchor is this scene's own stylized\n    // inertial frame, not registered to the true sky as seen from a real\n    // date/location, but the real relative positions, magnitudes, and\n    // colors between these named stars are preserved.\n    #define BRIGHT_STAR_COUNT 43\n    const vec3 BRIGHT_STAR_DIR[BRIGHT_STAR_COUNT] = vec3[](\n      vec3(-0.1868,-0.2876,0.9393),vec3(-0.0633,-0.7955,0.6027),vec3(-0.3733,-0.8732,-0.3133),vec3(-0.7830,0.3286,-0.5281),vec3(0.1253,0.6264,-0.7694),vec3(0.1296,0.7193,0.6825),vec3(0.1931,-0.1426,0.9708),vec3(-0.4169,0.0909,0.9044),vec3(0.4925,-0.8409,0.2244),vec3(0.0216,0.1288,0.9914),vec3(-0.4238,-0.8692,-0.2547),vec3(0.4601,0.1541,-0.8744),vec3(-0.4493,-0.8918,-0.0532),vec3(0.3436,0.2843,0.8951),vec3(-0.9144,-0.1934,-0.3556),vec3(-0.3463,-0.4452,-0.8258),vec3(-0.3904,0.4700,0.7916),vec3(0.8377,-0.4942,-0.2323),vec3(0.4546,0.7106,-0.5370),vec3(-0.4937,-0.8632,-0.1049),vec3(-0.8638,0.2073,0.4593),vec3(-0.2191,-0.4843,0.8470),vec3(-0.3420,0.5282,0.7772),vec3(-0.5380,-0.8398,-0.0732),vec3(-0.0903,-0.6032,-0.7925),vec3(0.1512,0.1106,0.9823),vec3(0.1298,0.4787,0.8683),vec3(-0.2586,-0.9380,0.2308),vec3(0.1045,-0.0209,0.9943),vec3(0.6025,-0.7310,-0.3204),vec3(0.0828,-0.0337,0.9960),vec3(-0.5442,0.8287,-0.1307),vec3(-0.4593,0.8809,0.1145),vec3(0.4056,0.7645,0.5009),vec3(-0.2619,-0.4444,0.8567),vec3(0.0863,-0.5647,-0.8208),vec3(-0.2965,-0.8616,0.4119),vec3(-0.5808,0.7583,-0.2959),vec3(0.0031,0.7065,0.7077),vec3(-0.1091,-0.9338,-0.3408),vec3(0.0101,0.9999,0.0079),vec3(-0.7790,-0.1507,0.6086),vec3(0.7800,0.3982,0.4827)\n    );\n    const vec3 BRIGHT_STAR_COL[BRIGHT_STAR_COUNT] = vec3[](\n      vec3(1.2610,1.2610,1.3000),vec3(1.2156,1.1488,1.0880),vec3(1.1657,0.9291,0.6493),vec3(1.1437,0.7691,0.4586),vec3(1.1018,1.1018,1.1358),vec3(1.1310,0.8709,0.5994),vec3(1.0316,1.0519,1.1262),vec3(1.1065,0.9582,0.8299),vec3(0.7866,0.8655,1.0955),vec3(1.0919,0.5678,0.2648),vec3(0.7088,0.7921,1.0821),vec3(1.0691,0.9900,0.9237),vec3(0.6943,0.7755,1.0682),vec3(1.0614,0.6241,0.3269),vec3(0.6796,0.7590,1.0455),vec3(1.0521,0.5513,0.2583),vec3(1.0374,0.7573,0.4979),vec3(1.0327,0.9954,0.9612),vec3(1.0255,0.9885,0.9545),vec3(0.6686,0.7467,1.0286),vec3(0.7935,0.8567,1.0199),vec3(0.6711,0.7508,1.0091),vec3(0.9820,0.9700,0.9790),vec3(0.9993,0.5696,0.2898),vec3(0.6596,0.7375,0.9993),vec3(0.6591,0.7370,0.9986),vec3(0.7524,0.8182,0.9979),vec3(0.9665,0.9665,0.9964),vec3(0.6905,0.7661,0.9949),vec3(0.8551,0.8908,0.9920),vec3(0.6627,0.7418,0.9890),vec3(0.9594,0.9594,0.9890),vec3(0.9876,0.7037,0.4498),vec3(0.9876,0.8434,0.7111),vec3(0.9847,0.7917,0.5652),vec3(0.9626,0.9508,0.9597),vec3(0.9825,0.6485,0.3793),vec3(0.6701,0.7467,0.9825),vec3(0.9591,0.9473,0.9562),vec3(0.9790,0.6050,0.3309),vec3(0.9740,0.7987,0.6136),vec3(0.9740,0.6019,0.3292),vec3(0.9726,0.6735,0.4158)\n    );\n\n    vec3 sky(vec3 ro, vec3 rd){\n      // Base (t=0) directions, unchanged from the original rewrite; the\n      // orbital-mechanics functions above rotate them over time rather\n      // than replacing them, so this stays additive to whatever the sun/\n      // terminator-consistency pass does with these base vectors later.\n      vec3 sunDir = rotX(normalize(vec3(0.42, 0.68, 0.38)), sunSweepAngle());\n      vec3 nadir  = vec3(0.0,-1.0,0.0);\n      float earthDist   = 2200.0;\n      float earthRadius = earthDist*sin(radians(70.0));\n      vec3 earthCenter  = ro + nadir*earthDist;\n\n      vec3 oc = ro-earthCenter;\n      float b = dot(rd,oc);\n      float c = dot(oc,oc)-earthRadius*earthRadius;\n      float disc = b*b-c;\n\n      if(disc>0.0){\n        float t=-b-sqrt(disc);\n        if(t>0.0){\n          vec3 hit = ro+rd*t;\n          vec3 N    = normalize(hit-earthCenter);\n          // Earth-surface pattern (continents/city-lights) is sampled in a\n          // coordinate counter-rotated by the apparent ground-track sweep,\n          // i.e. Earth's real rotation underneath the station - the actual\n          // lit/shadow test below still uses the true current N vs sunDir.\n          vec3 Nsurf    = rotX(N, -earthSweepAngle());\n          float sunFacing = max(dot(N,sunDir),0.0);\n          // Real NASA imagery, baked into this bundle at low resolution\n          // rather than fetched live (no good point inside a raymarch\n          // shader to await a network image mid-frame). Day map: NASA\n          // Earth Observatory / Visible Earth \"Blue Marble Next\n          // Generation\", public domain, visibleearth.nasa.gov/images/73909\n          // (source file world.topo.bathy.200412.3x5400x2700.jpg). Night\n          // map: NASA/NOAA Suomi NPP VIIRS \"Night Lights 2012\" day/night-\n          // band composite, public domain, visibleearth.nasa.gov/images/79765\n          // (source file dnb_land_ocean_ice.2012.3600x1800.jpg). Cloud\n          // map: NASA Earth Observatory \"cloud_combined\" composite, same\n          // Blue Marble image family (record 57747), public domain. All\n          // three downloaded 2026-10-03, resized to 384x192 (see\n          // loadEarthTexture() in the JS setup below).\n          //\n          // Honest sourcing note - NOT literal ISS photography: these\n          // are purpose-built, orthorectified, globally-mosaicked sphere\n          // textures from NASA's MODIS/VIIRS Earth-observing satellites\n          // (Terra/Aqua/Suomi NPP) - real NASA satellite data, but a\n          // different fleet than the crewed ISS. NASA's real ISS\n          // astronaut-photography archive (Gateway to Astronaut\n          // Photography of Earth, eol.jsc.nasa.gov) holds genuine\n          // handheld ISS camera frames, but those are individual oblique\n          // shots of specific locations at inconsistent angles/lighting/\n          // dates with no systematic global grid - not orthorectified or\n          // mosaicked into a seamless map projection, so there is no\n          // real ISS-sourced equivalent of a wrappable equirectangular\n          // sphere texture. Blue Marble/Black Marble are the genuine,\n          // correct tool for this job.\n          vec2 euv      = earthUV(Nsurf);\n          vec3 dayTex   = texture(u_earthDay, euv).rgb;\n          vec3 nightTex = texture(u_earthNight, euv).rgb;\n          // Clouds get their own slow independent rotation (a distinct\n          // multiple of earthSweepAngle, not locked 1:1 to the ground\n          // track) so cover visibly drifts relative to the continents\n          // beneath it - real weather moves independently of the solid\n          // surface. The rate itself is a stylized constant, not a wind\n          // model.\n          vec3 Ncloud     = rotX(N, -(earthSweepAngle()*0.82));\n          float cloudTex  = texture(u_earthCloud, earthUV(Ncloud)).r;\n          float cloudMask = smoothstep(0.30,0.62,cloudTex);\n          vec3 lit      = mix(dayTex, vec3(0.94,0.95,0.97), cloudMask*0.72);\n          float term    = smoothstep(0.0,0.18,sunFacing);\n          vec3 nightCol = vec3(0.006,0.01,0.02) + nightTex*2.2;\n          vec3 earthLit = mix(nightCol, lit*(0.35+1.35*sunFacing), term);\n          vec3 atmoGlow = atmosphereRim(N, rd, sunFacing);\n          // Ocean sun-glint: a real, highly recognizable astronaut-\n          // photography cue - a bright elongated specular highlight\n          // where calm ocean directly mirrors the Sun. Ocean mask comes\n          // from the day texture's own blue-channel dominance (real\n          // ocean reads darker/bluer than land or cloud in this\n          // imagery); specular is a standard Blinn-Phong half-vector\n          // term against the sphere normal, a tight exponent for a\n          // small bright highlight rather than a broad sheen, and\n          // suppressed under cloud cover since glint can't show through\n          // clouds.\n          float oceanMask = smoothstep(0.015,0.14, dayTex.b-max(dayTex.r,dayTex.g)) * (1.0-cloudMask);\n          vec3  Hsun       = normalize(sunDir-rd);\n          float glint      = pow(max(dot(N,Hsun),0.0), 240.0) * oceanMask * sunFacing * 3.2;\n          return clamp(earthLit+atmoGlow+vec3(1.0,0.98,0.92)*glint, 0.0, 1.9);\n        }\n      }\n\n      // Stars are effectively fixed in inertial space over this scene's\n      // timescale (like the Sun); the station's nadir-locked frame rotates\n      // once per orbit, so the sky must counter-sweep at the same rate for\n      // the view to be self-consistent with the sun motion above - this is\n      // the real mechanism behind \"the stars should visibly drift.\"\n      vec3 rdSky = rotX(rd, -sunSweepAngle());\n      float starField = step(0.9978, hash(floor(rdSky*420.0)));\n      vec3 stars = vec3(starField)*(0.55+0.45*hash(floor(rdSky*77.3)));\n\n      // Milky Way band: a real phenomenon (the galactic disk seen edge-\n      // on from inside it), approximated as a soft noise-mottled band\n      // along a fixed plane in this inertial frame. The plane's\n      // orientation here is stylized/arbitrary, NOT registered to the\n      // true galactic coordinate system - same honest simplification\n      // already disclosed above for Earth's surface-normal mapping -\n      // but the qualitative structure (diffuse band + mottled noise,\n      // not a uniform glow) is real.\n      vec3 galacticPole = normalize(vec3(0.36,0.84,-0.41));\n      float milkyD     = dot(rdSky, galacticPole);\n      float milkyBand  = exp(-milkyD*milkyD*16.0);\n      float milkyNoise = noise(rdSky*6.0)*0.6+noise(rdSky*15.0)*0.4;\n      vec3 milkyWay    = vec3(0.55,0.57,0.63) * milkyBand * (0.08+milkyNoise*0.16);\n\n      vec3 brightStarsCol = vec3(0.0);\n      for(int si=0; si<BRIGHT_STAR_COUNT; si++){\n        float sd = max(dot(rdSky, BRIGHT_STAR_DIR[si]), 0.0);\n        brightStarsCol += BRIGHT_STAR_COL[si]*smoothstep(0.99986,0.99996,sd);\n      }\n\n      // Moon: NASA SVS \"CGI Moon Kit\" (svs.gsfc.nasa.gov/4720) global\n      // color mosaic derived from the real Lunar Reconnaissance Orbiter\n      // Camera (LROC) - public domain. True orbital distance/period\n      // (~384,400km, ~27.3 days) would make the Moon both a sub-pixel\n      // dot and essentially motionless over this scene's ~90min\n      // timescale, so - exactly like the sim-time compression already\n      // disclosed above for the station's own orbit - it's placed at a\n      // stylized, much closer distance for visibility. Holding it fixed\n      // in this inertial frame is itself the physically honest choice\n      // at this timescale (true lunar motion really is negligible over\n      // 90 minutes), not a shortcut. Airless body: pure hard Lambertian\n      // shading, no atmosphere/ambient term at all - consistent with\n      // the real hard-light physics used for the station below.\n      vec3 moonDir    = normalize(vec3(-0.58,0.22,0.60));\n      float moonDist  = 1400.0;\n      float moonRad   = moonDist*sin(radians(1.6));\n      vec3 moonCenter = ro + moonDir*moonDist;\n      vec3 mOc    = ro - moonCenter;\n      float mB    = dot(rdSky, mOc);\n      float mC    = dot(mOc,mOc)-moonRad*moonRad;\n      float mDisc = mB*mB-mC;\n      vec3 moonCol = vec3(0.0);\n      if(mDisc>0.0){\n        float mT = -mB-sqrt(mDisc);\n        if(mT>0.0){\n          vec3 mHit = ro+rdSky*mT;\n          vec3 mN   = normalize(mHit-moonCenter);\n          vec3 moonTex = texture(u_moonTex, earthUV(mN)).rgb;\n          float mNdL = max(dot(mN,sunDir),0.0);\n          moonCol = moonTex*mNdL*1.7;\n        }\n      }\n\n      float sunDot = max(dot(rd,sunDir),0.0);\n      vec3 sunDisk = vec3(0.0);\n      // Real angular size: the Sun subtends ~0.53 deg as seen from Earth\n      // orbit (half-angle 0.265 deg -> cos ~0.9999893), rendered as a\n      // small, sharp, near-white disc rather than an oversized yellow\n      // blob - from space, with no atmosphere between camera and Sun to\n      // Rayleigh-scatter blue away, the Sun reads as neutral white, not\n      // the yellow it appears as through Earth's own atmosphere from\n      // the ground. The threshold is widened very slightly purely for\n      // screen-space anti-aliasing at this resolution, not a size change.\n      if(sunDot>0.999986){\n        float core = smoothstep(0.999986,0.999991,sunDot);\n        sunDisk = vec3(1.0,0.99,0.98)*core*9.0;\n      }\n      float faintGlow = pow(max(sunDot,0.0),64.0)*0.08;\n      return stars + milkyWay + brightStarsCol + moonCol + sunDisk + vec3(0.95,0.97,1.0)*faintGlow;\n    }\n\n    vec3 shade(vec3 albedo, float metal, float rough,\n               vec3 N, vec3 V, vec3 L, vec3 lc, float shadow){\n      vec3 H = normalize(V+L);\n      float NdL=max(dot(N,L),0.), NdV=max(dot(N,V),0.01), NdH=max(dot(N,H),0.);\n      float a=rough*rough;\n      float D=a*a/(3.14159*pow(NdH*NdH*(a*a-1.)+1.,2.));\n      float k=(rough+1.)*(rough+1.)/8.;\n      float G=NdL/(NdL*(1.-k)+k)*NdV/(NdV*(1.-k)+k);\n      vec3 F0=mix(vec3(.04),albedo,metal);\n      vec3 F=F0+(1.-F0)*pow(1.-max(dot(H,V),0.),5.);\n      vec3 spec=D*G*F/(4.*NdV*NdL+.001);\n      vec3 diff=albedo*(1.-metal)*(1.-F)/3.14159;\n      return (diff+spec)*lc*NdL*shadow;\n    }\n\n    // Cheap analytic sun glare/bloom. A real UnrealBloomPass-style effect\n    // (extract bright pixels above a threshold, blur, additive-composite\n    // back) needs a second framebuffer and an extra draw pass wired into\n    // the same resize()/render-loop JS that two other in-progress passes\n    // on this file are actively changing right now (6DOF camera, orbital\n    // sun motion) - adding FBO ping-pong there this moment is exactly the\n    // \"restructure shared code\" move this change is trying to avoid. This\n    // analytic stand-in reproduces the visible result (a soft halo plus\n    // tight bright streaks around a strong point light) in a single pass\n    // instead, reusing the same base sun vector sky() renders its sun\n    // disk from (kept as a literal here rather than a shared uniform, on\n    // purpose, so this has zero coupling to whatever the sun-direction\n    // pass does elsewhere - if that vector becomes a uniform later, this\n    // should be pointed at it too).\n    vec3 sunGlare(vec3 rd){\n      vec3 glareDir = rotX(normalize(vec3(0.42, 0.68, 0.38)), sunSweepAngle());\n      float c = max(dot(rd, glareDir), 0.0);\n      float halo    = pow(c, 2.2)   * 0.22;\n      float streak1 = pow(c, 60.0)  * 0.5;\n      float streak2 = pow(c, 400.0) * 1.1;\n      // Neutral white/slightly blue-white, matching the corrected real\n      // sun color above (space has no atmosphere to warm it toward yellow).\n      return vec3(1.0, 0.99, 0.97) * (halo + streak1 + streak2);\n    }\n\n    void main(){\n      vec2 uv = (gl_FragCoord.xy/u_res*2.-1.)*vec2(u_res.x/u_res.y,1.);\n      vec3 ro    = u_cam;\n      vec3 fwd   = normalize(u_dir);\n      // 6DOF free flight: screen-up comes from the controller's own\n      // current local up vector (which rolls with Q/E), not from world-up\n      // - this is what makes roll actually visible instead of the camera\n      // always self-leveling to the horizon.\n      vec3 right = normalize(cross(u_up, fwd));\n      vec3 up    = cross(fwd, right);\n      vec3 rd    = normalize(fwd + right*uv.x*0.62 + up*uv.y*0.62);\n\n      vec2 hit = march(ro, rd);\n      vec3 col;\n\n      // Base (t=0) direction unchanged; swept over time by the same\n      // orbital-mechanics functions driving sky()'s sun/terminator above,\n      // so the station's own shading and the Earth backdrop move together.\n      vec3 sunDir = rotX(normalize(vec3(0.55, 0.16, 0.45)), sunSweepAngle());\n      vec3 sunCol = vec3(1.0, 0.78, 0.45)*4.8;\n\n      if(hit.x > 0.){\n        vec3 p = ro + rd*hit.x;\n        vec3 N = normal(p);\n        vec3 V = -rd;\n        float matID = hit.y;\n        vec3  albedo; float metal=0., rough=0.7;\n        vec3  emissive = vec3(0.0);\n\n        if(matID < 1.5){\n          albedo = vec3(0.82,0.79,0.74)+noise(p*14.)*0.025 - noise(p*40.)*0.018;\n          rough  = 0.84;\n          if(N.y > 0.8){\n            albedo = vec3(0.52,0.50,0.46)+noise(p*6.)*0.03;\n            rough  = 0.76;\n          }\n        } else if(matID < 2.5){\n          albedo = vec3(0.18,0.12,0.07)+noise(p*22.)*0.02;\n          metal  = 0.72; rough = 0.42;\n        } else if(matID < 3.5){\n          albedo = vec3(0.08,0.13,0.15)+noise(p*30.)*0.012;\n          metal  = 0.58; rough = 0.22;\n        } else if(matID < 4.5){\n          albedo = vec3(0.06,0.06,0.07);\n          metal  = 0.28; rough = 0.38;\n        } else if(matID < 5.5){\n          albedo = vec3(0.05,0.05,0.06);\n          rough  = 0.9;\n        } else if(matID < 6.5){\n          // Ceiling and campus light fixtures\n          albedo = vec3(1.0);\n          rough = 0.1;\n          emissive = vec3(1.0, 0.88, 0.65) * 4.5;\n        } else if(matID < 7.5){\n          albedo = vec3(0.13,0.18,0.075)+noise(p*3.0)*0.075;\n          rough = 0.96;\n        } else if(matID < 8.5){\n          float seam=min(abs(fract(p.x*.25)-.5),abs(fract(p.z*.25)-.5));\n          albedo = vec3(0.29,0.28,0.25)+noise(p*8.0)*0.025-step(seam,.012)*.06;\n          if(u_planMode==1){\n            vec2 span=max(u_planBounds.zw-u_planBounds.xy,vec2(.001));\n            vec2 planUv=(p.xz-u_planBounds.xy)/span;\n            if(all(greaterThanEqual(planUv,vec2(0.0)))&&all(lessThanEqual(planUv,vec2(1.0)))){\n              vec3 drawing=texture(u_planSource,vec2(planUv.x,1.0-planUv.y)).rgb;\n              float ink=1.0-dot(drawing,vec3(.299,.587,.114));\n              albedo=mix(vec3(.34,.33,.30),vec3(.13,.19,.22),smoothstep(.08,.62,ink));\n            }\n          }\n          rough = 0.88;\n        } else if(matID < 9.5){\n          albedo = vec3(0.20,0.21,0.19)+noise(p*9.0)*0.035;\n          metal = 0.18; rough = 0.72;\n        } else if(matID < 10.5){\n          albedo = vec3(0.035,0.032,0.026);\n          metal = 0.35; rough = 0.28;\n          float markerLine = smoothstep(.42,.49,abs(fract(p.y*3.6)-.5));\n          emissive = vec3(1.0,.52,.035)*markerLine*1.35;\n        } else if(matID < 11.5){\n          albedo = vec3(0.055,0.16,0.045)+noise(p*5.5)*0.07;\n          rough = 0.98;\n        } else if(matID < 12.5){\n          albedo = vec3(0.31,0.19,0.095)+noise(p*9.0)*0.035;\n          rough = 0.72;\n        } else if(matID < 13.5){\n          albedo = vec3(0.10,0.12,0.13)+noise(p*18.0)*0.018;\n          metal = 0.55; rough = 0.38;\n        } else if(matID < 15.5){\n          albedo = vec3(0.12,0.28,0.58)+noise(p*14.0)*0.02;\n          rough = 0.72;\n        } else if(matID < 16.5){\n          albedo = vec3(0.95,0.74,0.14);\n          rough = 0.45;\n          emissive = vec3(1.0,0.78,0.15)*(0.35+0.15*sin(u_t*1.6));\n        } else if(matID < 17.5){\n          albedo = vec3(0.76,0.77,0.79)+noise(p*10.0)*0.02;\n          metal = 0.18; rough = 0.42;\n        } else if(matID < 18.5){\n          albedo = vec3(0.025,0.035,0.07)+noise(p*20.0)*0.01;\n          metal = 0.30; rough = 0.22;\n        } else if(matID < 19.5){\n          albedo = vec3(0.01,0.015,0.02);\n          emissive = vec3(0.30,0.58,1.0)*(2.2+0.6*sin(u_t*9.0+p.z*3.0));\n        } else if(matID < 20.5){\n          albedo = vec3(0.40,0.41,0.44)+noise(p*16.0)*0.018;\n          metal = 0.68; rough = 0.35;\n          // STRESS VIEW: truss/strut/gantry members only (this material),\n          // left alone - base metal look - when the overlay is off.\n          if(u_stressView>0.5){\n            float sVal = stressAt(p, N);\n            albedo = stressColor(sVal);\n            metal = 0.12; rough = 0.55;\n            emissive = stressColor(sVal)*0.22*smoothstep(0.78,1.0,sVal); // FEA-style hot-zone glow\n          }\n        } else if(matID < 21.5){\n          albedo = vec3(0.88,0.89,0.90);\n          metal = 0.08; rough = 0.30;\n        } else if(matID < 22.5){\n          // FilmLine Earth Relay Screening Pavilion: wine/burgundy facade\n          // plaster (#772230/#B71C1C, FilmLine's real brand color)\n          albedo = vec3(0.42,0.075,0.085)+noise(p*10.0)*0.02;\n          rough = 0.74;\n        } else if(matID < 23.5){\n          albedo = vec3(0.55,0.42,0.14)+noise(p*20.0)*0.015;\n          metal = 0.62; rough = 0.32;\n        } else if(matID < 24.5){\n          albedo = vec3(0.04,0.015,0.018);\n          rough = 0.4;\n          emissive = vec3(1.0,0.16,0.19)*(1.3+0.25*sin(u_t*1.6));\n        } else if(matID < 25.5){\n          albedo = vec3(0.58,0.58,0.60)+noise(p*25.0)*0.02;\n          metal = 0.72; rough = 0.28;\n        } else if(matID < 26.5){\n          albedo = vec3(0.035,0.032,0.03);\n          metal = 0.1; rough = 0.3;\n        } else if(matID < 27.5){\n          albedo = vec3(0.05,0.04,0.012);\n          emissive = vec3(1.0,0.82,0.25)*2.0;\n        } else if(matID < 28.5){\n          albedo = vec3(0.03,0.028,0.032);\n          rough = 0.5;\n          emissive = vec3(0.85,0.82,0.76)*1.1;\n        } else if(matID < 29.5){\n          // Welding arc flare at the robotic arm's work point - bright,\n          // near-white-hot, no albedo contribution of its own since a real\n          // arc this intense would wash it out.\n          albedo = vec3(0.02,0.02,0.03);\n          emissive = vec3(1.0,0.97,0.88)*7.0;\n        } else if(matID < 30.5){\n          // Gloved hand (first-person embodiment) / suit sleeve - WeylandAI\n          // Signal Blue shell with a thin Hi-Vis Yellow trim band so it\n          // reads as branded MMU/SAFER equipment, not a generic glove.\n          albedo = vec3(0.07,0.10,0.26)+noise(p*40.0)*0.015;\n          metal = 0.15; rough = 0.55;\n          float trimBand = smoothstep(0.06,0.0,abs(fract(p.y*9.0+p.x*2.0)-0.5));\n          emissive = vec3(1.0,0.83,0.0)*trimBand*0.30;\n        } else if(matID < 31.5){\n          // Third-person helmet shell - Signal Blue composite with a\n          // Hi-Vis Yellow brow trim, matching the brand palette used\n          // across the rest of the WeylandAI site rather than generic\n          // NASA white/orange.\n          albedo = vec3(0.065,0.095,0.24)+noise(p*18.0)*0.012;\n          metal = 0.30; rough = 0.42;\n          emissive = vec3(1.0,0.83,0.0)*smoothstep(0.06,0.0,abs(N.y-0.55))*0.30;\n        } else if(matID < 32.5){\n          // Third-person visor base color - almost entirely replaced right\n          // after the main lighting pass below by a real-time reflection\n          // of sky()/the scene off the visor's own surface normal.\n          albedo = vec3(0.015,0.02,0.03);\n          metal = 1.0; rough = 0.05;\n        } else {\n          albedo = vec3(0.82,0.80,0.72);\n          rough = 0.68;\n        }\n\n        float shadow = 1.0;\n        vec3 sp = p + N*0.015;\n        float st = 0.1;\n        for(int i=0;i<24;i++){\n          float sd = map(sp+sunDir*st).x;\n          shadow = min(shadow, 8.*sd/st);\n          st += max(sd, 0.04);\n          if(st>12.||shadow<0.01) break;\n        }\n        shadow = clamp(shadow,0.,1.);\n        float occ = ao(p,N);\n\n        // Physically-motivated space lighting: no atmosphere to scatter\n        // fill light, so the correct look is one hard directional key\n        // (sunDir/shadow above, unchanged) plus a real but much dimmer\n        // secondary source - Earth itself, bouncing its own lit-\n        // hemisphere light back up onto surfaces that face it (nadir,\n        // local -Y in this scene - the same \"down toward Earth\"\n        // convention sky() already uses to place the planet). Surfaces\n        // facing away from both the Sun and Earth read close to true\n        // black, matching the high contrast of real orbital photography\n        // instead of typical soft game-style ambient fill.\n        vec3 lighting = shade(albedo,metal,rough,N,V,sunDir,sunCol,shadow);\n        float earthBounceFacing = max(dot(N, vec3(0.0,-1.0,0.0)), 0.0);\n        vec3 earthBounce = vec3(0.11,0.16,0.23) * earthBounceFacing * 0.20;\n        lighting += albedo*(1.-metal)*earthBounce;\n        lighting += albedo*(1.-metal)*vec3(0.010,0.011,0.014);\n\n        vec3 workPos[4];\n        workPos[0]=vec3( 0.,3.0, 2.5);\n        workPos[1]=vec3( 0.,3.0, 6.5);\n        workPos[2]=vec3( 0.,3.0,10.5);\n        workPos[3]=vec3( 0.,3.0,13.5);\n        vec3 warmL = vec3(1.0,0.82,0.56);\n        for(int i=0;i<4;i++){\n          vec3 lv  = workPos[i]-p;\n          float ld = length(lv);\n          vec3 ldir= lv/ld;\n          float att= 7.0/(1.+ld*ld*0.15);\n          float spot= smoothstep(.1,.8,dot(ldir,vec3(0.,-1.,0.)));\n          lighting += shade(albedo,metal,rough,N,V,ldir,warmL*att*(0.35+0.65*spot),1.);\n        }\n\n        lighting *= mix(occ,1.,0.35);\n        lighting += emissive;\n        if(matID>31.5 && matID<32.5){\n          // Third-person visor: reflect the view ray off the visor's own\n          // surface normal and re-sample the scene's existing sky()\n          // function in that direction - reuses the same environment\n          // infrastructure everything else in this shader already relies\n          // on for a real-time reflection, rather than a second render\n          // pass or a cube map.\n          vec3 reflDir = reflect(rd, N);\n          vec3 reflCol = sky(p, reflDir);\n          lighting = mix(vec3(0.008,0.012,0.022), reflCol, 0.88) + vec3(0.05,0.35,0.95)*0.035;\n        }\n        float targetField = exp(-length(p-u_target)*0.82);\n        float scanBand = pow(max(0.,sin((p.y+p.z*.045-u_t*2.2)*15.0)),18.0);\n        float scanRim = pow(1.-abs(dot(N,V)),3.0);\n        lighting += vec3(1.0,.57,.045)*u_scan*targetField*(.22+scanBand*1.25+scanRim*.35);\n        float fog = 1.-exp(-hit.x*0.022);\n        vec3 fogCol = mix(vec3(0.30,0.23,0.14),sky(ro,normalize(vec3(rd.x,max(rd.y,.04),rd.z))),.62);\n        if((p.z>0.0 && p.z<16.0 && abs(p.x)<7.15) || (p.z>22.6 && p.z<29.0 && abs(p.x)<3.2)) fogCol=vec3(0.045,0.032,0.018);\n        col = mix(lighting, fogCol, fog);\n\n      } else {\n        col = sky(ro,rd);\n        // Glare only added on actual sky/void pixels (same test sky()\n        // itself uses to decide whether to draw the sun disk) so it never\n        // bleeds additively through solid facility or ship geometry that\n        // happens to sit between the camera and the sun's direction.\n        col += sunGlare(rd);\n      }\n\n      // Real device-orientation change, turned into an in-world moment\n      // instead of an invisible CSS reflow: a brief static/scanline\n      // glitch (u_glitch decays to 0 over ~0.5s in JS, see frame() below)\n      // while the astronaut's hands reach back up to \"correct\" the view\n      // (handled by forcing u_handsLowered back toward 0 for the same\n      // window, so the raise/lower hand rig above does the actual work).\n      if(u_glitch > 0.001){\n        float scanline = step(0.5, fract(sin(floor(gl_FragCoord.y*0.4 + u_t*140.0))*43758.5453));\n        float staticN  = hash(vec3(gl_FragCoord.xy*vec2(1.0,0.4) + u_t*150.0, u_t*7.0));\n        col = mix(col, vec3(staticN), scanline*u_glitch*0.45);\n        col += vec3(0.25,0.85,1.0) * pow(u_glitch,2.0) * scanline * 0.35;\n      }\n\n      vec2 vp = gl_FragCoord.xy/u_res;\n      vec2 vig = vp*(1.-vp.yx);\n      col *= pow(vig.x*vig.y*15.,0.14);\n\n      col = col*(2.51*col+0.03)/(col*(2.43*col+0.59)+0.14);\n      col = pow(clamp(col,0.,1.), vec3(0.4545));\n      fragColor = vec4(col,1.);\n    }`;\n    \n    function compile(type, src){\n      const s = gl.createShader(type);\n      gl.shaderSource(s, src);\n      gl.compileShader(s);\n      if(!gl.getShaderParameter(s, gl.COMPILE_STATUS)){\n        console.error('Shader error:', gl.getShaderInfoLog(s));\n        return null;\n      }\n      return s;\n    }\n    \n    const prog = gl.createProgram();\n    gl.attachShader(prog, compile(gl.VERTEX_SHADER, VS));\n    gl.attachShader(prog, compile(gl.FRAGMENT_SHADER, FS));\n    gl.linkProgram(prog);\n    gl.useProgram(prog);\n    \n    const buf = gl.createBuffer();\n    gl.bindBuffer(gl.ARRAY_BUFFER, buf);\n    gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1,-1,3,-1,-1,3]), gl.STATIC_DRAW);\n    const aLoc = gl.getAttribLocation(prog, 'a');\n    gl.enableVertexAttribArray(aLoc);\n    gl.vertexAttribPointer(aLoc, 2, gl.FLOAT, false, 0, 0);\n    \n    const uRes = gl.getUniformLocation(prog, 'u_res');\n    const uT   = gl.getUniformLocation(prog, 'u_t');\n    const uCam = gl.getUniformLocation(prog, 'u_cam');\n    const uDir = gl.getUniformLocation(prog, 'u_dir');\n    const uUp = gl.getUniformLocation(prog, 'u_up');\n    const uScan = gl.getUniformLocation(prog, 'u_scan');\n    const uTarget = gl.getUniformLocation(prog, 'u_target');\n    const uPlanSdf = gl.getUniformLocation(prog, 'u_planSdf');\n    const uPlanSource = gl.getUniformLocation(prog, 'u_planSource');\n    const uPlanMode = gl.getUniformLocation(prog, 'u_planMode');\n    const uPlanBounds = gl.getUniformLocation(prog, 'u_planBounds');\n    const uPlanHeight = gl.getUniformLocation(prog, 'u_planHeight');\n    const uStressView = gl.getUniformLocation(prog, 'u_stressView');\n    const uThirdPerson = gl.getUniformLocation(prog, 'u_thirdPerson');\n    const uAstroPos = gl.getUniformLocation(prog, 'u_astroPos');\n    const uAstroFwd = gl.getUniformLocation(prog, 'u_astroFwd');\n    const uAstroUp = gl.getUniformLocation(prog, 'u_astroUp');\n    const uHandsLowered = gl.getUniformLocation(prog, 'u_handsLowered');\n    const uGlitch = gl.getUniformLocation(prog, 'u_glitch');\n\n    const planSdfTexture = gl.createTexture();\n    gl.activeTexture(gl.TEXTURE0);\n    gl.bindTexture(gl.TEXTURE_2D, planSdfTexture);\n    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);\n    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);\n    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);\n    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);\n    gl.texImage2D(gl.TEXTURE_2D,0,gl.R32F,1,1,0,gl.RED,gl.FLOAT,new Float32Array([100]));\n    const planSourceTexture = gl.createTexture();\n    gl.activeTexture(gl.TEXTURE1);\n    gl.bindTexture(gl.TEXTURE_2D, planSourceTexture);\n    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);\n    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);\n    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);\n    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);\n    gl.texImage2D(gl.TEXTURE_2D,0,gl.RGBA,1,1,0,gl.RGBA,gl.UNSIGNED_BYTE,new Uint8Array([255,255,255,255]));\n    gl.uniform1i(uPlanSdf,0);\n    gl.uniform1i(uPlanSource,1);\n\n    const uEarthDay = gl.getUniformLocation(prog, 'u_earthDay');\n    const uEarthNight = gl.getUniformLocation(prog, 'u_earthNight');\n\n    // Real NASA public-domain Earth imagery, baked into this bundle at low\n    // resolution rather than fetched live at request time (no good point\n    // inside a raymarch shader, or a Worker-served static page, to await a\n    // network image fetch mid-frame). Day map: NASA Earth Observatory /\n    // Visible Earth \"Blue Marble Next Generation\", public domain --\n    // https://visibleearth.nasa.gov/images/73909 (source file\n    // world.topo.bathy.200412.3x5400x2700.jpg, downloaded + resized to\n    // 384x192 on 2026-10-03). Night map: NASA/NOAA Suomi NPP VIIRS \"Night\n    // Lights 2012\" day/night-band composite, public domain --\n    // https://visibleearth.nasa.gov/images/79765 (source file\n    // dnb_land_ocean_ice.2012.3600x1800.jpg, same treatment). Both NASA\n    // Earth Observatory image collections are explicitly public domain /\n    // free to use without permission. Combined inline payload ~35KB.\n    function loadEarthTexture(unit, dataUri){\n      const tex = gl.createTexture();\n      gl.activeTexture(unit);\n      gl.bindTexture(gl.TEXTURE_2D, tex);\n      gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);\n      gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);\n      gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.REPEAT);\n      gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);\n      // 1x1 placeholder so the very first frames (before the image\n      // decodes) sample a plausible dark-ocean color instead of garbage.\n      gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, 1, 1, 0, gl.RGBA, gl.UNSIGNED_BYTE, new Uint8Array([18,28,58,255]));\n      const img = new Image();\n      img.onload = () => {\n        gl.activeTexture(unit);\n        gl.bindTexture(gl.TEXTURE_2D, tex);\n        gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, img);\n      };\n      img.src = dataUri;\n      return tex;\n    }\n    loadEarthTexture(gl.TEXTURE2, 'data:image/jpeg;base64,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');\n    loadEarthTexture(gl.TEXTURE3, 'data:image/jpeg;base64,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');\n    gl.uniform1i(uEarthDay, 2);\n    gl.uniform1i(uEarthNight, 3);\n\n    // Cloud map: NASA Earth Observatory \"cloud_combined\" (same Blue\n    // Marble record family, 57747), public domain, grayscale cloud\n    // fraction - sampled as luminance to mask in white cloud cover. Moon\n    // map: NASA SVS \"CGI Moon Kit\" (svs.gsfc.nasa.gov/4720) global color\n    // mosaic from real Lunar Reconnaissance Orbiter Camera (LROC) data,\n    // public domain. Both downloaded 2026-10-03.\n    const uEarthCloud = gl.getUniformLocation(prog, 'u_earthCloud');\n    const uMoonTex = gl.getUniformLocation(prog, 'u_moonTex');\n    loadEarthTexture(gl.TEXTURE4, 'data:image/jpeg;base64,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');\n    loadEarthTexture(gl.TEXTURE5, 'data:image/jpeg;base64,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');\n    gl.uniform1i(uEarthCloud, 4);\n    gl.uniform1i(uMoonTex, 5);\n    let activePlanModel=null;\n    \n    // Proximity doorways in XZ plane\n    const doorways = [\n      { x: 0.0, z: 0.0, side: \"South\", name: \"Weyland Main Automatic Entrance (S1)\", hardware: \"Dual-panel sensor-driven sliding entrance, presence safety curtain, monitored access controller\" },\n      { x: -2.0, z: 2.0, side: \"West\", name: \"Project Office Automatic Opening (W1)\", hardware: \"Horton Series 2000 automatic sliding assembly, Schlage AD-Series access control, Pemko gasketing\" },\n      { x: 2.0, z: 2.0, side: \"East\", name: \"Conference Room Automatic Opening (E1)\", hardware: \"Besam SW200 automatic operator, monitored presence sensor, Rixson concealed support\" },\n      { x: -2.0, z: 6.0, side: \"West\", name: \"Materials Review Automatic Opening (W2)\", hardware: \"Automatic double-slide leaf set, wireless access lock, perimeter gasketing\" },\n      { x: 2.0, z: 6.0, side: \"East\", name: \"IT and Telecom Room Opening (E2)\", hardware: \"Fail-secure automatic operator, request-to-exit sensor, monitored latch interface\" },\n      { x: -2.0, z: 10.0, side: \"West\", name: \"Plan Review Room Automatic Opening (W3)\", hardware: \"Sensor-driven sliding assembly, monitored access control, perimeter gasketing\" },\n      { x: 2.0, z: 10.0, side: \"East\", name: \"Electrical Room Controlled Opening (E3)\", hardware: \"Automatic sliding assembly, occupancy sensing, emergency breakout leaves\" },\n      { x: -2.0, z: 14.0, side: \"West\", name: \"Mechanical Room Controlled Opening (W4)\", hardware: \"Automatic operator, dual-channel safety edge, keycard access controller\" },\n      { x: 2.0, z: 14.0, side: \"East\", name: \"Facilities Office Automatic Opening (E4)\", hardware: \"Automatic double-slide assembly, badge reader, monitored egress\" }\n    ];\n\n    const scanTargets = doorways.map((door, index) => ({\n      id: index === 0 ? 'entrance' : `opening-${door.side.toLowerCase()}-${door.z}`,\n      type: index === 0 ? 'AUTOMATIC ENTRANCE' : 'CONTROLLED OPENING',\n      name: door.name,\n      summary: door.hardware,\n      dimensions: index === 0 ? '2.60 W x 2.45 H m clear' : '1.36 W x 2.35 H m clear',\n      material: 'Aluminum / laminated safety glass',\n      hazard: index === 0 ? 'Validate presence curtain and breakout path' : 'Validate safety sensor before turnover',\n      status: index === 0 ? 'COMMISSIONING READY' : 'SPEC LINKED',\n      position: [door.x, 1.25, door.z],\n      radius: index === 0 ? 1.55 : 0.82,\n      maxRange: index === 0 ? 25 : 12,\n      tags: index === 0 ? ['exterior', 'opening'] : ['interior', 'opening']\n    }));\n    scanTargets.push(\n      { id: 'entrance-canopy', type: 'STRUCTURAL ASSEMBLY', name: 'Cantilevered Arrival Canopy', summary: 'Steel canopy, paired columns, integrated warm-white luminaires, and protected passenger loading zone.', dimensions: '6.00 W x 3.60 D m', material: 'Painted structural steel / membrane roof', hazard: 'Confirm drainage fall and column protection', status: 'MODEL COORDINATED', position: [0, 2.95, -1.8], radius: 2.6, maxRange: 20, tags: ['exterior', 'structure'] },\n      { id: 'approach-light-west', type: 'ELECTRICAL FIXTURE', name: 'West Approach Luminaire', summary: 'Site lighting pole with shielded LED head, photometric zone assignment, and underground feeder.', dimensions: '5.20 m mounting height', material: 'Powder-coated steel / LED optical head', hazard: 'Confirm footing cover and underground locate', status: 'CIRCUIT LINKED', position: [-4.6, 4.9, -7], radius: 0.75, maxRange: 16, tags: ['exterior', 'electrical'] },\n      { id: 'annex-west', type: 'FACILITY ZONE', name: 'West Service Annex', summary: 'Low-rise service annex linked to site logistics, utilities, and access-control models.', dimensions: '8.40 W x 10.80 D x 4.00 H m', material: 'Composite rainscreen / steel frame', hazard: 'Confirm delivery route and exterior drainage coordination', status: 'DIGITAL TWIN ONLINE', position: [-14, 2.0, 10], radius: 4.2, maxRange: 30, tags: ['exterior', 'facility'] },\n      { id: 'annex-east', type: 'FACILITY ZONE', name: 'East Operations Annex', summary: 'Operations annex with coordinated structure, envelope, equipment clearances, and work-package ownership.', dimensions: '9.60 W x 12.00 D x 3.40 H m', material: 'Insulated metal panel / steel frame', hazard: 'Maintain service access clearances', status: 'DIGITAL TWIN ONLINE', position: [15, 1.7, 13], radius: 4.8, maxRange: 32, tags: ['exterior', 'facility'] },\n      { id: 'corridor-light-2', type: 'ELECTRICAL FIXTURE', name: 'Corridor Luminaire L2', summary: 'Interior area light linked to reflected ceiling plan, circuit schedule, controls sequence, and commissioning test.', dimensions: '0.84 W x 0.84 D m', material: 'Aluminum housing / diffuse lens', hazard: 'Verify emergency circuit designation', status: 'CIRCUIT LINKED', position: [0, 3.15, 6], radius: 0.65, maxRange: 10, tags: ['interior', 'electrical'] }\n    );\n    sightxExperience = window.SightXExperience.create({ targets: scanTargets });\n    const sightxIngest = window.SightXSiteGenome.mount({ experience: sightxExperience });\n    // STRESS VIEW toggle: additive and decoupled the same way INGEST SITE is\n    // (sightx-experience.js's nav button dispatches a CustomEvent on click;\n    // this page owns the WebGL uniform, so it listens here rather than\n    // coupling the shared experience module to this one shader feature).\n    window.addEventListener('sightx:toggle-stress', () => {\n      stressViewActive = !stressViewActive;\n      const stressBtn = document.querySelector('[data-sxe-action=\"stress\"]');\n      if (stressBtn) stressBtn.classList.toggle('sxe-stress-active', stressViewActive);\n    });\n    resize();\n    \n    const sideDoorZ = [2, 6, 10, 14];\n    const roomFixtures = [\n      [-5.45, 2.0, 1.18, 0.67], [-6.55, 3.15, 0.42, 0.70],\n      [4.70, 2.0, 1.38, 0.74],\n      [-4.55, 6.0, 1.18, 0.72], [-6.55, 6.0, 0.42, 1.27],\n      [5.45, 5.35, 0.60, 0.54], [5.45, 6.65, 0.60, 0.54],\n      [-4.65, 10.0, 1.43, 0.85], [6.68, 10.0, 0.37, 1.31],\n      [-5.25, 14.0, 1.18, 0.75], [5.35, 14.0, 1.18, 0.67],\n      [6.55, 14.9, 0.42, 0.70]\n    ];\n\n    function nearSideOpening(z) {\n      return sideDoorZ.some(doorZ => Math.abs(z - doorZ) < 0.72);\n    }\n\n    function positionBlocked(x, z) {\n      if(activePlanModel){\n        const [minX,minZ,maxX,maxZ]=activePlanModel.bounds;\n        const u=(x-minX)/(maxX-minX), v=(z-minZ)/(maxZ-minZ);\n        if(u<0||u>1||v<0||v>1) return false;\n        const px=Math.max(0,Math.min(activePlanModel.width-1,Math.round(u*(activePlanModel.width-1))));\n        const py=Math.max(0,Math.min(activePlanModel.height-1,Math.round(v*(activePlanModel.height-1))));\n        return activePlanModel.sdf[py*activePlanModel.width+px]<0.32;\n      }\n      const ax = Math.abs(x);\n      if (Math.abs(x + 5.35) < 1.68 && Math.abs(z + 3.15) < 0.42) return true;\n      if ([ -5.5, 5.5 ].some(planterX => Math.abs(x - planterX) < 0.88 && Math.abs(z + 1.85) < 0.68)) return true;\n      if (z > -0.22 && z < 16.22 && ax > 7.0 && ax < 7.42) return true;\n      if (Math.abs(z) < 0.24 && ax < 7.3 && ax > 1.18) return true;\n      if (Math.abs(z - 16.0) < 0.26 && ax < 7.35) return true;\n      if (z > 0.0 && z < 16.0 && Math.abs(ax - 2.0) < 0.22 && !nearSideOpening(z)) return true;\n      if (ax > 2.08 && ax < 7.0 && [4, 8, 12].some(wallZ => Math.abs(z - wallZ) < 0.22)) return true;\n      if (roomFixtures.some(([fx, fz, hx, hz]) => Math.abs(x - fx) < hx && Math.abs(z - fz) < hz)) return true;\n      return false;\n    }\n\n    function checkDoorwayProximity(position, radius = 1.15) {\n      if(activePlanModel){\n        document.getElementById('hardware-modal').style.display='none';\n        return;\n      }\n      const px = position[0];\n      const pz = position[2];\n      let nearDoor = null;\n      for (const door of doorways) {\n        const dist = Math.hypot(px - door.x, pz - door.z);\n        if (dist < radius) {\n          nearDoor = door;\n          break;\n        }\n      }\n      \n      const modal = document.getElementById('hardware-modal');\n      if (nearDoor) {\n        document.getElementById('hud-door-name').textContent = nearDoor.name.toUpperCase();\n        document.getElementById('hud-door-hardware').textContent = nearDoor.hardware;\n        modal.style.display = 'block';\n        modal.dataset.doorId = nearDoor.z;\n      } else {\n        modal.style.display = 'none';\n      }\n    }\n\n    const filmlineSpot = { x: 0.0, z: 30.0 };\n    function checkFilmlineProximity(position, radius = 4.2) {\n      const modal = document.getElementById('filmline-modal');\n      if (!modal) return;\n      if (activePlanModel) { modal.style.display = 'none'; return; }\n      const dist = Math.hypot(position[0] - filmlineSpot.x, position[2] - filmlineSpot.z);\n      modal.style.display = dist < radius ? 'block' : 'none';\n    }\n\n    // Docking: a real state-changing interaction, not a cosmetic popup.\n    // The dock point is the construction ship's forward collar (shipC +\n    // (0,0,-3.2) in the raymarch scene, see the GLSL scene() construction-\n    // ship block). Pressing G within range locks free-flight and snaps the\n    // camera into a docked pose at the collar; pressing G again undocks\n    // and hands control back right where you were.\n    const dockPoint = { x: -14.0, y: 3.0, z: 6.8 };\n    const dockPose = { position: [-14.0, 3.0, 5.6], yaw: 0, pitch: 0 };\n    let nearDock = false;\n    let isDocked = false;\n    function updateDockModal() {\n      const modal = document.getElementById('dock-modal');\n      if (!modal) return;\n      const title = document.getElementById('dock-title');\n      const value = document.getElementById('dock-value');\n      const sub = document.getElementById('dock-sub');\n      if (isDocked) {\n        title.textContent = 'DOCKED / SEED VESSEL';\n        value.textContent = 'Forward collar mated. Free-flight locked.';\n        sub.textContent = 'Press G to undock';\n        modal.style.display = 'block';\n      } else if (nearDock) {\n        title.textContent = 'SEED VESSEL / FORWARD COLLAR';\n        value.textContent = 'Within docking range.';\n        sub.textContent = 'Press G to dock';\n        modal.style.display = 'block';\n      } else {\n        modal.style.display = 'none';\n      }\n    }\n    function checkDockProximity(position) {\n      if (activePlanModel || isDocked) return;\n      const dist = Math.hypot(position[0]-dockPoint.x, position[1]-dockPoint.y, position[2]-dockPoint.z);\n      nearDock = dist < 3.0;\n      updateDockModal();\n    }\n    document.addEventListener('keydown', (e) => {\n      if (e.code !== 'KeyG' || e.repeat) return;\n      if (document.pointerLockElement !== canvas) return;\n      if (activePlanModel) return;\n      if (isDocked) {\n        isDocked = false;\n        sightxControls.setEnabled(true);\n        updateDockModal();\n      } else if (nearDock) {\n        isDocked = true;\n        sightxControls.setEnabled(false);\n        sightxControls.setPose(dockPose.position, dockPose.yaw, dockPose.pitch);\n        updateDockModal();\n      }\n    });\n\n    // --- Astronaut spacewalk embodiment: first/third-person (V), the\n    // hands-raised->lowered reveal, and the real-device-orientation\n    // \"correction\" glitch. See handSdf()/map() and the u_glitch block in\n    // the shader above for the actual rendering; this just drives the\n    // timing uniforms consumed in frame() below. ---\n    let thirdPerson = false;\n    let handsLowerStart = null;     // performance.now() timestamp the hands began lowering\n    let handsForceRaiseUntil = 0;   // force hands fully raised until this timestamp (orientation glitch)\n    let glitchStart = null;         // performance.now() timestamp of the current glitch pulse\n    function easeOutCubic(t) { return 1 - Math.pow(1 - t, 3); }\n    function beginHandsLower() {\n      if (handsLowerStart === null) handsLowerStart = performance.now();\n    }\n    window.beginHandsLower = beginHandsLower;\n    function triggerOrientationCorrection() {\n      // Only reacts once the player has actually engaged controls (hands\n      // already began their first raise->lower) - a device rotation\n      // before that would otherwise glitch an idle menu/slideshow state\n      // for no reason.\n      if (handsLowerStart === null) return;\n      const now = performance.now();\n      glitchStart = now;\n      handsForceRaiseUntil = now + 480;\n      handsLowerStart = handsForceRaiseUntil;\n    }\n    const sxOrientationQuery = matchMedia('(orientation: portrait)');\n    if (sxOrientationQuery.addEventListener) sxOrientationQuery.addEventListener('change', triggerOrientationCorrection);\n    else if (sxOrientationQuery.addListener) sxOrientationQuery.addListener(triggerOrientationCorrection);\n    window.addEventListener('orientationchange', triggerOrientationCorrection);\n\n    const thrustGlowEl = document.getElementById('thrust-glow');\n    function flashThrustGlow() {\n      if (!thrustGlowEl) return;\n      thrustGlowEl.classList.remove('pulse');\n      void thrustGlowEl.offsetWidth; // restart the CSS animation\n      thrustGlowEl.classList.add('pulse');\n    }\n\n    const sightxControls = window.SightXControls.mount({\n      canvas,\n      hint: document.getElementById('hint'),\n      // Wide establishing shot by default: pulled back and elevated south\n      // of the facility so the construction ship (west bay, x~-14), the\n      // station power truss (east bay, x~15), the dock gantry, the\n      // entrance, and the Earth limb below are all in frame together on\n      // first load - not a close-up of a single door. The \"Acquire the\n      // main entrance\" commissioning task is still reachable by walking\n      // forward; it just isn't the first thing a visitor sees.\n      initialPosition: [0, 9, -24.0],\n      initialYaw: 0,\n      initialPitch: -0.22,\n      collision: positionBlocked,\n      onMove: position => { checkDoorwayProximity(position); checkFilmlineProximity(position); checkDockProximity(position); },\n      onScan: (active, position) => {\n        sightxExperience.setScanning(active);\n        checkDoorwayProximity(position, active ? 2.75 : 1.15);\n        checkFilmlineProximity(position, active ? 7.5 : 4.2);\n      },\n      onTourToggle: () => sightxExperience.toggleTour(),\n      onSettingsToggle: () => sightxExperience.toggleSettings(),\n      onReportToggle: () => sightxExperience.toggleReport(),\n      // V: first/third-person toggle - see thirdPerson in frame() below\n      // for the actual camera reposition and the shader's u_thirdPerson\n      // branch for the helmet/visor swap.\n      onViewToggle: () => {\n        thirdPerson = !thirdPerson;\n        document.body.classList.toggle('sightx-third-person', thirdPerson);\n      },\n      // MMU/SAFER booster glow: fired every frame a thrust key is\n      // actually held (see sightx-controls.js update()), matching the\n      // real discrete-burst momentum physics - not continuous force.\n      onThrust: flashThrustGlow,\n      onCapture: () => { hideUI(); beginHandsLower(); },\n      onRelease: () => {\n        if (!document.body.classList.contains('sightx-demo')) showUI();\n      }\n    });\n    sightxExperience.attachControls(sightxControls);\n\n    window.SightXPlanRenderer=Object.freeze({\n      load(model){\n        if(!model||!model.sdf||!model.width||!model.height) throw new Error('A compiled plan SDF is required.');\n        activePlanModel=model;\n        gl.activeTexture(gl.TEXTURE0);\n        gl.bindTexture(gl.TEXTURE_2D,planSdfTexture);\n        gl.pixelStorei(gl.UNPACK_ALIGNMENT,1);\n        gl.texImage2D(gl.TEXTURE_2D,0,gl.R32F,model.width,model.height,0,gl.RED,gl.FLOAT,model.sdf);\n        if(model.sourceImage){\n          gl.activeTexture(gl.TEXTURE1);\n          gl.bindTexture(gl.TEXTURE_2D,planSourceTexture);\n          gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL,false);\n          gl.texImage2D(gl.TEXTURE_2D,0,gl.RGBA,gl.RGBA,gl.UNSIGNED_BYTE,model.sourceImage);\n        }\n        document.body.classList.add('sx-reconstructed');\n        const spawn=model.spawn||[0,1.72,0];\n        sightxControls.setPose(spawn,Number(model.yaw)||0,0);\n        sightxExperience.notify(`${model.label||'PDF PLAN'} / RECONSTRUCTED LOCALLY`);\n      },\n      clear(){ activePlanModel=null; document.body.classList.remove('sx-reconstructed'); },\n      get active(){ return activePlanModel; }\n    });\n    \n    let last = 0;\n    function frame(ts){\n      const dt = Math.min((ts-last)/1000, 0.05); last = ts;\n      sightxControls.update(dt);\n      sightxExperience.update(ts, sightxControls);\n      if (sightxExperience.consumeResizeRequest()) resize();\n      // The astronaut's real pose (first-person eye point/orientation) -\n      // always the true FP camera regardless of view mode, since\n      // third-person is just a different RENDER camera looking at this\n      // same pose (see camPos/camFwd below), not a different character.\n      const astroPos = sightxControls.position;\n      const astroFwd = sightxControls.forward;\n      const astroUp = sightxControls.up;\n      const scanTarget = sightxExperience.targetPosition;\n\n      // Hands raise/lower: forced fully raised during an orientation-\n      // correction glitch window, otherwise eased toward lowered (1).\n      let loweredT;\n      if (ts < handsForceRaiseUntil || handsLowerStart === null) {\n        loweredT = 0;\n      } else {\n        loweredT = Math.min(1, (ts - handsLowerStart) / 1400);\n      }\n      const glitch = glitchStart === null ? 0 : Math.max(0, 1 - (ts - glitchStart) / 480);\n\n      // Third-person: pull the render camera out in FRONT of the\n      // astronaut (along their own forward direction) looking back at\n      // their helmet - a true front-on view, not an over-the-shoulder\n      // chase cam. See the shader's u_thirdPerson branch in map()/main()\n      // for the helmet+visor geometry and the visor's real-time\n      // reflection of sky() this exposes.\n      let camPos = astroPos, camFwd = astroFwd, camUp = astroUp;\n      if (thirdPerson) {\n        const dist = 1.35, rise = 0.10;\n        camPos = [\n          astroPos[0] + astroFwd[0]*dist + astroUp[0]*rise,\n          astroPos[1] + astroFwd[1]*dist + astroUp[1]*rise,\n          astroPos[2] + astroFwd[2]*dist + astroUp[2]*rise\n        ];\n        const toAstro = [astroPos[0]-camPos[0], astroPos[1]-camPos[1], astroPos[2]-camPos[2]];\n        const len = Math.hypot(toAstro[0], toAstro[1], toAstro[2]) || 1;\n        camFwd = [toAstro[0]/len, toAstro[1]/len, toAstro[2]/len];\n      }\n\n      gl.uniform2f(uRes, canvas.width, canvas.height);\n      gl.uniform1f(uT, ts*0.001);\n      gl.uniform3f(uCam, camPos[0], camPos[1], camPos[2]);\n      gl.uniform3f(uDir, camFwd[0], camFwd[1], camFwd[2]);\n      gl.uniform3f(uUp, camUp[0], camUp[1], camUp[2]);\n      gl.uniform1f(uThirdPerson, thirdPerson ? 1.0 : 0.0);\n      gl.uniform3f(uAstroPos, astroPos[0], astroPos[1], astroPos[2]);\n      gl.uniform3f(uAstroFwd, astroFwd[0], astroFwd[1], astroFwd[2]);\n      gl.uniform3f(uAstroUp, astroUp[0], astroUp[1], astroUp[2]);\n      gl.uniform1f(uHandsLowered, easeOutCubic(loweredT));\n      gl.uniform1f(uGlitch, glitch);\n      gl.uniform1f(uScan, sightxExperience.scanAmount);\n      gl.uniform3f(uTarget, scanTarget[0], scanTarget[1], scanTarget[2]);\n      gl.uniform1f(uStressView, stressViewActive ? 1.0 : 0.0);\n      gl.uniform1i(uPlanMode,activePlanModel?1:0);\n      if(activePlanModel){\n        gl.uniform4f(uPlanBounds,...activePlanModel.bounds);\n        gl.uniform1f(uPlanHeight,activePlanModel.wallHeight||3.2);\n      }\n      gl.drawArrays(gl.TRIANGLES, 0, 3);\n      requestAnimationFrame(frame);\n    }\n    requestAnimationFrame(frame);\n  </script>\n  <script type=\"module\" src=\"/assets/sightx-reconstruction.js?v=20260729-1\"></script>\n  <script>\n    window.SightXRuntime.mount({\n      manifestUrl: '/sightx/runtime-manifest.json'\n    }).catch(error => console.error('[SightX runtime]', error));\n  </script>\n\n  <!-- Guided Walkthrough Preview — real, deployed 2026-09-06. SightX's own\n       spec promises \"guided site walkthroughs\"; the WebGL scene above is\n       one real hardcoded demo project (Glendale Camino Real). This panel\n       is a genuinely different, smaller, real slice of that same promise:\n       given a plain-text project description, it generates an actual\n       narrated storyboard walkthrough (script via a self-hosted LLM,\n       animated-SVG scene sequence, optional browser text-to-speech) —\n       not a 3D render, not a video file. Calls weylandai's own\n       /api/sightx/walkthrough-preview, which forwards to\n       filmline-video-worker over a real same-account Service Binding. -->\n  <div id=\"wt-preview-toggle\" style=\"position:fixed;right:20px;bottom:20px;z-index:9999;\">\n    <button id=\"wt-preview-btn\" style=\"padding:10px 16px;background:#2a52ff;color:#090a0d;border:0;border-radius:6px;font-weight:700;font-family:'Space Grotesk',sans-serif;cursor:pointer;box-shadow:0 2px 12px rgba(0,0,0,0.4);\">Guided Walkthrough Preview</button>\n  </div>\n  <div id=\"wt-preview-panel\" style=\"display:none;position:fixed;inset:0;z-index:10000;background:rgba(9,10,13,0.92);overflow:auto;\">\n    <div style=\"max-width:820px;margin:40px auto;background:#12151a;border:1px solid #2a2e36;border-radius:10px;padding:28px;color:#f4f1ea;font-family:'Outfit',sans-serif;\">\n      <div style=\"display:flex;justify-content:space-between;align-items:center;\">\n        <h2 style=\"margin:0;font-family:'Space Grotesk',sans-serif;\">Guided Walkthrough Preview</h2>\n        <button id=\"wt-preview-close\" style=\"background:none;border:0;color:#8a94a6;font-size:22px;cursor:pointer;\">&times;</button>\n      </div>\n      <p style=\"color:#a9b2c0;font-size:14px;line-height:1.6;\">Describe a project (e.g. \"second-floor mechanical retrofit, three access points, one hazardous-material zone\") and generate a real narrated storyboard walkthrough — a script plus an animated scene sequence, played back with your browser's own text-to-speech. This is not the 3D scene above; it's a smaller, real, honest slice of SightX's \"guided site walkthroughs\" promise: script + animated storyboard, not photorealistic render or an encoded video file.</p>\n      <textarea id=\"wt-preview-input\" rows=\"3\" maxlength=\"1000\" placeholder=\"Describe the project or space to walk through...\" style=\"width:100%;box-sizing:border-box;background:#0d0f13;color:#f4f1ea;border:1px solid #2a2e36;border-radius:6px;padding:10px;font-family:inherit;font-size:14px;\"></textarea>\n      <button id=\"wt-preview-generate\" style=\"margin-top:10px;padding:10px 18px;background:#2a52ff;color:#090a0d;border:0;border-radius:6px;font-weight:700;cursor:pointer;\">Generate</button>\n      <span id=\"wt-preview-status\" style=\"margin-left:12px;color:#8a94a6;font-size:13px;\"></span>\n      <div id=\"wt-preview-result\" style=\"margin-top:18px;\"></div>\n    </div>\n  </div>\n  <script>\n    (function () {\n      var toggleBtn = document.getElementById('wt-preview-btn');\n      var panel = document.getElementById('wt-preview-panel');\n      var closeBtn = document.getElementById('wt-preview-close');\n      var genBtn = document.getElementById('wt-preview-generate');\n      var input = document.getElementById('wt-preview-input');\n      var status = document.getElementById('wt-preview-status');\n      var result = document.getElementById('wt-preview-result');\n      toggleBtn.addEventListener('click', function () { panel.style.display = 'block'; });\n      closeBtn.addEventListener('click', function () { panel.style.display = 'none'; });\n      genBtn.addEventListener('click', function () {\n        var description = (input.value || '').trim();\n        if (!description) { status.textContent = 'Enter a project description first.'; return; }\n        status.textContent = 'Generating (real model inference, ~10-20s)...';\n        result.innerHTML = '';\n        genBtn.disabled = true;\n        fetch('/api/sightx/walkthrough-preview', {\n          method: 'POST',\n          headers: { 'Content-Type': 'application/json' },\n          body: JSON.stringify({ description: description })\n        }).then(function (r) { return r.json().then(function (d) { return { ok: r.ok, d: d }; }); })\n          .then(function (res) {\n            genBtn.disabled = false;\n            if (!res.ok) { status.textContent = 'Error: ' + (res.d && res.d.detail && res.d.detail.message || 'generation failed'); return; }\n            status.textContent = 'Done (' + res.d.total_seconds + 's reel, ' + res.d.scene_count + ' scenes).';\n            result.innerHTML = res.d.svg + '<p style=\"margin-top:12px;color:#8a94a6;font-size:13px;\">' + res.d.logline_escaped + '</p>' +\n              '<button id=\"wt-preview-narrate\" style=\"margin-top:6px;padding:8px 14px;background:#2a2e36;color:#f4f1ea;border:0;border-radius:6px;cursor:pointer;\">Narrate (browser text-to-speech)</button>';\n            document.getElementById('wt-preview-narrate').addEventListener('click', function () {\n              if (!('speechSynthesis' in window)) { alert('No speechSynthesis support in this browser.'); return; }\n              window.speechSynthesis.cancel();\n              (res.d.narration_lines || []).forEach(function (line) {\n                if (line) window.speechSynthesis.speak(new SpeechSynthesisUtterance(line));\n              });\n            });\n          })\n          .catch(function (err) { genBtn.disabled = false; status.textContent = 'Request failed: ' + err.message; });\n      });\n    })();\n  </script>\n\n  <!-- Cosmic Evolution Intro Sequence Script -->\n  <script>\n  (function(){\n    try {\n      if (sessionStorage.getItem(\"weylandCosmicIntroSeen\") && !location.search.includes(\"intro=1\")) return;\n      if (window.matchMedia && window.matchMedia(\"(prefers-reduced-motion: reduce)\").matches && !location.search.includes(\"intro=1\")) {\n        sessionStorage.setItem(\"weylandCosmicIntroSeen\", \"1\");\n        return;\n      }\n    } catch (e) { return; }\n\n    var overlay = document.getElementById(\"cx-overlay\");\n    var canvas = document.getElementById(\"cx-canvas\");\n    var hudEpoch = document.getElementById(\"cx-epoch\");\n    var hudSub = document.getElementById(\"cx-sub\");\n    var hudDisc = document.getElementById(\"cx-disclosure\");\n    var skipBtn = document.getElementById(\"cx-skip\");\n    if (!overlay || !canvas) return;\n\n    var gl = canvas.getContext(\"webgl2\");\n    if (!gl) return;\n\n    overlay.style.display = \"block\";\n    document.documentElement.style.overflow = \"hidden\";\n\n    var cancelled = false;\n    function finish(){\n      if (cancelled) return;\n      cancelled = true;\n      try { sessionStorage.setItem(\"weylandCosmicIntroSeen\", \"1\"); } catch (e) {}\n      overlay.style.transition = \"opacity .45s ease\";\n      overlay.style.opacity = \"0\";\n      setTimeout(function(){\n        overlay.style.display = \"none\";\n        if (overlay.parentNode) overlay.parentNode.removeChild(overlay);\n        document.documentElement.style.overflow = \"\";\n        setTimeout(function(){\n          if (window.beginHandsLower) window.beginHandsLower();\n        }, 350);\n      }, 480);\n    }\n    skipBtn.addEventListener(\"click\", finish);\n\n    var SEC_PER_YEAR = 3.1557e7;\n    var EPOCHS = [\n      { key: \"quark\",      age: 1e-10,                 label: \"Quark Epoch\",                     sub: \"~10⁻¹²–10⁻⁶ s after Big Bang — fundamental forces decouple\" },\n      { key: \"hadron\",     age: 1e-3,                  label: \"Hadron Epoch\",                    sub: \"~10⁻⁶ s–1 s after Big Bang — quarks bind into nucleons\" },\n      { key: \"bbn\",        age: 180,                   label: \"Big Bang Nucleosynthesis (BBN)\",  sub: \"~3 min — light nuclei (H, He, Li) form in cooling plasma\" },\n      { key: \"recomb\",     age: 3.8e5 * SEC_PER_YEAR,  label: \"Recombination — CMB Released\",    sub: \"~380,000 yr — universe turns transparent; cosmic microwave background released\" },\n      { key: \"darkages\",   age: 1e8 * SEC_PER_YEAR,    label: \"Cosmic Dark Ages\",                sub: \"~100 million yr — neutral hydrogen pervasive, before first stellar ignition\" },\n      { key: \"firststars\", age: 3e8 * SEC_PER_YEAR,    label: \"First Stars (Population III)\",    sub: \"~100–400 million yr — cosmic dawn, earliest stellar nucleosynthesis\" },\n      { key: \"galaxies\",   age: 1e9 * SEC_PER_YEAR,    label: \"Galaxy Formation\",                 sub: \"~1 billion yr — gravitational collapse into cosmic web filaments\" },\n      { key: \"solarsys\",   age: 9.2e9 * SEC_PER_YEAR,  label: \"Solar System Formation\",           sub: \"~9.2 billion yr after Big Bang (~4.6 billion yr ago)\" },\n      { key: \"earth\",      age: 9.3e9 * SEC_PER_YEAR,  label: \"Earth Accretion\",                 sub: \"~4.54 billion yr ago — proto-planetary formation in circumstellar disk\" },\n      { key: \"present\",    age: 13.8e9 * SEC_PER_YEAR, label: \"Present Day — Low Earth Orbit\",    sub: \"13.8 billion yr — WeylandAI SightX Orbital Shipyard in LEO\" }\n    ];\n\n    var T_CRUNCH_END = 1.6, T_TRANSITION_END = 2.1, T_FLASH_END = 2.5;\n    var T_LOG_START = 2.5, T_LOG_END = 6.8, T_RESOLVE_END = 7.6;\n    var LOG_AGE_MIN = Math.log(1e-32) / Math.LN10;\n    var LOG_AGE_MAX = Math.log(EPOCHS[EPOCHS.length - 1].age) / Math.LN10;\n\n    function log10(x){ return Math.log(x) / Math.LN10; }\n    function clamp01(x){ return x < 0 ? 0 : (x > 1 ? 1 : x); }\n    function smooth01(a, b, t){ var x = clamp01((t - a) / (b - a)); return x * x * (3 - 2 * x); }\n\n    function ageToRawT(age){\n      var u = (log10(age) - LOG_AGE_MIN) / (LOG_AGE_MAX - LOG_AGE_MIN);\n      return T_LOG_START + u * (T_LOG_END - T_LOG_START);\n    }\n\n    var MIN_GAP = 0.42;\n    var cueTimes = EPOCHS.map(function(e){ return ageToRawT(e.age); });\n    for (var i = 1; i < cueTimes.length; i++){\n      if (cueTimes[i] < cueTimes[i - 1] + MIN_GAP) cueTimes[i] = cueTimes[i - 1] + MIN_GAP;\n    }\n    var rawSpan = cueTimes[cueTimes.length - 1] - T_LOG_START;\n    var targetSpan = T_LOG_END - T_LOG_START;\n    if (rawSpan > targetSpan){\n      for (var j = 0; j < cueTimes.length; j++){\n        cueTimes[j] = T_LOG_START + (cueTimes[j] - T_LOG_START) * (targetSpan / rawSpan);\n      }\n    }\n    function idx(key){ for (var k = 0; k < EPOCHS.length; k++){ if (EPOCHS[k].key === key) return k; } return 0; }\n\n    function resize(){\n      var dpr = Math.min(window.devicePixelRatio || 1, 2);\n      canvas.width = Math.floor(window.innerWidth * dpr);\n      canvas.height = Math.floor(window.innerHeight * dpr);\n      gl.viewport(0, 0, canvas.width, canvas.height);\n    }\n    window.addEventListener(\"resize\", resize);\n    resize();\n\n    var vsSrc = `#version 300 es\nin vec2 a;\nvoid main(){ gl_Position = vec4(a, 0, 1); }`;\n\n    var fsSrc = `#version 300 es\nprecision highp float;\nuniform vec2 u_res;\nuniform float u_t;\nuniform float u_crunch;\nuniform float u_flash;\nuniform float u_fog;\nuniform float u_starBoost;\nuniform float u_earth;\nuniform float u_zoom;\nout vec4 fragColor;\n\nfloat hash(vec3 p){\n  p = fract(p * vec3(443.897, 441.423, 437.195));\n  p += dot(p, p.yzx + 19.19);\n  return fract((p.x + p.y) * p.z);\n}\n\nfloat noise(vec3 p){\n  vec3 i = floor(p), f = fract(p);\n  f = f * f * (3.0 - 2.0 * f);\n  return mix(mix(mix(hash(i+vec3(0,0,0)),hash(i+vec3(1,0,0)),f.x),\n                 mix(hash(i+vec3(0,1,0)),hash(i+vec3(1,1,0)),f.x),f.y),\n             mix(mix(hash(i+vec3(0,0,1)),hash(i+vec3(1,0,1)),f.x),\n                 mix(hash(i+vec3(0,1,1)),hash(i+vec3(1,1,1)),f.x),f.y),f.z);\n}\n\nvoid main(){\n  vec2 p = (gl_FragCoord.xy - 0.5 * u_res) / u_res.y;\n  p *= mix(1.0, 0.55, u_zoom);\n  float r = length(p);\n  vec3 rd = normalize(vec3(p, 1.0));\n\n  float starField = step(0.9978 - u_starBoost * 0.0035, hash(floor(rd * 420.0)));\n  vec3 stars = vec3(starField) * (0.55 + 0.45 * hash(floor(rd * 77.3))) * (0.25 + 0.75 * u_starBoost);\n  vec3 col = stars;\n\n  if (u_crunch > 0.0) {\n    float collapseR = mix(1.8, 0.03, u_crunch);\n    float shell = exp(-pow((r - collapseR) * 6.0, 2.0));\n    float web = noise(vec3(p * (5.0 + u_crunch * 10.0), u_t * 0.4));\n    float filaments = smoothstep(0.40, 0.65, web) * shell;\n    vec3 hooleilanaCol = mix(vec3(0.2, 0.5, 0.95), vec3(1.0, 0.72, 0.3), u_crunch);\n    vec3 crunchGlow = hooleilanaCol * (shell * 1.5 + filaments * 2.0);\n    float core = exp(-r * r * 45.0 * (0.3 + u_crunch * 3.5)) * u_crunch;\n    col += crunchGlow + vec3(1.0, 0.88, 0.7) * core * 2.2;\n  }\n\n  if (u_flash > 0.0) {\n    float burst = exp(-r * r * (6.0 - u_flash * 5.5));\n    col += vec3(1.0) * burst * u_flash * 3.2;\n  }\n\n  if (u_fog > 0.001) {\n    float n = noise(vec3(p * 3.0 + u_t * 0.15, u_t * 0.25)) * 0.6 + noise(vec3(p * 9.0, u_t * 0.6)) * 0.4;\n    vec3 plasma = mix(vec3(0.15, 0.02, 0.01), vec3(1.0, 0.55, 0.15), n);\n    col = mix(col, plasma, u_fog);\n  }\n\n  if (u_earth > 0.001) {\n    vec2 sunP = vec2(0.33, 0.22);\n    float sunD = length(p - sunP);\n    float sunDisk = smoothstep(0.03, 0.026, sunD);\n    float sunGlow = exp(-sunD * sunD * 18.0) * 0.5;\n    vec3 sunCol = vec3(1.0, 0.97, 0.9) * (sunDisk * 3.0 + sunGlow);\n\n    vec2 earthP = vec2(-0.12, -0.06);\n    float earthR = 0.30;\n    float eD = length(p - earthP);\n    if (eD < earthR) {\n      vec2 n2 = (p - earthP) / earthR;\n      float z = sqrt(max(0.0, 1.0 - dot(n2, n2)));\n      vec3 N = normalize(vec3(n2, z));\n      vec3 sunDir = normalize(vec3(sunP - earthP, 0.6));\n      float sunFacing = max(dot(N, sunDir), 0.0);\n      float landNoise = noise(N * 5.0 + 7.0);\n      vec3 land = mix(vec3(0.05, 0.18, 0.55), vec3(0.2, 0.42, 0.18), step(0.52, landNoise));\n      vec3 lit = land * (0.3 + 1.1 * sunFacing);\n      vec3 nightCol = vec3(0.01, 0.015, 0.03);\n      vec3 earthCol = mix(nightCol, lit, smoothstep(0.0, 0.2, sunFacing));\n      float rim = pow(1.0 - z, 3.0);\n      earthCol += vec3(0.3, 0.5, 1.0) * rim * 0.5;\n      col = mix(col, earthCol, u_earth);\n    }\n    col += sunCol * u_earth;\n  }\n\n  fragColor = vec4(col, 1.0);\n}`;\n\n    function compile(type, src){\n      var sh = gl.createShader(type);\n      gl.shaderSource(sh, src);\n      gl.compileShader(sh);\n      if (!gl.getShaderParameter(sh, gl.COMPILE_STATUS)){\n        gl.deleteShader(sh);\n        return null;\n      }\n      return sh;\n    }\n    var vs = compile(gl.VERTEX_SHADER, vsSrc);\n    var fs = compile(gl.FRAGMENT_SHADER, fsSrc);\n    if (!vs || !fs) { finish(); return; }\n    var prog = gl.createProgram();\n    gl.attachShader(prog, vs);\n    gl.attachShader(prog, fs);\n    gl.linkProgram(prog);\n    if (!gl.getProgramParameter(prog, gl.LINK_STATUS)) { finish(); return; }\n    gl.useProgram(prog);\n\n    var quad = new Float32Array([-1, -1, 3, -1, -1, 3]);\n    var buf = gl.createBuffer();\n    gl.bindBuffer(gl.ARRAY_BUFFER, buf);\n    gl.bufferData(gl.ARRAY_BUFFER, quad, gl.STATIC_DRAW);\n    var aLoc = gl.getAttribLocation(prog, \"a\");\n    gl.enableVertexAttribArray(aLoc);\n    gl.vertexAttribPointer(aLoc, 2, gl.FLOAT, false, 0, 0);\n\n    var U = {};\n    [\"u_res\", \"u_t\", \"u_crunch\", \"u_flash\", \"u_fog\", \"u_starBoost\", \"u_earth\", \"u_zoom\"].forEach(function(n){\n      U[n] = gl.getUniformLocation(prog, n);\n    });\n\n    var recombCue = cueTimes[idx(\"recomb\")];\n    var darkCue = cueTimes[idx(\"darkages\")];\n    var solarCue = cueTimes[idx(\"solarsys\")];\n    var presentCue = cueTimes[idx(\"present\")];\n\n    var start = null;\n    var lastEpochShown = -99;\n\n    function frame(now){\n      if (cancelled) return;\n      if (start === null) start = now;\n      var t = (now - start) / 1000;\n\n      var crunch = 0, flash = 0, fog = 0;\n      if (t < T_CRUNCH_END) crunch = clamp01(t / T_CRUNCH_END);\n      else if (t < T_TRANSITION_END) crunch = 1.0;\n\n      var flashUp = smooth01(T_TRANSITION_END - 0.15, T_TRANSITION_END + 0.05, t);\n      var flashDown = 1 - smooth01(T_FLASH_END, T_FLASH_END + 0.4, t);\n      if (t >= T_TRANSITION_END - 0.15 && t < T_FLASH_END + 0.4) flash = Math.min(flashUp, 1) * flashDown;\n      crunch *= (1 - flashUp);\n\n      if (t > T_FLASH_END){\n        var fogUp = smooth01(T_FLASH_END, T_FLASH_END + 0.3, t);\n        var fogDown = 1 - smooth01(recombCue - 0.3, recombCue + 0.3, t);\n        fog = fogUp * fogDown;\n      }\n      var starBoost = smooth01(darkCue, presentCue, t);\n      var earth = smooth01(solarCue, presentCue + 0.3, t);\n      var zoom = smooth01(solarCue, T_RESOLVE_END, t);\n\n      gl.uniform2f(U.u_res, canvas.width, canvas.height);\n      gl.uniform1f(U.u_t, t);\n      gl.uniform1f(U.u_crunch, crunch);\n      gl.uniform1f(U.u_flash, flash);\n      gl.uniform1f(U.u_fog, fog);\n      gl.uniform1f(U.u_starBoost, starBoost);\n      gl.uniform1f(U.u_earth, earth);\n      gl.uniform1f(U.u_zoom, zoom);\n      gl.drawArrays(gl.TRIANGLES, 0, 3);\n\n      if (t < T_CRUNCH_END){\n        if (lastEpochShown !== -1){\n          hudEpoch.textContent = \"BIG CRUNCH (COLLAPSE TOWARD HOʻŌLEILANA)\";\n          hudSub.textContent = \"Sped-up universal future contracting toward candidate BAO relic (~820 Mly structure; Tully et al. 2023).\";\n          hudDisc.innerHTML = \"<strong>SPECULATIVE:</strong> Cyclic cosmology model (Steinhardt-Turok / Penrose CCC) &mdash; not scientific consensus. Real evidence (Planck/WMAP) shows accelerating expansion. Pre-bang crunch sequence artistically anchors toward Hoʻōleilana (Tully et al. 2023 BAO relic).\";\n          hudDisc.style.display = \"block\";\n          lastEpochShown = -1;\n        }\n      } else if (t < T_TRANSITION_END){\n        if (lastEpochShown !== -2){\n          hudEpoch.textContent = \"CRUNCH → BANG TRANSITION\";\n          hudSub.textContent = \"Hypothetical bounce linking the prior contraction to this universe's expansion.\";\n          lastEpochShown = -2;\n        }\n      } else if (t < T_LOG_START){\n        if (lastEpochShown !== -3){\n          hudEpoch.textContent = \"THE BIG BANG: PLANCK EPOCH & INFLATION\";\n          hudSub.textContent = \"Planck Epoch (~10⁻⁴³ s) → Cosmic Inflation (~10⁻³⁶–10⁻³² s) exponential expansion.\";\n          hudDisc.style.display = \"none\";\n          lastEpochShown = -3;\n        }\n      } else {\n        var activeIdx = 0;\n        for (var m = 0; m < cueTimes.length; m++){ if (t >= cueTimes[m]) activeIdx = m; }\n        if (activeIdx !== lastEpochShown){\n          hudEpoch.textContent = EPOCHS[activeIdx].label;\n          hudSub.textContent = EPOCHS[activeIdx].sub;\n          hudDisc.style.display = \"none\";\n          lastEpochShown = activeIdx;\n        }\n      }\n\n      if (t >= T_RESOLVE_END){ finish(); return; }\n      requestAnimationFrame(frame);\n    }\n    requestAnimationFrame(frame);\n  })();\n  </script>\n</body>\n</html>\n", { headers: { "Content-Type": "text/html; charset=UTF-8", "Cache-Control": "public, max-age=60" } });
+    return new Response(`<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SightX | WeylandAI Site Vision Demonstrator</title>
+  <meta name="description" content="Explore the SightX construction-vision demonstrator: a navigable WeylandAI facility with automated openings and site intelligence overlays.">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><rect width='64' height='64' fill='%23f0b800'/><path d='M13 16h8l6 28h-8zm15 0h8l4 17 4-17h8l-8 28h-8z' fill='%23090a0d'/></svg>">
+  
+  <!-- Premium Typography -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;700&family=Outfit:wght@300;400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/assets/sightx-controls.css?v=20260729-3">
+  <link rel="stylesheet" href="/assets/sightx-experience.css?v=20260729-3">
+  <link rel="stylesheet" href="/assets/sightx-ingest.css?v=20260729-3">
+  <link rel="stylesheet" href="/assets/sightx-reconstruction.css?v=20260729-1">
+  <link rel="stylesheet" href="/assets/sightx-runtime.css?v=20260813-1">
+  
+  <style>
+    :root {
+      --color-primary: #f0b800;
+      --color-accent: #d9e2e8;
+      --void-glow: rgba(240, 184, 0, 0.24);
+    }
+    
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    
+    body {
+      font-family: 'Outfit', sans-serif;
+      background: #030305;
+      color: #f0f0f5;
+      overflow-x: hidden;
+      min-height: 100vh;
+    }
+    
+    #bg-canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      z-index: 1;
+      transition: filter 1.0s cubic-bezier(0.4, 0, 0.2, 1);
+      filter: brightness(0.45) blur(4px);
+    }
+    
+    #bg-canvas.interactive {
+      filter: brightness(1.0) blur(0px);
+      cursor: crosshair;
+    }
+
+    body.sightx-demo #bg-canvas {
+      filter: brightness(1.0) blur(0px);
+      cursor: crosshair;
+    }
+
+    body.sightx-demo #app-container {
+      display: none;
+    }
+    
+    #app-container {
+      position: relative;
+      z-index: 2;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+      backdrop-filter: blur(8px);
+      transition: opacity 0.5s cubic-bezier(0.4, 0, 0.2, 1), transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+      opacity: 1;
+      transform: scale(1);
+    }
+    
+    #app-container.hidden {
+      opacity: 0;
+      pointer-events: none;
+      transform: scale(0.98);
+    }
+    
+    header {
+      padding: 25px 40px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    }
+    
+    .logo {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 24px;
+      font-weight: 700;
+      color: var(--color-primary);
+      text-shadow: 0 0 10px var(--void-glow);
+      letter-spacing: 2px;
+    }
+    
+    .logo span {
+      color: rgba(217, 226, 232, 0.58);
+      font-weight: 300;
+      letter-spacing: 1px;
+    }
+    
+    .status-badge {
+      background: rgba(240, 184, 0, 0.05);
+      border: 1px solid rgba(240, 184, 0, 0.2);
+      padding: 8px 16px;
+      border-radius: 20px;
+      font-size: 13px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-family: 'Space Grotesk', sans-serif;
+    }
+    
+    .status-dot {
+      width: 8px;
+      height: 8px;
+      background: var(--color-primary);
+      border-radius: 50%;
+      box-shadow: 0 0 8px var(--color-primary);
+    }
+    
+    main {
+      flex: 1;
+      max-width: 800px;
+      margin: 0 auto;
+      width: 100%;
+      padding: 40px 20px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+    
+    .slideshow-container {
+      position: relative;
+      background: rgba(10, 10, 15, 0.85);
+      border: 1px solid rgba(240, 184, 0, 0.15);
+      border-radius: 20px;
+      padding: 40px;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.6);
+      min-height: 380px;
+      display: flex;
+      flex-direction: column;
+    }
+    
+    .slide {
+      display: none;
+      flex-direction: column;
+      flex: 1;
+      animation: fadeIn 0.4s ease-out forwards;
+    }
+    
+    .slide.active {
+      display: flex;
+    }
+    
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(5px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    
+    .category-label {
+      display: inline-block;
+      padding: 6px 12px;
+      background: rgba(240, 184, 0, 0.08);
+      border: 1px solid var(--color-primary);
+      color: var(--color-primary);
+      border-radius: 30px;
+      font-size: 11px;
+      font-weight: 600;
+      margin-bottom: 20px;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      align-self: flex-start;
+      font-family: 'Space Grotesk', sans-serif;
+    }
+    
+    h1 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 38px;
+      margin-bottom: 18px;
+      line-height: 1.1;
+      color: #fff;
+    }
+    
+    .tagline { font-family: 'Space Grotesk', sans-serif; margin: -8px 0 14px; font-size: 16px; font-weight: 700; letter-spacing: -0.01em; color: var(--color-primary); } .purpose-text {
+      font-size: 16px;
+      line-height: 1.6;
+      color: #b0b0c5;
+      margin-bottom: 25px;
+    }
+    
+    .product-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 15px;
+      margin-top: 10px;
+    }
+    
+    .product-box {
+      background: rgba(255,255,255,0.01);
+      border: 1px solid rgba(255,255,255,0.04);
+      border-radius: 12px;
+      padding: 16px;
+      transition: all 0.2s;
+    }
+    
+    .product-box:hover {
+      border-color: rgba(240, 184, 0, 0.2);
+      background: rgba(240, 184, 0, 0.02);
+    }
+    
+    .product-title {
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 700;
+      color: var(--color-primary);
+      font-size: 15px;
+      margin-bottom: 6px;
+    }
+    
+    .product-desc {
+      font-size: 12px;
+      color: #808095;
+      line-height: 1.4;
+    }
+    
+    /* Interactive Widget */
+    .widget-title {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 18px;
+      font-weight: 700;
+      margin-bottom: 15px;
+      color: var(--color-primary);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    
+    .console-box {
+      flex: 1;
+      background: #020204;
+      border: 1px solid rgba(240,184,0,0.1);
+      border-radius: 10px;
+      padding: 15px;
+      font-family: 'Space Grotesk', monospace;
+      font-size: 13px;
+      color: var(--color-primary);
+      min-height: 180px;
+      overflow-y: auto;
+      margin-bottom: 15px;
+      box-shadow: inset 0 0 10px rgba(0,0,0,0.8);
+    }
+    
+    .console-input-row {
+      display: flex;
+      gap: 10px;
+    }
+    
+    .console-input {
+      flex: 1;
+      background: #020204;
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 8px;
+      padding: 10px 14px;
+      color: #fff;
+      font-family: monospace;
+      outline: none;
+      font-size: 13px;
+    }
+    
+    .console-input:focus {
+      border-color: var(--color-primary);
+    }
+    
+    .console-btn {
+      background: var(--color-primary);
+      border: none;
+      color: #000;
+      padding: 10px 20px;
+      border-radius: 8px;
+      font-weight: 700;
+      cursor: pointer;
+      font-family: 'Space Grotesk', sans-serif;
+      transition: all 0.2s;
+    }
+    
+    .console-btn:hover {
+      box-shadow: 0 0 12px var(--color-primary);
+    }
+    
+    .portal-trigger {
+      margin-top: 15px;
+      text-align: center;
+    }
+    
+    .portal-btn {
+      display: inline-block;
+      text-decoration: none;
+      color: #808095;
+      font-size: 12px;
+      padding: 8px 16px;
+      border-radius: 30px;
+      border: 1px solid rgba(255,255,255,0.1);
+      transition: all 0.2s;
+    }
+    
+    .portal-btn:hover {
+      color: #fff;
+      border-color: var(--color-accent);
+    }
+    
+    /* Product Footer Browser styling */
+    .product-footer-browser {
+      margin-top: 30px;
+      border-top: 1px solid rgba(255, 255, 255, 0.05);
+      padding-top: 20px;
+      display: flex;
+      justify-content: center;
+    }
+    
+    .product-tabs {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+    
+    .product-tab {
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      color: #808095;
+      padding: 10px 20px;
+      border-radius: 8px;
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 1px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    
+    .product-tab:hover {
+      border-color: var(--color-primary);
+      color: #fff;
+    }
+    
+    .product-tab.active {
+      background: var(--color-primary);
+      color: #000;
+      border-color: var(--color-primary);
+      box-shadow: 0 0 10px rgba(240, 184, 0, 0.2);
+    }
+    
+    /* Fleet browser drawer */
+    .fleet-browser-container {
+      position: relative;
+      width: 100%;
+    }
+    
+    .fleet-drawer {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 100vw;
+      background: rgba(6, 6, 9, 0.97);
+      border-top: 1px solid var(--color-primary);
+      box-shadow: 0 -10px 40px rgba(0, 0, 0, 0.8);
+      z-index: 998;
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+      backdrop-filter: blur(15px);
+    }
+    
+    .fleet-drawer.open {
+      max-height: 280px;
+    }
+    
+    .fleet-drawer-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 15px 40px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    }
+    
+    .fleet-drawer-title {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 13px;
+      letter-spacing: 2px;
+      color: var(--color-accent);
+      font-weight: 700;
+      text-transform: uppercase;
+    }
+    
+    .close-drawer-btn {
+      background: none;
+      border: none;
+      color: #808095;
+      font-size: 18px;
+      cursor: pointer;
+      transition: color 0.2s;
+    }
+    
+    .close-drawer-btn:hover {
+      color: #fff;
+    }
+    
+    .fleet-links-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 10px;
+      padding: 20px 40px;
+      overflow-y: auto;
+      max-height: 200px;
+    }
+    
+    .fleet-link {
+      color: #808095;
+      text-decoration: none;
+      font-size: 12px;
+      padding: 10px 14px;
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      border-radius: 8px;
+      transition: all 0.2s;
+      font-family: 'Space Grotesk', sans-serif;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      overflow: hidden;
+      text-align: left;
+    }
+    
+    .fleet-link:hover {
+      background: rgba(240, 184, 0, 0.08);
+      border-color: var(--color-primary);
+      color: #fff;
+      transform: translateY(-2px);
+    }
+    
+    .cat-chips {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 6px;
+    }
+    
+    .cat-chip {
+      display: inline-block;
+      font-size: 11px;
+      padding: 6px 12px;
+      background: rgba(255,255,255,0.02);
+      border: 1px solid rgba(255,255,255,0.05);
+      color: #808095;
+      border-radius: 30px;
+      cursor: pointer;
+      transition: all 0.2s;
+      font-family: 'Space Grotesk', sans-serif;
+    }
+    
+    .cat-chip:hover, .cat-chip.active {
+      background: rgba(240, 184, 0, 0.08);
+      color: var(--color-primary);
+      border-color: var(--color-primary);
+    }
+    
+    footer {
+      border-top: 1px solid rgba(255, 255, 255, 0.05);
+      padding: 30px 40px;
+      background: rgba(5,5,8,0.9);
+      text-align: center;
+    }
+    
+    .footer-text {
+      color: #606075;
+      font-size: 12px;
+      line-height: 1.6;
+    }
+    
+    /* Play Mode HUD Hints */
+    #hint {
+      position: fixed;
+      top: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 10;
+      background: rgba(0, 0, 0, 0.85);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      padding: 8px 16px;
+      border-radius: 20px;
+      font-family: 'Space Grotesk', monospace;
+      font-size: 11px;
+      letter-spacing: 1px;
+      color: #888;
+      pointer-events: none;
+      transition: opacity 0.3s;
+    }
+    
+    /* High-tech HUD Hardware Proximity Modal */
+    .hud-modal {
+      position: fixed;
+      bottom: 40px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 5;
+      background: linear-gradient(180deg, rgba(9, 9, 11, 0.95) 0%, rgba(3, 3, 5, 0.98) 100%);
+      border: 1px solid var(--color-primary);
+      box-shadow: 0 0 25px rgba(240, 184, 0, 0.25);
+      padding: 22px;
+      border-radius: 12px;
+      width: 90%;
+      max-width: 450px;
+      font-family: 'Space Grotesk', monospace;
+      color: #fff;
+      backdrop-filter: blur(10px);
+      animation: hud-reveal 0.3s cubic-bezier(0.19, 1, 0.22, 1);
+    }
+    
+    @keyframes hud-reveal {
+      from { transform: translate(-50%, 20px); opacity: 0; }
+      to { transform: translate(-50%, 0); opacity: 1; }
+    }
+    
+    .hud-scanner {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 2px;
+      background: var(--color-primary);
+      box-shadow: 0 0 8px var(--color-primary);
+      animation: scan 1.5s linear infinite;
+    }
+    
+    @keyframes scan {
+      0% { top: 0%; opacity: 0; }
+      10% { opacity: 1; }
+      90% { opacity: 1; }
+      100% { top: 100%; opacity: 0; }
+    }
+    
+    .hud-header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      border-bottom: 1px solid rgba(240, 184, 0, 0.2);
+      padding-bottom: 10px;
+      margin-bottom: 12px;
+    }
+    
+    .hud-icon {
+      font-size: 18px;
+    }
+    
+    .hud-title {
+      font-weight: 700;
+      color: var(--color-primary);
+      letter-spacing: 1px;
+      font-size: 14px;
+    }
+    
+    .hud-body {
+      font-size: 13px;
+      line-height: 1.5;
+    }
+    
+    .hud-label {
+      color: #808095;
+      margin-bottom: 5px;
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    
+    .hud-value {
+      color: #f0f0f5;
+      margin-bottom: 10px;
+    }
+    
+    .hud-sub {
+      color: var(--color-accent);
+      font-size: 11px;
+      border-top: 1px solid rgba(255, 255, 255, 0.05);
+      padding-top: 12px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    
+    .hud-sub a {
+      color: var(--color-accent);
+      text-decoration: none;
+      border: 1px solid var(--color-accent);
+      padding: 3px 8px;
+      border-radius: 4px;
+      background: rgba(0, 229, 255, 0.05);
+      transition: all 0.2s;
+    }
+    
+    .hud-sub a:hover {
+      color: #fff;
+      border-color: #fff;
+      background: rgba(0, 229, 255, 0.15);
+      box-shadow: 0 0 8px var(--color-accent);
+    }
+    
+    /* Login Screen Modal Overlay */
+    #os-login-modal {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(3, 3, 5, 0.95);
+      z-index: 999;
+      display: none;
+      justify-content: center;
+      align-items: center;
+      backdrop-filter: blur(15px);
+    }
+    
+    .login-box {
+      width: 100%;
+      max-width: 400px;
+      background: rgba(10, 10, 15, 0.85);
+      border: 1px solid rgba(240, 184, 0, 0.2);
+      border-radius: 20px;
+      padding: 40px;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.8);
+      text-align: center;
+    }
+    
+    .login-box h2 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 30px;
+      margin-bottom: 10px;
+      color: var(--color-primary);
+    }
+    
+    .login-box p {
+      color: #808095;
+      font-size: 13px;
+      margin-bottom: 30px;
+    }
+    
+    .login-input {
+      width: 100%;
+      background: #020204;
+      border: 1px solid rgba(240,184,0,0.2);
+      border-radius: 10px;
+      padding: 12px 16px;
+      color: #fff;
+      font-size: 15px;
+      margin-bottom: 15px;
+      outline: none;
+      font-family: monospace;
+    }
+    
+    .login-input:focus {
+      border-color: var(--color-accent);
+    }
+    
+    .login-button {
+      width: 100%;
+      background: var(--color-primary);
+      color: #000;
+      border: none;
+      padding: 12px 20px;
+      border-radius: 10px;
+      font-size: 16px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.2s;
+      font-family: 'Space Grotesk', sans-serif;
+    }
+    
+    .login-button:hover {
+      box-shadow: 0 0 15px var(--color-primary);
+    }
+    
+    .close-modal {
+      margin-top: 15px;
+      font-size: 13px;
+      color: #606075;
+      cursor: pointer;
+    }
+    
+    .close-modal:hover {
+      color: #fff;
+    }
+
+    /* Mobile media queries */
+    @media (max-width: 600px) {
+      header {
+        padding: 15px 20px;
+      }
+      .logo {
+        font-size: 20px;
+      }
+      h1 {
+        font-size: 28px;
+      }
+      .purpose-text {
+        font-size: 14px;
+        line-height: 1.5;
+      }
+      .slideshow-container {
+        padding: 20px;
+        min-height: auto;
+      }
+      .product-grid {
+        grid-template-columns: 1fr;
+      }
+      .product-tab {
+        padding: 8px 12px;
+        font-size: 10px;
+      }
+      .hud-modal {
+        bottom: 20px;
+        padding: 15px;
+      }
+      .fleet-drawer-header { padding: 15px 20px; }
+      .fleet-links-grid { padding: 15px 20px; grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body class="sightx-demo">
+  
+  <!-- The Playable WebGL Canvas -->
+  <canvas id="bg-canvas"></canvas>
+  
+  <div id="hint">CLICK to capture mouse</div>
+  
+  <!-- High-tech HUD Hardware Proximity Modal -->
+  <div id="hardware-modal" class="hud-modal" style="display: none;">
+    <div class="hud-scanner"></div>
+    <div class="hud-header">
+      <span class="hud-icon">SX</span>
+      <span class="hud-title" id="hud-door-name">DOORWAY PROXIMITY SIGNAL</span>
+    </div>
+    <div class="hud-body">
+      <div class="hud-label">Hardware Schedule:</div>
+      <div class="hud-value" id="hud-door-hardware">Extracting specifications...</div>
+      <div class="hud-sub">
+        <span>Verified via SubX Platform</span>
+        <a href="https://precisionautodoors.com" target="_blank">Precision Auto Doors</a>
+      </div>
+    </div>
+  </div>
+  
+  <div id="app-container">
+    <header>
+      <div class="logo">WEYLAND<span>AI</span></div>
+      <div class="status-badge">
+        <div class="status-dot"></div>
+        <span>Build Network Online</span>
+      </div>
+    </header>
+    
+    <main>
+      <div class="slideshow-container" id="slideshow">
+        
+        <!-- Slide 0: Overview -->
+        <div class="slide active">
+          <div class="category-label">Autonomous Construction</div>
+          <h1>Build at machine scale.</h1>
+          <div class="tagline">Measure twice. Match once.</div>
+          <p class="purpose-text">WeylandAI unifies project intelligence, computer vision, autonomous equipment, and robotic trade crews in one construction operating system. We take a build from opportunity discovery through verified completion with less delay, waste, and coordination loss.</p>
+        </div>
+        
+        <!-- Slide 1: Project intelligence -->
+        <div class="slide">
+          <div class="category-label">Project Intelligence</div>
+          <h1>See the work before it begins.</h1>
+          <p class="purpose-text">Our intelligence pipeline discovers viable projects, maps subcontractor capacity, reads plans and imagery, quantifies scope, and turns uncertainty into an executable construction plan.</p>
+          <div class="product-grid">
+            <div class="product-box">
+              <div class="product-title">HuntX + SubX</div>
+              <div class="product-desc">Opportunity discovery, qualification, capacity mapping, and subcontractor intelligence.</div>
+            </div>
+            <div class="product-box">
+              <div class="product-title">SightX + TakeoffX</div>
+              <div class="product-desc">Site vision, dimension extraction, material quantities, hazards, and automated estimates.</div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Slide 2: Robotics -->
+        <div class="slide">
+          <div class="category-label">Robotic Field Systems</div>
+          <h1>Autonomous crews. Coordinated as one.</h1>
+          <p class="purpose-text">WeylandAI coordinates earthwork, concrete, framing, masonry, roofing, electrical, and plumbing systems against the same live model, schedule, safety envelope, and quality record.</p>
+          <div class="product-grid">
+            <div class="product-box">
+              <div class="product-title">Earthwork Fleet</div>
+              <div class="product-desc">GPS/RTK-guided excavation, grading, trenching, telemetry, and obstacle avoidance.</div>
+            </div>
+            <div class="product-box">
+              <div class="product-title">Trade Crews</div>
+              <div class="product-desc">Repeatable robotic installation with code, tolerance, and quality verification.</div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Slide 3: Computing -->
+        <div class="slide">
+          <div class="category-label">Construction Operating System</div>
+          <h1>One control plane for every site.</h1>
+          <p class="purpose-text">A shared digital thread connects plans, bids, equipment, crews, progress evidence, safety findings, and client reporting. Every completed project makes the next project faster and more predictable.</p>
+        </div>
+        
+        <!-- Slide 4: Secure Console -->
+        <div class="slide">
+          <div class="widget-card">
+            <div class="widget-title">
+              <span>&gt;_</span> Project Console
+            </div>
+            <div class="console-box" id="console-display">
+              System initialized.<br>
+              Category: Construction / Automation<br>
+              Status: READY<br>
+              Type 'help' to begin...<br>
+              <br>
+              &gt;
+            </div>
+            <div class="console-input-row">
+              <input type="text" class="console-input" id="console-cmd" placeholder="Type a command...">
+              <button class="console-btn" onclick="executeCommand()">Run</button>
+            </div>
+            <div class="portal-trigger">
+              <a href="#" class="portal-btn" onclick="openLoginModal()">Access Client Workspace</a>
+            </div>
+          </div>
+        </div>
+        
+      </div>
+      
+      <!-- Product Footer Browser (SPA tabs) -->
+      <div class="product-footer-browser">
+        <div class="product-tabs">
+          <button class="product-tab active" onclick="goToSlide(0)">OVERVIEW</button>
+          <button class="product-tab" onclick="goToSlide(1)">INTELLIGENCE</button>
+          <button class="product-tab" onclick="goToSlide(2)">FIELD FLEET</button>
+          <button class="product-tab" onclick="goToSlide(3)">BUILD OS</button>
+          <button class="product-tab" onclick="goToSlide(4)">CLIENT CONSOLE</button>
+        </div>
+      </div>
+    </main>
+    
+    <footer>
+      <div class="footer-text">
+        <div class="fleet-browser-container">
+          <div class="fleet-drawer" id="fleet-drawer">
+            <div class="fleet-drawer-header">
+              <div class="fleet-drawer-title" id="fleet-drawer-title">Explore Fleet Category</div>
+              <button class="close-drawer-btn" onclick="closeFleetDrawer()">\u2715</button>
+            </div>
+            <div class="fleet-links-grid" id="fleet-links-grid"></div>
+          </div>
+          
+          <div class="network-tray" style="margin-bottom: 25px;">
+            <div class="network-tray-title">Explore the MobCorp Venture Fleet</div>
+            <div class="cat-chips">
+              <span class="cat-chip" onclick="toggleFleetCategory('AI')">AI</span> <span class="cat-chip" onclick="toggleFleetCategory('Agents')">Agents</span> <span class="cat-chip" onclick="toggleFleetCategory('Business')">Business</span> <span class="cat-chip" onclick="toggleFleetCategory('Corporate')">Corporate</span> <span class="cat-chip" onclick="toggleFleetCategory('Defense')">Defense</span> <span class="cat-chip" onclick="toggleFleetCategory('Dev Tools')">Dev Tools</span> <span class="cat-chip" onclick="toggleFleetCategory('Education')">Education</span> <span class="cat-chip" onclick="toggleFleetCategory('Finance')">Finance</span> <span class="cat-chip" onclick="toggleFleetCategory('Health')">Health</span> <span class="cat-chip" onclick="toggleFleetCategory('Media')">Media</span> <span class="cat-chip" onclick="toggleFleetCategory('Science')">Science</span> 
+            </div>
+          </div>
+        </div>
+        
+        <p>This venture is a canonical node of the MobCorp Autonomous Network. All rights reserved.</p>
+      </div>
+    </footer>
+  </div>
+
+  <!-- The Login Screen Modal Overlay -->
+  <div id="os-login-modal">
+    <div class="login-box">
+      <h2>WeylandAI Client Workspace</h2>
+      <p>Projects, sites, crews, and evidence in one operating view.</p>
+      <input type="email" class="login-input" id="modal-email" placeholder="Email / Username">
+      <input type="password" class="login-input" id="modal-pass" placeholder="Authorization Code">
+      <button class="login-button" onclick="submitAuth()">Sign In</button>
+      <div class="close-modal" onclick="closeLoginModal()">Cancel</div>
+    </div>
+  </div>
+
+  <script src="/assets/sightx-controls.js?v=20260729-3"></script>
+  <script src="/assets/sightx-experience.js?v=20260729-3"></script>
+  <script src="/assets/sightx-ingest.js?v=20260729-3"></script>
+  <script src="/assets/sightx-runtime.js?v=20260813-1"></script>
+  <script>
+    // \u2500\u2500 Slideshow SPA Navigation \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500
+    let currentSlide = 0;
+    const slides = document.querySelectorAll('.slide');
+    const tabs = document.querySelectorAll('.product-tab');
+    
+    function goToSlide(index) {
+      slides[currentSlide].classList.remove('active');
+      tabs[currentSlide].classList.remove('active');
+      currentSlide = (index + slides.length) % slides.length;
+      slides[currentSlide].classList.add('active');
+      tabs[currentSlide].classList.add('active');
+      resetIdleTimer();
+    }
+
+    // Keyboard navigation for Weyland slides (when console isn't focused)
+    document.addEventListener('keydown', (e) => {
+      if (document.pointerLockElement) return;
+      if (document.activeElement.tagName === 'INPUT' || document.activeElement.tagName === 'TEXTAREA') return;
+      if (e.key === 'ArrowLeft') {
+        goToSlide(currentSlide - 1);
+      } else if (e.key === 'ArrowRight') {
+        goToSlide(currentSlide + 1);
+      }
+    });
+
+    // \u2500\u2500 Console Simulator \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500
+    const consoleDisplay = document.getElementById('console-display');
+    const consoleCmd = document.getElementById('console-cmd');
+    
+    consoleCmd.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') executeCommand();
+    });
+
+    function executeCommand() {
+      const cmd = consoleCmd.value.trim().toLowerCase();
+      if (!cmd) return;
+      
+      let response = '';
+      if (cmd === 'help') {
+        response = 'Available commands:\\
+' +
+                   '  status   - View current system status\\
+' +
+                   '  fleet    - Check autonomous crew status\\
+' +
+                   '  projects - List active project sites\\
+' +
+                   '  clear    - Clear console screen';
+      } else if (cmd === 'status') {
+        response = 'System: weylandai.com\\
+' +
+                   'Status: ONLINE\\
+' +
+                   'Category: Construction / Automation\\
+' +
+                   'Operational Integrity: 100% (READY)\\
+' +
+                   'Pipeline: HuntX > SubX > SightX > TakeoffX > PropX > QText';
+      } else if (cmd === 'fleet') {
+        response = 'Autonomous Crew Status:\\
+' +
+                   '  - Earthwork systems: READY\\
+' +
+                   '  - Concrete and framing systems: READY\\
+' +
+                   '  - Trade installation systems: READY\\
+' +
+                   'All telemetry channels operational.';
+      } else if (cmd === 'projects') {
+        response = 'Project Network:\\
+' +
+                   '  - Site intelligence: ACTIVE\\
+' +
+                   '  - Estimation pipeline: ACTIVE\\
+' +
+                   '  - Field coordination: ACTIVE';
+      } else if (cmd === 'clear') {
+        consoleDisplay.innerHTML = '&gt; ';
+        consoleCmd.value = '';
+        return;
+      } else {
+        response = 'Unknown command: "' + cmd + '". Type "help" for a list of commands.';
+      }
+      
+      consoleDisplay.innerHTML += cmd + '<br>' + response.replace(/\\
+/g, '<br>') + '<br><br>&gt; ';
+      consoleDisplay.scrollTop = consoleDisplay.scrollHeight;
+      consoleCmd.value = '';
+    }
+
+    function openLoginModal() {
+      document.getElementById('os-login-modal').style.display = 'flex';
+    }
+    
+    function closeLoginModal() {
+      document.getElementById('os-login-modal').style.display = 'none';
+    }
+    
+    function submitAuth() {
+      const email = document.getElementById('modal-email').value;
+      const pass = document.getElementById('modal-pass').value;
+      if (!email || !pass) {
+        alert('Credentials required.');
+        return;
+      }
+      alert('Secure Portal connection timed out. Please check your credentials and try again.');
+    }
+
+    // \u2500\u2500 Fleet Browser Logic \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500
+    const FLEET_DATA = {"Defense": [{"domain": "abstergo.cc", "name": "abstergo_cc"}, {"domain": "areshiva.com", "name": "areshiva_com"}, {"domain": "draknir.com", "name": "draknir_com"}, {"domain": "draugr.cc", "name": "draugr_cc"}, {"domain": "malathor.com", "name": "malathor_com"}, {"domain": "valdring.com", "name": "valdring_com"}, {"domain": "valkrai.com", "name": "valkrai_com"}, {"domain": "ventraleye.com", "name": "ventraleye_com"}, {"domain": "watchforce.cc", "name": "watchforce_cc"}], "Finance": [{"domain": "accountdrac.com", "name": "accountdrac_com"}, {"domain": "bitdoggo.com", "name": "bitdoggo_com"}, {"domain": "bondwright.com", "name": "bondwright_com"}, {"domain": "bookeepr.cc", "name": "bookeepr_cc"}, {"domain": "cryptosmart.cc", "name": "cryptosmart_cc"}, {"domain": "encoverai.com", "name": "encoverai_com"}, {"domain": "equifiant.com", "name": "equifiant_com"}, {"domain": "fedbank.cc", "name": "fedbank_cc"}, {"domain": "fundyai.com", "name": "fundyai_com"}, {"domain": "greenhandcapital.com", "name": "greenhandcapital_com"}, {"domain": "mobcoin.cc", "name": "mobcoin_cc"}, {"domain": "quanticfork.com", "name": "quanticfork_com"}, {"domain": "selfcoin.cc", "name": "selfcoin_cc"}, {"domain": "vendyai.com", "name": "vendyai_com"}], "Agents": [{"domain": "agentropi.com", "name": "agentropi_com"}, {"domain": "agentzaar.com", "name": "agentzaar_com"}, {"domain": "consenta.cc", "name": "consenta_cc"}, {"domain": "entoolize.com", "name": "entoolize_com"}, {"domain": "mailguyai.com", "name": "mailguyai_com"}, {"domain": "marketingium.com", "name": "marketingium_com"}, {"domain": "rebrief.me", "name": "rebrief_me"}, {"domain": "salesfactorai.com", "name": "salesfactorai_com"}, {"domain": "taskgridai.com", "name": "taskgridai_com"}], "Health": [{"domain": "agewinder.com", "name": "agewinder_com"}, {"domain": "healspell.com", "name": "healspell_com"}, {"domain": "lovemaint.com", "name": "lovemaint_com"}, {"domain": "meeva.io", "name": "meeva_io"}, {"domain": "newgameplus.cc", "name": "newgameplus_cc"}, {"domain": "recovai.com", "name": "recovai_com"}, {"domain": "sanctuaryui.com", "name": "sanctuaryui_com"}, {"domain": "talkingmind.cc", "name": "talkingmind_cc"}, {"domain": "workshrinker.com", "name": "workshrinker_com"}, {"domain": "youthmend.com", "name": "youthmend_com"}], "AI": [{"domain": "aicossic.com", "name": "aicossic_com"}, {"domain": "americanagi.cc", "name": "americanagi_cc"}, {"domain": "americnagi.cc", "name": "americnagi_cc"}, {"domain": "bloomagi.cc", "name": "bloomagi_cc"}, {"domain": "greybeardai.com", "name": "greybeardai_com"}, {"domain": "intfer.cc", "name": "intfer_cc"}, {"domain": "legibleweights.com", "name": "legibleweights_com"}, {"domain": "legionicai.com", "name": "legionicai_com"}, {"domain": "scalarflux.com", "name": "scalarflux_com"}, {"domain": "sentiantai.com", "name": "sentiantai_com"}, {"domain": "singularityui.com", "name": "singularityui_com"}, {"domain": "transcendantai.com", "name": "transcendantai_com"}], "Science": [{"domain": "aiopencommerce.com", "name": "aiopencommerce_com"}, {"domain": "anattar.com", "name": "anattar_com"}, {"domain": "conseiv.com", "name": "conseiv_com"}, {"domain": "ecofixai.com", "name": "ecofixai_com"}, {"domain": "emissionhub.cc", "name": "emissionhub_cc"}, {"domain": "enablinghomes.com", "name": "enablinghomes_com"}, {"domain": "femptocom.com", "name": "femptocom_com"}, {"domain": "galadul.com", "name": "galadul_com"}, {"domain": "tenancyai.com", "name": "tenancyai_com"}, {"domain": "weylandai.com", "name": "weylandai_com"}, {"domain": "yutaniai.com", "name": "yutaniai_com"}], "Media": [{"domain": "alhena.cc", "name": "alhena_cc"}, {"domain": "animetrope.com", "name": "animetrope_com"}, {"domain": "audiovizai.com", "name": "audiovizai_com"}, {"domain": "book2film.cc", "name": "book2film_cc"}, {"domain": "bookclubs.cc", "name": "bookclubs_cc"}, {"domain": "danzoa.com", "name": "danzoa_com"}, {"domain": "fedtalent.cc", "name": "fedtalent_cc"}, {"domain": "filmline.cc", "name": "filmline_cc"}, {"domain": "gamegob.com", "name": "gamegob_com"}, {"domain": "glyphyai.com", "name": "glyphyai_com"}, {"domain": "kubaki.cc", "name": "kubaki_cc"}, {"domain": "literacraft.com", "name": "literacraft_com"}, {"domain": "mobleybooks.com", "name": "mobleybooks_com"}, {"domain": "paintedwhore.cc", "name": "paintedwhore_cc"}, {"domain": "pandorachat.cc", "name": "pandorachat_cc"}], "Dev Tools": [{"domain": "authfor.com", "name": "authfor_com"}, {"domain": "devducky.com", "name": "devducky_com"}, {"domain": "devtoolai.com", "name": "devtoolai_com"}, {"domain": "devtoolbx.com", "name": "devtoolbx_com"}, {"domain": "extraterran.com", "name": "extraterran_com"}, {"domain": "fystz.com", "name": "fystz_com"}, {"domain": "gravnova.com", "name": "gravnova_com"}, {"domain": "halside.com", "name": "halside_com"}, {"domain": "helmdir.com", "name": "helmdir_com"}, {"domain": "powerhost.cc", "name": "powerhost_cc"}, {"domain": "syncropy.com", "name": "syncropy_com"}, {"domain": "warpdrive.cc", "name": "warpdrive_cc"}], "Education": [{"domain": "bignice.cc", "name": "bignice_cc"}, {"domain": "brynhildai.com", "name": "brynhildai_com"}, {"domain": "gurukle.com", "name": "gurukle_com"}, {"domain": "leadersclub.cc", "name": "leadersclub_cc"}, {"domain": "ownschool.cc", "name": "ownschool_cc"}, {"domain": "reasontodate.com", "name": "reasontodate_com"}], "Business": [{"domain": "dofura.com", "name": "dofura_com"}, {"domain": "domainwombat.com", "name": "domainwombat_com"}, {"domain": "firmcreate.com", "name": "firmcreate_com"}, {"domain": "glcx.cc", "name": "glcx_cc"}, {"domain": "helmcorp.cc", "name": "helmcorp_cc"}, {"domain": "hildrai.com", "name": "hildrai_com"}, {"domain": "industrize.com", "name": "industrize_com"}, {"domain": "lawyik.com", "name": "lawyik_com"}, {"domain": "patentkin.com", "name": "patentkin_com"}, {"domain": "traceformer.com", "name": "traceformer_com"}], "Corporate": [{"domain": "golfcad.cc", "name": "golfcad_cc"}, {"domain": "golfdad.cc", "name": "golfdad_cc"}, {"domain": "golflink.cc", "name": "golflink_cc"}, {"domain": "golfmind.cc", "name": "golfmind_cc"}, {"domain": "helmscorp.cc", "name": "helmscorp_cc"}, {"domain": "instantiability.com", "name": "instantiability_com"}, {"domain": "mobcorp.cc", "name": "mobcorp_cc"}, {"domain": "mobleyhelms.com", "name": "mobleyhelms_com"}, {"domain": "mobleymetal.com", "name": "mobleymetal_com"}, {"domain": "mobleyreport.com", "name": "mobleyreport_com"}, {"domain": "mobleysoft.com", "name": "mobleysoft_com"}, {"domain": "roncorp.cc", "name": "roncorp_cc"}, {"domain": "ronhelms.cc", "name": "ronhelms_cc"}]};
+    const fleetDrawer = document.getElementById('fleet-drawer');
+    const fleetDrawerTitle = document.getElementById('fleet-drawer-title');
+    const fleetLinksGrid = document.getElementById('fleet-links-grid');
+    let activeFleetCat = null;
+
+    function toggleFleetCategory(cat) {
+      if (activeFleetCat === cat) {
+        closeFleetDrawer();
+        return;
+      }
+      
+      activeFleetCat = cat;
+      document.querySelectorAll('.cat-chip').forEach(c => {
+        c.classList.toggle('active', c.textContent.trim() === cat);
+      });
+
+      fleetDrawerTitle.textContent = \`\${cat.toUpperCase()} FLEET SITES\`;
+      fleetLinksGrid.innerHTML = '';
+      
+      const sites = FLEET_DATA[cat] || [];
+      sites.forEach(s => {
+        const a = document.createElement('a');
+        a.href = \`https://\${s.domain}/\`;
+        a.target = '_blank';
+        a.className = 'fleet-link';
+        a.textContent = s.name.replace(/_/g, ' ').toUpperCase();
+        fleetLinksGrid.appendChild(a);
+      });
+      
+      fleetDrawer.classList.add('open');
+      resetIdleTimer();
+    }
+    
+    function closeFleetDrawer() {
+      if (!fleetDrawer) return;
+      fleetDrawer.classList.remove('open');
+      activeFleetCat = null;
+      document.querySelectorAll('.cat-chip').forEach(c => c.classList.remove('active'));
+    }
+
+    // Close fleet drawer on outside click
+    document.addEventListener('click', (e) => {
+      if (fleetDrawer && !fleetDrawer.contains(e.target) && !e.target.classList.contains('cat-chip')) {
+        closeFleetDrawer();
+      }
+    });
+
+    // \u2500\u2500 Interaction & Idle Show/Hide \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500
+    const appContainer = document.getElementById('app-container');
+    const canvas = document.getElementById('bg-canvas');
+    let idleTimer = null;
+    
+    function showUI() {
+      // If pointer is captured (playing SightX), keep UI hidden
+      if (document.pointerLockElement === canvas) return;
+      
+      appContainer.classList.remove('hidden');
+      canvas.classList.remove('interactive');
+      resetIdleTimer();
+    }
+    
+    function hideUI() {
+      appContainer.classList.add('hidden');
+      canvas.classList.add('interactive');
+      closeFleetDrawer();
+    }
+    
+    // Start showing overlay, then let it fade
+    function resetIdleTimer() {
+      clearTimeout(idleTimer);
+      idleTimer = setTimeout(hideUI, 5000); // Hide after 5 seconds idle
+    }
+    
+    // Wire up events
+    document.addEventListener('mousemove', showUI);
+    document.addEventListener('click', showUI);
+    document.addEventListener('keydown', showUI);
+    document.addEventListener('touchstart', showUI);
+    
+    // Prevent hiding while interacting with the overlay
+    appContainer.addEventListener('mousemove', (e) => { e.stopPropagation(); resetIdleTimer(); });
+    appContainer.addEventListener('click', (e) => { e.stopPropagation(); resetIdleTimer(); });
+    appContainer.addEventListener('keydown', (e) => { e.stopPropagation(); resetIdleTimer(); });
+    
+    // SightX is a dedicated, unoccluded product demonstrator.
+    if (document.body.classList.contains('sightx-demo')) {
+      hideUI();
+    } else {
+      resetIdleTimer();
+    }
+
+    // \u2500\u2500 WebGL Setup (SightX playable background corridor) \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500
+    const gl = canvas.getContext('webgl2');
+    let sightxExperience = null;
+    
+    function resize() {
+      const scale = sightxExperience ? sightxExperience.renderScale : Math.min(window.devicePixelRatio, 1.25);
+      canvas.width = Math.floor(window.innerWidth * scale);
+      canvas.height = Math.floor(window.innerHeight * scale);
+      canvas.style.width = window.innerWidth + 'px';
+      canvas.style.height = window.innerHeight + 'px';
+      gl.viewport(0, 0, canvas.width, canvas.height);
+    }
+    window.addEventListener('resize', resize);
+    resize();
+    
+    const VS = \`#version 300 es
+    in vec2 a;
+    void main(){ gl_Position = vec4(a, 0, 1); }\`;
+    
+    const FS = \`#version 300 es
+    precision highp float;
+    out vec4 fragColor;
+    uniform vec2  u_res;
+    uniform float u_t;
+    uniform vec3  u_cam;
+    uniform vec3  u_dir;
+    uniform float u_scan;
+    uniform vec3  u_target;
+    uniform sampler2D u_planSdf;
+    uniform sampler2D u_planSource;
+    uniform int u_planMode;
+    uniform vec4 u_planBounds;
+    uniform float u_planHeight;
+
+    float hash(vec3 p){ return fract(sin(dot(p,vec3(127.1,311.7,74.7)))*43758.5); }
+    float noise(vec3 p){
+      vec3 i=floor(p), f=fract(p);
+      f=f*f*(3.-2.*f);
+      return mix(mix(mix(hash(i),hash(i+vec3(1,0,0)),f.x),
+                     mix(hash(i+vec3(0,1,0)),hash(i+vec3(1,1,0)),f.x),f.y),
+                 mix(mix(hash(i+vec3(0,0,1)),hash(i+vec3(1,0,1)),f.x),
+                     mix(hash(i+vec3(0,1,1)),hash(i+vec3(1,1,1)),f.x),f.y),f.z);
+    }
+
+    float sdBox(vec3 p, vec3 b){ vec3 q=abs(p)-b; return length(max(q,0.))+min(max(q.x,max(q.y,q.z)),0.); }
+    float sdCyl(vec3 p, float r, float h){ vec2 d=abs(vec2(length(p.xz),p.y))-vec2(r,h); return min(max(d.x,d.y),0.)+length(max(d,0.)); }
+    float sdSphere(vec3 p, float r){ return length(p)-r; }
+
+    vec2 put(vec2 scene, float distance, float material){
+      return distance < scene.x ? vec2(distance, material) : scene;
+    }
+
+    float sdDoorOpening(vec3 q, float w, float h){
+      return sdBox(q-vec3(0.0,h*.5,0.0),vec3(w,h*.5,0.30));
+    }
+
+    float sdDoorFrame(vec3 q, float w, float h){
+      float rail=0.065, depth=0.10;
+      float head = sdBox(q-vec3(0.0,h+rail,0.0),vec3(w+rail,rail,depth));
+      float left = sdBox(q-vec3(-w-rail,h*.5,0.0),vec3(rail,h*.5+rail,depth));
+      float right= sdBox(q-vec3( w+rail,h*.5,0.0),vec3(rail,h*.5+rail,depth));
+      return min(head,min(left,right));
+    }
+
+    float sdDoorPanels(vec3 q, float w, float h, float open){
+      float halfPanel=w*.48;
+      float travel=open*w*.72;
+      float left =sdBox(q-vec3(-w*.5-travel,h*.5,0.0),vec3(halfPanel,h*.5-.08,.026));
+      float right=sdBox(q-vec3( w*.5+travel,h*.5,0.0),vec3(halfPanel,h*.5-.08,.026));
+      return min(left,right);
+    }
+
+    float doorOpen(vec2 position){
+      return 1.0-smoothstep(0.85,2.5,length(u_cam.xz-position));
+    }
+
+    // Local door coordinates: X runs across the opening, Y is vertical, Z is
+    // perpendicular to its host wall. This keeps every panel correctly oriented.
+    vec3 sideDoorSpace(vec3 p, float wallX, float doorZ){
+      return vec3(p.z-doorZ,p.y,p.x-wallX);
+    }
+
+    float sdPlanWall(vec3 p){
+      vec2 span=max(u_planBounds.zw-u_planBounds.xy,vec2(.001));
+      vec2 uv=(p.xz-u_planBounds.xy)/span;
+      vec2 outside=max(max(-uv,uv-1.0)*span,0.0);
+      if(any(lessThan(uv,vec2(0.0)))||any(greaterThan(uv,vec2(1.0)))) return length(outside)+1.0;
+      float plan=texture(u_planSdf,vec2(uv.x,1.0-uv.y)).r;
+      float vertical=abs(p.y-u_planHeight*.5)-u_planHeight*.5;
+      vec2 d=vec2(plan,vertical);
+      return min(max(d.x,d.y),0.0)+length(max(d,0.0));
+    }
+
+    vec2 map(vec3 p){
+      if(u_planMode==1){
+        vec2 planResult=vec2(p.y,8.0);
+        planResult=put(planResult,sdPlanWall(p),1.0);
+        return planResult;
+      }
+      float path = 1.0-smoothstep(2.7,3.1,abs(p.x));
+      float groundMaterial = 7.0;
+      if((abs(p.x)<7.04 && p.z>0.0 && p.z<16.0) || (path>.5 && p.z<.2)) groundMaterial=8.0;
+      vec2 res=vec2(p.y,groundMaterial);
+
+      // Finite facility shell: 14.4m wide, 16m deep, with a real exterior.
+      float outerWest=sdBox(p-vec3(-7.2,1.7,8.0),vec3(.16,1.7,8.0));
+      float outerEast=sdBox(p-vec3( 7.2,1.7,8.0),vec3(.16,1.7,8.0));
+      float rear=sdBox(p-vec3(0.0,1.7,16.0),vec3(7.2,1.7,.16));
+      float front=sdBox(p-vec3(0.0,1.7,0.0),vec3(7.2,1.7,.16));
+      front=max(front,-sdDoorOpening(p,1.30,2.45));
+      float roof=sdBox(p-vec3(0.0,3.45,8.0),vec3(7.36,.14,8.16));
+      res=put(res,outerWest,1.0); res=put(res,outerEast,1.0);
+      res=put(res,rear,1.0);      res=put(res,front,1.0);
+      res=put(res,roof,5.0);
+
+      // Corridor walls host four automatic double-sliding doors per side.
+      float westWall=sdBox(p-vec3(-2.0,1.6,8.0),vec3(.10,1.6,8.0));
+      float eastWall=sdBox(p-vec3( 2.0,1.6,8.0),vec3(.10,1.6,8.0));
+      for(int i=0;i<4;i++){
+        float z=2.0+float(i)*4.0;
+        westWall=max(westWall,-sdDoorOpening(sideDoorSpace(p,-2.0,z),.68,2.35));
+        eastWall=max(eastWall,-sdDoorOpening(sideDoorSpace(p, 2.0,z),.68,2.35));
+      }
+      res=put(res,westWall,1.0); res=put(res,eastWall,1.0);
+
+      // Four rooms in each wing, separated from one another but connected to
+      // the central circulation spine through the modeled door openings.
+      for(int i=0;i<3;i++){
+        float z=4.0+float(i)*4.0;
+        res=put(res,sdBox(p-vec3(-4.6,1.6,z),vec3(2.5,1.6,.10)),1.0);
+        res=put(res,sdBox(p-vec3( 4.6,1.6,z),vec3(2.5,1.6,.10)),1.0);
+      }
+
+      // Room program. Each controlled opening now leads to a recognizable,
+      // navigable construction workspace rather than an empty shell.
+      res=put(res,sdBox(p-vec3(-5.45,.76, 2.0),vec3(1.05,.07,.52)),12.0); // Project office desk
+      res=put(res,sdBox(p-vec3(-5.45,1.12,2.0),vec3(.42,.27,.035)),13.0); // Project display
+      res=put(res,sdBox(p-vec3(-6.55,.92,3.15),vec3(.30,.92,.58)),13.0); // Drawing storage
+
+      res=put(res,sdBox(p-vec3( 4.70,.76, 2.0),vec3(1.25,.07,.58)),12.0); // Conference table
+      res=put(res,sdBox(p-vec3( 4.70,.42, 1.18),vec3(.95,.40,.28)),2.0);
+      res=put(res,sdBox(p-vec3( 4.70,.42, 2.82),vec3(.95,.40,.28)),2.0);
+
+      res=put(res,sdBox(p-vec3(-4.55,.76, 6.0),vec3(1.05,.07,.58)),12.0); // Materials review table
+      res=put(res,sdBox(p-vec3(-6.55,1.08,6.0),vec3(.30,1.08,1.15)),13.0); // Sample rack
+      res=put(res,sdBox(p-vec3(-4.85,.96,6.0),vec3(.48,.12,.35)),14.0); // Reviewed sample
+
+      res=put(res,sdBox(p-vec3( 5.45,1.10,5.35),vec3(.48,1.10,.42)),13.0); // Telecom rack A
+      res=put(res,sdBox(p-vec3( 5.45,1.10,6.65),vec3(.48,1.10,.42)),13.0); // Telecom rack B
+
+      res=put(res,sdBox(p-vec3(-4.65,.78,10.0),vec3(1.30,.06,.72)),12.0); // Plan review table
+      res=put(res,sdBox(p-vec3(-6.92,1.68,10.0),vec3(.035,.68,1.10)),14.0); // Plan board
+
+      res=put(res,sdBox(p-vec3( 6.68,1.12,10.0),vec3(.24,1.12,1.18)),13.0); // Electrical switchgear
+      res=put(res,sdBox(p-vec3( 5.85,.18,10.0),vec3(.62,.018,1.35)),14.0); // Service clearance
+
+      res=put(res,sdBox(p-vec3(-5.25,.88,14.0),vec3(1.05,.88,.62)),13.0); // Air-handling unit
+      res=put(res,sdCyl(p-vec3(-6.45,1.55,14.0),.13,1.55),2.0); // Mechanical riser
+
+      res=put(res,sdBox(p-vec3( 5.35,.76,14.0),vec3(1.05,.07,.52)),12.0); // Facilities workstation
+      res=put(res,sdBox(p-vec3( 6.55,.92,14.9),vec3(.30,.92,.58)),13.0); // Facilities storage
+
+      // Main entrance: a centered, sensor-driven double sliding assembly.
+      float entryOpen=doorOpen(vec2(0.0,0.0));
+      res=put(res,sdDoorFrame(p,1.30,2.45),2.0);
+      res=put(res,sdDoorPanels(p,1.30,2.45,entryOpen),3.0);
+
+      float hardware=1e9;
+      for(int i=0;i<4;i++){
+        float z=2.0+float(i)*4.0;
+        vec3 westQ=sideDoorSpace(p,-2.0,z);
+        vec3 eastQ=sideDoorSpace(p, 2.0,z);
+        float westOpen=doorOpen(vec2(-2.0,z));
+        float eastOpen=doorOpen(vec2( 2.0,z));
+        res=put(res,sdDoorFrame(westQ,.68,2.35),2.0);
+        res=put(res,sdDoorPanels(westQ,.68,2.35,westOpen),3.0);
+        res=put(res,sdDoorFrame(eastQ,.68,2.35),2.0);
+        res=put(res,sdDoorPanels(eastQ,.68,2.35,eastOpen),3.0);
+        hardware=min(hardware,sdBox(westQ-vec3(.42,1.32,-.12),vec3(.08,.12,.025)));
+        hardware=min(hardware,sdBox(eastQ-vec3(.42,1.32,-.12),vec3(.08,.12,.025)));
+      }
+      res=put(res,hardware,4.0);
+
+      // Entrance canopy, structural columns, glazing, and interior luminaires.
+      res=put(res,sdBox(p-vec3(0.0,3.02,-1.8),vec3(3.0,.12,1.8)),5.0);
+      res=put(res,sdBox(p-vec3(-2.72,1.5,-2.2),vec3(.12,1.5,.12)),2.0);
+      res=put(res,sdBox(p-vec3( 2.72,1.5,-2.2),vec3(.12,1.5,.12)),2.0);
+      res=put(res,sdBox(p-vec3(-4.45,1.65,-.19),vec3(1.35,1.02,.025)),3.0);
+      res=put(res,sdBox(p-vec3( 4.45,1.65,-.19),vec3(1.35,1.02,.025)),3.0);
+      for(int i=0;i<4;i++){
+        float z=2.0+float(i)*4.0;
+        res=put(res,sdBox(p-vec3(0.0,3.25,z),vec3(.42,.07,.42)),6.0);
+        res=put(res,sdBox(p-vec3(-4.6,3.25,z),vec3(.50,.07,.36)),6.0);
+        res=put(res,sdBox(p-vec3( 4.6,3.25,z),vec3(.50,.07,.36)),6.0);
+      }
+
+      // Wider Weyland campus: low service annexes and approach lighting make
+      // the facility legible as a building in a world, not an isolated box.
+      res=put(res,sdBox(p-vec3(-14.0,2.0,10.0),vec3(4.2,2.0,5.4)),9.0);
+      res=put(res,sdBox(p-vec3( 15.0,1.7,13.0),vec3(4.8,1.7,6.0)),9.0);
+      res=put(res,sdBox(p-vec3(-14.0,4.12,10.0),vec3(4.45,.12,5.65)),5.0);
+      res=put(res,sdBox(p-vec3( 15.0,3.52,13.0),vec3(5.05,.12,6.25)),5.0);
+      float poles=min(sdCyl(p-vec3(-4.6,2.6,-7.0),.07,2.6),sdCyl(p-vec3(4.6,2.6,-7.0),.07,2.6));
+      res=put(res,poles,2.0);
+      res=put(res,sdBox(p-vec3(-4.6,5.18,-7.0),vec3(.38,.06,.16)),6.0);
+      res=put(res,sdBox(p-vec3( 4.6,5.18,-7.0),vec3(.38,.06,.16)),6.0);
+
+      // Arrival landscape and illuminated campus marker establish a deliberate
+      // public face without obstructing the central accessible approach.
+      res=put(res,sdBox(p-vec3(-5.35,.82,-3.15),vec3(1.42,.72,.09)),10.0);
+      res=put(res,sdBox(p-vec3(-5.35,.10,-3.15),vec3(1.62,.10,.30)),2.0);
+      for(int i=0;i<2;i++){
+        float x=-5.5+float(i)*11.0;
+        res=put(res,sdBox(p-vec3(x,.28,-1.85),vec3(.72,.28,.52)),2.0);
+        res=put(res,sdSphere(p-vec3(x,.78,-1.85),.58),11.0);
+      }
+      for(int i=0;i<2;i++){
+        float x=3.0+float(i)*3.0;
+        res=put(res,sdBox(p-vec3( x,2.05,-.25),vec3(.035,1.15,.08)),2.0);
+        res=put(res,sdBox(p-vec3(-x,2.05,-.25),vec3(.035,1.15,.08)),2.0);
+      }
+      return res;
+    }
+
+    vec2 march(vec3 ro, vec3 rd){
+      float t=0.001; float id=0.;
+      for(int i=0;i<112;i++){
+        vec2 h=map(ro+rd*t);
+        if(h.x<0.002) return vec2(t,h.y);
+        t+=h.x*.85;
+        if(t>72.) break;
+      }
+      return vec2(-1.,0.);
+    }
+
+    vec3 normal(vec3 p){
+      float e=.001;
+      return normalize(vec3(
+        map(p+vec3(e,0,0)).x-map(p-vec3(e,0,0)).x,
+        map(p+vec3(0,e,0)).x-map(p-vec3(0,e,0)).x,
+        map(p+vec3(0,0,e)).x-map(p-vec3(0,0,e)).x));
+    }
+
+    float ao(vec3 p, vec3 n){
+      float s=0.; float w=1.;
+      for(int i=1;i<=5;i++){
+        float d=float(i)*.08;
+        s+=w*(d-map(p+n*d).x);
+        w*=.6;
+      }
+      return clamp(1.-s*2.2,0.,1.);
+    }
+
+    vec3 sky(vec3 rd){
+      vec3 sunDir = normalize(vec3(0.55, 0.16, 0.45));
+      vec3 betaR  = vec3(5.8e-6, 9.0e-6, 1.4e-5);
+      float betaM = 6.5e-5;
+      float HR=8000., HM=1200.;
+      float elev    = max(rd.y,0.01);
+      float sunElev = max(sunDir.y,0.02);
+      vec3  tauR = betaR*HR*(1./elev+1./sunElev);
+      float tauM = betaM*HM*(1./elev+1./sunElev);
+      vec3  T    = exp(-tauR-tauM);
+      float mu   = dot(rd,sunDir);
+      float phR  = .75*(1.+mu*mu);
+      float phM  = .5*(1.-(.76*.76))/pow(1.+.76*.76-2.*.76*mu,1.5);
+      vec3 planck= vec3(1.0,0.82,0.52);
+      vec3 s     = (phR*betaR*HR/elev+phM*betaM*HM/elev)*T*planck*3.2;
+      float sunDot=max(dot(rd,sunDir),0.);
+      if(sunDot>0.9998 && sunDir.y>-0.05){
+        float limb=1.-smoothstep(.9998,.99995,sunDot);
+        s += planck*limb*90.*max(0.,sunDir.y+0.08);
+      }
+      s += vec3(1.0,0.92,0.70)*pow(max(0.,1.-abs(rd.y)),6.)*0.18;
+      return clamp(s,0.,1.);
+    }
+
+    vec3 shade(vec3 albedo, float metal, float rough,
+               vec3 N, vec3 V, vec3 L, vec3 lc, float shadow){
+      vec3 H = normalize(V+L);
+      float NdL=max(dot(N,L),0.), NdV=max(dot(N,V),0.01), NdH=max(dot(N,H),0.);
+      float a=rough*rough;
+      float D=a*a/(3.14159*pow(NdH*NdH*(a*a-1.)+1.,2.));
+      float k=(rough+1.)*(rough+1.)/8.;
+      float G=NdL/(NdL*(1.-k)+k)*NdV/(NdV*(1.-k)+k);
+      vec3 F0=mix(vec3(.04),albedo,metal);
+      vec3 F=F0+(1.-F0)*pow(1.-max(dot(H,V),0.),5.);
+      vec3 spec=D*G*F/(4.*NdV*NdL+.001);
+      vec3 diff=albedo*(1.-metal)*(1.-F)/3.14159;
+      return (diff+spec)*lc*NdL*shadow;
+    }
+
+    void main(){
+      vec2 uv = (gl_FragCoord.xy/u_res*2.-1.)*vec2(u_res.x/u_res.y,1.);
+      vec3 ro    = u_cam;
+      vec3 fwd   = normalize(u_dir);
+      vec3 right = normalize(cross(vec3(0,1,0), fwd));
+      vec3 up    = cross(fwd, right);
+      vec3 rd    = normalize(fwd + right*uv.x*0.62 + up*uv.y*0.62);
+
+      vec2 hit = march(ro, rd);
+      vec3 col;
+
+      vec3 sunDir = normalize(vec3(0.55, 0.16, 0.45));
+      vec3 sunCol = vec3(1.0, 0.78, 0.45)*4.8;
+
+      if(hit.x > 0.){
+        vec3 p = ro + rd*hit.x;
+        vec3 N = normal(p);
+        vec3 V = -rd;
+        float matID = hit.y;
+        vec3  albedo; float metal=0., rough=0.7;
+        vec3  emissive = vec3(0.0);
+
+        if(matID < 1.5){
+          albedo = vec3(0.82,0.79,0.74)+noise(p*14.)*0.025 - noise(p*40.)*0.018;
+          rough  = 0.84;
+          if(N.y > 0.8){
+            albedo = vec3(0.52,0.50,0.46)+noise(p*6.)*0.03;
+            rough  = 0.76;
+          }
+        } else if(matID < 2.5){
+          albedo = vec3(0.18,0.12,0.07)+noise(p*22.)*0.02;
+          metal  = 0.72; rough = 0.42;
+        } else if(matID < 3.5){
+          albedo = vec3(0.08,0.13,0.15)+noise(p*30.)*0.012;
+          metal  = 0.58; rough = 0.22;
+        } else if(matID < 4.5){
+          albedo = vec3(0.06,0.06,0.07);
+          metal  = 0.28; rough = 0.38;
+        } else if(matID < 5.5){
+          albedo = vec3(0.05,0.05,0.06);
+          rough  = 0.9;
+        } else if(matID < 6.5){
+          // Ceiling and campus light fixtures
+          albedo = vec3(1.0);
+          rough = 0.1;
+          emissive = vec3(1.0, 0.88, 0.65) * 4.5;
+        } else if(matID < 7.5){
+          albedo = vec3(0.13,0.18,0.075)+noise(p*3.0)*0.075;
+          rough = 0.96;
+        } else if(matID < 8.5){
+          float seam=min(abs(fract(p.x*.25)-.5),abs(fract(p.z*.25)-.5));
+          albedo = vec3(0.29,0.28,0.25)+noise(p*8.0)*0.025-step(seam,.012)*.06;
+          if(u_planMode==1){
+            vec2 span=max(u_planBounds.zw-u_planBounds.xy,vec2(.001));
+            vec2 planUv=(p.xz-u_planBounds.xy)/span;
+            if(all(greaterThanEqual(planUv,vec2(0.0)))&&all(lessThanEqual(planUv,vec2(1.0)))){
+              vec3 drawing=texture(u_planSource,vec2(planUv.x,1.0-planUv.y)).rgb;
+              float ink=1.0-dot(drawing,vec3(.299,.587,.114));
+              albedo=mix(vec3(.34,.33,.30),vec3(.13,.19,.22),smoothstep(.08,.62,ink));
+            }
+          }
+          rough = 0.88;
+        } else if(matID < 9.5){
+          albedo = vec3(0.20,0.21,0.19)+noise(p*9.0)*0.035;
+          metal = 0.18; rough = 0.72;
+        } else if(matID < 10.5){
+          albedo = vec3(0.035,0.032,0.026);
+          metal = 0.35; rough = 0.28;
+          float markerLine = smoothstep(.42,.49,abs(fract(p.y*3.6)-.5));
+          emissive = vec3(1.0,.52,.035)*markerLine*1.35;
+        } else if(matID < 11.5){
+          albedo = vec3(0.055,0.16,0.045)+noise(p*5.5)*0.07;
+          rough = 0.98;
+        } else if(matID < 12.5){
+          albedo = vec3(0.31,0.19,0.095)+noise(p*9.0)*0.035;
+          rough = 0.72;
+        } else if(matID < 13.5){
+          albedo = vec3(0.10,0.12,0.13)+noise(p*18.0)*0.018;
+          metal = 0.55; rough = 0.38;
+        } else {
+          albedo = vec3(0.82,0.80,0.72);
+          rough = 0.68;
+        }
+
+        float shadow = 1.0;
+        vec3 sp = p + N*0.015;
+        float st = 0.1;
+        for(int i=0;i<24;i++){
+          float sd = map(sp+sunDir*st).x;
+          shadow = min(shadow, 8.*sd/st);
+          st += max(sd, 0.04);
+          if(st>12.||shadow<0.01) break;
+        }
+        shadow = clamp(shadow,0.,1.);
+        float occ = ao(p,N);
+
+        vec3 lighting = shade(albedo,metal,rough,N,V,sunDir,sunCol,shadow);
+        vec3 skyL = vec3(0.40,0.28,0.14)*0.30;
+        lighting += albedo*(1.-metal)*skyL*(0.5+0.5*max(N.y,0.));
+        lighting += albedo*(1.-metal)*vec3(0.14,0.10,0.05)*max(-N.y,0.)*0.25;
+        lighting += albedo*(1.-metal)*vec3(0.08,0.06,0.04)*(0.5+0.5*N.y);
+
+        vec3 workPos[4];
+        workPos[0]=vec3( 0.,3.0, 2.5);
+        workPos[1]=vec3( 0.,3.0, 6.5);
+        workPos[2]=vec3( 0.,3.0,10.5);
+        workPos[3]=vec3( 0.,3.0,13.5);
+        vec3 warmL = vec3(1.0,0.82,0.56);
+        for(int i=0;i<4;i++){
+          vec3 lv  = workPos[i]-p;
+          float ld = length(lv);
+          vec3 ldir= lv/ld;
+          float att= 7.0/(1.+ld*ld*0.15);
+          float spot= smoothstep(.1,.8,dot(ldir,vec3(0.,-1.,0.)));
+          lighting += shade(albedo,metal,rough,N,V,ldir,warmL*att*(0.35+0.65*spot),1.);
+        }
+
+        lighting *= mix(occ,1.,0.35);
+        lighting += emissive;
+        float targetField = exp(-length(p-u_target)*0.82);
+        float scanBand = pow(max(0.,sin((p.y+p.z*.045-u_t*2.2)*15.0)),18.0);
+        float scanRim = pow(1.-abs(dot(N,V)),3.0);
+        lighting += vec3(1.0,.57,.045)*u_scan*targetField*(.22+scanBand*1.25+scanRim*.35);
+        float fog = 1.-exp(-hit.x*0.022);
+        vec3 fogCol = mix(vec3(0.30,0.23,0.14),sky(normalize(vec3(rd.x,max(rd.y,.04),rd.z))),.62);
+        if(p.z>0.0 && p.z<16.0 && abs(p.x)<7.15) fogCol=vec3(0.045,0.032,0.018);
+        col = mix(lighting, fogCol, fog);
+
+      } else {
+        col = sky(rd);
+        col = mix(col, vec3(0.35,0.28,0.18)*0.6, 0.15);
+      }
+
+      vec2 vp = gl_FragCoord.xy/u_res;
+      vec2 vig = vp*(1.-vp.yx);
+      col *= pow(vig.x*vig.y*15.,0.14);
+
+      col = col*(2.51*col+0.03)/(col*(2.43*col+0.59)+0.14);
+      col = pow(clamp(col,0.,1.), vec3(0.4545));
+      fragColor = vec4(col,1.);
+    }\`;
+    
+    function compile(type, src){
+      const s = gl.createShader(type);
+      gl.shaderSource(s, src);
+      gl.compileShader(s);
+      if(!gl.getShaderParameter(s, gl.COMPILE_STATUS)){
+        console.error('Shader error:', gl.getShaderInfoLog(s));
+        return null;
+      }
+      return s;
+    }
+    
+    const prog = gl.createProgram();
+    gl.attachShader(prog, compile(gl.VERTEX_SHADER, VS));
+    gl.attachShader(prog, compile(gl.FRAGMENT_SHADER, FS));
+    gl.linkProgram(prog);
+    gl.useProgram(prog);
+    
+    const buf = gl.createBuffer();
+    gl.bindBuffer(gl.ARRAY_BUFFER, buf);
+    gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1,-1,3,-1,-1,3]), gl.STATIC_DRAW);
+    const aLoc = gl.getAttribLocation(prog, 'a');
+    gl.enableVertexAttribArray(aLoc);
+    gl.vertexAttribPointer(aLoc, 2, gl.FLOAT, false, 0, 0);
+    
+    const uRes = gl.getUniformLocation(prog, 'u_res');
+    const uT   = gl.getUniformLocation(prog, 'u_t');
+    const uCam = gl.getUniformLocation(prog, 'u_cam');
+    const uDir = gl.getUniformLocation(prog, 'u_dir');
+    const uScan = gl.getUniformLocation(prog, 'u_scan');
+    const uTarget = gl.getUniformLocation(prog, 'u_target');
+    const uPlanSdf = gl.getUniformLocation(prog, 'u_planSdf');
+    const uPlanSource = gl.getUniformLocation(prog, 'u_planSource');
+    const uPlanMode = gl.getUniformLocation(prog, 'u_planMode');
+    const uPlanBounds = gl.getUniformLocation(prog, 'u_planBounds');
+    const uPlanHeight = gl.getUniformLocation(prog, 'u_planHeight');
+
+    const planSdfTexture = gl.createTexture();
+    gl.activeTexture(gl.TEXTURE0);
+    gl.bindTexture(gl.TEXTURE_2D, planSdfTexture);
+    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
+    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
+    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
+    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
+    gl.texImage2D(gl.TEXTURE_2D,0,gl.R32F,1,1,0,gl.RED,gl.FLOAT,new Float32Array([100]));
+    const planSourceTexture = gl.createTexture();
+    gl.activeTexture(gl.TEXTURE1);
+    gl.bindTexture(gl.TEXTURE_2D, planSourceTexture);
+    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
+    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
+    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
+    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
+    gl.texImage2D(gl.TEXTURE_2D,0,gl.RGBA,1,1,0,gl.RGBA,gl.UNSIGNED_BYTE,new Uint8Array([255,255,255,255]));
+    gl.uniform1i(uPlanSdf,0);
+    gl.uniform1i(uPlanSource,1);
+    let activePlanModel=null;
+    
+    // Proximity doorways in XZ plane
+    const doorways = [
+      { x: 0.0, z: 0.0, side: "South", name: "Weyland Main Automatic Entrance (S1)", hardware: "Dual-panel sensor-driven sliding entrance, presence safety curtain, monitored access controller" },
+      { x: -2.0, z: 2.0, side: "West", name: "Project Office Automatic Opening (W1)", hardware: "Horton Series 2000 automatic sliding assembly, Schlage AD-Series access control, Pemko gasketing" },
+      { x: 2.0, z: 2.0, side: "East", name: "Conference Room Automatic Opening (E1)", hardware: "Besam SW200 automatic operator, monitored presence sensor, Rixson concealed support" },
+      { x: -2.0, z: 6.0, side: "West", name: "Materials Review Automatic Opening (W2)", hardware: "Automatic double-slide leaf set, wireless access lock, perimeter gasketing" },
+      { x: 2.0, z: 6.0, side: "East", name: "IT and Telecom Room Opening (E2)", hardware: "Fail-secure automatic operator, request-to-exit sensor, monitored latch interface" },
+      { x: -2.0, z: 10.0, side: "West", name: "Plan Review Room Automatic Opening (W3)", hardware: "Sensor-driven sliding assembly, monitored access control, perimeter gasketing" },
+      { x: 2.0, z: 10.0, side: "East", name: "Electrical Room Controlled Opening (E3)", hardware: "Automatic sliding assembly, occupancy sensing, emergency breakout leaves" },
+      { x: -2.0, z: 14.0, side: "West", name: "Mechanical Room Controlled Opening (W4)", hardware: "Automatic operator, dual-channel safety edge, keycard access controller" },
+      { x: 2.0, z: 14.0, side: "East", name: "Facilities Office Automatic Opening (E4)", hardware: "Automatic double-slide assembly, badge reader, monitored egress" }
+    ];
+
+    const scanTargets = doorways.map((door, index) => ({
+      id: index === 0 ? 'entrance' : \`opening-\${door.side.toLowerCase()}-\${door.z}\`,
+      type: index === 0 ? 'AUTOMATIC ENTRANCE' : 'CONTROLLED OPENING',
+      name: door.name,
+      summary: door.hardware,
+      dimensions: index === 0 ? '2.60 W x 2.45 H m clear' : '1.36 W x 2.35 H m clear',
+      material: 'Aluminum / laminated safety glass',
+      hazard: index === 0 ? 'Validate presence curtain and breakout path' : 'Validate safety sensor before turnover',
+      status: index === 0 ? 'COMMISSIONING READY' : 'SPEC LINKED',
+      position: [door.x, 1.25, door.z],
+      radius: index === 0 ? 1.55 : 0.82,
+      maxRange: index === 0 ? 25 : 12,
+      tags: index === 0 ? ['exterior', 'opening'] : ['interior', 'opening']
+    }));
+    scanTargets.push(
+      { id: 'entrance-canopy', type: 'STRUCTURAL ASSEMBLY', name: 'Cantilevered Arrival Canopy', summary: 'Steel canopy, paired columns, integrated warm-white luminaires, and protected passenger loading zone.', dimensions: '6.00 W x 3.60 D m', material: 'Painted structural steel / membrane roof', hazard: 'Confirm drainage fall and column protection', status: 'MODEL COORDINATED', position: [0, 2.95, -1.8], radius: 2.6, maxRange: 20, tags: ['exterior', 'structure'] },
+      { id: 'approach-light-west', type: 'ELECTRICAL FIXTURE', name: 'West Approach Luminaire', summary: 'Site lighting pole with shielded LED head, photometric zone assignment, and underground feeder.', dimensions: '5.20 m mounting height', material: 'Powder-coated steel / LED optical head', hazard: 'Confirm footing cover and underground locate', status: 'CIRCUIT LINKED', position: [-4.6, 4.9, -7], radius: 0.75, maxRange: 16, tags: ['exterior', 'electrical'] },
+      { id: 'annex-west', type: 'FACILITY ZONE', name: 'West Service Annex', summary: 'Low-rise service annex linked to site logistics, utilities, and access-control models.', dimensions: '8.40 W x 10.80 D x 4.00 H m', material: 'Composite rainscreen / steel frame', hazard: 'Confirm delivery route and exterior drainage coordination', status: 'DIGITAL TWIN ONLINE', position: [-14, 2.0, 10], radius: 4.2, maxRange: 30, tags: ['exterior', 'facility'] },
+      { id: 'annex-east', type: 'FACILITY ZONE', name: 'East Operations Annex', summary: 'Operations annex with coordinated structure, envelope, equipment clearances, and work-package ownership.', dimensions: '9.60 W x 12.00 D x 3.40 H m', material: 'Insulated metal panel / steel frame', hazard: 'Maintain service access clearances', status: 'DIGITAL TWIN ONLINE', position: [15, 1.7, 13], radius: 4.8, maxRange: 32, tags: ['exterior', 'facility'] },
+      { id: 'corridor-light-2', type: 'ELECTRICAL FIXTURE', name: 'Corridor Luminaire L2', summary: 'Interior area light linked to reflected ceiling plan, circuit schedule, controls sequence, and commissioning test.', dimensions: '0.84 W x 0.84 D m', material: 'Aluminum housing / diffuse lens', hazard: 'Verify emergency circuit designation', status: 'CIRCUIT LINKED', position: [0, 3.15, 6], radius: 0.65, maxRange: 10, tags: ['interior', 'electrical'] }
+    );
+    sightxExperience = window.SightXExperience.create({ targets: scanTargets });
+    const sightxIngest = window.SightXSiteGenome.mount({ experience: sightxExperience });
+    resize();
+    
+    const sideDoorZ = [2, 6, 10, 14];
+    const roomFixtures = [
+      [-5.45, 2.0, 1.18, 0.67], [-6.55, 3.15, 0.42, 0.70],
+      [4.70, 2.0, 1.38, 0.74],
+      [-4.55, 6.0, 1.18, 0.72], [-6.55, 6.0, 0.42, 1.27],
+      [5.45, 5.35, 0.60, 0.54], [5.45, 6.65, 0.60, 0.54],
+      [-4.65, 10.0, 1.43, 0.85], [6.68, 10.0, 0.37, 1.31],
+      [-5.25, 14.0, 1.18, 0.75], [5.35, 14.0, 1.18, 0.67],
+      [6.55, 14.9, 0.42, 0.70]
+    ];
+
+    function nearSideOpening(z) {
+      return sideDoorZ.some(doorZ => Math.abs(z - doorZ) < 0.72);
+    }
+
+    function positionBlocked(x, z) {
+      if(activePlanModel){
+        const [minX,minZ,maxX,maxZ]=activePlanModel.bounds;
+        const u=(x-minX)/(maxX-minX), v=(z-minZ)/(maxZ-minZ);
+        if(u<0||u>1||v<0||v>1) return false;
+        const px=Math.max(0,Math.min(activePlanModel.width-1,Math.round(u*(activePlanModel.width-1))));
+        const py=Math.max(0,Math.min(activePlanModel.height-1,Math.round(v*(activePlanModel.height-1))));
+        return activePlanModel.sdf[py*activePlanModel.width+px]<0.32;
+      }
+      const ax = Math.abs(x);
+      if (Math.abs(x + 5.35) < 1.68 && Math.abs(z + 3.15) < 0.42) return true;
+      if ([ -5.5, 5.5 ].some(planterX => Math.abs(x - planterX) < 0.88 && Math.abs(z + 1.85) < 0.68)) return true;
+      if (z > -0.22 && z < 16.22 && ax > 7.0 && ax < 7.42) return true;
+      if (Math.abs(z) < 0.24 && ax < 7.3 && ax > 1.18) return true;
+      if (Math.abs(z - 16.0) < 0.26 && ax < 7.35) return true;
+      if (z > 0.0 && z < 16.0 && Math.abs(ax - 2.0) < 0.22 && !nearSideOpening(z)) return true;
+      if (ax > 2.08 && ax < 7.0 && [4, 8, 12].some(wallZ => Math.abs(z - wallZ) < 0.22)) return true;
+      if (roomFixtures.some(([fx, fz, hx, hz]) => Math.abs(x - fx) < hx && Math.abs(z - fz) < hz)) return true;
+      return false;
+    }
+
+    function checkDoorwayProximity(position, radius = 1.15) {
+      if(activePlanModel){
+        document.getElementById('hardware-modal').style.display='none';
+        return;
+      }
+      const px = position[0];
+      const pz = position[2];
+      let nearDoor = null;
+      for (const door of doorways) {
+        const dist = Math.hypot(px - door.x, pz - door.z);
+        if (dist < radius) {
+          nearDoor = door;
+          break;
+        }
+      }
+      
+      const modal = document.getElementById('hardware-modal');
+      if (nearDoor) {
+        document.getElementById('hud-door-name').textContent = nearDoor.name.toUpperCase();
+        document.getElementById('hud-door-hardware').textContent = nearDoor.hardware;
+        modal.style.display = 'block';
+        modal.dataset.doorId = nearDoor.z;
+      } else {
+        modal.style.display = 'none';
+      }
+    }
+
+    const sightxControls = window.SightXControls.mount({
+      canvas,
+      hint: document.getElementById('hint'),
+      initialPosition: [0, 1.72, -9.0],
+      initialYaw: 0,
+      initialPitch: 0,
+      collision: positionBlocked,
+      onMove: position => checkDoorwayProximity(position),
+      onScan: (active, position) => {
+        sightxExperience.setScanning(active);
+        checkDoorwayProximity(position, active ? 2.75 : 1.15);
+      },
+      onTourToggle: () => sightxExperience.toggleTour(),
+      onSettingsToggle: () => sightxExperience.toggleSettings(),
+      onReportToggle: () => sightxExperience.toggleReport(),
+      onCapture: hideUI,
+      onRelease: () => {
+        if (!document.body.classList.contains('sightx-demo')) showUI();
+      }
+    });
+    sightxExperience.attachControls(sightxControls);
+
+    window.SightXPlanRenderer=Object.freeze({
+      load(model){
+        if(!model||!model.sdf||!model.width||!model.height) throw new Error('A compiled plan SDF is required.');
+        activePlanModel=model;
+        gl.activeTexture(gl.TEXTURE0);
+        gl.bindTexture(gl.TEXTURE_2D,planSdfTexture);
+        gl.pixelStorei(gl.UNPACK_ALIGNMENT,1);
+        gl.texImage2D(gl.TEXTURE_2D,0,gl.R32F,model.width,model.height,0,gl.RED,gl.FLOAT,model.sdf);
+        if(model.sourceImage){
+          gl.activeTexture(gl.TEXTURE1);
+          gl.bindTexture(gl.TEXTURE_2D,planSourceTexture);
+          gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL,false);
+          gl.texImage2D(gl.TEXTURE_2D,0,gl.RGBA,gl.RGBA,gl.UNSIGNED_BYTE,model.sourceImage);
+        }
+        document.body.classList.add('sx-reconstructed');
+        const spawn=model.spawn||[0,1.72,0];
+        sightxControls.setPose(spawn,Number(model.yaw)||0,0);
+        sightxExperience.notify(\`\${model.label||'PDF PLAN'} / RECONSTRUCTED LOCALLY\`);
+      },
+      clear(){ activePlanModel=null; document.body.classList.remove('sx-reconstructed'); },
+      get active(){ return activePlanModel; }
+    });
+    
+    let last = 0;
+    function frame(ts){
+      const dt = Math.min((ts-last)/1000, 0.05); last = ts;
+      sightxControls.update(dt);
+      sightxExperience.update(ts, sightxControls);
+      if (sightxExperience.consumeResizeRequest()) resize();
+      const camPos = sightxControls.position;
+      const fwd = sightxControls.forward;
+      const scanTarget = sightxExperience.targetPosition;
+      gl.uniform2f(uRes, canvas.width, canvas.height);
+      gl.uniform1f(uT, ts*0.001);
+      gl.uniform3f(uCam, camPos[0], camPos[1], camPos[2]);
+      gl.uniform3f(uDir, fwd[0], fwd[1], fwd[2]);
+      gl.uniform1f(uScan, sightxExperience.scanAmount);
+      gl.uniform3f(uTarget, scanTarget[0], scanTarget[1], scanTarget[2]);
+      gl.uniform1i(uPlanMode,activePlanModel?1:0);
+      if(activePlanModel){
+        gl.uniform4f(uPlanBounds,...activePlanModel.bounds);
+        gl.uniform1f(uPlanHeight,activePlanModel.wallHeight||3.2);
+      }
+      gl.drawArrays(gl.TRIANGLES, 0, 3);
+      requestAnimationFrame(frame);
+    }
+    requestAnimationFrame(frame);
+  </script>
+  <script type="module" src="/assets/sightx-reconstruction.js?v=20260729-1"></script>
+  <script>
+    window.SightXRuntime.mount({
+      manifestUrl: '/sightx/runtime-manifest.json'
+    }).catch(error => console.error('[SightX runtime]', error));
+  </script>
+  <style>
+    #mx-toggle{position:fixed;bottom:24px;right:24px;z-index:9000;background:#12141988;backdrop-filter:blur(10px);border:1px solid #2c3139;color:#edf0f1;border-radius:99px;padding:12px 18px;font:750 11px/1 ui-monospace,monospace;letter-spacing:.06em;cursor:pointer}
+    #mx-toggle:hover{border-color:#f0b800;color:#f0b800}
+    #mx-panel{position:fixed;bottom:24px;right:24px;z-index:9001;width:300px;max-width:calc(100vw - 48px);background:#0d0f14ee;backdrop-filter:blur(14px);border:1px solid #2c3139;border-radius:16px;box-shadow:0 25px 70px rgba(0,0,0,.5);display:none;flex-direction:column;overflow:hidden;font-family:"Avenir Next","Helvetica Neue",sans-serif}
+    #mx-panel.open{display:flex}
+    #mx-head{display:flex;justify-content:space-between;align-items:center;padding:12px 14px;border-bottom:1px solid #2c3139}
+    #mx-head b{color:#edf0f1;font-size:12px;letter-spacing:.06em}
+    #mx-close{background:none;border:0;color:#9299a3;cursor:pointer;font-size:16px}
+    #mx-roster{display:flex;gap:6px;flex-wrap:wrap;padding:10px 14px;border-bottom:1px solid #2c3139}
+    .mx-avatar{width:26px;height:26px;border-radius:50%;display:grid;place-items:center;font:800 10px ui-monospace,monospace;color:#090a0d}
+    #mx-messages{flex:1;max-height:220px;overflow-y:auto;padding:10px 14px;display:flex;flex-direction:column;gap:8px;font-size:12px;color:#edf0f1}
+    .mx-msg b{color:#f0b800;margin-right:4px}
+    .mx-sys{color:#9299a3;font-style:italic}
+    #mx-input-row{display:flex;gap:6px;padding:10px 14px;border-top:1px solid #2c3139}
+    #mx-input{flex:1;background:#161920;border:1px solid #2c3139;border-radius:8px;padding:8px 10px;color:#fff;font-size:12px}
+    #mx-voice-btn{background:none;border:1px solid #2c3139;color:#9299a3;border-radius:8px;padding:8px 10px;cursor:pointer;font-size:13px}
+    #mx-voice-btn.active{background:#61dfa0;border-color:#61dfa0;color:#090a0d}
+    #mx-gate{padding:16px;font-size:12px;color:#9299a3;line-height:1.6}
+    #mx-gate a{color:#f0b800}
+  </style>
+  <button id="mx-toggle">\u{1F465} COLLABORATE</button>
+  <div id="mx-panel">
+    <div id="mx-head"><b>MEETINGX LIVE</b><button id="mx-close">\u2715</button></div>
+    <div id="mx-roster"></div>
+    <div id="mx-messages"></div>
+    <div id="mx-input-row">
+      <button id="mx-voice-btn" title="Toggle voice">\u{1F3A4}</button>
+      <input id="mx-input" type="text" placeholder="Message..." maxlength="2000">
+    </div>
+  </div>
+  <script>
+  (function(){
+    const PROJECT_ID = 'glendale-camino-real';
+    let ws = null, joined = false, myId = null, peers = {}, localStream = null;
+    const $ = (id) => document.getElementById(id);
+    function addMsg(html, cls) { const d = document.createElement('div'); d.className = 'mx-msg' + (cls ? ' ' + cls : ''); d.innerHTML = html; const box = $('mx-messages'); box.appendChild(d); box.scrollTop = box.scrollHeight; }
+    function esc(s) { return String(s == null ? '' : s).replace(/[<>&]/g, c => ({'<':'&lt;','>':'&gt;','&':'&amp;'}[c])); }
+    function renderRoster(users) { $('mx-roster').innerHTML = users.map(u => \`<span class="mx-avatar" style="background:\${u.color}" title="\${esc(u.name)}">\${esc((u.name||'?').slice(0,1).toUpperCase())}</span>\`).join(''); }
+    let roster = [];
+    function connect() {
+      ws = new WebSocket((location.protocol === 'https:' ? 'wss://' : 'ws://') + location.host + '/api/sight/room/' + PROJECT_ID);
+      ws.onopen = () => { joined = true; };
+      ws.onclose = () => {
+        const neverJoined = !joined;
+        joined = false;
+        if (neverJoined) {
+          $('mx-panel').innerHTML = '<div id="mx-gate">Sign in and add MeetingX to collaborate live in this walkthrough. See <a href="/pricing">/pricing</a>.</div>';
+        }
+      };
+      ws.onerror = () => {};
+      ws.onmessage = (evt) => {
+        let msg; try { msg = JSON.parse(evt.data); } catch (e) { return; }
+        if (msg.type === 'roster') { roster = msg.users; myId = msg.you; renderRoster(roster); addMsg('Connected. ' + roster.length + ' present.', 'mx-sys'); }
+        else if (msg.type === 'join') { roster.push(msg.user); renderRoster(roster); addMsg(esc(msg.user.name) + ' joined', 'mx-sys'); if (localStream) callPeer(msg.user.userId); }
+        else if (msg.type === 'leave') { roster = roster.filter(u => u.userId !== msg.userId); renderRoster(roster); if (peers[msg.userId]) { peers[msg.userId].pc.close(); delete peers[msg.userId]; } }
+        else if (msg.type === 'chat') { addMsg('<b>' + esc(msg.user.name) + ':</b> ' + esc(msg.text)); }
+        else if (msg.type === 'signal') { handleSignal(msg); }
+      };
+    }
+    function sendSignal(to, payload) { ws.send(JSON.stringify({ type: 'signal', to, payload })); }
+    function makePeerConnection(peerId) {
+      const pc = new RTCPeerConnection({ iceServers: [{ urls: 'stun:stun.l.google.com:19302' }] });
+      if (localStream) localStream.getTracks().forEach(t => pc.addTrack(t, localStream));
+      pc.onicecandidate = (e) => { if (e.candidate) sendSignal(peerId, { candidate: e.candidate }); };
+      pc.ontrack = (e) => {
+        let audio = document.getElementById('mx-audio-' + peerId);
+        if (!audio) { audio = document.createElement('audio'); audio.id = 'mx-audio-' + peerId; audio.autoplay = true; document.body.appendChild(audio); }
+        audio.srcObject = e.streams[0];
+      };
+      peers[peerId] = { pc };
+      return pc;
+    }
+    async function callPeer(peerId) {
+      const pc = makePeerConnection(peerId);
+      const offer = await pc.createOffer();
+      await pc.setLocalDescription(offer);
+      sendSignal(peerId, { sdp: offer });
+    }
+    async function handleSignal(msg) {
+      const peerId = msg.from;
+      let entry = peers[peerId];
+      const pc = entry ? entry.pc : makePeerConnection(peerId);
+      if (msg.payload.sdp) {
+        await pc.setRemoteDescription(new RTCSessionDescription(msg.payload.sdp));
+        if (msg.payload.sdp.type === 'offer') {
+          const answer = await pc.createAnswer();
+          await pc.setLocalDescription(answer);
+          sendSignal(peerId, { sdp: answer });
+        }
+      } else if (msg.payload.candidate) {
+        try { await pc.addIceCandidate(msg.payload.candidate); } catch (e) {}
+      }
+    }
+    $('mx-toggle').addEventListener('click', () => {
+      $('mx-panel').classList.toggle('open');
+      if (!ws) connect();
+    });
+    $('mx-close').addEventListener('click', () => $('mx-panel').classList.remove('open'));
+    $('mx-input').addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' && ws && joined && e.target.value.trim()) {
+        ws.send(JSON.stringify({ type: 'chat', text: e.target.value.trim() }));
+        e.target.value = '';
+      }
+    });
+    $('mx-voice-btn').addEventListener('click', async () => {
+      const btn = $('mx-voice-btn');
+      if (!localStream) {
+        try {
+          localStream = await navigator.mediaDevices.getUserMedia({ audio: true });
+          btn.classList.add('active');
+          roster.filter(u => u.userId !== myId).forEach(u => callPeer(u.userId));
+        } catch (e) { addMsg('Mic access denied.', 'mx-sys'); }
+      } else {
+        localStream.getTracks().forEach(t => t.stop());
+        localStream = null;
+        Object.values(peers).forEach(p => p.pc.close());
+        peers = {};
+        btn.classList.remove('active');
+      }
+    });
+  })();
+  </script>
+
+
+  <!-- Guided Walkthrough Preview -- real, deployed 2026-09-06. SightX's own
+       spec promises "guided site walkthroughs"; the WebGL scene above is
+       one real hardcoded demo project (Glendale Camino Real). This panel
+       is a genuinely different, smaller, real slice of that same promise:
+       given a plain-text project description, it generates an actual
+       narrated storyboard walkthrough (script via a self-hosted LLM,
+       animated-SVG scene sequence, optional browser text-to-speech) --
+       not a 3D render, not a video file. Calls weylandai's own
+       /api/sightx/walkthrough-preview, which forwards to
+       filmline-video-worker over a real same-account Service Binding. -->
+  <div id="wt-preview-toggle" style="position:fixed;right:20px;bottom:20px;z-index:9999;">
+    <button id="wt-preview-btn" style="padding:10px 16px;background:#f0b800;color:#090a0d;border:0;border-radius:6px;font-weight:700;font-family:'Space Grotesk',sans-serif;cursor:pointer;box-shadow:0 2px 12px rgba(0,0,0,0.4);">Guided Walkthrough Preview</button>
+  </div>
+  <div id="wt-preview-panel" style="display:none;position:fixed;inset:0;z-index:10000;background:rgba(9,10,13,0.92);overflow:auto;">
+    <div style="max-width:820px;margin:40px auto;background:#12151a;border:1px solid #2a2e36;border-radius:10px;padding:28px;color:#f4f1ea;font-family:'Outfit',sans-serif;">
+      <div style="display:flex;justify-content:space-between;align-items:center;">
+        <h2 style="margin:0;font-family:'Space Grotesk',sans-serif;">Guided Walkthrough Preview</h2>
+        <button id="wt-preview-close" style="background:none;border:0;color:#8a94a6;font-size:22px;cursor:pointer;">&times;</button>
+      </div>
+      <p style="color:#a9b2c0;font-size:14px;line-height:1.6;">Describe a project (e.g. "second-floor mechanical retrofit, three access points, one hazardous-material zone") and generate a real narrated storyboard walkthrough -- a script plus an animated scene sequence, played back with your browser's own text-to-speech. This is not the 3D scene above; it's a smaller, real, honest slice of SightX's "guided site walkthroughs" promise: script + animated storyboard, not photorealistic render or an encoded video file.</p>
+      <textarea id="wt-preview-input" rows="3" maxlength="1000" placeholder="Describe the project or space to walk through..." style="width:100%;box-sizing:border-box;background:#0d0f13;color:#f4f1ea;border:1px solid #2a2e36;border-radius:6px;padding:10px;font-family:inherit;font-size:14px;"></textarea>
+      <button id="wt-preview-generate" style="margin-top:10px;padding:10px 18px;background:#f0b800;color:#090a0d;border:0;border-radius:6px;font-weight:700;cursor:pointer;">Generate</button>
+      <span id="wt-preview-status" style="margin-left:12px;color:#8a94a6;font-size:13px;"></span>
+      <div id="wt-preview-result" style="margin-top:18px;"></div>
+    </div>
+  </div>
+  <script>
+    (function () {
+      var toggleBtn = document.getElementById('wt-preview-btn');
+      var panel = document.getElementById('wt-preview-panel');
+      var closeBtn = document.getElementById('wt-preview-close');
+      var genBtn = document.getElementById('wt-preview-generate');
+      var input = document.getElementById('wt-preview-input');
+      var status = document.getElementById('wt-preview-status');
+      var result = document.getElementById('wt-preview-result');
+      toggleBtn.addEventListener('click', function () { panel.style.display = 'block'; });
+      closeBtn.addEventListener('click', function () { panel.style.display = 'none'; });
+      genBtn.addEventListener('click', function () {
+        var description = (input.value || '').trim();
+        if (!description) { status.textContent = 'Enter a project description first.'; return; }
+        status.textContent = 'Generating (real model inference, ~10-20s)...';
+        result.innerHTML = '';
+        genBtn.disabled = true;
+        fetch('/api/sightx/walkthrough-preview', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ description: description })
+        }).then(function (r) { return r.json().then(function (d) { return { ok: r.ok, d: d }; }); })
+          .then(function (res) {
+            genBtn.disabled = false;
+            if (!res.ok) { status.textContent = 'Error: ' + (res.d && res.d.detail && res.d.detail.message || 'generation failed'); return; }
+            status.textContent = 'Done (' + res.d.total_seconds + 's reel, ' + res.d.scene_count + ' scenes).';
+            result.innerHTML = res.d.svg + '<p style="margin-top:12px;color:#8a94a6;font-size:13px;">' + res.d.logline_escaped + '</p>' +
+              '<button id="wt-preview-narrate" style="margin-top:6px;padding:8px 14px;background:#2a2e36;color:#f4f1ea;border:0;border-radius:6px;cursor:pointer;">Narrate (browser text-to-speech)</button>';
+            document.getElementById('wt-preview-narrate').addEventListener('click', function () {
+              if (!('speechSynthesis' in window)) { alert('No speechSynthesis support in this browser.'); return; }
+              window.speechSynthesis.cancel();
+              (res.d.narration_lines || []).forEach(function (line) {
+                if (line) window.speechSynthesis.speak(new SpeechSynthesisUtterance(line));
+              });
+            });
+          })
+          .catch(function (err) { genBtn.disabled = false; status.textContent = 'Request failed: ' + err.message; });
+      });
+    })();
+  </script>
+</body>
+</html>
+`, { headers: { "Content-Type": "text/html; charset=UTF-8", "Cache-Control": "public, max-age=60" } });
   }
   function serve_meetingx() {
     return new Response(`<!doctype html>
