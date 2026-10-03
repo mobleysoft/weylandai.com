@@ -1568,12 +1568,12 @@
           <option value="ca_opsc">CA School Construction Funding (OPSC)</option>
         </select>
         <button id="hx-refresh-btn" class="button primary" type="button">REFRESH FROM SOURCES</button>
-        <span id="hx-status" style="color:var(--muted);font-size:12px;margin-left:auto">Syncing live sources...</span>
+        <span id="hx-status" style="color:var(--muted);font-size:12px;margin-left:auto">Connecting&hellip;</span>
       </div>
 
       <div class="metrics-row" style="grid-template-columns:repeat(3,1fr)">
-        <div class="metric-card"><span>Opportunities Listed</span><strong id="hx-count">24</strong></div>
-        <div class="metric-card"><span>Last Pipeline Sync</span><strong id="hx-last-fetch" style="font-size:16px;color:var(--blue)">Live Connected</strong></div>
+        <div class="metric-card"><span>Opportunities Listed</span><strong id="hx-count">&mdash;</strong></div>
+        <div class="metric-card"><span>Last Pipeline Sync</span><strong id="hx-last-fetch" style="font-size:16px;color:var(--blue)">Connecting&hellip;</strong></div>
         <div class="metric-card"><span>Active Public Capital</span><strong style="font-size:24px;color:var(--green)">$142,850,000</strong></div>
       </div>
 
@@ -1588,38 +1588,7 @@
               <tr><th>OPPORTUNITY</th><th>AGENCY</th><th>LOCATION</th><th>KEY DATE</th><th>EST. VALUE</th><th>SOURCE</th></tr>
             </thead>
             <tbody id="hx-body">
-              <tr>
-                <td><a href="https://ftp.dot.state.tx.us/pub/txdot-info/cmd/cserve/bidrx/des.htm" target="_blank" style="color:var(--text);text-decoration:none;font-weight:700">I-35 Northeast Expansion Corridor Structural Modernization</a></td>
-                <td>Texas DOT</td>
-                <td>San Antonio, TX</td>
-                <td>10/18/2026</td>
-                <td class="val-cell">$48,200,000</td>
-                <td><span class="status-badge" style="background:rgba(42,82,255,.15);color:var(--primary);border:1px solid rgba(42,82,255,.35)">TXDOT</span></td>
-              </tr>
-              <tr>
-                <td><a href="https://www.dgs.ca.gov/OPSC" target="_blank" style="color:var(--text);text-decoration:none;font-weight:700">Fresno Unified High School STEM Wing &amp; Security Door Replacement</a></td>
-                <td>CA OPSC / State Allocation Board</td>
-                <td>Fresno, CA</td>
-                <td>11/04/2026</td>
-                <td class="val-cell">$14,650,000</td>
-                <td><span class="status-badge" style="background:rgba(255,212,0,.15);color:var(--accent);border:1px solid rgba(255,212,0,.35)">CA OPSC</span></td>
-              </tr>
-              <tr>
-                <td><a href="https://ftp.dot.state.tx.us/pub/txdot-info/cmd/cserve/bidrx/des.htm" target="_blank" style="color:var(--text);text-decoration:none;font-weight:700">Loop 1604 Non-Tolled Express Lanes Phase 4 &amp; Acoustic Barrier Doors</a></td>
-                <td>Texas DOT</td>
-                <td>Bexar County, TX</td>
-                <td>11/12/2026</td>
-                <td class="val-cell">$72,400,000</td>
-                <td><span class="status-badge" style="background:rgba(42,82,255,.15);color:var(--primary);border:1px solid rgba(42,82,255,.35)">TXDOT</span></td>
-              </tr>
-              <tr>
-                <td><a href="https://www.dgs.ca.gov/OPSC" target="_blank" style="color:var(--text);text-decoration:none;font-weight:700">San Diego Unified Net-Zero HVAC &amp; Heavy Hardware Retrofit</a></td>
-                <td>CA OPSC</td>
-                <td>San Diego, CA</td>
-                <td>12/01/2026</td>
-                <td class="val-cell">$7,600,000</td>
-                <td><span class="status-badge" style="background:rgba(255,212,0,.15);color:var(--accent);border:1px solid rgba(255,212,0,.35)">CA OPSC</span></td>
-              </tr>
+              <tr><td colspan="6" style="text-align:center;color:var(--muted);padding:24px">Connecting to live public sources&hellip;</td></tr>
             </tbody>
           </table>
         </div>
@@ -2443,13 +2412,57 @@
     var hxStatus = document.getElementById("hx-status");
     var hxBody = document.getElementById("hx-body");
     var hxCount = document.getElementById("hx-count");
+    var hxLastFetch = document.getElementById("hx-last-fetch");
 
-    var originalHuntRows = [
-      { title: "I-35 Northeast Expansion Corridor Structural Modernization", agency: "Texas DOT", location: "San Antonio, TX", date: "10/18/2026", val: "$48,200,000", src: "TXDOT", url: "https://ftp.dot.state.tx.us/pub/txdot-info/cmd/cserve/bidrx/des.htm" },
-      { title: "Fresno Unified High School STEM Wing & Security Door Replacement", agency: "CA OPSC / State Allocation Board", location: "Fresno, CA", date: "11/04/2026", val: "$14,650,000", src: "CA OPSC", url: "https://www.dgs.ca.gov/OPSC" },
-      { title: "Loop 1604 Non-Tolled Express Lanes Phase 4 & Acoustic Barrier Doors", agency: "Texas DOT", location: "Bexar County, TX", date: "11/12/2026", val: "$72,400,000", src: "TXDOT", url: "https://ftp.dot.state.tx.us/pub/txdot-info/cmd/cserve/bidrx/des.htm" },
-      { title: "San Diego Unified Net-Zero HVAC & Heavy Hardware Retrofit", agency: "CA OPSC", location: "San Diego, CA", date: "12/01/2026", val: "$7,600,000", src: "CA OPSC", url: "https://www.dgs.ca.gov/OPSC" }
-    ];
+    // Placeholder shown only until the real fetch below resolves - never
+    // left in place silently on a failed fetch (that was the actual bug:
+    // a failed /api/hunt/opportunities call used to fall through to a
+    // hardcoded "4 verified dockets current" success message while still
+    // showing these same four made-up rows - a real dishonesty bug, not
+    // a demo convenience, fixed alongside wiring in ephemeral auth below).
+    var originalHuntRows = [];
+
+    function huntApiRow(o) {
+      return {
+        title: o.title,
+        agency: o.agency,
+        location: o.location,
+        date: o.key_date ? new Date(o.key_date).toLocaleDateString() : "Active",
+        val: o.estimated_value ? "$" + Number(o.estimated_value).toLocaleString() : "Undisclosed",
+        src: (o.source || "").toUpperCase(),
+        url: o.detail_url || "#"
+      };
+    }
+
+    function loadHuntOpportunities(isManualRefresh) {
+      if (hxStatus) hxStatus.textContent = "Pulling latest dockets from live public APIs...";
+      if (hxRefresh) hxRefresh.disabled = true;
+      ephemeralToken().then(function(token) {
+        var doFetch = function() {
+          return fetch("/api/hunt/opportunities", { headers: { "Authorization": "Bearer " + token } });
+        };
+        var p = isManualRefresh
+          ? fetch("/api/hunt/refresh", { method: "POST", headers: { "Authorization": "Bearer " + token } }).then(doFetch)
+          : doFetch();
+        return p;
+      }).then(function(r) {
+        if (!r.ok) return r.json().catch(function(){ return {}; }).then(function(d) {
+          throw new Error((d.error && (d.error.message || d.error)) || ("request failed (" + r.status + ")"));
+        });
+        return r.json();
+      }).then(function(data) {
+        var rows = (data && data.opportunities) || [];
+        originalHuntRows = rows.map(huntApiRow);
+        if (hxStatus) hxStatus.textContent = rows.length ? ("Synced " + rows.length + " live opportunities.") : "Live sources connected. No opportunities match current filters yet.";
+        if (hxLastFetch) hxLastFetch.textContent = new Date().toLocaleTimeString();
+        filterHuntRows();
+      }).catch(function(err) {
+        if (hxStatus) hxStatus.textContent = "Couldn't reach live sources: " + err.message;
+        if (hxLastFetch) hxLastFetch.textContent = "Unavailable";
+      }).finally(function() {
+        if (hxRefresh) hxRefresh.disabled = false;
+      });
+    }
 
     function filterHuntRows() {
       var q = (hxSearch ? hxSearch.value : "").toLowerCase().trim();
@@ -2481,35 +2494,8 @@
 
     if (hxSearch) hxSearch.addEventListener("input", filterHuntRows);
     if (hxSource) hxSource.addEventListener("change", filterHuntRows);
-    if (hxRefresh) {
-      hxRefresh.addEventListener("click", function() {
-        hxStatus.textContent = "Pulling latest dockets from live public APIs...";
-        hxRefresh.disabled = true;
-        fetch("/api/hunt/opportunities").then(function(r){ return r.json(); }).then(function(data){
-          if (data && data.opportunities && data.opportunities.length) {
-            hxStatus.textContent = "Synced " + data.opportunities.length + " live opportunities.";
-            originalHuntRows = data.opportunities.map(function(o){
-              return {
-                title: o.title,
-                agency: o.agency,
-                location: o.location,
-                date: o.key_date ? new Date(o.key_date).toLocaleDateString() : "Active",
-                val: o.estimated_value ? "$" + Number(o.estimated_value).toLocaleString() : "Undisclosed",
-                src: (o.source || "").toUpperCase(),
-                url: o.detail_url || "#"
-              };
-            });
-            filterHuntRows();
-          } else {
-            hxStatus.textContent = "Live sources synchronized. All listings up to date.";
-          }
-        }).catch(function(){
-          hxStatus.textContent = "Live sources synchronized. 4 verified dockets current.";
-        }).finally(function(){
-          hxRefresh.disabled = false;
-        });
-      });
-    }
+    if (hxRefresh) hxRefresh.addEventListener("click", function() { loadHuntOpportunities(true); });
+    if (hxBody) loadHuntOpportunities(false);
 
     // 6. Chapter 02: TakeoffX Vector Blueprint Zones
     var zones = document.querySelectorAll(".zone-box");
