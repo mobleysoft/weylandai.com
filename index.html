@@ -1402,6 +1402,92 @@
       padding: 7px 12px;
       border-radius: 4px;
     }
+    /* Ephemeral-to-permanent upgrade modal */
+    #upgrade-modal {
+      position: fixed;
+      inset: 0;
+      z-index: 100000;
+      display: none;
+      align-items: center;
+      justify-content: center;
+    }
+    #upgrade-modal.is-open { display: flex; }
+    .upgrade-backdrop {
+      position: absolute;
+      inset: 0;
+      background: rgba(5, 6, 9, 0.72);
+      backdrop-filter: blur(4px);
+    }
+    .upgrade-dialog {
+      position: relative;
+      width: calc(100% - 40px);
+      max-width: 400px;
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      padding: 28px 26px 24px;
+      box-shadow: 0 30px 80px rgba(0,0,0,0.5);
+    }
+    .upgrade-close {
+      position: absolute;
+      top: 14px;
+      right: 14px;
+      background: none;
+      border: 0;
+      color: var(--muted);
+      font-size: 20px;
+      line-height: 1;
+      padding: 4px;
+    }
+    .upgrade-eyebrow {
+      color: var(--primary);
+      font-family: var(--font-display);
+      font-size: 11px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      margin-bottom: 10px;
+    }
+    .upgrade-h {
+      font-size: 22px;
+      margin: 0 0 6px;
+      letter-spacing: -0.02em;
+    }
+    .upgrade-sub {
+      color: var(--muted);
+      font-size: 13px;
+      margin: 0 0 18px;
+      line-height: 1.5;
+    }
+    #upgrade-form { display: flex; flex-direction: column; gap: 10px; }
+    #upgrade-form input {
+      background: var(--panel2);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 11px 14px;
+      color: var(--text);
+      font-family: var(--font-body);
+      font-size: 14px;
+    }
+    #upgrade-form input:focus {
+      outline: none;
+      border-color: var(--primary);
+    }
+    #upgrade-form .button {
+      margin-top: 4px;
+      justify-content: center;
+    }
+    .upgrade-error {
+      color: var(--red);
+      font-size: 12.5px;
+      line-height: 1.5;
+    }
+    .upgrade-alt {
+      margin-top: 16px;
+      text-align: center;
+      font-size: 12.5px;
+      color: var(--muted);
+    }
+    .upgrade-alt a { color: var(--blue); }
     /* Boot overlay: a brief HUD-calibration flicker before the page
        settles, so the first frame feels authored instead of the page just
        appearing. Pure visual beat, no copy - skipped entirely under
@@ -1484,7 +1570,7 @@
         <a href="#whyweyland" data-target="whyweyland">Why WeylandAI</a>
         <a href="#pricing" data-target="pricing">Pricing</a>
         <a href="/news">News</a>
-        <a class="wn-signin" href="/login?redirect=/">Sign In</a>
+        <a class="wn-signin js-upgrade-cta" href="/login?redirect=/">Sign In</a>
       </nav>
     </div>
     <!-- Scroll progress bar IS the seam between nav and content - a child of
@@ -2244,7 +2330,7 @@
         <a href="#pricing">Pricing</a>
         <a href="/news">News</a>
         <a href="/venturedeck">Venture Deck</a>
-        <a href="/login?redirect=/">Sign In</a>
+        <a class="js-upgrade-cta" href="/login?redirect=/">Sign In</a>
       </div>
     </footer>
   </main>
@@ -2259,8 +2345,31 @@
     <a href="#whyweyland">Why WeylandAI</a>
     <a href="#pricing">Pricing</a>
     <a href="/news">News</a>
-    <a class="wn-signin" href="/login?redirect=/">Sign In</a>
+    <a class="wn-signin js-upgrade-cta" href="/login?redirect=/">Sign In</a>
   </nav>
+
+  <!-- Ephemeral-to-permanent upgrade modal: every visitor already has a
+       working (if guest-scoped) identity via ephemeralToken() - this is
+       the "make it permanent" step, Suno.ai-style, not a gate blocking
+       first use. Returning users with a real account go to the real
+       /login flow instead via the link at the bottom. -->
+  <div id="upgrade-modal" aria-hidden="true">
+    <div class="upgrade-backdrop" data-upgrade-close></div>
+    <div class="upgrade-dialog" role="dialog" aria-modal="true" aria-labelledby="upgrade-title">
+      <button type="button" class="upgrade-close" data-upgrade-close aria-label="Close">&times;</button>
+      <div id="upgrade-title" class="upgrade-eyebrow">SAVE YOUR SESSION</div>
+      <h3 class="upgrade-h">Make this account permanent.</h3>
+      <p class="upgrade-sub">Your current session carries over &mdash; nothing is lost.</p>
+      <form id="upgrade-form">
+        <input type="text" id="upgrade-name" placeholder="Name (optional)" autocomplete="name">
+        <input type="email" id="upgrade-email" placeholder="Email" autocomplete="email" required>
+        <input type="password" id="upgrade-password" placeholder="Password" autocomplete="new-password" required minlength="8">
+        <button type="submit" class="button primary" id="upgrade-submit">CREATE FREE ACCOUNT</button>
+        <div id="upgrade-error" class="upgrade-error" hidden></div>
+      </form>
+      <div class="upgrade-alt">Already have an account? <a href="/login?redirect=/">Sign in</a></div>
+    </div>
+  </div>
 
   <div id="badge-toast" role="status"></div>
 
@@ -2786,6 +2895,70 @@
     }
 
     loadRealTrial();
+
+    // 10. Ephemeral-to-permanent account upgrade modal
+    var upgradeModal = document.getElementById("upgrade-modal");
+    var upgradeForm = document.getElementById("upgrade-form");
+    var upgradeError = document.getElementById("upgrade-error");
+    var upgradeSubmit = document.getElementById("upgrade-submit");
+    var ACCOUNT_TOKEN_KEY = "weylandai_account_token_v1";
+
+    function openUpgradeModal() {
+      if (!upgradeModal) return;
+      try {
+        if (localStorage.getItem(ACCOUNT_TOKEN_KEY)) return; // already upgraded this browser
+      } catch (_) {}
+      upgradeModal.classList.add("is-open");
+      upgradeModal.setAttribute("aria-hidden", "false");
+    }
+    function closeUpgradeModal() {
+      if (!upgradeModal) return;
+      upgradeModal.classList.remove("is-open");
+      upgradeModal.setAttribute("aria-hidden", "true");
+    }
+
+    document.querySelectorAll(".js-upgrade-cta").forEach(function(el) {
+      el.addEventListener("click", function(e) {
+        e.preventDefault();
+        openUpgradeModal();
+      });
+    });
+    document.querySelectorAll("[data-upgrade-close]").forEach(function(el) {
+      el.addEventListener("click", closeUpgradeModal);
+    });
+    document.addEventListener("keydown", function(e) {
+      if (e.key === "Escape" && upgradeModal && upgradeModal.classList.contains("is-open")) closeUpgradeModal();
+    });
+
+    if (upgradeForm) {
+      upgradeForm.addEventListener("submit", function(e) {
+        e.preventDefault();
+        if (upgradeError) { upgradeError.hidden = true; upgradeError.textContent = ""; }
+        upgradeSubmit.disabled = true;
+        upgradeSubmit.textContent = "CREATING...";
+        var email = document.getElementById("upgrade-email").value.trim();
+        var password = document.getElementById("upgrade-password").value;
+        var name = document.getElementById("upgrade-name").value.trim();
+        ephemeralToken().then(function(token) {
+          return fetch("/api/auth/ephemeral/upgrade", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ token: token, email: email, password: password, name: name || undefined })
+          });
+        }).then(function(r) {
+          return r.json().then(function(d) { return { ok: r.ok, d: d }; });
+        }).then(function(res) {
+          if (!res.ok) throw new Error((res.d && res.d.error) || "Could not create account.");
+          try { localStorage.setItem(ACCOUNT_TOKEN_KEY, res.d.token); } catch (_) {}
+          upgradeForm.innerHTML = '<div style="color:var(--green);font-size:14px;line-height:1.6">Account created &mdash; your session is now permanent.</div>';
+          setTimeout(closeUpgradeModal, 1400);
+        }).catch(function(err) {
+          if (upgradeError) { upgradeError.hidden = false; upgradeError.textContent = err.message; }
+          upgradeSubmit.disabled = false;
+          upgradeSubmit.textContent = "CREATE FREE ACCOUNT";
+        });
+      });
+    }
 
   })();
   </script>
