@@ -3120,8 +3120,11 @@
   <script>
   (function(){
     try {
-      if (sessionStorage.getItem("weylandCosmicIntroSeen") && !location.search.includes("intro=1")) return;
-      if (window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches && !location.search.includes("intro=1")) {
+      // Default entry point is present-day (on-site), not the cosmic
+      // origin sequence — the full 9-epoch intro is tabled for now and
+      // only runs when explicitly requested via ?intro=1.
+      if (!location.search.includes("intro=1")) return;
+      if (window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
         sessionStorage.setItem("weylandCosmicIntroSeen", "1");
         return;
       }
