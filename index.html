@@ -90,11 +90,33 @@
          checkerboard, matching what's already visible above/below. */
       width: calc(100% - 2 * clamp(10px, 2.4vw, 32px));
       max-width: 1600px;
+      /* The envelope itself is now the scroll container (not the page) -
+         a fixed height (viewport minus its own top/bottom margin) plus
+         overflow-y:auto means its clip-path genuinely masks everything
+         inside it at every scroll position, not just at rest. Previously
+         the PAGE scrolled and the sticky header just pinned itself to the
+         viewport, so content could pass behind the header but nothing
+         ever truly clipped it - the envelope's own shape only bounded its
+         layout box, not what could become visible through/around it.
+         Scrolling the card itself instead of the document means the
+         notched silhouette is the actual scrollport, so nothing can ever
+         render above the navbar or outside the card's edges. */
+      height: calc(100vh - 2 * clamp(10px, 2.4vw, 32px));
+      overflow-y: auto;
+      overflow-x: hidden;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
       margin: clamp(10px, 2.4vw, 32px) auto;
       border-radius: 4px;
       box-shadow: 0 30px 90px rgba(0, 0, 0, 0.55);
+      /* The top-left miter (0,26px)->(8px,0) is deliberately NOT the same
+         45-degree cut as the other 3 corners - it's set to the exact same
+         slope as the logo tab's own left edge (15px run over its 50px
+         height, ~0.3 ratio) so the tab reads as literally the same cut
+         continuing down into the envelope's corner, not a coincidence of
+         two unrelated angles sitting next to each other. */
       clip-path: polygon(
-        0 22px, 22px 0,
+        0 26px, 8px 0,
         calc(100% - 22px) 0, 100% 22px,
         100% calc(100% - 22px), calc(100% - 22px) 100%,
         22px 100%, 0 calc(100% - 22px)
@@ -110,9 +132,12 @@
         var(--bg);
       background-size: 30px 30px, 30px 30px, auto;
     }
+    /* Firefox uses scrollbar-width (set above); WebKit/Blink need this -
+       the scroll still works via wheel/trackpad/touch/keyboard, only the
+       chrome is hidden, matching the "masked card" look. */
+    .envelope-frame::-webkit-scrollbar { display: none; }
     @media (max-width: 640px) {
-      .envelope-frame { width: calc(100% - 12px); margin: 6px auto; clip-path: polygon(0 12px, 12px 0, calc(100% - 12px) 0, 100% 12px, 100% calc(100% - 12px), calc(100% - 12px) 100%, 12px 100%, 0 calc(100% - 12px)); }
-      header.site-header { top: 6px; }
+      .envelope-frame { width: calc(100% - 12px); height: calc(100vh - 12px); margin: 6px auto; clip-path: polygon(0 12px, 12px 0, calc(100% - 12px) 0, 100% 12px, 100% calc(100% - 12px), calc(100% - 12px) 100%, 12px 100%, 0 calc(100% - 12px)); }
     }
 
     /* Kinetic Scroll Progress Bar - a child of header.site-header now, so it
@@ -134,12 +159,29 @@
     /* Sticky Header & Ribbon */
     header.site-header {
       position: sticky;
-      top: clamp(10px, 2.4vw, 32px);
+      /* top:0, not an inset offset - .envelope-frame itself now provides
+         the "inset from the viewport" look via its own margin+clip-path,
+         so the header's sticky position needs to flush-cover the TOP of
+         its scrollport with no gap. A nonzero offset here used to match
+         the old page-level-scroll design (where the header stuck relative
+         to the viewport and the gap showed checkerboard above it) - inside
+         the new internally-scrolling envelope, that same gap is just an
+         uncovered band at the top of the scrollport, and scrolled content
+         shows through it instead of being masked. */
+      top: 0;
       z-index: 500;
-      background: rgba(11, 13, 19, 0.88);
-      backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
-      padding: 12px clamp(16px, 3vw, 40px);
+      /* Fully opaque, not translucent-glass (was rgba(11,13,19,0.88) +
+         blur) - at 88% opacity, scrolled content sitting directly behind
+         the header (e.g. the hero's own stat row, once scrolled up past
+         this point) visibly ghosted THROUGH the blur, which is exactly
+         the kind of "visible above/through the navbar" leak the mask is
+         supposed to prevent. Solid var(--bg) actually masks it; blur over
+         real transparency was cosmetic, not a mask. */
+      background: var(--bg);
+      /* Bottom padding is a hairline (1px), not a full gap - the tabs should
+         sit right against the seam, with only the 1px border + the 3px
+         progress bar overlaying it as the visible divider, not a black band. */
+      padding: 12px clamp(16px, 3vw, 40px) 1px;
       transition: background 0.3s ease;
       /* Always-visible baseline track for #scroll-progress (its child,
          absolutely positioned at bottom:0) - this IS the seam line between
@@ -170,14 +212,6 @@
     .wn-ribbon .wn-flag:first-child {
       margin-left: 0;
     }
-    /* Last tab in the ribbon tilts down slightly, like the bottom envelope
-       in a stack - pivoting on its own left edge (where it overlaps the
-       tab before it, so that seam stays flush) while the free right edge
-       visibly dips. */
-    .wn-ribbon .wn-flag:last-child {
-      transform: rotate(3deg);
-      transform-origin: left center;
-    }
     .wn-flag-frame {
       position: absolute;
       top: -2px;
@@ -185,6 +219,13 @@
       bottom: -2px;
       left: -2px;
       clip-path: polygon(17px 0, 100% 0, calc(100% - 17px) 100%, 0 100%);
+    }
+    /* Last tab (SightX) stays upright - no tilt - but its rightmost miter is
+       inverted (top pulled in, bottom at full width) instead of matching
+       every other tab's slant, the way the last envelope in a stack has its
+       trailing edge cut the opposite way to visually close the sequence. */
+    .wn-ribbon .wn-flag:last-child .wn-flag-frame {
+      clip-path: polygon(17px 0, calc(100% - 17px) 0, 100% 100%, 0 100%);
     }
     .wn-flag-fill {
       position: relative;
@@ -198,6 +239,9 @@
       white-space: nowrap;
       clip-path: polygon(15px 0, 100% 0, calc(100% - 15px) 100%, 0 100%);
       transition: filter 0.15s ease, background 0.25s ease, color 0.25s ease;
+    }
+    .wn-ribbon .wn-flag:last-child .wn-flag-fill {
+      clip-path: polygon(15px 0, calc(100% - 15px) 0, 100% 100%, 0 100%);
     }
     .wn-flag:hover .wn-flag-fill {
       filter: brightness(1.12);
@@ -1234,12 +1278,54 @@
       .pl-assemble { grid-template-columns: repeat(2, 1fr); }
       .wn-flag-fill { height: 34px; font-size: 9.5px; padding: 0 16px 0 18px; }
       .wn-logo img { height: 20px; }
-      /* Why WeylandAI / Pricing / News / Sign In move to the footer on
-         mobile (which already lists Pricing + Sign In; Why WeylandAI and
-         News are added there) so the header is just the product-tab
-         ribbon, and the manila body reads as flowing straight down from
-         the blue logo tab, uninterrupted by a second nav row. */
-      .wn-secondary { display: none; }
+      .wn-persistent-footer { justify-content: space-around; gap: 6px; padding: 10px 12px; }
+    }
+    /* Why WeylandAI / Pricing / News / Sign In live ONLY here, not in the
+       header - a persistent footer bar, visible at every screen width and
+       every scroll position, same as the navbar is always visible.
+       position:fixed (not sticky) is deliberate: now that .envelope-frame
+       is its own scroll container, a sticky element placed anywhere but
+       the very end would either not engage until scrolled near the
+       bottom, or show in the wrong spot at rest - fixed pins it to the
+       viewport unconditionally, from the first frame, at any width. */
+    .wn-secondary { display: none; }
+    .shell { padding-bottom: 76px; }
+    .wn-persistent-footer {
+      display: flex;
+      position: fixed;
+      left: 50%;
+      transform: translateX(-50%);
+      /* Same width/max-width/bottom-offset math as .envelope-frame itself
+         (clamp(10px,2.4vw,32px), 1600px cap) - not an arbitrary small
+         pill. That makes this bar's outer edges land exactly on the
+         card's own left/right/bottom edges, so it reads as the envelope's
+         own footer strip, not a disconnected floating rectangle sitting
+         in the checkerboard margin below it. */
+      bottom: clamp(10px, 2.4vw, 32px);
+      width: calc(100% - 2 * clamp(10px, 2.4vw, 32px));
+      max-width: 1600px;
+      z-index: 600;
+      justify-content: center;
+      align-items: center;
+      gap: 24px;
+      background: var(--bg);
+      border-top: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 0 0 4px 4px;
+      padding: 10px 20px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+    }
+    .wn-persistent-footer a {
+      color: var(--muted);
+      text-decoration: none;
+      font: 750 10px/1 ui-monospace, monospace;
+      letter-spacing: 0.04em;
+      white-space: nowrap;
+    }
+    .wn-persistent-footer a.wn-signin {
+      background: var(--primary);
+      color: #fff;
+      padding: 7px 12px;
+      border-radius: 4px;
     }
   </style>
 </head>
@@ -1347,7 +1433,7 @@
       <div class="chapter-head">
         <div class="chapter-product-badge"><span>HuntX</span></div>
         <h2>Never Miss a State Letting or School Board Funding Release.</h2>
-        <div class="chapter-tagline">Measure twice. Match once.</div>
+        <div class="chapter-tagline">Every lead traces to its own source docket.</div>
         <p class="chapter-desc">HuntX pulls live public construction leads directly from state open-data APIs &mdash; Texas DOT highway and bridge lettings and California school-facility funding releases today, with municipal capital programs added continuously. Every row traces back to its authentic public agency source docket.</p>
       </div>
 
@@ -1429,7 +1515,7 @@
       <div class="chapter-head">
         <div class="chapter-product-badge"><span>TakeoffX</span></div>
         <h2>Read Schedules &amp; Quantify Openings in Milliseconds.</h2>
-        <div class="chapter-tagline">Measure twice. Match once.</div>
+        <div class="chapter-tagline">Vector geometry, not guesswork.</div>
         <p class="chapter-desc">TakeoffX ingests raw architectural vector PDFs, detects opening tags, and quantifies doors, hardware sets, and wall ratings directly from the drawings. Estimators review confidence-scored bounding boxes instead of counting marks by hand with highlighters.</p>
       </div>
 
@@ -1528,7 +1614,7 @@
       <div class="chapter-head">
         <div class="chapter-product-badge"><span>SubX</span></div>
         <h2>Turn a Door Schedule into a Matched Submittal &mdash; Live.</h2>
-        <div class="chapter-tagline">Measure twice. Match once.</div>
+        <div class="chapter-tagline">From schedule to submittal, zero rekeying.</div>
         <p class="chapter-desc">You are working in the live SubX engine against &ldquo;The WeylandAI Building,&rdquo; a shared example project. TakeoffX quantified the drawings above, SubX extracts the hardware sets and submittal requirements below, and CutsheetX matches every line against real manufacturer catalogues &mdash; with verifiable citations attached.</p>
       </div>
 
@@ -1666,7 +1752,7 @@
       <div class="chapter-head">
         <div class="chapter-product-badge"><span>CutsheetX</span></div>
         <h2>60,000 Verified Variants with Real PDF Citations.</h2>
-        <div class="chapter-tagline">Measure twice. Match once.</div>
+        <div class="chapter-tagline">Every match cites its own page.</div>
         <p class="chapter-desc">CutsheetX queries WeylandAI's 60,000-variant database of Allegion, ASSA ABLOY, Dormakaba, and Hager products. Every matched hardware set carries a cryptographically verifiable manufacturer catalog citation and submittal sheet snippet. If a variant hasn't matched yet, it is flagged plainly rather than invented.</p>
       </div>
 
@@ -1738,7 +1824,7 @@
       <div class="chapter-head">
         <div class="chapter-product-badge"><span>PropX</span><span>MeetingX</span></div>
         <h2>Automated Margin Protection &amp; Shared Spatial Sessions.</h2>
-        <div class="chapter-tagline">Measure twice. Match once.</div>
+        <div class="chapter-tagline">Price locked. Field synced.</div>
         <p class="chapter-desc">PropX translates extracted hardware quantities directly into commercial proposals with automated margin protection and live supplier price-lock verification. MeetingX connects estimators, general contractors, and field crews inside a shared spatial session powered by Cloudflare Durable Objects.</p>
       </div>
 
@@ -1846,7 +1932,7 @@
       <div class="chapter-head">
         <div class="chapter-product-badge"><span>SightX</span></div>
         <h2>SightX &mdash; Physics-Grounding in Low Earth Orbit &amp; On Site.</h2>
-        <div class="chapter-tagline">Measure twice. Match once.</div>
+        <div class="chapter-tagline">One spatial record, the same physics everywhere.</div>
         <p class="chapter-desc">A raymarched orbital shipyard and jobsite digital twin powered by genuine physics: Hill-Clohessy-Wiltshire (HCW) microgravity relative dynamics, single-source solar radiance casting harsh vacuum shadows, tactile astronaut suit HUD controls, and sub-millimeter BIM geometry.</p>
       </div>
 
@@ -1899,15 +1985,16 @@
       </div>
     </section>
 
-    <!-- CHAPTER 07: Why WeylandAI — Architectural Superiority -->
+    <!-- Why WeylandAI - a positioning section, not part of the HuntX->SightX
+         product sequence, so it deliberately carries no CHAPTER number. -->
     <section class="story-chapter" id="whyweyland">
       <div class="chapter-eyebrow">
-        <span class="ch-badge ch-accent">CHAPTER 07</span>
+        <span class="ch-badge ch-accent">ABOUT</span>
         <span>WHY WEYLANDAI &middot; SOVEREIGN ARCHITECTURAL SUPERIORITY</span>
       </div>
       <div class="chapter-head">
         <h2>One Project Spine. Five Operating Engines.</h2>
-        <div class="chapter-tagline">Measure twice. Match once.</div>
+        <div class="chapter-tagline">One record, not five disconnected tools.</div>
         <p class="chapter-desc">SubConP is the Subcontractor Operating Package: project discovery, submittals, takeoffs, cut sheets, and proposals operating on one shared, continuous project record instead of five disconnected, expensive point tools.</p>
       </div>
 
@@ -1965,10 +2052,11 @@
       </div>
     </section>
 
-    <!-- CHAPTER 08: Commercial Pricing & Ingress -->
+    <!-- Pricing - likewise not part of the product sequence; no CHAPTER
+         number. -->
     <section class="story-chapter" id="pricing">
       <div class="chapter-eyebrow">
-        <span class="ch-badge ch-accent">CHAPTER 08</span>
+        <span class="ch-badge ch-accent">PRICING</span>
         <span>COMMERCIAL LICENSING &amp; INSTANT INGRESS</span>
       </div>
       <div class="chapter-head">
@@ -2071,6 +2159,17 @@
 
   </div><!-- /.envelope-frame -->
 
+  <!-- Persistent footer (position:fixed, outside the scroll container,
+       visible at every screen width) - the header's .wn-secondary is
+       permanently hidden; this is the only place these links live, so
+       they're always reachable, same as the navbar. -->
+  <nav class="wn-persistent-footer" aria-label="Secondary Navigation">
+    <a href="#whyweyland">Why WeylandAI</a>
+    <a href="#pricing">Pricing</a>
+    <a href="/news">News</a>
+    <a class="wn-signin" href="/login?redirect=/">Sign In</a>
+  </nav>
+
   <div id="badge-toast" role="status"></div>
 
   <!-- SCRIPT: Scrollytelling Router & Interactive Chapters -->
@@ -2078,11 +2177,17 @@
   (function(){
     "use strict";
 
+    // .envelope-frame is the real scroll container now (not window/body) -
+    // its own clip-path+overflow:auto is what makes it a true mask, so
+    // every scroll-position-dependent calculation below targets it
+    // directly instead of the document/viewport.
+    var scrollRoot = document.querySelector(".envelope-frame");
+
     // 1. Scroll Progress Bar
-    window.addEventListener("scroll", function() {
-      var winScroll = document.documentElement.scrollTop || document.body.scrollTop;
-      var height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-      var scrolled = height > 0 ? (winScroll / height) * 100 : 0;
+    scrollRoot.addEventListener("scroll", function() {
+      var scrolled = scrollRoot.scrollHeight > scrollRoot.clientHeight
+        ? (scrollRoot.scrollTop / (scrollRoot.scrollHeight - scrollRoot.clientHeight)) * 100
+        : 0;
       var bar = document.getElementById("scroll-progress");
       if (bar) bar.style.width = scrolled + "%";
     }, { passive: true });
@@ -2111,8 +2216,14 @@
           e.preventDefault();
           var navEl = document.getElementById("top-nav");
           var navHeight = navEl ? navEl.offsetHeight : 64;
-          var targetPos = targetEl.getBoundingClientRect().top + window.pageYOffset - navHeight - 16;
-          window.scrollTo({ top: targetPos, behavior: "smooth" });
+          // Position relative to scrollRoot's own scrollport, not the
+          // window - getBoundingClientRect() gives viewport-relative
+          // coordinates for both, so subtracting scrollRoot's own rect
+          // top converts targetEl's position into scrollRoot-local space.
+          var targetPos = targetEl.getBoundingClientRect().top
+            - scrollRoot.getBoundingClientRect().top
+            + scrollRoot.scrollTop - navHeight - 16;
+          scrollRoot.scrollTo({ top: targetPos, behavior: "smooth" });
           if (window.history && window.history.pushState) {
             window.history.pushState(null, "", "#" + targetId);
           }
@@ -2129,7 +2240,7 @@
           updateActiveNav(entry.target.id);
         }
       });
-    }, { rootMargin: "-20% 0px -60% 0px", threshold: 0 });
+    }, { root: scrollRoot, rootMargin: "-20% 0px -60% 0px", threshold: 0 });
 
     chapters.forEach(function(id) {
       var el = document.getElementById(id);
@@ -2182,8 +2293,10 @@
         setTimeout(function() {
           var navEl = document.getElementById("top-nav");
           var navHeight = navEl ? navEl.offsetHeight : 64;
-          var targetPos = targetEl.getBoundingClientRect().top + window.pageYOffset - navHeight - 16;
-          window.scrollTo({ top: targetPos, behavior: "smooth" });
+          var targetPos = targetEl.getBoundingClientRect().top
+            - scrollRoot.getBoundingClientRect().top
+            + scrollRoot.scrollTop - navHeight - 16;
+          scrollRoot.scrollTo({ top: targetPos, behavior: "smooth" });
           updateActiveNav(initialId);
         }, 150);
       }
@@ -2493,8 +2606,10 @@
         if (targetBeat) {
           var navEl = document.getElementById("top-nav");
           var navHeight = navEl ? navEl.offsetHeight : 64;
-          var pos = targetBeat.getBoundingClientRect().top + window.pageYOffset - navHeight - 16;
-          window.scrollTo({ top: pos, behavior: "smooth" });
+          var pos = targetBeat.getBoundingClientRect().top
+            - scrollRoot.getBoundingClientRect().top
+            + scrollRoot.scrollTop - navHeight - 16;
+          scrollRoot.scrollTo({ top: pos, behavior: "smooth" });
         }
       });
     });
