@@ -1170,42 +1170,27 @@
       
       let response = '';
       if (cmd === 'help') {
-        response = 'Available commands:\
-' +
-                   '  status   - View current system status\
-' +
-                   '  fleet    - Check autonomous crew status\
-' +
-                   '  projects - List active project sites\
-' +
+        response = 'Available commands:\n' +
+                   '  status   - View current system status\n' +
+                   '  fleet    - Check autonomous crew status\n' +
+                   '  projects - List active project sites\n' +
                    '  clear    - Clear console screen';
       } else if (cmd === 'status') {
-        response = 'System: weylandai.com\
-' +
-                   'Status: ONLINE\
-' +
-                   'Category: Construction / Automation\
-' +
-                   'Operational Integrity: 100% (READY)\
-' +
+        response = 'System: weylandai.com\n' +
+                   'Status: ONLINE\n' +
+                   'Category: Construction / Automation\n' +
+                   'Operational Integrity: 100% (READY)\n' +
                    'Pipeline: HuntX > SubX > SightX > TakeoffX > PropX > QText';
       } else if (cmd === 'fleet') {
-        response = 'Autonomous Crew Status:\
-' +
-                   '  - Earthwork systems: READY\
-' +
-                   '  - Concrete and framing systems: READY\
-' +
-                   '  - Trade installation systems: READY\
-' +
+        response = 'Autonomous Crew Status:\n' +
+                   '  - Earthwork systems: READY\n' +
+                   '  - Concrete and framing systems: READY\n' +
+                   '  - Trade installation systems: READY\n' +
                    'All telemetry channels operational.';
       } else if (cmd === 'projects') {
-        response = 'Project Network:\
-' +
-                   '  - Site intelligence: ACTIVE\
-' +
-                   '  - Estimation pipeline: ACTIVE\
-' +
+        response = 'Project Network:\n' +
+                   '  - Site intelligence: ACTIVE\n' +
+                   '  - Estimation pipeline: ACTIVE\n' +
                    '  - Field coordination: ACTIVE';
       } else if (cmd === 'clear') {
         consoleDisplay.innerHTML = '&gt; ';
