@@ -2060,36 +2060,43 @@
           </div>
         </div>
 
-        <!-- MeetingX Spatial Presence DO Box -->
+        <!-- MeetingX Spatial Presence DO Box - illustrative example, not a
+             live connection (no WebSocket/DO call happens on this page).
+             Previously claimed "DO_RELAY ACTIVE" with three named people -
+             including the real site owner's actual name - shown as
+             currently active in a session that was never connected. Real
+             anonymous multi-user room access is a deliberate non-goal for
+             now (see EPHEMERAL_TRIAL_PRODUCTS: meetingx excluded, real-time
+             room creation has a different abuse surface than read APIs). -->
         <div class="meetingx-box" id="meetingx">
           <div>
             <div class="card-head" style="padding:0 0 16px;border-bottom:1px solid var(--line);margin-bottom:16px">
               <h3 style="margin:0">MeetingX Spatial Relay</h3>
-              <span class="status-badge" style="background:rgba(102,212,255,.15);color:var(--blue);border:1px solid rgba(102,212,255,.35)">DO_RELAY ACTIVE</span>
+              <span class="status-badge" style="background:rgba(102,212,255,.15);color:var(--blue);border:1px solid rgba(102,212,255,.35)">EXAMPLE SESSION</span>
             </div>
             <p style="font-size:13px;color:var(--muted);line-height:1.5;margin-bottom:18px">
               Multi-user WebRTC voice and spatial sync directly inside the project record. Estimators and jobsite superintendents annotate openings simultaneously.
             </p>
 
             <div class="presence-row">
-              <div class="presence-avatar">JM</div>
+              <div class="presence-avatar">AR</div>
               <div>
-                <strong style="font-size:13px;color:#fff;display:block">John Mobley (Lead Estimator)</strong>
-                <span style="font-size:11px;color:var(--green);font-family:ui-monospace,monospace">&bull; Active &middot; Reviewing Set 04 Takeoff</span>
+                <strong style="font-size:13px;color:#fff;display:block">Alex Rivera (Lead Estimator)</strong>
+                <span style="font-size:11px;color:var(--green);font-family:ui-monospace,monospace">Reviewing Set 04 Takeoff</span>
               </div>
             </div>
             <div class="presence-row">
               <div class="presence-avatar" style="background:var(--accent);color:#0b0c10">SK</div>
               <div>
                 <strong style="font-size:13px;color:#fff;display:block">Sarah Kowalski (Field Superintendent)</strong>
-                <span style="font-size:11px;color:var(--blue);font-family:ui-monospace,monospace">&bull; Mobile &middot; Austin Jobsite Trailer</span>
+                <span style="font-size:11px;color:var(--blue);font-family:ui-monospace,monospace">Austin Jobsite Trailer</span>
               </div>
             </div>
             <div class="presence-row" style="border-bottom:none">
               <div class="presence-avatar" style="background:var(--green);color:#0b0c10">DR</div>
               <div>
                 <strong style="font-size:13px;color:#fff;display:block">Dave Reynolds (Project Manager)</strong>
-                <span style="font-size:11px;color:var(--muted);font-family:ui-monospace,monospace">&bull; Connected &middot; Viewing Proposal</span>
+                <span style="font-size:11px;color:var(--muted);font-family:ui-monospace,monospace">Viewing Proposal</span>
               </div>
             </div>
           </div>
