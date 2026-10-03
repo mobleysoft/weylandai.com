@@ -283,8 +283,30 @@
 
     /* Hero Section */
     .hero-chapter {
+      position: relative;
       padding-top: 48px;
       padding-bottom: 70px;
+    }
+    /* Full-bleed folder-body gradient: the nav tabs are blue/yellow "folder
+       tabs" sitting on top of the page; this makes the hero read as the
+       folder's own surface, picking up the same blue right where the tabs
+       meet it and settling into the page's normal dark tone by the bottom -
+       one continuous object, not a navbar floating over unrelated content. */
+    .hero-chapter:before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 50%;
+      width: 100vw;
+      transform: translateX(-50%);
+      height: 100%;
+      z-index: -1;
+      background: linear-gradient(165deg,
+        rgba(58, 98, 255, 0.35) 0%,
+        rgba(42, 82, 255, 0.16) 22%,
+        rgba(42, 82, 255, 0.04) 50%,
+        rgba(11, 13, 19, 0) 78%
+      );
     }
     .hero-kicker {
       color: var(--primary);
