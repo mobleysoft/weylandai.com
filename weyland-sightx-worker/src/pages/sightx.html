@@ -1149,6 +1149,7 @@
 
     float sdBox(vec3 p, vec3 b){ vec3 q=abs(p)-b; return length(max(q,0.))+min(max(q.x,max(q.y,q.z)),0.); }
     float sdCyl(vec3 p, float r, float h){ vec2 d=abs(vec2(length(p.xz),p.y))-vec2(r,h); return min(max(d.x,d.y),0.)+length(max(d,0.)); }
+    float sdCylZ(vec3 p, float r, float h){ return sdCyl(vec3(p.x,p.z,p.y), r, h); }
     float sdSphere(vec3 p, float r){ return length(p)-r; }
 
     vec2 put(vec2 scene, float distance, float material){
@@ -1202,10 +1203,11 @@
         planResult=put(planResult,sdPlanWall(p),1.0);
         return planResult;
       }
-      float path = 1.0-smoothstep(2.7,3.1,abs(p.x));
-      float groundMaterial = 7.0;
-      if((abs(p.x)<7.04 && p.z>0.0 && p.z<16.0) || (path>.5 && p.z<.2)) groundMaterial=8.0;
-      vec2 res=vec2(p.y,groundMaterial);
+      // LEO shipyard: no ground campus. The only "floor" is the pressurized
+      // deck plating inside the facility's own finite footprint — bounded,
+      // not an infinite plane, so rays that miss it go straight to vacuum
+      // (sky() below) instead of an endless grass campus.
+      vec2 res=vec2(sdBox(p-vec3(0.0,-0.04,8.0),vec3(7.28,0.04,8.28)),8.0);
 
       // Finite facility shell: 14.4m wide, 16m deep, with a real exterior.
       float outerWest=sdBox(p-vec3(-7.2,1.7,8.0),vec3(.16,1.7,8.0));
@@ -1241,6 +1243,28 @@
       res=put(res,sdBox(p-vec3(-5.45,.76, 2.0),vec3(1.05,.07,.52)),12.0); // Project office desk
       res=put(res,sdBox(p-vec3(-5.45,1.12,2.0),vec3(.42,.27,.035)),13.0); // Project display
       res=put(res,sdBox(p-vec3(-6.55,.92,3.15),vec3(.30,.92,.58)),13.0); // Drawing storage
+
+      // Manila folder pile — real geometry (not an overlay), sitting on the
+      // desk's front-left corner. Doubles as the WeylandAI site portal prop:
+      // raise it to leave this scene for the rest of weylandai.com, lower it
+      // to return, same non-pausing model as a Fallout Pip-Boy. Folder/tab
+      // proportions (1.264:1 width:depth, tab inset 4.6%, tab width 33.8%)
+      // measured from a real manila-folder reference photo earlier this
+      // session, not invented.
+      {
+        const float FW=.17, FD=.1345, FT=.009;
+        for(int fi=0; fi<6; fi++){
+          float i=float(fi);
+          float ang=(i-2.5)*.085+sin(i*1.7)*.03;
+          vec3 c=vec3(-5.9+sin(i*1.3)*.035, .83+FT*(i+.5)*1.05, 1.65+cos(i*2.1)*.03);
+          vec3 lp=p-c;
+          float cs=cos(ang), sn=sin(ang);
+          vec3 rp=vec3(lp.x*cs-lp.z*sn, lp.y, lp.x*sn+lp.z*cs);
+          res=put(res, sdBox(rp, vec3(FW*.5,FT*.5,FD*.5)), 15.0);
+          vec3 tp=rp-vec3(FW*-.285,0.0,FD*.53);
+          res=put(res, sdBox(tp, vec3(FW*.169,FT*.5,FD*.09)), 16.0);
+        }
+      }
 
       res=put(res,sdBox(p-vec3( 4.70,.76, 2.0),vec3(1.25,.07,.58)),12.0); // Conference table
       res=put(res,sdBox(p-vec3( 4.70,.42, 1.18),vec3(.95,.40,.28)),2.0);
@@ -1299,30 +1323,73 @@
         res=put(res,sdBox(p-vec3( 4.6,3.25,z),vec3(.50,.07,.36)),6.0);
       }
 
-      // Wider Weyland campus: low service annexes and approach lighting make
-      // the facility legible as a building in a world, not an isolated box.
-      res=put(res,sdBox(p-vec3(-14.0,2.0,10.0),vec3(4.2,2.0,5.4)),9.0);
-      res=put(res,sdBox(p-vec3( 15.0,1.7,13.0),vec3(4.8,1.7,6.0)),9.0);
-      res=put(res,sdBox(p-vec3(-14.0,4.12,10.0),vec3(4.45,.12,5.65)),5.0);
-      res=put(res,sdBox(p-vec3( 15.0,3.52,13.0),vec3(5.05,.12,6.25)),5.0);
-      float poles=min(sdCyl(p-vec3(-4.6,2.6,-7.0),.07,2.6),sdCyl(p-vec3(4.6,2.6,-7.0),.07,2.6));
-      res=put(res,poles,2.0);
-      res=put(res,sdBox(p-vec3(-4.6,5.18,-7.0),vec3(.38,.06,.16)),6.0);
-      res=put(res,sdBox(p-vec3( 4.6,5.18,-7.0),vec3(.38,.06,.16)),6.0);
-
-      // Arrival landscape and illuminated campus marker establish a deliberate
-      // public face without obstructing the central accessible approach.
-      res=put(res,sdBox(p-vec3(-5.35,.82,-3.15),vec3(1.42,.72,.09)),10.0);
-      res=put(res,sdBox(p-vec3(-5.35,.10,-3.15),vec3(1.62,.10,.30)),2.0);
-      for(int i=0;i<2;i++){
-        float x=-5.5+float(i)*11.0;
-        res=put(res,sdBox(p-vec3(x,.28,-1.85),vec3(.72,.28,.52)),2.0);
-        res=put(res,sdSphere(p-vec3(x,.78,-1.85),.58),11.0);
+      // West bay: the actual product. A real construction ship under
+      // assembly — the "seed" vessel this LEO shipyard builds and later
+      // sends to Earth-Moon L5 to bootstrap the real generation-ship-scale
+      // yard there (see sky()'s header comment for why L5). Electric
+      // (Hall-effect) propulsion, not chemical: this is a one-time, patient,
+      // high-delta-v transfer with no crew aboard, exactly the case where
+      // ion thrusters' efficiency beats chemical thrust — the characteristic
+      // pale-blue xenon-plasma glow is a real signature of that choice, not
+      // a decorative light.
+      {
+        vec3 shipC = vec3(-14.0, 3.0, 10.0);
+        vec3 sp = p - shipC;
+        res=put(res, sdCylZ(sp, .55, 3.2), 17.0);                       // spine/hull
+        res=put(res, sdCylZ(sp-vec3(0,0,-3.2), .75, .3), 20.0);          // forward docking collar
+        res=put(res, sdSphere(sp-vec3(0,.6,-.8), .42), 17.0);            // propellant tank
+        res=put(res, sdSphere(sp-vec3(0,.6, .8), .42), 17.0);            // propellant tank
+        for(int i=0;i<4;i++){
+          float ang = float(i)*1.5708 + .78;
+          vec3 tpos = vec3(cos(ang)*.38, sin(ang)*.38, 3.55);
+          res=put(res, sdCylZ(sp-tpos, .09, .22), 20.0);                 // thruster housing
+          float glow = sdCylZ(sp-tpos-vec3(0,0,.3), .055, .18);
+          res=put(res, glow, 19.0);                                     // ion exhaust glow
+        }
+        for(int i=0;i<2;i++){
+          float side = i<1 ? 1.0 : -1.0;
+          vec3 wingC = vec3(side*2.75, 0.0, .3);
+          res=put(res, sdBox(sp-wingC, vec3(2.05,.025,1.15)), 18.0);     // solar wing
+          res=put(res, sdBox(sp-vec3(side*.68,0,.3), vec3(.10,.07,1.0)), 20.0); // wing strut
+        }
+        // Simple two-segment manipulator arm, stowed along the spine.
+        vec3 armBase = sp - vec3(.55,.45,-2.1);
+        float seg1 = sdCylZ(vec3(armBase.z,armBase.y-armBase.x*.3,armBase.x), .045, .55);
+        res=put(res, seg1, 20.0);
       }
-      for(int i=0;i<2;i++){
-        float x=3.0+float(i)*3.0;
-        res=put(res,sdBox(p-vec3( x,2.05,-.25),vec3(.035,1.15,.08)),2.0);
-        res=put(res,sdBox(p-vec3(-x,2.05,-.25),vec3(.035,1.15,.08)),2.0);
+
+      // East bay: the station's own power/thermal truss — real flat solar
+      // arrays plus dedicated white radiator panels (waste heat has nowhere
+      // to go but radiation in vacuum, so these are load-bearing, not set
+      // dressing), on an open gantry rather than a sealed building, since
+      // nothing out here needs weather protection.
+      {
+        vec3 stC = vec3(15.0, 2.2, 13.0);
+        vec3 tp = p - stC;
+        res=put(res, sdCylZ(tp, .22, 4.4), 20.0);                       // truss backbone
+        for(int i=0;i<2;i++){
+          float side = i<1 ? 1.0 : -1.0;
+          res=put(res, sdBox(tp-vec3(side*3.0,0,-1.6), vec3(2.6,.03,1.6)), 18.0); // solar array
+          res=put(res, sdBox(tp-vec3(side*.9,0,-1.6), vec3(.08,.07,1.5)), 20.0);   // array strut
+          res=put(res, sdBox(tp-vec3(side*2.1,0, 2.2), vec3(1.5,.45,.035)), 21.0); // radiator panel
+          res=put(res, sdBox(tp-vec3(side*.7,0, 2.2), vec3(.08,.07,.4)), 20.0);    // radiator strut
+        }
+      }
+
+      // Open dock gantry framing the construction bay — scaffold, not a
+      // sealed structure, consistent with assembling a ship in vacuum.
+      {
+        vec3 gC = vec3(-14.0, 3.0, 10.0);
+        for(int i=0;i<4;i++){
+          float sx = (i%2==0) ? -1.0 : 1.0;
+          float sz = (i<2) ? -1.0 : 1.0;
+          vec3 post = gC + vec3(sx*3.2, 0.0, sz*4.6);
+          res=put(res, sdCyl(p-post, .09, 3.0), 20.0);
+        }
+        res=put(res, sdBox(p-(gC+vec3(0,3.0,-4.6)), vec3(3.3,.09,.09)), 20.0);
+        res=put(res, sdBox(p-(gC+vec3(0,3.0, 4.6)), vec3(3.3,.09,.09)), 20.0);
+        res=put(res, sdBox(p-(gC+vec3(-3.2,3.0,0)), vec3(.09,.09,4.7)), 20.0);
+        res=put(res, sdBox(p-(gC+vec3( 3.2,3.0,0)), vec3(.09,.09,4.7)), 20.0);
       }
       return res;
     }
@@ -1356,28 +1423,62 @@
       return clamp(1.-s*2.2,0.,1.);
     }
 
-    vec3 sky(vec3 rd){
-      vec3 sunDir = normalize(vec3(0.55, 0.16, 0.45));
-      vec3 betaR  = vec3(5.8e-6, 9.0e-6, 1.4e-5);
-      float betaM = 6.5e-5;
-      float HR=8000., HM=1200.;
-      float elev    = max(rd.y,0.01);
-      float sunElev = max(sunDir.y,0.02);
-      vec3  tauR = betaR*HR*(1./elev+1./sunElev);
-      float tauM = betaM*HM*(1./elev+1./sunElev);
-      vec3  T    = exp(-tauR-tauM);
-      float mu   = dot(rd,sunDir);
-      float phR  = .75*(1.+mu*mu);
-      float phM  = .5*(1.-(.76*.76))/pow(1.+.76*.76-2.*.76*mu,1.5);
-      vec3 planck= vec3(1.0,0.82,0.52);
-      vec3 s     = (phR*betaR*HR/elev+phM*betaM*HM/elev)*T*planck*3.2;
-      float sunDot=max(dot(rd,sunDir),0.);
-      if(sunDot>0.9998 && sunDir.y>-0.05){
-        float limb=1.-smoothstep(.9998,.99995,sunDot);
-        s += planck*limb*90.*max(0.,sunDir.y+0.08);
+    // LEO backdrop. The facility is WeylandAI's orbital shipyard — real
+    // orbital mechanics drove the siting: LEO for frequent crew rotation,
+    // cheap Earth resupply and visual drama, building the "seed" construction
+    // ship that will later bootstrap the real generation-ship-scale yard at
+    // Earth-Moon L5 (stable, continuous sun, no Van Allen exposure, pulls
+    // bulk material from the Moon's shallow well instead of Earth's deep
+    // one — wrong physics for a first facility, right physics for the
+    // follow-on). Earth is a real ray-sphere intersection, not a texture
+    // card, so its limb curvature and terminator fall out of the geometry
+    // instead of being faked. Distance/radius are stylized against this
+    // scene's meter-scale geometry rather than true 6371km (no precision
+    // benefit from the real number at this scale) but tuned so Earth's
+    // angular radius matches a real ~400km-altitude view (~70 degrees).
+    vec3 sky(vec3 ro, vec3 rd){
+      vec3 sunDir = normalize(vec3(0.42, 0.68, 0.38));
+      vec3 nadir  = vec3(0.0,-1.0,0.0);
+      float earthDist   = 2200.0;
+      float earthRadius = earthDist*sin(radians(70.0));
+      vec3 earthCenter  = ro + nadir*earthDist;
+
+      vec3 oc = ro-earthCenter;
+      float b = dot(rd,oc);
+      float c = dot(oc,oc)-earthRadius*earthRadius;
+      float disc = b*b-c;
+
+      if(disc>0.0){
+        float t=-b-sqrt(disc);
+        if(t>0.0){
+          vec3 hit = ro+rd*t;
+          vec3 N   = normalize(hit-earthCenter);
+          float sunFacing = max(dot(N,sunDir),0.0);
+          float landN   = noise(N*5.0);
+          float cloudN  = noise(N*11.0+vec3(3.7,1.1,9.2))*0.6+noise(N*23.0)*0.4;
+          vec3 oceanCol = vec3(0.045,0.13,0.30);
+          vec3 landCol  = vec3(0.15,0.21,0.085);
+          vec3 base     = mix(oceanCol,landCol,smoothstep(0.52,0.60,landN));
+          vec3 lit      = mix(base,vec3(0.92,0.93,0.95),smoothstep(0.58,0.74,cloudN));
+          float term    = smoothstep(0.0,0.18,sunFacing);
+          vec3 nightCol = vec3(0.008,0.012,0.022)+vec3(1.0,0.78,0.42)*pow(hash(floor(N*220.0)),22.0)*0.6;
+          vec3 earthLit = mix(nightCol, lit*(0.25+1.5*sunFacing), term);
+          float limb    = pow(1.0-max(dot(N,-rd),0.0),4.5);
+          vec3 atmoGlow = vec3(0.30,0.52,1.0)*limb*(0.18+max(sunFacing,0.0)*1.1);
+          return clamp(earthLit+atmoGlow,0.0,1.6);
+        }
       }
-      s += vec3(1.0,0.92,0.70)*pow(max(0.,1.-abs(rd.y)),6.)*0.18;
-      return clamp(s,0.,1.);
+
+      float starField = step(0.9978, hash(floor(rd*420.0)));
+      vec3 stars = vec3(starField)*(0.55+0.45*hash(floor(rd*77.3)));
+      float sunDot = max(dot(rd,sunDir),0.0);
+      vec3 sunDisk = vec3(0.0);
+      if(sunDot>0.99965){
+        float core = smoothstep(0.99965,0.9999,sunDot);
+        sunDisk = vec3(1.0,0.97,0.90)*core*6.0;
+      }
+      float faintGlow = pow(max(sunDot,0.0),64.0)*0.08;
+      return stars + sunDisk + vec3(1.0,0.9,0.75)*faintGlow;
     }
 
     vec3 shade(vec3 albedo, float metal, float rough,
@@ -1474,6 +1575,28 @@
         } else if(matID < 13.5){
           albedo = vec3(0.10,0.12,0.13)+noise(p*18.0)*0.018;
           metal = 0.55; rough = 0.38;
+        } else if(matID < 15.5){
+          albedo = vec3(0.12,0.28,0.58)+noise(p*14.0)*0.02;
+          rough = 0.72;
+        } else if(matID < 16.5){
+          albedo = vec3(0.95,0.74,0.14);
+          rough = 0.45;
+          emissive = vec3(1.0,0.78,0.15)*(0.35+0.15*sin(u_t*1.6));
+        } else if(matID < 17.5){
+          albedo = vec3(0.76,0.77,0.79)+noise(p*10.0)*0.02;
+          metal = 0.18; rough = 0.42;
+        } else if(matID < 18.5){
+          albedo = vec3(0.025,0.035,0.07)+noise(p*20.0)*0.01;
+          metal = 0.30; rough = 0.22;
+        } else if(matID < 19.5){
+          albedo = vec3(0.01,0.015,0.02);
+          emissive = vec3(0.30,0.58,1.0)*(2.2+0.6*sin(u_t*9.0+p.z*3.0));
+        } else if(matID < 20.5){
+          albedo = vec3(0.40,0.41,0.44)+noise(p*16.0)*0.018;
+          metal = 0.68; rough = 0.35;
+        } else if(matID < 21.5){
+          albedo = vec3(0.88,0.89,0.90);
+          metal = 0.08; rough = 0.30;
         } else {
           albedo = vec3(0.82,0.80,0.72);
           rough = 0.68;
@@ -1519,13 +1642,12 @@
         float scanRim = pow(1.-abs(dot(N,V)),3.0);
         lighting += vec3(1.0,.57,.045)*u_scan*targetField*(.22+scanBand*1.25+scanRim*.35);
         float fog = 1.-exp(-hit.x*0.022);
-        vec3 fogCol = mix(vec3(0.30,0.23,0.14),sky(normalize(vec3(rd.x,max(rd.y,.04),rd.z))),.62);
+        vec3 fogCol = mix(vec3(0.30,0.23,0.14),sky(ro,normalize(vec3(rd.x,max(rd.y,.04),rd.z))),.62);
         if(p.z>0.0 && p.z<16.0 && abs(p.x)<7.15) fogCol=vec3(0.045,0.032,0.018);
         col = mix(lighting, fogCol, fog);
 
       } else {
-        col = sky(rd);
-        col = mix(col, vec3(0.35,0.28,0.18)*0.6, 0.15);
+        col = sky(ro,rd);
       }
 
       vec2 vp = gl_FragCoord.xy/u_res;
@@ -1770,137 +1892,14 @@
       manifestUrl: '/sightx/runtime-manifest.json'
     }).catch(error => console.error('[SightX runtime]', error));
   </script>
-  <style>
-    #mx-toggle{position:fixed;bottom:24px;right:24px;z-index:9000;background:#12141988;backdrop-filter:blur(10px);border:1px solid #2c3139;color:#edf0f1;border-radius:99px;padding:12px 18px;font:750 11px/1 ui-monospace,monospace;letter-spacing:.06em;cursor:pointer}
-    #mx-toggle:hover{border-color:#2a52ff;color:#2a52ff}
-    #mx-panel{position:fixed;bottom:24px;right:24px;z-index:9001;width:300px;max-width:calc(100vw - 48px);background:#0d0f14ee;backdrop-filter:blur(14px);border:1px solid #2c3139;border-radius:16px;box-shadow:0 25px 70px rgba(0,0,0,.5);display:none;flex-direction:column;overflow:hidden;font-family:"Avenir Next","Helvetica Neue",sans-serif}
-    #mx-panel.open{display:flex}
-    #mx-head{display:flex;justify-content:space-between;align-items:center;padding:12px 14px;border-bottom:1px solid #2c3139}
-    #mx-head b{color:#edf0f1;font-size:12px;letter-spacing:.06em}
-    #mx-close{background:none;border:0;color:#9299a3;cursor:pointer;font-size:16px}
-    #mx-roster{display:flex;gap:6px;flex-wrap:wrap;padding:10px 14px;border-bottom:1px solid #2c3139}
-    .mx-avatar{width:26px;height:26px;border-radius:50%;display:grid;place-items:center;font:800 10px ui-monospace,monospace;color:#090a0d}
-    #mx-messages{flex:1;max-height:220px;overflow-y:auto;padding:10px 14px;display:flex;flex-direction:column;gap:8px;font-size:12px;color:#edf0f1}
-    .mx-msg b{color:#2a52ff;margin-right:4px}
-    .mx-sys{color:#9299a3;font-style:italic}
-    #mx-input-row{display:flex;gap:6px;padding:10px 14px;border-top:1px solid #2c3139}
-    #mx-input{flex:1;background:#161920;border:1px solid #2c3139;border-radius:8px;padding:8px 10px;color:#fff;font-size:12px}
-    #mx-voice-btn{background:none;border:1px solid #2c3139;color:#9299a3;border-radius:8px;padding:8px 10px;cursor:pointer;font-size:13px}
-    #mx-voice-btn.active{background:#61dfa0;border-color:#61dfa0;color:#090a0d}
-    #mx-gate{padding:16px;font-size:12px;color:#9299a3;line-height:1.6}
-    #mx-gate a{color:#2a52ff}
-  </style>
-  <button id="mx-toggle">👥 COLLABORATE</button>
-  <div id="mx-panel">
-    <div id="mx-head"><b>MEETINGX LIVE</b><button id="mx-close">✕</button></div>
-    <div id="mx-roster"></div>
-    <div id="mx-messages"></div>
-    <div id="mx-input-row">
-      <button id="mx-voice-btn" title="Toggle voice">🎤</button>
-      <input id="mx-input" type="text" placeholder="Message..." maxlength="2000">
-    </div>
-  </div>
-  <script>
-  (function(){
-    const PROJECT_ID = 'glendale-camino-real';
-    let ws = null, joined = false, myId = null, peers = {}, localStream = null;
-    const $ = (id) => document.getElementById(id);
-    function addMsg(html, cls) { const d = document.createElement('div'); d.className = 'mx-msg' + (cls ? ' ' + cls : ''); d.innerHTML = html; const box = $('mx-messages'); box.appendChild(d); box.scrollTop = box.scrollHeight; }
-    function esc(s) { return String(s == null ? '' : s).replace(/[<>&]/g, c => ({'<':'&lt;','>':'&gt;','&':'&amp;'}[c])); }
-    function renderRoster(users) { $('mx-roster').innerHTML = users.map(u => `<span class="mx-avatar" style="background:${u.color}" title="${esc(u.name)}">${esc((u.name||'?').slice(0,1).toUpperCase())}</span>`).join(''); }
-    let roster = [];
-    function connect() {
-      ws = new WebSocket((location.protocol === 'https:' ? 'wss://' : 'ws://') + location.host + '/api/sight/room/' + PROJECT_ID);
-      ws.onopen = () => { joined = true; };
-      ws.onclose = () => {
-        const neverJoined = !joined;
-        joined = false;
-        if (neverJoined) {
-          $('mx-panel').innerHTML = '<div id="mx-gate">Sign in and add MeetingX to collaborate live in this walkthrough. See <a href="/pricing">/pricing</a>.</div>';
-        }
-      };
-      ws.onerror = () => {};
-      ws.onmessage = (evt) => {
-        let msg; try { msg = JSON.parse(evt.data); } catch (e) { return; }
-        if (msg.type === 'roster') { roster = msg.users; myId = msg.you; renderRoster(roster); addMsg('Connected. ' + roster.length + ' present.', 'mx-sys'); }
-        else if (msg.type === 'join') { roster.push(msg.user); renderRoster(roster); addMsg(esc(msg.user.name) + ' joined', 'mx-sys'); if (localStream) callPeer(msg.user.userId); }
-        else if (msg.type === 'leave') { roster = roster.filter(u => u.userId !== msg.userId); renderRoster(roster); if (peers[msg.userId]) { peers[msg.userId].pc.close(); delete peers[msg.userId]; } }
-        else if (msg.type === 'chat') { addMsg('<b>' + esc(msg.user.name) + ':</b> ' + esc(msg.text)); }
-        else if (msg.type === 'signal') { handleSignal(msg); }
-      };
-    }
-    function sendSignal(to, payload) { ws.send(JSON.stringify({ type: 'signal', to, payload })); }
-    function makePeerConnection(peerId) {
-      const pc = new RTCPeerConnection({ iceServers: [{ urls: 'stun:stun.l.google.com:19302' }] });
-      if (localStream) localStream.getTracks().forEach(t => pc.addTrack(t, localStream));
-      pc.onicecandidate = (e) => { if (e.candidate) sendSignal(peerId, { candidate: e.candidate }); };
-      pc.ontrack = (e) => {
-        let audio = document.getElementById('mx-audio-' + peerId);
-        if (!audio) { audio = document.createElement('audio'); audio.id = 'mx-audio-' + peerId; audio.autoplay = true; document.body.appendChild(audio); }
-        audio.srcObject = e.streams[0];
-      };
-      peers[peerId] = { pc };
-      return pc;
-    }
-    async function callPeer(peerId) {
-      const pc = makePeerConnection(peerId);
-      const offer = await pc.createOffer();
-      await pc.setLocalDescription(offer);
-      sendSignal(peerId, { sdp: offer });
-    }
-    async function handleSignal(msg) {
-      const peerId = msg.from;
-      let entry = peers[peerId];
-      const pc = entry ? entry.pc : makePeerConnection(peerId);
-      if (msg.payload.sdp) {
-        await pc.setRemoteDescription(new RTCSessionDescription(msg.payload.sdp));
-        if (msg.payload.sdp.type === 'offer') {
-          const answer = await pc.createAnswer();
-          await pc.setLocalDescription(answer);
-          sendSignal(peerId, { sdp: answer });
-        }
-      } else if (msg.payload.candidate) {
-        try { await pc.addIceCandidate(msg.payload.candidate); } catch (e) {}
-      }
-    }
-    $('mx-toggle').addEventListener('click', () => {
-      $('mx-panel').classList.toggle('open');
-      if (!ws) connect();
-    });
-    $('mx-close').addEventListener('click', () => $('mx-panel').classList.remove('open'));
-    $('mx-input').addEventListener('keydown', (e) => {
-      if (e.key === 'Enter' && ws && joined && e.target.value.trim()) {
-        ws.send(JSON.stringify({ type: 'chat', text: e.target.value.trim() }));
-        e.target.value = '';
-      }
-    });
-    $('mx-voice-btn').addEventListener('click', async () => {
-      const btn = $('mx-voice-btn');
-      if (!localStream) {
-        try {
-          localStream = await navigator.mediaDevices.getUserMedia({ audio: true });
-          btn.classList.add('active');
-          roster.filter(u => u.userId !== myId).forEach(u => callPeer(u.userId));
-        } catch (e) { addMsg('Mic access denied.', 'mx-sys'); }
-      } else {
-        localStream.getTracks().forEach(t => t.stop());
-        localStream = null;
-        Object.values(peers).forEach(p => p.pc.close());
-        peers = {};
-        btn.classList.remove('active');
-      }
-    });
-  })();
-  </script>
 
-
-  <!-- Guided Walkthrough Preview -- real, deployed 2026-09-06. SightX's own
+  <!-- Guided Walkthrough Preview — real, deployed 2026-09-06. SightX's own
        spec promises "guided site walkthroughs"; the WebGL scene above is
        one real hardcoded demo project (Glendale Camino Real). This panel
        is a genuinely different, smaller, real slice of that same promise:
        given a plain-text project description, it generates an actual
        narrated storyboard walkthrough (script via a self-hosted LLM,
-       animated-SVG scene sequence, optional browser text-to-speech) --
+       animated-SVG scene sequence, optional browser text-to-speech) —
        not a 3D render, not a video file. Calls weylandai's own
        /api/sightx/walkthrough-preview, which forwards to
        filmline-video-worker over a real same-account Service Binding. -->
@@ -1913,7 +1912,7 @@
         <h2 style="margin:0;font-family:'Space Grotesk',sans-serif;">Guided Walkthrough Preview</h2>
         <button id="wt-preview-close" style="background:none;border:0;color:#8a94a6;font-size:22px;cursor:pointer;">&times;</button>
       </div>
-      <p style="color:#a9b2c0;font-size:14px;line-height:1.6;">Describe a project (e.g. "second-floor mechanical retrofit, three access points, one hazardous-material zone") and generate a real narrated storyboard walkthrough -- a script plus an animated scene sequence, played back with your browser's own text-to-speech. This is not the 3D scene above; it's a smaller, real, honest slice of SightX's "guided site walkthroughs" promise: script + animated storyboard, not photorealistic render or an encoded video file.</p>
+      <p style="color:#a9b2c0;font-size:14px;line-height:1.6;">Describe a project (e.g. "second-floor mechanical retrofit, three access points, one hazardous-material zone") and generate a real narrated storyboard walkthrough — a script plus an animated scene sequence, played back with your browser's own text-to-speech. This is not the 3D scene above; it's a smaller, real, honest slice of SightX's "guided site walkthroughs" promise: script + animated storyboard, not photorealistic render or an encoded video file.</p>
       <textarea id="wt-preview-input" rows="3" maxlength="1000" placeholder="Describe the project or space to walk through..." style="width:100%;box-sizing:border-box;background:#0d0f13;color:#f4f1ea;border:1px solid #2a2e36;border-radius:6px;padding:10px;font-family:inherit;font-size:14px;"></textarea>
       <button id="wt-preview-generate" style="margin-top:10px;padding:10px 18px;background:#2a52ff;color:#090a0d;border:0;border-radius:6px;font-weight:700;cursor:pointer;">Generate</button>
       <span id="wt-preview-status" style="margin-left:12px;color:#8a94a6;font-size:13px;"></span>

@@ -234,7 +234,7 @@ function showProof(kind) {
 }
 
 async function loadCatalogLevel(levelId) {
-  if (!state.project) return;
+  if (!state.project) return false;
   const level = state.project.levels.find(item => item.id === levelId) || state.project.levels[0];
   state.level = level;
   state.upload.file = null;
@@ -265,8 +265,10 @@ async function loadCatalogLevel(levelId) {
     trigger.querySelector('span').textContent = `${level.sheet} / ${state.project.name.split(' - ')[0]}`;
     status(`${level.label} reconstructed from ${compiled.wallPixels.toLocaleString()} classified wall pixels. Review Source, Model Input, and Semantic Result before relying on dimensions.`, 'ok');
     refs.provenance.innerHTML = `<b>OBSERVED SOURCE</b><br>${state.project.source.file}, page ${level.page}, ${level.sheet}. SHA-256 ${state.project.source.sha256.slice(0, 16)}...<br><b>INFERRED</b><br>${level.extraction.method}; ${level.extraction.status}.`;
+    return true;
   } catch (error) {
     status(`Reconstruction failed: ${error.message}`, 'error');
+    return false;
   }
 }
 
@@ -275,7 +277,7 @@ async function loadProject(projectId) {
   refs.address.textContent = state.project.address;
   refs.level.replaceChildren(...state.project.levels.map(level => element('option', { value: level.id }, level.label)));
   refs.map.src = state.project.context.embedUrl;
-  await loadCatalogLevel(state.project.levels[0].id);
+  return loadCatalogLevel(state.project.levels[0].id);
 }
 
 function updateCropBox() {
@@ -431,8 +433,14 @@ try {
     return response.json();
   });
   refs.project.replaceChildren(...state.catalog.projects.map(project => element('option', { value: project.id }, project.name)));
-  await loadProject(state.catalog.projects[0].id);
-  openPanel(true);
+  const reconstructed = await loadProject(state.catalog.projects[0].id);
+  // SightX's primary surface is the walkable 3D twin (the canvas behind
+  // this panel), not this 2D tool. Only auto-open to show off a working
+  // demo reconstruction; if the built-in demo's source assets are
+  // missing/broken, stay out of the way so the walkable scene is what a
+  // visitor actually sees by default. The PDF TWIN trigger button still
+  // reaches this panel (and the real error status inside it) either way.
+  if (reconstructed) openPanel(true);
 } catch (error) {
   status(`Project catalog unavailable: ${error.message}`, 'error');
   trigger.querySelector('span').textContent = 'SOURCE CATALOG ERROR';
