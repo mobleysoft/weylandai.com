@@ -35333,7 +35333,7 @@ global.SovereignPdfRender = {
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>SightX | WeylandAI Site Vision Demonstrator</title>
   <meta name="description" content="Explore the SightX construction-vision demonstrator: a navigable WeylandAI facility with automated openings and site intelligence overlays.">
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><rect width='64' height='64' fill='%23f0b800'/><path d='M13 16h8l6 28h-8zm15 0h8l4 17 4-17h8l-8 28h-8z' fill='%23090a0d'/></svg>">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><rect width='64' height='64' fill='%232a52ff'/><path d='M13 16h8l6 28h-8zm15 0h8l4 17 4-17h8l-8 28h-8z' fill='%23090a0d'/></svg>">
   
   <!-- Premium Typography -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -35347,9 +35347,10 @@ global.SovereignPdfRender = {
   
   <style>
     :root {
-      --color-primary: #f0b800;
+      --color-primary: #2a52ff;
       --color-accent: #d9e2e8;
-      --void-glow: rgba(240, 184, 0, 0.24);
+      --accent-hivis: #ffd400;
+      --void-glow: rgba(42, 82, 255, 0.24);
     }
     
     * {
@@ -35433,8 +35434,8 @@ global.SovereignPdfRender = {
     }
     
     .status-badge {
-      background: rgba(240, 184, 0, 0.05);
-      border: 1px solid rgba(240, 184, 0, 0.2);
+      background: rgba(42, 82, 255, 0.05);
+      border: 1px solid rgba(42, 82, 255, 0.2);
       padding: 8px 16px;
       border-radius: 20px;
       font-size: 13px;
@@ -35466,7 +35467,7 @@ global.SovereignPdfRender = {
     .slideshow-container {
       position: relative;
       background: rgba(10, 10, 15, 0.85);
-      border: 1px solid rgba(240, 184, 0, 0.15);
+      border: 1px solid rgba(42, 82, 255, 0.15);
       border-radius: 20px;
       padding: 40px;
       box-shadow: 0 20px 40px rgba(0,0,0,0.6);
@@ -35494,7 +35495,7 @@ global.SovereignPdfRender = {
     .category-label {
       display: inline-block;
       padding: 6px 12px;
-      background: rgba(240, 184, 0, 0.08);
+      background: rgba(42, 82, 255, 0.08);
       border: 1px solid var(--color-primary);
       color: var(--color-primary);
       border-radius: 30px;
@@ -35515,7 +35516,16 @@ global.SovereignPdfRender = {
       color: #fff;
     }
     
-    .tagline { font-family: 'Space Grotesk', sans-serif; margin: -8px 0 14px; font-size: 16px; font-weight: 700; letter-spacing: -0.01em; color: var(--color-primary); } .purpose-text {
+    .tagline {
+      font-family: 'Space Grotesk', sans-serif;
+      margin: -8px 0 14px;
+      font-size: 16px;
+      font-weight: 700;
+      letter-spacing: -0.01em;
+      color: var(--color-primary);
+    }
+
+    .purpose-text {
       font-size: 16px;
       line-height: 1.6;
       color: #b0b0c5;
@@ -35538,8 +35548,8 @@ global.SovereignPdfRender = {
     }
     
     .product-box:hover {
-      border-color: rgba(240, 184, 0, 0.2);
-      background: rgba(240, 184, 0, 0.02);
+      border-color: rgba(42, 82, 255, 0.2);
+      background: rgba(42, 82, 255, 0.02);
     }
     
     .product-title {
@@ -35571,7 +35581,7 @@ global.SovereignPdfRender = {
     .console-box {
       flex: 1;
       background: #020204;
-      border: 1px solid rgba(240,184,0,0.1);
+      border: 1px solid rgba(42,82,255,0.1);
       border-radius: 10px;
       padding: 15px;
       font-family: 'Space Grotesk', monospace;
@@ -35680,7 +35690,7 @@ global.SovereignPdfRender = {
       background: var(--color-primary);
       color: #000;
       border-color: var(--color-primary);
-      box-shadow: 0 0 10px rgba(240, 184, 0, 0.2);
+      box-shadow: 0 0 10px rgba(42, 82, 255, 0.2);
     }
     
     /* Fleet browser drawer */
@@ -35764,7 +35774,7 @@ global.SovereignPdfRender = {
     }
     
     .fleet-link:hover {
-      background: rgba(240, 184, 0, 0.08);
+      background: rgba(42, 82, 255, 0.08);
       border-color: var(--color-primary);
       color: #fff;
       transform: translateY(-2px);
@@ -35791,7 +35801,7 @@ global.SovereignPdfRender = {
     }
     
     .cat-chip:hover, .cat-chip.active {
-      background: rgba(240, 184, 0, 0.08);
+      background: rgba(42, 82, 255, 0.08);
       color: var(--color-primary);
       border-color: var(--color-primary);
     }
@@ -35827,7 +35837,100 @@ global.SovereignPdfRender = {
       pointer-events: none;
       transition: opacity 0.3s;
     }
-    
+
+    /* First-person helmet HUD frame/visor edge - WeylandAI Signal Blue /
+       Hi-Vis Yellow brand palette, not generic NASA white/orange. Hidden
+       automatically in third-person (V toggle) since the helmet itself
+       is drawn in-scene there instead. The gloved hands are real 3D SDF
+       geometry rendered inside the WebGL canvas (see handSdf() in the
+       shader), not part of this overlay. */
+    #visor-frame {
+      position: fixed;
+      inset: 0;
+      z-index: 8;
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity 0.4s ease;
+    }
+    body.sightx-playing:not(.sightx-third-person) #visor-frame { opacity: 1; }
+    #visor-frame::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse 72% 72% at 50% 54%, transparent 56%, rgba(3,4,8,0.5) 84%, rgba(3,4,8,0.9) 100%);
+    }
+    #visor-frame::after {
+      content: "";
+      position: absolute;
+      inset: 12px;
+      border-radius: 46% / 38%;
+      border: 2px solid rgba(42,82,255,0.5);
+      box-shadow: 0 0 0 1px rgba(255,212,0,0.2) inset, 0 0 46px rgba(42,82,255,0.16) inset;
+    }
+    .visor-tick {
+      position: absolute;
+      width: 22px;
+      height: 22px;
+      border: 2px solid var(--accent-hivis);
+      opacity: 0.7;
+    }
+    .visor-tick.tl { top: 20px; left: 20px; border-right: 0; border-bottom: 0; }
+    .visor-tick.tr { top: 20px; right: 20px; border-left: 0; border-bottom: 0; }
+    .visor-tick.bl { bottom: 20px; left: 20px; border-right: 0; border-top: 0; }
+    .visor-tick.br { bottom: 20px; right: 20px; border-left: 0; border-top: 0; }
+
+    /* MMU/SAFER booster-unit thrust feedback - a brief Hi-Vis Yellow glow
+       burst at the view edges (bottom corners, where the backpack's RCS
+       nozzles would be) each time a thrust key fires a burst. Restarted
+       every frame thrust is held (see onThrust in the script below), so
+       it stays lit continuously under sustained thrust and fades over
+       ~0.4s once released - a visual match for the discrete-burst
+       momentum physics (see sightx-controls.js), not continuous force. */
+    #thrust-glow {
+      position: fixed;
+      inset: 0;
+      z-index: 7;
+      pointer-events: none;
+      opacity: 0;
+    }
+    #thrust-glow.pulse { animation: sxThrustPulse 0.4s ease-out; }
+    @keyframes sxThrustPulse {
+      0%   { opacity: 0.85; }
+      100% { opacity: 0; }
+    }
+    #thrust-glow::before, #thrust-glow::after {
+      content: "";
+      position: absolute;
+      width: 220px;
+      height: 220px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(255,212,0,0.55), transparent 70%);
+      filter: blur(2px);
+    }
+    #thrust-glow::before { bottom: -60px; left: -40px; }
+    #thrust-glow::after  { bottom: -60px; right: -40px; }
+
+    /* Disclosed orbital demo time-scale readout - see sky()/main() comments
+       in the shader for the real orbital-mechanics numbers this reports. */
+    #orbit-hud {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      z-index: 10;
+      background: rgba(0, 0, 0, 0.75);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      padding: 7px 12px;
+      border-radius: 10px;
+      font-family: 'Space Grotesk', monospace;
+      font-size: 10px;
+      letter-spacing: 0.5px;
+      line-height: 1.5;
+      color: #8fb8d8;
+      pointer-events: none;
+      max-width: 230px;
+    }
+    #orbit-hud b { color: #cfe4f5; }
+
     /* High-tech HUD Hardware Proximity Modal */
     .hud-modal {
       position: fixed;
@@ -35837,7 +35940,7 @@ global.SovereignPdfRender = {
       z-index: 5;
       background: linear-gradient(180deg, rgba(9, 9, 11, 0.95) 0%, rgba(3, 3, 5, 0.98) 100%);
       border: 1px solid var(--color-primary);
-      box-shadow: 0 0 25px rgba(240, 184, 0, 0.25);
+      box-shadow: 0 0 25px rgba(42, 82, 255, 0.25);
       padding: 22px;
       border-radius: 12px;
       width: 90%;
@@ -35875,7 +35978,7 @@ global.SovereignPdfRender = {
       display: flex;
       align-items: center;
       gap: 10px;
-      border-bottom: 1px solid rgba(240, 184, 0, 0.2);
+      border-bottom: 1px solid rgba(42, 82, 255, 0.2);
       padding-bottom: 10px;
       margin-bottom: 12px;
     }
@@ -35955,7 +36058,7 @@ global.SovereignPdfRender = {
       width: 100%;
       max-width: 400px;
       background: rgba(10, 10, 15, 0.85);
-      border: 1px solid rgba(240, 184, 0, 0.2);
+      border: 1px solid rgba(42, 82, 255, 0.2);
       border-radius: 20px;
       padding: 40px;
       box-shadow: 0 20px 40px rgba(0,0,0,0.8);
@@ -35978,7 +36081,7 @@ global.SovereignPdfRender = {
     .login-input {
       width: 100%;
       background: #020204;
-      border: 1px solid rgba(240,184,0,0.2);
+      border: 1px solid rgba(42,82,255,0.2);
       border-radius: 10px;
       padding: 12px 16px;
       color: #fff;
@@ -36021,6 +36124,55 @@ global.SovereignPdfRender = {
       color: #fff;
     }
 
+    /* PDF-to-twin bridge caption: explains that the scene on screen is a
+       sample output of the same PDF -> 3D walkable-building capability the
+       PDF TWIN trigger (bottom-left) opens, not an unrelated showcase. */
+    #pdf-bridge-caption {
+      position: fixed;
+      left: 22px;
+      bottom: 72px;
+      z-index: 85;
+      max-width: 340px;
+      padding: 10px 28px 10px 12px;
+      background: rgba(7, 9, 11, 0.88);
+      border: 1px solid rgba(240, 184, 0, 0.35);
+      border-radius: 4px;
+      color: #d9e2e8;
+      font-family: 'Outfit', sans-serif;
+      font-size: 11px;
+      line-height: 1.45;
+      backdrop-filter: blur(10px);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+      transition: opacity 0.3s;
+    }
+
+    #pdf-bridge-caption b {
+      display: block;
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 700;
+      font-size: 10px;
+      letter-spacing: 0.12em;
+      color: #f0b800;
+      margin-bottom: 4px;
+    }
+
+    #pdf-bridge-caption-close {
+      position: absolute;
+      top: 4px;
+      right: 8px;
+      background: none;
+      border: none;
+      color: #808095;
+      font-size: 15px;
+      line-height: 1;
+      cursor: pointer;
+      padding: 4px;
+    }
+
+    #pdf-bridge-caption-close:hover {
+      color: #fff;
+    }
+
     /* Mobile media queries */
     @media (max-width: 600px) {
       header {
@@ -36053,16 +36205,65 @@ global.SovereignPdfRender = {
       }
       .fleet-drawer-header { padding: 15px 20px; }
       .fleet-links-grid { padding: 15px 20px; grid-template-columns: 1fr; }
+      #pdf-bridge-caption { left: 12px; right: 12px; bottom: 128px; max-width: none; }
     }
   </style>
 </head>
 <body class="sightx-demo">
+  <!-- Cosmic Evolution Intro: 9 Epochs from Ho'\u014Dleilana BAO contraction to LEO Ingress -->
+  <div id="cx-overlay" style="position:fixed;inset:0;z-index:9999;background:#000;display:none;pointer-events:auto">
+    <canvas id="cx-canvas" style="position:absolute;inset:0;width:100%;height:100%;display:block"></canvas>
+    <div id="cx-hud" style="position:absolute;left:24px;bottom:24px;max-width:min(660px,88vw);background:rgba(8,10,16,0.84);border:1px solid rgba(42,82,255,0.35);border-radius:10px;padding:16px 22px;backdrop-filter:blur(14px);box-shadow:0 12px 40px rgba(0,0,0,0.8)">
+      <div style="font:700 11px/1 'Space Grotesk',monospace;letter-spacing:0.18em;color:#2a52ff;margin-bottom:7px;display:flex;align-items:center;gap:8px">
+        <span style="display:inline-block;width:6px;height:6px;border-radius:50%;background:#00e5ff;box-shadow:0 0 8px #00e5ff"></span>WEYLAND SIGHTX // CHRONO-TELEMETRY
+      </div>
+      <div id="cx-epoch" style="font:800 13px/1.35 'Space Grotesk',monospace;letter-spacing:0.06em;color:#ffd400;text-transform:uppercase">EPOCH // 13.8B YRS AGO \u2014 HO'\u014CLEILANA CONTRACTION</div>
+      <div id="cx-sub" style="font:500 11px/1.4 'Outfit',sans-serif;color:#a0aec0;letter-spacing:0.03em;margin-top:4px">DEEP SPACE FILAMENTS CONTRACTING TO DISTANT SINGULARITY</div>
+      <div style="margin-top:12px;width:100%;height:2px;background:rgba(255,255,255,0.12);border-radius:2px;overflow:hidden">
+        <div id="cx-progress" style="width:0%;height:100%;background:linear-gradient(90deg,#2a52ff,#00e5ff,#ffd400);transition:width 0.08s linear"></div>
+      </div>
+    </div>
+    <button id="cx-skip" type="button" style="position:absolute;top:22px;right:22px;z-index:2;border:1px solid rgba(255,255,255,0.35);border-radius:24px;padding:10px 22px;background:rgba(10,12,18,0.7);color:#f0f0f5;font:700 11px/1 'Space Grotesk',monospace;letter-spacing:0.14em;cursor:pointer;backdrop-filter:blur(8px);transition:all 0.2s ease;box-shadow:0 4px 16px rgba(0,0,0,0.5)">SKIP &#9656;</button>
+  </div>
   
   <!-- The Playable WebGL Canvas -->
   <canvas id="bg-canvas"></canvas>
-  
+
   <div id="hint">CLICK to capture mouse</div>
-  
+
+  <!-- Astronaut spacewalk embodiment HUD: the helmet visor frame/edge
+       (first-person only - see #visor-frame CSS above) and the MMU/SAFER
+       booster thrust glow (both views). The gloved hands themselves are
+       real 3D SDF geometry inside the WebGL canvas, not part of this
+       overlay - see handSdf() in the shader. -->
+  <div id="visor-frame" aria-hidden="true">
+    <span class="visor-tick tl"></span>
+    <span class="visor-tick tr"></span>
+    <span class="visor-tick bl"></span>
+    <span class="visor-tick br"></span>
+  </div>
+  <div id="thrust-glow" aria-hidden="true"></div>
+
+  <!-- Honest disclosure of the orbital-mechanics demo time-scale: real
+       orbital motion at this ~400km/92.68min LEO period is far too slow to
+       see second-to-second, so it's sped up 92.74x (full orbit in 60 real
+       seconds) rather than silently faked - see sky()/main() in the shader
+       for the Kepler-derived numbers behind this. -->
+  <div id="orbit-hud"><b>ORBIT SIM</b> \xB7 400km LEO, 92.68min period<br>1 real sec = 92.7 sim sec (~60s/orbit)</div>
+
+  <!-- Explains the relationship between this scene and the PDF TWIN tool:
+       this facility is a hand-built sample of what the PDF -> 3D
+       walkable-building capability produces, shown by default because a
+       first-time visitor hasn't uploaded a project yet. Honest framing:
+       this geometry was authored directly in the raymarch shader, not
+       literally generated by the PDF pipeline - it demonstrates the
+       capability rather than being its output. -->
+  <div id="pdf-bridge-caption">
+    <b>ORBITAL SHIPYARD TWIN</b>
+    This orbital drydock gantry is a real-time raymarched spatial demonstration of WeylandAI's autonomous CAD/BIM &rarr; 3D digital-twin capability &mdash; modeled in Low Earth Orbit with live orbital telemetry, FEA structural stress, and multi-tier starship assembly.
+    <button id="pdf-bridge-caption-close" type="button" aria-label="Dismiss" onclick="document.getElementById('pdf-bridge-caption').remove()">&times;</button>
+  </div>
+
   <!-- High-tech HUD Hardware Proximity Modal -->
   <div id="hardware-modal" class="hud-modal" style="display: none;">
     <div class="hud-scanner"></div>
@@ -36080,6 +36281,44 @@ global.SovereignPdfRender = {
     </div>
   </div>
   
+  <!-- FilmLine (filmline.cc) credit panel - same proximity-HUD pattern as
+       the door-hardware modal above, but for the Earth Relay Screening
+       Pavilion's real film-reel artifact and the real venture it stands in for. -->
+  <div id="filmline-modal" class="hud-modal" style="display: none;">
+    <div class="hud-scanner"></div>
+    <div class="hud-header">
+      <span class="hud-icon">FL</span>
+      <span class="hud-title">FILMLINE SCREENING PAVILION</span>
+    </div>
+    <div class="hud-body">
+      <div class="hud-label">Venture on display:</div>
+      <div class="hud-value">AI script-to-storyboard-reel generator for independent filmmakers. A one-line premise becomes an editable AI-written script, an animated storyboard reel, and a narrated preview page - real and live today, no signup.</div>
+      <div class="hud-sub">
+        <span>Real venture, not set dressing</span>
+        <a href="https://filmline.cc" target="_blank">Open FilmLine.cc</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Docking HUD - same proximity-HUD pattern as the hardware/FilmLine
+       panels above, but tied to a real state change: pressing G within
+       range locks free-flight and snaps the camera onto the construction
+       ship's forward collar; pressing G again hands control back. -->
+  <div id="dock-modal" class="hud-modal" style="display: none;">
+    <div class="hud-scanner"></div>
+    <div class="hud-header">
+      <span class="hud-icon">DK</span>
+      <span class="hud-title" id="dock-title">SEED VESSEL / FORWARD COLLAR</span>
+    </div>
+    <div class="hud-body">
+      <div class="hud-label">Docking Status:</div>
+      <div class="hud-value" id="dock-value">Within docking range.</div>
+      <div class="hud-sub">
+        <span id="dock-sub">Press G to dock</span>
+      </div>
+    </div>
+  </div>
+
   <div id="app-container">
     <header>
       <div class="logo">WEYLAND<span>AI</span></div>
@@ -36249,9 +36488,11 @@ global.SovereignPdfRender = {
     const consoleDisplay = document.getElementById('console-display');
     const consoleCmd = document.getElementById('console-cmd');
     
-    consoleCmd.addEventListener('keydown', (e) => {
-      if (e.key === 'Enter') executeCommand();
-    });
+    if (consoleCmd) {
+      consoleCmd.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter') executeCommand();
+      });
+    }
 
     function executeCommand() {
       const cmd = consoleCmd.value.trim().toLowerCase();
@@ -36259,42 +36500,27 @@ global.SovereignPdfRender = {
       
       let response = '';
       if (cmd === 'help') {
-        response = 'Available commands:\\
-' +
-                   '  status   - View current system status\\
-' +
-                   '  fleet    - Check autonomous crew status\\
-' +
-                   '  projects - List active project sites\\
-' +
+        response = 'Available commands:\\n' +
+                   '  status   - View current system status\\n' +
+                   '  fleet    - Check autonomous crew status\\n' +
+                   '  projects - List active project sites\\n' +
                    '  clear    - Clear console screen';
       } else if (cmd === 'status') {
-        response = 'System: weylandai.com\\
-' +
-                   'Status: ONLINE\\
-' +
-                   'Category: Construction / Automation\\
-' +
-                   'Operational Integrity: 100% (READY)\\
-' +
+        response = 'System: weylandai.com\\n' +
+                   'Status: ONLINE\\n' +
+                   'Category: Construction / Automation\\n' +
+                   'Operational Integrity: 100% (READY)\\n' +
                    'Pipeline: HuntX > SubX > SightX > TakeoffX > PropX > QText';
       } else if (cmd === 'fleet') {
-        response = 'Autonomous Crew Status:\\
-' +
-                   '  - Earthwork systems: READY\\
-' +
-                   '  - Concrete and framing systems: READY\\
-' +
-                   '  - Trade installation systems: READY\\
-' +
+        response = 'Autonomous Crew Status:\\n' +
+                   '  - Earthwork systems: READY\\n' +
+                   '  - Concrete and framing systems: READY\\n' +
+                   '  - Trade installation systems: READY\\n' +
                    'All telemetry channels operational.';
       } else if (cmd === 'projects') {
-        response = 'Project Network:\\
-' +
-                   '  - Site intelligence: ACTIVE\\
-' +
-                   '  - Estimation pipeline: ACTIVE\\
-' +
+        response = 'Project Network:\\n' +
+                   '  - Site intelligence: ACTIVE\\n' +
+                   '  - Estimation pipeline: ACTIVE\\n' +
                    '  - Field coordination: ACTIVE';
       } else if (cmd === 'clear') {
         consoleDisplay.innerHTML = '&gt; ';
@@ -36304,8 +36530,7 @@ global.SovereignPdfRender = {
         response = 'Unknown command: "' + cmd + '". Type "help" for a list of commands.';
       }
       
-      consoleDisplay.innerHTML += cmd + '<br>' + response.replace(/\\
-/g, '<br>') + '<br><br>&gt; ';
+      consoleDisplay.innerHTML += cmd + '<br>' + response.replace(/\\n/g, '<br>') + '<br><br>&gt; ';
       consoleDisplay.scrollTop = consoleDisplay.scrollHeight;
       consoleCmd.value = '';
     }
@@ -36384,16 +36609,16 @@ global.SovereignPdfRender = {
     
     function showUI() {
       // If pointer is captured (playing SightX), keep UI hidden
-      if (document.pointerLockElement === canvas) return;
+      if (canvas && document.pointerLockElement === canvas) return;
       
-      appContainer.classList.remove('hidden');
-      canvas.classList.remove('interactive');
+      if (appContainer) appContainer.classList.remove('hidden');
+      if (canvas) canvas.classList.remove('interactive');
       resetIdleTimer();
     }
     
     function hideUI() {
-      appContainer.classList.add('hidden');
-      canvas.classList.add('interactive');
+      if (appContainer) appContainer.classList.add('hidden');
+      if (canvas) canvas.classList.add('interactive');
       closeFleetDrawer();
     }
     
@@ -36410,9 +36635,11 @@ global.SovereignPdfRender = {
     document.addEventListener('touchstart', showUI);
     
     // Prevent hiding while interacting with the overlay
-    appContainer.addEventListener('mousemove', (e) => { e.stopPropagation(); resetIdleTimer(); });
-    appContainer.addEventListener('click', (e) => { e.stopPropagation(); resetIdleTimer(); });
-    appContainer.addEventListener('keydown', (e) => { e.stopPropagation(); resetIdleTimer(); });
+    if (appContainer) {
+      appContainer.addEventListener('mousemove', (e) => { e.stopPropagation(); resetIdleTimer(); });
+      appContainer.addEventListener('click', (e) => { e.stopPropagation(); resetIdleTimer(); });
+      appContainer.addEventListener('keydown', (e) => { e.stopPropagation(); resetIdleTimer(); });
+    }
     
     // SightX is a dedicated, unoccluded product demonstrator.
     if (document.body.classList.contains('sightx-demo')) {
@@ -36424,6 +36651,7 @@ global.SovereignPdfRender = {
     // \u2500\u2500 WebGL Setup (SightX playable background corridor) \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500
     const gl = canvas.getContext('webgl2');
     let sightxExperience = null;
+    let stressViewActive = false; // STRESS VIEW HUD toggle state, see u_stressView
     
     function resize() {
       const scale = sightxExperience ? sightxExperience.renderScale : Math.min(window.devicePixelRatio, 1.25);
@@ -36447,13 +36675,33 @@ global.SovereignPdfRender = {
     uniform float u_t;
     uniform vec3  u_cam;
     uniform vec3  u_dir;
+    uniform vec3  u_up;
     uniform float u_scan;
     uniform vec3  u_target;
     uniform sampler2D u_planSdf;
     uniform sampler2D u_planSource;
+    // Real NASA public-domain Earth imagery (day/night), see loadEarthTexture()
+    // in the JS setup below for exact source URLs and licensing notes.
+    uniform sampler2D u_earthDay;
+    uniform sampler2D u_earthNight;
+    uniform sampler2D u_earthCloud;
+    uniform sampler2D u_moonTex;
     uniform int u_planMode;
     uniform vec4 u_planBounds;
     uniform float u_planHeight;
+    // STRESS VIEW overlay toggle (0=off, default; 1=on) - see stressAt()
+    // and stressColor() below, driven by the "STRESS VIEW" HUD action.
+    uniform float u_stressView;
+    // Astronaut spacewalk embodiment (V toggles first/third-person) - see
+    // handSdf()/map() below for the camera-relative gloved hands and the
+    // third-person helmet+visor, and main()'s u_glitch block for the
+    // brief in-world correction effect on a real device-orientation change.
+    uniform float u_thirdPerson;
+    uniform vec3  u_astroPos;
+    uniform vec3  u_astroFwd;
+    uniform vec3  u_astroUp;
+    uniform float u_handsLowered;
+    uniform float u_glitch;
 
     float hash(vec3 p){ return fract(sin(dot(p,vec3(127.1,311.7,74.7)))*43758.5); }
     float noise(vec3 p){
@@ -36467,7 +36715,57 @@ global.SovereignPdfRender = {
 
     float sdBox(vec3 p, vec3 b){ vec3 q=abs(p)-b; return length(max(q,0.))+min(max(q.x,max(q.y,q.z)),0.); }
     float sdCyl(vec3 p, float r, float h){ vec2 d=abs(vec2(length(p.xz),p.y))-vec2(r,h); return min(max(d.x,d.y),0.)+length(max(d,0.)); }
+    float sdCylZ(vec3 p, float r, float h){ return sdCyl(vec3(p.x,p.z,p.y), r, h); }
     float sdSphere(vec3 p, float r){ return length(p)-r; }
+
+    // Moved up from its original spot further down (next to the orbital-
+    // mechanics sweep-angle helpers) - the astronaut-embodiment arm IK
+    // below calls rotX() before that later point in the file, which is a
+    // real GLSL ES 3.00 compile error (no forward declarations), so
+    // nothing in the scene rendered at all until this moved. Pure
+    // relocation, not a logic change - body is byte-identical to the
+    // original definition.
+    vec3 rotX(vec3 v, float a){
+      float c=cos(a), s=sin(a);
+      return vec3(v.x, v.y*c-v.z*s, v.y*s+v.z*c);
+    }
+    vec3 rotY(vec3 v, float a){
+      float c=cos(a), s=sin(a);
+      return vec3(v.x*c+v.z*s, v.y, -v.x*s+v.z*c);
+    }
+    vec3 rotZ(vec3 v, float a){
+      float c=cos(a), s=sin(a);
+      return vec3(v.x*c-v.y*s, v.x*s+v.y*c, v.z);
+    }
+    float sdCapsule(vec3 p, vec3 a, vec3 b, float r){
+      vec3 pa=p-a, ba=b-a;
+      float h=clamp(dot(pa,ba)/dot(ba,ba),0.,1.);
+      return length(pa-ba*h)-r;
+    }
+
+    // WeylandAI MMU/SAFER glove, built in the camera's own view-space
+    // (x=right, y=up, z=forward/depth from the eye) - real SDF finger and
+    // thumb geometry shaded through the same lighting pipeline as the
+    // rest of the scene (not a 2D screen overlay), so it carries real
+    // depth/parallax from the very first frame rather than a flat sprite.
+    // 'side' is -1 for the left hand, +1 for the right. 'portrait' picks
+    // the real device-holding ergonomics for the current viewport: a
+    // phone/tablet held in portrait is gripped with thumbs reaching up
+    // from the BOTTOM corners plus a fingertip peeking over the TOP edge
+    // from the back-gripping fingers; a wide landscape viewport is held
+    // by fingers wrapping the LEFT/RIGHT side bezels instead. 'lower'
+    // (0=raised at spawn, 1=lowered clear of frame) drives the reveal.
+    float handSdf(vec3 vp, float side, bool portrait, float lower){
+      vec3 off = vec3(0.0, -0.95*lower, 0.38*lower);
+      if(portrait){
+        float thumb   = sdCapsule(vp, vec3(side*0.34,-0.52,0.58)+off, vec3(side*0.16,-0.18,0.40)+off, 0.050);
+        float knuckle = sdCapsule(vp, vec3(side*0.30, 0.56,0.62)+off, vec3(side*0.22, 0.42,0.52)+off, 0.040);
+        return min(thumb, knuckle);
+      }
+      float finger1 = sdCapsule(vp, vec3(side*0.62, 0.10,0.55)+off, vec3(side*0.34, 0.06,0.42)+off, 0.042);
+      float finger2 = sdCapsule(vp, vec3(side*0.62,-0.06,0.55)+off, vec3(side*0.34,-0.10,0.42)+off, 0.042);
+      return min(finger1, finger2);
+    }
 
     vec2 put(vec2 scene, float distance, float material){
       return distance < scene.x ? vec2(distance, material) : scene;
@@ -36514,134 +36812,347 @@ global.SovereignPdfRender = {
       return min(max(d.x,d.y),0.0)+length(max(d,0.0));
     }
 
-    vec2 map(vec3 p){
+        vec2 map(vec3 p){
       if(u_planMode==1){
         vec2 planResult=vec2(p.y,8.0);
         planResult=put(planResult,sdPlanWall(p),1.0);
         return planResult;
       }
-      float path = 1.0-smoothstep(2.7,3.1,abs(p.x));
-      float groundMaterial = 7.0;
-      if((abs(p.x)<7.04 && p.z>0.0 && p.z<16.0) || (path>.5 && p.z<.2)) groundMaterial=8.0;
-      vec2 res=vec2(p.y,groundMaterial);
 
-      // Finite facility shell: 14.4m wide, 16m deep, with a real exterior.
-      float outerWest=sdBox(p-vec3(-7.2,1.7,8.0),vec3(.16,1.7,8.0));
-      float outerEast=sdBox(p-vec3( 7.2,1.7,8.0),vec3(.16,1.7,8.0));
-      float rear=sdBox(p-vec3(0.0,1.7,16.0),vec3(7.2,1.7,.16));
-      float front=sdBox(p-vec3(0.0,1.7,0.0),vec3(7.2,1.7,.16));
-      front=max(front,-sdDoorOpening(p,1.30,2.45));
-      float roof=sdBox(p-vec3(0.0,3.45,8.0),vec3(7.36,.14,8.16));
-      res=put(res,outerWest,1.0); res=put(res,outerEast,1.0);
-      res=put(res,rear,1.0);      res=put(res,front,1.0);
-      res=put(res,roof,5.0);
+      vec2 res = vec2(1e9, 0.0);
 
-      // Corridor walls host four automatic double-sliding doors per side.
-      float westWall=sdBox(p-vec3(-2.0,1.6,8.0),vec3(.10,1.6,8.0));
-      float eastWall=sdBox(p-vec3( 2.0,1.6,8.0),vec3(.10,1.6,8.0));
-      for(int i=0;i<4;i++){
-        float z=2.0+float(i)*4.0;
-        westWall=max(westWall,-sdDoorOpening(sideDoorSpace(p,-2.0,z),.68,2.35));
-        eastWall=max(eastWall,-sdDoorOpening(sideDoorSpace(p, 2.0,z),.68,2.35));
-      }
-      res=put(res,westWall,1.0); res=put(res,eastWall,1.0);
+      // =========================================================================
+      // 1. MASSIVE HEXAGONAL / ARCHED OPEN GANTRY CRADLE
+      //    (Star Trek Utopia Planitia / Star Wars Fondor / Kuat Drive Yards)
+      //    Berth spans Z = -4.0 to +28.0, X = -10.0 to +10.0, Y = -2.0 to 11.0.
+      //    All structural truss/gantry members use Material 20.0 (STRESS VIEW).
+      // =========================================================================
 
-      // Four rooms in each wing, separated from one another but connected to
-      // the central circulation spine through the modeled door openings.
-      for(int i=0;i<3;i++){
-        float z=4.0+float(i)*4.0;
-        res=put(res,sdBox(p-vec3(-4.6,1.6,z),vec3(2.5,1.6,.10)),1.0);
-        res=put(res,sdBox(p-vec3( 4.6,1.6,z),vec3(2.5,1.6,.10)),1.0);
-      }
+      // (A) Longitudinal Heavy Keel Beams & Gantry Rails (Z from -4.0 to 28.0)
+      float keelSpine = sdBox(vec3(p.x, p.y - (-2.0), p.z - 12.0), vec3(0.55, 0.45, 16.5));
+      res = put(res, keelSpine, 20.0);
 
-      // Room program. Each controlled opening now leads to a recognizable,
-      // navigable construction workspace rather than an empty shell.
-      res=put(res,sdBox(p-vec3(-5.45,.76, 2.0),vec3(1.05,.07,.52)),12.0); // Project office desk
-      res=put(res,sdBox(p-vec3(-5.45,1.12,2.0),vec3(.42,.27,.035)),13.0); // Project display
-      res=put(res,sdBox(p-vec3(-6.55,.92,3.15),vec3(.30,.92,.58)),13.0); // Drawing storage
+      // Twin lower gantry runway / maintenance catwalks (port & starboard)
+      float catwalks = sdBox(vec3(abs(p.x) - 8.5, p.y - (-1.4), p.z - 12.0), vec3(0.75, 0.08, 16.5));
+      float guardrails = sdBox(vec3(abs(p.x) - 7.8, p.y - (-0.9), p.z - 12.0), vec3(0.04, 0.42, 16.5));
+      res = put(res, min(catwalks, guardrails), 20.0);
 
-      res=put(res,sdBox(p-vec3( 4.70,.76, 2.0),vec3(1.25,.07,.58)),12.0); // Conference table
-      res=put(res,sdBox(p-vec3( 4.70,.42, 1.18),vec3(.95,.40,.28)),2.0);
-      res=put(res,sdBox(p-vec3( 4.70,.42, 2.82),vec3(.95,.40,.28)),2.0);
+      // Mid-height gantry crane rails
+      float midRails = sdBox(vec3(abs(p.x) - 9.2, p.y - 5.5, p.z - 12.0), vec3(0.32, 0.32, 16.5));
+      res = put(res, midRails, 20.0);
 
-      res=put(res,sdBox(p-vec3(-4.55,.76, 6.0),vec3(1.05,.07,.58)),12.0); // Materials review table
-      res=put(res,sdBox(p-vec3(-6.55,1.08,6.0),vec3(.30,1.08,1.15)),13.0); // Sample rack
-      res=put(res,sdBox(p-vec3(-4.85,.96,6.0),vec3(.48,.12,.35)),14.0); // Reviewed sample
+      // Upper overhead gantry runner rails
+      float topRails = sdBox(vec3(abs(p.x) - 4.5, p.y - 10.6, p.z - 12.0), vec3(0.35, 0.35, 16.5));
+      res = put(res, topRails, 20.0);
 
-      res=put(res,sdBox(p-vec3( 5.45,1.10,5.35),vec3(.48,1.10,.42)),13.0); // Telecom rack A
-      res=put(res,sdBox(p-vec3( 5.45,1.10,6.65),vec3(.48,1.10,.42)),13.0); // Telecom rack B
+      // (B) Massive Transverse Gantry Ribs / Hexagonal Arches
+      // 6 primary structural frames at Z = -3.0, 3.0, 9.0, 15.0, 21.0, 27.0
+      for(int ri = 0; ri < 6; ri++){
+        float zRib = -3.0 + float(ri) * 6.0;
+        vec3 rp = vec3(abs(p.x), p.y, p.z - zRib);
 
-      res=put(res,sdBox(p-vec3(-4.65,.78,10.0),vec3(1.30,.06,.72)),12.0); // Plan review table
-      res=put(res,sdBox(p-vec3(-6.92,1.68,10.0),vec3(.035,.68,1.10)),14.0); // Plan board
+        // Bottom transverse frame beam
+        float botBeam = sdBox(rp - vec3(4.0, -2.0, 0.0), vec3(4.5, 0.35, 0.45));
+        
+        // Outer vertical gantry column
+        float colBeam = sdBox(rp - vec3(9.0, 2.5, 0.0), vec3(0.40, 4.0, 0.45));
 
-      res=put(res,sdBox(p-vec3( 6.68,1.12,10.0),vec3(.24,1.12,1.18)),13.0); // Electrical switchgear
-      res=put(res,sdBox(p-vec3( 5.85,.18,10.0),vec3(.62,.018,1.35)),14.0); // Service clearance
+        // Upper inward-angled arch rafter (connecting outer column to top roof)
+        vec2 rafterRot = rotZ(vec3(rp.x - 6.75, rp.y - 8.5, 0.0), 0.73).xy;
+        float rafterBeam = sdBox(vec3(rafterRot.x, rafterRot.y, rp.z), vec3(0.32, 3.1, 0.45));
 
-      res=put(res,sdBox(p-vec3(-5.25,.88,14.0),vec3(1.05,.88,.62)),13.0); // Air-handling unit
-      res=put(res,sdCyl(p-vec3(-6.45,1.55,14.0),.13,1.55),2.0); // Mechanical riser
+        // Top horizontal roof cap beam
+        float topBeam = sdBox(rp - vec3(2.25, 10.6, 0.0), vec3(2.5, 0.32, 0.45));
 
-      res=put(res,sdBox(p-vec3( 5.35,.76,14.0),vec3(1.05,.07,.52)),12.0); // Facilities workstation
-      res=put(res,sdBox(p-vec3( 6.55,.92,14.9),vec3(.30,.92,.58)),13.0); // Facilities storage
+        // Structural corner gussets / knee braces
+        float gusset1 = sdBox(rp - vec3(7.8, 6.0, 0.0), vec3(0.28, 0.28, 0.35));
+        float gusset2 = sdBox(rp - vec3(4.8, 9.6, 0.0), vec3(0.28, 0.28, 0.35));
 
-      // Main entrance: a centered, sensor-driven double sliding assembly.
-      float entryOpen=doorOpen(vec2(0.0,0.0));
-      res=put(res,sdDoorFrame(p,1.30,2.45),2.0);
-      res=put(res,sdDoorPanels(p,1.30,2.45,entryOpen),3.0);
+        float ribSdf = min(min(botBeam, colBeam), min(rafterBeam, topBeam));
+        ribSdf = min(ribSdf, min(gusset1, gusset2));
+        res = put(res, ribSdf, 20.0);
 
-      float hardware=1e9;
-      for(int i=0;i<4;i++){
-        float z=2.0+float(i)*4.0;
-        vec3 westQ=sideDoorSpace(p,-2.0,z);
-        vec3 eastQ=sideDoorSpace(p, 2.0,z);
-        float westOpen=doorOpen(vec2(-2.0,z));
-        float eastOpen=doorOpen(vec2( 2.0,z));
-        res=put(res,sdDoorFrame(westQ,.68,2.35),2.0);
-        res=put(res,sdDoorPanels(westQ,.68,2.35,westOpen),3.0);
-        res=put(res,sdDoorFrame(eastQ,.68,2.35),2.0);
-        res=put(res,sdDoorPanels(eastQ,.68,2.35,eastOpen),3.0);
-        hardware=min(hardware,sdBox(westQ-vec3(.42,1.32,-.12),vec3(.08,.12,.025)));
-        hardware=min(hardware,sdBox(eastQ-vec3(.42,1.32,-.12),vec3(.08,.12,.025)));
-      }
-      res=put(res,hardware,4.0);
-
-      // Entrance canopy, structural columns, glazing, and interior luminaires.
-      res=put(res,sdBox(p-vec3(0.0,3.02,-1.8),vec3(3.0,.12,1.8)),5.0);
-      res=put(res,sdBox(p-vec3(-2.72,1.5,-2.2),vec3(.12,1.5,.12)),2.0);
-      res=put(res,sdBox(p-vec3( 2.72,1.5,-2.2),vec3(.12,1.5,.12)),2.0);
-      res=put(res,sdBox(p-vec3(-4.45,1.65,-.19),vec3(1.35,1.02,.025)),3.0);
-      res=put(res,sdBox(p-vec3( 4.45,1.65,-.19),vec3(1.35,1.02,.025)),3.0);
-      for(int i=0;i<4;i++){
-        float z=2.0+float(i)*4.0;
-        res=put(res,sdBox(p-vec3(0.0,3.25,z),vec3(.42,.07,.42)),6.0);
-        res=put(res,sdBox(p-vec3(-4.6,3.25,z),vec3(.50,.07,.36)),6.0);
-        res=put(res,sdBox(p-vec3( 4.6,3.25,z),vec3(.50,.07,.36)),6.0);
+        // Gantry berth floodlight stanchions pointing down into the drydock
+        float floodHousing = sdBox(rp - vec3(4.0, 10.0, 0.0), vec3(0.35, 0.18, 0.25));
+        res = put(res, floodHousing, 20.0);
+        float floodLens = sdBox(rp - vec3(4.0, 9.85, 0.0), vec3(0.28, 0.04, 0.20));
+        res = put(res, floodLens, 6.0); // Emissive warm luminaire
       }
 
-      // Wider Weyland campus: low service annexes and approach lighting make
-      // the facility legible as a building in a world, not an isolated box.
-      res=put(res,sdBox(p-vec3(-14.0,2.0,10.0),vec3(4.2,2.0,5.4)),9.0);
-      res=put(res,sdBox(p-vec3( 15.0,1.7,13.0),vec3(4.8,1.7,6.0)),9.0);
-      res=put(res,sdBox(p-vec3(-14.0,4.12,10.0),vec3(4.45,.12,5.65)),5.0);
-      res=put(res,sdBox(p-vec3( 15.0,3.52,13.0),vec3(5.05,.12,6.25)),5.0);
-      float poles=min(sdCyl(p-vec3(-4.6,2.6,-7.0),.07,2.6),sdCyl(p-vec3(4.6,2.6,-7.0),.07,2.6));
-      res=put(res,poles,2.0);
-      res=put(res,sdBox(p-vec3(-4.6,5.18,-7.0),vec3(.38,.06,.16)),6.0);
-      res=put(res,sdBox(p-vec3( 4.6,5.18,-7.0),vec3(.38,.06,.16)),6.0);
+      // (C) Open Construction Bay Lattice / Diagonal Truss Bracing
+      if(p.z >= -3.5 && p.z <= 27.5){
+        float zBay = mod(p.z + 3.0, 6.0) - 3.0;
+        float absX = abs(p.x);
+        vec3 t1 = rotY(vec3(absX - 9.0, p.y - 2.5, zBay), 0.52);
+        vec3 t2 = rotY(vec3(absX - 9.0, p.y - 2.5, zBay), -0.52);
+        float diagTruss = min(sdBox(t1, vec3(0.10, 3.6, 0.10)), sdBox(t2, vec3(0.10, 3.6, 0.10)));
+        res = put(res, diagTruss, 20.0);
+      }
 
-      // Arrival landscape and illuminated campus marker establish a deliberate
-      // public face without obstructing the central accessible approach.
-      res=put(res,sdBox(p-vec3(-5.35,.82,-3.15),vec3(1.42,.72,.09)),10.0);
-      res=put(res,sdBox(p-vec3(-5.35,.10,-3.15),vec3(1.62,.10,.30)),2.0);
-      for(int i=0;i<2;i++){
-        float x=-5.5+float(i)*11.0;
-        res=put(res,sdBox(p-vec3(x,.28,-1.85),vec3(.72,.28,.52)),2.0);
-        res=put(res,sdSphere(p-vec3(x,.78,-1.85),.58),11.0);
+      // (D) Heavy Articulated Umbilical Arm Connecting Cradle to Ship
+      float umbBoom1 = sdCapsule(p, vec3(-8.5, 3.8, 7.5), vec3(-5.2, 4.1, 7.8), 0.24);
+      float umbElbow = sdSphere(p - vec3(-5.2, 4.1, 7.8), 0.38);
+      float umbBoom2 = sdCapsule(p, vec3(-5.2, 4.1, 7.8), vec3(-2.2, 3.5, 7.5), 0.20);
+      res = put(res, min(min(umbBoom1, umbBoom2), umbElbow), 20.0);
+      float umbCollar = sdCylZ(p - vec3(-2.3, 3.5, 7.5), 0.42, 0.18);
+      res = put(res, umbCollar, 4.0);
+
+      // (E) Robotic Welding Arms with Intermittent Sparks (Material 35.0)
+      // Welding Station 1: Port midsection (Z ~ 8.2, X ~ -3.2, Y ~ 4.2)
+      {
+        vec3 armBase = vec3(-4.5, 5.2, 8.0);
+        float armCycle = fract(u_t / 6.0);
+        float armReach = clamp(smoothstep(0.0, 0.25, armCycle) - smoothstep(0.55, 0.85, armCycle), 0.0, 1.0);
+        float shoulderA = mix(-1.3, -0.4, armReach);
+        float elbowA = mix(1.8, 0.6, armReach);
+        
+        vec3 rel1 = rotX(p - armBase, -shoulderA);
+        float seg1 = sdCylZ(rel1 - vec3(0.0, 0.0, 0.4), 0.06, 0.4);
+        vec3 elbowPos = armBase + rotX(vec3(0.0, 0.0, 0.8), shoulderA);
+        float seg2A = shoulderA + elbowA;
+        vec3 rel2 = rotX(p - elbowPos, -seg2A);
+        float seg2 = sdCylZ(rel2 - vec3(0.0, 0.0, 0.35), 0.045, 0.35);
+        float joints = min(sdSphere(p - armBase, 0.12), sdSphere(p - elbowPos, 0.09));
+        res = put(res, min(min(seg1, seg2), joints), 20.0);
+
+        vec3 tipPos = elbowPos + rotX(vec3(0.0, 0.0, 0.7), seg2A);
+        res = put(res, sdSphere(p - tipPos, 0.06), 13.0);
+
+        // Intermittent high-intensity electric welding arc / sparks (Material 35.0)
+        float weldGate = step(0.3, sin(u_t * 4.0));
+        float weldFlicker = step(0.48, fract(sin(u_t * 91.3) * 43758.5453));
+        float arcSize = weldGate * weldFlicker * 0.075 + 0.003;
+        res = put(res, sdSphere(p - tipPos, arcSize), 35.0);
       }
-      for(int i=0;i<2;i++){
-        float x=3.0+float(i)*3.0;
-        res=put(res,sdBox(p-vec3( x,2.05,-.25),vec3(.035,1.15,.08)),2.0);
-        res=put(res,sdBox(p-vec3(-x,2.05,-.25),vec3(.035,1.15,.08)),2.0);
+
+      // Welding Station 2: Starboard upper bulkhead (Z ~ 11.2, X ~ 3.2, Y ~ 4.8)
+      {
+        vec3 armBase2 = vec3(4.2, 5.8, 11.0);
+        float armCycle2 = fract((u_t + 3.0) / 7.0);
+        float armReach2 = clamp(smoothstep(0.0, 0.28, armCycle2) - smoothstep(0.52, 0.82, armCycle2), 0.0, 1.0);
+        float shoulderA2 = mix(-1.2, -0.35, armReach2);
+        float elbowA2 = mix(1.7, 0.5, armReach2);
+        
+        vec3 rel1_2 = rotX(p - armBase2, -shoulderA2);
+        float seg1_2 = sdCylZ(rel1_2 - vec3(0.0, 0.0, 0.38), 0.06, 0.38);
+        vec3 elbowPos2 = armBase2 + rotX(vec3(0.0, 0.0, 0.76), shoulderA2);
+        float seg2A2 = shoulderA2 + elbowA2;
+        vec3 rel2_2 = rotX(p - elbowPos2, -seg2A2);
+        float seg2_2 = sdCylZ(rel2_2 - vec3(0.0, 0.0, 0.32), 0.045, 0.32);
+        res = put(res, min(min(seg1_2, seg2_2), min(sdSphere(p - armBase2, 0.12), sdSphere(p - elbowPos2, 0.09))), 20.0);
+
+        vec3 tipPos2 = elbowPos2 + rotX(vec3(0.0, 0.0, 0.64), seg2A2);
+        res = put(res, sdSphere(p - tipPos2, 0.06), 13.0);
+
+        float weldGate2 = step(0.35, sin(u_t * 3.3 + 2.1));
+        float weldFlicker2 = step(0.5, fract(sin(u_t * 117.5) * 43758.5453));
+        float arcSize2 = weldGate2 * weldFlicker2 * 0.075 + 0.003;
+        res = put(res, sdSphere(p - tipPos2, arcSize2), 35.0);
       }
+
+      // =========================================================================
+      // 2. CAPITAL STARSHIP / SEED VESSEL UNDER CONSTRUCTION
+      //    (Star Trek / Star Wars inspired capital vessel)
+      //    Positioned inside berth along Z = -2.0 to 24.5, Y = 3.6, X = 0.
+      // =========================================================================
+
+      // (A) Forward Prow / Bow Section (Z ~ -2.0 to 5.5)
+      {
+        float zProw = p.z - 1.8;
+        if(zProw >= -4.0 && zProw <= 4.0){
+          float bowTaper = clamp((p.z - (-2.0)) / 7.5, 0.0, 1.0);
+          float halfW = 0.45 + 1.95 * bowTaper;
+          float halfH = 0.35 + 0.85 * bowTaper;
+          vec3 bp = p - vec3(0.0, 3.6, 1.8);
+          float prowBox = sdBox(bp, vec3(halfW, halfH, 3.7));
+          float chine = dot(abs(bp.xy), vec2(0.7071, 0.7071)) - (0.85 + 1.25 * bowTaper);
+          float prowHull = max(prowBox, chine);
+          res = put(res, prowHull, 17.0); // Capital ship hull plating
+        }
+
+        // Forward Bridge / Command Tower (Dorsal superstructure at Z ~ 3.5, Y ~ 4.8)
+        float bridgeSuper = sdBox(p - vec3(0.0, 4.75, 3.4), vec3(0.85, 0.32, 1.25));
+        float bridgeUpper = sdBox(p - vec3(0.0, 5.15, 3.6), vec3(0.48, 0.16, 0.75));
+        res = put(res, min(bridgeSuper, bridgeUpper), 17.0);
+        // Bridge sensor strip / viewport band
+        float bridgeVisor = sdBox(p - vec3(0.0, 4.82, 2.12), vec3(0.62, 0.06, 0.06));
+        res = put(res, bridgeVisor, 10.0); // Emissive viewport strip
+
+        // Navigational Deflector / Forward Sensor Array (Tip at Z = -2.1, Y = 3.4)
+        float deflCowl = sdCylZ(p - vec3(0.0, 3.4, -2.0), 0.58, 0.16);
+        res = put(res, deflCowl, 20.0);
+        float deflDish = sdSphere(p - vec3(0.0, 3.4, -2.02), 0.40);
+        res = put(res, deflDish, 19.0); // Luminous cyan deflector glow
+      }
+
+      // (B) Exposed Structural Rib Cage & Under-Construction Interior Decks (Z ~ 5.5 to 13.5)
+      {
+        float midSpine = sdBox(p - vec3(0.0, 1.8, 9.5), vec3(0.45, 0.35, 4.0));
+        res = put(res, midSpine, 20.0);
+
+        // Three exposed interior deck plates (Deck 1, 2, 3)
+        float deck1 = sdBox(p - vec3(0.0, 2.5, 9.5), vec3(1.85, 0.05, 3.9));
+        float deck2 = sdBox(p - vec3(0.0, 3.6, 9.5), vec3(2.15, 0.05, 3.9));
+        float deck3 = sdBox(p - vec3(0.0, 4.7, 9.5), vec3(1.75, 0.05, 3.9));
+        res = put(res, min(deck1, min(deck2, deck3)), 20.0);
+
+        // Transverse structural ring bulkheads / rib cage frames (4 rings spaced at Z = 6.5, 8.5, 10.5, 12.5)
+        for(int bi = 0; bi < 4; bi++){
+          float zBulk = 6.5 + float(bi) * 2.0;
+          vec3 bkp = vec3(abs(p.x), p.y, p.z - zBulk);
+          float ribPost = sdBox(bkp - vec3(2.15, 3.6, 0.0), vec3(0.10, 1.45, 0.10));
+          float ribRoof = sdBox(bkp - vec3(1.0, 5.05, 0.0), vec3(1.2, 0.10, 0.10));
+          float ribFloor = sdBox(bkp - vec3(1.0, 2.15, 0.0), vec3(1.2, 0.10, 0.10));
+          float deckCol = sdCyl(vec3(bkp.x - 1.0, bkp.y - 3.6, bkp.z), 0.06, 1.35);
+          float ribFrame = min(min(ribPost, ribRoof), min(ribFloor, deckCol));
+          res = put(res, ribFrame, 20.0);
+        }
+
+        // Partially-fitted exterior hull plating (lower port side partially completed)
+        float hullPlates = sdBox(p - vec3(-2.25, 2.9, 8.2), vec3(0.08, 0.75, 1.9));
+        res = put(res, hullPlates, 17.0);
+        // Upper starboard alignment jigs / construction clamps
+        float clampJig = sdBox(p - vec3(2.28, 4.3, 11.2), vec3(0.12, 0.16, 0.16));
+        res = put(res, clampJig, 10.0); // Safety yellow alignment clamp
+      }
+
+      // (C) Cylindrical Reactor / Antimatter Core Housing (Z ~ 13.5 to 17.5, Y ~ 3.6)
+      {
+        float coreVessel = sdCyl(p - vec3(0.0, 3.6, 15.0), 1.15, 1.6);
+        res = put(res, coreVessel, 17.0);
+
+        // Magnetic constriction field rings
+        for(int ci = 0; ci < 3; ci++){
+          float yRing = 2.6 + float(ci) * 1.0;
+          float mRing = sdCyl(p - vec3(0.0, yRing, 15.0), 1.32, 0.14);
+          res = put(res, mRing, 2.0); // Anodized bronze magnetic coils
+        }
+
+        // Antimatter intermix inspection core (pulsing cyan glow)
+        float coreChamber = sdCyl(p - vec3(0.0, 3.6, 15.0), 0.88, 0.55);
+        res = put(res, coreChamber, 19.0); // Luminous plasma glow
+
+        // Heavy plasma transfer conduits to engine pylons
+        float conduit = sdCylZ(vec3(abs(p.x) - 1.25, p.y - 3.8, p.z - 16.5), 0.24, 1.4);
+        res = put(res, conduit, 20.0);
+      }
+
+      // (D) Two Aft Engine Nacelle Pylons with Luminous Blue/Cyan Plasma Glow
+      // Pylons sweep outboard and aft: X = 0 -> +/- 5.2, Y = 3.6 -> 4.8, Z = 16.2 -> 18.5
+      for(int si = 0; si < 2; si++){
+        float side = si == 0 ? -1.0 : 1.0;
+        vec3 pylonRoot = vec3(side * 1.3, 3.5, 16.2);
+        vec3 pylonTip  = vec3(side * 5.2, 4.8, 18.5);
+        float pylonStrut = sdCapsule(p, pylonRoot, pylonTip, 0.28);
+        res = put(res, pylonStrut, 20.0);
+
+        // Twin Engine Nacelles (at X = +/- 5.2, Y = 4.8, Z from 15.0 to 24.5)
+        vec3 np = vec3(p.x - side * 5.2, p.y - 4.8, p.z - 19.5);
+        
+        // Nacelle main body cylinder
+        float nacelleBody = sdCylZ(np, 0.65, 4.4);
+        res = put(res, nacelleBody, 17.0);
+
+        // Forward Bussard Ramscoop / Intake Cowling (Z ~ 15.0)
+        float bussard = sdSphere(p - vec3(side * 5.2, 4.8, 15.0), 0.72);
+        res = put(res, bussard, 2.0); // Copper/bronze ramscoop cowl
+
+        // Warp Nacelle Plasma Glow Channel (Inboard & outboard luminous cyan glow)
+        float plasmaChannel = sdBox(vec3(abs(np.x) - 0.56, np.y, np.z), vec3(0.12, 0.18, 3.2));
+        res = put(res, plasmaChannel, 19.0); // Luminous blue/cyan plasma glow
+
+        // Aft sublight / impulse exhaust manifold nozzle (Z ~ 24.0)
+        float exhaustNozzle = sdCylZ(p - vec3(side * 5.2, 4.8, 24.0), 0.52, 0.22);
+        res = put(res, exhaustNozzle, 19.0); // Luminous engine glow
+      }
+
+      // Maintenance inspection pod (scale contrast, Star Wars / Trek cue)
+      {
+        vec3 podC = vec3(2.5 + sin(u_t * 0.08) * 0.8, 6.5 + sin(u_t * 0.12) * 0.15, 4.0 + cos(u_t * 0.06) * 0.7);
+        vec3 pp = p - podC;
+        res = put(res, sdCylZ(vec3(pp.z, pp.y, pp.x), 0.05, 0.12), 20.0);
+        res = put(res, sdSphere(pp - vec3(0.0, 0.0, 0.08), 0.04), 13.0);
+        res = put(res, sdSphere(pp - vec3(0.0, 0.0, -0.10), 0.02), 16.0);
+      }
+
+      // Station power/thermal truss (East bay) - preserved
+      {
+        vec3 stC = vec3(15.0, 2.2, 13.0);
+        vec3 tp = p - stC;
+        res = put(res, sdCylZ(tp, 0.22, 4.4), 20.0);
+        for(int i = 0; i < 2; i++){
+          float side = i < 1 ? 1.0 : -1.0;
+          res = put(res, sdBox(tp - vec3(side * 3.0, 0.0, -1.6), vec3(2.6, 0.03, 1.6)), 18.0);
+          res = put(res, sdBox(tp - vec3(side * 0.9, 0.0, -1.6), vec3(0.08, 0.07, 1.5)), 20.0);
+          res = put(res, sdBox(tp - vec3(side * 2.1, 0.0,  2.2), vec3(1.5, 0.45, 0.035)), 21.0);
+          res = put(res, sdBox(tp - vec3(side * 0.7, 0.0,  2.2), vec3(0.08, 0.07, 0.4)), 20.0);
+        }
+      }
+
+      // FilmLine Earth Relay Screening Pavilion (South plaza, Z = 30.0) - preserved
+      {
+        vec3 fc = vec3(0.0, 0.0, 30.0);
+        vec3 fp = p - fc;
+        res = put(res, sdBox(fp - vec3(0.0, -0.05, 2.6), vec3(6.0, 0.05, 3.8)), 7.0);
+        res = put(res, sdBox(fp - vec3(0.0, 0.0, -4.2), vec3(3.3, 0.02, 3.3)), 8.0);
+        float thFront = sdBox(fp - vec3(0.0, 1.7, -1.2), vec3(3.14, 1.7, 0.14));
+        thFront = max(thFront, -sdDoorOpening(fp - vec3(0.0, 0.0, -1.2), 1.0, 2.3));
+        res = put(res, thFront, 22.0);
+        res = put(res, sdBox(fp - vec3(0.0, 1.7, -7.2), vec3(3.14, 1.7, 0.14)), 22.0);
+        res = put(res, sdBox(fp - vec3(-3.0, 1.7, -4.2), vec3(0.14, 1.7, 3.14)), 22.0);
+        res = put(res, sdBox(fp - vec3( 3.0, 1.7, -4.2), vec3(0.14, 1.7, 3.14)), 22.0);
+        res = put(res, sdBox(fp - vec3(0.0, 3.42, -4.2), vec3(3.28, 0.14, 3.28)), 5.0);
+        res = put(res, sdBox(fp - vec3(0.0, 2.55, 0.05), vec3(1.35, 0.10, 1.25)), 23.0);
+        res = put(res, sdBox(fp - vec3(0.0, 2.15, -1.05), vec3(1.0, 0.32, 0.03)), 24.0);
+        res = put(res, sdBox(fp - vec3(-1.15, 1.15, -1.05), vec3(0.08, 1.15, 0.06)), 23.0);
+        res = put(res, sdBox(fp - vec3( 1.15, 1.15, -1.05), vec3(0.08, 1.15, 0.06)), 23.0);
+        res = put(res, sdBox(fp - vec3(0.0, 2.0, -7.05), vec3(1.6, 1.0, 0.03)), 28.0);
+        {
+          vec3 rp = fp - vec3(0.0, 1.9, -4.6);
+          float flangeA = sdCylZ(rp - vec3(0.0, 0.0, -0.12), 0.55, 0.015);
+          float flangeB = sdCylZ(rp - vec3(0.0, 0.0,  0.12), 0.55, 0.015);
+          for(int i = 0; i < 6; i++){
+            float ang = float(i) * 1.0472;
+            vec3 hp = rp - vec3(cos(ang) * 0.32, sin(ang) * 0.32, 0.0);
+            float hole = sdCylZ(hp, 0.07, 0.03);
+            flangeA = max(flangeA, -hole);
+            flangeB = max(flangeB, -hole);
+          }
+          res = put(res, flangeA, 25.0);
+          res = put(res, flangeB, 25.0);
+          res = put(res, sdCylZ(rp, 0.09, 0.14), 25.0);
+          res = put(res, sdCylZ(rp, 0.46, 0.10), 26.0);
+          res = put(res, sdBox(rp - vec3(0.0, -0.62, 0.0), vec3(0.09, 0.18, 0.012)), 26.0);
+          vec3 starP = rp - vec3(0.0, 0.0, -0.09);
+          vec2 srot = vec2(starP.x * 0.7071 - starP.y * 0.7071, starP.x * 0.7071 + starP.y * 0.7071);
+          res = put(res, sdBox(vec3(srot, starP.z), vec3(0.045, 0.045, 0.01)), 27.0);
+        }
+      }
+
+      // Astronaut embodiment (first-person hands or third-person helmet/visor)
+      if(u_thirdPerson < 0.5){
+        vec3 cfwd   = normalize(u_dir);
+        vec3 cright = normalize(cross(u_up, cfwd));
+        vec3 cup    = cross(cfwd, cright);
+        vec3 rel    = p - u_cam;
+        vec3 vp = vec3(dot(rel,cright), dot(rel,cup), dot(rel,cfwd));
+        bool portrait = u_res.x < u_res.y;
+        float lower = clamp(u_handsLowered, 0.0, 1.0);
+        res = put(res, min(handSdf(vp,-1.0,portrait,lower), handSdf(vp,1.0,portrait,lower)), 30.0);
+      } else {
+        vec3 afwd   = normalize(u_astroFwd);
+        vec3 aright = normalize(cross(u_astroUp, afwd));
+        vec3 aup    = cross(afwd, aright);
+        vec3 arel   = p - u_astroPos;
+        vec3 al = vec3(dot(arel,aright), dot(arel,aup), dot(arel,afwd));
+        float helmet = sdSphere(al - vec3(0.0,0.0,-0.05), 0.26);
+        res = put(res, helmet, 31.0);
+        vec3 visorP = (al - vec3(0.0,0.0,0.07)) * vec3(1.0,1.08,1.0);
+        float visor = length(visorP) - 0.215;
+        float visorMask = al.z - 0.05;
+        res = put(res, max(visor, -visorMask), 32.0);
+      }
+
       return res;
     }
 
@@ -36674,28 +37185,359 @@ global.SovereignPdfRender = {
       return clamp(1.-s*2.2,0.,1.);
     }
 
-    vec3 sky(vec3 rd){
-      vec3 sunDir = normalize(vec3(0.55, 0.16, 0.45));
-      vec3 betaR  = vec3(5.8e-6, 9.0e-6, 1.4e-5);
-      float betaM = 6.5e-5;
-      float HR=8000., HM=1200.;
-      float elev    = max(rd.y,0.01);
-      float sunElev = max(sunDir.y,0.02);
-      vec3  tauR = betaR*HR*(1./elev+1./sunElev);
-      float tauM = betaM*HM*(1./elev+1./sunElev);
-      vec3  T    = exp(-tauR-tauM);
-      float mu   = dot(rd,sunDir);
-      float phR  = .75*(1.+mu*mu);
-      float phM  = .5*(1.-(.76*.76))/pow(1.+.76*.76-2.*.76*mu,1.5);
-      vec3 planck= vec3(1.0,0.82,0.52);
-      vec3 s     = (phR*betaR*HR/elev+phM*betaM*HM/elev)*T*planck*3.2;
-      float sunDot=max(dot(rd,sunDir),0.);
-      if(sunDot>0.9998 && sunDir.y>-0.05){
-        float limb=1.-smoothstep(.9998,.99995,sunDot);
-        s += planck*limb*90.*max(0.,sunDir.y+0.08);
+    // --- Orbital mechanics driving sun/star sweep + Earth rotation ---
+    // Real circular-LEO reference, chosen and justified (not arbitrary):
+    // altitude 400km (ISS-like). Period from Kepler's third law,
+    // T=2*pi*sqrt(a^3/mu): a=6371+400=6771km, mu_earth=398600.4418 km^3/s^2
+    // -> T_orbit ~= 5564s (92.68 min), matching the real published ISS
+    // period at this altitude. Earth's rotation uses the SIDEREAL period
+    // (23h56m04s = 86164.1s, rotation relative to the fixed stars) rather
+    // than the 24h00m solar day, because the Sun below is treated as fixed
+    // in inertial space over this scene's ~90min timescale (Earth creeps
+    // only ~0.025 degrees along its year-long solar orbit in 90 minutes -
+    // negligible next to the ~1486 degrees it rotates), so rotation-
+    // relative-to-sun is, to excellent approximation, just the sidereal rate.
+    //
+    // DISCLOSED DEMO TIME SCALE: true real-time motion here would be
+    // ~0.065 deg/sec of orbital sweep - correct, but imperceptible second
+    // to second, which is why John's live test saw "no motion discernible."
+    // u_t (real seconds since page load) is compressed by DEMO_K=92.74x so
+    // the real 92.68-minute orbit completes in 60 real seconds - i.e.
+    // "1 real second = 92.7 simulated seconds." A visitor watching for
+    // 10-30 real seconds sees a genuine 60-180 degree slice of the orbit,
+    // not a static frame. This is sped-up and labeled as such in the HUD,
+    // not silently faked.
+    //
+    // DISCLOSED SIMPLIFICATION: the station is modeled as a circular,
+    // nadir-locked LEO orbiter (nadir fixed at local -Y, as already set up
+    // below) whose body frame rotates once per orbit about ONE fixed local
+    // axis (chosen here as local +X, standing in for the real orbit-normal/
+    // cross-track direction) rather than full 3D inertial attitude
+    // kinematics. That single-axis rotation is exactly right for the
+    // ANGULAR RATE of sun/star sweep and terminator motion derived below;
+    // it does not reproduce the real ~51.6 degree ISS inclination's effect
+    // on which stars/ground track pass by. Earth's own solar orbit
+    // (ellipse, ~365d) and this orbit's eccentricity are both ignored
+    // (circular orbit; sun fixed) - both real effects, both negligible at
+    // this scene's ~90min scale.
+    #define DEMO_K 92.74
+    #define W_ORBIT 0.0011290
+    #define W_EARTH 0.00007292
+    // rotX() itself now lives up near the other basic SDF/vector helpers
+    // (see comment there) so the earlier astronaut-arm-IK code can call
+    // it; only the orbital-timing helpers that depend on u_t stay here.
+    float simT(){ return u_t*DEMO_K; }
+    // Station-local-frame sweep angle of an inertially-fixed direction
+    // (Sun, stars): the nadir-locked body frame completes one full
+    // rotation per orbit relative to the inertial/sun-and-star-fixed frame.
+    float sunSweepAngle(){ return W_ORBIT*simT(); }
+    // Apparent sweep of Earth's own rotating surface features (continents,
+    // night lights) under the station: real relative rate = orbital rate
+    // minus Earth's sidereal rotation rate (prograde orbit, same spin
+    // sense as Earth) ~= 2*pi/5950s, a ~99.2min apparent ground-track
+    // period - a real derived number, not a guess.
+    float earthSweepAngle(){ return (W_ORBIT-W_EARTH)*simT(); }
+
+    // === STRUCTURAL STRESS MODEL (toggleable STRESS VIEW overlay) ===========
+    // Deliberately simplified - approximated as a function of distance-from
+    // -mount x thermal-differential, NOT a full FEA solve - but the two load
+    // sources modeled are the two that are actually real for a truss in
+    // orbit (there is no self-weight to model in zero-g):
+    //
+    //   (1) THERMAL CYCLING. Real spacecraft structures take their worst
+    //       thermal stress not at local "noon"/"midnight" but AT the
+    //       sunlit/shadow terminator crossing, where insolation changes
+    //       fastest and the structure's own thermal mass can't keep up - a
+    //       real, well-documented effect. Modeled as the rate of change of
+    //       sun-facing, |d(N.sunDir)/dt|, finite-differenced using the same
+    //       orbital sweep driving the sun/terminator above - not a static
+    //       day/night brightness term.
+    //
+    //   (2) CANTILEVER / SIMPLY-SUPPORTED BENDING - basic beam theory,
+    //       matched to each member's actual boundary condition already
+    //       built into this scene's geometry:
+    //         - booms fixed at one end with a mass at the free end (ship
+    //           spine -> wing struts, station backbone -> array/radiator
+    //           struts): M(x) = F*(L-x), peak at the FIXED ROOT, ~0 at the
+    //           free tip - the real location of maximum cantilever stress.
+    //         - the station backbone carries BOTH side-struts' outboard
+    //           loads, summed per cross-section - a shared boom legitimately
+    //           sees compounded stress near its anchored end.
+    //         - dock-gantry rails, pinned at a post on each end (NOT
+    //           cantilevered): M(x) = w*x*(L-x)/2, peak at MIDSPAN, ~0 at
+    //           the posts - the correct beam theory for that support
+    //           condition, not the cantilever formula.
+    //       Relative load/mass magnitudes (e.g. "a radiator panel is a
+    //       heavier attachment than a bare strut") are illustrative
+    //       estimates of relative magnitude, not a certified mass budget.
+    //
+    // Nearest-member selection reuses this file's own put() "closest SDF
+    // wins" idea, so a surface point is scored by the member it actually
+    // belongs to rather than a neighbor. Returns a 0..~1 unitless scalar
+    // consumed by stressColor() below.
+    void considerStress(inout float dBest, inout float sBest, float d, float s){
+      if(d<dBest){ dBest=d; sBest=s; }
+    }
+    float cantileverFrac(float x, float L, float F){ // x measured from the fixed root
+      return F*max(L-x,0.0)/max(L,0.001);
+    }
+    float spanFrac(float x, float L, float w){ // x measured from one pinned support
+      return w*x*max(L-x,0.0)*0.5/max(L*L*0.125,0.001); // normalized to its own midspan max
+    }
+    float stressAt(vec3 p, vec3 N){
+      // Thermal transient term, shared by every member at this point.
+      float dt = 0.35;
+      vec3 s0 = rotX(normalize(vec3(0.55,0.16,0.45)), W_ORBIT*(u_t)*DEMO_K);
+      vec3 s1 = rotX(normalize(vec3(0.55,0.16,0.45)), W_ORBIT*(u_t-dt)*DEMO_K);
+      float thermal = abs(dot(N,s0)-dot(N,s1))/dt * 2.2;
+
+      float dBest=1e9, mech=0.0;
+
+      // Orbital shipyard gantry cradle rails and keel spine
+      float dKeel = sdBox(vec3(p.x, p.y - (-2.0), p.z - 12.0), vec3(0.55, 0.45, 16.5));
+      considerStress(dBest, mech, dKeel, 0.35);
+
+      float dCat = sdBox(vec3(abs(p.x) - 8.5, p.y - (-1.4), p.z - 12.0), vec3(0.75, 0.08, 16.5));
+      considerStress(dBest, mech, dCat, spanFrac(clamp(p.z + 4.0, 0.0, 32.0), 32.0, 0.8));
+
+      // Capital starship spine & engine pylons
+      float dShipSpine = sdBox(p - vec3(0.0, 1.8, 9.5), vec3(0.45, 0.35, 4.0));
+      considerStress(dBest, mech, dShipSpine, 0.45);
+
+      for(int si = 0; si < 2; si++){
+        float side = si == 0 ? -1.0 : 1.0;
+        float dPylon = sdCapsule(p, vec3(side * 1.3, 3.5, 16.2), vec3(side * 5.2, 4.8, 18.5), 0.28);
+        float xP = clamp(abs(p.x) - 1.3, 0.0, 3.9);
+        considerStress(dBest, mech, dPylon, cantileverFrac(xP, 3.9, 0.7));
       }
-      s += vec3(1.0,0.92,0.70)*pow(max(0.,1.-abs(rd.y)),6.)*0.18;
-      return clamp(s,0.,1.);
+
+      // Construction ship (west bay): booms fixed at the spine.
+      {
+        vec3 shipC=vec3(-14.0,3.0,10.0), sp=p-shipC;
+        float dCollar=sdCylZ(sp-vec3(0,0,-3.2), .75, .3);
+        considerStress(dBest, mech, dCollar, 0.30); // docking interface load, not a boom
+        for(int i=0;i<4;i++){
+          float ang=float(i)*1.5708+.78;
+          vec3 tpos=vec3(cos(ang)*.38, sin(ang)*.38, 3.55);
+          float dHouse=sdCylZ(sp-tpos,.09,.22);
+          considerStress(dBest, mech, dHouse, 0.30); // thruster mount + thrust reaction
+        }
+        for(int i=0;i<2;i++){
+          float side=i<1?1.0:-1.0;
+          float root=0.68, tip=2.75, L=tip-root;
+          float dStrut=sdBox(sp-vec3(side*.68,0,.3), vec3(.10,.07,1.0));
+          float x=clamp(abs(sp.x)-root,0.0,L);
+          considerStress(dBest, mech, dStrut, cantileverFrac(x,L,0.45));
+          float dWing=sdBox(sp-vec3(side*2.75,0.0,.3), vec3(2.05,.025,1.15));
+          considerStress(dBest, mech, dWing, 0.08); // free tip: low, passive panel flex
+        }
+      }
+
+      // Station power/thermal truss (east bay): backbone + its struts.
+      {
+        vec3 stC=vec3(15.0,2.2,13.0), tp=p-stC;
+        float dBackbone=sdCylZ(tp,.22,4.4);
+        if(dBackbone<dBest){
+          float root=-4.4, zp=tp.z;
+          float Farray=0.5, Frad=0.65;
+          float m1=Farray*max(-1.6-zp,0.0), m2=Frad*max(2.2-zp,0.0);
+          float denom=Farray*(-1.6-root)+Frad*(2.2-root);
+          considerStress(dBest, mech, dBackbone, clamp((m1+m2)/denom,0.0,1.0));
+        }
+        for(int i=0;i<2;i++){
+          float side=i<1?1.0:-1.0;
+          float rootA=0.9, tipA=3.0, LA=tipA-rootA;
+          float dArrStrut=sdBox(tp-vec3(side*.9,0,-1.6), vec3(.08,.07,1.5));
+          float xA=clamp(abs(tp.x)-rootA,0.0,LA);
+          considerStress(dBest, mech, dArrStrut, cantileverFrac(xA,LA,0.5));
+          float dArr=sdBox(tp-vec3(side*3.0,0,-1.6), vec3(2.6,.03,1.6));
+          considerStress(dBest, mech, dArr, 0.08);
+          float rootR=0.7, tipR=2.1, LR=tipR-rootR;
+          float dRadStrut=sdBox(tp-vec3(side*.7,0,2.2), vec3(.08,.07,.4));
+          float xR=clamp(abs(tp.x)-rootR,0.0,LR);
+          considerStress(dBest, mech, dRadStrut, cantileverFrac(xR,LR,0.65));
+          float dRad=sdBox(tp-vec3(side*2.1,0,2.2), vec3(1.5,.45,.035));
+          considerStress(dBest, mech, dRad, 0.12);
+        }
+      }
+
+      // Dock gantry: posts carry simple axial load only; the rails are
+      // pinned at a post on each end, so THEY peak at midspan, not at the
+      // posts (a different, correct beam-theory case from the booms above).
+      {
+        vec3 gC=vec3(-14.0,3.0,10.0), gp=p-gC;
+        for(int i=0;i<4;i++){
+          float sx=(i%2==0)?-1.0:1.0, sz=(i<2)?-1.0:1.0;
+          vec3 post=gC+vec3(sx*3.2,0.0,sz*4.6);
+          float dPost=sdCyl(p-post,.09,3.0);
+          considerStress(dBest, mech, dPost, 0.18);
+        }
+        float dRailN=sdBox(gp-vec3(0,3.0,-4.6), vec3(3.3,.09,.09));
+        considerStress(dBest, mech, dRailN, spanFrac(clamp(gp.x+3.2,0.0,6.4),6.4,1.0));
+        float dRailS=sdBox(gp-vec3(0,3.0, 4.6), vec3(3.3,.09,.09));
+        considerStress(dBest, mech, dRailS, spanFrac(clamp(gp.x+3.2,0.0,6.4),6.4,1.0));
+        float dRailW=sdBox(gp-vec3(-3.2,3.0,0), vec3(.09,.09,4.7));
+        considerStress(dBest, mech, dRailW, spanFrac(clamp(gp.z+4.6,0.0,9.2),9.2,1.0));
+        float dRailE=sdBox(gp-vec3( 3.2,3.0,0), vec3(.09,.09,4.7));
+        considerStress(dBest, mech, dRailE, spanFrac(clamp(gp.z+4.6,0.0,9.2),9.2,1.0));
+      }
+
+      return clamp(mech+thermal, 0.0, 1.4);
+    }
+    // Standard FEA-style blue -> green -> yellow -> red stress colormap.
+    vec3 stressColor(float s){
+      vec3 c;
+      if(s<0.33) c=mix(vec3(0.07,0.20,0.85), vec3(0.05,0.75,0.55), s/0.33);
+      else if(s<0.66) c=mix(vec3(0.05,0.75,0.55), vec3(0.95,0.85,0.10), (s-0.33)/0.33);
+      else c=mix(vec3(0.95,0.85,0.10), vec3(0.95,0.08,0.06), clamp((s-0.66)/0.34,0.0,1.0));
+      return c;
+    }
+
+    // LEO backdrop. The facility is WeylandAI's orbital shipyard \u2014 real
+    // orbital mechanics drove the siting: LEO for frequent crew rotation,
+    // cheap Earth resupply and visual drama, building the "seed" construction
+    // ship that will later bootstrap the real generation-ship-scale yard at
+    // Earth-Moon L5 (stable, continuous sun, no Van Allen exposure, pulls
+    // bulk material from the Moon's shallow well instead of Earth's deep
+    // one \u2014 wrong physics for a first facility, right physics for the
+    // follow-on). Earth is a real ray-sphere intersection, not a texture
+    // card, so its limb curvature and terminator fall out of the geometry
+    // instead of being faked. Distance/radius are stylized against this
+    // scene's meter-scale geometry rather than true 6371km (no precision
+    // benefit from the real number at this scale) but tuned so Earth's
+    // angular radius matches a real ~400km-altitude view (~70 degrees).
+    // Equirectangular lon/lat UV for the real NASA day/night texture
+    // lookups in sky() below: longitude from atan2(z,x), latitude from
+    // asin(y), standard full-sphere unwrap. This scene's Earth normal is
+    // stylized geometry, not true geodetic coordinates, so continent
+    // placement relative to the station is illustrative rather than a
+    // real ground-track - the imagery itself is the real, sourced part.
+    vec2 earthUV(vec3 n){
+      float lon = atan(n.z, n.x);
+      float lat = asin(clamp(n.y, -1.0, 1.0));
+      return vec2(lon*(1.0/6.2831853)+0.5, 0.5 - lat*(1.0/3.1415926));
+    }
+
+    // Simplified single-scattering atmosphere limb glow. Conceptually
+    // referencing Eric Bruneton's "Precomputed Atmospheric Scattering"
+    // (BSD-licensed technique writeup, not copied code) but deliberately
+    // NOT implementing the full precomputed multi-scattering LUTs that
+    // paper describes - that's real overkill for one rim term on a single
+    // raymarched sphere. What's real physics here: Rayleigh scattering
+    // goes as ~1/lambda^4, so blue light scatters far more than red - the
+    // three channel weights below are that ratio (relative, not literal
+    // physical units). Near the terminator the real atmosphere reddens
+    // (same mechanism as a sunset: a longer in-atmosphere path length
+    // preferentially scatters blue out of the line of sight) - approximated
+    // by blending toward a warm tint as sunFacing drops near grazing
+    // incidence rather than through an actual path-length integral.
+    vec3 atmosphereRim(vec3 N, vec3 rd, float sunFacing){
+      float grazing  = 1.0 - max(dot(N,-rd),0.0);
+      float limbSoft = pow(grazing, 4.5);
+      float limbCore = pow(grazing, 14.0);
+      vec3 rayleigh  = vec3(0.237, 0.482, 1.000);
+      vec3 duskTint  = vec3(1.0, 0.42, 0.18);
+      float dusk     = smoothstep(0.35, 0.0, sunFacing) * smoothstep(0.0, 0.5, sunFacing + 0.3);
+      vec3 rimCol    = mix(rayleigh, duskTint, dusk*0.55);
+      return rimCol * (limbSoft*0.55 + limbCore*0.9) * (0.15 + max(sunFacing,0.0)*1.15);
+    }
+
+    // Real bright-star catalog: 43 of Earth's actual brightest
+    // stars (Yale Bright Star Catalog / Hipparcos RA/Dec/V-magnitude/B-V -
+    // public astronomical data), converted offline to unit direction
+    // vectors in this scene's inertial frame and to real blackbody-
+    // derived colors from each star's B-V index (hot blue-white stars vs.
+    // cool orange/red ones - real stars are not all pure white). The
+    // field's overall orientation anchor is this scene's own stylized
+    // inertial frame, not registered to the true sky as seen from a real
+    // date/location, but the real relative positions, magnitudes, and
+    // colors between these named stars are preserved.
+        vec3 sky(vec3 ro, vec3 rd){
+      // One consistent orbital sun direction
+      vec3 sunDir = rotX(normalize(vec3(0.42, 0.68, 0.38)), sunSweepAngle());
+      vec3 nadir  = vec3(0.0,-1.0,0.0);
+      float earthDist   = 2200.0;
+      float earthRadius = earthDist*sin(radians(70.0));
+      vec3 earthCenter  = ro + nadir*earthDist;
+
+      vec3 oc = ro-earthCenter;
+      float b = dot(rd,oc);
+      float c = dot(oc,oc)-earthRadius*earthRadius;
+      float disc = b*b-c;
+
+      if(disc>0.0){
+        float t=-b-sqrt(disc);
+        if(t>0.0){
+          vec3 hit = ro+rd*t;
+          vec3 N    = normalize(hit-earthCenter);
+          vec3 Nsurf    = rotX(N, -earthSweepAngle());
+          float sunFacing = max(dot(N,sunDir),0.0);
+          vec2 euv      = earthUV(Nsurf);
+          vec3 dayTex   = texture(u_earthDay, euv).rgb;
+          vec3 nightTex = texture(u_earthNight, euv).rgb;
+          vec3 Ncloud     = rotX(N, -(earthSweepAngle()*0.82));
+          float cloudTex  = texture(u_earthCloud, earthUV(Ncloud)).r;
+          float cloudMask = smoothstep(0.30,0.62,cloudTex);
+          vec3 lit      = mix(dayTex, vec3(0.94,0.95,0.97), cloudMask*0.72);
+          float term    = smoothstep(0.0,0.18,sunFacing);
+          vec3 nightCol = vec3(0.006,0.01,0.02) + nightTex*2.2;
+          vec3 earthLit = mix(nightCol, lit*(0.35+1.35*sunFacing), term);
+          vec3 atmoGlow = atmosphereRim(N, rd, sunFacing);
+          float oceanMask = smoothstep(0.015,0.14, dayTex.b-max(dayTex.r,dayTex.g)) * (1.0-cloudMask);
+          vec3  Hsun       = normalize(sunDir-rd);
+          float glint      = pow(max(dot(N,Hsun),0.0), 240.0) * oceanMask * sunFacing * 3.2;
+          return clamp(earthLit+atmoGlow+vec3(1.0,0.98,0.92)*glint, 0.0, 1.9);
+        }
+      }
+
+      // Pinpoint starfield (sub-pixel, no oversized glowing discs)
+      vec3 rdSky = rotX(rd, -sunSweepAngle());
+      float h1 = hash(floor(rdSky*520.0));
+      float star1 = step(0.9982, h1) * (0.35 + 0.65*fract(h1*143.1));
+      float h2 = hash(floor(rdSky*960.0));
+      float star2 = step(0.9994, h2) * (0.6 + 0.4*fract(h2*521.7));
+      vec3 starTint1 = mix(vec3(0.85, 0.92, 1.0), vec3(1.0, 0.95, 0.88), fract(h1*33.1));
+      vec3 starTint2 = mix(vec3(0.92, 0.96, 1.0), vec3(1.0, 0.85, 0.72), fract(h2*77.9));
+      vec3 stars = vec3(star1)*starTint1 + vec3(star2)*starTint2;
+
+      // Soft Milky Way band along galactic plane
+      vec3 galacticPole = normalize(vec3(0.36,0.84,-0.41));
+      float milkyD     = dot(rdSky, galacticPole);
+      float milkyBand  = exp(-milkyD*milkyD*18.0);
+      float milkyNoise = noise(rdSky*6.0)*0.6 + noise(rdSky*15.0)*0.4;
+      vec3 milkyWay    = vec3(0.50,0.54,0.64) * milkyBand * (0.05 + milkyNoise*0.13);
+
+      // Distant Moon (LROC mosaic, airless Lambertian shading)
+      vec3 moonDir    = normalize(vec3(-0.58,0.22,0.60));
+      float moonDist  = 1400.0;
+      float moonRad   = moonDist*sin(radians(1.6));
+      vec3 moonCenter = ro + moonDir*moonDist;
+      vec3 mOc    = ro - moonCenter;
+      float mB    = dot(rdSky, mOc);
+      float mC    = dot(mOc,mOc)-moonRad*moonRad;
+      float mDisc = mB*mB-mC;
+      vec3 moonCol = vec3(0.0);
+      if(mDisc>0.0){
+        float mT = -mB-sqrt(mDisc);
+        if(mT>0.0){
+          vec3 mHit = ro+rdSky*mT;
+          vec3 mN   = normalize(mHit-moonCenter);
+          vec3 moonTex = texture(u_moonTex, earthUV(mN)).rgb;
+          float mNdL = max(dot(mN,sunDir),0.0);
+          moonCol = moonTex*mNdL*1.7;
+        }
+      }
+
+      // ONE TRUE DRAMATIC SUN:
+      // Brilliant white disc, sharp sub-degree angular size (half-angle ~0.265 deg)
+      float sunDot = max(dot(rd,sunDir),0.0);
+      vec3 sunDisk = vec3(0.0);
+      if(sunDot > 0.999989){
+        float core = smoothstep(0.999989, 0.999994, sunDot);
+        sunDisk = vec3(1.0, 1.0, 1.0) * core * 14.0;
+      }
+      float faintGlow = pow(sunDot, 128.0) * 0.05;
+      return stars + milkyWay + moonCol + sunDisk + vec3(0.96, 0.98, 1.0)*faintGlow;
     }
 
     vec3 shade(vec3 albedo, float metal, float rough,
@@ -36713,18 +37555,50 @@ global.SovereignPdfRender = {
       return (diff+spec)*lc*NdL*shadow;
     }
 
+    // Cheap analytic sun glare/bloom. A real UnrealBloomPass-style effect
+    // (extract bright pixels above a threshold, blur, additive-composite
+    // back) needs a second framebuffer and an extra draw pass wired into
+    // the same resize()/render-loop JS that two other in-progress passes
+    // on this file are actively changing right now (6DOF camera, orbital
+    // sun motion) - adding FBO ping-pong there this moment is exactly the
+    // "restructure shared code" move this change is trying to avoid. This
+    // analytic stand-in reproduces the visible result (a soft halo plus
+    // tight bright streaks around a strong point light) in a single pass
+    // instead, reusing the same base sun vector sky() renders its sun
+    // disk from (kept as a literal here rather than a shared uniform, on
+    // purpose, so this has zero coupling to whatever the sun-direction
+    // pass does elsewhere - if that vector becomes a uniform later, this
+    // should be pointed at it too).
+    vec3 sunGlare(vec3 rd){
+      vec3 glareDir = rotX(normalize(vec3(0.42, 0.68, 0.38)), sunSweepAngle());
+      float c = max(dot(rd, glareDir), 0.0);
+      float halo    = pow(c, 2.2)   * 0.22;
+      float streak1 = pow(c, 60.0)  * 0.5;
+      float streak2 = pow(c, 400.0) * 1.1;
+      // Neutral white/slightly blue-white, matching the corrected real
+      // sun color above (space has no atmosphere to warm it toward yellow).
+      return vec3(1.0, 0.99, 0.97) * (halo + streak1 + streak2);
+    }
+
     void main(){
       vec2 uv = (gl_FragCoord.xy/u_res*2.-1.)*vec2(u_res.x/u_res.y,1.);
       vec3 ro    = u_cam;
       vec3 fwd   = normalize(u_dir);
-      vec3 right = normalize(cross(vec3(0,1,0), fwd));
+      // 6DOF free flight: screen-up comes from the controller's own
+      // current local up vector (which rolls with Q/E), not from world-up
+      // - this is what makes roll actually visible instead of the camera
+      // always self-leveling to the horizon.
+      vec3 right = normalize(cross(u_up, fwd));
       vec3 up    = cross(fwd, right);
       vec3 rd    = normalize(fwd + right*uv.x*0.62 + up*uv.y*0.62);
 
       vec2 hit = march(ro, rd);
       vec3 col;
 
-      vec3 sunDir = normalize(vec3(0.55, 0.16, 0.45));
+      // Base (t=0) direction unchanged; swept over time by the same
+      // orbital-mechanics functions driving sky()'s sun/terminator above,
+      // so the station's own shading and the Earth backdrop move together.
+      vec3 sunDir = rotX(normalize(vec3(0.42, 0.68, 0.38)), sunSweepAngle());
       vec3 sunCol = vec3(1.0, 0.78, 0.45)*4.8;
 
       if(hit.x > 0.){
@@ -36792,6 +37666,94 @@ global.SovereignPdfRender = {
         } else if(matID < 13.5){
           albedo = vec3(0.10,0.12,0.13)+noise(p*18.0)*0.018;
           metal = 0.55; rough = 0.38;
+        } else if(matID < 15.5){
+          albedo = vec3(0.12,0.28,0.58)+noise(p*14.0)*0.02;
+          rough = 0.72;
+        } else if(matID < 16.5){
+          albedo = vec3(0.95,0.74,0.14);
+          rough = 0.45;
+          emissive = vec3(1.0,0.78,0.15)*(0.35+0.15*sin(u_t*1.6));
+        } else if(matID < 17.5){
+          albedo = vec3(0.76,0.77,0.79)+noise(p*10.0)*0.02;
+          metal = 0.18; rough = 0.42;
+        } else if(matID < 18.5){
+          albedo = vec3(0.025,0.035,0.07)+noise(p*20.0)*0.01;
+          metal = 0.30; rough = 0.22;
+        } else if(matID < 19.5){
+          albedo = vec3(0.01,0.015,0.02);
+          emissive = vec3(0.30,0.58,1.0)*(2.2+0.6*sin(u_t*9.0+p.z*3.0));
+        } else if(matID < 20.5){
+          albedo = vec3(0.40,0.41,0.44)+noise(p*16.0)*0.018;
+          metal = 0.68; rough = 0.35;
+          // STRESS VIEW: truss/strut/gantry members only (this material),
+          // left alone - base metal look - when the overlay is off.
+          if(u_stressView>0.5){
+            float sVal = stressAt(p, N);
+            albedo = stressColor(sVal);
+            metal = 0.12; rough = 0.55;
+            emissive = stressColor(sVal)*0.22*smoothstep(0.78,1.0,sVal); // FEA-style hot-zone glow
+          }
+        } else if(matID < 21.5){
+          albedo = vec3(0.88,0.89,0.90);
+          metal = 0.08; rough = 0.30;
+        } else if(matID < 22.5){
+          // FilmLine Earth Relay Screening Pavilion: wine/burgundy facade
+          // plaster (#772230/#B71C1C, FilmLine's real brand color)
+          albedo = vec3(0.42,0.075,0.085)+noise(p*10.0)*0.02;
+          rough = 0.74;
+        } else if(matID < 23.5){
+          albedo = vec3(0.55,0.42,0.14)+noise(p*20.0)*0.015;
+          metal = 0.62; rough = 0.32;
+        } else if(matID < 24.5){
+          albedo = vec3(0.04,0.015,0.018);
+          rough = 0.4;
+          emissive = vec3(1.0,0.16,0.19)*(1.3+0.25*sin(u_t*1.6));
+        } else if(matID < 25.5){
+          albedo = vec3(0.58,0.58,0.60)+noise(p*25.0)*0.02;
+          metal = 0.72; rough = 0.28;
+        } else if(matID < 26.5){
+          albedo = vec3(0.035,0.032,0.03);
+          metal = 0.1; rough = 0.3;
+        } else if(matID < 27.5){
+          albedo = vec3(0.05,0.04,0.012);
+          emissive = vec3(1.0,0.82,0.25)*2.0;
+        } else if(matID < 28.5){
+          albedo = vec3(0.03,0.028,0.032);
+          rough = 0.5;
+          emissive = vec3(0.85,0.82,0.76)*1.1;
+        } else if(matID < 29.5){
+          // Welding arc flare at the robotic arm's work point - bright,
+          // near-white-hot, no albedo contribution of its own since a real
+          // arc this intense would wash it out.
+          albedo = vec3(0.02,0.02,0.03);
+          emissive = vec3(1.0,0.97,0.88)*7.0;
+        } else if(matID < 30.5){
+          // Gloved hand (first-person embodiment) / suit sleeve - WeylandAI
+          // Signal Blue shell with a thin Hi-Vis Yellow trim band so it
+          // reads as branded MMU/SAFER equipment, not a generic glove.
+          albedo = vec3(0.07,0.10,0.26)+noise(p*40.0)*0.015;
+          metal = 0.15; rough = 0.55;
+          float trimBand = smoothstep(0.06,0.0,abs(fract(p.y*9.0+p.x*2.0)-0.5));
+          emissive = vec3(1.0,0.83,0.0)*trimBand*0.30;
+        } else if(matID < 31.5){
+          // Third-person helmet shell - Signal Blue composite with a
+          // Hi-Vis Yellow brow trim, matching the brand palette used
+          // across the rest of the WeylandAI site rather than generic
+          // NASA white/orange.
+          albedo = vec3(0.065,0.095,0.24)+noise(p*18.0)*0.012;
+          metal = 0.30; rough = 0.42;
+          emissive = vec3(1.0,0.83,0.0)*smoothstep(0.06,0.0,abs(N.y-0.55))*0.30;
+        } else if(matID < 32.5){
+          // Third-person visor base color - almost entirely replaced right
+          // after the main lighting pass below by a real-time reflection
+          // of sky()/the scene off the visor's own surface normal.
+          albedo = vec3(0.015,0.02,0.03);
+          metal = 1.0; rough = 0.05;
+        } else if(matID > 34.5 && matID < 35.5){
+          // Robotic welding arc flare & sparks (Material 35.0)
+          albedo = vec3(0.02);
+          float arcFlicker = step(0.40, fract(sin(u_t * 89.1) * 43758.5453)) * (0.6 + 0.4 * sin(u_t * 190.0));
+          emissive = vec3(0.88, 0.94, 1.0) * (20.0 + 30.0 * arcFlicker);
         } else {
           albedo = vec3(0.82,0.80,0.72);
           rough = 0.68;
@@ -36809,11 +37771,21 @@ global.SovereignPdfRender = {
         shadow = clamp(shadow,0.,1.);
         float occ = ao(p,N);
 
+        // Physically-motivated space lighting: no atmosphere to scatter
+        // fill light, so the correct look is one hard directional key
+        // (sunDir/shadow above, unchanged) plus a real but much dimmer
+        // secondary source - Earth itself, bouncing its own lit-
+        // hemisphere light back up onto surfaces that face it (nadir,
+        // local -Y in this scene - the same "down toward Earth"
+        // convention sky() already uses to place the planet). Surfaces
+        // facing away from both the Sun and Earth read close to true
+        // black, matching the high contrast of real orbital photography
+        // instead of typical soft game-style ambient fill.
         vec3 lighting = shade(albedo,metal,rough,N,V,sunDir,sunCol,shadow);
-        vec3 skyL = vec3(0.40,0.28,0.14)*0.30;
-        lighting += albedo*(1.-metal)*skyL*(0.5+0.5*max(N.y,0.));
-        lighting += albedo*(1.-metal)*vec3(0.14,0.10,0.05)*max(-N.y,0.)*0.25;
-        lighting += albedo*(1.-metal)*vec3(0.08,0.06,0.04)*(0.5+0.5*N.y);
+        float earthBounceFacing = max(dot(N, vec3(0.0,-1.0,0.0)), 0.0);
+        vec3 earthBounce = vec3(0.11,0.16,0.23) * earthBounceFacing * 0.20;
+        lighting += albedo*(1.-metal)*earthBounce;
+        lighting += albedo*(1.-metal)*vec3(0.010,0.011,0.014);
 
         vec3 workPos[4];
         workPos[0]=vec3( 0.,3.0, 2.5);
@@ -36832,18 +37804,46 @@ global.SovereignPdfRender = {
 
         lighting *= mix(occ,1.,0.35);
         lighting += emissive;
+        if(matID>31.5 && matID<32.5){
+          // Third-person visor: reflect the view ray off the visor's own
+          // surface normal and re-sample the scene's existing sky()
+          // function in that direction - reuses the same environment
+          // infrastructure everything else in this shader already relies
+          // on for a real-time reflection, rather than a second render
+          // pass or a cube map.
+          vec3 reflDir = reflect(rd, N);
+          vec3 reflCol = sky(p, reflDir);
+          lighting = mix(vec3(0.008,0.012,0.022), reflCol, 0.88) + vec3(0.05,0.35,0.95)*0.035;
+        }
         float targetField = exp(-length(p-u_target)*0.82);
         float scanBand = pow(max(0.,sin((p.y+p.z*.045-u_t*2.2)*15.0)),18.0);
         float scanRim = pow(1.-abs(dot(N,V)),3.0);
         lighting += vec3(1.0,.57,.045)*u_scan*targetField*(.22+scanBand*1.25+scanRim*.35);
         float fog = 1.-exp(-hit.x*0.022);
-        vec3 fogCol = mix(vec3(0.30,0.23,0.14),sky(normalize(vec3(rd.x,max(rd.y,.04),rd.z))),.62);
-        if(p.z>0.0 && p.z<16.0 && abs(p.x)<7.15) fogCol=vec3(0.045,0.032,0.018);
+        vec3 fogCol = mix(vec3(0.30,0.23,0.14),sky(ro,normalize(vec3(rd.x,max(rd.y,.04),rd.z))),.62);
+        if((p.z>0.0 && p.z<16.0 && abs(p.x)<7.15) || (p.z>22.6 && p.z<29.0 && abs(p.x)<3.2)) fogCol=vec3(0.045,0.032,0.018);
         col = mix(lighting, fogCol, fog);
 
       } else {
-        col = sky(rd);
-        col = mix(col, vec3(0.35,0.28,0.18)*0.6, 0.15);
+        col = sky(ro,rd);
+        // Glare only added on actual sky/void pixels (same test sky()
+        // itself uses to decide whether to draw the sun disk) so it never
+        // bleeds additively through solid facility or ship geometry that
+        // happens to sit between the camera and the sun's direction.
+        col += sunGlare(rd);
+      }
+
+      // Real device-orientation change, turned into an in-world moment
+      // instead of an invisible CSS reflow: a brief static/scanline
+      // glitch (u_glitch decays to 0 over ~0.5s in JS, see frame() below)
+      // while the astronaut's hands reach back up to "correct" the view
+      // (handled by forcing u_handsLowered back toward 0 for the same
+      // window, so the raise/lower hand rig above does the actual work).
+      if(u_glitch > 0.001){
+        float scanline = step(0.5, fract(sin(floor(gl_FragCoord.y*0.4 + u_t*140.0))*43758.5453));
+        float staticN  = hash(vec3(gl_FragCoord.xy*vec2(1.0,0.4) + u_t*150.0, u_t*7.0));
+        col = mix(col, vec3(staticN), scanline*u_glitch*0.45);
+        col += vec3(0.25,0.85,1.0) * pow(u_glitch,2.0) * scanline * 0.35;
       }
 
       vec2 vp = gl_FragCoord.xy/u_res;
@@ -36883,6 +37883,7 @@ global.SovereignPdfRender = {
     const uT   = gl.getUniformLocation(prog, 'u_t');
     const uCam = gl.getUniformLocation(prog, 'u_cam');
     const uDir = gl.getUniformLocation(prog, 'u_dir');
+    const uUp = gl.getUniformLocation(prog, 'u_up');
     const uScan = gl.getUniformLocation(prog, 'u_scan');
     const uTarget = gl.getUniformLocation(prog, 'u_target');
     const uPlanSdf = gl.getUniformLocation(prog, 'u_planSdf');
@@ -36890,6 +37891,13 @@ global.SovereignPdfRender = {
     const uPlanMode = gl.getUniformLocation(prog, 'u_planMode');
     const uPlanBounds = gl.getUniformLocation(prog, 'u_planBounds');
     const uPlanHeight = gl.getUniformLocation(prog, 'u_planHeight');
+    const uStressView = gl.getUniformLocation(prog, 'u_stressView');
+    const uThirdPerson = gl.getUniformLocation(prog, 'u_thirdPerson');
+    const uAstroPos = gl.getUniformLocation(prog, 'u_astroPos');
+    const uAstroFwd = gl.getUniformLocation(prog, 'u_astroFwd');
+    const uAstroUp = gl.getUniformLocation(prog, 'u_astroUp');
+    const uHandsLowered = gl.getUniformLocation(prog, 'u_handsLowered');
+    const uGlitch = gl.getUniformLocation(prog, 'u_glitch');
 
     const planSdfTexture = gl.createTexture();
     gl.activeTexture(gl.TEXTURE0);
@@ -36909,44 +37917,85 @@ global.SovereignPdfRender = {
     gl.texImage2D(gl.TEXTURE_2D,0,gl.RGBA,1,1,0,gl.RGBA,gl.UNSIGNED_BYTE,new Uint8Array([255,255,255,255]));
     gl.uniform1i(uPlanSdf,0);
     gl.uniform1i(uPlanSource,1);
+
+    const uEarthDay = gl.getUniformLocation(prog, 'u_earthDay');
+    const uEarthNight = gl.getUniformLocation(prog, 'u_earthNight');
+
+    // Real NASA public-domain Earth imagery, baked into this bundle at low
+    // resolution rather than fetched live at request time (no good point
+    // inside a raymarch shader, or a Worker-served static page, to await a
+    // network image fetch mid-frame). Day map: NASA Earth Observatory /
+    // Visible Earth "Blue Marble Next Generation", public domain --
+    // https://visibleearth.nasa.gov/images/73909 (source file
+    // world.topo.bathy.200412.3x5400x2700.jpg, downloaded + resized to
+    // 384x192 on 2026-10-03). Night map: NASA/NOAA Suomi NPP VIIRS "Night
+    // Lights 2012" day/night-band composite, public domain --
+    // https://visibleearth.nasa.gov/images/79765 (source file
+    // dnb_land_ocean_ice.2012.3600x1800.jpg, same treatment). Both NASA
+    // Earth Observatory image collections are explicitly public domain /
+    // free to use without permission. Combined inline payload ~35KB.
+    function loadEarthTexture(unit, dataUri){
+      const tex = gl.createTexture();
+      gl.activeTexture(unit);
+      gl.bindTexture(gl.TEXTURE_2D, tex);
+      gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
+      gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
+      gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.REPEAT);
+      gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
+      // 1x1 placeholder so the very first frames (before the image
+      // decodes) sample a plausible dark-ocean color instead of garbage.
+      gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, 1, 1, 0, gl.RGBA, gl.UNSIGNED_BYTE, new Uint8Array([18,28,58,255]));
+      const img = new Image();
+      img.onload = () => {
+        gl.activeTexture(unit);
+        gl.bindTexture(gl.TEXTURE_2D, tex);
+        gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, img);
+      };
+      img.src = dataUri;
+      return tex;
+    }
+    loadEarthTexture(gl.TEXTURE2, 'data:image/jpeg;base64,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');
+    loadEarthTexture(gl.TEXTURE3, 'data:image/jpeg;base64,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');
+    gl.uniform1i(uEarthDay, 2);
+    gl.uniform1i(uEarthNight, 3);
+
+    // Cloud map: NASA Earth Observatory "cloud_combined" (same Blue
+    // Marble record family, 57747), public domain, grayscale cloud
+    // fraction - sampled as luminance to mask in white cloud cover. Moon
+    // map: NASA SVS "CGI Moon Kit" (svs.gsfc.nasa.gov/4720) global color
+    // mosaic from real Lunar Reconnaissance Orbiter Camera (LROC) data,
+    // public domain. Both downloaded 2026-10-03.
+    const uEarthCloud = gl.getUniformLocation(prog, 'u_earthCloud');
+    const uMoonTex = gl.getUniformLocation(prog, 'u_moonTex');
+    loadEarthTexture(gl.TEXTURE4, 'data:image/jpeg;base64,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');
+    loadEarthTexture(gl.TEXTURE5, 'data:image/jpeg;base64,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');
+    gl.uniform1i(uEarthCloud, 4);
+    gl.uniform1i(uMoonTex, 5);
     let activePlanModel=null;
     
     // Proximity doorways in XZ plane
-    const doorways = [
-      { x: 0.0, z: 0.0, side: "South", name: "Weyland Main Automatic Entrance (S1)", hardware: "Dual-panel sensor-driven sliding entrance, presence safety curtain, monitored access controller" },
-      { x: -2.0, z: 2.0, side: "West", name: "Project Office Automatic Opening (W1)", hardware: "Horton Series 2000 automatic sliding assembly, Schlage AD-Series access control, Pemko gasketing" },
-      { x: 2.0, z: 2.0, side: "East", name: "Conference Room Automatic Opening (E1)", hardware: "Besam SW200 automatic operator, monitored presence sensor, Rixson concealed support" },
-      { x: -2.0, z: 6.0, side: "West", name: "Materials Review Automatic Opening (W2)", hardware: "Automatic double-slide leaf set, wireless access lock, perimeter gasketing" },
-      { x: 2.0, z: 6.0, side: "East", name: "IT and Telecom Room Opening (E2)", hardware: "Fail-secure automatic operator, request-to-exit sensor, monitored latch interface" },
-      { x: -2.0, z: 10.0, side: "West", name: "Plan Review Room Automatic Opening (W3)", hardware: "Sensor-driven sliding assembly, monitored access control, perimeter gasketing" },
-      { x: 2.0, z: 10.0, side: "East", name: "Electrical Room Controlled Opening (E3)", hardware: "Automatic sliding assembly, occupancy sensing, emergency breakout leaves" },
-      { x: -2.0, z: 14.0, side: "West", name: "Mechanical Room Controlled Opening (W4)", hardware: "Automatic operator, dual-channel safety edge, keycard access controller" },
-      { x: 2.0, z: 14.0, side: "East", name: "Facilities Office Automatic Opening (E4)", hardware: "Automatic double-slide assembly, badge reader, monitored egress" }
+    const scanTargets = [
+      { id: 'entrance', type: 'GANTRY CRADLE', name: 'Primary Berth Keel & Transverse Gantry Portal', summary: 'Hexagonal open drydock gantry structure with 32m longitudinal keel spine, high-bay floodlights, and runway catwalks.', dimensions: '20.0 W x 32.0 D x 13.0 H m', material: 'High-tensile structural alloy / FEA-monitored', hazard: 'Verify micro-meteoroid shielding and thermal expansion clearances', status: 'MODEL COORDINATED', position: [0.0, -1.0, 1.0], radius: 4.5, maxRange: 35, tags: ['exterior', 'shipyard', 'gantry'] },
+      { id: 'prow-deflector', type: 'STARSHIP BOW', name: 'Capital Seed Vessel // Command Bow & Deflector', summary: 'Forward wedge hull with chamfered armor chines, dorsal bridge superstructure, and illuminated navigational deflector field.', dimensions: '6.4 W x 8.0 D x 4.2 H m', material: 'Reinforced composite armor / sensor lattice', hazard: 'High-frequency deflector field active', status: 'ASSEMBLY PHASE 2', position: [0.0, 3.4, 2.5], radius: 3.0, maxRange: 25, tags: ['interior', 'shipyard', 'ship', 'prow'] },
+      { id: 'ribcage-bulkhead', type: 'STRUCTURAL BULKHEAD', name: 'Exposed Structural Rib Cage & Decks 1-3', summary: 'Multi-deck starship midsection showing exposed central spine, ring bulkheads, interior decks, and yellow alignment jigs.', dimensions: '7.2 W x 8.0 D x 5.0 H m', material: 'Structural rib cage / titanium-aluminide alloy', hazard: 'Exposed structural frame \u2014 zero-g tether required', status: 'DECK FRAMING COMPLETE', position: [0.0, 3.5, 9.5], radius: 3.8, maxRange: 25, tags: ['interior', 'shipyard', 'structure'] },
+      { id: 'reactor-core', type: 'POWER SYSTEM', name: 'Antimatter Reactor Containment Vessel', summary: 'Cylindrical magnetic confinement pressure vessel with triple constriction coils and glowing quantum intermix core.', dimensions: '3.6 DIA x 4.0 L m', material: 'Magnetic flux confinement casing / superconductor coils', hazard: 'High magnetic flux field \u2014 non-magnetic gear mandatory', status: 'SPEC LINKED', position: [0.0, 3.8, 15.5], radius: 2.8, maxRange: 22, tags: ['interior', 'shipyard', 'reactor'] },
+      { id: 'port-nacelle', type: 'PROPULSION ASSEMBLY', name: 'Port Warp Plasma Nacelle & Bussard Scoop', summary: 'Port cantilevered engine pylon with forward Bussard ramscoop intake, continuous cyan plasma channel, and aft impulse exhaust.', dimensions: '2.0 W x 9.5 L x 2.2 H m', material: 'Plasma conduit / warp field coil housing', hazard: 'Residual plasma thermal hazard (>1200 K)', status: 'FIELD READY', position: [-5.2, 5.0, 18.0], radius: 3.5, maxRange: 30, tags: ['interior', 'shipyard', 'propulsion'] },
+      { id: 'starboard-nacelle', type: 'PROPULSION ASSEMBLY', name: 'Starboard Warp Plasma Nacelle & Bussard Scoop', summary: 'Starboard cantilevered engine pylon with forward Bussard intake, cyan plasma manifold, and impulse exhaust nozzle.', dimensions: '2.0 W x 9.5 L x 2.2 H m', material: 'Plasma conduit / warp field coil housing', hazard: 'Residual plasma thermal hazard (>1200 K)', status: 'FIELD READY', position: [5.2, 5.0, 18.0], radius: 3.5, maxRange: 30, tags: ['interior', 'shipyard', 'propulsion'] },
+      { id: 'docking-umbilical', type: 'SERVICE GANTRY', name: 'Pressurized Gantry Umbilical Service Arm', summary: 'Articulated swing boom with swivel elbow and pressurized bellows collar connecting cradle gantry to starship midship port.', dimensions: '6.5 m extended reach / 0.9 m bore', material: 'Pressurized elastomer bellows / hydraulic boom', hazard: 'Maintain flexible joint pressure seal', status: 'CONNECTED', position: [-5.5, 3.6, 10.0], radius: 2.2, maxRange: 20, tags: ['exterior', 'shipyard', 'umbilical'] },
+      { id: 'welding-station-port', type: 'ROBOTIC FABRICATION', name: 'Robotic Welding Manipulator Arm (Port)', summary: 'Multi-axis articulated welding manipulator performing automated electron-beam hull stitch-welding with intermittent arc flare.', dimensions: '3.2 m reach / dual-torch end-effector', material: 'Anodized bronze / tungsten-carbide torch tip', hazard: 'Intermittent high-intensity electric arc and spark emissions', status: 'ACTIVE AUTONOMOUS CYCLE', position: [-3.5, 3.2, 7.5], radius: 1.8, maxRange: 18, tags: ['interior', 'shipyard', 'robotics'] },
+      { id: 'welding-station-stbd', type: 'ROBOTIC FABRICATION', name: 'Robotic Welding Manipulator Arm (Starboard)', summary: 'Starboard upper bulkhead robotic welding unit with active spark discharge and real-time seam tracking optical sensors.', dimensions: '2.8 m reach / optical vision tracking head', material: 'Anodized bronze / fiber-laser welding head', hazard: 'Optical radiation flare warning', status: 'ACTIVE AUTONOMOUS CYCLE', position: [3.5, 4.5, 12.0], radius: 1.8, maxRange: 18, tags: ['interior', 'shipyard', 'robotics'] }
     ];
-
-    const scanTargets = doorways.map((door, index) => ({
-      id: index === 0 ? 'entrance' : \`opening-\${door.side.toLowerCase()}-\${door.z}\`,
-      type: index === 0 ? 'AUTOMATIC ENTRANCE' : 'CONTROLLED OPENING',
-      name: door.name,
-      summary: door.hardware,
-      dimensions: index === 0 ? '2.60 W x 2.45 H m clear' : '1.36 W x 2.35 H m clear',
-      material: 'Aluminum / laminated safety glass',
-      hazard: index === 0 ? 'Validate presence curtain and breakout path' : 'Validate safety sensor before turnover',
-      status: index === 0 ? 'COMMISSIONING READY' : 'SPEC LINKED',
-      position: [door.x, 1.25, door.z],
-      radius: index === 0 ? 1.55 : 0.82,
-      maxRange: index === 0 ? 25 : 12,
-      tags: index === 0 ? ['exterior', 'opening'] : ['interior', 'opening']
-    }));
-    scanTargets.push(
-      { id: 'entrance-canopy', type: 'STRUCTURAL ASSEMBLY', name: 'Cantilevered Arrival Canopy', summary: 'Steel canopy, paired columns, integrated warm-white luminaires, and protected passenger loading zone.', dimensions: '6.00 W x 3.60 D m', material: 'Painted structural steel / membrane roof', hazard: 'Confirm drainage fall and column protection', status: 'MODEL COORDINATED', position: [0, 2.95, -1.8], radius: 2.6, maxRange: 20, tags: ['exterior', 'structure'] },
-      { id: 'approach-light-west', type: 'ELECTRICAL FIXTURE', name: 'West Approach Luminaire', summary: 'Site lighting pole with shielded LED head, photometric zone assignment, and underground feeder.', dimensions: '5.20 m mounting height', material: 'Powder-coated steel / LED optical head', hazard: 'Confirm footing cover and underground locate', status: 'CIRCUIT LINKED', position: [-4.6, 4.9, -7], radius: 0.75, maxRange: 16, tags: ['exterior', 'electrical'] },
-      { id: 'annex-west', type: 'FACILITY ZONE', name: 'West Service Annex', summary: 'Low-rise service annex linked to site logistics, utilities, and access-control models.', dimensions: '8.40 W x 10.80 D x 4.00 H m', material: 'Composite rainscreen / steel frame', hazard: 'Confirm delivery route and exterior drainage coordination', status: 'DIGITAL TWIN ONLINE', position: [-14, 2.0, 10], radius: 4.2, maxRange: 30, tags: ['exterior', 'facility'] },
-      { id: 'annex-east', type: 'FACILITY ZONE', name: 'East Operations Annex', summary: 'Operations annex with coordinated structure, envelope, equipment clearances, and work-package ownership.', dimensions: '9.60 W x 12.00 D x 3.40 H m', material: 'Insulated metal panel / steel frame', hazard: 'Maintain service access clearances', status: 'DIGITAL TWIN ONLINE', position: [15, 1.7, 13], radius: 4.8, maxRange: 32, tags: ['exterior', 'facility'] },
-      { id: 'corridor-light-2', type: 'ELECTRICAL FIXTURE', name: 'Corridor Luminaire L2', summary: 'Interior area light linked to reflected ceiling plan, circuit schedule, controls sequence, and commissioning test.', dimensions: '0.84 W x 0.84 D m', material: 'Aluminum housing / diffuse lens', hazard: 'Verify emergency circuit designation', status: 'CIRCUIT LINKED', position: [0, 3.15, 6], radius: 0.65, maxRange: 10, tags: ['interior', 'electrical'] }
-    );
     sightxExperience = window.SightXExperience.create({ targets: scanTargets });
     const sightxIngest = window.SightXSiteGenome.mount({ experience: sightxExperience });
+    // STRESS VIEW toggle: additive and decoupled the same way INGEST SITE is
+    // (sightx-experience.js's nav button dispatches a CustomEvent on click;
+    // this page owns the WebGL uniform, so it listens here rather than
+    // coupling the shared experience module to this one shader feature).
+    window.addEventListener('sightx:toggle-stress', () => {
+      stressViewActive = !stressViewActive;
+      const stressBtn = document.querySelector('[data-sxe-action="stress"]');
+      if (stressBtn) stressBtn.classList.toggle('sxe-stress-active', stressViewActive);
+    });
     resize();
     
     const sideDoorZ = [2, 6, 10, 14];
@@ -37012,22 +38061,140 @@ global.SovereignPdfRender = {
       }
     }
 
+    const filmlineSpot = { x: 0.0, z: 30.0 };
+    function checkFilmlineProximity(position, radius = 4.2) {
+      const modal = document.getElementById('filmline-modal');
+      if (!modal) return;
+      if (activePlanModel) { modal.style.display = 'none'; return; }
+      const dist = Math.hypot(position[0] - filmlineSpot.x, position[2] - filmlineSpot.z);
+      modal.style.display = dist < radius ? 'block' : 'none';
+    }
+
+    // Docking: a real state-changing interaction, not a cosmetic popup.
+    // The dock point is the construction ship's forward collar (shipC +
+    // (0,0,-3.2) in the raymarch scene, see the GLSL scene() construction-
+    // ship block). Pressing G within range locks free-flight and snaps the
+    // camera into a docked pose at the collar; pressing G again undocks
+    // and hands control back right where you were.
+    const dockPoint = { x: -14.0, y: 3.0, z: 6.8 };
+    const dockPose = { position: [-14.0, 3.0, 5.6], yaw: 0, pitch: 0 };
+    let nearDock = false;
+    let isDocked = false;
+    function updateDockModal() {
+      const modal = document.getElementById('dock-modal');
+      if (!modal) return;
+      const title = document.getElementById('dock-title');
+      const value = document.getElementById('dock-value');
+      const sub = document.getElementById('dock-sub');
+      if (isDocked) {
+        title.textContent = 'DOCKED / SEED VESSEL';
+        value.textContent = 'Forward collar mated. Free-flight locked.';
+        sub.textContent = 'Press G to undock';
+        modal.style.display = 'block';
+      } else if (nearDock) {
+        title.textContent = 'SEED VESSEL / FORWARD COLLAR';
+        value.textContent = 'Within docking range.';
+        sub.textContent = 'Press G to dock';
+        modal.style.display = 'block';
+      } else {
+        modal.style.display = 'none';
+      }
+    }
+    function checkDockProximity(position) {
+      if (activePlanModel || isDocked) return;
+      const dist = Math.hypot(position[0]-dockPoint.x, position[1]-dockPoint.y, position[2]-dockPoint.z);
+      nearDock = dist < 3.0;
+      updateDockModal();
+    }
+    document.addEventListener('keydown', (e) => {
+      if (e.code !== 'KeyG' || e.repeat) return;
+      if (document.pointerLockElement !== canvas) return;
+      if (activePlanModel) return;
+      if (isDocked) {
+        isDocked = false;
+        sightxControls.setEnabled(true);
+        updateDockModal();
+      } else if (nearDock) {
+        isDocked = true;
+        sightxControls.setEnabled(false);
+        sightxControls.setPose(dockPose.position, dockPose.yaw, dockPose.pitch);
+        updateDockModal();
+      }
+    });
+
+    // --- Astronaut spacewalk embodiment: first/third-person (V), the
+    // hands-raised->lowered reveal, and the real-device-orientation
+    // "correction" glitch. See handSdf()/map() and the u_glitch block in
+    // the shader above for the actual rendering; this just drives the
+    // timing uniforms consumed in frame() below. ---
+    let thirdPerson = false;
+    let handsLowerStart = null;     // performance.now() timestamp the hands began lowering
+    let handsForceRaiseUntil = 0;   // force hands fully raised until this timestamp (orientation glitch)
+    let glitchStart = null;         // performance.now() timestamp of the current glitch pulse
+    function easeOutCubic(t) { return 1 - Math.pow(1 - t, 3); }
+    function beginHandsLower() {
+      if (handsLowerStart === null) handsLowerStart = performance.now();
+    }
+    window.beginHandsLower = beginHandsLower;
+    function triggerOrientationCorrection() {
+      // Only reacts once the player has actually engaged controls (hands
+      // already began their first raise->lower) - a device rotation
+      // before that would otherwise glitch an idle menu/slideshow state
+      // for no reason.
+      if (handsLowerStart === null) return;
+      const now = performance.now();
+      glitchStart = now;
+      handsForceRaiseUntil = now + 480;
+      handsLowerStart = handsForceRaiseUntil;
+    }
+    const sxOrientationQuery = matchMedia('(orientation: portrait)');
+    if (sxOrientationQuery.addEventListener) sxOrientationQuery.addEventListener('change', triggerOrientationCorrection);
+    else if (sxOrientationQuery.addListener) sxOrientationQuery.addListener(triggerOrientationCorrection);
+    window.addEventListener('orientationchange', triggerOrientationCorrection);
+
+    const thrustGlowEl = document.getElementById('thrust-glow');
+    function flashThrustGlow() {
+      if (!thrustGlowEl) return;
+      thrustGlowEl.classList.remove('pulse');
+      void thrustGlowEl.offsetWidth; // restart the CSS animation
+      thrustGlowEl.classList.add('pulse');
+    }
+
     const sightxControls = window.SightXControls.mount({
       canvas,
       hint: document.getElementById('hint'),
-      initialPosition: [0, 1.72, -9.0],
+      // Wide establishing shot by default: pulled back and elevated south
+      // of the facility so the construction ship (west bay, x~-14), the
+      // station power truss (east bay, x~15), the dock gantry, the
+      // entrance, and the Earth limb below are all in frame together on
+      // first load - not a close-up of a single door. The "Acquire the
+      // main entrance" commissioning task is still reachable by walking
+      // forward; it just isn't the first thing a visitor sees.
+      initialPosition: [0, 9, -24.0],
       initialYaw: 0,
-      initialPitch: 0,
+      initialPitch: -0.22,
       collision: positionBlocked,
-      onMove: position => checkDoorwayProximity(position),
+      onMove: position => { checkDoorwayProximity(position); checkFilmlineProximity(position); checkDockProximity(position); },
       onScan: (active, position) => {
         sightxExperience.setScanning(active);
         checkDoorwayProximity(position, active ? 2.75 : 1.15);
+        checkFilmlineProximity(position, active ? 7.5 : 4.2);
       },
       onTourToggle: () => sightxExperience.toggleTour(),
       onSettingsToggle: () => sightxExperience.toggleSettings(),
       onReportToggle: () => sightxExperience.toggleReport(),
-      onCapture: hideUI,
+      // V: first/third-person toggle - see thirdPerson in frame() below
+      // for the actual camera reposition and the shader's u_thirdPerson
+      // branch for the helmet/visor swap.
+      onViewToggle: () => {
+        thirdPerson = !thirdPerson;
+        document.body.classList.toggle('sightx-third-person', thirdPerson);
+      },
+      // MMU/SAFER booster glow: fired every frame a thrust key is
+      // actually held (see sightx-controls.js update()), matching the
+      // real discrete-burst momentum physics - not continuous force.
+      onThrust: flashThrustGlow,
+      onCapture: () => { hideUI(); beginHandsLower(); },
       onRelease: () => {
         if (!document.body.classList.contains('sightx-demo')) showUI();
       }
@@ -37063,15 +38230,58 @@ global.SovereignPdfRender = {
       sightxControls.update(dt);
       sightxExperience.update(ts, sightxControls);
       if (sightxExperience.consumeResizeRequest()) resize();
-      const camPos = sightxControls.position;
-      const fwd = sightxControls.forward;
+      // The astronaut's real pose (first-person eye point/orientation) -
+      // always the true FP camera regardless of view mode, since
+      // third-person is just a different RENDER camera looking at this
+      // same pose (see camPos/camFwd below), not a different character.
+      const astroPos = sightxControls.position;
+      const astroFwd = sightxControls.forward;
+      const astroUp = sightxControls.up;
       const scanTarget = sightxExperience.targetPosition;
+
+      // Hands raise/lower: forced fully raised during an orientation-
+      // correction glitch window, otherwise eased toward lowered (1).
+      let loweredT;
+      if (ts < handsForceRaiseUntil || handsLowerStart === null) {
+        loweredT = 0;
+      } else {
+        loweredT = Math.min(1, (ts - handsLowerStart) / 1400);
+      }
+      const glitch = glitchStart === null ? 0 : Math.max(0, 1 - (ts - glitchStart) / 480);
+
+      // Third-person: pull the render camera out in FRONT of the
+      // astronaut (along their own forward direction) looking back at
+      // their helmet - a true front-on view, not an over-the-shoulder
+      // chase cam. See the shader's u_thirdPerson branch in map()/main()
+      // for the helmet+visor geometry and the visor's real-time
+      // reflection of sky() this exposes.
+      let camPos = astroPos, camFwd = astroFwd, camUp = astroUp;
+      if (thirdPerson) {
+        const dist = 1.35, rise = 0.10;
+        camPos = [
+          astroPos[0] + astroFwd[0]*dist + astroUp[0]*rise,
+          astroPos[1] + astroFwd[1]*dist + astroUp[1]*rise,
+          astroPos[2] + astroFwd[2]*dist + astroUp[2]*rise
+        ];
+        const toAstro = [astroPos[0]-camPos[0], astroPos[1]-camPos[1], astroPos[2]-camPos[2]];
+        const len = Math.hypot(toAstro[0], toAstro[1], toAstro[2]) || 1;
+        camFwd = [toAstro[0]/len, toAstro[1]/len, toAstro[2]/len];
+      }
+
       gl.uniform2f(uRes, canvas.width, canvas.height);
       gl.uniform1f(uT, ts*0.001);
       gl.uniform3f(uCam, camPos[0], camPos[1], camPos[2]);
-      gl.uniform3f(uDir, fwd[0], fwd[1], fwd[2]);
+      gl.uniform3f(uDir, camFwd[0], camFwd[1], camFwd[2]);
+      gl.uniform3f(uUp, camUp[0], camUp[1], camUp[2]);
+      gl.uniform1f(uThirdPerson, thirdPerson ? 1.0 : 0.0);
+      gl.uniform3f(uAstroPos, astroPos[0], astroPos[1], astroPos[2]);
+      gl.uniform3f(uAstroFwd, astroFwd[0], astroFwd[1], astroFwd[2]);
+      gl.uniform3f(uAstroUp, astroUp[0], astroUp[1], astroUp[2]);
+      gl.uniform1f(uHandsLowered, easeOutCubic(loweredT));
+      gl.uniform1f(uGlitch, glitch);
       gl.uniform1f(uScan, sightxExperience.scanAmount);
       gl.uniform3f(uTarget, scanTarget[0], scanTarget[1], scanTarget[2]);
+      gl.uniform1f(uStressView, stressViewActive ? 1.0 : 0.0);
       gl.uniform1i(uPlanMode,activePlanModel?1:0);
       if(activePlanModel){
         gl.uniform4f(uPlanBounds,...activePlanModel.bounds);
@@ -37088,142 +38298,19 @@ global.SovereignPdfRender = {
       manifestUrl: '/sightx/runtime-manifest.json'
     }).catch(error => console.error('[SightX runtime]', error));
   </script>
-  <style>
-    #mx-toggle{position:fixed;bottom:24px;right:24px;z-index:9000;background:#12141988;backdrop-filter:blur(10px);border:1px solid #2c3139;color:#edf0f1;border-radius:99px;padding:12px 18px;font:750 11px/1 ui-monospace,monospace;letter-spacing:.06em;cursor:pointer}
-    #mx-toggle:hover{border-color:#f0b800;color:#f0b800}
-    #mx-panel{position:fixed;bottom:24px;right:24px;z-index:9001;width:300px;max-width:calc(100vw - 48px);background:#0d0f14ee;backdrop-filter:blur(14px);border:1px solid #2c3139;border-radius:16px;box-shadow:0 25px 70px rgba(0,0,0,.5);display:none;flex-direction:column;overflow:hidden;font-family:"Avenir Next","Helvetica Neue",sans-serif}
-    #mx-panel.open{display:flex}
-    #mx-head{display:flex;justify-content:space-between;align-items:center;padding:12px 14px;border-bottom:1px solid #2c3139}
-    #mx-head b{color:#edf0f1;font-size:12px;letter-spacing:.06em}
-    #mx-close{background:none;border:0;color:#9299a3;cursor:pointer;font-size:16px}
-    #mx-roster{display:flex;gap:6px;flex-wrap:wrap;padding:10px 14px;border-bottom:1px solid #2c3139}
-    .mx-avatar{width:26px;height:26px;border-radius:50%;display:grid;place-items:center;font:800 10px ui-monospace,monospace;color:#090a0d}
-    #mx-messages{flex:1;max-height:220px;overflow-y:auto;padding:10px 14px;display:flex;flex-direction:column;gap:8px;font-size:12px;color:#edf0f1}
-    .mx-msg b{color:#f0b800;margin-right:4px}
-    .mx-sys{color:#9299a3;font-style:italic}
-    #mx-input-row{display:flex;gap:6px;padding:10px 14px;border-top:1px solid #2c3139}
-    #mx-input{flex:1;background:#161920;border:1px solid #2c3139;border-radius:8px;padding:8px 10px;color:#fff;font-size:12px}
-    #mx-voice-btn{background:none;border:1px solid #2c3139;color:#9299a3;border-radius:8px;padding:8px 10px;cursor:pointer;font-size:13px}
-    #mx-voice-btn.active{background:#61dfa0;border-color:#61dfa0;color:#090a0d}
-    #mx-gate{padding:16px;font-size:12px;color:#9299a3;line-height:1.6}
-    #mx-gate a{color:#f0b800}
-  </style>
-  <button id="mx-toggle">\u{1F465} COLLABORATE</button>
-  <div id="mx-panel">
-    <div id="mx-head"><b>MEETINGX LIVE</b><button id="mx-close">\u2715</button></div>
-    <div id="mx-roster"></div>
-    <div id="mx-messages"></div>
-    <div id="mx-input-row">
-      <button id="mx-voice-btn" title="Toggle voice">\u{1F3A4}</button>
-      <input id="mx-input" type="text" placeholder="Message..." maxlength="2000">
-    </div>
-  </div>
-  <script>
-  (function(){
-    const PROJECT_ID = 'glendale-camino-real';
-    let ws = null, joined = false, myId = null, peers = {}, localStream = null;
-    const $ = (id) => document.getElementById(id);
-    function addMsg(html, cls) { const d = document.createElement('div'); d.className = 'mx-msg' + (cls ? ' ' + cls : ''); d.innerHTML = html; const box = $('mx-messages'); box.appendChild(d); box.scrollTop = box.scrollHeight; }
-    function esc(s) { return String(s == null ? '' : s).replace(/[<>&]/g, c => ({'<':'&lt;','>':'&gt;','&':'&amp;'}[c])); }
-    function renderRoster(users) { $('mx-roster').innerHTML = users.map(u => \`<span class="mx-avatar" style="background:\${u.color}" title="\${esc(u.name)}">\${esc((u.name||'?').slice(0,1).toUpperCase())}</span>\`).join(''); }
-    let roster = [];
-    function connect() {
-      ws = new WebSocket((location.protocol === 'https:' ? 'wss://' : 'ws://') + location.host + '/api/sight/room/' + PROJECT_ID);
-      ws.onopen = () => { joined = true; };
-      ws.onclose = () => {
-        const neverJoined = !joined;
-        joined = false;
-        if (neverJoined) {
-          $('mx-panel').innerHTML = '<div id="mx-gate">Sign in and add MeetingX to collaborate live in this walkthrough. See <a href="/pricing">/pricing</a>.</div>';
-        }
-      };
-      ws.onerror = () => {};
-      ws.onmessage = (evt) => {
-        let msg; try { msg = JSON.parse(evt.data); } catch (e) { return; }
-        if (msg.type === 'roster') { roster = msg.users; myId = msg.you; renderRoster(roster); addMsg('Connected. ' + roster.length + ' present.', 'mx-sys'); }
-        else if (msg.type === 'join') { roster.push(msg.user); renderRoster(roster); addMsg(esc(msg.user.name) + ' joined', 'mx-sys'); if (localStream) callPeer(msg.user.userId); }
-        else if (msg.type === 'leave') { roster = roster.filter(u => u.userId !== msg.userId); renderRoster(roster); if (peers[msg.userId]) { peers[msg.userId].pc.close(); delete peers[msg.userId]; } }
-        else if (msg.type === 'chat') { addMsg('<b>' + esc(msg.user.name) + ':</b> ' + esc(msg.text)); }
-        else if (msg.type === 'signal') { handleSignal(msg); }
-      };
-    }
-    function sendSignal(to, payload) { ws.send(JSON.stringify({ type: 'signal', to, payload })); }
-    function makePeerConnection(peerId) {
-      const pc = new RTCPeerConnection({ iceServers: [{ urls: 'stun:stun.l.google.com:19302' }] });
-      if (localStream) localStream.getTracks().forEach(t => pc.addTrack(t, localStream));
-      pc.onicecandidate = (e) => { if (e.candidate) sendSignal(peerId, { candidate: e.candidate }); };
-      pc.ontrack = (e) => {
-        let audio = document.getElementById('mx-audio-' + peerId);
-        if (!audio) { audio = document.createElement('audio'); audio.id = 'mx-audio-' + peerId; audio.autoplay = true; document.body.appendChild(audio); }
-        audio.srcObject = e.streams[0];
-      };
-      peers[peerId] = { pc };
-      return pc;
-    }
-    async function callPeer(peerId) {
-      const pc = makePeerConnection(peerId);
-      const offer = await pc.createOffer();
-      await pc.setLocalDescription(offer);
-      sendSignal(peerId, { sdp: offer });
-    }
-    async function handleSignal(msg) {
-      const peerId = msg.from;
-      let entry = peers[peerId];
-      const pc = entry ? entry.pc : makePeerConnection(peerId);
-      if (msg.payload.sdp) {
-        await pc.setRemoteDescription(new RTCSessionDescription(msg.payload.sdp));
-        if (msg.payload.sdp.type === 'offer') {
-          const answer = await pc.createAnswer();
-          await pc.setLocalDescription(answer);
-          sendSignal(peerId, { sdp: answer });
-        }
-      } else if (msg.payload.candidate) {
-        try { await pc.addIceCandidate(msg.payload.candidate); } catch (e) {}
-      }
-    }
-    $('mx-toggle').addEventListener('click', () => {
-      $('mx-panel').classList.toggle('open');
-      if (!ws) connect();
-    });
-    $('mx-close').addEventListener('click', () => $('mx-panel').classList.remove('open'));
-    $('mx-input').addEventListener('keydown', (e) => {
-      if (e.key === 'Enter' && ws && joined && e.target.value.trim()) {
-        ws.send(JSON.stringify({ type: 'chat', text: e.target.value.trim() }));
-        e.target.value = '';
-      }
-    });
-    $('mx-voice-btn').addEventListener('click', async () => {
-      const btn = $('mx-voice-btn');
-      if (!localStream) {
-        try {
-          localStream = await navigator.mediaDevices.getUserMedia({ audio: true });
-          btn.classList.add('active');
-          roster.filter(u => u.userId !== myId).forEach(u => callPeer(u.userId));
-        } catch (e) { addMsg('Mic access denied.', 'mx-sys'); }
-      } else {
-        localStream.getTracks().forEach(t => t.stop());
-        localStream = null;
-        Object.values(peers).forEach(p => p.pc.close());
-        peers = {};
-        btn.classList.remove('active');
-      }
-    });
-  })();
-  </script>
 
-
-  <!-- Guided Walkthrough Preview -- real, deployed 2026-09-06. SightX's own
+  <!-- Guided Walkthrough Preview \u2014 real, deployed 2026-09-06. SightX's own
        spec promises "guided site walkthroughs"; the WebGL scene above is
        one real hardcoded demo project (Glendale Camino Real). This panel
        is a genuinely different, smaller, real slice of that same promise:
        given a plain-text project description, it generates an actual
        narrated storyboard walkthrough (script via a self-hosted LLM,
-       animated-SVG scene sequence, optional browser text-to-speech) --
+       animated-SVG scene sequence, optional browser text-to-speech) \u2014
        not a 3D render, not a video file. Calls weylandai's own
        /api/sightx/walkthrough-preview, which forwards to
        filmline-video-worker over a real same-account Service Binding. -->
   <div id="wt-preview-toggle" style="position:fixed;right:20px;bottom:20px;z-index:9999;">
-    <button id="wt-preview-btn" style="padding:10px 16px;background:#f0b800;color:#090a0d;border:0;border-radius:6px;font-weight:700;font-family:'Space Grotesk',sans-serif;cursor:pointer;box-shadow:0 2px 12px rgba(0,0,0,0.4);">Guided Walkthrough Preview</button>
+    <button id="wt-preview-btn" style="padding:10px 16px;background:#2a52ff;color:#090a0d;border:0;border-radius:6px;font-weight:700;font-family:'Space Grotesk',sans-serif;cursor:pointer;box-shadow:0 2px 12px rgba(0,0,0,0.4);">Guided Walkthrough Preview</button>
   </div>
   <div id="wt-preview-panel" style="display:none;position:fixed;inset:0;z-index:10000;background:rgba(9,10,13,0.92);overflow:auto;">
     <div style="max-width:820px;margin:40px auto;background:#12151a;border:1px solid #2a2e36;border-radius:10px;padding:28px;color:#f4f1ea;font-family:'Outfit',sans-serif;">
@@ -37231,9 +38318,9 @@ global.SovereignPdfRender = {
         <h2 style="margin:0;font-family:'Space Grotesk',sans-serif;">Guided Walkthrough Preview</h2>
         <button id="wt-preview-close" style="background:none;border:0;color:#8a94a6;font-size:22px;cursor:pointer;">&times;</button>
       </div>
-      <p style="color:#a9b2c0;font-size:14px;line-height:1.6;">Describe a project (e.g. "second-floor mechanical retrofit, three access points, one hazardous-material zone") and generate a real narrated storyboard walkthrough -- a script plus an animated scene sequence, played back with your browser's own text-to-speech. This is not the 3D scene above; it's a smaller, real, honest slice of SightX's "guided site walkthroughs" promise: script + animated storyboard, not photorealistic render or an encoded video file.</p>
+      <p style="color:#a9b2c0;font-size:14px;line-height:1.6;">Describe a project (e.g. "second-floor mechanical retrofit, three access points, one hazardous-material zone") and generate a real narrated storyboard walkthrough \u2014 a script plus an animated scene sequence, played back with your browser's own text-to-speech. This is not the 3D scene above; it's a smaller, real, honest slice of SightX's "guided site walkthroughs" promise: script + animated storyboard, not photorealistic render or an encoded video file.</p>
       <textarea id="wt-preview-input" rows="3" maxlength="1000" placeholder="Describe the project or space to walk through..." style="width:100%;box-sizing:border-box;background:#0d0f13;color:#f4f1ea;border:1px solid #2a2e36;border-radius:6px;padding:10px;font-family:inherit;font-size:14px;"></textarea>
-      <button id="wt-preview-generate" style="margin-top:10px;padding:10px 18px;background:#f0b800;color:#090a0d;border:0;border-radius:6px;font-weight:700;cursor:pointer;">Generate</button>
+      <button id="wt-preview-generate" style="margin-top:10px;padding:10px 18px;background:#2a52ff;color:#090a0d;border:0;border-radius:6px;font-weight:700;cursor:pointer;">Generate</button>
       <span id="wt-preview-status" style="margin-left:12px;color:#8a94a6;font-size:13px;"></span>
       <div id="wt-preview-result" style="margin-top:18px;"></div>
     </div>
@@ -37277,6 +38364,622 @@ global.SovereignPdfRender = {
           .catch(function (err) { genBtn.disabled = false; status.textContent = 'Request failed: ' + err.message; });
       });
     })();
+  </script>
+
+  <!-- Cosmic Evolution Intro Sequence Script: 9 Epochs & Smooth Cross-fade -->
+  <script>
+  (function(){
+    try {
+      if (sessionStorage.getItem("weylandCosmicIntroSeen") && !location.search.includes("intro=1")) return;
+      if (window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches && !location.search.includes("intro=1")) {
+        sessionStorage.setItem("weylandCosmicIntroSeen", "1");
+        return;
+      }
+    } catch (e) { return; }
+
+    var overlay = document.getElementById("cx-overlay");
+    var canvas = document.getElementById("cx-canvas");
+    var hudEpoch = document.getElementById("cx-epoch");
+    var hudSub = document.getElementById("cx-sub");
+    var hudProgress = document.getElementById("cx-progress");
+    var skipBtn = document.getElementById("cx-skip");
+    if (!overlay || !canvas) return;
+
+    var gl = canvas.getContext("webgl2", { alpha: false, preserveDrawingBuffer: true, powerPreference: "high-performance" });
+    if (!gl) return;
+
+    overlay.style.display = "block";
+    document.documentElement.style.overflow = "hidden";
+
+    // \u2500\u2500 Phase Definitions & Timeline \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500
+    var PHASES = [
+      { id: 1, epoch: "EPOCH // 13.8B YRS AGO \u2014 HO'\u014CLEILANA CONTRACTION",  sub: "DEEP SPACE FILAMENTS CONTRACTING TO DISTANT SINGULARITY",  t0: 0.0, t1: 1.8 },
+      { id: 2, epoch: "EPOCH // T=0 \u2014 QUANTUM BOUNCE & INFLATION",         sub: "EINSTEIN LENSING RING // RELATIVISTIC SINGULARITY FLASH",   t0: 1.8, t1: 2.5 },
+      { id: 3, epoch: "EPOCH // ~10\u207B\u2076 SEC \u2014 QUARK-GLUON PLASMA",           sub: "INCANDESCENT DECONFINED HADRONIC FLUID // 10\xB9\xB2 K",         t0: 2.5, t1: 3.4 },
+      { id: 4, epoch: "EPOCH // ~380,000 YR \u2014 RECOMBINATION (CMB)",         sub: "PLASMA CLEARING // COSMIC MICROWAVE BACKGROUND MOTTLING",  t0: 3.4, t1: 4.3 },
+      { id: 5, epoch: "EPOCH // ~100M YR \u2014 COSMIC DARK AGES",              sub: "GRAVITATIONAL FILAMENT CLUSTERING // 21CM HYDROGEN VOID",  t0: 4.3, t1: 5.1 },
+      { id: 6, epoch: "EPOCH // ~300M YR \u2014 FIRST STARS (POPULATION III)",  sub: "COSMIC DAWN // PRIMORDIAL HYPERMASSIVE STELLAR IGNITION",  t0: 5.1, t1: 6.0 },
+      { id: 7, epoch: "EPOCH // ~1B YR \u2014 GALAXY FORMATION",                sub: "SPIRAL DISK DYNAMICS // LUMINOUS COSMIC WEB FILAMENTS",    t0: 6.0, t1: 7.0 },
+      { id: 8, epoch: "EPOCH // ~4.5B YRS AGO \u2014 ACCRETION & PROTO-EARTH",  sub: "CIRCUMSTELLAR DISK // MAGMA OCEANS COOLING TO WATER",    t0: 7.0, t1: 8.1 },
+      { id: 9, epoch: "EPOCH // PRESENT DAY \u2014 LOW EARTH ORBIT // SIGHTX",   sub: "ORBITAL SHIPYARD APPROACH // 400 KM ALTITUDE INGRESS",     t0: 8.1, t1: 9.3 }
+    ];
+
+    var T_TOTAL = 9.3;
+    var T_TRANSITION_START = 8.6;
+
+    // \u2500\u2500 Seamless Transition Lifecycle (Never Terminate in Black!) \u2500\u2500
+    var transitionTriggered = false;
+    var introFullyCompleted = false;
+
+    function finish() {
+      if (transitionTriggered) return;
+      transitionTriggered = true;
+      try { sessionStorage.setItem("weylandCosmicIntroSeen", "1"); } catch (e) {}
+
+      // Cross-fade overlay opacity 1 -> 0 over 650ms.
+      // CRITICAL: Keep cx-canvas rendering actively at 60fps during the fade so there is ZERO black frame!
+      overlay.style.transition = "opacity 0.65s ease-out";
+      overlay.style.opacity = "0";
+
+      setTimeout(function() {
+        introFullyCompleted = true;
+        overlay.style.display = "none";
+        if (overlay.parentNode) overlay.parentNode.removeChild(overlay);
+        document.documentElement.style.overflow = "";
+
+        // Lower astronaut spacewalk hands in 3D scene
+        if (window.beginHandsLower) window.beginHandsLower();
+      }, 680);
+    }
+
+    skipBtn.addEventListener("click", finish);
+
+    function clamp01(x) { return x < 0 ? 0 : (x > 1 ? 1 : x); }
+    function smooth01(a, b, t) { var x = clamp01((t - a) / (b - a)); return x * x * (3 - 2 * x); }
+
+    function resize() {
+      var dpr = Math.min(window.devicePixelRatio || 1, 2);
+      canvas.width = Math.floor(window.innerWidth * dpr);
+      canvas.height = Math.floor(window.innerHeight * dpr);
+      gl.viewport(0, 0, canvas.width, canvas.height);
+    }
+    window.addEventListener("resize", resize);
+    resize();
+
+    var vsSrc = \`#version 300 es
+in vec2 a;
+void main(){ gl_Position = vec4(a, 0.0, 1.0); }\`;
+
+    var fsSrc = \`#version 300 es
+precision highp float;
+
+uniform vec2 u_res;
+uniform float u_t;
+uniform float u_w1, u_w2, u_w3, u_w4, u_w5, u_w6, u_w7, u_w8, u_w9;
+uniform float u_p1, u_p2, u_p3, u_p4, u_p5, u_p6, u_p7, u_p8, u_p9;
+
+out vec4 fragColor;
+
+float hash12(vec2 p) {
+  vec3 p3 = fract(vec3(p.xyx) * 0.1031);
+  p3 += dot(p3, p3.yzx + 33.33);
+  return fract((p3.x + p3.y) * p3.z);
+}
+
+float hash13(vec3 p) {
+  p = fract(p * 0.1031);
+  p += dot(p, p.zyx + 31.32);
+  return fract((p.x + p.y) * p.z);
+}
+
+float noise2D(vec2 p) {
+  vec2 i = floor(p);
+  vec2 f = fract(p);
+  f = f * f * (3.0 - 2.0 * f);
+  float a = hash12(i);
+  float b = hash12(i + vec2(1.0, 0.0));
+  float c = hash12(i + vec2(0.0, 1.0));
+  float d = hash12(i + vec2(1.0, 1.0));
+  return mix(mix(a, b, f.x), mix(c, d, f.x), f.y);
+}
+
+float noise3D(vec3 p) {
+  vec3 i = floor(p);
+  vec3 f = fract(p);
+  f = f * f * (3.0 - 2.0 * f);
+  float n000 = hash13(i + vec3(0.0, 0.0, 0.0));
+  float n100 = hash13(i + vec3(1.0, 0.0, 0.0));
+  float n010 = hash13(i + vec3(0.0, 1.0, 0.0));
+  float n110 = hash13(i + vec3(1.0, 1.0, 0.0));
+  float n001 = hash13(i + vec3(0.0, 0.0, 1.0));
+  float n101 = hash13(i + vec3(1.0, 0.0, 1.0));
+  float n011 = hash13(i + vec3(0.0, 1.0, 1.0));
+  float n111 = hash13(i + vec3(1.0, 1.0, 1.0));
+  return mix(
+    mix(mix(n000, n100, f.x), mix(n010, n110, f.x), f.y),
+    mix(mix(n001, n101, f.x), mix(n011, n111, f.x), f.y),
+    f.z
+  );
+}
+
+float fbm(vec2 p) {
+  float v = 0.0;
+  float a = 0.5;
+  mat2 rot = mat2(0.8, 0.6, -0.6, 0.8);
+  for (int i = 0; i < 4; i++) {
+    v += a * noise2D(p);
+    p = rot * p * 2.02;
+    a *= 0.5;
+  }
+  return v;
+}
+
+vec3 renderStarfield(vec2 p, float boost) {
+  float stars = step(0.9965 - boost * 0.003, hash12(floor(p * 260.0)));
+  float brightness = hash12(floor(p * 260.0) + 17.1);
+  return vec3(stars * (0.4 + 0.6 * brightness) * (0.3 + 0.7 * boost));
+}
+
+// Phase 1: Ho\u02BB\u014Dleilana BAO filament contraction (deep space view, filaments drawing inwards)
+vec3 phase1Hooleilana(vec2 p, float prog, float t) {
+  float r = length(p);
+  float contraction = 1.0 + prog * 2.6;
+  vec2 pIn = p * contraction;
+  pIn += normalize(p + 1e-4) * (prog * 0.45);
+
+  float w1 = abs(noise2D(pIn * 6.5 + vec2(t * 0.15, -t * 0.1)) - 0.5);
+  float w2 = abs(noise2D(pIn * 13.0 + vec2(3.1, 7.2) - vec2(t * 0.2, t * 0.15)) - 0.5);
+  float ridge = min(w1, w2 * 1.4);
+  float filaments = 1.0 - smoothstep(0.01, 0.16, ridge);
+  filaments = pow(filaments, 2.2);
+
+  float nodeNoise = noise2D(pIn * 18.0 + 5.0);
+  float nodes = pow(nodeNoise, 4.5) * filaments * 12.0;
+
+  float baoWave = sin(r * 32.0 * (1.0 - prog * 0.3) + t * 5.0) * 0.5 + 0.5;
+  float baoShell = pow(baoWave, 5.0) * smoothstep(0.06, 0.35, r);
+
+  vec3 filamentCol = vec3(0.15, 0.48, 0.98) * filaments * 1.8;
+  filamentCol += vec3(0.2, 0.82, 0.95) * baoShell * 1.4;
+  filamentCol += vec3(1.0, 0.85, 0.55) * nodes;
+
+  float singDist = length(p);
+  float singCore = exp(-singDist * singDist * 1600.0) * (1.5 + prog * 4.0);
+  float singHalo = exp(-singDist * 35.0) * (0.4 + prog * 1.2);
+  vec3 singCol = vec3(0.9, 0.96, 1.0) * singCore + vec3(0.4, 0.7, 1.0) * singHalo;
+
+  vec3 bgStars = renderStarfield(pIn * 0.5, 0.4);
+
+  return bgStars * 0.4 + filamentCol + singCol;
+}
+
+// Phase 2: Quantum bounce singularity flash (gravitational lensing ring + brilliant white-blue flash)
+vec3 phase2Bounce(vec2 p, float prog, float t) {
+  float r = length(p);
+  float flashT = clamp(prog, 0.0, 1.0);
+
+  float ringR = 0.15 + 0.08 * sin(flashT * 3.14159);
+  float lensRing = exp(-pow((r - ringR) * 36.0, 2.0));
+  vec3 lensCol = vec3(0.45, 0.8, 1.0) * lensRing * 2.8;
+
+  float burstCurve = sin(flashT * 3.14159);
+  float coreBurst = exp(-r * (4.5 - burstCurve * 3.6)) * burstCurve * 5.0;
+
+  float spike1 = exp(-abs(p.x * p.y) * 1200.0);
+  float spike2 = exp(-abs((p.x + p.y) * (p.x - p.y)) * 700.0);
+  vec3 spikes = vec3(0.92, 0.96, 1.0) * (spike1 + spike2 * 0.7) * burstCurve * 2.4;
+
+  float shockR = flashT * 1.5;
+  float shock = exp(-pow((r - shockR) * 24.0, 2.0)) * (1.0 - flashT * 0.7);
+  vec3 shockCol = vec3(0.6, 0.88, 1.0) * shock * 2.2;
+
+  return vec3(0.92, 0.96, 1.0) * coreBurst + lensCol + spikes + shockCol;
+}
+
+// Phase 3: Primordial quark-gluon plasma (turbulent glowing amber/crimson incandescent fluid)
+vec3 phase3QuarkGluon(vec2 p, float prog, float t) {
+  vec2 uv = p * 4.2;
+  float n1 = noise3D(vec3(uv, t * 1.1));
+  float n2 = noise3D(vec3(uv + vec2(n1 * 2.2, -n1 * 1.8), t * 0.9));
+  float qgp = noise3D(vec3(uv * 1.9 + vec2(n2 * 2.8, n2 * 2.1), t * 1.4));
+  qgp = qgp * 0.6 + n2 * 0.4;
+
+  vec3 cCrimson = vec3(0.22, 0.015, 0.01);
+  vec3 cAmber   = vec3(0.98, 0.35, 0.02);
+  vec3 cGold    = vec3(1.0, 0.85, 0.16);
+  vec3 cWhite   = vec3(1.0, 0.98, 0.92);
+
+  vec3 col = mix(cCrimson, cAmber, smoothstep(0.18, 0.48, qgp));
+  col = mix(col, cGold, smoothstep(0.48, 0.76, qgp));
+  col = mix(col, cWhite, smoothstep(0.76, 0.96, qgp));
+
+  col *= (1.0 - length(p) * 0.25);
+  return col;
+}
+
+// Phase 4: CMB Recombination (plasma clearing, cosmic microwave background thermal mottling cooling to deep indigo/black)
+vec3 phase4Recombination(vec2 p, float prog, float t) {
+  float clearingPlasma = (1.0 - smoothstep(0.0, 0.45, prog));
+  vec3 pResidue = vec3(0.85, 0.3, 0.05) * clearingPlasma * noise2D(p * 5.0 + t * 0.4);
+
+  float m1 = noise2D(p * 16.0);
+  float m2 = noise2D(p * 34.0 + 3.7);
+  float m3 = noise2D(p * 68.0 + 8.1);
+  float cmbMottling = m1 * 0.5 + m2 * 0.35 + m3 * 0.15;
+
+  vec3 cmbWarm = vec3(0.22, 0.58, 0.95);
+  vec3 cmbCold = vec3(0.04, 0.06, 0.24);
+  vec3 cmbCol = mix(cmbCold, cmbWarm, smoothstep(0.35, 0.65, cmbMottling));
+
+  float coolDown = 1.0 - smoothstep(0.35, 0.95, prog);
+  cmbCol *= (0.2 + 0.8 * coolDown);
+
+  return pResidue + cmbCol * (0.15 + 0.85 * coolDown);
+}
+
+// Phase 5: Cosmic Dark Ages (black void with subtle gravitational filament clustering)
+vec3 phase5DarkAges(vec2 p, float prog, float t) {
+  float d1 = abs(noise2D(p * 5.2 + 2.1) - 0.5);
+  float d2 = abs(noise2D(p * 10.4 + 6.8) - 0.5);
+  float dmWeb = 1.0 - smoothstep(0.02, 0.20, min(d1, d2 * 1.3));
+  dmWeb = pow(dmWeb, 2.5);
+
+  float nodePotential = pow(noise2D(p * 14.0), 3.5) * dmWeb;
+
+  vec3 dmCol = vec3(0.05, 0.07, 0.20) * dmWeb * 0.7;
+  dmCol += vec3(0.10, 0.14, 0.38) * nodePotential * 1.2;
+
+  return dmCol;
+}
+
+// Phase 6: First Stars (brilliant point-light stars igniting across the filaments)
+vec3 phase6FirstStars(vec2 p, float prog, float t) {
+  float d1 = abs(noise2D(p * 5.2 + 2.1) - 0.5);
+  float d2 = abs(noise2D(p * 10.4 + 6.8) - 0.5);
+  float dmWeb = pow(1.0 - smoothstep(0.02, 0.20, min(d1, d2 * 1.3)), 2.5);
+  vec3 col = vec3(0.05, 0.07, 0.20) * dmWeb * 0.5;
+
+  vec2 grid = p * 14.0;
+  vec2 id = floor(grid);
+  vec2 gv = fract(grid) - 0.5;
+
+  float starRand = hash12(id);
+  float starThreshold = 0.58;
+  if (starRand > starThreshold) {
+    float igniteTime = (starRand - starThreshold) / (1.0 - starThreshold);
+    float igniteProgress = smoothstep(igniteTime, igniteTime + 0.15, prog);
+
+    if (igniteProgress > 0.001) {
+      vec2 starOff = vec2(hash12(id + 1.1) - 0.5, hash12(id + 2.7) - 0.5) * 0.4;
+      vec2 delta = gv - starOff;
+      float d = length(delta);
+
+      float core = exp(-d * 50.0) * 3.5 * igniteProgress;
+      float spike = (exp(-abs(delta.x * delta.y) * 900.0) + exp(-abs(delta.x) * 45.0) * exp(-abs(delta.y) * 45.0) * 0.3) * igniteProgress;
+      float bubble = exp(-d * 4.5) * 0.28 * igniteProgress;
+      vec3 bubbleCol = mix(vec3(0.2, 0.5, 0.95), vec3(0.8, 0.25, 0.65), hash12(id + 5.3));
+
+      vec3 starCol = vec3(0.88, 0.94, 1.0) * (core + spike * 1.8) + bubbleCol * bubble;
+      col += starCol;
+    }
+  }
+
+  return col;
+}
+
+// Phase 7: Galaxy Formation (spiral galaxy swirls and glowing cosmic web filaments)
+vec3 phase7Galaxies(vec2 p, float prog, float t) {
+  vec3 col = renderStarfield(p * 1.2, 0.85);
+
+  vec2 gP = p - vec2(0.08, 0.02);
+  float gDist = length(gP);
+  float gAngle = atan(gP.y, gP.x);
+
+  float armVal = sin(gAngle * 2.0 - log(gDist + 0.03) * 4.2 + t * 0.7);
+  float spiral = smoothstep(0.2, 0.85, armVal * 0.5 + 0.5) * exp(-gDist * 3.5);
+
+  float core = exp(-gDist * gDist * 55.0) * 2.4;
+  vec3 coreCol = vec3(1.0, 0.90, 0.70) * core;
+
+  float armDust = noise2D(gP * 24.0);
+  vec3 armCol = mix(vec3(0.35, 0.68, 1.0), vec3(0.95, 0.45, 0.7), armDust) * spiral * 1.5;
+
+  col += coreCol + armCol;
+
+  vec2 gP2 = p - vec2(-0.45, -0.22);
+  float gDist2 = length(gP2);
+  float armVal2 = sin(atan(gP2.y, gP2.x) * 2.0 - log(gDist2 + 0.05) * 5.0 + t * 0.9);
+  col += vec3(0.9, 0.85, 0.6) * exp(-gDist2 * gDist2 * 120.0) * 1.8;
+  col += vec3(0.4, 0.7, 1.0) * smoothstep(0.3, 0.8, armVal2 * 0.5 + 0.5) * exp(-gDist2 * 6.0);
+
+  float web = pow(1.0 - abs(noise2D(p * 4.5) - 0.5), 3.5) * 0.22;
+  col += vec3(0.2, 0.45, 0.85) * web;
+
+  return col;
+}
+
+// Phase 8: Protoplanetary disk spinning and coalescing into Earth with glowing lava/ocean accretion
+vec3 phase8EarthAccretion(vec2 p, float prog, float t) {
+  vec3 col = renderStarfield(p, 0.7);
+
+  vec2 diskP = vec2(p.x, (p.y - 0.05) * 2.4);
+  float diskR = length(diskP);
+  float diskAngle = atan(diskP.y, diskP.x);
+
+  float diskRings = sin(diskR * 38.0 - diskAngle * 2.0 - t * 2.5) * 0.5 + 0.5;
+  float diskMask = smoothstep(0.70, 0.28, diskR) * smoothstep(0.09, 0.18, diskR);
+  float diskFade = 1.0 - smoothstep(0.55, 1.0, prog);
+  vec3 diskCol = mix(vec3(0.95, 0.4, 0.06), vec3(1.0, 0.85, 0.3), diskRings) * diskMask * diskFade * 2.0;
+
+  col += diskCol;
+
+  vec2 earthCenter = vec2(0.0, -0.02);
+  float earthR = mix(0.20, 0.32, smoothstep(0.0, 0.5, prog));
+  vec2 pE = p - earthCenter;
+  float dE = length(pE);
+
+  if (dE < earthR) {
+    vec2 n2 = pE / earthR;
+    float z = sqrt(max(0.0, 1.0 - dot(n2, n2)));
+    vec3 N = normalize(vec3(n2, z));
+
+    vec3 sunDir = normalize(vec3(0.42, 0.68, 0.38));
+    float sunFacing = max(dot(N, sunDir), 0.0);
+
+    float lavaNoise = fbm(N.xy * 5.5 + vec2(t * 0.15, -t * 0.1));
+    float crackMask = smoothstep(0.48, 0.65, lavaNoise);
+
+    float coolProg = smoothstep(0.2, 0.85, prog);
+    vec3 magmaCol = vec3(1.0, 0.45, 0.05) * (2.2 + 0.8 * sin(t * 3.0 + lavaNoise * 8.0));
+    vec3 basaltCol = vec3(0.08, 0.09, 0.11);
+    vec3 crustCol = mix(magmaCol, basaltCol, coolProg);
+
+    vec3 oceanCol = vec3(0.05, 0.20, 0.58);
+    vec3 landCol  = vec3(0.18, 0.42, 0.18);
+    vec3 surfaceWater = mix(oceanCol, landCol, step(0.52, lavaNoise));
+
+    vec3 earthSurface = mix(crustCol, surfaceWater, coolProg * (1.0 - crackMask * (1.0 - coolProg)));
+
+    vec3 lit = earthSurface * (0.25 + 1.25 * sunFacing);
+    vec3 nightSide = vec3(0.008, 0.015, 0.03) + magmaCol * (1.0 - coolProg) * 0.4;
+    vec3 earthCol = mix(nightSide, lit, smoothstep(0.0, 0.2, sunFacing));
+
+    float cloudNoise = fbm(N.xy * 8.0 - vec2(t * 0.25, t * 0.15));
+    float cloudMask = smoothstep(0.45, 0.70, cloudNoise) * coolProg;
+    earthCol = mix(earthCol, vec3(0.92, 0.95, 0.98) * (0.2 + 1.2 * sunFacing), cloudMask * 0.75);
+
+    float rim = pow(1.0 - z, 3.2);
+    vec3 atmoCol = mix(vec3(0.24, 0.48, 1.0), vec3(1.0, 0.45, 0.2), 1.0 - sunFacing);
+    earthCol += atmoCol * rim * (0.4 + 0.8 * sunFacing);
+
+    col = earthCol;
+  }
+
+  return col;
+}
+
+// Phase 9: Camera smoothly dives into Low Earth Orbit, matching exact altitude, sun angle, and Earth curvature of 3D shipyard!
+vec3 phase9LEOShipyard(vec2 p, float prog, float t) {
+  vec3 sunDir = normalize(vec3(0.42, 0.68, 0.38));
+
+  float horizonY = -0.06;
+  float earthCurvature = 0.42;
+  vec2 horizonCenter = vec2(0.0, horizonY - 1.0 / earthCurvature);
+  float dToHorizonCenter = length(p - horizonCenter);
+  float earthRadiusScreen = 1.0 / earthCurvature;
+
+  vec3 col = renderStarfield(p * 1.5, 0.9);
+
+  vec2 mwP = p - vec2(0.1, 0.25);
+  float mwBand = exp(-pow(dot(mwP, vec2(0.5, 0.86)), 2.0) * 12.0);
+  col += vec3(0.5, 0.55, 0.65) * mwBand * (0.08 + 0.15 * noise2D(p * 8.0));
+
+  vec2 sunP = vec2(0.48, 0.38);
+  float sunDist = length(p - sunP);
+  float sunDisc = smoothstep(0.04, 0.032, sunDist);
+  float sunGlow = exp(-sunDist * 5.0) * 0.6 + exp(-sunDist * 16.0) * 0.8;
+  vec3 sunCol = vec3(1.0, 0.98, 0.92) * (sunDisc * 4.0 + sunGlow * 1.6);
+  col += sunCol;
+
+  if (dToHorizonCenter < earthRadiusScreen) {
+    vec2 surfNorm2 = (p - horizonCenter) / earthRadiusScreen;
+    float zNorm = sqrt(max(0.0, 1.0 - dot(surfNorm2, surfNorm2)));
+    vec3 N = normalize(vec3(surfNorm2.x, surfNorm2.y, zNorm));
+
+    float sunFacing = max(dot(N, sunDir), 0.0);
+
+    float continentNoise = fbm(p * 4.5 + vec2(1.2, 0.8));
+    float isLand = smoothstep(0.48, 0.53, continentNoise);
+    vec3 land = mix(vec3(0.16, 0.38, 0.14), vec3(0.45, 0.38, 0.22), noise2D(p * 12.0));
+    vec3 ocean = vec3(0.04, 0.18, 0.52);
+    vec3 daySurface = mix(ocean, land, isLand);
+
+    float cloud = fbm(p * 7.5 - vec2(t * 0.08, 0.0));
+    float cloudMask = smoothstep(0.45, 0.72, cloud);
+    vec3 surfaceLit = mix(daySurface, vec3(0.94, 0.96, 0.98), cloudMask * 0.75);
+
+    vec3 Hsun = normalize(sunDir - vec3(0.0, 0.0, -1.0));
+    float glint = pow(max(dot(N, Hsun), 0.0), 180.0) * (1.0 - isLand) * (1.0 - cloudMask) * sunFacing * 3.0;
+
+    vec3 nightCityLights = vec3(1.0, 0.75, 0.35) * step(0.68, noise2D(p * 28.0)) * isLand * 1.5;
+    vec3 nightCol = vec3(0.005, 0.01, 0.02) + nightCityLights;
+    vec3 earthLit = mix(nightCol, surfaceLit * (0.35 + 1.25 * sunFacing), smoothstep(0.0, 0.20, sunFacing));
+
+    float grazing = 1.0 - zNorm;
+    float atmoLimb = pow(grazing, 4.0) * 1.4;
+    vec3 atmoRayleigh = vec3(0.237, 0.482, 1.000);
+    vec3 atmoDusk = vec3(1.0, 0.42, 0.18);
+    vec3 atmoColor = mix(atmoRayleigh, atmoDusk, smoothstep(0.35, 0.0, sunFacing));
+    earthLit += atmoColor * atmoLimb * (0.3 + 0.9 * sunFacing);
+    earthLit += vec3(1.0, 0.98, 0.92) * glint;
+
+    col = earthLit;
+  } else {
+    float distAbove = dToHorizonCenter - earthRadiusScreen;
+    if (distAbove < 0.045) {
+      float glow = exp(-distAbove * 90.0);
+      vec3 atmoRayleigh = vec3(0.237, 0.482, 1.000);
+      col += atmoRayleigh * glow * 1.2;
+    }
+  }
+
+  float shipyardEmergence = smoothstep(0.5, 1.0, prog);
+  if (shipyardEmergence > 0.01) {
+    float truss1 = step(abs(p.x - 0.28), 0.012) * step(p.y, 0.25) * step(-0.15, p.y);
+    float truss2 = step(abs(p.y - 0.08), 0.008) * step(-0.1, p.x) * step(p.x, 0.65);
+    float cross1 = step(abs((p.x - 0.28) - (p.y - 0.08)), 0.007) * step(0.18, p.x) * step(p.x, 0.38);
+    float gantry = max(max(truss1, truss2), cross1);
+
+    float beaconBlink = step(0.5, fract(t * 1.2));
+    float beacon = exp(-length(p - vec2(0.28, 0.25)) * 120.0) * beaconBlink;
+    vec3 beaconCol = vec3(1.0, 0.2, 0.1) * beacon * 3.0;
+
+    vec3 gantryCol = vec3(0.06, 0.07, 0.09) * (0.4 + 0.6 * max(dot(vec3(0.0, 1.0, 0.0), sunDir), 0.0));
+    col = mix(col, gantryCol, gantry * shipyardEmergence * 0.85) + beaconCol * shipyardEmergence;
+  }
+
+  return col;
+}
+
+void main() {
+  vec2 p = (gl_FragCoord.xy - 0.5 * u_res) / u_res.y;
+
+  vec3 col = vec3(0.0);
+
+  if (u_w1 > 0.001) col += phase1Hooleilana(p, u_p1, u_t) * u_w1;
+  if (u_w2 > 0.001) col += phase2Bounce(p, u_p2, u_t) * u_w2;
+  if (u_w3 > 0.001) col += phase3QuarkGluon(p, u_p3, u_t) * u_w3;
+  if (u_w4 > 0.001) col += phase4Recombination(p, u_p4, u_t) * u_w4;
+  if (u_w5 > 0.001) col += phase5DarkAges(p, u_p5, u_t) * u_w5;
+  if (u_w6 > 0.001) col += phase6FirstStars(p, u_p6, u_t) * u_w6;
+  if (u_w7 > 0.001) col += phase7Galaxies(p, u_p7, u_t) * u_w7;
+  if (u_w8 > 0.001) col += phase8EarthAccretion(p, u_p8, u_t) * u_w8;
+  if (u_w9 > 0.001) col += phase9LEOShipyard(p, u_p9, u_t) * u_w9;
+
+  col = clamp(col, 0.0, 2.0);
+  col = col / (1.0 + col * 0.15);
+
+  fragColor = vec4(col, 1.0);
+}\`;
+
+    function compile(type, src){
+      var sh = gl.createShader(type);
+      gl.shaderSource(sh, src);
+      gl.compileShader(sh);
+      if (!gl.getShaderParameter(sh, gl.COMPILE_STATUS)){
+        console.error("[Cosmic Intro] Shader error:", gl.getShaderInfoLog(sh));
+        gl.deleteShader(sh);
+        return null;
+      }
+      return sh;
+    }
+    var vs = compile(gl.VERTEX_SHADER, vsSrc);
+    var fs = compile(gl.FRAGMENT_SHADER, fsSrc);
+    if (!vs || !fs) { finish(); return; }
+    var prog = gl.createProgram();
+    gl.attachShader(prog, vs);
+    gl.attachShader(prog, fs);
+    gl.linkProgram(prog);
+    if (!gl.getProgramParameter(prog, gl.LINK_STATUS)) {
+      console.error("[Cosmic Intro] Program link error:", gl.getProgramInfoLog(prog));
+      finish();
+      return;
+    }
+    gl.useProgram(prog);
+
+    var quad = new Float32Array([-1, -1, 3, -1, -1, 3]);
+    var buf = gl.createBuffer();
+    gl.bindBuffer(gl.ARRAY_BUFFER, buf);
+    gl.bufferData(gl.ARRAY_BUFFER, quad, gl.STATIC_DRAW);
+    var aLoc = gl.getAttribLocation(prog, "a");
+    gl.enableVertexAttribArray(aLoc);
+    gl.vertexAttribPointer(aLoc, 2, gl.FLOAT, false, 0, 0);
+
+    var U = {};
+    var uniformNames = [
+      "u_res", "u_t",
+      "u_w1", "u_w2", "u_w3", "u_w4", "u_w5", "u_w6", "u_w7", "u_w8", "u_w9",
+      "u_p1", "u_p2", "u_p3", "u_p4", "u_p5", "u_p6", "u_p7", "u_p8", "u_p9"
+    ];
+    uniformNames.forEach(function(n){
+      U[n] = gl.getUniformLocation(prog, n);
+    });
+
+    var start = null;
+    var lastPhaseShown = -99;
+
+    function frame(now){
+      if (introFullyCompleted) return;
+      if (start === null) start = now;
+      var t = (now - start) / 1000;
+
+      // Calculate phase subprogress & smooth blending weights
+      var blend = 0.20;
+      var rawWeights = [];
+      var subProgs = [];
+      for (var i = 0; i < PHASES.length; i++) {
+        var p = PHASES[i];
+        var subProg = clamp01((t - p.t0) / (p.t1 - p.t0));
+        subProgs.push(subProg);
+
+        var wIn = (i === 0) ? 1.0 : smooth01(p.t0 - blend, p.t0 + blend, t);
+        var wOut = (i === PHASES.length - 1) ? 1.0 : (1.0 - smooth01(p.t1 - blend, p.t1 + blend, t));
+        rawWeights.push(wIn * wOut);
+      }
+      var weightSum = rawWeights.reduce(function(a, b){ return a + b; }, 0) || 1.0;
+      var weights = rawWeights.map(function(w){ return w / weightSum; });
+
+      gl.uniform2f(U.u_res, canvas.width, canvas.height);
+      gl.uniform1f(U.u_t, t);
+
+      gl.uniform1f(U.u_w1, weights[0]);
+      gl.uniform1f(U.u_w2, weights[1]);
+      gl.uniform1f(U.u_w3, weights[2]);
+      gl.uniform1f(U.u_w4, weights[3]);
+      gl.uniform1f(U.u_w5, weights[4]);
+      gl.uniform1f(U.u_w6, weights[5]);
+      gl.uniform1f(U.u_w7, weights[6]);
+      gl.uniform1f(U.u_w8, weights[7]);
+      gl.uniform1f(U.u_w9, weights[8]);
+
+      gl.uniform1f(U.u_p1, subProgs[0]);
+      gl.uniform1f(U.u_p2, subProgs[1]);
+      gl.uniform1f(U.u_p3, subProgs[2]);
+      gl.uniform1f(U.u_p4, subProgs[3]);
+      gl.uniform1f(U.u_p5, subProgs[4]);
+      gl.uniform1f(U.u_p6, subProgs[5]);
+      gl.uniform1f(U.u_p7, subProgs[6]);
+      gl.uniform1f(U.u_p8, subProgs[7]);
+      gl.uniform1f(U.u_p9, subProgs[8]);
+
+      gl.drawArrays(gl.TRIANGLES, 0, 3);
+
+      // Determine active epoch for HUD
+      var activeIdx = 0;
+      for (var k = 0; k < PHASES.length; k++){
+        if (t >= PHASES[k].t0) activeIdx = k;
+      }
+      if (activeIdx !== lastPhaseShown){
+        hudEpoch.textContent = PHASES[activeIdx].epoch;
+        hudSub.textContent = PHASES[activeIdx].sub;
+        lastPhaseShown = activeIdx;
+      }
+
+      if (hudProgress) {
+        hudProgress.style.width = (clamp01(t / T_TOTAL) * 100).toFixed(1) + "%";
+      }
+
+      // Smoothly trigger cross-fade to 3D scene while Phase 9 is rendering LEO
+      if (t >= T_TRANSITION_START && !transitionTriggered){
+        finish();
+      }
+
+      if (!introFullyCompleted){
+        requestAnimationFrame(frame);
+      }
+    }
+    requestAnimationFrame(frame);
+  })();
   </script>
 </body>
 </html>
