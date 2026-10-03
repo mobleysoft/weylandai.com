@@ -1242,6 +1242,28 @@
       res=put(res,sdBox(p-vec3(-5.45,1.12,2.0),vec3(.42,.27,.035)),13.0); // Project display
       res=put(res,sdBox(p-vec3(-6.55,.92,3.15),vec3(.30,.92,.58)),13.0); // Drawing storage
 
+      // Manila folder pile — real geometry (not an overlay), sitting on the
+      // desk's front-left corner. Doubles as the WeylandAI site portal prop:
+      // raise it to leave this scene for the rest of weylandai.com, lower it
+      // to return, same non-pausing model as a Fallout Pip-Boy. Folder/tab
+      // proportions (1.264:1 width:depth, tab inset 4.6%, tab width 33.8%)
+      // measured from a real manila-folder reference photo earlier this
+      // session, not invented.
+      {
+        const float FW=.17, FD=.1345, FT=.009;
+        for(int fi=0; fi<6; fi++){
+          float i=float(fi);
+          float ang=(i-2.5)*.085+sin(i*1.7)*.03;
+          vec3 c=vec3(-5.9+sin(i*1.3)*.035, .83+FT*(i+.5)*1.05, 1.65+cos(i*2.1)*.03);
+          vec3 lp=p-c;
+          float cs=cos(ang), sn=sin(ang);
+          vec3 rp=vec3(lp.x*cs-lp.z*sn, lp.y, lp.x*sn+lp.z*cs);
+          res=put(res, sdBox(rp, vec3(FW*.5,FT*.5,FD*.5)), 15.0);
+          vec3 tp=rp-vec3(FW*-.285,0.0,FD*.53);
+          res=put(res, sdBox(tp, vec3(FW*.169,FT*.5,FD*.09)), 16.0);
+        }
+      }
+
       res=put(res,sdBox(p-vec3( 4.70,.76, 2.0),vec3(1.25,.07,.58)),12.0); // Conference table
       res=put(res,sdBox(p-vec3( 4.70,.42, 1.18),vec3(.95,.40,.28)),2.0);
       res=put(res,sdBox(p-vec3( 4.70,.42, 2.82),vec3(.95,.40,.28)),2.0);
@@ -1356,28 +1378,62 @@
       return clamp(1.-s*2.2,0.,1.);
     }
 
-    vec3 sky(vec3 rd){
-      vec3 sunDir = normalize(vec3(0.55, 0.16, 0.45));
-      vec3 betaR  = vec3(5.8e-6, 9.0e-6, 1.4e-5);
-      float betaM = 6.5e-5;
-      float HR=8000., HM=1200.;
-      float elev    = max(rd.y,0.01);
-      float sunElev = max(sunDir.y,0.02);
-      vec3  tauR = betaR*HR*(1./elev+1./sunElev);
-      float tauM = betaM*HM*(1./elev+1./sunElev);
-      vec3  T    = exp(-tauR-tauM);
-      float mu   = dot(rd,sunDir);
-      float phR  = .75*(1.+mu*mu);
-      float phM  = .5*(1.-(.76*.76))/pow(1.+.76*.76-2.*.76*mu,1.5);
-      vec3 planck= vec3(1.0,0.82,0.52);
-      vec3 s     = (phR*betaR*HR/elev+phM*betaM*HM/elev)*T*planck*3.2;
-      float sunDot=max(dot(rd,sunDir),0.);
-      if(sunDot>0.9998 && sunDir.y>-0.05){
-        float limb=1.-smoothstep(.9998,.99995,sunDot);
-        s += planck*limb*90.*max(0.,sunDir.y+0.08);
+    // LEO backdrop. The facility is WeylandAI's orbital shipyard — real
+    // orbital mechanics drove the siting: LEO for frequent crew rotation,
+    // cheap Earth resupply and visual drama, building the "seed" construction
+    // ship that will later bootstrap the real generation-ship-scale yard at
+    // Earth-Moon L5 (stable, continuous sun, no Van Allen exposure, pulls
+    // bulk material from the Moon's shallow well instead of Earth's deep
+    // one — wrong physics for a first facility, right physics for the
+    // follow-on). Earth is a real ray-sphere intersection, not a texture
+    // card, so its limb curvature and terminator fall out of the geometry
+    // instead of being faked. Distance/radius are stylized against this
+    // scene's meter-scale geometry rather than true 6371km (no precision
+    // benefit from the real number at this scale) but tuned so Earth's
+    // angular radius matches a real ~400km-altitude view (~70 degrees).
+    vec3 sky(vec3 ro, vec3 rd){
+      vec3 sunDir = normalize(vec3(0.42, 0.68, 0.38));
+      vec3 nadir  = vec3(0.0,-1.0,0.0);
+      float earthDist   = 2200.0;
+      float earthRadius = earthDist*sin(radians(70.0));
+      vec3 earthCenter  = ro + nadir*earthDist;
+
+      vec3 oc = ro-earthCenter;
+      float b = dot(rd,oc);
+      float c = dot(oc,oc)-earthRadius*earthRadius;
+      float disc = b*b-c;
+
+      if(disc>0.0){
+        float t=-b-sqrt(disc);
+        if(t>0.0){
+          vec3 hit = ro+rd*t;
+          vec3 N   = normalize(hit-earthCenter);
+          float sunFacing = max(dot(N,sunDir),0.0);
+          float landN   = noise(N*5.0);
+          float cloudN  = noise(N*11.0+vec3(3.7,1.1,9.2))*0.6+noise(N*23.0)*0.4;
+          vec3 oceanCol = vec3(0.045,0.13,0.30);
+          vec3 landCol  = vec3(0.15,0.21,0.085);
+          vec3 base     = mix(oceanCol,landCol,smoothstep(0.52,0.60,landN));
+          vec3 lit      = mix(base,vec3(0.92,0.93,0.95),smoothstep(0.58,0.74,cloudN));
+          float term    = smoothstep(0.0,0.18,sunFacing);
+          vec3 nightCol = vec3(0.008,0.012,0.022)+vec3(1.0,0.78,0.42)*pow(hash(floor(N*220.0)),22.0)*0.6;
+          vec3 earthLit = mix(nightCol, lit*(0.25+1.5*sunFacing), term);
+          float limb    = pow(1.0-max(dot(N,-rd),0.0),4.5);
+          vec3 atmoGlow = vec3(0.30,0.52,1.0)*limb*(0.18+max(sunFacing,0.0)*1.1);
+          return clamp(earthLit+atmoGlow,0.0,1.6);
+        }
       }
-      s += vec3(1.0,0.92,0.70)*pow(max(0.,1.-abs(rd.y)),6.)*0.18;
-      return clamp(s,0.,1.);
+
+      float starField = step(0.9978, hash(floor(rd*420.0)));
+      vec3 stars = vec3(starField)*(0.55+0.45*hash(floor(rd*77.3)));
+      float sunDot = max(dot(rd,sunDir),0.0);
+      vec3 sunDisk = vec3(0.0);
+      if(sunDot>0.99965){
+        float core = smoothstep(0.99965,0.9999,sunDot);
+        sunDisk = vec3(1.0,0.97,0.90)*core*6.0;
+      }
+      float faintGlow = pow(max(sunDot,0.0),64.0)*0.08;
+      return stars + sunDisk + vec3(1.0,0.9,0.75)*faintGlow;
     }
 
     vec3 shade(vec3 albedo, float metal, float rough,
@@ -1474,6 +1530,13 @@
         } else if(matID < 13.5){
           albedo = vec3(0.10,0.12,0.13)+noise(p*18.0)*0.018;
           metal = 0.55; rough = 0.38;
+        } else if(matID < 15.5){
+          albedo = vec3(0.12,0.28,0.58)+noise(p*14.0)*0.02;
+          rough = 0.72;
+        } else if(matID < 16.5){
+          albedo = vec3(0.95,0.74,0.14);
+          rough = 0.45;
+          emissive = vec3(1.0,0.78,0.15)*(0.35+0.15*sin(u_t*1.6));
         } else {
           albedo = vec3(0.82,0.80,0.72);
           rough = 0.68;
@@ -1519,13 +1582,12 @@
         float scanRim = pow(1.-abs(dot(N,V)),3.0);
         lighting += vec3(1.0,.57,.045)*u_scan*targetField*(.22+scanBand*1.25+scanRim*.35);
         float fog = 1.-exp(-hit.x*0.022);
-        vec3 fogCol = mix(vec3(0.30,0.23,0.14),sky(normalize(vec3(rd.x,max(rd.y,.04),rd.z))),.62);
+        vec3 fogCol = mix(vec3(0.30,0.23,0.14),sky(ro,normalize(vec3(rd.x,max(rd.y,.04),rd.z))),.62);
         if(p.z>0.0 && p.z<16.0 && abs(p.x)<7.15) fogCol=vec3(0.045,0.032,0.018);
         col = mix(lighting, fogCol, fog);
 
       } else {
-        col = sky(rd);
-        col = mix(col, vec3(0.35,0.28,0.18)*0.6, 0.15);
+        col = sky(ro,rd);
       }
 
       vec2 vp = gl_FragCoord.xy/u_res;
