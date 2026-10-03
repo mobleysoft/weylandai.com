@@ -22,6 +22,27 @@
 //                                      on first AuthFor sign-in.
 //   GET  /api/auth/me               - the real account-info endpoint
 //
+// Added (previously missing - index.html's ephemeralToken() called this
+// path and got a bare 404 in production; confirmed live with a direct
+// curl before writing this, not assumed from the client code alone):
+//   POST /api/auth/ephemeral         - proxies AuthFor's real
+//                                      POST /api/v1/ephemeral/create.
+//                                      Every product worker's
+//                                      authenticateViaAuthFor() already
+//                                      falls back to verifying this kind
+//                                      of token (see each worker's
+//                                      authfor-client.js) - this route was
+//                                      the only missing link between a
+//                                      visitor landing on weylandai.com
+//                                      and getting a real, immediately
+//                                      usable (if guest-scoped) identity,
+//                                      Suno.ai-style, with no signup wall.
+//   POST /api/auth/ephemeral/upgrade - proxies AuthFor's real
+//                                      POST /api/v1/ephemeral/upgrade,
+//                                      converting a guest session into a
+//                                      permanent emailed+paymented account
+//                                      without losing its history.
+//
 // Original header follows, preserved for provenance:
 //
 import { jsonResponse3 } from "../lib/json-response.js";
@@ -241,6 +262,49 @@ export function registerAuthSessionRoutes(router, { authenticate, errorResponse 
       return jsonResponse3({ user: userData });
     } catch (error5) {
       return errorResponse("DATABASE_ERROR", "Failed to fetch user: " + error5.message);
+    }
+  });
+
+  router.post("/api/auth/ephemeral", async (request2) => {
+    try {
+      const body = await request2.json().catch(() => ({}));
+      const resp = await fetch("https://authfor.com/api/v1/ephemeral/create", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          ventureName: "weylandai.com",
+          displayName: typeof body.displayName === "string" ? body.displayName : undefined
+        })
+      });
+      const data = await resp.json().catch(() => ({}));
+      if (!resp.ok) {
+        return jsonResponse3({ error: data.error || "ephemeral_create_failed" }, resp.status);
+      }
+      return jsonResponse3({ token: data.token, session: data.session });
+    } catch (err) {
+      return jsonResponse3({ error: "Ephemeral session creation failed: " + err.message }, 500);
+    }
+  });
+
+  router.post("/api/auth/ephemeral/upgrade", async (request2) => {
+    try {
+      const body = await request2.json().catch(() => ({}));
+      const { token, email, password, name } = body;
+      if (!token || !email || !password) {
+        return jsonResponse3({ error: "token, email, and password are required" }, 400);
+      }
+      const resp = await fetch("https://authfor.com/api/v1/ephemeral/upgrade", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ token, email, password, name })
+      });
+      const data = await resp.json().catch(() => ({}));
+      if (!resp.ok) {
+        return jsonResponse3({ error: data.error || "ephemeral_upgrade_failed" }, resp.status);
+      }
+      return jsonResponse3(data);
+    } catch (err) {
+      return jsonResponse3({ error: "Ephemeral upgrade failed: " + err.message }, 500);
     }
   });
 }

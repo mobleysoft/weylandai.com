@@ -217,4 +217,51 @@ export function registerAuthSessionRoutes(router, { authenticate, errorResponse 
       return errorResponse("DATABASE_ERROR", "Failed to fetch user: " + error5.message);
     }
   });
+
+  // Kept in sync with weyland-platform-worker/src/routes/auth-session.js's
+  // own copy of these two routes - see that file's header for why they
+  // were added (POST /api/auth/ephemeral was missing entirely and
+  // confirmed 404ing live despite index.html already calling it).
+  router.post("/api/auth/ephemeral", async (request2) => {
+    try {
+      const body = await request2.json().catch(() => ({}));
+      const resp = await fetch("https://authfor.com/api/v1/ephemeral/create", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          ventureName: "weylandai.com",
+          displayName: typeof body.displayName === "string" ? body.displayName : undefined
+        })
+      });
+      const data = await resp.json().catch(() => ({}));
+      if (!resp.ok) {
+        return jsonResponse3({ error: data.error || "ephemeral_create_failed" }, resp.status);
+      }
+      return jsonResponse3({ token: data.token, session: data.session });
+    } catch (err) {
+      return jsonResponse3({ error: "Ephemeral session creation failed: " + err.message }, 500);
+    }
+  });
+
+  router.post("/api/auth/ephemeral/upgrade", async (request2) => {
+    try {
+      const body = await request2.json().catch(() => ({}));
+      const { token, email, password, name } = body;
+      if (!token || !email || !password) {
+        return jsonResponse3({ error: "token, email, and password are required" }, 400);
+      }
+      const resp = await fetch("https://authfor.com/api/v1/ephemeral/upgrade", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ token, email, password, name })
+      });
+      const data = await resp.json().catch(() => ({}));
+      if (!resp.ok) {
+        return jsonResponse3({ error: data.error || "ephemeral_upgrade_failed" }, resp.status);
+      }
+      return jsonResponse3(data);
+    } catch (err) {
+      return jsonResponse3({ error: "Ephemeral upgrade failed: " + err.message }, 500);
+    }
+  });
 }

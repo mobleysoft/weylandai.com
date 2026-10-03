@@ -194,7 +194,13 @@ export async function requireActiveSubscription(user, env2) {
 // for the existing real limiter this could reuse) - not built here because
 // it needs a real per-product decision about what the limit should be, not
 // an invented number.
-export const EPHEMERAL_TRIAL_PRODUCTS = new Set(["subx", "takeoffx", "cutsheetx", "sightx"]);
+// Expanded (ephemeral-first/Suno.ai-style access is now the default UX,
+// not a demo-only carve-out): huntx and propx are read-mostly, no
+// persistent shared state, same risk profile as the original four.
+// meetingx deliberately excluded - it gates real-time Durable Object
+// room creation, a different abuse surface (anyone could spin up rooms)
+// that needs its own rate-limit decision before opening to guests.
+export const EPHEMERAL_TRIAL_PRODUCTS = new Set(["subx", "takeoffx", "cutsheetx", "sightx", "huntx", "propx"]);
 
 // Closes the gap the comment above documents, added alongside the
 // conglomerate-wide trial-invite-emails capability
