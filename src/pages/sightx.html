@@ -1149,6 +1149,7 @@
 
     float sdBox(vec3 p, vec3 b){ vec3 q=abs(p)-b; return length(max(q,0.))+min(max(q.x,max(q.y,q.z)),0.); }
     float sdCyl(vec3 p, float r, float h){ vec2 d=abs(vec2(length(p.xz),p.y))-vec2(r,h); return min(max(d.x,d.y),0.)+length(max(d,0.)); }
+    float sdCylZ(vec3 p, float r, float h){ return sdCyl(vec3(p.x,p.z,p.y), r, h); }
     float sdSphere(vec3 p, float r){ return length(p)-r; }
 
     vec2 put(vec2 scene, float distance, float material){
@@ -1202,10 +1203,11 @@
         planResult=put(planResult,sdPlanWall(p),1.0);
         return planResult;
       }
-      float path = 1.0-smoothstep(2.7,3.1,abs(p.x));
-      float groundMaterial = 7.0;
-      if((abs(p.x)<7.04 && p.z>0.0 && p.z<16.0) || (path>.5 && p.z<.2)) groundMaterial=8.0;
-      vec2 res=vec2(p.y,groundMaterial);
+      // LEO shipyard: no ground campus. The only "floor" is the pressurized
+      // deck plating inside the facility's own finite footprint — bounded,
+      // not an infinite plane, so rays that miss it go straight to vacuum
+      // (sky() below) instead of an endless grass campus.
+      vec2 res=vec2(sdBox(p-vec3(0.0,-0.04,8.0),vec3(7.28,0.04,8.28)),8.0);
 
       // Finite facility shell: 14.4m wide, 16m deep, with a real exterior.
       float outerWest=sdBox(p-vec3(-7.2,1.7,8.0),vec3(.16,1.7,8.0));
@@ -1321,30 +1323,73 @@
         res=put(res,sdBox(p-vec3( 4.6,3.25,z),vec3(.50,.07,.36)),6.0);
       }
 
-      // Wider Weyland campus: low service annexes and approach lighting make
-      // the facility legible as a building in a world, not an isolated box.
-      res=put(res,sdBox(p-vec3(-14.0,2.0,10.0),vec3(4.2,2.0,5.4)),9.0);
-      res=put(res,sdBox(p-vec3( 15.0,1.7,13.0),vec3(4.8,1.7,6.0)),9.0);
-      res=put(res,sdBox(p-vec3(-14.0,4.12,10.0),vec3(4.45,.12,5.65)),5.0);
-      res=put(res,sdBox(p-vec3( 15.0,3.52,13.0),vec3(5.05,.12,6.25)),5.0);
-      float poles=min(sdCyl(p-vec3(-4.6,2.6,-7.0),.07,2.6),sdCyl(p-vec3(4.6,2.6,-7.0),.07,2.6));
-      res=put(res,poles,2.0);
-      res=put(res,sdBox(p-vec3(-4.6,5.18,-7.0),vec3(.38,.06,.16)),6.0);
-      res=put(res,sdBox(p-vec3( 4.6,5.18,-7.0),vec3(.38,.06,.16)),6.0);
-
-      // Arrival landscape and illuminated campus marker establish a deliberate
-      // public face without obstructing the central accessible approach.
-      res=put(res,sdBox(p-vec3(-5.35,.82,-3.15),vec3(1.42,.72,.09)),10.0);
-      res=put(res,sdBox(p-vec3(-5.35,.10,-3.15),vec3(1.62,.10,.30)),2.0);
-      for(int i=0;i<2;i++){
-        float x=-5.5+float(i)*11.0;
-        res=put(res,sdBox(p-vec3(x,.28,-1.85),vec3(.72,.28,.52)),2.0);
-        res=put(res,sdSphere(p-vec3(x,.78,-1.85),.58),11.0);
+      // West bay: the actual product. A real construction ship under
+      // assembly — the "seed" vessel this LEO shipyard builds and later
+      // sends to Earth-Moon L5 to bootstrap the real generation-ship-scale
+      // yard there (see sky()'s header comment for why L5). Electric
+      // (Hall-effect) propulsion, not chemical: this is a one-time, patient,
+      // high-delta-v transfer with no crew aboard, exactly the case where
+      // ion thrusters' efficiency beats chemical thrust — the characteristic
+      // pale-blue xenon-plasma glow is a real signature of that choice, not
+      // a decorative light.
+      {
+        vec3 shipC = vec3(-14.0, 3.0, 10.0);
+        vec3 sp = p - shipC;
+        res=put(res, sdCylZ(sp, .55, 3.2), 17.0);                       // spine/hull
+        res=put(res, sdCylZ(sp-vec3(0,0,-3.2), .75, .3), 20.0);          // forward docking collar
+        res=put(res, sdSphere(sp-vec3(0,.6,-.8), .42), 17.0);            // propellant tank
+        res=put(res, sdSphere(sp-vec3(0,.6, .8), .42), 17.0);            // propellant tank
+        for(int i=0;i<4;i++){
+          float ang = float(i)*1.5708 + .78;
+          vec3 tpos = vec3(cos(ang)*.38, sin(ang)*.38, 3.55);
+          res=put(res, sdCylZ(sp-tpos, .09, .22), 20.0);                 // thruster housing
+          float glow = sdCylZ(sp-tpos-vec3(0,0,.3), .055, .18);
+          res=put(res, glow, 19.0);                                     // ion exhaust glow
+        }
+        for(int i=0;i<2;i++){
+          float side = i<1 ? 1.0 : -1.0;
+          vec3 wingC = vec3(side*2.75, 0.0, .3);
+          res=put(res, sdBox(sp-wingC, vec3(2.05,.025,1.15)), 18.0);     // solar wing
+          res=put(res, sdBox(sp-vec3(side*.68,0,.3), vec3(.10,.07,1.0)), 20.0); // wing strut
+        }
+        // Simple two-segment manipulator arm, stowed along the spine.
+        vec3 armBase = sp - vec3(.55,.45,-2.1);
+        float seg1 = sdCylZ(vec3(armBase.z,armBase.y-armBase.x*.3,armBase.x), .045, .55);
+        res=put(res, seg1, 20.0);
       }
-      for(int i=0;i<2;i++){
-        float x=3.0+float(i)*3.0;
-        res=put(res,sdBox(p-vec3( x,2.05,-.25),vec3(.035,1.15,.08)),2.0);
-        res=put(res,sdBox(p-vec3(-x,2.05,-.25),vec3(.035,1.15,.08)),2.0);
+
+      // East bay: the station's own power/thermal truss — real flat solar
+      // arrays plus dedicated white radiator panels (waste heat has nowhere
+      // to go but radiation in vacuum, so these are load-bearing, not set
+      // dressing), on an open gantry rather than a sealed building, since
+      // nothing out here needs weather protection.
+      {
+        vec3 stC = vec3(15.0, 2.2, 13.0);
+        vec3 tp = p - stC;
+        res=put(res, sdCylZ(tp, .22, 4.4), 20.0);                       // truss backbone
+        for(int i=0;i<2;i++){
+          float side = i<1 ? 1.0 : -1.0;
+          res=put(res, sdBox(tp-vec3(side*3.0,0,-1.6), vec3(2.6,.03,1.6)), 18.0); // solar array
+          res=put(res, sdBox(tp-vec3(side*.9,0,-1.6), vec3(.08,.07,1.5)), 20.0);   // array strut
+          res=put(res, sdBox(tp-vec3(side*2.1,0, 2.2), vec3(1.5,.45,.035)), 21.0); // radiator panel
+          res=put(res, sdBox(tp-vec3(side*.7,0, 2.2), vec3(.08,.07,.4)), 20.0);    // radiator strut
+        }
+      }
+
+      // Open dock gantry framing the construction bay — scaffold, not a
+      // sealed structure, consistent with assembling a ship in vacuum.
+      {
+        vec3 gC = vec3(-14.0, 3.0, 10.0);
+        for(int i=0;i<4;i++){
+          float sx = (i%2==0) ? -1.0 : 1.0;
+          float sz = (i<2) ? -1.0 : 1.0;
+          vec3 post = gC + vec3(sx*3.2, 0.0, sz*4.6);
+          res=put(res, sdCyl(p-post, .09, 3.0), 20.0);
+        }
+        res=put(res, sdBox(p-(gC+vec3(0,3.0,-4.6)), vec3(3.3,.09,.09)), 20.0);
+        res=put(res, sdBox(p-(gC+vec3(0,3.0, 4.6)), vec3(3.3,.09,.09)), 20.0);
+        res=put(res, sdBox(p-(gC+vec3(-3.2,3.0,0)), vec3(.09,.09,4.7)), 20.0);
+        res=put(res, sdBox(p-(gC+vec3( 3.2,3.0,0)), vec3(.09,.09,4.7)), 20.0);
       }
       return res;
     }
@@ -1537,6 +1582,21 @@
           albedo = vec3(0.95,0.74,0.14);
           rough = 0.45;
           emissive = vec3(1.0,0.78,0.15)*(0.35+0.15*sin(u_t*1.6));
+        } else if(matID < 17.5){
+          albedo = vec3(0.76,0.77,0.79)+noise(p*10.0)*0.02;
+          metal = 0.18; rough = 0.42;
+        } else if(matID < 18.5){
+          albedo = vec3(0.025,0.035,0.07)+noise(p*20.0)*0.01;
+          metal = 0.30; rough = 0.22;
+        } else if(matID < 19.5){
+          albedo = vec3(0.01,0.015,0.02);
+          emissive = vec3(0.30,0.58,1.0)*(2.2+0.6*sin(u_t*9.0+p.z*3.0));
+        } else if(matID < 20.5){
+          albedo = vec3(0.40,0.41,0.44)+noise(p*16.0)*0.018;
+          metal = 0.68; rough = 0.35;
+        } else if(matID < 21.5){
+          albedo = vec3(0.88,0.89,0.90);
+          metal = 0.08; rough = 0.30;
         } else {
           albedo = vec3(0.82,0.80,0.72);
           rough = 0.68;
