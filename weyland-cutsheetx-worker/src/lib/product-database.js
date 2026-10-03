@@ -155,6 +155,13 @@ var PRODUCT_DATABASE = [
   { manufacturer: "Ives", code: ["IVE", "IVES"], models: ["FB458"], productName: "Ives FB458 Automatic Flush Bolt", category: "Locks & Locksets", specs: 'Automatic, 12" or 18" Length, Heavy Duty', fireRating: "3 Hour", ada: false, standards: "ANSI/BHMA A156.16, UL10C", priceRange: "$165-245" },
   { manufacturer: "Ives", code: ["IVE", "IVES"], models: ["436B"], productName: "Ives 436B Roller Latch", category: "Locks & Locksets", specs: "Adjustable, Spring Loaded, Brass/Bronze", fireRating: "Non-Rated", ada: false, standards: "ANSI/BHMA A156.16", priceRange: "$18-28" },
   { manufacturer: "Ives", code: ["IVE", "IVES"], models: ["315"], productName: "Ives 315 Sliding Door Latch", category: "Locks & Locksets", specs: "Hook Latch, Cavity Slider, Stainless Steel", fireRating: "Non-Rated", ada: false, standards: "ANSI/BHMA A156.15", priceRange: "$42-62" },
+  // Ives 8400 Series Kick Plates (gap found 2026-10-03: real corpus schedules
+  // in tools/corpus/door-schedules/ reference "KICK PLATE 8400 10\" X 1/2\" LDW
+  // B-CS 630 IVE" and similar lines, which findProductMatch() could not
+  // resolve to any product - the database had Rockwood/Don-Jo kick/mop plates
+  // but no Ives one, even though manufacturer code IVE/IVES already maps to
+  // Ives everywhere else in this file)
+  { manufacturer: "Ives", code: ["IVE", "IVES"], models: ["8400", "8400 Series"], productName: "Ives 8400 Series Kick Plate", category: "Protection & Armor", specs: '.050" Gauge Stainless Steel, Beveled 4 Edges (B-4E/B-CS), Standard Heights 6"-16", Screw or Adhesive Mount', fireRating: "Non-Rated", ada: false, standards: "ANSI/BHMA A156.6", priceRange: "$35-58" },
   // Additional Rockwood Flush Bolts
   { manufacturer: "Rockwood", code: ["ROCKWOOD"], models: ["580"], productName: "Rockwood 580 Automatic Flush Bolt", category: "Locks & Locksets", specs: 'Automatic, 12" or 18", Brass/Bronze', fireRating: "3 Hour", ada: false, standards: "ANSI/BHMA A156.16, UL10C", priceRange: "$158-235" },
   { manufacturer: "Rockwood", code: ["ROCKWOOD"], models: ["585"], productName: "Rockwood 585 Manual Flush Bolt", category: "Locks & Locksets", specs: 'Manual, 12" or 18", Heavy Duty', fireRating: "3 Hour", ada: false, standards: "ANSI/BHMA A156.16, UL10C", priceRange: "$88-135" },

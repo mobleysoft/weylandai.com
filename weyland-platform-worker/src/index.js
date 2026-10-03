@@ -130,8 +130,15 @@ export default {
       // /subscribe through MASCOM_EDGE (those "still live as bundled HTML
       // in this worker" per the monolith's own wrangler.toml comment), so
       // this Worker doesn't either.
+      // Real SPA-router fragment requests (X-Skeletonking-Route: fragment -
+      // see src/lib/sk-router.js, the real client router ported from
+      // skeletonking-v2.js) must always reach SovereignPlatformRoutes.dispatch
+      // directly. MASCOM_EDGE only ever serves the full cached HTML document
+      // for "/" and knows nothing about the fragment JSON contract - see
+      // ../../src/lib/weyland-entry.js's identical fix for the same reason.
+      const isFragmentRequest = request.headers.get("X-Skeletonking-Route") === "fragment";
       const isHome = url.pathname === "/" || url.pathname === "/index.html";
-      if (isHome && env.MASCOM_EDGE) {
+      if (isHome && env.MASCOM_EDGE && !isFragmentRequest) {
         try {
           const edgeResp = await env.MASCOM_EDGE.fetch("https://weylandai.com/");
           if (edgeResp && edgeResp.status === 200) {
@@ -151,7 +158,7 @@ export default {
       }
       const clean = url.pathname.toLowerCase().replace(/^\/|\/$/g, "");
       if (clean === "" || clean === "pricing" || clean === "subscribe") {
-        const marketingResponse = SovereignPlatformRoutes.dispatch(url.pathname);
+        const marketingResponse = SovereignPlatformRoutes.dispatch(url.pathname, isFragmentRequest);
         if (marketingResponse) return marketingResponse;
       }
     }
