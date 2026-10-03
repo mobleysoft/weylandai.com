@@ -34,6 +34,17 @@
     html {
       scroll-behavior: smooth;
     }
+    /* Reticle cursor: echoes SightX's own "target lock" HUD language (the
+       proximity scan reticle you see through the backdrop) rather than an
+       arbitrary custom-cursor shape - same visual vocabulary, foreground
+       and background. Excluded from text inputs so editing still feels
+       like editing. */
+    body {
+      cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Ccircle cx='12' cy='12' r='7' fill='none' stroke='%2366d4ff' stroke-width='1.4' opacity='0.85'/%3E%3Ccircle cx='12' cy='12' r='1.4' fill='%2366d4ff'/%3E%3Cline x1='12' y1='1' x2='12' y2='4' stroke='%2366d4ff' stroke-width='1.4'/%3E%3Cline x1='12' y1='20' x2='12' y2='23' stroke='%2366d4ff' stroke-width='1.4'/%3E%3Cline x1='1' y1='12' x2='4' y2='12' stroke='%2366d4ff' stroke-width='1.4'/%3E%3Cline x1='20' y1='12' x2='23' y2='12' stroke='%2366d4ff' stroke-width='1.4'/%3E%3C/svg%3E") 12 12, auto;
+    }
+    a, button, .button, [role="button"], .wn-flag, .tab-rail [role="tab"], label[for], select, summary {
+      cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Ccircle cx='12' cy='12' r='6' fill='none' stroke='%23ffd400' stroke-width='1.8'/%3E%3Ccircle cx='12' cy='12' r='2' fill='%23ffd400'/%3E%3Cline x1='12' y1='0' x2='12' y2='3' stroke='%23ffd400' stroke-width='1.8'/%3E%3Cline x1='12' y1='21' x2='12' y2='24' stroke='%23ffd400' stroke-width='1.8'/%3E%3Cline x1='0' y1='12' x2='3' y2='12' stroke='%23ffd400' stroke-width='1.8'/%3E%3Cline x1='21' y1='12' x2='24' y2='12' stroke='%23ffd400' stroke-width='1.8'/%3E%3C/svg%3E") 12 12, pointer;
+    }
     html, body {
       margin: 0;
       min-height: 100%;
@@ -284,6 +295,7 @@
       height: 50px;
       padding: 0 20px 0 22px;
       font: 800 11px/1 ui-monospace, monospace;
+      font-family: var(--font-display);
       letter-spacing: 0.04em;
       white-space: nowrap;
       clip-path: polygon(15px 0, 100% 0, calc(100% - 15px) 100%, 0 100%);
@@ -462,6 +474,7 @@
       text-decoration: none;
       background: transparent;
       font: 750 11px/1 ui-monospace, monospace;
+      font-family: var(--font-display);
       letter-spacing: 0.06em;
       cursor: pointer;
       transition: all 0.2s ease;
