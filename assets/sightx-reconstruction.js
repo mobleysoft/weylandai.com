@@ -433,14 +433,12 @@ try {
     return response.json();
   });
   refs.project.replaceChildren(...state.catalog.projects.map(project => element('option', { value: project.id }, project.name)));
-  const reconstructed = await loadProject(state.catalog.projects[0].id);
+  await loadProject(state.catalog.projects[0].id);
   // SightX's primary surface is the walkable 3D twin (the canvas behind
-  // this panel), not this 2D tool. Only auto-open to show off a working
-  // demo reconstruction; if the built-in demo's source assets are
-  // missing/broken, stay out of the way so the walkable scene is what a
-  // visitor actually sees by default. The PDF TWIN trigger button still
-  // reaches this panel (and the real error status inside it) either way.
-  if (reconstructed) openPanel(true);
+  // this panel), not this 2D tool - it must never auto-mount over the
+  // canvas on load. The PDF TWIN trigger button is the one real entry
+  // point into this panel; ENTER TWIN/CLOSE bridge back out to the
+  // walkable scene (window.SightXPlanRenderer), unchanged.
 } catch (error) {
   status(`Project catalog unavailable: ${error.message}`, 'error');
   trigger.querySelector('span').textContent = 'SOURCE CATALOG ERROR';
