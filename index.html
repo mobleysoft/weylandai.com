@@ -279,6 +279,13 @@
       .product-tabs::-webkit-scrollbar{display:none}
       .product-tab{flex:0 0 auto}
       .product-tab.home{position:sticky;left:0}
+      /* Mobile shows only the three tools this page's demo actually walks
+         through (TakeOffX -> SubX -> CutsheetX, same trio as the hero's
+         own chain indicator) - the other three products stay desktop-only
+         here to keep the pinned strip uncluttered. */
+      .product-tab[href="/huntx/"],
+      .product-tab[href="/meetingx/"],
+      .product-tab[href="/propx-app/"]{display:none}
       .nav{
         position:fixed;bottom:0;left:0;right:0;z-index:50;
         margin:0;padding:10px 16px calc(10px + env(safe-area-inset-bottom));
