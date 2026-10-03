@@ -88,18 +88,20 @@
     @media (max-width: 640px) {
       .envelope-frame { margin: 6px; clip-path: polygon(0 12px, 12px 0, calc(100% - 12px) 0, 100% 12px, 100% calc(100% - 12px), calc(100% - 12px) 100%, 12px 100%, 0 calc(100% - 12px)); }
       header.site-header { top: 6px; }
-      #scroll-progress { top: 6px !important; }
     }
 
-    /* Fixed Kinetic Scroll Progress Bar */
+    /* Kinetic Scroll Progress Bar - a child of header.site-header now, so it
+       always sits exactly at the header's bottom edge (the seam between nav
+       and content) regardless of header height, instead of a hardcoded
+       viewport offset that could drift out of sync with the frame margin. */
     #scroll-progress {
-      position: fixed;
-      top: clamp(10px, 2.4vw, 32px);
+      position: absolute;
+      bottom: 0;
       left: 0;
       height: 3px;
       width: 0%;
       background: linear-gradient(90deg, var(--primary), var(--accent), var(--green));
-      z-index: 1000;
+      z-index: 2;
       transition: width 0.08s ease-out;
       box-shadow: 0 0 10px rgba(42, 82, 255, 0.5);
     }
@@ -112,9 +114,12 @@
       background: rgba(11, 13, 19, 0.88);
       backdrop-filter: blur(20px);
       -webkit-backdrop-filter: blur(20px);
-      border-bottom: 1px solid rgba(50, 58, 70, 0.6);
       padding: 12px clamp(16px, 3vw, 40px);
       transition: background 0.3s ease;
+      /* Always-visible baseline track for #scroll-progress (its child,
+         absolutely positioned at bottom:0) - this IS the seam line between
+         nav and content; the JS-driven gradient bar overlays it exactly. */
+      border-bottom: 1px solid rgba(255, 255, 255, 0.12);
     }
     .wn-row {
       display: flex;
@@ -1164,11 +1169,11 @@
        SightX canvas later without touching anything inside .envelope-frame -->
   <div id="stage-backdrop"></div>
 
-  <!-- Scroll Progress Indicator -->
-  <div id="scroll-progress"></div>
-
-  <!-- Envelope frame: all real site content lives inside this, inset from
-       the viewport so the stage backdrop reads as a border/gutter around it -->
+  <!-- Envelope frame: all real site content (nav + main + footer) lives
+       inside this as ONE continuous card, inset from the viewport so the
+       stage backdrop reads as a single unbroken border around the whole
+       thing - not separate borders per section, which would read as several
+       floating cards instead of one envelope popping off the background. -->
   <div class="envelope-frame">
 
   <!-- Sticky Scrollytelling Ribbon Header -->
@@ -1194,6 +1199,10 @@
         <a class="wn-signin" href="/login?redirect=/">Sign In</a>
       </nav>
     </div>
+    <!-- Scroll progress bar IS the seam between nav and content - a child of
+         the sticky header so it always sits exactly at its bottom edge,
+         regardless of header height, rather than a hardcoded offset. -->
+    <div id="scroll-progress"></div>
   </header>
 
   <main class="shell">
