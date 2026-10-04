@@ -31,7 +31,7 @@ Construction, Developer Tools, Artificial Intelligence, Productivity, SaaS
 - Terms: https://consenta.cc/policy/weylandai.com/terms
 
 ## Lead media (video)
-media/weylandai_run_2026-10-04.mp4 — 35 s, 1280×720, recorded against production on 2026-10-04: prologue, dossier in hand, raise, a real CutsheetX match (LCN 4040XP), a real PropX proposal for Precision Auto Doors, pricing. NOTE 2026-10-04: SightX's world is being rethemed from the orbital drydock to a real commercial building with real hardware; re-record after the building retheme lands so the video matches the site. Recorded headless (software GL), so the 3D frames are choppier than a real GPU; re-record on a Mac with screen capture before launch if time allows, same script: scratchpad record_run.mjs flow is documented in DEPLOY_PATHS.md's neighbor files.
+media/weylandai_run_2026-10-04.mp4 — 69 s, 1280×720, recorded against production on 2026-10-04 after the SightX jobsite retheme: prologue, the corridor twin with the dossier in hand, raise, a six-line schedule matched live (6 of 6) and walked into the corridor walls, a real CutsheetX match (LCN 4040XP) with its citation, a real PropX proposal for Precision Auto Doors, pricing. Recorded headless (software GL), so the 3D frames are choppier than a real GPU; re-record on a Mac with screen capture before launch if time allows (script: scratchpad record_run2.mjs; same flow). Trim to the best 30-45 s for the PH lead slot if the full take feels long.
 
 ## Gallery (1270×760, captured live — see ./gallery/)
 1. `05_cutsheetx_live_match.png` — lead image: CutsheetX live catalog match with source citations.
