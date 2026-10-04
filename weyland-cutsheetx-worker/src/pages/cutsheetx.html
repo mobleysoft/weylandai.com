@@ -170,7 +170,7 @@
 
   <script>
   (function(){
-    var EPH_KEY = '_cutsheetx_ephemeral_token';
+    var EPH_KEY = 'weylandai_ephemeral_token_v1';
     var statusLine = document.getElementById('status-line');
     var token = null;
 
@@ -214,28 +214,28 @@
       statusLine.className = 'status-line' + (isErr ? ' err' : '');
     }
 
-    // Mint (or reuse) a real AuthFor ephemeral trial session - the same
-    // real POST /api/v1/ephemeral/create the weylandai.com landing page's
-    // own trial already calls. CutSheetX is one of the four products in
-    // lib/auth.js's EPHEMERAL_TRIAL_PRODUCTS allowlist, so this token gets
-    // full, real, unmetered access to every route on this page - no
-    // signup wall, no mocked auth.
+    // Mint (or reuse) a real AuthFor ephemeral trial session, proxied
+    // through weyland-platform-worker's rate-limited /api/auth/ephemeral
+    // (previously called authfor.com directly from the browser - no rate
+    // limiting on that path at all, and a page-local sessionStorage key
+    // that wasted a fresh mint every time a visitor arrived from the main
+    // story page instead of reusing the one it already had). CutSheetX is
+    // one of the products in lib/auth.js's EPHEMERAL_TRIAL_PRODUCTS
+    // allowlist, so this token gets full, real, unmetered access to every
+    // route on this page - no signup wall, no mocked auth.
     function ephemeralToken(){
       try {
         var existing = window.sessionStorage.getItem(EPH_KEY);
         if (existing) return Promise.resolve(existing);
       } catch (e) {}
-      return fetch('https://authfor.com/api/v1/ephemeral/create', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ ventureName: 'weylandai.com', displayName: 'CutSheetX trial visitor' })
-      }).then(function(r){
-        if (!r.ok) throw new Error('ephemeral token request failed (HTTP ' + r.status + ')');
-        return r.json();
-      }).then(function(d){
-        try { window.sessionStorage.setItem(EPH_KEY, d.token); } catch (e) {}
-        return d.token;
-      });
+      return fetch('/api/auth/ephemeral', { method: 'POST' })
+        .then(function(r){
+          if (!r.ok) throw new Error('ephemeral token request failed (HTTP ' + r.status + ')');
+          return r.json();
+        }).then(function(d){
+          try { window.sessionStorage.setItem(EPH_KEY, d.token); } catch (e) {}
+          return d.token;
+        });
     }
 
     // Fetch an authenticated binary resource (PDF) and open it in a new

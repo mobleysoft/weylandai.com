@@ -129,11 +129,33 @@
 <script>
 (function(){
   var TOKEN_KEY = '_authfor_token';
+  var EPH_KEY = 'weylandai_ephemeral_token_v1';
+  var activeToken = null;
   function token(){ try { return localStorage.getItem(TOKEN_KEY); } catch(e){ return null; } }
   function authHeaders(json){
-    var h = { 'Authorization': 'Bearer ' + token() };
+    var h = { 'Authorization': 'Bearer ' + (activeToken || token()) };
     if (json) h['Content-Type'] = 'application/json';
     return h;
+  }
+  // Ephemeral-first fallback (Suno.ai-style): propx is in lib/auth.js's
+  // EPHEMERAL_TRIAL_PRODUCTS allowlist, so a visitor with no real AuthFor
+  // session yet still gets real, immediately usable access rather than
+  // hitting the sign-in gate before ever trying the product. Proxied
+  // through the rate-limited /api/auth/ephemeral route (same pattern as
+  // the main story page and every other product page).
+  function ephemeralToken(){
+    try {
+      var existing = window.sessionStorage.getItem(EPH_KEY);
+      if (existing) return Promise.resolve(existing);
+    } catch (e) {}
+    return fetch('/api/auth/ephemeral', { method: 'POST' })
+      .then(function(r){
+        if (!r.ok) throw new Error('ephemeral token request failed (HTTP ' + r.status + ')');
+        return r.json();
+      }).then(function(d){
+        try { window.sessionStorage.setItem(EPH_KEY, d.token); } catch (e) {}
+        return d.token;
+      });
   }
   function esc(s){ return String(s == null ? '' : s).replace(/[&<>"']/g, function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]; }); }
   function apiErrorText(data){
@@ -342,15 +364,24 @@
       });
   });
 
-  // Boot: if there's no token at all, skip straight to the gate instead of
-  // firing an API call we know will 401 - matches subx-app.html's own
-  // convention of not spinning "Loading..." for a request that can't succeed.
-  if (!token()) {
-    showGate();
-  } else {
+  // Boot: a real AuthFor session wins if present; otherwise fall back to
+  // an ephemeral guest token before ever showing the sign-in gate - propx
+  // is ephemeral-eligible, so there's no reason to block first use on
+  // signing in. Gate only shows if ephemeral minting itself fails (e.g.
+  // AuthFor unreachable).
+  if (token()) {
     statusPill.textContent = 'SESSION FOUND';
     mainLayout.style.display = '';
     loadSubmittals();
+  } else {
+    ephemeralToken().then(function(t){
+      activeToken = t;
+      statusPill.textContent = 'TRIAL SESSION';
+      mainLayout.style.display = '';
+      loadSubmittals();
+    }).catch(function(){
+      showGate();
+    });
   }
 })();
 </script>

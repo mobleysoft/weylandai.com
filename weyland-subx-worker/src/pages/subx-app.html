@@ -1704,11 +1704,32 @@ global.SovereignPdfRender = {
   <script>
     (function(){
       var TOKEN_KEY = '_authfor_token';
+      var EPH_KEY = 'weylandai_ephemeral_token_v1';
+      var activeToken = null;
       function token(){ try { return localStorage.getItem(TOKEN_KEY); } catch(e){ return null; } }
       function authHeaders(json){
-        var h = { 'Authorization': 'Bearer ' + token() };
+        var h = { 'Authorization': 'Bearer ' + (activeToken || token()) };
         if (json) h['Content-Type'] = 'application/json';
         return h;
+      }
+      // Ephemeral-first fallback: subx/takeoffx are both in lib/auth.js's
+      // EPHEMERAL_TRIAL_PRODUCTS allowlist, so a visitor with no real
+      // AuthFor session yet should land straight in the app instead of
+      // AuthForStandard's own login-form UI. Proxied through the
+      // rate-limited /api/auth/ephemeral route.
+      function ephemeralToken(){
+        try {
+          var existing = window.sessionStorage.getItem(EPH_KEY);
+          if (existing) return Promise.resolve(existing);
+        } catch (e) {}
+        return fetch('/api/auth/ephemeral', { method: 'POST' })
+          .then(function(r){
+            if (!r.ok) throw new Error('ephemeral token request failed (HTTP ' + r.status + ')');
+            return r.json();
+          }).then(function(d){
+            try { window.sessionStorage.setItem(EPH_KEY, d.token); } catch (e) {}
+            return d.token;
+          });
       }
       function esc(s){ return String(s == null ? '' : s).replace(/[&<>"']/g, function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]; }); }
       // Real API error shapes in this codebase vary by route: some return
@@ -1748,9 +1769,18 @@ global.SovereignPdfRender = {
       window.addEventListener('authfor-success', showApp);
       document.getElementById('logout-link').addEventListener('click', function(e){ e.preventDefault(); auth.logout(); });
 
-      auth.init().then(function(result){
-        if (result && result.authenticated) showApp();
-      });
+      if (token()) {
+        auth.init().then(function(result){
+          if (result && result.authenticated) showApp();
+        });
+      } else {
+        ephemeralToken().then(function(t){
+          activeToken = t;
+          showApp();
+        }).catch(function(){
+          auth.init();
+        });
+      }
 
       function loadSessions(){
         var box = document.getElementById('sessions-list');
