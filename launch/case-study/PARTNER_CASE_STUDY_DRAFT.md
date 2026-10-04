@@ -13,7 +13,7 @@ subject has agreed in writing to be named.
 - The homepage demos (HuntX, CutsheetX, PropX) run against real backends with no account.
 
 ## What a publishable case study needs (fill in; keep every number traceable)
-1. Subject: company, trade, region, size. Named contact and written consent to be named.
+1. Subject: Precision Auto Doors (Andrew Miller, cofounder of WeylandAI). Consent to be named given by phone 2026-10-04 (per John); a one-line written confirmation is still worth collecting. Still needed: trade scope, region, size.
 2. The job: one real project (name or an agreed description), bid date, scope.
 3. The workflow before WeylandAI, with the time it took and who did it.
 4. The workflow with WeylandAI: which tools were used (CutsheetX? TakeOffX? PropX?), on

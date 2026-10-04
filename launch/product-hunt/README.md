@@ -5,6 +5,9 @@ Drafted 2026-10-04 from what is actually live on weylandai.com. Every claim belo
 ## Name
 WeylandAI
 
+## Makers
+John Mobley (founder), Andrew Miller (cofounder, Precision Auto Doors)
+
 ## Tagline (max 60 chars)
 Match every spec line to the catalog page, with the citation
 (59 chars)
@@ -48,7 +51,7 @@ The rest of the suite picks up the same project record from there: HuntX (public
 
 A few deliberate choices:
 - No sign-up wall. The site mints an ephemeral session through our own auth subsidiary, authfor.com. Upgrade when you want to keep your work.
-- Built with a working door company. Precision Auto Doors, Andrew Miller's company, is the suite's first real user; the door and hardware workflows on the page are the ones that trade actually lives in.
+- Built with a door company, by a door company. My cofounder Andrew Miller runs Precision Auto Doors, the suite's first real user; the door and hardware workflows on the page are the ones that trade actually lives in.
 - The site is an artifact in SightX's world. It opens in first person with a dossier in your hand; raise it and it is the website. The 8-second opening illustrates a cosmology hypothesis I am developing, labeled as a hypothesis next to the parts that are observed.
 
 Privacy and terms live on consenta.cc, our consent and compliance venture, with a real data-rights request path.
@@ -59,7 +62,7 @@ Ask me anything — about takeoffs, about the twin, or about why a folder.
 - [ ] Hunter/maker accounts confirmed; launch at 12:01 AM PT.
 - [ ] Gallery images uploaded in the order above, thumbnail cropped.
 - [ ] First comment posted within 2 minutes of going live.
-- [ ] Andrew Miller has OK'd being named (homepage chapter + comment).
+- [x] Andrew Miller OK'd being named (by phone, 2026-10-04) and is a cofounder; add him as a Maker on the listing.
 - [ ] /#pricing and Stripe checkout tested the day before.
 - [ ] Ephemeral demo rate limits confirmed (10/min per IP on /api/auth/ephemeral); the PropX and CutsheetX demos share that budget.
 - [ ] Someone watching the platform, MeetingX and SightX worker logs for the first 2 hours.
