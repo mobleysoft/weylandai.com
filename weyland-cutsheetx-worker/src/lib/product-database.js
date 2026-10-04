@@ -365,6 +365,45 @@ async function getCutSheetsForProduct(productId, env2) {
     return [];
   }
 }
+// Page-hint parsing for cut-sheet citations (added 2026-10-04).
+//
+// What the product_documents rows actually hold (verified live against
+// weyland_db, not assumed): every one of the 7,792 cut_sheet rows has a
+// NULL document_url and a non-null r2_object_key pointing at one of just
+// 8 distinct full manufacturer price-book PDFs in the subx-uploads bucket
+// (manufacturer-catalogs/<hash>.pdf, e.g. the 152-page LCN price book).
+// The ONLY per-product page information is encoded in document_title
+// free text, e.g. "... product listed around pp.6-48 in the edition
+// originally catalogued ..." or "... around p.33 ..." - and ~3,000 rows
+// (Ives, Glynn-Johnson) literally say "p.None", meaning no page is known.
+// parsePageHint pulls the "6-48" / "33" range out of that text, or
+// returns null when none is there. It never invents a page.
+function parsePageHint(title) {
+  if (!title || typeof title !== "string") return null;
+  const m = title.match(/\bpp?\.\s*(\d{1,4})(?:\s*[-–]\s*(\d{1,4}))?/i);
+  if (!m) return null;
+  const first = parseInt(m[1], 10);
+  if (!Number.isFinite(first) || first < 1) return null;
+  const last = m[2] ? parseInt(m[2], 10) : null;
+  return { hint: last && last !== first ? `${first}-${last}` : String(first), firstPage: first };
+}
+
+// Builds the deep-link for a cut-sheet row. A link is only produced when
+// the row has a real stored PDF (r2_object_key) that GET
+// /api/cut-sheets/sheet/:id/pdf (routes/cut-sheet-coverage.js) can
+// stream; the #page= fragment is added only when the title carries a
+// parsed page hint. No R2 key -> pageUrl null, never a made-up link.
+function cutSheetCitation(cs) {
+  const parsed = parsePageHint(cs.document_title);
+  const hasPdf = !!(cs.r2_object_key && String(cs.r2_object_key).trim());
+  let pageUrl = null;
+  if (hasPdf) {
+    pageUrl = `/api/cut-sheets/sheet/${encodeURIComponent(cs.id)}/pdf`;
+    if (parsed) pageUrl += `#page=${parsed.firstPage}`;
+  }
+  return { pageHint: parsed ? parsed.hint : null, pageUrl };
+}
+
 async function matchComponentToCutSheets(component, env2) {
   const match = await matchProductFromDb(component, env2);
   if (!match) {
@@ -373,7 +412,8 @@ async function matchComponentToCutSheets(component, env2) {
       component,
       product: null,
       cutSheets: [],
-      confidence: null
+      confidence: null,
+      matchType: null
     };
   }
   const cutSheets = await getCutSheetsForProduct(match.product.id, env2);
@@ -391,6 +431,9 @@ async function matchComponentToCutSheets(component, env2) {
       fireRated: match.product.fire_rated,
       adaCompliant: match.product.ada_compliant
     },
+    // Every pre-existing key is preserved verbatim (the weylandai.com
+    // homepage reads matched/confidence/matchType/product/cutSheets[]
+    // .title/.pages); pageHint/pageUrl are additive.
     cutSheets: cutSheets.map((cs) => ({
       id: cs.id,
       title: cs.document_title,
@@ -398,7 +441,8 @@ async function matchComponentToCutSheets(component, env2) {
       url: cs.document_url,
       r2Key: cs.r2_object_key,
       bucket: cs.r2_bucket,
-      pages: cs.page_count
+      pages: cs.page_count,
+      ...cutSheetCitation(cs)
     })),
     confidence: match.confidence,
     matchType: match.matchType
@@ -413,4 +457,6 @@ export {
   matchProductFromDb,
   getCutSheetsForProduct,
   matchComponentToCutSheets,
+  parsePageHint,
+  cutSheetCitation,
 };

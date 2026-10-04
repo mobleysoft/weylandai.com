@@ -54,7 +54,8 @@
 //   /api/cps/admin/*               -> routes/cps-admin.js
 //   /api/cps/import-prices         -> routes/cps-import-prices.js
 //   /api/cps/catalogues/:id/pages/:n/render -> routes/cps-page-render.js
-//   /api/cut-sheets/match, /batch-match, /for-set/:id -> routes/cut-sheet-match.js
+//   /api/cut-sheets/match, /match-batch, /batch-match, /for-set/:id -> routes/cut-sheet-match.js
+//   /api/cut-sheets/coverage (public), /request-manufacturer, /sheet/:id/pdf -> routes/cut-sheet-coverage.js
 //   /api/cut-sheets/documents/:id, /download/:id -> routes/cut-sheet-documents.js
 //   /api/cut-sheets/intelligence/*, /domains* -> routes/cut-sheet-intelligence.js
 //   /api/cut-sheets/discover*, /discoveries* -> routes/cut-sheet-discoveries.js
@@ -103,6 +104,7 @@ import { registerCpsPriceCandidatesRoutes } from "./routes/cps-price-candidates.
 import { registerCpsPageRenderRoutes } from "./routes/cps-page-render.js";
 import { registerCutSheetMatchRoutes } from "./routes/cut-sheet-match.js";
 import { registerCutSheetDocumentsRoutes } from "./routes/cut-sheet-documents.js";
+import { registerCutSheetCoverageRoutes } from "./routes/cut-sheet-coverage.js";
 import { registerCutSheetIntelligenceRoutes } from "./routes/cut-sheet-intelligence.js";
 import { registerCutSheetDiscoveriesRoutes } from "./routes/cut-sheet-discoveries.js";
 import { registerCutSheetVerifiedRoutes } from "./routes/cut-sheet-verified.js";
@@ -113,7 +115,7 @@ import { registerCatalogueDocumentsRoutes } from "./routes/catalogue-documents.j
 
 import cutsheetxHtml from "./pages/cutsheetx.html";
 
-const WORKER_VERSION = "2026-09-12.1";
+const WORKER_VERSION = "2026-10-04.1";
 
 const router = new NativeRouter();
 
@@ -143,6 +145,9 @@ registerCpsPageRenderRoutes(router, { authenticate, PDFDocument });
 
 registerCutSheetMatchRoutes(router, { authenticate, requireProductAccess });
 registerCutSheetDocumentsRoutes(router, { authenticate, requireProductAccess });
+// 2026-10-04: match-batch lives in cut-sheet-match.js (same matcher);
+// coverage (public), request-manufacturer, and sheet/:id/pdf live here.
+registerCutSheetCoverageRoutes(router, { authenticate, requireProductAccess });
 registerCutSheetIntelligenceRoutes(router, { authenticate, getDiscoveryConfig, getManufacturerDomains });
 registerCutSheetDiscoveriesRoutes(router, { authenticate, queueForDiscovery, getManufacturerDomains });
 registerCutSheetVerifiedRoutes(router, { authenticate, requireProductAccess });
