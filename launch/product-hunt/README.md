@@ -42,7 +42,7 @@ Alternate: `01b_prologue_precondensate.png`. Thumbnail source: `00_thumbnail_squ
 ## First (maker) comment — draft for John to edit in his own voice
 Hi Product Hunt — John here, founder of WeylandAI.
 
-Start with the one thing: CutsheetX. Paste a door or hardware spec line and it finds the manufacturer's catalog variant and hands you the match with a citation back to the source page. No sign-up. It is on the homepage right now and it hits the real backend; when it fails you see the real error, not a canned success.
+Start with the one thing: CutsheetX. Paste a door or hardware spec line, or paste a whole door hardware schedule, and it matches every line to the manufacturer's catalog variant with a citation that opens the real price book at the page. Misses are recorded (manufacturer and model only) and shown publicly as coverage, so you can see the catalog grow and request what's missing. No sign-up. It is on the homepage right now and it hits the real backend; when it fails you see the real error, not a canned success.
 
 The rest of the suite picks up the same project record from there: HuntX (public bids), TakeOffX (machine-vision takeoffs), SubX (submittal extraction), PropX (margin-protected proposals, with a real PDF), MeetingX (the room), and SightX (a real-time 3D field twin).
 

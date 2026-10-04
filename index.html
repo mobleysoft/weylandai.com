@@ -3231,7 +3231,7 @@
           var results = (res.data && res.data.results) || [], sum = res.data.summary || {};
           var rows = results.map(function (r) {
             var p = r.product || {}, cs = r.cutSheet || null;
-            var cite = cs ? ((cs.pageUrl ? "<a href=\"" + hsEsc(cs.pageUrl) + "\" target=\"_blank\" rel=\"noopener\" style=\"color:var(--blue)\">" : "") + hsEsc(cs.title || "cut sheet") + (cs.pageHint ? ", pp. " + hsEsc(cs.pageHint) : "") + (cs.pageUrl ? "</a>" : "")) : "\u2014";
+            var cite = cs ? ((cs.pageUrl ? "<a href=\"" + hsEsc(cs.pageUrl) + "\" target=\"_blank\" rel=\"noopener\" style=\"color:var(--blue)\">" : "") + hsEsc(String(cs.title || "cut sheet").split(" (")[0]) + (cs.pageHint ? ", pp. " + hsEsc(cs.pageHint) : "") + (cs.pages ? " (" + hsEsc(cs.pages) + "-page price book)" : "") + (cs.pageUrl ? "</a>" : "")) : "\u2014";
             var req = r.matched ? "" : " <a href=\"#cx-coverage\" style=\"color:var(--accent)\">request</a>";
             return "<tr><td style=\"font-family:ui-monospace,monospace;color:var(--text)\">" + hsEsc(r.raw || ((r.manufacturer || "") + " " + (r.model || ""))) + "</td>" +
               "<td style=\"color:" + (r.matched ? "var(--text)" : "var(--red)") + ";font-weight:" + (r.matched ? "700" : "400") + "\">" + (r.matched ? hsEsc(p.name || (p.manufacturer + " " + p.model)) : "no match" + req) + "</td>" +
