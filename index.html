@@ -3402,7 +3402,11 @@
         var frame = document.createElement("iframe");
         frame.src = (location.hostname === "127.0.0.1" || location.hostname === "localhost")
           ? "/weyland-sightx-worker/src/pages/sightx.html?embed=bg&intro=1"
-          : "/sightx?embed=bg&intro=1";
+          // Trailing slash matters: on this zone "/sightx?query" falls
+          // through to the monolith's stale bundled copy of the page, while
+          // "/sightx/?query" is matched by the weylandai.com/sightx/* route
+          // to weyland-sightx-worker (verified live 2026-10-04).
+          : "/sightx/?embed=bg&intro=1";
         frame.addEventListener("load", function () {
           if (window.__weylandSendDossierState) window.__weylandSendDossierState();
         });
