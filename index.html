@@ -184,11 +184,56 @@
          top - scoped to (and clipped to the shape of) the envelope itself
          rather than the whole page, so it reads as "inside the folder,"
          not bleeding into the checkerboard gutters outside it. */
+      /* Folder-body gradient, anchored at the ROOT of the logo tab: the
+         exact point where the tab's bottom-left miter meets the body
+         (x:0, y:55px - the same vertex the top-left notch is cut to, see
+         clip-path above). Start color is the signature sigil blue
+         (--primary, the logo badge's own #2A52FF fill), so the tab reads
+         as the light source the folder body is lit by - tab and body
+         become one object with one key light from top-left (the same
+         direction the drop shadow already implies), instead of a flat
+         dark card with a colored tab stuck on it. Because .envelope-frame
+         is the scroll container and this is ITS background (attachment:
+         scroll = fixed to the element's box, not its contents), the glow
+         stays pinned under the tab while content scrolls over it - a
+         Pip-Boy screen glow, not a wash that scrolls away. The sticky
+         header paints the identical gradient at the identical origin so
+         the seam between header and body is invisible. */
+      --tab-root-y: 55px;
+      --sigil-glow-r: 820px;
       background:
         linear-gradient(rgba(255, 255, 255, 0.035) 1px, transparent 1px),
         linear-gradient(90deg, rgba(255, 255, 255, 0.035) 1px, transparent 1px),
+        radial-gradient(circle var(--sigil-glow-r) at 0 var(--tab-root-y),
+          var(--primary) 0,
+          rgba(42, 82, 255, 0.62) 5%,
+          rgba(42, 82, 255, 0.26) 18%,
+          rgba(42, 82, 255, 0.08) 42%,
+          rgba(42, 82, 255, 0) 100%),
         var(--bg);
-      background-size: 30px 30px, 30px 30px, auto;
+      background-size: 30px 30px, 30px 30px, auto, auto;
+      transition: transform 0.75s cubic-bezier(0.2, 0.8, 0.2, 1);
+    }
+    /* Lowered state (the yellow [close] control in the header): the folder
+       drops out of the bottom of the viewport like a Pip-Boy arm being
+       lowered, revealing the SightX world it was held up against. The
+       world becomes interactive while lowered (pointer-events restored on
+       the backdrop iframe); the raise control brings the folder back. */
+    body.folder-lowered .envelope-frame,
+    body.folder-lowered .wn-persistent-footer {
+      pointer-events: none;
+    }
+    body.folder-lowered .envelope-frame {
+      transform: translateY(calc(100vh + 80px));
+    }
+    body.folder-lowered .wn-persistent-footer {
+      transform: translateX(-50%) translateY(calc(100vh + 80px));
+    }
+    body.folder-lowered #stage-backdrop iframe {
+      pointer-events: auto;
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .envelope-frame, .wn-persistent-footer { transition: none; }
     }
     @media (max-width: 640px) {
       /* Top-left corner recomputed for mobile, not reusing the generic
@@ -200,6 +245,12 @@
          mobile-sized position at all, which is why it looked like an
          unrelated artifact instead of a continuation of the tab's edge. */
       .envelope-frame { width: calc(100% - 12px); height: calc(100vh - 12px); margin: 6px auto; clip-path: polygon(0 37px, 17px 0, calc(100% - 12px) 0, 100% 12px, 100% calc(100% - 12px), calc(100% - 12px) 100%, 12px 100%, 0 calc(100% - 12px)); }
+    }
+    @media (max-width: 768px) {
+      /* Tab root follows the smaller mobile tab (1px header pad + 34px fill
+         + 2px frame overhang = 37px), so the glow still starts exactly at
+         the tab's bottom-left miter, not at the desktop coordinate. */
+      .envelope-frame { --tab-root-y: 37px; --sigil-glow-r: 540px; }
     }
 
     /* Kinetic Scroll Progress Bar - a child of header.site-header now, so it
@@ -239,7 +290,18 @@
          the kind of "visible above/through the navbar" leak the mask is
          supposed to prevent. Solid var(--bg) actually masks it; blur over
          real transparency was cosmetic, not a mask. */
-      background: var(--bg);
+      /* Same sigil-blue radial as .envelope-frame, same origin (header is
+         sticky at top:0 of that scrollport, so x:0,y:55px is the same
+         point in both boxes) - solid --bg underneath keeps it fully
+         opaque, so it still masks scrolled content like before. */
+      background:
+        radial-gradient(circle var(--sigil-glow-r) at 0 var(--tab-root-y),
+          var(--primary) 0,
+          rgba(42, 82, 255, 0.62) 5%,
+          rgba(42, 82, 255, 0.26) 18%,
+          rgba(42, 82, 255, 0.08) 42%,
+          rgba(42, 82, 255, 0) 100%),
+        var(--bg);
       /* Both top AND bottom are now a 1px hairline, not a padded band - the
          header's own visible footprint should be ~the tab ribbon's own
          bounding box, not a rectangle with solid-color margin showing
@@ -274,16 +336,30 @@
     .wn-ribbon {
       display: flex;
       align-items: stretch;
+      /* Fills the header row (minus the close control) so the equal-flex
+         tabs below divide the full width between them - every tab,
+         logo included, is the same size. */
+      flex: 1 1 auto;
+      min-width: 0;
     }
+    /* Every tab is a TRAPEZOID now (base wider than top: left miter "/",
+       right miter "\"), the way real folder tabs are cut - the old shape
+       was a parallelogram (both miters leaning the same way), which is
+       not how a tab sits on a folder. Trapezoids can't interlock with a
+       negative margin the way the parallelograms did (their frames would
+       cross in an X at every joint), so tabs now sit flush base-to-base
+       with a V-shaped gap opening between their tops - exactly a row of
+       tabs along a folder's edge. */
     .wn-flag {
       position: relative;
       display: block;
-      margin-left: -15px;
+      margin-left: 0;
       text-decoration: none;
       cursor: pointer;
-    }
-    .wn-ribbon .wn-flag:first-child {
-      margin-left: 0;
+      /* Equal size: every tab is the same flex share, basis 0, so the
+         labels' differing lengths don't produce differing tab widths. */
+      flex: 1 1 0;
+      min-width: 0;
     }
     .wn-flag-frame {
       position: absolute;
@@ -291,14 +367,63 @@
       right: -2px;
       bottom: -2px;
       left: -2px;
-      clip-path: polygon(17px 0, 100% 0, calc(100% - 17px) 100%, 0 100%);
-    }
-    /* Last tab (SightX) stays upright - no tilt - but its rightmost miter is
-       inverted (top pulled in, bottom at full width) instead of matching
-       every other tab's slant, the way the last envelope in a stack has its
-       trailing edge cut the opposite way to visually close the sequence. */
-    .wn-ribbon .wn-flag:last-child .wn-flag-frame {
       clip-path: polygon(17px 0, calc(100% - 17px) 0, 100% 100%, 0 100%);
+    }
+    /* The product tabs live in .wn-blade. On desktop it is display:contents
+       so the 9 flags (logo + 8 products) are direct flex items of the
+       ribbon and divide it exactly equally. On mobile it becomes the
+       "safety blade": a horizontally scrolling strip of equal yellow
+       segments that slides out of the blue logo tab - the logo is the
+       knife handle, fixed at the left; the blade overlaps the handle by
+       the width of its trailing miter and is clip-pathed to that same
+       miter, so retracting tabs disappear INTO the handle along its
+       slanted edge rather than at a hard vertical line. */
+    .wn-blade {
+      display: contents;
+    }
+    @media (max-width: 1000px) {
+      .wn-flag-fill { padding: 0 10px; font-size: 10px; }
+    }
+    @media (max-width: 768px) {
+      :root { --tab-w-m: 104px; }
+      .wn-ribbon > .wn-logo {
+        flex: 0 0 var(--tab-w-m);
+        position: relative;
+        z-index: 2;
+      }
+      .wn-blade {
+        display: flex;
+        align-items: stretch;
+        flex: 1 1 auto;
+        min-width: 0;
+        position: relative;
+        /* -15px overlaps the handle's trailing miter; the clip below cuts
+           the blade to that same miter line. The 2px vertical
+           padding/negative margin keeps the tabs' 2px frame overhang
+           inside the scrollport instead of clipped by overflow-y (which
+           overflow-x:auto forces to auto). */
+        margin: -2px 0 -2px -15px;
+        padding: 2px 0;
+        overflow-x: auto;
+        overflow-y: hidden;
+        scrollbar-width: none;
+        -webkit-overflow-scrolling: touch;
+        scroll-snap-type: x proximity;
+        clip-path: polygon(0 0, 100% 0, 100% 100%, 15px 100%);
+      }
+      .wn-blade::-webkit-scrollbar { display: none; }
+      /* Right-edge fade only while more blade remains to the right. */
+      .wn-blade.has-more {
+        -webkit-mask-image: linear-gradient(to right, #000 calc(100% - 30px), transparent);
+        mask-image: linear-gradient(to right, #000 calc(100% - 30px), transparent);
+      }
+      .wn-blade .wn-flag {
+        flex: 0 0 var(--tab-w-m);
+        scroll-snap-align: start;
+      }
+      /* At rest the first segment sits flush against the handle's base
+         (its 15px lead-in lands it exactly past the overlap). */
+      .wn-blade .wn-flag:first-child { margin-left: 15px; }
     }
     .wn-flag-fill {
       position: relative;
@@ -306,16 +431,13 @@
       align-items: center;
       justify-content: center;
       height: 50px;
-      padding: 0 20px 0 22px;
+      padding: 0 16px;
       font: 800 11px/1 ui-monospace, monospace;
       font-family: var(--font-display);
       letter-spacing: 0.04em;
       white-space: nowrap;
-      clip-path: polygon(15px 0, 100% 0, calc(100% - 15px) 100%, 0 100%);
-      transition: filter 0.15s ease, background 0.25s ease, color 0.25s ease;
-    }
-    .wn-ribbon .wn-flag:last-child .wn-flag-fill {
       clip-path: polygon(15px 0, calc(100% - 15px) 0, 100% 100%, 0 100%);
+      transition: filter 0.15s ease, background 0.25s ease, color 0.25s ease;
     }
     .wn-flag:hover .wn-flag-fill {
       filter: brightness(1.12);
@@ -329,7 +451,74 @@
        a one-off rectangle - and fills more of its own (unchanged-size)
        container: less side padding, a bigger mark, same aspect ratio. */
     .wn-logo .wn-flag-fill { padding: 0 10px; }
-    .wn-logo img { display: block; height: 36px; width: auto; }
+    /* Scales down inside its (now equal-width) tab instead of forcing the
+       logo tab wider than the others - both max constraints with auto
+       dimensions keep the badge's aspect ratio. */
+    .wn-logo img { display: block; width: auto; height: auto; max-height: 36px; max-width: 100%; }
+
+    /* Yellow close control, top-right of the envelope (the header IS the
+       envelope's top edge; its right side is otherwise empty since the
+       secondary nav lives in the fixed footer bar). The X plus the
+       bracketed [close] clue tells a first-time visitor what the X does
+       before they try it - lowers the folder to reveal SightX behind. */
+    .wn-close {
+      flex: none;
+      margin-left: auto;
+      display: inline-flex;
+      align-items: center;
+      gap: 9px;
+      height: 50px;
+      padding: 0 0 0 14px;
+      appearance: none;
+      -webkit-appearance: none;
+      background: transparent;
+      border: 0;
+      cursor: pointer;
+      color: var(--accent);
+      font: 800 11px/1 ui-monospace, monospace;
+      font-family: var(--font-display);
+      letter-spacing: 0.08em;
+      white-space: nowrap;
+    }
+    .wn-close-x {
+      font-size: 19px;
+      line-height: 1;
+      text-shadow: 0 0 12px rgba(255, 212, 0, 0.6);
+      transition: transform 0.15s ease;
+    }
+    .wn-close:hover .wn-close-x { transform: scale(1.15); }
+    .wn-close:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 2px; }
+    @media (max-width: 768px) {
+      .wn-close { height: 34px; gap: 6px; padding-left: 8px; font-size: 9.5px; }
+      .wn-close-x { font-size: 16px; }
+    }
+    /* Raise control: appears only while the folder is lowered, sitting on
+       the bottom edge where the folder went, cut like a tab so it reads as
+       the folder's own handle poking up from below. */
+    .wn-raise {
+      position: fixed;
+      left: 50%;
+      bottom: clamp(10px, 2.4vw, 32px);
+      transform: translateX(-50%);
+      z-index: 700;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 11px 26px;
+      appearance: none;
+      -webkit-appearance: none;
+      border: 0;
+      cursor: pointer;
+      background: var(--accent);
+      color: #1a1300;
+      font: 800 11px/1 ui-monospace, monospace;
+      font-family: var(--font-display);
+      letter-spacing: 0.08em;
+      clip-path: polygon(14px 0, calc(100% - 14px) 0, 100% 100%, 0 100%);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.45);
+    }
+    .wn-raise[hidden] { display: none; }
+    .wn-raise:focus-visible { outline: 2px solid #fff; outline-offset: -4px; }
     
     .wn-secondary {
       display: flex;
@@ -1385,7 +1574,7 @@
       .metrics-row { grid-template-columns: 1fr; }
       .pl-assemble { grid-template-columns: repeat(2, 1fr); }
       .wn-flag-fill { height: 34px; font-size: 9.5px; padding: 0 16px 0 18px; }
-      .wn-logo img { height: 20px; }
+      .wn-logo img { max-height: 20px; }
       .wn-persistent-footer { justify-content: space-around; gap: 6px; padding: 10px 12px; }
     }
     /* Why WeylandAI / Pricing / News / Sign In live ONLY here, not in the
@@ -1591,6 +1780,7 @@
           <span class="wn-flag-frame"></span>
           <span class="wn-flag-fill"><img id="wn-logo-img" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA1MzYgMTQ1IiB3aWR0aD0iNTM2IiBoZWlnaHQ9IjE0NSI+CiAgPHRpdGxlPldleWxhbmRBSSB3b3JkbWFyayDigJQgcmVhbCB2ZWN0b3IgdHJhY2UsIHJlY29sb3JlZCBiYWRnZTwvdGl0bGU+CiAgPHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjUzNiIgaGVpZ2h0PSIxNDUiIHJ4PSIyMCIgZmlsbD0iIzJBNTJGRiIvPgogIDxnIHRyYW5zZm9ybT0idHJhbnNsYXRlKDI4LDI4KSI+CiAgICA8ZyB0cmFuc2Zvcm09InRyYW5zbGF0ZSgwLDg0KSBzY2FsZSgxLDEuMDIwMykgdHJhbnNsYXRlKDAsLTg0KSI+CiAgICA8ZyB0cmFuc2Zvcm09InRyYW5zbGF0ZSgtMi45LDUpIHNjYWxlKDEsMS4xMTkpIHRyYW5zbGF0ZSgyLjksLTUpIj4KICAgIDxnIHRyYW5zZm9ybT0idHJhbnNsYXRlKDAsOS4yKSB0cmFuc2xhdGUoNTgsNjYuMykgc2NhbGUoMS4xNSkgdHJhbnNsYXRlKC01OCwtNjYuMykiPgogICAgPGcgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoMC4wMDAwMDAsODkuMDAwMDAwKSBzY2FsZSgwLjEwMDAwMCwtMC4xMDAwMDApIiBmaWxsPSIjRkZENDAwIiBzdHJva2U9Im5vbmUiPgogICAgICA8cGF0aCBkPSJNIDgyLjksODQwLjAgTCA4Mi45LDgwMi4wIEwgMjE2LjAsMzAwLjAgTCAxOTguMCwzMzguMCBMIDEyNi45LDU5NS4zIEwgMTE0LjQsMzQzLjIgTCA3MS44LDI2MS42IEwgNzEuOCwyMjguMSBMIDQ1Ni41LDIyOC4xIEwgNTc4LjMsNjAwLjIgTCA3MDAuMSwyMjguMSBMIDEwNzguMiwyMjguMSBMIDEwNzguMiwyNjEuNiBMIDEwMzYuMywzNDIuMCBMIDEwMjMuNCw2MDEuMyBMIDk1MC4wLDMzMy4wIEwgOTI3LjUsMzA2LjAgTCAxMDYyLjksODAyLjAgTCAxMDYyLjksODQwLjAgTCA4MjEuNSw4NDAuMCBMIDgyMS41LDgwMi4wIEwgODA3LjUsMzkwLjYgTCA2NjguMCw4NDAuMCBMIDQ5NS4wLDg0MC4wIEwgMzUwLjIsMzc1LjMgTCAzMzUuNyw4MDIuMCBMIDMzNS43LDg0MC4wIFoiLz4KICAgIDwvZz4KICAgIDwvZz4KICAgIDwvZz4KICAgIDwvZz4KICAgIDxnIHRyYW5zZm9ybT0idHJhbnNsYXRlKDAsMi41KSI+CiAgICA8ZyB0cmFuc2Zvcm09InRyYW5zbGF0ZSgwLjAwMDAwMCw4OS4wMDAwMDApIHNjYWxlKDAuMTAwMDAwLC0wLjEwMDAwMCkiIGZpbGw9IiNGNUY3RkEiIHN0cm9rZT0ibm9uZSI+CiAgICAgIDxwYXRoIGQ9Ik0yMTAwIDUzNSBsMCAtMzA1IDY1IDAgNjUgMCAwIDMwNSAwIDMwNSAtNjUgMCAtNjUgMCAwIC0zMDV6Ii8+CiAgICAgIDxwYXRoIGQ9Ik0zNjEwIDcyOSBjMCAtOTggLTIgLTEwOSAtMTUgLTk2IC0yNSAyNiAtODQgNDAgLTEzOCAzNCAtMTExIC0xNAotMTcyIC05NSAtMTcxIC0yMjcgMCAtMTE0IDQzIC0xODMgMTMzIC0yMTUgNjEgLTIxIDk5IC0xOSAxNTAgMTAgNTIgMzAgNTEgMzAKNTEgNyAwIC0xNiA3IC0xOCA1OCAtMTYgbDU3IDMgMyAzMDUgMiAzMDYgLTY1IDAgLTY1IDAgMCAtMTExeiBtLTI3IC0xOTAgYzIzCi0yNSAyNyAtMzggMjcgLTkwIDAgLTkzIC0zMiAtMTM5IC05NyAtMTM5IC0xMTEgMCAtMTQzIDIxMCAtMzkgMjU2IDQxIDE4IDc1CjEwIDEwOSAtMjd6Ii8+CiAgICAgIDxwYXRoIGQ9Ik0xMzM1IDY2NSBjLTUgLTIgLTIyIC02IC0zOCAtOSAtNDEgLTkgLTEwMyAtNzEgLTEyMyAtMTIyIC0yNiAtNjcKLTE1IC0xNzMgMjIgLTIyNyA5MCAtMTMwIDMwOCAtMTI0IDM4MiAxMCBsMjIgNDEgLTQzIDYgYy01MSA4IC03MCAyIC0xMDMgLTMwCi0yNiAtMjcgLTk3IC0zMyAtMTI2IC0xMCAtMjIgMTYgLTQ5IDY3IC00MiA3OCAzIDQgNzQgOCAxNTkgOCA5MSAwIDE1NiA0IDE2MAoxMCAzIDUgMSAzNiAtNCA2NyAtMjEgMTEwIC05NyAxNzggLTIwNCAxODEgLTI5IDAgLTU2IC0xIC02MiAtM3ogbTg5IC05NSBjMjEKLTggNTYgLTU0IDU2IC03NSAwIC0zIC00MyAtNSAtOTUgLTUgLTg1IDAgLTk1IDIgLTk1IDE4IDAgMTAgMTAgMjggMjMgMzkgMzYKMzMgNjggNDAgMTExIDIzeiIvPgogICAgICA8cGF0aCBkPSJNMjQ0NSA2NjQgYy03OCAtMTkgLTEzNSAtNzEgLTEzNSAtMTIzIDAgLTE5IDUgLTIxIDYwIC0yMSA1NCAwIDYxIDIKNjkgMjQgMTEgMjggMjkgMzYgODEgMzYgMzggMCA3MCAtMjAgNzAgLTQzIC0xIC0yOCAtMjIgLTM5IC0xMDYgLTUyIC00OSAtOAotMTA2IC0yMiAtMTI2IC0zMSAtNjYgLTI5IC04NiAtMTE1IC00MyAtMTgxIDIwIC0yOSA4OCAtNjMgMTMwIC02MyAzNiAwIDEyMgoyNSAxNDEgNDEgMTEgOSAxNCA4IDE0IC00IDAgLTEyIDE1IC0xNiA2MyAtMTkgMzQgLTIgNjIgLTQgNjMgLTMgMCAwIC0yIDc5Ci02IDE3NSAtNyAxOTYgLTEzIDIxNSAtNzggMjQ2IC0zNiAxNyAtMTU2IDI4IC0xOTcgMTh6IG0xNDIgLTI4MSBjLTExIC03MAotODkgLTEwNiAtMTQ1IC02NyAtMjUgMTcgLTI4IDQyIC05IDY3IDEyIDE3IDc0IDM0IDEzMSAzNiAyOCAxIDI4IDAgMjMgLTM2eiIvPgogICAgICA8cGF0aCBkPSJNMjk5NiA2NjAgYy0xNiAtNSAtMzkgLTE5IC01MiAtMzEgbC0yNCAtMjIgMCAyNiBjMCAyNyAtMSAyNyAtNjUgMjcKbC02NSAwIDAgLTIxMyBjMCAtMTE4IDIgLTIxNiA0IC0yMTggMiAtMiAzNCAtMyA2OSAtMSBsNjYgNCAzIDE1MCBjMyAxNDQgNAoxNTEgMjcgMTY5IDI3IDIyIDc5IDI1IDEwNyA1IDE3IC0xMyAxOSAtMzAgMjIgLTE3MCA0IC0xNzMgLTEgLTE2NCA4MyAtMTU4Cmw0OSA0IDAgMTY0IGMwIDE0NCAtMiAxNzAgLTIwIDIwMyAtMzAgNjAgLTExOSA4NiAtMjA0IDYxeiIvPgogICAgICA8cGF0aCBkPSJNMTYwMCA2NTcgYzAgLTIgMzYgLTk1IDgxIC0yMDggNDUgLTExMiA4MSAtMjE0IDgxIC0yMjYgMCAtMTMgLTcKLTM0IC0xNiAtNDggLTE0IC0yMSAtMjQgLTI1IC02MSAtMjUgbC00NSAwIDAgLTUwIDAgLTUwIDU1IDAgYzY0IDAgMTEwIDE3CjE0MiA1MSAxMiAxMyA2MiAxMzIgMTEyIDI2NCA0OSAxMzIgOTQgMjUzIDEwMCAyNjggbDExIDI4IC02NyAtMyAtNjYgLTMgLTQ4Ci0xNDAgYy0yNiAtNzcgLTUwIC0xMzMgLTUzIC0xMjUgLTMgOCAtMjUgNzEgLTQ5IDE0MCBsLTQ0IDEyNSAtNjYgMyBjLTM3IDIKLTY3IDEgLTY3IC0xeiIvPgogICAgPC9nPgogICAgPC9nPgogICAgPGcgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoLTkuMywwKSI+CiAgICA8ZyB0cmFuc2Zvcm09InRyYW5zbGF0ZSgwLDg0KSBzY2FsZSgxLDEuMDIwMykgdHJhbnNsYXRlKDAsLTg0KSI+CiAgICA8ZyB0cmFuc2Zvcm09InRyYW5zbGF0ZSgzODkuOCw1KSBzY2FsZSgxLDEuMTE1OCkgdHJhbnNsYXRlKC0zODkuOCwtNSkiPgogICAgPGcgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoMzg5LjgsNSkgc2NhbGUoMS4xNSkgdHJhbnNsYXRlKC0zODkuOCwtNSkiPgogICAgPGcgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoMC4wMDAwMDAsODkuMDAwMDAwKSBzY2FsZSgwLjEwMDAwMCwtMC4xMDAwMDApIiBmaWxsPSIjRjVGN0ZBIiBzdHJva2U9Im5vbmUiPgogICAgICA8cGF0aCBkPSJNNDEzMCA4MTggYy02MCAtMTM5IC0yMzcgLTU4OSAtMjMyIC01OTEgNCAtMiAzOCAtMyA3NyAtMyA3NiAxIDc1IDAKMTA5IDg5IGwxNSAzNyAxMjQgMCAxMjMgMCAyNSAtNjIgMjQgLTYzIDc3IDAgYzQzIDAgNzggNCA3OCA5IDAgNCAtMzEgODMsLTY4CjE3NSAtMzggOTEgLTkzIDIyNiAtMTIyIDI5OSBsLTU0IDEzMiAtODMgMCBjLTc3IDAgLTg0IC0yIC05MyAtMjJ6IG0xMzkgLTI1OApjMTYgLTQxIDI3IC03OCAyNCAtODIgLTIgLTUgLTM1IC04IC03NCAtOCAtNTEgMCAtNjkgNCAtNjkgMTMgMCAxMiAzMyAxMDEgNjIKMTY3IDEyIDI5IDggMzYgNTcgLTkweiIvPgogICAgICA8cGF0aCBkPSJNNDYwMiA1MzMgbDMgLTMwOCA3MyAwIDcyIDAgMCAzMDcgMCAzMDggLTc1IDAgLTc1IDAgMiAtMzA3eiIvPgogICAgPC9nPgogICAgPC9nPgogICAgPC9nPgogICAgPC9nPgogICAgPC9nPgogIDwvZz4KPC9zdmc+Cg==" alt="WeylandAI" width="536" height="145"></span>
         </a>
+        <div class="wn-blade">
         <a href="#huntx" class="wn-flag" data-tone="yellow" data-target="huntx"><span class="wn-flag-frame"></span><span class="wn-flag-fill">HuntX</span></a>
         <a href="#takeoffx" class="wn-flag" data-tone="yellow" data-target="takeoffx"><span class="wn-flag-frame"></span><span class="wn-flag-fill">TakeOffX</span></a>
         <a href="#subx" class="wn-flag" data-tone="yellow" data-target="subx"><span class="wn-flag-frame"></span><span class="wn-flag-fill">SubX</span></a>
@@ -1599,6 +1789,7 @@
         <a href="#meetingx" class="wn-flag" data-tone="yellow" data-target="meetingx"><span class="wn-flag-frame"></span><span class="wn-flag-fill">MeetingX</span></a>
         <a href="#sightx" class="wn-flag" data-tone="yellow" data-target="sightx"><span class="wn-flag-frame"></span><span class="wn-flag-fill">SightX</span></a>
         <a href="#wire" class="wn-flag" data-tone="yellow" data-target="wire"><span class="wn-flag-frame"></span><span class="wn-flag-fill">Wire</span></a>
+        </div>
       </div>
       <nav class="wn-secondary">
         <a href="#whyweyland" data-target="whyweyland">Why WeylandAI</a>
@@ -1606,6 +1797,7 @@
         <a href="#wire" data-target="wire">News</a>
         <a class="wn-signin js-upgrade-cta" href="/login?redirect=/">Sign In</a>
       </nav>
+      <button type="button" class="wn-close" id="envelope-close" aria-label="Close the folder and reveal the SightX world behind it"><span class="wn-close-x" aria-hidden="true">&#x2715;</span><span class="wn-close-hint">[close]</span></button>
     </div>
     <!-- Scroll progress bar IS the seam between nav and content - a child of
          the sticky header so it always sits exactly at its bottom edge,
@@ -2418,6 +2610,7 @@
   </main>
 
   </div><!-- /.envelope-frame -->
+  <button type="button" class="wn-raise" id="envelope-raise" hidden aria-label="Raise the folder back up"><span aria-hidden="true">&#x25B2;</span> [open folder]</button>
 
   <!-- Persistent footer (position:fixed, outside the scroll container,
        visible at every screen width) - the header's .wn-secondary is
@@ -2473,6 +2666,20 @@
     // like tilting a held device against what's behind it. No-ops cleanly
     // when the backdrop iframe doesn't exist - mobile/reduced-motion never
     // got one injected in the first place.
+    // Mobile safety-blade ribbon: fade the right edge only while more
+    // tabs remain off to the right. No-op on desktop (display:contents,
+    // no scroll box).
+    var blade = document.querySelector(".wn-blade");
+    function bladeMore() {
+      if (!blade) return;
+      blade.classList.toggle("has-more", blade.scrollWidth - blade.clientWidth - blade.scrollLeft > 4);
+    }
+    if (blade) {
+      blade.addEventListener("scroll", bladeMore, { passive: true });
+      window.addEventListener("resize", bladeMore);
+      bladeMore();
+    }
+
     var backdropFrame = null;
     scrollRoot.addEventListener("scroll", function() {
       var fraction = scrollRoot.scrollHeight > scrollRoot.clientHeight
@@ -2557,6 +2764,16 @@
           flag.removeAttribute("aria-current");
         }
       });
+      // Mobile blade: slide the active tab into view so the segment that
+      // matches the chapter on screen is never hidden inside the handle.
+      var bladeEl = document.querySelector(".wn-blade");
+      if (bladeEl && bladeEl.scrollWidth > bladeEl.clientWidth + 1) {
+        var activeFlag = bladeEl.querySelector('.wn-flag[aria-current="page"]');
+        if (activeFlag) {
+          var reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+          bladeEl.scrollTo({ left: Math.max(0, activeFlag.offsetLeft - 15), behavior: reduce ? "auto" : "smooth" });
+        }
+      }
       // Invert Logo: Blue when at Hero, Yellow when inside product chapters.
       // The logo is a real fixed-color SVG <img> (not inline/CSS-fillable), so
       // the visual swap requires changing its src to the matching pre-colored
@@ -3125,21 +3342,76 @@
        cost on mobile for a purely ambient backdrop). -->
   <script>
   (function () {
-    try {
-      var reducedMotion = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-      if (reducedMotion || window.innerWidth < 900) return;
-      var backdrop = document.getElementById("stage-backdrop");
-      if (!backdrop) return;
-      var frame = document.createElement("iframe");
-      frame.src = "/sightx?embed=bg";
-      frame.title = "";
-      frame.setAttribute("aria-hidden", "true");
-      frame.tabIndex = -1;
-      frame.addEventListener("load", function () {
-        frame.classList.add("is-loaded");
-      });
-      backdrop.appendChild(frame);
-    } catch (e) {}
+    var injected = false;
+    // force=true (the [close] control) injects regardless of the
+    // mobile/reduced-motion default - the visitor explicitly asked to see
+    // the world behind the folder, so the ambient-only cost rule no longer
+    // applies.
+    window.__weylandEnsureBackdrop = function (force) {
+      if (injected) return true;
+      try {
+        var reducedMotion = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+        if (!force && (reducedMotion || window.innerWidth < 900)) return false;
+        var backdrop = document.getElementById("stage-backdrop");
+        if (!backdrop) return false;
+        var frame = document.createElement("iframe");
+        frame.src = "/sightx?embed=bg";
+        frame.title = "SightX live world";
+        frame.setAttribute("aria-hidden", "true");
+        frame.tabIndex = -1;
+        frame.addEventListener("load", function () {
+          frame.classList.add("is-loaded");
+        });
+        backdrop.appendChild(frame);
+        injected = true;
+        return true;
+      } catch (e) { return false; }
+    };
+    window.__weylandEnsureBackdrop(false);
+  })();
+  </script>
+
+  <!-- Lower / raise the folder (the yellow [close] control + its raise
+       counterpart). Lowering drops the envelope + its footer bar out of the
+       viewport, makes the SightX iframe interactive, and marks the folder
+       inert so focus can't land in it off-screen. Escape raises it. -->
+  <script>
+  (function () {
+    var body = document.body;
+    var frame = document.querySelector(".envelope-frame");
+    var footerBar = document.querySelector(".wn-persistent-footer");
+    var closeBtn = document.getElementById("envelope-close");
+    var raiseBtn = document.getElementById("envelope-raise");
+    if (!frame || !closeBtn || !raiseBtn) return;
+    function setInert(el, on) {
+      if (!el) return;
+      if (on) { el.setAttribute("inert", ""); el.setAttribute("aria-hidden", "true"); }
+      else { el.removeAttribute("inert"); el.removeAttribute("aria-hidden"); }
+    }
+    function lower() {
+      if (window.__weylandEnsureBackdrop) window.__weylandEnsureBackdrop(true);
+      var bd = document.querySelector("#stage-backdrop iframe");
+      if (bd) bd.removeAttribute("aria-hidden");
+      body.classList.add("folder-lowered");
+      setInert(frame, true);
+      setInert(footerBar, true);
+      raiseBtn.hidden = false;
+      raiseBtn.focus();
+    }
+    function raise() {
+      body.classList.remove("folder-lowered");
+      setInert(frame, false);
+      setInert(footerBar, false);
+      var bd = document.querySelector("#stage-backdrop iframe");
+      if (bd) bd.setAttribute("aria-hidden", "true");
+      raiseBtn.hidden = true;
+      closeBtn.focus();
+    }
+    closeBtn.addEventListener("click", lower);
+    raiseBtn.addEventListener("click", raise);
+    document.addEventListener("keydown", function (e) {
+      if (e.key === "Escape" && body.classList.contains("folder-lowered")) raise();
+    });
   })();
   </script>
 </body>
