@@ -1009,7 +1009,7 @@
        see second-to-second, so it's sped up 92.74x (full orbit in 60 real
        seconds) rather than silently faked - see sky()/main() in the shader
        for the Kepler-derived numbers behind this. -->
-  <div id="orbit-hud"><b>JOBSITE TWIN</b> · 30 m corridor, 8 scheduled openings + 1 exit pair<br>hardware drawn where it mounts; every product named is in the CutsheetX catalog</div>
+  <div id="orbit-hud"><b>JOBSITE TWIN</b> · 30 m corridor · 8 doors + exit pair from the schedule<br>hardware drawn where it mounts · every product named is in the CutsheetX catalog</div>
 
   <!-- Explains the relationship between this scene and the PDF TWIN tool:
        this facility is a hand-built sample of what the PDF -> 3D
@@ -1504,6 +1504,7 @@
     // u_openCount == 0 leaves the default scene exactly as it was.
     uniform float u_openCount;
     uniform vec4  u_openings[12];
+    uniform float u_exitPair;   // 1 when the loaded schedule carries an exit-device opening
 
     float hash(vec3 p){ return fract(sin(dot(p,vec3(127.1,311.7,74.7)))*43758.5); }
     float noise(vec3 p){
@@ -1560,12 +1561,14 @@
     float handSdf(vec3 vp, float side, bool portrait, float lower){
       vec3 off = vec3(0.0, -0.95*lower, 0.38*lower);
       if(portrait){
-        float thumb   = sdCapsule(vp, vec3(side*0.34,-0.52,0.58)+off, vec3(side*0.16,-0.18,0.40)+off, 0.050);
-        float knuckle = sdCapsule(vp, vec3(side*0.30, 0.56,0.62)+off, vec3(side*0.22, 0.42,0.52)+off, 0.040);
+        float thumb   = sdCapsule(vp, vec3(side*0.34,-0.62,0.70)+off, vec3(side*0.18,-0.34,0.56)+off, 0.036);
+        float knuckle = sdCapsule(vp, vec3(side*0.30, 0.62,0.74)+off, vec3(side*0.23, 0.50,0.64)+off, 0.028);
         return min(thumb, knuckle);
       }
-      float finger1 = sdCapsule(vp, vec3(side*0.62, 0.10,0.55)+off, vec3(side*0.34, 0.06,0.42)+off, 0.042);
-      float finger2 = sdCapsule(vp, vec3(side*0.62,-0.06,0.55)+off, vec3(side*0.34,-0.10,0.42)+off, 0.042);
+      // Human-scale work glove at the frame edge: two fingers resting low
+      // and well out in front of the eye (0.6-0.75 m), not a helmet-side grip.
+      float finger1 = sdCapsule(vp, vec3(side*0.72,-0.20,0.76)+off, vec3(side*0.48,-0.24,0.62)+off, 0.032);
+      float finger2 = sdCapsule(vp, vec3(side*0.72,-0.34,0.76)+off, vec3(side*0.48,-0.38,0.62)+off, 0.032);
       return min(finger1, finger2);
     }
 
@@ -1716,8 +1719,9 @@
         vec3 q = rotY(p - vec3(o.x, WALK_Y, o.y), -o.z);
         cuts = min(cuts, sdBox(q - vec3(0.0, cutHalfH, 0.0), vec3(cutHalfW, cutHalfH, 0.30)));
       }
-      // Exit pair opening in the far end wall (z = 30): 1.8 m clear.
-      cuts = min(cuts, sdBox(p - vec3(0.0, WALK_Y + 1.08, 30.10), vec3(0.95, 1.08, 0.30)));
+      // Exit pair opening in the far end wall (z = 30): 1.8 m clear. Only
+      // when the schedule carries an exit-device opening (u_exitPair).
+      if(u_exitPair > 0.5) cuts = min(cuts, sdBox(p - vec3(0.0, WALK_Y + 1.08, 30.10), vec3(0.95, 1.08, 0.30)));
 
       float wallH = (CEIL_Y + 0.30) - WALK_Y;
       float wallMid = WALK_Y + wallH*0.5;
@@ -1760,8 +1764,9 @@
 
       // Exit pair: HM frame, two 3'-0" flush leaves, Von Duprin 99 rim
       // devices (push side = corridor), LCN 4040XP parallel-arm closers,
-      // illuminated EXIT sign. Fixed geometry, not from the schedule.
-      {
+      // illuminated EXIT sign. Drawn only when the schedule carries an
+      // exit-device opening (the sx-walk script sets u_exitPair from it).
+      if(u_exitPair > 0.5){
         vec3 e = p - vec3(0.0, WALK_Y, 30.10);
         float ebb = length(e - vec3(0.0, 1.1, 0.0)) - 2.6;
         if(ebb < 0.4){
@@ -2117,7 +2122,31 @@
     // inertial frame, not registered to the true sky as seen from a real
     // date/location, but the real relative positions, magnitudes, and
     // colors between these named stars are preserved.
-        vec3 sky(vec3 ro, vec3 rd){
+        // Troffer visibility (cheap analytic shadowing for the corridor lights):
+    // the corridor walls are the planes |x| = HW..HW+0.125, so a point in a
+    // wing is lit only if the light->point segment crosses the wall inside
+    // a scheduled opening. Points above the ceiling or outside the end
+    // walls get nothing. Avoids a second shadow march per light.
+    float trofferVis(vec3 lp, vec3 p){
+      if(p.y > CEIL_Y + 0.02) return 0.0;
+      if(p.z < -3.0 || p.z > 30.0) return 0.0;
+      float ax = abs(p.x);
+      if(ax <= HW + 0.01) return 1.0;
+      float sx = p.x > 0.0 ? 1.0 : -1.0;
+      float wx = sx * (HW + 0.0625);
+      float t = (wx - lp.x) / (p.x - lp.x);
+      if(t <= 0.0 || t >= 1.0) return 0.0;
+      vec3 c = lp + (p - lp) * t;
+      for(int i=0;i<12;i++){
+        if(float(i) > u_openCount - 0.5) break;
+        vec4 o = u_openings[i];
+        if((o.x > 0.0 ? 1.0 : -1.0) != sx) continue;
+        if(abs(c.z - o.y) < WALK_W && c.y > WALK_Y && c.y < WALK_Y + WALK_H) return 1.0;
+      }
+      return 0.0;
+    }
+
+    vec3 sky(vec3 ro, vec3 rd){
       // Daytime jobsite sky: fixed afternoon sun, a simple scattering
       // gradient, a thin cloud deck, dull ground below the horizon (the
       // site slab in map() covers everything the walk can actually reach).
@@ -2459,12 +2488,14 @@
         vec3 coolL = vec3(1.0,0.95,0.86);
         for(int i=0;i<6;i++){
           vec3 lp = vec3(0.0, CEIL_Y - 0.03, 1.0 + 4.8*float(i));
+          float vis = trofferVis(lp, p);
+          if(vis <= 0.0) continue;
           vec3 lv  = lp-p;
           float ld = length(lv);
           vec3 ldir= lv/ld;
           float att= 5.5/(1.+ld*ld*0.16);
           float spot= smoothstep(-0.1,0.7,dot(ldir,vec3(0.,-1.,0.)));
-          lighting += shade(albedo,metal,rough,N,V,ldir,coolL*att*(0.30+0.70*spot),1.);
+          lighting += shade(albedo,metal,rough,N,V,ldir,coolL*att*(0.30+0.70*spot),1.)*vis;
         }
 
         lighting *= mix(occ,1.,0.35);
@@ -2577,7 +2608,9 @@
     // source of truth. count 0 => the shader skips the openings entirely.
     const uOpenCount = gl.getUniformLocation(prog, 'u_openCount');
     const uOpenings = gl.getUniformLocation(prog, 'u_openings');
-    const sxWalkGeom = window.__sxWalkGeom = { count: 0, data: new Float32Array(48) };
+    const uExitPair = gl.getUniformLocation(prog, 'u_exitPair');
+    const sxWalkGeom = window.__sxWalkGeom = { count: 0, exit: 0, data: new Float32Array(48) };
+    gl.uniform1f(uExitPair, 0);
     gl.uniform1f(uOpenCount, 0);
 
     const planSdfTexture = gl.createTexture();
@@ -3005,6 +3038,7 @@
       }
       gl.uniform1f(uGlitch, glitch);
       gl.uniform1f(uOpenCount, sxWalkGeom.count);
+      gl.uniform1f(uExitPair, sxWalkGeom.exit);
       if (sxWalkGeom.count > 0) gl.uniform4fv(uOpenings, sxWalkGeom.data);
       if (window.sxWalk && window.sxWalk.tick) window.sxWalk.tick(camPos, camFwd, camUp, ts);
       gl.uniform1f(uScan, sightxExperience.scanAmount);
@@ -3334,19 +3368,37 @@
       if (k >= 1) fly = null;
     }
 
+    // An opening whose hardware is an exit device (Von Duprin 99/98 class,
+    // or anything the host tags pair:true) is the corridor's exit pair:
+    // it is drawn in the far end wall (shader u_exitPair) instead of as a
+    // single side door, and labeled there. One pair per schedule.
+    function isPair(o) {
+      if (o.pair === true) return true;
+      var t = ((o.label || "") + " " + (o.sub || "")).toLowerCase();
+      return /exit device|exit pair|rim device|panic|von duprin|\b9[89]\b/.test(t);
+    }
     function set(list, opts) {
       var silent = !!(opts && opts.silent);
       list = Array.isArray(list) ? list.slice(0, MAX) : [];
+      var side = 0, pairTaken = false;
       openings = list.map(function (o, i) {
         o = (o && typeof o === "object") ? o : { label: o };
-        var right = (i % 2 === 0);
-        var swing = 0.30 + 0.45 * ((i * 3) % 5) / 4;
-        return { label: clean(o.label, 28) || ("OPENING " + (i + 1)), sub: clean(o.sub, 44),
-                 x: right ? WALL_X : -WALL_X, z: ROW_Z0 + i * ROW_DZ, yaw: right ? Math.PI / 2 : -Math.PI / 2, ajar: swing };
+        var label = clean(o.label, 28) || ("OPENING " + (i + 1)), sub = clean(o.sub, 44);
+        if (!pairTaken && isPair(o)) {
+          pairTaken = true;
+          return { label: label, sub: sub, pair: true, x: 0, z: 30.1, yaw: 0, ajar: 0 };
+        }
+        var k = side++;
+        var right = (k % 2 === 0);
+        var swing = 0.30 + 0.45 * ((k * 3) % 5) / 4;
+        return { label: label, sub: sub, pair: false,
+                 x: right ? WALL_X : -WALL_X, z: ROW_Z0 + k * ROW_DZ, yaw: right ? Math.PI / 2 : -Math.PI / 2, ajar: swing };
       });
       geom.data.fill(0);
-      openings.forEach(function (o, i) { geom.data[i * 4] = o.x; geom.data[i * 4 + 1] = o.z; geom.data[i * 4 + 2] = o.yaw; geom.data[i * 4 + 3] = o.ajar; });
-      geom.count = openings.length;
+      var n = 0;
+      openings.forEach(function (o) { if (o.pair) return; geom.data[n * 4] = o.x; geom.data[n * 4 + 1] = o.z; geom.data[n * 4 + 2] = o.yaw; geom.data[n * 4 + 3] = o.ajar; n++; });
+      geom.count = n;
+      geom.exit = pairTaken ? 1 : 0;
       build();
       if (openings.length) { if (!silent) flyToRow(); } else { fly = null; root.classList.remove("is-on"); }
       if (!silent) post({ type: "weyland:walk-ready", count: openings.length });
@@ -3409,7 +3461,8 @@
       { label: "105 BREAK ROOM",  sub: "LCN 1461 - Schlage L9080 - Hager BB1279" },
       { label: "106 OFFICE",      sub: "LCN 4040XP - Schlage L9080 - Ives 5BB1" },
       { label: "107 JANITOR",     sub: "LCN 1461 - Schlage L9080 - Ives 5BB1" },
-      { label: "108 IT / DATA",   sub: "LCN 4040XP - Schlage L9080 - Hager BB1279" }
+      { label: "108 IT / DATA",   sub: "LCN 4040XP - Schlage L9080 - Hager BB1279" },
+      { label: "100 EXIT PAIR",   sub: "Von Duprin 99 - LCN 4040XP - Ives 5BB1", pair: true }
     ], { silent: true });
   })();
   </script>

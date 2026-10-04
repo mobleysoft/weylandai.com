@@ -5,7 +5,8 @@
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <meta name="theme-color" content="#0b0d13">
   <title>WeylandAI | Match every spec line to the real catalog page, with the citation</title>
-  <link rel="canonical" href="https://weylandai.com/">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"Organization","name":"WeylandAI","url":"https://weylandai.com/","description":"CutsheetX matches every door and hardware spec line to the real catalog page, with the citation; the same project record flows through bids, takeoffs, submittals, proposals, meetings and a 3D field twin.","founder":[{"@type":"Person","name":"Ron Helms","jobTitle":"CEO and Lead Software Developer"},{"@type":"Person","name":"John Mobley","jobTitle":"CTO and Chief Architect"},{"@type":"Person","name":"Andrew Miller","jobTitle":"Business Development","worksFor":{"@type":"Organization","name":"Precision Auto Doors"}}]}</script>
+<link rel="canonical" href="https://weylandai.com/">
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%232a52ff'/%3E%3Cpath d='M10 16h8l6 24 6-18h4l6 18 6-24h8L44 50h-8l-4-13-4 13h-8z' fill='%23ffd400'/%3E%3C/svg%3E">
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="WeylandAI">
@@ -2791,7 +2792,8 @@
             <li><span class="chk-yes">&check;</span> Export opportunities to CSV/JSON</li>
             <li><span class="chk-yes">&check;</span> 3 Estimator logins included</li>
           </ul>
-          <a class="js-upgrade-cta button" href="/login?redirect=/huntx" style="width:100%;justify-content:center">START HUNTX</a>
+          <a class="js-checkout button" data-product="weyland-huntx-seat" href="#pricing" style="width:100%;justify-content:center">START HUNTX &middot; $799/MO</a>
+          <div class="js-checkout-note" style="font-size:12px;color:var(--muted);margin-top:8px;min-height:1.2em" aria-live="polite"></div>
         </div>
 
         <!-- Featured SubConP Suite Card -->
@@ -2812,7 +2814,8 @@
             <li><span class="chk-yes">&check;</span> Uncapped project estimating volume</li>
             <li><span class="chk-yes">&check;</span> Up to 10 concurrent team members</li>
           </ul>
-          <a class="js-upgrade-cta button accent" href="/login?redirect=/subx-app" style="width:100%;justify-content:center">START SUBCONP SUITE</a>
+          <a class="js-checkout button accent" data-product="weyland-subconp-seat" href="#pricing" style="width:100%;justify-content:center">START SUBCONP SUITE &middot; $2,499/MO</a>
+          <div class="js-checkout-note" style="font-size:12px;color:var(--muted);margin-top:8px;min-height:1.2em" aria-live="polite"></div>
         </div>
 
         <!-- Enterprise Sovereign Card -->
@@ -3698,6 +3701,33 @@
       el.addEventListener("click", function(e) {
         e.preventDefault();
         openUpgradeModal();
+      });
+    });
+    // Pricing: straight to a real Stripe Checkout session. No account first:
+    // the platform creates the session unauthenticated and the purchase is
+    // attached to the buyer on return (ephemeral session, same as every
+    // other demo on this page). A failure is shown inline, never swallowed.
+    document.querySelectorAll(".js-checkout").forEach(function(el) {
+      el.addEventListener("click", function(e) {
+        e.preventDefault();
+        var note = el.parentNode.querySelector(".js-checkout-note");
+        var product = el.getAttribute("data-product");
+        el.setAttribute("aria-busy", "true");
+        if (note) note.textContent = "Opening secure checkout\u2026";
+        fetch("/api/billing/checkout/create", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ product_id: product, quantity: 1, success_url: location.origin + "/?checkout=success#pricing", cancel_url: location.origin + "/#pricing" })
+        }).then(function(r) { return r.json().then(function(d) { return { ok: r.ok, d: d }; }); })
+          .then(function(res) {
+            if (!res.ok || !res.d || !res.d.checkout_url) throw new Error((res.d && res.d.detail && res.d.detail.message) || ("checkout " + (res.d && res.d.error || "unavailable")));
+            if (note) note.textContent = "Redirecting to Stripe\u2026";
+            location.href = res.d.checkout_url;
+          })
+          .catch(function(err) {
+            el.removeAttribute("aria-busy");
+            if (note) note.textContent = "Checkout did not open: " + err.message + " \u2014 email hello@weylandai.com and we will send a link.";
+          });
       });
     });
     document.querySelectorAll("[data-upgrade-close]").forEach(function(el) {

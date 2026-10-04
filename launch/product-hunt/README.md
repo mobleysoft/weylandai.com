@@ -8,6 +8,11 @@ WeylandAI
 ## Makers
 Ron Helms (CEO, Lead Software Developer), John Mobley (CTO, Chief Architect), Andrew Miller (Business Development; Precision Auto Doors)
 
+All three are to be added as Makers on the Product Hunt listing (the PH account owner does this in the listing editor; it cannot be done from this repo). The same three names and titles already appear on the homepage team row, in the homepage's schema.org Organization markup (founder entries), in the case-study scaffold, and here.
+
+## Consent
+Andrew Miller consented to being named as cofounder and first real user of WeylandAI (Precision Auto Doors) on weylandai.com, in this listing, and in the case study. Consent was given by phone on 2026-10-04 and confirmed by John Mobley in writing the same day. Ron Helms and John Mobley are named as themselves in their own company.
+
 ## Tagline (max 60 chars)
 Match every spec line to the catalog page, with the citation
 (59 chars)
