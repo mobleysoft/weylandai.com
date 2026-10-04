@@ -175,15 +175,37 @@ export function registerAuthSessionRoutes(router, { authenticate, errorResponse 
           trial_ends_at: trialEndsAt
         };
       }
-      const token = await generateJWT({
-        userId: user.id,
-        email: user.email,
-        tenantId: user.tenant_id,
-        name: user.name,
-        company: user.company
-      }, env2.JWT_SECRET);
-      return jsonResponse3({
+      // Found live 2026-10-04 (MeetingX e2e run): this route 500'd on
+      // every first-time sign-up with "Imported HMAC key length (0)" -
+      // no worker has a JWT_SECRET configured, so generateJWT() threw
+      // AFTER the users row was inserted (account silently created, caller
+      // saw a 500). The local JWT is also verified by nothing: product
+      // workers trust AuthFor tokens and the weyland_session cookie. So:
+      // mint the JWT only if a secret exists, and ALWAYS establish the
+      // real weyland_session cookie here (same row + cookie shape as
+      // POST /api/auth/session above), which is what actually signs the
+      // caller in.
+      let token = null;
+      if (env2.JWT_SECRET) {
+        token = await generateJWT({
+          userId: user.id,
+          email: user.email,
+          tenantId: user.tenant_id,
+          name: user.name,
+          company: user.company
+        }, env2.JWT_SECRET);
+      }
+      const sessionId = "wses_" + crypto.randomUUID().replace(/-/g, "");
+      const expiresAt = new Date(Date.now() + 24 * 60 * 60 * 1e3).toISOString();
+      const sessionNode = { email: user.email, name: user.name || "", mhsId: "" };
+      await env2.DB.prepare(
+        "INSERT INTO weyland_sessions (id, user_id, email, mhs_id, player_json, expires_at, created_at) VALUES (?, ?, ?, ?, ?, ?, datetime('now'))"
+      ).bind(sessionId, user.id, user.email, "", JSON.stringify(sessionNode), expiresAt).run();
+      const cookie = `weyland_session=${sessionId}; Path=/; HttpOnly; Secure; SameSite=Lax; Max-Age=86400`;
+      return new Response(JSON.stringify({
         token,
+        session_id: sessionId,
+        expires_at: expiresAt,
         user: {
           id: user.id,
           email: user.email,
@@ -194,7 +216,7 @@ export function registerAuthSessionRoutes(router, { authenticate, errorResponse 
           subscriptionStatus: user.subscription_status,
           trialEndsAt: user.trial_ends_at
         }
-      });
+      }), { status: 200, headers: { "Content-Type": "application/json", "Set-Cookie": cookie } });
     } catch (error4) {
       return jsonResponse3({ error: "Token exchange failed: " + error4.message }, 500);
     }
