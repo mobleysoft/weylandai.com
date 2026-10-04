@@ -951,7 +951,9 @@
     html.sxe-bg-embed #wt-preview-toggle,
     html.sxe-bg-embed #wt-preview-panel,
     html.sxe-bg-embed #visor-frame,
-    html.sxe-bg-embed #thrust-glow {
+    html.sxe-bg-embed #thrust-glow,
+    html.sxe-bg-embed #sx-plan-trigger,
+    html.sxe-bg-embed #sightx-touch-ui {
       display: none !important;
     }
   </style>
@@ -973,8 +975,8 @@
       <div style="font:700 11px/1 'Space Grotesk',monospace;letter-spacing:0.18em;color:#2a52ff;margin-bottom:7px;display:flex;align-items:center;gap:8px">
         <span style="display:inline-block;width:6px;height:6px;border-radius:50%;background:#00e5ff;box-shadow:0 0 8px #00e5ff"></span>WEYLAND SIGHTX // CHRONO-TELEMETRY
       </div>
-      <div id="cx-epoch" style="font:800 13px/1.35 'Space Grotesk',monospace;letter-spacing:0.06em;color:#ffd400;text-transform:uppercase">EPOCH // 13.8B YRS AGO — HO'ŌLEILANA CONTRACTION</div>
-      <div id="cx-sub" style="font:500 11px/1.4 'Outfit',sans-serif;color:#a0aec0;letter-spacing:0.03em;margin-top:4px">DEEP SPACE FILAMENTS CONTRACTING TO DISTANT SINGULARITY</div>
+      <div id="cx-epoch" style="font:800 13px/1.35 'Space Grotesk',monospace;letter-spacing:0.06em;color:#ffd400;text-transform:uppercase">PRECONDENSATE // DIFFUSE MATTER BELOW THRESHOLD</div>
+      <div id="cx-sub" style="font:500 11px/1.4 'Outfit',sans-serif;color:#a0aec0;letter-spacing:0.03em;margin-top:4px">MHS HYPOTHESIS // THE PRESENT UNIVERSE AS THE NEXT BANG'S PRECURSOR STATE</div>
       <div style="margin-top:12px;width:100%;height:2px;background:rgba(255,255,255,0.12);border-radius:2px;overflow:hidden">
         <div id="cx-progress" style="width:0%;height:100%;background:linear-gradient(90deg,#2a52ff,#00e5ff,#ffd400);transition:width 0.08s linear"></div>
       </div>
@@ -1457,6 +1459,21 @@
     uniform vec3  u_astroFwd;
     uniform vec3  u_astroUp;
     uniform float u_handsLowered;
+    // Dossier held in the LEFT hand (embed mode only): the weylandai.com
+    // site is the dossier - lowered, it sits in the player's hand; raised,
+    // it is the page itself (the host lowers/raises the folder). Center
+    // and half-extents come from JS (one source of truth shared with the
+    // DOM callout that labels it), the basis is fixed here and mirrored
+    // in JS verbatim.
+    uniform float u_dossier;
+    uniform vec3 u_dossierC;
+    uniform vec3 u_dossierHe;
+    // 1 while the chrono-telemetry prologue is playing underneath (embed):
+    // everything except the hands and the folder is written transparent,
+    // so the player's own hand holding the folder stays in view over the
+    // prologue - the folder is an artifact of this world, present from
+    // the first frame, not something the page adds afterwards.
+    uniform float u_introMode;
     uniform float u_glitch;
 
     float hash(vec3 p){ return fract(sin(dot(p,vec3(127.1,311.7,74.7)))*43758.5); }
@@ -1525,6 +1542,36 @@
 
     vec2 put(vec2 scene, float distance, float material){
       return distance < scene.x ? vec2(distance, material) : scene;
+    }
+
+    // Dossier basis in view space (x right, y up, z forward). Face normal
+    // DN points mostly up toward the eye (held low, tilted back, the way a
+    // folder is actually read in hand); DX is the long edge; DY the short
+    // edge lying back into depth. Mirrored exactly in JS (sxDossier.basis).
+    const vec3 DX = vec3(0.9528, -0.2629, 0.1522);
+    const vec3 DY = vec3(0.0000,  0.5011, 0.8655);
+    const vec3 DN = vec3(0.3038,  0.8245, -0.4774);
+    // Returns (distance, material) for the manila dossier + its tabs + the
+    // left hand's thumb/finger wrapping it. 'off' is the same lower offset
+    // the gloves use so it travels with the hand.
+    vec2 dossierSdf(vec3 vp, vec3 off){
+      vec3 C = u_dossierC + off;
+      vec3 he = u_dossierHe;
+      vec3 rel = vp - C;
+      vec3 q = vec3(dot(rel, DX), dot(rel, DY), dot(rel, DN));
+      // Plain manila slab: the host projects the live site onto this face
+      // (CSS homography from the same four corners), so the site's own tab
+      // ribbon IS the folder's tabs - no separate SDF tabs.
+      vec2 r = vec2(sdBox(q, he), 33.0);
+      // Left thumb across the front face near the left edge, one fingertip
+      // curling over the left edge from underneath.
+      vec3 ta = C + DX*(-he.x+0.03) + DY*(-0.15) + DN*0.052;
+      vec3 tb = C + DX*(-he.x+0.13) + DY*(-0.01) + DN*0.046;
+      r = put(r, sdCapsule(vp, ta, tb, 0.042), 30.0);
+      vec3 fa = C + DX*(-he.x-0.06) + DY*(-0.06) + DN*(-0.06);
+      vec3 fb = C + DX*(-he.x+0.05) + DY*(-0.05) + DN*(0.022);
+      r = put(r, sdCapsule(vp, fa, fb, 0.036), 30.0);
+      return r;
     }
 
     float sdDoorOpening(vec3 q, float w, float h){
@@ -1894,7 +1941,15 @@
         vec3 vp = vec3(dot(rel,cright), dot(rel,cup), dot(rel,cfwd));
         bool portrait = u_res.x < u_res.y;
         float lower = clamp(u_handsLowered, 0.0, 1.0);
-        res = put(res, min(handSdf(vp,-1.0,portrait,lower), handSdf(vp,1.0,portrait,lower)), 30.0);
+        if(u_dossier > 0.5){
+          // Left hand holds the dossier (replaces the left bezel grip);
+          // right hand keeps its bezel grip.
+          res = put(res, handSdf(vp,1.0,portrait,lower), 30.0);
+          vec2 d = dossierSdf(vp, vec3(0.0, -0.95*lower, 0.38*lower));
+          res = put(res, d.x, d.y);
+        } else {
+          res = put(res, min(handSdf(vp,-1.0,portrait,lower), handSdf(vp,1.0,portrait,lower)), 30.0);
+        }
       } else {
         vec3 afwd   = normalize(u_astroFwd);
         vec3 aright = normalize(cross(u_astroUp, afwd));
@@ -2505,6 +2560,21 @@
           // of sky()/the scene off the visor's own surface normal.
           albedo = vec3(0.015,0.02,0.03);
           metal = 1.0; rough = 0.05;
+        } else if(matID > 32.5 && matID < 33.5){
+          // Dossier body: manila stock with faint paper grain.
+          albedo = vec3(0.86,0.70,0.42)+noise(p*60.0)*0.03;
+          metal = 0.0; rough = 0.85;
+          emissive = vec3(0.86,0.70,0.42)*0.06;
+        } else if(matID > 33.5 && matID < 34.5){
+          // Dossier logo tab: WeylandAI sigil blue.
+          albedo = vec3(0.165,0.32,1.0);
+          metal = 0.0; rough = 0.6;
+          emissive = vec3(0.165,0.32,1.0)*0.25;
+        } else if(matID > 35.5 && matID < 36.5){
+          // Dossier product tabs: hi-vis yellow.
+          albedo = vec3(1.0,0.83,0.0);
+          metal = 0.0; rough = 0.6;
+          emissive = vec3(1.0,0.83,0.0)*0.22;
         } else if(matID > 34.5 && matID < 35.5){
           // Robotic welding arc flare & sparks (Material 35.0)
           albedo = vec3(0.02);
@@ -2629,6 +2699,11 @@
 
       col = col*(2.51*col+0.03)/(col*(2.43*col+0.59)+0.14);
       col = pow(clamp(col,0.,1.), vec3(0.4545));
+      if(u_introMode > 0.5){
+        float m = hit.y;
+        bool keep = hit.x > 0.0 && (abs(m-30.0) < 0.5 || abs(m-33.0) < 0.5 || abs(m-34.0) < 0.5 || abs(m-36.0) < 0.5);
+        if(!keep){ fragColor = vec4(0.0); return; }
+      }
       fragColor = vec4(col,1.);
     }`;
     
@@ -2674,6 +2749,10 @@
     const uAstroFwd = gl.getUniformLocation(prog, 'u_astroFwd');
     const uAstroUp = gl.getUniformLocation(prog, 'u_astroUp');
     const uHandsLowered = gl.getUniformLocation(prog, 'u_handsLowered');
+    const uDossier = gl.getUniformLocation(prog, 'u_dossier');
+    const uDossierC = gl.getUniformLocation(prog, 'u_dossierC');
+    const uDossierHe = gl.getUniformLocation(prog, 'u_dossierHe');
+    const uIntroMode = gl.getUniformLocation(prog, 'u_introMode');
     const uGlitch = gl.getUniformLocation(prog, 'u_glitch');
 
     const planSdfTexture = gl.createTexture();
@@ -3024,6 +3103,10 @@
       } else {
         loweredT = Math.min(1, (ts - handsLowerStart) / 1400);
       }
+      // Embed mode: the dossier (and the hands with it) is driven by the
+      // host's folder state and by flight engagement instead of the one-way
+      // "lower once" rule - see sxDossier below.
+      if (window.sxDossier) loweredT = window.sxDossier.lowered(ts);
       const glitch = glitchStart === null ? 0 : Math.max(0, 1 - (ts - glitchStart) / 480);
 
       // Third-person: pull the render camera out in FRONT of the
@@ -3054,7 +3137,21 @@
       gl.uniform3f(uAstroPos, astroPos[0], astroPos[1], astroPos[2]);
       gl.uniform3f(uAstroFwd, astroFwd[0], astroFwd[1], astroFwd[2]);
       gl.uniform3f(uAstroUp, astroUp[0], astroUp[1], astroUp[2]);
-      gl.uniform1f(uHandsLowered, easeOutCubic(loweredT));
+      // sxDossier already eases its own value (and parks at a specific
+      // depth during the prologue), so it must not be eased a second time.
+      const handsVal = window.sxDossier ? loweredT : easeOutCubic(loweredT);
+      gl.uniform1f(uHandsLowered, handsVal);
+      if (window.sxDossier) {
+        const g = window.sxDossier.geometry();
+        gl.uniform1f(uDossier, 1);
+        gl.uniform3f(uDossierC, g.C[0], g.C[1], g.C[2]);
+        gl.uniform3f(uDossierHe, g.he[0], g.he[1], g.he[2]);
+        window.sxDossier.update(handsVal);
+        gl.uniform1f(uIntroMode, window.sxDossier.introUp() ? 1 : 0);
+      } else {
+        gl.uniform1f(uDossier, 0);
+        gl.uniform1f(uIntroMode, 0);
+      }
       gl.uniform1f(uGlitch, glitch);
       gl.uniform1f(uScan, sightxExperience.scanAmount);
       gl.uniform3f(uTarget, scanTarget[0], scanTarget[1], scanTarget[2]);
@@ -3143,7 +3240,142 @@
     })();
   </script>
 
-  <!-- Cosmic Evolution Intro Sequence Script: 9 Epochs & Smooth Cross-fade -->
+  <!-- Dossier callout (embed mode only): a scientific-diagram label in 3D
+       space. The leader line leaves the dossier's front face along its
+       normal and meets the label's underline; the label itself stays
+       screen-aligned so it is legible. Positions are recomputed every
+       frame from the same view-space geometry the shader draws. -->
+  <style>
+    #sx-dossier { position: fixed; inset: 0; z-index: 30; pointer-events: none; display: none; }
+    html.sxe-bg-embed #sx-dossier.is-on { display: block; }
+    #sx-dossier svg { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
+    #sx-dossier-hot { position: absolute; pointer-events: auto; cursor: pointer; border-radius: 6px; }
+    #sx-dossier-label {
+      position: absolute; pointer-events: auto; cursor: pointer;
+      transform: translate(0, -100%);
+      padding: 0 2px 7px 2px;
+      border-bottom: 1.5px solid #ffd400;
+      color: #ffd400; white-space: nowrap;
+      font: 800 13px/1.15 'Space Grotesk', ui-monospace, monospace; letter-spacing: 0.08em;
+      text-shadow: 0 0 10px rgba(255,212,0,0.45), 0 1px 2px rgba(0,0,0,0.9);
+      animation: sx-dossier-breathe 2.6s ease-in-out infinite;
+    }
+    #sx-dossier-label small { display: block; margin-top: 3px; font: 600 10.5px/1.2 'Outfit', sans-serif; letter-spacing: 0.06em; color: #f1f3f5; opacity: 0.85; text-transform: uppercase; }
+    @keyframes sx-dossier-breathe { 0%,100% { opacity: 0.92; } 50% { opacity: 1; } }
+    @media (prefers-reduced-motion: reduce) { #sx-dossier-label { animation: none; } }
+    @media (max-width: 640px) { #sx-dossier-label { font-size: 12px; } }
+  </style>
+  <div id="sx-dossier" aria-hidden="true">
+    <svg><line id="sx-dossier-leader" x1="0" y1="0" x2="0" y2="0" stroke="#ffd400" stroke-width="1.5" stroke-linecap="round" /><circle id="sx-dossier-dot" cx="0" cy="0" r="3.2" fill="#ffd400" /></svg>
+    <div id="sx-dossier-hot" role="button" tabindex="0" aria-label="Raise the dossier"></div>
+    <div id="sx-dossier-label" role="button" tabindex="0">[tap / enter]<small>to raise dossier</small></div>
+  </div>
+  <script>
+  (function () {
+    if (!document.documentElement.classList.contains("sxe-bg-embed")) return;
+    var root = document.getElementById("sx-dossier");
+    var leader = document.getElementById("sx-dossier-leader");
+    var dot = document.getElementById("sx-dossier-dot");
+    var hot = document.getElementById("sx-dossier-hot");
+    var label = document.getElementById("sx-dossier-label");
+    if (!root || !leader || !hot || !label) return;
+
+    // Mirrors the GLSL constants DX/DY/DN exactly.
+    var DX = [0.9528, -0.2629, 0.1522], DY = [0.0000, 0.5011, 0.8655], DN = [0.3038, 0.8245, -0.4774];
+    function geometry() {
+      var portrait = window.innerWidth < window.innerHeight;
+      return portrait
+        ? { C: [-0.05, -0.40, 1.05], he: [0.22, 0.155, 0.012] }
+        : { C: [-0.30, -0.33, 0.85], he: [0.27, 0.19, 0.012] };
+    }
+    function add(a, b, k) { return [a[0] + b[0] * k, a[1] + b[1] * k, a[2] + b[2] * k]; }
+    function project(v) {
+      var W = window.innerWidth, H = window.innerHeight, aspect = W / H;
+      if (v[2] <= 0.05) return null;
+      var ux = (v[0] / v[2]) / 0.62, uy = (v[1] / v[2]) / 0.62;
+      return [ (ux / aspect + 1) * 0.5 * W, (1 - uy) * 0.5 * H ];
+    }
+
+    // State: 0 = dossier in hand (site lowered), 1 = dossier raised/out of
+    // view. Driven by the host's folder state and by flight engagement.
+    var siteRaised = false;
+    var target = 0, value = 0, lastTs = null;
+    var introOverlay = document.getElementById("cx-overlay");
+    function introUp() {
+      return !!(introOverlay && introOverlay.parentNode && introOverlay.style.display !== "none");
+    }
+    function lowered(ts) {
+      // "Flying" means the player actually took the controls (pointer lock on
+      // desktop). The controls' own sightx-playing class is not enough: on
+      // touch devices it is set automatically on load, which would lower
+      // the dossier before anyone touched anything.
+      var playing = !!document.pointerLockElement;
+      // During the prologue the folder is in hand but NOT foremost: parked
+      // partway down at the periphery (0.28: the top third of it shows). It rises to the ready
+      // position (0) when the prologue ends, and the callout appears.
+      target = introUp() ? 0.28 : ((siteRaised || playing) ? 1 : 0);
+      if (lastTs === null) lastTs = ts;
+      var dt = Math.min(0.25, (ts - lastTs) / 1000); lastTs = ts;
+      var rate = dt / 1.0; // ~1s travel
+      value += Math.max(-rate, Math.min(rate, target - value));
+      return value;
+    }
+
+    // The host (weylandai.com) maps its live page onto this face: every
+    // frame we post the four projected corners (TL, TR, BR, BL in the
+    // page's own orientation - the far edge is the page's top), plus the
+    // callout anchor/end so the host can keep everything aligned.
+    hot.style.display = "none"; // the host's own tap-catcher covers the face
+    function update(lowerT) {
+      var g = geometry();
+      var off = [0, -0.95 * lowerT, 0.38 * lowerT];
+      var C = add(g.C, off, 1);
+      var A = add(add(C, DY, g.he[1] - 0.012), DN, g.he[2]);
+      var L = window.innerWidth < window.innerHeight ? 0.30 : 0.32;
+      var E = add(A, DN, L);
+      var pA = project(A), pE = project(E);
+      var corners = [
+        project(add(add(C, DX, -g.he[0]), DY,  g.he[1])), project(add(add(C, DX,  g.he[0]), DY,  g.he[1])),
+        project(add(add(C, DX,  g.he[0]), DY, -g.he[1])), project(add(add(C, DX, -g.he[0]), DY, -g.he[1]))
+      ];
+      var ok = !!(pA && pE && !corners.some(function (c) { return !c; }));
+      var visible = ok && !(lowerT > 0.35 || introUp());
+      var inView = ok && lowerT < 0.98;
+      try {
+        window.parent.postMessage({ type: "weyland:dossier-geometry", visible: visible, inView: inView, intro: introUp(),
+          corners: ok ? corners : null, anchor: pA, end: pE, lowerT: lowerT }, location.origin);
+      } catch (e) {}
+      if (!visible) { root.classList.remove("is-on"); return; }
+      root.classList.add("is-on");
+      leader.setAttribute("x1", pA[0]); leader.setAttribute("y1", pA[1]);
+      leader.setAttribute("x2", pE[0]); leader.setAttribute("y2", pE[1]);
+      dot.setAttribute("cx", pA[0]); dot.setAttribute("cy", pA[1]);
+      label.style.left = pE[0] + "px"; label.style.top = pE[1] + "px";
+    }
+
+    function raiseDossier() {
+      try { window.parent.postMessage({ type: "weyland:raise-dossier" }, location.origin); } catch (e) {}
+    }
+    hot.addEventListener("click", function (e) { e.stopPropagation(); raiseDossier(); });
+    label.addEventListener("click", function (e) { e.stopPropagation(); raiseDossier(); });
+    [hot, label].forEach(function (el) {
+      el.addEventListener("keydown", function (e) { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); raiseDossier(); } });
+    });
+    document.addEventListener("keydown", function (e) {
+      if (e.key === "Enter" && !siteRaised && !document.pointerLockElement) {
+        var t = e.target; if (t && (t.tagName === "INPUT" || t.tagName === "TEXTAREA")) return;
+        raiseDossier();
+      }
+    });
+    window.addEventListener("message", function (e) {
+      if (e.origin !== location.origin || !e.data || e.data.type !== "weyland:dossier-state") return;
+      siteRaised = !!e.data.raised;
+    });
+    window.sxDossier = { geometry: geometry, lowered: lowered, update: update, introUp: introUp };
+  })();
+  </script>
+
+  <!-- Cosmic Evolution Intro Sequence Script: hypothesis stages + 8 standard epochs & smooth cross-fade -->
   <script>
   (function(){
     try {
@@ -3155,7 +3387,11 @@
         sessionStorage.setItem("weylandCosmicIntroSeen", "1");
         return;
       }
+      // Plays once per browser session (a reload mid-visit doesn't replay
+      // a 14-second prologue); a fresh tab plays it again.
+      if (sessionStorage.getItem("weylandCosmicIntroSeen") === "1") return;
     } catch (e) { return; }
+    var introIsEmbed = document.documentElement.classList.contains("sxe-bg-embed");
 
     var overlay = document.getElementById("cx-overlay");
     var canvas = document.getElementById("cx-canvas");
@@ -3170,22 +3406,52 @@
 
     overlay.style.display = "block";
     document.documentElement.style.overflow = "hidden";
+    // Embed: the prologue renders UNDER the 3D hand layer (#bg-canvas, z 1,
+    // which writes everything but hands+folder transparent while
+    // u_introMode is on), so the player's hand holding the folder is in
+    // view from the first frame. The HUD caption and SKIP are lifted out
+    // of the overlay to stay on top and reachable.
+    var liftedEls = [];
+    if (introIsEmbed) {
+      overlay.style.zIndex = "0";
+      overlay.style.pointerEvents = "none";
+      var hudEl = document.getElementById("cx-hud");
+      if (hudEl) {
+        hudEl.style.position = "fixed"; hudEl.style.zIndex = "9999";
+        hudEl.style.left = "22px"; hudEl.style.right = "auto"; hudEl.style.bottom = "auto"; hudEl.style.top = "64px";
+        document.body.appendChild(hudEl); liftedEls.push(hudEl);
+      }
+      if (skipBtn) {
+        skipBtn.style.position = "fixed"; skipBtn.style.zIndex = "9999";
+        document.body.appendChild(skipBtn); liftedEls.push(skipBtn);
+      }
+    }
 
     // ── Phase Definitions & Timeline ─────────────────────────
+    // Stages tagged MHS HYPOTHESIS are John Mobley's big-bang
+    // precondensation ("simulocaniaty") hypothesis, not textbook cosmology
+    // - see infoflotons/papers/precondensation_simulocaniaty_v0_*.md. The
+    // standard epochs that follow are unchanged. Shader phase index =
+    // array index (u_w[i] / u_p[i]).
     var PHASES = [
-      { id: 1, epoch: "EPOCH // 13.8B YRS AGO — HO'ŌLEILANA CONTRACTION",  sub: "DEEP SPACE FILAMENTS CONTRACTING TO DISTANT SINGULARITY",  t0: 0.0, t1: 1.8 },
-      { id: 2, epoch: "EPOCH // T=0 — QUANTUM BOUNCE & INFLATION",         sub: "EINSTEIN LENSING RING // RELATIVISTIC SINGULARITY FLASH",   t0: 1.8, t1: 2.5 },
-      { id: 3, epoch: "EPOCH // ~10⁻⁶ SEC — QUARK-GLUON PLASMA",           sub: "INCANDESCENT DECONFINED HADRONIC FLUID // 10¹² K",         t0: 2.5, t1: 3.4 },
-      { id: 4, epoch: "EPOCH // ~380,000 YR — RECOMBINATION (CMB)",         sub: "PLASMA CLEARING // COSMIC MICROWAVE BACKGROUND MOTTLING",  t0: 3.4, t1: 4.3 },
-      { id: 5, epoch: "EPOCH // ~100M YR — COSMIC DARK AGES",              sub: "GRAVITATIONAL FILAMENT CLUSTERING // 21CM HYDROGEN VOID",  t0: 4.3, t1: 5.1 },
-      { id: 6, epoch: "EPOCH // ~300M YR — FIRST STARS (POPULATION III)",  sub: "COSMIC DAWN // PRIMORDIAL HYPERMASSIVE STELLAR IGNITION",  t0: 5.1, t1: 6.0 },
-      { id: 7, epoch: "EPOCH // ~1B YR — GALAXY FORMATION",                sub: "SPIRAL DISK DYNAMICS // LUMINOUS COSMIC WEB FILAMENTS",    t0: 6.0, t1: 7.0 },
-      { id: 8, epoch: "EPOCH // ~4.5B YRS AGO — ACCRETION & PROTO-EARTH",  sub: "CIRCUMSTELLAR DISK // MAGMA OCEANS COOLING TO WATER",    t0: 7.0, t1: 8.1 },
-      { id: 9, epoch: "EPOCH // PRESENT DAY — LOW EARTH ORBIT // SIGHTX",   sub: "ORBITAL SHIPYARD APPROACH // 400 KM ALTITUDE INGRESS",     t0: 8.1, t1: 9.3 }
+      { epoch: "PRECONDENSATE // DIFFUSE MATTER BELOW THRESHOLD",          sub: "MHS HYPOTHESIS // THE PRESENT UNIVERSE AS THE NEXT BANG'S PRECURSOR STATE", t0: 0.0,  t1: 1.6 },
+      { epoch: "KNOWN SPACE // MILKY WAY → LOCAL GROUP → LANIAKEA",         sub: "OBSERVED // EVERY LOCAL STRUCTURE FLOWS TOWARD THE GREAT ATTRACTOR (TULLY ET AL. 2014)", t0: 1.6, t1: 4.2 },
+      { epoch: "UNKNOWN ATTRACTOR // DRAWN BY SEEMINGLY NOTHING",           sub: "MHS HYPOTHESIS // THE SAME INFLOW, FOLLOWED PAST WHAT IS MAPPED - NO VISIBLE MASS AT THE FOCUS", t0: 4.2, t1: 5.7 },
+      { epoch: "FIZZLES // LOCAL COLLAPSE, NO IGNITION",                    sub: "MHS HYPOTHESIS // NUCLEATION: ONE AT A TIME, EACH GOES DARK",             t0: 5.7,  t1: 7.2 },
+      { epoch: "SIMULOCANIATY // HO'ŌLEILANA CONTRACTION",                  sub: "MHS HYPOTHESIS // ENOUGH MATTER GATHERED AT ONCE - PRECONDITION MET",     t0: 7.2,  t1: 8.7 },
+      { epoch: "EPOCH // T=0 — BIG BANG: QUANTUM BOUNCE & INFLATION",      sub: "EINSTEIN LENSING RING // RELATIVISTIC SINGULARITY FLASH",   t0: 8.7,  t1: 9.4 },
+      { epoch: "EPOCH // ~10⁻⁶ SEC — QUARK-GLUON PLASMA",                  sub: "INCANDESCENT DECONFINED HADRONIC FLUID // 10¹² K",         t0: 9.4,  t1: 10.3 },
+      { epoch: "EPOCH // ~380,000 YR — RECOMBINATION (CMB)",                sub: "PLASMA CLEARING // COSMIC MICROWAVE BACKGROUND MOTTLING",  t0: 10.3, t1: 11.2 },
+      { epoch: "EPOCH // ~100M YR — COSMIC DARK AGES",                     sub: "GRAVITATIONAL FILAMENT CLUSTERING // 21CM HYDROGEN VOID",  t0: 11.2, t1: 12.0 },
+      { epoch: "EPOCH // ~300M YR — FIRST STARS (POPULATION III)",         sub: "COSMIC DAWN // PRIMORDIAL HYPERMASSIVE STELLAR IGNITION",  t0: 12.0, t1: 12.9 },
+      { epoch: "EPOCH // ~1B YR — GALAXY FORMATION",                       sub: "SPIRAL DISK DYNAMICS // LUMINOUS COSMIC WEB FILAMENTS",    t0: 12.9, t1: 13.9 },
+      { epoch: "EPOCH // ~4.5B YRS AGO — ACCRETION & PROTO-EARTH",         sub: "CIRCUMSTELLAR DISK // MAGMA OCEANS COOLING TO WATER",    t0: 13.9, t1: 15.0 },
+      { epoch: "EPOCH // PRESENT DAY — LOW EARTH ORBIT // SIGHTX",          sub: "ORBITAL SHIPYARD APPROACH // 400 KM ALTITUDE INGRESS",     t0: 15.0, t1: 16.2 }
     ];
+    var N_PHASES = PHASES.length;
 
-    var T_TOTAL = 9.3;
-    var T_TRANSITION_START = 8.6;
+    var T_TOTAL = 16.2;
+    var T_TRANSITION_START = 15.5;
 
     // ── Seamless Transition Lifecycle (Never Terminate in Black!) ──
     var transitionTriggered = false;
@@ -3205,10 +3471,16 @@
         introFullyCompleted = true;
         overlay.style.display = "none";
         if (overlay.parentNode) overlay.parentNode.removeChild(overlay);
+        liftedEls.forEach(function (el) { if (el.parentNode) el.parentNode.removeChild(el); });
         document.documentElement.style.overflow = "";
 
-        // Lower astronaut spacewalk hands in 3D scene
-        if (window.beginHandsLower) window.beginHandsLower();
+        // Lower astronaut spacewalk hands in 3D scene - except in embed
+        // mode, where the dossier must stay in the player's hand until
+        // they raise it (that IS the site's entry interaction).
+        if (!introIsEmbed && window.beginHandsLower) window.beginHandsLower();
+        if (introIsEmbed) {
+          try { window.parent.postMessage({ type: "weyland:intro-finished" }, location.origin); } catch (e) {}
+        }
       }, 680);
     }
 
@@ -3235,8 +3507,8 @@ precision highp float;
 
 uniform vec2 u_res;
 uniform float u_t;
-uniform float u_w1, u_w2, u_w3, u_w4, u_w5, u_w6, u_w7, u_w8, u_w9;
-uniform float u_p1, u_p2, u_p3, u_p4, u_p5, u_p6, u_p7, u_p8, u_p9;
+uniform float u_w[13];
+uniform float u_p[13];
 
 out vec4 fragColor;
 
@@ -3294,13 +3566,138 @@ float fbm(vec2 p) {
   return v;
 }
 
+vec3 phase1Hooleilana(vec2 p, float prog, float t);
+
 vec3 renderStarfield(vec2 p, float boost) {
   float stars = step(0.9965 - boost * 0.003, hash12(floor(p * 260.0)));
   float brightness = hash12(floor(p * 260.0) + 17.1);
   return vec3(stars * (0.4 + 0.6 * brightness) * (0.3 + 0.7 * boost));
 }
 
-// Phase 1: Hoʻōleilana BAO filament contraction (deep space view, filaments drawing inwards)
+// ── MHS hypothesis stages (precede the bang) ───────────────────────────
+// H1 Precondensate: an even, dim haze with no center. Matter is there, it
+// is simply below threshold. Slow drift, nothing organizes.
+vec3 phaseH1Precondensate(vec2 p, float prog, float t) {
+  vec2 q = p * 2.2 + vec2(t * 0.03, -t * 0.02);
+  float haze = fbm(q) * 0.55 + fbm(q * 2.7 + 11.0) * 0.25;
+  haze = smoothstep(0.25, 0.85, haze);
+  vec3 col = vec3(0.08, 0.13, 0.30) * haze * (0.7 + 0.5 * prog);
+  col += renderStarfield(p * 0.8 + 3.0, 0.15) * 0.25;
+  // a faint grain so it reads as particulate, not fog
+  col += vec3(0.10, 0.14, 0.26) * step(0.996, hash12(floor(p * 420.0) + floor(t * 2.0))) * 0.6;
+  return col;
+}
+
+// H2 Known space (OBSERVED, not hypothesis): start at home - an inclined
+// spiral that reads as the Milky Way - and zoom out until the Local Group
+// and the field appear, then the Laniakea flow: every nearby structure
+// streaming toward one off-center focus, the Great Attractor / Shapley
+// direction (Tully, Courtois, Hoffman & Pomarede 2014). This is the part
+// we actually have mapped; the hypothesis stages extrapolate from it.
+vec3 spiralGalaxy(vec2 q, float t) {
+  float r = length(q) + 1e-4;
+  float th = atan(q.y, q.x);
+  float arms = 0.0;
+  for (int k = 0; k < 2; k++) {
+    float a = th - 2.6 * log(r) + float(k) * 3.14159 + t * 0.04;
+    arms += exp(-pow(sin(a * 0.5), 2.0) * 16.0);
+  }
+  float disk = exp(-r * 1.9) * smoothstep(1.7, 0.9, r);
+  float bulge = exp(-r * r * 28.0) * 2.2;
+  float dust = 0.55 + 0.45 * noise2D(q * 7.0 + 2.0);
+  vec3 col = vec3(1.0, 0.90, 0.74) * bulge
+           + vec3(0.62, 0.72, 1.0) * disk * arms * dust * 1.1
+           + vec3(0.30, 0.36, 0.58) * disk * 0.22;
+  col += vec3(0.95, 0.60, 0.70) * disk * arms * pow(noise2D(q * 22.0), 6.0) * 2.0;
+  return col;
+}
+vec3 phaseH2KnownSpace(vec2 p, float prog, float t) {
+  float zoom = mix(1.1, 22.0, smoothstep(0.0, 0.62, prog));
+  vec2 att = vec2(0.34, 0.13);
+  vec3 col = vec3(0.0);
+  mat2 tilt = mat2(1.0, 0.0, 0.0, 1.0 / 0.52);
+  col += spiralGalaxy(tilt * (p * zoom), t);
+  float nb = smoothstep(0.35, 0.6, prog);
+  col += spiralGalaxy(tilt * ((p - vec2(-0.26, 0.17)) * zoom * 1.3), t + 9.0) * nb * 0.9;
+  col += spiralGalaxy((p - vec2(-0.08, 0.31)) * zoom * 3.0, t + 4.0) * nb * 0.5;
+  for (int i = 0; i < 10; i++) {
+    vec2 c = vec2(hash12(vec2(float(i), 1.7)), hash12(vec2(float(i), 8.2))) - 0.5;
+    c = c * vec2(1.6, 0.9) + att * 0.4;
+    float d = length((p - c * (1.0 - 0.15 * prog)) * zoom * 2.4);
+    col += vec3(0.85, 0.80, 0.70) * exp(-d * d * 1.5) * nb * 0.5;
+  }
+  float fl = smoothstep(0.5, 0.75, prog);
+  vec2 dv = p - att;
+  float r = length(dv) + 1e-4;
+  float ang = atan(dv.y, dv.x);
+  float a = ang / 6.2832 * 30.0;
+  float lane = hash12(vec2(floor(a), 2.0));
+  float along = fract(r * 5.0 + t * 0.8 + lane * 4.0);
+  float streak = smoothstep(0.6, 1.0, along) * step(0.4, lane);
+  float lineMask = smoothstep(0.22, 0.0, abs(fract(a) - 0.5));
+  col += vec3(0.35, 0.75, 1.0) * streak * lineMask * smoothstep(0.03, 0.2, r) * fl * 0.9;
+  col += vec3(0.60, 0.70, 1.0) * exp(-r * r * 40.0) * fl * 0.8;
+  col += renderStarfield(p * 0.9 + 1.0, 0.2) * 0.25 * (1.0 - nb * 0.5);
+  return col;
+}
+
+// H3 Unknown attractor: streamlines converge on a focus where NOTHING is
+// drawn - the focus is the one dark place on screen. Inflow speed grows.
+vec3 phaseH2Attractor(vec2 p, float prog, float t) {
+  float r = length(p) + 1e-4;
+  float ang = atan(p.y, p.x);
+  float flow = t * (0.6 + prog * 1.6);
+  // radial streak field: thin lines along the inflow direction, advected inward
+  float a = ang / 6.2832 * 38.0;
+  float lane = hash12(vec2(floor(a), 1.0));
+  float along = fract(r * 7.0 + flow + lane * 3.0);
+  float streak = smoothstep(0.55, 1.0, along) * step(0.35, lane);
+  float lineMask = smoothstep(0.22, 0.0, abs(fract(a) - 0.5));
+  float lines = streak * lineMask * smoothstep(0.08, 0.30, r) * (0.35 + prog * 0.9);
+  vec3 col = vec3(0.18, 0.42, 0.95) * lines;
+  // the haze from H1, now visibly drawn inward
+  vec2 q = p * (2.2 + prog * 1.5) + normalize(p) * (-flow * 0.08);
+  float haze = smoothstep(0.3, 0.9, fbm(q) * 0.6 + fbm(q * 2.5 + 7.0) * 0.25);
+  col += vec3(0.09, 0.15, 0.34) * haze * 0.9;
+  // the focus: darker than its surroundings, not brighter
+  col *= 0.35 + 0.65 * smoothstep(0.0, 0.10, r);
+  col += renderStarfield(p * 0.8 + 3.0, 0.15) * 0.2;
+  return col;
+}
+
+// H3 Fizzles: nucleation. Scattered local collapses pull in, flare, and go
+// dark one at a time. None of them ignites anything.
+vec3 phaseH3Fizzles(vec2 p, float prog, float t) {
+  vec3 col = phaseH2Attractor(p, 0.6, t) * 0.55;
+  vec2 cell = floor(p * 4.0 + 7.0);
+  vec2 f = fract(p * 4.0 + 7.0) - 0.5;
+  for (int dy = -1; dy <= 1; dy++) for (int dx = -1; dx <= 1; dx++) {
+    vec2 c = cell + vec2(float(dx), float(dy));
+    vec2 jitter = vec2(hash12(c), hash12(c + 9.1)) - 0.5;
+    vec2 d = f - vec2(float(dx), float(dy)) - jitter * 0.6;
+    float birth = hash12(c + 3.3) * 4.0;          // seconds (relative)
+    float life = 1.1 + hash12(c + 5.5) * 0.8;
+    float age = mod(t - birth, 4.6);
+    float u = clamp(age / life, 0.0, 1.0);
+    // radius shrinks (pull-in), brightness peaks then snaps to black
+    float rad = mix(0.22, 0.02, u);
+    float glow = exp(-dot(d, d) / (rad * rad)) ;
+    float bright = sin(u * 3.14159) * (1.0 - step(0.93, u));
+    float dark = smoothstep(0.86, 1.0, u) * 1.4;   // the dead spot afterwards
+    col += vec3(0.95, 0.72, 0.35) * glow * bright * 0.9;
+    col -= col * exp(-dot(d, d) / 0.004) * dark;
+  }
+  return max(col, 0.0);
+}
+
+// H4 Simulocaniaty: the whole field crosses at once. The contraction from
+// the original Hoʻōleilana phase, now global - everything brightens and
+// inrushes together instead of one spot at a time. Hands off to the bang.
+vec3 phaseH4Simulocaniaty(vec2 p, float prog, float t) {
+  return phase1Hooleilana(p, prog, t) * (0.8 + prog * 0.8);
+}
+
+// Phase 1 (original): Hoʻōleilana BAO filament contraction (deep space view, filaments drawing inwards)
 vec3 phase1Hooleilana(vec2 p, float prog, float t) {
   float r = length(p);
   float contraction = 1.0 + prog * 2.6;
@@ -3626,15 +4023,19 @@ void main() {
 
   vec3 col = vec3(0.0);
 
-  if (u_w1 > 0.001) col += phase1Hooleilana(p, u_p1, u_t) * u_w1;
-  if (u_w2 > 0.001) col += phase2Bounce(p, u_p2, u_t) * u_w2;
-  if (u_w3 > 0.001) col += phase3QuarkGluon(p, u_p3, u_t) * u_w3;
-  if (u_w4 > 0.001) col += phase4Recombination(p, u_p4, u_t) * u_w4;
-  if (u_w5 > 0.001) col += phase5DarkAges(p, u_p5, u_t) * u_w5;
-  if (u_w6 > 0.001) col += phase6FirstStars(p, u_p6, u_t) * u_w6;
-  if (u_w7 > 0.001) col += phase7Galaxies(p, u_p7, u_t) * u_w7;
-  if (u_w8 > 0.001) col += phase8EarthAccretion(p, u_p8, u_t) * u_w8;
-  if (u_w9 > 0.001) col += phase9LEOShipyard(p, u_p9, u_t) * u_w9;
+  if (u_w[0]  > 0.001) col += phaseH1Precondensate(p, u_p[0], u_t) * u_w[0];
+  if (u_w[1]  > 0.001) col += phaseH2KnownSpace(p, u_p[1], u_t) * u_w[1];
+  if (u_w[2]  > 0.001) col += phaseH2Attractor(p, u_p[2], u_t) * u_w[2];
+  if (u_w[3]  > 0.001) col += phaseH3Fizzles(p, u_p[3], u_t) * u_w[3];
+  if (u_w[4]  > 0.001) col += phaseH4Simulocaniaty(p, u_p[4], u_t) * u_w[4];
+  if (u_w[5]  > 0.001) col += phase2Bounce(p, u_p[5], u_t) * u_w[5];
+  if (u_w[6]  > 0.001) col += phase3QuarkGluon(p, u_p[6], u_t) * u_w[6];
+  if (u_w[7]  > 0.001) col += phase4Recombination(p, u_p[7], u_t) * u_w[7];
+  if (u_w[8]  > 0.001) col += phase5DarkAges(p, u_p[8], u_t) * u_w[8];
+  if (u_w[9]  > 0.001) col += phase6FirstStars(p, u_p[9], u_t) * u_w[9];
+  if (u_w[10] > 0.001) col += phase7Galaxies(p, u_p[10], u_t) * u_w[10];
+  if (u_w[11] > 0.001) col += phase8EarthAccretion(p, u_p[11], u_t) * u_w[11];
+  if (u_w[12] > 0.001) col += phase9LEOShipyard(p, u_p[12], u_t) * u_w[12];
 
   col = clamp(col, 0.0, 2.0);
   col = col / (1.0 + col * 0.15);
@@ -3676,12 +4077,7 @@ void main() {
     gl.vertexAttribPointer(aLoc, 2, gl.FLOAT, false, 0, 0);
 
     var U = {};
-    var uniformNames = [
-      "u_res", "u_t",
-      "u_w1", "u_w2", "u_w3", "u_w4", "u_w5", "u_w6", "u_w7", "u_w8", "u_w9",
-      "u_p1", "u_p2", "u_p3", "u_p4", "u_p5", "u_p6", "u_p7", "u_p8", "u_p9"
-    ];
-    uniformNames.forEach(function(n){
+    ["u_res", "u_t", "u_w", "u_p"].forEach(function(n){
       U[n] = gl.getUniformLocation(prog, n);
     });
 
@@ -3712,25 +4108,8 @@ void main() {
       gl.uniform2f(U.u_res, canvas.width, canvas.height);
       gl.uniform1f(U.u_t, t);
 
-      gl.uniform1f(U.u_w1, weights[0]);
-      gl.uniform1f(U.u_w2, weights[1]);
-      gl.uniform1f(U.u_w3, weights[2]);
-      gl.uniform1f(U.u_w4, weights[3]);
-      gl.uniform1f(U.u_w5, weights[4]);
-      gl.uniform1f(U.u_w6, weights[5]);
-      gl.uniform1f(U.u_w7, weights[6]);
-      gl.uniform1f(U.u_w8, weights[7]);
-      gl.uniform1f(U.u_w9, weights[8]);
-
-      gl.uniform1f(U.u_p1, subProgs[0]);
-      gl.uniform1f(U.u_p2, subProgs[1]);
-      gl.uniform1f(U.u_p3, subProgs[2]);
-      gl.uniform1f(U.u_p4, subProgs[3]);
-      gl.uniform1f(U.u_p5, subProgs[4]);
-      gl.uniform1f(U.u_p6, subProgs[5]);
-      gl.uniform1f(U.u_p7, subProgs[6]);
-      gl.uniform1f(U.u_p8, subProgs[7]);
-      gl.uniform1f(U.u_p9, subProgs[8]);
+      gl.uniform1fv(U.u_w, new Float32Array(weights));
+      gl.uniform1fv(U.u_p, new Float32Array(subProgs));
 
       gl.drawArrays(gl.TRIANGLES, 0, 3);
 

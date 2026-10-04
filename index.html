@@ -165,6 +165,10 @@
       margin: clamp(10px, 2.4vw, 32px) auto;
       border-radius: 4px;
       box-shadow: 0 30px 90px rgba(0, 0, 0, 0.55);
+      /* 0 0: the lowered state maps this box onto the folder's face in the
+         SightX scene with a 4-corner homography (matrix3d), which assumes
+         the element's own top-left as origin. */
+      transform-origin: 0 0;
       /* The top-left miter (0,55px)->(17px,0) is computed, not guessed -
          it traces the EXACT same line as the logo tab's own bottom-left
          corner: header's 1px top padding + the tab's own 54px height
@@ -219,17 +223,33 @@
        lowered, revealing the SightX world it was held up against. The
        world becomes interactive while lowered (pointer-events restored on
        the backdrop iframe); the raise control brings the folder back. */
-    body.folder-lowered .envelope-frame,
-    body.folder-lowered .wn-persistent-footer {
+    html.folder-lowered .envelope-frame,
+    html.folder-lowered .wn-persistent-footer {
       pointer-events: none;
     }
-    body.folder-lowered .envelope-frame {
-      transform: translateY(calc(100vh + 80px));
+    /* Lowered = back in the player's LEFT hand: it leaves/arrives from
+       the lower-left, slightly rolled, where SightX draws the folder in
+       hand - the raise reads as the same object coming up to the eye. */
+    /* Fallback only (no geometry from SightX yet, or the hand is out of
+       view): off-screen lower-left. Once SightX reports the folder's four
+       projected corners, an inline matrix3d pastes this element onto that
+       face - the live site IS the folder's texture. */
+    html.folder-lowered .envelope-frame {
+      transform: translate(-16vw, 112vh) rotate(-7deg);
+      box-shadow: none;
+      will-change: transform;
     }
-    body.folder-lowered .wn-persistent-footer {
+    #dossier-tap {
+      position: fixed; display: none; z-index: 650;
+      appearance: none; -webkit-appearance: none; border: 0; background: transparent; padding: 0; margin: 0;
+      cursor: pointer;
+    }
+    html.folder-lowered #dossier-tap.is-on { display: block; }
+    #dossier-tap:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+    html.folder-lowered .wn-persistent-footer {
       transform: translateX(-50%) translateY(calc(100vh + 80px));
     }
-    body.folder-lowered #stage-backdrop iframe {
+    html.folder-lowered #stage-backdrop iframe {
       pointer-events: auto;
     }
     @media (prefers-reduced-motion: reduce) {
@@ -1750,6 +1770,20 @@
   </style>
 </head>
 <body>
+  <script>
+    // The site is an artifact in SightX's world: a manila folder in the
+    // player's left hand. It starts LOWERED (in hand, world in view) so the
+    // chrono-telemetry prologue is the first thing anyone sees; [tap/enter]
+    // raises it. Set on <html> before first paint so there is no drop
+    // animation on load. Reduced-motion visitors get the folder raised.
+    (function () {
+      try {
+        if (!(window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches)) {
+          document.documentElement.classList.add("folder-lowered");
+        }
+      } catch (e) {}
+    })();
+  </script>
   <div id="boot-overlay" aria-hidden="true">
     <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="7" fill="none" stroke="#66d4ff" stroke-width="1.4"/><circle cx="12" cy="12" r="1.4" fill="#66d4ff"/><line x1="12" y1="1" x2="12" y2="4" stroke="#66d4ff" stroke-width="1.4"/><line x1="12" y1="20" x2="12" y2="23" stroke="#66d4ff" stroke-width="1.4"/><line x1="1" y1="12" x2="4" y2="12" stroke="#66d4ff" stroke-width="1.4"/><line x1="20" y1="12" x2="23" y2="12" stroke="#66d4ff" stroke-width="1.4"/></svg>
   </div>
@@ -1804,7 +1838,7 @@
         <a href="#wire" data-target="wire">News</a>
         <a class="wn-signin js-upgrade-cta" href="/login?redirect=/">Sign In</a>
       </nav>
-      <button type="button" class="wn-close" id="envelope-close" aria-label="Close the folder and reveal the SightX world behind it"><span class="wn-close-x" aria-hidden="true">&#x2715;</span><span class="wn-close-hint">[close]</span></button>
+      <button type="button" class="wn-close" id="envelope-close" aria-label="Lower the dossier back into your hand and reveal the SightX world"><span class="wn-close-x" aria-hidden="true">&#x2715;</span><span class="wn-close-hint">[close]</span></button>
     </div>
     <!-- Scroll progress bar IS the seam between nav and content - a child of
          the sticky header so it always sits exactly at its bottom edge,
@@ -2617,7 +2651,8 @@
   </main>
 
   </div><!-- /.envelope-frame -->
-  <button type="button" class="wn-raise" id="envelope-raise" hidden aria-label="Raise the folder back up"><span aria-hidden="true">&#x25B2;</span> [open folder]</button>
+  <button type="button" id="dossier-tap" aria-label="Raise the dossier"></button>
+  <button type="button" class="wn-raise" id="envelope-raise" hidden aria-label="Raise the folder back up"><span aria-hidden="true">&#x25B2;</span> [raise dossier]</button>
 
   <!-- Persistent footer (position:fixed, outside the scroll container,
        visible at every screen width) - the header's .wn-secondary is
@@ -3358,11 +3393,19 @@
       if (injected) return true;
       try {
         var reducedMotion = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-        if (!force && (reducedMotion || window.innerWidth < 900)) return false;
+        // Every viewport now, not desktop-only: the prologue is the site's
+        // opening shot (otherwise nobody ever sees the precondensation ->
+        // bang sequence). Reduced motion stays opt-in via [close].
+        if (!force && reducedMotion) return false;
         var backdrop = document.getElementById("stage-backdrop");
         if (!backdrop) return false;
         var frame = document.createElement("iframe");
-        frame.src = "/sightx?embed=bg";
+        frame.src = (location.hostname === "127.0.0.1" || location.hostname === "localhost")
+          ? "/weyland-sightx-worker/src/pages/sightx.html?embed=bg&intro=1"
+          : "/sightx?embed=bg&intro=1";
+        frame.addEventListener("load", function () {
+          if (window.__weylandSendDossierState) window.__weylandSendDossierState();
+        });
         frame.title = "SightX live world";
         frame.setAttribute("aria-hidden", "true");
         frame.tabIndex = -1;
@@ -3384,7 +3427,7 @@
        inert so focus can't land in it off-screen. Escape raises it. -->
   <script>
   (function () {
-    var body = document.body;
+    var root = document.documentElement;
     var frame = document.querySelector(".envelope-frame");
     var footerBar = document.querySelector(".wn-persistent-footer");
     var closeBtn = document.getElementById("envelope-close");
@@ -3395,29 +3438,128 @@
       if (on) { el.setAttribute("inert", ""); el.setAttribute("aria-hidden", "true"); }
       else { el.removeAttribute("inert"); el.removeAttribute("aria-hidden"); }
     }
+    function isLowered() { return root.classList.contains("folder-lowered"); }
+    // Tell SightX whether the dossier is raised (at the eye = the page) or
+    // lowered (in the player's hand), so it draws/hides the in-hand folder.
+    function sendState() {
+      var bd = document.querySelector("#stage-backdrop iframe");
+      if (!bd || !bd.contentWindow) return;
+      try { bd.contentWindow.postMessage({ type: "weyland:dossier-state", raised: !isLowered() }, location.origin); } catch (e) {}
+    }
+    window.__weylandSendDossierState = sendState;
+    function apply(lowered, focusTarget) {
+      var bd = document.querySelector("#stage-backdrop iframe");
+      if (lowered) {
+        root.classList.add("folder-lowered");
+        if (bd) bd.removeAttribute("aria-hidden");
+        setInert(frame, true); setInert(footerBar, true);
+        raiseBtn.hidden = false;
+        if (focusTarget) raiseBtn.focus();
+      } else {
+        root.classList.remove("folder-lowered");
+        if (bd) bd.setAttribute("aria-hidden", "true");
+        setInert(frame, false); setInert(footerBar, false);
+        raiseBtn.hidden = true;
+        if (focusTarget) closeBtn.focus();
+      }
+      sendState();
+    }
+    // ---- Project the live page onto the folder's face ----
+    // SightX posts the folder's four projected corners every frame; we
+    // solve the 4-point homography from this element's own box to those
+    // corners and apply it as matrix3d. Raising clears it, so the CSS
+    // transition carries the folder from the hand up to the eye as one
+    // continuous object.
+    var tap = document.getElementById("dossier-tap");
+    var live = false;          // true: follow geometry frames without transition
+    var lastMatrix = "";
+    function solve8(A, b) {
+      var n = 8, i, j, k;
+      for (i = 0; i < n; i++) {
+        var piv = i;
+        for (j = i + 1; j < n; j++) if (Math.abs(A[j][i]) > Math.abs(A[piv][i])) piv = j;
+        if (Math.abs(A[piv][i]) < 1e-12) return null;
+        if (piv !== i) { var tr = A[i]; A[i] = A[piv]; A[piv] = tr; var tb = b[i]; b[i] = b[piv]; b[piv] = tb; }
+        for (j = i + 1; j < n; j++) {
+          var f = A[j][i] / A[i][i];
+          for (k = i; k < n; k++) A[j][k] -= f * A[i][k];
+          b[j] -= f * b[i];
+        }
+      }
+      var x = new Array(n);
+      for (i = n - 1; i >= 0; i--) {
+        var sum = b[i];
+        for (k = i + 1; k < n; k++) sum -= A[i][k] * x[k];
+        x[i] = sum / A[i][i];
+      }
+      return x;
+    }
+    function homography(src, dst) {
+      var A = [], b = [];
+      for (var i = 0; i < 4; i++) {
+        var x = src[i][0], y = src[i][1], X = dst[i][0], Y = dst[i][1];
+        A.push([x, y, 1, 0, 0, 0, -X * x, -X * y]); b.push(X);
+        A.push([0, 0, 0, x, y, 1, -Y * x, -Y * y]); b.push(Y);
+      }
+      var h = solve8(A, b);
+      if (!h || h.some(function (v) { return !isFinite(v) || Math.abs(v) > 1e7; })) return null;
+      return "matrix3d(" + [h[0], h[3], 0, h[6], h[1], h[4], 0, h[7], 0, 0, 1, 0, h[2], h[5], 0, 1].map(function (v) { return v.toFixed(6); }).join(",") + ")";
+    }
+    function applyGeometry(g) {
+      if (!isLowered()) return;
+      if (!g || !g.inView || !g.corners) {
+        if (live) frame.style.transform = "";
+        if (tap) tap.classList.remove("is-on");
+        return;
+      }
+      var L = frame.offsetLeft, T = frame.offsetTop, W = frame.offsetWidth, H = frame.offsetHeight;
+      var dst = g.corners.map(function (c) { return [c[0] - L, c[1] - T]; });
+      var m = homography([[0, 0], [W, 0], [W, H], [0, H]], dst);
+      if (!m) return;
+      lastMatrix = m;
+      if (live) frame.style.transform = m;
+      if (tap) {
+        var xs = g.corners.map(function (c) { return c[0]; }), ys = g.corners.map(function (c) { return c[1]; });
+        var x0 = Math.max(0, Math.min.apply(null, xs)), x1 = Math.min(window.innerWidth, Math.max.apply(null, xs));
+        var y0 = Math.max(0, Math.min.apply(null, ys)), y1 = Math.min(window.innerHeight, Math.max.apply(null, ys));
+        tap.style.left = x0 + "px"; tap.style.top = y0 + "px"; tap.style.width = Math.max(0, x1 - x0) + "px"; tap.style.height = Math.max(0, y1 - y0) + "px";
+        tap.classList.toggle("is-on", g.visible && x1 > x0 && y1 > y0);
+      }
+    }
     function lower() {
       if (window.__weylandEnsureBackdrop) window.__weylandEnsureBackdrop(true);
-      var bd = document.querySelector("#stage-backdrop iframe");
-      if (bd) bd.removeAttribute("aria-hidden");
-      body.classList.add("folder-lowered");
-      setInert(frame, true);
-      setInert(footerBar, true);
-      raiseBtn.hidden = false;
-      raiseBtn.focus();
+      live = false;
+      frame.style.transition = "";                 // CSS 0.75s transform transition
+      apply(true, true);
+      frame.style.transform = lastMatrix;          // animate from the eye down into the hand
+      setTimeout(function () { live = true; frame.style.transition = "none"; }, 800);
     }
     function raise() {
-      body.classList.remove("folder-lowered");
-      setInert(frame, false);
-      setInert(footerBar, false);
-      var bd = document.querySelector("#stage-backdrop iframe");
-      if (bd) bd.setAttribute("aria-hidden", "true");
-      raiseBtn.hidden = true;
-      closeBtn.focus();
+      live = false;
+      if (tap) tap.classList.remove("is-on");
+      frame.style.transition = "";
+      // force a style flush so the transition starts from the current matrix
+      void frame.offsetWidth;
+      apply(false, true);
+      frame.style.transform = "";                  // back to identity: the page at the eye
     }
+    // Boot: the <head>-time class already lowered the folder visually;
+    // bring the rest of the state (inert, handle, iframe aria) in line,
+    // and follow geometry frames immediately (no drop animation).
+    apply(isLowered(), false);
+    if (isLowered()) { live = true; frame.style.transition = "none"; }
+    if (tap) tap.addEventListener("click", function () { raise(); });
     closeBtn.addEventListener("click", lower);
     raiseBtn.addEventListener("click", raise);
     document.addEventListener("keydown", function (e) {
-      if (e.key === "Escape" && body.classList.contains("folder-lowered")) raise();
+      if (!isLowered()) return;
+      if (e.key === "Escape" || e.key === "Enter") { e.preventDefault(); raise(); }
+    });
+    // SightX's in-world [tap / enter] callout asks us to raise.
+    window.addEventListener("message", function (e) {
+      if (e.origin !== location.origin || !e.data) return;
+      if (e.data.type === "weyland:raise-dossier") raise();
+      else if (e.data.type === "weyland:dossier-geometry") applyGeometry(e.data);
     });
   })();
   </script>
