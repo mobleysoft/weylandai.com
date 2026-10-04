@@ -80,13 +80,28 @@ echo "Pre-deploy checks passed: on main, clean tree (scoped), required bindings 
 # 4. Deploy for real.
 sd_deploy "$CONFIG" "$@"
 
-# 5. Post-deploy live verification against the real homepage - no dedicated
-#    /health route exists in this worker, so this checks for the page's own
-#    distinguishing title string instead, confirmed live 2026-09-24.
+# 5. Post-deploy live verification. No dedicated /health route exists in this
+#    worker, so check a page it genuinely serves. Until 2026-10-04 this checked
+#    "/" for the title "WeylandAI | SubX" - that failed on every deploy for two
+#    pre-existing reasons found 2026-10-04: the homepage title had long since
+#    changed, and "/" is no longer served by this worker at all (live header:
+#    X-Served-By: mascom-edge-via-weyland-platform-worker), so it could never
+#    verify THIS worker. /pricing is a bundled marketing page served directly
+#    from this worker's marketing-pages.js (confirmed live 2026-10-04).
 echo ""
 echo "== post-deploy verification =="
 sd_verify_response_body \
-  "https://weylandai.com/" \
-  "WeylandAI | SubX"
+  "https://weylandai.com/pricing" \
+  "Pricing &amp; Licensing | WeylandAI SubConP Suite"
+
+# 6. SightX hand-off. Since 2026-10-04 this worker must NOT serve /sightx
+#    itself: the bare /sightx (+query) 308s to /sightx/ on the dedicated
+#    weyland-sightx-worker (see weyland-entry.js). A regression here would
+#    silently resurrect the stale bundled SightX page for query-string URLs
+#    like /sightx?embed=bg&intro=1, which is exactly how it was found.
+sd_verify_response_header \
+  "https://weylandai.com/sightx?embed=bg&intro=1" \
+  "location" \
+  "https://weylandai.com/sightx/?embed=bg&intro=1"
 
 sd_banner_done "weylandai-com-worker"
