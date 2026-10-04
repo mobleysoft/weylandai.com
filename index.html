@@ -324,7 +324,11 @@
       align-items: center;
       justify-content: space-between;
       gap: 16px;
-      flex-wrap: wrap;
+      /* nowrap, not wrap: the ribbon shrinks (min-width:0) rather than
+         pushing the [close] control onto a second header row - seen live
+         on mobile, where the blade's full scroll width made the row wrap
+         and doubled the header's height. */
+      flex-wrap: nowrap;
       max-width: 1500px;
       /* margin:0, not 0 auto - auto-centering here would reopen the exact
          gap just closed on header's own left padding, on any screen wide
@@ -492,13 +496,16 @@
       .wn-close { height: 34px; gap: 6px; padding-left: 8px; font-size: 9.5px; }
       .wn-close-x { font-size: 16px; }
     }
-    /* Raise control: appears only while the folder is lowered, sitting on
-       the bottom edge where the folder went, cut like a tab so it reads as
-       the folder's own handle poking up from below. */
+    /* Raise control: appears only while the folder is lowered. Hangs from
+       the TOP edge, centered, cut as an inverted tab - the one spot the
+       SightX world keeps clear in both its desktop (drydock HUD) and
+       mobile (chrono-telemetry intro) scenes; at the bottom it sat on top
+       of SightX's own control bar / walkthrough button (seen live). */
     .wn-raise {
       position: fixed;
       left: 50%;
-      bottom: clamp(10px, 2.4vw, 32px);
+      top: 0;
+      padding-top: calc(11px + env(safe-area-inset-top, 0px));
       transform: translateX(-50%);
       z-index: 700;
       display: inline-flex;
@@ -514,7 +521,7 @@
       font: 800 11px/1 ui-monospace, monospace;
       font-family: var(--font-display);
       letter-spacing: 0.08em;
-      clip-path: polygon(14px 0, calc(100% - 14px) 0, 100% 100%, 0 100%);
+      clip-path: polygon(0 0, 100% 0, calc(100% - 14px) 100%, 14px 100%);
       box-shadow: 0 10px 30px rgba(0, 0, 0, 0.45);
     }
     .wn-raise[hidden] { display: none; }
