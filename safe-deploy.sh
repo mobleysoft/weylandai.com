@@ -92,7 +92,7 @@ echo ""
 echo "== post-deploy verification =="
 sd_verify_response_body \
   "https://weylandai.com/pricing" \
-  "Pricing &amp; Licensing | WeylandAI SubConP Suite"
+  "Pricing & Licensing | WeylandAI SubConP Suite"
 
 # 6. SightX hand-off. Since 2026-10-04 this worker must NOT serve /sightx
 #    itself: the bare /sightx (+query) 308s to /sightx/ on the dedicated
