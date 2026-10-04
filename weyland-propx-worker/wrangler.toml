@@ -49,9 +49,15 @@ bucket_name = "subx-uploads"
 # 60 seconds per session key (ephemeral token / user id / client IP).
 # The route checks env.DEMO_RATE_LIMITER defensively and reports in its
 # response whether a limiter was actually applied.
-[[unsafe.bindings]]
+# Documented form (developers.cloudflare.com/workers/runtime-apis/bindings/
+# rate-limit/): top-level [[ratelimits]], NOT [[unsafe.bindings]] type =
+# "ratelimit" - the unsafe form uploaded as inert "Unsafe Metadata" and a
+# 30-request burst from one session produced zero 429s (checked live
+# 2026-10-04 before switching). Enforcement is per-Cloudflare-location
+# and eventually consistent by design, so treat it as abuse damping, not
+# an exact counter.
+[[ratelimits]]
 name = "DEMO_RATE_LIMITER"
-type = "ratelimit"
 namespace_id = "2026100401"
 simple = { limit = 10, period = 60 }
 
