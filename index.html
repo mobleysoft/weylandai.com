@@ -258,6 +258,18 @@
       box-shadow: none;
       will-change: transform;
     }
+    /* iOS glue (2026-10-04): 100vh is the LARGE viewport on iOS Safari, so
+       with the toolbar expanded the frame overflowed the visible viewport and
+       a touch-drag scrolled the document, sliding the pasted site off the
+       folder SightX was still drawing in the hand. dvh tracks the real
+       viewport; the lowered state locks document scrolling outright; the
+       backdrop refuses browser touch gestures so drags reach SightX. */
+    @supports (height: 100dvh) {
+      .envelope-frame { height: calc(100dvh - 2 * clamp(10px, 2.4vw, 32px)); }
+      @media (max-width: 640px) { .envelope-frame { height: calc(100dvh - 12px); } }
+    }
+    html.folder-lowered, html.folder-lowered body { overflow: hidden; overscroll-behavior: none; }
+    html.folder-lowered #stage-backdrop { touch-action: none; }
     #dossier-tap {
       position: fixed; display: none; z-index: 650;
       appearance: none; -webkit-appearance: none; border: 0; background: transparent; padding: 0; margin: 0;
@@ -3909,14 +3921,22 @@
         if (tap) tap.classList.remove("is-on");
         return;
       }
-      var L = frame.offsetLeft, T = frame.offsetTop, W = frame.offsetWidth, H = frame.offsetHeight;
-      var dst = g.corners.map(function (c) { return [c[0] - L, c[1] - T]; });
+      // Corners arrive in the iframe's own CSS pixels. Bring them into this
+      // document's viewport (iframe rect) and then into the frame's
+      // untransformed layout box, which sits at offsetLeft/offsetTop minus
+      // whatever the document has scrolled (it should be 0 while lowered,
+      // but the mapping must not depend on that).
+      var bdEl = document.querySelector("#stage-backdrop iframe");
+      var bdRect = bdEl ? bdEl.getBoundingClientRect() : { left: 0, top: 0 };
+      var L = frame.offsetLeft - window.scrollX, T = frame.offsetTop - window.scrollY, W = frame.offsetWidth, H = frame.offsetHeight;
+      var corners = g.corners.map(function (c) { return [c[0] + bdRect.left, c[1] + bdRect.top]; });
+      var dst = corners.map(function (c) { return [c[0] - L, c[1] - T]; });
       var m = homography([[0, 0], [W, 0], [W, H], [0, H]], dst);
       if (!m) return;
       lastMatrix = m;
       if (live) frame.style.transform = m;
       if (tap) {
-        var xs = g.corners.map(function (c) { return c[0]; }), ys = g.corners.map(function (c) { return c[1]; });
+        var xs = corners.map(function (c) { return c[0]; }), ys = corners.map(function (c) { return c[1]; });
         var x0 = Math.max(0, Math.min.apply(null, xs)), x1 = Math.min(window.innerWidth, Math.max.apply(null, xs));
         var y0 = Math.max(0, Math.min.apply(null, ys)), y1 = Math.min(window.innerHeight, Math.max.apply(null, ys));
         tap.style.left = x0 + "px"; tap.style.top = y0 + "px"; tap.style.width = Math.max(0, x1 - x0) + "px"; tap.style.height = Math.max(0, y1 - y0) + "px";
@@ -3925,6 +3945,7 @@
     }
     function lower() {
       if (window.__weylandEnsureBackdrop) window.__weylandEnsureBackdrop(true);
+      try { window.scrollTo(0, 0); } catch (e) {}
       live = false;
       frame.style.transition = "";                 // CSS 0.75s transform transition
       apply(true, true);

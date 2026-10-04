@@ -958,6 +958,11 @@
     html.sxe-bg-embed #sightx-touch-ui {
       display: none !important;
     }
+    /* Embedded as the homepage backdrop: the page itself must never pan,
+       zoom or rubber-band under a finger; drags belong to the camera. */
+    html.sxe-bg-embed, html.sxe-bg-embed body { overflow: hidden; touch-action: none; overscroll-behavior: none; }
+    html.sxe-bg-embed #bg-canvas { touch-action: none; }
+    html.sxe-bg-embed .sx-walk-label { pointer-events: auto; cursor: pointer; }
   </style>
 </head>
 <body class="sightx-demo">
@@ -1214,7 +1219,7 @@
     </div>
   </div>
 
-  <script src="/assets/sightx-controls.js?v=20261004-2"></script>
+  <script src="/assets/sightx-controls.js?v=20261004-3"></script>
   <script src="/assets/sightx-experience.js?v=20261004-1"></script>
   <script>
     // Ingest (PDF upload UI) and the Unreal runtime bridge are not used in
@@ -3355,6 +3360,8 @@
         div.className = "sx-walk-label";
         div.appendChild(document.createTextNode(o.label));
         var sm = document.createElement("small"); sm.textContent = o.sub; div.appendChild(sm);
+        // Tap/click a label to walk to that opening (phones have no WASD).
+        div.addEventListener("click", function (e) { e.stopPropagation(); flyToOpening(o); });
         labelsRoot.appendChild(div);
         return { line: line, dot: dotEl, div: div };
       });
@@ -3379,6 +3386,19 @@
       while (dy > Math.PI) dy -= 2 * Math.PI;
       while (dy < -Math.PI) dy += 2 * Math.PI;
       fly = { t0: null, p0: c.position.slice(), p1: p1, yaw0: yaw0, dyaw: dy, pitch0: c.pitch, pitch1: pitch1 };
+    }
+    // Ease to a spot in the corridor facing one opening: side doors from
+    // just off the centreline on their side, the exit pair from 2.6 m back.
+    function flyToOpening(o) {
+      var c = controls();
+      if (!c || typeof c.setPose !== "function" || planActive()) return;
+      var p1, yaw1;
+      if (o.pair) { p1 = [0, DECK_Y + 1.60, o.z - 2.6]; yaw1 = 0; }
+      else { var side = o.x > 0 ? 1 : -1; p1 = [side * 0.25, DECK_Y + 1.60, o.z]; yaw1 = side * Math.PI / 2; }
+      var yaw0 = c.yaw, dy = yaw1 - yaw0;
+      while (dy > Math.PI) dy -= 2 * Math.PI;
+      while (dy < -Math.PI) dy += 2 * Math.PI;
+      fly = { t0: null, p0: c.position.slice(), p1: p1, yaw0: yaw0, dyaw: dy, pitch0: c.pitch, pitch1: -0.02 };
     }
     function stepFly(ts) {
       var c = controls();
@@ -3436,13 +3456,21 @@
       root.classList.add("is-on");
       var f = norm(fwd), r = norm(cross(upv, f)), u = cross(f, r);
       var W = window.innerWidth, H = window.innerHeight;
+      // Small screens: eight labels stacked down a corridor are unreadable,
+      // so show only the nearest four (the rest return as you walk).
+      var maxLabels = Math.min(W, H) < 760 ? 4 : nodes.length;
+      var keep = null;
+      if (maxLabels < nodes.length) {
+        keep = openings.map(function (o, i) { return [Math.hypot(o.x - cam[0], o.z - cam[2]), i]; })
+          .sort(function (a, b) { return a[0] - b[0]; }).slice(0, maxLabels).map(function (p) { return p[1]; });
+      }
       for (var i = 0; i < nodes.length; i++) {
         var o = openings[i], nd = nodes[i];
         var rel = [o.x - cam[0], HEAD_Y - cam[1], o.z - cam[2]];
         var v = [dot(rel, r), dot(rel, u), dot(rel, f)];
         var pt = project(v);
         var d = Math.hypot(rel[0], rel[1], rel[2]);
-        var vis = !!pt && d < 48 && pt[0] > -60 && pt[0] < W + 60 && pt[1] > -60 && pt[1] < H + 60;
+        var vis = !!pt && d < 48 && pt[0] > -60 && pt[0] < W + 60 && pt[1] > -60 && pt[1] < H + 60 && (!keep || keep.indexOf(i) !== -1);
         if (!vis) { nd.div.style.display = "none"; nd.line.setAttribute("visibility", "hidden"); nd.dot.setAttribute("visibility", "hidden"); continue; }
         var alpha = Math.max(0.18, Math.min(1, 1 - (d - 14) / 30));
         var scale = Math.max(0.62, Math.min(1, Math.sqrt(9 / Math.max(d, 1))));
@@ -3487,6 +3515,55 @@
       { label: "108 IT / DATA",   sub: "LCN 4040XP - Schlage L9080 - Hager BB1279" },
       { label: "100 EXIT PAIR",   sub: "Von Duprin 99 - LCN 4040XP - Ives 5BB1", pair: true }
     ], { silent: true });
+  })();
+  </script>
+
+  <!-- Embed touch motion (2026-10-04): the homepage backdrop hides the
+       touch joystick UI, so phones had no way to move. One finger on the
+       world: drag = look, press-and-hold = walk forward (drag sideways
+       while holding to steer), release = stop. Tapping a door label walks
+       to that door (sx-walk flyToOpening). Mouse pointers are untouched. -->
+  <script>
+  (function () {
+    if (!document.documentElement.classList.contains("sxe-bg-embed")) return;
+    var canvas = document.getElementById("bg-canvas");
+    if (!canvas) return;
+    var introOverlay = document.getElementById("cx-overlay");
+    function introUp() { return !!(introOverlay && introOverlay.parentNode && introOverlay.style.display !== "none"); }
+    function ctl() { try { return sightxControls; } catch (e) { return null; } }
+    var HOLD_MS = 320, MOVE_PX = 8;
+    var a = null;
+    // Diagnostics for the production check (counts only).
+    var stats = window.__sxTouchStats = { downs: 0, moves: 0, looks: 0, holds: 0, lastDx: 0 };
+    canvas.addEventListener("pointerdown", function (e) {
+      if (e.pointerType === "mouse" || introUp() || !ctl()) return;
+      stats.downs++;
+      e.preventDefault();
+      a = { id: e.pointerId, x0: e.clientX, y0: e.clientY, x: e.clientX, y: e.clientY, moved: false, walking: false };
+      try { canvas.setPointerCapture(e.pointerId); } catch (_) {}
+      a.timer = setTimeout(function () {
+        if (a && !a.moved) { a.walking = true; stats.holds++; var c = ctl(); if (c && c.setStick) c.setStick(0, -0.85); }
+      }, HOLD_MS);
+    }, { passive: false });
+    canvas.addEventListener("pointermove", function (e) {
+      if (!a || e.pointerId !== a.id) return;
+      var c = ctl(); if (!c || !c.lookBy) return;
+      var dx = e.clientX - a.x, dy = e.clientY - a.y;
+      a.x = e.clientX; a.y = e.clientY;
+      stats.moves++; stats.lastDx = dx;
+      if (!a.moved && Math.hypot(e.clientX - a.x0, e.clientY - a.y0) > MOVE_PX) a.moved = true;
+      if (a.walking) { stats.looks++; c.lookBy(dx, 0); }
+      else if (a.moved) { stats.looks++; c.lookBy(dx, dy); }
+    });
+    function end(e) {
+      if (!a || (e && e.pointerId !== a.id)) return;
+      clearTimeout(a.timer);
+      if (a.walking) { var c = ctl(); if (c && c.setStick) c.setStick(0, 0); }
+      a = null;
+    }
+    canvas.addEventListener("pointerup", end);
+    canvas.addEventListener("pointercancel", end);
+    window.addEventListener("blur", function () { end(null); });
   })();
   </script>
 

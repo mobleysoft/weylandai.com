@@ -383,7 +383,10 @@
       if (event.movementX) fwd = rotateAroundAxis(fwd, up, -event.movementX * settings.mouseSensitivity);
       if (event.movementY) fwd = rotateAroundAxis(fwd, right, -event.movementY * settings.mouseSensitivity);
       fwd = normalize3(fwd);
-      up = normalize3(cross3(right, fwd));
+      // up = fwd x right (same order as basisFromYawPitch). The previous
+      // right x fwd flipped the up vector on every event, so successive
+      // look events cancelled each other and the view could invert.
+      up = normalize3(cross3(fwd, right));
       if (event.movementX || event.movementY) {
         signalInput('look');
         hintState.lastInput = performance.now();
@@ -460,18 +463,31 @@
       lookY = event.clientY;
       lookZone.setPointerCapture(event.pointerId);
     });
+    // Touch look in screen pixels; shared by the look zone and by hosts
+    // that drive the camera from their own gestures (the weylandai.com
+    // embed has no touch UI, so it forwards canvas drags here).
+    function lookBy(dx, dy) {
+      if (!inputEnabled || (!dx && !dy)) return;
+      const right = normalize3(cross3(up, fwd));
+      if (dx) fwd = rotateAroundAxis(fwd, up, -dx * settings.touchSensitivity);
+      if (dy) fwd = rotateAroundAxis(fwd, right, -dy * settings.touchSensitivity);
+      fwd = normalize3(fwd);
+      up = normalize3(cross3(fwd, right));
+      signalInput('look');
+    }
+    // Virtual stick for hosts: x = strafe (-1..1), y = -forward (-1..1).
+    function setStick(x, y) {
+      stickAxis.x = clamp(Number(x) || 0, -1, 1);
+      stickAxis.y = clamp(Number(y) || 0, -1, 1);
+      if (stickAxis.x || stickAxis.y) signalInput('move');
+    }
     lookZone.addEventListener('pointermove', event => {
       if (event.pointerId !== lookPointer) return;
       const dx = event.clientX - lookX;
       const dy = event.clientY - lookY;
       lookX = event.clientX;
       lookY = event.clientY;
-      const right = normalize3(cross3(up, fwd));
-      if (dx) fwd = rotateAroundAxis(fwd, up, -dx * settings.touchSensitivity);
-      if (dy) fwd = rotateAroundAxis(fwd, right, -dy * settings.touchSensitivity);
-      fwd = normalize3(fwd);
-      up = normalize3(cross3(right, fwd));
-      if (dx || dy) signalInput('look');
+      lookBy(dx, dy);
     });
     const resetLook = event => { if (!event || event.pointerId === lookPointer) lookPointer = null; };
     lookZone.addEventListener('pointerup', resetLook);
@@ -730,6 +746,8 @@
       activate,
       setEnabled,
       setPose,
+      lookBy,
+      setStick,
       updateSettings,
       resetSettings,
       setBinding,
