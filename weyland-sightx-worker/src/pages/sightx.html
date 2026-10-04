@@ -1496,6 +1496,12 @@
     // the first frame, not something the page adds afterwards.
     uniform float u_introMode;
     uniform float u_glitch;
+    // Door-schedule walk (host -> iframe "weyland:walk-schedule"): up to 12
+    // door openings standing in a row on the port drydock catwalk so a
+    // visitor can walk a real door schedule. Each entry is (x, z, yaw, ajar).
+    // u_openCount == 0 leaves the default scene exactly as it was.
+    uniform float u_openCount;
+    uniform vec4  u_openings[12];
 
     float hash(vec3 p){ return fract(sin(dot(p,vec3(127.1,311.7,74.7)))*43758.5); }
     float noise(vec3 p){
@@ -1634,6 +1640,36 @@
       float vertical=abs(p.y-u_planHeight*.5)-u_planHeight*.5;
       vec2 d=vec2(plan,vertical);
       return min(max(d.x,d.y),0.0)+length(max(d,0.0));
+    }
+
+    // Door-schedule openings. Catwalk slab is centred y=-1.4 with half-height
+    // 0.08, so its deck top is y=-1.32; frames stand on it. Clear opening
+    // 0.9 m x 2.1 m, frame depth 0.1 m, jamb/head section 0.1 m. Material
+    // 40 = frame (see main()), the leaf reuses 17 (brushed light metal).
+    // Mirrored in JS (sxWalk: DECK_Y / HEAD_Y) for the DOM labels.
+    const float WALK_Y = -1.32;
+    const float WALK_W = 0.45;
+    const float WALK_H = 2.1;
+    vec2 openingsSdf(vec3 p, vec2 res){
+      for(int i=0;i<12;i++){
+        if(float(i) > u_openCount - 0.5) break;
+        vec4 o = u_openings[i];
+        vec3 q = p - vec3(o.x, WALK_Y, o.y);
+        // Cheap bounding sphere first: a conservative lower bound that can
+        // never register a hit (> 0.4), so the detailed SDF only runs close.
+        float bb = length(q - vec3(0.0, WALK_H*0.5 + 0.1, 0.0)) - 1.75;
+        if(bb > 0.4){ res.x = min(res.x, bb); continue; }
+        q = rotY(q, -o.z);
+        float jamb = 0.05, dep = 0.05;
+        float head  = sdBox(q - vec3(0.0, WALK_H + jamb, 0.0), vec3(WALK_W + 2.0*jamb, jamb, dep));
+        float jambs = sdBox(vec3(abs(q.x) - (WALK_W + jamb), q.y - WALK_H*0.5, q.z), vec3(jamb, WALK_H*0.5, dep));
+        res = put(res, min(head, jambs), 40.0);
+        // Leaf hinged on the -x jamb, swung open by o.w radians.
+        vec3 lq = rotY(q - vec3(-WALK_W, 0.0, 0.0), o.w);
+        float leaf = sdBox(lq - vec3(WALK_W - 0.01, WALK_H*0.5, 0.0), vec3(WALK_W - 0.02, WALK_H*0.5 - 0.02, 0.02));
+        res = put(res, leaf, 17.0);
+      }
+      return res;
     }
 
         vec2 map(vec3 p){
@@ -1952,6 +1988,9 @@
           res = put(res, sdBox(vec3(srot, starP.z), vec3(0.045, 0.045, 0.01)), 27.0);
         }
       }
+
+      // Door-schedule walk (skipped entirely when no schedule is loaded)
+      if(u_openCount > 0.5) res = openingsSdf(p, res);
 
       // Astronaut embodiment (first-person hands or third-person helmet/visor)
       if(u_thirdPerson < 0.5){
@@ -2601,6 +2640,15 @@
           albedo = vec3(0.02);
           float arcFlicker = step(0.40, fract(sin(u_t * 89.1) * 43758.5453)) * (0.6 + 0.4 * sin(u_t * 190.0));
           emissive = vec3(0.88, 0.94, 1.0) * (20.0 + 30.0 * arcFlicker);
+        } else if(matID > 39.5 && matID < 40.5){
+          // Door-schedule frames: dark powder-coat steel with a hi-vis
+          // yellow head and a yellow safety band on each jamb at hand height.
+          float headBand = step(WALK_Y + WALK_H + 0.005, p.y);
+          float jambBand = step(abs(p.y - (WALK_Y + 1.0)), 0.06);
+          float trim = max(headBand, jambBand);
+          albedo = mix(vec3(0.20,0.21,0.235), vec3(1.0,0.83,0.0), trim);
+          metal = mix(0.45, 0.0, trim); rough = mix(0.40, 0.6, trim);
+          emissive = mix(vec3(0.20,0.21,0.235)*0.08, vec3(1.0,0.83,0.0)*0.18, trim);
         } else {
           albedo = vec3(0.82,0.80,0.72);
           rough = 0.68;
@@ -2775,6 +2823,13 @@
     const uDossierHe = gl.getUniformLocation(prog, 'u_dossierHe');
     const uIntroMode = gl.getUniformLocation(prog, 'u_introMode');
     const uGlitch = gl.getUniformLocation(prog, 'u_glitch');
+    // Door-schedule walk: filled by window.sxWalk (sx-walk script below),
+    // uploaded every frame here so the shader and the DOM labels share one
+    // source of truth. count 0 => the shader skips the openings entirely.
+    const uOpenCount = gl.getUniformLocation(prog, 'u_openCount');
+    const uOpenings = gl.getUniformLocation(prog, 'u_openings');
+    const sxWalkGeom = window.__sxWalkGeom = { count: 0, data: new Float32Array(48) };
+    gl.uniform1f(uOpenCount, 0);
 
     const planSdfTexture = gl.createTexture();
     gl.activeTexture(gl.TEXTURE0);
@@ -2863,7 +2918,11 @@
       { id: 'welding-station-stbd', type: 'ROBOTIC FABRICATION', name: 'Robotic Welding Manipulator Arm (Starboard)', summary: 'Starboard upper bulkhead robotic welding unit with active spark discharge and real-time seam tracking optical sensors.', dimensions: '2.8 m reach / optical vision tracking head', material: 'Anodized bronze / fiber-laser welding head', hazard: 'Optical radiation flare warning', status: 'ACTIVE AUTONOMOUS CYCLE', position: [3.5, 4.5, 12.0], radius: 1.8, maxRange: 18, tags: ['interior', 'shipyard', 'robotics'] }
     ];
     sightxExperience = window.SightXExperience.create({ targets: scanTargets });
-    const sightxIngest = window.SightXSiteGenome.mount({ experience: sightxExperience });
+    // sightx-ingest.js is deliberately not loaded in background-embed mode
+    // (see the loader near the top of <body>), so SightXSiteGenome is absent
+    // there: guard it, or this whole script dies here and the embed never
+    // reaches the render loop.
+    const sightxIngest = window.SightXSiteGenome ? window.SightXSiteGenome.mount({ experience: sightxExperience }) : null;
     // STRESS VIEW toggle: additive and decoupled the same way INGEST SITE is
     // (sightx-experience.js's nav button dispatches a CustomEvent on click;
     // this page owns the WebGL uniform, so it listens here rather than
@@ -2911,9 +2970,14 @@
       return false;
     }
 
+    // The drydock scene (0e0edb0) removed the old interior door list but
+    // kept this proximity check, which every onMove() calls: an undefined
+    // 'doorways' threw inside frame() on the first movement and killed the
+    // render loop. No hardware doors in this scene => empty list.
+    const doorways = [];
     function checkDoorwayProximity(position, radius = 1.15) {
       if(activePlanModel){
-        document.getElementById('hardware-modal').style.display='none';
+        const pm = document.getElementById('hardware-modal'); if (pm) pm.style.display='none';
         return;
       }
       const px = position[0];
@@ -2928,6 +2992,7 @@
       }
       
       const modal = document.getElementById('hardware-modal');
+      if (!modal) return;
       if (nearDoor) {
         document.getElementById('hud-door-name').textContent = nearDoor.name.toUpperCase();
         document.getElementById('hud-door-hardware').textContent = nearDoor.hardware;
@@ -3184,6 +3249,9 @@
         gl.uniform1f(uIntroMode, 0);
       }
       gl.uniform1f(uGlitch, glitch);
+      gl.uniform1f(uOpenCount, sxWalkGeom.count);
+      if (sxWalkGeom.count > 0) gl.uniform4fv(uOpenings, sxWalkGeom.data);
+      if (window.sxWalk && window.sxWalk.tick) window.sxWalk.tick(camPos, camFwd, camUp, ts);
       gl.uniform1f(uScan, sightxExperience.scanAmount);
       gl.uniform3f(uTarget, scanTarget[0], scanTarget[1], scanTarget[2]);
       gl.uniform1f(uStressView, stressViewActive ? 1.0 : 0.0);
@@ -3199,7 +3267,9 @@
   </script>
   <script type="module" src="/assets/sightx-reconstruction.js?v=20260729-1"></script>
   <script>
-    window.SightXRuntime.mount({
+    // sightx-runtime.js is not loaded in background-embed mode (see the
+    // loader near the top of <body>), so the bridge is simply absent there.
+    if (window.SightXRuntime) window.SightXRuntime.mount({
       manifestUrl: '/sightx/runtime-manifest.json'
     }).catch(error => console.error('[SightX runtime]', error));
   </script>
@@ -3403,6 +3473,176 @@
       siteRaised = !!e.data.raised;
     });
     window.sxDossier = { geometry: geometry, lowered: lowered, update: update, introUp: introUp };
+  })();
+  </script>
+
+  <!-- Door-schedule walk (embed): the host posts a door schedule
+       ({type:"weyland:walk-schedule", openings:[{label, sub}]}, max 12) and
+       the openings are rendered as real door frames in a row on the port
+       drydock catwalk (shader: openingsSdf / material 40). This layer puts a
+       floating label over each frame head, projected every frame with the
+       same camera math the shader uses (see sxDossier.project). -->
+  <style>
+    #sx-walk { position: fixed; inset: 0; z-index: 29; pointer-events: none; display: none; }
+    #sx-walk.is-on { display: block; }
+    #sx-walk svg { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
+    .sx-walk-label {
+      position: absolute; pointer-events: none;
+      transform: translate(-50%, -100%); transform-origin: 50% 100%;
+      padding: 0 5px 6px 5px;
+      border-bottom: 1.5px solid #ffd400;
+      color: #ffd400; white-space: nowrap; text-align: center;
+      font: 800 13px/1.15 'Space Grotesk', ui-monospace, monospace; letter-spacing: 0.08em;
+      text-shadow: 0 0 10px rgba(255,212,0,0.45), 0 1px 2px rgba(0,0,0,0.9);
+    }
+    .sx-walk-label small { display: block; margin-top: 3px; font: 600 10.5px/1.2 'Outfit', sans-serif; letter-spacing: 0.06em; color: #f1f3f5; opacity: 0.85; text-transform: uppercase; }
+    @media (max-width: 640px) { .sx-walk-label { font-size: 12px; } }
+  </style>
+  <div id="sx-walk" aria-hidden="true"><svg id="sx-walk-svg"></svg><div id="sx-walk-labels"></div></div>
+  <script>
+  (function () {
+    var embed = document.documentElement.classList.contains("sxe-bg-embed");
+    var root = document.getElementById("sx-walk");
+    var svg = document.getElementById("sx-walk-svg");
+    var labelsRoot = document.getElementById("sx-walk-labels");
+    var geom = window.__sxWalkGeom;
+    if (!root || !svg || !labelsRoot || !geom) return;
+    var SVGNS = "http://www.w3.org/2000/svg";
+    // Row layout: port catwalk (x=-8.5, deck top y=-1.32, see WALK_Y in the
+    // shader), first frame at z=0, one every 2.0 m (a 2.0 pitch from z=0
+    // clears every transverse gantry rib column at z=3,9,15,21), all facing
+    // down the catwalk so walking +z passes through each opening in order.
+    var ROW_X = -8.5, ROW_Z0 = 0.0, ROW_DZ = 2.0, DECK_Y = -1.32, HEAD_Y = DECK_Y + 2.1 + 0.1;
+    var MAX = 12;
+    var openings = [], nodes = [], fly = null;
+    var introOverlay = document.getElementById("cx-overlay");
+    function introUp() { return !!(introOverlay && introOverlay.parentNode && introOverlay.style.display !== "none"); }
+    function clean(s, n) { s = (s == null ? "" : String(s)).replace(/\s+/g, " ").trim(); return s.length > n ? s.slice(0, n - 3) + "..." : s; }
+    function post(msg) { try { window.parent.postMessage(msg, location.origin); } catch (e) {} }
+    function norm(v) { var l = Math.hypot(v[0], v[1], v[2]) || 1; return [v[0] / l, v[1] / l, v[2] / l]; }
+    function cross(a, b) { return [a[1] * b[2] - a[2] * b[1], a[2] * b[0] - a[0] * b[2], a[0] * b[1] - a[1] * b[0]]; }
+    function dot(a, b) { return a[0] * b[0] + a[1] * b[1] + a[2] * b[2]; }
+    // Identical to sxDossier.project / the shader's rd (0.62 fov factor).
+    function project(v) {
+      var W = window.innerWidth, H = window.innerHeight, aspect = W / H;
+      if (v[2] <= 0.05) return null;
+      var ux = (v[0] / v[2]) / 0.62, uy = (v[1] / v[2]) / 0.62;
+      return [ (ux / aspect + 1) * 0.5 * W, (1 - uy) * 0.5 * H ];
+    }
+
+    function build() {
+      labelsRoot.textContent = "";
+      while (svg.firstChild) svg.removeChild(svg.firstChild);
+      nodes = openings.map(function (o) {
+        var line = document.createElementNS(SVGNS, "line");
+        line.setAttribute("stroke", "#ffd400"); line.setAttribute("stroke-width", "1.5"); line.setAttribute("stroke-linecap", "round");
+        var dotEl = document.createElementNS(SVGNS, "circle");
+        dotEl.setAttribute("r", "3"); dotEl.setAttribute("fill", "#ffd400");
+        svg.appendChild(line); svg.appendChild(dotEl);
+        var div = document.createElement("div");
+        div.className = "sx-walk-label";
+        div.appendChild(document.createTextNode(o.label));
+        var sm = document.createElement("small"); sm.textContent = o.sub; div.appendChild(sm);
+        labelsRoot.appendChild(div);
+        return { line: line, dot: dotEl, div: div };
+      });
+    }
+
+    function controls() { try { return sightxControls; } catch (e) { return null; } }
+    function planActive() { try { return !!activePlanModel; } catch (e) { return false; } }
+
+    // Ease the camera (not pointer-locked; the visitor can still click to
+    // fly) to a spot just behind and beside the first frame, elevated a
+    // little, looking down the row so every frame is in view at once.
+    function flyToRow(ts) {
+      var c = controls();
+      if (!c || typeof c.setPose !== "function" || planActive()) return;
+      var n = openings.length;
+      var zMid = ROW_Z0 + ROW_DZ * (n - 1) * 0.5;
+      // Inboard of the catwalk, a little above head height, just short of
+      // the first frame: an oblique view so the frames read as a receding
+      // row (sighting exactly along the row stacks them and their labels).
+      var p1 = [ROW_X + 2.1, DECK_Y + 2.6, ROW_Z0 - 3.0];
+      var ax = ROW_X - p1[0], az = zMid - p1[2];
+      var yaw1 = Math.atan2(ax, az);
+      var pitch1 = Math.atan2((DECK_Y + 1.3) - p1[1], Math.hypot(ax, az));
+      var yaw0 = c.yaw, dy = yaw1 - yaw0;
+      while (dy > Math.PI) dy -= 2 * Math.PI;
+      while (dy < -Math.PI) dy += 2 * Math.PI;
+      fly = { t0: null, p0: c.position.slice(), p1: p1, yaw0: yaw0, dyaw: dy, pitch0: c.pitch, pitch1: pitch1 };
+    }
+    function stepFly(ts) {
+      var c = controls();
+      if (!c || document.pointerLockElement) { fly = null; return; }
+      if (fly.t0 === null) fly.t0 = ts;
+      var k = Math.min(1, (ts - fly.t0) / 1800);
+      var e = k < 0.5 ? 4 * k * k * k : 1 - Math.pow(-2 * k + 2, 3) / 2;
+      var p = [fly.p0[0] + (fly.p1[0] - fly.p0[0]) * e, fly.p0[1] + (fly.p1[1] - fly.p0[1]) * e, fly.p0[2] + (fly.p1[2] - fly.p0[2]) * e];
+      c.setPose(p, fly.yaw0 + fly.dyaw * e, fly.pitch0 + (fly.pitch1 - fly.pitch0) * e);
+      if (k >= 1) fly = null;
+    }
+
+    function set(list) {
+      list = Array.isArray(list) ? list.slice(0, MAX) : [];
+      openings = list.map(function (o, i) {
+        o = (o && typeof o === "object") ? o : { label: o };
+        var swing = (0.35 + 0.5 * ((i * 3) % 5) / 4) * (i % 2 ? -1 : 1);
+        return { label: clean(o.label, 28) || ("OPENING " + (i + 1)), sub: clean(o.sub, 44),
+                 x: ROW_X, z: ROW_Z0 + i * ROW_DZ, yaw: 0, ajar: swing };
+      });
+      geom.data.fill(0);
+      openings.forEach(function (o, i) { geom.data[i * 4] = o.x; geom.data[i * 4 + 1] = o.z; geom.data[i * 4 + 2] = o.yaw; geom.data[i * 4 + 3] = o.ajar; });
+      geom.count = openings.length;
+      build();
+      if (openings.length) flyToRow(); else { fly = null; root.classList.remove("is-on"); }
+      post({ type: "weyland:walk-ready", count: openings.length });
+      return openings.length;
+    }
+
+    // Called from frame() with the RENDER camera (third-person aware).
+    function tick(cam, fwd, upv, ts) {
+      if (fly) stepFly(ts);
+      if (!openings.length) return;
+      if (introUp() || planActive()) { root.classList.remove("is-on"); return; }
+      root.classList.add("is-on");
+      var f = norm(fwd), r = norm(cross(upv, f)), u = cross(f, r);
+      var W = window.innerWidth, H = window.innerHeight;
+      for (var i = 0; i < nodes.length; i++) {
+        var o = openings[i], nd = nodes[i];
+        var rel = [o.x - cam[0], HEAD_Y - cam[1], o.z - cam[2]];
+        var v = [dot(rel, r), dot(rel, u), dot(rel, f)];
+        var pt = project(v);
+        var d = Math.hypot(rel[0], rel[1], rel[2]);
+        var vis = !!pt && d < 48 && pt[0] > -60 && pt[0] < W + 60 && pt[1] > -60 && pt[1] < H + 60;
+        if (!vis) { nd.div.style.display = "none"; nd.line.setAttribute("visibility", "hidden"); nd.dot.setAttribute("visibility", "hidden"); continue; }
+        var alpha = Math.max(0.18, Math.min(1, 1 - (d - 14) / 30));
+        var scale = Math.max(0.62, Math.min(1, Math.sqrt(9 / Math.max(d, 1))));
+        // Alternate leader heights so neighbouring labels stagger instead
+        // of stacking when several frames line up in depth.
+        var lead = Math.max(22, Math.min(64, 520 / Math.max(d, 4))) + (i % 2) * 26;
+        nd.line.setAttribute("visibility", "visible"); nd.dot.setAttribute("visibility", "visible");
+        nd.line.setAttribute("x1", pt[0]); nd.line.setAttribute("y1", pt[1]);
+        nd.line.setAttribute("x2", pt[0]); nd.line.setAttribute("y2", pt[1] - lead);
+        nd.line.setAttribute("opacity", alpha); nd.dot.setAttribute("opacity", alpha);
+        nd.dot.setAttribute("cx", pt[0]); nd.dot.setAttribute("cy", pt[1]);
+        nd.div.style.display = "block";
+        nd.div.style.left = pt[0] + "px"; nd.div.style.top = (pt[1] - lead) + "px";
+        nd.div.style.opacity = alpha;
+        nd.div.style.transform = "translate(-50%, -100%) scale(" + scale.toFixed(3) + ")";
+        nd.div.style.zIndex = String(1000 - Math.round(d * 10));
+      }
+    }
+
+    // Only the host can drive this (same-origin iframe, embed mode); the
+    // window.sxWalk handle below is for explicit/debug use anywhere.
+    if (embed) {
+      window.addEventListener("message", function (e) {
+        if (e.origin !== location.origin || !e.data || e.data.type !== "weyland:walk-schedule") return;
+        set(e.data.openings);
+      });
+    }
+    window.sxWalk = { set: set, clear: function () { return set([]); }, tick: tick,
+                      get openings() { return openings.slice(); }, get count() { return openings.length; } };
   })();
   </script>
 
