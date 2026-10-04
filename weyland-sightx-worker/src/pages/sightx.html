@@ -1214,8 +1214,18 @@
 
   <script src="/assets/sightx-controls.js?v=20260729-3"></script>
   <script src="/assets/sightx-experience.js?v=20260729-3"></script>
-  <script src="/assets/sightx-ingest.js?v=20260729-3"></script>
-  <script src="/assets/sightx-runtime.js?v=20260813-1"></script>
+  <script>
+    // Ingest (PDF upload UI) and the Unreal runtime bridge are not used in
+    // background-embed mode (their UI is hidden there anyway, and the
+    // runtime's manifest probe 404s in the console on every homepage
+    // load). Load them only when this page is the primary surface.
+    (function () {
+      if (document.documentElement.classList.contains("sxe-bg-embed")) return;
+      ["/assets/sightx-ingest.js?v=20260729-3", "/assets/sightx-runtime.js?v=20260813-1"].forEach(function (src) {
+        var s = document.createElement("script"); s.src = src; s.async = false; document.head.appendChild(s);
+      });
+    })();
+  </script>
   <script>
     // ── Slideshow SPA Navigation ─────────────────────────────────────────────
     let currentSlide = 0;
@@ -1412,7 +1422,13 @@
     let stressViewActive = false; // STRESS VIEW HUD toggle state, see u_stressView
     
     function resize() {
-      const scale = sightxExperience ? sightxExperience.renderScale : Math.min(window.devicePixelRatio, 1.25);
+      if (!gl) return; // no WebGL2 (seen under audit tooling): nothing to size
+      // Embed on a small screen: the scene is an ambient backdrop behind a
+      // prologue and a folder, not the primary surface - render at 1x so a
+      // phone GPU is not asked to raymarch at 2-3x device pixels.
+      const embedSmall = document.documentElement.classList.contains("sxe-bg-embed") && Math.min(window.innerWidth, window.innerHeight) < 900;
+      const scale = embedSmall ? Math.min(window.devicePixelRatio, 1.0)
+        : (sightxExperience ? sightxExperience.renderScale : Math.min(window.devicePixelRatio, 1.25));
       canvas.width = Math.floor(window.innerWidth * scale);
       canvas.height = Math.floor(window.innerHeight * scale);
       canvas.style.width = window.innerWidth + 'px';
@@ -3490,7 +3506,8 @@
     function smooth01(a, b, t) { var x = clamp01((t - a) / (b - a)); return x * x * (3 - 2 * x); }
 
     function resize() {
-      var dpr = Math.min(window.devicePixelRatio || 1, 2);
+      var introEmbedSmall = document.documentElement.classList.contains("sxe-bg-embed") && Math.min(window.innerWidth, window.innerHeight) < 900;
+      var dpr = Math.min(window.devicePixelRatio || 1, introEmbedSmall ? 1.25 : 2);
       canvas.width = Math.floor(window.innerWidth * dpr);
       canvas.height = Math.floor(window.innerHeight * dpr);
       gl.viewport(0, 0, canvas.width, canvas.height);
