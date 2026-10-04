@@ -3,12 +3,18 @@
 # launch-day fix never depends on one machine's Keychain. Manual dispatch
 # only - nothing deploys on push.
 #
-# One-time setup (repo Settings -> Secrets and variables -> Actions), set
-# 2026-10-04 from the machine's global environment with gh secret set:
-#   CLOUDFLARE_API_KEY     the account's Global API Key (the same credential
-#                          every local wrangler deploy uses)
-#   CLOUDFLARE_EMAIL       the account email
+# One-time setup (repo Settings -> Secrets and variables -> Actions), done
+# 2026-10-04: a least-privilege token named "weylandai-github-actions-deploy"
+# was minted via the Cloudflare API (Workers Scripts/KV/D1/R2/Queues/AI/
+# Vectorize/Observability write, Tail + Account Settings read on the account;
+# Workers Routes write + Zone read on weylandai.com; User Details +
+# Memberships read) and stored as:
+#   CLOUDFLARE_API_TOKEN   that token (wrangler-action v3 only accepts a token;
+#                          Global API Key auth is not supported there)
 #   CLOUDFLARE_ACCOUNT_ID  the account id
+# The same token is also in the machine's global env as
+# CLOUDFLARE_DEPLOY_API_TOKEN. Rotate by re-running the mint script and
+# re-setting the secret.
 # Then: Actions -> "Deploy worker" -> Run workflow -> pick the worker, or
 # gh workflow run deploy-workers.yml -f worker=<name>.
 name: Deploy worker
@@ -60,13 +66,8 @@ jobs:
           if [ -f package-lock.json ]; then npm ci --ignore-scripts; elif [ -f package.json ]; then npm install --ignore-scripts; fi
       - name: Deploy
         uses: cloudflare/wrangler-action@v3
-        env:
-          CLOUDFLARE_API_KEY: ${{ secrets.CLOUDFLARE_API_KEY }}
-          CLOUDFLARE_EMAIL: ${{ secrets.CLOUDFLARE_EMAIL }}
-          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
         with:
-          apiKey: ${{ secrets.CLOUDFLARE_API_KEY }}
-          email: ${{ secrets.CLOUDFLARE_EMAIL }}
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
           workingDirectory: ${{ steps.dir.outputs.dir }}
           command: deploy
