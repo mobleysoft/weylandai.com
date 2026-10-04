@@ -404,3 +404,32 @@ class AuthForStandard {
 
 // Export for use
 window.AuthForStandard = AuthForStandard;
+
+// Ephemeral-first identity (Suno.ai-style zero-friction entry): every
+// visitor gets a real, immediately usable guest token with no signup
+// wall, proxied through to AuthFor's real POST /api/v1/ephemeral/create.
+// Shared across every page on this origin via the same sessionStorage
+// key index.html's own copy of this helper uses, so navigating from the
+// main story page to a standalone product page in the same tab reuses
+// the same token instead of minting a second one. Each standalone
+// product page should call this as a fallback when AuthForStandard has
+// no real token yet, rather than showing a sign-in wall before first use
+// - the backend's own per-product EPHEMERAL_TRIAL_PRODUCTS allowlist (see
+// each worker's lib/auth.js) decides what an ephemeral token can actually
+// reach; a product that isn't eligible returns a real, honest 402 rather
+// than silently failing.
+(function () {
+  var EPHEMERAL_TOKEN_KEY = "weylandai_ephemeral_token_v1";
+  window.ephemeralToken = function () {
+    try {
+      var existing = sessionStorage.getItem(EPHEMERAL_TOKEN_KEY);
+      if (existing) return Promise.resolve(existing);
+    } catch (_) {}
+    return fetch("/api/auth/ephemeral", { method: "POST" })
+      .then(function (r) { if (!r.ok) throw new Error("ephemeral auth failed"); return r.json(); })
+      .then(function (d) {
+        try { sessionStorage.setItem(EPHEMERAL_TOKEN_KEY, d.token); } catch (_) {}
+        return d.token;
+      });
+  };
+})();

@@ -47,6 +47,7 @@
 //
 import { jsonResponse3 } from "../lib/json-response.js";
 import { generateJWT, hashPassword } from "../auth-module.js";
+import { checkRateLimit } from "../lib/rate-limit.js";
 
 /**
  * @param {object} router
@@ -265,8 +266,16 @@ export function registerAuthSessionRoutes(router, { authenticate, errorResponse 
     }
   });
 
-  router.post("/api/auth/ephemeral", async (request2) => {
+  router.post("/api/auth/ephemeral", async (request2, env2) => {
     try {
+      const ip = request2.headers.get("CF-Connecting-IP") || "unknown";
+      const rl = await checkRateLimit(ip, "ephemeral-create", env2, { requests: 10, windowSeconds: 60 });
+      if (rl.limited) {
+        return new Response(JSON.stringify({ error: "Too many requests - please slow down." }), {
+          status: 429,
+          headers: { "Content-Type": "application/json", "Retry-After": String(rl.retryAfter) }
+        });
+      }
       const body = await request2.json().catch(() => ({}));
       const resp = await fetch("https://authfor.com/api/v1/ephemeral/create", {
         method: "POST",
@@ -286,8 +295,16 @@ export function registerAuthSessionRoutes(router, { authenticate, errorResponse 
     }
   });
 
-  router.post("/api/auth/ephemeral/upgrade", async (request2) => {
+  router.post("/api/auth/ephemeral/upgrade", async (request2, env2) => {
     try {
+      const ip = request2.headers.get("CF-Connecting-IP") || "unknown";
+      const rl = await checkRateLimit(ip, "ephemeral-upgrade", env2, { requests: 10, windowSeconds: 60 });
+      if (rl.limited) {
+        return new Response(JSON.stringify({ error: "Too many requests - please slow down." }), {
+          status: 429,
+          headers: { "Content-Type": "application/json", "Retry-After": String(rl.retryAfter) }
+        });
+      }
       const body = await request2.json().catch(() => ({}));
       const { token, email, password, name } = body;
       if (!token || !email || !password) {
