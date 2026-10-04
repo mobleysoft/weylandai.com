@@ -1897,6 +1897,22 @@
             <small id="hm-note" style="color:var(--muted);font-size:11px">Captured from the live matcher on 2026-10-04.</small>
           </div>
         </div>
+        <!-- Paste a whole schedule: one spec per line (CSV/TSV/"Mfr Model"
+             all accepted). POST /api/cut-sheets/match-batch matches every
+             line through the same matcher and records misses (manufacturer
+             + model only) so coverage can grow. WALK THIS SCHEDULE hands the
+             matched openings to SightX and lowers the dossier. -->
+        <div class="metric-card" id="hero-schedule" style="text-align:left;padding:18px 22px">
+          <span>Or paste your door hardware schedule</span>
+          <textarea id="hs-text" rows="4" placeholder="One spec per line, e.g.&#10;LCN 4040XP&#10;Von Duprin, 99&#10;Schlage	L9080" style="width:100%;margin-top:10px;background:#161920;color:var(--text);border:1px solid var(--line);border-radius:8px;padding:10px 12px;font:500 13px/1.45 ui-monospace,monospace;resize:vertical"></textarea>
+          <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-top:10px">
+            <button id="hs-run" type="button" class="button accent" style="padding:9px 16px;font-size:11px">MATCH THE SCHEDULE</button>
+            <button id="hs-walk" type="button" class="button primary" style="padding:9px 16px;font-size:11px" disabled>WALK THIS SCHEDULE IN SIGHTX</button>
+            <small id="hs-note" style="color:var(--muted);font-size:11px">Up to 60 lines. Misses are recorded as manufacturer + model only, so coverage grows.</small>
+          </div>
+          <div id="hs-results" style="margin-top:12px;font-size:13px;color:var(--muted)"></div>
+          <div id="hs-dossier" style="margin-top:10px;font-size:11px;color:var(--muted)"></div>
+        </div>
       </div>
     </section>
 
@@ -2267,6 +2283,18 @@
           <button id="cx-match-btn" class="button primary" type="button">MATCH</button>
         </div>
         <div id="cx-match-results" style="margin-top:16px;color:var(--muted);font-size:13px"></div>
+        <!-- Live catalog coverage from GET /api/cut-sheets/coverage (public,
+             real counts). Misses are the product: the most-missed models
+             are listed, and a visitor can request a manufacturer. -->
+        <div id="cx-coverage" style="margin-top:18px;padding-top:14px;border-top:1px solid var(--line);font-size:12.5px;color:var(--muted)">
+          <div style="font:800 10.5px/1 var(--font-display);letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);margin-bottom:8px">CATALOG COVERAGE, LIVE</div>
+          <div id="cx-coverage-body">Loading real counts&hellip;</div>
+          <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-top:10px">
+            <input id="cx-req-mfr" type="text" maxlength="80" placeholder="Request a manufacturer (e.g. Pemko)" style="flex:1;min-width:200px;background:#161920;border:1px solid var(--line);border-radius:8px;padding:8px 10px;color:var(--text);font-size:13px">
+            <button id="cx-req-btn" type="button" class="button" style="padding:8px 14px;font-size:11px">REQUEST</button>
+            <small id="cx-req-note" style="color:var(--muted);font-size:11px"></small>
+          </div>
+        </div>
       </div>
     </section>
 
@@ -2279,9 +2307,9 @@
       <h2>Precision Auto Doors is the suite&rsquo;s first real user.</h2>
       <p class="hero-sub">Andrew Miller&rsquo;s door company runs its own work through WeylandAI while it is being built. The door and hardware workflows on this page are the ones that trade actually lives in: spec lines, catalog variants, submittal packages, priced proposals. When one of their jobs has been run start to finish with the clock on it, that number goes here. Until then, the only timed figure is the sample package below, and it is labeled as such.</p>
       <div class="metrics-row" style="grid-template-columns:repeat(3,1fr);max-width:860px">
-        <div class="metric-card"><span>Sample package, end to end</span><strong class="g">6.6&nbsp;s</strong><small style="color:var(--muted);font-size:11px">6 spec lines matched, proposal priced, real PDF rendered</small></div>
-        <div class="metric-card"><span>Spec lines matched</span><strong class="b">6 / 6</strong><small style="color:var(--muted);font-size:11px">LCN, Von Duprin, Schlage, Ives, Hager</small></div>
-        <div class="metric-card"><span>Measured</span><strong class="p">2026-10-04</strong><small style="color:var(--muted);font-size:11px">against production, no account; harness in the repo (launch/case-study/timed_run.mjs)</small></div>
+        <div class="metric-card"><span id="bw-label">Sample package, end to end</span><strong class="g" id="bw-total">6.6&nbsp;s</strong><small id="bw-total-sub" style="color:var(--muted);font-size:11px">6 spec lines matched, proposal priced, real PDF rendered</small></div>
+        <div class="metric-card"><span>Spec lines matched</span><strong class="b" id="bw-matched">6 / 6</strong><small id="bw-matched-sub" style="color:var(--muted);font-size:11px">LCN, Von Duprin, Schlage, Ives, Hager</small></div>
+        <div class="metric-card"><span>Measured</span><strong class="p" id="bw-date">2026-10-04</strong><small style="color:var(--muted);font-size:11px">against production, no account; harness in the repo (launch/case-study/timed_run.mjs). This card reads the latest committed run.</small></div>
       </div>
     </section>
 
@@ -2480,6 +2508,7 @@
               var d = res.data;
               if (!d || !d.success || !d.totals || !d.lineItems) { box.textContent = "Unexpected response from /api/proposals/demo (" + res.status + ")."; return; }
               var t = d.totals;
+              try { window.dispatchEvent(new CustomEvent("weyland:proposal", { detail: { total: t.grandTotal, lines: d.lineItemCount, at: Date.now() } })); } catch (e) {}
               var rows = d.lineItems.map(function(li){
                 var desc = [li.material, li.size, li.fire_rating ? "FR " + li.fire_rating : null].filter(Boolean).join(" · ") || li.notes || "";
                 return "<tr><td><strong style=\"color:var(--text)\">" + pxEsc(li.door_type) + "</strong><br><small style=\"color:var(--muted)\">" + pxEsc(desc) + "</small></td>" +
@@ -3163,6 +3192,110 @@
       });
     }
 
+    // 5b3. The dossier remembers: matched lines and the last priced proposal
+    // persist in this browser (localStorage) across raise/lower and reloads.
+    var DOSSIER_KEY = "weyland_dossier_v1";
+    function dossierRead() { try { return JSON.parse(localStorage.getItem(DOSSIER_KEY) || "{}") || {}; } catch (e) { return {}; } }
+    function dossierWrite(d) { try { localStorage.setItem(DOSSIER_KEY, JSON.stringify(d)); } catch (e) {} dossierRender(); }
+    function dossierRender() {
+      var d = dossierRead(), n = (d.matches || []).length, el = document.getElementById("hs-dossier"), sub = document.querySelector("#upgrade-modal .upgrade-sub");
+      var text = "";
+      if (n || d.proposal) {
+        text = "Your dossier holds " + n + " matched line" + (n === 1 ? "" : "s") + (d.proposal ? " and a priced proposal (" + Number(d.proposal.total).toLocaleString(undefined, { style: "currency", currency: "USD" }) + ")" : "") + ", kept in this browser.";
+      }
+      if (el) el.textContent = text;
+      if (sub) sub.textContent = text ? text.replace("kept in this browser", "create an account to keep it on every device") : "Your current session carries over \u2014 nothing is lost.";
+    }
+    window.addEventListener("weyland:proposal", function (e) { var d = dossierRead(); d.proposal = e.detail; dossierWrite(d); });
+    dossierRender();
+
+    // 5b4. Paste a schedule -> POST /api/cut-sheets/match-batch -> table with
+    // per-line citations, running hit count, misses with a request link,
+    // and WALK THIS SCHEDULE (SightX) once anything matched.
+    var hsRun = document.getElementById("hs-run"), hsWalk = document.getElementById("hs-walk");
+    var hsMatched = [];
+    function hsEsc(v) { return String(v == null ? "" : v).replace(/[&<>"]/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", "\"": "&quot;" }[c]; }); }
+    if (hsRun) {
+      hsRun.addEventListener("click", function () {
+        var text = document.getElementById("hs-text").value;
+        var out = document.getElementById("hs-results"), note = document.getElementById("hs-note");
+        if (!text.trim()) { out.textContent = "Paste at least one spec line."; return; }
+        hsRun.disabled = true; hsWalk.disabled = true; hsMatched = [];
+        out.textContent = "Matching every line on the real matcher\u2026";
+        var t0 = performance.now();
+        ephemeralToken().then(function (token) {
+          return fetch("/api/cut-sheets/match-batch", { method: "POST", headers: { "Authorization": "Bearer " + token, "Content-Type": "application/json" }, body: JSON.stringify({ text: text }) });
+        }).then(function (r) { return r.json().then(function (d) { return { ok: r.ok, status: r.status, data: d }; }); }).then(function (res) {
+          var ms = Math.round(performance.now() - t0);
+          if (!res.ok) { var m = (res.data && res.data.error && (res.data.error.message || res.data.error)) || ("request failed (" + res.status + ")"); out.textContent = String(m); return; }
+          var results = (res.data && res.data.results) || [], sum = res.data.summary || {};
+          var rows = results.map(function (r) {
+            var p = r.product || {}, cs = r.cutSheet || null;
+            var cite = cs ? ((cs.pageUrl ? "<a href=\"" + hsEsc(cs.pageUrl) + "\" target=\"_blank\" rel=\"noopener\" style=\"color:var(--blue)\">" : "") + hsEsc(cs.title || "cut sheet") + (cs.pageHint ? ", pp. " + hsEsc(cs.pageHint) : "") + (cs.pageUrl ? "</a>" : "")) : "\u2014";
+            var req = r.matched ? "" : " <a href=\"#cx-coverage\" style=\"color:var(--accent)\">request</a>";
+            return "<tr><td style=\"font-family:ui-monospace,monospace;color:var(--text)\">" + hsEsc(r.raw || ((r.manufacturer || "") + " " + (r.model || ""))) + "</td>" +
+              "<td style=\"color:" + (r.matched ? "var(--text)" : "var(--red)") + ";font-weight:" + (r.matched ? "700" : "400") + "\">" + (r.matched ? hsEsc(p.name || (p.manufacturer + " " + p.model)) : "no match" + req) + "</td>" +
+              "<td style=\"color:var(--green)\">" + (r.matched ? hsEsc((r.confidence || "") + " \u00b7 " + (r.matchType || "")) : "") + "</td>" +
+              "<td>" + cite + "</td></tr>";
+          }).join("");
+          out.innerHTML = "<div style=\"color:var(--text);font-weight:700;margin-bottom:6px\">" + (sum.matched || 0) + " of " + (sum.total || results.length) + " lines matched \u00b7 " + ms + " ms</div>" +
+            "<div style=\"overflow-x:auto\"><table style=\"width:100%;border-collapse:collapse;font-size:12.5px\"><thead><tr style=\"color:var(--muted);text-align:left\"><th>SPEC LINE</th><th>MATCHED</th><th>CONFIDENCE</th><th>CITATION</th></tr></thead><tbody>" + rows + "</tbody></table></div>";
+          hsMatched = results.filter(function (r) { return r.matched; }).map(function (r) { var p = r.product || {}; return { label: p.model || r.model || "", sub: (p.manufacturer || r.manufacturer || "") + (p.category ? " \u00b7 " + p.category : "") }; });
+          hsWalk.disabled = hsMatched.length === 0;
+          var d = dossierRead(); d.matches = (d.matches || []).concat(results.filter(function (r) { return r.matched; }).map(function (r) { return { raw: r.raw, product: (r.product || {}).name, confidence: r.confidence, at: Date.now() }; })).slice(-200); dossierWrite(d);
+        }).catch(function (err) { out.textContent = "Request failed: " + err.message; }).finally(function () { hsRun.disabled = false; });
+      });
+      hsWalk.addEventListener("click", function () {
+        var bd = document.querySelector("#stage-backdrop iframe");
+        var note = document.getElementById("hs-note");
+        if (!bd || !bd.contentWindow || !hsMatched.length) { note.textContent = "SightX is not loaded in this browser (reduced motion or no WebGL)."; return; }
+        try { bd.contentWindow.postMessage({ type: "weyland:walk-schedule", openings: hsMatched.slice(0, 12) }, location.origin); } catch (e) {}
+        note.textContent = "Handing " + Math.min(12, hsMatched.length) + " openings to SightX\u2026 raise the dossier any time with Enter.";
+        if (window.__weylandLowerDossier) window.__weylandLowerDossier();
+      });
+      window.addEventListener("message", function (e) {
+        if (e.origin !== location.origin || !e.data || e.data.type !== "weyland:walk-ready") return;
+        var note = document.getElementById("hs-note"); if (note) note.textContent = "SightX placed " + e.data.count + " openings along the catwalk. Click the world to fly; Enter raises the dossier.";
+      });
+    }
+
+    // 5b5. Catalog coverage (public endpoint, real counts) + manufacturer request.
+    var covBody = document.getElementById("cx-coverage-body");
+    if (covBody) {
+      fetch("/api/cut-sheets/coverage").then(function (r) { return r.ok ? r.json() : Promise.reject(new Error("coverage " + r.status)); }).then(function (c) {
+        var top = (c.top_missed || []).slice(0, 5).map(function (m) { return hsEsc((m.manufacturer || "?") + " " + (m.model || "")) + " (" + m.count + ")"; }).join(", ");
+        covBody.innerHTML = "<strong style=\"color:var(--text)\">" + Number(c.products || 0).toLocaleString() + "</strong> products across <strong style=\"color:var(--text)\">" + Number(c.manufacturers || 0).toLocaleString() + "</strong> manufacturers, <strong style=\"color:var(--text)\">" + Number(c.cutSheets || 0).toLocaleString() + "</strong> product-to-page citations into <strong style=\"color:var(--text)\">" + Number(c.cutSheetFiles || 0).toLocaleString() + "</strong> manufacturer price books. " +
+          "Spec lines missed in the wild so far: <strong style=\"color:var(--text)\">" + Number(c.misses_total || 0).toLocaleString() + "</strong> (" + Number(c.misses_distinct || 0).toLocaleString() + " distinct)" + (top ? ". Most missed: " + top + "." : ".") + (c.requests ? " Manufacturer requests: " + c.requests + "." : "");
+      }).catch(function (err) { covBody.textContent = "Coverage counts unavailable right now (" + err.message + ")."; });
+      var reqBtn = document.getElementById("cx-req-btn");
+      reqBtn.addEventListener("click", function () {
+        var mfr = document.getElementById("cx-req-mfr").value.trim(), note = document.getElementById("cx-req-note");
+        if (!mfr) { note.textContent = "Type a manufacturer name."; return; }
+        reqBtn.disabled = true; note.textContent = "Sending\u2026";
+        ephemeralToken().then(function (token) {
+          return fetch("/api/cut-sheets/request-manufacturer", { method: "POST", headers: { "Authorization": "Bearer " + token, "Content-Type": "application/json" }, body: JSON.stringify({ manufacturer: mfr }) });
+        }).then(function (r) { note.textContent = r.ok ? "Recorded. It counts toward what we catalogue next." : "Could not record it (" + r.status + ")."; })
+          .catch(function (err) { note.textContent = "Request failed: " + err.message; }).finally(function () { reqBtn.disabled = false; });
+      });
+    }
+
+    // 5b6. Living chapter: the built-with cards read the latest committed run
+    // (launch/case-study/latest_run.json, served by the GitHub Pages origin).
+    (function () {
+      var tot = document.getElementById("bw-total"); if (!tot) return;
+      fetch("https://mobleysoft.github.io/weylandai.com/launch/case-study/latest_run.json", { cache: "no-store" }).then(function (r) { return r.ok ? r.json() : null; }).then(function (run) {
+        if (!run || !run.totalMs || run.failed) return;
+        var real = run.source === "real-bid-file";
+        document.getElementById("bw-label").textContent = (real ? "A real bid, end to end" : "Sample package, end to end");
+        tot.textContent = (run.totalMs / 1000).toFixed(1) + " s";
+        document.getElementById("bw-total-sub").textContent = run.specCount + " spec lines matched, proposal priced" + (run.pdf && run.pdf.isPdf ? ", real PDF rendered" : "");
+        document.getElementById("bw-matched").textContent = run.matchedCount + " / " + run.specCount;
+        var mf = {}; (run.matches || []).forEach(function (m) { if (m.matched && m.spec && m.spec.manufacturer) mf[m.spec.manufacturer] = 1; });
+        document.getElementById("bw-matched-sub").textContent = Object.keys(mf).join(", ");
+        document.getElementById("bw-date").textContent = String(run.finishedAt || run.startedAt || "").slice(0, 10);
+      }).catch(function () {});
+    })();
+
     // 5c. Chapter 04: CutsheetX - real live match against /api/cut-sheets/match,
     // same ephemeral-token pattern as HuntX above. The static example cards
     // stay as illustrative examples (honestly labeled, no live claim); this
@@ -3743,6 +3876,7 @@
     apply(isLowered(), false);
     if (isLowered()) { live = true; frame.style.transition = "none"; }
     if (tap) tap.addEventListener("click", function () { raise(); });
+    window.__weylandLowerDossier = lower;
     document.querySelectorAll(".js-lower-dossier").forEach(function (el) {
       el.addEventListener("click", function (e) { e.preventDefault(); lower(); });
     });

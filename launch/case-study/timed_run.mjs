@@ -74,3 +74,10 @@ console.error("\nstep".padEnd(44) + "ms".padStart(8) + "  ok");
 for (const s of steps) console.error(s.step.padEnd(43) + String(s.ms).padStart(8) + "  " + (s.ok ? "yes" : "NO " + (s.error || "")));
 console.error("total".padEnd(43) + String(run.totalMs).padStart(8) + "\nmatched " + run.matchedCount + "/" + run.specCount + " spec lines; proposal " + (run.proposal ? "ok" : "failed") + "; pdf " + (run.pdf && run.pdf.isPdf ? run.pdf.bytes + " bytes" : "failed"));
 console.log(JSON.stringify(run, null, 2));
+// The homepage's built-with cards read latest_run.json from the GitHub Pages
+// origin, so committing this file after a run updates the site.
+try {
+  const here = new URL(".", import.meta.url).pathname;
+  fs.writeFileSync(here + "latest_run.json", JSON.stringify(run, null, 2));
+  console.error("wrote " + here + "latest_run.json (commit it to update the built-with chapter)");
+} catch (e) { console.error("could not write latest_run.json: " + e.message); }
