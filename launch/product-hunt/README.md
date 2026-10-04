@@ -27,6 +27,9 @@ Construction, Developer Tools, Artificial Intelligence, Productivity, SaaS
 - Privacy: https://consenta.cc/policy/weylandai.com/privacy
 - Terms: https://consenta.cc/policy/weylandai.com/terms
 
+## Lead media (video)
+media/weylandai_run_2026-10-04.mp4 — 35 s, 1280×720, recorded against production on 2026-10-04: prologue, dossier in hand, raise, a real CutsheetX match (LCN 4040XP), a real PropX proposal for Precision Auto Doors, pricing. Recorded headless (software GL), so the 3D frames are choppier than a real GPU; re-record on a Mac with screen capture before launch if time allows, same script: scratchpad record_run.mjs flow is documented in DEPLOY_PATHS.md's neighbor files.
+
 ## Gallery (1270×760, captured live — see ./gallery/)
 1. `05_cutsheetx_live_match.png` — lead image: CutsheetX live catalog match with source citations.
 2. `02_dossier_in_hand.png` — the site as a dossier in the player's hand inside SightX, with the [tap / enter] callout.

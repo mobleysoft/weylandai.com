@@ -32,3 +32,13 @@ subject has agreed in writing to be named.
 Ask the $40k partner for one introduction to a subcontractor who will run one real bid
 through CutsheetX with us watching the clock. Offer the suite free for that job in
 exchange for the numbers and the quote.
+
+## Measured so far (sample package, not a real bid) - 2026-10-04
+Harness: `timed_run.mjs` (same directory). Against production with an ephemeral session:
+ephemeral session 0.9 s; six CutsheetX matches (LCN 4040XP, Von Duprin 99, Schlage L9080,
+Ives 5BB1, LCN 1461, Hager BB1279) 0.56-0.63 s each, 6/6 exact; PropX proposal 0.63 s;
+real PDF 1.6 s (67 KB). Total 6.6 s. Raw output: `timed_run_sample_2026-10-04.json`.
+
+To run Andrew's actual bid: export his spec lines as `specs.json`
+(`[{"manufacturer": "...", "model": "..."}, ...]`) and run
+`node launch/case-study/timed_run.mjs specs.json`. Publish only what that prints.
