@@ -6,7 +6,7 @@ Drafted 2026-10-04 from what is actually live on weylandai.com. Every claim belo
 WeylandAI
 
 ## Makers
-John Mobley (founder), Andrew Miller (cofounder, Precision Auto Doors)
+Ron Helms (CEO, Lead Software Developer), John Mobley (CTO, Chief Architect), Andrew Miller (Business Development; Precision Auto Doors)
 
 ## Tagline (max 60 chars)
 Match every spec line to the catalog page, with the citation
@@ -31,7 +31,7 @@ Construction, Developer Tools, Artificial Intelligence, Productivity, SaaS
 - Terms: https://consenta.cc/policy/weylandai.com/terms
 
 ## Lead media (video)
-media/weylandai_run_2026-10-04.mp4 — 35 s, 1280×720, recorded against production on 2026-10-04: prologue, dossier in hand, raise, a real CutsheetX match (LCN 4040XP), a real PropX proposal for Precision Auto Doors, pricing. Recorded headless (software GL), so the 3D frames are choppier than a real GPU; re-record on a Mac with screen capture before launch if time allows, same script: scratchpad record_run.mjs flow is documented in DEPLOY_PATHS.md's neighbor files.
+media/weylandai_run_2026-10-04.mp4 — 35 s, 1280×720, recorded against production on 2026-10-04: prologue, dossier in hand, raise, a real CutsheetX match (LCN 4040XP), a real PropX proposal for Precision Auto Doors, pricing. NOTE 2026-10-04: SightX's world is being rethemed from the orbital drydock to a real commercial building with real hardware; re-record after the building retheme lands so the video matches the site. Recorded headless (software GL), so the 3D frames are choppier than a real GPU; re-record on a Mac with screen capture before launch if time allows, same script: scratchpad record_run.mjs flow is documented in DEPLOY_PATHS.md's neighbor files.
 
 ## Gallery (1270×760, captured live — see ./gallery/)
 1. `05_cutsheetx_live_match.png` — lead image: CutsheetX live catalog match with source citations.
@@ -52,7 +52,7 @@ The rest of the suite picks up the same project record from there: HuntX (public
 A few deliberate choices:
 - No sign-up wall. The site mints an ephemeral session through our own auth subsidiary, authfor.com. Upgrade when you want to keep your work.
 - Built with a door company, by a door company. My cofounder Andrew Miller runs Precision Auto Doors, the suite's first real user; the door and hardware workflows on the page are the ones that trade actually lives in.
-- The site is an artifact in SightX's world. It opens in first person with a dossier in your hand; raise it and it is the website. The 8-second opening illustrates a cosmology hypothesis I am developing, labeled as a hypothesis next to the parts that are observed.
+- The site is an artifact in SightX's world: a commercial building whose doors carry the same real hardware CutsheetX cites. It opens in first person with a dossier in your hand; raise it and it is the website; paste a schedule and walk it door by door. The 8-second opening illustrates a cosmology hypothesis I am developing, labeled as a hypothesis next to the parts that are observed.
 
 Privacy and terms live on consenta.cc, our consent and compliance venture, with a real data-rights request path.
 

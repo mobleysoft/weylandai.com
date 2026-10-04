@@ -285,6 +285,14 @@ export function createWeylandWorker({ monolith }) {
       if (url.hostname === "weylandai.com" && /^\/sightx$/i.test(url.pathname)) {
         return Response.redirect("https://weylandai.com/sightx/" + url.search, 308);
       }
+      // Sitemap (2026-10-04): the site is a single page plus SightX and
+      // pricing; crawlers get an explicit map instead of a 404.
+      if (url.hostname === "weylandai.com" && url.pathname === "/sitemap.xml") {
+        var siteUrls = ["https://weylandai.com/", "https://weylandai.com/sightx/", "https://weylandai.com/pricing"];
+        var xml = '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n' +
+          siteUrls.map(function (u) { return "  <url><loc>" + u + "</loc><changefreq>daily</changefreq></url>"; }).join("\n") + "\n</urlset>\n";
+        return new Response(xml, { status: 200, headers: { "Content-Type": "application/xml; charset=utf-8", "Cache-Control": "public, max-age=3600" } });
+      }
       var sovereignResponse = SovereignWeylandRoutes.dispatch(url.pathname, isFragmentRequest);
       if (sovereignResponse) return sovereignResponse;
     }
