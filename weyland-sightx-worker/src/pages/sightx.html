@@ -1214,7 +1214,7 @@
     </div>
   </div>
 
-  <script src="/assets/sightx-controls.js?v=20261004-1"></script>
+  <script src="/assets/sightx-controls.js?v=20261004-2"></script>
   <script src="/assets/sightx-experience.js?v=20261004-1"></script>
   <script>
     // Ingest (PDF upload UI) and the Unreal runtime bridge are not used in
@@ -2868,6 +2868,9 @@
       initialYaw: 0,
       initialPitch: -0.03,
       collision: positionBlocked,
+      // Stand at eye height (1.6 m over the VCT at -1.32) anywhere inside
+      // the building footprint; free flight resumes outside it.
+      groundY: (x, z) => (!activePlanModel && Math.abs(x) < 7.4 && z > -3.2 && z < 30.2) ? 0.28 : null,
       onMove: position => { checkDoorwayProximity(position); checkFilmlineProximity(position); checkDockProximity(position); },
       onScan: (active, position) => {
         sightxExperience.setScanning(active);

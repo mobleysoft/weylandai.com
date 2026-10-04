@@ -290,7 +290,7 @@
         renderTlouHint(['W', 'S'], 'MOVE', 'FORWARD / BACK');
       } else if (!hintState.hasBraked && Math.hypot(velocity[0], velocity[1], velocity[2]) > 0.35) {
         renderTlouHint('X', 'STOP', 'HALT MOVEMENT');
-      } else if (!hintState.hasElevated) {
+      } else if (!hintState.hasElevated && typeof options.groundY !== 'function') {
         renderTlouHint(['SPACE', 'C'], 'EYE HEIGHT', 'UP / DOWN');
       } else {
         hideTlouHint();
@@ -657,6 +657,19 @@
       if (position[1] < profile.bounds.minY) {
         position[1] = profile.bounds.minY;
         if (velocity[1] < 0) velocity[1] = 0;
+      }
+
+      // Ground lock (jobsite twin, 2026-10-04): the host may supply
+      // options.groundY(x, z) returning the eye height to stand at for
+      // this XZ, or null for free flight. Inside a building a visitor
+      // walks at eye height; outside the footprint the 6DOF scheme still
+      // applies so the exterior can be inspected from above.
+      if (typeof options.groundY === 'function') {
+        const eyeY = options.groundY(position[0], position[2]);
+        if (typeof eyeY === 'number' && isFinite(eyeY)) {
+          position[1] = clamp(eyeY, profile.bounds.minY, profile.bounds.maxY);
+          velocity[1] = 0;
+        }
       }
 
       if (options.onMove) options.onMove(position);
