@@ -1595,14 +1595,35 @@
       // (CSS homography from the same four corners), so the site's own tab
       // ribbon IS the folder's tabs - no separate SDF tabs.
       vec2 r = vec2(sdBox(q, he), 33.0);
-      // Left thumb across the front face near the left edge, one fingertip
-      // curling over the left edge from underneath.
-      vec3 ta = C + DX*(-he.x+0.03) + DY*(-0.15) + DN*0.052;
-      vec3 tb = C + DX*(-he.x+0.13) + DY*(-0.01) + DN*0.046;
-      r = put(r, sdCapsule(vp, ta, tb, 0.042), 30.0);
-      vec3 fa = C + DX*(-he.x-0.06) + DY*(-0.06) + DN*(-0.06);
-      vec3 fb = C + DX*(-he.x+0.05) + DY*(-0.05) + DN*(0.022);
-      r = put(r, sdCapsule(vp, fa, fb, 0.036), 30.0);
+      // Left hand at real proportions (thumb radius ~13 mm, palm ~85 mm
+      // across), gripping the folder's left edge: palm under the edge,
+      // thumb in two joints over the front face, fingers hidden beneath
+      // the folder, sleeve running down toward the body. Everything is in
+      // the dossier basis so it travels with the folder.
+      float ex = -he.x;
+      // Palm: rounded slab just behind the face, heel peeking past the edge.
+      vec3 pq = q - vec3(ex + 0.012, -0.075, -0.034);
+      float palm = sdBox(pq, vec3(0.040, 0.044, 0.012)) - 0.012;
+      r = put(r, palm, 30.0);
+      // Thumb: base at the palm's upper edge, proximal joint over the edge,
+      // distal segment lying on the face.
+      vec3 tb0 = C + DX*(ex - 0.016) + DY*(-0.030) + DN*(-0.004);
+      vec3 tb1 = C + DX*(ex + 0.038) + DY*( 0.004) + DN*( 0.027);
+      vec3 tb2 = C + DX*(ex + 0.108) + DY*( 0.046) + DN*( 0.025);
+      r = put(r, sdCapsule(vp, tb0, tb1, 0.0135), 30.0);
+      r = put(r, sdCapsule(vp, tb1, tb2, 0.0115), 30.0);
+      // Two fingertips just visible past the edge from underneath.
+      vec3 f0a = C + DX*(ex - 0.030) + DY*(-0.085) + DN*(-0.040);
+      vec3 f0b = C + DX*(ex + 0.030) + DY*(-0.080) + DN*(-0.026);
+      vec3 f1a = C + DX*(ex - 0.028) + DY*(-0.108) + DN*(-0.044);
+      vec3 f1b = C + DX*(ex + 0.030) + DY*(-0.104) + DN*(-0.028);
+      r = put(r, sdCapsule(vp, f0a, f0b, 0.0095), 30.0);
+      r = put(r, sdCapsule(vp, f1a, f1b, 0.0095), 30.0);
+      // Wrist and sleeve: from the heel of the palm down toward the body.
+      vec3 wr = C + DX*(ex - 0.012) + DY*(-0.125) + DN*(-0.040);
+      vec3 el = vec3(-0.40, -0.72, 0.46) + off;
+      r = put(r, sdCapsule(vp, wr, wr + (el - wr)*0.18, 0.030), 30.0);
+      r = put(r, sdCapsule(vp, wr + (el - wr)*0.15, el, 0.040), 52.0);
       return r;
     }
 
@@ -1801,13 +1822,11 @@
         bool portrait = u_res.x < u_res.y;
         float lower = clamp(u_handsLowered, 0.0, 1.0);
         if(u_dossier > 0.5){
-          // Left hand holds the dossier (replaces the left bezel grip);
-          // right hand keeps its bezel grip.
-          res = put(res, handSdf(vp,1.0,portrait,lower), 30.0);
+          // Left hand holds the dossier (hand geometry lives in
+          // dossierSdf). No right hand: nothing is held in it, and a
+          // first-person walk shows no hand that is not holding something.
           vec2 d = dossierSdf(vp, vec3(0.0, -0.95*lower, 0.38*lower));
           res = put(res, d.x, d.y);
-        } else {
-          res = put(res, min(handSdf(vp,-1.0,portrait,lower), handSdf(vp,1.0,portrait,lower)), 30.0);
         }
       } else {
         vec3 afwd   = normalize(u_astroFwd);
@@ -2454,6 +2473,10 @@
           float joint = 1.0 - min(smoothstep(0.0, 0.03, min(bx, 1.0 - bx)), smoothstep(0.0, 0.05, min(by, 1.0 - by)));
           albedo = mix(vec3(0.62,0.60,0.56) + noise(p*25.0)*0.03, vec3(0.50,0.49,0.47), joint);
           rough = 0.95;
+        } else if(matID > 51.5 && matID < 52.5){
+          // Jacket sleeve: dark hi-vis-rated workwear, matte.
+          albedo = vec3(0.11,0.12,0.15) + noise(p*30.0)*0.01;
+          rough = 0.92;
         } else if(matID > 50.5 && matID < 51.5){
           // Illuminated EXIT sign face.
           albedo = vec3(0.12,0.02,0.02);
@@ -2550,7 +2573,7 @@
       col = pow(clamp(col,0.,1.), vec3(0.4545));
       if(u_introMode > 0.5){
         float m = hit.y;
-        bool keep = hit.x > 0.0 && (abs(m-30.0) < 0.5 || abs(m-33.0) < 0.5 || abs(m-34.0) < 0.5 || abs(m-36.0) < 0.5);
+        bool keep = hit.x > 0.0 && (abs(m-30.0) < 0.5 || abs(m-33.0) < 0.5 || abs(m-34.0) < 0.5 || abs(m-36.0) < 0.5 || abs(m-52.0) < 0.5);
         if(!keep){ fragColor = vec4(0.0); return; }
       }
       fragColor = vec4(col,1.);

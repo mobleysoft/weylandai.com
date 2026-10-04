@@ -1,0 +1,20 @@
+{
+  "_about": "Draft step file for `mobley lumen run` (Mobley driving the estate's own Lumen browser). Prerequisite: a signed-in Product Hunt session in Lumen, either imported from Safari on this Mac (`mobley lumen import-safari-cookies producthunt.com`) or created by signing in inside the Lumen window itself (its WebKit store persists). Selectors below are the first-pass guesses for the submission form; the run stops at the first failed step and leaves a screenshot, after which the selectors get corrected against `mobley lumen elements`. The final Schedule/Submit click is deliberately absent: John reviews and submits.",
+  "steps": [
+    { "navigate": "https://www.producthunt.com/posts/new" },
+    { "wait": 2500 },
+    { "screenshot": "/Users/johnmobley/weylandai.com/launch/product-hunt/runs/01_posts_new.png" },
+    { "expect_text": "Submit" },
+    { "fill": ["input[type=url], input[name=url], input[placeholder*='http']", "https://weylandai.com"] },
+    { "wait": 800 },
+    { "click": "button[type=submit], button:has(span)" },
+    { "wait": 3500 },
+    { "screenshot": "/Users/johnmobley/weylandai.com/launch/product-hunt/runs/02_after_url.png" },
+    { "fill": ["input[name=name], input[placeholder*='name' i]", "WeylandAI"] },
+    { "fill": ["input[name=tagline], input[placeholder*='tagline' i]", "Match every spec line to the catalog page, with the citation"] },
+    { "fill": ["textarea[name=description], textarea[placeholder*='describe' i]", "CutsheetX reads a door or hardware spec, finds the manufacturer's catalog variant, and hands you the match with a link to the source page. Try it with no account. Then the same project record flows through bids, takeoffs, submittals, proposals, meetings and a 3D twin."] },
+    { "wait": 600 },
+    { "screenshot": "/Users/johnmobley/weylandai.com/launch/product-hunt/runs/03_main_info.png" },
+    { "note": "Topics, thumbnail, gallery, makers (Ron Helms, John Mobley, Andrew Miller) and the first comment follow once the live form's selectors are confirmed; schedule date is John's call." }
+  ]
+}
