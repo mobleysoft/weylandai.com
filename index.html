@@ -999,6 +999,39 @@
       gap: 20px;
       margin-top: 24px;
     }
+    .wire-feed {
+      margin-top: 24px;
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      overflow: hidden;
+      background: rgba(18, 20, 25, 0.94);
+    }
+    .wire-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      gap: 20px;
+      padding: 16px 22px;
+      border-bottom: 1px solid var(--line);
+      text-decoration: none;
+      transition: background 0.15s ease;
+    }
+    .wire-item:last-child { border-bottom: none; }
+    .wire-item:hover { background: rgba(255,255,255,0.03); }
+    .wire-item-title {
+      color: var(--text);
+      font-size: 14.5px;
+      line-height: 1.4;
+    }
+    .wire-item-source {
+      flex: none;
+      color: var(--muted);
+      font-family: var(--font-display);
+      font-size: 10.5px;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
     .cutsheet-card {
       background: rgba(18, 20, 25, 0.94);
       border: 1px solid var(--line);
@@ -1565,11 +1598,12 @@
         <a href="#propx" class="wn-flag" data-tone="yellow" data-target="propx"><span class="wn-flag-frame"></span><span class="wn-flag-fill">PropX</span></a>
         <a href="#meetingx" class="wn-flag" data-tone="yellow" data-target="meetingx"><span class="wn-flag-frame"></span><span class="wn-flag-fill">MeetingX</span></a>
         <a href="#sightx" class="wn-flag" data-tone="yellow" data-target="sightx"><span class="wn-flag-frame"></span><span class="wn-flag-fill">SightX</span></a>
+        <a href="#wire" class="wn-flag" data-tone="yellow" data-target="wire"><span class="wn-flag-frame"></span><span class="wn-flag-fill">Wire</span></a>
       </div>
       <nav class="wn-secondary">
         <a href="#whyweyland" data-target="whyweyland">Why WeylandAI</a>
         <a href="#pricing" data-target="pricing">Pricing</a>
-        <a href="/news">News</a>
+        <a href="#wire" data-target="wire">News</a>
         <a class="wn-signin js-upgrade-cta" href="/login?redirect=/">Sign In</a>
       </nav>
     </div>
@@ -2170,6 +2204,35 @@
       </div>
     </section>
 
+    <!-- CHAPTER 07: Wire - real product (weyland-wire-seat, real Stripe
+         price_1UMD5fLWTxUJi5AVF6xGy8mK), previously had zero presence
+         anywhere in the main page or pricing table despite being fully
+         live and billable - only reachable via a footer link to a
+         separate /news page. GET /api/wire/news is unauthenticated and
+         public (free tier, 6 headlines; the $49/mo tier unlocks 20 +
+         synthesis), so this renders real data with no token needed. -->
+    <section class="story-chapter" id="wire">
+      <div class="chapter-eyebrow">
+        <span class="ch-badge ch-accent">WIRE</span>
+        <span>CONSTRUCTION INDUSTRY NEWS, LIVE</span>
+      </div>
+      <div class="chapter-head">
+        <div class="chapter-product-badge"><span>Wire</span></div>
+        <h2>One Feed for Everything Moving in Construction.</h2>
+        <div class="chapter-tagline">Real headlines. Real sources.</div>
+        <p class="chapter-desc">Pulled live from the industry press, cited to its source.</p>
+      </div>
+
+      <div class="wire-feed" id="wire-feed">
+        <div style="color:var(--muted);padding:20px 0">Connecting to live sources&hellip;</div>
+      </div>
+
+      <div style="display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin-top:20px">
+        <span class="status-badge" style="background:rgba(255,212,0,.15);color:var(--accent);border:1px solid rgba(255,212,0,.35)">$49/MO FOR FULL SYNTHESIS</span>
+        <a class="button primary" href="#pricing">UNLOCK FULL WIRE &rarr;</a>
+      </div>
+    </section>
+
     <!-- Why WeylandAI - a positioning section, not part of the HuntX->SightX
          product sequence, so it deliberately carries no CHAPTER number. -->
     <section class="story-chapter" id="whyweyland">
@@ -2335,7 +2398,7 @@
         <a href="#propx">PropX</a>
         <a href="#sightx">SightX</a>
         <a href="#pricing">Pricing</a>
-        <a href="/news">News</a>
+        <a href="#wire">News</a>
         <a href="/venturedeck">Venture Deck</a>
         <a class="js-upgrade-cta" href="/login?redirect=/">Sign In</a>
       </div>
@@ -2351,7 +2414,7 @@
   <nav class="wn-persistent-footer" aria-label="Secondary Navigation">
     <a href="#whyweyland">Why WeylandAI</a>
     <a href="#pricing">Pricing</a>
-    <a href="/news">News</a>
+    <a href="#wire">News</a>
     <a class="wn-signin js-upgrade-cta" href="/login?redirect=/">Sign In</a>
   </nav>
 
@@ -2612,6 +2675,33 @@
     if (hxSource) hxSource.addEventListener("change", filterHuntRows);
     if (hxRefresh) hxRefresh.addEventListener("click", function() { loadHuntOpportunities(true); });
     if (hxBody) loadHuntOpportunities(false);
+
+    // 5b. Chapter 07: Wire - public, unauthenticated feed (no token needed
+    // for the free tier), so this just fetches directly on load.
+    var wireFeedEl = document.getElementById("wire-feed");
+    if (wireFeedEl) {
+      fetch("/api/wire/news").then(function(r) {
+        if (!r.ok) throw new Error("request failed (" + r.status + ")");
+        return r.json();
+      }).then(function(data) {
+        var items = (data && data.items) || [];
+        if (!items.length) {
+          wireFeedEl.innerHTML = '<div style="color:var(--muted);padding:20px 0">No live headlines available right now.</div>';
+          return;
+        }
+        wireFeedEl.innerHTML = items.slice(0, 6).map(function(it) {
+          var title = String(it.title || "").replace(/[<>&]/g, function(c) { return { "<": "&lt;", ">": "&gt;", "&": "&amp;" }[c]; });
+          var href = it.link || "#";
+          var source = String(it.source || "").replace(/[<>&]/g, function(c) { return { "<": "&lt;", ">": "&gt;", "&": "&amp;" }[c]; });
+          return '<a class="wire-item" href="' + href + '" target="_blank" rel="noopener">' +
+            '<span class="wire-item-title">' + title + '</span>' +
+            '<span class="wire-item-source">' + source + '</span>' +
+          '</a>';
+        }).join("");
+      }).catch(function(err) {
+        wireFeedEl.innerHTML = '<div style="color:var(--muted);padding:20px 0">Couldn\'t reach live sources: ' + err.message + '</div>';
+      });
+    }
 
     // 6. Chapter 02: TakeoffX Vector Blueprint Zones
     var zones = document.querySelectorAll(".zone-box");
