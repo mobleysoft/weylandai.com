@@ -2065,6 +2065,13 @@ export var SovereignWeylandRoutes = (function() {
     "leadx": serve_leadx,
     "careers": serve_careers,
     "progress": serve_progress,
+    // "sightx" is a FALLBACK ONLY as of 2026-10-04: the live page is served
+    // by the dedicated weyland-sightx-worker (routes weylandai.com/sightx and
+    // weylandai.com/sightx/*). weyland-entry.js now 308-redirects the bare
+    // /sightx (+query) to /sightx/ before this dispatch runs, because that
+    // slash-less+query form was hitting this monolith's zone-wide route and
+    // serving this stale bundled copy. This entry only answers if /sightx/
+    // ever falls through to the monolith (dedicated route missing).
     "sightx": serve_sightx,
     "meetingx": serve_meetingx,
     "sightx/runtime-manifest.json": serve_sightx_runtime_manifest_json,

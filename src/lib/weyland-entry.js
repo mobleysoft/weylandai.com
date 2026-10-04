@@ -218,6 +218,18 @@ export function createWeylandWorker({ monolith }) {
       // subdomain made (cors.js's DEFAULT_CORS_ORIGINS explicitly expects
       // subx.weylandai.com to call the API - the redirect made that
       // impossible for GET/HEAD requests that follow the 301).
+      // SightX is no longer served by this worker (see the /sightx 308 below).
+      // Its subdomain root must land on /sightx/ WITH the trailing slash: the
+      // dedicated weyland-sightx-worker owns routes weylandai.com/sightx and
+      // weylandai.com/sightx/*, and a bare /sightx?query falls through to this
+      // monolith's zone-wide weylandai.com/* route instead (verified live
+      // 2026-10-04). Other legacy product subdomains are unaffected.
+      if (subdomainMatch[1] === "sightx") {
+        const sightxTarget = url.pathname === "/"
+          ? "https://weylandai.com/sightx/" + url.search
+          : "https://weylandai.com" + url.pathname + url.search;
+        return Response.redirect(sightxTarget, 308);
+      }
       const target = url.pathname === "/"
         ? `https://weylandai.com/${subdomainMatch[1]}${url.search}`
         : `https://weylandai.com${url.pathname}${url.search}`;
@@ -259,6 +271,19 @@ export function createWeylandWorker({ monolith }) {
         } catch (e) {
           console.log("[MASCOM_EDGE delegation failed, falling back to bundled page]", e.message);
         }
+      }
+      // SightX moved to the dedicated weyland-sightx-worker (routes
+      // weylandai.com/sightx and weylandai.com/sightx/*). Verified live
+      // 2026-10-04: https://weylandai.com/sightx?embed=bg&intro=1 (no trailing
+      // slash, WITH a query string) was still answered by THIS worker's
+      // zone-wide weylandai.com/* route, serving the old bundled SightX page
+      // from marketing-pages.js, while /sightx and /sightx/?query reached the
+      // dedicated worker. Redirect the bare path to /sightx/ (query preserved)
+      // so every variant lands on the dedicated worker's /sightx/* route.
+      // Only the slash-less form is redirected - /sightx/ itself is never
+      // redirected, so there is no loop if that route ever falls back here.
+      if (url.hostname === "weylandai.com" && /^\/sightx$/i.test(url.pathname)) {
+        return Response.redirect("https://weylandai.com/sightx/" + url.search, 308);
       }
       var sovereignResponse = SovereignWeylandRoutes.dispatch(url.pathname, isFragmentRequest);
       if (sovereignResponse) return sovereignResponse;

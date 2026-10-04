@@ -386,7 +386,7 @@ async function requireActiveSubscription(user, env2) {
   }
   return null;
 }
-var EPHEMERAL_TRIAL_PRODUCTS = /* @__PURE__ */ new Set(["subx", "takeoffx", "cutsheetx", "sightx"]);
+var EPHEMERAL_TRIAL_PRODUCTS = /* @__PURE__ */ new Set(["subx", "takeoffx", "cutsheetx", "sightx", "huntx", "propx"]);
 async function checkEphemeralTrialEntitlement(ephemeralToken2, productSlug) {
   if (!ephemeralToken2) return { limited: false };
   try {
@@ -18115,6 +18115,63 @@ function registerAuthSessionRoutes(router2, { authenticate: authenticate2, error
       return errorResponse2("DATABASE_ERROR", "Failed to fetch user: " + error5.message);
     }
   });
+  router2.post("/api/auth/ephemeral", async (request2, env2) => {
+    try {
+      const ip = request2.headers.get("CF-Connecting-IP") || "unknown";
+      const rl = await checkRateLimit(ip, "ephemeral-create", env2, { requests: 10, windowSeconds: 60 });
+      if (rl.limited) {
+        return new Response(JSON.stringify({ error: "Too many requests - please slow down." }), {
+          status: 429,
+          headers: { "Content-Type": "application/json", "Retry-After": String(rl.retryAfter) }
+        });
+      }
+      const body = await request2.json().catch(() => ({}));
+      const resp = await fetch("https://authfor.com/api/v1/ephemeral/create", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          ventureName: "weylandai.com",
+          displayName: typeof body.displayName === "string" ? body.displayName : void 0
+        })
+      });
+      const data = await resp.json().catch(() => ({}));
+      if (!resp.ok) {
+        return jsonResponse3({ error: data.error || "ephemeral_create_failed" }, resp.status);
+      }
+      return jsonResponse3({ token: data.token, session: data.session });
+    } catch (err) {
+      return jsonResponse3({ error: "Ephemeral session creation failed: " + err.message }, 500);
+    }
+  });
+  router2.post("/api/auth/ephemeral/upgrade", async (request2, env2) => {
+    try {
+      const ip = request2.headers.get("CF-Connecting-IP") || "unknown";
+      const rl = await checkRateLimit(ip, "ephemeral-upgrade", env2, { requests: 10, windowSeconds: 60 });
+      if (rl.limited) {
+        return new Response(JSON.stringify({ error: "Too many requests - please slow down." }), {
+          status: 429,
+          headers: { "Content-Type": "application/json", "Retry-After": String(rl.retryAfter) }
+        });
+      }
+      const body = await request2.json().catch(() => ({}));
+      const { token, email, password, name } = body;
+      if (!token || !email || !password) {
+        return jsonResponse3({ error: "token, email, and password are required" }, 400);
+      }
+      const resp = await fetch("https://authfor.com/api/v1/ephemeral/upgrade", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ token, email, password, name })
+      });
+      const data = await resp.json().catch(() => ({}));
+      if (!resp.ok) {
+        return jsonResponse3({ error: data.error || "ephemeral_upgrade_failed" }, resp.status);
+      }
+      return jsonResponse3(data);
+    } catch (err) {
+      return jsonResponse3({ error: "Ephemeral upgrade failed: " + err.message }, 500);
+    }
+  });
 }
 
 // src/routes/install-device-auth.js
@@ -35285,7 +35342,7 @@ global.SovereignPdfRender = {
     <footer class="site-footer">
       <div>
         <strong>WeylandAI</strong> &middot; Construction Document Automation &amp; Spatial Twin OS<br>
-        <span style="color:var(--muted);font-size:11px">A Mobley Soft &middot; Mascom Conglomerate Venture</span>
+        <span style="color:var(--muted);font-size:11px">A Mobley Helms Systems LP Company</span>
       </div>
       <div style="display:flex;gap:16px;flex-wrap:wrap">
         <a href="#hero">Top</a>
@@ -42676,6 +42733,13 @@ document.querySelectorAll('.preset').forEach(btn=>btn.addEventListener('click',(
     "leadx": serve_leadx,
     "careers": serve_careers,
     "progress": serve_progress,
+    // "sightx" is a FALLBACK ONLY as of 2026-10-04: the live page is served
+    // by the dedicated weyland-sightx-worker (routes weylandai.com/sightx and
+    // weylandai.com/sightx/*). weyland-entry.js now 308-redirects the bare
+    // /sightx (+query) to /sightx/ before this dispatch runs, because that
+    // slash-less+query form was hitting this monolith's zone-wide route and
+    // serving this stale bundled copy. This entry only answers if /sightx/
+    // ever falls through to the monolith (dedicated route missing).
     "sightx": serve_sightx,
     "meetingx": serve_meetingx,
     "sightx/runtime-manifest.json": serve_sightx_runtime_manifest_json,
@@ -42929,6 +42993,10 @@ function createWeylandWorker({ monolith: monolith2 }) {
       const LEGACY_PRODUCT_SUBDOMAINS = ["subx", "takeoffx", "propx", "cutsheetx", "huntx", "sightx"];
       const subdomainMatch = url.hostname.match(/^([a-z]+)\.weylandai\.com$/);
       if (subdomainMatch && LEGACY_PRODUCT_SUBDOMAINS.includes(subdomainMatch[1])) {
+        if (subdomainMatch[1] === "sightx") {
+          const sightxTarget = url.pathname === "/" ? "https://weylandai.com/sightx/" + url.search : "https://weylandai.com" + url.pathname + url.search;
+          return Response.redirect(sightxTarget, 308);
+        }
         const target = url.pathname === "/" ? `https://weylandai.com/${subdomainMatch[1]}${url.search}` : `https://weylandai.com${url.pathname}${url.search}`;
         return Response.redirect(target, 301);
       }
@@ -42954,6 +43022,9 @@ function createWeylandWorker({ monolith: monolith2 }) {
           } catch (e) {
             console.log("[MASCOM_EDGE delegation failed, falling back to bundled page]", e.message);
           }
+        }
+        if (url.hostname === "weylandai.com" && /^\/sightx$/i.test(url.pathname)) {
+          return Response.redirect("https://weylandai.com/sightx/" + url.search, 308);
         }
         var sovereignResponse = SovereignWeylandRoutes.dispatch(url.pathname, isFragmentRequest);
         if (sovereignResponse) return sovereignResponse;
