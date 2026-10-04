@@ -1421,14 +1421,19 @@
     let sightxExperience = null;
     let stressViewActive = false; // STRESS VIEW HUD toggle state, see u_stressView
     
+    // Adaptive quality: frame() keeps an fps EMA; when it sits under 24 for
+    // a 2s window the render scale steps down 20% (floor 0.5x of the normal
+    // scale) and resize() re-applies. Real phones vary too much to pick one
+    // fixed scale; this measures instead of guessing.
+    let adaptiveMul = 1, fpsEma = 60, lastFrameTs = 0, lastAdaptCheck = 0;
     function resize() {
       if (!gl) return; // no WebGL2 (seen under audit tooling): nothing to size
       // Embed on a small screen: the scene is an ambient backdrop behind a
       // prologue and a folder, not the primary surface - render at 1x so a
       // phone GPU is not asked to raymarch at 2-3x device pixels.
       const embedSmall = document.documentElement.classList.contains("sxe-bg-embed") && Math.min(window.innerWidth, window.innerHeight) < 900;
-      const scale = embedSmall ? Math.min(window.devicePixelRatio, 1.0)
-        : (sightxExperience ? sightxExperience.renderScale : Math.min(window.devicePixelRatio, 1.25));
+      const scale = (embedSmall ? Math.min(window.devicePixelRatio, 1.0)
+        : (sightxExperience ? sightxExperience.renderScale : Math.min(window.devicePixelRatio, 1.25))) * adaptiveMul;
       canvas.width = Math.floor(window.innerWidth * scale);
       canvas.height = Math.floor(window.innerHeight * scale);
       canvas.style.width = window.innerWidth + 'px';
@@ -3098,6 +3103,16 @@
     
     let last = 0;
     function frame(ts){
+      if (lastFrameTs) {
+        const dtMs = ts - lastFrameTs;
+        if (dtMs > 0 && dtMs < 1000) fpsEma = fpsEma * 0.92 + (1000 / dtMs) * 0.08;
+      }
+      lastFrameTs = ts;
+      if (ts - lastAdaptCheck > 2000) {
+        lastAdaptCheck = ts;
+        if (fpsEma < 24 && adaptiveMul > 0.5) { adaptiveMul = Math.max(0.5, adaptiveMul * 0.8); resize(); }
+        window.__sxFps = Math.round(fpsEma); window.__sxAdaptiveMul = adaptiveMul;
+      }
       const dt = Math.min((ts-last)/1000, 0.05); last = ts;
       sightxControls.update(dt);
       sightxExperience.update(ts, sightxControls);
@@ -3398,7 +3413,7 @@
       // Default entry point is present-day (on-site), not the cosmic
       // origin sequence — the full 9-epoch intro is tabled for now and
       // only runs when explicitly requested via ?intro=1.
-      if (!location.search.includes("intro=1")) return;
+      if (!location.search.includes("intro=1") && !location.search.includes("intro=replay")) return;
       if (window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
         sessionStorage.setItem("weylandCosmicIntroSeen", "1");
         return;
@@ -3406,6 +3421,10 @@
       // Plays once per browser session (a reload mid-visit doesn't replay
       // a 14-second prologue); a fresh tab plays it again.
       if (sessionStorage.getItem("weylandCosmicIntroSeen") === "1") return;
+      // Once per BROWSER, not just per session: a returning visitor has
+      // seen it; they land straight in the world with the folder in hand.
+      // ?intro=replay forces it.
+      if (!location.search.includes("intro=replay") && localStorage.getItem("weylandCosmicIntroSeenEver") === "1") return;
     } catch (e) { return; }
     var introIsEmbed = document.documentElement.classList.contains("sxe-bg-embed");
 
@@ -3450,24 +3469,26 @@
     // standard epochs that follow are unchanged. Shader phase index =
     // array index (u_w[i] / u_p[i]).
     var PHASES = [
-      { epoch: "PRECONDENSATE // DIFFUSE MATTER BELOW THRESHOLD",          sub: "MHS HYPOTHESIS // THE PRESENT UNIVERSE AS THE NEXT BANG'S PRECURSOR STATE", t0: 0.0,  t1: 1.6 },
-      { epoch: "KNOWN SPACE // MILKY WAY → LOCAL GROUP → LANIAKEA",         sub: "OBSERVED // EVERY LOCAL STRUCTURE FLOWS TOWARD THE GREAT ATTRACTOR (TULLY ET AL. 2014)", t0: 1.6, t1: 4.2 },
-      { epoch: "UNKNOWN ATTRACTOR // DRAWN BY SEEMINGLY NOTHING",           sub: "MHS HYPOTHESIS // THE SAME INFLOW, FOLLOWED PAST WHAT IS MAPPED - NO VISIBLE MASS AT THE FOCUS", t0: 4.2, t1: 5.7 },
-      { epoch: "FIZZLES // LOCAL COLLAPSE, NO IGNITION",                    sub: "MHS HYPOTHESIS // NUCLEATION: ONE AT A TIME, EACH GOES DARK",             t0: 5.7,  t1: 7.2 },
-      { epoch: "SIMULOCANIATY // HO'ŌLEILANA CONTRACTION",                  sub: "MHS HYPOTHESIS // ENOUGH MATTER GATHERED AT ONCE - PRECONDITION MET",     t0: 7.2,  t1: 8.7 },
-      { epoch: "EPOCH // T=0 — BIG BANG: QUANTUM BOUNCE & INFLATION",      sub: "EINSTEIN LENSING RING // RELATIVISTIC SINGULARITY FLASH",   t0: 8.7,  t1: 9.4 },
-      { epoch: "EPOCH // ~10⁻⁶ SEC — QUARK-GLUON PLASMA",                  sub: "INCANDESCENT DECONFINED HADRONIC FLUID // 10¹² K",         t0: 9.4,  t1: 10.3 },
-      { epoch: "EPOCH // ~380,000 YR — RECOMBINATION (CMB)",                sub: "PLASMA CLEARING // COSMIC MICROWAVE BACKGROUND MOTTLING",  t0: 10.3, t1: 11.2 },
-      { epoch: "EPOCH // ~100M YR — COSMIC DARK AGES",                     sub: "GRAVITATIONAL FILAMENT CLUSTERING // 21CM HYDROGEN VOID",  t0: 11.2, t1: 12.0 },
-      { epoch: "EPOCH // ~300M YR — FIRST STARS (POPULATION III)",         sub: "COSMIC DAWN // PRIMORDIAL HYPERMASSIVE STELLAR IGNITION",  t0: 12.0, t1: 12.9 },
-      { epoch: "EPOCH // ~1B YR — GALAXY FORMATION",                       sub: "SPIRAL DISK DYNAMICS // LUMINOUS COSMIC WEB FILAMENTS",    t0: 12.9, t1: 13.9 },
-      { epoch: "EPOCH // ~4.5B YRS AGO — ACCRETION & PROTO-EARTH",         sub: "CIRCUMSTELLAR DISK // MAGMA OCEANS COOLING TO WATER",    t0: 13.9, t1: 15.0 },
-      { epoch: "EPOCH // PRESENT DAY — LOW EARTH ORBIT // SIGHTX",          sub: "ORBITAL SHIPYARD APPROACH // 400 KM ALTITUDE INGRESS",     t0: 15.0, t1: 16.2 }
+      { epoch: "PRECONDENSATE // DIFFUSE MATTER BELOW THRESHOLD",          sub: "MHS HYPOTHESIS // THE PRESENT UNIVERSE AS THE NEXT BANG'S PRECURSOR STATE", t0: 0,  t1: 0.8 },
+      { epoch: "KNOWN SPACE // MILKY WAY → LOCAL GROUP → LANIAKEA",         sub: "OBSERVED // EVERY LOCAL STRUCTURE FLOWS TOWARD THE GREAT ATTRACTOR (TULLY ET AL. 2014)", t0: 0.8, t1: 2.1 },
+      { epoch: "UNKNOWN ATTRACTOR // DRAWN BY SEEMINGLY NOTHING",           sub: "MHS HYPOTHESIS // THE SAME INFLOW, FOLLOWED PAST WHAT IS MAPPED - NO VISIBLE MASS AT THE FOCUS", t0: 2.1, t1: 2.85 },
+      { epoch: "FIZZLES // LOCAL COLLAPSE, NO IGNITION",                    sub: "MHS HYPOTHESIS // NUCLEATION: ONE AT A TIME, EACH GOES DARK",             t0: 2.85,  t1: 3.6 },
+      { epoch: "SIMULOCANIATY // HO'ŌLEILANA CONTRACTION",                  sub: "MHS HYPOTHESIS // ENOUGH MATTER GATHERED AT ONCE - PRECONDITION MET",     t0: 3.6,  t1: 4.35 },
+      { epoch: "EPOCH // T=0 — BIG BANG: QUANTUM BOUNCE & INFLATION",      sub: "EINSTEIN LENSING RING // RELATIVISTIC SINGULARITY FLASH",   t0: 4.35,  t1: 4.7 },
+      { epoch: "EPOCH // ~10⁻⁶ SEC — QUARK-GLUON PLASMA",                  sub: "INCANDESCENT DECONFINED HADRONIC FLUID // 10¹² K",         t0: 4.7,  t1: 5.15 },
+      { epoch: "EPOCH // ~380,000 YR — RECOMBINATION (CMB)",                sub: "PLASMA CLEARING // COSMIC MICROWAVE BACKGROUND MOTTLING",  t0: 5.15, t1: 5.6 },
+      { epoch: "EPOCH // ~100M YR — COSMIC DARK AGES",                     sub: "GRAVITATIONAL FILAMENT CLUSTERING // 21CM HYDROGEN VOID",  t0: 5.6, t1: 6 },
+      { epoch: "EPOCH // ~300M YR — FIRST STARS (POPULATION III)",         sub: "COSMIC DAWN // PRIMORDIAL HYPERMASSIVE STELLAR IGNITION",  t0: 6, t1: 6.45 },
+      { epoch: "EPOCH // ~1B YR — GALAXY FORMATION",                       sub: "SPIRAL DISK DYNAMICS // LUMINOUS COSMIC WEB FILAMENTS",    t0: 6.45, t1: 6.95 },
+      { epoch: "EPOCH // ~4.5B YRS AGO — ACCRETION & PROTO-EARTH",         sub: "CIRCUMSTELLAR DISK // MAGMA OCEANS COOLING TO WATER",    t0: 6.95, t1: 7.5 },
+      { epoch: "EPOCH // PRESENT DAY — LOW EARTH ORBIT // SIGHTX",          sub: "ORBITAL SHIPYARD APPROACH // 400 KM ALTITUDE INGRESS",     t0: 7.5, t1: 8.1 }
     ];
     var N_PHASES = PHASES.length;
 
-    var T_TOTAL = 16.2;
-    var T_TRANSITION_START = 15.5;
+    // Halved 2026-10-04: 16s was long for a first visit; the same stages
+    // land in 8. Returning visitors skip it entirely (see the gate above).
+    var T_TOTAL = 8.1;
+    var T_TRANSITION_START = 7.75;
 
     // ── Seamless Transition Lifecycle (Never Terminate in Black!) ──
     var transitionTriggered = false;
@@ -3476,7 +3497,7 @@
     function finish() {
       if (transitionTriggered) return;
       transitionTriggered = true;
-      try { sessionStorage.setItem("weylandCosmicIntroSeen", "1"); } catch (e) {}
+      try { sessionStorage.setItem("weylandCosmicIntroSeen", "1"); localStorage.setItem("weylandCosmicIntroSeenEver", "1"); } catch (e) {}
 
       // Cross-fade overlay opacity 1 -> 0 over 650ms.
       // CRITICAL: Keep cx-canvas rendering actively at 60fps during the fade so there is ZERO black frame!

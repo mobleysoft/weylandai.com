@@ -1,0 +1,75 @@
+# Second deploy path (added 2026-10-04): every WeylandAI worker can be
+# deployed from GitHub Actions with a repo-scoped Cloudflare API token, so a
+# launch-day fix never depends on one machine's Keychain. Manual dispatch
+# only - nothing deploys on push.
+#
+# One-time setup (repo Settings -> Secrets and variables -> Actions):
+#   CLOUDFLARE_API_TOKEN   a token with Workers Scripts:Edit, Workers Routes:Edit,
+#                          D1:Edit, KV Storage:Edit, R2:Edit on account f07be5f8...
+#   CLOUDFLARE_ACCOUNT_ID  the account id
+# Then: Actions -> "Deploy worker" -> Run workflow -> pick the worker.
+name: Deploy worker
+
+on:
+  workflow_dispatch:
+    inputs:
+      worker:
+        description: Which worker to deploy
+        required: true
+        type: choice
+        options:
+          - weyland-platform-worker
+          - weyland-sightx-worker
+          - weyland-propx-worker
+          - weyland-huntx-worker
+          - weyland-cutsheetx-worker
+          - weyland-subx-worker
+          - weyland-meetingx-worker
+          - monolith (weylandai-com-worker)
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Resolve working directory
+        id: dir
+        run: |
+          if [ "${{ inputs.worker }}" = "monolith (weylandai-com-worker)" ]; then
+            echo "dir=." >> "$GITHUB_OUTPUT"
+            echo "build=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "dir=${{ inputs.worker }}" >> "$GITHUB_OUTPUT"
+            echo "build=false" >> "$GITHUB_OUTPUT"
+          fi
+      - name: Build monolith bundle
+        if: steps.dir.outputs.build == 'true'
+        run: |
+          npm ci --ignore-scripts
+          npm run build
+      - name: Install worker deps (if any)
+        if: steps.dir.outputs.build == 'false'
+        working-directory: ${{ steps.dir.outputs.dir }}
+        run: |
+          if [ -f package-lock.json ]; then npm ci --ignore-scripts; elif [ -f package.json ]; then npm install --ignore-scripts; fi
+      - name: Deploy
+        uses: cloudflare/wrangler-action@v3
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          workingDirectory: ${{ steps.dir.outputs.dir }}
+          command: deploy
+      - name: Post-deploy live check
+        run: |
+          case "${{ inputs.worker }}" in
+            weyland-sightx-worker)   url="https://weylandai.com/sightx/"; marker="sx-dossier" ;;
+            weyland-platform-worker) url="https://weylandai.com/api/auth/session/check"; marker="valid" ;;
+            weyland-propx-worker)    url="https://weylandai.com/api/proposals/demo"; marker="" ;;
+            *)                       url="https://weylandai.com/"; marker="envelope-frame" ;;
+          esac
+          code=$(curl -s -o /tmp/body -w "%{http_code}" "$url")
+          echo "$url -> $code"
+          if [ -n "$marker" ] && ! grep -q "$marker" /tmp/body; then echo "marker '$marker' missing" >&2; exit 1; fi
