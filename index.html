@@ -2383,6 +2383,158 @@
           </div>
         </div>
       </div>
+
+      <!-- PropX live demo - same ephemeral-token pattern as the CutsheetX
+           "TRY A REAL MATCH" box above. POST /api/proposals/demo
+           (weyland-propx-worker) prices a FIXED, clearly-labeled sample
+           bill of materials through the exact same normalizeLineItems /
+           computeTotals / generateQuoteHtml / renderQuotePdf code the paid
+           /api/proposals/generate route runs; nothing is stored. The table
+           and margin slider above remain a static illustrative example -
+           this box is the piece a visitor can actually run. -->
+      <div id="propx-live-demo" data-marker="propx-live-demo-v1" style="margin-top:24px;border:1px solid var(--line);border-radius:16px;padding:20px 22px;background:rgba(18,20,25,.94)">
+        <div style="font:800 11px/1 var(--font-display);letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);margin-bottom:12px">TRY A REAL PROPOSAL &mdash; GENERATED LIVE BY THE REAL PROPX ENGINE</div>
+        <p style="margin:0 0 12px;color:var(--muted);font-size:13px;line-height:1.5">Prices a fixed sample 6-opening bill of materials through the same pricing, tax, and document-rendering code paying customers run. The sample unit prices are inputs, not a live supplier quote; the subtotal, tax, total, and rendered proposal are computed server-side when you click.</p>
+        <div style="display:flex;gap:10px;flex-wrap:wrap">
+          <input id="px-client" type="text" maxlength="80" placeholder="Client name (optional)" style="flex:2;min-width:200px;background:#161920;border:1px solid var(--line);border-radius:8px;padding:10px 14px;color:#fff;font-size:14px">
+          <input id="px-tax" type="number" min="0" max="25" step="0.01" placeholder="Tax rate % (e.g. 8.25)" style="flex:1;min-width:160px;background:#161920;border:1px solid var(--line);border-radius:8px;padding:10px 14px;color:#fff;font-size:14px">
+          <button id="px-generate-btn" class="button primary" type="button">GENERATE</button>
+          <button id="px-pdf-btn" class="button" type="button" disabled>OPEN REAL PDF</button>
+        </div>
+        <div id="px-results" style="margin-top:16px;color:var(--muted);font-size:13px"></div>
+        <iframe id="px-preview" hidden sandbox="" title="PropX demo proposal preview" style="width:100%;height:560px;border:1px solid var(--line);border-radius:12px;background:#fff;margin-top:12px"></iframe>
+      </div>
+      <script>
+      (function(){
+        "use strict";
+        // Same token source as the rest of the page: window.ephemeralToken when
+        // exposed, otherwise the identical sessionStorage key + POST
+        // /api/auth/ephemeral the page's own ephemeralToken() uses, so this box
+        // shares one guest session with the HuntX/CutsheetX/SubX demos.
+        var PX_TOKEN_KEY = "weylandai_ephemeral_token_v1";
+        function pxEphemeralToken(){
+          if (typeof window.ephemeralToken === "function") return window.ephemeralToken();
+          try {
+            var existing = sessionStorage.getItem(PX_TOKEN_KEY);
+            if (existing) return Promise.resolve(existing);
+          } catch (_) {}
+          return fetch("/api/auth/ephemeral", { method: "POST" })
+            .then(function(r){ if (!r.ok) throw new Error("ephemeral auth failed"); return r.json(); })
+            .then(function(d){
+              try { sessionStorage.setItem(PX_TOKEN_KEY, d.token); } catch(_) {}
+              return d.token;
+            });
+        }
+        function pxEsc(s){ return String(s == null ? "" : s).replace(/[<>&"]/g, function(c){ return { "<": "&lt;", ">": "&gt;", "&": "&amp;", "\"": "&quot;" }[c]; }); }
+        function pxMoney(n){ return "$" + Number(n || 0).toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 }); }
+        function pxBody(format){
+          var client = document.getElementById("px-client").value.trim();
+          var taxPct = parseFloat(document.getElementById("px-tax").value);
+          var body = {};
+          if (client) body.clientName = client;
+          if (!isNaN(taxPct) && taxPct >= 0) body.taxRate = taxPct / 100;
+          if (format) body.format = format;
+          return body;
+        }
+        function pxErrorMessage(data, status){
+          var msg = data && data.error && (data.error.message || data.error);
+          if (data && data.details) msg = (msg || "") + " (" + data.details + ")";
+          return String(msg || ("request failed (" + status + ")"));
+        }
+        function init(){
+          var genBtn = document.getElementById("px-generate-btn");
+          var pdfBtn = document.getElementById("px-pdf-btn");
+          var box = document.getElementById("px-results");
+          var frame = document.getElementById("px-preview");
+          if (!genBtn || !pdfBtn || !box || !frame) return;
+
+          genBtn.addEventListener("click", function(){
+            box.textContent = "Pricing the sample bill of materials on the real PropX engine…";
+            genBtn.disabled = true;
+            pdfBtn.disabled = true;
+            frame.hidden = true;
+            pxEphemeralToken().then(function(token){
+              return fetch("/api/proposals/demo", {
+                method: "POST",
+                headers: { "Authorization": "Bearer " + token, "Content-Type": "application/json" },
+                body: JSON.stringify(pxBody(null))
+              });
+            }).then(function(r){
+              return r.json().then(function(d){ return { ok: r.ok, status: r.status, data: d }; });
+            }).then(function(res){
+              if (!res.ok) { box.textContent = pxErrorMessage(res.data, res.status); return; }
+              var d = res.data;
+              if (!d || !d.success || !d.totals || !d.lineItems) { box.textContent = "Unexpected response from /api/proposals/demo (" + res.status + ")."; return; }
+              var t = d.totals;
+              var rows = d.lineItems.map(function(li){
+                var desc = [li.material, li.size, li.fire_rating ? "FR " + li.fire_rating : null].filter(Boolean).join(" · ") || li.notes || "";
+                return "<tr><td><strong style=\"color:var(--text)\">" + pxEsc(li.door_type) + "</strong><br><small style=\"color:var(--muted)\">" + pxEsc(desc) + "</small></td>" +
+                  "<td style=\"text-align:right\">" + pxEsc(li.quantity) + "</td>" +
+                  "<td style=\"text-align:right\">" + pxMoney(li.unit_price) + "</td>" +
+                  "<td style=\"text-align:right;font-weight:700\">" + pxMoney(li.quantity * li.unit_price) + "</td></tr>";
+              }).join("");
+              var taxRow = t.taxRate > 0
+                ? "<tr><td colspan=\"3\" style=\"text-align:right\">Tax (" + (t.taxRate * 100).toFixed(2) + "%)</td><td style=\"text-align:right\">" + pxMoney(t.taxAmount) + "</td></tr>"
+                : "";
+              box.innerHTML =
+                "<div style=\"color:var(--text);font-weight:700;margin-bottom:6px\">Generated " + pxEsc(new Date(d.generatedAt).toLocaleTimeString()) +
+                " · " + pxEsc(d.lineItemCount) + " line items · " + (d.stored ? "stored" : "not stored") +
+                " · " + (d.rateLimiter ? "rate-limited per session" : "no rate limiter reported") + "</div>" +
+                "<div style=\"margin-bottom:10px\">" + pxEsc(d.sampleBom && d.sampleBom.note) + "</div>" +
+                "<div style=\"overflow-x:auto\"><table style=\"width:100%;border-collapse:collapse;font-size:13px\">" +
+                "<thead><tr><th style=\"text-align:left\">SAMPLE LINE ITEM (INPUT)</th><th style=\"text-align:right\">QTY</th><th style=\"text-align:right\">UNIT (INPUT)</th><th style=\"text-align:right\">EXTENDED</th></tr></thead>" +
+                "<tbody>" + rows +
+                "<tr style=\"background:rgba(255,255,255,.02)\"><td colspan=\"3\" style=\"text-align:right\">Subtotal</td><td style=\"text-align:right\">" + pxMoney(t.subtotal) + "</td></tr>" +
+                taxRow +
+                "<tr><td colspan=\"3\" style=\"text-align:right;font-weight:800;color:#fff\">Total (computed server-side)</td><td style=\"text-align:right;font-weight:800;color:#fff\">" + pxMoney(t.grandTotal) + "</td></tr>" +
+                "</tbody></table></div>" +
+                "<div style=\"margin-top:10px\">Below: the actual proposal document the engine rendered for this request (same template the paid route sends to the PDF renderer).</div>";
+              if (d.quoteHtml) {
+                frame.srcdoc = d.quoteHtml;
+                frame.hidden = false;
+              }
+              pdfBtn.disabled = false;
+            }).catch(function(err){
+              box.textContent = "Request failed: " + err.message;
+            }).finally(function(){
+              genBtn.disabled = false;
+            });
+          });
+
+          pdfBtn.addEventListener("click", function(){
+            var prev = box.innerHTML;
+            var note = document.createElement("div");
+            note.style.marginTop = "10px";
+            note.textContent = "Rendering the real PDF via Cloudflare Browser Rendering…";
+            box.appendChild(note);
+            pdfBtn.disabled = true;
+            pxEphemeralToken().then(function(token){
+              return fetch("/api/proposals/demo", {
+                method: "POST",
+                headers: { "Authorization": "Bearer " + token, "Content-Type": "application/json" },
+                body: JSON.stringify(pxBody("pdf"))
+              });
+            }).then(function(r){
+              if (!r.ok) return r.json().catch(function(){ return {}; }).then(function(d){ throw new Error(pxErrorMessage(d, r.status)); });
+              var ct = r.headers.get("Content-Type") || "";
+              if (ct.indexOf("application/pdf") === -1) throw new Error("expected a PDF, got " + ct);
+              return r.blob();
+            }).then(function(blob){
+              var url = URL.createObjectURL(blob);
+              var w = window.open(url, "_blank");
+              note.innerHTML = "Real PDF rendered (" + Math.round(blob.size / 1024) + " KB). " +
+                (w ? "" : "Pop-up blocked — ") + "<a href=\"" + url + "\" target=\"_blank\" rel=\"noopener\" style=\"color:var(--accent)\">open it here</a>.";
+            }).catch(function(err){
+              note.textContent = "PDF request failed: " + err.message;
+            }).finally(function(){
+              pdfBtn.disabled = false;
+            });
+          });
+        }
+        if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", init);
+        else init();
+      })();
+      </script>
     </section>
 
     <!-- CHAPTER 06: SightX — Photorealistic 3D Spatial Digital Twin -->

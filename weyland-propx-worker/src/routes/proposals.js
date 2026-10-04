@@ -54,20 +54,131 @@
 // case). The UI built alongside this worker surfaces both paths
 // honestly instead of hiding the dependency.
 //
-// A SECOND REAL GAP found during this extraction, worth flagging even
-// though out of scope to fix here: "propx" is NOT in auth.js's
-// EPHEMERAL_TRIAL_PRODUCTS set (only subx, takeoffx, cutsheetx, sightx
-// are). That means an anonymous/ephemeral guest session - the mechanism
-// the other three SubConP products use for a no-signup trial - gets a
-// hard 402 EPHEMERAL_PRODUCT_NOT_AVAILABLE from requireProductAccess()
-// here. A real account with subscription_tier 'subconp' or
-// products_enabled including 'propx' is required for every real call,
-// with no trial path today. Unchanged from the original behavior -
-// noted, not altered, since changing entitlement policy is a real
-// product decision, not something an extraction pass should do
-// silently.
+// 2026-10-04: "propx" IS now in auth.js's EPHEMERAL_TRIAL_PRODUCTS set
+// (the earlier header note about it being missing is obsolete), so an
+// ephemeral guest passes requireProductAccess here. But /generate still
+// needs a submittalId the guest owns - and an ephemeral session owns no
+// submittals (userId is null) - so a guest could never actually run the
+// engine. POST /api/proposals/demo (below) closes that gap honestly: it
+// prices a FIXED, clearly-labeled sample bill of materials through the
+// exact same normalizeLineItems() / computeTotals() / buildQuoteData() /
+// generateQuoteHtml() / renderQuotePdf() code path the paid route runs
+// (those helpers were extracted out of the generate handler for exactly
+// this reason - one pricing implementation, not two), and does NOT write
+// to the real proposals table or R2 (a demo must not mint real quote
+// numbers or pollute tenant data). It is rate-limited per session via
+// the DEMO_RATE_LIMITER binding in wrangler.toml.
 
 import { jsonResponse3 } from "../lib/json-response.js";
+
+// ---------------------------------------------------------------------
+// Shared pricing / document helpers. Extracted 2026-10-04 from the inline
+// body of POST /api/proposals/generate so the demo route can reuse them
+// byte-for-byte. Behavior of /generate is unchanged.
+// ---------------------------------------------------------------------
+
+// Customer-supplied line items -> priced door lines. Never invents a price:
+// a missing unit price is 0, exactly as the original inline code did.
+export function normalizeLineItems(lineItems) {
+  return lineItems.map((li) => ({
+    door_type: li.description || li.door_type || "Item",
+    material: li.material || null,
+    size: li.size || null,
+    fire_rating: li.fireRating || li.fire_rating || null,
+    quantity: Number(li.quantity) || 0,
+    unit_price: Number(li.unitPrice ?? li.unit_price) || 0,
+    notes: li.notes || null
+  }));
+}
+
+// Real extracted door_entries rows -> one row per distinct door group with
+// unit_price left at 0 for the estimator to fill in (never a fabricated
+// price), exactly as the original inline code did.
+export function groupDoorLines(rawDoors) {
+  const groups = {};
+  for (const d of rawDoors) {
+    const key = `${d.door_type || "Door"}|${d.material_code || ""}|${d.fire_rating || ""}`;
+    if (!groups[key]) {
+      groups[key] = { door_type: d.door_type || "Door", material: d.material_code || null, fire_rating: d.fire_rating || null, size: null, quantity: 0, unit_price: 0, notes: null };
+    }
+    groups[key].quantity++;
+  }
+  return Object.values(groups);
+}
+
+export function computeTotals(doorLines, taxRate) {
+  const subtotal = doorLines.reduce((sum2, d) => sum2 + d.quantity * d.unit_price, 0);
+  const effectiveTaxRate = Number(taxRate) || 0;
+  const taxAmount = subtotal * effectiveTaxRate;
+  const grandTotal = subtotal + taxAmount;
+  return { subtotal, taxRate: effectiveTaxRate, taxAmount, grandTotal };
+}
+
+export const DEFAULT_EXCLUSIONS_TEXT = "This proposal is based on the door schedule extracted from the referenced submittal. Final scope, pricing, and material sourcing are subject to verification against full project specifications and current supplier availability.";
+
+export async function loadVendorProfile(env2, tenantId) {
+  const vendorRaw = await env2.DB.prepare(
+    `SELECT company_name, company_address, company_phone, company_email, logo_url, affirmed FROM vendor_profile WHERE tenant_id = ?`
+  ).bind(tenantId).first();
+  return vendorRaw?.affirmed ? vendorRaw : { company_name: vendorRaw?.company_name || null };
+}
+
+export function buildQuoteData({ vendorProfile, recipient, quoteNumber, now, validityDays, doorLines, totals, exclusionsText, coverNote }) {
+  return {
+    vendor: vendorProfile,
+    recipient,
+    quoteNumber,
+    quoteDate: now,
+    validityDays,
+    doors: doorLines,
+    frames: [],
+    services: [],
+    hardwareSets: [],
+    totals,
+    settings: {
+      show_unit_prices: true,
+      show_extended_prices: true,
+      exclusions_text: exclusionsText || DEFAULT_EXCLUSIONS_TEXT,
+      tax_jurisdiction: null
+    },
+    coverNote: coverNote || null,
+    templateDna: { header: { title_text: "PROPOSAL" } }
+  };
+}
+
+// Cloudflare Browser Rendering -> Letter PDF bytes. Same launch/newPage/
+// setContent/pdf/close sequence the original inline code ran.
+export async function renderQuotePdf(puppeteer, env2, quoteHtml) {
+  const browser = await puppeteer.launch(env2.BROWSER);
+  try {
+    const page = await browser.newPage();
+    await page.setContent(quoteHtml, { waitUntil: "load" });
+    return await page.pdf({ format: "Letter", printBackground: true, margin: { top: "0in", right: "0in", bottom: "0in", left: "0in" } });
+  } finally {
+    await browser.close();
+  }
+}
+
+// ---------------------------------------------------------------------
+// The fixed sample bill of materials the public demo prices. These unit
+// prices are INPUTS to the engine, labeled as such in every response -
+// illustrative list prices for a 6-opening commercial package, not a live
+// supplier quote. Nothing below this table is hand-written: subtotal,
+// tax, total, and the rendered document all come out of the same code
+// /generate runs.
+// ---------------------------------------------------------------------
+export const DEMO_SAMPLE_BOM = {
+  label: "Sample 6-opening commercial package (fixed demo input)",
+  note: "Unit prices are illustrative sample list prices supplied as inputs to the engine - not a live supplier quote. Subtotal, tax, total, and the rendered proposal are computed server-side by the same code POST /api/proposals/generate runs for paying customers.",
+  lineItems: [
+    { description: "Hollow Metal Door", material: "HM 18ga", size: "3'0\" x 7'0\" x 1-3/4\"", fireRating: "90 min", quantity: 4, unitPrice: 485.00, notes: "Sample list price" },
+    { description: "Flush Wood Door", material: "WD 5-ply", size: "3'0\" x 7'0\" x 1-3/4\"", fireRating: "20 min", quantity: 2, unitPrice: 362.00, notes: "Sample list price" },
+    { description: "Welded HM Frame", material: "HM 16ga", size: "3'0\" x 7'0\" x 5-3/4\"", fireRating: "90 min", quantity: 6, unitPrice: 198.00, notes: "Sample list price" },
+    { description: "HW Set 01 - Exit Device Package", material: null, size: null, fireRating: null, quantity: 4, unitPrice: 1145.00, notes: "Rim exit device, surface closer, hinges, stop - sample list price" },
+    { description: "HW Set 02 - Office Lockset Package", material: null, size: null, fireRating: null, quantity: 2, unitPrice: 612.00, notes: "Cylindrical lockset, surface closer, hinges, stop - sample list price" },
+    { description: "Field Installation Labor", material: null, size: null, fireRating: null, quantity: 6, unitPrice: 212.50, notes: "2.5 crew-hours per opening at $85.00/hr - sample rate" }
+  ]
+};
 
 export function registerProposalsRoutes(router, { authenticate, requireProductAccess, generateQuoteHtml, puppeteer }) {
   router.post("/api/proposals/generate", async (request2, env2) => {
@@ -99,50 +210,26 @@ export function registerProposalsRoutes(router, { authenticate, requireProductAc
         "SELECT * FROM door_entries WHERE submittal_id = ? ORDER BY door_number"
       ).bind(submittalId).all();
       const rawDoors = doorsResult.results || [];
-      const vendorRaw = await env2.DB.prepare(
-        `SELECT company_name, company_address, company_phone, company_email, logo_url, affirmed FROM vendor_profile WHERE tenant_id = ?`
-      ).bind(tenantId).first();
-      const vendorProfile = vendorRaw?.affirmed ? vendorRaw : { company_name: vendorRaw?.company_name || null };
+      const vendorProfile = await loadVendorProfile(env2, tenantId);
       const now = (/* @__PURE__ */ new Date()).toISOString();
       // Priced line items: use what the customer supplied (they may have
       // filled in real unit prices from their own supplier quotes) if given,
       // otherwise auto-derive one row per distinct door group from the real
       // extracted schedule with unit_price left at 0 for them to fill in -
       // never invent a price.
-      let doorLines;
-      if (Array.isArray(lineItems) && lineItems.length > 0) {
-        doorLines = lineItems.map((li) => ({
-          door_type: li.description || li.door_type || "Item",
-          material: li.material || null,
-          size: li.size || null,
-          fire_rating: li.fireRating || li.fire_rating || null,
-          quantity: Number(li.quantity) || 0,
-          unit_price: Number(li.unitPrice ?? li.unit_price) || 0,
-          notes: li.notes || null
-        }));
-      } else {
-        const groups = {};
-        for (const d of rawDoors) {
-          const key = `${d.door_type || "Door"}|${d.material_code || ""}|${d.fire_rating || ""}`;
-          if (!groups[key]) {
-            groups[key] = { door_type: d.door_type || "Door", material: d.material_code || null, fire_rating: d.fire_rating || null, size: null, quantity: 0, unit_price: 0, notes: null };
-          }
-          groups[key].quantity++;
-        }
-        doorLines = Object.values(groups);
-      }
-      const subtotal = doorLines.reduce((sum2, d) => sum2 + d.quantity * d.unit_price, 0);
-      const effectiveTaxRate = Number(taxRate) || 0;
-      const taxAmount = subtotal * effectiveTaxRate;
-      const grandTotal = subtotal + taxAmount;
+      const doorLines = (Array.isArray(lineItems) && lineItems.length > 0)
+        ? normalizeLineItems(lineItems)
+        : groupDoorLines(rawDoors);
+      const totals = computeTotals(doorLines, taxRate);
+      const { subtotal, taxRate: effectiveTaxRate, taxAmount, grandTotal } = totals;
       const effectiveValidityDays = Number(validityDays) || 30;
       const maxQuoteResult = await env2.DB.prepare(
         `SELECT COALESCE(MAX(quote_number), 0) + 1 as next_number FROM proposals WHERE tenant_id = ?`
       ).bind(tenantId).first();
       const quoteNumber = maxQuoteResult?.next_number || 1;
       const proposalId = crypto.randomUUID();
-      const quoteData = {
-        vendor: vendorProfile,
+      const quoteData = buildQuoteData({
+        vendorProfile,
         recipient: {
           client_name: clientName || null,
           client_address: clientAddress || null,
@@ -152,32 +239,15 @@ export function registerProposalsRoutes(router, { authenticate, requireProductAc
           bid_due_date: bidDueDate || null
         },
         quoteNumber,
-        quoteDate: now,
+        now,
         validityDays: effectiveValidityDays,
-        doors: doorLines,
-        frames: [],
-        services: [],
-        hardwareSets: [],
-        totals: { subtotal, taxRate: effectiveTaxRate, taxAmount, grandTotal },
-        settings: {
-          show_unit_prices: true,
-          show_extended_prices: true,
-          exclusions_text: exclusionsText || "This proposal is based on the door schedule extracted from the referenced submittal. Final scope, pricing, and material sourcing are subject to verification against full project specifications and current supplier availability.",
-          tax_jurisdiction: null
-        },
-        coverNote: rfpSummary || null,
-        templateDna: { header: { title_text: "PROPOSAL" } }
-      };
+        doorLines,
+        totals,
+        exclusionsText,
+        coverNote: rfpSummary
+      });
       const quoteHtml = generateQuoteHtml(quoteData, null);
-      let pdfBytes;
-      const browser = await puppeteer.launch(env2.BROWSER);
-      try {
-        const page = await browser.newPage();
-        await page.setContent(quoteHtml, { waitUntil: "load" });
-        pdfBytes = await page.pdf({ format: "Letter", printBackground: true, margin: { top: "0in", right: "0in", bottom: "0in", left: "0in" } });
-      } finally {
-        await browser.close();
-      }
+      const pdfBytes = await renderQuotePdf(puppeteer, env2, quoteHtml);
       const r2Key = `proposals/${submittalId}/${proposalId}.pdf`;
       await env2.UPLOADS.put(r2Key, pdfBytes, {
         httpMetadata: { contentType: "application/pdf" },
@@ -209,6 +279,116 @@ export function registerProposalsRoutes(router, { authenticate, requireProductAc
     } catch (error5) {
       console.error("[PropX Generate Proposal] Error:", error5);
       return jsonResponse3({ error: "Failed to generate proposal", details: error5.message }, 500);
+    }
+  });
+
+  // POST /api/proposals/demo - see file header. Accepts ephemeral guest
+  // sessions (propx is in EPHEMERAL_TRIAL_PRODUCTS). Body (all optional):
+  //   taxRate       0..0.25  (fraction, e.g. 0.0825)
+  //   validityDays  1..180
+  //   clientName    string, <= 80 chars
+  //   format        "json" (default) | "pdf"
+  // "json" returns the priced lines, totals, and the rendered proposal
+  // HTML (the same generateQuoteHtml output /generate feeds to the PDF
+  // renderer). "pdf" runs the real Cloudflare Browser Rendering step and
+  // streams the PDF bytes back directly - nothing is stored.
+  router.post("/api/proposals/demo", async (request2, env2) => {
+    const { error: error4, user } = await authenticate(request2, env2);
+    if (error4)
+      return error4;
+    {
+      const _prodErr = await requireProductAccess(user, env2, "propx");
+      if (_prodErr) return _prodErr;
+    }
+    // Per-session rate limit via Cloudflare's Workers Rate Limiting
+    // binding (wrangler.toml [[unsafe.bindings]] DEMO_RATE_LIMITER). If
+    // the binding is absent we say so in the response rather than
+    // pretending a limit was applied.
+    let rateLimited = null;
+    const rlKey = user?.ephemeralToken || user?.userId || user?.id || request2.headers.get("CF-Connecting-IP") || "anon";
+    if (env2.DEMO_RATE_LIMITER && typeof env2.DEMO_RATE_LIMITER.limit === "function") {
+      try {
+        const { success } = await env2.DEMO_RATE_LIMITER.limit({ key: `propx-demo:${rlKey}` });
+        rateLimited = "DEMO_RATE_LIMITER";
+        if (!success) {
+          return jsonResponse3({
+            success: false,
+            error: { code: "RATE_LIMITED", message: "Demo rate limit reached for this session - try again in a minute." }
+          }, 429);
+        }
+      } catch (rlErr) {
+        console.log("[PropX Demo] rate limiter error:", rlErr.message);
+      }
+    }
+    try {
+      let body = {};
+      try { body = await request2.json(); } catch (_) { body = {}; }
+      const taxRateIn = Number(body.taxRate);
+      const taxRate = Number.isFinite(taxRateIn) ? Math.min(Math.max(taxRateIn, 0), 0.25) : 0;
+      const validityIn = Number(body.validityDays);
+      const validityDays = Number.isFinite(validityIn) && validityIn > 0 ? Math.min(Math.floor(validityIn), 180) : 30;
+      const clientName = typeof body.clientName === "string" && body.clientName.trim() ? body.clientName.trim().slice(0, 80) : "Sample Client";
+      const format = body.format === "pdf" ? "pdf" : "json";
+
+      const tenantId = user.tenantId || user.tenant_id || "ven_weyland";
+      const vendorProfile = await loadVendorProfile(env2, tenantId);
+      const now = (/* @__PURE__ */ new Date()).toISOString();
+      const doorLines = normalizeLineItems(DEMO_SAMPLE_BOM.lineItems);
+      const totals = computeTotals(doorLines, taxRate);
+      const quoteData = buildQuoteData({
+        vendorProfile,
+        recipient: {
+          client_name: clientName,
+          client_address: null,
+          project_name: "PropX Live Demo - Sample 6-Opening Package",
+          project_address: null,
+          rfp_reference: "DEMO",
+          bid_due_date: null
+        },
+        quoteNumber: "DEMO",
+        now,
+        validityDays,
+        doorLines,
+        totals,
+        exclusionsText: "DEMO PROPOSAL - priced from a fixed sample bill of materials with illustrative sample list prices, not a live supplier quote. Generated live by the PropX proposal engine; not a binding offer.",
+        coverNote: null
+      });
+      const quoteHtml = generateQuoteHtml(quoteData, null);
+
+      if (format === "pdf") {
+        const pdfBytes = await renderQuotePdf(puppeteer, env2, quoteHtml);
+        return new Response(pdfBytes, {
+          headers: {
+            "Content-Type": "application/pdf",
+            "Content-Disposition": "inline; filename=\"PropX-Demo-Proposal.pdf\"",
+            "Cache-Control": "no-store"
+          }
+        });
+      }
+
+      return jsonResponse3({
+        success: true,
+        demo: true,
+        stored: false,
+        rateLimiter: rateLimited,
+        sampleBom: { label: DEMO_SAMPLE_BOM.label, note: DEMO_SAMPLE_BOM.note },
+        engine: {
+          pricing: "normalizeLineItems + computeTotals (shared with POST /api/proposals/generate)",
+          document: "generateQuoteHtml (shared with POST /api/proposals/generate)",
+          pdf: "POST /api/proposals/demo with {format:\"pdf\"} runs renderQuotePdf via Cloudflare Browser Rendering"
+        },
+        generatedAt: now,
+        session: user?.ephemeral ? "ephemeral" : "account",
+        recipient: quoteData.recipient,
+        validityDays,
+        lineItemCount: doorLines.length,
+        lineItems: doorLines,
+        totals,
+        quoteHtml
+      });
+    } catch (error5) {
+      console.error("[PropX Demo Proposal] Error:", error5);
+      return jsonResponse3({ error: "Failed to generate demo proposal", details: error5.message }, 500);
     }
   });
 

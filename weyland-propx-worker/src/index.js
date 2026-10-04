@@ -18,6 +18,11 @@
 // header for exact provenance and the two real gaps this pass found and
 // is honestly surfacing rather than hiding):
 //   POST /api/proposals/generate     -> routes/proposals.js
+//   POST /api/proposals/demo         -> routes/proposals.js (2026-10-04:
+//                                        ephemeral-session homepage demo;
+//                                        same pricing/render code, fixed
+//                                        labeled sample BOM, nothing stored,
+//                                        DEMO_RATE_LIMITER-limited)
 //   GET  /api/proposals/:id/download -> routes/proposals.js
 //   GET  /propx-app                  -> the real proposal-builder UI
 //                                        this pass built (src/pages/

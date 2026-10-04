@@ -43,6 +43,18 @@ binding = "BROWSER"
 binding = "UPLOADS"
 bucket_name = "subx-uploads"
 
+# Added 2026-10-04 for POST /api/proposals/demo (the homepage's public,
+# ephemeral-session PropX demo - see src/routes/proposals.js header).
+# Cloudflare Workers Rate Limiting binding: 10 demo generations per
+# 60 seconds per session key (ephemeral token / user id / client IP).
+# The route checks env.DEMO_RATE_LIMITER defensively and reports in its
+# response whether a limiter was actually applied.
+[[unsafe.bindings]]
+name = "DEMO_RATE_LIMITER"
+type = "ratelimit"
+namespace_id = "2026100401"
+simple = { limit = 10, period = 60 }
+
 # Cloudflare Worker Routes on the weylandai.com zone - enabled after this
 # Worker was deployed standalone to its own *.workers.dev subdomain and
 # curl-verified for real parity against the monolith's existing behavior:
