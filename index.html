@@ -1838,7 +1838,7 @@
         <a href="#wire" data-target="wire">News</a>
         <a class="wn-signin js-upgrade-cta" href="/login?redirect=/">Sign In</a>
       </nav>
-      <button type="button" class="wn-close" id="envelope-close" aria-label="Lower the dossier back into your hand and reveal the SightX world"><span class="wn-close-x" aria-hidden="true">&#x2715;</span><span class="wn-close-hint">[close]</span></button>
+      <button type="button" class="wn-close" id="envelope-close" aria-label="Close: lower the dossier back into your hand and reveal the SightX world"><span class="wn-close-x" aria-hidden="true">&#x2715;</span><span class="wn-close-hint">[close]</span></button>
     </div>
     <!-- Scroll progress bar IS the seam between nav and content - a child of
          the sticky header so it always sits exactly at its bottom edge,
@@ -1856,7 +1856,7 @@
       <div class="hero-actions">
         <a class="button accent" href="#huntx">EXPLORE THE STORY &darr;</a>
         <a class="button primary" href="#pricing">VIEW SUITE PRICING</a>
-        <a class="button" href="/login?redirect=/">SIGN IN TO WORKSPACE</a>
+        <a class="js-upgrade-cta button" href="/login?redirect=/">SIGN IN TO WORKSPACE</a>
       </div>
 
       <!-- Scrollytelling Timeline Breadcrumb -->
@@ -2135,7 +2135,7 @@
                 <div class="pl-assemble-card"><span>Pending Match</span><strong id="pl-pending-count"><span class="skel" style="width:1.4em;height:18px"></span></strong></div>
               </div>
               <div class="note-card" style="margin:0">
-                This is the real assembled content, not a mockup. <a class="button primary" href="/login?redirect=/subx-app">SIGN IN TO EXPORT THE REAL PDF PACKAGE</a>
+                This is the real assembled content, not a mockup. <a class="js-upgrade-cta button primary" href="/login?redirect=/subx-app">SIGN IN TO EXPORT THE REAL PDF PACKAGE</a>
               </div>
             </article>
           </div>
@@ -2379,7 +2379,7 @@
           </div>
 
           <div style="margin-top:20px">
-            <a class="button" href="/login?redirect=/" style="width:100%;justify-content:center">CONNECT TO SPATIAL ROOM</a>
+            <a class="js-upgrade-cta button" href="/login?redirect=/" style="width:100%;justify-content:center">CONNECT TO SPATIAL ROOM</a>
           </div>
         </div>
       </div>
@@ -2568,9 +2568,9 @@
           <div class="sightx-centerpiece">
             <h3>The Orbital Shipyard &amp; Spatial Twin</h3>
             <p>Explore the full-scale open-berth drydock, starship hull frame under active robotic welding, and Low Earth Orbit curvature with real astronaut suit physics.</p>
-            <a class="button primary" href="/sightx" target="_blank" style="padding:14px 26px;font-size:12px">
+            <button type="button" class="button primary js-lower-dossier" style="padding:14px 26px;font-size:12px">
               LAUNCH FULLSCREEN 3D ORBITAL SPACEWALK &rarr;
-            </a>
+            </button>
           </div>
 
           <div style="display:flex;justify-content:space-between;align-items:center;font-size:11px;color:var(--muted);font-family:ui-monospace,monospace;position:relative;z-index:5">
@@ -2724,7 +2724,7 @@
             <li><span class="chk-yes">&check;</span> Export opportunities to CSV/JSON</li>
             <li><span class="chk-yes">&check;</span> 3 Estimator logins included</li>
           </ul>
-          <a class="button" href="/login?redirect=/huntx" style="width:100%;justify-content:center">START HUNTX</a>
+          <a class="js-upgrade-cta button" href="/login?redirect=/huntx" style="width:100%;justify-content:center">START HUNTX</a>
         </div>
 
         <!-- Featured SubConP Suite Card -->
@@ -2745,7 +2745,7 @@
             <li><span class="chk-yes">&check;</span> Uncapped project estimating volume</li>
             <li><span class="chk-yes">&check;</span> Up to 10 concurrent team members</li>
           </ul>
-          <a class="button accent" href="/login?redirect=/subx-app" style="width:100%;justify-content:center">START SUBCONP SUITE</a>
+          <a class="js-upgrade-cta button accent" href="/login?redirect=/subx-app" style="width:100%;justify-content:center">START SUBCONP SUITE</a>
         </div>
 
         <!-- Enterprise Sovereign Card -->
@@ -2773,7 +2773,7 @@
           <strong style="color:#fff;font-size:16px;display:block">Average Annual Subcontractor Savings: $37,600</strong>
           <span style="color:var(--muted)">Eliminates Togal.ai ($3,600/yr), Dodge Construction ($10,000/yr), and 240+ hours of manual submittal compilation ($24,000/yr).</span>
         </div>
-        <a class="button primary" href="/login?redirect=/">SIGN IN WITH AUTHFOR</a>
+        <a class="js-upgrade-cta button primary" href="/login?redirect=/">SIGN IN WITH AUTHFOR</a>
       </div>
     </section>
 
@@ -2794,7 +2794,6 @@
         <a href="#sightx">SightX</a>
         <a href="#pricing">Pricing</a>
         <a href="#wire">News</a>
-        <a href="/venturedeck">Venture Deck</a>
         <a class="js-upgrade-cta" href="/login?redirect=/">Sign In</a>
         <a href="https://consenta.cc/policy/weylandai.com/privacy" target="_blank" rel="noopener">Privacy Policy</a>
         <a href="https://consenta.cc/policy/weylandai.com/terms" target="_blank" rel="noopener">Terms of Service</a>
@@ -2804,7 +2803,7 @@
 
   </div><!-- /.envelope-frame -->
   <button type="button" id="dossier-tap" aria-label="Raise the dossier"></button>
-  <button type="button" class="wn-raise" id="envelope-raise" hidden aria-label="Raise the folder back up"><span aria-hidden="true">&#x25B2;</span> [raise dossier]</button>
+  <button type="button" class="wn-raise" id="envelope-raise" hidden aria-label="Raise dossier: bring the folder back up to the eye"><span aria-hidden="true">&#x25B2;</span> [raise dossier]</button>
 
   <!-- Persistent footer (position:fixed, outside the scroll container,
        visible at every screen width) - the header's .wn-secondary is
@@ -3573,7 +3572,9 @@
         return true;
       } catch (e) { return false; }
     };
-    window.__weylandEnsureBackdrop(false);
+    function bootBackdrop() { window.__weylandEnsureBackdrop(false); }
+    if (document.readyState === "complete") bootBackdrop();
+    else window.addEventListener("load", bootBackdrop, { once: true });
   })();
   </script>
 
@@ -3705,6 +3706,9 @@
     apply(isLowered(), false);
     if (isLowered()) { live = true; frame.style.transition = "none"; }
     if (tap) tap.addEventListener("click", function () { raise(); });
+    document.querySelectorAll(".js-lower-dossier").forEach(function (el) {
+      el.addEventListener("click", function (e) { e.preventDefault(); lower(); });
+    });
     closeBtn.addEventListener("click", lower);
     raiseBtn.addEventListener("click", raise);
     document.addEventListener("keydown", function (e) {
