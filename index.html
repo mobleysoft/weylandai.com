@@ -536,7 +536,7 @@
     }
     /* Raise control: appears only while the folder is lowered. Hangs from
        the TOP edge, centered, cut as an inverted tab - the one spot the
-       SightX world keeps clear in both its desktop (drydock HUD) and
+       SightX world keeps clear in both its desktop (jobsite HUD) and
        mobile (chrono-telemetry intro) scenes; at the bottom it sat on top
        of SightX's own control bar / walkthrough button (seen live). */
     .wn-raise {
@@ -2608,13 +2608,13 @@
     <section class="story-chapter" id="sightx">
       <div class="chapter-eyebrow">
         <span class="ch-badge">SIGHTX</span>
-        <span>3D FIELD TWIN &middot; YOUR SCHEDULE, AS REAL DOORS</span>
+        <span>3D FIELD TWIN &middot; A BUILDING MADE OF PARTS YOU CAN BUY</span>
       </div>
       <div class="chapter-head">
         <div class="chapter-product-badge"><span>SightX</span></div>
-        <h2>SightX &mdash; Walk your schedule in 3D, door by door.</h2>
-        <div class="chapter-tagline">One spatial record, the same hardware everywhere.</div>
-        <p class="chapter-desc">Paste a schedule above and press walk: the matched openings stand up as door frames in a first-person scene, each labeled with the real product the matcher found. Next: the whole building from your plan set, built by the same deterministic cascades that do the matching (the rules are written down in docs/PDF_TO_TWIN_RULES.md).</p>
+        <h2>SightX &mdash; Walk the building you are bidding, door by door.</h2>
+        <div class="chapter-tagline">A corridor of hollow-metal doors, every product on them a real catalog page.</div>
+        <p class="chapter-desc">Behind this dossier is a 30 m commercial corridor: hollow-metal frames, flush doors, hinges, levers and closers drawn where the hardware set mounts them, and an exit pair with rim devices at the end. Every product named in it (LCN 4040XP and 1461, Schlage L9080, Ives 5BB1, Hager BB1279, Von Duprin 99) resolves in the CutsheetX catalog today. Paste your own schedule above and press walk: your matched openings replace the sample ones. Next: the whole building from your plan set, built by the same deterministic cascades that do the matching (the rules are written down in docs/PDF_TO_TWIN_RULES.md).</p>
       </div>
 
       <div class="sightx-container">
@@ -2622,8 +2622,8 @@
         <div class="sightx-canvas-card">
           <div class="sightx-hud">
             <div class="sightx-telemetry">
-              SCENE: FACILITY 01 (DEMONSTRATION SITE)<br>
-              OPENINGS: YOUR SCHEDULE, UP TO 12 DOORS, LABELED<br>
+              SCENE: CORRIDOR 100 (SAMPLE JOBSITE TWIN, HAND-AUTHORED)<br>
+              OPENINGS: 8 SAMPLE DOORS + EXIT PAIR, OR YOUR SCHEDULE (UP TO 12)<br>
               HARDWARE: LCN &middot; VON DUPRIN &middot; SCHLAGE &middot; IVES &middot; HAGER<br>
               CONTROLS: CLICK TO FLY &middot; ENTER RAISES THE DOSSIER
             </div>
@@ -2633,8 +2633,8 @@
           </div>
 
           <div class="sightx-centerpiece">
-            <h3>Your Doors, Standing Up</h3>
-            <p>Lower the dossier and the scene is behind it. Match a schedule, press walk, and the doors you specified stand in a row with their real products on them. Nothing on a label is a part you cannot buy.</p>
+            <h3>A Jobsite, Not a Space Station</h3>
+            <p>Lower the dossier and the corridor is behind it. Walk it, scan a frame to read its hardware set, or match your own schedule and press walk to hang your doors in its walls. Nothing on a label is a part you cannot buy.</p>
             <button type="button" class="button primary js-lower-dossier" style="padding:14px 26px;font-size:12px">
               LOWER THE DOSSIER AND LOOK AROUND &rarr;
             </button>
@@ -3295,7 +3295,7 @@
       });
       window.addEventListener("message", function (e) {
         if (e.origin !== location.origin || !e.data || e.data.type !== "weyland:walk-ready") return;
-        var note = document.getElementById("hs-note"); if (note) note.textContent = "SightX placed " + e.data.count + " openings along the catwalk. Click the world to fly; Enter raises the dossier.";
+        var note = document.getElementById("hs-note"); if (note) note.textContent = "SightX hung " + e.data.count + " openings in the corridor walls. Click the world to walk; Enter raises the dossier.";
       });
     }
 
