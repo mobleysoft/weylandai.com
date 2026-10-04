@@ -1,0 +1,132 @@
+{
+  "base": "https://weylandai.com",
+  "startedAt": "2026-10-04T06:30:17.709Z",
+  "specCount": 6,
+  "source": "sample-package",
+  "matches": [
+    {
+      "spec": {
+        "manufacturer": "LCN",
+        "model": "4040XP"
+      },
+      "matched": true,
+      "confidence": "high",
+      "matchType": "exact",
+      "product": "LCN 4040XP Extra Heavy Duty Door Closer",
+      "sheets": 1
+    },
+    {
+      "spec": {
+        "manufacturer": "Von Duprin",
+        "model": "99"
+      },
+      "matched": true,
+      "confidence": "high",
+      "matchType": "exact",
+      "product": "Von Duprin 99 Series Rim Exit Device",
+      "sheets": 1
+    },
+    {
+      "spec": {
+        "manufacturer": "Schlage",
+        "model": "L9080"
+      },
+      "matched": true,
+      "confidence": "high",
+      "matchType": "exact",
+      "product": "Schlage L9080 Storeroom Mortise Lock",
+      "sheets": 0
+    },
+    {
+      "spec": {
+        "manufacturer": "Ives",
+        "model": "5BB1"
+      },
+      "matched": true,
+      "confidence": "high",
+      "matchType": "exact",
+      "product": "IVES 5BB1 Standard Weight Ball Bearing Hinge",
+      "sheets": 0
+    },
+    {
+      "spec": {
+        "manufacturer": "LCN",
+        "model": "1461"
+      },
+      "matched": true,
+      "confidence": "high",
+      "matchType": "exact",
+      "product": "LCN 1461 Cast Iron Door Closer",
+      "sheets": 1
+    },
+    {
+      "spec": {
+        "manufacturer": "Hager",
+        "model": "BB1279"
+      },
+      "matched": true,
+      "confidence": "high",
+      "matchType": "exact",
+      "product": "Hager BB1279 Ball Bearing Hinge",
+      "sheets": 0
+    }
+  ],
+  "proposal": {
+    "lineItemCount": 6,
+    "grandTotal": 11832.8075
+  },
+  "pdf": {
+    "bytes": 67008,
+    "isPdf": true
+  },
+  "steps": [
+    {
+      "step": "ephemeral session",
+      "ms": 928,
+      "ok": true
+    },
+    {
+      "step": "cutsheetx match LCN 4040XP",
+      "ms": 625,
+      "ok": true
+    },
+    {
+      "step": "cutsheetx match Von Duprin 99",
+      "ms": 567,
+      "ok": true
+    },
+    {
+      "step": "cutsheetx match Schlage L9080",
+      "ms": 555,
+      "ok": true
+    },
+    {
+      "step": "cutsheetx match Ives 5BB1",
+      "ms": 559,
+      "ok": true
+    },
+    {
+      "step": "cutsheetx match LCN 1461",
+      "ms": 564,
+      "ok": true
+    },
+    {
+      "step": "cutsheetx match Hager BB1279",
+      "ms": 558,
+      "ok": true
+    },
+    {
+      "step": "propx proposal (json)",
+      "ms": 632,
+      "ok": true
+    },
+    {
+      "step": "propx proposal (real pdf)",
+      "ms": 1594,
+      "ok": true
+    }
+  ],
+  "totalMs": 6582,
+  "matchedCount": 6,
+  "finishedAt": "2026-10-04T06:30:24.293Z"
+}

@@ -1876,27 +1876,26 @@
         <a class="journey-step" href="#sightx"><span class="dot"></span>06 SightX: 3D Twin</a>
       </nav>
 
-      <!-- Key Architectural Metrics -->
-      <div class="metrics-row">
-        <div class="metric-card">
-          <span>Deterministic Citations</span>
-          <strong class="g">100%</strong>
-          <small style="color:var(--muted);font-size:11px">Every match traces to its source document</small>
-        </div>
-        <div class="metric-card">
-          <span>Vector Plan Quantification</span>
-          <strong class="b">&lt; 3.0s</strong>
-          <small style="color:var(--muted);font-size:11px">Machine-vision geometry detection</small>
-        </div>
-        <div class="metric-card">
-          <span>Verified Catalog Variants</span>
-          <strong class="p">60,000+</strong>
-          <small style="color:var(--muted);font-size:11px">Schlage, LCN, Von Duprin, Yale</small>
-        </div>
-        <div class="metric-card">
-          <span>Public Pipeline Ingestion</span>
-          <strong class="g">$142M+</strong>
-          <small style="color:var(--muted);font-size:11px">TXDOT &amp; CA OPSC live feeds</small>
+      <!-- One real CutsheetX match in the hero, instead of metric cards.
+           The static result below is a REAL response captured from
+           POST /api/cut-sheets/match on 2026-10-04 (LCN 4040XP: exact match,
+           high confidence, cited to the LCN price book). RUN IT LIVE re-runs
+           the same request with an ephemeral session and replaces the card
+           with whatever the matcher returns right now - including a miss. -->
+      <div id="hero-match" class="metrics-row" style="grid-template-columns:1fr;max-width:860px">
+        <div class="metric-card" style="text-align:left;padding:18px 22px">
+          <span>One real match, as the matcher returned it</span>
+          <div style="display:grid;grid-template-columns:auto 1fr;gap:6px 16px;margin:10px 0 12px;font-size:13px;line-height:1.45">
+            <div style="color:var(--muted)">Spec line</div><div id="hm-spec" style="font-family:ui-monospace,monospace;color:var(--text)">LCN 4040XP</div>
+            <div style="color:var(--muted)">Matched</div><div id="hm-product" style="color:var(--text);font-weight:700">LCN 4040XP Extra Heavy Duty Door Closer</div>
+            <div style="color:var(--muted)">Confidence</div><div id="hm-conf" style="color:var(--green);font-weight:700">high &middot; exact</div>
+            <div style="color:var(--muted)">Citation</div><div id="hm-cite" style="color:var(--text)">LCN Price Book, 152 pages (product listed around pp. 6&ndash;48 in the edition catalogued)</div>
+          </div>
+          <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:center">
+            <button id="hm-run" type="button" class="button accent" style="padding:9px 16px;font-size:11px">RUN IT LIVE</button>
+            <a class="button" href="#cutsheetx" style="padding:9px 16px;font-size:11px">TRY YOUR OWN SPEC &darr;</a>
+            <small id="hm-note" style="color:var(--muted);font-size:11px">Captured from the live matcher on 2026-10-04.</small>
+          </div>
         </div>
       </div>
     </section>
@@ -2278,7 +2277,12 @@
     <section class="story-chapter" id="builtwith">
       <div class="chapter-eyebrow"><span class="ch-badge">BUILT WITH A WORKING DOOR COMPANY</span></div>
       <h2>Precision Auto Doors is the suite&rsquo;s first real user.</h2>
-      <p class="hero-sub">Andrew Miller&rsquo;s door company runs its own work through WeylandAI while it is being built. The door and hardware workflows on this page are the ones that trade actually lives in: spec lines, catalog variants, submittal packages, priced proposals. When a job has been run start to finish with the clock on it, the numbers go here, not before.</p>
+      <p class="hero-sub">Andrew Miller&rsquo;s door company runs its own work through WeylandAI while it is being built. The door and hardware workflows on this page are the ones that trade actually lives in: spec lines, catalog variants, submittal packages, priced proposals. When one of their jobs has been run start to finish with the clock on it, that number goes here. Until then, the only timed figure is the sample package below, and it is labeled as such.</p>
+      <div class="metrics-row" style="grid-template-columns:repeat(3,1fr);max-width:860px">
+        <div class="metric-card"><span>Sample package, end to end</span><strong class="g">6.6&nbsp;s</strong><small style="color:var(--muted);font-size:11px">6 spec lines matched, proposal priced, real PDF rendered</small></div>
+        <div class="metric-card"><span>Spec lines matched</span><strong class="b">6 / 6</strong><small style="color:var(--muted);font-size:11px">LCN, Von Duprin, Schlage, Ives, Hager</small></div>
+        <div class="metric-card"><span>Measured</span><strong class="p">2026-10-04</strong><small style="color:var(--muted);font-size:11px">against production, no account; harness in the repo (launch/case-study/timed_run.mjs)</small></div>
+      </div>
     </section>
 
     <section class="story-chapter" id="propx">
@@ -3133,6 +3137,29 @@
         }).join("");
       }).catch(function(err) {
         wireFeedEl.innerHTML = '<div style="color:var(--muted);padding:20px 0">Couldn\'t reach live sources: ' + err.message + '</div>';
+      });
+    }
+
+    // 5b2. Hero: re-run the one real match live, replacing the captured card
+    // with whatever the matcher returns now (a miss is shown as a miss).
+    var hmRun = document.getElementById("hm-run");
+    if (hmRun) {
+      hmRun.addEventListener("click", function() {
+        var note = document.getElementById("hm-note");
+        hmRun.disabled = true; note.textContent = "Running against the live matcher\u2026";
+        var t0 = performance.now();
+        ephemeralToken().then(function(token) {
+          return fetch("/api/cut-sheets/match", { method: "POST", headers: { "Authorization": "Bearer " + token, "Content-Type": "application/json" }, body: JSON.stringify({ manufacturer: "LCN", model: "4040XP" }) });
+        }).then(function(r) { return r.json().then(function(d) { return { ok: r.ok, status: r.status, data: d }; }); }).then(function(res) {
+          var ms = Math.round(performance.now() - t0);
+          if (!res.ok) { note.textContent = "Matcher returned " + res.status + " (" + ms + " ms). That is the real response."; return; }
+          var d = res.data, p = d.product || {}, sheet = (d.cutSheets || [])[0];
+          if (!d.matched) { document.getElementById("hm-product").textContent = "No match"; document.getElementById("hm-conf").textContent = "\u2014"; document.getElementById("hm-cite").textContent = "\u2014"; note.textContent = "Live result, " + ms + " ms: no match this time."; return; }
+          document.getElementById("hm-product").textContent = p.name || ((p.manufacturer || "") + " " + (p.model || ""));
+          document.getElementById("hm-conf").textContent = (d.confidence || "") + " \u00b7 " + (d.matchType || "");
+          document.getElementById("hm-cite").textContent = sheet ? ((sheet.title || "Cut sheet") + (sheet.pages != null ? ", " + sheet.pages + " pages" : "")) : "no cut sheet returned";
+          note.textContent = "Live result just now, " + ms + " ms round trip from your browser.";
+        }).catch(function(err) { note.textContent = "Request failed: " + err.message; }).finally(function() { hmRun.disabled = false; });
       });
     }
 
