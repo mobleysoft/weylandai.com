@@ -3253,6 +3253,22 @@
         note.textContent = "Handing " + Math.min(12, hsMatched.length) + " openings to SightX\u2026 raise the dossier any time with Enter.";
         if (window.__weylandLowerDossier) window.__weylandLowerDossier();
       });
+      // Citation links point at an authenticated route (/api/cut-sheets/sheet/:id/pdf);
+      // a plain new-tab navigation carries no bearer token, so open them by
+      // fetching with the session token and handing the browser a blob URL
+      // with the page fragment preserved. These are full price books
+      // (1-19 MB), so say so while it loads.
+      document.getElementById("hs-results").addEventListener("click", function (e) {
+        var a = e.target.closest("a[href*='/api/cut-sheets/sheet/']"); if (!a) return;
+        e.preventDefault();
+        var href = a.getAttribute("href"), hash = href.indexOf("#") >= 0 ? href.slice(href.indexOf("#")) : "", path = href.replace(/#.*$/, "");
+        var orig = a.textContent; a.textContent = orig + " (opening the price book\u2026)";
+        ephemeralToken().then(function (token) { return fetch(path, { headers: { "Authorization": "Bearer " + token } }); })
+          .then(function (r) { if (!r.ok) throw new Error("PDF " + r.status); return r.blob(); })
+          .then(function (b) { var url = URL.createObjectURL(b); window.open(url + hash, "_blank", "noopener"); })
+          .catch(function (err) { a.textContent = orig + " (could not open: " + err.message + ")"; })
+          .finally(function () { setTimeout(function () { a.textContent = orig; }, 4000); });
+      });
       window.addEventListener("message", function (e) {
         if (e.origin !== location.origin || !e.data || e.data.type !== "weyland:walk-ready") return;
         var note = document.getElementById("hs-note"); if (note) note.textContent = "SightX placed " + e.data.count + " openings along the catwalk. Click the world to fly; Enter raises the dossier.";
