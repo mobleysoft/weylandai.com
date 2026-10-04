@@ -18072,15 +18072,27 @@ function registerAuthSessionRoutes(router2, { authenticate: authenticate2, error
           trial_ends_at: trialEndsAt
         };
       }
-      const token = await generateJWT({
-        userId: user.id,
-        email: user.email,
-        tenantId: user.tenant_id,
-        name: user.name,
-        company: user.company
-      }, env2.JWT_SECRET);
-      return jsonResponse3({
+      let token = null;
+      if (env2.JWT_SECRET) {
+        token = await generateJWT({
+          userId: user.id,
+          email: user.email,
+          tenantId: user.tenant_id,
+          name: user.name,
+          company: user.company
+        }, env2.JWT_SECRET);
+      }
+      const sessionId = "wses_" + crypto.randomUUID().replace(/-/g, "");
+      const expiresAt = new Date(Date.now() + 24 * 60 * 60 * 1e3).toISOString();
+      const sessionNode = { email: user.email, name: user.name || "", mhsId: "" };
+      await env2.DB.prepare(
+        "INSERT INTO weyland_sessions (id, user_id, email, mhs_id, player_json, expires_at, created_at) VALUES (?, ?, ?, ?, ?, ?, datetime('now'))"
+      ).bind(sessionId, user.id, user.email, "", JSON.stringify(sessionNode), expiresAt).run();
+      const cookie = `weyland_session=${sessionId}; Path=/; HttpOnly; Secure; SameSite=Lax; Max-Age=86400`;
+      return new Response(JSON.stringify({
         token,
+        session_id: sessionId,
+        expires_at: expiresAt,
         user: {
           id: user.id,
           email: user.email,
@@ -18091,7 +18103,7 @@ function registerAuthSessionRoutes(router2, { authenticate: authenticate2, error
           subscriptionStatus: user.subscription_status,
           trialEndsAt: user.trial_ends_at
         }
-      });
+      }), { status: 200, headers: { "Content-Type": "application/json", "Set-Cookie": cookie } });
     } catch (error4) {
       return jsonResponse3({ error: "Token exchange failed: " + error4.message }, 500);
     }
