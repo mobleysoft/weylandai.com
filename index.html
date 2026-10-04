@@ -2025,6 +2025,16 @@
           </div>
         </div>
       </div>
+
+      <div style="margin-top:24px;border:1px solid var(--line);border-radius:16px;padding:20px 22px;background:rgba(18,20,25,.94)">
+        <div style="font:800 11px/1 var(--font-display);letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);margin-bottom:12px">TRY A REAL MATCH &mdash; LIVE AGAINST THE REAL CATALOG</div>
+        <div style="display:flex;gap:10px;flex-wrap:wrap">
+          <input id="cx-mfr" type="text" placeholder="Manufacturer (optional)" style="flex:1;min-width:160px;background:#161920;border:1px solid var(--line);border-radius:8px;padding:10px 14px;color:#fff;font-size:14px">
+          <input id="cx-model" type="text" placeholder="Model or catalog number (e.g. 4040XP)" style="flex:2;min-width:220px;background:#161920;border:1px solid var(--line);border-radius:8px;padding:10px 14px;color:#fff;font-size:14px">
+          <button id="cx-match-btn" class="button primary" type="button">MATCH</button>
+        </div>
+        <div id="cx-match-results" style="margin-top:16px;color:var(--muted);font-size:13px"></div>
+      </div>
     </section>
 
     <!-- CHAPTER 05: PropX & MeetingX — Commercial Proposal & Field Presence -->
@@ -2703,6 +2713,53 @@
         }).join("");
       }).catch(function(err) {
         wireFeedEl.innerHTML = '<div style="color:var(--muted);padding:20px 0">Couldn\'t reach live sources: ' + err.message + '</div>';
+      });
+    }
+
+    // 5c. Chapter 04: CutsheetX - real live match against /api/cut-sheets/match,
+    // same ephemeral-token pattern as HuntX above. The static example cards
+    // stay as illustrative examples (honestly labeled, no live claim); this
+    // is the genuinely interactive piece a visitor can actually try.
+    var cxMatchBtn = document.getElementById("cx-match-btn");
+    if (cxMatchBtn) {
+      cxMatchBtn.addEventListener("click", function() {
+        var mfr = document.getElementById("cx-mfr").value.trim();
+        var model = document.getElementById("cx-model").value.trim();
+        var box = document.getElementById("cx-match-results");
+        if (!model) { box.textContent = "Enter a model or catalog number."; return; }
+        box.textContent = "Matching against the real product database…";
+        cxMatchBtn.disabled = true;
+        ephemeralToken().then(function(token) {
+          return fetch("/api/cut-sheets/match", {
+            method: "POST",
+            headers: { "Authorization": "Bearer " + token, "Content-Type": "application/json" },
+            body: JSON.stringify({ manufacturer: mfr || undefined, model: model })
+          });
+        }).then(function(r) {
+          return r.json().then(function(d) { return { ok: r.ok, status: r.status, data: d }; });
+        }).then(function(res) {
+          if (!res.ok) {
+            var msg = (res.data && res.data.error && (res.data.error.message || res.data.error)) || ("request failed (" + res.status + ")");
+            box.textContent = String(msg);
+            return;
+          }
+          var result = res.data;
+          if (!result.matched || !result.cutSheets || !result.cutSheets.length) {
+            box.textContent = "No match found for \"" + (mfr ? mfr + " " : "") + model + "\" in the real product database.";
+            return;
+          }
+          var p = result.product || {};
+          var sheets = result.cutSheets.map(function(s) {
+            return "<li>" + (s.title || "Cut Sheet") + (s.pages != null ? " · " + s.pages + " pages" : "") + "</li>";
+          }).join("");
+          box.innerHTML = "<div style=\"color:var(--text);font-weight:700;margin-bottom:6px\">Matched: " +
+            (p.name || ((p.manufacturer || "") + " " + (p.model || ""))) +
+            " · " + (result.confidence || "") + " (" + (result.matchType || "") + ")</div><ul style=\"margin:0;padding-left:18px;color:var(--muted)\">" + sheets + "</ul>";
+        }).catch(function(err) {
+          box.textContent = "Request failed: " + err.message;
+        }).finally(function() {
+          cxMatchBtn.disabled = false;
+        });
       });
     }
 
