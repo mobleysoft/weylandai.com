@@ -1,0 +1,7 @@
+{
+  "name": "weyland-plan-extract",
+  "private": true,
+  "type": "module",
+  "description": "Stage-1 PDF-to-twin extraction prototype (triage, scale lock, walls) on the shipped pdf.js",
+  "dependencies": { "pdfjs-dist": "^4.10.38" }
+}
