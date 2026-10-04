@@ -281,17 +281,17 @@
       if (!hintEl) return;
       hintState.lastInput = performance.now();
       if (!locked) {
-        renderTlouHint('CLICK', 'INITIATE EVA SPACEWALK', 'CAPTURE MOUSE');
+        renderTlouHint('CLICK', 'WALK THE JOBSITE', 'CAPTURE MOUSE');
         return;
       }
       if (!hintState.hasLooked) {
-        renderTlouHint('MOUSE', 'LOOK AROUND', 'ORIENT ATTITUDE');
+        renderTlouHint('MOUSE', 'LOOK AROUND', 'DOWN THE CORRIDOR');
       } else if (!hintState.hasThrust) {
-        renderTlouHint(['W', 'S'], 'EVA THRUST', 'FORWARD / REVERSE');
+        renderTlouHint(['W', 'S'], 'MOVE', 'FORWARD / BACK');
       } else if (!hintState.hasBraked && Math.hypot(velocity[0], velocity[1], velocity[2]) > 0.35) {
-        renderTlouHint('X', 'INERTIAL BRAKE', 'DAMPEN DRIFT');
+        renderTlouHint('X', 'STOP', 'HALT MOVEMENT');
       } else if (!hintState.hasElevated) {
-        renderTlouHint(['SPACE', 'C'], 'RCS ELEVATION', 'ASCEND / DESCEND');
+        renderTlouHint(['SPACE', 'C'], 'EYE HEIGHT', 'UP / DOWN');
       } else {
         hideTlouHint();
       }
@@ -593,10 +593,9 @@
           velocity[2] = 0;
         }
 
-        // Hill-Clohessy-Wiltshire (HCW) relative microgravity orbital drift in LEO (400km, omega ~ 0.001131 rad/s)
-        const omegaOrb = 0.001131;
-        velocity[1] += 3.0 * omegaOrb * omegaOrb * (position[1] - 1.72) * dt;
-        velocity[2] += -2.0 * omegaOrb * velocity[1] * dt;
+        // (The orbital HCW drift term that used to live here was removed
+        // with the 2026-10-04 jobsite retheme: the twin is a building on
+        // Earth now. Ground-locked walking is the next controls step.)
       }
 
       // Check vertical elevation state for TLOU hint
@@ -609,7 +608,7 @@
       const now = performance.now();
       if (locked && (now - hintState.lastInput > 8000) && !hintState.idleActive) {
         hintState.idleActive = true;
-        renderTlouHint(['WASD', 'X', 'SPACE'], 'EVA MANEUVER', 'THRUSTER SUITE');
+        renderTlouHint(['WASD', 'X', 'SPACE'], 'MOVE / STOP / UP', 'WALK CONTROLS');
       }
 
       // Strict enforcement of altitude floor: cannot dip below facility into Earth

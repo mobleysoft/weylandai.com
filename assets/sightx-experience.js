@@ -7,11 +7,11 @@
   const STORAGE_KEY = 'weyland-sightx-report-v2';
 
   const tourStops = Object.freeze([
-    Object.freeze({ position: [0, 1.72, -10.5], yaw: 0, pitch: -0.035, seconds: 1.6, title: 'Exterior context', copy: 'SightX establishes site, access, weather, and approach conditions before entry.' }),
-    Object.freeze({ position: [0, 1.72, -4.2], yaw: 0, pitch: 0, seconds: 3.2, title: 'Automatic entrance', copy: 'The primary opening is linked to its hardware schedule, safety devices, and commissioning record.' }),
-    Object.freeze({ position: [0, 1.72, 2.4], yaw: 0, pitch: 0, seconds: 3.5, title: 'Operational twin', copy: 'Crossing the threshold preserves spatial context instead of starting a disconnected form or checklist.' }),
-    Object.freeze({ position: [0, 1.72, 6.0], yaw: -0.72, pitch: -0.02, seconds: 3.1, title: 'Materials review area', copy: 'Every visible asset can resolve to specifications, responsible trades, exceptions, and evidence.' }),
-    Object.freeze({ position: [0, 1.72, 10.0], yaw: 0.72, pitch: 0.02, seconds: 3.0, title: 'Building services area', copy: 'SightX turns an exploratory walkthrough into a structured, exportable field record.' })
+    Object.freeze({ position: [0, 0.28, -1.6], yaw: 0, pitch: -0.03, seconds: 2.2, title: 'Corridor 100', copy: 'The sample twin: a 30 m corridor whose eight scheduled openings and exit pair are drawn from real hardware sets.' }),
+    Object.freeze({ position: [0.2, 0.28, 0.4], yaw: 0.95, pitch: -0.05, seconds: 3.4, title: 'Opening 101', copy: 'A 3070 hollow-metal frame and flush leaf. Hinges, lever and closer sit where the hardware set mounts them; each product is a CutsheetX catalog match.' }),
+    Object.freeze({ position: [-0.2, 0.28, 4.0], yaw: -0.95, pitch: -0.05, seconds: 3.2, title: 'Opening 102', copy: 'Mirror hand across the corridor. Hand and swing come from the schedule; the twin flags a mismatch instead of guessing.' }),
+    Object.freeze({ position: [0, 0.28, 14.0], yaw: 0, pitch: 0, seconds: 3.0, title: 'Walk the schedule', copy: 'Paste a door schedule on weylandai.com and every matched line becomes a labeled frame in this corridor.' }),
+    Object.freeze({ position: [0, 0.28, 25.5], yaw: 0, pitch: -0.02, seconds: 3.4, title: 'Exit pair', copy: 'Von Duprin 99 rim devices on the push side, LCN 4040XP parallel-arm closers, illuminated sign: egress hardware drawn as specified.' })
   ]);
 
   function loadFindings() {
@@ -29,7 +29,7 @@
     root.setAttribute('aria-label', 'SightX field intelligence');
     root.innerHTML = `
       <header class="sxe-command-bar">
-        <div class="sxe-identity"><span class="sxe-mark">SX</span><div><b>SIGHTX</b><small>ORBITAL DRYDOCK // FACILITY 01</small></div></div>
+        <div class="sxe-identity"><span class="sxe-mark">SX</span><div><b>SIGHTX</b><small>JOBSITE TWIN // CORRIDOR 100</small></div></div>
         <div class="sxe-system-state"><span class="sxe-live-dot"></span><span class="sxe-quality-label">ADAPTIVE / CALIBRATING</span></div>
         <nav class="sxe-actions" aria-label="SightX utilities">
           <button type="button" data-sxe-action="tour">GUIDED TOUR <kbd>T</kbd></button>
@@ -42,8 +42,8 @@
 
       <section class="sxe-mission" aria-live="polite">
         <div class="sxe-eyebrow"><span>LIVE COMMISSIONING RUN</span><b class="sxe-mission-progress">0 / 4</b></div>
-        <h2 class="sxe-mission-title">Acquire the shipyard gantry</h2>
-        <p class="sxe-mission-copy">Center the gantry cradle in the reticle, then hold <kbd>E</kbd> or <kbd>SPACE</kbd> to inspect it.</p>
+        <h2 class="sxe-mission-title">Scan opening 101</h2>
+        <p class="sxe-mission-copy">Center the first door frame in the reticle, then hold <kbd>F</kbd> to read its hardware set.</p>
         <div class="sxe-progress-track"><i></i></div>
       </section>
 
@@ -136,10 +136,10 @@
     };
 
     const mission = [
-      { title: 'Acquire the shipyard gantry', copy: 'Center the gantry cradle in the reticle, then hold E or SPACE to inspect it.', test: state => state.scannedIds.has('entrance') || state.scannedIds.has('keel-spine') },
-      { title: 'Inspect starship construction bay', copy: 'Thrust along the keel into the primary assembly berth (Z > 2.0).', test: state => state.position[2] > 2.0 },
-      { title: 'Scan reactor or nacelle assembly', copy: 'Aim at the reactor core or plasma nacelles and complete a semantic scan.', test: state => state.findings.some(item => item.tags && (item.tags.includes('propulsion') || item.tags.includes('reactor') || item.tags.includes('interior'))) },
-      { title: 'Review the generated field record', copy: 'Open FIELD RECORD to inspect orbital telemetry, FEA structural stress, and assembly status.', test: state => state.reportReviewed }
+      { title: 'Scan opening 101', copy: 'Center the first door frame in the reticle, then hold F to read its hardware set.', test: state => state.scannedIds.has('door-101') || state.scannedIds.has('door-102') },
+      { title: 'Walk the corridor', copy: 'Move down the run past the fourth opening (Z > 15).', test: state => state.position[2] > 15.0 },
+      { title: 'Scan the exit pair', copy: 'Aim at the exit pair at the end of the corridor and complete a scan of its rim devices.', test: state => state.findings.some(item => item.tags && item.tags.includes('egress')) },
+      { title: 'Review the generated field record', copy: 'Open FIELD RECORD to see every scanned opening with its hardware set and catalog status.', test: state => state.reportReviewed }
     ];
 
     const state = {
@@ -157,7 +157,7 @@
       reportReviewed: false,
       position: [0, 1.72, -9],
       forward: [0, 0, 1],
-      siteName: 'SightX Orbital Shipyard Facility',
+      siteName: 'SightX Jobsite Twin: Corridor 100',
       packages: [],
       markerEntries: [],
       lastTs: 0,
@@ -249,7 +249,7 @@
       refs.scanBar.style.width = `${Math.round(state.scanProgress * 100)}%`;
       refs.scanPrompt.textContent = state.scanActive
         ? `SCANNING ${Math.round(state.scanProgress * 100)}%`
-        : (state.scannedIds.has(target.id) ? 'HOLD E / SPACE TO RESCAN' : 'HOLD E / SPACE TO SCAN');
+        : (state.scannedIds.has(target.id) ? 'HOLD F TO RESCAN' : 'HOLD F TO SCAN');
       refs.target.classList.toggle('scanning', state.scanActive);
       refs.target.classList.toggle('captured', state.scannedIds.has(target.id));
     }
