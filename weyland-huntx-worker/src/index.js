@@ -41,19 +41,6 @@ import { ingestSources } from "./lib/ingest.js";
 const router = new NativeRouter();
 registerHuntRoutes(router, { authenticate });
 
-// Cron observability (2026-10-05): every scheduled() invocation writes one
-// row to weyland_db.cron_ticks before doing any work, so "the cron never
-// fired" and "the cron fired and failed" can be told apart from D1 alone.
-async function recordCronTick(env, worker, cron) {
-  try {
-    const db = env.DB;
-    await db.prepare("CREATE TABLE IF NOT EXISTS cron_ticks (id TEXT PRIMARY KEY, worker TEXT NOT NULL, cron TEXT, fired_at TEXT NOT NULL)").run();
-    await db.prepare("INSERT INTO cron_ticks (id, worker, cron, fired_at) VALUES (?, ?, ?, ?)").bind(crypto.randomUUID(), worker, cron || null, new Date().toISOString()).run();
-  } catch (e) {
-    console.error("[cron-tick] " + worker + ": " + e.message);
-  }
-}
-
 export default {
   async fetch(request, env, ctx) {
     // Traffic-driven freshness (2026-10-05): Cron Triggers on this account
@@ -85,10 +72,4 @@ export default {
     return router.handle(request, env, ctx);
   },
 
-  // Hourly (see wrangler.toml [triggers]): the only path that touches
-  // TxDOT / CA OPSC. Requests never do - see src/lib/ingest.js.
-  async scheduled(event, env, ctx) {
-    ctx.waitUntil(recordCronTick(env, "weyland-huntx-worker", event && event.cron));
-    ctx.waitUntil(ingestSources(env).then((r) => console.log("[HuntX Ingest] cron run", JSON.stringify({ upserted: r.upserted, errors: r.errors }))));
-  },
 };

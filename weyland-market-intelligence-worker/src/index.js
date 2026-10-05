@@ -26,7 +26,7 @@
 // on ANY external party's service, keyed or not. PriceX now computes its
 // pricing index from ONLY this account's own first-party door-hardware
 // catalog data (env.WEYLAND_DB, a read-only second D1 binding to
-// weyland_db - see wrangler.toml), refreshed weekly by the scheduled()
+// weyland_db - see wrangler.toml), refreshed weekly in the background (lib/job-lease.js)
 // handler below into this worker's own price_index_snapshots table
 // (env.DB). MarketX has no first-party substitute yet and is honestly
 // retired (501) rather than faked or left externally dependent.
@@ -46,7 +46,6 @@ registerMarketIntelligenceRoutes(router);
 // binding) is resolved through this Worker's own GeoX route and then its
 // WeatherX route, which store their answers in the D1 store cache
 // (src/lib/store-cache.js). Bounded per run; errors are logged, never thrown.
-const PREWARM_CRON = "30 5 * * *";
 async function prewarmProjectLocations(env, ctx) {
   const summary = { addresses: 0, geocoded: 0, forecasts: 0, failed: 0 };
   const rows = await env.WEYLAND_DB.prepare(
@@ -71,7 +70,6 @@ async function prewarmProjectLocations(env, ctx) {
   return summary;
 }
 
-
 export default {
   async fetch(request, env, ctx) {
     const url = new URL(request.url);
@@ -95,27 +93,4 @@ export default {
     return router.handle(request, env, ctx);
   },
 
-  // Cron Trigger (see wrangler.toml [triggers]) - weekly recompute of
-  // PriceX's pricing index straight from this account's own weyland_db
-  // catalog tables (env.WEYLAND_DB) into this worker's own
-  // price_index_snapshots table (env.DB). Zero external network calls -
-  // both are this same Cloudflare account's own D1 databases. Runs
-  // independent of any customer request, so PriceX never blocks on this
-  // computation. Errors are logged, not thrown - a failed run leaves last
-  // week's real snapshot serving rather than breaking the route.
-  async scheduled(event, env, ctx) {
-    if (event.cron === PREWARM_CRON) {
-      ctx.waitUntil(
-        prewarmProjectLocations(env, ctx)
-          .then((result) => console.log("[prewarm-locations] ok:", JSON.stringify(result)))
-          .catch((err) => console.error("[prewarm-locations] failed:", err.message))
-      );
-      return;
-    }
-    ctx.waitUntil(
-      computePriceIndexSnapshot(env)
-        .then((result) => console.log("[price-index-snapshot] ok:", JSON.stringify(result)))
-        .catch((err) => console.error("[price-index-snapshot] failed:", err.message))
-    );
-  },
 };

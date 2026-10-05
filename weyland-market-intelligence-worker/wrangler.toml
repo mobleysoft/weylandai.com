@@ -56,13 +56,3 @@ database_id = "987411cc-07a5-43ae-848c-e18e4f2cec35"
 binding = "WEYLAND_DB"
 database_name = "weyland_db"
 database_id = "5729f77e-d7e3-4577-ab43-3c064fa90ca5"
-
-# Weekly (Monday 13:00 UTC) - computes and stores one price_index_snapshots
-# row per real, sufficiently-sampled hardware category from our own
-# catalog data. Weekly is arbitrary but reasonable: the catalog itself
-# only changes when new manufacturer data is ingested (not continuously),
-# and this is what accumulates the real trend history over time - the
-# more weeks of real snapshots exist, the more genuine a MoM/YoY signal
-# PriceX can eventually compute, entirely from first-party data.
-[triggers]
-crons = ["0 13 * * 1", "30 5 * * *"]  # weekly price index; daily GeoX/WeatherX pre-warm for project addresses (2026-10-05)

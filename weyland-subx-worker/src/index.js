@@ -177,7 +177,6 @@ registerHardwareScheduleGenerateRoutes(router, {
   materializeDseToLineItems,
 });
 
-
 registerHardwareSchedulePageExtractRoutes(router, {
   authenticate,
   getSessionStatus,
@@ -232,21 +231,8 @@ void resolveInferenceContract;
 void authenticateCps;
 
 // Demo-clone housekeeping (2026-10-05): public read-only status; the sweep
-// itself only runs from scheduled() below.
+// itself runs in the background off ordinary requests (lib/job-lease.js).
 router.get("/api/hardware-schedule/demo-clones/status", async (_request, env) => jsonResponse3(await demoCloneSweepStatus(env)));
-
-// Cron observability (2026-10-05): every scheduled() invocation writes one
-// row to weyland_db.cron_ticks before doing any work, so "the cron never
-// fired" and "the cron fired and failed" can be told apart from D1 alone.
-async function recordCronTick(env, worker, cron) {
-  try {
-    const db = env.DB;
-    await db.prepare("CREATE TABLE IF NOT EXISTS cron_ticks (id TEXT PRIMARY KEY, worker TEXT NOT NULL, cron TEXT, fired_at TEXT NOT NULL)").run();
-    await db.prepare("INSERT INTO cron_ticks (id, worker, cron, fired_at) VALUES (?, ?, ?, ?)").bind(crypto.randomUUID(), worker, cron || null, new Date().toISOString()).run();
-  } catch (e) {
-    console.error("[cron-tick] " + worker + ": " + e.message);
-  }
-}
 
 export default {
   async fetch(request, env, ctx) {
@@ -258,14 +244,4 @@ export default {
     return router.handle(request, env, ctx);
   },
 
-  // Hourly (wrangler.toml [triggers]): remove demo clones older than 24 h,
-  // up to 40 per run, so the per-visitor demo never accumulates in D1.
-  async scheduled(event, env, ctx) {
-    ctx.waitUntil(recordCronTick(env, "weyland-subx-worker", event && event.cron));
-    ctx.waitUntil(
-      sweepExpiredDemoClones(env)
-        .then((s) => console.log("[demo-clone-sweep]", JSON.stringify(s)))
-        .catch((e) => console.error("[demo-clone-sweep] failed:", e.message))
-    );
-  },
 };
