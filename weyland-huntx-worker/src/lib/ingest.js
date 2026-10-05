@@ -1,7 +1,7 @@
 // weyland-huntx-worker/src/lib/ingest.js
 //
 // The only place HuntX talks to the public sources (TxDOT Socrata, CA OPSC
-// CKAN). Runs from the Worker's scheduled() cron, never from a request:
+// CKAN, Illinois CDB Socrata, NYC City Record Socrata). Runs from the Worker's scheduled() cron, never from a request:
 // per direct instruction (2026-10-05) Weyland must not need any call
 // outside the conglomerate to operate. Visitors read the opportunities
 // table in D1 (our store); this job keeps that table fresh in the
@@ -58,8 +58,75 @@ export async function fetchCaOpscOpportunities() {
   }));
 }
 
+
+// Illinois Capital Development Board "Future Solicitations" (Socrata,
+// illinois-edp.data.socrata.com/6rb8-ntpm): every row is a public building
+// construction project with an estimated bid date, a cost band and the
+// architect of record. Added 2026-10-05.
+export async function fetchIllinoisCdbOpportunities() {
+  const url = "https://illinois-edp.data.socrata.com/resource/6rb8-ntpm.json?" + new URLSearchParams({
+    "$where": "estimated_bid_date >= '" + new Date().toISOString().slice(0, 10) + "'",
+    "$order": "estimated_bid_date ASC",
+    "$limit": "200"
+  });
+  const res = await fetch(url, { headers: { "Accept": "application/json" } });
+  if (!res.ok) throw new Error("Illinois CDB fetch failed: " + res.status);
+  const rows = await res.json();
+  return rows.map((r) => {
+    const parts = String(r.location_name || "").split(" - ");
+    return {
+      source: "il_cdb",
+      source_ref: r.project_number,
+      title: (r.description || "State Construction Project") + " \u2014 " + (parts[0] || ""),
+      agency: "Illinois Capital Development Board",
+      location: [parts.length >= 2 ? parts[parts.length - 2] : null, "IL"].filter(Boolean).join(", "),
+      category: "Public Building Construction",
+      status: "Future Solicitation",
+      key_date: r.estimated_bid_date || null,
+      estimated_value: parseCostBand(r.approximate_cost),
+      detail_url: "https://cdb.illinois.gov/business/procurement.html",
+      raw_data: r
+    };
+  });
+}
+
+// "Less than $6,000,000" -> 6000000 (upper bound of the band); null when unparseable.
+function parseCostBand(text) {
+  const m = String(text || "").replace(/,/g, "").match(/\$?(\d+(?:\.\d+)?)/);
+  return m ? parseFloat(m[1]) : null;
+}
+
+// NYC City Record Online (Socrata, data.cityofnewyork.us/dg92-zbpx): the
+// city's official procurement notices. Kept to open construction
+// solicitations with a due date still ahead. Added 2026-10-05.
+export async function fetchNycCityRecordOpportunities() {
+  const today = new Date().toISOString().slice(0, 10);
+  const url = "https://data.cityofnewyork.us/resource/dg92-zbpx.json?" + new URLSearchParams({
+    "$select": "request_id,pin,start_date,due_date,agency_name,type_of_notice_description,short_title,category_description,selection_method_description,additional_description_1",
+    "$where": "section_name='Procurement' AND type_of_notice_description='Solicitation' AND category_description like 'Construction%' AND due_date >= '" + today + "T00:00:00'",
+    "$order": "due_date ASC",
+    "$limit": "200"
+  });
+  const res = await fetch(url, { headers: { "Accept": "application/json" } });
+  if (!res.ok) throw new Error("NYC City Record fetch failed: " + res.status);
+  const rows = await res.json();
+  return rows.map((r) => ({
+    source: "nyc_cityrecord",
+    source_ref: r.request_id,
+    title: r.short_title || "Construction Solicitation",
+    agency: r.agency_name ? "NYC " + r.agency_name : "City of New York",
+    location: "New York, NY",
+    category: r.category_description || "Construction/Construction Services",
+    status: r.selection_method_description || "Solicitation",
+    key_date: r.due_date || null,
+    estimated_value: null,
+    detail_url: "https://a856-cityrecord.nyc.gov/RequestDetail/" + encodeURIComponent(r.request_id || ""),
+    raw_data: Object.assign({}, r, { additional_description_1: String(r.additional_description_1 || "").replace(/<[^>]+>/g, " ").replace(/\s+/g, " ").trim().slice(0, 1200) })
+  }));
+}
+
 /**
- * Pull both sources and upsert into D1. Returns a summary row that is also
+ * Pull every source and upsert into D1. Returns a summary row that is also
  * written to ingest_runs (created on first use).
  */
 export async function ingestSources(env) {
@@ -68,7 +135,7 @@ export async function ingestSources(env) {
   ).run();
   const started = new Date().toISOString();
   const runId = crypto.randomUUID();
-  const results = await Promise.allSettled([fetchTxdotOpportunities(), fetchCaOpscOpportunities()]);
+  const results = await Promise.allSettled([fetchTxdotOpportunities(), fetchCaOpscOpportunities(), fetchIllinoisCdbOpportunities(), fetchNycCityRecordOpportunities()]);
   let upserted = 0;
   const errors = [];
   for (const r of results) {

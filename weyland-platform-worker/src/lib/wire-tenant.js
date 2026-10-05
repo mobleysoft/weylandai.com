@@ -35,6 +35,14 @@
 export const WIRE_FEEDS = [
   { source: "Engineering News-Record", url: "https://www.enr.com/rss/articles" },
   { source: "Construction Dive", url: "https://www.constructiondive.com/feeds/news/" },
+  // Added 2026-10-05, each probed live (HTTP 200, real <item>s): general
+  // construction, building enclosure, and the door / access-control /
+  // storefront trade press that CutsheetX and SubX customers actually read.
+  { source: "For Construction Pros", url: "https://www.forconstructionpros.com/rss" },
+  { source: "Building Enclosure", url: "https://www.buildingenclosureonline.com/rss/articles" },
+  { source: "SDM Magazine", url: "https://www.sdmmag.com/rss/articles" },
+  { source: "Security Sales & Integration", url: "https://www.securitysales.com/feed/" },
+  { source: "USGlass", url: "https://www.usglassmag.com/feed/" },
 ];
 
 // Byte-for-byte the same regex parser as news-wire-worker/src/worker.js's

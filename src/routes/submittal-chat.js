@@ -51,91 +51,13 @@ export function registerSubmittalChatRoutes(router, { authenticate, logClaudeAPI
     "summary": "Brief overall assessment"
   }`;
   }
-  async function validateWithClaudeVision(env2, submittalData, referenceImageBase64, prompt, telemetryContext = {}) {
-    const ANTHROPIC_API_KEY = env2.ANTHROPIC_API_KEY;
-    if (!ANTHROPIC_API_KEY) {
-      return { error: "Claude API not configured" };
-    }
-    const requestTimestamp = (/* @__PURE__ */ new Date()).toISOString();
-    const startTime = Date.now();
-    const model = "claude-opus-4-6";
-    const endpoint = "https://api.anthropic.com/v1/messages";
-    try {
-      const response = await fetch(endpoint, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "x-api-key": ANTHROPIC_API_KEY,
-          "anthropic-version": "2023-06-01"
-        },
-        body: JSON.stringify({
-          model,
-          max_tokens: 4096,
-          messages: [{
-            role: "user",
-            content: [
-              {
-                type: "image",
-                source: {
-                  type: "base64",
-                  media_type: "image/png",
-                  data: referenceImageBase64.replace(/^data:image\/\w+;base64,/, "")
-                }
-              },
-              {
-                type: "text",
-                text: prompt + "\n\nThe image above shows the reference submittal document to compare against."
-              }
-            ]
-          }]
-        })
-      });
-      if (!response.ok) {
-        const errorText = await response.text();
-        const latencyMs2 = Date.now() - startTime;
-        console.error("[Submittal Validation] Claude API error:", errorText);
-        await logClaudeAPICall(env2, {
-          apiType: "validation",
-          endpoint,
-          model,
-          requestTimestamp,
-          responseTimestamp: (/* @__PURE__ */ new Date()).toISOString(),
-          latencyMs: latencyMs2,
-          errorMessage: `HTTP ${response.status}: ${errorText.substring(0, 500)}`,
-          sessionId: telemetryContext.sessionId,
-          userId: telemetryContext.userId
-        });
-        return { error: "Claude API request failed", details: errorText };
-      }
-      const result = await response.json();
-      const responseTimestamp = (/* @__PURE__ */ new Date()).toISOString();
-      const latencyMs = Date.now() - startTime;
-      await logClaudeAPICall(env2, {
-        apiType: "validation",
-        endpoint,
-        model,
-        requestTimestamp,
-        responseTimestamp,
-        inputTokens: result.usage?.input_tokens || 0,
-        outputTokens: result.usage?.output_tokens || 0,
-        latencyMs,
-        sessionId: telemetryContext.sessionId,
-        userId: telemetryContext.userId
-      });
-      const content = result.content?.[0]?.text || "";
-      const jsonMatch = content.match(/\{[\s\S]*\}/);
-      if (jsonMatch) {
-        try {
-          return JSON.parse(jsonMatch[0]);
-        } catch {
-          return { raw_response: content };
-        }
-      }
-      return { raw_response: content };
-    } catch (error4) {
-      console.error("[Submittal Validation] Error:", error4);
-      return { error: error4.message };
-    }
+  // 2026-10-05: the Claude-vision image comparison called api.anthropic.com
+  // and was removed (no API call outside the conglomerate at request time).
+  // A reference image now gets the structural validation plus an explicit
+  // note that image comparison is not available.
+  async function validateWithClaudeVision(env2, submittalData) {
+    const structural = validateSubmittalStructure(submittalData);
+    return Object.assign({}, structural, { image_comparison: "unavailable: no in-ecosystem vision route at request time (policy 2026-10-05)" });
   }
   function validateSubmittalStructure(submittalData) {
     const issues = [];
@@ -219,84 +141,15 @@ export function registerSubmittalChatRoutes(router, { authenticate, logClaudeAPI
       }, 500);
     }
   });
+  // 2026-10-05: the assistant chat posted straight to api.anthropic.com. No
+  // page calls this route; it now answers honestly instead of reaching
+  // outside the conglomerate.
   router.post("/api/chat", async (request2, env2) => {
-    const { error: error4, user } = await authenticate(request2, env2);
-    if (error4)
-      return error4;
-    const requestTimestamp = (/* @__PURE__ */ new Date()).toISOString();
-    const startTime = Date.now();
-    const model = "claude-opus-4-6";
-    const endpoint = "https://api.anthropic.com/v1/messages";
-    try {
-      const body = await request2.json();
-      const { message, systemPrompt, context: context3 } = body;
-      if (!message) {
-        return jsonResponse3({ error: "message is required" }, 400);
-      }
-      console.log(`[Chat] User message: "${message.substring(0, 50)}..."`);
-      const fullSystemPrompt = systemPrompt || `You are the Weyland Assistant, an AI helper for the Weyland Hardware Submittal Express system by Weyland. Help users understand their submittal data, suggest edits, explain compliance requirements, and answer questions about door hardware. Keep responses concise and helpful.`;
-      const claudeResponse = await fetch(endpoint, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "x-api-key": env2.ANTHROPIC_API_KEY,
-          "anthropic-version": "2023-06-01"
-        },
-        body: JSON.stringify({
-          model,
-          max_tokens: 1024,
-          system: fullSystemPrompt,
-          messages: [
-            {
-              role: "user",
-              content: message
-            }
-          ]
-        })
-      });
-      if (!claudeResponse.ok) {
-        const errorText = await claudeResponse.text();
-        const latencyMs2 = Date.now() - startTime;
-        console.error("[Chat] Claude API error:", errorText);
-        await logClaudeAPICall(env2, {
-          apiType: "chat",
-          endpoint,
-          model,
-          requestTimestamp,
-          responseTimestamp: (/* @__PURE__ */ new Date()).toISOString(),
-          latencyMs: latencyMs2,
-          errorMessage: `HTTP ${claudeResponse.status}: ${errorText.substring(0, 500)}`,
-          userId: user.userId
-        });
-        throw new Error(`Claude API error: ${claudeResponse.status}`);
-      }
-      const claudeResult = await claudeResponse.json();
-      const responseTimestamp = (/* @__PURE__ */ new Date()).toISOString();
-      const latencyMs = Date.now() - startTime;
-      await logClaudeAPICall(env2, {
-        apiType: "chat",
-        endpoint,
-        model,
-        requestTimestamp,
-        responseTimestamp,
-        inputTokens: claudeResult.usage?.input_tokens || 0,
-        outputTokens: claudeResult.usage?.output_tokens || 0,
-        latencyMs,
-        userId: user.userId
-      });
-      const responseText = claudeResult.content[0]?.text || "I apologize, I could not generate a response.";
-      console.log(`[Chat] Response generated: ${responseText.substring(0, 50)}...`);
-      return jsonResponse3({
-        success: true,
-        response: responseText,
-        usage: claudeResult.usage
-      }, 200);
-    } catch (error5) {
-      console.error("[Chat] Error:", error5);
-      return jsonResponse3({
-        error: "Failed to process chat message",
-        details: error5.message
-      }, 500);
-    }
+    const { error: error4 } = await authenticate(request2, env2);
+    if (error4) return error4;
+    return jsonResponse3({
+      error: "assistant unavailable",
+      reason: "weylandai.com makes no API call outside the MobCorp ecosystem at request time; no in-ecosystem chat route is wired yet"
+    }, 503);
   });
 }

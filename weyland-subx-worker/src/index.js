@@ -53,6 +53,7 @@
 //      main worker's config. That one endpoint will 500 until those two
 //      secrets are set here too.
 
+import { sweepExpiredDemoClones, demoCloneSweepStatus } from "./lib/demo-clone-sweep.js";
 import { NativeRouter } from "./lib/router.js";
 import { createCorsHandler } from "./lib/cors.js";
 import { jsonResponse3 } from "./lib/json-response.js";
@@ -229,8 +230,22 @@ registerTakeoffLineItemsRoutes(router, { authenticate, requireProductAccess });
 void resolveInferenceContract;
 void authenticateCps;
 
+// Demo-clone housekeeping (2026-10-05): public read-only status; the sweep
+// itself only runs from scheduled() below.
+router.get("/api/hardware-schedule/demo-clones/status", async (_request, env) => jsonResponse3(await demoCloneSweepStatus(env)));
+
 export default {
   async fetch(request, env, ctx) {
     return router.handle(request, env, ctx);
+  },
+
+  // Hourly (wrangler.toml [triggers]): remove demo clones older than 24 h,
+  // up to 40 per run, so the per-visitor demo never accumulates in D1.
+  async scheduled(event, env, ctx) {
+    ctx.waitUntil(
+      sweepExpiredDemoClones(env)
+        .then((s) => console.log("[demo-clone-sweep]", JSON.stringify(s)))
+        .catch((e) => console.error("[demo-clone-sweep] failed:", e.message))
+    );
   },
 };

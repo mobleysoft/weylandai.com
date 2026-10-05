@@ -36,8 +36,6 @@
 
 import { PDFDocument } from "pdf-lib";
 import { arrayBufferToBase643, buildIsolatedPageExtractionPrompt, parseHardwareExtractionResult } from "./hardware-extraction-prompts.js";
-import { callClaudeWithPdf } from "./hardware-extraction-vision-adapters.js";
-import { extractWithDirectPdfMode } from "./hardware-extraction-pipeline.js";
 import { detectTextLayer, extractPdfBookmarks } from "./pdf-metadata.js";
 import { materializeAffirmedGroup } from "./hardware-extraction-materialize.js";
 import { enrichComponentsWithPricing } from "./pricing.js";
@@ -51,111 +49,6 @@ async function loadRenderer() {
   return null;
 }
 
-async function extractIsolatedPage(pdfBuffer, pageNumber) {
-  const startTime = Date.now();
-  const sourcePdf = await PDFDocument.load(pdfBuffer);
-  const totalPages = sourcePdf.getPageCount();
-  if (pageNumber < 1 || pageNumber > totalPages) {
-    throw new Error(`Page ${pageNumber} out of range (PDF has ${totalPages} pages)`);
-  }
-  const isolatedPdf = await PDFDocument.create();
-  const [copiedPage] = await isolatedPdf.copyPages(sourcePdf, [pageNumber - 1]);
-  isolatedPdf.addPage(copiedPage);
-  const isolatedBytes = await isolatedPdf.save();
-  const isolatedBuffer = isolatedBytes.buffer.slice(
-    isolatedBytes.byteOffset,
-    isolatedBytes.byteOffset + isolatedBytes.byteLength
-  );
-  const extractTime = Date.now() - startTime;
-  const originalSizeKB = (pdfBuffer.byteLength / 1024).toFixed(1);
-  const isolatedSizeKB = (isolatedBuffer.byteLength / 1024).toFixed(1);
-  console.log(`[Hardware Extractor] Page ${pageNumber} isolated: ${originalSizeKB}KB → ${isolatedSizeKB}KB (${extractTime}ms)`);
-  return {
-    pageBuffer: isolatedBuffer,
-    totalPages,
-    extractionTimeMs: extractTime
-  };
-}
-
-async function extractWithIsolatedPdfMode(pdfBuffer, pageNumber, env2) {
-  console.log(`[Hardware Extractor] Using ISOLATED PDF mode for page ${pageNumber}...`);
-  const overallStartTime = Date.now();
-  const { pageBuffer, totalPages, extractionTimeMs: isolationTime } = await extractIsolatedPage(pdfBuffer, pageNumber);
-  const base64Pdf = arrayBufferToBase643(pageBuffer);
-  const isolatedSizeKB = (pageBuffer.byteLength / 1024).toFixed(1);
-  console.log(`[Hardware Extractor] Isolated PDF size: ${isolatedSizeKB}KB`);
-  const prompt = buildIsolatedPageExtractionPrompt(pageNumber, totalPages);
-  const extractionStartTime = Date.now();
-  const result = await callClaudeWithPdf(base64Pdf, prompt, env2, pageNumber);
-  const extractionTime = Date.now() - extractionStartTime;
-  console.log(`[Hardware Extractor] Claude response received (${extractionTime}ms)`);
-  const parsedResult = parseHardwareExtractionResult(result);
-  const totalTime = Date.now() - overallStartTime;
-  console.log(`[Hardware Extractor] PAGE ${pageNumber} EXTRACTION COMPLETE (ISOLATED PDF)`);
-  return {
-    page_number: pageNumber,
-    total_pages: totalPages,
-    hardware_groups: parsedResult.hardware_groups || [],
-    metadata: {
-      ...parsedResult.metadata || parsedResult.page_metadata || {},
-      extraction_mode: "isolated_pdf",
-      page_isolated: true,
-      isolated_pdf_size_kb: parseFloat(isolatedSizeKB)
-    },
-    usage: parsedResult.usage,
-    extraction_time_ms: extractionTime,
-    isolation_time_ms: isolationTime,
-    total_time_ms: totalTime
-  };
-}
-
-// extractWithEmbeddedGofaineatMode: the real, no-Anthropic-key path (OCR
-// via weyland-ocr-worker + structuring via the local Qwen3-8B bridge -
-// see hardware-extraction-vision-dispatch.js's
-// extractHardwareGroupsViaEmbeddedGofaineat for the full pipeline and its
-// header comment for why this is a separate prompt/contract from the
-// door-schedule embedded_gofaineat adapter). Added 2026-09-13
-// (EXTRACTION_PIPELINE_CUSTOMER_PATH.md Part 5) to fix the real, live
-// "ANTHROPIC_API_KEY not configured" 500 that every real click of
-// /subx-app's "RUN EXTRACTION" button was hitting - confirmed live before
-// this fix, both of the tiers below (isolated-PDF, direct-PDF) depend on
-// callClaudeWithPdf, which throws that exact error since
-// ANTHROPIC_API_KEY is not, and per direct instruction will not be,
-// provisioned on this account ("we do not need an anthropic api key for
-// weylandai.com! We do extractions via embedded gofaineats").
-//
-// No page isolation needed here (unlike the Claude tiers below): the OCR
-// step renders the target page directly off the full pdfBuffer via
-// weyland-ocr-worker's PDFium rasterizer, given just the page number.
-//
-// REAL BUG FIXED 2026-10-01: this function used to call
-// extractHardwareGroupsViaEmbeddedGofaineat() unconditionally, regardless
-// of what kind of schedule the session actually was - meaning the real,
-// live /api/hardware-schedule/session/:id/page/:pageNum endpoint (the one
-// Mobley's subx_virtual_user.py validated against) NEVER reached the
-// door-schedule contract (extractDoorScheduleViaEmbeddedGofaineat / the
-// new deterministic grid extractor), even for a real door-schedule PDF
-// (GCCFullDoorSchedule.pdf) - every page failed, confirmed live. Fixed by
-// reusing the SAME scheduleType dispatch hardware-extraction-pipeline.js's
-// runEmbeddedGofaineatExtraction() already does correctly for the
-// batch-extract/extract-affirmed flows.
-//
-// Schedule-type resolution, in priority order (per direct instruction to
-// prefer the existing real per-page detector over a manual global flag):
-//   1. schedule_region_candidates row for THIS exact page_number - real,
-//      per-page auto-detection from POST .../detect-schedules (an OCR
-//      title-scan via weyland-ocr-worker, see hardware-schedule-extract.js
-//      lines ~486-512) - more accurate than a single session-wide dropdown
-//      value, and correct even for a mixed document (e.g. a door schedule
-//      on page 4 of an otherwise non-schedule set). Its bounding_box is
-//      honestly a full-page placeholder today (detection_method:
-//      "ocr_title_scan_pdfium" never populated real sub-page coordinates -
-//      see that route's own comment), so this only uses the per-page
-//      schedule_type, not a crop region - there isn't a real one yet.
-//   2. session.document_type - the manual dropdown on subx-app.html's
-//      upload form (default "hardware_schedule"), used as a fallback for
-//      sessions that never ran /detect-schedules (the single-page route
-//      doesn't require that step - it's meant for ad hoc one-page pulls).
 async function resolvePageScheduleType(sessionId, pageNumber, session, env2) {
   try {
     const candidate = await env2.DB.prepare(`
@@ -194,46 +87,10 @@ async function extractWithEmbeddedGofaineatMode(pdfBuffer, pageNumber, env2, ses
 
 export async function extractSinglePage(pdfBuffer, pageNumber, env2, sessionId, startRow = 0) {
   console.log(`[Hardware Extractor] EXTRACTING PAGE ${pageNumber}`);
-  // Real account state today (and, per direct instruction, permanently
-  // going forward): ANTHROPIC_API_KEY is not configured on this worker,
-  // so both Claude-vision tiers below (isolated-PDF, direct-PDF) would
-  // just throw "ANTHROPIC_API_KEY not configured" immediately - that WAS
-  // this function's real live behavior until this fix. Route straight to
-  // the working local pipeline instead of paying for a guaranteed-failing
-  // attempt first. If a real ANTHROPIC_API_KEY is ever configured on this
-  // worker in the future (a real credential decision this session isn't
-  // making), the original higher-fidelity Claude-vision tiers stay intact
-  // below and are used automatically - this only changes routing, it
-  // doesn't delete the Claude-vision code path.
-  if (!env2.ANTHROPIC_API_KEY) {
-    return await extractWithEmbeddedGofaineatMode(pdfBuffer.slice(0), pageNumber, env2, sessionId, startRow);
-  }
-  console.log(`[Hardware Extractor] ANTHROPIC_API_KEY configured - using Claude vision (ISOLATED MODE)`);
-  // Fixed 2026-09-09 upstream (see header): each fallback gets its own
-  // ArrayBuffer.slice() copy since the isolated-PDF-mode WASM library
-  // detaches the buffer it's given as a side effect.
-  try {
-    console.log(`[Hardware Extractor] Using ISOLATED PDF mode (true page isolation)...`);
-    return await extractWithIsolatedPdfMode(pdfBuffer.slice(0), pageNumber, env2);
-  } catch (isolationError) {
-    console.error(`[Hardware Extractor] Isolated PDF mode failed:`, {
-      message: isolationError.message,
-      stack: isolationError.stack,
-      name: isolationError.name,
-      pageNumber,
-      pdfSize: pdfBuffer.byteLength
-    });
-    console.log(`[Hardware Extractor] Falling back to image render mode...`);
-  }
-  const renderer = await loadRenderer();
-  if (renderer) {
-    // Unreachable in this worker (loadRenderer() always returns null -
-    // see file header) - branch kept so this function's real shape
-    // matches production's, not silently rewritten.
-    console.log(`[Hardware Extractor] Using image render mode...`);
-  }
-  console.log(`[Hardware Extractor] WARNING: Using LEGACY full PDF mode (not recommended)...`);
-  return await extractWithDirectPdfMode(pdfBuffer.slice(0), pageNumber, env2);
+  // 2026-10-05: the only extraction route. The former Claude-vision tiers
+  // (isolated-PDF, direct-PDF) were removed together with the Anthropic
+  // adapters; nothing here reaches outside the conglomerate.
+  return await extractWithEmbeddedGofaineatMode(pdfBuffer.slice(0), pageNumber, env2, sessionId, startRow);
 }
 
 export async function detectTextLayer2(pdfBuffer) {

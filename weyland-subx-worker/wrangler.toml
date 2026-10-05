@@ -72,3 +72,7 @@ fallthrough = true
 type = "Data"
 globs = ["assets/client-ocr/*.bin"]
 fallthrough = true
+
+# Hourly demo-clone expiry sweep (src/lib/demo-clone-sweep.js), 2026-10-05.
+[triggers]
+crons = ["45 * * * *"]

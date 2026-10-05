@@ -7,12 +7,6 @@ import { callLocalQwen } from "./qwen-bridge.js";
 
 // Policy (John, 2026-10-05): WeylandAI runs vision / language through
 // gofaineat only and makes no API call outside the conglomerate. The
-// Anthropic route below is kept for provenance but can no longer be
-// reached: the call site throws before any network request.
-function anthropicDisabled(url) {
-  throw new Error("anthropic route disabled by policy (2026-10-05): use the embedded_gofaineat route; attempted " + url);
-}
-
 export var EXTRACTION_PROMPT_TEMPLATE = `\u{1F6A8}\u{1F6A8}\u{1F6A8} CRITICAL: STOP AND READ THIS FIRST \u{1F6A8}\u{1F6A8}\u{1F6A8}
 
 YOU WILL FAIL THIS TASK IF YOU DON'T READ THIS SECTION CAREFULLY.
@@ -476,83 +470,12 @@ DECISION: [YES/NO with reasoning]
 }
 
 Do NOT skip the verification section. This is how we ensure you extracted from the correct page.`;
-export async function viaApiDirect(sessionId, pdfBuffer, env2, ctx = {}) {
-  const base64Image = arrayBufferToBase64(pdfBuffer);
-  const requestTimestamp = (/* @__PURE__ */ new Date()).toISOString();
-  const startTime = Date.now();
-  const model = "claude-opus-4-6";
-  const endpoint = "https://api.anthropic.com/v1/messages"; // see anthropicDisabled
-  console.log("viaApiDirect called");
-  console.log("env object keys:", Object.keys(env2));
-  console.log("ANTHROPIC_API_KEY configured:", !!env2.ANTHROPIC_API_KEY);
-  const response = await anthropicDisabled(endpoint, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      "x-api-key": env2.ANTHROPIC_API_KEY,
-      "anthropic-version": "2023-06-01"
-    },
-    body: JSON.stringify({
-      model,
-      max_tokens: 8e3,
-      messages: [{
-        role: "user",
-        content: [
-          {
-            type: "document",
-            source: {
-              type: "base64",
-              media_type: "application/pdf",
-              data: base64Image
-            }
-          },
-          {
-            type: "text",
-            text: EXTRACTION_PROMPT_TEMPLATE
-          }
-        ]
-      }]
-    })
-  });
-  if (!response.ok) {
-    const errorText = await response.text();
-    const latencyMs2 = Date.now() - startTime;
-    await logClaudeAPICall(env2, {
-      apiType: "vision",
-      endpoint,
-      model,
-      requestTimestamp,
-      responseTimestamp: (/* @__PURE__ */ new Date()).toISOString(),
-      latencyMs: latencyMs2,
-      errorMessage: `HTTP ${response.status}: ${errorText.substring(0, 500)}`,
-      sessionId,
-      userId: ctx.userId,
-      pageNumber: ctx.pageNumber
-    });
-    throw new Error(`Claude API error: ${response.status} - ${errorText}`);
-  }
-  const result = await response.json();
-  const responseTimestamp = (/* @__PURE__ */ new Date()).toISOString();
-  const latencyMs = Date.now() - startTime;
-  await logClaudeAPICall(env2, {
-    apiType: "vision",
-    endpoint,
-    model,
-    requestTimestamp,
-    responseTimestamp,
-    inputTokens: result.usage?.input_tokens || 0,
-    outputTokens: result.usage?.output_tokens || 0,
-    latencyMs,
-    sessionId,
-    userId: ctx.userId,
-    pageNumber: ctx.pageNumber
-  });
-  if (result.error) {
-    throw new Error(`Claude API error: ${result.error.message}`);
-  }
-  const extractionText = result.content[0].text.trim();
-  const parsed = parseAndValidateExtraction(extractionText, { tokenUsage: result.usage });
-  return parsed;
+// Removed 2026-10-05: viaApiDirect posted the page image to api.anthropic.com.
+// Weyland makes no API call outside the conglomerate at request time. The
+// adapter name is kept so a session whose stored extraction_route is still
+// "api_direct" gets an explicit error instead of an unknown-route crash.
+export async function viaApiDirect() {
+  throw new Error("api_direct extraction route was removed (2026-10-05): choose embedded_gofaineat via POST /api/sessions/:sessionId/extraction-route");
 }
 export function parseAndValidateExtraction(extractionText, telemetryContext = {}) {
   let responseText = extractionText;
@@ -968,7 +891,7 @@ export async function dispatchVisionExtraction(sessionId, pdfBuffer, env2, ctx =
   // selectable per-session via PATCH /api/sessions/:sessionId/extraction-route
   // for a customer with their own real SABP bridge or Anthropic key.
   const DEFAULT_ROUTE = env2.WEYLAND_EDITION === "local" ? "claude_code_subprocess" : "embedded_gofaineat";
-  const route = row?.extraction_route in ADAPTERS ? row.extraction_route : DEFAULT_ROUTE in ADAPTERS ? DEFAULT_ROUTE : "api_direct";
+  const route = row?.extraction_route in ADAPTERS ? row.extraction_route : DEFAULT_ROUTE in ADAPTERS ? DEFAULT_ROUTE : "embedded_gofaineat";
   const result = await ADAPTERS[route](sessionId, pdfBuffer, env2, ctx);
   if (row && result?.sync !== false && !result?.error) {
     await env2.DB.prepare(

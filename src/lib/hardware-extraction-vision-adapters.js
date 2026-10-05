@@ -53,12 +53,6 @@ import { generateJWT } from "../auth-module.js";
 
 // Policy (John, 2026-10-05): WeylandAI runs vision / language through
 // gofaineat only and makes no API call outside the conglomerate. The
-// Anthropic route below is kept for provenance but can no longer be
-// reached: the call site throws before any network request.
-function anthropicDisabled(url) {
-  throw new Error("anthropic route disabled by policy (2026-10-05): use the embedded_gofaineat route; attempted " + url);
-}
-
 export class CircuitBreaker {
   constructor() {
     this.failures = 0;
@@ -104,130 +98,18 @@ export class CircuitBreaker {
 
 export const claudeCircuitBreaker = new CircuitBreaker();
 
-export async function callClaudeVision(base64Pdf, prompt, env2) {
-  const apiKey = env2.ANTHROPIC_API_KEY;
-  if (!apiKey) {
-    const error4 = new Error("ANTHROPIC_API_KEY not found in environment");
-    error4.retryable = false;
-    throw error4;
-  }
-  validateClaudeRequest(base64Pdf, prompt);
-  const timeout2 = getClaudeTimeout(base64Pdf);
-  console.log(`[Hardware Extractor] Using ${timeout2}ms timeout for ${(base64Pdf.length * 3 / 4 / 1024 / 1024).toFixed(2)}MB PDF`);
-  const maxRetries = 3;
-  const retryDelays = [5e3, 1e4, 2e4];
-  let lastError = null;
-  for (let attempt = 1; attempt <= maxRetries; attempt++) {
-    try {
-      console.log(`[Hardware Extractor] Attempt ${attempt}/${maxRetries} - Calling Claude Vision API...`);
-      const _inf = resolveInferenceContract(env2);
-      const result = await claudeCircuitBreaker.execute(async () => {
-        const requestBody = {
-          model: _inf.model,
-          max_tokens: _inf.max_tokens,
-          temperature: _inf.temperature,
-          messages: [
-            {
-              role: "user",
-              content: [
-                {
-                  type: "document",
-                  source: {
-                    type: "base64",
-                    media_type: "application/pdf",
-                    data: base64Pdf
-                  }
-                },
-                {
-                  type: "text",
-                  text: prompt
-                }
-              ]
-            }
-          ]
-        };
-        console.log("[Hardware Extractor] Request details:", {
-          model: requestBody.model,
-          max_tokens: requestBody.max_tokens,
-          temperature: requestBody.temperature,
-          pdf_size_mb: (base64Pdf.length * 3 / 4 / 1024 / 1024).toFixed(2),
-          prompt_size: prompt.length,
-          timeout_ms: timeout2,
-          attempt
-        });
-        const controller = new AbortController();
-        const timeoutId = setTimeout(() => controller.abort(), timeout2);
-        try {
-          const response = await anthropicDisabled("https://api.anthropic.com/v1/messages", {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-              "anthropic-version": "2023-06-01",
-              "x-api-key": apiKey
-            },
-            body: JSON.stringify(requestBody),
-            signal: controller.signal
-          });
-          clearTimeout(timeoutId);
-          if (!response.ok) {
-            let errorText = "";
-            let errorJson = null;
-            try {
-              errorText = await response.text();
-              if (errorText) {
-                try {
-                  errorJson = JSON.parse(errorText);
-                } catch (e) {
-                }
-              }
-            } catch (e) {
-              errorText = "Failed to read error response";
-            }
-            console.error("[Hardware Extractor] API error status:", response.status);
-            console.error("[Hardware Extractor] API error headers:", JSON.stringify([...response.headers.entries()]));
-            console.error("[Hardware Extractor] API error body:", errorJson || errorText);
-            const error4 = new Error(`Claude API error: ${response.status} ${errorJson ? JSON.stringify(errorJson.error || errorJson) : errorText}`);
-            error4.statusCode = response.status;
-            error4.errorDetails = errorJson;
-            error4.retryable = [429, 500, 502, 503, 504].includes(response.status);
-            throw error4;
-          }
-          const data = await response.json();
-          console.log(`[Hardware Extractor] API response received (${data.usage?.input_tokens || 0} input tokens, ${data.usage?.output_tokens || 0} output tokens)`);
-          return data;
-        } catch (fetchError) {
-          clearTimeout(timeoutId);
-          if (fetchError.name === "AbortError") {
-            const error4 = new Error(`Request timeout after ${timeout2}ms`);
-            error4.retryable = true;
-            error4.timeout = true;
-            throw error4;
-          }
-          throw fetchError;
-        }
-      });
-      return result;
-    } catch (error4) {
-      lastError = error4;
-      console.error(`[Hardware Extractor] Attempt ${attempt}/${maxRetries} failed:`, error4.message);
-      if (error4.retryable === false) {
-        console.error("[Hardware Extractor] Error is not retryable, aborting");
-        throw error4;
-      }
-      if (attempt === maxRetries) {
-        console.error("[Hardware Extractor] Max retries reached, aborting");
-        break;
-      }
-      const delay = retryDelays[attempt - 1];
-      console.log(`[Hardware Extractor] Retrying in ${delay}ms...`);
-      await new Promise((resolve2) => setTimeout(resolve2, delay));
-    }
-  }
-  const finalError = new Error(`Claude API call failed after ${maxRetries} attempts: ${lastError.message}`);
-  finalError.originalError = lastError;
-  finalError.attempts = maxRetries;
-  throw finalError;
+// Removed 2026-10-05: the direct Anthropic vision route (callClaudeVision,
+// _callClaudeVisionWithImage_apiDirect, callClaudeWithPdf) is gone. Weyland
+// makes no API call outside the conglomerate at request time; extraction
+// runs through the embedded_gofaineat route (hardware-extraction-vision-
+// dispatch.js). The names stay exported so every caller still resolves, and
+// a caller that reaches one gets an explicit error, not a silent fallback.
+function removedAnthropicRoute(name) {
+  const err = new Error(name + " was removed (2026-10-05): weylandai.com has no Anthropic API route; use the embedded_gofaineat extraction route");
+  err.retryable = false;
+  return err;
 }
+export async function callClaudeVision() { throw removedAnthropicRoute("callClaudeVision"); }
 export async function callClaudeVisionWithImage(imageBuffer, prompt, env2, pageNumber, sessionId, ownerMhsId) {
   let route = env2.WEYLAND_EDITION === "local" ? "claude_code_subprocess" : "claude_code_local";
   if (sessionId && env2.DB) {
@@ -389,181 +271,8 @@ export async function _imageSourceForQueue(imageBase64, env2) {
   return { type: "url", url: `${origin}/api/internal/r2-stream?token=${encodeURIComponent(token)}` };
 }
 
-export async function _callClaudeVisionWithImage_apiDirect(imageBuffer, prompt, env2, pageNumber) {
-  const apiKey = env2.ANTHROPIC_API_KEY;
-  if (!apiKey) {
-    const error4 = new Error("ANTHROPIC_API_KEY not found in environment");
-    error4.retryable = false;
-    throw error4;
-  }
-  const base64Image = arrayBufferToBase643(imageBuffer);
-  const imageSizeMB = (imageBuffer.byteLength / 1024 / 1024).toFixed(2);
-  const mediaType = detectImageMediaType(imageBuffer);
-  console.log(`[Hardware Extractor] Sending page ${pageNumber} image to Claude Vision (${imageSizeMB}MB ${mediaType})`);
-  const timeout2 = 6e5;
-  const maxRetries = 3;
-  const retryDelays = [5e3, 1e4, 2e4];
-  let lastError = null;
-  for (let attempt = 1; attempt <= maxRetries; attempt++) {
-    try {
-      console.log(`[Hardware Extractor] Attempt ${attempt}/${maxRetries} - Calling Claude Vision with ${mediaType} image...`);
-      const _inf = resolveInferenceContract(env2);
-      const result = await claudeCircuitBreaker.execute(async () => {
-        const requestBody = {
-          model: _inf.model,
-          max_tokens: _inf.max_tokens,
-          temperature: _inf.temperature,
-          messages: [
-            {
-              role: "user",
-              content: [
-                {
-                  type: "image",
-                  source: {
-                    type: "base64",
-                    media_type: mediaType,
-                    data: base64Image
-                  }
-                },
-                {
-                  type: "text",
-                  text: prompt
-                }
-              ]
-            }
-          ]
-        };
-        console.log("[Hardware Extractor] Request details:", {
-          model: requestBody.model,
-          max_tokens: requestBody.max_tokens,
-          temperature: requestBody.temperature,
-          image_size_mb: imageSizeMB,
-          media_type: mediaType,
-          prompt_size: prompt.length,
-          timeout_ms: timeout2,
-          attempt,
-          page_number: pageNumber
-        });
-        const controller = new AbortController();
-        const timeoutId = setTimeout(() => controller.abort(), timeout2);
-        try {
-          const response = await anthropicDisabled("https://api.anthropic.com/v1/messages", {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-              "anthropic-version": "2023-06-01",
-              "x-api-key": apiKey
-            },
-            body: JSON.stringify(requestBody),
-            signal: controller.signal
-          });
-          clearTimeout(timeoutId);
-          if (!response.ok) {
-            let errorText = "";
-            let errorJson = null;
-            try {
-              errorText = await response.text();
-              if (errorText) {
-                try {
-                  errorJson = JSON.parse(errorText);
-                } catch (e) {
-                }
-              }
-            } catch (e) {
-              errorText = "Failed to read error response";
-            }
-            console.error("[Hardware Extractor] API error status:", response.status);
-            console.error("[Hardware Extractor] API error body:", errorJson || errorText);
-            const error4 = new Error(`Claude API error: ${response.status} ${errorJson ? JSON.stringify(errorJson.error || errorJson) : errorText}`);
-            error4.statusCode = response.status;
-            error4.errorDetails = errorJson;
-            error4.retryable = [429, 500, 502, 503, 504].includes(response.status);
-            throw error4;
-          }
-          const data = await response.json();
-          console.log(`[Hardware Extractor] API response received (${data.usage?.input_tokens || 0} input tokens, ${data.usage?.output_tokens || 0} output tokens)`);
-          return data;
-        } catch (fetchError) {
-          clearTimeout(timeoutId);
-          if (fetchError.name === "AbortError") {
-            const error4 = new Error(`Request timeout after ${timeout2}ms`);
-            error4.retryable = true;
-            error4.timeout = true;
-            throw error4;
-          }
-          throw fetchError;
-        }
-      });
-      return result;
-    } catch (error4) {
-      lastError = error4;
-      console.error(`[Hardware Extractor] Attempt ${attempt}/${maxRetries} failed:`, error4.message);
-      if (error4.retryable === false) {
-        console.error("[Hardware Extractor] Error is not retryable, aborting");
-        throw error4;
-      }
-      if (attempt === maxRetries) {
-        console.error("[Hardware Extractor] Max retries reached, aborting");
-        break;
-      }
-      const delay = retryDelays[attempt - 1];
-      console.log(`[Hardware Extractor] Retrying in ${delay}ms...`);
-      await new Promise((resolve2) => setTimeout(resolve2, delay));
-    }
-  }
-  const finalError = new Error(`Claude API call failed after ${maxRetries} attempts: ${lastError.message}`);
-  finalError.originalError = lastError;
-  finalError.attempts = maxRetries;
-  throw finalError;
-}
-
-export async function callClaudeWithPdf(base64Pdf, prompt, env2, pageNumber) {
-  const apiKey = env2.ANTHROPIC_API_KEY;
-  if (!apiKey) {
-    throw new Error("ANTHROPIC_API_KEY not configured");
-  }
-  const requestBody = {
-    model: "claude-opus-4-5-20251101",
-    max_tokens: 8192,
-    messages: [
-      {
-        role: "user",
-        content: [
-          {
-            type: "document",
-            source: {
-              type: "base64",
-              media_type: "application/pdf",
-              data: base64Pdf
-            }
-          },
-          {
-            type: "text",
-            text: prompt
-          }
-        ]
-      }
-    ]
-  };
-  console.log(`[Hardware Extractor] Calling Claude API with PDF document...`);
-  const response = await anthropicDisabled("https://api.anthropic.com/v1/messages", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      "x-api-key": apiKey,
-      "anthropic-version": "2023-06-01"
-    },
-    body: JSON.stringify(requestBody)
-  });
-  if (!response.ok) {
-    const errorText = await response.text();
-    console.error(`[Hardware Extractor] Claude API error: ${response.status} ${errorText}`);
-    throw new Error(`Claude API error: ${response.status} ${response.statusText}`);
-  }
-  const result = await response.json();
-  return result;
-}
-
+export async function _callClaudeVisionWithImage_apiDirect() { throw removedAnthropicRoute("_callClaudeVisionWithImage_apiDirect"); }
+export async function callClaudeWithPdf() { throw removedAnthropicRoute("callClaudeWithPdf"); }
 export function resolveInferenceContract(env2) {
   return {
     model: env2.WEYLAND_INFERENCE_MODEL || "claude-opus-4-8",

@@ -20259,91 +20259,9 @@ function registerSubmittalChatRoutes(router2, { authenticate: authenticate2, log
     "summary": "Brief overall assessment"
   }`;
   }
-  async function validateWithClaudeVision(env2, submittalData, referenceImageBase64, prompt, telemetryContext = {}) {
-    const ANTHROPIC_API_KEY = env2.ANTHROPIC_API_KEY;
-    if (!ANTHROPIC_API_KEY) {
-      return { error: "Claude API not configured" };
-    }
-    const requestTimestamp = (/* @__PURE__ */ new Date()).toISOString();
-    const startTime = Date.now();
-    const model = "claude-opus-4-6";
-    const endpoint = "https://api.anthropic.com/v1/messages";
-    try {
-      const response = await fetch(endpoint, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "x-api-key": ANTHROPIC_API_KEY,
-          "anthropic-version": "2023-06-01"
-        },
-        body: JSON.stringify({
-          model,
-          max_tokens: 4096,
-          messages: [{
-            role: "user",
-            content: [
-              {
-                type: "image",
-                source: {
-                  type: "base64",
-                  media_type: "image/png",
-                  data: referenceImageBase64.replace(/^data:image\/\w+;base64,/, "")
-                }
-              },
-              {
-                type: "text",
-                text: prompt + "\n\nThe image above shows the reference submittal document to compare against."
-              }
-            ]
-          }]
-        })
-      });
-      if (!response.ok) {
-        const errorText = await response.text();
-        const latencyMs2 = Date.now() - startTime;
-        console.error("[Submittal Validation] Claude API error:", errorText);
-        await logClaudeAPICall2(env2, {
-          apiType: "validation",
-          endpoint,
-          model,
-          requestTimestamp,
-          responseTimestamp: (/* @__PURE__ */ new Date()).toISOString(),
-          latencyMs: latencyMs2,
-          errorMessage: `HTTP ${response.status}: ${errorText.substring(0, 500)}`,
-          sessionId: telemetryContext.sessionId,
-          userId: telemetryContext.userId
-        });
-        return { error: "Claude API request failed", details: errorText };
-      }
-      const result = await response.json();
-      const responseTimestamp = (/* @__PURE__ */ new Date()).toISOString();
-      const latencyMs = Date.now() - startTime;
-      await logClaudeAPICall2(env2, {
-        apiType: "validation",
-        endpoint,
-        model,
-        requestTimestamp,
-        responseTimestamp,
-        inputTokens: result.usage?.input_tokens || 0,
-        outputTokens: result.usage?.output_tokens || 0,
-        latencyMs,
-        sessionId: telemetryContext.sessionId,
-        userId: telemetryContext.userId
-      });
-      const content = result.content?.[0]?.text || "";
-      const jsonMatch = content.match(/\{[\s\S]*\}/);
-      if (jsonMatch) {
-        try {
-          return JSON.parse(jsonMatch[0]);
-        } catch {
-          return { raw_response: content };
-        }
-      }
-      return { raw_response: content };
-    } catch (error4) {
-      console.error("[Submittal Validation] Error:", error4);
-      return { error: error4.message };
-    }
+  async function validateWithClaudeVision(env2, submittalData) {
+    const structural = validateSubmittalStructure(submittalData);
+    return Object.assign({}, structural, { image_comparison: "unavailable: no in-ecosystem vision route at request time (policy 2026-10-05)" });
   }
   function validateSubmittalStructure(submittalData) {
     const issues = [];
@@ -20427,84 +20345,12 @@ function registerSubmittalChatRoutes(router2, { authenticate: authenticate2, log
     }
   });
   router2.post("/api/chat", async (request2, env2) => {
-    const { error: error4, user } = await authenticate2(request2, env2);
-    if (error4)
-      return error4;
-    const requestTimestamp = (/* @__PURE__ */ new Date()).toISOString();
-    const startTime = Date.now();
-    const model = "claude-opus-4-6";
-    const endpoint = "https://api.anthropic.com/v1/messages";
-    try {
-      const body = await request2.json();
-      const { message, systemPrompt, context: context3 } = body;
-      if (!message) {
-        return jsonResponse3({ error: "message is required" }, 400);
-      }
-      console.log(`[Chat] User message: "${message.substring(0, 50)}..."`);
-      const fullSystemPrompt = systemPrompt || `You are the Weyland Assistant, an AI helper for the Weyland Hardware Submittal Express system by Weyland. Help users understand their submittal data, suggest edits, explain compliance requirements, and answer questions about door hardware. Keep responses concise and helpful.`;
-      const claudeResponse = await fetch(endpoint, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "x-api-key": env2.ANTHROPIC_API_KEY,
-          "anthropic-version": "2023-06-01"
-        },
-        body: JSON.stringify({
-          model,
-          max_tokens: 1024,
-          system: fullSystemPrompt,
-          messages: [
-            {
-              role: "user",
-              content: message
-            }
-          ]
-        })
-      });
-      if (!claudeResponse.ok) {
-        const errorText = await claudeResponse.text();
-        const latencyMs2 = Date.now() - startTime;
-        console.error("[Chat] Claude API error:", errorText);
-        await logClaudeAPICall2(env2, {
-          apiType: "chat",
-          endpoint,
-          model,
-          requestTimestamp,
-          responseTimestamp: (/* @__PURE__ */ new Date()).toISOString(),
-          latencyMs: latencyMs2,
-          errorMessage: `HTTP ${claudeResponse.status}: ${errorText.substring(0, 500)}`,
-          userId: user.userId
-        });
-        throw new Error(`Claude API error: ${claudeResponse.status}`);
-      }
-      const claudeResult = await claudeResponse.json();
-      const responseTimestamp = (/* @__PURE__ */ new Date()).toISOString();
-      const latencyMs = Date.now() - startTime;
-      await logClaudeAPICall2(env2, {
-        apiType: "chat",
-        endpoint,
-        model,
-        requestTimestamp,
-        responseTimestamp,
-        inputTokens: claudeResult.usage?.input_tokens || 0,
-        outputTokens: claudeResult.usage?.output_tokens || 0,
-        latencyMs,
-        userId: user.userId
-      });
-      const responseText = claudeResult.content[0]?.text || "I apologize, I could not generate a response.";
-      console.log(`[Chat] Response generated: ${responseText.substring(0, 50)}...`);
-      return jsonResponse3({
-        success: true,
-        response: responseText,
-        usage: claudeResult.usage
-      }, 200);
-    } catch (error5) {
-      console.error("[Chat] Error:", error5);
-      return jsonResponse3({
-        error: "Failed to process chat message",
-        details: error5.message
-      }, 500);
-    }
+    const { error: error4 } = await authenticate2(request2, env2);
+    if (error4) return error4;
+    return jsonResponse3({
+      error: "assistant unavailable",
+      reason: "weylandai.com makes no API call outside the MobCorp ecosystem at request time; no in-ecosystem chat route is wired yet"
+    }, 503);
   });
 }
 
@@ -26669,9 +26515,6 @@ function _buildCrossReference(ctx) {
 }
 
 // src/lib/hardware-extraction-vision-adapters.js
-function anthropicDisabled(url) {
-  throw new Error("anthropic route disabled by policy (2026-10-05): use the embedded_gofaineat route; attempted " + url);
-}
 var CircuitBreaker = class {
   constructor() {
     this.failures = 0;
@@ -26714,129 +26557,13 @@ var CircuitBreaker = class {
   }
 };
 var claudeCircuitBreaker = new CircuitBreaker();
-async function callClaudeVision(base64Pdf, prompt, env2) {
-  const apiKey = env2.ANTHROPIC_API_KEY;
-  if (!apiKey) {
-    const error4 = new Error("ANTHROPIC_API_KEY not found in environment");
-    error4.retryable = false;
-    throw error4;
-  }
-  validateClaudeRequest(base64Pdf, prompt);
-  const timeout2 = getClaudeTimeout(base64Pdf);
-  console.log(`[Hardware Extractor] Using ${timeout2}ms timeout for ${(base64Pdf.length * 3 / 4 / 1024 / 1024).toFixed(2)}MB PDF`);
-  const maxRetries = 3;
-  const retryDelays = [5e3, 1e4, 2e4];
-  let lastError = null;
-  for (let attempt = 1; attempt <= maxRetries; attempt++) {
-    try {
-      console.log(`[Hardware Extractor] Attempt ${attempt}/${maxRetries} - Calling Claude Vision API...`);
-      const _inf = resolveInferenceContract(env2);
-      const result = await claudeCircuitBreaker.execute(async () => {
-        const requestBody = {
-          model: _inf.model,
-          max_tokens: _inf.max_tokens,
-          temperature: _inf.temperature,
-          messages: [
-            {
-              role: "user",
-              content: [
-                {
-                  type: "document",
-                  source: {
-                    type: "base64",
-                    media_type: "application/pdf",
-                    data: base64Pdf
-                  }
-                },
-                {
-                  type: "text",
-                  text: prompt
-                }
-              ]
-            }
-          ]
-        };
-        console.log("[Hardware Extractor] Request details:", {
-          model: requestBody.model,
-          max_tokens: requestBody.max_tokens,
-          temperature: requestBody.temperature,
-          pdf_size_mb: (base64Pdf.length * 3 / 4 / 1024 / 1024).toFixed(2),
-          prompt_size: prompt.length,
-          timeout_ms: timeout2,
-          attempt
-        });
-        const controller = new AbortController();
-        const timeoutId = setTimeout(() => controller.abort(), timeout2);
-        try {
-          const response = await anthropicDisabled("https://api.anthropic.com/v1/messages", {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-              "anthropic-version": "2023-06-01",
-              "x-api-key": apiKey
-            },
-            body: JSON.stringify(requestBody),
-            signal: controller.signal
-          });
-          clearTimeout(timeoutId);
-          if (!response.ok) {
-            let errorText = "";
-            let errorJson = null;
-            try {
-              errorText = await response.text();
-              if (errorText) {
-                try {
-                  errorJson = JSON.parse(errorText);
-                } catch (e) {
-                }
-              }
-            } catch (e) {
-              errorText = "Failed to read error response";
-            }
-            console.error("[Hardware Extractor] API error status:", response.status);
-            console.error("[Hardware Extractor] API error headers:", JSON.stringify([...response.headers.entries()]));
-            console.error("[Hardware Extractor] API error body:", errorJson || errorText);
-            const error4 = new Error(`Claude API error: ${response.status} ${errorJson ? JSON.stringify(errorJson.error || errorJson) : errorText}`);
-            error4.statusCode = response.status;
-            error4.errorDetails = errorJson;
-            error4.retryable = [429, 500, 502, 503, 504].includes(response.status);
-            throw error4;
-          }
-          const data = await response.json();
-          console.log(`[Hardware Extractor] API response received (${data.usage?.input_tokens || 0} input tokens, ${data.usage?.output_tokens || 0} output tokens)`);
-          return data;
-        } catch (fetchError) {
-          clearTimeout(timeoutId);
-          if (fetchError.name === "AbortError") {
-            const error4 = new Error(`Request timeout after ${timeout2}ms`);
-            error4.retryable = true;
-            error4.timeout = true;
-            throw error4;
-          }
-          throw fetchError;
-        }
-      });
-      return result;
-    } catch (error4) {
-      lastError = error4;
-      console.error(`[Hardware Extractor] Attempt ${attempt}/${maxRetries} failed:`, error4.message);
-      if (error4.retryable === false) {
-        console.error("[Hardware Extractor] Error is not retryable, aborting");
-        throw error4;
-      }
-      if (attempt === maxRetries) {
-        console.error("[Hardware Extractor] Max retries reached, aborting");
-        break;
-      }
-      const delay = retryDelays[attempt - 1];
-      console.log(`[Hardware Extractor] Retrying in ${delay}ms...`);
-      await new Promise((resolve2) => setTimeout(resolve2, delay));
-    }
-  }
-  const finalError = new Error(`Claude API call failed after ${maxRetries} attempts: ${lastError.message}`);
-  finalError.originalError = lastError;
-  finalError.attempts = maxRetries;
-  throw finalError;
+function removedAnthropicRoute(name) {
+  const err = new Error(name + " was removed (2026-10-05): weylandai.com has no Anthropic API route; use the embedded_gofaineat extraction route");
+  err.retryable = false;
+  return err;
+}
+async function callClaudeVision() {
+  throw removedAnthropicRoute("callClaudeVision");
 }
 async function callClaudeVisionWithImage(imageBuffer, prompt, env2, pageNumber, sessionId, ownerMhsId) {
   let route = env2.WEYLAND_EDITION === "local" ? "claude_code_subprocess" : "claude_code_local";
@@ -26995,178 +26722,11 @@ async function _imageSourceForQueue(imageBase64, env2) {
   console.log(`[Image Sidecar] ${(bytes.length / 1024).toFixed(0)}KB -> R2 ${key} (signed URL, full fidelity)`);
   return { type: "url", url: `${origin}/api/internal/r2-stream?token=${encodeURIComponent(token)}` };
 }
-async function _callClaudeVisionWithImage_apiDirect(imageBuffer, prompt, env2, pageNumber) {
-  const apiKey = env2.ANTHROPIC_API_KEY;
-  if (!apiKey) {
-    const error4 = new Error("ANTHROPIC_API_KEY not found in environment");
-    error4.retryable = false;
-    throw error4;
-  }
-  const base64Image = arrayBufferToBase643(imageBuffer);
-  const imageSizeMB = (imageBuffer.byteLength / 1024 / 1024).toFixed(2);
-  const mediaType = detectImageMediaType(imageBuffer);
-  console.log(`[Hardware Extractor] Sending page ${pageNumber} image to Claude Vision (${imageSizeMB}MB ${mediaType})`);
-  const timeout2 = 6e5;
-  const maxRetries = 3;
-  const retryDelays = [5e3, 1e4, 2e4];
-  let lastError = null;
-  for (let attempt = 1; attempt <= maxRetries; attempt++) {
-    try {
-      console.log(`[Hardware Extractor] Attempt ${attempt}/${maxRetries} - Calling Claude Vision with ${mediaType} image...`);
-      const _inf = resolveInferenceContract(env2);
-      const result = await claudeCircuitBreaker.execute(async () => {
-        const requestBody = {
-          model: _inf.model,
-          max_tokens: _inf.max_tokens,
-          temperature: _inf.temperature,
-          messages: [
-            {
-              role: "user",
-              content: [
-                {
-                  type: "image",
-                  source: {
-                    type: "base64",
-                    media_type: mediaType,
-                    data: base64Image
-                  }
-                },
-                {
-                  type: "text",
-                  text: prompt
-                }
-              ]
-            }
-          ]
-        };
-        console.log("[Hardware Extractor] Request details:", {
-          model: requestBody.model,
-          max_tokens: requestBody.max_tokens,
-          temperature: requestBody.temperature,
-          image_size_mb: imageSizeMB,
-          media_type: mediaType,
-          prompt_size: prompt.length,
-          timeout_ms: timeout2,
-          attempt,
-          page_number: pageNumber
-        });
-        const controller = new AbortController();
-        const timeoutId = setTimeout(() => controller.abort(), timeout2);
-        try {
-          const response = await anthropicDisabled("https://api.anthropic.com/v1/messages", {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-              "anthropic-version": "2023-06-01",
-              "x-api-key": apiKey
-            },
-            body: JSON.stringify(requestBody),
-            signal: controller.signal
-          });
-          clearTimeout(timeoutId);
-          if (!response.ok) {
-            let errorText = "";
-            let errorJson = null;
-            try {
-              errorText = await response.text();
-              if (errorText) {
-                try {
-                  errorJson = JSON.parse(errorText);
-                } catch (e) {
-                }
-              }
-            } catch (e) {
-              errorText = "Failed to read error response";
-            }
-            console.error("[Hardware Extractor] API error status:", response.status);
-            console.error("[Hardware Extractor] API error body:", errorJson || errorText);
-            const error4 = new Error(`Claude API error: ${response.status} ${errorJson ? JSON.stringify(errorJson.error || errorJson) : errorText}`);
-            error4.statusCode = response.status;
-            error4.errorDetails = errorJson;
-            error4.retryable = [429, 500, 502, 503, 504].includes(response.status);
-            throw error4;
-          }
-          const data = await response.json();
-          console.log(`[Hardware Extractor] API response received (${data.usage?.input_tokens || 0} input tokens, ${data.usage?.output_tokens || 0} output tokens)`);
-          return data;
-        } catch (fetchError) {
-          clearTimeout(timeoutId);
-          if (fetchError.name === "AbortError") {
-            const error4 = new Error(`Request timeout after ${timeout2}ms`);
-            error4.retryable = true;
-            error4.timeout = true;
-            throw error4;
-          }
-          throw fetchError;
-        }
-      });
-      return result;
-    } catch (error4) {
-      lastError = error4;
-      console.error(`[Hardware Extractor] Attempt ${attempt}/${maxRetries} failed:`, error4.message);
-      if (error4.retryable === false) {
-        console.error("[Hardware Extractor] Error is not retryable, aborting");
-        throw error4;
-      }
-      if (attempt === maxRetries) {
-        console.error("[Hardware Extractor] Max retries reached, aborting");
-        break;
-      }
-      const delay = retryDelays[attempt - 1];
-      console.log(`[Hardware Extractor] Retrying in ${delay}ms...`);
-      await new Promise((resolve2) => setTimeout(resolve2, delay));
-    }
-  }
-  const finalError = new Error(`Claude API call failed after ${maxRetries} attempts: ${lastError.message}`);
-  finalError.originalError = lastError;
-  finalError.attempts = maxRetries;
-  throw finalError;
+async function _callClaudeVisionWithImage_apiDirect() {
+  throw removedAnthropicRoute("_callClaudeVisionWithImage_apiDirect");
 }
-async function callClaudeWithPdf(base64Pdf, prompt, env2, pageNumber) {
-  const apiKey = env2.ANTHROPIC_API_KEY;
-  if (!apiKey) {
-    throw new Error("ANTHROPIC_API_KEY not configured");
-  }
-  const requestBody = {
-    model: "claude-opus-4-5-20251101",
-    max_tokens: 8192,
-    messages: [
-      {
-        role: "user",
-        content: [
-          {
-            type: "document",
-            source: {
-              type: "base64",
-              media_type: "application/pdf",
-              data: base64Pdf
-            }
-          },
-          {
-            type: "text",
-            text: prompt
-          }
-        ]
-      }
-    ]
-  };
-  console.log(`[Hardware Extractor] Calling Claude API with PDF document...`);
-  const response = await anthropicDisabled("https://api.anthropic.com/v1/messages", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      "x-api-key": apiKey,
-      "anthropic-version": "2023-06-01"
-    },
-    body: JSON.stringify(requestBody)
-  });
-  if (!response.ok) {
-    const errorText = await response.text();
-    console.error(`[Hardware Extractor] Claude API error: ${response.status} ${errorText}`);
-    throw new Error(`Claude API error: ${response.status} ${response.statusText}`);
-  }
-  const result = await response.json();
-  return result;
+async function callClaudeWithPdf() {
+  throw removedAnthropicRoute("callClaudeWithPdf");
 }
 function resolveInferenceContract(env2) {
   return {
@@ -28787,9 +28347,6 @@ async function requestIntoCorpus(url, env2, reason = "request") {
 }
 
 // src/lib/cutsheet-discovery.js
-function anthropicDisabled2(url) {
-  throw new Error("anthropic route disabled by policy (2026-10-05): use the embedded_gofaineat route; attempted " + url);
-}
 var PDF_MAGIC_BYTES = [37, 80, 68, 70];
 var MAX_FILE_SIZE = 50 * 1024 * 1024;
 var DOWNLOAD_TIMEOUT = 3e4;
@@ -29011,122 +28568,6 @@ async function analyzePdfWithGofaineat(buffer, component, env2) {
   console.log(`[PDF Validator] gofaineat analysis complete: ${metadata.matchesExpectedProduct ? "MATCH" : "NO MATCH"} (${metadata.matchConfidence})`);
   return metadata;
 }
-async function analyzePdfWithClaude(buffer, component, env2) {
-  if (!env2.ANTHROPIC_API_KEY) {
-    console.warn("[PDF Validator] No ANTHROPIC_API_KEY, skipping Claude analysis");
-    return {
-      analyzed: false,
-      reason: "API key not configured"
-    };
-  }
-  const bytes = new Uint8Array(buffer);
-  const base64 = btoa(String.fromCharCode(...bytes));
-  const prompt = `You are analyzing a product cut sheet or specification document for door hardware.
-
-CONTEXT:
-- We're looking for: ${component.manufacturer || "Unknown"} model ${component.model || component.catalog_number || "Unknown"}
-- Component type: ${component.dhi_category || component.component_type || "Unknown"}
-
-TASK:
-Analyze this PDF document and extract the following information. Return ONLY valid JSON, no other text.
-
-{
-  "documentType": "cut_sheet|spec_sheet|catalog_page|installation_guide|unknown",
-  "manufacturer": "extracted manufacturer name",
-  "brandName": "brand if different from manufacturer",
-  "modelNumbers": ["array", "of", "model", "numbers"],
-  "productName": "full product name/title",
-  "productCategory": "lock|hinge|closer|exit_device|weatherstrip|kick_plate|other",
-  "specifications": {
-    "dimensions": "any dimension info",
-    "material": "material composition",
-    "finish": "finish options or codes",
-    "weight": "weight if specified"
-  },
-  "certifications": ["UL", "ADA", "ANSI", "etc"],
-  "fireRating": "fire rating if specified (e.g., '3-hour')",
-  "compliance": ["CBC", "IBC", "other codes"],
-  "matchesExpectedProduct": true|false,
-  "matchConfidence": 0.0-1.0,
-  "matchReason": "brief explanation of why it matches or doesn't match",
-  "pageCount": estimated_number_of_pages,
-  "documentDate": "date if visible",
-  "extractedText": "first 500 chars of relevant text"
-}`;
-  try {
-    const response = await anthropicDisabled2("https://api.anthropic.com/v1/messages", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "x-api-key": env2.ANTHROPIC_API_KEY,
-        "anthropic-version": "2023-06-01"
-      },
-      body: JSON.stringify({
-        model: "claude-opus-4-5-20251101",
-        max_tokens: 2048,
-        messages: [{
-          role: "user",
-          content: [
-            {
-              type: "document",
-              source: {
-                type: "base64",
-                media_type: "application/pdf",
-                data: base64
-              }
-            },
-            {
-              type: "text",
-              text: prompt
-            }
-          ]
-        }]
-      })
-    });
-    if (!response.ok) {
-      const errorText = await response.text();
-      console.error(`[PDF Validator] Claude API error: ${response.status} - ${errorText}`);
-      return {
-        analyzed: false,
-        reason: `API error: ${response.status}`,
-        error: errorText
-      };
-    }
-    const result = await response.json();
-    const content = result.content?.[0]?.text || "";
-    let metadata;
-    try {
-      const jsonMatch = content.match(/\{[\s\S]*\}/);
-      if (jsonMatch) {
-        metadata = JSON.parse(jsonMatch[0]);
-      } else {
-        throw new Error("No JSON found in response");
-      }
-    } catch (parseError) {
-      console.error("[PDF Validator] Failed to parse Claude response:", parseError);
-      return {
-        analyzed: true,
-        parseError: true,
-        rawResponse: content.substring(0, 500),
-        reason: "Failed to parse response"
-      };
-    }
-    console.log(`[PDF Validator] Claude analysis complete: ${metadata.matchesExpectedProduct ? "MATCH" : "NO MATCH"} (${metadata.matchConfidence})`);
-    return {
-      analyzed: true,
-      ...metadata,
-      inputTokens: result.usage?.input_tokens,
-      outputTokens: result.usage?.output_tokens
-    };
-  } catch (error4) {
-    console.error("[PDF Validator] Claude analysis failed:", error4);
-    return {
-      analyzed: false,
-      reason: error4.message,
-      error: error4.toString()
-    };
-  }
-}
 function calculateMatchScore(metadata, component) {
   if (!metadata || !metadata.analyzed) {
     return 0;
@@ -29213,7 +28654,7 @@ async function validatePdf(url, component, env2) {
   } catch (storageError) {
     console.error("[PDF Validator] Storage error:", storageError);
   }
-  const metadata = env2.WEYLAND_PDF_VALIDATION_ROUTE === "claude" ? await analyzePdfWithClaude(download.buffer, component, env2) : await analyzePdfWithGofaineat(download.buffer, component, env2);
+  const metadata = await analyzePdfWithGofaineat(download.buffer, component, env2);
   const matchScore = calculateMatchScore(metadata, component);
   const elapsed = Date.now() - startTime;
   console.log(`[PDF Validator] Validation complete in ${elapsed}ms - Score: ${matchScore}`);
@@ -43271,9 +42712,6 @@ async function callLocalQwen(env2, messages, opts = {}) {
 }
 
 // src/lib/hardware-extraction-vision-dispatch.js
-function anthropicDisabled3(url) {
-  throw new Error("anthropic route disabled by policy (2026-10-05): use the embedded_gofaineat route; attempted " + url);
-}
 var EXTRACTION_PROMPT_TEMPLATE = `\u{1F6A8}\u{1F6A8}\u{1F6A8} CRITICAL: STOP AND READ THIS FIRST \u{1F6A8}\u{1F6A8}\u{1F6A8}
 
 YOU WILL FAIL THIS TASK IF YOU DON'T READ THIS SECTION CAREFULLY.
@@ -43737,83 +43175,8 @@ DECISION: [YES/NO with reasoning]
 }
 
 Do NOT skip the verification section. This is how we ensure you extracted from the correct page.`;
-async function viaApiDirect(sessionId, pdfBuffer, env2, ctx = {}) {
-  const base64Image = arrayBufferToBase64(pdfBuffer);
-  const requestTimestamp = (/* @__PURE__ */ new Date()).toISOString();
-  const startTime = Date.now();
-  const model = "claude-opus-4-6";
-  const endpoint = "https://api.anthropic.com/v1/messages";
-  console.log("viaApiDirect called");
-  console.log("env object keys:", Object.keys(env2));
-  console.log("ANTHROPIC_API_KEY configured:", !!env2.ANTHROPIC_API_KEY);
-  const response = await anthropicDisabled3(endpoint, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      "x-api-key": env2.ANTHROPIC_API_KEY,
-      "anthropic-version": "2023-06-01"
-    },
-    body: JSON.stringify({
-      model,
-      max_tokens: 8e3,
-      messages: [{
-        role: "user",
-        content: [
-          {
-            type: "document",
-            source: {
-              type: "base64",
-              media_type: "application/pdf",
-              data: base64Image
-            }
-          },
-          {
-            type: "text",
-            text: EXTRACTION_PROMPT_TEMPLATE
-          }
-        ]
-      }]
-    })
-  });
-  if (!response.ok) {
-    const errorText = await response.text();
-    const latencyMs2 = Date.now() - startTime;
-    await logClaudeAPICall(env2, {
-      apiType: "vision",
-      endpoint,
-      model,
-      requestTimestamp,
-      responseTimestamp: (/* @__PURE__ */ new Date()).toISOString(),
-      latencyMs: latencyMs2,
-      errorMessage: `HTTP ${response.status}: ${errorText.substring(0, 500)}`,
-      sessionId,
-      userId: ctx.userId,
-      pageNumber: ctx.pageNumber
-    });
-    throw new Error(`Claude API error: ${response.status} - ${errorText}`);
-  }
-  const result = await response.json();
-  const responseTimestamp = (/* @__PURE__ */ new Date()).toISOString();
-  const latencyMs = Date.now() - startTime;
-  await logClaudeAPICall(env2, {
-    apiType: "vision",
-    endpoint,
-    model,
-    requestTimestamp,
-    responseTimestamp,
-    inputTokens: result.usage?.input_tokens || 0,
-    outputTokens: result.usage?.output_tokens || 0,
-    latencyMs,
-    sessionId,
-    userId: ctx.userId,
-    pageNumber: ctx.pageNumber
-  });
-  if (result.error) {
-    throw new Error(`Claude API error: ${result.error.message}`);
-  }
-  const extractionText = result.content[0].text.trim();
-  const parsed = parseAndValidateExtraction(extractionText, { tokenUsage: result.usage });
-  return parsed;
+async function viaApiDirect() {
+  throw new Error("api_direct extraction route was removed (2026-10-05): choose embedded_gofaineat via POST /api/sessions/:sessionId/extraction-route");
 }
 function parseAndValidateExtraction(extractionText, telemetryContext = {}) {
   let responseText = extractionText;
@@ -44164,7 +43527,7 @@ async function dispatchVisionExtraction(sessionId, pdfBuffer, env2, ctx = {}) {
   ).bind(sessionId).first();
   const ADAPTERS = adaptersForEdition(env2);
   const DEFAULT_ROUTE = env2.WEYLAND_EDITION === "local" ? "claude_code_subprocess" : "embedded_gofaineat";
-  const route = row?.extraction_route in ADAPTERS ? row.extraction_route : DEFAULT_ROUTE in ADAPTERS ? DEFAULT_ROUTE : "api_direct";
+  const route = row?.extraction_route in ADAPTERS ? row.extraction_route : DEFAULT_ROUTE in ADAPTERS ? DEFAULT_ROUTE : "embedded_gofaineat";
   const result = await ADAPTERS[route](sessionId, pdfBuffer, env2, ctx);
   if (row && result?.sync !== false && !result?.error) {
     await env2.DB.prepare(

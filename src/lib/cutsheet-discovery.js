@@ -4,12 +4,6 @@ import { getFromCorpus, requestIntoCorpus, isExternalUrl } from "./catalog-corpu
 
 // Policy (John, 2026-10-05): WeylandAI runs vision / language through
 // gofaineat only and makes no API call outside the conglomerate. The
-// Anthropic route below is kept for provenance but can no longer be
-// reached: the call site throws before any network request.
-function anthropicDisabled(url) {
-  throw new Error("anthropic route disabled by policy (2026-10-05): use the embedded_gofaineat route; attempted " + url);
-}
-
 export var PDF_MAGIC_BYTES = [37, 80, 68, 70];
 export var MAX_FILE_SIZE = 50 * 1024 * 1024;
 export var DOWNLOAD_TIMEOUT = 3e4;
@@ -278,122 +272,6 @@ export async function analyzePdfWithGofaineat(buffer, component, env2) {
   return metadata;
 }
 
-export async function analyzePdfWithClaude(buffer, component, env2) {
-  if (!env2.ANTHROPIC_API_KEY) {
-    console.warn("[PDF Validator] No ANTHROPIC_API_KEY, skipping Claude analysis");
-    return {
-      analyzed: false,
-      reason: "API key not configured"
-    };
-  }
-  const bytes = new Uint8Array(buffer);
-  const base64 = btoa(String.fromCharCode(...bytes));
-  const prompt = `You are analyzing a product cut sheet or specification document for door hardware.
-
-CONTEXT:
-- We're looking for: ${component.manufacturer || "Unknown"} model ${component.model || component.catalog_number || "Unknown"}
-- Component type: ${component.dhi_category || component.component_type || "Unknown"}
-
-TASK:
-Analyze this PDF document and extract the following information. Return ONLY valid JSON, no other text.
-
-{
-  "documentType": "cut_sheet|spec_sheet|catalog_page|installation_guide|unknown",
-  "manufacturer": "extracted manufacturer name",
-  "brandName": "brand if different from manufacturer",
-  "modelNumbers": ["array", "of", "model", "numbers"],
-  "productName": "full product name/title",
-  "productCategory": "lock|hinge|closer|exit_device|weatherstrip|kick_plate|other",
-  "specifications": {
-    "dimensions": "any dimension info",
-    "material": "material composition",
-    "finish": "finish options or codes",
-    "weight": "weight if specified"
-  },
-  "certifications": ["UL", "ADA", "ANSI", "etc"],
-  "fireRating": "fire rating if specified (e.g., '3-hour')",
-  "compliance": ["CBC", "IBC", "other codes"],
-  "matchesExpectedProduct": true|false,
-  "matchConfidence": 0.0-1.0,
-  "matchReason": "brief explanation of why it matches or doesn't match",
-  "pageCount": estimated_number_of_pages,
-  "documentDate": "date if visible",
-  "extractedText": "first 500 chars of relevant text"
-}`;
-  try {
-    const response = await anthropicDisabled("https://api.anthropic.com/v1/messages", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "x-api-key": env2.ANTHROPIC_API_KEY,
-        "anthropic-version": "2023-06-01"
-      },
-      body: JSON.stringify({
-        model: "claude-opus-4-5-20251101",
-        max_tokens: 2048,
-        messages: [{
-          role: "user",
-          content: [
-            {
-              type: "document",
-              source: {
-                type: "base64",
-                media_type: "application/pdf",
-                data: base64
-              }
-            },
-            {
-              type: "text",
-              text: prompt
-            }
-          ]
-        }]
-      })
-    });
-    if (!response.ok) {
-      const errorText = await response.text();
-      console.error(`[PDF Validator] Claude API error: ${response.status} - ${errorText}`);
-      return {
-        analyzed: false,
-        reason: `API error: ${response.status}`,
-        error: errorText
-      };
-    }
-    const result = await response.json();
-    const content = result.content?.[0]?.text || "";
-    let metadata;
-    try {
-      const jsonMatch = content.match(/\{[\s\S]*\}/);
-      if (jsonMatch) {
-        metadata = JSON.parse(jsonMatch[0]);
-      } else {
-        throw new Error("No JSON found in response");
-      }
-    } catch (parseError) {
-      console.error("[PDF Validator] Failed to parse Claude response:", parseError);
-      return {
-        analyzed: true,
-        parseError: true,
-        rawResponse: content.substring(0, 500),
-        reason: "Failed to parse response"
-      };
-    }
-    console.log(`[PDF Validator] Claude analysis complete: ${metadata.matchesExpectedProduct ? "MATCH" : "NO MATCH"} (${metadata.matchConfidence})`);
-    return {
-      analyzed: true,
-      ...metadata,
-      inputTokens: result.usage?.input_tokens,
-      outputTokens: result.usage?.output_tokens
-    };
-  } catch (error4) {
-    console.error("[PDF Validator] Claude analysis failed:", error4);
-    return {
-      analyzed: false,
-      reason: error4.message,
-      error: error4.toString()
-    };
-  }
-}
 export function calculateMatchScore(metadata, component) {
   if (!metadata || !metadata.analyzed) {
     return 0;
@@ -480,15 +358,9 @@ export async function validatePdf(url, component, env2) {
   } catch (storageError) {
     console.error("[PDF Validator] Storage error:", storageError);
   }
-  // gofaineat (OCR + deterministic classifier) is the real default - see
-  // analyzePdfWithGofaineat's own comment for why analyzePdfWithClaude
-  // always scored 0. Falls through to the Claude route only if a caller's
-  // env explicitly opts in (WEYLAND_PDF_VALIDATION_ROUTE="claude") AND has
-  // a real ANTHROPIC_API_KEY - neither is true for this venture today, so
-  // this is a real behavior change for every caller, not a flag nobody sets.
-  const metadata = env2.WEYLAND_PDF_VALIDATION_ROUTE === "claude"
-    ? await analyzePdfWithClaude(download.buffer, component, env2)
-    : await analyzePdfWithGofaineat(download.buffer, component, env2);
+  // gofaineat (OCR + deterministic classifier) is the only validation route;
+  // the Anthropic alternative was removed 2026-10-05.
+  const metadata = await analyzePdfWithGofaineat(download.buffer, component, env2);
   const matchScore = calculateMatchScore(metadata, component);
   const elapsed = Date.now() - startTime;
   console.log(`[PDF Validator] Validation complete in ${elapsed}ms - Score: ${matchScore}`);
