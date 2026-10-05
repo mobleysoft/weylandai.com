@@ -277,10 +277,12 @@
        a spacer so nothing hides under the footer. */
     @media (max-width: 640px) {
       .wn-persistent-footer a { min-height: 44px; display: inline-flex; align-items: center; padding: 0 12px; font-size: 12px; }
-      .wn-flag-fill { font-size: 11px; }
+      .wn-flag .wn-flag-fill, .wn-logo .wn-flag-fill { font-size: 11px !important; }
       .wn-flag { min-height: 44px; }
-      .wn-close-hint { font-size: 11px; }
-      .status-badge, .beat-live-chip, .badge-tray-label, .cutsheet-conf, .zone-tag, .featured-pill { font-size: 11px; }
+      .wn-close-hint, .wn-signin { font-size: 11px !important; }
+      .envelope-frame .status-badge, .envelope-frame .beat-live-chip, .envelope-frame .badge-tray-label,
+      .envelope-frame .cutsheet-conf, .envelope-frame .zone-tag, .envelope-frame .featured-pill,
+      .envelope-frame .cutsheet-mfg, .envelope-frame .journey-label, .envelope-frame th { font-size: 11px !important; }
       .button { min-height: 44px; }
       .envelope-frame::after { content: ''; display: block; height: 76px; }
     }
