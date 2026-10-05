@@ -32,6 +32,7 @@
 // __name(fn, "fnName") bundler bookkeeping calls stripped, same as
 // every prior extraction this session.
 
+import { resolveCatalogueKey } from "./catalogue-storage.js";
 var PRODUCT_DATABASE = [
   // Schlage Locks
   { manufacturer: "Schlage", code: ["SCH", "SCHLAGE"], models: ["L9080P", "L9080", "L9080-P"], productName: "Schlage L9080P Passage Mortise Lock", category: "Locks & Locksets", specs: 'ANSI/BHMA Grade 1, Heavy Duty Commercial, 2-3/4" Backset', fireRating: "3 Hour", ada: true, standards: "ANSI/BHMA A156.13, UL10C", priceRange: "$340-485" },
@@ -420,13 +421,22 @@ async function getCataloguePagesForModel(manufacturerName, model, env2, limit = 
       "WHERE catalogue_pages_fts MATCH ? AND (? = '' OR lower(c.manufacturer) = lower(?)) " +
       "ORDER BY (c.title LIKE '%Price Book%') ASC, p.page_num ASC LIMIT ?"
     ).bind('"' + token + '"', manufacturerName || "", manufacturerName || "", limit).all();
-    return (rows.results || []).map((r) => ({
-      catalogueId: r.catalogue_id,
-      title: r.title,
-      manufacturer: r.manufacturer,
-      pageNum: r.page_num,
-      pageUrl: "/api/cps/catalogues/" + encodeURIComponent(r.catalogue_id) + "/pages/" + r.page_num + "/render"
-    }));
+    // Only link to the page render when the source PDF (or an already
+    // rendered page) is really in R2: 42 of the 70 catalogues were ingested
+    // text-only and 3 carry a Windows path from another machine. A citation
+    // without a PDF stays a citation (title + page), never a dead link.
+    const out = [];
+    for (const r of rows.results || []) {
+      let pageUrl = null;
+      try {
+        const cat = await env2.DB.prepare("SELECT catalogue_id, storage_path, source_filename FROM catalogues WHERE catalogue_id = ?").bind(r.catalogue_id).first();
+        const cachedKey = "catalogues/" + r.catalogue_id + "/pages/page_" + r.page_num + ".pdf";
+        const present = env2.UPLOADS && ((await env2.UPLOADS.head(cachedKey)) || (cat && (await resolveCatalogueKey(env2, cat))));
+        if (present) pageUrl = "/api/cps/catalogues/" + encodeURIComponent(r.catalogue_id) + "/pages/" + r.page_num + "/render";
+      } catch (e) { /* no link rather than a guessed one */ }
+      out.push({ catalogueId: r.catalogue_id, title: r.title, manufacturer: r.manufacturer, pageNum: r.page_num, pageUrl, pdfAvailable: !!pageUrl });
+    }
+    return out;
   } catch (e) {
     console.warn("[matcher] catalogue page fallback failed:", e.message);
     return [];

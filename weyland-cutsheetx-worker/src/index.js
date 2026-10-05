@@ -116,6 +116,7 @@ import { registerCatalogueDocumentsRoutes } from "./routes/catalogue-documents.j
 
 import cutsheetxHtml from "./pages/cutsheetx.html";
 import { seedCorpusWanted, ingestCorpus, corpusStatus } from "./lib/catalog-corpus.js";
+import { resolveCatalogueStoragePaths } from "./lib/catalogue-storage.js";
 import { EXPANDED_URL_PATTERNS } from "./lib/cutsheet-discovery.js";
 
 const WORKER_VERSION = "2026-10-04.1";
@@ -174,6 +175,10 @@ void matchComponentToCutSheets;
 // R2 and are pulled only by scheduled() below. Status is public; an
 // authenticated CutsheetX user may kick one background ingest.
 async function runCorpusIngest(env) {
+  // Repair catalogues.storage_path against R2 first (lib/catalogue-storage.js),
+  // so page renders and catalogue-page citations point at real objects.
+  const storage = await resolveCatalogueStoragePaths(env).catch((e) => ({ error: e.message }));
+  console.log("[corpus] catalogue storage paths", JSON.stringify(storage));
   const seeded = await seedCorpusWanted(env, EXPANDED_URL_PATTERNS);
   const ingested = await ingestCorpus(env, 10);
   const status = await corpusStatus(env);

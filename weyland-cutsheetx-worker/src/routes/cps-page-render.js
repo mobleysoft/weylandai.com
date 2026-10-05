@@ -1,4 +1,5 @@
 import { jsonResponse3 } from "../lib/json-response.js";
+import { resolveCatalogueKey } from "../lib/catalogue-storage.js";
 
 /**
  * @param {object} router
@@ -43,7 +44,8 @@ export function registerCpsPageRenderRoutes(router, { authenticate, PDFDocument 
           error: `Page ${pageNumber} exceeds catalogue page count (${catalogue.page_count})`
         }, 400);
       }
-      const sourceKey = catalogue.storage_path || `catalogues/${catalogue.source_filename}`;
+      // 2026-10-05: storage_path is not always right - resolve against R2 (lib/catalogue-storage.js).
+      const sourceKey = (await resolveCatalogueKey(env2, catalogue)) || catalogue.storage_path || ("catalogues/" + catalogue.source_filename);
       const sourcePdf = await env2.UPLOADS.get(sourceKey);
       if (!sourcePdf) {
         return jsonResponse3({
