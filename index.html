@@ -2027,7 +2027,7 @@
         <div class="chapter-product-badge"><span>TakeoffX</span></div>
         <h2>Read Schedules &amp; Quantify Openings in Milliseconds.</h2>
         <div class="chapter-tagline">Vector geometry, not guesswork.</div>
-        <p class="chapter-desc">Door and hardware counts, without the manual takeoff.</p>
+        <p class="chapter-desc">Door and hardware counts, without the manual takeoff. The canvas below is stage 1 running on a real public bid-set sheet; the schedule stage underneath is where the door counts come from.</p>
       </div>
 
       <div class="workspace-grid">
@@ -2035,44 +2035,23 @@
         <div class="canvas-card">
           <div class="canvas-header">
             <div>
-              <strong style="color:#fff;font-size:15px">Interactive Drawing Canvas &middot; Sheet A9.01</strong>
-              <small style="display:block;color:var(--muted);font-family:ui-monospace,monospace">4400 Bluestem Pkwy &middot; First Floor Architectural</small>
+              <strong style="color:#fff;font-size:15px">Stage-1 Vector Extraction &middot; Fayette County, GA bid set</strong>
+              <small style="display:block;color:var(--muted);font-family:ui-monospace,monospace">Public addendum plans &middot; Life Safety Plan, page 6 of 21 &middot; drawn from the extracted geometry</small>
             </div>
-            <span class="status-badge" style="background:rgba(97,223,160,.15);color:var(--green);border:1px solid rgba(97,223,160,.35)">VECTOR PARSED: 99.4% CONF</span>
+            <span class="status-badge" id="tx-scale-badge" style="background:rgba(97,223,160,.15);color:var(--green);border:1px solid rgba(97,223,160,.35)">SCALE LOCK: loading</span>
           </div>
 
           <div class="canvas-viewport" id="blueprint-viewport">
             <div class="blueprint-grid"></div>
-            <div class="vector-overlay">
-              <div class="zone-box active" id="zone-1" data-zone="Zone A-1" data-doors="14" data-set="Set 01 / 02" data-conf="99.8%">
-                <span class="zone-tag">ZONE A-1</span>
-                <strong style="color:#fff;font-size:13px;display:block">Main Entrance &amp; Vestibule</strong>
-                <span style="color:var(--muted);font-size:11px;font-family:ui-monospace,monospace">14 Openings &middot; Pair Aluminum</span>
-                <div style="margin-top:10px;font-size:10.5px;color:var(--green);font-family:ui-monospace,monospace">CONF: 99.8% &middot; DETECTED</div>
-              </div>
-              <div class="zone-box" id="zone-2" data-zone="Zone B-2" data-doors="42" data-set="Set 04 / 06" data-conf="99.2%">
-                <span class="zone-tag">ZONE B-2</span>
-                <strong style="color:#fff;font-size:13px;display:block">East Core Corridor &amp; Suites</strong>
-                <span style="color:var(--muted);font-size:11px;font-family:ui-monospace,monospace">42 Openings &middot; Flush Wood</span>
-                <div style="margin-top:10px;font-size:10.5px;color:var(--blue);font-family:ui-monospace,monospace">CONF: 99.2% &middot; DETECTED</div>
-              </div>
-              <div class="zone-box" id="zone-3" data-zone="Zone C-3" data-doors="16" data-set="Set 09 / 11" data-conf="98.9%">
-                <span class="zone-tag">ZONE C-3</span>
-                <strong style="color:#fff;font-size:13px;display:block">Stairwell &amp; Fire Exits</strong>
-                <span style="color:var(--muted);font-size:11px;font-family:ui-monospace,monospace">16 Openings &middot; Hollow Metal 90m</span>
-                <div style="margin-top:10px;font-size:10.5px;color:var(--accent);font-family:ui-monospace,monospace">CONF: 98.9% &middot; FIRE RATED</div>
-              </div>
-              <div class="zone-box" id="zone-4" data-zone="Zone D-4" data-doors="12" data-set="Set 12" data-conf="99.5%">
-                <span class="zone-tag">ZONE D-4</span>
-                <strong style="color:#fff;font-size:13px;display:block">Mechanical &amp; Electrical Vault</strong>
-                <span style="color:var(--muted);font-size:11px;font-family:ui-monospace,monospace">12 Openings &middot; Heavy Steel</span>
-                <div style="margin-top:10px;font-size:10.5px;color:var(--green);font-family:ui-monospace,monospace">CONF: 99.5% &middot; SECURE</div>
-              </div>
-            </div>
+            <!-- Real walls (2026-10-05): /assets/takeoffx/fayette-p6-walls.json is the
+                 output of tools/plan-extract on a public bid-set sheet (613 walls,
+                 scale locked from the sheet's own "SCALE: 3/16\" = 1'-0\"" note).
+                 Replaced four hand-written zones with invented counts and confidences. -->
+            <svg id="tx-walls" class="vector-overlay" style="display:block;padding:0;grid-template-columns:none" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid meet" role="img" aria-label="Walls extracted from a real floor plan"></svg>
           </div>
           <div style="margin-top:14px;display:flex;justify-content:space-between;align-items:center;font-size:12px;color:var(--muted)">
-            <span>Click any zone above to isolate schedule line items.</span>
-            <span id="zone-inspector-readout" style="font-family:ui-monospace,monospace;color:var(--green)">Zone A-1: 14 Openings Selected</span>
+            <span>Every line above is a wall the extractor found on the sheet. Hover one for its length.</span>
+            <span id="zone-inspector-readout" style="font-family:ui-monospace,monospace;color:var(--green)">loading the extraction</span>
           </div>
         </div>
 
@@ -2080,33 +2059,16 @@
         <div class="ledger-card">
           <div>
             <div class="card-head" style="padding:0 0 16px;border-bottom:1px solid var(--line);margin-bottom:16px">
-              <h3 style="margin:0">Extracted Takeoff Ledger</h3>
-              <span class="status-badge status-matched">84 TOTAL OPENINGS</span>
+              <h3 style="margin:0">Stage-1 Extraction Ledger</h3>
+              <span class="status-badge status-matched" id="tx-ledger-badge">REAL SHEET</span>
             </div>
-            <div class="ledger-row">
-              <span>Total Door Openings Identified</span>
-              <strong id="ledger-openings">84 Openings</strong>
-            </div>
-            <div class="ledger-row">
-              <span>Distinct Hardware Sets Required</span>
-              <strong id="ledger-sets">12 Hardware Sets</strong>
-            </div>
-            <div class="ledger-row">
-              <span>Fire-Rated Assemblies (60m / 90m)</span>
-              <strong style="color:var(--accent)">16 Assemblies</strong>
-            </div>
-            <div class="ledger-row">
-              <span>Acoustic / Smoke Seals</span>
-              <strong>42 Openings</strong>
-            </div>
-            <div class="ledger-row">
-              <span>Mean Confidence Score</span>
-              <strong style="color:var(--green)">99.35%</strong>
-            </div>
-            <div class="ledger-row" style="border-bottom:none">
-              <span>Estimated Quantification Time</span>
-              <strong style="color:var(--blue)">1.84 seconds</strong>
-            </div>
+            <div class="ledger-row"><span>Wall segments found</span><strong id="tx-walls-n">loading</strong></div>
+            <div class="ledger-row"><span>Total wall length</span><strong id="tx-walls-ft">loading</strong></div>
+            <div class="ledger-row"><span>Closure (wall ends meeting another wall)</span><strong id="tx-closure" style="color:var(--green)">loading</strong></div>
+            <div class="ledger-row"><span>Stroked segments / filled polygons parsed</span><strong id="tx-parsed">loading</strong></div>
+            <div class="ledger-row"><span>Scale lock, read from the sheet</span><strong id="tx-scale">loading</strong></div>
+            <div class="ledger-row" style="border-bottom:none"><span>Extraction time (laptop, pdf.js operator walk)</span><strong id="tx-time" style="color:var(--blue)">loading</strong></div>
+            <p style="color:var(--muted);font-size:11.5px;margin:12px 0 0">Door and hardware counts come from the schedule stage below, not from this geometry pass.</p>
           </div>
 
           <div style="margin-top:20px">
@@ -3398,25 +3360,36 @@
       });
     }
 
-    // 6. Chapter 02: TakeoffX Vector Blueprint Zones
-    var zones = document.querySelectorAll(".zone-box");
-    var readout = document.getElementById("zone-inspector-readout");
-    var ledgerOpenings = document.getElementById("ledger-openings");
-    var ledgerSets = document.getElementById("ledger-sets");
-
-    zones.forEach(function(zone) {
-      zone.addEventListener("click", function() {
-        zones.forEach(function(z){ z.classList.remove("active"); });
-        zone.classList.add("active");
-        var name = zone.getAttribute("data-zone");
-        var doors = zone.getAttribute("data-doors");
-        var set = zone.getAttribute("data-set");
-        var conf = zone.getAttribute("data-conf");
-        if (readout) readout.textContent = name + " Selected: " + doors + " Openings (" + set + ") &middot; " + conf + " Conf";
-        if (ledgerOpenings) ledgerOpenings.textContent = doors + " Openings";
-        if (ledgerSets) ledgerSets.textContent = set;
-      });
-    });
+    // 6. Chapter 02: TakeoffX canvas - real walls from the stage-1 extractor
+    (function () {
+      var svg = document.getElementById("tx-walls");
+      if (!svg) return;
+      var readout = document.getElementById("zone-inspector-readout");
+      var set = function (id, v) { var el = document.getElementById(id); if (el) el.textContent = v; };
+      fetch("/assets/takeoffx/fayette-p6-walls.json").then(function (r) { return r.json(); }).then(function (d) {
+        var bb = d.bboxFt, pad = 4, w = bb[2] - bb[0] + pad * 2, h = bb[3] - bb[1] + pad * 2;
+        svg.setAttribute("viewBox", (bb[0] - pad) + " " + (bb[1] - pad) + " " + w + " " + h);
+        var ns = "http://www.w3.org/2000/svg", frag = document.createDocumentFragment();
+        d.walls.forEach(function (wl) {
+          var ln = document.createElementNS(ns, "line");
+          ln.setAttribute("x1", wl[0]); ln.setAttribute("y1", wl[1]); ln.setAttribute("x2", wl[2]); ln.setAttribute("y2", wl[3]);
+          ln.setAttribute("stroke", "rgba(97,223,160,.85)"); ln.setAttribute("stroke-width", Math.max(0.35, wl[4])); ln.setAttribute("stroke-linecap", "square");
+          var len = Math.hypot(wl[2] - wl[0], wl[3] - wl[1]);
+          var t = document.createElementNS(ns, "title"); t.textContent = len.toFixed(1) + " ft wall, " + Math.round(wl[4] * 12) + " in thick"; ln.appendChild(t);
+          ln.addEventListener("mouseenter", function () { if (readout) readout.textContent = len.toFixed(1) + " ft wall \u00b7 " + Math.round(wl[4] * 12) + " in thick"; });
+          frag.appendChild(ln);
+        });
+        svg.appendChild(frag);
+        set("tx-walls-n", d.wallCount + " segments");
+        set("tx-walls-ft", Math.round(d.totalWallLengthFt).toLocaleString() + " ft");
+        set("tx-closure", Math.round(d.closure.closedFraction * 1000) / 10 + "% (" + d.closure.open + " of " + d.closure.endpoints + " ends open)");
+        set("tx-parsed", d.parsed.strokedSegments.toLocaleString() + " / " + d.parsed.filledPolygons.toLocaleString());
+        set("tx-scale", d.scale.text);
+        set("tx-time", d.extraction.wallSeconds + " s");
+        set("tx-scale-badge", "SCALE LOCK: " + d.scale.text.replace(/^SCALE:\s*/, ""));
+        if (readout) readout.textContent = d.wallCount + " walls drawn \u00b7 " + Math.round(d.totalWallLengthFt).toLocaleString() + " ft";
+      }).catch(function (e) { if (readout) readout.textContent = "extraction asset failed to load: " + e.message; set("tx-scale-badge", "SCALE LOCK: unavailable"); });
+    })();
 
     // 7. Chapter 05: PropX Margin Slider
     var marginSlider = document.getElementById("margin-slider");
