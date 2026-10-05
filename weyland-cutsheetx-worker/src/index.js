@@ -189,6 +189,19 @@ router.post("/api/cut-sheets/corpus/ingest", async (request, env, ctx) => {
   return jsonResponse3({ started: true, status: await corpusStatus(env) });
 });
 
+// Cron observability (2026-10-05): every scheduled() invocation writes one
+// row to weyland_db.cron_ticks before doing any work, so "the cron never
+// fired" and "the cron fired and failed" can be told apart from D1 alone.
+async function recordCronTick(env, worker, cron) {
+  try {
+    const db = env.DB;
+    await db.prepare("CREATE TABLE IF NOT EXISTS cron_ticks (id TEXT PRIMARY KEY, worker TEXT NOT NULL, cron TEXT, fired_at TEXT NOT NULL)").run();
+    await db.prepare("INSERT INTO cron_ticks (id, worker, cron, fired_at) VALUES (?, ?, ?, ?)").bind(crypto.randomUUID(), worker, cron || null, new Date().toISOString()).run();
+  } catch (e) {
+    console.error("[cron-tick] " + worker + ": " + e.message);
+  }
+}
+
 export default {
   async fetch(request, env, ctx) {
     return router.handle(request, env, ctx);
@@ -197,6 +210,7 @@ export default {
   // Every 10 minutes (wrangler.toml [triggers]): seed wanted URLs and pull
   // up to ten into R2. The only place this Worker fetches a manufacturer site.
   async scheduled(event, env, ctx) {
+    ctx.waitUntil(recordCronTick(env, "weyland-cutsheetx-worker", event && event.cron));
     ctx.waitUntil(runCorpusIngest(env).catch((e) => console.error("[corpus] cron failed:", e.message)));
   },
 };
