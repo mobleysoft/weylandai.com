@@ -65,7 +65,7 @@ export async function fetchWireNews(isPro = false) {
   const results = await Promise.all(
     WIRE_FEEDS.map(async (feed) => {
       try {
-        const res = await fetch(feed.url, { headers: { "User-Agent": "weylandai.com wire-desk research" } });
+        const res = await fetch(feed.url, { headers: { "User-Agent": "WeylandAI WireX (+https://weylandai.com/bot)" } });
         if (!res.ok) return [];
         const xml = await res.text();
         return parseRssItems(xml, feed.source, limit);
@@ -90,7 +90,7 @@ export async function ingestWireNews(env) {
   const results = await Promise.all(
     WIRE_FEEDS.map(async (feed) => {
       try {
-        const res = await fetch(feed.url, { headers: { "User-Agent": "weylandai.com wire-desk research" }, signal: AbortSignal.timeout(15000) });
+        const res = await fetch(feed.url, { headers: { "User-Agent": "WeylandAI WireX (+https://weylandai.com/bot)" }, signal: AbortSignal.timeout(15000) });
         if (!res.ok) return [];
         const xml = await res.text();
         return parseRssItems(xml, feed.source, 20);

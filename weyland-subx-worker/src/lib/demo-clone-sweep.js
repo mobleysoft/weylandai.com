@@ -39,7 +39,7 @@ async function ensureLog(env) {
  */
 export async function sweepExpiredDemoClones(env, { olderThanHours = 24, limit = 40 } = {}) {
   await ensureLog(env);
-  const summary = { ranAt: new Date().toISOString(), olderThanHours, sessionsDeleted: 0, projectsDeleted: 0, rowsDeleted: 0, remainingExpired: 0, errors: [] };
+  const summary = { ranAt: new Date().toISOString(), olderThanHours, sessionsDeleted: 0, projectsDeleted: 0, orphanProjectsDeleted: 0, rowsDeleted: 0, remainingExpired: 0, errors: [] };
   const expired = await env.DB.prepare(
     "SELECT id, project_id FROM hardware_extraction_sessions WHERE file_buffer_key LIKE ? AND created_at < datetime('now', ?) ORDER BY created_at ASC LIMIT ?"
   ).bind(CLONE_KEY_PREFIX + "%", "-" + olderThanHours + " hours", limit).all();
@@ -71,6 +71,16 @@ export async function sweepExpiredDemoClones(env, { olderThanHours = 24, limit =
     }
   }
 
+  // Clones created before 2026-09-12 never had their session linked to the
+  // project row (project_id was not set), so the pass above cannot reach
+  // their projects. Those rows are recognisable: same name and client as
+  // the demo seed, no session pointing at them, older than the clone life.
+  try {
+    summary.orphanProjectsDeleted = await sweepOrphanCloneProjects(env, olderThanHours, 100);
+  } catch (e) {
+    summary.errors.push("orphan projects: " + String(e.message).slice(0, 160));
+  }
+
   const left = await env.DB.prepare(
     "SELECT COUNT(*) AS n FROM hardware_extraction_sessions WHERE file_buffer_key LIKE ? AND created_at < datetime('now', ?)"
   ).bind(CLONE_KEY_PREFIX + "%", "-" + olderThanHours + " hours").first();
@@ -82,6 +92,23 @@ export async function sweepExpiredDemoClones(env, { olderThanHours = 24, limit =
   return summary;
 }
 
+const SEED_PROJECT_ID = "eabd5ff6-e19f-4e6b-acfc-9a250445dfa8"; // src/routes/demo-trial.js
+
+async function sweepOrphanCloneProjects(env, olderThanHours, limit) {
+  const rows = await env.DB.prepare(
+    "SELECT p.id FROM projects p, projects s WHERE s.id = ? AND p.id != s.id AND p.name = s.name AND p.client_name IS s.client_name " +
+    "AND p.id NOT IN (SELECT project_id FROM hardware_extraction_sessions WHERE project_id IS NOT NULL) AND p.created_at < datetime('now', ?) LIMIT ?"
+  ).bind(SEED_PROJECT_ID, "-" + olderThanHours + " hours", limit).all();
+  let deleted = 0;
+  for (const r of rows.results || []) {
+    const stmts = PROJECT_TABLES.map((t) => env.DB.prepare("DELETE FROM " + t + " WHERE project_id = ?").bind(r.id));
+    stmts.push(env.DB.prepare("DELETE FROM projects WHERE id = ?").bind(r.id));
+    await env.DB.batch(stmts);
+    deleted++;
+  }
+  return deleted;
+}
+
 /** Public, read-only: live clone counts and the last sweep. */
 export async function demoCloneSweepStatus(env) {
   await ensureLog(env);
@@ -89,5 +116,8 @@ export async function demoCloneSweepStatus(env) {
     "SELECT COUNT(*) AS clones, SUM(CASE WHEN created_at < datetime('now', '-24 hours') THEN 1 ELSE 0 END) AS expired FROM hardware_extraction_sessions WHERE file_buffer_key LIKE ?"
   ).bind(CLONE_KEY_PREFIX + "%").first();
   const last = await env.DB.prepare("SELECT ran_at, sessions_deleted, projects_deleted, rows_deleted, remaining_expired, errors FROM demo_clone_sweeps ORDER BY ran_at DESC LIMIT 1").first();
-  return { clones: counts?.clones || 0, expired: counts?.expired || 0, ttlHours: 24, lastSweep: last || null };
+  const orphans = await env.DB.prepare(
+    "SELECT COUNT(*) AS n FROM projects p, projects s WHERE s.id = ? AND p.id != s.id AND p.name = s.name AND p.client_name IS s.client_name AND p.id NOT IN (SELECT project_id FROM hardware_extraction_sessions WHERE project_id IS NOT NULL)"
+  ).bind(SEED_PROJECT_ID).first();
+  return { clones: counts?.clones || 0, expired: counts?.expired || 0, orphanProjects: orphans?.n || 0, ttlHours: 24, lastSweep: last || null };
 }
