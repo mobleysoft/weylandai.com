@@ -114,8 +114,8 @@ export function registerInternalRoutes(router) {
   router.get("/api/internal/pdf-render-shell", async (request2, env2) => {
     const html = `<!DOCTYPE html><html><head>
   <script type="module">
-  import * as pdfjsLib from "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/4.10.38/pdf.min.mjs";
-  pdfjsLib.GlobalWorkerOptions.workerSrc = "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/4.10.38/pdf.worker.min.mjs";
+  import * as pdfjsLib from "https://weylandai.com/assets/pdfjs/pdf.min.mjs";
+  pdfjsLib.GlobalWorkerOptions.workerSrc = "https://weylandai.com/assets/pdfjs/pdf.worker.min.mjs";
   window.pdfjsLib = pdfjsLib;
   window.__pdfjsReady = true;
   <\/script>

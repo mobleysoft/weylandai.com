@@ -19724,8 +19724,8 @@ function registerInternalRoutes(router2) {
   router2.get("/api/internal/pdf-render-shell", async (request2, env2) => {
     const html = `<!DOCTYPE html><html><head>
   <script type="module">
-  import * as pdfjsLib from "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/4.10.38/pdf.min.mjs";
-  pdfjsLib.GlobalWorkerOptions.workerSrc = "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/4.10.38/pdf.worker.min.mjs";
+  import * as pdfjsLib from "https://weylandai.com/assets/pdfjs/pdf.min.mjs";
+  pdfjsLib.GlobalWorkerOptions.workerSrc = "https://weylandai.com/assets/pdfjs/pdf.worker.min.mjs";
   window.pdfjsLib = pdfjsLib;
   window.__pdfjsReady = true;
   </script>
@@ -20569,8 +20569,7 @@ function registerLoginPageRoutes(router2) {
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <title>Sign In | WeylandAI</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600;700&family=Barlow+Condensed:wght@600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/assets/fonts.css?v=20261005">
   <style>
   *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
   :root{--navy:#0a1628;--navy-mid:#0f1e35;--navy-light:#132240;--navy-surface:#1a2f50;--gold:#c9a227;--gold-light:#d4b440;--text:#dce3f0;--text-mid:#8a9bb5;--text-dim:#4d6384;--border:#1e3454;--radius:10px}
@@ -26670,6 +26669,9 @@ function _buildCrossReference(ctx) {
 }
 
 // src/lib/hardware-extraction-vision-adapters.js
+function anthropicDisabled(url) {
+  throw new Error("anthropic route disabled by policy (2026-10-05): use the embedded_gofaineat route; attempted " + url);
+}
 var CircuitBreaker = class {
   constructor() {
     this.failures = 0;
@@ -26766,7 +26768,7 @@ async function callClaudeVision(base64Pdf, prompt, env2) {
         const controller = new AbortController();
         const timeoutId = setTimeout(() => controller.abort(), timeout2);
         try {
-          const response = await fetch("https://api.anthropic.com/v1/messages", {
+          const response = await anthropicDisabled("https://api.anthropic.com/v1/messages", {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
@@ -27051,7 +27053,7 @@ async function _callClaudeVisionWithImage_apiDirect(imageBuffer, prompt, env2, p
         const controller = new AbortController();
         const timeoutId = setTimeout(() => controller.abort(), timeout2);
         try {
-          const response = await fetch("https://api.anthropic.com/v1/messages", {
+          const response = await anthropicDisabled("https://api.anthropic.com/v1/messages", {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
@@ -27149,7 +27151,7 @@ async function callClaudeWithPdf(base64Pdf, prompt, env2, pageNumber) {
     ]
   };
   console.log(`[Hardware Extractor] Calling Claude API with PDF document...`);
-  const response = await fetch("https://api.anthropic.com/v1/messages", {
+  const response = await anthropicDisabled("https://api.anthropic.com/v1/messages", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -28744,11 +28746,62 @@ async function serveR2(env2, pathname) {
   return null;
 }
 
+// src/lib/catalog-corpus.js
+var PREFIX = "catalog-corpus/";
+async function sha256Hex(text) {
+  const buf = await crypto.subtle.digest("SHA-256", new TextEncoder().encode(text));
+  return [...new Uint8Array(buf)].map((b) => b.toString(16).padStart(2, "0")).join("");
+}
+async function corpusKey(url) {
+  return PREFIX + await sha256Hex(url.trim()) + ".pdf";
+}
+function isExternalUrl(url) {
+  try {
+    const u = new URL(url, "https://weylandai.com");
+    return /^https?:$/.test(u.protocol) && !/(^|\.)weylandai\.com$/.test(u.hostname);
+  } catch (e) {
+    return false;
+  }
+}
+async function ensureTable(env2) {
+  await env2.DB.prepare(
+    "CREATE TABLE IF NOT EXISTS catalog_corpus_wanted (url TEXT PRIMARY KEY, reason TEXT, requested_at TEXT NOT NULL, attempts INTEGER DEFAULT 0, last_error TEXT, fetched_at TEXT, r2_key TEXT, size INTEGER)"
+  ).run();
+}
+async function getFromCorpus(url, env2) {
+  if (!env2?.UPLOADS) return null;
+  const key = await corpusKey(url);
+  const obj = await env2.UPLOADS.get(key);
+  if (!obj) return null;
+  const buffer = await obj.arrayBuffer();
+  return { buffer, contentLength: buffer.byteLength, contentType: "application/pdf", fetchedAt: obj.customMetadata?.fetchedAt || null, r2Key: key };
+}
+async function requestIntoCorpus(url, env2, reason = "request") {
+  if (!env2?.DB || !isExternalUrl(url)) return;
+  try {
+    await ensureTable(env2);
+    await env2.DB.prepare("INSERT OR IGNORE INTO catalog_corpus_wanted (url, reason, requested_at) VALUES (?, ?, ?)").bind(url.trim(), reason, (/* @__PURE__ */ new Date()).toISOString()).run();
+  } catch (e) {
+    console.warn("[corpus] could not queue", url, e.message);
+  }
+}
+
 // src/lib/cutsheet-discovery.js
+function anthropicDisabled2(url) {
+  throw new Error("anthropic route disabled by policy (2026-10-05): use the embedded_gofaineat route; attempted " + url);
+}
 var PDF_MAGIC_BYTES = [37, 80, 68, 70];
 var MAX_FILE_SIZE = 50 * 1024 * 1024;
 var DOWNLOAD_TIMEOUT = 3e4;
 async function downloadPdf(url, env2) {
+  if (isExternalUrl(url)) {
+    const hit = await getFromCorpus(url, env2);
+    if (hit) {
+      return { success: true, buffer: hit.buffer, contentLength: hit.contentLength, contentType: hit.contentType, fromCorpus: true, r2Key: hit.r2Key };
+    }
+    await requestIntoCorpus(url, env2, "download");
+    return { success: false, error: "not in the catalog corpus yet; queued for the next scheduled ingest", errorCode: "NOT_IN_CORPUS" };
+  }
   console.log(`[PDF Validator] Downloading: ${url}`);
   try {
     const controller = new AbortController();
@@ -29001,7 +29054,7 @@ Analyze this PDF document and extract the following information. Return ONLY val
   "extractedText": "first 500 chars of relevant text"
 }`;
   try {
-    const response = await fetch("https://api.anthropic.com/v1/messages", {
+    const response = await anthropicDisabled2("https://api.anthropic.com/v1/messages", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -30409,6 +30462,24 @@ async function trySmartDirectUrls(manufacturer, model, env2, browser = null, use
     console.log(`[Discovery] Allegion brand detected: ${brandKey}, ${allegionUrls.length} URLs generated`);
     for (const candidate of allegionUrls) {
       try {
+        const corpusHit = await getFromCorpus(candidate.url, env2);
+        if (!corpusHit) {
+          await requestIntoCorpus(candidate.url, env2, "discovery:" + (candidate.source || "pattern"));
+          console.log("[Discovery] Not in corpus yet (queued for ingest): " + candidate.url);
+          continue;
+        }
+        return {
+          url: candidate.url,
+          strategy: "catalog_corpus",
+          confidence: candidate.confidence || 0.9,
+          source: "catalog_corpus",
+          contentType: "application/pdf",
+          manufacturer: mfrKey,
+          seriesMatch: parsed.series,
+          modelMatch: parsed.baseModel,
+          r2Key: corpusHit.r2Key,
+          note: "Served from the catalog corpus (ingested " + corpusHit.fetchedAt + ")"
+        };
         const headResponse = await fetch(candidate.url, {
           method: "GET",
           headers: {
@@ -30484,6 +30555,26 @@ async function trySmartDirectUrls(manufacturer, model, env2, browser = null, use
   }
   urlCandidates.sort((a, b) => b.confidence - a.confidence);
   for (const candidate of urlCandidates.slice(0, 20)) {
+    {
+      const corpusHit = await getFromCorpus(candidate.url, env2);
+      if (!corpusHit) {
+        await requestIntoCorpus(candidate.url, env2, "discovery:" + (candidate.source || "pattern"));
+        console.log("[Discovery] Not in corpus yet (queued for ingest): " + candidate.url);
+        continue;
+      }
+      return {
+        url: candidate.url,
+        strategy: "catalog_corpus",
+        confidence: candidate.confidence || 0.9,
+        source: "catalog_corpus",
+        contentType: "application/pdf",
+        manufacturer: mfrKey,
+        seriesMatch: parsed.series,
+        modelMatch: parsed.baseModel,
+        r2Key: corpusHit.r2Key,
+        note: "Served from the catalog corpus (ingested " + corpusHit.fetchedAt + ")"
+      };
+    }
     try {
       const isTrustedSource = candidate.source === "direct_series_url" || candidate.source === "direct_series_url_from_model" || candidate.source === "database_verified";
       if (isCloudflareProtected(candidate.url)) {
@@ -37782,9 +37873,9 @@ global.SovereignPdfRender = {
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><rect width='64' height='64' fill='%232a52ff'/><path d='M13 16h8l6 28h-8zm15 0h8l4 17 4-17h8l-8 28h-8z' fill='%23090a0d'/></svg>">
   
   <!-- Premium Typography -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;700&family=Outfit:wght@300;400;600&display=swap" rel="stylesheet">
+
+
+  <link rel="stylesheet" href="/assets/fonts.css?v=20261005">
   <link rel="stylesheet" href="/assets/sightx-controls.css?v=20260729-3">
   <link rel="stylesheet" href="/assets/sightx-experience.css?v=20260729-3">
   <link rel="stylesheet" href="/assets/sightx-ingest.css?v=20260729-3">
@@ -43180,6 +43271,9 @@ async function callLocalQwen(env2, messages, opts = {}) {
 }
 
 // src/lib/hardware-extraction-vision-dispatch.js
+function anthropicDisabled3(url) {
+  throw new Error("anthropic route disabled by policy (2026-10-05): use the embedded_gofaineat route; attempted " + url);
+}
 var EXTRACTION_PROMPT_TEMPLATE = `\u{1F6A8}\u{1F6A8}\u{1F6A8} CRITICAL: STOP AND READ THIS FIRST \u{1F6A8}\u{1F6A8}\u{1F6A8}
 
 YOU WILL FAIL THIS TASK IF YOU DON'T READ THIS SECTION CAREFULLY.
@@ -43652,7 +43746,7 @@ async function viaApiDirect(sessionId, pdfBuffer, env2, ctx = {}) {
   console.log("viaApiDirect called");
   console.log("env object keys:", Object.keys(env2));
   console.log("ANTHROPIC_API_KEY configured:", !!env2.ANTHROPIC_API_KEY);
-  const response = await fetch(endpoint, {
+  const response = await anthropicDisabled3(endpoint, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -179984,8 +180078,8 @@ async function renderRegionAt600DPI22(pdfBuffer, pageNumber, boundingBox, env2 =
       await page.setContent([
         "<!DOCTYPE html><html><head>",
         '<script type="module">',
-        'import * as pdfjsLib from "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/4.10.38/pdf.min.mjs";',
-        'pdfjsLib.GlobalWorkerOptions.workerSrc = "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/4.10.38/pdf.worker.min.mjs";',
+        'import * as pdfjsLib from "https://weylandai.com/assets/pdfjs/pdf.min.mjs";',
+        'pdfjsLib.GlobalWorkerOptions.workerSrc = "https://weylandai.com/assets/pdfjs/pdf.worker.min.mjs";',
         "window.pdfjsLib = pdfjsLib;",
         "window.__pdfjsReady = true;",
         "</script>",

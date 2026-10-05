@@ -30,8 +30,7 @@ export function registerLoginPageRoutes(router) {
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <title>Sign In | WeylandAI</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600;700&family=Barlow+Condensed:wght@600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/assets/fonts.css?v=20261005">
   <style>
   *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
   :root{--navy:#0a1628;--navy-mid:#0f1e35;--navy-light:#132240;--navy-surface:#1a2f50;--gold:#c9a227;--gold-light:#d4b440;--text:#dce3f0;--text-mid:#8a9bb5;--text-dim:#4d6384;--border:#1e3454;--radius:10px}

@@ -3096,7 +3096,11 @@
     }
     requestAnimationFrame(frame);
   </script>
-  <script type="module" src="/assets/sightx-reconstruction.js?v=20260729-1"></script>
+  <!-- 2026-10-05: the PDF TWIN reconstruction tool (assets/sightx-reconstruction.js)
+       is not loaded. Its project catalog (/sightx/projects/glendale-camino-real/)
+       no longer exists, so it only showed SOURCE CATALOG ERROR, and its module
+       evaluation (pdf.js + chamfer SDF) was a 1.4 s main-thread task on every
+       homepage load. Restore the script tag once a catalog is back in R2. -->
   <script>
     // sightx-runtime.js is not loaded in background-embed mode (see the
     // loader near the top of <body>), so the bridge is simply absent there.

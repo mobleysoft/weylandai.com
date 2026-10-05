@@ -19,7 +19,7 @@
 //
 // *** HONEST FLAG, NOT INTRODUCED BY THIS PORT ***
 // Inside the headless-browser page context, this function loads PDF.js
-// from a public CDN (cdnjs.cloudflare.com) via a <script type="module">
+// from our own host (weylandai.com/assets/pdfjs, was cdnjs.cloudflare.com until 2026-10-05) via a <script type="module">
 // tag - a real third-party runtime dependency that already exists in
 // today's live production code. Carried forward unchanged per the
 // extraction task's own instruction (port real working code, don't
@@ -70,8 +70,8 @@ export async function renderRegionAt600DPI2(pdfBuffer, pageNumber, boundingBox, 
       await page.setContent([
         "<!DOCTYPE html><html><head>",
         '<script type="module">',
-        'import * as pdfjsLib from "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/4.10.38/pdf.min.mjs";',
-        'pdfjsLib.GlobalWorkerOptions.workerSrc = "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/4.10.38/pdf.worker.min.mjs";',
+        'import * as pdfjsLib from "https://weylandai.com/assets/pdfjs/pdf.min.mjs";',
+        'pdfjsLib.GlobalWorkerOptions.workerSrc = "https://weylandai.com/assets/pdfjs/pdf.worker.min.mjs";',
         "window.pdfjsLib = pdfjsLib;",
         "window.__pdfjsReady = true;",
         "<\/script>",

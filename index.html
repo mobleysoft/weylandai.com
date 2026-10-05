@@ -24,7 +24,30 @@
   <!-- Cloudflare Web Analytics: cookieless, no personal data, aggregate
        only; Cloudflare is already a named processor in the privacy policy
        on consenta.cc. Added for launch so traffic is measured at all. -->
-  <script defer src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token": "a5cb75feac5a4d3b8147ccd94b355618"}'></script>
+  <!-- 2026-10-05: first-party page-view beacon (was Cloudflare Insights RUM
+       from static.cloudflareinsights.com). One sendBeacon per visit into our
+       own D1 client_telemetry table via POST /api/telemetry. No cookies,
+       no identifiers beyond what the request already carries. -->
+  <script>
+  (function () {
+    function send() {
+      try {
+        var nav = performance.getEntriesByType && performance.getEntriesByType("navigation")[0];
+        var paint = performance.getEntriesByType && performance.getEntriesByType("paint");
+        var fcp = null; (paint || []).forEach(function (e) { if (e.name === "first-contentful-paint") fcp = Math.round(e.startTime); });
+        var body = JSON.stringify({ event_type: "pageview", event_name: "homepage", severity: "info",
+          url: location.pathname + location.search, viewport_width: innerWidth, viewport_height: innerHeight,
+          client_timestamp: new Date().toISOString(),
+          performance_data: nav ? { ttfb: Math.round(nav.responseStart), domContentLoaded: Math.round(nav.domContentLoadedEventEnd), load: Math.round(nav.loadEventEnd), fcp: fcp, transferSize: nav.transferSize || null, type: nav.type } : null,
+          context: { referrer: document.referrer ? new URL(document.referrer).hostname : null, lang: navigator.language, coarse: !!(matchMedia && matchMedia("(pointer: coarse)").matches) } });
+        if (navigator.sendBeacon) navigator.sendBeacon("/api/telemetry", new Blob([body], { type: "application/json" }));
+        else fetch("/api/telemetry", { method: "POST", headers: { "Content-Type": "application/json" }, body: body, keepalive: true });
+      } catch (e) {}
+    }
+    if (document.readyState === "complete") setTimeout(send, 0);
+    else addEventListener("load", function () { setTimeout(send, 0); }, { once: true });
+  })();
+  </script>
   <meta name="description" content="CutsheetX matches every door and hardware spec line to the real manufacturer catalog page, with a citation back to the source. Try it with no account. Part of the WeylandAI suite for commercial subcontractors: bids, takeoffs, submittals, proposals, meetings, and a 3D field twin on one project record.">>
   <style>
     :root {
@@ -1828,7 +1851,12 @@
     // animation on load. Reduced-motion visitors get the folder raised.
     (function () {
       try {
-        if (!(window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches)) {
+        // 2026-10-05: phones (coarse pointer) start with the folder raised so
+        // the headline is readable at first paint; the twin is one tap away.
+        var mm = window.matchMedia;
+        var reduce = mm && mm("(prefers-reduced-motion: reduce)").matches;
+        var coarse = mm && mm("(pointer: coarse)").matches;
+        if (!reduce && !coarse) {
           document.documentElement.classList.add("folder-lowered");
         }
       } catch (e) {}
@@ -3189,6 +3217,13 @@
       var grid = document.getElementById("cx-live-cards"), note = document.getElementById("cx-live-note");
       if (!grid) return;
       var specs = [["Von Duprin", "99"], ["LCN", "4040XP"], ["Schlage", "L9080"]];
+      var started = false;
+      var start = function () { if (started) return; started = true; run(); };
+      if ("IntersectionObserver" in window) {
+        var io = new IntersectionObserver(function (entries) { if (entries.some(function (e) { return e.isIntersecting; })) { io.disconnect(); start(); } }, { rootMargin: "600px 0px" });
+        io.observe(grid); setTimeout(start, 30000);
+      } else { start(); }
+      function run() {
       var esc = function (v) { return String(v == null ? "" : v).replace(/[&<>"]/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", "\"": "&quot;" }[c]; }); };
       var t0 = performance.now();
       ephemeralToken().then(function (token) {
@@ -3208,6 +3243,7 @@
         }).join("");
         if (note) note.textContent = "Three spec lines, matched by the live matcher as this page loaded (" + ms + " ms). A match without a filed cut sheet says so.";
       }).catch(function (err) { if (note) note.textContent = "Live match failed: " + err.message; });
+      }
     })();
 
     // 5b4. Paste a schedule -> POST /api/cut-sheets/match-batch -> table with
@@ -3659,7 +3695,17 @@
       });
     }
 
-    loadRealTrial();
+    // 2026-10-05: the per-visitor demo clone (POST /api/demo/weyland-building/
+    // session, real D1 rows) is created when the SubX chapter comes into view,
+    // not on every page load.
+    (function () {
+      var subx = document.getElementById("subx");
+      var fired = false, fire = function () { if (!fired) { fired = true; loadRealTrial(); } };
+      if (!subx || !("IntersectionObserver" in window)) { fire(); return; }
+      var io = new IntersectionObserver(function (entries) { if (entries.some(function (e) { return e.isIntersecting; })) { io.disconnect(); fire(); } }, { rootMargin: "400px 0px" });
+      io.observe(subx);
+      setTimeout(fire, 45000); // never later than 45 s, so SubX is ready even if the visitor never scrolls there
+    })();
 
     // 10. Ephemeral-to-permanent account upgrade modal
     var upgradeModal = document.getElementById("upgrade-modal");
@@ -3798,8 +3844,31 @@
       } catch (e) { return false; }
     };
     function bootBackdrop() { window.__weylandEnsureBackdrop(false); }
-    if (document.readyState === "complete") bootBackdrop();
-    else window.addEventListener("load", bootBackdrop, { once: true });
+    // 2026-10-05: the SightX world is a second WebGL app in an iframe (about
+    // 3.4 s of script on a phone). It is never part of first paint any more:
+    // desktops mount it when the main thread goes idle after load, phones
+    // mount it on the first touch / scroll / key, or when the visitor lowers
+    // the folder (which calls __weylandEnsureBackdrop(true) directly).
+    var coarse = window.matchMedia && window.matchMedia("(pointer: coarse)").matches;
+    function whenIdle(fn) {
+      if ("requestIdleCallback" in window) window.requestIdleCallback(fn, { timeout: 4000 });
+      else setTimeout(fn, 1500);
+    }
+    function afterLoad(fn) {
+      if (document.readyState === "complete") fn();
+      else window.addEventListener("load", fn, { once: true });
+    }
+    if (coarse) {
+      var armed = false;
+      var onFirstInput = function () {
+        if (armed) return; armed = true;
+        ["pointerdown", "touchstart", "scroll", "keydown", "wheel"].forEach(function (t) { window.removeEventListener(t, onFirstInput, true); });
+        whenIdle(bootBackdrop);
+      };
+      ["pointerdown", "touchstart", "scroll", "keydown", "wheel"].forEach(function (t) { window.addEventListener(t, onFirstInput, { capture: true, passive: true }); });
+    } else {
+      afterLoad(function () { whenIdle(bootBackdrop); });
+    }
   })();
   </script>
 
