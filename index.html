@@ -270,6 +270,20 @@
     }
     html.folder-lowered, html.folder-lowered body { overflow: hidden; overscroll-behavior: none; }
     html.folder-lowered #stage-backdrop { touch-action: none; }
+    /* Mobile-first sizing (2026-10-04, measured on an iPhone 13 viewport):
+       107 badges at 9px, tab labels at 9.5px, footer links 15px tall, and
+       the persistent footer covering the last 47px of content. Touch
+       targets go to 44px, the smallest text to 11px, and the frame gets
+       a spacer so nothing hides under the footer. */
+    @media (max-width: 640px) {
+      .wn-persistent-footer a { min-height: 44px; display: inline-flex; align-items: center; padding: 0 12px; font-size: 12px; }
+      .wn-flag-fill { font-size: 11px; }
+      .wn-flag { min-height: 44px; }
+      .wn-close-hint { font-size: 11px; }
+      .status-badge, .beat-live-chip, .badge-tray-label, .cutsheet-conf, .zone-tag, .featured-pill { font-size: 11px; }
+      .button { min-height: 44px; }
+      .envelope-frame::after { content: ''; display: block; height: 76px; }
+    }
     #dossier-tap {
       position: fixed; display: none; z-index: 650;
       appearance: none; -webkit-appearance: none; border: 0; background: transparent; padding: 0; margin: 0;
