@@ -126,3 +126,8 @@ zone_name = "weylandai.com"
 [[routes]]
 pattern = "weylandai.com/api/user/cutsheets*"
 zone_name = "weylandai.com"
+
+# Catalog corpus ingest every 10 minutes - the only external calls this
+# Worker makes at run time; requests read R2 / D1 only (2026-10-05).
+[triggers]
+crons = ["*/10 * * * *"]

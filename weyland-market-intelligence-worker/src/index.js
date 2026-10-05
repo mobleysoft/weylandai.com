@@ -38,6 +38,39 @@ import { registerMarketIntelligenceRoutes, computePriceIndexSnapshot } from "./r
 const router = new NativeRouter();
 registerMarketIntelligenceRoutes(router);
 
+// Daily pre-warm (wrangler.toml [triggers], second cron) - per direct
+// instruction (2026-10-05) no visitor request should be the first to hit
+// Census or NWS for a location we already hold. Every distinct
+// projects.project_address in the real weyland_db (read-only WEYLAND_DB
+// binding) is resolved through this Worker's own GeoX route and then its
+// WeatherX route, which store their answers in the D1 store cache
+// (src/lib/store-cache.js). Bounded per run; errors are logged, never thrown.
+const PREWARM_CRON = "30 5 * * *";
+async function prewarmProjectLocations(env, ctx) {
+  const summary = { addresses: 0, geocoded: 0, forecasts: 0, failed: 0 };
+  const rows = await env.WEYLAND_DB.prepare(
+    "SELECT DISTINCT project_address FROM projects WHERE project_address IS NOT NULL AND TRIM(project_address) != '' LIMIT 60"
+  ).all();
+  for (const row of rows.results || []) {
+    summary.addresses++;
+    try {
+      const geo = await router.handle(new Request("https://weylandai.com/api/geox/lookup?address=" + encodeURIComponent(row.project_address)), env, ctx);
+      if (!geo || geo.status !== 200) { summary.failed++; continue; }
+      const g = await geo.json();
+      summary.geocoded++;
+      if (g.latitude != null && g.longitude != null) {
+        const wx = await router.handle(new Request("https://weylandai.com/api/weatherx/delay-risk?lat=" + g.latitude + "&lon=" + g.longitude), env, ctx);
+        if (wx && wx.status === 200) summary.forecasts++; else summary.failed++;
+      }
+    } catch (e) {
+      summary.failed++;
+      console.warn("[prewarm-locations]", row.project_address, e.message);
+    }
+  }
+  return summary;
+}
+
+
 export default {
   async fetch(request, env, ctx) {
     const url = new URL(request.url);
@@ -62,6 +95,14 @@ export default {
   // computation. Errors are logged, not thrown - a failed run leaves last
   // week's real snapshot serving rather than breaking the route.
   async scheduled(event, env, ctx) {
+    if (event.cron === PREWARM_CRON) {
+      ctx.waitUntil(
+        prewarmProjectLocations(env, ctx)
+          .then((result) => console.log("[prewarm-locations] ok:", JSON.stringify(result)))
+          .catch((err) => console.error("[prewarm-locations] failed:", err.message))
+      );
+      return;
+    }
     ctx.waitUntil(
       computePriceIndexSnapshot(env)
         .then((result) => console.log("[price-index-snapshot] ok:", JSON.stringify(result)))

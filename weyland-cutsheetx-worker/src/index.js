@@ -114,6 +114,8 @@ import { registerCatalogueProductsRoutes } from "./routes/catalogue-products.js"
 import { registerCatalogueDocumentsRoutes } from "./routes/catalogue-documents.js";
 
 import cutsheetxHtml from "./pages/cutsheetx.html";
+import { seedCorpusWanted, ingestCorpus, corpusStatus } from "./lib/catalog-corpus.js";
+import { EXPANDED_URL_PATTERNS } from "./lib/cutsheet-discovery.js";
 
 const WORKER_VERSION = "2026-10-04.1";
 
@@ -167,8 +169,34 @@ registerCatalogueDocumentsRoutes(router, { authenticate });
 // this binding is genuinely redundant, not a missing wire-up.
 void matchComponentToCutSheets;
 
+// Catalog corpus (2026-10-05): the manufacturer PDFs CutsheetX cites live in
+// R2 and are pulled only by scheduled() below. Status is public; an
+// authenticated CutsheetX user may kick one background ingest.
+async function runCorpusIngest(env) {
+  const seeded = await seedCorpusWanted(env, EXPANDED_URL_PATTERNS);
+  const ingested = await ingestCorpus(env, 10);
+  const status = await corpusStatus(env);
+  console.log("[corpus] run", JSON.stringify({ seeded, ingested, status }));
+  return { seeded, ingested, status };
+}
+router.get("/api/cut-sheets/corpus/status", async (_request, env) => jsonResponse3(await corpusStatus(env)));
+router.post("/api/cut-sheets/corpus/ingest", async (request, env, ctx) => {
+  const { error: authError, user } = await authenticate(request, env);
+  if (authError) return authError;
+  const prodErr = await requireProductAccess(user, env, "cutsheetx");
+  if (prodErr) return prodErr;
+  ctx.waitUntil(runCorpusIngest(env).catch((e) => console.error("[corpus] ingest failed:", e.message)));
+  return jsonResponse3({ started: true, status: await corpusStatus(env) });
+});
+
 export default {
   async fetch(request, env, ctx) {
     return router.handle(request, env, ctx);
+  },
+
+  // Every 10 minutes (wrangler.toml [triggers]): seed wanted URLs and pull
+  // up to ten into R2. The only place this Worker fetches a manufacturer site.
+  async scheduled(event, env, ctx) {
+    ctx.waitUntil(runCorpusIngest(env).catch((e) => console.error("[corpus] cron failed:", e.message)));
   },
 };

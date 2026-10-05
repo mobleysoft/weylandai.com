@@ -1,4 +1,5 @@
 import { normalizeManufacturerKey, parseModelString, generateSearchVariants, generateSearchQueries } from "./cps-matching.js";
+import { getFromCorpus, requestIntoCorpus, isExternalUrl } from "./catalog-corpus.js";
 
 
 // Policy (John, 2026-10-05): WeylandAI runs vision / language through
@@ -13,6 +14,17 @@ export var PDF_MAGIC_BYTES = [37, 80, 68, 70];
 export var MAX_FILE_SIZE = 50 * 1024 * 1024;
 export var DOWNLOAD_TIMEOUT = 3e4;
 export async function downloadPdf(url, env2) {
+  // Policy (2026-10-05): manufacturer PDFs are served from our own catalog
+  // corpus (R2). A URL that is not there yet is queued for the scheduled
+  // ingest; this function never fetches an external site at request time.
+  if (isExternalUrl(url)) {
+    const hit = await getFromCorpus(url, env2);
+    if (hit) {
+      return { success: true, buffer: hit.buffer, contentLength: hit.contentLength, contentType: hit.contentType, fromCorpus: true, r2Key: hit.r2Key };
+    }
+    await requestIntoCorpus(url, env2, "download");
+    return { success: false, error: "not in the catalog corpus yet; queued for the next scheduled ingest", errorCode: "NOT_IN_CORPUS" };
+  }
   console.log(`[PDF Validator] Downloading: ${url}`);
   try {
     const controller = new AbortController();
@@ -1728,6 +1740,27 @@ export async function trySmartDirectUrls(manufacturer, model, env2, browser = nu
     console.log(`[Discovery] Allegion brand detected: ${brandKey}, ${allegionUrls.length} URLs generated`);
     for (const candidate of allegionUrls) {
       try {
+        // Policy (2026-10-05): never fetch a manufacturer site while a request
+        // waits. Candidates are served from the catalog corpus in R2 or queued
+        // for the scheduled ingest (src/lib/catalog-corpus.js).
+        const corpusHit = await getFromCorpus(candidate.url, env2);
+        if (!corpusHit) {
+          await requestIntoCorpus(candidate.url, env2, "discovery:" + (candidate.source || "pattern"));
+          console.log("[Discovery] Not in corpus yet (queued for ingest): " + candidate.url);
+          continue;
+        }
+        return {
+          url: candidate.url,
+          strategy: "catalog_corpus",
+          confidence: candidate.confidence || 0.9,
+          source: "catalog_corpus",
+          contentType: "application/pdf",
+          manufacturer: mfrKey,
+          seriesMatch: parsed.series,
+          modelMatch: parsed.baseModel,
+          r2Key: corpusHit.r2Key,
+          note: "Served from the catalog corpus (ingested " + corpusHit.fetchedAt + ")"
+        };
         const headResponse = await fetch(candidate.url, {
           method: "GET",
           headers: {
@@ -1803,6 +1836,21 @@ export async function trySmartDirectUrls(manufacturer, model, env2, browser = nu
   }
   urlCandidates.sort((a, b) => b.confidence - a.confidence);
   for (const candidate of urlCandidates.slice(0, 20)) {
+      // Policy (2026-10-05): never fetch a manufacturer site while a request
+      // waits; serve from the catalog corpus or queue for the scheduled ingest.
+      {
+        const corpusHit = await getFromCorpus(candidate.url, env2);
+        if (!corpusHit) {
+          await requestIntoCorpus(candidate.url, env2, "discovery:" + (candidate.source || "pattern"));
+          console.log("[Discovery] Not in corpus yet (queued for ingest): " + candidate.url);
+          continue;
+        }
+        return {
+          url: candidate.url, strategy: "catalog_corpus", confidence: candidate.confidence || 0.9, source: "catalog_corpus",
+          contentType: "application/pdf", manufacturer: mfrKey, seriesMatch: parsed.series, modelMatch: parsed.baseModel,
+          r2Key: corpusHit.r2Key, note: "Served from the catalog corpus (ingested " + corpusHit.fetchedAt + ")"
+        };
+      }
     try {
       const isTrustedSource = candidate.source === "direct_series_url" || candidate.source === "direct_series_url_from_model" || candidate.source === "database_verified";
       if (isCloudflareProtected(candidate.url)) {
