@@ -2277,7 +2277,7 @@
         <div class="cutsheet-card"><div><div class="cutsheet-meta"><span class="cutsheet-mfg">MATCHING LIVE</span></div><h3>LCN 4040XP</h3><p>Asking the matcher now.</p></div><div class="citation-box">CITATION: pending</div></div>
         <div class="cutsheet-card"><div><div class="cutsheet-meta"><span class="cutsheet-mfg">MATCHING LIVE</span></div><h3>Schlage L9080</h3><p>Asking the matcher now.</p></div><div class="citation-box">CITATION: pending</div></div>
       </div>
-      <p id="cx-live-note" style="color:var(--muted);font-size:12px;margin-top:8px">Three spec lines, matched by the live matcher as this page loaded. A match without a filed cut sheet says so.</p>
+      <p id="cx-live-note" style="color:var(--muted);font-size:12px;margin-top:8px">Three spec lines, matched by the live matcher as this page loaded. A match without a filed cut sheet cites the catalogue page that mentions the model, or says nothing is filed.</p>
 
       <div style="margin-top:24px;border:1px solid var(--line);border-radius:16px;padding:20px 22px;background:rgba(18,20,25,.94)">
         <div style="font:800 11px/1 var(--font-display);letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);margin-bottom:12px">TRY A REAL MATCH &mdash; LIVE AGAINST THE REAL CATALOG</div>
@@ -3250,7 +3250,10 @@
           var sp = specs[i], d = res.data || {}, p = d.product || {}, cs = (d.cutSheets || [])[0] || null;
           if (!res.ok) return "<div class=\"cutsheet-card\"><div><div class=\"cutsheet-meta\"><span class=\"cutsheet-mfg\">" + esc(sp[0].toUpperCase()) + "</span><span class=\"cutsheet-conf\" style=\"color:var(--red)\">MATCHER " + esc(res.status || "ERR") + "</span></div><h3>" + esc(sp[0] + " " + sp[1]) + "</h3><p>The matcher did not answer. That is the real response.</p></div><div class=\"citation-box\">CITATION: none</div></div>";
           if (!d.matched) return "<div class=\"cutsheet-card\"><div><div class=\"cutsheet-meta\"><span class=\"cutsheet-mfg\">" + esc(sp[0].toUpperCase()) + "</span><span class=\"cutsheet-conf\" style=\"color:var(--red)\">NO MATCH</span></div><h3>" + esc(sp[0] + " " + sp[1]) + "</h3><p>Not in the catalogue. Recorded as a miss so coverage grows.</p></div><div class=\"citation-box\">CITATION: none</div></div>";
-          var cite = cs ? ((cs.pageUrl ? "<a href=\"" + esc(cs.pageUrl) + "\" target=\"_blank\" rel=\"noopener\" style=\"color:var(--blue)\">" : "") + esc(cs.title || "Cut sheet") + (cs.pages != null ? " \u00b7 " + esc(cs.pages) + " pages" : "") + (cs.pageUrl ? "</a>" : "")) : "no cut sheet filed for this model yet";
+          var cp = (d.cataloguePages || [])[0] || null;
+          var cite = cs ? ((cs.pageUrl ? "<a href=\"" + esc(cs.pageUrl) + "\" target=\"_blank\" rel=\"noopener\" style=\"color:var(--blue)\">" : "") + esc(cs.title || "Cut sheet") + (cs.pages != null ? " \u00b7 " + esc(cs.pages) + " pages" : "") + (cs.pageUrl ? "</a>" : ""))
+            : cp ? ("no standalone cut sheet; catalogue page: <a href=\"" + esc(cp.pageUrl) + "\" target=\"_blank\" rel=\"noopener\" style=\"color:var(--blue)\">" + esc(cp.title) + " \u00b7 p." + esc(cp.pageNum) + "</a>")
+            : "no cut sheet or catalogue page filed for this model yet";
           return "<div class=\"cutsheet-card\"><div><div class=\"cutsheet-meta\"><span class=\"cutsheet-mfg\">" + esc((p.manufacturer || sp[0]).toUpperCase()) + "</span><span class=\"cutsheet-conf\">" + esc((d.confidence || "") + " \u00b7 " + (d.matchType || "")) + "</span></div><h3>" + esc(p.name || (sp[0] + " " + sp[1])) + "</h3><p>Spec line: " + esc(sp[0] + " " + sp[1]) + ". Catalogue entry " + esc(p.model || sp[1]) + ".</p></div><div class=\"citation-box\">CITATION: " + cite + "</div></div>";
         }).join("");
         if (note) note.textContent = "Three spec lines, matched by the live matcher as this page loaded (" + ms + " ms). A match without a filed cut sheet says so.";
