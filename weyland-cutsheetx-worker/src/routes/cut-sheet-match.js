@@ -62,6 +62,9 @@ function toBatchResult(line, r) {
       pageHint: sheet.pageHint ?? null,
       pageUrl: sheet.pageUrl ?? null,
     } : null,
+    // 2026-10-05: when no cut sheet is filed, the first catalogue page that
+    // mentions the model (see product-database.js getCataloguePagesForModel).
+    cataloguePage: (r.cataloguePages && r.cataloguePages[0]) || null,
   };
 }
 

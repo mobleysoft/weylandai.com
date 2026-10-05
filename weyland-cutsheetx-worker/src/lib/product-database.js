@@ -404,6 +404,35 @@ function cutSheetCitation(cs) {
   return { pageHint: parsed ? parsed.hint : null, pageUrl };
 }
 
+// Catalogue-page fallback (2026-10-05). 7,792 standalone cut sheets cover
+// far from every catalogued model, but the 70 ingested catalogues (3,622
+// pages, full text in catalogue_pages_fts) usually do. When a product
+// matches and no cut sheet is filed, cite the catalogue pages that mention
+// the model, non-price-book titles first. Links go to the real page render
+// route (/api/cps/catalogues/:id/pages/:n/render). Never invents a page.
+async function getCataloguePagesForModel(manufacturerName, model, env2, limit = 3) {
+  const token = String(model || "").replace(/["'*^]/g, "").trim();
+  if (!token || token.length < 3) return [];
+  try {
+    const rows = await env2.DB.prepare(
+      "SELECT c.catalogue_id, c.title, c.manufacturer, p.page_num FROM catalogue_pages_fts f " +
+      "JOIN catalogue_pages p ON p.rowid = f.rowid JOIN catalogues c ON c.catalogue_id = p.catalogue_id " +
+      "WHERE catalogue_pages_fts MATCH ? AND (? = '' OR lower(c.manufacturer) = lower(?)) " +
+      "ORDER BY (c.title LIKE '%Price Book%') ASC, p.page_num ASC LIMIT ?"
+    ).bind('"' + token + '"', manufacturerName || "", manufacturerName || "", limit).all();
+    return (rows.results || []).map((r) => ({
+      catalogueId: r.catalogue_id,
+      title: r.title,
+      manufacturer: r.manufacturer,
+      pageNum: r.page_num,
+      pageUrl: "/api/cps/catalogues/" + encodeURIComponent(r.catalogue_id) + "/pages/" + r.page_num + "/render"
+    }));
+  } catch (e) {
+    console.warn("[matcher] catalogue page fallback failed:", e.message);
+    return [];
+  }
+}
+
 async function matchComponentToCutSheets(component, env2) {
   const match = await matchProductFromDb(component, env2);
   if (!match) {
@@ -417,8 +446,10 @@ async function matchComponentToCutSheets(component, env2) {
     };
   }
   const cutSheets = await getCutSheetsForProduct(match.product.id, env2);
+  const cataloguePages = cutSheets.length ? [] : await getCataloguePagesForModel(match.product.manufacturer_name, match.product.base_model, env2);
   return {
     matched: true,
+    cataloguePages,
     component,
     product: {
       id: match.product.id,
