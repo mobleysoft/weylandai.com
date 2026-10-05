@@ -133,7 +133,7 @@
   right: var(--sx-safe-right);
   bottom: var(--sx-safe-bottom);
   display: grid;
-  grid-template-columns: repeat(2, auto);
+  grid-template-columns: auto;
   align-items: end;
   gap: 12px;
   pointer-events: none;

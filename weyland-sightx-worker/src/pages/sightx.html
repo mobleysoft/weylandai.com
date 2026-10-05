@@ -9,7 +9,7 @@
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><rect width='64' height='64' fill='%232a52ff'/><path d='M13 16h8l6 28h-8zm15 0h8l4 17 4-17h8l-8 28h-8z' fill='%23090a0d'/></svg>">
   
   <!-- Premium Typography -->
-  <link rel="stylesheet" href="/assets/sightx-controls.css?v=20260729-3">
+  <link rel="stylesheet" href="/assets/sightx-controls.css?v=20261005-1">
   <link rel="stylesheet" href="/assets/sightx-experience.css?v=20260729-3">
   <link rel="stylesheet" href="/assets/sightx-ingest.css?v=20260729-3">
   <link rel="stylesheet" href="/assets/sightx-reconstruction.css?v=20260729-1">
@@ -963,7 +963,7 @@
     html.sxe-bg-embed .sx-walk-label { pointer-events: auto; cursor: pointer; }
     /* Embed joystick (2026-10-04, John: "better mobile motion controls when
        in portrait mode, perhaps a joystick"): the controller's own touch UI
-       (floating stick on the left 45%, drag-to-look on the right 55%, SCAN)
+       (floating stick, drag-to-look, auto-scan)
        is shown while the folder is lowered on touch devices. No landscape
        gate, brand plate, fullscreen or sprint in the embed: the homepage is
        the frame, and portrait is the primary orientation there. */
@@ -973,8 +973,19 @@
     html.sxe-bg-embed #sightx-touch-ui .sx-utility,
     html.sxe-bg-embed #sightx-touch-ui .sx-crosshair,
     html.sxe-bg-embed #sightx-touch-ui .sx-action.sprint { display: none !important; }
-    html.sxe-bg-embed #sightx-touch-ui .sx-actions { grid-template-columns: auto; bottom: calc(var(--sx-safe-bottom, 18px) + 54px); }
-    html.sxe-bg-embed #sightx-touch-ui .sx-stick { bottom: calc(var(--sx-safe-bottom, 18px) + 54px); }
+    /* Joystick bottom-right (2026-10-05, John: "the joystick should be where the
+       scan button is"): the lowered dossier covers the bottom-left, so the
+       stick lives in the bottom-right quadrant where SCAN used to be, and the
+       whole screen drags to look. There is no SCAN button any more - anything
+       in range scans itself (sightx-experience.js autoScan). */
+    html.sxe-bg-embed #sightx-touch-ui .sx-actions { display: none !important; }
+    html.sxe-bg-embed #sightx-touch-ui .sx-look-zone { inset: 0; z-index: 1; }
+    html.sxe-bg-embed #sightx-touch-ui .sx-move-zone { inset: 50% 0 0 50%; z-index: 2; }
+    html.sxe-bg-embed #sightx-touch-ui .sx-stick,
+    html.sxe-bg-embed #sightx-touch-ui.floating-stick .sx-stick {
+      left: var(--sx-stick-left, auto); right: var(--sx-safe-right, 18px); top: var(--sx-stick-top, auto);
+      bottom: calc(var(--sx-safe-bottom, 18px) + 54px);
+    }
     /* Door labels stay tappable above the touch zones. */
     html.sxe-bg-embed #sx-walk { z-index: 45; }
   </style>
@@ -1233,8 +1244,8 @@
     </div>
   </div>
 
-  <script src="/assets/sightx-controls.js?v=20261004-4"></script>
-  <script src="/assets/sightx-experience.js?v=20261004-1"></script>
+  <script src="/assets/sightx-controls.js?v=20261005-1"></script>
+  <script src="/assets/sightx-experience.js?v=20261005-1"></script>
   <script>
     // Ingest (PDF upload UI) and the Unreal runtime bridge are not used in
     // background-embed mode (their UI is hidden there anyway, and the

@@ -101,6 +101,10 @@
       position: Object.freeze(target.position.slice())
     }));
     const targetIds = new Set(targets.map(target => target.id));
+    // Auto-scan (2026-10-05, John: "whatever is in range should automatically
+    // be scanned"): a target in range starts its own scan and stops when it is
+    // captured or lost. Holding F still works as a manual (re)scan.
+    const autoScan = options.autoScan !== false;
     const root = createUI();
     const refs = {
       siteSubtitle: root.querySelector('.sxe-identity small'),
@@ -146,6 +150,7 @@
       controls: null,
       currentTarget: null,
       scanActive: false,
+      autoScanning: false,
       scanProgress: 0,
       scanTargetId: null,
       scanStartedAt: 0,
@@ -249,7 +254,7 @@
       refs.scanBar.style.width = `${Math.round(state.scanProgress * 100)}%`;
       refs.scanPrompt.textContent = state.scanActive
         ? `SCANNING ${Math.round(state.scanProgress * 100)}%`
-        : (state.scannedIds.has(target.id) ? 'HOLD F TO RESCAN' : 'HOLD F TO SCAN');
+        : (state.scannedIds.has(target.id) ? (autoScan ? 'CAPTURED' : 'HOLD F TO RESCAN') : (autoScan ? 'IN RANGE' : 'HOLD F TO SCAN'));
       refs.target.classList.toggle('scanning', state.scanActive);
       refs.target.classList.toggle('captured', state.scannedIds.has(target.id));
     }
@@ -557,6 +562,7 @@
       root.classList.toggle('scanning', active);
       if (active && state.currentTarget) armScan(state.currentTarget, performance.now());
       if (!active) {
+        state.autoScanning = false;
         clearTimeout(state.scanTimer);
         state.scanTimer = 0;
         state.scanProgress = 0;
@@ -685,6 +691,11 @@
       updateTour(ts);
       const candidate = getTarget(state.position, state.forward);
       state.currentTarget = candidate;
+      if (autoScan) {
+        const wantScan = !!candidate && !state.scannedIds.has(candidate.target.id);
+        if (wantScan && !state.scanActive) { state.autoScanning = true; setScanning(true); }
+        else if (!wantScan && state.scanActive && state.autoScanning) { state.autoScanning = false; setScanning(false); }
+      }
       if (state.scanActive && candidate) {
         if (state.scanTargetId !== candidate.target.id) {
           armScan(candidate, ts);

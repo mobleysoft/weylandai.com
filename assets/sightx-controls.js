@@ -132,7 +132,6 @@
       <div class="sx-crosshair" aria-hidden="true"></div>
       <div class="sx-move-zone" aria-label="Movement control area"><div class="sx-stick" aria-label="Movement joystick"><div class="sx-stick-knob"></div></div></div>
       <div class="sx-actions">
-        <button class="sx-action scan" type="button" aria-label="Hold to scan">SCAN</button>
         <button class="sx-action sprint" type="button" aria-label="Hold to sprint">SPRINT</button>
       </div>
       <div class="sx-utility"><button class="sx-fullscreen" type="button">FULLSCREEN</button></div>
@@ -187,7 +186,9 @@
     const knob = touchUI.querySelector('.sx-stick-knob');
     const lookZone = touchUI.querySelector('.sx-look-zone');
     const sprintButton = touchUI.querySelector('.sx-action.sprint');
-    const scanButton = touchUI.querySelector('.sx-action.scan');
+    // No SCAN button since 2026-10-05: scanning is automatic for anything in
+    // range (sightx-experience.js autoScan). setScan stays for the F key.
+    const scanButton = null;
     let stickPointer = null;
     let lookPointer = null;
     let lookX = 0;
@@ -428,16 +429,22 @@
       stick.style.removeProperty('--sx-stick-left');
       stick.style.removeProperty('--sx-stick-top');
       stick.style.removeProperty('bottom');
+      stick.style.removeProperty('right');
     }
 
     function placeFloatingStick(event) {
       if (!settings.floatingStick) return;
+      // The stick floats to the finger but stays inside its own zone, wherever
+      // the host put that zone (left 45% on the full page, bottom-right in the
+      // homepage embed).
       const size = stick.getBoundingClientRect().width;
-      const x = clamp(event.clientX, size * 0.55, window.innerWidth * 0.43);
-      const y = clamp(event.clientY, size * 0.55, window.innerHeight - size * 0.55);
+      const zone = moveZone.getBoundingClientRect();
+      const x = clamp(event.clientX, zone.left + size * 0.55, Math.max(zone.left + size * 0.55, zone.right - size * 0.55));
+      const y = clamp(event.clientY, Math.max(0, zone.top) + size * 0.55, Math.max(zone.top + size * 0.55, zone.bottom - size * 0.55));
       stick.style.setProperty('--sx-stick-left', `${x - size * 0.5}px`);
       stick.style.setProperty('--sx-stick-top', `${y - size * 0.5}px`);
       stick.style.bottom = 'auto';
+      stick.style.right = 'auto';
     }
 
     moveZone.addEventListener('pointerdown', event => {
@@ -509,14 +516,11 @@
 
     const setScan = active => {
       if (active && !inputEnabled) return;
-      scanButton.classList.toggle('active', active);
+      if (scanButton) scanButton.classList.toggle('active', active);
       touchUI.classList.toggle('scanning', active);
       if (options.onScan) options.onScan(active, position);
       if (active) signalInput('scan');
     };
-    scanButton.addEventListener('pointerdown', event => { event.preventDefault(); scanButton.setPointerCapture(event.pointerId); setScan(true); });
-    scanButton.addEventListener('pointerup', () => setScan(false));
-    scanButton.addEventListener('pointercancel', () => setScan(false));
 
     touchUI.querySelector('.sx-fullscreen').addEventListener('click', requestLandscape);
     touchUI.querySelector('.sx-enter-landscape').addEventListener('click', requestLandscape);
