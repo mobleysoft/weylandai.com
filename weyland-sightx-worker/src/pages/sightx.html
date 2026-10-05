@@ -963,6 +963,22 @@
     html.sxe-bg-embed, html.sxe-bg-embed body { overflow: hidden; touch-action: none; overscroll-behavior: none; }
     html.sxe-bg-embed #bg-canvas { touch-action: none; }
     html.sxe-bg-embed .sx-walk-label { pointer-events: auto; cursor: pointer; }
+    /* Embed joystick (2026-10-04, John: "better mobile motion controls when
+       in portrait mode, perhaps a joystick"): the controller's own touch UI
+       (floating stick on the left 45%, drag-to-look on the right 55%, SCAN)
+       is shown while the folder is lowered on touch devices. No landscape
+       gate, brand plate, fullscreen or sprint in the embed: the homepage is
+       the frame, and portrait is the primary orientation there. */
+    html.sxe-bg-embed.sx-touch-on #sightx-touch-ui { display: block !important; }
+    html.sxe-bg-embed #sightx-touch-ui .sx-rotate-gate,
+    html.sxe-bg-embed #sightx-touch-ui .sx-mobile-brand,
+    html.sxe-bg-embed #sightx-touch-ui .sx-utility,
+    html.sxe-bg-embed #sightx-touch-ui .sx-crosshair,
+    html.sxe-bg-embed #sightx-touch-ui .sx-action.sprint { display: none !important; }
+    html.sxe-bg-embed #sightx-touch-ui .sx-actions { grid-template-columns: auto; bottom: calc(var(--sx-safe-bottom, 18px) + 54px); }
+    html.sxe-bg-embed #sightx-touch-ui .sx-stick { bottom: calc(var(--sx-safe-bottom, 18px) + 54px); }
+    /* Door labels stay tappable above the touch zones. */
+    html.sxe-bg-embed #sx-walk { z-index: 45; }
   </style>
 </head>
 <body class="sightx-demo">
@@ -1219,7 +1235,7 @@
     </div>
   </div>
 
-  <script src="/assets/sightx-controls.js?v=20261004-3"></script>
+  <script src="/assets/sightx-controls.js?v=20261004-4"></script>
   <script src="/assets/sightx-experience.js?v=20261004-1"></script>
   <script>
     // Ingest (PDF upload UI) and the Unreal runtime bridge are not used in
@@ -3244,9 +3260,13 @@
     // page's own orientation - the far edge is the page's top), plus the
     // callout anchor/end so the host can keep everything aligned.
     hot.style.display = "none"; // the host's own tap-catcher covers the face
+    var coarseTouch = matchMedia("(hover: none) and (pointer: coarse)").matches;
     function update(lowerT) {
       var g = geometry();
       var off = [0, -0.95 * lowerT, 0.38 * lowerT];
+      // Joystick UI only while a finger can reach the world: folder lowered,
+      // prologue over, touch device. (CSS above shows #sightx-touch-ui.)
+      document.documentElement.classList.toggle("sx-touch-on", coarseTouch && !siteRaised && !introUp());
       var C = add(g.C, off, 1);
       var A = add(add(C, DY, g.he[1] - 0.012), DN, g.he[2]);
       var L = window.innerWidth < window.innerHeight ? 0.30 : 0.32;

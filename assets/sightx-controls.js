@@ -38,6 +38,10 @@
     // clips velocity AFTER a burst adds to it, it never decays existing
     // velocity on its own.
     movement: Object.freeze({ accel: 6.0, sprintAccel: 13.0, maxSpeed: 16.0, collisionStep: 0.08, roll: 1.6 }),
+    // Walking profile (used whenever the host's groundY() says we stand on a
+    // floor): a person, not a spacecraft. Fast to start, fast to stop, no
+    // vertical thrust, sprint is a jog. Tuned for a thumb on a phone.
+    walk: Object.freeze({ accel: 22.0, sprintAccel: 34.0, maxSpeed: 2.4, sprintSpeed: 4.6, stopDamp: 0.0008 }),
     look: Object.freeze({ mouse: 0.0022, touch: 0.0040 }),
     bounds: Object.freeze({ minX: -50.0, maxX: 50.0, minY: 0.2, maxY: 30.0, minZ: -50.0, maxZ: 50.0 })
   });
@@ -532,6 +536,9 @@
         signalInput('look');
       }
 
+      // Grounded = the host reports a floor under us (see groundY below):
+      // use the walking profile and ignore vertical thrust.
+      const grounded = typeof options.groundY === 'function' && Number.isFinite(options.groundY(position[0], position[2]));
       let forwardAmt = -stickAxis.y;
       let strafe = stickAxis.x;
       let vertical = 0;
@@ -539,8 +546,8 @@
       if (actionActive('backward')) forwardAmt -= 1;
       if (actionActive('right')) strafe += 1;
       if (actionActive('left')) strafe -= 1;
-      if (actionActive('up')) vertical += 1;
-      if (actionActive('down')) vertical -= 1;
+      if (!grounded && actionActive('up')) vertical += 1;
+      if (!grounded && actionActive('down')) vertical -= 1;
       const inputLength = Math.hypot(forwardAmt, strafe, vertical);
       if (inputLength > 1) { forwardAmt /= inputLength; strafe /= inputLength; vertical /= inputLength; }
       const thrusting = Boolean(forwardAmt || strafe || vertical);
@@ -559,7 +566,9 @@
         }
         if (options.onThrust) options.onThrust(velocity);
         const sprinting = sprintHeld || actionActive('sprint');
-        const accel = (sprinting ? profile.movement.sprintAccel : profile.movement.accel) * settings.moveScale;
+        const accel = (grounded
+          ? (sprinting ? profile.walk.sprintAccel : profile.walk.accel)
+          : (sprinting ? profile.movement.sprintAccel : profile.movement.accel)) * settings.moveScale;
         // Thrust along the CRAFT's own current local axes (fwd/right/up),
         // not world X/Z - "forward" always means wherever you're
         // currently facing, in any orientation.
@@ -570,8 +579,9 @@
         // Finite RCS propellant budget: caps accumulated drift the same
         // way a real SAFER unit's limited delta-v does.
         const builtSpeed = Math.hypot(velocity[0], velocity[1], velocity[2]);
-        if (builtSpeed > profile.movement.maxSpeed) {
-          const scale = profile.movement.maxSpeed / builtSpeed;
+        const speedCap = grounded ? (sprinting ? profile.walk.sprintSpeed : profile.walk.maxSpeed) : profile.movement.maxSpeed;
+        if (builtSpeed > speedCap) {
+          const scale = speedCap / builtSpeed;
           velocity[0] *= scale; velocity[1] *= scale; velocity[2] *= scale;
         }
       }
@@ -598,8 +608,10 @@
         }
       } else if (!thrusting) {
         // Natural gentle stabilization damping when no thrust keys are held
-        // so release doesn't feel like an uncontrollable runaway rocket
-        const coastDamp = Math.pow(0.85, dt);
+        // so release doesn't feel like an uncontrollable runaway rocket.
+        // On a floor a person simply stops: strong damping (settles in
+        // about a quarter second) instead of the zero-g coast.
+        const coastDamp = Math.pow(grounded ? profile.walk.stopDamp : 0.85, dt);
         velocity[0] *= coastDamp;
         velocity[1] *= coastDamp;
         velocity[2] *= coastDamp;
