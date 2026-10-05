@@ -70,6 +70,7 @@
 //     lines 151-163) - dead code, broken VENDYAI_API_URL fetch, and a
 //     hardcoded duplicate $2,000/mo price. Nothing to port or preserve.
 
+import { trafficDrivenJob } from "./lib/job-lease.js";
 import { NativeRouter } from "./lib/router.js";
 import { jsonResponse3 } from "./lib/json-response.js";
 import { WORKER_VERSION, errorResponse } from "./lib/errors.js";
@@ -134,6 +135,11 @@ async function recordCronTick(env, worker, cron) {
 
 export default {
   async fetch(request, env, ctx) {
+    // Traffic-driven freshness (2026-10-05): Cron Triggers on this account
+    // are registered but have never fired (cron_ticks stays empty), so any
+    // request may claim the D1 lease for this worker's background job and
+    // run it via waitUntil. The visitor never waits; no request calls out.
+    trafficDrivenJob(env, ctx, { db: env.DB, job: "wirex-ingest", cadenceSeconds: 1200, worker: "weyland-platform-worker", run: () => ingestWireNews(env).then((r) => console.log("[WireX] traffic-driven ingest", r.items.length, "headlines")) });
     const url = new URL(request.url);
 
     if (request.method === "GET" || request.method === "HEAD") {

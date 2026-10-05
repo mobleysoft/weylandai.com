@@ -53,6 +53,7 @@
 //      main worker's config. That one endpoint will 500 until those two
 //      secrets are set here too.
 
+import { trafficDrivenJob } from "./lib/job-lease.js";
 import { sweepExpiredDemoClones, demoCloneSweepStatus } from "./lib/demo-clone-sweep.js";
 import { NativeRouter } from "./lib/router.js";
 import { createCorsHandler } from "./lib/cors.js";
@@ -249,6 +250,11 @@ async function recordCronTick(env, worker, cron) {
 
 export default {
   async fetch(request, env, ctx) {
+    // Traffic-driven freshness (2026-10-05): Cron Triggers on this account
+    // are registered but have never fired (cron_ticks stays empty), so any
+    // request may claim the D1 lease for this worker's background job and
+    // run it via waitUntil. The visitor never waits; no request calls out.
+    trafficDrivenJob(env, ctx, { db: env.DB, job: "demo-clone-sweep", cadenceSeconds: 3600, worker: "weyland-subx-worker", run: () => sweepExpiredDemoClones(env).then((s) => console.log("[demo-clone-sweep] traffic-driven", JSON.stringify(s))) });
     return router.handle(request, env, ctx);
   },
 

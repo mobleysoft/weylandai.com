@@ -31,6 +31,7 @@
 // takes precedence and sends matching requests here instead, regardless
 // of what's still registered in the monolith's own route table.
 
+import { trafficDrivenJob } from "./lib/job-lease.js";
 import { NativeRouter } from "./lib/router.js";
 import { authenticate } from "./lib/auth.js";
 import { registerHuntRoutes } from "./routes/hunt.js";
@@ -55,6 +56,11 @@ async function recordCronTick(env, worker, cron) {
 
 export default {
   async fetch(request, env, ctx) {
+    // Traffic-driven freshness (2026-10-05): Cron Triggers on this account
+    // are registered but have never fired (cron_ticks stays empty), so any
+    // request may claim the D1 lease for this worker's background job and
+    // run it via waitUntil. The visitor never waits; no request calls out.
+    trafficDrivenJob(env, ctx, { db: env.DB, job: "huntx-ingest", cadenceSeconds: 3600, worker: "weyland-huntx-worker", run: () => ingestSources(env).then((r) => console.log("[HuntX Ingest] traffic-driven run", JSON.stringify({ upserted: r.upserted, errors: r.errors }))) });
     const url = new URL(request.url);
 
     // Own health check, answered directly - not part of the extracted

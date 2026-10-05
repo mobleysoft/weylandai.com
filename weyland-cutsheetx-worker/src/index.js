@@ -82,6 +82,7 @@
 //     CutSheetX's. Not part of this product's real route surface despite
 //     living in the same directory.
 
+import { trafficDrivenJob } from "./lib/job-lease.js";
 import { NativeRouter } from "./lib/router.js";
 import { createCorsHandler } from "./lib/cors.js";
 import { jsonResponse3 } from "./lib/json-response.js";
@@ -204,6 +205,11 @@ async function recordCronTick(env, worker, cron) {
 
 export default {
   async fetch(request, env, ctx) {
+    // Traffic-driven freshness (2026-10-05): Cron Triggers on this account
+    // are registered but have never fired (cron_ticks stays empty), so any
+    // request may claim the D1 lease for this worker's background job and
+    // run it via waitUntil. The visitor never waits; no request calls out.
+    trafficDrivenJob(env, ctx, { db: env.DB, job: "cutsheetx-corpus-ingest", cadenceSeconds: 600, worker: "weyland-cutsheetx-worker", run: () => runCorpusIngest(env) });
     return router.handle(request, env, ctx);
   },
 
