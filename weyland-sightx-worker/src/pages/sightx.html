@@ -3484,6 +3484,12 @@
         keep = openings.map(function (o, i) { return [Math.hypot(o.x - cam[0], o.z - cam[2]), i]; })
           .sort(function (a, b) { return a[0] - b[0]; }).slice(0, maxLabels).map(function (p) { return p[1]; });
       }
+      // First pass: project and size every visible label; second pass:
+      // resolve overlaps nearest-first by lifting the farther label's
+      // leader (and dropping it if it would have to climb off the screen).
+      // Eight door tags down one corridor otherwise stack into one smear
+      // on a phone (seen live 2026-10-05).
+      var placed = [], cand = [];
       for (var i = 0; i < nodes.length; i++) {
         var o = openings[i], nd = nodes[i];
         var rel = [o.x - cam[0], HEAD_Y - cam[1], o.z - cam[2]];
@@ -3492,11 +3498,31 @@
         var d = Math.hypot(rel[0], rel[1], rel[2]);
         var vis = !!pt && d < 48 && pt[0] > -60 && pt[0] < W + 60 && pt[1] > -60 && pt[1] < H + 60 && (!keep || keep.indexOf(i) !== -1);
         if (!vis) { nd.div.style.display = "none"; nd.line.setAttribute("visibility", "hidden"); nd.dot.setAttribute("visibility", "hidden"); continue; }
+        var scale0 = Math.max(0.62, Math.min(1, Math.sqrt(9 / Math.max(d, 1))));
+        cand.push({ i: i, nd: nd, pt: pt, d: d, scale: scale0,
+                    lead: Math.max(22, Math.min(64, 520 / Math.max(d, 4))) + (i % 2) * 26,
+                    w: (nd.w || (nd.w = nd.div.offsetWidth || 160)) * scale0,
+                    h: (nd.h || (nd.h = nd.div.offsetHeight || 36)) * scale0 });
+      }
+      cand.sort(function (a, b) { return a.d - b.d; });
+      for (var c = 0; c < cand.length; c++) {
+        var L = cand[c], tries = 0, hit = true;
+        while (hit && tries++ < 12) {
+          hit = false;
+          var x0 = L.pt[0] - L.w / 2, y1 = L.pt[1] - L.lead, y0 = y1 - L.h;
+          for (var p = 0; p < placed.length; p++) {
+            var P = placed[p];
+            if (x0 < P.x1 + 6 && x0 + L.w > P.x0 - 6 && y0 < P.y1 + 4 && y1 > P.y0 - 4) { L.lead += (y1 - P.y0) + L.h * 0.15 + 8; hit = true; break; }
+          }
+        }
+        if (hit || L.pt[1] - L.lead - L.h < 4) { L.drop = true; continue; }
+        placed.push({ x0: L.pt[0] - L.w / 2, x1: L.pt[0] + L.w / 2, y0: L.pt[1] - L.lead - L.h, y1: L.pt[1] - L.lead });
+      }
+      for (var c2 = 0; c2 < cand.length; c2++) {
+        var C = cand[c2], nd = C.nd;
+        if (C.drop) { nd.div.style.display = "none"; nd.line.setAttribute("visibility", "hidden"); nd.dot.setAttribute("visibility", "hidden"); continue; }
+        var pt = C.pt, d = C.d, scale = C.scale, lead = C.lead;
         var alpha = Math.max(0.18, Math.min(1, 1 - (d - 14) / 30));
-        var scale = Math.max(0.62, Math.min(1, Math.sqrt(9 / Math.max(d, 1))));
-        // Alternate leader heights so neighbouring labels stagger instead
-        // of stacking when several frames line up in depth.
-        var lead = Math.max(22, Math.min(64, 520 / Math.max(d, 4))) + (i % 2) * 26;
         nd.line.setAttribute("visibility", "visible"); nd.dot.setAttribute("visibility", "visible");
         nd.line.setAttribute("x1", pt[0]); nd.line.setAttribute("y1", pt[1]);
         nd.line.setAttribute("x2", pt[0]); nd.line.setAttribute("y2", pt[1] - lead);
