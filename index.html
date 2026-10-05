@@ -2262,68 +2262,20 @@
       </div>
       <div class="chapter-head">
         <div class="chapter-product-badge"><span>CutsheetX</span></div>
-        <h2>60,000 Verified Variants with Real PDF Citations.</h2>
+        <h2>60,000 Catalogued Variants. 7,792 Cut Sheets on File.</h2>
         <div class="chapter-tagline">Every match cites its own page.</div>
-        <p class="chapter-desc">60,000 Allegion, ASSA ABLOY, Dormakaba, and Hager variants &mdash; every match cited.</p>
+        <p class="chapter-desc">60,000 Allegion, ASSA ABLOY, Dormakaba, and Hager variants in our own store. When the sheet is on file the match cites its page; when it is not, the match says so and the miss is recorded.</p>
       </div>
 
-      <div class="cutsheet-grid">
-        <div class="cutsheet-card">
-          <div>
-            <div class="cutsheet-meta">
-              <span class="cutsheet-mfg">ALLEGION &middot; VON DUPRIN</span>
-              <span class="cutsheet-conf">99.4% CONF</span>
-            </div>
-            <h3>99 Series Rim Exit Device</h3>
-            <p>Grade 1 heavy-duty rim exit device with grooved architectural case, 3-hour fire rating, and US26D satin chrome finish. Matched for Door 101A and 101B exterior egress.</p>
-          </div>
-          <div class="citation-box">
-            CITATION: Allegion Master Spec 2026, Section 08 71 00 &middot; Doc ID #doc_vd99_rev4 &middot; Page 44
-          </div>
-        </div>
-
-        <div class="cutsheet-card">
-          <div>
-            <div class="cutsheet-meta">
-              <span class="cutsheet-mfg">ALLEGION &middot; LCN</span>
-              <span class="cutsheet-conf">99.1% CONF</span>
-            </div>
-            <h3>4040XP Heavy Duty Surface Closer</h3>
-            <p>Cast iron cylinder with Extra Duty Arm (EDA), forged steel piston, non-handed design, and all-weather fluid. Meets ADA accessibility standards at vestibule openings.</p>
-          </div>
-          <div class="citation-box">
-            CITATION: LCN 4040XP Engineering Catalog, Rev. 2025 &middot; Doc ID #doc_lcn_4040xp &middot; Page 18
-          </div>
-        </div>
-
-        <div class="cutsheet-card">
-          <div>
-            <div class="cutsheet-meta">
-              <span class="cutsheet-mfg">SCHLAGE COMMERCIAL</span>
-              <span class="cutsheet-conf">99.6% CONF</span>
-            </div>
-            <h3>ND Series Cylindrical Lock (ND53PD)</h3>
-            <p>Grade 1 Vandlgard entrance lock with Rhodes lever, 6-pin Everest 29 cylinder, and heavy-gauge cold-rolled steel chassis. Built for high-traffic educational &amp; corporate corridors.</p>
-          </div>
-          <div class="citation-box">
-            CITATION: Schlage Commercial Lock Catalog &middot; Doc ID #doc_schlage_nd53_rhodes &middot; Page 112
-          </div>
-        </div>
-
-        <div class="cutsheet-card" style="border-color:rgba(255,212,0,.4)">
-          <div>
-            <div class="cutsheet-meta">
-              <span class="cutsheet-mfg" style="color:var(--accent)">SPECIALTY SPECIFICATION</span>
-              <span class="status-badge status-pending">PENDING AFFIRM</span>
-            </div>
-            <h3>Electrified Delayed Egress Crash Bar</h3>
-            <p>Custom security delayed-egress latch with local audible horn and fire alarm relay bypass. Identified in specs; awaiting manual manufacturer selection affirmation.</p>
-          </div>
-          <div class="citation-box" style="color:var(--accent)">
-            STATUS: Flagged for estimator review &middot; No match without a cited source
-          </div>
-        </div>
+      <!-- Live cards (2026-10-05): rendered from POST /api/cut-sheets/match for
+           three real spec lines when the page loads. Replaces four hand-written
+           cards whose doc IDs and percentages did not exist in the store. -->
+      <div class="cutsheet-grid" id="cx-live-cards" aria-live="polite">
+        <div class="cutsheet-card"><div><div class="cutsheet-meta"><span class="cutsheet-mfg">MATCHING LIVE</span></div><h3>Von Duprin 99</h3><p>Asking the matcher now.</p></div><div class="citation-box">CITATION: pending</div></div>
+        <div class="cutsheet-card"><div><div class="cutsheet-meta"><span class="cutsheet-mfg">MATCHING LIVE</span></div><h3>LCN 4040XP</h3><p>Asking the matcher now.</p></div><div class="citation-box">CITATION: pending</div></div>
+        <div class="cutsheet-card"><div><div class="cutsheet-meta"><span class="cutsheet-mfg">MATCHING LIVE</span></div><h3>Schlage L9080</h3><p>Asking the matcher now.</p></div><div class="citation-box">CITATION: pending</div></div>
       </div>
+      <p id="cx-live-note" style="color:var(--muted);font-size:12px;margin-top:8px">Three spec lines, matched by the live matcher as this page loaded. A match without a filed cut sheet says so.</p>
 
       <div style="margin-top:24px;border:1px solid var(--line);border-radius:16px;padding:20px 22px;background:rgba(18,20,25,.94)">
         <div style="font:800 11px/1 var(--font-display);letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);margin-bottom:12px">TRY A REAL MATCH &mdash; LIVE AGAINST THE REAL CATALOG</div>
@@ -2766,7 +2718,7 @@
               </tr>
               <tr>
                 <td><strong>Manufacturer Spec Matching</strong></td>
-                <td class="weyland-col"><span class="chk-yes">&check;</span> <strong>60,000 Verified Variants</strong> &mdash; Every match backed by a cited manufacturer PDF page.</td>
+                <td class="weyland-col"><span class="chk-yes">&check;</span> <strong>60,000 catalogued variants, 7,792 cut sheets on file</strong> &mdash; a match cites its sheet page, or says the sheet is not filed yet.</td>
                 <td><span class="chk-no">&cross;</span> None. Estimators manually flip through vendor binders.</td>
                 <td><span class="chk-no">&cross;</span> Manual submittal logs; no automated cut sheet library.</td>
               </tr>
@@ -3267,6 +3219,34 @@
     }
     window.addEventListener("weyland:proposal", function (e) { var d = dossierRead(); d.proposal = e.detail; dossierWrite(d); });
     dossierRender();
+
+    // 5b3b. CutsheetX chapter cards: three real spec lines through the real
+    // matcher at load (one POST /api/cut-sheets/match each), rendered as
+    // whatever came back. No hand-written citations anywhere on this page.
+    (function () {
+      var grid = document.getElementById("cx-live-cards"), note = document.getElementById("cx-live-note");
+      if (!grid) return;
+      var specs = [["Von Duprin", "99"], ["LCN", "4040XP"], ["Schlage", "L9080"]];
+      var esc = function (v) { return String(v == null ? "" : v).replace(/[&<>"]/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", "\"": "&quot;" }[c]; }); };
+      var t0 = performance.now();
+      ephemeralToken().then(function (token) {
+        return Promise.all(specs.map(function (sp) {
+          return fetch("/api/cut-sheets/match", { method: "POST", headers: { "Authorization": "Bearer " + token, "Content-Type": "application/json" }, body: JSON.stringify({ manufacturer: sp[0], model: sp[1] }) })
+            .then(function (r) { return r.json().then(function (d) { return { ok: r.ok, status: r.status, data: d }; }); })
+            .catch(function (e) { return { ok: false, status: 0, data: { error: e.message } }; });
+        }));
+      }).then(function (results) {
+        var ms = Math.round(performance.now() - t0);
+        grid.innerHTML = results.map(function (res, i) {
+          var sp = specs[i], d = res.data || {}, p = d.product || {}, cs = (d.cutSheets || [])[0] || null;
+          if (!res.ok) return "<div class=\"cutsheet-card\"><div><div class=\"cutsheet-meta\"><span class=\"cutsheet-mfg\">" + esc(sp[0].toUpperCase()) + "</span><span class=\"cutsheet-conf\" style=\"color:var(--red)\">MATCHER " + esc(res.status || "ERR") + "</span></div><h3>" + esc(sp[0] + " " + sp[1]) + "</h3><p>The matcher did not answer. That is the real response.</p></div><div class=\"citation-box\">CITATION: none</div></div>";
+          if (!d.matched) return "<div class=\"cutsheet-card\"><div><div class=\"cutsheet-meta\"><span class=\"cutsheet-mfg\">" + esc(sp[0].toUpperCase()) + "</span><span class=\"cutsheet-conf\" style=\"color:var(--red)\">NO MATCH</span></div><h3>" + esc(sp[0] + " " + sp[1]) + "</h3><p>Not in the catalogue. Recorded as a miss so coverage grows.</p></div><div class=\"citation-box\">CITATION: none</div></div>";
+          var cite = cs ? ((cs.pageUrl ? "<a href=\"" + esc(cs.pageUrl) + "\" target=\"_blank\" rel=\"noopener\" style=\"color:var(--blue)\">" : "") + esc(cs.title || "Cut sheet") + (cs.pages != null ? " \u00b7 " + esc(cs.pages) + " pages" : "") + (cs.pageUrl ? "</a>" : "")) : "no cut sheet filed for this model yet";
+          return "<div class=\"cutsheet-card\"><div><div class=\"cutsheet-meta\"><span class=\"cutsheet-mfg\">" + esc((p.manufacturer || sp[0]).toUpperCase()) + "</span><span class=\"cutsheet-conf\">" + esc((d.confidence || "") + " \u00b7 " + (d.matchType || "")) + "</span></div><h3>" + esc(p.name || (sp[0] + " " + sp[1])) + "</h3><p>Spec line: " + esc(sp[0] + " " + sp[1]) + ". Catalogue entry " + esc(p.model || sp[1]) + ".</p></div><div class=\"citation-box\">CITATION: " + cite + "</div></div>";
+        }).join("");
+        if (note) note.textContent = "Three spec lines, matched by the live matcher as this page loaded (" + ms + " ms). A match without a filed cut sheet says so.";
+      }).catch(function (err) { if (note) note.textContent = "Live match failed: " + err.message; });
+    })();
 
     // 5b4. Paste a schedule -> POST /api/cut-sheets/match-batch -> table with
     // per-line citations, running hit count, misses with a request link,
