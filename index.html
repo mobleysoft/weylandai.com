@@ -12,8 +12,11 @@
   <link rel="preload" href="/assets/fonts/outfit-variable.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="/assets/fonts/space-grotesk-variable.woff2" as="font" type="font/woff2" crossorigin>
   <style>
-@font-face{font-family:'Outfit';font-style:normal;font-weight:300 600;font-display:swap;src:url(/assets/fonts/outfit-variable.woff2) format('woff2');unicode-range:U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD}
-@font-face{font-family:'Space Grotesk';font-style:normal;font-weight:400 700;font-display:swap;src:url(/assets/fonts/space-grotesk-variable.woff2) format('woff2');unicode-range:U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD}
+  /* optional (not swap): the files are preloaded so they are normally in hand before first paint;
+     on a slow first visit the system face stays for that view instead of reflowing the hero mid-read
+     (Lighthouse attributed the whole 0.12 CLS to the Outfit swap, 2026-10-05). */
+@font-face{font-family:'Outfit';font-style:normal;font-weight:300 600;font-display:optional;src:url(/assets/fonts/outfit-variable.woff2) format('woff2');unicode-range:U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD}
+@font-face{font-family:'Space Grotesk';font-style:normal;font-weight:400 700;font-display:optional;src:url(/assets/fonts/space-grotesk-variable.woff2) format('woff2');unicode-range:U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD}
   </style>
   <script type="application/ld+json">{"@context":"https://schema.org","@type":"Organization","name":"WeylandAI","url":"https://weylandai.com/","description":"CutsheetX matches every door and hardware spec line to the real catalog page, with the citation; the same project record flows through bids, takeoffs, submittals, proposals, meetings and a 3D field twin.","founder":[{"@type":"Person","name":"Ron Helms","jobTitle":"CEO and Lead Software Developer"},{"@type":"Person","name":"John Mobley","jobTitle":"CTO and Chief Architect"},{"@type":"Person","name":"Andrew Miller","jobTitle":"Business Development","worksFor":{"@type":"Organization","name":"Precision Auto Doors"}}]}</script>
 <link rel="canonical" href="https://weylandai.com/">
