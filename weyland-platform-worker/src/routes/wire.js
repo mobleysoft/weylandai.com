@@ -88,7 +88,7 @@ const WIRE_PAGE = `<!doctype html>
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>WeylandAI Wire</title>
+<title>WeylandAI WireX</title>
 <meta name="description" content="Live construction-industry headlines from Engineering News-Record and Construction Dive, a deterministic Editor's Briefing that cites its own sources, and WeylandAI's own real, audited price-extraction engineering reports.">
 <style>
   :root {
@@ -235,7 +235,7 @@ const WIRE_PAGE = `<!doctype html>
   </section>
 
   <div class="upgrade-box" id="upgrade-box" style="display:none">
-    <span><strong>WeylandAI Wire Pro</strong> &mdash; $49.00/month, real recurring Stripe subscription: 20 headlines per feed instead of 6, full reports wire.</span>
+    <span><strong>WeylandAI WireX Pro</strong> &mdash; $49.00/month, real recurring Stripe subscription: 20 headlines per feed instead of 6, full reports wire.</span>
     <button id="upgrade-btn" type="button">Subscribe &mdash; $49/mo</button>
   </div>
 
