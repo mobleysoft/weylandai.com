@@ -1,4 +1,5 @@
 import { jsonResponse3 } from "../lib/json-response.js";
+import { withStoreCache } from "../lib/store-cache.js";
 
 /**
  * The "X-tool" public-data-driven market-intelligence routes: pricex
@@ -200,7 +201,7 @@ export function registerMarketIntelligenceRoutes(router) {
     }, 501);
   });
 
-  router.get("/api/compx/vendors", async (request2, env2) => {
+  router.get("/api/compx/vendors", withStoreCache((u) => (u.searchParams.get("q") || "").trim() ? "compx:" + (u.searchParams.get("q") || "").trim().toLowerCase() : null, 604800, async (request2, env2) => {
     try {
       const url = new URL(request2.url);
       const q = (url.searchParams.get("q") || "").trim();
@@ -213,7 +214,7 @@ export function registerMarketIntelligenceRoutes(router) {
       console.error("[CompX] vendor search error:", err.message);
       return jsonResponse3({ detail: { message: err.message } }, 502);
     }
-  });
+  }));
 
   // WeatherX runs on the National Weather Service's public API
   // (api.weather.gov) - free, keyless, no signup. Verified live 2026-09-02.
@@ -231,7 +232,7 @@ export function registerMarketIntelligenceRoutes(router) {
     return "low";
   }
 
-  router.get("/api/weatherx/delay-risk", async (request2, env2) => {
+  router.get("/api/weatherx/delay-risk", withStoreCache((u) => u.searchParams.get("lat") && u.searchParams.get("lon") ? "weatherx:" + Number(u.searchParams.get("lat")).toFixed(2) + "," + Number(u.searchParams.get("lon")).toFixed(2) : null, 10800, async (request2, env2) => {
     try {
       const url = new URL(request2.url);
       const lat = url.searchParams.get("lat");
@@ -272,7 +273,7 @@ export function registerMarketIntelligenceRoutes(router) {
       console.error("[WeatherX] delay-risk error:", err.message);
       return jsonResponse3({ detail: { message: err.message } }, 502);
     }
-  });
+  }));
 
   // ForecastX needs no external data source - it's a deterministic cash-flow
   // projection from a project's own real contract terms (value, duration,
@@ -353,7 +354,7 @@ export function registerMarketIntelligenceRoutes(router) {
   // coordinates plus real county/state/tract FIPS geography, not just a
   // lat/lon pin - useful for a GC that needs to report project location by
   // jurisdiction, not just show it on a map.
-  router.get("/api/geox/lookup", async (request2, env2) => {
+  router.get("/api/geox/lookup", withStoreCache((u) => (u.searchParams.get("address") || "").trim() ? "geox:" + (u.searchParams.get("address") || "").trim().toLowerCase().replace(/\s+/g, " ") : null, 2592000, async (request2, env2) => {
     try {
       const url = new URL(request2.url);
       const address = url.searchParams.get("address");
@@ -389,5 +390,5 @@ export function registerMarketIntelligenceRoutes(router) {
       console.error("[GeoX] lookup error:", err.message);
       return jsonResponse3({ detail: { message: err.message } }, 502);
     }
-  });
+  }));
 }

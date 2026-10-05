@@ -1,5 +1,14 @@
 import { normalizeManufacturerKey, parseModelString, generateSearchVariants, generateSearchQueries } from "./cps-matching.js";
 
+
+// Policy (John, 2026-10-05): WeylandAI runs vision / language through
+// gofaineat only and makes no API call outside the conglomerate. The
+// Anthropic route below is kept for provenance but can no longer be
+// reached: the call site throws before any network request.
+function anthropicDisabled(url) {
+  throw new Error("anthropic route disabled by policy (2026-10-05): use the embedded_gofaineat route; attempted " + url);
+}
+
 export var PDF_MAGIC_BYTES = [37, 80, 68, 70];
 export var MAX_FILE_SIZE = 50 * 1024 * 1024;
 export var DOWNLOAD_TIMEOUT = 3e4;
@@ -300,7 +309,7 @@ Analyze this PDF document and extract the following information. Return ONLY val
   "extractedText": "first 500 chars of relevant text"
 }`;
   try {
-    const response = await fetch("https://api.anthropic.com/v1/messages", {
+    const response = await anthropicDisabled("https://api.anthropic.com/v1/messages", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

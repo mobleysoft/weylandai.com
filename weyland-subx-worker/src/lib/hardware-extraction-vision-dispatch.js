@@ -5,6 +5,15 @@ import { generateJWT, arrayBufferToBase64 } from "../auth-module.js";
 import { parseHardwareExtractionResult } from "./hardware-extraction-prompts.js";
 import { callLocalQwen } from "./qwen-bridge.js";
 
+
+// Policy (John, 2026-10-05): WeylandAI runs vision / language through
+// gofaineat only and makes no API call outside the conglomerate. The
+// Anthropic route below is kept for provenance but can no longer be
+// reached: the call site throws before any network request.
+function anthropicDisabled(url) {
+  throw new Error("anthropic route disabled by policy (2026-10-05): use the embedded_gofaineat route; attempted " + url);
+}
+
 export var EXTRACTION_PROMPT_TEMPLATE = `\u{1F6A8}\u{1F6A8}\u{1F6A8} CRITICAL: STOP AND READ THIS FIRST \u{1F6A8}\u{1F6A8}\u{1F6A8}
 
 YOU WILL FAIL THIS TASK IF YOU DON'T READ THIS SECTION CAREFULLY.
@@ -473,11 +482,11 @@ export async function viaApiDirect(sessionId, pdfBuffer, env2, ctx = {}) {
   const requestTimestamp = (/* @__PURE__ */ new Date()).toISOString();
   const startTime = Date.now();
   const model = "claude-opus-4-6";
-  const endpoint = "https://api.anthropic.com/v1/messages";
+  const endpoint = "https://api.anthropic.com/v1/messages"; // see anthropicDisabled
   console.log("viaApiDirect called");
   console.log("env object keys:", Object.keys(env2));
   console.log("ANTHROPIC_API_KEY configured:", !!env2.ANTHROPIC_API_KEY);
-  const response = await fetch(endpoint, {
+  const response = await anthropicDisabled(endpoint, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",

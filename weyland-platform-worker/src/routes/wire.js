@@ -23,7 +23,7 @@
 import { jsonResponse3 } from "../lib/json-response.js";
 import {
   WIRE_FEEDS,
-  fetchWireNews,
+  readWireNews,
   synthesizeHeadlinesDeterministic,
   WEYLAND_REPORTS,
   WEYLAND_WIRE_PRODUCT_ID,
@@ -43,15 +43,15 @@ async function verifyWireSession(env2, sessionId) {
 }
 
 export function registerWireRoutes(router) {
-  router.get("/api/wire/news", async (request2, env2) => {
+  router.get("/api/wire/news", async (request2, env2, ctx) => {
     const sessionId = new URL(request2.url).searchParams.get("session_id");
     const isPro = sessionId ? await verifyWireSession(env2, sessionId) : false;
-    const items = await fetchWireNews(isPro);
-    return jsonResponse3({ sources: WIRE_FEEDS.map((f) => f.source), pro: isPro, items });
+    const wire = await readWireNews(env2, isPro, ctx);
+    return jsonResponse3({ sources: WIRE_FEEDS.map((f) => f.source), pro: isPro, items: wire.items, ingested_at: wire.fetchedAt, warming: wire.warming });
   });
 
-  router.get("/api/wire/synthesis", async (_request2, env2) => {
-    const items = await fetchWireNews(false);
+  router.get("/api/wire/synthesis", async (_request2, env2, ctx) => {
+    const items = (await readWireNews(env2, false, ctx)).items;
     if (!items.length) {
       return jsonResponse3({ detail: { message: "no live headlines available right now - try again shortly" } }, 502);
     }

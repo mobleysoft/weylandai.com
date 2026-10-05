@@ -85,6 +85,7 @@ import { registerWebhooksSubscriptionRoutes } from "./routes/webhooks-subscripti
 import { registerDemoRoutes } from "./routes/demo.js";
 import { registerRootRoutes } from "./routes/root.js";
 import { registerWireRoutes } from "./routes/wire.js";
+import { ingestWireNews } from "./lib/wire-tenant.js";
 
 const router = new NativeRouter();
 
@@ -164,5 +165,11 @@ export default {
     }
 
     return router.handle(request, env, ctx);
+  },
+
+  // Every 20 minutes (wrangler.toml [triggers]): the only path that fetches
+  // the WireX RSS sources; requests read KV only (src/lib/wire-tenant.js).
+  async scheduled(event, env, ctx) {
+    ctx.waitUntil(ingestWireNews(env).then((r) => console.log("[WireX] ingested", r.items.length, "headlines")));
   }
 };

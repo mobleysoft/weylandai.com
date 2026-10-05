@@ -254,3 +254,8 @@ zone_name = "weylandai.com"
 [[routes]]
 pattern = "weylandai.com/api/wire/*"
 zone_name = "weylandai.com"
+
+# WireX RSS ingest every 20 minutes - the only external calls this Worker
+# makes at run time; requests read KV only (2026-10-05).
+[triggers]
+crons = ["*/20 * * * *"]

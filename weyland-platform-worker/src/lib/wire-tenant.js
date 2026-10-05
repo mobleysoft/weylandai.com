@@ -69,6 +69,53 @@ export async function fetchWireNews(isPro = false) {
   return results.flat();
 }
 
+// --- Store-backed wire (2026-10-05) ------------------------------------
+// Per direct instruction, no visitor request may depend on a call outside
+// the conglomerate. The RSS feeds above are pulled by the Worker's
+// scheduled() cron (every 20 minutes, see wrangler.toml) into the CACHE KV
+// namespace; /api/wire/news and /api/wire/synthesis read that store only.
+// The first request after a cold deploy finds nothing and kicks one
+// background ingest via ctx.waitUntil without waiting on it.
+export const WIRE_STORE_KEY = "wire:news:v1";
+
+export async function ingestWireNews(env) {
+  const results = await Promise.all(
+    WIRE_FEEDS.map(async (feed) => {
+      try {
+        const res = await fetch(feed.url, { headers: { "User-Agent": "weylandai.com wire-desk research" }, signal: AbortSignal.timeout(15000) });
+        if (!res.ok) return [];
+        const xml = await res.text();
+        return parseRssItems(xml, feed.source, 20);
+      } catch {
+        return [];
+      }
+    })
+  );
+  const items = results.flat();
+  const record = { items, fetchedAt: new Date().toISOString(), sources: WIRE_FEEDS.map((f) => f.source) };
+  if (items.length && env.CACHE) await env.CACHE.put(WIRE_STORE_KEY, JSON.stringify(record));
+  return record;
+}
+
+export async function readWireNews(env, isPro = false, ctx = null) {
+  const limit = isPro ? 20 : 6;
+  let record = null;
+  try { record = env.CACHE ? await env.CACHE.get(WIRE_STORE_KEY, "json") : null; } catch { record = null; }
+  if (!record) {
+    if (ctx && typeof ctx.waitUntil === "function") ctx.waitUntil(ingestWireNews(env).catch((e) => console.error("[WireX] warm-up ingest failed:", e.message)));
+    return { items: [], fetchedAt: null, warming: true };
+  }
+  const perSource = new Map();
+  const items = [];
+  for (const it of record.items) {
+    const n = perSource.get(it.source) || 0;
+    if (n >= limit) continue;
+    perSource.set(it.source, n + 1);
+    items.push(it);
+  }
+  return { items, fetchedAt: record.fetchedAt, warming: false };
+}
+
 // --- Deterministic Editor's Briefing engine --------------------------
 // Copied verbatim from nginx/workers/venture-fleet/src/worker.js
 // (2026-10-02 deterministic replacement for the old Qwen-backed

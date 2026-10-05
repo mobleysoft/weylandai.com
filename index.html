@@ -2718,7 +2718,7 @@
       </div>
 
       <div class="wire-feed" id="wire-feed">
-        <div style="color:var(--muted);padding:20px 0">Connecting to live sources&hellip;</div>
+        <div style="color:var(--muted);padding:20px 0">Loading the wire&hellip;</div>
       </div>
 
       <div style="display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin-top:20px">
@@ -3224,7 +3224,7 @@
           '</a>';
         }).join("");
       }).catch(function(err) {
-        wireFeedEl.innerHTML = '<div style="color:var(--muted);padding:20px 0">Couldn\'t reach live sources: ' + err.message + '</div>';
+        wireFeedEl.innerHTML = '<div style="color:var(--muted);padding:20px 0">Couldn\'t read the wire: ' + err.message + '</div>';
       });
     }
 

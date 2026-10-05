@@ -50,6 +50,15 @@ import { validateClaudeRequest, getClaudeTimeout, arrayBufferToBase643, detectIm
 import { callEdge } from "./edge-telemetry.js";
 import { generateJWT } from "../auth-module.js";
 
+
+// Policy (John, 2026-10-05): WeylandAI runs vision / language through
+// gofaineat only and makes no API call outside the conglomerate. The
+// Anthropic route below is kept for provenance but can no longer be
+// reached: the call site throws before any network request.
+function anthropicDisabled(url) {
+  throw new Error("anthropic route disabled by policy (2026-10-05): use the embedded_gofaineat route; attempted " + url);
+}
+
 export class CircuitBreaker {
   constructor() {
     this.failures = 0;
@@ -149,7 +158,7 @@ export async function callClaudeVision(base64Pdf, prompt, env2) {
         const controller = new AbortController();
         const timeoutId = setTimeout(() => controller.abort(), timeout2);
         try {
-          const response = await fetch("https://api.anthropic.com/v1/messages", {
+          const response = await anthropicDisabled("https://api.anthropic.com/v1/messages", {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
@@ -438,7 +447,7 @@ export async function _callClaudeVisionWithImage_apiDirect(imageBuffer, prompt, 
         const controller = new AbortController();
         const timeoutId = setTimeout(() => controller.abort(), timeout2);
         try {
-          const response = await fetch("https://api.anthropic.com/v1/messages", {
+          const response = await anthropicDisabled("https://api.anthropic.com/v1/messages", {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
@@ -537,7 +546,7 @@ export async function callClaudeWithPdf(base64Pdf, prompt, env2, pageNumber) {
     ]
   };
   console.log(`[Hardware Extractor] Calling Claude API with PDF document...`);
-  const response = await fetch("https://api.anthropic.com/v1/messages", {
+  const response = await anthropicDisabled("https://api.anthropic.com/v1/messages", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
