@@ -32,6 +32,7 @@
 // retired (501) rather than faked or left externally dependent.
 // CompX/WeatherX/ForecastX/GeoX are unchanged and still stateless.
 
+import { trafficDrivenJob } from "./lib/job-lease.js";
 import { NativeRouter } from "./lib/router.js";
 import { registerMarketIntelligenceRoutes, computePriceIndexSnapshot } from "./routes/market-intelligence.js";
 
@@ -74,6 +75,14 @@ async function prewarmProjectLocations(env, ctx) {
 export default {
   async fetch(request, env, ctx) {
     const url = new URL(request.url);
+    // Traffic-driven freshness (2026-10-05): Cron Triggers on this account are
+    // registered but have never fired (weyland_db.cron_ticks stays empty), so
+    // requests claim D1 leases for the two background jobs instead. Nothing
+    // here waits on them and nothing here calls outside the conglomerate.
+    trafficDrivenJob(env, ctx, { db: env.DB, job: "marketx-prewarm-locations", cadenceSeconds: 86400, worker: "weyland-market-intelligence-worker",
+      run: () => prewarmProjectLocations(env, ctx).then((r) => console.log("[prewarm-locations] traffic-driven:", JSON.stringify(r))) });
+    trafficDrivenJob(env, ctx, { db: env.DB, job: "pricex-index-snapshot", cadenceSeconds: 7 * 86400, worker: "weyland-market-intelligence-worker",
+      run: () => computePriceIndexSnapshot(env).then((r) => console.log("[price-index-snapshot] traffic-driven:", JSON.stringify(r))) });
     // Own health check, answered directly - not part of the extracted
     // route table, so it can't collide with any real market-intelligence
     // path (all of which live under /api/*).

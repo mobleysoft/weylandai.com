@@ -1,4 +1,4 @@
-// src/auth-module.js
+// weyland-subx-worker/src/auth-module.js
 async function generateJWT(payload, secret, expiresInMs = 864e5) {
   const header = {
     alg: "HS256",
@@ -48,12 +48,6 @@ async function verifyJWT(token, secret) {
   }
   return payload;
 }
-async function hashPassword(password) {
-  const encoder = new TextEncoder();
-  const data = encoder.encode(password);
-  const hashBuffer = await crypto.subtle.digest("SHA-256", data);
-  return arrayBufferToBase64(hashBuffer);
-}
 async function authenticateRequest(request2, secret) {
   const authHeader = request2.headers.get("Authorization");
   if (!authHeader) {
@@ -64,13 +58,6 @@ async function authenticateRequest(request2, secret) {
   }
   const token = authHeader.substring(7).trim();
   return await verifyJWT(token, secret);
-}
-async function generateSignedResourceUrl(resourcePath, secret, expiresInMinutes = 15) {
-  const expires = Math.floor(Date.now() / 1e3) + expiresInMinutes * 60;
-  const payload = `${resourcePath}:${expires}`;
-  const sig = await createHmacSignature(payload, secret);
-  const separator = resourcePath.includes("?") ? "&" : "?";
-  return `${resourcePath}${separator}expires=${expires}&sig=${sig}`;
 }
 async function verifySignedResourceUrl(url, secret) {
   const expires = url.searchParams.get("expires");
@@ -125,9 +112,6 @@ function base64UrlDecode(str) {
   const base64 = paddedStr.replace(/-/g, "+").replace(/_/g, "/");
   return decodeURIComponent(escape(atob(base64)));
 }
-function arrayBufferToBase64(buffer) {
-  return btoa(arrayBufferToString(buffer));
-}
 function arrayBufferToString(buffer) {
   const bytes = new Uint8Array(buffer);
   let binary = "";
@@ -137,7 +121,7 @@ function arrayBufferToString(buffer) {
   return binary;
 }
 
-// src/lib/legacy-local-session.js
+// weyland-subx-worker/src/lib/legacy-local-session.js
 async function authenticateLocalSession(request2, env2) {
   const cookies = request2.headers.get("Cookie") || "";
   const sessionMatch = cookies.match(/weyland_session=([^;]+)/);
@@ -184,7 +168,7 @@ async function authenticateLocalJwt(request2, env2) {
   }
 }
 
-// src/lib/json-response.js
+// weyland-subx-worker/src/lib/json-response.js
 function jsonResponse3(data, status = 200) {
   return new Response(JSON.stringify(data), {
     status,
@@ -192,7 +176,7 @@ function jsonResponse3(data, status = 200) {
   });
 }
 
-// src/lib/authfor-client.js
+// weyland-subx-worker/src/lib/authfor-client.js
 async function authenticateViaAuthFor(request2, env2) {
   const auth = request2.headers.get("Authorization") || "";
   const token = auth.replace(/^Bearer\s+/i, "").trim();
@@ -279,7 +263,7 @@ async function checkSignedUrlAccess(url, env2) {
   return { error: jsonResponse3({ error: result.expired ? "Signed URL expired" : result.error }, status) };
 }
 
-// src/lib/auth.js
+// weyland-subx-worker/src/lib/auth.js
 async function authenticate(request2, env2) {
   const url = new URL(request2.url);
   const localSessionResult = await authenticateLocalSession(request2, env2);
@@ -2345,7 +2329,7 @@ async function checkRateLimit(userId, operation, env2, limits2 = { requests: 10,
   }
 }
 
-// src/lib/edge-telemetry.js
+// weyland-subx-worker/src/lib/edge-telemetry.js
 var WORKER_VERSION = "2.10.0";
 function detectFileType(buffer) {
   const bytes = new Uint8Array(buffer.slice(0, 12));
@@ -2534,7 +2518,7 @@ async function callEdge2(method, path, env2, body) {
   return { status: resp.status, body: data };
 }
 
-// src/lib/submittal-transforms.js
+// weyland-subx-worker/src/lib/submittal-transforms.js
 async function transformDoorEntriesToHardwareSets2(sessionId, userId, env2) {
   console.log(`[Door\u2192Takeoff Bridge] Starting transformation for session ${sessionId}`);
   const { results: entries } = await env2.DB.prepare(
@@ -4250,7 +4234,7 @@ function registerQuoteTemplatesRoutes(router2, { authenticate: authenticate2 }) 
   });
 }
 
-// src/lib/pricing.js
+// weyland-subx-worker/src/lib/pricing.js
 var MFR_CODE_MAP = {
   "SCH": ["schlage", "allegion"],
   "SCHLAGE": ["schlage", "allegion"],
@@ -5947,7 +5931,7 @@ function registerTakeoffLineItemsRoutes(router2, { authenticate: authenticate2, 
   });
 }
 
-// src/lib/html-format.js
+// weyland-propx-worker/src/lib/html-format.js
 function fmtDate(isoDate) {
   if (!isoDate) return "\u2014";
   try {
@@ -5962,7 +5946,7 @@ function esc(str) {
   return String(str).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
 }
 
-// src/lib/quote-html.js
+// weyland-propx-worker/src/lib/quote-html.js
 var DEFAULT_THEME_CONFIG = {
   version: "1.0",
   palette: {
@@ -7049,6 +7033,145 @@ function registerQuotesViewRoutes(router2, { authenticate: authenticate2 }) {
   });
 }
 
+// src/auth-module.js
+async function generateJWT2(payload, secret, expiresInMs = 864e5) {
+  const header = {
+    alg: "HS256",
+    typ: "JWT"
+  };
+  const now = Date.now();
+  const tokenPayload = {
+    ...payload,
+    iat: Math.floor(now / 1e3),
+    // Issued at (seconds)
+    exp: Math.floor((now + expiresInMs) / 1e3),
+    // Expires at (seconds)
+    jti: crypto.randomUUID()
+    // JWT ID for tracking
+  };
+  const encodedHeader = base64UrlEncode2(JSON.stringify(header));
+  const encodedPayload = base64UrlEncode2(JSON.stringify(tokenPayload));
+  const signature = await createHmacSignature2(
+    `${encodedHeader}.${encodedPayload}`,
+    secret
+  );
+  return `${encodedHeader}.${encodedPayload}.${signature}`;
+}
+async function verifyJWT2(token, secret) {
+  if (!token || typeof token !== "string") {
+    throw new Error("Invalid token format");
+  }
+  const parts = token.split(".");
+  if (parts.length !== 3) {
+    throw new Error("Malformed JWT token");
+  }
+  const [encodedHeader, encodedPayload, providedSignature] = parts;
+  const expectedSignature = await createHmacSignature2(
+    `${encodedHeader}.${encodedPayload}`,
+    secret
+  );
+  if (providedSignature !== expectedSignature) {
+    throw new Error("Invalid token signature");
+  }
+  const payload = JSON.parse(base64UrlDecode2(encodedPayload));
+  const now = Math.floor(Date.now() / 1e3);
+  if (payload.exp && payload.exp < now) {
+    throw new Error("Token expired");
+  }
+  if (payload.nbf && payload.nbf > now) {
+    throw new Error("Token not yet valid");
+  }
+  return payload;
+}
+async function hashPassword(password) {
+  const encoder = new TextEncoder();
+  const data = encoder.encode(password);
+  const hashBuffer = await crypto.subtle.digest("SHA-256", data);
+  return arrayBufferToBase64(hashBuffer);
+}
+async function authenticateRequest2(request2, secret) {
+  const authHeader = request2.headers.get("Authorization");
+  if (!authHeader) {
+    throw new Error("Missing Authorization header");
+  }
+  if (!authHeader.startsWith("Bearer ")) {
+    throw new Error("Invalid Authorization header format");
+  }
+  const token = authHeader.substring(7).trim();
+  return await verifyJWT2(token, secret);
+}
+async function generateSignedResourceUrl(resourcePath, secret, expiresInMinutes = 15) {
+  const expires = Math.floor(Date.now() / 1e3) + expiresInMinutes * 60;
+  const payload = `${resourcePath}:${expires}`;
+  const sig = await createHmacSignature2(payload, secret);
+  const separator = resourcePath.includes("?") ? "&" : "?";
+  return `${resourcePath}${separator}expires=${expires}&sig=${sig}`;
+}
+async function verifySignedResourceUrl2(url, secret) {
+  const expires = url.searchParams.get("expires");
+  const sig = url.searchParams.get("sig");
+  if (!expires || !sig) {
+    return { valid: false, expired: false, error: "Missing expires or sig parameter" };
+  }
+  const expiresInt = parseInt(expires, 10);
+  if (isNaN(expiresInt)) {
+    return { valid: false, expired: false, error: "Invalid expires parameter" };
+  }
+  const now = Math.floor(Date.now() / 1e3);
+  if (now > expiresInt) {
+    return { valid: false, expired: true, error: "URL has expired" };
+  }
+  const urlCopy = new URL(url.href);
+  urlCopy.searchParams.delete("expires");
+  urlCopy.searchParams.delete("sig");
+  let cleanPath = urlCopy.pathname;
+  if (urlCopy.searchParams.toString()) {
+    cleanPath += "?" + urlCopy.searchParams.toString();
+  }
+  const payload = `${cleanPath}:${expires}`;
+  const expectedSig = await createHmacSignature2(payload, secret);
+  if (sig !== expectedSig) {
+    return { valid: false, expired: false, error: "Invalid signature" };
+  }
+  return { valid: true, expired: false };
+}
+async function createHmacSignature2(message, secret) {
+  const encoder = new TextEncoder();
+  const key = await crypto.subtle.importKey(
+    "raw",
+    encoder.encode(secret),
+    { name: "HMAC", hash: "SHA-256" },
+    false,
+    ["sign"]
+  );
+  const signature = await crypto.subtle.sign(
+    "HMAC",
+    key,
+    encoder.encode(message)
+  );
+  return base64UrlEncode2(arrayBufferToString2(signature));
+}
+function base64UrlEncode2(str) {
+  const base64 = typeof str === "string" ? btoa(unescape(encodeURIComponent(str))) : btoa(str);
+  return base64.replace(/\+/g, "-").replace(/\//g, "_").replace(/=/g, "");
+}
+function base64UrlDecode2(str) {
+  const paddedStr = str.padEnd(str.length + (4 - str.length % 4) % 4, "=");
+  const base64 = paddedStr.replace(/-/g, "+").replace(/_/g, "/");
+  return decodeURIComponent(escape(atob(base64)));
+}
+function arrayBufferToBase64(buffer) {
+  return btoa(arrayBufferToString2(buffer));
+}
+function arrayBufferToString2(buffer) {
+  const bytes = new Uint8Array(buffer);
+  let binary = "";
+  for (let i2 = 0; i2 < bytes.length; i2++) {
+    binary += String.fromCharCode(bytes[i2]);
+  }
+  return binary;
+}
+
 // src/routes/quotes-generate.js
 function registerQuotesGenerateRoutes(router2, { authenticate: authenticate2, requireProductAccess: requireProductAccess2, puppeteer: puppeteer2 }) {
   router2.post("/api/quotes/:quoteId/share", async (request2, env2) => {
@@ -7073,7 +7196,7 @@ function registerQuotesGenerateRoutes(router2, { authenticate: authenticate2, re
         });
       }
       const payload = `${quoteId}:${tenantId}:${quote.created_at}`;
-      const accessToken = await createHmacSignature(payload, env2.JWT_SECRET);
+      const accessToken = await createHmacSignature2(payload, env2.JWT_SECRET);
       const now = (/* @__PURE__ */ new Date()).toISOString();
       await env2.DB.prepare(
         `UPDATE takeoff_quotes SET access_token = ?, shared_at = ?, status = 'sent' WHERE id = ? AND tenant_id = ?`
@@ -7911,7 +8034,7 @@ function registerQuotesGenerateRoutes(router2, { authenticate: authenticate2, re
   });
 }
 
-// src/lib/region-conflicts.js
+// weyland-subx-worker/src/lib/region-conflicts.js
 async function detectAndPersistRegionConflicts(sessionId, env2) {
   const { results } = await env2.DB.prepare(
     `SELECT id, page_number, schedule_type, bounding_box, bounding_box_percent, user_adjusted_bounding_box, cross_ref, status, created_at
@@ -18074,7 +18197,7 @@ function registerAuthSessionRoutes(router2, { authenticate: authenticate2, error
       }
       let token = null;
       if (env2.JWT_SECRET) {
-        token = await generateJWT({
+        token = await generateJWT2({
           userId: user.id,
           email: user.email,
           tenantId: user.tenant_id,
@@ -19628,7 +19751,7 @@ function registerInternalRoutes(router2) {
       const token = url.searchParams.get("token");
       if (!token)
         return new Response(null, { status: 401 });
-      const payload = await verifyJWT(token, env2.JWT_SECRET);
+      const payload = await verifyJWT2(token, env2.JWT_SECRET);
       if (!payload.key)
         return new Response(null, { status: 400 });
       const head = await env2.UPLOADS.head(payload.key);
@@ -19666,7 +19789,7 @@ function registerInternalRoutes(router2) {
       if (!token) {
         return jsonResponse3({ error: "Missing token parameter" }, 401);
       }
-      const payload = await verifyJWT(token, env2.JWT_SECRET);
+      const payload = await verifyJWT2(token, env2.JWT_SECRET);
       if (!payload.key) {
         return jsonResponse3({ error: "Invalid token payload" }, 400);
       }
@@ -22624,7 +22747,7 @@ function base64ToUint8Array(base64) {
   return bytes;
 }
 
-// src/lib/cors.js
+// weyland-subx-worker/src/lib/cors.js
 var DEFAULT_CORS_ORIGINS = [
   "https://weylandai.com",
   "https://subx.weylandai.com",
@@ -22786,7 +22909,7 @@ function createCorsHandler(env2) {
   });
 }
 
-// src/lib/router.js
+// weyland-subx-worker/src/lib/router.js
 var NativeRouter = class _NativeRouter {
   constructor() {
     this.routes = /* @__PURE__ */ new Map();
@@ -22934,7 +23057,7 @@ var NativeRouter = class _NativeRouter {
   }
 };
 
-// src/lib/sovereign-pdf.js
+// weyland-subx-worker/src/lib/sovereign-pdf.js
 var HELVETICA_WIDTHS = {
   32: 278,
   33: 278,
@@ -23347,7 +23470,7 @@ ${xrefOffset}
   }
 };
 
-// src/lib/submittal-assembler.js
+// weyland-subx-worker/src/lib/submittal-assembler.js
 var BHMA_FINISH_LOOKUP = {
   "600": "Primed for Painting",
   "605": "Bright Brass",
@@ -24257,7 +24380,7 @@ async function getAssemblyStatus(sessionId, env2) {
   }
 }
 
-// src/lib/cps-matching.js
+// weyland-cutsheetx-worker/src/lib/cps-matching.js
 var FINISH_CODES = /* @__PURE__ */ new Set([
   // Schlage/Allegion finishes
   "605",
@@ -24851,6 +24974,238 @@ async function persistSessionMatches(sessionId, env2) {
   return matchResults;
 }
 
+// weyland-subx-worker/src/lib/hardware-extraction-prompts.js
+function arrayBufferToBase643(buffer) {
+  const bytes = new Uint8Array(buffer);
+  let binary = "";
+  for (let i2 = 0; i2 < bytes.byteLength; i2++) {
+    binary += String.fromCharCode(bytes[i2]);
+  }
+  return btoa(binary);
+}
+
+// weyland-subx-worker/src/lib/hardware-extraction-vision-adapters.js
+var CircuitBreaker = class {
+  constructor() {
+    this.failures = 0;
+    this.lastFailureTime = null;
+    this.state = "CLOSED";
+    this.threshold = 100;
+    this.timeout = 1e4;
+  }
+  recordSuccess() {
+    this.failures = 0;
+    this.state = "CLOSED";
+  }
+  recordFailure() {
+    this.failures++;
+    this.lastFailureTime = Date.now();
+    if (this.failures >= this.threshold) {
+      this.state = "OPEN";
+      console.warn(`[Circuit Breaker] OPEN - ${this.failures} consecutive failures. Pausing for ${this.timeout}ms`);
+    }
+  }
+  async execute(fn) {
+    if (this.state === "OPEN") {
+      const timeSinceLastFailure = Date.now() - this.lastFailureTime;
+      if (timeSinceLastFailure >= this.timeout) {
+        console.log("[Circuit Breaker] Attempting to transition to HALF_OPEN");
+        this.state = "HALF_OPEN";
+      } else {
+        const waitTime = Math.ceil((this.timeout - timeSinceLastFailure) / 1e3);
+        throw new Error(`Circuit breaker is OPEN. Service unavailable. Retry in ${waitTime} seconds.`);
+      }
+    }
+    try {
+      const result = await fn();
+      this.recordSuccess();
+      return result;
+    } catch (error4) {
+      this.recordFailure();
+      throw error4;
+    }
+  }
+};
+var claudeCircuitBreaker = new CircuitBreaker();
+function removedAnthropicRoute(name) {
+  const err = new Error(name + " was removed (2026-10-05): weylandai.com has no Anthropic API route; use the embedded_gofaineat extraction route");
+  err.retryable = false;
+  return err;
+}
+async function callClaudeVision() {
+  throw removedAnthropicRoute("callClaudeVision");
+}
+async function callClaudeVisionWithImage(imageBuffer, prompt, env2, pageNumber, sessionId, ownerMhsId) {
+  let route = env2.WEYLAND_EDITION === "local" ? "claude_code_subprocess" : "claude_code_local";
+  if (sessionId && env2.DB) {
+    try {
+      const row = await env2.DB.prepare(
+        `SELECT extraction_route FROM hardware_extraction_sessions WHERE id = ?`
+      ).bind(sessionId).first();
+      if (row?.extraction_route)
+        route = row.extraction_route;
+    } catch (e) {
+      console.log(`[callClaudeVisionWithImage] route lookup failed for session ${sessionId}, defaulting api_direct: ${e.message}`);
+    }
+  }
+  const isLocal = env2.WEYLAND_EDITION === "local";
+  if (route === "claude_code_subprocess" && !isLocal)
+    route = "api_direct";
+  if (route === "claude_code_local" && isLocal)
+    route = "api_direct";
+  console.log(`[callClaudeVisionWithImage] page=${pageNumber} session=${sessionId || "none"} route=${route}`);
+  if (route === "api_direct") {
+    return _callClaudeVisionWithImage_apiDirect(imageBuffer, prompt, env2, pageNumber);
+  }
+  if (route === "claude_code_local") {
+    return _callClaudeVisionWithImage_sabp(imageBuffer, prompt, env2, pageNumber, sessionId, ownerMhsId);
+  }
+  if (route === "claude_code_subprocess") {
+    return _callClaudeVisionWithImage_localSubprocess(imageBuffer, prompt, env2, pageNumber);
+  }
+  console.warn(`[callClaudeVisionWithImage] unknown route "${route}", falling back to api_direct`);
+  return _callClaudeVisionWithImage_apiDirect(imageBuffer, prompt, env2, pageNumber);
+}
+async function _callClaudeVisionWithImage_sabp(imageBuffer, prompt, env2, pageNumber, sessionId, ownerMhsId) {
+  const startTime = Date.now();
+  let ownerId = ownerMhsId || null;
+  if (!ownerId) {
+    const owner = await env2.DB.prepare(
+      `SELECT n.mhs_id FROM hardware_extraction_sessions s JOIN nodes n ON n.id = s.user_id WHERE s.id = ?`
+    ).bind(sessionId).first();
+    ownerId = owner?.mhs_id || null;
+  }
+  if (!ownerId) {
+    throw new Error(`SABP route: no mhs_id for session ${sessionId}`);
+  }
+  const base64 = arrayBufferToBase643(imageBuffer);
+  const _imgSource = await _imageSourceForQueue(base64, env2);
+  const messages = [{
+    role: "user",
+    content: [
+      { type: "image", source: _imgSource },
+      { type: "text", text: prompt }
+    ]
+  }];
+  const _inf = resolveInferenceContract(env2);
+  const queueOnce = async () => {
+    const queueRes = await callEdge2("POST", "/ai/v1/jobs/queue", env2, {
+      owner_id: ownerId,
+      venture_code: "weyland",
+      model_hint: _inf.model,
+      max_tokens: _inf.max_tokens,
+      temperature: _inf.temperature,
+      messages,
+      metadata: {
+        session_id: sessionId,
+        page_number: pageNumber,
+        kind: "hardware_schedule_page_extract"
+      }
+    });
+    if (queueRes.status !== 200 || !queueRes.body?.job_id) {
+      throw new Error(`SABP queue failed for page ${pageNumber}: ${JSON.stringify(queueRes.body || queueRes.status)}`);
+    }
+    return queueRes.body.job_id;
+  };
+  let jobId = await queueOnce();
+  console.log(`[SABP] page=${pageNumber} job queued: ${jobId}`);
+  const POLL_INTERVAL_MS = 1500;
+  const POLL_BUDGET_MS = 54e4;
+  const deadline = startTime + POLL_BUDGET_MS;
+  let _retried = false;
+  while (Date.now() < deadline) {
+    await new Promise((r) => setTimeout(r, POLL_INTERVAL_MS));
+    const pollRes = await callEdge2("GET", `/ai/v1/jobs/${encodeURIComponent(jobId)}`, env2);
+    if (pollRes.status !== 200) {
+      throw new Error(`SABP poll failed for job ${jobId}: ${pollRes.status}`);
+    }
+    const job = pollRes.body;
+    if (job.status === "completed") {
+      const text = job.result?.content?.[0]?.text || "";
+      return {
+        content: [{ type: "text", text }],
+        model: job.result?.model || "claude-code-local",
+        usage: job.result?.usage || { input_tokens: 0, output_tokens: 0 },
+        provider_path: "claude_code_local",
+        latency_ms: Date.now() - startTime
+      };
+    }
+    if (job.status === "failed" || job.status === "error") {
+      if (!_retried && deadline - Date.now() > 6e4) {
+        _retried = true;
+        console.warn(`[SABP] job ${jobId} failed (${JSON.stringify(job.error || {}).slice(0, 200)}) \u2014 requeueing once`);
+        jobId = await queueOnce();
+        console.log(`[SABP] page=${pageNumber} retry job queued: ${jobId}`);
+        continue;
+      }
+      throw new Error(`SABP job ${jobId} failed: ${JSON.stringify(job.error || job)}`);
+    }
+  }
+  throw new Error(`SABP per-page extraction timed out after ${POLL_BUDGET_MS}ms (page ${pageNumber}, job ${jobId})`);
+}
+async function _callClaudeVisionWithImage_localSubprocess(imageBuffer, prompt, env2, pageNumber) {
+  const startTime = Date.now();
+  const base64 = arrayBufferToBase643(imageBuffer);
+  const messages = [{
+    role: "user",
+    content: [
+      { type: "image", source: { type: "base64", media_type: "image/png", data: base64 } },
+      { type: "text", text: prompt }
+    ]
+  }];
+  const sidecar = env2.LOCAL_VISION_SIDECAR_URL || "http://127.0.0.1:9999";
+  const r = await fetch(`${sidecar}/extract`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ messages, model_hint: "claude-opus-4-8", max_tokens: 4096 })
+  });
+  if (!r.ok)
+    throw new Error(`Local sidecar unreachable for page ${pageNumber}: ${r.status}`);
+  const result = await r.json();
+  if (!result.success) {
+    throw new Error(`Local sidecar error for page ${pageNumber}: ${JSON.stringify(result.error || result)}`);
+  }
+  const text = result.result?.content?.[0]?.text || "";
+  return {
+    content: [{ type: "text", text }],
+    model: "claude-code-local",
+    usage: { input_tokens: 0, output_tokens: 0 },
+    provider_path: "claude_code_subprocess",
+    latency_ms: Date.now() - startTime
+  };
+}
+async function _imageSourceForQueue(imageBase64, env2) {
+  const INLINE_MAX = 115e4;
+  const isPng = imageBase64.startsWith("iVBOR");
+  const mediaType = isPng ? "image/png" : "image/jpeg";
+  if (imageBase64.length <= INLINE_MAX || !env2.UPLOADS || !env2.JWT_SECRET) {
+    return { type: "base64", media_type: mediaType, data: imageBase64 };
+  }
+  const bin = atob(imageBase64);
+  const bytes = new Uint8Array(bin.length);
+  for (let i2 = 0; i2 < bin.length; i2++)
+    bytes[i2] = bin.charCodeAt(i2);
+  const key = `jobimg/${crypto.randomUUID()}.${isPng ? "png" : "jpg"}`;
+  await env2.UPLOADS.put(key, bytes, { httpMetadata: { contentType: mediaType } });
+  const token = await generateJWT({ key }, env2.JWT_SECRET, 24e5);
+  const origin = env2.APP_URL || "https://weyland.onamerica.org";
+  console.log(`[Image Sidecar] ${(bytes.length / 1024).toFixed(0)}KB -> R2 ${key} (signed URL, full fidelity)`);
+  return { type: "url", url: `${origin}/api/internal/r2-stream?token=${encodeURIComponent(token)}` };
+}
+async function _callClaudeVisionWithImage_apiDirect() {
+  throw removedAnthropicRoute("_callClaudeVisionWithImage_apiDirect");
+}
+async function callClaudeWithPdf() {
+  throw removedAnthropicRoute("callClaudeWithPdf");
+}
+function resolveInferenceContract(env2) {
+  return {
+    model: env2.WEYLAND_INFERENCE_MODEL || "claude-opus-4-8",
+    max_tokens: parseInt(env2.WEYLAND_MAX_TOKENS || "16000", 10) || 16e3,
+    temperature: 0
+  };
+}
+
 // src/lib/hardware-extraction-prompts.js
 var DEFAULT_MOUNTING_HEIGHTS = {
   lock: 36,
@@ -25275,7 +25630,7 @@ VALIDATION CHECKLIST:
 
 Begin extraction now. Return ONLY the JSON response.`;
 }
-function validateClaudeRequest(base64Pdf, prompt) {
+function validateClaudeRequest2(base64Pdf, prompt) {
   const errors = [];
   const pdfSizeBytes = base64Pdf.length * 3 / 4;
   const maxSizeBytes = 24 * 1024 * 1024;
@@ -25297,7 +25652,7 @@ function validateClaudeRequest(base64Pdf, prompt) {
     throw validationError;
   }
 }
-function getClaudeTimeout(base64Pdf) {
+function getClaudeTimeout2(base64Pdf) {
   return 6e5;
 }
 function parseHardwareExtractionResult(apiResponse, options = {}) {
@@ -25407,7 +25762,7 @@ function parseHardwareExtractionResult(apiResponse, options = {}) {
   console.log(`[Hardware Extractor] Mounting positions: ${extractedCount} extracted, ${defaultCount} defaulted`);
   return resultWithDefaults;
 }
-function arrayBufferToBase643(buffer) {
+function arrayBufferToBase6432(buffer) {
   const bytes = new Uint8Array(buffer);
   let binary = "";
   for (let i2 = 0; i2 < bytes.byteLength; i2++) {
@@ -25512,7 +25867,7 @@ function extractGrade(compliance) {
   }
   return null;
 }
-function detectImageMediaType(buffer) {
+function detectImageMediaType2(buffer) {
   const bytes = new Uint8Array(buffer.slice(0, 8));
   if (bytes[0] === 137 && bytes[1] === 80 && bytes[2] === 78 && bytes[3] === 71) {
     return "image/png";
@@ -26514,232 +26869,10 @@ function _buildCrossReference(ctx) {
   };
 }
 
-// src/lib/hardware-extraction-vision-adapters.js
-var CircuitBreaker = class {
-  constructor() {
-    this.failures = 0;
-    this.lastFailureTime = null;
-    this.state = "CLOSED";
-    this.threshold = 100;
-    this.timeout = 1e4;
-  }
-  recordSuccess() {
-    this.failures = 0;
-    this.state = "CLOSED";
-  }
-  recordFailure() {
-    this.failures++;
-    this.lastFailureTime = Date.now();
-    if (this.failures >= this.threshold) {
-      this.state = "OPEN";
-      console.warn(`[Circuit Breaker] OPEN - ${this.failures} consecutive failures. Pausing for ${this.timeout}ms`);
-    }
-  }
-  async execute(fn) {
-    if (this.state === "OPEN") {
-      const timeSinceLastFailure = Date.now() - this.lastFailureTime;
-      if (timeSinceLastFailure >= this.timeout) {
-        console.log("[Circuit Breaker] Attempting to transition to HALF_OPEN");
-        this.state = "HALF_OPEN";
-      } else {
-        const waitTime = Math.ceil((this.timeout - timeSinceLastFailure) / 1e3);
-        throw new Error(`Circuit breaker is OPEN. Service unavailable. Retry in ${waitTime} seconds.`);
-      }
-    }
-    try {
-      const result = await fn();
-      this.recordSuccess();
-      return result;
-    } catch (error4) {
-      this.recordFailure();
-      throw error4;
-    }
-  }
-};
-var claudeCircuitBreaker = new CircuitBreaker();
-function removedAnthropicRoute(name) {
-  const err = new Error(name + " was removed (2026-10-05): weylandai.com has no Anthropic API route; use the embedded_gofaineat extraction route");
-  err.retryable = false;
-  return err;
-}
-async function callClaudeVision() {
-  throw removedAnthropicRoute("callClaudeVision");
-}
-async function callClaudeVisionWithImage(imageBuffer, prompt, env2, pageNumber, sessionId, ownerMhsId) {
-  let route = env2.WEYLAND_EDITION === "local" ? "claude_code_subprocess" : "claude_code_local";
-  if (sessionId && env2.DB) {
-    try {
-      const row = await env2.DB.prepare(
-        `SELECT extraction_route FROM hardware_extraction_sessions WHERE id = ?`
-      ).bind(sessionId).first();
-      if (row?.extraction_route)
-        route = row.extraction_route;
-    } catch (e) {
-      console.log(`[callClaudeVisionWithImage] route lookup failed for session ${sessionId}, defaulting api_direct: ${e.message}`);
-    }
-  }
-  const isLocal = env2.WEYLAND_EDITION === "local";
-  if (route === "claude_code_subprocess" && !isLocal)
-    route = "api_direct";
-  if (route === "claude_code_local" && isLocal)
-    route = "api_direct";
-  console.log(`[callClaudeVisionWithImage] page=${pageNumber} session=${sessionId || "none"} route=${route}`);
-  if (route === "api_direct") {
-    return _callClaudeVisionWithImage_apiDirect(imageBuffer, prompt, env2, pageNumber);
-  }
-  if (route === "claude_code_local") {
-    return _callClaudeVisionWithImage_sabp(imageBuffer, prompt, env2, pageNumber, sessionId, ownerMhsId);
-  }
-  if (route === "claude_code_subprocess") {
-    return _callClaudeVisionWithImage_localSubprocess(imageBuffer, prompt, env2, pageNumber);
-  }
-  console.warn(`[callClaudeVisionWithImage] unknown route "${route}", falling back to api_direct`);
-  return _callClaudeVisionWithImage_apiDirect(imageBuffer, prompt, env2, pageNumber);
-}
-async function _callClaudeVisionWithImage_sabp(imageBuffer, prompt, env2, pageNumber, sessionId, ownerMhsId) {
-  const startTime = Date.now();
-  let ownerId = ownerMhsId || null;
-  if (!ownerId) {
-    const owner = await env2.DB.prepare(
-      `SELECT n.mhs_id FROM hardware_extraction_sessions s JOIN nodes n ON n.id = s.user_id WHERE s.id = ?`
-    ).bind(sessionId).first();
-    ownerId = owner?.mhs_id || null;
-  }
-  if (!ownerId) {
-    throw new Error(`SABP route: no mhs_id for session ${sessionId}`);
-  }
-  const base64 = arrayBufferToBase643(imageBuffer);
-  const _imgSource = await _imageSourceForQueue(base64, env2);
-  const messages = [{
-    role: "user",
-    content: [
-      { type: "image", source: _imgSource },
-      { type: "text", text: prompt }
-    ]
-  }];
-  const _inf = resolveInferenceContract(env2);
-  const queueOnce = async () => {
-    const queueRes = await callEdge2("POST", "/ai/v1/jobs/queue", env2, {
-      owner_id: ownerId,
-      venture_code: "weyland",
-      model_hint: _inf.model,
-      max_tokens: _inf.max_tokens,
-      temperature: _inf.temperature,
-      messages,
-      metadata: {
-        session_id: sessionId,
-        page_number: pageNumber,
-        kind: "hardware_schedule_page_extract"
-      }
-    });
-    if (queueRes.status !== 200 || !queueRes.body?.job_id) {
-      throw new Error(`SABP queue failed for page ${pageNumber}: ${JSON.stringify(queueRes.body || queueRes.status)}`);
-    }
-    return queueRes.body.job_id;
-  };
-  let jobId = await queueOnce();
-  console.log(`[SABP] page=${pageNumber} job queued: ${jobId}`);
-  const POLL_INTERVAL_MS = 1500;
-  const POLL_BUDGET_MS = 54e4;
-  const deadline = startTime + POLL_BUDGET_MS;
-  let _retried = false;
-  while (Date.now() < deadline) {
-    await new Promise((r) => setTimeout(r, POLL_INTERVAL_MS));
-    const pollRes = await callEdge2("GET", `/ai/v1/jobs/${encodeURIComponent(jobId)}`, env2);
-    if (pollRes.status !== 200) {
-      throw new Error(`SABP poll failed for job ${jobId}: ${pollRes.status}`);
-    }
-    const job = pollRes.body;
-    if (job.status === "completed") {
-      const text = job.result?.content?.[0]?.text || "";
-      return {
-        content: [{ type: "text", text }],
-        model: job.result?.model || "claude-code-local",
-        usage: job.result?.usage || { input_tokens: 0, output_tokens: 0 },
-        provider_path: "claude_code_local",
-        latency_ms: Date.now() - startTime
-      };
-    }
-    if (job.status === "failed" || job.status === "error") {
-      if (!_retried && deadline - Date.now() > 6e4) {
-        _retried = true;
-        console.warn(`[SABP] job ${jobId} failed (${JSON.stringify(job.error || {}).slice(0, 200)}) \u2014 requeueing once`);
-        jobId = await queueOnce();
-        console.log(`[SABP] page=${pageNumber} retry job queued: ${jobId}`);
-        continue;
-      }
-      throw new Error(`SABP job ${jobId} failed: ${JSON.stringify(job.error || job)}`);
-    }
-  }
-  throw new Error(`SABP per-page extraction timed out after ${POLL_BUDGET_MS}ms (page ${pageNumber}, job ${jobId})`);
-}
-async function _callClaudeVisionWithImage_localSubprocess(imageBuffer, prompt, env2, pageNumber) {
-  const startTime = Date.now();
-  const base64 = arrayBufferToBase643(imageBuffer);
-  const messages = [{
-    role: "user",
-    content: [
-      { type: "image", source: { type: "base64", media_type: "image/png", data: base64 } },
-      { type: "text", text: prompt }
-    ]
-  }];
-  const sidecar = env2.LOCAL_VISION_SIDECAR_URL || "http://127.0.0.1:9999";
-  const r = await fetch(`${sidecar}/extract`, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ messages, model_hint: "claude-opus-4-8", max_tokens: 4096 })
-  });
-  if (!r.ok)
-    throw new Error(`Local sidecar unreachable for page ${pageNumber}: ${r.status}`);
-  const result = await r.json();
-  if (!result.success) {
-    throw new Error(`Local sidecar error for page ${pageNumber}: ${JSON.stringify(result.error || result)}`);
-  }
-  const text = result.result?.content?.[0]?.text || "";
-  return {
-    content: [{ type: "text", text }],
-    model: "claude-code-local",
-    usage: { input_tokens: 0, output_tokens: 0 },
-    provider_path: "claude_code_subprocess",
-    latency_ms: Date.now() - startTime
-  };
-}
-async function _imageSourceForQueue(imageBase64, env2) {
-  const INLINE_MAX = 115e4;
-  const isPng = imageBase64.startsWith("iVBOR");
-  const mediaType = isPng ? "image/png" : "image/jpeg";
-  if (imageBase64.length <= INLINE_MAX || !env2.UPLOADS || !env2.JWT_SECRET) {
-    return { type: "base64", media_type: mediaType, data: imageBase64 };
-  }
-  const bin = atob(imageBase64);
-  const bytes = new Uint8Array(bin.length);
-  for (let i2 = 0; i2 < bin.length; i2++)
-    bytes[i2] = bin.charCodeAt(i2);
-  const key = `jobimg/${crypto.randomUUID()}.${isPng ? "png" : "jpg"}`;
-  await env2.UPLOADS.put(key, bytes, { httpMetadata: { contentType: mediaType } });
-  const token = await generateJWT({ key }, env2.JWT_SECRET, 24e5);
-  const origin = env2.APP_URL || "https://weyland.onamerica.org";
-  console.log(`[Image Sidecar] ${(bytes.length / 1024).toFixed(0)}KB -> R2 ${key} (signed URL, full fidelity)`);
-  return { type: "url", url: `${origin}/api/internal/r2-stream?token=${encodeURIComponent(token)}` };
-}
-async function _callClaudeVisionWithImage_apiDirect() {
-  throw removedAnthropicRoute("_callClaudeVisionWithImage_apiDirect");
-}
-async function callClaudeWithPdf() {
-  throw removedAnthropicRoute("callClaudeWithPdf");
-}
-function resolveInferenceContract(env2) {
-  return {
-    model: env2.WEYLAND_INFERENCE_MODEL || "claude-opus-4-8",
-    max_tokens: parseInt(env2.WEYLAND_MAX_TOKENS || "16000", 10) || 16e3,
-    temperature: 0
-  };
-}
-
 // src/lib/hardware-extraction-pipeline.js
 async function extractHardwareSchedule(pdfBuffer, env2) {
   console.log("[Hardware Extractor] Starting hardware schedule extraction");
-  const base64Pdf = arrayBufferToBase643(pdfBuffer);
+  const base64Pdf = arrayBufferToBase6432(pdfBuffer);
   const prompt = buildHardwareExtractionPrompt();
   const result = await callClaudeVision(base64Pdf, prompt, env2);
   const parsedResult = parseHardwareExtractionResult(result);
@@ -27082,7 +27215,7 @@ async function extractWithImageMode(pdfBuffer, pageNumber, env2, renderer) {
 async function extractWithDirectPdfMode(pdfBuffer, pageNumber, env2) {
   console.log(`[Hardware Extractor] WARNING: Sending FULL PDF to Claude for page ${pageNumber}...`);
   const extractionStartTime = Date.now();
-  const base64Pdf = arrayBufferToBase643(pdfBuffer);
+  const base64Pdf = arrayBufferToBase6432(pdfBuffer);
   const pdfSizeMB = (pdfBuffer.byteLength / 1024 / 1024).toFixed(2);
   console.log(`[Hardware Extractor] PDF size: ${pdfSizeMB}MB`);
   const prompt = buildDirectPdfExtractionPrompt(pageNumber);
@@ -28306,7 +28439,7 @@ async function serveR2(env2, pathname) {
   return null;
 }
 
-// src/lib/catalog-corpus.js
+// weyland-cutsheetx-worker/src/lib/catalog-corpus.js
 var PREFIX = "catalog-corpus/";
 async function sha256Hex(text) {
   const buf = await crypto.subtle.digest("SHA-256", new TextEncoder().encode(text));
@@ -28346,7 +28479,7 @@ async function requestIntoCorpus(url, env2, reason = "request") {
   }
 }
 
-// src/lib/cutsheet-discovery.js
+// weyland-cutsheetx-worker/src/lib/cutsheet-discovery.js
 var PDF_MAGIC_BYTES = [37, 80, 68, 70];
 var MAX_FILE_SIZE = 50 * 1024 * 1024;
 var DOWNLOAD_TIMEOUT = 3e4;
@@ -30848,7 +30981,7 @@ function serve_progress() {
   return Response.redirect("https://weylandai.com/", 302);
 }
 
-// src/lib/sk-router.js
+// weyland-platform-worker/src/lib/sk-router.js
 function skRouterScriptTag() {
   return `<script>
 (function(){
@@ -42665,7 +42798,7 @@ var SightXRoom = class {
   }
 };
 
-// src/lib/qwen-bridge.js
+// weyland-subx-worker/src/lib/qwen-bridge.js
 var QWEN_BRIDGE_URL = "https://llama.mobleysoft.com";
 async function callLocalQwen(env2, messages, opts = {}) {
   const { maxTokens = 4e3, temperature = 0.1 } = opts;
@@ -43552,7 +43685,7 @@ function pdfBufferOrNull2(buf, keyForLog) {
   return null;
 }
 async function generateR2StreamUrl2(bufferKey, env2) {
-  const token = await generateJWT({ key: bufferKey }, env2.JWT_SECRET, 3e5);
+  const token = await generateJWT2({ key: bufferKey }, env2.JWT_SECRET, 3e5);
   const origin = env2.APP_URL || "https://weyland.onamerica.org";
   return `${origin}/api/internal/r2-stream?token=${encodeURIComponent(token)}`;
 }
@@ -43574,7 +43707,7 @@ function getUnaffirmReason(item, type) {
   return "Unknown";
 }
 
-// src/lib/pdf-metadata.js
+// weyland-subx-worker/src/lib/pdf-metadata.js
 function skip(b, i2) {
   while (i2 < b.length) {
     if (WS.has(b[i2])) {
@@ -45523,17 +45656,17 @@ var init_auth_module = __esm({
     init_virtual_unenv_global_polyfill_cloudflare_unenv_preset_node_process();
     init_virtual_unenv_global_polyfill_cloudflare_unenv_preset_node_console();
     init_performance2();
-    __name(generateJWT, "generateJWT");
-    __name(verifyJWT, "verifyJWT");
+    __name(generateJWT2, "generateJWT");
+    __name(verifyJWT2, "verifyJWT");
     __name(hashPassword, "hashPassword");
-    __name(authenticateRequest, "authenticateRequest");
+    __name(authenticateRequest2, "authenticateRequest");
     __name(generateSignedResourceUrl, "generateSignedResourceUrl");
-    __name(verifySignedResourceUrl, "verifySignedResourceUrl");
-    __name(createHmacSignature, "createHmacSignature");
-    __name(base64UrlEncode, "base64UrlEncode");
-    __name(base64UrlDecode, "base64UrlDecode");
+    __name(verifySignedResourceUrl2, "verifySignedResourceUrl");
+    __name(createHmacSignature2, "createHmacSignature");
+    __name(base64UrlEncode2, "base64UrlEncode");
+    __name(base64UrlDecode2, "base64UrlDecode");
     __name(arrayBufferToBase64, "arrayBufferToBase64");
-    __name(arrayBufferToString, "arrayBufferToString");
+    __name(arrayBufferToString2, "arrayBufferToString");
   }
 });
 var require_tslib = __commonJS({
@@ -179110,7 +179243,7 @@ async function extractWithIsolatedPdfMode(pdfBuffer, pageNumber, env2) {
   console.log(`[Hardware Extractor] Using ISOLATED PDF mode for page ${pageNumber}...`);
   const overallStartTime = Date.now();
   const { pageBuffer, totalPages, extractionTimeMs: isolationTime } = await extractIsolatedPage(pdfBuffer, pageNumber);
-  const base64Pdf = arrayBufferToBase643(pageBuffer);
+  const base64Pdf = arrayBufferToBase6432(pageBuffer);
   const isolatedSizeKB = (pageBuffer.byteLength / 1024).toFixed(1);
   console.log(`[Hardware Extractor] Isolated PDF size: ${isolatedSizeKB}KB`);
   const prompt = buildIsolatedPageExtractionPrompt(pageNumber, totalPages);
@@ -179817,14 +179950,14 @@ var init_hardware_schedule_extractor = __esm({
     __name(loadRenderer, "loadRenderer");
     __name(extractIsolatedPage, "extractIsolatedPage");
     __name(buildHardwareExtractionPrompt, "buildHardwareExtractionPrompt");
-    __name(validateClaudeRequest, "validateClaudeRequest");
-    __name(getClaudeTimeout, "getClaudeTimeout");
+    __name(validateClaudeRequest2, "validateClaudeRequest");
+    __name(getClaudeTimeout2, "getClaudeTimeout");
     __name(parseHardwareExtractionResult, "parseHardwareExtractionResult");
-    __name(arrayBufferToBase643, "arrayBufferToBase64");
+    __name(arrayBufferToBase6432, "arrayBufferToBase64");
     __name(normalizeComponentType, "normalizeComponentType");
     __name(mapToDhiCategory, "mapToDhiCategory");
     __name(extractGrade, "extractGrade");
-    __name(detectImageMediaType, "detectImageMediaType");
+    __name(detectImageMediaType2, "detectImageMediaType");
     __name(extractSinglePage, "extractSinglePage");
     __name(extractWithIsolatedPdfMode, "extractWithIsolatedPdfMode");
     __name(buildIsolatedPageExtractionPrompt, "buildIsolatedPageExtractionPrompt");
