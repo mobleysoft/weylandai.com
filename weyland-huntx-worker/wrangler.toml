@@ -67,3 +67,8 @@ zone_name = "weylandai.com"
 [[routes]]
 pattern = "weylandai.com/huntx"
 zone_name = "weylandai.com"
+
+# Hourly source ingest (TxDOT + CA OPSC) - the only external calls this
+# Worker makes; requests read D1 only (2026-10-05).
+[triggers]
+crons = ["17 * * * *"]

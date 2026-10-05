@@ -35,6 +35,7 @@ import { NativeRouter } from "./lib/router.js";
 import { authenticate } from "./lib/auth.js";
 import { registerHuntRoutes } from "./routes/hunt.js";
 import { serve_huntx } from "./pages/huntx.js";
+import { ingestSources } from "./lib/ingest.js";
 
 const router = new NativeRouter();
 registerHuntRoutes(router, { authenticate });
@@ -63,5 +64,11 @@ export default {
     }
 
     return router.handle(request, env, ctx);
+  },
+
+  // Hourly (see wrangler.toml [triggers]): the only path that touches
+  // TxDOT / CA OPSC. Requests never do - see src/lib/ingest.js.
+  async scheduled(event, env, ctx) {
+    ctx.waitUntil(ingestSources(env).then((r) => console.log("[HuntX Ingest] cron run", JSON.stringify({ upserted: r.upserted, errors: r.errors }))));
   },
 };

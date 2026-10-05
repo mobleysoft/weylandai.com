@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <meta name="theme-color" content="#0b0d13">
   <title>WeylandAI | Match every spec line to the real catalog page, with the citation</title>
+  <link rel="stylesheet" href="/assets/fonts.css?v=20261005">
   <script type="application/ld+json">{"@context":"https://schema.org","@type":"Organization","name":"WeylandAI","url":"https://weylandai.com/","description":"CutsheetX matches every door and hardware spec line to the real catalog page, with the citation; the same project record flows through bids, takeoffs, submittals, proposals, meetings and a 3D field twin.","founder":[{"@type":"Person","name":"Ron Helms","jobTitle":"CEO and Lead Software Developer"},{"@type":"Person","name":"John Mobley","jobTitle":"CTO and Chief Architect"},{"@type":"Person","name":"Andrew Miller","jobTitle":"Business Development","worksFor":{"@type":"Organization","name":"Precision Auto Doors"}}]}</script>
 <link rel="canonical" href="https://weylandai.com/">
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%232a52ff'/%3E%3Cpath d='M10 16h8l6 24 6-18h4l6 18 6-24h8L44 50h-8l-4-13-4 13h-8z' fill='%23ffd400'/%3E%3C/svg%3E">
@@ -25,9 +26,6 @@
        on consenta.cc. Added for launch so traffic is measured at all. -->
   <script defer src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token": "a5cb75feac5a4d3b8147ccd94b355618"}'></script>
   <meta name="description" content="CutsheetX matches every door and hardware spec line to the real manufacturer catalog page, with a citation back to the source. Try it with no account. Part of the WeylandAI suite for commercial subcontractors: bids, takeoffs, submittals, proposals, meetings, and a 3D field twin on one project record.">>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
   <style>
     :root {
       /* Same pairing SightX's own HUD already uses - the card (device) and
@@ -1988,7 +1986,7 @@
           <option value="txdot">Texas DOT (Highway &amp; Bridge Lettings)</option>
           <option value="ca_opsc">CA School Construction Funding (OPSC)</option>
         </select>
-        <button id="hx-refresh-btn" class="button primary" type="button">REFRESH FROM SOURCES</button>
+        <button id="hx-refresh-btn" class="button primary" type="button">RELOAD INDEX</button>
         <span id="hx-status" style="color:var(--muted);font-size:12px;margin-left:auto">Connecting&hellip;</span>
       </div>
 
@@ -3140,16 +3138,15 @@
     }
 
     function loadHuntOpportunities(isManualRefresh) {
-      if (hxStatus) hxStatus.textContent = "Pulling latest dockets from live public APIs...";
+      if (hxStatus) hxStatus.textContent = "Loading the opportunity index...";
       if (hxRefresh) hxRefresh.disabled = true;
       ephemeralToken().then(function(token) {
         var doFetch = function() {
           return fetch("/api/hunt/opportunities", { headers: { "Authorization": "Bearer " + token } });
         };
-        var p = isManualRefresh
-          ? fetch("/api/hunt/refresh", { method: "POST", headers: { "Authorization": "Bearer " + token } }).then(doFetch)
-          : doFetch();
-        return p;
+        // The page only ever reads our own index (D1). TxDOT / CA OPSC are
+        // pulled by the HuntX Worker's hourly cron, never by a visitor.
+        return doFetch();
       }).then(function(r) {
         if (!r.ok) return r.json().catch(function(){ return {}; }).then(function(d) {
           throw new Error((d.error && (d.error.message || d.error)) || ("request failed (" + r.status + ")"));
@@ -3158,11 +3155,13 @@
       }).then(function(data) {
         var rows = (data && data.opportunities) || [];
         originalHuntRows = rows.map(huntApiRow);
-        if (hxStatus) hxStatus.textContent = rows.length ? ("Synced " + rows.length + " live opportunities.") : "Live sources connected. No opportunities match current filters yet.";
+        var ing = data && data.lastIngest;
+        var when = ing && (ing.finished_at || ing.started_at) ? new Date(ing.finished_at || ing.started_at).toLocaleString() : (data && data.lastFetchedAt ? new Date(data.lastFetchedAt).toLocaleString() : null);
+        if (hxStatus) hxStatus.textContent = rows.length ? (rows.length + " opportunities in the index" + (when ? " · sources ingested " + when : "") + ".") : "The index has no opportunities matching the current filters yet.";
         if (hxLastFetch) hxLastFetch.textContent = new Date().toLocaleTimeString();
         filterHuntRows();
       }).catch(function(err) {
-        if (hxStatus) hxStatus.textContent = "Couldn't reach live sources: " + err.message;
+        if (hxStatus) hxStatus.textContent = "Couldn't read the opportunity index: " + err.message;
         if (hxLastFetch) hxLastFetch.textContent = "Unavailable";
       }).finally(function() {
         if (hxRefresh) hxRefresh.disabled = false;
