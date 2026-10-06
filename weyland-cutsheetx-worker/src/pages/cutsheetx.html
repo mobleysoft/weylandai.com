@@ -97,12 +97,10 @@
     <div class="card" id="price-review">
       <h2>Review Catalogue Prices</h2>
       <p>Upload a price-book PDF or enter its source URL. Extracted rows remain drafts until you check the source and explicitly choose Human Affirm. Quote-only and unresolved rows need review, not guessed prices.</p>
-      <p id="price-sandbox" hidden class="note-card">Local virtual-user sandbox: approved synthetic fixtures only. Human Affirm, price publication, quotes and submittals are blocked by the sandbox server. OCR is fixture text replay.</p>
       <div class="row">
         <label>Manufacturer<input id="price-manufacturer" placeholder="e.g. Schlage"></label>
         <label>Catalogue URL<input id="price-url" type="url" placeholder="https://manufacturer.example/price-book.pdf"></label>
         <label>Or upload PDF<input id="price-file" type="file" accept="application/pdf,.pdf"></label>
-        <select id="price-fixtures" hidden aria-label="Approved sandbox fixture"><option value="">Choose a synthetic test fixture</option></select>
       </div>
       <button id="price-extract" type="button">Extract draft prices</button>
       <button id="price-cancel" type="button">Cancel review / back to input</button>
@@ -286,7 +284,6 @@
 
     // Price-book review: drafts are not pricing until explicitly reviewed.
     var priceEpoch = 0, priceController = null, priceIds = [];
-    var priceSandbox = false;
     var priceMessage = document.getElementById('price-status');
     var priceRows = document.getElementById('price-candidates');
     var priceEvidence = document.getElementById('price-evidence');
@@ -329,7 +326,7 @@
       }).join('');
       (data.candidates||[]).forEach(function(c,i){
         var checked=document.getElementById('price-reviewed-'+i),affirm=document.getElementById('price-affirm-'+i);
-        checked.onchange=function(){affirm.disabled=priceSandbox||!checked.checked;};
+        checked.onchange=function(){affirm.disabled=!checked.checked;};
         document.getElementById('price-source-'+i).onclick=async function(){
           try{
             var r=await fetch('/api/cps/price-candidates/'+encodeURIComponent(c.id)+'/source',{headers:authHeaders()});
@@ -341,7 +338,7 @@
         };
         async function save(affirmed){
           try{
-            if(affirmed&&(!checked.checked||priceSandbox))throw new Error('Human source review is required; sandbox affirmation is blocked.');
+            if(affirmed&&!checked.checked)throw new Error('Human source review is required.');
             var edits=correction(i);
             await priceRequest('/api/cps/price-candidates/'+encodeURIComponent(c.id)+'/affirm',{method:'PATCH',headers:authHeaders(true),body:JSON.stringify({affirmed:affirmed,reviewed_source:affirmed&&checked.checked,edits:edits})});
             if(epoch!==priceEpoch)return;await renderPriceCandidates(epoch);priceNotice(affirmed?'Human Affirm recorded. No quote or submittal was created.':'Corrections saved as an unaffirmed draft. Review the source again before Human Affirm.');
@@ -369,15 +366,6 @@
       finally{if(epoch===priceEpoch)button.disabled=false;}
     };
     document.getElementById('price-cancel').onclick=function(){priceEpoch++;if(priceController)priceController.abort();priceIds=[];priceRows.replaceChildren();clearPriceEvidence();document.getElementById('price-extract').disabled=false;priceNotice('Review cancelled. Already staged candidates remain drafts; no prices were affirmed.');document.getElementById('price-url').focus();};
-    // This endpoint exists only in the separate localhost sandbox server.
-    // It changes display controls, never the server's mutation permissions.
-    fetch('/api/cps/virtual-user/status').then(function(r){return r.ok?r.json():null;}).then(function(mode){
-      if(!mode||mode.sandbox!==true)return;priceSandbox=true;
-      document.getElementById('price-sandbox').hidden=false;var select=document.getElementById('price-fixtures');select.hidden=false;
-      (mode.fixtures||[]).forEach(function(f){var o=document.createElement('option');o.value=f.url;o.textContent=f.name;select.append(o);});
-      select.onchange=function(){document.getElementById('price-url').value=select.value;document.getElementById('price-file').value='';};
-    }).catch(function(){});
-
     // ---------------- Component Match ----------------
     document.getElementById('match-btn').addEventListener('click', function(){
       var manufacturer = document.getElementById('match-mfr').value.trim();
