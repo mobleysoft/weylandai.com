@@ -144,7 +144,9 @@ export default {
       // for "/" and knows nothing about the fragment JSON contract - see
       // ../../src/lib/weyland-entry.js's identical fix for the same reason.
       const isFragmentRequest = request.headers.get("X-Skeletonking-Route") === "fragment";
-      const isHome = url.pathname === "/" || url.pathname === "/index.html";
+      // /login is a view of the homepage (single page: the shell opens its sign-in overlay there);
+      // the old standalone page in routes/login-page.js only answers if the edge fetch fails.
+      const isHome = url.pathname === "/" || url.pathname === "/index.html" || url.pathname === "/login";
       if (isHome && env.MASCOM_EDGE && !isFragmentRequest) {
         try {
           const edgeResp = await env.MASCOM_EDGE.fetch("https://weylandai.com/");
