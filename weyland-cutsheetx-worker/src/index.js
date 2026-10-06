@@ -113,10 +113,12 @@ import { registerCutSheetLocalRoutes } from "./routes/cut-sheet-local.js";
 import { registerUserCutsheetsRoutes } from "./routes/user-cutsheets.js";
 import { registerCatalogueProductsRoutes } from "./routes/catalogue-products.js";
 import { registerCatalogueDocumentsRoutes } from "./routes/catalogue-documents.js";
+import { registerFindRoutes } from "./routes/find.js";
 
 import cutsheetxHtml from "./pages/cutsheetx.html";
 import { seedCorpusWanted, ingestCorpus, corpusStatus } from "./lib/catalog-corpus.js";
 import { resolveCatalogueStoragePaths } from "./lib/catalogue-storage.js";
+import { computeProductCoverageBatch, productCoverageSummary } from "./lib/product-coverage.js";
 import { EXPANDED_URL_PATTERNS } from "./lib/cutsheet-discovery.js";
 
 const WORKER_VERSION = "2026-10-04.1";
@@ -179,13 +181,20 @@ async function runCorpusIngest(env) {
   // so page renders and catalogue-page citations point at real objects.
   const storage = await resolveCatalogueStoragePaths(env).catch((e) => ({ error: e.message }));
   console.log("[corpus] catalogue storage paths", JSON.stringify(storage));
+  // Catalogue pages are documents too: check the next batch of products for a
+  // sheet or a catalogue page naming the model (lib/product-coverage.js).
+  const coverage = await computeProductCoverageBatch(env, 250).catch((e) => ({ error: e.message }));
+  console.log("[corpus] product coverage batch", JSON.stringify(coverage));
   const seeded = await seedCorpusWanted(env, EXPANDED_URL_PATTERNS);
   const ingested = await ingestCorpus(env, 10);
   const status = await corpusStatus(env);
   console.log("[corpus] run", JSON.stringify({ seeded, ingested, status }));
   return { seeded, ingested, status };
 }
-router.get("/api/cut-sheets/corpus/status", async (_request, env) => jsonResponse3(await corpusStatus(env)));
+// Public cut-sheet finder (2026-10-05): /find, /find/<mfr>/<model>, /find/sitemap.xml, /api/catalogue/find
+registerFindRoutes(router);
+
+router.get("/api/cut-sheets/corpus/status", async (_request, env) => jsonResponse3(Object.assign(await corpusStatus(env), { modelCoverage: await productCoverageSummary(env).catch((e) => ({ error: e.message })) })));
 router.post("/api/cut-sheets/corpus/ingest", async (request, env, ctx) => {
   const { error: authError, user } = await authenticate(request, env);
   if (authError) return authError;

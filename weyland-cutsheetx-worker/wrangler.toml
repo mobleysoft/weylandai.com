@@ -126,3 +126,8 @@ zone_name = "weylandai.com"
 [[routes]]
 pattern = "weylandai.com/api/user/cutsheets*"
 zone_name = "weylandai.com"
+
+# Public cut-sheet finder pages (2026-10-05): indexable product URLs served by this worker.
+[[routes]]
+pattern = "weylandai.com/find*"
+zone_name = "weylandai.com"

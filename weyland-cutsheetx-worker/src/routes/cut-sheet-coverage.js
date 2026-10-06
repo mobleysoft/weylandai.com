@@ -22,6 +22,7 @@
 // parsePageHint) - nothing here guesses a page.
 
 import { jsonResponse3 } from "../lib/json-response.js";
+import { productCoverageSummary } from "../lib/product-coverage.js";
 import { kvRateLimit, normalizeMissKey } from "../lib/cut-sheet-misses.js";
 
 const COVERAGE_TTL_SECONDS = 60;
@@ -141,6 +142,12 @@ router.get("/api/cut-sheets/coverage", async (request2, env2, ctx) => {
     countOrNull(db, "SELECT COUNT(*) AS c FROM cut_sheet_misses"),
     countOrNull(db, "SELECT COUNT(*) AS c FROM cut_sheet_manufacturer_requests"),
   ]);
+  // Catalogue pages are documents too (2026-10-05): how many catalogue pages
+  // carry text, and the checked product-level coverage (sheet OR page).
+  const cataloguePages = await countOrNull(db, "SELECT COUNT(*) AS c FROM catalogue_pages WHERE text_content IS NOT NULL AND char_count > 0");
+  const catalogues = await countOrNull(db, "SELECT COUNT(*) AS c FROM catalogues WHERE text_extracted = 1");
+  let modelCoverage = null;
+  try { modelCoverage = await productCoverageSummary(env2); } catch (err) { console.error("[coverage] modelCoverage failed:", err?.message || err); }
   let topMissed = [];
   try {
     const rows = await db.prepare(`
@@ -159,6 +166,9 @@ router.get("/api/cut-sheets/coverage", async (request2, env2, ctx) => {
     // stored PDF files (full price books), so nobody reads cutSheets as
     // "7,792 separate documents".
     cutSheetFiles,
+    cataloguePages,
+    catalogues,
+    modelCoverage,
     misses_total: missesTotal,
     misses_distinct: missesDistinct,
     top_missed: topMissed,

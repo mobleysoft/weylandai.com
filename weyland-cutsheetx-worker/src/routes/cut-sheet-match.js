@@ -65,6 +65,13 @@ function toBatchResult(line, r) {
     // 2026-10-05: when no cut sheet is filed, the first catalogue page that
     // mentions the model (see product-database.js getCataloguePagesForModel).
     cataloguePage: (r.cataloguePages && r.cataloguePages[0]) || null,
+    // One citation whichever kind is filed: a standalone sheet first, else
+    // the catalogue page that names the model. Null only when neither exists.
+    citation: sheet
+      ? { kind: "cut_sheet", title: sheet.title, page: sheet.pageHint || null, url: sheet.pageUrl || null }
+      : ((r.cataloguePages && r.cataloguePages[0])
+        ? { kind: "catalogue_page", title: r.cataloguePages[0].title, page: String(r.cataloguePages[0].pageNum), url: r.cataloguePages[0].pageUrl || null }
+        : null),
   };
 }
 

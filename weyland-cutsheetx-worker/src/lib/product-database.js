@@ -500,4 +500,5 @@ export {
   matchComponentToCutSheets,
   parsePageHint,
   cutSheetCitation,
+  getCataloguePagesForModel,
 };
