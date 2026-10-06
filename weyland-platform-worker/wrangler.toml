@@ -172,6 +172,13 @@ zone_name = "weylandai.com"
 pattern = "weylandai.com/login"
 zone_name = "weylandai.com"
 
+# 2026-10-06: a route with no wildcard does not match once a query string is present, so
+# /login?redirect=... fell through to weylandai.com/* (the monolith and its old login page). The
+# wildcard sends every /login URL here, where it is a view of the homepage (single page).
+[[routes]]
+pattern = "weylandai.com/login*"
+zone_name = "weylandai.com"
+
 [[routes]]
 pattern = "weylandai.com/api/auth/*"
 zone_name = "weylandai.com"

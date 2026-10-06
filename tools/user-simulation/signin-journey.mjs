@@ -82,7 +82,8 @@ try {
   await page.waitForTimeout(800);
   const navAfterLoad = navigations;
   // "No postback" means the document is never replaced: a mark set now must survive every step.
-  const docMark = await page.evaluate(() => (window.__waDocMark = "doc-" + Math.random().toString(36).slice(2)));
+  const markDoc = () => page.evaluate(() => (window.__waDocMark = "doc-" + Math.random().toString(36).slice(2)));
+  let docMark = await markDoc();
   const sameDoc = async () => (await page.evaluate(() => window.__waDocMark).catch(() => null)) === docMark;
 
   // The homepage's own Sign In buttons sit on the 3D dossier and can be tiny or covered; the
@@ -105,8 +106,10 @@ try {
   if (formShown) {
     await page.fill("#weyland-signin-email", email);
     await page.fill("#weyland-signin-password", password);
+    const before = await page.evaluate(() => ({ e: document.getElementById("weyland-signin-email").value.length, p: document.getElementById("weyland-signin-password").value.length }));
+    check("homepage form holds both values right before submit", before.e > 0 && before.p > 0, JSON.stringify(before));
     await page.click("#weyland-signin-submit");
-    await page.waitForFunction(() => document.documentElement.dataset.weylandAuth === "signed-in", null, { timeout: 20000 }).catch(() => {});
+    await page.waitForFunction(() => document.documentElement.dataset.weylandAuth === "signed-in", null, { timeout: 45000 }).catch(() => {});
   }
   const st = await page.evaluate(() => ({ auth: document.documentElement.dataset.weylandAuth || "", user: document.documentElement.dataset.weylandUser || "", label: (document.querySelector(".wn-signin") || {}).textContent || "" }));
   check("no postback during sign-in", await sameDoc(), "document replaced=" + !(await sameDoc()));
@@ -122,6 +125,7 @@ try {
   await page.reload({ waitUntil: "load" });
   await page.waitForFunction(() => document.documentElement.dataset.weylandAuth === "signed-in", null, { timeout: 15000 }).catch(() => {});
   check("signed-in state survives a reload", await page.evaluate(() => document.documentElement.dataset.weylandAuth) === "signed-in");
+  docMark = await markDoc(); // the reload replaced the document on purpose; mark the new one
 
   await page.evaluate(() => window.WeylandShell.open("app", { path: "/subx-app" }));
   const frame = page.frameLocator("#wa-overlay iframe");
@@ -148,16 +152,35 @@ try {
   // ---- Journey B: the /login deep link used by product pages ----
   const ctx2 = await browser.newContext();
   const p2 = await ctx2.newPage();
+  const apiLog = [];
+  p2.on("response", async (r) => {
+    const u = r.url();
+    if (!/\/api\/auth\/|authfor\.com\/api\/v1\//.test(u)) return;
+    let extra = "";
+    if (r.status() >= 400) {
+      const body = await r.text().catch(() => "");
+      let sent = {};
+      try { sent = JSON.parse(r.request().postData() || "{}"); } catch (e) { sent = {}; }
+      extra = " body=" + body.slice(0, 120) + " sent_email=" + (sent.email ? "yes" : "no") + " sent_password=" + (sent.password ? "yes(" + String(sent.password).length + ")" : "no");
+    }
+    apiLog.push(r.request().method() + " " + u.replace(/^https:\/\/[^/]+/, "") + " " + r.status() + extra);
+  });
+  let renders = 0;
+  await p2.exposeFunction("__waRender", () => { renders += 1; });
+  await p2.addInitScript(() => { new MutationObserver(() => { const f = document.getElementById("weyland-signin-email"); if (f && !f.__seen) { f.__seen = true; window.__waRender && window.__waRender(); } }).observe(document, { childList: true, subtree: true }); });
   await p2.goto(BASE + "/login?redirect=/subx-app", { waitUntil: "load" });
   await p2.waitForSelector("#weyland-signin-email", { timeout: 15000 }).catch(() => {});
   check("/login opens the same in-page sign-in (no separate page)", await p2.locator("#weyland-signin-email").isVisible().catch(() => false));
-  await p2.fill("#weyland-signin-email", email).catch(() => {});
-  await p2.fill("#weyland-signin-password", password).catch(() => {});
-  await p2.click("#weyland-signin-submit").catch(() => {});
-  await p2.waitForFunction(() => document.documentElement.dataset.weylandAuth === "signed-in", null, { timeout: 20000 }).catch(() => {});
+  await p2.fill("#weyland-signin-email", email);
+  await p2.fill("#weyland-signin-password", password);
+  const before = await p2.evaluate(() => ({ e: document.getElementById("weyland-signin-email").value.length, p: document.getElementById("weyland-signin-password").value.length }));
+  check("/login form holds both values right before submit", before.e > 0 && before.p > 0, JSON.stringify(before));
+  await p2.click("#weyland-signin-submit");
+  await p2.waitForFunction(() => document.documentElement.dataset.weylandAuth === "signed-in" || !!((document.querySelector("#wa-overlay .wa-error") || {}).textContent), null, { timeout: 45000 }).catch(() => {});
   await p2.waitForTimeout(1500);
-  const b = await p2.evaluate(() => ({ path: location.pathname, view: window.WeylandShell ? window.WeylandShell.state().view : null }));
-  check("/login continues to its target inside the overlay", b.path === "/subx-app" && b.view === "app", JSON.stringify(b));
+  const b = await p2.evaluate(() => ({ path: location.pathname, view: window.WeylandShell ? window.WeylandShell.state().view : null,
+    error: ((document.querySelector("#wa-overlay .wa-error") || {}).textContent || "").trim(), auth: document.documentElement.dataset.weylandAuth }));
+  check("/login continues to its target inside the overlay", b.path === "/subx-app" && b.view === "app", JSON.stringify(b) + " sign-in form renders=" + renders + " api=" + apiLog.join(" | "));
   const sv3 = await serverView(ctx2);
   check("/login sign-in also creates the server session", sv3.cookie && sv3.valid, JSON.stringify(sv3));
   await ctx2.close();

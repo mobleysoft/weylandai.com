@@ -193,6 +193,23 @@
     return Promise.resolve();
   }
 
+  function authforLogin(auth, em, pw) {
+    return fetch("https://authfor.com/api/v1/login", {
+      method: "POST", headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ email: em, password: pw, client_id: auth.clientId, venture_id: auth.ventureName, redirect_url: auth.redirectUrl })
+    }).then(function (r) {
+      return r.json().catch(function () { return {}; }).then(function (d) {
+        if (!r.ok) {
+          var msg = d.message || d.detail || d.error || "";
+          if (r.status === 401) msg = "That email and password do not match an account.";
+          throw new Error(msg || ("Sign-in failed (" + r.status + ")."));
+        }
+        if (d.mfa_required) { auth._mfaRequired = true; auth._mfaPending = d.mfa_token; return { mfa_required: true }; }
+        return auth._processAuthResponse(d);
+      });
+    });
+  }
+
   function errorBox() { return h("div", { "class": "wa-error", role: "alert" }); }
   function showError(box, msg) { box.textContent = msg; box.style.display = "block"; }
 
@@ -206,24 +223,39 @@
     var codeWrap = h("div", { style: "display:none" }, [h("label", { "for": "weyland-signin-code", text: "Authenticator code" }), code]);
     var submit = h("button", { id: "weyland-signin-submit", "class": "wa-primary", type: "submit", text: "SIGN IN" });
     var mfa = false;
+    var inflight = false;
     var form = h("form", { novalidate: "novalidate", onsubmit: function (e) {
       e.preventDefault();
+      if (inflight) return; // one attempt at a time; a second submit never races the first
       err.style.display = "none";
+      var em = email.value.trim(), pw = pass.value;
+      if (!mfa && !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(em)) { showError(err, "Enter the email your WeylandAI account uses."); email.focus(); return; }
+      if (!mfa && !pw) { showError(err, "Enter your password."); pass.focus(); return; }
+      if (mfa && !code.value.trim()) { showError(err, "Enter the code from your authenticator app."); code.focus(); return; }
       var auth = sdk();
       if (!auth) { showError(err, "Sign-in is still loading. Try again in a second."); return; }
-      submit.disabled = true;
-      submit.textContent = "SIGNING IN...";
-      var p = mfa ? auth.verifyMFA(code.value.trim()) : auth.login(email.value.trim(), pass.value);
+      inflight = true;
+      var started = Date.now();
+      var stage = "Checking your password";
+      submit.disabled = true; email.disabled = true; pass.disabled = true;
+      var tick = setInterval(function () {
+        var secs = Math.round((Date.now() - started) / 1000);
+        submit.textContent = stage.toUpperCase() + "... " + secs + "s";
+        if (secs >= 25) showError(err, "This is taking longer than it should. You can wait, or close and try again.");
+      }, 500);
+      function done() { clearInterval(tick); inflight = false; submit.disabled = false; email.disabled = false; pass.disabled = false; submit.textContent = mfa ? "VERIFY CODE" : "SIGN IN"; }
+      var p = mfa ? auth.verifyMFA(code.value.trim()) : authforLogin(auth, em, pw);
       Promise.resolve(p).then(function (res) {
         if (res && res.mfa_required) {
-          mfa = true; codeWrap.style.display = "block"; submit.disabled = false; submit.textContent = "VERIFY CODE";
+          mfa = true; codeWrap.style.display = "block"; done();
           setTimeout(function () { code.focus(); }, 30);
           return;
         }
+        stage = "Opening your account";
         return afterAuthFor(continueTo, err);
       }).catch(function (e2) {
         showError(err, (e2 && e2.message) || "Sign-in failed. Check the email and password.");
-      }).then(function () { if (!mfa || S.status === "signed-in") { submit.disabled = false; submit.textContent = "SIGN IN"; } });
+      }).then(done);
     } }, [
       h("label", { "for": "weyland-signin-email", text: "Email" }), email,
       h("label", { "for": "weyland-signin-password", text: "Password" }), pass,
