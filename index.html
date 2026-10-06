@@ -2738,7 +2738,7 @@
               </tr>
               <tr>
                 <td><strong>Pricing Model</strong></td>
-                <td class="weyland-col"><span class="chk-yes">&check;</span> <strong>$2,499/mo Flat Suite</strong> &mdash; Predictable, uncapped estimating volume.</td>
+                <td class="weyland-col"><span class="chk-yes">&check;</span> <strong><span data-sku-price="weyland-subconp-seat">$2,000</span>/mo Flat Suite</strong> &mdash; Predictable, uncapped estimating volume.</td>
                 <td><span class="chk-no">&cross;</span> $18,000&ndash;$30,000/yr across 4 separate vendor bills.</td>
                 <td><span class="chk-no">&cross;</span> $15,000&ndash;$45,000/yr based on firm's gross revenue.</td>
               </tr>
@@ -2777,7 +2777,7 @@
             <li><span class="chk-yes">&check;</span> Export opportunities to CSV/JSON</li>
             <li><span class="chk-yes">&check;</span> 3 Estimator logins included</li>
           </ul>
-          <a class="js-checkout button" data-product="weyland-huntx-seat" href="#pricing" style="width:100%;justify-content:center">START HUNTX &middot; $799/MO</a>
+          <a class="js-checkout button" data-product="weyland-huntx-seat" href="#pricing" style="width:100%;justify-content:center">START HUNTX &middot; <span data-sku-price="weyland-huntx-seat">$799</span>/MO</a>
           <div class="js-checkout-note" style="font-size:12px;color:var(--muted);margin-top:8px;min-height:1.2em" aria-live="polite"></div>
         </div>
 
@@ -2788,7 +2788,7 @@
             <span style="color:var(--accent);font:800 11px ui-monospace,monospace;letter-spacing:0.12em;text-transform:uppercase">UNIFIED OPERATING PACKAGE</span>
             <h3>SubConP Core Suite</h3>
             <p style="color:var(--muted);font-size:13px;line-height:1.5;margin:8px 0 0">The complete back-office to field automation suite for commercial subcontractors.</p>
-            <div class="pricing-cost" style="color:var(--accent)">$2,499 <span>/ month</span></div>
+            <div class="pricing-cost" style="color:var(--accent)"><span data-sku-price="weyland-subconp-seat">$2,000</span> <span>/ month</span></div>
           </div>
           <ul class="pricing-features">
             <li><span class="chk-yes">&check;</span> <strong>HuntX</strong>: Full state open-data lead discovery</li>
@@ -2799,7 +2799,7 @@
             <li><span class="chk-yes">&check;</span> Uncapped project estimating volume</li>
             <li><span class="chk-yes">&check;</span> Up to 10 concurrent team members</li>
           </ul>
-          <a class="js-checkout button accent" data-product="weyland-subconp-seat" href="#pricing" style="width:100%;justify-content:center">START SUBCONP SUITE &middot; $2,499/MO</a>
+          <a class="js-checkout button accent" data-product="weyland-subconp-seat" href="#pricing" style="width:100%;justify-content:center">START SUBCONP SUITE &middot; <span data-sku-price="weyland-subconp-seat">$2,000</span>/MO</a>
           <div class="js-checkout-note" style="font-size:12px;color:var(--muted);margin-top:8px;min-height:1.2em" aria-live="polite"></div>
         </div>
 
@@ -3295,6 +3295,19 @@
           }).join("");
           out.innerHTML = "<div style=\"color:var(--text);font-weight:700;margin-bottom:6px\">" + (sum.matched || 0) + " of " + (sum.total || results.length) + " lines matched \u00b7 " + ms + " ms</div>" +
             "<div style=\"overflow-x:auto\"><table style=\"width:100%;border-collapse:collapse;font-size:12.5px\"><thead><tr style=\"color:var(--muted);text-align:left\"><th>SPEC LINE</th><th>MATCHED</th><th>CONFIDENCE</th><th>CITATION</th></tr></thead><tbody>" + rows + "</tbody></table></div>";
+          if ((sum.matched || 0) > 0) {
+            // Decision 2026-10-05: no new per-packet price. The packet is part of the SubX seat
+            // (price from the SKU via [data-sku-price]); the click goes straight to Stripe Checkout.
+            out.insertAdjacentHTML("beforeend",
+              "<div class=\"hs-packet\" style=\"margin-top:12px;padding:12px 14px;border:1px solid var(--border);border-radius:8px;display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between\">" +
+                "<span style=\"color:var(--text);font-size:13px;line-height:1.5;max-width:46ch\"><strong>" + (sum.matched || 0) + " matched line" + ((sum.matched || 0) === 1 ? "" : "s") + "</strong> can become a submittal packet: cut sheets, catalogue pages and citations assembled into one PDF, every line traceable to its source.</span>" +
+                "<span style=\"display:flex;flex-direction:column;gap:4px;min-width:220px\">" +
+                  "<a class=\"js-checkout button accent\" data-product=\"weyland-subx-seat\" href=\"#pricing\" style=\"padding:9px 14px;font-size:11px;justify-content:center\">BUILD THE PACKET \u00b7 SUBX <span data-sku-price=\"weyland-subx-seat\">$599</span>/MO</a>" +
+                  "<span class=\"js-checkout-note\" style=\"font-size:11px;color:var(--muted);min-height:1.2em\" aria-live=\"polite\"></span>" +
+                "</span>" +
+              "</div>");
+            if (window.__weylandFillSkuPrices) window.__weylandFillSkuPrices();
+          }
           hsMatched = results.filter(function (r) { return r.matched; }).map(function (r) { var p = r.product || {}; return { label: p.model || r.model || "", sub: (p.manufacturer || r.manufacturer || "") + (p.category ? " \u00b7 " + p.category : "") }; });
           hsWalk.disabled = hsMatched.length === 0;
           var d = dossierRead(); d.matches = (d.matches || []).concat(results.filter(function (r) { return r.matched; }).map(function (r) { return { raw: r.raw, product: (r.product || {}).name, confidence: r.confidence, at: Date.now() }; })).slice(-200); dossierWrite(d);
@@ -3752,12 +3765,43 @@
         openUpgradeModal();
       });
     });
+    // Prices come from the Stripe SKUs (GET /api/billing/catalog, our own API), never
+    // typed into copy: every [data-sku-price] is filled from unit_amount at load. The
+    // static text is the pre-fill, so nothing jumps if the request is slow or fails.
+    var skuCatalogPromise = null;
+    function fillSkuPrices() {
+      var els = document.querySelectorAll("[data-sku-price]");
+      if (!els.length || !window.fetch) return;
+      skuCatalogPromise = skuCatalogPromise || fetch("/api/billing/catalog", { credentials: "omit" })
+        .then(function(r) { return r.ok ? r.json() : null; })
+        .then(function(d) {
+          var list = (d && d.products) || [];
+          var byId = {};
+          list.forEach(function(p) { if (p && p.id && typeof p.unit_amount === "number") byId[p.id] = p; });
+          return byId;
+        });
+      skuCatalogPromise
+        .then(function(byId) {
+          els.forEach(function(el) {
+            var p = byId[el.getAttribute("data-sku-price")];
+            if (!p) return;
+            var dollars = Math.round(p.unit_amount / 100);
+            el.textContent = "$" + dollars.toLocaleString("en-US");
+            if (p.trial_period_days) el.setAttribute("title", p.trial_period_days + "-day trial, then $" + dollars.toLocaleString("en-US") + "/" + (p.currency || "usd").toUpperCase() + " per month");
+          });
+        })
+        .catch(function() {});
+    }
+    fillSkuPrices();
+    window.__weylandFillSkuPrices = fillSkuPrices;
     // Pricing: straight to a real Stripe Checkout session. No account first:
     // the platform creates the session unauthenticated and the purchase is
     // attached to the buyer on return (ephemeral session, same as every
     // other demo on this page). A failure is shown inline, never swallowed.
-    document.querySelectorAll(".js-checkout").forEach(function(el) {
-      el.addEventListener("click", function(e) {
+    document.addEventListener("click", function(e) {
+      var el = e.target && e.target.closest ? e.target.closest(".js-checkout") : null;
+      if (!el) return;
+      (function(el) {
         e.preventDefault();
         var note = el.parentNode.querySelector(".js-checkout-note");
         var product = el.getAttribute("data-product");
@@ -3777,7 +3821,7 @@
             el.removeAttribute("aria-busy");
             if (note) note.textContent = "Checkout did not open: " + err.message + " \u2014 email hello@weylandai.com and we will send a link.";
           });
-      });
+      })(el);
     });
     document.querySelectorAll("[data-upgrade-close]").forEach(function(el) {
       el.addEventListener("click", closeUpgradeModal);
