@@ -476,6 +476,14 @@ router.post("/api/hardware-schedule/session/:sessionId/page/:pageNum/extract-res
     // (extractDoorScheduleViaEmbeddedGofaineat) already uses, not a second
     // parallel write path.
     if (Array.isArray(extraction.doors)) {
+      if (extraction.doors.length === 0) {
+        return jsonResponse3({
+          success: false,
+          error: "EMPTY_DOOR_SCHEDULE",
+          details: "No door rows were extracted. Review the source page, orientation and table detection before continuing.",
+          requires_review: true
+        }, 422);
+      }
       const written = await writeDoorScheduleEntries(sessionId, session.tenant_id || null, pageNumber, extraction.doors, extraction.extraction_confidence || 0.85, env2);
       if (!written.success) {
         return jsonResponse3({ error: "Failed to store door-schedule result", details: written.error }, 500);

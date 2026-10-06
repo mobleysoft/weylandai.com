@@ -35169,6 +35169,22 @@ function registerHardwareScheduleFinalizeImageRoutes(router2, {
   });
 }
 
+// weyland-subx-worker/src/lib/hardware-schedule-tenant.js
+function resolveHardwareScheduleTenant(user, requestedTenant) {
+  const own = [user?.tenant_id, user?.tenantId];
+  const memberships = Array.isArray(user?.tenants) ? user.tenants.map((t) => t?.id) : [];
+  const allowed = new Set([...own, ...memberships].filter((id) => typeof id === "string" && id.trim()).map((id) => id.trim()));
+  const defaultTenant = own.find((id) => typeof id === "string" && id.trim())?.trim() || memberships.find((id) => typeof id === "string" && id.trim())?.trim();
+  if (requestedTenant != null && typeof requestedTenant !== "string") {
+    return { status: 400, error: "tenant_id must be a string" };
+  }
+  const selected = requestedTenant?.trim() || defaultTenant;
+  if (!selected || !allowed.has(selected)) {
+    return { status: 403, error: "Tenant access denied for this authenticated user" };
+  }
+  return { tenantId: selected };
+}
+
 // src/routes/hardware-schedule-extract.js
 function countPdfPagesRaw(buffer) {
   try {
@@ -35360,7 +35376,6 @@ function registerHardwareScheduleExtractRoutes(router2, {
       const submittalId = formData.get("submittalId") || null;
       const totalPages = parseInt(formData.get("totalPages") || "0", 10);
       const documentType = formData.get("document_type") || "hardware_schedule";
-      const tenantId = formData.get("tenant_id") || (request2?.user?.tenant_id || "ven_weyland");
       if (!file) {
         return jsonResponse3({ error: "No file provided" }, 400);
       }
@@ -35371,6 +35386,11 @@ function registerHardwareScheduleExtractRoutes(router2, {
           valid_types: validDocumentTypes
         }, 400);
       }
+      const tenant = resolveHardwareScheduleTenant(user, formData.get("tenant_id"));
+      if (tenant.error) {
+        return jsonResponse3({ success: false, error: tenant.error }, tenant.status);
+      }
+      const tenantId = tenant.tenantId;
       const fileBuffer = await file.arrayBuffer();
       const fileInfo = detectFileType2(fileBuffer);
       if (fileInfo.type === "unknown") {

@@ -1981,6 +1981,11 @@ global.SovereignPdfRender = {
           var totalCount = isDoorSchedule
             ? allResults.reduce(function(s, r){ return s + (r.extraction.doors || []).length; }, 0)
             : allResults.reduce(function(s, r){ return s + (r.extraction.hardware_groups || []).length; }, 0);
+          if (totalCount === 0) {
+            raw.textContent = JSON.stringify(allResults, null, 2);
+            raw.style.display = 'block';
+            throw new Error('No schedule rows were extracted. Review the source page, orientation and table detection before continuing.');
+          }
           var noun = isDoorSchedule ? 'door(s)' : 'hardware group(s)';
           out.innerHTML = '<div class="ok-box">Client-side extraction succeeded: ' + totalCount + ' ' + noun + ' total across ' + totalPages + ' page(s) (' + esc(pageSummaries.join(', ')) + '), computed entirely in this browser tab.</div>';
           raw.textContent = JSON.stringify(allResults, null, 2);

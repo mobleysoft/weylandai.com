@@ -1,3 +1,4 @@
+import { resolveHardwareScheduleTenant } from "../../weyland-subx-worker/src/lib/hardware-schedule-tenant.js";
 // src/routes/hardware-schedule-extract.js
 //
 // The last piece of the hardware-schedule cluster
@@ -238,7 +239,7 @@ router.post("/api/hardware-schedule/start", async (request2, env2) => {
     const submittalId = formData.get("submittalId") || null;
     const totalPages = parseInt(formData.get("totalPages") || "0", 10);
     const documentType = formData.get("document_type") || "hardware_schedule";
-    const tenantId = formData.get("tenant_id") || (request2?.user?.tenant_id || "ven_weyland");
+
     if (!file) {
       return jsonResponse3({ error: "No file provided" }, 400);
     }
@@ -249,6 +250,11 @@ router.post("/api/hardware-schedule/start", async (request2, env2) => {
         valid_types: validDocumentTypes
       }, 400);
     }
+    const tenant = resolveHardwareScheduleTenant(user, formData.get("tenant_id"));
+    if (tenant.error) {
+      return jsonResponse3({ success: false, error: tenant.error }, tenant.status);
+    }
+    const tenantId = tenant.tenantId;
     const fileBuffer = await file.arrayBuffer();
     const fileInfo = detectFileType(fileBuffer);
     if (fileInfo.type === "unknown") {
