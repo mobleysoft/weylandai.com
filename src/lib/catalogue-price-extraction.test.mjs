@@ -138,12 +138,9 @@ test("extractPriceRowsFromOcrText: chunks real multi-line OCR text and issues on
     };
   };
   try {
-    // No "$" anywhere in this fixture on purpose - this test exercises the
-    // LLM-chunking mechanism itself, so the input must NOT be one of the
-    // two shapes (matrix / single-column) that now resolve deterministically
-    // with zero LLM calls (verified live 2026-10-01 - both real document
-    // shapes this module has ever been tested against now decompose fully).
-    const bigOcrText = Array.from({ length: 30 }, () => "1 door license, basic access control, 2 year license PAC-1-2Y {Site] [Time] [Email] price not visible, call rep").join("\n");
+    // Two-price rows without column headers remain genuinely ambiguous.
+    // Seven lines per chunk respects the bounded output-object budget.
+    const bigOcrText = Array.from({ length: 21 }, () => "PAC-1-2Y $200.00 $300.00").join("\n");
     const env2 = { QWEN_BRIDGE_CLIENT_ID: "id", QWEN_BRIDGE_CLIENT_SECRET: "secret" };
     const result = await extractPriceRowsFromOcrText(env2, bigOcrText, { manufacturer: "Schlage", trade: "doors" });
     assert.equal(result.chunksProcessed, 3);
@@ -270,14 +267,90 @@ test("extractPriceRowsFromOcrText: a single chunk's Qwen failure doesn't abort t
     };
   };
   try {
-    const bigOcrText = Array.from({ length: 24 }, () => "1 door license, basic access control, 2 year license PAC-1-2Y {Site] [Time] [Email] price not visible, call rep").join("\n");
+    const bigOcrText = Array.from({ length: 14 }, () => "PAC-1-2Y $200.00 $300.00").join("\n");
     const env2 = { QWEN_BRIDGE_CLIENT_ID: "id", QWEN_BRIDGE_CLIENT_SECRET: "secret" };
     const result = await extractPriceRowsFromOcrText(env2, bigOcrText, {});
     assert.equal(result.chunksProcessed, 2);
     assert.equal(result.rows.length, 1, "the failed chunk contributes 0 rows, the surviving chunk still contributes its real row");
-    assert.equal(result.warnings.length, 1);
-    assert.match(result.warnings[0], /qwen call failed/);
+    assert.equal(result.warnings.filter((w) => /qwen call failed/.test(w)).length, 1);
+    assert.ok(result.warnings.some((w) => /expected exactly 1 price/.test(w)));
   } finally {
     globalThis.fetch = originalFetch;
   }
+});
+
+
+test("guarded row decisions preserve real long Schlage rows and exclude quote-only lines", async () => {
+  const { classifyPriceLine } = await import("./catalogue-price-extraction.js");
+  for (const line of REAL_OCR_CHUNK.split("\n").slice(0, 5)) assert.equal(classifyPriceLine(line).rowType, "priced_data_row");
+  assert.equal(classifyPriceLine(REAL_OCR_CHUNK.split("\n")[5]).rowType, "call_for_quote");
+  assert.equal(classifyPriceLine("Shipping fee $25.00").rowType, "header_or_noise");
+  assert.equal(classifyPriceLine("Minimum order $100.00").rowType, "header_or_noise");
+});
+
+test("single-column parsing retains compound models and separates real finish codes", () => {
+  for (const line of ["L9050 06L 626 $412.00", "L9050 06L US26D $412.00"]) {
+    const result = extractPriceRowsSingleColumn(line);
+    assert.equal(result.rows.length, 1);
+    assert.equal(result.rows[0].full_model_number, "L9050 06L");
+    assert.equal(result.rows[0].finish_code, line.includes("US26D") ? "US26D" : "626");
+    assert.equal(result.rows[0].list_price, 412);
+  }
+  assert.equal(extractPriceRowsSingleColumn("626 $412.00").rows.length, 0);
+});
+
+test("quote-only pages never call Qwen or manufacture a price", async () => {
+  const original = globalThis.fetch;
+  globalThis.fetch = () => { throw new Error("must not be called"); };
+  try {
+    const result = await extractPriceRowsFromOcrText({}, REAL_OCR_CHUNK.split("\n")[5]);
+    assert.equal(result.rows.length, 0);
+    assert.equal(result.chunksProcessed, 0);
+  } finally { globalThis.fetch = original; }
+});
+
+test("partial matrix pages preserve unmatched single-column rows", async () => {
+  const original = globalThis.fetch;
+  globalThis.fetch = () => { throw new Error("must not be called"); };
+  try {
+    const result = await extractPriceRowsFromOcrText({}, "626 630 605\nXP98 $10.00 $20.00 $30.00\nL9050 06L 626 $412.00");
+    assert.equal(result.rows.length, 4);
+    assert.ok(result.rows.some((r) => r.full_model_number === "L9050 06L" && r.finish_code === "626"));
+    assert.equal(result.chunksProcessed, 0);
+  } finally { globalThis.fetch = original; }
+});
+
+test("description references never replace the layout model column", () => {
+  const result = extractPriceRowsSingleColumn("A201-399    Hub and cap outside A25 A53 A170    $45.00");
+  assert.equal(result.rows[0].full_model_number, "A201-399");
+  assert.equal(extractPriceRowsSingleColumn("L9050 626 630 $412.00").rows.length, 0);
+});
+
+
+test("option adjustments are not standalone catalogue prices", async () => {
+  const result = await extractPriceRowsFromOcrText({}, "Price adjustment\n41-005 $29.60\nLess each knob -$17.60");
+  assert.equal(result.rows.length, 0);
+  assert.equal(result.chunksProcessed, 0);
+  assert.match(result.warnings[0], /base-product context/);
+});
+
+
+test("LCN layout placeholders are not negative signs or model numbers", () => {
+  const result = extractPriceRowsSingleColumn("Std Cylinder Assembly    1250-3071    .[Finish]    -    $180.00");
+  assert.equal(result.rows[0].full_model_number, "1250-3071");
+  assert.equal(result.rows[0].list_price, 180);
+});
+
+test("source footnotes are retained and finish legends are not quote-only products", async () => {
+  const { classifyPriceLine } = await import("./catalogue-price-extraction.js");
+  const result = extractPriceRowsSingleColumn("A301-386*    Spindle and catch inside (except A79)    $14.00");
+  assert.equal(result.rows[0].full_model_number, "A301-386*");
+  assert.equal(classifyPriceLine("N/A N/A 626 630").rowType, "header_or_noise");
+});
+
+
+test("plural price-adjustments tables abstain before extraction", async () => {
+  const result = await extractPriceRowsFromOcrText({}, "PRICE ADJUSTMENTS\nL9050 626 $25.00");
+  assert.deepEqual(result.rows, []);
+  assert.match(result.warnings.join(" "), /base-product context/);
 });
