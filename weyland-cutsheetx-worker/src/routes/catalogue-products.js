@@ -60,16 +60,19 @@ export function registerCatalogueProductsRoutes(router, { authenticate }) {
       if (!q || q.trim().length < 2) {
         return jsonResponse3({ error: "Search query must be at least 2 characters" }, 400);
       }
-      const searchQuery = q.replace(/[-]/g, " ").replace(/[^\w\s*]/g, "").trim() + "*";
-      const result = await env2.DB.prepare(`
-        SELECT p.*, m.name as manufacturer_name
-        FROM products p
-        LEFT JOIN manufacturers m ON p.manufacturer_id = m.id
-        WHERE p.rowid IN (
-          SELECT rowid FROM products_fts WHERE products_fts MATCH ?
-        )
-        LIMIT ?
-      `).bind(searchQuery, limit).all();
+      // No products_fts table exists in D1 (this route 500'd for every caller until
+      // 2026-10-05). Tokenised LIKE over model / name / series / manufacturer, exact model
+      // first, the same search the public finder (/find) uses.
+      const tokens = String(q).toLowerCase().replace(/[^a-z0-9\s.\-\/]/g, " ").split(/\s+/).filter((t) => t.length >= 1).slice(0, 6);
+      if (!tokens.length) return jsonResponse3({ query: q, results: [], count: 0 });
+      const hay = "lower(p.base_model || ' ' || coalesce(p.display_name,'') || ' ' || coalesce(p.product_series,'') || ' ' || coalesce(m.name,'') || ' ' || coalesce(m.slug,''))";
+      const where = tokens.map(() => hay + " LIKE ?").join(" AND ");
+      const binds = tokens.map((t) => "%" + t + "%");
+      const exact = tokens[tokens.length - 1];
+      const result = await env2.DB.prepare(
+        "SELECT p.*, m.name as manufacturer_name FROM products p LEFT JOIN manufacturers m ON p.manufacturer_id = m.id WHERE " + where +
+        " ORDER BY CASE WHEN lower(p.base_model) = ? THEN 0 WHEN lower(p.base_model) LIKE ? THEN 1 ELSE 2 END, length(p.base_model), p.display_name LIMIT ?"
+      ).bind(...binds, exact, exact + "%", limit).all();
       return jsonResponse3({
         query: q,
         results: result.results || [],
