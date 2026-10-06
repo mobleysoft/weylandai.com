@@ -321,6 +321,46 @@ function looksLikeModel(modelSearch) {
   return /\d/.test(modelSearch) || /^[A-Z]{2,}[-\/.][A-Z0-9]+$/.test(modelSearch);
 }
 
+// A finish or qualifier token at the end of a line ("... 626", "... US26D", "... LH").
+const FINISH_TAIL_RE = /\s+(?:US\d{1,2}[A-Z]?|\d{3}[A-Z]?|[A-Z]{2,3}\d{0,2})$/;
+
+// s, then s without its trailing finish/qualifier token when it has one.
+function withFinishTrimmed(s) {
+  const trimmed = s.replace(FINISH_TAIL_RE, "");
+  return trimmed && trimmed !== s ? [s, trimmed] : [s];
+}
+
+// Typed text inside a LIKE pattern matches literally: %, _ and the escape character itself
+// are escaped, and every LIKE in matchProductFromDb declares ESCAPE '\'.
+function likeLiteral(s) {
+  return String(s).replace(/[\\%_]/g, (c) => "\\" + c);
+}
+
+// The trade scope of a product query, written once: {where, binds} for one trade, or for any
+// trade when trade is empty. matchProductFromDb ranks by it rather than filtering on it
+// (ORDER BY CASE WHEN <where> THEN 0 ELSE 1 END, then the attempt's own order), so the first
+// row of every attempt is its best match in the line's trade when one exists and its best
+// match in any trade otherwise: "in the trade, then any trade" from the same SQL for both
+// scopes, in one D1 query instead of two.
+function tradeScope(trade) {
+  return trade ? { where: "p.trade = ?", binds: [trade] } : { where: "1 = 1", binds: [] };
+}
+
+// Order of attempts (2026-10-06). The first hit wins; each attempt is ranked by tradeScope,
+// so it looks in the line's trade first and then in any trade.
+//   (a) Exact matches, all of them before any prefix:
+//       1. within the named manufacturer: the rest of the line (modelFull, then without a
+//          finish tail), then the single model token
+//       2. any manufacturer: the whole line with the typed manufacturer folded back in (a
+//          first word we do not know, or know only as a fragment of a name, is often part of
+//          the model: "Royal 111", "Hardware Pack SLSS2"), then the rest of the line, then the
+//          single token
+//   (b) Prefix matches, only for tokens that look like model numbers, and only with a
+//       manufacturer the catalogue knows (or none): within the named manufacturer; then, for
+//       model-only lines, any manufacturer, four characters or more, never a bare number of
+//       four digits or fewer.
+// A product from outside the line's trade comes back with matchType + "_other_trade" and
+// confidence at most "medium", so callers can see it.
 async function matchProductFromDb(component, env2, trade = "doors") {
   const db = env2.DB;
   const { manufacturer, model, catalog_number, modelFull } = component;
@@ -331,69 +371,68 @@ async function matchProductFromDb(component, env2, trade = "doors") {
   try {
     const names = await getManufacturerNames(env2);
     const mfgKnown = mfgSearch ? manufacturerKnown(names, mfgSearch) : false;
-    const SELECT = `SELECT p.*, m.name as manufacturer_name, m.slug as manufacturer_slug
-        FROM products p JOIN manufacturers m ON p.manufacturer_id = m.id`;
+    const unknownMfg = !!mfgSearch && !mfgKnown;
+    const scope = tradeScope(trade);
+    const bestRow = (where, binds, orderBy) => db.prepare(`SELECT p.*, m.name as manufacturer_name, m.slug as manufacturer_slug
+        FROM products p JOIN manufacturers m ON p.manufacturer_id = m.id
+        WHERE ${where}
+        ORDER BY CASE WHEN ${scope.where} THEN 0 ELSE 1 END, ${orderBy}
+        LIMIT 1`).bind(...binds, ...scope.binds).first();
+    const found = (row, confidence, matchType) => {
+      if (!row) return null;
+      if (!trade || row.trade === trade) return { product: row, confidence, matchType };
+      return { product: row, confidence: confidence === "high" ? "medium" : confidence, matchType: `${matchType}_other_trade` };
+    };
+    const EXACT_ORDER = "p.display_name, p.id";
+    const PREFIX_ORDER = "LENGTH(p.base_model), p.base_model, p.id";
+    const IN_MFG = "(UPPER(m.name) LIKE ? ESCAPE '\\' OR UPPER(m.slug) LIKE ? ESCAPE '\\')";
+    const mfgLike = `%${likeLiteral(mfgSearch)}%`;
+    const exactInMfg = (s) => bestRow(`UPPER(p.base_model) = ? AND ${IN_MFG}`, [s, mfgLike, mfgLike], EXACT_ORDER);
+    const exactAnyMfg = (s) => bestRow("UPPER(p.base_model) = ?", [s], EXACT_ORDER);
+    const modelPrefix = `${likeLiteral(modelSearch)}%`;
 
-    // 0. the rest of the line as typed: catalogue models with spaces in them
-    //    ("DW16/MU16 10'0\" thru 10'6\"", "Hardware Pack SLSS2", "Royal 111")
+    // The rest of the line as typed: catalogue models with spaces in them ("DW16/MU16 10'0\"
+    // thru 10'6\"", "Hardware Pack SLSS2", "Royal 111"), then the same without a finish tail.
     const fullSearch = (modelFull || "").toUpperCase().replace(/\s+/g, " ").trim();
-    if (fullSearch && fullSearch !== modelSearch) {
-      const row = mfgSearch && mfgKnown
-        ? await db.prepare(`${SELECT}
-            WHERE p.trade = ? AND UPPER(p.base_model) = ?
-              AND (UPPER(m.name) LIKE ? OR UPPER(m.slug) LIKE ?)
-            LIMIT 1`).bind(trade, fullSearch, `%${mfgSearch}%`, `%${mfgSearch}%`).first()
-        : await db.prepare(`${SELECT}
-            WHERE p.trade = ? AND UPPER(p.base_model) = ?
-            ORDER BY p.display_name LIMIT 1`).bind(trade, fullSearch).first();
-      if (row) return { product: row, confidence: "high", matchType: "exact" };
-      // the remainder minus a trailing finish/qualifier token ("... 626", "... US26D")
-      const trimmed = fullSearch.replace(/\s+(?:US\d{1,2}[A-Z]?|\d{3}[A-Z]?|[A-Z]{2,3}\d{0,2})$/, "");
-      if (trimmed !== fullSearch && trimmed !== modelSearch) {
-        const row2 = await db.prepare(`${SELECT}
-            WHERE p.trade = ? AND UPPER(p.base_model) = ?
-            ORDER BY p.display_name LIMIT 1`).bind(trade, trimmed).first();
-        if (row2) return { product: row2, confidence: "high", matchType: "exact" };
+    const rest = fullSearch && fullSearch !== modelSearch
+      ? withFinishTrimmed(fullSearch).filter((s) => s !== modelSearch)
+      : [];
+
+    // (a) 1. exact, within the named manufacturer
+    if (mfgSearch && mfgKnown) {
+      for (const s of [...rest, modelSearch]) {
+        const hit = found(await exactInMfg(s), "high", "exact");
+        if (hit) return hit;
       }
     }
+    // (a) 2. exact, any manufacturer: the whole line first
+    if (mfgSearch) {
+      for (const s of withFinishTrimmed(fullSearch || modelSearch)) {
+        const hit = found(await exactAnyMfg(`${mfgSearch} ${s}`.replace(/\s+/g, " ")), "high", "exact");
+        if (hit) return hit;
+      }
+    }
+    //        then the rest of the line and the single token; a typed manufacturer the catalogue
+    //        does not know keeps the match at medium
+    for (const s of [...rest, modelSearch]) {
+      const hit = found(await exactAnyMfg(s), unknownMfg ? "medium" : "high", unknownMfg ? "exact_model_unknown_manufacturer" : "exact");
+      if (hit) return hit;
+    }
 
-    // 1. exact model within the named manufacturer
-    if (mfgSearch && mfgKnown) {
-      const exact = await db.prepare(`${SELECT}
-        WHERE p.trade = ? AND UPPER(p.base_model) = ?
-          AND (UPPER(m.name) LIKE ? OR UPPER(m.slug) LIKE ?)
-        LIMIT 1`).bind(trade, modelSearch, `%${mfgSearch}%`, `%${mfgSearch}%`).first();
-      if (exact) return { product: exact, confidence: "high", matchType: "exact" };
-    }
-    // 2. exact model, any manufacturer (model-only lines, or a manufacturer we do not know)
-    {
-      const exactAny = await db.prepare(`${SELECT}
-        WHERE p.trade = ? AND UPPER(p.base_model) = ?
-        ORDER BY p.display_name LIMIT 1`).bind(trade, modelSearch).first();
-      if (exactAny) return { product: exactAny, confidence: mfgSearch && !mfgKnown ? "medium" : "high", matchType: mfgSearch && !mfgKnown ? "exact_model_unknown_manufacturer" : "exact" };
-    }
-    // Past this point only things that look like model numbers may match, and only when the
-    // manufacturer is either absent or one the catalogue knows: a word like "plate" or a
+    // (b) Past this point only things that look like model numbers may match, and only when
+    // the manufacturer is either absent or one the catalogue knows: a word like "plate" or a
     // made-up maker never gets a prefix match.
     if (!looksLikeModel(modelSearch) || modelSearch.length < 3) return null;
-    if (mfgSearch && !mfgKnown) return null;
-    // 3. model prefix within the named manufacturer
+    if (unknownMfg) return null;
+    // (b) 1. model prefix within the named manufacturer
     if (mfgSearch) {
-      const partial = await db.prepare(`${SELECT}
-        WHERE p.trade = ? AND UPPER(p.base_model) LIKE ?
-          AND (UPPER(m.name) LIKE ? OR UPPER(m.slug) LIKE ?)
-        ORDER BY LENGTH(p.base_model) ASC LIMIT 1`).bind(trade, `${modelSearch}%`, `%${mfgSearch}%`, `%${mfgSearch}%`).first();
-      if (partial) return { product: partial, confidence: "medium", matchType: "partial" };
-      return null;
+      return found(await bestRow(`UPPER(p.base_model) LIKE ? ESCAPE '\\' AND ${IN_MFG}`, [modelPrefix, mfgLike, mfgLike], PREFIX_ORDER), "medium", "partial");
     }
-    // 4. model prefix, any manufacturer, model-only lines of at least four characters
-    if (modelSearch.length >= 4) {
-      const partial = await db.prepare(`${SELECT}
-        WHERE p.trade = ? AND UPPER(p.base_model) LIKE ?
-        ORDER BY LENGTH(p.base_model) ASC LIMIT 1`).bind(trade, `${modelSearch}%`).first();
-      if (partial) return { product: partial, confidence: "low", matchType: "partial" };
-    }
-    return null;
+    // (b) 2. model prefix, any manufacturer: model-only lines of at least four characters. A
+    // bare number of four digits or fewer ("111", "8136": the same number exists under several
+    // manufacturers) matches exactly or not at all.
+    if (modelSearch.length < 4 || /^\d{1,4}$/.test(modelSearch)) return null;
+    return found(await bestRow("UPPER(p.base_model) LIKE ? ESCAPE '\\'", [modelPrefix], PREFIX_ORDER), "low", "partial");
   } catch (err) {
     console.error("Product match error:", err);
     return null;
