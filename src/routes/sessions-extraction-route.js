@@ -1,12 +1,8 @@
 import { jsonResponse3 } from "../lib/json-response.js";
 
-var EXTRACTION_ROUTE_VALID = /* @__PURE__ */ new Set([
-  "api_direct",
-  // Weyland Managed API (MHS Anthropic account, metered)
-  "claude_code_local"
-  // Your Claude Code via SABP bridge (subscription-funded)
-  // Future: 'openai_codex', 'gemini', 'openconfig'
-]);
+function availableRoutes(env) {
+  return ["embedded_gofaineat", ...(env.WEYLAND_EDITION === "local" ? ["claude_code_subprocess"] : env.HASCOM_EDGE?.fetch ? ["claude_code_local"] : [])];
+}
 
 /**
  * @param {object} router
@@ -26,7 +22,9 @@ export function registerSessionsExtractionRouteRoutes(router, { authenticate }) 
       return jsonResponse3({ error: "session_not_found" }, 404);
     return jsonResponse3({
       session_id: sessionId,
-      route: row.extraction_route || null,
+      route: row.extraction_route || "embedded_gofaineat",
+      route_status: !row.extraction_route || availableRoutes(env2).includes(row.extraction_route) ? "available" : "unsupported",
+      available_routes: availableRoutes(env2),
       affirmed_at: row.extraction_route_affirmed_at || null,
       affirmed_by: row.extraction_route_affirmed_by || null
     });
@@ -43,10 +41,10 @@ export function registerSessionsExtractionRouteRoutes(router, { authenticate }) 
       return jsonResponse3({ error: "invalid_json" }, 400);
     }
     const route = typeof body?.route === "string" ? body.route.trim() : "";
-    if (!EXTRACTION_ROUTE_VALID.has(route)) {
+    if (!availableRoutes(env2).includes(route)) {
       return jsonResponse3({
         error: "invalid_route",
-        valid_routes: Array.from(EXTRACTION_ROUTE_VALID)
+        valid_routes: availableRoutes(env2)
       }, 400);
     }
     const sess = await env2.DB.prepare(

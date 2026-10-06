@@ -101,6 +101,8 @@ router.post("/api/hardware-schedule/extract", async (request2, env2) => {
     const userId = user.userId;
     console.log(`[Hardware Extract] Starting extraction job ${jobId} for user ${userId}`);
     const fileBuffer = await file.arrayBuffer();
+    const selectedPage = formData.get("page_number");
+    const extractionResult = await extractHardwareSchedule(fileBuffer, env2, { pageNumber: selectedPage === null || selectedPage === "" ? undefined : Number(selectedPage) });
     const fileBufferKey = `hardware-schedules/${userId}/${jobId}`;
     await env2.CACHE.put(fileBufferKey, fileBuffer, {
       expirationTtl: 86400 * 7
@@ -110,7 +112,6 @@ router.post("/api/hardware-schedule/extract", async (request2, env2) => {
       await env2.UPLOADS.put(fileBufferKey, fileBuffer);
       console.log(`[Hardware Extract] PDF stored in R2: ${fileBufferKey}`);
     }
-    const extractionResult = await extractHardwareSchedule(fileBuffer, env2);
     console.log(`[Hardware Extract] Extraction complete: ${extractionResult.hardware_groups.length} sets found`);
     const dbResult = await storeHardwareExtraction(extractionResult, env2, userId);
     await env2.DB.prepare(`
@@ -159,7 +160,7 @@ router.post("/api/hardware-schedule/extract", async (request2, env2) => {
     return jsonResponse3({
       error: "Failed to extract hardware schedule",
       details: error5.message
-    }, 500);
+    }, error5.status || 500);
   }
 });
 router.get("/api/hardware-schedule/review/:groupNumber", async (request2, env2) => {

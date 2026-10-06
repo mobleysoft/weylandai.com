@@ -1,3 +1,5 @@
+import { pdfFixture } from "../test-support/ocr-fixtures.mjs";
+import { extractHardwareSchedule } from "../lib/hardware-extraction-pipeline.js";
 import { test } from "node:test";
 import assert from "node:assert/strict";
 import { NativeRouter } from "../lib/router.js";
@@ -143,4 +145,23 @@ test("POST /api/hardware-schedule/session/:sessionId/batch-extract: real conflic
   assert.equal(res.status, 409);
   const body = await res.json();
   assert.equal(body.error, "conflicts_unresolved");
+});
+
+
+test("upload rejects ambiguous or invalid page selection before any storage or provider", async () => {
+ const pdf=await pdfFixture(2);let writes=0,providers=0;
+ const {router,env}=setup({overrides:{extractHardwareSchedule}});
+ env.CACHE={put(){writes++}};env.UPLOADS={put(){writes++}};env.OCR_SERVICE={fetch(){providers++}};
+ for(const selection of [undefined,'3','bogus']){
+  const form=new FormData();form.set('file',new Blob([pdf],{type:'application/pdf'}),'fixture.pdf');if(selection!==undefined)form.set('page_number',selection);
+  const res=await router.handle(new Request('https://weylandai.com/api/hardware-schedule/extract',{method:'POST',body:form}),env,{});
+  assert.equal(res.status,400);assert.equal(writes,0);assert.equal(providers,0);assert.equal(env.DB.runs.length,0);
+ }
+});
+test("upload forwards explicit selected page and stores only successful draft extraction", async()=>{
+ let page,stored=0;const {router,env}=setup({overrides:{extractHardwareSchedule:async(_pdf,_env,options)=>{page=options.pageNumber;return {hardware_groups:[]}}}});
+ env.CACHE={put(){stored++}};env.UPLOADS={put(){stored++}};
+ const form=new FormData();form.set('file',new Blob([await pdfFixture(2)],{type:'application/pdf'}),'fixture.pdf');form.set('page_number','2');
+ const res=await router.handle(new Request('https://weylandai.com/api/hardware-schedule/extract',{method:'POST',body:form}),env,{});
+ assert.equal(res.status,201);assert.equal(page,2);assert.equal(stored,2);assert.equal(env.DB.runs[0].binds[9],'pending_review');
 });

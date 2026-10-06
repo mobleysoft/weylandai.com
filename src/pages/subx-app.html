@@ -131,14 +131,15 @@
             <span class="rc-title">CLAUDE CODE (BRIDGE)</span>
             <span class="rc-desc">Runs on your own linked Claude Code / SABP bridge subscription. Requires that bridge to be connected.</span>
           </button>
-          <button type="button" data-route="api_direct" id="route-btn-api">
-            <span class="rc-title">WEYLANDAI MANAGED API</span>
-            <span class="rc-desc">Runs on WeylandAI's own metered Anthropic key, server-side. No bridge needed on your end.</span>
+          <button type="button" data-route="embedded_gofaineat" id="route-btn-embedded">
+            <span class="rc-title">LOCAL OCR WORKFLOW</span>
+            <span class="rc-desc">Uses the existing in-ecosystem OCR extraction workflow. No external managed API.</span>
           </button>
         </div>
         <div id="route-result"></div>
         <div class="note-card">
-          Honest scope note: the single-page extraction button below (<code>GET /api/hardware-schedule/session/:id/page/1</code>) always calls this server's own Anthropic credentials directly &mdash; it does not yet branch on the route selected above. If that credential isn't provisioned on this deployment, the button below will show a real error, not a silent hang. The route selector above genuinely governs a separate part of this pipeline (the SABP-bridge/queue path) and is wired here so you can set it for when that path is used.
+          Page extraction uses the existing OCR/grid workflow. The route selector governs only session or legacy batch paths that honor it; the bridge option requires an explicitly configured in-ecosystem binding. Extracted data remain drafts requiring human review. Successful extraction does not establish accuracy against a reference document.
+
         </div>
 
         <div class="actions-row">
@@ -1800,15 +1801,16 @@ global.SovereignPdfRender = {
           .then(function(r){ return r.json().then(function(d){ return { ok: r.ok, status: r.status, data: d }; }); })
           .then(function(res){
             document.getElementById('route-btn-bridge').classList.remove('active');
-            document.getElementById('route-btn-api').classList.remove('active');
+            document.getElementById('route-btn-bridge').disabled = !(res.data.available_routes || []).includes('claude_code_local');
+            document.getElementById('route-btn-embedded').classList.remove('active');
             if (!res.ok) {
               document.getElementById('route-current').textContent = 'Could not load route (HTTP ' + res.status + '): ' + apiErrorText(res.data);
               return;
             }
             if (res.data.route === 'claude_code_local') document.getElementById('route-btn-bridge').classList.add('active');
-            else if (res.data.route === 'api_direct') document.getElementById('route-btn-api').classList.add('active');
+            else if (res.data.route === 'embedded_gofaineat') document.getElementById('route-btn-embedded').classList.add('active');
             document.getElementById('route-current').textContent = res.data.route
-              ? ('Current route: ' + res.data.route + (res.data.affirmed_by ? ' (set by ' + res.data.affirmed_by + ')' : ''))
+              ? ((res.data.route_status === 'unsupported' ? 'Unsupported stored route; choose Local OCR: ' : 'Current route: ') + res.data.route + (res.data.affirmed_by ? ' (set by ' + res.data.affirmed_by + ')' : ''))
               : 'No route selected yet for this session (a default will be used).';
           })
           .catch(function(err){ document.getElementById('route-current').textContent = 'Network error: ' + err.message; });
@@ -1837,7 +1839,7 @@ global.SovereignPdfRender = {
         if (!currentSessionId) return;
         var out = document.getElementById('extract-result');
         var raw = document.getElementById('raw-output');
-        out.innerHTML = '<span class="spin"></span>Calling the real extraction endpoint &mdash; this invokes Claude Vision synchronously and can take up to a minute&hellip;';
+        out.innerHTML = '<span class="spin"></span>Calling the real extraction endpoint &mdash; this runs the existing local OCR workflow and may take time&hellip;';
         raw.style.display = 'none';
         fetch('/api/hardware-schedule/session/' + encodeURIComponent(currentSessionId) + '/page/1', { headers: authHeaders() })
           .then(function(r){ return r.json().then(function(d){ return { ok: r.ok, status: r.status, data: d }; }); })

@@ -1,3 +1,4 @@
+import { pdfFixture, embeddedEnv, withEmbeddedModel } from "../test-support/ocr-fixtures.mjs";
 import { test } from "node:test";
 import assert from "node:assert/strict";
 import {
@@ -90,51 +91,19 @@ test("parseAndValidateExtraction: a door with no door_number is dropped with a w
 
 // --- viaApiDirect ---
 
-test("viaApiDirect: real happy path calls the Anthropic API directly and parses the result", async () => {
-  const restore = fakeFetchOnce(async (url, opts) => {
-    assert.equal(url, "https://api.anthropic.com/v1/messages");
-    const body = JSON.parse(opts.body);
-    assert.equal(body.model, "claude-opus-4-6");
-    return {
-      ok: true,
-      json: async () => ({
-        content: [{ text: '---JSON OUTPUT BEGINS BELOW THIS LINE---\n{"doors":[{"door_number":"G3"}]}' }],
-        usage: { input_tokens: 10, output_tokens: 5 },
-      }),
-    };
-  });
-  try {
-    const result = await viaApiDirect("s1", new Uint8Array([0x25, 0x50, 0x44, 0x46]).buffer, { ANTHROPIC_API_KEY: "sk-x" });
-    assert.equal(result.doors[0].door_number, "G3");
-  } finally {
-    restore();
-  }
+test("viaApiDirect: compatibility export explicitly rejects retired extraction without a request", async () => {
+ let calls=0;const restore=fakeFetchOnce(async()=>{calls++;throw Error('no request')});try{await assert.rejects(()=>viaApiDirect('s1',new ArrayBuffer(4),{ANTHROPIC_API_KEY:'present'}),/removed/);assert.equal(calls,0);}finally{restore()}
 });
 
-test("viaApiDirect: real HTTP error path throws and still logs the failed call", async () => {
-  const logged = [];
-  const restore = fakeFetchOnce(async (url) => {
-    if (url.includes("hascom-edge")) {
-      logged.push("telemetry");
-      return { ok: true, json: async () => ({}) };
-    }
-    return { ok: false, status: 500, text: async () => "server error" };
-  });
-  try {
-    await assert.rejects(
-      viaApiDirect("s1", new ArrayBuffer(4), { ANTHROPIC_API_KEY: "sk-x" }),
-      /Claude API error: 500/,
-    );
-  } finally {
-    restore();
-  }
+test("viaApiDirect: retired path rejects missing credentials without retries or completion", async () => {
+ let calls=0;const restore=fakeFetchOnce(async()=>{calls++;throw Error('no request')});try{await assert.rejects(()=>viaApiDirect('s1',new ArrayBuffer(4),{}),/removed/);assert.equal(calls,0);}finally{restore()}
 });
 
 // --- viaSabpClaudeCode ---
 
 test("viaSabpClaudeCode: real behavior returns no_mhs_id_for_session_owner when the session owner has none", async () => {
   const db = lenientDb({ first: { mhs_id: null } });
-  const result = await viaSabpClaudeCode("s1", new ArrayBuffer(4), { DB: db });
+  const result = await viaSabpClaudeCode("s1", new ArrayBuffer(4), { HASCOM_EDGE: { fetch: (request, init) => globalThis.fetch(request.url || request, init) }, DB: db });
   assert.deepEqual(result, { sync: true, error: "no_mhs_id_for_session_owner" });
 });
 
@@ -161,7 +130,7 @@ test("viaSabpClaudeCode: real happy path queues a job via callEdge and updates t
     return { ok: true, status: 200, text: async () => "{}" };
   });
   try {
-    const result = await viaSabpClaudeCode("s1", new ArrayBuffer(4), { DB: db, HASCOM_EDGE: undefined });
+    const result = await viaSabpClaudeCode("s1", new ArrayBuffer(4), { HASCOM_EDGE: { fetch: (request, init) => globalThis.fetch(request.url || request, init) }, DB: db, HASCOM_EDGE: { fetch: (request, init) => globalThis.fetch(request.url || request, init) } });
     assert.equal(result.sync, false);
     assert.equal(result.job_id, "job1");
     assert.ok(dbCalls.some((sql) => sql.includes("UPDATE hardware_extraction_sessions")));
@@ -186,7 +155,7 @@ test("viaSabpClaudeCode: real behavior surfaces a queue_failed result without th
   };
   const restore = fakeFetchOnce(async () => ({ ok: false, status: 500, text: async () => JSON.stringify({ error: "down" }) }));
   try {
-    const result = await viaSabpClaudeCode("s1", new ArrayBuffer(4), { DB: db });
+    const result = await viaSabpClaudeCode("s1", new ArrayBuffer(4), { HASCOM_EDGE: { fetch: (request, init) => globalThis.fetch(request.url || request, init) }, DB: db });
     assert.equal(result.sync, true);
     assert.equal(result.error, "queue_failed");
   } finally {
@@ -242,60 +211,29 @@ test("viaLocalSubprocess: real behavior reports sidecar_error when success:false
 
 test("adaptersForEdition: real routing for the local edition wires the subprocess adapter", () => {
   const adapters = adaptersForEdition({ WEYLAND_EDITION: "local" });
-  assert.equal(adapters.api_direct, viaApiDirect);
+  assert.equal(adapters.api_direct, undefined);
   assert.equal(adapters.claude_code_subprocess, viaLocalSubprocess);
   assert.equal(adapters.claude_code_local, undefined);
 });
 
 test("adaptersForEdition: real routing for a non-local edition wires the sabp adapter", () => {
-  const adapters = adaptersForEdition({ WEYLAND_EDITION: "production" });
+  const adapters = adaptersForEdition({ WEYLAND_EDITION: "production", HASCOM_EDGE: {fetch(){}} });
   assert.equal(adapters.claude_code_local, viaSabpClaudeCode);
   assert.equal(adapters.claude_code_subprocess, undefined);
 });
 
 // --- dispatchVisionExtraction ---
 
-test("dispatchVisionExtraction: real routing honors a session's stored extraction_route", async () => {
-  const db = {
-    prepare: () => ({
-      bind: () => ({
-        first: async () => ({ extraction_route: "api_direct" }),
-        run: async () => ({ changes: 1 }),
-      }),
-    }),
-  };
-  const restore = fakeFetchOnce(async () => ({
-    ok: true,
-    json: async () => ({ content: [{ text: '---JSON OUTPUT BEGINS BELOW THIS LINE---\n{"doors":[]}' }], usage: {} }),
-  }));
-  try {
-    const result = await dispatchVisionExtraction("s1", new ArrayBuffer(4), { ANTHROPIC_API_KEY: "sk-x", DB: db });
-    assert.deepEqual(result.doors, []);
-  } finally {
-    restore();
-  }
+test("dispatchVisionExtraction: stored embedded route uses real OCR contract and local structuring", async () => {
+ const db=lenientDb({first:{extraction_route:'embedded_gofaineat',total_pages:1}});const pdf=await pdfFixture(),ocr=[];const env=embeddedEnv(db,ocr);
+ const result=await withEmbeddedModel({doors:[{door_number:'G3',width_inches:36,height_inches:84,thickness_inches:1.75}]},()=>dispatchVisionExtraction('s1',pdf,env,{pageNumber:1}));assert.equal(result.doors[0].door_number,'G3');assert.equal(result.extraction_route,'embedded_gofaineat');assert.equal(ocr.length,3);
 });
 
-test("dispatchVisionExtraction: real behavior marks the session complete only after a real, non-error result", async () => {
-  const updateCalls = [];
-  const db = {
-    prepare(sql) {
-      if (sql.includes("UPDATE")) {
-        return { bind: () => ({ run: async () => { updateCalls.push(sql); return { changes: 1 }; } }) };
-      }
-      return { bind: () => ({ first: async () => ({ extraction_route: "api_direct" }) }) };
-    },
-  };
-  const restore = fakeFetchOnce(async () => ({
-    ok: true,
-    json: async () => ({ content: [{ text: '---JSON OUTPUT BEGINS BELOW THIS LINE---\n{"doors":[]}' }], usage: {} }),
-  }));
-  try {
-    await dispatchVisionExtraction("s1", new ArrayBuffer(4), { ANTHROPIC_API_KEY: "sk-x", DB: db });
-    assert.equal(updateCalls.length, 1);
-  } finally {
-    restore();
-  }
+test("dispatchVisionExtraction: completion is written only after supported non-error extraction", async () => {
+ const updates=[];let route='embedded_gofaineat';const db={prepare(sql){return {bind(){return this},async first(){return {extraction_route:route,total_pages:1}},async run(){updates.push(sql);return {changes:1}}}}};
+ const pdf=await pdfFixture();await withEmbeddedModel({doors:[{door_number:'G3'}]},()=>dispatchVisionExtraction('s1',pdf,embeddedEnv(db),{pageNumber:1}));assert.equal(updates.length,1);
+ for(route of ['api_direct','unknown']){const result=await dispatchVisionExtraction('s1',pdf,{DB:db});assert.ok(result.error);assert.equal(updates.length,1)}
+ const failed=await dispatchVisionExtraction('s1',pdf,{DB:{prepare:()=>({bind(){return this},first:async()=>({extraction_route:'embedded_gofaineat'})})}});assert.equal(failed.error,'ocr_service_not_configured');assert.equal(updates.length,1);
 });
 
 // --- pdfBufferOrNull ---
@@ -346,4 +284,12 @@ test("getUnaffirmReason: real component-type reasons, checked in priority order"
 
 test("getUnaffirmReason: an unknown type returns a real, honest 'Unknown', not a crash", () => {
   assert.equal(getUnaffirmReason({}, "something_else"), "Unknown");
+});
+
+test("production adapter list exposes no unbound bridge or retired API",()=>{const a=adaptersForEdition({});assert.equal(a.claude_code_local,undefined);assert.equal(a.api_direct,undefined);assert.equal(typeof a.embedded_gofaineat,'function')});
+
+// An owner identity alone cannot authorize an unbound, cross-account bridge.
+test("viaSabpClaudeCode: missing service binding makes zero outbound calls", async () => {
+ let calls=0;const restore=fakeFetchOnce(async()=>{calls++;throw Error('network forbidden')});
+ try { const result=await viaSabpClaudeCode('s1',new ArrayBuffer(4),{DB:lenientDb({first:{mhs_id:'mhs1'}})});assert.equal(result.error,'bridge_not_configured');assert.equal(calls,0); } finally {restore();}
 });

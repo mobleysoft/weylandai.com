@@ -1,3 +1,5 @@
+import { createRequire } from "node:module";
+const RealPDF=createRequire(import.meta.url)("../../weyland-subx-worker/node_modules/pdf-lib");
 import { test } from "node:test";
 import assert from "node:assert/strict";
 import {
@@ -109,7 +111,9 @@ test("generateCoverPage: real happy path produces saved bytes", async () => {
   const PDFLib = makeFakePDFLib();
   const bytes = await generateCoverPage({ projectName: "Test Project", contractor: "ACME Co" }, PDFLib);
   assert.ok(bytes instanceof Uint8Array);
-  assert.ok(new TextDecoder().decode(bytes).includes("1pages"));
+  assert.equal((await RealPDF.PDFDocument.load(bytes)).getPageCount(),1);
+  assert.ok(new TextDecoder().decode(bytes).includes("Test Project"));
+  assert.ok(new TextDecoder().decode(bytes).includes("ACME Co"));
 });
 
 test("generateTableOfContents: overflows to a new page past the bottom margin", async () => {
@@ -117,7 +121,8 @@ test("generateTableOfContents: overflows to a new page past the bottom margin", 
   const sections = Array.from({ length: 40 }, (_, i) => ({ title: `Section ${i}`, pageNumber: i + 3 }));
   const bytes = await generateTableOfContents(sections, PDFLib);
   const decoded = new TextDecoder().decode(bytes);
-  const pageCount = parseInt(decoded.match(/FAKEPDF:(\d+)pages/)[1], 10);
+  const pageCount = (await RealPDF.PDFDocument.load(bytes)).getPageCount();
+  assert.ok(decoded.includes("Section 39"), "last section remains in the output content");
   assert.ok(pageCount > 1, "expected TOC to overflow onto additional pages");
 });
 
@@ -135,31 +140,13 @@ test("generateHardwareSetPage: real happy path with doors and components produce
   };
   const bytes = await generateHardwareSetPage(setData, {}, PDFLib);
   const decoded = new TextDecoder().decode(bytes);
-  assert.ok(decoded.includes("2pages"), "cover set page + keying/compliance page");
+  assert.equal((await RealPDF.PDFDocument.load(bytes)).getPageCount(),2, "cover set page + keying/compliance page");
+  assert.ok(decoded.includes("H100"));assert.ok(decoded.includes("101"));assert.ok(decoded.includes("Entry Doors"));
 });
 
-test("generateHardwareSetPage: BHMA finish lookup resolves a known code to its display name", async () => {
-  const PDFLib = makeFakePDFLib();
-  const drawnTexts = [];
-  const realAddPage = PDFLib.PDFDocument.create;
-  PDFLib.PDFDocument.create = async () => {
-    const doc = await realAddPage();
-    const realAddPageMethod = doc.addPage.bind(doc);
-    doc.addPage = (size) => {
-      const page = realAddPageMethod(size);
-      const realDrawText = page.drawText.bind(page);
-      page.drawText = (text, opts) => { drawnTexts.push(text); return realDrawText(text, opts); };
-      return page;
-    };
-    return doc;
-  };
-  const setData = {
-    set: { set_number: "2B" },
-    components: [{ quantity: 1, finish: "626" }],
-    doors: [],
-  };
-  await generateHardwareSetPage(setData, {}, PDFLib);
-  assert.ok(drawnTexts.some((t) => t.includes("Satin Chromium")), "expected the BHMA code 626 to resolve to its display name");
+test("generateHardwareSetPage: BHMA finish name is present in actual sovereign PDF content", async () => {
+ const bytes=await generateHardwareSetPage({set:{set_number:'2B'},components:[{quantity:1,finish:'626'}],doors:[]},{},makeFakePDFLib());
+ assert.equal((await RealPDF.PDFDocument.load(bytes)).getPageCount(),2);assert.ok(new TextDecoder().decode(bytes).includes('Satin Chromium'));
 });
 
 test("mergePdfs: combines multiple documents' page counts", async () => {

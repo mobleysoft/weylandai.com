@@ -94,6 +94,23 @@
       <code>weyland_db</code>.
     </div>
 
+    <div class="card" id="price-review">
+      <h2>Review Catalogue Prices</h2>
+      <p>Upload a price-book PDF or enter its source URL. Extracted rows remain drafts until you check the source and explicitly choose Human Affirm. Quote-only and unresolved rows need review, not guessed prices.</p>
+      <p id="price-sandbox" hidden class="note-card">Local virtual-user sandbox: approved synthetic fixtures only. Human Affirm, price publication, quotes and submittals are blocked by the sandbox server. OCR is fixture text replay.</p>
+      <div class="row">
+        <label>Manufacturer<input id="price-manufacturer" placeholder="e.g. Schlage"></label>
+        <label>Catalogue URL<input id="price-url" type="url" placeholder="https://manufacturer.example/price-book.pdf"></label>
+        <label>Or upload PDF<input id="price-file" type="file" accept="application/pdf,.pdf"></label>
+        <select id="price-fixtures" hidden aria-label="Approved sandbox fixture"><option value="">Choose a synthetic test fixture</option></select>
+      </div>
+      <button id="price-extract" type="button">Extract draft prices</button>
+      <button id="price-cancel" type="button">Cancel review / back to input</button>
+      <p id="price-status" role="status" aria-live="polite">No price candidates loaded. Affirming records a review decision; it does not create quotes or submittals.</p>
+      <div id="price-evidence"></div>
+      <div id="price-candidates"></div>
+    </div>
+
     <!-- ================= Component Match ================= -->
     <div class="card">
       <h2>Match a Component to a Cut Sheet <span class="tag">real, downloadable</span></h2>
@@ -266,6 +283,100 @@
           if (btn) { btn.disabled = false; btn.textContent = originalLabel; }
         });
     }
+
+    // Price-book review: drafts are not pricing until explicitly reviewed.
+    var priceEpoch = 0, priceController = null, priceIds = [];
+    var priceSandbox = false;
+    var priceMessage = document.getElementById('price-status');
+    var priceRows = document.getElementById('price-candidates');
+    var priceEvidence = document.getElementById('price-evidence');
+    var priceBlob = null;
+    function priceNotice(message, error){priceMessage.textContent = message;priceMessage.className='status-line'+(error?' err':'');}
+    function clearPriceEvidence(){ if(priceBlob) URL.revokeObjectURL(priceBlob);priceBlob=null;priceEvidence.replaceChildren(); }
+    function correction(index){
+      var amount=document.getElementById('price-amount-'+index).value;
+      if(!amount.trim() || !Number.isFinite(Number(amount)) || Number(amount)<0) throw new Error('Enter a valid nonnegative price.');
+      var model=document.getElementById('price-model-'+index).value.trim();
+      if(!model) throw new Error('Enter the model number.');
+      return {full_model_number:model,finish_code:document.getElementById('price-finish-'+index).value.trim()||null,list_price:Number(amount),price_uom:document.getElementById('price-unit-'+index).value.trim()||'EA'};
+    }
+    async function priceRequest(url, options){
+      var response=await fetch(url,options);
+      var data=await response.json();
+      if(!response.ok) throw new Error(data.detail||data.error||('HTTP '+response.status));
+      return data;
+    }
+    async function renderPriceCandidates(epoch){
+      if(!priceIds.length){priceRows.replaceChildren();return;}
+      var data=await priceRequest('/api/cps/price-candidates?ids='+encodeURIComponent(priceIds.join(',')),{headers:authHeaders()});
+      if(epoch!==priceEpoch)return;
+      priceRows.innerHTML=(data.candidates||[]).map(function(c,i){
+        var warnings;try{warnings=JSON.parse(c.extraction_warnings||'[]');}catch(e){warnings=['Unreadable extraction warnings; review source.'];}
+        return '<section class="price-candidate card" data-id="'+esc(c.id)+'">'+
+          '<h3>Candidate '+(i+1)+' · '+(c.affirmed?'Affirmed':'Draft — not affirmed')+'</h3>'+
+          '<p>Source page '+esc(c.page_number)+' · '+(c.verified_in_source_text===1?'Model/price found in source text':'Source text unverified')+'. A source-text match is not a guarantee of correct pricing.</p>'+
+          '<p class="sub">'+esc(c.source_url)+' · Pipeline: '+esc(c.extraction_model||'unknown')+'</p>'+
+          '<blockquote>'+esc(c.raw_model_text||'Review the source PDF to verify the original row.')+'</blockquote>'+
+          (warnings.length?'<p class="error-box">'+esc(warnings.join(' · '))+'</p>':'')+
+          '<div class="row"><label>Model<input id="price-model-'+i+'" value="'+esc(c.full_model_number)+'"></label>'+
+          '<label>Finish<input id="price-finish-'+i+'" value="'+esc(c.finish_code||'')+'"></label>'+
+          '<label>List price<input id="price-amount-'+i+'" type="number" min="0" step="0.01" value="'+esc(c.list_price)+'"></label>'+
+          '<label>Unit<input id="price-unit-'+i+'" value="'+esc(c.price_uom||'EA')+'"></label></div>'+
+          '<button type="button" id="price-source-'+i+'">View source page</button> '+
+          '<button type="button" id="price-save-'+i+'">Save corrections as draft</button><br>'+
+          '<label><input type="checkbox" id="price-reviewed-'+i+'" disabled> I checked the source page, model, finish, unit and price.</label> '+
+          '<button type="button" id="price-affirm-'+i+'" disabled>Human Affirm</button></section>';
+      }).join('');
+      (data.candidates||[]).forEach(function(c,i){
+        var checked=document.getElementById('price-reviewed-'+i),affirm=document.getElementById('price-affirm-'+i);
+        checked.onchange=function(){affirm.disabled=priceSandbox||!checked.checked;};
+        document.getElementById('price-source-'+i).onclick=async function(){
+          try{
+            var r=await fetch('/api/cps/price-candidates/'+encodeURIComponent(c.id)+'/source',{headers:authHeaders()});
+            if(!r.ok){var d=await r.json();throw new Error(d.error||'Source preview unavailable');}
+            var blob=await r.blob();if(epoch!==priceEpoch)return;clearPriceEvidence();priceBlob=URL.createObjectURL(blob);
+            var frame=document.createElement('iframe');frame.title='Source PDF page '+c.page_number;frame.src=priceBlob;frame.style='width:100%;height:600px;border:1px solid #888';priceEvidence.append(frame);
+            checked.disabled=false;priceNotice('Source page '+c.page_number+' opened. Check the original row and unit before Human Affirm.');
+          }catch(e){if(epoch===priceEpoch)priceNotice(e.message,true);}
+        };
+        async function save(affirmed){
+          try{
+            if(affirmed&&(!checked.checked||priceSandbox))throw new Error('Human source review is required; sandbox affirmation is blocked.');
+            var edits=correction(i);
+            await priceRequest('/api/cps/price-candidates/'+encodeURIComponent(c.id)+'/affirm',{method:'PATCH',headers:authHeaders(true),body:JSON.stringify({affirmed:affirmed,reviewed_source:affirmed&&checked.checked,edits:edits})});
+            if(epoch!==priceEpoch)return;await renderPriceCandidates(epoch);priceNotice(affirmed?'Human Affirm recorded. No quote or submittal was created.':'Corrections saved as an unaffirmed draft. Review the source again before Human Affirm.');
+          }catch(e){if(epoch===priceEpoch)priceNotice(e.message,true);}
+        }
+        document.getElementById('price-save-'+i).onclick=function(){save(false);};
+        affirm.onclick=function(){save(true);};
+      });
+    }
+    document.getElementById('price-extract').onclick=async function(){
+      var epoch=++priceEpoch;priceIds=[];priceRows.replaceChildren();clearPriceEvidence();
+      priceController=new AbortController();var button=this;button.disabled=true;
+      try{
+        var file=document.getElementById('price-file').files[0], manufacturer=document.getElementById('price-manufacturer').value.trim();
+        var url=document.getElementById('price-url').value.trim(), data;
+        if(!manufacturer)throw new Error('Enter the manufacturer.');
+        if(file&&url)throw new Error('Choose a PDF upload or a catalogue URL, not both.');
+        if(file){var form=new FormData();form.append('file',file);form.append('manufacturer',manufacturer);data=await priceRequest('/api/cps/price-candidates/upload',{method:'POST',headers:authHeaders(),body:form,signal:priceController.signal});}
+        else{if(!/^https?:\/\//i.test(url))throw new Error('Enter a complete catalogue URL or select a PDF.');data=await priceRequest('/api/cps/price-candidates/discover',{method:'POST',headers:authHeaders(true),body:JSON.stringify({url:url,manufacturer:manufacturer,trade:'doors'}),signal:priceController.signal});}
+        if(epoch!==priceEpoch)return;priceIds=data.candidateIds||[];await renderPriceCandidates(epoch);
+        if(epoch!==priceEpoch)return;
+        var notes=(data.pageNotes||[]).map(function(p){return 'Page '+p.page+': '+(p.reason==='quote_only'?'quote-only; supplier pricing required':'no visible product-price rows');});
+        priceNotice((data.alreadyStaged?'Already staged. ':'')+data.candidatesStaged+' price candidate(s). '+(data.warnings||[]).concat(notes).join(' · ')+(priceIds.length?' Review every source row before Human Affirm.':' No prices affirmed.'));
+      }catch(e){if(epoch===priceEpoch)priceNotice(e.name==='AbortError'?'Review cancelled; already staged candidates remain drafts.':e.message,true);}
+      finally{if(epoch===priceEpoch)button.disabled=false;}
+    };
+    document.getElementById('price-cancel').onclick=function(){priceEpoch++;if(priceController)priceController.abort();priceIds=[];priceRows.replaceChildren();clearPriceEvidence();document.getElementById('price-extract').disabled=false;priceNotice('Review cancelled. Already staged candidates remain drafts; no prices were affirmed.');document.getElementById('price-url').focus();};
+    // This endpoint exists only in the separate localhost sandbox server.
+    // It changes display controls, never the server's mutation permissions.
+    fetch('/api/cps/virtual-user/status').then(function(r){return r.ok?r.json():null;}).then(function(mode){
+      if(!mode||mode.sandbox!==true)return;priceSandbox=true;
+      document.getElementById('price-sandbox').hidden=false;var select=document.getElementById('price-fixtures');select.hidden=false;
+      (mode.fixtures||[]).forEach(function(f){var o=document.createElement('option');o.value=f.url;o.textContent=f.name;select.append(o);});
+      select.onchange=function(){document.getElementById('price-url').value=select.value;document.getElementById('price-file').value='';};
+    }).catch(function(){});
 
     // ---------------- Component Match ----------------
     document.getElementById('match-btn').addEventListener('click', function(){

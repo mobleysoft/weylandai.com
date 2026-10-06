@@ -38,12 +38,12 @@ test("GET /api/sessions/:sessionId/extraction-route: 404 when session not found"
 });
 
 test("GET /api/sessions/:sessionId/extraction-route: real happy path returns the stored route", async () => {
-  const db = makeFakeDb({ row: { extraction_route: "claude_code_local", extraction_route_affirmed_at: "t1", extraction_route_affirmed_by: "u1" } });
+  const db = makeFakeDb({ row: { extraction_route: "embedded_gofaineat", extraction_route_affirmed_at: "t1", extraction_route_affirmed_by: "u1" } });
   const { router, env } = setup({ db });
   const res = await router.handle(new Request("https://example.com/api/sessions/s1/extraction-route"), env, {});
   assert.equal(res.status, 200);
   const body = await res.json();
-  assert.equal(body.route, "claude_code_local");
+  assert.equal(body.route, "embedded_gofaineat");
 });
 
 test("POST /api/sessions/:sessionId/extraction-route: invalid JSON is a real 400", async () => {
@@ -58,12 +58,12 @@ test("POST /api/sessions/:sessionId/extraction-route: invalid route value is a r
   const res = await router.handle(req, env, {});
   assert.equal(res.status, 400);
   const body = await res.json();
-  assert.deepEqual(body.valid_routes.sort(), ["api_direct", "claude_code_local"]);
+  assert.deepEqual(body.valid_routes.sort(), ["embedded_gofaineat"]);
 });
 
 test("POST /api/sessions/:sessionId/extraction-route: 404 when session not found", async () => {
   const { router, env } = setup({ db: makeFakeDb({ row: null }) });
-  const req = new Request("https://example.com/api/sessions/s1/extraction-route", { method: "POST", body: JSON.stringify({ route: "api_direct" }) });
+  const req = new Request("https://example.com/api/sessions/s1/extraction-route", { method: "POST", body: JSON.stringify({ route: "embedded_gofaineat" }) });
   const res = await router.handle(req, env, {});
   assert.equal(res.status, 404);
 });
@@ -71,11 +71,15 @@ test("POST /api/sessions/:sessionId/extraction-route: 404 when session not found
 test("POST /api/sessions/:sessionId/extraction-route: real happy path affirms the route", async () => {
   const db = makeFakeDb({ row: { id: "s1" } });
   const { router, env } = setup({ db });
-  const req = new Request("https://example.com/api/sessions/s1/extraction-route", { method: "POST", body: JSON.stringify({ route: "api_direct", remember: true }) });
+  const req = new Request("https://example.com/api/sessions/s1/extraction-route", { method: "POST", body: JSON.stringify({ route: "embedded_gofaineat", remember: true }) });
   const res = await router.handle(req, env, {});
   assert.equal(res.status, 200);
   const body = await res.json();
   assert.equal(body.ok, true);
-  assert.equal(body.route, "api_direct");
+  assert.equal(body.route, "embedded_gofaineat");
   assert.equal(body.remember_requested, true);
+});
+
+test("retired/unconfigured route selections cannot write session settings",async()=>{
+ let writes=0;const db={prepare(){return{bind(){return this},first:async()=>({id:'s1'}),run:async()=>{writes++}}}};const {router,env}=setup({db});for(const route of ['api_direct','claude_code_local','claude_code_subprocess']){const res=await router.handle(new Request('https://example.com/api/sessions/s1/extraction-route',{method:'POST',body:JSON.stringify({route})}),env,{});assert.equal(res.status,400)}assert.equal(writes,0);
 });

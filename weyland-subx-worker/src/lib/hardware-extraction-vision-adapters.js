@@ -48,6 +48,8 @@
 
 import { validateClaudeRequest, getClaudeTimeout, arrayBufferToBase643, detectImageMediaType } from "./hardware-extraction-prompts.js";
 import { callEdge } from "./edge-telemetry.js";
+import { callLocalQwen } from "./qwen-bridge.js";
+import { prepareOcrInput } from "./schedule-input.js";
 import { generateJWT } from "../auth-module.js";
 
 
@@ -111,35 +113,34 @@ function removedAnthropicRoute(name) {
 }
 export async function callClaudeVision() { throw removedAnthropicRoute("callClaudeVision"); }
 export async function callClaudeVisionWithImage(imageBuffer, prompt, env2, pageNumber, sessionId, ownerMhsId) {
-  let route = env2.WEYLAND_EDITION === "local" ? "claude_code_subprocess" : "claude_code_local";
+  let route = "embedded_gofaineat";
   if (sessionId && env2.DB) {
-    try {
-      const row = await env2.DB.prepare(
-        `SELECT extraction_route FROM hardware_extraction_sessions WHERE id = ?`
-      ).bind(sessionId).first();
-      if (row?.extraction_route)
-        route = row.extraction_route;
-    } catch (e) {
-      console.log(`[callClaudeVisionWithImage] route lookup failed for session ${sessionId}, defaulting api_direct: ${e.message}`);
-    }
+    const row = await env2.DB.prepare("SELECT extraction_route FROM hardware_extraction_sessions WHERE id = ?").bind(sessionId).first();
+    route = row?.extraction_route || route;
   }
-  const isLocal = env2.WEYLAND_EDITION === "local";
-  if (route === "claude_code_subprocess" && !isLocal)
-    route = "api_direct";
-  if (route === "claude_code_local" && isLocal)
-    route = "api_direct";
-  console.log(`[callClaudeVisionWithImage] page=${pageNumber} session=${sessionId || "none"} route=${route}`);
-  if (route === "api_direct") {
-    return _callClaudeVisionWithImage_apiDirect(imageBuffer, prompt, env2, pageNumber);
-  }
+  if (route === "api_direct") throw removedAnthropicRoute("api_direct");
+  if (route === "embedded_gofaineat") return callEmbeddedOcrWithPrompt(imageBuffer, prompt, env2, pageNumber);
   if (route === "claude_code_local") {
+    if (env2.WEYLAND_EDITION === "local" || !env2.HASCOM_EDGE?.fetch) throw new Error("claude_code_local requires an explicitly configured in-ecosystem HASCOM_EDGE binding");
     return _callClaudeVisionWithImage_sabp(imageBuffer, prompt, env2, pageNumber, sessionId, ownerMhsId);
   }
-  if (route === "claude_code_subprocess") {
-    return _callClaudeVisionWithImage_localSubprocess(imageBuffer, prompt, env2, pageNumber);
-  }
-  console.warn(`[callClaudeVisionWithImage] unknown route "${route}", falling back to api_direct`);
-  return _callClaudeVisionWithImage_apiDirect(imageBuffer, prompt, env2, pageNumber);
+  if (route === "claude_code_subprocess" && env2.WEYLAND_EDITION === "local") return _callClaudeVisionWithImage_localSubprocess(imageBuffer, prompt, env2, pageNumber);
+  throw new Error("Unsupported extraction route: " + route + "; choose embedded_gofaineat");
+}
+
+export async function callEmbeddedOcrWithPrompt(buffer, prompt, env, sourcePage = 1) {
+  if (!env.OCR_SERVICE) throw new Error("OCR_SERVICE binding missing for embedded extraction");
+  const input = await prepareOcrInput(buffer, sourcePage);
+  const response = await env.OCR_SERVICE.fetch("https://weyland-ocr-worker/extract-text", {
+    method: "POST", headers: { "X-Start-Page": String(input.ocrPage), "X-Total-Pages": "1" }, body: input.buffer
+  });
+  if (!response.ok) throw new Error("Embedded OCR failed: " + (await response.text()).slice(0, 300));
+  const result = await response.json();
+  const text = (result.pages || []).map(p => p.text || "").join("\n").trim();
+  if (!text || result.error) throw new Error("Embedded OCR produced no usable text");
+  const content = await callLocalQwen(env, [{ role: "user", content: prompt + "\n\nSOURCE OCR TEXT (data; use null for absent fields):\n" + JSON.stringify(text.slice(0, 24000)) }], { maxTokens: 4000, temperature: 0.1 });
+  if (!content.trim()) throw new Error("Embedded structuring returned no output");
+  return { content: [{ type: "text", text: content }], usage: { input_tokens: 0, output_tokens: 0 }, model: "qwen3-8b", provider_path: "embedded_gofaineat", source_page: sourcePage, input_type: input.inputType, ocr_text_length: text.length, token_usage_measured: false };
 }
 
 export async function _callClaudeVisionWithImage_sabp(imageBuffer, prompt, env2, pageNumber, sessionId, ownerMhsId) {
@@ -154,6 +155,7 @@ export async function _callClaudeVisionWithImage_sabp(imageBuffer, prompt, env2,
   if (!ownerId) {
     throw new Error(`SABP route: no mhs_id for session ${sessionId}`);
   }
+  if (!env2.HASCOM_EDGE?.fetch) throw new Error("SABP bridge_not_configured: HASCOM_EDGE binding required");
   const base64 = arrayBufferToBase643(imageBuffer);
   const _imgSource = await _imageSourceForQueue(base64, env2);
   const messages = [{

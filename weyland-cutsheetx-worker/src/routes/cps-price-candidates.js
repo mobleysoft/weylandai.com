@@ -8,7 +8,7 @@
 // rows a human has explicitly affirmed.
 
 import { jsonResponse3 } from "../lib/json-response.js";
-import { extractPricesFromPdfUrl, extractPricesForComponent } from "../lib/catalogue-price-discovery.js";
+import { extractPricesFromPdfUrl, extractPricesFromPdfBuffer, extractPricesForComponent } from "../lib/catalogue-price-discovery.js";
 import { importPriceVariants } from "./cps-import-prices.js";
 import { parseModelString, normalizeManufacturerKey } from "../lib/cps-matching.js";
 
@@ -22,7 +22,7 @@ async function sha256Hex(text) {
   return Array.from(new Uint8Array(hashBuffer)).map((b) => b.toString(16).padStart(2, "0")).join("");
 }
 
-export function registerCpsPriceCandidatesRoutes(router, { authenticate }) {
+export function registerCpsPriceCandidatesRoutes(router, { authenticate, PDFDocument }) {
   router.post("/api/cps/price-candidates/discover", async (request2, env2) => {
     const { error: error4, user } = await authenticate(request2, env2);
     if (error4) return error4;
@@ -35,6 +35,37 @@ export function registerCpsPriceCandidatesRoutes(router, { authenticate }) {
     } catch (err) {
       return jsonResponse3({ error: "Failed to discover prices: " + err.message }, 500);
     }
+  });
+
+  router.post("/api/cps/price-candidates/upload", async (request, env) => {
+    const { error, user } = await authenticate(request, env);
+    if (error) return error;
+    try {
+      const form = await request.formData();
+      const file = form.get("file");
+      if (!file || typeof file.arrayBuffer !== "function") return jsonResponse3({ error: "PDF file required" }, 400);
+      if (file.size > 50 * 1024 * 1024) return jsonResponse3({ error: "PDF exceeds 50 MiB" }, 413);
+      const result = await extractPricesFromPdfBuffer(await file.arrayBuffer(), { manufacturer: String(form.get("manufacturer") || ""), trade: "doors" }, env, "upload:" + String(file.name || "catalogue.pdf"));
+      return jsonResponse3(result, result.error ? 422 : 200);
+    } catch (err) { return jsonResponse3({ error: "Upload failed: " + err.message }, 400); }
+  });
+
+  router.get("/api/cps/price-candidates/:id/source", async (request, env) => {
+    const { error } = await authenticate(request, env);
+    if (error) return error;
+    try {
+      const candidate = await env.DB.prepare("SELECT * FROM catalogue_price_candidates WHERE id = ?").bind(request.params.id).first();
+      if (!candidate) return jsonResponse3({ error: "candidate not found" }, 404);
+      if (!candidate.temp_r2_key || !Number.isInteger(candidate.page_number) || candidate.page_number < 1) return jsonResponse3({ error: "Source page unavailable" }, 404);
+      const obj = await env.UPLOADS.get(candidate.temp_r2_key);
+      if (!obj) return jsonResponse3({ error: "Stored source PDF unavailable" }, 404);
+      if (!PDFDocument) return jsonResponse3({ error: "PDF rendering unavailable" }, 503);
+      const pdf = await PDFDocument.load(await obj.arrayBuffer());
+      if (candidate.page_number > pdf.getPageCount()) return jsonResponse3({ error: "Source page outside PDF" }, 422);
+      const page = await PDFDocument.create();
+      page.addPage((await page.copyPages(pdf, [candidate.page_number - 1]))[0]);
+      return new Response(await page.save(), { headers: { "Content-Type": "application/pdf", "Content-Disposition": "inline; filename=source-page.pdf", "Cache-Control": "private, no-store", "X-CPS-Source-Page": String(candidate.page_number) } });
+    } catch (err) { return jsonResponse3({ error: "Source preview failed: " + err.message }, 422); }
   });
 
   router.post("/api/cps/price-candidates/discover-by-model", async (request2, env2) => {
@@ -63,6 +94,13 @@ export function registerCpsPriceCandidatesRoutes(router, { authenticate }) {
       const rejectedParam = url.searchParams.get("rejected");
       let query = "SELECT * FROM catalogue_price_candidates WHERE 1=1";
       const params = [];
+      const ids = url.searchParams.get("ids");
+      if (ids !== null) {
+        const values = ids.split(",").filter(Boolean);
+        if (!values.length || values.length > 200) return jsonResponse3({ error: "Provide 1 to 200 candidate ids" }, 400);
+        query += " AND id IN (" + values.map(() => "?").join(",") + ")";
+        params.push(...values);
+      }
       if (manufacturer) {
         query += " AND manufacturer LIKE ?";
         params.push(`%${manufacturer}%`);
@@ -89,11 +127,19 @@ export function registerCpsPriceCandidatesRoutes(router, { authenticate }) {
     if (error4) return error4;
     try {
       const { id } = request2.params;
-      const { affirmed, edits } = await request2.json();
+      const { affirmed, edits, reviewed_source } = await request2.json();
+      if (!user.userId) return jsonResponse3({ error: "Sign in to save corrections or affirm prices" }, 403);
+      if (typeof affirmed !== "boolean") return jsonResponse3({ error: "affirmed must be an explicit boolean" }, 400);
+      if (affirmed && reviewed_source !== true) return jsonResponse3({ error: "Confirm human source review before affirming" }, 400);
+      const allowed = new Set(["full_model_number", "finish_code", "finish_description", "list_price", "unit_price", "price_uom"]);
+      if (edits && (typeof edits !== "object" || Array.isArray(edits) || Object.keys(edits).some(k => !allowed.has(k)))) return jsonResponse3({ error: "Unsupported correction fields" }, 400);
+      if (edits && ["list_price", "unit_price"].some(k => edits[k] != null && (typeof edits[k] !== "number" || !Number.isFinite(edits[k]) || edits[k] < 0))) return jsonResponse3({ error: "Price must be a finite nonnegative number" }, 400);
+      if (edits && ["full_model_number", "finish_code", "finish_description", "price_uom"].some(k => edits[k] != null && typeof edits[k] !== "string")) return jsonResponse3({ error: "Model, finish and unit corrections must be text" }, 400);
       const candidate = await env2.DB.prepare("SELECT * FROM catalogue_price_candidates WHERE id = ?").bind(id).first();
       if (!candidate) return jsonResponse3({ error: "candidate not found" }, 404);
 
       const merged = { ...candidate, ...(edits || {}) };
+      if (!String(merged.full_model_number || "").trim() || merged.list_price == null || !Number.isFinite(Number(merged.list_price)) || Number(merged.list_price) < 0) return jsonResponse3({ error: "A model and valid list price are required" }, 400);
       await env2.DB.prepare(`
         UPDATE catalogue_price_candidates
         SET full_model_number = ?, finish_code = ?, finish_description = ?,

@@ -1,3 +1,4 @@
+import * as discoveryExports from "./cutsheet-discovery.js";
 import { test } from "node:test";
 import assert from "node:assert/strict";
 import {
@@ -8,7 +9,6 @@ import {
   calculateHash,
   checkDuplicate,
   storeInTempStorage,
-  analyzePdfWithClaude,
   analyzePdfWithGofaineat,
   calculateMatchScore,
   validatePdf,
@@ -77,7 +77,7 @@ test("downloadPdf: real happy path returns success with a validated PDF buffer",
     arrayBuffer: async () => pdfBytes.buffer,
   }));
   try {
-    const result = await downloadPdf("https://example.com/a.pdf", {});
+    const result = await downloadPdf("https://weylandai.com/a.pdf", {});
     assert.equal(result.success, true);
     assert.equal(result.contentLength, pdfBytes.length);
   } finally {
@@ -88,7 +88,7 @@ test("downloadPdf: real happy path returns success with a validated PDF buffer",
 test("downloadPdf: real HTTP error is surfaced as DOWNLOAD_FAILED", async () => {
   const restore = fakeFetchOnce(async () => ({ ok: false, status: 404, statusText: "Not Found" }));
   try {
-    const result = await downloadPdf("https://example.com/missing.pdf", {});
+    const result = await downloadPdf("https://weylandai.com/missing.pdf", {});
     assert.equal(result.success, false);
     assert.equal(result.errorCode, "DOWNLOAD_FAILED");
   } finally {
@@ -104,7 +104,7 @@ test("downloadPdf: rejects a file whose magic bytes are not %PDF", async () => {
     arrayBuffer: async () => notPdf.buffer,
   }));
   try {
-    const result = await downloadPdf("https://example.com/a.pdf", {});
+    const result = await downloadPdf("https://weylandai.com/a.pdf", {});
     assert.equal(result.success, false);
     assert.equal(result.errorCode, "INVALID_PDF_MAGIC");
   } finally {
@@ -118,7 +118,7 @@ test("downloadPdf: rejects a non-PDF content type on a non-.pdf URL", async () =
     headers: { get: (k) => (k === "content-type" ? "text/html" : "0") },
   }));
   try {
-    const result = await downloadPdf("https://example.com/page", {});
+    const result = await downloadPdf("https://weylandai.com/page", {});
     assert.equal(result.success, false);
     assert.equal(result.errorCode, "INVALID_CONTENT_TYPE");
   } finally {
@@ -132,7 +132,7 @@ test("downloadPdf: rejects a file over MAX_FILE_SIZE before downloading the body
     headers: { get: (k) => (k === "content-type" ? "application/pdf" : String(MAX_FILE_SIZE + 1)) },
   }));
   try {
-    const result = await downloadPdf("https://example.com/huge.pdf", {});
+    const result = await downloadPdf("https://weylandai.com/huge.pdf", {});
     assert.equal(result.success, false);
     assert.equal(result.errorCode, "FILE_TOO_LARGE");
   } finally {
@@ -194,28 +194,12 @@ test("storeInTempStorage: real put call uses a hash-derived R2 key and pdf conte
 
 // --- analyzePdfWithClaude ---
 
-test("analyzePdfWithClaude: real behavior when no ANTHROPIC_API_KEY is configured", async () => {
-  const result = await analyzePdfWithClaude(new ArrayBuffer(4), {}, {});
-  assert.equal(result.analyzed, false);
-  assert.equal(result.reason, "API key not configured");
+test("retired analyzePdfWithClaude is absent from current exports", () => {
+ assert.equal(Object.hasOwn(discoveryExports,'analyzePdfWithClaude'),false);
 });
 
-test("analyzePdfWithClaude: real happy path parses the JSON block from Claude's response", async () => {
-  const restore = fakeFetchOnce(async () => ({
-    ok: true,
-    json: async () => ({
-      content: [{ text: '{"documentType":"cut_sheet","matchesExpectedProduct":true,"matchConfidence":0.9}' }],
-      usage: { input_tokens: 10, output_tokens: 5 },
-    }),
-  }));
-  try {
-    const result = await analyzePdfWithClaude(new ArrayBuffer(4), { manufacturer: "Schlage" }, { ANTHROPIC_API_KEY: "sk-x" });
-    assert.equal(result.analyzed, true);
-    assert.equal(result.documentType, "cut_sheet");
-    assert.equal(result.matchesExpectedProduct, true);
-  } finally {
-    restore();
-  }
+test("configured retired provider credentials cannot override current OCR analysis", async () => {
+ let calls=0;const restore=fakeFetchOnce(async()=>{calls++;throw Error('external model forbidden')});try{const env={ANTHROPIC_API_KEY:'present',OCR_SERVICE:{fetch:async()=>Response.json({pages:[{page:1,text:'Schlage L9050 CUT SHEET'}]})}};const result=await analyzePdfWithGofaineat(new ArrayBuffer(4),{manufacturer:'Schlage',model:'L9050'},env);assert.equal(result.analyzed,true);assert.equal(result.matchesExpectedProduct,true);assert.equal(calls,0);}finally{restore()}
 });
 
 // --- analyzePdfWithGofaineat ---
@@ -294,7 +278,7 @@ test("calculateMatchScore: real scoring rewards manufacturer + model + category 
 test("validatePdf: real download failure short-circuits before hashing", async () => {
   const restore = fakeFetchOnce(async () => ({ ok: false, status: 500, statusText: "Error" }));
   try {
-    const result = await validatePdf("https://example.com/x.pdf", {}, {});
+    const result = await validatePdf("https://weylandai.com/x.pdf", {}, {});
     assert.equal(result.valid, false);
     assert.equal(result.stage, "download");
   } finally {
@@ -311,7 +295,7 @@ test("validateCandidates: real behavior sorts validated candidates by matchScore
   }));
   const db = fakeDb();
   try {
-    const candidates = [{ url: "https://a.com/a.pdf" }, { url: "https://b.com/b.pdf" }];
+    const candidates = [{ url: "https://weylandai.com/a.pdf" }, { url: "https://weylandai.com/b.pdf" }];
     const results = await validateCandidates(candidates, { manufacturer: "Schlage" }, { DB: db }, 2);
     assert.equal(results.length, 2);
     assert.ok(results[0].matchScore >= results[1].matchScore);
@@ -621,4 +605,11 @@ test("getDiscoveryConfig: real query flattens key/value rows into a config objec
   };
   const config = await getDiscoveryConfig({ DB: db });
   assert.deepEqual(config, { pending_review_expiry_days: "30" });
+});
+
+test("external PDF downloads serve corpus hits and enqueue misses without request-time network",async()=>{
+ let calls=0;const puts=[];const bytes=new TextEncoder().encode('%PDF-1.4 synthetic');const DB={prepare(sql){return {bind(){return this},async run(){puts.push(sql);return {}}}}};const restore=fakeFetchOnce(async()=>{calls++;throw Error('not allowed')});try{
+ const hit=await downloadPdf('https://manufacturer.example/test.pdf',{DB,UPLOADS:{get:async()=>({arrayBuffer:async()=>bytes.buffer})}});assert.equal(hit.success,true);assert.equal(hit.fromCorpus,true);
+ const miss=await downloadPdf('https://manufacturer.example/missing.pdf',{DB,UPLOADS:{get:async()=>null}});assert.equal(miss.errorCode,'NOT_IN_CORPUS');assert.ok(puts.some(x=>x.includes('INSERT OR IGNORE')));assert.equal(calls,0);
+ }finally{restore()}
 });

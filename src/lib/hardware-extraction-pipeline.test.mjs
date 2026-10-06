@@ -1,3 +1,4 @@
+import { pdfFixture, PNG, embeddedEnv, withEmbeddedModel } from "../test-support/ocr-fixtures.mjs";
 import { test } from "node:test";
 import assert from "node:assert/strict";
 import {
@@ -61,14 +62,10 @@ function withMockFetch(impl, fn) {
   return fn().finally(() => { globalThis.fetch = originalFetch; });
 }
 
-test("extractHardwareSchedule: real happy path builds a prompt, calls Claude, and parses the result", async () => {
-  await withMockFetch(async () => ({
-    ok: true, headers: new Headers(),
-    async json() { return { content: [{ text: JSON.stringify({ hardware_groups: [] }) }] }; },
-  }), async () => {
-    const result = await extractHardwareSchedule(new ArrayBuffer(8), { ANTHROPIC_API_KEY: "sk-1" });
-    assert.deepEqual(result.hardware_groups, []);
-  });
+test("extractHardwareSchedule: single PDF page uses existing OCR and in-ecosystem structuring", async () => {
+ const pdf=await pdfFixture();const ocr=[],models=[];
+ const result=await withEmbeddedModel({hardware_groups:[{group_number:"1",components:[{component_type:"LOCK",quantity:1,model_number:"L9050"}]}]},()=>extractHardwareSchedule(pdf,embeddedEnv(null,ocr)),models);
+ assert.equal(result.hardware_groups.length,1);assert.equal(result.hardware_groups[0].components[0].model_number,"L9050");assert.equal(result.metadata.extraction_mode,"embedded_gofaineat");assert.equal(ocr.length,3);assert.equal(models.length,1);
 });
 
 test("storeHardwareExtraction: real happy path inserts a new hardware set and its components", async () => {
@@ -147,7 +144,7 @@ test("queuePageExtractionJob: real happy path resolves a contract, queues via ca
     status: 200,
     async text() { return JSON.stringify({ job_id: "job1" }); },
   }), async () => {
-    const result = await queuePageExtractionJob("aVZCT1I=", { DB: db, FLEET_API_KEY: "fk1" }, { sessionId: "s1", pageNumber: 1 });
+    const result = await queuePageExtractionJob("aVZCT1I=", { HASCOM_EDGE: { fetch: (request, init) => globalThis.fetch(request.url || request, init) }, DB: db, FLEET_API_KEY: "fk1" }, { sessionId: "s1", pageNumber: 1 });
     assert.equal(result.job_id, "job1");
     assert.equal(result.owner_id, "mhs1");
     assert.ok(runCalls.some((c) => c.sql.includes("UPDATE hardware_extraction_sessions SET pending_job_id")));
@@ -162,47 +159,20 @@ test("buildExtractionResultFromVision: real happy path wraps a parsed vision res
   assert.equal(result.metadata.isolation_method, "sabp_bridge_async");
 });
 
-test("extractWithImageMode: real happy path renders, sends to Claude, and returns parsed groups with timing", async () => {
-  // extractWithImageMode always calls callClaudeVisionWithImage with a hardcoded null
-  // sessionId, so the DB route-override lookup never fires - the default route for a
-  // non-local WEYLAND_EDITION is claude_code_local (sabp), which itself needs a DB to
-  // resolve an owner mhs_id. Force WEYLAND_EDITION=local instead, which routes to the
-  // local-subprocess adapter (its own sidecar-shaped mock response).
-  const fakeRenderer = async () => ({ imageBuffer: new ArrayBuffer(8), totalPages: 3 });
-  await withMockFetch(async () => ({
-    ok: true,
-    async json() { return { success: true, result: { content: [{ text: JSON.stringify({ hardware_groups: [] }) }] } }; },
-  }), async () => {
-    const result = await extractWithImageMode(new ArrayBuffer(8), 1, { ANTHROPIC_API_KEY: "sk-1", WEYLAND_EDITION: "local" }, fakeRenderer);
-    assert.equal(result.total_pages, 3);
-    assert.equal(result.metadata.extraction_mode, "image_render");
-  });
+test("extractWithImageMode: real renderer PNG enters embedded OCR and retains source page metadata", async () => {
+ const renderer=async()=>({imageBuffer:PNG,totalPages:3});const ocr=[];const pdf=await pdfFixture(3);
+ const result=await withEmbeddedModel({hardware_groups:[]},()=>extractWithImageMode(pdf,2,embeddedEnv(null,ocr),renderer));
+ assert.equal(result.total_pages,3);assert.equal(result.metadata.extraction_mode,"image_render");assert.equal(ocr.length,1);
 });
 
-test("extractWithDirectPdfMode: real happy path sends the full PDF and returns parsed groups", async () => {
-  await withMockFetch(async () => ({
-    ok: true,
-    async json() { return { content: [{ text: JSON.stringify({ hardware_groups: [] }) }] }; },
-  }), async () => {
-    const result = await extractWithDirectPdfMode(new ArrayBuffer(8), 1, { ANTHROPIC_API_KEY: "sk-1" });
-    assert.equal(result.metadata.extraction_mode, "direct_pdf");
-    assert.equal(result.metadata.page_isolated, false);
-  });
+test("extractWithDirectPdfMode: compatibility entry uses the selected PDF page through OCR", async () => {
+ const pdf=await pdfFixture(3),ocr=[];const result=await withEmbeddedModel({hardware_groups:[]},()=>extractWithDirectPdfMode(pdf,2,embeddedEnv(null,ocr)));
+ assert.equal(result.page_number,2);assert.equal(result.total_pages,3);assert.equal(result.metadata.extraction_mode,"embedded_gofaineat");assert.ok(ocr.every(x=>x.headers.get('X-Page-Number')==='2'));
 });
 
-test("extractFromPageImage: real happy path resolves a legacy contract (no DB) and extracts", async () => {
-  // No DB, no sessionId -> resolveExtractionContract's legacy branch, and
-  // callClaudeVisionWithImage's route-override DB lookup never fires either;
-  // force WEYLAND_EDITION=local so it hits the local-subprocess adapter.
-  await withMockFetch(async () => ({
-    ok: true,
-    async json() { return { success: true, result: { content: [{ text: JSON.stringify({ hardware_groups: [] }) }] } }; },
-  }), async () => {
-    const imgB64 = Buffer.from("hello").toString("base64");
-    const result = await extractFromPageImage(imgB64, 1, 1, { ANTHROPIC_API_KEY: "sk-1", WEYLAND_EDITION: "local" });
-    assert.equal(result.metadata.isolation_method, "frontend_canvas_capture");
-    assert.equal(result.constraints, null); // no DB -> legacy contract, no constraints
-  });
+test("extractFromPageImage: a real PNG uses the embedded route with resolved legacy contract", async () => {
+ const imgB64=Buffer.from(PNG).toString('base64');const result=await withEmbeddedModel({hardware_groups:[]},()=>extractFromPageImage(imgB64,1,1,embeddedEnv(null)));
+ assert.equal(result.page_number,1);assert.deepEqual(result.hardware_groups,[]);
 });
 
 test("createExtractionSession: real happy path creates a session and returns its id", async () => {
@@ -287,24 +257,10 @@ test("resolveExtractionContract: appends operator guidance to the prompt when pr
   assert.ok(result.prompt.includes("Check page 2"));
 });
 
-test("extractDoorScheduleHGSE: real happy path resolves a candidate's page number and delegates to extractDoorSchedule", async () => {
-  const db = makeFakeDb({
-    handlers: {
-      "FROM schedule_region_candidates": () => ({ page_number: 3 }),
-      "scope_level = 'global' AND field_group = 'door_schedule'": () => [],
-      "scope_level = 'industry' AND industry_id": () => [],
-      "scope_level = 'tenant' AND tenant_id": () => [],
-      "SELECT extraction_route": () => ({ extraction_route: "api_direct" }),
-    },
-  });
-  await withMockFetch(async () => ({
-    ok: true, headers: new Headers(),
-    async json() { return { content: [{ text: JSON.stringify({ door_entries: [] }) }] }; },
-  }), async () => {
-    const result = await extractDoorScheduleHGSE(new ArrayBuffer(8), "prompt", { sessionId: "s1", candidateId: "cand1" }, { DB: db, ANTHROPIC_API_KEY: "sk-1" });
-    assert.equal(result.success, true);
-    assert.equal(result.entries_count, 0);
-  });
+test("extractDoorScheduleHGSE: selected candidate page uses embedded OCR and persists parsed entries", async () => {
+ const runs=[];const db=makeFakeDb({handlers:{"SELECT extraction_route":()=>({extraction_route:"embedded_gofaineat"}),"FROM schedule_region_candidates":()=>({page_number:2})},runCalls:runs});
+ const result=await withEmbeddedModel({door_entries:[{mark:"101",fire_rating:"NR"}]},()=>extractDoorScheduleHGSE(PNG,"prompt",{sessionId:"s1",pageNumber:1,candidateId:"c1",tenantId:"ven_weyland",totalPages:3},embeddedEnv(db)));
+ assert.equal(result.success,true);assert.equal(result.entries_count,1);assert.ok(runs.some(x=>x.sql.includes('INSERT INTO door_schedule_entries')));
 });
 
 test("routeExtraction: an unknown schedule type returns a real failure result, not a throw", async () => {
@@ -313,28 +269,16 @@ test("routeExtraction: an unknown schedule type returns a real failure result, n
   assert.match(result.error, /Unknown schedule type/);
 });
 
-test("routeExtraction: a not_implemented schedule type falls back to generic extraction", async () => {
-  const db = makeFakeDb({ handlers: { "SELECT extraction_route": () => ({ extraction_route: "api_direct" }) } });
-  await withMockFetch(async () => ({
-    ok: true, headers: new Headers(),
-    async json() { return { content: [{ type: "text", text: JSON.stringify({ entries: [] }) }] }; },
-  }), async () => {
-    const result = await routeExtraction("finish_schedule", new ArrayBuffer(8), { sessionId: "s1", pageNumber: 1 }, { ANTHROPIC_API_KEY: "sk-1", DB: db });
-    assert.equal(result.fallback_reason, "not_implemented");
-    assert.equal(result.success, true);
-  });
+test("routeExtraction: generic fallback uses embedded OCR and preserves its explicit fallback reason", async () => {
+ const db=makeFakeDb({handlers:{"SELECT extraction_route":()=>({extraction_route:"embedded_gofaineat"})}});
+ const result=await withEmbeddedModel({entries:[{mark:"F1",finish:"PT"}]},()=>routeExtraction("finish_schedule",PNG,{sessionId:"s1",pageNumber:1},embeddedEnv(db)));
+ assert.equal(result.fallback_reason,"not_implemented");assert.equal(result.success,true);assert.equal(result.entry_count,1);assert.equal(result.entries[0].mark,"F1");
 });
 
-test("extractGenericSchedule: real happy path returns parsed generic entries", async () => {
-  const db = makeFakeDb({ handlers: { "SELECT extraction_route": () => ({ extraction_route: "api_direct" }) } });
-  await withMockFetch(async () => ({
-    ok: true, headers: new Headers(),
-    async json() { return { content: [{ type: "text", text: JSON.stringify({ entries: [{ a: 1 }] }) }] }; },
-  }), async () => {
-    const result = await extractGenericSchedule(new ArrayBuffer(8), { sessionId: "s1", pageNumber: 1 }, { ANTHROPIC_API_KEY: "sk-1", DB: db });
-    assert.equal(result.success, true);
-    assert.equal(result.entry_count, 1);
-  });
+test("extractGenericSchedule: embedded OCR returns actual parsed generic entries", async () => {
+ const db=makeFakeDb({handlers:{"SELECT extraction_route":()=>({extraction_route:"embedded_gofaineat"})}});
+ const result=await withEmbeddedModel({entries:[{a:1}]},()=>extractGenericSchedule(PNG,{sessionId:"s1",pageNumber:1},embeddedEnv(db)));
+ assert.equal(result.success,true);assert.equal(result.entry_count,1);assert.deepEqual(result.entries,[{a:1}]);
 });
 
 test("extractGenericSchedule: a real Claude failure returns a real failure result, not a throw", async () => {
@@ -368,26 +312,10 @@ test("resolveDoorScheduleConstraints: real happy path merges global door-schedul
   assert.ok(result.fields.some((f) => f.field_name === "mark"));
 });
 
-test("extractDoorSchedule: real happy path resolves constraints, calls Claude, and persists entries", async () => {
-  const runCalls = [];
-  const db = makeFakeDb({
-    handlers: {
-      "scope_level = 'global' AND field_group = 'door_schedule'": () => [],
-      "scope_level = 'industry' AND industry_id": () => [],
-      "scope_level = 'tenant' AND tenant_id": () => [],
-      "SELECT extraction_route": () => ({ extraction_route: "api_direct" }),
-    },
-    runCalls,
-  });
-  await withMockFetch(async () => ({
-    ok: true, headers: new Headers(),
-    async json() { return { content: [{ text: JSON.stringify({ door_entries: [{ mark: "101", fire_rating: "NR" }] }) }] }; },
-  }), async () => {
-    const result = await extractDoorSchedule("s1", new ArrayBuffer(8), "ven_weyland", 1, 3, { DB: db, ANTHROPIC_API_KEY: "sk-1" });
-    assert.equal(result.success, true);
-    assert.equal(result.entries_count, 1);
-    assert.ok(runCalls.some((c) => c.sql.includes("INSERT INTO door_schedule_entries")));
-  });
+test("extractDoorSchedule: embedded OCR resolves constraints and persists draft entries", async () => {
+ const runCalls=[];const db=makeFakeDb({handlers:{"scope_level = 'global'":()=>[],"scope_level = 'industry'":()=>[],"scope_level = 'tenant'":()=>[],"SELECT extraction_route":()=>({extraction_route:"embedded_gofaineat"})},runCalls});
+ const result=await withEmbeddedModel({door_entries:[{mark:"101",fire_rating:"NR"}]},()=>extractDoorSchedule("s1",PNG,"ven_weyland",1,3,embeddedEnv(db)));
+ assert.equal(result.success,true);assert.equal(result.entries_count,1);assert.equal(result.entries[0].mark,"101");assert.ok(runCalls.some(c=>c.sql.includes("INSERT INTO door_schedule_entries")));
 });
 
 test("extractDoorSchedule: a Claude failure returns a real failure result with the resolved constraints intact", async () => {
@@ -431,4 +359,19 @@ test("persistDoorScheduleResponse: real happy path with a resolved-constraints p
   assert.equal(result.entries_count, 1);
   assert.ok(runCalls.some((c) => c.sql.includes("INSERT INTO door_schedule_entries")));
   assert.ok(runCalls.some((c) => c.sql.includes("UPDATE hardware_extraction_sessions")));
+});
+
+test("hardware PDF extraction rejects implicit multi-page selection and out-of-range pages before provider calls",async()=>{
+ const pdf=await pdfFixture(2);let called=0;const env=embeddedEnv(null);env.OCR_SERVICE.fetch=async()=>{called++;throw Error('not expected')};
+ await assert.rejects(()=>extractHardwareSchedule(pdf,env),/Select page_number/);await assert.rejects(()=>extractWithDirectPdfMode(pdf,3,env),/out of range/);assert.equal(called,0);
+});
+
+test("queued page extraction cannot use an unbound bridge even with an owner", async () => {
+ let calls=0;const original=globalThis.fetch;globalThis.fetch=async()=>{calls++;throw Error('forbidden')};
+ try { await assert.rejects(()=>queuePageExtractionJob('AA==',{}, {ownerMhsId:'mhs1',pageNumber:1}),/bridge_not_configured/);assert.equal(calls,0); } finally {globalThis.fetch=original;}
+});
+test("hardware input rejects invalid PDFs and oversize buffers before calling OCR", async () => {
+ let calls=0;const env={OCR_SERVICE:{fetch(){calls++}}};
+ await assert.rejects(()=>extractHardwareSchedule(new TextEncoder().encode('not pdf'),env),e=>e.status===400);
+ await assert.rejects(()=>extractHardwareSchedule(new ArrayBuffer(50*1024*1024+1),env),e=>e.status===400);assert.equal(calls,0);
 });

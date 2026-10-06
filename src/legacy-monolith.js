@@ -132800,87 +132800,12 @@ async function extractIsolatedPage(pdfBuffer, pageNumber) {
     extractionTimeMs: extractTime
   };
 }
-async function extractSinglePage(pdfBuffer, pageNumber, env2) {
-  console.log(`[Hardware Extractor] \u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550`);
-  console.log(`[Hardware Extractor] EXTRACTING PAGE ${pageNumber} (ISOLATED MODE)`);
-  console.log(`[Hardware Extractor] \u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550`);
-  const startTime = Date.now();
-  // Fixed 2026-09-09: each fallback below used to be handed the SAME
-  // pdfBuffer object. Found live (not theoretical) via a real production
-  // 500: "Cannot perform Construct on a detached ArrayBuffer". The
-  // isolated-PDF-mode attempt's WASM PDF library detaches the buffer it's
-  // given as a side effect of slicing out a single page; when that attempt
-  // then failed for an unrelated reason and this function fell through to
-  // image-render mode, it tried to reuse the now-detached original buffer.
-  // ArrayBuffer.slice() always returns an independent copy regardless of
-  // whether the source was later detached, so each attempt below now gets
-  // its own - the minimal, safe fix given the actual failure mode, without
-  // needing to also fix (or fully understand) exactly how the WASM layer
-  // detaches its input.
-  try {
-    console.log(`[Hardware Extractor] Using ISOLATED PDF mode (true page isolation)...`);
-    return await extractWithIsolatedPdfMode(pdfBuffer.slice(0), pageNumber, env2);
-  } catch (isolationError) {
-    console.error(`[Hardware Extractor] Isolated PDF mode failed:`, {
-      message: isolationError.message,
-      stack: isolationError.stack,
-      name: isolationError.name,
-      pageNumber,
-      pdfSize: pdfBuffer.byteLength
-    });
-    console.log(`[Hardware Extractor] Falling back to image render mode...`);
-  }
-  const renderer = await loadRenderer();
-  if (renderer) {
-    try {
-      console.log(`[Hardware Extractor] Using image render mode...`);
-      return await extractWithImageMode(pdfBuffer.slice(0), pageNumber, env2, renderer);
-    } catch (renderError) {
-      console.warn(`[Hardware Extractor] Image render failed: ${renderError.message}`);
-      console.log(`[Hardware Extractor] Falling back to legacy full PDF mode...`);
-    }
-  }
-  console.log(`[Hardware Extractor] WARNING: Using LEGACY full PDF mode (not recommended)...`);
-  return await extractWithDirectPdfMode(pdfBuffer.slice(0), pageNumber, env2);
+async function extractSinglePage(pdfBuffer, pageNumber, env2, sessionId, startRow = 0) {
+  const page = await import("../weyland-subx-worker/src/lib/hardware-extraction-single-page.js");
+  return page.extractSinglePage(pdfBuffer, pageNumber, env2, sessionId, startRow);
 }
 async function extractWithIsolatedPdfMode(pdfBuffer, pageNumber, env2) {
-  console.log(`[Hardware Extractor] Using ISOLATED PDF mode for page ${pageNumber}...`);
-  const overallStartTime = Date.now();
-  const { pageBuffer, totalPages, extractionTimeMs: isolationTime } = await extractIsolatedPage(pdfBuffer, pageNumber);
-  const base64Pdf = arrayBufferToBase643(pageBuffer);
-  const isolatedSizeKB = (pageBuffer.byteLength / 1024).toFixed(1);
-  console.log(`[Hardware Extractor] Isolated PDF size: ${isolatedSizeKB}KB`);
-  const prompt = buildIsolatedPageExtractionPrompt(pageNumber, totalPages);
-  const extractionStartTime = Date.now();
-  const result = await callClaudeWithPdf(base64Pdf, prompt, env2, pageNumber);
-  const extractionTime = Date.now() - extractionStartTime;
-  console.log(`[Hardware Extractor] Claude response received (${extractionTime}ms)`);
-  const parsedResult = parseHardwareExtractionResult(result);
-  const totalTime = Date.now() - overallStartTime;
-  console.log(`[Hardware Extractor] \u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550`);
-  console.log(`[Hardware Extractor] PAGE ${pageNumber} EXTRACTION COMPLETE (ISOLATED PDF)`);
-  console.log(`[Hardware Extractor]   - Hardware groups found: ${parsedResult.hardware_groups.length}`);
-  console.log(`[Hardware Extractor]   - Total components: ${parsedResult.hardware_groups.reduce((sum2, g) => sum2 + (g.components?.length || 0), 0)}`);
-  console.log(`[Hardware Extractor]   - Isolation time: ${isolationTime}ms`);
-  console.log(`[Hardware Extractor]   - Claude time: ${extractionTime}ms`);
-  console.log(`[Hardware Extractor]   - Total time: ${totalTime}ms`);
-  console.log(`[Hardware Extractor] \u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550`);
-  return {
-    page_number: pageNumber,
-    total_pages: totalPages,
-    hardware_groups: parsedResult.hardware_groups || [],
-    metadata: {
-      ...parsedResult.metadata || parsedResult.page_metadata || {},
-      extraction_mode: "isolated_pdf",
-      page_isolated: true,
-      // TRUE page isolation - Claude only saw this page
-      isolated_pdf_size_kb: parseFloat(isolatedSizeKB)
-    },
-    usage: parsedResult.usage,
-    extraction_time_ms: extractionTime,
-    isolation_time_ms: isolationTime,
-    total_time_ms: totalTime
-  };
+  return extractWithDirectPdfMode(pdfBuffer, pageNumber, env2);
 }
 async function detectTextLayer2(pdfBuffer) {
   return detectTextLayer(pdfBuffer);

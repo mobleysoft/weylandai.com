@@ -146,7 +146,7 @@ registerCpsMappingsRoutes(router, { authenticate });
 registerCpsQueueRoutes(router, { authenticate });
 registerCpsAdminRoutes(router, { authenticate });
 registerCpsImportPricesRoutes(router, { authenticateCps });
-registerCpsPriceCandidatesRoutes(router, { authenticate });
+registerCpsPriceCandidatesRoutes(router, { authenticate, PDFDocument });
 registerCpsPageRenderRoutes(router, { authenticate, PDFDocument });
 
 registerCutSheetMatchRoutes(router, { authenticate, requireProductAccess });

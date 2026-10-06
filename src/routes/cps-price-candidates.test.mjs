@@ -109,9 +109,9 @@ function makeFakeDb({ candidates = [], manufacturer = { id: "mfr-schlage" } } = 
   };
 }
 
-function setup({ db } = {}) {
+function setup({ db, authenticate = authOk } = {}) {
   const router = new NativeRouter();
-  registerCpsPriceCandidatesRoutes(router, { authenticate: authOk });
+  registerCpsPriceCandidatesRoutes(router, { authenticate });
   return { router, env: { DB: db || makeFakeDb() } };
 }
 
@@ -136,7 +136,7 @@ test("PATCH /api/cps/price-candidates/:id/affirm: real affirm stamps affirmed_by
   const { router, env } = setup({ db });
   const req = new Request("https://example.com/api/cps/price-candidates/cpc-1/affirm", {
     method: "PATCH",
-    body: JSON.stringify({ affirmed: true }),
+    body: JSON.stringify({ affirmed: true, reviewed_source: true }),
   });
   const res = await router.handle(req, env, {});
   const body = await res.json();
@@ -151,7 +151,7 @@ test("PATCH /api/cps/price-candidates/:id/affirm: a human correction (edits) is 
   const { router, env } = setup({ db });
   const req = new Request("https://example.com/api/cps/price-candidates/cpc-1/affirm", {
     method: "PATCH",
-    body: JSON.stringify({ affirmed: true, edits: { list_price: 412.0 } }),
+    body: JSON.stringify({ affirmed: true, reviewed_source: true, edits: { list_price: 412.0 } }),
   });
   await router.handle(req, env, {});
   assert.equal(db.store.get("cpc-1").list_price, 412.0);
@@ -159,7 +159,7 @@ test("PATCH /api/cps/price-candidates/:id/affirm: a human correction (edits) is 
 
 test("PATCH /api/cps/price-candidates/:id/affirm: unknown id is a real 404, not a silent no-op", async () => {
   const { router, env } = setup({ db: makeFakeDb({ candidates: [] }) });
-  const req = new Request("https://example.com/api/cps/price-candidates/nope/affirm", { method: "PATCH", body: JSON.stringify({ affirmed: true }) });
+  const req = new Request("https://example.com/api/cps/price-candidates/nope/affirm", { method: "PATCH", body: JSON.stringify({ affirmed: true, reviewed_source: true }) });
   const res = await router.handle(req, env, {});
   assert.equal(res.status, 404);
 });
@@ -213,3 +213,14 @@ test("POST /api/cps/price-candidates/promote: no matching rows returns a real ze
   const body = await res.json();
   assert.equal(body.promoted, 0);
 });
+
+
+test("affirm requires explicit source review and a boolean, corrections cannot smuggle source fields", async () => {
+ for(const body of [{affirmed:true},{affirmed:"true",reviewed_source:true},{affirmed:false,edits:{source_url:"https://evil.test"}},{affirmed:false,edits:{list_price:-1}},{affirmed:false,edits:{full_model_number:42}}]){
+  const db=makeFakeDb({candidates:[makeCandidateRow()]});const {router,env}=setup({db});
+  const r=await router.handle(new Request("https://example.com/api/cps/price-candidates/cpc-1/affirm",{method:"PATCH",body:JSON.stringify(body)}),env,{});
+  assert.equal(r.status,400);assert.equal(db.runs.length,0);
+ }
+});
+test("saving corrections leaves a draft unaffirmed",async()=>{const db=makeFakeDb({candidates:[makeCandidateRow({affirmed:1})]});const {router,env}=setup({db});const r=await router.handle(new Request("https://example.com/api/cps/price-candidates/cpc-1/affirm",{method:"PATCH",body:JSON.stringify({affirmed:false,edits:{list_price:415}})}),env,{});assert.equal(r.status,200);assert.equal(db.store.get("cpc-1").affirmed,0);assert.equal(db.store.get("cpc-1").list_price,415);});
+test("source preview and uploads remain authenticated",async()=>{const db=makeFakeDb();const {router,env}=setup({db,authenticate:authFail});for(const [path,method]of [["/api/cps/price-candidates/cpc-1/source","GET"],["/api/cps/price-candidates/upload","POST"]]){const r=await router.handle(new Request("https://example.com"+path,{method}),env,{});assert.equal(r.status,401);assert.equal(db.runs.length,0);}});

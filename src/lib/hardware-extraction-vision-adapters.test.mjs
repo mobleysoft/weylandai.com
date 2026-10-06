@@ -1,3 +1,4 @@
+import { pdfFixture, PNG, embeddedEnv, withEmbeddedModel } from "../test-support/ocr-fixtures.mjs";
 import { test } from "node:test";
 import assert from "node:assert/strict";
 import {
@@ -5,6 +6,7 @@ import {
   claudeCircuitBreaker,
   callClaudeVision,
   callClaudeVisionWithImage,
+  callEmbeddedOcrWithPrompt,
   _callClaudeVisionWithImage_sabp,
   _callClaudeVisionWithImage_localSubprocess,
   _imageSourceForQueue,
@@ -66,100 +68,32 @@ test("resolveInferenceContract: real env overrides applied", () => {
   assert.equal(contract.max_tokens, 8000);
 });
 
-test("callClaudeVision: throws a real non-retryable error when ANTHROPIC_API_KEY is missing", async () => {
-  await assert.rejects(() => callClaudeVision("QUJD", "a valid prompt string here", {}), (err) => {
-    assert.match(err.message, /ANTHROPIC_API_KEY/);
-    assert.equal(err.retryable, false);
-    return true;
-  });
+test("callClaudeVision: retired route rejects configuration case 0 without fetch or retries", async () => {
+ let attempts=0;await withMockFetch(async()=>{attempts++;throw Error('must not call')},async()=>{await assert.rejects(()=>callClaudeVision(new ArrayBuffer(8),"prompt",{},1),err=>{assert.match(err.message,/removed/);assert.equal(err.retryable,false);return true;});});assert.equal(attempts,0);
 });
 
-test("callClaudeVision: real happy path calls the Anthropic API with the resolved inference contract", async () => {
-  let seenBody;
-  await withMockFetch(async (url, init) => {
-    seenBody = JSON.parse(init.body);
-    return { ok: true, headers: new Headers(), async json() { return { content: [{ text: "{}" }], usage: { input_tokens: 1, output_tokens: 1 } }; } };
-  }, async () => {
-    const result = await callClaudeVision("QUJDRA==", "a valid prompt string here", { ANTHROPIC_API_KEY: "sk-1" });
-    assert.equal(seenBody.model, "claude-opus-4-8");
-    assert.ok(result.content);
-  });
+test("callClaudeVision: retired route rejects configuration case 1 without fetch or retries", async () => {
+ let attempts=0;await withMockFetch(async()=>{attempts++;throw Error('must not call')},async()=>{await assert.rejects(()=>callClaudeVision(new ArrayBuffer(8),"prompt",{ANTHROPIC_API_KEY:"test-present",QWEN_BRIDGE_CLIENT_ID:"test",QWEN_BRIDGE_CLIENT_SECRET:"test"},1),err=>{assert.match(err.message,/removed/);assert.equal(err.retryable,false);return true;});});assert.equal(attempts,0);
 });
 
-test("callClaudeVision: retries on a retryable 500 and eventually succeeds", async () => {
-  let attempts = 0;
-  await withMockFetch(async () => {
-    attempts++;
-    if (attempts < 2) {
-      return { ok: false, status: 500, headers: new Headers(), async text() { return "server error"; } };
-    }
-    return { ok: true, headers: new Headers(), async json() { return { content: [{ text: "ok" }] }; } };
-  }, async () => {
-    // Use a fresh circuit breaker path by using isolated retry delays - real delays are 5s/10s/20s,
-    // too slow for a unit test, so we only assert on the eventual success shape after patching timers.
-    const originalSetTimeout = globalThis.setTimeout;
-    globalThis.setTimeout = (fn, ms, ...args) => originalSetTimeout(fn, ms > 1000 ? 1 : ms, ...args);
-    try {
-      const result = await callClaudeVision("QUJDRA==", "a valid prompt string here", { ANTHROPIC_API_KEY: "sk-1" });
-      assert.equal(attempts, 2);
-      assert.ok(result.content);
-    } finally {
-      globalThis.setTimeout = originalSetTimeout;
-    }
-  });
+test("callClaudeVision: retired route rejects configuration case 2 without fetch or retries", async () => {
+ let attempts=0;await withMockFetch(async()=>{attempts++;throw Error('must not call')},async()=>{await assert.rejects(()=>callClaudeVision(new ArrayBuffer(8),"prompt",{ANTHROPIC_API_KEY:"test-present",QWEN_BRIDGE_CLIENT_ID:"test",QWEN_BRIDGE_CLIENT_SECRET:"test"},1),err=>{assert.match(err.message,/removed/);assert.equal(err.retryable,false);return true;});});assert.equal(attempts,0);
 });
 
-test("callClaudeVision: a non-retryable status (401) throws after just one attempt", async () => {
-  let attempts = 0;
-  await withMockFetch(async () => {
-    attempts++;
-    return { ok: false, status: 401, headers: new Headers(), async text() { return JSON.stringify({ error: { message: "bad key" } }); } };
-  }, async () => {
-    await assert.rejects(() => callClaudeVision("QUJDRA==", "a valid prompt string here", { ANTHROPIC_API_KEY: "sk-1" }));
-    // 401 isn't in the [429,500,502,503,504] retryable set, so error4.retryable is explicitly
-    // false (not undefined) and the loop's `if (error4.retryable === false) throw` fires on
-    // the first attempt.
-    assert.equal(attempts, 1);
-  });
+test("callClaudeVision: retired route rejects configuration case 3 without fetch or retries", async () => {
+ let attempts=0;await withMockFetch(async()=>{attempts++;throw Error('must not call')},async()=>{await assert.rejects(()=>callClaudeVision(new ArrayBuffer(8),"prompt",{ANTHROPIC_API_KEY:"test-present",QWEN_BRIDGE_CLIENT_ID:"test",QWEN_BRIDGE_CLIENT_SECRET:"test"},1),err=>{assert.match(err.message,/removed/);assert.equal(err.retryable,false);return true;});});assert.equal(attempts,0);
 });
 
-test("callClaudeVisionWithImage: with no session and a non-local edition, defaults to the claude_code_local (sabp) route", async () => {
-  // No sessionId means the DB route-override lookup is skipped, and the
-  // default route ("claude_code_local" for non-local WEYLAND_EDITION) isn't
-  // corrected to api_direct by the edition-mismatch guards - it calls the
-  // sabp adapter, which needs a DB binding to resolve an owner mhs_id.
-  const env = { ANTHROPIC_API_KEY: "sk-1" };
-  await assert.rejects(() => callClaudeVisionWithImage(new ArrayBuffer(8), "prompt", env, 1, null, null));
+test("callClaudeVisionWithImage: no session defaults to embedded OCR, not an external bridge", async () => {
+ const ocr=[];const result=await withEmbeddedModel({entries:[{mark:'101'}]},()=>callClaudeVisionWithImage(PNG,'prompt',embeddedEnv(null,ocr),1));assert.equal(result.provider_path,'embedded_gofaineat');assert.equal(ocr.length,1);assert.equal(result.source_page,1);
 });
 
-test("callClaudeVisionWithImage: honors a real session-level extraction_route override of api_direct", async () => {
-  let seenUrl;
-  await withMockFetch(async (url) => {
-    seenUrl = url;
-    return { ok: true, headers: new Headers(), async json() { return { content: [{ text: "ok" }] }; } };
-  }, async () => {
-    const env = {
-      ANTHROPIC_API_KEY: "sk-1",
-      DB: { prepare: () => ({ bind: () => ({ async first() { return { extraction_route: "api_direct" }; } }) }) },
-    };
-    await callClaudeVisionWithImage(new ArrayBuffer(8), "prompt", env, 1, "s1", null);
-    assert.equal(seenUrl, "https://api.anthropic.com/v1/messages");
-  });
+test("callClaudeVisionWithImage: retired stored api_direct fails before OCR or outbound calls", async () => {
+ const DB={prepare:()=>({bind:()=>({first:async()=>({extraction_route:'api_direct'})})})};let calls=0;const env=embeddedEnv(DB);env.OCR_SERVICE.fetch=async()=>{calls++;};await withMockFetch(async()=>{calls++;},()=>assert.rejects(()=>callClaudeVisionWithImage(PNG,'prompt',env,1,'s1'),/removed/));assert.equal(calls,0);
 });
 
-test("callClaudeVisionWithImage: an unknown route falls back to api_direct", async () => {
-  let seenUrl;
-  await withMockFetch(async (url) => {
-    seenUrl = url;
-    return { ok: true, headers: new Headers(), async json() { return { content: [{ text: "ok" }] }; } };
-  }, async () => {
-    const env = {
-      ANTHROPIC_API_KEY: "sk-1",
-      DB: { prepare: () => ({ bind: () => ({ async first() { return { extraction_route: "totally_unknown" }; } }) }) },
-    };
-    await callClaudeVisionWithImage(new ArrayBuffer(8), "prompt", env, 1, "s1", null);
-    assert.equal(seenUrl, "https://api.anthropic.com/v1/messages");
-  });
+test("callClaudeVisionWithImage: unknown stored route abstains without provider fallback", async () => {
+ const DB={prepare:()=>({bind:()=>({first:async()=>({extraction_route:'totally_unknown'})})})};let calls=0;await withMockFetch(async()=>{calls++;},()=>assert.rejects(()=>callClaudeVisionWithImage(PNG,'prompt',embeddedEnv(DB),1,'s1'),/Unsupported extraction route/));assert.equal(calls,0);
 });
 
 test("_imageSourceForQueue: small images are inlined as base64", async () => {
@@ -198,7 +132,7 @@ test("_callClaudeVisionWithImage_sabp: real happy path queues then polls to comp
     const originalSetTimeout = globalThis.setTimeout;
     globalThis.setTimeout = (fn, ms, ...args) => originalSetTimeout(fn, ms > 100 ? 1 : ms, ...args);
     try {
-      const env = { FLEET_API_KEY: "fk1" };
+      const env = { FLEET_API_KEY: "fk1", HASCOM_EDGE: { fetch: (request, init) => globalThis.fetch(request.url || request, init) } };
       const result = await _callClaudeVisionWithImage_sabp(new ArrayBuffer(8), "prompt", env, 1, "s1", "mhs1");
       assert.equal(result.content[0].text, "extracted");
       assert.equal(result.provider_path, "claude_code_local");
@@ -236,45 +170,35 @@ test("_callClaudeVisionWithImage_localSubprocess: throws when the sidecar is unr
   });
 });
 
-test("_callClaudeVisionWithImage_apiDirect: throws a real non-retryable error when the API key is missing", async () => {
-  await assert.rejects(() => _callClaudeVisionWithImage_apiDirect(new ArrayBuffer(8), "prompt", {}, 1), (err) => {
-    assert.equal(err.retryable, false);
-    return true;
-  });
+test("_callClaudeVisionWithImage_apiDirect: retired route rejects configuration case 4 without fetch or retries", async () => {
+ let attempts=0;await withMockFetch(async()=>{attempts++;throw Error('must not call')},async()=>{await assert.rejects(()=>_callClaudeVisionWithImage_apiDirect(new ArrayBuffer(8),"prompt",{},1),err=>{assert.match(err.message,/removed/);assert.equal(err.retryable,false);return true;});});assert.equal(attempts,0);
 });
 
-test("_callClaudeVisionWithImage_apiDirect: real happy path sends the image as base64 with the detected media type", async () => {
-  let seenBody;
-  const pngBytes = new Uint8Array([137, 80, 78, 71, 0, 0, 0, 0]).buffer;
-  await withMockFetch(async (url, init) => {
-    seenBody = JSON.parse(init.body);
-    return { ok: true, headers: new Headers(), async json() { return { content: [{ text: "ok" }] }; } };
-  }, async () => {
-    const result = await _callClaudeVisionWithImage_apiDirect(pngBytes, "prompt", { ANTHROPIC_API_KEY: "sk-1" }, 1);
-    assert.equal(seenBody.messages[0].content[0].source.media_type, "image/png");
-    assert.ok(result.content);
-  });
+test("_callClaudeVisionWithImage_apiDirect: retired route rejects configuration case 5 without fetch or retries", async () => {
+ let attempts=0;await withMockFetch(async()=>{attempts++;throw Error('must not call')},async()=>{await assert.rejects(()=>_callClaudeVisionWithImage_apiDirect(new ArrayBuffer(8),"prompt",{ANTHROPIC_API_KEY:"test-present",QWEN_BRIDGE_CLIENT_ID:"test",QWEN_BRIDGE_CLIENT_SECRET:"test"},1),err=>{assert.match(err.message,/removed/);assert.equal(err.retryable,false);return true;});});assert.equal(attempts,0);
 });
 
-test("callClaudeWithPdf: throws when the API key is missing", async () => {
-  await assert.rejects(() => callClaudeWithPdf("QUJD", "prompt", {}, 1), /ANTHROPIC_API_KEY not configured/);
+test("callClaudeWithPdf: retired route rejects configuration case 6 without fetch or retries", async () => {
+ let attempts=0;await withMockFetch(async()=>{attempts++;throw Error('must not call')},async()=>{await assert.rejects(()=>callClaudeWithPdf(new ArrayBuffer(8),"prompt",{},1),err=>{assert.match(err.message,/removed/);assert.equal(err.retryable,false);return true;});});assert.equal(attempts,0);
 });
 
-test("callClaudeWithPdf: real happy path sends the PDF document to the fixed model", async () => {
-  let seenBody;
-  await withMockFetch(async (url, init) => {
-    seenBody = JSON.parse(init.body);
-    return { ok: true, async json() { return { content: [{ text: "ok" }] }; } };
-  }, async () => {
-    const result = await callClaudeWithPdf("QUJDRA==", "prompt", { ANTHROPIC_API_KEY: "sk-1" }, 1);
-    assert.equal(seenBody.model, "claude-opus-4-5-20251101");
-    assert.equal(seenBody.messages[0].content[0].type, "document");
-    assert.ok(result.content);
-  });
+test("callClaudeWithPdf: retired route rejects configuration case 7 without fetch or retries", async () => {
+ let attempts=0;await withMockFetch(async()=>{attempts++;throw Error('must not call')},async()=>{await assert.rejects(()=>callClaudeWithPdf(new ArrayBuffer(8),"prompt",{ANTHROPIC_API_KEY:"test-present",QWEN_BRIDGE_CLIENT_ID:"test",QWEN_BRIDGE_CLIENT_SECRET:"test"},1),err=>{assert.match(err.message,/removed/);assert.equal(err.retryable,false);return true;});});assert.equal(attempts,0);
 });
 
-test("callClaudeWithPdf: real error path surfaces the API's status text", async () => {
-  await withMockFetch(async () => ({ ok: false, status: 500, statusText: "Internal Server Error", async text() { return "boom"; } }), async () => {
-    await assert.rejects(() => callClaudeWithPdf("QUJDRA==", "prompt", { ANTHROPIC_API_KEY: "sk-1" }, 1), /Claude API error: 500/);
-  });
+test("callClaudeWithPdf: retired route rejects configuration case 8 without fetch or retries", async () => {
+ let attempts=0;await withMockFetch(async()=>{attempts++;throw Error('must not call')},async()=>{await assert.rejects(()=>callClaudeWithPdf(new ArrayBuffer(8),"prompt",{ANTHROPIC_API_KEY:"test-present",QWEN_BRIDGE_CLIENT_ID:"test",QWEN_BRIDGE_CLIENT_SECRET:"test"},1),err=>{assert.match(err.message,/removed/);assert.equal(err.retryable,false);return true;});});assert.equal(attempts,0);
+});
+
+test("embedded image extraction reports missing/empty/failed OCR without model calls",async()=>{
+ let calls=0;await withMockFetch(async()=>{calls++;throw Error('no model')},async()=>{
+  await assert.rejects(()=>callEmbeddedOcrWithPrompt(PNG,'prompt',{},1),/OCR_SERVICE/);
+  for(const response of [new Response('bad',{status:500}),Response.json({pages:[{text:''}]})])await assert.rejects(()=>callEmbeddedOcrWithPrompt(PNG,'prompt',{OCR_SERVICE:{fetch:async()=>response}},1),/OCR/);
+ });assert.equal(calls,0);
+});
+
+test("SABP image adapter requires a real binding before any upload or request", async () => {
+ let calls=0;await withMockFetch(async()=>{calls++;throw Error('forbidden')},async()=>{
+  await assert.rejects(()=>_callClaudeVisionWithImage_sabp(new ArrayBuffer(4),'p',{UPLOADS:{put(){calls++}}},1,'s1','mhs1'),/bridge_not_configured/);assert.equal(calls,0);
+ });
 });

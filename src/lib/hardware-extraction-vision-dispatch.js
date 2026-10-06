@@ -626,6 +626,7 @@ export async function viaSabpClaudeCode(sessionId, pdfBuffer, env2, ctx = {}) {
   ).bind(sessionId).first();
   if (!session?.mhs_id)
     return { sync: true, error: "no_mhs_id_for_session_owner" };
+  if (!env2.HASCOM_EDGE?.fetch) return { sync: true, error: "bridge_not_configured" };
   const _schedType = session.document_type === "door_schedule" ? "door_schedule" : null;
   const contract = await resolveExtractionContract(env2, {
     sessionId,
@@ -873,9 +874,8 @@ export async function viaLocalSubprocess(sessionId, pdfBuffer, env2, ctx = {}) {
 export function adaptersForEdition(env2) {
   const isLocal = env2.WEYLAND_EDITION === "local";
   return {
-    api_direct: viaApiDirect,
     embedded_gofaineat: viaEmbeddedGofaineat,
-    ...!isLocal && { claude_code_local: viaSabpClaudeCode },
+    ...!isLocal && env2.HASCOM_EDGE?.fetch && { claude_code_local: viaSabpClaudeCode },
     ...isLocal && { claude_code_subprocess: viaLocalSubprocess }
   };
 }
@@ -884,14 +884,9 @@ export async function dispatchVisionExtraction(sessionId, pdfBuffer, env2, ctx =
     `SELECT extraction_route FROM hardware_extraction_sessions WHERE id = ?`
   ).bind(sessionId).first();
   const ADAPTERS = adaptersForEdition(env2);
-  // embedded_gofaineat is now the real default for non-local editions: it
-  // needs neither an Anthropic API key nor Ron's hascom-edge/auth-onamerica
-  // (see the route's own doc comment above for why claude_code_local was
-  // silently depending on both). claude_code_local/api_direct stay
-  // selectable per-session via PATCH /api/sessions/:sessionId/extraction-route
-  // for a customer with their own real SABP bridge or Anthropic key.
-  const DEFAULT_ROUTE = env2.WEYLAND_EDITION === "local" ? "claude_code_subprocess" : "embedded_gofaineat";
-  const route = row?.extraction_route in ADAPTERS ? row.extraction_route : DEFAULT_ROUTE in ADAPTERS ? DEFAULT_ROUTE : "embedded_gofaineat";
+  // Persisted unsupported selections must not silently invoke another provider.
+  const route = row?.extraction_route || "embedded_gofaineat";
+  if (!Object.hasOwn(ADAPTERS, route)) return { sync: true, error: route === "api_direct" ? "extraction_route_retired" : "unsupported_extraction_route", route, available_routes: Object.keys(ADAPTERS) };
   const result = await ADAPTERS[route](sessionId, pdfBuffer, env2, ctx);
   if (row && result?.sync !== false && !result?.error) {
     await env2.DB.prepare(

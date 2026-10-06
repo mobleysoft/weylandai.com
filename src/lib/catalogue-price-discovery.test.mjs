@@ -60,7 +60,7 @@ function withMockedFetch(pdfBytes, qwenContent, fn) {
 }
 
 test("extractPricesFromPdfUrl: missing OCR_SERVICE binding fails cleanly, no download attempted", async () => {
-  const result = await extractPricesFromPdfUrl("https://example.com/x.pdf", {}, { DB: makeFakeDb() });
+  const result = await extractPricesFromPdfUrl("https://weylandai.com/fixture.pdf", {}, { DB: makeFakeDb() });
   assert.equal(result.error, "ocr_service_not_configured");
 });
 
@@ -68,7 +68,7 @@ test("extractPricesFromPdfUrl: an already-staged PDF (same hash) short-circuits 
   const db = makeFakeDb({ existingCandidates: [{ id: "cpc-1", catalogue_id: null }, { id: "cpc-2", catalogue_id: null }] });
   const env2 = { DB: db, OCR_SERVICE: makeFakeOcrService({}, 1), UPLOADS: { put: async () => {} } };
   await withMockedFetch(REAL_PDF_MAGIC, "{}", async () => {
-    const result = await extractPricesFromPdfUrl("https://example.com/x.pdf", {}, env2);
+    const result = await extractPricesFromPdfUrl("https://weylandai.com/fixture.pdf", {}, env2);
     assert.equal(result.alreadyStaged, true);
     assert.deepEqual(result.candidateIds, ["cpc-1", "cpc-2"]);
   });
@@ -101,13 +101,15 @@ test("extractPricesFromPdfUrl: real end-to-end - a price-shaped page gets staged
     };
     env2.QWEN_BRIDGE_CLIENT_ID = "id";
     env2.QWEN_BRIDGE_CLIENT_SECRET = "secret";
-    const result = await extractPricesFromPdfUrl("https://example.com/schlage.pdf", { manufacturer: "Schlage", trade: "doors" }, env2);
+    const result = await extractPricesFromPdfUrl("https://weylandai.com/synthetic-schlage.pdf", { manufacturer: "Schlage", trade: "doors" }, env2);
     assert.equal(result.pagesScanned, 1, "only the price-shaped page counts as scanned");
     assert.equal(result.pagesSkipped, 1, "the TOC page is skipped");
-    assert.equal(result.candidatesStaged, 1);
+    assert.equal(result.candidatesStaged, 2, "both unambiguous rows must be extracted");
     globalThis.fetch = originalFetch;
   });
-  assert.equal(db.inserted.length, 1);
+  assert.equal(db.inserted.length, 2);
+  assert.equal(qwenCallCount, 0, "deterministic rows must not call the residual model");
+  assert.deepEqual(db.inserted.map(row => [row[7], row[10]]), [["L9050 06L", 412], ["L9050 30L", 438]]);
   assert.equal(db.inserted[0][5], "Schlage");
 });
 

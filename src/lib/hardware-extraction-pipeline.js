@@ -66,19 +66,14 @@ import {
   SCHEDULE_TYPE_REGISTRY, DOOR_SCHEDULE_ALLOWED_FIELDS,
 } from "./hardware-extraction-prompts.js";
 import {
-  callClaudeVision, callClaudeVisionWithImage, _imageSourceForQueue, callClaudeWithPdf,
+  callClaudeVisionWithImage, _imageSourceForQueue,
   resolveInferenceContract,
 } from "./hardware-extraction-vision-adapters.js";
 import { callEdge } from "./edge-telemetry.js";
 
-export async function extractHardwareSchedule(pdfBuffer, env2) {
-  console.log("[Hardware Extractor] Starting hardware schedule extraction");
-  const base64Pdf = arrayBufferToBase643(pdfBuffer);
-  const prompt = buildHardwareExtractionPrompt();
-  const result = await callClaudeVision(base64Pdf, prompt, env2);
-  const parsedResult = parseHardwareExtractionResult(result);
-  console.log(`[Hardware Extractor] Extracted ${parsedResult.hardware_groups.length} hardware groups`);
-  return parsedResult;
+export async function extractHardwareSchedule(pdfBuffer, env2, { pageNumber } = {}) {
+  const { extractHardwarePage } = await import("./schedule-input.js");
+  return extractHardwarePage(pdfBuffer, pageNumber, env2);
 }
 
 export async function storeHardwareExtraction(extractionResult, env2, userId, context3 = {}) {
@@ -324,6 +319,7 @@ export async function queuePageExtractionJob(imageBase64, env2, opts = {}) {
   }
   if (!ownerId)
     throw new Error(`queuePageExtractionJob: no owner mhs_id for session ${sessionId}`);
+  if (!env2.HASCOM_EDGE?.fetch) throw new Error("SABP bridge_not_configured: HASCOM_EDGE binding required");
   const contract = await resolveExtractionContract(env2, {
     sessionId,
     pageNumber,
@@ -421,35 +417,10 @@ export async function extractWithImageMode(pdfBuffer, pageNumber, env2, renderer
 }
 
 export async function extractWithDirectPdfMode(pdfBuffer, pageNumber, env2) {
-  console.log(`[Hardware Extractor] WARNING: Sending FULL PDF to Claude for page ${pageNumber}...`);
-  const extractionStartTime = Date.now();
-  const base64Pdf = arrayBufferToBase643(pdfBuffer);
-  const pdfSizeMB = (pdfBuffer.byteLength / 1024 / 1024).toFixed(2);
-  console.log(`[Hardware Extractor] PDF size: ${pdfSizeMB}MB`);
-  const prompt = buildDirectPdfExtractionPrompt(pageNumber);
-  const result = await callClaudeWithPdf(base64Pdf, prompt, env2, pageNumber);
-  const extractionTime = Date.now() - extractionStartTime;
-  console.log(`[Hardware Extractor] Claude response received (${extractionTime}ms)`);
-  const parsedResult = parseHardwareExtractionResult(result);
-  console.log(`[Hardware Extractor] \u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550`);
-  console.log(`[Hardware Extractor] PAGE ${pageNumber} EXTRACTION COMPLETE (direct PDF)`);
-  console.log(`[Hardware Extractor]   - Hardware groups found: ${parsedResult.hardware_groups.length}`);
-  console.log(`[Hardware Extractor]   - Total components: ${parsedResult.hardware_groups.reduce((sum2, g) => sum2 + (g.components?.length || 0), 0)}`);
-  console.log(`[Hardware Extractor] \u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550`);
-  return {
-    page_number: pageNumber,
-    total_pages: parsedResult.metadata?.total_pages || 1,
-    hardware_groups: parsedResult.hardware_groups || [],
-    metadata: {
-      ...parsedResult.metadata || parsedResult.page_metadata || {},
-      extraction_mode: "direct_pdf",
-      page_isolated: false
-      // Claude sees full PDF, uses instruction for page focus
-    },
-    usage: parsedResult.usage,
-    extraction_time_ms: extractionTime,
-    total_time_ms: extractionTime
-  };
+  // Compatibility name only: the selected page uses our existing OCR route,
+  // not a full-document third-party vision call.
+  const { extractHardwarePage } = await import("./schedule-input.js");
+  return extractHardwarePage(pdfBuffer, pageNumber, env2);
 }
 
 export async function extractFromPageImage(imageBase64, pageNumber, totalPages, env2, options = {}) {
