@@ -169,8 +169,10 @@
     S.body.appendChild(node);
     S.overlay.classList.add("is-open");
     root.classList.add("wa-overlay-open");
+    // Focus now, never later: a delayed focus can yank the caret back into the first field while
+    // someone (or a password manager, or an agent) is already filling the next one.
     var first = S.body.querySelector("input,button");
-    if (first && viewName !== "app") setTimeout(function () { try { first.focus(); } catch (e) {} }, 30);
+    if (first && viewName !== "app" && !S.body.contains(document.activeElement)) { try { first.focus({ preventScroll: true }); } catch (e) {} }
   }
 
   function close() {
@@ -248,7 +250,7 @@
       Promise.resolve(p).then(function (res) {
         if (res && res.mfa_required) {
           mfa = true; codeWrap.style.display = "block"; done();
-          setTimeout(function () { code.focus(); }, 30);
+          try { code.focus({ preventScroll: true }); } catch (e) {}
           return;
         }
         stage = "Opening your account";
