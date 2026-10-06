@@ -282,67 +282,116 @@ function enrichComponent(component) {
     _matched_product: match.productName
   };
 }
+// Manufacturer names and slugs from the catalogue, cached per isolate for ten minutes. Used
+// by the spec parser (longest-prefix manufacturer detection) and by the matcher (a
+// manufacturer the catalogue does not know limits a line to exact model matches).
+let _mfrCache = { at: 0, names: null, promise: null };
+async function getManufacturerNames(env2) {
+  const now = Date.now();
+  if (_mfrCache.names && now - _mfrCache.at < 600000) return _mfrCache.names;
+  if (!_mfrCache.promise) {
+    _mfrCache.promise = env2.DB.prepare("SELECT name, slug FROM manufacturers").all()
+      .then((r) => {
+        const names = [];
+        for (const row of r.results || []) {
+          if (row.name) names.push(String(row.name));
+          if (row.slug) names.push(String(row.slug));
+        }
+        _mfrCache = { at: Date.now(), names, promise: null };
+        return names;
+      })
+      .catch((err) => { _mfrCache.promise = null; console.error("manufacturer list:", err); return _mfrCache.names || []; });
+  }
+  return _mfrCache.promise;
+}
+
+function manufacturerKnown(names, mfgSearch) {
+  if (!mfgSearch) return false;
+  const q = mfgSearch.toLowerCase();
+  for (const n of names) {
+    const k = String(n).toLowerCase();
+    if (k === q || k.includes(q) || q.includes(k)) return true;
+  }
+  return false;
+}
+
+// Does the token look like a catalogue model number rather than a word? Digits, or a
+// letters-separator-alphanumerics shape ("SL-SQ24", "PVPART.1365" both have digits anyway).
+function looksLikeModel(modelSearch) {
+  return /\d/.test(modelSearch) || /^[A-Z]{2,}[-\/.][A-Z0-9]+$/.test(modelSearch);
+}
+
 async function matchProductFromDb(component, env2, trade = "doors") {
   const db = env2.DB;
-  const { manufacturer, model, catalog_number } = component;
+  const { manufacturer, model, catalog_number, modelFull } = component;
   const modelSearch = (model || catalog_number || "").toUpperCase().trim();
   const mfgSearch = (manufacturer || "").toUpperCase().trim();
-  if (!modelSearch && !mfgSearch)
+  if (!modelSearch)
     return null;
   try {
-    if (mfgSearch && modelSearch) {
-      const exact = await db.prepare(`
-        SELECT p.*, m.name as manufacturer_name, m.slug as manufacturer_slug
-        FROM products p
-        JOIN manufacturers m ON p.manufacturer_id = m.id
+    const names = await getManufacturerNames(env2);
+    const mfgKnown = mfgSearch ? manufacturerKnown(names, mfgSearch) : false;
+    const SELECT = `SELECT p.*, m.name as manufacturer_name, m.slug as manufacturer_slug
+        FROM products p JOIN manufacturers m ON p.manufacturer_id = m.id`;
+
+    // 0. the rest of the line as typed: catalogue models with spaces in them
+    //    ("DW16/MU16 10'0\" thru 10'6\"", "Hardware Pack SLSS2", "Royal 111")
+    const fullSearch = (modelFull || "").toUpperCase().replace(/\s+/g, " ").trim();
+    if (fullSearch && fullSearch !== modelSearch) {
+      const row = mfgSearch && mfgKnown
+        ? await db.prepare(`${SELECT}
+            WHERE p.trade = ? AND UPPER(p.base_model) = ?
+              AND (UPPER(m.name) LIKE ? OR UPPER(m.slug) LIKE ?)
+            LIMIT 1`).bind(trade, fullSearch, `%${mfgSearch}%`, `%${mfgSearch}%`).first()
+        : await db.prepare(`${SELECT}
+            WHERE p.trade = ? AND UPPER(p.base_model) = ?
+            ORDER BY p.display_name LIMIT 1`).bind(trade, fullSearch).first();
+      if (row) return { product: row, confidence: "high", matchType: "exact" };
+      // the remainder minus a trailing finish/qualifier token ("... 626", "... US26D")
+      const trimmed = fullSearch.replace(/\s+(?:US\d{1,2}[A-Z]?|\d{3}[A-Z]?|[A-Z]{2,3}\d{0,2})$/, "");
+      if (trimmed !== fullSearch && trimmed !== modelSearch) {
+        const row2 = await db.prepare(`${SELECT}
+            WHERE p.trade = ? AND UPPER(p.base_model) = ?
+            ORDER BY p.display_name LIMIT 1`).bind(trade, trimmed).first();
+        if (row2) return { product: row2, confidence: "high", matchType: "exact" };
+      }
+    }
+
+    // 1. exact model within the named manufacturer
+    if (mfgSearch && mfgKnown) {
+      const exact = await db.prepare(`${SELECT}
         WHERE p.trade = ? AND UPPER(p.base_model) = ?
           AND (UPPER(m.name) LIKE ? OR UPPER(m.slug) LIKE ?)
-        LIMIT 1
-      `).bind(trade, modelSearch, `%${mfgSearch}%`, `%${mfgSearch}%`).first();
-      if (exact) {
-        return { product: exact, confidence: "high", matchType: "exact" };
-      }
+        LIMIT 1`).bind(trade, modelSearch, `%${mfgSearch}%`, `%${mfgSearch}%`).first();
+      if (exact) return { product: exact, confidence: "high", matchType: "exact" };
     }
-    if (modelSearch.length >= 3) {
-      const partial = await db.prepare(`
-        SELECT p.*, m.name as manufacturer_name, m.slug as manufacturer_slug
-        FROM products p
-        JOIN manufacturers m ON p.manufacturer_id = m.id
-        WHERE p.trade = ? AND (UPPER(p.base_model) LIKE ?
-           OR UPPER(p.product_series) LIKE ?)
-        ORDER BY LENGTH(p.base_model) ASC
-        LIMIT 1
-      `).bind(trade, `${modelSearch}%`, `%${modelSearch}%`).first();
-      if (partial) {
-        return { product: partial, confidence: "medium", matchType: "partial" };
-      }
+    // 2. exact model, any manufacturer (model-only lines, or a manufacturer we do not know)
+    {
+      const exactAny = await db.prepare(`${SELECT}
+        WHERE p.trade = ? AND UPPER(p.base_model) = ?
+        ORDER BY p.display_name LIMIT 1`).bind(trade, modelSearch).first();
+      if (exactAny) return { product: exactAny, confidence: mfgSearch && !mfgKnown ? "medium" : "high", matchType: mfgSearch && !mfgKnown ? "exact_model_unknown_manufacturer" : "exact" };
     }
-    // Catalog-numbering heuristics below are door-hardware-specific
-    // conventions (e.g. ANSI strike prefixes) -- only meaningful for the
-    // 'doors' trade. Plumbing/electrical get no equivalent yet; see
-    // MULTI_TRADE_BID_SUPPORT.md rollout plan step 3.
-    if (trade === "doors") {
-      const categoryPatterns = [
-        { pattern: /^5BB/i, category: "Hinges" },
-        { pattern: /^L9/i, category: "Locks" },
-        { pattern: /^4[0-9]{3}/i, category: "Closers" },
-        { pattern: /^8[0-9]{3}/i, category: "Seals" },
-        { pattern: /^9[0-9]{3}/i, category: "Exit Devices" }
-      ];
-      for (const { pattern, category } of categoryPatterns) {
-        if (pattern.test(modelSearch)) {
-          const categoryMatch = await db.prepare(`
-            SELECT p.*, m.name as manufacturer_name, m.slug as manufacturer_slug
-            FROM products p
-            JOIN manufacturers m ON p.manufacturer_id = m.id
-            WHERE p.trade = 'doors' AND p.category_level_1 = ?
-            LIMIT 1
-          `).bind(category).first();
-          if (categoryMatch) {
-            return { product: categoryMatch, confidence: "low", matchType: "category" };
-          }
-        }
-      }
+    // Past this point only things that look like model numbers may match, and only when the
+    // manufacturer is either absent or one the catalogue knows: a word like "plate" or a
+    // made-up maker never gets a prefix match.
+    if (!looksLikeModel(modelSearch) || modelSearch.length < 3) return null;
+    if (mfgSearch && !mfgKnown) return null;
+    // 3. model prefix within the named manufacturer
+    if (mfgSearch) {
+      const partial = await db.prepare(`${SELECT}
+        WHERE p.trade = ? AND UPPER(p.base_model) LIKE ?
+          AND (UPPER(m.name) LIKE ? OR UPPER(m.slug) LIKE ?)
+        ORDER BY LENGTH(p.base_model) ASC LIMIT 1`).bind(trade, `${modelSearch}%`, `%${mfgSearch}%`, `%${mfgSearch}%`).first();
+      if (partial) return { product: partial, confidence: "medium", matchType: "partial" };
+      return null;
+    }
+    // 4. model prefix, any manufacturer, model-only lines of at least four characters
+    if (modelSearch.length >= 4) {
+      const partial = await db.prepare(`${SELECT}
+        WHERE p.trade = ? AND UPPER(p.base_model) LIKE ?
+        ORDER BY LENGTH(p.base_model) ASC LIMIT 1`).bind(trade, `${modelSearch}%`).first();
+      if (partial) return { product: partial, confidence: "low", matchType: "partial" };
     }
     return null;
   } catch (err) {
@@ -350,6 +399,7 @@ async function matchProductFromDb(component, env2, trade = "doors") {
     return null;
   }
 }
+
 async function getCutSheetsForProduct(productId, env2) {
   const db = env2.DB;
   try {
@@ -491,6 +541,7 @@ async function matchComponentToCutSheets(component, env2) {
 }
 
 export {
+  getManufacturerNames,
   PRODUCT_DATABASE,
   validateProductDatabase,
   findProductMatch,

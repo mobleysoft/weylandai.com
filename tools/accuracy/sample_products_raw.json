@@ -1,0 +1,2904 @@
+[
+  {
+    "results": [
+      {
+        "id": "prod-ives-sb453us26d-12-tb",
+        "base_model": "SB453US26D-12-TB",
+        "display_name": "IVES SB453US26D-12-TB",
+        "product_series": "General",
+        "category_level_1": null,
+        "manufacturer": "IVES",
+        "manufacturer_slug": "ives"
+      },
+      {
+        "id": "prod-ngp-sl-sq24-96",
+        "base_model": "SL-SQ24-96",
+        "display_name": "NGP SL-SQ24-96",
+        "product_series": "Side Wall Low Profile Mill Aluminum Fascia with Holes 96\"",
+        "category_level_1": null,
+        "manufacturer": "National Guard Products",
+        "manufacturer_slug": "ngp"
+      },
+      {
+        "id": "prod-ngp-slal-250-pdkit-6-ext",
+        "base_model": "SLAL-250-PDKIT-6-EXT",
+        "display_name": "NGP SLAL-250-PDKIT-6-EXT",
+        "product_series": "(73\") for up 3/0 x 9/0 doors, 2 x 6 wood",
+        "category_level_1": null,
+        "manufacturer": "National Guard Products",
+        "manufacturer_slug": "ngp"
+      },
+      {
+        "id": "prod-ives-pvpart.1365",
+        "base_model": "PVPART.1365",
+        "display_name": "Ives PVPART.1365",
+        "product_series": "General",
+        "category_level_1": null,
+        "manufacturer": "IVES",
+        "manufacturer_slug": "ives"
+      },
+      {
+        "id": "prod-sch-10-001",
+        "base_model": "10-001",
+        "display_name": "SCHLAGE 10-001",
+        "product_series": "1-1/8\"",
+        "category_level_1": null,
+        "manufacturer": "Schlage",
+        "manufacturer_slug": "schlage"
+      },
+      {
+        "id": "prod-ngp-wa431",
+        "base_model": "WA431",
+        "display_name": "NGP WA431",
+        "product_series": "General",
+        "category_level_1": null,
+        "manufacturer": "National Guard Products",
+        "manufacturer_slug": "ngp"
+      },
+      {
+        "id": "prod-ngp-913",
+        "base_model": "913",
+        "display_name": "NGP 913",
+        "product_series": "General",
+        "category_level_1": null,
+        "manufacturer": "National Guard Products",
+        "manufacturer_slug": "ngp"
+      },
+      {
+        "id": "prod-ives-9100hd-28-blk",
+        "base_model": "9100HD-28-BLK",
+        "display_name": "Ives 9100HD-28-BLK",
+        "product_series": "General",
+        "category_level_1": null,
+        "manufacturer": "IVES",
+        "manufacturer_slug": "ives"
+      },
+      {
+        "id": "prod-zer-972aa-bi",
+        "base_model": "972AA-BI",
+        "display_name": "ZERO 972AA-BI",
+        "product_series": "Biowall antibacterial rubber, white",
+        "category_level_1": null,
+        "manufacturer": "Zero International",
+        "manufacturer_slug": "zero"
+      },
+      {
+        "id": "prod-ngp-884-7vdkb",
+        "base_model": "884-7VDKB",
+        "display_name": "NGP 884-7VDKB",
+        "product_series": "General",
+        "category_level_1": null,
+        "manufacturer": "National Guard Products",
+        "manufacturer_slug": "ngp"
+      },
+      {
+        "id": "prod-bea-10ms51w-ja",
+        "base_model": "10MS51W-JA",
+        "display_name": "BEA 10MS51W-JA",
+        "product_series": "MS51W WIRELESS - 900MHz VER. Jamb Wave to Open + Wheelchair",
+        "category_level_1": null,
+        "manufacturer": "BEA Inc",
+        "manufacturer_slug": "bea"
+      },
+      {
+        "id": "prod-ives-wspart.1011",
+        "base_model": "WSPART.1011",
+        "display_name": "Ives WSPART.1011",
+        "product_series": "General",
+        "category_level_1": null,
+        "manufacturer": "IVES",
+        "manufacturer_slug": "ives"
+      },
+      {
+        "id": "prod-stc-dw16/mu1610'0\"thru10'6\"",
+        "base_model": "DW16/MU16 10'0\" thru 10'6\"",
+        "display_name": "STEELCRAFT DW16/MU16 10'0\" thru 10'6\"",
+        "product_series": "General",
+        "category_level_1": null,
+        "manufacturer": "Steelcraft",
+        "manufacturer_slug": "steelcraft"
+      },
+      {
+        "id": "prod-ives-09-137-626",
+        "base_model": "09-137-626",
+        "display_name": "Ives 09-137-626",
+        "product_series": "General",
+        "category_level_1": null,
+        "manufacturer": "IVES",
+        "manufacturer_slug": "ives"
+      },
+      {
+        "id": "prod-cam-cm-701s",
+        "base_model": "CM-701S",
+        "display_name": "CAMDEN CM-701S",
+        "product_series": "General",
+        "category_level_1": null,
+        "manufacturer": "Camden Door Controls",
+        "manufacturer_slug": "camden"
+      },
+      {
+        "id": "prod-sch-pl7-7",
+        "base_model": "PL7-7",
+        "display_name": "SCHLAGE PL7-7",
+        "product_series": "Push side thumbturn - 7\" backset",
+        "category_level_1": null,
+        "manufacturer": "Schlage",
+        "manufacturer_slug": "schlage"
+      },
+      {
+        "id": "prod-dyk-us-1bmattblack",
+        "base_model": "US-1B MATT BLACK",
+        "display_name": "DYKE US-1B MATT BLACK",
+        "product_series": "US-1B MATT BLACK",
+        "category_level_1": null,
+        "manufacturer": "Dyke Industries",
+        "manufacturer_slug": "dyke"
+      },
+      {
+        "id": "prod-ngp-ro100",
+        "base_model": "RO100",
+        "display_name": "NGP RO100",
+        "product_series": "General",
+        "category_level_1": null,
+        "manufacturer": "National Guard Products",
+        "manufacturer_slug": "ngp"
+      },
+      {
+        "id": "prod-ngp-134nb",
+        "base_model": "134NB",
+        "display_name": "NGP 134NB",
+        "product_series": "General",
+        "category_level_1": null,
+        "manufacturer": "National Guard Products",
+        "manufacturer_slug": "ngp"
+      },
+      {
+        "id": "prod-lcn-4414hsa",
+        "base_model": "4414HSA",
+        "display_name": "LCN 4414HSA",
+        "product_series": "Std Cylinder Assembly",
+        "category_level_1": null,
+        "manufacturer": "LCN Closers",
+        "manufacturer_slug": "lcn"
+      },
+      {
+        "id": "prod-zer-972g-bi",
+        "base_model": "972G-BI",
+        "display_name": "ZERO 972G-BI",
+        "product_series": "Gold anodized Biowall antibacterial rubber, white",
+        "category_level_1": null,
+        "manufacturer": "Zero International",
+        "manufacturer_slug": "zero"
+      },
+      {
+        "id": "prod-cam-cm-tx-99",
+        "base_model": "CM-TX-99",
+        "display_name": "CAMDEN CM-TX-99",
+        "product_series": "915Mhz. plug-in transmitter for CM-331 & 332 series switches",
+        "category_level_1": null,
+        "manufacturer": "Camden Door Controls",
+        "manufacturer_slug": "camden"
+      },
+      {
+        "id": "prod-zer-8664d-72",
+        "base_model": "8664D-72",
+        "display_name": "ZERO 8664D-72",
+        "product_series": "Saddle threshold, Dark bronze anodized, 6\" x 1/4\"(152.4 x 6.35), 72\" (1828.8) length",
+        "category_level_1": null,
+        "manufacturer": "Zero International",
+        "manufacturer_slug": "zero"
+      },
+      {
+        "id": "prod-ives-510c-625",
+        "base_model": "510C-625",
+        "display_name": "Ives 510C-625",
+        "product_series": "General",
+        "category_level_1": null,
+        "manufacturer": "IVES",
+        "manufacturer_slug": "ives"
+      },
+      {
+        "id": "prod-ives-484z-643e/716",
+        "base_model": "484Z-643E/716",
+        "display_name": "IVES 484Z-643E/716",
+        "product_series": "General",
+        "category_level_1": null,
+        "manufacturer": "IVES",
+        "manufacturer_slug": "ives"
+      },
+      {
+        "id": "prod-cam-cx-1000/77",
+        "base_model": "CX-1000/77",
+        "display_name": "CAMDEN CX-1000/77",
+        "product_series": "MaxiMinder™",
+        "category_level_1": null,
+        "manufacturer": "Camden Door Controls",
+        "manufacturer_slug": "camden"
+      },
+      {
+        "id": "prod-ives-09-512-618",
+        "base_model": "09-512-618",
+        "display_name": "Ives 09-512-618",
+        "product_series": "General",
+        "category_level_1": null,
+        "manufacturer": "IVES",
+        "manufacturer_slug": "ives"
+      },
+      {
+        "id": "prod-ives-pvpart.1844",
+        "base_model": "PVPART.1844",
+        "display_name": "Ives PVPART.1844",
+        "product_series": "General",
+        "category_level_1": null,
+        "manufacturer": "IVES",
+        "manufacturer_slug": "ives"
+      },
+      {
+        "id": "prod-ngp-hardwarepackslss2",
+        "base_model": "Hardware Pack SLSS2",
+        "display_name": "NGP Hardware Pack SLSS2",
+        "product_series": "General",
+        "category_level_1": null,
+        "manufacturer": "National Guard Products",
+        "manufacturer_slug": "ngp"
+      },
+      {
+        "id": "prod-zer-8136",
+        "base_model": "8136",
+        "display_name": "ZERO 8136",
+        "product_series": "Polycarbonate seal/brush, .394\" (10)",
+        "category_level_1": null,
+        "manufacturer": "Zero International",
+        "manufacturer_slug": "zero"
+      },
+      {
+        "id": "prod-bea-10micro1dadapt",
+        "base_model": "10MICRO1DADAPT",
+        "display_name": "BEA 10MICRO1DADAPT",
+        "product_series": "Microcell DBL, with beam adapt",
+        "category_level_1": null,
+        "manufacturer": "BEA Inc",
+        "manufacturer_slug": "bea"
+      },
+      {
+        "id": "prod-sch-03-244-8at",
+        "base_model": "03-244-8AT",
+        "display_name": "SCHLAGE 03-244-8AT",
+        "product_series": "Athens - Tactile",
+        "category_level_1": null,
+        "manufacturer": "Schlage",
+        "manufacturer_slug": "schlage"
+      },
+      {
+        "id": "prod-ives-vr810-dt",
+        "base_model": "VR810-DT",
+        "display_name": "Ives VR810-DT",
+        "product_series": "General",
+        "category_level_1": null,
+        "manufacturer": "IVES",
+        "manufacturer_slug": "ives"
+      },
+      {
+        "id": "prod-ives-us28",
+        "base_model": "US28",
+        "display_name": "Ives US28",
+        "product_series": "General",
+        "category_level_1": null,
+        "manufacturer": "IVES",
+        "manufacturer_slug": "ives"
+      },
+      {
+        "id": "prod-ives-pullpart.1205",
+        "base_model": "PULLPART.1205",
+        "display_name": "Ives PULLPART.1205",
+        "product_series": "General",
+        "category_level_1": null,
+        "manufacturer": "IVES",
+        "manufacturer_slug": "ives"
+      },
+      {
+        "id": "prod-ives-9103ezhd-33-2-us26d",
+        "base_model": "9103EZHD-33-2-US26D",
+        "display_name": "Ives 9103EZHD-33-2-US26D",
+        "product_series": "General",
+        "category_level_1": null,
+        "manufacturer": "IVES",
+        "manufacturer_slug": "ives"
+      },
+      {
+        "id": "prod-ngp-780sdkb-96\"",
+        "base_model": "780SDKB-96\"",
+        "display_name": "NGP 780SDKB-96\"",
+        "product_series": "General",
+        "category_level_1": null,
+        "manufacturer": "National Guard Products",
+        "manufacturer_slug": "ngp"
+      },
+      {
+        "id": "prod-ives-fspart.1037",
+        "base_model": "FSPART.1037",
+        "display_name": "Ives FSPART.1037",
+        "product_series": "General",
+        "category_level_1": null,
+        "manufacturer": "IVES",
+        "manufacturer_slug": "ives"
+      },
+      {
+        "id": "prod-sch-03-233-rho",
+        "base_model": "03-233-RHO",
+        "display_name": "SCHLAGE 03-233-RHO",
+        "product_series": "Rhodes",
+        "category_level_1": null,
+        "manufacturer": "Schlage",
+        "manufacturer_slug": "schlage"
+      },
+      {
+        "id": "prod-sloan-royal111",
+        "base_model": "Royal 111",
+        "display_name": "Sloan Royal 111 Flushometer",
+        "product_series": "Royal",
+        "category_level_1": "Valves",
+        "manufacturer": "Sloan Valve Company",
+        "manufacturer_slug": "sloan"
+      },
+      {
+        "id": "prod-stc-sz18polys/galvsz004",
+        "base_model": "SZ18 POLYS / GALV SZ004",
+        "display_name": "STEELCRAFT SZ18 POLYS / GALV SZ004",
+        "product_series": "General",
+        "category_level_1": null,
+        "manufacturer": "Steelcraft",
+        "manufacturer_slug": "steelcraft"
+      },
+      {
+        "id": "prod-ives-9145ezhd-28-0-us4",
+        "base_model": "9145EZHD-28-0-US4",
+        "display_name": "Ives 9145EZHD-28-0-US4",
+        "product_series": "General",
+        "category_level_1": null,
+        "manufacturer": "IVES",
+        "manufacturer_slug": "ives"
+      },
+      {
+        "id": "prod-ives-hgpart.1173",
+        "base_model": "HGPART.1173",
+        "display_name": "Ives HGPART.1173",
+        "product_series": "General",
+        "category_level_1": null,
+        "manufacturer": "IVES",
+        "manufacturer_slug": "ives"
+      },
+      {
+        "id": "prod-ngp-713br",
+        "base_model": "713BR",
+        "display_name": "NGP 713BR",
+        "product_series": "General",
+        "category_level_1": null,
+        "manufacturer": "National Guard Products",
+        "manufacturer_slug": "ngp"
+      },
+      {
+        "id": "prod-vd-970302",
+        "base_model": "970302",
+        "display_name": "VONDUPRIN 970302",
+        "product_series": "6224 Faceplate",
+        "category_level_1": null,
+        "manufacturer": "Von Duprin",
+        "manufacturer_slug": "vonduprin"
+      },
+      {
+        "id": "prod-cam-cm-ptss-7",
+        "base_model": "CM-PTSS-7",
+        "display_name": "CAMDEN CM-PTSS-7",
+        "product_series": "Stainless steel cable and endcaps, 7” length",
+        "category_level_1": null,
+        "manufacturer": "Camden Door Controls",
+        "manufacturer_slug": "camden"
+      },
+      {
+        "id": "prod-ives-405a14",
+        "base_model": "405A14",
+        "display_name": "IVES 405A14",
+        "product_series": "General",
+        "category_level_1": null,
+        "manufacturer": "IVES",
+        "manufacturer_slug": "ives"
+      },
+      {
+        "id": "prod-vd-900-ba",
+        "base_model": "900-BA",
+        "display_name": "VONDUPRIN 900-BA",
+        "product_series": "44487155-00",
+        "category_level_1": null,
+        "manufacturer": "Von Duprin",
+        "manufacturer_slug": "vonduprin"
+      },
+      {
+        "id": "prod-zer-3056fs-b",
+        "base_model": "3056FS-B",
+        "display_name": "ZERO 3056FS-B",
+        "product_series": "Black anodized/mortised adjustable/neoprene/intumescent fire stop",
+        "category_level_1": null,
+        "manufacturer": "Zero International",
+        "manufacturer_slug": "zero"
+      },
+      {
+        "id": "prod-ngp-122nss",
+        "base_model": "122NSS",
+        "display_name": "NGP 122NSS",
+        "product_series": "General",
+        "category_level_1": null,
+        "manufacturer": "National Guard Products",
+        "manufacturer_slug": "ngp"
+      },
+      {
+        "id": "prod-ives-262b10b",
+        "base_model": "262B10B",
+        "display_name": "IVES 262B10B",
+        "product_series": "General",
+        "category_level_1": null,
+        "manufacturer": "IVES",
+        "manufacturer_slug": "ives"
+      },
+      {
+        "id": "prod-cam-cx-ed1079dl",
+        "base_model": "CX-ED1079DL",
+        "display_name": "CAMDEN CX-ED1079DL",
+        "product_series": "As above, with latch monitoring",
+        "category_level_1": null,
+        "manufacturer": "Camden Door Controls",
+        "manufacturer_slug": "camden"
+      },
+      {
+        "id": "prod-stc-h-upto7'2\"high1'6\"thru2'8\"",
+        "base_model": "H- UP TO 7'2\" HIGH 1'6\" thru 2'8\"",
+        "display_name": "STEELCRAFT H- UP TO 7'2\" HIGH 1'6\" thru 2'8\"",
+        "product_series": "General",
+        "category_level_1": null,
+        "manufacturer": "Steelcraft",
+        "manufacturer_slug": "steelcraft"
+      },
+      {
+        "id": "prod-ives-hgpart.1247",
+        "base_model": "HGPART.1247",
+        "display_name": "Ives HGPART.1247",
+        "product_series": "General",
+        "category_level_1": null,
+        "manufacturer": "IVES",
+        "manufacturer_slug": "ives"
+      },
+      {
+        "id": "prod-ives-9190hd-28-2-695",
+        "base_model": "9190HD-28-2-695",
+        "display_name": "Ives 9190HD-28-2-695",
+        "product_series": "General",
+        "category_level_1": null,
+        "manufacturer": "IVES",
+        "manufacturer_slug": "ives"
+      },
+      {
+        "id": "prod-ives-pvpart.1007",
+        "base_model": "PVPART.1007",
+        "display_name": "Ives PVPART.1007",
+        "product_series": "General",
+        "category_level_1": null,
+        "manufacturer": "IVES",
+        "manufacturer_slug": "ives"
+      },
+      {
+        "id": "prod-stc-f16over8\"thru12\"face",
+        "base_model": "F16 Over 8\" thru 12\" face",
+        "display_name": "STEELCRAFT F16 Over 8\" thru 12\" face",
+        "product_series": "General",
+        "category_level_1": null,
+        "manufacturer": "Steelcraft",
+        "manufacturer_slug": "steelcraft"
+      },
+      {
+        "id": "prod-zer-23",
+        "base_model": "23",
+        "display_name": "ZERO 23",
+        "product_series": "Spring interlocking hook, Bronze",
+        "category_level_1": null,
+        "manufacturer": "Zero International",
+        "manufacturer_slug": "zero"
+      },
+      {
+        "id": "prod-ives-69f26",
+        "base_model": "69F26",
+        "display_name": "IVES 69F26",
+        "product_series": "General",
+        "category_level_1": null,
+        "manufacturer": "IVES",
+        "manufacturer_slug": "ives"
+      },
+      {
+        "id": "prod-koh-k2032",
+        "base_model": "K-2032",
+        "display_name": "Kohler Ladena Wall-Mount Lavatory",
+        "product_series": "Ladena",
+        "category_level_1": "Fixtures",
+        "manufacturer": "Kohler",
+        "manufacturer_slug": "kohler"
+      },
+      {
+        "id": "prod-stc-f14/fn14157'0\"doorheight",
+        "base_model": "F14/FN14 15 7'0\" door height",
+        "display_name": "STEELCRAFT F14/FN14 15 7'0\" door height",
+        "product_series": "General",
+        "category_level_1": null,
+        "manufacturer": "Steelcraft",
+        "manufacturer_slug": "steelcraft"
+      },
+      {
+        "id": "prod-ives-pvpart.1642",
+        "base_model": "PVPART.1642",
+        "display_name": "Ives PVPART.1642",
+        "product_series": "General",
+        "category_level_1": null,
+        "manufacturer": "IVES",
+        "manufacturer_slug": "ives"
+      },
+      {
+        "id": "prod-fal-600278",
+        "base_model": "600278",
+        "display_name": "FALCON 600278",
+        "product_series": "500 Series Cylinder lock nut",
+        "category_level_1": null,
+        "manufacturer": "Falcon",
+        "manufacturer_slug": "falcon"
+      },
+      {
+        "id": "prod-sch-a501-565",
+        "base_model": "A501-565",
+        "display_name": "SCHLAGE A501-565",
+        "product_series": "Reinforcer for 1-3/8\" thick non-reinforced metal doors, fits both 7/8\" and 1\" diameter housings.",
+        "category_level_1": null,
+        "manufacturer": "Schlage",
+        "manufacturer_slug": "schlage"
+      },
+      {
+        "id": "prod-stc-f16/fn16102slidetogethermullion-parta",
+        "base_model": "F16/FN16 102 Slide together mullion - part A",
+        "display_name": "STEELCRAFT F16/FN16 102 Slide together mullion - part A",
+        "product_series": "General",
+        "category_level_1": null,
+        "manufacturer": "Steelcraft",
+        "manufacturer_slug": "steelcraft"
+      },
+      {
+        "id": "prod-ives-pvpart.1772",
+        "base_model": "PVPART.1772",
+        "display_name": "Ives PVPART.1772",
+        "product_series": "General",
+        "category_level_1": null,
+        "manufacturer": "IVES",
+        "manufacturer_slug": "ives"
+      },
+      {
+        "id": "prod-vd-050661",
+        "base_model": "050661",
+        "display_name": "VONDUPRIN 050661",
+        "product_series": "8827 48\" Extension Rod Kit",
+        "category_level_1": null,
+        "manufacturer": "Von Duprin",
+        "manufacturer_slug": "vonduprin"
+      },
+      {
+        "id": "prod-cam-cm-3000/30",
+        "base_model": "CM-3000/30",
+        "display_name": "CAMDEN CM-3000/30",
+        "product_series": "General",
+        "category_level_1": null,
+        "manufacturer": "Camden Door Controls",
+        "manufacturer_slug": "camden"
+      },
+      {
+        "id": "prod-ngp-sl-sq18-96",
+        "base_model": "SL-SQ18-96",
+        "display_name": "NGP SL-SQ18-96",
+        "product_series": "General",
+        "category_level_1": null,
+        "manufacturer": "National Guard Products",
+        "manufacturer_slug": "ngp"
+      },
+      {
+        "id": "prod-bea-55.0001",
+        "base_model": "55.0001",
+        "display_name": "BEA 55.0001",
+        "product_series": "Jamb Cap Kit for SuperScan",
+        "category_level_1": null,
+        "manufacturer": "BEA Inc",
+        "manufacturer_slug": "bea"
+      },
+      {
+        "id": "prod-zer-339fs-b",
+        "base_model": "339FS-B",
+        "display_name": "ZERO 339FS-B",
+        "product_series": "Black anodized/neoprene/Intumet",
+        "category_level_1": null,
+        "manufacturer": "Zero International",
+        "manufacturer_slug": "zero"
+      },
+      {
+        "id": "prod-sch-47860060",
+        "base_model": "47860060",
+        "display_name": "SCHLAGE 47860060",
+        "product_series": "18 6",
+        "category_level_1": null,
+        "manufacturer": "Schlage",
+        "manufacturer_slug": "schlage"
+      },
+      {
+        "id": "prod-ives-060f643e/716",
+        "base_model": "060F643E/716",
+        "display_name": "IVES 060F643E/716",
+        "product_series": "General",
+        "category_level_1": null,
+        "manufacturer": "IVES",
+        "manufacturer_slug": "ives"
+      },
+      {
+        "id": "prod-ngp-rce-30sia-dkb",
+        "base_model": "RCE-30SIA-DKB",
+        "display_name": "NGP RCE-30SIA-DKB",
+        "product_series": "General",
+        "category_level_1": null,
+        "manufacturer": "National Guard Products",
+        "manufacturer_slug": "ngp"
+      },
+      {
+        "id": "prod-zer-318n-ps",
+        "base_model": "318N-PS",
+        "display_name": "ZERO 318N-PS",
+        "product_series": "Closed cell sponge neoprene black with PSA, 3/8\" x 3/4\" (9.5 x 19.1)",
+        "category_level_1": null,
+        "manufacturer": "Zero International",
+        "manufacturer_slug": "zero"
+      },
+      {
+        "id": "prod-stc-mu169'0\"",
+        "base_model": "MU16 9'0\"",
+        "display_name": "STEELCRAFT MU16 9'0\"",
+        "product_series": "General",
+        "category_level_1": null,
+        "manufacturer": "Steelcraft",
+        "manufacturer_slug": "steelcraft"
+      },
+      {
+        "id": "prod-ngp-ro150dkb",
+        "base_model": "RO150DKB",
+        "display_name": "NGP RO150DKB",
+        "product_series": "General",
+        "category_level_1": null,
+        "manufacturer": "National Guard Products",
+        "manufacturer_slug": "ngp"
+      },
+      {
+        "id": "prod-vd-47555178",
+        "base_model": "47555178",
+        "display_name": "VONDUPRIN 47555178",
+        "product_series": "8827K-NL-LBR Center Case Kit",
+        "category_level_1": null,
+        "manufacturer": "Von Duprin",
+        "manufacturer_slug": "vonduprin"
+      },
+      {
+        "id": "prod-ngp-hd2400a-etw8-molex",
+        "base_model": "HD2400A-ETW8-MOLEX",
+        "display_name": "NGP HD2400A-ETW8-MOLEX",
+        "product_series": "General",
+        "category_level_1": null,
+        "manufacturer": "National Guard Products",
+        "manufacturer_slug": "ngp"
+      },
+      {
+        "id": "prod-ives-pvpart.1199",
+        "base_model": "PVPART.1199",
+        "display_name": "Ives PVPART.1199",
+        "product_series": "General",
+        "category_level_1": null,
+        "manufacturer": "IVES",
+        "manufacturer_slug": "ives"
+      },
+      {
+        "id": "prod-stc-f16/fn16367'2\"doorheight",
+        "base_model": "F16/FN16 36 7'2\" door height",
+        "display_name": "STEELCRAFT F16/FN16 36 7'2\" door height",
+        "product_series": "General",
+        "category_level_1": null,
+        "manufacturer": "Steelcraft",
+        "manufacturer_slug": "steelcraft"
+      },
+      {
+        "id": "prod-vd-050421",
+        "base_model": "050421",
+        "display_name": "VONDUPRIN 050421",
+        "product_series": "8875-F LHR Center Case Kit",
+        "category_level_1": null,
+        "manufacturer": "Von Duprin",
+        "manufacturer_slug": "vonduprin"
+      },
+      {
+        "id": "prod-sch-03-234-rho",
+        "base_model": "03-234-RHO",
+        "display_name": "SCHLAGE 03-234-RHO",
+        "product_series": "Rhodes",
+        "category_level_1": null,
+        "manufacturer": "Schlage",
+        "manufacturer_slug": "schlage"
+      },
+      {
+        "id": "prod-ives-643e/716",
+        "base_model": "643E/716",
+        "display_name": "Ives 643E/716",
+        "product_series": "General",
+        "category_level_1": null,
+        "manufacturer": "IVES",
+        "manufacturer_slug": "ives"
+      },
+      {
+        "id": "prod-fal-w501",
+        "base_model": "W501",
+        "display_name": "Falcon W501 Entry Lock",
+        "product_series": "W Series Grade 2",
+        "category_level_1": "Locks",
+        "manufacturer": "Falcon",
+        "manufacturer_slug": "falcon"
+      },
+      {
+        "id": "prod-dyk-pocketframe",
+        "base_model": "POCKET FRAME",
+        "display_name": "DYKE POCKET FRAME",
+        "product_series": "POCKET FRAME",
+        "category_level_1": null,
+        "manufacturer": "Dyke Industries",
+        "manufacturer_slug": "dyke"
+      },
+      {
+        "id": "prod-zer-328fs-b",
+        "base_model": "328FS-B",
+        "display_name": "ZERO 328FS-B",
+        "product_series": "Black anodized/neoprene intumescent fire stop",
+        "category_level_1": null,
+        "manufacturer": "Zero International",
+        "manufacturer_slug": "zero"
+      },
+      {
+        "id": "prod-sch-48077941",
+        "base_model": "48077941",
+        "display_name": "SCHLAGE 48077941",
+        "product_series": "10, 40, 50, 53, 70, 80",
+        "category_level_1": null,
+        "manufacturer": "Schlage",
+        "manufacturer_slug": "schlage"
+      },
+      {
+        "id": "prod-stc-dw16/mu169'6\"thru10'0\"",
+        "base_model": "DW16/MU16 9'6\" thru 10'0\"",
+        "display_name": "STEELCRAFT DW16/MU16 9'6\" thru 10'0\"",
+        "product_series": "General",
+        "category_level_1": null,
+        "manufacturer": "Steelcraft",
+        "manufacturer_slug": "steelcraft"
+      },
+      {
+        "id": "prod-ives-571a14",
+        "base_model": "571A14",
+        "display_name": "IVES 571A14",
+        "product_series": "General",
+        "category_level_1": null,
+        "manufacturer": "IVES",
+        "manufacturer_slug": "ives"
+      },
+      {
+        "id": "prod-bea-15.5039",
+        "base_model": "15.5039",
+        "display_name": "BEA 15.5039",
+        "product_series": "PCB,Panther TD433PTRII",
+        "category_level_1": null,
+        "manufacturer": "BEA Inc",
+        "manufacturer_slug": "bea"
+      },
+      {
+        "id": "prod-ives-fs452-4",
+        "base_model": "FS452-4",
+        "display_name": "IVES FS452-4",
+        "product_series": "General",
+        "category_level_1": null,
+        "manufacturer": "IVES",
+        "manufacturer_slug": "ives"
+      },
+      {
+        "id": "prod-fal-650308",
+        "base_model": "650308",
+        "display_name": "FALCON 650308",
+        "product_series": "19-V Center case LHR",
+        "category_level_1": null,
+        "manufacturer": "Falcon",
+        "manufacturer_slug": "falcon"
+      },
+      {
+        "id": "prod-ives-fb458-12",
+        "base_model": "FB458-12",
+        "display_name": "IVES FB458-12",
+        "product_series": "General",
+        "category_level_1": null,
+        "manufacturer": "IVES",
+        "manufacturer_slug": "ives"
+      },
+      {
+        "id": "prod-stc-mu163'0\"6'8\"",
+        "base_model": "MU16 3'0\" 6' 8\"",
+        "display_name": "STEELCRAFT MU16 3'0\" 6' 8\"",
+        "product_series": "General",
+        "category_level_1": null,
+        "manufacturer": "Steelcraft",
+        "manufacturer_slug": "steelcraft"
+      },
+      {
+        "id": "prod-stc-f16/fn1613310'6\"singleasastrike",
+        "base_model": "F16/FN16 133 10'6\" single ASA strike",
+        "display_name": "STEELCRAFT F16/FN16 133 10'6\" single ASA strike",
+        "product_series": "General",
+        "category_level_1": null,
+        "manufacturer": "Steelcraft",
+        "manufacturer_slug": "steelcraft"
+      },
+      {
+        "id": "prod-tim-67c-645",
+        "base_model": "67C-645",
+        "display_name": "TIMELY 67C-645",
+        "product_series": "67C-645 (Pair) Timely Steel Door Frames-",
+        "category_level_1": null,
+        "manufacturer": "Timely Industries",
+        "manufacturer_slug": "timely"
+      },
+      {
+        "id": "prod-zer-352a",
+        "base_model": "352A",
+        "display_name": "ZERO 352A",
+        "product_series": "Clear anodized automatic door bottom 10\" – 18\" (305 – 457)",
+        "category_level_1": null,
+        "manufacturer": "Zero International",
+        "manufacturer_slug": "zero"
+      },
+      {
+        "id": "prod-ives-us32d",
+        "base_model": "US32D",
+        "display_name": "Ives US32D",
+        "product_series": "General",
+        "category_level_1": null,
+        "manufacturer": "IVES",
+        "manufacturer_slug": "ives"
+      },
+      {
+        "id": "prod-vd-114834",
+        "base_model": "114834",
+        "display_name": "VONDUPRIN 114834",
+        "product_series": "M85LH Lever Kit 360",
+        "category_level_1": null,
+        "manufacturer": "Von Duprin",
+        "manufacturer_slug": "vonduprin"
+      },
+      {
+        "id": "prod-fal-4174",
+        "base_model": "4174",
+        "display_name": "FALCON 4174",
+        "product_series": "19 Device (push side) used on 86 door preps",
+        "category_level_1": null,
+        "manufacturer": "Falcon",
+        "manufacturer_slug": "falcon"
+      },
+      {
+        "id": "prod-stc-l18/sl18wh7602",
+        "base_model": "L18/SL18 WH 7602",
+        "display_name": "STEELCRAFT L18/SL18 WH 7602",
+        "product_series": "General",
+        "category_level_1": null,
+        "manufacturer": "Steelcraft",
+        "manufacturer_slug": "steelcraft"
+      },
+      {
+        "id": "prod-ives-pvpart.1132",
+        "base_model": "PVPART.1132",
+        "display_name": "Ives PVPART.1132",
+        "product_series": "General",
+        "category_level_1": null,
+        "manufacturer": "IVES",
+        "manufacturer_slug": "ives"
+      },
+      {
+        "id": "prod-ives-9190hd-33-0-us26d",
+        "base_model": "9190HD-33-0-US26D",
+        "display_name": "Ives 9190HD-33-0-US26D",
+        "product_series": "General",
+        "category_level_1": null,
+        "manufacturer": "IVES",
+        "manufacturer_slug": "ives"
+      },
+      {
+        "id": "prod-dyk-pem-p0880",
+        "base_model": "PEM-P 0880",
+        "display_name": "DYKE PEM-P 0880",
+        "product_series": "PEM-P 0880",
+        "category_level_1": null,
+        "manufacturer": "Dyke Industries",
+        "manufacturer_slug": "dyke"
+      },
+      {
+        "id": "prod-ives-pvpart.1320",
+        "base_model": "PVPART.1320",
+        "display_name": "Ives PVPART.1320",
+        "product_series": "General",
+        "category_level_1": null,
+        "manufacturer": "IVES",
+        "manufacturer_slug": "ives"
+      },
+      {
+        "id": "prod-zer-478b",
+        "base_model": "478B",
+        "display_name": "ZERO 478B",
+        "product_series": "Black anodized/snap-on cover/double neoprene",
+        "category_level_1": null,
+        "manufacturer": "Zero International",
+        "manufacturer_slug": "zero"
+      },
+      {
+        "id": "prod-bea-10lzrflatscan3d-lb",
+        "base_model": "10LZRFLATSCAN3D-LB",
+        "display_name": "BEA 10LZRFLATSCAN3D-LB",
+        "product_series": "FLATSCAN 3D LEFT SENSOR ONLY, 1 Replacement Sensor",
+        "category_level_1": null,
+        "manufacturer": "BEA Inc",
+        "manufacturer_slug": "bea"
+      },
+      {
+        "id": "prod-ives-u696b15",
+        "base_model": "U696B15",
+        "display_name": "IVES U696B15",
+        "product_series": "General",
+        "category_level_1": null,
+        "manufacturer": "IVES",
+        "manufacturer_slug": "ives"
+      },
+      {
+        "id": "prod-vd-35a-alk",
+        "base_model": "35A-ALK",
+        "display_name": "VONDUPRIN 35A-ALK",
+        "product_series": "Alarm Kit for 35A Series devices",
+        "category_level_1": null,
+        "manufacturer": "Von Duprin",
+        "manufacturer_slug": "vonduprin"
+      },
+      {
+        "id": "prod-ngp-429br",
+        "base_model": "429BR",
+        "display_name": "NGP 429BR",
+        "product_series": "General",
+        "category_level_1": null,
+        "manufacturer": "National Guard Products",
+        "manufacturer_slug": "ngp"
+      },
+      {
+        "id": "prod-bea-10t300hh4",
+        "base_model": "10T300HH4",
+        "display_name": "BEA 10T300HH4",
+        "product_series": "Transmitter, 300MHz, 4button",
+        "category_level_1": null,
+        "manufacturer": "BEA Inc",
+        "manufacturer_slug": "bea"
+      },
+      {
+        "id": "prod-sch-ad-200",
+        "base_model": "AD-200",
+        "display_name": "SCHLAGE AD-200",
+        "product_series": "Storeroom",
+        "category_level_1": null,
+        "manufacturer": "Schlage",
+        "manufacturer_slug": "schlage"
+      },
+      {
+        "id": "prod-zer-8810s-b",
+        "base_model": "8810S-B",
+        "display_name": "ZERO 8810S-B",
+        "product_series": "Silicone kerf seal/black",
+        "category_level_1": null,
+        "manufacturer": "Zero International",
+        "manufacturer_slug": "zero"
+      },
+      {
+        "id": "prod-sch-61-509",
+        "base_model": "61-509",
+        "display_name": "SCHLAGE 61-509",
+        "product_series": "Emergency release key, standard size, for B571 occupancy indicator deadbolt. Includes one key, ring, and instruction tag",
+        "category_level_1": null,
+        "manufacturer": "Schlage",
+        "manufacturer_slug": "schlage"
+      },
+      {
+        "id": "prod-ngp-112n",
+        "base_model": "112N",
+        "display_name": "NGP 112N",
+        "product_series": "General",
+        "category_level_1": null,
+        "manufacturer": "National Guard Products",
+        "manufacturer_slug": "ngp"
+      },
+      {
+        "id": "prod-ives-8190ezhd-0",
+        "base_model": "8190EZHD-0",
+        "display_name": "Ives 8190EZHD-0",
+        "product_series": "General",
+        "category_level_1": null,
+        "manufacturer": "IVES",
+        "manufacturer_slug": "ives"
+      },
+      {
+        "id": "prod-ives-70b3",
+        "base_model": "70B3",
+        "display_name": "IVES 70B3",
+        "product_series": "General",
+        "category_level_1": null,
+        "manufacturer": "IVES",
+        "manufacturer_slug": "ives"
+      },
+      {
+        "id": "prod-vd-47568154",
+        "base_model": "47568154",
+        "display_name": "VONDUPRIN 47568154",
+        "product_series": "98 PA-CDSI Cover Plate Kit 3'",
+        "category_level_1": null,
+        "manufacturer": "Von Duprin",
+        "manufacturer_slug": "vonduprin"
+      },
+      {
+        "id": "prod-cam-cm-25",
+        "base_model": "CM-25",
+        "display_name": "CAMDEN CM-25",
+        "product_series": "1-3/4” Width, Narrow switch, vertical mounting, brush stainless steel finish",
+        "category_level_1": null,
+        "manufacturer": "Camden Door Controls",
+        "manufacturer_slug": "camden"
+      },
+      {
+        "id": "prod-cam-cm-6050",
+        "base_model": "CM-6050",
+        "display_name": "CAMDEN CM-6050",
+        "product_series": "General",
+        "category_level_1": null,
+        "manufacturer": "Camden Door Controls",
+        "manufacturer_slug": "camden"
+      },
+      {
+        "id": "prod-zer-570a",
+        "base_model": "570A",
+        "display_name": "ZERO 570A",
+        "product_series": "Clear anodized/self-adjusting/silicone",
+        "category_level_1": null,
+        "manufacturer": "Zero International",
+        "manufacturer_slug": "zero"
+      },
+      {
+        "id": "prod-ngp-130sss",
+        "base_model": "130SSS",
+        "display_name": "NGP 130SSS",
+        "product_series": "General",
+        "category_level_1": null,
+        "manufacturer": "National Guard Products",
+        "manufacturer_slug": "ngp"
+      },
+      {
+        "id": "prod-ives-sb1600m1-bl",
+        "base_model": "SB1600M1-BL",
+        "display_name": "Ives SB1600M1-BL",
+        "product_series": "General",
+        "category_level_1": null,
+        "manufacturer": "IVES",
+        "manufacturer_slug": "ives"
+      },
+      {
+        "id": "prod-ives-347b10b",
+        "base_model": "347B10B",
+        "display_name": "IVES 347B10B",
+        "product_series": "General",
+        "category_level_1": null,
+        "manufacturer": "IVES",
+        "manufacturer_slug": "ives"
+      },
+      {
+        "id": "prod-ives-pvpart.1683",
+        "base_model": "PVPART.1683",
+        "display_name": "Ives PVPART.1683",
+        "product_series": "General",
+        "category_level_1": null,
+        "manufacturer": "IVES",
+        "manufacturer_slug": "ives"
+      },
+      {
+        "id": "prod-ives-061f10",
+        "base_model": "061F10",
+        "display_name": "IVES 061F10",
+        "product_series": "General",
+        "category_level_1": null,
+        "manufacturer": "IVES",
+        "manufacturer_slug": "ives"
+      },
+      {
+        "id": "prod-ives-pvpart.1018",
+        "base_model": "PVPART.1018",
+        "display_name": "Ives PVPART.1018",
+        "product_series": "General",
+        "category_level_1": null,
+        "manufacturer": "IVES",
+        "manufacturer_slug": "ives"
+      },
+      {
+        "id": "prod-ives-054b10",
+        "base_model": "054B10",
+        "display_name": "IVES 054B10",
+        "product_series": "General",
+        "category_level_1": null,
+        "manufacturer": "IVES",
+        "manufacturer_slug": "ives"
+      },
+      {
+        "id": "prod-ives-8281-18-630",
+        "base_model": "8281-18-630",
+        "display_name": "Ives 8281-18-630",
+        "product_series": "General",
+        "category_level_1": null,
+        "manufacturer": "IVES",
+        "manufacturer_slug": "ives"
+      },
+      {
+        "id": "prod-cam-cm-420n",
+        "base_model": "CM-420N",
+        "display_name": "CAMDEN CM-420N",
+        "product_series": "N/O and N/C contact, Plain faceplate",
+        "category_level_1": null,
+        "manufacturer": "Camden Door Controls",
+        "manufacturer_slug": "camden"
+      },
+      {
+        "id": "prod-ives-9190ezhd-33-0-us26",
+        "base_model": "9190EZHD-33-0-US26",
+        "display_name": "Ives 9190EZHD-33-0-US26",
+        "product_series": "General",
+        "category_level_1": null,
+        "manufacturer": "IVES",
+        "manufacturer_slug": "ives"
+      },
+      {
+        "id": "prod-ngp-225sa-36\"",
+        "base_model": "225SA-36\"",
+        "display_name": "NGP 225SA-36\"",
+        "product_series": "General",
+        "category_level_1": null,
+        "manufacturer": "National Guard Products",
+        "manufacturer_slug": "ngp"
+      },
+      {
+        "id": "prod-bea-10lzrflatscan-rw",
+        "base_model": "10LZRFLATSCAN-RW",
+        "display_name": "BEA 10LZRFLATSCAN-RW",
+        "product_series": "LZRFLATSCAN Sensor ONLY, RIGHT WHITE",
+        "category_level_1": null,
+        "manufacturer": "BEA Inc",
+        "manufacturer_slug": "bea"
+      },
+      {
+        "id": "prod-zer-8144s-b",
+        "base_model": "8144S-B",
+        "display_name": "ZERO 8144S-B",
+        "product_series": "Silicone/batwing type/ black/PSA",
+        "category_level_1": null,
+        "manufacturer": "Zero International",
+        "manufacturer_slug": "zero"
+      },
+      {
+        "id": "prod-sch-f506-867",
+        "base_model": "F506-867",
+        "display_name": "SCHLAGE F506-867",
+        "product_series": "Handing Plate",
+        "category_level_1": null,
+        "manufacturer": "Schlage",
+        "manufacturer_slug": "schlage"
+      },
+      {
+        "id": "prod-dyk-clearig",
+        "base_model": "CLEAR IG",
+        "display_name": "DYKE CLEAR IG",
+        "product_series": "CLEAR IG",
+        "category_level_1": null,
+        "manufacturer": "Dyke Industries",
+        "manufacturer_slug": "dyke"
+      },
+      {
+        "id": "prod-zer-675a1",
+        "base_model": "675A1",
+        "display_name": "ZERO 675A1",
+        "product_series": "Plate, Aluminum, 5\" (127.0) wide",
+        "category_level_1": null,
+        "manufacturer": "Zero International",
+        "manufacturer_slug": "zero"
+      },
+      {
+        "id": "prod-bea-30.0345",
+        "base_model": "30.0345",
+        "display_name": "BEA 30.0345",
+        "product_series": "Conn,7 Pos Female,Plug,",
+        "category_level_1": null,
+        "manufacturer": "BEA Inc",
+        "manufacturer_slug": "bea"
+      },
+      {
+        "id": "prod-ives-fb33-12-md",
+        "base_model": "FB33-12-MD",
+        "display_name": "Ives FB33-12-MD",
+        "product_series": "General",
+        "category_level_1": null,
+        "manufacturer": "IVES",
+        "manufacturer_slug": "ives"
+      },
+      {
+        "id": "prod-ngp-200nb",
+        "base_model": "200NB",
+        "display_name": "NGP 200NB",
+        "product_series": "General",
+        "category_level_1": null,
+        "manufacturer": "National Guard Products",
+        "manufacturer_slug": "ngp"
+      },
+      {
+        "id": "prod-ives-pullpart.1093",
+        "base_model": "PULLPART.1093",
+        "display_name": "Ives PULLPART.1093",
+        "product_series": "General",
+        "category_level_1": null,
+        "manufacturer": "IVES",
+        "manufacturer_slug": "ives"
+      },
+      {
+        "id": "prod-ngp-2014rald",
+        "base_model": "2014RALD",
+        "display_name": "NGP 2014RALD",
+        "product_series": "General",
+        "category_level_1": null,
+        "manufacturer": "National Guard Products",
+        "manufacturer_slug": "ngp"
+      },
+      {
+        "id": "prod-zer-235",
+        "base_model": "235",
+        "display_name": "ZERO 235",
+        "product_series": "Ramp, Aluminum, 3\" (76.2), 1/4\" (6.4)",
+        "category_level_1": null,
+        "manufacturer": "Zero International",
+        "manufacturer_slug": "zero"
+      },
+      {
+        "id": "prod-ngp-426e",
+        "base_model": "426E",
+        "display_name": "NGP 426E",
+        "product_series": "General",
+        "category_level_1": null,
+        "manufacturer": "National Guard Products",
+        "manufacturer_slug": "ngp"
+      },
+      {
+        "id": "prod-ngp-13vdkb",
+        "base_model": "13VDKB",
+        "display_name": "NGP 13VDKB",
+        "product_series": "General",
+        "category_level_1": null,
+        "manufacturer": "National Guard Products",
+        "manufacturer_slug": "ngp"
+      },
+      {
+        "id": "prod-ngp-704evdkb",
+        "base_model": "704EVDKB",
+        "display_name": "NGP 704EVDKB",
+        "product_series": "General",
+        "category_level_1": null,
+        "manufacturer": "National Guard Products",
+        "manufacturer_slug": "ngp"
+      },
+      {
+        "id": "prod-zer-153b",
+        "base_model": "153B",
+        "display_name": "ZERO 153B",
+        "product_series": "Black anodized/neoprene",
+        "category_level_1": null,
+        "manufacturer": "Zero International",
+        "manufacturer_slug": "zero"
+      },
+      {
+        "id": "prod-ngp-92tdkb",
+        "base_model": "92TDKB",
+        "display_name": "NGP 92TDKB",
+        "product_series": "General",
+        "category_level_1": null,
+        "manufacturer": "National Guard Products",
+        "manufacturer_slug": "ngp"
+      },
+      {
+        "id": "prod-ngp-9700a",
+        "base_model": "9700A",
+        "display_name": "NGP 9700A",
+        "product_series": "General",
+        "category_level_1": null,
+        "manufacturer": "National Guard Products",
+        "manufacturer_slug": "ngp"
+      },
+      {
+        "id": "prod-ngp-8139",
+        "base_model": "8139",
+        "display_name": "NGP 8139",
+        "product_series": "General",
+        "category_level_1": null,
+        "manufacturer": "National Guard Products",
+        "manufacturer_slug": "ngp"
+      },
+      {
+        "id": "prod-fal-3777",
+        "base_model": "3777",
+        "display_name": "FALCON 3777",
+        "product_series": "25-V T op rod kit",
+        "category_level_1": null,
+        "manufacturer": "Falcon",
+        "manufacturer_slug": "falcon"
+      },
+      {
+        "id": "prod-ives-9103ezhd-28-8-us15",
+        "base_model": "9103EZHD-28-8-US15",
+        "display_name": "Ives 9103EZHD-28-8-US15",
+        "product_series": "General",
+        "category_level_1": null,
+        "manufacturer": "IVES",
+        "manufacturer_slug": "ives"
+      },
+      {
+        "id": "prod-ngp-458dkb",
+        "base_model": "458DKB",
+        "display_name": "NGP 458DKB",
+        "product_series": "General",
+        "category_level_1": null,
+        "manufacturer": "National Guard Products",
+        "manufacturer_slug": "ngp"
+      },
+      {
+        "id": "prod-ngp-9500x2525b,c,w",
+        "base_model": "9500 X 2525 B, C, W",
+        "display_name": "NGP 9500 X 2525 B, C, W",
+        "product_series": "General",
+        "category_level_1": null,
+        "manufacturer": "National Guard Products",
+        "manufacturer_slug": "ngp"
+      },
+      {
+        "id": "prod-zer-8878",
+        "base_model": "8878",
+        "display_name": "ZERO 8878",
+        "product_series": "Dark bronze anodized/silicone seal",
+        "category_level_1": null,
+        "manufacturer": "Zero International",
+        "manufacturer_slug": "zero"
+      },
+      {
+        "id": "prod-zer-9003vbk-3684",
+        "base_model": "9003VBK-3684",
+        "display_name": "ZERO 9003VBK-3684",
+        "product_series": "Vinyl seal, Black anodized, 36\" x 84\" set (914.4 x 2133.6)",
+        "category_level_1": null,
+        "manufacturer": "Zero International",
+        "manufacturer_slug": "zero"
+      },
+      {
+        "id": "prod-cam-cm-3040",
+        "base_model": "CM-3040",
+        "display_name": "CAMDEN CM-3040",
+        "product_series": "General",
+        "category_level_1": null,
+        "manufacturer": "Camden Door Controls",
+        "manufacturer_slug": "camden"
+      },
+      {
+        "id": "prod-ngp-sdg-brkt-mw",
+        "base_model": "SDG-BRKT-MW",
+        "display_name": "NGP SDG-BRKT-MW",
+        "product_series": "General",
+        "category_level_1": null,
+        "manufacturer": "National Guard Products",
+        "manufacturer_slug": "ngp"
+      },
+      {
+        "id": "prod-bea-10eagle",
+        "base_model": "10EAGLE",
+        "display_name": "BEA 10EAGLE",
+        "product_series": "Eagle Motion Sensor",
+        "category_level_1": null,
+        "manufacturer": "BEA Inc",
+        "manufacturer_slug": "bea"
+      },
+      {
+        "id": "prod-zer-68a1",
+        "base_model": "68A1",
+        "display_name": "ZERO 68A1",
+        "product_series": "Threshold rest, Aluminum, 1/2\" (12.7)",
+        "category_level_1": null,
+        "manufacturer": "Zero International",
+        "manufacturer_slug": "zero"
+      },
+      {
+        "id": "prod-cam-cm-1130",
+        "base_model": "CM-1130",
+        "display_name": "CAMDEN CM-1130",
+        "product_series": "General",
+        "category_level_1": null,
+        "manufacturer": "Camden Door Controls",
+        "manufacturer_slug": "camden"
+      },
+      {
+        "id": "prod-ives-pvpart.1640",
+        "base_model": "PVPART.1640",
+        "display_name": "Ives PVPART.1640",
+        "product_series": "General",
+        "category_level_1": null,
+        "manufacturer": "IVES",
+        "manufacturer_slug": "ives"
+      },
+      {
+        "id": "prod-ngp-512",
+        "base_model": "512",
+        "display_name": "NGP 512",
+        "product_series": "General",
+        "category_level_1": null,
+        "manufacturer": "National Guard Products",
+        "manufacturer_slug": "ngp"
+      },
+      {
+        "id": "prod-ngp-221nss-48\"",
+        "base_model": "221NSS-48\"",
+        "display_name": "NGP 221NSS-48\"",
+        "product_series": "General",
+        "category_level_1": null,
+        "manufacturer": "National Guard Products",
+        "manufacturer_slug": "ngp"
+      },
+      {
+        "id": "prod-bea-pushplate475s-hw",
+        "base_model": "PUSH PLATE 475S-HW",
+        "display_name": "BEA PUSH PLATE 475S-HW",
+        "product_series": "PUSH PLATE 475S-HW, 2 of 10PBS1 + 2 of 10BOX475SQSM",
+        "category_level_1": null,
+        "manufacturer": "BEA Inc",
+        "manufacturer_slug": "bea"
+      },
+      {
+        "id": "prod-bea-10pbjm1",
+        "base_model": "10PBJM1",
+        "display_name": "BEA 10PBJM1",
+        "product_series": "Push Plate,S/S Jamb,T&L",
+        "category_level_1": null,
+        "manufacturer": "BEA Inc",
+        "manufacturer_slug": "bea"
+      },
+      {
+        "id": "prod-ives-pullpart.1089",
+        "base_model": "PULLPART.1089",
+        "display_name": "Ives PULLPART.1089",
+        "product_series": "General",
+        "category_level_1": null,
+        "manufacturer": "IVES",
+        "manufacturer_slug": "ives"
+      },
+      {
+        "id": "prod-cam-cx-esf-3br-bz",
+        "base_model": "CX-ESF-3BR-BZ",
+        "display_name": "CAMDEN CX-ESF-3BR-BZ",
+        "product_series": "Radius Hollow Metal Faceplate for CX-ED1309, Dark Bronze finish",
+        "category_level_1": null,
+        "manufacturer": "Camden Door Controls",
+        "manufacturer_slug": "camden"
+      },
+      {
+        "id": "prod-ngp-1013ss",
+        "base_model": "1013SS",
+        "display_name": "NGP 1013SS",
+        "product_series": "General",
+        "category_level_1": null,
+        "manufacturer": "National Guard Products",
+        "manufacturer_slug": "ngp"
+      },
+      {
+        "id": "prod-zer-673a1",
+        "base_model": "673A1",
+        "display_name": "ZERO 673A1",
+        "product_series": "Plate, Aluminum, 3\" (76.2) wide",
+        "category_level_1": null,
+        "manufacturer": "Zero International",
+        "manufacturer_slug": "zero"
+      },
+      {
+        "id": "prod-fal-650328",
+        "base_model": "650328",
+        "display_name": "FALCON 650328",
+        "product_series": "19-R Mounting pkg",
+        "category_level_1": null,
+        "manufacturer": "Falcon",
+        "manufacturer_slug": "falcon"
+      },
+      {
+        "id": "prod-zer-47253866-34",
+        "base_model": "47253866-34",
+        "display_name": "ZERO 47253866-34",
+        "product_series": "352, 362, 366, 368 - up to 108\" (2.7 m) (11) Screws #8 x 1-1/2\" FPHSMS, Gold ZP G",
+        "category_level_1": null,
+        "manufacturer": "Zero International",
+        "manufacturer_slug": "zero"
+      },
+      {
+        "id": "prod-ives-pullpart.1202",
+        "base_model": "PULLPART.1202",
+        "display_name": "Ives PULLPART.1202",
+        "product_series": "General",
+        "category_level_1": null,
+        "manufacturer": "IVES",
+        "manufacturer_slug": "ives"
+      },
+      {
+        "id": "prod-zer-770sp",
+        "base_model": "770SP",
+        "display_name": "ZERO 770SP",
+        "product_series": "Steel-prime painted, Door closer mounting bracket 6\" (152.4) long",
+        "category_level_1": null,
+        "manufacturer": "Zero International",
+        "manufacturer_slug": "zero"
+      },
+      {
+        "id": "prod-stc-candck7'2\"",
+        "base_model": "C AND CK 7'2\"",
+        "display_name": "STEELCRAFT C AND CK 7'2\"",
+        "product_series": "General",
+        "category_level_1": null,
+        "manufacturer": "Steelcraft",
+        "manufacturer_slug": "steelcraft"
+      },
+      {
+        "id": "prod-vd-050422",
+        "base_model": "050422",
+        "display_name": "VONDUPRIN 050422",
+        "product_series": "8847-F RHR Center Case Kit",
+        "category_level_1": null,
+        "manufacturer": "Von Duprin",
+        "manufacturer_slug": "vonduprin"
+      },
+      {
+        "id": "prod-dyk-23x81cutout",
+        "base_model": "23x81 CUT OUT",
+        "display_name": "DYKE 23x81 CUT OUT",
+        "product_series": "23x81 CUT OUT",
+        "category_level_1": null,
+        "manufacturer": "Dyke Industries",
+        "manufacturer_slug": "dyke"
+      },
+      {
+        "id": "prod-lcn-4314me-3071b140",
+        "base_model": "4314ME-3071B140",
+        "display_name": "LCN 4314ME-3071B140",
+        "product_series": "Default/common configuration",
+        "category_level_1": null,
+        "manufacturer": "LCN Closers",
+        "manufacturer_slug": "lcn"
+      },
+      {
+        "id": "prod-sch-pm091el",
+        "base_model": "PM091EL",
+        "display_name": "SCHLAGE PM091EL",
+        "product_series": "Electrically locking both levers, no cylinder",
+        "category_level_1": null,
+        "manufacturer": "Schlage",
+        "manufacturer_slug": "schlage"
+      },
+      {
+        "id": "prod-ives-pvpart.1444",
+        "base_model": "PVPART.1444",
+        "display_name": "Ives PVPART.1444",
+        "product_series": "General",
+        "category_level_1": null,
+        "manufacturer": "IVES",
+        "manufacturer_slug": "ives"
+      },
+      {
+        "id": "prod-vd-47999316",
+        "base_model": "47999316",
+        "display_name": "VONDUPRIN 47999316",
+        "product_series": "75 CD Conversion Kit",
+        "category_level_1": null,
+        "manufacturer": "Von Duprin",
+        "manufacturer_slug": "vonduprin"
+      },
+      {
+        "id": "prod-sch-12-651",
+        "base_model": "12-651",
+        "display_name": "SCHLAGE 12-651",
+        "product_series": "2-3/4\" backset deadbolt unit less faceplate, 1\" housing dia.",
+        "category_level_1": null,
+        "manufacturer": "Schlage",
+        "manufacturer_slug": "schlage"
+      },
+      {
+        "id": "prod-ives-9190hd-28-2-us32",
+        "base_model": "9190HD-28-2-US32",
+        "display_name": "Ives 9190HD-28-2-US32",
+        "product_series": "General",
+        "category_level_1": null,
+        "manufacturer": "IVES",
+        "manufacturer_slug": "ives"
+      },
+      {
+        "id": "prod-ives-42b4",
+        "base_model": "42B4",
+        "display_name": "IVES 42B4",
+        "product_series": "General",
+        "category_level_1": null,
+        "manufacturer": "IVES",
+        "manufacturer_slug": "ives"
+      },
+      {
+        "id": "prod-sch-47859988",
+        "base_model": "47859988",
+        "display_name": "SCHLAGE 47859988",
+        "product_series": "ME1 6",
+        "category_level_1": null,
+        "manufacturer": "Schlage",
+        "manufacturer_slug": "schlage"
+      },
+      {
+        "id": "prod-stc-dw16/mu169'0\"thru9'6\"",
+        "base_model": "DW16/MU16 9'0\" thru 9'6\"",
+        "display_name": "STEELCRAFT DW16/MU16 9'0\" thru 9'6\"",
+        "product_series": "General",
+        "category_level_1": null,
+        "manufacturer": "Steelcraft",
+        "manufacturer_slug": "steelcraft"
+      },
+      {
+        "id": "prod-bea-10pbr451",
+        "base_model": "10PBR451",
+        "display_name": "BEA 10PBR451",
+        "product_series": "Push Plate,S/S 4.5\"\" Rnd,T&L",
+        "category_level_1": null,
+        "manufacturer": "BEA Inc",
+        "manufacturer_slug": "bea"
+      },
+      {
+        "id": "prod-ives-8169-10-630",
+        "base_model": "8169-10-630",
+        "display_name": "Ives 8169-10-630",
+        "product_series": "General",
+        "category_level_1": null,
+        "manufacturer": "IVES",
+        "manufacturer_slug": "ives"
+      },
+      {
+        "id": "prod-ngp-92twhb",
+        "base_model": "92TWHB",
+        "display_name": "NGP 92TWHB",
+        "product_series": "General",
+        "category_level_1": null,
+        "manufacturer": "National Guard Products",
+        "manufacturer_slug": "ngp"
+      },
+      {
+        "id": "prod-vd-109132",
+        "base_model": "109132",
+        "display_name": "VONDUPRIN 109132",
+        "product_series": "Rod Member Kit 1-3/4\" Door 377",
+        "category_level_1": null,
+        "manufacturer": "Von Duprin",
+        "manufacturer_slug": "vonduprin"
+      },
+      {
+        "id": "prod-lcn-9550",
+        "base_model": "9550",
+        "display_name": "LCN 9550",
+        "product_series": "Track",
+        "category_level_1": null,
+        "manufacturer": "LCN Closers",
+        "manufacturer_slug": "lcn"
+      },
+      {
+        "id": "prod-ives-pvpart.1827",
+        "base_model": "PVPART.1827",
+        "display_name": "Ives PVPART.1827",
+        "product_series": "General",
+        "category_level_1": null,
+        "manufacturer": "IVES",
+        "manufacturer_slug": "ives"
+      },
+      {
+        "id": "prod-ives-72z-625e",
+        "base_model": "72Z-625E",
+        "display_name": "Ives 72Z-625E",
+        "product_series": "General",
+        "category_level_1": null,
+        "manufacturer": "IVES",
+        "manufacturer_slug": "ives"
+      },
+      {
+        "id": "prod-bea-10hortonssharn",
+        "base_model": "10HORTONSSHARN",
+        "display_name": "BEA 10HORTONSSHARN",
+        "product_series": "Harness, SS HORTON Superscan Relay harness",
+        "category_level_1": null,
+        "manufacturer": "BEA Inc",
+        "manufacturer_slug": "bea"
+      },
+      {
+        "id": "prod-fal-47417139",
+        "base_model": "47417139",
+        "display_name": "FALCON 47417139",
+        "product_series": "General",
+        "category_level_1": null,
+        "manufacturer": "Falcon",
+        "manufacturer_slug": "falcon"
+      },
+      {
+        "id": "prod-stc-f164'8\"thru5'4\"",
+        "base_model": "F16 4'8\" thru 5'4\"",
+        "display_name": "STEELCRAFT F16 4'8\" thru 5'4\"",
+        "product_series": "General",
+        "category_level_1": null,
+        "manufacturer": "Steelcraft",
+        "manufacturer_slug": "steelcraft"
+      },
+      {
+        "id": "prod-ngp-170sb",
+        "base_model": "170SB",
+        "display_name": "NGP 170SB",
+        "product_series": "General",
+        "category_level_1": null,
+        "manufacturer": "National Guard Products",
+        "manufacturer_slug": "ngp"
+      },
+      {
+        "id": "prod-ives-pvpart.1780",
+        "base_model": "PVPART.1780",
+        "display_name": "Ives PVPART.1780",
+        "product_series": "General",
+        "category_level_1": null,
+        "manufacturer": "IVES",
+        "manufacturer_slug": "ives"
+      },
+      {
+        "id": "prod-ives-fs1154",
+        "base_model": "FS1154",
+        "display_name": "Ives FS1154",
+        "product_series": "General",
+        "category_level_1": null,
+        "manufacturer": "IVES",
+        "manufacturer_slug": "ives"
+      },
+      {
+        "id": "prod-ives-pullpart.1219",
+        "base_model": "PULLPART.1219",
+        "display_name": "Ives PULLPART.1219",
+        "product_series": "General",
+        "category_level_1": null,
+        "manufacturer": "IVES",
+        "manufacturer_slug": "ives"
+      },
+      {
+        "id": "prod-ngp-325br",
+        "base_model": "325BR",
+        "display_name": "NGP 325BR",
+        "product_series": "General",
+        "category_level_1": null,
+        "manufacturer": "National Guard Products",
+        "manufacturer_slug": "ngp"
+      },
+      {
+        "id": "prod-zer-3365",
+        "base_model": "3365",
+        "display_name": "ZERO 3365",
+        "product_series": "Bottom seal, 5/8\" wide",
+        "category_level_1": null,
+        "manufacturer": "Zero International",
+        "manufacturer_slug": "zero"
+      },
+      {
+        "id": "prod-ives-9103ezhd-33-2-us26",
+        "base_model": "9103EZHD-33-2-US26",
+        "display_name": "Ives 9103EZHD-33-2-US26",
+        "product_series": "General",
+        "category_level_1": null,
+        "manufacturer": "IVES",
+        "manufacturer_slug": "ives"
+      },
+      {
+        "id": "prod-ives-pvpart.1837",
+        "base_model": "PVPART.1837",
+        "display_name": "Ives PVPART.1837",
+        "product_series": "General",
+        "category_level_1": null,
+        "manufacturer": "IVES",
+        "manufacturer_slug": "ives"
+      },
+      {
+        "id": "prod-stc-f128'0\"6'8\"",
+        "base_model": "F12 8'0\" 6' 8\"",
+        "display_name": "STEELCRAFT F12 8'0\" 6' 8\"",
+        "product_series": "General",
+        "category_level_1": null,
+        "manufacturer": "Steelcraft",
+        "manufacturer_slug": "steelcraft"
+      },
+      {
+        "id": "prod-zer-117s-b",
+        "base_model": "117S-B",
+        "display_name": "ZERO 117S-B",
+        "product_series": "Silicone seal/black/ self-adhesive",
+        "category_level_1": null,
+        "manufacturer": "Zero International",
+        "manufacturer_slug": "zero"
+      },
+      {
+        "id": "prod-lcn-1.75\"",
+        "base_model": "1.75\"",
+        "display_name": "LCN 1.75\"",
+        "product_series": "Default/common configuration",
+        "category_level_1": null,
+        "manufacturer": "LCN Closers",
+        "manufacturer_slug": "lcn"
+      },
+      {
+        "id": "prod-ives-pullpart.1074",
+        "base_model": "PULLPART.1074",
+        "display_name": "Ives PULLPART.1074",
+        "product_series": "General",
+        "category_level_1": null,
+        "manufacturer": "IVES",
+        "manufacturer_slug": "ives"
+      },
+      {
+        "id": "prod-zer-8001aa-84",
+        "base_model": "8001AA-84",
+        "display_name": "ZERO 8001AA-84",
+        "product_series": "Nylon brush door sweep, 1\" (25.4) long, Clear anodized, 84\" (2133.6)",
+        "category_level_1": null,
+        "manufacturer": "Zero International",
+        "manufacturer_slug": "zero"
+      },
+      {
+        "id": "prod-zer-676b1",
+        "base_model": "676B1",
+        "display_name": "ZERO 676B1",
+        "product_series": "Plate, Bronze, 6\" (152.4) wide",
+        "category_level_1": null,
+        "manufacturer": "Zero International",
+        "manufacturer_slug": "zero"
+      },
+      {
+        "id": "prod-zer-47257393",
+        "base_model": "47257393",
+        "display_name": "ZERO 47257393",
+        "product_series": "#226 Stainless steel sleeve anchor 4",
+        "category_level_1": null,
+        "manufacturer": "Zero International",
+        "manufacturer_slug": "zero"
+      },
+      {
+        "id": "prod-ives-pullpart.1211",
+        "base_model": "PULLPART.1211",
+        "display_name": "Ives PULLPART.1211",
+        "product_series": "General",
+        "category_level_1": null,
+        "manufacturer": "IVES",
+        "manufacturer_slug": "ives"
+      },
+      {
+        "id": "prod-cam-cm-lp2",
+        "base_model": "CM-LP2",
+        "display_name": "CAMDEN CM-LP2",
+        "product_series": "(2) ‘AAA‘ lithium battery packs",
+        "category_level_1": null,
+        "manufacturer": "Camden Door Controls",
+        "manufacturer_slug": "camden"
+      },
+      {
+        "id": "prod-ives-sbpart.1002",
+        "base_model": "SBPART.1002",
+        "display_name": "Ives SBPART.1002",
+        "product_series": "General",
+        "category_level_1": null,
+        "manufacturer": "IVES",
+        "manufacturer_slug": "ives"
+      },
+      {
+        "id": "prod-ives-pvpart.1376",
+        "base_model": "PVPART.1376",
+        "display_name": "Ives PVPART.1376",
+        "product_series": "General",
+        "category_level_1": null,
+        "manufacturer": "IVES",
+        "manufacturer_slug": "ives"
+      },
+      {
+        "id": "prod-sch-l583-287",
+        "base_model": "L583-287",
+        "display_name": "SCHLAGE L583-287",
+        "product_series": "L-Escutcheon mounting screws for L9175 half-dummy function",
+        "category_level_1": null,
+        "manufacturer": "Schlage",
+        "manufacturer_slug": "schlage"
+      },
+      {
+        "id": "prod-ngp-335n-36\"",
+        "base_model": "335N-36\"",
+        "display_name": "NGP 335N-36\"",
+        "product_series": "General",
+        "category_level_1": null,
+        "manufacturer": "National Guard Products",
+        "manufacturer_slug": "ngp"
+      },
+      {
+        "id": "prod-fal-060137",
+        "base_model": "060137",
+        "display_name": "FALCON 060137",
+        "product_series": "712L-C Output cam package 1-3/4\" door",
+        "category_level_1": null,
+        "manufacturer": "Falcon",
+        "manufacturer_slug": "falcon"
+      },
+      {
+        "id": "prod-fal-600273",
+        "base_model": "600273",
+        "display_name": "FALCON 600273",
+        "product_series": "510/512/513 Slider",
+        "category_level_1": null,
+        "manufacturer": "Falcon",
+        "manufacturer_slug": "falcon"
+      },
+      {
+        "id": "prod-zurn-z6000",
+        "base_model": "Z6000",
+        "display_name": "Zurn Z6000 Series Flush Valve",
+        "product_series": "AquaSense/AquaFlush",
+        "category_level_1": "Valves",
+        "manufacturer": "Zurn Industries",
+        "manufacturer_slug": "zurn"
+      },
+      {
+        "id": "prod-ives-fspart.1043",
+        "base_model": "FSPART.1043",
+        "display_name": "Ives FSPART.1043",
+        "product_series": "General",
+        "category_level_1": null,
+        "manufacturer": "IVES",
+        "manufacturer_slug": "ives"
+      },
+      {
+        "id": "prod-bea-10acpbda9",
+        "base_model": "10ACPBDA9",
+        "display_name": "BEA 10ACPBDA9",
+        "product_series": "10ACPBDA9 -- Switch, Delayed Action GREEN PTE 2\" Jamb",
+        "category_level_1": null,
+        "manufacturer": "BEA Inc",
+        "manufacturer_slug": "bea"
+      },
+      {
+        "id": "prod-vd-880dt-v/m/377t2",
+        "base_model": "880DT-V/M/377T2",
+        "display_name": "VONDUPRIN 880DT-V/M/377T2",
+        "product_series": "8827 . TL-BE . [   ] . [   ]",
+        "category_level_1": null,
+        "manufacturer": "Von Duprin",
+        "manufacturer_slug": "vonduprin"
+      },
+      {
+        "id": "prod-zer-365fs-b",
+        "base_model": "365FS-B",
+        "display_name": "ZERO 365FS-B",
+        "product_series": "Black anodized automatic door bottom Heavy duty/intumescent 18-1/8\" – 36\" (460 – 914)",
+        "category_level_1": null,
+        "manufacturer": "Zero International",
+        "manufacturer_slug": "zero"
+      },
+      {
+        "id": "prod-ngp-95wh",
+        "base_model": "95WH",
+        "display_name": "NGP 95WH",
+        "product_series": "General",
+        "category_level_1": null,
+        "manufacturer": "National Guard Products",
+        "manufacturer_slug": "ngp"
+      },
+      {
+        "id": "prod-ngp-endcapssl-sq18",
+        "base_model": "END CAPS SL-SQ18",
+        "display_name": "NGP END CAPS SL-SQ18",
+        "product_series": "End Caps for Fascia SL-SQ18",
+        "category_level_1": null,
+        "manufacturer": "National Guard Products",
+        "manufacturer_slug": "ngp"
+      },
+      {
+        "id": "prod-ives-9145ezhd-33-0-us26",
+        "base_model": "9145EZHD-33-0-US26",
+        "display_name": "Ives 9145EZHD-33-0-US26",
+        "product_series": "General",
+        "category_level_1": null,
+        "manufacturer": "IVES",
+        "manufacturer_slug": "ives"
+      },
+      {
+        "id": "prod-sch-08-021",
+        "base_model": "08-021",
+        "display_name": "SCHLAGE 08-021",
+        "product_series": "Rose for inside chassis and lever assembly",
+        "category_level_1": null,
+        "manufacturer": "Schlage",
+        "manufacturer_slug": "schlage"
+      },
+      {
+        "id": "prod-bea-10microcelladapter",
+        "base_model": "10MICROCELLADAPTER",
+        "display_name": "BEA 10MICROCELLADAPTER",
+        "product_series": "Harness, Microcell cable adapt",
+        "category_level_1": null,
+        "manufacturer": "BEA Inc",
+        "manufacturer_slug": "bea"
+      },
+      {
+        "id": "prod-vd-900597",
+        "base_model": "900597",
+        "display_name": "VONDUPRIN 900597",
+        "product_series": "98/99 Impact Resistant End Cap Scr Pkg",
+        "category_level_1": null,
+        "manufacturer": "Von Duprin",
+        "manufacturer_slug": "vonduprin"
+      },
+      {
+        "id": "prod-sch-10-141",
+        "base_model": "10-141",
+        "display_name": "SCHLAGE 10-141",
+        "product_series": "J-CO7",
+        "category_level_1": null,
+        "manufacturer": "Schlage",
+        "manufacturer_slug": "schlage"
+      },
+      {
+        "id": "prod-ives-9103ezhd-33-0-us4",
+        "base_model": "9103EZHD-33-0-US4",
+        "display_name": "Ives 9103EZHD-33-0-US4",
+        "product_series": "General",
+        "category_level_1": null,
+        "manufacturer": "IVES",
+        "manufacturer_slug": "ives"
+      },
+      {
+        "id": "prod-ives-349b5",
+        "base_model": "349B5",
+        "display_name": "IVES 349B5",
+        "product_series": "General",
+        "category_level_1": null,
+        "manufacturer": "IVES",
+        "manufacturer_slug": "ives"
+      },
+      {
+        "id": "prod-ngp-819t6a",
+        "base_model": "819T6A",
+        "display_name": "NGP 819T6A",
+        "product_series": "General",
+        "category_level_1": null,
+        "manufacturer": "National Guard Products",
+        "manufacturer_slug": "ngp"
+      },
+      {
+        "id": "prod-ngp-9000a",
+        "base_model": "9000A",
+        "display_name": "NGP 9000A",
+        "product_series": "General",
+        "category_level_1": null,
+        "manufacturer": "National Guard Products",
+        "manufacturer_slug": "ngp"
+      },
+      {
+        "id": "prod-ives-hgpart.1012",
+        "base_model": "HGPART.1012",
+        "display_name": "Ives HGPART.1012",
+        "product_series": "General",
+        "category_level_1": null,
+        "manufacturer": "IVES",
+        "manufacturer_slug": "ives"
+      },
+      {
+        "id": "prod-ives-061f26",
+        "base_model": "061F26",
+        "display_name": "IVES 061F26",
+        "product_series": "General",
+        "category_level_1": null,
+        "manufacturer": "IVES",
+        "manufacturer_slug": "ives"
+      },
+      {
+        "id": "prod-ives-9190hd-33-0-us32",
+        "base_model": "9190HD-33-0-US32",
+        "display_name": "Ives 9190HD-33-0-US32",
+        "product_series": "General",
+        "category_level_1": null,
+        "manufacturer": "IVES",
+        "manufacturer_slug": "ives"
+      },
+      {
+        "id": "prod-dyk-2pnlsqtopdlb",
+        "base_model": "2PNL SQ TOP DLB",
+        "display_name": "DYKE 2PNL SQ TOP DLB",
+        "product_series": "2PNL SQ TOP DLB",
+        "category_level_1": null,
+        "manufacturer": "Dyke Industries",
+        "manufacturer_slug": "dyke"
+      },
+      {
+        "id": "prod-bea-10ms51w-sa",
+        "base_model": "10MS51W-SA",
+        "display_name": "BEA 10MS51W-SA",
+        "product_series": "MS51W WIRELESS -900MHz Single Gang Wave to Open + Wheelchair",
+        "category_level_1": null,
+        "manufacturer": "BEA Inc",
+        "manufacturer_slug": "bea"
+      },
+      {
+        "id": "prod-ives-8700-09-630",
+        "base_model": "8700-09-630",
+        "display_name": "Ives 8700-09-630",
+        "product_series": "General",
+        "category_level_1": null,
+        "manufacturer": "IVES",
+        "manufacturer_slug": "ives"
+      },
+      {
+        "id": "prod-ives-fbpart.1080",
+        "base_model": "FBPART.1080",
+        "display_name": "Ives FBPART.1080",
+        "product_series": "General",
+        "category_level_1": null,
+        "manufacturer": "IVES",
+        "manufacturer_slug": "ives"
+      },
+      {
+        "id": "prod-ngp-950v",
+        "base_model": "950V",
+        "display_name": "NGP 950V",
+        "product_series": "General",
+        "category_level_1": null,
+        "manufacturer": "National Guard Products",
+        "manufacturer_slug": "ngp"
+      },
+      {
+        "id": "prod-sch-48144025",
+        "base_model": "48144025",
+        "display_name": "SCHLAGE 48144025",
+        "product_series": "N-Escutcheon, outside emergency turn",
+        "category_level_1": null,
+        "manufacturer": "Schlage",
+        "manufacturer_slug": "schlage"
+      },
+      {
+        "id": "prod-ives-pvpart.1786",
+        "base_model": "PVPART.1786",
+        "display_name": "Ives PVPART.1786",
+        "product_series": "General",
+        "category_level_1": null,
+        "manufacturer": "IVES",
+        "manufacturer_slug": "ives"
+      },
+      {
+        "id": "prod-ives-dp1",
+        "base_model": "DP1",
+        "display_name": "Ives DP1",
+        "product_series": "General",
+        "category_level_1": null,
+        "manufacturer": "IVES",
+        "manufacturer_slug": "ives"
+      },
+      {
+        "id": "prod-sch-lm9292elf",
+        "base_model": "LM9292ELF",
+        "display_name": "SCHLAGE LM9292ELF",
+        "product_series": "Electrically locking, outside cylinder, outside lever locks",
+        "category_level_1": null,
+        "manufacturer": "Schlage",
+        "manufacturer_slug": "schlage"
+      },
+      {
+        "id": "prod-cam-cx-esp1b-bk",
+        "base_model": "CX-ESP1B-BK",
+        "display_name": "CAMDEN CX-ESP1B-BK",
+        "product_series": "ANSI Square, 4-7/8\" x 1-1/4\", all-black finish (BHMA 622, US19)",
+        "category_level_1": null,
+        "manufacturer": "Camden Door Controls",
+        "manufacturer_slug": "camden"
+      },
+      {
+        "id": "prod-ives-919-626",
+        "base_model": "919-626",
+        "display_name": "Ives 919-626",
+        "product_series": "General",
+        "category_level_1": null,
+        "manufacturer": "IVES",
+        "manufacturer_slug": "ives"
+      },
+      {
+        "id": "prod-ives-us10",
+        "base_model": "US10",
+        "display_name": "Ives US10",
+        "product_series": "General",
+        "category_level_1": null,
+        "manufacturer": "IVES",
+        "manufacturer_slug": "ives"
+      },
+      {
+        "id": "prod-vd-050417",
+        "base_model": "050417",
+        "display_name": "VONDUPRIN 050417",
+        "product_series": "8827K/L Center Case Kit",
+        "category_level_1": null,
+        "manufacturer": "Von Duprin",
+        "manufacturer_slug": "vonduprin"
+      },
+      {
+        "id": "prod-zer-9097va-36",
+        "base_model": "9097VA-36",
+        "display_name": "ZERO 9097VA-36",
+        "product_series": "Vinyl seal door sweep with rain drip, Aluminum, 36\" (914.4)",
+        "category_level_1": null,
+        "manufacturer": "Zero International",
+        "manufacturer_slug": "zero"
+      },
+      {
+        "id": "prod-ives-pvpart.1616",
+        "base_model": "PVPART.1616",
+        "display_name": "Ives PVPART.1616",
+        "product_series": "General",
+        "category_level_1": null,
+        "manufacturer": "IVES",
+        "manufacturer_slug": "ives"
+      },
+      {
+        "id": "prod-ngp-r250",
+        "base_model": "R250",
+        "display_name": "NGP R250",
+        "product_series": "General",
+        "category_level_1": null,
+        "manufacturer": "National Guard Products",
+        "manufacturer_slug": "ngp"
+      },
+      {
+        "id": "prod-sch-03-231-8sp",
+        "base_model": "03-231-8SP",
+        "display_name": "SCHLAGE 03-231-8SP",
+        "product_series": "Sparta - Tactile",
+        "category_level_1": null,
+        "manufacturer": "Schlage",
+        "manufacturer_slug": "schlage"
+      },
+      {
+        "id": "prod-ives-corpart.1005",
+        "base_model": "CORPART.1005",
+        "display_name": "Ives CORPART.1005",
+        "product_series": "General",
+        "category_level_1": null,
+        "manufacturer": "IVES",
+        "manufacturer_slug": "ives"
+      },
+      {
+        "id": "prod-ives-pvpart.1495",
+        "base_model": "PVPART.1495",
+        "display_name": "Ives PVPART.1495",
+        "product_series": "General",
+        "category_level_1": null,
+        "manufacturer": "IVES",
+        "manufacturer_slug": "ives"
+      },
+      {
+        "id": "prod-ives-pvpart.1863",
+        "base_model": "PVPART.1863",
+        "display_name": "Ives PVPART.1863",
+        "product_series": "General",
+        "category_level_1": null,
+        "manufacturer": "IVES",
+        "manufacturer_slug": "ives"
+      },
+      {
+        "id": "prod-sch-primus",
+        "base_model": "PRIMUS",
+        "display_name": "Schlage Primus High Security Core",
+        "product_series": "PRIMUS",
+        "category_level_1": "Cores & Cylinders",
+        "manufacturer": "Schlage",
+        "manufacturer_slug": "schlage"
+      },
+      {
+        "id": "prod-ives-63f-626e",
+        "base_model": "63F-626E",
+        "display_name": "IVES 63F-626E",
+        "product_series": "General",
+        "category_level_1": null,
+        "manufacturer": "IVES",
+        "manufacturer_slug": "ives"
+      },
+      {
+        "id": "prod-dyk-6pnltextfg",
+        "base_model": "6 PNL TEXT FG",
+        "display_name": "DYKE 6 PNL TEXT FG",
+        "product_series": "6 PNL TEXT FG",
+        "category_level_1": null,
+        "manufacturer": "Dyke Industries",
+        "manufacturer_slug": "dyke"
+      },
+      {
+        "id": "prod-sch-n523-176",
+        "base_model": "N523-176",
+        "display_name": "SCHLAGE N523-176",
+        "product_series": "10, 40, 50, 53, 70, 80",
+        "category_level_1": null,
+        "manufacturer": "Schlage",
+        "manufacturer_slug": "schlage"
+      },
+      {
+        "id": "prod-ngp-8434v",
+        "base_model": "8434V",
+        "display_name": "NGP 8434V",
+        "product_series": "General",
+        "category_level_1": null,
+        "manufacturer": "National Guard Products",
+        "manufacturer_slug": "ngp"
+      },
+      {
+        "id": "prod-fal-650166",
+        "base_model": "650166",
+        "display_name": "FALCON 650166",
+        "product_series": "710TP Mounting package 2-1/4\"",
+        "category_level_1": null,
+        "manufacturer": "Falcon",
+        "manufacturer_slug": "falcon"
+      },
+      {
+        "id": "prod-bea-10lzbrmag3ul",
+        "base_model": "10LZBRMAG3UL",
+        "display_name": "BEA 10LZBRMAG3UL",
+        "product_series": "L & Z bracket kit, Maglock3UL",
+        "category_level_1": null,
+        "manufacturer": "BEA Inc",
+        "manufacturer_slug": "bea"
+      },
+      {
+        "id": "prod-ives-pvpart.1842",
+        "base_model": "PVPART.1842",
+        "display_name": "Ives PVPART.1842",
+        "product_series": "General",
+        "category_level_1": null,
+        "manufacturer": "IVES",
+        "manufacturer_slug": "ives"
+      },
+      {
+        "id": "prod-ives-pvpart.1716",
+        "base_model": "PVPART.1716",
+        "display_name": "Ives PVPART.1716",
+        "product_series": "General",
+        "category_level_1": null,
+        "manufacturer": "IVES",
+        "manufacturer_slug": "ives"
+      },
+      {
+        "id": "prod-fal-005164",
+        "base_model": "005164",
+        "display_name": "FALCON 005164",
+        "product_series": " ANSI, 1-1/4\" x 4-7/8\" standard1 1-3/16\"",
+        "category_level_1": null,
+        "manufacturer": "Falcon",
+        "manufacturer_slug": "falcon"
+      },
+      {
+        "id": "prod-vd-900504",
+        "base_model": "900504",
+        "display_name": "VONDUPRIN 900504",
+        "product_series": "88 C/C or E/C Mtg Pkg (CS Screws)",
+        "category_level_1": null,
+        "manufacturer": "Von Duprin",
+        "manufacturer_slug": "vonduprin"
+      },
+      {
+        "id": "prod-stc-sz18honeycombcrssz016",
+        "base_model": "SZ18 HONEYCOMB CRS SZ016",
+        "display_name": "STEELCRAFT SZ18 HONEYCOMB CRS SZ016",
+        "product_series": "General",
+        "category_level_1": null,
+        "manufacturer": "Steelcraft",
+        "manufacturer_slug": "steelcraft"
+      },
+      {
+        "id": "prod-vd-6112",
+        "base_model": "6112",
+        "display_name": "VONDUPRIN 6112",
+        "product_series": ".[Finish]",
+        "category_level_1": null,
+        "manufacturer": "Von Duprin",
+        "manufacturer_slug": "vonduprin"
+      },
+      {
+        "id": "prod-bea-35.0213",
+        "base_model": "35.0213",
+        "display_name": "BEA 35.0213",
+        "product_series": "COVER FLATSCAN & LIGHT PIPE LEFT BLACK",
+        "category_level_1": null,
+        "manufacturer": "BEA Inc",
+        "manufacturer_slug": "bea"
+      },
+      {
+        "id": "prod-ives-pvpart.1073",
+        "base_model": "PVPART.1073",
+        "display_name": "Ives PVPART.1073",
+        "product_series": "General",
+        "category_level_1": null,
+        "manufacturer": "IVES",
+        "manufacturer_slug": "ives"
+      },
+      {
+        "id": "prod-bea-10pbs6",
+        "base_model": "10PBS6",
+        "display_name": "BEA 10PBS6",
+        "product_series": "Push Plate 6\"\" Square TEXT only",
+        "category_level_1": null,
+        "manufacturer": "BEA Inc",
+        "manufacturer_slug": "bea"
+      },
+      {
+        "id": "prod-zer-675d1",
+        "base_model": "675D1",
+        "display_name": "ZERO 675D1",
+        "product_series": "Plate, Dark bronze anodized, 5\" (127.0) wide",
+        "category_level_1": null,
+        "manufacturer": "Zero International",
+        "manufacturer_slug": "zero"
+      },
+      {
+        "id": "prod-cam-cm-1110",
+        "base_model": "CM-1110",
+        "display_name": "CAMDEN CM-1110",
+        "product_series": "General",
+        "category_level_1": null,
+        "manufacturer": "Camden Door Controls",
+        "manufacturer_slug": "camden"
+      },
+      {
+        "id": "prod-zer-8001bk-48",
+        "base_model": "8001BK-48",
+        "display_name": "ZERO 8001BK-48",
+        "product_series": "Nylon brush door sweep, 1\" (25.4) long, Black anodized, 48\" (1219.2)",
+        "category_level_1": null,
+        "manufacturer": "Zero International",
+        "manufacturer_slug": "zero"
+      },
+      {
+        "id": "prod-schlage-l9176",
+        "base_model": "L9176",
+        "display_name": "SCHLAGE L9176",
+        "product_series": "Full dummy trim with lock case",
+        "category_level_1": null,
+        "manufacturer": "Schlage",
+        "manufacturer_slug": "schlage"
+      },
+      {
+        "id": "prod-ives-pullpart.1022",
+        "base_model": "PULLPART.1022",
+        "display_name": "Ives PULLPART.1022",
+        "product_series": "General",
+        "category_level_1": null,
+        "manufacturer": "IVES",
+        "manufacturer_slug": "ives"
+      },
+      {
+        "id": "prod-ngp-8424",
+        "base_model": "8424",
+        "display_name": "NGP 8424",
+        "product_series": "General",
+        "category_level_1": null,
+        "manufacturer": "National Guard Products",
+        "manufacturer_slug": "ngp"
+      },
+      {
+        "id": "prod-ngp-426edkb",
+        "base_model": "426EDKB",
+        "display_name": "NGP 426EDKB",
+        "product_series": "General",
+        "category_level_1": null,
+        "manufacturer": "National Guard Products",
+        "manufacturer_slug": "ngp"
+      },
+      {
+        "id": "prod-cam-cm-3000/10",
+        "base_model": "CM-3000/10",
+        "display_name": "CAMDEN CM-3000/10",
+        "product_series": "General",
+        "category_level_1": null,
+        "manufacturer": "Camden Door Controls",
+        "manufacturer_slug": "camden"
+      },
+      {
+        "id": "prod-ives-cbpart.1002",
+        "base_model": "CBPART.1002",
+        "display_name": "Ives CBPART.1002",
+        "product_series": "General",
+        "category_level_1": null,
+        "manufacturer": "IVES",
+        "manufacturer_slug": "ives"
+      },
+      {
+        "id": "prod-zer-69g1",
+        "base_model": "69G1",
+        "display_name": "ZERO 69G1",
+        "product_series": "Plate, Gold anodized, 1/4\" x 1-1/8\" (6.4 x 28.6)",
+        "category_level_1": null,
+        "manufacturer": "Zero International",
+        "manufacturer_slug": "zero"
+      },
+      {
+        "id": "prod-ives-pvpart.1262",
+        "base_model": "PVPART.1262",
+        "display_name": "Ives PVPART.1262",
+        "product_series": "General",
+        "category_level_1": null,
+        "manufacturer": "IVES",
+        "manufacturer_slug": "ives"
+      },
+      {
+        "id": "prod-ngp-10x11/2”",
+        "base_model": "10 X 1 1/2”",
+        "display_name": "NGP 10 X 1 1/2”",
+        "product_series": "General",
+        "category_level_1": null,
+        "manufacturer": "National Guard Products",
+        "manufacturer_slug": "ngp"
+      },
+      {
+        "id": "prod-ives-pullpart.1286",
+        "base_model": "PULLPART.1286",
+        "display_name": "Ives PULLPART.1286",
+        "product_series": "General",
+        "category_level_1": null,
+        "manufacturer": "IVES",
+        "manufacturer_slug": "ives"
+      },
+      {
+        "id": "prod-fal-1794",
+        "base_model": "1794",
+        "display_name": "FALCON 1794",
+        "product_series": "Configure a product",
+        "category_level_1": null,
+        "manufacturer": "Falcon",
+        "manufacturer_slug": "falcon"
+      },
+      {
+        "id": "prod-stc-mu14headthru3'0\"",
+        "base_model": "MU14 Head Thru 3'0\"",
+        "display_name": "STEELCRAFT MU14 Head Thru 3'0\"",
+        "product_series": "General",
+        "category_level_1": null,
+        "manufacturer": "Steelcraft",
+        "manufacturer_slug": "steelcraft"
+      },
+      {
+        "id": "prod-stc-f128'0\"",
+        "base_model": "F12 8' 0\"",
+        "display_name": "STEELCRAFT F12 8' 0\"",
+        "product_series": "General",
+        "category_level_1": null,
+        "manufacturer": "Steelcraft",
+        "manufacturer_slug": "steelcraft"
+      },
+      {
+        "id": "prod-dyk-4x4x10postwrap",
+        "base_model": "4X4X10 POST WRAP",
+        "display_name": "DYKE 4X4X10 POST WRAP",
+        "product_series": "4X4X10 POST WRAP",
+        "category_level_1": null,
+        "manufacturer": "Dyke Industries",
+        "manufacturer_slug": "dyke"
+      },
+      {
+        "id": "prod-dyk-10-liteprimed",
+        "base_model": "10-LITE PRIMED",
+        "display_name": "DYKE 10-LITE PRIMED",
+        "product_series": "10-LITE PRIMED",
+        "category_level_1": null,
+        "manufacturer": "Dyke Industries",
+        "manufacturer_slug": "dyke"
+      },
+      {
+        "id": "prod-ives-pvpart.1128",
+        "base_model": "PVPART.1128",
+        "display_name": "Ives PVPART.1128",
+        "product_series": "General",
+        "category_level_1": null,
+        "manufacturer": "IVES",
+        "manufacturer_slug": "ives"
+      },
+      {
+        "id": "prod-ngp-floodshieldside,neoprene",
+        "base_model": "Flood Shield Side, Neoprene",
+        "display_name": "NGP Flood Shield Side, Neoprene",
+        "product_series": "General",
+        "category_level_1": null,
+        "manufacturer": "National Guard Products",
+        "manufacturer_slug": "ngp"
+      },
+      {
+        "id": "prod-ives-pullpart.1071",
+        "base_model": "PULLPART.1071",
+        "display_name": "Ives PULLPART.1071",
+        "product_series": "General",
+        "category_level_1": null,
+        "manufacturer": "IVES",
+        "manufacturer_slug": "ives"
+      },
+      {
+        "id": "prod-ives-fspart.1059",
+        "base_model": "FSPART.1059",
+        "display_name": "Ives FSPART.1059",
+        "product_series": "General",
+        "category_level_1": null,
+        "manufacturer": "IVES",
+        "manufacturer_slug": "ives"
+      },
+      {
+        "id": "prod-ives-pvpart.1555",
+        "base_model": "PVPART.1555",
+        "display_name": "Ives PVPART.1555",
+        "product_series": "General",
+        "category_level_1": null,
+        "manufacturer": "IVES",
+        "manufacturer_slug": "ives"
+      },
+      {
+        "id": "prod-ives-mb1f",
+        "base_model": "MB1F",
+        "display_name": "Ives MB1F",
+        "product_series": "General",
+        "category_level_1": null,
+        "manufacturer": "IVES",
+        "manufacturer_slug": "ives"
+      },
+      {
+        "id": "prod-ives-otp300",
+        "base_model": "OTP300",
+        "display_name": "Ives OTP300",
+        "product_series": "General",
+        "category_level_1": null,
+        "manufacturer": "IVES",
+        "manufacturer_slug": "ives"
+      },
+      {
+        "id": "prod-lcn-9130-3038",
+        "base_model": "9130-3038",
+        "display_name": "LCN 9130-3038",
+        "product_series": "Default/common configuration",
+        "category_level_1": null,
+        "manufacturer": "LCN Closers",
+        "manufacturer_slug": "lcn"
+      },
+      {
+        "id": "prod-vd-375l-d",
+        "base_model": "375L-D",
+        "display_name": "VONDUPRIN 375L-D",
+        "product_series": "General",
+        "category_level_1": null,
+        "manufacturer": "Von Duprin",
+        "manufacturer_slug": "vonduprin"
+      },
+      {
+        "id": "prod-ives-hgpart.1017",
+        "base_model": "HGPART.1017",
+        "display_name": "Ives HGPART.1017",
+        "product_series": "General",
+        "category_level_1": null,
+        "manufacturer": "IVES",
+        "manufacturer_slug": "ives"
+      },
+      {
+        "id": "prod-bea-10ms51-sp",
+        "base_model": "10MS51-SP",
+        "display_name": "BEA 10MS51-SP",
+        "product_series": "MS51 RELAY VERSION Single Gang Plain",
+        "category_level_1": null,
+        "manufacturer": "BEA Inc",
+        "manufacturer_slug": "bea"
+      },
+      {
+        "id": "prod-ives-9190ezhd-28-2-us4",
+        "base_model": "9190EZHD-28-2-US4",
+        "display_name": "Ives 9190EZHD-28-2-US4",
+        "product_series": "General",
+        "category_level_1": null,
+        "manufacturer": "IVES",
+        "manufacturer_slug": "ives"
+      },
+      {
+        "id": "prod-ives-pvpart.1480",
+        "base_model": "PVPART.1480",
+        "display_name": "Ives PVPART.1480",
+        "product_series": "General",
+        "category_level_1": null,
+        "manufacturer": "IVES",
+        "manufacturer_slug": "ives"
+      },
+      {
+        "id": "prod-bea-10acpbda2",
+        "base_model": "10ACPBDA2",
+        "display_name": "BEA 10ACPBDA2",
+        "product_series": "Switch, Delayed Action RED PTE 2\" SINGLE GANG",
+        "category_level_1": null,
+        "manufacturer": "BEA Inc",
+        "manufacturer_slug": "bea"
+      },
+      {
+        "id": "prod-dyk-17055-litessb",
+        "base_model": "1705 5-LITE SSB",
+        "display_name": "DYKE 1705 5-LITE SSB",
+        "product_series": "1705 5-LITE SSB",
+        "category_level_1": null,
+        "manufacturer": "Dyke Industries",
+        "manufacturer_slug": "dyke"
+      },
+      {
+        "id": "prod-stc-f14/fn14347'2\"doorheight",
+        "base_model": "F14/FN14 34 7'2\" door height",
+        "display_name": "STEELCRAFT F14/FN14 34 7'2\" door height",
+        "product_series": "General",
+        "category_level_1": null,
+        "manufacturer": "Steelcraft",
+        "manufacturer_slug": "steelcraft"
+      },
+      {
+        "id": "prod-ives-026b643e/716",
+        "base_model": "026B643E/716",
+        "display_name": "Ives 026B643E/716",
+        "product_series": "General",
+        "category_level_1": null,
+        "manufacturer": "IVES",
+        "manufacturer_slug": "ives"
+      },
+      {
+        "id": "prod-ives-pullpart.1057",
+        "base_model": "PULLPART.1057",
+        "display_name": "Ives PULLPART.1057",
+        "product_series": "General",
+        "category_level_1": null,
+        "manufacturer": "IVES",
+        "manufacturer_slug": "ives"
+      },
+      {
+        "id": "prod-stc-slupto6'8\"high1'6\"thru2'8\"",
+        "base_model": "SL UP TO 6'8\" HIGH 1'6\" thru 2'8\"",
+        "display_name": "STEELCRAFT SL UP TO 6'8\" HIGH 1'6\" thru 2'8\"",
+        "product_series": "General",
+        "category_level_1": null,
+        "manufacturer": "Steelcraft",
+        "manufacturer_slug": "steelcraft"
+      },
+      {
+        "id": "prod-ives-66-rs-ms-ssb26d",
+        "base_model": "66-RS-MS-SSB26D",
+        "display_name": "Ives 66-RS-MS-SSB26D",
+        "product_series": "General",
+        "category_level_1": null,
+        "manufacturer": "IVES",
+        "manufacturer_slug": "ives"
+      },
+      {
+        "id": "prod-fal-650376",
+        "base_model": "650376",
+        "display_name": "FALCON 650376",
+        "product_series": "F-25-C, CWDC Center slide assembly",
+        "category_level_1": null,
+        "manufacturer": "Falcon",
+        "manufacturer_slug": "falcon"
+      },
+      {
+        "id": "prod-ngp-781sa-36\"",
+        "base_model": "781SA-36\"",
+        "display_name": "NGP 781SA-36\"",
+        "product_series": "General",
+        "category_level_1": null,
+        "manufacturer": "National Guard Products",
+        "manufacturer_slug": "ngp"
+      },
+      {
+        "id": "prod-ives-rlpart.1033",
+        "base_model": "RLPART.1033",
+        "display_name": "Ives RLPART.1033",
+        "product_series": "General",
+        "category_level_1": null,
+        "manufacturer": "IVES",
+        "manufacturer_slug": "ives"
+      },
+      {
+        "id": "prod-zer-47252145",
+        "base_model": "47252145",
+        "display_name": "ZERO 47252145",
+        "product_series": "Z49: 360, 364, 369 (2) End caps (8) Screws USP",
+        "category_level_1": null,
+        "manufacturer": "Zero International",
+        "manufacturer_slug": "zero"
+      },
+      {
+        "id": "prod-ives-70b10b",
+        "base_model": "70B10B",
+        "display_name": "IVES 70B10B",
+        "product_series": "General",
+        "category_level_1": null,
+        "manufacturer": "IVES",
+        "manufacturer_slug": "ives"
+      },
+      {
+        "id": "prod-ives-506-613",
+        "base_model": "506-613",
+        "display_name": "Ives 506-613",
+        "product_series": "General",
+        "category_level_1": null,
+        "manufacturer": "IVES",
+        "manufacturer_slug": "ives"
+      },
+      {
+        "id": "prod-ives-8145ezhd-18",
+        "base_model": "8145EZHD-18",
+        "display_name": "Ives 8145EZHD-18",
+        "product_series": "General",
+        "category_level_1": null,
+        "manufacturer": "IVES",
+        "manufacturer_slug": "ives"
+      }
+    ],
+    "success": true,
+    "meta": {
+      "served_by": "v3-prod",
+      "served_by_region": "ENAM",
+      "served_by_colo": "IAD",
+      "served_by_primary": true,
+      "timings": {
+        "sql_duration_ms": 12.293
+      },
+      "duration": 12.293,
+      "changes": 0,
+      "last_row_id": 0,
+      "changed_db": false,
+      "size_after": 57466880,
+      "rows_read": 31520,
+      "rows_written": 0,
+      "total_attempts": 1
+    }
+  }
+]

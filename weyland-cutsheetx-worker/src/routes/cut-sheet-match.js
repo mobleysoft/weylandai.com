@@ -18,6 +18,7 @@
 
 import { matchComponentToCutSheets } from "../lib/product-database.js";
 import { parseSpecText, recordMisses } from "../lib/cut-sheet-misses.js";
+import { getManufacturerNames } from "../lib/product-database.js";
 import { jsonResponse3 } from "../lib/json-response.js";
 
 // POST /api/cut-sheets/match-batch (2026-10-04): up to this many lines per
@@ -145,13 +146,14 @@ router.post("/api/cut-sheets/match-batch", async (request2, env2, ctx) => {
       if (!model) continue;
       const manufacturer = typeof l.manufacturer === "string" && l.manufacturer.trim() ? l.manufacturer.trim() : null;
       const raw = typeof l.raw === "string" && l.raw.trim() ? l.raw.trim() : [manufacturer, model].filter(Boolean).join(" ");
-      lines.push({ raw, manufacturer, model });
+      const modelFull = typeof l.modelFull === "string" && l.modelFull.trim() ? l.modelFull.trim() : void 0;
+      lines.push({ raw, manufacturer, model, modelFull });
     }
   } else if (typeof body?.text === "string") {
     if (body.text.length > 20000) {
       return jsonResponse3({ error: "text too long (max 20000 chars)" }, 400);
     }
-    lines = parseSpecText(body.text);
+    lines = parseSpecText(body.text, await getManufacturerNames(env2));
     if (lines.length > MATCH_BATCH_CAP) {
       return jsonResponse3({ error: `Too many lines after parsing: ${lines.length} (max ${MATCH_BATCH_CAP})`, max: MATCH_BATCH_CAP, parsed: lines.length }, 400);
     }
@@ -166,7 +168,7 @@ router.post("/api/cut-sheets/match-batch", async (request2, env2, ctx) => {
     for (let i = 0; i < lines.length; i += MATCH_BATCH_CONCURRENCY) {
       const chunk = lines.slice(i, i + MATCH_BATCH_CONCURRENCY);
       const chunkResults = await Promise.all(chunk.map((line) =>
-        matchComponentToCutSheets({ manufacturer: line.manufacturer || void 0, model: line.model }, env2)
+        matchComponentToCutSheets({ manufacturer: line.manufacturer || void 0, model: line.model, modelFull: line.modelFull || void 0 }, env2)
           .then((r) => toBatchResult(line, r))
       ));
       for (let j = 0; j < chunkResults.length; j++) results[i + j] = chunkResults[j];
