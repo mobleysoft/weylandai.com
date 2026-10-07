@@ -69,6 +69,8 @@ import { jsonResponse3 } from "./lib/json-response.js";
 import { registerSightXWalkthroughRoutes } from "./routes/sightx-walkthrough.js";
 
 import sightxHtml from "./pages/sightx.html";
+// Security headers on every answer (2026-10-07): the platform's set, one shared module.
+import { secured } from "../../weyland-shared/security-headers.js";
 
 const router = new NativeRouter();
 
@@ -95,8 +97,8 @@ router.addRoute("HEAD", "/sightx/", serveSightX);
 
 registerSightXWalkthroughRoutes(router);
 
-export default {
+export default secured({
   async fetch(request, env, ctx) {
     return router.handle(request, env, ctx);
   },
-};
+});
