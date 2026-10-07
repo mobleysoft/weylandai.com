@@ -264,6 +264,24 @@ test("/api/auth/me and /api/subscription/status tell a past_due account what it 
   assert.ok(!body.entitlements.products.includes("meetingx"));
 });
 
+test("two events for one subscription at the same moment: the newer state wins whichever writes first", async () => {
+  const { upsertSubscription, factsFromSubscription } = await import("../lib/subscriptions-store.js");
+  for (const order of [["older", "newer"], ["newer", "older"]]) {
+    const env = makeEnv();
+    const s = await subscriber(env);
+    const t = nowSec();
+    const facts = {
+      older: factsFromSubscription(subscriptionObject({ id: s.sub, customer: s.customer, productId: s.productId, status: "past_due" })),
+      newer: factsFromSubscription(subscriptionObject({ id: s.sub, customer: s.customer, productId: s.productId, status: "canceled" }), "customer.subscription.deleted")
+    };
+    const at = { older: t + 10, newer: t + 20 };
+    // Both read the row before either writes (the awaits interleave).
+    const results = await Promise.all(order.map((k) => upsertSubscription(env.DB, facts[k], { userId: s.row.id, eventAt: at[k], eventType: k })));
+    const row = await env.DB.prepare("SELECT status, last_event_at FROM weyland_subscriptions WHERE subscription_id = ?").bind(s.sub).first();
+    assert.deepEqual({ ...row }, { status: "canceled", last_event_at: t + 20 }, order.join(" then ") + ": " + JSON.stringify(results.map((r) => r.reason)));
+  }
+});
+
 test("no network call left the process except the stubbed AuthFor register", () => {
   assert.deepEqual(network.unexpected, []);
   assert.equal(network.stripe.length, 0, "no Stripe call: everything came from the events and D1");

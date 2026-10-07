@@ -136,6 +136,16 @@ export async function listUserSubscriptions(db, userId) {
  */
 export async function upsertSubscription(db, facts, { userId, eventAt, eventType }) {
   await ensureSubscriptionsTable(db);
+  // Two events for one subscription at once: the compare-and-set below lets one
+  // write; the other reads again and is applied on top, or found stale.
+  for (let attempt = 0; attempt < 5; attempt++) {
+    const res = await upsertOnce(db, facts, { userId, eventAt, eventType });
+    if (res.reason !== "lost-race") return res;
+  }
+  return { applied: false, reason: "lost-race", row: null };
+}
+
+async function upsertOnce(db, facts, { userId, eventAt, eventType }) {
   const now = new Date().toISOString();
   const at = Number.isFinite(Number(eventAt)) ? Math.floor(Number(eventAt)) : Math.floor(Date.now() / 1000);
   const existing = await getSubscription(db, facts.subscription_id);
@@ -184,10 +194,8 @@ export async function upsertSubscription(db, facts, { userId, eventAt, eventType
     `INSERT OR IGNORE INTO weyland_subscriptions (subscription_id, user_id, customer_id, status, product_ids, tiers, suite, seats, last_event_at, last_event_type, created_at, updated_at)
      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`
   ).bind(row.subscription_id, row.user_id, row.customer_id, row.status, row.product_ids, row.tiers, row.suite, row.seats, row.last_event_at, row.last_event_type, now, now).run();
-  if (!res?.meta?.changes) {
-    // Someone inserted it between our read and our write: apply this event on top, once.
-    return upsertSubscription(db, facts, { userId, eventAt: at, eventType });
-  }
+  // Someone inserted it between our read and our write: read again (the caller retries).
+  if (!res?.meta?.changes) return { applied: false, reason: "lost-race", row: null };
   return { applied: true, reason: "inserted", row };
 }
 
