@@ -30,16 +30,20 @@
     header{display:flex;align-items:center;justify-content:space-between;gap:15px;margin-bottom:24px;flex-wrap:wrap}
     .embedded header{display:none}
     .embedded .shell{padding-top:14px}
+    /* Opened directly, the page carries the shared shell (see the single-page bridge below): its
+       account control floats top right, above the header. The page's own element styles are
+       scoped to .shell so they never restyle the shell's sign-in view or that control. */
+    html.wa-standalone .shell{padding-top:64px}
     .brand{display:flex;align-items:center;gap:12px;color:var(--text);text-decoration:none}
     .mark{width:42px;height:42px;display:grid;place-items:center;background:var(--primary);color:var(--bg);font-weight:900}
     .brand b{display:block;letter-spacing:.16em}
     .brand small{display:block;color:var(--muted);font:700 9px/1.5 ui-monospace,monospace;letter-spacing:.11em}
     .nav{display:flex;gap:8px;flex-wrap:wrap}
-    .nav a,.button,button{border:1px solid var(--line);border-radius:99px;padding:10px 15px;color:var(--text);text-decoration:none;background:transparent;font:750 10.5px/1 ui-monospace,monospace;letter-spacing:.06em;cursor:pointer;transition:border-color .2s,color .2s,box-shadow .2s;display:inline-flex;align-items:center;gap:6px;min-height:38px}
-    .nav a:hover,.button:hover,button:hover{border-color:var(--primary);color:var(--primary);box-shadow:0 0 15px rgba(42,82,255,.2)}
-    .button.primary,button.primary{background:var(--primary);border-color:var(--primary);color:#fff;font-weight:900}
-    .button.primary:hover,button.primary:hover{color:#fff;box-shadow:0 0 15px rgba(42,82,255,.45)}
-    button:disabled,.button[aria-disabled=true]{opacity:.5;cursor:not-allowed}
+    .nav a,.button,.shell button{border:1px solid var(--line);border-radius:99px;padding:10px 15px;color:var(--text);text-decoration:none;background:transparent;font:750 10.5px/1 ui-monospace,monospace;letter-spacing:.06em;cursor:pointer;transition:border-color .2s,color .2s,box-shadow .2s;display:inline-flex;align-items:center;gap:6px;min-height:38px}
+    .nav a:hover,.button:hover,.shell button:hover{border-color:var(--primary);color:var(--primary);box-shadow:0 0 15px rgba(42,82,255,.2)}
+    .button.primary,.shell button.primary{background:var(--primary);border-color:var(--primary);color:#fff;font-weight:900}
+    .button.primary:hover,.shell button.primary:hover{color:#fff;box-shadow:0 0 15px rgba(42,82,255,.45)}
+    .shell button:disabled,.button[aria-disabled=true]{opacity:.5;cursor:not-allowed}
     .eyebrow{color:var(--primary);font:800 11px/1 ui-monospace,monospace;letter-spacing:.18em;text-transform:uppercase}
     h1{font-size:clamp(26px,4vw,42px);letter-spacing:-.04em;line-height:1.05;margin:10px 0 8px}
     .lede{max-width:760px;color:var(--muted);line-height:1.6;margin:0 0 18px;font-size:15px}
@@ -51,11 +55,11 @@
     .card{background:rgba(18,20,25,.94);border:1px solid var(--line);border-radius:18px;padding:20px;margin-bottom:20px;box-shadow:0 25px 70px rgba(0,0,0,.25)}
     .card h2{font-size:17px;margin:0 0 4px;letter-spacing:.01em}
     .card .sub{color:var(--muted);font-size:13px;margin:0 0 14px;line-height:1.5}
-    label{display:block;font:700 10px/1 ui-monospace,monospace;letter-spacing:.08em;color:var(--muted);margin:14px 0 6px;text-transform:uppercase}
-    label.inline{display:inline-block;margin:0 4px 0 0}
-    input[type=text],input[type=file],select{width:100%;background:#0d0f14;border:1px solid var(--line);border-radius:8px;padding:10px 12px;color:var(--text);font-size:15px;font-family:inherit}
+    .shell label{display:block;font:700 10px/1 ui-monospace,monospace;letter-spacing:.08em;color:var(--muted);margin:14px 0 6px;text-transform:uppercase}
+    .shell label.inline{display:inline-block;margin:0 4px 0 0}
+    .shell input[type=text],.shell input[type=file],.shell select{width:100%;background:#0d0f14;border:1px solid var(--line);border-radius:8px;padding:10px 12px;color:var(--text);font-size:15px;font-family:inherit}
     select.small{width:auto;min-width:90px;padding:8px 10px}
-    input[type=text]:focus,select:focus{outline:none;border-color:var(--primary)}
+    .shell input[type=text]:focus,.shell select:focus{outline:none;border-color:var(--primary)}
     .grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
     @media(max-width:760px){.grid2{grid-template-columns:1fr}}
     .table-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch;border-radius:10px}
@@ -206,6 +210,52 @@
       </div>
     </div>
   </div>
+
+  <script>
+  /* Single-page bridge (the same one MeetingX and PropX carry). Inside the WeylandAI overlay (the
+     homepage shell opens this page as /subx-app?embed=1 in an iframe) sign-in goes through the
+     parent's WeylandShell, which reopens the workspace signed in. Opened directly - /subx,
+     /subx-app, /takeoffx, a shared link - this page loads the same shell: SIGN IN opens the shell's
+     sign-in over this page, and the workspace carries on in this same document as soon as the
+     shell says the visitor is signed in (its 'weyland-auth' event). Never a trip to /login and
+     back (2026-10-07: that was a second document load for every visitor arriving here). */
+  (function () {
+    var embedded = false;
+    try { embedded = window.self !== window.top; } catch (e) { embedded = true; }
+    function parentShell() { try { return embedded && window.parent && window.parent.WeylandShell ? window.parent.WeylandShell : null; } catch (e) { return null; } }
+    function shell() { return parentShell() || window.WeylandShell || null; }
+    function loadScript(src) { return new Promise(function (res, rej) { var s = document.createElement("script"); s.src = src; s.onload = res; s.onerror = rej; document.head.appendChild(s); }); }
+    if (!embedded) document.documentElement.classList.add("wa-standalone");
+    var ready = embedded ? Promise.resolve() : (window.AuthForStandard ? Promise.resolve() : loadScript("/assets/authfor-integration-standard.js"))
+      .then(function () { return window.WeylandShell ? null : loadScript("/assets/weyland-shell.js"); }).catch(function () {});
+    window.WeylandPage = {
+      embedded: embedded,
+      ready: ready,
+      // continueTo: the workspace address to reopen in the overlay after sign-in (overlay only;
+      // opened directly, the page itself continues).
+      signIn: function (continueTo) {
+        return ready.then(function () {
+          var s = shell();
+          if (s) return s.open("signin", embedded ? { continueTo: continueTo } : {});
+          location.href = "/login?redirect=" + encodeURIComponent(continueTo); // only if the shell could not load
+        });
+      },
+      // Resolves once this browser is signed out (AuthFor session and the weyland_session cookie).
+      signOut: function () {
+        return ready.then(function () {
+          var s = shell();
+          if (s && typeof s.signOut === "function") return s.signOut();
+          var t = null;
+          try { t = localStorage.getItem("_authfor_token"); } catch (e) {}
+          ["_authfor_token", "_authfor_refresh", "_authfor_session"].forEach(function (k) { try { localStorage.removeItem(k); } catch (er) {} });
+          var calls = [fetch("/api/auth/logout", { method: "POST", credentials: "same-origin" }).catch(function () {})];
+          if (t) calls.push(fetch("https://authfor.com/api/v1/logout", { method: "POST", headers: { Authorization: "Bearer " + t, "Content-Type": "application/json" }, body: "{}" }).catch(function () {}));
+          return Promise.all(calls);
+        });
+      }
+    };
+  })();
+  </script>
 
   <script>
 // ===== SOVEREIGN PDF RASTERIZER (inline, client-side) =====
@@ -1800,31 +1850,57 @@ global.SovereignPdfRender = {
       function typeLabel(t) { return t === "hardware_schedule" ? "hardware schedule" : "door schedule"; }
 
       // ---------- sign in / out ----------
+      // Sign-in and sign-out happen on this page (window.WeylandPage, the single-page bridge
+      // above): the shell's sign-in opens over the workspace, and the workspace loads the
+      // visitor's schedules in this same document when the shell reports the sign-in.
       function showSignIn(note) {
+        state.authed = false;
         $("app").classList.add("hide");
+        $("logout-link").classList.add("hide");
         $("signin-card").classList.remove("hide");
         $("signin-note").textContent = note || "";
       }
+      // The address this workspace was opened at (the overlay reopens it after sign-in).
+      function workspacePath() {
+        var p = location.pathname.replace(/\/+$/, "") || "/subx-app";
+        if (TAKEOFF && !/^\/takeoffx/.test(p)) p += "?mode=takeoff";
+        return p;
+      }
       $("signin-btn").addEventListener("click", function () {
-        var target = TAKEOFF ? "/takeoffx" : "/subx-app";
-        try {
-          if (window.parent !== window && window.parent.WeylandShell) { window.parent.WeylandShell.open("signin", { continueTo: target }); return; }
-        } catch (e) { /* not inside the shell */ }
-        location.href = "/login?redirect=" + encodeURIComponent(target);
+        $("signin-note").textContent = "";
+        window.WeylandPage.signIn(workspacePath());
       });
+      // Back to the signed-out workspace, in place: nothing of the account stays on screen.
+      function signedOutHere(note) {
+        state.sessions = []; state.current = null; state.detail = null; state.lastUpload = null; state.demoAsked = false;
+        hideViewer();
+        $("sessions-list").innerHTML = '<div class="empty">Loading&hellip;</div>';
+        ["session-card", "package-card"].forEach(function (id) { $(id).classList.add("hide"); });
+        ["extract-result", "package-result", "upload-result", "doors-wrap", "sets-wrap", "takeoff", "list-actions"].forEach(function (id) { $(id).innerHTML = ""; });
+        ["st-upload", "st-read", "st-review", "st-pdf"].forEach(function (id) { setStep(id, null); });
+        showSignIn(note);
+      }
+      // The account is off the screen at once; SIGN IN comes back when the sign-out has finished
+      // (the shell closes its overlay when it has, which would take a sign-in view opened earlier
+      // with it).
       $("logout-link").addEventListener("click", function (e) {
         e.preventDefault();
-        var t = token();
-        ["_authfor_token", "_authfor_refresh", "_authfor_session"].forEach(function (k) { try { localStorage.removeItem(k); } catch (er) {} });
-        var calls = [fetch("/api/auth/logout", { method: "POST", credentials: "same-origin" }).catch(function () {})];
-        if (t) calls.push(fetch("https://authfor.com/api/v1/logout", { method: "POST", headers: { Authorization: "Bearer " + t, "Content-Type": "application/json" }, body: "{}" }).catch(function () {}));
-        Promise.all(calls).then(function () { location.href = "/"; });
+        if (state.signingOut) return;
+        state.signingOut = true;
+        signedOutHere("Signing out\u2026");
+        $("signin-btn").disabled = true;
+        window.WeylandPage.signOut().then(function () {
+          state.signingOut = false;
+          $("signin-btn").disabled = false;
+          if (!state.authed) $("signin-note").textContent = "You are signed out.";
+        });
       });
 
       // ---------- schedules list ----------
       function loadSessions() {
         return api("/api/hardware-schedule/sessions?limit=30").then(function (res) {
           if (res.status === 401 || (res.ok && res.data && res.data.signed_in === false)) { showSignIn(); return null; }
+          state.authed = true;
           $("signin-card").classList.add("hide");
           $("app").classList.remove("hide");
           if (!res.ok) {
@@ -2005,7 +2081,7 @@ global.SovereignPdfRender = {
         var comps = d.components || [];
         var body = d.hardware_sets.map(function (s) {
           var mine = comps.filter(function (c) { return c.set_number === s.set_number; });
-          return "<tr><td class=\"nowrap\"><b>" + esc(s.set_number) + "</b></td><td>" + esc(s.set_name || "") + "</td><td>" + mine.map(function (c) { return esc((c.quantity || 1) + " x " + [c.component_type, c.manufacturer, c.model, c.finish].filter(Boolean).join(" ")); }).join("<br>") + '</td><td class="nowrap">' + (s.affirmed ? '<span class="tag ok">REVIEWED</span>' : '<span class="tag warn">DRAFT</span>') + "</td></tr>";
+          return "<tr><td class=\"nowrap\"><b>" + esc(s.set_number) + "</b></td><td>" + esc(s.set_name || "") + "</td><td>" + mine.map(function (c) { return esc((c.quantity || 1) + " x " + [c.component_type ? String(c.component_type).replace(/_/g, " ") : "", c.manufacturer, c.model, c.finish].filter(Boolean).join(" ")); }).join("<br>") + '</td><td class="nowrap">' + (s.affirmed ? '<span class="tag ok">REVIEWED</span>' : '<span class="tag warn">DRAFT</span>') + "</td></tr>";
         }).join("");
         box.innerHTML = '<p class="muted-small" style="margin-top:14px">' + d.hardware_sets.length + " hardware sets.</p><table><thead><tr><th>Set</th><th>Name</th><th>Items</th><th>Status</th></tr></thead><tbody>" + body + "</tbody></table>";
       }
@@ -2275,8 +2351,30 @@ global.SovereignPdfRender = {
       });
 
       // ---------- start ----------
-      loadSessions().then(function (sessions) {
-        if (!sessions) return;
+      function start() {
+        state.starting = true;
+        return loadSessions().then(function (sessions) {
+          if (sessions && !sessions.length && !state.demoAsked) return ownDemoCopy();
+          return sessions;
+        }).then(function (sessions) {
+          state.starting = false;
+          if (sessions) openFirst(sessions);
+        }, function () { state.starting = false; });
+      }
+      // An account with nothing here yet gets its own copy of the demo building
+      // to open (the same copy the homepage makes). The homepage makes it for
+      // whoever the visitor is when its SubX chapter comes near the screen: a
+      // visitor who signs in after that has a guest's copy, which this
+      // account's list cannot show (2026-10-07, 2 of 3 journey runs).
+      function ownDemoCopy() {
+        state.demoAsked = true;
+        $("sessions-list").innerHTML = '<div class="empty"><span class="spin"></span>Loading&hellip; making your own copy of the demo building.</div>';
+        return api("/api/demo/weyland-building/session", { method: "POST" }).then(function (res) {
+          if (!res.ok) { renderSessions(); return state.sessions; }
+          return loadSessions();
+        });
+      }
+      function openFirst(sessions) {
         var want = params.get("session");
         var pick = null;
         if (want && sessions.some(function (s) { return s.id === want; })) pick = want;
@@ -2290,7 +2388,30 @@ global.SovereignPdfRender = {
           pick = (withRows[0] || real[0] || demos[0] || {}).id || null;
         }
         if (pick) openSession(pick, { scroll: false });
+      }
+      // The shell (opened directly) tells this page when the visitor signs in or out from its
+      // sign-in view or its account control. A signed-out report counts only after it reported
+      // signed-in here: the shell says signed-out first while it is still checking a cookie-only
+      // session, and that must not hide a workspace the server already opened.
+      var shellSawSignedIn = false;
+      window.addEventListener("weyland-auth", function (e) {
+        var status = e && e.detail ? e.detail.status : null;
+        if (status === "signed-in") {
+          shellSawSignedIn = true;
+          if (!state.authed && !state.starting) {
+            // Signed in over this page: the workspace takes the sign-in card's place at once and
+            // fills in as the schedules load.
+            $("signin-card").classList.add("hide");
+            $("app").classList.remove("hide");
+            $("sessions-list").innerHTML = '<div class="empty">Loading&hellip;</div>';
+            start();
+          }
+        } else if (status === "signed-out" && shellSawSignedIn) {
+          shellSawSignedIn = false;
+          if (state.authed && !state.signingOut) signedOutHere("You are signed out.");
+        }
       });
+      start();
     })();
   </script>
 </body>
