@@ -630,6 +630,9 @@
       box-shadow: 0 10px 30px rgba(0, 0, 0, 0.45);
     }
     .wn-raise[hidden] { display: none; }
+    /* No hardware WebGL2 here (software renderer or none): there is no world
+       to lower the folder into, so the [close] control is not offered. */
+    html[data-weyland-gl="software"] #envelope-close, html[data-weyland-gl="none"] #envelope-close { display: none; }
     .wn-raise:focus-visible { outline: 2px solid #fff; outline-offset: -4px; }
     
     .wn-secondary {
@@ -1871,7 +1874,36 @@
         var mm = window.matchMedia;
         var reduce = mm && mm("(prefers-reduced-motion: reduce)").matches;
         var coarse = mm && mm("(pointer: coarse)").matches;
-        if (!reduce && !coarse) {
+        // 2026-10-07: the world behind the folder is a full WebGL2 raymarcher.
+        // Where the browser draws WebGL in software (SwiftShader, llvmpipe,
+        // "Software" / "Basic Render" adapters) it froze this page for 18-47 s
+        // and stalled sign-in, so there it is never mounted and the folder
+        // starts raised. Measured once per tab session; html[data-weyland-gl]
+        // carries the answer ("hardware" | "software" | "none") for CSS.
+        window.__weylandGLClass = function () {
+          if (window.__weylandGL) return window.__weylandGL;
+          var v = null;
+          try { v = sessionStorage.getItem("weyland_gl_v1"); } catch (e) {}
+          if (v !== "hardware" && v !== "software" && v !== "none") {
+            v = "none";
+            try {
+              var c = document.createElement("canvas");
+              var gl = c.getContext("webgl2");
+              if (gl) {
+                var ext = gl.getExtension("WEBGL_debug_renderer_info");
+                var r = String((ext && gl.getParameter(ext.UNMASKED_RENDERER_WEBGL)) || gl.getParameter(gl.RENDERER) || "");
+                v = /swiftshader|llvmpipe|softpipe|software|basic render/i.test(r) ? "software" : "hardware";
+                var lose = gl.getExtension("WEBGL_lose_context");
+                if (lose) lose.loseContext();
+              }
+            } catch (e) { v = "none"; }
+            try { sessionStorage.setItem("weyland_gl_v1", v); } catch (e) {}
+          }
+          window.__weylandGL = v;
+          document.documentElement.setAttribute("data-weyland-gl", v);
+          return v;
+        };
+        if (!reduce && !coarse && window.__weylandGLClass() === "hardware") {
           document.documentElement.classList.add("folder-lowered");
         }
       } catch (e) {}
@@ -3322,16 +3354,25 @@
         }).catch(function (err) { out.textContent = "Request failed: " + err.message; }).finally(function () { hsRun.disabled = false; });
       });
       hsWalk.addEventListener("click", function () {
-        var bd = document.querySelector("#stage-backdrop iframe");
         var note = document.getElementById("hs-note");
-        if (!bd || !bd.contentWindow || !hsMatched.length) { note.textContent = "SightX is not loaded in this browser (reduced motion or no WebGL)."; return; }
-        try { bd.contentWindow.postMessage({ type: "weyland:walk-schedule", openings: hsMatched.slice(0, 12) }, location.origin); } catch (e) {}
-        note.textContent = "Handing " + Math.min(12, hsMatched.length) + " openings to SightX\u2026 raise the dossier any time with Enter.";
+        if (!hsMatched.length) return;
+        // The visitor asked for the world: mount it now if it is not there yet (reduced motion,
+        // a phone before its first touch), unless this browser has no hardware WebGL2.
+        if (!window.__weylandEnsureBackdrop || !window.__weylandEnsureBackdrop(true)) {
+          note.textContent = "SightX needs hardware-accelerated 3D. This browser draws WebGL in software (or not at all), so the corridor stays off here; your matches are above.";
+          return;
+        }
+        var bd = document.querySelector("#stage-backdrop iframe");
+        var openings = hsMatched.slice(0, 12);
+        var send = function () { try { bd.contentWindow.postMessage({ type: "weyland:walk-schedule", openings: openings }, location.origin); } catch (e) {} };
+        if (bd && bd.classList.contains("is-loaded")) send(); else if (bd) bd.addEventListener("load", send, { once: true });
+        note.textContent = "Handing " + openings.length + " openings to SightX\u2026 raise the dossier any time with Enter.";
         if (window.__weylandLowerDossier) window.__weylandLowerDossier();
       });
       window.addEventListener("message", function (e) {
         if (e.origin !== location.origin || !e.data || e.data.type !== "weyland:walk-ready") return;
-        var note = document.getElementById("hs-note"); if (note) note.textContent = "SightX hung " + e.data.count + " openings in the corridor walls. Click the world to walk; Enter raises the dossier.";
+        var touch = window.matchMedia && window.matchMedia("(pointer: coarse)").matches;
+        var note = document.getElementById("hs-note"); if (note) note.textContent = "SightX hung " + e.data.count + " openings in the corridor walls. " + (touch ? "Walk with the joystick; tap [raise dossier] to bring this back." : "Click the world to walk; Enter raises the dossier.");
       });
     }
 
@@ -3941,18 +3982,61 @@
   <script>
   (function () {
     var injected = false;
+    var pendingMount = false;
+    // 2026-10-07: the world never draws behind the shell overlay (sign-in,
+    // account, apps, documents) or the create-account dialog. Pausing is done
+    // from this side: the SightX frame is same-origin and every loop in it
+    // schedules itself through its window's requestAnimationFrame, so while an
+    // overlay is open that function queues instead of scheduling (the frame is
+    // also hidden), and on close the queued callbacks are handed back to the
+    // real one. An overlay that opens before the world has mounted delays the
+    // mount until it closes.
+    var docEl = document.documentElement;
+    var paused = null;
+    function overlayOpen() {
+      return docEl.classList.contains("wa-overlay-open") || !!document.querySelector("#upgrade-modal.is-open");
+    }
+    function pauseBackdrop() {
+      if (paused) return;
+      var f = document.querySelector("#stage-backdrop iframe"), w = null;
+      if (!f) return;
+      try { w = f.contentWindow; if (!w || typeof w.requestAnimationFrame !== "function") return; } catch (e) { return; }
+      var queue = [], raf = w.requestAnimationFrame;
+      try { w.requestAnimationFrame = function (cb) { queue.push(cb); return 0; }; } catch (e) { return; }
+      paused = { win: w, raf: raf, queue: queue, frame: f };
+      f.style.visibility = "hidden";
+    }
+    function resumeBackdrop() {
+      if (!paused) return;
+      var p = paused;
+      paused = null;
+      try { p.win.requestAnimationFrame = p.raf; } catch (e) {}
+      p.frame.style.visibility = "";
+      p.queue.forEach(function (cb) { try { p.raf.call(p.win, cb); } catch (e) {} });
+    }
+    function syncBackdrop() {
+      if (overlayOpen()) { pauseBackdrop(); return; }
+      resumeBackdrop();
+      if (pendingMount) { pendingMount = false; whenIdle(bootBackdrop); }
+    }
+    new MutationObserver(syncBackdrop).observe(docEl, { attributes: true, attributeFilter: ["class"] });
+    var upgradeEl = document.getElementById("upgrade-modal");
+    if (upgradeEl) new MutationObserver(syncBackdrop).observe(upgradeEl, { attributes: true, attributeFilter: ["class"] });
     // force=true (the [close] control) injects regardless of the
     // mobile/reduced-motion default - the visitor explicitly asked to see
     // the world behind the folder, so the ambient-only cost rule no longer
-    // applies.
+    // applies. Software-rendered or missing WebGL2 never mounts it (see
+    // window.__weylandGLClass in the first script); the caller gets false.
     window.__weylandEnsureBackdrop = function (force) {
       if (injected) return true;
       try {
+        if (window.__weylandGLClass && window.__weylandGLClass() !== "hardware") return false;
         var reducedMotion = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
         // Every viewport now, not desktop-only: the prologue is the site's
         // opening shot (otherwise nobody ever sees the precondensation ->
         // bang sequence). Reduced motion stays opt-in via [close].
         if (!force && reducedMotion) return false;
+        if (!force && overlayOpen()) { pendingMount = true; return false; }
         var backdrop = document.getElementById("stage-backdrop");
         if (!backdrop) return false;
         var frame = document.createElement("iframe");
@@ -3971,6 +4055,7 @@
         frame.tabIndex = -1;
         frame.addEventListener("load", function () {
           frame.classList.add("is-loaded");
+          if (overlayOpen()) pauseBackdrop();
         });
         backdrop.appendChild(frame);
         injected = true;
@@ -4124,13 +4209,24 @@
       }
     }
     function lower() {
-      if (window.__weylandEnsureBackdrop) window.__weylandEnsureBackdrop(true);
+      // No world to lower into (software or missing WebGL2): say so instead of
+      // dropping the folder over an empty stage.
+      if (window.__weylandEnsureBackdrop && !window.__weylandEnsureBackdrop(true)) {
+        var toast = document.getElementById("badge-toast");
+        if (toast) {
+          toast.textContent = "SightX needs hardware-accelerated 3D. This browser draws WebGL in software (or not at all), so the corridor stays off here.";
+          toast.classList.add("show");
+          setTimeout(function () { toast.classList.remove("show"); }, 5200);
+        }
+        return false;
+      }
       try { window.scrollTo(0, 0); } catch (e) {}
       live = false;
       frame.style.transition = "";                 // CSS 0.75s transform transition
       apply(true, true);
       frame.style.transform = lastMatrix;          // animate from the eye down into the hand
       setTimeout(function () { live = true; frame.style.transition = "none"; }, 800);
+      return true;
     }
     function raise() {
       live = false;
