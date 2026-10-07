@@ -55,6 +55,12 @@ export async function sweepExpiredDemoClones(env, { olderThanHours = 24, limit =
       const results = await env.DB.batch(stmts);
       for (const r of results) summary.rowsDeleted += r.meta?.changes || 0;
       summary.sessionsDeleted++;
+      // The submittal package the workspace may have built for the clone
+      // (routes/subx-workspace.js stores it at this key); deleting a key that
+      // was never written is a no-op.
+      if (env.UPLOADS) {
+        try { await env.UPLOADS.delete("submittals/" + row.id + "/final_submittal.pdf"); } catch (e) { summary.errors.push(row.id + " package: " + String(e.message).slice(0, 120)); }
+      }
 
       if (row.project_id) {
         const still = await env.DB.prepare("SELECT COUNT(*) AS n FROM hardware_extraction_sessions WHERE project_id = ?").bind(row.project_id).first();
