@@ -266,8 +266,10 @@ export function registerSubxWorkspaceRoutes(router, { authenticate, requireActiv
       if (!result.success) {
         return jsonResponse3({ success: false, error: "Assembly failed", details: result.errors.join("; ") }, 500);
       }
+      // A first package for one of your own schedules counts as a submittal
+      // on your plan; the demo building's package does not.
       let usage = null;
-      if (!hadPackage) {
+      if (!hadPackage && !isDemoClone(o.session)) {
         try { usage = await incrementSubmittalsUsed(o.user.userId, env2); } catch (_) { usage = null; }
       }
       return jsonResponse3({

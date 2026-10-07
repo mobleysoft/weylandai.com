@@ -661,6 +661,23 @@ export async function mergePdfs(pdfBytes, PDFLib) {
   }
   return await mergedDoc.save();
 }
+// 36 -> 3'-0", 95 -> 7'-11", 94.5 -> 7'-10 1/2"; 1.75 -> 1 3/4".
+function sixteenthsText(x) {
+  const e = Math.round(x * 16);
+  if (e <= 0 || e >= 16) return "";
+  let n = e, d = 16;
+  while (n % 2 === 0) { n /= 2; d /= 2; }
+  return n + "/" + d;
+}
+export function inchesText(x) {
+  const whole = Math.floor(x + 1e-9), f = sixteenthsText(x - whole);
+  return (whole ? String(whole) : "") + (whole && f ? " " : "") + f + '"';
+}
+export function feetInchesText(x) {
+  const ft = Math.floor((x + 1e-9) / 12), rest = x - ft * 12;
+  const whole = Math.floor(rest + 1e-9), f = sixteenthsText(rest - whole);
+  return ft + "'-" + whole + (f ? " " + f : "") + '"';
+}
 // generateDoorSchedulePages (2026-10-07): the extracted door rows as their
 // own submittal section - one row per door with every column the schedule
 // carries and the place it was read from (page and table row), so each line
@@ -681,12 +698,17 @@ export async function generateDoorSchedulePages(doorRows, info = {}) {
       const fc = d.field_confidence_json ? JSON.parse(d.field_confidence_json) : null;
       if (fc && fc.source && fc.source.table_row != null) src += " row " + fc.source.table_row;
     } catch (_) { /* not a source trace */ }
-    const size = d.width || [d.width_inches, d.height_inches].filter((x) => x != null).join(" x ") || null;
+    // Sizes as read into numbers; a value the reader could not read with
+    // certainty keeps its text as read, marked (?).
+    const size = d.width_inches != null && d.height_inches != null
+      ? feetInchesText(d.width_inches) + " x " + feetInchesText(d.height_inches)
+      : (d.width ? d.width + " (?)" : "(?)");
+    const thickness = d.thickness_inches != null ? inchesText(d.thickness_inches) : (d.thickness ? d.thickness + " (?)" : "-");
     return [
       d.mark,
       d.hardware_group || "-",
-      size || "-",
-      d.thickness || (d.thickness_inches != null ? String(d.thickness_inches) + '"' : "-"),
+      size,
+      thickness,
       d.fire_rating || "-",
       join(d.door_type, d.door_material, d.door_finish),
       join(d.frame_type, d.frame_material, d.frame_finish),
@@ -696,7 +718,7 @@ export async function generateDoorSchedulePages(doorRows, info = {}) {
   });
   const title = "Door Schedule (extracted)";
   const sub = (info.projectName || "Project") + " - " + rows.length + " door" + (rows.length === 1 ? "" : "s") + (info.filename ? " read from " + info.filename : "");
-  const note = "Machine-read from the uploaded schedule; values stay drafts until reviewed. Source = page and table row on the uploaded sheet (appended at the end of this package).";
+  const note = "Machine-read from the uploaded schedule; values stay drafts until reviewed. (?) = not read with certainty, check it on the sheet. Source = page and table row on the uploaded sheet (appended at the end of this package).";
   let start = 0;
   let pageNo = 0;
   do {

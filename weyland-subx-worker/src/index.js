@@ -99,8 +99,6 @@ import { registerTakeoffLineItemsRoutes } from "./routes/takeoff-line-items.js";
 import { registerSubxWorkspaceRoutes } from "./routes/subx-workspace.js";
 
 import subxAppHtml from "./pages/subx-app.html";
-import subxHtml from "./pages/subx.html";
-import takeoffxHtml from "./pages/takeoffx.html";
 
 const router = new NativeRouter();
 
@@ -112,22 +110,31 @@ router.get("/health", () => jsonResponse3({
   version: WORKER_VERSION,
 }));
 
-// --- Real static pages (subx-app is the actual app; subx/takeoffx are
-// the product marketing pages that link into it) ---
-// 2026-10-07: the zone routes for these pages are wildcards now
-// (weylandai.com/subx*, weylandai.com/takeoffx* - see wrangler.toml), so the
-// single-page shell's ?embed=1 (and any other query string) reaches this
-// worker instead of the monolith's stale copy. The router matches on the
-// path alone, so queries need nothing here; the trailing-slash spellings are
-// served as the same page.
-// The two product pages carried a {{NAV}} placeholder the monolith used to
-// fill; served raw from here it showed as literal "{{NAV}}" text. They get a
-// short nav of real destinations, and inside the shell's overlay (embed=1, or
-// framed) the header is hidden so no link loads a second site in the overlay.
-const PRODUCT_NAV = '<a href="/">HOME</a><a href="/subx-app">WORKSPACE</a><a href="/subx">SUBX</a><a href="/takeoffx">TAKEOFFX</a><a href="/pricing">PRICING</a>';
-const EMBED_HEAD = '<script>(function(){var e=/[?&]embed=1(&|$)/.test(location.search);try{e=e||window.parent!==window}catch(x){e=true}if(e)document.documentElement.className+=" embedded"})();</script><style>.embedded header{display:none!important}</style></head>';
-const productPage = (html) => html.replace("{{NAV}}", PRODUCT_NAV).replace("</head>", EMBED_HEAD);
-const PAGES = { "/subx-app": subxAppHtml, "/subx": productPage(subxHtml), "/takeoffx": productPage(takeoffxHtml) };
+// --- Pages ---
+// SubX and TakeOffX are one workspace (src/pages/subx-app.html). /subx-app and
+// /subx open it for submittals; /takeoffx opens it with the takeoff counts
+// leading (the page reads its mode from the path, or from ?mode=takeoff).
+// 2026-10-07: the two thin product pages that stood at /subx and /takeoffx
+// only linked here - one more document to load before anything could be done
+// (inside the shell's overlay, a second document in the frame), and the
+// TakeOffX one said SIGN IN TO START A TAKEOFF to a signed-in user. The product
+// URLs now serve the product itself; a visitor who is not signed in gets the
+// sign-in in place on the same page.
+// The zone routes are wildcards (weylandai.com/subx*, /subx-app*, /takeoffx* -
+// see wrangler.toml), so the single-page shell's ?embed=1 (and any other query
+// string) reaches this worker instead of the monolith's stale copy. The router
+// matches on the path alone; the trailing-slash spellings are the same page.
+const WORKSPACE_TITLE = "<title>SubX Workspace | WeylandAI</title>";
+const workspacePage = (title, description) => subxAppHtml.replace(
+  WORKSPACE_TITLE,
+  "<title>" + title + "</title>\n  <meta name=\"description\" content=\"" + description + "\">"
+);
+const SUBX_DESCRIPTION = "Upload a door or hardware schedule PDF: SubX reads every row, traces each door to the page and row it came from, and builds the submittal package PDF.";
+const PAGES = {
+  "/subx-app": workspacePage("SubX Workspace | WeylandAI", SUBX_DESCRIPTION),
+  "/subx": workspacePage("SubX | WeylandAI", SUBX_DESCRIPTION),
+  "/takeoffx": workspacePage("TakeOffX | WeylandAI", "Upload your door schedule PDF: TakeOffX counts the doors by type, size, fire rating and hardware group, each count traced to the page and row it came from."),
+};
 for (const [path, html] of Object.entries(PAGES)) {
   const serve = () => new Response(html, {
     headers: { "Content-Type": "text/html; charset=UTF-8", "Cache-Control": "public, max-age=60" },

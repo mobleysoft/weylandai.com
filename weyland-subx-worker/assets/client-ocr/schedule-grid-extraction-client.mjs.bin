@@ -451,6 +451,77 @@ function ocrRowBand(engine, pageImage, colBounds, rowRightEdge, y0, y1, psm = "6
   return cells;
 }
 
+// Second read of one size cell (2026-10-07). The row read misses the small
+// marks in dimensions at schedule text sizes: on OCCDoorSchedulePg4.pdf,
+// 7'-11" (printed with a heavy short dash) came back as 711", 7211", v=11"
+// or 11". When a width, height or thickness does not parse, that cell alone
+// is read again - cropped inside its rulings, with a white margin - in a few
+// fixed ways (enlarged 2x and 3x, thresholded to black on white, restricted
+// to the characters a dimension is written with, and not). No single way reads
+// every cell of that sheet; a reading is taken only when
+//   - it parses as a value a door can have (the caller's accept()), and
+//   - its digits are the digits most of the readings of that cell agree on
+//     (the row's own reading counts as one), so a reading that dropped or
+//     invented a digit is never the one taken.
+// Otherwise the value stays unread for the reviewer.
+const DIMENSION_CHARS = "0123456789'\"-/ ";
+const REREAD_WAYS = [
+  { up: 1, whitelist: true },
+  { up: 2, whitelist: true },
+  { up: 2, thr: 150, whitelist: true },
+  { up: 3, thr: 150, whitelist: true },
+  { up: 2, thr: 150, whitelist: false },
+];
+function padWhite(img, m) {
+  const w = img.width + 2 * m, h = img.height + 2 * m;
+  const out = new Uint8ClampedArray(w * h * 4).fill(255);
+  for (let y = 0; y < img.height; y++) out.set(img.data.subarray(y * img.width * 4, (y + 1) * img.width * 4), ((y + m) * w + m) * 4);
+  return { data: out, width: w, height: h };
+}
+function thresholdImage(img, thr) {
+  const d = new Uint8ClampedArray(img.data);
+  for (let i = 0; i < d.length; i += 4) {
+    const v = d[i] * 0.299 + d[i + 1] * 0.587 + d[i + 2] * 0.114 < thr ? 0 : 255;
+    d[i] = d[i + 1] = d[i + 2] = v;
+    d[i + 3] = 255;
+  }
+  return { data: d, width: img.width, height: img.height };
+}
+function readCellOnce(engine, cell, way) {
+  let img = way.up > 1 ? upscaleN(cell, way.up) : cell;
+  if (way.thr) img = thresholdImage(img, way.thr);
+  img = padWhite(img, Math.max(8, Math.round(img.height / 2)));
+  engine.clearImage();
+  engine.loadImage(img);
+  engine.setVariable("tessedit_pageseg_mode", "7");
+  engine.setVariable("tessedit_char_whitelist", way.whitelist ? DIMENSION_CHARS : "");
+  try {
+    return String(engine.getText() || "").replace(/\s+/g, " ").trim();
+  } catch (e) {
+    return "";
+  } finally {
+    engine.setVariable("tessedit_char_whitelist", "");
+  }
+}
+const digitsOf = (t) => String(t || "").replace(/\D/g, "");
+function rereadDimensionCell(engine, pageImage, x0, x1, y0, y1, opts, firstReading, accept) {
+  const pad = (opts.pad || 2) + 2;
+  const cx0 = Math.max(0, Math.round(x0) + pad), cx1 = Math.min(pageImage.width, Math.round(x1) - pad);
+  const cy0 = Math.max(0, Math.round(y0) + pad), cy1 = Math.min(pageImage.height, Math.round(y1) - pad);
+  if (cx1 - cx0 < 6 || cy1 - cy0 < 6) return { text: null, readings: [] };
+  const cell = cropRowImage(pageImage, cy0, cy1, cx0, cx1);
+  const readings = REREAD_WAYS.map((way) => cleanDimension(readCellOnce(engine, cell, way)) || "");
+  const votes = new Map();
+  for (const r of readings.concat([cleanDimension(firstReading) || ""])) {
+    const d = digitsOf(r);
+    if (d) votes.set(d, (votes.get(d) || 0) + 1);
+  }
+  const ranked = [...votes.entries()].sort((a, b) => b[1] - a[1]);
+  const agreed = ranked.length && ranked[0][1] >= 2 && !(ranked[1] && ranked[1][1] === ranked[0][1]) ? ranked[0][0] : null;
+  const text = agreed ? readings.find((r) => r && digitsOf(r) === agreed && accept(r)) || null : null;
+  return { text, readings };
+}
+
 // Closes the currently-open hardware group into groups/matrix - mirrors
 // extractHardwareGroupsViaGrid's server-side closeOpenGroup exactly, minus
 // the cross-request KV continuation state (not needed - this whole page
@@ -644,14 +715,84 @@ function cleanDimension(text) {
 }
 
 // Door thickness: "13/4\"" is "1 3/4\"" with the space lost (a proper
-// fraction after one whole digit); anything else goes through the shared
-// parser unchanged.
+// fraction after one whole digit), also written 1-3/4", 3/4" or 2".
+// A fraction in a dimension is written reduced, over 2, 4, 8 or 16 (1/2,
+// 3/4, 3/8...): "2/4" or "3/5" is a misread digit, not a fraction.
+function fractionValue(n, d) {
+  const num = parseInt(n, 10), den = parseInt(d, 10);
+  if (![2, 4, 8, 16].includes(den) || !(num > 0) || num >= den || num % 2 === 0) return null;
+  return num / den;
+}
+
 function parseThickness(text) {
   const t = cleanDimension(text);
   if (!t) return null;
-  const m = t.match(/^(\d)(\d)\/(\d)"?$/);
-  if (m && parseInt(m[2], 10) < parseInt(m[3], 10)) return parseInt(m[1], 10) + parseInt(m[2], 10) / parseInt(m[3], 10);
-  return parseArchDimension(t);
+  let v = null, m;
+  if ((m = t.match(/^(\d)[\s-]*(\d{1,2})\/(\d{1,2})\s*"?$/))) {
+    const f = fractionValue(m[2], m[3]);
+    v = f == null ? null : parseInt(m[1], 10) + f;
+  } else if ((m = t.match(/^(\d{1,2})\/(\d{1,2})\s*"?$/))) {
+    v = fractionValue(m[1], m[2]);
+  } else if ((m = t.match(/^(\d)\s*"$/))) {
+    v = parseInt(m[1], 10);
+  }
+  // A door leaf is 1 3/8" to 2 1/2" thick. A value outside 3/4"-3" is a
+  // misread (OCCDoorSchedulePg4.pdf: "4 34\"" became 82 inches) and stays
+  // unread rather than counted.
+  return v != null && v >= 0.75 && v <= 3 ? v : null;
+}
+
+// Door sizes (2026-10-07, second pass). A schedule writes them as feet-inches
+// with a separator (3'-0", 7'-11", 3-0") or, on some sheets, as plain inches
+// for both (36" x 84"). The shared parseArchDimension also takes digits with
+// no separator, which turned OCR misreads on the sample sheet into sizes no
+// door has: 7'-11" read as 711" became 71'-1", 7211" became 721'-1", 11"
+// became 1'-1", and 7'-0" read as 70" became 5'-10". Here a dimension counts
+// only when its format is unambiguous and the value is one a door can have;
+// anything else stays unread (null). The size text as read is kept for the
+// reviewer, and the takeoff counts the door under "size not read" instead of
+// under an invented size.
+const DOOR_LIMITS = { width: [12, 144], height: [60, 240] };
+function readDoorDimension(text) {
+  const t = cleanDimension(text);
+  if (!t) return null;
+  let m = t.match(/^(\d{1,2})\s*(?:'\s*-?|-)\s*(\d{1,2})(?:\s+(\d)\/(\d{1,2}))?\s*"?$/);
+  if (m) {
+    const inch = parseInt(m[2], 10);
+    const frac = m[3] ? fractionValue(m[3], m[4]) : 0;
+    if (inch > 11 || frac == null) return null;
+    return { inches: parseInt(m[1], 10) * 12 + inch + frac, format: "ft-in" };
+  }
+  m = t.match(/^(\d{1,2})'$/);
+  if (m) return { inches: parseInt(m[1], 10) * 12, format: "ft-in" };
+  m = t.match(/^(\d{2,3})(?:\s+(\d)\/(\d{1,2}))?\s*"$/);
+  if (m) {
+    const frac = m[2] ? fractionValue(m[2], m[3]) : 0;
+    return frac == null ? null : { inches: parseInt(m[1], 10) + frac, format: "in" };
+  }
+  return null;
+}
+function doorSize(widthText, heightText) {
+  const w = readDoorDimension(widthText), h = readDoorDimension(heightText);
+  // Plain inches only when the row writes both dimensions that way: an
+  // inches-only value next to a feet-inches one is a feet-inches value whose
+  // marks were lost.
+  const plainInches = !!(w && h && w.format === "in" && h.format === "in");
+  const accept = (d, kind) => (d && (d.format === "ft-in" || plainInches) && d.inches >= DOOR_LIMITS[kind][0] && d.inches <= DOOR_LIMITS[kind][1] ? d.inches : null);
+  return { width_inches: accept(w, "width"), height_inches: accept(h, "height") };
+}
+
+// Fire ratings: one rating must count as one value. OCR varies the case
+// ("45 Min."), the closing punctuation ("20 MIN,") and the unit word
+// ("20 MIM."); only those are normalised. The number is kept as read
+// ("2U MIN." stays, for the reviewer).
+function cleanFireRating(text) {
+  const t = cleanCell(text);
+  if (!t) return null;
+  let u = t.toUpperCase().replace(/\s+/g, " ");
+  u = u.replace(/(^|[^A-Z])M[I1L][NM](?![A-Z])[.,;:]?/g, "$1MIN.");
+  u = u.replace(/(\S)\s*MIN\./g, "$1 MIN.");
+  return u.replace(/[,;:]+$/, "");
 }
 
 // Short schedule codes (frame type S1, S12...): a leading "$" before a digit
@@ -932,6 +1073,27 @@ export async function extractDoorScheduleFromPdf(pdfBytes, pageNumber, onProgres
     if (hasAnyField) rows.push(row);
   }
 
+  // Second read of the size cells that did not parse (see rereadDimensionCell).
+  const sizeCols = { width: fieldNames.indexOf("width"), height: fieldNames.indexOf("height"), thickness: fieldNames.indexOf("thickness") };
+  let reread = 0, rereadUsed = 0;
+  for (const row of rows) {
+    if (!cleanDoorMark(row.mark)) continue;
+    const y0 = rowLines[row._band], y1 = rowLines[row._band + 1];
+    const size = doorSize(row.width, row.height);
+    const tryCell = (field, parses) => {
+      const ci = sizeCols[field];
+      if (ci < 0 || !colBounds[ci]) return;
+      reread++;
+      const got = rereadDimensionCell(engine, pageImage, colBounds[ci][0], colBounds[ci][1], y0, y1, ocrOpts, row[field], parses);
+      if (options.debug) (row._reread = row._reread || {})[field] = got;
+      if (got.text) { row[field] = got.text; rereadUsed++; }
+    };
+    const fits = (kind) => (t) => { const d = readDoorDimension(t); return !!(d && d.format === "ft-in" && d.inches >= DOOR_LIMITS[kind][0] && d.inches <= DOOR_LIMITS[kind][1]); };
+    if (size.width_inches == null) tryCell("width", fits("width"));
+    if (size.height_inches == null) tryCell("height", fits("height"));
+    if (parseThickness(row.thickness) == null) tryCell("thickness", (t) => parseThickness(t) != null);
+  }
+
   // Same {mark/hardware_group/fire_rating/size/...} mapping extractGridDoors
   // uses server-side, plus the frame/finish/detail columns the schedule
   // actually carries (written by writeDoorScheduleEntries when present).
@@ -940,10 +1102,9 @@ export async function extractDoorScheduleFromPdf(pdfBytes, pageNumber, onProgres
   const doors = rows.map((row) => ({
     door_number: cleanDoorMark(row.mark),
     hardware_group: cleanCell(row.hardware_group),
-    fire_rating: cleanCell(row.fire_rating),
+    fire_rating: cleanFireRating(row.fire_rating),
     size: [cleanDimension(row.width), cleanDimension(row.height)].filter(Boolean).join(" x ") || null,
-    width_inches: parseArchDimension(cleanDimension(row.width)),
-    height_inches: parseArchDimension(cleanDimension(row.height)),
+    ...doorSize(row.width, row.height),
     thickness: cleanDimension(row.thickness),
     thickness_inches: parseThickness(row.thickness),
     door_type: cleanCell(row.door_type),
@@ -959,6 +1120,7 @@ export async function extractDoorScheduleFromPdf(pdfBytes, pageNumber, onProgres
     panic_hardware: cleanCell(row.panic_hardware),
     remarks: cleanCell(row.notes),
     source_row: row._band,
+    ...(options.debug && row._reread ? { size_reread: row._reread } : {}),
   })).filter((d) => d.door_number);
 
   progress("Extraction complete.");
@@ -971,6 +1133,8 @@ export async function extractDoorScheduleFromPdf(pdfBytes, pageNumber, onProgres
     render_dpi: best.dpi,
     header_fields: fieldNames,
     header_matches: header.matches,
+    size_cells_reread: reread,
+    size_cells_reread_used: rereadUsed,
     orientation_attempts: attempts,
     total_time_ms: Math.round(performance.now() - t0),
   };
@@ -983,3 +1147,8 @@ export async function extractDoorScheduleFromPdf(pdfBytes, pageNumber, onProgres
   }
   return { doors, extraction_confidence: 0.85, metadata };
 }
+
+// The pure cell readers, exported for the worker's unit tests
+// (test/door-cells.test.mjs); nothing in the page or the runner calls them
+// directly.
+export { cleanDoorMark, doorSize, parseThickness, cleanFireRating };

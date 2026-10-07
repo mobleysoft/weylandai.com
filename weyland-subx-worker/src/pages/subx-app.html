@@ -14,7 +14,12 @@
       var embedded = /[?&]embed=1(&|$)/.test(q);
       try { embedded = embedded || window.parent !== window; } catch (e) { embedded = true; }
       if (embedded) document.documentElement.className += " embedded";
-      if (/[?&]mode=takeoff(&|$)/.test(q)) document.documentElement.className += " takeoff";
+      // TakeOffX is this same workspace, opened at /takeoffx (or with
+      // ?mode=takeoff): the takeoff counts lead, same upload and reader.
+      if (/[?&]mode=takeoff(&|$)/.test(q) || /^\/takeoffx/.test(location.pathname)) {
+        document.documentElement.className += " takeoff";
+        document.title = "TakeOffX | WeylandAI";
+      }
     })();
   </script>
   <style>
@@ -81,32 +86,42 @@
     .counts ul{list-style:none;margin:0;padding:0;font-size:13px}
     .counts li{display:flex;justify-content:space-between;gap:10px;padding:4px 0;border-bottom:1px solid #1a1e25}
     .counts li b{color:var(--text)}
-    .viewer{width:100%;height:min(78vh,900px);border:1px solid var(--line);border-radius:12px;background:#fff;margin-top:14px}
+    .pdf-pages{margin-top:14px;display:flex;flex-direction:column;gap:14px}
+    .pdf-pages .pdf-meta{color:var(--muted);font-size:12.5px;line-height:1.5}
+    .pdf-page{position:relative;width:100%;max-width:920px;margin:0 auto;background:#fff;border-radius:4px;box-shadow:0 8px 28px rgba(0,0,0,.45);aspect-ratio:612/792;overflow:hidden}
+    .pdf-page canvas{display:block;width:100%;height:100%}
+    .pdf-page .pno{position:absolute;right:8px;bottom:6px;font:700 10px/1 ui-monospace,monospace;color:#444;background:rgba(255,255,255,.88);padding:4px 7px;border-radius:99px}
+    .pdf-page .pdf-err{position:absolute;inset:0;display:grid;place-items:center;color:#a33;font-size:13px;padding:20px;text-align:center}
+    .tagline{color:var(--primary);font-weight:800;font-size:15px;margin:0 0 10px}
+    .unread{color:var(--accent);text-decoration:underline dotted rgba(255,212,0,.75);text-underline-offset:3px;cursor:help}
     canvas#rasterize-canvas{width:100%;max-width:700px;border:1px solid var(--line);border-radius:8px;margin-top:10px;background:#fff}
     .hide{display:none!important}
-    .takeoff-only{display:none}
-    .takeoff .takeoff-only{display:block}
-    .takeoff .subx-only{display:none}
+    html:not(.takeoff) .takeoff-only{display:none!important}
+    .takeoff .subx-only{display:none!important}
   </style>
 </head>
 <body>
   <div class="shell">
     <header>
-      <a class="brand" href="/"><span class="mark">SX</span><span><b>SUBX</b><small>WORKSPACE</small></span></a>
+      <a class="brand subx-only" href="/"><span class="mark">SX</span><span><b>SUBX</b><small>SUBMITTALS</small></span></a>
+      <a class="brand takeoff-only" href="/"><span class="mark">TX</span><span><b>TAKEOFFX</b><small>TAKEOFF</small></span></a>
       <nav class="nav">
-        <a href="/subx">PRODUCT PAGE</a>
-        <a href="/takeoffx">TAKEOFFX</a>
+        <a href="/" class="takeoff-only">HOME</a>
+        <a href="/subx" class="takeoff-only">SUBX</a>
+        <a href="/" class="subx-only">HOME</a>
+        <a href="/takeoffx" class="subx-only">TAKEOFFX</a>
         <a href="/pricing">PRICING</a>
         <a href="#" id="logout-link" class="hide">SIGN OUT</a>
       </nav>
     </header>
 
-    <div class="eyebrow subx-only">SubX &middot; submittal workspace</div>
+    <div class="eyebrow subx-only">SubX &middot; submittal automation</div>
     <div class="eyebrow takeoff-only">TakeOffX &middot; takeoff from your own drawings</div>
     <h1 class="subx-only">Schedule in, submittal package out</h1>
     <h1 class="takeoff-only">Count the doors on your own schedule</h1>
-    <p class="lede subx-only">Upload a door or hardware schedule PDF. SubX reads every row &mdash; a sheet printed sideways is turned upright first &mdash; lists the doors it found with the page and row each one came from, and builds the submittal package PDF.</p>
-    <p class="lede takeoff-only">Upload your door schedule PDF. TakeOffX reads every row and counts doors by type, size, fire rating and hardware group, each count traceable to the page and row it came from. Review the rows, then export the list or the submittal package.</p>
+    <p class="tagline">Measure twice. Match once.</p>
+    <p class="lede subx-only">Upload a door or hardware schedule PDF. SubX reads every row &mdash; a sheet printed sideways is turned upright first &mdash; lists the doors it found with the page and row each one came from, matches hardware to manufacturer cut sheets on file, and builds the submittal package PDF for your review before it goes out.</p>
+    <p class="lede takeoff-only">Upload your door schedule PDF. TakeOffX reads every row and counts doors by type, size, fire rating and hardware group, each count traceable to the page and row it came from. A value it could not read is left blank for you to check, never guessed. Review the rows, then export the list or the submittal package.</p>
     <ol class="steps" id="steps"><li id="st-upload">Upload</li><li id="st-read">Read</li><li id="st-review">Review</li><li id="st-pdf">Submittal PDF</li></ol>
 
     <div class="card hide" id="signin-card">
@@ -175,7 +190,10 @@
           <a class="button hide" id="package-download" href="#">DOWNLOAD PDF</a>
         </div>
         <div id="package-result"></div>
-        <iframe id="package-viewer" class="viewer hide" title="Submittal package PDF"></iframe>
+        <!-- The package is drawn here, page by page, with the same pdf.js the
+             reader uses: it shows on phones and in the shell overlay, where a
+             PDF in an iframe shows nothing or only its first page. -->
+        <div id="package-pages" class="pdf-pages hide" aria-label="Submittal package pages"></div>
       </div>
     </div>
   </div>
@@ -1724,7 +1742,7 @@ global.SovereignPdfRender = {
       var root = document.documentElement;
       var EMBED = root.classList.contains("embedded");
       var TAKEOFF = root.classList.contains("takeoff");
-      var MODULE_URL = "/api/hardware-schedule/client-ocr-assets/schedule-grid-extraction-client.mjs?v=20261007";
+      var MODULE_URL = "/api/hardware-schedule/client-ocr-assets/schedule-grid-extraction-client.mjs?v=20261007c";
       var state = { sessions: [], current: null, detail: null, lastUpload: null, blobUrl: null, busy: false };
       function $(id) { return document.getElementById(id); }
       function esc(s) { return String(s == null ? "" : s).replace(/[&<>"']/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]; }); }
@@ -1779,7 +1797,7 @@ global.SovereignPdfRender = {
         $("signin-note").textContent = note || "";
       }
       $("signin-btn").addEventListener("click", function () {
-        var target = "/subx-app" + (TAKEOFF ? "?mode=takeoff" : "");
+        var target = TAKEOFF ? "/takeoffx" : "/subx-app";
         try {
           if (window.parent !== window && window.parent.WeylandShell) { window.parent.WeylandShell.open("signin", { continueTo: target }); return; }
         } catch (e) { /* not inside the shell */ }
@@ -1831,7 +1849,12 @@ global.SovereignPdfRender = {
 
       // ---------- one schedule ----------
       function hideViewer() {
-        $("package-viewer").classList.add("hide");
+        var box = $("package-pages");
+        if (state.pageObserver) { state.pageObserver.disconnect(); state.pageObserver = null; }
+        if (state.pdfDoc) { try { state.pdfDoc.destroy(); } catch (e) {} state.pdfDoc = null; }
+        Array.prototype.forEach.call(box.querySelectorAll("canvas"), function (c) { c.width = 0; c.height = 0; });
+        box.innerHTML = "";
+        box.classList.add("hide");
         $("package-download").classList.add("hide");
         if (state.blobUrl) { try { URL.revokeObjectURL(state.blobUrl); } catch (e) {} state.blobUrl = null; }
       }
@@ -1905,17 +1928,48 @@ global.SovereignPdfRender = {
         if (s.rotation) txt += " (turned " + s.rotation + "°)";
         return txt;
       }
+      // Sizes and thickness are shown as read into numbers (3'-0" x 7'-11",
+      // 1 3/4"). A value the reader could not read with certainty keeps its
+      // text as read, marked, and is left out of the counts.
+      function fracText(x) {
+        var e = Math.round(x * 16);
+        if (e <= 0 || e >= 16) return "";
+        var n = e, d = 16;
+        while (n % 2 === 0) { n /= 2; d /= 2; }
+        return n + "/" + d;
+      }
+      function inchText(x) {
+        var whole = Math.floor(x + 1e-9), f = fracText(x - whole);
+        return (whole ? String(whole) : "") + (whole && f ? " " : "") + f + '"';
+      }
+      function ftInText(x) {
+        var ft = Math.floor((x + 1e-9) / 12), rest = x - ft * 12;
+        var whole = Math.floor(rest + 1e-9), f = fracText(rest - whole);
+        return ft + "'-" + whole + (f ? " " + f : "") + '"';
+      }
+      function unread(text, why) { return '<span class="unread" title="' + esc(why) + '">' + esc(text) + "</span>"; }
+      function sizeCell(d) {
+        if (d.width_inches != null && d.height_inches != null) return esc(ftInText(d.width_inches) + " x " + ftInText(d.height_inches));
+        return unread(d.width || "not read", "Not read with certainty: check it on the sheet. Not counted under By size.");
+      }
+      function thicknessCell(d) {
+        if (d.thickness_inches != null) return esc(inchText(d.thickness_inches));
+        return d.thickness ? unread(d.thickness, "Not read with certainty: check it on the sheet.") : "-";
+      }
       function renderDoors() {
         var doors = state.detail.doors, box = $("doors-wrap");
         if (!doors.length) {
           box.innerHTML = state.detail.hardware_sets.length ? "" : '<div class="empty">No rows read yet. Choose a page and press READ THIS PAGE.</div>';
           return;
         }
+        var unreadCount = doors.filter(function (d) { return d.width_inches == null || d.height_inches == null || (d.thickness && d.thickness_inches == null); }).length;
         var head = "<tr><th>Mark</th><th>HW group</th><th>Size</th><th>Thick.</th><th>Fire</th><th>Door type</th><th>Door matl / fin</th><th>Frame</th><th>Notes</th><th>Source</th></tr>";
         var body = doors.map(function (d) {
-          return "<tr><td class=\"nowrap\"><b>" + esc(d.mark) + "</b></td><td>" + esc(d.hardware_group || "-") + '</td><td class="nowrap">' + esc(d.width || "-") + '</td><td class="nowrap">' + esc(d.thickness || (d.thickness_inches != null ? d.thickness_inches + '"' : "-")) + '</td><td class="nowrap">' + esc(d.fire_rating || "-") + "</td><td>" + esc(d.door_type || "-") + "</td><td>" + esc([d.door_material, d.door_finish].filter(Boolean).join(" / ") || "-") + "</td><td>" + esc([d.frame_type, d.frame_material, d.frame_finish].filter(Boolean).join(" / ") || "-") + "</td><td>" + esc(d.notes || "") + '</td><td class="nowrap muted-small">' + esc(srcText(d)) + "</td></tr>";
+          return "<tr><td class=\"nowrap\"><b>" + esc(d.mark) + "</b></td><td>" + esc(d.hardware_group || "-") + '</td><td class="nowrap">' + sizeCell(d) + '</td><td class="nowrap">' + thicknessCell(d) + '</td><td class="nowrap">' + esc(d.fire_rating || "-") + "</td><td>" + esc(d.door_type || "-") + "</td><td>" + esc([d.door_material, d.door_finish].filter(Boolean).join(" / ") || "-") + "</td><td>" + esc([d.frame_type, d.frame_material, d.frame_finish].filter(Boolean).join(" / ") || "-") + "</td><td>" + esc(d.notes || "") + '</td><td class="nowrap muted-small">' + esc(srcText(d)) + "</td></tr>";
         }).join("");
-        box.innerHTML = '<p class="muted-small">' + doors.length + " door rows, machine-read: check them against the source page before you submit.</p><table><thead>" + head + "</thead><tbody>" + body + "</tbody></table>";
+        box.innerHTML = '<p class="muted-small">' + doors.length + " door rows, machine-read: check them against the source page before you submit." +
+          (unreadCount ? ' <span class="unread">Marked</span> values (' + unreadCount + " row" + (unreadCount === 1 ? "" : "s") + ") could not be read with certainty; they keep the text as read and are left out of the counts." : "") +
+          "</p><table><thead>" + head + "</thead><tbody>" + body + "</tbody></table>";
       }
       function renderSets() {
         var d = state.detail, box = $("sets-wrap");
@@ -2068,22 +2122,90 @@ global.SovereignPdfRender = {
       });
 
       // ---------- submittal package ----------
+      // The package is drawn in the page with pdf.js (the reader's own copy,
+      // loaded through the reader module): a canvas per page, drawn when it
+      // comes near the screen and dropped again when it is far away, so a
+      // long package with cut sheets stays light on a phone.
+      var pdfjsPromise = null;
+      function pdfjs() {
+        if (!pdfjsPromise) {
+          pdfjsPromise = import(MODULE_URL).then(function (m) { return m.loadPdfJs(); });
+          pdfjsPromise.catch(function () { pdfjsPromise = null; });
+        }
+        return pdfjsPromise;
+      }
+      function drawPdfPage(holder) {
+        var doc = state.pdfDoc;
+        if (!doc || holder.getAttribute("data-drawn")) return;
+        holder.setAttribute("data-drawn", "1");
+        var n = parseInt(holder.getAttribute("data-page"), 10);
+        doc.getPage(n).then(function (page) {
+          if (state.pdfDoc !== doc || !holder.getAttribute("data-drawn")) return;
+          var base = page.getViewport({ scale: 1 });
+          holder.style.aspectRatio = base.width + " / " + base.height;
+          var cssW = holder.clientWidth || 800;
+          var dpr = Math.min(window.devicePixelRatio || 1, 2);
+          var scale = Math.min((cssW * dpr) / base.width, 2400 / Math.max(base.width, base.height));
+          var vp = page.getViewport({ scale: scale });
+          var canvas = document.createElement("canvas");
+          canvas.width = Math.max(1, Math.floor(vp.width));
+          canvas.height = Math.max(1, Math.floor(vp.height));
+          holder.insertBefore(canvas, holder.firstChild);
+          return page.render({ canvasContext: canvas.getContext("2d"), viewport: vp }).promise.then(function () {
+            holder.setAttribute("data-rendered", "1");
+          });
+        }).catch(function (e) {
+          holder.insertAdjacentHTML("beforeend", '<div class="pdf-err">' + esc("Page " + n + " could not be drawn: " + ((e && e.message) || e)) + "</div>");
+        });
+      }
+      function dropPdfPage(holder) {
+        if (!holder.getAttribute("data-drawn")) return;
+        holder.removeAttribute("data-drawn");
+        holder.removeAttribute("data-rendered");
+        Array.prototype.forEach.call(holder.querySelectorAll("canvas"), function (c) { c.width = 0; c.height = 0; c.remove(); });
+      }
+      function renderPdfPages(bytes, label) {
+        var box = $("package-pages");
+        return pdfjs().then(function (lib) {
+          return lib.getDocument({ data: new Uint8Array(bytes) }).promise;
+        }).then(function (doc) {
+          state.pdfDoc = doc;
+          box.innerHTML = '<div class="pdf-meta">' + esc(label + " - " + doc.numPages + " page" + (doc.numPages === 1 ? "" : "s") + ", shown below.") + "</div>";
+          box.classList.remove("hide");
+          var holders = [];
+          for (var i = 1; i <= doc.numPages; i++) {
+            var holder = document.createElement("div");
+            holder.className = "pdf-page";
+            holder.setAttribute("data-page", String(i));
+            holder.innerHTML = '<span class="pno">' + i + " / " + doc.numPages + "</span>";
+            box.appendChild(holder);
+            holders.push(holder);
+          }
+          if ("IntersectionObserver" in window) {
+            state.pageObserver = new IntersectionObserver(function (entries) {
+              entries.forEach(function (en) { if (en.isIntersecting) drawPdfPage(en.target); else dropPdfPage(en.target); });
+            }, { rootMargin: "1500px 0px" });
+            holders.forEach(function (h) { state.pageObserver.observe(h); });
+          } else {
+            holders.slice(0, 30).forEach(drawPdfPage);
+          }
+        });
+      }
       function showPdf(url) {
-        var viewer = $("package-viewer");
         return fetch(url, { credentials: "same-origin", headers: authHeaders(false) }).then(function (r) {
           if (!r.ok) throw new Error("HTTP " + r.status);
-          return r.blob();
-        }).then(function (blob) {
+          return r.arrayBuffer();
+        }).then(function (buf) {
           hideViewer();
-          state.blobUrl = URL.createObjectURL(blob);
-          viewer.src = state.blobUrl;
-          viewer.classList.remove("hide");
+          state.blobUrl = URL.createObjectURL(new Blob([buf], { type: "application/pdf" }));
           var a = $("package-download");
           a.href = state.blobUrl;
           a.setAttribute("download", safeName() + "_submittal.pdf");
           a.classList.remove("hide");
+          return renderPdfPages(buf, "Submittal package for " + ((state.detail && state.detail.session.project_name) || "this schedule"));
         }).catch(function (e) {
-          $("package-result").insertAdjacentHTML("beforeend", '<div class="error-box">' + esc("The PDF could not be shown here: " + ((e && e.message) || e)) + "</div>");
+          var msg = "The PDF could not be shown here: " + ((e && e.message) || e) + (state.blobUrl ? ". DOWNLOAD PDF still saves it." : ".");
+          $("package-result").insertAdjacentHTML("beforeend", '<div class="error-box">' + esc(msg) + "</div>");
         });
       }
       $("package-btn").addEventListener("click", function () {
@@ -2131,9 +2253,13 @@ global.SovereignPdfRender = {
         var pick = null;
         if (want && sessions.some(function (s) { return s.id === want; })) pick = want;
         if (!pick) {
+          // Your own latest schedule with rows, else your latest upload, else
+          // the demo building the homepage showed you ("EXPORT THE REAL PDF
+          // PACKAGE" lands here): its rows and its package are one press away.
           var real = sessions.filter(function (s) { return !s.is_demo; });
           var withRows = real.filter(function (s) { return s.door_count || s.set_count; });
-          pick = (withRows[0] || real[0] || {}).id || null;
+          var demos = sessions.filter(function (s) { return s.is_demo; });
+          pick = (withRows[0] || real[0] || demos[0] || {}).id || null;
         }
         if (pick) openSession(pick, { scroll: false });
       });
