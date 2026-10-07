@@ -1760,6 +1760,16 @@
     @media (max-width: 374px) {
       html.folder-lowered #wa-account-chip:not(.wa-docked) .wa-label { display: none; }
     }
+    /* Phones: the PropX chapter's grid kept a 690 px column (its cost table carries the global
+       640 px table minimum) and the inline three-up metric rows overrode the one-column rule, so the
+       MeetingX box (CONNECT TO SPATIAL ROOM cut to "CONNECT TO SPATIA"), the PropX card and several
+       metric cards ran past the right edge of a 390 px screen. */
+    @media (max-width: 768px) {
+      .propx-grid { grid-template-columns: minmax(0, 1fr); }
+      .propx-card table { min-width: 0; }
+      .propx-card th, .propx-card td { padding: 10px 8px; }
+      .metrics-row[style] { grid-template-columns: minmax(0, 1fr) !important; }
+    }
     /* Ephemeral-to-permanent upgrade modal */
     #upgrade-modal {
       position: fixed;
