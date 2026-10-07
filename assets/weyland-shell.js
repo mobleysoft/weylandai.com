@@ -111,6 +111,15 @@
       "#wa-overlay .wa-row{display:flex;justify-content:space-between;gap:12px;font-size:14px;padding:8px 0;border-bottom:1px solid rgba(255,255,255,.06)}",
       "#wa-overlay .wa-row span:first-child{color:#8b9bb7}",
       "#wa-overlay iframe{display:block;width:100%;height:100%;border:0;background:#fff}",
+      "#wa-overlay .wa-pdf{min-height:100%;display:flex;flex-direction:column;background:#1b2130}",
+      "#wa-overlay .wa-pdf-bar{position:sticky;top:0;z-index:2;display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:8px;padding:8px 12px;background:rgba(6,11,22,.97);border-bottom:1px solid rgba(255,255,255,.08)}",
+      "#wa-overlay .wa-pdf-btn{min-width:44px;min-height:40px;background:none;border:1px solid rgba(255,255,255,.22);color:#e9eef8;border-radius:8px;padding:6px 12px;font-weight:600;font-size:13px;font-family:inherit;cursor:pointer}",
+      "#wa-overlay .wa-pdf-btn[disabled]{opacity:.4;cursor:default}",
+      "#wa-overlay .wa-pdf-page{min-width:8.5em;text-align:center;font-size:13px;color:#c9d3e6}",
+      "#wa-overlay .wa-pdf-status{padding:14px;color:#9fb0cc;font-size:14px;line-height:1.5;text-align:center}",
+      "#wa-overlay .wa-pdf-stage{flex:1;overflow-x:auto;padding:12px;text-align:center}",
+      "#wa-overlay .wa-pdf-canvas{display:inline-block;vertical-align:top;background:#fff;box-shadow:0 10px 40px rgba(0,0,0,.45)}",
+      "#wa-overlay iframe.wa-pdf-native{height:80vh}",
       "html.wa-overlay-open,html.wa-overlay-open body{overflow:hidden}",
       "html.wa-overlay-open footer,html.wa-overlay-open .site-footer{visibility:hidden}",
       "@media (prefers-reduced-motion:no-preference){#wa-overlay.is-open .wa-card{animation:wa-in .18s ease-out}}",
@@ -164,32 +173,72 @@
       S.body
     ]);
     document.body.appendChild(S.overlay);
-    document.addEventListener("keydown", function (e) { if (e.key === "Escape" && S.overlay.classList.contains("is-open")) close(); });
+    document.addEventListener("keydown", function (e) {
+      if (!S.overlay.classList.contains("is-open")) return;
+      if (e.key === "Escape") { close(); return; }
+      if (S.view === "pdf" && S.pdf && !/^(INPUT|TEXTAREA|SELECT)$/.test((e.target && e.target.tagName) || "")) {
+        if (e.key === "ArrowRight" || e.key === "PageDown") { e.preventDefault(); S.pdf.go(1); }
+        else if (e.key === "ArrowLeft" || e.key === "PageUp") { e.preventDefault(); S.pdf.go(-1); }
+      }
+    });
+  }
+
+  // Tell the page when the overlay opens or closes (the homepage pauses its 3D backdrop meanwhile);
+  // html.wa-overlay-open carries the same state for CSS and observers.
+  function announce(open) {
+    try { window.dispatchEvent(new CustomEvent("weyland-overlay", { detail: { open: open, view: S.view } })); } catch (e) {}
+  }
+
+  // Whatever the previous view held that keeps working in the background (a pdf.js document) stops here.
+  function teardown() {
+    if (S.pdf) { try { S.pdf.stop(); } catch (e) {} S.pdf = null; }
+    S.appFrame = null;
   }
 
   function show(title, node, viewName) {
     ensureOverlay();
+    teardown();
+    var wasOpen = S.overlay.classList.contains("is-open");
     S.view = viewName;
     S.title.textContent = title;
     S.body.textContent = "";
+    S.body.scrollTop = 0;
     S.body.appendChild(node);
     S.overlay.classList.add("is-open");
     root.classList.add("wa-overlay-open");
     // Focus now, never later: a delayed focus can yank the caret back into the first field while
     // someone (or a password manager, or an agent) is already filling the next one.
     var first = S.body.querySelector("input,button");
-    if (first && viewName !== "app" && !S.body.contains(document.activeElement)) { try { first.focus({ preventScroll: true }); } catch (e) {} }
+    if (first && viewName !== "app" && viewName !== "pdf" && !S.body.contains(document.activeElement)) { try { first.focus({ preventScroll: true }); } catch (e) {} }
+    if (!wasOpen) announce(true);
+  }
+
+  function hideOverlay() {
+    if (!S.overlay) return;
+    var wasOpen = S.overlay.classList.contains("is-open");
+    teardown();
+    S.overlay.classList.remove("is-open");
+    root.classList.remove("wa-overlay-open");
+    S.body.textContent = "";
+    S.view = null;
+    if (wasOpen) announce(false);
+  }
+
+  // Views that should answer the browser's Back button get their own history entry; closing puts the
+  // address back to where the visitor was (query and hash kept), not a bare "/".
+  function pushView(state, url) {
+    try {
+      if (!(history.state && history.state.wa)) S.baseUrl = location.pathname === "/login" ? "/" : location.pathname + location.search + location.hash;
+      history.pushState(state, "", url);
+    } catch (e) {}
   }
 
   function close() {
     if (!S.overlay) return Promise.resolve();
-    S.overlay.classList.remove("is-open");
-    root.classList.remove("wa-overlay-open");
-    S.body.textContent = "";
-    S.appFrame = null;
-    S.view = null;
-    if (history.state && history.state.wa) history.replaceState(null, "", "/");
+    hideOverlay();
+    if (history.state && history.state.wa) history.replaceState(null, "", S.baseUrl || "/");
     else if (location.pathname === "/login") history.replaceState(null, "", "/");
+    S.baseUrl = null;
     return Promise.resolve();
   }
 
@@ -198,6 +247,7 @@
     if (view === "signin") return viewSignIn(opts.continueTo || null, opts.email || "");
     if (view === "account") return viewAccount();
     if (view === "app") return viewApp(opts.path || "/subx-app");
+    if (view === "pdf") return viewPdf(opts);
     if (view === "create") { if (S.status === "signed-in") return viewAccount(); close(); openCreateAccount(opts.continueTo || null); return Promise.resolve(); }
     return Promise.resolve();
   }
@@ -332,7 +382,7 @@
     return Promise.resolve();
   }
 
-  function viewApp(path) {
+  function viewApp(path, fromHistory) {
     var clean = path.split("#")[0];
     var name = APPS[clean.split("?")[0]] || "WeylandAI";
     var frame = h("iframe", { title: name, src: clean + (clean.indexOf("?") >= 0 ? "&" : "?") + "embed=1" });
@@ -343,9 +393,135 @@
         if (p === "/login") viewSignIn(redirectTarget(frame.contentWindow.location.href) || clean);
       } catch (e) {}
     });
-    S.appFrame = frame;
     show(name, frame, "app");
-    try { history.pushState({ wa: "app", path: clean }, "", clean); } catch (e) {}
+    S.appFrame = frame;
+    if (!fromHistory) pushView({ wa: "app", path: clean }, clean);
+    return Promise.resolve();
+  }
+
+  // ---------- documents: cited price-book pages and catalogue pages, in place ----------
+  // Citations point at authenticated routes (/api/cut-sheets/sheet/<id>/pdf and
+  // /api/cps/catalogues/<id>/pages/<n>/render). A plain new tab carries no bearer token, so guests saw
+  // {"error":"Authentication required"}. Here the document is read with the visitor's own token and
+  // drawn by our self-hosted pdf.js, opened at the cited page. Price books run to ~19 MB; their route
+  // answers range requests, so only the pages being looked at are downloaded.
+  var pdfLibPromise = null;
+  function loadPdfLib() {
+    if (!pdfLibPromise) {
+      pdfLibPromise = import("/assets/pdfjs/pdf.min.mjs").then(function (lib) {
+        lib.GlobalWorkerOptions.workerSrc = "/assets/pdfjs/pdf.worker.min.mjs";
+        return lib;
+      });
+      pdfLibPromise.catch(function () { pdfLibPromise = null; });
+    }
+    return pdfLibPromise;
+  }
+
+  function viewPdf(opts, fromHistory) {
+    opts = opts || {};
+    var url = String(opts.url || "");
+    var m = /#page=(\d+)/.exec(url);
+    var first = Math.max(1, parseInt(opts.page || (m && m[1]) || "1", 10) || 1);
+    var path = url.replace(/#.*$/, "");
+    if (!/^\/api\//.test(path)) return Promise.resolve(); // our own document routes only
+    var title = String(opts.title || "Cited document").replace(/\s+/g, " ").trim().slice(0, 160);
+    var bearer = opts.token || token() || ssGet(EPH_KEY) || "";
+    var headers = bearer ? { Authorization: "Bearer " + bearer } : {};
+    var status = h("div", { "class": "wa-pdf-status", role: "status", "aria-live": "polite", text: "Opening " + title + "…" });
+    var prev = h("button", { type: "button", "class": "wa-pdf-btn", text: "‹ Prev", "aria-label": "Previous page" });
+    var label = h("span", { "class": "wa-pdf-page" });
+    var next = h("button", { type: "button", "class": "wa-pdf-btn", text: "Next ›", "aria-label": "Next page" });
+    var zoomOut = h("button", { type: "button", "class": "wa-pdf-btn", text: "−", "aria-label": "Zoom out" });
+    var zoomIn = h("button", { type: "button", "class": "wa-pdf-btn", text: "+", "aria-label": "Zoom in" });
+    var save = h("button", { type: "button", "class": "wa-pdf-btn", text: "Download" });
+    var stage = h("div", { "class": "wa-pdf-stage" });
+    var wrap = h("div", { "class": "wa-pdf", "data-wa-doc": path }, [h("div", { "class": "wa-pdf-bar" }, [prev, label, next, zoomOut, zoomIn, save]), status, stage]);
+    var st = { doc: null, task: null, n: first, zoom: 1, alive: true };
+    st.stop = function () { st.alive = false; if (st.task) { try { st.task.destroy(); } catch (e) {} } };
+    st.go = function (d) { if (st.doc) draw(st.n + d); };
+    show(title, wrap, "pdf");
+    S.pdf = st;
+    if (!fromHistory) pushView({ wa: "pdf", url: url, title: title, page: first }, location.pathname + location.search + location.hash);
+    function say(t) { status.textContent = t; status.style.display = t ? "block" : "none"; }
+    function nav() {
+      var total = st.doc ? st.doc.numPages : 0;
+      label.textContent = total ? "Page " + st.n + " of " + total : "";
+      prev.disabled = !total || st.n <= 1;
+      next.disabled = !total || st.n >= total;
+      zoomOut.disabled = !total || st.zoom <= 1;
+      zoomIn.disabled = !total || st.zoom >= 3;
+    }
+    function draw(n) {
+      if (!st.doc || !st.alive) return;
+      n = Math.min(Math.max(1, n), st.doc.numPages);
+      st.n = n; nav();
+      say("Drawing page " + n + "…");
+      st.doc.getPage(n).then(function (page) {
+        if (!st.alive || st.n !== n) return null;
+        var base = page.getViewport({ scale: 1 });
+        var fit = Math.max(240, Math.min((S.body.clientWidth || window.innerWidth) - 24, 1000));
+        var vp = page.getViewport({ scale: (fit / base.width) * st.zoom });
+        var dpr = Math.min(window.devicePixelRatio || 1, 2);
+        var canvas = h("canvas", { "class": "wa-pdf-canvas", role: "img", "aria-label": title + ", page " + n });
+        canvas.width = Math.floor(vp.width * dpr); canvas.height = Math.floor(vp.height * dpr);
+        canvas.style.width = Math.floor(vp.width) + "px"; canvas.style.height = Math.floor(vp.height) + "px";
+        return page.render({ canvasContext: canvas.getContext("2d"), viewport: vp, transform: dpr !== 1 ? [dpr, 0, 0, dpr, 0, 0] : null }).promise.then(function () {
+          if (!st.alive || st.n !== n) return;
+          stage.textContent = "";
+          stage.appendChild(canvas);
+          wrap.setAttribute("data-wa-page", String(n));
+          say("");
+          try { S.body.scrollTop = 0; } catch (e) {}
+        });
+      }).catch(function (e) { if (st.alive) say("Could not draw page " + n + ": " + ((e && e.message) || e)); });
+    }
+    function fetchDoc() { return fetch(path, { headers: headers, credentials: "same-origin" }); }
+    prev.addEventListener("click", function () { st.go(-1); });
+    next.addEventListener("click", function () { st.go(1); });
+    zoomIn.addEventListener("click", function () { if (st.doc && st.zoom < 3) { st.zoom += 0.5; draw(st.n); } });
+    zoomOut.addEventListener("click", function () { if (st.doc && st.zoom > 1) { st.zoom -= 0.5; draw(st.n); } });
+    save.addEventListener("click", function () {
+      save.disabled = true; save.textContent = "Downloading…";
+      fetchDoc().then(function (r) { if (!r.ok) throw new Error("The download failed (" + r.status + ")."); return r.blob(); })
+        .then(function (b) {
+          var a = h("a", { href: URL.createObjectURL(b), download: (title.replace(/[^\w.,() -]+/g, "").trim() || "document") + ".pdf" });
+          document.body.appendChild(a); a.click(); a.remove();
+          setTimeout(function () { URL.revokeObjectURL(a.href); }, 60000);
+        })
+        .catch(function (e) { say((e && e.message) || "The download failed."); })
+        .then(function () { save.disabled = false; save.textContent = "Download"; });
+    });
+    nav();
+    loadPdfLib().then(function (lib) {
+      if (!st.alive) return null;
+      st.task = lib.getDocument({ url: path, httpHeaders: headers, disableAutoFetch: true, disableStream: true, rangeChunkSize: 524288 });
+      st.task.onProgress = function (p) {
+        if (st.alive && !st.doc && p && p.total > 4194304) say("Reading " + title + " (" + (p.loaded / 1048576).toFixed(1) + " of " + (p.total / 1048576).toFixed(1) + " MB)…");
+      };
+      return st.task.promise;
+    }).then(function (doc) {
+      if (!doc) return;
+      if (!st.alive) { try { doc.destroy(); } catch (e) {} return; }
+      st.doc = doc;
+      draw(Math.min(first, doc.numPages));
+    }).catch(function (e) {
+      if (!st.alive) return null;
+      var code = e && (e.status || (e.cause && e.cause.status));
+      if (code) {
+        // The route answered with an error: say it in words (its own message), never raw JSON.
+        return fetchDoc().then(function (r) { return r.json().catch(function () { return {}; }); }).then(function (d) {
+          var msg = d && ((d.error && (d.error.message || d.error)) || d.message);
+          say(code === 401 ? "This document needs a session on this page. Reload the page, then open the citation again." : "Could not open this document" + (msg ? ": " + msg : " (" + code + ")."));
+        });
+      }
+      // pdf.js unavailable in this browser: the browser's own viewer, still inside the page.
+      return fetchDoc().then(function (r) { if (!r.ok) throw new Error("(" + r.status + ")"); return r.blob(); }).then(function (b) {
+        if (!st.alive) return;
+        stage.textContent = "";
+        stage.appendChild(h("iframe", { title: title, "class": "wa-pdf-native", src: URL.createObjectURL(b) + "#page=" + first }));
+        say("");
+      }).catch(function (e2) { say("Could not open this document " + ((e2 && e2.message) || "")); });
+    });
     return Promise.resolve();
   }
 
@@ -496,8 +672,9 @@
   }, true);
 
   window.addEventListener("popstate", function (e) {
-    if (e.state && e.state.wa === "app" && e.state.path) viewApp(e.state.path);
-    else if (S.overlay && S.overlay.classList.contains("is-open")) { S.overlay.classList.remove("is-open"); root.classList.remove("wa-overlay-open"); S.body.textContent = ""; }
+    if (e.state && e.state.wa === "app" && e.state.path) viewApp(e.state.path, true);
+    else if (e.state && e.state.wa === "pdf" && e.state.url) viewPdf({ url: e.state.url, title: e.state.title, page: e.state.page }, true);
+    else if (S.overlay && S.overlay.classList.contains("is-open")) hideOverlay();
   });
 
   function publicState() { return { status: S.status, email: S.user && S.user.email || null, view: S.view }; }
