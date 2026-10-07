@@ -4,7 +4,8 @@ import { test } from "node:test";
 import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
 import { NativeRouter } from "../src/lib/router.js";
-import { registerCutsheetxPageRoutes } from "../src/routes/cutsheetx-page.js";
+import vm from "node:vm";
+import { registerCutsheetxPageRoutes, withDocViewer } from "../src/routes/cutsheetx-page.js";
 
 const router = new NativeRouter();
 registerCutsheetxPageRoutes(router, "<!doctype html><title>CX</title>");
@@ -39,4 +40,17 @@ test("the page's embedded-nav script only acts inside the shell", () => {
   assert.match(html, /window\.parent !== window && window\.parent\.WeylandShell/);
   assert.match(html, /shell\.open\('app'/);
   assert.match(html, /rel="canonical" href="https:\/\/weylandai\.com\/cutsheetx"/);
+});
+
+test("the real page: viewer in <head>, every script parses, documents never open a new tab", () => {
+  const html = withDocViewer(readFileSync(new URL("../src/pages/cutsheetx.html", import.meta.url), "utf8"));
+  assert.ok(html.indexOf("window.CutsheetxDocs = {") > 0 && html.indexOf("window.CutsheetxDocs = {") < html.indexOf("<body"));
+  const scripts = [...html.matchAll(/<script>([\s\S]*?)<\/script>/g)].map((m) => m[1]);
+  assert.ok(scripts.length >= 3);
+  for (const x of scripts) new vm.Script(x);
+  assert.ok(!/window\.open|_blank|openAuthedPdf/.test(html));
+  assert.match(html, /data-doc-download="\/api\/cut-sheets\/download\//);
+  assert.match(html, /data-doc-url="\/api\/cps\/catalogues\//);
+  assert.match(html, /docs\.remember\('cutsheetx'/);
+  assert.match(html, /docs\.resumed\('cutsheetx'\)/);
 });

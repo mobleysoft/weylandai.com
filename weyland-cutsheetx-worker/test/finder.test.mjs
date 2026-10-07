@@ -36,6 +36,18 @@ test("a product page is server-rendered with its citations", async () => {
   assert.match(html, /Schlage L Series Catalog<\/strong>, p\. 25/);
 });
 
+test("citations open in place: data-doc-url links, never a new tab", async () => {
+  const l9080 = (await get("/find/schlage/L9080")).html;
+  assert.match(l9080, /<a href="\/api\/cps\/catalogues\/cat-l\/pages\/25\/render" data-doc-url="\/api\/cps\/catalogues\/cat-l\/pages\/25\/render" data-doc-title="Schlage L Series Catalog, p\. 25">open page<\/a>/);
+  const lcn = (await get("/find/lcn/4040XP")).html;
+  assert.match(lcn, /<a href="\/api\/cut-sheets\/sheet\/d-4040xp\/pdf#page=6" data-doc-url="\/api\/cut-sheets\/sheet\/d-4040xp\/pdf#page=6" data-doc-title="LCN Price Book, pp\. 6-48">open<\/a>/);
+  for (const html of [l9080, lcn, (await get("/find?q=schlage")).html]) {
+    assert.ok(!/window\.open|_blank|data-doc="/.test(html));
+    assert.ok(html.includes("window.CutsheetxDocs = {"), "document viewer on the page");
+    assert.ok(html.indexOf("window.CutsheetxDocs = {") < html.indexOf("history.replaceState({ finder: 1 }"), "viewer before the navigation script");
+  }
+});
+
 test("the finder's lead states live counts, not hard-coded ones", async () => {
   const { html } = await get("/find");
   assert.match(html, /<p class="lead">4 catalogued products from 4 manufacturers, with page citations into 2 manufacturer price books and 3 indexed catalogue pages\. Free, no account\.<\/p>/);
@@ -57,4 +69,6 @@ test("the script survives the template literal intact (no backslashes, no backti
   assert.ok(!NAV_SCRIPT.includes(String.fromCharCode(92)));
   assert.ok(!NAV_SCRIPT.includes(String.fromCharCode(96)));
   assert.match(NAV_SCRIPT, /window\.parent\.WeylandShell/);
+  assert.match(NAV_SCRIPT, /a\.hasAttribute\("data-doc-url"\)/, "document links are not finder navigation");
+  assert.match(NAV_SCRIPT, /docs\.remember\("finder"/);
 });

@@ -280,38 +280,6 @@
         });
     }
 
-    // Fetch an authenticated binary resource (PDF) and open it in a new
-    // tab. window.open(url,'_blank') is called SYNCHRONOUSLY on the click
-    // (before the fetch resolves) so browser popup blockers don't treat
-    // the later blob navigation as an unsolicited popup.
-    function openAuthedPdf(url, btn){
-      // A citation's #page=N fragment is the cited page: fetch without it, then hand it to the viewer.
-      var hash = url.indexOf('#') >= 0 ? url.slice(url.indexOf('#')) : '';
-      var path = url.replace(/#.*$/, '');
-      var win = window.open('', '_blank');
-      var originalLabel = btn ? btn.textContent : null;
-      if (btn) { btn.disabled = true; btn.textContent = 'LOADING…'; }
-      fetch(path, { headers: authHeaders() })
-        .then(function(r){
-          if (!r.ok) return r.json().catch(function(){ return null; }).then(function(data){
-            throw new Error('HTTP ' + r.status + ': ' + apiErrorText(data));
-          });
-          return r.blob();
-        })
-        .then(function(blob){
-          var objUrl = URL.createObjectURL(blob) + hash;
-          if (win) win.location = objUrl;
-          else window.open(objUrl, '_blank');
-        })
-        .catch(function(err){
-          if (win) win.close();
-          alert('Could not open document: ' + err.message);
-        })
-        .finally(function(){
-          if (btn) { btn.disabled = false; btn.textContent = originalLabel; }
-        });
-    }
-
     // Price-book review: drafts are not pricing until explicitly reviewed.
     var priceEpoch = 0, priceController = null, priceIds = [];
     var priceMessage = document.getElementById('price-status');
@@ -401,22 +369,29 @@
     // does and returns the same per-line answer: one matcher, one answer. A match is cited by
     // its price-book pages (a filed cut sheet) or, when no cut sheet is filed, by the
     // catalogue page that names the model. "No match found" means no product matched at all.
-    // A citation the matcher signed (?cite=) opens as a plain link: the browser's own PDF viewer
-    // goes straight to #page=N and streams the file. An unsigned one is fetched with the token.
-    function citeButton(id, label, url){
+    // A citation opens in place (lib/doc-viewer.js, window.CutsheetxDocs, wired by data-doc-url):
+    // standalone it is drawn over this page at the cited page and the results stay underneath; in
+    // the homepage overlay it opens in the shell's own document view, and the shell's Back brings
+    // this page back with the same results (remember/resumed below). A signed citation is also a
+    // real link, so opening it in a tab of its own works; an unsigned one is a button.
+    function citeButton(id, label, url, title){
       if (!url) return '';
-      if (/[?&]cite=/.test(url)) return '<a class="link-btn" id="' + id + '" href="' + esc(url) + '" target="_blank" rel="noopener">' + label + '</a>';
-      return '<button class="link-btn" id="' + id + '" data-url="' + esc(url) + '">' + label + '</button>';
+      var attrs = ' id="' + id + '" data-doc-url="' + esc(url) + '" data-doc-title="' + esc(title || '') + '"';
+      return /[?&]cite=/.test(url)
+        ? '<a class="link-btn"' + attrs + ' href="' + esc(url) + '">' + label + '</a>'
+        : '<button type="button" class="link-btn"' + attrs + '>' + label + '</button>';
     }
-    document.getElementById('match-btn').addEventListener('click', function(){
+    var lastMatch = null, lastSearch = null;
+    function runMatch(){
       var manufacturer = document.getElementById('match-mfr').value.trim();
       var model = document.getElementById('match-model').value.trim();
       var component_type = document.getElementById('match-type').value.trim();
       var box = document.getElementById('match-results');
-      if (!model) { box.innerHTML = '<div class="error-box">Enter a model or catalog number.</div>'; return; }
+      lastMatch = null;
+      if (!model) { box.innerHTML = '<div class="error-box">Enter a model or catalog number.</div>'; return Promise.resolve(); }
       var asTyped = (manufacturer ? manufacturer + ' ' : '') + model;
       box.innerHTML = '<div class="loading">Matching against the real product database…</div>';
-      fetch('/api/cut-sheets/match', {
+      return fetch('/api/cut-sheets/match', {
         method: 'POST',
         headers: authHeaders(true),
         body: JSON.stringify({ manufacturer: manufacturer || undefined, model, component_type: component_type || undefined })
@@ -425,6 +400,7 @@
         .then(function(res){
           if (!res.ok) { box.innerHTML = '<div class="error-box">HTTP ' + res.status + ': ' + esc(apiErrorText(res.data)) + '</div>'; return; }
           var result = res.data;
+          lastMatch = result.matched ? { mfr: manufacturer, model: model, type: component_type } : null;
           if (!result.matched) {
             box.innerHTML = '<div class="empty">No match found for "' + esc(asTyped) + '". The miss is recorded; recorded misses decide what the catalogue takes in next.</div>';
             return;
@@ -439,42 +415,39 @@
               var title = String(sheet.title || 'Cut sheet').split(' (')[0];
               return '<tr><td>' + esc(title) + (sheet.pageHint ? ', pp. ' + esc(sheet.pageHint) : '') + '</td>' +
                 '<td>' + esc(sheet.pages != null ? sheet.pages + '-page price book' : '') + '</td>' +
-                '<td>' + citeButton('cite-open-' + i, 'OPEN AT THE PAGE', sheet.pageUrl) + ' ' +
-                (sheet.id ? '<button class="link-btn" data-doc="' + esc(sheet.id) + '">DOWNLOAD PDF</button>' : '') + '</td></tr>';
+                '<td>' + citeButton('cite-open-' + i, 'OPEN AT THE PAGE', sheet.pageUrl, title + (sheet.pageHint ? ', pp. ' + sheet.pageHint : '')) + ' ' +
+                (sheet.id ? '<button type="button" class="link-btn" data-doc-download="/api/cut-sheets/download/' + esc(encodeURIComponent(sheet.id)) + '" data-doc-title="' + esc(title) + '">DOWNLOAD PDF</button>' : '') + '</td></tr>';
             }).join('') + '</tbody></table>';
           } else if (pages.length) {
             html += '<div class="loading">No standalone cut sheet is filed for this model. Cited by the catalogue pages that name it:</div>' +
               '<table><thead><tr><th>Catalogue</th><th>Page</th><th></th></tr></thead><tbody>' + pages.map(function(c, i){
                 return '<tr><td>' + esc(c.title) + '</td><td>p. ' + esc(c.pageNum) + '</td><td>' +
-                  (c.pageUrl ? citeButton('cite-page-' + i, 'OPEN PAGE', c.pageUrl) : '<span class="pill">PDF NOT ON FILE; PAGE TEXT INDEXED</span>') + '</td></tr>';
+                  (c.pageUrl ? citeButton('cite-page-' + i, 'OPEN PAGE', c.pageUrl, c.title + ', p. ' + c.pageNum) : '<span class="pill">PDF NOT ON FILE; PAGE TEXT INDEXED</span>') + '</td></tr>';
               }).join('') + '</tbody></table>';
           } else {
             html += '<div class="empty">Matched in the catalogue. No cut sheet or catalogue page is filed for this model yet.</div>';
           }
           box.innerHTML = html;
-          Array.prototype.forEach.call(box.querySelectorAll('button[data-url]'), function(el){
-            el.addEventListener('click', function(){ openAuthedPdf(el.getAttribute('data-url'), el); });
-          });
-          Array.prototype.forEach.call(box.querySelectorAll('button[data-doc]'), function(el){
-            el.addEventListener('click', function(){ openAuthedPdf('/api/cut-sheets/download/' + encodeURIComponent(el.getAttribute('data-doc')), el); });
-          });
         })
         .catch(function(err){ box.innerHTML = '<div class="error-box">Request failed: ' + esc(err.message) + '</div>'; });
-    });
+    }
+    document.getElementById('match-btn').addEventListener('click', function(){ runMatch(); });
 
     // ---------------- Full-Text Search ----------------
-    document.getElementById('search-btn').addEventListener('click', function(){
+    function runSearch(){
       var q = document.getElementById('search-q').value.trim();
       var mfr = document.getElementById('search-mfr').value.trim();
       var box = document.getElementById('search-results');
-      if (q.length < 2) { box.innerHTML = '<div class="error-box">Query must be at least 2 characters.</div>'; return; }
+      lastSearch = null;
+      if (q.length < 2) { box.innerHTML = '<div class="error-box">Query must be at least 2 characters.</div>'; return Promise.resolve(); }
       box.innerHTML = '<div class="loading">Searching the indexed catalogue pages…</div>';
       var url = '/api/cps/search?q=' + encodeURIComponent(q) + (mfr ? '&manufacturer=' + encodeURIComponent(mfr) : '');
-      fetch(url, { headers: authHeaders() })
+      return fetch(url, { headers: authHeaders() })
         .then(function(r){ return r.json().then(function(d){ return { ok: r.ok, status: r.status, data: d }; }); })
         .then(function(res){
           if (!res.ok) { box.innerHTML = '<div class="error-box">HTTP ' + res.status + ': ' + esc(apiErrorText(res.data)) + '</div>'; return; }
           var data = res.data;
+          lastSearch = data.results && data.results.length ? { q: q, mfr: mfr } : null;
           if (!data.results || data.results.length === 0) {
             box.innerHTML = '<div class="empty">No matches for "' + esc(q) + '"' + (data.warning ? ' (' + esc(data.warning) + ')' : '') + '.</div>';
             return;
@@ -485,20 +458,15 @@
               '<td>' + esc(r.catalogue_name || r.catalogue_id) + '</td>' +
               '<td>' + esc(r.page_num) + '</td>' +
               '<td class="excerpt">' + escKeepMark(r.excerpt || '') + '</td>' +
-              '<td><button class="link-btn" id="' + btnId + '" data-cat="' + esc(r.catalogue_id) + '" data-page="' + esc(r.page_num) + '">VIEW PAGE</button></td></tr>';
+              '<td><button type="button" class="link-btn" id="' + btnId + '" data-doc-url="/api/cps/catalogues/' + esc(encodeURIComponent(r.catalogue_id)) + '/pages/' + esc(encodeURIComponent(r.page_num)) + '/render"' +
+              ' data-doc-title="' + esc((r.catalogue_name || r.catalogue_id) + ', p. ' + r.page_num) + '">VIEW PAGE</button></td></tr>';
           }).join('');
           box.innerHTML = '<div class="loading" style="margin-bottom:8px">' + data.count + ' result(s) — method: ' + esc(data.searchMethod) + '</div>' +
             '<table><thead><tr><th>Manufacturer</th><th>Catalogue</th><th>Page</th><th>Excerpt</th><th></th></tr></thead><tbody>' + rows + '</tbody></table>';
-          data.results.forEach(function(r, i){
-            var el = document.getElementById('view-btn-' + i);
-            if (!el) return;
-            el.addEventListener('click', function(){
-              openAuthedPdf('/api/cps/catalogues/' + encodeURIComponent(r.catalogue_id) + '/pages/' + encodeURIComponent(r.page_num) + '/render', el);
-            });
-          });
         })
         .catch(function(err){ box.innerHTML = '<div class="error-box">Request failed: ' + esc(err.message) + '</div>'; });
-    });
+    }
+    document.getElementById('search-btn').addEventListener('click', function(){ runSearch(); });
 
     // ---------------- Local Series Lookup ----------------
     document.getElementById('local-btn').addEventListener('click', function(){
@@ -560,10 +528,42 @@
         n(c.cataloguePages) + ' indexed pages from ' + n(c.catalogues) + ' catalogues, full-text searchable.';
     }).catch(function(){});
 
+    // ---------------- Coming back from the shell's document view ----------------
+    // In the homepage overlay a citation opens in the shell's own document view, which replaces this
+    // page; the shell's Back loads it again. What it showed (the matched line, the search) is noted
+    // on the shell's history entry before the hand-off and shown again here.
+    var docs = window.CutsheetxDocs;
+    if (docs) docs.remember('cutsheetx', function(trigger){
+      if (!lastMatch && !lastSearch) return null;
+      var inSearch = !!(trigger && trigger.closest && trigger.closest('#search-results'));
+      return { match: lastMatch, search: lastSearch, section: inSearch ? 'search' : 'match' };
+    });
+    function restore(back){
+      var jobs = [];
+      if (back.match && back.match.model) {
+        document.getElementById('match-mfr').value = back.match.mfr || '';
+        document.getElementById('match-model').value = back.match.model;
+        document.getElementById('match-type').value = back.match.type || '';
+        jobs.push(runMatch());
+      }
+      if (back.search && back.search.q) {
+        document.getElementById('search-q').value = back.search.q;
+        document.getElementById('search-mfr').value = back.search.mfr || '';
+        jobs.push(runSearch());
+      }
+      Promise.all(jobs).then(function(){
+        var box = document.getElementById(back.section === 'search' ? 'search-results' : 'match-results');
+        var card = box && box.closest ? box.closest('.card') : box;
+        if (card) window.scrollTo(0, Math.max(0, card.getBoundingClientRect().top + window.pageYOffset - 12));
+      });
+    }
+
     // ---------------- Boot ----------------
     ephemeralToken().then(function(t){
       token = t;
       setStatus('Trial session active - <b>full real access</b>, no signup required.');
+      var back = docs && docs.resumed('cutsheetx');
+      if (back) restore(back);
       loadCatalogues();
     }).catch(function(err){
       setStatus('Could not start a trial session: ' + esc(err.message) + ' - some actions below may fail without a real account.', true);

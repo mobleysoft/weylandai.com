@@ -14,10 +14,20 @@
 // same page. Any other /cutsheetx* path gets the router's ordinary 404 JSON,
 // which is what the monolith answered for those paths before the wildcard.
 
+import { DOC_VIEWER_SCRIPT } from "../lib/doc-viewer.js";
+
 export const CUTSHEETX_PAGE_PATHS = ["/cutsheetx", "/cutsheetx/", "/cutsheetx/index.html", "/cutsheetx.html"];
 
+// Cited documents open in place (lib/doc-viewer.js, shared with the finder): the viewer goes in
+// <head>, so window.CutsheetxDocs exists before the page's own scripts run (they register what
+// to restore when the shell's document view hands the page back).
+export function withDocViewer(html) {
+  return html.includes("</head>") ? html.replace("</head>", () => "<script>" + DOC_VIEWER_SCRIPT + "</script>\n</head>") : html;
+}
+
 export function registerCutsheetxPageRoutes(router, html) {
-  const serve = () => new Response(html, {
+  const page = withDocViewer(html);
+  const serve = () => new Response(page, {
     headers: { "Content-Type": "text/html; charset=UTF-8", "Cache-Control": "public, max-age=60" },
   });
   for (const path of CUTSHEETX_PAGE_PATHS) router.get(path, serve);

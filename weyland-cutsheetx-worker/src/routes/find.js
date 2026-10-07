@@ -9,10 +9,13 @@
 //
 // Everything is read from our own store (products_fts, product_documents,
 // catalogue_pages_fts) - no call leaves the conglomerate. The PDF routes stay
-// behind the existing ephemeral-token gate; the page mints a token on click,
-// so no document is served anonymously and no accounts are needed.
+// behind the existing ephemeral-token gate; the page mints a guest token when a
+// document is first opened (and keeps it for the tab), so no document is served
+// anonymously and no accounts are needed. Documents open in place
+// (lib/doc-viewer.js), never in a new tab.
 
 import { jsonResponse3 } from "../lib/json-response.js";
+import { DOC_VIEWER_SCRIPT } from "../lib/doc-viewer.js";
 import { kvRateLimit } from "../lib/cut-sheet-misses.js";
 import { getCutSheetsForProduct, cutSheetCitation, getCataloguePagesForModel } from "../lib/product-database.js";
 
@@ -111,23 +114,6 @@ button{background:var(--gold);color:#111;border:0;border-radius:10px;padding:13p
 footer{color:var(--muted);font-size:12.5px;margin-top:40px}ul.results{list-style:none;padding:0;margin:0}ul.results li{padding:12px 0;border-bottom:1px solid var(--line)}
 `;
 
-const OPEN_SCRIPT = `
-// Documents stay behind the free trial token: mint one on click, fetch the
-// PDF with it, and show it. No accounts, nothing served anonymously.
-document.addEventListener("click", async function (e) {
-  var a = e.target.closest("a[data-doc]"); if (!a) return;
-  e.preventDefault(); var win = window.open("", "_blank");
-  try {
-    var r = await fetch("/api/auth/ephemeral", { method: "POST", headers: { "Content-Type": "application/json" }, body: "{}" });
-    var t = (await r.json()); var token = t.token || t.access_token;
-    var pdf = await fetch(a.getAttribute("data-doc"), { headers: { "Authorization": "Bearer " + token } });
-    if (!pdf.ok) throw new Error("document " + pdf.status);
-    var blob = await pdf.blob(); var url = URL.createObjectURL(blob) + (a.getAttribute("data-page") ? "#page=" + a.getAttribute("data-page") : "");
-    if (win) win.location = url; else location.href = url;
-  } catch (err) { if (win) win.close(); a.insertAdjacentHTML("afterend", " <span style=\\"color:var(--red)\\">could not open: " + String(err.message).replace(/</g, "&lt;") + "</span>"); }
-});
-`;
-
 // Finder in place (2026-10-07). The server-rendered pages stay exactly what they
 // are - the indexable URLs /find?q=... and /find/<manufacturer>/<model>, with
 // the sitemap - and with a script the search form and the finder's own links
@@ -146,7 +132,7 @@ export const NAV_SCRIPT = `
   function plainClick(e) { return !e.defaultPrevented && e.button === 0 && !e.metaKey && !e.ctrlKey && !e.shiftKey && !e.altKey; }
   function linkOf(e) {
     var a = e.target && e.target.closest ? e.target.closest("a[href]") : null;
-    if (!a || a.target || a.hasAttribute("download") || a.hasAttribute("data-doc")) return null;
+    if (!a || a.target || a.hasAttribute("download") || a.hasAttribute("data-doc-url") || a.hasAttribute("data-doc-download")) return null;
     try { return new URL(a.getAttribute("href"), location.href); } catch (err) { return null; }
   }
   if (shell) {
@@ -162,6 +148,7 @@ export const NAV_SCRIPT = `
   var main = document.querySelector("main");
   if (!main || !window.fetch || !window.DOMParser || !window.URLSearchParams || !history.pushState) return;
   var inflight = null;
+  var shown = location.pathname + location.search;
   function isFinder(u) {
     if (u.origin !== location.origin) return false;
     var p = u.pathname;
@@ -186,6 +173,7 @@ export const NAV_SCRIPT = `
         var next = doc.querySelector("main");
         if (!next) throw new Error("no main");
         if (push) record(url);
+        shown = push ? location.pathname + location.search : url;
         main.innerHTML = next.innerHTML;
         document.title = doc.title;
         window.scrollTo(0, 0);
@@ -215,9 +203,26 @@ export const NAV_SCRIPT = `
     show(u.pathname + u.search, true);
   });
   history.replaceState({ finder: 1 }, "", location.href);
+  // Back from an open document (lib/doc-viewer.js) lands on the same URL: nothing to fetch.
   window.addEventListener("popstate", function (e) {
-    if (e.state && e.state.finder) show(location.pathname + location.search, false);
+    if (!(e.state && e.state.finder)) return;
+    var u = location.pathname + location.search;
+    if (u !== shown) show(u, false);
   });
+  // In the overlay a document opens in the shell's own view, which replaces this frame; the shell's
+  // Back loads the finder again at the URL it first opened. The page it was on is noted before the
+  // hand-off and shown again here.
+  var docs = window.CutsheetxDocs;
+  if (shell && docs) {
+    docs.remember("finder", function () { return { url: location.pathname + location.search }; });
+    var back = docs.resumed("finder");
+    if (back && back.url) {
+      try {
+        var bu = new URL(back.url, location.href);
+        if (isFinder(bu) && bu.pathname + bu.search !== shown) show(bu.pathname + bu.search, true);
+      } catch (err) {}
+    }
+  }
 })();
 `;
 
@@ -229,21 +234,29 @@ function page({ title, description, canonical, body, jsonLd }) {
 <body><main><header><a href="/" style="text-decoration:none;display:flex;align-items:center;gap:10px;color:var(--text)"><span class="mark">W</span><strong>WeylandAI</strong></a><span class="meta">Door hardware cut-sheet finder</span></header>
 ${body}
 <footer>Documents are the manufacturers' own, served from WeylandAI's catalogue store. No accounts, no tracking beyond a page count in our own table. <a href="/">weylandai.com</a></footer></main>
-<script>${OPEN_SCRIPT}</script><script>${NAV_SCRIPT}</script></body></html>`;
+<script>${DOC_VIEWER_SCRIPT}</script><script>${NAV_SCRIPT}</script></body></html>`;
 }
 
 function searchForm(q) {
   return `<form action="/find" method="get" role="search"><input type="search" name="q" value="${esc(q || "")}" placeholder="Manufacturer and model, e.g. Von Duprin 99 or LCN 4040XP" aria-label="Search door hardware" autofocus><button type="submit">Find</button></form>`;
 }
 
+// A citation opens in place (lib/doc-viewer.js, wired by data-doc-url): drawn over the finder page
+// standalone, or in the homepage shell's document view inside its overlay. Never a new tab: these
+// links are unsigned, so a tab of their own would get {"error":"Authentication required"}.
+function docLink(url, title, label) {
+  return ` <a href="${esc(url)}" data-doc-url="${esc(url)}" data-doc-title="${esc(title)}">${label}</a>`;
+}
+
 function renderCitations(docs) {
   const parts = [];
   for (const cs of docs.cutSheets) {
     const title = String(cs.title || "Price book").split(" (")[0];
-    parts.push(`<div class="cite"><strong>${esc(title)}</strong>${cs.pageHint ? ", pp. " + esc(cs.pageHint) : ""}${cs.pages ? ` <small>${esc(cs.pages)}-page manufacturer price book</small>` : ""}${cs.pageUrl ? ` <a href="${esc(cs.pageUrl)}" data-doc="${esc(cs.pageUrl.split("#")[0])}" data-page="${esc((cs.pageUrl.split("#page=")[1] || ""))}">open</a>` : ""}</div>`);
+    const cited = title + (cs.pageHint ? ", pp. " + cs.pageHint : "");
+    parts.push(`<div class="cite"><strong>${esc(title)}</strong>${cs.pageHint ? ", pp. " + esc(cs.pageHint) : ""}${cs.pages ? ` <small>${esc(cs.pages)}-page manufacturer price book</small>` : ""}${cs.pageUrl ? docLink(cs.pageUrl, cited, "open") : ""}</div>`);
   }
   for (const cp of docs.cataloguePages) {
-    parts.push(`<div class="cite"><strong>${esc(cp.title)}</strong>, p. ${esc(cp.pageNum)} <small>catalogue page naming this model</small>${cp.pageUrl ? ` <a href="${esc(cp.pageUrl)}" data-doc="${esc(cp.pageUrl)}">open page</a>` : ` <small>PDF not yet on file; the page text is indexed</small>`}</div>`);
+    parts.push(`<div class="cite"><strong>${esc(cp.title)}</strong>, p. ${esc(cp.pageNum)} <small>catalogue page naming this model</small>${cp.pageUrl ? docLink(cp.pageUrl, cp.title + ", p. " + cp.pageNum, "open page") : ` <small>PDF not yet on file; the page text is indexed</small>`}</div>`);
   }
   if (!parts.length) parts.push(`<p class="none">No document is filed for this model yet. The miss is recorded and feeds our catalogue intake.</p>`);
   return parts.join("");

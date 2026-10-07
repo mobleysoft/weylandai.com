@@ -5,14 +5,20 @@
 //
 //   A. /cutsheetx: live counts load; MATCH answers Schlage L9080 with its catalogue-page citation
 //      (the same answer as the homepage paste) and LCN 4040XP with its price-book pages; both
-//      citations open as plain links (signed) and are PDFs; SEARCH returns pages.
+//      citations are drawn in the page at the cited page (lib/doc-viewer.js, pdf.js), never in a new
+//      tab, and Back closes the document with the results still there; DOWNLOAD PDF saves the price
+//      book without a new tab; SEARCH returns pages.
 //   B. The homepage's single-page shell: CutsheetX opens in the overlay at /cutsheetx?embed=1 (not
-//      /pricing), its nav stays in the shell; the finder searches and opens results in place inside
-//      the overlay, Back closes the overlay, the WeylandAI link closes it without nesting a homepage.
+//      /pricing); a citation there opens in the shell's own document view and the shell's Back brings
+//      CutsheetX back with the same match; its nav stays in the shell; the finder searches and opens
+//      results in place inside the overlay, its "open" goes to the shell's document view and Back
+//      returns to the product page, Back closes the overlay, the WeylandAI link closes it without
+//      nesting a homepage.
 //   C. Homepage paste (known catalogue lines only), hero cards and TRY A REAL MATCH: the single-line
 //      form gives the paste's answer, and every citation opens in place (the shell's document view
 //      draws the page) for a guest, never {"error":"Authentication required"}.
-//   D. Standalone finder: search and result links in place; Back, Forward and reload work.
+//   D. Standalone finder: search and result links in place; Back, Forward and reload work; a product
+//      page's "open" draws the document in the page with a Download control, Back closes it.
 //
 // Side effects: each run mints guest (AuthFor ephemeral) sessions, as every visitor does. The demo
 // building clone (POST /api/demo/weyland-building/session) is blocked so nothing is written for it,
@@ -28,27 +34,37 @@ const checks = [];
 function check(name, ok, detail) { checks.push({ name, ok: !!ok, detail: detail == null ? "" : String(detail).slice(0, 300) }); return !!ok; }
 const redact = (u) => String(u || "").replace(/cite=[^&#]+/, "cite=...");
 
-// Open a citation link in a new tab and report the document response the browser received.
-async function openCitation(page, selector, label) {
+// CutsheetX and the finder draw a document in the page (lib/doc-viewer.js, 2026-10-07): pdf.js at the
+// cited page over the page the visitor is on. It must be drawn, at the expected page, with no new tab
+// and never an auth error.
+async function openInPage(page, selector, label, expectLabel) {
+  const tabs = page.context().pages().length;
   const link = page.locator(selector).first();
-  const href = await link.getAttribute("href");
-  const path = href.split("#")[0].split("?")[0];
-  const popupP = page.context().waitForEvent("page", { timeout: 30000 }).catch(() => null);
-  const respP = page.context().waitForEvent("response", { predicate: (r) => r.url().includes(path), timeout: 45000 }).catch(() => null);
+  const doc = (await link.getAttribute("data-doc-url")) || "";
   await link.scrollIntoViewIfNeeded().catch(() => {});
   const clicked = await link.click({ timeout: 20000 }).then(() => true, (e) => e.message);
-  const popup = await popupP;
-  if (!popup) {
-    if (process.env.JOURNEY_SHOTS) await page.screenshot({ path: process.env.JOURNEY_SHOTS + "/" + label.split(" ")[0] + ".png" }).catch(() => {});
-    check(label, false, "no new tab opened; click: " + clicked + "; href=" + redact(href));
-    return;
-  }
-  const resp = await respP;
-  const status = resp ? resp.status() : null;
-  const type = resp ? resp.headers()["content-type"] || "" : "";
-  check(label, (status === 200 || status === 206) && /pdf/.test(type), "href=" + redact(href) + " status=" + status + " type=" + type);
-  await popup.close().catch(() => {});
+  const opened = await page.waitForSelector(".cxd.is-open", { timeout: 20000 }).then(() => true, () => false);
+  const drawn = opened && await page.waitForSelector(".cxd.is-open .cxd-stage canvas", { timeout: 90000 }).then(() => true, () => false);
+  const pageLabel = opened ? ((await page.textContent(".cxd-page").catch(() => "")) || "") : "";
+  const statusText = opened ? ((await page.textContent(".cxd-status").catch(() => "")) || "") : "";
+  if (!drawn && process.env.JOURNEY_SHOTS) await page.screenshot({ path: process.env.JOURNEY_SHOTS + "/" + label.split(" ")[0] + ".png" }).catch(() => {});
+  check(label, drawn && expectLabel.test(pageLabel) && page.context().pages().length === tabs && !/Authentication required/i.test(statusText),
+    "doc=" + redact(doc) + " click=" + clicked + " " + pageLabel + (statusText ? " status=" + statusText : ""));
 }
+async function closedByBack(page) {
+  await page.goBack();
+  return page.waitForFunction(() => !document.querySelector(".cxd.is-open"), null, { timeout: 10000 }).then(() => true, () => false);
+}
+// Inside the homepage overlay the same citation goes to the shell's own document view.
+async function shellDocument(home) {
+  const opened = await home.waitForSelector("#wa-overlay.is-open .wa-pdf", { timeout: 20000 }).then(() => true, () => false);
+  const drawn = opened && await home.waitForSelector("#wa-overlay .wa-pdf-canvas", { timeout: 90000 }).then(() => true, () => false);
+  const label = opened ? ((await home.textContent("#wa-overlay .wa-pdf-page").catch(() => "")) || "") : "";
+  const status = opened ? ((await home.textContent("#wa-overlay .wa-pdf-status").catch(() => "")) || "") : "";
+  const title = opened ? ((await home.textContent("#wa-overlay .wa-title").catch(() => "")) || "") : "";
+  return { drawn, label, status, title, detail: title + " | " + label + (status ? " | " + status : "") };
+}
+const citedPage = (doc) => { const m = /#page=(\d+)/.exec(doc || ""); return new RegExp("^Page " + (m ? m[1] : "1") + " of \\d+$"); };
 
 // The homepage opens citations in place (2026-10-07, index.html 1d4efa4): the shell's document view
 // draws the cited page with pdf.js. The page must be drawn, never an auth error, then the view closes.
@@ -73,7 +89,7 @@ async function openCitationInPlace(page, selector, label) {
 
 const browser = await chromium.launch({ args: ["--use-angle=metal"] });
 try {
-  const ctx = await browser.newContext({ viewport: { width: 1280, height: 860 } });
+  const ctx = await browser.newContext({ viewport: { width: 1280, height: 860 }, acceptDownloads: true });
   await ctx.route("**/api/demo/weyland-building/session**", (route) => route.abort());
 
   // ---- A. /cutsheetx standalone ----
@@ -90,13 +106,21 @@ try {
   }
   let t = await match("Schlage", "L9080");
   check("A2 MATCH Schlage L9080: matched, cited by Schlage L Series Catalog p. 25", /Matched product: SCHLAGE L9080/.test(t) && /Schlage L Series Catalog/.test(t) && /p\. 25/.test(t) && !/No match found/.test(t), t);
-  check("A3 its citation is a signed plain link", /[?&]cite=/.test(await cx.getAttribute("#match-results a.link-btn", "href") || ""), redact(await cx.getAttribute("#match-results a.link-btn", "href")));
-  await openCitation(cx, "#match-results a.link-btn", "A4 OPEN PAGE opens the catalogue page as a PDF");
+  check("A3 its citation is a signed link", /[?&]cite=/.test(await cx.getAttribute("#match-results a.link-btn", "href") || ""), redact(await cx.getAttribute("#match-results a.link-btn", "href")));
+  await openInPage(cx, "#match-results a.link-btn", "A4 OPEN PAGE draws the catalogue page in the page (no new tab)", /^Page 1 of 1$/);
+  check("A4b Back closes the document; the match is still shown", await closedByBack(cx) && /Matched product: SCHLAGE L9080/.test(await cx.textContent("#match-results")), cx.url());
   t = await match("", "Schlage L9080");
   check("A5 MATCH with the whole line in the model field gives the same answer", /Matched product: SCHLAGE L9080/.test(t), t.slice(0, 120));
   t = await match("LCN", "4040XP");
   check("A6 MATCH LCN 4040XP: matched with its price-book pages", /Matched product: LCN 4040XP/.test(t) && /LCN Price Book, pp\. \d+-\d+/.test(t), t.slice(0, 200));
-  await openCitation(cx, "#match-results a.link-btn", "A7 OPEN AT THE PAGE opens the price book as a PDF");
+  await openInPage(cx, "#match-results a.link-btn", "A7 OPEN AT THE PAGE draws the price book at the cited page (no new tab)", citedPage(await cx.getAttribute("#match-results a.link-btn", "data-doc-url")));
+  await cx.keyboard.press("Escape");
+  await cx.waitForFunction(() => !document.querySelector(".cxd.is-open"), null, { timeout: 10000 }).catch(() => {});
+  const tabsA = ctx.pages().length;
+  const dlP = cx.waitForEvent("download", { timeout: 180000 }).catch(() => null);
+  await cx.click("#match-results [data-doc-download]");
+  const dl = await dlP;
+  check("A7b DOWNLOAD PDF saves the price book (no new tab)", !!dl && /\.pdf$/.test(dl.suggestedFilename()) && ctx.pages().length === tabsA, dl ? dl.suggestedFilename() : "no download");
   await cx.fill("#search-q", "closer"); await cx.click("#search-btn");
   await cx.waitForFunction(() => /result\(s\)|No matches|HTTP/.test(document.getElementById("search-results").textContent), null, { timeout: 30000 });
   t = await cx.textContent("#search-results");
@@ -113,6 +137,18 @@ try {
   let frame = await (await home.waitForSelector("#wa-overlay iframe", { timeout: 15000 })).contentFrame();
   await frame.waitForSelector("#match-btn", { timeout: 20000 });
   check("B1 CutsheetX opens in the overlay at /cutsheetx?embed=1 (not /pricing)", /\/cutsheetx\?embed=1$/.test(frame.url()) && /CutSheetX/.test(await frame.title()), frame.url());
+  await frame.waitForFunction(() => /Trial session active/.test(document.getElementById("status-line").textContent), null, { timeout: 30000 });
+  await frame.fill("#match-mfr", "Schlage"); await frame.fill("#match-model", "L9080");
+  await frame.click("#match-btn");
+  await frame.waitForFunction(() => !/Matching against/.test(document.getElementById("match-results").textContent), null, { timeout: 30000 });
+  const tabsB = ctx.pages().length;
+  await frame.click("#match-results [data-doc-url]");
+  let sd = await shellDocument(home);
+  check("B1b in the overlay a CutsheetX citation opens in the shell's document view (no new tab)", sd.drawn && /Schlage L Series Catalog, p\. 25/.test(sd.title) && /^Page 1 of 1$/.test(sd.label) && ctx.pages().length === tabsB && await sameHome(), sd.detail);
+  await home.goBack();
+  frame = await (await home.waitForSelector("#wa-overlay iframe[src^='/cutsheetx']", { timeout: 15000 })).contentFrame();
+  const restored = await frame.waitForFunction(() => /Matched product: SCHLAGE L9080/.test(document.getElementById("match-results").textContent), null, { timeout: 30000 }).then(() => true, () => false);
+  check("B1c the shell's Back brings CutsheetX back with the same match", restored && (await frame.inputValue("#match-model")) === "L9080" && await sameHome(), frame.url());
   await frame.click("nav.nav a[href='/']");
   await home.waitForFunction(() => !document.querySelector("#wa-overlay.is-open"), null, { timeout: 10000 });
   check("B2 its HOME link closes the overlay on the same homepage", new URL(home.url()).pathname === "/" && await sameHome(), home.url());
@@ -128,6 +164,15 @@ try {
   await frame.waitForFunction(() => /^\/find\/[^/]+\/[^/]+$/.test(location.pathname) && !!document.querySelector("main h2"), null, { timeout: 20000 });
   check("B3 finder in the overlay: search and result link in place", await frame.evaluate(() => window.__finderMarker === "kept"), frame.url());
   check("B4 finder in the overlay adds no history entries", (await home.evaluate(() => history.length)) === histBefore, "");
+  const productPath = await frame.evaluate(() => location.pathname);
+  const finderDoc = await frame.getAttribute("main .cite a[data-doc-url]", "data-doc-url").catch(() => null);
+  await frame.click("main .cite a[data-doc-url]");
+  sd = await shellDocument(home);
+  check("B4b the finder's 'open' in the overlay opens in the shell's document view at the cited page", !!finderDoc && sd.drawn && citedPage(finderDoc).test(sd.label) && ctx.pages().length === tabsB, redact(finderDoc) + " " + sd.detail);
+  await home.goBack();
+  frame = await (await home.waitForSelector("#wa-overlay iframe[src^='/find']", { timeout: 15000 })).contentFrame();
+  const onProduct = await frame.waitForFunction((p) => location.pathname === p && !!document.querySelector("main .cite"), productPath, { timeout: 20000 }).then(() => true, () => false);
+  check("B4c the shell's Back returns to the finder's product page", onProduct && await sameHome(), frame.url());
   await home.goBack();
   await home.waitForFunction(() => !document.querySelector("#wa-overlay.is-open"), null, { timeout: 10000 });
   check("B5 browser Back closes the overlay on the same homepage", new URL(home.url()).pathname === "/" && await sameHome(), home.url());
@@ -180,6 +225,11 @@ try {
   await fp.waitForFunction((h) => location.pathname === h && !!document.querySelector("main h2"), href, { timeout: 20000 });
   await fp.reload({ waitUntil: "load" });
   check("D5 reload serves the product page from the server", /4040XP/.test(await fp.textContent("main h1")), fp.url());
+  await fp.evaluate(() => { window.__finderMarker = "kept"; });
+  const productDoc = await fp.getAttribute("main .cite a[data-doc-url]", "data-doc-url").catch(() => null);
+  await openInPage(fp, "main .cite a[data-doc-url]", "D6 the product page's 'open' draws the document in the page at the cited page (no new tab)", citedPage(productDoc));
+  const saveControl = await fp.isVisible(".cxd .cxd-save").catch(() => false);
+  check("D7 the document has a Download control; Back closes it on the same page", saveControl && await closedByBack(fp) && await sameFinder() && new URL(fp.url()).pathname === href, fp.url());
 } catch (e) {
   check("journey completed", false, e.message);
 } finally {
