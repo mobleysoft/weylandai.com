@@ -187,8 +187,10 @@ node tools/user-simulation/run-journeys.mjs --passes 1 --only subx-upload-to-sub
 ```
 
 It writes `reports/matrix-<stamp>/` (one log per run, `results.jsonl` as it goes, `summary.json`).
-A full three-pass run takes about 36 minutes and opens 30 live Stripe Checkout Sessions (10 per
-pass, each stopped at the loaded form and left to expire).
+A full three-pass run took about 36 minutes before the sign-in, account and offer journeys were
+added on 2026-10-07, and opens 45 live Stripe Checkout Sessions (15 per pass: pricing-to-checkout 9,
+offer-to-payment-form 3, account-plan, wirex-news and phone-key-journeys 1 each), each stopped at
+the loaded form and left to expire.
 
 | Script | Journey |
 |---|---|
@@ -212,6 +214,8 @@ pass, each stopped at the loaded form and left to expire).
 | `journeys/shell-address.mjs` | the address of an open view (/#/find): reload, shared link, typed #/&lt;app&gt;, Back / Forward / Close, a cited document after a reload |
 | `journeys/code-sign-in.mjs` | sign in with an emailed code: a real code to a new `jmobleyworks+<tag>@gmail.com` alias, AuthFor's answer read, the code step, a wrong code refused; `CODE_FILE=<path>` finishes with the code from the inbox |
 | `journeys/reset-in-page.mjs` | the emailed reset link `/#/reset?token=` (the token AuthFor's API issued, read back from its store): a new password, signed in in place, the link works once, the new password signs in elsewhere |
+| `journeys/offer-to-payment-form.mjs` | the $100 first submittal: the paste result's BUILD THE PACKET and the pricing card lead with "$100 · your first submittal + 30 days of every product · no automatic charge", the helper's Terms step, Stripe's form at $100.00 (stops there), desktop + phone; after a payment (the helper's own events given to the page): the result in place with the end date and one next step, a held purchase and how to claim it, then an account with the offer running: no second $100 button, OPEN SUBX opens SubX in the page |
+| `journeys/account-plan.mjs` | the account card's plan for throwaway accounts in the offer's real states (day 25: end date, credit, the prompt, CHOOSE A PLAN up to Stripe's form for SubConP; day 10; ended: paused, work kept), and cancel / resume / card / invoice PDF against answers given in the test browser (no real plan exists) |
 
 Rules every journey keeps (`lib/journey-kit.mjs`):
 
@@ -233,7 +237,8 @@ Rules every journey keeps (`lib/journey-kit.mjs`):
   stays (it cannot be deleted from here).
 - **No payment, no email.** Checkout journeys stop when Stripe's form shows the
   product and price (each press leaves one live Checkout Session to expire);
-  nothing sends email to anyone.
+  nothing sends email except code-sign-in and reset-in-page (one each, to a new
+  `jmobleyworks+<tag>@gmail.com` alias of John's).
 - **Reports** go to `reports/journey-<id>-latest.json` plus a timestamped copy
   (`reports/` is not committed).
 

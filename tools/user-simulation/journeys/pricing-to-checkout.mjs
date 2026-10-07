@@ -8,8 +8,9 @@
 // document never replaced and the URL never on checkout.stripe.com; closing the form leaves the
 // visitor on the same page.
 // Buttons:
-//   - homepage #pricing START HUNTX ($799/mo) and START SUBCONP SUITE ($2,000/mo), and the paste
-//     result's BUILD THE PACKET (SubX $599/mo);
+//   - homepage #pricing START HUNTX ($799/mo) and CHOOSE THE SUITE ($2,000/mo; START SUBCONP SUITE
+//     until 2026-10-07); since 2026-10-07 (fc:shell) the homepage's offer card BUILD MY FIRST
+//     SUBMITTAL and the paste result's BUILD THE PACKET open the $100 first submittal (one-time);
 //   - the pricing page in the homepage overlay, ACTIVATE STANDALONE SEAT for HuntX ($799/mo);
 //   - since 2026-10-07 (afce86f, 4177fed) the pricing page and /subscribe open Stripe's embedded
 //     form in the page: /pricing ACTIVATE STANDALONE SEAT (HuntX) and DEPLOY SUITE (SubConP), and
@@ -26,11 +27,13 @@ import { Journey, BASE, openHome, raiseDossier, setMark, placeState, press, pres
 const J = new Journey("pricing-to-checkout", "Pricing to checkout (stop at the payment form)");
 const HUNTX = { product: /HuntX/i, price: /\$799(\.00)?\b/ };
 const SUITE = { product: /Subcontractor|SubConP/i, price: /\$2,000(\.00)?\b/ };
+const OFFER = { product: /First Submittal/i, price: /\$100(\.00)?\b/ };
 
 const CASES = [
   { label: "homepage START HUNTX", start: "home", ...HUNTX, find: (page) => page.locator("#pricing .js-checkout[data-product='weyland-huntx-seat'], #pricing a, #pricing button").filter({ hasText: /start huntx/i }).first() },
-  { label: "homepage START SUBCONP SUITE", start: "home", ...SUITE, find: (page) => page.locator("#pricing .js-checkout[data-product='weyland-subconp-seat'], #pricing a, #pricing button").filter({ hasText: /start subconp/i }).first() },
-  { label: "paste result BUILD THE PACKET (SubX)", start: "home", product: /SubX/i, price: /\$599(\.00)?\b/, before: async (page) => { await pasteSchedule(page, SAMPLE_LINES.slice(0, 2)); }, find: (page) => page.locator("#hs-results a, #hs-results button").filter({ hasText: /build the packet/i }).first() },
+  { label: "homepage CHOOSE THE SUITE (SubConP)", start: "home", ...SUITE, find: (page) => page.locator("#pricing .js-checkout[data-product='weyland-subconp-seat'], #pricing a, #pricing button").filter({ hasText: /choose the suite/i }).first() },
+  { label: "homepage offer card BUILD MY FIRST SUBMITTAL ($100 offer)", start: "home", ...OFFER, find: (page) => page.locator("#pricing .offer-card .js-checkout[data-product='weyland-first-submittal']").first() },
+  { label: "paste result BUILD THE PACKET ($100 offer)", start: "home", ...OFFER, before: async (page) => { await pasteSchedule(page, SAMPLE_LINES.slice(0, 2)); }, find: (page) => page.locator("#hs-results a, #hs-results button").filter({ hasText: /build the packet/i }).first() },
   { label: "pricing page in the overlay, ACTIVATE STANDALONE SEAT (HuntX)", start: "home", overlay: "/pricing", frameSelector: "#btnBuyHunt", ...HUNTX },
   { label: "pricing page, ACTIVATE STANDALONE SEAT (HuntX)", start: "/pricing", selector: "#btnBuyHunt", ...HUNTX },
   { label: "pricing page, DEPLOY SUITE (SubConP)", start: "/pricing", selector: "#btnHeaderDeploy", ...SUITE },

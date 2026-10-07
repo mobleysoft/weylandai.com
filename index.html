@@ -1626,6 +1626,44 @@
       color: #d1d5db;
     }
     .pricing-features li { display: flex; align-items: flex-start; gap: 10px; }
+    /* The $100 first submittal (2026-10-07): the pricing card and the paste result's box. */
+    .offer-card {
+      margin-top: 24px;
+      padding: 26px 26px 22px;
+      border: 2px solid var(--accent);
+      border-radius: 20px;
+      background: linear-gradient(145deg, rgba(26, 30, 38, 0.98), rgba(16, 18, 24, 0.98));
+      box-shadow: 0 0 40px rgba(255, 212, 0, 0.16);
+    }
+    .offer-line { color: #fff; font: 800 clamp(17px, 2.2vw, 22px)/1.35 var(--font-display); letter-spacing: -0.01em; }
+    .offer-line strong { color: var(--accent); }
+    .offer-card .pricing-features { margin: 16px 0 18px; }
+    .offer-act { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 14px; }
+    .offer-act .button { justify-content: center; }
+    .offer-act .js-checkout-note { font-size: 12px; color: var(--muted); min-height: 1.2em; flex: 1 1 220px; }
+    .offer-box { margin-top: 12px; padding: 12px 14px; border: 1px solid rgba(255, 212, 0, 0.55); border-radius: 10px; background: rgba(255, 212, 0, 0.05); }
+    .offer-box .offer-line { font-size: 15px; }
+    .offer-box .offer-copy { color: var(--text); font-size: 13px; line-height: 1.5; margin: 6px 0 10px; max-width: 70ch; }
+    .offer-box .offer-act .button { padding: 9px 14px; font-size: 11px; }
+    .offer-done { margin-top: 12px; padding: 12px 14px; border-radius: 10px; border: 1px solid rgba(97, 223, 160, 0.45); background: rgba(97, 223, 160, 0.08); color: var(--text); font-size: 13px; line-height: 1.55; }
+    .offer-done strong { color: #fff; }
+    .offer-done .button { margin-top: 10px; padding: 9px 14px; font-size: 11px; justify-content: center; }
+    .offer-done.is-held { border-color: rgba(255, 212, 0, 0.55); background: rgba(255, 212, 0, 0.06); }
+    .pricing-sub { margin: 40px 0 6px; color: #fff; font-size: 20px; }
+    .offer-act[hidden] { display: none; }
+    .offer-done p { margin: 0; }
+    .offer-done p + p { margin-top: 6px; }
+    .plan-when { color: var(--muted); font-size: 12.5px; line-height: 1.5; margin: 0 0 4px; }
+    /* A price written from the catalog ([data-sku-price]) is the price itself, not the small "/ month". */
+    .pricing-cost span[data-sku-price] { font-size: inherit; color: inherit; font-weight: inherit; }
+    /* The paste result's box sits inside .metric-card, whose span and strong rules are for the metric
+       tiles (10px uppercase labels, 28px figures): inside the box they are plain text. */
+    .metric-card .offer-box span, .metric-card .offer-box strong {
+      display: inline; margin: 0; font-family: inherit; font-size: inherit; line-height: inherit;
+      letter-spacing: normal; text-transform: none; color: inherit; font-weight: inherit;
+    }
+    .metric-card .offer-box strong { font-weight: 700; color: #fff; }
+    .metric-card .offer-box .js-checkout-note { font-size: 12px; color: var(--muted); }
 
     /* Footer */
     footer.site-footer {
@@ -2851,7 +2889,7 @@
               </tr>
               <tr>
                 <td><strong>Pricing Model</strong></td>
-                <td class="weyland-col"><span class="chk-yes">&check;</span> <strong><span data-sku-price="weyland-subconp-seat">$2,000</span>/mo Flat Suite</strong> &mdash; Predictable, uncapped estimating volume.</td>
+                <td class="weyland-col"><span class="chk-yes">&check;</span> <strong><span data-sku-price="weyland-first-submittal">$100</span> first submittal, then the <span data-sku-price="weyland-subconp-seat">$2,000</span>/mo flat suite</strong> &mdash; 30 days of every product first, with no automatic charge; the suite only when you choose it, with uncapped estimating volume.</td>
                 <td><span class="chk-no">&cross;</span> $18,000&ndash;$30,000/yr across 4 separate vendor bills.</td>
                 <td><span class="chk-no">&cross;</span> $15,000&ndash;$45,000/yr based on firm's gross revenue.</td>
               </tr>
@@ -2866,13 +2904,31 @@
     <section class="story-chapter" id="pricing">
       <div class="chapter-eyebrow">
         <span class="ch-badge ch-accent">PRICING</span>
-        <span>COMMERCIAL LICENSING &amp; INSTANT INGRESS</span>
+        <span>START WITH ONE SUBMITTAL</span>
       </div>
       <div class="chapter-head">
-        <h2>Transparent Pricing for High-Performance Contractors.</h2>
-        <div class="chapter-tagline">Run the back office and keep the field moving.</div>
-        <p class="chapter-desc">Full suite or individual engines. No hidden per-seat markups.</p>
+        <h2>Your first submittal: $100, with every product for 30 days.</h2>
+        <div class="chapter-tagline">Pasting a schedule and seeing the cited matches is free, with no account. Pay when you want the packet built.</div>
       </div>
+
+      <!-- The offer (John, 2026-10-07): one payment, no automatic charge. The button opens the payment
+           form in this page (fc:payments' SKU weyland-first-submittal); the result and the next step
+           appear in this card. -->
+      <div class="offer-card" id="offer" data-offer-box>
+        <div class="offer-line"><strong>$100</strong> &middot; your first submittal + 30 days of every product &middot; no automatic charge</div>
+        <ul class="pricing-features">
+          <li><span class="chk-yes">&check;</span> <span>One submittal packet: SubX reads your door or hardware schedule and builds the PDF, with the cut sheets, catalogue pages and citations, every line traced to its page.</span></li>
+          <li><span class="chk-yes">&check;</span> <span>30 days of every product: SubX, TakeOffX, CutsheetX, SightX, PropX, MeetingX and HuntX.</span></li>
+          <li><span class="chk-yes">&check;</span> <span>One payment. Nothing renews: before the 30 days end we ask you to choose a plan. Without one, the paid tools pause and your account and work stay.</span></li>
+        </ul>
+        <div class="offer-act">
+          <a class="js-checkout button accent" data-product="weyland-first-submittal" href="#pricing">BUILD MY FIRST SUBMITTAL &middot; <span data-sku-price="weyland-first-submittal">$100</span></a>
+          <span class="js-checkout-note" aria-live="polite"></span>
+        </div>
+      </div>
+
+      <h3 class="pricing-sub">Monthly plans, after your first submittal</h3>
+      <p class="chapter-desc">A plan is charged when you choose it and then each month until you cancel. Cancel, change the card and see invoices in your account.</p>
 
       <div class="pricing-grid">
         <!-- Standalone HuntX Card -->
@@ -2896,12 +2952,13 @@
 
         <!-- Featured SubConP Suite Card -->
         <div class="pricing-card featured">
-          <span class="featured-pill">RECOMMENDED &middot; COMPLETE OS</span>
+          <span class="featured-pill">THE PLAN AFTER YOUR 30 DAYS</span>
           <div class="pricing-head">
             <span style="color:var(--accent);font:800 11px ui-monospace,monospace;letter-spacing:0.12em;text-transform:uppercase">UNIFIED OPERATING PACKAGE</span>
             <h3>SubConP Core Suite</h3>
             <p style="color:var(--muted);font-size:13px;line-height:1.5;margin:8px 0 0">The complete back-office to field automation suite for commercial subcontractors.</p>
             <div class="pricing-cost" style="color:var(--accent)"><span data-sku-price="weyland-subconp-seat">$2,000</span> <span>/ month</span></div>
+            <p class="plan-when">The plan for keeping every product after your first submittal&rsquo;s 30 days. Charged the day you choose it, then monthly until you cancel.</p>
           </div>
           <ul class="pricing-features">
             <li><span class="chk-yes">&check;</span> <strong>HuntX</strong>: Full state open-data lead discovery</li>
@@ -2912,7 +2969,7 @@
             <li><span class="chk-yes">&check;</span> Uncapped project estimating volume</li>
             <li><span class="chk-yes">&check;</span> Up to 10 concurrent team members</li>
           </ul>
-          <a class="js-checkout button accent" data-product="weyland-subconp-seat" href="#pricing" style="width:100%;justify-content:center">START SUBCONP SUITE &middot; <span data-sku-price="weyland-subconp-seat">$2,000</span>/MO</a>
+          <a class="js-checkout button accent" data-product="weyland-subconp-seat" href="#pricing" style="width:100%;justify-content:center">CHOOSE THE SUITE &middot; <span data-sku-price="weyland-subconp-seat">$2,000</span>/MO</a>
           <div class="js-checkout-note" style="font-size:12px;color:var(--muted);margin-top:8px;min-height:1.2em" aria-live="polite"></div>
         </div>
 
@@ -3027,6 +3084,10 @@
     // over the one this tab already had (2026-10-07).
     var EPHEMERAL_TOKEN_KEY = "weylandai_ephemeral_token_v1";
     var ephemeralMint = null;
+    // The $100 first submittal (John, 2026-10-07): one payment, the first submittal plus 30 days of
+    // every product, no automatic charge. Stripe SKU of the platform's catalog (fc:payments).
+    var OFFER_SKU = "weyland-first-submittal";
+    var OFFER_LINE = "$100 \u00b7 your first submittal + 30 days of every product \u00b7 no automatic charge";
 
     // .envelope-frame is the real scroll container now (not window/body) -
     // its own clip-path+overflow:auto is what makes it a true mask, so
@@ -3423,17 +3484,21 @@
           out.innerHTML = "<div style=\"color:var(--text);font-weight:700;margin-bottom:6px\">" + (sum.matched || 0) + " of " + (sum.total || results.length) + " lines matched \u00b7 " + ms + " ms</div>" +
             "<div style=\"overflow-x:auto\"><table style=\"width:100%;border-collapse:collapse;font-size:12.5px\"><thead><tr style=\"color:var(--muted);text-align:left\"><th>SPEC LINE</th><th>MATCHED</th><th>CONFIDENCE</th><th>CITATION</th></tr></thead><tbody>" + rows + "</tbody></table></div>";
           if ((sum.matched || 0) > 0) {
-            // Decision 2026-10-05: no new per-packet price. The packet is part of the SubX seat
-            // (price from the SKU via [data-sku-price]); the click opens the payment form in the page.
+            // Decision 2026-10-07: the first submittal is $100, one payment, with 30 days of every
+            // product and no automatic charge. The button opens the payment form in the page; the
+            // result and the next step (SubX with the visitor's schedule) appear in this box.
+            var nMatched = sum.matched || 0;
             out.insertAdjacentHTML("beforeend",
-              "<div class=\"hs-packet\" style=\"margin-top:12px;padding:12px 14px;border:1px solid var(--border);border-radius:8px;display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between\">" +
-                "<span style=\"color:var(--text);font-size:13px;line-height:1.5;max-width:46ch\"><strong>" + (sum.matched || 0) + " matched line" + ((sum.matched || 0) === 1 ? "" : "s") + "</strong> can become a submittal packet: cut sheets, catalogue pages and citations assembled into one PDF, every line traceable to its source.</span>" +
-                "<span style=\"display:flex;flex-direction:column;gap:4px;min-width:220px\">" +
-                  "<a class=\"js-checkout button accent\" data-product=\"weyland-subx-seat\" href=\"#pricing\" style=\"padding:9px 14px;font-size:11px;justify-content:center\">BUILD THE PACKET \u00b7 SUBX <span data-sku-price=\"weyland-subx-seat\">$599</span>/MO</a>" +
-                  "<span class=\"js-checkout-note\" style=\"font-size:11px;color:var(--muted);min-height:1.2em\" aria-live=\"polite\"></span>" +
-                "</span>" +
+              "<div class=\"hs-packet offer-box\" data-offer-box>" +
+                "<div class=\"offer-line\">" + hsEsc(OFFER_LINE) + "</div>" +
+                "<p class=\"offer-copy\"><strong>" + nMatched + " matched line" + (nMatched === 1 ? "" : "s") + "</strong> can become your first submittal packet: SubX builds it from your door or hardware schedule, with the cut sheets, catalogue pages and citations in one PDF and every line traced to its source. For 30 days you also have every product; nothing is charged after that unless you choose a plan.</p>" +
+                "<div class=\"offer-act\">" +
+                  "<a class=\"js-checkout button accent\" data-product=\"" + OFFER_SKU + "\" href=\"#pricing\">BUILD THE PACKET \u00b7 <span data-sku-price=\"" + OFFER_SKU + "\">$100</span></a>" +
+                  "<span class=\"js-checkout-note\" aria-live=\"polite\"></span>" +
+                "</div>" +
               "</div>");
             if (window.__weylandFillSkuPrices) window.__weylandFillSkuPrices();
+            paintOffer(out.querySelector(".offer-box"));
           }
           hsMatched = results.filter(function (r) { return r.matched; }).map(function (r) { var p = r.product || {}; return { label: p.model || r.model || "", sub: (p.manufacturer || r.manufacturer || "") + (p.category ? " \u00b7 " + p.category : "") }; });
           hsWalk.disabled = hsMatched.length === 0;
@@ -3963,7 +4028,8 @@
             if (!p) return;
             var dollars = Math.round(p.unit_amount / 100);
             el.textContent = "$" + dollars.toLocaleString("en-US");
-            if (p.trial_period_days) el.setAttribute("title", p.trial_period_days + "-day trial, then $" + dollars.toLocaleString("en-US") + "/" + (p.currency || "usd").toUpperCase() + " per month");
+            if (p.trial_period_days && !p.one_time) el.setAttribute("title", p.trial_period_days + "-day trial, then $" + dollars.toLocaleString("en-US") + "/" + (p.currency || "usd").toUpperCase() + " per month");
+            else el.removeAttribute("title");
           });
         })
         .catch(function() {});
@@ -3978,6 +4044,7 @@
     // the account control; the note under the button says what happened. A failure is shown
     // inline, never swallowed.
     var CHECKOUT_PRODUCTS = {
+      "weyland-first-submittal": { name: "WeylandAI first submittal", app: "SubX", path: "/subx-app", offer: true },
       "weyland-huntx-seat": { name: "WeylandAI HuntX seat", app: "HuntX", path: "/huntx" },
       "weyland-subx-seat": { name: "WeylandAI SubX seat", app: "SubX", path: "/subx-app" },
       "weyland-subconp-seat": { name: "WeylandAI SubConP suite", app: "SubX", path: "/subx-app" }
@@ -3994,10 +4061,13 @@
       });
       return window.__weylandCheckoutLoading;
     }
-    var checkoutNote = null, checkoutPaid = null;
+    // The purchase a buy button on this page started. Its note follows only that checkout (the
+    // account view's "choose a plan" opens checkouts of its own, with their own messages).
+    var homeCheckout = null;
     function setCheckoutNote(text, open) {
-      if (!checkoutNote) return;
-      checkoutNote.textContent = text || "";
+      var note = homeCheckout && homeCheckout.note;
+      if (!note) return;
+      note.textContent = text || "";
       if (!open) return;
       var b = document.createElement("button");
       b.type = "button";
@@ -4005,7 +4075,87 @@
       b.textContent = "OPEN " + open.app.toUpperCase();
       b.style.cssText = "margin-left:6px;background:none;border:0;padding:0;color:var(--accent);font:inherit;font-weight:700;text-decoration:underline;cursor:pointer";
       b.addEventListener("click", function () { if (window.WeylandShell) window.WeylandShell.open("app", { path: open.path }); });
-      checkoutNote.appendChild(b);
+      note.appendChild(b);
+    }
+    function longDate(iso) {
+      var t = iso ? new Date(iso) : null;
+      if (!t || isNaN(t.getTime())) return "";
+      try { return t.toLocaleDateString("en-US", { weekday: "long", month: "long", day: "numeric", year: "numeric" }); } catch (_) { return t.toDateString(); }
+    }
+    function hasAccountToken() { try { return !!localStorage.getItem("_authfor_token"); } catch (_) { return false; } }
+    // The $100 first submittal in a box that offers it ([data-offer-box]: the pricing card and the
+    // paste result's packet box). data-offer-state: "" offers it; "paid" = bought in this box;
+    // "held" = paid with the email of an existing account, waiting on that account. A signed-in
+    // account whose 30 days are running is offered no second purchase (the platform sells it once
+    // per account): its box shows the end date instead. Every state has one next step.
+    function shellNow() { try { return window.WeylandShell ? window.WeylandShell.state() : null; } catch (_) { return null; } }
+    function offerWindow(st) { var a = st && st.status === "signed-in" ? st.access : null; return a && a.kind === "offer" ? a : null; }
+    function offerPara(html) { var p = document.createElement("p"); p.innerHTML = html; return p; }
+    function offerButton(text, onClick) {
+      var b = document.createElement("button");
+      b.type = "button"; b.className = "button accent"; b.textContent = text;
+      b.addEventListener("click", onClick);
+      return b;
+    }
+    // SubX, where the schedule is uploaded and the packet built; signed out, the emailed code first.
+    function openSubxNext() {
+      if (!window.WeylandShell) return;
+      var st = shellNow();
+      if (st && st.status === "signed-in") window.WeylandShell.open("app", { path: "/subx-app" });
+      else window.WeylandShell.open("signin", { mode: "code", continueTo: "/subx-app" });
+    }
+    function paintOffer(box) {
+      if (!box) return;
+      var st = shellNow(), win = offerWindow(st), signedIn = !!st && st.status === "signed-in";
+      var state = box.getAttribute("data-offer-state") || "";
+      // A held purchase is added the moment its account signs in (an emailed code proves the email).
+      if (state === "held" && win) { state = "paid"; box.setAttribute("data-offer-state", state); }
+      if (!state && win) state = "owned";
+      var act = box.querySelector(".offer-act"), done = box.querySelector(".offer-done");
+      if (!state) { if (done) done.remove(); if (act) act.hidden = false; return; }
+      if (act) act.hidden = true;
+      if (!done) { done = document.createElement("div"); done.setAttribute("role", "status"); box.appendChild(done); }
+      done.className = "offer-done" + (state === "held" ? " is-held" : "");
+      done.setAttribute("data-state", state);
+      done.textContent = "";
+      if (state === "held") {
+        var lead = offerPara("<strong>Paid.</strong> ");
+        lead.appendChild(document.createTextNode("The email you paid with (" + (box.getAttribute("data-offer-hint") || "the address you typed in the payment form") + ") already has a WeylandAI account, so the purchase waits on that account: your first submittal and 30 days of every product. Nothing more is charged."));
+        done.appendChild(lead);
+        done.appendChild(offerPara("To add it: choose <strong>SIGN IN WITH A CODE</strong>, enter that email, then the code we send to it. It is added the moment you are signed in."));
+        done.appendChild(offerButton("SIGN IN WITH A CODE", function () { if (window.WeylandShell) window.WeylandShell.open("signin", { mode: "code" }); }));
+        return;
+      }
+      var ends = (win && win.ends_at) || box.getAttribute("data-offer-ends") || "";
+      var endMs = ends ? new Date(ends).getTime() : NaN;
+      var left = win && win.days_left != null ? win.days_left : (isFinite(endMs) ? Math.max(0, Math.ceil((endMs - Date.now()) / 86400000)) : null);
+      var until = longDate(ends);
+      var untilText = until ? "Every product is yours until " + until + (left ? " (" + left + (left === 1 ? " day" : " days") + ")" : "") + "." : "Every product is yours for 30 days.";
+      done.appendChild(offerPara((state === "paid" ? "<strong>Paid. Your first submittal is ready to build.</strong> " : "<strong>Your first submittal is paid.</strong> ") +
+        untilText + " Nothing is charged after that unless you choose a plan."));
+      done.appendChild(offerPara(signedIn
+        ? "Next: open SubX and upload the door or hardware schedule for this job. SubX reads every row and builds your submittal packet."
+        : "Next: sign in with the email you paid with (we email you a code), then upload the door or hardware schedule for this job in SubX."));
+      var next = offerButton(signedIn ? "OPEN SUBX: UPLOAD YOUR SCHEDULE" : "SIGN IN TO OPEN SUBX", openSubxNext);
+      next.classList.add("js-offer-next");
+      done.appendChild(next);
+      if (state === "paid" && signedIn && st.email && !hasAccountToken()) {
+        var tip = document.createElement("div");
+        tip.className = "js-offer-tip";
+        tip.style.cssText = "margin-top:8px;color:var(--muted);font-size:12px";
+        tip.textContent = "You are signed in on this browser. On another device, choose Sign in, then Email me a sign-in code, with " + st.email + ".";
+        done.appendChild(tip);
+      }
+    }
+    // The first submittal is paid (or held): the result and its next step, in the box the purchase began in.
+    function offerResult(hc, held, endsAt) {
+      var box = hc && hc.box;
+      if (!box) return false;
+      box.setAttribute("data-offer-state", held ? "held" : "paid");
+      if (held) box.setAttribute("data-offer-hint", hc.emailHint || "");
+      if (endsAt) box.setAttribute("data-offer-ends", endsAt);
+      paintOffer(box);
+      return true;
     }
     document.addEventListener("click", function(e) {
       var el = e.target && e.target.closest ? e.target.closest(".js-checkout") : null;
@@ -4014,24 +4164,33 @@
       if (el.getAttribute("aria-busy") === "true") return;
       var product = el.getAttribute("data-product");
       var info = CHECKOUT_PRODUCTS[product] || {};
-      checkoutNote = el.parentNode.querySelector(".js-checkout-note");
+      homeCheckout = { product: product, info: info, note: el.parentNode.querySelector(".js-checkout-note"), box: el.closest("[data-offer-box]"), session: null, paid: false, done: false };
+      var mine = homeCheckout;
       el.setAttribute("aria-busy", "true");
       setCheckoutNote("Opening secure checkout…");
       weylandCheckoutHelper()
         .then(function (W) { return W.open({ product_id: product, quantity: 1, name: info.name || "WeylandAI" }); })
-        .then(function (opened) { if (opened) setCheckoutNote("Secure checkout is open on this page."); })
-        .catch(function (err) { setCheckoutNote("Checkout did not open: " + err.message + " — email hello@weylandai.com and we will send a link."); })
+        .then(function (opened) { if (opened && homeCheckout === mine) { mine.session = opened.session_id || mine.session; if (!mine.paid) setCheckoutNote("Secure checkout is open on this page."); } })
+        .catch(function (err) { if (homeCheckout === mine) setCheckoutNote("Checkout did not open: " + err.message + " Nothing was charged. If it keeps happening, write to support@weylandai.com."); })
         .then(function () { el.removeAttribute("aria-busy"); });
     });
     window.addEventListener("weyland-checkout", function (e) {
       var d = e.detail || {};
-      var info = CHECKOUT_PRODUCTS[d.product_id] || null;
-      if (d.status === "error") setCheckoutNote("Checkout did not open: " + (d.message || "it is unavailable right now.") + " — email hello@weylandai.com and we will send a link.");
-      else if (d.status === "complete") { checkoutPaid = d.session_id || true; setCheckoutNote("Payment received. Activating…"); }
-      else if (d.status === "active") setCheckoutNote((info ? info.app : "Your seat") + " is active and you are signed in.", info);
-      else if (d.status === "paid_pending") setCheckoutNote("Payment received. Your account appears here as soon as it is set up.");
-      else if (d.status === "closed") setCheckoutNote(checkoutPaid && (checkoutPaid === true || checkoutPaid === d.session_id) ? "Payment received. Your account appears here as soon as it is set up." : "Checkout closed before payment. Nothing was charged.");
+      var hc = homeCheckout;
+      if (!hc || (d.product_id && d.product_id !== hc.product) || (hc.session && d.session_id && d.session_id !== hc.session)) return;
+      if (d.session_id && !hc.session) hc.session = d.session_id;
+      var info = hc.info && hc.info.app ? hc.info : null;
+      if (d.status === "error") setCheckoutNote("Checkout did not open: " + (d.message || "it is unavailable right now.") + " Nothing was charged. If it keeps happening, write to support@weylandai.com.");
+      else if (d.status === "complete") { hc.paid = true; setCheckoutNote("Payment received. Activating…"); }
+      else if (d.status === "active") { hc.done = true; setCheckoutNote(""); if (!(info && info.offer && offerResult(hc, false, d.access_ends_at))) setCheckoutNote((info ? info.app : "Your seat") + " is active and you are signed in.", info); }
+      else if (d.status === "held") { hc.done = true; hc.emailHint = d.email_hint || ""; setCheckoutNote(""); if (!offerResult(hc, true)) setCheckoutNote("Paid. The email you paid with already has a WeylandAI account: sign in with a code sent to it, and the purchase is added there."); }
+      else if (d.status === "paid_pending") { hc.done = true; setCheckoutNote("Payment received. Your account appears here as soon as it is set up."); }
+      else if (d.status === "closed" && !hc.done) setCheckoutNote(hc.paid ? "Payment received. Your account appears here as soon as it is set up." : "Checkout closed before payment. Nothing was charged.");
     });
+    // The account loaded, signed in or signed out: every first-submittal box follows it.
+    function paintOffers() { Array.prototype.forEach.call(document.querySelectorAll("[data-offer-box]"), paintOffer); }
+    window.addEventListener("weyland-access", paintOffers);
+    window.addEventListener("weyland-auth", paintOffers);
     // Back from a payment method that had to leave for its bank (embedded checkout's return_url),
     // or from an older hosted checkout: the helper reads the result and finishes it here.
     (function () {
