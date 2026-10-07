@@ -45,7 +45,10 @@ await J.run(async () => {
     const o = await frameInfo(f);
     const oids = f ? await functionalIds(f) : [];
     const missing = s.ids.filter((id) => !oids.includes(id));
-    const ok = !!o && !o.jsonError && !o.chromeError && !o.evalError && !o.nestedShell && !!s.title && o.title === s.title && norm(o.path) === norm(s.path) && missing.length === 0;
+    // The same page: same title and every functional element of the direct visit. The address may
+    // differ only for an alias that lands on the same page (e.g. /wire shows News at /news).
+    const ok = !!o && !o.jsonError && !o.chromeError && !o.evalError && !o.nestedShell && !!s.title && o.title === s.title && missing.length === 0;
+    if (o && norm(o.path) !== norm(s.path)) J.note(p + " address in the overlay", { overlay: o.path, direct: s.path });
     J.check(p + " opens in the overlay as the same page as a direct visit", ok,
       { overlay: o ? { path: o.path, title: o.title, jsonError: o.jsonError, chromeError: o.chromeError, nestedShell: o.nestedShell } : null, direct: { path: s.path, title: s.title, error: s.error }, missingIds: missing.slice(0, 12) });
     await page.evaluate(() => window.WeylandShell.close());

@@ -6,7 +6,7 @@
 // Expected: signed in and inside the requested product; the sign-in happens where the visitor is
 // (standing order: no page hop ever, for anything). Each case counts the documents the browser
 // loads from arrival to working in the product: 1 means everything happened in place.
-// Cases: /subx (START A SUBMITTAL), /subx-app (SIGN IN), /meetingx?room=<new id> (JOIN ROOM, then
+// Cases: /subx (the workspace since 82aea46; START A SUBMITTAL before), /subx-app (SIGN IN), /meetingx?room=<new id> (JOIN ROOM, then
 // SIGN IN TO JOIN: sign-in in place over the room, 2026-10-07 8fbb52d), /login?redirect=/propx-app
 // and /login?redirect=/huntx.
 // One throwaway SubConP account; its rows and any demo clones are deleted in finally. The MeetingX
@@ -54,15 +54,19 @@ await J.run(async () => {
 
   const cases = [
     {
-      label: "/subx product page, START A SUBMITTAL", path: "/subx",
+      // /subx was a product page with START A SUBMITTAL until 82aea46; since then it is the
+      // workspace itself, which asks a guest to sign in.
+      label: "/subx link", path: "/subx",
       go: async (page) => {
         const start = page.locator("a, button").filter({ hasText: /start a submittal/i }).first();
-        if (!(await start.count())) return { why: "no START A SUBMITTAL on /subx" };
-        await press(page, start);
-        await page.waitForLoadState("load").catch(() => {});
-        await sleep(2500);
-        // A guest in the workspace is asked to sign in there.
-        if (!(await page.locator("#weyland-signin-email").isVisible().catch(() => false)) && (await page.locator("#signin-btn").isVisible().catch(() => false))) {
+        if (await start.isVisible().catch(() => false)) {
+          await press(page, start);
+          await page.waitForLoadState("load").catch(() => {});
+          await sleep(2500);
+        }
+        await until(async () => (await page.locator("#weyland-signin-email").isVisible().catch(() => false)) || (await page.locator("#signin-btn").isVisible().catch(() => false)), 15000, 500);
+        if (!(await page.locator("#weyland-signin-email").isVisible().catch(() => false))) {
+          if (!(await page.locator("#signin-btn").isVisible().catch(() => false))) return { why: "/subx offered a guest no way to sign in (no START A SUBMITTAL, no SIGN IN)" };
           await press(page, "#signin-btn");
           await page.waitForLoadState("load").catch(() => {});
         }
@@ -133,8 +137,8 @@ await J.run(async () => {
     } else {
       J.check(c.label + ": the visitor is offered sign-in and signs in", r.signIn.shown && r.signIn.auth === "signed-in", r.signIn);
       J.check(c.label + ": signed in, the visitor is inside the product", !!r.inside, r.detail);
+      J.check(c.label + ": no page hop from arrival to working in the product (documents loaded: " + docs.length + ")", docs.length === 1 && ps.sameDocument && ps.onSite, { docs, sameDocument: ps.sameDocument, onSite: ps.onSite });
     }
-    J.check(c.label + ": no page hop from arrival to working in the product (documents loaded: " + docs.length + ")", docs.length === 1 && ps.sameDocument && ps.onSite, { docs, sameDocument: ps.sameDocument, onSite: ps.onSite });
     await ctx.close();
   }
 });
