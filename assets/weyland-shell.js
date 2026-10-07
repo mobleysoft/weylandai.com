@@ -9,12 +9,20 @@
  *   document.documentElement.dataset.weylandAuth = "signed-in" | "signed-out" | "no-account"
  *   document.documentElement.dataset.weylandUser = account email (when signed in)
  *   window.WeylandShell.open("signin" | "account" | "app" | "create", { path, continueTo, email })
+ *   window.WeylandShell.open("pdf", { url, title, page, token })   one of our own /api/ document routes
+ *   window.WeylandShell.open("pdf", { blob, title, page })         a PDF the page already holds (a Blob)
  *   window.WeylandShell.close(); window.WeylandShell.signOut()   (both resolve; no reloads)
  *   window.WeylandShell.completeSignup(authforUpgradeResponse, { continueTo })
  *     -> Promise<state>: after the homepage's create-account dialog upgrades the guest identity at
  *        AuthFor, this signs the visitor in on the spot (AuthFor session kept like a sign-in,
  *        POST /api/auth/authfor-exchange creates the WeylandAI account + weyland_session cookie).
  *   The page provides window.__weylandOpenCreateAccount(continueTo) (its create-account dialog).
+ *   Account control placement: the chip floats top right unless the page marks a slot with
+ *   [data-wa-chip-slot]; then it sits in that slot (the slot's own children are hidden while it
+ *   does), except while <html> carries data-wa-chip-float (the page's way of saying "the slot is
+ *   out of view now": the homepage sets it while its dossier is lowered).
+ *   Signed in also covers a weyland_session cookie without an AuthFor token (a purchase made
+ *   without signing in signs the buyer in that way).
  * Needs /assets/authfor-integration-standard.js (AuthForStandard) loaded first.
  */
 (function () {
@@ -27,6 +35,16 @@
   var APPS = { "/subx-app": "SubX", "/subx": "SubX", "/takeoffx": "TakeOffX", "/cutsheetx": "CutsheetX", "/sightx": "SightX",
                "/propx-app": "PropX", "/meetingx": "MeetingX", "/meetx": "MeetingX", "/huntx": "HuntX", "/find": "Finder",
                "/pricing": "Plans and pricing", "/wire": "News", "/news": "News" };
+  // The address each app is opened at. /sightx answers 308 -> /sightx/ (the SightX worker's page
+  // lives at the slash path); /wire and /meetx are older names of /news and /meetingx.
+  var CANON = { "/sightx": "/sightx/", "/wire": "/news", "/meetx": "/meetingx" };
+  function appKey(path) { return String(path || "").split("#")[0].split("?")[0].replace(/\/+$/, "") || "/"; }
+  function canonicalApp(path) {
+    var p = String(path || "").split("#")[0];
+    var q = p.indexOf("?");
+    var key = appKey(p);
+    return (CANON[key] || key) + (q >= 0 ? p.slice(q) : "");
+  }
   var root = document.documentElement;
   var S = { status: "unknown", user: null, overlay: null, body: null, title: null, chip: null, sdk: null, view: null, appFrame: null };
 
@@ -87,10 +105,13 @@
       "padding:8px 14px;border-radius:999px;border:1px solid rgba(255,212,0,.65);background:rgba(10,18,32,.86);color:#f2f5fb;font:600 13px/1.2 inherit;",
       "letter-spacing:.02em;cursor:pointer;backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);box-shadow:0 4px 18px rgba(0,0,0,.35)}",
       "#wa-account-chip:hover,#wa-account-chip:focus-visible{border-color:#ffd400;outline:none;box-shadow:0 0 0 2px rgba(255,212,0,.35)}",
-      "#wa-account-chip .wa-dot{width:8px;height:8px;border-radius:50%;background:#7c8aa5}",
+      "#wa-account-chip .wa-dot{flex:none;width:8px;height:8px;border-radius:50%;background:#7c8aa5}",
+      "#wa-account-chip .wa-label{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:16em}",
+      "#wa-account-chip.wa-docked{position:relative;top:auto;right:auto;z-index:auto;min-width:0;box-shadow:none;backdrop-filter:none;-webkit-backdrop-filter:none}",
+      "[data-wa-chip-slot].wa-chip-docked>:not(#wa-account-chip){display:none!important}",
       "html[data-weyland-auth=signed-in] #wa-account-chip .wa-dot{background:#3ddc84}",
       "html[data-weyland-auth=no-account] #wa-account-chip .wa-dot{background:#ffb020}",
-      "#wa-overlay{position:fixed;inset:0;z-index:2147483000;display:none;flex-direction:column;background:rgba(6,11,22,.97);color:#e9eef8;font-family:inherit}",
+      "#wa-overlay{position:fixed;inset:0;z-index:2147483000;display:none;flex-direction:column;background:#060b16;color:#e9eef8;font-family:inherit}",
       "#wa-overlay.is-open{display:flex}",
       "#wa-overlay .wa-bar{display:flex;align-items:center;gap:12px;min-height:52px;padding:max(8px,env(safe-area-inset-top)) 14px 8px;border-bottom:1px solid rgba(255,255,255,.08)}",
       "#wa-overlay .wa-brand{font-weight:800;letter-spacing:.06em;color:#ffd400;text-transform:uppercase;font-size:13px;background:none;border:0;cursor:pointer;padding:6px 4px}",
@@ -134,14 +155,33 @@
       S.chip = h("button", { id: "wa-account-chip", type: "button", "aria-haspopup": "dialog", onclick: function () {
         open(S.status === "signed-in" || S.status === "no-account" ? "account" : "signin");
       } });
-      document.body.appendChild(S.chip);
+      placeChip();
+      try { new MutationObserver(placeChip).observe(root, { attributes: true, attributeFilter: ["data-wa-chip-float"] }); } catch (e) {}
     }
     S.chip.textContent = "";
     S.chip.appendChild(h("span", { "class": "wa-dot", "aria-hidden": "true" }));
     var label = S.status === "signed-in" ? (S.user && S.user.email ? S.user.email.split("@")[0] : "Account")
       : S.status === "no-account" ? "Finish setup" : "Sign in";
-    S.chip.appendChild(document.createTextNode(label));
+    S.chip.appendChild(h("span", { "class": "wa-label", text: label }));
     S.chip.setAttribute("aria-label", S.status === "signed-in" ? "Account: " + (S.user && S.user.email || "") : label);
+  }
+
+  // The chip floats top right, or sits in the page's [data-wa-chip-slot] (see the header comment).
+  // On the homepage that slot is in the dossier's footer bar, so the chip never covers the
+  // dossier's own header controls ([close], the product tabs) on a phone.
+  function placeChip() {
+    if (!S.chip) return;
+    var slot = root.hasAttribute("data-wa-chip-float") ? null : document.querySelector("[data-wa-chip-slot]");
+    var parent = slot || document.body;
+    var docked = document.querySelectorAll("[data-wa-chip-slot].wa-chip-docked");
+    for (var i = 0; i < docked.length; i++) if (docked[i] !== slot) docked[i].classList.remove("wa-chip-docked");
+    if (S.chip.parentNode !== parent) {
+      var hadFocus = document.activeElement === S.chip;
+      parent.appendChild(S.chip);
+      if (hadFocus) { try { S.chip.focus({ preventScroll: true }); } catch (e) {} }
+    }
+    S.chip.classList.toggle("wa-docked", !!slot);
+    if (slot) slot.classList.add("wa-chip-docked");
   }
 
   function relabelCtas() {
@@ -275,6 +315,8 @@
   // ---------- views ----------
   function viewSignIn(continueTo, prefillEmail) {
     if (S.status === "signed-in") return continueTo ? viewApp(continueTo) : viewAccount();
+    // Signed in at AuthFor, no WeylandAI account yet: the next step is setting it up, not a password.
+    if (S.status === "no-account") return viewNoAccount((S.user && S.user.email) || "", continueTo);
     var err = errorBox();
     var email = h("input", { id: "weyland-signin-email", type: "email", autocomplete: "email", required: "required", inputmode: "email" });
     if (prefillEmail) email.value = prefillEmail;
@@ -383,8 +425,8 @@
   }
 
   function viewApp(path, fromHistory) {
-    var clean = path.split("#")[0];
-    var name = APPS[clean.split("?")[0]] || "WeylandAI";
+    var clean = canonicalApp(path);
+    var name = APPS[appKey(clean)] || "WeylandAI";
     var frame = h("iframe", { title: name, src: clean + (clean.indexOf("?") >= 0 ? "&" : "?") + "embed=1" });
     frame.addEventListener("load", function () {
       // An app page that needs sign-in links to /login: answer it here instead of inside the frame.
@@ -405,6 +447,8 @@
   // {"error":"Authentication required"}. Here the document is read with the visitor's own token and
   // drawn by our self-hosted pdf.js, opened at the cited page. Price books run to ~19 MB; their route
   // answers range requests, so only the pages being looked at are downloaded.
+  // A PDF the page already holds (opts.blob, e.g. the PropX proposal the homepage just rendered) is
+  // shown the same way, instead of a blob URL in a new tab.
   var pdfLibPromise = null;
   function loadPdfLib() {
     if (!pdfLibPromise) {
@@ -419,12 +463,13 @@
 
   function viewPdf(opts, fromHistory) {
     opts = opts || {};
-    var url = String(opts.url || "");
+    var blob = opts.blob && typeof opts.blob.arrayBuffer === "function" ? opts.blob : null;
+    var url = blob ? "" : String(opts.url || "");
     var m = /#page=(\d+)/.exec(url);
     var first = Math.max(1, parseInt(opts.page || (m && m[1]) || "1", 10) || 1);
     var path = url.replace(/#.*$/, "");
-    if (!/^\/api\//.test(path)) return Promise.resolve(); // our own document routes only
-    var title = String(opts.title || "Cited document").replace(/\s+/g, " ").trim().slice(0, 160);
+    if (!blob && !/^\/api\//.test(path)) return Promise.resolve(); // our own document routes only
+    var title = String(opts.title || (blob ? "Document" : "Cited document")).replace(/\s+/g, " ").trim().slice(0, 160);
     var bearer = opts.token || token() || ssGet(EPH_KEY) || "";
     var headers = bearer ? { Authorization: "Bearer " + bearer } : {};
     var status = h("div", { "class": "wa-pdf-status", role: "status", "aria-live": "polite", text: "Opening " + title + "…" });
@@ -435,13 +480,17 @@
     var zoomIn = h("button", { type: "button", "class": "wa-pdf-btn", text: "+", "aria-label": "Zoom in" });
     var save = h("button", { type: "button", "class": "wa-pdf-btn", text: "Download" });
     var stage = h("div", { "class": "wa-pdf-stage" });
-    var wrap = h("div", { "class": "wa-pdf", "data-wa-doc": path }, [h("div", { "class": "wa-pdf-bar" }, [prev, label, next, zoomOut, zoomIn, save]), status, stage]);
+    var wrap = h("div", { "class": "wa-pdf", "data-wa-doc": blob ? "blob" : path }, [h("div", { "class": "wa-pdf-bar" }, [prev, label, next, zoomOut, zoomIn, save]), status, stage]);
     var st = { doc: null, task: null, n: first, zoom: 1, alive: true };
     st.stop = function () { st.alive = false; if (st.task) { try { st.task.destroy(); } catch (e) {} } };
     st.go = function (d) { if (st.doc) draw(st.n + d); };
     show(title, wrap, "pdf");
     S.pdf = st;
-    if (!fromHistory) pushView({ wa: "pdf", url: url, title: title, page: first }, location.pathname + location.search + location.hash);
+    if (!fromHistory) {
+      var hist = { wa: "pdf", url: url, title: title, page: first };
+      if (blob) { hist = { wa: "pdf", blob: keepBlob(blob, title), title: title, page: first }; }
+      pushView(hist, location.pathname + location.search + location.hash);
+    }
     function say(t) { status.textContent = t; status.style.display = t ? "block" : "none"; }
     function nav() {
       var total = st.doc ? st.doc.numPages : 0;
@@ -476,13 +525,17 @@
       }).catch(function (e) { if (st.alive) say("Could not draw page " + n + ": " + ((e && e.message) || e)); });
     }
     function fetchDoc() { return fetch(path, { headers: headers, credentials: "same-origin" }); }
+    function getBlob() {
+      if (blob) return Promise.resolve(blob);
+      return fetchDoc().then(function (r) { if (!r.ok) throw new Error("(" + r.status + ")"); return r.blob(); });
+    }
     prev.addEventListener("click", function () { st.go(-1); });
     next.addEventListener("click", function () { st.go(1); });
     zoomIn.addEventListener("click", function () { if (st.doc && st.zoom < 3) { st.zoom += 0.5; draw(st.n); } });
     zoomOut.addEventListener("click", function () { if (st.doc && st.zoom > 1) { st.zoom -= 0.5; draw(st.n); } });
     save.addEventListener("click", function () {
       save.disabled = true; save.textContent = "Downloading…";
-      fetchDoc().then(function (r) { if (!r.ok) throw new Error("The download failed (" + r.status + ")."); return r.blob(); })
+      getBlob().catch(function (e) { throw new Error("The download failed " + ((e && e.message) || "") + "."); })
         .then(function (b) {
           var a = h("a", { href: URL.createObjectURL(b), download: (title.replace(/[^\w.,() -]+/g, "").trim() || "document") + ".pdf" });
           document.body.appendChild(a); a.click(); a.remove();
@@ -494,11 +547,17 @@
     nav();
     loadPdfLib().then(function (lib) {
       if (!st.alive) return null;
-      st.task = lib.getDocument({ url: path, httpHeaders: headers, disableAutoFetch: true, disableStream: true, rangeChunkSize: 524288 });
-      st.task.onProgress = function (p) {
-        if (st.alive && !st.doc && p && p.total > 4194304) say("Reading " + title + " (" + (p.loaded / 1048576).toFixed(1) + " of " + (p.total / 1048576).toFixed(1) + " MB)…");
-      };
-      return st.task.promise;
+      var src = blob
+        ? blob.arrayBuffer().then(function (buf) { return { data: new Uint8Array(buf) }; })
+        : Promise.resolve({ url: path, httpHeaders: headers, disableAutoFetch: true, disableStream: true, rangeChunkSize: 524288 });
+      return src.then(function (params) {
+        if (!st.alive) return null;
+        st.task = lib.getDocument(params);
+        st.task.onProgress = function (p) {
+          if (st.alive && !st.doc && p && p.total > 4194304) say("Reading " + title + " (" + (p.loaded / 1048576).toFixed(1) + " of " + (p.total / 1048576).toFixed(1) + " MB)…");
+        };
+        return st.task.promise;
+      });
     }).then(function (doc) {
       if (!doc) return;
       if (!st.alive) { try { doc.destroy(); } catch (e) {} return; }
@@ -507,7 +566,7 @@
     }).catch(function (e) {
       if (!st.alive) return null;
       var code = e && (e.status || (e.cause && e.cause.status));
-      if (code) {
+      if (code && !blob) {
         // The route answered with an error: say it in words (its own message), never raw JSON.
         return fetchDoc().then(function (r) { return r.json().catch(function () { return {}; }); }).then(function (d) {
           var msg = d && ((d.error && (d.error.message || d.error)) || d.message);
@@ -515,7 +574,7 @@
         });
       }
       // pdf.js unavailable in this browser: the browser's own viewer, still inside the page.
-      return fetchDoc().then(function (r) { if (!r.ok) throw new Error("(" + r.status + ")"); return r.blob(); }).then(function (b) {
+      return getBlob().then(function (b) {
         if (!st.alive) return;
         stage.textContent = "";
         stage.appendChild(h("iframe", { title: title, "class": "wa-pdf-native", src: URL.createObjectURL(b) + "#page=" + first }));
@@ -523,6 +582,16 @@
       }).catch(function (e2) { say("Could not open this document " + ((e2 && e2.message) || "")); });
     });
     return Promise.resolve();
+  }
+
+  // PDFs handed over as Blobs are kept (the last few) so browser Back/Forward can show them again.
+  function keepBlob(blob, title) {
+    S.blobs = S.blobs || {};
+    S.blobSeq = (S.blobSeq || 0) + 1;
+    var key = "b" + S.blobSeq;
+    S.blobs[key] = { blob: blob, title: title };
+    delete S.blobs["b" + (S.blobSeq - 4)];
+    return key;
   }
 
   function openCreateAccount(continueTo) {
@@ -588,7 +657,22 @@
 
   function refreshState() {
     var t = token();
-    if (!t) { setSignedOut(); return Promise.resolve(S.status); }
+    if (!t) {
+      // No AuthFor sign-in in this browser. A seat bought in the page without signing in signs the
+      // buyer in with the weyland_session cookie alone (set when checkout provisioning finishes), so
+      // the server is asked whether this browser holds a live session (a guest: valid:false, 200).
+      if (S.status === "unknown") setSignedOut();
+      return (S.loggingOut || Promise.resolve()).then(function () {
+        return api("/api/auth/session/check");
+      }).then(function (c) {
+        return c.ok && c.data && c.data.valid ? me() : null;
+      }).then(function (r) {
+        if (token()) return S.status; // signed in through AuthFor meanwhile; that path owns the state
+        if (r && r.ok && r.data && r.data.user) setSignedIn(r.data.user);
+        else if (S.status !== "signed-out") setSignedOut();
+        return S.status;
+      });
+    }
     return me().then(function (r) {
       if (r.ok && r.data && r.data.user) { setSignedIn(r.data.user); return S.status; }
       if (r.status === 401 && lsGet(REFRESH_KEY) && sdk() && typeof sdk()._refreshSession === "function") {
@@ -638,6 +722,7 @@
     [TOKEN_KEY, REFRESH_KEY, SESSION_KEY].forEach(lsDel);
     if (S.sdk) { S.sdk._token = null; S.sdk._user = null; S.sdk._refreshToken = null; S.sdk._sessionId = null; if (S.sdk._refreshTimer) clearTimeout(S.sdk._refreshTimer); }
     var local = api("/api/auth/logout", { method: "POST" });
+    S.loggingOut = local; // a refresh meanwhile waits for the server session to be gone
     S.status = "signed-in"; // so setSignedOut() also drops the account token from the guest slot
     setSignedOut();
     return Promise.all([authfor, local]).then(function () { return close(); });
@@ -665,7 +750,7 @@
       return;
     }
     var path = sameOriginPath(href);
-    if (path && APPS[path.split("?")[0]] && !a.target && !e.metaKey && !e.ctrlKey && !e.shiftKey) {
+    if (path && APPS[appKey(path)] && !a.target && !e.metaKey && !e.ctrlKey && !e.shiftKey) {
       e.preventDefault(); e.stopImmediatePropagation();
       viewApp(path);
     }
@@ -673,6 +758,7 @@
 
   window.addEventListener("popstate", function (e) {
     if (e.state && e.state.wa === "app" && e.state.path) viewApp(e.state.path, true);
+    else if (e.state && e.state.wa === "pdf" && e.state.blob && S.blobs && S.blobs[e.state.blob]) viewPdf({ blob: S.blobs[e.state.blob].blob, title: e.state.title, page: e.state.page }, true);
     else if (e.state && e.state.wa === "pdf" && e.state.url) viewPdf({ url: e.state.url, title: e.state.title, page: e.state.page }, true);
     else if (S.overlay && S.overlay.classList.contains("is-open")) hideOverlay();
   });

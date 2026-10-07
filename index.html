@@ -1739,6 +1739,27 @@
       padding: 7px 12px;
       border-radius: 4px;
     }
+    /* The account control (assets/weyland-shell.js) sits in this bar while the dossier is up
+       ([data-wa-chip-slot] below), so on a phone it never covers the header's [close] or the
+       product tabs; while the dossier is lowered the bar slides away and it floats (see below). */
+    .wn-chip-slot { display: inline-flex; align-items: center; min-width: 0; }
+    .wn-persistent-footer #wa-account-chip { padding: 6px 12px; font-size: 12px; }
+    @media (max-width: 768px) {
+      /* The phone layout the 768px block above intends for this bar (space-around, 6px gaps). That
+         block sits before the bar's base rule, so it never applied, and the base 24px gaps left the
+         account control too little room for its label. */
+      .wn-persistent-footer { justify-content: space-around; gap: 6px; padding: 10px 12px; }
+    }
+    @media (max-width: 640px) {
+      .wn-persistent-footer #wa-account-chip { min-height: 44px; }
+    }
+    /* Lowered, the bar is gone and the control floats: top left, not top right, because the SightX
+       intro's SKIP button sits top right (it was under the control); top left is clear above the
+       chrono panel and beside [raise dossier]. Very narrow phones show just the status dot there. */
+    html.folder-lowered #wa-account-chip:not(.wa-docked) { right: auto; left: max(12px, env(safe-area-inset-left)); }
+    @media (max-width: 374px) {
+      html.folder-lowered #wa-account-chip:not(.wa-docked) .wa-label { display: none; }
+    }
     /* Ephemeral-to-permanent upgrade modal */
     #upgrade-modal {
       position: fixed;
@@ -2466,7 +2487,23 @@
           </div>
 
           <div style="margin-top:20px">
-            <a class="js-upgrade-cta button" href="/login?redirect=/" style="width:100%;justify-content:center">CONNECT TO SPATIAL ROOM</a>
+            <a class="js-upgrade-cta button" id="mx-connect" href="/login?redirect=/meetingx" style="width:100%;justify-content:center">CONNECT TO SPATIAL ROOM</a>
+            <script>
+            // CONNECT TO SPATIAL ROOM opens a fresh MeetingX room in the overlay and joins it. A visitor
+            // who is not signed in signs in first, in place (the shell's sign-in view), and lands in the
+            // room already joined; a signed-in visitor goes straight in. The MeetingX page joins on load
+            // when this tab holds its "meetingx.joinAfterSignIn" note for that room
+            // (weyland-meetingx-worker/src/pages/meetingx.html). Runs before the shell's own click
+            // handler (window capture), which then opens /login?redirect=<room> in place.
+            window.addEventListener("click", function (e) {
+              var a = e.target && e.target.closest ? e.target.closest("#mx-connect") : null;
+              if (!a) return;
+              var id = (window.crypto && crypto.randomUUID) ? crypto.randomUUID() : (Math.random().toString(36).slice(2) + Date.now().toString(36));
+              var room = id.replace(/[^A-Za-z0-9]/g, "").slice(0, 10);
+              try { sessionStorage.setItem("meetingx.joinAfterSignIn", JSON.stringify({ room: room, at: Date.now(), tries: 0 })); } catch (err) {}
+              a.setAttribute("href", "/login?redirect=" + encodeURIComponent("/meetingx?room=" + room));
+            }, true);
+            </script>
           </div>
         </div>
       </div>
@@ -2608,10 +2645,27 @@
               if (ct.indexOf("application/pdf") === -1) throw new Error("expected a PDF, got " + ct);
               return r.blob();
             }).then(function(blob){
-              var url = URL.createObjectURL(blob);
-              var w = window.open(url, "_blank");
-              note.innerHTML = "Real PDF rendered (" + Math.round(blob.size / 1024) + " KB). " +
-                (w ? "" : "Pop-up blocked — ") + "<a href=\"" + url + "\" target=\"_blank\" rel=\"noopener\" style=\"color:var(--accent)\">open it here</a>.";
+              // In place: the shell's document viewer (assets/weyland-shell.js, the same one the
+              // citations use), never a new tab. Without the shell, the browser's viewer in this box.
+              var title = "PropX proposal (sample bill of materials)";
+              var shell = window.WeylandShell && typeof window.WeylandShell.open === "function" ? window.WeylandShell : null;
+              note.textContent = "Real PDF rendered (" + Math.round(blob.size / 1024) + " KB). ";
+              if (shell) {
+                shell.open("pdf", { blob: blob, title: title });
+                var again = document.createElement("button");
+                again.type = "button";
+                again.id = "px-pdf-again";
+                again.textContent = "OPEN IT AGAIN";
+                again.style.cssText = "background:none;border:0;padding:0;color:var(--accent);font:inherit;font-weight:700;text-decoration:underline;cursor:pointer";
+                again.addEventListener("click", function(){ shell.open("pdf", { blob: blob, title: title }); });
+                note.appendChild(again);
+              } else {
+                var view = document.createElement("iframe");
+                view.title = title;
+                view.src = URL.createObjectURL(blob);
+                view.style.cssText = "display:block;width:100%;height:560px;border:1px solid var(--line);border-radius:12px;background:#fff;margin-top:10px";
+                note.appendChild(view);
+              }
             }).catch(function(err){
               note.textContent = "PDF request failed: " + err.message;
             }).finally(function(){
@@ -2903,7 +2957,7 @@
     <a href="#whyweyland">Why WeylandAI</a>
     <a href="#pricing">Pricing</a>
     <a href="#wire">News</a>
-    <a class="wn-signin js-upgrade-cta" href="/login?redirect=/">Sign In</a>
+    <span class="wn-chip-slot" data-wa-chip-slot><a class="wn-signin js-upgrade-cta" href="/login?redirect=/">Sign In</a></span>
   </nav>
 
   <!-- Ephemeral-to-permanent upgrade modal: every visitor already has a
@@ -3337,7 +3391,7 @@
             "<div style=\"overflow-x:auto\"><table style=\"width:100%;border-collapse:collapse;font-size:12.5px\"><thead><tr style=\"color:var(--muted);text-align:left\"><th>SPEC LINE</th><th>MATCHED</th><th>CONFIDENCE</th><th>CITATION</th></tr></thead><tbody>" + rows + "</tbody></table></div>";
           if ((sum.matched || 0) > 0) {
             // Decision 2026-10-05: no new per-packet price. The packet is part of the SubX seat
-            // (price from the SKU via [data-sku-price]); the click goes straight to Stripe Checkout.
+            // (price from the SKU via [data-sku-price]); the click opens the payment form in the page.
             out.insertAdjacentHTML("beforeend",
               "<div class=\"hs-packet\" style=\"margin-top:12px;padding:12px 14px;border:1px solid var(--border);border-radius:8px;display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between\">" +
                 "<span style=\"color:var(--text);font-size:13px;line-height:1.5;max-width:46ch\"><strong>" + (sum.matched || 0) + " matched line" + ((sum.matched || 0) === 1 ? "" : "s") + "</strong> can become a submittal packet: cut sheets, catalogue pages and citations assembled into one PDF, every line traceable to its source.</span>" +
@@ -3873,35 +3927,80 @@
     }
     fillSkuPrices();
     window.__weylandFillSkuPrices = fillSkuPrices;
-    // Pricing: straight to a real Stripe Checkout session. No account first:
-    // the platform creates the session unauthenticated and the purchase is
-    // attached to the buyer on return (ephemeral session, same as every
-    // other demo on this page). A failure is shown inline, never swallowed.
+    // Pricing: the payment form opens inside this page (Stripe's embedded Checkout through the
+    // platform's helper, GET /api/billing/embedded-checkout.js, the same one /pricing and /news
+    // use), never a separate checkout.stripe.com page. No account first: the session is created
+    // without one (a signed-in visitor's email is used automatically). When provisioning
+    // finishes, the helper signs the buyer in on this page (weyland_session cookie) and refreshes
+    // the account control; the note under the button says what happened. A failure is shown
+    // inline, never swallowed.
+    var CHECKOUT_PRODUCTS = {
+      "weyland-huntx-seat": { name: "WeylandAI HuntX seat", app: "HuntX", path: "/huntx" },
+      "weyland-subx-seat": { name: "WeylandAI SubX seat", app: "SubX", path: "/subx-app" },
+      "weyland-subconp-seat": { name: "WeylandAI SubConP suite", app: "SubX", path: "/subx-app" }
+    };
+    function weylandCheckoutHelper() {
+      if (window.WeylandCheckout) return Promise.resolve(window.WeylandCheckout);
+      if (window.__weylandCheckoutLoading) return window.__weylandCheckoutLoading;
+      window.__weylandCheckoutLoading = new Promise(function (resolve, reject) {
+        var s = document.createElement("script");
+        s.src = "/api/billing/embedded-checkout.js";
+        s.onload = function () { if (window.WeylandCheckout) resolve(window.WeylandCheckout); else reject(new Error("the checkout form did not load.")); };
+        s.onerror = function () { window.__weylandCheckoutLoading = null; reject(new Error("the checkout form did not load.")); };
+        document.head.appendChild(s);
+      });
+      return window.__weylandCheckoutLoading;
+    }
+    var checkoutNote = null, checkoutPaid = null;
+    function setCheckoutNote(text, open) {
+      if (!checkoutNote) return;
+      checkoutNote.textContent = text || "";
+      if (!open) return;
+      var b = document.createElement("button");
+      b.type = "button";
+      b.className = "js-checkout-open";
+      b.textContent = "OPEN " + open.app.toUpperCase();
+      b.style.cssText = "margin-left:6px;background:none;border:0;padding:0;color:var(--accent);font:inherit;font-weight:700;text-decoration:underline;cursor:pointer";
+      b.addEventListener("click", function () { if (window.WeylandShell) window.WeylandShell.open("app", { path: open.path }); });
+      checkoutNote.appendChild(b);
+    }
     document.addEventListener("click", function(e) {
       var el = e.target && e.target.closest ? e.target.closest(".js-checkout") : null;
       if (!el) return;
-      (function(el) {
-        e.preventDefault();
-        var note = el.parentNode.querySelector(".js-checkout-note");
-        var product = el.getAttribute("data-product");
-        el.setAttribute("aria-busy", "true");
-        if (note) note.textContent = "Opening secure checkout\u2026";
-        fetch("/api/billing/checkout/create", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ product_id: product, quantity: 1, success_url: location.origin + "/?checkout=success#pricing", cancel_url: location.origin + "/#pricing" })
-        }).then(function(r) { return r.json().then(function(d) { return { ok: r.ok, d: d }; }); })
-          .then(function(res) {
-            if (!res.ok || !res.d || !res.d.checkout_url) throw new Error((res.d && res.d.detail && res.d.detail.message) || ("checkout " + (res.d && res.d.error || "unavailable")));
-            if (note) note.textContent = "Redirecting to Stripe\u2026";
-            location.href = res.d.checkout_url;
-          })
-          .catch(function(err) {
-            el.removeAttribute("aria-busy");
-            if (note) note.textContent = "Checkout did not open: " + err.message + " \u2014 email hello@weylandai.com and we will send a link.";
-          });
-      })(el);
+      e.preventDefault();
+      if (el.getAttribute("aria-busy") === "true") return;
+      var product = el.getAttribute("data-product");
+      var info = CHECKOUT_PRODUCTS[product] || {};
+      checkoutNote = el.parentNode.querySelector(".js-checkout-note");
+      el.setAttribute("aria-busy", "true");
+      setCheckoutNote("Opening secure checkout…");
+      weylandCheckoutHelper()
+        .then(function (W) { return W.open({ product_id: product, quantity: 1, name: info.name || "WeylandAI" }); })
+        .then(function (opened) { if (opened) setCheckoutNote("Secure checkout is open on this page."); })
+        .catch(function (err) { setCheckoutNote("Checkout did not open: " + err.message + " — email hello@weylandai.com and we will send a link."); })
+        .then(function () { el.removeAttribute("aria-busy"); });
     });
+    window.addEventListener("weyland-checkout", function (e) {
+      var d = e.detail || {};
+      var info = CHECKOUT_PRODUCTS[d.product_id] || null;
+      if (d.status === "error") setCheckoutNote("Checkout did not open: " + (d.message || "it is unavailable right now.") + " — email hello@weylandai.com and we will send a link.");
+      else if (d.status === "complete") { checkoutPaid = d.session_id || true; setCheckoutNote("Payment received. Activating…"); }
+      else if (d.status === "active") setCheckoutNote((info ? info.app : "Your seat") + " is active and you are signed in.", info);
+      else if (d.status === "paid_pending") setCheckoutNote("Payment received. Your account appears here as soon as it is set up.");
+      else if (d.status === "closed") setCheckoutNote(checkoutPaid && (checkoutPaid === true || checkoutPaid === d.session_id) ? "Payment received. Your account appears here as soon as it is set up." : "Checkout closed before payment. Nothing was charged.");
+    });
+    // Back from a payment method that had to leave for its bank (embedded checkout's return_url),
+    // or from an older hosted checkout: the helper reads the result and finishes it here.
+    (function () {
+      var q = new URLSearchParams(location.search);
+      var kind = q.get("checkout");
+      if ((kind === "return" || kind === "success") && /^cs_(live|test)_[A-Za-z0-9]+$/.test(q.get("session_id") || "")) {
+        weylandCheckoutHelper().catch(function () {});
+      } else if (kind === "cancelled") {
+        q.delete("checkout");
+        try { history.replaceState(history.state, "", location.pathname + (q.toString() ? "?" + q.toString() : "") + location.hash); } catch (err) {}
+      }
+    })();
     document.querySelectorAll("[data-upgrade-close]").forEach(function(el) {
       el.addEventListener("click", closeUpgradeModal);
     });
@@ -3984,7 +4083,8 @@
     var injected = false;
     var pendingMount = false;
     // 2026-10-07: the world never draws behind the shell overlay (sign-in,
-    // account, apps, documents) or the create-account dialog. Pausing is done
+    // account, apps, documents), the create-account dialog or the checkout
+    // form (html.wco-open, set by the checkout helper). Pausing is done
     // from this side: the SightX frame is same-origin and every loop in it
     // schedules itself through its window's requestAnimationFrame, so while an
     // overlay is open that function queues instead of scheduling (the frame is
@@ -3994,7 +4094,7 @@
     var docEl = document.documentElement;
     var paused = null;
     function overlayOpen() {
-      return docEl.classList.contains("wa-overlay-open") || !!document.querySelector("#upgrade-modal.is-open");
+      return docEl.classList.contains("wa-overlay-open") || docEl.classList.contains("wco-open") || !!document.querySelector("#upgrade-modal.is-open");
     }
     function pauseBackdrop() {
       if (paused) return;
@@ -4261,7 +4361,22 @@
     });
   })();
   </script>
+<script>
+  // The account control sits in the footer bar while the dossier is up and floats top right while
+  // it is lowered (the bar slides away with the folder): assets/weyland-shell.js reads
+  // html[data-wa-chip-float].
+  (function () {
+    var root = document.documentElement;
+    function sync() {
+      var lowered = root.classList.contains("folder-lowered");
+      if (lowered === root.hasAttribute("data-wa-chip-float")) return;
+      if (lowered) root.setAttribute("data-wa-chip-float", ""); else root.removeAttribute("data-wa-chip-float");
+    }
+    sync();
+    try { new MutationObserver(sync).observe(root, { attributes: true, attributeFilter: ["class"] }); } catch (e) {}
+  })();
+</script>
 <script src="/assets/authfor-integration-standard.js?v=20261006c"></script>
-<script src="/assets/weyland-shell.js?v=20261007b"></script>
+<script src="/assets/weyland-shell.js?v=20261007c"></script>
 </body>
 </html>
