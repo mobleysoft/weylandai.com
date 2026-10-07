@@ -102,6 +102,7 @@ await J.run(async () => {
   const confirmP = page.waitForResponse((r) => /authfor\.com\/api\/v1\/password\/reset-confirm$/.test(r.url().split("?")[0]) && r.request().method() === "POST", { timeout: 30000 }).catch(() => null);
   await press(page, "#weyland-reset-submit");
   const confirm = await confirmP;
+  const resetAt = Date.now();
   await page.waitForFunction(() => document.documentElement.dataset.weylandAuth === "signed-in" && window.WeylandShell.state().view === "account", null, { timeout: 45000 }).catch(() => {});
   const after = await shellState(page);
   J.check("SAVE AND SIGN IN saves the password at AuthFor and signs in as the account", !!confirm && confirm.status() === 200 && after.auth === "signed-in" && after.user === ALIAS, { status: confirm && confirm.status(), auth: after.auth, user: after.user, error: after.error });
@@ -110,14 +111,20 @@ await J.run(async () => {
   J.check("the WeylandAI server session is the account's", sv.valid && sv.email === ALIAS, sv);
   await J.checkInPlace(page, mark, "the reset happened in place: same document, still on weylandai.com");
 
-  // The same link again: refused in words.
+  // The same link again: refused in words. What AuthFor answered and what the view shows are kept in
+  // the check, so a failure says which side it was (live 2026-10-07 17:19Z it failed once, no detail).
   await page.evaluate((t) => { window.WeylandShell.open("reset", { token: t, email: "" }); }, token);
+  await page.waitForSelector("#weyland-reset-password", { state: "visible", timeout: 10000 }).catch(() => {});
   await page.fill("#weyland-reset-password", newPassword);
   await page.fill("#weyland-reset-password2", newPassword);
+  const againP = page.waitForResponse((r) => /authfor\.com\/api\/v1\/password\/reset-confirm$/.test(r.url().split("?")[0]) && r.request().method() === "POST", { timeout: 30000 }).catch(() => null);
   await press(page, "#weyland-reset-submit");
+  const again = await againP;
+  const againBody = again ? await again.json().catch(() => ({})) : null;
   await until(async () => (await shellState(page)).error, 15000, 300);
   const twice = await shellState(page);
-  J.check("the link works once: used again, the page says it has expired or was used", /expired or was already used/i.test(twice.error), twice.error);
+  J.check("the link works once: used again, AuthFor refuses it and the page says it has expired or was used", !!again && again.status() === 401 && /expired or was already used/i.test(twice.error),
+    { authfor: again ? { status: again.status(), code: (againBody && againBody.code) || null } : "no reset-confirm request seen", error: twice.error, view: twice.view, overlay: twice.overlayText.slice(0, 200) });
   await page.evaluate(() => window.WeylandShell.close());
   await ctx.close();
 
@@ -128,7 +135,18 @@ await J.run(async () => {
   await p2.waitForFunction(() => !!window.WeylandShell && !!document.getElementById("wa-account-chip"), null, { timeout: 20000 }).catch(() => {});
   await raiseDossier(p2);
   const oldTry = await authfor("/api/v1/login", { email: ALIAS, password: oldPassword, client_id: "af_weyland_login" });
-  J.check("the old password no longer signs in (AuthFor 401)", oldTry.status === 401, { status: oldTry.status, code: oldTry.d.code });
+  const oldAfter = Math.round((Date.now() - resetAt) / 1000);
+  // AuthFor keeps users and reset links in Workers KV, which is eventually consistent (a write can
+  // take about 60 s to reach every read). An old password still accepted is tried once more after
+  // that window, so the report says whether it stopped working later or not at all. The check
+  // itself stays strict: the old password must be refused at once.
+  let oldLater = null;
+  if (oldTry.status !== 401) {
+    await sleep(65000);
+    const t2 = await authfor("/api/v1/login", { email: ALIAS, password: oldPassword, client_id: "af_weyland_login" });
+    oldLater = { status: t2.status, code: t2.d.code || null, seconds_after_reset: Math.round((Date.now() - resetAt) / 1000) };
+  }
+  J.check("the old password no longer signs in (AuthFor 401)", oldTry.status === 401, { status: oldTry.status, code: oldTry.d.code || null, seconds_after_reset: oldAfter, tried_again: oldLater });
   const st2 = await signIn(p2, { email: ALIAS, password: newPassword });
   J.check("the new password signs in from a second browser", st2.auth === "signed-in" && st2.user === ALIAS, { auth: st2.auth, user: st2.user, error: st2.error });
   await p2.evaluate(() => window.WeylandShell && window.WeylandShell.signOut());
