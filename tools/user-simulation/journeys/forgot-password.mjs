@@ -9,6 +9,8 @@
 // reaches AuthFor and nobody is mailed. The address is a user-sim-* address registered nowhere.
 // Not exercised, for the same reason: the email itself and the reset page it links to (AuthFor's
 // code builds https://authfor.com/reset?token=..., a page on authfor.com, not weylandai.com).
+// Since 2026-10-07 (fc:shell): the success words are a note, not an error, and when AuthFor answers
+// that it could not send (502 {sent:false}) the page says so instead of "on its way".
 // No account. Demo clones the homepage creates for the guest are captured and deleted.
 //
 // Usage: node tools/user-simulation/journeys/forgot-password.mjs   (exit 0 = all passed)
@@ -23,14 +25,16 @@ await J.run(async () => {
   const page = await J.page(ctx);
   // Answer the reset request in this browser: it never reaches AuthFor, so no email is sent.
   const sent = [];
+  let failNext = false;
   await ctx.route(RESET, async (route) => {
     const req = route.request();
     const cors = { "Access-Control-Allow-Origin": "https://weylandai.com", "Access-Control-Allow-Headers": "Content-Type", "Access-Control-Allow-Methods": "POST, OPTIONS" };
     if (req.method() === "OPTIONS") return route.fulfill({ status: 204, headers: cors });
     let body = {};
     try { body = JSON.parse(req.postData() || "{}"); } catch (e) { body = {}; }
-    sent.push({ method: req.method(), email: body.email || null });
-    return route.fulfill({ status: 200, headers: cors, contentType: "application/json", body: JSON.stringify({ success: true, message: "If email exists, reset link has been sent" }) });
+    sent.push({ method: req.method(), email: body.email || null, venture: body.client_id || body.venture_id || null });
+    if (failNext) { failNext = false; return route.fulfill({ status: 502, headers: cors, contentType: "application/json", body: JSON.stringify({ error: "The email could not be sent. Try again in a minute.", code: "EMAIL_SEND_FAILED", sent: false }) }); }
+    return route.fulfill({ status: 200, headers: cors, contentType: "application/json", body: JSON.stringify({ sent: true, brand: "weylandai" }) });
   });
   await openHome(page, J);
   await raiseDossier(page);
@@ -53,10 +57,19 @@ await J.run(async () => {
   const email = J.unregisteredEmail("forgot");
   await page.fill("#weyland-signin-email", email);
   await press(page, forgot);
-  await until(async () => sent.length > 0 && /reset link/i.test((await shellState(page)).error), 8000, 300);
+  const note = () => page.evaluate(() => { const n = document.querySelector("#wa-overlay.is-open .wa-note"); return n && n.style.display !== "none" ? n.textContent.trim() : ""; });
+  await until(async () => sent.length > 0 && /reset link is on its way/i.test(await note()), 8000, 300);
   const second = await shellState(page);
-  J.check("with the email typed, one reset request goes out for exactly that email", sent.length === 1 && sent[0].method === "POST" && sent[0].email === email, sent);
-  J.check("the page says a reset link is on its way, without saying whether the account exists", /if that email has an account, a reset link is on its way/i.test(second.error), second.error);
+  const said = await note();
+  J.check("with the email typed, one reset request goes out for exactly that email, naming WeylandAI", sent.length === 1 && sent[0].method === "POST" && sent[0].email === email && !!sent[0].venture, sent);
+  J.check("the page says a reset link is on its way, without saying whether the account exists", /if that email has an account, a reset link is on its way/i.test(said) && !second.error, { note: said, error: second.error });
+
+  // AuthFor could not send: the page says so, never "on its way".
+  failNext = true;
+  await press(page, forgot);
+  await until(async () => sent.length > 1 && /could not be sent/i.test((await shellState(page)).error), 8000, 300);
+  const third = await shellState(page);
+  J.check("when AuthFor reports the email could not be sent, the page says so", sent.length === 2 && /could not be sent/i.test(third.error) && !/on its way/i.test(await note()), { error: third.error, note: await note() });
   J.check("it all happens in the sign-in overlay (the form is still there to sign in)", second.overlayOpen && second.view === "signin" && (await page.locator("#weyland-signin-email").isVisible().catch(() => false)), { overlayOpen: second.overlayOpen, view: second.view });
   J.note("not_exercised", "the reset email and the page it links to (https://authfor.com/reset?token=..., per AuthFor's code) - exercising them sends an email");
   J.note("reset_requests_answered_locally", sent.length);

@@ -12,7 +12,8 @@
 // reports/matrix-<stamp>/results.jsonl (written as it goes, so an interrupted matrix keeps what
 // it ran), and the journeys' own reports to reports/ as usual (reports/ is not committed).
 // Each journey deletes what it creates; checkout steps stop at Stripe's loaded form (each press
-// leaves one live Checkout Session to expire) and nothing sends email.
+// leaves one live Checkout Session to expire) and nothing sends email except code-sign-in and
+// reset-in-page (one email each, to a new jmobleyworks+<tag>@gmail.com alias of John's).
 // Exit code 0 only if every run of every journey passed.
 import { spawn } from "node:child_process";
 import { createWriteStream, existsSync, mkdirSync, readdirSync, readFileSync, appendFileSync, writeFileSync } from "node:fs";

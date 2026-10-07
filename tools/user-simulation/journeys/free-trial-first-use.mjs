@@ -68,7 +68,7 @@ await J.run(async () => {
 
   // The account card shows the trial; OPEN SUBX opens the workspace signed in.
   const card = await openAccountCard(page);
-  J.check("trial: the account card shows the plan and when the trial ends", card.view === "account" && /trial/i.test(card.overlayText) && /trial ends\s*\d{4}-\d{2}-\d{2}/i.test(card.overlayText), card.overlayText);
+  J.check("trial: the account card shows the plan and when the trial ends", card.view === "account" && /trial/i.test(card.overlayText) && /trial ends\s*(mon|tues|wednes|thurs|fri|satur|sun)day, \w+ \d{1,2}, \d{4} \(\d+ days? left\)/i.test(card.overlayText), card.overlayText);
   const open = page.locator("#wa-overlay.is-open button").filter({ hasText: /open subx/i }).first();
   if (await open.count()) {
     await press(page, open);

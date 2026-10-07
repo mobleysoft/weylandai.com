@@ -210,6 +210,8 @@ pass, each stopped at the loaded form and left to expire).
 | `journeys/wirex-news.mjs` | WireX chapter, News in the overlay, WireX Pro upgrade (stops at the loaded form) |
 | `journeys/forgot-password.mjs` | Forgot password in the sign-in overlay (the request is answered in the browser: no email) |
 | `journeys/shell-address.mjs` | the address of an open view (/#/find): reload, shared link, typed #/&lt;app&gt;, Back / Forward / Close, a cited document after a reload |
+| `journeys/code-sign-in.mjs` | sign in with an emailed code: a real code to a new `jmobleyworks+<tag>@gmail.com` alias, AuthFor's answer read, the code step, a wrong code refused; `CODE_FILE=<path>` finishes with the code from the inbox |
+| `journeys/reset-in-page.mjs` | the emailed reset link `/#/reset?token=` (the token AuthFor's API issued, read back from its store): a new password, signed in in place, the link works once, the new password signs in elsewhere |
 
 Rules every journey keeps (`lib/journey-kit.mjs`):
 

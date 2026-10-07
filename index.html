@@ -1641,6 +1641,8 @@
       gap: 20px;
     }
     footer.site-footer a { color: var(--text); text-decoration: none; font-family: ui-monospace, monospace; }
+    footer.site-footer .site-operator, footer.site-footer .site-contact { display: block; color: var(--muted); font-size: 11px; line-height: 1.6; }
+    footer.site-footer .site-mail { color: var(--text); user-select: all; -webkit-user-select: all; }
     footer.site-footer a:hover { color: var(--accent); }
 
     /* Skeleton shimmer */
@@ -2947,7 +2949,8 @@
     <footer class="site-footer">
       <div>
         <strong>WeylandAI</strong> &middot; Construction Document Automation &amp; Spatial Twin OS<br>
-        <span style="color:var(--muted);font-size:11px">A Mobley Helms Systems LP Company</span>
+        <span class="site-operator">WeylandAI is operated by Argo LLC.</span>
+        <span class="site-contact">Write to us: <span class="site-mail">hello@weylandai.com</span> &middot; accounts and billing: <span class="site-mail">support@weylandai.com</span></span>
       </div>
       <div style="display:flex;gap:16px;flex-wrap:wrap">
         <a href="#hero">Top</a>
@@ -2961,8 +2964,8 @@
         <a href="#pricing">Pricing</a>
         <a href="#wire">News</a>
         <a class="js-upgrade-cta" href="/login?redirect=/">Sign In</a>
-        <a href="https://consenta.cc/policy/weylandai.com/privacy" target="_blank" rel="noopener">Privacy Policy</a>
-        <a href="https://consenta.cc/policy/weylandai.com/terms" target="_blank" rel="noopener">Terms of Service</a>
+        <a href="/privacy">Privacy Policy</a>
+        <a href="/terms">Terms of Service</a>
       </div>
     </footer>
   </main>
@@ -3005,7 +3008,7 @@
         <div id="upgrade-error" class="upgrade-error" role="alert" hidden></div>
       </form>
       <div id="upgrade-done" class="upgrade-done" role="status" hidden></div>
-      <div class="upgrade-alt" style="margin-bottom:4px">By creating an account you agree to our <a href="https://consenta.cc/policy/weylandai.com/terms" target="_blank" rel="noopener">Terms</a> and <a href="https://consenta.cc/policy/weylandai.com/privacy" target="_blank" rel="noopener">Privacy Policy</a>.</div>
+      <div class="upgrade-alt" style="margin-bottom:4px">By creating an account you agree to our <a href="/terms">Terms</a> and <a href="/privacy">Privacy Policy</a>.</div>
       <div class="upgrade-alt">Already have an account? <a href="/login?redirect=/">Sign in</a></div>
     </div>
   </div>
@@ -3758,43 +3761,40 @@
     var statPending = document.getElementById("stat-pending");
     var statSets = document.getElementById("stat-sets");
 
-    var MATCHED_DOORS = ["101A", "101B", "102", "103A", "103B", "104", "105A", "105B"];
-
+    // The demo building's door schedule as the visitor's own copy holds it (GET .../door-index:
+    // by_hardware_set { "HW-01": [{ door_number, door_location, door_type, source_page, verified }] }).
+    // Every cell is the row's own value (a dash where the schedule has none). MATCHED = the row's
+    // hardware set is confirmed (verified); PENDING REVIEW = not yet. Until 2026-10-07 this expected
+    // { doors: [...] } and drew nothing from the live answer, and invented the location and door type.
     function renderRealDoorRows(byHardwareSet){
-      if (!tbody) return;
-      var rows = [];
-      var total = 0, matched = 0, pending = 0;
-      var setKeys = Object.keys(byHardwareSet || {});
-
-      setKeys.forEach(function(setNum){
-        var setObj = byHardwareSet[setNum];
-        var setDoors = (setObj && setObj.doors) || [];
-        var isMatchedSet = parseInt(setNum, 10) <= 6;
-        setDoors.forEach(function(doorNum){
+      if (!tbody) return 0;
+      var rows = [], total = 0, matched = 0, sets = Object.keys(byHardwareSet || {});
+      sets.forEach(function(setNum){
+        var list = byHardwareSet[setNum];
+        list = Array.isArray(list) ? list : (list && Array.isArray(list.doors) ? list.doors.map(function (n) { return { door_number: n }; }) : []);
+        list.forEach(function(door){
+          var num = String((door && door.door_number) || "").trim();
+          if (!num) return;
           total++;
-          if (isMatchedSet) matched++; else pending++;
-          var statusClass = isMatchedSet ? "status-matched" : "status-pending";
-          var statusText = isMatchedSet ? "MATCHED" : "PENDING";
-          var isAcknowledged = state.matches.indexOf(doorNum) !== -1;
-          rows.push(
-            '<tr class="' + (isMatchedSet ? 'row-matched' : '') + (isAcknowledged ? ' seen' : '') + '" data-door="' + doorNum + '" tabindex="' + (isMatchedSet ? '0' : '-1') + '">' +
-              '<td class="door-cell">' + doorNum + '</td>' +
-              '<td>Level 1 &middot; Sector ' + (doorNum.slice(0,1) || '1') + '</td>' +
-              '<td class="part-cell">Alum/Glass Vestibule</td>' +
-              '<td class="part-cell">Set ' + setNum + '</td>' +
-              '<td><span class="status-badge ' + statusClass + '">' + statusText + '</span></td>' +
-            '</tr>'
-          );
+          var ok = !!door.verified;
+          if (ok) matched++;
+          var seen = state.matches.indexOf(num) !== -1;
+          rows.push('<tr class="' + (ok ? 'row-matched' : '') + (seen ? ' seen' : '') + '" data-door="' + hsEsc(num) + '" tabindex="' + (ok ? '0' : '-1') + '">' +
+            '<td class="door-cell">' + hsEsc(num) + '</td>' +
+            '<td>' + hsEsc(door.door_location || "\u2014") + '</td>' +
+            '<td class="part-cell">' + hsEsc(door.door_type || "\u2014") + '</td>' +
+            '<td class="part-cell">' + hsEsc(setNum) + (door.source_page ? ' <span style="color:var(--muted)">\u00b7 p. ' + hsEsc(door.source_page) + '</span>' : '') + '</td>' +
+            '<td><span class="status-badge ' + (ok ? 'status-matched' : 'status-pending') + '">' + (ok ? 'MATCHED' : 'PENDING REVIEW') + '</span></td>' +
+          '</tr>');
         });
       });
-
-      if (rows.length) {
-        tbody.innerHTML = rows.join("");
-        if (statTotal) statTotal.textContent = total;
-        if (statMatched) statMatched.textContent = matched;
-        if (statPending) statPending.textContent = pending;
-        if (statSets) statSets.textContent = setKeys.length;
-      }
+      if (!rows.length) return 0;
+      tbody.innerHTML = rows.join("");
+      if (statTotal) statTotal.textContent = total;
+      if (statMatched) statMatched.textContent = matched;
+      if (statPending) statPending.textContent = total - matched;
+      if (statSets) statSets.textContent = sets.length;
+      return total;
     }
 
     if (tbody) {
@@ -3832,9 +3832,29 @@
       });
     });
 
-    // Load Live Trial Session
+    // Load Live Trial Session: the visitor's own copy of the demo building (made by the SubX server
+    // for this guest or account) and its real door rows. When the copy cannot be made or read, the
+    // chapter says plainly that the live demo is unavailable and shows no rows. (Until 2026-10-07 it
+    // showed hard-coded door numbers labelled "VERIFIED DEMO SESSION" / "D1 DEMO CACHE" instead.)
+    function trialUnavailable(why){
+      if (sessionBadge) {
+        sessionBadge.classList.remove("is-loading");
+        sessionBadge.classList.remove("is-live");
+        sessionBadge.classList.add("is-down");
+        sessionBadge.textContent = "LIVE DEMO UNAVAILABLE";
+      }
+      if (tableSourceLabel) tableSourceLabel.textContent = "THE WEYLANDAI BUILDING \u00B7 NOT LOADED";
+      if (sourceNote) sourceNote.textContent = "";
+      [statTotal, statMatched, statPending, statSets].forEach(function (el) { if (el) el.textContent = "\u2014"; });
+      if (!tbody) return;
+      tbody.innerHTML = '<tr><td colspan="5" style="color:var(--text);white-space:normal;line-height:1.55">The live demo is unavailable right now: ' + hsEsc(String(why || "it did not answer").replace(/[.\s]+$/, "")) + '. No rows are shown in its place. ' +
+        '<button type="button" class="js-trial-retry" style="margin-left:4px;background:none;border:0;padding:0;color:var(--accent);font:inherit;font-weight:700;text-decoration:underline;cursor:pointer">TRY AGAIN</button></td></tr>';
+      var retry = tbody.querySelector(".js-trial-retry");
+      if (retry) retry.addEventListener("click", function () { loadRealTrial(); });
+    }
     function loadRealTrial(){
       var token;
+      if (sessionBadge) { sessionBadge.classList.remove("is-down"); sessionBadge.classList.add("is-loading"); sessionBadge.textContent = "LOADING THE LIVE DEMO"; }
       ephemeralToken().then(function(t){
         token = t;
         return fetch("/api/demo/weyland-building/session", {
@@ -3842,44 +3862,33 @@
           headers: { "Authorization": "Bearer " + token }
         });
       }).then(function(r){
-        if (!r.ok) throw new Error("session endpoint (" + r.status + ")");
-        return r.json();
+        if (r.ok) return r.json();
+        return r.json().catch(function () { return {}; }).then(function (d) {
+          var msg = d && (d.message || (d.error && (d.error.message || (typeof d.error === "string" ? d.error : ""))));
+          throw new Error(r.status === 429 ? (msg || "too many copies of the demo building were made from this network in the last few minutes; try again in a few minutes") : "your copy of the demo building could not be made (" + r.status + (msg ? ": " + msg : "") + ")");
+        });
       }).then(function(session){
         return fetch("/api/hardware-schedule/session/" + encodeURIComponent(session.session_id) + "/door-index", {
           headers: { "Authorization": "Bearer " + token }
         }).then(function(r){
-          if (!r.ok) throw new Error("door schedule (" + r.status + ")");
+          if (!r.ok) throw new Error("its door schedule could not be read (" + r.status + ")");
           return r.json();
         }).then(function(doorIndex){
           return { session: session, doorIndex: doorIndex };
         });
       }).then(function(result){
-        renderRealDoorRows(result.doorIndex.by_hardware_set);
+        var n = renderRealDoorRows(result.doorIndex && result.doorIndex.by_hardware_set);
+        if (!n) throw new Error("your copy came back with no door rows");
         if (sessionBadge) {
           sessionBadge.classList.remove("is-loading");
           sessionBadge.classList.add("is-live");
           sessionBadge.textContent = "LIVE \u2014 YOUR SESSION ACTIVE";
         }
-        if (sourceNote) sourceNote.textContent = "Every match keeps its source citation attached in the real product. This is your private copy.";
-        if (tableSourceLabel) tableSourceLabel.textContent = "THE WEYLANDAI BUILDING \u00B7 REAL D1 SESSION";
+        if (sourceNote) sourceNote.textContent = "These rows are your private copy of the demo building's real door schedule.";
+        if (tableSourceLabel) tableSourceLabel.textContent = "THE WEYLANDAI BUILDING \u00B7 YOUR COPY, LIVE";
       }).catch(function(err){
-        console.warn("[Trial] fallback mode:", err.message);
-        if (sessionBadge) {
-          sessionBadge.classList.remove("is-loading");
-          sessionBadge.classList.add("is-live");
-          sessionBadge.textContent = "VERIFIED DEMO SESSION";
-        }
-        if (tableSourceLabel) tableSourceLabel.textContent = "THE WEYLANDAI BUILDING \u00B7 D1 DEMO CACHE";
-        renderRealDoorRows({
-          "1": { doors: ["101A", "101B"] },
-          "2": { doors: ["102"] },
-          "3": { doors: ["103A", "103B"] },
-          "4": { doors: ["104"] },
-          "5": { doors: ["105A", "105B"] },
-          "6": { doors: ["106"] },
-          "7": { doors: ["107"] },
-          "8": { doors: ["108"] }
-        });
+        console.warn("[Trial] live demo unavailable:", err && err.message);
+        trialUnavailable(err && err.message);
       });
     }
 
@@ -4412,6 +4421,6 @@
   })();
 </script>
 <script src="/assets/authfor-integration-standard.js?v=20261006c"></script>
-<script src="/assets/weyland-shell.js?v=20261007e"></script>
+<script src="/assets/weyland-shell.js?v=20261007f"></script>
 </body>
 </html>
