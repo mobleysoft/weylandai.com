@@ -50,8 +50,8 @@ async function signedInBuyer(request2, env2) {
     if (!hasCookie && !hasBearer) return null;
     const { user } = await authenticate(request2, env2);
     if (!user?.userId || user.ephemeral) return null;
-    const row = await env2.DB.prepare("SELECT id, email FROM users WHERE id = ?").bind(user.userId).first();
-    return row?.email ? { userId: row.id, email: row.email } : null;
+    const row = await env2.DB.prepare("SELECT id, email, stripe_customer_id FROM users WHERE id = ?").bind(user.userId).first();
+    return row?.email ? { userId: row.id, email: row.email, customerId: row.stripe_customer_id || null } : null;
   } catch {
     return null;
   }
@@ -151,6 +151,9 @@ export function registerBillingRoutes(router, { WEYLAND_PRODUCTS, CHECKOUT_READY
           venture_id: "weylandai",
           mode: "subscription",
           customer_email: buyer?.email,
+          // The signed-in account (vendyai passes it to Stripe since 2026-10-07):
+          // the payment webhook grants the purchase to it and signs that browser in.
+          client_reference_id: buyer?.userId,
           success_url: urls.success_url,
           cancel_url: urls.cancel_url,
           line_items: [{ price: productCfg.priceId, quantity }],
@@ -198,10 +201,12 @@ export function registerBillingRoutes(router, { WEYLAND_PRODUCTS, CHECKOUT_READY
         priceFacts(env2, stripeRequest, productCfg.priceId).catch((e) => { console.error("[Billing] price lookup failed:", e.message); return null; })
       ]);
       const metadata = { venture_id: "weylandai", product_id: body.product_id, seats: String(quantity), ui: "embedded", start_path: start.slice(0, 450) };
-      const subscriptionData = { metadata: { venture_id: "weylandai", product_id: body.product_id, seats: String(quantity) } };
+      // user_id: the account a later cancellation or failed payment belongs to
+      // (routes/webhooks-subscription.js finds it by the subscription first).
+      const subscriptionData = { metadata: { venture_id: "weylandai", product_id: body.product_id, seats: String(quantity), user_id: buyer?.userId } };
       // Same trial the hosted page shows (SubConP: 30 days), stated explicitly.
       if (price?.trial_period_days) subscriptionData.trial_period_days = price.trial_period_days;
-      const session = await stripeApi(env2, "POST", "/checkout/sessions", {
+      const params = {
         ui_mode: "embedded_page",
         mode: "subscription",
         line_items: [{ price: productCfg.priceId, quantity }],
@@ -213,7 +218,22 @@ export function registerBillingRoutes(router, { WEYLAND_PRODUCTS, CHECKOUT_READY
         client_reference_id: buyer?.userId,
         metadata,
         subscription_data: subscriptionData
-      });
+      };
+      // A signed-in account that already pays for something buys under the same
+      // Stripe customer, so the billing portal (POST /api/subscription/portal)
+      // shows all of its subscriptions, not just the newest one. If Stripe
+      // refuses that customer, the checkout goes ahead by email as before.
+      let session;
+      if (buyer?.customerId) {
+        const { customer_email, ...withCustomer } = params;
+        try {
+          session = await stripeApi(env2, "POST", "/checkout/sessions", { ...withCustomer, customer: buyer.customerId });
+        } catch (err) {
+          if (!(err.status >= 400 && err.status < 500)) throw err;
+          console.warn("[Billing] existing customer refused, checking out by email:", err.stripeError?.code || err.status);
+        }
+      }
+      if (!session) session = await stripeApi(env2, "POST", "/checkout/sessions", params);
       return jsonResponse3({
         client_secret: session.client_secret,
         session_id: session.id,
@@ -299,10 +319,15 @@ export function registerBillingRoutes(router, { WEYLAND_PRODUCTS, CHECKOUT_READY
           // Self-serve sign-in: the webhook already created a real weyland_sessions
           // row (parsed.session_id) - hand it to the browser as a cookie here so
           // payment -> signed-in happens automatically, no manual founder onboarding.
-          if (parsed.status === "active" && parsed.session_id) {
+          // 2026-10-07: the webhook only creates that row for an account the
+          // checkout created or the signed-in buyer's own account; a purchase
+          // that typed an existing account's email answers signed_in:false and
+          // the buyer signs in with that email (routes/webhooks-subscription.js).
+          const signedIn = parsed.status === "active" && !!parsed.session_id;
+          if (signedIn) {
             headers["Set-Cookie"] = `weyland_session=${parsed.session_id}; Path=/; Max-Age=2592000; Secure; HttpOnly; SameSite=Lax`;
           }
-          return new Response(JSON.stringify({ status: parsed.status, quantity: parsed.quantity }), { status: 200, headers });
+          return new Response(JSON.stringify({ status: parsed.status, quantity: parsed.quantity, signed_in: signedIn }), { status: 200, headers });
         }
       }
       return jsonResponse3({ status: "pending" });

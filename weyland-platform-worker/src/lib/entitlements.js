@@ -32,6 +32,7 @@
 
 import { WEYLAND_PRODUCTS, stripeRequest } from "./stripe-billing.js";
 import { EPHEMERAL_TRIAL_PRODUCTS } from "./auth.js";
+import { ensureSubscriptionsTable, listUserSubscriptions, paidFromRows } from "./subscriptions-store.js";
 
 export const GUEST_PRODUCTS = Object.freeze([...EPHEMERAL_TRIAL_PRODUCTS]);
 
@@ -179,6 +180,17 @@ export async function syncUserEntitlements(env, userId, { nowMs = Date.now(), ro
     if (!current) return { userId, changed: false, reason: "no-row", row: null };
     let plan = desiredEntitlements(current, nowMs);
     if (plan.needsStripe) {
+      // 2026-10-07: the account's own subscription rows (kept by the payment
+      // webhooks, lib/subscriptions-store.js) answer this without asking Stripe
+      // while the visitor waits; Stripe is asked only for accounts that bought
+      // before those rows existed.
+      const rows = await subscriptionRowsFor(env, userId);
+      if (rows.length) {
+        const paid = paidFromRows(rows);
+        plan = desiredEntitlements(current, nowMs, { tiers: paid.tiers, suite: paid.suite });
+        if (!plan.changes) return { userId, changed: false, reason: plan.reason, row: current };
+        return writePlan(env, userId, current, plan, nowMs);
+      }
       if (!current.stripe_customer_id || !env.STRIPE_SECRET_KEY) {
         console.warn("[entitlements] trial ended after a purchase but no Stripe customer to check:", userId);
         return { userId, changed: false, reason: "trial-ended-purchase-unverified", row: current };
@@ -192,20 +204,118 @@ export async function syncUserEntitlements(env, userId, { nowMs = Date.now(), ro
       }
     }
     if (!plan.changes) return { userId, changed: false, reason: plan.reason, row: current };
-    const n = plan.changes;
-    const res = await env.DB.prepare(
-      `UPDATE users SET subscription_tier = ?, subscription_status = ?, products_enabled = ?, submittals_limit = ?, updated_at = ?
-       WHERE id = ? AND COALESCE(subscription_tier, '') = ? AND COALESCE(subscription_status, '') = ? AND COALESCE(products_enabled, '') = ?`
-    ).bind(
-      n.subscription_tier, n.subscription_status, n.products_enabled, n.submittals_limit, new Date(nowMs).toISOString(),
-      userId, current.subscription_tier ?? "", current.subscription_status ?? "", current.products_enabled ?? ""
-    ).run();
-    const changed = !!(res?.meta?.changes);
-    return { userId, changed, reason: changed ? plan.reason : "lost-race-retry-next-sync", row: changed ? { ...current, ...n } : current };
+    return writePlan(env, userId, current, plan, nowMs);
   } catch (e) {
     console.error("[entitlements] sync failed:", userId, e.message);
     return { userId, changed: false, reason: "error", row };
   }
+}
+
+// Compare-and-set write of a plan computed from `current`.
+async function writePlan(env, userId, current, plan, nowMs, { resetUsage = false } = {}) {
+  const n = plan.changes || {
+    subscription_tier: current.subscription_tier ?? null,
+    subscription_status: current.subscription_status ?? null,
+    products_enabled: current.products_enabled ?? "",
+    submittals_limit: current.submittals_limit ?? null
+  };
+  // resetUsage (a renewal was paid) also zeroes submittals_used: a new period.
+  const res = await env.DB.prepare(
+    `UPDATE users SET subscription_tier = ?, subscription_status = ?, products_enabled = ?, submittals_limit = ?,${resetUsage ? " submittals_used = 0," : ""} updated_at = ?
+       WHERE id = ? AND COALESCE(subscription_tier, '') = ? AND COALESCE(subscription_status, '') = ? AND COALESCE(products_enabled, '') = ?`
+  ).bind(
+    n.subscription_tier, n.subscription_status, n.products_enabled, n.submittals_limit, new Date(nowMs).toISOString(),
+    userId, current.subscription_tier ?? "", current.subscription_status ?? "", current.products_enabled ?? ""
+  ).run();
+  const changed = !!(res?.meta?.changes);
+  return { userId, changed, reason: changed ? plan.reason : "lost-race-retry-next-sync", row: changed ? { ...current, ...n } : current };
+}
+
+async function subscriptionRowsFor(env, userId) {
+  try {
+    await ensureSubscriptionsTable(env.DB);
+    return await listUserSubscriptions(env.DB, userId);
+  } catch (e) {
+    console.error("[entitlements] subscription rows unavailable:", userId, e.message);
+    return [];
+  }
+}
+
+// What a paid seat allows per billing period; never below what a free account
+// gets (a purchase used to drop the cap from 999 to 50 x seats).
+export const SUBMITTALS_PER_SEAT = 50;
+export function paidSubmittalsLimit(current, seats) {
+  return Math.max(Number(current) || 0, SIGNED_IN_SUBMITTALS_LIMIT, SUBMITTALS_PER_SEAT * Math.max(0, Number(seats) || 0));
+}
+
+/**
+ * What the users row should hold given the account's subscription rows
+ * (2026-10-07, payment lifecycle). Rules:
+ *   - products a subscription paid for and no longer pays for (cancelled,
+ *     payment failing) are removed, unless another paying subscription pays
+ *     for them; products granted any other way (by hand, the trial) stay;
+ *   - every paying subscription's products are added; the guest floor stays;
+ *   - while the 14-day trial is open it keeps the whole suite;
+ *   - tier: 'subconp' while a suite subscription pays (or the suite was
+ *     granted by hand, never by a subscription), 'standalone' while any
+ *     subscription pays, 'starter' in the trial, else 'free';
+ *   - status: 'active' while anything pays (and for the free plan), 'trial'
+ *     in the trial, 'past_due' when the only subscriptions left are failing.
+ */
+export function desiredFromSubscriptions(row, subs, nowMs = Date.now()) {
+  const paid = paidFromRows(subs);
+  const current = {
+    subscription_tier: row.subscription_tier ?? null,
+    subscription_status: row.subscription_status ?? null,
+    products_enabled: row.products_enabled ?? "",
+    submittals_limit: row.submittals_limit ?? null
+  };
+  const enabled = parseProducts(current.products_enabled);
+  const end = trialEndMs(row);
+  const trialOpen = (enabled.includes(TRIAL_MARK) || TRIAL_STATUSES.has(current.subscription_status)) && Number.isFinite(end) && end > nowMs;
+  const lapsed = new Set([...paid.everTiers].filter((t) => !paid.tiers.has(t)));
+  let products = [...enabled.filter((p) => !lapsed.has(p)), ...paid.tiers, ...GUEST_PRODUCTS];
+  if (trialOpen) products = [TRIAL_MARK, ...SUITE_PRODUCTS, ...products];
+  const manualSuite = current.subscription_tier === "subconp" && !paid.everSuite;
+  let tier;
+  if (paid.suite || manualSuite) tier = "subconp";
+  else if (paid.tiers.size) tier = "standalone";
+  else if (trialOpen) tier = "starter";
+  else tier = "free";
+  let status;
+  if (paid.paying || manualSuite) status = "active";
+  else if (trialOpen) status = "trial";
+  else if (paid.failing) status = "past_due";
+  else status = "active";
+  const next = {
+    subscription_tier: tier,
+    subscription_status: status,
+    products_enabled: joinProducts(products),
+    submittals_limit: paidSubmittalsLimit(current.submittals_limit, paid.seats)
+  };
+  const changed = ["subscription_tier", "subscription_status", "products_enabled", "submittals_limit"]
+    .some((k) => String(next[k] ?? "") !== String(current[k] ?? ""));
+  const reason = paid.paying ? "paying" : paid.failing ? "payment-failing" : trialOpen ? "trial-only" : "nothing-paid";
+  return { changes: changed ? next : null, reason, current, paid };
+}
+
+/**
+ * Bring the users row in line with its subscription rows (called by the
+ * payment webhook after each applied event). resetUsage starts a new usage
+ * period (a renewal was paid). Returns { userId, changed, reason, row }.
+ */
+export async function applySubscriptionState(env, userId, { nowMs = Date.now(), resetUsage = false } = {}) {
+  for (let attempt = 0; attempt < 3; attempt++) {
+    const current = await env.DB.prepare(`SELECT ${ROW_COLUMNS} FROM users WHERE id = ?`).bind(userId).first();
+    if (!current) return { userId, changed: false, reason: "no-row", row: null };
+    const rows = await subscriptionRowsFor(env, userId);
+    const plan = desiredFromSubscriptions(current, rows, nowMs);
+    if (!plan.changes && !resetUsage) return { userId, changed: false, reason: plan.reason, row: current };
+    const res = await writePlan(env, userId, current, plan, nowMs, { resetUsage });
+    if (res.changed) return { ...res, reason: plan.reason };
+    // Lost a compare-and-set race (another write to the row in between): read again.
+  }
+  return { userId, changed: false, reason: "lost-race", row: null };
 }
 
 /**
@@ -235,8 +345,12 @@ export function describeEntitlements(row, nowMs = Date.now()) {
   const enabled = parseProducts(row.products_enabled);
   const end = trialEndMs(row);
   const trialActive = enabled.includes(TRIAL_MARK) && Number.isFinite(end) && end > nowMs;
-  const suite = row.subscription_tier === "subconp" || trialActive;
-  const products = suite ? [...SUITE_PRODUCTS] : enabled.filter((p) => p !== TRIAL_MARK);
+  // The same test requireActiveSubscription() makes in every product worker:
+  // a past_due / cancelled account can use only what a guest can (2026-10-07).
+  const status = row.subscription_status || "trial";
+  const usable = status === "active" || (status === "trial" && !(Number.isFinite(end) && end <= nowMs));
+  const suite = usable && (row.subscription_tier === "subconp" || trialActive);
+  const products = !usable ? [] : suite ? [...SUITE_PRODUCTS] : enabled.filter((p) => p !== TRIAL_MARK);
   for (const g of GUEST_PRODUCTS) if (!products.includes(g)) products.push(g);
   let plan = row.subscription_tier || "free";
   if (trialActive) plan = "trial";
@@ -246,6 +360,9 @@ export function describeEntitlements(row, nowMs = Date.now()) {
     trial: trialActive ? { active: true, ends_at: row.trial_ends_at } : { active: false, ended_at: Number.isFinite(end) && end <= nowMs ? row.trial_ends_at : null },
     suite,
     products,
-    guest_products: [...GUEST_PRODUCTS]
+    guest_products: [...GUEST_PRODUCTS],
+    // A renewal payment failed: paid products are withheld until it is paid
+    // (POST /api/subscription/portal opens Stripe's page to update the card).
+    payment_failing: status === "past_due" || status === "unpaid"
   };
 }

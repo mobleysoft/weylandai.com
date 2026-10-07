@@ -235,21 +235,22 @@ zone_name = "weylandai.com"
 pattern = "weylandai.com/api/subscription/*"
 zone_name = "weylandai.com"
 
-# STAGE 3b (/api/webhooks/subscription) is DELIBERATELY NOT added, even
-# though SUBSCRIPTION_WEBHOOK_SECRET is now provisioned and verified
-# above (2026-09-13) - this Worker can correctly verify real traffic now,
-# but vendyai's own venture_webhook_endpoints row for venture_id=
-# 'weylandai' still points webhook_url at weylandai.com (the monolith),
-# so real Stripe events keep flowing there regardless of this Worker's
-# route table. Stays routed to weylandai-com-worker via the zone's
-# existing weylandai.com/* catch-all (confirmed live via the Cloudflare
-# API's zone routes listing, 2026-09-12: weylandai-com-worker still owns
-# weylandai.com/* since no more-specific route for
-# /api/webhooks/subscription exists). Cutting over for real needs a
-# deliberate follow-up pass: repoint vendyai's webhook_url to this
-# Worker, add the [[routes]] entry below, and verify a live end-to-end
-# delivery - not something to do incidentally as part of provisioning a
-# secret.
+# STAGE 3b (added 2026-10-07): /api/webhooks/subscription - every WeylandAI
+# payment event. vendyai's venture_webhook_endpoints row for 'weylandai'
+# points at https://weylandai.com/api/webhooks/subscription; this route makes
+# that URL this Worker's (it fell to the monolith's weylandai.com/* before,
+# whose copy of the handler granted the whole SubConP suite for a WireX seat
+# and never saw cancellations). Checked before adding it: the same secret
+# names on both Workers; vendyai's forward secret (vendyai_ledger
+# hmac_secret) accepted by both with a signed no-op probe and a wrong-secret
+# probe refused by both (same verify function). STRIPE_WEBHOOK_SECRET here is
+# vendyai's Stripe endpoint secret, not the one the monolith holds, so a
+# Stripe-signed request from the legacy direct Stripe endpoint for this URL
+# (subscribed since 2026-09-01) is refused here: every event comes through
+# vendyai, which forwards the lifecycle events too since 2026-10-07.
+[[routes]]
+pattern = "weylandai.com/api/webhooks/subscription*"
+zone_name = "weylandai.com"
 
 # STAGE 4 (added 2026-10-02, live): /wire and /api/wire/* - WeylandAI
 # Wire, the first real pilot tenant of mobleyreport.com's

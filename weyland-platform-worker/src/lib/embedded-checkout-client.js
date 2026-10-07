@@ -113,6 +113,21 @@ export const EMBEDDED_CHECKOUT_JS = `(function () {
     });
   }
 
+  // The shell's sign-in view (top-most page that has the shell), unless that page is already signed in.
+  function openSignIn() {
+    var wins = [window.top, window.parent, window];
+    for (var i = 0; i < wins.length; i++) {
+      try {
+        var w = wins[i];
+        if (w && w.WeylandShell && typeof w.WeylandShell.open === "function") {
+          if (w.document && w.document.documentElement && w.document.documentElement.dataset.weylandAuth === "signed-in") return;
+          setTimeout(function () { try { w.WeylandShell.open("signin", {}); } catch (e) {} }, 1800);
+          return;
+        }
+      } catch (e) {}
+    }
+  }
+
   function addDone() {
     if (!state.modal || state.modal.querySelector(".wco-done")) return;
     var b = document.createElement("button");
@@ -144,8 +159,16 @@ export const EMBEDDED_CHECKOUT_JS = `(function () {
         .then(function (d) {
           if (d && d.status === "active") {
             state.polling = false;
-            setStatus((state.productName || "Your seat") + " is active and you are signed in.", "good");
-            refreshShell();
+            if (d.signed_in === false) {
+              // The email paid with belongs to an existing account: the purchase is on it,
+              // and signing in with that email (not this payment) opens it.
+              setStatus((state.productName || "Your seat") + " is active on the WeylandAI account for the email you paid with. Sign in with that email to use it.", "good");
+              refreshShell();
+              openSignIn();
+            } else {
+              setStatus((state.productName || "Your seat") + " is active and you are signed in.", "good");
+              refreshShell();
+            }
             emit({ status: "active", session_id: sessionId, product_id: state.productId, quantity: d.quantity });
             addDone();
             return;
