@@ -6,6 +6,7 @@
   <meta name="theme-color" content="#090a0d">
   <title>CutSheetX | Manufacturer Cut-Sheet Search &amp; Matching</title>
   <meta name="description" content="Search a real, ingested library of manufacturer door-hardware catalogues and match a component to its real cut-sheet document - no login required to try it.">
+  <link rel="canonical" href="https://weylandai.com/cutsheetx">
   <style>
     :root{--bg:#090a0d;--panel:#121419;--panel2:#181b21;--line:#2c3139;--text:#edf0f1;--muted:#9299a3;--gold:#f0b800;--green:#61dfa0;--blue:#66d4ff;--red:#ff756e;--purple:#a78bfa;--primary:#2a52ff;--accent:#ffd400}
     *{box-sizing:border-box}html,body{margin:0;min-height:100%;background:var(--bg);color:var(--text);font-family:"Avenir Next","Helvetica Neue",sans-serif}
@@ -183,6 +184,34 @@
     </div>
   </div>
 
+  <script>
+  // Inside the single-page shell's overlay (assets/weyland-shell.js loads this page as
+  // /cutsheetx?embed=1 in an iframe), a nav link must not load a second WeylandAI page
+  // inside the frame: HOME closes the overlay, and the other products open in the same
+  // overlay through the shell. Standalone, every link is an ordinary link.
+  (function(){
+    var shell = null;
+    try { if (window.parent !== window && window.parent.WeylandShell) shell = window.parent.WeylandShell; } catch (e) {}
+    if (!shell) return;
+    document.documentElement.setAttribute('data-embedded', '1');
+    var APP = /^\/(subx|subx-app|takeoffx|huntx|sightx|propx-app|meetingx|meetx|find|pricing|news|wire)(\/|$)/;
+    document.addEventListener('click', function(e){
+      if (e.defaultPrevented || e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+      var a = e.target && e.target.closest ? e.target.closest('a[href]') : null;
+      if (!a || a.target) return;
+      var u; try { u = new URL(a.getAttribute('href'), location.href); } catch (err) { return; }
+      if (u.origin !== location.origin) return;
+      if (u.pathname === '/' || u.pathname === '/index.html') {
+        e.preventDefault();
+        shell.close();
+        if (u.hash) { try { window.parent.location.hash = u.hash; } catch (err) {} }
+      } else if (APP.test(u.pathname)) {
+        e.preventDefault();
+        shell.open('app', { path: u.pathname + u.search });
+      }
+    });
+  })();
+  </script>
   <script>
   (function(){
     var EPH_KEY = 'weylandai_ephemeral_token_v1';

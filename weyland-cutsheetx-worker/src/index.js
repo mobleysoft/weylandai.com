@@ -64,7 +64,7 @@
 //   /api/user/cutsheets*           -> routes/user-cutsheets.js
 //   /api/catalogue/products        -> routes/catalogue-products.js
 //   /api/catalogue/documents       -> routes/catalogue-documents.js
-//   /cutsheetx                     -> real static page (src/pages/cutsheetx.html)
+//   /cutsheetx, /cutsheetx/ (+ any query) -> real static page (src/pages/cutsheetx.html), routes/cutsheetx-page.js
 //
 // DELIBERATELY EXCLUDED (documented, not silently dropped):
 //   - src/routes/sessions-cutsheets.js: POST /api/sessions/:id/discover-
@@ -114,6 +114,7 @@ import { registerUserCutsheetsRoutes } from "./routes/user-cutsheets.js";
 import { registerCatalogueProductsRoutes } from "./routes/catalogue-products.js";
 import { registerCatalogueDocumentsRoutes } from "./routes/catalogue-documents.js";
 import { registerFindRoutes } from "./routes/find.js";
+import { registerCutsheetxPageRoutes } from "./routes/cutsheetx-page.js";
 
 import cutsheetxHtml from "./pages/cutsheetx.html";
 import { seedCorpusWanted, ingestCorpus, corpusStatus } from "./lib/catalog-corpus.js";
@@ -133,11 +134,11 @@ router.get("/health", () => jsonResponse3({
   version: WORKER_VERSION,
 }));
 
-// --- Real static page: the new /cutsheetx product page (see header
-// comment above for exactly what was missing and why this exists). ---
-router.get("/cutsheetx", () => new Response(cutsheetxHtml, {
-  headers: { "Content-Type": "text/html; charset=UTF-8", "Cache-Control": "public, max-age=60" },
-}));
+// --- Real static page: the /cutsheetx product page (see header comment
+// above for exactly what was missing and why this exists), at every path
+// variant the wildcard route "weylandai.com/cutsheetx*" delivers here
+// (/cutsheetx, /cutsheetx/, ...; any query string) - routes/cutsheetx-page.js. ---
+registerCutsheetxPageRoutes(router, cutsheetxHtml);
 
 registerCpsCataloguesRoutes(router, { authenticate });
 registerCpsSearchRoutes(router, { authenticate });

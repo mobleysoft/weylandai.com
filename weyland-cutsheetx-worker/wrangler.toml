@@ -107,8 +107,14 @@ fallthrough = true
 # catalogue/documents, user/cutsheets, drafts, queue, mappings, admin
 # normalization-status) all returned real (mostly real-empty, matching
 # D1) data with no wiring errors.
+# 2026-10-07: wildcard, not the exact "weylandai.com/cutsheetx". An exact
+# pattern does not match the same path with a query string, so the single-page
+# shell's overlay (/cutsheetx?embed=1) and the product nav's /cutsheetx/ fell
+# through to the monolith catch-all (302 -> /pricing). Every other /cutsheetx*
+# path was a monolith 404 before this (probed live), and src/routes/
+# cutsheetx-page.js serves the page variants.
 [[routes]]
-pattern = "weylandai.com/cutsheetx"
+pattern = "weylandai.com/cutsheetx*"
 zone_name = "weylandai.com"
 
 [[routes]]
