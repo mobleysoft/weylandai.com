@@ -141,11 +141,11 @@ export async function claimHeldPurchases(env, account, { sessionIds = [], emailV
     for (const p of held) {
       if (!(emailVerified || ids.has(p.checkout_session_id))) continue;
       try {
-        await grantPurchase(env, p, account.id, { nowMs, claimMethod: emailVerified ? "email_verified" : "same_browser" });
-        out.claimed.push({ session_id: p.checkout_session_id, product_id: p.product_id, kind: p.kind });
+        const g = await grantPurchase(env, p, account.id, { nowMs, claimMethod: emailVerified ? "email_verified" : "same_browser" });
+        out.claimed.push({ session_id: p.checkout_session_id, product_id: p.product_id, kind: p.kind, access_ends_at: g.accessEndsAt || null });
         if (env.CACHE) {
           await env.CACHE.put(`checkout_status:${p.checkout_session_id}`, JSON.stringify({
-            status: "active", quantity: p.quantity, session_id: null, product_id: p.product_id, claimed: true
+            status: "active", quantity: p.quantity, session_id: null, product_id: p.product_id, access_ends_at: g.accessEndsAt || null, claimed: true
           }), { expirationTtl: 86400 });
         }
         console.log(`[claims] ${p.checkout_session_id} (${p.product_id}) granted to ${account.id} by ${emailVerified ? "proven email" : "the paying browser"}`);
