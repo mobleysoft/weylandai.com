@@ -118,7 +118,7 @@ test("new buyer, signed out: the offer makes the account, opens every product fo
   assert.equal(a.days_left, 30);
   assert.equal(a.prompt_for_plan, false);
   assert.equal(a.ends_at, new Date(end).toISOString());
-  assert.equal(Date.parse(a.prompt_from), end - 7 * DAY);
+  assert.equal(Date.parse(a.prompt_from), end - 8 * DAY);
   assert.deepEqual(a.first_submittal.credit, { total: 1, used: 0, remaining: 1 });
   assert.equal(a.first_submittal.amount_total, 10000);
   assert.equal(a.held_purchases, 0);
@@ -162,23 +162,25 @@ test("a signed-in account in its 14-day trial buys the offer: 30 days from now, 
   assert.equal((await again.json()).detail.code, "offer_used");
 });
 
-test("day 23 prompts for a plan, day 22 does not; the access block counts days up", () => {
+test("day 23 of the offer prompts for a plan (8 days left), day 22 does not; a trial prompts in its last 3 days", () => {
   const now = Date.parse("2026-10-07T12:00:00Z");
   const row = (endMs) => ({ id: "u", subscription_tier: "starter", subscription_status: "trial", products_enabled: TRIAL_MARK, trial_ends_at: new Date(endMs).toISOString() });
   const purchases = (endMs) => [{ kind: "offer", status: "granted", granted_at: new Date(endMs - 30 * DAY).toISOString(), access_ends_at: new Date(endMs).toISOString(), credits_total: 1, credits_used: 0 }];
   const at = (daysLeft) => { const end = now + daysLeft * DAY; return describeAccess(row(end), { purchases: purchases(end), nowMs: now }); };
-  assert.equal(at(8).prompt_for_plan, false, "day 22 (8 days left)");
-  assert.equal(at(7).prompt_for_plan, true, "day 23 (7 days left)");
-  assert.equal(at(7).days_left, 7);
+  assert.equal(at(9).prompt_for_plan, false, "day 22 (9 days left)");
+  assert.equal(at(8).prompt_for_plan, true, "day 23 (8 days left; day 1 is the day of purchase)");
+  assert.equal(Date.parse(at(8).prompt_from), now, "prompt_from is the start of day 23");
+  assert.equal(at(8).days_left, 8);
   assert.equal(at(0.5).days_left, 1, "the last day counts as one");
   assert.equal(at(0.5).kind, "offer");
   // A paying plan: no prompt, kind subscription.
   const paying = describeAccess(row(now + 3 * DAY), { purchases: purchases(now + 3 * DAY), subscriptions: [{ status: "active", tiers: "huntx", suite: 0, seats: 1 }], nowMs: now });
   assert.equal(paying.kind, "subscription");
   assert.equal(paying.prompt_for_plan, false);
-  // The 14-day trial is "trial", prompted in its last 7 days too.
-  const trial = describeAccess(row(now + 6 * DAY), { purchases: [], nowMs: now });
-  assert.deepEqual([trial.kind, trial.prompt_for_plan, trial.first_submittal], ["trial", true, null]);
+  // The 14-day trial is "trial", prompted in its last 3 days.
+  const trial = describeAccess(row(now + 4 * DAY), { purchases: [], nowMs: now });
+  assert.deepEqual([trial.kind, trial.prompt_for_plan, trial.first_submittal], ["trial", false, null]);
+  assert.equal(describeAccess(row(now + 3 * DAY), { purchases: [], nowMs: now }).prompt_for_plan, true);
 });
 
 test("day 30 without a plan: the products stop, the free tools stay, the account and its email stay; no Stripe call", async () => {

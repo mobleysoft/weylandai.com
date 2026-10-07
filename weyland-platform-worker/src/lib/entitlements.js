@@ -374,7 +374,10 @@ export function describeEntitlements(row, nowMs = Date.now(), access = undefined
 
 // ── access: what the account card, the day-23 prompt and the ended message read ──
 
-export const PROMPT_DAYS = 7;
+// When the product starts asking for a plan: the offer from day 23 of its 30
+// (day 1 is the day of purchase, so 8 days or fewer left; John 2026-10-07, the
+// Terms say "from day 23"), a 14-day trial in its last 3 days (fc:shell).
+export const PROMPT_DAYS = Object.freeze({ offer: 8, trial: 3 });
 const DAY_MS = 24 * 60 * 60 * 1e3;
 const iso = (ms) => new Date(ms).toISOString();
 
@@ -387,7 +390,8 @@ const iso = (ms) => new Date(ms).toISOString();
  *         "offer" (the $100 first-submittal window is open), "trial" (the
  *         14-day trial is open), "none".
  *   prompt_for_plan: an offer or trial window is open, nothing pays, and
- *         PROMPT_DAYS or fewer are left (the offer: from day 23 of 30).
+ *         PROMPT_DAYS[kind] or fewer days are left (the offer: from day 23 of
+ *         30, 8 days left; the trial: its last 3 days).
  */
 export function describeAccess(row, { purchases = [], subscriptions = [], heldCount = 0, nowMs = Date.now() } = {}) {
   if (!row) return null;
@@ -415,8 +419,8 @@ export function describeAccess(row, { purchases = [], subscriptions = [], heldCo
     kind,
     ends_at: inWindow ? iso(end) : null,
     days_left: inWindow ? Math.max(0, Math.ceil(left / DAY_MS)) : null,
-    prompt_for_plan: inWindow && left <= PROMPT_DAYS * DAY_MS,
-    prompt_from: inWindow ? iso(end - PROMPT_DAYS * DAY_MS) : null,
+    prompt_for_plan: inWindow && left <= PROMPT_DAYS[kind] * DAY_MS,
+    prompt_from: inWindow ? iso(end - PROMPT_DAYS[kind] * DAY_MS) : null,
     ended,
     first_submittal: offer ? {
       purchased_at: offer.purchased_at || null,
