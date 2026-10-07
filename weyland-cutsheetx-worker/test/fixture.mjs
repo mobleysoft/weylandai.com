@@ -25,4 +25,7 @@ export const FIXTURE_SQL = [
   "INSERT INTO catalogue_pages VALUES ('cat-l',25,'L9080 storeroom function mortise lock'),('cat-l',59,'L9080 trim options'),('cat-pb',161,'L9080 list price');",
   "INSERT INTO catalogue_pages_fts(rowid, text) SELECT rowid, text FROM catalogue_pages;",
   "ALTER TABLE product_documents ADD COLUMN mime_type TEXT;",
+  "ALTER TABLE catalogue_pages ADD COLUMN text_content TEXT;",
+  "ALTER TABLE catalogue_pages ADD COLUMN char_count INTEGER;",
+  "UPDATE catalogue_pages SET text_content = text, char_count = length(text);",
 ].join("\n");

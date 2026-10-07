@@ -86,13 +86,11 @@
     </div>
 
     <div class="note-card">
-      This is the whole real, working product surface, honestly scoped: <code>28</code> ingested catalogues /
-      <code>3,622</code> OCR'd pages are full-text searchable (below), and <code>7,792</code> real product cut-sheet
-      documents are matchable by manufacturer + model with a real downloadable PDF. The one thing that does
-      <em>not</em> work end-to-end yet: viewing an ingested catalogue's original page image - the search index has
-      the real extracted text, but the source PDF binary for the catalogues below isn't present in storage, so that
-      button will show a real 404 rather than a fake preview. Everything else on this page is a live round trip to
-      <code>weyland_db</code>.
+      <span id="cov-line">What is on file: catalogued products, price-book citations and indexed catalogue pages (live counts load with the page).</span>
+      A match cites the manufacturer's own page - the price-book pages where the product is listed, or the catalogue
+      page that names the model - and the cited page opens. Catalogues ingested as text only are searchable and cited,
+      but their page image is not on file yet, so opening one of their pages says so instead of showing a preview.
+      Everything on this page is a live round trip to <code>weyland_db</code>.
     </div>
 
     <div class="card" id="price-review">
@@ -137,7 +135,7 @@
     <!-- ================= Full-Text Search ================= -->
     <div class="card">
       <h2>Search the Ingested Catalogue Library <span class="tag">real FTS, live text</span></h2>
-      <p class="sub">Full-text search across every OCR'd page of the 28 real manufacturer catalogues in
+      <p class="sub">Full-text search across every indexed page of the ingested manufacturer catalogues in
       <code>catalogue_pages</code> (Schlage, LCN, Von Duprin, Ives, and more - see the browse panel below for the
       exact list). Returns the real matching excerpt from the real document text.</p>
       <div class="row">
@@ -157,7 +155,7 @@
     <!-- ================= Local Series Lookup ================= -->
     <div class="card">
       <h2>Local Series Lookup <span class="tag meta">real, identification-only</span></h2>
-      <p class="sub">A curated 43-file reference index (Allegion / ASSA ABLOY / independent brands) that identifies
+      <p class="sub">A curated reference index (Allegion / ASSA ABLOY / independent brands) that identifies
       which manufacturer series a model belongs to. Honest scope: this confirms <em>which cut-sheet series covers a
       model</em> with real confidence scoring - it does not host a downloadable document itself (that's what the
       Component Match panel above is for).</p>
@@ -470,7 +468,7 @@
       var mfr = document.getElementById('search-mfr').value.trim();
       var box = document.getElementById('search-results');
       if (q.length < 2) { box.innerHTML = '<div class="error-box">Query must be at least 2 characters.</div>'; return; }
-      box.innerHTML = '<div class="loading">Searching 3,622 real ingested pages…</div>';
+      box.innerHTML = '<div class="loading">Searching the indexed catalogue pages…</div>';
       var url = '/api/cps/search?q=' + encodeURIComponent(q) + (mfr ? '&manufacturer=' + encodeURIComponent(mfr) : '');
       fetch(url, { headers: authHeaders() })
         .then(function(r){ return r.json().then(function(d){ return { ok: r.ok, status: r.status, data: d }; }); })
@@ -508,7 +506,7 @@
       var model = document.getElementById('local-model').value.trim();
       var box = document.getElementById('local-results');
       if (!mfr) { box.innerHTML = '<div class="error-box">Manufacturer is required.</div>'; return; }
-      box.innerHTML = '<div class="loading">Checking the 43-file local reference index…</div>';
+      box.innerHTML = '<div class="loading">Checking the local reference index…</div>';
       var url = '/api/cut-sheets/local-search?manufacturer=' + encodeURIComponent(mfr) + (model ? '&model=' + encodeURIComponent(model) : '');
       fetch(url, { headers: authHeaders() })
         .then(function(r){ return r.json().then(function(d){ return { ok: r.ok, status: r.status, data: d }; }); })
@@ -534,15 +532,16 @@
       var statsBox = document.getElementById('cat-stats');
       var box = document.getElementById('cat-results');
       box.innerHTML = '<div class="loading">Loading real catalogue list…</div>';
-      fetch('/api/cps/catalogues?limit=50', { headers: authHeaders() })
+      fetch('/api/cps/catalogues?limit=200', { headers: authHeaders() })
         .then(function(r){ return r.json().then(function(d){ return { ok: r.ok, status: r.status, data: d }; }); })
         .then(function(res){
           if (!res.ok) { box.innerHTML = '<div class="error-box">HTTP ' + res.status + ': ' + esc(apiErrorText(res.data)) + '</div>'; return; }
           var d = res.data;
-          var totalPages = (d.catalogues || []).reduce(function(sum, c){ return sum + (c.page_count || 0); }, 0);
+          var listed = d.catalogues || [];
+          var totalPages = listed.reduce(function(sum, c){ return sum + (c.page_count || 0); }, 0);
           statsBox.innerHTML =
-            '<div class="stat"><div class="n">' + (d.total || 0) + '</div><div class="l">Catalogues</div></div>' +
-            '<div class="stat"><div class="n">' + totalPages + '</div><div class="l">Ingested Pages</div></div>';
+            '<div class="stat"><div class="n">' + Number(d.total || 0).toLocaleString() + '</div><div class="l">Catalogues</div></div>' +
+            '<div class="stat"><div class="n">' + Number(totalPages).toLocaleString() + '</div><div class="l">Pages' + (listed.length < (d.total || 0) ? ' (first ' + listed.length + ')' : '') + '</div></div>';
           if (!d.catalogues || d.catalogues.length === 0) { box.innerHTML = '<div class="empty">No catalogues ingested yet.</div>'; return; }
           var rows = d.catalogues.map(function(c){
             return '<tr><td>' + esc(c.manufacturer) + '</td><td>' + esc(c.title) + '</td><td>' + esc(c.page_count) + '</td><td>' + esc(c.mapping_count) + '</td></tr>';
@@ -551,6 +550,15 @@
         })
         .catch(function(err){ box.innerHTML = '<div class="error-box">Request failed: ' + esc(err.message) + '</div>'; });
     }
+
+    // ---------------- Live counts (public /api/cut-sheets/coverage, the homepage's source too) ----------------
+    fetch('/api/cut-sheets/coverage').then(function(r){ return r.ok ? r.json() : null; }).then(function(c){
+      if (!c || c.products == null) return;
+      var n = function(v){ return Number(v || 0).toLocaleString(); };
+      document.getElementById('cov-line').textContent = n(c.products) + ' catalogued products from ' + n(c.manufacturers) +
+        ' manufacturers; ' + n(c.cutSheets) + ' product-to-page citations into ' + n(c.cutSheetFiles) + ' manufacturer price books; ' +
+        n(c.cataloguePages) + ' indexed pages from ' + n(c.catalogues) + ' catalogues, full-text searchable.';
+    }).catch(function(){});
 
     // ---------------- Boot ----------------
     ephemeralToken().then(function(t){

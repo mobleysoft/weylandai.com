@@ -36,6 +36,14 @@ test("a product page is server-rendered with its citations", async () => {
   assert.match(html, /Schlage L Series Catalog<\/strong>, p\. 25/);
 });
 
+test("the finder's lead states live counts, not hard-coded ones", async () => {
+  const { html } = await get("/find");
+  assert.match(html, /<p class="lead">4 catalogued products from 4 manufacturers, with page citations into 2 manufacturer price books and 3 indexed catalogue pages\. Free, no account\.<\/p>/);
+  const miss = await get("/find/nope/NOPE");
+  assert.equal(miss.status, 404);
+  assert.match(miss.html, /is not one of the 4 catalogued products/);
+});
+
 test("every finder page carries the in-place navigation script, and it parses", async () => {
   for (const path of ["/find", "/find?q=schlage", "/find/schlage/L9080", "/find/nope/NOPE"]) {
     const { html } = await get(path);

@@ -52,6 +52,30 @@ async function searchProducts(env, q, limit = 20) {
   return rows.results || [];
 }
 
+// The finder's headline counts, read live (2026-10-07) with the same COUNTs
+// /api/cut-sheets/coverage reports, kept ten minutes per isolate. The lead used
+// to hard-code them ("42 manufacturers": 33 manufacturers have catalogued
+// products). null when the query fails; the page then states no numbers.
+let countsMemo = { at: 0, value: null };
+async function finderCounts(env) {
+  if (countsMemo.value && Date.now() - countsMemo.at < 600000) return countsMemo.value;
+  try {
+    const row = await env.DB.prepare(
+      "SELECT (SELECT COUNT(*) FROM products) AS products, " +
+      "(SELECT COUNT(DISTINCT manufacturer_id) FROM products) AS manufacturers, " +
+      "(SELECT COUNT(DISTINCT r2_object_key) FROM product_documents WHERE document_type = 'cut_sheet' AND active = 1 AND r2_object_key IS NOT NULL) AS priceBooks, " +
+      "(SELECT COUNT(*) FROM catalogue_pages WHERE text_content IS NOT NULL AND char_count > 0) AS pages"
+    ).first();
+    if (row && row.products != null) countsMemo = { at: Date.now(), value: row };
+    return row && row.products != null ? row : countsMemo.value;
+  } catch (e) {
+    return countsMemo.value;
+  }
+}
+function fmt(n) {
+  return Number(n || 0).toLocaleString("en-US");
+}
+
 async function loadProduct(env, slug, model) {
   return env.DB.prepare(
     "SELECT p.*, m.name AS manufacturer_name, m.slug AS manufacturer_slug FROM products p LEFT JOIN manufacturers m ON m.id = p.manufacturer_id " +
@@ -251,7 +275,8 @@ export function registerFindRoutes(router) {
     const { slug, model } = request.params;
     const product = await loadProduct(env, decodeURIComponent(slug), decodeURIComponent(model));
     if (!product) {
-      return new Response(page({ title: "Not in the catalogue | WeylandAI finder", description: "This model is not catalogued yet.", canonical: SITE + "/find", body: `<h1>Not in the catalogue yet</h1><p class="lead">${esc(decodeURIComponent(slug))} ${esc(decodeURIComponent(model))} is not one of the 10,508 catalogued products.</p>${searchForm(decodeURIComponent(slug) + " " + decodeURIComponent(model))}` }), { status: 404, headers: { "Content-Type": "text/html; charset=utf-8" } });
+      const counts = await finderCounts(env);
+      return new Response(page({ title: "Not in the catalogue | WeylandAI finder", description: "This model is not catalogued yet.", canonical: SITE + "/find", body: `<h1>Not in the catalogue yet</h1><p class="lead">${esc(decodeURIComponent(slug))} ${esc(decodeURIComponent(model))} is not one of the ${counts ? esc(fmt(counts.products)) + " " : ""}catalogued products.</p>${searchForm(decodeURIComponent(slug) + " " + decodeURIComponent(model))}` }), { status: 404, headers: { "Content-Type": "text/html; charset=utf-8" } });
     }
     const docs = await documentsFor(env, product);
     const name = product.display_name || `${product.manufacturer_name} ${product.base_model}`;
@@ -281,7 +306,11 @@ ${renderCitations(docs)}
     }
     recordFinderView(env, ctx, request, q ? "finder-search" : "finder-home", url.pathname + (q ? "?q" : ""));
     const list = q ? (limited ? `<p class="none">Too many searches from this network; try again in an hour.</p>` : results.length ? `<ul class="results">${results.map((p) => `<li><a href="${esc(productUrl(p))}"><strong>${esc(p.display_name || (p.manufacturer_name + " " + p.base_model))}</strong></a><br><span class="meta">${esc(p.manufacturer_name || "")}${p.product_series ? " · " + esc(p.product_series) : ""}${p.category_level_1 ? " · " + esc(p.category_level_1) : ""}</span></li>`).join("")}</ul>` : `<p class="none">Nothing catalogued matches "${esc(q)}". Try the manufacturer and the base model, like "Schlage L9080".</p>`) : "";
-    const body = `<h1>Find a door hardware cut sheet</h1><p class="lead">10,508 catalogued products from 42 manufacturers, with page citations into 8 manufacturer price books and 3,618 indexed catalogue pages. Free, no account.</p>${searchForm(q)}${list}
+    const counts = await finderCounts(env);
+    const lead = counts
+      ? `${esc(fmt(counts.products))} catalogued products from ${esc(fmt(counts.manufacturers))} manufacturers, with page citations into ${esc(fmt(counts.priceBooks))} manufacturer price books and ${esc(fmt(counts.pages))} indexed catalogue pages. Free, no account.`
+      : "Catalogued door hardware products, with page citations into manufacturer price books and indexed catalogue pages. Free, no account.";
+    const body = `<h1>Find a door hardware cut sheet</h1><p class="lead">${lead}</p>${searchForm(q)}${list}
 <div class="cta"><strong>Have a whole schedule?</strong> Paste it on the homepage and every line is matched and cited in one pass. <a href="/#subx">Open SubX &rarr;</a></div>`;
     return new Response(page({ title: q ? `${q} cut sheet | WeylandAI finder` : "Door hardware cut-sheet finder | WeylandAI", description: "Free finder for door hardware cut sheets and catalogue pages: Von Duprin, LCN, Schlage, Ives, Hager, Dormakaba and more, with page citations.", canonical: SITE + "/find", body }), { headers: { "Content-Type": "text/html; charset=utf-8", "Cache-Control": q ? "no-store" : "public, max-age=600" } });
   };
