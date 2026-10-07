@@ -9,6 +9,7 @@
 // Original header follows, preserved for provenance:
 //
 import { jsonResponse3 } from "../lib/json-response.js";
+import { syncUserEntitlements, describeEntitlements } from "../lib/entitlements.js";
 
 /**
  * @param {object} router
@@ -20,32 +21,28 @@ export function registerSubscriptionRoutes(router, { authenticate, errorResponse
     if (error4)
       return error4;
     try {
+      // 2026-10-07: an ended trial no longer becomes status 'trial_expired'
+      // (every product worker's requireActiveSubscription answered 402 to that,
+      // locking the account below what a guest can do); the entitlement sync
+      // moves it to the free plan instead - see lib/entitlements.js.
+      await syncUserEntitlements(env2, user.userId);
       const row = await env2.DB.prepare(`
         SELECT subscription_tier, subscription_status, submittals_used, submittals_limit,
-               trial_ends_at
+               trial_ends_at, products_enabled
         FROM users WHERE id = ?
       `).bind(user.userId).first();
       if (!row) {
         return errorResponse("NOT_FOUND", "User not found");
       }
-      let status = row.subscription_status;
-      if (status === "trial" && row.trial_ends_at) {
-        const trialEnd = new Date(row.trial_ends_at);
-        if (trialEnd < /* @__PURE__ */ new Date()) {
-          status = "trial_expired";
-          await env2.DB.prepare(
-            "UPDATE users SET subscription_status = ? WHERE id = ?"
-          ).bind("trial_expired", user.userId).run();
-        }
-      }
       return jsonResponse3({
         subscription: {
           tier: row.subscription_tier || "starter",
-          status,
+          status: row.subscription_status,
           submittalsUsed: row.submittals_used || 0,
           submittalsLimit: row.submittals_limit || 10,
           trialEndsAt: row.trial_ends_at
-        }
+        },
+        entitlements: describeEntitlements(row)
       });
     } catch (err) {
       return errorResponse("DATABASE_ERROR", "Failed to fetch subscription: " + err.message);

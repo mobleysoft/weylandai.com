@@ -282,6 +282,16 @@ export async function requireProductAccess(user, env2, productSlug) {
     }
     return null;
   }
+  // 2026-10-07: a signed-in user may always do what a guest may do, whatever
+  // the plan, its status or its usage counter (a trial or lapsed account got
+  // 402 on products an anonymous visitor could use). This is the reference
+  // rule for the forks of this function in the product workers; until they
+  // carry it, the platform keeps every users row's products_enabled holding
+  // the guest set (see lib/entitlements.js).
+  if (user?.userId && EPHEMERAL_TRIAL_PRODUCTS.has(productSlug)) {
+    const exists = await env2.DB.prepare("SELECT id FROM users WHERE id = ?").bind(user.userId).first();
+    if (exists) return null;
+  }
   const subError = await requireActiveSubscription(user, env2);
   if (subError) return subError;
   const row = await env2.DB.prepare(

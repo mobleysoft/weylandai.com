@@ -87,6 +87,7 @@ import { registerDemoRoutes } from "./routes/demo.js";
 import { registerRootRoutes } from "./routes/root.js";
 import { registerWireRoutes } from "./routes/wire.js";
 import { ingestWireNews } from "./lib/wire-tenant.js";
+import { sweepEntitlements } from "./lib/entitlements.js";
 
 const router = new NativeRouter();
 
@@ -127,6 +128,10 @@ export default {
     // request may claim the D1 lease for this worker's background job and
     // run it via waitUntil. The visitor never waits; no request calls out.
     trafficDrivenJob(env, ctx, { db: env.DB, job: "wirex-ingest", cadenceSeconds: 1200, worker: "weyland-platform-worker", run: () => ingestWireNews(env).then((r) => console.log("[WireX] traffic-driven ingest", r.items.length, "headlines")) });
+    // Entitlements (2026-10-07): ended trials drop to the free plan, every
+    // account keeps the guest floor - for accounts that do not visit a
+    // platform route themselves in the meantime (lib/entitlements.js).
+    trafficDrivenJob(env, ctx, { db: env.DB, job: "entitlements-sync", cadenceSeconds: 600, worker: "weyland-platform-worker", run: () => sweepEntitlements(env).then((r) => console.log("[entitlements] sweep", r.scanned, "scanned", r.changed, "changed")) });
     const url = new URL(request.url);
 
     if (request.method === "GET" || request.method === "HEAD") {

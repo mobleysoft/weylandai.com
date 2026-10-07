@@ -48,6 +48,7 @@
 import { jsonResponse3 } from "../lib/json-response.js";
 import { generateJWT, hashPassword } from "../auth-module.js";
 import { checkRateLimit } from "../lib/rate-limit.js";
+import { newTrialAccount, syncUserEntitlements, describeEntitlements } from "../lib/entitlements.js";
 
 /**
  * @param {object} router
@@ -107,6 +108,9 @@ export function registerAuthSessionRoutes(router, { authenticate, errorResponse 
       if (!existingUser) {
         return jsonResponse3({ error: "no_weyland_account", message: "No WeylandAI account for this identity yet — subscribe at /pricing" }, 404);
       }
+      // Entitlements first (trial suite / trial end / guest floor - lib/entitlements.js),
+      // so the product workers see the right row from this session's first request on.
+      await syncUserEntitlements(env2, existingUser.id);
       const sessionId = "wses_" + crypto.randomUUID().replace(/-/g, "");
       const expiresAt = new Date(Date.now() + 24 * 60 * 60 * 1e3).toISOString();
       let user = await env2.DB.prepare("SELECT id, mhs_id FROM nodes WHERE email = ?").bind(node.email).first();
@@ -191,12 +195,15 @@ export function registerAuthSessionRoutes(router, { authenticate, errorResponse 
         const company = authforUser.user?.company || null;
         const sanitizedCompany = company ? sanitizeDisplayName(company) : null;
         const tenantId = sanitizedCompany ? "tenant-" + (await hashPassword(sanitizedCompany)).substring(0, 8) : userId;
-        const trialEndsAt = new Date(Date.now() + 14 * 24 * 60 * 60 * 1e3).toISOString();
+        // 2026-10-07: the trial includes the whole suite until trial_ends_at
+        // (products_enabled carries the trial grant; it used to be '' and every
+        // product answered 402 to a brand-new trial) - see lib/entitlements.js.
+        const trial = newTrialAccount();
         await env2.DB.prepare(
           `INSERT INTO users (id, email, password_hash, name, company, tenant_id,
             subscription_tier, subscription_status, submittals_used, submittals_limit,
-            trial_ends_at, created_at)
-           VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`
+            trial_ends_at, products_enabled, created_at)
+           VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`
         ).bind(
           userId,
           email,
@@ -204,11 +211,12 @@ export function registerAuthSessionRoutes(router, { authenticate, errorResponse 
           name,
           sanitizedCompany,
           tenantId,
-          "starter",
-          "trial",
+          trial.subscription_tier,
+          trial.subscription_status,
           0,
-          10,
-          trialEndsAt,
+          trial.submittals_limit,
+          trial.trial_ends_at,
+          trial.products_enabled,
           (/* @__PURE__ */ new Date()).toISOString()
         ).run();
         user = {
@@ -217,10 +225,16 @@ export function registerAuthSessionRoutes(router, { authenticate, errorResponse 
           name,
           company: sanitizedCompany,
           tenant_id: tenantId,
-          subscription_tier: "starter",
-          subscription_status: "trial",
-          trial_ends_at: trialEndsAt
+          subscription_tier: trial.subscription_tier,
+          subscription_status: trial.subscription_status,
+          trial_ends_at: trial.trial_ends_at
         };
+      } else {
+        const synced = await syncUserEntitlements(env2, user.id);
+        if (synced.row) {
+          user.subscription_tier = synced.row.subscription_tier;
+          user.subscription_status = synced.row.subscription_status;
+        }
       }
       // Found live 2026-10-04 (MeetingX e2e run): this route 500'd on
       // every first-time sign-up with "Imported HMAC key length (0)" -
@@ -273,16 +287,21 @@ export function registerAuthSessionRoutes(router, { authenticate, errorResponse 
     if (error4)
       return error4;
     try {
+      await syncUserEntitlements(env2, user.userId);
       const userData = await env2.DB.prepare(
         `SELECT id, email, name, company, tenant_id,
                 subscription_tier, subscription_status, submittals_used, submittals_limit,
-                trial_ends_at, created_at
+                trial_ends_at, created_at, products_enabled
          FROM users WHERE id = ?`
       ).bind(user.userId).first();
       if (!userData) {
         return errorResponse("NOT_FOUND", "User not found");
       }
-      return jsonResponse3({ user: userData });
+      // entitlements: what this account can use right now, as the platform
+      // reports it (plan, trial window, product slugs incl. the guest floor).
+      const entitlements = describeEntitlements(userData);
+      const { products_enabled: _productsEnabled, ...publicUser } = userData;
+      return jsonResponse3({ user: publicUser, entitlements });
     } catch (error5) {
       return errorResponse("DATABASE_ERROR", "Failed to fetch user: " + error5.message);
     }
