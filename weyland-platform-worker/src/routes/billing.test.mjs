@@ -57,8 +57,12 @@ test("siteUrlWith keeps the literal session placeholder and the hash", () => {
 test("hosted return URLs: back to the starting page, not /subscribe", () => {
   const req = (ref) => new Request("https://weylandai.com/api/billing/checkout/create", { headers: ref ? { Referer: ref } : {} });
   const home = hostedReturnUrls(req(), { success_url: "https://weylandai.com/?checkout=success#pricing", cancel_url: "https://weylandai.com/#pricing" });
-  assert.equal(home.success_url, "https://weylandai.com/?checkout=success&session_id={CHECKOUT_SESSION_ID}#pricing");
+  // The homepage cannot finish an activation yet, so success keeps /subscribe's view; Back returns home.
+  assert.equal(home.success_url, "https://weylandai.com/subscribe?checkout=success&session_id={CHECKOUT_SESSION_ID}");
   assert.equal(home.cancel_url, "https://weylandai.com/?checkout=cancelled#pricing");
+  const pricing = hostedReturnUrls(req("https://weylandai.com/pricing?ref=ph"), {});
+  assert.equal(pricing.success_url, "https://weylandai.com/pricing?ref=ph&checkout=success&session_id={CHECKOUT_SESSION_ID}");
+  assert.equal(pricing.cancel_url, "https://weylandai.com/pricing?ref=ph&checkout=cancelled");
   const news = hostedReturnUrls(req("https://weylandai.com/news"), {});
   assert.equal(news.cancel_url, "https://weylandai.com/news?checkout=cancelled");
   assert.equal(news.success_url, "https://weylandai.com/news?checkout=success&session_id={CHECKOUT_SESSION_ID}");
@@ -81,7 +85,7 @@ test("hosted checkout/create: same response, vendyai gets the start page's URLs"
   assert.equal(sent.venture_id, "weylandai");
   assert.equal(sent.mode, "subscription");
   assert.equal(sent.cancel_url, "https://weylandai.com/?checkout=cancelled#pricing");
-  assert.equal(sent.success_url, "https://weylandai.com/?checkout=success&session_id={CHECKOUT_SESSION_ID}#pricing");
+  assert.equal(sent.success_url, "https://weylandai.com/subscribe?checkout=success&session_id={CHECKOUT_SESSION_ID}");
   assert.equal(sent.metadata.product_id, "weyland-huntx-seat");
   assert.equal(sent.line_items[0].price, WEYLAND_PRODUCTS["weyland-huntx-seat"].priceId);
   assert.equal(sent.customer_email, undefined);

@@ -67,10 +67,25 @@ export function siteUrlWith(path, params) {
   return out;
 }
 
+// Pages served by this worker that finish a returning checkout themselves:
+// /pricing and /news load /api/billing/embedded-checkout.js (its resume()
+// waits for provisioning, which sets the session cookie), /subscribe has its
+// own success view. The homepage cannot yet: "/" with a query string is
+// answered by the monolith's catch-all (the exact "/" route is left as it is)
+// and index.html does not read ?checkout=success - so a purchase started there
+// keeps the old success view (/subscribe), which signs the buyer in, while
+// Back (cancel) returns to the homepage.
+const FINISHES_RETURN = /^\/(pricing|news|wire|subscribe)\/?(?:[?#]|$)/i;
+
+export function finishesCheckoutReturn(path) {
+  return FINISHES_RETURN.test(path || "");
+}
+
 /** success_url / cancel_url for the hosted (redirect) checkout. */
 export function hostedReturnUrls(request, body = {}) {
   const start = startPathFor(request, body);
-  const successPath = safeSitePath(body.success_url) || start;
+  const successStart = safeSitePath(body.success_url) || start;
+  const successPath = finishesCheckoutReturn(successStart) ? successStart : "/subscribe";
   return {
     start,
     success_url: siteUrlWith(successPath, { checkout: "success", session_id: SESSION_PLACEHOLDER }),
