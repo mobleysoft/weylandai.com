@@ -17,14 +17,19 @@
 // Usage: node tools/user-simulation/signin-journey.mjs   (exit 0 = every check passed)
 //   WEYLAND_BASE_URL overrides https://weylandai.com; PLAYWRIGHT_CORE points at playwright-core
 //   if it is not installed next to this repo.
+// Browser: Chromium with --use-angle=metal (real GPU WebGL). With software WebGL (SwiftShader) the
+// homepage's 3D backdrop starves the browser and sign-in stalls for 18-39 s, so the first check is
+// "browser has GPU WebGL" and the run stops there when it fails, instead of flaking.
+// The signed-in homepage clones the demo project "The WeylandAI Building" for the test user; those
+// clones are captured from POST /api/demo/weyland-building/session and deleted with the rows.
 import { randomBytes } from "node:crypto";
 import { mkdir, writeFile } from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { d1Query } from "./lib/throwaway-account.mjs";
+import { chromium, LAUNCH_ARGS, gpuRenderer, purgeTestData } from "./lib/journey-kit.mjs";
 
 const BASE = (process.env.WEYLAND_BASE_URL || "https://weylandai.com").replace(/\/$/, "");
-const { chromium } = await import(process.env.PLAYWRIGHT_CORE || "playwright-core");
 const HERE = fileURLToPath(new URL(".", import.meta.url));
 
 const suffix = Date.now().toString(36) + randomBytes(3).toString("hex");
@@ -46,12 +51,24 @@ async function createWeylandAccount() {
   if (!r.success) throw new Error("users insert failed");
 }
 
+// Demo clones the homepage creates for this run (session_id -> project_id), deleted in cleanup().
+const clones = new Map();
+const pendingClones = new Set();
+function watchClones(context) {
+  context.on("response", (r) => {
+    if (r.request().method() !== "POST" || !/\/api\/demo\/weyland-building\/session\/?$/.test(new URL(r.url()).pathname) || r.status() >= 300) return;
+    const p = r.json().then((j) => { if (j && j.session_id) clones.set(j.session_id, j.project_id || null); }).catch(() => {});
+    pendingClones.add(p); p.finally(() => pendingClones.delete(p));
+  });
+}
+
 async function cleanup() {
-  const out = [];
-  for (const sql of ["DELETE FROM weyland_sessions WHERE email='" + email + "';", "DELETE FROM nodes WHERE email='" + email + "';", "DELETE FROM users WHERE id='" + userId + "';"]) {
-    try { const r = await d1Query(sql); out.push(r.success ? "ok" : "failed"); } catch (e) { out.push("error: " + e.message); }
+  try {
+    const res = await purgeTestData({ userIds: [userId], emails: [email], cloneSessions: [...clones.entries()].map(([s, p]) => ({ session_id: s, project_id: p })) });
+    return { ok: res.ok, detail: "clones=" + clones.size + " rows=" + res.deletedTotal + " remaining=" + JSON.stringify(res.remaining) };
+  } catch (e) {
+    return { ok: false, detail: "error: " + e.message };
   }
-  return out;
 }
 
 async function serverView(context) {
@@ -69,12 +86,17 @@ async function serverView(context) {
 let browser;
 const startedAt = new Date().toISOString();
 try {
+  browser = await chromium.launch({ args: LAUNCH_ARGS });
+  const gpu = await gpuRenderer(browser);
+  const gpuOk = !!(gpu && gpu.renderer) && !/swiftshader/i.test(gpu.renderer);
+  check("browser has GPU WebGL", gpuOk, (gpu && (gpu.renderer || gpu.error)) || "no WebGL context");
+  if (!gpuOk) throw new Error("stopped: no GPU WebGL in this browser; software WebGL starves the homepage backdrop and the journey would flake. Run on a Mac with a GPU (Chromium --use-angle=metal).");
   await registerAuthFor();
   await createWeylandAccount();
-  browser = await chromium.launch();
 
   // ---- Journey A: sign in on the homepage, in place ----
   const ctx = await browser.newContext({ viewport: { width: 1280, height: 860 } });
+  watchClones(ctx);
   const page = await ctx.newPage();
   let navigations = 0;
   page.on("framenavigated", (f) => { if (f === page.mainFrame()) navigations += 1; });
@@ -151,6 +173,7 @@ try {
 
   // ---- Journey B: the /login deep link used by product pages ----
   const ctx2 = await browser.newContext();
+  watchClones(ctx2);
   const p2 = await ctx2.newPage();
   const apiLog = [];
   p2.on("response", async (r) => {
@@ -176,7 +199,17 @@ try {
   const before = await p2.evaluate(() => ({ e: document.getElementById("weyland-signin-email").value.length, p: document.getElementById("weyland-signin-password").value.length }));
   check("/login form holds both values right before submit", before.e > 0 && before.p > 0, JSON.stringify(before));
   await p2.click("#weyland-signin-submit");
-  await p2.waitForFunction(() => document.documentElement.dataset.weylandAuth === "signed-in" || !!((document.querySelector("#wa-overlay .wa-error") || {}).textContent), null, { timeout: 45000 }).catch(() => {});
+  // Wait for the sign-in to finish or fail for real. The shell shows "This is taking longer than it
+  // should. You can wait, or close and try again." after 25 s while the attempt is still running;
+  // that notice is progress, not an outcome, so it does not end the wait.
+  await p2.waitForFunction(() => {
+    if (document.documentElement.dataset.weylandAuth === "signed-in") return true;
+    const err = document.querySelector("#wa-overlay .wa-error");
+    const t = err && err.offsetParent !== null && err.style.display !== "none" ? err.textContent.trim() : "";
+    return !!t && !/taking longer than it should/i.test(t);
+  }, null, { timeout: 90000 }).catch(() => {});
+  // After sign-in the shell continues to the redirect target in the overlay.
+  await p2.waitForFunction(() => location.pathname === "/subx-app" && window.WeylandShell && window.WeylandShell.state().view === "app", null, { timeout: 10000 }).catch(() => {});
   await p2.waitForTimeout(1500);
   const b = await p2.evaluate(() => ({ path: location.pathname, view: window.WeylandShell ? window.WeylandShell.state().view : null,
     error: ((document.querySelector("#wa-overlay .wa-error") || {}).textContent || "").trim(), auth: document.documentElement.dataset.weylandAuth }));
@@ -187,9 +220,10 @@ try {
 } catch (e) {
   check("journey ran to completion", false, e.message);
 } finally {
+  if (pendingClones.size) await Promise.race([Promise.allSettled([...pendingClones]), new Promise((r) => setTimeout(r, 4000))]);
   if (browser) await browser.close().catch(() => {});
   const cleaned = await cleanup();
-  check("test account rows deleted", cleaned.every((x) => x === "ok"), cleaned.join(","));
+  check("test account rows and demo clones deleted", cleaned.ok, cleaned.detail);
 }
 
 const failed = checks.filter((c) => !c.ok);
