@@ -5,18 +5,42 @@ import { resolveCatalogueKey } from "../lib/catalogue-storage.js";
 // or a Windows path from another machine). Since 2026-10-07 every result says whether its page can
 // be drawn (pdfAvailable): the source PDF resolves in R2, or the single page is already rendered.
 // The CutsheetX page offers VIEW PAGE only where it can be drawn and otherwise says the page text
-// is indexed, as the matcher's catalogue-page citations do (lib/product-database.js). One HEAD per
-// catalogue, remembered ten minutes per isolate; without R2 or on any error the results go out
-// as before, without the field.
+// is indexed, as the matcher's catalogue-page citations do (lib/product-database.js). Per catalogue,
+// remembered ten minutes per isolate: whether its source PDF resolves (HEADs) and, when it does
+// not, which single pages are already rendered (one R2 list); so a repeated search makes no R2
+// call. Without R2 or on any error the results go out as before, without the field.
+const MEMO_TTL_MS = 10 * 60 * 1000;
 const sourceMemo = new Map();
-const SOURCE_TTL_MS = 10 * 60 * 1000;
-async function catalogueSourcePresent(env, row) {
-  const hit = sourceMemo.get(row.catalogue_id);
-  if (hit && Date.now() - hit.at < SOURCE_TTL_MS) return hit.present;
-  let present = false;
-  try { present = !!(await resolveCatalogueKey(env, row)); } catch (e) { present = false; }
-  sourceMemo.set(row.catalogue_id, { at: Date.now(), present });
-  return present;
+const renderedMemo = new Map();
+function memo(map, key, compute) {
+  const hit = map.get(key);
+  if (hit && Date.now() - hit.at < MEMO_TTL_MS) return hit.value;
+  const value = compute();
+  map.set(key, { at: Date.now(), value });
+  return value;
+}
+function catalogueSourcePresent(env, row) {
+  return memo(sourceMemo, row.catalogue_id, () => resolveCatalogueKey(env, row).then((k) => !!k, () => false));
+}
+// Page numbers already rendered for a catalogue (catalogues/<id>/pages/page_<n>.pdf), or null when
+// R2 cannot list them (each page is then checked with a HEAD).
+function renderedPages(env, id) {
+  return memo(renderedMemo, id, async () => {
+    if (typeof env.UPLOADS.list !== "function") return null;
+    try {
+      const pages = new Set();
+      let cursor;
+      for (let i = 0; i < 5; i++) {
+        const out = await env.UPLOADS.list({ prefix: "catalogues/" + id + "/pages/", limit: 1000, cursor });
+        for (const o of out.objects || []) { const m = /page_(\d+)\.pdf$/.exec(o.key); if (m) pages.add(Number(m[1])); }
+        if (!out.truncated) return pages;
+        cursor = out.cursor;
+      }
+      return null;
+    } catch (e) {
+      return null;
+    }
+  });
 }
 export async function withPdfAvailability(env, results) {
   if (!Array.isArray(results) || !results.length || !env || !env.UPLOADS || !env.DB) return results;
@@ -29,6 +53,8 @@ export async function withPdfAvailability(env, results) {
     await Promise.all((rows.results || []).map(async (row) => { present.set(row.catalogue_id, await catalogueSourcePresent(env, row)); }));
     const flags = await Promise.all(results.map(async (r) => {
       if (present.get(r.catalogue_id)) return true;
+      const pages = await renderedPages(env, r.catalogue_id);
+      if (pages) return pages.has(Number(r.page_num));
       try { return !!(await env.UPLOADS.head("catalogues/" + r.catalogue_id + "/pages/page_" + r.page_num + ".pdf")); } catch (e) { return false; }
     }));
     return results.map((r, i) => ({ ...r, pdfAvailable: flags[i] }));
