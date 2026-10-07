@@ -4,7 +4,7 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
 import { DatabaseSync } from "node:sqlite";
-import { sweepExpiredDemoClones } from "../src/lib/demo-clone-sweep.js";
+import { sweepExpiredDemoClones, demoCloneSweepStatus } from "../src/lib/demo-clone-sweep.js";
 
 function d1(db) {
   const wrap = (sql) => {
@@ -52,4 +52,39 @@ test("an expired clone goes with its rows, its project and its package PDF", asy
   assert.deepEqual(db.prepare("SELECT id FROM projects").all().map((r) => r.id), ["p-new"]);
   assert.equal(db.prepare("SELECT COUNT(*) AS n FROM door_schedule_entries").get().n, 1);
   assert.equal(db.prepare("SELECT COUNT(*) AS n FROM hardware_components").get().n, 0);
+});
+
+// Every copy since 2026-09 stores created_at as new Date().toISOString()
+// ("2026-10-06T01:52:43.612Z"); datetime('now', ...) answers "2026-10-06 14:22:00".
+// Compared as text, a copy made on the cutoff's own date never read as expired
+// (2026-10-07: hourly sweeps found 0 expired while 2 copies were past 24 h).
+test("a copy stored with an ISO timestamp expires at 24 h, whatever the time of day", async () => {
+  const db = new DatabaseSync(":memory:");
+  db.exec("CREATE TABLE hardware_extraction_sessions (id TEXT PRIMARY KEY, user_id TEXT, project_id TEXT, file_buffer_key TEXT, created_at TEXT)");
+  db.exec("CREATE TABLE projects (id TEXT PRIMARY KEY, name TEXT, client_name TEXT, created_at TEXT)");
+  db.exec("CREATE TABLE hardware_sets (id TEXT, session_id TEXT)");
+  for (const t of ["affirm_audit_log", "claude_api_logs", "client_telemetry", "constraint_executions", "cps_gaps", "cut_sheet_discovery_queue", "door_hardware_matrix", "door_schedule_entries", "hardware_door_matrix", "hardware_page_extractions", "ocr_validation_queue", "post_transformation_review_queue", "quotes", "schedule_entries", "schedule_region_candidates", "session_affirm_status", "session_cut_sheet_matches", "session_nomenclature", "session_readiness", "takeoff_line_items", "takeoff_quotes", "takeoff_settings", "undo_stack"]) {
+    db.exec("CREATE TABLE IF NOT EXISTS " + t + " (session_id TEXT, project_id TEXT)");
+  }
+  db.exec("CREATE TABLE hardware_components (set_id TEXT, hardware_set_id TEXT)");
+  db.exec("CREATE TABLE submittal_cut_sheets (hardware_set_id TEXT)");
+  for (const t of ["kdp_packets", "locations", "submittals", "verification_runs"]) db.exec("CREATE TABLE " + t + " (project_id TEXT)");
+  const iso = (msAgo) => new Date(Date.now() - msAgo).toISOString();
+  const H = 3600 * 1000;
+  const ins = db.prepare("INSERT INTO hardware_extraction_sessions VALUES (?,?,?,?,?)");
+  ins.run("day-old", "u1", "p-day-old", "demo-clone/day-old", iso(24 * H + 60 * 1000)); // a day and a minute
+  ins.run("fresh", "u1", "p-fresh", "demo-clone/fresh", iso(24 * H - 60 * 1000)); // a minute short of a day
+  const proj = db.prepare("INSERT INTO projects VALUES (?,?,?,?)");
+  proj.run("eabd5ff6-e19f-4e6b-acfc-9a250445dfa8", "The WeylandAI Building", "Demo", "2026-09-09T16:29:58.000Z"); // the seed
+  proj.run("p-day-old", "The WeylandAI Building", "Demo", iso(24 * H + 60 * 1000));
+  proj.run("p-fresh", "The WeylandAI Building", "Demo", iso(24 * H - 60 * 1000));
+  proj.run("p-orphan", "The WeylandAI Building", "Demo", iso(24 * H + 60 * 1000)); // a copy's project no session points at
+  const env = { DB: d1(db), UPLOADS: { async delete() {} } };
+  assert.equal((await demoCloneSweepStatus(env)).expired, 1);
+  const summary = await sweepExpiredDemoClones(env);
+  assert.equal(summary.sessionsDeleted, 1);
+  assert.equal(summary.orphanProjectsDeleted, 1);
+  assert.equal(summary.remainingExpired, 0);
+  assert.deepEqual(db.prepare("SELECT id FROM hardware_extraction_sessions").all().map((r) => r.id), ["fresh"]);
+  assert.deepEqual(db.prepare("SELECT id FROM projects ORDER BY id").all().map((r) => r.id), ["eabd5ff6-e19f-4e6b-acfc-9a250445dfa8", "p-fresh"]);
 });

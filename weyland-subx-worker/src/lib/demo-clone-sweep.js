@@ -8,11 +8,19 @@
 // hardware rows under that session. The clone's KV pointer expires after
 // 24 h (CLONE_TTL_SECONDS) but nothing ever removed the D1 rows - 233
 // clone sessions had accumulated by 2026-10-05, 164 of them past their
-// life. This runs from scheduled() (wrangler.toml [triggers]) and removes
-// everything a clone owns, by session_id, then by project_id, then the
-// project row itself - only when no other session still points at it.
+// life. This runs off ordinary requests, at most hourly (trafficDrivenJob in
+// src/index.js; there are no cron triggers), and removes everything a clone
+// owns, by session_id, then by project_id, then the project row itself -
+// only when no other session still points at it.
 
 const CLONE_KEY_PREFIX = "demo-clone/";
+
+// Age tests compare datetime(created_at), not the column: a copy's created_at
+// is an ISO string ("2026-10-06T01:52:43.612Z", new Date().toISOString()) and
+// datetime('now', ...) answers "2026-10-06 14:22:00"; as text, 'T' sorts after
+// ' ', so a copy made on the cutoff's own date never read as expired until the
+// date rolled over. 2026-10-07: every hourly sweep found 0 expired while 2
+// copies were past 24 h; copies lived up to 48 h.
 
 // Every table with a session_id column (sqlite_master, 2026-10-05).
 const SESSION_TABLES = [
@@ -42,7 +50,7 @@ export async function sweepExpiredDemoClones(env, { olderThanHours = 24, limit =
   await ensureLog(env);
   const summary = { ranAt: new Date().toISOString(), olderThanHours, sessionsDeleted: 0, projectsDeleted: 0, orphanProjectsDeleted: 0, rowsDeleted: 0, remainingExpired: 0, errors: [] };
   const expired = await env.DB.prepare(
-    "SELECT id, project_id FROM hardware_extraction_sessions WHERE file_buffer_key LIKE ? AND created_at < datetime('now', ?) ORDER BY created_at ASC LIMIT ?"
+    "SELECT id, project_id FROM hardware_extraction_sessions WHERE file_buffer_key LIKE ? AND datetime(created_at) < datetime('now', ?) ORDER BY created_at ASC LIMIT ?"
   ).bind(CLONE_KEY_PREFIX + "%", "-" + olderThanHours + " hours", limit).all();
 
   for (const row of expired.results || []) {
@@ -92,7 +100,7 @@ export async function sweepExpiredDemoClones(env, { olderThanHours = 24, limit =
   }
 
   const left = await env.DB.prepare(
-    "SELECT COUNT(*) AS n FROM hardware_extraction_sessions WHERE file_buffer_key LIKE ? AND created_at < datetime('now', ?)"
+    "SELECT COUNT(*) AS n FROM hardware_extraction_sessions WHERE file_buffer_key LIKE ? AND datetime(created_at) < datetime('now', ?)"
   ).bind(CLONE_KEY_PREFIX + "%", "-" + olderThanHours + " hours").first();
   summary.remainingExpired = left?.n || 0;
 
@@ -107,7 +115,7 @@ const SEED_PROJECT_ID = "eabd5ff6-e19f-4e6b-acfc-9a250445dfa8"; // src/routes/de
 async function sweepOrphanCloneProjects(env, olderThanHours, limit) {
   const rows = await env.DB.prepare(
     "SELECT p.id FROM projects p, projects s WHERE s.id = ? AND p.id != s.id AND p.name = s.name AND p.client_name IS s.client_name " +
-    "AND p.id NOT IN (SELECT project_id FROM hardware_extraction_sessions WHERE project_id IS NOT NULL) AND p.created_at < datetime('now', ?) LIMIT ?"
+    "AND p.id NOT IN (SELECT project_id FROM hardware_extraction_sessions WHERE project_id IS NOT NULL) AND datetime(p.created_at) < datetime('now', ?) LIMIT ?"
   ).bind(SEED_PROJECT_ID, "-" + olderThanHours + " hours", limit).all();
   let deleted = 0;
   for (const r of rows.results || []) {
@@ -123,7 +131,7 @@ async function sweepOrphanCloneProjects(env, olderThanHours, limit) {
 export async function demoCloneSweepStatus(env) {
   await ensureLog(env);
   const counts = await env.DB.prepare(
-    "SELECT COUNT(*) AS clones, SUM(CASE WHEN created_at < datetime('now', '-24 hours') THEN 1 ELSE 0 END) AS expired FROM hardware_extraction_sessions WHERE file_buffer_key LIKE ?"
+    "SELECT COUNT(*) AS clones, SUM(CASE WHEN datetime(created_at) < datetime('now', '-24 hours') THEN 1 ELSE 0 END) AS expired FROM hardware_extraction_sessions WHERE file_buffer_key LIKE ?"
   ).bind(CLONE_KEY_PREFIX + "%").first();
   const last = await env.DB.prepare("SELECT ran_at, sessions_deleted, projects_deleted, rows_deleted, remaining_expired, errors FROM demo_clone_sweeps ORDER BY ran_at DESC LIMIT 1").first();
   const orphans = await env.DB.prepare(
