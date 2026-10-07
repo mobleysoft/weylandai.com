@@ -27,15 +27,17 @@
 //                                             the real live page still
 //                                             serves.
 //   POST /api/sightx/walkthrough-preview  -> routes/sightx-walkthrough.js,
-//                                             SightX's one genuinely
-//                                             dynamic feature (confirmed:
-//                                             two different project
-//                                             descriptions produce two
-//                                             genuinely different generated
-//                                             titles/storyboards, not a
-//                                             canned response). Public, no
-//                                             auth - ported verbatim,
-//                                             including that fact.
+//                                             SightX's one dynamic feature:
+//                                             since 2026-10-07 a
+//                                             deterministic walkthrough
+//                                             built here from the
+//                                             description (no model;
+//                                             lib/walkthrough-builder.js),
+//                                             drawn by filmline-video-
+//                                             worker's /api/render. Two
+//                                             descriptions give two
+//                                             different walks. Public, no
+//                                             auth.
 //
 // SIGHTX_ROOM Durable Object - deliberately NOT bound here. Checked (not
 // assumed) during this extraction: SightX's own routes never reference it;

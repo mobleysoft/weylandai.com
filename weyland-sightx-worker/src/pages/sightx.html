@@ -3120,16 +3120,18 @@
     }).catch(error => console.error('[SightX runtime]', error));
   </script>
 
-  <!-- Guided Walkthrough Preview — real, deployed 2026-09-06. SightX's own
-       spec promises "guided site walkthroughs"; the WebGL scene above is
-       one real hardcoded demo project (Glendale Camino Real). This panel
-       is a genuinely different, smaller, real slice of that same promise:
-       given a plain-text project description, it generates an actual
-       narrated storyboard walkthrough (script via a self-hosted LLM,
-       animated-SVG scene sequence, optional browser text-to-speech) —
-       not a 3D render, not a video file. Calls weylandai's own
-       /api/sightx/walkthrough-preview, which forwards to
-       filmline-video-worker over a real same-account Service Binding. -->
+  <!-- Guided Walkthrough Preview. SightX's own spec promises "guided site
+       walkthroughs"; the WebGL scene above is one real hardcoded demo
+       project (Glendale Camino Real). This panel is a smaller, real slice
+       of that promise: from a plain-text description of a space it builds
+       an ordered walk (the spaces, a stop at each opening with the
+       hardware the description names) as an animated-SVG storyboard the
+       browser can read aloud. Since 2026-10-07 no language model is
+       involved: /api/sightx/walkthrough-preview reads the description
+       deterministically in weyland-sightx-worker (lib/walkthrough-builder.js)
+       and filmline-video-worker's model-free /api/render draws the
+       storyboard over a same-account Service Binding. Not a 3D render,
+       not a video file. -->
   <div id="wt-preview-toggle" style="position:fixed;right:20px;bottom:20px;z-index:9999;">
     <button id="wt-preview-btn" style="padding:10px 16px;background:#2a52ff;color:#090a0d;border:0;border-radius:6px;font-weight:700;font-family:'Space Grotesk',sans-serif;cursor:pointer;box-shadow:0 2px 12px rgba(0,0,0,0.4);">Guided Walkthrough Preview</button>
   </div>
@@ -3139,8 +3141,8 @@
         <h2 style="margin:0;font-family:'Space Grotesk',sans-serif;">Guided Walkthrough Preview</h2>
         <button id="wt-preview-close" style="background:none;border:0;color:#8a94a6;font-size:22px;cursor:pointer;">&times;</button>
       </div>
-      <p style="color:#a9b2c0;font-size:14px;line-height:1.6;">Describe a project (e.g. "second-floor mechanical retrofit, three access points, one hazardous-material zone") and generate a real narrated storyboard walkthrough — a script plus an animated scene sequence, played back with your browser's own text-to-speech. This is not the 3D scene above; it's a smaller, real, honest slice of SightX's "guided site walkthroughs" promise: script + animated storyboard, not photorealistic render or an encoded video file.</p>
-      <textarea id="wt-preview-input" rows="3" maxlength="1000" placeholder="Describe the project or space to walk through..." style="width:100%;box-sizing:border-box;background:#0d0f13;color:#f4f1ea;border:1px solid #2a2e36;border-radius:6px;padding:10px;font-family:inherit;font-size:14px;"></textarea>
+      <p style="color:#a9b2c0;font-size:14px;line-height:1.6;">Describe the space (e.g. "ground-floor corridor of a medical office: eight hollow-metal doors, one exit pair with panic devices") and SightX builds a walkthrough from what you wrote: the spaces in order and a stop at each opening with the hardware you named, as an animated storyboard your browser can read aloud. Nothing is added that the description does not say. This is not the 3D scene above and not a video file: it is a smaller, honest slice of SightX's "guided site walkthroughs" promise.</p>
+      <textarea id="wt-preview-input" rows="3" maxlength="1000" placeholder="Describe the space to walk: its rooms or corridors, the doors and the hardware on them..." style="width:100%;box-sizing:border-box;background:#0d0f13;color:#f4f1ea;border:1px solid #2a2e36;border-radius:6px;padding:10px;font-family:inherit;font-size:14px;"></textarea>
       <button id="wt-preview-generate" style="margin-top:10px;padding:10px 18px;background:#2a52ff;color:#090a0d;border:0;border-radius:6px;font-weight:700;cursor:pointer;">Generate</button>
       <span id="wt-preview-status" style="margin-left:12px;color:#8a94a6;font-size:13px;"></span>
       <div id="wt-preview-result" style="margin-top:18px;"></div>
@@ -3160,7 +3162,7 @@
       genBtn.addEventListener('click', function () {
         var description = (input.value || '').trim();
         if (!description) { status.textContent = 'Enter a project description first.'; return; }
-        status.textContent = 'Generating (real model inference, ~10-20s)...';
+        status.textContent = 'Building the walkthrough...';
         result.innerHTML = '';
         genBtn.disabled = true;
         fetch('/api/sightx/walkthrough-preview', {
@@ -3175,7 +3177,7 @@
             result.innerHTML = res.d.svg + '<p style="margin-top:12px;color:#8a94a6;font-size:13px;">' + res.d.logline_escaped + '</p>' +
               '<button id="wt-preview-narrate" style="margin-top:6px;padding:8px 14px;background:#2a2e36;color:#f4f1ea;border:0;border-radius:6px;cursor:pointer;">Narrate (browser text-to-speech)</button>';
             document.getElementById('wt-preview-narrate').addEventListener('click', function () {
-              if (!('speechSynthesis' in window)) { alert('No speechSynthesis support in this browser.'); return; }
+              if (!('speechSynthesis' in window)) { status.textContent = 'This browser cannot read aloud (no speech synthesis).'; return; }
               window.speechSynthesis.cancel();
               (res.d.narration_lines || []).forEach(function (line) {
                 if (line) window.speechSynthesis.speak(new SpeechSynthesisUtterance(line));

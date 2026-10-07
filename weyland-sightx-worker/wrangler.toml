@@ -12,10 +12,11 @@ workers_dev = true
 
 # No `compatibility_flags = ["nodejs_compat"]` and no D1/R2/BROWSER
 # bindings - confirmed by reading the real dependency closure (router.js,
-# json-response.js, routes/sightx-walkthrough.js), not assumed. SightX's
-# own real route surface is genuinely stateless: the walkthrough-preview
-# route only proxies to FILMLINE_VIDEO, and the /sightx page is a static
-# text asset. This is the simplest of the five extractions so far - no
+# json-response.js, routes/sightx-walkthrough.js, lib/walkthrough-builder.js),
+# not assumed. SightX's own real route surface is genuinely stateless: the
+# walkthrough-preview route builds the walkthrough in this Worker (no model,
+# since 2026-10-07) and asks FILMLINE_VIDEO's /api/render to draw it, and
+# the /sightx page is a static text asset. This is the simplest of the five extractions so far - no
 # database, no auth, no Durable Object.
 #
 # Per direct instruction (2026-09-12): no bundler for new Worker code.
