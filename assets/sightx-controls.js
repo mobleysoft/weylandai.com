@@ -441,14 +441,14 @@
       const zone = moveZone.getBoundingClientRect();
       const x = clamp(event.clientX, zone.left + size * 0.55, Math.max(zone.left + size * 0.55, zone.right - size * 0.55));
       const y = clamp(event.clientY, Math.max(0, zone.top) + size * 0.55, Math.max(zone.top + size * 0.55, zone.bottom - size * 0.55));
-      stick.style.setProperty('--sx-stick-left', `${x - size * 0.5}px`);
-      stick.style.setProperty('--sx-stick-top', `${y - size * 0.5}px`);
+      stick.style.setProperty('--sx-stick-left', `${x - zone.left - size * 0.5}px`);
+      stick.style.setProperty('--sx-stick-top', `${y - zone.top - size * 0.5}px`);
       stick.style.bottom = 'auto';
       stick.style.right = 'auto';
     }
 
     moveZone.addEventListener('pointerdown', event => {
-      if (!inputEnabled) return;
+      if (!inputEnabled || stickPointer !== null) return;
       event.preventDefault();
       stickPointer = event.pointerId;
       moveZone.setPointerCapture(event.pointerId);
@@ -464,7 +464,8 @@
       }
     });
     moveZone.addEventListener('pointerup', event => { if (event.pointerId === stickPointer) resetStick(); });
-    moveZone.addEventListener('pointercancel', resetStick);
+    moveZone.addEventListener('pointercancel', event => { if (event.pointerId === stickPointer) resetStick(); });
+    moveZone.addEventListener('lostpointercapture', event => { if (event.pointerId === stickPointer) resetStick(); });
 
     lookZone.addEventListener('pointerdown', event => {
       if (!inputEnabled) return;
@@ -488,6 +489,7 @@
     }
     // Virtual stick for hosts: x = strafe (-1..1), y = -forward (-1..1).
     function setStick(x, y) {
+      if (!inputEnabled) return;
       stickAxis.x = clamp(Number(x) || 0, -1, 1);
       stickAxis.y = clamp(Number(y) || 0, -1, 1);
       if (stickAxis.x || stickAxis.y) signalInput('move');
@@ -709,9 +711,12 @@
 
     function setEnabled(active) {
       inputEnabled = Boolean(active);
+      touchUI.inert = !inputEnabled;
+      touchUI.setAttribute('aria-hidden', String(!inputEnabled));
       if (!inputEnabled) {
         Object.keys(keys).forEach(code => { keys[code] = false; });
         sprintHeld = false;
+        velocity.fill(0);
         desktopScanHeld = false;
         resetStick();
         resetLook();
@@ -744,6 +749,8 @@
       if (options.onMove) options.onMove(position);
     }
 
+    window.addEventListener('resize', () => { resetStick(); resetLook(); });
+    window.addEventListener('orientationchange', () => { resetStick(); resetLook(); });
     window.addEventListener('blur', () => {
       Object.keys(keys).forEach(code => { keys[code] = false; });
       desktopScanHeld = false;

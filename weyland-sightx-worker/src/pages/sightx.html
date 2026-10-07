@@ -980,11 +980,17 @@
        in range scans itself (sightx-experience.js autoScan). */
     html.sxe-bg-embed #sightx-touch-ui .sx-actions { display: none !important; }
     html.sxe-bg-embed #sightx-touch-ui .sx-look-zone { inset: 0; z-index: 1; }
-    html.sxe-bg-embed #sightx-touch-ui .sx-move-zone { inset: 50% 0 0 50%; z-index: 2; }
+    html.sxe-bg-embed #sightx-touch-ui .sx-move-zone {
+      inset: auto max(10px, env(safe-area-inset-right)) max(18px, env(safe-area-inset-bottom)) auto;
+      width: 104px; height: 160px; z-index: 2;
+    }
     html.sxe-bg-embed #sightx-touch-ui .sx-stick,
     html.sxe-bg-embed #sightx-touch-ui.floating-stick .sx-stick {
-      left: var(--sx-stick-left, auto); right: var(--sx-safe-right, 18px); top: var(--sx-stick-top, auto);
-      bottom: calc(var(--sx-safe-bottom, 18px) + 54px);
+      left: var(--sx-stick-left, auto); right: 4px; top: var(--sx-stick-top, auto);
+      bottom: 34px; width: 96px;
+    }
+    @media (max-height: 440px) {
+      html.sxe-bg-embed #sightx-touch-ui .sx-move-zone { height: 132px; }
     }
     /* Door labels stay tappable above the touch zones. */
     html.sxe-bg-embed #sx-walk { z-index: 45; }
@@ -1244,7 +1250,7 @@
     </div>
   </div>
 
-  <script src="/assets/sightx-controls.js?v=20261005-1"></script>
+  <script src="/assets/sightx-controls.js?v=20261007-1"></script>
   <script src="/assets/sightx-experience.js?v=20261005-1"></script>
   <script>
     // Ingest (PDF upload UI) and the Unreal runtime bridge are not used in
@@ -3232,10 +3238,19 @@
     // Mirrors the GLSL constants DX/DY/DN exactly.
     var DX = [0.9528, -0.2629, 0.1522], DY = [0.0000, 0.5011, 0.8655], DN = [0.3038, 0.8245, -0.4774];
     function geometry() {
-      var portrait = window.innerWidth < window.innerHeight;
-      return portrait
-        ? { C: [-0.05, -0.40, 1.05], he: [0.22, 0.155, 0.012] }
-        : { C: [-0.30, -0.33, 0.85], he: [0.27, 0.19, 0.012] };
+      var W = window.innerWidth, H = window.innerHeight;
+      if (W >= H) return { C: [-0.30, -0.33, 0.85], he: [0.27, 0.19, 0.012] };
+      var g = { C: [-0.05, -0.40, 1.05], he: [0.22, 0.155, 0.012] };
+      // Touch portrait (2026-10-07, phone joystick): slide the folder left
+      // until its right-most corner (the near right one, C + DX*he.x -
+      // DY*he.y) projects 8 px short of the joystick's box (CSS above: 104 px
+      // wide, 10 px from the right edge), whatever the screen's shape.
+      if (coarseTouch) {
+        var z = g.C[2] + DX[2] * g.he[0] - DY[2] * g.he[1];
+        var x = (2 * (W - 10 - 104 - 8) / W - 1) * 0.62 * (W / H) * z - (DX[0] * g.he[0] - DY[0] * g.he[1]);
+        if (x < g.C[0]) g.C[0] = x;
+      }
+      return g;
     }
     function add(a, b, k) { return [a[0] + b[0] * k, a[1] + b[1] * k, a[2] + b[2] * k]; }
     function project(v) {
@@ -3247,7 +3262,8 @@
 
     // State: 0 = dossier in hand (site lowered), 1 = dossier raised/out of
     // view. Driven by the host's folder state and by flight engagement.
-    var siteRaised = false;
+    var siteRaised = true;
+    var lastInteractive = null;
     var target = 0, value = 0, lastTs = null;
     var introOverlay = document.getElementById("cx-overlay");
     function introUp() {
@@ -3281,7 +3297,12 @@
       var off = [0, -0.95 * lowerT, 0.38 * lowerT];
       // Joystick UI only while a finger can reach the world: folder lowered,
       // prologue over, touch device. (CSS above shows #sightx-touch-ui.)
-      document.documentElement.classList.toggle("sx-touch-on", coarseTouch && !siteRaised && !introUp());
+      var interactive = !siteRaised && !introUp();
+      document.documentElement.classList.toggle("sx-touch-on", coarseTouch && interactive);
+      if (lastInteractive !== interactive) {
+        lastInteractive = interactive;
+        try { sightxControls.setEnabled(interactive); } catch (_) { lastInteractive = null; }
+      }
       var C = add(g.C, off, 1);
       var A = add(add(C, DY, g.he[1] - 0.012), DN, g.he[2]);
       var L = window.innerWidth < window.innerHeight ? 0.30 : 0.32;
@@ -3321,8 +3342,9 @@
       }
     });
     window.addEventListener("message", function (e) {
-      if (e.origin !== location.origin || !e.data || e.data.type !== "weyland:dossier-state") return;
+      if (e.source !== window.parent || e.origin !== location.origin || !e.data || e.data.type !== "weyland:dossier-state") return;
       siteRaised = !!e.data.raised;
+      update(value);
     });
     window.sxDossier = { geometry: geometry, lowered: lowered, update: update, introUp: introUp };
   })();
@@ -3744,6 +3766,15 @@
     }
 
     skipBtn.addEventListener("click", finish);
+    // WALK THIS SCHEDULE (2026-10-07): the host's "weyland:walk-schedule" is
+    // the visitor asking for the world now, and the host's note says to walk
+    // with the joystick at once - end the opening shot so the joystick (shown
+    // only once the prologue is over) is there when the note says so.
+    if (introIsEmbed) {
+      window.addEventListener("message", function (e) {
+        if (e.source === window.parent && e.origin === location.origin && e.data && e.data.type === "weyland:walk-schedule") finish();
+      });
+    }
 
     function clamp01(x) { return x < 0 ? 0 : (x > 1 ? 1 : x); }
     function smooth01(a, b, t) { var x = clamp01((t - a) / (b - a)); return x * x * (3 - 2 * x); }
