@@ -74,12 +74,18 @@ script_name = "weylandai-com-worker"
 # untouched, not modified by this extraction), so Cloudflare's
 # route-precedence rule sends exactly these path shapes here and nothing
 # else.
+# 2026-10-07: wildcards. An exact pattern does not match the same path with
+# a query string, so a shared room link (/meetingx?room=...) and the
+# single-page shell's overlay (/meetingx?embed=1, /meetx?embed=1) fell
+# through to weylandai.com/* and got the monolith's stale copy, which has no
+# JOIN ROOM. src/index.js serves the page for /meetingx, /meetingx/, /meetx
+# and /meetx/ with any query string.
 [[routes]]
-pattern = "weylandai.com/meetingx"
+pattern = "weylandai.com/meetingx*"
 zone_name = "weylandai.com"
 
 [[routes]]
-pattern = "weylandai.com/meetx"
+pattern = "weylandai.com/meetx*"
 zone_name = "weylandai.com"
 
 [[routes]]

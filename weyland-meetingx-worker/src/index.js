@@ -37,13 +37,25 @@
 //
 // Route inventory (real):
 //   GET  /meetingx, /meetx        -> the real MeetingX page (this pass
-//                                     added the WebSocket join/broadcast
-//                                     wiring to it - see meetingx.html)
+//        (and /meetingx/, /meetx/,   added the WebSocket join/broadcast
+//        any query string)           wiring to it - see meetingx.html).
+//                                     2026-10-07: zone routes are the
+//                                     wildcards weylandai.com/meetingx* and
+//                                     /meetx*, so a shared ?room= link and
+//                                     the overlay's ?embed=1 reach this page
+//                                     (they used to fall through to the
+//                                     monolith's stale copy, no JOIN ROOM).
 //   *    /api/sight/room/:id      -> WebSocket upgrade, forwarded to the
 //                                     SIGHTX_ROOM Durable Object, same
 //                                     auth gate as the monolith's own
 //                                     copy of this route (authenticate()
 //                                     + requireProductAccess(..., "meetingx"))
+//   GET  /api/sight/room/:id      -> (no Upgrade header) access check the
+//                                     page runs before opening the socket:
+//                                     same auth gate, JSON answer, so the
+//                                     page can tell "sign in" (401) from
+//                                     "plan needed" (402) - a failed
+//                                     WebSocket handshake cannot.
 //
 // The monolith's own copy of the /api/sight/room/:id route (in
 // src/lib/weyland-entry.js's createWeylandWorker) is deliberately left in
@@ -54,6 +66,7 @@
 import { NativeRouter } from "./lib/router.js";
 import { authenticate, requireProductAccess } from "./lib/auth.js";
 import { jsonResponse3 } from "./lib/json-response.js";
+import { registerRoomRoutes, roomIdFrom, ROOM_ID } from "./routes/room.js";
 
 import meetingxHtml from "./pages/meetingx.html";
 
@@ -78,6 +91,10 @@ function servePage() {
 }
 router.get("/meetingx", servePage);
 router.get("/meetx", servePage);
+router.get("/meetingx/", servePage);
+router.get("/meetx/", servePage);
+
+registerRoomRoutes(router, { authenticate, requireProductAccess });
 
 export default {
   async fetch(request, env, ctx) {
@@ -89,8 +106,9 @@ export default {
     // ported verbatim (not reinvented) so behavior is provably unchanged
     // for anyone hitting either endpoint.
     if (request.headers.get("Upgrade") === "websocket" && url.pathname.startsWith("/api/sight/room/")) {
-      const projectId = url.pathname.slice("/api/sight/room/".length).split("/")[0];
+      const projectId = roomIdFrom(url);
       if (!projectId) return new Response("Missing project id", { status: 400 });
+      if (!ROOM_ID.test(projectId)) return new Response("Bad room id", { status: 400 });
       const { error: wsAuthError, user: wsUser } = await authenticate(request, env);
       if (wsAuthError) return wsAuthError;
       const wsProdErr = await requireProductAccess(wsUser, env, "meetingx");

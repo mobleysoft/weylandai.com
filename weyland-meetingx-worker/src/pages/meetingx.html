@@ -20,6 +20,13 @@
     .workspace{display:grid;grid-template-columns:1.2fr .8fr .8fr;gap:18px}.card{padding:20px;min-height:300px}.card-head{display:flex;justify-content:space-between;gap:12px;align-items:center;margin-bottom:15px}.card h3{margin:0;font-size:17px}.badge{color:var(--muted);font:700 9px/1 ui-monospace,monospace;border:1px solid var(--line);border-radius:99px;padding:6px 8px}.transcript{height:260px;overflow:auto;padding:13px;border:1px solid var(--line);border-radius:12px;background:#0b0c0f;color:#cbd0d5;font:13px/1.65 ui-monospace,monospace;white-space:pre-wrap}.interim{color:var(--muted)}
     .list{display:grid;gap:8px;max-height:230px;overflow:auto}.item{border:1px solid var(--line);border-radius:11px;padding:11px 12px;background:rgba(255,255,255,.018);font-size:13px;line-height:1.45}.item small{display:block;color:var(--muted);font:700 9px/1.4 ui-monospace,monospace;margin-top:5px}.empty{color:var(--muted);font-size:13px;line-height:1.6}.add{width:100%;margin-top:10px;border:1px dashed #454b54;background:transparent;color:var(--muted);border-radius:11px;padding:10px;cursor:pointer}.add:hover{border-color:var(--gold);color:var(--gold)}
     .ask{display:flex;gap:8px;margin-top:10px}.ask input{min-width:0;flex:1;background:#0b0c0f;color:var(--paper);border:1px solid var(--line);border-radius:10px;padding:11px;outline:none}.ask input:focus{border-color:var(--gold)}.ask button{border:0;background:var(--gold);color:var(--ink);font-weight:800;border-radius:10px;padding:0 14px;cursor:pointer}.answer{min-height:145px;border-left:2px solid var(--gold);padding:3px 0 3px 13px;color:#cbd0d5;font-size:13px;line-height:1.6}.footerbar{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-top:18px;color:var(--muted);font:700 9px/1.5 ui-monospace,monospace;letter-spacing:.05em}.footerbar button{border:1px solid var(--line);background:transparent;color:var(--paper);border-radius:10px;padding:9px 12px;cursor:pointer}.footerbar button:hover{border-color:var(--gold);color:var(--gold)}
+    .roombar{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin:-6px 0 16px;padding:10px 14px;border:1px solid var(--line);border-radius:14px;background:rgba(17,19,24,.91);font:700 10px/1.4 ui-monospace,monospace;letter-spacing:.06em}
+    .roombar b{color:var(--paper)}.roombar .badge{color:var(--paper)}.roombar .badge.on{border-color:var(--green);color:var(--green)}.roombar .badge.warn{border-color:var(--gold2);color:var(--gold2)}
+    .room-notice{flex:1;min-width:min(260px,100%);color:var(--muted);font:500 12px/1.45 "Avenir Next","Helvetica Neue",sans-serif;letter-spacing:0}
+    .roombar button{border:1px solid var(--line);background:transparent;color:var(--paper);border-radius:99px;padding:8px 12px;cursor:pointer;font:700 10px/1 ui-monospace,monospace;letter-spacing:.08em}
+    .roombar button.primary{background:var(--gold);border-color:var(--gold);color:var(--ink)}
+    .roombar button[hidden]{display:none}
+    html.wa-standalone .shell{padding-top:64px}
     @media(max-width:1050px){.intro{grid-template-columns:1fr}.workspace{grid-template-columns:1fr 1fr}.workspace .card:first-child{grid-column:1/-1}}
     @media(max-width:700px){.shell{padding:12px}.brand small,.top-actions .link{display:none}.hero,.hero video{min-height:55vh}.controls{width:calc(100% - 24px);overflow-x:auto;justify-content:flex-start}.workspace{grid-template-columns:1fr}.workspace .card:first-child{grid-column:auto}.brief{padding:18px}.footerbar{align-items:flex-start;flex-direction:column}}
   </style>
@@ -28,8 +35,17 @@
   <div class="shell">
     <header>
       <a class="brand" href="/"><span class="mark">WX</span><span><strong>MEETINGX</strong><small>WEYLAND COLLABORATION INTELLIGENCE</small></span></a>
-      <div class="top-actions"><span class="status"><i class="dot"></i> LIVE BETA</span><span class="status" id="room-chip">ROOM <span id="room-code">&hellip;</span></span><button class="link" id="copy-room-link" type="button" style="cursor:pointer">COPY LINK</button><a class="link" href="/sightx/">SIGHTX</a><a class="link" href="/">WEYLAND</a></div>
+      <div class="top-actions"><span class="status"><i class="dot"></i> LIVE BETA</span><span class="status" id="room-chip">ROOM <span id="room-code">&hellip;</span></span><button class="link" id="copy-room-link" type="button" style="cursor:pointer">COPY LINK</button><a class="link" href="/sightx">SIGHTX</a><a class="link" href="/">WEYLAND</a></div>
     </header>
+
+    <div class="roombar" id="roombar">
+      <span>ROOM <b id="room-code-bar">&hellip;</b></span>
+      <span class="badge" id="room-state">NOT CONNECTED</span>
+      <span class="room-notice" id="room-notice">Press JOIN ROOM to meet here. Everyone who opens this room's link and joins sees the same roster and chat.</span>
+      <button type="button" class="primary" id="room-join-bar">JOIN ROOM</button>
+      <button type="button" id="room-signin" hidden>SIGN IN TO JOIN</button>
+      <button type="button" id="room-plans" hidden>SEE PLANS</button>
+    </div>
 
     <section class="intro">
       <div class="hero">
@@ -84,7 +100,7 @@
         <div class="answer" id="answer">Ask about the product flow, the commercial wedge, the raise, or what should be demonstrated. MeetingX answers from the verified meeting brief rather than the public web.</div>
         <form class="ask" id="ask-form"><input id="ask-input" autocomplete="off" placeholder="What is the clearest way to explain SubX and TakeoffX?"><button>ASK</button></form>
       </article>
-      <article class="card" style="grid-column:1/-1;min-height:220px">
+      <article class="card" id="room-card" style="grid-column:1/-1;min-height:220px">
         <div class="card-head"><h3>Live Room</h3><span class="badge" id="room-status">NOT CONNECTED</span></div>
         <div style="display:grid;grid-template-columns:minmax(160px,.9fr) 2fr;gap:14px">
           <div>
@@ -98,9 +114,50 @@
       </article>
     </section>
 
-    <div class="footerbar"><span>MEETINGX BETA · MEDIA AND NOTES STAY IN THIS BROWSER · MULTI-PARTY TRANSPORT NOT YET CLAIMED</span><button id="export-btn">EXPORT MEETING RECORD</button></div>
+    <div class="footerbar"><span>MEETINGX BETA · ROOM PRESENCE AND CHAT ARE SHARED WITH EVERYONE IN THE ROOM · CAMERA, SCREEN, TRANSCRIPT AND NOTES STAY IN THIS BROWSER (NO SHARED AUDIO OR VIDEO YET)</span><button id="export-btn">EXPORT MEETING RECORD</button></div>
   </div>
 
+  <script>
+  /* Single-page bridge. Inside the WeylandAI overlay (an iframe the homepage shell opens) sign-in and
+     links to other products go through the parent's WeylandShell, so the visitor never leaves the
+     page they are on. Opened directly (a shared room link), this page loads the same shell, so
+     sign-in happens in place, over this page, and the visitor stays in the room. */
+  (function () {
+    var embedded = false;
+    try { embedded = window.self !== window.top; } catch (e) { embedded = true; }
+    function parentShell() { try { return embedded && window.parent && window.parent.WeylandShell ? window.parent.WeylandShell : null; } catch (e) { return null; } }
+    function shell() { return parentShell() || window.WeylandShell || null; }
+    function loadScript(src) { return new Promise(function (res, rej) { var s = document.createElement("script"); s.src = src; s.onload = res; s.onerror = rej; document.head.appendChild(s); }); }
+    if (!embedded) document.documentElement.classList.add("wa-standalone");
+    var ready = embedded ? Promise.resolve() : (window.AuthForStandard ? Promise.resolve() : loadScript("/assets/authfor-integration-standard.js"))
+      .then(function () { return window.WeylandShell ? null : loadScript("/assets/weyland-shell.js"); }).catch(function () {});
+    window.WeylandPage = {
+      embedded: embedded,
+      ready: ready,
+      authStatus: function () { var s = shell(); try { return s && s.state ? s.state().status : null; } catch (e) { return null; } },
+      signIn: function (continueTo) {
+        return ready.then(function () {
+          var s = shell();
+          if (s) return s.open("signin", embedded ? { continueTo: continueTo } : {});
+          location.href = "/login?redirect=" + encodeURIComponent(continueTo);
+        });
+      },
+      openApp: function (path) { return ready.then(function () { var s = shell(); if (s) return s.open("app", { path: path }); location.href = path; }); },
+      home: function () { var p = parentShell(); if (p) return p.close(); location.href = "/"; }
+    };
+    if (embedded) {
+      document.addEventListener("click", function (e) {
+        var a = e.target && e.target.closest ? e.target.closest("a[href]") : null;
+        if (!a || a.target || e.metaKey || e.ctrlKey || e.shiftKey) return;
+        var u; try { u = new URL(a.getAttribute("href"), location.href); } catch (err) { return; }
+        if (u.origin !== location.origin) return;
+        e.preventDefault();
+        if (u.pathname === "/") return window.WeylandPage.home();
+        window.WeylandPage.openApp(u.pathname.replace(/\/+$/, "") + u.search);
+      });
+    }
+  })();
+  </script>
   <script>
     const state={started:Date.now(),transcript:[],decisions:[],actions:[],camera:null,display:null,recognition:null,recording:false};
     const $=id=>document.getElementById(id);
@@ -119,48 +176,88 @@
     $('media-btn').onclick=startMedia;$('share-btn').onclick=shareScreen;$('record-btn').onclick=toggleSpeech;$('decision-btn').onclick=()=>add('decision');$('action-btn').onclick=()=>add('action');document.querySelectorAll('[data-add]').forEach(b=>b.onclick=()=>add(b.dataset.add));$('export-btn').onclick=exportRecord;
     $('ask-form').onsubmit=e=>{e.preventDefault();const q=$('ask-input').value.trim();if(!q)return;$('answer').textContent=answer(q);$('ask-input').value=''};
 
-    // Live Room: real multi-party join/roster/broadcast-chat over a plain
-    // browser WebSocket, no third-party library. Talks to the real
-    // SIGHTX_ROOM Durable Object (SightXRoom) already deployed and used by
-    // SightX - see weyland-meetingx-worker's own header comment for why
-    // this is the same relay, reached via a cross-script Durable Object
-    // binding rather than a fork. This adds real room presence + text
-    // chat; it does NOT add a TURN server or real audio/video peer
-    // connections, so the "multi-party transport not yet claimed" note
-    // below still accurately describes live audio/video conferencing.
+    // Live Room: real multi-party presence + chat over a plain browser WebSocket to the SIGHTX_ROOM
+    // Durable Object (SightXRoom, reached through weyland-meetingx-worker's cross-script binding).
+    // Joining needs a signed-in account with MeetingX. GET /api/sight/room/<id> (no upgrade) says
+    // whether this browser may join, with the same cookie session the WebSocket handshake carries;
+    // a visitor who is not signed in signs in in place (the shell's overlay) and comes back to this
+    // room already joined - never "sign in at /login, then reopen this link".
+    const JOIN_KEY='meetingx.joinAfterSignIn';
     const roomParams=new URLSearchParams(location.search);
-    let roomId=roomParams.get('room');
+    let roomId=(roomParams.get('room')||'').replace(/[^A-Za-z0-9_-]/g,'').slice(0,64);
     if(!roomId){roomId=(crypto.randomUUID?crypto.randomUUID():Math.random().toString(36).slice(2)).replace(/-/g,'').slice(0,10);roomParams.set('room',roomId);history.replaceState(null,'','?'+roomParams.toString())}
-    $('room-code').textContent=roomId;
-    let roomSocket=null,roomRoster=[],roomYouId=null;
-    function roomWsUrl(){const proto=location.protocol==='https:'?'wss:':'ws:';return `${proto}//${location.host}/api/sight/room/${encodeURIComponent(roomId)}`}
-    function renderRoster(){const node=$('roster');node.innerHTML=roomRoster.length?roomRoster.map(u=>`<div class="item" style="border-left:3px solid ${u.color||'var(--line)'}">${escapeHtml(u.name)}${u.userId===roomYouId?' <small style="display:inline">(you)</small>':''}</div>`).join(''):'<p class="empty">No one else here yet.</p>'}
+    $('room-code').textContent=roomId;$('room-code-bar').textContent=roomId;
+    function roomLink(){return location.origin+'/meetingx?room='+encodeURIComponent(roomId)}
+    let roomSocket=null,roomRoster=[],roomYouId=null,joining=false,connected=false;
+    function ssGet(k){try{return sessionStorage.getItem(k)}catch(e){return null}}
+    function ssSet(k,v){try{sessionStorage.setItem(k,v)}catch(e){}}
+    function ssDel(k){try{sessionStorage.removeItem(k)}catch(e){}}
+    function pendingJoin(){try{const p=JSON.parse(ssGet(JOIN_KEY)||'null');return p&&p.room===roomId&&Date.now()-p.at<15*60*1000?p:null}catch(e){return null}}
+    function setRoomState(text,tone){$('room-status').textContent=text;const b=$('room-state');b.textContent=text;b.className='badge'+(tone?' '+tone:'');document.body.setAttribute('data-room-state',text)}
+    function notice(text,opts){opts=opts||{};$('room-notice').textContent=text;$('room-signin').hidden=!opts.signin;$('room-plans').hidden=!opts.plans}
+    function setJoinLabels(){const label=connected?'LEAVE ROOM':'JOIN ROOM';$('room-btn').textContent=label;$('room-join-bar').textContent=label;$('room-btn').classList.toggle('active',connected)}
+    function renderRoster(){const node=$('roster');node.innerHTML=roomRoster.length?roomRoster.map(u=>`<div class="item" style="border-left:3px solid ${u.color||'var(--line)'}">${escapeHtml(u.name)}${u.userId===roomYouId?' <small style="display:inline">(you)</small>':''}</div>`).join(''):'<p class="empty">Join the room to see who else is here.</p>';$('room-state').textContent=connected?('CONNECTED · '+roomRoster.length+' HERE'):$('room-state').textContent}
     function appendRoomChat(line){const node=$('room-chat');if(node.dataset.empty!=='false'){node.innerHTML='';node.dataset.empty='false'}const row=document.createElement('div');row.textContent=line;node.appendChild(row);node.scrollTop=node.scrollHeight}
-    function joinRoom(){
-      if(roomSocket)return;
-      $('room-status').textContent='CONNECTING';
-      try{roomSocket=new WebSocket(roomWsUrl())}catch(e){$('room-status').textContent='UNAVAILABLE';return}
-      roomSocket.onopen=()=>{$('room-status').textContent='CONNECTED';$('room-btn').classList.add('active');$('room-btn').textContent='LEAVE ROOM'};
+    async function probeRoom(){const r=await fetch('/api/sight/room/'+encodeURIComponent(roomId),{credentials:'same-origin',headers:{Accept:'application/json'}});const d=await r.json().catch(()=>({}));return {status:r.status,data:d}}
+    // The WebSocket handshake can only carry the weyland_session cookie. If this browser holds an
+    // AuthFor token but lost the cookie, make the server session again (same call the shell makes).
+    async function ensureCookieSession(){let t=null;try{t=localStorage.getItem('_authfor_token')}catch(e){}if(!t)return false;const r=await fetch('/api/auth/session',{method:'POST',credentials:'same-origin',headers:{'Content-Type':'application/json'},body:JSON.stringify({token:t})});return r.ok}
+    async function joinRoom(){
+      if(roomSocket||joining)return;
+      joining=true;setRoomState('CHECKING ACCESS');
+      try{
+        let p=await probeRoom();
+        if(p.status===401&&await ensureCookieSession().catch(()=>false))p=await probeRoom();
+        if(p.status===401){
+          const prev=pendingJoin();
+          if(prev&&prev.tries>=2){setRoomState('NOT CONNECTED','warn');notice('You are signed in, but this browser has no MeetingX session. Sign out from the account button and sign in again, then press JOIN ROOM.',{signin:true});ssDel(JOIN_KEY);return}
+          ssSet(JOIN_KEY,JSON.stringify({room:roomId,at:Date.now(),tries:(prev?prev.tries:0)+1}));
+          setRoomState('SIGN IN TO JOIN','warn');
+          notice('Sign in to join room '+roomId+'. You come straight back to this room, already joined.',{signin:true});
+          window.WeylandPage.signIn('/meetingx?room='+encodeURIComponent(roomId));
+          return;
+        }
+        if(p.status===402){ssDel(JOIN_KEY);setRoomState('PLAN NEEDED','warn');notice((p.data&&p.data.message)||'Your plan does not include MeetingX rooms.',{plans:true});return}
+        if(p.status!==200||!p.data||!p.data.access){ssDel(JOIN_KEY);setRoomState('UNAVAILABLE','warn');notice('The room could not be opened ('+((p.data&&p.data.message)||('HTTP '+p.status))+'). Try JOIN ROOM again.');return}
+        ssDel(JOIN_KEY);
+        connect(p.data);
+      }catch(e){setRoomState('UNAVAILABLE','warn');notice('The room could not be reached: '+e.message+'. Try JOIN ROOM again.')}
+      finally{joining=false}
+    }
+    function connect(info){
+      setRoomState('CONNECTING');
+      const proto=location.protocol==='https:'?'wss:':'ws:';
+      try{roomSocket=new WebSocket(proto+'//'+location.host+'/api/sight/room/'+encodeURIComponent(roomId))}catch(e){roomSocket=null;setRoomState('UNAVAILABLE','warn');notice('This browser could not open the room connection.');return}
+      roomSocket.onopen=()=>{connected=true;setJoinLabels();setRoomState('CONNECTED','on');notice('You are in room '+roomId+' as '+((info&&info.name)||'you')+'. Share the link (COPY LINK) so others can join.');try{$('room-card').scrollIntoView({behavior:'smooth',block:'nearest'})}catch(e){}};
       roomSocket.onmessage=evt=>{
         let msg;try{msg=JSON.parse(evt.data)}catch(e){return}
-        if(msg.type==='roster'){roomRoster=msg.users;roomYouId=msg.you;renderRoster();appendRoomChat(`You joined room ${roomId}. ${roomRoster.length} participant(s) here now.`)}
+        if(msg.type==='roster'){roomRoster=msg.users||[];roomYouId=msg.you;renderRoster();appendRoomChat(`You joined room ${roomId}. ${roomRoster.length} participant(s) here now.`)}
         else if(msg.type==='join'){roomRoster.push(msg.user);renderRoster();appendRoomChat(`${msg.user.name} joined the room.`)}
-        else if(msg.type==='leave'){roomRoster=roomRoster.filter(u=>u.userId!==msg.userId);renderRoster();appendRoomChat('A participant left the room.')}
+        else if(msg.type==='leave'){const i=roomRoster.findIndex(u=>u.userId===msg.userId&&u.userId!==roomYouId);const gone=i>=0?roomRoster.splice(i,1)[0]:null;renderRoster();appendRoomChat((gone?gone.name:'A participant')+' left the room.')}
         else if(msg.type==='chat'){appendRoomChat(`${msg.user.name}: ${msg.text}`)}
       };
       roomSocket.onclose=evt=>{
-        const wasConnected=$('room-status').textContent==='CONNECTED';
-        $('room-status').textContent='NOT CONNECTED';$('room-btn').classList.remove('active');$('room-btn').textContent='JOIN ROOM';roomSocket=null;roomRoster=[];roomYouId=null;renderRoster();
-        if(!wasConnected&&evt.code!==1000)appendRoomChat('Could not join the live room - this requires a signed-in MeetingX account. Sign in at /login, then reopen this room link.');
+        const was=connected;connected=false;roomSocket=null;roomRoster=[];roomYouId=null;setJoinLabels();renderRoster();
+        setRoomState('NOT CONNECTED',was&&evt.code!==1000?'warn':'');
+        if(was&&evt.code!==1000)notice('The room connection dropped. Press JOIN ROOM to reconnect.');
+        else if(!was)notice('The room did not accept the connection. Press JOIN ROOM to try again.');
+        else notice('You left room '+roomId+'. Press JOIN ROOM to come back.');
       };
-      roomSocket.onerror=()=>{$('room-status').textContent='CONNECTION FAILED'};
+      roomSocket.onerror=()=>{};
     }
     function leaveRoom(){if(roomSocket)roomSocket.close(1000,'user left')}
     function sendRoomChat(){const v=$('room-chat-input').value.trim();if(!v||!roomSocket||roomSocket.readyState!==1)return;roomSocket.send(JSON.stringify({type:'chat',text:v}));$('room-chat-input').value=''}
     $('room-btn').onclick=()=>{if(roomSocket)leaveRoom();else joinRoom()};
+    $('room-join-bar').onclick=()=>{if(roomSocket)leaveRoom();else joinRoom()};
+    $('room-signin').onclick=()=>{ssSet(JOIN_KEY,JSON.stringify({room:roomId,at:Date.now(),tries:0}));window.WeylandPage.signIn('/meetingx?room='+encodeURIComponent(roomId))};
+    $('room-plans').onclick=()=>window.WeylandPage.openApp('/pricing');
     $('room-chat-send').onclick=sendRoomChat;
     $('room-chat-input').addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();sendRoomChat()}});
-    $('copy-room-link').onclick=()=>{const link=location.href;const done=()=>{$('copy-room-link').textContent='COPIED';setTimeout(()=>{$('copy-room-link').textContent='COPY LINK'},1500)};if(navigator.clipboard&&navigator.clipboard.writeText)navigator.clipboard.writeText(link).then(done,done);else done()};
+    $('copy-room-link').onclick=()=>{const link=roomLink();const done=ok=>{$('copy-room-link').textContent=ok?'COPIED':'LINK: '+link;setTimeout(()=>{$('copy-room-link').textContent='COPY LINK'},ok?1500:6000)};if(navigator.clipboard&&navigator.clipboard.writeText)navigator.clipboard.writeText(link).then(()=>done(true),()=>done(false));else done(false)};
+    $('copy-room-link').dataset.link=roomLink();
+    // Came back from an in-place sign-in for this room: join without another click.
+    window.addEventListener('weyland-auth',e=>{if(e.detail&&e.detail.status==='signed-in'&&pendingJoin()&&!roomSocket)joinRoom()});
+    if(pendingJoin())window.WeylandPage.ready.then(()=>joinRoom());
   </script>
 </body>
 </html>
