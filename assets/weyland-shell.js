@@ -8,8 +8,13 @@
  * Contract other code can rely on:
  *   document.documentElement.dataset.weylandAuth = "signed-in" | "signed-out" | "no-account"
  *   document.documentElement.dataset.weylandUser = account email (when signed in)
- *   window.WeylandShell.open("signin" | "account" | "app", { path, continueTo })
+ *   window.WeylandShell.open("signin" | "account" | "app" | "create", { path, continueTo, email })
  *   window.WeylandShell.close(); window.WeylandShell.signOut()   (both resolve; no reloads)
+ *   window.WeylandShell.completeSignup(authforUpgradeResponse, { continueTo })
+ *     -> Promise<state>: after the homepage's create-account dialog upgrades the guest identity at
+ *        AuthFor, this signs the visitor in on the spot (AuthFor session kept like a sign-in,
+ *        POST /api/auth/authfor-exchange creates the WeylandAI account + weyland_session cookie).
+ *   The page provides window.__weylandOpenCreateAccount(continueTo) (its create-account dialog).
  * Needs /assets/authfor-integration-standard.js (AuthForStandard) loaded first.
  */
 (function () {
@@ -26,6 +31,7 @@
   var S = { status: "unknown", user: null, overlay: null, body: null, title: null, chip: null, sdk: null, view: null, appFrame: null };
 
   function lsGet(k) { try { return localStorage.getItem(k); } catch (e) { return null; } }
+  function lsSet(k, v) { try { localStorage.setItem(k, v); } catch (e) {} }
   function lsDel(k) { try { localStorage.removeItem(k); } catch (e) {} }
   function ssGet(k) { try { return sessionStorage.getItem(k); } catch (e) { return null; } }
   function ssSet(k, v) { try { sessionStorage.setItem(k, v); } catch (e) {} }
@@ -189,9 +195,10 @@
 
   function open(view, opts) {
     opts = opts || {};
-    if (view === "signin") return viewSignIn(opts.continueTo || null);
+    if (view === "signin") return viewSignIn(opts.continueTo || null, opts.email || "");
     if (view === "account") return viewAccount();
     if (view === "app") return viewApp(opts.path || "/subx-app");
+    if (view === "create") { if (S.status === "signed-in") return viewAccount(); close(); openCreateAccount(opts.continueTo || null); return Promise.resolve(); }
     return Promise.resolve();
   }
 
@@ -216,10 +223,11 @@
   function showError(box, msg) { box.textContent = msg; box.style.display = "block"; }
 
   // ---------- views ----------
-  function viewSignIn(continueTo) {
+  function viewSignIn(continueTo, prefillEmail) {
     if (S.status === "signed-in") return continueTo ? viewApp(continueTo) : viewAccount();
     var err = errorBox();
     var email = h("input", { id: "weyland-signin-email", type: "email", autocomplete: "email", required: "required", inputmode: "email" });
+    if (prefillEmail) email.value = prefillEmail;
     var pass = h("input", { id: "weyland-signin-password", type: "password", autocomplete: "current-password", required: "required" });
     var code = h("input", { id: "weyland-signin-code", type: "text", inputmode: "numeric", autocomplete: "one-time-code" });
     var codeWrap = h("div", { style: "display:none" }, [h("label", { "for": "weyland-signin-code", text: "Authenticator code" }), code]);
@@ -269,7 +277,10 @@
       form,
       h("p", { style: "margin:18px 0 0" }, [
         "New here? ",
-        h("button", { "class": "wa-link", type: "button", text: "Create a free account", onclick: function () { close(); openCreateAccount(); } }),
+        h("button", { "class": "wa-link", type: "button", text: "Create a free account", onclick: function () {
+          if (typeof window.__weylandOpenCreateAccount !== "function") { showError(err, "Account creation opens from the WeylandAI homepage."); return; }
+          close(); openCreateAccount(continueTo);
+        } }),
         " ",
         h("span", { text: "or close this and paste a spec line to try it with no account." })
       ]),
@@ -338,12 +349,39 @@
     return Promise.resolve();
   }
 
-  function openCreateAccount() {
-    // The homepage's own "make this session permanent" dialog keeps the guest session's history.
-    var cta = document.querySelector(".js-upgrade-cta");
-    if (!cta) return;
-    S.bypass = true;
-    try { cta.click(); } finally { S.bypass = false; }
+  function openCreateAccount(continueTo) {
+    // The homepage's own create-account dialog upgrades the guest identity (keeping its history)
+    // and then calls completeSignup() below; it opens every time it is asked.
+    if (typeof window.__weylandOpenCreateAccount !== "function") return false;
+    return window.__weylandOpenCreateAccount(continueTo || null) !== false;
+  }
+
+  // Signs the visitor in right after the guest identity became a real AuthFor account
+  // (POST /api/auth/ephemeral/upgrade answers like a login: token, user, session_id, refresh_token).
+  // The AuthFor session is kept exactly as a sign-in keeps it; POST /api/auth/authfor-exchange creates
+  // the WeylandAI account (users row, 14-day trial) and the weyland_session cookie; then this page
+  // loads the account, so the chip, every homepage call and every app run as it. Rejects with a
+  // sentence a person can act on.
+  function completeSignup(data, opts) {
+    opts = opts || {};
+    if (!data || !data.token) return Promise.reject(new Error("Your account was created, but no sign-in came back with it. Sign in with your new email and password."));
+    var auth = sdk();
+    if (auth && typeof auth._processAuthResponse === "function") auth._processAuthResponse(data);
+    else {
+      lsSet(TOKEN_KEY, data.token);
+      if (data.session_id) lsSet(SESSION_KEY, data.session_id);
+      if (data.refresh_token) lsSet(REFRESH_KEY, data.refresh_token);
+    }
+    return api("/api/auth/authfor-exchange", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ authfor_token: data.token }) })
+      .then(function (r) {
+        if (!r.ok) throw new Error(((r.data && (r.data.message || r.data.error)) || ("The WeylandAI account could not be set up (" + r.status + ")")) + ". Sign in with your new email and password to finish.");
+        return refreshState();
+      })
+      .then(function () {
+        if (S.status !== "signed-in") throw new Error("Your account exists, but this page could not load it. Sign in with your new email and password.");
+        if (opts.continueTo && opts.continueTo !== "/") viewApp(opts.continueTo);
+        return publicState();
+      });
   }
 
   // ---------- auth state ----------
@@ -431,7 +469,6 @@
 
   // ---------- one click handler for the whole page ----------
   document.addEventListener("click", function (e) {
-    if (S.bypass) return;
     var a = e.target && e.target.closest ? e.target.closest("a,button") : null;
     if (!a || a.closest("#wa-overlay") || a.id === "wa-account-chip") return;
     var href = a.getAttribute("href") || "";
@@ -463,7 +500,8 @@
     else if (S.overlay && S.overlay.classList.contains("is-open")) { S.overlay.classList.remove("is-open"); root.classList.remove("wa-overlay-open"); S.body.textContent = ""; }
   });
 
-  window.WeylandShell = { open: open, close: close, signOut: signOut, refresh: refreshState, state: function () { return { status: S.status, email: S.user && S.user.email || null, view: S.view }; } };
+  function publicState() { return { status: S.status, email: S.user && S.user.email || null, view: S.view }; }
+  window.WeylandShell = { open: open, close: close, signOut: signOut, refresh: refreshState, completeSignup: completeSignup, state: publicState };
   window.WeylandSignIn = window.WeylandShell;
 
   function boot() {

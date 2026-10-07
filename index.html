@@ -60,7 +60,7 @@
     else addEventListener("load", function () { setTimeout(send, 0); }, { once: true });
   })();
   </script>
-  <meta name="description" content="CutsheetX matches every door and hardware spec line to the real manufacturer catalog page, with a citation back to the source. Try it with no account. Part of the WeylandAI suite for commercial subcontractors: bids, takeoffs, submittals, proposals, meetings, and a 3D field twin on one project record.">>
+  <meta name="description" content="CutsheetX matches every door and hardware spec line to the real manufacturer catalog page, with a citation back to the source. Try it with no account. Part of the WeylandAI suite for commercial subcontractors: bids, takeoffs, submittals, proposals, meetings, and a 3D field twin on one project record.">
   <style>
     :root {
       /* Same pairing SightX's own HUD already uses - the card (device) and
@@ -1822,6 +1822,9 @@
       color: var(--muted);
     }
     .upgrade-alt a { color: var(--blue); }
+    #upgrade-form[hidden] { display: none; }
+    .upgrade-done { color: var(--green); font-size: 14px; line-height: 1.6; }
+    .upgrade-error .upgrade-switch { background: none; border: 0; padding: 0; color: var(--blue); text-decoration: underline; cursor: pointer; font: inherit; }
     /* Boot overlay: a brief HUD-calibration flicker before the page
        settles, so the first frame feels authored instead of the page just
        appearing. Pure visual beat, no copy - skipped entirely under
@@ -2874,22 +2877,26 @@
   <!-- Ephemeral-to-permanent upgrade modal: every visitor already has a
        working (if guest-scoped) identity via ephemeralToken() - this is
        the "make it permanent" step, Suno.ai-style, not a gate blocking
-       first use. Returning users with a real account go to the real
-       /login flow instead via the link at the bottom. -->
+       first use. 2026-10-07: on success the visitor is signed in right
+       here, with a WeylandAI account (WeylandShell.completeSignup: AuthFor
+       session + POST /api/auth/authfor-exchange), and this page keeps
+       everything it already shows. Returning users sign in in place via
+       the link at the bottom (the shell's sign-in view). -->
   <div id="upgrade-modal" aria-hidden="true">
     <div class="upgrade-backdrop" data-upgrade-close></div>
     <div class="upgrade-dialog" role="dialog" aria-modal="true" aria-labelledby="upgrade-title">
       <button type="button" class="upgrade-close" data-upgrade-close aria-label="Close">&times;</button>
-      <div id="upgrade-title" class="upgrade-eyebrow">SAVE YOUR SESSION</div>
-      <h3 class="upgrade-h">Make this account permanent.</h3>
-      <p class="upgrade-sub">Your current session carries over &mdash; nothing is lost.</p>
-      <form id="upgrade-form">
+      <div id="upgrade-title" class="upgrade-eyebrow">CREATE YOUR FREE ACCOUNT</div>
+      <h3 class="upgrade-h">Keep going as yourself.</h3>
+      <p class="upgrade-sub">You stay on this page and are signed in as soon as the account exists. Your matches stay where they are.</p>
+      <form id="upgrade-form" novalidate>
         <input type="text" id="upgrade-name" placeholder="Name (optional)" autocomplete="name">
         <input type="email" id="upgrade-email" placeholder="Email" autocomplete="email" required>
-        <input type="password" id="upgrade-password" placeholder="Password" autocomplete="new-password" required minlength="8">
+        <input type="password" id="upgrade-password" placeholder="Password (8 or more characters)" autocomplete="new-password" required minlength="8">
         <button type="submit" class="button primary" id="upgrade-submit">CREATE FREE ACCOUNT</button>
-        <div id="upgrade-error" class="upgrade-error" hidden></div>
+        <div id="upgrade-error" class="upgrade-error" role="alert" hidden></div>
       </form>
+      <div id="upgrade-done" class="upgrade-done" role="status" hidden></div>
       <div class="upgrade-alt" style="margin-bottom:4px">By creating an account you agree to our <a href="https://consenta.cc/policy/weylandai.com/terms" target="_blank" rel="noopener">Terms</a> and <a href="https://consenta.cc/policy/weylandai.com/privacy" target="_blank" rel="noopener">Privacy Policy</a>.</div>
       <div class="upgrade-alt">Already have an account? <a href="/login?redirect=/">Sign in</a></div>
     </div>
@@ -3217,7 +3224,8 @@
         text = "Your dossier holds " + n + " matched line" + (n === 1 ? "" : "s") + (d.proposal ? " and a priced proposal (" + Number(d.proposal.total).toLocaleString(undefined, { style: "currency", currency: "USD" }) + ")" : "") + ", kept in this browser.";
       }
       if (el) el.textContent = text;
-      if (sub) sub.textContent = text ? text.replace("kept in this browser", "create an account to keep it on every device") : "Your current session carries over \u2014 nothing is lost.";
+      // Honest about where the dossier lives: this browser (localStorage), not the account.
+      if (sub) sub.textContent = text ? text.replace(", kept in this browser.", ". It stays on this page, and in this browser, when you create the account; you are signed in as soon as it exists.") : "You stay on this page and are signed in as soon as the account exists. Your matches stay where they are.";
     }
     window.addEventListener("weyland:proposal", function (e) { var d = dossierRead(); d.proposal = e.detail; dossierWrite(d); });
     dossierRender();
@@ -3738,33 +3746,43 @@
       setTimeout(fire, 45000); // never later than 45 s, so SubX is ready even if the visitor never scrolls there
     })();
 
-    // 10. Ephemeral-to-permanent account upgrade modal
+    // 10. Create a free account from the guest session. Every visitor already
+    // has a working guest identity (ephemeralToken()); this makes it a real
+    // account and signs the visitor in on this page (2026-10-07): AuthFor's
+    // ephemeral upgrade, then WeylandShell.completeSignup(), which keeps the
+    // AuthFor session, creates the WeylandAI account (users row, 14-day trial)
+    // and its server session, and shows the account in the chip. Nothing is
+    // reloaded, so the pasted matches stay where they are. The shell's
+    // "Create a free account" opens this dialog every time it is asked (the
+    // old one-account-per-browser early return is gone with its dead key).
     var upgradeModal = document.getElementById("upgrade-modal");
     var upgradeForm = document.getElementById("upgrade-form");
     var upgradeError = document.getElementById("upgrade-error");
     var upgradeSubmit = document.getElementById("upgrade-submit");
-    var ACCOUNT_TOKEN_KEY = "weylandai_account_token_v1";
+    var upgradeDone = document.getElementById("upgrade-done");
+    var upgradeContinueTo = null;
+    try { localStorage.removeItem("weylandai_account_token_v1"); } catch (_) {} // retired: it held a token nothing read
 
-    function openUpgradeModal() {
-      if (!upgradeModal) return;
-      try {
-        if (localStorage.getItem(ACCOUNT_TOKEN_KEY)) return; // already upgraded this browser
-      } catch (_) {}
+    function openUpgradeModal(continueTo) {
+      if (!upgradeModal) return false;
+      upgradeContinueTo = typeof continueTo === "string" ? continueTo : null;
+      if (upgradeForm) upgradeForm.hidden = false;
+      if (upgradeDone) { upgradeDone.hidden = true; upgradeDone.textContent = ""; }
+      if (upgradeError) { upgradeError.hidden = true; upgradeError.textContent = ""; }
+      if (upgradeSubmit) { upgradeSubmit.disabled = false; upgradeSubmit.textContent = "CREATE FREE ACCOUNT"; }
+      dossierRender();
       upgradeModal.classList.add("is-open");
       upgradeModal.setAttribute("aria-hidden", "false");
+      var first = document.getElementById("upgrade-name");
+      if (first) { try { first.focus({ preventScroll: true }); } catch (_) {} }
+      return true;
     }
     function closeUpgradeModal() {
       if (!upgradeModal) return;
       upgradeModal.classList.remove("is-open");
       upgradeModal.setAttribute("aria-hidden", "true");
     }
-
-    document.querySelectorAll(".js-upgrade-cta").forEach(function(el) {
-      el.addEventListener("click", function(e) {
-        e.preventDefault();
-        openUpgradeModal();
-      });
-    });
+    window.__weylandOpenCreateAccount = openUpgradeModal;
     // Prices come from the Stripe SKUs (GET /api/billing/catalog, our own API), never
     // typed into copy: every [data-sku-price] is filled from unit_amount at load. The
     // static text is the pre-fill, so nothing jumps if the request is slow or fails.
@@ -3830,32 +3848,66 @@
       if (e.key === "Escape" && upgradeModal && upgradeModal.classList.contains("is-open")) closeUpgradeModal();
     });
 
-    if (upgradeForm) {
-      upgradeForm.addEventListener("submit", function(e) {
-        e.preventDefault();
-        if (upgradeError) { upgradeError.hidden = true; upgradeError.textContent = ""; }
-        upgradeSubmit.disabled = true;
-        upgradeSubmit.textContent = "CREATING...";
-        var email = document.getElementById("upgrade-email").value.trim();
-        var password = document.getElementById("upgrade-password").value;
-        var name = document.getElementById("upgrade-name").value.trim();
-        ephemeralToken().then(function(token) {
-          return fetch("/api/auth/ephemeral/upgrade", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ token: token, email: email, password: password, name: name || undefined })
+    function upgradeFail(msg, existingEmail) {
+      if (upgradeError) {
+        upgradeError.hidden = false;
+        upgradeError.textContent = msg;
+        if (existingEmail) {
+          var sw = document.createElement("button");
+          sw.type = "button"; sw.className = "upgrade-switch"; sw.textContent = "Sign in instead";
+          sw.addEventListener("click", function () {
+            closeUpgradeModal();
+            if (window.WeylandShell) window.WeylandShell.open("signin", { continueTo: upgradeContinueTo, email: existingEmail });
           });
-        }).then(function(r) {
-          return r.json().then(function(d) { return { ok: r.ok, d: d }; });
-        }).then(function(res) {
-          if (!res.ok) throw new Error((res.d && res.d.error) || "Could not create account.");
-          try { localStorage.setItem(ACCOUNT_TOKEN_KEY, res.d.token); } catch (_) {}
-          upgradeForm.innerHTML = '<div style="color:var(--green);font-size:14px;line-height:1.6">Account created &mdash; your session is now permanent.</div>';
-          setTimeout(closeUpgradeModal, 1400);
-        }).catch(function(err) {
-          if (upgradeError) { upgradeError.hidden = false; upgradeError.textContent = err.message; }
-          upgradeSubmit.disabled = false;
-          upgradeSubmit.textContent = "CREATE FREE ACCOUNT";
+          upgradeError.appendChild(document.createTextNode(" "));
+          upgradeError.appendChild(sw);
+        }
+      }
+      if (upgradeSubmit) { upgradeSubmit.disabled = false; upgradeSubmit.textContent = "CREATE FREE ACCOUNT"; }
+    }
+    function postUpgrade(body, retried) {
+      return ephemeralToken().then(function (token) {
+        return fetch("/api/auth/ephemeral/upgrade", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ token: token, email: body.email, password: body.password, name: body.name || undefined }) });
+      }).then(function (r) {
+        return r.json().catch(function () { return {}; }).then(function (d) { return { ok: r.ok, status: r.status, d: d || {} }; });
+      }).then(function (res) {
+        // The guest token this tab holds can be spent (already upgraded) or gone (expired, or
+        // an account token left in the guest slot): start one fresh guest session and retry.
+        if (!res.ok && !retried && (res.status === 404 || /already upgraded|not found|expired/i.test(String(res.d.error || "")))) {
+          try { sessionStorage.removeItem(EPHEMERAL_TOKEN_KEY); } catch (_) {}
+          return postUpgrade(body, true);
+        }
+        return res;
+      });
+    }
+    if (upgradeForm) {
+      upgradeForm.addEventListener("submit", function (e) {
+        e.preventDefault();
+        if (upgradeSubmit.disabled) return; // one attempt at a time
+        if (upgradeError) { upgradeError.hidden = true; upgradeError.textContent = ""; }
+        var emailEl = document.getElementById("upgrade-email"), passEl = document.getElementById("upgrade-password");
+        var email = emailEl.value.trim(), password = passEl.value, name = document.getElementById("upgrade-name").value.trim();
+        if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) { upgradeFail("Enter the email you will sign in with."); emailEl.focus(); return; }
+        if (password.length < 8) { upgradeFail("Choose a password of 8 or more characters."); passEl.focus(); return; }
+        upgradeSubmit.disabled = true;
+        upgradeSubmit.textContent = "CREATING YOUR ACCOUNT…";
+        postUpgrade({ email: email, password: password, name: name }, false).then(function (res) {
+          if (!res.ok) {
+            var err = String(res.d.error || "");
+            if (/already registered|already exists|user_exists/i.test(err)) return upgradeFail("That email already has an account.", email);
+            if (res.status === 429) return upgradeFail("Too many tries from this connection. Wait a minute, then try again.");
+            return upgradeFail(err ? "Could not create the account: " + err + "." : "Could not create the account (" + res.status + ").");
+          }
+          upgradeSubmit.textContent = "SIGNING YOU IN…";
+          if (!window.WeylandShell || typeof window.WeylandShell.completeSignup !== "function") throw new Error("Your account was created. Sign in with your new email and password.");
+          var continueTo = upgradeContinueTo;
+          return window.WeylandShell.completeSignup(res.d, { continueTo: continueTo }).then(function (st) {
+            upgradeForm.hidden = true;
+            if (upgradeDone) { upgradeDone.hidden = false; upgradeDone.textContent = "Account created. You are signed in as " + ((st && st.email) || email) + "."; }
+            if (continueTo) closeUpgradeModal(); else setTimeout(closeUpgradeModal, 1400);
+          });
+        }).catch(function (err) {
+          upgradeFail((err && err.message) || "Could not create the account.");
         });
       });
     }
@@ -4094,6 +4146,6 @@
   })();
   </script>
 <script src="/assets/authfor-integration-standard.js?v=20261006c"></script>
-<script src="/assets/weyland-shell.js?v=20261006c"></script>
+<script src="/assets/weyland-shell.js?v=20261007a"></script>
 </body>
 </html>
