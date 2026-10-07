@@ -151,6 +151,16 @@ zone_name = "weylandai.com"
 pattern = "weylandai.com/pricing"
 zone_name = "weylandai.com"
 
+# 2026-10-07: an exact pattern does not match the same path with a query
+# string or a trailing slash, so /pricing?ref=ph, /pricing?embed=1 (the
+# overlay) and /pricing/ fell through to weylandai.com/* and the monolith's
+# stale copy (32,814 bytes vs 43,392). Wildcards for /pricing, /subscribe and
+# /wire send every spelling here; src/index.js and routes/wire.js answer the
+# variants and anything else under these prefixes gets the same 404 as before.
+[[routes]]
+pattern = "weylandai.com/pricing*"
+zone_name = "weylandai.com"
+
 # STAGE 2 (added below, live): /login and /api/auth/* - verified via a
 # real fixture users+weyland_sessions round trip against the real shared
 # D1 (temporary rows, deleted immediately after): GET /api/auth/me,
@@ -214,6 +224,10 @@ pattern = "weylandai.com/subscribe"
 zone_name = "weylandai.com"
 
 [[routes]]
+pattern = "weylandai.com/subscribe*"
+zone_name = "weylandai.com"
+
+[[routes]]
 pattern = "weylandai.com/api/billing/*"
 zone_name = "weylandai.com"
 
@@ -252,6 +266,10 @@ zone_name = "weylandai.com"
 # path - deliberately decoupled from that gap.
 [[routes]]
 pattern = "weylandai.com/wire"
+zone_name = "weylandai.com"
+
+[[routes]]
+pattern = "weylandai.com/wire*"
 zone_name = "weylandai.com"
 
 [[routes]]

@@ -83,7 +83,11 @@ export function registerWireRoutes(router) {
     return jsonResponse3({ active });
   });
 
-  router.get("/news", () => new Response(WIRE_PAGE, {
+  // 2026-10-07: every spelling answers with the page itself - /news, /news/,
+  // /wire, /wire/, with any query string (the routes are wildcards now). /wire
+  // used to 301 to /news (dropping ?embed=1) and /wire?embed=1 and /news/
+  // returned 404 JSON, so the overlay's News entry was broken.
+  const servePage = () => new Response(WIRE_PAGE, {
     status: 200,
     headers: {
       "Content-Type": "text/html; charset=utf-8",
@@ -91,9 +95,8 @@ export function registerWireRoutes(router) {
       "X-Weyland-Wire": "weyland-platform-worker",
       "X-Content-Type-Options": "nosniff",
     },
-  }));
-  // Old link kept working for anyone who already bookmarked/shared it.
-  router.get("/wire", () => Response.redirect("https://weylandai.com/news", 301));
+  });
+  for (const path of ["/news", "/news/", "/wire", "/wire/"]) router.get(path, servePage);
 }
 
 const WIRE_PAGE = `<!doctype html>
@@ -102,6 +105,7 @@ const WIRE_PAGE = `<!doctype html>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>WeylandAI WireX</title>
+<link rel="canonical" href="https://weylandai.com/news">
 <meta name="description" content="Live construction-industry headlines from Engineering News-Record and Construction Dive, a deterministic Editor's Briefing that cites its own sources, and WeylandAI's own real, audited price-extraction engineering reports.">
 <style>
   :root {
@@ -265,6 +269,11 @@ const WIRE_PAGE = `<!doctype html>
 
 <script>
 (function () {
+  var embedded = new URLSearchParams(window.location.search).get('embed') === '1' || window.self !== window.top;
+  if (embedded) {
+    var back = document.querySelector('.back-link');
+    if (back) back.style.display = 'none';
+  }
   var d = new Date();
   document.getElementById('dateline-date').textContent = d.toLocaleDateString(undefined, { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
 

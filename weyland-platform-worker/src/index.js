@@ -91,6 +91,16 @@ import { sweepEntitlements } from "./lib/entitlements.js";
 
 const router = new NativeRouter();
 
+// /pricing inside the homepage overlay (?embed=1): the overlay has its own
+// title bar and close, so the page's brand link and site nav are hidden -
+// following them loaded a second homepage inside the frame.
+async function embedPricing(response) {
+  const html = await response.text();
+  const style = "<style>header .brand, header .nav { display: none !important; } header { justify-content: flex-end; }</style>";
+  const headers = new Headers(response.headers);
+  return new Response(html.replace("</head>", style + "</head>"), { status: response.status, headers });
+}
+
 router.get("/health", () => jsonResponse3({
   ok: true,
   worker: "weyland-platform-worker",
@@ -170,9 +180,15 @@ export default {
           console.log("[MASCOM_EDGE delegation failed, falling back to bundled page]", e.message);
         }
       }
+      // The routes for /pricing* and /subscribe* are wildcards (2026-10-07), so
+      // every query-string and trailing-slash spelling arrives here; anything
+      // else under those prefixes falls through to the router's 404, as before.
       const clean = url.pathname.toLowerCase().replace(/^\/|\/$/g, "");
       if (clean === "" || clean === "pricing" || clean === "subscribe") {
         const marketingResponse = SovereignPlatformRoutes.dispatch(url.pathname, isFragmentRequest);
+        if (marketingResponse && clean === "pricing" && !isFragmentRequest && url.searchParams.get("embed") === "1") {
+          return embedPricing(marketingResponse);
+        }
         if (marketingResponse) return marketingResponse;
       }
     }
