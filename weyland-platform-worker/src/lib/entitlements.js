@@ -30,9 +30,10 @@
 // webhook (which does its own read-merge-write of products_enabled) is never
 // overwritten; a lost race is simply retried on the next sync.
 
-import { WEYLAND_PRODUCTS, stripeRequest } from "./stripe-billing.js";
+import { WEYLAND_PRODUCTS, stripeRequest, subscriptionProducts } from "./stripe-billing.js";
 import { EPHEMERAL_TRIAL_PRODUCTS } from "./auth.js";
 import { ensureSubscriptionsTable, listUserSubscriptions, paidFromRows } from "./subscriptions-store.js";
+import { purchasesForUser, latestOffer, heldPurchasesForEmail } from "./purchases-store.js";
 
 export const GUEST_PRODUCTS = Object.freeze([...EPHEMERAL_TRIAL_PRODUCTS]);
 
@@ -151,7 +152,7 @@ export function desiredEntitlements(row, nowMs = Date.now(), purchased = null) {
 
 /** Tiers the customer's live Stripe subscriptions pay for. */
 export async function purchasedFromStripe(env, customerId) {
-  const byPrice = new Map(Object.values(WEYLAND_PRODUCTS).map((p) => [p.priceId, p.tier]));
+  const byPrice = new Map(subscriptionProducts().map(([, p]) => [p.priceId, p.tier]));
   const subs = await stripeRequest(env, "GET", `/subscriptions?customer=${encodeURIComponent(customerId)}&status=all&limit=100`);
   const tiers = new Set();
   let suite = false;
@@ -173,7 +174,10 @@ const ROW_COLUMNS = "id, subscription_tier, subscription_status, products_enable
  * Bring one user's row in line with the rules above. Never throws; returns
  * { userId, changed, reason, row } (row = the row as it now stands).
  */
-export async function syncUserEntitlements(env, userId, { nowMs = Date.now(), row = null } = {}) {
+// allowStripe: only the background sweep may ask Stripe (accounts that bought
+// before weyland_subscriptions existed); a route a visitor waits on never does
+// (2026-10-07: the end of a trial or of the $100 offer is decided from D1 alone).
+export async function syncUserEntitlements(env, userId, { nowMs = Date.now(), row = null, allowStripe = false } = {}) {
   try {
     if (!env?.DB || !userId) return { userId, changed: false, reason: "no-db-or-user", row };
     const current = row || await env.DB.prepare(`SELECT ${ROW_COLUMNS} FROM users WHERE id = ?`).bind(userId).first();
@@ -191,8 +195,8 @@ export async function syncUserEntitlements(env, userId, { nowMs = Date.now(), ro
         if (!plan.changes) return { userId, changed: false, reason: plan.reason, row: current };
         return writePlan(env, userId, current, plan, nowMs);
       }
-      if (!current.stripe_customer_id || !env.STRIPE_SECRET_KEY) {
-        console.warn("[entitlements] trial ended after a purchase but no Stripe customer to check:", userId);
+      if (!allowStripe || !current.stripe_customer_id || !env.STRIPE_SECRET_KEY) {
+        if (allowStripe) console.warn("[entitlements] trial ended after a purchase but no Stripe customer to check:", userId);
         return { userId, changed: false, reason: "trial-ended-purchase-unverified", row: current };
       }
       try {
@@ -334,13 +338,13 @@ export async function sweepEntitlements(env, { nowMs = Date.now(), limit = 200 }
   ).bind(`%,${TRIAL_MARK},%`, ...binds, limit).all();
   const results = [];
   for (const row of rows.results || []) {
-    results.push(await syncUserEntitlements(env, row.id, { nowMs, row }));
+    results.push(await syncUserEntitlements(env, row.id, { nowMs, row, allowStripe: true }));
   }
   return { scanned: results.length, changed: results.filter((r) => r.changed).length, results };
 }
 
-/** What /api/auth/me reports: the plan in words plus the product list. */
-export function describeEntitlements(row, nowMs = Date.now()) {
+/** What /api/auth/me reports: the plan in words plus the product list (and, given, the access block). */
+export function describeEntitlements(row, nowMs = Date.now(), access = undefined) {
   if (!row) return null;
   const enabled = parseProducts(row.products_enabled);
   const end = trialEndMs(row);
@@ -362,7 +366,86 @@ export function describeEntitlements(row, nowMs = Date.now()) {
     products,
     guest_products: [...GUEST_PRODUCTS],
     // A renewal payment failed: paid products are withheld until it is paid
-    // (POST /api/subscription/portal opens Stripe's page to update the card).
-    payment_failing: status === "past_due" || status === "unpaid"
+    // (the card is updated in the page: POST /api/billing/payment-method/setup).
+    payment_failing: status === "past_due" || status === "unpaid",
+    ...(access === undefined ? {} : { access })
   };
+}
+
+// ── access: what the account card, the day-23 prompt and the ended message read ──
+
+export const PROMPT_DAYS = 7;
+const DAY_MS = 24 * 60 * 60 * 1e3;
+const iso = (ms) => new Date(ms).toISOString();
+
+/**
+ * The account's access in the words the shell uses (contract: fc:payments,
+ * plan/evidence/weylandai_contracts.md). Pure: the caller passes the
+ * account's purchases (lib/purchases-store.js), its subscription rows and the
+ * number of purchases held for its email.
+ *   kind: "subscription" (something pays, or the suite was granted by hand),
+ *         "offer" (the $100 first-submittal window is open), "trial" (the
+ *         14-day trial is open), "none".
+ *   prompt_for_plan: an offer or trial window is open, nothing pays, and
+ *         PROMPT_DAYS or fewer are left (the offer: from day 23 of 30).
+ */
+export function describeAccess(row, { purchases = [], subscriptions = [], heldCount = 0, nowMs = Date.now() } = {}) {
+  if (!row) return null;
+  const paid = paidFromRows(subscriptions);
+  const manualSuite = row.subscription_tier === "subconp" && !paid.everSuite;
+  const paying = paid.paying || manualSuite;
+  const enabled = parseProducts(row.products_enabled);
+  const end = trialEndMs(row);
+  const windowOpen = (enabled.includes(TRIAL_MARK) || TRIAL_STATUSES.has(row.subscription_status)) && Number.isFinite(end) && end > nowMs;
+  const offer = latestOffer(purchases);
+  const offerEnd = offer ? Date.parse(offer.access_ends_at || "") : NaN;
+  const offerOpen = windowOpen && Number.isFinite(offerEnd) && offerEnd > nowMs;
+  let kind = "none";
+  if (paying) kind = "subscription";
+  else if (offerOpen) kind = "offer";
+  else if (windowOpen) kind = "trial";
+  const inWindow = kind === "offer" || kind === "trial";
+  const left = inWindow ? end - nowMs : null;
+  let ended = null;
+  if (kind === "none" && Number.isFinite(end) && end <= nowMs) {
+    const offerEnded = Number.isFinite(offerEnd) && offerEnd <= nowMs && Math.abs(offerEnd - end) < DAY_MS;
+    ended = { kind: offerEnded ? "offer" : "trial", at: iso(end) };
+  }
+  return {
+    kind,
+    ends_at: inWindow ? iso(end) : null,
+    days_left: inWindow ? Math.max(0, Math.ceil(left / DAY_MS)) : null,
+    prompt_for_plan: inWindow && left <= PROMPT_DAYS * DAY_MS,
+    prompt_from: inWindow ? iso(end - PROMPT_DAYS * DAY_MS) : null,
+    ended,
+    first_submittal: offer ? {
+      purchased_at: offer.purchased_at || null,
+      granted_at: offer.granted_at || null,
+      access_ends_at: offer.access_ends_at || null,
+      amount_total: offer.amount_total ?? null,
+      currency: offer.currency || null,
+      credit: {
+        total: Number(offer.credits_total) || 0,
+        used: Number(offer.credits_used) || 0,
+        remaining: Math.max(0, (Number(offer.credits_total) || 0) - (Number(offer.credits_used) || 0))
+      }
+    } : null,
+    held_purchases: Number(heldCount) || 0
+  };
+}
+
+/** describeAccess for an account, reading what it needs from D1 (no Stripe). Never throws. */
+export async function loadAccess(env, row, { nowMs = Date.now() } = {}) {
+  if (!row?.id) return null;
+  try {
+    const [purchases, subscriptions, held] = await Promise.all([
+      purchasesForUser(env.DB, row.id),
+      subscriptionRowsFor(env, row.id),
+      row.email ? heldPurchasesForEmail(env.DB, row.email) : Promise.resolve([])
+    ]);
+    return describeAccess(row, { purchases, subscriptions, heldCount: held.length, nowMs });
+  } catch (e) {
+    console.error("[entitlements] access unavailable:", row.id, e.message);
+    return null;
+  }
 }

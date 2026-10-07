@@ -48,7 +48,20 @@
 import { jsonResponse3 } from "../lib/json-response.js";
 import { generateJWT, hashPassword } from "../auth-module.js";
 import { checkRateLimit } from "../lib/rate-limit.js";
-import { newTrialAccount, syncUserEntitlements, describeEntitlements } from "../lib/entitlements.js";
+import { newTrialAccount, syncUserEntitlements, describeEntitlements, loadAccess } from "../lib/entitlements.js";
+import { claimHeldPurchases, claimIdsFromRequest, claimCookie, claimFromCookie } from "../lib/grants.js";
+
+// 2026-10-07 purchase-claim protection: purchases made signed out with the email
+// of an existing account are held (routes/webhooks-subscription.js). A sign-in
+// grants them when AuthFor says the email is proven (a code sign-in or a reset:
+// email_verified, fc:identity) or when this browser is the one that paid (the
+// weyland_claim cookie). Returns { claimed, cookie } (cookie: Set-Cookie or null).
+async function claimOnSignIn(env2, request2, account, emailVerified) {
+  const ids = claimIdsFromRequest(request2);
+  if (!ids.length && !emailVerified) return { claimed: [], cookie: null };
+  const r = await claimHeldPurchases(env2, account, { sessionIds: ids, emailVerified: emailVerified === true });
+  return { claimed: r.claimed, cookie: ids.length ? claimCookie(r.keepIds) : null };
+}
 
 /**
  * @param {object} router
@@ -129,9 +142,13 @@ export function registerAuthSessionRoutes(router, { authenticate, errorResponse 
         "INSERT INTO weyland_sessions (id, user_id, email, mhs_id, player_json, expires_at, created_at) VALUES (?, ?, ?, ?, ?, ?, datetime('now'))"
       ).bind(sessionId, user.id, node.email, node.mhsId || "", JSON.stringify(node), expiresAt).run();
       const cookie = `weyland_session=${sessionId}; Path=/; HttpOnly; Secure; SameSite=Lax; Max-Age=86400`;
-      return new Response(JSON.stringify({ ok: true, node, session_id: sessionId, expires_at: expiresAt }), {
+      const claim = await claimOnSignIn(env2, request2, { id: existingUser.id, email: node.email }, _claims.email_verified === true || _claims.user?.email_verified === true);
+      const headers = new Headers({ "Content-Type": "application/json" });
+      headers.append("Set-Cookie", cookie);
+      if (claim.cookie) headers.append("Set-Cookie", claim.cookie);
+      return new Response(JSON.stringify({ ok: true, node, session_id: sessionId, expires_at: expiresAt, ...(claim.claimed.length ? { claimed: claim.claimed } : {}) }), {
         status: 200,
-        headers: { "Content-Type": "application/json", "Set-Cookie": cookie }
+        headers
       });
     } catch (err) {
       return jsonResponse3({ error: "Session creation failed: " + err.message }, 500);
@@ -263,10 +280,16 @@ export function registerAuthSessionRoutes(router, { authenticate, errorResponse 
         "INSERT INTO weyland_sessions (id, user_id, email, mhs_id, player_json, expires_at, created_at) VALUES (?, ?, ?, ?, ?, ?, datetime('now'))"
       ).bind(sessionId, user.id, user.email, "", JSON.stringify(sessionNode), expiresAt).run();
       const cookie = `weyland_session=${sessionId}; Path=/; HttpOnly; Secure; SameSite=Lax; Max-Age=86400`;
+      const emailVerified = authforUser.email_verified === true || authforUser.user?.email_verified === true;
+      const claim = await claimOnSignIn(env2, request2, { id: user.id, email: user.email }, emailVerified);
+      const headers = new Headers({ "Content-Type": "application/json" });
+      headers.append("Set-Cookie", cookie);
+      if (claim.cookie) headers.append("Set-Cookie", claim.cookie);
       return new Response(JSON.stringify({
         token,
         session_id: sessionId,
         expires_at: expiresAt,
+        ...(claim.claimed.length ? { claimed: claim.claimed } : {}),
         user: {
           id: user.id,
           email: user.email,
@@ -277,7 +300,7 @@ export function registerAuthSessionRoutes(router, { authenticate, errorResponse 
           subscriptionStatus: user.subscription_status,
           trialEndsAt: user.trial_ends_at
         }
-      }), { status: 200, headers: { "Content-Type": "application/json", "Set-Cookie": cookie } });
+      }), { status: 200, headers });
     } catch (error4) {
       return jsonResponse3({ error: "Token exchange failed: " + error4.message }, 500);
     }
@@ -287,6 +310,8 @@ export function registerAuthSessionRoutes(router, { authenticate, errorResponse 
     if (error4)
       return error4;
     try {
+      const pre = await env2.DB.prepare("SELECT id, email FROM users WHERE id = ?").bind(user.userId).first();
+      const claim = pre ? await claimFromCookie(env2, request2, pre) : { claimed: [], cookie: null };
       await syncUserEntitlements(env2, user.userId);
       const userData = await env2.DB.prepare(
         `SELECT id, email, name, company, tenant_id,
@@ -298,10 +323,15 @@ export function registerAuthSessionRoutes(router, { authenticate, errorResponse 
         return errorResponse("NOT_FOUND", "User not found");
       }
       // entitlements: what this account can use right now, as the platform
-      // reports it (plan, trial window, product slugs incl. the guest floor).
-      const entitlements = describeEntitlements(userData);
+      // reports it (plan, trial window, product slugs incl. the guest floor),
+      // and entitlements.access: offer / subscription / trial / none with the
+      // end date, days left and the day-23 prompt (contract fc:payments).
+      const access = await loadAccess(env2, userData);
+      const entitlements = describeEntitlements(userData, Date.now(), access);
       const { products_enabled: _productsEnabled, ...publicUser } = userData;
-      return jsonResponse3({ user: publicUser, entitlements });
+      const headers = { "Content-Type": "application/json" };
+      if (claim.cookie) headers["Set-Cookie"] = claim.cookie;
+      return new Response(JSON.stringify({ user: publicUser, entitlements, ...(claim.claimed.length ? { claimed: claim.claimed } : {}) }), { status: 200, headers });
     } catch (error5) {
       return errorResponse("DATABASE_ERROR", "Failed to fetch user: " + error5.message);
     }

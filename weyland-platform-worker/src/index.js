@@ -41,13 +41,18 @@
 //                                                  users row on first
 //                                                  AuthFor login)
 //   GET       /api/auth/me                      -> routes/auth-session.js
-//   GET       /api/billing/catalog              -> routes/billing.js
-//   POST      /api/billing/checkout/create      -> routes/billing.js
-//                                                  (real env.VENDYAI call)
-//   GET       /api/billing/checkout/status/:id  -> routes/billing.js
+//   GET       /api/billing/catalog              -> routes/billing.js (lib/catalog.js, cached)
+//   POST      /api/billing/checkout/embedded    -> routes/billing.js (Stripe embedded
+//                                                  Checkout in the page; the $100
+//                                                  first-submittal offer and every plan)
+//   GET       /api/billing/checkout/status/:id  -> routes/billing.js (pending / active / held)
+//   POST      /api/billing/claims               -> routes/billing.js (held purchases)
+//   POST      /api/billing/checkout/create      -> 410 since 2026-10-07 (hosted Checkout removed)
+//   GET       /api/billing/plan, POST /api/billing/subscription/cancel|resume,
+//   POST      /api/billing/payment-method/setup|default,
+//   GET       /api/billing/invoices[/:id/pdf]   -> routes/plan.js (plan management in the page)
 //   GET       /api/subscription/status          -> routes/subscription.js
-//   POST      /api/subscription/portal          -> routes/subscription.js
-//                                                  (real env.VENDYAI call)
+//   POST      /api/subscription/portal          -> 410 since 2026-10-07 (Stripe's hosted portal)
 //   POST      /api/webhooks/subscription        -> routes/webhooks-
 //                                                  subscription.js (real
 //                                                  Stripe/vendyai webhook)
@@ -84,6 +89,9 @@ import { registerBillingRoutes } from "./routes/billing.js";
 import { registerSubscriptionRoutes } from "./routes/subscription.js";
 import { registerWebhooksSubscriptionRoutes } from "./routes/webhooks-subscription.js";
 import { registerDemoRoutes } from "./routes/demo.js";
+import { registerPlanRoutes } from "./routes/plan.js";
+import { getCatalog } from "./lib/catalog.js";
+import { withCatalogPrices } from "./lib/pricing-checkout.js";
 import { registerRootRoutes } from "./routes/root.js";
 import { registerWireRoutes } from "./routes/wire.js";
 import { ingestWireNews } from "./lib/wire-tenant.js";
@@ -112,6 +120,7 @@ registerLoginPageRoutes(router);
 registerAuthSessionRoutes(router, { authenticate, errorResponse });
 registerBillingRoutes(router, { WEYLAND_PRODUCTS, CHECKOUT_READY_PRODUCTS, stripeRequest });
 registerSubscriptionRoutes(router, { authenticate, errorResponse });
+registerPlanRoutes(router);
 registerWebhooksSubscriptionRoutes(router, {
   WEYLAND_PRODUCTS,
   WEYLAND_SUBCONP_PRODUCT_ID,
@@ -201,7 +210,13 @@ async function handle(request, env, ctx) {
     // else under those prefixes falls through to the router's 404, as before.
     const clean = url.pathname.toLowerCase().replace(/^\/|\/$/g, "");
     if (clean === "" || clean === "pricing" || clean === "subscribe") {
-      const marketingResponse = SovereignPlatformRoutes.dispatch(url.pathname, isFragmentRequest);
+      let marketingResponse = SovereignPlatformRoutes.dispatch(url.pathname, isFragmentRequest);
+      // /pricing and /subscribe show the catalog's live prices (lib/catalog.js),
+      // so a card never says one price while the payment form charges another.
+      if (marketingResponse && (clean === "pricing" || clean === "subscribe")) {
+        const catalog = await getCatalog(env, ctx).catch((e) => { console.error("[pricing] catalog unavailable:", e.message); return null; });
+        marketingResponse = await withCatalogPrices(marketingResponse, catalog, env);
+      }
       if (marketingResponse && clean === "pricing" && !isFragmentRequest && url.searchParams.get("embed") === "1") {
         return embedPricing(marketingResponse);
       }

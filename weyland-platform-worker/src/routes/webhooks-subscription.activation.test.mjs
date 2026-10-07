@@ -16,6 +16,7 @@ import { randomBytes } from "node:crypto";
 
 import worker from "../index.js";
 import { syncUserEntitlements, GUEST_PRODUCTS, TRIAL_MARK } from "../lib/entitlements.js";
+import { claimHeldPurchases } from "../lib/grants.js";
 import {
   makeEnv, ctx, handle, send, paidSession, forwardCompletionBody, forwardRequest, stripeRequest, nowSec, newId,
   throwawayEmail, installNetwork, restoreNetwork, network, userByEmail, userById, products, paidProducts, count,
@@ -47,7 +48,7 @@ test("new buyer, embedded MeetingX seat, forwarded by vendyai -> account created
 
   // The page polls the checkout status: the session cookie comes back with it.
   const p = await poll(env, session.id);
-  assert.deepEqual(await p.json(), { status: "active", quantity: 1, signed_in: true });
+  assert.deepEqual(await p.json(), { status: "active", quantity: 1, signed_in: true, product_id: "weyland-meetingx-seat", access_ends_at: null });
   const cookie = (p.headers.get("Set-Cookie") || "").match(/weyland_session=([^;]+)/)?.[1];
   const sess = await env.DB.prepare("SELECT * FROM weyland_sessions WHERE user_id = ?").bind(row.id).first();
   assert.equal(cookie, sess.id);
@@ -185,34 +186,50 @@ test("a replay after a cancellation does not re-activate", async () => {
   assert.equal(await gate(env, after.id, "meetingx"), 402);
 });
 
-test("letter case: an account stored lower-case and a Stripe email with capitals -> that account gets the purchase, no second account", async () => {
+test("letter case: an account stored lower-case and a Stripe email with capitals -> that account's purchase (held until claimed), no second account", async () => {
   const env = makeEnv();
   const email = throwawayEmail("case");
   const userId = await insertFreeAccount(env, email);
   const shouted = email.replace("user-sim", "User-Sim").replace("example.com", "Example.COM");
   const session = paidSession({ productId: "weyland-meetingx-seat", email: shouted });
   const r = await send(env, forwardCompletionBody(session));
-  assert.equal(r.body.account, "email");
+  assert.equal(r.body.account, "email_match_held");
+  assert.equal(r.body.held, true);
   const rows = (await env.DB.prepare("SELECT id FROM users").all()).results;
   assert.deepEqual(rows.map((x) => x.id), [userId]);
+  const held = await env.DB.prepare("SELECT status, email FROM weyland_purchases WHERE checkout_session_id = ?").bind(session.id).first();
+  assert.deepEqual({ ...held }, { status: "held", email: email.toLowerCase() });
+  assert.equal(await gate(env, userId, "meetingx"), 402, "not on the account before the claim");
+  // The owner proves the email (a code sign-in): the purchase is theirs.
+  const c = await claimHeldPurchases(env, { id: userId, email }, { emailVerified: true });
+  assert.deepEqual(c.claimed.map((x) => x.session_id), [session.id]);
   assert.equal(await gate(env, userId, "meetingx"), "allowed");
 });
 
-test("someone else's email: an anonymous checkout that types an existing account's email grants the purchase but signs nobody in", async () => {
+test("someone else's email: an anonymous checkout that types an existing account's email is held - nothing granted, nobody signed in", async () => {
   const env = makeEnv();
   const victim = throwawayEmail("owner");
   const userId = await insertFreeAccount(env, victim);
   const session = paidSession({ productId: "weyland-wire-seat", email: victim, amount: 4900 });
   const r = await send(env, forwardCompletionBody(session));
   assert.equal(r.body.signed_in, false);
+  assert.equal(r.body.held, true);
   assert.equal(await count(env, "SELECT COUNT(*) AS n FROM weyland_sessions"), 0, "no session row for the account");
   const p = await poll(env, session.id);
-  assert.deepEqual(await p.json(), { status: "active", quantity: 1, signed_in: false });
-  assert.equal(p.headers.get("Set-Cookie"), null, "no session cookie handed to the paying browser");
-  assert.ok(paidProducts(await userById(env, userId)).includes("wire"), "the purchase is on the account");
+  const body = await p.json();
+  assert.equal(body.status, "held");
+  assert.equal(body.signed_in, false);
+  assert.match(body.email_hint, /^us\*\*\*@example\.com$/);
+  const setCookie = p.headers.get("Set-Cookie") || "";
+  assert.ok(!/weyland_session=/.test(setCookie), "no session cookie handed to the paying browser");
+  assert.match(setCookie, new RegExp("^weyland_claim=" + session.id + ";.*HttpOnly"), "the paying browser holds the claim");
+  assert.ok(!paidProducts(await userById(env, userId)).includes("wire"), "not granted on the email alone");
+  // Its subscription is still tracked (a cancellation before the claim is recorded).
+  const sub = await env.DB.prepare("SELECT user_id, status FROM weyland_subscriptions WHERE subscription_id = ?").bind(session.subscription).first();
+  assert.deepEqual({ ...sub }, { user_id: "held:" + session.id, status: "active" });
 });
 
-test("a checkout of another venture, or for a product not in the catalog, or not a subscription -> nothing written", async () => {
+test("a checkout of another venture, or for a product not in the catalog, or in the wrong mode -> nothing written", async () => {
   const env = makeEnv();
   const email = throwawayEmail("other");
   const other = paidSession({ productId: "weyland-meetingx-seat", email });
@@ -223,7 +240,10 @@ test("a checkout of another venture, or for a product not in the catalog, or not
   assert.equal((await send(env, forwardCompletionBody(unknown))).body.ignored, "unknown_product");
   const oneTime = paidSession({ productId: "weyland-meetingx-seat", email });
   oneTime.mode = "payment";
-  assert.equal((await send(env, forwardCompletionBody(oneTime))).body.ignored, "not_a_subscription");
+  assert.equal((await send(env, forwardCompletionBody(oneTime))).body.ignored, "mode_mismatch", "a plan is never sold as a one-time payment");
+  const setup = paidSession({ productId: "weyland-meetingx-seat", email });
+  setup.mode = "setup";
+  assert.equal((await send(env, forwardCompletionBody(setup))).body.ignored, "not_a_purchase");
   assert.equal(await count(env, "SELECT COUNT(*) AS n FROM users"), 0);
   assert.equal(await count(env, "SELECT COUNT(*) AS n FROM weyland_sessions"), 0);
   assert.equal(await count(env, "SELECT COUNT(*) AS n FROM processed_webhook_events"), 0, "ignored events leave no dedupe row");

@@ -411,20 +411,51 @@ export async function frameInfo(frame) {
 }
 
 /**
+ * The Terms step WeylandCheckout shows before Stripe's form (2026-10-07: the buyer accepts the Terms
+ * of Service and the Privacy Policy in checkout, stored with the purchase). Accepts it the way a
+ * person does - tick the box, press CONTINUE TO PAYMENT - in whichever weylandai.com document shows
+ * it (the page or the overlay). Returns null when no Terms step is on screen, else
+ * { shown, continueDisabledBeforeTick, summary }.
+ */
+export async function acceptCheckoutTerms(page) {
+  for (const f of page.frames()) {
+    let host = "";
+    try { host = new URL(f.url()).host; } catch (e) { continue; }
+    if (/(^|\.)stripe\.com$/.test(host)) continue;
+    const box = f.locator(".wco-terms .wco-agree").first();
+    if (!(await box.count().catch(() => 0))) continue;
+    if (!(await box.isVisible().catch(() => false))) continue;
+    const go = f.locator(".wco-terms .wco-continue").first();
+    const disabledBefore = await go.isDisabled().catch(() => null);
+    const summary = await f.locator(".wco-terms .wco-sum").first().innerText().catch(() => "");
+    // Already ticked: the journey itself is accepting it (it checks the step on its own).
+    if (await box.isChecked().catch(() => false)) return { shown: true, acceptedByJourney: true, summary: summary.replace(/\s+/g, " ").slice(0, 300) };
+    await box.click({ timeout: 5000 }).catch(() => {});
+    await go.click({ timeout: 5000 }).catch(() => {});
+    return { shown: true, continueDisabledBeforeTick: disabledBefore === true, summary: summary.replace(/\s+/g, " ").slice(0, 300) };
+  }
+  return null;
+}
+
+/**
  * Looks for the payment form after a buy button was pressed. "embedded": a stripe.com frame shown
  * inside the weylandai.com page (top document or the overlay), at least 250x200 px and in view.
  * "top-level": the whole page went to checkout.stripe.com (a page hop). Stops as soon as the
- * product and the price are on screen; never touches the form.
+ * product and the price are on screen; never touches the form. The Terms step in front of the form
+ * is accepted on the way (acceptCheckoutTerms) and reported as `terms`.
  */
 export async function findPaymentForm(page, { product, price }, ms = 45000) {
   const end = Date.now() + ms;
   let last = { where: "none" };
+  let terms = null;
   while (Date.now() < end) {
+    if (!terms) terms = await acceptCheckoutTerms(page);
+    last.terms = terms;
     let topHost = "";
     try { topHost = new URL(page.url()).host; } catch (e) { topHost = ""; }
     if (/(^|\.)stripe\.com$/.test(topHost)) {
       const text = await page.evaluate(() => (document.body ? document.body.innerText : "")).catch(() => "");
-      last = { where: "top-level", host: topHost, product: product.test(text), price: price.test(text), text: text.replace(/\s+/g, " ").slice(0, 300) };
+      last = { where: "top-level", host: topHost, product: product.test(text), price: price.test(text), text: text.replace(/\s+/g, " ").slice(0, 300), terms };
       if (last.product && last.price) return last;
     } else {
       const vp = page.viewportSize() || { width: 1280, height: 860 };
@@ -442,7 +473,7 @@ export async function findPaymentForm(page, { product, price }, ms = 45000) {
       }
       if (hosts.length) {
         const text = texts.join("\n");
-        last = { where: "embedded", hosts: [...new Set(hosts)], visible, product: product.test(text), price: price.test(text), text: text.replace(/\s+/g, " ").slice(0, 300) };
+        last = { where: "embedded", hosts: [...new Set(hosts)], visible, product: product.test(text), price: price.test(text), text: text.replace(/\s+/g, " ").slice(0, 300), terms };
         if (visible && last.product && last.price) return last;
       }
     }

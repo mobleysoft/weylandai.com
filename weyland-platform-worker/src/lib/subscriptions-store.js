@@ -15,7 +15,7 @@
 //
 // No outbound call: everything here is D1 and the catalog in stripe-billing.js.
 
-import { WEYLAND_PRODUCTS } from "./stripe-billing.js";
+import { subscriptionProducts } from "./stripe-billing.js";
 
 export const SUBSCRIPTIONS_DDL = [
   `CREATE TABLE IF NOT EXISTS weyland_subscriptions (
@@ -51,7 +51,9 @@ export async function ensureSubscriptionsTable(db) {
   ensured.add(db);
 }
 
-const BY_PRICE = new Map(Object.entries(WEYLAND_PRODUCTS).map(([productId, cfg]) => [cfg.priceId, { productId, tier: cfg.tier }]));
+// Subscription prices only: the one-time first-submittal offer is never a
+// subscription item (it is granted by the payment-mode branch of the webhook).
+const BY_PRICE = new Map(subscriptionProducts().map(([productId, cfg]) => [cfg.priceId, { productId, tier: cfg.tier }]));
 
 /** { productId, tier } for a WeylandAI price id (tier null = the SubConP suite), else null. */
 export function catalogForPrice(priceId) {

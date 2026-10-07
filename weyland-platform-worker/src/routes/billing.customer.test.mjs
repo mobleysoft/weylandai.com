@@ -5,6 +5,7 @@
 // billing portal shows every subscription the account pays for; if Stripe
 // refuses the customer, the checkout goes ahead by email as before. The
 // subscription carries the account id (user_id) for the lifecycle webhooks.
+// (2026-10-07: every request carries terms_accepted:true, which checkout now requires.)
 import test from "node:test";
 import assert from "node:assert/strict";
 import { randomUUID } from "node:crypto";
@@ -46,7 +47,7 @@ function stubStripe({ refuseCustomer = false } = {}) {
 }
 
 const embedded = (env, cookie) => worker.fetch(new Request("https://weylandai.com/api/billing/checkout/embedded", {
-  method: "POST", headers: { "Content-Type": "application/json", Cookie: cookie }, body: JSON.stringify({ product_id: "weyland-meetingx-seat" })
+  method: "POST", headers: { "Content-Type": "application/json", Cookie: cookie }, body: JSON.stringify({ product_id: "weyland-meetingx-seat", terms_accepted: true })
 }), { ...env, STRIPE_PUBLISHABLE_KEY: "pk_test_dummy" }, ctx);
 
 test("an account with a Stripe customer buys under that customer, and the subscription names the account", async () => {

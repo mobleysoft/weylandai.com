@@ -14,6 +14,9 @@
 //   - since 2026-10-07 (afce86f, 4177fed) the pricing page and /subscribe open Stripe's embedded
 //     form in the page: /pricing ACTIVATE STANDALONE SEAT (HuntX) and DEPLOY SUITE (SubConP), and
 //     /subscribe CONTINUE TO SECURE CHECKOUT (SubConP seat).
+//   - since 2026-10-07: /pricing START WITH MY FIRST SUBMITTAL (the $100 one-time offer), and in
+//     every case the Terms step in front of Stripe's form (the box must be ticked before CONTINUE
+//     TO PAYMENT works; the kit ticks it the way a person does).
 // Each press creates one live Checkout Session that is left to expire (the documented side
 // effect). No account.
 //
@@ -31,7 +34,8 @@ const CASES = [
   { label: "pricing page in the overlay, ACTIVATE STANDALONE SEAT (HuntX)", start: "home", overlay: "/pricing", frameSelector: "#btnBuyHunt", ...HUNTX },
   { label: "pricing page, ACTIVATE STANDALONE SEAT (HuntX)", start: "/pricing", selector: "#btnBuyHunt", ...HUNTX },
   { label: "pricing page, DEPLOY SUITE (SubConP)", start: "/pricing", selector: "#btnHeaderDeploy", ...SUITE },
-  { label: "/subscribe CONTINUE TO SECURE CHECKOUT (SubConP seat)", start: "/subscribe", selector: "button[data-checkout]", ...SUITE }
+  { label: "/subscribe CONTINUE TO SECURE CHECKOUT (SubConP seat)", start: "/subscribe", selector: "button[data-checkout]", ...SUITE },
+  { label: "pricing page, START WITH MY FIRST SUBMITTAL ($100 offer)", start: "/pricing", selector: "#btnBuyOffer", product: /First Submittal/i, price: /\$100(\.00)?\b/ }
 ];
 
 // The embedded form's own modal (WeylandCheckout, /api/billing/embedded-checkout.js) in a frame.
@@ -79,6 +83,7 @@ await J.run(async () => {
     J.check(c.label + ": the payment form opens inside the page (no hop to checkout.stripe.com)", form.where === "embedded" && form.visible && ps.sameDocument && ps.onSite && popups === 0,
       { where: form.where, visible: form.visible, hosts: form.hosts, newTabs: popups, ...ps });
     J.check(c.label + ": the payment form shows the right product and price", !!form.product && !!form.price, { where: form.where, text: form.text });
+    J.check(c.label + ": the Terms are accepted in the page before the payment form (CONTINUE waits for the box)", !!form.terms && form.terms.shown === true && form.terms.continueDisabledBeforeTick === true, form.terms || null);
     if (form.where === "embedded" && ps.sameDocument) {
       // Closing the form (its Close button; nothing typed, nothing paid) leaves the visitor where they were.
       const closeBtn = surface.locator(".wco-backdrop .wco-close").first();

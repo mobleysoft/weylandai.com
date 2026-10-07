@@ -54,10 +54,28 @@
 export const WEYLAND_SUBCONP_PRICE_ID = "price_1UAh7DLWTxUJi5AVaNKljKc7";
 export const WEYLAND_SUBCONP_PRODUCT_ID = "weyland-subconp-seat";
 
+// The first-submittal offer (John, 2026-10-07): $100 one-time buys the first
+// submittal and 30 days of every product. No automatic charge, ever: when the
+// 30 days end the account keeps the free tools until its owner chooses a plan.
+// Stripe product prod_VOlLa2fvWDim0E "WeylandAI First Submittal (includes 30
+// days of every product)", price below ($100.00 USD one-time, lookup_key
+// weyland-first-submittal-100), created 2026-10-07 in the live catalog.
+// kind "offer": sold in Checkout's payment mode, granted by the payment webhook
+// (routes/webhooks-subscription.js) for OFFER_ACCESS_DAYS from the grant.
+export const WEYLAND_OFFER_PRODUCT_ID = "weyland-first-submittal";
+export const WEYLAND_OFFER_PRICE_ID = "price_1UNxocLWTxUJi5AVylLigOvr";
+export const OFFER_ACCESS_DAYS = 30;
+export const OFFER_SUBMITTAL_CREDITS = 1;
+export const OFFER_UNIT_AMOUNT = 10000;
+
 // A la carte products - real Stripe Products/Prices, matching the prices
 // already published on /pricing. tier: the products_enabled slug granted
-// by requireProductAccess() on a successful purchase.
+// by requireProductAccess() on a successful purchase (null: the SubConP
+// suite, checked by subscription_tier). kind "offer": a one-time purchase
+// that is not a subscription (isOfferProduct below); every other entry is a
+// monthly subscription price.
 export const WEYLAND_PRODUCTS = {
+  [WEYLAND_OFFER_PRODUCT_ID]: { priceId: WEYLAND_OFFER_PRICE_ID, tier: null, kind: "offer", mode: "payment" },
   [WEYLAND_SUBCONP_PRODUCT_ID]: { priceId: WEYLAND_SUBCONP_PRICE_ID, tier: null },
   "weyland-cutsheetx-seat": { priceId: "price_1UAqxkLWTxUJi5AVk2l5N4Cg", tier: "cutsheetx" },
   "weyland-takeoffx-seat": { priceId: "price_1UAqxsLWTxUJi5AV6aJjh5Nc", tier: "takeoffx" },
@@ -128,6 +146,7 @@ export const WEYLAND_PRODUCTS = {
 // pay for something that doesn't exist via a different entry point (an old
 // link, a future page reusing this catalog, a direct API call).
 export const CHECKOUT_READY_PRODUCTS = new Set([
+  WEYLAND_OFFER_PRODUCT_ID,
   WEYLAND_SUBCONP_PRODUCT_ID,
   "weyland-cutsheetx-seat",
   "weyland-takeoffx-seat",
@@ -183,6 +202,16 @@ export const CHECKOUT_READY_PRODUCTS = new Set([
   // teaser price with no feature behind it.
   "weyland-wire-seat"
 ]);
+
+/** The one-time first-submittal offer (not a subscription). */
+export function isOfferProduct(productId) {
+  return WEYLAND_PRODUCTS[productId]?.kind === "offer";
+}
+
+/** Catalog entries that are monthly subscriptions (everything but the offer). */
+export function subscriptionProducts() {
+  return Object.entries(WEYLAND_PRODUCTS).filter(([, cfg]) => cfg.kind !== "offer");
+}
 
 // CompX reuses HuntX's own real data source directly - the TXDOT bid
 // tabulation open-data set (de7b-7dna), not a new API. This is a *different*

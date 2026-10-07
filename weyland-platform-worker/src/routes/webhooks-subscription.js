@@ -18,16 +18,21 @@
 // created and are handled too.
 //
 // Events acted on:
-//   checkout.session.completed (metadata.venture_id "weylandai", subscription
-//     mode, a catalog product_id) - the account is found (the signed-in buyer
-//     by client_reference_id, else the email, case-insensitively) or created,
-//     the subscription is recorded (lib/subscriptions-store.js) and the users
-//     row granted what it pays for (lib/entitlements.js). The browser that paid
-//     is signed in (session cookie handed over by GET
+//   checkout.session.completed (metadata.venture_id "weylandai", a catalog
+//     product_id; subscription mode for a plan, payment mode for the $100
+//     first-submittal offer) - the account is found (the signed-in buyer by
+//     client_reference_id, else the email, case-insensitively) or created, the
+//     purchase is recorded (lib/purchases-store.js, with the Terms the buyer
+//     accepted) and granted: a plan through its subscription row
+//     (lib/subscriptions-store.js, lib/entitlements.js), the offer as 30 days of
+//     every product and the first-submittal credit (lib/grants.js). The browser
+//     that paid is signed in (session cookie handed over by GET
 //     /api/billing/checkout/status/:id) only when this checkout created the
-//     account or was made by that signed-in account; a checkout that merely
-//     typed an existing account's email grants the purchase but signs nobody in
-//     (it used to: paying with someone else's email opened their account).
+//     account or was made by that signed-in account.
+//     Purchase-claim protection (2026-10-07): a checkout made signed out with an
+//     existing account's email is HELD, not granted - granted when the email is
+//     proven (a code sign-in) or that account signs in on the browser that paid
+//     (lib/grants.js). It used to be granted to whoever owned the email.
 //   customer.subscription.updated / customer.subscription.deleted /
 //   invoice.payment_failed / invoice.paid - the subscription's state is
 //   recorded if newer than what is known, then the users row is recomputed:
@@ -47,6 +52,8 @@ import {
   ensureSubscriptionsTable, factsFromSubscription, factsFromInvoice,
   isWeylandSubscription, getSubscription, upsertSubscription
 } from "../lib/subscriptions-store.js";
+import { recordPurchase, markGranted, maskEmail, HELD_USER_PREFIX, PURCHASE_KINDS } from "../lib/purchases-store.js";
+import { grantPurchase } from "../lib/grants.js";
 
 export const VENTURE_ID = "weylandai";
 export const LIFECYCLE_EVENTS = new Set([
@@ -108,7 +115,8 @@ export function registerWebhooksSubscriptionRoutes(router, { WEYLAND_PRODUCTS, v
 
       if (eventType === COMPLETED) {
         if (obj.metadata?.venture_id !== VENTURE_ID) return ignored("other_venture");
-        if (obj.mode !== "subscription") return ignored("not_a_subscription");
+        // subscription: a monthly plan; payment: the one-time $100 first-submittal offer.
+        if (obj.mode !== "subscription" && obj.mode !== "payment") return ignored("not_a_purchase");
       } else if (!LIFECYCLE_EVENTS.has(eventType)) {
         return ignored("unhandled_type");
       }
@@ -193,6 +201,16 @@ async function registerAuthFor(email, name) {
   return null;
 }
 
+// Stripe's checkout session payment states that mean the money is in.
+const SETTLED = new Set(["paid", "no_payment_required"]);
+// Checkout status kept for the paying browser's poll (GET /api/billing/checkout/status/:id).
+const STATUS_TTL_SECONDS = 86400;
+
+async function putCheckoutStatus(env2, sessionId, value) {
+  if (!env2.CACHE) return;
+  await env2.CACHE.put(`checkout_status:${sessionId}`, JSON.stringify(value), { expirationTtl: STATUS_TTL_SECONDS });
+}
+
 async function provisionCheckout(env2, event, obj, WEYLAND_PRODUCTS) {
   const productId = obj.metadata?.product_id;
   const purchased = productId ? WEYLAND_PRODUCTS[productId] : null;
@@ -202,8 +220,21 @@ async function provisionCheckout(env2, event, obj, WEYLAND_PRODUCTS) {
     console.error(`[Webhook] checkout ${obj.id} has no catalog product_id (${productId || "none"}) - nothing granted`);
     return { ignored: "unknown_product" };
   }
+  // The offer is sold only as a one-time payment, every plan only as a subscription.
+  const isOffer = purchased.kind === "offer";
+  if (isOffer !== (obj.mode === "payment")) {
+    console.error(`[Webhook] checkout ${obj.id}: ${productId} in ${obj.mode} mode - nothing granted`);
+    return { ignored: "mode_mismatch" };
+  }
+  // vendyai's forward carries no payment_status; a Stripe-signed event does. The
+  // offer's sessions take cards only, so a finished session means the money is in;
+  // any other state waits.
+  if (isOffer && obj.payment_status && !SETTLED.has(obj.payment_status)) {
+    console.warn(`[Webhook] offer checkout ${obj.id} finished with payment_status ${obj.payment_status} - not granted`);
+    return { ignored: "payment_not_settled" };
+  }
   const email = String(obj.customer_details?.email || obj.customer_email || "").trim().toLowerCase();
-  const quantity = Math.max(1, Number.parseInt(obj.metadata?.seats, 10) || 1);
+  const quantity = isOffer ? 1 : Math.max(1, Number.parseInt(obj.metadata?.seats, 10) || 1);
   const name = obj.customer_details?.name || email;
   const now = new Date().toISOString();
   let { row: account, matchedBy } = await findAccount(env2, obj, email);
@@ -224,6 +255,46 @@ async function provisionCheckout(env2, event, obj, WEYLAND_PRODUCTS) {
       if (matchedBy === "email") matchedBy = "created";
     }
   }
+
+  const subscriptionId = typeof obj.subscription === "string" ? obj.subscription : obj.subscription?.id || null;
+  const purchaseRow = {
+    checkout_session_id: String(obj.id),
+    kind: isOffer ? PURCHASE_KINDS.OFFER : PURCHASE_KINDS.SUBSCRIPTION,
+    product_id: productId,
+    email: email || (account?.email ? String(account.email).toLowerCase() : null),
+    customer_id: obj.customer || null,
+    subscription_id: subscriptionId,
+    payment_intent_id: typeof obj.payment_intent === "string" ? obj.payment_intent : obj.payment_intent?.id || null,
+    amount_total: Number.isFinite(Number(obj.amount_total)) && obj.amount_total !== null ? Number(obj.amount_total) : null,
+    currency: obj.currency || null,
+    quantity,
+    terms_url: obj.metadata?.terms_url || null,
+    terms_accepted_at: obj.metadata?.terms_accepted_at || null,
+    purchased_at: new Date(eventTime(event) * 1000).toISOString()
+  };
+
+  // Purchase-claim protection (2026-10-07): a purchase made signed out with an
+  // email that belongs to an existing account is held, not granted to it. It is
+  // granted when that email is proven (a code sign-in) or that account signs in
+  // on the browser that paid (lib/grants.js claimHeldPurchases).
+  if (account && matchedBy === "email") {
+    const { row: held } = await recordPurchase(env2.DB, { ...purchaseRow, status: "held", user_id: null });
+    if (held?.status === "held" && !isOffer && subscriptionId) {
+      // Its cancellations and failed payments are still recorded while it waits.
+      const facts = {
+        subscription_id: subscriptionId, customer_id: obj.customer || null, status: "active", venture_id: VENTURE_ID,
+        product_ids: [productId], tiers: purchased.tier ? [purchased.tier] : [], suite: purchased.tier === null, seats: quantity, matched: true
+      };
+      await upsertSubscription(env2.DB, facts, { userId: HELD_USER_PREFIX + obj.id, eventAt: eventTime(event), eventType: COMPLETED });
+    }
+    const isHeld = held?.status !== "granted";
+    await putCheckoutStatus(env2, obj.id, isHeld
+      ? { status: "held", quantity, product_id: productId, email_hint: maskEmail(email), session_id: null }
+      : { status: "active", quantity, product_id: productId, session_id: null, access_ends_at: held?.access_ends_at || null });
+    console.log(`[Webhook] Checkout ${obj.id}: ${productId} x${quantity} held for an existing account's email (granted on a code sign-in or that account signing in on the paying browser)`);
+    return { provisioned: false, held: isHeld, account: "email_match_held", signed_in: false };
+  }
+
   const sessionRow = (userId, authforSession) => env2.DB.prepare(
     "INSERT INTO weyland_sessions (id, user_id, email, player_json, expires_at) VALUES (?, ?, ?, ?, ?)"
   ).bind(sessionId, userId, account?.email || email, JSON.stringify({
@@ -250,7 +321,9 @@ async function provisionCheckout(env2, event, obj, WEYLAND_PRODUCTS) {
     account = { id: userId, email };
     matchedBy = "created";
   } else {
-    if (obj.customer) {
+    // A plan bought by this account makes its customer the account's customer
+    // (the offer only fills it in when there is none: lib/grants.js).
+    if (obj.customer && !isOffer) {
       await env2.DB.prepare("UPDATE users SET stripe_customer_id = ?, updated_at = ? WHERE id = ?").bind(obj.customer, now, account.id).run();
     }
     if (matchedBy === "signed_in_buyer" && !sessionId) {
@@ -259,11 +332,24 @@ async function provisionCheckout(env2, event, obj, WEYLAND_PRODUCTS) {
     }
   }
 
-  // The grant: recorded against the subscription when its id is known (every
-  // event since 2026-10-07), so later cancellations and failures can take it back.
-  const subscriptionId = typeof obj.subscription === "string" ? obj.subscription : obj.subscription?.id || null;
   let grant;
-  if (subscriptionId) {
+  let accessEndsAt = null;
+  if (isOffer) {
+    // The $100 first-submittal offer: the whole suite for 30 days from now and
+    // the first-submittal credit (lib/grants.js). Recorded 'pending' first, so a
+    // retry after a failure in between grants it instead of finding it done.
+    const { row: rec } = await recordPurchase(env2.DB, { ...purchaseRow, status: "pending", user_id: account.id });
+    if (rec.status === "granted") {
+      accessEndsAt = rec.access_ends_at;
+      grant = { subscription: "none", entitlements: "already-granted", access_ends_at: accessEndsAt };
+    } else {
+      const g = await grantPurchase(env2, rec, account.id, { claimMethod: matchedBy });
+      accessEndsAt = g.accessEndsAt;
+      grant = { subscription: "none", entitlements: "offer-window", access_ends_at: accessEndsAt };
+    }
+  } else if (subscriptionId) {
+    // The grant: recorded against the subscription, so later cancellations and
+    // failures can take it back.
     const facts = {
       subscription_id: subscriptionId,
       customer_id: obj.customer || null,
@@ -278,6 +364,8 @@ async function provisionCheckout(env2, event, obj, WEYLAND_PRODUCTS) {
     const up = await upsertSubscription(env2.DB, facts, { userId: account.id, eventAt: eventTime(event), eventType: COMPLETED });
     const applied = await applySubscriptionState(env2, account.id);
     grant = { subscription: up.reason, entitlements: applied.reason };
+    const { row: rec } = await recordPurchase(env2.DB, { ...purchaseRow, status: "pending", user_id: account.id });
+    if (rec.status !== "granted") await markGranted(env2.DB, obj.id, { userId: account.id, grantedAt: now, claimMethod: matchedBy, from: rec.status });
   } else {
     // A forward without the subscription id (vendyai before 2026-10-07): grant directly, as before.
     const cur = await env2.DB.prepare(`SELECT ${USER_COLUMNS} FROM users WHERE id = ?`).bind(account.id).first();
@@ -288,16 +376,17 @@ async function provisionCheckout(env2, event, obj, WEYLAND_PRODUCTS) {
       "UPDATE users SET subscription_status = 'active', subscription_tier = ?, products_enabled = ?, submittals_limit = ?, updated_at = ? WHERE id = ?"
     ).bind(tier, products, paidSubmittalsLimit(cur.submittals_limit, quantity), now, account.id).run();
     grant = { subscription: "unknown-id", entitlements: "granted" };
+    const { row: rec } = await recordPurchase(env2.DB, { ...purchaseRow, status: "pending", user_id: account.id });
+    if (rec.status !== "granted") await markGranted(env2.DB, obj.id, { userId: account.id, grantedAt: now, claimMethod: matchedBy, from: rec.status });
   }
 
   // Signing the paying browser in (the session made above): only for an account
   // this checkout created or the signed-in account that started it.
   const handOff = (matchedBy === "created" || matchedBy === "signed_in_buyer") && !!sessionId;
-  if (env2.CACHE) {
-    await env2.CACHE.put(`checkout_status:${obj.id}`, JSON.stringify(
-      handOff ? { status: "active", quantity, session_id: sessionId } : { status: "active", quantity, session_id: null, sign_in: "required" }
-    ), { expirationTtl: 3600 });
-  }
+  await putCheckoutStatus(env2, obj.id, {
+    status: "active", quantity, product_id: productId, access_ends_at: accessEndsAt,
+    ...(handOff ? { session_id: sessionId } : { session_id: null, sign_in: "required" })
+  });
   console.log(`[Webhook] Checkout ${obj.id}: ${productId} x${quantity} for user ${account.id} (${matchedBy}); ${grant.subscription}/${grant.entitlements}`);
   return { provisioned: true, account: matchedBy, signed_in: handOff, ...grant };
 }

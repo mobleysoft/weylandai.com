@@ -310,4 +310,11 @@ zone_name = "weylandai.com"
 # Read from the account's own hosted Checkout page for this pass; if the
 # account's API keys are ever rolled, update it here.
 [vars]
+# TERMS_URL / PRIVACY_URL (2026-10-07): the Terms of Service and Privacy Policy a
+# buyer accepts in checkout (stored with the purchase) and /pricing and /subscribe
+# link. Published by fc:ops (plan/evidence/weylandai_contracts.md); the consenta.cc
+# addresses carry the same text until https://weylandai.com/terms and /privacy are
+# live. Only https URLs on weylandai.com or consenta.cc are used (lib/legal.js).
+TERMS_URL = "https://consenta.cc/policy/weylandai.com/terms"
+PRIVACY_URL = "https://consenta.cc/policy/weylandai.com/privacy"
 STRIPE_PUBLISHABLE_KEY = "pk_live_51QSK8LLWTxUJi5AV3h9n8yTt8upsRRZVDWKKLRy8XLQEGosWsRCIpqxolyN3cii4EliBIQML39fEcdCEdQQg5sov00nxpPW5WG"
