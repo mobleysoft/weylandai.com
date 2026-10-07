@@ -222,12 +222,14 @@ try {
     const t = err && err.offsetParent !== null && err.style.display !== "none" ? err.textContent.trim() : "";
     return !!t && !/taking longer than it should/i.test(t);
   }, null, { timeout: 90000 }).catch(() => {});
-  // After sign-in the shell continues to the redirect target in the overlay.
-  await p2.waitForFunction(() => location.pathname === "/subx-app" && window.WeylandShell && window.WeylandShell.state().view === "app", null, { timeout: 10000 }).catch(() => {});
+  // After sign-in the shell continues to the redirect target in the overlay. The address is the
+  // homepage carrying the open app as its fragment (/#/subx-app, so a reload comes back to it inside
+  // the shell); the app's own /subx-app would load the standalone page on a reload.
+  await p2.waitForFunction(() => location.pathname === "/" && /^#\/subx-app([?#]|$)/.test(location.hash) && window.WeylandShell && window.WeylandShell.state().view === "app", null, { timeout: 10000 }).catch(() => {});
   await p2.waitForTimeout(1500);
-  const b = await p2.evaluate(() => ({ path: location.pathname, view: window.WeylandShell ? window.WeylandShell.state().view : null,
+  const b = await p2.evaluate(() => ({ path: location.pathname, hash: location.hash, view: window.WeylandShell ? window.WeylandShell.state().view : null,
     error: ((document.querySelector("#wa-overlay .wa-error") || {}).textContent || "").trim(), auth: document.documentElement.dataset.weylandAuth }));
-  check("/login continues to its target inside the overlay", b.path === "/subx-app" && b.view === "app", JSON.stringify(b) + " sign-in form renders=" + renders + " api=" + apiLog.join(" | "));
+  check("/login continues to its target inside the overlay", b.path === "/" && /^#\/subx-app([?#]|$)/.test(b.hash) && b.view === "app", JSON.stringify(b) + " sign-in form renders=" + renders + " api=" + apiLog.join(" | "));
   const sv3 = await serverView(ctx2);
   check("/login sign-in also creates the server session", sv3.cookie && sv3.valid, JSON.stringify(sv3));
   await settleClones();

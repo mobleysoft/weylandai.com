@@ -23,6 +23,12 @@
  *   out of view now": the homepage sets it while its dossier is lowered).
  *   Signed in also covers a weyland_session cookie without an AuthFor token (a purchase made
  *   without signing in signs the buyer in that way).
+ *   Address of an open app: this page's own address with the app's path as its fragment, #<path>
+ *   (the homepage with the Finder open is /#/find; a MeetingX room, /#/meetingx?room=ab12). A
+ *   reload, a shared link or a typed address opens that app again over this page; Back closes it
+ *   (or returns to the view before it) and Forward opens it again. The app's own address (/find)
+ *   never goes into the address bar: it serves the standalone page, which stays as it is for
+ *   visitors who arrive on it from outside.
  * Needs /assets/authfor-integration-standard.js (AuthForStandard) loaded first.
  */
 (function () {
@@ -41,13 +47,54 @@
   var CANON = { "/sightx": "/sightx/", "/wire": "/news" };
   function appKey(path) { return String(path || "").split("#")[0].split("?")[0].replace(/\/+$/, "") || "/"; }
   function canonicalApp(path) {
-    var p = String(path || "").split("#")[0];
+    var full = String(path || ""), at = full.indexOf("#");
+    var p = at >= 0 ? full.slice(0, at) : full, hash = at >= 0 ? full.slice(at) : "";
     var q = p.indexOf("?");
     var key = appKey(p);
-    return (CANON[key] || key) + (q >= 0 ? p.slice(q) : "");
+    return (CANON[key] || key) + (q >= 0 ? p.slice(q) : "") + hash;
+  }
+  function appName(p) { return APPS[appKey(p)] || APPS["/" + String(p || "").split("#")[0].split("?")[0].split("/")[1]] || "WeylandAI"; }
+  function withEmbed(p) {
+    var at = p.indexOf("#"), head = at >= 0 ? p.slice(0, at) : p, hash = at >= 0 ? p.slice(at) : "";
+    return head + (head.indexOf("?") >= 0 ? "&" : "?") + "embed=1" + hash;
   }
   var root = document.documentElement;
-  var S = { status: "unknown", user: null, overlay: null, body: null, title: null, chip: null, sdk: null, view: null, appFrame: null };
+  var S = { status: "unknown", user: null, overlay: null, body: null, title: null, chip: null, sdk: null, view: null, appFrame: null, stepping: null, afterStep: [] };
+
+  // ---------- the address of an open view ----------
+  // An app open in the overlay is written into this page's own address as a fragment, #<app path>,
+  // so a reload, a shared link or a typed address loads this same page and boot() opens the app
+  // over it again. Not the app's own address (/find): that serves the standalone page, without
+  // the shell. Not ?app= either: "/" with a query string is answered by the old site worker's
+  // catch-all instead of the platform worker, and a fragment never reaches a server.
+  // History entries the shell writes carry what Back, Forward and a reload need: wa (the view),
+  // path, base (the address Close returns to), waUrl (the entry's own address), waDoc (pushed by
+  // this document), waDepth (views above the base), waStep (history.length right after the push)
+  // and waContig (only this document's own views between the entry and the base).
+  var DOC_ID = Math.random().toString(36).slice(2) + Date.now().toString(36);
+  function isAppHash(hash) { return /^#\//.test(hash || ""); }
+  // This page's address without the open view: where closing it returns to.
+  function baseAddress() {
+    if (location.pathname === "/login") return "/";
+    return location.pathname + location.search + (isAppHash(location.hash) ? "" : location.hash);
+  }
+  function addressOf(base, appPath) { return String(base || "/").split("#")[0] + "#" + appPath; }
+  function dropParam(search, name) {
+    var kept = String(search || "").replace(/^\?/, "").split("&").filter(function (kv) { return kv && kv.split("=")[0] !== name; });
+    return kept.length ? "?" + kept.join("&") : "";
+  }
+  // A page an app view may show: this origin, under one of the apps' own paths (the overlay's
+  // ?embed=1 dropped). Anything else (another site, an API route, the homepage) is refused.
+  function appPathOf(p) {
+    p = String(p || "");
+    if (p.charAt(0) !== "/" || p.charAt(1) === "/" || p.charAt(1) === "\\") return null;
+    var u;
+    try { u = new URL(p, location.origin); } catch (e) { return null; }
+    if (u.origin !== location.origin || !APPS["/" + u.pathname.split("/")[1]]) return null;
+    return u.pathname + dropParam(u.search, "embed") + u.hash;
+  }
+  function appFromAddress() { return isAppHash(location.hash) ? appPathOf(location.hash.slice(1)) : null; }
+  function copyState(st) { var o = {}; if (st && typeof st === "object") for (var k in st) o[k] = st[k]; return o; }
 
   function lsGet(k) { try { return localStorage.getItem(k); } catch (e) { return null; } }
   function lsSet(k, v) { try { localStorage.setItem(k, v); } catch (e) {} }
@@ -207,16 +254,16 @@
     S.body = h("div", { "class": "wa-body" });
     S.overlay = h("div", { id: "wa-overlay", role: "dialog", "aria-modal": "true", "aria-label": "WeylandAI" }, [
       h("div", { "class": "wa-bar" }, [
-        h("button", { "class": "wa-brand", type: "button", text: "WeylandAI", onclick: function () { close(); } }),
+        h("button", { "class": "wa-brand", type: "button", text: "WeylandAI", onclick: function () { closeFromUi(); } }),
         S.title,
-        h("button", { "class": "wa-close", type: "button", text: "Close", onclick: function () { close(); } })
+        h("button", { "class": "wa-close", type: "button", text: "Close", onclick: function () { closeFromUi(); } })
       ]),
       S.body
     ]);
     document.body.appendChild(S.overlay);
     document.addEventListener("keydown", function (e) {
       if (!S.overlay.classList.contains("is-open")) return;
-      if (e.key === "Escape") { close(); return; }
+      if (e.key === "Escape") { closeFromUi(); return; }
       if (S.view === "pdf" && S.pdf && !/^(INPUT|TEXTAREA|SELECT)$/.test((e.target && e.target.tagName) || "")) {
         if (e.key === "ArrowRight" || e.key === "PageDown") { e.preventDefault(); S.pdf.go(1); }
         else if (e.key === "ArrowLeft" || e.key === "PageUp") { e.preventDefault(); S.pdf.go(-1); }
@@ -265,22 +312,86 @@
     if (wasOpen) announce(false);
   }
 
-  // Views that should answer the browser's Back button get their own history entry; closing puts the
-  // address back to where the visitor was (query and hash kept), not a bare "/".
-  function pushView(state, url) {
+  // An opened app or document gets its own history entry (Back closes it, Forward opens it again):
+  // an app at #<its path> (appPath), a document at the current address. Closing puts the address
+  // back to where the visitor was (query and a section #hash kept), not a bare "/".
+  function record(state, appPath) {
+    if (S.stepping) { S.afterStep.push(function () { record(state, appPath); }); return; }
     try {
-      if (!(history.state && history.state.wa)) S.baseUrl = location.pathname === "/login" ? "/" : location.pathname + location.search + location.hash;
+      var cur = history.state;
+      var ours = !!(cur && cur.wa && !cur.waClosed);
+      if (!ours && location.pathname === "/login") history.replaceState(null, "", "/"); // Back never lands on /login
+      var base = ours && cur.base ? cur.base : baseAddress();
+      var url = appPath ? addressOf(base, appPath) : location.pathname + location.search + location.hash;
+      state.base = base;
+      state.waUrl = url;
+      if (ours && cur.wa === "app" && state.wa === "app" && cur.path === state.path) {
+        // The same app again (after the sign-in it asked for): this entry, not a second one.
+        var same = copyState(cur);
+        same.waUrl = url;
+        history.replaceState(same, "", url);
+        return;
+      }
+      var mine = ours && cur.waDoc === DOC_ID;
+      state.waDoc = DOC_ID;
+      state.waDepth = mine ? (cur.waDepth || 0) + 1 : 1;
       history.pushState(state, "", url);
+      state.waStep = history.length;
+      state.waContig = !ours || (mine && !!cur.waContig && history.length === cur.waStep + 1);
+      history.replaceState(state, "", url);
     } catch (e) {}
   }
 
+  // Closes whatever the overlay shows; the open view's entry becomes the base address in place.
+  // Synchronous: a caller may change the address right after (a product page's "/#pricing" link).
   function close() {
     if (!S.overlay) return Promise.resolve();
     hideOverlay();
-    if (history.state && history.state.wa) history.replaceState(null, "", S.baseUrl || "/");
-    else if (location.pathname === "/login") history.replaceState(null, "", "/");
-    S.baseUrl = null;
+    var st = history.state;
+    try {
+      if (st && st.wa) history.replaceState(null, "", st.base || baseAddress());
+      else if (location.pathname === "/login") history.replaceState(null, "", "/");
+      else if (isAppHash(location.hash)) history.replaceState(st, "", baseAddress());
+    } catch (e) {}
     return Promise.resolve();
+  }
+
+  // Close, the WeylandAI brand, Escape and "Back to the site": when every entry from the base up to
+  // the open view was written by this page (and nothing came after it), step back to the base, so
+  // Back afterwards leaves the page instead of doing nothing and Forward opens the view again.
+  // Otherwise (a reload or a shared link opened the view, or the app's own pages added entries) as
+  // close(). The address is the base at once either way.
+  function closeFromUi() {
+    if (!S.overlay) return Promise.resolve();
+    var st = history.state;
+    var n = st && st.wa && !st.waClosed && st.waDoc === DOC_ID && st.waContig && st.waDepth > 0 &&
+      history.length === st.waStep && history.length < 50 && !S.stepping ? st.waDepth : 0;
+    if (!n) return close();
+    hideOverlay();
+    var closed = copyState(st);
+    closed.waClosed = true;
+    try { history.replaceState(closed, "", st.base || baseAddress()); } catch (e) {}
+    return stepBack(n);
+  }
+
+  // history.go() answers later (popstate): a view opened meanwhile records its entry after it.
+  function stepBack(n) {
+    return new Promise(function (resolve) {
+      var timer = null;
+      function done() {
+        if (S.stepping !== done) return;
+        S.stepping = null;
+        clearTimeout(timer);
+        var queued = S.afterStep;
+        S.afterStep = [];
+        queued.forEach(function (fn) { try { fn(); } catch (e) {} });
+        resolve();
+      }
+      S.stepping = done;
+      S.afterStep = [];
+      timer = setTimeout(done, 3000);
+      try { history.go(-n); } catch (e) { done(); }
+    });
   }
 
   function open(view, opts) {
@@ -419,7 +530,7 @@
       h("h2", { text: u.name || "Your account" }),
       h("div", null, rows.map(function (r) { return h("div", { "class": "wa-row" }, [h("span", { text: r[0] }), h("span", { text: r[1] })]); })),
       h("button", { "class": "wa-primary", type: "button", text: "OPEN SUBX", onclick: function () { viewApp("/subx-app"); } }),
-      h("button", { "class": "wa-secondary", type: "button", text: "Back to the site", onclick: function () { close(); } }),
+      h("button", { "class": "wa-secondary", type: "button", text: "Back to the site", onclick: function () { closeFromUi(); } }),
       h("button", { id: "weyland-signout", "class": "wa-secondary", type: "button", text: "Sign out", onclick: function () { signOut(); } })
     ]), "account");
     return Promise.resolve();
@@ -427,19 +538,50 @@
 
   function viewApp(path, fromHistory) {
     var clean = canonicalApp(path);
-    var name = APPS[appKey(clean)] || "WeylandAI";
-    var frame = h("iframe", { title: name, src: clean + (clean.indexOf("?") >= 0 ? "&" : "?") + "embed=1" });
+    var name = appName(clean);
+    var frame = h("iframe", { title: name, src: withEmbed(clean) });
     frame.addEventListener("load", function () {
+      var w = null, p = "";
+      try { w = frame.contentWindow; p = w.location.pathname; } catch (e) { return; }
       // An app page that needs sign-in links to /login: answer it here instead of inside the frame.
-      try {
-        var p = frame.contentWindow.location.pathname;
-        if (p === "/login") viewSignIn(redirectTarget(frame.contentWindow.location.href) || clean);
-      } catch (e) {}
+      if (p === "/login") { viewSignIn(redirectTarget(w.location.href) || clean); return; }
+      watchFrame(frame);
+      followFrame(frame);
     });
     show(name, frame, "app");
     S.appFrame = frame;
-    if (!fromHistory) pushView({ wa: "app", path: clean }, clean);
+    if (!fromHistory) record({ wa: "app", path: clean }, clean);
     return Promise.resolve();
+  }
+
+  // The address follows the page the app shows (a Finder search, a product page, a room), so a
+  // reload or a shared link comes back to that page, not only to the app's first page.
+  function followFrame(frame) {
+    if (S.appFrame !== frame || S.view !== "app" || S.stepping) return;
+    var st = history.state;
+    if (!st || st.wa !== "app") return;
+    var p = null;
+    try { var loc = frame.contentWindow.location; if (loc.origin === location.origin) p = appPathOf(loc.pathname + loc.search + loc.hash); } catch (e) { p = null; }
+    if (!p || p === st.path) return;
+    var next = copyState(st);
+    next.path = p;
+    next.waUrl = addressOf(st.base || baseAddress(), p);
+    try { history.replaceState(next, "", next.waUrl); } catch (e) {}
+  }
+  // Same-document moves inside the app (pushState, replaceState, Back within it, #hash) are seen
+  // as they happen; a new document in the frame calls this again from its load event.
+  function watchFrame(frame) {
+    var w = null;
+    try { w = frame.contentWindow; if (!w || w.__waShellWatch) return; w.__waShellWatch = true; } catch (e) { return; }
+    var follow = function () { followFrame(frame); };
+    ["pushState", "replaceState"].forEach(function (m) {
+      try {
+        var orig = w.history[m];
+        if (typeof orig !== "function") return;
+        w.history[m] = function () { var r = orig.apply(this, arguments); follow(); return r; };
+      } catch (e) {}
+    });
+    try { w.addEventListener("popstate", follow); w.addEventListener("hashchange", follow); } catch (e) {}
   }
 
   // ---------- documents: cited price-book pages and catalogue pages, in place ----------
@@ -490,7 +632,7 @@
     if (!fromHistory) {
       var hist = { wa: "pdf", url: url, title: title, page: first };
       if (blob) { hist = { wa: "pdf", blob: keepBlob(blob, title), title: title, page: first }; }
-      pushView(hist, location.pathname + location.search + location.hash);
+      record(hist, null);
     }
     function say(t) { status.textContent = t; status.style.display = t ? "block" : "none"; }
     function nav() {
@@ -757,14 +899,63 @@
     }
   }, true);
 
+  // Back and Forward: show the view the entry names (or none).
   window.addEventListener("popstate", function (e) {
-    if (e.state && e.state.wa === "app" && e.state.path) viewApp(e.state.path, true);
-    else if (e.state && e.state.wa === "pdf" && e.state.blob && S.blobs && S.blobs[e.state.blob]) viewPdf({ blob: S.blobs[e.state.blob].blob, title: e.state.title, page: e.state.page }, true);
-    else if (e.state && e.state.wa === "pdf" && e.state.url) viewPdf({ url: e.state.url, title: e.state.title, page: e.state.page }, true);
-    else if (S.overlay && S.overlay.classList.contains("is-open")) hideOverlay();
+    if (S.stepping) { S.stepping(); return; } // the step back closeFromUi() asked for: closed already
+    var st = e.state;
+    if (st && st.wa && st.waClosed) {
+      // Forward onto a view that was closed: open it again, at its own address.
+      st = copyState(st);
+      delete st.waClosed;
+      try { history.replaceState(st, "", st.waUrl || location.href); } catch (err) {}
+    }
+    if (!(st && st.wa) && appFromAddress()) { openFromAddress(); return; } // #/<app> typed or followed: the browser made the entry
+    showEntry(st);
+  });
+  // #/<app> typed into the address bar or followed from a link, when popstate did not show it.
+  window.addEventListener("hashchange", function () {
+    var p = appFromAddress(), st = history.state;
+    if (!p || S.stepping || (S.view === "app" && st && st.wa === "app" && st.path === p)) return;
+    openFromAddress();
   });
 
-  function publicState() { return { status: S.status, email: S.user && S.user.email || null, view: S.view }; }
+  function showEntry(st) {
+    if (st && st.wa === "app" && st.path) viewApp(st.path, true);
+    else if (st && st.wa === "pdf" && st.blob && S.blobs && S.blobs[st.blob]) viewPdf({ blob: S.blobs[st.blob].blob, title: st.title, page: st.page }, true);
+    else if (st && st.wa === "pdf" && st.url) viewPdf({ url: st.url, title: st.title, page: st.page }, true);
+    else if (S.overlay && S.overlay.classList.contains("is-open")) hideOverlay();
+  }
+
+  // Opens the app this page's address names (#/<app>): a reload, a shared link, a typed address.
+  // The entry becomes the shell's own (state), so the address follows the app and Close returns to
+  // the page without the fragment.
+  function openFromAddress() {
+    var p = appFromAddress();
+    if (!p) return false;
+    var st = history.state;
+    var next = st && st.wa === "app" && !st.waClosed ? copyState(st) : {};
+    next.wa = "app";
+    next.path = p;
+    next.base = next.base || baseAddress();
+    next.waUrl = location.pathname + location.search + location.hash;
+    try { history.replaceState(next, "", next.waUrl); } catch (e) {}
+    viewApp(p, true);
+    return true;
+  }
+
+  // At load: the view this entry had before a reload (a cited document keeps only its history
+  // state; an app also has its address), or the app a shared link names.
+  function restoreView() {
+    if (location.pathname === "/login") return; // the /login view continues to its own target
+    var st = history.state;
+    if (st && st.wa === "pdf" && st.url && !st.waClosed) { viewPdf({ url: st.url, title: st.title, page: st.page }, true); return; }
+    openFromAddress();
+  }
+
+  function publicState() {
+    var st = history.state;
+    return { status: S.status, email: S.user && S.user.email || null, view: S.view, path: S.view === "app" && st && st.wa === "app" ? st.path || null : null };
+  }
   window.WeylandShell = { open: open, close: close, signOut: signOut, refresh: refreshState, completeSignup: completeSignup, state: publicState };
   window.WeylandSignIn = window.WeylandShell;
 
@@ -772,6 +963,7 @@
     injectStyles();
     renderChip();
     root.dataset.weylandAuth = root.dataset.weylandAuth || "signed-out";
+    restoreView();
     refreshState().then(function () {
       if (S.status === "signed-in") ensureServerSession();
       if (location.pathname === "/login") {
