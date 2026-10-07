@@ -458,8 +458,10 @@
               '<td>' + esc(r.catalogue_name || r.catalogue_id) + '</td>' +
               '<td>' + esc(r.page_num) + '</td>' +
               '<td class="excerpt">' + escKeepMark(r.excerpt || '') + '</td>' +
-              '<td><button type="button" class="link-btn" id="' + btnId + '" data-doc-url="/api/cps/catalogues/' + esc(encodeURIComponent(r.catalogue_id)) + '/pages/' + esc(encodeURIComponent(r.page_num)) + '/render"' +
-              ' data-doc-title="' + esc((r.catalogue_name || r.catalogue_id) + ', p. ' + r.page_num) + '">VIEW PAGE</button></td></tr>';
+              '<td>' + (r.pdfAvailable === false
+                ? '<span class="pill">PDF NOT ON FILE; PAGE TEXT INDEXED</span>'
+                : '<button type="button" class="link-btn" id="' + btnId + '" data-doc-url="/api/cps/catalogues/' + esc(encodeURIComponent(r.catalogue_id)) + '/pages/' + esc(encodeURIComponent(r.page_num)) + '/render"' +
+                  ' data-doc-title="' + esc((r.catalogue_name || r.catalogue_id) + ', p. ' + r.page_num) + '">VIEW PAGE</button>') + '</td></tr>';
           }).join('');
           box.innerHTML = '<div class="loading" style="margin-bottom:8px">' + data.count + ' result(s) — method: ' + esc(data.searchMethod) + '</div>' +
             '<table><thead><tr><th>Manufacturer</th><th>Catalogue</th><th>Page</th><th>Excerpt</th><th></th></tr></thead><tbody>' + rows + '</tbody></table>';

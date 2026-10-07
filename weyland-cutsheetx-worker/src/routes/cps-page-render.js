@@ -56,9 +56,12 @@ export function registerCpsPageRenderRoutes(router, { authenticate, PDFDocument 
       const sourceKey = (await resolveCatalogueKey(env2, catalogue)) || catalogue.storage_path || ("catalogues/" + catalogue.source_filename);
       const sourcePdf = await env2.UPLOADS.get(sourceKey);
       if (!sourcePdf) {
+        // 2026-10-07: in words, without the storage key (it showed a visitor a Windows path from
+        // the machine the catalogue was ingested on). The key stays in the Worker's log.
+        console.warn(`[CPS Render] Source PDF not in R2 for ${catalogueId}: ${sourceKey}`);
         return jsonResponse3({
-          error: `Source PDF not found in R2: ${sourceKey}`,
-          hint: "Catalogue may not be uploaded yet"
+          error: "The PDF of this catalogue is not on file yet. Its page text is indexed and searchable.",
+          code: "CATALOGUE_PDF_NOT_ON_FILE"
         }, 404);
       }
       console.log(`[CPS Render] Extracting page ${pageNumber} from ${sourceKey}`);
@@ -102,11 +105,8 @@ export function registerCpsPageRenderRoutes(router, { authenticate, PDFDocument 
         }
       });
     } catch (err) {
-      console.error(`[CPS Render] Error: ${err.message}`);
-      return jsonResponse3({
-        error: "Failed to render page: " + err.message,
-        stack: err.stack
-      }, 500);
+      console.error(`[CPS Render] Error: ${err.message}`, err.stack);
+      return jsonResponse3({ error: "This page could not be drawn from the catalogue PDF: " + err.message }, 500);
     }
   });
 }

@@ -1,4 +1,42 @@
 import { jsonResponse3 } from "../lib/json-response.js";
+import { resolveCatalogueKey } from "../lib/catalogue-storage.js";
+
+// Search results name catalogue pages, and many catalogues were ingested text-only (no PDF in R2,
+// or a Windows path from another machine). Since 2026-10-07 every result says whether its page can
+// be drawn (pdfAvailable): the source PDF resolves in R2, or the single page is already rendered.
+// The CutsheetX page offers VIEW PAGE only where it can be drawn and otherwise says the page text
+// is indexed, as the matcher's catalogue-page citations do (lib/product-database.js). One HEAD per
+// catalogue, remembered ten minutes per isolate; without R2 or on any error the results go out
+// as before, without the field.
+const sourceMemo = new Map();
+const SOURCE_TTL_MS = 10 * 60 * 1000;
+async function catalogueSourcePresent(env, row) {
+  const hit = sourceMemo.get(row.catalogue_id);
+  if (hit && Date.now() - hit.at < SOURCE_TTL_MS) return hit.present;
+  let present = false;
+  try { present = !!(await resolveCatalogueKey(env, row)); } catch (e) { present = false; }
+  sourceMemo.set(row.catalogue_id, { at: Date.now(), present });
+  return present;
+}
+export async function withPdfAvailability(env, results) {
+  if (!Array.isArray(results) || !results.length || !env || !env.UPLOADS || !env.DB) return results;
+  try {
+    const ids = [...new Set(results.map((r) => r.catalogue_id).filter(Boolean))].slice(0, 100);
+    const rows = await env.DB.prepare(
+      "SELECT catalogue_id, storage_path, source_filename FROM catalogues WHERE catalogue_id IN (" + ids.map(() => "?").join(",") + ")"
+    ).bind(...ids).all();
+    const present = new Map();
+    await Promise.all((rows.results || []).map(async (row) => { present.set(row.catalogue_id, await catalogueSourcePresent(env, row)); }));
+    const flags = await Promise.all(results.map(async (r) => {
+      if (present.get(r.catalogue_id)) return true;
+      try { return !!(await env.UPLOADS.head("catalogues/" + r.catalogue_id + "/pages/page_" + r.page_num + ".pdf")); } catch (e) { return false; }
+    }));
+    return results.map((r, i) => ({ ...r, pdfAvailable: flags[i] }));
+  } catch (e) {
+    console.warn("[CPS Search] page availability skipped:", e.message);
+    return results;
+  }
+}
 
 /**
  * @param {object} router
@@ -78,7 +116,7 @@ export function registerCpsSearchRoutes(router, { authenticate }) {
           return jsonResponse3({
             query: q,
             searchMethod: "trigram",
-            results: trigramResult.results,
+            results: await withPdfAvailability(env2, trigramResult.results),
             count: trigramResult.results.length
           });
         }
@@ -112,7 +150,7 @@ export function registerCpsSearchRoutes(router, { authenticate }) {
       return jsonResponse3({
         query: q,
         searchMethod: "fts5_expanded",
-        results: result.results || [],
+        results: await withPdfAvailability(env2, result.results || []),
         count: result.results?.length || 0
       });
     } catch (err) {
