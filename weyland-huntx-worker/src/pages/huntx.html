@@ -1,0 +1,318 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#090a0d">
+  <title>HuntX | Public Construction Opportunity Discovery</title>
+  <style>
+    :root{--bg:#090a0d;--panel:#121419;--panel2:#181b21;--line:#2c3139;--text:#edf0f1;--muted:#9299a3;--accent:#ffd400;--green:#61dfa0;--blue:#66d4ff;--red:#ff756e;--primary:#2a52ff}
+    *{box-sizing:border-box}html,body{margin:0;min-height:100%;background:var(--bg);color:var(--text);font-family:"Avenir Next","Helvetica Neue",sans-serif}
+    body:before{content:"";position:fixed;inset:0;pointer-events:none;background:radial-gradient(circle at 85% 15%,rgba(42,82,255,.12),transparent 28rem),linear-gradient(rgba(255,255,255,.015) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.015) 1px,transparent 1px);background-size:auto,30px 30px,30px 30px}
+    .shell{position:relative;max-width:1500px;margin:auto;padding:20px clamp(16px,3vw,40px) 60px}
+    html.wa-standalone .shell{padding-top:64px}
+    header{display:flex;align-items:center;justify-content:space-between;gap:15px;margin-bottom:24px;flex-wrap:wrap}
+    .brand{display:flex;align-items:center;gap:12px;color:var(--text);text-decoration:none}
+    .mark{width:42px;height:42px;display:grid;place-items:center;background:var(--primary);color:var(--bg);font-weight:900}
+    .brand b{display:block;letter-spacing:.16em}
+    .brand small{display:block;color:var(--muted);font:700 9px/1.5 ui-monospace,monospace;letter-spacing:.11em}
+    .nav{display:flex;gap:8px;flex-wrap:wrap}
+    .nav a,.button{border:1px solid var(--line);border-radius:99px;padding:9px 14px;color:var(--text);text-decoration:none;background:transparent;font:750 10px/1 ui-monospace,monospace;letter-spacing:.06em;cursor:pointer;transition:all .2s}
+    .nav a:hover,.button:hover{border-color:var(--primary);color:var(--primary);box-shadow:0 0 15px rgba(42,82,255,.2)}
+    .button.primary{background:var(--primary);border-color:var(--primary);color:var(--bg);font-weight:900}
+    .button.primary:hover{color:var(--bg)}
+    .button:disabled{opacity:.5;cursor:not-allowed}
+    .titlebar{display:flex;justify-content:space-between;align-items:end;gap:25px;margin:35px 0 25px}
+    .eyebrow{color:var(--primary);font:800 11px/1 ui-monospace,monospace;letter-spacing:.18em;text-transform:uppercase}
+    .titlebar h1{font-size:clamp(34px,4.5vw,64px);letter-spacing:-.05em;line-height:1.02;margin:12px 0}
+    .titlebar p{max-width:680px;color:var(--muted);line-height:1.6;margin:0;font-size:16px}.titlebar .tagline{margin:2px 0 14px;font-size:16px;font-weight:800;letter-spacing:-.01em;color:var(--primary)}
+    .filter-bar{display:flex;gap:15px;margin-bottom:12px;flex-wrap:wrap;background:#0e1117;padding:18px 24px;border:1px solid var(--line);border-radius:16px;align-items:center}
+    .search-input{flex:1;min-width:min(280px,100%);background:#161920;border:1px solid var(--line);border-radius:10px;padding:12px 18px;color:#fff;font-size:15px}
+    .search-input:focus{outline:none;border-color:var(--primary)}
+    select{background:#161920;border:1px solid var(--line);border-radius:10px;padding:12px 18px;color:#fff;font-size:14px;cursor:pointer;max-width:100%}
+    .status-line{min-height:20px;margin:0 4px 22px;color:var(--muted);font-size:13px;line-height:1.5}
+    .status-line.err{color:var(--red)}
+    .metrics-row{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:28px}
+    .metric-card{background:rgba(18,20,25,.9);border:1px solid var(--line);border-radius:14px;padding:20px;min-width:0}
+    .metric-card span{color:var(--muted);font:700 10px/1 ui-monospace,monospace;letter-spacing:.1em;text-transform:uppercase;display:block}
+    .metric-card strong{font-size:32px;font-weight:900;color:var(--text);margin-top:8px;display:block;overflow-wrap:anywhere}
+    .table-card{background:rgba(18,20,25,.94);border:1px solid var(--line);border-radius:18px;overflow:hidden;box-shadow:0 25px 70px rgba(0,0,0,.25);overflow-x:auto}
+    table{width:100%;border-collapse:collapse;font-size:13px}
+    th{text-align:left;color:var(--muted);font:750 10px/1 ui-monospace,monospace;letter-spacing:.1em;padding:16px 20px;background:#0d0f14;border-bottom:2px solid var(--line)}
+    td{padding:14px 20px;border-bottom:1px solid #1f232b;vertical-align:middle}
+    tr:hover td{background:rgba(102,212,255,.04)}
+    td a{color:var(--text);text-decoration:none}td a:hover{color:var(--blue);text-decoration:underline}
+    .status-badge{font:800 9px ui-monospace,monospace;padding:5px 10px;border-radius:99px;display:inline-block;letter-spacing:.08em;background:rgba(42,82,255,.15);color:var(--primary);border:1px solid rgba(42,82,255,.35);white-space:nowrap}
+    .val-cell{font-weight:800;color:var(--primary);font-size:14px}
+    .more{display:flex;justify-content:center;margin:18px 0}
+    .note-card{color:var(--muted);font-size:14px;line-height:1.6;background:rgba(18,20,25,.9);border:1px solid var(--line);border-radius:18px;padding:22px}
+    .note-card code{background:#161920;padding:2px 6px;border-radius:4px;color:var(--primary);font-size:13px}
+    .note-card .button{margin-top:14px}
+    @media(max-width:900px){.metrics-row{grid-template-columns:1fr}.titlebar{flex-direction:column;align-items:flex-start}.filter-bar{padding:14px}}
+  </style>
+</head>
+<body>
+  <div class="shell">
+    <header>
+      <a class="brand" href="/" data-wa-home><span class="mark">HX</span><span><b>HUNTX</b><small>OPPORTUNITY DISCOVERY</small></span></a>
+      <nav class="nav"><!--HUNTX_NAV--></nav>
+    </header>
+    <div class="titlebar">
+      <div>
+        <div class="eyebrow">OPPORTUNITY DISCOVERY</div>
+        <h1>HuntX</h1>
+        <div class="tagline">Measure twice. Match once.</div>
+        <p>Public construction leads from state and city open-data feeds - Texas DOT lettings,
+        California school-facility funding releases, Illinois Capital Development Board
+        solicitations and New York City construction solicitations - pulled into our own index.
+        Every row links to its public source.</p>
+      </div>
+      <button class="button primary" id="signin-btn" type="button" hidden>SIGN IN TO VIEW OPPORTUNITIES</button>
+    </div>
+
+    <div id="app" hidden>
+      <div class="filter-bar">
+        <input id="hx-search" class="search-input" type="search" placeholder="Search title, agency or location - e.g. Austin, Bridge, High School" autocomplete="off">
+        <select id="hx-source" aria-label="Source">
+          <option value="">All sources</option>
+        </select>
+        <button id="hx-refresh-btn" class="button primary" type="button">REFRESH FROM SOURCES</button>
+      </div>
+      <div class="status-line" id="hx-status" role="status" aria-live="polite"></div>
+      <div class="metrics-row">
+        <div class="metric-card"><span>OPPORTUNITIES MATCHING</span><strong id="hx-count">0</strong></div>
+        <div class="metric-card"><span>LAST PULLED FROM SOURCES</span><strong id="hx-last-fetch" style="font-size:16px">Never</strong></div>
+        <div class="metric-card"><span>SOURCES IN THE INDEX</span><strong id="hx-sources" style="font-size:16px">-</strong></div>
+      </div>
+      <div class="table-card">
+        <table>
+          <thead><tr><th>OPPORTUNITY</th><th>AGENCY</th><th>LOCATION</th><th>KEY DATE</th><th>EST. VALUE</th><th>SOURCE</th></tr></thead>
+          <tbody id="hx-body"><tr><td colspan="6" style="color:var(--muted)">Loading...</td></tr></tbody>
+        </table>
+      </div>
+      <div class="more"><button id="hx-more" class="button" type="button" hidden>SHOW MORE</button></div>
+    </div>
+
+    <div class="note-card" id="guest-note">
+      HuntX is available standalone at $799/mo or as part of the SubConP suite.
+      <div id="guest-note-detail"></div>
+      <button class="button" id="pricing-btn" type="button" hidden>SEE PLANS</button>
+    </div>
+  </div>
+  <script>
+  /* Single-page bridge. Inside the WeylandAI overlay (an iframe the homepage shell opens) sign-in and
+     links to other products go through the parent's WeylandShell, so the visitor never leaves the
+     page they are on. Opened directly, this page loads the same shell, so sign-in still happens in
+     place and other products open as overlays. */
+  (function () {
+    var embedded = false;
+    try { embedded = window.self !== window.top; } catch (e) { embedded = true; }
+    function parentShell() { try { return embedded && window.parent && window.parent.WeylandShell ? window.parent.WeylandShell : null; } catch (e) { return null; } }
+    function shell() { return parentShell() || window.WeylandShell || null; }
+    function loadScript(src) { return new Promise(function (res, rej) { var s = document.createElement("script"); s.src = src; s.onload = res; s.onerror = rej; document.head.appendChild(s); }); }
+    if (!embedded) document.documentElement.classList.add("wa-standalone");
+    var ready = embedded ? Promise.resolve() : (window.AuthForStandard ? Promise.resolve() : loadScript("/assets/authfor-integration-standard.js"))
+      .then(function () { return window.WeylandShell ? null : loadScript("/assets/weyland-shell.js"); }).catch(function () {});
+    window.WeylandPage = {
+      embedded: embedded,
+      ready: ready,
+      signIn: function (continueTo) {
+        return ready.then(function () {
+          var s = shell();
+          if (s) return s.open("signin", embedded ? { continueTo: continueTo } : {});
+          location.href = "/login?redirect=" + encodeURIComponent(continueTo);
+        });
+      },
+      openApp: function (path) { return ready.then(function () { var s = shell(); if (s) return s.open("app", { path: path }); location.href = path; }); },
+      home: function () { var p = parentShell(); if (p) return p.close(); location.href = "/"; }
+    };
+    if (embedded) {
+      document.addEventListener("click", function (e) {
+        var a = e.target && e.target.closest ? e.target.closest("a[href]") : null;
+        if (!a || a.target || e.metaKey || e.ctrlKey || e.shiftKey) return;
+        var u; try { u = new URL(a.getAttribute("href"), location.href); } catch (err) { return; }
+        if (u.origin !== location.origin) return;
+        e.preventDefault();
+        if (a.hasAttribute("data-wa-home") || u.pathname === "/") return window.WeylandPage.home();
+        window.WeylandPage.openApp(u.pathname.replace(/\/+$/, "") + u.search);
+      });
+    }
+  })();
+  </script>
+  <script>
+  (function () {
+    "use strict";
+    var TOKEN_KEY = "_authfor_token";
+    var EPH_KEY = "weylandai_ephemeral_token_v1";
+    var PAGE = 100;
+    var SOURCE_LABEL = { txdot: "TXDOT", ca_opsc: "CA OPSC", il_cdb: "IL CDB", nyc_cityrecord: "NYC CITY RECORD" };
+    var SOURCE_NAME = { txdot: "Texas DOT lettings", ca_opsc: "CA school construction funding", il_cdb: "Illinois Capital Development Board", nyc_cityrecord: "NYC City Record construction" };
+    var $ = function (id) { return document.getElementById(id); };
+    var state = { token: null, rows: [], total: 0, offset: 0, seq: 0, lastIngestAt: null, polling: null };
+
+    function lsGet(k) { try { return localStorage.getItem(k); } catch (e) { return null; } }
+    function ssGet(k) { try { return sessionStorage.getItem(k); } catch (e) { return null; } }
+    function ssSet(k, v) { try { sessionStorage.setItem(k, v); } catch (e) {} }
+    function esc(s) { return String(s == null ? "" : s).replace(/[<>&"']/g, function (c) { return { "<": "&lt;", ">": "&gt;", "&": "&amp;", "\"": "&quot;", "'": "&#39;" }[c]; }); }
+    function fmtMoney(v) { return v ? "$" + Number(v).toLocaleString(undefined, { maximumFractionDigits: 0 }) : "-"; }
+    function fmtDate(v) { if (!v) return "-"; if (/^9999/.test(v)) return "Open"; try { var d = new Date(v); return isNaN(d) ? v : d.toLocaleDateString(); } catch (e) { return v; } }
+    function fmtWhen(v) { try { return new Date(v).toLocaleString(); } catch (e) { return v; } }
+    function setStatus(text, isErr) { var s = $("hx-status"); s.textContent = text || ""; s.className = "status-line" + (isErr ? " err" : ""); }
+
+    // A real account token first; otherwise a guest trial session (HuntX is open to guests).
+    function ephemeralToken() {
+      var existing = ssGet(EPH_KEY);
+      if (existing) return Promise.resolve(existing);
+      return fetch("/api/auth/ephemeral", { method: "POST" }).then(function (r) {
+        if (!r.ok) throw new Error("guest session request failed (HTTP " + r.status + ")");
+        return r.json();
+      }).then(function (d) { ssSet(EPH_KEY, d.token); return d.token; });
+    }
+    function getToken() { var t = lsGet(TOKEN_KEY); return t ? Promise.resolve(t) : ephemeralToken(); }
+    function headers(json) { var h = state.token ? { Authorization: "Bearer " + state.token } : {}; if (json) h["Content-Type"] = "application/json"; return h; }
+    function errText(d, status) { var e = d && d.error; return (e && (e.message || e)) || (d && d.message) || ("HTTP " + status); }
+
+    function query(offset) {
+      var p = new URLSearchParams();
+      var q = $("hx-search").value.trim();
+      var src = $("hx-source").value;
+      if (q) p.set("q", q);
+      if (src) p.set("source", src);
+      p.set("limit", String(PAGE));
+      if (offset) p.set("offset", String(offset));
+      return "/api/hunt/opportunities?" + p.toString();
+    }
+
+    function renderSources(list) {
+      if (!Array.isArray(list) || !list.length) return;
+      var sel = $("hx-source"), keep = sel.value;
+      sel.innerHTML = '<option value="">All sources</option>' + list.map(function (s) {
+        return '<option value="' + esc(s.source) + '">' + esc(SOURCE_NAME[s.source] || s.source) + " (" + s.n + ")</option>";
+      }).join("");
+      sel.value = keep;
+      $("hx-sources").textContent = list.length + " · " + list.map(function (s) { return SOURCE_LABEL[s.source] || s.source; }).join(", ");
+    }
+
+    function renderIngest(ing, lastFetchedAt) {
+      var when = ing && (ing.finished_at || ing.started_at) || lastFetchedAt;
+      $("hx-last-fetch").textContent = when ? fmtWhen(when) : "Never";
+      state.lastIngestAt = ing && ing.started_at || null;
+    }
+
+    function rowHtml(r) {
+      var title = r.detail_url ? '<a href="' + esc(r.detail_url) + '" target="_blank" rel="noopener">' + esc(r.title) + "</a>" : esc(r.title);
+      return "<tr><td>" + title + "</td><td>" + esc(r.agency) + "</td><td>" + esc(r.location) + "</td><td>" + fmtDate(r.key_date) +
+        '</td><td class="val-cell">' + fmtMoney(r.estimated_value) + '</td><td><span class="status-badge">' + esc(SOURCE_LABEL[r.source] || r.source) + "</span></td></tr>";
+    }
+
+    function render() {
+      var body = $("hx-body");
+      body.innerHTML = state.rows.length ? state.rows.map(rowHtml).join("") : '<tr><td colspan="6" style="color:var(--muted)">No opportunities match this search. Try a city, an agency or a project type.</td></tr>';
+      $("hx-count").textContent = state.total;
+      var more = $("hx-more");
+      more.hidden = state.rows.length >= state.total;
+      more.textContent = "SHOW MORE (" + state.rows.length + " OF " + state.total + ")";
+    }
+
+    function load(append) {
+      var seq = ++state.seq;
+      var offset = append ? state.rows.length : 0;
+      if (!append) setStatus("Searching the index...");
+      return fetch(query(offset), { headers: headers() }).then(function (r) {
+        return r.json().catch(function () { return {}; }).then(function (d) { return { ok: r.ok, status: r.status, data: d }; });
+      }).then(function (res) {
+        if (seq !== state.seq) return res;
+        if (!res.ok) { setStatus("Could not read the opportunity index: " + errText(res.data, res.status), true); return res; }
+        var d = res.data;
+        var rows = d.opportunities || [];
+        state.rows = append ? state.rows.concat(rows) : rows;
+        state.total = typeof d.total === "number" ? d.total : state.rows.length;
+        renderSources(d.sources);
+        renderIngest(d.lastIngest, d.lastFetchedAt);
+        render();
+        var q = $("hx-search").value.trim();
+        setStatus("Showing " + state.rows.length + " of " + state.total + (q ? " matching “" + q + "”" : "") +
+          (typeof d.indexed === "number" ? " · " + d.indexed + " opportunities in the index" : "") + ".");
+        return res;
+      }).catch(function (e) { if (seq === state.seq) setStatus("Could not read the opportunity index: " + e.message, true); });
+    }
+
+    function pollForNewIngest(before, deadline) {
+      clearTimeout(state.polling);
+      if (Date.now() > deadline) { setStatus("The pull from the public sources is still running; the list will show it on your next search."); return; }
+      state.polling = setTimeout(function () {
+        fetch("/api/hunt/opportunities?limit=1", { headers: headers() }).then(function (r) { return r.json(); }).then(function (d) {
+          var ing = d && d.lastIngest;
+          if (ing && ing.finished_at && ing.started_at !== before) {
+            renderIngest(ing, d.lastFetchedAt);
+            return load(false).then(function () {
+              setStatus("Pulled from the public sources just now: " + (ing.upserted || 0) + " opportunities refreshed" +
+                (ing.errors ? " (one or more sources failed this time: " + String(ing.errors).slice(0, 160) + ")" : "") + ". " + $("hx-status").textContent);
+            });
+          }
+          pollForNewIngest(before, deadline);
+        }).catch(function () { pollForNewIngest(before, deadline); });
+      }, 5000);
+    }
+
+    function refresh() {
+      var btn = $("hx-refresh-btn");
+      btn.disabled = true;
+      setStatus("Asking the index to pull from the public sources...");
+      fetch("/api/hunt/refresh", { method: "POST", headers: headers(true) }).then(function (r) {
+        return r.json().catch(function () { return {}; }).then(function (d) { return { ok: r.ok, status: r.status, data: d }; });
+      }).then(function (res) {
+        btn.disabled = false;
+        if (!res.ok) { setStatus("Refresh failed: " + errText(res.data, res.status), true); return; }
+        var d = res.data, ing = d.lastIngest, pull = d.pull || {};
+        renderSources(d.sources);
+        renderIngest(ing, null);
+        var last = ing && ing.finished_at ? "The last pull finished " + fmtWhen(ing.finished_at) + " and refreshed " + (ing.upserted || 0) + " opportunities." : "No pull from the sources has finished yet.";
+        if (pull.started) {
+          setStatus("Pulling from the public sources now (about 20 seconds). " + (typeof d.indexed === "number" ? d.indexed + " opportunities are in the index. " : "") + last);
+          pollForNewIngest(ing && ing.started_at || null, Date.now() + 90000);
+        } else {
+          var msg = (typeof d.indexed === "number" ? d.indexed + " opportunities are in the index. " : "") + last +
+            (pull.retryAfterSeconds ? " The next pull can start in " + Math.ceil(pull.retryAfterSeconds / 60) + " min." : "");
+          load(false).then(function () { setStatus(msg + " " + $("hx-status").textContent); });
+        }
+      }).catch(function (e) { btn.disabled = false; setStatus("Refresh failed: " + e.message, true); });
+    }
+
+    function showGate(kind, message) {
+      document.body.setAttribute("data-hx-state", kind);
+      $("app").hidden = true;
+      $("guest-note").hidden = false;
+      $("signin-btn").hidden = kind !== "signin";
+      $("pricing-btn").hidden = kind !== "plan";
+      $("guest-note-detail").textContent = message || "";
+    }
+
+    function boot() {
+      clearTimeout(state.polling);
+      return getToken().then(function (t) { state.token = t; }).catch(function () { state.token = lsGet(TOKEN_KEY); }).then(function () {
+        return fetch("/api/hunt/opportunities?limit=1", { headers: headers() });
+      }).then(function (probe) {
+        if (probe.status === 401 || probe.status === 403) { showGate("signin", "Sign in to search the opportunity index."); return; }
+        if (probe.status === 402) {
+          return probe.json().catch(function () { return {}; }).then(function (d) { showGate("plan", errText(d, 402)); });
+        }
+        $("app").hidden = false;
+        $("guest-note").hidden = true;
+        return load(false).then(function () { document.body.setAttribute("data-hx-state", "app"); });
+      }).catch(function (e) { showGate("signin", "Could not reach HuntX: " + e.message); });
+    }
+
+    var debounce = null;
+    $("hx-search").addEventListener("input", function () { clearTimeout(debounce); debounce = setTimeout(function () { load(false); }, 300); });
+    $("hx-source").addEventListener("change", function () { load(false); });
+    $("hx-refresh-btn").addEventListener("click", refresh);
+    $("hx-more").addEventListener("click", function () { load(true); });
+    $("signin-btn").addEventListener("click", function () { window.WeylandPage.signIn("/huntx"); });
+    $("pricing-btn").addEventListener("click", function () { window.WeylandPage.openApp("/pricing"); });
+    window.addEventListener("weyland-auth", function () { boot(); });
+    boot();
+  })();
+  </script>
+</body>
+</html>

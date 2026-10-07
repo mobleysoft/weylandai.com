@@ -1,68 +1,23 @@
 // weyland-huntx-worker/src/pages/huntx.js
 //
-// HuntX's real, live marketing page - ported verbatim from
-// ../../../src/lib/marketing-pages.js's serve_huntx() (lines 50-52 at
-// extraction time), which is itself the audited real content (the
-// completeness audit found this, not the stale src/pages/huntx.html
-// that commit 0b388fc restored to match it for reference/documentation
-// only - that file is NOT the live source and was not used here).
-// Byte-identical HTML/CSS/JS to the monolith's copy; only this file's
-// wrapper (export instead of a nested closure inside the
-// SovereignWeylandRoutes IIFE) changed. Served by this Worker at GET/HEAD
-// /huntx, matching weyland-entry.js's dispatch() normalization
-// (lowercased, leading/trailing slashes stripped) of the same path in
-// the monolith.
+// Serves HuntX's page (src/pages/huntx.html, imported as text - see
+// wrangler.toml's [[rules]] block) at /huntx, /huntx/ and any query-string
+// variant (/huntx?embed=1 from the single-page shell's overlay). The page
+// itself used to live here as one escaped string ported from the
+// monolith's marketing-pages.js; it moved to a real .html file on
+// 2026-10-07 when the route became the wildcard weylandai.com/huntx* and
+// the page gained guest access, server-side search paging and an honest
+// REFRESH FROM SOURCES result.
 //
-// serve_huntx() calls renderNav("huntx") - a real runtime dependency on
-// two more names from marketing-pages.js's outer SovereignWeylandRoutes
-// IIFE closure (ROUTE_LABELS, renderNav), not visible in the 3-line
-// function body alone. Missing this on the first deploy attempt threw a
-// real "ReferenceError: renderNav is not defined" (caught via
-// `wrangler tail`, not assumed) - both are ported verbatim below,
-// unchanged, so HuntX's nav bar renders the same full cross-product link
-// set it does in production.
+// Nav: see ./huntx-nav.js.
 
-var ROUTE_LABELS = {
-  onboarding: "ONBOARDING",
-  huntx: "HUNTX",
-  takeoffx: "TAKEOFFX",
-  subx: "SUBX",
-  cutsheetx: "CUTSHEETX",
-  propx: "PROPX",
-  sightx: "SIGHTX",
-  meetingx: "MEETX",
-  qtext: "QTEXT",
-  whyweyland: "WHY WEYLAND",
-  investors: "INVESTORS",
-  venturedeck: "VENTURE DECK",
-  lienx: "LIENX",
-  bidx: "BIDX",
-  coa: "COA",
-  rfax: "RFAX",
-  changeordx: "CHANGEORDX",
-  permitx: "PERMITX",
-  closex: "CLOSEX",
-  notesx: "NOTESX",
-  inspecx: "INSPECX",
-  safetyx: "SAFETYX",
-  survx: "SURVX",
-  specx: "SPECX",
-  drawx: "DRAWX",
-  asbuiltx: "ASBUILTX",
-  leadx: "LEADX",
-  careers: "CAREERS"
-};
-function renderNav(current) {
-  var selfAliases = { meetingx: ["meetingx", "meetx"] };
-  var exclude = selfAliases[current] || [current];
-  var links = "";
-  for (var key in ROUTE_LABELS) {
-    if (exclude.indexOf(key) !== -1) continue;
-    links += "<a href=\"/" + key + "/\">" + ROUTE_LABELS[key] + "</a>";
-  }
-  return links;
+import huntxHtml from "./huntx.html";
+import { fillHuntxPage } from "./huntx-nav.js";
+
+export function serve_huntx(request) {
+  var embedded = false;
+  try { embedded = new URL(request.url).searchParams.get("embed") === "1"; } catch (e) { embedded = false; }
+  return new Response(fillHuntxPage(huntxHtml, embedded), {
+    headers: { "Content-Type": "text/html; charset=UTF-8", "Cache-Control": "no-store" }
+  });
 }
-
-export function serve_huntx() {
-    return new Response("<!doctype html>\n<html lang=\"en\">\n<head>\n  <meta charset=\"utf-8\">\n  <meta name=\"viewport\" content=\"width=device-width,initial-scale=1\">\n  <meta name=\"theme-color\" content=\"#090a0d\">\n  <title>HuntX | Public Construction Opportunity Discovery</title>\n  <style>\n    :root{--bg:#090a0d;--panel:#121419;--panel2:#181b21;--line:#2c3139;--text:#edf0f1;--muted:#9299a3;--accent:#ffd400;--green:#61dfa0;--blue:#66d4ff;--red:#ff756e;--primary:#2a52ff;--primary:#2a52ff;--accent:#ffd400}\n    *{box-sizing:border-box}html,body{margin:0;min-height:100%;background:var(--bg);color:var(--text);font-family:\"Avenir Next\",\"Helvetica Neue\",sans-serif}\n    body:before{content:\"\";position:fixed;inset:0;pointer-events:none;background:radial-gradient(circle at 85% 15%,rgba(42,82,255,.12),transparent 28rem),linear-gradient(rgba(255,255,255,.015) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.015) 1px,transparent 1px);background-size:auto,30px 30px,30px 30px}\n    .shell{position:relative;max-width:1500px;margin:auto;padding:20px clamp(16px,3vw,40px) 60px}\n    header{display:flex;align-items:center;justify-content:space-between;gap:15px;margin-bottom:24px}\n    .brand{display:flex;align-items:center;gap:12px;color:var(--text);text-decoration:none}\n    .mark{width:42px;height:42px;display:grid;place-items:center;background:var(--primary);color:var(--bg);font-weight:900}\n    .brand b{display:block;letter-spacing:.16em}\n    .brand small{display:block;color:var(--muted);font:700 9px/1.5 ui-monospace,monospace;letter-spacing:.11em}\n    .nav{display:flex;gap:8px;flex-wrap:wrap}\n    .nav a,.button{border:1px solid var(--line);border-radius:99px;padding:9px 14px;color:var(--text);text-decoration:none;background:transparent;font:750 10px/1 ui-monospace,monospace;letter-spacing:.06em;cursor:pointer;transition:all .2s}\n    .nav a:hover,.button:hover{border-color:var(--primary);color:var(--primary);box-shadow:0 0 15px rgba(42,82,255,.2)}\n    .button.primary{background:var(--primary);border-color:var(--primary);color:var(--bg);font-weight:900}\n    .button:disabled{opacity:.5;cursor:not-allowed}\n    .titlebar{display:flex;justify-content:space-between;align-items:end;gap:25px;margin:35px 0 25px}\n    .eyebrow{color:var(--primary);font:800 11px/1 ui-monospace,monospace;letter-spacing:.18em;text-transform:uppercase}\n    .titlebar h1{font-size:clamp(34px,4.5vw,64px);letter-spacing:-.05em;line-height:1.02;margin:12px 0}\n    .titlebar p{max-width:680px;color:var(--muted);line-height:1.6;margin:0;font-size:16px}.titlebar .tagline{margin:2px 0 14px;font-size:16px;font-weight:800;letter-spacing:-.01em;color:var(--primary)}\n    .pill{border:1px solid rgba(42,82,255,.4);color:var(--primary);border-radius:99px;padding:10px 15px;font:800 10px/1 ui-monospace,monospace;letter-spacing:.1em;background:rgba(42,82,255,.1)}\n    .filter-bar{display:flex;gap:15px;margin-bottom:24px;flex-wrap:wrap;background:#0e1117;padding:18px 24px;border:1px solid var(--line);border-radius:16px;align-items:center}\n    .search-input{flex:1;min-width:280px;background:#161920;border:1px solid var(--line);border-radius:10px;padding:12px 18px;color:#fff;font-size:15px}\n    .search-input:focus{outline:none;border-color:var(--primary)}\n    select{background:#161920;border:1px solid var(--line);border-radius:10px;padding:12px 18px;color:#fff;font-size:14px;cursor:pointer}\n    .metrics-row{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:28px}\n    .metric-card{background:rgba(18,20,25,.9);border:1px solid var(--line);border-radius:14px;padding:20px}\n    .metric-card span{color:var(--muted);font:700 10px/1 ui-monospace,monospace;letter-spacing:.1em;text-transform:uppercase;display:block}\n    .metric-card strong{font-size:32px;font-weight:900;color:var(--text);margin-top:8px;display:block}\n    .table-card{background:rgba(18,20,25,.94);border:1px solid var(--line);border-radius:18px;overflow:hidden;box-shadow:0 25px 70px rgba(0,0,0,.25);overflow-x:auto}\n    table{width:100%;border-collapse:collapse;font-size:13px}\n    th{text-align:left;color:var(--muted);font:750 10px/1 ui-monospace,monospace;letter-spacing:.1em;padding:16px 20px;background:#0d0f14;border-bottom:2px solid var(--line)}\n    td{padding:14px 20px;border-bottom:1px solid #1f232b;vertical-align:middle}\n    tr:hover td{background:rgba(102,212,255,.04)}\n    .status-badge{font:800 9px ui-monospace,monospace;padding:5px 10px;border-radius:99px;display:inline-block;letter-spacing:.08em;background:rgba(42,82,255,.15);color:var(--primary);border:1px solid rgba(42,82,255,.35)}\n    .val-cell{font-weight:800;color:var(--primary);font-size:14px}\n    .note-card{color:var(--muted);font-size:14px;line-height:1.6}\n    .note-card code{background:#161920;padding:2px 6px;border-radius:4px;color:var(--primary);font-size:13px}\n    @media(max-width:900px){.metrics-row{grid-template-columns:repeat(2,1fr)}.titlebar{flex-direction:column;align-items:flex-start}}\n  </style>\n</head>\n<body>\n  <div class=\"shell\">\n    <header>\n      <a class=\"brand\" href=\"/\"><span class=\"mark\">HX</span><span><b>HUNTX</b><small>OPPORTUNITY DISCOVERY</small></span></a>\n      <nav class=\"nav\">" + renderNav("huntx") + "</nav>\n    </header>\n    <div class=\"titlebar\">\n      <div>\n        <div class=\"eyebrow\">OPPORTUNITY DISCOVERY</div>\n        <h1>HuntX</h1>\n        <div class=\"tagline\">Measure twice. Match once.</div>\n        <p>Pulls live public construction leads directly from state open-data APIs - Texas DOT\n        construction lettings and California school-facility funding releases today, more\n        sources added over time. Every row traces back to its real public source.</p>\n      </div>\n      <a class=\"button primary\" id=\"signin-btn\" href=\"/login?redirect=/huntx\" style=\"display:none\">SIGN IN TO VIEW OPPORTUNITIES</a>\n    </div>\n\n    <div id=\"app\" style=\"display:none\">\n      <div class=\"filter-bar\">\n        <input id=\"hx-search\" class=\"search-input\" type=\"text\" placeholder=\"Search title, agency, or location...\">\n        <select id=\"hx-source\">\n          <option value=\"\">All sources</option>\n          <option value=\"txdot\">Texas DOT (highway/bridge)</option>\n          <option value=\"ca_opsc\">CA school construction funding</option>\n        </select>\n        <button id=\"hx-refresh-btn\" class=\"button primary\">REFRESH FROM SOURCES</button>\n        <span id=\"hx-status\" style=\"color:var(--muted);font-size:12px\"></span>\n      </div>\n      <div class=\"metrics-row\">\n        <div class=\"metric-card\"><span>OPPORTUNITIES LISTED</span><strong id=\"hx-count\">0</strong></div>\n        <div class=\"metric-card\"><span>LAST REFRESHED</span><strong id=\"hx-last-fetch\" style=\"font-size:16px\">Never</strong></div>\n        <div class=\"metric-card\"><span>LIVE SOURCES</span><strong style=\"font-size:16px\">2</strong></div>\n      </div>\n      <div class=\"table-card\">\n        <table>\n          <thead><tr><th>OPPORTUNITY</th><th>AGENCY</th><th>LOCATION</th><th>KEY DATE</th><th>EST. VALUE</th><th>SOURCE</th></tr></thead>\n          <tbody id=\"hx-body\"><tr><td colspan=\"6\" style=\"color:var(--muted)\">Loading...</td></tr></tbody>\n        </table>\n      </div>\n    </div>\n\n    <div class=\"card note-card\" id=\"guest-note\" style=\"background:rgba(18,20,25,.9);border:1px solid var(--line);border-radius:18px;padding:22px\">\n      HuntX is available standalone at $799/mo or as part of the SubConP suite. See\n      <code>/pricing</code> for licensing, or sign in above if you already have access.\n    </div>\n  </div>\n  <script src=\"/assets/authfor-integration-standard.js\"></script>\n  <script>\n    const auth = new AuthForStandard({ clientId: 'af_weyland_login', ventureName: 'weylandai.com' });\n    let activeToken = null;\n    function authHeaders(json) {\n      const t = activeToken || auth.getToken();\n      const h = t ? { 'Authorization': 'Bearer ' + t } : {};\n      if (json) h['Content-Type'] = 'application/json';\n      return h;\n    }\n    function esc(s) { return String(s == null ? '' : s).replace(/[<>&]/g, c => ({'<':'&lt;','>':'&gt;','&':'&amp;'}[c])); }\n    const SOURCE_LABEL = { txdot: 'TXDOT', ca_opsc: 'CA OPSC' };\n    function fmtMoney(v) { return v ? '$' + Number(v).toLocaleString(undefined, {maximumFractionDigits:0}) : '—'; }\n    function fmtDate(v) { if (!v) return '—'; try { return new Date(v).toLocaleDateString(); } catch(e) { return v; } }\n\n    async function loadOpportunities() {\n      const body = document.getElementById('hx-body');\n      const q = document.getElementById('hx-search').value.trim();\n      const source = document.getElementById('hx-source').value;\n      const params = new URLSearchParams();\n      if (q) params.set('q', q);\n      if (source) params.set('source', source);\n      const res = await fetch('/api/hunt/opportunities?' + params.toString(), { headers: authHeaders() });\n      if (!res.ok) { body.innerHTML = '<tr><td colspan=\"6\" style=\"color:var(--muted)\">Failed to load.</td></tr>'; return; }\n      const data = await res.json();\n      const rows = data.opportunities || [];\n      document.getElementById('hx-count').textContent = rows.length;\n      document.getElementById('hx-last-fetch').textContent = data.lastFetchedAt ? new Date(data.lastFetchedAt).toLocaleString() : 'Never - click Refresh';\n      body.innerHTML = rows.length ? rows.map(r => `<tr>\n          <td>${r.detail_url ? `<a href=\"${esc(r.detail_url)}\" target=\"_blank\" style=\"color:var(--text);text-decoration:none\">${esc(r.title)}</a>` : esc(r.title)}</td>\n          <td>${esc(r.agency)}</td>\n          <td>${esc(r.location)}</td>\n          <td>${fmtDate(r.key_date)}</td>\n          <td class=\"val-cell\">${fmtMoney(r.estimated_value)}</td>\n          <td><span class=\"status-badge\">${SOURCE_LABEL[r.source] || esc(r.source)}</span></td>\n        </tr>`).join('') : '<tr><td colspan=\"6\" style=\"color:var(--muted)\">No opportunities yet - click REFRESH FROM SOURCES.</td></tr>';\n    }\n\n    document.getElementById('hx-refresh-btn').addEventListener('click', async () => {\n      const btn = document.getElementById('hx-refresh-btn');\n      const status = document.getElementById('hx-status');\n      btn.disabled = true;\n      status.textContent = 'Pulling from live public sources...';\n      try {\n        const res = await fetch('/api/hunt/refresh', { method: 'POST', headers: authHeaders(true) });\n        const data = await res.json();\n        if (!res.ok) { status.textContent = 'Error: ' + (data.error || 'refresh failed'); btn.disabled = false; return; }\n        status.textContent = data.upserted + ' opportunities updated.';\n        await loadOpportunities();\n      } catch (e) {\n        status.textContent = 'Error: ' + e.message;\n      }\n      btn.disabled = false;\n    });\n    document.getElementById('hx-search').addEventListener('input', () => { clearTimeout(window._hxT); window._hxT = setTimeout(loadOpportunities, 300); });\n    document.getElementById('hx-source').addEventListener('change', loadOpportunities);\n\n    (async () => {\n      try {\n        if (!auth.getToken()) {\n          try { activeToken = await ephemeralToken(); } catch (e) {}\n        }\n        const probe = await fetch('/api/hunt/opportunities', { headers: authHeaders() });\n        if (probe.status === 401 || probe.status === 403) {\n          document.getElementById('signin-btn').style.display = 'inline-block';\n          return;\n        }\n        if (probe.status === 402) {\n          const d = await probe.json().catch(() => ({}));\n          document.getElementById('guest-note').innerHTML = (d.error && d.error.message) || 'You\\'re signed in, but your plan doesn\\'t include HuntX yet. See <code>/pricing</code> to add it.';\n          return;\n        }\n        document.getElementById('app').style.display = 'block';\n        document.getElementById('guest-note').style.display = 'none';\n        loadOpportunities();\n      } catch (e) {\n        document.getElementById('signin-btn').style.display = 'inline-block';\n      }\n    })();\n  </script>\n</body>\n</html>\n", { headers: { "Content-Type": "text/html; charset=UTF-8", "Cache-Control": "public, max-age=60" } });
-  }

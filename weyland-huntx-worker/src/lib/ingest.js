@@ -1,7 +1,8 @@
 // weyland-huntx-worker/src/lib/ingest.js
 //
 // The only place HuntX talks to the public sources (TxDOT Socrata, CA OPSC
-// CKAN, Illinois CDB Socrata, NYC City Record Socrata). Runs from the Worker's scheduled() cron, never from a request:
+// CKAN, Illinois CDB Socrata, NYC City Record Socrata). Runs in the background (ctx.waitUntil from the request-driven lease in
+// index.js, or from REFRESH FROM SOURCES), never inside a visitor's request:
 // per direct instruction (2026-10-05) Weyland must not need any call
 // outside the conglomerate to operate. Visitors read the opportunities
 // table in D1 (our store); this job keeps that table fresh in the
@@ -128,8 +129,27 @@ export async function fetchNycCityRecordOpportunities() {
 /**
  * Pull every source and upsert into D1. Returns a summary row that is also
  * written to ingest_runs (created on first use).
+ *
+ * trigger: "traffic" (the request-driven hourly lease in index.js),
+ * "refresh" (REFRESH FROM SOURCES) or "cron" (scheduled(), if crons ever
+ * fire on this account). 2026-10-07: upserts go to D1 in batches
+ * (env.DB.batch, UPSERT_BATCH statements per round trip) instead of one
+ * awaited statement per row. A full run used to take 12-29 s of sequential
+ * round trips inside ctx.waitUntil, and the 2026-10-07 04:28Z run was cut
+ * off part-way (txdot and ca_opsc rows written, no ingest_runs row, il_cdb
+ * and nyc_cityrecord untouched).
  */
-export async function ingestSources(env) {
+export const UPSERT_BATCH = 50;
+const UPSERT_SQL = `
+        INSERT INTO opportunities (id, source, source_ref, title, agency, location, category, status, key_date, estimated_value, detail_url, raw_data, created_at, fetched_at)
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+        ON CONFLICT(source, source_ref) DO UPDATE SET
+          title=excluded.title, agency=excluded.agency, location=excluded.location, category=excluded.category,
+          status=excluded.status, key_date=excluded.key_date, estimated_value=excluded.estimated_value,
+          raw_data=excluded.raw_data, fetched_at=excluded.fetched_at
+      `;
+
+export async function ingestSources(env, trigger = "cron") {
   await env.DB.prepare(
     "CREATE TABLE IF NOT EXISTS ingest_runs (id TEXT PRIMARY KEY, started_at TEXT NOT NULL, finished_at TEXT, trigger TEXT, upserted INTEGER DEFAULT 0, sources INTEGER DEFAULT 0, errors TEXT)"
   ).run();
@@ -140,26 +160,29 @@ export async function ingestSources(env) {
   const errors = [];
   for (const r of results) {
     if (r.status === "rejected") { errors.push(String(r.reason)); continue; }
+    const stmts = [];
     for (const opp of r.value) {
       if (!opp.source_ref) continue;
-      await env.DB.prepare(`
-        INSERT INTO opportunities (id, source, source_ref, title, agency, location, category, status, key_date, estimated_value, detail_url, raw_data, created_at, fetched_at)
-        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-        ON CONFLICT(source, source_ref) DO UPDATE SET
-          title=excluded.title, agency=excluded.agency, location=excluded.location, category=excluded.category,
-          status=excluded.status, key_date=excluded.key_date, estimated_value=excluded.estimated_value,
-          raw_data=excluded.raw_data, fetched_at=excluded.fetched_at
-      `).bind(
+      stmts.push(env.DB.prepare(UPSERT_SQL).bind(
         crypto.randomUUID(), opp.source, String(opp.source_ref), opp.title, opp.agency, opp.location, opp.category,
         opp.status, opp.key_date, opp.estimated_value, opp.detail_url, JSON.stringify(opp.raw_data), started, started
-      ).run();
-      upserted++;
+      ));
+    }
+    for (let i = 0; i < stmts.length; i += UPSERT_BATCH) {
+      const chunk = stmts.slice(i, i + UPSERT_BATCH);
+      try {
+        if (typeof env.DB.batch === "function") await env.DB.batch(chunk);
+        else for (const st of chunk) await st.run();
+        upserted += chunk.length;
+      } catch (e) {
+        errors.push("upsert batch failed: " + ((e && e.message) || e));
+      }
     }
   }
   const finished = new Date().toISOString();
   await env.DB.prepare("INSERT INTO ingest_runs (id, started_at, finished_at, trigger, upserted, sources, errors) VALUES (?, ?, ?, ?, ?, ?, ?)")
-    .bind(runId, started, finished, "cron", upserted, results.length, errors.length ? JSON.stringify(errors) : null).run();
-  return { runId, started, finished, upserted, sources: results.length, errors };
+    .bind(runId, started, finished, trigger, upserted, results.length, errors.length ? JSON.stringify(errors) : null).run();
+  return { runId, started, finished, trigger, upserted, sources: results.length, errors };
 }
 
 /** Last completed ingest, for the page's "index refreshed at" line. */

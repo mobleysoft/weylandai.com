@@ -64,6 +64,18 @@ database_id = "5729f77e-d7e3-4577-ab43-3c064fa90ca5"
 pattern = "weylandai.com/api/hunt/*"
 zone_name = "weylandai.com"
 
+# 2026-10-07: wildcard. An exact pattern does not match the same path with
+# a query string, so /huntx?embed=1 (the single-page shell's overlay) and
+# /huntx/ fell through to weylandai.com/* and got the monolith's stale copy.
+# src/index.js serves the page for /huntx and /huntx/ with any query string;
+# anything else under /huntx* gets this Worker's JSON 404.
 [[routes]]
-pattern = "weylandai.com/huntx"
+pattern = "weylandai.com/huntx*"
 zone_name = "weylandai.com"
+
+# src/pages/huntx.html is imported as text (Wrangler's built-in module rule,
+# no bundler), same as the other weyland-*-worker pages.
+[[rules]]
+type = "Text"
+globs = ["**/*.html"]
+fallthrough = true

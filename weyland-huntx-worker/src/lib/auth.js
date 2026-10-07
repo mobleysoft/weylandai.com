@@ -288,7 +288,7 @@ export async function requireProductAccess(user, env2, productSlug) {
   const subError = await requireActiveSubscription(user, env2);
   if (subError) return subError;
   const row = await env2.DB.prepare(
-    "SELECT subscription_tier, products_enabled FROM users WHERE id = ?"
+    "SELECT subscription_tier, subscription_status, products_enabled FROM users WHERE id = ?"
   ).bind(user.userId).first();
   if (!row) {
     return jsonResponse3({ success: false, error: { code: "NOT_FOUND", message: "User not found" } }, 404);
@@ -296,6 +296,13 @@ export async function requireProductAccess(user, env2, productSlug) {
   if (row.subscription_tier === "subconp") return null;
   const enabled = (row.products_enabled || "").split(",").map((s) => s.trim()).filter(Boolean);
   if (enabled.includes(productSlug)) return null;
+  // 2026-10-07: a signed-in trial account (START MY FREE 14-DAY TRIAL; the
+  // account row has an empty products_enabled) never gets less than an
+  // anonymous guest session does. Before this, signing up took away what the
+  // visitor could do a minute earlier as a guest: every guest-trial product
+  // answered 402 PRODUCT_NOT_ENABLED. requireActiveSubscription above has
+  // already refused an expired trial, so "trial" here means a live one.
+  if (EPHEMERAL_TRIAL_PRODUCTS.has(productSlug) && (row.subscription_status || "trial") === "trial") return null;
   return jsonResponse3({
     success: false,
     error: {

@@ -3,7 +3,7 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "test": "node --test src/routes/hunt.test.mjs"
+    "test": "node --test src/routes/hunt.test.mjs src/lib/auth.test.mjs"
   },
   "devDependencies": {
     "wrangler": "^4.129.1"

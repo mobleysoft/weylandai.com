@@ -16,6 +16,9 @@
 // Owns 3 routes, ported byte-for-byte from the monolith (see
 // src/routes/hunt.js and src/pages/huntx.js for exact provenance):
 //   GET/HEAD /huntx                 - the real marketing/product page
+//                                     (route weylandai.com/huntx*, so
+//                                     /huntx/, /huntx?embed=1 and any other
+//                                     query-string variant land here too)
 //   POST     /api/hunt/refresh      - scrape+upsert TxDOT + CA OPSC feeds
 //   GET      /api/hunt/opportunities - list/search the opportunities table
 //
@@ -47,7 +50,7 @@ export default {
     // are registered but have never fired (cron_ticks stays empty), so any
     // request may claim the D1 lease for this worker's background job and
     // run it via waitUntil. The visitor never waits; no request calls out.
-    trafficDrivenJob(env, ctx, { db: env.DB, job: "huntx-ingest", cadenceSeconds: 3600, worker: "weyland-huntx-worker", run: () => ingestSources(env).then((r) => console.log("[HuntX Ingest] traffic-driven run", JSON.stringify({ upserted: r.upserted, errors: r.errors }))) });
+    trafficDrivenJob(env, ctx, { db: env.DB, job: "huntx-ingest", cadenceSeconds: 3600, worker: "weyland-huntx-worker", run: () => ingestSources(env, "traffic").then((r) => console.log("[HuntX Ingest] traffic-driven run", JSON.stringify({ upserted: r.upserted, errors: r.errors }))) });
     const url = new URL(request.url);
 
     // Own health check, answered directly - not part of the extracted
@@ -66,7 +69,7 @@ export default {
     // porting that whole general-purpose dispatcher for a single route.
     if ((request.method === "GET" || request.method === "HEAD")) {
       const clean = url.pathname.toLowerCase().replace(/^\/|\/$/g, "");
-      if (clean === "huntx") return serve_huntx();
+      if (clean === "huntx") return serve_huntx(request);
     }
 
     return router.handle(request, env, ctx);
