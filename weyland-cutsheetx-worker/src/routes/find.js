@@ -104,6 +104,99 @@ document.addEventListener("click", async function (e) {
 });
 `;
 
+// Finder in place (2026-10-07). The server-rendered pages stay exactly what they
+// are - the indexable URLs /find?q=... and /find/<manufacturer>/<model>, with
+// the sitemap - and with a script the search form and the finder's own links
+// no longer replace the document: the script fetches the same URL's HTML, swaps
+// in its <main> and <title>, and records the URL in history, so Back, Forward,
+// reload and sharing keep working. Anything unexpected falls back to an
+// ordinary navigation. Inside the single-page shell's overlay (iframe, parent
+// window.WeylandShell) the URL is replaced rather than pushed, so the browser's
+// Back still closes the overlay, and the links to the homepage close the
+// overlay instead of loading a second homepage inside it.
+// (No backslashes in this template literal: they would not survive into the page.)
+export const NAV_SCRIPT = `
+(function () {
+  var shell = null;
+  try { if (window.parent !== window && window.parent.WeylandShell) shell = window.parent.WeylandShell; } catch (e) {}
+  function plainClick(e) { return !e.defaultPrevented && e.button === 0 && !e.metaKey && !e.ctrlKey && !e.shiftKey && !e.altKey; }
+  function linkOf(e) {
+    var a = e.target && e.target.closest ? e.target.closest("a[href]") : null;
+    if (!a || a.target || a.hasAttribute("download") || a.hasAttribute("data-doc")) return null;
+    try { return new URL(a.getAttribute("href"), location.href); } catch (err) { return null; }
+  }
+  if (shell) {
+    document.addEventListener("click", function (e) {
+      if (!plainClick(e)) return;
+      var u = linkOf(e);
+      if (!u || u.origin !== location.origin || (u.pathname !== "/" && u.pathname !== "/index.html")) return;
+      e.preventDefault();
+      shell.close();
+      if (u.hash) { try { window.parent.location.hash = u.hash; } catch (err) {} }
+    });
+  }
+  var main = document.querySelector("main");
+  if (!main || !window.fetch || !window.DOMParser || !window.URLSearchParams || !history.pushState) return;
+  var inflight = null;
+  function isFinder(u) {
+    if (u.origin !== location.origin) return false;
+    var p = u.pathname;
+    return p === "/find" || p === "/find/" || (p.indexOf("/find/") === 0 && p.slice(-4) !== ".xml");
+  }
+  function record(url) {
+    if (shell) history.replaceState({ finder: 1 }, "", url); else history.pushState({ finder: 1 }, "", url);
+  }
+  function show(url, push) {
+    if (inflight && inflight.abort) inflight.abort();
+    var ctl = window.AbortController ? new AbortController() : {};
+    inflight = ctl;
+    main.setAttribute("aria-busy", "true");
+    fetch(url, { headers: { Accept: "text/html" }, credentials: "same-origin", signal: ctl.signal })
+      .then(function (r) {
+        if (!r.ok && r.status !== 404) throw new Error("HTTP " + r.status);
+        return r.text();
+      })
+      .then(function (html) {
+        if (inflight !== ctl) return;
+        var doc = new DOMParser().parseFromString(html, "text/html");
+        var next = doc.querySelector("main");
+        if (!next) throw new Error("no main");
+        if (push) record(url);
+        main.innerHTML = next.innerHTML;
+        document.title = doc.title;
+        window.scrollTo(0, 0);
+        var h = main.querySelector("h1");
+        if (h) { h.setAttribute("tabindex", "-1"); try { h.focus({ preventScroll: true }); } catch (err) {} }
+      })
+      .catch(function (err) {
+        if (err && err.name === "AbortError") return;
+        location.href = url;
+      })
+      .then(function () {
+        if (inflight === ctl) { inflight = null; main.removeAttribute("aria-busy"); }
+      });
+  }
+  document.addEventListener("submit", function (e) {
+    var f = e.target;
+    if (!f || f.getAttribute("action") !== "/find" || String(f.getAttribute("method") || "get").toLowerCase() !== "get") return;
+    e.preventDefault();
+    var q = String(new FormData(f).get("q") || "").trim();
+    show(q ? "/find?" + new URLSearchParams({ q: q }).toString() : "/find", true);
+  });
+  document.addEventListener("click", function (e) {
+    if (!plainClick(e)) return;
+    var u = linkOf(e);
+    if (!u || !isFinder(u)) return;
+    e.preventDefault();
+    show(u.pathname + u.search, true);
+  });
+  history.replaceState({ finder: 1 }, "", location.href);
+  window.addEventListener("popstate", function (e) {
+    if (e.state && e.state.finder) show(location.pathname + location.search, false);
+  });
+})();
+`;
+
 function page({ title, description, canonical, body, jsonLd }) {
   return `<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>${esc(title)}</title><meta name="description" content="${esc(description)}"><link rel="canonical" href="${esc(canonical)}">
@@ -112,7 +205,7 @@ function page({ title, description, canonical, body, jsonLd }) {
 <body><main><header><a href="/" style="text-decoration:none;display:flex;align-items:center;gap:10px;color:var(--text)"><span class="mark">W</span><strong>WeylandAI</strong></a><span class="meta">Door hardware cut-sheet finder</span></header>
 ${body}
 <footer>Documents are the manufacturers' own, served from WeylandAI's catalogue store. No accounts, no tracking beyond a page count in our own table. <a href="/">weylandai.com</a></footer></main>
-<script>${OPEN_SCRIPT}</script></body></html>`;
+<script>${OPEN_SCRIPT}</script><script>${NAV_SCRIPT}</script></body></html>`;
 }
 
 function searchForm(q) {
