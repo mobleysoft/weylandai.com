@@ -3017,6 +3017,14 @@
   (function(){
     "use strict";
 
+    // The guest token: its sessionStorage key and the mint under way (see ephemeralToken()).
+    // Declared before any chapter runs: the HuntX chapter asks for the guest token while this
+    // script is still running (loadHuntOpportunities below). Declared further down, the key was
+    // still undefined at that moment, so every page load minted a new guest token and stored it
+    // over the one this tab already had (2026-10-07).
+    var EPHEMERAL_TOKEN_KEY = "weylandai_ephemeral_token_v1";
+    var ephemeralMint = null;
+
     // .envelope-frame is the real scroll container now (not window/body) -
     // its own clip-path+overflow:auto is what makes it a true mask, so
     // every scroll-position-dependent calculation below targets it
@@ -3682,7 +3690,6 @@
 
     // 9. Chapter 03: Live Trial Session Loading & Door Schedule Table
     var STORAGE_KEY = "weylandai_subx_demo_v1";
-    var EPHEMERAL_TOKEN_KEY = "weylandai_ephemeral_token_v1";
 
     var state = { matches: [], badges: {} };
     try {
@@ -3724,17 +3731,22 @@
       showToast("UNLOCKED: " + (label || (BADGES[key] && BADGES[key].label) || key));
     }
 
+    // One guest token per tab: the stored one, or one mint shared by every caller that asks while
+    // it is under way (two mints would leave two guest identities, the second replacing the first).
     function ephemeralToken(){
       try {
         var existing = sessionStorage.getItem(EPHEMERAL_TOKEN_KEY);
         if (existing) return Promise.resolve(existing);
       } catch (_) {}
-      return fetch("/api/auth/ephemeral", { method: "POST" })
+      if (ephemeralMint) return ephemeralMint;
+      ephemeralMint = fetch("/api/auth/ephemeral", { method: "POST" })
         .then(function(r){ if (!r.ok) throw new Error("ephemeral auth failed"); return r.json(); })
         .then(function(d){
           try { sessionStorage.setItem(EPHEMERAL_TOKEN_KEY, d.token); } catch(_) {}
+          ephemeralMint = null;
           return d.token;
-        });
+        }, function(err){ ephemeralMint = null; throw err; });
+      return ephemeralMint;
     }
 
     var sessionBadge = document.getElementById("session-badge");
