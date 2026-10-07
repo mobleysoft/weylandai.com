@@ -10,7 +10,8 @@
 //
 // Moved here from the repo-root monolith (src/routes/demo-trial.js) on
 // 2026-10-07, request and answer unchanged (same KV pointer
-// demo-clone:<caller>, same 24 h life, same per-network limit, same rows),
+// demo-clone:<caller>, same 24 h life, same rows; a guest's new copies keep
+// the per-network limit, an account's count toward the account - see below),
 // so that a copy carries the demo's hardware sets WITH their parts
 // (lib/demo-building.js) and is written in one D1 batch. This worker already
 // owned the rest of the copy's life: the workspace that opens it and the
@@ -33,6 +34,14 @@ export function networkOf(rawIp) {
   return ip.includes(":") ? ip.split(":").slice(0, 4).join(":") + "::/64" : ip;
 }
 
+/** Which limit a new copy counts toward: a guest's network, or an account. */
+export function demoCopyLimit(user, rawIp) {
+  if (user && !user.ephemeral && user.userId) {
+    return { key: "user:" + user.userId, limits: { requests: 5, windowSeconds: 600 }, message: "Too many copies of the demo building were made for this account in the last few minutes. Please try again shortly." };
+  }
+  return { key: networkOf(rawIp), limits: { requests: 20, windowSeconds: 600 }, message: "Too many copies of the demo building were made from this network in the last few minutes. Please try again shortly." };
+}
+
 export function registerDemoBuildingRoutes(router, { authenticate, checkRateLimit }) {
   const handler = async (request2, env2) => {
     const { error: error4, user } = await authenticate(request2, env2);
@@ -49,11 +58,18 @@ export function registerDemoBuildingRoutes(router, { authenticate, checkRateLimi
           return jsonResponse3({ project_id: cached.project_id, session_id: cached.session_id, reused: true });
         }
       }
-      // Only a NEW copy (about 45 rows) counts toward the per-network limit:
-      // handing back an existing one writes nothing.
-      const rateCheck = await checkRateLimit(networkOf(request2.headers.get("CF-Connecting-IP")), "demo-trial-clone", env2, { requests: 20, windowSeconds: 600 });
+      // Only a NEW copy (about 45 rows) counts toward a limit: handing back an
+      // existing one writes nothing. A guest (an AuthFor ephemeral token, free
+      // to mint) is limited per network, as before. An account is limited per
+      // account instead: its copy is normally made once a day (the KV pointer),
+      // so the limit only stops bursts, and an account's copy (the workspace
+      // asks for one when its list is empty) no longer uses up its network's
+      // allowance for guests - an office of signed-in users, or a run of the
+      // journey tests from one machine, found the demo refused (2026-10-07).
+      const limit = demoCopyLimit(user, request2.headers.get("CF-Connecting-IP"));
+      const rateCheck = await checkRateLimit(limit.key, "demo-trial-clone", env2, limit.limits);
       if (rateCheck.limited) {
-        return jsonResponse3({ error: "Too many trial session requests from this network. Please try again shortly.", retryAfter: rateCheck.retryAfter }, 429);
+        return jsonResponse3({ error: limit.message, retryAfter: rateCheck.retryAfter }, 429);
       }
       const made = await cloneDemoBuilding(env2, user);
       await env2.CACHE.put(cacheKey, JSON.stringify({ project_id: made.project_id, session_id: made.session_id }), { expirationTtl: CLONE_TTL_SECONDS });

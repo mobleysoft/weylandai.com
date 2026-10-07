@@ -1873,6 +1873,7 @@ global.SovereignPdfRender = {
       // Back to the signed-out workspace, in place: nothing of the account stays on screen.
       function signedOutHere(note) {
         state.sessions = []; state.current = null; state.detail = null; state.lastUpload = null; state.demoAsked = false;
+        if (state.demoRetry) { clearTimeout(state.demoRetry); state.demoRetry = null; }
         hideViewer();
         $("sessions-list").innerHTML = '<div class="empty">Loading&hellip;</div>';
         ["session-card", "package-card"].forEach(function (id) { $(id).classList.add("hide"); });
@@ -2370,8 +2371,24 @@ global.SovereignPdfRender = {
         state.demoAsked = true;
         $("sessions-list").innerHTML = '<div class="empty"><span class="spin"></span>Loading&hellip; making your own copy of the demo building.</div>';
         return api("/api/demo/weyland-building/session", { method: "POST" }).then(function (res) {
-          if (!res.ok) { renderSessions(); return state.sessions; }
-          return loadSessions();
+          if (res.ok) return loadSessions();
+          // Not made (a limit on new copies, or an error): say so under the empty
+          // list instead of a bare "Nothing uploaded yet", and try once more after the limit's
+          // window if the list is still empty then (2026-10-07: a journey run got 429 here and
+          // the visitor saw an empty list with no reason).
+          renderSessions();
+          var wait = res.status === 429 && res.data && Number(res.data.retryAfter) > 0 ? Math.min(Number(res.data.retryAfter), 900) : 0;
+          var why = errText(res.data) + (res.status && res.status !== 429 ? " (HTTP " + res.status + ")." : "");
+          if (wait) why = why.replace(/\s*Please try again shortly\.?\s*$/, "");
+          $("sessions-list").insertAdjacentHTML("beforeend", '<p class="muted-small" id="demo-copy-note">Your own copy of the demo building could not be made just now. ' + esc(why) + " " +
+            (wait ? "This page tries again in about " + Math.max(1, Math.round(wait / 60)) + " min; meanwhile, upload a schedule above." : "Upload a schedule above, or open this page again later to look through the demo building.") + "</p>");
+          if (wait && !state.demoRetry) {
+            // Once per sign-in: the timer id stays set (as the marker) until sign-out.
+            state.demoRetry = setTimeout(function () {
+              if (state.authed && !state.sessions.length) { state.demoAsked = false; start(); }
+            }, (wait + 3) * 1000);
+          }
+          return state.sessions;
         });
       }
       function openFirst(sessions) {

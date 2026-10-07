@@ -8,7 +8,7 @@ import assert from "node:assert/strict";
 import { DatabaseSync } from "node:sqlite";
 import { NativeRouter } from "../src/lib/router.js";
 import { DEMO_SHEET, PART_TYPES, parsePart, splitParts, sheetHardwareSets, seedHardwareStatements, cloneDemoBuilding, SEED_SESSION_ID, SEED_PROJECT_ID } from "../src/lib/demo-building.js";
-import { registerDemoBuildingRoutes, networkOf } from "../src/routes/demo-building.js";
+import { registerDemoBuildingRoutes, networkOf, demoCopyLimit } from "../src/routes/demo-building.js";
 
 const SCHEMA = [
   "CREATE TABLE projects (id TEXT PRIMARY KEY, tenant_id TEXT NOT NULL, name TEXT NOT NULL, project_type TEXT DEFAULT 'DOORS', status TEXT DEFAULT 'active', client_name TEXT, client_address TEXT, client_contact_name TEXT, client_contact_email TEXT, client_contact_phone TEXT, billing_name TEXT, billing_address TEXT, shipping_address TEXT, ap_contact TEXT, resale_number TEXT, project_address TEXT, dsa_number TEXT, architect TEXT, contractor TEXT, external_project_ref TEXT, metadata TEXT, notes TEXT, metadata_affirmed INTEGER DEFAULT 0, metadata_affirmed_at TEXT, metadata_affirmed_by TEXT, created_at TEXT DEFAULT (datetime('now')), updated_at TEXT, created_by TEXT, user_id TEXT, project_number TEXT)",
@@ -160,10 +160,11 @@ test("the route hands back a complete copy, and replaces one that is gone or has
   const env = { DB: d1(db), CACHE: kv() };
   const users = { tA: { userId: "acctA", tenantId: "ven_weyland" }, tG: { ephemeral: true, id: "eph_G", userId: null } };
   let limited = 0;
+  const limitCalls = [];
   const router = new NativeRouter();
   registerDemoBuildingRoutes(router, {
     authenticate: async (request) => { const t = (request.headers.get("Authorization") || "").replace(/^Bearer /, ""); return users[t] ? { user: users[t] } : { error: new Response("{}", { status: 401 }) }; },
-    checkRateLimit: async () => { limited++; return { limited: false }; },
+    checkRateLimit: async (key, op, _env, limits) => { limited++; limitCalls.push([key, op, limits.requests, limits.windowSeconds]); return { limited: false }; },
   });
   const a1 = await call(router, env, "tA");
   assert.equal(a1.status, 201);
@@ -186,6 +187,35 @@ test("the route hands back a complete copy, and replaces one that is gone or has
   assert.equal(g1.status, 201);
   assert.ok(env.CACHE.m.has("demo-clone:eph:eph_G") && env.CACHE.m.has("demo-clone:user:acctA"));
   assert.equal((await call(router, env, "nobody")).status, 401);
+  // The account's new copies counted toward the account; the guest's toward its network.
+  assert.deepEqual(limitCalls.map((c) => c[0] + " " + c[2]), ["user:acctA 5", "user:acctA 5", "user:acctA 5", "203.0.113.9 20"]);
+  assert.ok(limitCalls.every((c) => c[1] === "demo-trial-clone" && c[3] === 600));
+});
+
+test("a limited caller gets 429 with the wait, and nothing is written", async () => {
+  const db = seededDb();
+  const env = { DB: d1(db), CACHE: kv() };
+  const router = new NativeRouter();
+  registerDemoBuildingRoutes(router, {
+    authenticate: async () => ({ user: { userId: "acctL", tenantId: "ven_weyland" } }),
+    checkRateLimit: async () => ({ limited: true, retryAfter: 321 }),
+  });
+  const before = count(db, "SELECT COUNT(*) AS n FROM hardware_extraction_sessions");
+  const r = await call(router, env, "any");
+  assert.equal(r.status, 429);
+  assert.equal(r.body.retryAfter, 321);
+  assert.match(r.body.error, /for this account/);
+  assert.equal(count(db, "SELECT COUNT(*) AS n FROM hardware_extraction_sessions"), before);
+  assert.equal(env.CACHE.m.size, 0);
+});
+
+test("a guest's new copy counts toward its network (IPv6 by /64), an account's toward the account", () => {
+  const g = demoCopyLimit({ ephemeral: true, id: "eph_1", userId: null }, "2001:db8:1:2:aaaa:bbbb:cccc:dddd");
+  assert.deepEqual([g.key, g.limits.requests, g.limits.windowSeconds], ["2001:db8:1:2::/64", 20, 600]);
+  assert.match(g.message, /from this network/);
+  const a = demoCopyLimit({ userId: "acct9" }, "203.0.113.9");
+  assert.deepEqual([a.key, a.limits.requests, a.limits.windowSeconds], ["user:acct9", 5, 600]);
+  assert.match(a.message, /for this account/);
 });
 
 test("the network limit counts an IPv6 visitor by /64", () => {
