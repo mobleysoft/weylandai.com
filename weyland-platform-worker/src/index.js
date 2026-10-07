@@ -88,6 +88,7 @@ import { registerRootRoutes } from "./routes/root.js";
 import { registerWireRoutes } from "./routes/wire.js";
 import { ingestWireNews } from "./lib/wire-tenant.js";
 import { sweepEntitlements } from "./lib/entitlements.js";
+import { withSecurityHeaders, wwwRedirect, crawlResponse } from "./lib/site-policy.js";
 
 const router = new NativeRouter();
 
@@ -132,68 +133,81 @@ registerWireRoutes(router);
 registerRootRoutes(router, { WORKER_VERSION });
 
 export default {
+  // Every answer this worker gives - the homepage it proxies, the pages, the
+  // APIs, the 404s - leaves with the security headers (lib/site-policy.js).
+  // www.weylandai.com/* is routed here only to be sent to the apex.
   async fetch(request, env, ctx) {
-    // Traffic-driven freshness (2026-10-05): Cron Triggers on this account
-    // are registered but have never fired (cron_ticks stays empty), so any
-    // request may claim the D1 lease for this worker's background job and
-    // run it via waitUntil. The visitor never waits; no request calls out.
-    trafficDrivenJob(env, ctx, { db: env.DB, job: "wirex-ingest", cadenceSeconds: 1200, worker: "weyland-platform-worker", run: () => ingestWireNews(env).then((r) => console.log("[WireX] traffic-driven ingest", r.items.length, "headlines")) });
-    // Entitlements (2026-10-07): ended trials drop to the free plan, every
-    // account keeps the guest floor - for accounts that do not visit a
-    // platform route themselves in the meantime (lib/entitlements.js).
-    trafficDrivenJob(env, ctx, { db: env.DB, job: "entitlements-sync", cadenceSeconds: 600, worker: "weyland-platform-worker", run: () => sweepEntitlements(env).then((r) => console.log("[entitlements] sweep", r.scanned, "scanned", r.changed, "changed")) });
-    const url = new URL(request.url);
+    const toApex = wwwRedirect(request);
+    if (toApex) return withSecurityHeaders(toApex);
+    return withSecurityHeaders(await handle(request, env, ctx));
+  },
+};
 
-    if (request.method === "GET" || request.method === "HEAD") {
-      // Matches weyland-entry.js's createWeylandWorker dispatch order
-      // exactly for the 3 marketing paths this Worker owns: MASCOM_EDGE
-      // (real GitHub-Pages pull-through cache) is tried first, but ONLY
-      // for the home page "/" - the monolith never routes /pricing or
-      // /subscribe through MASCOM_EDGE (those "still live as bundled HTML
-      // in this worker" per the monolith's own wrangler.toml comment), so
-      // this Worker doesn't either.
-      // Real SPA-router fragment requests (X-Skeletonking-Route: fragment -
-      // see src/lib/sk-router.js, the real client router ported from
-      // skeletonking-v2.js) must always reach SovereignPlatformRoutes.dispatch
-      // directly. MASCOM_EDGE only ever serves the full cached HTML document
-      // for "/" and knows nothing about the fragment JSON contract - see
-      // ../../src/lib/weyland-entry.js's identical fix for the same reason.
-      const isFragmentRequest = request.headers.get("X-Skeletonking-Route") === "fragment";
-      // /login is a view of the homepage (single page: the shell opens its sign-in overlay there);
-      // the old standalone page in routes/login-page.js only answers if the edge fetch fails.
-      const isHome = url.pathname === "/" || url.pathname === "/index.html" || url.pathname === "/login";
-      if (isHome && env.MASCOM_EDGE && !isFragmentRequest) {
-        try {
-          const edgeResp = await env.MASCOM_EDGE.fetch("https://weylandai.com/");
-          if (edgeResp && edgeResp.status === 200) {
-            const body = await edgeResp.arrayBuffer();
-            return new Response(body, {
-              status: 200,
-              headers: {
-                "Content-Type": edgeResp.headers.get("Content-Type") || "text/html; charset=utf-8",
-                "X-Cache": edgeResp.headers.get("X-Cache") || "",
-                "X-Served-By": "mascom-edge-via-weyland-platform-worker"
-              }
-            });
-          }
-        } catch (e) {
-          console.log("[MASCOM_EDGE delegation failed, falling back to bundled page]", e.message);
+async function handle(request, env, ctx) {
+  // Traffic-driven freshness (2026-10-05): Cron Triggers on this account
+  // are registered but have never fired (cron_ticks stays empty), so any
+  // request may claim the D1 lease for this worker's background job and
+  // run it via waitUntil. The visitor never waits; no request calls out.
+  trafficDrivenJob(env, ctx, { db: env.DB, job: "wirex-ingest", cadenceSeconds: 1200, worker: "weyland-platform-worker", run: () => ingestWireNews(env).then((r) => console.log("[WireX] traffic-driven ingest", r.items.length, "headlines")) });
+  // Entitlements (2026-10-07): ended trials drop to the free plan, every
+  // account keeps the guest floor - for accounts that do not visit a
+  // platform route themselves in the meantime (lib/entitlements.js).
+  trafficDrivenJob(env, ctx, { db: env.DB, job: "entitlements-sync", cadenceSeconds: 600, worker: "weyland-platform-worker", run: () => sweepEntitlements(env).then((r) => console.log("[entitlements] sweep", r.scanned, "scanned", r.changed, "changed")) });
+  const url = new URL(request.url);
+
+  if (request.method === "GET" || request.method === "HEAD") {
+    // robots.txt and the sitemap index (routes weylandai.com/robots.txt* and
+    // weylandai.com/sitemap*); every other path under those routes falls
+    // through to the router's 404.
+    const crawl = crawlResponse(url);
+    if (crawl) return crawl;
+    // Matches weyland-entry.js's createWeylandWorker dispatch order
+    // exactly for the 3 marketing paths this Worker owns: MASCOM_EDGE
+    // (real GitHub-Pages pull-through cache) is tried first, but ONLY
+    // for the home page "/" - the monolith never routes /pricing or
+    // /subscribe through MASCOM_EDGE (those "still live as bundled HTML
+    // in this worker" per the monolith's own wrangler.toml comment), so
+    // this Worker doesn't either.
+    // Real SPA-router fragment requests (X-Skeletonking-Route: fragment -
+    // see src/lib/sk-router.js, the real client router ported from
+    // skeletonking-v2.js) must always reach SovereignPlatformRoutes.dispatch
+    // directly. MASCOM_EDGE only ever serves the full cached HTML document
+    // for "/" and knows nothing about the fragment JSON contract - see
+    // ../../src/lib/weyland-entry.js's identical fix for the same reason.
+    const isFragmentRequest = request.headers.get("X-Skeletonking-Route") === "fragment";
+    // /login is a view of the homepage (single page: the shell opens its sign-in overlay there);
+    // the old standalone page in routes/login-page.js only answers if the edge fetch fails.
+    const isHome = url.pathname === "/" || url.pathname === "/index.html" || url.pathname === "/login";
+    if (isHome && env.MASCOM_EDGE && !isFragmentRequest) {
+      try {
+        const edgeResp = await env.MASCOM_EDGE.fetch("https://weylandai.com/");
+        if (edgeResp && edgeResp.status === 200) {
+          const body = await edgeResp.arrayBuffer();
+          return new Response(body, {
+            status: 200,
+            headers: {
+              "Content-Type": edgeResp.headers.get("Content-Type") || "text/html; charset=utf-8",
+              "X-Cache": edgeResp.headers.get("X-Cache") || "",
+              "X-Served-By": "mascom-edge-via-weyland-platform-worker"
+            }
+          });
         }
-      }
-      // The routes for /pricing* and /subscribe* are wildcards (2026-10-07), so
-      // every query-string and trailing-slash spelling arrives here; anything
-      // else under those prefixes falls through to the router's 404, as before.
-      const clean = url.pathname.toLowerCase().replace(/^\/|\/$/g, "");
-      if (clean === "" || clean === "pricing" || clean === "subscribe") {
-        const marketingResponse = SovereignPlatformRoutes.dispatch(url.pathname, isFragmentRequest);
-        if (marketingResponse && clean === "pricing" && !isFragmentRequest && url.searchParams.get("embed") === "1") {
-          return embedPricing(marketingResponse);
-        }
-        if (marketingResponse) return marketingResponse;
+      } catch (e) {
+        console.log("[MASCOM_EDGE delegation failed, falling back to bundled page]", e.message);
       }
     }
+    // The routes for /pricing* and /subscribe* are wildcards (2026-10-07), so
+    // every query-string and trailing-slash spelling arrives here; anything
+    // else under those prefixes falls through to the router's 404, as before.
+    const clean = url.pathname.toLowerCase().replace(/^\/|\/$/g, "");
+    if (clean === "" || clean === "pricing" || clean === "subscribe") {
+      const marketingResponse = SovereignPlatformRoutes.dispatch(url.pathname, isFragmentRequest);
+      if (marketingResponse && clean === "pricing" && !isFragmentRequest && url.searchParams.get("embed") === "1") {
+        return embedPricing(marketingResponse);
+      }
+      if (marketingResponse) return marketingResponse;
+    }
+  }
 
-    return router.handle(request, env, ctx);
-  },
-
-};
+  return router.handle(request, env, ctx);
+}

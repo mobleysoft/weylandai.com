@@ -280,6 +280,26 @@ zone_name = "weylandai.com"
 pattern = "weylandai.com/api/wire/*"
 zone_name = "weylandai.com"
 
+# 2026-10-07: www.weylandai.com was answered by a Cloudflare Tunnel origin
+# (proxied CNAME 712d54ce-....cfargotunnel.com) with its own, different copy
+# of the homepage. Every www URL now gets a permanent redirect to the same
+# path on the apex (src/lib/site-policy.js wwwRedirect). The existing, more
+# specific www.weylandai.com/venture.json route (getventures) is unchanged.
+[[routes]]
+pattern = "www.weylandai.com/*"
+zone_name = "weylandai.com"
+
+# 2026-10-07: robots.txt and the sitemap index (src/lib/site-policy.js).
+# Both fell through to the monolith before: a robots.txt of comments with no
+# rule or sitemap, and a 3-page sitemap without the finder's.
+[[routes]]
+pattern = "weylandai.com/robots.txt*"
+zone_name = "weylandai.com"
+
+[[routes]]
+pattern = "weylandai.com/sitemap*"
+zone_name = "weylandai.com"
+
 # ── Plain vars ───────────────────────────────────────────────
 # STRIPE_PUBLISHABLE_KEY (2026-10-07): the live publishable key of the same
 # Stripe account STRIPE_SECRET_KEY and vendyai use (it carries the same
