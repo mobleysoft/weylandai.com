@@ -54,12 +54,24 @@ async function createWeylandAccount() {
 // Demo clones the homepage creates for this run (session_id -> project_id), deleted in cleanup().
 const clones = new Map();
 const pendingClones = new Set();
+const inflightClones = new Set();
+const isClone = (req) => req.method() === "POST" && /\/api\/demo\/weyland-building\/session\/?$/.test(new URL(req.url()).pathname);
 function watchClones(context) {
+  context.on("request", (req) => { if (isClone(req)) inflightClones.add(req); });
+  context.on("requestfinished", (req) => inflightClones.delete(req));
+  context.on("requestfailed", (req) => inflightClones.delete(req));
   context.on("response", (r) => {
-    if (r.request().method() !== "POST" || !/\/api\/demo\/weyland-building\/session\/?$/.test(new URL(r.url()).pathname) || r.status() >= 300) return;
+    if (!isClone(r.request()) || r.status() >= 300) return;
     const p = r.json().then((j) => { if (j && j.session_id) clones.set(j.session_id, j.project_id || null); }).catch(() => {});
     pendingClones.add(p); p.finally(() => pendingClones.delete(p));
   });
+}
+// Before a reload or closing a context: let clone requests in flight answer, so their ids are read
+// (a dropped request can still create the clone on the server).
+async function settleClones() {
+  const end = Date.now() + 20000;
+  while (inflightClones.size && Date.now() < end) await new Promise((r) => setTimeout(r, 250));
+  if (pendingClones.size) await Promise.race([Promise.allSettled([...pendingClones]), new Promise((r) => setTimeout(r, 4000))]);
 }
 
 async function cleanup() {
@@ -144,6 +156,7 @@ try {
 
   const markBeforeReload = await sameDoc();
   check("still the same document after sign-in", markBeforeReload);
+  await settleClones();
   await page.reload({ waitUntil: "load" });
   await page.waitForFunction(() => document.documentElement.dataset.weylandAuth === "signed-in", null, { timeout: 15000 }).catch(() => {});
   check("signed-in state survives a reload", await page.evaluate(() => document.documentElement.dataset.weylandAuth) === "signed-in");
@@ -169,6 +182,7 @@ try {
   const sv2 = await serverView(ctx);
   check("sign-out ends the server session", !sv2.valid, JSON.stringify(sv2));
   check("sign-out clears the AuthFor token", !(await page.evaluate(() => localStorage.getItem("_authfor_token"))));
+  await settleClones();
   await ctx.close();
 
   // ---- Journey B: the /login deep link used by product pages ----
@@ -216,11 +230,12 @@ try {
   check("/login continues to its target inside the overlay", b.path === "/subx-app" && b.view === "app", JSON.stringify(b) + " sign-in form renders=" + renders + " api=" + apiLog.join(" | "));
   const sv3 = await serverView(ctx2);
   check("/login sign-in also creates the server session", sv3.cookie && sv3.valid, JSON.stringify(sv3));
+  await settleClones();
   await ctx2.close();
 } catch (e) {
   check("journey ran to completion", false, e.message);
 } finally {
-  if (pendingClones.size) await Promise.race([Promise.allSettled([...pendingClones]), new Promise((r) => setTimeout(r, 4000))]);
+  await settleClones();
   if (browser) await browser.close().catch(() => {});
   const cleaned = await cleanup();
   check("test account rows and demo clones deleted", cleaned.ok, cleaned.detail);

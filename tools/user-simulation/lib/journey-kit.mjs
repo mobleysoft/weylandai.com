@@ -691,6 +691,7 @@ export class Journey {
     this.apiLog = [];
     this.pending = new Set();
     this.cloneRequests = new Set();
+    this.abortedClones = [];
     this.browser = null;
     this.renderer = null;
     this.cleanupResult = null;
@@ -737,9 +738,12 @@ export class Journey {
     // with nobody left to read its id. Clone requests in flight are tracked, and closing a context
     // (or the browser, in run()) first waits for them to answer so their ids are captured.
     ctx.on("request", (req) => { if (req.method() === "POST" && CLONE_PATH.test(pathOf(req.url()))) this.cloneRequests.add(req); });
-    const settled = (req) => this.cloneRequests.delete(req);
-    ctx.on("requestfinished", settled);
-    ctx.on("requestfailed", settled);
+    ctx.on("requestfinished", (req) => this.cloneRequests.delete(req));
+    ctx.on("requestfailed", (req) => {
+      // A clone request the browser gave up on (e.g. the page navigated away) may still have been
+      // carried out on the server, with no id to delete it by: the report says so.
+      if (this.cloneRequests.delete(req)) this.abortedClones.push({ at: new Date().toISOString(), error: String((req.failure() || {}).errorText || "") });
+    });
     const close = ctx.close.bind(ctx);
     ctx.close = async (...args) => { await this.settleClones(); return close(...args); };
     return ctx;
@@ -760,6 +764,11 @@ export class Journey {
     p.__downloads = [];
     p.on("popup", (pp) => { p.__popups.push(pp); pp.on("download", (d) => p.__downloads.push(d.suggestedFilename())); });
     p.on("download", (d) => p.__downloads.push(d.suggestedFilename()));
+    // Leaving a document cancels its requests in the browser, not on the server: a navigation or
+    // reload the test makes first waits for demo-clone requests in flight, so their ids are read.
+    const goto = p.goto.bind(p), reload = p.reload.bind(p);
+    p.goto = async (...args) => { await this.settleClones(); return goto(...args); };
+    p.reload = async (...args) => { await this.settleClones(); return reload(...args); };
     return p;
   }
 
@@ -836,6 +845,7 @@ export class Journey {
   }
 
   async cleanup() {
+    if (this.abortedClones.length) this.note("demo_clone_requests_aborted", { count: this.abortedClones.length, requests: this.abortedClones, meaning: "the browser dropped these clone requests (the page left); if the server still made a clone, it is a guest-owned 'The WeylandAI Building' copy created at about that time, left to the demo-clone sweep" });
     const nothing = !this.accounts.length && !this.clones.size && !this.uploads.size;
     if (nothing) { this.cleanupResult = { nothing: true }; return; }
     let res;
