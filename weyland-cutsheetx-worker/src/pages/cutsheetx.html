@@ -58,7 +58,7 @@
     .stat{background:#0d0f14;border:1px solid var(--line);border-radius:10px;padding:12px 14px}
     .stat .n{font-size:22px;font-weight:900;color:var(--primary)}
     .stat .l{font:700 9px ui-monospace,monospace;color:var(--muted);letter-spacing:.06em;text-transform:uppercase;margin-top:2px}
-    .link-btn{color:var(--primary);background:none;border:1px solid rgba(42,82,255,.35);border-radius:99px;padding:5px 11px;font:750 10px ui-monospace,monospace;cursor:pointer}
+    .link-btn{color:var(--primary);background:none;border:1px solid rgba(42,82,255,.35);border-radius:99px;padding:5px 11px;font:750 10px ui-monospace,monospace;cursor:pointer;text-decoration:none;display:inline-block}
     .link-btn:hover{background:rgba(102,212,255,.1)}
     .link-btn[disabled]{opacity:.4;cursor:not-allowed}
     @media(max-width:700px){.excerpt{max-width:220px}}
@@ -403,8 +403,12 @@
     // does and returns the same per-line answer: one matcher, one answer. A match is cited by
     // its price-book pages (a filed cut sheet) or, when no cut sheet is filed, by the
     // catalogue page that names the model. "No match found" means no product matched at all.
+    // A citation the matcher signed (?cite=) opens as a plain link: the browser's own PDF viewer
+    // goes straight to #page=N and streams the file. An unsigned one is fetched with the token.
     function citeButton(id, label, url){
-      return url ? '<button class="link-btn" id="' + id + '" data-url="' + esc(url) + '">' + label + '</button>' : '';
+      if (!url) return '';
+      if (/[?&]cite=/.test(url)) return '<a class="link-btn" id="' + id + '" href="' + esc(url) + '" target="_blank" rel="noopener">' + label + '</a>';
+      return '<button class="link-btn" id="' + id + '" data-url="' + esc(url) + '">' + label + '</button>';
     }
     document.getElementById('match-btn').addEventListener('click', function(){
       var manufacturer = document.getElementById('match-mfr').value.trim();

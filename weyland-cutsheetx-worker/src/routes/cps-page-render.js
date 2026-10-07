@@ -1,5 +1,6 @@
 import { jsonResponse3 } from "../lib/json-response.js";
 import { resolveCatalogueKey } from "../lib/catalogue-storage.js";
+import { citationGrant, grantRefusal } from "../lib/citation-links.js";
 
 /**
  * @param {object} router
@@ -7,9 +8,16 @@ import { resolveCatalogueKey } from "../lib/catalogue-storage.js";
  */
 export function registerCpsPageRenderRoutes(router, { authenticate, PDFDocument }) {
   router.get("/api/cps/catalogues/:catalogueId/pages/:pageNum/render", async (request2, env2) => {
-    const { error: error4, user } = await authenticate(request2, env2);
-    if (error4)
-      return error4;
+    // 2026-10-07: a citation link the matcher signed (?cite=, lib/citation-links.js)
+    // opens its one page without a token - the homepage renders citations as plain
+    // links, which carry no Authorization header. Everything else authenticates
+    // exactly as before (guest token, account token, session cookie).
+    const grant = await citationGrant(request2, env2);
+    if (grant !== "valid") {
+      const { error: error4 } = await authenticate(request2, env2);
+      if (error4)
+        return grant === "none" ? error4 : jsonResponse3(grantRefusal(grant), grant === "expired" ? 410 : 401);
+    }
     try {
       const { catalogueId, pageNum } = request2.params;
       const pageNumber = parseInt(pageNum, 10);

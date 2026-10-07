@@ -24,6 +24,7 @@
 import { jsonResponse3 } from "../lib/json-response.js";
 import { productCoverageSummary } from "../lib/product-coverage.js";
 import { kvRateLimit, normalizeMissKey } from "../lib/cut-sheet-misses.js";
+import { citationGrant, grantRefusal } from "../lib/citation-links.js";
 
 const COVERAGE_TTL_SECONDS = 60;
 const REQUEST_NOTE_MAX = 200;
@@ -193,10 +194,16 @@ router.get("/api/cut-sheets/coverage", async (request2, env2, ctx) => {
 // Range requests honoured (206) so PDF viewers can seek to #page=N
 // without pulling the whole price book first.
 router.get("/api/cut-sheets/sheet/:id/pdf", async (request2, env2) => {
-  const { error: error4, user } = await authenticate(request2, env2);
-  if (error4)
-    return error4;
-  {
+  // 2026-10-07: a citation link the matcher signed (?cite=, lib/citation-links.js)
+  // opens its one document without a token, Range requests included (a PDF
+  // viewer seeking to #page=N re-requests the same signed URL). The matcher
+  // route that minted the link already required CutsheetX access. Everything
+  // else authenticates exactly as before.
+  const grant = await citationGrant(request2, env2);
+  if (grant !== "valid") {
+    const { error: error4, user } = await authenticate(request2, env2);
+    if (error4)
+      return grant === "none" ? error4 : jsonResponse3(grantRefusal(grant), grant === "expired" ? 410 : 401);
     const _prodErr = await requireProductAccess(user, env2, "cutsheetx");
     if (_prodErr) return _prodErr;
   }

@@ -41,6 +41,11 @@ workers_dev = true
 # manufacturers, manufacturer_domains, cut_sheet_discoveries/_queue,
 # discovery_engine_config, user_affirmed_cutsheets, extraction_cache) all
 # already live in the shared weyland_db.
+# Secret CITATION_LINK_SECRET (2026-10-07; set with "wrangler secret put
+# CITATION_LINK_SECRET", never written in this file): the HMAC key for signed
+# citation links (src/lib/citation-links.js), so a citation the matcher hands a
+# guest opens as a plain link. Without it, citation URLs stay unsigned and the
+# two document routes need a token, as before.
 [[d1_databases]]
 binding = "DB"
 database_name = "weyland_db"

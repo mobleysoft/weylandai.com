@@ -34,6 +34,7 @@ import { matchComponentToCutSheets } from "../lib/product-database.js";
 import { parseSpecText, recordMisses } from "../lib/cut-sheet-misses.js";
 import { getManufacturerNames } from "../lib/product-database.js";
 import { jsonResponse3 } from "../lib/json-response.js";
+import { signMatchResultLinks } from "../lib/citation-links.js";
 
 // POST /api/cut-sheets/match-batch (2026-10-04): up to this many lines per
 // call; 400 above (not silently truncated like the older /batch-match).
@@ -81,9 +82,12 @@ export function lineFromFields(fields, knownManufacturers = []) {
   return { raw: text, manufacturer: mfr || null, model, modelFull: modelFull !== model ? modelFull : undefined };
 }
 
-// The one matcher call every entry point makes for a line.
-export function matchLine(line, env2) {
-  return matchComponentToCutSheets({ manufacturer: line.manufacturer || void 0, model: line.model, modelFull: line.modelFull || void 0 }, env2);
+// The one matcher call every entry point makes for a line. Its citation URLs
+// come back signed (lib/citation-links.js), so a citation opens as a plain
+// link for the guest or account that asked.
+export async function matchLine(line, env2) {
+  const r = await matchComponentToCutSheets({ manufacturer: line.manufacturer || void 0, model: line.model, modelFull: line.modelFull || void 0 }, env2);
+  return signMatchResultLinks(env2, r);
 }
 
 // Projects the shared matcher's full result down to the compact per-line
@@ -273,7 +277,7 @@ router.post("/api/cut-sheets/batch-match", async (request2, env2) => {
     const maxBatch = 50;
     const batch = components.slice(0, maxBatch);
     const results = await Promise.all(
-      batch.map((comp) => matchComponentToCutSheets(comp, env2))
+      batch.map((comp) => matchComponentToCutSheets(comp, env2).then((r) => signMatchResultLinks(env2, r)))
     );
     const matched = results.filter((r) => r.matched);
     const unmatched = results.filter((r) => !r.matched);
@@ -318,7 +322,7 @@ router.get("/api/cut-sheets/for-set/:setId", async (request2, env2) => {
       }), { status: 404, headers: { "Content-Type": "application/json" } });
     }
     const results = await Promise.all(
-      components.results.map((comp) => matchComponentToCutSheets(comp, env2))
+      components.results.map((comp) => matchComponentToCutSheets(comp, env2).then((r) => signMatchResultLinks(env2, r)))
     );
     const seenSheets = /* @__PURE__ */ new Set();
     const uniqueCutSheets = [];
