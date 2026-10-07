@@ -207,13 +207,15 @@ try {
   try {
     await d1("DELETE FROM weyland_sessions WHERE user_id = " + q(userId));
     await d1("DELETE FROM weyland_subscriptions WHERE subscription_id = " + q(sub) + " OR user_id = " + q(userId));
+    // Since 2026-10-07 every completed checkout is recorded in weyland_purchases too.
+    await d1("DELETE FROM weyland_purchases WHERE checkout_session_id = " + q(checkoutId) + " OR user_id = " + q(userId));
     await d1("DELETE FROM processed_webhook_events WHERE event_id LIKE " + q("evt_usersim" + id + "%") + " OR event_id = " + q("checkout:" + checkoutId));
     await d1("DELETE FROM users WHERE id = " + q(userId));
     const env = { ...process.env };
     delete env.CF_API_KEY;
     await execFileP("npx", ["wrangler", "kv", "key", "delete", "--namespace-id", CACHE_NAMESPACE, "--remote", "checkout_status:" + checkoutId], { cwd: WORKER_DIR, env }).catch((e) => console.error("kv delete:", e.message.split("\n")[0]));
-    const left = (await d1("SELECT (SELECT COUNT(*) FROM users WHERE id = " + q(userId) + ") AS users, (SELECT COUNT(*) FROM weyland_sessions WHERE user_id = " + q(userId) + ") AS sessions, (SELECT COUNT(*) FROM weyland_subscriptions WHERE subscription_id = " + q(sub) + ") AS subscriptions, (SELECT COUNT(*) FROM processed_webhook_events WHERE event_id LIKE " + q("evt_usersim" + id + "%") + " OR event_id = " + q("checkout:" + checkoutId) + ") AS dedupe")).results[0];
-    check("cleanup: no rows left", left.users === 0 && left.sessions === 0 && left.subscriptions === 0 && left.dedupe === 0, left);
+    const left = (await d1("SELECT (SELECT COUNT(*) FROM users WHERE id = " + q(userId) + ") AS users, (SELECT COUNT(*) FROM weyland_sessions WHERE user_id = " + q(userId) + ") AS sessions, (SELECT COUNT(*) FROM weyland_subscriptions WHERE subscription_id = " + q(sub) + ") AS subscriptions, (SELECT COUNT(*) FROM weyland_purchases WHERE checkout_session_id = " + q(checkoutId) + ") AS purchases, (SELECT COUNT(*) FROM processed_webhook_events WHERE event_id LIKE " + q("evt_usersim" + id + "%") + " OR event_id = " + q("checkout:" + checkoutId) + ") AS dedupe")).results[0];
+    check("cleanup: no rows left", left.users === 0 && left.sessions === 0 && left.subscriptions === 0 && left.purchases === 0 && left.dedupe === 0, left);
   } catch (e) {
     check("cleanup", false, { error: e.message });
   }
