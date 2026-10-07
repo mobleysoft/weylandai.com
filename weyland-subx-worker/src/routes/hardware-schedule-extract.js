@@ -247,6 +247,15 @@ router.post("/api/hardware-schedule/start", async (request2, env2) => {
   const { error: error4, user } = await authenticate(request2, env2);
   if (error4)
     return error4;
+  // 2026-10-07: an upload belongs to an account (hardware_extraction_sessions
+  // .user_id is NOT NULL). A guest session (AuthFor ephemeral, no users row)
+  // used to get through to the KV + R2 writes and then fail the insert with a
+  // 500, leaving the file behind under hardware-sessions/null/. Refused here,
+  // before anything is stored, with the code the workspace answers with its
+  // in-place sign-in.
+  if (!user || !user.userId) {
+    return jsonResponse3({ success: false, error: "Sign in to upload your own schedule.", code: "SIGN_IN_REQUIRED" }, 401);
+  }
   const subError = await requireActiveSubscription(user, env2);
   if (subError)
     return subError;
