@@ -285,7 +285,11 @@ export async function openHome(page, journey, tag = "") {
   await sleep(600);
 }
 
-/** Desktop starts with the dossier lowered over the 3D corridor; Enter raises it (phones start raised). */
+/** Desktop starts with the dossier lowered over the 3D corridor; Enter raises it (phones start raised).
+ *  Returns once the dossier has stopped moving: html.folder-lowered goes at the START of the raise,
+ *  and .envelope-frame's 0.75 s transform transition is still carrying every control on it from the
+ *  hand to the eye. A press aimed while it moves can miss (seen live 2026-10-07: #hm-run sampled at
+ *  [105,833] -> [-1650,1527] -> [-85,816] -> [90,761] in the 700 ms after the class went). */
 export async function raiseDossier(page, { touch = false } = {}) {
   const lowered = () => page.evaluate(() => document.documentElement.classList.contains("folder-lowered"));
   if (!(await lowered())) return "raised";
@@ -293,7 +297,23 @@ export async function raiseDossier(page, { touch = false } = {}) {
   else await page.keyboard.press("Enter");
   await page.waitForFunction(() => !document.documentElement.classList.contains("folder-lowered"), null, { timeout: 6000 }).catch(() => {});
   if (await lowered()) { await page.evaluate(() => { const b = document.getElementById("envelope-raise"); if (b) b.click(); }); await sleep(900); }
-  return (await lowered()) ? "still lowered" : "raised";
+  if (await lowered()) return "still lowered";
+  await settleDossier(page);
+  return "raised";
+}
+
+/** Waits (up to 3 s) until the dossier frame's on-screen box has held still for 3 animation frames. */
+export async function settleDossier(page, ms = 3000) {
+  await page.waitForFunction(() => {
+    const el = document.querySelector(".envelope-frame");
+    if (!el) return true;
+    const r = el.getBoundingClientRect();
+    const key = [r.x, r.y, r.width, r.height].map((v) => Math.round(v)).join(",");
+    const s = window.__wajSettle || (window.__wajSettle = { key: "", same: 0 });
+    if (s.key === key) s.same += 1; else { s.key = key; s.same = 0; }
+    return s.same >= 3;
+  }, null, { polling: "raf", timeout: ms }).catch(() => {});
+  await page.evaluate(() => { delete window.__wajSettle; }).catch(() => {});
 }
 
 export async function setMark(page) {
