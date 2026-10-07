@@ -49,7 +49,7 @@ export function pricingEmbeddedCheckoutScript() {
     "      .catch(function (e) { if (btn) { btn.textContent = 'CHECKOUT UNAVAILABLE - EMAIL HELLO@WEYLANDAI.COM'; } })",
     "      .then(function () { if (btn && label && btn.textContent === 'OPENING CHECKOUT...') { btn.textContent = label; } if (btn) btn.disabled = false; });",
     "  };",
-    "  if (/[?&]checkout=return/.test(location.search)) weylandCheckoutHelper();",
+    "  if (/[?&]checkout=(return|success)/.test(location.search)) weylandCheckoutHelper();",
     "})();",
     "</script>"
   ].join("\n");

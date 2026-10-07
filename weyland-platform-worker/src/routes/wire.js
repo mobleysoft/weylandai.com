@@ -332,7 +332,7 @@ const WIRE_PAGE = `<!doctype html>
     var d = e.detail || {};
     if ((d.status === 'complete' || d.status === 'active') && d.product_id === 'weyland-wire-seat') rememberPro(d.session_id);
   });
-  if (/[?&]checkout=return/.test(location.search)) weylandCheckoutHelper();
+  if (/[?&]checkout=(return|success)/.test(location.search)) weylandCheckoutHelper();
   document.getElementById('upgrade-btn')?.addEventListener('click', function () {
     var btn = this;
     btn.disabled = true;

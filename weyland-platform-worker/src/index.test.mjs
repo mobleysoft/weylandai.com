@@ -60,3 +60,17 @@ test("anything else under the wildcard prefixes keeps the router's 404", async (
     assert.match(r.headers.get("Content-Type"), /json/);
   }
 });
+
+test("a checkout coming back to the homepage gets the checkout helper; a plain visit does not", async () => {
+  const edgeEnv = { MASCOM_EDGE: { fetch: async () => new Response("<html><body><p>home</p></body></html>", { status: 200, headers: { "Content-Type": "text/html" } }) } };
+  const plain = await worker.fetch(new Request("https://weylandai.com/"), edgeEnv, ctx);
+  assert.ok(!(await plain.text()).includes("embedded-checkout.js"));
+  for (const q of ["?checkout=success&session_id=cs_live_abc123", "?checkout=return&session_id=cs_live_abc123"]) {
+    const back = await worker.fetch(new Request("https://weylandai.com/" + q), edgeEnv, ctx);
+    assert.match(await back.text(), /<script src="\/api\/billing\/embedded-checkout\.js" defer><\/script><\/body>/, q);
+  }
+  for (const q of ["?checkout=success&session_id=%3Cscript%3E", "?checkout=cancelled&session_id=cs_live_abc123"]) {
+    const other = await worker.fetch(new Request("https://weylandai.com/" + q), edgeEnv, ctx);
+    assert.ok(!(await other.text()).includes("embedded-checkout.js"), q);
+  }
+});

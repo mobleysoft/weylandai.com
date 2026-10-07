@@ -91,6 +91,22 @@ import { sweepEntitlements } from "./lib/entitlements.js";
 
 const router = new NativeRouter();
 
+// A checkout coming back to the homepage (?checkout=success|return&session_id=cs_...,
+// set by routes/billing.js): the page gets /api/billing/embedded-checkout.js, whose
+// resume() shows the result in place, waits until the seat is provisioned (which
+// sets the session cookie) and refreshes the shell - what /subscribe used to do
+// after the old success URL, without leaving the page the buyer started on.
+function isCheckoutReturn(url) {
+  const kind = url.searchParams.get("checkout");
+  return (kind === "success" || kind === "return") && /^cs_(live|test)_[A-Za-z0-9]+$/.test(url.searchParams.get("session_id") || "");
+}
+function withCheckoutHelper(buf) {
+  const html = new TextDecoder().decode(buf);
+  const at = html.lastIndexOf("</body>");
+  if (at === -1 || html.includes("/api/billing/embedded-checkout.js")) return buf;
+  return new TextEncoder().encode(html.slice(0, at) + '<script src="/api/billing/embedded-checkout.js" defer></script>' + html.slice(at));
+}
+
 // /pricing inside the homepage overlay (?embed=1): the overlay has its own
 // title bar and close, so the page's brand link and site nav are hidden -
 // following them loaded a second homepage inside the frame.
@@ -166,7 +182,8 @@ export default {
         try {
           const edgeResp = await env.MASCOM_EDGE.fetch("https://weylandai.com/");
           if (edgeResp && edgeResp.status === 200) {
-            const body = await edgeResp.arrayBuffer();
+            let body = await edgeResp.arrayBuffer();
+            if (isCheckoutReturn(url)) body = withCheckoutHelper(body);
             return new Response(body, {
               status: 200,
               headers: {

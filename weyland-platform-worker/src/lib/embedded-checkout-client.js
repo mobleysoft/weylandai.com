@@ -14,7 +14,8 @@
 //        provisioned ({status:"active"}, which also sets the weyland_session
 //        cookie), then calls WeylandShell.refresh() where present.
 //   WeylandCheckout.resume() -> handles ?checkout=return&session_id= after a
-//        redirect-based payment method (runs automatically on load).
+//        redirect-based payment method, and ?checkout=success&session_id=
+//        when a hosted checkout comes back (runs automatically on load).
 //   window event "weyland-checkout" {detail:{status, session_id, product_id}}:
 //        open | complete | active | paid_pending | closed | error
 //
@@ -222,7 +223,8 @@ export const EMBEDDED_CHECKOUT_JS = `(function () {
   function resume() {
     var p = new URLSearchParams(location.search);
     var sid = p.get("session_id");
-    if (p.get("checkout") !== "return" || !sid) return false;
+    var kind = p.get("checkout");
+    if ((kind !== "return" && kind !== "success") || !sid || !/^cs_(live|test)_[A-Za-z0-9]+$/.test(sid)) return false;
     state.sessionId = sid;
     state.modal = buildModal("Checkout");
     setStatus("Checking your payment\\u2026", "");
