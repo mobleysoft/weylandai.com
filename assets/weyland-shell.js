@@ -35,9 +35,10 @@
   var APPS = { "/subx-app": "SubX", "/subx": "SubX", "/takeoffx": "TakeOffX", "/cutsheetx": "CutsheetX", "/sightx": "SightX",
                "/propx-app": "PropX", "/meetingx": "MeetingX", "/meetx": "MeetingX", "/huntx": "HuntX", "/find": "Finder",
                "/pricing": "Plans and pricing", "/wire": "News", "/news": "News" };
-  // The address each app is opened at. /sightx answers 308 -> /sightx/ (the SightX worker's page
-  // lives at the slash path); /wire and /meetx are older names of /news and /meetingx.
-  var CANON = { "/sightx": "/sightx/", "/wire": "/news", "/meetx": "/meetingx" };
+  // The address an app is opened at when it differs from the link: /sightx answers 308 -> /sightx/
+  // (the SightX worker's page lives at the slash path), and News (WireX) lives at /news (/wire is its
+  // old name). Every other app opens at the path it was asked for.
+  var CANON = { "/sightx": "/sightx/", "/wire": "/news" };
   function appKey(path) { return String(path || "").split("#")[0].split("?")[0].replace(/\/+$/, "") || "/"; }
   function canonicalApp(path) {
     var p = String(path || "").split("#")[0];
