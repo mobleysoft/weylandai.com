@@ -21,6 +21,8 @@
 // uses in production - not a new trust model.
 
 import { jsonResponse3 } from "../lib/json-response.js";
+import { stripeApi } from "../lib/stripe-api.js";
+import { checkoutLoaderSnippet } from "../lib/pricing-checkout.js";
 import {
   WIRE_FEEDS,
   readWireNews,
@@ -31,12 +33,23 @@ import {
 } from "../lib/wire-tenant.js";
 
 async function verifyWireSession(env2, sessionId) {
-  if (!sessionId || !env2.VENDYAI) return false;
+  if (!sessionId) return false;
+  if (env2.VENDYAI) {
+    try {
+      const res = await env2.VENDYAI.fetch(`https://vendyai-com-worker.internal/api/checkout/sessions/${encodeURIComponent(sessionId)}`);
+      if (res.ok) {
+        const data = await res.json();
+        return data.status === "completed" && data.venture_id === "weylandai";
+      }
+    } catch {}
+  }
+  // 2026-10-07: embedded-checkout sessions are created by this worker directly
+  // with Stripe (routes/billing.js), so vendyai's ledger has no row for them -
+  // ask Stripe, and only count a completed WireX Pro purchase.
+  if (!/^cs_(live|test)_[A-Za-z0-9]{10,200}$/.test(sessionId) || !env2.STRIPE_SECRET_KEY) return false;
   try {
-    const res = await env2.VENDYAI.fetch(`https://vendyai-com-worker.internal/api/checkout/sessions/${encodeURIComponent(sessionId)}`);
-    if (!res.ok) return false;
-    const data = await res.json();
-    return data.status === "completed" && data.venture_id === "weylandai";
+    const s = await stripeApi(env2, "GET", `/checkout/sessions/${sessionId}`);
+    return s.status === "complete" && s.metadata?.venture_id === "weylandai" && s.metadata?.product_id === WEYLAND_WIRE_PRODUCT_ID;
   } catch {
     return false;
   }
@@ -262,6 +275,7 @@ const WIRE_PAGE = `<!doctype html>
   if (sidParam) { localStorage.setItem(storageKey, sidParam); }
   var sid = localStorage.getItem(storageKey) || '';
 
+  function loadNews() {
   fetch('/api/wire/news' + (sid ? '?session_id=' + encodeURIComponent(sid) : ''))
     .then(function (r) { return r.json(); })
     .then(function (data) {
@@ -287,27 +301,37 @@ const WIRE_PAGE = `<!doctype html>
           '</div>';
       }).join('');
       document.getElementById('news-pro-status').textContent = data.pro ? 'Pro active - 20 headlines/feed.' : '';
-      if (!data.pro) { document.getElementById('upgrade-box').style.display = 'flex'; }
+      document.getElementById('upgrade-box').style.display = data.pro ? 'none' : 'flex';
     })
     .catch(function (err) {
       document.getElementById('lead-story-slot').innerHTML = '<p class="loading">' + esc(err.message) + '</p>';
     });
+  }
+  loadNews();
 
+  // 2026-10-07: payment happens in this page (Stripe's embedded form via
+  // /api/billing/embedded-checkout.js) - it used to send the whole page, or
+  // the overlay frame, to checkout.stripe.com.
+  ${checkoutLoaderSnippet()}
+  function rememberPro(sessionId) {
+    if (!sessionId) return;
+    try { localStorage.setItem(storageKey, sessionId); } catch (e) {}
+    sid = sessionId;
+    loadNews();
+  }
+  window.addEventListener('weyland-checkout', function (e) {
+    var d = e.detail || {};
+    if ((d.status === 'complete' || d.status === 'active') && d.product_id === 'weyland-wire-seat') rememberPro(d.session_id);
+  });
+  if (/[?&]checkout=return/.test(location.search)) weylandCheckoutHelper();
   document.getElementById('upgrade-btn')?.addEventListener('click', function () {
     var btn = this;
     btn.disabled = true;
-    btn.textContent = 'Loading...';
-    fetch('/api/billing/checkout/create', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ product_id: 'weyland-wire-seat', quantity: 1 })
-    })
-      .then(function (r) { return r.json(); })
-      .then(function (data) {
-        if (data.checkout_url) { window.location.href = data.checkout_url; }
-        else { btn.textContent = (data.detail && data.detail.message) || 'Unavailable - try again later'; btn.disabled = false; }
-      })
-      .catch(function (err) { btn.textContent = 'Error: ' + err.message; btn.disabled = false; });
+    btn.textContent = 'Opening checkout...';
+    weylandCheckoutHelper()
+      .then(function (W) { return W.open({ product_id: 'weyland-wire-seat', quantity: 1, name: 'WeylandAI WireX Pro' }); })
+      .catch(function (err) { btn.textContent = 'Error: ' + err.message; })
+      .then(function () { btn.disabled = false; if (btn.textContent === 'Opening checkout...') btn.textContent = 'Subscribe \u2014 $49/mo'; });
   });
 
   document.getElementById('synthesis-btn').addEventListener('click', function () {

@@ -261,3 +261,14 @@ zone_name = "weylandai.com"
 [[routes]]
 pattern = "weylandai.com/api/wire/*"
 zone_name = "weylandai.com"
+
+# ── Plain vars ───────────────────────────────────────────────
+# STRIPE_PUBLISHABLE_KEY (2026-10-07): the live publishable key of the same
+# Stripe account STRIPE_SECRET_KEY and vendyai use (it carries the same
+# account id as every price in lib/stripe-billing.js). Public by design -
+# Stripe.js needs it in the browser to mount embedded Checkout (routes/
+# billing.js POST /api/billing/checkout/embedded returns it to the page).
+# Read from the account's own hosted Checkout page for this pass; if the
+# account's API keys are ever rolled, update it here.
+[vars]
+STRIPE_PUBLISHABLE_KEY = "pk_live_51QSK8LLWTxUJi5AV3h9n8yTt8upsRRZVDWKKLRy8XLQEGosWsRCIpqxolyN3cii4EliBIQML39fEcdCEdQQg5sov00nxpPW5WG"
