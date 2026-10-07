@@ -40,11 +40,13 @@ import { authenticate } from "./lib/auth.js";
 import { registerHuntRoutes } from "./routes/hunt.js";
 import { serve_huntx } from "./pages/huntx.js";
 import { ingestSources } from "./lib/ingest.js";
+// Security headers on every answer (2026-10-07): the platform's set, one shared module.
+import { secured } from "../../weyland-shared/security-headers.js";
 
 const router = new NativeRouter();
 registerHuntRoutes(router, { authenticate });
 
-export default {
+export default secured({
   async fetch(request, env, ctx) {
     // Traffic-driven freshness (2026-10-05): Cron Triggers on this account
     // are registered but have never fired (cron_ticks stays empty), so any
@@ -75,4 +77,4 @@ export default {
     return router.handle(request, env, ctx);
   },
 
-};
+});

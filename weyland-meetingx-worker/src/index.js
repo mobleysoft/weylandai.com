@@ -69,6 +69,8 @@ import { jsonResponse3 } from "./lib/json-response.js";
 import { registerRoomRoutes, roomIdFrom, ROOM_ID } from "./routes/room.js";
 
 import meetingxHtml from "./pages/meetingx.html";
+// Security headers on every answer (2026-10-07): the platform's set, one shared module.
+import { secured } from "../../weyland-shared/security-headers.js";
 
 const router = new NativeRouter();
 
@@ -96,7 +98,7 @@ router.get("/meetx/", servePage);
 
 registerRoomRoutes(router, { authenticate, requireProductAccess });
 
-export default {
+export default secured({
   async fetch(request, env, ctx) {
     const url = new URL(request.url);
 
@@ -123,4 +125,4 @@ export default {
 
     return router.handle(request, env, ctx);
   },
-};
+});

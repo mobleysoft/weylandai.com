@@ -40,7 +40,9 @@ await J.run(async () => {
     const hits = await finder.evaluate(() => Array.from(document.querySelectorAll("a[href^='/find/']")).map((a) => a.getAttribute("href"))).catch(() => []);
     J.check("Finder search 'LCN 4040XP' lists the product", hits.some((h) => /^\/find\/lcn\/4040XP$/i.test(h)), hits.slice(0, 6));
     const s1 = await finderInPlace();
-    J.check("the Finder search answers in place (same document, the address shows the query)", s1.sameDocument && /^\/find\?q=LCN(\+|%20)4040XP$/i.test(s1.url || ""), s1);
+    // Inside the overlay the frame keeps the ?embed=1 the shell opened it with (2026-10-07; the search
+    // form used to drop it, so the frame ended up at the standalone address).
+    J.check("the Finder search answers in place (same document, the address shows the query and keeps embed=1)", s1.sameDocument && /^\/find\?q=LCN(\+|%20)4040XP&embed=1$/i.test(s1.url || ""), s1);
     const link = finder.locator("a[href='/find/lcn/4040XP']").first();
     if (await link.count()) {
       await pressIn(finder, link);
@@ -48,7 +50,7 @@ await J.run(async () => {
       const DOC = "a[data-doc], a[data-doc-url]";
       await until(() => finder.evaluate((sel) => /^\/find\/lcn\/4040XP$/i.test(location.pathname) && !document.querySelector("main[aria-busy]") && document.querySelectorAll(sel).length > 0, DOC), 20000, 300);
       const s2 = await finderInPlace();
-      J.check("the product link opens the product page in place (same document)", s2.sameDocument && /^\/find\/lcn\/4040XP$/i.test(s2.url || ""), s2);
+      J.check("the product link opens the product page in place (same document, embed=1 kept)", s2.sameDocument && /^\/find\/lcn\/4040XP\?embed=1$/i.test(s2.url || ""), s2);
       const text = await finder.evaluate(() => (document.querySelector("main") || document.body).innerText).catch(() => "");
       J.check("the product page lists documents on file with page citations", /pp?\.\s*\d+/i.test(text) && (await finder.locator(DOC).count()) > 0, text.replace(/\s+/g, " ").slice(0, 300));
       const open = finder.locator(DOC).first();

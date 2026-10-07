@@ -101,6 +101,8 @@ import { registerSubxWorkspaceRoutes } from "./routes/subx-workspace.js";
 import { registerDemoBuildingRoutes } from "./routes/demo-building.js";
 
 import subxAppHtml from "./pages/subx-app.html";
+// Security headers on every answer (2026-10-07): the platform's set, one shared module.
+import { secured } from "../../weyland-shared/security-headers.js";
 
 const router = new NativeRouter();
 
@@ -262,7 +264,7 @@ void authenticateCps;
 // itself runs in the background off ordinary requests (lib/job-lease.js).
 router.get("/api/hardware-schedule/demo-clones/status", async (_request, env) => jsonResponse3(await demoCloneSweepStatus(env)));
 
-export default {
+export default secured({
   async fetch(request, env, ctx) {
     // Traffic-driven freshness (2026-10-05): Cron Triggers on this account
     // are registered but have never fired (cron_ticks stays empty), so any
@@ -279,4 +281,4 @@ export default {
     return router.handle(request, { ...env, SUBX_RUNNER_ORIGIN: runnerOrigin }, ctx);
   },
 
-};
+});

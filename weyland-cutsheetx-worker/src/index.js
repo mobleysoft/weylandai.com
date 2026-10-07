@@ -114,6 +114,7 @@ import { registerUserCutsheetsRoutes } from "./routes/user-cutsheets.js";
 import { registerCatalogueProductsRoutes } from "./routes/catalogue-products.js";
 import { registerCatalogueDocumentsRoutes } from "./routes/catalogue-documents.js";
 import { registerFindRoutes } from "./routes/find.js";
+import { registerLegalRoutes } from "./routes/legal-pages.js";
 import { registerCutsheetxPageRoutes } from "./routes/cutsheetx-page.js";
 
 import cutsheetxHtml from "./pages/cutsheetx.html";
@@ -121,6 +122,8 @@ import { seedCorpusWanted, ingestCorpus, corpusStatus } from "./lib/catalog-corp
 import { resolveCatalogueStoragePaths } from "./lib/catalogue-storage.js";
 import { computeProductCoverageBatch, productCoverageSummary } from "./lib/product-coverage.js";
 import { EXPANDED_URL_PATTERNS } from "./lib/cutsheet-discovery.js";
+// Security headers on every answer (2026-10-07): the platform's set, one shared module.
+import { secured } from "../../weyland-shared/security-headers.js";
 
 const WORKER_VERSION = "2026-10-04.1";
 
@@ -195,6 +198,10 @@ async function runCorpusIngest(env) {
 // Public cut-sheet finder (2026-10-05): /find, /find/<mfr>/<model>, /find/sitemap.xml, /api/catalogue/find
 registerFindRoutes(router);
 
+// WeylandAI's Terms of Service and Privacy Policy on weylandai.com (2026-10-07): /terms, /privacy;
+// the text is consenta.cc's (service binding CONSENTA), see routes/legal-pages.js.
+registerLegalRoutes(router);
+
 router.get("/api/cut-sheets/corpus/status", async (_request, env) => jsonResponse3(Object.assign(await corpusStatus(env), { modelCoverage: await productCoverageSummary(env).catch((e) => ({ error: e.message })) })));
 router.post("/api/cut-sheets/corpus/ingest", async (request, env, ctx) => {
   const { error: authError, user } = await authenticate(request, env);
@@ -205,7 +212,7 @@ router.post("/api/cut-sheets/corpus/ingest", async (request, env, ctx) => {
   return jsonResponse3({ started: true, status: await corpusStatus(env) });
 });
 
-export default {
+export default secured({
   async fetch(request, env, ctx) {
     // Traffic-driven freshness (2026-10-05): Cron Triggers on this account
     // are registered but have never fired (cron_ticks stays empty), so any
@@ -215,4 +222,4 @@ export default {
     return router.handle(request, env, ctx);
   },
 
-};
+});

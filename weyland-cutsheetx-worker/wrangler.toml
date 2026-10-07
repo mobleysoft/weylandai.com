@@ -62,6 +62,14 @@ database_id = "5729f77e-d7e3-4577-ab43-3c064fa90ca5"
 binding = "OCR_SERVICE"
 service = "weyland-ocr-worker"
 
+# WeylandAI's Terms of Service and Privacy Policy (2026-10-07,
+# src/routes/legal-pages.js): /terms and /privacy answer with consenta.cc's
+# pages for weylandai.com, reached through this binding (same account, no
+# network hop). The text lives in consenta.cc's policy registry only.
+[[services]]
+binding = "CONSENTA"
+service = "consenta-cc-worker"
+
 [[kv_namespaces]]
 binding = "CACHE"
 id = "80a77dcf4f5f4e8588c172f2ecef95fb"
@@ -141,4 +149,15 @@ zone_name = "weylandai.com"
 # Public cut-sheet finder pages (2026-10-05): indexable product URLs served by this worker.
 [[routes]]
 pattern = "weylandai.com/find*"
+zone_name = "weylandai.com"
+
+# WeylandAI's Terms of Service and Privacy Policy on the site itself
+# (2026-10-07): both paths answered the monolith's JSON 404 before (probed
+# live), and no other route on the zone names them.
+[[routes]]
+pattern = "weylandai.com/terms*"
+zone_name = "weylandai.com"
+
+[[routes]]
+pattern = "weylandai.com/privacy*"
 zone_name = "weylandai.com"

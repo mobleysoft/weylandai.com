@@ -54,6 +54,8 @@ import puppeteer from "@cloudflare/puppeteer";
 import { registerProposalsRoutes } from "./routes/proposals.js";
 
 import propxAppHtml from "./pages/propx-app.html";
+// Security headers on every answer (2026-10-07): the platform's set, one shared module.
+import { secured } from "../../weyland-shared/security-headers.js";
 
 const router = new NativeRouter();
 
@@ -84,8 +86,8 @@ registerProposalsRoutes(router, {
   puppeteer,
 });
 
-export default {
+export default secured({
   async fetch(request, env, ctx) {
     return router.handle(request, env, ctx);
   },
-};
+});

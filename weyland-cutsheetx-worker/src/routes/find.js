@@ -112,6 +112,7 @@ button{background:var(--gold);color:#111;border:0;border-radius:10px;padding:13p
 .cite{border-left:3px solid var(--green);padding:8px 12px;margin:10px 0;background:#0d0f14;border-radius:0 8px 8px 0}.cite small{color:var(--muted);display:block}
 .none{color:var(--muted)}.cta{margin-top:30px;padding:18px;border:1px dashed rgba(240,184,0,.45);border-radius:12px}.cta a{color:var(--gold);font-weight:800}
 footer{color:var(--muted);font-size:12.5px;margin-top:40px}ul.results{list-style:none;padding:0;margin:0}ul.results li{padding:12px 0;border-bottom:1px solid var(--line)}
+.embedded main>header{display:none}.embedded main{padding-top:18px}
 `;
 
 // Finder in place (2026-10-07). The server-rendered pages stay exactly what they
@@ -144,6 +145,16 @@ export const NAV_SCRIPT = `
       shell.close();
       if (u.hash) { try { window.parent.location.hash = u.hash; } catch (err) {} }
     });
+  }
+  // Inside the overlay the frame keeps ?embed=1 - the address the shell opened it at - through every
+  // in-place step (search, result and product links, Back from a document), so the page stays in its
+  // embedded layout and the frame's own address keeps saying so. The links' hrefs stay clean: one
+  // opened in a new tab is the standalone page. (2026-10-07: the search form used to drop it.)
+  var embedded = !!shell || /[?&]embed=1(&|$)/.test(location.search);
+  function withEmbed(url) {
+    if (!embedded || /[?&]embed=1(&|$)/.test(url)) return url;
+    var at = url.indexOf("#"), head = at >= 0 ? url.slice(0, at) : url, hash = at >= 0 ? url.slice(at) : "";
+    return head + (head.indexOf("?") >= 0 ? "&" : "?") + "embed=1" + hash;
   }
   var main = document.querySelector("main");
   if (!main || !window.fetch || !window.DOMParser || !window.URLSearchParams || !history.pushState) return;
@@ -193,14 +204,14 @@ export const NAV_SCRIPT = `
     if (!f || f.getAttribute("action") !== "/find" || String(f.getAttribute("method") || "get").toLowerCase() !== "get") return;
     e.preventDefault();
     var q = String(new FormData(f).get("q") || "").trim();
-    show(q ? "/find?" + new URLSearchParams({ q: q }).toString() : "/find", true);
+    show(withEmbed(q ? "/find?" + new URLSearchParams({ q: q }).toString() : "/find"), true);
   });
   document.addEventListener("click", function (e) {
     if (!plainClick(e)) return;
     var u = linkOf(e);
     if (!u || !isFinder(u)) return;
     e.preventDefault();
-    show(u.pathname + u.search, true);
+    show(withEmbed(u.pathname + u.search), true);
   });
   history.replaceState({ finder: 1 }, "", location.href);
   // Back from an open document (lib/doc-viewer.js) lands on the same URL: nothing to fetch.
@@ -219,7 +230,7 @@ export const NAV_SCRIPT = `
     if (back && back.url) {
       try {
         var bu = new URL(back.url, location.href);
-        if (isFinder(bu) && bu.pathname + bu.search !== shown) show(bu.pathname + bu.search, true);
+        if (isFinder(bu) && withEmbed(bu.pathname + bu.search) !== shown) show(withEmbed(bu.pathname + bu.search), true);
       } catch (err) {}
     }
   }
@@ -230,7 +241,7 @@ function page({ title, description, canonical, body, jsonLd }) {
   return `<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>${esc(title)}</title><meta name="description" content="${esc(description)}"><link rel="canonical" href="${esc(canonical)}">
 <meta property="og:title" content="${esc(title)}"><meta property="og:description" content="${esc(description)}"><meta property="og:url" content="${esc(canonical)}">
-<link rel="icon" href="/favicon.ico"><style>${STYLE}</style>${jsonLd ? `<script type="application/ld+json">${JSON.stringify(jsonLd)}</script>` : ""}</head>
+<link rel="icon" href="/favicon.ico"><script>(function(){var e=/[?&]embed=1(&|$)/.test(location.search);try{e=e||(window.parent!==window&&!!window.parent.WeylandShell)}catch(x){}if(e)document.documentElement.className+=" embedded"})()</script><style>${STYLE}</style>${jsonLd ? `<script type="application/ld+json">${JSON.stringify(jsonLd)}</script>` : ""}</head>
 <body><main><header><a href="/" style="text-decoration:none;display:flex;align-items:center;gap:10px;color:var(--text)"><span class="mark">W</span><strong>WeylandAI</strong></a><span class="meta">Door hardware cut-sheet finder</span></header>
 ${body}
 <footer>Documents are the manufacturers' own, served from WeylandAI's catalogue store. No accounts, no tracking beyond a page count in our own table. <a href="/">weylandai.com</a></footer></main>
