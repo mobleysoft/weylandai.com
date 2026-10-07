@@ -7,7 +7,8 @@
 //      (the same answer as the homepage paste) and LCN 4040XP with its price-book pages; both
 //      citations are drawn in the page at the cited page (lib/doc-viewer.js, pdf.js), never in a new
 //      tab, and Back closes the document with the results still there; DOWNLOAD PDF saves the price
-//      book without a new tab; SEARCH returns pages.
+//      book without a new tab; SEARCH returns pages, each either drawable (VIEW PAGE draws it) or
+//      marked PDF NOT ON FILE.
 //   B. The homepage's single-page shell: CutsheetX opens in the overlay at /cutsheetx?embed=1 (not
 //      /pricing); a citation there opens in the shell's own document view and the shell's Back brings
 //      CutsheetX back with the same match; its nav stays in the shell; the finder searches and opens
@@ -125,6 +126,11 @@ try {
   await cx.waitForFunction(() => /result\(s\)|No matches|HTTP/.test(document.getElementById("search-results").textContent), null, { timeout: 30000 });
   t = await cx.textContent("#search-results");
   check("A8 SEARCH 'closer' returns catalogue pages", /\d+ result\(s\)/.test(t), t.slice(0, 80));
+  // Pages of catalogues ingested text-only say so instead of offering a VIEW PAGE that cannot draw.
+  const rows = await cx.$$eval("#search-results tbody tr", (trs) => trs.map((tr) => ({ view: !!tr.querySelector("[data-doc-url]"), noPdf: /PDF NOT ON FILE/.test(tr.textContent) })));
+  check("A9 every search result either opens its page or says the PDF is not on file", rows.length > 0 && rows.every((r) => r.view !== r.noPdf) && rows.some((r) => r.view),
+    rows.filter((r) => r.view).length + " VIEW PAGE, " + rows.filter((r) => r.noPdf).length + " not on file");
+  await openInPage(cx, "#search-results [data-doc-url]", "A10 VIEW PAGE draws the catalogue page in the page", /^Page 1 of 1$/);
   await cx.close();
 
   // ---- B. the single-page shell ----
