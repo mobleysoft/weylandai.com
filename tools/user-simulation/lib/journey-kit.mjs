@@ -110,7 +110,7 @@ const isTestEmail = (e) => /^user-sim-[a-z0-9-]+@weylandai\.com$/i.test(String(e
  * / upload session ids this run's own browser received. A captured clone session is deleted only
  * if its row says it is a demo clone (file_buffer_key = demo-clone/<id>) or belongs to a test user.
  */
-export async function purgeTestData({ userIds = [], emails = [], cloneSessions = [], uploadSessions = [] } = {}) {
+export async function purgeTestData({ userIds = [], emails = [], cloneSessions = [], uploadSessions = [], packageSessions = [] } = {}) {
   const out = { ok: false, deleted: {}, deletedTotal: 0, r2: [], kv: [], skipped: [], remaining: null };
   const E = [...new Set(emails.filter(isTestEmail).map((e) => e.toLowerCase()))];
   let U = [...new Set(userIds.filter((u) => /^usersim_[A-Za-z0-9_]+$/.test(String(u || ""))))];
@@ -139,6 +139,8 @@ export async function purgeTestData({ userIds = [], emails = [], cloneSessions =
     if (/^hardware-sessions\//.test(r.file_buffer_key || "") && ownedKey(r.file_buffer_key)) { R2.push([UPLOADS_BUCKET, r.file_buffer_key]); KV.push(r.file_buffer_key); }
   }
   for (const c of clones) if (S.includes(c.session_id) && isUuid(c.project_id)) P.add(c.project_id);
+  // A submittal package the SubX workspace built for one of these sessions (lib/submittal-assembler.js).
+  for (const sid of packageSessions) if (isUuid(sid) && S.includes(sid)) R2.push([UPLOADS_BUCKET, "submittals/" + sid + "/final_submittal.pdf"]);
   for (const r of projs.results || []) P.add(r.id);
   P.delete(DEMO_SEED_PROJECT);
   const SUB = (subs.results || []).map((r) => r.id);
@@ -550,20 +552,23 @@ export async function openAccountCard(page, { touch = false } = {}) {
   return shellState(page);
 }
 
-/** The SubX workspace (/subx-app) as the visitor sees it, in the overlay frame or a page. */
+/**
+ * The SubX workspace (/subx-app, rebuilt 2026-10-07 in 6d31174) as the visitor sees it, in the
+ * overlay frame or a page: #app (upload, "Your schedules", one schedule, the submittal package) or
+ * #signin-card when it needs a sign-in.
+ */
 export async function subxWorkspace(target, ms = 20000) {
   await until(() => target.evaluate(() => {
-    const app = document.getElementById("app");
+    const shown = (el) => !!el && !el.classList.contains("hide") && el.getBoundingClientRect().height > 0;
     const list = document.getElementById("sessions-list");
-    return !!app && app.style.display !== "none" && !!list && !/Loading/i.test(list.innerText);
+    return shown(document.getElementById("signin-card")) || (shown(document.getElementById("app")) && !!list && !/Loading/i.test(list.innerText));
   }), ms, 500);
   return target.evaluate(() => {
-    const app = document.getElementById("app");
-    const login = document.getElementById("login-ui");
+    const shown = (el) => !!el && !el.classList.contains("hide") && el.getBoundingClientRect().height > 0;
     return {
-      path: location.pathname, embed: /embed=1/.test(location.search),
-      appVisible: !!app && app.style.display !== "none" && app.getBoundingClientRect().height > 0,
-      loginVisible: !!login && login.offsetParent !== null && login.innerText.trim().length > 0,
+      path: location.pathname, search: location.search,
+      appVisible: shown(document.getElementById("app")),
+      loginVisible: shown(document.getElementById("signin-card")),
       accountToken: !!localStorage.getItem("_authfor_token"),
       sessions: ((document.getElementById("sessions-list") || {}).innerText || "").replace(/\s+/g, " ").slice(0, 300),
       clientExtraction: !!document.getElementById("client-extract-btn")
@@ -571,48 +576,86 @@ export async function subxWorkspace(target, ms = 20000) {
   }).catch((e) => ({ error: String(e.message || e).slice(0, 120) }));
 }
 
-const parseJson = (t) => { try { return JSON.parse(t); } catch (e) { return null; } };
+/** The schedule open in the workspace: its door rows (mark + source), takeoff tiles, steps, sets. */
+export async function workspaceDetail(target) {
+  return target.evaluate(() => {
+    const txt = (el) => (el ? el.innerText.replace(/\s+/g, " ").trim() : "");
+    const rows = Array.from(document.querySelectorAll("#doors-wrap tbody tr")).map((tr) => {
+      const td = tr.querySelectorAll("td");
+      return { mark: txt(td[0]), group: txt(td[1]), size: txt(td[2]), source: txt(td[td.length - 1]) };
+    });
+    const sets = Array.from(document.querySelectorAll("#sets-wrap tbody tr")).map((tr) => {
+      const td = tr.querySelectorAll("td");
+      return { set: txt(td[0]), name: txt(td[1]), items: txt(td[2]), status: txt(td[3]) };
+    });
+    const tiles = Array.from(document.querySelectorAll("#takeoff .stat")).map((s) => ({ label: txt(s.querySelector("span")), value: txt(s.querySelector("b")) }));
+    const step = (id) => { const el = document.getElementById(id); return el ? (el.classList.contains("done") ? "done" : el.classList.contains("now") ? "now" : "") : null; };
+    return {
+      title: txt(document.getElementById("sd-title")), sub: txt(document.getElementById("sd-sub")),
+      doorNote: txt(document.querySelector("#doors-wrap p")), rows, sets, tiles,
+      counts: txt(document.querySelector("#takeoff .counts")).slice(0, 300),
+      steps: { upload: step("st-upload"), read: step("st-read"), review: step("st-review"), pdf: step("st-pdf") },
+      actions: Array.from(document.querySelectorAll("#list-actions button")).map((b) => txt(b))
+    };
+  }).catch((e) => ({ error: String(e.message || e).slice(0, 120), rows: [], sets: [], tiles: [] }));
+}
 
 /**
- * In the SubX extraction workspace (frame or page): upload a PDF, open the new session, run the
- * extraction the workspace offers (server first; the client-side one too when the page has it and
- * the server one did not succeed), then read the door index. Returns what each step showed.
+ * In the SubX workspace (frame or page): upload a PDF (UPLOAD AND READ PAGE 1 uploads it, opens it
+ * and reads page 1 on the server), fall back to READ IT IN THIS BROWSER when the server read found
+ * nothing, then read the door rows. Returns what each step showed.
  */
 export async function workspaceUploadAndExtract(target, { project, pdf = SAMPLE_PDF, docType = "door_schedule" }) {
-  const out = { upload: null, tries: [], doorIndex: null, doors: 0, listed: false };
+  const out = { upload: null, tries: [], doors: 0, rows: [], listed: false };
   await target.fill("#f-project", project);
   await target.selectOption("#f-doctype", docType).catch(() => {});
   await target.setInputFiles("#f-file", pdf);
-  out.raster = await waitText(target, "#rasterize-status", /Rendered|failed|error|gap/i, 60000);
+  out.preview = ((await waitText(target, "#rasterize-status", /preview|failed|error/i, 60000, /^Drawing/i)) || "").slice(0, 160);
+  const t0 = Date.now();
   await pressIn(target, "#upload-btn");
-  out.upload = ((await waitText(target, "#upload-result", /Session created|failed|error/i, 120000, /^Uploading/i)) || "").slice(0, 300);
-  if (!/Session created/i.test(out.upload)) return out;
-  const row = target.locator("#sessions-list tr[data-session]").filter({ hasText: project }).first();
-  out.listed = !!(await until(async () => (await row.count()) > 0, 20000));
-  if (!out.listed) return out;
-  await pressIn(target, row);
-  await sleep(2500);
-  if (await target.locator("#extract-btn").count()) {
-    const t0 = Date.now();
-    await pressIn(target, "#extract-btn");
-    const r = await waitText(target, "#extract-result", /succeeded|failed|error/i, 240000, /^Calling the real extraction/i);
-    out.tries.push({ route: "server", seconds: Math.round((Date.now() - t0) / 1000), result: (r || "").slice(0, 240) });
-  }
-  if (!out.tries.some((t) => /succeeded/i.test(t.result)) && (await target.locator("#client-extract-btn").count())) {
-    await target.setInputFiles("#f-file", pdf).catch(() => {});
-    const t0 = Date.now();
+  out.upload = ((await waitText(target, "#upload-result", /^Uploaded|failed|error|choose|sign in/i, 120000, /^Uploading/i)) || "").slice(0, 300);
+  if (!/^Uploaded/i.test(out.upload)) return out;
+  out.listed = !!(await until(() => target.evaluate((p) => Array.from(document.querySelectorAll("#sessions-list tr[data-id]")).some((tr) => tr.innerText.includes(p)), project), 30000, 500));
+  // The workspace opens the new schedule and reads page 1 by itself.
+  const r1 = (await waitText(target, "#extract-result", /^Page \d+:|could not be read|error|failed/i, 300000, /^Reading page/i)) || "";
+  out.tries.push({ route: "server (read on upload)", seconds: Math.round((Date.now() - t0) / 1000), result: r1.slice(0, 240) });
+  if (!/^Page \d+: [1-9]\d* (door|hardware set)/i.test(r1) && (await target.locator("#client-extract-btn").count())) {
+    const t1 = Date.now();
     await pressIn(target, "#client-extract-btn");
-    const r = await waitText(target, "#extract-result", /succeeded|failed|error|No schedule rows/i, 300000);
-    out.tries.push({ route: "client-side", seconds: Math.round((Date.now() - t0) / 1000), result: (r || "").slice(0, 240) });
+    const r2 = (await waitText(target, "#extract-result", /read in this browser and saved|No .* table was found|failed|error|could not/i, 300000)) || "";
+    out.tries.push({ route: "in this browser", seconds: Math.round((Date.now() - t1) / 1000), result: r2.slice(0, 240) });
   }
-  await pressIn(target, "#doorindex-btn");
-  const di = await waitText(target, "#raw-output", /^\{|HTTP|error/i, 30000, /^Loading/i);
-  out.doorIndexRaw = (di || "").slice(0, 4000);
-  const dj = parseJson(di || "");
-  out.doorIndex = dj && (dj.statistics || dj.stats) || null;
-  const s = out.doorIndex || {};
-  out.doors = Number(s.unique_doors || s.total_doors || s.totalDoors || s.doors || s.total_mappings || 0);
+  // After a read the page reloads the schedule; the table fills once that answers ("No rows read
+  // yet" is already there before the read, so it is not an answer).
+  const readSome = out.tries.some((t) => /^Page \d+: [1-9]\d* (door|hardware set)|[1-9]\d* (doors|hardware sets) read in this browser/i.test(t.result));
+  await until(() => target.evaluate(() => document.querySelectorAll("#doors-wrap tbody tr, #sets-wrap tbody tr").length > 0), readSome ? 45000 : 3000, 500);
+  const d = await workspaceDetail(target);
+  out.detail = { title: d.title, sub: d.sub, doorNote: d.doorNote, tiles: d.tiles, steps: d.steps, actions: d.actions, counts: d.counts };
+  out.rows = d.rows;
+  out.doors = d.rows.length;
   return out;
+}
+
+/**
+ * BUILD THE SUBMITTAL PDF on the open schedule: waits for the result, the PDF shown in the page's
+ * own viewer and the DOWNLOAD PDF link. Never leaves the page.
+ */
+export async function buildSubmittalPackage(target) {
+  const t0 = Date.now();
+  await pressIn(target, "#package-btn");
+  const result = (await waitText(target, "#package-result", /^Built:|could not be built|error|failed/i, 300000, /^Building the package/i)) || "";
+  const viewer = await until(() => target.evaluate(() => {
+    const v = document.getElementById("package-viewer");
+    if (!v || v.classList.contains("hide")) return null;
+    const r = v.getBoundingClientRect();
+    return r.width > 200 && r.height > 200 ? { src: (v.getAttribute("src") || "").slice(0, 5), w: Math.round(r.width), h: Math.round(r.height) } : null;
+  }), 60000, 500);
+  const download = await target.evaluate(() => {
+    const a = document.getElementById("package-download");
+    return a && !a.classList.contains("hide") ? { href: (a.getAttribute("href") || "").slice(0, 5), file: a.getAttribute("download") } : null;
+  }).catch(() => null);
+  const pages = Number((/^Built:\s*(\d+)\s+pages/i.exec(result) || [])[1] || 0);
+  return { result: result.slice(0, 400), pages, seconds: Math.round((Date.now() - t0) / 1000), viewer, download };
 }
 
 /** Elements wider than the viewport (or poking past its right edge) on a phone. */
@@ -636,6 +679,7 @@ export class Journey {
     this.accounts = [];
     this.clones = new Map();
     this.uploads = new Set();
+    this.packages = new Set();
     this.apiLog = [];
     this.pending = new Set();
     this.cloneRequests = new Set();
@@ -732,6 +776,8 @@ export class Journey {
     if (/^\/api\/hardware-schedule\/start\/?$/.test(u.pathname)) {
       this._track(r.json().then((j) => { const sid = j && (j.sessionId || j.session_id || (j.session && j.session.id)); if (sid) this.uploads.add(sid); }).catch(() => {}));
     }
+    const pkg = /^\/api\/hardware-schedule\/session\/([^/]+)\/submittal-pdf\/?$/.exec(u.pathname);
+    if (pkg && r.status() < 300) this.packages.add(decodeURIComponent(pkg[1]));
   }
 
   /** API responses since t0 whose path matches re. */
@@ -790,14 +836,15 @@ export class Journey {
         userIds: this.accounts.map((a) => a.userId).filter(Boolean),
         emails: this.accounts.map((a) => a.email),
         cloneSessions: [...this.clones.entries()].map(([s, p]) => ({ session_id: s, project_id: p })),
-        uploadSessions: [...this.uploads]
+        uploadSessions: [...this.uploads],
+        packageSessions: [...this.packages]
       });
     } catch (e) {
       res = { ok: false, error: String((e && e.message) || e).slice(0, 300) };
     }
     this.cleanupResult = res;
     this.check("test data deleted (account rows, demo clones, uploads)", res.ok,
-      { clonesCaptured: this.clones.size, uploadsCaptured: this.uploads.size, deletedRows: res.deletedTotal, remaining: res.remaining, skipped: res.skipped, error: res.error });
+      { clonesCaptured: this.clones.size, uploadsCaptured: this.uploads.size, packagesBuilt: this.packages.size, deletedRows: res.deletedTotal, r2: res.r2, kv: res.kv, remaining: res.remaining, skipped: res.skipped, error: res.error });
   }
 
   async writeReport() {

@@ -1,15 +1,19 @@
 // tools/user-simulation/journeys/takeoffx-takeoff.mjs
 //
 // Journey map id "takeoffx-takeoff" (priority 2): a signed-in subscriber runs a TakeOffX takeoff on
-// their own drawing (/Users/johnmobley/pdf/OCCDoorSchedulePg4.pdf).
-// Expected: door and hardware counts from the visitor's own drawings, with confidence and a review
-// step; reached in place (the TakeOffX page opens in the homepage overlay and leads into the
-// takeoff workspace there).
+// their own drawing (/Users/johnmobley/pdf/OCCDoorSchedulePg4.pdf, a door schedule).
+// Expected: door and hardware counts from the visitor's own drawings, with how sure they are and a
+// review step; reached in place (the TakeOffX page opens in the homepage overlay and leads into the
+// takeoff workspace there). Since 2026-10-07 (6d31174) START A TAKEOFF opens the SubX workspace in
+// takeoff mode (/subx-app?mode=takeoff): the counts (doors, sizes read, fire-rated doors, hardware
+// groups, by type/size/rating/group) come with every door row traced to the page and row it was
+// read from and a "machine-read: check them against the source page" note - that traceability is
+// the confidence this product gives, and the Review step with the row list is the review.
 // Throwaway SubConP account; upload rows (by session_id), R2 object, KV copy, demo clone and the
 // account rows are deleted in finally.
 //
 // Usage: node tools/user-simulation/journeys/takeoffx-takeoff.mjs   (exit 0 = all passed)
-import { Journey, openHome, raiseDossier, setMark, press, pressIn, until, sleep, signIn, openApp, overlayFrame, frameInfo, workspaceUploadAndExtract } from "../lib/journey-kit.mjs";
+import { Journey, openHome, raiseDossier, setMark, press, pressIn, until, sleep, signIn, openApp, overlayFrame, frameInfo, subxWorkspace, workspaceUploadAndExtract } from "../lib/journey-kit.mjs";
 
 const J = new Journey("takeoffx-takeoff", "TakeOffX takeoff");
 
@@ -34,9 +38,9 @@ await J.run(async () => {
   // The TakeOffX page in the overlay, then its own call to action.
   const tf = await openApp(page, "/takeoffx");
   const info = await frameInfo(tf);
-  J.check("TakeOffX opens in the overlay", !!info && /^\/takeoffx\/?$/.test(info.path || "") && !info.jsonError, info ? { path: info.path, title: info.title, jsonError: info.jsonError } : "no frame");
+  J.check("TakeOffX opens in the overlay", !!info && /^\/takeoffx\/?$/.test(info.path || "") && !info.jsonError && !info.nestedShell, info ? { path: info.path, title: info.title, jsonError: info.jsonError } : "no frame");
   const cta = tf ? await tf.evaluate(() => {
-    const a = Array.from(document.querySelectorAll("a, button")).find((x) => x.offsetParent !== null && /takeoff/i.test(x.innerText) && /start|run|new|begin|upload/i.test(x.innerText));
+    const a = Array.from(document.querySelectorAll("a, button")).find((x) => x.offsetParent !== null && /takeoff/i.test(x.innerText) && /start|run|new|begin|upload|sign in/i.test(x.innerText));
     if (!a) return null;
     a.setAttribute("data-waj-cta", "1");
     return { text: a.innerText.trim(), href: a.getAttribute("href") };
@@ -45,27 +49,30 @@ await J.run(async () => {
   let ws = null;
   if (cta) {
     await pressIn(tf, "[data-waj-cta='1']");
-    await sleep(3000);
+    await sleep(2000);
     ws = await overlayFrame(page, 25000);
   }
-  const wsInfo = ws ? await frameInfo(ws) : null;
-  const signedInWs = ws ? await ws.evaluate(() => ({ token: !!localStorage.getItem("_authfor_token"), upload: !!document.querySelector("input[type=file]"), login: !!document.getElementById("login-ui") && document.getElementById("login-ui").offsetParent !== null && document.getElementById("login-ui").innerText.trim().length > 0 })).catch(() => null) : null;
-  J.check("the takeoff workspace opens in the overlay, signed in, with an upload", !!wsInfo && !!signedInWs && signedInWs.token && signedInWs.upload && !signedInWs.login, { path: wsInfo && wsInfo.path, title: wsInfo && wsInfo.title, ...(signedInWs || {}) });
+  const wsState = ws ? await subxWorkspace(ws, 25000) : null;
+  const mode = ws ? await ws.evaluate(() => ({ takeoff: document.documentElement.classList.contains("takeoff"), heading: ((Array.from(document.querySelectorAll("h1")).find((h) => h.offsetParent !== null) || {}).innerText || "").trim(), upload: !!document.getElementById("upload-form") })).catch(() => null) : null;
+  J.check("the takeoff workspace opens in the overlay, signed in, with an upload", !!wsState && wsState.appVisible && wsState.accountToken && !wsState.loginVisible && !!mode && mode.upload,
+    { path: wsState && wsState.path, search: wsState && wsState.search, appVisible: wsState && wsState.appVisible, login: wsState && wsState.loginVisible, ...(mode || {}) });
+  J.note("takeoff_mode", mode);
 
   // A takeoff on the visitor's own drawing.
-  if (ws && (await ws.locator("#upload-form").count())) {
+  if (ws && mode && mode.upload) {
     const run = await workspaceUploadAndExtract(ws, { project: "user-sim takeoff journey " + J.suffix });
-    J.note("takeoff_run", { upload: run.upload, tries: run.tries, doorIndex: run.doorIndex });
-    const conf = /confidence/i.test(run.doorIndexRaw || "") || run.tries.some((t) => /confidence/i.test(t.result));
-    J.check("the takeoff returns door and hardware counts from the uploaded drawing", run.doors > 0, { doors: run.doors, tries: run.tries, upload: run.upload });
-    J.check("the counts come with a confidence", run.doors > 0 && conf, conf ? "confidence present" : "no confidence in the result");
-    const review = await ws.evaluate(() => Array.from(document.querySelectorAll("button, a")).filter((x) => x.offsetParent !== null && /review|approve|affirm|verify|confirm/i.test(x.innerText)).map((x) => x.innerText.trim().slice(0, 40)).slice(0, 5)).catch(() => []);
-    J.check("the takeoff offers a review step", run.doors > 0 && review.length > 0, review.length ? review : "no review control");
-  } else if (ws) {
-    // A dedicated takeoff workspace: any file input plus a run control.
-    J.check("the takeoff returns door and hardware counts from the uploaded drawing", false, "workspace without the known upload form; title=" + (wsInfo && wsInfo.title));
+    J.note("takeoff_run", { upload: run.upload, tries: run.tries, detail: run.detail });
+    const tiles = Object.fromEntries((run.detail && run.detail.tiles || []).map((t) => [t.label.toLowerCase(), t.value]));
+    J.check("the takeoff returns door and hardware counts from the uploaded drawing", Number(tiles.doors || 0) > 0 && "hardware groups" in tiles, { tiles, doors: run.doors, tries: run.tries });
+    J.check("the counts break down by door type, size, fire rating and hardware group", /by door type/i.test(run.detail && run.detail.counts || "") && /by size/i.test(run.detail.counts) && /by fire rating/i.test(run.detail.counts),
+      (run.detail && run.detail.counts || "").slice(0, 200) || "no breakdown");
+    const traced = run.rows.filter((r) => /^p\.\d+ row \d+/.test(r.source));
+    J.check("each counted door is traceable to the page and row it was read from (the takeoff's confidence)", run.doors > 0 && traced.length === run.doors && /machine-read|check them against the source/i.test(run.detail.doorNote || ""),
+      { rows: run.doors, traced: traced.length, note: run.detail && run.detail.doorNote });
+    J.check("the takeoff offers a review step (Review is the current step, rows listed, the list can be exported)",
+      run.doors > 0 && run.detail.steps.review === "now" && run.detail.actions.some((a) => /door list/i.test(a)), { steps: run.detail && run.detail.steps, actions: run.detail && run.detail.actions });
   } else {
-    J.check("the takeoff returns door and hardware counts from the uploaded drawing", false, "no takeoff workspace");
+    J.check("the takeoff returns door and hardware counts from the uploaded drawing", false, ws ? "no upload form in the takeoff workspace" : "no takeoff workspace");
   }
 
   await page.evaluate(() => window.WeylandShell.close());

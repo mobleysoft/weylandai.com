@@ -162,3 +162,66 @@ in sync with `run.mjs`'s `LIMITATIONS` constant) - reproduced here:
   manual cleanup query if one is ever found stranded).
 - The SubX/TakeoffX extraction-quality finding is based on one real test
   PDF, not a representative sample of real customer documents.
+
+## Journey tests in a real browser (2026-10-07)
+
+The HTTP harness above has no browser. The journey tests do: one script per
+journey in `/Users/johnmobley/plan/evidence/weylandai_journey_map_20261007.json`,
+each driving real Chromium against production the way a visitor would
+(desktop 1280x860, or a 390x844 touch phone), on the single-page homepage
+shell (`assets/weyland-shell.js`).
+
+```bash
+cd /Users/johnmobley/weylandai.com
+export PLAYWRIGHT_CORE=/path/to/node_modules/playwright-core/index.mjs   # if not installed here
+node tools/user-simulation/journeys/first-result-no-account.mjs         # exit 0 = every check passed
+node tools/user-simulation/signin-journey.mjs                           # the reference sign-in journey
+```
+
+| Script | Journey |
+|---|---|
+| `journeys/first-result-no-account.mjs` | cold guest, desktop + phone: hero RUN IT LIVE, paste, citations drawn in place |
+| `journeys/create-free-account.mjs` | guest pastes, creates a free account in the page, signed in on the 14-day trial |
+| `journeys/free-trial-first-use.mjs` | new trial account uses paste, hero, CutsheetX, PropX, HuntX, account card |
+| `journeys/subx-upload-to-submittal.mjs` | subscriber uploads a door schedule PDF in SubX, rows with sources, package PDF |
+| `journeys/takeoffx-takeoff.mjs` | TakeOffX in the overlay, START A TAKEOFF, counts with sources and a review step |
+| `journeys/cutsheetx-finder-search.mjs` | Finder (in place), CutsheetX MATCH / SEARCH / LOCAL LOOKUP, TRY A REAL MATCH |
+| `journeys/sightx-corridor.mjs` | WALK THIS SCHEDULE IN SIGHTX, LOWER / raise the dossier, walkthrough preview |
+| `journeys/propx-proposal.mjs` | PropX sample proposal and PDF; the builder in the overlay prices a schedule |
+| `journeys/meetingx-room.mjs` | two subscribers in one MeetingX room: link, roster, chat |
+| `journeys/huntx-opportunities.mjs` | HuntX chapter (index, search, source filter), HuntX app, REFRESH FROM SOURCES |
+| `journeys/pricing-to-checkout.mjs` | every buy button: Stripe's form inside the page (stops at the loaded form) |
+| `journeys/account-view-signout.mjs` | account card, OPEN SUBX, sign-out in place |
+| `journeys/overlay-products.mjs` | every product path in the overlay = the direct page; links, closing, reload |
+| `journeys/phone-key-journeys.mjs` | the key journeys on a phone, every step by tap |
+| `journeys/deep-link-login.mjs` | arriving from shared links (/subx, /subx-app, a MeetingX room, /login?redirect=) |
+| `journeys/wirex-news.mjs` | WireX chapter, News in the overlay, WireX Pro upgrade (stops at the loaded form) |
+| `journeys/forgot-password.mjs` | Forgot password in the sign-in overlay (the request is answered in the browser: no email) |
+
+Rules every journey keeps (`lib/journey-kit.mjs`):
+
+- **Real GPU WebGL.** Chromium starts with `--use-angle=metal`; the first check
+  is "browser has GPU WebGL" and a run on software WebGL (SwiftShader) stops
+  there, because the homepage's 3D backdrop starves such a browser and every
+  later step would flake.
+- **No page hop.** A journey that should stay in place marks the document at
+  the start and checks at the end that it was never replaced and never left
+  weylandai.com; documents (citations, packages) must be drawn in the page.
+- **Throwaway data only, deleted in finally.** Identities are
+  `user-sim-<label>-<run>@weylandai.com` (password generated per run, never
+  printed or written to a report). The users / weyland_sessions / nodes rows,
+  the "The WeylandAI Building" demo clones the homepage creates (ids captured
+  from `POST /api/demo/weyland-building/session`; clone requests still in
+  flight are awaited before a browser closes), SubX uploads (D1 rows, the R2
+  object, the KV copy), built submittal packages, proposals and submittals are
+  deleted, and the report says what was deleted and that the AuthFor identity
+  stays (it cannot be deleted from here).
+- **No payment, no email.** Checkout journeys stop when Stripe's form shows the
+  product and price (each press leaves one live Checkout Session to expire);
+  nothing sends email to anyone.
+- **Reports** go to `reports/journey-<id>-latest.json` plus a timestamped copy
+  (`reports/` is not committed).
+
+`cleanup-usersim-clones.mjs` lists (dry run) or deletes (`--delete`) demo
+clones owned by `usersim_*` ids, left by runs from before the journeys
+deleted their own.
