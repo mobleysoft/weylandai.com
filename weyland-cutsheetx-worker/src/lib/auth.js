@@ -266,6 +266,15 @@ export async function requireProductAccess(user, env2, productSlug) {
     }
     return null;
   }
+  // 2026-10-07: a signed-in user may always do what a guest may do, whatever
+  // the plan, its status or its usage counter (a lapsed, used-up or other-plan
+  // account got 402 on the CutsheetX matcher an anonymous visitor could use).
+  // Same rule, same place, as the reference copy in
+  // weyland-platform-worker/src/lib/auth.js (commit 239a768).
+  if (user?.userId && EPHEMERAL_TRIAL_PRODUCTS.has(productSlug)) {
+    const exists = await env2.DB.prepare("SELECT id FROM users WHERE id = ?").bind(user.userId).first();
+    if (exists) return null;
+  }
   const subError = await requireActiveSubscription(user, env2);
   if (subError) return subError;
   const row = await env2.DB.prepare(
