@@ -209,6 +209,7 @@ pass, each stopped at the loaded form and left to expire).
 | `journeys/deep-link-login.mjs` | arriving from shared links (/subx, /subx-app, a MeetingX room, /login?redirect=) |
 | `journeys/wirex-news.mjs` | WireX chapter, News in the overlay, WireX Pro upgrade (stops at the loaded form) |
 | `journeys/forgot-password.mjs` | Forgot password in the sign-in overlay (the request is answered in the browser: no email) |
+| `journeys/shell-address.mjs` | the address of an open view (/#/find): reload, shared link, typed #/&lt;app&gt;, Back / Forward / Close, a cited document after a reload |
 
 Rules every journey keeps (`lib/journey-kit.mjs`):
 
