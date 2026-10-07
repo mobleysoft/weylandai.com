@@ -54,3 +54,30 @@ export function pricingEmbeddedCheckoutScript() {
     "</script>"
   ].join("\n");
 }
+
+// /subscribe (the SubConP page): CONTINUE TO SECURE CHECKOUT opens the same
+// embedded form for the chosen seat count. Its own script (assets/
+// subscribe.js) sent a signed-out visitor to an off-site sign-in gateway
+// first and then the whole page to checkout.stripe.com; Stripe's form
+// collects the email, a signed-in account's email is used automatically, and
+// the provisioning webhook creates or updates the account either way. This
+// runs before that module script, so its capture listener answers first.
+export function subscribeEmbeddedCheckoutScript() {
+  return "<script>\n(function () {\n" + checkoutLoaderSnippet() + "\n" + [
+    "  var btn = document.querySelector('[data-checkout]');",
+    "  if (!btn) return;",
+    "  function relabel() { if (/SIGN IN/i.test(btn.textContent)) btn.textContent = 'CONTINUE TO SECURE CHECKOUT'; }",
+    "  try { new MutationObserver(relabel).observe(btn, { childList: true, characterData: true, subtree: true }); } catch (e) {}",
+    "  btn.addEventListener('click', function (e) {",
+    "    e.preventDefault();",
+    "    e.stopImmediatePropagation();",
+    "    var input = document.getElementById('seat-count');",
+    "    var seats = Math.max(1, Math.min(250, parseInt(input && input.value, 10) || 1));",
+    "    weylandCheckoutHelper().then(function (W) { return W.open({ product_id: '" + WEYLAND_SUBCONP_PRODUCT_ID + "', quantity: seats, name: 'WeylandAI SubConP' }); });",
+    "  }, true);",
+    "  if (/[?&]checkout=return/.test(location.search)) weylandCheckoutHelper();",
+    "})();",
+    "</script>"
+  ].join("\n");
+}
+
