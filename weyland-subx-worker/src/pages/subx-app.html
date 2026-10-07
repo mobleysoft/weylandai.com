@@ -94,6 +94,15 @@
     .pdf-page .pdf-err{position:absolute;inset:0;display:grid;place-items:center;color:#a33;font-size:13px;padding:20px;text-align:center}
     .tagline{color:var(--primary);font-weight:800;font-size:15px;margin:0 0 10px}
     .unread{color:var(--accent);text-decoration:underline dotted rgba(255,212,0,.75);text-underline-offset:3px;cursor:help}
+    @media(max-width:640px){
+      #doors-wrap table,#doors-wrap tbody,#doors-wrap tr,#doors-wrap td{display:block;width:100%}
+      #doors-wrap thead{display:none}
+      #doors-wrap tr{border:1px solid var(--line);border-radius:12px;margin:0 0 10px;padding:10px 12px;background:#0d0f14}
+      #doors-wrap td{border:0;padding:2px 0;white-space:normal;display:flex;gap:10px}
+      #doors-wrap td.mark-cell{font-size:16px;padding-bottom:6px}
+      #doors-wrap td[data-label]:before{content:attr(data-label);flex:0 0 108px;color:var(--muted);font:700 10px/1.9 ui-monospace,monospace;letter-spacing:.06em;text-transform:uppercase}
+      #doors-wrap td.empty-cell{display:none}
+    }
     canvas#rasterize-canvas{width:100%;max-width:700px;border:1px solid var(--line);border-radius:8px;margin-top:10px;background:#fff}
     .hide{display:none!important}
     html:not(.takeoff) .takeoff-only{display:none!important}
@@ -121,7 +130,7 @@
     <h1 class="takeoff-only">Count the doors on your own schedule</h1>
     <p class="tagline">Measure twice. Match once.</p>
     <p class="lede subx-only">Upload a door or hardware schedule PDF. SubX reads every row &mdash; a sheet printed sideways is turned upright first &mdash; lists the doors it found with the page and row each one came from, matches hardware to manufacturer cut sheets on file, and builds the submittal package PDF for your review before it goes out.</p>
-    <p class="lede takeoff-only">Upload your door schedule PDF. TakeOffX reads every row and counts doors by type, size, fire rating and hardware group, each count traceable to the page and row it came from. A value it could not read is left blank for you to check, never guessed. Review the rows, then export the list or the submittal package.</p>
+    <p class="lede takeoff-only">Upload your door schedule PDF. TakeOffX reads every row and counts doors by type, size, fire rating and hardware group, each count traceable to the page and row it came from. A value it could not read with certainty is marked for you to check and left out of the counts, never guessed. Review the rows, then export the list or the submittal package.</p>
     <ol class="steps" id="steps"><li id="st-upload">Upload</li><li id="st-read">Read</li><li id="st-review">Review</li><li id="st-pdf">Submittal PDF</li></ol>
 
     <div class="card hide" id="signin-card">
@@ -1903,9 +1912,12 @@ global.SovereignPdfRender = {
         renderListActions();
         renderPackageStatus();
       }
-      function countList(title, items) {
-        if (!items || !items.length) return "";
-        return "<div><h3>" + esc(title) + "</h3><ul>" + items.slice(0, 12).map(function (i) { return "<li><span>" + esc(i.value) + "</span><b>" + esc(i.count) + "</b></li>"; }).join("") + (items.length > 12 ? '<li><span class="muted-small">+' + (items.length - 12) + " more</span><b></b></li>" : "") + "</ul></div>";
+      function countList(title, items, extra) {
+        if ((!items || !items.length) && !extra) return "";
+        items = items || [];
+        return "<div><h3>" + esc(title) + "</h3><ul>" + items.slice(0, 12).map(function (i) { return "<li><span>" + esc(i.value) + "</span><b>" + esc(i.count) + "</b></li>"; }).join("") +
+          (items.length > 12 ? '<li><span class="muted-small">+' + (items.length - 12) + " more</span><b></b></li>" : "") +
+          (extra ? '<li><span class="unread">' + esc(extra.value) + "</span><b>" + esc(extra.count) + "</b></li>" : "") + "</ul></div>";
       }
       function renderTakeoff() {
         var t = state.detail.takeoff, box = $("takeoff");
@@ -1919,7 +1931,7 @@ global.SovereignPdfRender = {
         ];
         if (t.hardware_sets) tiles.push(["Hardware sets", t.hardware_sets], ["Hardware items", t.hardware_components]);
         box.innerHTML = '<div class="stats">' + tiles.map(function (x) { return '<div class="stat"><b>' + esc(x[1]) + "</b><span>" + esc(x[0]) + "</span></div>"; }).join("") + "</div>" +
-          '<div class="counts">' + countList("By door type", t.by_door_type) + countList("By size", t.by_size) + countList("By fire rating", t.by_fire_rating) + countList("By hardware group", t.by_hardware_group) + countList("By frame material", t.by_frame_material) + "</div>";
+          '<div class="counts">' + countList("By door type", t.by_door_type) + countList("By size", t.by_size, t.doors > t.doors_with_size ? { value: "Size not read (marked below)", count: t.doors - t.doors_with_size } : null) + countList("By fire rating", t.by_fire_rating) + countList("By hardware group", t.by_hardware_group) + countList("By frame material", t.by_frame_material) + "</div>";
       }
       function srcText(d) {
         var s = d.source || {};
@@ -1964,8 +1976,24 @@ global.SovereignPdfRender = {
         }
         var unreadCount = doors.filter(function (d) { return d.width_inches == null || d.height_inches == null || (d.thickness && d.thickness_inches == null); }).length;
         var head = "<tr><th>Mark</th><th>HW group</th><th>Size</th><th>Thick.</th><th>Fire</th><th>Door type</th><th>Door matl / fin</th><th>Frame</th><th>Notes</th><th>Source</th></tr>";
+        // Each cell carries its column name, so on a phone a row reads as a
+        // small card (label: value) instead of a ten-column table squeezed to
+        // 390 px; empty cells are left out of the card.
+        function td(label, html, cls) {
+          var empty = html === "-" || html === "";
+          return '<td data-label="' + label + '" class="' + (cls || "") + (empty ? " empty-cell" : "") + '">' + html + "</td>";
+        }
         var body = doors.map(function (d) {
-          return "<tr><td class=\"nowrap\"><b>" + esc(d.mark) + "</b></td><td>" + esc(d.hardware_group || "-") + '</td><td class="nowrap">' + sizeCell(d) + '</td><td class="nowrap">' + thicknessCell(d) + '</td><td class="nowrap">' + esc(d.fire_rating || "-") + "</td><td>" + esc(d.door_type || "-") + "</td><td>" + esc([d.door_material, d.door_finish].filter(Boolean).join(" / ") || "-") + "</td><td>" + esc([d.frame_type, d.frame_material, d.frame_finish].filter(Boolean).join(" / ") || "-") + "</td><td>" + esc(d.notes || "") + '</td><td class="nowrap muted-small">' + esc(srcText(d)) + "</td></tr>";
+          return '<tr><td class="nowrap mark-cell"><b>' + esc(d.mark) + "</b></td>" +
+            td("HW group", esc(d.hardware_group || "-")) +
+            td("Size", sizeCell(d), "nowrap") +
+            td("Thick.", thicknessCell(d), "nowrap") +
+            td("Fire", esc(d.fire_rating || "-"), "nowrap") +
+            td("Door type", esc(d.door_type || "-")) +
+            td("Door matl / fin", esc([d.door_material, d.door_finish].filter(Boolean).join(" / ") || "-")) +
+            td("Frame", esc([d.frame_type, d.frame_material, d.frame_finish].filter(Boolean).join(" / ") || "-")) +
+            td("Notes", esc(d.notes || "")) +
+            td("Source", esc(srcText(d)), "nowrap muted-small") + "</tr>";
         }).join("");
         box.innerHTML = '<p class="muted-small">' + doors.length + " door rows, machine-read: check them against the source page before you submit." +
           (unreadCount ? ' <span class="unread">Marked</span> values (' + unreadCount + " row" + (unreadCount === 1 ? "" : "s") + ") could not be read with certainty; they keep the text as read and are left out of the counts." : "") +
