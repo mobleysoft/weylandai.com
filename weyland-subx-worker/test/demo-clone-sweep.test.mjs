@@ -28,7 +28,8 @@ test("an expired clone goes with its rows, its project and its package PDF", asy
   for (const t of ["affirm_audit_log", "claude_api_logs", "client_telemetry", "constraint_executions", "cps_gaps", "cut_sheet_discovery_queue", "door_hardware_matrix", "door_schedule_entries", "hardware_door_matrix", "hardware_page_extractions", "ocr_validation_queue", "post_transformation_review_queue", "quotes", "schedule_entries", "schedule_region_candidates", "session_affirm_status", "session_cut_sheet_matches", "session_nomenclature", "session_readiness", "takeoff_line_items", "takeoff_quotes", "takeoff_settings", "undo_stack"]) {
     db.exec("CREATE TABLE IF NOT EXISTS " + t + " (session_id TEXT, project_id TEXT)");
   }
-  for (const t of ["hardware_components", "submittal_cut_sheets"]) db.exec("CREATE TABLE " + t + " (hardware_set_id TEXT)");
+  db.exec("CREATE TABLE hardware_components (set_id TEXT, hardware_set_id TEXT)");
+  db.exec("CREATE TABLE submittal_cut_sheets (hardware_set_id TEXT)");
   for (const t of ["kdp_packets", "locations", "submittals", "verification_runs"]) db.exec("CREATE TABLE " + t + " (project_id TEXT)");
   const ins = db.prepare("INSERT INTO hardware_extraction_sessions VALUES (?,?,?,?,datetime('now', ?))");
   ins.run("old-clone", "u1", "p-old", "demo-clone/old-clone", "-30 hours");
@@ -38,7 +39,8 @@ test("an expired clone goes with its rows, its project and its package PDF", asy
   db.prepare("INSERT INTO projects VALUES ('p-new','The WeylandAI Building','Demo',datetime('now','-1 hours'))").run();
   db.prepare("INSERT INTO door_schedule_entries (session_id) VALUES ('old-clone'), ('old-clone'), ('new-clone')").run();
   db.prepare("INSERT INTO hardware_sets VALUES ('s1','old-clone')").run();
-  db.prepare("INSERT INTO hardware_components VALUES ('s1')").run();
+  // One part keyed the way every reader writes it (set_id only), one with both ids (a demo copy).
+  db.prepare("INSERT INTO hardware_components VALUES ('s1', NULL), ('s1', 's1')").run();
   const deleted = [];
   const env = { DB: d1(db), UPLOADS: { async delete(k) { deleted.push(k); } } };
   const summary = await sweepExpiredDemoClones(env);

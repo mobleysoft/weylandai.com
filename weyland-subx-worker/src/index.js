@@ -20,6 +20,7 @@
 //   /api/submittals/*            -> routes/submittals.js
 //   /api/hardware-schedule/*     -> routes/hardware-schedule-*.js (8 files)
 //   /api/takeoff/*                -> routes/takeoff-data.js, takeoff-line-items.js
+//   /api/demo/weyland-building/session -> routes/demo-building.js (the demo copy)
 //   /subx-app, /subx, /takeoffx   -> real static pages (src/pages/*.html)
 //
 // KNOWN, DOCUMENTED GAPS (do not silently paper over these - see each
@@ -97,6 +98,7 @@ import { registerHardwareScheduleClientOcrAssetRoutes } from "./routes/hardware-
 import { registerTakeoffDataRoutes } from "./routes/takeoff-data.js";
 import { registerTakeoffLineItemsRoutes } from "./routes/takeoff-line-items.js";
 import { registerSubxWorkspaceRoutes } from "./routes/subx-workspace.js";
+import { registerDemoBuildingRoutes } from "./routes/demo-building.js";
 
 import subxAppHtml from "./pages/subx-app.html";
 
@@ -239,6 +241,10 @@ registerHardwareScheduleExtractRoutes(router, {
 registerHardwareScheduleClientOcrAssetRoutes(router);
 
 registerSubxWorkspaceRoutes(router, { authenticate, requireActiveSubscription });
+
+// The homepage's per-visitor copy of the demo building (moved here from the
+// monolith 2026-10-07; see routes/demo-building.js).
+registerDemoBuildingRoutes(router, { authenticate, checkRateLimit });
 
 registerTakeoffDataRoutes(router, { authenticate, requireProductAccess });
 registerTakeoffLineItemsRoutes(router, { authenticate, requireProductAccess });

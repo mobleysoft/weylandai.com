@@ -131,3 +131,13 @@ zone_name = "weylandai.com"
 [[routes]]
 pattern = "weylandai.com/api/takeoff/*"
 zone_name = "weylandai.com"
+
+# The homepage's per-visitor copy of SubX's demo project, "The WeylandAI
+# Building" (POST /api/demo/weyland-building/session, routes/demo-building.js).
+# Served by the monolith's src/routes/demo-trial.js until 2026-10-07; here so
+# the copy carries the demo's hardware sets with their parts and is written in
+# one D1 batch. Ends in * so a trailing slash or a query string arrives here
+# too.
+[[routes]]
+pattern = "weylandai.com/api/demo/weyland-building/session*"
+zone_name = "weylandai.com"

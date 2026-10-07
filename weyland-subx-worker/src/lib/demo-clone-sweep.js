@@ -1,7 +1,8 @@
 // weyland-subx-worker/src/lib/demo-clone-sweep.js
 //
 // Expiry sweep for the per-visitor demo clones that POST /api/demo/
-// weyland-building/session (main worker, src/routes/demo-trial.js) creates:
+// weyland-building/session (routes/demo-building.js, this worker, since
+// 2026-10-07; the monolith's src/routes/demo-trial.js before) creates:
 // a fresh projects row, a hardware_extraction_sessions row whose
 // file_buffer_key is "demo-clone/<sessionId>", and the cloned door /
 // hardware rows under that session. The clone's KV pointer expires after
@@ -47,6 +48,9 @@ export async function sweepExpiredDemoClones(env, { olderThanHours = 24, limit =
   for (const row of expired.results || []) {
     try {
       const stmts = [];
+      // A set's parts hang off hardware_components.set_id (the column every
+      // reader joins on; hardware_set_id is empty on every older row).
+      stmts.push(env.DB.prepare("DELETE FROM hardware_components WHERE set_id IN (SELECT id FROM hardware_sets WHERE session_id = ?)").bind(row.id));
       for (const t of HARDWARE_SET_CHILD_TABLES) {
         stmts.push(env.DB.prepare("DELETE FROM " + t + " WHERE hardware_set_id IN (SELECT id FROM hardware_sets WHERE session_id = ?)").bind(row.id));
       }
