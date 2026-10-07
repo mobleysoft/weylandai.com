@@ -3,6 +3,12 @@ main = "src/index.js"
 compatibility_date = "2025-10-31"
 compatibility_flags = ["nodejs_compat"]
 
+# Explicitly kept on (same as every other weyland-*-worker): adding
+# [[routes]] below makes Wrangler disable the workers.dev subdomain by
+# default on deploy. It was on before this worker's routes moved into this
+# file (checked 2026-10-07: enabled, previews enabled).
+workers_dev = true
+
 # SubX + TakeoffX extracted out of weylandai.com's monolith
 # (src/legacy-monolith.js / weyland.worker.js) as their own standalone
 # Worker, per the 2026-09-12 microservices push (MICROSERVICES_PUSH.md)
@@ -72,3 +78,56 @@ fallthrough = true
 type = "Data"
 globs = ["assets/client-ocr/*.bin"]
 fallthrough = true
+
+# Zone routes (2026-10-07). Until now this worker's routes existed only in
+# the Cloudflare dashboard/API, as EXACT patterns for the pages
+# (weylandai.com/subx-app, /subx, /takeoffx). An exact pattern does not match
+# the same path with a query string, so the single-page shell's
+# /subx-app?embed=1 (and /takeoffx?embed=1, /subx?embed=1) fell through to
+# weylandai.com/* on weylandai-com-worker, which served an older copy of the
+# workspace (no client-side extraction, 'bridge' / 'managed API' route
+# buttons) - the overlay and the direct page were two different apps.
+# The page patterns are wildcards now; src/index.js serves the path variants
+# they bring (query strings, trailing slash).
+#
+# "wrangler deploy" PUTs this list as the COMPLETE set of routes for this
+# script (routes not listed here are deleted), so every route this worker
+# owned before is listed: the API patterns are unchanged from the zone
+# listing taken 2026-10-07 05:0xZ.
+[[routes]]
+pattern = "weylandai.com/subx*"
+zone_name = "weylandai.com"
+
+# Already covered by /subx*; listed on its own so the workspace's route is
+# visible in the zone listing by name.
+[[routes]]
+pattern = "weylandai.com/subx-app*"
+zone_name = "weylandai.com"
+
+[[routes]]
+pattern = "weylandai.com/takeoffx*"
+zone_name = "weylandai.com"
+
+[[routes]]
+pattern = "weylandai.com/api/hardware-schedule"
+zone_name = "weylandai.com"
+
+[[routes]]
+pattern = "weylandai.com/api/hardware-schedule/*"
+zone_name = "weylandai.com"
+
+[[routes]]
+pattern = "weylandai.com/api/submittals"
+zone_name = "weylandai.com"
+
+[[routes]]
+pattern = "weylandai.com/api/submittals/*"
+zone_name = "weylandai.com"
+
+[[routes]]
+pattern = "weylandai.com/api/takeoff"
+zone_name = "weylandai.com"
+
+[[routes]]
+pattern = "weylandai.com/api/takeoff/*"
+zone_name = "weylandai.com"

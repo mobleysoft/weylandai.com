@@ -5,60 +5,88 @@
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <meta name="theme-color" content="#090a0d">
   <title>SubX Workspace | WeylandAI</title>
+  <script>
+    // Inside the single-page shell (assets/weyland-shell.js loads this page as
+    // /subx-app?embed=1 in its overlay) the shell owns navigation: no header,
+    // no links that would load a second site inside the overlay.
+    (function () {
+      var q = location.search;
+      var embedded = /[?&]embed=1(&|$)/.test(q);
+      try { embedded = embedded || window.parent !== window; } catch (e) { embedded = true; }
+      if (embedded) document.documentElement.className += " embedded";
+      if (/[?&]mode=takeoff(&|$)/.test(q)) document.documentElement.className += " takeoff";
+    })();
+  </script>
   <style>
-    :root{--bg:#090a0d;--panel:#121419;--panel2:#181b21;--line:#2c3139;--text:#edf0f1;--muted:#9299a3;--accent:#ffd400;--green:#61dfa0;--blue:#66d4ff;--red:#ff756e;--primary:#2a52ff;--primary:#2a52ff;--accent:#ffd400}
+    :root{--bg:#090a0d;--panel:#121419;--panel2:#181b21;--line:#2c3139;--text:#edf0f1;--muted:#9299a3;--accent:#ffd400;--green:#61dfa0;--blue:#66d4ff;--red:#ff756e;--primary:#2a52ff}
     *{box-sizing:border-box}html,body{margin:0;min-height:100%;background:var(--bg);color:var(--text);font-family:"Avenir Next","Helvetica Neue",sans-serif}
     body:before{content:"";position:fixed;inset:0;pointer-events:none;background:radial-gradient(circle at 20% 20%,rgba(42,82,255,.12),transparent 28rem),linear-gradient(rgba(255,255,255,.015) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.015) 1px,transparent 1px);background-size:auto,30px 30px,30px 30px}
-    .shell{position:relative;max-width:1200px;margin:auto;padding:20px clamp(16px,3vw,40px) 60px}
-    header{display:flex;align-items:center;justify-content:space-between;gap:15px;margin-bottom:24px}
+    .shell{position:relative;max-width:1200px;margin:auto;padding:20px clamp(14px,3vw,40px) 60px}
+    header{display:flex;align-items:center;justify-content:space-between;gap:15px;margin-bottom:24px;flex-wrap:wrap}
+    .embedded header{display:none}
+    .embedded .shell{padding-top:14px}
     .brand{display:flex;align-items:center;gap:12px;color:var(--text);text-decoration:none}
     .mark{width:42px;height:42px;display:grid;place-items:center;background:var(--primary);color:var(--bg);font-weight:900}
     .brand b{display:block;letter-spacing:.16em}
     .brand small{display:block;color:var(--muted);font:700 9px/1.5 ui-monospace,monospace;letter-spacing:.11em}
     .nav{display:flex;gap:8px;flex-wrap:wrap}
-    .nav a,.button,button{border:1px solid var(--line);border-radius:99px;padding:9px 14px;color:var(--text);text-decoration:none;background:transparent;font:750 10px/1 ui-monospace,monospace;letter-spacing:.06em;cursor:pointer;transition:all .2s}
+    .nav a,.button,button{border:1px solid var(--line);border-radius:99px;padding:10px 15px;color:var(--text);text-decoration:none;background:transparent;font:750 10.5px/1 ui-monospace,monospace;letter-spacing:.06em;cursor:pointer;transition:border-color .2s,color .2s,box-shadow .2s;display:inline-flex;align-items:center;gap:6px;min-height:38px}
     .nav a:hover,.button:hover,button:hover{border-color:var(--primary);color:var(--primary);box-shadow:0 0 15px rgba(42,82,255,.2)}
-    .button.primary,button.primary{background:var(--primary);border-color:var(--primary);color:var(--bg);font-weight:900}
-    .button.primary:hover,button.primary:hover{color:var(--bg);box-shadow:0 0 15px rgba(42,82,255,.4)}
-    button:disabled{opacity:.5;cursor:not-allowed}
+    .button.primary,button.primary{background:var(--primary);border-color:var(--primary);color:#fff;font-weight:900}
+    .button.primary:hover,button.primary:hover{color:#fff;box-shadow:0 0 15px rgba(42,82,255,.45)}
+    button:disabled,.button[aria-disabled=true]{opacity:.5;cursor:not-allowed}
     .eyebrow{color:var(--primary);font:800 11px/1 ui-monospace,monospace;letter-spacing:.18em;text-transform:uppercase}
-    h1{font-size:clamp(28px,4vw,44px);letter-spacing:-.04em;line-height:1.05;margin:10px 0 6px}
-    .lede{max-width:680px;color:var(--muted);line-height:1.6;margin:0 0 28px;font-size:15px}
-    .card{background:rgba(18,20,25,.94);border:1px solid var(--line);border-radius:18px;padding:22px;margin-bottom:22px;box-shadow:0 25px 70px rgba(0,0,0,.25)}
-    .card h2{font-size:16px;margin:0 0 4px;letter-spacing:.02em}
-    .card .sub{color:var(--muted);font-size:12.5px;margin:0 0 16px;line-height:1.5}
-    .grid2{display:grid;grid-template-columns:1fr 1fr;gap:22px}
-    @media(max-width:860px){.grid2{grid-template-columns:1fr}}
+    h1{font-size:clamp(26px,4vw,42px);letter-spacing:-.04em;line-height:1.05;margin:10px 0 8px}
+    .lede{max-width:760px;color:var(--muted);line-height:1.6;margin:0 0 18px;font-size:15px}
+    .steps{display:flex;gap:8px;flex-wrap:wrap;list-style:none;padding:0;margin:0 0 22px;counter-reset:s}
+    .steps li{counter-increment:s;border:1px solid var(--line);border-radius:99px;padding:7px 12px;color:var(--muted);font:700 10px/1 ui-monospace,monospace;letter-spacing:.08em;text-transform:uppercase}
+    .steps li:before{content:counter(s) "  ";color:var(--primary)}
+    .steps li.done{color:var(--green);border-color:rgba(97,223,160,.4)}
+    .steps li.now{color:var(--text);border-color:var(--primary)}
+    .card{background:rgba(18,20,25,.94);border:1px solid var(--line);border-radius:18px;padding:20px;margin-bottom:20px;box-shadow:0 25px 70px rgba(0,0,0,.25)}
+    .card h2{font-size:17px;margin:0 0 4px;letter-spacing:.01em}
+    .card .sub{color:var(--muted);font-size:13px;margin:0 0 14px;line-height:1.5}
     label{display:block;font:700 10px/1 ui-monospace,monospace;letter-spacing:.08em;color:var(--muted);margin:14px 0 6px;text-transform:uppercase}
-    label:first-child{margin-top:0}
-    input[type=text],input[type=file],select{width:100%;background:#0d0f14;border:1px solid var(--line);border-radius:8px;padding:10px 12px;color:var(--text);font-size:14px;font-family:inherit}
+    label.inline{display:inline-block;margin:0 4px 0 0}
+    input[type=text],input[type=file],select{width:100%;background:#0d0f14;border:1px solid var(--line);border-radius:8px;padding:10px 12px;color:var(--text);font-size:15px;font-family:inherit}
+    select.small{width:auto;min-width:90px;padding:8px 10px}
     input[type=text]:focus,select:focus{outline:none;border-color:var(--primary)}
-    table{width:100%;border-collapse:collapse;font-size:13.5px}
-    th{text-align:left;color:var(--muted);font:750 10px/1 ui-monospace,monospace;letter-spacing:.08em;padding:10px 12px;background:#0d0f14;border-bottom:2px solid var(--line)}
-    td{padding:12px;border-bottom:1px solid #1f232b;vertical-align:middle}
-    tr.selected td{background:rgba(42,82,255,.08)}
+    .grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+    @media(max-width:760px){.grid2{grid-template-columns:1fr}}
+    .table-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch;border-radius:10px}
+    table{width:100%;border-collapse:collapse;font-size:13px}
+    th{text-align:left;color:var(--muted);font:750 10px/1.2 ui-monospace,monospace;letter-spacing:.06em;padding:9px 10px;background:#0d0f14;border-bottom:2px solid var(--line);white-space:nowrap}
+    td{padding:9px 10px;border-bottom:1px solid #1f232b;vertical-align:top}
+    td.nowrap{white-space:nowrap}
+    tr.selected td{background:rgba(42,82,255,.1)}
     tr.clickable{cursor:pointer}
-    tr.clickable:hover td{background:rgba(42,82,255,.05)}
-    .status-badge{font:800 9px ui-monospace,monospace;padding:5px 10px;border-radius:99px;display:inline-block;letter-spacing:.08em}
-    .status-ok{background:rgba(97,223,160,.15);color:var(--green);border:1px solid rgba(97,223,160,.35)}
-    .status-pending{background:rgba(255,212,0,.15);color:var(--accent);border:1px solid rgba(255,212,0,.35)}
-    .status-err{background:rgba(255,117,110,.15);color:var(--red);border:1px solid rgba(255,117,110,.35)}
-    .note-card{background:rgba(18,20,25,.9);border:1px solid var(--line);border-radius:14px;padding:16px 18px;color:var(--muted);font-size:13px;line-height:1.6;margin-top:6px}
-    .note-card code{background:#161920;padding:2px 6px;border-radius:4px;color:var(--primary);font-size:12px}
-    .error-box{background:rgba(255,117,110,.08);border:1px solid rgba(255,117,110,.4);border-radius:10px;padding:12px 14px;color:var(--red);font-size:13px;line-height:1.5;margin-top:12px;white-space:pre-wrap;font-family:ui-monospace,monospace}
-    .ok-box{background:rgba(97,223,160,.08);border:1px solid rgba(97,223,160,.4);border-radius:10px;padding:12px 14px;color:var(--green);font-size:13px;line-height:1.5;margin-top:12px;white-space:pre-wrap;font-family:ui-monospace,monospace}
-    pre.raw{background:#0b0d12;border:1px solid var(--line);border-radius:10px;padding:14px;font-size:11.5px;line-height:1.5;color:#c8ccd4;overflow:auto;max-height:340px}
-    .route-choice{display:flex;gap:10px;flex-wrap:wrap;margin-top:8px}
-    .route-choice button{flex:1;min-width:180px;text-align:left;padding:12px 14px}
-    .route-choice button.active{border-color:var(--primary);color:var(--primary);box-shadow:0 0 12px rgba(42,82,255,.25)}
-    .route-choice .rc-title{font:800 11px ui-monospace,monospace;letter-spacing:.06em}
-    .route-choice .rc-desc{display:block;color:var(--muted);font:600 10px/1.4 ui-monospace,monospace;margin-top:4px;letter-spacing:0;text-transform:none}
-    #login-ui{max-width:420px;margin:60px auto}
-    .muted-small{color:var(--muted);font-size:12px}
-    .empty{color:var(--muted);font-size:13px;padding:20px;text-align:center}
-    .actions-row{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
+    tr.clickable:hover td{background:rgba(42,82,255,.06)}
+    .tag{font:800 9px ui-monospace,monospace;padding:4px 8px;border-radius:99px;display:inline-block;letter-spacing:.06em;border:1px solid var(--line);color:var(--muted);white-space:nowrap}
+    .tag.ok{color:var(--green);border-color:rgba(97,223,160,.4)}
+    .tag.warn{color:var(--accent);border-color:rgba(255,212,0,.4)}
+    .error-box{background:rgba(255,117,110,.08);border:1px solid rgba(255,117,110,.4);border-radius:10px;padding:12px 14px;color:var(--red);font-size:13.5px;line-height:1.5;margin-top:12px;white-space:pre-wrap}
+    .ok-box{background:rgba(97,223,160,.08);border:1px solid rgba(97,223,160,.4);border-radius:10px;padding:12px 14px;color:var(--green);font-size:13.5px;line-height:1.5;margin-top:12px;white-space:pre-wrap}
+    .info-box{background:rgba(42,82,255,.08);border:1px solid rgba(42,82,255,.35);border-radius:10px;padding:12px 14px;color:var(--text);font-size:13.5px;line-height:1.5;margin-top:12px}
+    .muted-small{color:var(--muted);font-size:12.5px;line-height:1.5}
+    .empty{color:var(--muted);font-size:13.5px;padding:16px;text-align:center}
+    .actions-row{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-top:14px}
     .spin{display:inline-block;width:11px;height:11px;border:2px solid rgba(255,255,255,.25);border-top-color:var(--primary);border-radius:50%;animation:spin .7s linear infinite;vertical-align:middle;margin-right:6px}
     @keyframes spin{to{transform:rotate(360deg)}}
+    .stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin:14px 0}
+    .stat{border:1px solid var(--line);border-radius:12px;padding:12px;background:#0d0f14}
+    .stat b{display:block;font-size:26px;letter-spacing:-.03em}
+    .stat span{color:var(--muted);font:700 10px/1.3 ui-monospace,monospace;letter-spacing:.06em;text-transform:uppercase}
+    .counts{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px;margin:6px 0 14px}
+    .counts h3{margin:0 0 6px;font:800 10px/1 ui-monospace,monospace;letter-spacing:.1em;color:var(--muted);text-transform:uppercase}
+    .counts ul{list-style:none;margin:0;padding:0;font-size:13px}
+    .counts li{display:flex;justify-content:space-between;gap:10px;padding:4px 0;border-bottom:1px solid #1a1e25}
+    .counts li b{color:var(--text)}
+    .viewer{width:100%;height:min(78vh,900px);border:1px solid var(--line);border-radius:12px;background:#fff;margin-top:14px}
+    canvas#rasterize-canvas{width:100%;max-width:700px;border:1px solid var(--line);border-radius:8px;margin-top:10px;background:#fff}
+    .hide{display:none!important}
+    .takeoff-only{display:none}
+    .takeoff .takeoff-only{display:block}
+    .takeoff .subx-only{display:none}
   </style>
 </head>
 <body>
@@ -67,96 +95,87 @@
       <a class="brand" href="/"><span class="mark">SX</span><span><b>SUBX</b><small>WORKSPACE</small></span></a>
       <nav class="nav">
         <a href="/subx">PRODUCT PAGE</a>
+        <a href="/takeoffx">TAKEOFFX</a>
         <a href="/pricing">PRICING</a>
-        <a href="#" id="logout-link" style="display:none">SIGN OUT</a>
+        <a href="#" id="logout-link" class="hide">SIGN OUT</a>
       </nav>
     </header>
 
-    <div class="eyebrow">SUBMITTAL AUTOMATION &middot; REAL SESSIONS</div>
-    <h1>Your extraction workspace</h1>
-    <p class="lede">Upload a door-hardware schedule, watch a real Claude Vision extraction run against it, and pick which extraction route processes your account's sessions. This is the actual pipeline behind SubX/TakeoffX &mdash; not a mockup, and it will tell you plainly if a step isn't working yet rather than hang silently.</p>
+    <div class="eyebrow subx-only">SubX &middot; submittal workspace</div>
+    <div class="eyebrow takeoff-only">TakeOffX &middot; takeoff from your own drawings</div>
+    <h1 class="subx-only">Schedule in, submittal package out</h1>
+    <h1 class="takeoff-only">Count the doors on your own schedule</h1>
+    <p class="lede subx-only">Upload a door or hardware schedule PDF. SubX reads every row &mdash; a sheet printed sideways is turned upright first &mdash; lists the doors it found with the page and row each one came from, and builds the submittal package PDF.</p>
+    <p class="lede takeoff-only">Upload your door schedule PDF. TakeOffX reads every row and counts doors by type, size, fire rating and hardware group, each count traceable to the page and row it came from. Review the rows, then export the list or the submittal package.</p>
+    <ol class="steps" id="steps"><li id="st-upload">Upload</li><li id="st-read">Read</li><li id="st-review">Review</li><li id="st-pdf">Submittal PDF</li></ol>
 
-    <div id="login-ui"></div>
+    <div class="card hide" id="signin-card">
+      <h2>Sign in to work on your own schedules</h2>
+      <p class="sub">Uploads, readings and packages are kept in your account. Sign-in happens right here; nothing you have open is lost.</p>
+      <div class="actions-row"><button type="button" class="primary" id="signin-btn">SIGN IN</button></div>
+      <div id="signin-note" class="muted-small"></div>
+    </div>
 
-    <div id="app" style="display:none">
-
-      <div class="card">
-        <h2>Start a new extraction</h2>
-        <p class="sub">Uploads straight to your account via <code>POST /api/hardware-schedule/start</code>. PDF only.</p>
+    <div id="app" class="hide">
+      <div class="card" id="upload-card">
+        <h2>Upload a schedule</h2>
+        <p class="sub">PDF up to 30 MB. Page 1 is read as soon as it is uploaded; pick other pages afterwards.</p>
         <form id="upload-form">
-          <label>Project name</label>
-          <input type="text" id="f-project" placeholder="e.g. 500 Main St &mdash; Door Hardware">
-          <label>Document type</label>
-          <select id="f-doctype">
-            <option value="hardware_schedule">Hardware schedule</option>
-            <option value="door_schedule">Door schedule</option>
-            <option value="finish_schedule">Finish schedule</option>
-            <option value="frame_schedule">Frame schedule</option>
-          </select>
-          <label>PDF file</label>
-          <input type="file" id="f-file" accept="application/pdf">
+          <div class="grid2">
+            <div>
+              <label for="f-project">Project name</label>
+              <input type="text" id="f-project" placeholder="e.g. 500 Main St &mdash; Door Hardware" autocomplete="off">
+            </div>
+            <div>
+              <label for="f-doctype">What the PDF is</label>
+              <select id="f-doctype">
+                <option value="door_schedule" selected>Door schedule</option>
+                <option value="hardware_schedule">Hardware schedule (hardware sets)</option>
+              </select>
+            </div>
+          </div>
+          <label for="f-file">PDF file</label>
+          <input type="file" id="f-file" accept="application/pdf,.pdf">
           <div class="actions-row">
-            <button type="submit" class="primary" id="upload-btn">UPLOAD &amp; CREATE SESSION</button>
+            <button type="submit" class="primary" id="upload-btn">UPLOAD AND READ PAGE 1</button>
           </div>
         </form>
         <div id="upload-result"></div>
-        <div class="note-card" id="rasterize-note">
-          <strong>Client-side page preview (sovereign, runs entirely in your browser):</strong>
-          the moment you pick a PDF above, this page rasterizes page&nbsp;1 to real pixels right here
-          &mdash; no upload, no server, no Cloudflare Worker involved for this step. Real, honest scope:
-          this decodes the PDF's own structure and paints its vector content and embedded images with
-          this browser's native <code>Canvas2D</code>/<code>createImageBitmap</code> &mdash; it does NOT
-          read the text (OCR is separate, harder, unsolved work, not attempted here). If a page uses an
-          image encoding this browser can't natively decode (e.g. JBIG2 or CCITT Group&nbsp;4 scans), that
-          will be reported below plainly rather than silently shown blank.
-        </div>
         <div id="rasterize-status" class="muted-small" style="margin-top:8px"></div>
-        <canvas id="rasterize-canvas" style="width:100%;max-width:700px;border:1px solid var(--line);border-radius:8px;margin-top:10px;display:none;background:#fff"></canvas>
+        <canvas id="rasterize-canvas" class="hide"></canvas>
       </div>
 
-      <div class="card">
-        <h2>Your sessions</h2>
-        <p class="sub">Real rows from <code>GET /api/sessions</code>. Click one to manage its extraction route and run a page extraction.</p>
-        <div id="sessions-list"><div class="empty">Loading&hellip;</div></div>
+      <div class="card" id="sessions-card">
+        <h2>Your schedules</h2>
+        <p class="sub">Open one to read more pages, review the rows or build its package.</p>
+        <div id="sessions-list" class="table-wrap"><div class="empty">Loading&hellip;</div></div>
       </div>
 
-      <div class="card" id="session-detail-card" style="display:none">
-        <h2 id="sd-title">Session</h2>
+      <div class="card hide" id="session-card">
+        <h2 id="sd-title">Schedule</h2>
         <p class="sub" id="sd-sub"></p>
-
-        <label>Extraction route</label>
-        <p class="muted-small" id="route-current">Loading current route&hellip;</p>
-        <div class="route-choice">
-          <button type="button" data-route="claude_code_local" id="route-btn-bridge">
-            <span class="rc-title">CLAUDE CODE (BRIDGE)</span>
-            <span class="rc-desc">Runs on your own linked Claude Code / SABP bridge subscription. Requires that bridge to be connected.</span>
-          </button>
-          <button type="button" data-route="embedded_gofaineat" id="route-btn-embedded">
-            <span class="rc-title">LOCAL OCR WORKFLOW</span>
-            <span class="rc-desc">Uses the existing in-ecosystem OCR extraction workflow. No external managed API.</span>
-          </button>
-        </div>
-        <div id="route-result"></div>
-        <div class="note-card">
-          Page extraction uses the existing OCR/grid workflow. The route selector governs only session or legacy batch paths that honor it; the bridge option requires an explicitly configured in-ecosystem binding. Extracted data remain drafts requiring human review. Successful extraction does not establish accuracy against a reference document.
-
-        </div>
-
-        <div class="actions-row">
-          <button type="button" class="primary" id="extract-btn">RUN EXTRACTION (PAGE 1)</button>
-          <button type="button" class="primary" id="client-extract-btn">RUN EXTRACTION (CLIENT-SIDE, PAGE 1)</button>
-          <button type="button" id="doorindex-btn">VIEW DOOR INDEX</button>
-          <button type="button" id="export-btn">VIEW EXPORT (JSON)</button>
-        </div>
-        <div class="note-card">
-          The client-side button renders the page and runs OCR entirely in THIS browser tab (pdf.js + tesseract-wasm, real vendored libraries, no server-side Cloudflare CPU spent on rendering or OCR) and only sends the finished structured result back to the server. Works for hardware_schedule pages; see <code>hardware-grid-extraction-client.mjs</code>.
+        <div class="actions-row" id="read-row">
+          <label for="sd-page" class="inline">Page</label>
+          <select id="sd-page" class="small"></select>
+          <button type="button" class="primary" id="extract-btn">READ THIS PAGE</button>
+          <button type="button" id="client-extract-btn">READ IT IN THIS BROWSER</button>
         </div>
         <div id="extract-result"></div>
-        <pre class="raw" id="raw-output" style="display:none"></pre>
+        <div id="takeoff"></div>
+        <div id="doors-wrap" class="table-wrap"></div>
+        <div id="sets-wrap" class="table-wrap"></div>
+        <div class="actions-row" id="list-actions"></div>
       </div>
 
-      <div class="note-card">
-        New here and just want to see it work first? The <a href="/" style="color:var(--primary)">WeylandAI homepage</a> gives every visitor an instant, private demo session with real matched hardware &mdash; no signup required.
+      <div class="card hide" id="package-card">
+        <h2>Submittal package (PDF)</h2>
+        <p class="sub">Cover, contents, the door schedule with the source page and row of every line, any hardware sets with their matched cut sheets, and your uploaded schedule as the source appendix.</p>
+        <div class="actions-row">
+          <button type="button" class="primary" id="package-btn">BUILD THE SUBMITTAL PDF</button>
+          <a class="button hide" id="package-download" href="#">DOWNLOAD PDF</a>
+        </div>
+        <div id="package-result"></div>
+        <iframe id="package-viewer" class="viewer hide" title="Submittal package PDF"></iframe>
       </div>
     </div>
   </div>
@@ -1668,386 +1687,455 @@ global.SovereignPdfRender = {
 
   </script>
   <script>
-    (function(){
-      var fileInput = document.getElementById('f-file');
-      var statusEl = document.getElementById('rasterize-status');
-      var canvas = document.getElementById('rasterize-canvas');
+    // Page-1 preview of the chosen PDF, drawn by the inline rasterizer above
+    // (nothing is uploaded for this step).
+    (function () {
+      var fileInput = document.getElementById("f-file");
+      var statusEl = document.getElementById("rasterize-status");
+      var canvas = document.getElementById("rasterize-canvas");
       if (!fileInput || !statusEl || !canvas) return;
-      fileInput.addEventListener('change', function(){
+      fileInput.addEventListener("change", function () {
         if (!fileInput.files || fileInput.files.length === 0) return;
         var file = fileInput.files[0];
-        canvas.style.display = 'none';
-        statusEl.textContent = 'Rasterizing page 1 client-side (sovereign, no upload)...';
+        var project = document.getElementById("f-project");
+        if (project && !project.value.trim()) project.value = file.name.replace(/\.pdf$/i, "");
+        canvas.classList.add("hide");
+        statusEl.textContent = "Drawing page 1 in this browser...";
         var reader = new FileReader();
-        reader.onload = function(){
-          window.SovereignPdfRender.renderPdfPageToCanvas(reader.result, 0, canvas, { scale: 2 })
-            .then(function(result){
-              canvas.style.display = 'block';
-              var msg = 'Rendered page 1: ' + result.width + '\u00d7' + result.height + ' px, real pixels, zero third-party code.';
-              if (result.warnings && result.warnings.length) {
-                msg += ' Honest gaps found: ' + result.warnings.join(' | ');
-              }
-              statusEl.textContent = msg;
+        reader.onload = function () {
+          window.SovereignPdfRender.renderPdfPageToCanvas(reader.result, 0, canvas, { scale: 1.5 })
+            .then(function (result) {
+              canvas.classList.remove("hide");
+              statusEl.textContent = "Page 1 preview (" + result.width + " x " + result.height + " px). Press UPLOAD AND READ PAGE 1 to read it.";
             })
-            .catch(function(err){
-              canvas.style.display = 'none';
-              statusEl.textContent = 'Client-side rasterization failed honestly: ' + err.message;
+            .catch(function () {
+              canvas.classList.add("hide");
+              statusEl.textContent = "No preview for this file in this browser; it can still be uploaded and read.";
             });
-        };
-        reader.onerror = function(){
-          statusEl.textContent = 'Could not read the selected file: ' + (reader.error ? reader.error.message : 'unknown error');
         };
         reader.readAsArrayBuffer(file);
       });
     })();
   </script>
-  <script src="/assets/authfor-integration-standard.js"></script>
   <script>
-    (function(){
-      var TOKEN_KEY = '_authfor_token';
-      var EPH_KEY = 'weylandai_ephemeral_token_v1';
-      var activeToken = null;
-      function token(){ try { return localStorage.getItem(TOKEN_KEY); } catch(e){ return null; } }
-      function authHeaders(json){
-        var h = { 'Authorization': 'Bearer ' + (activeToken || token()) };
-        if (json) h['Content-Type'] = 'application/json';
+    (function () {
+      "use strict";
+      var params = new URLSearchParams(location.search);
+      var root = document.documentElement;
+      var EMBED = root.classList.contains("embedded");
+      var TAKEOFF = root.classList.contains("takeoff");
+      var MODULE_URL = "/api/hardware-schedule/client-ocr-assets/schedule-grid-extraction-client.mjs?v=20261007";
+      var state = { sessions: [], current: null, detail: null, lastUpload: null, blobUrl: null, busy: false };
+      function $(id) { return document.getElementById(id); }
+      function esc(s) { return String(s == null ? "" : s).replace(/[&<>"']/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]; }); }
+      function token() { try { return localStorage.getItem("_authfor_token"); } catch (e) { return null; } }
+      function authHeaders(json) {
+        var h = {};
+        var t = token();
+        if (t) h.Authorization = "Bearer " + t;
+        if (json) h["Content-Type"] = "application/json";
         return h;
       }
-      // Ephemeral-first fallback: subx/takeoffx are both in lib/auth.js's
-      // EPHEMERAL_TRIAL_PRODUCTS allowlist, so a visitor with no real
-      // AuthFor session yet should land straight in the app instead of
-      // AuthForStandard's own login-form UI. Proxied through the
-      // rate-limited /api/auth/ephemeral route.
-      function ephemeralToken(){
-        try {
-          var existing = window.sessionStorage.getItem(EPH_KEY);
-          if (existing) return Promise.resolve(existing);
-        } catch (e) {}
-        return fetch('/api/auth/ephemeral', { method: 'POST' })
-          .then(function(r){
-            if (!r.ok) throw new Error('ephemeral token request failed (HTTP ' + r.status + ')');
-            return r.json();
-          }).then(function(d){
-            try { window.sessionStorage.setItem(EPH_KEY, d.token); } catch (e) {}
-            return d.token;
-          });
+      // Every call carries the weyland_session cookie (same origin) and, when
+      // the visitor signed in on the homepage, the AuthFor token too.
+      function api(path, opts) {
+        opts = opts || {};
+        var init = { method: opts.method || "GET", credentials: "same-origin", headers: authHeaders(opts.json !== undefined) };
+        if (opts.json !== undefined) init.body = JSON.stringify(opts.json);
+        if (opts.form) init.body = opts.form;
+        return fetch(path, init).then(function (r) {
+          return r.json().catch(function () { return {}; }).then(function (d) { return { ok: r.ok, status: r.status, data: d }; });
+        }).catch(function (e) { return { ok: false, status: 0, data: { error: "Network error: " + ((e && e.message) || e) } }; });
       }
-      function esc(s){ return String(s == null ? '' : s).replace(/[&<>"']/g, function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]; }); }
-      // Real API error shapes in this codebase vary by route: some return
-      // {error:"string", details:"..."}, others (routes using
-      // error-utilities.js's jsonErrorResponse) return
-      // {error:{code,message,details,...}}. Both are unwrapped here so the
-      // MOST SPECIFIC real reason (details, e.g. "ANTHROPIC_API_KEY not
-      // configured") is shown instead of a generic wrapper message -
-      // honest error surfacing is the whole point of this page.
-      function apiErrorText(data){
-        if (!data) return 'Unknown error';
-        var e = data.error;
+      function errText(d) {
+        if (!d) return "Unknown error";
         var parts = [];
-        if (e && typeof e === 'object') {
-          if (e.message) parts.push(e.message);
-          if (e.details && e.details !== e.message) parts.push(e.details);
-        } else if (e) {
-          parts.push(String(e));
-        }
-        if (data.details && parts.indexOf(String(data.details)) === -1) parts.push(String(data.details));
-        if (parts.length === 0) parts.push(JSON.stringify(data));
-        return parts.join(' — ');
+        var e = d.error;
+        if (e && typeof e === "object") { if (e.message) parts.push(e.message); if (e.details && e.details !== e.message) parts.push(e.details); }
+        else if (e) parts.push(String(e));
+        if (d.details && parts.indexOf(String(d.details)) === -1) parts.push(String(d.details));
+        if (d.detail && parts.indexOf(String(d.detail)) === -1) parts.push(String(d.detail));
+        if (d.data && d.data.detail && parts.indexOf(String(d.data.detail)) === -1) parts.push(String(d.data.detail));
+        return parts.length ? parts.join(" - ") : JSON.stringify(d).slice(0, 300);
       }
-
-      var currentSessionId = null;
-      var currentDocumentType = 'hardware_schedule';
-      var currentTotalPages = 1;
-
-      function showApp(){
-        document.getElementById('login-ui').style.display = 'none';
-        document.getElementById('app').style.display = 'block';
-        document.getElementById('logout-link').style.display = 'inline-block';
-        loadSessions();
+      function setStep(id, cls) {
+        var el = $(id);
+        if (!el) return;
+        el.classList.remove("done", "now");
+        if (cls) el.classList.add(cls);
       }
-
-      var auth = new AuthForStandard({ clientId: 'af_weyland_subx_app', ventureName: 'weylandai.com', loginUISelector: '#login-ui' });
-      window.addEventListener('authfor-success', showApp);
-      document.getElementById('logout-link').addEventListener('click', function(e){ e.preventDefault(); auth.logout(); });
-
-      if (token()) {
-        auth.init().then(function(result){
-          if (result && result.authenticated) showApp();
-        });
-      } else {
-        ephemeralToken().then(function(t){
-          activeToken = t;
-          showApp();
-        }).catch(function(){
-          auth.init();
-        });
+      function ticking(el, label) {
+        var t0 = Date.now();
+        el.innerHTML = '<span class="spin"></span>' + esc(label);
+        var iv = setInterval(function () { el.innerHTML = '<span class="spin"></span>' + esc(label) + " " + Math.round((Date.now() - t0) / 1000) + " s"; }, 500);
+        return function () { clearInterval(iv); };
       }
+      function typeLabel(t) { return t === "hardware_schedule" ? "hardware schedule" : "door schedule"; }
 
-      function loadSessions(){
-        var box = document.getElementById('sessions-list');
-        fetch('/api/sessions?limit=25', { headers: authHeaders() })
-          .then(function(r){ return r.json().then(function(d){ return { ok: r.ok, status: r.status, data: d }; }); })
-          .then(function(res){
-            if (!res.ok) {
-              box.innerHTML = '<div class="error-box">Failed to load sessions (HTTP ' + res.status + '): ' + esc(apiErrorText(res.data)) + '</div>';
-              return;
-            }
-            var sessions = res.data.sessions || [];
-            if (sessions.length === 0) {
-              box.innerHTML = '<div class="empty">No sessions yet &mdash; upload a PDF above to create your first one.</div>';
-              return;
-            }
-            var rows = sessions.map(function(s){
-              var badge = s.status === 'completed'
-                ? '<span class="status-badge status-ok">COMPLETED</span>'
-                : (s.status === 'failed' ? '<span class="status-badge status-err">FAILED</span>' : '<span class="status-badge status-pending">' + esc((s.status||'active').toUpperCase()) + '</span>');
-              return '<tr class="clickable" data-session="' + esc(s.sessionId) + '">' +
-                '<td>' + esc(s.projectName) + '<div class="muted-small">' + esc(s.filename) + '</div></td>' +
-                '<td>' + (s.pagesProcessed||0) + ' / ' + (s.totalPages||'?') + ' pages</td>' +
-                '<td>' + (s.hardwareSets||0) + '</td>' +
-                '<td>' + badge + '</td>' +
-                '<td>' + esc((s.createdAt||'').replace('T',' ').slice(0,16)) + '</td>' +
-              '</tr>';
-            }).join('');
-            box.innerHTML = '<table><thead><tr><th>Project</th><th>Progress</th><th>Hardware sets</th><th>Status</th><th>Created</th></tr></thead><tbody>' + rows + '</tbody></table>';
-            box.querySelectorAll('tr[data-session]').forEach(function(row){
-              row.addEventListener('click', function(){ selectSession(row.getAttribute('data-session'), row); });
-            });
-          })
-          .catch(function(err){ box.innerHTML = '<div class="error-box">Network error loading sessions: ' + esc(err.message) + '</div>'; });
+      // ---------- sign in / out ----------
+      function showSignIn(note) {
+        $("app").classList.add("hide");
+        $("signin-card").classList.remove("hide");
+        $("signin-note").textContent = note || "";
       }
-
-      function selectSession(sessionId, rowEl){
-        currentSessionId = sessionId;
-        currentDocumentType = 'hardware_schedule';
-        document.querySelectorAll('#sessions-list tr').forEach(function(r){ r.classList.remove('selected'); });
-        if (rowEl) rowEl.classList.add('selected');
-        var card = document.getElementById('session-detail-card');
-        card.style.display = 'block';
-        document.getElementById('sd-title').textContent = 'Session ' + sessionId.slice(0, 8) + '…';
-        document.getElementById('sd-sub').textContent = 'Managing extraction route + running real extraction for this session.';
-        document.getElementById('extract-result').innerHTML = '';
-        document.getElementById('route-result').innerHTML = '';
-        document.getElementById('raw-output').style.display = 'none';
-        loadRoute(sessionId);
-        // Real document_type for THIS session (hardware_schedule vs
-        // door_schedule) - reused from the existing extraction-contract
-        // endpoint rather than adding a new route, since it already
-        // returns this exact field for a different purpose.
-        fetch('/api/hardware-schedule/session/' + encodeURIComponent(sessionId) + '/page/1/extraction-contract', { headers: authHeaders() })
-          .then(function(r){ return r.json(); })
-          .then(function(d){
-            if (d && d.document_type) currentDocumentType = d.document_type;
-            if (d && d.totalPages) currentTotalPages = d.totalPages;
-          })
-          .catch(function(){});
-        card.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      }
-
-      function loadRoute(sessionId){
-        fetch('/api/sessions/' + encodeURIComponent(sessionId) + '/extraction-route', { headers: authHeaders() })
-          .then(function(r){ return r.json().then(function(d){ return { ok: r.ok, status: r.status, data: d }; }); })
-          .then(function(res){
-            document.getElementById('route-btn-bridge').classList.remove('active');
-            document.getElementById('route-btn-bridge').disabled = !(res.data.available_routes || []).includes('claude_code_local');
-            document.getElementById('route-btn-embedded').classList.remove('active');
-            if (!res.ok) {
-              document.getElementById('route-current').textContent = 'Could not load route (HTTP ' + res.status + '): ' + apiErrorText(res.data);
-              return;
-            }
-            if (res.data.route === 'claude_code_local') document.getElementById('route-btn-bridge').classList.add('active');
-            else if (res.data.route === 'embedded_gofaineat') document.getElementById('route-btn-embedded').classList.add('active');
-            document.getElementById('route-current').textContent = res.data.route
-              ? ((res.data.route_status === 'unsupported' ? 'Unsupported stored route; choose Local OCR: ' : 'Current route: ') + res.data.route + (res.data.affirmed_by ? ' (set by ' + res.data.affirmed_by + ')' : ''))
-              : 'No route selected yet for this session (a default will be used).';
-          })
-          .catch(function(err){ document.getElementById('route-current').textContent = 'Network error: ' + err.message; });
-      }
-
-      document.querySelectorAll('.route-choice button').forEach(function(btn){
-        btn.addEventListener('click', function(){
-          if (!currentSessionId) return;
-          var route = btn.getAttribute('data-route');
-          var out = document.getElementById('route-result');
-          out.innerHTML = '<span class="spin"></span>Setting route&hellip;';
-          fetch('/api/sessions/' + encodeURIComponent(currentSessionId) + '/extraction-route', {
-            method: 'POST', headers: authHeaders(true), body: JSON.stringify({ route: route })
-          })
-            .then(function(r){ return r.json().then(function(d){ return { ok: r.ok, status: r.status, data: d }; }); })
-            .then(function(res){
-              if (!res.ok) { out.innerHTML = '<div class="error-box">Failed to set route (HTTP ' + res.status + '): ' + esc(apiErrorText(res.data)) + '</div>'; return; }
-              out.innerHTML = '<div class="ok-box">Route set to ' + esc(res.data.route) + ' at ' + esc(res.data.affirmed_at) + '.</div>';
-              loadRoute(currentSessionId);
-            })
-            .catch(function(err){ out.innerHTML = '<div class="error-box">Network error: ' + esc(err.message) + '</div>'; });
-        });
-      });
-
-      document.getElementById('extract-btn').addEventListener('click', function(){
-        if (!currentSessionId) return;
-        var out = document.getElementById('extract-result');
-        var raw = document.getElementById('raw-output');
-        out.innerHTML = '<span class="spin"></span>Calling the real extraction endpoint &mdash; this runs the existing local OCR workflow and may take time&hellip;';
-        raw.style.display = 'none';
-        fetch('/api/hardware-schedule/session/' + encodeURIComponent(currentSessionId) + '/page/1', { headers: authHeaders() })
-          .then(function(r){ return r.json().then(function(d){ return { ok: r.ok, status: r.status, data: d }; }); })
-          .then(function(res){
-            if (!res.ok) {
-              var msg = res.data ? apiErrorText(res.data) : ('HTTP ' + res.status);
-              out.innerHTML = '<div class="error-box">Extraction failed honestly (HTTP ' + res.status + '):\n' + esc(msg) + '</div>';
-              return;
-            }
-            var groups = (res.data.data && res.data.data.hardware_groups) || [];
-            out.innerHTML = '<div class="ok-box">Extraction succeeded: ' + groups.length + ' hardware group(s) found on page 1.</div>';
-            raw.textContent = JSON.stringify(res.data, null, 2);
-            raw.style.display = 'block';
-          })
-          .catch(function(err){ out.innerHTML = '<div class="error-box">Network error: ' + esc(err.message) + '</div>'; });
-      });
-
-      // Client-side extraction: real rendering (pdf.js) + real OCR
-      // (tesseract-wasm) in THIS browser tab, zero Cloudflare CPU spent -
-      // only the finished result is sent to the server, via the SAME
-      // extract-result endpoint the operator-local/Claude-vision path
-      // already uses. Per direct instruction 2026-10-02: no shipped
-      // extraction path should depend on server-side compute when it can
-      // run client-side instead.
-      document.getElementById('client-extract-btn').addEventListener('click', async function(){
-        if (!currentSessionId) return;
-        var fileInputEl = document.getElementById('f-file');
-        if (!fileInputEl.files || fileInputEl.files.length === 0) {
-          alert('Choose a PDF file first.');
-          return;
-        }
-        var out = document.getElementById('extract-result');
-        var raw = document.getElementById('raw-output');
-        var isDoorSchedule = currentDocumentType === 'door_schedule';
-        // Real bug fixed 2026-10-02: only door_schedule and hardware_schedule
-        // have real client-side extractors. finish_schedule/frame_schedule
-        // are real, selectable upload options with no extraction pipeline at
-        // all (same gap just fixed server-side in runEmbeddedGofaineatExtraction) -
-        // silently defaulting them to extractHardwareScheduleFromPdf would
-        // produce plausible-looking-but-meaningless output instead of an
-        // honest "not supported yet."
-        if (currentDocumentType !== 'door_schedule' && currentDocumentType !== 'hardware_schedule') {
-          out.innerHTML = '<div class="error-box">Client-side extraction isn\'t implemented for "' + esc(currentDocumentType) + '" yet - only door_schedule and hardware_schedule have real extractors.</div>';
-          return;
-        }
-        var totalPages = currentTotalPages || 1;
-        raw.style.display = 'none';
-        var btn = this;
-        btn.disabled = true;
+      $("signin-btn").addEventListener("click", function () {
+        var target = "/subx-app" + (TAKEOFF ? "?mode=takeoff" : "");
         try {
-          out.innerHTML = '<span class="spin"></span>Loading client-side extraction engine&hellip;';
-          var file = fileInputEl.files[0];
-          var bytes = await file.arrayBuffer();
-          var mod = await import('/api/hardware-schedule/client-ocr-assets/schedule-grid-extraction-client.mjs');
-
-          // Real multi-page loop - sequential (not parallel): tesseract-wasm's
-          // OCR engine instance is stateful/single-threaded per page, and
-          // sequential also keeps per-page progress readable rather than N
-          // simultaneous progress streams racing in the same status line.
-          var pageSummaries = [];
-          var allResults = [];
-          for (var p = 1; p <= totalPages; p++) {
-            var pageLabel = 'page ' + p + '/' + totalPages;
-            var progressCb = (function(label){
-              return function(msg){ out.innerHTML = '<span class="spin"></span>[' + label + '] ' + esc(msg); };
-            })(pageLabel);
-            var extraction = isDoorSchedule
-              ? await mod.extractDoorScheduleFromPdf(bytes, p, progressCb)
-              : await mod.extractHardwareScheduleFromPdf(bytes, p, progressCb);
-            out.innerHTML = '<span class="spin"></span>[' + pageLabel + '] Saving result to session&hellip;';
-            var r = await fetch('/api/hardware-schedule/session/' + encodeURIComponent(currentSessionId) + '/page/' + p + '/extract-result', {
-              method: 'POST',
-              headers: authHeaders(true),
-              body: JSON.stringify({
-                extraction: extraction,
-                provider: { name: 'client_grid_deterministic', model: null, client: 'browser_pdfjs_tesseract_wasm' }
-              })
-            });
-            var d = await r.json();
-            if (!r.ok) {
-              out.innerHTML = '<div class="error-box">[' + pageLabel + '] Save failed (HTTP ' + r.status + '): ' + esc(apiErrorText(d)) + '</div>';
-              btn.disabled = false;
-              return;
-            }
-            allResults.push({ page: p, extraction: extraction });
-            pageSummaries.push(isDoorSchedule
-              ? (p + ': ' + (extraction.doors || []).length + ' door(s)')
-              : (p + ': ' + (extraction.hardware_groups || []).length + ' group(s)'));
-          }
-
-          var totalCount = isDoorSchedule
-            ? allResults.reduce(function(s, r){ return s + (r.extraction.doors || []).length; }, 0)
-            : allResults.reduce(function(s, r){ return s + (r.extraction.hardware_groups || []).length; }, 0);
-          if (totalCount === 0) {
-            raw.textContent = JSON.stringify(allResults, null, 2);
-            raw.style.display = 'block';
-            throw new Error('No schedule rows were extracted. Review the source page, orientation and table detection before continuing.');
-          }
-          var noun = isDoorSchedule ? 'door(s)' : 'hardware group(s)';
-          out.innerHTML = '<div class="ok-box">Client-side extraction succeeded: ' + totalCount + ' ' + noun + ' total across ' + totalPages + ' page(s) (' + esc(pageSummaries.join(', ')) + '), computed entirely in this browser tab.</div>';
-          raw.textContent = JSON.stringify(allResults, null, 2);
-          raw.style.display = 'block';
-        } catch (err) {
-          out.innerHTML = '<div class="error-box">Client-side extraction error: ' + esc(err.message) + '</div>';
-        } finally {
-          btn.disabled = false;
-        }
+          if (window.parent !== window && window.parent.WeylandShell) { window.parent.WeylandShell.open("signin", { continueTo: target }); return; }
+        } catch (e) { /* not inside the shell */ }
+        location.href = "/login?redirect=" + encodeURIComponent(target);
       });
-
-      document.getElementById('doorindex-btn').addEventListener('click', function(){
-        if (!currentSessionId) return;
-        var raw = document.getElementById('raw-output');
-        raw.style.display = 'block';
-        raw.textContent = 'Loading…';
-        fetch('/api/hardware-schedule/session/' + encodeURIComponent(currentSessionId) + '/door-index', { headers: authHeaders() })
-          .then(function(r){ return r.json(); })
-          .then(function(d){ raw.textContent = JSON.stringify(d, null, 2); })
-          .catch(function(err){ raw.textContent = 'Network error: ' + err.message; });
-      });
-
-      document.getElementById('export-btn').addEventListener('click', function(){
-        if (!currentSessionId) return;
-        var raw = document.getElementById('raw-output');
-        raw.style.display = 'block';
-        raw.textContent = 'Loading…';
-        fetch('/api/hardware-schedule/session/' + encodeURIComponent(currentSessionId) + '/export', { headers: Object.assign({ 'Accept': 'application/json' }, authHeaders()) })
-          .then(function(r){ return r.json().then(function(d){ return { ok: r.ok, status: r.status, data: d }; }); })
-          .then(function(res){ raw.textContent = res.ok ? JSON.stringify(res.data, null, 2) : ('HTTP ' + res.status + ': ' + JSON.stringify(res.data, null, 2)); })
-          .catch(function(err){ raw.textContent = 'Network error: ' + err.message; });
-      });
-
-      document.getElementById('upload-form').addEventListener('submit', function(e){
+      $("logout-link").addEventListener("click", function (e) {
         e.preventDefault();
-        var fileInput = document.getElementById('f-file');
-        var out = document.getElementById('upload-result');
-        if (!fileInput.files || fileInput.files.length === 0) {
-          out.innerHTML = '<div class="error-box">Choose a PDF file first.</div>';
+        var t = token();
+        ["_authfor_token", "_authfor_refresh", "_authfor_session"].forEach(function (k) { try { localStorage.removeItem(k); } catch (er) {} });
+        var calls = [fetch("/api/auth/logout", { method: "POST", credentials: "same-origin" }).catch(function () {})];
+        if (t) calls.push(fetch("https://authfor.com/api/v1/logout", { method: "POST", headers: { Authorization: "Bearer " + t, "Content-Type": "application/json" }, body: "{}" }).catch(function () {}));
+        Promise.all(calls).then(function () { location.href = "/"; });
+      });
+
+      // ---------- schedules list ----------
+      function loadSessions() {
+        return api("/api/hardware-schedule/sessions?limit=30").then(function (res) {
+          if (res.status === 401 || (res.ok && res.data && res.data.signed_in === false)) { showSignIn(); return null; }
+          $("signin-card").classList.add("hide");
+          $("app").classList.remove("hide");
+          if (!res.ok) {
+            $("sessions-list").innerHTML = '<div class="error-box">Could not load your schedules (HTTP ' + res.status + "): " + esc(errText(res.data)) + "</div>";
+            return null;
+          }
+          if (!EMBED) $("logout-link").classList.remove("hide");
+          state.sessions = res.data.sessions || [];
+          if (state.sessions.some(function (s) { return !s.is_demo; })) setStep("st-upload", "done");
+          renderSessions();
+          return state.sessions;
+        });
+      }
+      function renderSessions() {
+        var box = $("sessions-list");
+        if (!state.sessions.length) { box.innerHTML = '<div class="empty">Nothing uploaded yet - upload a schedule above.</div>'; return; }
+        var rows = state.sessions.map(function (s) {
+          var found = s.door_count ? s.door_count + " doors" : (s.set_count ? s.set_count + " hardware sets" : "not read yet");
+          return '<tr class="clickable' + (state.current === s.id ? " selected" : "") + '" data-id="' + esc(s.id) + '">' +
+            "<td>" + esc(s.project_name) + (s.is_demo ? ' <span class="tag">DEMO</span>' : "") + '<div class="muted-small">' + esc(s.filename || "") + "</div></td>" +
+            '<td class="nowrap">' + esc(typeLabel(s.document_type)) + "</td>" +
+            '<td class="nowrap">' + esc(s.total_pages || "?") + "</td>" +
+            '<td class="nowrap">' + esc(found) + "</td>" +
+            '<td class="nowrap">' + esc(String(s.created_at || "").replace("T", " ").slice(0, 16)) + "</td></tr>";
+        }).join("");
+        box.innerHTML = "<table><thead><tr><th>Project</th><th>Type</th><th>Pages</th><th>Found</th><th>Uploaded (UTC)</th></tr></thead><tbody>" + rows + "</tbody></table>";
+        Array.prototype.forEach.call(box.querySelectorAll("tr[data-id]"), function (tr) {
+          tr.addEventListener("click", function () { openSession(tr.getAttribute("data-id"), { scroll: true }); });
+        });
+      }
+
+      // ---------- one schedule ----------
+      function hideViewer() {
+        $("package-viewer").classList.add("hide");
+        $("package-download").classList.add("hide");
+        if (state.blobUrl) { try { URL.revokeObjectURL(state.blobUrl); } catch (e) {} state.blobUrl = null; }
+      }
+      function openSession(id, opts) {
+        opts = opts || {};
+        state.current = id;
+        renderSessions();
+        $("session-card").classList.remove("hide");
+        $("package-card").classList.remove("hide");
+        $("extract-result").innerHTML = "";
+        $("package-result").innerHTML = "";
+        $("package-result").removeAttribute("data-fresh");
+        hideViewer();
+        return loadDetail(id).then(function () {
+          if (opts.scroll) $("session-card").scrollIntoView({ behavior: "smooth", block: "start" });
+        });
+      }
+      function loadDetail(id) {
+        return api("/api/hardware-schedule/session/" + encodeURIComponent(id) + "/doors").then(function (res) {
+          if (id !== state.current) return;
+          if (!res.ok) { $("doors-wrap").innerHTML = '<div class="error-box">' + esc(errText(res.data)) + "</div>"; return; }
+          state.detail = res.data;
+          renderDetail();
+        });
+      }
+      function renderDetail() {
+        var d = state.detail, s = d.session;
+        $("sd-title").textContent = s.project_name || "Schedule";
+        $("sd-sub").textContent = [s.filename || "", typeLabel(s.document_type), (s.total_pages || "?") + " page" + (s.total_pages === 1 ? "" : "s"), s.is_demo ? "demo building (no uploaded PDF to read)" : ""].filter(Boolean).join(" · ");
+        var sel = $("sd-page"), keep = sel.value;
+        sel.innerHTML = "";
+        for (var p = 1; p <= Math.max(1, s.total_pages || 1); p++) {
+          var o = document.createElement("option");
+          o.value = String(p); o.textContent = String(p);
+          sel.appendChild(o);
+        }
+        if (keep && parseInt(keep, 10) <= (s.total_pages || 1)) sel.value = keep;
+        $("read-row").classList.toggle("hide", !!s.is_demo);
+        var hasRows = d.doors.length > 0 || d.hardware_sets.length > 0;
+        setStep("st-read", hasRows ? "done" : "now");
+        setStep("st-review", hasRows ? "now" : "");
+        setStep("st-pdf", d.package ? "done" : "");
+        renderTakeoff();
+        renderDoors();
+        renderSets();
+        renderListActions();
+        renderPackageStatus();
+      }
+      function countList(title, items) {
+        if (!items || !items.length) return "";
+        return "<div><h3>" + esc(title) + "</h3><ul>" + items.slice(0, 12).map(function (i) { return "<li><span>" + esc(i.value) + "</span><b>" + esc(i.count) + "</b></li>"; }).join("") + (items.length > 12 ? '<li><span class="muted-small">+' + (items.length - 12) + " more</span><b></b></li>" : "") + "</ul></div>";
+      }
+      function renderTakeoff() {
+        var t = state.detail.takeoff, box = $("takeoff");
+        if (!t.doors && !t.hardware_sets) { box.innerHTML = ""; return; }
+        var fireRated = (t.by_fire_rating || []).filter(function (f) { return !/^(NR|N\/R|NONE|-)$/i.test(String(f.value)); }).reduce(function (n, f) { return n + f.count; }, 0);
+        var tiles = [
+          ["Doors", t.doors],
+          ["Sizes read", t.doors_with_size + " / " + t.doors],
+          ["Fire-rated doors", fireRated],
+          ["Hardware groups", (t.by_hardware_group || []).length],
+        ];
+        if (t.hardware_sets) tiles.push(["Hardware sets", t.hardware_sets], ["Hardware items", t.hardware_components]);
+        box.innerHTML = '<div class="stats">' + tiles.map(function (x) { return '<div class="stat"><b>' + esc(x[1]) + "</b><span>" + esc(x[0]) + "</span></div>"; }).join("") + "</div>" +
+          '<div class="counts">' + countList("By door type", t.by_door_type) + countList("By size", t.by_size) + countList("By fire rating", t.by_fire_rating) + countList("By hardware group", t.by_hardware_group) + countList("By frame material", t.by_frame_material) + "</div>";
+      }
+      function srcText(d) {
+        var s = d.source || {};
+        var txt = "p." + (s.page || d.page_number || "?");
+        if (s.table_row != null) txt += " row " + s.table_row;
+        if (s.rotation) txt += " (turned " + s.rotation + "°)";
+        return txt;
+      }
+      function renderDoors() {
+        var doors = state.detail.doors, box = $("doors-wrap");
+        if (!doors.length) {
+          box.innerHTML = state.detail.hardware_sets.length ? "" : '<div class="empty">No rows read yet. Choose a page and press READ THIS PAGE.</div>';
           return;
         }
-        var btn = document.getElementById('upload-btn');
-        btn.disabled = true;
-        out.innerHTML = '<span class="spin"></span>Uploading and creating session&hellip;';
+        var head = "<tr><th>Mark</th><th>HW group</th><th>Size</th><th>Thick.</th><th>Fire</th><th>Door type</th><th>Door matl / fin</th><th>Frame</th><th>Notes</th><th>Source</th></tr>";
+        var body = doors.map(function (d) {
+          return "<tr><td class=\"nowrap\"><b>" + esc(d.mark) + "</b></td><td>" + esc(d.hardware_group || "-") + '</td><td class="nowrap">' + esc(d.width || "-") + '</td><td class="nowrap">' + esc(d.thickness || (d.thickness_inches != null ? d.thickness_inches + '"' : "-")) + '</td><td class="nowrap">' + esc(d.fire_rating || "-") + "</td><td>" + esc(d.door_type || "-") + "</td><td>" + esc([d.door_material, d.door_finish].filter(Boolean).join(" / ") || "-") + "</td><td>" + esc([d.frame_type, d.frame_material, d.frame_finish].filter(Boolean).join(" / ") || "-") + "</td><td>" + esc(d.notes || "") + '</td><td class="nowrap muted-small">' + esc(srcText(d)) + "</td></tr>";
+        }).join("");
+        box.innerHTML = '<p class="muted-small">' + doors.length + " door rows, machine-read: check them against the source page before you submit.</p><table><thead>" + head + "</thead><tbody>" + body + "</tbody></table>";
+      }
+      function renderSets() {
+        var d = state.detail, box = $("sets-wrap");
+        if (!d.hardware_sets.length) { box.innerHTML = ""; return; }
+        var comps = d.components || [];
+        var body = d.hardware_sets.map(function (s) {
+          var mine = comps.filter(function (c) { return c.set_number === s.set_number; });
+          return "<tr><td class=\"nowrap\"><b>" + esc(s.set_number) + "</b></td><td>" + esc(s.set_name || "") + "</td><td>" + mine.map(function (c) { return esc((c.quantity || 1) + " x " + [c.component_type, c.manufacturer, c.model, c.finish].filter(Boolean).join(" ")); }).join("<br>") + '</td><td class="nowrap">' + (s.affirmed ? '<span class="tag ok">REVIEWED</span>' : '<span class="tag warn">DRAFT</span>') + "</td></tr>";
+        }).join("");
+        box.innerHTML = '<p class="muted-small" style="margin-top:14px">' + d.hardware_sets.length + " hardware sets.</p><table><thead><tr><th>Set</th><th>Name</th><th>Items</th><th>Status</th></tr></thead><tbody>" + body + "</tbody></table>";
+      }
+      function csvCell(v) { v = v == null ? "" : String(v); return /[",\r\n]/.test(v) ? '"' + v.replace(/"/g, '""') + '"' : v; }
+      function safeName() { return String((state.detail && state.detail.session.project_name) || "schedule").replace(/[^A-Za-z0-9]+/g, "_").replace(/^_+|_+$/g, "").slice(0, 60) || "schedule"; }
+      function renderListActions() {
+        var box = $("list-actions");
+        box.innerHTML = "";
+        if (!state.detail.doors.length) return;
+        var b = document.createElement("button");
+        b.type = "button";
+        b.textContent = "DOWNLOAD THE DOOR LIST (CSV)";
+        b.addEventListener("click", function () {
+          var rows = [["Mark", "Hardware group", "Size (as read)", "Width (in)", "Height (in)", "Thickness", "Fire rating", "Door type", "Door material", "Door finish", "Frame type", "Frame material", "Frame finish", "Head", "Jamb", "Sill", "Notes", "Source page", "Source row"]];
+          state.detail.doors.forEach(function (d) {
+            var s = d.source || {};
+            rows.push([d.mark, d.hardware_group, d.width, d.width_inches, d.height_inches, d.thickness || d.thickness_inches, d.fire_rating, d.door_type, d.door_material, d.door_finish, d.frame_type, d.frame_material, d.frame_finish, d.head_detail, d.jamb_detail, d.sill_detail, d.notes, s.page || d.page_number, s.table_row]);
+          });
+          var blob = new Blob([rows.map(function (r) { return r.map(csvCell).join(","); }).join("\r\n")], { type: "text/csv" });
+          var a = document.createElement("a");
+          a.href = URL.createObjectURL(blob);
+          a.download = safeName() + "_doors.csv";
+          document.body.appendChild(a);
+          a.click();
+          setTimeout(function () { URL.revokeObjectURL(a.href); a.remove(); }, 2000);
+        });
+        box.appendChild(b);
+      }
+      function renderPackageStatus() {
+        var p = state.detail.package, out = $("package-result");
+        $("package-btn").textContent = p ? "REBUILD THE SUBMITTAL PDF" : "BUILD THE SUBMITTAL PDF";
+        if (!p) { if (!out.innerHTML) out.innerHTML = ""; return; }
+        if (out.getAttribute("data-fresh") === "1") return;
+        out.innerHTML = '<div class="info-box">Built ' + esc(String(p.built_at || "").replace("T", " ").slice(0, 16)) + " UTC, " + esc(p.pages || "?") + ' pages. <button type="button" id="package-show">SHOW IT</button></div>';
+        $("package-show").addEventListener("click", function () { showPdf(p.url); });
+      }
+
+      // ---------- read a page ----------
+      function setBusy(b) {
+        state.busy = b;
+        ["extract-btn", "client-extract-btn", "package-btn", "upload-btn"].forEach(function (id) { $(id).disabled = b; });
+      }
+      function summaryText(pageNum, data, cached) {
+        var type = data.schedule_type || (data.hardware_groups && data.hardware_groups.length ? "hardware_schedule" : "door_schedule");
+        var n = type === "door_schedule" ? (data.entry_count != null ? data.entry_count : (data.entries || []).length) : (data.hardware_groups || []).length;
+        var what = type === "door_schedule" ? n + " door" + (n === 1 ? "" : "s") : n + " hardware set" + (n === 1 ? "" : "s");
+        var md = data.metadata || {};
+        var extra = [];
+        if (md.rotation_applied) extra.push("the sheet is printed sideways, so it was turned " + md.rotation_applied + "° to read it");
+        if (data.schedule_type_detected) extra.push("the page is a " + typeLabel(data.schedule_type_detected) + ", so it was read as one");
+        if (cached) extra.push("this page was read earlier");
+        return "Page " + pageNum + ": " + what + " read" + (extra.length ? " (" + extra.join("; ") + ")" : "") + ". Each row below shows the page and row it came from.";
+      }
+      function readPage(pageNum) {
+        var id = state.current;
+        if (!id || state.busy) return Promise.resolve();
+        var out = $("extract-result");
+        setBusy(true);
+        setStep("st-read", "now");
+        var stop = ticking(out, "Reading page " + pageNum + ": finding the table, turning the sheet upright if it is sideways, reading every row...");
+        return api("/api/hardware-schedule/session/" + encodeURIComponent(id) + "/page/" + pageNum).then(function (res) {
+          stop();
+          setBusy(false);
+          if (!res.ok) {
+            out.innerHTML = '<div class="error-box">Page ' + pageNum + " could not be read (HTTP " + res.status + "): " + esc(errText(res.data)) + "</div>";
+            return;
+          }
+          out.innerHTML = '<div class="ok-box">' + esc(summaryText(pageNum, (res.data && res.data.data) || {}, res.data && res.data.cached)) + "</div>";
+          return loadSessions().then(function () { return loadDetail(id); });
+        });
+      }
+      $("extract-btn").addEventListener("click", function () { readPage(parseInt($("sd-page").value, 10) || 1); });
+
+      // Same reader, run in this tab (pdf.js + tesseract-wasm); the result is
+      // saved through the same endpoint the server reader writes through.
+      $("client-extract-btn").addEventListener("click", function () {
+        var id = state.current, d = state.detail;
+        if (!id || !d || state.busy) return;
+        var pageNum = parseInt($("sd-page").value, 10) || 1;
+        var type = d.session.document_type === "hardware_schedule" ? "hardware_schedule" : "door_schedule";
+        var out = $("extract-result");
+        setBusy(true);
+        out.innerHTML = '<span class="spin"></span>Loading the reader into this browser...';
+        var bytesP = state.lastUpload && state.lastUpload.sessionId === id
+          ? state.lastUpload.file.arrayBuffer()
+          : fetch("/api/hardware-schedule/session/" + encodeURIComponent(id) + "/source.pdf", { credentials: "same-origin", headers: authHeaders(false) }).then(function (r) {
+              if (!r.ok) throw new Error("Could not fetch the uploaded PDF (HTTP " + r.status + ").");
+              return r.arrayBuffer();
+            });
+        var small = (navigator.maxTouchPoints || 0) > 0 && Math.min(screen.width, screen.height) < 900;
+        Promise.all([bytesP, import(MODULE_URL)]).then(function (arr) {
+          var bytes = arr[0], mod = arr[1];
+          var progress = function (msg) { out.innerHTML = '<span class="spin"></span>' + esc(msg); };
+          var run = type === "door_schedule" ? mod.extractDoorScheduleFromPdf : mod.extractHardwareScheduleFromPdf;
+          return run(bytes, pageNum, progress, { maxPixels: small ? 14e6 : 36e6 }).then(function (extraction) {
+            var n = type === "door_schedule" ? (extraction.doors || []).length : (extraction.hardware_groups || []).length;
+            if (!n) throw new Error("No " + typeLabel(type) + " table was found on page " + pageNum + " (read as shown and turned 90, 180 and 270 degrees).");
+            progress("Saving " + n + " rows...");
+            return api("/api/hardware-schedule/session/" + encodeURIComponent(id) + "/page/" + pageNum + "/extract-result", {
+              method: "POST",
+              json: { extraction: extraction, provider: { name: "client_grid_deterministic", model: null, client: "browser_pdfjs_tesseract_wasm" } }
+            }).then(function (res) {
+              if (!res.ok) throw new Error("Saving failed (HTTP " + res.status + "): " + errText(res.data));
+              out.innerHTML = '<div class="ok-box">' + esc("Page " + pageNum + ": " + n + (type === "door_schedule" ? " doors" : " hardware sets") + " read in this browser and saved.") + "</div>";
+            });
+          });
+        }).catch(function (e) {
+          out.innerHTML = '<div class="error-box">' + esc((e && e.message) || String(e)) + "</div>";
+        }).then(function () {
+          setBusy(false);
+          return loadSessions().then(function () { return loadDetail(id); });
+        });
+      });
+
+      // ---------- upload ----------
+      $("upload-form").addEventListener("submit", function (e) {
+        e.preventDefault();
+        var fileInput = $("f-file"), out = $("upload-result");
+        if (!fileInput.files || !fileInput.files.length) { out.innerHTML = '<div class="error-box">Choose the PDF first.</div>'; return; }
+        var file = fileInput.files[0];
+        if (file.size > 30 * 1024 * 1024) { out.innerHTML = '<div class="error-box">That PDF is ' + (file.size / 1048576).toFixed(1) + " MB; the reader takes up to 30 MB. Upload just the schedule pages.</div>"; return; }
+        if (state.busy) return;
+        setBusy(true);
+        out.innerHTML = '<span class="spin"></span>Uploading ' + esc(file.name) + "...";
         var fd = new FormData();
-        fd.append('file', fileInput.files[0]);
-        fd.append('projectName', document.getElementById('f-project').value || fileInput.files[0].name);
-        fd.append('document_type', document.getElementById('f-doctype').value);
-        fetch('/api/hardware-schedule/start', { method: 'POST', headers: authHeaders(false), body: fd })
-          .then(function(r){ return r.json().then(function(d){ return { ok: r.ok, status: r.status, data: d }; }); })
-          .then(function(res){
-            btn.disabled = false;
-            if (!res.ok) {
-              var msg = res.data ? apiErrorText(res.data) : ('HTTP ' + res.status);
-              out.innerHTML = '<div class="error-box">Upload failed honestly (HTTP ' + res.status + '):\n' + esc(msg) + (res.data && res.data.upgradeUrl ? ('\nSee ' + res.data.upgradeUrl) : '') + '</div>';
-              return;
-            }
-            out.innerHTML = '<div class="ok-box">Session created: ' + esc(res.data.sessionId) + ' (' + res.data.totalPages + ' page(s)). ' + esc(res.data.message || '') + '</div>';
-            document.getElementById('upload-form').reset();
-            loadSessions();
-          })
-          .catch(function(err){ btn.disabled = false; out.innerHTML = '<div class="error-box">Network error: ' + esc(err.message) + '</div>'; });
+        fd.append("file", file);
+        fd.append("projectName", $("f-project").value.trim() || file.name.replace(/\.pdf$/i, ""));
+        fd.append("document_type", $("f-doctype").value);
+        api("/api/hardware-schedule/start", { method: "POST", form: fd }).then(function (res) {
+          setBusy(false);
+          if (res.status === 401) { showSignIn("Sign in to upload your own schedule."); return; }
+          if (!res.ok) {
+            out.innerHTML = '<div class="error-box">Upload failed (HTTP ' + res.status + "): " + esc(errText(res.data)) + "</div>";
+            return;
+          }
+          var sid = res.data.sessionId;
+          state.lastUpload = { sessionId: sid, file: file };
+          setStep("st-upload", "done");
+          out.innerHTML = '<div class="ok-box">' + esc("Uploaded " + file.name + " (" + res.data.totalPages + " page" + (res.data.totalPages === 1 ? "" : "s") + "). Reading page 1 now.") + "</div>";
+          return loadSessions().then(function () { return openSession(sid, { scroll: true }); }).then(function () { return readPage(1); });
+        });
+      });
+
+      // ---------- submittal package ----------
+      function showPdf(url) {
+        var viewer = $("package-viewer");
+        return fetch(url, { credentials: "same-origin", headers: authHeaders(false) }).then(function (r) {
+          if (!r.ok) throw new Error("HTTP " + r.status);
+          return r.blob();
+        }).then(function (blob) {
+          hideViewer();
+          state.blobUrl = URL.createObjectURL(blob);
+          viewer.src = state.blobUrl;
+          viewer.classList.remove("hide");
+          var a = $("package-download");
+          a.href = state.blobUrl;
+          a.setAttribute("download", safeName() + "_submittal.pdf");
+          a.classList.remove("hide");
+        }).catch(function (e) {
+          $("package-result").insertAdjacentHTML("beforeend", '<div class="error-box">' + esc("The PDF could not be shown here: " + ((e && e.message) || e)) + "</div>");
+        });
+      }
+      $("package-btn").addEventListener("click", function () {
+        var id = state.current;
+        if (!id || state.busy) return;
+        var out = $("package-result");
+        setBusy(true);
+        setStep("st-pdf", "now");
+        hideViewer();
+        out.removeAttribute("data-fresh");
+        var stop = ticking(out, "Building the package: cover, contents, door schedule, hardware sets and cut sheets, source pages...");
+        api("/api/hardware-schedule/session/" + encodeURIComponent(id) + "/submittal-pdf", { method: "POST", json: {} }).then(function (res) {
+          stop();
+          setBusy(false);
+          if (!res.ok) {
+            out.innerHTML = '<div class="error-box">' + esc("The package could not be built (HTTP " + res.status + "): " + errText(res.data)) + "</div>";
+            return;
+          }
+          var d = res.data;
+          var parts = (d.sections || []).filter(function (s) { return s.type !== "cover" && s.type !== "toc"; }).map(function (s) {
+            if (s.type === "door_schedule") return "door schedule (" + s.doors + " doors, " + s.pages + " pages)";
+            if (s.type === "hardware_set") return "hardware set " + s.title.replace(/^Hardware Set /, "");
+            if (s.type === "cut_sheet") return "cut sheet: " + (s.manufacturer ? s.manufacturer + " " : "") + s.title;
+            if (s.type === "schedule") return "your uploaded schedule (" + s.pages + " page" + (s.pages === 1 ? "" : "s") + ")";
+            return s.title;
+          });
+          var note = "";
+          var m = d.cut_sheet_matching || {};
+          if (!m.components && d.doors) {
+            note = " The doors reference hardware groups; the items in each group (and their cut sheets) come from the hardware schedule - upload it here as a hardware schedule to add them.";
+          } else if (m.components) {
+            note = " Cut sheets: " + m.matched + " of " + m.components + " hardware items matched exactly to a document on file" + (m.unmatched ? "; the rest are listed without one." : ".");
+          }
+          out.setAttribute("data-fresh", "1");
+          out.innerHTML = '<div class="ok-box">' + esc("Built: " + d.totalPages + " pages - cover, contents, " + parts.join(", ") + "." + note) + "</div>";
+          setStep("st-pdf", "done");
+          return showPdf(d.pdfUrl).then(function () { $("package-card").scrollIntoView({ behavior: "smooth", block: "start" }); });
+        });
+      });
+
+      // ---------- start ----------
+      loadSessions().then(function (sessions) {
+        if (!sessions) return;
+        var want = params.get("session");
+        var pick = null;
+        if (want && sessions.some(function (s) { return s.id === want; })) pick = want;
+        if (!pick) {
+          var real = sessions.filter(function (s) { return !s.is_demo; });
+          var withRows = real.filter(function (s) { return s.door_count || s.set_count; });
+          pick = (withRows[0] || real[0] || {}).id || null;
+        }
+        if (pick) openSession(pick, { scroll: false });
       });
     })();
   </script>

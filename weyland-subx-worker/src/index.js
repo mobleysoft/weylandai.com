@@ -96,6 +96,7 @@ import { registerHardwareScheduleExtractRoutes } from "./routes/hardware-schedul
 import { registerHardwareScheduleClientOcrAssetRoutes } from "./routes/hardware-schedule-client-ocr-assets.js";
 import { registerTakeoffDataRoutes } from "./routes/takeoff-data.js";
 import { registerTakeoffLineItemsRoutes } from "./routes/takeoff-line-items.js";
+import { registerSubxWorkspaceRoutes } from "./routes/subx-workspace.js";
 
 import subxAppHtml from "./pages/subx-app.html";
 import subxHtml from "./pages/subx.html";
@@ -113,15 +114,27 @@ router.get("/health", () => jsonResponse3({
 
 // --- Real static pages (subx-app is the actual app; subx/takeoffx are
 // the product marketing pages that link into it) ---
-router.get("/subx-app", () => new Response(subxAppHtml, {
-  headers: { "Content-Type": "text/html; charset=UTF-8", "Cache-Control": "public, max-age=60" },
-}));
-router.get("/subx", () => new Response(subxHtml, {
-  headers: { "Content-Type": "text/html; charset=UTF-8", "Cache-Control": "public, max-age=60" },
-}));
-router.get("/takeoffx", () => new Response(takeoffxHtml, {
-  headers: { "Content-Type": "text/html; charset=UTF-8", "Cache-Control": "public, max-age=60" },
-}));
+// 2026-10-07: the zone routes for these pages are wildcards now
+// (weylandai.com/subx*, weylandai.com/takeoffx* - see wrangler.toml), so the
+// single-page shell's ?embed=1 (and any other query string) reaches this
+// worker instead of the monolith's stale copy. The router matches on the
+// path alone, so queries need nothing here; the trailing-slash spellings are
+// served as the same page.
+// The two product pages carried a {{NAV}} placeholder the monolith used to
+// fill; served raw from here it showed as literal "{{NAV}}" text. They get a
+// short nav of real destinations, and inside the shell's overlay (embed=1, or
+// framed) the header is hidden so no link loads a second site in the overlay.
+const PRODUCT_NAV = '<a href="/">HOME</a><a href="/subx-app">WORKSPACE</a><a href="/subx">SUBX</a><a href="/takeoffx">TAKEOFFX</a><a href="/pricing">PRICING</a>';
+const EMBED_HEAD = '<script>(function(){var e=/[?&]embed=1(&|$)/.test(location.search);try{e=e||window.parent!==window}catch(x){e=true}if(e)document.documentElement.className+=" embedded"})();</script><style>.embedded header{display:none!important}</style></head>';
+const productPage = (html) => html.replace("{{NAV}}", PRODUCT_NAV).replace("</head>", EMBED_HEAD);
+const PAGES = { "/subx-app": subxAppHtml, "/subx": productPage(subxHtml), "/takeoffx": productPage(takeoffxHtml) };
+for (const [path, html] of Object.entries(PAGES)) {
+  const serve = () => new Response(html, {
+    headers: { "Content-Type": "text/html; charset=UTF-8", "Cache-Control": "public, max-age=60" },
+  });
+  router.get(path, serve);
+  router.get(path + "/", serve);
+}
 
 registerSubmittalsRoutes(router, {
   authenticate,
@@ -218,6 +231,8 @@ registerHardwareScheduleExtractRoutes(router, {
 
 registerHardwareScheduleClientOcrAssetRoutes(router);
 
+registerSubxWorkspaceRoutes(router, { authenticate, requireActiveSubscription });
+
 registerTakeoffDataRoutes(router, { authenticate, requireProductAccess });
 registerTakeoffLineItemsRoutes(router, { authenticate, requireProductAccess });
 
@@ -241,7 +256,14 @@ export default {
     // request may claim the D1 lease for this worker's background job and
     // run it via waitUntil. The visitor never waits; no request calls out.
     trafficDrivenJob(env, ctx, { db: env.DB, job: "demo-clone-sweep", cadenceSeconds: 3600, worker: "weyland-subx-worker", run: () => sweepExpiredDemoClones(env).then((s) => console.log("[demo-clone-sweep] traffic-driven", JSON.stringify(s))) });
-    return router.handle(request, env, ctx);
+    // The Browser Rendering reader (lib/browser-grid-extraction.js) opens
+    // grid-runner.html on the origin that is serving THIS version of the
+    // worker: weylandai.com in production, the version's workers.dev preview
+    // URL when a version is tested before it is deployed. Per request, never
+    // shared state.
+    const host = new URL(request.url).hostname;
+    const runnerOrigin = host === "weylandai.com" || host.endsWith(".workers.dev") ? "https://" + host : "https://weylandai.com";
+    return router.handle(request, { ...env, SUBX_RUNNER_ORIGIN: runnerOrigin }, ctx);
   },
 
 };

@@ -484,7 +484,9 @@ router.post("/api/hardware-schedule/session/:sessionId/page/:pageNum/extract-res
           requires_review: true
         }, 422);
       }
-      const written = await writeDoorScheduleEntries(sessionId, session.tenant_id || null, pageNumber, extraction.doors, extraction.extraction_confidence || 0.85, env2);
+      const rotation = extraction.metadata && extraction.metadata.rotation_applied != null ? extraction.metadata.rotation_applied : null;
+      const doorsWithSource = extraction.doors.map((d) => ({ ...d, source_rotation: rotation }));
+      const written = await writeDoorScheduleEntries(sessionId, session.tenant_id || null, pageNumber, doorsWithSource, extraction.extraction_confidence || 0.85, env2);
       if (!written.success) {
         return jsonResponse3({ error: "Failed to store door-schedule result", details: written.error }, 500);
       }

@@ -27,15 +27,35 @@ import tesseractCoreBin from "../../assets/client-ocr/tesseract-core.bin";
 import tesseractCoreFallbackBin from "../../assets/client-ocr/tesseract-core-fallback.bin";
 import engTrainedDataBin from "../../assets/client-ocr/eng-traineddata.bin";
 import scheduleGridClientBin from "../../assets/client-ocr/schedule-grid-extraction-client.mjs.bin";
+// The Browser Rendering runner page (2026-10-07): weyland-subx-worker's
+// server-side "RUN EXTRACTION" opens it in a headless tab and runs the same
+// module there (lib/browser-grid-extraction.js). Imported as text by the
+// **/*.html rule in wrangler.toml.
+import gridRunnerHtml from "../../assets/client-ocr/grid-runner.html";
+// Built-in shims the vendored pdf.js 6.2 needs on browsers a few releases old
+// (Browser Rendering's Chrome among them: "n.toHex is not a function");
+// prepended to both pdf.js files so its worker gets them too. Source:
+// assets/client-ocr-src/pdfjs-compat.js.
+import pdfjsCompatBin from "../../assets/client-ocr/pdfjs-compat.js.bin";
+
+function withCompat(bin) {
+  const a = new Uint8Array(pdfjsCompatBin), b = new Uint8Array(bin);
+  const out = new Uint8Array(a.length + 1 + b.length);
+  out.set(a, 0);
+  out[a.length] = 10;
+  out.set(b, a.length + 1);
+  return out;
+}
 
 const ASSETS = {
-  "pdf.mjs": { data: pdfLibBin, contentType: "text/javascript; charset=utf-8" },
-  "pdf-worker.mjs": { data: pdfWorkerBin, contentType: "text/javascript; charset=utf-8" },
+  "pdf.mjs": { data: withCompat(pdfLibBin), contentType: "text/javascript; charset=utf-8" },
+  "pdf-worker.mjs": { data: withCompat(pdfWorkerBin), contentType: "text/javascript; charset=utf-8" },
   "tesseract-wasm-lib.mjs": { data: tesseractLibBin, contentType: "text/javascript; charset=utf-8" },
   "tesseract-core.wasm": { data: tesseractCoreBin, contentType: "application/wasm" },
   "tesseract-core-fallback.wasm": { data: tesseractCoreFallbackBin, contentType: "application/wasm" },
   "eng-traineddata.bin": { data: engTrainedDataBin, contentType: "application/octet-stream" },
   "schedule-grid-extraction-client.mjs": { data: scheduleGridClientBin, contentType: "text/javascript; charset=utf-8" },
+  "grid-runner.html": { data: gridRunnerHtml, contentType: "text/html; charset=utf-8", cacheControl: "no-store" },
 };
 
 export function registerHardwareScheduleClientOcrAssetRoutes(router) {
@@ -48,10 +68,12 @@ export function registerHardwareScheduleClientOcrAssetRoutes(router) {
         headers: { "Content-Type": "application/json" },
       });
     }
+    // The page imports the module with a ?v= version, so a changed module is
+    // a new URL; the long immutable lifetime only ever applies to one version.
     return new Response(asset.data, {
       headers: {
         "Content-Type": asset.contentType,
-        "Cache-Control": "public, max-age=31536000, immutable",
+        "Cache-Control": asset.cacheControl || "public, max-age=31536000, immutable",
       },
     });
   });

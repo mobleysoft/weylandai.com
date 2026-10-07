@@ -30,14 +30,29 @@
 // pagination/continuation-state machinery that file needed can be dropped
 // entirely: a whole page (even one with multiple hardware-set tables, like
 // p223 of that same real document) is detected and OCR'd in one pass.
+//
+// 2026-10-07: the same module is also what "RUN EXTRACTION" runs on the
+// server. weyland-ocr-worker's /extract-schedule-grid renders the page with
+// PDFium inside a 128 MB Worker isolate; a Letter page at 400 dpi is a 60 MB
+// bitmap, copied once more out of WASM memory, and the isolate died with
+// "Worker exceeded memory limit" before the first row was read
+// (OCCDoorSchedulePg4.pdf, confirmed with wrangler tail). weyland-subx-worker
+// now opens grid-runner.html in a Cloudflare Browser Rendering tab (the
+// env.BROWSER binding renderRegionAt600DPI2 already uses) and calls these
+// exports there - one implementation for the visitor's tab and the server.
+// The door_schedule path also learned orientation, ruling-only column
+// detection and a text-sized render (see extractDoorScheduleFromPdf).
 
 const ASSET_BASE = "/api/hardware-schedule/client-ocr-assets";
 
 let pdfjsLibPromise = null;
 export async function loadPdfJs() {
   if (!pdfjsLibPromise) {
-    pdfjsLibPromise = import(/* webpackIgnore: true */ `${ASSET_BASE}/pdf.mjs`).then((mod) => {
-      mod.GlobalWorkerOptions.workerSrc = `${ASSET_BASE}/pdf-worker.mjs`;
+    // ?v=2: since 2026-10-07 both files are served with compatibility shims
+    // prepended (assets/client-ocr-src/pdfjs-compat.js); a new URL so no
+    // browser keeps an immutable-cached copy from before.
+    pdfjsLibPromise = import(/* webpackIgnore: true */ `${ASSET_BASE}/pdf.mjs?v=2`).then((mod) => {
+      mod.GlobalWorkerOptions.workerSrc = `${ASSET_BASE}/pdf-worker.mjs?v=2`;
       return mod;
     });
   }
@@ -230,14 +245,38 @@ function matchHeaderLabel(headerText, usedFields, patternTable = HARDWARE_SCHEDU
 // small column count with wildly different widths (detectGridLinesHardware
 // above deliberately has NO split, for that reason). Ported verbatim from
 // ocr-worker/index.js's server-side detectGridLines.
+//
+// 2026-10-07: a column line now has to be RULING, not just dark. The old test
+// (any x that is dark in more than half of the band) also fires on a column
+// of text that repeats in every row of a dense table - measured on
+// OCCDoorSchedulePg4.pdf, the "20 MIN." / "NR" strokes in FIRE RATING and the
+// "(E)" / "STAL (SF)" strokes in FRAME MATERIAL reached 0.46-0.52 of the band
+// height, split both columns in two and cost the MARK/FIRE RATING header
+// match. Text is made of short vertical runs (shorter than a row); a ruled
+// line runs continuously across rows. When the caller knows the row pitch
+// (bounds.pitch, from findTableBoundsDoor) only dark runs of at least two
+// row pitches count.
 function detectGridLinesDoor(lum, width, bounds) {
   const y0 = bounds.y0, y1 = bounds.y1;
   const bandH = y1 - y0;
   const colDark = new Array(width).fill(0);
-  for (let y = y0; y < y1; y++) {
-    const rowBase = y * width;
+  const minRun = bounds.pitch ? Math.max(3, Math.round(bounds.pitch * 2)) : 1;
+  if (minRun > 1) {
     for (let x = 0; x < width; x++) {
-      if (lum[rowBase + x] < 150) colDark[x]++;
+      let run = 0, covered = 0;
+      for (let y = y0; y < y1; y++) {
+        if (lum[y * width + x] < 150) run++;
+        else { if (run >= minRun) covered += run; run = 0; }
+      }
+      if (run >= minRun) covered += run;
+      colDark[x] = covered;
+    }
+  } else {
+    for (let y = y0; y < y1; y++) {
+      const rowBase = y * width;
+      for (let x = 0; x < width; x++) {
+        if (lum[rowBase + x] < 150) colDark[x]++;
+      }
     }
   }
   const colCandidates = [];
@@ -293,7 +332,11 @@ function findTableBoundsDoor(lum, width, height) {
       curStart = i + 1;
     }
   }
-  return { y0: Math.max(0, rowLines[bestStart] - 5), y1: Math.min(height, rowLines[bestEnd] + 5) };
+  // Row pitch of the chosen table (median gap between its own row lines),
+  // used by detectGridLinesDoor to tell ruling from text.
+  const ownGaps = gaps.slice(bestStart, bestEnd).sort((a, b) => a - b);
+  const pitch = ownGaps.length ? ownGaps[Math.floor(ownGaps.length / 2)] : medianGap;
+  return { y0: Math.max(0, rowLines[bestStart] - 5), y1: Math.min(height, rowLines[bestEnd] + 5), pitch };
 }
 
 // Best-effort architectural feet-inches (3'-0", 7'-11") or fractional-inches
@@ -366,9 +409,11 @@ function upscaleN(img, n) {
 // Renders a pdf.js page to an ImageData at the given target DPI (assumes a
 // standard 72-DPI PDF user-space unit, matching PDFium's own scale
 // convention used server-side).
-async function renderPageToImageData(pdfDoc, pageNumber, dpi) {
+async function renderPageToImageData(pdfDoc, pageNumber, dpi, rotation = 0) {
   const page = await pdfDoc.getPage(pageNumber);
-  const viewport = page.getViewport({ scale: dpi / 72 });
+  // rotation is applied on top of the page's own /Rotate, so 0 always means
+  // "as the PDF viewer shows it" and 90/270 turn a sideways sheet upright.
+  const viewport = page.getViewport({ scale: dpi / 72, rotation: ((page.rotate || 0) + rotation) % 360 });
   const canvas = document.createElement("canvas");
   canvas.width = Math.ceil(viewport.width);
   canvas.height = Math.ceil(viewport.height);
@@ -377,11 +422,15 @@ async function renderPageToImageData(pdfDoc, pageNumber, dpi) {
   return ctx.getImageData(0, 0, canvas.width, canvas.height);
 }
 
-function ocrRowBand(engine, pageImage, colBounds, rowRightEdge, y0, y1, psm = "6") {
-  const PAD = 2, ROW_UPSCALE = 3;
+function ocrRowBand(engine, pageImage, colBounds, rowRightEdge, y0, y1, psm = "6", opts = {}) {
+  // opts.pad / opts.upscale: the door-schedule path renders the table itself
+  // at a DPI chosen for its text size (thicker rulings, no upscale needed);
+  // the defaults keep the hardware-schedule path exactly as validated.
+  const PAD = opts.pad || 2, ROW_UPSCALE = opts.upscale || 3;
   const ry0 = y0 + PAD, ry1 = y1 - PAD;
   if (ry1 - ry0 < 5) return null;
-  const rowImg = upscaleN(cropRowImage(pageImage, ry0, ry1, 0, rowRightEdge), ROW_UPSCALE);
+  const cropped = cropRowImage(pageImage, ry0, ry1, 0, rowRightEdge);
+  const rowImg = ROW_UPSCALE > 1 ? upscaleN(cropped, ROW_UPSCALE) : cropped;
   engine.clearImage();
   engine.loadImage(rowImg);
   // PSM 6 (uniform block) for hardware_schedule - rows can wrap to 2+ text
@@ -557,113 +606,380 @@ export async function extractHardwareScheduleFromPdf(pdfBytes, pageNumber, onPro
   };
 }
 
+// ===== door_schedule (2026-10-07: orientation, ruling-only columns, text-sized render) =====
+
+// A door mark is a short code with at least one digit (053, 131, 144A, 228A,
+// B12, 1-101). Section rows inside a schedule ("EXISTING", "FIRST FLOOR",
+// "NEW CONSTRUCTION") and stray OCR noise are not doors and are dropped here,
+// never written as door rows.
+function cleanDoorMark(text) {
+  const t = String(text || "").replace(/[|!\[\]{}()_'"`~,;:]/g, " ").trim().split(/\s+/).filter(Boolean).join("");
+  const core = t.replace(/^[.\-\/]+|[.\-\/]+$/g, "");
+  if (!core || core.length > 10) return null;
+  if (!/\d/.test(core)) return null;
+  if (!/^[A-Za-z0-9][A-Za-z0-9.\-\/]*$/.test(core)) return null;
+  return core.toUpperCase();
+}
+
+// Residue of a ruling that survived erasing reads as a lone "|", "}", "j"...
+// next to the real value; a lone token from that set is dropped when the cell
+// has anything else in it.
+const RULE_RESIDUE = /^[|{}\[\]()jlI!\\\/:;,.\u2014\u2013]$/;
+function cleanCell(text) {
+  const parts = String(text || "").replace(/[|]/g, " ").replace(/\s+/g, " ").trim().split(" ").filter(Boolean);
+  while (parts.length > 1 && RULE_RESIDUE.test(parts[0])) parts.shift();
+  while (parts.length > 1 && RULE_RESIDUE.test(parts[parts.length - 1])) parts.pop();
+  const t = parts.join(" ");
+  return t || null;
+}
+
+// Architectural dimensions are always feet'-inches" with a hyphen; OCR of
+// that hyphen at schedule sizes comes back as "=", "~" or a dash variant, and
+// curly quotes come back for the foot/inch marks. Only those characters are
+// normalised - digits are never guessed.
+function cleanDimension(text) {
+  const t = cleanCell(text);
+  if (!t) return null;
+  return t.replace(/[\u2018\u2019\u2032]/g, "'").replace(/[\u201c\u201d\u2033]/g, '"').replace(/(\d'?)\s*[=~\u2013\u2014]\s*(\d)/g, "$1-$2");
+}
+
+// Door thickness: "13/4\"" is "1 3/4\"" with the space lost (a proper
+// fraction after one whole digit); anything else goes through the shared
+// parser unchanged.
+function parseThickness(text) {
+  const t = cleanDimension(text);
+  if (!t) return null;
+  const m = t.match(/^(\d)(\d)\/(\d)"?$/);
+  if (m && parseInt(m[2], 10) < parseInt(m[3], 10)) return parseInt(m[1], 10) + parseInt(m[2], 10) / parseInt(m[3], 10);
+  return parseArchDimension(t);
+}
+
+// Short schedule codes (frame type S1, S12...): a leading "$" before a digit
+// is the letter S.
+function cleanCode(text) {
+  const t = cleanCell(text);
+  return t ? t.replace(/^\$(?=\d)/, "S") : null;
+}
+
+function bestHeaderBand(bandTexts, patternTable) {
+  let idx = 0, matches = -1;
+  for (let i = 0; i < bandTexts.length; i++) {
+    const trial = new Set();
+    let m = 0;
+    for (const cellText of bandTexts[i]) {
+      const f = matchHeaderLabel(cellText, trial, patternTable);
+      if (f) { m++; trial.add(f); }
+    }
+    if (m > matches) { matches = m; idx = i; }
+  }
+  return { idx, matches: Math.max(0, matches) };
+}
+
+// Field name per column from the header band. A two-line header (group row
+// "SIZE / DOOR / FRAME / DETAILS" over "WIDTH / HEIGHT / TYPE ...") lands in
+// two bands; a column the best band left unnamed takes its name from the
+// band just above it when that band names it.
+function headerFieldNames(bandTexts, idx, patternTable) {
+  const used = new Set();
+  const names = (bandTexts[idx] || []).map((c) => {
+    const f = matchHeaderLabel(c, used, patternTable);
+    if (f) used.add(f);
+    return f;
+  });
+  const above = bandTexts[idx - 1];
+  if (above) {
+    for (let ci = 0; ci < names.length; ci++) {
+      if (names[ci]) continue;
+      const f = matchHeaderLabel(above[ci], used, patternTable);
+      if (f) { names[ci] = f; used.add(f); }
+    }
+  }
+  return names;
+}
+
+function medianGap(lines) {
+  const gaps = [];
+  for (let i = 1; i < lines.length; i++) gaps.push(lines[i] - lines[i - 1]);
+  gaps.sort((a, b) => a - b);
+  return gaps.length ? gaps[Math.floor(gaps.length / 2)] : 0;
+}
+
+// Renders one rectangle of a page (device pixels at this DPI/rotation) - the
+// door table is rendered on its own at the DPI its text needs, instead of the
+// whole sheet at a fixed DPI.
+async function renderRegionToImageData(pdfDoc, pageNumber, dpi, rotation, region) {
+  const page = await pdfDoc.getPage(pageNumber);
+  const viewport = page.getViewport({ scale: dpi / 72, rotation: ((page.rotate || 0) + rotation) % 360 });
+  const w = Math.max(1, Math.round(region.x1 - region.x0)), h = Math.max(1, Math.round(region.y1 - region.y0));
+  const canvas = document.createElement("canvas");
+  canvas.width = w;
+  canvas.height = h;
+  const ctx = canvas.getContext("2d", { willReadFrequently: true });
+  ctx.fillStyle = "#ffffff";
+  ctx.fillRect(0, 0, w, h);
+  await page.render({ canvasContext: ctx, viewport, transform: [1, 0, 0, 1, -region.x0, -region.y0] }).promise;
+  const img = ctx.getImageData(0, 0, w, h);
+  canvas.width = 0;
+  canvas.height = 0;
+  return img;
+}
+
+// Revision clouds, deltas and markups are drawn in colour (blue/red/green)
+// over the black schedule text; OCR reads them as noise. Strongly coloured
+// pixels become paper before OCR (gridlines were already found).
+function whitenColouredInk(imageData) {
+  const d = imageData.data;
+  for (let i = 0; i < d.length; i += 4) {
+    const r = d[i], g = d[i + 1], b = d[i + 2];
+    const mx = Math.max(r, g, b), mn = Math.min(r, g, b);
+    if (mx - mn > 90) { d[i] = d[i + 1] = d[i + 2] = 255; }
+  }
+}
+
+// Erases each detected ruling over its real width: from the detected centre
+// outwards while the pixel column is still covered by long dark runs (a
+// heavy table border is several pixels wide at a high DPI; text never has
+// runs that long, so neighbouring text survives).
+function eraseRulings(imageData, xs, y0, y1, minRun, maxHalfWidth) {
+  const { width, data } = imageData;
+  const lumAt = (x, y) => { const i = (y * width + x) * 4; return data[i] * 0.299 + data[i + 1] * 0.587 + data[i + 2] * 0.114; };
+  const coverage = (x) => {
+    let run = 0, covered = 0;
+    for (let y = y0; y < y1; y++) {
+      if (lumAt(x, y) < 150) run++;
+      else { if (run >= minRun) covered += run; run = 0; }
+    }
+    if (run >= minRun) covered += run;
+    return covered / Math.max(1, y1 - y0);
+  };
+  for (const xc of xs) {
+    // Every pixel column in the window is tested on its own (a double rule
+    // has white between its two strokes; stopping at the first white column
+    // left the second stroke to be read as "|", "}" or "j").
+    const cols = [];
+    for (let dx = -maxHalfWidth; dx <= maxHalfWidth; dx++) {
+      const x = xc + dx;
+      if (x < 0 || x >= width) continue;
+      if (Math.abs(dx) <= 1 || coverage(x) > 0.2) cols.push(x);
+    }
+    for (const x of cols) {
+      for (let y = 0; y < imageData.height; y++) {
+        const i = (y * width + x) * 4;
+        data[i] = data[i + 1] = data[i + 2] = 255;
+      }
+    }
+  }
+}
+
+// The horizontal twin of eraseRulings: a heavy row rule is many pixels tall at
+// a text-sized DPI, and cropping inside it with a fixed pad clipped the text
+// (row bands came out 32 px tall with the bottom of every glyph cut off). Each
+// pixel row near a detected rule that is mostly dark across the table width
+// is a rule pixel row and becomes paper; text rows never are.
+function eraseRowRulings(imageData, ys, x0, x1, maxHalfHeight) {
+  const { width, height, data } = imageData;
+  const darkFrac = (y) => {
+    let dark = 0;
+    for (let x = x0; x < x1; x++) {
+      const i = (y * width + x) * 4;
+      if (data[i] * 0.299 + data[i + 1] * 0.587 + data[i + 2] * 0.114 < 150) dark++;
+    }
+    return dark / Math.max(1, x1 - x0);
+  };
+  for (const yc of ys) {
+    for (let dy = -maxHalfHeight; dy <= maxHalfHeight; dy++) {
+      const y = yc + dy;
+      if (y < 0 || y >= height) continue;
+      if (darkFrac(y) > 0.5) {
+        for (let x = x0; x < x1; x++) {
+          const i = (y * width + x) * 4;
+          data[i] = data[i + 1] = data[i + 2] = 255;
+        }
+      }
+    }
+  }
+}
+
 // extractDoorScheduleFromPdf: the door_schedule sibling of
 // extractHardwareScheduleFromPdf above - same real client-side pipeline
-// (pdf.js render + tesseract-wasm OCR, zero server CPU), but door_schedule
-// is a single large ruled table per page with one-line rows (unlike
-// hardware_schedule's multiple small multi-line-row tables), so it uses the
-// pitch-split column detection, PSM 7 (single-line) OCR, and the
-// {doors:[...]} contract the existing POST .../extract-result route now
-// also accepts (writeDoorScheduleEntries - see that route's own comment).
-export async function extractDoorScheduleFromPdf(pdfBytes, pageNumber, onProgress) {
+// (pdf.js render + tesseract-wasm OCR), returning the {doors:[...]} contract
+// the POST .../extract-result route and the server-side Browser Rendering
+// runner both write through writeDoorScheduleEntries.
+//
+// 2026-10-07 (OCCDoorSchedulePg4.pdf, an A-801 sheet printed sideways onto
+// portrait Letter, 2-pt text):
+//   * Orientation. A sideways sheet still has a perfectly regular grid, just
+//     turned 90 degrees, so gridlines alone cannot tell it from an upright
+//     table (it read as "51 columns, 22 rows"). The page is tried as shown,
+//     then turned 90, 270 and 180 degrees; the header band decides - the
+//     orientation whose header reads as door-schedule labels (MARK, FIRE
+//     RATING, WIDTH...) wins, and the first one with a clear header (4+
+//     labels) stops the search, so an upright sheet costs what it did before.
+//   * Ruling-only columns (detectGridLinesDoor) and ruling-width erasing.
+//   * Text-sized render. Only the table is rendered, at the DPI that makes a
+//     row about TARGET_ROW_PX tall (300-1200 dpi, capped by maxPixels),
+//     instead of the whole sheet at 400 dpi with a 3x pixel upscale (which
+//     cannot add detail that was never rendered: 3'-0" read as "a").
+export async function extractDoorScheduleFromPdf(pdfBytes, pageNumber, onProgress, options = {}) {
   const t0 = performance.now();
   const progress = (msg) => { if (onProgress) onProgress(msg); };
   progress("Loading PDF renderer...");
   const pdfjsLib = await loadPdfJs();
   const pdfDoc = await pdfjsLib.getDocument({ data: pdfBytes.slice(0) }).promise;
 
-  const DETECT_DPI = 150, BASE_DPI = 400;
-  const RATIO = BASE_DPI / DETECT_DPI;
-
-  progress(`Detecting the table on page ${pageNumber}...`);
-  const detectImage = await renderPageToImageData(pdfDoc, pageNumber, DETECT_DPI);
-  const lum = toLuminance(detectImage);
-  const bounds = findTableBoundsDoor(lum, detectImage.width, detectImage.height);
-  const detected = bounds ? detectGridLinesDoor(lum, detectImage.width, bounds) : { colLines: [], rowLines: [] };
-  if (detected.colLines.length < 4 || detected.rowLines.length < 6) {
-    return { doors: [], extraction_confidence: 0, metadata: { extraction_mode: "client_grid_deterministic", page_isolated: false, no_table_detected: true } };
-  }
-  const colLines = detected.colLines.map((x) => Math.round(x * RATIO));
-  const rowLines = detected.rowLines.map((y) => Math.round(y * RATIO));
-
-  progress(`Rendering page ${pageNumber} at full resolution...`);
-  const pageImage = await renderPageToImageData(pdfDoc, pageNumber, BASE_DPI);
-  const wideColEnd = Math.min(Math.round((detected.wideColEnd ?? detectImage.width - 1) * RATIO), pageImage.width - 1);
-
-  const colBounds = [];
-  for (let i = 0; i < colLines.length - 1; i++) colBounds.push([colLines[i], colLines[i + 1]]);
-  colBounds.push([colLines[colLines.length - 1], wideColEnd]);
-  eraseVerticalLines(pageImage, colLines);
+  const DETECT_DPI = 150;
+  const TARGET_ROW_PX = options.targetRowPx || 64;
+  const MIN_DPI = 300, MAX_DPI = options.maxDpi || 1200;
+  const MAX_PIXELS = options.maxPixels || 36e6;
+  const rotations = Array.isArray(options.rotations) && options.rotations.length ? options.rotations : [0, 90, 270, 180];
+  const headerPsm = options.headerPsm || "6";
+  const rowPsm = options.rowPsm || "7";
 
   progress("Loading OCR engine...");
   const engine = await getOcrEngine(progress);
 
-  const totalRowBands = rowLines.length - 1;
-  const headerSearchWindow = Math.min(4, totalRowBands);
-  progress(`OCR'ing table (${totalRowBands} rows)...`);
-  const headerBandTexts = [];
-  for (let i = 0; i < headerSearchWindow; i++) {
-    headerBandTexts.push(ocrRowBand(engine, pageImage, colBounds, wideColEnd, rowLines[i], rowLines[i + 1], "7") || []);
-  }
-  let headerRowIdx = 0, headerMatches = -1;
-  for (let i = 0; i < headerBandTexts.length; i++) {
-    const trial = new Set();
-    let matches = 0;
-    for (const cellText of headerBandTexts[i]) {
-      const f = matchHeaderLabel(cellText, trial, DOOR_SCHEDULE_HEADER_PATTERNS);
-      if (f) { matches++; trial.add(f); }
-    }
-    if (matches > headerMatches) { headerMatches = matches; headerRowIdx = i; }
-  }
-  const usedFields = new Set();
-  const fieldNames = (headerBandTexts[headerRowIdx] || []).map((c) => {
-    const f = matchHeaderLabel(c, usedFields, DOOR_SCHEDULE_HEADER_PATTERNS);
-    if (f) usedFields.add(f);
-    return f;
-  });
+  const attempts = [];
+  let best = null;
+  for (const rotation of rotations) {
+    const turned = rotation ? " (turned " + rotation + " degrees)" : "";
+    progress("Detecting the table on page " + pageNumber + turned + "...");
+    const detectImage = await renderPageToImageData(pdfDoc, pageNumber, DETECT_DPI, rotation);
+    const lum = toLuminance(detectImage);
+    const bounds = findTableBoundsDoor(lum, detectImage.width, detectImage.height);
+    const detected = bounds ? detectGridLinesDoor(lum, detectImage.width, bounds) : { colLines: [], rowLines: [] };
+    const attempt = { rotation, columns: detected.colLines.length, row_lines: detected.rowLines.length, header_matches: 0 };
+    attempts.push(attempt);
+    if (detected.colLines.length < 4 || detected.rowLines.length < 6) continue;
 
-  const dataStartBand = headerRowIdx + 1;
-  const rowsByField = [];
+    // DPI from the measured row pitch, then capped so the table bitmap stays
+    // within maxPixels.
+    const pitch150 = Math.max(2, medianGap(detected.rowLines));
+    let dpi = Math.max(MIN_DPI, Math.min(MAX_DPI, Math.round(DETECT_DPI * TARGET_ROW_PX / pitch150)));
+    const wideEnd150 = detected.wideColEnd ?? detectImage.width - 1;
+    const r150 = {
+      x0: Math.max(0, detected.colLines[0] - 6),
+      x1: Math.min(detectImage.width, wideEnd150 + 6),
+      y0: Math.max(0, detected.rowLines[0] - 6),
+      y1: Math.min(detectImage.height, detected.rowLines[detected.rowLines.length - 1] + 6),
+    };
+    while (dpi > MIN_DPI && ((r150.x1 - r150.x0) * dpi / DETECT_DPI) * ((r150.y1 - r150.y0) * dpi / DETECT_DPI) > MAX_PIXELS) dpi = Math.floor(dpi * 0.9);
+    const s = dpi / DETECT_DPI;
+    const region = { x0: Math.round(r150.x0 * s), y0: Math.round(r150.y0 * s), x1: Math.round(r150.x1 * s), y1: Math.round(r150.y1 * s) };
+    progress("Rendering the table at " + dpi + " dpi" + turned + "...");
+    const pageImage = await renderRegionToImageData(pdfDoc, pageNumber, dpi, rotation, region);
+    const colLines = detected.colLines.map((x) => Math.round(x * s) - region.x0);
+    const rowLines = detected.rowLines.map((y) => Math.round(y * s) - region.y0);
+    const wideColEnd = Math.min(Math.round(wideEnd150 * s) - region.x0, pageImage.width - 1);
+    const colBounds = [];
+    for (let i = 0; i < colLines.length - 1; i++) colBounds.push([colLines[i], colLines[i + 1]]);
+    colBounds.push([colLines[colLines.length - 1], wideColEnd]);
+    const pitchPx = pitch150 * s;
+    eraseRulings(pageImage, colLines.concat([wideColEnd]), Math.max(0, rowLines[0]), Math.min(pageImage.height, rowLines[rowLines.length - 1]), Math.max(3, Math.round(pitchPx * 2)), Math.max(4, Math.round(s * 4)));
+    eraseRowRulings(pageImage, rowLines, Math.max(0, colLines[0]), Math.min(pageImage.width, wideColEnd), Math.max(3, Math.round(s * 3)));
+    whitenColouredInk(pageImage);
+    const ocrOpts = { pad: 2, upscale: Math.max(1, Math.min(3, Math.round(TARGET_ROW_PX / pitchPx))) };
+    const totalRowBands = rowLines.length - 1;
+
+    const headerSearchWindow = Math.min(options.headerWindow || 5, totalRowBands);
+    progress("Reading the header row" + turned + "...");
+    const headerBandTexts = [];
+    for (let i = 0; i < headerSearchWindow; i++) {
+      headerBandTexts.push(ocrRowBand(engine, pageImage, colBounds, wideColEnd, rowLines[i], rowLines[i + 1], headerPsm, ocrOpts) || []);
+    }
+    const header = bestHeaderBand(headerBandTexts, DOOR_SCHEDULE_HEADER_PATTERNS);
+    attempt.header_matches = header.matches;
+    attempt.dpi = dpi;
+    if (options.debug) attempt.header_bands = headerBandTexts.map((cells) => cells.join(" | "));
+    if (!best || header.matches > best.header.matches) {
+      best = { rotation, dpi, region, pageImage, colBounds, wideColEnd, rowLines, totalRowBands, headerBandTexts, header, ocrOpts };
+    }
+    if (header.matches >= 4) break;
+  }
+
+  if (!best) {
+    return { doors: [], extraction_confidence: 0, metadata: { extraction_mode: "client_grid_deterministic", page_isolated: false, no_table_detected: true, orientation_attempts: attempts } };
+  }
+
+  // A ruled table whose header reads as fewer than three door-schedule labels
+  // is not a door schedule (a hardware-set table, a finish legend...): its
+  // first column would otherwise be read as door marks ("1", "2" quantities).
+  if (best.header.matches < 3) {
+    return { doors: [], extraction_confidence: 0, metadata: { extraction_mode: "client_grid_deterministic", page_isolated: false, no_door_header: true, header_matches: best.header.matches, orientation_attempts: attempts, total_time_ms: Math.round(performance.now() - t0) } };
+  }
+
+  const { pageImage, colBounds, wideColEnd, rowLines, totalRowBands, headerBandTexts, header, ocrOpts } = best;
+  const fieldNames = headerFieldNames(headerBandTexts, header.idx, DOOR_SCHEDULE_HEADER_PATTERNS);
+  // The mark is the row key. If header OCR missed the MARK label, the first
+  // column is the mark column on the schedules this was built against (and
+  // cleanDoorMark still rejects anything that is not a mark).
+  if (!fieldNames.includes("mark") && fieldNames.length > 0 && !fieldNames[0]) fieldNames[0] = "mark";
+
+  const dataStartBand = header.idx + 1;
+  progress("Reading " + Math.max(0, totalRowBands - dataStartBand) + " table rows...");
+  const rows = [];
+  const rawRows = [];
   for (let i = dataStartBand; i < totalRowBands; i++) {
-    const cells = ocrRowBand(engine, pageImage, colBounds, wideColEnd, rowLines[i], rowLines[i + 1], "7");
+    const cells = ocrRowBand(engine, pageImage, colBounds, wideColEnd, rowLines[i], rowLines[i + 1], rowPsm, ocrOpts);
     if (!cells) continue;
-    const row = {};
+    if (options.debug) rawRows.push(cells.join(" | "));
+    const row = { _band: i };
     let hasAnyField = false;
     for (let ci = 0; ci < fieldNames.length; ci++) {
-      const key = fieldNames[ci] || `col_${ci}`;
+      const key = fieldNames[ci] || "col_" + ci;
       row[key] = cells[ci] || "";
       if (fieldNames[ci] && cells[ci]) hasAnyField = true;
     }
-    if (hasAnyField) rowsByField.push(row);
+    if (hasAnyField) rows.push(row);
   }
 
-  // Same real {mark/hardware_group/fire_rating/size/...} mapping
-  // extractGridDoors already uses server-side - one real transform, not a
-  // second parallel one that could silently drift.
-  const doors = rowsByField.map((row) => ({
-    door_number: row.mark || null,
-    hardware_group: row.hardware_group || null,
-    fire_rating: row.fire_rating || null,
-    size: [row.width, row.height].filter(Boolean).join(" x ") || null,
-    width_inches: parseArchDimension(row.width),
-    height_inches: parseArchDimension(row.height),
-    thickness_inches: parseArchDimension(row.thickness),
-    door_type: row.door_type || null,
-    material_code: row.door_material || null,
-    frame_material: row.frame_material || null,
-    remarks: row.notes || null,
+  // Same {mark/hardware_group/fire_rating/size/...} mapping extractGridDoors
+  // uses server-side, plus the frame/finish/detail columns the schedule
+  // actually carries (written by writeDoorScheduleEntries when present).
+  // source_row is the table row band the values were read from (row 0 is the
+  // table's top band), so every door traces back to its line on the sheet.
+  const doors = rows.map((row) => ({
+    door_number: cleanDoorMark(row.mark),
+    hardware_group: cleanCell(row.hardware_group),
+    fire_rating: cleanCell(row.fire_rating),
+    size: [cleanDimension(row.width), cleanDimension(row.height)].filter(Boolean).join(" x ") || null,
+    width_inches: parseArchDimension(cleanDimension(row.width)),
+    height_inches: parseArchDimension(cleanDimension(row.height)),
+    thickness: cleanDimension(row.thickness),
+    thickness_inches: parseThickness(row.thickness),
+    door_type: cleanCell(row.door_type),
+    material_code: cleanCell(row.door_material),
+    door_finish: cleanCell(row.door_finish),
+    stc_rating: cleanCell(row.stc_rating),
+    frame_type: cleanCode(row.frame_type),
+    frame_material: cleanCell(row.frame_material),
+    frame_finish: cleanCell(row.frame_finish),
+    head_detail: cleanCell(row.head_detail),
+    jamb_detail: cleanCell(row.jamb_detail),
+    sill_detail: cleanCell(row.sill_detail),
+    panic_hardware: cleanCell(row.panic_hardware),
+    remarks: cleanCell(row.notes),
+    source_row: row._band,
   })).filter((d) => d.door_number);
 
   progress("Extraction complete.");
-  return {
-    doors,
-    extraction_confidence: 0.85,
-    metadata: {
-      extraction_mode: "client_grid_deterministic",
-      extraction_route: "client_grid_deterministic",
-      page_isolated: false,
-      row_count: doors.length,
-      total_time_ms: Math.round(performance.now() - t0),
-    },
+  const metadata = {
+    extraction_mode: "client_grid_deterministic",
+    extraction_route: "client_grid_deterministic",
+    page_isolated: false,
+    row_count: doors.length,
+    rotation_applied: best.rotation,
+    render_dpi: best.dpi,
+    header_fields: fieldNames,
+    header_matches: header.matches,
+    orientation_attempts: attempts,
+    total_time_ms: Math.round(performance.now() - t0),
   };
+  if (options.debug) {
+    metadata.raw_rows = rawRows;
+    metadata.col_bounds = colBounds;
+    metadata.row_lines = rowLines;
+    metadata.header_bands = headerBandTexts.map((cells) => cells.join(" | "));
+    metadata.header_idx = header.idx;
+  }
+  return { doors, extraction_confidence: 0.85, metadata };
 }

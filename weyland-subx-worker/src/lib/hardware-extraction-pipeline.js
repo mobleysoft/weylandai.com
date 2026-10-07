@@ -73,7 +73,9 @@ import { callEdge } from "./edge-telemetry.js";
 import {
   extractDoorScheduleViaEmbeddedGofaineat,
   extractHardwareGroupsViaGrid,
+  writeDoorScheduleEntries,
 } from "./hardware-extraction-vision-dispatch.js";
+import { runGridInBrowser } from "./browser-grid-extraction.js";
 
 export async function extractHardwareSchedule(pdfBuffer, env2, { pageNumber } = {}) {
   const { extractHardwarePage } = await import("./schedule-input.js");
@@ -432,9 +434,36 @@ export async function runEmbeddedGofaineatExtraction(scheduleType, sessionId, te
       schedule_type: scheduleType,
     };
   }
+  // 2026-10-07: door and hardware schedules are read in a Browser Rendering
+  // tab first (lib/browser-grid-extraction.js - the in-Worker OCR path ran
+  // out of memory on a Letter page). The other schedule type is tried in the
+  // same tab when the chosen one finds no table of its kind, and the session
+  // is re-typed to what the page actually is. A continuation call
+  // (startRow > 0) belongs to an OCR-worker run already in progress.
+  let browserProblem = null;
+  if (env2.BROWSER && startRow === 0 && (scheduleType === "door_schedule" || scheduleType === "hardware_schedule")) {
+    const other = scheduleType === "door_schedule" ? "hardware_schedule" : "door_schedule";
+    const br = await runGridInBrowser(env2, buf, pageNumber, scheduleType, { alsoTry: other });
+    if (br.ok) {
+      return await persistBrowserGridResult(br, scheduleType, sessionId, tenantId, pageNumber, totalPages, env2);
+    }
+    browserProblem = br.error + (br.detail ? ": " + br.detail : "");
+    console.warn("[Embedded Router] Browser grid runner unavailable for " + sessionId + " p" + pageNumber + " (" + browserProblem + ") - falling back to weyland-ocr-worker");
+  }
+  const withBrowserNote = (r) => {
+    if (browserProblem && r && r.success === false) {
+      r.detail = (r.detail || r.error || "") + " (browser reader unavailable: " + browserProblem + ")";
+    }
+    return r;
+  };
   if (scheduleType === "door_schedule") {
-    const result = await extractDoorScheduleViaEmbeddedGofaineat(sessionId, tenantId, buf, pageNumber, totalPages, env2, startRow);
-    return { ...result, schedule_type: scheduleType, target_table: "door_schedule_entries" };
+    let result;
+    try {
+      result = await extractDoorScheduleViaEmbeddedGofaineat(sessionId, tenantId, buf, pageNumber, totalPages, env2, startRow);
+    } catch (e) {
+      result = { success: false, error: "ocr_worker_failed", detail: ocrWorkerFailureText(e), entries: [], entry_count: 0 };
+    }
+    return withBrowserNote({ ...result, schedule_type: scheduleType, target_table: "door_schedule_entries" });
   }
   // Real bug fixed 2026-10-02: any scheduleType OTHER than door_schedule
   // silently fell into the hardware_schedule branch below - including
@@ -469,7 +498,12 @@ export async function runEmbeddedGofaineatExtraction(scheduleType, sessionId, te
   // kept below for the no-sessionId fallback call site only). See
   // extractHardwareGroupsViaGrid's own header comment (hardware-extraction-
   // vision-dispatch.js) for the full real validation history.
-  const raw = await extractHardwareGroupsViaGrid(sessionId, buf, pageNumber, totalPages, env2, startRow);
+  let raw;
+  try {
+    raw = await extractHardwareGroupsViaGrid(sessionId, buf, pageNumber, totalPages, env2, startRow);
+  } catch (e) {
+    return withBrowserNote({ success: false, error: "ocr_worker_failed", detail: ocrWorkerFailureText(e), entries: [], entry_count: 0, hardware_groups: [], door_hardware_matrix: [], schedule_type: scheduleType });
+  }
   return {
     success: true,
     hardware_groups: raw.hardware_groups,
@@ -486,6 +520,84 @@ export async function runEmbeddedGofaineatExtraction(scheduleType, sessionId, te
     done: raw.done,
     next_start_row: raw.next_start_row,
     total_data_rows: raw.total_data_rows,
+  };
+}
+
+// The service binding surfaces the OCR worker's own isolate failure as an
+// exception ("Worker exceeded memory limit."); say what it means.
+function ocrWorkerFailureText(e) {
+  const msg = String((e && e.message) || e || "");
+  if (/memory limit/i.test(msg)) {
+    return "The in-Worker OCR reader ran out of memory rendering this page (" + msg + ")";
+  }
+  return msg.slice(0, 300);
+}
+
+// Persists a Browser Rendering grid result (runGridInBrowser) through the
+// same tables the in-Worker paths write: door rows via
+// writeDoorScheduleEntries (door_schedule_entries upsert), hardware groups
+// returned for the page route's savePageExtraction2. Re-types the session
+// when the page turned out to be the other schedule type.
+async function persistBrowserGridResult(br, requestedType, sessionId, tenantId, pageNumber, totalPages, env2) {
+  const actualType = br.schedule_type || requestedType;
+  const result = br.result || {};
+  const md = { ...(result.metadata || {}), browser_ms: br.ms };
+  if (br.empty) {
+    const tried = (br.tried || [requestedType]).map((t) => t.replace("_", " ")).join(" or ");
+    return {
+      success: false,
+      error: "no_schedule_table_found",
+      detail: "No " + tried + " table was found on page " + pageNumber + " (the page was read as shown and turned 90, 180 and 270 degrees). Check that this page holds the schedule itself, ruled into rows and columns.",
+      entries: [], entry_count: 0, hardware_groups: [], door_hardware_matrix: [],
+      schedule_type: requestedType, metadata: md,
+    };
+  }
+  if (actualType !== requestedType && sessionId) {
+    try {
+      await env2.DB.prepare("UPDATE hardware_extraction_sessions SET document_type = ?, updated_at = ? WHERE id = ?")
+        .bind(actualType, new Date().toISOString(), sessionId).run();
+    } catch (e) {
+      console.warn("[Embedded Router] could not re-type session " + sessionId + ": " + e.message);
+    }
+  }
+  const retyped = actualType !== requestedType ? { schedule_type_detected: actualType, schedule_type_requested: requestedType } : {};
+  if (actualType === "door_schedule") {
+    const doors = (result.doors || []).map((d) => ({ ...d, source_rotation: md.rotation_applied ?? null }));
+    const written = await writeDoorScheduleEntries(sessionId, tenantId, pageNumber, doors, result.extraction_confidence || 0.85, env2);
+    if (!written.success) {
+      return { ...written, success: false, schedule_type: actualType, metadata: md, ...retyped };
+    }
+    return {
+      ...written,
+      schedule_type: actualType,
+      target_table: "door_schedule_entries",
+      extraction_route: "browser_grid_deterministic",
+      row_count: doors.length,
+      done: true,
+      next_start_row: null,
+      total_data_rows: doors.length,
+      metadata: md,
+      ...retyped,
+    };
+  }
+  const groups = result.hardware_groups || [];
+  return {
+    success: true,
+    hardware_groups: groups,
+    hardwareGroups: groups,
+    door_hardware_matrix: result.door_hardware_matrix || [],
+    entry_count: groups.length,
+    entries: groups,
+    usage: null,
+    metadata: md,
+    schedule_type: actualType,
+    target_table: "hardware_components",
+    extraction_route: "browser_grid_deterministic",
+    row_count: groups.length,
+    done: true,
+    next_start_row: null,
+    total_data_rows: null,
+    ...retyped,
   };
 }
 

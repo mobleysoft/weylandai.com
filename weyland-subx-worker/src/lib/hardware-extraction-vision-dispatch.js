@@ -1126,6 +1126,25 @@ async function extractGridDoors(pdfBuffer, pageNumber, env2, startRow = 0) {
 // `doors` is the same {door_number, hardware_group, fire_rating, size,
 // width_inches, height_inches, thickness_inches, door_type, material_code,
 // frame_material, remarks} shape extractGridDoors already produces.
+// door_schedule_entries.panic is an INTEGER flag; the schedule's PANIC
+// HARDWARE cell reads "P.H." / "PH" / "YES" when present and "-" when not.
+function panicFlag(v) {
+  if (v == null) return null;
+  const t = String(v).trim().toUpperCase();
+  if (!t) return null;
+  if (/^(P\.?\s*H\.?|PH|YES|Y|X|PANIC)$/.test(t)) return 1;
+  if (/^(-|—|–|NO|N|NONE)$/.test(t)) return 0;
+  return null;
+}
+
+// door_schedule_entries.stc_rating is an INTEGER; anything that is not a
+// plain 2-digit STC number stays NULL rather than a guess.
+function stcNumber(v) {
+  if (v == null) return null;
+  const m = String(v).trim().match(/^(\d{2})$/);
+  return m ? parseInt(m[1], 10) : null;
+}
+
 export async function writeDoorScheduleEntries(sessionId, tenantId, pageNumber, doors, extractionConfidence, env2) {
   const isLowConf = (extractionConfidence || 0) < 0.7;
   const processedEntries = [];
@@ -1147,20 +1166,26 @@ export async function writeDoorScheduleEntries(sessionId, tenantId, pageNumber, 
       height_inches: door.height_inches,
       door_type: door.door_type,
       door_material: door.material_code,
-      frame_type: null,
+      // 2026-10-07: the browser grid reader returns every column the
+      // schedule carries (frame type/finish, door finish, head/jamb/sill
+      // details, STC, panic); older callers leave them undefined -> NULL.
+      frame_type: door.frame_type ?? null,
       frame_material: door.frame_material,
-      panic: null,
-      thickness: null,
+      panic: panicFlag(door.panic_hardware),
+      thickness: door.thickness ?? null,
       thickness_inches: door.thickness_inches,
-      door_finish: null,
-      stc_rating: null,
-      frame_finish: null,
-      head_detail: null,
-      jamb_detail: null,
-      sill_detail: null,
+      door_finish: door.door_finish ?? null,
+      stc_rating: stcNumber(door.stc_rating),
+      frame_finish: door.frame_finish ?? null,
+      head_detail: door.head_detail ?? null,
+      jamb_detail: door.jamb_detail ?? null,
+      sill_detail: door.sill_detail ?? null,
       notes: door.remarks,
       extraction_confidence: extractionConfidence,
-      field_confidence_json: null,
+      // Where on the sheet this row was read (the grid readers report the
+      // table row band and the page turn they applied) - the trace the
+      // submittal package prints next to every door.
+      field_confidence_json: door.source_row != null ? JSON.stringify({ source: { page: pageNumber, table_row: door.source_row, rotation: door.source_rotation ?? null } }) : null,
       low_confidence_fields: isLowConf ? "extraction_confidence" : ""
     };
     processedEntries.push(fullEntry);
@@ -1186,6 +1211,7 @@ export async function writeDoorScheduleEntries(sessionId, tenantId, pageNumber, 
           datetime('now')
         )
         ON CONFLICT(session_id, mark) DO UPDATE SET
+          page_number = excluded.page_number,
           hardware_group = excluded.hardware_group,
           fire_rating = excluded.fire_rating,
           width = excluded.width, height = excluded.height,
@@ -1193,6 +1219,11 @@ export async function writeDoorScheduleEntries(sessionId, tenantId, pageNumber, 
           door_type = excluded.door_type, door_material = excluded.door_material,
           frame_type = excluded.frame_type, frame_material = excluded.frame_material,
           panic = excluded.panic,
+          thickness = excluded.thickness, thickness_inches = excluded.thickness_inches,
+          door_finish = excluded.door_finish, stc_rating = excluded.stc_rating,
+          frame_finish = excluded.frame_finish, head_detail = excluded.head_detail,
+          jamb_detail = excluded.jamb_detail, sill_detail = excluded.sill_detail,
+          notes = excluded.notes,
           extraction_confidence = excluded.extraction_confidence,
           field_confidence_json = excluded.field_confidence_json,
           low_confidence_fields = excluded.low_confidence_fields,

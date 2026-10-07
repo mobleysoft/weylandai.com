@@ -65,6 +65,9 @@ const HELVETICA_BOLD_WIDTHS = {
   124: 280, 125: 389, 126: 584
 };
 
+// Helvetica AFM widths for the punctuation pdfLiteralString maps to WinAnsi.
+const PUNCTUATION_WIDTHS = { 0x2014: 1000, 0x2013: 556, 0x2018: 222, 0x2019: 222, 0x201c: 333, 0x201d: 333, 0x2022: 350, 0x2026: 1000, 0x2032: 191, 0x2033: 355, 0xd7: 584 };
+
 export const StandardFonts = {
   Helvetica: "Helvetica",
   HelveticaBold: "Helvetica-Bold"
@@ -104,6 +107,13 @@ function colorComponents(color) {
 // representation in this simple Type1 setup - replaced with '?' rather
 // than silently corrupting the byte stream or throwing on real project
 // names that happen to contain e.g. a smart quote or an em dash).
+// 2026-10-07: the punctuation every real title and schedule uses (em/en
+// dash, curly quotes, bullet, ellipsis) has a single WinAnsi byte; map it
+// there instead of printing "?" ("Hardware Submittal Sheet ? Set 01").
+const WINANSI_PUNCTUATION = {
+  0x2014: 0x97, 0x2013: 0x96, 0x2018: 0x91, 0x2019: 0x92, 0x201c: 0x93,
+  0x201d: 0x94, 0x2022: 0x95, 0x2026: 0x85, 0x2032: 0x27, 0x2033: 0x22,
+};
 function pdfLiteralString(text) {
   let out = "";
   for (const ch of String(text)) {
@@ -112,10 +122,21 @@ function pdfLiteralString(text) {
       out += "\\" + ch;
     } else if (code < 256) {
       out += ch;
+    } else if (WINANSI_PUNCTUATION[code] !== undefined) {
+      out += String.fromCharCode(WINANSI_PUNCTUATION[code]);
     } else {
       out += "?";
     }
   }
+  return out;
+}
+
+// Content streams carry single-byte WinAnsi text: encode each UTF-16 code
+// unit (all < 256 after pdfLiteralString) as one byte. TextEncoder would
+// write Latin-1 and WinAnsi punctuation bytes as two-byte UTF-8 sequences.
+function latin1Bytes(str) {
+  const out = new Uint8Array(str.length);
+  for (let i = 0; i < str.length; i++) out[i] = str.charCodeAt(i) & 0xff;
   return out;
 }
 
@@ -129,7 +150,7 @@ class SovereignPDFFont {
     let total = 0;
     for (const ch of String(text)) {
       const code = ch.codePointAt(0);
-      const w = this._widths[code] !== undefined ? this._widths[code] : this._widths[32];
+      const w = this._widths[code] !== undefined ? this._widths[code] : (PUNCTUATION_WIDTHS[code] !== undefined ? PUNCTUATION_WIDTHS[code] : this._widths[32]);
       total += w;
     }
     return (total * size) / 1000;
@@ -270,7 +291,7 @@ export class PDFDocument {
       endObj();
 
       const content = page._content();
-      const contentBytes = enc.encode(content);
+      const contentBytes = latin1Bytes(content);
       beginObj(contentObjNum(i));
       push(`<< /Length ${contentBytes.length} >>\nstream\n`);
       chunks.push(contentBytes);

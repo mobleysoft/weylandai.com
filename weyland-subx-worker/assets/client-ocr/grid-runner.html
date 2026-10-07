@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="robots" content="noindex">
+<title>SubX grid runner</title>
+</head>
+<body>
+<script type="module">
+// Server-side runner for weyland-subx-worker (lib/browser-grid-extraction.js):
+// a Cloudflare Browser Rendering tab opens this page and calls
+// window.__runGrid(...) with the session's PDF. It runs the SAME grid
+// extraction module the SubX workspace runs in a visitor's tab (pdf.js +
+// tesseract-wasm), so the server and the browser can never drift apart.
+// Nothing here is shown to visitors.
+import * as grid from "/api/hardware-schedule/client-ocr-assets/schedule-grid-extraction-client.mjs?v=20261007";
+
+function b64ToBytes(b64) {
+  const bin = atob(b64);
+  const out = new Uint8Array(bin.length);
+  for (let i = 0; i < bin.length; i++) out[i] = bin.charCodeAt(i);
+  return out;
+}
+
+// input: { b64 } (the PDF bytes); scheduleType: "door_schedule" | "hardware_schedule".
+window.__runGrid = async (input, pageNumber, scheduleType, options) => {
+  const logs = [];
+  const t0 = performance.now();
+  const note = (m) => logs.push(Math.round(performance.now() - t0) + "ms " + m);
+  try {
+    if (!input || !input.b64) throw new Error("no PDF bytes were passed to the runner");
+    const bytes = b64ToBytes(input.b64);
+    const fn = scheduleType === "door_schedule" ? grid.extractDoorScheduleFromPdf : grid.extractHardwareScheduleFromPdf;
+    const result = await fn(bytes.buffer, pageNumber, note, options || {});
+    return { ok: true, result, logs, ms: Math.round(performance.now() - t0) };
+  } catch (e) {
+    return { ok: false, error: String((e && e.message) || e), logs, ms: Math.round(performance.now() - t0) };
+  }
+};
+window.__gridRunnerReady = true;
+</script>
+</body>
+</html>
