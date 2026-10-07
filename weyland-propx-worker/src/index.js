@@ -24,6 +24,11 @@
 //                                        labeled sample BOM, nothing stored,
 //                                        DEMO_RATE_LIMITER-limited)
 //   GET  /api/proposals/:id/download -> routes/proposals.js
+//   GET  /api/proposals/sources      -> routes/proposals.js (2026-10-07:
+//   GET  /api/proposals/sources/:kind/:id  what the caller can price - their
+//   GET  /api/proposals/mine            SubX sessions, submittals, and the
+//                                        SubX demo schedule - and their
+//                                        stored proposals)
 //   GET  /propx-app                  -> the real proposal-builder UI
 //                                        this pass built (src/pages/
 //                                        propx-app.html) - PropX had NO
@@ -63,9 +68,14 @@ router.get("/health", () => jsonResponse3({
 // the AuthFor Bearer token and gets the exact same 401/402 the backend
 // would return to any other caller - the page just renders those
 // honestly instead of hiding behind a server-side redirect.
-router.get("/propx-app", () => new Response(propxAppHtml, {
-  headers: { "Content-Type": "text/html; charset=UTF-8", "Cache-Control": "public, max-age=60" },
-}));
+// 2026-10-07: the zone route is the wildcard weylandai.com/propx-app*, so
+// /propx-app?embed=1 (the single-page shell's overlay) and /propx-app/ land
+// here; with the exact route they fell through to the monolith's 404.
+const servePropxApp = () => new Response(propxAppHtml, {
+  headers: { "Content-Type": "text/html; charset=UTF-8", "Cache-Control": "no-store" },
+});
+router.get("/propx-app", servePropxApp);
+router.get("/propx-app/", servePropxApp);
 
 registerProposalsRoutes(router, {
   authenticate,

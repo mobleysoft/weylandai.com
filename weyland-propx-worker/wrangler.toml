@@ -88,8 +88,12 @@ simple = { limit = 10, period = 60 }
 pattern = "weylandai.com/api/proposals/*"
 zone_name = "weylandai.com"
 
+# 2026-10-07: wildcard. The exact pattern did not match /propx-app?embed=1
+# (the single-page shell's overlay), which fell through to weylandai.com/*
+# and got the monolith's 404 JSON. src/index.js serves /propx-app and
+# /propx-app/ with any query string.
 [[routes]]
-pattern = "weylandai.com/propx-app"
+pattern = "weylandai.com/propx-app*"
 zone_name = "weylandai.com"
 
 # *.html pages (src/pages/propx-app.html) imported as raw text in

@@ -70,6 +70,19 @@
 // the DEMO_RATE_LIMITER binding in wrangler.toml.
 
 import { jsonResponse3 } from "../lib/json-response.js";
+import { listSources, loadSource } from "../lib/proposal-sources.js";
+
+// 2026-10-07: PropX prices data the caller really has. GET
+// /api/proposals/sources lists it (the caller's SubX extraction sessions,
+// their legacy submittals, and SubX's demo door schedule, The WeylandAI
+// Building, for anyone with no schedule yet); GET
+// /api/proposals/sources/:kind/:id returns one schedule with line items
+// derived from it (lib/proposal-sources.js); POST /api/proposals/generate
+// takes { source: {kind, id} } as well as the legacy { submittalId }. An
+// account's proposal is stored as before (proposals row + R2 PDF, quote
+// number); a guest session's is rendered and returned inline (pdfBase64),
+// not stored and rate-limited, the same posture as /demo. GET
+// /api/proposals/mine lists the account's stored proposals.
 
 // ---------------------------------------------------------------------
 // Shared pricing / document helpers. Extracted 2026-10-04 from the inline
@@ -180,7 +193,72 @@ export const DEMO_SAMPLE_BOM = {
   ]
 };
 
+// PDF bytes -> base64 without Buffer (chunked, so large PDFs never blow the
+// argument limit of String.fromCharCode).
+export function bytesToBase64(bytes) {
+  const u8 = bytes instanceof Uint8Array ? bytes : new Uint8Array(bytes);
+  let bin = "";
+  for (let i = 0; i < u8.length; i += 0x8000) bin += String.fromCharCode.apply(null, u8.subarray(i, i + 0x8000));
+  return btoa(bin);
+}
+
+async function limitGuest(env2, user, request2, label) {
+  if (!env2.DEMO_RATE_LIMITER || typeof env2.DEMO_RATE_LIMITER.limit !== "function") return null;
+  const key = user?.ephemeralToken || user?.userId || user?.id || request2.headers.get("CF-Connecting-IP") || "anon";
+  try {
+    const { success } = await env2.DEMO_RATE_LIMITER.limit({ key: label + ":" + key });
+    if (!success) return jsonResponse3({ success: false, error: { code: "RATE_LIMITED", message: "Proposal rate limit reached for this session - try again in a minute." } }, 429);
+  } catch (e) {
+    console.log("[PropX] rate limiter error:", e.message);
+  }
+  return null;
+}
+
 export function registerProposalsRoutes(router, { authenticate, requireProductAccess, generateQuoteHtml, puppeteer }) {
+  async function gate(request2, env2) {
+    const { error: error4, user } = await authenticate(request2, env2);
+    if (error4) return { error: error4 };
+    const _prodErr = await requireProductAccess(user, env2, "propx");
+    if (_prodErr) return { error: _prodErr };
+    return { user };
+  }
+
+  // What this caller can price - see lib/proposal-sources.js.
+  router.get("/api/proposals/sources", async (request2, env2) => {
+    const { error, user } = await gate(request2, env2);
+    if (error) return error;
+    try {
+      const { sources, hasOwn } = await listSources(env2.DB, user);
+      return jsonResponse3({ success: true, session: user?.ephemeral ? "guest" : "account", hasOwn, sources });
+    } catch (e) {
+      console.error("[PropX Sources] Error:", e);
+      return jsonResponse3({ error: "Failed to list your schedules", details: e.message }, 500);
+    }
+  });
+
+  router.get("/api/proposals/sources/:kind/:id", async (request2, env2) => {
+    const { error, user } = await gate(request2, env2);
+    if (error) return error;
+    try {
+      const loaded = await loadSource(env2.DB, user, request2.params.kind, decodeURIComponent(request2.params.id || ""));
+      if (!loaded) return jsonResponse3({ error: "Schedule not found" }, 404);
+      return jsonResponse3({ success: true, ...loaded });
+    } catch (e) {
+      console.error("[PropX Source] Error:", e);
+      return jsonResponse3({ error: "Failed to read the schedule", details: e.message }, 500);
+    }
+  });
+
+  router.get("/api/proposals/mine", async (request2, env2) => {
+    const { error, user } = await gate(request2, env2);
+    if (error) return error;
+    if (!user?.userId || user.ephemeral) return jsonResponse3({ success: true, proposals: [] });
+    const r = await env2.DB.prepare(
+      "SELECT id, quote_number, client_name, project_address, door_count, subtotal, tax_amount, grand_total, submittal_id, created_at FROM proposals WHERE user_id = ? ORDER BY created_at DESC LIMIT 20"
+    ).bind(user.userId).all();
+    return jsonResponse3({ success: true, proposals: (r.results || []).map((x) => ({ ...x, downloadUrl: `/api/proposals/${x.id}/download` })) });
+  });
+
   router.post("/api/proposals/generate", async (request2, env2) => {
     const { error: error4, user } = await authenticate(request2, env2);
     if (error4)
@@ -192,37 +270,67 @@ export function registerProposalsRoutes(router, { authenticate, requireProductAc
     try {
       const body = await request2.json();
       const {
-        submittalId, rfpReference, rfpSummary,
+        submittalId, source, rfpReference, rfpSummary,
         clientName, clientAddress, projectAddress, bidDueDate,
         validityDays, taxRate, exclusionsText, lineItems
       } = body;
-      if (!submittalId) {
-        return jsonResponse3({ error: "submittalId is required" }, 400);
+      // What to price: { source: {kind, id} } (session | submittal | demo),
+      // or the original { submittalId }.
+      const src = source && source.kind ? { kind: String(source.kind), id: String(source.id || "") } : (submittalId ? { kind: "submittal", id: String(submittalId) } : null);
+      if (!src) {
+        return jsonResponse3({ error: "Choose what to price: source {kind, id} or submittalId is required" }, 400);
+      }
+      const guest = !!user?.ephemeral || !user?.userId;
+      if (guest) {
+        const limited = await limitGuest(env2, user, request2, "propx-generate");
+        if (limited) return limited;
       }
       const tenantId = user.tenantId || user.tenant_id || "ven_weyland";
-      const submittal = await env2.DB.prepare(
-        "SELECT * FROM submittals WHERE id = ? AND user_id = ?"
-      ).bind(submittalId, user.userId).first();
-      if (!submittal) {
-        return jsonResponse3({ error: "Submittal not found" }, 404);
+      const loaded = await loadSource(env2.DB, user, src.kind, src.id);
+      if (!loaded) {
+        return jsonResponse3({ error: src.kind === "submittal" ? "Submittal not found" : "Schedule not found" }, 404);
       }
-      const doorsResult = await env2.DB.prepare(
-        "SELECT * FROM door_entries WHERE submittal_id = ? ORDER BY door_number"
-      ).bind(submittalId).all();
-      const rawDoors = doorsResult.results || [];
+      const rawDoors = loaded.doors;
+      const sourceKey = src.kind === "demo" ? "demo-" + src.id : src.id;
       const vendorProfile = await loadVendorProfile(env2, tenantId);
       const now = (/* @__PURE__ */ new Date()).toISOString();
       // Priced line items: use what the customer supplied (they may have
       // filled in real unit prices from their own supplier quotes) if given,
-      // otherwise auto-derive one row per distinct door group from the real
-      // extracted schedule with unit_price left at 0 for them to fill in -
-      // never invent a price.
-      const doorLines = (Array.isArray(lineItems) && lineItems.length > 0)
-        ? normalizeLineItems(lineItems)
-        : groupDoorLines(rawDoors);
+      // otherwise the lines derived from the schedule (lib/proposal-sources.js),
+      // whose prices come only from the schedule's own data or start at 0 -
+      // never an invented price.
+      const doorLines = normalizeLineItems((Array.isArray(lineItems) && lineItems.length > 0) ? lineItems : loaded.lines);
       const totals = computeTotals(doorLines, taxRate);
       const { subtotal, taxRate: effectiveTaxRate, taxAmount, grandTotal } = totals;
       const effectiveValidityDays = Number(validityDays) || 30;
+      const recipient = {
+        client_name: clientName || (loaded.project && loaded.project.client_name) || null,
+        client_address: clientAddress || (loaded.project && loaded.project.client_address) || null,
+        project_name: (loaded.project && loaded.project.name) || loaded.source.name || null,
+        project_address: projectAddress || (loaded.project && loaded.project.project_address) || null,
+        rfp_reference: rfpReference || null,
+        bid_due_date: bidDueDate || null
+      };
+      const exclusions = exclusionsText || (loaded.source.demo
+        ? "Priced from SubX's demo door schedule (The WeylandAI Building, a sample project). " + DEFAULT_EXCLUSIONS_TEXT
+        : null);
+      if (guest) {
+        // A guest session owns no account to store under: render and return
+        // the proposal inline, not stored, no quote number minted.
+        const quoteData = buildQuoteData({ vendorProfile, recipient, quoteNumber: "PREVIEW", now, validityDays: effectiveValidityDays, doorLines, totals, exclusionsText: exclusions, coverNote: rfpSummary });
+        const pdfBytes = await renderQuotePdf(puppeteer, env2, generateQuoteHtml(quoteData, null));
+        return jsonResponse3({
+          success: true,
+          stored: false,
+          source: loaded.source,
+          quoteNumber: "PREVIEW",
+          doorCount: rawDoors.length,
+          lineItemCount: doorLines.length,
+          lineItems: doorLines,
+          subtotal, taxRate: effectiveTaxRate, taxAmount, grandTotal,
+          pdfBase64: bytesToBase64(pdfBytes)
+        });
+      }
       const maxQuoteResult = await env2.DB.prepare(
         `SELECT COALESCE(MAX(quote_number), 0) + 1 as next_number FROM proposals WHERE tenant_id = ?`
       ).bind(tenantId).first();
@@ -230,28 +338,21 @@ export function registerProposalsRoutes(router, { authenticate, requireProductAc
       const proposalId = crypto.randomUUID();
       const quoteData = buildQuoteData({
         vendorProfile,
-        recipient: {
-          client_name: clientName || null,
-          client_address: clientAddress || null,
-          project_name: submittal.project_name || null,
-          project_address: projectAddress || null,
-          rfp_reference: rfpReference || null,
-          bid_due_date: bidDueDate || null
-        },
+        recipient,
         quoteNumber,
         now,
         validityDays: effectiveValidityDays,
         doorLines,
         totals,
-        exclusionsText,
+        exclusionsText: exclusions,
         coverNote: rfpSummary
       });
       const quoteHtml = generateQuoteHtml(quoteData, null);
       const pdfBytes = await renderQuotePdf(puppeteer, env2, quoteHtml);
-      const r2Key = `proposals/${submittalId}/${proposalId}.pdf`;
+      const r2Key = `proposals/${sourceKey}/${proposalId}.pdf`;
       await env2.UPLOADS.put(r2Key, pdfBytes, {
         httpMetadata: { contentType: "application/pdf" },
-        customMetadata: { submittalId, tenantId, generatedAt: now }
+        customMetadata: { submittalId: sourceKey, sourceKind: src.kind, tenantId, generatedAt: now }
       });
       await env2.DB.prepare(`
         INSERT INTO proposals (
@@ -262,18 +363,20 @@ export function registerProposalsRoutes(router, { authenticate, requireProductAc
         )
         VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 'draft', ?, ?)
       `).bind(
-        proposalId, submittalId, user.userId, tenantId, rfpReference || null, rfpSummary || null, rawDoors.length,
-        clientName || null, clientAddress || null, projectAddress || null, bidDueDate || null, effectiveValidityDays, effectiveTaxRate,
+        proposalId, sourceKey, user.userId, tenantId, rfpReference || null, rfpSummary || null, rawDoors.length,
+        recipient.client_name, recipient.client_address, recipient.project_address, bidDueDate || null, effectiveValidityDays, effectiveTaxRate,
         quoteData.settings.exclusions_text, subtotal, taxAmount, grandTotal, JSON.stringify(doorLines), quoteNumber,
         r2Key, now, now
       ).run();
       return jsonResponse3({
         success: true,
+        stored: true,
+        source: loaded.source,
         proposalId,
         quoteNumber,
         doorCount: rawDoors.length,
         lineItemCount: doorLines.length,
-        subtotal, taxAmount, grandTotal,
+        subtotal, taxRate: effectiveTaxRate, taxAmount, grandTotal,
         downloadUrl: `/api/proposals/${proposalId}/download`
       });
     } catch (error5) {
