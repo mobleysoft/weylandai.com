@@ -4,8 +4,8 @@
 // their own drawing (/Users/johnmobley/pdf/OCCDoorSchedulePg4.pdf, a door schedule).
 // Expected: door and hardware counts from the visitor's own drawings, with how sure they are and a
 // review step; reached in place (the TakeOffX page opens in the homepage overlay and leads into the
-// takeoff workspace there). Since 2026-10-07 (6d31174) START A TAKEOFF opens the SubX workspace in
-// takeoff mode (/subx-app?mode=takeoff): the counts (doors, sizes read, fire-rated doors, hardware
+// takeoff workspace there). Since 2026-10-07 (6d31174, 82aea46) /takeoffx is the SubX workspace in
+// takeoff mode (before 82aea46 its START A TAKEOFF led there): the counts (doors, sizes read, fire-rated doors, hardware
 // groups, by type/size/rating/group) come with every door row traced to the page and row it was
 // read from and a "machine-read: check them against the source page" note - that traceability is
 // the confidence this product gives, and the Review step with the row list is the review.
@@ -35,23 +35,31 @@ await J.run(async () => {
   J.check("subscriber signs in on the homepage", st.auth === "signed-in", { auth: st.auth, error: st.error, seconds: st.seconds });
   await page.evaluate(() => window.WeylandShell && window.WeylandShell.close());
 
-  // The TakeOffX page in the overlay, then its own call to action.
+  // TakeOffX in the overlay. Since 82aea46 /takeoffx is the workspace itself in takeoff mode (the
+  // upload at once for a signed-in visitor); an older product page led there through its own call
+  // to action, which is pressed when the page shows one instead of the upload.
   const tf = await openApp(page, "/takeoffx");
   const info = await frameInfo(tf);
   J.check("TakeOffX opens in the overlay", !!info && /^\/takeoffx\/?$/.test(info.path || "") && !info.jsonError && !info.nestedShell, info ? { path: info.path, title: info.title, jsonError: info.jsonError } : "no frame");
-  const cta = tf ? await tf.evaluate(() => {
-    const a = Array.from(document.querySelectorAll("a, button")).find((x) => x.offsetParent !== null && /takeoff/i.test(x.innerText) && /start|run|new|begin|upload|sign in/i.test(x.innerText));
-    if (!a) return null;
-    a.setAttribute("data-waj-cta", "1");
-    return { text: a.innerText.trim(), href: a.getAttribute("href") };
-  }) : null;
-  J.check("signed in, the TakeOffX page does not ask to sign in again", !!cta && !/sign in/i.test(cta.text), cta || "no takeoff call to action on the page");
-  let ws = null;
-  if (cta) {
-    await pressIn(tf, "[data-waj-cta='1']");
-    await sleep(2000);
-    ws = await overlayFrame(page, 25000);
+  let ws = tf;
+  const direct = tf ? await subxWorkspace(tf, 20000) : null;
+  let cta = null;
+  if (!(direct && direct.appVisible && tf && (await tf.locator("#upload-form").count()))) {
+    cta = tf ? await tf.evaluate(() => {
+      const a = Array.from(document.querySelectorAll("a, button")).find((x) => x.offsetParent !== null && /takeoff/i.test(x.innerText) && /start|run|new|begin|upload|sign in/i.test(x.innerText));
+      if (!a) return null;
+      a.setAttribute("data-waj-cta", "1");
+      return { text: a.innerText.trim(), href: a.getAttribute("href") };
+    }) : null;
+    if (cta && !/sign in/i.test(cta.text)) {
+      await pressIn(tf, "[data-waj-cta='1']");
+      await sleep(2000);
+      ws = await overlayFrame(page, 25000);
+    }
   }
+  J.note("takeoff_entry", direct && direct.appVisible ? "the workspace itself" : cta ? "the page's call to action: " + cta.text : "neither");
+  const signInAsked = (!!direct && direct.loginVisible) || (!!cta && /sign in/i.test(cta.text));
+  J.check("signed in, TakeOffX does not ask to sign in again", !signInAsked && (!!(direct && direct.appVisible) || !!cta), { direct: direct && { appVisible: direct.appVisible, login: direct.loginVisible }, cta });
   const wsState = ws ? await subxWorkspace(ws, 25000) : null;
   const mode = ws ? await ws.evaluate(() => ({ takeoff: document.documentElement.classList.contains("takeoff"), heading: ((Array.from(document.querySelectorAll("h1")).find((h) => h.offsetParent !== null) || {}).innerText || "").trim(), upload: !!document.getElementById("upload-form") })).catch(() => null) : null;
   J.check("the takeoff workspace opens in the overlay, signed in, with an upload", !!wsState && wsState.appVisible && wsState.accountToken && !wsState.loginVisible && !!mode && mode.upload,

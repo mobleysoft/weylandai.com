@@ -44,12 +44,14 @@ await J.run(async () => {
     const link = finder.locator("a[href='/find/lcn/4040XP']").first();
     if (await link.count()) {
       await pressIn(finder, link);
-      await until(() => finder.evaluate(() => /^\/find\/lcn\/4040XP$/i.test(location.pathname) && !document.querySelector("main[aria-busy]") && document.querySelectorAll("a[data-doc]").length > 0), 20000, 300);
+      // Document links: a[data-doc] until edb2834, a[data-doc-url] (opened in place) since.
+      const DOC = "a[data-doc], a[data-doc-url]";
+      await until(() => finder.evaluate((sel) => /^\/find\/lcn\/4040XP$/i.test(location.pathname) && !document.querySelector("main[aria-busy]") && document.querySelectorAll(sel).length > 0, DOC), 20000, 300);
       const s2 = await finderInPlace();
       J.check("the product link opens the product page in place (same document)", s2.sameDocument && /^\/find\/lcn\/4040XP$/i.test(s2.url || ""), s2);
-      const text = await finder.evaluate(() => document.body.innerText).catch(() => "");
-      J.check("the product page lists documents on file with page citations", /pp?\.\s*\d+/i.test(text) && (await finder.locator("a[data-doc]").count()) > 0, text.replace(/\s+/g, " ").slice(0, 200));
-      const open = finder.locator("a[data-doc]").first();
+      const text = await finder.evaluate(() => (document.querySelector("main") || document.body).innerText).catch(() => "");
+      J.check("the product page lists documents on file with page citations", /pp?\.\s*\d+/i.test(text) && (await finder.locator(DOC).count()) > 0, text.replace(/\s+/g, " ").slice(0, 300));
+      const open = finder.locator(DOC).first();
       if (await open.count()) {
         const ref = { since: Date.now(), apiRe: /\/api\/(cut-sheets\/sheet\/[^/]+\/pdf|cps\/catalogues\/[^/]+\/pages\/\d+\/render)$/, popupsBefore: page.__popups.length, downloadsBefore: page.__downloads.length };
         await pressIn(finder, open);
@@ -80,27 +82,51 @@ await J.run(async () => {
     await pressIn(surface, "#match-btn");
     return (await waitText(surface, "#match-results", /Matched product|No match|HTTP|failed|error/i, 30000, /^Matching against/i)) || "";
   };
-  const m1 = await match("LCN", "4040XP");
+  const host = where === "overlay" ? page : standalone;
+  const DOC_API = /\/api\/(cut-sheets\/(download\/[^/]+|sheet\/[^/]+\/pdf)|cps\/catalogues\/[^/]+\/pages\/\d+\/render)$/;
+  // A document opened from the app: drawn in place at the cited page. In the overlay the shell's
+  // document view takes the app's place; closing it closes the overlay, so the app is reopened.
+  const openInPlace = async (label, locator) => {
+    const want = citedPage(await locator.getAttribute("data-doc-url").catch(() => null));
+    const ref = { since: Date.now(), apiRe: DOC_API, popupsBefore: host.__popups.length, downloadsBefore: host.__downloads.length };
+    await pressIn(surface, locator);
+    const o = await documentOutcome(J, host, ref);
+    J.check(label + " (" + where + ")", o.ok && !o.refused && !o.newTab && (o.pdf.drawn ? o.pdf.page === want : o.inPage.viewers > 0), { want, newTab: o.newTab, api: o.api, pdf: o.pdf, inPage: o.inPage });
+    if (o.pdf.open) {
+      await closeOverlay(host, "escape");
+      if (where === "overlay") surface = await openApp(page, "/cutsheetx");
+    }
+    return o;
+  };
+  let m1 = await match("LCN", "4040XP");
   J.check("CutsheetX MATCH 'LCN 4040XP' returns the matched cut sheet (" + where + ")", /Matched product/i.test(m1) && /DOWNLOAD PDF/i.test(m1), m1.replace(/\s+/g, " ").slice(0, 200));
-  const dl = surface.locator("#match-results button[data-doc]").first();
+  const openAt = surface.locator("#match-results [data-doc-url]").first();
+  if (await openAt.count()) {
+    await openInPlace("CutsheetX OPEN AT THE PAGE draws the cited page in place (no new tab)", openAt);
+    m1 = await match("LCN", "4040XP"); // the app may have been reopened
+  }
+  // DOWNLOAD PDF saves the file (data-doc-download since 2026-10-07; data-doc before).
+  const dl = surface.locator("#match-results [data-doc-download], #match-results button[data-doc]").first();
   if (await dl.count()) {
-    const host = where === "overlay" ? page : standalone;
-    const ref = { since: Date.now(), apiRe: /\/api\/cut-sheets\/(download\/[^/]+|sheet\/[^/]+\/pdf)$/, popupsBefore: host.__popups.length, downloadsBefore: host.__downloads.length };
+    const ref = { since: Date.now(), apiRe: DOC_API, popupsBefore: host.__popups.length, downloadsBefore: host.__downloads.length };
     await pressIn(surface, dl);
     const o = await documentOutcome(J, host, ref);
     J.check("CutsheetX DOWNLOAD PDF delivers the cut sheet (" + where + ")", o.ok && !o.refused && (o.newTab || o.downloads.length > 0 || o.pdf.drawn || o.inPage.viewers > 0), o);
-    J.check("CutsheetX DOWNLOAD PDF stays in place (no new tab) (" + where + ")", o.ok && !o.refused && !o.newTab, { newTab: o.newTab, downloads: o.downloads, pdf: o.pdf });
+    J.check("CutsheetX DOWNLOAD PDF saves the file without a new tab (" + where + ")", o.ok && !o.refused && !o.newTab && (o.downloads.length > 0 || o.pdf.drawn), { newTab: o.newTab, downloads: o.downloads, pdf: o.pdf });
     if (o.pdf.open) {
-      // The document view replaced the app in the overlay: close it and reopen the app to go on.
-      await closeOverlay(page, "escape");
+      await closeOverlay(host, "escape");
       if (where === "overlay") surface = await openApp(page, "/cutsheetx");
     }
+  } else {
+    J.check("CutsheetX DOWNLOAD PDF delivers the cut sheet (" + where + ")", false, "no DOWNLOAD PDF control in the MATCH result");
   }
   await surface.fill("#search-q", "closer");
   await pressIn(surface, "#search-btn");
   const sr = (await waitText(surface, "#search-results", /result\(s\)|No match|no results|HTTP|failed|error/i, 40000, /^Searching/i)) || "";
   const count = Number((sr.match(/(\d+)\s+result\(s\)/i) || [])[1] || 0);
   J.check("CutsheetX SEARCH 'closer' returns results (" + where + ")", count > 0, sr.split("\n")[0]);
+  const view = surface.locator("#search-results [data-doc-url]").first();
+  if (count > 0 && (await view.count())) await openInPlace("CutsheetX SEARCH result VIEW PAGE draws the page in place (no new tab)", view);
   await surface.fill("#local-mfr", "lcn");
   await surface.fill("#local-model", "4040XP");
   await pressIn(surface, "#local-btn");

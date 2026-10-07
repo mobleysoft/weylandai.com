@@ -644,11 +644,19 @@ export async function buildSubmittalPackage(target) {
   const t0 = Date.now();
   await pressIn(target, "#package-btn");
   const result = (await waitText(target, "#package-result", /^Built:|could not be built|error|failed/i, 300000, /^Building the package/i)) || "";
+  // Shown in the page: drawn page by page with pdf.js into #package-pages (82aea46), or (before
+  // that) a blob in the #package-viewer iframe.
   const viewer = await until(() => target.evaluate(() => {
+    const pages = document.getElementById("package-pages");
+    if (pages && !pages.classList.contains("hide")) {
+      const holders = pages.querySelectorAll(".pdf-page");
+      const drawn = Array.from(pages.querySelectorAll(".pdf-page[data-rendered] canvas")).filter((c) => { const r = c.getBoundingClientRect(); return r.width > 200 && r.height > 200; });
+      return drawn.length ? { kind: "pages drawn in the page", pages: holders.length, drawn: drawn.length, meta: ((pages.querySelector(".pdf-meta") || {}).innerText || "").trim().slice(0, 120) } : null;
+    }
     const v = document.getElementById("package-viewer");
     if (!v || v.classList.contains("hide")) return null;
     const r = v.getBoundingClientRect();
-    return r.width > 200 && r.height > 200 ? { src: (v.getAttribute("src") || "").slice(0, 5), w: Math.round(r.width), h: Math.round(r.height) } : null;
+    return r.width > 200 && r.height > 200 ? { kind: "iframe", src: (v.getAttribute("src") || "").slice(0, 5), w: Math.round(r.width), h: Math.round(r.height) } : null;
   }), 60000, 500);
   const download = await target.evaluate(() => {
     const a = document.getElementById("package-download");

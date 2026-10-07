@@ -69,32 +69,45 @@ await J.run(async () => {
     J.check("closing an app with " + how + " returns to the same homepage", !(await overlayOpen(page)) && path === "/" && ps.sameDocument && ps.onSite, { overlayOpen: await overlayOpen(page), path, ...ps });
   }
 
-  // A product page's own navigation inside the overlay.
-  const NAV = [
-    ["NEWS", (i) => !!i && !i.jsonError && !i.chromeError && /^\/news\/?$/.test(i.path || "") ],
-    ["CUTSHEETX", (i) => !!i && /^\/cutsheetx\/?$/.test(i.path || "") && i.ids.includes("match-btn")],
-    ["VENTURE DECK", (i) => !!i && !i.chromeError && !i.jsonError && !i.evalError],
-    ["the brand link '/'", (i, closed) => closed || (!!i && !i.nestedShell)]
-  ];
-  for (const [label, good] of NAV) {
-    const f = await openApp(page, "/subx");
-    await sleep(1500);
-    const found = f ? await f.evaluate((l) => {
-      const links = Array.from(document.querySelectorAll("a")).filter((a) => a.offsetParent !== null);
-      const a = l.startsWith("the brand") ? links.find((x) => x.getAttribute("href") === "/") : links.find((x) => x.innerText.trim().toUpperCase() === l);
-      if (!a) return null;
-      a.setAttribute("data-waj-nav", "1");
-      return a.getAttribute("href");
-    }, label).catch(() => null) : null;
-    if (!found) { J.note("nav " + label, "no such link on /subx in the overlay"); await page.evaluate(() => window.WeylandShell.close()); continue; }
-    await pressIn(f, "[data-waj-nav='1']");
-    await sleep(4000);
-    const closed = !(await overlayOpen(page));
-    const g = closed ? null : await overlayFrame(page, 8000);
-    const i = g ? await frameInfo(g) : null;
-    const ps = await placeState(page, mark);
-    J.check("inside the overlay, the product nav's " + label + " stays in the shell and shows a working page", good(i, closed) && ps.sameDocument && ps.onSite,
-      { href: found, overlayClosed: closed, shows: i ? { url: (i.url || "").slice(0, 90), title: i.title, jsonError: i.jsonError, chromeError: i.chromeError, nestedShell: i.nestedShell } : null, ...ps });
+  // Each product page's own links, inside the overlay. Every visible link is classified: an outside
+  // site must open in a new tab (inside the frame it would only show the browser's refusal page);
+  // our own links (up to 3 distinct ones per page) are pressed one at a time and must stay in the
+  // shell and show a working page (or close the overlay back to the same homepage), never a JSON
+  // error, a browser error page or a second homepage nested in the overlay.
+  const host = new URL(BASE).host;
+  for (const p of PATHS) {
+    let f = await openApp(page, p, 40000);
+    await sleep(2000);
+    const links = f ? await f.evaluate((h) => Array.from(document.querySelectorAll("a[href]")).filter((a) => a.offsetParent !== null && a.getBoundingClientRect().width > 0).map((a) => {
+      let u = null;
+      try { u = new URL(a.getAttribute("href"), location.href); } catch (e) { u = null; }
+      return { text: (a.innerText || a.getAttribute("aria-label") || "").replace(/\s+/g, " ").trim().slice(0, 30), href: a.getAttribute("href"), host: u ? u.host : "", path: u ? u.pathname + u.search : "", proto: u ? u.protocol : "", target: a.getAttribute("target") || "", sameDoc: !!u && u.host === location.host && u.pathname === location.pathname && u.search === location.search && !!u.hash, data: a.hasAttribute("data-doc") };
+    }), host).catch(() => []) : [];
+    const outside = links.filter((l) => /^https?:$/.test(l.proto) && l.host !== host);
+    const outsideInFrame = outside.filter((l) => l.target !== "_blank");
+    J.check(p + " in the overlay: its links to outside sites open in a new tab, not inside the overlay", outsideInFrame.length === 0, { outside: outside.length, inFrame: outsideInFrame.slice(0, 5) });
+    const own = [...new Map(links.filter((l) => /^https?:$/.test(l.proto) && l.host === host && !l.sameDoc && !l.data && l.target !== "_blank").map((l) => [l.path, l])).values()].slice(0, 3);
+    const bad = [];
+    for (const l of own) {
+      if (!f) break;
+      const before = await placeState(page, mark);
+      const clicked = await f.evaluate((href) => { const a = Array.from(document.querySelectorAll("a[href]")).find((x) => x.getAttribute("href") === href && x.offsetParent !== null); if (!a) return false; a.setAttribute("data-waj-nav", "1"); return true; }, l.href).catch(() => false);
+      if (!clicked) continue;
+      await pressIn(f, "[data-waj-nav='1']").catch(() => {});
+      await sleep(3500);
+      const closed = !(await overlayOpen(page));
+      const g = closed ? null : await overlayFrame(page, 8000);
+      const i = g ? await frameInfo(g) : null;
+      const ps = await placeState(page, mark);
+      const homeAddress = closed ? await page.evaluate(() => location.pathname) : null;
+      const ok = ps.sameDocument && ps.onSite && before.sameDocument && (closed ? homeAddress === "/" : !!i && !i.jsonError && !i.chromeError && !i.evalError && !i.nestedShell && /\S/.test(i.text || ""));
+      if (!ok) bad.push({ link: l.text || l.href, href: l.href, overlayClosed: closed, shows: i ? { path: i.path, title: i.title, jsonError: i.jsonError, chromeError: i.chromeError, nestedShell: i.nestedShell } : null, sameDocument: ps.sameDocument, onSite: ps.onSite });
+      // Back to the product page for the next link.
+      if (!closed) await page.evaluate(() => window.WeylandShell.close());
+      f = await openApp(page, p, 40000);
+      await sleep(1500);
+    }
+    J.check(p + " in the overlay: its own links stay in the shell and show working pages (" + own.length + " tried)", bad.length === 0, bad.length ? bad : own.map((l) => l.href));
     await page.evaluate(() => window.WeylandShell.close());
   }
 

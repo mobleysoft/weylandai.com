@@ -50,7 +50,11 @@ await J.run(async () => {
   }
   if (!room || !(await room.locator("#room-btn").count())) throw new Error("no JOIN ROOM for participant A; the rest of the journey cannot run");
 
-  await pressIn(room, "#room-btn");
+  // Since 7aabf72 CONNECT TO SPATIAL ROOM opens a fresh room that a signed-in visitor joins at once;
+  // press JOIN ROOM only when the room is not already joined (pressing it then would leave).
+  const auto = await waitText(room, "#room-status", /^CONNECTED$/i, 8000);
+  J.note("participant_a_joined_on_open", /^CONNECTED$/i.test(auto || ""));
+  if (!/^CONNECTED$/i.test(auto || "")) await pressIn(room, "#room-btn");
   const stA = await waitText(room, "#room-status", /^CONNECTED$|FAILED|UNAVAILABLE|NOT CONNECTED/i, 20000, /CONNECTING/i);
   J.check("participant A joins the room (CONNECTED)", /^CONNECTED$/i.test(stA || ""), stA + " | " + ((await room.evaluate(() => (document.getElementById("room-chat") || {}).innerText || "").catch(() => "")) || "").slice(0, 160));
 
@@ -81,7 +85,8 @@ await J.run(async () => {
   J.check("the shared room link offers JOIN ROOM to participant B", hasJoin, { url: pageB.url().slice(0, 120), title: await pageB.title() });
   let roomB = (await pageB.locator("#room-btn").count()) ? pageB : await overlayFrame(pageB, 3000);
   if (roomB && (await roomB.locator("#room-btn").count())) {
-    await pressIn(roomB, "#room-btn");
+    const autoB = await waitText(roomB, "#room-status", /^CONNECTED$/i, 4000);
+    if (!/^CONNECTED$/i.test(autoB || "")) await pressIn(roomB, "#room-btn");
     const stB = await waitText(roomB, "#room-status", /^CONNECTED$|FAILED|UNAVAILABLE|NOT CONNECTED/i, 20000, /CONNECTING/i);
     J.check("participant B joins the same room (CONNECTED)", /^CONNECTED$/i.test(stB || ""), stB + " | " + ((await roomB.evaluate(() => (document.getElementById("room-chat") || {}).innerText || "").catch(() => "")) || "").slice(0, 160));
     const both = await until(async () => (await roster(room)).length >= 2 && (await roster(roomB)).length >= 2, 15000, 500);
