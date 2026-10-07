@@ -14,9 +14,22 @@
 // are deleted in finally.
 //
 // Usage: node tools/user-simulation/journeys/subx-upload-to-submittal.mjs   (exit 0 = all passed)
-import { Journey, openHome, raiseDossier, setMark, press, pressIn, waitText, until, sleep, signIn, overlayFrame, subxWorkspace, workspaceDetail, workspaceUploadAndExtract, buildSubmittalPackage } from "../lib/journey-kit.mjs";
+import { Journey, openHome, raiseDossier, setMark, press, pressIn, waitText, until, sleep, signIn, overlayFrame, subxWorkspace, workspaceDetail, workspaceUploadAndExtract, buildSubmittalPackage, d1, q } from "../lib/journey-kit.mjs";
 
 const J = new Journey("subx-upload-to-submittal", "Upload a construction PDF and get a submittal (SubX)");
+
+/** Who owns the demo copies this run's browser received: this account, or not (the guest). */
+async function demoCopyOwner(acct) {
+  await J.settleClones();
+  const ids = [...J.clones.keys()];
+  if (!ids.length) return "no demo copy captured";
+  try {
+    const [r] = await d1("SELECT id, user_id FROM hardware_extraction_sessions WHERE id IN (" + ids.map(q).join(",") + ");");
+    return (r.results || []).map((x) => ({ session: String(x.id).slice(0, 8), owner: x.user_id === acct.userId ? "this account" : "not this account" }));
+  } catch (e) {
+    return "owner not read: " + String((e && e.message) || e).slice(0, 120);
+  }
+}
 
 await J.run(async () => {
   await J.launch();
@@ -51,13 +64,17 @@ await J.run(async () => {
   let listed = ws ? ws.sessions : (await subxWorkspace(frame)).sessions;
   J.note("workspace_sessions_first_load", listed);
   if (!/WeylandAI Building/i.test(listed || "")) {
-    // Seen intermittently: the list right after the clone is written comes back empty. A visitor
-    // would open the workspace again; do the same once and record that it took a second look.
+    // Seen in 2 of 3 runs on 2026-10-07 (and 1 of 3 runs of a probe): the homepage makes the visitor's
+    // demo copy when the SubX chapter comes near the screen, as whoever the visitor is at that moment.
+    // When that happens before sign-in has finished, the copy belongs to the guest, and the account's
+    // workspace (which lists only the account's own schedules) shows none. A visitor would open the
+    // workspace again; do the same once, and record who owns the copy so a failure says why.
     await page.evaluate(() => window.WeylandShell.close());
     await sleep(4000);
     await page.evaluate(() => window.WeylandShell.open("app", { path: "/subx-app" }));
     frame = await overlayFrame(page, 25000);
     listed = frame ? (await subxWorkspace(frame)).sessions + " (listed only after reopening the workspace)" : "no frame";
+    J.note("demo_copy_owner", await demoCopyOwner(acct));
   }
   J.check("the workspace lists the visitor's 'The WeylandAI Building' demo schedule", /WeylandAI Building/i.test(listed || ""), listed || "");
   if (!frame) throw new Error("no SubX workspace frame");

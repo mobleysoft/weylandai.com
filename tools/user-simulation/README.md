@@ -178,6 +178,18 @@ node tools/user-simulation/journeys/first-result-no-account.mjs         # exit 0
 node tools/user-simulation/signin-journey.mjs                           # the reference sign-in journey
 ```
 
+All of them, three times each, one at a time (pass 1 runs every journey, then pass 2, then
+pass 3), with a summary of which journeys passed every check in every run:
+
+```bash
+node tools/user-simulation/run-journeys.mjs --passes 3          # exit 0 = every run of every journey passed
+node tools/user-simulation/run-journeys.mjs --passes 1 --only subx-upload-to-submittal,deep-link-login
+```
+
+It writes `reports/matrix-<stamp>/` (one log per run, `results.jsonl` as it goes, `summary.json`).
+A full three-pass run takes about 36 minutes and opens 30 live Stripe Checkout Sessions (10 per
+pass, each stopped at the loaded form and left to expire).
+
 | Script | Journey |
 |---|---|
 | `journeys/first-result-no-account.mjs` | cold guest, desktop + phone: hero RUN IT LIVE, paste, citations drawn in place |
