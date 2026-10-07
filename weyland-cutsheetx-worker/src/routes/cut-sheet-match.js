@@ -15,6 +15,20 @@
 // though the real value passed in is always the same top-level
 // lib/auth.js import - this keeps the module trivially testable with a
 // fake authenticate rather than exercising the real auth flow.
+//
+// ONE PATH FOR EVERY SPEC LINE (2026-10-07). However a line arrives - pasted
+// (POST /match-batch {text}), as fields (/match-batch {lines}), or typed into
+// a single-line form (POST /match: the CutsheetX page's MATCH and the
+// homepage's TRY A REAL MATCH) - it becomes the same {raw, manufacturer,
+// model, modelFull} line (lineFromFields reads fields with the paste parser,
+// parseSpecText), is matched by the same call (matchLine) and is projected by
+// the same toBatchResult, so one line gets one answer everywhere. Before this,
+// /match handed its raw fields to the matcher and its callers read only
+// cutSheets[]: Schlage L9080, matched through its catalogue page because no
+// standalone cut sheet is filed, read "No match found" on the CutsheetX page
+// and the homepage form while the paste cited Schlage L Series Catalog p. 25.
+// /match now returns every key it returned before plus match-batch's per-line
+// answer (raw, line, cutSheet, cataloguePage, citation).
 
 import { matchComponentToCutSheets } from "../lib/product-database.js";
 import { parseSpecText, recordMisses } from "../lib/cut-sheet-misses.js";
@@ -37,10 +51,46 @@ function recordMissesInBackground(ctx, env2, misses) {
   if (ctx && typeof ctx.waitUntil === "function") ctx.waitUntil(p);
 }
 
+function normName(s) {
+  return String(s || "").toLowerCase().replace(/[.,]+$/, "").replace(/\s+/g, " ").trim();
+}
+
+// Fields (manufacturer + model, or catalog_number) -> the line a paste of the
+// same text produces: "Schlage" + "L9080" is read exactly like the pasted line
+// "Schlage L9080". The typed manufacturer joins the catalogue's names for this
+// one parse, so the line splits where the visitor split it (a maker the
+// catalogue does not list stays the manufacturer, as typed, and the matcher
+// decides how far to trust it). A model field that repeats the manufacturer
+// ("Schlage" + "Schlage L9080") is read once. If the parser still reads the
+// text differently from the fields (a header-like word, a maker name longer
+// than four words, a comma inside the model), the fields win: manufacturer as
+// typed, the model's first token as the model, the whole model as modelFull.
+export function lineFromFields(fields, knownManufacturers = []) {
+  const str = (v) => (typeof v === "string" || typeof v === "number" ? String(v).replace(/\s+/g, " ").trim() : "");
+  const mfr = str(fields && fields.manufacturer).replace(/[|,;]+/g, " ").replace(/\s+/g, " ").trim();
+  let modelText = str(fields && fields.model) || str(fields && fields.catalog_number);
+  if (mfr && modelText.toLowerCase().startsWith(mfr.toLowerCase() + " ")) modelText = modelText.slice(mfr.length + 1).trim();
+  if (!modelText) return null;
+  const text = mfr ? mfr + " " + modelText : modelText;
+  const names = Array.isArray(knownManufacturers) ? knownManufacturers : [];
+  const parsed = parseSpecText(text, mfr ? names.concat([mfr]) : names)[0] || null;
+  if (parsed && (!mfr || normName(parsed.manufacturer) === normName(mfr))) return parsed;
+  const tokens = modelText.split(/[\s|,;]+/).filter(Boolean);
+  const model = tokens[0];
+  const modelFull = tokens.join(" ");
+  return { raw: text, manufacturer: mfr || null, model, modelFull: modelFull !== model ? modelFull : undefined };
+}
+
+// The one matcher call every entry point makes for a line.
+export function matchLine(line, env2) {
+  return matchComponentToCutSheets({ manufacturer: line.manufacturer || void 0, model: line.model, modelFull: line.modelFull || void 0 }, env2);
+}
+
 // Projects the shared matcher's full result down to the compact per-line
 // shape /match-batch returns. One matching implementation
-// (matchComponentToCutSheets) feeds both /match and /match-batch.
-function toBatchResult(line, r) {
+// (matchComponentToCutSheets, via matchLine) feeds both /match and
+// /match-batch.
+export function toBatchResult(line, r) {
   const sheet = (r.cutSheets && r.cutSheets[0]) || null;
   return {
     raw: line.raw,
@@ -76,6 +126,23 @@ function toBatchResult(line, r) {
   };
 }
 
+// POST /match's answer: every key it returned before (matched, product with
+// its series/grade flags, cutSheets[], cataloguePages[], confidence,
+// matchType, and component = the request's own fields), plus the per-line
+// answer /match-batch gives for the same line (raw, line, cutSheet,
+// cataloguePage, citation).
+export function singleMatchResponse(line, r, requestFields) {
+  const one = toBatchResult(line, r);
+  return Object.assign({}, r, {
+    component: requestFields,
+    raw: one.raw,
+    line: { manufacturer: line.manufacturer ?? null, model: line.model, modelFull: line.modelFull ?? null },
+    cutSheet: one.cutSheet,
+    cataloguePage: one.cataloguePage,
+    citation: one.citation,
+  });
+}
+
 export function registerCutSheetMatchRoutes(router, { authenticate, requireProductAccess }) {
 router.post("/api/cut-sheets/match", async (request2, env2, ctx) => {
   const { error: error4, user } = await authenticate(request2, env2);
@@ -93,19 +160,16 @@ router.post("/api/cut-sheets/match", async (request2, env2, ctx) => {
         error: "Missing required field: model or catalog_number"
       }), { status: 400, headers: { "Content-Type": "application/json" } });
     }
-    const result = await matchComponentToCutSheets({
-      manufacturer,
-      model,
-      catalog_number,
-      component_type
-    }, env2);
-    if (!result.matched) {
-      recordMissesInBackground(ctx, env2, [{ manufacturer, model: model || catalog_number }]);
+    // The same line path as /match-batch (see the file header).
+    const line = lineFromFields({ manufacturer, model, catalog_number }, await getManufacturerNames(env2));
+    if (!line) {
+      return jsonResponse3({ error: "Missing required field: model or catalog_number" }, 400);
     }
-    return new Response(JSON.stringify(result), {
-      status: 200,
-      headers: { "Content-Type": "application/json" }
-    });
+    const r = await matchLine(line, env2);
+    if (!r.matched) {
+      recordMissesInBackground(ctx, env2, [{ manufacturer: line.manufacturer, model: line.model }]);
+    }
+    return jsonResponse3(singleMatchResponse(line, r, { manufacturer, model, catalog_number, component_type }));
   } catch (err) {
     return new Response(JSON.stringify({ error: err.message }), {
       status: 500,
@@ -140,6 +204,7 @@ router.post("/api/cut-sheets/match-batch", async (request2, env2, ctx) => {
       return jsonResponse3({ error: `Too many lines: ${body.lines.length} (max ${MATCH_BATCH_CAP})`, max: MATCH_BATCH_CAP }, 400);
     }
     lines = [];
+    const names = await getManufacturerNames(env2);
     for (const l of body.lines) {
       if (!l || typeof l !== "object") continue;
       const model = typeof l.model === "string" ? l.model.trim() : "";
@@ -147,7 +212,14 @@ router.post("/api/cut-sheets/match-batch", async (request2, env2, ctx) => {
       const manufacturer = typeof l.manufacturer === "string" && l.manufacturer.trim() ? l.manufacturer.trim() : null;
       const raw = typeof l.raw === "string" && l.raw.trim() ? l.raw.trim() : [manufacturer, model].filter(Boolean).join(" ");
       const modelFull = typeof l.modelFull === "string" && l.modelFull.trim() ? l.modelFull.trim() : void 0;
-      lines.push({ raw, manufacturer, model, modelFull });
+      if (modelFull) {
+        // A caller that split the line itself (modelFull given) is taken as sent.
+        lines.push({ raw, manufacturer, model, modelFull });
+        continue;
+      }
+      // Fields read exactly as POST /match reads them (lineFromFields).
+      const line = lineFromFields({ manufacturer, model }, names);
+      if (line) lines.push(Object.assign(line, { raw }));
     }
   } else if (typeof body?.text === "string") {
     if (body.text.length > 20000) {
@@ -168,8 +240,7 @@ router.post("/api/cut-sheets/match-batch", async (request2, env2, ctx) => {
     for (let i = 0; i < lines.length; i += MATCH_BATCH_CONCURRENCY) {
       const chunk = lines.slice(i, i + MATCH_BATCH_CONCURRENCY);
       const chunkResults = await Promise.all(chunk.map((line) =>
-        matchComponentToCutSheets({ manufacturer: line.manufacturer || void 0, model: line.model, modelFull: line.modelFull || void 0 }, env2)
-          .then((r) => toBatchResult(line, r))
+        matchLine(line, env2).then((r) => toBatchResult(line, r))
       ));
       for (let j = 0; j < chunkResults.length; j++) results[i + j] = chunkResults[j];
     }

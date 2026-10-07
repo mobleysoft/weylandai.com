@@ -112,10 +112,10 @@
 
     <!-- ================= Component Match ================= -->
     <div class="card">
-      <h2>Match a Component to a Cut Sheet <span class="tag">real, downloadable</span></h2>
-      <p class="sub">Enter what's on the hardware schedule (manufacturer + model, or a catalog number) and this
-      calls the same matcher (<code>lib/product-database.js</code>) SubX uses internally. A match returns a real
-      cut-sheet document you can download.</p>
+      <h2>Match a Component to Its Cited Page <span class="tag">real, cited</span></h2>
+      <p class="sub">Enter what's on the hardware schedule (manufacturer + model, or a catalog number). This is the
+      same matcher, reading the line the same way, as pasting it on the homepage, so it gives the same answer. A
+      match cites the manufacturer's own page: a price-book cut sheet, or the catalogue page that names the model.</p>
       <div class="row">
         <div class="field">
           <label>Manufacturer</label>
@@ -287,10 +287,13 @@
     // (before the fetch resolves) so browser popup blockers don't treat
     // the later blob navigation as an unsolicited popup.
     function openAuthedPdf(url, btn){
+      // A citation's #page=N fragment is the cited page: fetch without it, then hand it to the viewer.
+      var hash = url.indexOf('#') >= 0 ? url.slice(url.indexOf('#')) : '';
+      var path = url.replace(/#.*$/, '');
       var win = window.open('', '_blank');
       var originalLabel = btn ? btn.textContent : null;
       if (btn) { btn.disabled = true; btn.textContent = 'LOADING…'; }
-      fetch(url, { headers: authHeaders() })
+      fetch(path, { headers: authHeaders() })
         .then(function(r){
           if (!r.ok) return r.json().catch(function(){ return null; }).then(function(data){
             throw new Error('HTTP ' + r.status + ': ' + apiErrorText(data));
@@ -298,7 +301,7 @@
           return r.blob();
         })
         .then(function(blob){
-          var objUrl = URL.createObjectURL(blob);
+          var objUrl = URL.createObjectURL(blob) + hash;
           if (win) win.location = objUrl;
           else window.open(objUrl, '_blank');
         })
@@ -396,12 +399,20 @@
     };
     document.getElementById('price-cancel').onclick=function(){priceEpoch++;if(priceController)priceController.abort();priceIds=[];priceRows.replaceChildren();clearPriceEvidence();document.getElementById('price-extract').disabled=false;priceNotice('Review cancelled. Already staged candidates remain drafts; no prices were affirmed.');document.getElementById('price-url').focus();};
     // ---------------- Component Match ----------------
+    // POST /api/cut-sheets/match reads the line exactly as the homepage paste (match-batch)
+    // does and returns the same per-line answer: one matcher, one answer. A match is cited by
+    // its price-book pages (a filed cut sheet) or, when no cut sheet is filed, by the
+    // catalogue page that names the model. "No match found" means no product matched at all.
+    function citeButton(id, label, url){
+      return url ? '<button class="link-btn" id="' + id + '" data-url="' + esc(url) + '">' + label + '</button>' : '';
+    }
     document.getElementById('match-btn').addEventListener('click', function(){
       var manufacturer = document.getElementById('match-mfr').value.trim();
       var model = document.getElementById('match-model').value.trim();
       var component_type = document.getElementById('match-type').value.trim();
       var box = document.getElementById('match-results');
       if (!model) { box.innerHTML = '<div class="error-box">Enter a model or catalog number.</div>'; return; }
+      var asTyped = (manufacturer ? manufacturer + ' ' : '') + model;
       box.innerHTML = '<div class="loading">Matching against the real product database…</div>';
       fetch('/api/cut-sheets/match', {
         method: 'POST',
@@ -412,29 +423,38 @@
         .then(function(res){
           if (!res.ok) { box.innerHTML = '<div class="error-box">HTTP ' + res.status + ': ' + esc(apiErrorText(res.data)) + '</div>'; return; }
           var result = res.data;
-          if (!result.matched || !result.cutSheets || result.cutSheets.length === 0) {
-            box.innerHTML = '<div class="empty">No match found for "' + esc(manufacturer) + ' ' + esc(model) +
-              '" in the real product database (10,484 real products / 7,792 real documents currently ingested).</div>';
+          if (!result.matched) {
+            box.innerHTML = '<div class="empty">No match found for "' + esc(asTyped) + '". The miss is recorded; recorded misses decide what the catalogue takes in next.</div>';
             return;
           }
           var p = result.product || {};
-          var productLine = '<div class="loading" style="margin-bottom:8px">Matched product: <b style="color:var(--text)">' +
-            esc(p.name || (p.manufacturer + ' ' + p.model)) + '</b> &middot; confidence: ' + esc(result.confidence) +
+          var html = '<div class="loading" style="margin-bottom:8px">Matched product: <b style="color:var(--text)">' +
+            esc(p.name || ((p.manufacturer || '') + ' ' + (p.model || ''))) + '</b> &middot; confidence: ' + esc(result.confidence) +
             ' (' + esc(result.matchType) + ')</div>';
-          var rows = result.cutSheets.map(function(sheet, i){
-            var id = 'dl-btn-' + i;
-            return '<tr><td>' + esc(sheet.title || 'Cut Sheet') + '</td>' +
-              '<td>' + esc(sheet.type || '') + '</td>' +
-              '<td>' + esc(sheet.pages != null ? sheet.pages : '') + '</td>' +
-              '<td><button class="link-btn" id="' + id + '" data-doc="' + esc(sheet.id || '') + '">DOWNLOAD PDF</button></td></tr>';
-          }).join('');
-          box.innerHTML = productLine + '<table><thead><tr><th>Document</th><th>Type</th><th>Pages</th><th></th></tr></thead><tbody>' + rows + '</tbody></table>';
-          result.cutSheets.forEach(function(sheet, i){
-            var docId = sheet.id;
-            var el = document.getElementById('dl-btn-' + i);
-            if (!el) return;
-            if (!docId) { el.disabled = true; el.textContent = 'NO DOC ID'; return; }
-            el.addEventListener('click', function(){ openAuthedPdf('/api/cut-sheets/download/' + encodeURIComponent(docId), el); });
+          var sheets = result.cutSheets || [], pages = result.cataloguePages || [];
+          if (sheets.length) {
+            html += '<table><thead><tr><th>Cited document</th><th>Size</th><th></th></tr></thead><tbody>' + sheets.map(function(sheet, i){
+              var title = String(sheet.title || 'Cut sheet').split(' (')[0];
+              return '<tr><td>' + esc(title) + (sheet.pageHint ? ', pp. ' + esc(sheet.pageHint) : '') + '</td>' +
+                '<td>' + esc(sheet.pages != null ? sheet.pages + '-page price book' : '') + '</td>' +
+                '<td>' + citeButton('cite-open-' + i, 'OPEN AT THE PAGE', sheet.pageUrl) + ' ' +
+                (sheet.id ? '<button class="link-btn" data-doc="' + esc(sheet.id) + '">DOWNLOAD PDF</button>' : '') + '</td></tr>';
+            }).join('') + '</tbody></table>';
+          } else if (pages.length) {
+            html += '<div class="loading">No standalone cut sheet is filed for this model. Cited by the catalogue pages that name it:</div>' +
+              '<table><thead><tr><th>Catalogue</th><th>Page</th><th></th></tr></thead><tbody>' + pages.map(function(c, i){
+                return '<tr><td>' + esc(c.title) + '</td><td>p. ' + esc(c.pageNum) + '</td><td>' +
+                  (c.pageUrl ? citeButton('cite-page-' + i, 'OPEN PAGE', c.pageUrl) : '<span class="pill">PDF NOT ON FILE; PAGE TEXT INDEXED</span>') + '</td></tr>';
+              }).join('') + '</tbody></table>';
+          } else {
+            html += '<div class="empty">Matched in the catalogue. No cut sheet or catalogue page is filed for this model yet.</div>';
+          }
+          box.innerHTML = html;
+          Array.prototype.forEach.call(box.querySelectorAll('button[data-url]'), function(el){
+            el.addEventListener('click', function(){ openAuthedPdf(el.getAttribute('data-url'), el); });
+          });
+          Array.prototype.forEach.call(box.querySelectorAll('button[data-doc]'), function(el){
+            el.addEventListener('click', function(){ openAuthedPdf('/api/cut-sheets/download/' + encodeURIComponent(el.getAttribute('data-doc')), el); });
           });
         })
         .catch(function(err){ box.innerHTML = '<div class="error-box">Request failed: ' + esc(err.message) + '</div>'; });
