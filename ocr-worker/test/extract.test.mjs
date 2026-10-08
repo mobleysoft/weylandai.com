@@ -80,6 +80,8 @@ test('FCMAT inspection: letter pages from the text layer, scanned FIT pages OCR\
     console.log('  fcmat p' + p.page, p.render, 'rotation', p.rotation_applied, p.orientation || '', JSON.stringify(p.text.slice(0, 160)));
     assert.ok(p.render.width * p.render.height <= DEFAULT_MAX_RENDER_PIXELS);
     assert.ok(/inspection|deficien|facility|school/i.test(p.text), 'page ' + p.page + ' OCR text does not read as the FIT form');
+    assert.ok(p.word_confidence > 0.8, 'word confidence ' + p.word_confidence);
+    assert.equal(p.rotation_applied, 0);
   }
   console.log('  fcmat 4 pages (2 OCR) in', ms, 'ms');
   const r2 = await run(FCMAT, { 'X-Start-Page': '5', 'X-Total-Pages': '5', 'X-Max-Ocr-Pages': '2' });

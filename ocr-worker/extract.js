@@ -31,13 +31,18 @@
 //      BGRA): letter pages at 150 dpi (2.1 MP) render exactly as before; a
 //      36x24 sheet is scaled down to about 76 dpi instead of crashing.
 //   3. BGRA to RGBA in place. No second page-sized buffer.
-//   4. Orientation guard. A suggested turn is committed only when the OCR word
-//      confidence of a middle band is clearly better turned (the same check
-//      renderAndExtractTableRegion got on 2026-09-17, commit 768e928).
+//   4. Orientation guard. The page is recognised upright first; only when the
+//      mean word confidence is low (under 0.6) is getOrientation() consulted,
+//      and its turn is kept only if the turned page reads clearly better.
+//      getOrientation() alone said "90 degrees, confidence 1.0" for an upright
+//      FIT page at 120 dpi (measured 2026-10-08), which is the class of error
+//      that flipped DrawX's pages.
 //   5. Page windows. At most maxOcrPages pages are OCR'd per request
-//      (default 4, about 3 to 6 CPU-seconds each on a letter scan); the reply
-//      says where it stopped (endPage, hasMore, nextPage) so the caller runs
-//      the rest as further requests, on its own D1 job lease.
+//      (default 1: a dense landscape scan costs the Worker 10 to 12 s of
+//      CPU, measured live 07:05 EDT 2026-10-08; two pages took 24.5 s and four
+//      died at 38.7 s); the reply says where it stopped (endPage, hasMore,
+//      nextPage) so the caller runs the rest as further requests on its own
+//      D1 job lease.
 //   6. Sequential diff. /diff-pages renders the original, reduces it to a
 //      small thumbnail, frees it, then renders the revision; the two pages
 //      are never in memory together and are rendered under a 2 MP budget.
@@ -48,8 +53,9 @@ export const MAX_RENDER_PIXELS_CEILING = 8000000;
 export const MIN_RENDER_PIXELS = 250000;
 export const DIFF_MAX_RENDER_PIXELS = 2000000;
 export const TEXT_LAYER_MIN_CHARS = 40;
-export const DEFAULT_MAX_OCR_PAGES = 4;
-export const MAX_OCR_PAGES_CEILING = 8;
+export const DEFAULT_MAX_OCR_PAGES = 1;
+export const MAX_OCR_PAGES_CEILING = 2;
+export const LOW_WORD_CONFIDENCE = 0.6;
 export const DIFF_GRID_COLS = 24;
 export const DIFF_GRID_ROWS = 32;
 export const DIFF_SUBSAMPLES = 8;
@@ -131,43 +137,49 @@ export function hasTextLayer(text, minChars = TEXT_LAYER_MIN_CHARS) {
   return text.replace(/\s+/g, '').length >= minChars;
 }
 
+function recognise(ocrEngine, image) {
+  ocrEngine.clearImage();
+  ocrEngine.loadImage(image);
+  ocrEngine.setVariable('tessedit_pageseg_mode', '3');
+  const text = (ocrEngine.getText() || '').trim();
+  // getTextBoxes() after getText() reuses the recognition (65 ms measured).
+  const words = ocrEngine.getTextBoxes('word');
+  const confidence = words.length ? words.reduce((s, w) => s + w.confidence, 0) / words.length : 0;
+  return { text, words: words.length, confidence };
+}
+
 /**
- * Loads the page into the engine in the orientation that OCRs best. A turn
- * suggested by getOrientation() is applied only when the middle band of the
- * turned page reads with clearly higher word confidence than the upright one.
- * The upright page is already loaded in the engine when this returns.
+ * Full-page OCR with the orientation guard: recognise upright; if the mean
+ * word confidence is low and getOrientation() suggests a turn, recognise the
+ * turned page too and keep whichever reads clearly better.
  */
-export function orientedForOcr(ocrEngine, pageImage, rotate90CW) {
-  ocrEngine.clearImage();
-  ocrEngine.loadImage(pageImage);
+export function ocrPage(ocrEngine, pageImage, rotate90CW) {
+  const upright = recognise(ocrEngine, pageImage);
+  const result = { text: upright.text, rotation: 0, wordConfidence: upright.confidence, words: upright.words, checked: false };
+  if (upright.confidence >= LOW_WORD_CONFIDENCE) {
+    ocrEngine.clearImage();
+    return result;
+  }
   const orientation = ocrEngine.getOrientation() || { rotation: 0, confidence: 0 };
-  const suggested = Number(orientation.rotation) || 0;
-  if (suggested === 0 || !(orientation.confidence > 0.5)) {
-    return { image: pageImage, rotation: 0, checked: false, suggested, confidence: orientation.confidence };
-  }
-  const turns = ((Math.round(suggested / 90) % 4) + 4) % 4;
-  const upright = meanWordConfidence(ocrEngine, cropBand(pageImage, 0.3, 0.7));
-  // Candidates: the suggested turn and, for a quarter turn, its opposite.
-  const candidates = turns === 2 ? [2] : [turns, (4 - turns) % 4];
-  let best = { turns: 0, confidence: upright, image: pageImage };
-  for (const t of candidates) {
-    if (t === 0) continue;
-    let rotated = pageImage;
-    for (let k = 0; k < t; k++) rotated = rotate90CW(rotated);
-    const conf = meanWordConfidence(ocrEngine, cropBand(rotated, 0.3, 0.7));
-    if (conf > best.confidence + 0.1) best = { turns: t, confidence: conf, image: rotated };
-  }
   ocrEngine.clearImage();
-  ocrEngine.loadImage(best.image);
-  return {
-    image: best.image,
-    rotation: best.turns * 90,
-    checked: true,
-    suggested,
-    confidence: orientation.confidence,
-    uprightWordConfidence: Math.round(upright * 1000) / 1000,
-    bestWordConfidence: Math.round(best.confidence * 1000) / 1000,
-  };
+  const suggested = Number(orientation.rotation) || 0;
+  const turns = ((Math.round(suggested / 90) % 4) + 4) % 4;
+  result.checked = true;
+  result.suggested = suggested;
+  result.suggestedConfidence = orientation.confidence;
+  if (turns === 0 || !(orientation.confidence > 0.5)) return result;
+  let rotated = pageImage;
+  for (let k = 0; k < turns; k++) rotated = rotate90CW(rotated);
+  const turned = recognise(ocrEngine, rotated);
+  ocrEngine.clearImage();
+  result.turnedWordConfidence = turned.confidence;
+  if (turned.confidence > upright.confidence + 0.1) {
+    result.text = turned.text;
+    result.rotation = turns * 90;
+    result.wordConfidence = turned.confidence;
+    result.words = turned.words;
+  }
+  return result;
 }
 
 /**
@@ -204,23 +216,21 @@ export async function extractPages({ library, ocrEngine, rotate90CW, pdfBuffer, 
       if (ocrPages >= maxOcrPages) break;
       ocrPages++;
       const image = await renderPageRgba(page, { maxPixels });
-      const oriented = orientedForOcr(ocrEngine, image, rotate90CW);
-      ocrEngine.setVariable('tessedit_pageseg_mode', '3');
-      const text = ocrEngine.getText();
-      ocrEngine.clearImage();
+      const ocr = ocrPage(ocrEngine, image, rotate90CW);
       const entry = {
         page: i + 1,
-        text: (text || '').trim(),
+        text: ocr.text,
         source: 'ocr',
-        rotation_applied: oriented.rotation,
+        rotation_applied: ocr.rotation,
+        word_confidence: Math.round(ocr.wordConfidence * 1000) / 1000,
+        words: ocr.words,
         render: { width: image.width, height: image.height, dpi: image.dpi },
       };
-      if (oriented.checked) {
+      if (ocr.checked) {
         entry.orientation = {
-          suggested: oriented.suggested,
-          confidence: oriented.confidence,
-          upright_word_confidence: oriented.uprightWordConfidence,
-          best_word_confidence: oriented.bestWordConfidence,
+          suggested: ocr.suggested,
+          confidence: ocr.suggestedConfidence,
+          turned_word_confidence: ocr.turnedWordConfidence === undefined ? null : Math.round(ocr.turnedWordConfidence * 1000) / 1000,
         };
       }
       pages.push(entry);
