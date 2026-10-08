@@ -88,7 +88,7 @@ import { registerLoginPageRoutes } from "./routes/login-page.js";
 import { registerAuthSessionRoutes } from "./routes/auth-session.js";
 import { registerBillingRoutes } from "./routes/billing.js";
 import { registerSubscriptionRoutes } from "./routes/subscription.js";
-import { registerWebhooksSubscriptionRoutes } from "./routes/webhooks-subscription.js";
+import { registerWebhooksSubscriptionRoutes, sweepRecentCheckouts } from "./routes/webhooks-subscription.js";
 import { registerDemoRoutes } from "./routes/demo.js";
 import { registerPlanRoutes } from "./routes/plan.js";
 import { getCatalog } from "./lib/catalog.js";
@@ -162,6 +162,9 @@ async function handle(request, env, ctx) {
   // Entitlements (2026-10-07): ended trials drop to the free plan, every
   // account keeps the guest floor - for accounts that do not visit a
   // platform route themselves in the meantime (lib/entitlements.js).
+  // Checkout reconciliation (2026-10-08): completed weylandai checkouts no
+  // webhook delivery has granted are granted from Stripe's own record.
+  trafficDrivenJob(env, ctx, { db: env.DB, job: "checkout-reconcile", cadenceSeconds: 300, worker: "weyland-platform-worker", run: () => sweepRecentCheckouts(env, WEYLAND_PRODUCTS).then((r) => console.log("[reconcile] sweep", JSON.stringify(r))) });
   trafficDrivenJob(env, ctx, { db: env.DB, job: "entitlements-sync", cadenceSeconds: 600, worker: "weyland-platform-worker", run: () => sweepEntitlements(env).then((r) => console.log("[entitlements] sweep", r.scanned, "scanned", r.changed, "changed")) });
   const url = new URL(request.url);
 

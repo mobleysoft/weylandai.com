@@ -40,6 +40,7 @@ import { isOfferProduct, OFFER_ACCESS_DAYS } from "../lib/stripe-billing.js";
 import { getPurchase, purchasesForUser, maskEmail, PURCHASE_KINDS } from "../lib/purchases-store.js";
 import { claimHeldPurchases, claimIdsFromRequest, claimCookie } from "../lib/grants.js";
 import { termsUrls } from "../lib/legal.js";
+import { reconcileCheckout } from "./webhooks-subscription.js";
 
 // The account behind the request, if any: its email goes to Stripe and its id
 // to client_reference_id, so the purchase lands on the same users row.
@@ -303,7 +304,25 @@ export function registerBillingRoutes(router, { WEYLAND_PRODUCTS, CHECKOUT_READY
               : null;
         }
       }
-      if (!parsed) return jsonResponse3({ status: "pending" });
+      if (!parsed) {
+        // No webhook delivery yet: ask Stripe itself, and grant a completed
+        // checkout the same way the webhook would (webhooks-subscription.js).
+        try {
+          const r = await reconcileCheckout(env2, sessionId, WEYLAND_PRODUCTS);
+          if (!r.ignored) {
+            const cached = env2.CACHE ? await env2.CACHE.get(`checkout_status:${sessionId}`) : null;
+            if (cached) { try { parsed = JSON.parse(cached); } catch { parsed = null; } }
+            if (!parsed) {
+              purchase = await getPurchase(env2.DB, sessionId).catch(() => null);
+              if (purchase && purchase.status === "granted") parsed = { status: "active", quantity: purchase.quantity, product_id: purchase.product_id, session_id: null, access_ends_at: purchase.access_ends_at };
+              else if (purchase && purchase.status === "held") parsed = { status: "held", quantity: purchase.quantity, product_id: purchase.product_id, email_hint: maskEmail(purchase.email) };
+            }
+          }
+        } catch (e) {
+          console.error("[Billing] reconcile " + sessionId + ": " + e.message);
+        }
+        if (!parsed) return jsonResponse3({ status: "pending" });
+      }
 
       if (parsed.status === "held") {
         // Already signed in here as the account with that email: this is the

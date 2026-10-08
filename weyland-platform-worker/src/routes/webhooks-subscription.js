@@ -54,6 +54,7 @@ import {
 } from "../lib/subscriptions-store.js";
 import { recordPurchase, markGranted, maskEmail, HELD_USER_PREFIX, PURCHASE_KINDS } from "../lib/purchases-store.js";
 import { grantPurchase } from "../lib/grants.js";
+import { stripeApi } from "../lib/stripe-api.js";
 
 export const VENTURE_ID = "weylandai";
 export const LIFECYCLE_EVENTS = new Set([
@@ -420,4 +421,66 @@ async function applyLifecycle(env2, event, obj) {
   if (!up.applied) return { ignored: up.reason, entitlements: res.reason };
   console.log(`[Webhook] ${eventType}: subscription ${facts.subscription_id} -> ${up.row.status}; account ${userId} ${res.reason}${renewal ? ", new usage period" : ""}`);
   return { applied: true, subscription_status: up.row.status, entitlements: res.reason, renewal };
+}
+
+// ---------------------------------------------------------------------------
+// Reconciliation (2026-10-08). A live $0 QA purchase (100% coupon, owner-approved)
+// completed in Stripe and was never granted: neither vendyai's forward nor the
+// direct Stripe endpoint reached this route with a valid delivery. A buyer must
+// not depend on a webhook alone, so a completion is also read straight from
+// Stripe with this worker's own key and run through the same dedupe and
+// provisionCheckout as the webhook ("checkout:<id>" makes whichever comes first
+// the only one): when the paying browser polls its status (billing.js), and by
+// a sweep of the last three days of completed checkouts (index.js).
+
+async function processCompletion(env2, event, obj, WEYLAND_PRODUCTS) {
+  if (obj.metadata?.venture_id !== VENTURE_ID) return { ignored: "other_venture" };
+  if (obj.mode !== "subscription" && obj.mode !== "payment") return { ignored: "not_a_purchase" };
+  if (obj.status && obj.status !== "complete") return { ignored: "not_complete" };
+  const key = "checkout:" + obj.id;
+  const r = await env2.DB.prepare("INSERT OR IGNORE INTO processed_webhook_events (event_id, event_type) VALUES (?, ?)").bind(key, COMPLETED).run();
+  if (!r?.meta?.changes) return { duplicate: true };
+  try {
+    const result = await provisionCheckout(env2, event, obj, WEYLAND_PRODUCTS);
+    if (result.ignored) await forgetKeys(env2, [key]);
+    return result;
+  } catch (err) {
+    await forgetKeys(env2, [key]);
+    throw err;
+  }
+}
+
+/** Grant one checkout from Stripe's own record of it. stripe is injectable for tests. */
+export async function reconcileCheckout(env2, sessionId, WEYLAND_PRODUCTS, stripe = stripeApi) {
+  const s = await stripe(env2, "GET", `/checkout/sessions/${sessionId}`);
+  if (!s || s.status !== "complete") return { ignored: "not_complete" };
+  const event = { id: null, type: COMPLETED, created: s.created, data: { object: s } };
+  const result = await processCompletion(env2, event, s, WEYLAND_PRODUCTS);
+  if (!result.duplicate && !result.ignored) console.log(`[Reconcile] ${sessionId} granted from Stripe's record (no webhook had arrived)`);
+  return result;
+}
+
+/** Completed weylandai checkouts of the last `days` that no delivery has processed. */
+export async function sweepRecentCheckouts(env2, WEYLAND_PRODUCTS, { days = 3, stripe = stripeApi, nowMs = Date.now() } = {}) {
+  const since = Math.floor(nowMs / 1000) - days * 86400;
+  const out = { scanned: 0, granted: 0, errors: [] };
+  let after = null;
+  for (let page = 0; page < 10; page++) {
+    const q = `/checkout/sessions?limit=100&status=complete&created[gte]=${since}` + (after ? `&starting_after=${after}` : "");
+    const list = await stripe(env2, "GET", q);
+    const data = (list && list.data) || [];
+    for (const s of data) {
+      if (s.metadata?.venture_id !== VENTURE_ID) continue;
+      out.scanned++;
+      const seen = await env2.DB.prepare("SELECT 1 AS x FROM processed_webhook_events WHERE event_id = ?").bind("checkout:" + s.id).first();
+      if (seen) continue;
+      try {
+        const r = await processCompletion(env2, { id: null, type: COMPLETED, created: s.created, data: { object: s } }, s, WEYLAND_PRODUCTS);
+        if (!r.duplicate && !r.ignored) out.granted++;
+      } catch (e) { out.errors.push(s.id + ": " + e.message); }
+    }
+    if (!list || !list.has_more || !data.length) break;
+    after = data[data.length - 1].id;
+  }
+  return out;
 }
