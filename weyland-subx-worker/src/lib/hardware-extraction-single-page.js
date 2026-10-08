@@ -66,17 +66,21 @@ async function resolvePageScheduleType(sessionId, pageNumber, session, env2) {
   return { scheduleType: (session && session.document_type) || "hardware_schedule", source: "session_document_type" };
 }
 
-async function extractWithEmbeddedGofaineatMode(pdfBuffer, pageNumber, env2, sessionId, startRow = 0) {
+async function extractWithEmbeddedGofaineatMode(pdfBuffer, pageNumber, env2, sessionId, startRow = 0, opts = {}) {
   const totalPages = (await PDFDocument.load(pdfBuffer)).getPageCount();
   if (pageNumber < 1 || pageNumber > totalPages) {
     throw new Error(`Page ${pageNumber} out of range (PDF has ${totalPages} pages)`);
   }
   if (sessionId) {
     const session = await getSessionStatus(sessionId, env2);
-    const { scheduleType, source } = await resolvePageScheduleType(sessionId, pageNumber, session, env2);
+    // 2026-10-08: the caller may say what this page is (the page finder found
+    // a bid set's door schedule on p.29 and its hardware groups on pp.17-23,
+    // in one session); otherwise the session's type decides, as before.
+    const explicit = opts.scheduleType === "door_schedule" || opts.scheduleType === "hardware_schedule";
+    const { scheduleType, source } = explicit ? { scheduleType: opts.scheduleType, source: "requested" } : await resolvePageScheduleType(sessionId, pageNumber, session, env2);
     const tenantId = session && session.tenant_id;
     console.log(`[Hardware Extractor] Using EMBEDDED_GOFAINEAT mode (schedule_type=${scheduleType}, source=${source}, startRow=${startRow}) for page ${pageNumber}/${totalPages}...`);
-    return await runEmbeddedGofaineatExtraction(scheduleType, sessionId, tenantId, pdfBuffer, null, pageNumber, totalPages, env2, startRow);
+    return await runEmbeddedGofaineatExtraction(scheduleType, sessionId, tenantId, pdfBuffer, null, pageNumber, totalPages, env2, startRow, { explicit });
   }
   // No sessionId available (a caller outside the session-based page route) -
   // fall back to the original hardware-groups-only behavior rather than
@@ -85,12 +89,12 @@ async function extractWithEmbeddedGofaineatMode(pdfBuffer, pageNumber, env2, ses
   return await extractHardwareGroupsViaEmbeddedGofaineat(pdfBuffer, pageNumber, totalPages, env2);
 }
 
-export async function extractSinglePage(pdfBuffer, pageNumber, env2, sessionId, startRow = 0) {
+export async function extractSinglePage(pdfBuffer, pageNumber, env2, sessionId, startRow = 0, opts = {}) {
   console.log(`[Hardware Extractor] EXTRACTING PAGE ${pageNumber}`);
   // 2026-10-05: the only extraction route. The former Claude-vision tiers
   // (isolated-PDF, direct-PDF) were removed together with the Anthropic
   // adapters; nothing here reaches outside the conglomerate.
-  return await extractWithEmbeddedGofaineatMode(pdfBuffer.slice(0), pageNumber, env2, sessionId, startRow);
+  return await extractWithEmbeddedGofaineatMode(pdfBuffer.slice(0), pageNumber, env2, sessionId, startRow, opts);
 }
 
 export async function detectTextLayer2(pdfBuffer) {

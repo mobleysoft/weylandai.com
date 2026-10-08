@@ -146,7 +146,7 @@ async function upload(acct, doc) {
 
 // ---------------------------------------------------------------- scoring
 const up = (s) => String(s == null ? "" : s).trim().toUpperCase();
-const normMark = (s) => up(s).replace(/\s+/g, "");
+const normMark = (s) => up(s).replace(/\s*\[P\.\d+\]\s*$/, "").replace(/\s+/g, "");
 const normGroup = (s) => up(s).replace(/[\s_]+/g, " ").replace(/^0+(?=\d)/, "").trim();
 const normFire = (s) => up(s).replace(/[.,;:\s]+/g, "").replace(/MINUTES?$|MINS?$/, "MIN");
 const normText = (s) => up(s).replace(/[^A-Z0-9]+/g, " ").trim();
@@ -313,7 +313,21 @@ try {
         error: fp.ok ? null : JSON.stringify(d).slice(0, 200) };
     }
     const reads = [...wantDoorPages.map((p) => ({ page: p, type: "door_schedule" })), ...wantHwPages.map((p) => ({ page: p, type: "hardware_schedule" }))];
-    for (const rd of reads) {
+    // One runner session for the whole list (POST read-pages); page by page when the server
+    // has no such route yet.
+    const batch = await api(acct, "/api/hardware-schedule/session/" + s.id + "/read-pages", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ pages: reads }) });
+    if (batch.status !== 404 && batch.status !== 405) {
+      entry.read_route = "read-pages";
+      const results = (batch.data && batch.data.results) || [];
+      for (const rd of reads) {
+        const r = results.find((x) => x.page === rd.page);
+        entry.reads.push({ page: rd.page, type: rd.type, status: batch.ok ? (r && r.ok ? 200 : 422) : batch.status, ms: r ? r.ms : batch.ms, ok: !!(batch.ok && r && r.ok),
+          found: r && r.ok ? (r.type === "door_schedule" ? r.doors + " doors" : r.groups + " groups") : null, route: r && r.metadata ? r.metadata.extraction_mode : null,
+          error: batch.ok ? (r ? r.error || null : "no result for this page") : JSON.stringify(batch.data).slice(0, 200) });
+        process.stdout.write(doc.id + " p" + rd.page + " " + (r && r.ok ? "ok" : "fail") + " " + (r ? r.ms : batch.ms) + "ms\n");
+      }
+      entry.batch_ms = batch.ms;
+    } else for (const rd of reads) {
       const r = await api(acct, "/api/hardware-schedule/session/" + s.id + "/page/" + rd.page + "?type=" + rd.type);
       const d = r.data || {};
       const inner = d.data || {};

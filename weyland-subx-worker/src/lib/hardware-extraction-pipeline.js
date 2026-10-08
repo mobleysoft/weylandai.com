@@ -416,7 +416,7 @@ export async function queuePageExtractionJob(imageBase64, env2, opts = {}) {
 // an R2 stream URL was generated (batch-extract's own >20MB fallback) - in
 // that real case this fetches the stream URL directly to get real bytes,
 // since the OCR step needs actual PDF bytes, not a stream reference.
-export async function runEmbeddedGofaineatExtraction(scheduleType, sessionId, tenantId, pdfBuffer, pdfStreamUrl, pageNumber, totalPages, env2, startRow = 0) {
+export async function runEmbeddedGofaineatExtraction(scheduleType, sessionId, tenantId, pdfBuffer, pdfStreamUrl, pageNumber, totalPages, env2, startRow = 0, opts = {}) {
   let buf = pdfBuffer;
   if (!buf && pdfStreamUrl) {
     try {
@@ -445,7 +445,7 @@ export async function runEmbeddedGofaineatExtraction(scheduleType, sessionId, te
     const other = scheduleType === "door_schedule" ? "hardware_schedule" : "door_schedule";
     const br = await runGridInBrowser(env2, buf, pageNumber, scheduleType, { alsoTry: other });
     if (br.ok) {
-      return await persistBrowserGridResult(br, scheduleType, sessionId, tenantId, pageNumber, totalPages, env2);
+      return await persistBrowserGridResult(br, scheduleType, sessionId, tenantId, pageNumber, totalPages, env2, { explicit: !!opts.explicit });
     }
     browserProblem = br.error + (br.detail ? ": " + br.detail : "");
     console.warn("[Embedded Router] Browser grid runner unavailable for " + sessionId + " p" + pageNumber + " (" + browserProblem + ") - falling back to weyland-ocr-worker");
@@ -538,21 +538,27 @@ function ocrWorkerFailureText(e) {
 // writeDoorScheduleEntries (door_schedule_entries upsert), hardware groups
 // returned for the page route's savePageExtraction2. Re-types the session
 // when the page turned out to be the other schedule type.
-async function persistBrowserGridResult(br, requestedType, sessionId, tenantId, pageNumber, totalPages, env2) {
+export async function persistBrowserGridResult(br, requestedType, sessionId, tenantId, pageNumber, totalPages, env2, opts = {}) {
   const actualType = br.schedule_type || requestedType;
   const result = br.result || {};
   const md = { ...(result.metadata || {}), browser_ms: br.ms };
   if (br.empty) {
-    const tried = (br.tried || [requestedType]).map((t) => t.replace("_", " ")).join(" or ");
+    const tried = (br.tried || [requestedType]).map((t) => t.replace("_", " ")).join(" or a ");
+    const hasText = md.text_words > 0 || md.extraction_mode === "text_layer";
     return {
       success: false,
       error: "no_schedule_table_found",
-      detail: "No " + tried + " table was found on page " + pageNumber + " (the page was read as shown and turned 90, 180 and 270 degrees). Check that this page holds the schedule itself, ruled into rows and columns.",
+      // Plain words, for the workspace to show as they are (2026-10-08).
+      detail: "Nothing on page " + pageNumber + " reads as a " + tried + ". " +
+        (hasText ? "Its text was read as printed" : "It has no text layer, so it was read as an image, as shown and turned 90, 180 and 270 degrees") +
+        ". A door schedule is a table with a header (door numbers, sizes, hardware sets); hardware groups are the Section 08 71 00 lists (Hardware Group No., then QTY, DESCRIPTION, CATALOG NUMBER, FINISH, MFR). Pick the page that holds them: after an upload the workspace lists the pages it found.",
       entries: [], entry_count: 0, hardware_groups: [], door_hardware_matrix: [],
       schedule_type: requestedType, metadata: md,
     };
   }
-  if (actualType !== requestedType && sessionId) {
+  // The session keeps its type when the caller named this page's type: a bid
+  // set holds both kinds in one session.
+  if (actualType !== requestedType && sessionId && !opts.explicit) {
     try {
       await env2.DB.prepare("UPDATE hardware_extraction_sessions SET document_type = ?, updated_at = ? WHERE id = ?")
         .bind(actualType, new Date().toISOString(), sessionId).run();
