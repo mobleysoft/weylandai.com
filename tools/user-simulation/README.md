@@ -187,10 +187,10 @@ node tools/user-simulation/run-journeys.mjs --passes 1 --only subx-upload-to-sub
 ```
 
 It writes `reports/matrix-<stamp>/` (one log per run, `results.jsonl` as it goes, `summary.json`).
-A full three-pass run took about 36 minutes before the sign-in, account and offer journeys were
-added on 2026-10-07, and opens 45 live Stripe Checkout Sessions (15 per pass: pricing-to-checkout 9,
-offer-to-payment-form 3, account-plan, wirex-news and phone-key-journeys 1 each), each stopped at
-the loaded form and left to expire.
+A full three-pass run took about 36 minutes with the first 19 journeys and about 50 minutes with
+all 23 (2026-10-07 evening). It opens 48 live Stripe Checkout Sessions (16 per pass: pricing-to-checkout 9,
+offer-to-payment-form 3, wirex-news 2, account-plan and phone-key-journeys 1 each), each stopped
+at the loaded form and left to expire.
 
 | Script | Journey |
 |---|---|
