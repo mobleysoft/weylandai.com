@@ -23,8 +23,16 @@ database_id = "5729f77e-d7e3-4577-ab43-3c064fa90ca5"
 pattern = "weylandai.com/api/forms/*"
 zone_name = "weylandai.com"
 
+[[r2_buckets]]
+binding = "UPLOADS"
+bucket_name = "subx-uploads"
+
 [[routes]]
 pattern = "weylandai.com/lienx*"
+zone_name = "weylandai.com"
+
+[[routes]]
+pattern = "weylandai.com/closex*"
 zone_name = "weylandai.com"
 
 [[rules]]

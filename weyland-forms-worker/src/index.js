@@ -8,6 +8,9 @@ import { NativeRouter } from "./lib/router.js";
 import { authenticate } from "./lib/auth.js";
 import { jsonResponse3 } from "./lib/json-response.js";
 import { registerLienxRoutes } from "./routes/lienx.js";
+import { registerClosexRoutes } from "./routes/closex.js";
+import { PDFDocument } from "pdf-lib";
+import closexHtml from "./pages/closex.html";
 import lienxHtml from "./pages/lienx.html";
 import { secured } from "../../weyland-shared/security-headers.js";
 
@@ -15,9 +18,10 @@ const router = new NativeRouter();
 router.get("/health", () => jsonResponse3({ ok: true, worker: "weyland-forms-worker" }));
 
 const page = (html) => () => new Response(html, { headers: { "Content-Type": "text/html; charset=UTF-8", "Cache-Control": "no-store" } });
-for (const p of ["/lienx", "/lienx/"]) { router.get(p, page(lienxHtml)); router.addRoute("HEAD", p, page(lienxHtml)); }
+for (const [paths, html] of [[["/lienx", "/lienx/"], lienxHtml], [["/closex", "/closex/"], closexHtml]]) for (const p of paths) { router.get(p, page(html)); router.addRoute("HEAD", p, page(html)); }
 
 registerLienxRoutes(router, { authenticate });
+registerClosexRoutes(router, { authenticate, PDFDocument });
 
 export default secured({
   async fetch(request, env, ctx) {

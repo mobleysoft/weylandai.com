@@ -153,7 +153,7 @@ export function table(w, columns, rows, { size = 9.5 } = {}) {
   const xs = []; let acc = M;
   for (const c of columns) { xs.push(acc); acc += c.width * width; }
   const head = () => {
-    need(w, size + 14);
+    need(w, 2 * size + 26); // the head with at least its first row
     columns.forEach((c, i) => drawLine(w, c.head, { font: w.fonts.sansBold, size: size - 0.5, x: xs[i] + 2 }));
     w.page.drawLine({ start: { x: M, y: w.y - 4 }, end: { x: M + width, y: w.y - 4 }, thickness: 0.8, color: rgb(0.3, 0.3, 0.3) });
     w.y -= size + 8;
@@ -171,7 +171,9 @@ export function table(w, columns, rows, { size = 9.5 } = {}) {
       });
     });
     w.y -= h;
-    w.page.drawLine({ start: { x: M, y: w.y + 3 }, end: { x: M + width, y: w.y + 3 }, thickness: 0.3, color: rgb(0.8, 0.8, 0.8) });
+    // The rule sits in the gap: under the row's descenders, above the next row's capitals.
+    const ruleY = w.y + (0.72 * size + h - 0.22 * size) / 2;
+    w.page.drawLine({ start: { x: M, y: ruleY }, end: { x: M + width, y: ruleY }, thickness: 0.3, color: rgb(0.8, 0.8, 0.8) });
   }
   w.y -= 8;
 }
