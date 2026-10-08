@@ -22,6 +22,8 @@ import puppeteer from "@cloudflare/puppeteer";
 import { secured } from "../../weyland-shared/security-headers.js";
 import { registerDocsRoutes, sweepJobs } from "./routes/docs.js";
 import { toolPageHtml, PAGE_SLUGS } from "./pages/tool-page.js";
+import { registerSafetyLogRoutes } from "./routes/safety-log.js";
+import { safetyLogHtml } from "./pages/safety-log-page.js";
 
 const router = new NativeRouter();
 
@@ -32,6 +34,12 @@ for (const slug of PAGE_SLUGS) {
   router.get("/" + slug, serve);
   router.get("/" + slug + "/", serve);
 }
+
+// SafetyX's log: the account's findings, corrective actions and OSHA 300 log.
+const serveLog = () => new Response(safetyLogHtml(), { headers: { "Content-Type": "text/html; charset=UTF-8", "Cache-Control": "no-store" } });
+router.get("/safetyx/log", serveLog);
+router.get("/safetyx/log/", serveLog);
+registerSafetyLogRoutes(router, { authenticate, puppeteer });
 
 registerDocsRoutes(router, { authenticate, requireProductAccess, puppeteer });
 

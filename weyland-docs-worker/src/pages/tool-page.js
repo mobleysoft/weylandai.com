@@ -13,9 +13,10 @@ export const PAGES = {
     caveat: "Flagging is by word list (leaking, broken, not working, out of service, cracks, damaged, deficiency ...), not an AI reading for meaning. Review the source document for anything it might miss.",
     fields: [["projectName", "PROJECT NAME", "text", ""], ["inspectionType", "INSPECTION TYPE", "text", "e.g. Fire/Life Safety"], ["inspectorName", "INSPECTOR", "text", ""], ["inspectionDate", "INSPECTION DATE", "date", ""]],
     files: [["file", "INSPECTION REPORT (PDF)"]], stats: [["pageCount", "PAGES"], ["passCount", "PASS LINES"], ["failCount", "FLAGGED"]], list: "flagged" },
-  safetyx: { api: "safety-reports", mark: "SX", name: "SafetyX", eyebrow: "SAFETY REPORT PROCESSOR", price: "$199/mo",
-    blurb: "Upload a safety report, incident narrative or daily log PDF. Lines that describe an incident, a hazard, a fall, or protection that was not used are listed with their page.",
-    caveat: "Flagging is by word list (incident, injury, hazard, fell, fall protection, not used, died, struck by ...), not an AI reading for meaning. Review the source document for anything it might miss.",
+  safetyx: { api: "safety-reports", mark: "SX", name: "SafetyX", eyebrow: "SAFETY REPORT PROCESSOR", price: "$149/mo",
+    blurb: "Upload a safety report, incident narrative or daily log PDF. Lines that describe an incident, an injury, a hazard, or protection that was not used are listed with their page, sorted by OSHA hazard (falls, struck-by, caught-in, electrocution first) with a 29 CFR 1904 recording hint for injuries.",
+    caveat: "Flagging is by word list (incident, injury, hazard, fell, fall protection, not used, struck by, cut, strained, first aid ...), not an AI reading for meaning. Each finding is sorted by OSHA hazard with the standard to check, and lands in your safety log with corrective actions and the OSHA 300 log.",
+    extra: '<a class="button" href="/safetyx/log" style="margin-top:14px;margin-left:8px">OPEN YOUR SAFETY LOG</a>',
     fields: [["projectName", "PROJECT NAME", "text", ""], ["reportType", "REPORT TYPE", "text", "e.g. Incident, Daily Log"], ["reportedBy", "REPORTED BY", "text", ""], ["reportDate", "REPORT DATE", "date", ""]],
     files: [["file", "SAFETY REPORT (PDF)"]], stats: [["pageCount", "PAGES"], ["incidentCount", "FLAGGED"], ["clearCount", "CLEAR LINES"]], list: "flagged" },
   survx: { api: "survey-reports", mark: "VX", name: "SurvX", eyebrow: "SITE SURVEY DATA PROCESSOR", price: "$199/mo",
@@ -41,11 +42,11 @@ export const PAGES = {
 };
 export const PAGE_SLUGS = Object.keys(PAGES);
 
-const NAV = [["/", "HOME"], ["/inspecx", "INSPECX"], ["/safetyx", "SAFETYX"], ["/survx", "SURVX"], ["/specx", "SPECX"], ["/drawx", "DRAWX"], ["/asbuiltx", "ASBUILTX"], ["/pricing", "PRICING"]];
+export const NAV = [["/", "HOME"], ["/inspecx", "INSPECX"], ["/safetyx", "SAFETYX"], ["/survx", "SURVX"], ["/specx", "SPECX"], ["/drawx", "DRAWX"], ["/asbuiltx", "ASBUILTX"], ["/pricing", "PRICING"]];
 
 const esc = (s) => String(s == null ? "" : s).replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
 
-const CSS = [
+export const CSS = [
   ":root{--bg:#090a0d;--panel:#121419;--panel2:#181b21;--line:#2c3139;--text:#edf0f1;--muted:#9299a3;--gold:#f0b800;--green:#61dfa0;--blue:#66d4ff;--red:#ff756e;--primary:#2a52ff}",
   "*{box-sizing:border-box}html,body{margin:0;min-height:100%;background:var(--bg);color:var(--text);font-family:\"Avenir Next\",\"Helvetica Neue\",sans-serif}",
   ".shell{position:relative;max-width:980px;margin:auto;padding:20px clamp(16px,3vw,40px) 60px}",
@@ -94,7 +95,7 @@ const SCRIPT = [
   "function errText(d,status){var e=d&&d.error;if(e&&typeof e==='object')return e.message||e.code||('HTTP '+status);return (e?e+(d.details?' - '+d.details:''):'')||('HTTP '+status)}",
   "function stats(data){$('stats').innerHTML=T.stats.map(function(s){var v=data[s[0]];return '<div><b>'+esc(v==null?'-':v)+(s[0]==='overallDiffPercent'?'%':'')+'</b>'+esc(s[1])+'</div>'}).join('')}",
   "function renderList(data){var out='';",
-  " if(T.list==='flagged'){var f=data.flagged||[];out=f.length?'<ul class=\"list\">'+f.map(function(x){return '<li><span class=\"pg\">p.'+esc(x.page)+'</span><span>'+esc(x.line)+'</span></li>'}).join('')+'</ul>':'<p class=\"sub\">No lines matched the word list. The pages were read ('+esc(data.textLayerPages||0)+' from the text layer, '+esc(data.ocrPages||0)+' by OCR).</p>'}",
+  " if(T.list==='flagged'){var f=data.flagged||[];out=f.length?'<ul class=\"list\">'+f.map(function(x){return '<li><span class=\"pg\">p.'+esc(x.page)+'</span><span>'+(x.hazard?'<b style=\"color:'+(x.hazard.focusFour?'var(--red)':'var(--blue)')+';font:700 10px ui-monospace,monospace\">'+esc(x.hazard.label.toUpperCase())+(x.outcome?' · '+esc(x.outcome.label.toUpperCase()):'')+'</b><br>':'')+esc(x.line)+'</span></li>'}).join('')+'</ul>':'<p class=\"sub\">No lines matched the word list. The pages were read ('+esc(data.textLayerPages||0)+' from the text layer, '+esc(data.ocrPages||0)+' by OCR).</p>'}",
   " else if(T.list==='sections'){var s=data.sections||[];out=s.length?'<table><thead><tr><th>SECTION</th><th>TITLE</th><th>PAGE</th><th>WORDS</th><th></th></tr></thead><tbody>'+s.map(function(x){return '<tr><td>'+esc(x.number)+'</td><td>'+esc(x.title)+'</td><td>'+esc(x.page)+'</td><td>'+esc(x.wordCount)+'</td><td class=\"short\">'+(x.short?'SHORT':'')+'</td></tr>'}).join('')+'</tbody></table>':'<p class=\"sub\">No SECTION headers or page footers with CSI numbers were found.</p>';var ra=data.referencedAbsent||[];if(ra.length)out+='<p class=\"sub\">'+ra.length+' numbers are referenced in the text but are not sections of this book: '+esc(ra.map(function(r){return r.number}).join(', '))+'</p>'}",
   " else if(T.list==='sheets'){var sh=data.sheets||[];out='<table><thead><tr><th>PAGE</th><th>SHEET</th><th>TITLE</th><th>READ FROM</th></tr></thead><tbody>'+sh.map(function(x){var how={'title-block':'title block','index-title':'index (title)','index-suffix':'index (number)','index-order':'index (order)','sheet-number-label':'SHEET NUMBER label'}[x.how]||'';return '<tr><td>'+esc(x.page)+'</td><td>'+(x.number?esc(x.number):'<span class=\"none\">no sheet number read</span>')+'</td><td>'+esc(x.title||'')+'</td><td class=\"none\">'+esc(how)+'</td></tr>'}).join('')+'</tbody></table>';var ln=data.listedNotFound||[];if(ln.length)out+='<p class=\"sub\">Listed in the cover-sheet index but not found on any page: '+esc(ln.map(function(l){return l.number}).join(', '))+'</p>'}",
   " else if(T.list==='heatmap'){var cd=data.cellDiffs||[];var cols=data.gridCols||24,rows=data.gridRows||32;var cw=100/cols,ch=100/rows;var cells='';for(var y=0;y<cd.length;y++)for(var x=0;x<cd[y].length;x++){var a=Math.min(1,cd[y][x]*3);cells+='<div style=\"position:absolute;left:'+(x*cw).toFixed(3)+'%;top:'+(y*ch).toFixed(3)+'%;width:'+cw.toFixed(3)+'%;height:'+ch.toFixed(3)+'%;background:rgba(168,51,31,'+a.toFixed(3)+')\"></div>'}out='<div class=\"heat\" style=\"aspect-ratio:'+(data.width||4)+'/'+(data.height||3)+'\">'+cells+'</div><p class=\"sub\">Darker cells differ more. Rendered at '+esc(data.rendered&&data.rendered[0]?data.rendered[0].dpi+' dpi':'reduced size')+'.</p>'}",
@@ -121,7 +122,7 @@ export function toolPageHtml(slug) {
     "<style>" + CSS + "</style>", "</head>", "<body>", '<div class="shell">',
     "<header>", '<a class="brand" href="/"><span class="mark">' + esc(t.mark) + "</span><span><b>" + esc(t.name.toUpperCase()) + "</b><small>" + esc(t.eyebrow) + "</small></span></a>", '<nav class="nav">' + nav + "</nav>", "</header>",
     '<div class="titlebar">', '<div class="eyebrow">' + esc(t.eyebrow) + "</div>", "<h1>" + esc(t.name) + "</h1>", "<p>" + esc(t.blurb) + "</p>", '<p class="caveat">' + esc(t.caveat) + "</p>",
-    '<a class="button primary" id="signin" href="/login?redirect=/' + slug + '" style="display:none;margin-top:14px">SIGN IN</a>', "</div>",
+    '<a class="button primary" id="signin" href="/login?redirect=/' + slug + '" style="display:none;margin-top:14px">SIGN IN</a>', t.extra || "", "</div>",
     '<div id="app" style="display:none">', '<div class="card">', '<div class="form-grid">' + fields + files + "</div>",
     '<button id="analyze" class="button primary" style="height:42px;margin-top:16px">' + (t.list === "heatmap" ? "COMPARE SHEETS" : "READ DOCUMENT") + "</button>",
     '<div class="progress"><i id="bar"></i></div>', '<div class="step-log" id="log"></div>', "</div>",

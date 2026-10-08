@@ -25,6 +25,7 @@
 import { jsonResponse3 } from "../lib/json-response.js";
 import { classifyInspection, classifySafety, classifySurvey, parseSpecSections, parseSheetIndex } from "../lib/classify.js";
 import { listSummaryHtml, specIndexHtml, drawingIndexHtml, asBuiltDiffHtml } from "../lib/summaries.js";
+import { readFlag } from "../lib/safety-hazards.js";
 
 export const OCR_WINDOW_PAGES = 150;
 export const OCR_PAGES_PER_CALL = 1;
@@ -87,13 +88,13 @@ const FINALIZERS = {
     const html = listSummaryHtml({ title: "Safety Report Summary", product: "SafetyX",
       fields: [["Project", fields.projectName], ["Report Type", fields.reportType], ["Reported By", fields.reportedBy], ["Report Date", fields.reportDate]],
       stats: [[pageCount, "Pages Read"], [r.incidentCount, "Incident/Hazard Lines"], [r.clearCount, "Resolved/Clear Lines"]],
-      flagged: r.flagged, none: "No lines matched the incident/hazard word list.", heading: "Incident / Hazard Lines",
+      flagged: r.flagged.map((f) => { const x = readFlag(f); return { ...f, line: "[" + x.hazard.label + (x.outcome ? "; " + x.outcome.label : "") + "] " + f.line }; }), none: "No lines matched the incident/hazard word list.", heading: "Incident / Hazard Lines",
       disclaimer: "Flagged items are lines matched by a word list (incident, injury, hazard, fell, fall protection, not used, died, struck by ...), each with its page number; not an AI reading for meaning. Review the source document for anything this list might miss or mis-flag." });
     const r2Key = "safety-reports/" + userId + "/" + id + ".pdf";
     await storePdf(env, r2Key, await renderHtmlToPdf(env, html), userId, tenantId, now);
     await env.DB.prepare("INSERT INTO safety_reports (id, user_id, tenant_id, project_name, report_type, report_date, reported_by, raw_text, incident_count, clear_count, flagged_items, page_count, r2_key, status, created_at, updated_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 'draft', ?, ?)")
       .bind(id, userId, tenantId, fields.projectName || null, fields.reportType || null, fields.reportDate || null, fields.reportedBy || null, rawText(pages), r.incidentCount, r.clearCount, JSON.stringify(r.flagged), pageCount, r2Key, now, now).run();
-    return { success: true, safetyReportId: id, pageCount, incidentCount: r.incidentCount, clearCount: r.clearCount, flagged: r.flagged, downloadUrl: "/api/safety-reports/" + id + "/download" };
+    return { success: true, safetyReportId: id, pageCount, incidentCount: r.incidentCount, clearCount: r.clearCount, flagged: r.flagged.map(readFlag), downloadUrl: "/api/safety-reports/" + id + "/download", logUrl: "/safetyx/log" };
   },
   async survx({ env, userId, tenantId, fields, pages, pageCount, id, now }) {
     const r = classifySurvey(pages);
