@@ -29,6 +29,13 @@ workers_dev = true
 # filmline-video-worker the monolith's own wrangler.toml already declares
 # for this exact route (comment there: "Same-account Service Binding,
 # same pattern as OCR_SERVICE above").
+# 2026-10-08: saved and shared corridors (routes/sightx-share.js) and the
+# accounts that save them live in the shared weyland_db.
+[[d1_databases]]
+binding = "DB"
+database_name = "weyland_db"
+database_id = "5729f77e-d7e3-4577-ab43-3c064fa90ca5"
+
 [[services]]
 binding = "FILMLINE_VIDEO"
 service = "filmline-video-worker"

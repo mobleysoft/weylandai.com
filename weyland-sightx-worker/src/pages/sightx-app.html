@@ -103,6 +103,7 @@ HW-2: lever lockset, 3 hinges, wall stop"></textarea>
           <button class="btn" id="fwd" type="button" aria-label="Walk forward">WALK ▲</button>
           <button class="btn" id="back" type="button" aria-label="Walk back">▼</button>
           <button class="btn" id="reset" type="button">START</button>
+          <button class="btn" id="share" type="button">SHARE WITH YOUR GC</button>
         </div>
       </div>
       <aside class="info" id="info" aria-live="polite">
@@ -111,6 +112,7 @@ HW-2: lever lockset, 3 hinges, wall stop"></textarea>
       </aside>
     </div>
     <div class="notes" id="notes"></div>
+    <div id="shareBox"></div>
 
     <div class="table">
       <table>
@@ -462,8 +464,29 @@ HW-2: lever lockset, 3 hinges, wall stop"></textarea>
 
     gl = initGL();
     if (!gl) { $("nogl").style.display = "grid"; $("sx-canvas").style.display = "none"; $("hint").style.display = "none"; }
+    // Saved and shared corridors (routes/sightx-share.js): keeping one and
+    // sending a link anyone can walk comes with SightX, the suite or the $100 offer.
+    $("share").onclick = function () {
+      if (!st.model) return;
+      var name = prompt("Name this corridor for the link", st.model.project);
+      if (name === null) return;
+      $("shareBox").innerHTML = "";
+      fetch("/api/sightx/models", { method: "POST", credentials: "same-origin", headers: Object.assign({ "Content-Type": "application/json" }, headers()), body: JSON.stringify({ name: name, model: st.model }) }).then(function (r) { return r.json().then(function (d) { return { status: r.status, d: d }; }); }).then(function (x) {
+        if (x.status === 401) { setStatus("Sign in to save and share a corridor."); window.WeylandPage.signIn(location.pathname + location.search); return; }
+        if (x.status === 402) { $("shareBox").innerHTML = '<div class="pay">' + esc(x.d.message) + ' <a class="btn primary" href="/#offer">$100 FIRST SUBMITTAL</a> <a class="btn" href="/pricing">PLANS</a></div>'; return; }
+        if (!x.d.success) { setStatus(x.d.message || "Could not save.", true); return; }
+        var link = location.origin + x.d.url;
+        $("shareBox").innerHTML = '<div class="pay">Saved. Anyone with this link can walk the corridor, no account needed: <a href="' + esc(link) + '">' + esc(link) + '</a> <button class="btn" type="button" id="copyLink">COPY</button></div>';
+        $("copyLink").onclick = function () { if (navigator.clipboard) navigator.clipboard.writeText(link); $("copyLink").textContent = "COPIED"; };
+      });
+    };
     var qs = new URLSearchParams(location.search);
-    if (qs.get("session")) tab("subx").then(function () { loadSession(qs.get("session")); });
+    if (qs.get("m")) {
+      fetch("/api/sightx/models/" + encodeURIComponent(qs.get("m"))).then(function (r) { return r.json(); }).then(function (d) {
+        if (!d.success) { setStatus(d.message, true); loadSample(); return; }
+        show(d.model, "a shared corridor (" + d.name + ", shared " + String(d.shared_at).slice(0, 10) + ")");
+      });
+    } else if (qs.get("session")) tab("subx").then(function () { loadSession(qs.get("session")); });
     else if (qs.get("src") === "subx") tab("subx");
     else loadSample();
   })();

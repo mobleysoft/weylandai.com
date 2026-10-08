@@ -3,7 +3,7 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "test": "node --test src/routes/sightx-walkthrough.test.mjs src/routes/sightx-model.test.mjs"
+    "test": "node --test src/routes/sightx-walkthrough.test.mjs src/routes/sightx-model.test.mjs src/routes/sightx-share.test.mjs"
   },
   "devDependencies": {
     "wrangler": "^4.129.1"

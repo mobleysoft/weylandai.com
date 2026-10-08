@@ -68,6 +68,8 @@ import { jsonResponse3 } from "./lib/json-response.js";
 
 import { registerSightXWalkthroughRoutes } from "./routes/sightx-walkthrough.js";
 import { registerSightXModelRoutes } from "./routes/sightx-model.js";
+import { registerSightXShareRoutes } from "./routes/sightx-share.js";
+import { authenticate } from "./lib/auth.js";
 
 import sightxHtml from "./pages/sightx.html";
 import sightxAppHtml from "./pages/sightx-app.html";
@@ -104,6 +106,7 @@ router.addRoute("HEAD", "/sightx/", serveSightX);
 
 registerSightXWalkthroughRoutes(router);
 registerSightXModelRoutes(router);
+registerSightXShareRoutes(router, { authenticate });
 
 export default secured({
   async fetch(request, env, ctx) {
