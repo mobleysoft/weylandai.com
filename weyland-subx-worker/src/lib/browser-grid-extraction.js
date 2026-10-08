@@ -38,6 +38,20 @@ function errText(e) {
   return String((e && e.message) || e || "unknown error").slice(0, 400);
 }
 
+// Gives the runner tab the PDF: by its URL when the caller has one (the tab
+// fetches it, the Worker never holds the base64), else as base64 in the
+// evaluate call. Returns the evaluate input for the page reads.
+async function handPdfToTab(page, pdfUrl, pdfBuffer) {
+  if (pdfUrl) {
+    const loaded = await page.evaluate((u) => window.__loadPdf(u), pdfUrl);
+    if (loaded && loaded.ok) return { cached: true };
+    if (!pdfBuffer) throw new Error("the runner could not fetch the PDF: " + ((loaded && loaded.error) || "no answer"));
+  }
+  return { b64: Buffer.from(pdfBuffer).toString("base64") };
+}
+
+const KEEP_ALIVE_MS = 180000;
+
 /**
  * Runs grid extraction for one page in a Browser Rendering tab.
  * @param {object} env - needs env.BROWSER
@@ -58,14 +72,14 @@ function errText(e) {
 export async function findPagesInBrowser(env, pdfBuffer, opts = {}) {
   const started = Date.now();
   if (!env || !env.BROWSER) return { ok: false, error: "browser_rendering_not_configured" };
-  if (!pdfBuffer || !pdfBuffer.byteLength) return { ok: false, error: "no_pdf_bytes" };
-  if (pdfBuffer.byteLength > MAX_BROWSER_PDF_BYTES) {
+  if (!opts.pdfUrl && (!pdfBuffer || !pdfBuffer.byteLength)) return { ok: false, error: "no_pdf_bytes" };
+  if (pdfBuffer && pdfBuffer.byteLength > MAX_BROWSER_PDF_BYTES) {
     return { ok: false, error: "pdf_too_large_for_browser_runner", detail: (pdfBuffer.byteLength / 1048576).toFixed(1) + " MB; the reader takes PDFs up to " + (MAX_BROWSER_PDF_BYTES / 1048576) + " MB" };
   }
   const origin = String(opts.origin || env.SUBX_RUNNER_ORIGIN || DEFAULT_ORIGIN).replace(/\/$/, "");
   let browser;
   try {
-    browser = await puppeteer.launch(env.BROWSER, { keep_alive: 300000 });
+    browser = await puppeteer.launch(env.BROWSER, { keep_alive: KEEP_ALIVE_MS });
   } catch (e) {
     return { ok: false, error: "browser_launch_failed", detail: errText(e), ms: Date.now() - started };
   }
@@ -77,8 +91,8 @@ export async function findPagesInBrowser(env, pdfBuffer, opts = {}) {
       return { ok: false, error: "runner_page_unavailable", detail: "GET " + RUNNER_PATH + " -> " + (resp ? resp.status() : "no response"), ms: Date.now() - started };
     }
     await page.waitForFunction("window.__gridRunnerReady === true && typeof window.__findPages === 'function'", { timeout: 30000 });
-    const b64 = Buffer.from(pdfBuffer).toString("base64");
-    const res = await page.evaluate((data, o) => window.__findPages({ b64: data }, o), b64, opts.runnerOptions || {});
+    const input = await handPdfToTab(page, opts.pdfUrl, pdfBuffer);
+    const res = await page.evaluate((inp, o) => window.__findPages(inp, o), input, opts.runnerOptions || {});
     if (!res || !res.ok) return { ok: false, error: "browser_runner_failed", detail: (res && res.error) || "runner returned nothing", logs: res && res.logs, ms: Date.now() - started };
     return { ok: true, result: res.result, logs: res.logs, ms: Date.now() - started };
   } catch (e) {
@@ -100,14 +114,14 @@ export async function findPagesInBrowser(env, pdfBuffer, opts = {}) {
 export async function runGridPagesInBrowser(env, pdfBuffer, pages, opts = {}) {
   const started = Date.now();
   if (!env || !env.BROWSER) return { ok: false, error: "browser_rendering_not_configured" };
-  if (!pdfBuffer || !pdfBuffer.byteLength) return { ok: false, error: "no_pdf_bytes" };
-  if (pdfBuffer.byteLength > MAX_BROWSER_PDF_BYTES) {
+  if (!opts.pdfUrl && (!pdfBuffer || !pdfBuffer.byteLength)) return { ok: false, error: "no_pdf_bytes" };
+  if (pdfBuffer && pdfBuffer.byteLength > MAX_BROWSER_PDF_BYTES) {
     return { ok: false, error: "pdf_too_large_for_browser_runner", detail: (pdfBuffer.byteLength / 1048576).toFixed(1) + " MB; the reader takes PDFs up to " + (MAX_BROWSER_PDF_BYTES / 1048576) + " MB" };
   }
   const origin = String(opts.origin || env.SUBX_RUNNER_ORIGIN || DEFAULT_ORIGIN).replace(/\/$/, "");
   let browser;
   try {
-    browser = await puppeteer.launch(env.BROWSER, { keep_alive: 600000 });
+    browser = await puppeteer.launch(env.BROWSER, { keep_alive: KEEP_ALIVE_MS });
   } catch (e) {
     return { ok: false, error: "browser_launch_failed", detail: errText(e), ms: Date.now() - started };
   }
@@ -119,7 +133,7 @@ export async function runGridPagesInBrowser(env, pdfBuffer, pages, opts = {}) {
       return { ok: false, error: "runner_page_unavailable", detail: "GET " + RUNNER_PATH + " -> " + (resp ? resp.status() : "no response"), ms: Date.now() - started };
     }
     await page.waitForFunction("window.__gridRunnerReady === true", { timeout: 30000 });
-    const b64 = Buffer.from(pdfBuffer).toString("base64");
+    const input = await handPdfToTab(page, opts.pdfUrl, pdfBuffer);
     const results = [];
     for (const want of pages) {
       const t0 = Date.now();
@@ -129,7 +143,7 @@ export async function runGridPagesInBrowser(env, pdfBuffer, pages, opts = {}) {
       const logs = [];
       try {
         for (const type of [first, other]) {
-          const res = await page.evaluate((data, p, t, o) => window.__runGrid({ b64: data }, p, t, o), b64, want.page, type, opts.runnerOptions || {});
+          const res = await page.evaluate((inp, p, t, o) => window.__runGrid(inp, p, t, o), input, want.page, type, opts.runnerOptions || {});
           if (res && Array.isArray(res.logs)) logs.push(...res.logs.map((l) => "[" + type + "] " + l));
           if (!res || !res.ok) { found = { ok: false, error: "browser_runner_failed", detail: (res && res.error) || "runner returned nothing" }; break; }
           const r = res.result || {};
@@ -157,8 +171,8 @@ export async function runGridPagesInBrowser(env, pdfBuffer, pages, opts = {}) {
 export async function runGridInBrowser(env, pdfBuffer, pageNumber, scheduleType, opts = {}) {
   const started = Date.now();
   if (!env || !env.BROWSER) return { ok: false, error: "browser_rendering_not_configured" };
-  if (!pdfBuffer || !pdfBuffer.byteLength) return { ok: false, error: "no_pdf_bytes" };
-  if (pdfBuffer.byteLength > MAX_BROWSER_PDF_BYTES) {
+  if (!opts.pdfUrl && (!pdfBuffer || !pdfBuffer.byteLength)) return { ok: false, error: "no_pdf_bytes" };
+  if (pdfBuffer && pdfBuffer.byteLength > MAX_BROWSER_PDF_BYTES) {
     return { ok: false, error: "pdf_too_large_for_browser_runner", detail: `${(pdfBuffer.byteLength / 1048576).toFixed(1)} MB; the server-side reader takes PDFs up to ${MAX_BROWSER_PDF_BYTES / 1048576} MB - upload just the schedule pages` };
   }
   const origin = String(opts.origin || env.SUBX_RUNNER_ORIGIN || DEFAULT_ORIGIN).replace(/\/$/, "");
@@ -166,7 +180,7 @@ export async function runGridInBrowser(env, pdfBuffer, pageNumber, scheduleType,
   try {
     // keep_alive: one long page.evaluate (a dense sheet can take a minute in
     // the tab) must not be mistaken for an idle session.
-    browser = await puppeteer.launch(env.BROWSER, { keep_alive: 600000 });
+    browser = await puppeteer.launch(env.BROWSER, { keep_alive: KEEP_ALIVE_MS });
   } catch (e) {
     return { ok: false, error: "browser_launch_failed", detail: errText(e), ms: Date.now() - started };
   }
@@ -178,14 +192,14 @@ export async function runGridInBrowser(env, pdfBuffer, pageNumber, scheduleType,
       return { ok: false, error: "runner_page_unavailable", detail: `GET ${RUNNER_PATH} -> ${resp ? resp.status() : "no response"}`, ms: Date.now() - started };
     }
     await page.waitForFunction("window.__gridRunnerReady === true", { timeout: 30000 });
-    const b64 = Buffer.from(pdfBuffer).toString("base64");
+    const input = await handPdfToTab(page, opts.pdfUrl, pdfBuffer);
     const types = [scheduleType].concat(opts.alsoTry && opts.alsoTry !== scheduleType ? [opts.alsoTry] : []);
     let first = null;
     const logs = [];
     for (const type of types) {
       const res = await page.evaluate(
-        (data, p, t, o) => window.__runGrid({ b64: data }, p, t, o),
-        b64, pageNumber, type, opts.runnerOptions || {}
+        (inp, p, t, o) => window.__runGrid(inp, p, t, o),
+        input, pageNumber, type, opts.runnerOptions || {}
       );
       if (res && Array.isArray(res.logs)) logs.push(...res.logs.map((l) => `[${type}] ${l}`));
       if (!res || !res.ok) {

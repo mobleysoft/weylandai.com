@@ -1,0 +1,13 @@
+{
+  "name": "weyland-docs-worker",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "wrangler dev",
+    "deploy": "wrangler deploy",
+    "test": "node --test test/"
+  },
+  "dependencies": {
+    "@cloudflare/puppeteer": "1.0.4"
+  }
+}

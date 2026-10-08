@@ -27,6 +27,21 @@ import { classifyError, jsonErrorResponse, ErrorMetrics } from "../error-utiliti
 import { findPagesInBrowser, runGridPagesInBrowser } from "../lib/browser-grid-extraction.js";
 import { persistBrowserGridResult } from "../lib/hardware-extraction-pipeline.js";
 
+// The URL the runner tab fetches the session's PDF from (2026-10-08). This
+// worker holds no signing secret, so the token is a hash of the session's own
+// file key (a UUID only its row knows) and the hour; the current and the
+// previous hour's tokens are accepted.
+async function runnerToken(session, hourOffset = 0) {
+  const bucket = Math.floor(Date.now() / 3600000) - hourOffset;
+  const data = new TextEncoder().encode(String(session.file_buffer_key || "") + ":" + session.id + ":" + bucket);
+  const digest = await crypto.subtle.digest("SHA-256", data);
+  return [...new Uint8Array(digest)].map((b) => b.toString(16).padStart(2, "0")).join("").slice(0, 40);
+}
+export async function runnerPdfUrl(session, env2) {
+  const origin = String(env2.SUBX_RUNNER_ORIGIN || "https://weylandai.com").replace(/\/$/, "");
+  return origin + "/api/hardware-schedule/runner-pdf/" + encodeURIComponent(session.id) + "/" + (await runnerToken(session));
+}
+
 // The session's PDF: KV first, then R2 (re-cached), as the page read does.
 async function sessionPdf(session, env2) {
   let fileBuffer = await env2.CACHE.get(session.file_buffer_key, { type: "arrayBuffer" });
@@ -212,6 +227,18 @@ router.get("/api/hardware-schedule/session/:sessionId/page/:pageNum", async (req
     });
   }
 });
+// The runner tab's copy of a session's PDF (see runnerPdfUrl).
+router.get("/api/hardware-schedule/runner-pdf/:sessionId/:token", async (request2, env2) => {
+  const session = await env2.DB.prepare("SELECT id, file_buffer_key, filename FROM hardware_extraction_sessions WHERE id = ?").bind(request2.params.sessionId).first();
+  if (!session) return jsonResponse3({ error: "not found" }, 404);
+  const token = String(request2.params.token || "");
+  const ok = token.length >= 40 && (token === (await runnerToken(session, 0)) || token === (await runnerToken(session, 1)));
+  if (!ok) return jsonResponse3({ error: "not found" }, 404);
+  const fileBuffer = await sessionPdf(session, env2);
+  if (!fileBuffer) return jsonResponse3({ error: "not stored" }, 404);
+  return new Response(fileBuffer, { headers: { "Content-Type": "application/pdf", "Cache-Control": "private, no-store" } });
+});
+
 // Where the schedules are in the uploaded PDF (2026-10-08): the text layer of
 // every page, read in the Browser Rendering runner with the same module the
 // workspace runs in a tab. Kept on the session (detected_schedule_pages) so a
@@ -237,7 +264,7 @@ router.post("/api/hardware-schedule/session/:sessionId/find-pages", async (reque
   }
   const fileBuffer = await sessionPdf(session, env2);
   if (!fileBuffer) return jsonResponse3({ success: false, error: "The uploaded PDF is no longer stored; upload it again." }, 404);
-  const fp = await findPagesInBrowser(env2, fileBuffer);
+  const fp = await findPagesInBrowser(env2, fileBuffer, { pdfUrl: await runnerPdfUrl(session, env2) });
   if (!fp.ok) {
     return jsonResponse3({ success: false, error: "The pages could not be looked through just now (" + (fp.error || "reader unavailable") + (fp.detail ? ": " + fp.detail : "") + "). Pick the schedule page yourself and press READ THIS PAGE." }, 503);
   }
@@ -278,7 +305,7 @@ router.post("/api/hardware-schedule/session/:sessionId/read-pages", async (reque
   const fileBuffer = await sessionPdf(session, env2);
   if (!fileBuffer) return jsonResponse3({ success: false, error: "The uploaded PDF is no longer stored; upload it again." }, 404);
   const started = Date.now();
-  const run = await runGridPagesInBrowser(env2, fileBuffer, pages);
+  const run = await runGridPagesInBrowser(env2, fileBuffer, pages, { pdfUrl: await runnerPdfUrl(session, env2) });
   if (!run.ok) {
     return jsonResponse3({ success: false, error: "The pages could not be read just now (" + (run.error || "reader unavailable") + (run.detail ? ": " + run.detail : "") + "). Try READ THIS PAGE on one page, or READ IT IN THIS BROWSER." }, 503);
   }
