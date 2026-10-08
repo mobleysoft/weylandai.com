@@ -13,13 +13,15 @@ import { STATES, STATUTORY_NOT_CARRIED, FORM_KINDS, KIND_LABEL, formFor, fill, m
 import { newDoc, title, field, para, notice, signature, small, finish } from "../lib/pdf.js";
 import { outputAccess, paymentRequired } from "../../../weyland-shared/output-access.js";
 
-const KEYS = ["amount", "checkMaker", "payee", "owner", "jobDescription", "customer", "throughDate", "date", "company", "signerTitle", "project", "jobNo", "propertyName", "propertyLocation", "invoiceNumber", "paymentPeriod", "disputedAmount", "propertyDescription", "year"];
+const KEYS = ["amount", "checkMaker", "payee", "owner", "jobDescription", "customer", "throughDate", "date", "company", "signerTitle", "project", "jobNo", "propertyName", "propertyLocation", "invoiceNumber", "paymentPeriod", "disputedAmount", "propertyDescription", "year", "coversAll", "claimantAddress", "claimantPhone", "retainage", "unpaidAmount", "priorWaiverDates", "priorUnpaid"];
 
 export function cleanValues(raw) {
   const v = {};
   for (const k of KEYS) v[k] = String((raw && raw[k]) ?? "").replace(/\s+/g, " ").trim().slice(0, 300);
   v.amount = moneyText(v.amount);
   v.disputedAmount = v.disputedAmount ? moneyText(v.disputedAmount) : "0.00";
+  v.retainage = v.retainage ? moneyText(v.retainage) : "0.00";
+  v.unpaidAmount = v.unpaidAmount ? moneyText(v.unpaidAmount) : "0.00";
   if (!v.date) {
     const d = new Date();
     v.date = d.toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric", timeZone: "UTC" });
@@ -38,7 +40,7 @@ export function filledWaiver(state, kind, raw) {
   // Florida's DATED line takes the day apart from the year.
   const fv = st === "FL" ? { ...v, date: v.date.replace(/,?\s*(19|20)\d{2}\s*$/, "") } : v;
   const blocks = f.blocks.map((b) => {
-    if (b.t === "field") return { t: "field", label: b.label, value: b.key === "amount" || b.key === "disputedAmount" ? (fv[b.key] ? "$" + fv[b.key] : "") : fv[b.key] };
+    if (b.t === "field") return { t: "field", label: b.label, value: ["amount", "disputedAmount", "retainage", "unpaidAmount", "priorUnpaid"].includes(b.key) ? (fv[b.key] ? "$" + fv[b.key] : "") : fv[b.key] };
     if (b.t === "sign") return { t: "sign", lines: b.lines.map((l) => ({ label: l.label || null, caption: l.caption || null, value: l.key ? fv[l.key] : "" })) };
     return { t: b.t, text: fill(b.text, fv) };
   });
@@ -58,8 +60,10 @@ export function filledWaiver(state, kind, raw) {
 
 export async function waiverPdf(w) {
   const doc = await newDoc({ title: w.title, footer: w.statutory ? `${w.cite} · filled by WeylandAI LienX` : "General-form waiver · WeylandAI LienX" });
+  let titled = false;
   for (const b of w.blocks) {
-    if (b.t === "title") title(doc, b.text);
+    // The form's own title first; later titles are the statute's section headings.
+    if (b.t === "title") { if (titled) { doc.y -= 10; title(doc, b.text, { size: 12, gapAfter: 12 }); } else title(doc, b.text); titled = true; }
     else if (b.t === "field") field(doc, b.label, b.value);
     else if (b.t === "para") para(doc, b.text);
     else if (b.t === "notice") notice(doc, b.text);

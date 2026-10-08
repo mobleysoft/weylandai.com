@@ -1,0 +1,93 @@
+Source: California Legislature official bulk data, https://downloads.leginfo.legislature.ca.gov/pubinfo_2025.zip (LAW_SECTION_TBL: CIV 8132, 8134, 8136, 8138; active versions, Stats. 2010 ch. 697). Display pages: https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=CIV&sectionNum=8132 (and 8134, 8136, 8138)
+Fetched: 2026-10-08. Text below is each section's text with HTML tags removed, unedited.
+----
+§ 8132.
+If a claimant is required to execute a waiver and release in exchange for, or in order to induce payment of, a progress payment and the claimant is not, in fact, paid in exchange for the waiver and release or a single payee check or joint payee check is given in exchange for the waiver and release, the waiver and release shall be null, void, and unenforceable unless it is in substantially the following form:
+CONDITIONAL WAIVER AND RELEASE ON PROGRESS PAYMENT
+NOTICE: THIS DOCUMENT WAIVES THE CLAIMANT’S LIEN, STOP PAYMENT NOTICE, AND PAYMENT BOND RIGHTS EFFECTIVE ON RECEIPT OF PAYMENT. A PERSON SHOULD NOT RELY ON THIS DOCUMENT UNLESS SATISFIED THAT THE CLAIMANT HAS RECEIVED PAYMENT.
+Identifying Information
+Name of Claimant:
+Name of Customer:
+Job Location:
+Owner:
+Through Date:
+Conditional Waiver and Release
+This document waives and releases lien, stop payment notice, and payment bond rights the claimant has for labor and service provided, and equipment and material delivered, to the customer on this job through the Through Date of this document. Rights based upon labor or service provided, or equipment or material delivered, pursuant to a written change order that has been fully executed by the parties prior to the date that this document is signed by the claimant, are waived and released by this document, unless listed as an Exception below. This document is effective only on the claimant’s receipt of payment from the financial institution on which the following check is drawn:
+Maker of Check:
+Amount of Check: $
+Check Payable to:
+Exceptions
+This document does not affect any of the following:
+(1) Retentions.
+(2) Extras for which the claimant has not received payment.
+(3) The following progress payments for which the claimant has previously given a conditional waiver and release but has not received payment:
+Date(s) of waiver and release:
+Amount(s) of unpaid progress payment(s): $
+(4) Contract rights, including (A) a right based on rescission, abandonment, or breach of contract, and (B) the right to
+recover compensation for work not compensated by the payment.
+Signature
+Claimant’s Signature:
+Claimant’s Title:
+Date of Signature:
+§ 8134.
+If the claimant is required to execute a waiver and release in exchange for, or in order to induce payment of, a progress payment and the claimant asserts in the waiver that the claimant has, in fact, been paid the progress payment, the waiver and release shall be null, void, and unenforceable unless it is in substantially the following form, with the text of the “Notice to Claimant” in at least as large a type as the largest
+type otherwise in the form:
+UNCONDITIONAL WAIVER AND RELEASE ON PROGRESS PAYMENT
+NOTICE TO CLAIMANT: THIS DOCUMENT WAIVES AND RELEASES LIEN, STOP PAYMENT NOTICE, AND PAYMENT BOND RIGHTS UNCONDITIONALLY AND STATES THAT YOU HAVE BEEN PAID FOR GIVING UP THOSE RIGHTS. THIS DOCUMENT IS ENFORCEABLE AGAINST YOU IF YOU SIGN IT, EVEN IF YOU HAVE NOT BEEN PAID. IF YOU HAVE NOT BEEN PAID, USE A CONDITIONAL WAIVER AND RELEASE FORM.
+Identifying Information
+Name of Claimant:
+Name of Customer:
+Job Location:
+Owner:
+Through Date:
+Unconditional Waiver and Release
+This document waives and releases lien, stop payment notice, and payment bond rights the claimant has for labor and service provided, and equipment and material delivered, to the customer on this job through the Through Date of this document. Rights based upon labor or service provided, or equipment or material delivered, pursuant to a written change order that has been fully executed by the parties prior to the date that this document is signed by the claimant, are waived and released by this document, unless listed as an Exception below. The claimant has received the following progress payment: $
+Exceptions
+This document does not affect any of the following:
+(1) Retentions.
+(2) Extras for which the claimant has not received payment.
+(3) Contract rights, including (A) a right based on rescission, abandonment, or breach of contract, and (B) the right to recover compensation for work not compensated by the payment.
+Signature
+Claimant’s Signature:
+Claimant’s Title:
+Date of Signature:
+§ 8136.
+If the claimant is required to execute a waiver and release in exchange for, or in order to induce payment of, a final payment and the claimant is not, in fact, paid in exchange for the waiver and release or a single payee check or joint payee check is given in exchange for the waiver and release, the waiver and release shall be null, void, and unenforceable unless it is in substantially the following form:
+CONDITIONAL WAIVER AND RELEASE ON FINAL PAYMENT
+NOTICE: THIS DOCUMENT WAIVES THE CLAIMANT’S LIEN, STOP PAYMENT NOTICE, AND PAYMENT BOND RIGHTS EFFECTIVE ON RECEIPT OF PAYMENT. A PERSON SHOULD NOT RELY ON THIS DOCUMENT UNLESS SATISFIED THAT THE CLAIMANT HAS RECEIVED PAYMENT.
+Identifying Information
+Name of Claimant:
+Name of Customer:
+Job Location:
+Owner:
+Conditional Waiver and Release
+This document waives and releases lien, stop payment notice, and payment bond rights the claimant has for labor and service provided, and equipment and material delivered, to the customer on this job. Rights based upon labor or service provided, or equipment or material delivered, pursuant to a written change order that has been fully executed by the parties prior to the date that this document is signed by the claimant, are waived and released by this document, unless listed as an Exception below. This document is effective only on the claimant’s receipt of payment from the financial institution on which the following check is drawn:
+Maker of Check:
+Amount of Check: $
+Check Payable to:
+Exceptions
+This document does not affect any of the following:
+Disputed claims for extras in the amount of: $ 
+Signature
+Claimant’s Signature:
+Claimant’s Title:
+Date of Signature:
+§ 8138.
+If the claimant is required to execute a waiver and release in exchange for, or in order to induce payment of, a final payment and the claimant asserts in the waiver that the claimant has, in fact, been paid the final payment, the waiver and release shall be null, void, and unenforceable unless it is in substantially the following form, with the text of the “Notice to Claimant” in at least as large a type as the largest type
+otherwise in the form:
+UNCONDITIONAL WAIVER AND RELEASE ON FINAL PAYMENT
+NOTICE TO CLAIMANT: THIS DOCUMENT WAIVES AND RELEASES LIEN, STOP PAYMENT NOTICE, AND PAYMENT BOND RIGHTS UNCONDITIONALLY AND STATES THAT YOU HAVE BEEN PAID FOR GIVING UP THOSE RIGHTS. THIS DOCUMENT IS ENFORCEABLE AGAINST YOU IF YOU SIGN IT, EVEN IF YOU HAVE NOT BEEN PAID. IF YOU HAVE NOT BEEN PAID, USE A CONDITIONAL WAIVER AND RELEASE FORM.
+Identifying Information
+Name of Claimant:
+Name of Customer:
+Job Location:
+Owner:
+Unconditional Waiver and Release
+This document waives and releases lien, stop payment notice, and payment bond rights the claimant has for all labor and service provided, and equipment and material delivered, to the customer on this job. Rights based upon labor or service provided, or equipment or material delivered, pursuant to a written change order that has been fully executed by the parties prior to the date that this document is signed by the claimant, are waived and released by this document, unless listed as an Exception below. The claimant has been paid in full.
+Exceptions
+This document does not affect the following:
+Disputed claims for extras in the amount of: $
+Signature
+Claimant’s Signature:
+Claimant’s Title:
+Date of Signature:
