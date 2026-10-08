@@ -247,10 +247,15 @@ test("a stored hardware component is read like a printed line, and the packet ge
   assert.deepEqual(citedPagesFor(r), [{ kind: "price_book", catalogueId: "1538de17afa634c0", pageNum: 47, title: "LCN Price Book" }]);
   const ives = await matchComponentToCutSheets(lineFromComponent({ quantity: 1, component_type: "kick plate", manufacturer: "IVE", catalog_number: "8400 10\" HIGH B-CS", finish: "630" }, KNOWN), env);
   assert.deepEqual(citedPagesFor(ives), [{ kind: "catalogue", catalogueId: "8f1396cefd72a60b", pageNum: 131, title: "Ives Architectural Hardware Products Catalog" }]);
-  // The Ives price book's PDF on file is another edition than its index: no page is pinned, nothing embedded from it.
-  const ws = await matchComponentToCutSheets({ manufacturer: "Ives", model: "WS406/407CCV" }, env);
+  // The Ives price book's PDF on file is another edition than its index: no page is pinned, nothing
+  // embedded from it; a caller that needs a page on file (the packet) gets the catalogue's page, the
+  // paste flow (no option) keeps the filed sheet alone.
+  const ws = await matchComponentToCutSheets({ manufacturer: "Ives", model: "WS406/407CCV" }, env, { pagesWhenUnpinned: true });
   assert.equal(ws.cutSheets[0].pinnedPage, null);
   assert.deepEqual(citedPagesFor(ws), [{ kind: "catalogue", catalogueId: "8f1396cefd72a60b", pageNum: 148, title: "Ives Architectural Hardware Products Catalog" }]);
+  const wsPaste = await matchComponentToCutSheets({ manufacturer: "Ives", model: "WS406/407CCV" }, env);
+  assert.deepEqual(wsPaste.cataloguePages, []);
+  assert.deepEqual(citedPagesFor(wsPaste), []);
   const noModel = lineFromComponent({ quantity: 1, component_type: "cylinder", manufacturer: "SCH", catalog_number: "MORTISE TYPE W/ CORE (KEYED TO EXISTING SYSTEM)", finish: "626S" }, KNOWN);
   assert.equal(noModel.noModel, true);
   const nm = await matchComponentToCutSheets(noModel, env);

@@ -31,16 +31,29 @@ export function catalogueKeyCandidates(row) {
   return [...new Set(c)];
 }
 
+// Resolved keys, per isolate, for ten minutes: the citation of every matched line used to
+// HEAD up to three keys per catalogue page, sixty lines at a time.
+const _resolved = new Map();
+const RESOLVED_TTL_MS = 600000;
+
 /** Find the R2 key that exists for a catalogue row, or null. */
 export async function resolveCatalogueKey(env, row) {
   if (!env.UPLOADS) return null;
+  const id = row && row.catalogue_id;
+  const memo = id ? _resolved.get(id) : null;
+  if (memo && Date.now() - memo.at < RESOLVED_TTL_MS) return memo.key;
+  let found = null;
   for (const key of catalogueKeyCandidates(row)) {
     try {
-      if (await env.UPLOADS.head(key)) return key;
+      if (await env.UPLOADS.head(key)) { found = key; break; }
     } catch (e) { /* try the next candidate */ }
   }
-  return null;
+  if (id) _resolved.set(id, { at: Date.now(), key: found });
+  return found;
 }
+
+/** Forgets resolved keys (tests, and after a catalogue's file moves). */
+export function resetResolvedCatalogueKeys() { _resolved.clear(); }
 
 /** Repair storage_path for every catalogue whose recorded key is not in R2. */
 export async function resolveCatalogueStoragePaths(env, limit = 100) {

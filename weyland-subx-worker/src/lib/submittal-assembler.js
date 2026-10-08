@@ -909,6 +909,43 @@ export async function assembleSubmittalPackage(sessionId, options, env2, PDFLib)
         }
       }
     }
+    // Every item without a page, inside the packet (2026-10-08): as the schedule
+    // names it, why no page is here, and what would put one there (the maker is
+    // not in the catalogue, the model is not, no catalogue number on the line,
+    // the book is on file but its page is not pinned, the PDF is not on file).
+    // A reviewer sees what is missing without opening the app.
+    const misses = Array.isArray(options.cutSheetMisses) ? options.cutSheetMisses.filter(Boolean) : [];
+    if (misses.length) {
+      const { PDFDocument: PDFDocument4, StandardFonts: StandardFonts4, rgb: rgb4 } = PDFLib;
+      const md = await PDFDocument4.create();
+      const h = await md.embedFont(StandardFonts4.Helvetica);
+      const b = await md.embedFont(StandardFonts4.HelveticaBold);
+      const perPage = 16, W = 612, H = 792, M = 40;
+      const grey = rgb4(0.35, 0.35, 0.35), ink = rgb4(0.1, 0.1, 0.1), blue = rgb4(0.2, 0.4, 0.6);
+      const needed = Math.ceil(misses.length / perPage);
+      for (let pg = 0; pg < needed; pg++) {
+        const page = md.addPage([W, H]);
+        let y = H - 50;
+        page.drawText("ITEMS WITHOUT A CUT SHEET (" + misses.length + ")" + (pg > 0 ? " (continued)" : ""), { x: M, y, size: 15, font: b, color: blue });
+        y -= 16;
+        page.drawText("Listed as the hardware schedule names them, with why no page is in this packet and what would put one there.", { x: M, y, size: 8, font: h, color: grey });
+        y -= 20;
+        for (const item of misses.slice(pg * perPage, (pg + 1) * perPage)) {
+          const label = [item.qty ? item.qty + " EA" : null, item.component_type ? String(item.component_type).toUpperCase() : null, item.model || null, item.manufacturer ? "(" + item.manufacturer + ")" : null].filter(Boolean).join(" ") + (item.sets && item.sets.length ? "  [set " + item.sets.join(", ") + "]" : "");
+          page.drawText(truncateText(label, W - M * 2, b, 8.5), { x: M, y, size: 8.5, font: b, color: ink });
+          y -= 11;
+          page.drawText(truncateText("   why: " + (item.reason || "not matched"), W - M * 2, h, 8), { x: M, y, size: 8, font: h, color: grey });
+          y -= 11;
+          page.drawText(truncateText("   needed: " + (item.need || "the maker's name and catalogue number"), W - M * 2, h, 8), { x: M, y, size: 8, font: h, color: grey });
+          y -= 16;
+        }
+        page.drawText("Page " + (currentPage + pg), { x: W - M - 40, y: 26, size: 7.5, font: h, color: grey });
+      }
+      tocSections.push({ title: "Items without a cut sheet (" + misses.length + ")", pageNumber: currentPage, type: "cut_sheet" });
+      currentPage += needed;
+      cutSheetPdfs.push(await md.save());
+      result.sections.push({ type: "cut_sheet_misses", title: "Items without a cut sheet", pages: needed, items: misses.length });
+    }
     for (const cs of Array.isArray(options.citedPages) ? [] : (cutSheets.results || [])) {
       if ((cs.page_count || 1) > MAX_WHOLE_DOC_PAGES) {
         result.errors.push(`${cs.document_title} is ${cs.page_count} pages; not attached whole (attach the cited page instead)`);

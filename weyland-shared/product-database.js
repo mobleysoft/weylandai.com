@@ -404,8 +404,9 @@ async function getCataloguePagesForModel(manufacturerName, model, env2, limit = 
     for (const r of rows) {
       let pageUrl = null;
       try {
+        // The catalogue's PDF (resolved once per catalogue per isolate), else a page already drawn.
         const cachedKey = "catalogues/" + r.catalogue_id + "/pages/page_" + r.page_num + ".pdf";
-        const present = env2.UPLOADS && ((await env2.UPLOADS.head(cachedKey)) || (await resolveCatalogueKey(env2, r)));
+        const present = env2.UPLOADS && ((await resolveCatalogueKey(env2, r)) || (await env2.UPLOADS.head(cachedKey)));
         if (present) pageUrl = "/api/cps/catalogues/" + encodeURIComponent(r.catalogue_id) + "/pages/" + r.page_num + "/render";
       } catch (e) { /* no link rather than a guessed one */ }
       out.push({ catalogueId: r.catalogue_id, title: r.title, manufacturer: r.manufacturer, pageNum: r.page_num, pageUrl, pdfAvailable: !!pageUrl, mentions: r.mentions == null ? null : Number(r.mentions), contentsPage: !!r.toc });
@@ -475,7 +476,7 @@ export function citationFor(r) {
  * Every pre-existing key is preserved (the homepage reads matched/confidence/matchType/
  * product/cutSheets[].title/.pages); maker, reason, matchNote, pinnedPage are additive.
  */
-async function matchComponentToCutSheets(component, env2) {
+async function matchComponentToCutSheets(component, env2, opts = {}) {
   const index = await getMakerIndex(env2);
   const maker = resolveMaker(index, component && component.manufacturer);
   const makerOut = { typed: maker.typed, name: maker.name, code: maker.code, known: maker.known, realMaker: maker.realMaker };
@@ -518,9 +519,11 @@ async function matchComponentToCutSheets(component, env2) {
       ...cutSheetCitation(cs, pinned),
     });
   }
-  // Catalogue pages: always when no sheet is filed; also when the filed book's page is not
-  // pinned, so the citation can land on a page that really names the model.
-  const needPages = sheets.length === 0 || !sheets.some((s) => s.pinnedPage);
+  // Catalogue pages: when no sheet is filed; and, for a caller that needs a page on file
+  // (the packet, opts.pagesWhenUnpinned), also when the filed book's page is not pinned.
+  // The paste flow leaves that out: 60 lines of full-text queries and R2 checks per batch
+  // took it past the harness's patience (2026-10-08, one chunk of 60 dropped).
+  const needPages = sheets.length === 0 || (!!opts.pagesWhenUnpinned && !sheets.some((s) => s.pinnedPage));
   const cataloguePages = needPages ? await getCataloguePagesForModel(maker.typed ? maker : match.product.manufacturer_name, match.product.base_model, env2) : [];
   const typed = (component.model || "").toUpperCase().trim();
   const notes = {
