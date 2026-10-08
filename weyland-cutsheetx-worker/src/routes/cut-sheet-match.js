@@ -100,7 +100,14 @@ export function toBatchResult(line, r) {
     raw: line.raw,
     manufacturer: line.manufacturer ?? null,
     model: line.model,
+    // A printed spec line's other cells, as read (description, finish, qty).
+    ...(line.description !== undefined ? { description: line.description ?? null, finish: line.finish ?? null, qty: line.qty ?? null } : {}),
     matched: !!r.matched,
+    // Not a product to match: furnished by others ("BY DIVISION 28", "B/O").
+    ...(r.byOthers ? { byOthers: true } : {}),
+    // The model exists only under a different maker than the line names; it is
+    // not offered as a match (weyland-shared/cut-sheet-matcher.js, rule 1).
+    ...(r.otherMaker ? { otherMaker: r.otherMaker } : {}),
     confidence: r.confidence ?? null,
     matchType: r.matchType ?? null,
     product: r.product ? {
@@ -170,7 +177,7 @@ router.post("/api/cut-sheets/match", async (request2, env2, ctx) => {
       return jsonResponse3({ error: "Missing required field: model or catalog_number" }, 400);
     }
     const r = await matchLine(line, env2);
-    if (!r.matched) {
+    if (!r.matched && !r.byOthers) {
       recordMissesInBackground(ctx, env2, [{ manufacturer: line.manufacturer, model: line.model }]);
     }
     return jsonResponse3(singleMatchResponse(line, r, { manufacturer, model, catalog_number, component_type }));
@@ -249,10 +256,11 @@ router.post("/api/cut-sheets/match-batch", async (request2, env2, ctx) => {
       for (let j = 0; j < chunkResults.length; j++) results[i + j] = chunkResults[j];
     }
     const matched = results.filter((r) => r.matched).length;
-    recordMissesInBackground(ctx, env2, results.filter((r) => !r.matched).map((r) => ({ manufacturer: r.manufacturer, model: r.model })));
+    const byOthers = results.filter((r) => r.byOthers).length;
+    recordMissesInBackground(ctx, env2, results.filter((r) => !r.matched && !r.byOthers).map((r) => ({ manufacturer: r.manufacturer, model: r.model })));
     return jsonResponse3({
       results,
-      summary: { total: results.length, matched, missed: results.length - matched, ms: Date.now() - t0 },
+      summary: { total: results.length, matched, missed: results.length - matched - byOthers, by_others: byOthers, ms: Date.now() - t0 },
     });
   } catch (err) {
     return jsonResponse3({ error: err.message }, 500);

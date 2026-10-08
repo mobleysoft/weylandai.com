@@ -20,6 +20,8 @@
 // only - see ../../migrations/cut-sheet-misses.sql). This module does NOT
 // run DDL at request time.
 
+import { parsePrintedSpecLine } from "../../../weyland-shared/cut-sheet-matcher.js";
+
 const SEPARATOR_RE = /[\t|,;]/;
 
 // Lines whose tokens are all (or whose first token is, with no digits
@@ -100,6 +102,15 @@ export function parseSpecText(text, knownManufacturers = null) {
     }
     if (cols.length === 0) continue;
     if (isHeaderLine(cols, line)) continue;
+    // A line as 08 71 00 and hardware schedules print it, maker last:
+    // "1 EA PUSH PLATE 8200 4" X 16" 630 IVE" (2026-10-08: read as maker
+    // "PUSH", model "PLATE" before; 10 of the 143 real lines in
+    // tools/corpus/expected matched).
+    const printed = parsePrintedSpecLine(cols, known);
+    if (printed && printed.model) {
+      out.push({ raw: line, manufacturer: printed.manufacturer, model: printed.model, modelFull: printed.modelFull !== printed.model ? printed.modelFull : undefined, description: printed.description, finish: printed.finish, qty: printed.qty });
+      continue;
+    }
     // Drop a leading quantity column ("2", "2 ea", "12x") and the unit word after it.
     while (cols.length > 1 && isQtyToken(cols[0])) {
       cols.shift();

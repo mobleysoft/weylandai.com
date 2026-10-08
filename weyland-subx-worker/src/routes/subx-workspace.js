@@ -23,6 +23,7 @@ import { PDFDocument, StandardFonts, rgb } from "pdf-lib";
 import { jsonResponse3 } from "../lib/json-response.js";
 import { assembleSubmittalPackage } from "../lib/submittal-assembler.js";
 import { matchComponentToCutSheets } from "../lib/product-database.js";
+import { componentLine, getCataloguePagesForModel } from "../../../weyland-shared/cut-sheet-matcher.js";
 import { incrementSubmittalsUsed } from "../lib/edge-telemetry.js";
 
 function isDemoClone(session) {
@@ -76,48 +77,89 @@ async function packageStatus(env2, sessionId) {
   }
 }
 
-// Cut sheets for the session's hardware components: only an exact
-// manufacturer + model match from the product database attaches a document
-// (a category or partial guess would put the wrong product in a submittal).
-async function persistExactCutSheetMatches(sessionId, env2) {
+// Cut sheets for the session's hardware components (2026-10-08).
+//
+// Each component is matched as its line was printed: the stored catalog cell
+// ("8400 10\" HIGH B-CS TKTX SCREWS AT HM DOORS") gives the model (8400) and
+// the full text, the maker is resolved by the shared matcher (IVE -> Ives).
+// Before this the whole cell was the model, so nothing matched exactly and a
+// packet carried 0 of its cut sheets (value audit). Only the named maker's
+// own product counts: an exact model, its family ("39D" -> Zero 39) or a
+// model that starts with the printed one, never another maker's model. "BY DIVISION 28" lines are not
+// products.
+//
+// What gets cited, in order: a catalogue page that names the model in a
+// product catalogue (the page a submittal reviewer expects), then the page a
+// price-book cut-sheet row points to, then a price-book page. Catalogue pages
+// are stored as cut_sheet_id "catpage:<catalogue_id>:<page>"; the assembler
+// embeds only the cited pages, never a whole price book.
+export function pickCitation(match) {
+  const pages = match.cataloguePages || [];
+  const isBook = (t) => /price\s*book|price\s*list/i.test(String(t || ""));
+  const page = pages.find((p) => p.pdfAvailable && !isBook(p.title));
+  if (page) return { kind: "catalogue_page", id: "catpage:" + page.catalogueId + ":" + page.pageNum, title: page.title + " p." + page.pageNum };
+  const sheet = (match.cutSheets || []).find((c) => c.r2Key && c.pageHint);
+  if (sheet) return { kind: "cut_sheet", id: sheet.id, title: sheet.title };
+  const bookPage = pages.find((p) => p.pdfAvailable);
+  if (bookPage) return { kind: "catalogue_page", id: "catpage:" + bookPage.catalogueId + ":" + bookPage.pageNum, title: bookPage.title + " p." + bookPage.pageNum };
+  return null;
+}
+
+export async function persistExactCutSheetMatches(sessionId, env2) {
   const comps = await env2.DB.prepare(`
     SELECT hc.manufacturer, hc.model, hc.catalog_number, hc.component_type
     FROM hardware_components hc JOIN hardware_sets hs ON hc.set_id = hs.id
     WHERE hs.session_id = ?
   `).bind(sessionId).all();
   const seen = new Set();
-  let matched = 0, unmatched = 0;
+  let matched = 0, unmatched = 0, byOthers = 0;
   const missing = [];
   for (const c of comps.results || []) {
-    const key = (c.manufacturer || "") + "|" + (c.model || c.catalog_number || "");
+    const line = componentLine(c);
+    const key = (c.manufacturer || "") + "|" + (line.modelFull || line.model || "");
     if (seen.has(key) || key === "|") continue;
     seen.add(key);
     let match = null;
-    try { match = await matchComponentToCutSheets(c, env2); } catch (e) { match = null; }
-    if (match && match.matched && match.matchType === "exact" && match.cutSheets.length > 0) {
-      matched++;
-      for (const cs of match.cutSheets.slice(0, 2)) {
+    try { match = await matchComponentToCutSheets(line, env2); } catch (e) { match = null; }
+    if (match && match.byOthers) { byOthers++; continue; }
+    // Exact, the model's family, or a catalogue model that starts with the
+    // printed one (FB51P -> FB51P-12-MD) - always within the maker the line
+    // names; another trade's product is not attached.
+    if (match && match.matched && ["exact", "series", "partial"].includes(match.matchType)) {
+      const cite = match.cutSheets.length ? pickCitation({ ...match, cataloguePages: await getCataloguePagesForModel(match.product.manufacturer, match.product.model, env2) }) : pickCitation(match);
+      if (cite) {
+        matched++;
         try {
           // session_cut_sheet_matches has no UNIQUE(session_id, cut_sheet_id)
           // (only its id primary key), so an upsert cannot target that pair:
           // look first, insert once.
-          const existing = await env2.DB.prepare("SELECT id FROM session_cut_sheet_matches WHERE session_id = ? AND cut_sheet_id = ?").bind(sessionId, cs.id).first();
+          const existing = await env2.DB.prepare("SELECT id FROM session_cut_sheet_matches WHERE session_id = ? AND cut_sheet_id = ?").bind(sessionId, cite.id).first();
           if (!existing) {
             await env2.DB.prepare(`
               INSERT INTO session_cut_sheet_matches (id, session_id, cut_sheet_id, matched_manufacturer, matched_model, match_type, confidence, status, created_at)
-              VALUES (?, ?, ?, ?, ?, 'exact', 1.0, 'matched', CURRENT_TIMESTAMP)
-            `).bind("scm_" + crypto.randomUUID(), sessionId, cs.id, c.manufacturer || null, c.model || c.catalog_number || null).run();
+              VALUES (?, ?, ?, ?, ?, ?, ?, 'matched', CURRENT_TIMESTAMP)
+            `).bind("scm_" + crypto.randomUUID(), sessionId, cite.id, match.product.manufacturer || c.manufacturer || null, match.product.model || line.model || null, match.matchType + ":" + cite.kind, match.matchType === "exact" ? 1.0 : match.matchType === "series" ? 0.8 : 0.6).run();
           }
         } catch (e) {
           console.warn("[SubX package] could not record cut sheet match: " + e.message);
         }
+        continue;
       }
-    } else {
-      unmatched++;
-      if (missing.length < 25) missing.push({ manufacturer: c.manufacturer || null, model: c.model || c.catalog_number || null, component_type: c.component_type || null });
+    }
+    unmatched++;
+    if (missing.length < 25) {
+      missing.push({
+        manufacturer: c.manufacturer || null,
+        model: line.modelFull || line.model || null,
+        component_type: c.component_type || null,
+        // Why: matched but nothing on file to show, the model exists only
+        // under another maker, or not in the catalogue.
+        reason: match && match.matched ? "no_cut_sheet_on_file" : match && match.otherMaker ? "other_maker_only" : "not_in_catalogue",
+        ...(match && match.otherMaker ? { other_maker: match.otherMaker.manufacturer + " " + match.otherMaker.model } : {}),
+      });
     }
   }
-  return { components: seen.size, matched, unmatched, missing };
+  return { components: seen.size, matched, unmatched, by_others: byOthers, missing };
 }
 
 export function registerSubxWorkspaceRoutes(router, { authenticate, requireActiveSubscription }) {

@@ -8,26 +8,10 @@
 // resolves each row against R2 with cheap HEAD calls and repairs the column.
 // Idempotent; runs from the corpus ingest job (traffic-driven lease).
 
-const WINDOWS_PATH = /^[A-Za-z]:\\/;
-
-export function catalogueKeyCandidates(row) {
-  const c = [];
-  if (row.storage_path && !WINDOWS_PATH.test(row.storage_path)) c.push(row.storage_path);
-  if (row.source_filename) c.push("catalogues/" + row.source_filename);
-  c.push("cps/catalogues/" + row.catalogue_id + ".pdf");
-  return [...new Set(c)];
-}
-
-/** Find the R2 key that exists for a catalogue row, or null. */
-export async function resolveCatalogueKey(env, row) {
-  if (!env.UPLOADS) return null;
-  for (const key of catalogueKeyCandidates(row)) {
-    try {
-      if (await env.UPLOADS.head(key)) return key;
-    } catch (e) { /* try the next candidate */ }
-  }
-  return null;
-}
+// The key lookup itself is shared with the one matcher (weyland-shared/
+// catalogue-key.js); re-exported here for this worker's existing importers.
+import { catalogueKeyCandidates, resolveCatalogueKey, isWindowsPath } from "../../../weyland-shared/catalogue-key.js";
+export { catalogueKeyCandidates, resolveCatalogueKey };
 
 /** Repair storage_path for every catalogue whose recorded key is not in R2. */
 export async function resolveCatalogueStoragePaths(env, limit = 100) {
@@ -36,7 +20,7 @@ export async function resolveCatalogueStoragePaths(env, limit = 100) {
   for (const row of rows.results || []) {
     summary.checked++;
     let ok = false;
-    if (row.storage_path && !WINDOWS_PATH.test(row.storage_path)) {
+    if (row.storage_path && !isWindowsPath(row.storage_path)) {
       try { ok = !!(await env.UPLOADS.head(row.storage_path)); } catch (e) { ok = false; }
     }
     if (ok) { summary.alreadyCorrect++; continue; }

@@ -33,6 +33,8 @@
 // is kept on these 3 functions' signatures for call-site compatibility
 // even though they no longer read it internally.
 
+import { parsePageHint } from "../../../weyland-shared/cut-sheet-matcher.js";
+import { resolveCatalogueKey } from "../../../weyland-shared/catalogue-key.js";
 import { PDFDocument as SovereignPDFDocument, StandardFonts as SovereignStandardFonts, rgb as sovereignRgb } from "./sovereign-pdf.js";
 
 var BHMA_FINISH_LOOKUP = {
@@ -751,6 +753,72 @@ function cutSheetBucket(env2, r2Bucket) {
   return env2.UPLOADS;
 }
 
+// The pages a cut-sheet citation points to, as their own PDF (2026-10-08).
+// Every product_documents cut sheet is a whole manufacturer price book (the
+// LCN one is 152 pages); the packet used to embed the whole book per item, or
+// nothing when the book could not be fetched. Now: the catalogue page that
+// names the model, or the page range the cut-sheet row gives (at most four
+// pages). A row with no page and more than six pages is not embedded: a
+// packet never carries a price book.
+const MAX_CITED_PAGES = 4;
+async function loadPdfOnce(bucket, key, PDFLib, loaded) {
+  if (loaded.has(key)) return loaded.get(key);
+  const obj = await bucket.get(key);
+  const doc = obj ? await PDFLib.PDFDocument.load(new Uint8Array(await obj.arrayBuffer()), { ignoreEncryption: true }) : null;
+  loaded.set(key, doc);
+  return doc;
+}
+async function pagesAsPdf(src, first, last, PDFLib) {
+  const n = src.getPageCount();
+  const idx = [];
+  for (let p = first; p <= Math.min(last, n, first + MAX_CITED_PAGES - 1); p++) idx.push(p - 1);
+  if (!idx.length) return null;
+  const out = await PDFLib.PDFDocument.create();
+  const copied = await out.copyPages(src, idx);
+  copied.forEach((pg) => out.addPage(pg));
+  return { bytes: await out.save(), pages: idx.length };
+}
+async function citedPagesFor(cs, env2, PDFLib, options, loaded) {
+  const id = String(cs.cut_sheet_id || "");
+  const cat = id.match(/^catpage:(.+):(\d+)$/);
+  if (cat) {
+    const [, catalogueId, pageStr] = cat;
+    const page = parseInt(pageStr, 10);
+    const row = await env2.DB.prepare("SELECT catalogue_id, title, storage_path, source_filename FROM catalogues WHERE catalogue_id = ?").bind(catalogueId).first();
+    const title = (row && row.title ? row.title : "Catalogue") + ", p. " + page;
+    const single = await env2.UPLOADS.get("catalogues/" + catalogueId + "/pages/page_" + page + ".pdf");
+    if (single) return { bytes: new Uint8Array(await single.arrayBuffer()), pages: 1, title };
+    const key = row ? await resolveCatalogueKey(env2, row) : null;
+    if (!key) return { reason: "catalogue PDF not in storage" };
+    const src = await loadPdfOnce(env2.UPLOADS, key, PDFLib, loaded);
+    const got = src ? await pagesAsPdf(src, page, page, PDFLib) : null;
+    return got ? { ...got, title } : { reason: "page " + page + " not in the catalogue PDF" };
+  }
+  const hint = parsePageHint(cs.document_title);
+  if (cs.r2_object_key) {
+    const bucket = cutSheetBucket(env2, cs.r2_bucket);
+    if (hint && hint.lastPage - hint.firstPage + 1 > MAX_CITED_PAGES) {
+      return { reason: "the price book gives pages " + hint.hint + " for this product, too wide to be its cut sheet" };
+    }
+    if (hint) {
+      const src = bucket ? await loadPdfOnce(bucket, cs.r2_object_key, PDFLib, loaded) : null;
+      const got = src ? await pagesAsPdf(src, hint.firstPage, hint.lastPage, PDFLib) : null;
+      const shown = got && got.pages > 1 ? "pp. " + hint.firstPage + "-" + (hint.firstPage + got.pages - 1) : "p. " + hint.firstPage;
+      return got ? { ...got, title: (cs.document_title || "Cut sheet").replace(/\s*\(.*$/, "") + ", " + shown } : { reason: "cited page not in the stored PDF" };
+    }
+    if ((cs.page_count || 0) > 6) return { reason: "the stored document is a " + cs.page_count + "-page book with no page for this product" };
+    const obj = bucket ? await bucket.get(cs.r2_object_key) : null;
+    if (obj) return { bytes: new Uint8Array(await obj.arrayBuffer()), pages: cs.page_count || 1, title: cs.document_title || "Cut sheet" };
+  }
+  if (cs.document_url && options.fetchRemoteCutSheets) {
+    const response = await fetch(cs.document_url, { headers: { "Accept": "application/pdf", "User-Agent": "WeylandAI-SubX-Assembler/1.0" } });
+    if (response.ok && (response.headers.get("content-type") || "").includes("pdf")) {
+      return { bytes: new Uint8Array(await response.arrayBuffer()), pages: cs.page_count || 1, title: cs.document_title || "Cut sheet" };
+    }
+  }
+  return { reason: "no stored copy" };
+}
+
 export async function assembleSubmittalPackage(sessionId, options, env2, PDFLib) {
   console.log(`[Assembler] Starting assembly for session ${sessionId}`);
   const result = {
@@ -802,14 +870,18 @@ export async function assembleSubmittalPackage(sessionId, options, env2, PDFLib)
       doorSection = await generateDoorSchedulePages(doorRows, { projectName, filename: session.filename });
     }
 
+    // Cited cut sheets: a product_documents row, or a catalogue page stored
+    // as "catpage:<catalogue_id>:<page>" (routes/subx-workspace.js
+    // pickCitation). LEFT JOINs so catalogue pages come through.
     const cutSheets = await env2.DB.prepare(`
       SELECT
+        scm.cut_sheet_id, scm.matched_manufacturer, scm.matched_model,
         pd.id, pd.document_title, pd.document_url, pd.r2_object_key, pd.r2_bucket, pd.page_count,
         m.name as manufacturer_name
       FROM session_cut_sheet_matches scm
-      JOIN product_documents pd ON scm.cut_sheet_id = pd.id
-      JOIN products p ON pd.product_id = p.id
-      JOIN manufacturers m ON p.manufacturer_id = m.id
+      LEFT JOIN product_documents pd ON scm.cut_sheet_id = pd.id
+      LEFT JOIN products p ON pd.product_id = p.id
+      LEFT JOIN manufacturers m ON p.manufacturer_id = m.id
       WHERE scm.session_id = ?
       ORDER BY scm.created_at
     `).bind(sessionId).all();
@@ -887,35 +959,22 @@ export async function assembleSubmittalPackage(sessionId, options, env2, PDFLib)
       }
     }
     const cutSheetPdfs = [];
+    const loaded = new Map();
     for (const cs of cutSheets.results || []) {
-      let csBytes = null;
-      if (cs.r2_object_key) {
-        try {
-          const bucket = cutSheetBucket(env2, cs.r2_bucket);
-          const csObj = bucket ? await bucket.get(cs.r2_object_key) : null;
-          if (csObj) csBytes = new Uint8Array(await csObj.arrayBuffer());
-        } catch (e) {
-          console.warn(`[Assembler] R2 fetch failed for ${cs.document_title}: ${e.message}`);
-        }
+      let cited = null;
+      try {
+        cited = await citedPagesFor(cs, env2, PDFLib, options, loaded);
+      } catch (e) {
+        console.warn(`[Assembler] cut sheet ${cs.cut_sheet_id}: ${e.message}`);
       }
-      if (!csBytes && cs.document_url && options.fetchRemoteCutSheets) {
-        try {
-          const response = await fetch(cs.document_url, { headers: { "Accept": "application/pdf", "User-Agent": "WeylandAI-SubX-Assembler/1.0" } });
-          if (response.ok && (response.headers.get("content-type") || "").includes("pdf")) {
-            csBytes = new Uint8Array(await response.arrayBuffer());
-          }
-        } catch (e) {
-          console.warn(`[Assembler] URL fetch error for ${cs.document_title}: ${e.message}`);
-        }
-      }
-      if (csBytes && csBytes.length > 0) {
-        const pages = cs.page_count || 1;
-        tocSections.push({ title: `${cs.manufacturer_name}: ${cs.document_title}`, pageNumber: currentPage, type: "cut_sheet" });
-        currentPage += pages;
-        cutSheetPdfs.push(csBytes);
-        result.sections.push({ type: "cut_sheet", title: cs.document_title, manufacturer: cs.manufacturer_name, pages });
+      const label = [cs.matched_manufacturer || cs.manufacturer_name, cs.matched_model].filter(Boolean).join(" ");
+      if (cited && cited.bytes && cited.bytes.length > 0) {
+        tocSections.push({ title: `${label ? label + ": " : ""}${cited.title}`, pageNumber: currentPage, type: "cut_sheet" });
+        currentPage += cited.pages;
+        cutSheetPdfs.push(cited.bytes);
+        result.sections.push({ type: "cut_sheet", title: cited.title, manufacturer: cs.matched_manufacturer || cs.manufacturer_name || null, model: cs.matched_model || null, pages: cited.pages });
       } else {
-        result.errors.push(`Could not fetch ${cs.document_title} (no stored copy)`);
+        result.errors.push(`Could not include the cut sheet for ${label || cs.cut_sheet_id}${cited && cited.reason ? " (" + cited.reason + ")" : " (no stored copy)"}`);
       }
     }
     // Source appendix: the pages of the uploaded PDF that rows were read from
