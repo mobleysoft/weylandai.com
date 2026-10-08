@@ -32,6 +32,7 @@ async function priceEntry(env, productId, cfg) {
     return {
       id: productId,
       checkout_ready: price.active === true && CHECKOUT_READY_PRODUCTS.has(productId),
+      price_active: price.active === true,
       price_id: price.id,
       unit_amount: price.unit_amount,
       currency: price.currency,
@@ -73,10 +74,34 @@ async function refresh(env) {
 }
 
 /**
+ * checkout_ready follows the gate (CHECKOUT_READY_PRODUCTS) as it is now, not as
+ * it was when the copy was kept: a product taken off sale by a deploy is off
+ * sale in the catalog at once, not after the kept copy's next refresh
+ * (2026-10-08: the six tools of fix 7 read checkout_ready true for minutes after
+ * the deploy that removed them). A copy kept before price_active existed uses
+ * its own checkout_ready as the price's active flag, so this only narrows.
+ */
+function gated(value) {
+  if (!value || !Array.isArray(value.products)) return value;
+  return {
+    ...value,
+    products: value.products.map((p) => {
+      if (!p || p.blockers) return p;
+      const active = typeof p.price_active === "boolean" ? p.price_active : p.checkout_ready === true;
+      return { ...p, checkout_ready: active && CHECKOUT_READY_PRODUCTS.has(p.id) };
+    })
+  };
+}
+
+/**
  * The catalog: { fetched_at, products:[...] }. Fresh enough for a page; never
  * older than STALE_AFTER_MS plus one background refresh.
  */
 export async function getCatalog(env, ctx) {
+  return gated(await getCatalogKept(env, ctx));
+}
+
+async function getCatalogKept(env, ctx) {
   const now = Date.now();
   if (memory && now - memory.at < MEMORY_MS) return memory.value;
   let kept = null;

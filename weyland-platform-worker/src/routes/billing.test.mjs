@@ -205,7 +205,7 @@ test("catalog: read from Stripe in parallel, kept in KV, the offer one-time, no 
     const byId = Object.fromEntries(d.products.map((p) => [p.id, p]));
     assert.equal(d.products.length, Object.keys(WEYLAND_PRODUCTS).length);
     assert.deepEqual({ ...byId["weyland-first-submittal"], name: undefined, price_id: undefined },
-      { id: "weyland-first-submittal", checkout_ready: true, unit_amount: 10000, currency: "usd", interval: null, one_time: true, kind: "offer", trial_period_days: null, livemode: true, name: undefined, price_id: undefined });
+      { id: "weyland-first-submittal", checkout_ready: true, price_active: true, unit_amount: 10000, currency: "usd", interval: null, one_time: true, kind: "offer", trial_period_days: null, livemode: true, name: undefined, price_id: undefined });
     assert.equal(byId["weyland-subconp-seat"].trial_period_days, null, "the price's own 30 days are never applied");
     assert.equal(byId["weyland-marketx-seat"].checkout_ready, false);
     const priceCalls = stripe.calls.filter((c) => c.url.includes("/v1/prices/")).length;

@@ -104,7 +104,9 @@ test("/pricing: no mail app, no hosted checkout; MarketX not sold; the offer lea
   assert.ok(text.indexOf('id="offerCard"') < text.indexOf('id="alacarteSection"'), "the offer comes before the a la carte grid");
   assert.match(text, /WeylandAI is operated by Argo LLC\. <a href="https:\/\/weylandai\.com\/terms" data-legal="terms"/);
   assert.match(text, /<a href="https:\/\/weylandai\.com\/privacy" data-legal="privacy"/);
-  assert.match(text, /No free trial on this plan: the free month comes with the \$100 first submittal/);
+  // 2026-10-08 (fix 11): the sentence "No free trial on this plan: the free month comes with the $100 first
+  // submittal" is gone (every new account gets a 14-day trial, and the month costs $100).
+  assert.doesNotMatch(text, /No free trial|free month/);
   for (const src of inlineScripts(text)) assert.doesNotThrow(() => new Function(src));
   // The page's own checkout script: a product that is not sold opens nothing.
   assert.match(text, /btn\.textContent = 'NOT SOLD YET'/);
@@ -131,6 +133,36 @@ test("/pricing: DrawX, SpecX, AsBuiltX, InspecX, SurvX and PriceX are NOT SOLD Y
   for (const sku of Object.values(notSold)) assert.ok(!ready.includes(sku), sku + " not in READY");
   // Still sold: the suite, the offer and the tools that work.
   for (const sku of ["weyland-subconp-seat", "weyland-first-submittal", "weyland-huntx-seat", "weyland-subx-seat", "weyland-cutsheetx-seat", "weyland-lienx-seat", "weyland-safetyx-seat"]) assert.ok(ready.includes(sku), sku + " in READY");
+});
+
+// 2026-10-08 (fix 11 of plan/weylandai_value_report.md): the claims section 5 lists for /pricing are gone.
+test("/pricing: no cryptographic provenance, Togal, Lumion or Dodge comparisons, machine vision, avatars, FRED, local inference or pay-for-itself claims", async () => {
+  const env = await envWithCatalog();
+  const { text } = await page(env, "/pricing");
+  for (const re of [/cryptographic/i, /Togal/i, /Lumion/i, /Dodge/i, /ConstructConnect/i, /Sub-second/i, /machine-vision/i, /live avatars/i, /voice chat/i,
+    /permit ledger/i, /Transforms standard 2D/i, /real FRED/i, /sourced live/i, /Local Apple Silicon/i, /Sovereign Compute/i, /pay for itself/i, /strictly enforced/i]) {
+    assert.doesNotMatch(text, re);
+  }
+  assert.match(text, /A project room: who is here, and chat/);
+  assert.match(text, /It reads schedules, not drawings\./);
+  assert.match(text, /Includes all 7 engines on one project spine\./);
+});
+
+// The catalog's checkout_ready follows the gate as it is now, not the kept copy (lib/catalog.js gated()).
+test("/api/billing/catalog: a kept copy that still says a not-sold product is ready is served as not ready", async () => {
+  const env = await envWithCatalog();
+  const kept = JSON.parse(await env.CACHE.get("billing_catalog_v2"));
+  for (const p of kept.products) if (p.id === "weyland-drawx-seat" || p.id === "weyland-pricex-seat") { p.checkout_ready = true; delete p.price_active; }
+  await env.CACHE.put("billing_catalog_v2", JSON.stringify(kept));
+  _resetCatalogMemory();
+  const r = await worker.fetch(new Request("https://weylandai.com/api/billing/catalog"), env, ctx);
+  const d = await r.json();
+  const byId = Object.fromEntries(d.products.map((p) => [p.id, p]));
+  assert.equal(byId["weyland-drawx-seat"].checkout_ready, false);
+  assert.equal(byId["weyland-pricex-seat"].checkout_ready, false);
+  assert.equal(byId["weyland-marketx-seat"].checkout_ready, false);
+  assert.equal(byId["weyland-huntx-seat"].checkout_ready, true);
+  assert.equal(byId["weyland-first-submittal"].checkout_ready, true);
 });
 
 test("/pricing in the overlay (?embed=1) and as an SPA fragment carry the same catalog prices", async () => {
