@@ -24,6 +24,7 @@ import { jsonResponse3 } from "../lib/json-response.js";
 import { assembleSubmittalPackage } from "../lib/submittal-assembler.js";
 import { matchComponentToCutSheets } from "../lib/product-database.js";
 import { incrementSubmittalsUsed } from "../lib/edge-telemetry.js";
+import { outputAccess, paymentRequired } from "../../../weyland-shared/output-access.js";
 
 function isDemoClone(session) {
   return String(session.file_buffer_key || "").startsWith("demo-clone/");
@@ -309,9 +310,16 @@ export function registerSubxWorkspaceRoutes(router, { authenticate, requireActiv
       if (!hadPackage && !isDemoClone(o.session)) {
         try { usage = await incrementSubmittalsUsed(o.user.userId, env2); } catch (_) { usage = null; }
       }
+      // Free to try, pay for the output (weyland-shared/output-access.js):
+      // anyone sees what the package holds; opening the PDF of your own
+      // schedule needs the $100 first submittal or a plan. The demo
+      // building's package stays open to everyone.
+      const access = isDemoClone(o.session) ? { paid: true, via: "demo" } : await outputAccess(env2, o.user.userId, "subx");
       return jsonResponse3({
         success: true,
         sessionId,
+        paid: !!access.paid,
+        ...(access.paid ? {} : { payment: paymentRequired("The submittal package PDF") }),
         pdfUrl: "/api/hardware-schedule/session/" + sessionId + "/submittal-pdf",
         totalPages: result.totalPages,
         sections: result.sections,
@@ -333,6 +341,10 @@ export function registerSubxWorkspaceRoutes(router, { authenticate, requireActiv
     if (o.error) return o.error;
     const obj = await env2.UPLOADS.get("submittals/" + o.session.id + "/final_submittal.pdf");
     if (!obj) return jsonResponse3({ success: false, error: "No package has been built for this session yet" }, 404);
+    if (!isDemoClone(o.session)) {
+      const access = await outputAccess(env2, o.user.userId, "subx");
+      if (!access.paid) return jsonResponse3(paymentRequired("The submittal package PDF"), 402);
+    }
     const url = new URL(request2.url);
     const name = String(o.session.project_name || "submittal").replace(/[^A-Za-z0-9]+/g, "_").replace(/^_+|_+$/g, "").slice(0, 80) || "submittal";
     return new Response(obj.body, {

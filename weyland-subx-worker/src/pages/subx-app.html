@@ -75,6 +75,8 @@
     .tag.warn{color:var(--accent);border-color:rgba(255,212,0,.4)}
     .error-box{background:rgba(255,117,110,.08);border:1px solid rgba(255,117,110,.4);border-radius:10px;padding:12px 14px;color:var(--red);font-size:13.5px;line-height:1.5;margin-top:12px;white-space:pre-wrap}
     .ok-box{background:rgba(97,223,160,.08);border:1px solid rgba(97,223,160,.4);border-radius:10px;padding:12px 14px;color:var(--green);font-size:13.5px;line-height:1.5;margin-top:12px;white-space:pre-wrap}
+    .pay-box { border: 1px solid #ffd400; border-radius: 8px; padding: 12px 14px; margin-top: 10px; }
+    .pay-box p { margin: 6px 0; }
     .info-box{background:rgba(42,82,255,.08);border:1px solid rgba(42,82,255,.35);border-radius:10px;padding:12px 14px;color:var(--text);font-size:13.5px;line-height:1.5;margin-top:12px}
     .muted-small{color:var(--muted);font-size:12.5px;line-height:1.5}
     .empty{color:var(--muted);font-size:13.5px;padding:16px;text-align:center}
@@ -2508,6 +2510,16 @@ global.SovereignPdfRender = {
           out.setAttribute("data-fresh", "1");
           out.innerHTML = '<div class="ok-box">' + esc("Built: " + d.totalPages + " pages - cover, contents, " + parts.join(", ") + "." + note) + "</div>";
           setStep("st-pdf", "done");
+          // Free to try, pay for the output: the package of your own schedule
+          // opens with the $100 first submittal or a plan.
+          if (d.paid === false) {
+            var pay = d.payment || {};
+            out.insertAdjacentHTML("beforeend", '<div class="pay-box"><p>' + esc(pay.message || "The submittal package PDF comes with the $100 first submittal or a plan.") +
+              '</p><p><a class="button primary" href="/#offer">GET THIS PACKAGE &middot; $100 FIRST SUBMITTAL</a> <a class="button" href="/pricing">SEE PLANS</a></p>' +
+              '<p class="muted-small">Paid with this account\'s email, it opens here as soon as the payment goes through; nothing renews automatically.</p></div>');
+            $("package-card").scrollIntoView({ behavior: "smooth", block: "start" });
+            return;
+          }
           return showPdf(d.pdfUrl).then(function () { $("package-card").scrollIntoView({ behavior: "smooth", block: "start" }); });
         });
       });

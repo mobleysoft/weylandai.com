@@ -77,7 +77,7 @@ function setup() {
     const type = res.headers.get("Content-Type") || "";
     return { status: res.status, type, data: type.includes("json") ? await res.json() : await res.text() };
   };
-  return { call, db };
+  return { call, db, objects };
 }
 
 test("sessions: your own only, demo clones marked; a guest is told to sign in, not refused", async () => {
@@ -146,4 +146,46 @@ test("a package is not built from a schedule nobody has read yet", async () => {
   assert.equal(r.data.error, "NOTHING_EXTRACTED");
   const none = await call("GET", "/api/hardware-schedule/session/sess-a/submittal-pdf", "a");
   assert.equal(none.status, 404);
+});
+
+// Free to try, pay for the output (weyland-shared/output-access.js): your own
+// package PDF opens with the $100 offer (inside its window) or a plan; the
+// demo building's opens for everyone; a free trial is not a purchase.
+test("the package PDF of your own schedule needs the $100 offer or a plan", async () => {
+  const { call, db, objects } = setup();
+  db.exec(`
+    CREATE TABLE users (id TEXT PRIMARY KEY, subscription_tier TEXT, subscription_status TEXT, trial_ends_at TEXT);
+    CREATE TABLE weyland_purchases (checkout_session_id TEXT PRIMARY KEY, kind TEXT, product_id TEXT, status TEXT, user_id TEXT);
+    CREATE TABLE weyland_subscriptions (id TEXT, user_id TEXT, status TEXT, tiers TEXT, suite INTEGER);
+  `);
+  objects.set("submittals/sess-a/final_submittal.pdf", "%PDF-1.7 package");
+  objects.set("submittals/sess-a-demo/final_submittal.pdf", "%PDF-1.7 demo package");
+  const later = new Date(Date.now() + 20 * 864e5).toISOString(), earlier = new Date(Date.now() - 864e5).toISOString();
+  const setUser = (tier, status, ends) => { db.exec("DELETE FROM users"); db.prepare("INSERT INTO users VALUES ('user-a',?,?,?)").run(tier, status, ends); };
+  const get = (sess) => call("GET", "/api/hardware-schedule/session/" + sess + "/submittal-pdf", "a");
+
+  // A 14-day free trial (no purchase): the package is shown as built, not handed over.
+  setUser("starter", "trial", later);
+  let r = await get("sess-a");
+  assert.equal(r.status, 402);
+  assert.equal(r.data.code, "PAYMENT_REQUIRED");
+  assert.match(r.data.message, /\$100 first submittal/);
+  // The demo building's package is open to everyone.
+  assert.equal((await get("sess-a-demo")).status, 200);
+  // The $100 first submittal, inside its 30-day window.
+  db.prepare("INSERT INTO weyland_purchases VALUES ('cs_1','offer','weyland-first-submittal','granted','user-a')").run();
+  assert.equal((await get("sess-a")).status, 200);
+  // ... and after the window: not any more.
+  setUser("free", "active", earlier);
+  assert.equal((await get("sess-a")).status, 402);
+  // A paying suite subscription, or a SubX / TakeoffX seat.
+  db.prepare("INSERT INTO weyland_subscriptions VALUES ('sub_1','user-a','active','',1)").run();
+  assert.equal((await get("sess-a")).status, 200);
+  db.exec("DELETE FROM weyland_subscriptions");
+  db.prepare("INSERT INTO weyland_subscriptions VALUES ('sub_2','user-a','active','takeoffx',0)").run();
+  assert.equal((await get("sess-a")).status, 200);
+  // A PropX seat alone does not carry the SubX package; a lapsed seat carries nothing.
+  db.exec("DELETE FROM weyland_subscriptions");
+  db.prepare("INSERT INTO weyland_subscriptions VALUES ('sub_3','user-a','active','propx',0),('sub_4','user-a','canceled','subx',0)").run();
+  assert.equal((await get("sess-a")).status, 402);
 });
