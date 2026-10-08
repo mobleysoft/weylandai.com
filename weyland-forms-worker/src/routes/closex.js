@@ -21,7 +21,8 @@ import { jsonResponse3 } from "../lib/json-response.js";
 import { newDoc, title, field, para, table, small, signature, finish } from "../lib/pdf.js";
 import { outputAccess, paymentRequired } from "../../../weyland-shared/output-access.js";
 import { matchComponentToCutSheets, citedPagesFor, PACKET_MATCH_TYPES } from "../../../weyland-shared/product-database.js";
-import { getCataloguePagePdf } from "../../../weyland-shared/cut-sheet-pages.js";
+import { getCataloguePagePdf, getDocumentPagePdf } from "../../../weyland-shared/cut-sheet-pages.js";
+import { pageNamingInFiledPdf, scheduleTokens } from "../../../weyland-shared/filed-page.js";
 
 export const CHECKLIST = [
   "Hardware installed and adjusted per the hardware schedule",
@@ -106,13 +107,32 @@ export async function citedProductPages(env, products, match = matchComponentToC
   const seen = new Set();
   for (const p of products) {
     let m = null;
-    try { m = await match({ manufacturer: p.manufacturer, model: p.model }, env); } catch (_) { m = null; }
-    const cp = m && m.matched && PACKET_MATCH_TYPES.has(String(m.matchType)) ? citedPagesFor(m, 1)[0] : null;
-    if (!cp) { missing.push(`${p.manufacturer} ${p.model}`.trim()); continue; }
-    const k = cp.catalogueId + "#" + cp.pageNum;
-    if (seen.has(k)) continue;
-    seen.add(k);
-    pages.push({ ...cp, manufacturer: p.manufacturer, model: p.model });
+    try { m = await match({ manufacturer: p.manufacturer, model: p.model }, env, { pagesWhenUnpinned: true }); } catch (_) { m = null; }
+    const firm = m && m.matched && PACKET_MATCH_TYPES.has(String(m.matchType));
+    const cp = firm ? citedPagesFor(m, 1)[0] : null;
+    if (cp) {
+      const k = cp.catalogueId + "#" + cp.pageNum;
+      if (!seen.has(k)) { seen.add(k); pages.push({ ...cp, manufacturer: p.manufacturer, model: p.model }); }
+      continue;
+    }
+    // A filed price book whose index is another edition: the page naming the model in that
+    // very file, from the text SubX's packet build cached in R2 (weyland-shared/filed-page.js).
+    // This worker reads the cache only (no OCR binding), so nothing is guessed when it is cold.
+    const sheet = firm && m.maker && m.maker.known ? (m.cutSheets || []).find((s) => s.r2Key && !s.pinnedPage) : null;
+    let hit = null;
+    if (sheet) {
+      const prod = m.product || {};
+      for (const model of [...new Set([prod.model, prod.base_model, ...scheduleTokens(p.model)].filter(Boolean))]) {
+        try { hit = await pageNamingInFiledPdf(env, sheet.r2Key, model); } catch (_) { hit = null; }
+        if (hit) break;
+      }
+    }
+    if (hit) {
+      const k = "doc:" + sheet.r2Key + "#" + hit.pageNum;
+      if (!seen.has(k)) { seen.add(k); pages.push({ r2Key: sheet.r2Key, catalogueId: null, pageNum: hit.pageNum, title: String(sheet.title || "Price book").split(" (")[0], kind: "price_book_filed", manufacturer: p.manufacturer, model: p.model }); }
+      continue;
+    }
+    missing.push(`${p.manufacturer} ${p.model}`.trim());
   }
   return { pages, missing };
 }
@@ -161,7 +181,9 @@ export async function closeoutPdf(env, model, cited, PDFDocument) {
   const out = await PDFDocument.load(bytes);
   const loaded = new Map();
   for (const p of cited.pages) {
-    const got = await getCataloguePagePdf(env, PDFDocument, { catalogueId: p.catalogueId, pageNum: p.pageNum }, loaded);
+    const got = p.r2Key
+      ? await getDocumentPagePdf(env, PDFDocument, { r2Key: p.r2Key, pageNum: p.pageNum }, loaded)
+      : await getCataloguePagePdf(env, PDFDocument, { catalogueId: p.catalogueId, pageNum: p.pageNum }, loaded);
     if (!got.bytes) continue;
     const src = await PDFDocument.load(got.bytes, { ignoreEncryption: true });
     const [pg] = await out.copyPages(src, [0]);

@@ -73,3 +73,14 @@ test("a catalog number wider than its column wraps inside it", async () => {
   assert.equal(lines.join(""), "PA-AX-9927-L-F-2SI-LBR-06-499F");
   assert.ok(lines.every((l) => font.widthOfTextAtSize(l, 8) <= 70));
 });
+
+test("a product whose filed price book is another edition's index gets the page from that book's cached text", async () => {
+  const { filedTextKey } = await import("../../weyland-shared/filed-page.js");
+  const key = "manufacturer-catalogs/vd.pdf";
+  const store = new Map([[filedTextKey(key), JSON.stringify([{ page: 41, text: "99 Series parts" }, { page: 42, text: "Less bottom rod 9927-EO-F-LBR" }])]]);
+  const env = { UPLOADS: { async get(k) { return store.has(k) ? { async json() { return JSON.parse(store.get(k)); } } : null; } } };
+  const match = async () => ({ matched: true, matchType: "base_model", maker: { known: true }, product: { model: "99", base_model: "99" }, cutSheets: [{ r2Key: key, pinnedPage: null, title: "Von Duprin Price Book (2026)" }], cataloguePages: [] });
+  const r = await citedProductPages(env, [{ manufacturer: "Von Duprin", model: "PA-AX-9927-EO-F-LBR-499F" }, { manufacturer: "Nobody", model: "X1" }], async (c) => (c.manufacturer === "Nobody" ? { matched: false } : match()));
+  assert.deepEqual(r.pages.map((p) => [p.r2Key, p.pageNum, p.title]), [[key, 42, "Von Duprin Price Book"]]);
+  assert.deepEqual(r.missing, ["Nobody X1"]);
+});
