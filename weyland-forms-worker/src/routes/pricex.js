@@ -14,7 +14,7 @@
 import { jsonResponse3 } from "../lib/json-response.js";
 import { outputAccess, paymentRequired } from "../../../weyland-shared/output-access.js";
 import { matchComponentToCutSheets, PACKET_MATCH_TYPES } from "../../../weyland-shared/product-database.js";
-import { pickVariant, priceLine, finishCode } from "../lib/pricing.js";
+import { pickVariant, priceLine, finishCode, variantNumber, variantFinish } from "../lib/pricing.js";
 import { loadJob, setKey } from "./closex.js";
 
 let ready = false;
@@ -68,14 +68,15 @@ export async function priceItem(env, { maker, model, finish }, match = matchComp
   if (!vs) { vs = await variantsOf(env, m.product.id); caches.variants.set(m.product.id, vs); }
   const pick = pickVariant(vs, model, finish);
   if (!pick) return { priced: false, product: m.product, reason: `No price book on file prices ${m.product.manufacturer} ${m.product.model}.` };
+  if (!pick.variant) return { priced: false, product: m.product, candidates: pick.candidates, reason: `${m.product.manufacturer} ${m.product.model}: ${pick.note}.`, book: vs[0] ? { id: vs[0].source_catalogue_id || null, name: bookName(vs[0]) } : null };
   const v = pick.variant;
   const notes = [];
   if (pick.note) notes.push(pick.note);
-  if (!pick.finishMatched) notes.push(`no price in finish ${finish}; priced in ${v.finish_code}`);
+  if (!pick.finishMatched) notes.push(`no price in finish ${finish}; priced in ${variantFinish(v) || "the book's only finish"}`);
   return {
     priced: true,
     product: { manufacturer: m.product.manufacturer, model: m.product.model },
-    variant: { number: v.full_model_number, finish: v.finish_code, list: Number(v.list_price), effective: v.price_effective_date || null },
+    variant: { number: variantNumber(v), finish: variantFinish(v), list: Number(v.list_price), effective: v.price_effective_date || null },
     basis: pick.basis, finishMatched: pick.finishMatched,
     book: { id: v.source_catalogue_id || null, name: bookName(v) },
     note: notes.join("; ") || null,

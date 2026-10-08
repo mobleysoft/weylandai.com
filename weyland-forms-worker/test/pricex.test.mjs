@@ -3,29 +3,36 @@ import { test } from "node:test";
 import assert from "node:assert/strict";
 import { DatabaseSync } from "node:sqlite";
 import { NativeRouter } from "../src/lib/router.js";
-import { pickVariant, priceLine, finishCode } from "../src/lib/pricing.js";
+import { pickVariant, priceLine, finishCode, variantNumber, variantFinish } from "../src/lib/pricing.js";
 import { registerPricexRoutes, resetForTests, priceItem } from "../src/routes/pricex.js";
 
+// The LCN 2026 book's shape: finish class in the number, no finish code except 652.
 const LCN = [
-  { full_model_number: "4040XP-3049EDA", finish_code: "626", list_price: 292 },
-  { full_model_number: "4040XP-3049EDA", finish_code: "689", list_price: 270 },
-  { full_model_number: "4040XP-REG", finish_code: "689", list_price: 240 },
-  { full_model_number: "4040XP", finish_code: "689", list_price: 231 },
+  { full_model_number: "4040XP-3049EDA [Powder Coat]", finish_code: "", list_price: 320 },
+  { full_model_number: "4040XP-3049EDA [652 Plated]", finish_code: "652", list_price: 673 },
+  { full_model_number: "4040XP-3049EDA [Other Plated]", finish_code: "", list_price: 719 },
+  { full_model_number: "4040XP-3077EDA [Powder Coat]", finish_code: "", list_price: 330 },
+  { full_model_number: "4040XP-3077 [Powder Coat]", finish_code: "", list_price: 192 },
+  { full_model_number: "4040XP-31 [Powder Coat]", finish_code: "", list_price: 11 },
   { full_model_number: "4040XP-CUSH", finish_code: "689", list_price: 0 },
 ];
 
-test("a variant is chosen by the schedule's own number and finish, and says how", () => {
+test("a variant is chosen by the schedule's own number and finish class, and says how", () => {
   assert.equal(finishCode("US26D"), "626");
   assert.equal(finishCode("26D"), "626");
   assert.equal(finishCode("626"), "626");
-  let p = pickVariant(LCN, "4040XP-3049 EDA", "US26D");
-  assert.deepEqual([p.variant.list_price, p.basis, p.finishMatched], [292, "exact", true]);
-  p = pickVariant(LCN, "4040XP REG x 62A", "689");
-  assert.deepEqual([p.variant.full_model_number, p.basis], ["4040XP-REG", "options"]);
-  assert.match(p.note, /not priced/);
-  p = pickVariant(LCN, "4040XP REG", "693");
-  assert.equal(p.finishMatched, false, "no black price: shown in another finish, and said so");
-  assert.equal(pickVariant([{ full_model_number: "X1", finish_code: "626", list_price: 0 }], "X1", "626"), null, "a zero price is not a price");
+  const pick = (m, f) => { const p = pickVariant(LCN, m, f); return p.variant ? [p.variant.list_price, p.basis, p.finishMatched] : [null, p.candidates.length]; };
+  assert.deepEqual(pick("4040XP-3049 EDA", "US26D"), [719, "exact", true], "626 is an other-plated finish");
+  assert.deepEqual(pick("4040XP-3049EDA", "652"), [673, "exact", true], "652 has its own price");
+  assert.deepEqual(pick("4040XP-3049EDA", "689"), [320, "exact", true], "689 is powder coat");
+  assert.deepEqual(pick("4040XP-3049EDA/62A", "689"), [320, "options", true]);
+  assert.deepEqual(pick("EDA 4040XP-3049", "689"), [320, "closest", true]);
+  assert.deepEqual(pick("4040XP EDA", "689"), [null, 2], "two arms match: the schedule does not say which, so nothing is priced");
+  assert.deepEqual(pick("4040XP-3077", "626"), [192, "exact", false], "no plated price for 3077: shown in powder coat, and said so");
+  assert.equal(pickVariant(LCN, "4040XP-CUSH", "689").variant, null, "a zero price is not a price");
+  assert.match(pickVariant(LCN, "4040XP-3049EDA", "").note, /no finish on the schedule/);
+  assert.equal(variantNumber(LCN[0]), "4040XP-3049EDA");
+  assert.equal(variantFinish(LCN[0]), "Powder Coat");
 });
 
 test("net and extended at the multiplier, in cents", () => {
@@ -51,9 +58,10 @@ function makeDb() {
   const c = db.prepare("INSERT INTO hardware_components VALUES (?,?,?,'EA',?,?,?,?,NULL,?)");
   c.run("h2", "closer", 1, "LCN", "4040XP EDA", "4040XP-3049 EDA", "626", 1);
   c.run("h2", "stop", 1, "Nobody", "XYZ-1", "XYZ-1", "626", 2);
-  c.run("h1", "closer", 1, "LCN", "4040XP REG", "4040XP REG", "689", 1);
-  const v = db.prepare("INSERT INTO product_variants VALUES ('p40',?,?,?,'2026-01-05','cat1',1)");
+  c.run("h1", "closer", 1, "LCN", "4040XP-3077", "4040XP-3077", "689", 1);
+  const v = db.prepare("INSERT INTO product_variants VALUES ('p40',?,?,?,'2026-05-29','cat1',1)");
   for (const x of LCN) v.run(x.full_model_number, x.finish_code, x.list_price);
+  db.prepare("INSERT INTO product_variants VALUES ('p40','4040XP-3049EDA','626',292,'2025-02-28','cat1',0)").run(); // a superseded edition
   db.prepare("INSERT INTO catalogues VALUES ('cat1','LCN Price Book','2026')").run();
   db.prepare("INSERT INTO users VALUES ('u1','free','trialing',NULL)").run();
   return db;
@@ -65,7 +73,10 @@ const match = async (c) => c.manufacturer === "LCN"
 test("one item: its price and the book it is from; an unknown maker is not priced", async () => {
   const env = { DB: d1(makeDb()) };
   const p = await priceItem(env, { maker: "LCN", model: "4040XP-3049EDA", finish: "26D" }, match);
-  assert.deepEqual([p.priced, p.variant.list, p.book.name, p.basis], [true, 292, "LCN Price Book 2026", "exact"]);
+  assert.deepEqual([p.priced, p.variant.list, p.variant.finish, p.book.name, p.basis], [true, 719, "Other Plated", "LCN Price Book 2026", "exact"], "the superseded edition's price is not used");
+  const amb = await priceItem(env, { maker: "LCN", model: "4040XP EDA", finish: "689" }, match);
+  assert.equal(amb.priced, false);
+  assert.match(amb.reason, /2 configurations matching 4040XP EDA \(4040XP-3049EDA, 4040XP-3077EDA\)/);
   const n = await priceItem(env, { maker: "Nobody", model: "XYZ-1" }, match);
   assert.equal(n.priced, false);
   assert.match(n.reason, /Nobody is not a maker/);
@@ -80,7 +91,7 @@ test("routes: the schedule priced at the account's multipliers, openings per set
   const call = (m, path, body, h = {}) => r.handle(new Request("https://weylandai.com" + path, { method: m, headers: h, body: body ? JSON.stringify(body) : undefined }), env, {});
 
   const look = await (await call("GET", "/api/forms/pricex/lookup?maker=LCN&model=4040XP-3049EDA&finish=626", null, { "x-guest": "1" })).json();
-  assert.equal(look.variant.list, 292, "the lookup is free, signed in or not");
+  assert.equal(look.variant.list, 719, "the lookup is free, signed in or not");
   assert.equal((await call("POST", "/api/forms/pricex/session/s1", {}, { "x-guest": "1" })).status, 401);
   assert.equal((await call("POST", "/api/forms/pricex/session/s1", {}, { "x-user": "u2" })).status, 403);
 
@@ -90,22 +101,22 @@ test("routes: the schedule priced at the account's multipliers, openings per set
 
   const res = await (await call("POST", "/api/forms/pricex/session/s1", {})).json();
   const closer2 = res.lines.find((l) => l.set === "2" && l.maker === "LCN");
-  assert.deepEqual([closer2.openings, closer2.qty, closer2.list, closer2.net, closer2.extended], [2, 2, 292, 122.64, 245.28], "set 2 is on doors 101 and 102 (02 and HW-2)");
+  assert.deepEqual([closer2.openings, closer2.qty, closer2.list, closer2.net, closer2.extended], [2, 2, 719, 301.98, 603.96], "set 2 is on doors 101 and 102 (02 and HW-2)");
   const closer1 = res.lines.find((l) => l.set === "1");
-  assert.equal(closer1.extended, 100.8); // 4040XP-REG 689 $240 x 0.42
+  assert.equal(closer1.extended, 80.64); // 4040XP-3077 powder coat $192 x 0.42
   const stop = res.lines.find((l) => l.maker === "Nobody");
   assert.equal(stop.priced, false);
-  assert.deepEqual([res.totals.net, res.totals.list, res.totals.unpricedLines], [346.08, 824, 1]);
+  assert.deepEqual([res.totals.net, res.totals.list, res.totals.unpricedLines], [684.6, 1630, 1]);
 
   const once = await (await call("POST", "/api/forms/pricex/session/s1", { default: 1 })).json();
-  assert.equal(once.totals.net, 824, "multipliers sent with the request price this run only");
+  assert.equal(once.totals.net, 1630, "multipliers sent with the request price this run only");
 
   assert.equal((await call("POST", "/api/forms/pricex/session/s1/csv", {})).status, 402);
   db.prepare("UPDATE users SET subscription_tier = 'subconp', subscription_status = 'active'").run();
   const csv = await call("POST", "/api/forms/pricex/session/s1/csv", {});
   assert.equal(csv.status, 200);
   const text = await csv.text();
-  assert.match(text, /4040XP-3049EDA,626,exact,LCN Price Book 2026,292\.00,0\.42,122\.64,245\.28/);
-  assert.match(text, /Total of priced lines \(list\),824\.00,,,346\.08/);
+  assert.match(text, /4040XP-3049EDA,Other Plated,exact,LCN Price Book 2026,719\.00,0\.42,301\.98,603\.96/);
+  assert.match(text, /Total of priced lines \(list\),1630\.00,,,684\.60/);
   assert.match(text, /not priced/);
 });
