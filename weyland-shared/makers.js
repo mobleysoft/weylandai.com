@@ -111,7 +111,9 @@ const FINISH_WORDS = new Set([
   "dkb", "dkbrz", "brz", "bronze", "brn", "brown", "wht", "white", "gold", "brass", "chrome", "nickel", "oil", "orb",
   "sp28", "spblk", "sp313", "313an", "sp4", "sp10b", "mtblk", "stat", "dkbz", "satin", "bright", "anodized",
 ]);
-const BHMA_FINISH_RE = /^(?:6\d\d|7\d\d)[A-Z]{0,2}$/;
+// The BHMA 600 series (605 bright brass ... 626 satin chrome, 630 satin stainless, 689 aluminum
+// paint ...). The 700 series is left out: it is rare on schedules and NGP numbers thresholds 713BR.
+const BHMA_FINISH_RE = /^6\d\d[A-Z]{0,2}$/;
 const US_FINISH_RE = /^US\d{1,2}[A-Z]{0,2}$/;
 
 /** True when the token is a finish code (626, 630, US26D, 689, BLK ...), not a model. */

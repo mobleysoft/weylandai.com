@@ -56,6 +56,9 @@ const HEADING_RES = [
   /^(?:for|each to have|provide|opening|openings|location|locations|mark|marks)\b\s*[:\-]?\s/i,
 ];
 
+// A spec section footer: "FINISH HARDWARE 087100-7", "DOOR HARDWARE 08 71 00 - 3".
+const FOOTER_RE = /^[A-Z][A-Z /&-]{2,40}\b0\s?8\s?\d{2}\s?\d{2}(?:\s?-\s?\d{1,2})?$/i;
+
 // A door mark: 109.1, 128.1.1, 100B, A101, 101A, 1423, P1-1.
 const DOOR_MARK_RE = /^[A-Z]{0,2}\d{1,4}[A-Z]?(?:[.-]\d{1,3}){0,3}[A-Z]?$/i;
 const DOTTED_MARK_RE = /^\d{1,4}(?:\.\d{1,3}){1,3}$/;
@@ -181,6 +184,28 @@ function parseSpecStyle(line, sets) {
     }
   }
   if (!maker && !hadQty) return null;
+  // "2 ea Schlage L9080 626", "2 ea National Guard Products Hardware Pack SLSS2": a maker we know
+  // right after the quantity and no maker at the end; the rest of the line is its catalogue number.
+  if (!maker && hadQty) {
+    for (let n = Math.min(4, tokens.length - 1); n >= 1; n--) {
+      const cand = tokens.slice(0, n).join(" ");
+      if (/\d/.test(cand) || !(isKnownMakerPhrase(cand, sets) || (n === 1 && isMakerCode(cand)))) continue;
+      const code = n === 1 && isMakerCode(cand) ? cand.toUpperCase() : null;
+      const catalog = tokens.slice(n);
+      let fin = null;
+      if (catalog.length > 1 && isFinishCode(catalog[catalog.length - 1])) fin = catalog.pop();
+      return {
+        raw: line,
+        manufacturer: code ? MAKER_CODES[code] : cand.replace(/[.,;:]+$/, ""),
+        makerCode: code || undefined,
+        model: catalog[0].replace(/[,;:]+$/, ""),
+        modelFull: catalog.length > 1 ? catalog.join(" ") : undefined,
+        qty: qty == null ? undefined : qty,
+        finish: fin || undefined,
+        kind: "spec",
+      };
+    }
+  }
 
   // The finish: the code before the maker (or at the end of a qty line with no maker).
   // A one- or two-letter token there is a finish too when a maker follows it (Zero's A, D, BK).
@@ -213,13 +238,10 @@ function parseSpecStyle(line, sets) {
       else if (isKnownMakerPhrase(cand, sets)) { maker = cand.replace(/[.,;:]+$/, ""); description = tokens.slice(0, i - n).join(" "); }
     }
   }
-  // A finish printed at the end of the catalogue number itself.
-  if (!finish && catalog.length > 1 && isFinishCode(catalog[catalog.length - 1]) && !/^\d{1,2}$/.test(catalog[catalog.length - 1])) {
-    finish = catalog.pop();
-  }
   if (catalog.length === 0 && !hadQty) return null;
-  catalog = catalog.map((t) => t.replace(/[,;:]+$/, "")).filter(Boolean);
-  const model = catalog.length ? catalog[0] : "";
+  // The catalogue number stays as typed (some models contain commas or colour words); only the
+  // model token loses punctuation that ends it.
+  const model = catalog.length ? catalog[0].replace(/[,;:]+$/, "") : "";
   const modelFull = catalog.join(" ");
   return {
     raw: line,
@@ -247,38 +269,44 @@ export function parseSpecLines(text, knownManufacturers = null) {
   if (typeof text !== "string") return out;
   const sets = knownSetFrom(knownManufacturers);
   for (const rawLine of text.split(/\r?\n/)) {
-    const line = rawLine.replace(/\s+/g, " ").trim();
+    // `raw` is the line as pasted (trimmed), so a caller can match answers back to its text;
+    // the parse works on the line with its runs of spaces collapsed.
+    const raw = rawLine.trim();
+    const tabbed = SEPARATOR_RE.test(raw);
+    const line = tabbed ? raw : raw.replace(/\s+/g, " ");
     if (!line) continue;
-    if (HEADING_RES.some((re) => re.test(line))) { out.skipped.push({ raw: line, reason: "heading" }); continue; }
+    if (HEADING_RES.some((re) => re.test(line))) { out.skipped.push({ raw, reason: "heading" }); continue; }
+    // A spec section footer: "FINISH HARDWARE 087100-7".
+    if (!tabbed && FOOTER_RE.test(line)) { out.skipped.push({ raw, reason: "footer" }); continue; }
 
     let cols;
-    if (SEPARATOR_RE.test(line)) {
+    if (tabbed) {
       cols = line.split(SEPARATOR_RE).map((c) => c.trim().replace(/^"|"$/g, "").trim()).filter(Boolean);
     } else {
       cols = line.split(/\s+/).filter(Boolean);
     }
     if (cols.length === 0) continue;
-    if (isHeaderLine(cols, line)) { out.skipped.push({ raw: line, reason: "header" }); continue; }
-    if (!SEPARATOR_RE.test(line) && isDoorList(cols, sets)) { out.skipped.push({ raw: line, reason: "doors" }); continue; }
+    if (isHeaderLine(cols, line)) { out.skipped.push({ raw, reason: "header" }); continue; }
+    if (!tabbed && isDoorList(cols, sets)) { out.skipped.push({ raw, reason: "doors" }); continue; }
 
     // A spec-style item line: quantity first, or a maker code at the end.
-    if (!SEPARATOR_RE.test(line)) {
+    if (!tabbed) {
       const spec = parseSpecStyle(line, sets);
       if (spec && (spec.manufacturer || spec.qty != null) && (spec.model || spec.noModel)) {
         // A quantity line with a known maker first ("2 ea Schlage L9080") is a Maker Model line.
-        if (!spec.noModel || spec.manufacturer) { out.lines.push(spec); continue; }
+        if (!spec.noModel || spec.manufacturer) { spec.raw = raw; out.lines.push(spec); continue; }
       }
     }
 
     // A comma separates maker and model only when a maker we know stands before it
     // ("Schlage, L9080"); any other comma is part of the model or description.
     let manufacturer = null, model = null, modelFull = null, tentative = false;
-    if (!SEPARATOR_RE.test(line) && line.includes(",")) {
+    if (!tabbed && line.includes(",")) {
       const at = line.indexOf(",");
       const head = line.slice(0, at).trim(), rest = line.slice(at + 1).trim();
       if (head && rest && isKnownMakerPhrase(head, sets)) {
         const restCols = rest.split(/\s+/).filter(Boolean);
-        out.lines.push({ raw: line, manufacturer: head, model: restCols[0], modelFull: restCols.length > 1 ? restCols.join(" ") : undefined, kind: "maker_model" });
+        out.lines.push({ raw, manufacturer: head, model: restCols[0].replace(/[,;:]+$/, ""), modelFull: restCols.length > 1 ? restCols.join(" ") : undefined, kind: "maker_model" });
         continue;
       }
     }
@@ -338,7 +366,7 @@ export function parseSpecLines(text, knownManufacturers = null) {
     model = String(model || "").trim().replace(/[,;:]+$/, "");
     if (!model) continue;
     modelFull = String(modelFull || model).trim();
-    const entry = { raw: line, manufacturer: manufacturer ? String(manufacturer).trim().replace(/[.,;:]+$/, "") : null, model, modelFull: modelFull !== model ? modelFull : undefined, kind: manufacturer ? "maker_model" : "model_only" };
+    const entry = { raw, manufacturer: manufacturer ? String(manufacturer).trim().replace(/[.,;:]+$/, "") : null, model, modelFull: modelFull !== model ? modelFull : undefined, kind: manufacturer ? "maker_model" : "model_only" };
     if (tentative) entry.tentative = true;
     out.lines.push(entry);
   }

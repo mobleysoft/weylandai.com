@@ -99,7 +99,7 @@ export function lineFromFields(fields, knownManufacturers = []) {
 // come back signed (lib/citation-links.js), so a citation opens as a plain
 // link for the guest or account that asked.
 export async function matchLine(line, env2) {
-  const r = await matchComponentToCutSheets({ manufacturer: line.manufacturer || void 0, model: line.model, modelFull: line.modelFull || void 0 }, env2);
+  const r = await matchComponentToCutSheets({ manufacturer: line.manufacturer || void 0, model: line.model, modelFull: line.modelFull || void 0, description: line.description || void 0, noModel: line.noModel || void 0 }, env2);
   return signMatchResultLinks(env2, r);
 }
 
