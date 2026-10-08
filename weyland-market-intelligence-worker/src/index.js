@@ -35,9 +35,17 @@
 import { trafficDrivenJob } from "./lib/job-lease.js";
 import { NativeRouter } from "./lib/router.js";
 import { registerMarketIntelligenceRoutes, computePriceIndexSnapshot } from "./routes/market-intelligence.js";
+import { registerCompxRoutes } from "./routes/compx.js";
+import { ingestAwards } from "./lib/awards.js";
+import compxHtml from "./pages/compx.html";
+import { secured } from "../../weyland-shared/security-headers.js";
 
 const router = new NativeRouter();
 registerMarketIntelligenceRoutes(router);
+registerCompxRoutes(router);
+// The rebuilt tools' pages (2026-10-08): this worker now has zone routes for them.
+const page = (html) => () => new Response(html, { headers: { "Content-Type": "text/html; charset=UTF-8", "Cache-Control": "no-store" } });
+for (const p of ["/compx", "/compx/"]) router.get(p, page(compxHtml));
 
 // Daily pre-warm (wrangler.toml [triggers], second cron) - per direct
 // instruction (2026-10-05) no visitor request should be the first to hit
@@ -70,7 +78,7 @@ async function prewarmProjectLocations(env, ctx) {
   return summary;
 }
 
-export default {
+export default secured({
   async fetch(request, env, ctx) {
     const url = new URL(request.url);
     // Traffic-driven freshness (2026-10-05): Cron Triggers on this account are
@@ -79,6 +87,8 @@ export default {
     // here waits on them and nothing here calls outside the conglomerate.
     trafficDrivenJob(env, ctx, { db: env.DB, job: "marketx-prewarm-locations", cadenceSeconds: 86400, worker: "weyland-market-intelligence-worker",
       run: () => prewarmProjectLocations(env, ctx).then((r) => console.log("[prewarm-locations] traffic-driven:", JSON.stringify(r))) });
+    trafficDrivenJob(env, ctx, { db: env.DB, job: "compx-awards-ingest", cadenceSeconds: 86400, worker: "weyland-market-intelligence-worker",
+      run: () => ingestAwards(env.DB).then((r) => console.log("[compx-awards] traffic-driven:", JSON.stringify(r))) });
     trafficDrivenJob(env, ctx, { db: env.DB, job: "pricex-index-snapshot", cadenceSeconds: 7 * 86400, worker: "weyland-market-intelligence-worker",
       run: () => computePriceIndexSnapshot(env).then((r) => console.log("[price-index-snapshot] traffic-driven:", JSON.stringify(r))) });
     // Own health check, answered directly - not part of the extracted
@@ -93,4 +103,4 @@ export default {
     return router.handle(request, env, ctx);
   },
 
-};
+});

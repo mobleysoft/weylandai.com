@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#090a0d">
+  <title>CompX | Who wins public door and building work</title>
+  <meta name="description" content="CompX searches public contract awards for door, hardware and building work: who won, how much, from which agency and by what method, with the vendors ranked by what they won.">
+  <style>
+    :root{--bg:#090a0d;--panel:#111318;--line:#2b3038;--text:#eef1f2;--muted:#9299a3;--primary:#2a52ff;--accent:#ffd400;--red:#ff716b;--green:#68e0a0}
+    *{box-sizing:border-box}html,body{margin:0;background:var(--bg);color:var(--text);font-family:"Avenir Next","Helvetica Neue",-apple-system,sans-serif}body{overflow-x:hidden}
+    .shell{max-width:1320px;margin:auto;padding:20px clamp(14px,2.5vw,36px) 50px}
+    html.wa-standalone .shell{padding-top:64px}
+    header{display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap;margin-bottom:18px}
+    .brand{display:flex;align-items:center;gap:12px;color:var(--text);text-decoration:none}.mark{width:42px;height:42px;display:grid;place-items:center;background:var(--primary);color:var(--bg);font-weight:900}
+    .brand b{display:block;letter-spacing:.16em}.brand small{display:block;color:var(--muted);font:700 9px/1.5 ui-monospace,monospace;letter-spacing:.11em}
+    nav{display:flex;gap:8px;flex-wrap:wrap}
+    nav a,.btn{border:1px solid var(--line);border-radius:99px;padding:9px 14px;color:var(--text);text-decoration:none;background:transparent;font:750 10px/1 ui-monospace,monospace;letter-spacing:.06em;cursor:pointer}
+    .btn.primary{background:var(--primary);border-color:var(--primary);color:#fff;font-weight:900}.btn:disabled{opacity:.5}
+    .eyebrow{color:var(--primary);font:800 11px/1 ui-monospace,monospace;letter-spacing:.18em}
+    h1{font-size:clamp(34px,4.5vw,56px);letter-spacing:-.05em;margin:10px 0 6px}
+    .lead{max-width:860px;color:var(--muted);line-height:1.6;margin:0 0 18px}
+    .grid{display:grid;grid-template-columns:minmax(0,430px) minmax(0,1fr);gap:16px;align-items:start}
+    .card{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:16px}
+    label{display:block;font:700 10px/1.4 ui-monospace,monospace;letter-spacing:.06em;color:var(--muted);margin:10px 0 4px}
+    input,select{width:100%;background:#161920;border:1px solid var(--line);border-radius:9px;padding:9px 11px;color:#fff;font-size:14px}
+    .row2{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+    .note{font-size:13px;line-height:1.5;color:var(--muted);margin:10px 0 0}
+    .warn{color:var(--accent)}.err{color:var(--red)}
+    .paper{background:#fbfbf8;color:#111;border-radius:6px;padding:clamp(18px,4vw,44px);font-family:Georgia,"Times New Roman",serif;font-size:14px;line-height:1.6;min-height:500px}
+    .paper h2{text-align:center;font-size:17px;margin:0 0 14px;text-transform:none}
+    .paper .f{margin:4px 0}.paper .f b{font-weight:700}.paper .f span{border-bottom:1px solid #999;padding:0 4px}
+    .paper p{text-align:justify;margin:10px 0}
+    .paper .sig{margin:18px 0 0 50%;}.paper .sig div{border-bottom:1px solid #333;min-height:22px;margin-top:12px}.paper .sig small{display:block;color:#666;font-size:10px}
+    .paper .notice{border:2px solid #000;padding:10px;font-weight:700;font-size:16px;margin-top:16px}
+    .cite{font-size:12px;color:var(--muted);margin:10px 2px}.cite a{color:var(--muted)}
+    .actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+    .pay{border:1px solid rgba(255,212,0,.4);background:rgba(255,212,0,.06);border-radius:12px;padding:10px 12px;font-size:13px;line-height:1.5;margin-top:10px}
+    @media(max-width:900px){.grid{grid-template-columns:1fr}}
+      table.t{width:100%;border-collapse:collapse;font-size:13px}table.t td,table.t th{padding:7px 9px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}.num{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
+    .filters{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px}.filters input,.filters select{width:auto;flex:1;min-width:160px}
+    .scroll{overflow-x:auto}
+  </style>
+</head>
+<body>
+  <div class="shell">
+    <header>
+      <a class="brand" href="/"><span class="mark">CP</span><span><b>COMPX</b><small>WHO WINS THE WORK</small></span></a>
+      <nav><a href="/huntx">HUNTX</a><a href="/bidx">BIDX</a><a href="/pricing">PRICING</a></nav>
+    </header>
+    <div class="eyebrow">CONTRACT AWARDS</div>
+    <h1>CompX</h1>
+    <p class="lead">Public contract awards for door, hardware and building work: who won, how much, from which agency and how they were selected, with the vendors ranked by what they won. The awards come from New York City's City Record (construction and door work since 2021), kept in our own index and refreshed daily. Use it to size up the competitors on the bids HuntX finds. Any search shows the 10 newest awards and the top 5 vendors; every row, the full ranking and the CSV come with CompX, the suite or the $100 first submittal.</p>
+    <div class="card">
+      <div class="filters">
+        <input id="q" placeholder="search title, vendor or agency (e.g. hollow metal, storefront, School Construction)">
+        <select id="fit"><option value="doors">Door and hardware work</option><option value="building" selected>Building work (doors likely)</option><option value="all">All construction</option></select>
+        <input id="since" type="date" aria-label="Awarded since">
+        <button class="btn" id="csv" type="button">CSV</button>
+      </div>
+      <div class="status" id="status"></div>
+      <div class="grid" style="grid-template-columns:minmax(0,1fr) minmax(0,1fr)">
+        <div class="scroll"><b>Vendors</b><table class="t"><thead><tr><th>VENDOR</th><th class="num">AWARDS</th><th class="num">TOTAL</th><th>LAST</th></tr></thead><tbody id="vendors"></tbody></table></div>
+        <div class="scroll"><b>Agencies</b><table class="t"><thead><tr><th>AGENCY</th><th class="num">AWARDS</th><th class="num">TOTAL</th></tr></thead><tbody id="agencies"></tbody></table></div>
+      </div>
+      <div class="scroll" style="margin-top:14px"><b>Awards</b><table class="t"><thead><tr><th>DATE</th><th>AGENCY</th><th>WORK</th><th>VENDOR</th><th class="num">AMOUNT</th><th>METHOD</th></tr></thead><tbody id="awards"></tbody></table></div>
+      <div id="pay"></div>
+    </div>
+  </div>
+  <script>
+  (function () {
+    var embedded = false;
+    try { embedded = window.self !== window.top; } catch (e) { embedded = true; }
+    function parentShell() { try { return embedded && window.parent && window.parent.WeylandShell ? window.parent.WeylandShell : null; } catch (e) { return null; } }
+    function shell() { return parentShell() || window.WeylandShell || null; }
+    function loadScript(src) { return new Promise(function (res, rej) { var s = document.createElement("script"); s.src = src; s.onload = res; s.onerror = rej; document.head.appendChild(s); }); }
+    if (!embedded) document.documentElement.classList.add("wa-standalone");
+    var ready = embedded ? Promise.resolve() : (window.AuthForStandard ? Promise.resolve() : loadScript("/assets/authfor-integration-standard.js"))
+      .then(function () { return window.WeylandShell ? null : loadScript("/assets/weyland-shell.js"); }).catch(function () {});
+    window.WeylandPage = {
+      ready: ready,
+      signIn: function (continueTo) { return ready.then(function () { var s = shell(); if (s) return s.open("signin", embedded ? { continueTo: continueTo } : {}); location.href = "/login?redirect=" + encodeURIComponent(continueTo); }); }
+    };
+  })();
+  </script>
+  <script>
+  (function () {
+    "use strict";
+    var $ = function (id) { return document.getElementById(id); };
+    function esc(s) { return String(s == null ? "" : s).replace(/[<>&"']/g, function (c) { return { "<": "&lt;", ">": "&gt;", "&": "&amp;", "\"": "&quot;", "'": "&#39;" }[c]; }); }
+    function token() { try { return localStorage.getItem("_authfor_token"); } catch (e) { return null; } }
+    function headers() { var h = {}; var t = token(); if (t) h.Authorization = "Bearer " + t; return h; }
+    function money(n) { return n == null ? "-" : "$" + Math.round(Number(n)).toLocaleString("en-US"); }
+    function qs(extra) { var p = new URLSearchParams(); if ($("q").value.trim()) p.set("q", $("q").value.trim()); p.set("fit", $("fit").value); if ($("since").value) p.set("since", $("since").value); if (extra) Object.keys(extra).forEach(function (k) { p.set(k, extra[k]); }); return p.toString(); }
+    var timer = null;
+    function load() {
+      clearTimeout(timer);
+      timer = setTimeout(function () {
+        $("status").textContent = "Searching...";
+        fetch("/api/compx/awards?" + qs(), { credentials: "same-origin", headers: headers() }).then(function (r) { return r.json(); }).then(function (d) {
+          if (!d.success) { $("status").textContent = d.message || "Search failed."; return; }
+          $("status").textContent = d.count + " awards, " + money(d.total) + " in total" + (d.indexedAt ? " · index updated " + String(d.indexedAt).slice(0, 10) : " · the index is being built, check back in a minute") + (d.limited ? " · showing the 10 newest and the top 5 vendors" : "");
+          $("vendors").innerHTML = d.vendors.map(function (v) { return "<tr><td>" + esc(v.vendor) + "</td><td class=num>" + v.awards + "</td><td class=num>" + money(v.total) + "</td><td>" + esc(v.last_award || "") + "</td></tr>"; }).join("") || "<tr><td colspan=4>None.</td></tr>";
+          $("agencies").innerHTML = d.agencies.map(function (a) { return "<tr><td>" + esc(a.agency) + "</td><td class=num>" + a.awards + "</td><td class=num>" + money(a.total) + "</td></tr>"; }).join("") || "<tr><td colspan=3>None.</td></tr>";
+          $("awards").innerHTML = d.awards.map(function (a) { return "<tr><td>" + esc(a.awarded_on) + "</td><td>" + esc(a.agency) + "</td><td>" + esc(a.title) + "</td><td>" + esc(a.vendor || "") + "</td><td class=num>" + money(a.amount) + "</td><td>" + esc(a.method || "") + "</td></tr>"; }).join("") || "<tr><td colspan=6>No awards match.</td></tr>";
+          $("pay").innerHTML = d.limited ? '<div class="pay">Every award, the full vendor ranking and the CSV come with CompX, the suite or the $100 first submittal. <a class="btn primary" href="/#offer">$100 FIRST SUBMITTAL</a> <a class="btn" href="/pricing">PLANS</a></div>' : "";
+        }).catch(function (e) { $("status").textContent = e.message; });
+      }, 250);
+    }
+    ["q", "fit", "since"].forEach(function (id) { $(id).addEventListener("input", load); $(id).addEventListener("change", load); });
+    $("csv").onclick = function () {
+      fetch("/api/compx/awards?" + qs({ format: "csv", limit: "2000" }), { credentials: "same-origin", headers: headers() }).then(function (r) {
+        if (r.status === 402) { $("pay").innerHTML = '<div class="pay">The CSV comes with CompX, the suite or the $100 first submittal. <a class="btn primary" href="/#offer">$100 FIRST SUBMITTAL</a></div>'; return; }
+        return r.blob().then(function (b) { var a = document.createElement("a"); a.href = URL.createObjectURL(b); a.download = "compx-awards.csv"; a.click(); });
+      });
+    };
+    load();
+    window.addEventListener("weyland-auth", load);
+  })();
+  </script>
+</body>
+</html>
