@@ -21,6 +21,8 @@
 // uses in production - not a new trust model.
 
 import { jsonResponse3 } from "../lib/json-response.js";
+import { authenticate } from "../lib/auth.js";
+import { outputAccess } from "../../../weyland-shared/output-access.js";
 import { stripeApi } from "../lib/stripe-api.js";
 import { checkoutLoaderSnippet } from "../lib/pricing-checkout.js";
 import {
@@ -32,33 +34,65 @@ import {
   WIRE_WORDMARK_SVG,
 } from "../lib/wire-tenant.js";
 
-async function verifyWireSession(env2, sessionId) {
+// 2026-10-08: WireX Pro is a monthly subscription, but a completed checkout
+// session id in the URL used to mean Pro forever, even after the
+// subscription was cancelled. Pro is now:
+//   - a signed-in account whose paying subscription covers WireX (the
+//     "wire" tier or the suite) or the $100 first submittal's 30 days
+//     (weyland-shared/output-access.js, the check every product uses), or
+//   - a checkout session (the link the checkout returns to) whose Stripe
+//     subscription is active or trialing right now.
+const LIVE_SUBSCRIPTION = new Set(["active", "trialing"]);
+
+export async function verifyWireSession(env2, sessionId) {
   if (!sessionId) return false;
   if (env2.VENDYAI) {
     try {
       const res = await env2.VENDYAI.fetch(`https://vendyai-com-worker.internal/api/checkout/sessions/${encodeURIComponent(sessionId)}`);
       if (res.ok) {
         const data = await res.json();
-        return data.status === "completed" && data.venture_id === "weylandai";
+        if (!(data.status === "completed" && data.venture_id === "weylandai")) return false;
+        // A ledger row that names its subscription is held to it; older rows
+        // carry none and keep the access they were sold with.
+        const sub = data.subscription_id || data.subscription || null;
+        if (sub && env2.STRIPE_SECRET_KEY) {
+          try { return LIVE_SUBSCRIPTION.has((await stripeApi(env2, "GET", `/subscriptions/${sub}`)).status); } catch { return false; }
+        }
+        return true;
       }
     } catch {}
   }
-  // 2026-10-07: embedded-checkout sessions are created by this worker directly
-  // with Stripe (routes/billing.js), so vendyai's ledger has no row for them -
-  // ask Stripe, and only count a completed WireX Pro purchase.
+  // Embedded-checkout sessions are created by this worker directly with
+  // Stripe (routes/billing.js): the session must be a completed WireX Pro
+  // purchase AND its subscription must still be live.
   if (!/^cs_(live|test)_[A-Za-z0-9]{10,200}$/.test(sessionId) || !env2.STRIPE_SECRET_KEY) return false;
   try {
     const s = await stripeApi(env2, "GET", `/checkout/sessions/${sessionId}`);
-    return s.status === "complete" && s.metadata?.venture_id === "weylandai" && s.metadata?.product_id === WEYLAND_WIRE_PRODUCT_ID;
+    if (!(s.status === "complete" && s.metadata?.venture_id === "weylandai" && s.metadata?.product_id === WEYLAND_WIRE_PRODUCT_ID)) return false;
+    const subId = typeof s.subscription === "string" ? s.subscription : s.subscription?.id;
+    if (!subId) return false;
+    const sub = await stripeApi(env2, "GET", `/subscriptions/${subId}`);
+    return LIVE_SUBSCRIPTION.has(sub.status);
   } catch {
     return false;
   }
 }
 
+/** Pro for this request: the signed-in account's plan, else the session link. */
+export async function wireIsPro(request2, env2, deps = {}) {
+  const auth = deps.authenticate || authenticate;
+  const access = deps.outputAccess || outputAccess;
+  try {
+    const { user } = await auth(request2, env2);
+    if (user && user.userId && !user.ephemeral && (await access(env2, user.userId, "wire")).paid) return true;
+  } catch {}
+  const sessionId = new URL(request2.url).searchParams.get("session_id");
+  return sessionId ? (deps.verifyWireSession || verifyWireSession)(env2, sessionId) : false;
+}
+
 export function registerWireRoutes(router) {
   router.get("/api/wire/news", async (request2, env2, ctx) => {
-    const sessionId = new URL(request2.url).searchParams.get("session_id");
-    const isPro = sessionId ? await verifyWireSession(env2, sessionId) : false;
+    const isPro = await wireIsPro(request2, env2);
     const wire = await readWireNews(env2, isPro, ctx);
     return jsonResponse3({ sources: WIRE_FEEDS.map((f) => f.source), pro: isPro, items: wire.items, ingested_at: wire.fetchedAt, warming: wire.warming });
   });
@@ -78,8 +112,7 @@ export function registerWireRoutes(router) {
   router.get("/api/wire/reports", async () => jsonResponse3({ items: WEYLAND_REPORTS }));
 
   router.get("/api/wire/verify", async (request2, env2) => {
-    const sessionId = new URL(request2.url).searchParams.get("session_id");
-    const active = await verifyWireSession(env2, sessionId);
+    const active = await wireIsPro(request2, env2);
     return jsonResponse3({ active });
   });
 
@@ -285,7 +318,8 @@ const WIRE_PAGE = `<!doctype html>
   var sid = localStorage.getItem(storageKey) || '';
 
   function loadNews() {
-  fetch('/api/wire/news' + (sid ? '?session_id=' + encodeURIComponent(sid) : ''))
+  var wireToken = null; try { wireToken = localStorage.getItem('_authfor_token'); } catch (e) {}
+  fetch('/api/wire/news' + (sid ? '?session_id=' + encodeURIComponent(sid) : ''), { credentials: 'same-origin', headers: wireToken ? { Authorization: 'Bearer ' + wireToken } : {} })
     .then(function (r) { return r.json(); })
     .then(function (data) {
       var items = data.items || [];
