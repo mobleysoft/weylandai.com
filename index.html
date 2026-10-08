@@ -1479,7 +1479,7 @@
     /* Chapter 6: SightX Spatial Digital Twin */
     .sightx-container {
       display: grid;
-      grid-template-columns: minmax(360px, 1.2fr) minmax(320px, 0.8fr);
+      grid-template-columns: 1fr;
       gap: 24px;
       margin-top: 24px;
     }
@@ -2132,15 +2132,15 @@
       </div>
       <div class="chapter-head">
         <div class="chapter-product-badge"><span>HuntX</span></div>
-        <h2>Never Miss a State Letting or School Board Funding Release.</h2>
-        <div class="chapter-tagline">Every lead traces to its own source docket.</div>
-        <p class="chapter-desc">Every public bid opportunity, verified and current.</p>
+        <h2>Texas DOT Lettings, California School Funding, NYC and Illinois Notices.</h2>
+        <div class="chapter-tagline">Four public sources, refreshed hourly, searchable by title, agency and place.</div>
+        <p class="chapter-desc">An index of public notices as the sources publish them. WeylandAI does not verify them, and a notice stays listed after its date has passed.</p>
       </div>
 
       <div class="filter-bar">
         <input id="hx-search" class="search-input" type="text" placeholder="Search title, agency, or location (e.g. Austin, Bridge, High School)...">
         <select id="hx-source">
-          <option value="">All Live Sources (TXDOT + CA OPSC)</option>
+          <option value="">All sources (TxDOT, CA OPSC, NYC City Record, Illinois CDB)</option>
           <option value="txdot">Texas DOT (Highway &amp; Bridge Lettings)</option>
           <option value="ca_opsc">CA School Construction Funding (OPSC)</option>
         </select>
@@ -2150,14 +2150,14 @@
 
       <div class="metrics-row" style="grid-template-columns:repeat(3,1fr)">
         <div class="metric-card"><span>Opportunities Listed</span><strong id="hx-count">&mdash;</strong></div>
-        <div class="metric-card"><span>Last Pipeline Sync</span><strong id="hx-last-fetch" style="font-size:16px;color:var(--blue)">Connecting&hellip;</strong></div>
-        <div class="metric-card"><span>Active Public Capital</span><strong style="font-size:24px;color:var(--green)">$142,850,000</strong></div>
+        <div class="metric-card"><span>Sources last ingested</span><strong id="hx-last-fetch" style="font-size:16px;color:var(--blue)">Connecting&hellip;</strong></div>
+        <div class="metric-card"><span>Listed value of the rows shown</span><strong id="hx-capital" style="font-size:24px;color:var(--green)">&mdash;</strong></div>
       </div>
 
       <div class="table-card">
         <div class="card-head">
           <h3>Public Construction Opportunities Feed</h3>
-          <span style="color:var(--green)">LIVE STATE OPEN-DATA STREAM</span>
+          <span style="color:var(--green)">PUBLIC OPEN-DATA INDEX, REFRESHED HOURLY</span>
         </div>
         <div class="table-scroll">
           <table>
@@ -2179,13 +2179,13 @@
     <section class="story-chapter" id="takeoffx">
       <div class="chapter-eyebrow">
         <span class="ch-badge">TAKEOFFX</span>
-        <span>MACHINE-VISION VECTOR BLUEPRINT QUANTIFICATION</span>
+        <span>DOOR COUNTS FROM YOUR SCHEDULE PAGE</span>
       </div>
       <div class="chapter-head">
         <div class="chapter-product-badge"><span>TakeoffX</span></div>
-        <h2>Read Schedules &amp; Quantify Openings in Milliseconds.</h2>
-        <div class="chapter-tagline">Vector geometry, not guesswork.</div>
-        <p class="chapter-desc">Door and hardware counts, without the manual takeoff. The canvas below is stage 1 running on a real public bid-set sheet; the schedule stage underneath is where the door counts come from.</p>
+        <h2>Count Doors by Size, Rating and Hardware Set from Your Schedule Page.</h2>
+        <div class="chapter-tagline">Every count traced to the row it came from; a page reads in 18 to 40 seconds.</div>
+        <p class="chapter-desc">Door and hardware counts from a ruled schedule table, not from the drawings. The canvas below is a stored example of stage-1 wall extraction from a real public bid-set sheet; it is not run for you. The door counts come from the schedule reader.</p>
       </div>
 
       <div class="workspace-grid">
@@ -2194,7 +2194,7 @@
           <div class="canvas-header">
             <div>
               <strong style="color:#fff;font-size:15px">Stage-1 Vector Extraction &middot; Fayette County, GA bid set</strong>
-              <small style="display:block;color:var(--muted);font-family:ui-monospace,monospace">Public addendum plans &middot; Life Safety Plan, page 6 of 21 &middot; drawn from the extracted geometry</small>
+              <small style="display:block;color:var(--muted);font-family:ui-monospace,monospace">Public addendum plans &middot; Life Safety Plan, page 6 of 21 &middot; a stored result, drawn from geometry extracted once</small>
             </div>
             <span class="status-badge" id="tx-scale-badge" style="background:rgba(97,223,160,.15);color:var(--green);border:1px solid rgba(97,223,160,.35)">SCALE LOCK: loading</span>
           </div>
@@ -2240,93 +2240,26 @@
     <section class="story-chapter" id="subx">
       <div class="chapter-eyebrow">
         <span class="ch-badge ch-accent">SUBX</span>
-        <span>SUBMITTAL AUTOMATION &middot; LIVE TRIAL SESSION</span>
+        <span>SUBMITTAL AUTOMATION &middot; YOUR SAMPLE SESSION</span>
       </div>
       <div class="chapter-head">
         <div class="chapter-product-badge"><span>SubX</span></div>
-        <h2>Turn a Door Schedule into a Matched Submittal &mdash; Live.</h2>
-        <div class="chapter-tagline">From schedule to submittal, zero rekeying.</div>
-        <p class="chapter-desc">Hardware sets and submittal requirements, extracted and catalog-matched, with citations.</p>
+        <h2>Read a Door Schedule Page into a Door List, Then a Packet.</h2>
+        <div class="chapter-tagline">Reads ruled schedule tables on the page you name; a size it cannot read with certainty is flagged, not guessed.</div>
+        <p class="chapter-desc">Door rows and hardware sets read from a ruled schedule table, each traced to its page and row, matched to the catalogue where it covers them, and built into the submittal PDF. Full-size CAD sheets and hardware groups printed in a spec section do not read yet.</p>
       </div>
 
-      <!-- 5-Step Pipeline Walk -->
-      <div class="pipeline" id="pipeline" aria-label="The real pipeline, step by step: raw drawing to matched submittal">
-        <div class="tab-rail tab-rail-mobile" role="tablist" aria-label="Pipeline steps">
-          <button class="tab-btn" data-tone="blue" data-beat="1" role="tab"><span>1</span><b>Raw Input</b></button>
-          <button class="tab-btn" data-tone="yellow" data-beat="2" role="tab"><span>2</span><b>Quantify</b></button>
-          <button class="tab-btn" data-tone="blue" data-beat="3" role="tab"><span>3</span><b>Extract</b></button>
-          <button class="tab-btn" data-tone="yellow" data-beat="4" role="tab"><span>4</span><b>Match</b></button>
-          <button class="tab-btn" data-tone="blue" data-beat="5" role="tab"><span>5</span><b>Assemble</b></button>
-        </div>
-
-        <div class="pipeline-layout">
-          <nav class="tab-rail tab-rail-desktop" role="tablist" aria-label="Pipeline steps">
-            <button class="tab-btn" data-tone="blue" data-beat="1" role="tab">1 &middot; <b>Raw Input</b></button>
-            <button class="tab-btn" data-tone="yellow" data-beat="2" role="tab">2 &middot; <b>Quantify</b></button>
-            <button class="tab-btn" data-tone="blue" data-beat="3" role="tab">3 &middot; <b>Extract</b></button>
-            <button class="tab-btn" data-tone="yellow" data-beat="4" role="tab">4 &middot; <b>Match</b></button>
-            <button class="tab-btn" data-tone="blue" data-beat="5" role="tab">5 &middot; <b>Assemble</b></button>
-          </nav>
-
-          <div class="beats">
-            <article class="beat" id="beat-1" data-beat="1">
-              <span class="beat-live-chip captured">CAPTURED ONCE &middot; REAL SOURCE DOCUMENT</span>
-              <div class="beat-kicker"><span class="beat-num blue">01</span><span class="beat-title">Raw Input</span></div>
-              <p class="beat-sub">A real page from &ldquo;The WeylandAI Building&rdquo;'s door &amp; hardware schedule &mdash; the exact sheet SubX reads to produce everything in the steps below and in the live trial panel further down.</p>
-              <figure class="pl-raw-figure">
-                <picture>
-                  <source srcset="/assets/pipeline/door-schedule-p1.webp" type="image/webp">
-                  <img src="/assets/pipeline/door-schedule-p1.jpg" width="1100" height="435" loading="lazy" decoding="async" alt="Sheet A9.01 Door and Hardware Schedule">
-                </picture>
-                <figcaption>Sheet A9.01 &middot; Door &amp; Hardware Schedule, captured directly from the real uploaded PDF behind this demo project.</figcaption>
-              </figure>
-            </article>
-
-            <article class="beat" id="beat-2" data-beat="2">
-              <span class="beat-live-chip">LIVE &middot; YOUR TRIAL SESSION</span>
-              <div class="beat-kicker"><span class="beat-num yellow">02</span><span class="beat-title">TakeOffX Quantifies</span></div>
-              <p class="beat-sub">Real quantities, tallied against the drawing above &mdash; computed from the live door-index response loaded into your session.</p>
-              <div class="pl-tally" id="pl-tally">
-                <div class="pl-tally-card"><span>Door Openings</span><strong><span class="skel" style="width:1.6em;height:20px"></span></strong></div>
-                <div class="pl-tally-card"><span>Hardware Sets</span><strong><span class="skel" style="width:1.6em;height:20px"></span></strong></div>
-                <div class="pl-tally-card"><span>Door Types</span><strong><span class="skel" style="width:1.6em;height:20px"></span></strong></div>
-              </div>
-              <div class="pl-tally" id="pl-tally-types" style="margin-top:10px"></div>
-            </article>
-
-            <article class="beat" id="beat-3" data-beat="3">
-              <span class="beat-live-chip">LIVE &middot; YOUR TRIAL SESSION</span>
-              <div class="beat-kicker"><span class="beat-num blue">03</span><span class="beat-title">SubX Extracts</span></div>
-              <p class="beat-sub">Every hardware set SubX pulled from that one page, matched back to the doors it governs &mdash; with the real per-row extraction confidence.</p>
-              <ul class="pl-extract-list" id="pl-extract-list" aria-live="off">
-                <li class="pl-extract-row"><span class="skel" style="width:100%;height:16px"></span></li>
-              </ul>
-            </article>
-
-            <article class="beat" id="beat-4" data-beat="4">
-              <span class="beat-live-chip captured">CAPTURED ONCE &middot; REAL D1 CATALOGUE QUERY</span>
-              <div class="beat-kicker"><span class="beat-num yellow">04</span><span class="beat-title">CutsheetX Matches</span></div>
-              <p class="beat-sub">Real manufacturer catalogue entries from WeylandAI's 60,000-variant product database, with real citations &mdash; and a real &ldquo;not matched yet&rdquo; case shown plainly.</p>
-              <div class="pl-match-grid" id="pl-match-grid"></div>
-            </article>
-
-            <article class="beat" id="beat-5" data-beat="5">
-              <span class="beat-live-chip">LIVE + CAPTURED &middot; COMBINED REAL DATA</span>
-              <div class="beat-kicker"><span class="beat-num blue">05</span><span class="beat-title">Submittal Assembled</span></div>
-              <p class="beat-sub">The real contents of the assembled package &mdash; an honest rollup of everything real shown above.</p>
-              <div class="pl-assemble" id="pl-assemble">
-                <div class="pl-assemble-card"><span>Doors Covered</span><strong><span class="skel" style="width:1.4em;height:18px"></span></strong></div>
-                <div class="pl-assemble-card"><span>Hardware Sets</span><strong><span class="skel" style="width:1.4em;height:18px"></span></strong></div>
-                <div class="pl-assemble-card"><span>Cut Sheets Cited</span><strong id="pl-cited-count"><span class="skel" style="width:1.4em;height:18px"></span></strong></div>
-                <div class="pl-assemble-card"><span>Pending Match</span><strong id="pl-pending-count"><span class="skel" style="width:1.4em;height:18px"></span></strong></div>
-              </div>
-              <div class="note-card" style="margin:0">
-                This is the real assembled content, not a mockup. <a class="js-upgrade-cta button primary" href="/login?redirect=/subx-app">SIGN IN TO EXPORT THE REAL PDF PACKAGE</a>
-              </div>
-            </article>
-          </div>
-        </div>
-      </div>
+      <!-- The sample schedule page the session below was read from. 2026-10-08: the five-step
+           storyboard that stood here (five "live" panels labelled as the visitor's own session) is gone: nothing
+           ever filled its panels (fix 11, plan/weylandai_value_report.md).
+           The sample session table below is the live part. -->
+      <figure class="pl-raw-figure" style="margin:0 0 20px">
+        <picture>
+          <source srcset="/assets/pipeline/door-schedule-p1.webp" type="image/webp">
+          <img src="/assets/pipeline/door-schedule-p1.jpg" width="1100" height="435" loading="lazy" decoding="async" alt="Sheet A9.01 Door and Hardware Schedule">
+        </picture>
+        <figcaption>Sheet A9.01 &middot; Door &amp; Hardware Schedule of WeylandAI&rsquo;s own sample building: the page the sample session below was read from, once.</figcaption>
+      </figure>
 
       <!-- Badge Tray -->
       <div class="badge-tray-wrap">
@@ -2342,7 +2275,7 @@
 
       <div class="note-card">
         <b>The WeylandAI Building</b> &middot; New Corporate Headquarters, 4400 Bluestem Parkway, Austin, TX (shared example project)<br>
-        Hardware schedule extracted from a real architectural door schedule, matched against manufacturer hardware sets. <span id="source-note"><span class="skel" style="width:220px;height:9px"></span></span><br>
+        A sample schedule: WeylandAI&rsquo;s own sample building, read once and copied into your session, matched against manufacturer hardware sets. <span id="source-note"><span class="skel" style="width:220px;height:9px"></span></span><br>
         <span style="color:var(--muted)">Click any <b style="color:var(--green)">MATCHED</b> row below to acknowledge it.</span>
       </div>
 
@@ -2383,8 +2316,8 @@
       <div class="chapter-head">
         <div class="chapter-product-badge"><span>CutsheetX</span></div>
         <h2>60,000 Catalogued Variants. 8 Price Books, 7,792 Page Citations. 3,618 Catalogue Pages.</h2>
-        <div class="chapter-tagline">Every match cites its own page.</div>
-        <p class="chapter-desc">60,000 Allegion, ASSA ABLOY, Dormakaba, and Hager variants in our own store, plus 24 manufacturer catalogues indexed page by page. A match cites its price-book pages, or the catalogue page that names the model; when neither is filed the match says so and the miss is recorded.</p>
+        <div class="chapter-tagline">Most matches cite the page; the rest say so.</div>
+        <p class="chapter-desc">60,000 variants of about 10,500 products in our own store, from Allegion&rsquo;s brands (Schlage, LCN, Von Duprin, Ives, Falcon, Zero, Steelcraft, Glynn-Johnson) plus NGP, BEA, Camden and Dyke, and 24 manufacturer catalogues indexed page by page. Sargent, Corbin Russwin, Pemko, dormakaba and Hager are not covered yet. A match cites its price-book pages, or the catalogue page that names the model; a citation can be a page range, and when nothing is filed the match says so and the miss is recorded.</p>
       </div>
 
       <!-- Live cards (2026-10-05): rendered from POST /api/cut-sheets/match for
@@ -2435,7 +2368,7 @@
         <div class="metric-card" style="text-align:left"><span>Business Development &middot; Precision Auto Doors</span><strong style="font-size:18px">Andrew Miller</strong></div>
       </div>
       <div class="metrics-row" style="grid-template-columns:repeat(3,1fr);max-width:860px">
-        <div class="metric-card"><span id="bw-label">Sample package, end to end</span><strong class="g" id="bw-total">6.6&nbsp;s</strong><small id="bw-total-sub" style="color:var(--muted);font-size:11px">6 spec lines matched, proposal priced, real PDF rendered</small></div>
+        <div class="metric-card"><span id="bw-label">Sample package, end to end (measured once)</span><strong class="g" id="bw-total">6.6&nbsp;s</strong><small id="bw-total-sub" style="color:var(--muted);font-size:11px">six sample lines chosen to match; the proposal prices a fixed sample; real PDF rendered</small></div>
         <div class="metric-card"><span>Spec lines matched</span><strong class="b" id="bw-matched">6 / 6</strong><small id="bw-matched-sub" style="color:var(--muted);font-size:11px">LCN, Von Duprin, Schlage, Ives, Hager</small></div>
         <div class="metric-card"><span>Measured</span><strong class="p" id="bw-date">2026-10-04</strong><small style="color:var(--muted);font-size:11px">against production, no account; harness in the repo (launch/case-study/timed_run.mjs). This card reads the latest committed run.</small></div>
       </div>
@@ -2444,21 +2377,21 @@
     <section class="story-chapter" id="propx">
       <div class="chapter-eyebrow">
         <span class="ch-badge ch-accent">PROPX &amp; MEETINGX</span>
-        <span>PROPOSAL INTELLIGENCE &amp; MULTIPLAYER SPATIAL FIELD</span>
+        <span>PRICED PROPOSALS &amp; THE PROJECT ROOM</span>
       </div>
       <div class="chapter-head">
         <div class="chapter-product-badge"><span>PropX</span><span>MeetingX</span></div>
-        <h2>Automated Margin Protection &amp; Shared Spatial Sessions.</h2>
-        <div class="chapter-tagline">Price locked. Field synced.</div>
-        <p class="chapter-desc">Priced proposals with margin protection. One shared session for the whole team.</p>
+        <h2>Priced Proposals &amp; a Shared Project Room.</h2>
+        <div class="chapter-tagline">Your unit prices, your margin. One room for the team.</div>
+        <p class="chapter-desc">PropX prices the schedule SubX read from the unit prices you enter and makes the proposal PDF. MeetingX is a room where the team sees who is here and talks.</p>
       </div>
 
       <div class="propx-grid">
         <!-- PropX Commercial Proposal -->
         <div class="propx-card">
           <div class="propx-head">
-            <h3>The WeylandAI Building &middot; Commercial Bid Package</h3>
-            <p>Rollup of 84 openings, 12 hardware sets, labor schedules, and verified material costs.</p>
+            <h3>Sample bid package &middot; an illustration</h3>
+            <p>Sample numbers, not a quote: the sample building is 10 doors and 8 hardware sets in SubX. The PropX builder prices your own schedule from the unit prices you enter.</p>
           </div>
 
           <table>
@@ -2467,8 +2400,8 @@
             </thead>
             <tbody>
               <tr>
-                <td><strong>Direct Material Costs</strong><br><small style="color:var(--muted)">60k-variant catalog price lock</small></td>
-                <td>84 Openings</td>
+                <td><strong>Direct Material Costs</strong><br><small style="color:var(--muted)">sample material line</small></td>
+                <td>Sample openings</td>
                 <td style="text-align:right;font-weight:700">$42,650.00</td>
               </tr>
               <tr>
@@ -2502,8 +2435,8 @@
             </div>
           </div>
           <div style="display:flex;gap:12px;align-items:center;flex-wrap:wrap">
-            <span class="status-badge status-matched">PROFIT MARGIN PROTECTED</span>
-            <span style="color:var(--muted);font-size:12px">Supplier price quotes locked for 45 calendar days.</span>
+            <span class="status-badge">SAMPLE NUMBERS</span>
+            <span style="color:var(--muted);font-size:12px">The slider shows how a margin changes a bid. No price is locked or quoted here.</span>
           </div>
         </div>
 
@@ -2518,11 +2451,11 @@
         <div class="meetingx-box" id="meetingx">
           <div>
             <div class="card-head" style="padding:0 0 16px;border-bottom:1px solid var(--line);margin-bottom:16px">
-              <h3 style="margin:0">MeetingX Spatial Relay</h3>
+              <h3 style="margin:0">MeetingX Project Room</h3>
               <span class="status-badge" style="background:rgba(102,212,255,.15);color:var(--blue);border:1px solid rgba(102,212,255,.35)">EXAMPLE SESSION</span>
             </div>
             <p style="font-size:13px;color:var(--muted);line-height:1.5;margin-bottom:18px">
-              Multi-user WebRTC voice and spatial sync directly inside the project record. Estimators and jobsite superintendents annotate openings simultaneously.
+              A project room: who is here, and chat, shared with everyone in the room. Camera, screen, transcript and notes stay in your own browser; there is no shared voice or video yet.
             </p>
 
             <div class="presence-row">
@@ -2745,13 +2678,13 @@
     <section class="story-chapter" id="sightx">
       <div class="chapter-eyebrow">
         <span class="ch-badge">SIGHTX</span>
-        <span>3D FIELD TWIN &middot; A BUILDING MADE OF PARTS YOU CAN BUY</span>
+        <span>3D SAMPLE CORRIDOR &middot; MADE OF PARTS YOU CAN BUY</span>
       </div>
       <div class="chapter-head">
         <div class="chapter-product-badge"><span>SightX</span></div>
-        <h2>SightX &mdash; Walk the building you are bidding, door by door.</h2>
+        <h2>SightX &mdash; Walk a sample corridor; your matched products hang in it.</h2>
         <div class="chapter-tagline">A corridor of hollow-metal doors, every product on them a real catalog page.</div>
-        <p class="chapter-desc">Behind this dossier is a 30 m commercial corridor: hollow-metal frames, flush doors, hinges, levers and closers drawn where the hardware set mounts them, and an exit pair with rim devices at the end. Every product named in it (LCN 4040XP and 1461, Schlage L9080, Ives 5BB1, Hager BB1279, Von Duprin 99) resolves in the CutsheetX catalog today. Paste your own schedule above and press walk: your matched openings replace the sample ones. Next: the whole building from your plan set, built by the same deterministic cascades that do the matching (the rules are written down in docs/PDF_TO_TWIN_RULES.md).</p>
+        <p class="chapter-desc">Behind this dossier is a 30 m commercial corridor: hollow-metal frames, flush doors, hinges, levers and closers drawn where the hardware set mounts them, and an exit pair with rim devices at the end. Every product named in it (LCN 4040XP and 1461, Schlage L9080, Ives 5BB1, Hager BB1279, Von Duprin 99) resolves in the CutsheetX catalog today. Paste your own schedule above and press walk: your matched openings replace the sample ones. Next: the whole building from your plan set; that is not built yet.</p>
       </div>
 
       <div class="sightx-container">
@@ -2777,29 +2710,8 @@
             </button>
           </div>
 
-          <div style="display:flex;justify-content:space-between;align-items:center;font-size:11px;color:var(--muted);font-family:ui-monospace,monospace;position:relative;z-index:5">
-            <span>SHADERS: GLSL PROCEDURAL RAYMARCH</span>
-            <span>CONTROL PROFILE: TACTILE HUD PILL</span>
-          </div>
         </div>
 
-        <!-- Embedded Storyboard Tour Reel -->
-        <div class="canvas-card">
-          <div class="canvas-header">
-            <div>
-              <strong style="color:#fff;font-size:15px">Guided Storyboard Preview</strong>
-              <small style="display:block;color:var(--muted);font-family:ui-monospace,monospace">The WeylandAI Building &middot; 4 Scenes &middot; 18.0s Reel</small>
-            </div>
-            <span class="status-badge" style="background:rgba(102,212,255,.15);color:var(--blue);border:1px solid rgba(102,212,255,.35)">NARRATED REEL</span>
-          </div>
-          <div id="reel-mount" style="background:#000;border-radius:12px;overflow:hidden;border:1px solid var(--line);min-height:280px;display:flex;align-items:center;justify-content:center">
-            <!-- Storyboard SVG dynamically injected here -->
-          </div>
-          <div style="margin-top:14px;display:flex;justify-content:space-between;align-items:center">
-            <span style="font-size:12px;color:var(--muted)">Narrated tour generated by filmline-video-worker.</span>
-            <button class="button" id="btn-replay-reel" type="button">REPLAY STORYBOARD</button>
-          </div>
-        </div>
       </div>
     </section>
 
@@ -2813,13 +2725,13 @@
     <section class="story-chapter" id="wire">
       <div class="chapter-eyebrow">
         <span class="ch-badge ch-accent">WIREX</span>
-        <span>CONSTRUCTION INDUSTRY NEWS, LIVE</span>
+        <span>CONSTRUCTION INDUSTRY NEWS</span>
       </div>
       <div class="chapter-head">
         <div class="chapter-product-badge"><span>WireX</span></div>
-        <h2>One Feed for Everything Moving in Construction.</h2>
+        <h2>Construction and Security Trade Headlines.</h2>
         <div class="chapter-tagline">Real headlines. Real sources.</div>
-        <p class="chapter-desc">Pulled live from the industry press, cited to its source.</p>
+        <p class="chapter-desc">Six trade publishers, refreshed in the background, each headline linked to its source.</p>
       </div>
 
       <div class="wire-feed" id="wire-feed">
@@ -2827,8 +2739,9 @@
       </div>
 
       <div style="display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin-top:20px">
-        <span class="status-badge" style="background:rgba(255,212,0,.15);color:var(--accent);border:1px solid rgba(255,212,0,.35)">$49/MO FOR FULL SYNTHESIS</span>
-        <a class="button primary" href="#pricing">UNLOCK FULL WIREX &rarr;</a>
+        <a class="button primary" href="/news">OPEN THE FULL WIRE &rarr;</a>
+        <a class="js-checkout button" data-product="weyland-wire-seat" href="#wire">MORE HEADLINES A FEED &middot; <span data-sku-price="weyland-wire-seat">$49</span>/MO</a>
+        <span class="js-checkout-note" style="font-size:12px;color:var(--muted)" aria-live="polite"></span>
       </div>
     </section>
 
@@ -2837,12 +2750,12 @@
     <section class="story-chapter" id="whyweyland">
       <div class="chapter-eyebrow">
         <span class="ch-badge ch-accent">ABOUT</span>
-        <span>WHY WEYLANDAI &middot; SOVEREIGN ARCHITECTURAL SUPERIORITY</span>
+        <span>WHY WEYLANDAI &middot; ONE PROJECT RECORD</span>
       </div>
       <div class="chapter-head">
-        <h2>One Project Spine. Five Operating Engines.</h2>
-        <div class="chapter-tagline">One record, not five disconnected tools.</div>
-        <p class="chapter-desc">Discovery to close-out, one continuous record &mdash; not five disconnected tools.</p>
+        <h2>One Project Spine. Seven Operating Engines.</h2>
+        <div class="chapter-tagline">One record, not seven disconnected tools.</div>
+        <p class="chapter-desc">Discovery to close-out, one continuous record &mdash; not seven disconnected tools.</p>
       </div>
 
       <div class="matrix-card">
@@ -2865,8 +2778,8 @@
               </tr>
               <tr>
                 <td><strong>Plan Quantification</strong></td>
-                <td class="weyland-col"><span class="chk-yes">&check;</span> <strong>Autonomous Vector Vision</strong> &mdash; &lt; 3.0s opening detection with bounding box review.</td>
-                <td><span class="chk-no">&cross;</span> Manual clicking and drawing polygons with mouse ($299/mo).</td>
+                <td class="weyland-col"><span class="chk-yes">&check;</span> <strong>Schedule-Based Door Counts</strong> &mdash; doors by size, rating and hardware set, read from your schedule page and traced to the row.</td>
+                <td><span class="chk-no">&cross;</span> A separate takeoff subscription per user.</td>
                 <td><span class="chk-no">&cross;</span> Static PDF viewer with no native hardware AI.</td>
               </tr>
               <tr>
@@ -2877,21 +2790,21 @@
               </tr>
               <tr>
                 <td><strong>Proposal &amp; Margin Protection</strong></td>
-                <td class="weyland-col"><span class="chk-yes">&check;</span> <strong>Live Supplier Price Lock</strong> &mdash; Dynamic margin sliders and price lock guarantees.</td>
+                <td class="weyland-col"><span class="chk-yes">&check;</span> <strong>Priced Proposal</strong> &mdash; your unit prices and your margin on the schedule you read, as one PDF.</td>
                 <td><span class="chk-no">&cross;</span> Stale Excel spreadsheets prone to formula corruption.</td>
                 <td><span class="chk-no">&cross;</span> Heavy enterprise ERP change order overhead.</td>
               </tr>
               <tr>
                 <td><strong>3D Spatial Field Twin</strong></td>
-                <td class="weyland-col"><span class="chk-yes">&check;</span> <strong>Real-Time WebGL Field Twin</strong> &mdash; Zero plugins; a real building with real, buyable hardware.</td>
-                <td><span class="chk-no">&cross;</span> $3,000/seat offline desktop renderers (Lumion).</td>
+                <td class="weyland-col"><span class="chk-yes">&check;</span> <strong>Real-Time WebGL Corridor</strong> &mdash; Zero plugins; a sample corridor of real, buyable hardware.</td>
+                <td><span class="chk-no">&cross;</span> Offline desktop renderers, licensed per seat.</td>
                 <td><span class="chk-no">&cross;</span> Heavy BIM 360 viewer requiring high-end GPU workstations.</td>
               </tr>
               <tr>
                 <td><strong>Pricing Model</strong></td>
-                <td class="weyland-col"><span class="chk-yes">&check;</span> <strong><span data-sku-price="weyland-first-submittal">$100</span> first submittal, then the <span data-sku-price="weyland-subconp-seat">$2,000</span>/mo flat suite</strong> &mdash; 30 days of every product first, with no automatic charge; the suite only when you choose it, with uncapped estimating volume.</td>
-                <td><span class="chk-no">&cross;</span> $18,000&ndash;$30,000/yr across 4 separate vendor bills.</td>
-                <td><span class="chk-no">&cross;</span> $15,000&ndash;$45,000/yr based on firm's gross revenue.</td>
+                <td class="weyland-col"><span class="chk-yes">&check;</span> <strong><span data-sku-price="weyland-first-submittal">$100</span> first submittal, then the <span data-sku-price="weyland-subconp-seat">$2,000</span>/mo per seat suite</strong> &mdash; 30 days of every product first, with no automatic charge; the suite only when you choose it, with uncapped estimating volume.</td>
+                <td><span class="chk-no">&cross;</span> Several vendor bills a year, one per tool.</td>
+                <td><span class="chk-no">&cross;</span> Priced on the firm's gross revenue.</td>
               </tr>
             </tbody>
           </table>
@@ -2917,7 +2830,7 @@
       <div class="offer-card" id="offer" data-offer-box>
         <div class="offer-line"><strong>$100</strong> &middot; your first submittal + 30 days of every product &middot; no automatic charge</div>
         <ul class="pricing-features">
-          <li><span class="chk-yes">&check;</span> <span>One submittal packet: SubX reads your door or hardware schedule and builds the PDF, with the cut sheets, catalogue pages and citations, every line traced to its page.</span></li>
+          <li><span class="chk-yes">&check;</span> <span>One submittal packet: SubX reads a ruled door or hardware schedule table on the page you name, lists the doors and hardware sets with the page and row each came from, and builds the PDF; items our catalogue covers get their cited document. Full-size CAD sheets and spec-section hardware groups do not read yet.</span></li>
           <li><span class="chk-yes">&check;</span> <span>30 days of every product: SubX, TakeOffX, CutsheetX, SightX, PropX, MeetingX and HuntX.</span></li>
           <li><span class="chk-yes">&check;</span> <span>One payment. Nothing renews: before the 30 days end we ask you to choose a plan. Without one, the paid tools pause and your account and work stay.</span></li>
         </ul>
@@ -2936,15 +2849,14 @@
           <div class="pricing-head">
             <span style="color:var(--blue);font:800 11px ui-monospace,monospace;letter-spacing:0.12em;text-transform:uppercase">A LA CARTE ENGINE</span>
             <h3>HuntX Standalone</h3>
-            <p style="color:var(--muted);font-size:13px;line-height:1.5;margin:8px 0 0">Dedicated public construction lead discovery and automated RFP ingestion.</p>
+            <p style="color:var(--muted);font-size:13px;line-height:1.5;margin:8px 0 0">Public construction notices from four sources, indexed hourly and searchable.</p>
             <div class="pricing-cost">$799 <span>/ month</span></div>
           </div>
           <ul class="pricing-features">
             <li><span class="chk-yes">&check;</span> Texas DOT (highway &amp; bridge) live lettings</li>
             <li><span class="chk-yes">&check;</span> California school facility (OPSC) releases</li>
-            <li><span class="chk-yes">&check;</span> Real-time keyword &amp; location email alerts</li>
-            <li><span class="chk-yes">&check;</span> Export opportunities to CSV/JSON</li>
-            <li><span class="chk-yes">&check;</span> 3 Estimator logins included</li>
+            <li><span class="chk-yes">&check;</span> NYC City Record and Illinois CDB notices</li>
+            <li><span class="chk-yes">&check;</span> Search by title, agency and place; the whole index, refreshed hourly</li>
           </ul>
           <a class="js-checkout button" data-product="weyland-huntx-seat" href="#pricing" style="width:100%;justify-content:center">START HUNTX &middot; <span data-sku-price="weyland-huntx-seat">$799</span>/MO</a>
           <div class="js-checkout-note" style="font-size:12px;color:var(--muted);margin-top:8px;min-height:1.2em" aria-live="polite"></div>
@@ -2957,17 +2869,17 @@
             <span style="color:var(--accent);font:800 11px ui-monospace,monospace;letter-spacing:0.12em;text-transform:uppercase">UNIFIED OPERATING PACKAGE</span>
             <h3>SubConP Core Suite</h3>
             <p style="color:var(--muted);font-size:13px;line-height:1.5;margin:8px 0 0">The complete back-office to field automation suite for commercial subcontractors.</p>
-            <div class="pricing-cost" style="color:var(--accent)"><span data-sku-price="weyland-subconp-seat">$2,000</span> <span>/ month</span></div>
+            <div class="pricing-cost" style="color:var(--accent)"><span data-sku-price="weyland-subconp-seat">$2,000</span> <span>/ seat / month</span></div>
             <p class="plan-when">The plan for keeping every product after your first submittal&rsquo;s 30 days. Charged the day you choose it, then monthly until you cancel.</p>
           </div>
           <ul class="pricing-features">
             <li><span class="chk-yes">&check;</span> <strong>HuntX</strong>: Full state open-data lead discovery</li>
-            <li><span class="chk-yes">&check;</span> <strong>TakeoffX</strong>: Machine-vision vector blueprint reader</li>
+            <li><span class="chk-yes">&check;</span> <strong>TakeoffX</strong>: Door counts from your schedule page</li>
             <li><span class="chk-yes">&check;</span> <strong>SubX &amp; CutsheetX</strong>: 60,000 catalog matches with PDF citations</li>
-            <li><span class="chk-yes">&check;</span> <strong>PropX</strong>: Commercial proposal generator &amp; margin locks</li>
-            <li><span class="chk-yes">&check;</span> <strong>MeetingX &amp; SightX</strong>: Real-time spatial field presence &amp; 3D twin</li>
+            <li><span class="chk-yes">&check;</span> <strong>PropX</strong>: Priced proposals from your schedule and your unit prices</li>
+            <li><span class="chk-yes">&check;</span> <strong>MeetingX &amp; SightX</strong>: Project room chat and the 3D sample corridor</li>
             <li><span class="chk-yes">&check;</span> Uncapped project estimating volume</li>
-            <li><span class="chk-yes">&check;</span> Up to 10 concurrent team members</li>
+            <li><span class="chk-yes">&check;</span> One seat per person; add seats as the team grows</li>
           </ul>
           <a class="js-checkout button accent" data-product="weyland-subconp-seat" href="#pricing" style="width:100%;justify-content:center">CHOOSE THE SUITE &middot; <span data-sku-price="weyland-subconp-seat">$2,000</span>/MO</a>
           <div class="js-checkout-note" style="font-size:12px;color:var(--muted);margin-top:8px;min-height:1.2em" aria-live="polite"></div>
@@ -2978,28 +2890,21 @@
           <div class="pricing-head">
             <span style="color:var(--green);font:800 11px ui-monospace,monospace;letter-spacing:0.12em;text-transform:uppercase">PRIVATE DEPLOYMENT</span>
             <h3>Enterprise Sovereign</h3>
-            <p style="color:var(--muted);font-size:13px;line-height:1.5;margin:8px 0 0">Dedicated infrastructure, private model weights, and custom catalog digitization.</p>
+            <p style="color:var(--muted);font-size:13px;line-height:1.5;margin:8px 0 0">Quoted on request; nothing below is built yet.</p>
             <div class="pricing-cost">Custom <span>/ annual</span></div>
           </div>
           <ul class="pricing-features">
-            <li><span class="chk-yes">&check;</span> Dedicated local inference nodes (Qwen3-8B / Llama)</li>
-            <li><span class="chk-yes">&check;</span> Bi-directional Procore &amp; ERP database sync</li>
-            <li><span class="chk-yes">&check;</span> Custom private manufacturer catalog ingestion</li>
-            <li><span class="chk-yes">&check;</span> Zero data retention &amp; sovereign IP isolation</li>
-            <li><span class="chk-yes">&check;</span> 24/7 Dedicated solutions engineering</li>
+            <li><span class="chk-yes">&check;</span> Private manufacturer catalogue ingestion: on request, quoted</li>
+            <li><span class="chk-yes">&check;</span> Procore or ERP sync: on request, quoted</li>
+            <li><span class="chk-yes">&check;</span> Private deployment and data isolation: on request, quoted</li>
+            <li><span class="chk-yes">&check;</span> Dedicated engineering: on request, quoted</li>
           </ul>
           <a class="button" href="mailto:enterprise@weylandai.com" style="width:100%;justify-content:center">CONTACT ENTERPRISE</a>
         </div>
       </div>
 
-      <!-- ROI Calculator Banner -->
-      <div class="note-card" style="margin-top:36px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:18px">
-        <div>
-          <strong style="color:#fff;font-size:16px;display:block">Average Annual Subcontractor Savings: $37,600</strong>
-          <span style="color:var(--muted)">Eliminates Togal.ai ($3,600/yr), Dodge Construction ($10,000/yr), and 240+ hours of manual submittal compilation ($24,000/yr).</span>
-        </div>
-        <a class="js-upgrade-cta button primary" href="/login?redirect=/">SIGN IN WITH AUTHFOR</a>
-      </div>
+      <!-- 2026-10-08: the "average annual savings" banner that stood here is gone: a hypothetical sum, not a
+           measured one. A measured job goes here when one has run. -->
     </section>
 
     <!-- Site Footer -->
@@ -3273,6 +3178,7 @@
         location: o.location,
         date: o.key_date ? new Date(o.key_date).toLocaleDateString() : "Active",
         val: o.estimated_value ? "$" + Number(o.estimated_value).toLocaleString() : "Undisclosed",
+        valNum: Number(o.estimated_value) || 0,
         src: (o.source || "").toUpperCase(),
         url: o.detail_url || "#"
       };
@@ -3285,8 +3191,8 @@
         var doFetch = function() {
           return fetch("/api/hunt/opportunities", { headers: { "Authorization": "Bearer " + token } });
         };
-        // The page only ever reads our own index (D1). TxDOT / CA OPSC are
-        // pulled by the HuntX Worker's hourly cron, never by a visitor.
+        // The page only ever reads our own index (D1). The sources are pulled by the HuntX
+        // Worker's traffic-driven job lease in the background, never by a visitor.
         return doFetch();
       }).then(function(r) {
         if (!r.ok) return r.json().catch(function(){ return {}; }).then(function(d) {
@@ -3298,8 +3204,10 @@
         originalHuntRows = rows.map(huntApiRow);
         var ing = data && data.lastIngest;
         var when = ing && (ing.finished_at || ing.started_at) ? new Date(ing.finished_at || ing.started_at).toLocaleString() : (data && data.lastFetchedAt ? new Date(data.lastFetchedAt).toLocaleString() : null);
-        if (hxStatus) hxStatus.textContent = rows.length ? (rows.length + " opportunities in the index" + (when ? " · sources ingested " + when : "") + ".") : "The index has no opportunities matching the current filters yet.";
-        if (hxLastFetch) hxLastFetch.textContent = new Date().toLocaleTimeString();
+        var total = (data && typeof data.total === "number" && data.total >= rows.length) ? data.total : rows.length;
+        if (hxStatus) hxStatus.textContent = rows.length ? ("Showing " + rows.length + " of " + total + " opportunities in the index" + (when ? " · sources ingested " + when : "") + ".") : "The index has no opportunities matching the current filters yet.";
+        // The time the sources were last ingested (the API's lastIngest), not the visitor's clock.
+        if (hxLastFetch) hxLastFetch.textContent = when || "Unknown";
         filterHuntRows();
       }).catch(function(err) {
         if (hxStatus) hxStatus.textContent = "Couldn't read the opportunity index: " + err.message;
@@ -3314,10 +3222,12 @@
       var src = (hxSource ? hxSource.value : "").toLowerCase();
       var filtered = originalHuntRows.filter(function(r) {
         var matchesQ = !q || r.title.toLowerCase().indexOf(q) !== -1 || r.agency.toLowerCase().indexOf(q) !== -1 || r.location.toLowerCase().indexOf(q) !== -1;
-        var matchesSrc = !src || (src === "txdot" && r.src === "TXDOT") || (src === "ca_opsc" && r.src === "CA OPSC");
+        var matchesSrc = !src || (src === "txdot" && r.src === "TXDOT") || (src === "ca_opsc" && (r.src === "CA OPSC" || r.src === "CA_OPSC"));
         return matchesQ && matchesSrc;
       });
       if (hxCount) hxCount.textContent = filtered.length;
+      var hxCapital = document.getElementById("hx-capital");
+      if (hxCapital) { var capital = filtered.reduce(function (sum, r) { return sum + (r.valNum || 0); }, 0); hxCapital.textContent = capital > 0 ? "$" + Math.round(capital).toLocaleString() : "\u2014"; }
       if (hxBody) {
         if (!filtered.length) {
           hxBody.innerHTML = '<tr><td colspan="6" style="text-align:center;color:var(--muted);padding:24px">No opportunities match the search filters.</td></tr>';
@@ -3491,7 +3401,7 @@
             out.insertAdjacentHTML("beforeend",
               "<div class=\"hs-packet offer-box\" data-offer-box>" +
                 "<div class=\"offer-line\">" + hsEsc(OFFER_LINE) + "</div>" +
-                "<p class=\"offer-copy\"><strong>" + nMatched + " matched line" + (nMatched === 1 ? "" : "s") + "</strong> can become your first submittal packet: SubX builds it from your door or hardware schedule, with the cut sheets, catalogue pages and citations in one PDF and every line traced to its source. For 30 days you also have every product; nothing is charged after that unless you choose a plan.</p>" +
+                "<p class=\"offer-copy\"><strong>" + nMatched + " matched line" + (nMatched === 1 ? "" : "s") + "</strong> can become your first submittal packet: SubX reads a ruled door or hardware schedule table on the page you name, lists its doors and sets with the page and row each came from, and builds the PDF, attaching the cited document for the items our catalogue covers. For 30 days you also have every product; nothing is charged after that unless you choose a plan.</p>" +
                 "<div class=\"offer-act\">" +
                   "<a class=\"js-checkout button accent\" data-product=\"" + OFFER_SKU + "\" href=\"#pricing\">BUILD THE PACKET \u00b7 <span data-sku-price=\"" + OFFER_SKU + "\">$100</span></a>" +
                   "<span class=\"js-checkout-note\" aria-live=\"polite\"></span>" +
@@ -3582,9 +3492,9 @@
       fetch("https://mobleysoft.github.io/weylandai.com/launch/case-study/latest_run.json", { cache: "no-store" }).then(function (r) { return r.ok ? r.json() : null; }).then(function (run) {
         if (!run || !run.totalMs || run.failed) return;
         var real = run.source === "real-bid-file";
-        document.getElementById("bw-label").textContent = (real ? "A real bid, end to end" : "Sample package, end to end");
+        document.getElementById("bw-label").textContent = (real ? "A real bid, end to end" : "Sample package, end to end (measured once)");
         tot.textContent = (run.totalMs / 1000).toFixed(1) + " s";
-        document.getElementById("bw-total-sub").textContent = run.specCount + " spec lines matched, proposal priced" + (run.pdf && run.pdf.isPdf ? ", real PDF rendered" : "");
+        document.getElementById("bw-total-sub").textContent = run.specCount + " sample lines chosen to match; the proposal prices a fixed sample" + (run.pdf && run.pdf.isPdf ? "; real PDF rendered" : "");
         document.getElementById("bw-matched").textContent = run.matchedCount + " / " + run.specCount;
         var mf = {}; (run.matches || []).forEach(function (m) { if (m.matched && m.spec && m.spec.manufacturer) mf[m.spec.manufacturer] = 1; });
         document.getElementById("bw-matched-sub").textContent = Object.keys(mf).join(", ");
@@ -3697,64 +3607,8 @@
       });
     }
 
-    // 8. Chapter 06: Storyboard Reel Player
-    var REEL_SVG = `<svg viewBox="0 0 1280 720" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="WeylandAI: The Building">
-  <title>WeylandAI: The Building</title>
-  <desc>A guided tour through the corporate headquarters of WeylandAI.</desc>
-  <rect width="1280" height="720" fill="#10151c" />
-  <g>
-  <g opacity="0">
-    <animate attributeName="opacity" values="0;1;1;0" keyTimes="0;0.06;0.9;1" begin="0.00s" dur="4.5s" fill="freeze" repeatCount="1" />
-    <rect width="1280" height="720" fill="#1b2735" />
-    <circle cx="1150" cy="130" r="90" fill="#f0b800" opacity="0.14">
-      <animateTransform attributeName="transform" type="rotate" from="0 1150 130" to="360 1150 130" begin="0.00s" dur="10.80s" repeatCount="indefinite" />
-    </circle>
-    <text x="90" y="110" font-family="ui-monospace, monospace" font-size="20" fill="#f0b800" letter-spacing="4">SCENE 1 / 4</text>
-    <text x="90" y="320" font-family="'Avenir Next', sans-serif" font-size="38" font-weight="700" fill="#f4f1ea"><tspan x="90" dy="0">The tour begins in the grand lobby,</tspan><tspan x="90" dy="40">where double aluminum doors and access</tspan><tspan x="90" dy="40">controls connect seamlessly to SubX schedules.</tspan></text>
-  </g>
-  <g opacity="0">
-    <animate attributeName="opacity" values="0;1;1;0" keyTimes="0;0.06;0.9;1" begin="4.50s" dur="4.5s" fill="freeze" repeatCount="1" />
-    <rect width="1280" height="720" fill="#22314a" />
-    <circle cx="1150" cy="130" r="90" fill="#f0b800" opacity="0.14">
-      <animateTransform attributeName="transform" type="rotate" from="0 1150 130" to="360 1150 130" begin="4.50s" dur="10.80s" repeatCount="indefinite" />
-    </circle>
-    <text x="90" y="110" font-family="ui-monospace, monospace" font-size="20" fill="#f0b800" letter-spacing="4">SCENE 2 / 4</text>
-    <text x="90" y="320" font-family="'Avenir Next', sans-serif" font-size="38" font-weight="700" fill="#f4f1ea"><tspan x="90" dy="0">Guided through the executive suites,</tspan><tspan x="90" dy="40">every Schlage ND lockset and LCN closer</tspan><tspan x="90" dy="40">matches verified manufacturer catalogue sheets.</tspan></text>
-  </g>
-  <g opacity="0">
-    <animate attributeName="opacity" values="0;1;1;0" keyTimes="0;0.06;0.9;1" begin="9.00s" dur="4.5s" fill="freeze" repeatCount="1" />
-    <rect width="1280" height="720" fill="#2b3f5c" />
-    <circle cx="1150" cy="130" r="90" fill="#f0b800" opacity="0.14">
-      <animateTransform attributeName="transform" type="rotate" from="0 1150 130" to="360 1150 130" begin="9.00s" dur="10.80s" repeatCount="indefinite" />
-    </circle>
-    <text x="90" y="110" font-family="ui-monospace, monospace" font-size="20" fill="#f0b800" letter-spacing="4">SCENE 3 / 4</text>
-    <text x="90" y="320" font-family="'Avenir Next', sans-serif" font-size="38" font-weight="700" fill="#f4f1ea"><tspan x="90" dy="0">The mission-critical IT server vaults</tspan><tspan x="90" dy="40">feature 90-minute fire rated hollow metal</tspan><tspan x="90" dy="40">assemblies with automated fail-secure latches.</tspan></text>
-  </g>
-  <g opacity="0">
-    <animate attributeName="opacity" values="0;1;1;0" keyTimes="0;0.06;0.9;1" begin="13.50s" dur="4.5s" fill="freeze" repeatCount="1" />
-    <rect width="1280" height="720" fill="#33495f" />
-    <circle cx="1150" cy="130" r="90" fill="#f0b800" opacity="0.14">
-      <animateTransform attributeName="transform" type="rotate" from="0 1150 130" to="360 1150 130" begin="13.50s" dur="10.80s" repeatCount="indefinite" />
-    </circle>
-    <text x="90" y="110" font-family="ui-monospace, monospace" font-size="20" fill="#f0b800" letter-spacing="4">SCENE 4 / 4</text>
-    <text x="90" y="320" font-family="'Avenir Next', sans-serif" font-size="38" font-weight="700" fill="#f4f1ea"><tspan x="90" dy="0">The tour concludes at the logistics bay,</tspan><tspan x="90" dy="40">where verified submittal packages generate</tspan><tspan x="90" dy="40">commercial proposals with locked supplier margins.</tspan></text>
-  </g>
-  </g>
-  <text x="90" y="672" font-family="ui-monospace, monospace" font-size="14" fill="#8a94a6">WeylandAI: The Building &middot; 4 scenes &middot; 18.0s reel &middot; filmline-video-worker</text>
-</svg>`;
-
-    var reelMount = document.getElementById("reel-mount");
-    if (reelMount) reelMount.innerHTML = REEL_SVG;
-
-    var btnReplay = document.getElementById("btn-replay-reel");
-    if (btnReplay && reelMount) {
-      btnReplay.addEventListener("click", function() {
-        reelMount.innerHTML = "";
-        void reelMount.offsetWidth;
-        reelMount.innerHTML = REEL_SVG;
-        awardBadge("explorer", "Full Walkthrough Viewed");
-      });
-    }
+    // 8. (2026-10-08) The storyboard reel SVG that stood here is gone: a silent SVG typed into this file,
+    //    presented as a narrated tour, about rooms that are not in the product.
 
     // 9. Chapter 03: Live Trial Session Loading & Door Schedule Table
     var STORAGE_KEY = "weylandai_subx_demo_v1";
@@ -3770,8 +3624,7 @@
 
     var BADGES = {
       first_match: { label: "First Door Verified", desc: "Acknowledge a matched door schedule line" },
-      complete: { label: "Submittal Ready", desc: "Acknowledge all matched doors in the schedule" },
-      explorer: { label: "Full Walkthrough Viewed", desc: "Inspect the SightX animated storyboard" }
+      complete: { label: "Submittal Ready", desc: "Acknowledge all matched doors in the schedule" }
     };
 
     function renderBadges(){
@@ -4047,7 +3900,8 @@
       "weyland-first-submittal": { name: "WeylandAI first submittal", app: "SubX", path: "/subx-app", offer: true },
       "weyland-huntx-seat": { name: "WeylandAI HuntX seat", app: "HuntX", path: "/huntx" },
       "weyland-subx-seat": { name: "WeylandAI SubX seat", app: "SubX", path: "/subx-app" },
-      "weyland-subconp-seat": { name: "WeylandAI SubConP suite", app: "SubX", path: "/subx-app" }
+      "weyland-subconp-seat": { name: "WeylandAI SubConP suite", app: "SubX", path: "/subx-app" },
+      "weyland-wire-seat": { name: "WeylandAI WireX seat", app: "News", path: "/news" }
     };
     function weylandCheckoutHelper() {
       if (window.WeylandCheckout) return Promise.resolve(window.WeylandCheckout);
@@ -4134,7 +3988,7 @@
       done.appendChild(offerPara((state === "paid" ? "<strong>Paid. Your first submittal is ready to build.</strong> " : "<strong>Your first submittal is paid.</strong> ") +
         untilText + " Nothing is charged after that unless you choose a plan."));
       done.appendChild(offerPara(signedIn
-        ? "Next: open SubX and upload the door or hardware schedule for this job. SubX reads every row and builds your submittal packet."
+        ? "Next: open SubX and upload the door or hardware schedule for this job. SubX reads the ruled schedule table on the page you name and builds your submittal packet."
         : "Next: sign in with the email you paid with (we email you a code), then upload the door or hardware schedule for this job in SubX."));
       var next = offerButton(signedIn ? "OPEN SUBX: UPLOAD YOUR SCHEDULE" : "SIGN IN TO OPEN SUBX", openSubxNext);
       next.classList.add("js-offer-next");
