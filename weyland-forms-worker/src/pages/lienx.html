@@ -1,0 +1,166 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#090a0d">
+  <title>LienX | Statutory lien waivers, filled from the job</title>
+  <meta name="description" content="LienX fills your state's own statutory lien waiver form, word for word, with the job's owner, customer, amount and dates: Arizona, Nevada and Florida today. States with statutory forms LienX doesn't carry yet are refused, not given a generic waiver.">
+  <style>
+    :root{--bg:#090a0d;--panel:#111318;--line:#2b3038;--text:#eef1f2;--muted:#9299a3;--primary:#2a52ff;--accent:#ffd400;--red:#ff716b;--green:#68e0a0}
+    *{box-sizing:border-box}html,body{margin:0;background:var(--bg);color:var(--text);font-family:"Avenir Next","Helvetica Neue",-apple-system,sans-serif}body{overflow-x:hidden}
+    .shell{max-width:1320px;margin:auto;padding:20px clamp(14px,2.5vw,36px) 50px}
+    html.wa-standalone .shell{padding-top:64px}
+    header{display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap;margin-bottom:18px}
+    .brand{display:flex;align-items:center;gap:12px;color:var(--text);text-decoration:none}.mark{width:42px;height:42px;display:grid;place-items:center;background:var(--primary);color:var(--bg);font-weight:900}
+    .brand b{display:block;letter-spacing:.16em}.brand small{display:block;color:var(--muted);font:700 9px/1.5 ui-monospace,monospace;letter-spacing:.11em}
+    nav{display:flex;gap:8px;flex-wrap:wrap}
+    nav a,.btn{border:1px solid var(--line);border-radius:99px;padding:9px 14px;color:var(--text);text-decoration:none;background:transparent;font:750 10px/1 ui-monospace,monospace;letter-spacing:.06em;cursor:pointer}
+    .btn.primary{background:var(--primary);border-color:var(--primary);color:#fff;font-weight:900}.btn:disabled{opacity:.5}
+    .eyebrow{color:var(--primary);font:800 11px/1 ui-monospace,monospace;letter-spacing:.18em}
+    h1{font-size:clamp(34px,4.5vw,56px);letter-spacing:-.05em;margin:10px 0 6px}
+    .lead{max-width:860px;color:var(--muted);line-height:1.6;margin:0 0 18px}
+    .grid{display:grid;grid-template-columns:minmax(0,430px) minmax(0,1fr);gap:16px;align-items:start}
+    .card{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:16px}
+    label{display:block;font:700 10px/1.4 ui-monospace,monospace;letter-spacing:.06em;color:var(--muted);margin:10px 0 4px}
+    input,select{width:100%;background:#161920;border:1px solid var(--line);border-radius:9px;padding:9px 11px;color:#fff;font-size:14px}
+    .row2{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+    .note{font-size:13px;line-height:1.5;color:var(--muted);margin:10px 0 0}
+    .warn{color:var(--accent)}.err{color:var(--red)}
+    .paper{background:#fbfbf8;color:#111;border-radius:6px;padding:clamp(18px,4vw,44px);font-family:Georgia,"Times New Roman",serif;font-size:14px;line-height:1.6;min-height:500px}
+    .paper h2{text-align:center;font-size:17px;margin:0 0 14px;text-transform:none}
+    .paper .f{margin:4px 0}.paper .f b{font-weight:700}.paper .f span{border-bottom:1px solid #999;padding:0 4px}
+    .paper p{text-align:justify;margin:10px 0}
+    .paper .sig{margin:18px 0 0 50%;}.paper .sig div{border-bottom:1px solid #333;min-height:22px;margin-top:12px}.paper .sig small{display:block;color:#666;font-size:10px}
+    .paper .notice{border:2px solid #000;padding:10px;font-weight:700;font-size:16px;margin-top:16px}
+    .cite{font-size:12px;color:var(--muted);margin:10px 2px}.cite a{color:var(--muted)}
+    .actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+    .pay{border:1px solid rgba(255,212,0,.4);background:rgba(255,212,0,.06);border-radius:12px;padding:10px 12px;font-size:13px;line-height:1.5;margin-top:10px}
+    @media(max-width:900px){.grid{grid-template-columns:1fr}}
+  </style>
+</head>
+<body>
+  <div class="shell">
+    <header>
+      <a class="brand" href="/"><span class="mark">LX</span><span><b>LIENX</b><small>STATUTORY LIEN WAIVERS</small></span></a>
+      <nav><a href="/propx-app">PROPX</a><a href="/subx-app">SUBX</a><a href="/pricing">PRICING</a></nav>
+    </header>
+    <div class="eyebrow">LIEN WAIVERS</div>
+    <h1>LienX</h1>
+    <p class="lead">Where a state prints its lien waiver forms in its statutes, a waiver counts only on that form. LienX fills your state's statutory form word for word, from the statute on the legislature's own site, with the job's owner, customer, amount and dates. It covers Arizona, Nevada and Florida today. A state with statutory forms LienX doesn't carry yet (California, Texas and others) is refused instead of getting a generic waiver that may not hold. Any other state gets a general-form waiver labelled as one. Previewing is free; the PDF comes with LienX, the suite or the $100 first submittal.</p>
+
+    <div class="grid">
+      <form class="card" id="f" autocomplete="off">
+        <label for="state">STATE OF THE JOB</label>
+        <select id="state"></select>
+        <label for="kind">WAIVER</label>
+        <select id="kind"></select>
+        <div id="stateNote" class="note"></div>
+        <label for="fromProp">FILL FROM A PROPX PROPOSAL</label>
+        <select id="fromProp"><option value="">(sign in to list your proposals)</option></select>
+        <div id="fields"></div>
+      </form>
+      <div>
+        <div class="paper" id="paper" aria-live="polite"></div>
+        <div class="cite" id="cite"></div>
+        <div class="actions"><button class="btn primary" id="pdf" type="button">DOWNLOAD PDF</button><span id="msg" class="note"></span></div>
+        <div id="pay"></div>
+      </div>
+    </div>
+  </div>
+  <script>
+  (function () {
+    var embedded = false;
+    try { embedded = window.self !== window.top; } catch (e) { embedded = true; }
+    function parentShell() { try { return embedded && window.parent && window.parent.WeylandShell ? window.parent.WeylandShell : null; } catch (e) { return null; } }
+    function shell() { return parentShell() || window.WeylandShell || null; }
+    function loadScript(src) { return new Promise(function (res, rej) { var s = document.createElement("script"); s.src = src; s.onload = res; s.onerror = rej; document.head.appendChild(s); }); }
+    if (!embedded) document.documentElement.classList.add("wa-standalone");
+    var ready = embedded ? Promise.resolve() : (window.AuthForStandard ? Promise.resolve() : loadScript("/assets/authfor-integration-standard.js"))
+      .then(function () { return window.WeylandShell ? null : loadScript("/assets/weyland-shell.js"); }).catch(function () {});
+    window.WeylandPage = {
+      ready: ready,
+      signIn: function (continueTo) { return ready.then(function () { var s = shell(); if (s) return s.open("signin", embedded ? { continueTo: continueTo } : {}); location.href = "/login?redirect=" + encodeURIComponent(continueTo); }); }
+    };
+  })();
+  </script>
+  <script>
+  (function () {
+    "use strict";
+    var $ = function (id) { return document.getElementById(id); };
+    function esc(s) { return String(s == null ? "" : s).replace(/[<>&"']/g, function (c) { return { "<": "&lt;", ">": "&gt;", "&": "&amp;", "\"": "&quot;", "'": "&#39;" }[c]; }); }
+    function token() { try { return localStorage.getItem("_authfor_token"); } catch (e) { return null; } }
+    function headers(json) { var h = {}; var t = token(); if (t) h.Authorization = "Bearer " + t; if (json) h["Content-Type"] = "application/json"; return h; }
+    // Which blanks each state's form has (the rest are not on that form).
+    var FIELDS = {
+      common: [["company", "YOUR COMPANY (CLAIMANT / LIENOR)"], ["signerTitle", "SIGNER'S TITLE"], ["customer", "YOUR CUSTOMER (WHO YOU CONTRACTED WITH)"], ["owner", "OWNER"], ["amount", "PAYMENT AMOUNT ($)"], ["date", "DATE SIGNED"]],
+      AZ: [["project", "PROJECT"], ["jobNo", "JOB NO."], ["jobDescription", "JOB LOCATION / DESCRIPTION"], ["checkMaker", "CHECK FROM (MAKER)"], ["payee", "CHECK PAYABLE TO"], ["throughDate", "THROUGH DATE (PROGRESS)"], ["disputedAmount", "DISPUTED CLAIMS ($, FINAL)"]],
+      NV: [["propertyName", "PROPERTY NAME"], ["propertyLocation", "PROPERTY LOCATION"], ["invoiceNumber", "INVOICE / PAY APPLICATION NO."], ["paymentPeriod", "PAYMENT PERIOD (FINAL)"], ["disputedAmount", "DISPUTED CLAIMS ($, FINAL)"]],
+      FL: [["throughDate", "THROUGH DATE (PROGRESS)"], ["propertyDescription", "DESCRIPTION OF PROPERTY"]],
+      generic: [["project", "PROJECT"], ["jobDescription", "JOB LOCATION"], ["checkMaker", "PAYMENT FROM (CONDITIONAL)"], ["throughDate", "THROUGH DATE (PROGRESS)"], ["disputedAmount", "DISPUTED CLAIMS ($, FINAL)"]],
+    };
+    var values = {}, info = null, timer = null, proposals = [];
+    function fieldList() { var s = $("state").value; return FIELDS.common.concat(FIELDS[s] || FIELDS.generic); }
+    function renderFields() {
+      $("fields").innerHTML = fieldList().map(function (f) { return '<label for="v-' + f[0] + '">' + f[1] + '</label><input id="v-' + f[0] + '" data-k="' + f[0] + '" value="' + esc(values[f[0]] || "") + '">'; }).join("");
+      var st = (info.statutory.filter(function (x) { return x.code === $("state").value; })[0]) || null;
+      var rf = (info.refused.filter(function (x) { return x.code === $("state").value; })[0]) || null;
+      $("stateNote").innerHTML = st ? esc(st.note) : rf ? '<span class="warn">This state prints its own forms (' + esc(rf.cite) + '). LienX does not carry them yet and will not make a generic waiver for it.</span>' : "No statutory waiver form for this state that LienX knows of: you get a general-form waiver, labelled as one. Check your state's rules or have counsel review it.";
+    }
+    function preview() {
+      clearTimeout(timer);
+      timer = setTimeout(function () {
+        fetch("/api/forms/lienx/preview", { method: "POST", headers: headers(true), body: JSON.stringify({ state: $("state").value, kind: $("kind").value, values: values }) }).then(function (r) { return r.json(); }).then(function (d) {
+          if (!d.success) { $("paper").innerHTML = '<p class="err">' + esc(d.message) + "</p>"; $("cite").textContent = ""; $("pdf").disabled = true; return; }
+          $("pdf").disabled = false;
+          var w = d.waiver;
+          $("paper").innerHTML = w.blocks.map(function (b) {
+            if (b.t === "title") return "<h2>" + esc(b.text) + "</h2>";
+            if (b.t === "field") return '<div class="f"><b>' + esc(b.label) + "</b> <span>" + esc(b.value || "          ") + "</span></div>";
+            if (b.t === "notice") return '<div class="notice">' + esc(b.text) + "</div>";
+            if (b.t === "sign") return '<div class="sig">' + b.lines.map(function (l) { return "<div>" + esc((l.label ? l.label + " " : "") + (l.value || "")) + "</div>" + (l.caption ? "<small>" + esc(l.caption) + "</small>" : ""); }).join("") + "</div>";
+            return "<p>" + esc(b.text) + "</p>";
+          }).join("");
+          $("cite").innerHTML = w.statutory ? 'Statutory form: ' + esc(w.cite) + ' &middot; <a href="' + esc(w.source) + '" target="_blank" rel="noopener">official text</a>' : esc(w.note);
+        });
+      }, 200);
+    }
+    $("fields").addEventListener("input", function (e) { var k = e.target.getAttribute("data-k"); if (k) { values[k] = e.target.value; preview(); } });
+    $("state").addEventListener("change", function () { renderFields(); preview(); });
+    $("kind").addEventListener("change", preview);
+    $("fromProp").addEventListener("change", function () {
+      var p = proposals.filter(function (x) { return x.id === $("fromProp").value; })[0];
+      if (!p) return;
+      values.customer = p.client_name || values.customer;
+      values.jobDescription = values.propertyLocation = p.project_address || values.jobDescription;
+      values.propertyDescription = p.project_address || values.propertyDescription;
+      values.project = values.propertyName = (p.quote_number ? "Quote " + p.quote_number + ", " : "") + (p.project_address || "");
+      if (p.grand_total) values.amount = String(p.grand_total);
+      renderFields(); preview();
+    });
+    $("pdf").addEventListener("click", function () {
+      $("msg").textContent = "Making the PDF..."; $("pay").innerHTML = "";
+      fetch("/api/forms/lienx/pdf", { method: "POST", credentials: "same-origin", headers: headers(true), body: JSON.stringify({ state: $("state").value, kind: $("kind").value, values: values }) }).then(function (r) {
+        if (r.status === 401) { $("msg").textContent = "Sign in to download the PDF."; window.WeylandPage.signIn("/lienx"); return; }
+        if (r.status === 402) return r.json().then(function (d) { $("msg").textContent = ""; $("pay").innerHTML = '<div class="pay">' + esc(d.message) + ' <a class="btn primary" href="/#offer">$100 FIRST SUBMITTAL</a> <a class="btn" href="/pricing">PLANS</a></div>'; });
+        if (!r.ok) return r.json().then(function (d) { $("msg").textContent = (d && d.message) || ("HTTP " + r.status); });
+        return r.blob().then(function (b) { var a = document.createElement("a"); a.href = URL.createObjectURL(b); a.download = "LienWaiver-" + $("state").value + "-" + $("kind").value + ".pdf"; a.click(); $("msg").textContent = "Downloaded."; });
+      }).catch(function (e) { $("msg").textContent = e.message; });
+    });
+    var US = "AL AK AZ AR CA CO CT DE DC FL GA HI ID IL IN IA KS KY LA ME MD MA MI MN MS MO MT NE NV NH NJ NM NY NC ND OH OK OR PA RI SC SD TN TX UT VT VA WA WV WI WY".split(" ");
+    fetch("/api/forms/lienx/states").then(function (r) { return r.json(); }).then(function (d) {
+      info = d;
+      var carried = d.statutory.map(function (s) { return s.code; });
+      $("state").innerHTML = US.map(function (s) { return '<option value="' + s + '">' + s + (carried.indexOf(s) >= 0 ? " - statutory form" : "") + "</option>"; }).join("");
+      $("state").value = "AZ";
+      $("kind").innerHTML = d.kinds.map(function (k) { return '<option value="' + k.kind + '">' + esc(k.label) + "</option>"; }).join("");
+      renderFields(); preview();
+    });
+    if (token()) fetch("/api/proposals/mine", { headers: headers() }).then(function (r) { return r.json(); }).then(function (d) {
+      proposals = d.proposals || [];
+      $("fromProp").innerHTML = '<option value="">' + (proposals.length ? "Choose a proposal" : "No PropX proposals yet") + "</option>" + proposals.map(function (p) { return '<option value="' + esc(p.id) + '">' + esc((p.quote_number || "") + " " + (p.client_name || "") + " " + (p.project_address || "")) + "</option>"; }).join("");
+    }).catch(function () {});
+  })();
+  </script>
+</body>
+</html>

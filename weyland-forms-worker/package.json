@@ -1,0 +1,11 @@
+{
+  "name": "weyland-forms-worker",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test": "node --test \"test/*.test.mjs\""
+  },
+  "dependencies": {
+    "pdf-lib": "^1.17.1"
+  }
+}
