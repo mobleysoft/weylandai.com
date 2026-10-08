@@ -217,7 +217,7 @@ function itemSimilarity(e, c) {
   let s = 0;
   if (ecat && cat === ecat) s += 3;
   else if (efirst && efirst.length >= 3 && (cat.startsWith(efirst) || cat.includes(efirst))) s += 1.5;
-  const desc = normText(c.component_type || c.description || "");
+  const desc = normText(c.description || c.component_type || "");
   if (desc && desc === normText(e.description)) s += 1;
   else if (desc && normText(e.description).includes(desc.split(" ")[0]) && desc.length > 3) s += 0.4;
   if (same(c.quantity, e.qty)) s += 0.3;
@@ -252,13 +252,13 @@ function scoreGroups(expectedDoc, sets, comps, foundDoors) {
       const sup = e.superseded || {};
       const checks = {
         qty: same(best.quantity, e.qty) || (sup.qty != null && same(best.quantity, sup.qty)),
-        description: normText(best.component_type || best.description) === normText(e.description) || (sup.description && normText(best.component_type || best.description) === normText(sup.description)),
+        description: normText(best.description || best.component_type) === normText(e.description) || (sup.description && normText(best.description || best.component_type) === normText(sup.description)) || normText(best.description || "") === normText(e.description + " (" + (sup.description || "") + ")"),
         catalog: normCat(best.model || best.catalog_number) === normCat(e.catalog) || (sup.catalog && normCat(best.model || best.catalog_number) === normCat(sup.catalog)),
         finish: up(best.finish) === up(e.finish) || (sup.finish && up(best.finish) === up(sup.finish)),
         mfr: mfrMatch(best.manufacturer, e.mfr),
       };
       for (const k of ITEM_FIELDS) perField[k][checks[k] ? "right" : "wrong"]++;
-      itemRows.push({ item: e.description + " " + (e.catalog || ""), found: true, wrong: ITEM_FIELDS.filter((k) => !checks[k]).map((k) => k + ": expected " + JSON.stringify(e[k] ?? null) + ", read " + JSON.stringify(k === "qty" ? best.quantity : k === "description" ? best.component_type : k === "catalog" ? (best.model || best.catalog_number) : k === "mfr" ? best.manufacturer : best[k])) });
+      itemRows.push({ item: e.description + " " + (e.catalog || ""), found: true, wrong: ITEM_FIELDS.filter((k) => !checks[k]).map((k) => k + ": expected " + JSON.stringify(e[k] ?? null) + ", read " + JSON.stringify(k === "qty" ? best.quantity : k === "description" ? (best.description || best.component_type) : k === "catalog" ? (best.model || best.catalog_number) : k === "mfr" ? best.manufacturer : best[k])) });
     }
     const extraItems = pool.filter((c) => !c._used).length;
     // Linking: the doors the door schedule gives this group vs the doors found carrying it.
