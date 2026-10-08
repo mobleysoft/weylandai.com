@@ -51,6 +51,20 @@ zone_name = "weylandai.com"
 pattern = "weylandai.com/bidx*"
 zone_name = "weylandai.com"
 
+# Exact paths for CoA: "/coa*" would also take any other path that starts
+# with "coa".
+[[routes]]
+pattern = "weylandai.com/coa"
+zone_name = "weylandai.com"
+
+[[routes]]
+pattern = "weylandai.com/coa/*"
+zone_name = "weylandai.com"
+
+[[routes]]
+pattern = "weylandai.com/permitx*"
+zone_name = "weylandai.com"
+
 [[rules]]
 type = "Text"
 globs = ["**/*.html", "**/*.txt"]
