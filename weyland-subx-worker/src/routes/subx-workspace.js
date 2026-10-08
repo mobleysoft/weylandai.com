@@ -35,8 +35,10 @@ const FIRE_OK = /^(\d{1,3}\s*(MIN\.?|MINS?\.?|MINUTES?|HRS?\.?|HOURS?)?|NR|N\/R|
 function unsureFields(d, fc, filled) {
   const out = [];
   const fields = fc && fc.fields ? fc.fields : null;
-  const ocr = fc ? fc.read_from === "ocr" : true;
-  const low = (f) => (fields && fields[f] != null ? fields[f] < 0.9 : ocr);
+  // A uniform OCR confidence (0.85 on every field) flags nothing by itself:
+  // the shape checks below do that work; a field the reader itself marked
+  // low (below 0.8) is flagged.
+  const low = (f) => !!(fields && fields[f] != null && fields[f] < 0.8);
   const mark = String(d.mark || "");
   if (low("mark") || !looksLikeMark(mark.replace(/\s*\[p\.\d+\]$/, ""))) out.push("mark");
   if (d.hardware_group != null && d.hardware_group !== "") { if (low("hardware_group") || !/^[A-Z0-9][A-Z0-9 .\-\/#]{0,15}$/i.test(String(d.hardware_group))) out.push("hardware_group"); }
@@ -308,7 +310,7 @@ export function registerSubxWorkspaceRoutes(router, { authenticate, requireActiv
       upd.width = [s.width, s.height].filter(Boolean).join(" x ") || null;
       upd.width_inches = s.width_inches ?? null;
       upd.height_inches = s.height_inches ?? null;
-      if (upd.width && (upd.width_inches == null || upd.height_inches == null)) return jsonResponse3({ success: false, error: "The size did not read as a door size. Write it as 3'-0\" x 7'-0\" (or PR 6'-0\" x 7'-0\" for a pair)." }, 400);
+      if ((sizeText || s.width || s.height) && (upd.width_inches == null || upd.height_inches == null)) return jsonResponse3({ success: false, error: "The size did not read as a door size. Write it as 3'-0\" x 7'-0\" (or PR 6'-0\" x 7'-0\" for a pair)." }, 400);
     }
     if ("thickness" in body) {
       upd.thickness = clean(body.thickness, 16);
