@@ -75,6 +75,7 @@
 //     lines 151-163) - dead code, broken VENDYAI_API_URL fetch, and a
 //     hardcoded duplicate $2,000/mo price. Nothing to port or preserve.
 
+import { honestPage } from "./lib/honest-pages.js";
 import { trafficDrivenJob } from "./lib/job-lease.js";
 import { NativeRouter } from "./lib/router.js";
 import { jsonResponse3 } from "./lib/json-response.js";
@@ -205,6 +206,10 @@ async function handle(request, env, ctx) {
         console.log("[MASCOM_EDGE delegation failed, falling back to bundled page]", e.message);
       }
     }
+    // Pages taken over from the monolith because they said what the code does
+    // not do (src/lib/honest-pages.js).
+    const honest = honestPage(url.pathname);
+    if (honest) return honest;
     // The routes for /pricing* and /subscribe* are wildcards (2026-10-07), so
     // every query-string and trailing-slash spelling arrives here; anything
     // else under those prefixes falls through to the router's 404, as before.

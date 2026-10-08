@@ -277,6 +277,58 @@ zone_name = "weylandai.com"
 pattern = "weylandai.com/news*"
 zone_name = "weylandai.com"
 
+# 2026-10-08: pages taken over from the monolith because they said what the
+# code does not do (src/lib/honest-pages.js). Wildcards so query-string and
+# trailing-slash spellings come here too; /propx is exact (and /propx/) so
+# weyland-propx-worker keeps /propx-app*.
+[[routes]]
+pattern = "weylandai.com/whyweyland*"
+zone_name = "weylandai.com"
+
+[[routes]]
+pattern = "weylandai.com/investors*"
+zone_name = "weylandai.com"
+
+[[routes]]
+pattern = "weylandai.com/propx"
+zone_name = "weylandai.com"
+
+[[routes]]
+pattern = "weylandai.com/propx/"
+zone_name = "weylandai.com"
+
+[[routes]]
+pattern = "weylandai.com/drawx*"
+zone_name = "weylandai.com"
+
+[[routes]]
+pattern = "weylandai.com/leadx*"
+zone_name = "weylandai.com"
+
+[[routes]]
+pattern = "weylandai.com/inspecx*"
+zone_name = "weylandai.com"
+
+[[routes]]
+pattern = "weylandai.com/survx*"
+zone_name = "weylandai.com"
+
+[[routes]]
+pattern = "weylandai.com/specx*"
+zone_name = "weylandai.com"
+
+[[routes]]
+pattern = "weylandai.com/asbuiltx*"
+zone_name = "weylandai.com"
+
+[[routes]]
+pattern = "weylandai.com/pricex*"
+zone_name = "weylandai.com"
+
+[[routes]]
+pattern = "weylandai.com/marketx*"
+zone_name = "weylandai.com"
+
 [[routes]]
 pattern = "weylandai.com/api/wire/*"
 zone_name = "weylandai.com"
