@@ -33,7 +33,7 @@
 // is kept on these 3 functions' signatures for call-site compatibility
 // even though they no longer read it internally.
 
-import { getCataloguePagePdf } from "../../../weyland-shared/cut-sheet-pages.js";
+import { getCataloguePagePdf, getDocumentPagePdf } from "../../../weyland-shared/cut-sheet-pages.js";
 import { PDFDocument as SovereignPDFDocument, StandardFonts as SovereignStandardFonts, rgb as sovereignRgb } from "./sovereign-pdf.js";
 
 var BHMA_FINISH_LOOKUP = {
@@ -897,13 +897,16 @@ export async function assembleSubmittalPackage(sessionId, options, env2, PDFLib)
     if (Array.isArray(options.citedPages)) {
       const loaded = new Map();
       for (const cp of options.citedPages) {
-        const got = await getCataloguePagePdf(env2, PDFLib.PDFDocument, { catalogueId: cp.catalogueId, pageNum: cp.pageNum }, loaded);
+        // A page found by reading the filed price book itself is cut from that file (cp.r2Key).
+        const got = cp.r2Key
+          ? await getDocumentPagePdf(env2, PDFLib.PDFDocument, { r2Key: cp.r2Key, pageNum: cp.pageNum }, loaded)
+          : await getCataloguePagePdf(env2, PDFLib.PDFDocument, { catalogueId: cp.catalogueId, pageNum: cp.pageNum }, loaded);
         const label = `${[cp.manufacturer, cp.model].filter(Boolean).join(" ")}: ${cp.title || "catalogue"}, page ${cp.pageNum}`;
         if (got.bytes) {
           tocSections.push({ title: label, pageNumber: currentPage, type: "cut_sheet" });
           currentPage += 1;
           cutSheetPdfs.push(got.bytes);
-          result.sections.push({ type: "cut_sheet", title: label, manufacturer: cp.manufacturer || null, model: cp.model || null, catalogue_id: cp.catalogueId, page: cp.pageNum, sets: cp.sets || [], pages: 1 });
+          result.sections.push({ type: "cut_sheet", title: label, manufacturer: cp.manufacturer || null, model: cp.model || null, catalogue_id: cp.catalogueId || null, page: cp.pageNum, sets: cp.sets || [], pages: 1 });
         } else {
           result.errors.push(`No page on file for ${label} (${got.reason})`);
         }
