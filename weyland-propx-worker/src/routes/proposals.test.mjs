@@ -131,7 +131,7 @@ test("generate: a guest prices the demo schedule and gets the PDF inline; nothin
   assert.equal(d.stored, false);
   assert.equal(d.quoteNumber, "PREVIEW");
   assert.equal(d.subtotal, 970);
-  assert.ok(Math.abs(d.grandTotal - 1050.025) < 1e-9);
+  assert.equal(d.grandTotal, 1050.03);
   assert.equal(Buffer.from(d.pdfBase64, "base64").toString().slice(0, 4), "%PDF");
   assert.equal(r2.length, 0);
   assert.equal(db.inserted.length, 0);
@@ -205,4 +205,12 @@ test("generate without a purchase: lines and totals, no PDF; the demo stays open
   assert.equal(d.downloadUrl, undefined);
   assert.equal(r2.length, 0);
   assert.equal(db.inserted.length, 0);
+});
+
+test("totals are whole cents", async () => {
+  const { computeTotals } = await import("./proposals.js");
+  const t = computeTotals([{ quantity: 7, unit_price: 119.9 }, { quantity: 1, unit_price: 0.1 }], 0.0725);
+  assert.equal(t.subtotal, 839.4);
+  assert.equal(t.taxAmount, 60.86);
+  assert.equal(t.grandTotal, 900.26);
 });

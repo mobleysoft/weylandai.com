@@ -120,11 +120,14 @@ export function groupDoorLines(rawDoors) {
   return Object.values(groups);
 }
 
+// Money is carried in whole cents so a proposal never shows 897.5980000000001.
+const cents = (n) => Math.round((Number(n) || 0) * 100) / 100;
+
 export function computeTotals(doorLines, taxRate) {
-  const subtotal = doorLines.reduce((sum2, d) => sum2 + d.quantity * d.unit_price, 0);
+  const subtotal = cents(doorLines.reduce((sum2, d) => sum2 + cents(d.quantity * d.unit_price), 0));
   const effectiveTaxRate = Number(taxRate) || 0;
-  const taxAmount = subtotal * effectiveTaxRate;
-  const grandTotal = subtotal + taxAmount;
+  const taxAmount = cents(subtotal * effectiveTaxRate);
+  const grandTotal = cents(subtotal + taxAmount);
   return { subtotal, taxRate: effectiveTaxRate, taxAmount, grandTotal };
 }
 
