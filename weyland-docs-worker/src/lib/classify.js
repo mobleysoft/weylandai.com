@@ -33,6 +33,11 @@ export const SAFETY_FLAG_PATTERNS = compile([
   "fell", "fall(?:s|ing)?", "died", "death", "not (?:being )?used", "(?:was|were) not (?:used|worn|provided|in place|installed)", "no fall protection",
   "without (?:fall protection|guardrails?|a harness|protection)", "unprotected", "struck by", "caught (?:in|between)", "electrocut\\w*", "amputat\\w*",
   "hospitali[sz]ed", "lost (?:his |her |their )?balance", "trigger height", "failed to", "did not (?:have|use|wear|provide)", "exposed to", "fracture\\w*", "head ?first",
+  // 2026-10-08: injuries told without the word "injury", and hazards named by what was wrong.
+  "cut (?:(?:his|her|their|a|the|left|right) )*(?:hand|finger|thumb|palm|arm|wrist|leg|head|face)", "lacerat\\w*", "strain(?:ed)? (?:his |her |their )?(?:lower |upper )?(?:back|shoulder|neck|knee|wrist)",
+  "sprain\\w*", "first[- ]aid", "medical treatment", "stitches", "sutures?", "restricted (?:duty|work)", "light duty", "days? away", "sent to (?:the )?(?:clinic|hospital|doctor|er\\b)",
+  "emergency room", "concussion", "passed out", "lost consciousness", "bruis\\w*", "burn(?:ed|s)? (?:his|her|their)", "energi[sz]ed", "guard ?rails? (?:missing|removed|down|not installed)",
+  "missing guard ?rails?", "unsecured (?:load|door|slab|frame|material|panel|opening)", "dropped (?:a |the )?\\w+ (?:from|off)", "pinch(?:ed)?", "crush\\w*", "close call",
 ]);
 export const SAFETY_CLEAR_PATTERNS = compile(["resolved", "corrected", "no incidents", "compliant", "ppe worn", "safe condition", "no hazards"]);
 
