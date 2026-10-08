@@ -1,0 +1,72 @@
+name = "weyland-docs-worker"
+main = "src/index.js"
+compatibility_date = "2025-10-31"
+compatibility_flags = ["nodejs_compat"]
+workers_dev = true
+
+# Same weyland_db as the monolith and every product worker: the six tools'
+# tables (inspection_reports, safety_reports, survey_reports, spec_sections,
+# drawing_indexes, asbuilt_diffs), users and sessions for auth, plus the
+# doc_jobs page-job table and job_runs lease table this worker creates.
+[[d1_databases]]
+binding = "DB"
+database_name = "weyland_db"
+database_id = "5729f77e-d7e3-4577-ab43-3c064fa90ca5"
+
+# Summary PDFs are rendered with Browser Rendering, as in the monolith.
+[browser]
+binding = "BROWSER"
+
+# Same bucket and key prefixes as the monolith (inspection-reports/USER/ID.pdf
+# and so on), so download links made before the move still open; uploads are
+# kept under the same prefix as ID.source.pdf while a page job runs.
+[[r2_buckets]]
+binding = "UPLOADS"
+bucket_name = "subx-uploads"
+
+# weyland-ocr-worker over a same-account service binding (text layer first,
+# one OCR'd page per call, sequential page diff; see ocr-worker/extract.js).
+[[services]]
+binding = "OCR_SERVICE"
+service = "weyland-ocr-worker"
+
+# Routes: each more specific than the monolith's weylandai.com/* catch-all, so
+# these paths come here and the monolith stops being reached for them without
+# being touched. Wildcards, so ?embed=1 and trailing slashes land here too
+# (the 7 October lesson). A deploy with [[routes]] replaces the whole list.
+[[routes]]
+pattern = "weylandai.com/inspecx*"
+zone_name = "weylandai.com"
+[[routes]]
+pattern = "weylandai.com/safetyx*"
+zone_name = "weylandai.com"
+[[routes]]
+pattern = "weylandai.com/survx*"
+zone_name = "weylandai.com"
+[[routes]]
+pattern = "weylandai.com/specx*"
+zone_name = "weylandai.com"
+[[routes]]
+pattern = "weylandai.com/drawx*"
+zone_name = "weylandai.com"
+[[routes]]
+pattern = "weylandai.com/asbuiltx*"
+zone_name = "weylandai.com"
+[[routes]]
+pattern = "weylandai.com/api/inspections/*"
+zone_name = "weylandai.com"
+[[routes]]
+pattern = "weylandai.com/api/safety-reports/*"
+zone_name = "weylandai.com"
+[[routes]]
+pattern = "weylandai.com/api/survey-reports/*"
+zone_name = "weylandai.com"
+[[routes]]
+pattern = "weylandai.com/api/spec-sections/*"
+zone_name = "weylandai.com"
+[[routes]]
+pattern = "weylandai.com/api/drawing-index/*"
+zone_name = "weylandai.com"
+[[routes]]
+pattern = "weylandai.com/api/asbuilt-diffs/*"
+zone_name = "weylandai.com"
