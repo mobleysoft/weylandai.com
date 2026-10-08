@@ -29,9 +29,22 @@
 // and the homepage form while the paste cited Schlage L Series Catalog p. 25.
 // /match now returns every key it returned before plus match-batch's per-line
 // answer (raw, line, cutSheet, cataloguePage, citation).
+//
+// LINES AS SPECS PRINT THEM (2026-10-08). The parser (weyland-shared/spec-lines.js)
+// reads QTY EA DESCRIPTION CATALOG FINISH MFR, takes the maker from the code at
+// the end (SEL, SCH, LCN, IVE ...), skips the group heading, the door list, the
+// column header and wrapped tails, and never splits a description at a comma.
+// Skipped lines come back in `skipped` with the reason, so "1 of 14 lines
+// matched" (nine of them headings, door numbers and wrapped text) reads as
+// "5 of 6 lines matched, 8 skipped". A line of words with no digit and no
+// maker we know is tried as a model and, when nothing is named that, listed as
+// wrapped text rather than counted as a miss. Every unmatched line says why
+// (reason, reasonText, need): the maker is not in the catalogue, the maker is
+// but the model is not, the token is a finish code, no catalogue number on
+// the line. A named maker's line is never answered with another maker's product.
 
-import { matchComponentToCutSheets } from "../lib/product-database.js";
-import { parseSpecText, recordMisses } from "../lib/cut-sheet-misses.js";
+import { matchComponentToCutSheets, citationFor } from "../lib/product-database.js";
+import { parseSpecText, parseSpecLines, recordMisses } from "../lib/cut-sheet-misses.js";
 import { getManufacturerNames } from "../lib/product-database.js";
 import { jsonResponse3 } from "../lib/json-response.js";
 import { signMatchResultLinks } from "../lib/citation-links.js";
@@ -96,7 +109,7 @@ export async function matchLine(line, env2) {
 // /match-batch.
 export function toBatchResult(line, r) {
   const sheet = (r.cutSheets && r.cutSheets[0]) || null;
-  return {
+  const out = {
     raw: line.raw,
     manufacturer: line.manufacturer ?? null,
     model: line.model,
@@ -122,12 +135,18 @@ export function toBatchResult(line, r) {
     cataloguePage: (r.cataloguePages && r.cataloguePages[0]) || null,
     // One citation whichever kind is filed: a standalone sheet first, else
     // the catalogue page that names the model. Null only when neither exists.
-    citation: sheet
-      ? { kind: "cut_sheet", title: sheet.title, page: sheet.pageHint || null, url: sheet.pageUrl || null }
-      : ((r.cataloguePages && r.cataloguePages[0])
-        ? { kind: "catalogue_page", title: r.cataloguePages[0].title, page: String(r.cataloguePages[0].pageNum), url: r.cataloguePages[0].pageUrl || null }
-        : null),
+    citation: citationFor(r),
   };
+  // 2026-10-08: what the line said (a spec line's quantity, description and finish, the maker
+  // as resolved from its code) and, for a miss, why.
+  if (line.modelFull && line.modelFull !== line.model) out.modelFull = line.modelFull;
+  if (line.description) out.description = line.description;
+  if (line.qty != null) out.qty = line.qty;
+  if (line.finish) out.finish = line.finish;
+  if (r.maker && r.maker.name && r.maker.typed) out.maker = r.maker.name;
+  if (r.matchNote) out.matchNote = r.matchNote;
+  if (!r.matched && r.reason) { out.reason = r.reason; out.reasonText = r.reasonText || null; out.need = r.need || null; }
+  return out;
 }
 
 // POST /match's answer: every key it returned before (matched, product with
@@ -170,8 +189,8 @@ router.post("/api/cut-sheets/match", async (request2, env2, ctx) => {
       return jsonResponse3({ error: "Missing required field: model or catalog_number" }, 400);
     }
     const r = await matchLine(line, env2);
-    if (!r.matched) {
-      recordMissesInBackground(ctx, env2, [{ manufacturer: line.manufacturer, model: line.model }]);
+    if (!r.matched && line.model && !line.tentative) {
+      recordMissesInBackground(ctx, env2, [{ manufacturer: (r.maker && r.maker.typed && r.maker.name) || line.manufacturer, model: line.model }]);
     }
     return jsonResponse3(singleMatchResponse(line, r, { manufacturer, model, catalog_number, component_type }));
   } catch (err) {
@@ -203,6 +222,7 @@ router.post("/api/cut-sheets/match-batch", async (request2, env2, ctx) => {
     return jsonResponse3({ error: "Body must be JSON: {lines:[...]} or {text:\"...\"}" }, 400);
   }
   let lines;
+  let skipped = [];
   if (Array.isArray(body?.lines)) {
     if (body.lines.length > MATCH_BATCH_CAP) {
       return jsonResponse3({ error: `Too many lines: ${body.lines.length} (max ${MATCH_BATCH_CAP})`, max: MATCH_BATCH_CAP }, 400);
@@ -229,7 +249,9 @@ router.post("/api/cut-sheets/match-batch", async (request2, env2, ctx) => {
     if (body.text.length > 20000) {
       return jsonResponse3({ error: "text too long (max 20000 chars)" }, 400);
     }
-    lines = parseSpecText(body.text, await getManufacturerNames(env2));
+    const parsed = parseSpecLines(body.text, await getManufacturerNames(env2));
+    lines = parsed.lines;
+    skipped = parsed.skipped;
     if (lines.length > MATCH_BATCH_CAP) {
       return jsonResponse3({ error: `Too many lines after parsing: ${lines.length} (max ${MATCH_BATCH_CAP})`, max: MATCH_BATCH_CAP, parsed: lines.length }, 400);
     }
@@ -237,22 +259,30 @@ router.post("/api/cut-sheets/match-batch", async (request2, env2, ctx) => {
     return jsonResponse3({ error: "Provide lines:[{manufacturer?, model, raw?}] or text:string" }, 400);
   }
   if (lines.length === 0) {
-    return jsonResponse3({ results: [], summary: { total: 0, matched: 0, missed: 0, ms: Date.now() - t0 } });
+    return jsonResponse3({ results: [], skipped, summary: { total: 0, matched: 0, missed: 0, skipped: skipped.length, ms: Date.now() - t0 } });
   }
   try {
-    const results = new Array(lines.length);
+    const all = new Array(lines.length);
     for (let i = 0; i < lines.length; i += MATCH_BATCH_CONCURRENCY) {
       const chunk = lines.slice(i, i + MATCH_BATCH_CONCURRENCY);
       const chunkResults = await Promise.all(chunk.map((line) =>
         matchLine(line, env2).then((r) => toBatchResult(line, r))
       ));
-      for (let j = 0; j < chunkResults.length; j++) results[i + j] = chunkResults[j];
+      for (let j = 0; j < chunkResults.length; j++) all[i + j] = chunkResults[j];
+    }
+    // Words with no digit and no maker we know ("REQUIRED", "TKTX SCREWS AT HM DOORS") were
+    // tried as a model; when nothing is named that they are wrapped text, not misses.
+    const results = [];
+    for (let i = 0; i < all.length; i++) {
+      if (!all[i].matched && lines[i].tentative) skipped.push({ raw: lines[i].raw, reason: "wrapped" });
+      else results.push(all[i]);
     }
     const matched = results.filter((r) => r.matched).length;
-    recordMissesInBackground(ctx, env2, results.filter((r) => !r.matched).map((r) => ({ manufacturer: r.manufacturer, model: r.model })));
+    recordMissesInBackground(ctx, env2, results.filter((r) => !r.matched && r.model).map((r) => ({ manufacturer: r.maker || r.manufacturer, model: r.model })));
     return jsonResponse3({
       results,
-      summary: { total: results.length, matched, missed: results.length - matched, ms: Date.now() - t0 },
+      skipped,
+      summary: { total: results.length, matched, missed: results.length - matched, skipped: skipped.length, ms: Date.now() - t0 },
     });
   } catch (err) {
     return jsonResponse3({ error: err.message }, 500);
