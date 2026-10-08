@@ -69,6 +69,30 @@ zone_name = "weylandai.com"
 pattern = "weylandai.com/compx*"
 zone_name = "weylandai.com"
 
+[[routes]]
+pattern = "weylandai.com/api/geox/*"
+zone_name = "weylandai.com"
+
+[[routes]]
+pattern = "weylandai.com/geox*"
+zone_name = "weylandai.com"
+
+[[routes]]
+pattern = "weylandai.com/api/weatherx/*"
+zone_name = "weylandai.com"
+
+[[routes]]
+pattern = "weylandai.com/weatherx*"
+zone_name = "weylandai.com"
+
+[[routes]]
+pattern = "weylandai.com/api/forecastx/*"
+zone_name = "weylandai.com"
+
+[[routes]]
+pattern = "weylandai.com/forecastx*"
+zone_name = "weylandai.com"
+
 [[rules]]
 type = "Text"
 globs = ["**/*.html"]
