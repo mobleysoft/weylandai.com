@@ -1,0 +1,179 @@
+{
+ "document": "Berryessa Union School District, Bid B-09-2023-24: Section 08 71 00 Door Hardware, HARDWARE GROUP NO. 01 and 02 (unruled spec text, no column header line, no door list: 'The Door Schedule on the Drawings indicates which hardware set is used with each door')",
+ "source": {
+  "file": "tools/corpus/door-schedules/dd339f57b51538ed.pdf",
+  "pages": [
+   282
+  ],
+  "page_size_pt": [
+   612,
+   792
+  ],
+  "text_layer": true
+ },
+ "schedule_type": "hardware_schedule",
+ "how_checked": "Rendered PDF page 282 with pdftoppm at 110 dpi and read by eye (2026-10-08 00:50 EDT). Nothing here came from any extractor.",
+ "format": "HARDWARE GROUP NO. <number>, then item lines QTY, EA/SET, DESCRIPTION, CATALOG NUMBER, FINISH, MFR with no header line; the INTERCHANGEABLE CORE line has a finish and no manufacturer.",
+ "group_count": 2,
+ "doors_by_group_from_drawings": {
+  "1": [
+   "002",
+   "003"
+  ],
+  "2": [
+   "001",
+   "004",
+   "005",
+   "006",
+   "007",
+   "008",
+   "009"
+  ]
+ },
+ "groups": [
+  {
+   "group": "01",
+   "page": 282,
+   "doors": [],
+   "items": [
+    {
+     "qty": 4,
+     "uom": "EA",
+     "description": "HINGE",
+     "catalog": "5BB1HW 4.5 X 4.5",
+     "finish": "652",
+     "mfr": "IVE"
+    },
+    {
+     "qty": 1,
+     "uom": "EA",
+     "description": "FIRE EXIT HARDWARE",
+     "catalog": "PA-AX-99-L-F-2SI-06",
+     "finish": "626",
+     "mfr": "VON"
+    },
+    {
+     "qty": 2,
+     "uom": "EA",
+     "description": "RIM CYLINDER",
+     "catalog": "20-057 ICX",
+     "finish": "626",
+     "mfr": "SCH"
+    },
+    {
+     "qty": 2,
+     "uom": "EA",
+     "description": "INTERCHANGEABLE CORE",
+     "catalog": "VERIFY PERMANENT CORE WITH DISTRICT",
+     "finish": "626",
+     "mfr": null
+    },
+    {
+     "qty": 1,
+     "uom": "EA",
+     "description": "SURFACE CLOSER",
+     "catalog": "4040XP EDA",
+     "finish": "689",
+     "mfr": "LCN"
+    },
+    {
+     "qty": 1,
+     "uom": "EA",
+     "description": "KICK PLATE",
+     "catalog": "8400 10\" X 2\" LDW B-CS",
+     "finish": "630",
+     "mfr": "IVE"
+    },
+    {
+     "qty": 1,
+     "uom": "EA",
+     "description": "GASKETING",
+     "catalog": "188SBK PSA",
+     "finish": "BK",
+     "mfr": "ZER"
+    }
+   ],
+   "notes": []
+  },
+  {
+   "group": "02",
+   "page": 282,
+   "doors": [],
+   "items": [
+    {
+     "qty": 8,
+     "uom": "EA",
+     "description": "HINGE",
+     "catalog": "5BB1HW 4.5 X 4.5",
+     "finish": "652",
+     "mfr": "IVE"
+    },
+    {
+     "qty": 1,
+     "uom": "EA",
+     "description": "FIRE EXIT HARDWARE",
+     "catalog": "PA-AX-9927-EO-F-LBR-499F",
+     "finish": "626",
+     "mfr": "VON"
+    },
+    {
+     "qty": 1,
+     "uom": "EA",
+     "description": "FIRE EXIT HARDWARE",
+     "catalog": "PA-AX-9927-L-F-2SI-LBR-06-499F",
+     "finish": "626",
+     "mfr": "VON"
+    },
+    {
+     "qty": 2,
+     "uom": "EA",
+     "description": "RIM CYLINDER",
+     "catalog": "20-057 ICX",
+     "finish": "626",
+     "mfr": "SCH"
+    },
+    {
+     "qty": 2,
+     "uom": "EA",
+     "description": "INTERCHANGEABLE CORE",
+     "catalog": "VERIFY PERMANENT CORE WITH DISTRICT",
+     "finish": "626",
+     "mfr": null
+    },
+    {
+     "qty": 2,
+     "uom": "EA",
+     "description": "SURFACE CLOSER",
+     "catalog": "4040XP EDA",
+     "finish": "689",
+     "mfr": "LCN"
+    },
+    {
+     "qty": 2,
+     "uom": "EA",
+     "description": "KICK PLATE",
+     "catalog": "8400 10\" X 1\" LDW B-CS",
+     "finish": "630",
+     "mfr": "IVE"
+    },
+    {
+     "qty": 1,
+     "uom": "EA",
+     "description": "GASKETING",
+     "catalog": "188SBK PSA",
+     "finish": "BK",
+     "mfr": "ZER"
+    },
+    {
+     "qty": 1,
+     "uom": "SET",
+     "description": "MEETING STILE",
+     "catalog": "328AA-S",
+     "finish": "AA",
+     "mfr": "ZER"
+    }
+   ],
+   "notes": []
+  }
+ ]
+}

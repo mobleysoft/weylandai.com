@@ -1,0 +1,225 @@
+{
+ "document": "Christina School District, Bid CHR23018 Christiana HS G-Building Secure Vestibule: Section 08 71 00, HARDWARE SETS, Hardware Set: 01-CARD READER (ruled table, Door# 100B, diagonal NOT FOR BIDDING PURPOSES watermark)",
+ "source": {
+  "file": "tools/corpus/door-schedules/525dc0b72011077a.pdf",
+  "pages": [
+   219
+  ],
+  "page_size_pt": [
+   612,
+   792
+  ],
+  "text_layer": true,
+  "note": "The watermark's letters sit in the text layer between the cells (pdftotext shows them as stray SE, PO, R, PU, G, IN, D)."
+ },
+ "schedule_type": "hardware_schedule",
+ "how_checked": "Rendered PDF page 219 with pdftoppm at 110 dpi and the watermark-covered cells again at 300 dpi (crops x 1037 y 700 and x 300 y 1680), read by eye (2026-10-08 01:00 EDT). The door sweep product number is under the watermark and is marked uncertain. Nothing here came from any extractor.",
+ "format": "Columns Qty, Description, Product Number, Fin, Man; the set heading and 'Door# 100B' sit in the two rows above the column header; a cell may wrap to two lines.",
+ "group_count": 1,
+ "groups": [
+  {
+   "group": "01",
+   "name": "CARD READER",
+   "heading_as_printed": "Hardware Set: 01-CARD READER   EXTERIOR   BULLET RESTANT ALD & ALF",
+   "page": 219,
+   "doors": [
+    "100B"
+   ],
+   "items": [
+    {
+     "qty": 2,
+     "uom": "EA",
+     "description": "CONTINUOUS HINGES",
+     "catalog": "224HD (PREP'D FOR EPT)",
+     "finish": "689",
+     "mfr": "IVE"
+    },
+    {
+     "qty": 1,
+     "uom": "EA",
+     "description": "KEY REMOVEABLE MULLION",
+     "catalog": "KR4954",
+     "finish": "BLK",
+     "mfr": "VD"
+    },
+    {
+     "qty": 1,
+     "uom": "EA",
+     "description": "MULLION CYLINDER",
+     "catalog": "MORTISE TYPE W/ CORE (KEYED TO EXISTING SYSTEM)",
+     "finish": "626",
+     "mfr": "SCH"
+    },
+    {
+     "qty": 2,
+     "uom": "EA",
+     "description": "DOOR PULLS",
+     "catalog": "1191-4",
+     "finish": "630",
+     "mfr": "TRM"
+    },
+    {
+     "qty": 1,
+     "uom": "EA",
+     "description": "DOOR CLOSER W/ STOPS",
+     "catalog": "4041XP SPR CNS 4041XP-30 & 61",
+     "finish": "689",
+     "mfr": "LCN"
+    },
+    {
+     "qty": 2,
+     "uom": "EA",
+     "description": "ELECTRIC POWER TRANSFERS",
+     "catalog": "EPT-10 BY SECURITY VENDOR",
+     "finish": "630",
+     "mfr": "VD"
+    },
+    {
+     "qty": 1,
+     "uom": "EA",
+     "description": "ELECTRIFIED PANIC DEVICE",
+     "catalog": "RX-QEL98L-NL-03 LD BY SECURITY VENDOR",
+     "finish": "630",
+     "mfr": "VD"
+    },
+    {
+     "qty": 1,
+     "uom": "EA",
+     "description": "POWER SUPPLY",
+     "catalog": "BY SECURITY VENDOR",
+     "finish": null,
+     "mfr": null
+    },
+    {
+     "qty": 1,
+     "uom": "EA",
+     "description": "TRIM CYLINDER & CORE",
+     "catalog": "AS REQUIRED (KEYED TO EXISTING SYSTEM)",
+     "finish": "626",
+     "mfr": "SCH"
+    },
+    {
+     "qty": 2,
+     "uom": "EA",
+     "description": "DOOR PULLS",
+     "catalog": "1191-4",
+     "finish": "630",
+     "mfr": "TRM"
+    },
+    {
+     "qty": 1,
+     "uom": "EA",
+     "description": "DOOR CLOSER W/ STOPS",
+     "catalog": "4041XP SPR CNS 4041XP-30 & 61",
+     "finish": "689",
+     "mfr": "LCN"
+    },
+    {
+     "qty": 1,
+     "uom": "EA",
+     "description": "ELECTRIFIED PANIC DEVICE",
+     "catalog": "RX-QEL98L-BE-03 LD BY SECURITY VENDOR",
+     "finish": "630",
+     "mfr": "VD"
+    },
+    {
+     "qty": 1,
+     "uom": "EA",
+     "description": "THRESHOLD",
+     "catalog": "896ADJ SIA SSMS/EA",
+     "finish": "AL",
+     "mfr": "NGP"
+    },
+    {
+     "qty": 2,
+     "uom": "EA",
+     "description": "DOOR SWEEPS",
+     "catalog": "101V",
+     "finish": "AL",
+     "mfr": "NGP",
+     "catalog_uncertain": "the watermark covers the product number; it reads as 101V and is not scored"
+    },
+    {
+     "qty": 1,
+     "uom": "EA",
+     "description": "AUTO DOOR OPERATOR",
+     "catalog": "DORMA 100 SERIES BY SECURITY VENDOR",
+     "finish": "AL",
+     "mfr": "DOR"
+    },
+    {
+     "qty": null,
+     "uom": "EA",
+     "description": "RELAY MODULE",
+     "catalog": "ALTRONTICS RB1224 BY SECURITY VENDOR",
+     "finish": null,
+     "mfr": null
+    },
+    {
+     "qty": 1,
+     "uom": "EA",
+     "description": "H/C PUSH SWITCH",
+     "catalog": "946HP45MO x 946475WR (EXTERIOR) BY SECURITY VENDOR",
+     "finish": "US32D",
+     "mfr": "RCI"
+    },
+    {
+     "qty": 1,
+     "uom": "EA",
+     "description": "H/C PUSH SWITCH",
+     "catalog": "946HP45MO (INTERIOR) BY SECURITY VENDOR",
+     "finish": "US32D",
+     "mfr": "RCI"
+    },
+    {
+     "qty": 1,
+     "uom": "EA",
+     "description": "BALLARD POST (FOR H/C SWITCH)",
+     "catalog": "BY SECURITY VENDOR",
+     "finish": null,
+     "mfr": null
+    },
+    {
+     "qty": 1,
+     "uom": "EA",
+     "description": "KEY SWITCH",
+     "catalog": "960MA BY SECURITY VENDOR",
+     "finish": "630",
+     "mfr": "RCI"
+    },
+    {
+     "qty": 1,
+     "uom": "EA",
+     "description": "KEY SWITCH CYLINDER",
+     "catalog": "MORTISE TYPE W/ CORE (KEYED TO EXISTING SYSTEM)",
+     "finish": "626",
+     "mfr": "SCH"
+    },
+    {
+     "qty": 2,
+     "uom": "EA",
+     "description": "DOOR POSITION SWITCHES",
+     "catalog": "GRI 180-12-W-34\" STL DR CONTACT WHITE BY SECURITY VENDOR",
+     "finish": null,
+     "mfr": null
+    },
+    {
+     "qty": null,
+     "uom": "EA",
+     "description": "VIDEO/INTERCOM STATION & CONSOLE w/ 5 RELEASE BUTTONS",
+     "catalog": "BY SECURITY VENDOR",
+     "finish": null,
+     "mfr": null
+    },
+    {
+     "qty": 1,
+     "uom": "EA",
+     "description": "CARD READER",
+     "catalog": "HID GLOBAL SIGNO 40TKS-002MRN-ADV iClass/EOS BY SECURITY VENDOR",
+     "finish": null,
+     "mfr": null
+    }
+   ]
+  }
+ ]
+}

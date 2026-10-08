@@ -1,0 +1,1227 @@
+{
+ "base": "https://weylandai.com",
+ "started_at": "2026-10-08T04:55:09.081Z",
+ "documents": [
+  {
+   "id": "rockford",
+   "file": "/Users/johnmobley/weylandai.com/tools/corpus/door-schedules/f0e863d88ea688ff.pdf",
+   "reads": [
+    {
+     "page": 29,
+     "type": "door_schedule",
+     "status": 422,
+     "ms": 31462,
+     "ok": false,
+     "found": null,
+     "route": null,
+     "error": "no_schedule_table_found - No door schedule or hardware schedule table was found on page 29 (the page was read as shown and turned 90, 180 and 270 degrees). Check that this page holds the schedule itself, ruled into rows and columns."
+    },
+    {
+     "page": 18,
+     "type": "hardware_schedule",
+     "status": 422,
+     "ms": 5259,
+     "ok": false,
+     "found": null,
+     "route": null,
+     "error": "no_schedule_table_found - No door schedule or hardware schedule table was found on page 18 (the page was read as shown and turned 90, 180 and 270 degrees). Check that this page holds the schedule itself, ruled into rows and columns."
+    },
+    {
+     "page": 19,
+     "type": "hardware_schedule",
+     "status": 422,
+     "ms": 6968,
+     "ok": false,
+     "found": null,
+     "route": null,
+     "error": "no_schedule_table_found - No door schedule or hardware schedule table was found on page 19 (the page was read as shown and turned 90, 180 and 270 degrees). Check that this page holds the schedule itself, ruled into rows and columns."
+    },
+    {
+     "page": 20,
+     "type": "hardware_schedule",
+     "status": 422,
+     "ms": 6878,
+     "ok": false,
+     "found": null,
+     "route": null,
+     "error": "no_schedule_table_found - No door schedule or hardware schedule table was found on page 20 (the page was read as shown and turned 90, 180 and 270 degrees). Check that this page holds the schedule itself, ruled into rows and columns."
+    },
+    {
+     "page": 21,
+     "type": "hardware_schedule",
+     "status": 422,
+     "ms": 4913,
+     "ok": false,
+     "found": null,
+     "route": null,
+     "error": "no_schedule_table_found - No door schedule or hardware schedule table was found on page 21 (the page was read as shown and turned 90, 180 and 270 degrees). Check that this page holds the schedule itself, ruled into rows and columns."
+    },
+    {
+     "page": 22,
+     "type": "hardware_schedule",
+     "status": 422,
+     "ms": 6293,
+     "ok": false,
+     "found": null,
+     "route": null,
+     "error": "no_schedule_table_found - No door schedule or hardware schedule table was found on page 22 (the page was read as shown and turned 90, 180 and 270 degrees). Check that this page holds the schedule itself, ruled into rows and columns."
+    },
+    {
+     "page": 23,
+     "type": "hardware_schedule",
+     "status": 422,
+     "ms": 6276,
+     "ok": false,
+     "found": null,
+     "route": null,
+     "error": "no_schedule_table_found - No door schedule or hardware schedule table was found on page 23 (the page was read as shown and turned 90, 180 and 270 degrees). Check that this page holds the schedule itself, ruled into rows and columns."
+    }
+   ],
+   "errors": [],
+   "session": "00aaa70f-6d6e-4249-9765-900969d318d6",
+   "total_pages": 30,
+   "upload_ms": 9405,
+   "find_pages": {
+    "available": false
+   },
+   "doors": {
+    "expected_rows": 65,
+    "rows_found": 0,
+    "rows_found_pct": 0,
+    "extra_rows": 0,
+    "extra_sample": [],
+    "field_accuracy_pct": null,
+    "per_field": {
+     "mark": {
+      "right": 0,
+      "wrong": 0
+     },
+     "hardware_group": {
+      "right": 0,
+      "wrong": 0
+     },
+     "width_inches": {
+      "right": 0,
+      "wrong": 0
+     },
+     "height_inches": {
+      "right": 0,
+      "wrong": 0
+     },
+     "fire_rating": {
+      "right": 0,
+      "wrong": 0
+     },
+     "door_type": {
+      "right": 0,
+      "wrong": 0
+     }
+    },
+    "rows": [
+     {
+      "mark": "1J.1",
+      "page": 29,
+      "found": false
+     },
+     {
+      "mark": "109.1",
+      "page": 29,
+      "found": false
+     },
+     {
+      "mark": "109.2",
+      "page": 29,
+      "found": false
+     },
+     {
+      "mark": "111.1",
+      "page": 29,
+      "found": false
+     },
+     {
+      "mark": "111.1.1",
+      "page": 29,
+      "found": false
+     },
+     {
+      "mark": "113.1",
+      "page": 29,
+      "found": false
+     },
+     {
+      "mark": "113.1.1",
+      "page": 29,
+      "found": false
+     },
+     {
+      "mark": "114.1",
+      "page": 29,
+      "found": false
+     },
+     {
+      "mark": "118.1",
+      "page": 29,
+      "found": false
+     },
+     {
+      "mark": "119.1",
+      "page": 29,
+      "found": false
+     },
+     {
+      "mark": "119.2",
+      "page": 29,
+      "found": false
+     },
+     {
+      "mark": "126.1",
+      "page": 29,
+      "found": false
+     },
+     {
+      "mark": "126.1.1",
+      "page": 29,
+      "found": false
+     },
+     {
+      "mark": "126.1.2",
+      "page": 29,
+      "found": false
+     },
+     {
+      "mark": "126.2",
+      "page": 29,
+      "found": false
+     },
+     {
+      "mark": "127.1",
+      "page": 29,
+      "found": false
+     },
+     {
+      "mark": "128.1.1",
+      "page": 29,
+      "found": false
+     },
+     {
+      "mark": "129.1",
+      "page": 29,
+      "found": false
+     },
+     {
+      "mark": "130.1",
+      "page": 29,
+      "found": false
+     },
+     {
+      "mark": "131.1",
+      "page": 29,
+      "found": false
+     },
+     {
+      "mark": "132.1",
+      "page": 29,
+      "found": false
+     },
+     {
+      "mark": "133.1",
+      "page": 29,
+      "found": false
+     },
+     {
+      "mark": "134.1",
+      "page": 29,
+      "found": false
+     },
+     {
+      "mark": "136.1",
+      "page": 29,
+      "found": false
+     },
+     {
+      "mark": "138.1",
+      "page": 29,
+      "found": false
+     },
+     {
+      "mark": "138.1.1",
+      "page": 29,
+      "found": false
+     },
+     {
+      "mark": "138.2",
+      "page": 29,
+      "found": false
+     },
+     {
+      "mark": "141.1",
+      "page": 29,
+      "found": false
+     },
+     {
+      "mark": "142.1",
+      "page": 29,
+      "found": false
+     },
+     {
+      "mark": "143.1",
+      "page": 29,
+      "found": false
+     },
+     {
+      "mark": "144.1",
+      "page": 29,
+      "found": false
+     },
+     {
+      "mark": "145.1",
+      "page": 29,
+      "found": false
+     },
+     {
+      "mark": "146.1",
+      "page": 29,
+      "found": false
+     },
+     {
+      "mark": "147.1",
+      "page": 29,
+      "found": false
+     },
+     {
+      "mark": "147.1.1",
+      "page": 29,
+      "found": false
+     },
+     {
+      "mark": "148.1",
+      "page": 29,
+      "found": false
+     },
+     {
+      "mark": "150.1",
+      "page": 29,
+      "found": false
+     },
+     {
+      "mark": "151.1",
+      "page": 29,
+      "found": false
+     },
+     {
+      "mark": "152.1",
+      "page": 29,
+      "found": false
+     },
+     {
+      "mark": "152.1.1",
+      "page": 29,
+      "found": false
+     },
+     {
+      "mark": "153.1",
+      "page": 29,
+      "found": false
+     },
+     {
+      "mark": "155.1",
+      "page": 29,
+      "found": false
+     },
+     {
+      "mark": "155.2",
+      "page": 29,
+      "found": false
+     },
+     {
+      "mark": "157.1",
+      "page": 29,
+      "found": false
+     },
+     {
+      "mark": "159.1",
+      "page": 29,
+      "found": false
+     },
+     {
+      "mark": "161.1",
+      "page": 29,
+      "found": false
+     },
+     {
+      "mark": "162.1",
+      "page": 29,
+      "found": false
+     },
+     {
+      "mark": "163.1",
+      "page": 29,
+      "found": false
+     },
+     {
+      "mark": "164.1",
+      "page": 29,
+      "found": false
+     },
+     {
+      "mark": "165.1",
+      "page": 29,
+      "found": false
+     },
+     {
+      "mark": "166.1",
+      "page": 29,
+      "found": false
+     },
+     {
+      "mark": "167.1",
+      "page": 29,
+      "found": false
+     },
+     {
+      "mark": "167.1.1",
+      "page": 29,
+      "found": false
+     },
+     {
+      "mark": "168.1",
+      "page": 29,
+      "found": false
+     },
+     {
+      "mark": "170.1",
+      "page": 29,
+      "found": false
+     },
+     {
+      "mark": "173.1",
+      "page": 29,
+      "found": false
+     },
+     {
+      "mark": "174.1",
+      "page": 29,
+      "found": false
+     },
+     {
+      "mark": "175.1",
+      "page": 29,
+      "found": false
+     },
+     {
+      "mark": "176.1",
+      "page": 29,
+      "found": false
+     },
+     {
+      "mark": "177.1",
+      "page": 29,
+      "found": false
+     },
+     {
+      "mark": "178.1",
+      "page": 29,
+      "found": false
+     },
+     {
+      "mark": "179.1",
+      "page": 29,
+      "found": false
+     },
+     {
+      "mark": "179.1.1",
+      "page": 29,
+      "found": false
+     },
+     {
+      "mark": "180.1",
+      "page": 29,
+      "found": false
+     },
+     {
+      "mark": "182.1",
+      "page": 29,
+      "found": false
+     }
+    ]
+   },
+   "hardware": {
+    "expected_groups": 13,
+    "groups_found": 0,
+    "extra_groups": [],
+    "expected_items": 103,
+    "items_found": 0,
+    "items_found_pct": 0,
+    "field_accuracy_pct": null,
+    "per_field": {
+     "qty": {
+      "right": 0,
+      "wrong": 0
+     },
+     "description": {
+      "right": 0,
+      "wrong": 0
+     },
+     "catalog": {
+      "right": 0,
+      "wrong": 0
+     },
+     "finish": {
+      "right": 0,
+      "wrong": 0
+     },
+     "mfr": {
+      "right": 0,
+      "wrong": 0
+     }
+    },
+    "doors_linked": null,
+    "groups": [
+     {
+      "group": "02 RR-M",
+      "found": false,
+      "items_expected": 8
+     },
+     {
+      "group": "06 CL",
+      "found": false,
+      "items_expected": 6
+     },
+     {
+      "group": "07 CL",
+      "found": false,
+      "items_expected": 6
+     },
+     {
+      "group": "19 STO",
+      "found": false,
+      "items_expected": 8
+     },
+     {
+      "group": "19F STO",
+      "found": false,
+      "items_expected": 8
+     },
+     {
+      "group": "20 STO",
+      "found": false,
+      "items_expected": 6
+     },
+     {
+      "group": "23 STO",
+      "found": false,
+      "items_expected": 6
+     },
+     {
+      "group": "28 COR",
+      "found": false,
+      "items_expected": 8
+     },
+     {
+      "group": "32 EXD",
+      "found": false,
+      "items_expected": 12
+     },
+     {
+      "group": "40 UTY",
+      "found": false,
+      "items_expected": 16
+     },
+     {
+      "group": "44 UTY-IT",
+      "found": false,
+      "items_expected": 10
+     },
+     {
+      "group": "47 VES",
+      "found": false,
+      "items_expected": 5
+     },
+     {
+      "group": "51 UTY-CUS",
+      "found": false,
+      "items_expected": 4
+     }
+    ]
+   }
+  },
+  {
+   "id": "berryessa",
+   "file": "/Users/johnmobley/weylandai.com/tools/corpus/door-schedules/dd339f57b51538ed.pdf",
+   "reads": [
+    {
+     "page": 284,
+     "type": "door_schedule",
+     "status": 422,
+     "ms": 13709,
+     "ok": false,
+     "found": null,
+     "route": null,
+     "error": "no_schedule_table_found - No door schedule or hardware schedule table was found on page 284 (the page was read as shown and turned 90, 180 and 270 degrees). Check that this page holds the schedule itself, ruled into rows and columns."
+    },
+    {
+     "page": 286,
+     "type": "door_schedule",
+     "status": 422,
+     "ms": 8091,
+     "ok": false,
+     "found": null,
+     "route": null,
+     "error": "no_schedule_table_found - No door schedule or hardware schedule table was found on page 286 (the page was read as shown and turned 90, 180 and 270 degrees). Check that this page holds the schedule itself, ruled into rows and columns."
+    },
+    {
+     "page": 288,
+     "type": "door_schedule",
+     "status": 422,
+     "ms": 12739,
+     "ok": false,
+     "found": null,
+     "route": null,
+     "error": "no_schedule_table_found - No door schedule or hardware schedule table was found on page 288 (the page was read as shown and turned 90, 180 and 270 degrees). Check that this page holds the schedule itself, ruled into rows and columns."
+    },
+    {
+     "page": 282,
+     "type": "hardware_schedule",
+     "status": 422,
+     "ms": 4202,
+     "ok": false,
+     "found": null,
+     "route": null,
+     "error": "no_schedule_table_found - No door schedule or hardware schedule table was found on page 282 (the page was read as shown and turned 90, 180 and 270 degrees). Check that this page holds the schedule itself, ruled into rows and columns."
+    }
+   ],
+   "errors": [],
+   "session": "0fead6b9-105f-41ac-8271-6eb4cbb62d5d",
+   "total_pages": 288,
+   "upload_ms": 5974,
+   "find_pages": {
+    "available": false
+   },
+   "doors": {
+    "expected_rows": 24,
+    "rows_found": 0,
+    "rows_found_pct": 0,
+    "extra_rows": 0,
+    "extra_sample": [],
+    "field_accuracy_pct": null,
+    "per_field": {
+     "mark": {
+      "right": 0,
+      "wrong": 0
+     },
+     "hardware_group": {
+      "right": 0,
+      "wrong": 0
+     },
+     "width_inches": {
+      "right": 0,
+      "wrong": 0
+     },
+     "height_inches": {
+      "right": 0,
+      "wrong": 0
+     },
+     "fire_rating": {
+      "right": 0,
+      "wrong": 0
+     },
+     "door_type": {
+      "right": 0,
+      "wrong": 0
+     }
+    },
+    "rows": [
+     {
+      "mark": "001",
+      "page": 284,
+      "found": false
+     },
+     {
+      "mark": "002",
+      "page": 284,
+      "found": false
+     },
+     {
+      "mark": "003",
+      "page": 284,
+      "found": false
+     },
+     {
+      "mark": "004",
+      "page": 284,
+      "found": false
+     },
+     {
+      "mark": "005",
+      "page": 284,
+      "found": false
+     },
+     {
+      "mark": "006",
+      "page": 284,
+      "found": false
+     },
+     {
+      "mark": "007",
+      "page": 284,
+      "found": false
+     },
+     {
+      "mark": "008",
+      "page": 284,
+      "found": false
+     },
+     {
+      "mark": "009",
+      "page": 284,
+      "found": false
+     },
+     {
+      "mark": "001",
+      "page": 286,
+      "found": false
+     },
+     {
+      "mark": "002",
+      "page": 286,
+      "found": false
+     },
+     {
+      "mark": "003",
+      "page": 286,
+      "found": false
+     },
+     {
+      "mark": "004",
+      "page": 286,
+      "found": false
+     },
+     {
+      "mark": "005",
+      "page": 286,
+      "found": false
+     },
+     {
+      "mark": "006",
+      "page": 286,
+      "found": false
+     },
+     {
+      "mark": "008",
+      "page": 286,
+      "found": false
+     },
+     {
+      "mark": "001",
+      "page": 288,
+      "found": false
+     },
+     {
+      "mark": "002",
+      "page": 288,
+      "found": false
+     },
+     {
+      "mark": "003",
+      "page": 288,
+      "found": false
+     },
+     {
+      "mark": "004",
+      "page": 288,
+      "found": false
+     },
+     {
+      "mark": "005",
+      "page": 288,
+      "found": false
+     },
+     {
+      "mark": "006",
+      "page": 288,
+      "found": false
+     },
+     {
+      "mark": "007",
+      "page": 288,
+      "found": false
+     },
+     {
+      "mark": "008",
+      "page": 288,
+      "found": false
+     }
+    ]
+   },
+   "hardware": {
+    "expected_groups": 2,
+    "groups_found": 0,
+    "extra_groups": [],
+    "expected_items": 16,
+    "items_found": 0,
+    "items_found_pct": 0,
+    "field_accuracy_pct": null,
+    "per_field": {
+     "qty": {
+      "right": 0,
+      "wrong": 0
+     },
+     "description": {
+      "right": 0,
+      "wrong": 0
+     },
+     "catalog": {
+      "right": 0,
+      "wrong": 0
+     },
+     "finish": {
+      "right": 0,
+      "wrong": 0
+     },
+     "mfr": {
+      "right": 0,
+      "wrong": 0
+     }
+    },
+    "doors_linked": null,
+    "groups": [
+     {
+      "group": "01",
+      "found": false,
+      "items_expected": 7
+     },
+     {
+      "group": "02",
+      "found": false,
+      "items_expected": 9
+     }
+    ]
+   }
+  },
+  {
+   "id": "occ",
+   "file": "/Users/johnmobley/pdf/OCCDoorSchedulePg4.pdf",
+   "reads": [
+    {
+     "page": 1,
+     "type": "door_schedule",
+     "status": 200,
+     "ms": 17364,
+     "ok": true,
+     "found": "42 doors",
+     "route": "browser_grid_deterministic",
+     "error": null
+    }
+   ],
+   "errors": [],
+   "session": "8f235ad6-d839-4d9c-a01c-2da6a1ddeaba",
+   "total_pages": 1,
+   "upload_ms": 1928,
+   "find_pages": {
+    "available": false
+   },
+   "doors": {
+    "expected_rows": 42,
+    "rows_found": 41,
+    "rows_found_pct": 97.6,
+    "extra_rows": 1,
+    "extra_sample": [
+     {
+      "page": 1,
+      "mark": "1423"
+     }
+    ],
+    "field_accuracy_pct": 97.2,
+    "per_field": {
+     "mark": {
+      "right": 41,
+      "wrong": 0
+     },
+     "hardware_group": {
+      "right": 41,
+      "wrong": 0
+     },
+     "width_inches": {
+      "right": 40,
+      "wrong": 1
+     },
+     "height_inches": {
+      "right": 39,
+      "wrong": 2
+     },
+     "fire_rating": {
+      "right": 40,
+      "wrong": 1
+     },
+     "door_type": {
+      "right": 38,
+      "wrong": 3
+     }
+    },
+    "rows": [
+     {
+      "mark": "053",
+      "page": 1,
+      "found": true,
+      "wrong": []
+     },
+     {
+      "mark": "131",
+      "page": 1,
+      "found": true,
+      "wrong": []
+     },
+     {
+      "mark": "133",
+      "page": 1,
+      "found": true,
+      "wrong": []
+     },
+     {
+      "mark": "134",
+      "page": 1,
+      "found": true,
+      "wrong": []
+     },
+     {
+      "mark": "135",
+      "page": 1,
+      "found": true,
+      "wrong": []
+     },
+     {
+      "mark": "144B",
+      "page": 1,
+      "found": true,
+      "wrong": []
+     },
+     {
+      "mark": "152",
+      "page": 1,
+      "found": true,
+      "wrong": []
+     },
+     {
+      "mark": "153",
+      "page": 1,
+      "found": true,
+      "wrong": []
+     },
+     {
+      "mark": "228B",
+      "page": 1,
+      "found": true,
+      "wrong": []
+     },
+     {
+      "mark": "136",
+      "page": 1,
+      "found": true,
+      "wrong": []
+     },
+     {
+      "mark": "137A",
+      "page": 1,
+      "found": true,
+      "wrong": []
+     },
+     {
+      "mark": "137B",
+      "page": 1,
+      "found": true,
+      "wrong": []
+     },
+     {
+      "mark": "138",
+      "page": 1,
+      "found": true,
+      "wrong": [
+       "width_inches: expected 36, read null"
+      ]
+     },
+     {
+      "mark": "139",
+      "page": 1,
+      "found": true,
+      "wrong": [
+       "door_type: expected \"C\", read \"Cc\""
+      ]
+     },
+     {
+      "mark": "141",
+      "page": 1,
+      "found": true,
+      "wrong": []
+     },
+     {
+      "mark": "142",
+      "page": 1,
+      "found": true,
+      "wrong": []
+     },
+     {
+      "mark": "143",
+      "page": 1,
+      "found": false
+     },
+     {
+      "mark": "144A",
+      "page": 1,
+      "found": true,
+      "wrong": []
+     },
+     {
+      "mark": "145",
+      "page": 1,
+      "found": true,
+      "wrong": []
+     },
+     {
+      "mark": "146",
+      "page": 1,
+      "found": true,
+      "wrong": []
+     },
+     {
+      "mark": "147A",
+      "page": 1,
+      "found": true,
+      "wrong": [
+       "door_type: expected \"C\", read \"Cc\""
+      ]
+     },
+     {
+      "mark": "147B",
+      "page": 1,
+      "found": true,
+      "wrong": []
+     },
+     {
+      "mark": "148",
+      "page": 1,
+      "found": true,
+      "wrong": []
+     },
+     {
+      "mark": "151",
+      "page": 1,
+      "found": true,
+      "wrong": []
+     },
+     {
+      "mark": "221",
+      "page": 1,
+      "found": true,
+      "wrong": []
+     },
+     {
+      "mark": "227",
+      "page": 1,
+      "found": true,
+      "wrong": [
+       "door_type: expected \"B\", read \"R\""
+      ]
+     },
+     {
+      "mark": "228A",
+      "page": 1,
+      "found": true,
+      "wrong": []
+     },
+     {
+      "mark": "235",
+      "page": 1,
+      "found": true,
+      "wrong": [
+       "fire_rating: expected \"20 MIN.\", read \"2U MIN.\""
+      ]
+     },
+     {
+      "mark": "238",
+      "page": 1,
+      "found": true,
+      "wrong": []
+     },
+     {
+      "mark": "241",
+      "page": 1,
+      "found": true,
+      "wrong": []
+     },
+     {
+      "mark": "242",
+      "page": 1,
+      "found": true,
+      "wrong": []
+     },
+     {
+      "mark": "243",
+      "page": 1,
+      "found": true,
+      "wrong": []
+     },
+     {
+      "mark": "244",
+      "page": 1,
+      "found": true,
+      "wrong": [
+       "height_inches: expected 95, read null"
+      ]
+     },
+     {
+      "mark": "245",
+      "page": 1,
+      "found": true,
+      "wrong": [
+       "height_inches: expected 95, read null"
+      ]
+     },
+     {
+      "mark": "246",
+      "page": 1,
+      "found": true,
+      "wrong": []
+     },
+     {
+      "mark": "247",
+      "page": 1,
+      "found": true,
+      "wrong": []
+     },
+     {
+      "mark": "248",
+      "page": 1,
+      "found": true,
+      "wrong": []
+     },
+     {
+      "mark": "249",
+      "page": 1,
+      "found": true,
+      "wrong": []
+     },
+     {
+      "mark": "250",
+      "page": 1,
+      "found": true,
+      "wrong": []
+     },
+     {
+      "mark": "251",
+      "page": 1,
+      "found": true,
+      "wrong": []
+     },
+     {
+      "mark": "252",
+      "page": 1,
+      "found": true,
+      "wrong": []
+     },
+     {
+      "mark": "253",
+      "page": 1,
+      "found": true,
+      "wrong": []
+     }
+    ]
+   }
+  },
+  {
+   "id": "christina",
+   "file": "/Users/johnmobley/weylandai.com/tools/corpus/door-schedules/525dc0b72011077a.pdf",
+   "reads": [
+    {
+     "page": 219,
+     "type": "hardware_schedule",
+     "status": 200,
+     "ms": 33643,
+     "ok": true,
+     "found": "1 groups",
+     "route": "browser_grid_deterministic",
+     "error": null
+    }
+   ],
+   "errors": [],
+   "session": "1934f33b-4620-4f36-b3a1-2c5c23930899",
+   "total_pages": 537,
+   "upload_ms": 5987,
+   "find_pages": {
+    "available": false
+   },
+   "hardware": {
+    "expected_groups": 1,
+    "groups_found": 0,
+    "extra_groups": [
+     "01-CARD READER EXTERIOR BULLET RESTANT ALD& ALF ,"
+    ],
+    "expected_items": 23,
+    "items_found": 0,
+    "items_found_pct": 0,
+    "field_accuracy_pct": null,
+    "per_field": {
+     "qty": {
+      "right": 0,
+      "wrong": 0
+     },
+     "description": {
+      "right": 0,
+      "wrong": 0
+     },
+     "catalog": {
+      "right": 0,
+      "wrong": 0
+     },
+     "finish": {
+      "right": 0,
+      "wrong": 0
+     },
+     "mfr": {
+      "right": 0,
+      "wrong": 0
+     }
+    },
+    "doors_linked": null,
+    "groups": [
+     {
+      "group": "01",
+      "found": false,
+      "items_expected": 23
+     }
+    ]
+   }
+  }
+ ],
+ "cleanup": {
+  "deleted": {
+   "hardware_components": 24,
+   "client_telemetry": 4,
+   "door_hardware_matrix": 2,
+   "door_schedule_entries": 42,
+   "hardware_page_extractions": 2,
+   "hardware_sets": 1,
+   "hardware_extraction_sessions": 4,
+   "weyland_sessions": 1,
+   "users": 1
+  },
+  "r2": [
+   "deleted",
+   "deleted",
+   "deleted",
+   "deleted"
+  ],
+  "kv": [
+   "deleted",
+   "deleted",
+   "deleted",
+   "deleted"
+  ],
+  "remaining": {
+   "users": 0,
+   "weyland_sessions": 0,
+   "extraction_sessions": 0
+  },
+  "ok": true
+ },
+ "finished_at": "2026-10-08T04:58:29.928Z"
+}

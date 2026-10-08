@@ -1,0 +1,1125 @@
+{
+ "document": "Rockford Public Schools, Bid 26-27 Addendum One: Section 087100 FINISH HARDWARE, hardware groups (unruled spec text)",
+ "source": {
+  "file": "tools/corpus/door-schedules/f0e863d88ea688ff.pdf",
+  "pages": [
+   18,
+   19,
+   20,
+   21,
+   22,
+   23
+  ],
+  "page_size_pt": [
+   612,
+   792
+  ],
+  "text_layer": true
+ },
+ "schedule_type": "hardware_schedule",
+ "how_checked": "Rendered PDF pages 18-23 with pdftoppm at 110 dpi (one image per page) and read every group by eye (2026-10-08 00:50 EDT); each group's door list was compared with the HARDWARE column of sheet A2.2 (all 13 agree). Catalog cells include their continuation lines (TKTX SCREWS AT HM DOORS, REQUIRED) joined with a space. Nothing here came from any extractor.",
+ "format": "Hardware Group No. <number> <code>, then its door marks, then columns QTY, EA, DESCRIPTION, CATALOG NUMBER, FINISH, MFR; wrapped cells continue on the next line in the same column.",
+ "group_count": 13,
+ "groups_not_printed": [
+  "01 RR (used on the drawing by 130.1, 132.1, 134.1; not reprinted in this addendum)"
+ ],
+ "groups": [
+  {
+   "group": "02 RR-M",
+   "page": 18,
+   "doors": [
+    "147.1",
+    "148.1",
+    "167.1",
+    "168.1",
+    "179.1",
+    "180.1"
+   ],
+   "items": [
+    {
+     "qty": 1,
+     "uom": "EA",
+     "description": "CONTINUOUS HINGE",
+     "catalog": "SL11 / SL24",
+     "finish": "628",
+     "mfr": "SEL"
+    },
+    {
+     "qty": 1,
+     "uom": "EA",
+     "description": "PUSH PLATE",
+     "catalog": "8200 4\" X 16\" TKTX SCREWS AT HM DOORS",
+     "finish": "630",
+     "mfr": "IVE"
+    },
+    {
+     "qty": 1,
+     "uom": "EA",
+     "description": "PULL PLATE",
+     "catalog": "8302 10\" 4\" X 16\" TKTX SCREWS AT HM DOORS",
+     "finish": "630",
+     "mfr": "IVE"
+    },
+    {
+     "qty": 1,
+     "uom": "EA",
+     "description": "REG/ PA SURFACE CLOSER - AS REQUIRED",
+     "catalog": "4040XP REG / 4040XP EDA - AS REQUIRED",
+     "finish": "689",
+     "mfr": "LCN"
+    },
+    {
+     "qty": 1,
+     "uom": "EA",
+     "description": "KICK PLATE",
+     "catalog": "8400 10\" HIGH B-CS TKTX SCREWS AT HM DOORS",
+     "finish": "630",
+     "mfr": "IVE"
+    },
+    {
+     "qty": 1,
+     "uom": "EA",
+     "description": "MOP PLATE",
+     "catalog": "8400 4\" HIGH B-CS TKTX SCREWS AT HM DOORS",
+     "finish": "630",
+     "mfr": "IVE"
+    },
+    {
+     "qty": 1,
+     "uom": "EA",
+     "description": "WALL STOP",
+     "catalog": "WS406/407CCV",
+     "finish": "630",
+     "mfr": "IVE"
+    },
+    {
+     "qty": 3,
+     "uom": "EA",
+     "description": "SILENCER",
+     "catalog": "SR64",
+     "finish": "GRY",
+     "mfr": "IVE"
+    }
+   ],
+   "notes": []
+  },
+  {
+   "group": "06 CL",
+   "page": 18,
+   "doors": [
+    "109.1",
+    "109.2",
+    "111.1",
+    "113.1",
+    "128.1.1",
+    "129.1",
+    "131.1",
+    "133.1",
+    "138.1.1",
+    "141.1",
+    "142.1",
+    "143.1",
+    "144.1",
+    "145.1",
+    "146.1",
+    "151.1",
+    "153.1",
+    "159.1",
+    "161.1",
+    "162.1",
+    "163.1",
+    "164.1",
+    "165.1",
+    "166.1",
+    "173.1",
+    "174.1",
+    "175.1",
+    "176.1",
+    "177.1",
+    "178.1"
+   ],
+   "items": [
+    {
+     "qty": 1,
+     "uom": "EA",
+     "description": "CONTINUOUS HINGE",
+     "catalog": "SL11 / SL24",
+     "finish": "628",
+     "mfr": "SEL"
+    },
+    {
+     "qty": 1,
+     "uom": "EA",
+     "description": "ENTRANCE LOCK",
+     "catalog": "ALX53R-RHO-626 FSIC",
+     "finish": "626",
+     "mfr": "SCH"
+    },
+    {
+     "qty": 1,
+     "uom": "EA",
+     "description": "CLOSER, HOLD OPEN",
+     "catalog": "4040XP H / HEDA - AS REQUIRED",
+     "finish": "689",
+     "mfr": "LCN"
+    },
+    {
+     "qty": 1,
+     "uom": "EA",
+     "description": "KICK PLATE",
+     "catalog": "8400 10\" HIGH B-CS TKTX SCREWS AT HM DOORS",
+     "finish": "630",
+     "mfr": "IVE"
+    },
+    {
+     "qty": 1,
+     "uom": "EA",
+     "description": "WALL STOP",
+     "catalog": "WS406/407CCV",
+     "finish": "630",
+     "mfr": "IVE"
+    },
+    {
+     "qty": 3,
+     "uom": "EA",
+     "description": "SILENCER",
+     "catalog": "SR64",
+     "finish": "GRY",
+     "mfr": "IVE"
+    }
+   ],
+   "notes": []
+  },
+  {
+   "group": "07 CL",
+   "page": 18,
+   "doors": [
+    "127.1",
+    "150.1",
+    "155.1",
+    "170.1",
+    "182.1"
+   ],
+   "items": [
+    {
+     "qty": 1,
+     "uom": "EA",
+     "description": "CONTINUOUS HINGE",
+     "catalog": "SL11 / SL24",
+     "finish": "628",
+     "mfr": "SEL"
+    },
+    {
+     "qty": 1,
+     "uom": "EA",
+     "description": "ENTRANCE LOCK",
+     "catalog": "ALX53R-RHO-626 FSIC",
+     "finish": "626",
+     "mfr": "SCH"
+    },
+    {
+     "qty": 1,
+     "uom": "EA",
+     "description": "OH STOP",
+     "catalog": "90S",
+     "finish": "652",
+     "mfr": "GLY"
+    },
+    {
+     "qty": 1,
+     "uom": "EA",
+     "description": "CLOSER, HOLD OPEN",
+     "catalog": "4040XP H / HEDA - AS REQUIRED",
+     "finish": "689",
+     "mfr": "LCN"
+    },
+    {
+     "qty": 1,
+     "uom": "EA",
+     "description": "KICK PLATE",
+     "catalog": "8400 10\" HIGH B-CS TKTX SCREWS AT HM DOORS",
+     "finish": "630",
+     "mfr": "IVE"
+    },
+    {
+     "qty": 3,
+     "uom": "EA",
+     "description": "SILENCER",
+     "catalog": "SR64",
+     "finish": "GRY",
+     "mfr": "IVE"
+    }
+   ],
+   "notes": []
+  },
+  {
+   "group": "19 STO",
+   "page": 19,
+   "doors": [
+    "111.1.1",
+    "113.1.1"
+   ],
+   "items": [
+    {
+     "qty": 2,
+     "uom": "EA",
+     "description": "CONTINUOUS HINGE",
+     "catalog": "SL11 / SL24",
+     "finish": "628",
+     "mfr": "SEL"
+    },
+    {
+     "qty": 1,
+     "uom": "EA",
+     "description": "CONST LATCHING BOLT",
+     "catalog": "FB51P / FB61P",
+     "finish": "630",
+     "mfr": "IVE"
+    },
+    {
+     "qty": 1,
+     "uom": "EA",
+     "description": "DUST PROOF STRIKE",
+     "catalog": "DP1/ DP2 (AS REQ'D)",
+     "finish": "626",
+     "mfr": "IVE"
+    },
+    {
+     "qty": 1,
+     "uom": "EA",
+     "description": "STOREROOM LOCK",
+     "catalog": "ALX80R-RHO-626 FSIC",
+     "finish": "626",
+     "mfr": "SCH"
+    },
+    {
+     "qty": 1,
+     "uom": "EA",
+     "description": "CLOSER, HOLD OPEN",
+     "catalog": "4040XP H / HEDA - AS REQUIRED",
+     "finish": "689",
+     "mfr": "LCN"
+    },
+    {
+     "qty": 2,
+     "uom": "EA",
+     "description": "ARMOR PLATE",
+     "catalog": "8400 34\" HIGH B-CS TKTX SCREWS AT HM DOORS",
+     "finish": "630",
+     "mfr": "IVE"
+    },
+    {
+     "qty": 2,
+     "uom": "EA",
+     "description": "WALL STOP",
+     "catalog": "WS406/407CCV",
+     "finish": "630",
+     "mfr": "IVE"
+    },
+    {
+     "qty": 2,
+     "uom": "EA",
+     "description": "SILENCER",
+     "catalog": "SR64",
+     "finish": "GRY",
+     "mfr": "IVE"
+    }
+   ],
+   "notes": [
+    "@ 111.1.1 & 113.1.1 GC / SUPPLIER NOTE TO ADJUST THE DOOR CLOSERS TO BE ON NON ROOM SIDE OF OPENING AND ADD HOLD OPENS AS LISTED IN THE SET MOVE OPENING 114.1 TO SET 19F-STO FIRE RATED NON HOLD OPEN"
+   ]
+  },
+  {
+   "group": "19F STO",
+   "page": 19,
+   "doors": [
+    "114.1"
+   ],
+   "items": [
+    {
+     "qty": 2,
+     "uom": "EA",
+     "description": "CONTINUOUS HINGE",
+     "catalog": "SL11 / SL24",
+     "finish": "628",
+     "mfr": "SEL"
+    },
+    {
+     "qty": 1,
+     "uom": "EA",
+     "description": "CONST LATCHING BOLT",
+     "catalog": "FB51P / FB61P",
+     "finish": "630",
+     "mfr": "IVE"
+    },
+    {
+     "qty": 1,
+     "uom": "EA",
+     "description": "DUST PROOF STRIKE",
+     "catalog": "DP1/ DP2 (AS REQ'D)",
+     "finish": "626",
+     "mfr": "IVE"
+    },
+    {
+     "qty": 1,
+     "uom": "EA",
+     "description": "STOREROOM LOCK",
+     "catalog": "ALX80R-RHO-626 FSIC",
+     "finish": "626",
+     "mfr": "SCH"
+    },
+    {
+     "qty": 2,
+     "uom": "EA",
+     "description": "REG/ PA SURFACE CLOSER - AS REQUIRED",
+     "catalog": "4040XP REG / 4040XP EDA - AS REQUIRED",
+     "finish": "689",
+     "mfr": "LCN"
+    },
+    {
+     "qty": 2,
+     "uom": "EA",
+     "description": "ARMOR PLATE",
+     "catalog": "8400 34\" HIGH B-CS TKTX SCREWS AT HM DOORS",
+     "finish": "630",
+     "mfr": "IVE"
+    },
+    {
+     "qty": 2,
+     "uom": "EA",
+     "description": "WALL STOP",
+     "catalog": "WS406/407CCV",
+     "finish": "630",
+     "mfr": "IVE"
+    },
+    {
+     "qty": 1,
+     "uom": "EA",
+     "description": "GASKETING",
+     "catalog": "188SBK PSA",
+     "finish": "BK",
+     "mfr": "ZER"
+    }
+   ],
+   "notes": []
+  },
+  {
+   "group": "20 STO",
+   "page": 19,
+   "doors": [
+    "157.1"
+   ],
+   "items": [
+    {
+     "qty": 1,
+     "uom": "EA",
+     "description": "CONTINUOUS HINGE",
+     "catalog": "SL11 / SL24",
+     "finish": "628",
+     "mfr": "SEL"
+    },
+    {
+     "qty": 1,
+     "uom": "EA",
+     "description": "STOREROOM LOCK",
+     "catalog": "ALX80R-RHO-626 FSIC",
+     "finish": "626",
+     "mfr": "SCH"
+    },
+    {
+     "qty": 1,
+     "uom": "EA",
+     "description": "REG/ PA SURFACE CLOSER - AS REQUIRED",
+     "catalog": "4040XP REG / 4040XP EDA - AS REQUIRED",
+     "finish": "689",
+     "mfr": "LCN"
+    },
+    {
+     "qty": 1,
+     "uom": "EA",
+     "description": "KICK PLATE",
+     "catalog": "8400 10\" HIGH B-CS TKTX SCREWS AT HM DOORS",
+     "finish": "630",
+     "mfr": "IVE"
+    },
+    {
+     "qty": 1,
+     "uom": "EA",
+     "description": "WALL STOP",
+     "catalog": "WS406/407CCV",
+     "finish": "630",
+     "mfr": "IVE"
+    },
+    {
+     "qty": 3,
+     "uom": "EA",
+     "description": "SILENCER",
+     "catalog": "SR64",
+     "finish": "GRY",
+     "mfr": "IVE"
+    }
+   ],
+   "notes": [
+    "@ TAG 136.1 ADD CARD READER APPLICATION"
+   ]
+  },
+  {
+   "group": "23 STO",
+   "page": 20,
+   "doors": [
+    "118.1",
+    "138.1",
+    "138.2",
+    "155.2"
+   ],
+   "items": [
+    {
+     "qty": 1,
+     "uom": "EA",
+     "description": "CONTINUOUS HINGE",
+     "catalog": "SL11 / SL24",
+     "finish": "628",
+     "mfr": "SEL"
+    },
+    {
+     "qty": 1,
+     "uom": "EA",
+     "description": "STOREROOM LOCK",
+     "catalog": "ALX80R-RHO-626 FSIC",
+     "finish": "626",
+     "mfr": "SCH"
+    },
+    {
+     "qty": 1,
+     "uom": "EA",
+     "description": "OH STOP",
+     "catalog": "90S",
+     "finish": "652",
+     "mfr": "GLY"
+    },
+    {
+     "qty": 1,
+     "uom": "EA",
+     "description": "REG/ PA SURFACE CLOSER - AS REQUIRED",
+     "catalog": "4040XP REG / 4040XP EDA - AS REQUIRED",
+     "finish": "689",
+     "mfr": "LCN"
+    },
+    {
+     "qty": 1,
+     "uom": "EA",
+     "description": "KICK PLATE",
+     "catalog": "8400 10\" HIGH B-CS TKTX SCREWS AT HM DOORS",
+     "finish": "630",
+     "mfr": "IVE"
+    },
+    {
+     "qty": 3,
+     "uom": "EA",
+     "description": "SILENCER",
+     "catalog": "SR64",
+     "finish": "GRY",
+     "mfr": "IVE"
+    }
+   ],
+   "notes": []
+  },
+  {
+   "group": "28 COR",
+   "page": 20,
+   "doors": [
+    "126.1",
+    "126.2"
+   ],
+   "items": [
+    {
+     "qty": 2,
+     "uom": "EA",
+     "description": "CONTINUOUS HINGE",
+     "catalog": "SL11 / SL24",
+     "finish": "628",
+     "mfr": "SEL"
+    },
+    {
+     "qty": 1,
+     "uom": "EA",
+     "description": "FIRE EXIT HARDWARE",
+     "catalog": "9927-L-BE-F-LBR-06-499F",
+     "finish": "626",
+     "mfr": "VON"
+    },
+    {
+     "qty": 1,
+     "uom": "EA",
+     "description": "FIRE EXIT HARDWARE",
+     "catalog": "9927-L-BE-F-LBRAFL-06-499F",
+     "finish": "626",
+     "mfr": "VON"
+    },
+    {
+     "qty": 2,
+     "uom": "EA",
+     "description": "W/ C KEYWAY",
+     "catalog": "20-057-C FSIC 6PIN",
+     "finish": "626",
+     "mfr": "SCH"
+    },
+    {
+     "qty": 2,
+     "uom": "EA",
+     "description": "OH STOP",
+     "catalog": "100SE",
+     "finish": "630",
+     "mfr": "GLY"
+    },
+    {
+     "qty": 2,
+     "uom": "EA",
+     "description": "FIRE/LIFE CLOSER",
+     "catalog": "4040SE",
+     "finish": "689",
+     "mfr": "LCN"
+    },
+    {
+     "qty": 2,
+     "uom": "EA",
+     "description": "KICK PLATE",
+     "catalog": "8400 10\" HIGH B-CS TKTX SCREWS AT HM DOORS",
+     "finish": "630",
+     "mfr": "IVE"
+    },
+    {
+     "qty": 1,
+     "uom": "EA",
+     "description": "GASKETING",
+     "catalog": "188SBK PSA",
+     "finish": "BK",
+     "mfr": "ZER"
+    }
+   ],
+   "notes": [
+    "OMIT CARD READER AT BOTH DOOR LEAFS MAKE NEW SET USE SENTRONIC CLOSERS @ 126.1 & 126.2 MAKE TRIM BE FUNCTION",
+    "USE NEW SET 28 COR"
+   ]
+  },
+  {
+   "group": "32 EXD",
+   "page": 21,
+   "doors": [
+    "126.1.1",
+    "152.1.1"
+   ],
+   "items": [
+    {
+     "qty": 1,
+     "uom": "EA",
+     "description": "CONTINUOUS HINGE",
+     "catalog": "SL11 / SL24 - EPT",
+     "finish": "DBZ",
+     "mfr": "SEL",
+     "superseded": {
+      "finish": "628"
+     }
+    },
+    {
+     "qty": 1,
+     "uom": "EA",
+     "description": "POWER TRANSFER",
+     "catalog": "EPT10",
+     "finish": "695",
+     "mfr": "VON",
+     "superseded": {
+      "finish": "689"
+     }
+    },
+    {
+     "qty": 1,
+     "uom": "EA",
+     "description": "ELEC PANIC HARDWARE",
+     "catalog": "QEL-99-EO-CON 24 VDC",
+     "finish": "710",
+     "mfr": "VON",
+     "superseded": {
+      "finish": "626"
+     }
+    },
+    {
+     "qty": 1,
+     "uom": "EA",
+     "description": "90 DEG OFFSET PULL",
+     "catalog": "8190HD 10\" O",
+     "finish": "695",
+     "mfr": "IVE",
+     "superseded": {
+      "finish": "630"
+     }
+    },
+    {
+     "qty": 1,
+     "uom": "EA",
+     "description": "OH STOP",
+     "catalog": "100S",
+     "finish": "695",
+     "mfr": "GLY",
+     "superseded": {
+      "finish": "630"
+     }
+    },
+    {
+     "qty": 1,
+     "uom": "EA",
+     "description": "SURFACE CLOSER",
+     "catalog": "4040XP REG / 4040XP EDA - AS REQUIRED",
+     "finish": "695",
+     "mfr": "LCN",
+     "superseded": {
+      "finish": "689",
+      "description": "REG/ PA SURFACE CLOSER - AS REQUIRED"
+     }
+    },
+    {
+     "qty": 1,
+     "uom": "EA",
+     "description": "DOOR SWEEP",
+     "catalog": "39D",
+     "finish": "D",
+     "mfr": "ZER",
+     "superseded": {
+      "catalog": "39A",
+      "finish": "A"
+     }
+    },
+    {
+     "qty": 1,
+     "uom": "EA",
+     "description": "THRESHOLD",
+     "catalog": "566D-V3-226",
+     "finish": "D",
+     "mfr": "ZER",
+     "superseded": {
+      "catalog": "566A-V3-226",
+      "finish": "A"
+     }
+    },
+    {
+     "qty": 1,
+     "uom": "EA",
+     "description": "WEATHERSTRIP",
+     "catalog": "BY DOOR AND FRAME MANUFACTURER",
+     "finish": null,
+     "mfr": "B/O"
+    },
+    {
+     "qty": 1,
+     "uom": "EA",
+     "description": "CREDENTIAL READER",
+     "catalog": "BY DIVISION 28",
+     "finish": null,
+     "mfr": "B/O"
+    },
+    {
+     "qty": 1,
+     "uom": "EA",
+     "description": "DOOR POSITION SWITCH - AS REQUIRED",
+     "catalog": "BY DIVISION 28",
+     "finish": null,
+     "mfr": "B/O"
+    },
+    {
+     "qty": 1,
+     "uom": "EA",
+     "description": "POWER SUPPLY",
+     "catalog": "BY DIVISION 28",
+     "finish": null,
+     "mfr": "B/O"
+    }
+   ],
+   "notes": [
+    "Addendum revision marks on this page: new values underlined, old values struck through in parentheses; 'superseded' holds the struck value.",
+    "DOOR NORMALLY CLOSED AND LOCKED. ENTRY BY VALID CREDENTIAL. ALWAYS FREE EGRESS. UPON LOSS OF POWER, DOOR REMAINS LOCKED."
+   ]
+  },
+  {
+   "group": "40 UTY",
+   "page": 22,
+   "doors": [
+    "119.1"
+   ],
+   "items": [
+    {
+     "qty": 1,
+     "uom": "EA",
+     "description": "CONTINUOUS HINGE",
+     "catalog": "SL11 / SL24",
+     "finish": "DBZ",
+     "mfr": "SEL",
+     "superseded": {
+      "finish": "628"
+     }
+    },
+    {
+     "qty": 2,
+     "uom": "EA",
+     "description": "CONTINUOUS HINGE",
+     "catalog": "SL11 / SL24 - EPT",
+     "finish": "DBZ",
+     "mfr": "SEL",
+     "superseded": {
+      "qty": 1,
+      "finish": "628",
+      "struck_line": true
+     }
+    },
+    {
+     "qty": 2,
+     "uom": "EA",
+     "description": "POWER TRANSFER",
+     "catalog": "EPT10",
+     "finish": "695",
+     "mfr": "VON",
+     "superseded": {
+      "qty": 1,
+      "finish": "689",
+      "struck_line": true
+     }
+    },
+    {
+     "qty": 1,
+     "uom": "EA",
+     "description": "CONST LATCHING BOLT",
+     "catalog": "FB51P / FB61P",
+     "finish": "613",
+     "mfr": "IVE",
+     "superseded": {
+      "finish": "630"
+     }
+    },
+    {
+     "qty": 1,
+     "uom": "EA",
+     "description": "DUST PROOF STRIKE",
+     "catalog": "DP1/ DP2 (AS REQ'D)",
+     "finish": "613",
+     "mfr": "IVE",
+     "superseded": {
+      "finish": "626"
+     }
+    },
+    {
+     "qty": 1,
+     "uom": "EA",
+     "description": "STOREROOM LOCK",
+     "catalog": "ALX80R-RHO-626 FSIC",
+     "finish": "643e",
+     "mfr": "SCH",
+     "superseded": {
+      "finish": "626"
+     }
+    },
+    {
+     "qty": 1,
+     "uom": "EA",
+     "description": "ELECTRIC STRIKE",
+     "catalog": "6223 FSE CON 12/16/24/28 VAC/VDC",
+     "finish": "613",
+     "mfr": "VON",
+     "superseded": {
+      "finish": "630"
+     }
+    },
+    {
+     "qty": 1,
+     "uom": "EA",
+     "description": "OH STOP",
+     "catalog": "90S",
+     "finish": "695",
+     "mfr": "GLY",
+     "superseded": {
+      "finish": "652"
+     }
+    },
+    {
+     "qty": 1,
+     "uom": "EA",
+     "description": "SURFACE CLOSER",
+     "catalog": "4040XP SCUSH",
+     "finish": "695",
+     "mfr": "LCN",
+     "superseded": {
+      "finish": "689",
+      "description": "PA CLOSER W/SPRING STOP"
+     }
+    },
+    {
+     "qty": 1,
+     "uom": "EA",
+     "description": "RAIN DRIP - AS REQUIRED",
+     "catalog": "142D",
+     "finish": "D",
+     "mfr": "ZER",
+     "superseded": {
+      "catalog": "142AA",
+      "finish": "AA"
+     }
+    },
+    {
+     "qty": 1,
+     "uom": "SET",
+     "description": "GASKETING",
+     "catalog": "429D-S",
+     "finish": "D",
+     "mfr": "ZER",
+     "superseded": {
+      "catalog": "429AA-S",
+      "finish": "AA",
+      "description": "WEATHERSTRIP"
+     }
+    },
+    {
+     "qty": 2,
+     "uom": "EA",
+     "description": "DOOR SWEEP",
+     "catalog": "39D",
+     "finish": "D",
+     "mfr": "ZER",
+     "superseded": {
+      "catalog": "39A",
+      "finish": "A",
+      "struck_line": true
+     }
+    },
+    {
+     "qty": 1,
+     "uom": "EA",
+     "description": "THRESHOLD",
+     "catalog": "566D-V3-226",
+     "finish": "D",
+     "mfr": "ZER",
+     "superseded": {
+      "catalog": "566A-V3-226",
+      "finish": "A",
+      "struck_line": true
+     }
+    },
+    {
+     "qty": 1,
+     "uom": "EA",
+     "description": "CREDENTIAL READER",
+     "catalog": "BY DIVISION 28",
+     "finish": null,
+     "mfr": "B/O"
+    },
+    {
+     "qty": 2,
+     "uom": "EA",
+     "description": "DOOR POSITION SWITCH - AS REQUIRED",
+     "catalog": "BY DIVISION 28",
+     "finish": null,
+     "mfr": "B/O"
+    },
+    {
+     "qty": 1,
+     "uom": "EA",
+     "description": "POWER SUPPLY",
+     "catalog": "BY DIVISION 28",
+     "finish": null,
+     "mfr": "B/O"
+    }
+   ],
+   "notes": [
+    "Addendum revision marks: new lines underlined, replaced lines struck through; 'struck_line' means a struck copy of the item (the old quantity/finish) is also printed and may be read as an extra item.",
+    "DOOR NORMALLY CLOSED AND LOCKED. ENTRY BY VALID CREDENTIAL OR MANUAL KEY OVERRIDE. ALWAYS FREE EGRESS. UPON ACTIVATION OF FIRE ALARM OR LOSS OF POWER, DOOR REMAINS LOCKED."
+   ]
+  },
+  {
+   "group": "44 UTY-IT",
+   "page": 23,
+   "doors": [
+    "119.2",
+    "136.1",
+    "1J.1"
+   ],
+   "items": [
+    {
+     "qty": 1,
+     "uom": "EA",
+     "description": "CONTINUOUS HINGE",
+     "catalog": "SL11 / SL24",
+     "finish": "628",
+     "mfr": "SEL"
+    },
+    {
+     "qty": 1,
+     "uom": "EA",
+     "description": "STOREROOM LOCK",
+     "catalog": "ALX80R-RHO-626 FSIC",
+     "finish": "626",
+     "mfr": "SCH"
+    },
+    {
+     "qty": 1,
+     "uom": "EA",
+     "description": "ELECTRIC STRIKE",
+     "catalog": "6211 FSE CON 12/16/24/28 VAC/VDC",
+     "finish": "630",
+     "mfr": "VON"
+    },
+    {
+     "qty": 1,
+     "uom": "EA",
+     "description": "REG/ PA SURFACE CLOSER - AS REQUIRED",
+     "catalog": "4040XP REG / 4040XP EDA - AS REQUIRED",
+     "finish": "689",
+     "mfr": "LCN"
+    },
+    {
+     "qty": 1,
+     "uom": "EA",
+     "description": "KICK PLATE",
+     "catalog": "8400 10\" HIGH B-CS TKTX SCREWS AT HM DOORS",
+     "finish": "630",
+     "mfr": "IVE"
+    },
+    {
+     "qty": 1,
+     "uom": "EA",
+     "description": "WALL STOP",
+     "catalog": "WS406/407CCV",
+     "finish": "630",
+     "mfr": "IVE"
+    },
+    {
+     "qty": 3,
+     "uom": "EA",
+     "description": "SILENCER",
+     "catalog": "SR64",
+     "finish": "GRY",
+     "mfr": "IVE"
+    },
+    {
+     "qty": 1,
+     "uom": "EA",
+     "description": "CREDENTIAL READER",
+     "catalog": "BY DIVISION 28",
+     "finish": null,
+     "mfr": "B/O"
+    },
+    {
+     "qty": 1,
+     "uom": "EA",
+     "description": "DOOR POSITION SWITCH - AS REQUIRED",
+     "catalog": "BY DIVISION 28",
+     "finish": null,
+     "mfr": "B/O"
+    },
+    {
+     "qty": 1,
+     "uom": "EA",
+     "description": "POWER SUPPLY",
+     "catalog": "BY DIVISION 28",
+     "finish": null,
+     "mfr": "B/O"
+    }
+   ],
+   "notes": [
+    "DOOR NORMALLY CLOSED AND LOCKED. ENTRY BY VALID CREDENTIAL OR MANUAL KEY OVERRIDE. ALWAYS FREE EGRESS. UPON ACTIVATION OF FIRE ALARM OR LOSS OF POWER, DOOR REMAINS LOCKED."
+   ]
+  },
+  {
+   "group": "47 VES",
+   "page": 23,
+   "doors": [
+    "152.1"
+   ],
+   "items": [
+    {
+     "qty": 1,
+     "uom": "EA",
+     "description": "CONTINUOUS HINGE",
+     "catalog": "SL57 FULL SURFACE",
+     "finish": "628",
+     "mfr": "SEL"
+    },
+    {
+     "qty": 1,
+     "uom": "EA",
+     "description": "PUSH/PULL BAR",
+     "catalog": "9190HD-33\"-10\"-NO",
+     "finish": "630",
+     "mfr": "IVE"
+    },
+    {
+     "qty": 1,
+     "uom": "EA",
+     "description": "OH STOP",
+     "catalog": "100S",
+     "finish": "630",
+     "mfr": "GLY"
+    },
+    {
+     "qty": 1,
+     "uom": "EA",
+     "description": "REG/ PA SURFACE CLOSER - AS REQUIRED",
+     "catalog": "4040XP REG / 4040XP EDA - AS REQUIRED",
+     "finish": "689",
+     "mfr": "LCN"
+    },
+    {
+     "qty": 1,
+     "uom": "EA",
+     "description": "WEATHERSTRIP",
+     "catalog": "BY DOOR AND FRAME MANUFACTURER",
+     "finish": null,
+     "mfr": "B/O"
+    }
+   ],
+   "notes": []
+  },
+  {
+   "group": "51 UTY-CUS",
+   "page": 23,
+   "doors": [
+    "147.1.1",
+    "167.1.1",
+    "179.1.1"
+   ],
+   "items": [
+    {
+     "qty": 1,
+     "uom": "EA",
+     "description": "CONTINUOUS HINGE",
+     "catalog": "SL11 / SL24",
+     "finish": "628",
+     "mfr": "SEL"
+    },
+    {
+     "qty": 1,
+     "uom": "EA",
+     "description": "STOREROOM LOCK",
+     "catalog": "ALX80R-RHO-626 FSIC",
+     "finish": "626",
+     "mfr": "SCH"
+    },
+    {
+     "qty": 1,
+     "uom": "EA",
+     "description": "OH STOP",
+     "catalog": "90S",
+     "finish": "652",
+     "mfr": "GLY"
+    },
+    {
+     "qty": 3,
+     "uom": "EA",
+     "description": "SILENCER",
+     "catalog": "SR64",
+     "finish": "GRY",
+     "mfr": "IVE"
+    }
+   ],
+   "notes": [
+    "NO KICK PLATE, NO CLOSER, OH STOP"
+   ]
+  }
+ ]
+}
