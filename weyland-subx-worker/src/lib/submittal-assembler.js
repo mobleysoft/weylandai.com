@@ -33,6 +33,7 @@
 // is kept on these 3 functions' signatures for call-site compatibility
 // even though they no longer read it internally.
 
+import { getCataloguePagePdf } from "../../../weyland-shared/cut-sheet-pages.js";
 import { PDFDocument as SovereignPDFDocument, StandardFonts as SovereignStandardFonts, rgb as sovereignRgb } from "./sovereign-pdf.js";
 
 var BHMA_FINISH_LOOKUP = {
@@ -802,7 +803,7 @@ export async function assembleSubmittalPackage(sessionId, options, env2, PDFLib)
       doorSection = await generateDoorSchedulePages(doorRows, { projectName, filename: session.filename });
     }
 
-    const cutSheets = await env2.DB.prepare(`
+    const cutSheets = Array.isArray(options.citedPages) ? { results: [] } : await env2.DB.prepare(`
       SELECT
         pd.id, pd.document_title, pd.document_url, pd.r2_object_key, pd.r2_bucket, pd.page_count,
         m.name as manufacturer_name
@@ -887,7 +888,32 @@ export async function assembleSubmittalPackage(sessionId, options, env2, PDFLib)
       }
     }
     const cutSheetPdfs = [];
-    for (const cs of cutSheets.results || []) {
+    // 2026-10-08: the packet carries the page each product is cited on
+    // (options.citedPages, from the shared matcher's citedPagesFor), never a
+    // whole price book: one matched Schlage lever put the 400-page price book
+    // into the package. Callers without cited pages get the old filed
+    // documents, but only short ones (a cut sheet, not a book).
+    const MAX_WHOLE_DOC_PAGES = 6;
+    if (Array.isArray(options.citedPages)) {
+      const loaded = new Map();
+      for (const cp of options.citedPages) {
+        const got = await getCataloguePagePdf(env2, PDFLib.PDFDocument, { catalogueId: cp.catalogueId, pageNum: cp.pageNum }, loaded);
+        const label = `${[cp.manufacturer, cp.model].filter(Boolean).join(" ")}: ${cp.title || "catalogue"}, page ${cp.pageNum}`;
+        if (got.bytes) {
+          tocSections.push({ title: label, pageNumber: currentPage, type: "cut_sheet" });
+          currentPage += 1;
+          cutSheetPdfs.push(got.bytes);
+          result.sections.push({ type: "cut_sheet", title: label, manufacturer: cp.manufacturer || null, model: cp.model || null, catalogue_id: cp.catalogueId, page: cp.pageNum, sets: cp.sets || [], pages: 1 });
+        } else {
+          result.errors.push(`No page on file for ${label} (${got.reason})`);
+        }
+      }
+    }
+    for (const cs of Array.isArray(options.citedPages) ? [] : (cutSheets.results || [])) {
+      if ((cs.page_count || 1) > MAX_WHOLE_DOC_PAGES) {
+        result.errors.push(`${cs.document_title} is ${cs.page_count} pages; not attached whole (attach the cited page instead)`);
+        continue;
+      }
       let csBytes = null;
       if (cs.r2_object_key) {
         try {

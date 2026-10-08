@@ -2496,7 +2496,7 @@ global.SovereignPdfRender = {
           var parts = (d.sections || []).filter(function (s) { return s.type !== "cover" && s.type !== "toc"; }).map(function (s) {
             if (s.type === "door_schedule") return "door schedule (" + s.doors + " doors, " + s.pages + " pages)";
             if (s.type === "hardware_set") return "hardware set " + s.title.replace(/^Hardware Set /, "");
-            if (s.type === "cut_sheet") return "cut sheet: " + (s.manufacturer ? s.manufacturer + " " : "") + s.title;
+            if (s.type === "cut_sheet") return s.page ? "catalogue page: " + s.title : "cut sheet: " + (s.manufacturer ? s.manufacturer + " " : "") + s.title;
             if (s.type === "schedule") return "your uploaded schedule (" + s.pages + " page" + (s.pages === 1 ? "" : "s") + ")";
             return s.title;
           });
@@ -2505,7 +2505,7 @@ global.SovereignPdfRender = {
           if (!m.components && d.doors) {
             note = " The doors reference hardware groups; the items in each group (and their cut sheets) come from the hardware schedule - upload it here as a hardware schedule to add them.";
           } else if (m.components) {
-            note = " Cut sheets: " + m.matched + " of " + m.components + " hardware items matched exactly to a document on file" + (m.unmatched ? "; the rest are listed without one." : ".");
+            note = " Cut sheets: " + m.matched + " of " + m.components + " hardware items have their catalogue page in the package (the page each product is on, not the whole price book)" + (m.unmatched ? "; " + m.unmatched + " are listed without one: " + (m.missing || []).slice(0, 5).map(function (x) { return [x.manufacturer, x.model].filter(Boolean).join(" "); }).join(", ") + (m.unmatched > 5 ? " ..." : "") + "." : ".");
           }
           out.setAttribute("data-fresh", "1");
           out.innerHTML = '<div class="ok-box">' + esc("Built: " + d.totalPages + " pages - cover, contents, " + parts.join(", ") + "." + note) + "</div>";
