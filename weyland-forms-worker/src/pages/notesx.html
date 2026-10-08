@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#090a0d">
+  <title>NotesX | Meeting minutes from your MeetingX rooms</title>
+  <meta name="description" content="NotesX turns a MeetingX room's record into meeting minutes: attendees, numbered decisions, action items open and closed, discussion, and the transcript as an appendix.">
+  <style>
+    :root{--bg:#090a0d;--panel:#111318;--line:#2b3038;--text:#eef1f2;--muted:#9299a3;--primary:#2a52ff;--accent:#ffd400;--red:#ff716b;--green:#68e0a0}
+    *{box-sizing:border-box}html,body{margin:0;background:var(--bg);color:var(--text);font-family:"Avenir Next","Helvetica Neue",-apple-system,sans-serif}body{overflow-x:hidden}
+    .shell{max-width:1320px;margin:auto;padding:20px clamp(14px,2.5vw,36px) 50px}
+    html.wa-standalone .shell{padding-top:64px}
+    header{display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap;margin-bottom:18px}
+    .brand{display:flex;align-items:center;gap:12px;color:var(--text);text-decoration:none}.mark{width:42px;height:42px;display:grid;place-items:center;background:var(--primary);color:var(--bg);font-weight:900}
+    .brand b{display:block;letter-spacing:.16em}.brand small{display:block;color:var(--muted);font:700 9px/1.5 ui-monospace,monospace;letter-spacing:.11em}
+    nav{display:flex;gap:8px;flex-wrap:wrap}
+    nav a,.btn{border:1px solid var(--line);border-radius:99px;padding:9px 14px;color:var(--text);text-decoration:none;background:transparent;font:750 10px/1 ui-monospace,monospace;letter-spacing:.06em;cursor:pointer}
+    .btn.primary{background:var(--primary);border-color:var(--primary);color:#fff;font-weight:900}.btn:disabled{opacity:.5}
+    .eyebrow{color:var(--primary);font:800 11px/1 ui-monospace,monospace;letter-spacing:.18em}
+    h1{font-size:clamp(34px,4.5vw,56px);letter-spacing:-.05em;margin:10px 0 6px}
+    .lead{max-width:860px;color:var(--muted);line-height:1.6;margin:0 0 18px}
+    .grid{display:grid;grid-template-columns:minmax(0,430px) minmax(0,1fr);gap:16px;align-items:start}
+    .card{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:16px}
+    label{display:block;font:700 10px/1.4 ui-monospace,monospace;letter-spacing:.06em;color:var(--muted);margin:10px 0 4px}
+    input,select{width:100%;background:#161920;border:1px solid var(--line);border-radius:9px;padding:9px 11px;color:#fff;font-size:14px}
+    .row2{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+    .note{font-size:13px;line-height:1.5;color:var(--muted);margin:10px 0 0}
+    .warn{color:var(--accent)}.err{color:var(--red)}
+    .paper{background:#fbfbf8;color:#111;border-radius:6px;padding:clamp(18px,4vw,44px);font-family:Georgia,"Times New Roman",serif;font-size:14px;line-height:1.6;min-height:500px}
+    .paper h2{text-align:center;font-size:17px;margin:0 0 14px;text-transform:none}
+    .paper .f{margin:4px 0}.paper .f b{font-weight:700}.paper .f span{border-bottom:1px solid #999;padding:0 4px}
+    .paper p{text-align:justify;margin:10px 0}
+    .paper .sig{margin:18px 0 0 50%;}.paper .sig div{border-bottom:1px solid #333;min-height:22px;margin-top:12px}.paper .sig small{display:block;color:#666;font-size:10px}
+    .paper .notice{border:2px solid #000;padding:10px;font-weight:700;font-size:16px;margin-top:16px}
+    .cite{font-size:12px;color:var(--muted);margin:10px 2px}.cite a{color:var(--muted)}
+    .actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+    .pay{border:1px solid rgba(255,212,0,.4);background:rgba(255,212,0,.06);border-radius:12px;padding:10px 12px;font-size:13px;line-height:1.5;margin-top:10px}
+    @media(max-width:900px){.grid{grid-template-columns:1fr}}
+  </style>
+</head>
+<body>
+  <div class="shell">
+    <header>
+      <a class="brand" href="/"><span class="mark">NX</span><span><b>NOTESX</b><small>MINUTES FROM THE ROOM</small></span></a>
+      <nav><a href="/meetingx">MEETINGX</a><a href="/changeordx">CHANGEORDX</a><a href="/pricing">PRICING</a></nav>
+    </header>
+    <div class="eyebrow">MEETING MINUTES</div>
+    <h1>NotesX</h1>
+    <p class="lead">MeetingX rooms save their record as you meet: chat, decisions, action items and transcript, each with who said it and when. NotesX turns that record into the minutes: attendees, numbered decisions, action items open and closed, the discussion, the next meeting, and the transcript as an appendix if you want it. Previewing is free; the PDF comes with NotesX, the suite or the $100 first submittal.</p>
+    <div class="grid">
+      <form class="card" id="f" autocomplete="off">
+        <label for="room">MEETINGX ROOM</label>
+        <select id="room"><option value="">Loading your rooms...</option></select>
+        <div id="signin" class="note" hidden><button class="btn" type="button" id="signinBtn">SIGN IN</button> to list the rooms you took part in.</div>
+        <label>MEETING TITLE</label><input id="title" value="Project meeting">
+        <label>PROJECT</label><input id="project">
+        <div class="row2"><div><label>FROM (DATE)</label><input id="from" type="date"></div><div><label>TO (DATE)</label><input id="to" type="date"></div></div>
+        <label>NEXT MEETING</label><input id="nextMeeting" placeholder="e.g. Thursday Oct 15, 10:00, same room">
+        <div class="note"><input type="checkbox" id="includeTranscript" style="width:auto"> <label for="includeTranscript" style="display:inline;font:inherit;color:inherit">Add the transcript as an appendix</label></div>
+      </form>
+      <div>
+        <div class="paper" id="paper" aria-live="polite"><p>Choose a room.</p></div>
+        <div class="actions"><button class="btn primary" id="pdf" type="button" disabled>DOWNLOAD THE MINUTES PDF</button><span id="msg" class="note"></span></div>
+        <div id="pay"></div>
+      </div>
+    </div>
+  </div>
+  <script>
+  (function () {
+    var embedded = false;
+    try { embedded = window.self !== window.top; } catch (e) { embedded = true; }
+    function parentShell() { try { return embedded && window.parent && window.parent.WeylandShell ? window.parent.WeylandShell : null; } catch (e) { return null; } }
+    function shell() { return parentShell() || window.WeylandShell || null; }
+    function loadScript(src) { return new Promise(function (res, rej) { var s = document.createElement("script"); s.src = src; s.onload = res; s.onerror = rej; document.head.appendChild(s); }); }
+    if (!embedded) document.documentElement.classList.add("wa-standalone");
+    var ready = embedded ? Promise.resolve() : (window.AuthForStandard ? Promise.resolve() : loadScript("/assets/authfor-integration-standard.js"))
+      .then(function () { return window.WeylandShell ? null : loadScript("/assets/weyland-shell.js"); }).catch(function () {});
+    window.WeylandPage = {
+      ready: ready,
+      signIn: function (continueTo) { return ready.then(function () { var s = shell(); if (s) return s.open("signin", embedded ? { continueTo: continueTo } : {}); location.href = "/login?redirect=" + encodeURIComponent(continueTo); }); }
+    };
+  })();
+  </script>
+  <script>
+  (function () {
+    "use strict";
+    var $ = function (id) { return document.getElementById(id); };
+    function esc(s) { return String(s == null ? "" : s).replace(/[<>&"']/g, function (c) { return { "<": "&lt;", ">": "&gt;", "&": "&amp;", "\"": "&quot;", "'": "&#39;" }[c]; }); }
+    function token() { try { return localStorage.getItem("_authfor_token"); } catch (e) { return null; } }
+    function headers(json) { var h = {}; var t = token(); if (t) h.Authorization = "Bearer " + t; if (json) h["Content-Type"] = "application/json"; return h; }
+    function body() { return { room: $("room").value, title: $("title").value, project: $("project").value, from: $("from").value, to: $("to").value, nextMeeting: $("nextMeeting").value, includeTranscript: $("includeTranscript").checked }; }
+    var timer = null;
+    function preview() {
+      clearTimeout(timer); if (!$("room").value) return;
+      timer = setTimeout(function () {
+        fetch("/api/forms/notesx/preview", { method: "POST", credentials: "same-origin", headers: headers(true), body: JSON.stringify(body()) }).then(function (r) { return r.json(); }).then(function (d) {
+          if (!d.success) { $("paper").innerHTML = '<p class="err">' + esc(d.message) + "</p>"; $("pdf").disabled = true; return; }
+          var m = d.minutes; $("pdf").disabled = false;
+          $("paper").innerHTML = "<h2>MEETING MINUTES</h2><div class=f><b>Meeting:</b> " + esc(m.title) + "</div><div class=f><b>Date:</b> " + esc(m.started ? m.started.slice(0, 10) : "") + "</div><div class=f><b>Attendees:</b> " + esc(m.attendees.join(", ")) + "</div>" +
+            "<h3>Decisions</h3>" + (m.decisions.length ? "<ol>" + m.decisions.map(function (x) { return "<li>" + esc(x.text) + " <small>(" + esc(x.by) + ")</small></li>"; }).join("") + "</ol>" : "<p>None recorded.</p>") +
+            "<h3>Action items</h3>" + (m.actions.length ? "<ol>" + m.actions.map(function (x) { return "<li>" + (x.done ? "[done] " : "[open] ") + esc(x.text) + "</li>"; }).join("") + "</ol>" : "<p>None recorded.</p>") +
+            "<h3>Discussion</h3>" + (m.discussion.length ? m.discussion.slice(0, 40).map(function (x) { return "<p><b>" + esc(x.by) + ":</b> " + esc(x.text) + "</p>"; }).join("") : "<p>No chat in this period.</p>") +
+            (m.transcript.length ? "<p><small>" + m.transcript.length + " transcript lines" + ($("includeTranscript").checked ? " (appended)" : "") + "</small></p>" : "");
+        });
+      }, 250);
+    }
+    $("f").addEventListener("input", preview); $("room").addEventListener("change", preview);
+    $("signinBtn").onclick = function () { window.WeylandPage.signIn("/notesx"); };
+    $("pdf").onclick = function () {
+      $("msg").textContent = "Making the PDF..."; $("pay").innerHTML = "";
+      fetch("/api/forms/notesx/pdf", { method: "POST", credentials: "same-origin", headers: headers(true), body: JSON.stringify(body()) }).then(function (r) {
+        if (r.status === 402) return r.json().then(function (d) { $("msg").textContent = ""; $("pay").innerHTML = '<div class="pay">' + esc(d.message) + ' <a class="btn primary" href="/#offer">$100 FIRST SUBMITTAL</a> <a class="btn" href="/pricing">PLANS</a></div>'; });
+        if (!r.ok) return r.json().then(function (d) { $("msg").textContent = d.message || ("HTTP " + r.status); });
+        return r.blob().then(function (b) { var a = document.createElement("a"); a.href = URL.createObjectURL(b); a.download = "Minutes.pdf"; a.click(); $("msg").textContent = "Downloaded."; });
+      });
+    };
+    fetch("/api/forms/notesx/rooms", { credentials: "same-origin", headers: headers() }).then(function (r) { if (r.status === 401) { $("room").innerHTML = "<option value=''>Sign in to see your rooms</option>"; $("signin").hidden = false; return null; } return r.json(); }).then(function (d) {
+      if (!d) return;
+      var rooms = d.rooms || [];
+      $("room").innerHTML = '<option value="">' + (rooms.length ? "Choose a room" : "No MeetingX room has your notes yet") + "</option>" + rooms.map(function (x) { return '<option value="' + esc(x.room) + '">Room ' + esc(x.room) + " · " + esc(String(x.last_at).slice(0, 10)) + " · " + x.decisions + " decisions, " + x.actions + " actions</option>"; }).join("");
+      var want = new URLSearchParams(location.search).get("room"); if (want) { $("room").value = want; preview(); }
+    });
+    window.addEventListener("weyland-auth", function () { location.reload(); });
+  })();
+  </script>
+</body>
+</html>

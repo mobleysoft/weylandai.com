@@ -127,7 +127,7 @@
       </article>
     </section>
 
-    <div class="footerbar"><span>MEETINGX BETA · VOICE, VIDEO AND SCREEN GO BROWSER TO BROWSER, UP TO 6 PEOPLE (SOME OFFICE NETWORKS BLOCK THIS) · CHAT, DECISIONS, ACTIONS AND TRANSCRIPT ARE SAVED WITH THE ROOM</span><button id="export-btn">EXPORT MEETING RECORD</button></div>
+    <div class="footerbar"><span>MEETINGX BETA · VOICE, VIDEO AND SCREEN GO BROWSER TO BROWSER, UP TO 6 PEOPLE (SOME OFFICE NETWORKS BLOCK THIS) · CHAT, DECISIONS, ACTIONS AND TRANSCRIPT ARE SAVED WITH THE ROOM</span><button id="export-btn">EXPORT MEETING RECORD</button> <button id="minutes-btn" type="button">MINUTES (NOTESX)</button></div>
   </div>
 
   <script>
@@ -338,6 +338,7 @@
     function copyRoomLink(btn){const link=roomLink();const done=ok=>{btn.textContent=ok?'COPIED':'LINK: '+link;setTimeout(()=>{btn.textContent='COPY LINK'},ok?1500:8000)};if(navigator.clipboard&&navigator.clipboard.writeText)navigator.clipboard.writeText(link).then(()=>done(true),()=>done(false));else done(false)}
     $('copy-room-link').onclick=()=>copyRoomLink($('copy-room-link'));$('room-copy').onclick=()=>copyRoomLink($('room-copy'));
     $('copy-room-link').dataset.link=roomLink();
+    $('minutes-btn').onclick=()=>{location.href='/notesx?room='+encodeURIComponent(roomId)};
     // Came back from an in-place sign-in for this room: join without another click.
     window.addEventListener('weyland-auth',e=>{if(e.detail&&e.detail.status==='signed-in'&&pendingJoin()&&!roomSocket)joinRoom()});
     if(pendingJoin())window.WeylandPage.ready.then(()=>joinRoom());
