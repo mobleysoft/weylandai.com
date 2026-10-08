@@ -36,7 +36,12 @@ const clean = (v) => {
   return s || null;
 };
 
+const ftin = (i) => Math.floor(i / 12) + "'-" + Math.round(i % 12) + '"';
 function sizeOf(d) {
+  // SubX's measured inches first: its text can drop a quote mark (3'-6" x 7'-10),
+  // which would split identical doors into two lines.
+  const wi = Number(d.width_inches), hi = Number(d.height_inches);
+  if (wi > 0 && hi > 0) return ftin(wi) + " x " + ftin(hi);
   if (d.size) return clean(d.size);
   const w = clean(d.width), h = clean(d.height);
   if (w && h) return w + " x " + h;
@@ -61,6 +66,10 @@ function compPrice(c) {
  * -> line items in the shape normalizeLineItems() takes:
  *    { description, material, size, fireRating, quantity, unitPrice, notes, kind, priceSource }
  */
+// "02", "2", "HW-2" and "Set 2" are one hardware set (the door schedule and
+// the hardware schedule rarely write it the same way).
+const setKey = (v) => String(v ?? "").trim().toUpperCase().replace(/^(HW|SET|GROUP)[-\s#]*/i, "").replace(/^0+(?=\w)/, "");
+
 export function deriveLines(doors, sets) {
   doors = Array.isArray(doors) ? doors : [];
   sets = Array.isArray(sets) ? sets : [];
@@ -69,7 +78,7 @@ export function deriveLines(doors, sets) {
   // One line per door type + material + fire rating, quantity = openings.
   const doorGroups = new Map();
   for (const d of doors) {
-    const type = clean(d.door_type) || "Door";
+    const type = clean(d.door_type) || "type not scheduled";
     const material = clean(d.material);
     const fire = clean(d.fire_rating);
     const key = [type, material || "", fire || ""].join("|").toLowerCase();
@@ -83,7 +92,7 @@ export function deriveLines(doors, sets) {
     const sizes = Array.from(g.sizes.keys());
     lines.push({
       kind: "door",
-      description: "Door - " + g.type,
+      description: "Door - " + (/^[A-Z0-9]{1,3}$/i.test(g.type) ? "type " + g.type : g.type),
       material: g.material,
       size: sizes.length === 1 ? sizes[0] : sizes.length > 1 ? "Varies" : null,
       fireRating: g.fire,
@@ -112,19 +121,19 @@ export function deriveLines(doors, sets) {
   const setByNumber = new Map();
   for (const s of sets) {
     const n = clean(s.set_number);
-    if (n && !setByNumber.has(n.toLowerCase())) setByNumber.set(n.toLowerCase(), s);
+    if (n && !setByNumber.has(setKey(n))) setByNumber.set(setKey(n), s);
   }
   const hwGroups = new Map();
   for (const d of doors) {
     const hg = clean(d.hardware_group);
     if (!hg) continue;
-    const key = hg.toLowerCase();
+    const key = setKey(hg);
     if (!hwGroups.has(key)) hwGroups.set(key, { number: hg, marks: [] });
     hwGroups.get(key).marks.push(clean(d.mark));
   }
   for (const s of sets) {
     const n = clean(s.set_number);
-    if (n && !hwGroups.has(n.toLowerCase())) hwGroups.set(n.toLowerCase(), { number: n, marks: [], doorCount: Number(s.door_count) || 1 });
+    if (n && !hwGroups.has(setKey(n))) hwGroups.set(setKey(n), { number: n, marks: [], doorCount: Number(s.door_count) || 1 });
   }
   for (const [key, g] of hwGroups) {
     const set = setByNumber.get(key) || null;
@@ -187,7 +196,7 @@ async function setsWithComponents(db, sessionId) {
 
 async function sessionDoors(db, sessionId) {
   const rows = await all(db,
-    "SELECT mark, door_type, door_material AS material, frame_material, fire_rating, width, height, hardware_group FROM door_schedule_entries WHERE session_id = ? AND COALESCE(validation_status, '') <> 'rejected' ORDER BY page_number, mark",
+    "SELECT mark, door_type, door_material AS material, frame_material, fire_rating, width, height, width_inches, height_inches, hardware_group FROM door_schedule_entries WHERE session_id = ? AND COALESCE(validation_status, '') <> 'rejected' ORDER BY page_number, mark",
     sessionId);
   if (rows.length) return rows;
   // Older sessions and the demo seed keep their doors in door_hardware_matrix.
