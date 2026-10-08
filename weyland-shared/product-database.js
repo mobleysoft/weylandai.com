@@ -228,7 +228,10 @@ async function matchProductFromDb(component, env2, trade = "doors") {
         const hit = found(await exactAny(`${mfgSearch} ${s}`.replace(/\s+/g, " ")), "high", "exact");
         if (hit) return hit;
       }
+      // Only something shaped like a catalogue number ("111", "SLSS2"), never a plain word:
+      // "Frame: welded, 16 ga, primed" must not become a product named WELDED.
       for (const s of [...rest, modelSearch]) {
+        if (!looksLikeModel(s)) continue;
         const hit = found(await exactAny(s), "medium", "exact_model_unknown_manufacturer");
         if (hit) return hit;
       }
