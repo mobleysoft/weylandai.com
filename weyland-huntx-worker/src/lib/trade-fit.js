@@ -19,8 +19,11 @@
 // that only lists civil work (TxDOT) is civil; one from a building-only
 // source (Illinois CDB) is building.
 
-const DOOR_WORDS = /\b(door hardware|finish hardware|hardware (?:replacement|upgrades?)|doors?|openings?|entrances?|storefronts?|vestibules?|access control|card readers?|locks?(?:ets)?|locking|keying|egress|panic (?:hardware|devices?)|exit devices?|frames?|hollow metal|overhead (?:doors?|coiling)|rolling (?:doors?|grilles?)|division 0?8|08\s?[17]\d\s?\d\d|ada (?:upgrades?|improvements?|compliance)|accessib\w*|school safety|security upgrades?)\b/i;
-const BUILDING_WORDS = /\b(buildings?|schools?|classrooms?|campus|library|librar(?:y|ies)|courthouse|fire (?:station|house)|firehouse|police|precinct|city hall|town hall|offices?|interiors?|renovat\w*|remodel\w*|moderniz\w*|additions?|alterations?|tenant improvements?|restrooms?|toilet rooms?|lockers?|gymnasium|auditorium|dormitor\w*|residence hall|housing|shelters?|hospital|clinic|health center|laborator\w*|facility|facilities|center|centre|museum|theater|visitor'?s? center|warehouse|maintenance (?:building|facility|garage)|garage|terminal|station house|construct(?:ion)? of|new construction|fit[- ]out|hvac|mechanical|electrical upgrades?|roof(?:ing)?|windows?|envelope|fa[cç]ade|stair(?:s|well)?|elevators?)\b/i;
+// Precision over recall (2026-10-08 live check): bare "opening" matched bid
+// openings, "school safety" matched kitchen fire suppression, and
+// "accessibility" matched playgrounds. Door scope now needs door words.
+const DOOR_WORDS = /\b(door hardware|finish hardware|builders'? hardware|hardware (?:replacement|upgrades?)|doors?|door (?:openings?|frames?)|entrances?|storefronts?|vestibules?|access control|card readers?|locksets?|lock(?:ing)? hardware|keying|panic (?:hardware|devices?)|exit devices?|hollow metal|overhead (?:doors?|coiling)|rolling (?:doors?|grilles?)|division 0?8|08\s?[17]\d\s?\d\d|ada (?:upgrades?|improvements?|compliance)|(?:full|partial) program accessibility|accessible entrances?)\b/i;
+const BUILDING_WORDS = /\b(buildings?|path of travel|accessibility|schools?|classrooms?|campus|library|librar(?:y|ies)|courthouse|fire (?:station|house)|firehouse|police|precinct|city hall|town hall|offices?|interiors?|renovat\w*|remodel\w*|moderniz\w*|additions?|alterations?|tenant improvements?|restrooms?|toilet rooms?|lockers?|gymnasium|auditorium|dormitor\w*|residence hall|housing|shelters?|hospital|clinic|health center|laborator\w*|facility|facilities|center|centre|museum|theater|visitor'?s? center|warehouse|maintenance (?:building|facility|garage)|garage|terminal|station house|construct(?:ion)? of|new construction|fit[- ]out|hvac|mechanical|electrical upgrades?|roof(?:ing)?|windows?|envelope|fa[cç]ade|stair(?:s|well)?|elevators?)\b/i;
 const CIVIL_WORDS = /\b(highways?|bridges?|pavement|paving|resurfac\w*|seal ?coat|overlay|roadways?|streets?|sidewalks?|curbs?|striping|pavement markings?|traffic signals?|signals?|intersections?|interchanges?|guard ?rail|culverts?|drainage|storm ?water|sewers?|water mains?|pipelines?|dredg\w*|levees?|landscap\w*|mowing|routine maintenance project|material maintenance project|preventative maintenance|bridge (?:repair|rehab\w*)|rest area|right[- ]of[- ]way|grading|excavation|demolition only|utility|utilities|wastewater|treatment plant|reservoir|dam|seawall|bulkhead|parks? (?:improvements?|paths?)|trails?)\b/i;
 
 const SOURCE_DEFAULT = { txdot: "civil", il_cdb: "building", ca_opsc: "signal", nyc_cityrecord: null, nyc_sca: "signal", la_ramp: null, de_mmp: null };
@@ -45,7 +48,7 @@ export function tradeFit(opp) {
   // "Rest area" or "bridge" work that also names a building is building work;
   // a road job that mentions "signal" or "drainage" only is civil.
   if (door && !(civil && !building && dflt === "civil")) return { fit: "doors", why: door[0] };
-  if (dflt === "signal") return { fit: "signal", why: "funding released" };
+  if (dflt === "signal") return { fit: "signal", why: opp.source === "nyc_sca" ? "planned, not bid yet" : "funding released" };
   if (building && !(civil && dflt === "civil" && !/\bbuildings?\b|\bfacilit/i.test(building[0]))) return { fit: "building", why: building[0] };
   if (civil) return { fit: "civil", why: civil[0] };
   if (dflt) return { fit: dflt, why: null };
