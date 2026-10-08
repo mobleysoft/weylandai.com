@@ -91,6 +91,28 @@ test("the packet embeds the cited page of a 300-page price book, not the book", 
   assert.ok(objects.has("catalogues/schlage-pb/pages/page_212.pdf"), "the cut page is cached for the citation route");
 });
 
+test("every item without a page is listed in the packet with why and what is needed", async () => {
+  const db = makeDb();
+  const env = { DB: d1(db), UPLOADS: { async get() { return null; }, async put() {}, async head() { return null; } } };
+  const r = await citedPagesForSession("s1", env, fakeMatch);
+  // The guess (LCN 4040XP answered with a category) and the unknown maker, each with a reason and a need.
+  assert.deepEqual(r.missing.map((m) => [m.model, m.code, m.qty]), [["4040XP", "match_not_firm", 1], ["XYZ-1", "not_catalogued", 1]]);
+  assert.match(r.missing[0].reason, /not firm enough for a submittal/);
+  assert.equal(r.missing[0].need, "the full catalogue number");
+  assert.equal(r.missing[1].reason, "no product by that maker");
+  assert.equal(r.missing[1].need, "the maker's name and catalogue number");
+  const res = await assembleSubmittalPackage("s1", { includeDraftSets: true, citedPages: [], cutSheetMisses: r.missing, saveToR2: false }, env, { PDFDocument, StandardFonts, rgb });
+  assert.equal(res.success, true, res.errors.join("; "));
+  const misses = res.sections.find((s) => s.type === "cut_sheet_misses");
+  assert.deepEqual({ pages: misses.pages, items: misses.items }, { pages: 1, items: 2 });
+  assert.equal(res.sections.filter((s) => s.type === "cut_sheet").length, 0);
+  const out = await PDFDocument.load(res.pdfBytes);
+  assert.equal(out.getPageCount(), res.totalPages);
+  // Nothing to list, nothing added.
+  const none = await assembleSubmittalPackage("s1", { includeDraftSets: true, citedPages: [], cutSheetMisses: [], saveToR2: false }, env, { PDFDocument, StandardFonts, rgb });
+  assert.equal(none.sections.some((s) => s.type === "cut_sheet_misses"), false);
+});
+
 test("repeated marks across sheets keep every door; re-reading a sheet adds none", async () => {
   const db = makeDb();
   const env = { DB: d1(db) };

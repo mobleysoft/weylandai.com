@@ -83,9 +83,31 @@ async function packageStatus(env2, sessionId) {
 // catalogue page naming the model) and citedPagesFor's first page that is on
 // file. One page per product; a page several components cite goes in once,
 // listing the sets that use it. Nothing is guessed: no match, no page.
-export async function citedPagesForSession(sessionId, env2, match = matchComponentToCutSheets) {
+// The packet needs a page on file, so the matcher is asked for the maker's catalogue pages
+// even when a filed price book's page is not pinned (its index is another edition).
+const matchForPacket = (c, env2) => matchComponentToCutSheets(c, env2, { pagesWhenUnpinned: true });
+
+// Why an item has no page in the packet, and what would put one there.
+function missFor(c, m) {
+  const who = (m && m.maker && m.maker.typed && m.maker.name) || c.manufacturer || "";
+  const model = c.model || "";
+  if (!m || !m.matched) {
+    return { reason: (m && m.reason) || "not_catalogued", why: (m && m.reasonText) || ("nothing catalogued is named " + [who, model].filter(Boolean).join(" ")), need: (m && m.need) || "the maker's name and catalogue number" };
+  }
+  const p = m.product || {};
+  if (!PACKET_MATCH_TYPES.has(String(m.matchType)) || !(m.maker && m.maker.known)) {
+    return { reason: "match_not_firm", why: (p.manufacturer || who) + " " + (p.model || "") + " begins with " + model + "; not firm enough for a submittal", need: "the full catalogue number" };
+  }
+  const sheet = (m.cutSheets && m.cutSheets[0]) || null;
+  const cp = (m.cataloguePages && m.cataloguePages[0]) || null;
+  if (sheet) return { reason: "page_not_pinned", why: String(sheet.title || "the price book").split(" (")[0] + " is on file, but the page naming " + (p.model || model) + " is not pinned (its indexed text is another edition)", need: "the current edition's page of that price book" };
+  if (cp) return { reason: "pdf_not_on_file", why: cp.title + " p. " + cp.pageNum + " names " + (p.model || model) + "; the PDF is not on file (its text is indexed)", need: "the PDF of " + cp.title };
+  return { reason: "no_document", why: (p.manufacturer || who) + " " + (p.model || model) + " is catalogued; no document is on file", need: (p.manufacturer || who) + "'s catalogue page for " + (p.model || model) };
+}
+
+export async function citedPagesForSession(sessionId, env2, match = matchForPacket) {
   const comps = await env2.DB.prepare(`
-    SELECT hs.set_number, hc.manufacturer, hc.model, hc.catalog_number, hc.component_type
+    SELECT hs.set_number, hc.quantity, hc.manufacturer, hc.model, hc.catalog_number, hc.component_type
     FROM hardware_components hc JOIN hardware_sets hs ON hc.set_id = hs.id
     WHERE hs.session_id = ? ORDER BY hs.set_number, hc.sequence_order
   `).bind(sessionId).all();
@@ -94,13 +116,15 @@ export async function citedPagesForSession(sessionId, env2, match = matchCompone
     const model = c.model || c.catalog_number || "";
     const key = (c.manufacturer || "").toUpperCase() + "|" + model.toUpperCase();
     if (!model) continue;
-    if (!byKey.has(key)) byKey.set(key, { c: { ...c, model }, sets: new Set() });
-    if (c.set_number) byKey.get(key).sets.add(String(c.set_number));
+    if (!byKey.has(key)) byKey.set(key, { c: { ...c, model }, sets: new Set(), qty: 0 });
+    const e = byKey.get(key);
+    if (c.set_number) e.sets.add(String(c.set_number));
+    e.qty += Number(c.quantity) > 0 ? Number(c.quantity) : 1;
   }
   const pages = new Map();
   let matched = 0, unmatched = 0;
   const missing = [];
-  for (const { c, sets } of byKey.values()) {
+  for (const { c, sets, qty } of byKey.values()) {
     let m = null;
     try { m = await match(c, env2); } catch (_) { m = null; }
     const cited = m && m.matched && PACKET_MATCH_TYPES.has(String(m.matchType)) ? citedPagesFor(m, 1) : [];
@@ -113,7 +137,11 @@ export async function citedPagesForSession(sessionId, env2, match = matchCompone
       for (const s of sets) if (!entry.sets.includes(s)) entry.sets.push(s);
     } else {
       unmatched++;
-      if (missing.length < 25) missing.push({ manufacturer: c.manufacturer || null, model: c.model || null, component_type: c.component_type || null, reason: m && m.matched ? "no cited page on file" : ((m && m.reasonText) || "no catalogue match") });
+      // Every miss, as the schedule names it, with why and what is needed (the packet lists them all).
+      if (missing.length < 200) {
+        const miss = missFor(c, m);
+        missing.push({ qty, sets: [...sets], manufacturer: (m && m.maker && m.maker.typed && m.maker.name) || c.manufacturer || null, model: c.model || null, component_type: c.component_type || null, reason: miss.why, code: miss.reason, need: miss.need });
+      }
     }
   }
   return { components: byKey.size, matched, unmatched, missing, pages: [...pages.values()] };
@@ -299,6 +327,7 @@ export function registerSubxWorkspaceRoutes(router, { authenticate, requireActiv
         includeDraftSets: true,
         saveToR2: true,
         citedPages: cutSheets.pages,
+        cutSheetMisses: cutSheets.missing,
       }, env2, { PDFDocument, StandardFonts, rgb });
       if (!result.success) {
         return jsonResponse3({ success: false, error: "Assembly failed", details: result.errors.join("; ") }, 500);
