@@ -1,0 +1,172 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#090a0d">
+  <title>ChangeOrdX | Change orders priced from your contract</title>
+  <meta name="description" content="ChangeOrdX prices change orders at your PropX contract's own unit prices, adds labor, overhead, profit, tax and bond, numbers them per contract and carries the contract sum and time forward.">
+  <style>
+    :root{--bg:#090a0d;--panel:#111318;--line:#2b3038;--text:#eef1f2;--muted:#9299a3;--primary:#2a52ff;--accent:#ffd400;--red:#ff716b;--green:#68e0a0}
+    *{box-sizing:border-box}html,body{margin:0;background:var(--bg);color:var(--text);font-family:"Avenir Next","Helvetica Neue",-apple-system,sans-serif}body{overflow-x:hidden}
+    .shell{max-width:1320px;margin:auto;padding:20px clamp(14px,2.5vw,36px) 50px}
+    html.wa-standalone .shell{padding-top:64px}
+    header{display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap;margin-bottom:18px}
+    .brand{display:flex;align-items:center;gap:12px;color:var(--text);text-decoration:none}.mark{width:42px;height:42px;display:grid;place-items:center;background:var(--primary);color:var(--bg);font-weight:900}
+    .brand b{display:block;letter-spacing:.16em}.brand small{display:block;color:var(--muted);font:700 9px/1.5 ui-monospace,monospace;letter-spacing:.11em}
+    nav{display:flex;gap:8px;flex-wrap:wrap}
+    nav a,.btn{border:1px solid var(--line);border-radius:99px;padding:9px 14px;color:var(--text);text-decoration:none;background:transparent;font:750 10px/1 ui-monospace,monospace;letter-spacing:.06em;cursor:pointer}
+    .btn.primary{background:var(--primary);border-color:var(--primary);color:#fff;font-weight:900}.btn:disabled{opacity:.5}
+    .eyebrow{color:var(--primary);font:800 11px/1 ui-monospace,monospace;letter-spacing:.18em}
+    h1{font-size:clamp(34px,4.5vw,56px);letter-spacing:-.05em;margin:10px 0 6px}
+    .lead{max-width:860px;color:var(--muted);line-height:1.6;margin:0 0 18px}
+    .grid{display:grid;grid-template-columns:minmax(0,430px) minmax(0,1fr);gap:16px;align-items:start}
+    .card{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:16px}
+    label{display:block;font:700 10px/1.4 ui-monospace,monospace;letter-spacing:.06em;color:var(--muted);margin:10px 0 4px}
+    input,select{width:100%;background:#161920;border:1px solid var(--line);border-radius:9px;padding:9px 11px;color:#fff;font-size:14px}
+    .row2{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+    .note{font-size:13px;line-height:1.5;color:var(--muted);margin:10px 0 0}
+    .warn{color:var(--accent)}.err{color:var(--red)}
+    .paper{background:#fbfbf8;color:#111;border-radius:6px;padding:clamp(18px,4vw,44px);font-family:Georgia,"Times New Roman",serif;font-size:14px;line-height:1.6;min-height:500px}
+    .paper h2{text-align:center;font-size:17px;margin:0 0 14px;text-transform:none}
+    .paper .f{margin:4px 0}.paper .f b{font-weight:700}.paper .f span{border-bottom:1px solid #999;padding:0 4px}
+    .paper p{text-align:justify;margin:10px 0}
+    .paper .sig{margin:18px 0 0 50%;}.paper .sig div{border-bottom:1px solid #333;min-height:22px;margin-top:12px}.paper .sig small{display:block;color:#666;font-size:10px}
+    .paper .notice{border:2px solid #000;padding:10px;font-weight:700;font-size:16px;margin-top:16px}
+    .cite{font-size:12px;color:var(--muted);margin:10px 2px}.cite a{color:var(--muted)}
+    .actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+    .pay{border:1px solid rgba(255,212,0,.4);background:rgba(255,212,0,.06);border-radius:12px;padding:10px 12px;font-size:13px;line-height:1.5;margin-top:10px}
+    @media(max-width:900px){.grid{grid-template-columns:1fr}}
+      table.t{width:100%;border-collapse:collapse;font-size:13px}table.t td,table.t th{padding:6px 8px;border-bottom:1px solid var(--line);text-align:left}table.t input{width:56px}.card{overflow-x:auto}
+    .num{text-align:right;font-variant-numeric:tabular-nums}
+  </style>
+</head>
+<body>
+  <div class="shell">
+    <header>
+      <a class="brand" href="/"><span class="mark">CO</span><span><b>CHANGEORDX</b><small>CHANGE ORDERS FROM THE CONTRACT</small></span></a>
+      <nav><a href="/propx-app">PROPX</a><a href="/closex">CLOSEX</a><a href="/pricing">PRICING</a></nav>
+    </header>
+    <div class="eyebrow">CHANGE ORDERS</div>
+    <h1>ChangeOrdX</h1>
+    <p class="lead">Start from your PropX proposal, the base contract, and add or delete items at its own unit prices. Then add labor, overhead, profit, bond, and the contract's sales tax on materials. Each change order is numbered per contract and shows the contract sum and time before and after, counting the change orders already approved. Pricing and saving are free; the PDF comes with ChangeOrdX, the suite or the $100 first submittal.</p>
+    <div class="card" style="margin-bottom:14px">
+      <label for="contract">BASE CONTRACT (PROPX PROPOSAL)</label>
+      <select id="contract"><option value="">Loading your proposals...</option></select>
+      <div id="signin" class="note" hidden><button class="btn" type="button" id="signinBtn">SIGN IN</button> to use your PropX proposals. No proposal yet? <a href="/propx-app" style="color:var(--text)">Price one in PropX</a>.</div>
+    </div>
+    <div class="grid" id="work" hidden>
+      <form class="card" id="f" autocomplete="off">
+        <label>CONTRACT LINES (ADD OR DELETE AT THE CONTRACT'S UNIT PRICE)</label>
+        <table class="t"><thead><tr><th>LINE</th><th class="num">UNIT</th><th>ADD</th><th>DELETE</th></tr></thead><tbody id="lines"></tbody></table>
+        <label>OTHER ITEMS (ONE PER LINE: DESCRIPTION, QTY, UNIT PRICE; START WITH "-" TO DELETE)</label>
+        <textarea id="extra" rows="3" style="width:100%;background:#161920;border:1px solid var(--line);border-radius:9px;color:#fff;padding:9px" placeholder="Kick plate 10x34 US32D, 4, 65"></textarea>
+        <label>LABOR (ONE PER LINE: DESCRIPTION, HOURS, RATE)</label>
+        <textarea id="labor" rows="2" style="width:100%;background:#161920;border:1px solid var(--line);border-radius:9px;color:#fff;padding:9px" placeholder="Install added pairs, 12, 95"></textarea>
+        <div class="row2"><div><label>OVERHEAD %</label><input id="overhead" value="10"></div><div><label>PROFIT %</label><input id="profit" value="5"></div></div>
+        <div class="row2"><div><label>BOND %</label><input id="bond" value="0"></div><div><label>CONTRACT TIME (DAYS +/-)</label><input id="days" value="0"></div></div>
+        <label>TITLE</label><input id="title" placeholder="e.g. Add two pairs at the B-pod corridor">
+        <label>REFERENCE (RFI, ASI, BULLETIN, DRAWING)</label><input id="reference">
+        <label>DESCRIPTION OF CHANGE</label><textarea id="reason" rows="3" style="width:100%;background:#161920;border:1px solid var(--line);border-radius:9px;color:#fff;padding:9px"></textarea>
+        <label>YOUR COMPANY</label><input id="company">
+      </form>
+      <div>
+        <div class="card" id="priced" aria-live="polite"></div>
+        <div class="actions"><button class="btn primary" id="save" type="button">SAVE AS CHANGE ORDER <span id="nextNo"></span></button><span id="msg" class="note"></span></div>
+        <div class="card" style="margin-top:12px"><b>Change orders on this contract</b><div id="log" class="note"></div></div>
+        <div id="pay"></div>
+      </div>
+    </div>
+  </div>
+  <script>
+  (function () {
+    var embedded = false;
+    try { embedded = window.self !== window.top; } catch (e) { embedded = true; }
+    function parentShell() { try { return embedded && window.parent && window.parent.WeylandShell ? window.parent.WeylandShell : null; } catch (e) { return null; } }
+    function shell() { return parentShell() || window.WeylandShell || null; }
+    function loadScript(src) { return new Promise(function (res, rej) { var s = document.createElement("script"); s.src = src; s.onload = res; s.onerror = rej; document.head.appendChild(s); }); }
+    if (!embedded) document.documentElement.classList.add("wa-standalone");
+    var ready = embedded ? Promise.resolve() : (window.AuthForStandard ? Promise.resolve() : loadScript("/assets/authfor-integration-standard.js"))
+      .then(function () { return window.WeylandShell ? null : loadScript("/assets/weyland-shell.js"); }).catch(function () {});
+    window.WeylandPage = {
+      ready: ready,
+      signIn: function (continueTo) { return ready.then(function () { var s = shell(); if (s) return s.open("signin", embedded ? { continueTo: continueTo } : {}); location.href = "/login?redirect=" + encodeURIComponent(continueTo); }); }
+    };
+  })();
+  </script>
+  <script>
+  (function () {
+    "use strict";
+    var $ = function (id) { return document.getElementById(id); };
+    function esc(s) { return String(s == null ? "" : s).replace(/[<>&"']/g, function (c) { return { "<": "&lt;", ">": "&gt;", "&": "&amp;", "\"": "&quot;", "'": "&#39;" }[c]; }); }
+    function token() { try { return localStorage.getItem("_authfor_token"); } catch (e) { return null; } }
+    function headers(json) { var h = {}; var t = token(); if (t) h.Authorization = "Bearer " + t; if (json) h["Content-Type"] = "application/json"; return h; }
+    function money(n) { n = Number(n) || 0; return (n < 0 ? "-$" : "$") + Math.abs(n).toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 }); }
+    var contracts = [], timer = null;
+    function current() { return contracts.filter(function (c) { return c.id === $("contract").value; })[0]; }
+    function parseRows(text, n) { return text.split("\n").map(function (l) { var del = /^\s*-/.test(l); var parts = l.replace(/^\s*-/, "").split(","); if (parts.length < n) return null; var tail = parts.splice(parts.length - (n - 1)); return { del: del, description: parts.join(",").trim(), a: tail[0], b: tail[1] }; }).filter(Boolean); }
+    function body() {
+      var items = [];
+      [].forEach.call(document.querySelectorAll("#lines input"), function (i) { var q = Number(i.value) || 0; if (q > 0) items.push({ action: i.dataset.act, ref: i.dataset.ref, qty: q }); });
+      parseRows($("extra").value, 3).forEach(function (r) { items.push({ action: r.del ? "delete" : "add", description: r.description, qty: r.a, unit_price: r.b }); });
+      var labor = parseRows($("labor").value, 3).map(function (r) { return { action: r.del ? "delete" : "add", description: r.description, hours: r.a, rate: r.b }; });
+      return { proposalId: $("contract").value, items: items, labor: labor, markup: { overhead: $("overhead").value, profit: $("profit").value, bond: $("bond").value }, days: $("days").value, title: $("title").value, reference: $("reference").value, reason: $("reason").value, company: $("company").value };
+    }
+    function price() {
+      clearTimeout(timer);
+      timer = setTimeout(function () {
+        fetch("/api/forms/changeordx/preview", { method: "POST", credentials: "same-origin", headers: headers(true), body: JSON.stringify(body()) }).then(function (r) { return r.json(); }).then(function (d) {
+          if (!d.success) { $("priced").innerHTML = '<p class="err">' + esc(d.message) + "</p>"; return; }
+          var p = d.priced, t = p.totals, c = p.contract;
+          $("nextNo").textContent = "No. " + d.number;
+          $("priced").innerHTML = '<table class="t">' + p.items.map(function (x) { return "<tr><td>" + (x.action === "delete" ? "DEL " : "ADD ") + esc(x.description) + "</td><td class=num>" + x.qty + " x " + money(x.unit_price) + "</td><td class=num>" + money(x.ext) + "</td></tr>"; }).join("") +
+            p.labor.map(function (x) { return "<tr><td>LABOR " + esc(x.description) + "</td><td class=num>" + x.hours + " h x " + money(x.rate) + "</td><td class=num>" + money(x.ext) + "</td></tr>"; }).join("") +
+            [["Subtotal", t.subtotal], ["Overhead " + p.markup.overhead + "%", t.overhead], ["Profit " + p.markup.profit + "%", t.profit], ["Tax on materials " + (p.markup.taxRate * 100).toFixed(2) + "%", t.tax], ["Bond " + p.markup.bond + "%", t.bond]].map(function (r) { return "<tr><td colspan=2>" + r[0] + "</td><td class=num>" + money(r[1]) + "</td></tr>"; }).join("") +
+            "<tr><td colspan=2><b>This change order</b></td><td class=num><b>" + money(t.total) + "</b></td></tr></table>" +
+            '<p class="note">Contract sum: ' + money(c.original) + " original + " + money(c.approvedBefore) + " approved = " + money(c.before) + " → <b>" + money(c.after) + "</b> with this change. Time: " + c.daysBefore + " + " + c.days + " = " + c.daysAfter + " days.</p>";
+        });
+      }, 250);
+    }
+    function renderContract() {
+      var c = current();
+      $("work").hidden = !c;
+      if (!c) return;
+      $("lines").innerHTML = c.lines.map(function (l) { return "<tr><td>" + esc(l.description) + " <span class=note>(" + l.quantity + " in contract)</span></td><td class=num>" + money(l.unit_price) + '</td><td><input data-act="add" data-ref="' + l.ref + '" inputmode="numeric"></td><td><input data-act="delete" data-ref="' + l.ref + '" inputmode="numeric"></td></tr>'; }).join("") || '<tr><td colspan=4 class="note">This proposal has no priced lines.</td></tr>';
+      $("log").innerHTML = c.change_orders.length ? c.change_orders.map(function (co) { return '<div style="margin:6px 0">No. ' + co.number + " · " + esc(co.title || "") + " · " + money(co.amount) + " · " + co.days + ' days · <select data-co="' + co.id + '">' + ["submitted", "approved", "rejected"].map(function (s) { return "<option" + (s === co.status ? " selected" : "") + ">" + s + "</option>"; }).join("") + '</select> <button class="btn" type="button" data-pdf="' + co.id + '">PDF</button></div>'; }).join("") : "None yet.";
+      price();
+    }
+    function loadContracts(keep) {
+      return fetch("/api/forms/changeordx/contracts", { credentials: "same-origin", headers: headers() }).then(function (r) { if (r.status === 401) { $("contract").innerHTML = "<option value=''>Sign in to see your proposals</option>"; $("signin").hidden = false; return null; } return r.json(); }).then(function (d) {
+        if (!d) return;
+        contracts = d.contracts || [];
+        $("contract").innerHTML = '<option value="">' + (contracts.length ? "Choose a proposal" : "No PropX proposals yet") + "</option>" + contracts.map(function (c) { return '<option value="' + esc(c.id) + '">Quote ' + esc(c.quote_number) + " · " + esc(c.client_name || "") + " · " + esc(c.project_address || "") + " · " + money(c.grand_total) + "</option>"; }).join("");
+        if (keep) $("contract").value = keep;
+        renderContract();
+      });
+    }
+    $("contract").addEventListener("change", renderContract);
+    $("f").addEventListener("input", price);
+    $("signinBtn").onclick = function () { window.WeylandPage.signIn("/changeordx"); };
+    $("save").onclick = function () {
+      $("msg").textContent = "Saving...";
+      fetch("/api/forms/changeordx/save", { method: "POST", credentials: "same-origin", headers: headers(true), body: JSON.stringify(body()) }).then(function (r) { return r.json(); }).then(function (d) {
+        $("msg").textContent = d.success ? "Saved as change order No. " + d.changeOrder.number + "." : d.message;
+        if (d.success) loadContracts($("contract").value);
+      });
+    };
+    $("log").addEventListener("change", function (e) { var id = e.target.dataset.co; if (!id) return; fetch("/api/forms/changeordx/" + encodeURIComponent(id) + "/status", { method: "POST", credentials: "same-origin", headers: headers(true), body: JSON.stringify({ status: e.target.value }) }).then(function () { loadContracts($("contract").value); }); });
+    $("log").addEventListener("click", function (e) {
+      var id = e.target.dataset && e.target.dataset.pdf; if (!id) return;
+      $("pay").innerHTML = "";
+      fetch("/api/forms/changeordx/" + encodeURIComponent(id) + "/pdf", { credentials: "same-origin", headers: headers() }).then(function (r) {
+        if (r.status === 402) return r.json().then(function (d) { $("pay").innerHTML = '<div class="pay">' + esc(d.message) + ' <a class="btn primary" href="/#offer">$100 FIRST SUBMITTAL</a> <a class="btn" href="/pricing">PLANS</a></div>'; });
+        if (!r.ok) return r.json().then(function (d) { $("msg").textContent = d.message || ("HTTP " + r.status); });
+        return r.blob().then(function (b) { var a = document.createElement("a"); a.href = URL.createObjectURL(b); a.download = "ChangeOrder.pdf"; a.click(); });
+      });
+    });
+    loadContracts();
+    window.addEventListener("weyland-auth", function () { loadContracts(); });
+  })();
+  </script>
+</body>
+</html>
