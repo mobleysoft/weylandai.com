@@ -45,7 +45,22 @@ function need(w, h) { if (w.y - h < M + 20) addPage(w); }
 export function wrap(text, font, size, width) {
   const out = [];
   for (const para of safe(text).split("\n")) {
-    const words = para.split(/\s+/).filter(Boolean);
+    // A word wider than the column (a catalog number like PA-AX-9927-L-F-2SI-LBR-06-499F)
+    // is broken after a hyphen or slash where it can be, else between characters.
+    const words = [];
+    for (const word of para.split(/\s+/).filter(Boolean)) {
+      if (font.widthOfTextAtSize(word, size) <= width) { words.push(word); continue; }
+      let rest = word;
+      while (rest && font.widthOfTextAtSize(rest, size) > width) {
+        let cut = 1;
+        while (cut < rest.length && font.widthOfTextAtSize(rest.slice(0, cut + 1), size) <= width) cut++;
+        const soft = Math.max(rest.lastIndexOf("-", cut - 1), rest.lastIndexOf("/", cut - 1));
+        if (soft > 0) cut = soft + 1;
+        words.push(rest.slice(0, cut));
+        rest = rest.slice(cut);
+      }
+      if (rest) words.push(rest);
+    }
     let line = "";
     for (const word of words) {
       const t = line ? line + " " + word : word;
