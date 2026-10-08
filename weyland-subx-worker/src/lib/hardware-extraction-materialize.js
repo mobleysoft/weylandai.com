@@ -150,10 +150,42 @@ export async function createHardwareSpecifications(setId, hwSet, env2) {
 }
 export function mapComponentType(rawType) {
   if (!rawType)
-    return "lock";
+    return "other";
   const normalized = rawType.toLowerCase().trim();
-  if (normalized.includes("hinge") || normalized.includes("butt"))
-    return "hinge";
+  // 2026-10-08: the specific items of a school's hardware groups first; an
+  // item nothing here names is "other", not "lock" (the 7 October audit saw
+  // power transfers, sweeps, switches and operators all called locks).
+  if (/\bsilencer/.test(normalized)) return "silencer";
+  if (/\b(mop plate|mop pl)/.test(normalized)) return "mop_plate";
+  if (/\barmor plate/.test(normalized)) return "armor_plate";
+  if (/\b(kick plate|kickplate)/.test(normalized)) return "kick_plate";
+  if (/\b(edge guard|edge plate)/.test(normalized)) return "edge_guard";
+  if (/\b(power transfer|ept\b|electric power transfer|electrified hinge)/.test(normalized)) return "power_transfer";
+  if (/\b(door position|position switch|dps\b)/.test(normalized)) return "door_position_switch";
+  if (/\b(push switch|push button|key switch|actuator|switch)\b/.test(normalized)) return "switch";
+  if (/\b(credential reader|card reader|prox reader|reader)\b/.test(normalized)) return "card_reader";
+  if (/\b(power supply|power supplies)/.test(normalized)) return "power_supply";
+  if (/\b(relay|module)\b/.test(normalized)) return "relay";
+  if (/\b(intercom|video|camera)/.test(normalized)) return "intercom";
+  if (/\b(bollard|ballard post|post)\b/.test(normalized)) return "bollard";
+  if (/\b(operator|automatic door|auto door|low energy)/.test(normalized)) return "power_operator";
+  if (/\b(sweep|rain drip|drip cap|weatherstrip|weather strip|gasket|gasketing|smoke seal|meeting stile|astragal seal|perimeter seal)/.test(normalized)) return "seal";
+  if (/\bthreshold/.test(normalized)) return "threshold";
+  if (/\bastragal/.test(normalized)) return "astragal";
+  if (/\b(mullion)\b/.test(normalized) && !/cylinder/.test(normalized)) return "mullion";
+  if (/\b(dust proof strike|dustproof strike)/.test(normalized)) return "dust_proof_strike";
+  if (/\belectric strike/.test(normalized)) return "electric_strike";
+  if (/\bstrike\b/.test(normalized)) return "strike";
+  if (/\b(flush bolt|latching bolt|const latching|constant latching|surface bolt|auto bolt|automatic bolt)/.test(normalized)) return "flush_bolt";
+  if (/\b(cylinder|keyway|core)\b/.test(normalized)) return /\bcore\b/.test(normalized) && !/cylinder/.test(normalized) ? "core" : "cylinder";
+  if (/\b(oh stop|overhead stop|overhead holder|oh holder)/.test(normalized)) return "overhead_stop";
+  if (/\bwall stop/.test(normalized)) return "wall_stop";
+  if (/\bfloor stop/.test(normalized)) return "floor_stop";
+  if (/\b(coordinator)/.test(normalized)) return "coordinator";
+  if (/\b(push\/pull|push pull|pull plate|door pull|pull bar|offset pull|pull)\b/.test(normalized) && !/push plate/.test(normalized)) return "pull_handle";
+  if (/\b(push plate|push bar)/.test(normalized)) return "push_plate";
+  if (/\b(protection plate)/.test(normalized)) return "kick_plate";
+  if (/\b(hinge|butt)\b/.test(normalized) || /continuous hinge/.test(normalized)) return "hinge";
   if (normalized.includes("pivot"))
     return "pivot";
   if (normalized.includes("lock") || normalized.includes("mortise") || normalized.includes("cylindrical"))
@@ -194,6 +226,8 @@ export function mapComponentType(rawType) {
     return "astragal";
   if (normalized.includes("flush bolt"))
     return "flush_bolt";
+  if (/\b(lock|latch|deadbolt|exit|panic|closer|hinge|stop|holder|seal|strike|bolt|cylinder|core|plate|pull|handle|lever|knob|operator|transfer|switch|reader|supply)\b/.test(normalized) === false)
+    return "other";
   if (normalized.includes("cylinder"))
     return "cylinder";
   if (normalized.includes("core") || normalized.includes("i/c"))

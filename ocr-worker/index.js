@@ -22,6 +22,13 @@ import { createOCREngine } from 'tesseract-wasm';
 import jpeg from 'jpeg-js';
 import { detectSchedules, rotate90CW } from '../src/extraction/jitagi-detect-schedules.js';
 import { pageRange } from './page-range.js';
+// 2026-10-08: the page-extraction base (text layer first, pixel budget, in-place
+// BGRA, orientation guard, page windows, sequential diff) lives in extract.js so
+// node tests can run it against tools/corpus; see that file's header.
+import {
+  bgraToRgbaInPlace, cropBand, meanWordConfidence, renderPageRgba,
+  extractPages, diffPagesSequential,
+} from './extract.js';
 
 // Native .wasm imports: Cloudflare compiles these to WebAssembly.Module
 // objects at DEPLOY time. Workers disallow compiling fresh WASM from raw
@@ -96,63 +103,12 @@ function upscale2x(img) {
   return { data: out, width: nw, height: nh };
 }
 
-// Crops a horizontal band [topPct, botPct] of an image's height, full
-// width - shared by renderAndExtractTableRegion's real extraction crop
-// and its rotation-confidence check below (same crop math, one place).
-function cropBand(img, topPct, botPct) {
-  const yTop = Math.max(0, Math.floor(img.height * topPct));
-  const yBot = Math.min(img.height, Math.floor(img.height * botPct));
-  const cropH = Math.max(1, yBot - yTop);
-  const cropped = new Uint8ClampedArray(img.width * cropH * 4);
-  for (let y = 0; y < cropH; y++) {
-    const srcRowStart = (yTop + y) * img.width * 4;
-    const dstRowStart = y * img.width * 4;
-    cropped.set(img.data.subarray(srcRowStart, srcRowStart + img.width * 4), dstRowStart);
-  }
-  return { data: cropped, width: img.width, height: cropH };
-}
+// cropBand() and meanWordConfidence() moved to extract.js (2026-10-08).
 
-// Mean per-word OCR confidence for an already-loaded-ready image, used
-// to empirically pick between orientation candidates below instead of
-// trusting getOrientation() alone.
-function meanWordConfidence(ocrEngine, image) {
-  ocrEngine.clearImage();
-  ocrEngine.loadImage(image);
-  ocrEngine.setVariable('tessedit_pageseg_mode', '6');
-  const words = ocrEngine.getTextBoxes('word');
-  if (!words.length) return 0;
-  return words.reduce((sum, w) => sum + w.confidence, 0) / words.length;
-}
-
-function bgraToRgba(bgra) {
-  const rgba = new Uint8ClampedArray(bgra.length);
-  for (let i = 0; i < bgra.length; i += 4) {
-    rgba[i] = bgra[i + 2];
-    rgba[i + 1] = bgra[i + 1];
-    rgba[i + 2] = bgra[i];
-    rgba[i + 3] = bgra[i + 3];
-  }
-  return rgba;
-}
-
-// Real bug fixed 2026-10-02: bgraToRgba() above allocates a full duplicate
-// page-sized buffer, which - combined with PDFium's own rendered.data
-// buffer staying referenced, plus tesseract-wasm's own non-shrinking WASM
-// heap growing across the per-row OCR loop - was enough to blow a Worker's
-// 128MB memory ceiling on a real live door-schedule page (confirmed via
-// Mobley's virtual-user test: "Worker exceeded memory limit" on every
-// page). B and R are swapped in place here instead (same 4-bytes/pixel
-// layout, just reordered) - zero extra allocation, used only by
-// extractGridTable's full-page render since that's the path that held a
-// full-page buffer alive for the whole per-row loop duration.
-function bgraToRgbaInPlace(bgra) {
-  for (let i = 0; i < bgra.length; i += 4) {
-    const b = bgra[i];
-    bgra[i] = bgra[i + 2];
-    bgra[i + 2] = b;
-  }
-  return bgra;
-}
+// bgraToRgba() (a full page-sized copy) is gone: every render path converts in
+// place with bgraToRgbaInPlace() from extract.js. The copy, plus PDFium's own
+// buffer and tesseract's, is what put one 36x24 sheet at 150 dpi (77.8 MB a
+// copy) over the Worker's 128 MB ceiling on 2026-10-07.
 
 // Real gap closed 2026-09-24 (accountdrac.com depth audit): every caller of
 // this worker only ever sent PDFs - a photographed receipt (JPG straight off
@@ -208,12 +164,8 @@ async function renderAndDetect(pdfBuffer, totalPages, sessionId) {
     const pageCount = Math.min(totalPages, doc.getPageCount());
     for (let i = 0; i < pageCount; i++) {
       const page = doc.getPage(i);
-      const rendered = await page.render({ scale: 150 / 72, colorSpace: 'BGRA' });
-      pageImages.set(i + 1, {
-        data: bgraToRgba(rendered.data),
-        width: rendered.width,
-        height: rendered.height,
-      });
+      const image = await renderPageRgba(page);
+      pageImages.set(i + 1, { data: image.data, width: image.width, height: image.height });
     }
   } finally {
     doc.destroy();
@@ -229,58 +181,19 @@ async function renderAndDetect(pdfBuffer, totalPages, sessionId) {
   });
 }
 
-// General-purpose full-page text extraction, for text-heavy documents
-// (inspection reports, safety logs, spec sections) rather than the
-// table-structure-specific detectSchedules() above. Same render pipeline,
-// pageseg_mode 3 (fully automatic layout, no OSD) instead of 11 (sparse
-// text) since these are prose/paragraph documents, not schedule tables.
+// General-purpose text extraction for text-heavy documents (inspection
+// reports, safety logs, spec sections, drawing title blocks). Since
+// 2026-10-08 this is extractPages() in extract.js: the PDF's own text layer
+// first, OCR (pageseg mode 3, orientation guarded) only for pages without
+// one, at most X-Max-Ocr-Pages OCR'd pages per request, renders capped by a
+// pixel budget. The reply's endPage/hasMore/nextPage tell the caller where
+// to resume; weyland-docs-worker runs the remaining windows on its D1 job
+// lease.
 async function renderAndExtractText(pdfBuffer, headers) {
   if (isJpeg(pdfBuffer)) return extractTextFromJpeg(pdfBuffer);
-
   const library = await getPdfiumLibrary();
   const ocrEngine = await getOcrEngine();
-
-  const doc = await library.loadDocument(new Uint8Array(pdfBuffer));
-  const pages = [];
-  let range;
-  try {
-    range = pageRange(headers, doc.getPageCount());
-    for (let i = range.start - 1; i < range.end; i++) {
-      const page = doc.getPage(i);
-      const rendered = await page.render({ scale: 150 / 72, colorSpace: 'BGRA' });
-      let pageImage = {
-        data: bgraToRgba(rendered.data),
-        width: rendered.width,
-        height: rendered.height,
-      };
-      // Real bug found 2026-09-12 testing against an actual scanned,
-      // rotated door schedule (/Users/johnmobley/pdf/OCCDoorSchedulePg4.pdf):
-      // this path OCR'd the page as rendered, with no orientation check,
-      // and got back ~111 characters of noise off a page that genuinely
-      // has a full table on it. detectSchedules()'s classifyOnePage() (same
-      // file, jitagi-detect-schedules.js) already does real orientation
-      // detection + rotate90CW before OCR and correctly reads "DOOR
-      // SCHEDULE" off the same real file - ported that same check here so
-      // full-page text extraction isn't silently worse than page
-      // classification on identical input.
-      ocrEngine.clearImage();
-      ocrEngine.loadImage(pageImage);
-      const orientation = ocrEngine.getOrientation();
-      if (orientation.rotation !== 0 && orientation.confidence > 0.5) {
-        const turns = Math.round(orientation.rotation / 90) % 4;
-        for (let t = 0; t < turns; t++) pageImage = rotate90CW(pageImage);
-        ocrEngine.clearImage();
-        ocrEngine.loadImage(pageImage);
-      }
-      ocrEngine.setVariable('tessedit_pageseg_mode', '3');
-      const text = ocrEngine.getText();
-      pages.push({ page: i + 1, text: (text || '').trim(), rotation_applied: orientation.rotation });
-    }
-  } finally {
-    doc.destroy();
-  }
-  return { pages, pageCount: pages.length, documentPageCount: range.documentPages,
-    startPage: range.start, endPage: range.end, hasMore: range.end < range.documentPages };
+  return extractPages({ library, ocrEngine, rotate90CW, pdfBuffer, headers, pageRange });
 }
 
 // Real, evidence-based fix for a real problem found 2026-09-12: full-page
@@ -337,7 +250,7 @@ async function renderAndExtractTableRegion(pdfBuffer, pageNumber, cropTopPct = 0
     // for a fraction of the memory/CPU a full-page 300dpi render costs.
     const rendered = await page.render({ scale: 150 / 72, colorSpace: 'BGRA' });
     let pageImage = {
-      data: bgraToRgba(rendered.data),
+      data: bgraToRgbaInPlace(rendered.data),
       width: rendered.width,
       height: rendered.height,
     };
@@ -990,61 +903,11 @@ async function extractGridTable(pdfBuffer, pageNumber, opts = {}) {
   }
 }
 
-// Renders a single page to a raw RGBA pixel buffer - used by AsX's diff
-// below, not for OCR. No text extraction here, just pixels.
-async function renderPageImage(pdfBuffer, pageNum) {
-  const library = await getPdfiumLibrary();
-  const doc = await library.loadDocument(new Uint8Array(pdfBuffer));
-  try {
-    const index = Math.max(0, Math.min(pageNum - 1, doc.getPageCount() - 1));
-    const page = doc.getPage(index);
-    const rendered = await page.render({ scale: 150 / 72, colorSpace: 'BGRA' });
-    return { data: bgraToRgba(rendered.data), width: rendered.width, height: rendered.height };
-  } finally {
-    doc.destroy();
-  }
-}
-
-// Coarse grid-cell pixel diff between two page renders - AsX's real
-// capability. This is literal pixel-value comparison, not any kind of
-// semantic markup/redline recognition: it will flag scan misalignment,
-// scale differences, and print-quality noise exactly the same as an
-// actual field revision. Grid size is fixed and modest (24x32 max) so the
-// output stays a readable heatmap, not per-pixel noise.
-function diffPageImages(imgA, imgB) {
-  const width = Math.min(imgA.width, imgB.width);
-  const height = Math.min(imgA.height, imgB.height);
-  const gridCols = Math.min(24, width);
-  const gridRows = Math.min(32, height);
-  const cellW = Math.floor(width / gridCols);
-  const cellH = Math.floor(height / gridRows);
-  const cellDiffs = [];
-  let totalDiff = 0;
-  for (let gy = 0; gy < gridRows; gy++) {
-    const row = [];
-    for (let gx = 0; gx < gridCols; gx++) {
-      let sum = 0, count = 0;
-      const x0 = gx * cellW, y0 = gy * cellH;
-      for (let y = y0; y < y0 + cellH; y += 2) {
-        for (let x = x0; x < x0 + cellW; x += 2) {
-          const i = (y * imgA.width + x) * 4;
-          const j = (y * imgB.width + x) * 4;
-          if (i + 2 >= imgA.data.length || j + 2 >= imgB.data.length) continue;
-          const dr = Math.abs(imgA.data[i] - imgB.data[j]);
-          const dg = Math.abs(imgA.data[i + 1] - imgB.data[j + 1]);
-          const db = Math.abs(imgA.data[i + 2] - imgB.data[j + 2]);
-          sum += (dr + dg + db) / 3;
-          count++;
-        }
-      }
-      const avg = count ? sum / count / 255 : 0;
-      row.push(Math.round(avg * 1000) / 1000);
-      totalDiff += avg;
-    }
-    cellDiffs.push(row);
-  }
-  return { width, height, gridCols, gridRows, cellDiffs, overallDiffPercent: Math.round((totalDiff / (gridCols * gridRows)) * 1000) / 10 };
-}
+// AsBuiltX's page diff is diffPagesSequential() in extract.js (2026-10-08):
+// the original and the revision are rendered one after the other under a
+// 2 MP budget and reduced to thumbnails, never both full pages in memory.
+// Promise.all over two 150 dpi renders of a 36x24 sheet was the second
+// "Worker exceeded memory limit" the 7 October audit reproduced.
 
 export default {
   async fetch(request, env, ctx) {
@@ -1128,11 +991,13 @@ export default {
             headers: { 'Content-Type': 'application/json' },
           });
         }
-        const [imgA, imgB] = await Promise.all([
-          renderPageImage(await originalFile.arrayBuffer(), page),
-          renderPageImage(await revisedFile.arrayBuffer(), page),
-        ]);
-        const result = diffPageImages(imgA, imgB);
+        const library = await getPdfiumLibrary();
+        const result = await diffPagesSequential({
+          library,
+          originalBuffer: await originalFile.arrayBuffer(),
+          revisedBuffer: await revisedFile.arrayBuffer(),
+          page,
+        });
         return new Response(JSON.stringify(result), { headers: { 'Content-Type': 'application/json' } });
       } catch (err) {
         return new Response(JSON.stringify({ error: err.message, stack: err.stack }), {

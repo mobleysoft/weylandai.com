@@ -1149,9 +1149,25 @@ export async function writeDoorScheduleEntries(sessionId, tenantId, pageNumber, 
   const isLowConf = (extractionConfidence || 0) < 0.7;
   const processedEntries = [];
   let insertedCount = 0;
+  // A session holds one row per mark (the upsert below). A bid set with one
+  // schedule per school repeats the marks (Berryessa: 001-009 on three
+  // sheets), so a mark already read from another page keeps that page's row
+  // and this page's row carries the page in its mark: "001 [p.286]".
+  const onOtherPages = new Map();
+  try {
+    const marks = [...new Set(doors.map((d) => d.door_number).filter(Boolean))];
+    for (let i = 0; i < marks.length; i += 80) {
+      const chunk = marks.slice(i, i + 80);
+      const rows = await env2.DB.prepare("SELECT mark, page_number FROM door_schedule_entries WHERE session_id = ? AND page_number != ? AND mark IN (" + chunk.map(() => "?").join(",") + ")").bind(sessionId, pageNumber, ...chunk).all();
+      for (const r of rows.results || []) onOtherPages.set(r.mark, r.page_number);
+    }
+  } catch (e) {
+    console.warn("[Embedded Door Schedule] repeated-mark check skipped: " + e.message);
+  }
   for (let i = 0; i < doors.length; i++) {
-    const door = doors[i];
+    let door = doors[i];
     if (!door.door_number) continue;
+    if (onOtherPages.has(door.door_number)) door = { ...door, door_number: door.door_number + " [p." + pageNumber + "]", remarks: [door.remarks, "same mark as a door on page " + onOtherPages.get(door.door_number)].filter(Boolean).join("; ") };
     const fullEntry = {
       id: `dse_${sessionId}_${door.door_number}_${Date.now()}_${i}`,
       session_id: sessionId,
@@ -1185,7 +1201,15 @@ export async function writeDoorScheduleEntries(sessionId, tenantId, pageNumber, 
       // Where on the sheet this row was read (the grid readers report the
       // table row band and the page turn they applied) - the trace the
       // submittal package prints next to every door.
-      field_confidence_json: door.source_row != null ? JSON.stringify({ source: { page: pageNumber, table_row: door.source_row, rotation: door.source_rotation ?? null } }) : null,
+      // Where the row was read (page, table row, turn) and how sure each
+      // field is (text layer 1.0, OCR 0.85), plus what the schedule printed
+      // that has no column here (pair, glazing, section).
+      field_confidence_json: door.source_row != null || door.field_confidence ? JSON.stringify({
+        source: { page: pageNumber, table_row: door.source_row ?? null, rotation: door.source_rotation ?? null },
+        read_from: door.read_from || null,
+        fields: door.field_confidence || null,
+        pair: door.pair ?? null, glazing: door.glazing ?? null, section: door.section ?? null,
+      }) : null,
       low_confidence_fields: isLowConf ? "extraction_confidence" : ""
     };
     processedEntries.push(fullEntry);

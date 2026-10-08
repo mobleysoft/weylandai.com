@@ -45,6 +45,13 @@
 
 const ASSET_BASE = "/api/hardware-schedule/client-ocr-assets";
 
+// 2026-10-08: the text layer comes first. A CAD sheet or a spec section
+// carries its schedule as positioned text; reading it beats OCR on every
+// count (no rendering, no misread digits) and is the only way to read an
+// unruled Section 08 71 00. OCR below is now the path for pages with no text
+// (a scan, a Print-to-PDF of a bitmap such as OCCDoorSchedulePg4.pdf).
+import * as TL from "./schedule-text-layer.mjs?v=20261008a";
+
 let pdfjsLibPromise = null;
 export async function loadPdfJs() {
   if (!pdfjsLibPromise) {
@@ -535,16 +542,105 @@ function closeOpenGroup(state) {
   state.openGroup = null;
 }
 
+// Horizontal and vertical rules inside one region of the page, found from a
+// render of just that region (the text-layer reader asks for them to snap its
+// column boundaries and to tell ruled rows apart). Coordinates in and out are
+// device points at scale 1 with the given rotation, as pageTextLines reports.
+async function rulesInRegion(pdfDoc, pageNumber, rotation, region) {
+  const w = region.x1 - region.x0, hgt = region.y1 - region.y0;
+  if (!(w > 10) || !(hgt > 10)) return null;
+  // 150 dpi, lower for a very large region (a bitmap of at most ~12 MP).
+  let dpi = 150;
+  while (dpi > 72 && (w * dpi / 72) * (hgt * dpi / 72) > 12e6) dpi = Math.round(dpi * 0.85);
+  const s = dpi / 72;
+  const img = await renderRegionToImageData(pdfDoc, pageNumber, dpi, rotation, { x0: region.x0 * s, y0: region.y0 * s, x1: region.x1 * s, y1: region.y1 * s });
+  const { width, height, data } = img;
+  const dark = (i) => data[i] * 0.299 + data[i + 1] * 0.587 + data[i + 2] * 0.114 < 215;
+  // A vertical rule: a pixel column dark over most of the region's height (a
+  // hairline renders grey, so the threshold is mild; text never reaches it).
+  const colDark = new Uint32Array(width);
+  const rowDark = new Uint32Array(height);
+  for (let y = 0; y < height; y++) {
+    const base = y * width;
+    for (let x = 0; x < width; x++) { if (dark((base + x) * 4)) { colDark[x]++; rowDark[y]++; } }
+  }
+  const verticals = [], horizontals = [];
+  const cluster = (arr, limit, out, axis) => {
+    let run = [];
+    const flush = () => { if (run.length) { out.push(region[axis] + (run.reduce((a, b) => a + b, 0) / run.length) / s); run = []; } };
+    for (let i = 0; i < arr.length; i++) { if (arr[i] >= limit) run.push(i); else flush(); }
+    flush();
+  };
+  cluster(colDark, 0.6 * height, verticals, "x0");
+  cluster(rowDark, 0.55 * width, horizontals, "y0");
+  return { verticals, horizontals, dpi };
+}
+
+// Where the schedules are in a whole bid set: every page's text layer is
+// read (no rendering, so a 288-page manual takes about a second) and each
+// page is classed as a door schedule, hardware groups, both or neither.
+export async function findSchedulePages(pdfBytes, onProgress, options = {}) {
+  const t0 = performance.now();
+  const progress = (msg) => { if (onProgress) onProgress(msg); };
+  const pdfjsLib = await loadPdfJs();
+  const pdfDoc = await pdfjsLib.getDocument({ data: pdfBytes.slice(0) }).promise;
+  const n = pdfDoc.numPages;
+  const out = { pages: n, door_schedule_pages: [], hardware_pages: [], pages_without_text: [], details: [], ms: 0 };
+  const limit = Math.min(n, options.maxPages || 1500);
+  for (let p = 1; p <= limit; p++) {
+    if (p % 25 === 0) progress("Looking for the schedules: page " + p + " of " + n + "...");
+    let tl;
+    try { tl = await TL.pageTextLines(pdfjsLib, await pdfDoc.getPage(p)); } catch (e) { out.details.push({ page: p, error: String((e && e.message) || e).slice(0, 120) }); continue; }
+    if (tl.word_count < 15) { out.pages_without_text.push(p); continue; }
+    const c = await TL.classifyLines(tl.lines, { width: tl.width, height: tl.height });
+    if (c.door_schedule) { out.door_schedule_pages.push(p); out.details.push({ page: p, door_schedule: c.door_schedule }); }
+    if (c.hardware) { out.hardware_pages.push(p); out.details.push({ page: p, hardware: c.hardware }); }
+  }
+  out.ms = Math.round(performance.now() - t0);
+  return out;
+}
+
 // extractHardwareScheduleFromPdf: the real client-side entry point. Takes a
 // File/Blob/ArrayBuffer of the full PDF and a 1-indexed page number, returns
 // {hardware_groups, door_hardware_matrix, detected_nomenclature, metadata} -
 // the exact shape the existing POST .../extract-result endpoint expects.
-export async function extractHardwareScheduleFromPdf(pdfBytes, pageNumber, onProgress) {
+export async function extractHardwareScheduleFromPdf(pdfBytes, pageNumber, onProgress, options = {}) {
   const t0 = performance.now();
   const progress = (msg) => { if (onProgress) onProgress(msg); };
   progress("Loading PDF renderer...");
   const pdfjsLib = await loadPdfJs();
   const pdfDoc = await pdfjsLib.getDocument({ data: pdfBytes.slice(0) }).promise;
+
+  // The text layer first (see the note at the top of this file).
+  if (!options.skipTextLayer) {
+    progress("Reading the text of page " + pageNumber + "...");
+    const page = await pdfDoc.getPage(pageNumber);
+    const tl = await TL.pageTextLines(pdfjsLib, page);
+    if (tl.word_count >= 15) {
+      const rules = (region) => rulesInRegion(pdfDoc, pageNumber, tl.rotation, region);
+      const hg = await TL.readHardwareGroupsFromLines(tl.lines, { width: tl.width, height: tl.height }, { rules });
+      const groups = hg ? hg.hardware_groups.filter((g) => g.components.length || g.assigned_doors.length) : [];
+      if (groups.length) {
+        progress("Extraction complete.");
+        return {
+          hardware_groups: groups.map((g) => ({
+            group_number: g.group_number, group_name: g.group_name, assigned_doors: g.assigned_doors, notes: g.notes || null, continued: g.continued,
+            components: g.components.map((c) => ({ component_type: c.component_type, description: c.description, quantity: c.quantity == null ? 1 : c.quantity, quantity_printed: c.quantity, uom: c.uom, manufacturer: c.manufacturer, manufacturer_code: c.manufacturer_code, model_number: c.model_number, catalog_number: c.catalog_number, finish: c.finish, notes: c.notes, field_confidence: c.field_confidence, read_from: "text_layer" })),
+          })),
+          door_hardware_matrix: hg.door_hardware_matrix,
+          detected_nomenclature: null,
+          metadata: { extraction_mode: "text_layer", extraction_route: "text_layer", page_isolated: false, rotation_applied: tl.rotation, table_count: groups.length, text_words: tl.word_count, total_time_ms: Math.round(performance.now() - t0) },
+        };
+      }
+      // Text on the page but no hardware groups in it. When the text reads as
+      // a door schedule instead, say so and skip the OCR pass (the caller then
+      // reads the page as a door schedule, from the text, at once).
+      const c = await TL.classifyLines(tl.lines, { width: tl.width, height: tl.height });
+      if (c.door_schedule) {
+        return { hardware_groups: [], door_hardware_matrix: [], detected_nomenclature: null, metadata: { extraction_mode: "text_layer", page_isolated: false, table_count: 0, no_table_detected: true, text_layer_reads_as: "door_schedule", text_words: tl.word_count } };
+      }
+    }
+  }
 
   const DETECT_DPI = 150, BASE_DPI = 400;
   const RATIO = BASE_DPI / DETECT_DPI;
@@ -968,6 +1064,36 @@ export async function extractDoorScheduleFromPdf(pdfBytes, pageNumber, onProgres
   const pdfjsLib = await loadPdfJs();
   const pdfDoc = await pdfjsLib.getDocument({ data: pdfBytes.slice(0) }).promise;
 
+  // The text layer first (see the note at the top of this file).
+  if (!options.skipTextLayer) {
+    progress("Reading the text of page " + pageNumber + "...");
+    const page = await pdfDoc.getPage(pageNumber);
+    const tl = await TL.pageTextLines(pdfjsLib, page);
+    if (tl.word_count >= 15) {
+      const rules = (region) => rulesInRegion(pdfDoc, pageNumber, tl.rotation, region);
+      const ds = await TL.readDoorScheduleFromLines(tl.lines, { width: tl.width, height: tl.height }, { rules });
+      if (!(ds && ds.doors.length)) {
+        const c = await TL.classifyLines(tl.lines, { width: tl.width, height: tl.height });
+        if (c.hardware) {
+          return { doors: [], extraction_confidence: 0, metadata: { extraction_mode: "text_layer", page_isolated: false, no_table_detected: true, text_layer_reads_as: "hardware_schedule", text_words: tl.word_count } };
+        }
+      }
+      if (ds && ds.doors.length) {
+        progress("Extraction complete.");
+        return {
+          doors: ds.doors,
+          extraction_confidence: 0.98,
+          metadata: {
+            extraction_mode: "text_layer", extraction_route: "text_layer", page_isolated: false,
+            row_count: ds.doors.length, rotation_applied: tl.rotation, text_words: tl.word_count,
+            tables: ds.tables.map((t) => ({ title: t.title, rows: t.rows, fields: t.fields, header: t.header, rules_used: t.rules_used })),
+            total_time_ms: Math.round(performance.now() - t0),
+          },
+        };
+      }
+    }
+  }
+
   const DETECT_DPI = 150;
   const TARGET_ROW_PX = options.targetRowPx || 64;
   const MIN_DPI = 300, MAX_DPI = options.maxDpi || 1200;
@@ -1120,6 +1246,10 @@ export async function extractDoorScheduleFromPdf(pdfBytes, pageNumber, onProgres
     panic_hardware: cleanCell(row.panic_hardware),
     remarks: cleanCell(row.notes),
     source_row: row._band,
+    read_from: "ocr",
+    // OCR values are machine-read: every field is marked for the reviewer at
+    // this confidence, and a size that did not parse at zero.
+    field_confidence: Object.fromEntries(fieldNames.filter(Boolean).map((f) => [f, 0.85])),
     ...(options.debug && row._reread ? { size_reread: row._reread } : {}),
   })).filter((d) => d.door_number);
 

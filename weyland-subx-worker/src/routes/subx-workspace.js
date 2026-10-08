@@ -154,7 +154,24 @@ export function registerSubxWorkspaceRoutes(router, { authenticate, requireActiv
       pages_read: s.pages_read,
       is_demo: isDemoClone(s),
     }));
-    return jsonResponse3({ success: true, signed_in: true, email: user.email || null, sessions });
+    let company = null;
+    try { const u = await env2.DB.prepare("SELECT company FROM users WHERE id = ?").bind(user.userId).first(); company = u && u.company ? u.company : null; } catch (_) { company = null; }
+    return jsonResponse3({ success: true, signed_in: true, email: user.email || null, company, sessions });
+  });
+
+  // The company that signs the packet's cover (2026-10-08).
+  router.put("/api/hardware-schedule/company", async (request2, env2) => {
+    const { error: error4, user } = await authenticate(request2, env2);
+    if (error4) return error4;
+    if (!user || !user.userId) return jsonResponse3({ success: false, error: "Sign in first.", code: "SIGN_IN_REQUIRED" }, 401);
+    const body = await request2.json().catch(() => ({}));
+    const company = String(body.company || "").replace(/\s+/g, " ").trim().slice(0, 120);
+    try {
+      await env2.DB.prepare("UPDATE users SET company = ?, updated_at = datetime('now') WHERE id = ?").bind(company || null, user.userId).run();
+    } catch (e) {
+      return jsonResponse3({ success: false, error: "The company could not be saved: " + e.message }, 500);
+    }
+    return jsonResponse3({ success: true, company: company || null });
   });
 
   router.get("/api/hardware-schedule/session/:sessionId/doors", async (request2, env2) => {
@@ -185,11 +202,20 @@ export function registerSubxWorkspaceRoutes(router, { authenticate, requireActiv
       FROM hardware_sets s WHERE s.session_id = ? ORDER BY s.set_number
     `).bind(sessionId).all();
     const hardwareSets = sets.results || [];
-    const comps = hardwareSets.length ? await env2.DB.prepare(`
-      SELECT hs.set_number, hc.component_type, hc.quantity, hc.manufacturer, hc.model, hc.finish
+    const compRows = hardwareSets.length ? await env2.DB.prepare(`
+      SELECT hc.id, hs.set_number, hc.component_type, hc.quantity, hc.uom, hc.manufacturer, hc.model, hc.catalog_number, hc.finish, hc.specifications
       FROM hardware_components hc JOIN hardware_sets hs ON hc.set_id = hs.id
       WHERE hs.session_id = ? ORDER BY hs.set_number, hc.sequence_order
     `).bind(sessionId).all() : { results: [] };
+    // The description as the schedule prints it lives in the component's
+    // specifications; the type code is the reader's own class of the item.
+    const comps = { results: (compRows.results || []).map((c) => {
+      let spec = null;
+      try { spec = c.specifications ? JSON.parse(c.specifications) : null; } catch (_) { spec = null; }
+      const out = { ...c, description: spec && spec.description ? spec.description : null, notes: spec && spec.notes ? spec.notes : null };
+      delete out.specifications;
+      return out;
+    }) };
     const takeoff = {
       doors: doors.length,
       doors_with_size: doors.filter((d) => d.width_inches != null && d.height_inches != null).length,
@@ -242,12 +268,23 @@ export function registerSubxWorkspaceRoutes(router, { authenticate, requireActiv
       const doorCount = await env2.DB.prepare("SELECT COUNT(*) AS n FROM door_schedule_entries WHERE session_id = ?").bind(sessionId).first();
       const setCount = await env2.DB.prepare("SELECT COUNT(*) AS n FROM hardware_sets WHERE session_id = ?").bind(sessionId).first();
       if (!(doorCount && doorCount.n) && !(setCount && setCount.n)) {
-        return jsonResponse3({ success: false, error: "NOTHING_EXTRACTED", details: "Read the schedule first (RUN EXTRACTION): the package is built from the extracted door rows and hardware sets." }, 409);
+        return jsonResponse3({ success: false, error: "NOTHING_EXTRACTED", details: "Nothing has been read from this schedule yet. Read a page first (READ THIS PAGE), then build the package: it is made from the door rows and hardware sets that were read." }, 409);
       }
       const hadPackage = await packageStatus(env2, sessionId);
       const cutSheets = await persistExactCutSheetMatches(sessionId, env2);
-      let preparedBy = null;
-      if (o.user.tenantId) {
+      // The cover names the company (2026-10-08): what the workspace sent,
+      // else the account's company, else the vendor profile. Never the email.
+      let preparedBy = String(body.preparedBy || "").trim().slice(0, 120) || null;
+      if (preparedBy) {
+        try { await env2.DB.prepare("UPDATE users SET company = ?, updated_at = datetime('now') WHERE id = ?").bind(preparedBy, o.user.userId).run(); } catch (_) { /* kept for this build only */ }
+      }
+      if (!preparedBy) {
+        try {
+          const u = await env2.DB.prepare("SELECT company FROM users WHERE id = ?").bind(o.user.userId).first();
+          preparedBy = u && u.company ? String(u.company).trim() || null : null;
+        } catch (_) { /* no users row (a guest) */ }
+      }
+      if (!preparedBy && o.user.tenantId) {
         try {
           const vp = await env2.DB.prepare("SELECT company_name FROM vendor_profile WHERE tenant_id = ?").bind(o.user.tenantId).first();
           preparedBy = vp && vp.company_name ? vp.company_name : null;
@@ -255,7 +292,7 @@ export function registerSubxWorkspaceRoutes(router, { authenticate, requireActiv
       }
       const result = await assembleSubmittalPackage(sessionId, {
         projectName: (body.projectName || "").trim() || null,
-        preparedBy: preparedBy || o.user.email || null,
+        preparedBy: preparedBy || null,
         preparedFor: body.preparedFor || null,
         contractor: body.contractor || null,
         architect: body.architect || null,

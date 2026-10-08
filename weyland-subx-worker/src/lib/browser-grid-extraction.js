@@ -50,6 +50,110 @@ function errText(e) {
  *   schedule", or the reverse).
  * @returns {Promise<{ok: boolean, schedule_type?: string, result?: object, error?: string, detail?: string, logs?: string[], ms?: number}>}
  */
+/**
+ * Where the schedules are in a whole PDF: every page's text layer, read in
+ * the same runner tab (2026-10-08). Returns the finder's own result shape
+ * ({pages, door_schedule_pages, hardware_pages, pages_without_text, details}).
+ */
+export async function findPagesInBrowser(env, pdfBuffer, opts = {}) {
+  const started = Date.now();
+  if (!env || !env.BROWSER) return { ok: false, error: "browser_rendering_not_configured" };
+  if (!pdfBuffer || !pdfBuffer.byteLength) return { ok: false, error: "no_pdf_bytes" };
+  if (pdfBuffer.byteLength > MAX_BROWSER_PDF_BYTES) {
+    return { ok: false, error: "pdf_too_large_for_browser_runner", detail: (pdfBuffer.byteLength / 1048576).toFixed(1) + " MB; the reader takes PDFs up to " + (MAX_BROWSER_PDF_BYTES / 1048576) + " MB" };
+  }
+  const origin = String(opts.origin || env.SUBX_RUNNER_ORIGIN || DEFAULT_ORIGIN).replace(/\/$/, "");
+  let browser;
+  try {
+    browser = await puppeteer.launch(env.BROWSER, { keep_alive: 300000 });
+  } catch (e) {
+    return { ok: false, error: "browser_launch_failed", detail: errText(e), ms: Date.now() - started };
+  }
+  try {
+    const page = await browser.newPage();
+    page.setDefaultTimeout(opts.timeoutMs || 120000);
+    const resp = await page.goto(origin + RUNNER_PATH, { waitUntil: "load", timeout: 30000 });
+    if (!resp || !resp.ok()) {
+      return { ok: false, error: "runner_page_unavailable", detail: "GET " + RUNNER_PATH + " -> " + (resp ? resp.status() : "no response"), ms: Date.now() - started };
+    }
+    await page.waitForFunction("window.__gridRunnerReady === true && typeof window.__findPages === 'function'", { timeout: 30000 });
+    const b64 = Buffer.from(pdfBuffer).toString("base64");
+    const res = await page.evaluate((data, o) => window.__findPages({ b64: data }, o), b64, opts.runnerOptions || {});
+    if (!res || !res.ok) return { ok: false, error: "browser_runner_failed", detail: (res && res.error) || "runner returned nothing", logs: res && res.logs, ms: Date.now() - started };
+    return { ok: true, result: res.result, logs: res.logs, ms: Date.now() - started };
+  } catch (e) {
+    return { ok: false, error: "browser_runner_failed", detail: errText(e), ms: Date.now() - started };
+  } finally {
+    try { await browser.close(); } catch (_) { /* already gone */ }
+  }
+}
+
+/**
+ * Reads several pages in ONE runner tab (2026-10-08): a bid set's door
+ * schedule and its hardware pages. Browser Rendering limits how many
+ * browsers an account may start per minute, and the page-by-page route
+ * launched one per page (the eighth launch of a Rockford read failed).
+ * pages: [{ page, type }] (type door_schedule | hardware_schedule); the other
+ * type is tried on the same page when the named one finds nothing.
+ * @returns {Promise<{ok: boolean, results?: Array, error?: string, detail?: string, ms?: number}>}
+ */
+export async function runGridPagesInBrowser(env, pdfBuffer, pages, opts = {}) {
+  const started = Date.now();
+  if (!env || !env.BROWSER) return { ok: false, error: "browser_rendering_not_configured" };
+  if (!pdfBuffer || !pdfBuffer.byteLength) return { ok: false, error: "no_pdf_bytes" };
+  if (pdfBuffer.byteLength > MAX_BROWSER_PDF_BYTES) {
+    return { ok: false, error: "pdf_too_large_for_browser_runner", detail: (pdfBuffer.byteLength / 1048576).toFixed(1) + " MB; the reader takes PDFs up to " + (MAX_BROWSER_PDF_BYTES / 1048576) + " MB" };
+  }
+  const origin = String(opts.origin || env.SUBX_RUNNER_ORIGIN || DEFAULT_ORIGIN).replace(/\/$/, "");
+  let browser;
+  try {
+    browser = await puppeteer.launch(env.BROWSER, { keep_alive: 600000 });
+  } catch (e) {
+    return { ok: false, error: "browser_launch_failed", detail: errText(e), ms: Date.now() - started };
+  }
+  try {
+    const page = await browser.newPage();
+    page.setDefaultTimeout(opts.timeoutMs || 170000);
+    const resp = await page.goto(origin + RUNNER_PATH, { waitUntil: "load", timeout: 30000 });
+    if (!resp || !resp.ok()) {
+      return { ok: false, error: "runner_page_unavailable", detail: "GET " + RUNNER_PATH + " -> " + (resp ? resp.status() : "no response"), ms: Date.now() - started };
+    }
+    await page.waitForFunction("window.__gridRunnerReady === true", { timeout: 30000 });
+    const b64 = Buffer.from(pdfBuffer).toString("base64");
+    const results = [];
+    for (const want of pages) {
+      const t0 = Date.now();
+      const first = want.type === "hardware_schedule" ? "hardware_schedule" : "door_schedule";
+      const other = first === "door_schedule" ? "hardware_schedule" : "door_schedule";
+      let found = null, firstTry = null;
+      const logs = [];
+      try {
+        for (const type of [first, other]) {
+          const res = await page.evaluate((data, p, t, o) => window.__runGrid({ b64: data }, p, t, o), b64, want.page, type, opts.runnerOptions || {});
+          if (res && Array.isArray(res.logs)) logs.push(...res.logs.map((l) => "[" + type + "] " + l));
+          if (!res || !res.ok) { found = { ok: false, error: "browser_runner_failed", detail: (res && res.error) || "runner returned nothing" }; break; }
+          const r = res.result || {};
+          const n = type === "door_schedule" ? (r.doors || []).length : (r.hardware_groups || []).length;
+          if (!firstTry) firstTry = { schedule_type: type, result: r };
+          if (n > 0) { found = { ok: true, schedule_type: type, result: r }; break; }
+          // The text says the page is the other kind: try it; otherwise stop.
+          const md = r.metadata || {};
+          if (!(md.text_layer_reads_as === other) && type === first && !opts.alwaysTryOther) { /* fall through to the other type anyway */ }
+        }
+        if (!found) found = { ok: true, schedule_type: firstTry.schedule_type, result: firstTry.result, empty: true, tried: [first, other] };
+      } catch (e) {
+        found = { ok: false, error: "browser_runner_failed", detail: errText(e) };
+      }
+      results.push({ page: want.page, requested_type: first, ...found, logs, ms: Date.now() - t0 });
+    }
+    return { ok: true, results, ms: Date.now() - started };
+  } catch (e) {
+    return { ok: false, error: "browser_runner_failed", detail: errText(e), ms: Date.now() - started };
+  } finally {
+    try { await browser.close(); } catch (_) { /* already gone */ }
+  }
+}
+
 export async function runGridInBrowser(env, pdfBuffer, pageNumber, scheduleType, opts = {}) {
   const started = Date.now();
   if (!env || !env.BROWSER) return { ok: false, error: "browser_rendering_not_configured" };

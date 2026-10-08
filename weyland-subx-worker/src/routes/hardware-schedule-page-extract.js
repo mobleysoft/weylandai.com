@@ -24,6 +24,21 @@
 
 import { jsonResponse3 } from "../lib/json-response.js";
 import { classifyError, jsonErrorResponse, ErrorMetrics } from "../error-utilities.js";
+import { findPagesInBrowser, runGridPagesInBrowser } from "../lib/browser-grid-extraction.js";
+import { persistBrowserGridResult } from "../lib/hardware-extraction-pipeline.js";
+
+// The session's PDF: KV first, then R2 (re-cached), as the page read does.
+async function sessionPdf(session, env2) {
+  let fileBuffer = await env2.CACHE.get(session.file_buffer_key, { type: "arrayBuffer" });
+  if (!fileBuffer && env2.UPLOADS) {
+    const r2Object = await env2.UPLOADS.get(session.file_buffer_key);
+    if (r2Object) {
+      fileBuffer = await r2Object.arrayBuffer();
+      try { await env2.CACHE.put(session.file_buffer_key, fileBuffer, { expirationTtl: 86400 * 7 }); } catch (_) { /* too large for KV */ }
+    }
+  }
+  return fileBuffer;
+}
 
 export function registerHardwareSchedulePageExtractRoutes(router, {
   authenticate,
@@ -63,7 +78,12 @@ router.get("/api/hardware-schedule/session/:sessionId/page/:pageNum", async (req
     // of this cache.
     const url = new URL(request2.url);
     const startRow = parseInt(url.searchParams.get("startRow") || "0", 10) || 0;
-    console.log(`[Hardware Page] Extracting page ${pageNum} for session ${sessionId} (startRow=${startRow})`);
+    // ?type=door_schedule|hardware_schedule names what this page holds
+    // (2026-10-08): a bid set's door schedule and hardware groups are read
+    // into one session, each page as its own kind.
+    const typeParam = url.searchParams.get("type");
+    const requestedType = typeParam === "door_schedule" || typeParam === "hardware_schedule" ? typeParam : null;
+    console.log(`[Hardware Page] Extracting page ${pageNum} for session ${sessionId} (startRow=${startRow}, type=${requestedType || "session"})`);
     const session = await getSessionStatus(sessionId, env2);
     if (!session) {
       const notFoundError = new Error("Session not found");
@@ -119,7 +139,7 @@ router.get("/api/hardware-schedule/session/:sessionId/page/:pageNum", async (req
     console.log(`[Hardware Page] PDF retrieved successfully (${fileBuffer.byteLength} bytes)`);
     console.log(`[Hardware Page] Starting Claude Vision extraction for page ${pageNum}`);
     const extractionStartTime = Date.now();
-    const extractionResult = await extractSinglePage(fileBuffer, pageNum, env2, sessionId, startRow);
+    const extractionResult = await extractSinglePage(fileBuffer, pageNum, env2, sessionId, startRow, { scheduleType: requestedType });
     const extractionLatency = Date.now() - extractionStartTime;
     await metrics.recordLatency("claude_extraction", extractionLatency, true);
     console.log(`[Hardware Page] Claude Vision extraction completed in ${extractionLatency}ms`);
@@ -192,6 +212,90 @@ router.get("/api/hardware-schedule/session/:sessionId/page/:pageNum", async (req
     });
   }
 });
+// Where the schedules are in the uploaded PDF (2026-10-08): the text layer of
+// every page, read in the Browser Rendering runner with the same module the
+// workspace runs in a tab. Kept on the session (detected_schedule_pages) so a
+// second call answers at once; ?refresh=1 reads again.
+router.post("/api/hardware-schedule/session/:sessionId/find-pages", async (request2, env2) => {
+  const { error: error4, user } = await authenticate(request2, env2);
+  if (error4) return error4;
+  if (!user || !user.userId) return jsonResponse3({ success: false, error: "Sign in to read your schedules.", code: "SIGN_IN_REQUIRED" }, 401);
+  const sessionId = request2.params.sessionId;
+  const session = await env2.DB.prepare("SELECT * FROM hardware_extraction_sessions WHERE id = ?").bind(sessionId).first();
+  if (!session) return jsonResponse3({ success: false, error: "Session not found" }, 404);
+  if (session.user_id !== user.userId) return jsonResponse3({ success: false, error: "This session belongs to another account" }, 403);
+  const url = new URL(request2.url);
+  const refresh = url.searchParams.get("refresh") === "1";
+  if (!refresh && session.detected_schedule_pages) {
+    try {
+      const prior = JSON.parse(session.detected_schedule_pages);
+      if (prior && prior.source === "text_layer") return jsonResponse3({ success: true, sessionId, cached: true, ...prior });
+    } catch (_) { /* an older bookmark-based value: read again */ }
+  }
+  if (String(session.file_buffer_key || "").startsWith("demo-clone/")) {
+    return jsonResponse3({ success: false, error: "The demo building has no uploaded PDF to look through." }, 404);
+  }
+  const fileBuffer = await sessionPdf(session, env2);
+  if (!fileBuffer) return jsonResponse3({ success: false, error: "The uploaded PDF is no longer stored; upload it again." }, 404);
+  const fp = await findPagesInBrowser(env2, fileBuffer);
+  if (!fp.ok) {
+    return jsonResponse3({ success: false, error: "The pages could not be looked through just now (" + (fp.error || "reader unavailable") + (fp.detail ? ": " + fp.detail : "") + "). Pick the schedule page yourself and press READ THIS PAGE." }, 503);
+  }
+  const r = fp.result || {};
+  const stored = {
+    source: "text_layer",
+    pages: r.pages || session.total_pages,
+    door_schedule_pages: r.door_schedule_pages || [],
+    hardware_pages: r.hardware_pages || [],
+    pages_without_text: (r.pages_without_text || []).slice(0, 400),
+    details: (r.details || []).filter((d) => d.door_schedule || d.hardware).slice(0, 60),
+    ms: fp.ms,
+    found_at: new Date().toISOString(),
+  };
+  try {
+    await env2.DB.prepare("UPDATE hardware_extraction_sessions SET detected_schedule_pages = ?, updated_at = ? WHERE id = ?").bind(JSON.stringify(stored), stored.found_at, sessionId).run();
+  } catch (e) {
+    console.warn("[find-pages] could not store the result: " + e.message);
+  }
+  return jsonResponse3({ success: true, sessionId, cached: false, ...stored });
+});
+
+// Reads a list of pages, each as its own kind, in one runner session
+// (2026-10-08): POST { pages: [{ page, type }] }, at most 20. Each page is
+// persisted exactly as the single-page GET persists it.
+router.post("/api/hardware-schedule/session/:sessionId/read-pages", async (request2, env2) => {
+  const { error: error4, user } = await authenticate(request2, env2);
+  if (error4) return error4;
+  if (!user || !user.userId) return jsonResponse3({ success: false, error: "Sign in to read your schedules.", code: "SIGN_IN_REQUIRED" }, 401);
+  const sessionId = request2.params.sessionId;
+  const session = await env2.DB.prepare("SELECT * FROM hardware_extraction_sessions WHERE id = ?").bind(sessionId).first();
+  if (!session) return jsonResponse3({ success: false, error: "Session not found" }, 404);
+  if (session.user_id !== user.userId) return jsonResponse3({ success: false, error: "This session belongs to another account" }, 403);
+  const body = await request2.json().catch(() => ({}));
+  const totalPages = session.total_pages || 1;
+  const pages = (Array.isArray(body.pages) ? body.pages : []).map((p) => ({ page: parseInt(p && p.page, 10), type: p && p.type === "hardware_schedule" ? "hardware_schedule" : "door_schedule" })).filter((p) => p.page >= 1 && p.page <= totalPages).slice(0, 20);
+  if (!pages.length) return jsonResponse3({ success: false, error: "Say which pages to read: pages: [{ page, type }]." }, 400);
+  const fileBuffer = await sessionPdf(session, env2);
+  if (!fileBuffer) return jsonResponse3({ success: false, error: "The uploaded PDF is no longer stored; upload it again." }, 404);
+  const started = Date.now();
+  const run = await runGridPagesInBrowser(env2, fileBuffer, pages);
+  if (!run.ok) {
+    return jsonResponse3({ success: false, error: "The pages could not be read just now (" + (run.error || "reader unavailable") + (run.detail ? ": " + run.detail : "") + "). Try READ THIS PAGE on one page, or READ IT IN THIS BROWSER." }, 503);
+  }
+  const results = [];
+  for (const r of run.results) {
+    if (!r.ok) { results.push({ page: r.page, type: r.requested_type, ok: false, error: "Page " + r.page + " could not be read: " + (r.detail || r.error || "reader failed") }); continue; }
+    const persisted = await persistBrowserGridResult(r, r.requested_type, sessionId, session.tenant_id || null, r.page, totalPages, env2, { explicit: true });
+    if (persisted.success === false) { results.push({ page: r.page, type: r.requested_type, ok: false, error: persisted.detail || persisted.error || "nothing read", code: persisted.error || null }); continue; }
+    if (persisted.schedule_type !== "door_schedule") {
+      try { await savePageExtraction2(sessionId, r.page, persisted, env2); } catch (e) { console.warn("[read-pages] save failed p" + r.page + ": " + e.message); }
+    }
+    const isDoor = persisted.schedule_type === "door_schedule";
+    results.push({ page: r.page, type: persisted.schedule_type, ok: true, doors: isDoor ? (persisted.entry_count ?? (persisted.entries || []).length) : 0, groups: isDoor ? 0 : (persisted.hardware_groups || []).length, items: isDoor ? 0 : (persisted.hardware_groups || []).reduce((n, g) => n + ((g.components || []).length), 0), metadata: { extraction_mode: (persisted.metadata || {}).extraction_mode || null, rotation_applied: (persisted.metadata || {}).rotation_applied || null }, ms: r.ms });
+  }
+  return jsonResponse3({ success: true, sessionId, results, ms: Date.now() - started });
+});
+
 router.post("/api/hardware-schedule/session/:sessionId/page/:pageNum/approve", async (request2, env2) => {
   const { error: error4, user } = await authenticate(request2, env2);
   if (error4)

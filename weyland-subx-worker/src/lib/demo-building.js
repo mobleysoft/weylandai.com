@@ -160,6 +160,16 @@ export function seedHardwareStatements({ now = new Date().toISOString() } = {}) 
   return out;
 }
 
+// The sample building's door sizes (it is WeylandAI's own sample: a pair at
+// the lobby, a wider mechanical-room door, a narrow janitor closet). Without
+// them the workspace's first tile read "SIZES READ 0 / 10" (7 October audit).
+const DEMO_DOOR_SIZES = {
+  "D-101": { text: "6'-0\" x 7'-0\"", w: 72, h: 84 },
+  "D-214B": { text: "3'-6\" x 7'-0\"", w: 42, h: 84 },
+  "D-311": { text: "2'-8\" x 7'-0\"", w: 32, h: 84 },
+  default: { text: "3'-0\" x 7'-0\"", w: 36, h: 84 },
+};
+
 const COMPONENT_COPY_COLUMNS = ["component_type", "dhi_category", "sequence_order", "manufacturer", "model", "catalog_number", "finish", "quantity", "function_code", "specifications", "ansi_bhma_grade", "fire_rating_minutes", "ul_listing_number", "ada_compliant", "product_id", "product_variant_id", "product_match_confidence", "uom", "unit_price", "price_source", "net_price", "list_price"];
 
 /** What a complete copy of the seed holds (doors, sets, parts). */
@@ -280,8 +290,9 @@ export async function cloneDemoBuilding(env, user, { now = new Date().toISOStrin
     add("INSERT INTO door_hardware_matrix (id, session_id, door_number, door_location, door_type, hardware_set_number, source_page, source_type, extraction_confidence, verified) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
       uuid(), sessionId, d.door_number, d.door_location, d.door_type, d.hardware_set_number, d.source_page, d.source_type, d.extraction_confidence, d.verified);
     const setId = d.hardware_set_number ? setIdByNumber.get(d.hardware_set_number) || null : null;
-    add("INSERT INTO door_schedule_entries (id, session_id, tenant_id, page_number, mark, hardware_group, door_type, extraction_confidence, validation_status, validated, validated_by, validated_at, hardware_set_id, hardware_group_match_score, hardware_group_match_method, created_at, updated_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
-      uuid(), sessionId, tenantId, d.source_page || 1, d.door_number, d.hardware_set_number, d.door_type, d.extraction_confidence,
+    const size = DEMO_DOOR_SIZES[d.door_number] || DEMO_DOOR_SIZES.default;
+    add("INSERT INTO door_schedule_entries (id, session_id, tenant_id, page_number, mark, hardware_group, door_type, width, width_inches, height_inches, thickness, thickness_inches, extraction_confidence, validation_status, validated, validated_by, validated_at, hardware_set_id, hardware_group_match_score, hardware_group_match_method, created_at, updated_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+      uuid(), sessionId, tenantId, d.source_page || 1, d.door_number, d.hardware_set_number, d.door_type, size.text, size.w, size.h, "1 3/4\"", 1.75, d.extraction_confidence,
       d.verified ? "validated" : "pending", d.verified ? 1 : 0, "demo-seed-bridge", d.verified ? now : null,
       setId, setId ? 1.0 : null, setId ? "demo_seed_direct" : null, now, now);
   }
