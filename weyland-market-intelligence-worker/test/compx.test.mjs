@@ -10,6 +10,7 @@ const AWARDS = [
   { request_id: "1", start_date: "2026-08-31T00:00:00.000", agency_name: "Fire Department", short_title: "Hollow Metal Doors and Frames", vendor_name: "Simbio USA Inc", contract_amount: "300000", category_description: "Goods", selection_method_description: "M/WBE Noncompetitive Small Purchase", pin: "05727W0009001" },
   { request_id: "2", start_date: "2026-08-24T00:00:00.000", agency_name: "Parks and Recreation", short_title: "Ocean Breeze Athletic Complex Storefront Doors Reconstruction", vendor_name: "Approved General Contracting Inc.", contract_amount: "1198600", category_description: "Construction/Construction Services" },
   { request_id: "3", start_date: "2025-05-01T00:00:00.000", agency_name: "Transportation", short_title: "Reconstruction of Bridge BIN 2240", vendor_name: "Big Civil LLC", contract_amount: "9000000", category_description: "Construction/Construction Services" },
+  { request_id: "5", start_date: "2024-08-16T00:00:00.000", agency_name: "Environmental Protection", short_title: "HVR-210: Hillview Reservoir Chemical Addition Facilities", vendor_name: "Skanska ECCO III HVR JV", contract_amount: "847720000", category_description: "Construction/Construction Services", additional_description_1: "... including doors, access control and security upgrades ..." },
   { request_id: "4", start_date: "2024-03-01T00:00:00.000", agency_name: "School Construction Authority", short_title: "Door hardware replacement at P.S. 15", vendor_name: "Simbio USA Inc", contract_amount: "450000", category_description: "Construction/Construction Services" },
 ];
 
@@ -18,7 +19,7 @@ test("awards are pulled into our own index and searched there, with the vendors 
   const db = d1(new DatabaseSync(":memory:"));
   const urls = [];
   const r = await ingestAwards(db, async (u) => { urls.push(u); return new Response(JSON.stringify(urls.length === 1 ? AWARDS : []), { status: 200 }); });
-  assert.equal(r.upserted, 4);
+  assert.equal(r.upserted, 5);
   assert.match(decodeURIComponent(urls[0]), /type_of_notice_description='Award'/);
   await ingestAwards(db, async () => new Response(JSON.stringify(AWARDS), { status: 200 }));
   const doors = await searchAwards(db, { fit: "doors" });
@@ -28,6 +29,7 @@ test("awards are pulled into our own index and searched there, with the vendors 
   const all = await searchAwards(db, { fit: "all", q: "bridge" });
   assert.equal(all.count, 1);
   assert.equal((await searchAwards(db, { fit: "building" })).rows.some((x) => /Bridge/.test(x.title)), false);
+  assert.equal(doors.rows.some((x) => /Hillview/.test(x.title)), false, "a description that mentions doors is not door scope");
 });
 
 test("route: a free search shows 10 rows and 5 vendors; the CSV needs payment", async () => {
