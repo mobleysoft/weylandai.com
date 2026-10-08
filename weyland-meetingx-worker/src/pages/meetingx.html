@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
   <meta name="theme-color" content="#090a0d">
   <title>MeetingX | WeylandAI</title>
-  <meta name="description" content="MeetingX: a project room for your team and your GC - who is here, and chat on the project record. No voice or video yet.">
+  <meta name="description" content="MeetingX: a project room for your team and your GC - voice, video and screen share, room chat, and decisions, actions and transcript saved with the room.">
   <style>
     :root{--ink:#090a0d;--panel:#111318;--panel2:#171a20;--line:#2b3038;--paper:#eef1f2;--muted:#9299a3;--gold:#2a52ff;--gold2:#ffd950;--green:#68e0a0;--red:#ff716b;--blue:#6ed8ff;--r:18px;--bg:#090a0d;--text:#eef1f2;--primary:#2a52ff;--accent:#ffd400}
     *{box-sizing:border-box}html,body{margin:0;min-height:100%;background:var(--ink);color:var(--paper);font-family:"Avenir Next","Helvetica Neue",sans-serif}body{overflow-x:hidden}
@@ -27,6 +27,13 @@
     .roombar button.primary{background:var(--gold);border-color:var(--gold);color:var(--ink)}
     .roombar button[hidden]{display:none}
     html.wa-standalone .shell{padding-top:64px}
+    .tiles{position:absolute;inset:0;display:grid;gap:6px;padding:6px 6px 64px;grid-template-columns:repeat(auto-fit,minmax(min(240px,100%),1fr));align-content:center}
+    .tile{position:relative;background:#050609;border-radius:12px;overflow:hidden;aspect-ratio:16/9;border:1px solid var(--line)}
+    .hero .tile video{width:100%;height:100%;min-height:0;object-fit:cover}
+    .tile-name{position:absolute;left:8px;bottom:8px;background:rgba(0,0,0,.6);padding:4px 8px;border-radius:99px;font:700 10px/1 ui-monospace,monospace;letter-spacing:.06em}
+    .tile-note{position:absolute;inset:auto 8px 34px 8px;color:var(--gold2);font:600 11px/1.4 "Avenir Next","Helvetica Neue",sans-serif}
+    .tile[hidden],.control[hidden]{display:none}
+    .item.done{opacity:.55;text-decoration:line-through}.item[data-kind=action]{cursor:pointer}
     .workspace>*,.intro>*{min-width:0}.room-grid{display:grid;grid-template-columns:minmax(160px,.9fr) minmax(0,2fr);gap:14px}.room-grid>*{min-width:0}
     @media(max-width:1050px){.intro{grid-template-columns:1fr}.workspace{grid-template-columns:1fr 1fr}.workspace .card:first-child{grid-column:1/-1}}
     @media(max-width:700px){.shell{padding:12px}.brand small,.top-actions .link{display:none}.hero,.hero video{min-height:55vh}.controls{width:calc(100% - 24px);overflow-x:auto;justify-content:flex-start}.workspace{grid-template-columns:minmax(0,1fr)}.workspace .card:first-child{grid-column:auto}.room-grid{grid-template-columns:minmax(0,1fr)}.brief{padding:18px}.footerbar{align-items:flex-start;flex-direction:column}}
@@ -51,14 +58,16 @@
 
     <section class="intro">
       <div class="hero">
-        <video id="stage" autoplay playsinline muted></video>
+        <div class="tiles" id="tiles"><div class="tile" id="tile-local" hidden><video id="stage" autoplay playsinline muted></video><span class="tile-name">YOU</span></div></div>
         <div class="hero-placeholder" id="placeholder">
           <div><div class="orb"></div><h1>Meet inside the<br><span>project model.</span></h1><p>MeetingX converts live conversation into a durable project record: transcript, decisions, actions, and the Weyland product context needed to act.</p></div>
         </div>
-        <span class="live-tag" id="media-status">LOCAL FACILITATION SURFACE</span>
+        <span class="live-tag" id="media-status">NOT IN A CALL</span>
         <span class="timer" id="timer">00:00:00</span>
         <div class="controls">
           <button class="control" id="media-btn">CAM + MIC</button>
+          <button class="control" id="mute-btn" hidden>MUTE</button>
+          <button class="control" id="cam-btn" hidden>CAMERA OFF</button>
           <button class="control" id="share-btn">SHARE SCREEN</button>
           <button class="control" id="record-btn">TRANSCRIBE</button>
           <button class="control" id="decision-btn">DECISION</button>
@@ -73,21 +82,21 @@
         <span class="eyebrow">Project Room</span>
         <h2>One room.<br>Everyone on the job.</h2>
         <div class="tagline">Who is here, and what was decided.</div>
-        <p>Share the room link with the architect, the GC and your own crew. Everyone who joins sees the same roster and chat; decisions and actions you record here export as one record.</p>
+        <p>Share the room link with the architect, the GC and your own crew. Everyone who joins hears and sees each other, shares the same chat, and the decisions, actions and transcript are saved with the room.</p>
         <div class="flow">
           <div class="flow-row"><b>01</b><div><strong>Join</strong><small>Press JOIN ROOM; the people in the room appear in the roster.</small></div></div>
-          <div class="flow-row"><b>02</b><div><strong>Talk</strong><small>Room chat reaches everyone here. Camera and screen stay in your own browser for now.</small></div></div>
-          <div class="flow-row"><b>03</b><div><strong>Record</strong><small>Decisions and actions, with the time they were made; the transcript if you turn it on.</small></div></div>
+          <div class="flow-row"><b>02</b><div><strong>Talk</strong><small>Turn on CAM + MIC: voice, video and screen share go to everyone in the room, browser to browser (up to 6 people). Room chat reaches everyone here.</small></div></div>
+          <div class="flow-row"><b>03</b><div><strong>Record</strong><small>Decisions and actions, with who and when, saved with the room; the transcript if you turn it on. Anyone who opens the room later sees the same record.</small></div></div>
           <div class="flow-row"><b>04</b><div><strong>Walk</strong><small>Open SightX to walk the sample corridor with the hardware you matched.</small></div></div>
         </div>
-        <div class="metrics"><div class="metric"><strong>CHAT</strong><span>SHARED WITH THE ROOM</span></div><div class="metric"><strong>NOTES</strong><span>KEPT IN YOUR BROWSER</span></div></div>
+        <div class="metrics"><div class="metric"><strong>CHAT</strong><span>SHARED WITH THE ROOM</span></div><div class="metric"><strong>NOTES</strong><span>SAVED WITH THE ROOM</span></div></div>
       </aside>
     </section>
 
     <section class="workspace">
       <article class="card">
         <div class="card-head"><h3>Live Transcript</h3><span class="badge" id="speech-status">READY</span></div>
-        <div class="transcript" id="transcript">MeetingX ready. Start transcription to create a local meeting record.</div>
+        <div class="transcript" id="transcript">MeetingX ready. Join the room and press TRANSCRIBE; what your microphone hears is saved to the room's record with your name.</div>
       </article>
       <article class="card">
         <div class="card-head"><h3>Decisions</h3><span class="badge" id="decision-count">0 CAPTURED</span></div>
@@ -118,7 +127,7 @@
       </article>
     </section>
 
-    <div class="footerbar"><span>MEETINGX BETA · ROOM PRESENCE AND CHAT ARE SHARED WITH EVERYONE IN THE ROOM · CAMERA, SCREEN, TRANSCRIPT AND NOTES STAY IN THIS BROWSER (NO SHARED AUDIO OR VIDEO YET)</span><button id="export-btn">EXPORT MEETING RECORD</button></div>
+    <div class="footerbar"><span>MEETINGX BETA · VOICE, VIDEO AND SCREEN GO BROWSER TO BROWSER, UP TO 6 PEOPLE (SOME OFFICE NETWORKS BLOCK THIS) · CHAT, DECISIONS, ACTIONS AND TRANSCRIPT ARE SAVED WITH THE ROOM</span><button id="export-btn">EXPORT MEETING RECORD</button></div>
   </div>
 
   <script>
@@ -163,22 +172,25 @@
   })();
   </script>
   <script>
-    const state={started:Date.now(),transcript:[],decisions:[],actions:[],camera:null,display:null,recognition:null,recording:false};
+    const state={started:Date.now(),transcript:[],decisions:[],actions:[],chat:[],camera:null,display:null,recognition:null,recording:false};
     const $=id=>document.getElementById(id);
     const clock=()=>{const s=Math.floor((Date.now()-state.started)/1000);$('timer').textContent=[s/3600,s/60%60,s%60].map(v=>String(Math.floor(v)).padStart(2,'0')).join(':')};setInterval(clock,1000);clock();
-    function showStream(stream,label){$('stage').srcObject=stream;$('placeholder').classList.add('hidden');$('media-status').textContent=label}
-    async function startMedia(){try{if(!state.camera)state.camera=await navigator.mediaDevices.getUserMedia({video:{width:{ideal:1280},height:{ideal:720}},audio:{echoCancellation:true,noiseSuppression:true}});showStream(state.camera,'CAMERA + MICROPHONE READY');$('media-btn').classList.add('active')}catch(e){$('media-status').textContent='MEDIA PERMISSION REQUIRED';alert('Allow camera and microphone access to activate the MeetingX stage.') }}
-    async function shareScreen(){try{state.display=await navigator.mediaDevices.getDisplayMedia({video:true,audio:true});showStream(state.display,'SCREEN SHARE ACTIVE');$('share-btn').classList.add('active');state.display.getVideoTracks()[0].addEventListener('ended',()=>{state.display=null;$('share-btn').classList.remove('active');if(state.camera)showStream(state.camera,'CAMERA + MICROPHONE READY');else{$('stage').srcObject=null;$('placeholder').classList.remove('hidden')}})}catch(e){if(e.name!=='NotAllowedError')alert('Screen sharing could not start: '+e.message)}}
-    function initSpeech(){const SR=window.SpeechRecognition||window.webkitSpeechRecognition;if(!SR)return null;const r=new SR();r.continuous=true;r.interimResults=true;r.lang='en-US';r.onresult=e=>{let interim='';for(let i=e.resultIndex;i<e.results.length;i++){const text=e.results[i][0].transcript.trim();if(e.results[i].isFinal){state.transcript.push({at:new Date().toISOString(),text});}else interim=text}renderTranscript(interim)};r.onend=()=>{if(state.recording){try{r.start()}catch(_){}}};r.onerror=e=>{$('speech-status').textContent=e.error.toUpperCase()};return r}
-    function renderTranscript(interim=''){$('transcript').innerHTML=(state.transcript.length?state.transcript.map(x=>`<div>${escapeHtml(x.text)}</div>`).join(''):'<span class="interim">Listening…</span>')+(interim?`<div class="interim">${escapeHtml(interim)}</div>`:'');$('transcript').scrollTop=$('transcript').scrollHeight}
+    function showStream(stream,label){$('stage').srcObject=stream;$('tile-local').hidden=false;$('media-status').textContent=label;updateStage()}
+    async function startMedia(){try{if(!state.camera)state.camera=await navigator.mediaDevices.getUserMedia({video:{width:{ideal:1280},height:{ideal:720}},audio:{echoCancellation:true,noiseSuppression:true}});showStream(state.camera,connected?'IN THE CALL':'CAMERA + MICROPHONE READY');$('media-btn').classList.add('active');$('mute-btn').hidden=false;$('cam-btn').hidden=false;pushLocalTracks()}catch(e){$('media-status').textContent='MEDIA PERMISSION REQUIRED';alert('Allow camera and microphone access to activate the MeetingX stage.') }}
+    async function shareScreen(){try{state.display=await navigator.mediaDevices.getDisplayMedia({video:true,audio:true});showStream(state.display,'SCREEN SHARE ACTIVE');$('share-btn').classList.add('active');pushLocalTracks();state.display.getVideoTracks()[0].addEventListener('ended',()=>{state.display=null;$('share-btn').classList.remove('active');pushLocalTracks();if(state.camera)showStream(state.camera,connected?'IN THE CALL':'CAMERA + MICROPHONE READY');else{$('stage').srcObject=null;$('tile-local').hidden=true;updateStage()}})}catch(e){if(e.name!=='NotAllowedError')alert('Screen sharing could not start: '+e.message)}}
+    function initSpeech(){const SR=window.SpeechRecognition||window.webkitSpeechRecognition;if(!SR)return null;const r=new SR();r.continuous=true;r.interimResults=true;r.lang='en-US';r.onresult=e=>{let interim='';for(let i=e.resultIndex;i<e.results.length;i++){const text=e.results[i][0].transcript.trim();if(e.results[i].isFinal){if(text)saveItem('transcript',text)}else interim=text}renderTranscript(interim)};r.onend=()=>{if(state.recording){try{r.start()}catch(_){}}};r.onerror=e=>{$('speech-status').textContent=e.error.toUpperCase()};return r}
+    function renderTranscript(interim=''){$('transcript').innerHTML=(state.transcript.length?state.transcript.map(x=>`<div>${x.by?`<b>${escapeHtml(x.by)}:</b> `:''}${escapeHtml(x.text)}</div>`).join(''):(state.recording?'<span class="interim">Listening…</span>':'<span class="interim">No transcript yet. Press TRANSCRIBE to add what your microphone hears.</span>'))+(interim?`<div class="interim">${escapeHtml(interim)}</div>`:'');$('transcript').scrollTop=$('transcript').scrollHeight}
     function toggleSpeech(){if(!state.recognition)state.recognition=initSpeech();if(!state.recognition){$('speech-status').textContent='UNSUPPORTED';alert('Live browser transcription is not available in this browser. Camera, notes, decisions, and export still work.');return}state.recording=!state.recording;if(state.recording){state.recognition.start();$('record-btn').classList.add('active');$('speech-status').textContent='LISTENING'}else{state.recognition.stop();$('record-btn').classList.remove('active');$('speech-status').textContent='PAUSED'}}
     function escapeHtml(v){return String(v).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
-    function add(kind){const label=kind==='decision'?'Decision':'Action and owner';const value=prompt(label+':');if(!value)return;state[kind+'s'].push({text:value,at:new Date().toISOString()});renderList(kind)}
-    function renderList(kind){const values=state[kind+'s'],node=$(kind+'s');node.innerHTML=values.length?values.map((x,i)=>`<div class="item">${escapeHtml(x.text)}<small>${new Date(x.at).toLocaleTimeString([], {hour:'2-digit',minute:'2-digit'})} · ${kind.toUpperCase()} ${i+1}</small></div>`).join(''):`<p class="empty">Nothing captured yet.</p>`;$(kind+'-count').textContent=`${values.length} ${kind==='action'?'OPEN':'CAPTURED'}`}
+    function add(kind){const label=kind==='decision'?'Decision':'Action and owner';const value=prompt(label+':');if(!value)return;saveItem(kind,value)}
+    function renderList(kind){const values=state[kind+'s'],node=$(kind+'s');node.innerHTML=values.length?values.map((x,i)=>`<div class="item${x.done?' done':''}" data-kind="${kind}" data-i="${i}">${escapeHtml(x.text)}<small>${new Date(x.at).toLocaleTimeString([], {hour:'2-digit',minute:'2-digit'})} · ${kind.toUpperCase()} ${i+1}${x.by?' · '+escapeHtml(x.by):''}${x.id?'':' · THIS BROWSER ONLY'}</small></div>`).join(''):`<p class="empty">Nothing captured yet.</p>`;$(kind+'-count').textContent=kind==='action'?`${values.filter(x=>!x.done).length} OPEN`:`${values.length} CAPTURED`}
     // Ask Weyland answers about this room (2026-10-08): how to join, share, chat, record, export, walk.
-    function answer(q){const s=q.toLowerCase();if(/join|connect|get .* in|invite|gc|architect|crew|link|share the room|room link/.test(s))return 'Press COPY LINK and send the link. Whoever opens it signs in (a free account is enough) and presses JOIN ROOM; they appear in the roster and see the same chat as you.';if(/chat|message|talk|voice|audio|video|call|camera|mic/.test(s))return 'Room chat reaches everyone in the room. CAM + MIC and SHARE SCREEN show your camera or screen in your own browser only; there is no shared voice or video yet, so use a phone call alongside the room for now.';if(/decision|action|record|note|minutes/.test(s))return 'Press DECISION or ACTION (or + Record decision, + Add action) to log one with the time. They are kept in this browser; EXPORT MEETING RECORD saves them with the transcript as one JSON file. They are not shared with the room yet.';if(/transcri|speech|dictat/.test(s))return 'TRANSCRIBE turns on your browser speech recognition and writes what it hears into the Live Transcript, in this browser only. It needs a browser with speech recognition and a microphone you allow.';if(/export|save|download|file|json/.test(s))return 'EXPORT MEETING RECORD downloads one JSON file: when the meeting started, the transcript, the decisions and the actions.';if(/sightx|walk|3d|corridor|door|hardware|model/.test(s))return 'SIGHTX (top right) opens the sample corridor; products you matched on the homepage hang on its doors. Opening it leaves this room for now, so share the room link first.';if(/price|cost|plan|seat|pay|\$/.test(s))return 'Plans and prices are at weylandai.com/pricing. MeetingX is part of the $100 first submittal\'s 30 days of every product, and sold on its own as a monthly seat.';return 'This room does four things: JOIN ROOM to meet, room chat that everyone here sees, DECISION and ACTION to log what was agreed, and EXPORT MEETING RECORD to keep it. Ask about any of them.'}
-    function exportRecord(){const payload={product:'MeetingX',schema_version:1,started_at:new Date(state.started).toISOString(),exported_at:new Date().toISOString(),transcript:state.transcript,decisions:state.decisions,actions:state.actions};const blob=new Blob([JSON.stringify(payload,null,2)],{type:'application/json'}),a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=`meetingx-${new Date().toISOString().replace(/[:.]/g,'-')}.json`;a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1000)}
-    $('media-btn').onclick=startMedia;$('share-btn').onclick=shareScreen;$('record-btn').onclick=toggleSpeech;$('decision-btn').onclick=()=>add('decision');$('action-btn').onclick=()=>add('action');document.querySelectorAll('[data-add]').forEach(b=>b.onclick=()=>add(b.dataset.add));$('export-btn').onclick=exportRecord;
+    function answer(q){const s=q.toLowerCase();if(/join|connect|get .* in|invite|gc|architect|crew|link|share the room|room link/.test(s))return 'Press COPY LINK and send the link. Whoever opens it signs in (a free account is enough) and presses JOIN ROOM; they appear in the roster and see the same chat as you.';if(/chat|message|talk|voice|audio|video|call|camera|mic/.test(s))return 'Join the room and press CAM + MIC: everyone in the room hears and sees you, browser to browser, up to 6 people. SHARE SCREEN sends your screen in place of your camera; MUTE and CAMERA OFF stop sending. If someone stays on "connecting", their network blocks direct calls; room chat still reaches them.';if(/decision|action|record|note|minutes/.test(s))return 'Press DECISION or ACTION (or + Record decision, + Add action) to log one with your name and the time. In a joined room they are saved with the room and everyone sees them; click an action to tick it off. EXPORT MEETING RECORD saves the whole record as one JSON file.';if(/transcri|speech|dictat/.test(s))return 'TRANSCRIBE turns on your browser speech recognition. In a joined room each line it hears is saved to the room with your name, so everyone sees it; each person transcribes their own microphone. It needs a browser with speech recognition (Chrome, Edge, Safari).';if(/export|save|download|file|json/.test(s))return 'EXPORT MEETING RECORD downloads one JSON file: when the meeting started, the transcript, the decisions and the actions.';if(/sightx|walk|3d|corridor|door|hardware|model/.test(s))return 'SIGHTX (top right) opens the sample corridor; products you matched on the homepage hang on its doors. Opening it leaves this room for now, so share the room link first.';if(/price|cost|plan|seat|pay|\$/.test(s))return 'Plans and prices are at weylandai.com/pricing. MeetingX is part of the $100 first submittal\'s 30 days of every product, and sold on its own as a monthly seat.';return 'This room does four things: JOIN ROOM to meet, room chat that everyone here sees, DECISION and ACTION to log what was agreed, and EXPORT MEETING RECORD to keep it. Ask about any of them.'}
+    function exportRecord(){const payload={product:'MeetingX',schema_version:2,room:roomId,started_at:new Date(state.started).toISOString(),exported_at:new Date().toISOString(),transcript:state.transcript,decisions:state.decisions,actions:state.actions,chat:state.chat};const blob=new Blob([JSON.stringify(payload,null,2)],{type:'application/json'}),a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=`meetingx-${new Date().toISOString().replace(/[:.]/g,'-')}.json`;a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1000)}
+    $('media-btn').onclick=startMedia;
+    $('mute-btn').onclick=()=>{const t=state.camera&&state.camera.getAudioTracks()[0];if(!t)return;t.enabled=!t.enabled;$('mute-btn').textContent=t.enabled?'MUTE':'UNMUTE';$('mute-btn').classList.toggle('active',!t.enabled)};
+    $('cam-btn').onclick=()=>{const t=state.camera&&state.camera.getVideoTracks()[0];if(!t)return;t.enabled=!t.enabled;$('cam-btn').textContent=t.enabled?'CAMERA OFF':'CAMERA ON';$('cam-btn').classList.toggle('active',!t.enabled)};$('share-btn').onclick=shareScreen;$('record-btn').onclick=toggleSpeech;$('decision-btn').onclick=()=>add('decision');$('action-btn').onclick=()=>add('action');document.querySelectorAll('[data-add]').forEach(b=>b.onclick=()=>add(b.dataset.add));$('export-btn').onclick=exportRecord;
+    $('actions').addEventListener('click',e=>{const el=e.target.closest&&e.target.closest('.item[data-kind=action]');if(!el)return;const it=state.actions[+el.dataset.i];if(!it)return;it.done=!it.done;renderList('action');if(it.id&&connected){fetch(recordUrl()+'/'+encodeURIComponent(it.id)+'/done',{method:'POST',credentials:'same-origin',headers:{'Content-Type':'application/json'},body:JSON.stringify({done:it.done})}).catch(()=>{});toPeers({kind:'done',id:it.id,done:it.done})}});
     $('ask-form').onsubmit=e=>{e.preventDefault();const q=$('ask-input').value.trim();if(!q)return;$('answer').textContent=answer(q);$('ask-input').value=''};
 
     // Live Room: real multi-party presence + chat over a plain browser WebSocket to the SIGHTX_ROOM
@@ -233,16 +245,17 @@
       setRoomState('CONNECTING');
       const proto=location.protocol==='https:'?'wss:':'ws:';
       try{roomSocket=new WebSocket(proto+'//'+location.host+'/api/sight/room/'+encodeURIComponent(roomId))}catch(e){roomSocket=null;setRoomState('UNAVAILABLE','warn');notice('This browser could not open the room connection.');return}
-      roomSocket.onopen=()=>{connected=true;setJoinLabels();setRoomState('CONNECTED','on');notice('You are in room '+roomId+' as '+((info&&info.name)||'you')+'. Share the link (COPY LINK) so others can join.');try{$('room-card').scrollIntoView({behavior:'smooth',block:'nearest'})}catch(e){}};
+      roomSocket.onopen=()=>{connected=true;setJoinLabels();setRoomState('CONNECTED','on');notice('You are in room '+roomId+' as '+((info&&info.name)||'you')+'. Turn on CAM + MIC to talk; share the link (COPY LINK) so others can join.');if(state.camera)$('media-status').textContent='IN THE CALL';loadRecord();try{$('room-card').scrollIntoView({behavior:'smooth',block:'nearest'})}catch(e){}};
       roomSocket.onmessage=evt=>{
         let msg;try{msg=JSON.parse(evt.data)}catch(e){return}
-        if(msg.type==='roster'){roomRoster=msg.users||[];roomYouId=msg.you;renderRoster();appendRoomChat(`You joined room ${roomId}. ${roomRoster.length} participant(s) here now.`)}
+        if(msg.type==='roster'){roomRoster=msg.users||[];roomYouId=msg.you;renderRoster();appendRoomChat(`You joined room ${roomId}. ${roomRoster.length} participant(s) here now.`);callEveryone()}
         else if(msg.type==='join'){roomRoster.push(msg.user);renderRoster();appendRoomChat(`${msg.user.name} joined the room.`)}
-        else if(msg.type==='leave'){const i=roomRoster.findIndex(u=>u.userId===msg.userId&&u.userId!==roomYouId);const gone=i>=0?roomRoster.splice(i,1)[0]:null;renderRoster();appendRoomChat((gone?gone.name:'A participant')+' left the room.')}
+        else if(msg.type==='signal'){onSignal(msg)}
+        else if(msg.type==='leave'){closePeer(msg.userId);const i=roomRoster.findIndex(u=>u.userId===msg.userId&&u.userId!==roomYouId);const gone=i>=0?roomRoster.splice(i,1)[0]:null;renderRoster();appendRoomChat((gone?gone.name:'A participant')+' left the room.')}
         else if(msg.type==='chat'){appendRoomChat(`${msg.user.name}: ${msg.text}`)}
       };
       roomSocket.onclose=evt=>{
-        const was=connected;connected=false;roomSocket=null;roomRoster=[];roomYouId=null;setJoinLabels();renderRoster();
+        const was=connected;connected=false;roomSocket=null;closeAllPeers();roomRoster=[];roomYouId=null;setJoinLabels();renderRoster();
         setRoomState('NOT CONNECTED',was&&evt.code!==1000?'warn':'');
         if(was&&evt.code!==1000)notice('The room connection dropped. Press JOIN ROOM to reconnect.');
         else if(!was)notice('The room did not accept the connection. Press JOIN ROOM to try again.');
@@ -250,8 +263,72 @@
       };
       roomSocket.onerror=()=>{};
     }
+    // Calls (2026-10-08): a browser-to-browser mesh. The room's Durable Object relays
+    // {type:'signal', to, payload} between members; whoever joins calls everyone already
+    // here, so two people never offer to each other at once. Each call carries one audio
+    // and one video sender from the start; turning the camera on, sharing the screen or
+    // stopping either swaps the track (replaceTrack) without renegotiating.
+    const MAX_PEERS=5;
+    const peers=new Map();
+    let iceConfig=null;
+    function recordUrl(){return '/api/sight/room/'+encodeURIComponent(roomId)+'/record'}
+    async function iceServers(){if(iceConfig)return iceConfig;try{const r=await fetch('/api/sight/room/'+encodeURIComponent(roomId)+'/ice',{credentials:'same-origin'});const d=r.ok?await r.json():null;iceConfig={iceServers:(d&&d.iceServers)||[{urls:['stun:stun.cloudflare.com:3478']}]}}catch(e){iceConfig={iceServers:[{urls:['stun:stun.cloudflare.com:3478']}]}}return iceConfig}
+    function localAudio(){return state.camera?state.camera.getAudioTracks()[0]||null:null}
+    function localVideo(){return state.display?state.display.getVideoTracks()[0]||null:(state.camera?state.camera.getVideoTracks()[0]||null:null)}
+    function sendSignal(to,payload){if(roomSocket&&roomSocket.readyState===1)roomSocket.send(JSON.stringify({type:'signal',to,payload}))}
+    function toPeers(payload){roomRoster.forEach(u=>{if(u.userId!==roomYouId)sendSignal(u.userId,payload)})}
+    function updateStage(){const any=!$('tile-local').hidden||peers.size>0;$('placeholder').classList.toggle('hidden',any)}
+    function tileFor(id,name){let t=document.getElementById('tile-'+id);if(!t){t=document.createElement('div');t.className='tile';t.id='tile-'+id;t.innerHTML='<video autoplay playsinline></video><span class="tile-note">Connecting...</span><span class="tile-name"></span>';t.querySelector('.tile-name').textContent=String(name||'Member').toUpperCase();$('tiles').appendChild(t)}return t}
+    function setTracks(p){p.pc.getTransceivers().forEach(t=>{const kind=t.receiver&&t.receiver.track&&t.receiver.track.kind;if(!kind||t.stopped)return;t.sender.replaceTrack(kind==='audio'?localAudio():localVideo()).catch(()=>{})})}
+    function pushLocalTracks(){peers.forEach(setTracks)}
+    async function makePeer(id,name){
+      const pc=new RTCPeerConnection(await iceServers());
+      const p={pc,name,pending:[]};peers.set(id,p);
+      const tile=tileFor(id,name);updateStage();
+      pc.onicecandidate=e=>{if(e.candidate)sendSignal(id,{kind:'ice',candidate:e.candidate})};
+      pc.ontrack=e=>{const v=tile.querySelector('video');if(!v.srcObject)v.srcObject=new MediaStream();v.srcObject.addTrack(e.track);v.play().catch(()=>{})};
+      pc.onconnectionstatechange=()=>{const note=tile.querySelector('.tile-note');const st=pc.connectionState;if(st==='connected')note.textContent='';else if(st==='failed')note.textContent='Could not connect: a network between you blocks direct calls. Chat still works.';else if(st==='disconnected')note.textContent='Reconnecting...'};
+      return p;
+    }
+    function closePeer(id){const p=peers.get(id);if(p){try{p.pc.close()}catch(e){}peers.delete(id)}const t=document.getElementById('tile-'+id);if(t)t.remove();updateStage()}
+    function closeAllPeers(){Array.from(peers.keys()).forEach(closePeer)}
+    async function flush(p){const c=p.pending.splice(0);for(const x of c){try{await p.pc.addIceCandidate(x)}catch(e){}}}
+    async function callPeer(u){const p=await makePeer(u.userId,u.name);p.pc.addTransceiver('audio',{direction:'sendrecv'});p.pc.addTransceiver('video',{direction:'sendrecv'});setTracks(p);await p.pc.setLocalDescription(await p.pc.createOffer());sendSignal(u.userId,{kind:'offer',sdp:p.pc.localDescription})}
+    function callEveryone(){if(!window.RTCPeerConnection)return;const others=roomRoster.filter(u=>u.userId!==roomYouId);if(others.length>MAX_PEERS)appendRoomChat('Calls connect up to '+(MAX_PEERS+1)+' people; chat reaches everyone.');others.slice(0,MAX_PEERS).forEach(u=>callPeer(u).catch(()=>{}))}
+    async function onSignal(msg){
+      const from=msg.from,pl=msg.payload||{};
+      try{
+        if(pl.kind==='offer'){if(!window.RTCPeerConnection)return;if(peers.size>=MAX_PEERS&&!peers.has(from))return;closePeer(from);const p=await makePeer(from,msg.fromName);await p.pc.setRemoteDescription(pl.sdp);p.pc.getTransceivers().forEach(t=>{t.direction='sendrecv'});setTracks(p);await p.pc.setLocalDescription(await p.pc.createAnswer());sendSignal(from,{kind:'answer',sdp:p.pc.localDescription});await flush(p)}
+        else if(pl.kind==='answer'){const p=peers.get(from);if(p){await p.pc.setRemoteDescription(pl.sdp);await flush(p)}}
+        else if(pl.kind==='ice'){const p=peers.get(from);if(!p)return;if(p.pc.remoteDescription)await p.pc.addIceCandidate(pl.candidate).catch(()=>{});else p.pending.push(pl.candidate)}
+        else if(pl.kind==='record'&&pl.item){applyItem(pl.item)}
+        else if(pl.kind==='done'){const it=state.actions.find(x=>x.id===pl.id);if(it){it.done=!!pl.done;renderList('action')}}
+      }catch(e){}
+    }
+    // The room record: chat, decisions, actions and transcript saved with the room (D1).
+    function listFor(kind){return kind==='decision'?state.decisions:kind==='action'?state.actions:kind==='transcript'?state.transcript:state.chat}
+    function renderKind(kind){if(kind==='transcript')renderTranscript();else if(kind!=='chat')renderList(kind)}
+    function applyItem(it){const list=listFor(it.kind);if(it.id&&list.some(x=>x.id===it.id))return;list.push(it);renderKind(it.kind)}
+    async function postItem(kind,text){const r=await fetch(recordUrl(),{method:'POST',credentials:'same-origin',headers:{'Content-Type':'application/json'},body:JSON.stringify({kind,text})});const d=await r.json().catch(()=>({}));if(!r.ok||!d.item)throw new Error((d&&d.message)||('HTTP '+r.status));return d.item}
+    async function saveItem(kind,text){
+      if(!connected){listFor(kind).push({text,at:new Date().toISOString()});renderKind(kind);return}
+      try{const it=await postItem(kind,text);applyItem(it);toPeers({kind:'record',item:it})}
+      catch(e){listFor(kind).push({text,at:new Date().toISOString()});renderKind(kind);notice('Could not save to the room ('+e.message+'); kept in this browser.')}
+    }
+    async function loadRecord(){
+      try{
+        const r=await fetch(recordUrl(),{credentials:'same-origin'});if(!r.ok)return;const d=await r.json();
+        const local={decision:state.decisions.filter(x=>!x.id),action:state.actions.filter(x=>!x.id),transcript:state.transcript.filter(x=>!x.id)};
+        state.decisions=[];state.actions=[];state.transcript=[];state.chat=[];
+        const chat=[];(d.items||[]).forEach(it=>{if(it.kind==='chat')chat.push(it);listFor(it.kind).push(it)});
+        if(chat.length){appendRoomChat('Earlier in this room:');chat.slice(-50).forEach(c=>appendRoomChat(`${c.by}: ${c.text}`))}
+        ['decision','action','transcript'].forEach(renderKind);
+        // Notes taken before joining go into the room's record.
+        for(const k of ['decision','action','transcript'])for(const x of local[k])await saveItem(k,x.text);
+      }catch(e){}
+    }
     function leaveRoom(){if(roomSocket)roomSocket.close(1000,'user left')}
-    function sendRoomChat(){const v=$('room-chat-input').value.trim();if(!v||!roomSocket||roomSocket.readyState!==1)return;roomSocket.send(JSON.stringify({type:'chat',text:v}));$('room-chat-input').value=''}
+    function sendRoomChat(){const v=$('room-chat-input').value.trim();if(!v||!roomSocket||roomSocket.readyState!==1)return;roomSocket.send(JSON.stringify({type:'chat',text:v}));$('room-chat-input').value='';fetch(recordUrl(),{method:'POST',credentials:'same-origin',headers:{'Content-Type':'application/json'},body:JSON.stringify({kind:'chat',text:v})}).then(r=>r.ok?r.json():null).then(d=>{if(d&&d.item)state.chat.push(d.item)}).catch(()=>{})}
     $('room-btn').onclick=()=>{if(roomSocket)leaveRoom();else joinRoom()};
     $('room-join-bar').onclick=()=>{if(roomSocket)leaveRoom();else joinRoom()};
     $('room-signin').onclick=()=>{ssSet(JOIN_KEY,JSON.stringify({room:roomId,at:Date.now(),tries:0}));window.WeylandPage.signIn('/meetingx?room='+encodeURIComponent(roomId))};
