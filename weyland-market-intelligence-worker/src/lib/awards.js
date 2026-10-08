@@ -27,7 +27,10 @@ export async function ensureAwards(db) {
 }
 
 export function awardRow(r, now) {
-  const fit = tradeFit({ source: "nyc_cityrecord", title: r.short_title, category: r.category_description, raw_data: { additional_description_1: r.additional_description_1 } });
+  // Title and category only: an award's long description mentions doors in
+  // passing (an $848M reservoir and Rikers emergency work were tagged door
+  // scope by their descriptions on the first run).
+  const fit = tradeFit({ source: "nyc_cityrecord", title: r.short_title, category: r.category_description });
   return {
     id: "nyc:" + (r.request_id || r.pin || r.short_title),
     source: "nyc_cityrecord",

@@ -87,7 +87,7 @@ export default secured({
     // here waits on them and nothing here calls outside the conglomerate.
     trafficDrivenJob(env, ctx, { db: env.DB, job: "marketx-prewarm-locations", cadenceSeconds: 86400, worker: "weyland-market-intelligence-worker",
       run: () => prewarmProjectLocations(env, ctx).then((r) => console.log("[prewarm-locations] traffic-driven:", JSON.stringify(r))) });
-    trafficDrivenJob(env, ctx, { db: env.DB, job: "compx-awards-ingest", cadenceSeconds: 86400, worker: "weyland-market-intelligence-worker",
+    trafficDrivenJob(env, ctx, { db: env.DB, job: "compx-awards-ingest-v2", cadenceSeconds: 86400, worker: "weyland-market-intelligence-worker",
       run: () => ingestAwards(env.DB).then((r) => console.log("[compx-awards] traffic-driven:", JSON.stringify(r))) });
     trafficDrivenJob(env, ctx, { db: env.DB, job: "pricex-index-snapshot", cadenceSeconds: 7 * 86400, worker: "weyland-market-intelligence-worker",
       run: () => computePriceIndexSnapshot(env).then((r) => console.log("[price-index-snapshot] traffic-driven:", JSON.stringify(r))) });
