@@ -443,7 +443,7 @@ export async function runEmbeddedGofaineatExtraction(scheduleType, sessionId, te
   let browserProblem = null;
   if (env2.BROWSER && startRow === 0 && (scheduleType === "door_schedule" || scheduleType === "hardware_schedule")) {
     const other = scheduleType === "door_schedule" ? "hardware_schedule" : "door_schedule";
-    const br = await runGridInBrowser(env2, buf, pageNumber, scheduleType, { alsoTry: other });
+    const br = await runGridInBrowser(env2, buf, pageNumber, scheduleType, { alsoTry: other, pdfUrl: opts.pdfUrl || null });
     if (br.ok) {
       return await persistBrowserGridResult(br, scheduleType, sessionId, tenantId, pageNumber, totalPages, env2, { explicit: !!opts.explicit });
     }

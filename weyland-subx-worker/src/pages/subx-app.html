@@ -113,6 +113,9 @@
     .hide{display:none!important}
     html:not(.takeoff) .takeoff-only{display:none!important}
     .takeoff .subx-only{display:none!important}
+    .item-line { padding: 2px 0; }
+    .item-edit input, tr.editing input { font: inherit; padding: 2px 4px; }
+    button.small { font-size: 11px; padding: 3px 8px; }
   </style>
 </head>
 <body>
@@ -2119,14 +2122,20 @@ global.SovereignPdfRender = {
         if (d.thickness_inches != null) return esc(inchText(d.thickness_inches));
         return d.thickness ? unread(d.thickness, "Not read with certainty: check it on the sheet.") : "-";
       }
+      // A value the reader is not sure of (read by OCR, not shaped like the
+      // column's values, empty where the other rows have one) is marked; any
+      // row can be corrected here before the package is built.
+      function flag(d, f, html) {
+        return (d.unsure || []).indexOf(f) >= 0 ? '<span class="unread" title="Check this against the sheet: the reader is not sure of it.">' + (html === "" || html === "-" ? "(empty)" : html) + "</span>" : html;
+      }
       function renderDoors() {
         var doors = state.detail.doors, box = $("doors-wrap");
         if (!doors.length) {
           box.innerHTML = state.detail.hardware_sets.length ? "" : '<div class="empty">No rows read yet. Choose a page and press READ THIS PAGE.</div>';
           return;
         }
-        var unreadCount = doors.filter(function (d) { return d.width_inches == null || d.height_inches == null || (d.thickness && d.thickness_inches == null); }).length;
-        var head = "<tr><th>Mark</th><th>HW group</th><th>Size</th><th>Thick.</th><th>Fire</th><th>Door type</th><th>Door matl / fin</th><th>Frame</th><th>Notes</th><th>Source</th></tr>";
+        var unsureRows = doors.filter(function (d) { return (d.unsure || []).length; }).length;
+        var head = "<tr><th>Mark</th><th>HW group</th><th>Size</th><th>Thick.</th><th>Fire</th><th>Door type</th><th>Door matl / fin</th><th>Frame</th><th>Notes</th><th>Source</th><th></th></tr>";
         // Each cell carries its column name, so on a phone a row reads as a
         // small card (label: value) instead of a ten-column table squeezed to
         // 390 px; empty cells are left out of the card.
@@ -2134,31 +2143,103 @@ global.SovereignPdfRender = {
           var empty = html === "-" || html === "";
           return '<td data-label="' + label + '" class="' + (cls || "") + (empty ? " empty-cell" : "") + '">' + html + "</td>";
         }
-        var body = doors.map(function (d) {
-          return '<tr><td class="nowrap mark-cell"><b>' + esc(d.mark) + "</b></td>" +
-            td("HW group", esc(d.hardware_group || "-")) +
-            td("Size", sizeCell(d), "nowrap") +
+        var body = doors.map(function (d, i) {
+          if (state.editing === d.id) return editRowHtml(d, i);
+          return '<tr data-door="' + esc(d.id) + '"><td class="nowrap mark-cell"><b>' + flag(d, "mark", esc(d.mark)) + "</b></td>" +
+            td("HW group", flag(d, "hardware_group", esc(d.hardware_group || "-"))) +
+            td("Size", (d.unsure || []).indexOf("size") >= 0 ? unread(d.width || "not read", "Not read with certainty: check it on the sheet. Not counted under By size.") : sizeCell(d), "nowrap") +
             td("Thick.", thicknessCell(d), "nowrap") +
-            td("Fire", esc(d.fire_rating || "-"), "nowrap") +
-            td("Door type", esc(d.door_type || "-")) +
+            td("Fire", flag(d, "fire_rating", esc(d.fire_rating || "-")), "nowrap") +
+            td("Door type", flag(d, "door_type", esc(d.door_type || "-"))) +
             td("Door matl / fin", esc([d.door_material, d.door_finish].filter(Boolean).join(" / ") || "-")) +
             td("Frame", esc([d.frame_type, d.frame_material, d.frame_finish].filter(Boolean).join(" / ") || "-")) +
-            td("Notes", esc(d.notes || "")) +
-            td("Source", esc(srcText(d)), "nowrap muted-small") + "</tr>";
+            td("Notes", esc(d.notes || "") + (d.corrected ? ' <span class="tag ok">CORRECTED</span>' : "")) +
+            td("Source", esc(srcText(d)), "nowrap muted-small") +
+            '<td class="nowrap"><button type="button" class="small" data-edit="' + esc(d.id) + '">EDIT</button></td></tr>';
         }).join("");
         box.innerHTML = '<p class="muted-small">' + doors.length + " door rows, machine-read: check them against the source page before you submit." +
-          (unreadCount ? ' <span class="unread">Marked</span> values (' + unreadCount + " row" + (unreadCount === 1 ? "" : "s") + ") could not be read with certainty; they keep the text as read and are left out of the counts." : "") +
+          (unsureRows ? ' <span class="unread">Marked</span> values (' + unsureRows + " row" + (unsureRows === 1 ? "" : "s") + ") are ones the reader is not sure of: read by OCR, not shaped like the column, or empty where the other rows have a value. A size not read is left out of the counts. Press EDIT to correct a row." : " Press EDIT to correct a row.") +
           "</p><table><thead>" + head + "</thead><tbody>" + body + "</tbody></table>";
+        Array.prototype.forEach.call(box.querySelectorAll("button[data-edit]"), function (b) {
+          b.addEventListener("click", function () { state.editing = b.getAttribute("data-edit"); renderDoors(); var f = box.querySelector("input"); if (f) f.focus(); });
+        });
+        Array.prototype.forEach.call(box.querySelectorAll("button[data-save]"), function (b) {
+          b.addEventListener("click", function () { saveDoorRow(b.getAttribute("data-save"), box); });
+        });
+        Array.prototype.forEach.call(box.querySelectorAll("button[data-cancel]"), function (b) {
+          b.addEventListener("click", function () { state.editing = null; renderDoors(); });
+        });
       }
+      function inp(name, value, width) {
+        return '<input type="text" name="' + name + '" value="' + esc(value == null ? "" : value) + '" style="width:' + (width || 90) + 'px">';
+      }
+      function editRowHtml(d) {
+        var size = d.width_inches != null && d.height_inches != null ? ftInText(d.width_inches) + " x " + ftInText(d.height_inches) : (d.width || "");
+        if (d.pair && d.width_inches != null) size = "PR " + size;
+        return '<tr class="editing" data-door="' + esc(d.id) + '">' +
+          '<td data-label="Mark">' + inp("mark", d.mark, 70) + "</td>" +
+          '<td data-label="HW group">' + inp("hardware_group", d.hardware_group, 80) + "</td>" +
+          '<td data-label="Size">' + inp("size", size, 130) + "</td>" +
+          '<td data-label="Thick.">' + inp("thickness", d.thickness || (d.thickness_inches != null ? inchText(d.thickness_inches) : ""), 60) + "</td>" +
+          '<td data-label="Fire">' + inp("fire_rating", d.fire_rating, 70) + "</td>" +
+          '<td data-label="Door type">' + inp("door_type", d.door_type, 50) + "</td>" +
+          '<td data-label="Door matl / fin">' + inp("door_material", d.door_material, 70) + "</td>" +
+          '<td data-label="Frame">' + inp("frame_type", d.frame_type, 70) + "</td>" +
+          '<td data-label="Notes">' + inp("notes", d.notes, 160) + "</td>" +
+          '<td class="nowrap muted-small">' + esc(srcText(d)) + "</td>" +
+          '<td class="nowrap"><button type="button" class="small primary" data-save="' + esc(d.id) + '">SAVE</button> <button type="button" class="small" data-cancel="1">CANCEL</button><div class="muted-small" id="edit-note"></div></td></tr>';
+      }
+      function saveDoorRow(doorId, box) {
+        var tr = box.querySelector('tr[data-door="' + doorId + '"]');
+        if (!tr) return;
+        var body = {};
+        Array.prototype.forEach.call(tr.querySelectorAll("input[name]"), function (f) { body[f.getAttribute("name")] = f.value; });
+        var note = tr.querySelector("#edit-note");
+        if (note) note.textContent = "Saving...";
+        api("/api/hardware-schedule/session/" + encodeURIComponent(state.current) + "/doors/" + encodeURIComponent(doorId), { method: "PATCH", json: body }).then(function (res) {
+          if (!res.ok) { if (note) note.textContent = plainError(res.data, res.status); return; }
+          state.editing = null;
+          return loadDetail(state.current);
+        });
+      }
+      // Hardware sets: each item as the schedule prints it (quantity,
+      // description, maker, model, finish), with the doors the door schedule
+      // gives the set, and an EDIT for any item.
       function renderSets() {
         var d = state.detail, box = $("sets-wrap");
         if (!d.hardware_sets.length) { box.innerHTML = ""; return; }
         var comps = d.components || [];
+        var norm = function (g) { return String(g || "").toUpperCase().replace(/\s+/g, " ").replace(/^0+(?=\d)/, "").trim(); };
         var body = d.hardware_sets.map(function (s) {
           var mine = comps.filter(function (c) { return c.set_number === s.set_number; });
-          return "<tr><td class=\"nowrap\"><b>" + esc(s.set_number) + "</b></td><td>" + esc(s.set_name || "") + "</td><td>" + mine.map(function (c) { return esc((c.quantity || 1) + " x " + [c.component_type ? String(c.component_type).replace(/_/g, " ") : "", c.manufacturer, c.model, c.finish].filter(Boolean).join(" ")); }).join("<br>") + '</td><td class="nowrap">' + (s.affirmed ? '<span class="tag ok">REVIEWED</span>' : '<span class="tag warn">DRAFT</span>') + "</td></tr>";
+          var doorsOfSet = (d.doors || []).filter(function (x) { return norm(x.hardware_group) === norm(s.set_number) || (norm(s.set_number).indexOf(norm(x.hardware_group) + " ") === 0 && norm(x.hardware_group)); }).map(function (x) { return x.mark; });
+          var items = mine.map(function (c) {
+            if (state.editingItem === c.id) {
+              return '<div class="item-edit" data-item="' + esc(c.id) + '">' + inp("quantity", c.quantity == null ? "" : c.quantity, 40) + " " + inp("description", c.description || String(c.component_type || "").replace(/_/g, " "), 150) + " " + inp("manufacturer", c.manufacturer, 90) + " " + inp("model", c.model, 150) + " " + inp("finish", c.finish, 50) +
+                ' <button type="button" class="small primary" data-save-item="' + esc(c.id) + '">SAVE</button> <button type="button" class="small" data-cancel-item="1">CANCEL</button><span class="muted-small item-note"></span></div>';
+            }
+            var line = (c.quantity == null ? "? " : c.quantity + " ") + (c.uom && c.uom !== "EA" ? c.uom + " " : "") + [c.description || (c.component_type ? String(c.component_type).replace(/_/g, " ") : ""), c.manufacturer, c.model, c.finish].filter(Boolean).join(" · ");
+            return '<div class="item-line">' + esc(line) + (c.quantity == null ? ' <span class="unread" title="No quantity printed">quantity?</span>' : "") + ' <button type="button" class="small" data-edit-item="' + esc(c.id) + '">EDIT</button></div>';
+          }).join("");
+          return "<tr><td class=\"nowrap\"><b>" + esc(s.set_number) + "</b>" + (doorsOfSet.length ? '<div class="muted-small">doors: ' + esc(doorsOfSet.join(", ")) + "</div>" : (s.door_count ? '<div class="muted-small">' + esc(s.door_count) + " doors</div>" : "")) + "</td><td>" + esc(s.set_name || "") + "</td><td>" + items + '</td><td class="nowrap">' + (s.affirmed ? '<span class="tag ok">REVIEWED</span>' : '<span class="tag warn">DRAFT</span>') + "</td></tr>";
         }).join("");
-        box.innerHTML = '<p class="muted-small" style="margin-top:14px">' + d.hardware_sets.length + " hardware sets.</p><table><thead><tr><th>Set</th><th>Name</th><th>Items</th><th>Status</th></tr></thead><tbody>" + body + "</tbody></table>";
+        box.innerHTML = '<p class="muted-small" style="margin-top:14px">' + d.hardware_sets.length + " hardware sets, " + comps.length + " items as the schedule prints them. Press EDIT to correct an item.</p><table><thead><tr><th>Set</th><th>Name</th><th>Items</th><th>Status</th></tr></thead><tbody>" + body + "</tbody></table>";
+        Array.prototype.forEach.call(box.querySelectorAll("button[data-edit-item]"), function (b) { b.addEventListener("click", function () { state.editingItem = b.getAttribute("data-edit-item"); renderSets(); }); });
+        Array.prototype.forEach.call(box.querySelectorAll("button[data-cancel-item]"), function (b) { b.addEventListener("click", function () { state.editingItem = null; renderSets(); }); });
+        Array.prototype.forEach.call(box.querySelectorAll("button[data-save-item]"), function (b) {
+          b.addEventListener("click", function () {
+            var id = b.getAttribute("data-save-item"), wrap = box.querySelector('.item-edit[data-item="' + id + '"]');
+            var body = {};
+            Array.prototype.forEach.call(wrap.querySelectorAll("input[name]"), function (f) { body[f.getAttribute("name")] = f.value; });
+            var note = wrap.querySelector(".item-note");
+            note.textContent = " saving...";
+            api("/api/hardware-schedule/session/" + encodeURIComponent(state.current) + "/components/" + encodeURIComponent(id), { method: "PATCH", json: body }).then(function (res) {
+              if (!res.ok) { note.textContent = " " + plainError(res.data, res.status); return; }
+              state.editingItem = null;
+              return loadDetail(state.current);
+            });
+          });
+        });
       }
       function csvCell(v) { v = v == null ? "" : String(v); return /[",\r\n]/.test(v) ? '"' + v.replace(/"/g, '""') + '"' : v; }
       function safeName() { return String((state.detail && state.detail.session.project_name) || "schedule").replace(/[^A-Za-z0-9]+/g, "_").replace(/^_+|_+$/g, "").slice(0, 60) || "schedule"; }

@@ -41,6 +41,7 @@ import { materializeAffirmedGroup } from "./hardware-extraction-materialize.js";
 import { enrichComponentsWithPricing } from "./pricing.js";
 import { extractHardwareGroupsViaEmbeddedGofaineat } from "./hardware-extraction-vision-dispatch.js";
 import { runEmbeddedGofaineatExtraction, getSessionStatus } from "./hardware-extraction-pipeline.js";
+import { runnerPdfUrl } from "../routes/hardware-schedule-page-extract.js";
 
 // Tier 2 disabled - see file header. Kept as a function (not inlined
 // `null`) so extractSinglePage's real call-and-check shape below is
@@ -80,7 +81,9 @@ async function extractWithEmbeddedGofaineatMode(pdfBuffer, pageNumber, env2, ses
     const { scheduleType, source } = explicit ? { scheduleType: opts.scheduleType, source: "requested" } : await resolvePageScheduleType(sessionId, pageNumber, session, env2);
     const tenantId = session && session.tenant_id;
     console.log(`[Hardware Extractor] Using EMBEDDED_GOFAINEAT mode (schedule_type=${scheduleType}, source=${source}, startRow=${startRow}) for page ${pageNumber}/${totalPages}...`);
-    return await runEmbeddedGofaineatExtraction(scheduleType, sessionId, tenantId, pdfBuffer, null, pageNumber, totalPages, env2, startRow, { explicit });
+    let pdfUrl = null;
+    try { if (session && session.file_buffer_key) pdfUrl = await runnerPdfUrl(session, env2); } catch (_) { pdfUrl = null; }
+    return await runEmbeddedGofaineatExtraction(scheduleType, sessionId, tenantId, pdfBuffer, null, pageNumber, totalPages, env2, startRow, { explicit, pdfUrl });
   }
   // No sessionId available (a caller outside the session-based page route) -
   // fall back to the original hardware-groups-only behavior rather than

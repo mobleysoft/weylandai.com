@@ -22,14 +22,30 @@ function b64ToBytes(b64) {
   return out;
 }
 
-// input: { b64 } (the PDF bytes); scheduleType: "door_schedule" | "hardware_schedule".
+// The PDF is fetched by this tab once per session (2026-10-08: pushing 9 MB
+// of base64 through one CDP call per page cost the Worker its memory on long
+// bid sets) and kept here for every page read that follows.
+let pdfBytes = null;
+window.__loadPdf = async (url) => {
+  const t0 = performance.now();
+  const r = await fetch(url, { credentials: "omit", cache: "no-store" });
+  if (!r.ok) return { ok: false, error: "GET of the PDF answered " + r.status };
+  pdfBytes = new Uint8Array(await r.arrayBuffer());
+  return { ok: true, bytes: pdfBytes.length, ms: Math.round(performance.now() - t0) };
+};
+function inputBytes(input) {
+  if (input && input.cached && pdfBytes) return pdfBytes;
+  if (input && input.b64) return b64ToBytes(input.b64);
+  throw new Error("no PDF bytes were passed to the runner");
+}
+
+// input: { b64 } or { cached: true }; scheduleType: "door_schedule" | "hardware_schedule".
 window.__runGrid = async (input, pageNumber, scheduleType, options) => {
   const logs = [];
   const t0 = performance.now();
   const note = (m) => logs.push(Math.round(performance.now() - t0) + "ms " + m);
   try {
-    if (!input || !input.b64) throw new Error("no PDF bytes were passed to the runner");
-    const bytes = b64ToBytes(input.b64);
+    const bytes = inputBytes(input);
     const fn = scheduleType === "door_schedule" ? grid.extractDoorScheduleFromPdf : grid.extractHardwareScheduleFromPdf;
     const result = await fn(bytes.buffer, pageNumber, note, options || {});
     return { ok: true, result, logs, ms: Math.round(performance.now() - t0) };
@@ -43,8 +59,7 @@ window.__findPages = async (input, options) => {
   const t0 = performance.now();
   const note = (m) => logs.push(Math.round(performance.now() - t0) + "ms " + m);
   try {
-    if (!input || !input.b64) throw new Error("no PDF bytes were passed to the runner");
-    const bytes = b64ToBytes(input.b64);
+    const bytes = inputBytes(input);
     const result = await grid.findSchedulePages(bytes.buffer, note, options || {});
     return { ok: true, result, logs, ms: Math.round(performance.now() - t0) };
   } catch (e) {

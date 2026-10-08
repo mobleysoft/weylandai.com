@@ -25,6 +25,30 @@ import { assembleSubmittalPackage } from "../lib/submittal-assembler.js";
 import { matchComponentToCutSheets, citedPagesFor, PACKET_MATCH_TYPES } from "../lib/product-database.js";
 import { incrementSubmittalsUsed } from "../lib/edge-telemetry.js";
 import { outputAccess, paymentRequired } from "../../../weyland-shared/output-access.js";
+import { readDimension, readSizeCell, looksLikeMark } from "../../assets/client-ocr-src/schedule-text-layer.mjs";
+
+// Which fields of a door row the reviewer should look at (2026-10-08): a
+// value read by OCR, a value that does not look like what the column holds,
+// a size that did not read into inches, or an empty cell in a column the
+// other rows fill.
+const FIRE_OK = /^(\d{1,3}\s*(MIN\.?|MINS?\.?|MINUTES?|HRS?\.?|HOURS?)?|NR|N\/R|NONE|N\/A|-+|YES|NO|[A-Z]{1,2}|\d{1,3}\/\d{1,3}|\d{1,3}\s*(MIN\.?)?\s*[A-Z]{1,2})$/i;
+function unsureFields(d, fc, filled) {
+  const out = [];
+  const fields = fc && fc.fields ? fc.fields : null;
+  const ocr = fc ? fc.read_from === "ocr" : true;
+  const low = (f) => (fields && fields[f] != null ? fields[f] < 0.9 : ocr);
+  const mark = String(d.mark || "");
+  if (low("mark") || !looksLikeMark(mark.replace(/\s*\[p\.\d+\]$/, ""))) out.push("mark");
+  if (d.hardware_group != null && d.hardware_group !== "") { if (low("hardware_group") || !/^[A-Z0-9][A-Z0-9 .\-\/#]{0,15}$/i.test(String(d.hardware_group))) out.push("hardware_group"); }
+  else if (filled.hardware_group) out.push("hardware_group");
+  if (d.fire_rating != null && d.fire_rating !== "") { if (low("fire_rating") || !FIRE_OK.test(String(d.fire_rating).trim())) out.push("fire_rating"); }
+  if (d.door_type != null && d.door_type !== "") { if (low("door_type") || !/^[A-Z0-9][A-Z0-9\-\/.]{0,5}$/i.test(String(d.door_type))) out.push("door_type"); }
+  else if (filled.door_type) out.push("door_type");
+  if ((d.width_inches == null || d.height_inches == null) && (d.width || filled.size)) out.push("size");
+  if (d.thickness && d.thickness_inches == null) out.push("thickness");
+  return out;
+}
+const num = (v) => (v == null || v === "" ? null : Number(v));
 
 function isDemoClone(session) {
   return String(session.file_buffer_key || "").startsWith("demo-clone/");
@@ -178,21 +202,31 @@ export function registerSubxWorkspaceRoutes(router, { authenticate, requireActiv
     if (o.error) return o.error;
     const sessionId = o.session.id;
     const rows = await env2.DB.prepare(`
-      SELECT mark, hardware_group, fire_rating, width, width_inches, height_inches, thickness, thickness_inches,
+      SELECT id, mark, hardware_group, fire_rating, width, width_inches, height_inches, thickness, thickness_inches,
              door_type, door_material, door_finish, stc_rating, frame_type, frame_material, frame_finish,
              head_detail, jamb_detail, sill_detail, panic, notes, page_number, extraction_confidence,
-             field_confidence_json, validation_status
+             field_confidence_json, validation_status, corrections_json
       FROM door_schedule_entries WHERE session_id = ?
       ORDER BY page_number ASC, rowid ASC
     `).bind(sessionId).all();
-    const doors = (rows.results || []).map((d) => {
+    const all = rows.results || [];
+    const n = all.length || 1;
+    const filled = {
+      hardware_group: all.filter((d) => d.hardware_group).length / n >= 0.7,
+      door_type: all.filter((d) => d.door_type).length / n >= 0.7,
+      size: all.filter((d) => d.width_inches != null).length / n >= 0.7,
+    };
+    const doors = all.map((d) => {
       let source = { page: d.page_number, table_row: null };
+      let fc = null;
       try {
-        const fc = d.field_confidence_json ? JSON.parse(d.field_confidence_json) : null;
+        fc = d.field_confidence_json ? JSON.parse(d.field_confidence_json) : null;
         if (fc && fc.source) source = { page: fc.source.page ?? d.page_number, table_row: fc.source.table_row ?? null, rotation: fc.source.rotation ?? null };
-      } catch (_) { /* older rows */ }
-      const out = { ...d, source };
+      } catch (_) { fc = null; }
+      const corrected = !!d.corrections_json;
+      const out = { ...d, source, read_from: fc ? fc.read_from || null : null, pair: fc ? fc.pair ?? null : null, glazing: fc ? fc.glazing ?? null : null, section: fc ? fc.section ?? null : null, corrected, unsure: corrected ? [] : unsureFields(d, fc, filled) };
       delete out.field_confidence_json;
+      delete out.corrections_json;
       return out;
     });
     const sets = await env2.DB.prepare(`
@@ -243,6 +277,86 @@ export function registerSubxWorkspaceRoutes(router, { authenticate, requireActiv
       takeoff,
       package: await packageStatus(env2, sessionId),
     });
+  });
+
+  // A reviewer's correction to one door row (2026-10-08). Sizes are read into
+  // inches with the same reader the schedule read used; the row is marked
+  // corrected and keeps what it read before.
+  router.patch("/api/hardware-schedule/session/:sessionId/doors/:doorId", async (request2, env2) => {
+    const o = await ownedSession(request2, env2, authenticate, request2.params.sessionId);
+    if (o.error) return o.error;
+    const row = await env2.DB.prepare("SELECT * FROM door_schedule_entries WHERE id = ? AND session_id = ?").bind(request2.params.doorId, o.session.id).first();
+    if (!row) return jsonResponse3({ success: false, error: "That door row is not in this schedule." }, 404);
+    const body = await request2.json().catch(() => ({}));
+    const clean = (v, max) => (v == null ? null : String(v).replace(/\s+/g, " ").trim().slice(0, max) || null);
+    const upd = {};
+    if ("mark" in body) { const m = clean(body.mark, 24); if (!m) return jsonResponse3({ success: false, error: "A door needs a mark." }, 400); upd.mark = m; }
+    if ("hardware_group" in body) upd.hardware_group = clean(body.hardware_group, 24);
+    if ("fire_rating" in body) upd.fire_rating = clean(body.fire_rating, 24);
+    if ("door_type" in body) upd.door_type = clean(body.door_type, 12);
+    if ("door_material" in body) upd.door_material = clean(body.door_material, 40);
+    if ("frame_type" in body) upd.frame_type = clean(body.frame_type, 24);
+    if ("notes" in body) upd.notes = clean(body.notes, 400);
+    if ("size" in body || "width" in body || "height" in body) {
+      const sizeText = clean(body.size, 60);
+      const s = sizeText ? readSizeCell(sizeText) : { width: clean(body.width, 24), height: clean(body.height, 24) };
+      if (!sizeText) {
+        const w = readDimension(s.width), h = readDimension(s.height);
+        s.width_inches = w && w.inches >= 12 && w.inches <= 192 ? w.inches : null;
+        s.height_inches = h && h.inches >= 60 && h.inches <= 240 ? h.inches : null;
+      }
+      upd.width = [s.width, s.height].filter(Boolean).join(" x ") || null;
+      upd.width_inches = s.width_inches ?? null;
+      upd.height_inches = s.height_inches ?? null;
+      if (upd.width && (upd.width_inches == null || upd.height_inches == null)) return jsonResponse3({ success: false, error: "The size did not read as a door size. Write it as 3'-0\" x 7'-0\" (or PR 6'-0\" x 7'-0\" for a pair)." }, 400);
+    }
+    if ("thickness" in body) {
+      upd.thickness = clean(body.thickness, 16);
+      const t = upd.thickness ? readDimension(upd.thickness) : null;
+      upd.thickness_inches = t && t.inches >= 0.75 && t.inches <= 3 ? t.inches : null;
+    }
+    const keys = Object.keys(upd);
+    if (!keys.length) return jsonResponse3({ success: false, error: "Nothing to change." }, 400);
+    let before = {};
+    try { before = row.corrections_json ? JSON.parse(row.corrections_json).before || {} : {}; } catch (_) { before = {}; }
+    for (const k of keys) if (!(k in before)) before[k] = row[k] ?? null;
+    const corrections = JSON.stringify({ before, by: o.user.email || o.user.userId, at: new Date().toISOString() });
+    try {
+      await env2.DB.prepare("UPDATE door_schedule_entries SET " + keys.map((k) => k + " = ?").join(", ") + ", corrections_json = ?, validation_status = 'corrected', validated = 1, validated_by = ?, validated_at = datetime('now'), updated_at = datetime('now') WHERE id = ?")
+        .bind(...keys.map((k) => upd[k]), corrections, o.user.email || o.user.userId, row.id).run();
+    } catch (e) {
+      if (/UNIQUE/i.test(e.message)) return jsonResponse3({ success: false, error: "Another row of this schedule already has that mark." }, 409);
+      return jsonResponse3({ success: false, error: "The row could not be saved: " + e.message }, 500);
+    }
+    return jsonResponse3({ success: true, id: row.id, changed: upd });
+  });
+
+  // A reviewer's correction to one hardware item.
+  router.patch("/api/hardware-schedule/session/:sessionId/components/:componentId", async (request2, env2) => {
+    const o = await ownedSession(request2, env2, authenticate, request2.params.sessionId);
+    if (o.error) return o.error;
+    const row = await env2.DB.prepare("SELECT hc.* FROM hardware_components hc JOIN hardware_sets hs ON hc.set_id = hs.id WHERE hc.id = ? AND hs.session_id = ?").bind(request2.params.componentId, o.session.id).first();
+    if (!row) return jsonResponse3({ success: false, error: "That item is not in this schedule." }, 404);
+    const body = await request2.json().catch(() => ({}));
+    const clean = (v, max) => (v == null ? null : String(v).replace(/\s+/g, " ").trim().slice(0, max) || null);
+    const upd = {};
+    if ("quantity" in body) { const q = parseInt(body.quantity, 10); if (!(q >= 0 && q < 1000)) return jsonResponse3({ success: false, error: "The quantity must be a whole number." }, 400); upd.quantity = q; }
+    if ("manufacturer" in body) upd.manufacturer = clean(body.manufacturer, 60);
+    if ("model" in body) { upd.model = clean(body.model, 120); upd.catalog_number = upd.model; }
+    if ("finish" in body) upd.finish = clean(body.finish, 16);
+    let spec = {};
+    try { spec = row.specifications ? JSON.parse(row.specifications) : {}; } catch (_) { spec = {}; }
+    if ("description" in body) { spec.description = clean(body.description, 120); upd.specifications = JSON.stringify(spec); }
+    if ("component_type" in body) upd.component_type = clean(body.component_type, 40) || row.component_type;
+    const keys = Object.keys(upd);
+    if (!keys.length) return jsonResponse3({ success: false, error: "Nothing to change." }, 400);
+    try {
+      await env2.DB.prepare("UPDATE hardware_components SET " + keys.map((k) => k + " = ?").join(", ") + ", affirmed = 1, affirmed_at = datetime('now'), affirmed_by = ?, updated_at = datetime('now') WHERE id = ?")
+        .bind(...keys.map((k) => upd[k]), o.user.email || o.user.userId, row.id).run();
+    } catch (e) {
+      return jsonResponse3({ success: false, error: "The item could not be saved: " + e.message }, 500);
+    }
+    return jsonResponse3({ success: true, id: row.id, changed: upd });
   });
 
   router.get("/api/hardware-schedule/session/:sessionId/source.pdf", async (request2, env2) => {
