@@ -298,27 +298,7 @@ pattern = "weylandai.com/propx/"
 zone_name = "weylandai.com"
 
 [[routes]]
-pattern = "weylandai.com/drawx*"
-zone_name = "weylandai.com"
-
-[[routes]]
 pattern = "weylandai.com/leadx*"
-zone_name = "weylandai.com"
-
-[[routes]]
-pattern = "weylandai.com/inspecx*"
-zone_name = "weylandai.com"
-
-[[routes]]
-pattern = "weylandai.com/survx*"
-zone_name = "weylandai.com"
-
-[[routes]]
-pattern = "weylandai.com/specx*"
-zone_name = "weylandai.com"
-
-[[routes]]
-pattern = "weylandai.com/asbuiltx*"
 zone_name = "weylandai.com"
 
 [[routes]]
