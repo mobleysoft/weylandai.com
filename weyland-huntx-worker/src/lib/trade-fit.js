@@ -47,7 +47,11 @@ export function tradeFit(opp) {
   const dflt = SOURCE_DEFAULT[opp.source];
   // "Rest area" or "bridge" work that also names a building is building work;
   // a road job that mentions "signal" or "drainage" only is civil.
-  if (door && !(civil && !building && dflt === "civil")) return { fit: "doors", why: door[0] };
+  // A weak door word ("entrance", "vestibule", "storefront") on civil work
+  // with no building in it is the road's entrance, not a door ("component
+  // rehabilitation of 8 bridges" named its entrance ramps).
+  const strongDoor = door && /door|hardware|lock|exit|panic|hollow metal|division|08\s?\d|accessib|ada /i.test(door[0]);
+  if (door && !(civil && !building && (dflt === "civil" || !strongDoor))) return { fit: "doors", why: door[0] };
   if (dflt === "signal") return { fit: "signal", why: opp.source === "nyc_sca" ? "planned, not bid yet" : "funding released" };
   if (building && !(civil && dflt === "civil" && !/\bbuildings?\b|\bfacilit/i.test(building[0]))) return { fit: "building", why: building[0] };
   if (civil) return { fit: "civil", why: civil[0] };
