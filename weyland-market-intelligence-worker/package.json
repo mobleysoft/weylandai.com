@@ -3,7 +3,7 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "test": "node --import ./test/register-html.mjs --test src/index.test.mjs src/routes/market-intelligence.test.mjs test/compx.test.mjs"
+    "test": "node --import ./test/register-html.mjs --test src/index.test.mjs src/routes/market-intelligence.test.mjs test/compx.test.mjs test/job-tools.test.mjs"
   },
   "devDependencies": {
     "wrangler": "^4.129.1"
