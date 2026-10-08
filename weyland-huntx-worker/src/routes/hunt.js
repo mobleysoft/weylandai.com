@@ -31,6 +31,13 @@
 //     DELETE /api/hunt/saved/:id
 //     new_count is the number of matching notices that entered the index
 //     after the search was last opened.
+//   Alerts (2026-10-08): each saved search carries two private feed URLs, so
+//   new notices reach the sub without opening HuntX:
+//     GET /api/hunt/feed/<token>.rss   newest 50 matches (Outlook, Slack, any reader)
+//     GET /api/hunt/feed/<token>.ics   upcoming due dates as all-day events
+//                                      (Google Calendar / Outlook "subscribe by URL")
+//     The token is the secret (32 hex). Deleting the search kills both feeds;
+//     each read re-checks the owner's HuntX plan, so a lapsed plan stops them.
 //
 //   POST /api/hunt/refresh
 //     Never waits on the public sources (per the 2026-10-05 instruction that
@@ -134,9 +141,54 @@ async function ensureSavedTable(env2) {
   await env2.DB.prepare(`CREATE TABLE IF NOT EXISTS huntx_saved_searches (
     id TEXT PRIMARY KEY, user_id TEXT NOT NULL, name TEXT NOT NULL, params TEXT NOT NULL,
     last_seen_at TEXT NOT NULL, created_at TEXT NOT NULL)`).run();
+  try { await env2.DB.prepare("ALTER TABLE huntx_saved_searches ADD COLUMN feed_token TEXT").run(); } catch (_) { /* already there */ }
   savedTableReady = true;
 }
 export function resetSavedTableForTests() { savedTableReady = false; }
+
+function feedToken() {
+  return [...crypto.getRandomValues(new Uint8Array(16))].map((b) => b.toString(16).padStart(2, "0")).join("");
+}
+const FEED_FILE = /^([0-9a-f]{32})\.(rss|ics)$/;
+const SITE = "https://weylandai.com";
+const xml = (v) => String(v ?? "").replace(/[<>&"']/g, (c) => ({ "<": "&lt;", ">": "&gt;", "&": "&amp;", '"': "&quot;", "'": "&apos;" })[c]);
+function summaryLine(o) {
+  return [o.agency, o.location, o.key_date && `due ${o.key_date}`, o.estimated_value && `est. $${Math.round(o.estimated_value).toLocaleString("en-US")}`, o.trade_fit && `fit: ${o.trade_fit}`].filter(Boolean).join(" · ");
+}
+export function rssFeed(name, rows, now) {
+  const items = rows.map((o) => `<item><title>${xml(o.title)}</title><link>${xml(o.detail_url || SITE + "/huntx")}</link><guid isPermaLink="false">huntx-${xml(o.id)}</guid><pubDate>${new Date(o.created_at || now).toUTCString()}</pubDate><description>${xml(summaryLine(o))}</description></item>`).join("");
+  return `<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"><channel><title>${xml("HuntX: " + name)}</title><link>${SITE}/huntx</link><description>${xml("New public bid notices matching your saved HuntX search \"" + name + "\".")}</description><lastBuildDate>${new Date(now).toUTCString()}</lastBuildDate>${items}</channel></rss>`;
+}
+const icsText = (v) => String(v ?? "").replace(/\\/g, "\\\\").replace(/;/g, "\\;").replace(/,/g, "\\,").replace(/\r?\n/g, "\\n");
+/** RFC 5545 folding: lines over 75 octets continue on a line starting with a space. */
+function fold(line) {
+  const out = [];
+  let cur = "", n = 0;
+  for (const ch of line) {
+    const b = new TextEncoder().encode(ch).length;
+    if (n + b > (out.length ? 74 : 75)) { out.push(cur); cur = ""; n = 0; }
+    cur += ch; n += b;
+  }
+  out.push(cur);
+  return out.join("\r\n ");
+}
+export function icsFeed(name, rows, now) {
+  const stamp = new Date(now).toISOString().replace(/[-:]/g, "").replace(/\.\d+Z$/, "Z");
+  const day = (d) => d.replace(/-/g, "");
+  const next = (d) => new Date(Date.parse(d + "T00:00:00Z") + 86400000).toISOString().slice(0, 10).replace(/-/g, "");
+  const lines = ["BEGIN:VCALENDAR", "VERSION:2.0", "PRODID:-//WeylandAI//HuntX//EN", "CALSCALE:GREGORIAN", "METHOD:PUBLISH", `X-WR-CALNAME:${icsText("HuntX: " + name)}`];
+  for (const o of rows) {
+    if (!/^\d{4}-\d{2}-\d{2}/.test(o.key_date || "")) continue;
+    const d = o.key_date.slice(0, 10);
+    lines.push("BEGIN:VEVENT", `UID:huntx-${o.id}@weylandai.com`, `DTSTAMP:${stamp}`, `DTSTART;VALUE=DATE:${day(d)}`, `DTEND;VALUE=DATE:${next(d)}`,
+      `SUMMARY:${icsText("Bid due: " + o.title)}`, `DESCRIPTION:${icsText(summaryLine(o) + (o.detail_url ? "\n" + o.detail_url : ""))}`, ...(o.detail_url ? [`URL:${icsText(o.detail_url)}`] : []), "TRANSP:TRANSPARENT", "END:VEVENT");
+  }
+  lines.push("END:VCALENDAR");
+  return lines.map(fold).join("\r\n") + "\r\n";
+}
+function feedUrls(token) {
+  return token ? { feed_url: `${SITE}/api/hunt/feed/${token}.rss`, calendar_url: `${SITE}/api/hunt/feed/${token}.ics` } : {};
+}
 
 async function lastLeaseAt(env2) {
   try {
@@ -252,7 +304,7 @@ export function registerHuntRoutes(router, { authenticate }) {
   router.get("/api/hunt/saved", async (request2, env2) => {
     const a = await signedIn(request2, env2);
     if (a.error) return a.error;
-    const r = await env2.DB.prepare("SELECT id, name, params, last_seen_at, created_at FROM huntx_saved_searches WHERE user_id = ? ORDER BY created_at").bind(a.userId).all();
+    const r = await env2.DB.prepare("SELECT id, name, params, last_seen_at, created_at, feed_token FROM huntx_saved_searches WHERE user_id = ? ORDER BY created_at").bind(a.userId).all();
     const today = new Date().toISOString().slice(0, 10);
     const saved = [];
     for (const s of r?.results || []) {
@@ -260,7 +312,9 @@ export function registerHuntRoutes(router, { authenticate }) {
       try { params = JSON.parse(s.params) || {}; } catch (_) { params = {}; }
       const { where, params: binds } = searchWhere(params, today);
       const row = await env2.DB.prepare(`SELECT COUNT(*) AS n FROM opportunities ${where} AND created_at > ?`).bind(...binds, s.last_seen_at).first();
-      saved.push({ id: s.id, name: s.name, params, last_seen_at: s.last_seen_at, new_count: row?.n || 0 });
+      let token = s.feed_token;
+      if (!token) { token = feedToken(); await env2.DB.prepare("UPDATE huntx_saved_searches SET feed_token = ? WHERE id = ?").bind(token, s.id).run(); }
+      saved.push({ id: s.id, name: s.name, params, last_seen_at: s.last_seen_at, new_count: row?.n || 0, ...feedUrls(token) });
     }
     return jsonResponse3({ success: true, saved });
   });
@@ -283,9 +337,10 @@ export function registerHuntRoutes(router, { authenticate }) {
     }
     const now = new Date().toISOString();
     const id = crypto.randomUUID();
-    await env2.DB.prepare("INSERT INTO huntx_saved_searches (id, user_id, name, params, last_seen_at, created_at) VALUES (?, ?, ?, ?, ?, ?)")
-      .bind(id, a.userId, name, JSON.stringify(params), now, now).run();
-    return jsonResponse3({ success: true, saved: { id, name, params, last_seen_at: now, new_count: 0 } });
+    const token = feedToken();
+    await env2.DB.prepare("INSERT INTO huntx_saved_searches (id, user_id, name, params, last_seen_at, created_at, feed_token) VALUES (?, ?, ?, ?, ?, ?, ?)")
+      .bind(id, a.userId, name, JSON.stringify(params), now, now, token).run();
+    return jsonResponse3({ success: true, saved: { id, name, params, last_seen_at: now, new_count: 0, ...feedUrls(token) } });
   });
 
   router.post("/api/hunt/saved/:id/seen", async (request2, env2) => {
@@ -302,5 +357,27 @@ export function registerHuntRoutes(router, { authenticate }) {
     const id = request2.params?.id || new URL(request2.url).pathname.split("/")[4];
     await env2.DB.prepare("DELETE FROM huntx_saved_searches WHERE id = ? AND user_id = ?").bind(id, a.userId).run();
     return jsonResponse3({ success: true });
+  });
+
+  router.get("/api/hunt/feed/:file", async (request2, env2) => {
+    const file = request2.params?.file || new URL(request2.url).pathname.split("/").pop();
+    const m = FEED_FILE.exec(String(file || ""));
+    const plain = (msg, status) => new Response(msg, { status, headers: { "Content-Type": "text/plain; charset=utf-8", "Cache-Control": "no-store" } });
+    if (!m) return plain("Not a HuntX feed.", 404);
+    await ensureSavedTable(env2);
+    const s = await env2.DB.prepare("SELECT id, user_id, name, params FROM huntx_saved_searches WHERE feed_token = ?").bind(m[1]).first();
+    if (!s) return plain("This HuntX feed was removed with its saved search.", 404);
+    if (!(await outputAccess(env2, s.user_id, "huntx")).paid) return plain("This HuntX feed is paused: the account's HuntX plan is not active. Renew at https://weylandai.com/pricing.", 402);
+    let params = {};
+    try { params = JSON.parse(s.params) || {}; } catch (_) { params = {}; }
+    const now = new Date().toISOString(), today = now.slice(0, 10);
+    const { where, params: binds } = searchWhere(params, today);
+    const cols = "id, title, agency, location, key_date, estimated_value, detail_url, trade_fit, created_at";
+    if (m[2] === "rss") {
+      const rows = (await env2.DB.prepare(`SELECT ${cols} FROM opportunities ${where} ORDER BY created_at DESC LIMIT 50`).bind(...binds).all()).results || [];
+      return new Response(rssFeed(s.name, rows, now), { headers: { "Content-Type": "application/rss+xml; charset=utf-8", "Cache-Control": "private, max-age=900" } });
+    }
+    const rows = (await env2.DB.prepare(`SELECT ${cols} FROM opportunities ${where} AND key_date >= ? ORDER BY key_date ASC LIMIT 300`).bind(...binds, today).all()).results || [];
+    return new Response(icsFeed(s.name, rows, now), { headers: { "Content-Type": "text/calendar; charset=utf-8", "Cache-Control": "private, max-age=900", "Content-Disposition": `inline; filename="huntx-${m[1].slice(0, 8)}.ics"` } });
   });
 }

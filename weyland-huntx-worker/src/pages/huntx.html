@@ -50,6 +50,8 @@
     .note-card .button{margin-top:14px}
     .filter-bar.second{padding:12px 24px;gap:10px}
     .filter-bar.second select{padding:9px 14px;font-size:13px}
+    .saved-bar a.feed{font-family:inherit;font-size:10px;letter-spacing:.08em;color:var(--accent,#d6b25e);text-decoration:none;border:1px solid currentColor;border-radius:3px;padding:0 4px;margin-left:4px}
+    .saved-bar .feed-note{flex-basis:100%;font-size:11px;opacity:.75}
     .saved-bar{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin:0 4px 14px;font-size:13px;color:var(--muted)}
     .chip{border:1px solid var(--line);border-radius:99px;padding:6px 10px;background:#121419;color:var(--text);font:700 11px/1 ui-monospace,monospace;cursor:pointer;display:inline-flex;gap:6px;align-items:center}
     .chip:hover{border-color:var(--primary)}
@@ -257,8 +259,10 @@
         bar.hidden = !list.length;
         bar.innerHTML = list.length ? "Saved:" + list.map(function (s) {
           return '<span class="chip" data-id="' + esc(s.id) + '">' + esc(s.name) + (s.new_count ? ' <span class="new">' + s.new_count + " NEW</span>" : "") +
+            (s.feed_url ? ' <a class="feed" href="' + esc(s.feed_url) + '" target="_blank" rel="noopener" title="RSS feed of new notices (Outlook, Slack, any feed reader)">RSS</a>' : "") +
+            (s.calendar_url ? ' <a class="feed" href="' + esc(s.calendar_url.replace(/^https:/, "webcal:")) + '" title="Subscribe to due dates in your calendar (or copy this link into Google Calendar: Other calendars, From URL)">CALENDAR</a>' : "") +
             '<span class="x" data-del="' + esc(s.id) + '" title="Delete">&times;</span></span>';
-        }).join("") : "";
+        }).join("") + '<span class="feed-note">RSS and CALENDAR are private links: new notices and due dates reach you without opening HuntX.</span>' : "";
         state.saved = list;
       }).catch(function () {});
     }
@@ -284,7 +288,7 @@
         return r.json().catch(function () { return {}; }).then(function (d) {
           if (r.status === 402) { setStatus(errText(d, r.status) + " See the $100 first submittal on the home page or the plans at /pricing.", true); $("pricing-btn").hidden = false; return; }
           if (!r.ok) { setStatus("Could not save the search: " + errText(d, r.status), true); return; }
-          setStatus("Saved. HuntX will count new notices that match it.");
+          setStatus("Saved. HuntX counts new notices that match it, and its RSS and CALENDAR links send them to your feed reader or calendar.");
           return loadSaved();
         });
       });
@@ -420,6 +424,7 @@
     $("hx-saved").addEventListener("click", function (e) {
       var del = e.target.getAttribute && e.target.getAttribute("data-del");
       if (del) { fetch("/api/hunt/saved/" + encodeURIComponent(del), { method: "DELETE", headers: headers() }).then(loadSaved); return; }
+      if (e.target.closest && e.target.closest("a.feed")) return;
       var chip = e.target.closest && e.target.closest(".chip");
       if (chip) applySaved(chip.getAttribute("data-id"));
     });

@@ -1,7 +1,7 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
 import { NativeRouter } from "../lib/router.js";
-import { registerHuntRoutes, REFRESH_COOLDOWN_SECONDS, searchWhere, pickSearch, MAX_SAVED_SEARCHES } from "./hunt.js";
+import { registerHuntRoutes, REFRESH_COOLDOWN_SECONDS, searchWhere, pickSearch, MAX_SAVED_SEARCHES, icsFeed } from "./hunt.js";
 import { ingestSources, UPSERT_BATCH } from "../lib/ingest.js";
 import { readFileSync } from "node:fs";
 import { renderNav, fillHuntxPage } from "../pages/huntx-nav.js";
@@ -238,11 +238,15 @@ test("saved searches: guests are refused; an account saves, counts new matches, 
 
   const list = await (await router.handle(new Request("https://example.com/api/hunt/saved"), env, {})).json();
   assert.equal(list.saved[0].new_count, 3);
+  assert.match(list.saved[0].feed_url, /^https:\/\/weylandai\.com\/api\/hunt\/feed\/[0-9a-f]{32}\.rss$/);
+  assert.match(list.saved[0].calendar_url, /\.ics$/);
+  assert.ok(db.log.some((x) => x.sql.startsWith("UPDATE huntx_saved_searches SET feed_token")), "an old search gets a feed token");
+  assert.match(made.saved.feed_url, /\.rss$/);
   const cnt = db.log.find((x) => x.op === "first" && x.sql.includes("created_at > ?"));
   assert.deepEqual(cnt.args, ["doors", "building", "NY", "2026-10-01T00:00:00Z"]);
 
   await router.handle(new Request("https://example.com/api/hunt/saved/s1/seen", { method: "POST" }), env, {});
-  const seen = db.log.find((x) => x.sql.startsWith("UPDATE huntx_saved_searches"));
+  const seen = db.log.find((x) => x.sql.startsWith("UPDATE huntx_saved_searches SET last_seen_at"));
   assert.deepEqual(seen.args.slice(1), ["s1", "u1"]);
   await router.handle(new Request("https://example.com/api/hunt/saved/s1", { method: "DELETE" }), env, {});
   const del = db.log.find((x) => x.sql.startsWith("DELETE FROM huntx_saved_searches"));
@@ -263,4 +267,39 @@ test("saved searches: saving one needs payment (searching stays free)", async ()
   assert.equal(res.status, 402);
   assert.equal((await res.json()).code, "PAYMENT_REQUIRED");
   assert.ok(!db.log.some((x) => x.sql.startsWith("INSERT INTO huntx_saved_searches")));
+});
+
+test("alert feeds: a saved search's token serves RSS and a due-date calendar; unknown, lapsed and malformed tokens are refused", async () => {
+  const TOKEN = "0123456789abcdef0123456789abcdef";
+  const rows = [{ id: "o1", title: "Door hardware replacement, PS 12", agency: "NYC SCA", location: "Bronx, NY", key_date: "2099-11-03", estimated_value: 250000, detail_url: "https://example.org/bid?id=1&x=2", trade_fit: "doors", created_at: "2026-10-08T10:00:00Z" }];
+  const mk = (userRow, saved = { id: "s1", user_id: "u1", name: "Doors NY", params: JSON.stringify({ fit: "doors", state: "NY" }) }) => {
+    const db = makeFakeDb({ listRows: rows, userRow });
+    const prep = db.prepare.bind(db);
+    db.prepare = (sql) => { const st = prep(sql); if (sql.includes("WHERE feed_token = ?")) st.first = async () => saved; return st; };
+    return setup({ db, authenticate: authFail });
+  };
+  const { router, env } = mk(PERMISSIVE_USER_ROW);
+  const rss = await router.handle(new Request(`https://example.com/api/hunt/feed/${TOKEN}.rss`), env, {});
+  assert.equal(rss.status, 200, "feeds need no sign-in: the token is the secret");
+  assert.match(rss.headers.get("Content-Type"), /rss\+xml/);
+  const body = await rss.text();
+  assert.match(body, /<title>HuntX: Doors NY<\/title>/);
+  assert.match(body, /<link>https:\/\/example\.org\/bid\?id=1&amp;x=2<\/link>/);
+  const ics = await router.handle(new Request(`https://example.com/api/hunt/feed/${TOKEN}.ics`), env, {});
+  assert.match(ics.headers.get("Content-Type"), /text\/calendar/);
+  const cal = await ics.text();
+  assert.match(cal, /DTSTART;VALUE=DATE:20991103\r\nDTEND;VALUE=DATE:20991104/);
+  assert.match(cal, /SUMMARY:Bid due: Door hardware replacement\\, PS 12/);
+  assert.ok(cal.split("\r\n").every((l) => new TextEncoder().encode(l).length <= 75), "lines folded at 75 octets");
+
+  assert.equal((await router.handle(new Request("https://example.com/api/hunt/feed/nope.rss"), env, {})).status, 404);
+  const gone = mk(PERMISSIVE_USER_ROW, null);
+  assert.equal((await gone.router.handle(new Request(`https://example.com/api/hunt/feed/${TOKEN}.rss`), gone.env, {})).status, 404);
+  const lapsed = mk({ subscription_tier: "free", subscription_status: "canceled", products_enabled: "" });
+  assert.equal((await lapsed.router.handle(new Request(`https://example.com/api/hunt/feed/${TOKEN}.ics`), lapsed.env, {})).status, 402);
+});
+
+test("icsFeed skips notices without a due date", () => {
+  const cal = icsFeed("x", [{ id: "a", title: "No date", key_date: null }, { id: "b", title: "TBD", key_date: "TBD" }], "2026-10-08T00:00:00Z");
+  assert.ok(!cal.includes("BEGIN:VEVENT"));
 });
