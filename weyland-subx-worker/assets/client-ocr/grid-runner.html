@@ -13,7 +13,7 @@
 // extraction module the SubX workspace runs in a visitor's tab (pdf.js +
 // tesseract-wasm), so the server and the browser can never drift apart.
 // Nothing here is shown to visitors.
-import * as grid from "/api/hardware-schedule/client-ocr-assets/schedule-grid-extraction-client.mjs?v=20261007c";
+import * as grid from "/api/hardware-schedule/client-ocr-assets/schedule-grid-extraction-client.mjs?v=20261008a";
 
 function b64ToBytes(b64) {
   const bin = atob(b64);
@@ -32,6 +32,20 @@ window.__runGrid = async (input, pageNumber, scheduleType, options) => {
     const bytes = b64ToBytes(input.b64);
     const fn = scheduleType === "door_schedule" ? grid.extractDoorScheduleFromPdf : grid.extractHardwareScheduleFromPdf;
     const result = await fn(bytes.buffer, pageNumber, note, options || {});
+    return { ok: true, result, logs, ms: Math.round(performance.now() - t0) };
+  } catch (e) {
+    return { ok: false, error: String((e && e.message) || e), logs, ms: Math.round(performance.now() - t0) };
+  }
+};
+// Where the schedules are in a whole bid set, from the text layer of every page.
+window.__findPages = async (input, options) => {
+  const logs = [];
+  const t0 = performance.now();
+  const note = (m) => logs.push(Math.round(performance.now() - t0) + "ms " + m);
+  try {
+    if (!input || !input.b64) throw new Error("no PDF bytes were passed to the runner");
+    const bytes = b64ToBytes(input.b64);
+    const result = await grid.findSchedulePages(bytes.buffer, note, options || {});
     return { ok: true, result, logs, ms: Math.round(performance.now() - t0) };
   } catch (e) {
     return { ok: false, error: String((e && e.message) || e), logs, ms: Math.round(performance.now() - t0) };

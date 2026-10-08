@@ -3,6 +3,7 @@
  "source": {
   "file": "tools/corpus/door-schedules/f0e863d88ea688ff.pdf",
   "pages": [
+   17,
    18,
    19,
    20,
@@ -17,13 +18,78 @@
   "text_layer": true
  },
  "schedule_type": "hardware_schedule",
- "how_checked": "Rendered PDF pages 18-23 with pdftoppm at 110 dpi (one image per page) and read every group by eye (2026-10-08 00:50 EDT); each group's door list was compared with the HARDWARE column of sheet A2.2 (all 13 agree). Catalog cells include their continuation lines (TKTX SCREWS AT HM DOORS, REQUIRED) joined with a space. Nothing here came from any extractor.",
+ "how_checked": "Rendered PDF pages 17-23 with pdftoppm at 110 dpi (one image per page) and read every group by eye (2026-10-08 00:50 EDT; page 17 added at 07:20 EDT after the page finder reported a group there, and read by eye the same way: it is Hardware Group No. 01 RR under 3.6 DOOR HARDWARE SCHEDULE, which the 7 October audit had recorded as not reprinted). Each group's door list was compared with the HARDWARE column of sheet A2.2 (all 14 agree). Catalog cells include their continuation lines (TKTX SCREWS AT HM DOORS, REQUIRED) joined with a space. Nothing here came from any extractor.",
  "format": "Hardware Group No. <number> <code>, then its door marks, then columns QTY, EA, DESCRIPTION, CATALOG NUMBER, FINISH, MFR; wrapped cells continue on the next line in the same column.",
- "group_count": 13,
- "groups_not_printed": [
-  "01 RR (used on the drawing by 130.1, 132.1, 134.1; not reprinted in this addendum)"
- ],
+ "group_count": 14,
  "groups": [
+  {
+   "group": "01 RR",
+   "page": 17,
+   "doors": [
+    "130.1",
+    "132.1",
+    "134.1"
+   ],
+   "items": [
+    {
+     "qty": 1,
+     "uom": "EA",
+     "description": "CONTINUOUS HINGE",
+     "catalog": "SL11 / SL24",
+     "finish": "628",
+     "mfr": "SEL"
+    },
+    {
+     "qty": 1,
+     "uom": "EA",
+     "description": "CYLINDRICAL PRIVACY LOCK W/OUTSIDE INDICATOR",
+     "catalog": "ND40S RHO OS-OCC",
+     "finish": "626",
+     "mfr": "SCH"
+    },
+    {
+     "qty": 1,
+     "uom": "EA",
+     "description": "REG/ PA SURFACE CLOSER - AS REQUIRED",
+     "catalog": "4040XP REG / 4040XP EDA - AS REQUIRED",
+     "finish": "689",
+     "mfr": "LCN"
+    },
+    {
+     "qty": 1,
+     "uom": "EA",
+     "description": "KICK PLATE",
+     "catalog": "8400 10\" HIGH B-CS TKTX SCREWS AT HM DOORS",
+     "finish": "630",
+     "mfr": "IVE"
+    },
+    {
+     "qty": 1,
+     "uom": "EA",
+     "description": "MOP PLATE",
+     "catalog": "8400 4\" HIGH B-CS TKTX SCREWS AT HM DOORS",
+     "finish": "630",
+     "mfr": "IVE"
+    },
+    {
+     "qty": 1,
+     "uom": "EA",
+     "description": "WALL STOP",
+     "catalog": "WS406/407CCV",
+     "finish": "630",
+     "mfr": "IVE"
+    },
+    {
+     "qty": 3,
+     "uom": "EA",
+     "description": "SILENCER",
+     "catalog": "SR64",
+     "finish": "GRY",
+     "mfr": "IVE"
+    }
+   ],
+   "notes": []
+  },
   {
    "group": "02 RR-M",
    "page": 18,

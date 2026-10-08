@@ -1801,7 +1801,7 @@ global.SovereignPdfRender = {
       var root = document.documentElement;
       var EMBED = root.classList.contains("embedded");
       var TAKEOFF = root.classList.contains("takeoff");
-      var MODULE_URL = "/api/hardware-schedule/client-ocr-assets/schedule-grid-extraction-client.mjs?v=20261007c";
+      var MODULE_URL = "/api/hardware-schedule/client-ocr-assets/schedule-grid-extraction-client.mjs?v=20261008a";
       var state = { sessions: [], current: null, detail: null, lastUpload: null, blobUrl: null, busy: false };
       function $(id) { return document.getElementById(id); }
       function esc(s) { return String(s == null ? "" : s).replace(/[&<>"']/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]; }); }
