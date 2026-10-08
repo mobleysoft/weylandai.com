@@ -76,7 +76,7 @@ jobs:
         run: |
           case "${{ inputs.worker }}" in
             weyland-sightx-worker)   url="https://weylandai.com/sightx/"; marker="sx-canvas" ;;
-            weyland-forms-worker)    url="https://weylandai.com/notesx"; marker="api/forms/notesx" ;;
+            weyland-forms-worker)    url="https://weylandai.com/rfax"; marker="api/forms/rfax" ;;
             weyland-platform-worker) url="https://weylandai.com/api/auth/session/check"; marker="valid" ;;
             weyland-propx-worker)    url="https://weylandai.com/api/proposals/demo"; marker="" ;;
             *)                       url="https://weylandai.com/"; marker="envelope-frame" ;;

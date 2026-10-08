@@ -43,6 +43,10 @@ zone_name = "weylandai.com"
 pattern = "weylandai.com/notesx*"
 zone_name = "weylandai.com"
 
+[[routes]]
+pattern = "weylandai.com/rfax*"
+zone_name = "weylandai.com"
+
 [[rules]]
 type = "Text"
 globs = ["**/*.html", "**/*.txt"]
