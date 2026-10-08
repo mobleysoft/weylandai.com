@@ -58,6 +58,8 @@
     .warning{margin:12px 0;border-left:2px solid var(--gold);padding:10px 13px;color:var(--muted);font-size:12px;line-height:1.55;background:rgba(240,184,0,.04);border-radius:0 8px 8px 0}
     .error-box{margin:12px 0;border-left:2px solid var(--red);padding:10px 13px;color:#ffb8b3;font-size:12px;line-height:1.55;background:rgba(255,117,110,.06);border-radius:0 8px 8px 0}
     .ok-box{margin:12px 0;border-left:2px solid var(--green);padding:10px 13px;color:var(--green);font-size:13px;line-height:1.55;background:rgba(97,223,160,.06);border-radius:0 8px 8px 0}
+    .pay-box { border: 1px solid #ffd400; border-radius: 8px; padding: 12px 14px; margin-top: 10px; }
+    .pay-box p { margin: 6px 0; }
     .actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px;align-items:center}
     .loading{padding:28px;text-align:center;color:var(--muted)}
     .preview{width:100%;height:640px;border:1px solid var(--line);border-radius:12px;background:#fff;margin-top:12px}
@@ -417,6 +419,15 @@
       api("/api/proposals/generate", { method: "POST", body: body }).then(function (res) {
         if (!res.ok) { done(); $("resultWrap").innerHTML = '<div class="error-box">' + esc(errText(res.data, res.status)) + "</div>"; return; }
         var d = res.data;
+        // Free to try, pay for the output: the totals are yours; the PDF comes
+        // with the $100 first submittal or a plan.
+        if (d.paid === false) {
+          done();
+          var pay = d.payment || {};
+          $("resultWrap").innerHTML = '<div class="ok-box">' + d.lineItemCount + " line" + (d.lineItemCount === 1 ? "" : "s") + " from " + d.doorCount + " openings. Subtotal " + money(d.subtotal) + ", tax " + money(d.taxAmount) + ", total <strong>" + money(d.grandTotal) + "</strong>.</div>" +
+            '<div class="pay-box"><p>' + esc(pay.message || "The proposal PDF comes with the $100 first submittal or a plan.") + '</p><p><a class="button primary" href="/#offer">$100 FIRST SUBMITTAL</a> <a class="button" href="/pricing">SEE PLANS</a></p></div>';
+          return;
+        }
         var head = document.createElement("div");
         head.innerHTML = '<div class="ok-box" id="genResult">' + (d.stored ? "Proposal #" + esc(d.quoteNumber) + " saved to your account." : "Proposal preview generated (guest sessions are not stored; sign in to keep proposals).") +
           " " + d.lineItemCount + " line" + (d.lineItemCount === 1 ? "" : "s") + " from " + d.doorCount + " openings. Subtotal " + money(d.subtotal) + ", tax " + money(d.taxAmount) + ", total <strong>" + money(d.grandTotal) + "</strong>.</div>";

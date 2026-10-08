@@ -14,7 +14,8 @@ const SEED_DOORS = [
 ];
 
 // Fake D1 keyed on the SQL the loaders and routes issue.
-function fakeDb({ sessions = [], sessionDoors = {}, sets = {}, comps = {}, submittals = [], inserted = [] } = {}) {
+// paidUsers: accounts with a paying PropX seat (weyland-shared/output-access.js).
+function fakeDb({ sessions = [], sessionDoors = {}, sets = {}, comps = {}, submittals = [], inserted = [], paidUsers = ["u1"] } = {}) {
   const db = {
     inserted,
     prepare(sql) {
@@ -28,6 +29,7 @@ function fakeDb({ sessions = [], sessionDoors = {}, sets = {}, comps = {}, submi
         if (sql.includes("FROM hardware_sets WHERE session_id")) return { results: sets[stmt.args[0]] || [] };
         if (sql.includes("FROM hardware_components c")) return { results: comps[stmt.args[0]] || [] };
         if (sql.includes("FROM proposals WHERE user_id")) return { results: inserted.filter((r) => r.user_id === stmt.args[0]) };
+        if (sql.includes("FROM weyland_subscriptions")) return { results: paidUsers.includes(stmt.args[0]) ? [{ status: "active", tiers: "propx", suite: 0 }] : [] };
         return { results: [] };
       };
       stmt.first = async () => {
@@ -37,6 +39,7 @@ function fakeDb({ sessions = [], sessionDoors = {}, sets = {}, comps = {}, submi
         if (sql.includes("FROM submittals WHERE id = ? AND user_id = ?")) return submittals.find((s) => s.id === stmt.args[0] && s.user_id === stmt.args[1]) || null;
         if (sql.includes("FROM projects WHERE id")) return { name: "The WeylandAI Building", client_name: "WeylandAI (internal)", project_address: "4400 Bluestem Parkway, Austin, TX" };
         if (sql.includes("FROM vendor_profile")) return null;
+        if (sql.includes("SELECT subscription_tier, subscription_status, trial_ends_at FROM users")) return { subscription_tier: "free", subscription_status: "active", trial_ends_at: null };
         if (sql.includes("MAX(quote_number)")) return { next_number: 41 };
         return null;
       };
@@ -184,4 +187,22 @@ test("page: no dead end to 'Create one in SubX first'; sources come from /api/pr
   assert.ok(!/Create one in/.test(html));
   assert.ok(html.includes('api("/api/proposals/sources")'));
   assert.ok(html.includes("window.WeylandPage.openApp(\"/subx-app\")"));
+});
+
+// Free to try, pay for the output: without a purchase, generate shows the
+// lines and totals and renders no PDF; the stored PDF is not handed over.
+test("generate without a purchase: lines and totals, no PDF; the demo stays open", async () => {
+  const db = fakeDb({ sessions: [{ id: "s1", user_id: "u3", project_name: "Tower A", project_id: "p1" }], sessionDoors: { s1: { dse: [{ mark: "101", door_type: "HM", hardware_group: "1" }] } }, paidUsers: [] });
+  const r2 = [];
+  const { router, env } = setup({ userId: "u3", tenantId: "ven_weyland" }, db, r2);
+  const res = await router.handle(new Request("https://weylandai.com/api/proposals/generate", { method: "POST", body: JSON.stringify({ source: { kind: "session", id: "s1" } }) }), env, {});
+  const d = await res.json();
+  assert.equal(res.status, 200);
+  assert.equal(d.paid, false);
+  assert.equal(d.payment.code, "PAYMENT_REQUIRED");
+  assert.equal(d.lineItemCount, 2);
+  assert.equal(d.pdfBase64, undefined);
+  assert.equal(d.downloadUrl, undefined);
+  assert.equal(r2.length, 0);
+  assert.equal(db.inserted.length, 0);
 });

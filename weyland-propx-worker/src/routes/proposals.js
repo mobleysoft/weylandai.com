@@ -69,6 +69,7 @@
 // numbers or pollute tenant data). It is rate-limited per session via
 // the DEMO_RATE_LIMITER binding in wrangler.toml.
 
+import { outputAccess, paymentRequired } from "../../../weyland-shared/output-access.js";
 import { jsonResponse3 } from "../lib/json-response.js";
 import { listSources, loadSource } from "../lib/proposal-sources.js";
 
@@ -314,6 +315,25 @@ export function registerProposalsRoutes(router, { authenticate, requireProductAc
       const exclusions = exclusionsText || (loaded.source.demo
         ? "Priced from SubX's demo door schedule (The WeylandAI Building, a sample project). " + DEFAULT_EXCLUSIONS_TEXT
         : null);
+      // Free to try, pay for the output (weyland-shared/output-access.js):
+      // the lines and totals are shown to anyone; the proposal PDF is rendered
+      // for the $100 first submittal or a PropX / suite plan. The demo
+      // schedule's proposal stays open to everyone.
+      const isDemo = src.kind === "demo" || !!(loaded.source && loaded.source.demo);
+      const paidOutput = isDemo || (!guest && (await outputAccess(env2, user.userId, "propx")).paid);
+      if (!paidOutput) {
+        return jsonResponse3({
+          success: true,
+          stored: false,
+          paid: false,
+          payment: paymentRequired("The proposal PDF"),
+          source: loaded.source,
+          doorCount: rawDoors.length,
+          lineItemCount: doorLines.length,
+          lineItems: doorLines,
+          subtotal, taxRate: effectiveTaxRate, taxAmount, grandTotal
+        });
+      }
       if (guest) {
         // A guest session owns no account to store under: render and return
         // the proposal inline, not stored, no quote number minted.
@@ -510,6 +530,9 @@ export function registerProposalsRoutes(router, { authenticate, requireProductAc
       ).bind(proposalId, user.userId).first();
       if (!proposal) {
         return jsonResponse3({ error: "Proposal not found" }, 404);
+      }
+      if (!String(proposal.submittal_id || "").startsWith("demo-") && !(await outputAccess(env2, user.userId, "propx")).paid) {
+        return jsonResponse3(paymentRequired("The proposal PDF"), 402);
       }
       const object = await env2.UPLOADS.get(proposal.r2_key);
       if (!object) {
