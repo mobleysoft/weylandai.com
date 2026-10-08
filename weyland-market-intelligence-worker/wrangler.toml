@@ -2,6 +2,7 @@ name = "weyland-market-intelligence-worker"
 main = "src/index.js"
 compatibility_date = "2025-10-31"
 compatibility_flags = ["nodejs_compat"]
+workers_dev = true
 
 # First real microservices-push extraction out of the weylandai.com
 # monolith (weyland.worker.js / src/legacy-monolith.js), per
@@ -56,3 +57,19 @@ database_id = "987411cc-07a5-43ae-848c-e18e4f2cec35"
 binding = "WEYLAND_DB"
 database_name = "weyland_db"
 database_id = "5729f77e-d7e3-4577-ab43-3c064fa90ca5"
+
+# 2026-10-08: CompX, WeatherX, ForecastX and GeoX are rebuilt here and
+# answered by this worker directly (until today the monolith served their
+# pages and reached these APIs through a service binding).
+[[routes]]
+pattern = "weylandai.com/api/compx/*"
+zone_name = "weylandai.com"
+
+[[routes]]
+pattern = "weylandai.com/compx*"
+zone_name = "weylandai.com"
+
+[[rules]]
+type = "Text"
+globs = ["**/*.html"]
+fallthrough = true
