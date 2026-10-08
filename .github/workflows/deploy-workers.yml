@@ -36,6 +36,7 @@ on:
           - weyland-meetingx-worker
           - weyland-forms-worker
           - weyland-market-intelligence-worker
+          - weyland-docs-worker
           - monolith (weylandai-com-worker)
 
 jobs:
@@ -79,6 +80,7 @@ jobs:
             weyland-sightx-worker)   url="https://weylandai.com/sightx/"; marker="sx-canvas" ;;
             weyland-market-intelligence-worker) url="https://weylandai.com/compx"; marker="api/compx/awards" ;;
             weyland-forms-worker)    url="https://weylandai.com/permitx"; marker="api/forms/permitx" ;;
+            weyland-docs-worker)     url="https://weylandai.com/safetyx"; marker="/access" ;;
             weyland-platform-worker) url="https://weylandai.com/api/auth/session/check"; marker="valid" ;;
             weyland-propx-worker)    url="https://weylandai.com/api/proposals/demo"; marker="" ;;
             *)                       url="https://weylandai.com/"; marker="envelope-frame" ;;
