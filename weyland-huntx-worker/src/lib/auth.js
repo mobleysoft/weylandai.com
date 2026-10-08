@@ -170,7 +170,7 @@ export async function requireActiveSubscription(user, env2) {
           message: "Your trial has expired. Please subscribe to continue.",
           subscriptionStatus: "trial_expired"
         },
-        upgradeUrl: "/pg-pricing.html"
+        upgradeUrl: "/pricing"
       }, 402);
     }
   }
@@ -182,7 +182,7 @@ export async function requireActiveSubscription(user, env2) {
         message: `Your subscription is ${status}. Please update your payment method.`,
         subscriptionStatus: status
       },
-      upgradeUrl: "/pg-pricing.html"
+      upgradeUrl: "/pricing"
     }, 402);
   }
   const used = row.submittals_used || 0;
@@ -196,7 +196,7 @@ export async function requireActiveSubscription(user, env2) {
         submittalsUsed: used,
         submittalsLimit: limit
       },
-      upgradeUrl: "/pg-pricing.html"
+      upgradeUrl: "/pricing"
     }, 402);
   }
   return null;
