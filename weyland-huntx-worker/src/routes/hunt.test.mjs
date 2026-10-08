@@ -219,7 +219,7 @@ test("GET /api/hunt/opportunities: classifies rows that have no trade fit yet an
   const body = await (await router.handle(new Request("https://example.com/api/hunt/opportunities?fit=doors"), env, {})).json();
   assert.ok(body.fits && "doors" in body.fits);
   const upd = db.log.find((x) => x.op === "batch" && x.sql.startsWith("UPDATE opportunities SET trade_fit"));
-  assert.deepEqual(upd.args, ["doors", "Door hardware", "IL", "o1"]);
+  assert.deepEqual(upd.args, ["doors", "Door hardware", "IL", 2, "o1"]);
   const list = db.log.find((x) => x.op === "all" && x.sql.includes("ORDER BY CASE"));
   assert.ok(list.sql.includes("trade_fit IN (?)") && list.args[0] === "doors");
 });
@@ -302,4 +302,13 @@ test("alert feeds: a saved search's token serves RSS and a due-date calendar; un
 test("icsFeed skips notices without a due date", () => {
   const cal = icsFeed("x", [{ id: "a", title: "No date", key_date: null }, { id: "b", title: "TBD", key_date: "TBD" }], "2026-10-08T00:00:00Z");
   assert.ok(!cal.includes("BEGIN:VEVENT"));
+});
+
+test("trade fit: another trade's doors (roof tanks, elevators) are not door scope; door words in the title still are", async () => {
+  const { tradeFit } = await import("../lib/trade-fit.js");
+  const fit = (title, description) => tradeFit({ source: "nyc_cityrecord", title, raw_data: { description } }).fit;
+  assert.equal(fit("IDIQ Contract for Repair of Gravity Roof Tanks at Various NYCHA Buildings", "tank access doors"), "building");
+  assert.equal(fit("Elevator Rehabilitation at Cassidy Lafayette Houses", "hoistway doors"), "building");
+  assert.equal(fit("Replace Windows & Doors, Roofing System", ""), "doors");
+  assert.equal(fit("Roof replacement", "new hollow metal doors at the bulkhead"), "doors");
 });
