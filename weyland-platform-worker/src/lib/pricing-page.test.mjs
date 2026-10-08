@@ -111,6 +111,28 @@ test("/pricing: no mail app, no hosted checkout; MarketX not sold; the offer lea
   assert.match(text, /weyland-first-submittal/);
 });
 
+// 2026-10-08 (fix 7 of plan/weylandai_value_report.md): the six tools that error on the audit
+// documents are not sold. Their cards say NOT SOLD YET with the reason, their buttons open
+// nothing, the catalog says checkout_ready false, and the plan choices leave them out.
+test("/pricing: DrawX, SpecX, AsBuiltX, InspecX, SurvX and PriceX are NOT SOLD YET, with the reason", async () => {
+  const env = await envWithCatalog();
+  const { text } = await page(env, "/pricing");
+  const notSold = { cardDrawX: "weyland-drawx-seat", cardSpecX: "weyland-specx-seat", cardAsBuiltX: "weyland-asbuiltx-seat", cardInspecX: "weyland-inspecx-seat", cardSurvX: "weyland-survx-seat", cardPrice: "weyland-pricex-seat" };
+  for (const [cardId, sku] of Object.entries(notSold)) {
+    assert.equal(CHECKOUT_READY_PRODUCTS.has(sku), false, sku + " is not checkout-ready");
+    const card = text.match(new RegExp('<div class="card" id="' + cardId + '">[\\s\\S]*?<\\/button>'))[0];
+    assert.match(card, /<div class="sku-edge">Not sold yet: [^<]+not sold until it[^<]*<\/div>/, cardId + " says why");
+    assert.match(card, /<button type="button" class="button" id="btnBuy\w+" disabled aria-disabled="true"[^>]*>NOT SOLD YET<\/button>/, cardId + " has no working button");
+    assert.doesNotMatch(card, /triggerCheckout/, cardId);
+  }
+  assert.doesNotMatch(text, /real FRED data|Live Producer Price Index/);
+  // The page's READY list (lib/pricing-checkout.js) follows the same set.
+  const ready = text.match(/var READY = (\[[^\]]*\]);/)[1];
+  for (const sku of Object.values(notSold)) assert.ok(!ready.includes(sku), sku + " not in READY");
+  // Still sold: the suite, the offer and the tools that work.
+  for (const sku of ["weyland-subconp-seat", "weyland-first-submittal", "weyland-huntx-seat", "weyland-subx-seat", "weyland-cutsheetx-seat", "weyland-lienx-seat", "weyland-safetyx-seat"]) assert.ok(ready.includes(sku), sku + " in READY");
+});
+
 test("/pricing in the overlay (?embed=1) and as an SPA fragment carry the same catalog prices", async () => {
   const env = await envWithCatalog({ ...LIVE, "weyland-geox-seat": 26600 });
   const emb = await page(env, "/pricing?embed=1");

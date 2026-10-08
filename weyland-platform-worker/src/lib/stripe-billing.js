@@ -162,7 +162,8 @@ export const CHECKOUT_READY_PRODUCTS = new Set([
   // even though it's still a valid, active, checkout_ready:false-flagged
   // Stripe price (kept in WEYLAND_PRODUCTS above so /api/billing/catalog
   // can still report on it honestly).
-  "weyland-pricex-seat",
+  // weyland-pricex-seat removed 2026-10-08 (fix 7 of plan/weylandai_value_report.md):
+  // its page prints "undefined" in every card; the FRED index behind it is gone.
   "weyland-compx-seat",
   "weyland-weatherx-seat",
   "weyland-forecastx-seat",
@@ -184,17 +185,21 @@ export const CHECKOUT_READY_PRODUCTS = new Set([
   "weyland-lienx-seat",
   "weyland-bidx-seat",
   "weyland-coa-seat",
-  "weyland-drawx-seat",
-  "weyland-asbuiltx-seat",
-  "weyland-specx-seat",
+  // weyland-drawx-seat, weyland-asbuiltx-seat, weyland-specx-seat,
+  // weyland-inspecx-seat and weyland-survx-seat removed 2026-10-08 (fix 7 of
+  // plan/weylandai_value_report.md): on the audit documents each one errors
+  // (HTTP 500 "Worker exceeded memory limit" on a 36 x 24 drawing sheet for
+  // DrawX and AsBuiltX; "Worker exceeded CPU time limit" on a 33-page spec
+  // extract for SpecX, a 9-page inspection report for InspecX and a condition
+  // survey for SurvX). They are not sold until each passes on
+  // tools/corpus/plan-sets, door-schedules and field-reports; /pricing shows
+  // NOT SOLD YET with the reason, and GET /api/billing/plan lists no seat for them.
   "weyland-rfax-seat",
   "weyland-changeordx-seat",
   "weyland-permitx-seat",
   "weyland-safetyx-seat",
   "weyland-closex-seat",
   "weyland-notesx-seat",
-  "weyland-inspecx-seat",
-  "weyland-survx-seat",
   // Added 2026-10-02 alongside the WEYLAND_PRODUCTS entry above - the
   // real backend (routes/wire.js: GET /wire, GET /api/wire/news,
   // /api/wire/synthesis, /api/wire/reports) is live, so this is
