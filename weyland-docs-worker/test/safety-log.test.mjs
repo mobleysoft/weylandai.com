@@ -123,3 +123,10 @@ test("routes: findings with hazards, actions open and close, cases numbered per 
   const acts = await call("GET", "/api/safety-reports/actions.csv");
   assert.match(await acts.text(), /Two-person lift/);
 });
+
+test("InspecX flags NFPA 80 fire-door deficiencies (painted-over label, gap exceeding 1/8 in., propped open, does not latch)", async () => {
+  const { classifyInspection } = await import("../src/lib/classify.js");
+  const text = ["Door 101: Closer leaking oil, does not latch.", "Door 102: Pass - self-closing and positive latching.", "Door 105: Fire label painted over; gap at meeting stile exceeds 1/8 in.", "Door 106: No deficiencies noted.", "Door 107: Door propped open with wedge at time of inspection."].join("\n");
+  const r = classifyInspection([{ page: 1, text }]);
+  assert.deepEqual(r.flagged.map((f) => f.line.slice(0, 8)), ["Door 101", "Door 105", "Door 107"]);
+});

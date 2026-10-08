@@ -20,6 +20,9 @@ function compile(sources) {
 }
 
 export const INSPECTION_FAIL_PATTERNS = compile([
+  // 2026-10-08: fire door assembly deficiencies (NFPA 80 annual inspection language).
+  "(?:label|labels) (?:is |are )?(?:painted over|missing|removed|illegible|not legible)", "painted over", "does not (?:latch|close|self[- ]close|positively latch)",
+  "(?:gap|clearance|undercut)s? [^.;]{0,40}exceed\\w*", "exceeds? (?:1/8|3/4|1/4)", "propped open", "wedged open", "held open by", "holes? (?:in|through) (?:the )?(?:door|frame)",
   "fail(?:ed|s|ure)?", "deficien\\w*", "not compliant", "non-?compliant", "corrective action", "reject\\w*", "violation", "does not meet",
   "leak(?:s|ing|ed)?", "broken", "not working", "not (?:operational|functioning|functional|operating)", "inoperable", "inoperative",
   "out[- ]of[- ]service", "take (?:it )?out of service", "loose", "missing", "needs? (?:to be )?(?:replaced|repaired|replacement|repair)",
