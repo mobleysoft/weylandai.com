@@ -128,12 +128,17 @@
     });
     $("session").addEventListener("change", load);
     $("signinBtn").onclick = function () { window.WeylandPage.signIn("/rfax"); };
-    fetch("/api/hardware-schedule/sessions?limit=50", { credentials: "same-origin", headers: headers() }).then(function (r) { return r.json(); }).then(function (d) {
-      if (d.signed_in === false) { $("session").innerHTML = '<option value="">Sign in to see your sessions</option>'; $("signin").hidden = false; return; }
-      var list = (d.sessions || []).filter(function (s) { return s.door_count > 0; });
-      $("session").innerHTML = '<option value="">' + (list.length ? "Choose a session" : "No session with a door schedule yet") + "</option>" + list.map(function (s) { return '<option value="' + esc(s.id) + '">' + esc(s.project_name || s.filename) + " · " + s.door_count + " doors" + (s.is_demo ? " (demo)" : "") + "</option>"; }).join("");
-    }).catch(function () { $("session").innerHTML = '<option value="">Could not reach SubX</option>'; });
-    window.addEventListener("weyland-auth", function () { location.reload(); });
+    // Re-read the list when sign-in changes (the shell announces it on every
+    // load, so reloading the page here looped forever).
+    function loadList() {
+      fetch("/api/hardware-schedule/sessions?limit=50", { credentials: "same-origin", headers: headers() }).then(function (r) { return r.json(); }).then(function (d) {
+        if (d.signed_in === false) { $("session").innerHTML = '<option value="">Sign in to see your sessions</option>'; $("signin").hidden = false; return; }
+        var list = (d.sessions || []).filter(function (s) { return s.door_count > 0; });
+        $("session").innerHTML = '<option value="">' + (list.length ? "Choose a session" : "No session with a door schedule yet") + "</option>" + list.map(function (s) { return '<option value="' + esc(s.id) + '">' + esc(s.project_name || s.filename) + " · " + s.door_count + " doors" + (s.is_demo ? " (demo)" : "") + "</option>"; }).join("");
+      }).catch(function () { $("session").innerHTML = '<option value="">Could not reach SubX</option>'; });
+    }
+    loadList();
+    window.addEventListener("weyland-auth", function () { loadList(); });
   })();
   </script>
 </body>
