@@ -31,6 +31,7 @@ test("a variant is chosen by the schedule's own number and finish class, and say
   assert.deepEqual(pick("4040XP-3077", "626"), [192, "exact", false], "no plated price for 3077: shown in powder coat, and said so");
   assert.equal(pickVariant(LCN, "4040XP-CUSH", "689").variant, null, "a zero price is not a price");
   assert.match(pickVariant(LCN, "4040XP-3049EDA", "").note, /no finish on the schedule/);
+  assert.equal(pickVariant([{ full_model_number: "20-057-ICX", finish_code: "", list_price: 227 }], "20-057 ICX", "626").finishMatched, true, "a row with no finish prices every finish");
   assert.equal(variantNumber(LCN[0]), "4040XP-3049EDA");
   assert.equal(variantFinish(LCN[0]), "Powder Coat");
 });

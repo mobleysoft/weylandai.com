@@ -54,7 +54,7 @@ export function finishScore(v, fin) {
   if (code) return code[1] === fin ? 2 : 0;
   if (/powder|paint|prime|coat/i.test(b)) return PAINTED.has(fin) ? 1 : 0;
   if (/plated|metal/i.test(b)) return PAINTED.has(fin) ? 0 : 1;
-  return 0;
+  return b ? 0 : 1; // a row with no finish at all is the book's one price for every finish
 }
 
 /**
