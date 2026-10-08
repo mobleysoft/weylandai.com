@@ -67,8 +67,10 @@ import { NativeRouter } from "./lib/router.js";
 import { jsonResponse3 } from "./lib/json-response.js";
 
 import { registerSightXWalkthroughRoutes } from "./routes/sightx-walkthrough.js";
+import { registerSightXModelRoutes } from "./routes/sightx-model.js";
 
 import sightxHtml from "./pages/sightx.html";
+import sightxAppHtml from "./pages/sightx-app.html";
 // Security headers on every answer (2026-10-07): the platform's set, one shared module.
 import { secured } from "../../weyland-shared/security-headers.js";
 
@@ -84,8 +86,13 @@ router.get("/health", () => jsonResponse3({
 // Not gated by any auth: the page loads for anyone (same convention as
 // subx-app.html/propx-app.html), and the one dynamic panel on it
 // (walkthrough-preview) calls a route that is itself public.
-function serveSightX() {
-  return new Response(sightxHtml, {
+// 2026-10-08: /sightx is the schedule-driven app (pages/sightx-app.html): a
+// corridor built from the customer's own door schedule. The hand-built
+// raymarch world (pages/sightx.html) is now only the homepage's backdrop,
+// which loads /sightx/?embed=bg and talks to it by postMessage.
+function serveSightX(request) {
+  const bg = new URL(request.url).searchParams.get("embed") === "bg";
+  return new Response(bg ? sightxHtml : sightxAppHtml, {
     headers: { "Content-Type": "text/html; charset=UTF-8", "Cache-Control": "public, max-age=60" },
   });
 }
@@ -96,6 +103,7 @@ router.addRoute("HEAD", "/sightx", serveSightX);
 router.addRoute("HEAD", "/sightx/", serveSightX);
 
 registerSightXWalkthroughRoutes(router);
+registerSightXModelRoutes(router);
 
 export default secured({
   async fetch(request, env, ctx) {
