@@ -102,3 +102,20 @@ export function scheduleTokens(model) {
   });
   return [...new Set([...joined, ...single])].filter((t) => modelPattern(t));
 }
+
+/** The maker's filed price books in R2 ({ r2Key, title }), for a model the catalogue does
+ *  not list: the schedule's number may still be printed in the maker's own book. */
+export async function makerFiledBooks(env, makerName, limit = 3) {
+  if (!env || !env.DB || !makerName) return [];
+  try {
+    const rows = (await env.DB.prepare(
+      `SELECT d.r2_object_key AS r2Key, MIN(d.document_title) AS title FROM product_documents d
+       JOIN products p ON p.id = d.product_id JOIN manufacturers m ON p.manufacturer_id = m.id
+       WHERE lower(m.name) = lower(?) AND d.document_type = 'cut_sheet' AND d.active = 1 AND d.r2_object_key IS NOT NULL
+       GROUP BY d.r2_object_key LIMIT ?`
+    ).bind(String(makerName), limit).all()).results || [];
+    return rows.filter((r) => r.r2Key);
+  } catch (_) {
+    return [];
+  }
+}

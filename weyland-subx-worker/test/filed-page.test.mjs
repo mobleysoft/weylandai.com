@@ -95,3 +95,21 @@ test("a product whose catalogue model is too short is searched by the schedule's
   assert.deepEqual(scheduleTokens("PA-AX-99-L-F-2SI-06"), ["99L"]);
   assert.deepEqual(scheduleTokens("4040XP EDA"), ["4040XPEDA", "4040XP"]);
 });
+
+test("a model the catalogue does not list is found in the maker's own filed price book by the schedule's number", async () => {
+  const db = new DatabaseSync(":memory:");
+  db.exec(`CREATE TABLE hardware_sets (id TEXT, session_id TEXT, set_number TEXT); CREATE TABLE hardware_components (id TEXT, set_id TEXT, component_type TEXT, quantity INTEGER, manufacturer TEXT, model TEXT, catalog_number TEXT, sequence_order INTEGER);
+    CREATE TABLE manufacturers (id INTEGER, name TEXT); CREATE TABLE products (id INTEGER, manufacturer_id INTEGER); CREATE TABLE product_documents (product_id INTEGER, document_type TEXT, active INTEGER, r2_object_key TEXT, document_title TEXT);`);
+  db.prepare("INSERT INTO hardware_sets VALUES ('h1','s1','1')").run();
+  db.prepare("INSERT INTO hardware_components VALUES ('c1','h1','seal',1,'Zero International','188SBK PSA',NULL,1)").run();
+  db.prepare("INSERT INTO manufacturers VALUES (7,'Zero International')").run();
+  db.prepare("INSERT INTO products VALUES (70,7)").run();
+  db.prepare("INSERT INTO product_documents VALUES (70,'cut_sheet',1,'manufacturer-catalogs/zero.pdf','Zero Price Book (2026)')").run();
+  const d1 = { prepare(sql) { let a = []; const st = { bind(...x) { a = x; return st; }, async all() { return { results: db.prepare(sql).all(...a).map((r) => ({ ...r })) }; } }; return st; } };
+  const env = fakeEnv(["Zero price book", "Gasketing: 188S, 188SBK self-adhesive, 188SBK PSA"], { DB: d1 });
+  env.store.set("manufacturer-catalogs/zero.pdf", new Uint8Array([1]));
+  const match = async () => ({ matched: false, reason: "model_not_in_catalogue", maker: { typed: true, known: true, name: "Zero International" }, cutSheets: [], cataloguePages: [] });
+  const r = await citedPagesForSession("s1", env, match);
+  assert.deepEqual(r.pages.map((p) => [p.r2Key, p.pageNum, p.manufacturer, p.title]), [["manufacturer-catalogs/zero.pdf", 2, "Zero International", "Zero Price Book"]]);
+  assert.equal(r.missing.length, 0);
+});

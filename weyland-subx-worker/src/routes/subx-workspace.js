@@ -23,7 +23,7 @@ import { PDFDocument, StandardFonts, rgb } from "pdf-lib";
 import { jsonResponse3 } from "../lib/json-response.js";
 import { assembleSubmittalPackage } from "../lib/submittal-assembler.js";
 import { matchComponentToCutSheets, citedPagesFor, PACKET_MATCH_TYPES } from "../lib/product-database.js";
-import { pageNamingInFiledPdf, scheduleTokens } from "../../../weyland-shared/filed-page.js";
+import { pageNamingInFiledPdf, scheduleTokens, makerFiledBooks } from "../../../weyland-shared/filed-page.js";
 import { incrementSubmittalsUsed } from "../lib/edge-telemetry.js";
 import { outputAccess, paymentRequired } from "../../../weyland-shared/output-access.js";
 import { readDimension, readSizeCell, looksLikeMark } from "../../assets/client-ocr-src/schedule-text-layer.mjs";
@@ -137,6 +137,20 @@ function missFor(c, m) {
 // The book's text is cached in R2 after the first read; a build spends at most FILED_BUDGET_MS on it.
 const FILED_BUDGET_MS = 25000;
 async function filedPageFor(env2, m, started, scheduleModel = "") {
+  // The maker is known but the catalogue does not list this model: the schedule's own number,
+  // as a whole token, in the maker's filed price books (it may be printed there).
+  if (m && !m.matched && m.reason === "model_not_in_catalogue" && m.maker && m.maker.known) {
+    for (const book of await makerFiledBooks(env2, m.maker.name)) {
+      for (const model of scheduleTokens(scheduleModel)) {
+        const left = FILED_BUDGET_MS - (Date.now() - started);
+        if (left < 3000) return null;
+        let hit = null;
+        try { hit = await pageNamingInFiledPdf(env2, book.r2Key, model, { budgetMs: left }); } catch (_) { hit = null; }
+        if (hit) return { r2Key: book.r2Key, pageNum: hit.pageNum, title: String(book.title || "Price book").split(" (")[0] };
+      }
+    }
+    return null;
+  }
   if (!m || !m.matched || !PACKET_MATCH_TYPES.has(String(m.matchType)) || !(m.maker && m.maker.known)) return null;
   const sheet = (m.cutSheets || []).find((s) => s.r2Key && !s.pinnedPage);
   if (!sheet) return null;
@@ -186,7 +200,7 @@ export async function citedPagesForSession(sessionId, env2, match = matchForPack
     } else if ((filed = await filedPageFor(env2, m, started, c.model))) {
       matched++;
       const k = "doc:" + filed.r2Key + "#" + filed.pageNum;
-      if (!pages.has(k)) pages.set(k, { r2Key: filed.r2Key, catalogueId: null, pageNum: filed.pageNum, title: filed.title, kind: "price_book_filed", manufacturer: (m.product && m.product.manufacturer) || c.manufacturer || null, model: (m.product && m.product.model) || c.model, sets: [] });
+      if (!pages.has(k)) pages.set(k, { r2Key: filed.r2Key, catalogueId: null, pageNum: filed.pageNum, title: filed.title, kind: "price_book_filed", manufacturer: (m.product && m.product.manufacturer) || (m.maker && m.maker.name) || c.manufacturer || null, model: (m.product && m.product.model) || c.model, sets: [] });
       const entry = pages.get(k);
       for (const s of sets) if (!entry.sets.includes(s)) entry.sets.push(s);
     } else {
