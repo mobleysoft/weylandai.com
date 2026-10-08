@@ -1,0 +1,93 @@
+import { test } from "node:test";
+import assert from "node:assert/strict";
+import { NativeRouter } from "../lib/router.js";
+import { registerSightXModelRoutes } from "./sightx-model.js";
+import { parseSchedule, modelFromSubx, sampleModel, parseSize, itemType, ratingOf } from "../lib/schedule-model.js";
+
+test("sizes, ratings and hardware kinds are read as the trade writes them", () => {
+  assert.deepEqual(parseSize("3070"), { w: 36, h: 84 });
+  assert.deepEqual(parseSize(`3'-0" x 7'-0"`), { w: 36, h: 84 });
+  assert.deepEqual(parseSize("PR 6080"), { w: 72, h: 96 });
+  assert.deepEqual(parseSize("36 x 84"), { w: 36, h: 84 });
+  assert.equal(parseSize("HW-1"), null);
+  assert.equal(ratingOf("90 MIN"), "90 min");
+  assert.equal(ratingOf("1-1/2 HR"), "1.5 hr");
+  assert.equal(itemType("LCN 4040XP-EDA"), "closer");
+  assert.equal(itemType("Von Duprin 98-NL-OP"), "exit");
+  assert.equal(itemType("Securitron M62"), "maglock");
+  assert.equal(itemType("Rockwood K1050"), "kick");
+  assert.equal(itemType("Schlage ND70PD RHO 626"), "lockset");
+});
+
+test("one door per line, with set definitions", () => {
+  const m = parseSchedule(`101 HM 3070 HW-1 90 MIN Corridor to Stair 1
+102 WD 3070 HW-2 Office 102
+103 PR HM 6070 HW-1 Lobby
+HW-1: closer, exit device, kick plate
+HW-2: lever lockset, 3 hinges, wall stop`);
+  assert.equal(m.doors.length, 3);
+  const [a, b, c] = m.doors;
+  assert.deepEqual([a.mark, a.material, a.width_in, a.height_in, a.set, a.rating, a.size_known], ["101", "hollow metal", 36, 84, "1", "90 min", true]);
+  assert.equal(a.location, "Corridor to Stair 1");
+  assert.equal(b.material, "wood");
+  assert.equal(c.leaves, 2);
+  assert.deepEqual(m.sets["1"].map((x) => x.type), ["closer", "exit", "kick"]);
+  assert.deepEqual(m.sets["2"].map((x) => x.type), ["lockset", "hinge", "stop"]);
+  assert.deepEqual(m.notes, []);
+});
+
+test("a table pasted from a spreadsheet, header row first", () => {
+  const m = parseSchedule(["Door No.\tLocation\tSize\tDoor Type\tFrame\tFire Rating\tHardware Set",
+    "D-122\tStairwell 1\t3'-0\" x 7'-0\"\tHM\tHM\t90 MIN\tHW-02",
+    "D-201\tExecutive Suite\t\tWood\tHM\t\tHW-05"].join("\n"));
+  assert.equal(m.doors.length, 2);
+  assert.deepEqual([m.doors[0].mark, m.doors[0].location, m.doors[0].rating, m.doors[0].set, m.doors[0].frame], ["D-122", "Stairwell 1", "90 min", "02", "HM"]);
+  assert.equal(m.doors[1].size_known, false);
+  assert.match(m.notes.join(" "), /1 door has no size/);
+  assert.match(m.notes.join(" "), /No hardware listed for sets 02, 05/);
+});
+
+test("a SubX session becomes the same model, sizes and parts from the read schedule", () => {
+  const m = modelFromSubx({
+    session: { project_name: "Berryessa ES" },
+    doors: [{ mark: "100A", hardware_group: "3", fire_rating: "45 MIN", width_inches: 36, height_inches: 84, door_type: "F", door_material: "WD", frame_material: "HM", panic: null, page_number: 4 }],
+    components: [{ set_number: "3", component_type: "CLOSER", quantity: 1, manufacturer: "LCN", model: "4040XP", catalog_number: "4040XP-RW/PA", finish: "689", description: "Closer" }],
+  });
+  assert.equal(m.project, "Berryessa ES");
+  assert.deepEqual([m.doors[0].mark, m.doors[0].material, m.doors[0].rating, m.doors[0].set, m.doors[0].source_page], ["100A", "wood", "45 min", "3", 4]);
+  assert.deepEqual(m.sets["3"][0], { type: "closer", qty: 1, label: "Closer · LCN · 4040XP", manufacturer: "LCN", catalog: "4040XP-RW/PA", finish: "689" });
+});
+
+test("the sample is SubX's demo sheet, sizes marked as not given", () => {
+  const m = sampleModel();
+  assert.equal(m.doors.length, 10);
+  assert.ok(m.doors.every((d) => !d.size_known));
+  assert.deepEqual(m.sets["HW-01"].map((x) => x.type), ["exit", "closer"]);
+  assert.deepEqual(m.sets["HW-07"].map((x) => x.type), ["lockset", "maglock"]);
+  assert.deepEqual(m.sets["HW-02"].map((x) => x.type), ["exit", "closer"]);
+  assert.deepEqual(m.sets["HW-08"].map((x) => x.type), ["lockset", "kick"]);
+  assert.deepEqual(m.sets["HW-09"].map((x) => x.type), ["exit", "seal"]);
+  assert.equal(m.doors.find((d) => d.mark === "D-101").material, "aluminum");
+});
+
+test("routes: sample, paste, SubX, and an unreadable paste", async () => {
+  const router = new NativeRouter();
+  registerSightXModelRoutes(router);
+  const call = (path, body) => router.handle(new Request("https://weylandai.com" + path, body ? { method: "POST", body: JSON.stringify(body) } : {}), {}, {});
+  assert.equal((await (await call("/api/sightx/sample")).json()).model.doors.length, 10);
+  const p = await (await call("/api/sightx/model", { text: "101 HM 3070 HW-1" })).json();
+  assert.equal(p.model.doors[0].mark, "101");
+  const s = await (await call("/api/sightx/model", { subx: { doors: [{ mark: "1" }], components: [] } })).json();
+  assert.equal(s.model.doors[0].mark, "1");
+  assert.equal((await call("/api/sightx/model", { text: "hello world" })).status, 422);
+  assert.equal((await call("/api/sightx/model", {})).status, 400);
+});
+
+test("page: /sightx is the schedule app; the homepage backdrop keeps the world page", async () => {
+  const { readFileSync } = await import("node:fs");
+  const app = readFileSync(new URL("../pages/sightx-app.html", import.meta.url), "utf8");
+  assert.ok(app.includes("/api/sightx/model") && app.includes("/api/hardware-schedule/session/") && app.includes("/api/sightx/sample"));
+  assert.ok(!/CHRONO|PRECONDENSATE|SEED VESSEL|FILMLINE|MobCorp/i.test(app), "no off-topic content in the product page");
+  const index = readFileSync(new URL("../index.js", import.meta.url), "utf8");
+  assert.match(index, /searchParams\.get\("embed"\) === "bg"/);
+});
