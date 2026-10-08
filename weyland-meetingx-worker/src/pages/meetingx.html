@@ -67,18 +67,20 @@
         </div>
       </div>
 
+      <!-- 2026-10-08 (fix 15, plan/weylandai_value_report.md): WeylandAI's own fundraising brief no longer
+           sits in a customer's room. This is the project brief. -->
       <aside class="brief">
-        <span class="eyebrow">Capital Meeting Brief</span>
-        <h2>One data spine.<br>Four revenue surfaces.</h2>
-        <div class="tagline">Measure twice. Match once.</div>
-        <p>The profitable wedge is not a list of disconnected products. It is one project intelligence flow sold at the points where construction loses the most time.</p>
+        <span class="eyebrow">Project Room</span>
+        <h2>One room.<br>Everyone on the job.</h2>
+        <div class="tagline">Who is here, and what was decided.</div>
+        <p>Share the room link with the architect, the GC and your own crew. Everyone who joins sees the same roster and chat; decisions and actions you record here export as one record.</p>
         <div class="flow">
-          <div class="flow-row"><b>01</b><div><strong>SubX</strong><small>Documents, specifications, submittals, and subcontractor intelligence.</small></div></div>
-          <div class="flow-row"><b>02</b><div><strong>TakeoffX</strong><small>Quantities, costs, labor, and estimate-ready scope.</small></div></div>
-          <div class="flow-row"><b>03</b><div><strong>PropX</strong><small>Bundles verified outputs into a reviewable proposal.</small></div></div>
-          <div class="flow-row"><b>04</b><div><strong>SightX</strong><small>Makes the same project data spatial, explorable, and explainable.</small></div></div>
+          <div class="flow-row"><b>01</b><div><strong>Join</strong><small>Press JOIN ROOM; the people in the room appear in the roster.</small></div></div>
+          <div class="flow-row"><b>02</b><div><strong>Talk</strong><small>Room chat reaches everyone here. Camera and screen stay in your own browser for now.</small></div></div>
+          <div class="flow-row"><b>03</b><div><strong>Record</strong><small>Decisions and actions, with the time they were made; the transcript if you turn it on.</small></div></div>
+          <div class="flow-row"><b>04</b><div><strong>Walk</strong><small>Open SightX to walk the sample corridor with the hardware you matched.</small></div></div>
         </div>
-        <div class="metrics"><div class="metric"><strong>$2K</strong><span>SUBCONP ACTIVE SEAT / MONTH</span></div><div class="metric"><strong>$10M</strong><span>TARGET SEED ROUND</span></div></div>
+        <div class="metrics"><div class="metric"><strong>CHAT</strong><span>SHARED WITH THE ROOM</span></div><div class="metric"><strong>NOTES</strong><span>KEPT IN YOUR BROWSER</span></div></div>
       </aside>
     </section>
 
@@ -99,8 +101,8 @@
       </article>
       <article class="card" style="grid-column:1/-1;min-height:220px">
         <div class="card-head"><h3>Ask Weyland</h3><span class="badge">MEETING CONTEXT</span></div>
-        <div class="answer" id="answer">Ask about the product flow, the commercial wedge, the raise, or what should be demonstrated. MeetingX answers from the verified meeting brief rather than the public web.</div>
-        <form class="ask" id="ask-form"><input id="ask-input" autocomplete="off" placeholder="What is the clearest way to explain SubX and TakeoffX?"><button>ASK</button></form>
+        <div class="answer" id="answer">Ask how to use this room: joining, sharing the link, chat, decisions and actions, the transcript, export, or opening SightX. MeetingX answers from what this room can do, not from the public web.</div>
+        <form class="ask" id="ask-form"><input id="ask-input" autocomplete="off" placeholder="How do I get the GC into this room?"><button>ASK</button></form>
       </article>
       <article class="card" id="room-card" style="grid-column:1/-1;min-height:220px">
         <div class="card-head"><h3>Live Room</h3><span class="badge" id="room-status">NOT CONNECTED</span></div>
@@ -173,7 +175,8 @@
     function escapeHtml(v){return String(v).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
     function add(kind){const label=kind==='decision'?'Decision':'Action and owner';const value=prompt(label+':');if(!value)return;state[kind+'s'].push({text:value,at:new Date().toISOString()});renderList(kind)}
     function renderList(kind){const values=state[kind+'s'],node=$(kind+'s');node.innerHTML=values.length?values.map((x,i)=>`<div class="item">${escapeHtml(x.text)}<small>${new Date(x.at).toLocaleTimeString([], {hour:'2-digit',minute:'2-digit'})} · ${kind.toUpperCase()} ${i+1}</small></div>`).join(''):`<p class="empty">Nothing captured yet.</p>`;$(kind+'-count').textContent=`${values.length} ${kind==='action'?'OPEN':'CAPTURED'}`}
-    function answer(q){const s=q.toLowerCase();if(/price|cost|2k|2,000/.test(s))return 'SubConP, the Subcontractor Operating Package, is $2,000 per active operator seat per month. It includes HuntX, SubX, TakeoffX, CutsheetX, PropX, and SightX.';if(/flow|together|pipeline|product|subconp/.test(s))return 'Explain one project record across six products: HuntX finds the opportunity; SubX prepares submittals; TakeoffX quantifies drawings; CutsheetX assembles product data; PropX produces the reviewed proposal; SightX makes the same record spatial.';if(/takeoff/.test(s))return 'TakeoffX, or Takeoff Express, is the estimating wedge: quantify scope, connect current cost and labor assumptions, and move an estimator from tracing plans to reviewing a machine-produced result.';if(/subx|submittal/.test(s))return 'SubX means Submittal Express. It reduces document handling and submittal preparation from hours or days to a professional review cycle.';if(/raise|10m|capital|fund/.test(s))return 'The deck asks for $10M and frames five years of runway with 60% engineering, 30% staffing, and 10% operations. The strongest proof is the revenue-producing SubX and TakeoffX workflow, not the count of future products.';if(/demo|show|present/.test(s))return 'Show three things: the Weyland homepage for the platform thesis, SightX for spatial comprehension, and MeetingX for conversation-to-action. Describe SubConP as six products operating on one shared project record.';if(/meetingx|meetx/.test(s))return 'MeetingX is the canonical name. This beta proves local media, screen sharing, transcription, decisions, actions, export, and context-aware facilitation. Multi-party conferencing still requires a signaling and TURN layer and is not being claimed today.';return 'Anchor the answer to SubConP: less manual construction work, faster quote and approval cycles, and one project record reused across HuntX, SubX, TakeoffX, CutsheetX, PropX, and SightX.'}
+    // Ask Weyland answers about this room (2026-10-08): how to join, share, chat, record, export, walk.
+    function answer(q){const s=q.toLowerCase();if(/join|connect|get .* in|invite|gc|architect|crew|link|share the room|room link/.test(s))return 'Press COPY LINK and send the link. Whoever opens it signs in (a free account is enough) and presses JOIN ROOM; they appear in the roster and see the same chat as you.';if(/chat|message|talk|voice|audio|video|call|camera|mic/.test(s))return 'Room chat reaches everyone in the room. CAM + MIC and SHARE SCREEN show your camera or screen in your own browser only; there is no shared voice or video yet, so use a phone call alongside the room for now.';if(/decision|action|record|note|minutes/.test(s))return 'Press DECISION or ACTION (or + Record decision, + Add action) to log one with the time. They are kept in this browser; EXPORT MEETING RECORD saves them with the transcript as one JSON file. They are not shared with the room yet.';if(/transcri|speech|dictat/.test(s))return 'TRANSCRIBE turns on your browser speech recognition and writes what it hears into the Live Transcript, in this browser only. It needs a browser with speech recognition and a microphone you allow.';if(/export|save|download|file|json/.test(s))return 'EXPORT MEETING RECORD downloads one JSON file: when the meeting started, the transcript, the decisions and the actions.';if(/sightx|walk|3d|corridor|door|hardware|model/.test(s))return 'SIGHTX (top right) opens the sample corridor; products you matched on the homepage hang on its doors. Opening it leaves this room for now, so share the room link first.';if(/price|cost|plan|seat|pay|\$/.test(s))return 'Plans and prices are at weylandai.com/pricing. MeetingX is part of the $100 first submittal\'s 30 days of every product, and sold on its own as a monthly seat.';return 'This room does four things: JOIN ROOM to meet, room chat that everyone here sees, DECISION and ACTION to log what was agreed, and EXPORT MEETING RECORD to keep it. Ask about any of them.'}
     function exportRecord(){const payload={product:'MeetingX',schema_version:1,started_at:new Date(state.started).toISOString(),exported_at:new Date().toISOString(),transcript:state.transcript,decisions:state.decisions,actions:state.actions};const blob=new Blob([JSON.stringify(payload,null,2)],{type:'application/json'}),a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=`meetingx-${new Date().toISOString().replace(/[:.]/g,'-')}.json`;a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1000)}
     $('media-btn').onclick=startMedia;$('share-btn').onclick=shareScreen;$('record-btn').onclick=toggleSpeech;$('decision-btn').onclick=()=>add('decision');$('action-btn').onclick=()=>add('action');document.querySelectorAll('[data-add]').forEach(b=>b.onclick=()=>add(b.dataset.add));$('export-btn').onclick=exportRecord;
     $('ask-form').onsubmit=e=>{e.preventDefault();const q=$('ask-input').value.trim();if(!q)return;$('answer').textContent=answer(q);$('ask-input').value=''};
