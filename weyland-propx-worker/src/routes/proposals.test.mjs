@@ -214,3 +214,19 @@ test("totals are whole cents", async () => {
   assert.equal(t.taxAmount, 60.86);
   assert.equal(t.grandTotal, 900.26);
 });
+
+test("deriveLines: a set written 2 on the door schedule and 02 on the hardware schedule is one priced line; sizes come from measured inches", () => {
+  const doors = [
+    { mark: "1", door_type: "B", material: "WD", fire_rating: "120", width: `3'-6" x 7'-10"`, width_inches: 42, height_inches: 94, hardware_group: "2" },
+    { mark: "2", door_type: "B", material: "WD", fire_rating: "120", width: `3'-6" x 7'-10`, width_inches: 42, height_inches: 94, hardware_group: "2" },
+    { mark: "3", door_type: null, material: "WD", fire_rating: "120", width_inches: 42, height_inches: 94, hardware_group: "SET 2" },
+  ];
+  const sets = [{ set_number: "02", components: [{ component_type: "hinge", quantity: 4, unit_price: 50 }, { component_type: "closer", quantity: 1, unit_price: 300 }] }];
+  const lines = deriveLines(doors, sets);
+  const hw = lines.filter((l) => l.kind === "hardware");
+  assert.equal(hw.length, 1);
+  assert.equal(hw[0].quantity, 3);
+  assert.equal(hw[0].unitPrice, 500);
+  const doorLines = lines.filter((l) => l.kind === "door");
+  assert.deepEqual(doorLines.map((l) => [l.description, l.size, l.quantity]), [["Door - type B", `3'-6" x 7'-10"`, 2], ["Door - type not scheduled", `3'-6" x 7'-10"`, 1]]);
+});
