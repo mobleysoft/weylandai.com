@@ -261,6 +261,7 @@
           return '<span class="chip" data-id="' + esc(s.id) + '">' + esc(s.name) + (s.new_count ? ' <span class="new">' + s.new_count + " NEW</span>" : "") +
             (s.feed_url ? ' <a class="feed" href="' + esc(s.feed_url) + '" target="_blank" rel="noopener" title="RSS feed of new notices (Outlook, Slack, any feed reader)">RSS</a>' : "") +
             (s.calendar_url ? ' <a class="feed" href="' + esc(s.calendar_url.replace(/^https:/, "webcal:")) + '" title="Subscribe to due dates in your calendar (or copy this link into Google Calendar: Other calendars, From URL)">CALENDAR</a>' : "") +
+            (d.emailAvailable ? ' <a class="feed" href="#" data-mail="' + esc(s.id) + '" data-on="' + (s.email_alerts ? "0" : "1") + '" title="' + (s.email_alerts ? "Stop the daily email for this search" : "Email me new notices for this search, at most once a day") + '">' + (s.email_alerts ? "EMAIL ON" : "EMAIL") + '</a>' : "") +
             '<span class="x" data-del="' + esc(s.id) + '" title="Delete">&times;</span></span>';
         }).join("") + '<span class="feed-note">RSS and CALENDAR are private links: new notices and due dates reach you without opening HuntX.</span>' : "";
         state.saved = list;
@@ -424,6 +425,18 @@
     $("hx-saved").addEventListener("click", function (e) {
       var del = e.target.getAttribute && e.target.getAttribute("data-del");
       if (del) { fetch("/api/hunt/saved/" + encodeURIComponent(del), { method: "DELETE", headers: headers() }).then(loadSaved); return; }
+      var mail = e.target.getAttribute && e.target.getAttribute("data-mail");
+      if (mail) {
+        e.preventDefault();
+        fetch("/api/hunt/saved/" + encodeURIComponent(mail) + "/email", { method: "POST", headers: headers(true), body: JSON.stringify({ on: e.target.getAttribute("data-on") === "1" }) }).then(function (r) {
+          return r.json().catch(function () { return {}; }).then(function (d) {
+            if (!r.ok) { setStatus(errText(d, r.status), true); return; }
+            setStatus(d.email_alerts ? "Email alerts on: new notices for this search arrive at most once a day." : "Email alerts off for this search.");
+            return loadSaved();
+          });
+        });
+        return;
+      }
       if (e.target.closest && e.target.closest("a.feed")) return;
       var chip = e.target.closest && e.target.closest(".chip");
       if (chip) applySaved(chip.getAttribute("data-id"));
