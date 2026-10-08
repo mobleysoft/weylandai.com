@@ -115,13 +115,18 @@
         return r.blob().then(function (b) { var a = document.createElement("a"); a.href = URL.createObjectURL(b); a.download = "Minutes.pdf"; a.click(); $("msg").textContent = "Downloaded."; });
       });
     };
-    fetch("/api/forms/notesx/rooms", { credentials: "same-origin", headers: headers() }).then(function (r) { if (r.status === 401) { $("room").innerHTML = "<option value=''>Sign in to see your rooms</option>"; $("signin").hidden = false; return null; } return r.json(); }).then(function (d) {
-      if (!d) return;
-      var rooms = d.rooms || [];
-      $("room").innerHTML = '<option value="">' + (rooms.length ? "Choose a room" : "No MeetingX room has your notes yet") + "</option>" + rooms.map(function (x) { return '<option value="' + esc(x.room) + '">Room ' + esc(x.room) + " · " + esc(String(x.last_at).slice(0, 10)) + " · " + x.decisions + " decisions, " + x.actions + " actions</option>"; }).join("");
-      var want = new URLSearchParams(location.search).get("room"); if (want) { $("room").value = want; preview(); }
-    });
-    window.addEventListener("weyland-auth", function () { location.reload(); });
+    // Re-read the list when sign-in changes (the shell announces it on every
+    // load, so reloading the page here looped forever).
+    function loadList() {
+      fetch("/api/forms/notesx/rooms", { credentials: "same-origin", headers: headers() }).then(function (r) { if (r.status === 401) { $("room").innerHTML = "<option value=''>Sign in to see your rooms</option>"; $("signin").hidden = false; return null; } return r.json(); }).then(function (d) {
+        if (!d) return;
+        var rooms = d.rooms || [];
+        $("room").innerHTML = '<option value="">' + (rooms.length ? "Choose a room" : "No MeetingX room has your notes yet") + "</option>" + rooms.map(function (x) { return '<option value="' + esc(x.room) + '">Room ' + esc(x.room) + " · " + esc(String(x.last_at).slice(0, 10)) + " · " + x.decisions + " decisions, " + x.actions + " actions</option>"; }).join("");
+        var want = new URLSearchParams(location.search).get("room"); if (want) { $("room").value = want; preview(); }
+      });
+    }
+    loadList();
+    window.addEventListener("weyland-auth", function () { loadList(); });
   })();
   </script>
 </body>
