@@ -19,6 +19,9 @@ import { registerRfaxRoutes } from "./routes/rfax.js";
 import rfaxHtml from "./pages/rfax.html";
 import { registerBidxRoutes } from "./routes/bidx.js";
 import bidxHtml from "./pages/bidx.html";
+import { registerCoaPermitxRoutes } from "./routes/coa-permitx.js";
+import coaHtml from "./pages/coa.html";
+import permitxHtml from "./pages/permitx.html";
 import lienxHtml from "./pages/lienx.html";
 import { secured } from "../../weyland-shared/security-headers.js";
 
@@ -26,7 +29,7 @@ const router = new NativeRouter();
 router.get("/health", () => jsonResponse3({ ok: true, worker: "weyland-forms-worker" }));
 
 const page = (html) => () => new Response(html, { headers: { "Content-Type": "text/html; charset=UTF-8", "Cache-Control": "no-store" } });
-for (const [paths, html] of [[["/lienx", "/lienx/"], lienxHtml], [["/closex", "/closex/"], closexHtml], [["/changeordx", "/changeordx/"], changeordxHtml], [["/notesx", "/notesx/"], notesxHtml], [["/rfax", "/rfax/"], rfaxHtml], [["/bidx", "/bidx/"], bidxHtml]]) for (const p of paths) { router.get(p, page(html)); router.addRoute("HEAD", p, page(html)); }
+for (const [paths, html] of [[["/lienx", "/lienx/"], lienxHtml], [["/closex", "/closex/"], closexHtml], [["/changeordx", "/changeordx/"], changeordxHtml], [["/notesx", "/notesx/"], notesxHtml], [["/rfax", "/rfax/"], rfaxHtml], [["/bidx", "/bidx/"], bidxHtml], [["/coa", "/coa/"], coaHtml], [["/permitx", "/permitx/"], permitxHtml]]) for (const p of paths) { router.get(p, page(html)); router.addRoute("HEAD", p, page(html)); }
 
 registerLienxRoutes(router, { authenticate });
 registerClosexRoutes(router, { authenticate, PDFDocument });
@@ -34,6 +37,7 @@ registerChangeOrdxRoutes(router, { authenticate });
 registerNotesxRoutes(router, { authenticate });
 registerRfaxRoutes(router, { authenticate, PDFDocument });
 registerBidxRoutes(router, { authenticate });
+registerCoaPermitxRoutes(router, { authenticate });
 
 export default secured({
   async fetch(request, env, ctx) {
