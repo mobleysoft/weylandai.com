@@ -117,7 +117,7 @@ test("/pricing: no mail app, no hosted checkout; MarketX not sold; the offer lea
 // documents were taken off sale. Five passed live on the docs worker the same evening (DrawX and
 // AsBuiltX on the 36 x 24 Fayette set, SpecX on the 288-page Berryessa manual, InspecX on the
 // FCMAT FIT inspection with 7 OCR'd pages, SurvX on the 289-page NSW dilapidation report) and are
-// sold again (owner's decision). PriceX stays not sold, with the reason.
+// sold again (owner's decision). PriceX is rebuilt on the price books and free to use; not sold yet.
 test("/pricing: DrawX, SpecX, AsBuiltX, InspecX and SurvX are sold again; PriceX is NOT SOLD YET, with the reason", async () => {
   const env = await envWithCatalog();
   const { text } = await page(env, "/pricing");
@@ -132,7 +132,7 @@ test("/pricing: DrawX, SpecX, AsBuiltX, InspecX and SurvX are sold again; PriceX
   }
   assert.equal(CHECKOUT_READY_PRODUCTS.has("weyland-pricex-seat"), false);
   const price = text.match(/<div class="card" id="cardPrice">[\s\S]*?<\/button>/)[0];
-  assert.match(price, /<div class="sku-edge">Not sold yet: [^<]+not sold until it[^<]*<\/div>/);
+  assert.match(price, /<div class="sku-edge">Not sold yet: free to use at <a href="\/pricex">/);
   assert.match(price, /disabled aria-disabled="true"[^>]*>NOT SOLD YET<\/button>/);
   assert.ok(!ready.includes("weyland-pricex-seat"));
   assert.doesNotMatch(text, /real FRED data|Live Producer Price Index/);

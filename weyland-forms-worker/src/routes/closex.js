@@ -35,7 +35,7 @@ export const CHECKLIST = [
   "Product data and warranties delivered",
 ];
 
-const setKey = (s) => String(s ?? "").trim().toUpperCase().replace(/^(HW|SET|GROUP)[-\s#]*/i, "").replace(/^0+(?=\w)/, "");
+export const setKey = (s) => String(s ?? "").trim().toUpperCase().replace(/^(HW|SET|GROUP)[-\s#]*/i, "").replace(/^0+(?=\w)/, "");
 const LOCKS = /lock|lever|latch|cylinder|core|deadbolt|exit|panic|mortise|cylindrical|storeroom|classroom|passage|privacy/i;
 
 /** The job: doors with their set's items, from SubX's own tables. */

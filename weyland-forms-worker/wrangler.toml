@@ -65,6 +65,11 @@ zone_name = "weylandai.com"
 pattern = "weylandai.com/permitx*"
 zone_name = "weylandai.com"
 
+# PriceX moved here from the platform worker 2026-10-08 (list prices from the books on file).
+[[routes]]
+pattern = "weylandai.com/pricex*"
+zone_name = "weylandai.com"
+
 [[rules]]
 type = "Text"
 globs = ["**/*.html", "**/*.txt"]
