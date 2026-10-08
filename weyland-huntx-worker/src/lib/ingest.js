@@ -12,6 +12,8 @@
 // fetchTxdotOpportunities / fetchCaOpscOpportunities are the byte-identical
 // helpers that lived inline in routes/hunt.js (moved, not rewritten).
 
+import { tradeFit, stateOf } from "./trade-fit.js";
+
 export async function fetchTxdotOpportunities() {
   const url = "https://data.texas.gov/resource/qh8x-rm8r.json?" + new URLSearchParams({
     "$select": "project_number,county,highway,district_division,project_classification,bids_will_be_opened_date,sealed_engineer_s_estimate,proposal_status,project_id",
@@ -126,6 +128,95 @@ export async function fetchNycCityRecordOpportunities() {
   }));
 }
 
+// "$1M - $4M" -> 4000000, "$250K - $500K" -> 500000 (the band's upper end);
+// null when there is no money in it.
+export function parseMoneyBand(text) {
+  const nums = [...String(text || "").replace(/,/g, "").matchAll(/\$?\s*(\d+(?:\.\d+)?)\s*([MK])?/gi)]
+    .map((m) => parseFloat(m[1]) * (/m/i.test(m[2] || "") ? 1e6 : /k/i.test(m[2] || "") ? 1e3 : 1))
+    .filter((n) => n > 0);
+  return nums.length ? Math.max(...nums) : null;
+}
+
+// Los Angeles Regional Alliance Marketplace for Procurement (Socrata,
+// data.lacity.org/hf3r-utnq): open construction bids from the City, LAUSD,
+// the county and the region's agencies. Added 2026-10-08.
+export async function fetchLaRampOpportunities() {
+  const today = new Date().toISOString().slice(0, 10);
+  const url = "https://data.lacity.org/resource/hf3r-utnq.json?" + new URLSearchParams({
+    "$where": "category = 'Construction' AND closedate >= '" + today + "'",
+    "$order": "closedate ASC",
+    "$limit": "200"
+  });
+  const res = await fetch(url, { headers: { "Accept": "application/json" } });
+  if (!res.ok) throw new Error("LA RAMP fetch failed: " + res.status);
+  const rows = await res.json();
+  return rows.map((r) => ({
+    source: "la_ramp",
+    source_ref: r.rampid,
+    title: String(r.title || "Construction Bid").replace(/\s+/g, " ").trim(),
+    agency: r.department || "Los Angeles region",
+    location: "Los Angeles, CA",
+    category: r.type && r.type !== "None" ? "Construction - " + r.type : "Construction",
+    status: r.stagename || "Open",
+    key_date: r.closedate || null,
+    estimated_value: null,
+    detail_url: (r.url && r.url.url) || "https://www.rampla.org/",
+    raw_data: r
+  }));
+}
+
+// Delaware Marketplace open bids (Socrata, data.delaware.gov/2hnj-zwix):
+// bids coded UNSPSC 72 (building and facility construction and maintenance
+// services) or 30 (structures and building components). Added 2026-10-08.
+export async function fetchDelawareOpportunities() {
+  const today = new Date().toISOString().slice(0, 10);
+  const url = "https://data.delaware.gov/resource/2hnj-zwix.json?" + new URLSearchParams({
+    "$where": "deadlinedate >= '" + today + "' AND (unspsc like '72%' OR unspsc like '%;72%' OR unspsc like '30%' OR unspsc like '%;30%')",
+    "$order": "deadlinedate ASC",
+    "$limit": "200"
+  });
+  const res = await fetch(url, { headers: { "Accept": "application/json" } });
+  if (!res.ok) throw new Error("Delaware fetch failed: " + res.status);
+  const rows = await res.json();
+  return rows.map((r) => ({
+    source: "de_mmp",
+    source_ref: r.contractnumber,
+    title: String(r.contracttitle || "State Bid").replace(/\s+/g, " ").trim(),
+    agency: "State of Delaware (" + (r.agencycode || "agency") + ")",
+    location: "Delaware, DE",
+    category: /(^|;)72(12|11)/.test(r.unspsc || "") ? "Building construction" : /(^|;)7214/.test(r.unspsc || "") ? "Heavy construction" : "Construction and facility services",
+    status: "Open",
+    key_date: r.deadlinedate || null,
+    estimated_value: null,
+    detail_url: (r.bidurl && r.bidurl.url) || "https://mmp.delaware.gov/",
+    raw_data: r
+  }));
+}
+
+// NYC School Construction Authority upcoming contracts (Socrata,
+// data.cityofnewyork.us/tsak-vtv3): school projects in scope or design,
+// before they are bid - doors, accessibility, interiors, exterior work.
+// Leads to watch, with the budget band. Added 2026-10-08.
+export async function fetchNycScaUpcoming() {
+  const url = "https://data.cityofnewyork.us/resource/tsak-vtv3.json?" + new URLSearchParams({ "$limit": "800" });
+  const res = await fetch(url, { headers: { "Accept": "application/json" } });
+  if (!res.ok) throw new Error("NYC SCA fetch failed: " + res.status);
+  const rows = await res.json();
+  return rows.filter((r) => r.upcoming_project_design_number).map((r) => ({
+    source: "nyc_sca",
+    source_ref: r.upcoming_project_design_number,
+    title: [r.upcoming_project_description, r.upcoming_project_name].filter(Boolean).join(" \u2014 "),
+    agency: "NYC School Construction Authority",
+    location: [r.upcoming_project_borough_ ? r.upcoming_project_borough_.charAt(0) + r.upcoming_project_borough_.slice(1).toLowerCase() : null, "NY"].filter(Boolean).join(", "),
+    category: r.upcoming_project_category || "School capital project",
+    status: r.upcoming_project_status_ ? "Upcoming (" + r.upcoming_project_status_ + ")" : "Upcoming",
+    key_date: null,
+    estimated_value: parseMoneyBand(r.upcoming_project_design_completion_date),
+    detail_url: "https://www.nycsca.org/Procurement",
+    raw_data: r
+  }));
+}
+
 /**
  * Pull every source and upsert into D1. Returns a summary row that is also
  * written to ingest_runs (created on first use).
@@ -141,12 +232,13 @@ export async function fetchNycCityRecordOpportunities() {
  */
 export const UPSERT_BATCH = 50;
 const UPSERT_SQL = `
-        INSERT INTO opportunities (id, source, source_ref, title, agency, location, category, status, key_date, estimated_value, detail_url, raw_data, created_at, fetched_at)
-        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+        INSERT INTO opportunities (id, source, source_ref, title, agency, location, category, status, key_date, estimated_value, detail_url, raw_data, created_at, fetched_at, trade_fit, trade_fit_why, state)
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
         ON CONFLICT(source, source_ref) DO UPDATE SET
           title=excluded.title, agency=excluded.agency, location=excluded.location, category=excluded.category,
           status=excluded.status, key_date=excluded.key_date, estimated_value=excluded.estimated_value,
-          raw_data=excluded.raw_data, fetched_at=excluded.fetched_at
+          raw_data=excluded.raw_data, fetched_at=excluded.fetched_at,
+          trade_fit=excluded.trade_fit, trade_fit_why=excluded.trade_fit_why, state=excluded.state
       `;
 
 export async function ingestSources(env, trigger = "cron") {
@@ -155,7 +247,8 @@ export async function ingestSources(env, trigger = "cron") {
   ).run();
   const started = new Date().toISOString();
   const runId = crypto.randomUUID();
-  const results = await Promise.allSettled([fetchTxdotOpportunities(), fetchCaOpscOpportunities(), fetchIllinoisCdbOpportunities(), fetchNycCityRecordOpportunities()]);
+  await ensureFitColumns(env);
+  const results = await Promise.allSettled([fetchTxdotOpportunities(), fetchCaOpscOpportunities(), fetchIllinoisCdbOpportunities(), fetchNycCityRecordOpportunities(), fetchLaRampOpportunities(), fetchDelawareOpportunities(), fetchNycScaUpcoming()]);
   let upserted = 0;
   const errors = [];
   for (const r of results) {
@@ -163,9 +256,11 @@ export async function ingestSources(env, trigger = "cron") {
     const stmts = [];
     for (const opp of r.value) {
       if (!opp.source_ref) continue;
+      const fit = tradeFit(opp);
       stmts.push(env.DB.prepare(UPSERT_SQL).bind(
         crypto.randomUUID(), opp.source, String(opp.source_ref), opp.title, opp.agency, opp.location, opp.category,
-        opp.status, opp.key_date, opp.estimated_value, opp.detail_url, JSON.stringify(opp.raw_data), started, started
+        opp.status, opp.key_date, opp.estimated_value, opp.detail_url, JSON.stringify(opp.raw_data), started, started,
+        fit.fit, fit.why, stateOf(opp.location)
       ));
     }
     for (let i = 0; i < stmts.length; i += UPSERT_BATCH) {
@@ -184,6 +279,20 @@ export async function ingestSources(env, trigger = "cron") {
     .bind(runId, started, finished, trigger, upserted, results.length, errors.length ? JSON.stringify(errors) : null).run();
   return { runId, started, finished, trigger, upserted, sources: results.length, errors };
 }
+
+// The trade fit columns (lib/trade-fit.js), added 2026-10-08. ALTER TABLE
+// ADD COLUMN fails once the column exists; that failure is the "already
+// there" answer. Rows written before have NULL and are classified on read
+// (routes/hunt.js backfillFit).
+let fitColumnsReady = false;
+export async function ensureFitColumns(env) {
+  if (fitColumnsReady) return;
+  for (const col of ["trade_fit TEXT", "trade_fit_why TEXT", "state TEXT"]) {
+    try { await env.DB.prepare("ALTER TABLE opportunities ADD COLUMN " + col).run(); } catch (_) { /* exists */ }
+  }
+  fitColumnsReady = true;
+}
+export function resetFitColumnsForTests() { fitColumnsReady = false; }
 
 /** Last completed ingest, for the page's "index refreshed at" line. */
 export async function lastIngest(env) {
