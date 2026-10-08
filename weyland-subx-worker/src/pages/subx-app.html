@@ -187,6 +187,7 @@
           <select id="sd-page" class="small"></select>
           <button type="button" class="primary" id="extract-btn">READ THIS PAGE</button>
           <button type="button" id="client-extract-btn">READ IT IN THIS BROWSER</button>
+          <button type="button" id="find-pages-btn">FIND THE SCHEDULE PAGES</button>
         </div>
         <div id="extract-result"></div>
         <div id="takeoff"></div>
@@ -1801,7 +1802,7 @@ global.SovereignPdfRender = {
       var root = document.documentElement;
       var EMBED = root.classList.contains("embedded");
       var TAKEOFF = root.classList.contains("takeoff");
-      var MODULE_URL = "/api/hardware-schedule/client-ocr-assets/schedule-grid-extraction-client.mjs?v=20261008a";
+      var MODULE_URL = "/api/hardware-schedule/client-ocr-assets/schedule-grid-extraction-client.mjs?v=20261008b";
       var state = { sessions: [], current: null, detail: null, lastUpload: null, blobUrl: null, busy: false };
       function $(id) { return document.getElementById(id); }
       function esc(s) { return String(s == null ? "" : s).replace(/[&<>"']/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]; }); }
@@ -2123,7 +2124,7 @@ global.SovereignPdfRender = {
       // ---------- read a page ----------
       function setBusy(b) {
         state.busy = b;
-        ["extract-btn", "client-extract-btn", "package-btn", "upload-btn"].forEach(function (id) { $(id).disabled = b; });
+        ["extract-btn", "client-extract-btn", "find-pages-btn", "package-btn", "upload-btn"].forEach(function (id) { $(id).disabled = b; });
       }
       function summaryText(pageNum, data, cached) {
         var type = data.schedule_type || (data.hardware_groups && data.hardware_groups.length ? "hardware_schedule" : "door_schedule");
@@ -2200,6 +2201,77 @@ global.SovereignPdfRender = {
         });
       });
 
+      // ---------- find the schedule pages ----------
+      // Every page's own text is read in this tab (the reader module's
+      // findSchedulePages): the pages holding a door schedule or hardware
+      // groups are found and read in one pass and saved like any other read,
+      // so a 500-page project manual needs no page number from you. A scanned
+      // page has no text; READ THIS PAGE (server OCR) still reads those.
+      function pagesLabel(list) {
+        var ps = list.map(function (f) { return f.page; });
+        var out = [], i = 0;
+        while (i < ps.length) {
+          var j = i;
+          while (j + 1 < ps.length && ps[j + 1] === ps[j] + 1) j++;
+          out.push(j > i ? ps[i] + "-" + ps[j] : String(ps[i]));
+          i = j + 1;
+        }
+        return (ps.length === 1 ? "page " : "pages ") + out.join(", ");
+      }
+      function findAndRead(id) {
+        if (!id || state.busy) return Promise.resolve(null);
+        var out = $("extract-result");
+        setBusy(true);
+        setStep("st-read", "now");
+        out.innerHTML = '<span class="spin"></span>Loading the reader into this browser...';
+        var bytesP = state.lastUpload && state.lastUpload.sessionId === id
+          ? state.lastUpload.file.arrayBuffer()
+          : fetch("/api/hardware-schedule/session/" + encodeURIComponent(id) + "/source.pdf", { credentials: "same-origin", headers: authHeaders(false) }).then(function (r) {
+              if (!r.ok) throw new Error("Could not fetch the uploaded PDF (HTTP " + r.status + ").");
+              return r.arrayBuffer();
+            });
+        return Promise.all([bytesP, import(MODULE_URL)]).then(function (arr) {
+          var mod = arr[1];
+          return mod.findSchedulePages(arr[0], function (msg) { out.innerHTML = '<span class="spin"></span>' + esc(msg); });
+        }).then(function (scan) {
+          if (!scan.found.length) {
+            out.innerHTML = '<div class="error-box">' + esc("No door schedule or hardware groups were found in the text of this PDF's " + scan.pages + " pages" + (scan.textless ? " (" + scan.textless + " of them are scanned images, which have no text)" : "") + ". Pick the schedule page above and use READ THIS PAGE: it reads scans too.") + "</div>";
+            return { found: 0 };
+          }
+          var saved = [], failed = [];
+          var chain = Promise.resolve();
+          scan.found.forEach(function (f, k) {
+            chain = chain.then(function () {
+              out.innerHTML = '<span class="spin"></span>' + esc("Saving page " + f.page + " (" + (k + 1) + " of " + scan.found.length + ")...");
+              return api("/api/hardware-schedule/session/" + encodeURIComponent(id) + "/page/" + f.page + "/extract-result", {
+                method: "POST",
+                json: { extraction: f.result, provider: { name: "client_text_layer", model: null, client: "browser_pdfjs_text_layer" } }
+              }).then(function (res) { (res.ok ? saved : failed).push(f); });
+            });
+          });
+          return chain.then(function () {
+            var doors = saved.filter(function (f) { return f.type === "door_schedule"; });
+            var sets = saved.filter(function (f) { return f.type === "hardware_schedule"; });
+            var parts = [];
+            if (doors.length) parts.push(doors.reduce(function (n, f) { return n + f.count; }, 0) + " doors on " + pagesLabel(doors));
+            if (sets.length) parts.push(sets.reduce(function (n, f) { return n + f.count; }, 0) + " hardware sets (" + sets.reduce(function (n, f) { return n + (f.items || 0); }, 0) + " items) on " + pagesLabel(sets));
+            var msg = "Searched all " + scan.pages + " pages in " + Math.max(1, Math.round(scan.ms / 1000)) + " s and read " + parts.join(" and ") + ". Each row below shows the page and row it came from.";
+            if (failed.length) msg += " " + failed.length + " page" + (failed.length === 1 ? "" : "s") + " could not be saved: " + pagesLabel(failed) + ".";
+            out.innerHTML = '<div class="' + (failed.length ? "error-box" : "ok-box") + '">' + esc(msg) + "</div>";
+            var sel = $("sd-page");
+            if (sel) sel.value = String(scan.found[0].page);
+            return { found: saved.length };
+          });
+        }).catch(function (e) {
+          out.innerHTML = '<div class="error-box">' + esc((e && e.message) || String(e)) + "</div>";
+          return null;
+        }).then(function (r) {
+          setBusy(false);
+          return loadSessions().then(function () { return loadDetail(id); }).then(function () { return r; });
+        });
+      }
+      $("find-pages-btn").addEventListener("click", function () { findAndRead(state.current); });
+
       // ---------- upload ----------
       $("upload-form").addEventListener("submit", function (e) {
         e.preventDefault();
@@ -2224,8 +2296,12 @@ global.SovereignPdfRender = {
           var sid = res.data.sessionId;
           state.lastUpload = { sessionId: sid, file: file };
           setStep("st-upload", "done");
-          out.innerHTML = '<div class="ok-box">' + esc("Uploaded " + file.name + " (" + res.data.totalPages + " page" + (res.data.totalPages === 1 ? "" : "s") + "). Reading page 1 now.") + "</div>";
-          return loadSessions().then(function () { return openSession(sid, { scroll: true }); }).then(function () { return readPage(1); });
+          out.innerHTML = '<div class="ok-box">' + esc("Uploaded " + file.name + " (" + res.data.totalPages + " page" + (res.data.totalPages === 1 ? "" : "s") + "). Finding the schedule pages now.") + "</div>";
+          // Find and read every schedule page from the PDF's text; a PDF with
+          // no schedule in its text (a scan) gets the server read of page 1.
+          return loadSessions().then(function () { return openSession(sid, { scroll: true }); }).then(function () { return findAndRead(sid); }).then(function (r) {
+            if (!r || !r.found) return readPage(1);
+          });
         });
       });
 

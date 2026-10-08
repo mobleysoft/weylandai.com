@@ -561,6 +561,76 @@ function closeOpenGroup(state) {
   state.openGroup = null;
 }
 
+// A page's text layer -> the extract-result shapes, or null when the page has
+// no schedule in its text (then OCR is tried, for a scan).
+function hardwareFromText(textLayer, t0) {
+  const read = readHardwareGroupsText(textLayer.items);
+  if (!read.hardware_groups.some((g) => g.components.length)) return null;
+  return {
+    hardware_groups: read.hardware_groups,
+    door_hardware_matrix: read.door_hardware_matrix,
+    detected_nomenclature: null,
+    metadata: {
+      extraction_mode: "text_layer",
+      extraction_route: "text_layer",
+      page_isolated: false,
+      text_items: textLayer.items.length,
+      text_direction: textLayer.direction,
+      columns: read.columns,
+      total_time_ms: Math.round(performance.now() - t0),
+    },
+  };
+}
+function doorsFromText(textLayer, t0) {
+  const read = readDoorScheduleText(textLayer.items);
+  const doors = read.rows.map((row, i) => doorFromRow({ ...row, _band: i })).filter((d) => d.door_number);
+  if (!doors.length) return null;
+  return {
+    doors,
+    extraction_confidence: 0.97,
+    metadata: {
+      extraction_mode: "text_layer",
+      extraction_route: "text_layer",
+      page_isolated: false,
+      row_count: doors.length,
+      rotation_applied: ((textLayer.direction % 360) + 360) % 360,
+      table_count: read.tables.length,
+      header_fields: read.tables.map((t) => t.fields),
+      text_items: textLayer.items.length,
+      total_time_ms: Math.round(performance.now() - t0),
+    },
+  };
+}
+
+/**
+ * Every page of a bid set that holds a door schedule or hardware groups, read
+ * from the text layer in one pass (2026-10-08). A 537-page project manual has
+ * its one hardware page at p.219; nobody should have to know that to upload
+ * it. Returns {pages, found: [{page, type, count, result}], textless}: result
+ * is exactly what extract*FromPdf returns for that page, ready for POST
+ * .../page/:n/extract-result. textless counts pages with no text (scans),
+ * which only OCR can read.
+ */
+export async function findSchedulePages(pdfBytes, onProgress, options = {}) {
+  const t0 = performance.now();
+  const progress = (msg, done, total) => { if (onProgress) onProgress(msg, done, total); };
+  progress("Loading PDF renderer...", 0, 0);
+  const pdfDoc = await openPdf(pdfBytes, options);
+  const total = pdfDoc.numPages;
+  const found = [];
+  let textless = 0;
+  for (let p = 1; p <= total; p++) {
+    if (p === 1 || p % 10 === 0 || p === total) progress("Looking for schedules: page " + p + " of " + total + "...", p, total);
+    const t = await readTextLayer(pdfDoc, p);
+    if (!t || t.items.length < 12) { textless++; continue; }
+    const doors = doorsFromText(t, performance.now());
+    if (doors) found.push({ page: p, type: "door_schedule", count: doors.doors.length, result: doors });
+    const hw = hardwareFromText(t, performance.now());
+    if (hw) found.push({ page: p, type: "hardware_schedule", count: hw.hardware_groups.length, items: hw.hardware_groups.reduce((n, g) => n + g.components.length, 0), result: hw });
+  }
+  return { pages: total, found, textless, ms: Math.round(performance.now() - t0) };
+}
+
 // extractHardwareScheduleFromPdf: the real client-side entry point. Takes a
 // File/Blob/ArrayBuffer of the full PDF and a 1-indexed page number, returns
 // {hardware_groups, door_hardware_matrix, detected_nomenclature, metadata} -
@@ -575,25 +645,10 @@ export async function extractHardwareScheduleFromPdf(pdfBytes, pageNumber, onPro
   if (options.textLayer !== false) {
     progress("Reading the text on page " + pageNumber + "...");
     textLayer = await readTextLayer(pdfDoc, pageNumber);
-    if (textLayer && textLayer.items.length) {
-      const read = readHardwareGroupsText(textLayer.items);
-      if (read.hardware_groups.some((g) => g.components.length)) {
-        progress("Extraction complete.");
-        return {
-          hardware_groups: read.hardware_groups,
-          door_hardware_matrix: read.door_hardware_matrix,
-          detected_nomenclature: null,
-          metadata: {
-            extraction_mode: "text_layer",
-            extraction_route: "text_layer",
-            page_isolated: false,
-            text_items: textLayer.items.length,
-            text_direction: textLayer.direction,
-            columns: read.columns,
-            total_time_ms: Math.round(performance.now() - t0),
-          },
-        };
-      }
+    const fromText = textLayer && textLayer.items.length ? hardwareFromText(textLayer, t0) : null;
+    if (fromText) {
+      progress("Extraction complete.");
+      return fromText;
     }
   }
 
@@ -1054,27 +1109,10 @@ export async function extractDoorScheduleFromPdf(pdfBytes, pageNumber, onProgres
   if (options.textLayer !== false) {
     progress("Reading the text on page " + pageNumber + "...");
     textLayer = await readTextLayer(pdfDoc, pageNumber);
-    if (textLayer && textLayer.items.length) {
-      const read = readDoorScheduleText(textLayer.items);
-      const doors = read.rows.map((row, i) => doorFromRow({ ...row, _band: i })).filter((d) => d.door_number);
-      if (doors.length) {
-        progress("Extraction complete.");
-        return {
-          doors,
-          extraction_confidence: 0.97,
-          metadata: {
-            extraction_mode: "text_layer",
-            extraction_route: "text_layer",
-            page_isolated: false,
-            row_count: doors.length,
-            rotation_applied: ((textLayer.direction % 360) + 360) % 360,
-            table_count: read.tables.length,
-            header_fields: read.tables.map((t) => t.fields),
-            text_items: textLayer.items.length,
-            total_time_ms: Math.round(performance.now() - t0),
-          },
-        };
-      }
+    const fromText = textLayer && textLayer.items.length ? doorsFromText(textLayer, t0) : null;
+    if (fromText) {
+      progress("Extraction complete.");
+      return fromText;
     }
   }
 

@@ -13,7 +13,7 @@ import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import * as pdfjs from "pdfjs-dist/legacy/build/pdf.mjs";
 import { textItemsFromContent, readDoorScheduleText, readHardwareGroupsText, splitSizeCell } from "../assets/client-ocr-src/schedule-text-layer.mjs";
-import { extractDoorScheduleFromPdf, extractHardwareScheduleFromPdf } from "../assets/client-ocr-src/schedule-grid-extraction-client.mjs";
+import { extractDoorScheduleFromPdf, extractHardwareScheduleFromPdf, findSchedulePages } from "../assets/client-ocr-src/schedule-grid-extraction-client.mjs";
 
 const here = dirname(fileURLToPath(import.meta.url));
 const WORKER = join(here, "..");
@@ -161,6 +161,18 @@ test("Christina set 01 (ruled, watermarked): 24 items, one printed without a qua
   const relay = g.components.find((c) => c.component_type === "RELAY MODULE");
   assert.deepEqual([relay.quantity, relay.model_number], [null, "ALTRONTICS RB1224 BY SECURITY VENDOR"]);
   assert.equal(g.components.find((c) => /^AUTO DOOR/.test(c.component_type)).model_number, "DORMA 100 SERIES BY SECURITY VENDOR");
+});
+
+test("findSchedulePages: the schedule pages of a whole bid set, with no page number given", async () => {
+  const rockford = await findSchedulePages(pdf("f0e863d88ea688ff.pdf"), null, opts);
+  assert.deepEqual(rockford.found.map((f) => [f.page, f.type]), [
+    [17, "hardware_schedule"], [18, "hardware_schedule"], [19, "hardware_schedule"], [20, "hardware_schedule"],
+    [21, "hardware_schedule"], [22, "hardware_schedule"], [23, "hardware_schedule"], [29, "door_schedule"],
+  ]);
+  assert.equal(rockford.found.at(-1).result.doors.length, 65);
+  // A 537-page project manual: the five hardware pages, nothing else.
+  const christina = await findSchedulePages(pdf("525dc0b72011077a.pdf"), null, opts);
+  assert.deepEqual(christina.found.map((f) => f.page), [219, 220, 221, 222, 223]);
 });
 
 test("the served copies are the sources (the asset route serves the .bin files)", () => {
