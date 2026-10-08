@@ -185,8 +185,17 @@ export const CHECKOUT_READY_PRODUCTS = new Set([
   "weyland-lienx-seat",
   "weyland-bidx-seat",
   "weyland-coa-seat",
-  // weyland-drawx-seat, weyland-asbuiltx-seat, weyland-specx-seat,
-  // weyland-inspecx-seat and weyland-survx-seat removed 2026-10-08 (fix 7 of
+  // Re-listed 2026-10-08 evening (owner's decision) after passing live on the
+  // weyland-docs-worker (page jobs, one OCR'd page per call): DrawX on the 21-sheet
+  // 36 x 24 Fayette set (11 s), AsBuiltX on two of its sheets, SpecX on the 288-page
+  // Berryessa manual (9 s), InspecX on the FCMAT FIT inspection (9 pages, 7 OCR'd,
+  // 87 s) and SurvX on the 289-page NSW dilapidation report (11 s).
+  "weyland-drawx-seat",
+  "weyland-asbuiltx-seat",
+  "weyland-specx-seat",
+  "weyland-inspecx-seat",
+  "weyland-survx-seat",
+  // History: they were removed earlier 2026-10-08 (fix 7 of
   // plan/weylandai_value_report.md): on the audit documents each one errors
   // (HTTP 500 "Worker exceeded memory limit" on a 36 x 24 drawing sheet for
   // DrawX and AsBuiltX; "Worker exceeded CPU time limit" on a 33-page spec

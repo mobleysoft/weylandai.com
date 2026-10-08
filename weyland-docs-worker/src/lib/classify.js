@@ -61,6 +61,10 @@ const EXCLUDED = [
   /\b(?:evaluator|the inspector|for example|should (?:mark|note|be rated|appear)|percent(?:age)?|criteria|Good Repair Standard|underlined statement|marked as|Indicate ['\u201c"]?X|Mark ['\u201c"]?D|in order to|such as)\b/i,
   // Headings and report boilerplate.
   /^[A-Z0-9 &()\/\-:,.']{3,40}:?$/, /was developed to alert|For more information visit|safety resources/i,
+  // A report's own grading legend and disclaimer (2026-10-08, NSW dilapidation report p.3):
+  // "Significant - Ranges from 5 mm to 15 mm", "Poor - Indicates generally that ...".
+  /^(?:good|reasonable|fair|poor|minor|moderate|significant|severe|extreme|very severe)\s*[-–:]\s*(?:ranges? from|items? (?:do|does|is|are)|indicates?|means?|refers? to|where)\b/i,
+  /\b(?:we are referring to the following|australian standard|as 2870|responsibility for any damage|be alleged that|no comment will be made)\b/i,
 ];
 // FIT rows: a category word with a standalone D or X mark on the same line.
 const FIT_CATEGORY = /\b(?:restrooms?|classrooms?|hall(?:way)?s?|playground|electrical|fire|roofs?|windows|doors|gas leaks|mechanical|sewer|interior|overall|structural|hazardous|pest|drinking fountains?|sinks?|library|kitchen|cafeteria|gym|office)\b/i;
