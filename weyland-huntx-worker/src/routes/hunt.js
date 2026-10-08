@@ -38,6 +38,10 @@
 //                                      (Google Calendar / Outlook "subscribe by URL")
 //     The token is the secret (32 hex). Deleting the search kills both feeds;
 //     each read re-checks the owner's HuntX plan, so a lapsed plan stops them.
+//   Email (2026-10-08, via mailguyAI; lib/email-alerts.js):
+//     POST /api/hunt/saved/:id/email {on}   a daily digest of new matches for that search
+//     GET  /api/hunt/unsubscribe/<token>    one-click stop, linked from every email
+//     GET  /api/hunt/saved also says emailAvailable (false until MAILGUY_API_KEY is set).
 //
 //   POST /api/hunt/refresh
 //     Never waits on the public sources (per the 2026-10-05 instruction that
@@ -141,7 +145,9 @@ async function ensureSavedTable(env2) {
   await env2.DB.prepare(`CREATE TABLE IF NOT EXISTS huntx_saved_searches (
     id TEXT PRIMARY KEY, user_id TEXT NOT NULL, name TEXT NOT NULL, params TEXT NOT NULL,
     last_seen_at TEXT NOT NULL, created_at TEXT NOT NULL)`).run();
-  try { await env2.DB.prepare("ALTER TABLE huntx_saved_searches ADD COLUMN feed_token TEXT").run(); } catch (_) { /* already there */ }
+  for (const col of ["feed_token TEXT", "email_alerts INTEGER DEFAULT 0", "last_emailed_at TEXT", "unsub_token TEXT"]) {
+    try { await env2.DB.prepare("ALTER TABLE huntx_saved_searches ADD COLUMN " + col).run(); } catch (_) { /* already there */ }
+  }
   savedTableReady = true;
 }
 export function resetSavedTableForTests() { savedTableReady = false; }
@@ -304,7 +310,7 @@ export function registerHuntRoutes(router, { authenticate }) {
   router.get("/api/hunt/saved", async (request2, env2) => {
     const a = await signedIn(request2, env2);
     if (a.error) return a.error;
-    const r = await env2.DB.prepare("SELECT id, name, params, last_seen_at, created_at, feed_token FROM huntx_saved_searches WHERE user_id = ? ORDER BY created_at").bind(a.userId).all();
+    const r = await env2.DB.prepare("SELECT id, name, params, last_seen_at, created_at, feed_token, email_alerts FROM huntx_saved_searches WHERE user_id = ? ORDER BY created_at").bind(a.userId).all();
     const today = new Date().toISOString().slice(0, 10);
     const saved = [];
     for (const s of r?.results || []) {
@@ -314,9 +320,9 @@ export function registerHuntRoutes(router, { authenticate }) {
       const row = await env2.DB.prepare(`SELECT COUNT(*) AS n FROM opportunities ${where} AND created_at > ?`).bind(...binds, s.last_seen_at).first();
       let token = s.feed_token;
       if (!token) { token = feedToken(); await env2.DB.prepare("UPDATE huntx_saved_searches SET feed_token = ? WHERE id = ?").bind(token, s.id).run(); }
-      saved.push({ id: s.id, name: s.name, params, last_seen_at: s.last_seen_at, new_count: row?.n || 0, ...feedUrls(token) });
+      saved.push({ id: s.id, name: s.name, params, last_seen_at: s.last_seen_at, new_count: row?.n || 0, email_alerts: !!s.email_alerts, ...feedUrls(token) });
     }
-    return jsonResponse3({ success: true, saved });
+    return jsonResponse3({ success: true, saved, emailAvailable: !!env2.MAILGUY_API_KEY });
   });
 
   router.post("/api/hunt/saved", async (request2, env2) => {
@@ -379,5 +385,32 @@ export function registerHuntRoutes(router, { authenticate }) {
     }
     const rows = (await env2.DB.prepare(`SELECT ${cols} FROM opportunities ${where} AND key_date >= ? ORDER BY key_date ASC LIMIT 300`).bind(...binds, today).all()).results || [];
     return new Response(icsFeed(s.name, rows, now), { headers: { "Content-Type": "text/calendar; charset=utf-8", "Cache-Control": "private, max-age=900", "Content-Disposition": `inline; filename="huntx-${m[1].slice(0, 8)}.ics"` } });
+  });
+
+  router.post("/api/hunt/saved/:id/email", async (request2, env2) => {
+    const a = await signedIn(request2, env2);
+    if (a.error) return a.error;
+    const id = request2.params?.id || new URL(request2.url).pathname.split("/")[4];
+    const body = await request2.json().catch(() => ({}));
+    const on = !!body.on;
+    if (on && !env2.MAILGUY_API_KEY) return jsonResponse3({ success: false, error: "EMAIL_UNAVAILABLE", message: "Email alerts are not switched on for HuntX yet. The RSS and calendar links deliver new notices meanwhile." }, 503);
+    if (on && !(await outputAccess(env2, a.userId, "huntx")).paid) return jsonResponse3(paymentRequired("Email alerts for a saved search"), 402);
+    const row = await env2.DB.prepare("SELECT id, unsub_token FROM huntx_saved_searches WHERE id = ? AND user_id = ?").bind(id, a.userId).first();
+    if (!row) return jsonResponse3({ success: false, message: "Not found." }, 404);
+    // Alerts start from now: the first digest holds what arrives after this.
+    await env2.DB.prepare("UPDATE huntx_saved_searches SET email_alerts = ?, unsub_token = ?, last_emailed_at = CASE WHEN ? THEN ? ELSE last_emailed_at END WHERE id = ? AND user_id = ?")
+      .bind(on ? 1 : 0, row.unsub_token || feedToken(), on ? 1 : 0, new Date().toISOString(), id, a.userId).run();
+    return jsonResponse3({ success: true, email_alerts: on });
+  });
+
+  router.get("/api/hunt/unsubscribe/:token", async (request2, env2) => {
+    const token = request2.params?.token || new URL(request2.url).pathname.split("/").pop();
+    await ensureSavedTable(env2);
+    const page = (msg) => new Response(`<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>HuntX email alerts</title></head><body style="font-family:Helvetica,Arial,sans-serif;background:#090a0d;color:#edf0f1;display:grid;place-items:center;min-height:100vh;margin:0"><div style="max-width:460px;padding:24px;text-align:center"><p style="font:700 12px monospace;letter-spacing:.12em;color:#ffd400">WEYLANDAI HUNTX</p><h1 style="font-size:22px">${msg}</h1><p><a href="/huntx" style="color:#66d4ff">Open HuntX</a></p></div></body></html>`, { headers: { "Content-Type": "text/html; charset=utf-8", "Cache-Control": "no-store" } });
+    if (!/^[0-9a-f]{32}$/.test(String(token || ""))) return page("That unsubscribe link is not valid.");
+    const row = await env2.DB.prepare("SELECT id, name FROM huntx_saved_searches WHERE unsub_token = ?").bind(token).first();
+    if (!row) return page("That saved search no longer exists, so it sends no email.");
+    await env2.DB.prepare("UPDATE huntx_saved_searches SET email_alerts = 0 WHERE id = ?").bind(row.id).run();
+    return page("Email alerts for “" + String(row.name).replace(/[<>&"]/g, "") + "” are off.");
   });
 }
