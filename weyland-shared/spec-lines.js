@@ -192,8 +192,9 @@ function parseSpecStyle(line, sets) {
       if (/\d/.test(cand) || !(isKnownMakerPhrase(cand, sets) || (n === 1 && isMakerCode(cand)))) continue;
       const code = n === 1 && isMakerCode(cand) ? cand.toUpperCase() : null;
       const catalog = tokens.slice(n);
-      let fin = null;
-      if (catalog.length > 1 && isFinishCode(catalog[catalog.length - 1])) fin = catalog.pop();
+      // A finish word at the end is noted but stays in the catalogue number: some models end in
+      // one ("10-LITE PRIMED"), and the matcher tries the line with and without its tail.
+      const fin = catalog.length > 1 && isFinishCode(catalog[catalog.length - 1]) ? catalog[catalog.length - 1] : null;
       return {
         raw: line,
         manufacturer: code ? MAKER_CODES[code] : cand.replace(/[.,;:]+$/, ""),
