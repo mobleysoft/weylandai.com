@@ -1,0 +1,1773 @@
+{
+ "started_at": "2026-10-08T07:52:04.211Z",
+ "reader": "schedule-grid-extraction-client.mjs (text layer first)",
+ "pdfjs": "6.2.108",
+ "documents": [
+  {
+   "id": "rockford",
+   "file": "tools/corpus/door-schedules/f0e863d88ea688ff.pdf",
+   "reads": [
+    {
+     "page": 29,
+     "type": "door_schedule",
+     "ms": 321,
+     "route": "text_layer",
+     "found": "65 doors"
+    },
+    {
+     "page": 18,
+     "type": "hardware_schedule",
+     "ms": 56,
+     "route": "text_layer",
+     "found": "3 groups"
+    },
+    {
+     "page": 19,
+     "type": "hardware_schedule",
+     "ms": 35,
+     "route": "text_layer",
+     "found": "3 groups"
+    },
+    {
+     "page": 20,
+     "type": "hardware_schedule",
+     "ms": 24,
+     "route": "text_layer",
+     "found": "2 groups"
+    },
+    {
+     "page": 21,
+     "type": "hardware_schedule",
+     "ms": 38,
+     "route": "text_layer",
+     "found": "1 groups"
+    },
+    {
+     "page": 22,
+     "type": "hardware_schedule",
+     "ms": 31,
+     "route": "text_layer",
+     "found": "1 groups"
+    },
+    {
+     "page": 23,
+     "type": "hardware_schedule",
+     "ms": 26,
+     "route": "text_layer",
+     "found": "3 groups"
+    }
+   ],
+   "doors": {
+    "expected_rows": 65,
+    "rows_found": 65,
+    "rows_found_pct": 100,
+    "extra_rows": 0,
+    "extra_sample": [],
+    "field_accuracy_pct": 100,
+    "per_field": {
+     "mark": {
+      "right": 65,
+      "wrong": 0
+     },
+     "hardware_group": {
+      "right": 65,
+      "wrong": 0
+     },
+     "width_inches": {
+      "right": 65,
+      "wrong": 0
+     },
+     "height_inches": {
+      "right": 65,
+      "wrong": 0
+     },
+     "fire_rating": {
+      "right": 65,
+      "wrong": 0
+     },
+     "door_type": {
+      "right": 65,
+      "wrong": 0
+     }
+    },
+    "rows": [
+     {
+      "mark": "1J.1",
+      "page": 29,
+      "found": true,
+      "wrong": []
+     },
+     {
+      "mark": "109.1",
+      "page": 29,
+      "found": true,
+      "wrong": []
+     },
+     {
+      "mark": "109.2",
+      "page": 29,
+      "found": true,
+      "wrong": []
+     },
+     {
+      "mark": "111.1",
+      "page": 29,
+      "found": true,
+      "wrong": []
+     },
+     {
+      "mark": "111.1.1",
+      "page": 29,
+      "found": true,
+      "wrong": []
+     },
+     {
+      "mark": "113.1",
+      "page": 29,
+      "found": true,
+      "wrong": []
+     },
+     {
+      "mark": "113.1.1",
+      "page": 29,
+      "found": true,
+      "wrong": []
+     },
+     {
+      "mark": "114.1",
+      "page": 29,
+      "found": true,
+      "wrong": []
+     },
+     {
+      "mark": "118.1",
+      "page": 29,
+      "found": true,
+      "wrong": []
+     },
+     {
+      "mark": "119.1",
+      "page": 29,
+      "found": true,
+      "wrong": []
+     },
+     {
+      "mark": "119.2",
+      "page": 29,
+      "found": true,
+      "wrong": []
+     },
+     {
+      "mark": "126.1",
+      "page": 29,
+      "found": true,
+      "wrong": []
+     },
+     {
+      "mark": "126.1.1",
+      "page": 29,
+      "found": true,
+      "wrong": []
+     },
+     {
+      "mark": "126.1.2",
+      "page": 29,
+      "found": true,
+      "wrong": []
+     },
+     {
+      "mark": "126.2",
+      "page": 29,
+      "found": true,
+      "wrong": []
+     },
+     {
+      "mark": "127.1",
+      "page": 29,
+      "found": true,
+      "wrong": []
+     },
+     {
+      "mark": "128.1.1",
+      "page": 29,
+      "found": true,
+      "wrong": []
+     },
+     {
+      "mark": "129.1",
+      "page": 29,
+      "found": true,
+      "wrong": []
+     },
+     {
+      "mark": "130.1",
+      "page": 29,
+      "found": true,
+      "wrong": []
+     },
+     {
+      "mark": "131.1",
+      "page": 29,
+      "found": true,
+      "wrong": []
+     },
+     {
+      "mark": "132.1",
+      "page": 29,
+      "found": true,
+      "wrong": []
+     },
+     {
+      "mark": "133.1",
+      "page": 29,
+      "found": true,
+      "wrong": []
+     },
+     {
+      "mark": "134.1",
+      "page": 29,
+      "found": true,
+      "wrong": []
+     },
+     {
+      "mark": "136.1",
+      "page": 29,
+      "found": true,
+      "wrong": []
+     },
+     {
+      "mark": "138.1",
+      "page": 29,
+      "found": true,
+      "wrong": []
+     },
+     {
+      "mark": "138.1.1",
+      "page": 29,
+      "found": true,
+      "wrong": []
+     },
+     {
+      "mark": "138.2",
+      "page": 29,
+      "found": true,
+      "wrong": []
+     },
+     {
+      "mark": "141.1",
+      "page": 29,
+      "found": true,
+      "wrong": []
+     },
+     {
+      "mark": "142.1",
+      "page": 29,
+      "found": true,
+      "wrong": []
+     },
+     {
+      "mark": "143.1",
+      "page": 29,
+      "found": true,
+      "wrong": []
+     },
+     {
+      "mark": "144.1",
+      "page": 29,
+      "found": true,
+      "wrong": []
+     },
+     {
+      "mark": "145.1",
+      "page": 29,
+      "found": true,
+      "wrong": []
+     },
+     {
+      "mark": "146.1",
+      "page": 29,
+      "found": true,
+      "wrong": []
+     },
+     {
+      "mark": "147.1",
+      "page": 29,
+      "found": true,
+      "wrong": []
+     },
+     {
+      "mark": "147.1.1",
+      "page": 29,
+      "found": true,
+      "wrong": []
+     },
+     {
+      "mark": "148.1",
+      "page": 29,
+      "found": true,
+      "wrong": []
+     },
+     {
+      "mark": "150.1",
+      "page": 29,
+      "found": true,
+      "wrong": []
+     },
+     {
+      "mark": "151.1",
+      "page": 29,
+      "found": true,
+      "wrong": []
+     },
+     {
+      "mark": "152.1",
+      "page": 29,
+      "found": true,
+      "wrong": []
+     },
+     {
+      "mark": "152.1.1",
+      "page": 29,
+      "found": true,
+      "wrong": []
+     },
+     {
+      "mark": "153.1",
+      "page": 29,
+      "found": true,
+      "wrong": []
+     },
+     {
+      "mark": "155.1",
+      "page": 29,
+      "found": true,
+      "wrong": []
+     },
+     {
+      "mark": "155.2",
+      "page": 29,
+      "found": true,
+      "wrong": []
+     },
+     {
+      "mark": "157.1",
+      "page": 29,
+      "found": true,
+      "wrong": []
+     },
+     {
+      "mark": "159.1",
+      "page": 29,
+      "found": true,
+      "wrong": []
+     },
+     {
+      "mark": "161.1",
+      "page": 29,
+      "found": true,
+      "wrong": []
+     },
+     {
+      "mark": "162.1",
+      "page": 29,
+      "found": true,
+      "wrong": []
+     },
+     {
+      "mark": "163.1",
+      "page": 29,
+      "found": true,
+      "wrong": []
+     },
+     {
+      "mark": "164.1",
+      "page": 29,
+      "found": true,
+      "wrong": []
+     },
+     {
+      "mark": "165.1",
+      "page": 29,
+      "found": true,
+      "wrong": []
+     },
+     {
+      "mark": "166.1",
+      "page": 29,
+      "found": true,
+      "wrong": []
+     },
+     {
+      "mark": "167.1",
+      "page": 29,
+      "found": true,
+      "wrong": []
+     },
+     {
+      "mark": "167.1.1",
+      "page": 29,
+      "found": true,
+      "wrong": []
+     },
+     {
+      "mark": "168.1",
+      "page": 29,
+      "found": true,
+      "wrong": []
+     },
+     {
+      "mark": "170.1",
+      "page": 29,
+      "found": true,
+      "wrong": []
+     },
+     {
+      "mark": "173.1",
+      "page": 29,
+      "found": true,
+      "wrong": []
+     },
+     {
+      "mark": "174.1",
+      "page": 29,
+      "found": true,
+      "wrong": []
+     },
+     {
+      "mark": "175.1",
+      "page": 29,
+      "found": true,
+      "wrong": []
+     },
+     {
+      "mark": "176.1",
+      "page": 29,
+      "found": true,
+      "wrong": []
+     },
+     {
+      "mark": "177.1",
+      "page": 29,
+      "found": true,
+      "wrong": []
+     },
+     {
+      "mark": "178.1",
+      "page": 29,
+      "found": true,
+      "wrong": []
+     },
+     {
+      "mark": "179.1",
+      "page": 29,
+      "found": true,
+      "wrong": []
+     },
+     {
+      "mark": "179.1.1",
+      "page": 29,
+      "found": true,
+      "wrong": []
+     },
+     {
+      "mark": "180.1",
+      "page": 29,
+      "found": true,
+      "wrong": []
+     },
+     {
+      "mark": "182.1",
+      "page": 29,
+      "found": true,
+      "wrong": []
+     }
+    ]
+   },
+   "hardware": {
+    "expected_groups": 13,
+    "groups_found": 13,
+    "extra_groups": [],
+    "expected_items": 103,
+    "items_found": 103,
+    "items_found_pct": 100,
+    "field_accuracy_pct": 100,
+    "per_field": {
+     "qty": {
+      "right": 103,
+      "wrong": 0
+     },
+     "description": {
+      "right": 103,
+      "wrong": 0
+     },
+     "catalog": {
+      "right": 103,
+      "wrong": 0
+     },
+     "finish": {
+      "right": 103,
+      "wrong": 0
+     },
+     "mfr": {
+      "right": 103,
+      "wrong": 0
+     }
+    },
+    "doors_linked": {
+     "expected": 61,
+     "linked": 61,
+     "pct": 100
+    },
+    "groups": [
+     {
+      "group": "02 RR-M",
+      "found": true,
+      "read_as": "02 RR-M",
+      "items_expected": 8,
+      "items_found": 8,
+      "extra_items": 0,
+      "link": {
+       "expected_doors": 6,
+       "linked": 6,
+       "set_door_count": 6
+      },
+      "items": [
+       {
+        "item": "CONTINUOUS HINGE SL11 / SL24",
+        "found": true,
+        "wrong": []
+       },
+       {
+        "item": "PUSH PLATE 8200 4\" X 16\" TKTX SCREWS AT HM DOORS",
+        "found": true,
+        "wrong": []
+       },
+       {
+        "item": "PULL PLATE 8302 10\" 4\" X 16\" TKTX SCREWS AT HM DOORS",
+        "found": true,
+        "wrong": []
+       },
+       {
+        "item": "REG/ PA SURFACE CLOSER - AS REQUIRED 4040XP REG / 4040XP EDA - AS REQUIRED",
+        "found": true,
+        "wrong": []
+       },
+       {
+        "item": "KICK PLATE 8400 10\" HIGH B-CS TKTX SCREWS AT HM DOORS",
+        "found": true,
+        "wrong": []
+       },
+       {
+        "item": "MOP PLATE 8400 4\" HIGH B-CS TKTX SCREWS AT HM DOORS",
+        "found": true,
+        "wrong": []
+       },
+       {
+        "item": "WALL STOP WS406/407CCV",
+        "found": true,
+        "wrong": []
+       },
+       {
+        "item": "SILENCER SR64",
+        "found": true,
+        "wrong": []
+       }
+      ]
+     },
+     {
+      "group": "06 CL",
+      "found": true,
+      "read_as": "06 CL",
+      "items_expected": 6,
+      "items_found": 6,
+      "extra_items": 0,
+      "link": {
+       "expected_doors": 30,
+       "linked": 30,
+       "set_door_count": 30
+      },
+      "items": [
+       {
+        "item": "CONTINUOUS HINGE SL11 / SL24",
+        "found": true,
+        "wrong": []
+       },
+       {
+        "item": "ENTRANCE LOCK ALX53R-RHO-626 FSIC",
+        "found": true,
+        "wrong": []
+       },
+       {
+        "item": "CLOSER, HOLD OPEN 4040XP H / HEDA - AS REQUIRED",
+        "found": true,
+        "wrong": []
+       },
+       {
+        "item": "KICK PLATE 8400 10\" HIGH B-CS TKTX SCREWS AT HM DOORS",
+        "found": true,
+        "wrong": []
+       },
+       {
+        "item": "WALL STOP WS406/407CCV",
+        "found": true,
+        "wrong": []
+       },
+       {
+        "item": "SILENCER SR64",
+        "found": true,
+        "wrong": []
+       }
+      ]
+     },
+     {
+      "group": "07 CL",
+      "found": true,
+      "read_as": "07 CL",
+      "items_expected": 6,
+      "items_found": 6,
+      "extra_items": 0,
+      "link": {
+       "expected_doors": 5,
+       "linked": 5,
+       "set_door_count": 5
+      },
+      "items": [
+       {
+        "item": "CONTINUOUS HINGE SL11 / SL24",
+        "found": true,
+        "wrong": []
+       },
+       {
+        "item": "ENTRANCE LOCK ALX53R-RHO-626 FSIC",
+        "found": true,
+        "wrong": []
+       },
+       {
+        "item": "OH STOP 90S",
+        "found": true,
+        "wrong": []
+       },
+       {
+        "item": "CLOSER, HOLD OPEN 4040XP H / HEDA - AS REQUIRED",
+        "found": true,
+        "wrong": []
+       },
+       {
+        "item": "KICK PLATE 8400 10\" HIGH B-CS TKTX SCREWS AT HM DOORS",
+        "found": true,
+        "wrong": []
+       },
+       {
+        "item": "SILENCER SR64",
+        "found": true,
+        "wrong": []
+       }
+      ]
+     },
+     {
+      "group": "19 STO",
+      "found": true,
+      "read_as": "19 STO",
+      "items_expected": 8,
+      "items_found": 8,
+      "extra_items": 0,
+      "link": {
+       "expected_doors": 2,
+       "linked": 2,
+       "set_door_count": 2
+      },
+      "items": [
+       {
+        "item": "CONTINUOUS HINGE SL11 / SL24",
+        "found": true,
+        "wrong": []
+       },
+       {
+        "item": "CONST LATCHING BOLT FB51P / FB61P",
+        "found": true,
+        "wrong": []
+       },
+       {
+        "item": "DUST PROOF STRIKE DP1/ DP2 (AS REQ'D)",
+        "found": true,
+        "wrong": []
+       },
+       {
+        "item": "STOREROOM LOCK ALX80R-RHO-626 FSIC",
+        "found": true,
+        "wrong": []
+       },
+       {
+        "item": "CLOSER, HOLD OPEN 4040XP H / HEDA - AS REQUIRED",
+        "found": true,
+        "wrong": []
+       },
+       {
+        "item": "ARMOR PLATE 8400 34\" HIGH B-CS TKTX SCREWS AT HM DOORS",
+        "found": true,
+        "wrong": []
+       },
+       {
+        "item": "WALL STOP WS406/407CCV",
+        "found": true,
+        "wrong": []
+       },
+       {
+        "item": "SILENCER SR64",
+        "found": true,
+        "wrong": []
+       }
+      ]
+     },
+     {
+      "group": "19F STO",
+      "found": true,
+      "read_as": "19F STO",
+      "items_expected": 8,
+      "items_found": 8,
+      "extra_items": 0,
+      "link": {
+       "expected_doors": 1,
+       "linked": 1,
+       "set_door_count": 1
+      },
+      "items": [
+       {
+        "item": "CONTINUOUS HINGE SL11 / SL24",
+        "found": true,
+        "wrong": []
+       },
+       {
+        "item": "CONST LATCHING BOLT FB51P / FB61P",
+        "found": true,
+        "wrong": []
+       },
+       {
+        "item": "DUST PROOF STRIKE DP1/ DP2 (AS REQ'D)",
+        "found": true,
+        "wrong": []
+       },
+       {
+        "item": "STOREROOM LOCK ALX80R-RHO-626 FSIC",
+        "found": true,
+        "wrong": []
+       },
+       {
+        "item": "REG/ PA SURFACE CLOSER - AS REQUIRED 4040XP REG / 4040XP EDA - AS REQUIRED",
+        "found": true,
+        "wrong": []
+       },
+       {
+        "item": "ARMOR PLATE 8400 34\" HIGH B-CS TKTX SCREWS AT HM DOORS",
+        "found": true,
+        "wrong": []
+       },
+       {
+        "item": "WALL STOP WS406/407CCV",
+        "found": true,
+        "wrong": []
+       },
+       {
+        "item": "GASKETING 188SBK PSA",
+        "found": true,
+        "wrong": []
+       }
+      ]
+     },
+     {
+      "group": "20 STO",
+      "found": true,
+      "read_as": "20 STO",
+      "items_expected": 6,
+      "items_found": 6,
+      "extra_items": 0,
+      "link": {
+       "expected_doors": 1,
+       "linked": 1,
+       "set_door_count": 1
+      },
+      "items": [
+       {
+        "item": "CONTINUOUS HINGE SL11 / SL24",
+        "found": true,
+        "wrong": []
+       },
+       {
+        "item": "STOREROOM LOCK ALX80R-RHO-626 FSIC",
+        "found": true,
+        "wrong": []
+       },
+       {
+        "item": "REG/ PA SURFACE CLOSER - AS REQUIRED 4040XP REG / 4040XP EDA - AS REQUIRED",
+        "found": true,
+        "wrong": []
+       },
+       {
+        "item": "KICK PLATE 8400 10\" HIGH B-CS TKTX SCREWS AT HM DOORS",
+        "found": true,
+        "wrong": []
+       },
+       {
+        "item": "WALL STOP WS406/407CCV",
+        "found": true,
+        "wrong": []
+       },
+       {
+        "item": "SILENCER SR64",
+        "found": true,
+        "wrong": []
+       }
+      ]
+     },
+     {
+      "group": "23 STO",
+      "found": true,
+      "read_as": "23 STO",
+      "items_expected": 6,
+      "items_found": 6,
+      "extra_items": 0,
+      "link": {
+       "expected_doors": 4,
+       "linked": 4,
+       "set_door_count": 4
+      },
+      "items": [
+       {
+        "item": "CONTINUOUS HINGE SL11 / SL24",
+        "found": true,
+        "wrong": []
+       },
+       {
+        "item": "STOREROOM LOCK ALX80R-RHO-626 FSIC",
+        "found": true,
+        "wrong": []
+       },
+       {
+        "item": "OH STOP 90S",
+        "found": true,
+        "wrong": []
+       },
+       {
+        "item": "REG/ PA SURFACE CLOSER - AS REQUIRED 4040XP REG / 4040XP EDA - AS REQUIRED",
+        "found": true,
+        "wrong": []
+       },
+       {
+        "item": "KICK PLATE 8400 10\" HIGH B-CS TKTX SCREWS AT HM DOORS",
+        "found": true,
+        "wrong": []
+       },
+       {
+        "item": "SILENCER SR64",
+        "found": true,
+        "wrong": []
+       }
+      ]
+     },
+     {
+      "group": "28 COR",
+      "found": true,
+      "read_as": "28 COR",
+      "items_expected": 8,
+      "items_found": 8,
+      "extra_items": 0,
+      "link": {
+       "expected_doors": 2,
+       "linked": 2,
+       "set_door_count": 2
+      },
+      "items": [
+       {
+        "item": "CONTINUOUS HINGE SL11 / SL24",
+        "found": true,
+        "wrong": []
+       },
+       {
+        "item": "FIRE EXIT HARDWARE 9927-L-BE-F-LBR-06-499F",
+        "found": true,
+        "wrong": []
+       },
+       {
+        "item": "FIRE EXIT HARDWARE 9927-L-BE-F-LBRAFL-06-499F",
+        "found": true,
+        "wrong": []
+       },
+       {
+        "item": "W/ C KEYWAY 20-057-C FSIC 6PIN",
+        "found": true,
+        "wrong": []
+       },
+       {
+        "item": "OH STOP 100SE",
+        "found": true,
+        "wrong": []
+       },
+       {
+        "item": "FIRE/LIFE CLOSER 4040SE",
+        "found": true,
+        "wrong": []
+       },
+       {
+        "item": "KICK PLATE 8400 10\" HIGH B-CS TKTX SCREWS AT HM DOORS",
+        "found": true,
+        "wrong": []
+       },
+       {
+        "item": "GASKETING 188SBK PSA",
+        "found": true,
+        "wrong": []
+       }
+      ]
+     },
+     {
+      "group": "32 EXD",
+      "found": true,
+      "read_as": "32 EXD",
+      "items_expected": 12,
+      "items_found": 12,
+      "extra_items": 0,
+      "link": {
+       "expected_doors": 2,
+       "linked": 2,
+       "set_door_count": 2
+      },
+      "items": [
+       {
+        "item": "CONTINUOUS HINGE SL11 / SL24 - EPT",
+        "found": true,
+        "wrong": []
+       },
+       {
+        "item": "POWER TRANSFER EPT10",
+        "found": true,
+        "wrong": []
+       },
+       {
+        "item": "ELEC PANIC HARDWARE QEL-99-EO-CON 24 VDC",
+        "found": true,
+        "wrong": []
+       },
+       {
+        "item": "90 DEG OFFSET PULL 8190HD 10\" O",
+        "found": true,
+        "wrong": []
+       },
+       {
+        "item": "OH STOP 100S",
+        "found": true,
+        "wrong": []
+       },
+       {
+        "item": "SURFACE CLOSER 4040XP REG / 4040XP EDA - AS REQUIRED",
+        "found": true,
+        "wrong": []
+       },
+       {
+        "item": "DOOR SWEEP 39D",
+        "found": true,
+        "wrong": []
+       },
+       {
+        "item": "THRESHOLD 566D-V3-226",
+        "found": true,
+        "wrong": []
+       },
+       {
+        "item": "WEATHERSTRIP BY DOOR AND FRAME MANUFACTURER",
+        "found": true,
+        "wrong": []
+       },
+       {
+        "item": "CREDENTIAL READER BY DIVISION 28",
+        "found": true,
+        "wrong": []
+       },
+       {
+        "item": "DOOR POSITION SWITCH - AS REQUIRED BY DIVISION 28",
+        "found": true,
+        "wrong": []
+       },
+       {
+        "item": "POWER SUPPLY BY DIVISION 28",
+        "found": true,
+        "wrong": []
+       }
+      ]
+     },
+     {
+      "group": "40 UTY",
+      "found": true,
+      "read_as": "40 UTY",
+      "items_expected": 16,
+      "items_found": 16,
+      "extra_items": 4,
+      "link": {
+       "expected_doors": 1,
+       "linked": 1,
+       "set_door_count": 1
+      },
+      "items": [
+       {
+        "item": "CONTINUOUS HINGE SL11 / SL24",
+        "found": true,
+        "wrong": []
+       },
+       {
+        "item": "CONTINUOUS HINGE SL11 / SL24 - EPT",
+        "found": true,
+        "wrong": []
+       },
+       {
+        "item": "POWER TRANSFER EPT10",
+        "found": true,
+        "wrong": []
+       },
+       {
+        "item": "CONST LATCHING BOLT FB51P / FB61P",
+        "found": true,
+        "wrong": []
+       },
+       {
+        "item": "DUST PROOF STRIKE DP1/ DP2 (AS REQ'D)",
+        "found": true,
+        "wrong": []
+       },
+       {
+        "item": "STOREROOM LOCK ALX80R-RHO-626 FSIC",
+        "found": true,
+        "wrong": []
+       },
+       {
+        "item": "ELECTRIC STRIKE 6223 FSE CON 12/16/24/28 VAC/VDC",
+        "found": true,
+        "wrong": []
+       },
+       {
+        "item": "OH STOP 90S",
+        "found": true,
+        "wrong": []
+       },
+       {
+        "item": "SURFACE CLOSER 4040XP SCUSH",
+        "found": true,
+        "wrong": []
+       },
+       {
+        "item": "RAIN DRIP - AS REQUIRED 142D",
+        "found": true,
+        "wrong": []
+       },
+       {
+        "item": "GASKETING 429D-S",
+        "found": true,
+        "wrong": []
+       },
+       {
+        "item": "DOOR SWEEP 39D",
+        "found": true,
+        "wrong": []
+       },
+       {
+        "item": "THRESHOLD 566D-V3-226",
+        "found": true,
+        "wrong": []
+       },
+       {
+        "item": "CREDENTIAL READER BY DIVISION 28",
+        "found": true,
+        "wrong": []
+       },
+       {
+        "item": "DOOR POSITION SWITCH - AS REQUIRED BY DIVISION 28",
+        "found": true,
+        "wrong": []
+       },
+       {
+        "item": "POWER SUPPLY BY DIVISION 28",
+        "found": true,
+        "wrong": []
+       }
+      ]
+     },
+     {
+      "group": "44 UTY-IT",
+      "found": true,
+      "read_as": "44 UTY-IT",
+      "items_expected": 10,
+      "items_found": 10,
+      "extra_items": 0,
+      "link": {
+       "expected_doors": 3,
+       "linked": 3,
+       "set_door_count": 3
+      },
+      "items": [
+       {
+        "item": "CONTINUOUS HINGE SL11 / SL24",
+        "found": true,
+        "wrong": []
+       },
+       {
+        "item": "STOREROOM LOCK ALX80R-RHO-626 FSIC",
+        "found": true,
+        "wrong": []
+       },
+       {
+        "item": "ELECTRIC STRIKE 6211 FSE CON 12/16/24/28 VAC/VDC",
+        "found": true,
+        "wrong": []
+       },
+       {
+        "item": "REG/ PA SURFACE CLOSER - AS REQUIRED 4040XP REG / 4040XP EDA - AS REQUIRED",
+        "found": true,
+        "wrong": []
+       },
+       {
+        "item": "KICK PLATE 8400 10\" HIGH B-CS TKTX SCREWS AT HM DOORS",
+        "found": true,
+        "wrong": []
+       },
+       {
+        "item": "WALL STOP WS406/407CCV",
+        "found": true,
+        "wrong": []
+       },
+       {
+        "item": "SILENCER SR64",
+        "found": true,
+        "wrong": []
+       },
+       {
+        "item": "CREDENTIAL READER BY DIVISION 28",
+        "found": true,
+        "wrong": []
+       },
+       {
+        "item": "DOOR POSITION SWITCH - AS REQUIRED BY DIVISION 28",
+        "found": true,
+        "wrong": []
+       },
+       {
+        "item": "POWER SUPPLY BY DIVISION 28",
+        "found": true,
+        "wrong": []
+       }
+      ]
+     },
+     {
+      "group": "47 VES",
+      "found": true,
+      "read_as": "47 VES",
+      "items_expected": 5,
+      "items_found": 5,
+      "extra_items": 0,
+      "link": {
+       "expected_doors": 1,
+       "linked": 1,
+       "set_door_count": 1
+      },
+      "items": [
+       {
+        "item": "CONTINUOUS HINGE SL57 FULL SURFACE",
+        "found": true,
+        "wrong": []
+       },
+       {
+        "item": "PUSH/PULL BAR 9190HD-33\"-10\"-NO",
+        "found": true,
+        "wrong": []
+       },
+       {
+        "item": "OH STOP 100S",
+        "found": true,
+        "wrong": []
+       },
+       {
+        "item": "REG/ PA SURFACE CLOSER - AS REQUIRED 4040XP REG / 4040XP EDA - AS REQUIRED",
+        "found": true,
+        "wrong": []
+       },
+       {
+        "item": "WEATHERSTRIP BY DOOR AND FRAME MANUFACTURER",
+        "found": true,
+        "wrong": []
+       }
+      ]
+     },
+     {
+      "group": "51 UTY-CUS",
+      "found": true,
+      "read_as": "51 UTY-CUS",
+      "items_expected": 4,
+      "items_found": 4,
+      "extra_items": 0,
+      "link": {
+       "expected_doors": 3,
+       "linked": 3,
+       "set_door_count": 3
+      },
+      "items": [
+       {
+        "item": "CONTINUOUS HINGE SL11 / SL24",
+        "found": true,
+        "wrong": []
+       },
+       {
+        "item": "STOREROOM LOCK ALX80R-RHO-626 FSIC",
+        "found": true,
+        "wrong": []
+       },
+       {
+        "item": "OH STOP 90S",
+        "found": true,
+        "wrong": []
+       },
+       {
+        "item": "SILENCER SR64",
+        "found": true,
+        "wrong": []
+       }
+      ]
+     }
+    ]
+   }
+  },
+  {
+   "id": "berryessa",
+   "file": "tools/corpus/door-schedules/dd339f57b51538ed.pdf",
+   "reads": [
+    {
+     "page": 284,
+     "type": "door_schedule",
+     "ms": 133,
+     "route": "text_layer",
+     "found": "9 doors"
+    },
+    {
+     "page": 286,
+     "type": "door_schedule",
+     "ms": 96,
+     "route": "text_layer",
+     "found": "7 doors"
+    },
+    {
+     "page": 288,
+     "type": "door_schedule",
+     "ms": 87,
+     "route": "text_layer",
+     "found": "8 doors"
+    },
+    {
+     "page": 282,
+     "type": "hardware_schedule",
+     "ms": 49,
+     "route": "text_layer",
+     "found": "2 groups"
+    }
+   ],
+   "doors": {
+    "expected_rows": 24,
+    "rows_found": 24,
+    "rows_found_pct": 100,
+    "extra_rows": 0,
+    "extra_sample": [],
+    "field_accuracy_pct": 98.6,
+    "per_field": {
+     "mark": {
+      "right": 24,
+      "wrong": 0
+     },
+     "hardware_group": {
+      "right": 24,
+      "wrong": 0
+     },
+     "width_inches": {
+      "right": 24,
+      "wrong": 0
+     },
+     "height_inches": {
+      "right": 24,
+      "wrong": 0
+     },
+     "fire_rating": {
+      "right": 24,
+      "wrong": 0
+     },
+     "door_type": {
+      "right": 22,
+      "wrong": 2
+     }
+    },
+    "rows": [
+     {
+      "mark": "001",
+      "page": 284,
+      "found": true,
+      "wrong": []
+     },
+     {
+      "mark": "002",
+      "page": 284,
+      "found": true,
+      "wrong": []
+     },
+     {
+      "mark": "003",
+      "page": 284,
+      "found": true,
+      "wrong": []
+     },
+     {
+      "mark": "004",
+      "page": 284,
+      "found": true,
+      "wrong": []
+     },
+     {
+      "mark": "005",
+      "page": 284,
+      "found": true,
+      "wrong": []
+     },
+     {
+      "mark": "006",
+      "page": 284,
+      "found": true,
+      "wrong": []
+     },
+     {
+      "mark": "007",
+      "page": 284,
+      "found": true,
+      "wrong": []
+     },
+     {
+      "mark": "008",
+      "page": 284,
+      "found": true,
+      "wrong": []
+     },
+     {
+      "mark": "009",
+      "page": 284,
+      "found": true,
+      "wrong": []
+     },
+     {
+      "mark": "001",
+      "page": 286,
+      "found": true,
+      "wrong": []
+     },
+     {
+      "mark": "002",
+      "page": 286,
+      "found": true,
+      "wrong": [
+       "door_type: expected \"B\", read null"
+      ]
+     },
+     {
+      "mark": "003",
+      "page": 286,
+      "found": true,
+      "wrong": []
+     },
+     {
+      "mark": "004",
+      "page": 286,
+      "found": true,
+      "wrong": []
+     },
+     {
+      "mark": "005",
+      "page": 286,
+      "found": true,
+      "wrong": []
+     },
+     {
+      "mark": "006",
+      "page": 286,
+      "found": true,
+      "wrong": []
+     },
+     {
+      "mark": "008",
+      "page": 286,
+      "found": true,
+      "wrong": []
+     },
+     {
+      "mark": "001",
+      "page": 288,
+      "found": true,
+      "wrong": []
+     },
+     {
+      "mark": "002",
+      "page": 288,
+      "found": true,
+      "wrong": [
+       "door_type: expected \"B\", read null"
+      ]
+     },
+     {
+      "mark": "003",
+      "page": 288,
+      "found": true,
+      "wrong": []
+     },
+     {
+      "mark": "004",
+      "page": 288,
+      "found": true,
+      "wrong": []
+     },
+     {
+      "mark": "005",
+      "page": 288,
+      "found": true,
+      "wrong": []
+     },
+     {
+      "mark": "006",
+      "page": 288,
+      "found": true,
+      "wrong": []
+     },
+     {
+      "mark": "007",
+      "page": 288,
+      "found": true,
+      "wrong": []
+     },
+     {
+      "mark": "008",
+      "page": 288,
+      "found": true,
+      "wrong": []
+     }
+    ]
+   },
+   "hardware": {
+    "expected_groups": 2,
+    "groups_found": 2,
+    "extra_groups": [],
+    "expected_items": 16,
+    "items_found": 16,
+    "items_found_pct": 100,
+    "field_accuracy_pct": 100,
+    "per_field": {
+     "qty": {
+      "right": 16,
+      "wrong": 0
+     },
+     "description": {
+      "right": 16,
+      "wrong": 0
+     },
+     "catalog": {
+      "right": 16,
+      "wrong": 0
+     },
+     "finish": {
+      "right": 16,
+      "wrong": 0
+     },
+     "mfr": {
+      "right": 16,
+      "wrong": 0
+     }
+    },
+    "doors_linked": null,
+    "groups": [
+     {
+      "group": "01",
+      "found": true,
+      "read_as": "01",
+      "items_expected": 7,
+      "items_found": 7,
+      "extra_items": 0,
+      "link": null,
+      "items": [
+       {
+        "item": "HINGE 5BB1HW 4.5 X 4.5",
+        "found": true,
+        "wrong": []
+       },
+       {
+        "item": "FIRE EXIT HARDWARE PA-AX-99-L-F-2SI-06",
+        "found": true,
+        "wrong": []
+       },
+       {
+        "item": "RIM CYLINDER 20-057 ICX",
+        "found": true,
+        "wrong": []
+       },
+       {
+        "item": "INTERCHANGEABLE CORE VERIFY PERMANENT CORE WITH DISTRICT",
+        "found": true,
+        "wrong": []
+       },
+       {
+        "item": "SURFACE CLOSER 4040XP EDA",
+        "found": true,
+        "wrong": []
+       },
+       {
+        "item": "KICK PLATE 8400 10\" X 2\" LDW B-CS",
+        "found": true,
+        "wrong": []
+       },
+       {
+        "item": "GASKETING 188SBK PSA",
+        "found": true,
+        "wrong": []
+       }
+      ]
+     },
+     {
+      "group": "02",
+      "found": true,
+      "read_as": "02",
+      "items_expected": 9,
+      "items_found": 9,
+      "extra_items": 0,
+      "link": null,
+      "items": [
+       {
+        "item": "HINGE 5BB1HW 4.5 X 4.5",
+        "found": true,
+        "wrong": []
+       },
+       {
+        "item": "FIRE EXIT HARDWARE PA-AX-9927-EO-F-LBR-499F",
+        "found": true,
+        "wrong": []
+       },
+       {
+        "item": "FIRE EXIT HARDWARE PA-AX-9927-L-F-2SI-LBR-06-499F",
+        "found": true,
+        "wrong": []
+       },
+       {
+        "item": "RIM CYLINDER 20-057 ICX",
+        "found": true,
+        "wrong": []
+       },
+       {
+        "item": "INTERCHANGEABLE CORE VERIFY PERMANENT CORE WITH DISTRICT",
+        "found": true,
+        "wrong": []
+       },
+       {
+        "item": "SURFACE CLOSER 4040XP EDA",
+        "found": true,
+        "wrong": []
+       },
+       {
+        "item": "KICK PLATE 8400 10\" X 1\" LDW B-CS",
+        "found": true,
+        "wrong": []
+       },
+       {
+        "item": "GASKETING 188SBK PSA",
+        "found": true,
+        "wrong": []
+       },
+       {
+        "item": "MEETING STILE 328AA-S",
+        "found": true,
+        "wrong": []
+       }
+      ]
+     }
+    ]
+   }
+  },
+  {
+   "id": "occ",
+   "file": "/Users/johnmobley/pdf/OCCDoorSchedulePg4.pdf",
+   "reads": [],
+   "skipped": "file not in this checkout"
+  },
+  {
+   "id": "christina",
+   "file": "tools/corpus/door-schedules/525dc0b72011077a.pdf",
+   "reads": [
+    {
+     "page": 219,
+     "type": "hardware_schedule",
+     "ms": 79,
+     "route": "text_layer",
+     "found": "1 groups"
+    }
+   ],
+   "hardware": {
+    "expected_groups": 1,
+    "groups_found": 1,
+    "extra_groups": [],
+    "expected_items": 23,
+    "items_found": 23,
+    "items_found_pct": 100,
+    "field_accuracy_pct": 99.1,
+    "per_field": {
+     "qty": {
+      "right": 22,
+      "wrong": 1
+     },
+     "description": {
+      "right": 23,
+      "wrong": 0
+     },
+     "catalog": {
+      "right": 23,
+      "wrong": 0
+     },
+     "finish": {
+      "right": 23,
+      "wrong": 0
+     },
+     "mfr": {
+      "right": 23,
+      "wrong": 0
+     }
+    },
+    "doors_linked": null,
+    "groups": [
+     {
+      "group": "01",
+      "found": true,
+      "read_as": "01",
+      "items_expected": 23,
+      "items_found": 23,
+      "extra_items": 1,
+      "link": null,
+      "items": [
+       {
+        "item": "CONTINUOUS HINGES 224HD (PREP'D FOR EPT)",
+        "found": true,
+        "wrong": []
+       },
+       {
+        "item": "KEY REMOVEABLE MULLION KR4954",
+        "found": true,
+        "wrong": []
+       },
+       {
+        "item": "MULLION CYLINDER MORTISE TYPE W/ CORE (KEYED TO EXISTING SYSTEM)",
+        "found": true,
+        "wrong": []
+       },
+       {
+        "item": "DOOR PULLS 1191-4",
+        "found": true,
+        "wrong": []
+       },
+       {
+        "item": "DOOR CLOSER W/ STOPS 4041XP SPR CNS 4041XP-30 & 61",
+        "found": true,
+        "wrong": []
+       },
+       {
+        "item": "ELECTRIC POWER TRANSFERS EPT-10 BY SECURITY VENDOR",
+        "found": true,
+        "wrong": []
+       },
+       {
+        "item": "ELECTRIFIED PANIC DEVICE RX-QEL98L-NL-03 LD BY SECURITY VENDOR",
+        "found": true,
+        "wrong": []
+       },
+       {
+        "item": "POWER SUPPLY BY SECURITY VENDOR",
+        "found": true,
+        "wrong": []
+       },
+       {
+        "item": "TRIM CYLINDER & CORE AS REQUIRED (KEYED TO EXISTING SYSTEM)",
+        "found": true,
+        "wrong": []
+       },
+       {
+        "item": "DOOR PULLS 1191-4",
+        "found": true,
+        "wrong": []
+       },
+       {
+        "item": "DOOR CLOSER W/ STOPS 4041XP SPR CNS 4041XP-30 & 61",
+        "found": true,
+        "wrong": []
+       },
+       {
+        "item": "ELECTRIFIED PANIC DEVICE RX-QEL98L-BE-03 LD BY SECURITY VENDOR",
+        "found": true,
+        "wrong": []
+       },
+       {
+        "item": "THRESHOLD 896ADJ SIA SSMS/EA",
+        "found": true,
+        "wrong": []
+       },
+       {
+        "item": "AUTO DOOR OPERATOR DORMA 100 SERIES BY SECURITY VENDOR",
+        "found": true,
+        "wrong": []
+       },
+       {
+        "item": "RELAY MODULE ALTRONTICS RB1224 BY SECURITY VENDOR",
+        "found": true,
+        "wrong": []
+       },
+       {
+        "item": "H/C PUSH SWITCH 946HP45MO x 946475WR (EXTERIOR) BY SECURITY VENDOR",
+        "found": true,
+        "wrong": []
+       },
+       {
+        "item": "H/C PUSH SWITCH 946HP45MO (INTERIOR) BY SECURITY VENDOR",
+        "found": true,
+        "wrong": []
+       },
+       {
+        "item": "BALLARD POST (FOR H/C SWITCH) BY SECURITY VENDOR",
+        "found": true,
+        "wrong": []
+       },
+       {
+        "item": "KEY SWITCH 960MA BY SECURITY VENDOR",
+        "found": true,
+        "wrong": []
+       },
+       {
+        "item": "KEY SWITCH CYLINDER MORTISE TYPE W/ CORE (KEYED TO EXISTING SYSTEM)",
+        "found": true,
+        "wrong": []
+       },
+       {
+        "item": "DOOR POSITION SWITCHES GRI 180-12-W-34\" STL DR CONTACT WHITE BY SECURITY VENDOR",
+        "found": true,
+        "wrong": []
+       },
+       {
+        "item": "VIDEO/INTERCOM STATION & CONSOLE w/ 5 RELEASE BUTTONS BY SECURITY VENDOR",
+        "found": true,
+        "wrong": [
+         "qty: expected null, read 1"
+        ]
+       },
+       {
+        "item": "CARD READER HID GLOBAL SIGNO 40TKS-002MRN-ADV iClass/EOS BY SECURITY VENDOR",
+        "found": true,
+        "wrong": []
+       }
+      ]
+     }
+    ]
+   }
+  }
+ ],
+ "finished_at": "2026-10-08T07:52:05.216Z",
+ "under_target": []
+}

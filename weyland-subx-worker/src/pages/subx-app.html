@@ -1801,7 +1801,7 @@ global.SovereignPdfRender = {
       var root = document.documentElement;
       var EMBED = root.classList.contains("embedded");
       var TAKEOFF = root.classList.contains("takeoff");
-      var MODULE_URL = "/api/hardware-schedule/client-ocr-assets/schedule-grid-extraction-client.mjs?v=20261007c";
+      var MODULE_URL = "/api/hardware-schedule/client-ocr-assets/schedule-grid-extraction-client.mjs?v=20261008a";
       var state = { sessions: [], current: null, detail: null, lastUpload: null, blobUrl: null, busy: false };
       function $(id) { return document.getElementById(id); }
       function esc(s) { return String(s == null ? "" : s).replace(/[&<>"']/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]; }); }
@@ -2179,11 +2179,14 @@ global.SovereignPdfRender = {
           var run = type === "door_schedule" ? mod.extractDoorScheduleFromPdf : mod.extractHardwareScheduleFromPdf;
           return run(bytes, pageNum, progress, { maxPixels: small ? 14e6 : 36e6 }).then(function (extraction) {
             var n = type === "door_schedule" ? (extraction.doors || []).length : (extraction.hardware_groups || []).length;
-            if (!n) throw new Error("No " + typeLabel(type) + " table was found on page " + pageNum + " (read as shown and turned 90, 180 and 270 degrees).");
+            if (!n) throw new Error("No " + typeLabel(type) + " was found on page " + pageNum + ": its text has no schedule rows, and no ruled table was found in its image (read as shown and turned 90, 180 and 270 degrees).");
+            var fromText = extraction.metadata && extraction.metadata.extraction_route === "text_layer";
             progress("Saving " + n + " rows...");
             return api("/api/hardware-schedule/session/" + encodeURIComponent(id) + "/page/" + pageNum + "/extract-result", {
               method: "POST",
-              json: { extraction: extraction, provider: { name: "client_grid_deterministic", model: null, client: "browser_pdfjs_tesseract_wasm" } }
+              json: { extraction: extraction, provider: fromText
+                ? { name: "client_text_layer", model: null, client: "browser_pdfjs_text_layer" }
+                : { name: "client_grid_deterministic", model: null, client: "browser_pdfjs_tesseract_wasm" } }
             }).then(function (res) {
               if (!res.ok) throw new Error("Saving failed (HTTP " + res.status + "): " + errText(res.data));
               out.innerHTML = '<div class="ok-box">' + esc("Page " + pageNum + ": " + n + (type === "door_schedule" ? " doors" : " hardware sets") + " read in this browser and saved.") + "</div>";

@@ -45,6 +45,13 @@
 
 const ASSET_BASE = "/api/hardware-schedule/client-ocr-assets";
 
+// 2026-10-08: both readers try the page's text layer first (CAD sheets and
+// spec sections carry their characters with positions; see that module's
+// header for the bid sets the grid/OCR path read nothing from). OCR runs only
+// when the page has no usable text, i.e. a scan. Versioned like every asset
+// here, because the route serves them immutable.
+import { textItemsFromContent, readDoorScheduleText, readHardwareGroupsText } from "./schedule-text-layer.mjs?v=20261008a";
+
 let pdfjsLibPromise = null;
 export async function loadPdfJs() {
   if (!pdfjsLibPromise) {
@@ -57,6 +64,25 @@ export async function loadPdfJs() {
     });
   }
   return pdfjsLibPromise;
+}
+
+// The text items of one page in reading order (schedule-text-layer.mjs), or
+// null when pdf.js could not give them.
+async function readTextLayer(pdfDoc, pageNumber) {
+  try {
+    const page = await pdfDoc.getPage(pageNumber);
+    const content = await page.getTextContent();
+    return textItemsFromContent(content, page.getViewport({ scale: 1 }));
+  } catch (_) {
+    return null;
+  }
+}
+
+// options.pdfjs: an already loaded pdf.js (Node's pdfjs-dist in the accuracy
+// harness and tests); the page and the server runner load the vendored one.
+async function openPdf(pdfBytes, options) {
+  const pdfjsLib = options && options.pdfjs ? options.pdfjs : await loadPdfJs();
+  return pdfjsLib.getDocument({ data: new Uint8Array(pdfBytes.slice(0)) }).promise;
 }
 
 let ocrEnginePromise = null;
@@ -539,12 +565,37 @@ function closeOpenGroup(state) {
 // File/Blob/ArrayBuffer of the full PDF and a 1-indexed page number, returns
 // {hardware_groups, door_hardware_matrix, detected_nomenclature, metadata} -
 // the exact shape the existing POST .../extract-result endpoint expects.
-export async function extractHardwareScheduleFromPdf(pdfBytes, pageNumber, onProgress) {
+export async function extractHardwareScheduleFromPdf(pdfBytes, pageNumber, onProgress, options = {}) {
   const t0 = performance.now();
   const progress = (msg) => { if (onProgress) onProgress(msg); };
   progress("Loading PDF renderer...");
-  const pdfjsLib = await loadPdfJs();
-  const pdfDoc = await pdfjsLib.getDocument({ data: pdfBytes.slice(0) }).promise;
+  const pdfDoc = await openPdf(pdfBytes, options);
+
+  let textLayer = null;
+  if (options.textLayer !== false) {
+    progress("Reading the text on page " + pageNumber + "...");
+    textLayer = await readTextLayer(pdfDoc, pageNumber);
+    if (textLayer && textLayer.items.length) {
+      const read = readHardwareGroupsText(textLayer.items);
+      if (read.hardware_groups.some((g) => g.components.length)) {
+        progress("Extraction complete.");
+        return {
+          hardware_groups: read.hardware_groups,
+          door_hardware_matrix: read.door_hardware_matrix,
+          detected_nomenclature: null,
+          metadata: {
+            extraction_mode: "text_layer",
+            extraction_route: "text_layer",
+            page_isolated: false,
+            text_items: textLayer.items.length,
+            text_direction: textLayer.direction,
+            columns: read.columns,
+            total_time_ms: Math.round(performance.now() - t0),
+          },
+        };
+      }
+    }
+  }
 
   const DETECT_DPI = 150, BASE_DPI = 400;
   const RATIO = BASE_DPI / DETECT_DPI;
@@ -564,7 +615,7 @@ export async function extractHardwareScheduleFromPdf(pdfBytes, pageNumber, onPro
     });
   }
   if (tables.length === 0) {
-    return { hardware_groups: [], door_hardware_matrix: [], detected_nomenclature: null, metadata: { extraction_mode: "client_grid_deterministic", page_isolated: false, table_count: 0, no_table_detected: true } };
+    return { hardware_groups: [], door_hardware_matrix: [], detected_nomenclature: null, metadata: { extraction_mode: "client_grid_deterministic", page_isolated: false, table_count: 0, no_table_detected: true, text_items: textLayer ? textLayer.items.length : 0 } };
   }
 
   progress(`Rendering page ${pageNumber} at full resolution...`);
@@ -941,6 +992,38 @@ function eraseRowRulings(imageData, ys, x0, x1, maxHalfHeight) {
   }
 }
 
+// One door record from one schedule row's cell text, whichever way the text
+// was read (OCR'd grid cells, or the text layer). Same {mark/hardware_group/
+// fire_rating/size/...} mapping extractGridDoors uses server-side, plus the
+// frame/finish/detail columns the schedule actually carries (written by
+// writeDoorScheduleEntries when present). source_row is the row the values
+// were read from (the table band for OCR, the row index for the text layer),
+// so every door traces back to its line on the sheet.
+function doorFromRow(row) {
+  return {
+    door_number: cleanDoorMark(row.mark),
+    hardware_group: cleanCell(row.hardware_group),
+    fire_rating: cleanFireRating(row.fire_rating),
+    size: [cleanDimension(row.width), cleanDimension(row.height)].filter(Boolean).join(" x ") || null,
+    ...doorSize(row.width, row.height),
+    thickness: cleanDimension(row.thickness),
+    thickness_inches: parseThickness(row.thickness),
+    door_type: cleanCell(row.door_type),
+    material_code: cleanCell(row.door_material),
+    door_finish: cleanCell(row.door_finish),
+    stc_rating: cleanCell(row.stc_rating),
+    frame_type: cleanCode(row.frame_type),
+    frame_material: cleanCell(row.frame_material),
+    frame_finish: cleanCell(row.frame_finish),
+    head_detail: cleanCell(row.head_detail),
+    jamb_detail: cleanCell(row.jamb_detail),
+    sill_detail: cleanCell(row.sill_detail),
+    panic_hardware: cleanCell(row.panic_hardware),
+    remarks: cleanCell(row.notes),
+    source_row: row._band,
+  };
+}
+
 // extractDoorScheduleFromPdf: the door_schedule sibling of
 // extractHardwareScheduleFromPdf above - same real client-side pipeline
 // (pdf.js render + tesseract-wasm OCR), returning the {doors:[...]} contract
@@ -965,8 +1048,35 @@ export async function extractDoorScheduleFromPdf(pdfBytes, pageNumber, onProgres
   const t0 = performance.now();
   const progress = (msg) => { if (onProgress) onProgress(msg); };
   progress("Loading PDF renderer...");
-  const pdfjsLib = await loadPdfJs();
-  const pdfDoc = await pdfjsLib.getDocument({ data: pdfBytes.slice(0) }).promise;
+  const pdfDoc = await openPdf(pdfBytes, options);
+
+  let textLayer = null;
+  if (options.textLayer !== false) {
+    progress("Reading the text on page " + pageNumber + "...");
+    textLayer = await readTextLayer(pdfDoc, pageNumber);
+    if (textLayer && textLayer.items.length) {
+      const read = readDoorScheduleText(textLayer.items);
+      const doors = read.rows.map((row, i) => doorFromRow({ ...row, _band: i })).filter((d) => d.door_number);
+      if (doors.length) {
+        progress("Extraction complete.");
+        return {
+          doors,
+          extraction_confidence: 0.97,
+          metadata: {
+            extraction_mode: "text_layer",
+            extraction_route: "text_layer",
+            page_isolated: false,
+            row_count: doors.length,
+            rotation_applied: ((textLayer.direction % 360) + 360) % 360,
+            table_count: read.tables.length,
+            header_fields: read.tables.map((t) => t.fields),
+            text_items: textLayer.items.length,
+            total_time_ms: Math.round(performance.now() - t0),
+          },
+        };
+      }
+    }
+  }
 
   const DETECT_DPI = 150;
   const TARGET_ROW_PX = options.targetRowPx || 64;
@@ -1100,26 +1210,7 @@ export async function extractDoorScheduleFromPdf(pdfBytes, pageNumber, onProgres
   // source_row is the table row band the values were read from (row 0 is the
   // table's top band), so every door traces back to its line on the sheet.
   const doors = rows.map((row) => ({
-    door_number: cleanDoorMark(row.mark),
-    hardware_group: cleanCell(row.hardware_group),
-    fire_rating: cleanFireRating(row.fire_rating),
-    size: [cleanDimension(row.width), cleanDimension(row.height)].filter(Boolean).join(" x ") || null,
-    ...doorSize(row.width, row.height),
-    thickness: cleanDimension(row.thickness),
-    thickness_inches: parseThickness(row.thickness),
-    door_type: cleanCell(row.door_type),
-    material_code: cleanCell(row.door_material),
-    door_finish: cleanCell(row.door_finish),
-    stc_rating: cleanCell(row.stc_rating),
-    frame_type: cleanCode(row.frame_type),
-    frame_material: cleanCell(row.frame_material),
-    frame_finish: cleanCell(row.frame_finish),
-    head_detail: cleanCell(row.head_detail),
-    jamb_detail: cleanCell(row.jamb_detail),
-    sill_detail: cleanCell(row.sill_detail),
-    panic_hardware: cleanCell(row.panic_hardware),
-    remarks: cleanCell(row.notes),
-    source_row: row._band,
+    ...doorFromRow(row),
     ...(options.debug && row._reread ? { size_reread: row._reread } : {}),
   })).filter((d) => d.door_number);
 

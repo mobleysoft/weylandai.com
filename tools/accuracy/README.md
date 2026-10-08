@@ -24,3 +24,23 @@ line mark ("1705 5-LITE SSB", "6 PNL TEXT FG", Steelcraft F16/F12); "Square D" i
 manufacturer. The matcher change moved no line from correct to wrong.
 
 The numbers are from the public finder's deterministic path; no language model is in it.
+
+# Schedule-reading accuracy (door schedules and hardware groups)
+
+Ground truth: `tools/corpus/expected/*.json`, rows read by eye from rendered pages. Both harnesses
+score with the same rules (`schedule-scoring.mjs`): doors matched by mark within their page, items
+by catalog/description within their group; targets 95% of rows found and 95% field accuracy.
+
+- `schedule_read_accuracy.mjs` runs production through the SubX workspace's own HTTP calls (needs
+  the Cloudflare login; writes `schedule_report_*`).
+- `schedule_text_layer_accuracy.mjs` runs the reader module itself in Node (pdf.js from
+  `weyland-subx-worker`'s devDependencies, no network, no account; writes `text_layer_report_*`,
+  exits 1 under target). Run `npm ci` in `weyland-subx-worker` first.
+
+| run | Rockford doors | Rockford items | Berryessa doors | Berryessa items | Christina items |
+|---|---|---|---|---|---|
+| before, live (`schedule_report_2026-10-08-04-55_before`) | 0/65 | 0/103 | 0/24 | 0/16 | 0/23 |
+| text layer first (`text_layer_report_2026-10-08-07-52_after`) | 65/65, 100% fields | 103/103, 100% | 24/24, 98.6% | 16/16, 100% | 23/23, 99.1% |
+
+The after report explains the three fields still counted wrong (two not in the text layer, one
+expected row to revisit). OCC A-801 is a scan (no text layer) and stays on the OCR path.
