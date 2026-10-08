@@ -148,7 +148,7 @@ export function notice(w, text, { size = 15 } = {}) {
 }
 
 // lines: [{ label?, caption?, value? }]
-export function signature(w, lines, { size = 11 } = {}) {
+export function signature(w, lines, { size = 11, captionSize = 8 } = {}) {
   w.y -= 8;
   for (const l of lines) {
     need(w, size + 22);
@@ -157,7 +157,7 @@ export function signature(w, lines, { size = 11 } = {}) {
     if (l.value) drawLine(w, l.value, { font: w.fonts.serif, size, x });
     w.page.drawLine({ start: { x, y: w.y - 3 }, end: { x: PAGE[0] - M, y: w.y - 3 }, thickness: 0.6, color: rgb(0.2, 0.2, 0.2) });
     w.y -= size + 2;
-    if (l.caption) { drawLine(w, l.caption, { font: w.fonts.sans, size: 8, x, color: rgb(0.4, 0.4, 0.4) }); w.y -= 10; }
+    if (l.caption) { drawLine(w, l.caption, { font: w.fonts.sans, size: captionSize, x, color: rgb(0.4, 0.4, 0.4) }); w.y -= captionSize + 2; }
     w.y -= 10;
   }
 }

@@ -127,6 +127,28 @@ const UT_RELEASE = "To the extent provided below, this document becomes effectiv
 const UT_WARRANT = (which) => `The undersigned warrants that the undersigned either has already paid or will use the money the undersigned receives from ${which} promptly to pay in full all the undersigned's laborers, subcontractors, materialmen, and suppliers for all work, materials, equipment, or combination of work, materials, and equipment that are the subject of this waiver and release.`;
 const UT_SIGN = [{ label: "Dated:", key: "date" }, { caption: "(Company Name)", key: "company" }, { label: "By:", key: null }, { label: "Its:", key: "signerTitle" }];
 
+// Georgia (O.C.G.A. § 44-14-366(c), (e), as revised by SB 315, eff. 2021) and
+// Mississippi (Miss. Code § 85-7-433(1), (2), from SB 2622 of 2014) print the
+// same mechanic/materialman form, each with a notice that must be on its face.
+const SOUTH_EMPLOYED = "THE UNDERSIGNED MECHANIC AND/OR MATERIALMAN HAS BEEN EMPLOYED BY {customer} (NAME OF CONTRACTOR) TO FURNISH {jobDescription} (DESCRIBE MATERIALS AND/OR LABOR) FOR THE CONSTRUCTION OF IMPROVEMENTS KNOWN AS {project} (TITLE OF THE PROJECT OR BUILDING) WHICH IS LOCATED IN THE CITY OF {city}, COUNTY OF {county}, AND IS OWNED BY {owner} (NAME OF OWNER) AND MORE PARTICULARLY DESCRIBED AS FOLLOWS:";
+const SOUTH_DESCRIBE = "(DESCRIBE THE PROPERTY UPON WHICH THE IMPROVEMENTS WERE MADE BY USING EITHER A METES AND BOUNDS DESCRIPTION, THE LAND LOT DISTRICT, BLOCK AND LOT NUMBER, OR STREET ADDRESS OF THE PROJECT.)";
+const SOUTH_INTERIM = "UPON THE RECEIPT OF THE SUM OF ${amount}, THE MECHANIC AND/OR MATERIALMAN WAIVES AND RELEASES ANY AND ALL LIENS OR CLAIMS OF LIENS IT HAS UPON THE FOREGOING DESCRIBED PROPERTY OR ANY RIGHTS AGAINST ANY LABOR AND/OR MATERIAL BOND THROUGH THE DATE OF {throughDate} (DATE) AND EXCEPTING THOSE RIGHTS AND LIENS THAT THE MECHANIC AND/OR MATERIALMAN MIGHT HAVE IN ANY RETAINED AMOUNTS, ON ACCOUNT OF LABOR OR MATERIALS, OR BOTH, FURNISHED BY THE UNDERSIGNED TO OR ON ACCOUNT OF SAID CONTRACTOR FOR SAID BUILDING OR PREMISES.";
+const SOUTH_FINAL = "UPON THE RECEIPT OF THE SUM OF ${amount}, THE MECHANIC AND/OR MATERIALMAN WAIVES AND RELEASES ANY AND ALL LIENS OR CLAIMS OF LIENS IT HAS UPON THE FOREGOING DESCRIBED PROPERTY OR ANY RIGHTS AGAINST ANY LABOR AND/OR MATERIAL BOND ON ACCOUNT OF LABOR OR MATERIALS, OR BOTH, FURNISHED BY THE UNDERSIGNED TO OR ON ACCOUNT OF SAID CONTRACTOR FOR SAID PROPERTY.";
+const SOUTH_HEAD = (state) => [{ t: "para", text: `STATE OF ${state}` }, { t: "field", label: "COUNTY OF", key: "county" }, { t: "para", text: SOUTH_EMPLOYED }, { t: "para", text: "{propertyDescription}" }, { t: "para", text: SOUTH_DESCRIBE }];
+const GA_NOTICE = "NOTICE: WHEN YOU EXECUTE AND SUBMIT THIS DOCUMENT, YOU SHALL BE CONCLUSIVELY DEEMED TO HAVE WAIVED AND RELEASED ANY AND ALL LIENS AND CLAIMS OF LIENS UPON THE FOREGOING DESCRIBED PROPERTY AND ANY RIGHTS REGARDING ANY LABOR OR MATERIAL BOND REGARDING THE SAID PROPERTY TO THE EXTENT (AND ONLY TO THE EXTENT) SET FORTH ABOVE, EVEN IF YOU HAVE NOT ACTUALLY RECEIVED SUCH PAYMENT, 90 DAYS AFTER THE DATE STATED ABOVE UNLESS YOU FILE AN AFFIDAVIT OF NONPAYMENT PRIOR TO THE EXPIRATION OF SUCH 90 DAY PERIOD. THE FAILURE TO INCLUDE THIS NOTICE LANGUAGE ON THE FORM SHALL RENDER THE FORM UNENFORCEABLE AND INVALID AS A WAIVER AND RELEASE UNDER O.C.G.A. § 44-14-366.";
+const GA_TAIL = [
+  { t: "para", text: "GIVEN UNDER HAND AND SEAL THIS {dateDay} DAY OF {dateMonth}, {year}." },
+  { t: "sign", lines: [{ caption: "(SEAL)", key: null }, { key: "company" }, { caption: "(WITNESS)", key: null }, { caption: "(ADDRESS)", key: null }] },
+  { t: "notice", text: GA_NOTICE },
+];
+const MS_NOTICE = "NOTICE: WHEN YOU EXECUTE AND SUBMIT THIS DOCUMENT, YOU SHALL BE CONCLUSIVELY DEEMED TO HAVE BEEN PAID IN FULL THE AMOUNT STATED ABOVE, EVEN IF YOU HAVE NOT ACTUALLY RECEIVED THE PAYMENT, SIXTY (60) DAYS AFTER THE DATE STATED ABOVE UNLESS YOU FILE EITHER AN AFFIDAVIT OF NONPAYMENT OR A CLAIM OF LIEN BEFORE THE EXPIRATION OF THE SIXTY-DAY PERIOD. THE FAILURE TO INCLUDE THIS NOTICE LANGUAGE ON THE FACE OF THE FORM SHALL RENDER THE FORM UNENFORCEABLE AND INVALID AS A WAIVER AND RELEASE UNDER SECTION 85-7-419, MISSISSIPPI CODE OF 1972.";
+const MS_TAIL = [
+  { t: "sign", lines: [{ caption: "SIGNATURE", key: null }, { label: "BY:", caption: "(PRINT NAME)", key: "signer" }, { label: "ITS:", caption: "(PRINT TITLE)", key: "signerTitle" }] },
+  { t: "para", text: "SWORN TO AND SUBSCRIBED BEFORE ME, THIS THE ____ DAY OF _________, 20__." },
+  { t: "sign", lines: [{ caption: "NOTARY PUBLIC", key: null }] },
+  { t: "notice", text: MS_NOTICE },
+];
+
 export const STATES = {
   AZ: {
     name: "Arizona",
@@ -412,13 +434,40 @@ export const STATES = {
       ],
     },
   },
+  GA: {
+    name: "Georgia",
+    cite: "O.C.G.A. § 44-14-366(c), (e)",
+    source: "https://www.legis.ga.gov/api/legislation/document/20192020/194229",
+    file: "ga-44-14-366.txt",
+    noticeInline: true,
+    minFont: 12,
+    kindsUseSameForm: true,
+    note: "Georgia: interim and final waivers follow the statutory forms (O.C.G.A. § 44-14-366, as revised effective 2021), in at least 12-point type, with the notice on the form. You are deemed paid and the waiver binds 90 days after the date stated unless you file an affidavit of nonpayment first, so give it only for a payment you expect, and file the affidavit if it doesn't arrive. LienX's text is the 2020 act (SB 315) applied to the statute; the Official Code is published only on LexisNexis.",
+    forms: {
+      progress: [{ t: "title", text: "WAIVER AND RELEASE OF LIEN AND PAYMENT BOND RIGHTS UPON INTERIM PAYMENT" }, ...SOUTH_HEAD("GEORGIA"), { t: "para", text: SOUTH_INTERIM }, ...GA_TAIL],
+      final: [{ t: "title", text: "WAIVER AND RELEASE OF LIEN AND PAYMENT BOND RIGHTS UPON FINAL PAYMENT" }, ...SOUTH_HEAD("GEORGIA"), { t: "para", text: SOUTH_FINAL }, ...GA_TAIL],
+    },
+  },
+  MS: {
+    name: "Mississippi",
+    cite: "Miss. Code § 85-7-433(1), (2)",
+    source: "https://billstatus.ls.state.ms.us/documents/2014/pdf/SB/2600-2699/SB2622SG.pdf",
+    file: "ms-85-7-433.txt",
+    noticeInline: true,
+    // "on the face of the form": the whole form, notice included, fits one page.
+    onePage: true,
+    kindsUseSameForm: true,
+    note: "Mississippi: interim and final waivers follow the statutory forms (Miss. Code § 85-7-433), sworn before a notary, with the notice on the face of the form. You are deemed paid in full 60 days after the date stated unless you file an affidavit of nonpayment or a claim of lien first. LienX's text is the act that created the section (SB 2622, 2014); the Code is published only on LexisNexis.",
+    forms: {
+      progress: [{ t: "title", text: "INTERIM WAIVER AND RELEASE UPON PAYMENT" }, ...SOUTH_HEAD("MISSISSIPPI"), { t: "para", text: SOUTH_INTERIM }, ...MS_TAIL],
+      final: [{ t: "title", text: "WAIVER AND RELEASE UPON FINAL PAYMENT" }, ...SOUTH_HEAD("MISSISSIPPI"), { t: "para", text: SOUTH_FINAL }, ...MS_TAIL],
+    },
+  },
 };
 
 // States whose statutes print waiver forms LienX does not carry yet: a
 // generic waiver is refused there.
 export const STATUTORY_NOT_CARRIED = {
-  GA: "Georgia Code § 44-14-366",
-  MS: "Mississippi Code § 85-7-433",
 };
 
 /** The blocks for a state and kind, or { refused } / { generic }. */
