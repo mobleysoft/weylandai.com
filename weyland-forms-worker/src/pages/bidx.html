@@ -1,0 +1,161 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#090a0d">
+  <title>BidX | Public bid package from HuntX and PropX</title>
+  <meta name="description" content="BidX builds the bid package for a public bid: the HuntX notice (agency, solicitation, due date) and your PropX price (base bid in words and figures, schedule of values), with alternates, unit prices, addenda, bid bond, qualifications and a bidder checklist.">
+  <style>
+    :root{--bg:#090a0d;--panel:#111318;--line:#2b3038;--text:#eef1f2;--muted:#9299a3;--primary:#2a52ff;--accent:#ffd400;--red:#ff716b;--green:#68e0a0}
+    *{box-sizing:border-box}html,body{margin:0;background:var(--bg);color:var(--text);font-family:"Avenir Next","Helvetica Neue",-apple-system,sans-serif}body{overflow-x:hidden}
+    .shell{max-width:1320px;margin:auto;padding:20px clamp(14px,2.5vw,36px) 50px}
+    html.wa-standalone .shell{padding-top:64px}
+    header{display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap;margin-bottom:18px}
+    .brand{display:flex;align-items:center;gap:12px;color:var(--text);text-decoration:none}.mark{width:42px;height:42px;display:grid;place-items:center;background:var(--primary);color:var(--bg);font-weight:900}
+    .brand b{display:block;letter-spacing:.16em}.brand small{display:block;color:var(--muted);font:700 9px/1.5 ui-monospace,monospace;letter-spacing:.11em}
+    nav{display:flex;gap:8px;flex-wrap:wrap}
+    nav a,.btn{border:1px solid var(--line);border-radius:99px;padding:9px 14px;color:var(--text);text-decoration:none;background:transparent;font:750 10px/1 ui-monospace,monospace;letter-spacing:.06em;cursor:pointer}
+    .btn.primary{background:var(--primary);border-color:var(--primary);color:#fff;font-weight:900}.btn:disabled{opacity:.5}
+    .eyebrow{color:var(--primary);font:800 11px/1 ui-monospace,monospace;letter-spacing:.18em}
+    h1{font-size:clamp(34px,4.5vw,56px);letter-spacing:-.05em;margin:10px 0 6px}
+    .lead{max-width:860px;color:var(--muted);line-height:1.6;margin:0 0 18px}
+    .grid{display:grid;grid-template-columns:minmax(0,430px) minmax(0,1fr);gap:16px;align-items:start}
+    .card{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:16px}
+    label{display:block;font:700 10px/1.4 ui-monospace,monospace;letter-spacing:.06em;color:var(--muted);margin:10px 0 4px}
+    input,select{width:100%;background:#161920;border:1px solid var(--line);border-radius:9px;padding:9px 11px;color:#fff;font-size:14px}
+    .row2{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+    .note{font-size:13px;line-height:1.5;color:var(--muted);margin:10px 0 0}
+    .warn{color:var(--accent)}.err{color:var(--red)}
+    .paper{background:#fbfbf8;color:#111;border-radius:6px;padding:clamp(18px,4vw,44px);font-family:Georgia,"Times New Roman",serif;font-size:14px;line-height:1.6;min-height:500px}
+    .paper h2{text-align:center;font-size:17px;margin:0 0 14px;text-transform:none}
+    .paper .f{margin:4px 0}.paper .f b{font-weight:700}.paper .f span{border-bottom:1px solid #999;padding:0 4px}
+    .paper p{text-align:justify;margin:10px 0}
+    .paper .sig{margin:18px 0 0 50%;}.paper .sig div{border-bottom:1px solid #333;min-height:22px;margin-top:12px}.paper .sig small{display:block;color:#666;font-size:10px}
+    .paper .notice{border:2px solid #000;padding:10px;font-weight:700;font-size:16px;margin-top:16px}
+    .cite{font-size:12px;color:var(--muted);margin:10px 2px}.cite a{color:var(--muted)}
+    .actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+    .pay{border:1px solid rgba(255,212,0,.4);background:rgba(255,212,0,.06);border-radius:12px;padding:10px 12px;font-size:13px;line-height:1.5;margin-top:10px}
+    @media(max-width:900px){.grid{grid-template-columns:1fr}}
+      textarea{width:100%;background:#161920;border:1px solid var(--line);border-radius:9px;color:#fff;padding:9px;font:inherit}
+  </style>
+</head>
+<body>
+  <div class="shell">
+    <header>
+      <a class="brand" href="/"><span class="mark">BX</span><span><b>BIDX</b><small>PUBLIC BID PACKAGE</small></span></a>
+      <nav><a href="/huntx">HUNTX</a><a href="/propx-app">PROPX</a><a href="/pricing">PRICING</a></nav>
+    </header>
+    <div class="eyebrow">BID SUBMISSION</div>
+    <h1>BidX</h1>
+    <p class="lead">The bid package for a public bid, built from what you already have in WeylandAI:</p>
+    <ul class="lead">
+      <li><b>The bid:</b> a HuntX notice gives the agency, solicitation, location, due date and public link.</li>
+      <li><b>The price:</b> your PropX proposal gives the base bid in words and figures, and its lines become the schedule of values.</li>
+      <li><b>What you add:</b> alternates, unit prices, addenda acknowledged, bid bond, qualifications, and a checklist of what to attach.</li>
+    </ul>
+    <p class="lead">Previewing is free; the PDF comes with BidX, the suite or the $100 first submittal.</p>
+    <div class="grid">
+      <form class="card" id="f" autocomplete="off">
+        <label for="q">FIND THE BID IN HUNTX</label><input id="q" placeholder="agency, school, city...">
+        <select id="opp" style="margin-top:6px"><option value="">(search, or type the bid below)</option></select>
+        <div class="row2"><div><label>AGENCY</label><input id="agency"></div><div><label>DUE</label><input id="due"></div></div>
+        <label>SOLICITATION</label><input id="solicitation">
+        <label for="prop">PRICE FROM PROPX</label><select id="prop"><option value="">(sign in to list your proposals)</option></select>
+        <label>OR BASE BID ($)</label><input id="baseBid">
+        <div class="row2"><div><label>YOUR COMPANY</label><input id="company"></div><div><label>LICENSE NO.</label><input id="license"></div></div>
+        <label>ADDRESS</label><input id="address">
+        <div class="row2"><div><label>SIGNER</label><input id="signer"></div><div><label>TITLE</label><input id="signerTitle"></div></div>
+        <div class="row2"><div><label>PHONE</label><input id="phone"></div><div><label>EMAIL</label><input id="email"></div></div>
+        <label>ALTERNATES (ONE PER LINE: DESCRIPTION, AMOUNT; START WITH "-" TO DEDUCT)</label><textarea id="alternates" rows="2"></textarea>
+        <label>UNIT PRICES (ONE PER LINE: ITEM, UNIT, PRICE)</label><textarea id="unitPrices" rows="2"></textarea>
+        <label>ADDENDA (ONE PER LINE: NUMBER, DATE)</label><textarea id="addenda" rows="2"></textarea>
+        <div class="row2"><div><label>BID BOND %</label><input id="bondPercent" value="5"></div><div><label>SURETY</label><input id="surety"></div></div>
+        <div class="row2"><div><label>COMPLETION</label><input id="days" placeholder="e.g. 120 calendar days"></div><div><label>BID VALID FOR</label><input id="validity" placeholder="e.g. 60 days"></div></div>
+        <label>QUALIFICATIONS AND EXCLUSIONS</label><textarea id="exclusions" rows="3"></textarea>
+        <div id="checklist"></div>
+      </form>
+      <div>
+        <div class="paper" id="paper" aria-live="polite"><p>Choose a bid and a price.</p></div>
+        <div class="actions"><button class="btn primary" id="pdf" type="button">DOWNLOAD THE BID PACKAGE</button><span id="msg" class="note"></span></div>
+        <div id="pay"></div>
+      </div>
+    </div>
+  </div>
+  <script>
+  (function () {
+    var embedded = false;
+    try { embedded = window.self !== window.top; } catch (e) { embedded = true; }
+    function parentShell() { try { return embedded && window.parent && window.parent.WeylandShell ? window.parent.WeylandShell : null; } catch (e) { return null; } }
+    function shell() { return parentShell() || window.WeylandShell || null; }
+    function loadScript(src) { return new Promise(function (res, rej) { var s = document.createElement("script"); s.src = src; s.onload = res; s.onerror = rej; document.head.appendChild(s); }); }
+    if (!embedded) document.documentElement.classList.add("wa-standalone");
+    var ready = embedded ? Promise.resolve() : (window.AuthForStandard ? Promise.resolve() : loadScript("/assets/authfor-integration-standard.js"))
+      .then(function () { return window.WeylandShell ? null : loadScript("/assets/weyland-shell.js"); }).catch(function () {});
+    window.WeylandPage = {
+      ready: ready,
+      signIn: function (continueTo) { return ready.then(function () { var s = shell(); if (s) return s.open("signin", embedded ? { continueTo: continueTo } : {}); location.href = "/login?redirect=" + encodeURIComponent(continueTo); }); }
+    };
+  })();
+  </script>
+  <script>
+  (function () {
+    "use strict";
+    var $ = function (id) { return document.getElementById(id); };
+    function esc(s) { return String(s == null ? "" : s).replace(/[<>&"']/g, function (c) { return { "<": "&lt;", ">": "&gt;", "&": "&amp;", "\"": "&quot;", "'": "&#39;" }[c]; }); }
+    function token() { try { return localStorage.getItem("_authfor_token"); } catch (e) { return null; } }
+    function headers(json) { var h = {}; var t = token(); if (t) h.Authorization = "Bearer " + t; if (json) h["Content-Type"] = "application/json"; return h; }
+    function money(n) { return "$" + (Number(n) || 0).toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 }); }
+    function rows(id, n) { return $(id).value.split("\n").map(function (l) { var del = /^\s*-/.test(l); var p = l.replace(/^\s*-/, "").split(","); if (p.length < n) return null; var tail = p.splice(p.length - (n - 1)); return { del: del, head: p.join(",").trim(), tail: tail.map(function (x) { return x.trim(); }) }; }).filter(Boolean); }
+    var CHECKS = ["Bid form signed", "Bid security (bond or check)", "Addenda acknowledged", "Schedule of values", "Non-collusion affidavit", "Contractor license number shown", "Insurance certificate", "References / experience", "DBE / small business forms (if required)", "Product data for named substitutions"];
+    $("checklist").innerHTML = "<label>BIDDER'S CHECKLIST</label>" + CHECKS.map(function (c, i) { return '<div class="note"><input type="checkbox" style="width:auto" id="k' + i + '" data-c="' + esc(c) + '"> <label for="k' + i + '" style="display:inline;font:inherit;color:inherit">' + esc(c) + "</label></div>"; }).join("");
+    function body() {
+      var b = { opportunityId: $("opp").value || null, proposalId: $("prop").value || null, checklist: {} };
+      ["agency", "due", "solicitation", "baseBid", "company", "license", "address", "signer", "signerTitle", "phone", "email", "bondPercent", "surety", "days", "validity", "exclusions"].forEach(function (k) { b[k] = $(k).value; });
+      b.alternates = rows("alternates", 2).map(function (r) { return { description: r.head, amount: r.tail[0], kind: r.del ? "deduct" : "add" }; });
+      b.unitPrices = rows("unitPrices", 3).map(function (r) { return { description: r.head, unit: r.tail[0], price: r.tail[1] }; });
+      b.addenda = rows("addenda", 2).map(function (r) { return { no: r.head, date: r.tail[0] }; });
+      [].forEach.call(document.querySelectorAll("[data-c]"), function (x) { b.checklist[x.dataset.c] = x.checked; });
+      return b;
+    }
+    var timer = null;
+    function preview() {
+      clearTimeout(timer);
+      timer = setTimeout(function () {
+        fetch("/api/forms/bidx/preview", { method: "POST", credentials: "same-origin", headers: headers(true), body: JSON.stringify(body()) }).then(function (r) { return r.json(); }).then(function (d) {
+          if (!d.success) { $("paper").innerHTML = '<p class="err">' + esc(d.message) + "</p>"; return; }
+          var p = d.package;
+          $("paper").innerHTML = "<h2>BID FORM</h2><div class=f><b>To:</b> " + esc(p.bid.agency) + "</div><div class=f><b>Solicitation:</b> " + esc(p.bid.solicitation) + "</div><div class=f><b>Bids due:</b> " + esc(p.bid.due) + "</div><div class=f><b>Bidder:</b> " + esc(p.bidder.company) + "</div>" +
+            "<p>Base bid: <b>" + esc(p.baseBidWords) + " (" + money(p.baseBid) + ")</b> <small>from " + esc(p.priceSource) + "</small></p>" +
+            (p.alternates.length ? "<p>Alternates: " + p.alternates.map(function (a) { return esc(a.no + ". " + a.description) + " " + (a.add ? "ADD " : "DEDUCT ") + money(a.amount); }).join("; ") + "</p>" : "") +
+            (p.addenda.length ? "<p>Addenda: " + p.addenda.map(function (a) { return esc(a.no + " (" + a.date + ")"); }).join(", ") + "</p>" : "") +
+            (p.bond.percent ? "<p>Bid bond " + p.bond.percent + "% = " + money(p.bond.amount) + "</p>" : "") +
+            (p.lines.length ? "<p><small>Schedule of values: " + p.lines.length + " lines from " + esc(p.priceSource) + "</small></p>" : "");
+        });
+      }, 300);
+    }
+    $("f").addEventListener("input", preview); $("opp").addEventListener("change", preview); $("prop").addEventListener("change", preview);
+    var qt = null;
+    $("q").addEventListener("input", function () { clearTimeout(qt); qt = setTimeout(function () {
+      fetch("/api/hunt/opportunities?limit=30&fit=building&q=" + encodeURIComponent($("q").value), { headers: headers() }).then(function (r) { return r.json(); }).then(function (d) {
+        var list = d.opportunities || [];
+        $("opp").innerHTML = '<option value="">' + list.length + " notices found</option>" + list.map(function (o) { return '<option value="' + esc(o.id) + '">' + esc((o.key_date || "").slice(0, 10) + " · " + o.agency + " · " + o.title).slice(0, 140) + "</option>"; }).join("");
+      });
+    }, 300); });
+    $("pdf").onclick = function () {
+      $("msg").textContent = "Making the PDF..."; $("pay").innerHTML = "";
+      fetch("/api/forms/bidx/pdf", { method: "POST", credentials: "same-origin", headers: headers(true), body: JSON.stringify(body()) }).then(function (r) {
+        if (r.status === 401) { $("msg").textContent = "Sign in to download the bid package."; window.WeylandPage.signIn("/bidx"); return; }
+        if (r.status === 402) return r.json().then(function (d) { $("msg").textContent = ""; $("pay").innerHTML = '<div class="pay">' + esc(d.message) + ' <a class="btn primary" href="/#offer">$100 FIRST SUBMITTAL</a> <a class="btn" href="/pricing">PLANS</a></div>'; });
+        if (!r.ok) return r.json().then(function (d) { $("msg").textContent = d.message || ("HTTP " + r.status); });
+        return r.blob().then(function (b) { var a = document.createElement("a"); a.href = URL.createObjectURL(b); a.download = "Bid.pdf"; a.click(); $("msg").textContent = "Downloaded."; });
+      });
+    };
+    if (token()) fetch("/api/proposals/mine", { headers: headers() }).then(function (r) { return r.json(); }).then(function (d) {
+      var ps = d.proposals || [];
+      $("prop").innerHTML = '<option value="">' + (ps.length ? "Choose a proposal" : "No PropX proposals yet") + "</option>" + ps.map(function (p) { return '<option value="' + esc(p.id) + '">Quote ' + esc(p.quote_number) + " · " + esc(p.client_name || "") + " · " + money(p.grand_total) + "</option>"; }).join("");
+    }).catch(function () {});
+  })();
+  </script>
+</body>
+</html>
