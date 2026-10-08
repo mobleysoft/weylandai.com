@@ -23,6 +23,7 @@ import { PDFDocument, StandardFonts, rgb } from "pdf-lib";
 import { jsonResponse3 } from "../lib/json-response.js";
 import { assembleSubmittalPackage } from "../lib/submittal-assembler.js";
 import { matchComponentToCutSheets, citedPagesFor, PACKET_MATCH_TYPES } from "../lib/product-database.js";
+import { pageNamingInFiledPdf } from "../../../weyland-shared/filed-page.js";
 import { incrementSubmittalsUsed } from "../lib/edge-telemetry.js";
 import { outputAccess, paymentRequired } from "../../../weyland-shared/output-access.js";
 import { readDimension, readSizeCell, looksLikeMark } from "../../assets/client-ocr-src/schedule-text-layer.mjs";
@@ -131,7 +132,27 @@ function missFor(c, m) {
   return { reason: "no_document", why: (p.manufacturer || who) + " " + (p.model || model) + " is catalogued; no document is on file", need: (p.manufacturer || who) + "'s catalogue page for " + (p.model || model) };
 }
 
+// A filed price book whose index is another edition: read that very PDF for the page naming
+// the model (weyland-shared/filed-page.js), so the packet carries the page instead of a miss.
+// The book's text is cached in R2 after the first read; a build spends at most FILED_BUDGET_MS on it.
+const FILED_BUDGET_MS = 25000;
+async function filedPageFor(env2, m, started) {
+  if (!m || !m.matched || !PACKET_MATCH_TYPES.has(String(m.matchType)) || !(m.maker && m.maker.known)) return null;
+  const sheet = (m.cutSheets || []).find((s) => s.r2Key && !s.pinnedPage);
+  if (!sheet) return null;
+  const left = FILED_BUDGET_MS - (Date.now() - started);
+  if (left < 3000) return null;
+  const p = m.product || {};
+  for (const model of [p.model, p.base_model].filter(Boolean)) {
+    let hit = null;
+    try { hit = await pageNamingInFiledPdf(env2, sheet.r2Key, model, { budgetMs: left }); } catch (_) { hit = null; }
+    if (hit) return { r2Key: sheet.r2Key, pageNum: hit.pageNum, title: String(sheet.title || "Price book").split(" (")[0] };
+  }
+  return null;
+}
+
 export async function citedPagesForSession(sessionId, env2, match = matchForPacket) {
+  const started = Date.now();
   const comps = await env2.DB.prepare(`
     SELECT hs.set_number, hc.quantity, hc.manufacturer, hc.model, hc.catalog_number, hc.component_type
     FROM hardware_components hc JOIN hardware_sets hs ON hc.set_id = hs.id
@@ -151,7 +172,7 @@ export async function citedPagesForSession(sessionId, env2, match = matchForPack
   let matched = 0, unmatched = 0;
   const missing = [];
   for (const { c, sets, qty } of byKey.values()) {
-    let m = null;
+    let m = null, filed = null;
     try { m = await match(c, env2); } catch (_) { m = null; }
     const cited = m && m.matched && PACKET_MATCH_TYPES.has(String(m.matchType)) ? citedPagesFor(m, 1) : [];
     if (cited.length) {
@@ -159,6 +180,12 @@ export async function citedPagesForSession(sessionId, env2, match = matchForPack
       const p = cited[0];
       const k = p.catalogueId + "#" + p.pageNum;
       if (!pages.has(k)) pages.set(k, { catalogueId: p.catalogueId, pageNum: p.pageNum, title: p.title, kind: p.kind, manufacturer: (m.product && m.product.manufacturer) || c.manufacturer || null, model: (m.product && m.product.model) || c.model, sets: [] });
+      const entry = pages.get(k);
+      for (const s of sets) if (!entry.sets.includes(s)) entry.sets.push(s);
+    } else if ((filed = await filedPageFor(env2, m, started))) {
+      matched++;
+      const k = "doc:" + filed.r2Key + "#" + filed.pageNum;
+      if (!pages.has(k)) pages.set(k, { r2Key: filed.r2Key, catalogueId: null, pageNum: filed.pageNum, title: filed.title, kind: "price_book_filed", manufacturer: (m.product && m.product.manufacturer) || c.manufacturer || null, model: (m.product && m.product.model) || c.model, sets: [] });
       const entry = pages.get(k);
       for (const s of sets) if (!entry.sets.includes(s)) entry.sets.push(s);
     } else {

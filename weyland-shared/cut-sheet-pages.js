@@ -64,3 +64,38 @@ export async function getCataloguePagePdf(env, PDFDocument, { catalogueId, pageN
     return { bytes: null, reason: "render_failed" };
   }
 }
+
+/**
+ * One page of a filed document straight from its R2 key (2026-10-08): the page
+ * weyland-shared/filed-page.js found by reading that very file, so it is cut
+ * from the same edition it was read in. Cached at cut-sheet-pages/<key>/page_<n>.pdf.
+ * Returns { bytes, cached } or { bytes: null, reason }.
+ */
+export async function getDocumentPagePdf(env, PDFDocument, { r2Key, pageNum }, loaded = null) {
+  const n = parseInt(pageNum, 10);
+  if (!r2Key || !Number.isFinite(n) || n < 1) return { bytes: null, reason: "page_out_of_range" };
+  if (!env || !env.UPLOADS) return { bytes: null, reason: "pdf_not_on_file" };
+  const cacheKey = "cut-sheet-pages/" + String(r2Key).replace(/[^A-Za-z0-9/._-]/g, "_") + "/page_" + n + ".pdf";
+  try {
+    const cached = await env.UPLOADS.get(cacheKey);
+    if (cached) return { bytes: new Uint8Array(await cached.arrayBuffer()), cached: true };
+  } catch (e) { /* cut it again */ }
+  try {
+    let src = loaded && loaded.get(r2Key);
+    if (!src) {
+      const obj = await env.UPLOADS.get(r2Key);
+      if (!obj) return { bytes: null, reason: "pdf_not_on_file" };
+      src = await PDFDocument.load(await obj.arrayBuffer(), { ignoreEncryption: true });
+      if (loaded) loaded.set(r2Key, src);
+    }
+    if (n > src.getPageCount()) return { bytes: null, reason: "page_out_of_range" };
+    const one = await PDFDocument.create();
+    const [page] = await one.copyPages(src, [n - 1]);
+    one.addPage(page);
+    const bytes = await one.save();
+    try { await env.UPLOADS.put(cacheKey, bytes, { httpMetadata: { contentType: "application/pdf" }, customMetadata: { source: r2Key, pageNumber: String(n) } }); } catch (e) { /* still returned */ }
+    return { bytes, cached: false };
+  } catch (e) {
+    return { bytes: null, reason: "render_failed" };
+  }
+}
