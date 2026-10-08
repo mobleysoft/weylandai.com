@@ -34,6 +34,7 @@ on:
           - weyland-cutsheetx-worker
           - weyland-subx-worker
           - weyland-meetingx-worker
+          - weyland-forms-worker
           - monolith (weylandai-com-worker)
 
 jobs:
@@ -74,7 +75,8 @@ jobs:
       - name: Post-deploy live check
         run: |
           case "${{ inputs.worker }}" in
-            weyland-sightx-worker)   url="https://weylandai.com/sightx/"; marker="sx-dossier" ;;
+            weyland-sightx-worker)   url="https://weylandai.com/sightx/"; marker="sx-canvas" ;;
+            weyland-forms-worker)    url="https://weylandai.com/lienx"; marker="api/forms/lienx" ;;
             weyland-platform-worker) url="https://weylandai.com/api/auth/session/check"; marker="valid" ;;
             weyland-propx-worker)    url="https://weylandai.com/api/proposals/demo"; marker="" ;;
             *)                       url="https://weylandai.com/"; marker="envelope-frame" ;;

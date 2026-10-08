@@ -1,0 +1,26 @@
+// weyland-forms-worker/src/index.js
+//
+// WeylandAI's form tools, rebuilt off the monolith (2026-10-08): pages at
+// /lienx (and each tool's own path as it moves here), APIs under
+// /api/forms/<tool>/*. See wrangler.toml for why this worker exists.
+
+import { NativeRouter } from "./lib/router.js";
+import { authenticate } from "./lib/auth.js";
+import { jsonResponse3 } from "./lib/json-response.js";
+import { registerLienxRoutes } from "./routes/lienx.js";
+import lienxHtml from "./pages/lienx.html";
+import { secured } from "../../weyland-shared/security-headers.js";
+
+const router = new NativeRouter();
+router.get("/health", () => jsonResponse3({ ok: true, worker: "weyland-forms-worker" }));
+
+const page = (html) => () => new Response(html, { headers: { "Content-Type": "text/html; charset=UTF-8", "Cache-Control": "no-store" } });
+for (const p of ["/lienx", "/lienx/"]) { router.get(p, page(lienxHtml)); router.addRoute("HEAD", p, page(lienxHtml)); }
+
+registerLienxRoutes(router, { authenticate });
+
+export default secured({
+  async fetch(request, env, ctx) {
+    return router.handle(request, env, ctx);
+  },
+});

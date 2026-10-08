@@ -1,0 +1,33 @@
+# weyland-forms-worker: WeylandAI's form tools (2026-10-08).
+#
+# LienX first (statutory lien waivers filled from the job), then BidX, CoA,
+# RFaX, ChangeOrdX, PermitX, CloseX and NotesX as each is rebuilt
+# here. Until today these were templated forms rendered by headless Chrome
+# inside the monolith (src/routes/document-generators.js), which this
+# project's owners do not deploy. Here every PDF is drawn with pdf-lib (no
+# browser), filled from the customer's own SubX / PropX / MeetingX data, and
+# the PDF needs payment (weyland-shared/output-access.js); the preview is
+# free. Zone routes below take precedence over the monolith's catch-all.
+name = "weyland-forms-worker"
+main = "src/index.js"
+compatibility_date = "2025-10-31"
+compatibility_flags = ["nodejs_compat"]
+workers_dev = true
+
+[[d1_databases]]
+binding = "DB"
+database_name = "weyland_db"
+database_id = "5729f77e-d7e3-4577-ab43-3c064fa90ca5"
+
+[[routes]]
+pattern = "weylandai.com/api/forms/*"
+zone_name = "weylandai.com"
+
+[[routes]]
+pattern = "weylandai.com/lienx*"
+zone_name = "weylandai.com"
+
+[[rules]]
+type = "Text"
+globs = ["**/*.html", "**/*.txt"]
+fallthrough = true
