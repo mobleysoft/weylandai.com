@@ -30,6 +30,7 @@ export const OUTPUT_TIERS = Object.freeze({
   takeoffx: ["takeoffx", "subx"],
   propx: ["propx"],
   cutsheetx: ["cutsheetx"],
+  huntx: ["huntx"], // saved searches and their new-notice counts
 });
 
 async function rows(db, sql, ...binds) {

@@ -48,6 +48,19 @@
     .note-card{color:var(--muted);font-size:14px;line-height:1.6;background:rgba(18,20,25,.9);border:1px solid var(--line);border-radius:18px;padding:22px}
     .note-card code{background:#161920;padding:2px 6px;border-radius:4px;color:var(--primary);font-size:13px}
     .note-card .button{margin-top:14px}
+    .filter-bar.second{padding:12px 24px;gap:10px}
+    .filter-bar.second select{padding:9px 14px;font-size:13px}
+    .saved-bar{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin:0 4px 14px;font-size:13px;color:var(--muted)}
+    .chip{border:1px solid var(--line);border-radius:99px;padding:6px 10px;background:#121419;color:var(--text);font:700 11px/1 ui-monospace,monospace;cursor:pointer;display:inline-flex;gap:6px;align-items:center}
+    .chip:hover{border-color:var(--primary)}
+    .chip .new{background:var(--accent);color:#000;border-radius:99px;padding:2px 6px;font-weight:900}
+    .chip .x{color:var(--muted);padding-left:4px}
+    .fit{font:800 9px ui-monospace,monospace;padding:4px 8px;border-radius:99px;display:inline-block;letter-spacing:.06em;white-space:nowrap;border:1px solid var(--line)}
+    .fit.doors{background:rgba(97,223,160,.15);color:var(--green);border-color:rgba(97,223,160,.4)}
+    .fit.building{background:rgba(102,212,255,.12);color:var(--blue);border-color:rgba(102,212,255,.35)}
+    .fit.signal{background:rgba(255,212,0,.1);color:var(--accent);border-color:rgba(255,212,0,.35)}
+    .fit.civil{color:var(--muted)}
+    .why{display:block;color:var(--muted);font-size:11px;margin-top:4px}
     @media(max-width:900px){.metrics-row{grid-template-columns:1fr}.titlebar{flex-direction:column;align-items:flex-start}.filter-bar{padding:14px}}
   </style>
 </head>
@@ -62,10 +75,12 @@
         <div class="eyebrow">OPPORTUNITY DISCOVERY</div>
         <h1>HuntX</h1>
         <div class="tagline">Measure twice. Match once.</div>
-        <p>Public construction leads from state and city open-data feeds - Texas DOT lettings,
-        California school-facility funding releases, Illinois Capital Development Board
-        solicitations and New York City construction solicitations - pulled into our own index.
-        Every row links to its public source.</p>
+        <p>Public construction bids from state and city open-data feeds - Illinois Capital
+        Development Board, New York City construction solicitations and School Construction
+        Authority upcoming work, Los Angeles construction bids, Delaware construction contracts,
+        Texas DOT lettings and California school-facility funding releases - pulled into our own index.
+        Each notice is sorted by what's in it for a door and hardware sub: door scope named,
+        building work, funding to watch, or civil work. Every row links to its public source.</p>
       </div>
       <button class="button primary" id="signin-btn" type="button" hidden>SIGN IN TO VIEW OPPORTUNITIES</button>
     </div>
@@ -78,6 +93,32 @@
         </select>
         <button id="hx-refresh-btn" class="button primary" type="button">REFRESH FROM SOURCES</button>
       </div>
+      <div class="filter-bar second">
+        <select id="hx-fit" aria-label="Trade fit">
+          <option value="building" selected>Building work (doors likely)</option>
+          <option value="doors">Door scope named</option>
+          <option value="signal">Funding to watch (not bid yet)</option>
+          <option value="civil">Civil and road work</option>
+          <option value="all">Everything</option>
+        </select>
+        <select id="hx-state" aria-label="State"><option value="">All states</option></select>
+        <select id="hx-due" aria-label="Key date">
+          <option value="">Any date</option>
+          <option value="14">Due in 14 days</option>
+          <option value="30">Due in 30 days</option>
+          <option value="60">Due in 60 days</option>
+          <option value="90">Due in 90 days</option>
+        </select>
+        <select id="hx-min" aria-label="Minimum value">
+          <option value="">Any value</option>
+          <option value="100000">$100K+</option>
+          <option value="500000">$500K+</option>
+          <option value="1000000">$1M+</option>
+          <option value="5000000">$5M+</option>
+        </select>
+        <button id="hx-save" class="button" type="button">SAVE THIS SEARCH</button>
+      </div>
+      <div class="saved-bar" id="hx-saved" hidden></div>
       <div class="status-line" id="hx-status" role="status" aria-live="polite"></div>
       <div class="metrics-row">
         <div class="metric-card"><span>OPPORTUNITIES MATCHING</span><strong id="hx-count">0</strong></div>
@@ -86,15 +127,16 @@
       </div>
       <div class="table-card">
         <table>
-          <thead><tr><th>OPPORTUNITY</th><th>AGENCY</th><th>LOCATION</th><th>KEY DATE</th><th>EST. VALUE</th><th>SOURCE</th></tr></thead>
-          <tbody id="hx-body"><tr><td colspan="6" style="color:var(--muted)">Loading...</td></tr></tbody>
+          <thead><tr><th>OPPORTUNITY</th><th>FIT</th><th>AGENCY</th><th>LOCATION</th><th>KEY DATE</th><th>EST. VALUE</th><th>SOURCE</th></tr></thead>
+          <tbody id="hx-body"><tr><td colspan="7" style="color:var(--muted)">Loading...</td></tr></tbody>
         </table>
       </div>
       <div class="more"><button id="hx-more" class="button" type="button" hidden>SHOW MORE</button></div>
     </div>
 
     <div class="note-card" id="guest-note">
-      HuntX is available standalone at $799/mo or as part of the SubConP suite.
+      Searching the index is free. Saved searches, with a count of new notices each time you come back,
+      come with HuntX ($799/mo standalone), the SubConP suite, or the $100 first submittal (30 days of every product).
       <div id="guest-note-detail"></div>
       <button class="button" id="pricing-btn" type="button" hidden>SEE PLANS</button>
     </div>
@@ -145,8 +187,9 @@
     var TOKEN_KEY = "_authfor_token";
     var EPH_KEY = "weylandai_ephemeral_token_v1";
     var PAGE = 100;
-    var SOURCE_LABEL = { txdot: "TXDOT", ca_opsc: "CA OPSC", il_cdb: "IL CDB", nyc_cityrecord: "NYC CITY RECORD" };
-    var SOURCE_NAME = { txdot: "Texas DOT lettings", ca_opsc: "CA school construction funding", il_cdb: "Illinois Capital Development Board", nyc_cityrecord: "NYC City Record construction" };
+    var SOURCE_LABEL = { txdot: "TXDOT", ca_opsc: "CA OPSC", il_cdb: "IL CDB", nyc_cityrecord: "NYC CITY RECORD", nyc_sca: "NYC SCA", la_ramp: "LA CITY", de_mmp: "DELAWARE" };
+    var SOURCE_NAME = { txdot: "Texas DOT lettings", ca_opsc: "CA school construction funding", il_cdb: "Illinois Capital Development Board", nyc_cityrecord: "NYC City Record construction", nyc_sca: "NYC School Construction Authority (upcoming)", la_ramp: "Los Angeles construction bids", de_mmp: "Delaware construction contracts" };
+    var FIT_LABEL = { doors: "DOOR SCOPE", building: "BUILDING", signal: "FUNDING", civil: "CIVIL" };
     var $ = function (id) { return document.getElementById(id); };
     var state = { token: null, rows: [], total: 0, offset: 0, seq: 0, lastIngestAt: null, polling: null };
 
@@ -178,9 +221,73 @@
       var src = $("hx-source").value;
       if (q) p.set("q", q);
       if (src) p.set("source", src);
+      var f = filters();
+      Object.keys(f).forEach(function (k) { p.set(k, f[k]); });
       p.set("limit", String(PAGE));
       if (offset) p.set("offset", String(offset));
       return "/api/hunt/opportunities?" + p.toString();
+    }
+
+    function filters() {
+      var out = {}, v;
+      if ((v = $("hx-fit").value)) out.fit = v;
+      if ((v = $("hx-state").value)) out.state = v;
+      if ((v = $("hx-due").value)) out.due_within = v;
+      if ((v = $("hx-min").value)) out.min_value = v;
+      return out;
+    }
+
+    function renderStates(list) {
+      if (!Array.isArray(list) || !list.length) return;
+      var sel = $("hx-state"), keep = sel.value;
+      sel.innerHTML = '<option value="">All states</option>' + list.map(function (s) {
+        return '<option value="' + esc(s.state) + '">' + esc(s.state) + " (" + s.n + ")</option>";
+      }).join("");
+      sel.value = keep;
+    }
+
+    // Saved searches live on the account; a guest is asked to sign in.
+    function signedIn() { return !!lsGet(TOKEN_KEY); }
+    function setSelect(id, v) { var el = $(id); if (!v) { el.value = el.id === "hx-fit" ? "building" : ""; return; } if (![].some.call(el.options, function (o) { return o.value === v; })) { var o = document.createElement("option"); o.value = v; o.textContent = v; el.appendChild(o); } el.value = v; }
+    function loadSaved() {
+      var bar = $("hx-saved");
+      if (!signedIn()) { bar.hidden = true; return Promise.resolve(); }
+      return fetch("/api/hunt/saved", { headers: headers() }).then(function (r) { return r.ok ? r.json() : { saved: [] }; }).then(function (d) {
+        var list = d.saved || [];
+        bar.hidden = !list.length;
+        bar.innerHTML = list.length ? "Saved:" + list.map(function (s) {
+          return '<span class="chip" data-id="' + esc(s.id) + '">' + esc(s.name) + (s.new_count ? ' <span class="new">' + s.new_count + " NEW</span>" : "") +
+            '<span class="x" data-del="' + esc(s.id) + '" title="Delete">&times;</span></span>';
+        }).join("") : "";
+        state.saved = list;
+      }).catch(function () {});
+    }
+    function applySaved(id) {
+      var s = (state.saved || []).filter(function (x) { return x.id === id; })[0];
+      if (!s) return;
+      var p = s.params || {};
+      $("hx-search").value = p.q || "";
+      setSelect("hx-source", p.source); setSelect("hx-fit", p.fit || "all"); setSelect("hx-state", p.state);
+      setSelect("hx-due", p.due_within); setSelect("hx-min", p.min_value);
+      load(false);
+      fetch("/api/hunt/saved/" + encodeURIComponent(id) + "/seen", { method: "POST", headers: headers() }).then(loadSaved);
+    }
+    function saveSearch() {
+      if (!signedIn()) { setStatus("Sign in to save a search; HuntX then shows how many new notices match it each time you come back."); window.WeylandPage.signIn("/huntx"); return; }
+      var params = filters(), q = $("hx-search").value.trim(), src = $("hx-source").value;
+      if (q) params.q = q;
+      if (src) params.source = src;
+      var parts = [q, src && (SOURCE_LABEL[src] || src), params.fit && params.fit !== "all" && (FIT_LABEL[params.fit] || params.fit), params.state, params.due_within && "due " + params.due_within + "d", params.min_value && "$" + Number(params.min_value).toLocaleString() + "+"].filter(Boolean);
+      var name = window.prompt("Name this search", parts.join(" · ") || "All notices");
+      if (name === null) return;
+      fetch("/api/hunt/saved", { method: "POST", headers: headers(true), body: JSON.stringify({ name: name, params: params }) }).then(function (r) {
+        return r.json().catch(function () { return {}; }).then(function (d) {
+          if (r.status === 402) { setStatus(errText(d, r.status) + " See the $100 first submittal on the home page or the plans at /pricing.", true); $("pricing-btn").hidden = false; return; }
+          if (!r.ok) { setStatus("Could not save the search: " + errText(d, r.status), true); return; }
+          setStatus("Saved. HuntX will count new notices that match it.");
+          return loadSaved();
+        });
+      });
     }
 
     function renderSources(list) {
@@ -201,13 +308,14 @@
 
     function rowHtml(r) {
       var title = r.detail_url ? '<a href="' + esc(r.detail_url) + '" target="_blank" rel="noopener">' + esc(r.title) + "</a>" : esc(r.title);
-      return "<tr><td>" + title + "</td><td>" + esc(r.agency) + "</td><td>" + esc(r.location) + "</td><td>" + fmtDate(r.key_date) +
+      var fit = r.trade_fit ? '<span class="fit ' + esc(r.trade_fit) + '">' + esc(FIT_LABEL[r.trade_fit] || r.trade_fit) + "</span>" + (r.trade_fit_why ? '<span class="why">' + esc(r.trade_fit_why) + "</span>" : "") : "-";
+      return "<tr><td>" + title + "</td><td>" + fit + "</td><td>" + esc(r.agency) + "</td><td>" + esc(r.location) + "</td><td>" + fmtDate(r.key_date) +
         '</td><td class="val-cell">' + fmtMoney(r.estimated_value) + '</td><td><span class="status-badge">' + esc(SOURCE_LABEL[r.source] || r.source) + "</span></td></tr>";
     }
 
     function render() {
       var body = $("hx-body");
-      body.innerHTML = state.rows.length ? state.rows.map(rowHtml).join("") : '<tr><td colspan="6" style="color:var(--muted)">No opportunities match this search. Try a city, an agency or a project type.</td></tr>';
+      body.innerHTML = state.rows.length ? state.rows.map(rowHtml).join("") : '<tr><td colspan="7" style="color:var(--muted)">No opportunities match this search. Try a city, an agency or a project type, or widen the trade fit.</td></tr>';
       $("hx-count").textContent = state.total;
       var more = $("hx-more");
       more.hidden = state.rows.length >= state.total;
@@ -228,6 +336,7 @@
         state.rows = append ? state.rows.concat(rows) : rows;
         state.total = typeof d.total === "number" ? d.total : state.rows.length;
         renderSources(d.sources);
+        renderStates(d.states);
         renderIngest(d.lastIngest, d.lastFetchedAt);
         render();
         var q = $("hx-search").value.trim();
@@ -299,13 +408,21 @@
         }
         $("app").hidden = false;
         $("guest-note").hidden = true;
-        return load(false).then(function () { document.body.setAttribute("data-hx-state", "app"); });
+        return load(false).then(function () { document.body.setAttribute("data-hx-state", "app"); return loadSaved(); });
       }).catch(function (e) { showGate("signin", "Could not reach HuntX: " + e.message); });
     }
 
     var debounce = null;
     $("hx-search").addEventListener("input", function () { clearTimeout(debounce); debounce = setTimeout(function () { load(false); }, 300); });
     $("hx-source").addEventListener("change", function () { load(false); });
+    ["hx-fit", "hx-state", "hx-due", "hx-min"].forEach(function (id) { $(id).addEventListener("change", function () { load(false); }); });
+    $("hx-save").addEventListener("click", saveSearch);
+    $("hx-saved").addEventListener("click", function (e) {
+      var del = e.target.getAttribute && e.target.getAttribute("data-del");
+      if (del) { fetch("/api/hunt/saved/" + encodeURIComponent(del), { method: "DELETE", headers: headers() }).then(loadSaved); return; }
+      var chip = e.target.closest && e.target.closest(".chip");
+      if (chip) applySaved(chip.getAttribute("data-id"));
+    });
     $("hx-refresh-btn").addEventListener("click", refresh);
     $("hx-more").addEventListener("click", function () { load(true); });
     $("signin-btn").addEventListener("click", function () { window.WeylandPage.signIn("/huntx"); });
