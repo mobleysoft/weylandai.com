@@ -287,7 +287,7 @@ export async function ingestSources(env, trigger = "cron") {
 let fitColumnsReady = false;
 export async function ensureFitColumns(env) {
   if (fitColumnsReady) return;
-  for (const col of ["trade_fit TEXT", "trade_fit_why TEXT", "state TEXT"]) {
+  for (const col of ["trade_fit TEXT", "trade_fit_why TEXT", "state TEXT", "trade_fit_v INTEGER"]) {
     try { await env.DB.prepare("ALTER TABLE opportunities ADD COLUMN " + col).run(); } catch (_) { /* exists */ }
   }
   fitColumnsReady = true;

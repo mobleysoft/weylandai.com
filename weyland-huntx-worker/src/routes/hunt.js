@@ -58,7 +58,7 @@
 import { jsonResponse3 } from "../lib/json-response.js";
 import { requireProductAccess } from "../lib/auth.js";
 import { ingestSources, lastIngest, ensureFitColumns } from "../lib/ingest.js";
-import { tradeFit, stateOf, FIT_FILTERS } from "../lib/trade-fit.js";
+import { tradeFit, stateOf, FIT_FILTERS, FIT_VERSION } from "../lib/trade-fit.js";
 import { claimJobLease } from "../lib/job-lease.js";
 import { outputAccess, paymentRequired } from "../../../weyland-shared/output-access.js";
 
@@ -113,12 +113,12 @@ export async function backfillFit(env2) {
   await ensureFitColumns(env2);
   let r;
   try {
-    r = await env2.DB.prepare("SELECT id, source, title, category, location, raw_data FROM opportunities WHERE trade_fit IS NULL LIMIT 500").all();
+    r = await env2.DB.prepare("SELECT id, source, title, category, location, raw_data FROM opportunities WHERE trade_fit IS NULL OR COALESCE(trade_fit_v, 0) < ? LIMIT 500").bind(FIT_VERSION).all();
   } catch (_) { return 0; }
   const rows = r?.results || [];
   if (!rows.length) return 0;
-  const stmt = env2.DB.prepare("UPDATE opportunities SET trade_fit = ?, trade_fit_why = ?, state = ? WHERE id = ?");
-  const updates = rows.map((o) => { const f = tradeFit(o); return stmt.bind(f.fit, f.why, stateOf(o.location), o.id); });
+  const stmt = env2.DB.prepare("UPDATE opportunities SET trade_fit = ?, trade_fit_why = ?, state = ?, trade_fit_v = ? WHERE id = ?");
+  const updates = rows.map((o) => { const f = tradeFit(o); return stmt.bind(f.fit, f.why, stateOf(o.location), FIT_VERSION, o.id); });
   for (let i = 0; i < updates.length; i += 50) await env2.DB.batch(updates.slice(i, i + 50));
   return rows.length;
 }

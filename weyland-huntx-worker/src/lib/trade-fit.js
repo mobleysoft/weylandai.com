@@ -26,6 +26,9 @@ const DOOR_WORDS = /\b(door hardware|finish hardware|builders'? hardware|hardwar
 const BUILDING_WORDS = /\b(buildings?|path of travel|accessibility|schools?|classrooms?|campus|library|librar(?:y|ies)|courthouse|fire (?:station|house)|firehouse|police|precinct|city hall|town hall|offices?|interiors?|renovat\w*|remodel\w*|moderniz\w*|additions?|alterations?|tenant improvements?|restrooms?|toilet rooms?|lockers?|gymnasium|auditorium|dormitor\w*|residence hall|housing|shelters?|hospital|clinic|health center|laborator\w*|facility|facilities|center|centre|museum|theater|visitor'?s? center|warehouse|maintenance (?:building|facility|garage)|garage|terminal|station house|construct(?:ion)? of|new construction|fit[- ]out|hvac|mechanical|electrical upgrades?|roof(?:ing)?|windows?|envelope|fa[cç]ade|stair(?:s|well)?|elevators?)\b/i;
 const CIVIL_WORDS = /\b(highways?|bridges?|pavement|paving|resurfac\w*|seal ?coat|overlay|roadways?|streets?|sidewalks?|curbs?|striping|pavement markings?|traffic signals?|signals?|intersections?|interchanges?|guard ?rail|culverts?|drainage|storm ?water|sewers?|water mains?|pipelines?|dredg\w*|levees?|landscap\w*|mowing|routine maintenance project|material maintenance project|preventative maintenance|bridge (?:repair|rehab\w*)|rest area|right[- ]of[- ]way|grading|excavation|demolition only|utility|utilities|wastewater|treatment plant|reservoir|dam|seawall|bulkhead|parks? (?:improvements?|paths?)|trails?)\b/i;
 
+// Titles that name a trade other than doors (its own doors are part of that trade's work).
+const OTHER_TRADE = /\b(elevators?|escalators?|roof(?:ing)?|(?:water|gravity|storage|fuel) tanks?|tanks?|boilers?|plumbing|hvac|heating|ventilation|chillers?|cooling towers?|sprinklers?|fire alarm|fire suppression|generators?|electrical|lighting|paint(?:ing)?|asbestos|abatement|masonry|pointing|waterproofing|flooring|carpet|kitchen equipment)\b/i;
+
 const SOURCE_DEFAULT = { txdot: "civil", il_cdb: "building", ca_opsc: "signal", nyc_cityrecord: null, nyc_sca: "signal", la_ramp: null, de_mmp: null };
 
 function textOf(opp) {
@@ -39,6 +42,9 @@ function textOf(opp) {
  * @param {{source: string, title?: string, category?: string, raw_data?: object|string}} opp
  * @returns {{fit: "doors"|"building"|"signal"|"civil", why: string|null}}
  */
+// Bumped whenever the rules change, so stored notices are classified again (hunt.js backfillFit).
+export const FIT_VERSION = 2;
+
 export function tradeFit(opp) {
   const t = textOf(opp);
   const door = t.match(DOOR_WORDS);
@@ -51,7 +57,15 @@ export function tradeFit(opp) {
   // with no building in it is the road's entrance, not a door ("component
   // rehabilitation of 8 bridges" named its entrance ramps).
   const strongDoor = door && /door|hardware|lock|exit|panic|hollow metal|division|08\s?\d|accessib|ada /i.test(door[0]);
-  if (door && !(civil && !building && (dflt === "civil" || !strongDoor))) return { fit: "doors", why: door[0] };
+  // A bare door word only in the description, on a notice whose title is another trade's work,
+  // is that trade's door (an elevator's hoistway doors, a roof tank's access door), not door
+  // scope (2026-10-08 live audit: "Repair of Gravity Roof Tanks" and "Elevator Rehabilitation"
+  // sat at the top of the doors filter).
+  const head = [opp.title, opp.category].filter(Boolean).join(" ");
+  const headDoor = head.match(DOOR_WORDS);
+  const specificDoor = door && /hardware|lock|exit device|panic|hollow metal|division|08\s?\d|accessib|ada |storefront|access control|card reader/i.test(door[0]);
+  const otherTrade = !headDoor && !specificDoor && OTHER_TRADE.test(head);
+  if (door && !otherTrade && !(civil && !building && (dflt === "civil" || !strongDoor))) return { fit: "doors", why: door[0] };
   if (dflt === "signal") return { fit: "signal", why: opp.source === "nyc_sca" ? "planned, not bid yet" : "funding released" };
   if (building && !(civil && dflt === "civil" && !/\bbuildings?\b|\bfacilit/i.test(building[0]))) return { fit: "building", why: building[0] };
   if (civil) return { fit: "civil", why: civil[0] };
