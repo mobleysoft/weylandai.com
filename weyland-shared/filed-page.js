@@ -86,3 +86,19 @@ export async function pageNamingInFiledPdf(env, r2Key, model, opts = {}) {
   const pages = await filedPdfPages(env, r2Key, opts);
   return pages ? bestPageFor(pages, model) : null;
 }
+
+/** Search tokens from the schedule's own catalogue number, most specific first, for a
+ *  product whose catalogue model is too short to search ("99"): a numeric run joined to
+ *  the option letters after it ("9927-EO" -> 9927EO, "99-L" -> 99L), then numeric runs of
+ *  three or more characters (9927). Prefixes such as PA-AX and runs with one digit are skipped. */
+export function scheduleTokens(model) {
+  const runs = String(model || "").toUpperCase().match(/[A-Z0-9]+/g) || [];
+  const joined = [], single = [];
+  runs.forEach((r, i) => {
+    if (!/^\d{2,}[A-Z]*$/.test(r)) return;
+    const next = runs[i + 1];
+    if (next && /^[A-Z]{1,3}$/.test(next)) joined.push(r + next);
+    if (r.length >= 3) single.push(r);
+  });
+  return [...new Set([...joined, ...single])].filter((t) => modelPattern(t));
+}

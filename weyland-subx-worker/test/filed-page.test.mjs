@@ -5,7 +5,7 @@ import { test } from "node:test";
 import assert from "node:assert/strict";
 import { DatabaseSync } from "node:sqlite";
 import { PDFDocument, StandardFonts } from "pdf-lib";
-import { modelPattern, bestPageFor, pageNamingInFiledPdf, filedTextKey } from "../../weyland-shared/filed-page.js";
+import { modelPattern, bestPageFor, pageNamingInFiledPdf, filedTextKey, scheduleTokens } from "../../weyland-shared/filed-page.js";
 import { getDocumentPagePdf } from "../../weyland-shared/cut-sheet-pages.js";
 import { citedPagesForSession } from "../src/routes/subx-workspace.js";
 
@@ -88,4 +88,10 @@ test("the packet cites the filed book's own page where the index was another edi
   const cut = await getDocumentPagePdf(env, PDFDocument, { r2Key: "manufacturer-catalogs/lcn.pdf", pageNum: 3 });
   const one = await PDFDocument.load(cut.bytes);
   assert.equal(one.getPageCount(), 1);
+});
+
+test("a product whose catalogue model is too short is searched by the schedule's own number", () => {
+  assert.deepEqual(scheduleTokens("PA-AX-9927-EO-F-LBR-499F"), ["9927EO", "9927", "499F"]);
+  assert.deepEqual(scheduleTokens("PA-AX-99-L-F-2SI-06"), ["99L"]);
+  assert.deepEqual(scheduleTokens("4040XP EDA"), ["4040XPEDA", "4040XP"]);
 });
