@@ -62,11 +62,16 @@ export async function loadJob(env, sessionId, userId) {
 
 const ftin = (i) => (i == null ? "" : Math.floor(i / 12) + "'-" + Math.round(i % 12) + '"');
 
+// SubX's door notes are the schedule's remarks plus its own bookkeeping
+// ("same mark as a door on page 284", where a later schedule page reuses a
+// mark); the bookkeeping is not a location.
+const locationFrom = (notes) => String(notes || "").split(/;\s*/).filter((x) => x && !/^same mark as a door on page \d+$/i.test(x.trim())).join("; ");
+
 export function closeoutModel(job, input = {}) {
   const openings = job.doors.map((d) => {
     const set = job.sets.get(setKey(d.hardware_group)) || null;
     return {
-      mark: d.mark, location: d.notes || "", size: d.width_inches && d.height_inches ? `${ftin(d.width_inches)} x ${ftin(d.height_inches)}` : "",
+      mark: d.mark, location: locationFrom(d.notes), size: d.width_inches && d.height_inches ? `${ftin(d.width_inches)} x ${ftin(d.height_inches)}` : "",
       rating: d.fire_rating || "", set: d.hardware_group || "", items: set ? set.items : [], page: d.page_number,
     };
   });

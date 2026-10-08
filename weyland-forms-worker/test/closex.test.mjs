@@ -57,3 +57,19 @@ test("the package PDF carries the cited catalogue page of a product, not the boo
   const withoutPages = await PDFDocument.load(await closeoutPdf(env, m, { pages: [], missing: cited.missing }, PDFDocument));
   assert.equal(pdf.getPageCount(), withoutPages.getPageCount() + 1);
 });
+
+test("SubX's duplicate-mark bookkeeping is not printed as a door's location", () => {
+  const job = { session: { project_name: "P" }, sets: new Map(), doors: [{ mark: "001 [p.286]", notes: "CORRIDOR 12; same mark as a door on page 284" }, { mark: "002 [p.286]", notes: "same mark as a door on page 284" }] };
+  const m = closeoutModel(job, {});
+  assert.deepEqual(m.openings.map((o) => o.location), ["CORRIDOR 12", ""]);
+});
+
+test("a catalog number wider than its column wraps inside it", async () => {
+  const { wrap } = await import("../src/lib/pdf.js");
+  const doc = await PDFDocument.create();
+  const font = await doc.embedFont(StandardFonts.Helvetica);
+  const lines = wrap("PA-AX-9927-L-F-2SI-LBR-06-499F", font, 8, 70);
+  assert.ok(lines.length > 1);
+  assert.equal(lines.join(""), "PA-AX-9927-L-F-2SI-LBR-06-499F");
+  assert.ok(lines.every((l) => font.widthOfTextAtSize(l, 8) <= 70));
+});

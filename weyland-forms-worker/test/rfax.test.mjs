@@ -67,3 +67,11 @@ test("routes: numbered RFIs, answers, ownership, and the PDF carries the cited s
   const pdf = await PDFDocument.load(await res.arrayBuffer());
   assert.ok(pdf.getPageCount() >= 2, "the RFI plus schedule page 2");
 });
+
+test("an item with no manufacturer is asked about once, naming every set it is in", () => {
+  const it = { type: "core", description: "INTERCHANGEABLE CORE", model: "VERIFY WITH DISTRICT", manufacturer: "" };
+  const model = { openings: [{ mark: "1", set: "2", rating: "", size: "3x7", items: [it] }, { mark: "2", set: "1", rating: "", size: "3x7", items: [it] }, { mark: "3", set: "2", rating: "", size: "3x7", items: [it] }] };
+  const q = findIssues(model).find((i) => i.kind === "no_manufacturer").question;
+  assert.match(q, /INTERCHANGEABLE CORE VERIFY WITH DISTRICT \(sets 1, 2\)\./);
+  assert.equal(q.match(/INTERCHANGEABLE CORE/g).length, 1);
+});

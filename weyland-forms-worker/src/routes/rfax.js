@@ -44,9 +44,18 @@ export function findIssues(model) {
   if (noLatch.length) issues.push({ kind: "rated_no_latch", subject: "Fire-rated openings with no latching hardware in their set", question: `The following fire-rated openings are assigned hardware sets that list no lock, latch or exit device: ${noLatch.map((o) => `${o.mark} (${o.rating}, set ${o.set})`).join("; ")}. A fire door assembly must be positive-latching. Please confirm the latching device to be provided, or revise the hardware set.`, openings: noLatch.map((o) => o.mark) });
   const noSize = model.openings.filter((o) => !o.size).map((o) => o.mark);
   if (noSize.length) issues.push({ kind: "no_size", subject: "Openings with no door size in the schedule", question: `No door size could be read for opening${noSize.length > 1 ? "s" : ""} ${noSize.join(", ")}. Please confirm the door width, height and thickness.`, openings: noSize });
-  const noMaker = [];
-  for (const o of model.openings) for (const it of o.items) if (!it.manufacturer && it.model) noMaker.push(`${it.description || it.type} ${it.model} (set ${o.set})`);
-  const uniq = [...new Set(noMaker)];
+  // One line per item, naming every set it appears in.
+  const noMaker = new Map();
+  for (const o of model.openings) for (const it of o.items) {
+    if (it.manufacturer || !it.model) continue;
+    const k = `${it.description || it.type} ${it.model}`;
+    if (!noMaker.has(k)) noMaker.set(k, new Set());
+    if (o.set) noMaker.get(k).add(String(o.set));
+  }
+  const uniq = [...noMaker].map(([k, sets]) => {
+    const list = [...sets].sort((a, b) => a.localeCompare(b, undefined, { numeric: true }));
+    return list.length ? `${k} (set${list.length > 1 ? "s" : ""} ${list.join(", ")})` : k;
+  });
   if (uniq.length) issues.push({ kind: "no_manufacturer", subject: "Hardware items with no manufacturer named", question: `The hardware schedule names no manufacturer for: ${uniq.slice(0, 20).join("; ")}${uniq.length > 20 ? " ..." : ""}. Please confirm the manufacturer, or whether an equal is acceptable.`, openings: [] });
   return issues;
 }
