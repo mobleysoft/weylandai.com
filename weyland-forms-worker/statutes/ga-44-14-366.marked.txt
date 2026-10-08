@@ -1,0 +1,277 @@
+SB 315 (2020) as passed, read from the PDF: [-struck-] {+inserted+}. Kept as the audit trail for ga-44-14-366.txt.
+----
+20 LC 41 2195
+Senate Bill 315
+By: Senators Tippins of the 37th, Dugan of the 30th, Cowsert of the 46th, Stone of the 23rd,
+Ligon, Jr. of the 3rd and others
+AS PASSED
+A BILL TO BE ENTITLED
+AN ACT
+1 To amend Part 3 of Article 8 of Chapter 14 of Title 44 of the Official Code of Georgia
+2 Annotated, relating to mechanics and materialmen, so as to provide that a waiver and release
+3 of lien and bond rights shall only be applicable to the issues of the waiver and release and
+4 shall not affect any other rights or remedies available under the law; to revise language and
+5 appearance requirements of statutory forms; to revise procedures; to provide for related
+6 matters; to repeal conflicting laws; and for other purposes.
+7 BE IT ENACTED BY THE GENERAL ASSEMBLY OF GEORGIA:
+8 SECTION 1.
+9 Part 3 of Article 8 of Chapter 14 of Title 44 of the Official Code of Georgia Annotated,
+10 relating to mechanics and materialmen, is amended by revising Code Section 44-14-366,
+11 relating to waiver of lien or claim upon bond in advance of furnishing labor, services, or
+12 materials void, interim waiver and release upon payment, unconditional waiver and release
+13 upon final payment, and affidavit of nonpayment, as follows:
+14 44-14-366.
+"
+15 {+(a)+} {+Waivers+} {+and+} {+releases+} {+provided+} {+for+} {+under+} {+this+} {+Code+} {+section+} {+shall+} {+be+} {+limited+} {+to+} {+waivers+}
+16 {+and+} {+releases+} {+of+} {+lien+} {+and+} {+labor+} {+or+} {+material+} {+bond+} {+rights+} {+and+} {+shall+} {+not+} {+be+} {+deemed+} {+to+} {+affect+} {+any+}
+17 {+other+} {+rights+} {+or+} {+remedies+} {+of+} {+the+} {+claimant.+}
+18 (a)(b) A right to claim a lien or to claim upon a bond may not be waived in advance of
+19
+furnishing of labor, services, or materials. Any purported waiver or release of lien or bond
+20 claim or of this Code section executed or made in advance of furnishing of labor, services,
+21 or materials is null, void, and unenforceable.
+22 (b)(c) No oral or written statement by the claimant purporting to waive, release, impair,
+23 or otherwise adversely affect a lien or bond claim is enforceable or creates an estoppel or
+24 impairment of claim of lien or claim upon a bond unless:
+25 (1) It is pursuant to a waiver and release form duly executed by {+the+} claimant prescribed
+26 below; and
+S. B. 315
+- 1 -
+20 LC 41 2195
+27 (2) The claimant has received payment for the claim as set forth in subsection [-(f)-] {+(g)+} of
+28 this Code section.
+29 (c)(d) When a claimant is requested to execute a waiver and release in exchange for or in
+30 order to induce payment other than final payment, the waiver and release shall substantially
+31 follow the {+language+} {+of+} {+the+} following form, [-in-] [-boldface-] [-capital-] [-letters-] {+be+} in at least 12 point
+32 font, {+and+} {+need+} {+not+} {+be+} {+in+} {+boldface+} {+capital+} {+letters,+} and the priority of such claimant's lien
+33 rights, except as to retention, shall upon such payment thereafter run from the day after the
+34 date specified in such [-Interim-] Waiver and Release [-upon-] {+of+} {+Lien+} {+and+} {+Payment+} {+Bond+} {+Rights+}
+35 {+Upon+} {+Interim+} Payment form:
+36 [-'INTERIM-] WAIVER AND RELEASE {+OF+} {+LIEN+}
+37 {+AND+} {+PAYMENT+} {+BOND+} {+RIGHTS+} UPON {+INTERIM+} PAYMENT
+38 STATE OF GEORGIA
+39 COUNTY OF __________
+40 THE UNDERSIGNED MECHANIC AND/OR MATERIALMAN HAS BEEN
+41 EMPLOYED BY _______________________ (NAME OF CONTRACTOR) TO
+42 FURNISH _______________________ (DESCRIBE MATERIALS AND/OR
+43 LABOR) FOR THE CONSTRUCTION OF IMPROVEMENTS KNOWN AS
+44 _______________________ (TITLE OF THE PROJECT OR BUILDING) WHICH
+45 IS LOCATED IN THE CITY OF _________________, COUNTY OF
+46 _____________, AND IS OWNED BY _______________________ (NAME OF
+47 OWNER) AND MORE PARTICULARLY DESCRIBED AS FOLLOWS:
+48 ____________________________________________________________________
+49 ____________________________________________________________________
+50 ____________________________________________________________________
+51 (DESCRIBE THE PROPERTY UPON WHICH THE IMPROVEMENTS WERE
+52
+MADE BY USING EITHER A METES AND BOUNDS DESCRIPTION, THE
+53 LAND LOT DISTRICT, BLOCK AND LOT NUMBER, OR STREET ADDRESS
+54 OF THE PROJECT.)
+55 UPON THE RECEIPT OF THE SUM OF $__________, THE MECHANIC
+56 AND/OR MATERIALMAN WAIVES AND RELEASES ANY AND ALL LIENS
+57 OR CLAIMS OF LIENS IT HAS UPON THE FOREGOING DESCRIBED
+58 PROPERTY OR ANY RIGHTS AGAINST ANY LABOR AND/OR MATERIAL
+59 BOND THROUGH THE DATE OF _______________________ (DATE) AND
+60 EXCEPTING THOSE RIGHTS AND LIENS THAT THE MECHANIC AND/OR
+S. B. 315
+- 2 -
+20 LC 41 2195
+61 MATERIALMAN MIGHT HAVE IN ANY RETAINED AMOUNTS, ON
+62 ACCOUNT OF LABOR OR MATERIALS, OR BOTH, FURNISHED BY THE
+63 UNDERSIGNED TO OR ON ACCOUNT OF SAID CONTRACTOR FOR SAID
+64 BUILDING OR PREMISES.
+65 GIVEN UNDER HAND AND SEAL THIS ______ DAY OF ______________, ____.
+66 __________________ (SEAL)
+67 _________________________
+68 _______________________
+69 (WITNESS)
+70 _______________________
+71 (ADDRESS)
+72 NOTICE: WHEN YOU EXECUTE AND SUBMIT THIS DOCUMENT, YOU
+73 SHALL BE CONCLUSIVELY DEEMED TO HAVE [-BEEN-] [-PAID-] [-IN-] [-FULL-] [-THE-]
+74 [-AMOUNT-] [-STATED-] {+WAIVED+} {+AND+} {+RELEASED+} {+ANY+} {+AND+} {+ALL+} {+LIENS+} {+AND+}
+75 {+CLAIMS+} {+OF+} {+LIENS+} {+UPON+} {+THE+} {+FOREGOING+} {+DESCRIBED+} {+PROPERTY+} {+AND+}
+76 {+ANY+} {+RIGHTS+} {+REGARDING+} {+ANY+} {+LABOR+} {+OR+} {+MATERIAL+} {+BOND+}
+77 {+REGARDING+} {+THE+} {+SAID+} {+PROPERTY+} {+TO+} {+THE+} {+EXTENT+} {+(AND+} {+ONLY+} {+TO+} {+THE+}
+78 {+EXTENT)+} {+SET+} {+FORTH+} ABOVE, EVEN IF YOU HAVE NOT ACTUALLY
+79 RECEIVED SUCH PAYMENT, [-60-] {+90+} DAYS AFTER THE DATE STATED
+80 ABOVE UNLESS YOU FILE [-EITHER-] AN AFFIDAVIT OF NONPAYMENT [-OR-]
+81 [-A-] [-CLAIM-] [-OF-] [-LIEN-] PRIOR TO THE EXPIRATION OF SUCH [-60-] {+90+} DAY
+82 PERIOD. THE FAILURE TO INCLUDE THIS NOTICE LANGUAGE ON THE
+83 [-FACE-] [-OF-] [-THE-] FORM SHALL RENDER THE FORM UNENFORCEABLE AND
+84 INVALID AS A WAIVER AND RELEASE UNDER O.C.G.A. [-SECTION-]
+85 {+§+} 44-14-366.'
+86
+Provided, however, that the failure to correctly complete any of the blank spaces in the
+87 above form shall not invalidate said form so long as the subject matter of said release may
+88 reasonably be determined.
+89 (d)(e) When a claimant is requested to execute a waiver and release in exchange for or in
+90 order to induce making of final payment, the waiver and release shall substantially follow
+91 the {+language+} {+of+} {+the+} following form, {+be+} [-in-] [-boldface-] [-capital-] [-letters-] in at least 12 point font,
+92 {+and+} {+need+} {+not+} {+be+} {+in+} {+boldface+} {+capital+} {+letters:+}
+S. B. 315
+- 3 -
+20 LC 41 2195
+93 'WAIVER AND RELEASE {+OF+} {+LIEN+}
+94 {+AND+} {+PAYMENT+} {+BOND+} {+RIGHTS+} UPON FINAL PAYMENT
+95 STATE OF GEORGIA
+96 COUNTY OF __________
+97 THE UNDERSIGNED MECHANIC AND/OR MATERIALMAN HAS BEEN
+98 EMPLOYED BY _______________________ (NAME OF CONTRACTOR) TO
+99 FURNISH _______________________ (DESCRIBE MATERIALS AND/OR
+100 LABOR) FOR THE CONSTRUCTION OF IMPROVEMENTS KNOWN AS
+101 _______________________ (TITLE OF THE PROJECT OR BUILDING) WHICH
+102 IS LOCATED IN THE CITY OF _________________, COUNTY OF
+103 _____________, AND IS OWNED BY _________________________ (NAME OF
+104 OWNER) AND MORE PARTICULARLY DESCRIBED AS FOLLOWS:
+105 ____________________________________________________________________
+106 ____________________________________________________________________
+107 ____________________________________________________________________
+108 (DESCRIBE THE PROPERTY UPON WHICH THE IMPROVEMENTS WERE
+109 MADE BY USING EITHER A METES AND BOUNDS DESCRIPTION, THE
+110 LAND LOT DISTRICT, BLOCK AND LOT NUMBER, OR STREET ADDRESS
+111 OF THE PROJECT.)
+112 UPON THE RECEIPT OF THE SUM OF $__________, THE MECHANIC
+113 AND/OR MATERIALMAN WAIVES AND RELEASES ANY AND ALL LIENS
+114 OR CLAIMS OF LIENS IT HAS UPON THE FOREGOING DESCRIBED
+115 PROPERTY OR ANY RIGHTS AGAINST ANY LABOR AND/OR MATERIAL
+116 BOND ON ACCOUNT OF LABOR OR MATERIALS, OR BOTH, FURNISHED
+117 BY THE UNDERSIGNED TO OR ON ACCOUNT OF SAID CONTRACTOR FOR
+118 SAID PROPERTY.
+119 GIVEN UNDER HAND AND SEAL THIS ______ DAY OF ______________, ____.
+120 __________________ (SEAL)
+121 _________________________
+122 _______________________
+123 (WITNESS)
+124 _______________________
+125 (ADDRESS)
+S. B. 315
+- 4 -
+20 LC 41 2195
+126 NOTICE: WHEN YOU EXECUTE AND SUBMIT THIS DOCUMENT, YOU
+127 SHALL BE CONCLUSIVELY DEEMED TO HAVE [-BEEN-] [-PAID-] [-IN-] [-FULL-] [-THE-]
+128 [-AMOUNT-] [-STATED-] {+WAIVED+} {+AND+} {+RELEASED+} {+ANY+} {+AND+} {+ALL+} {+LIENS+} {+AND+}
+129 {+CLAIMS+} {+OF+} {+LIENS+} {+UPON+} {+THE+} {+FOREGOING+} {+DESCRIBED+} {+PROPERTY+} {+AND+}
+130 {+ANY+} {+RIGHTS+} {+REGARDING+} {+ANY+} {+LABOR+} {+OR+} {+MATERIAL+} {+BOND+}
+131 {+REGARDING+} {+THE+} {+SAID+} {+PROPERTY+} {+TO+} {+THE+} {+EXTENT+} {+(AND+} {+ONLY+} {+TO+} {+THE+}
+132 {+EXTENT)+} {+SET+} {+FORTH+} ABOVE, EVEN IF YOU HAVE NOT ACTUALLY
+133 RECEIVED SUCH PAYMENT, [-60-] {+90+} DAYS AFTER THE DATE STATED
+134 ABOVE UNLESS YOU FILE [-EITHER-] AN AFFIDAVIT OF NONPAYMENT [-OR-]
+135 [-A-] [-CLAIM-] [-OF-] [-LIEN-] PRIOR TO THE EXPIRATION OF SUCH [-60-] {+90+} DAY
+136 PERIOD. THE FAILURE TO INCLUDE THIS NOTICE LANGUAGE ON [-THE-]
+137 [-FACE-] [-OF-] THE FORM SHALL RENDER THE FORM UNENFORCEABLE AND
+138 INVALID AS A WAIVER AND RELEASE UNDER O.C.G.A. [-SECTION-] {+§+}
+139 44-14-366.'
+140 Provided, however, that the failure to correctly complete any of the blank spaces in the
+141 above form shall not invalidate said form so long as the subject matter of said release may
+142 reasonably be determined.
+143 (e)(f) Nothing contained in this Code section shall affect:
+144 (1) The enforceability of any subordination of lien rights by a potential lien claimant to
+145 the rights of any other party which may have or acquire an interest in all or any part of
+146 the real estate, factories, railroads, or other property for which the potential lien claimant
+147 has furnished labor, services, or material, even though such subordination is entered into
+148 in advance of furnishing labor, services, or material and even though the claimant has not
+149 actually received payment in full for its claim;
+150 (2) The enforceability of any waiver of lien rights given in connection with the
+151 settlement of a bona fide dispute concerning the amount due the lien claimant for labor,
+152 services, or material which have already been furnished;
+153 (3) The validity of a cancellation or release of a recorded claim of lien or preliminary
+154
+notice of lien rights; or
+155 (4) The provisions of paragraph (2) of subsection (a) of Code Section 44-14-361.2,
+156 paragraphs (3) and (4) of subsection (a) and subsections (b) and (c) of Code Section
+157 44-14-361.4, or Code Section 44-14-364.
+158 (f)(g)(1) When a waiver and release provided for in this Code section is executed by the
+159 claimant, it shall be binding against the claimant for [-all-] purposes {+of+} {+the+} {+waiver+} {+of+} {+lien+} {+and+}
+160 {+labor+} {+or+} {+material+} {+bond+} {+rights+} {+to+} {+the+} {+extent+} {+stated+} {+in+} {+the+} {+waiver+} {+and+} {+release,+} subject only
+161 to [-payment-] [-in-] [-full-] [-of-] [-the-] [-amount-] [-set-] [-forth-] [-in-] [-the-] [-waiver-] [-and-] [-release-] {+the+} {+provisions+} {+of+}
+162 {+paragraphs+} {+(2)+} {+and+} {+(3)+} {+of+} {+this+} {+subsection.+}
+S. B. 315
+- 5 -
+20 LC 41 2195
+163 (2) Such [-amounts-] {+lien+} {+and+} {+labor+} {+or+} {+material+} {+bond+} {+waivers+} {+and+} {+releases+} shall conclusively
+164 be deemed [-paid-] [-in-] [-full-] {+effective+} upon the earliest to occur of:
+165 (A) Actual receipt of funds {+in+} {+the+} {+amount+} {+set+} {+forth+} {+in+} {+the+} {+waiver+} {+and+} {+release;+}
+166 (B) Execution by the claimant of a separate written acknowledgment of payment in
+167 full; or
+168 (C) {+Ninety+} [-Sixty-] days after the date of the execution of the waiver and release, unless
+169 prior to the expiration of said [-60-] {+90+} day period the claimant files [-a-] [-claim-] [-of-] [-lien-] [-or-] [-files-]
+170 in the county in which the property is located an affidavit of nonpayment, using
+171 substantially the {+language+} {+in+} {+the+} following form [-in-] [-boldface-] [-capital-] [-letters,-] {+where+} {+such+}
+172 {+language+} {+shall+} {+be+} in at least 12 point font {+and+} {+need+} {+not+} {+be+} {+in+} {+boldface+} {+capital+} {+letters:+}
+173 'AFFIDAVIT OF NONPAYMENT UNDER
+174 O.C.G.A. [-SECTION-] {+§+} 44-14-366
+175 STATE OF GEORGIA
+176 COUNTY OF __________
+177 THE UNDERSIGNED MECHANIC AND/OR MATERIALMAN HAS BEEN
+178 EMPLOYED BY ____________________________ (NAME OF
+179 CONTRACTOR) TO FURNISH _______________________ (DESCRIBE
+180 MATERIALS AND/OR LABOR) FOR THE CONSTRUCTION OF
+181 IMPROVEMENTS KNOWN AS _______________________ (TITLE OF THE
+182 PROJECT OR BUILDING) WHICH IS LOCATED IN THE CITY OF
+183 ______________, COUNTY OF ________, AND IS OWNED BY
+184 _______________________ (NAME OF OWNER) AND MORE
+185 PARTICULARLY DESCRIBED AS FOLLOWS:
+186 _________________________________________________________________
+187 _________________________________________________________________
+188
+_________________________________________________________________
+189 (DESCRIBE THE PROPERTY UPON WHICH THE IMPROVEMENTS
+190 WERE MADE BY USING EITHER A METES AND BOUNDS
+191 DESCRIPTION, THE LAND LOT DISTRICT, BLOCK AND LOT
+192 NUMBER, OR STREET ADDRESS OF THE PROJECT.)
+193 PURSUANT TO O.C.G.A. [-SECTION-] {+§+} 44-14-366 THE UNDERSIGNED
+194 EXECUTED A LIEN WAIVER AND RELEASE WITH RESPECT TO THIS
+195 PROPERTY DATED ______________, ____. THE AMOUNT SET FORTH IN
+196 SAID WAIVER AND RELEASE ($______) HAS NOT BEEN PAID {+IN+} {+FULL+}
+S. B. 315
+- 6 -
+20 LC 41 2195
+197 {+AND+} {+$_________________+} {+OF+} {+THE+} {+AMOUNT+} {+SET+} {+FORTH+} {+IN+} {+SAID+}
+198 {+WAIVER+} {+AND+} {+RELEASE+} {+REMAINS+} {+UNPAID,+} AND THE UNDERSIGNED
+199 HEREBY GIVES NOTICE OF SUCH NONPAYMENT.
+200 THE ABOVE FACTS ARE SWORN TRUE AND CORRECT BY THE
+201 UNDERSIGNED, THIS ______ DAY OF ______________, ____.
+202 ____________________(SEAL)
+203 CLAIMANT'S SIGNATURE
+204 SWORN TO AND EXECUTED
+205 IN THE PRESENCE OF:
+206 _____________________
+207 WITNESS
+208 _____________________
+209 NOTARY PUBLIC
+210 WITHIN SEVEN DAYS OF FILING THIS AFFIDAVIT OF NONPAYMENT,
+211 THE FILING PARTY SHALL SEND A COPY OF THE AFFIDAVIT BY
+212 REGISTERED OR CERTIFIED MAIL OR STATUTORY OVERNIGHT
+213 DELIVERY TO THE OWNER OF THE PROPERTY. IF THE FILING PARTY
+214 IS NOT IN PRIVITY OF CONTRACT WITH THE PROPERTY OWNER AND
+215 A NOTICE OF COMMENCEMENT IS FILED FOR THE IMPROVEMENT ON
+216 THE PROPERTY FOR WHICH THE FILING PARTY'S LABOR, SERVICES,
+217 OR MATERIALS WERE FURNISHED, A COPY OF THE AFFIDAVIT SHALL
+218 BE SENT TO THE CONTRACTOR AT THE ADDRESS SHOWN ON THE
+219 NOTICE OF COMMENCEMENT. WHENEVER THE OWNER OF THE
+220 PROPERTY IS AN ENTITY ON FILE WITH THE SECRETARY OF STATE'S
+221 CORPORATIONS DIVISION, SENDING A COPY OF THE LIEN TO THE
+222
+COMPANY'S ADDRESS OR THE REGISTERED AGENT'S ADDRESS ON
+223 FILE WITH THE SECRETARY OF STATE SHALL BE DEEMED
+224 SUFFICIENT.'
+225 (3) A claimant who is paid, in full, the amount set forth in the waiver and release form
+226 after filing an affidavit of nonpayment shall upon request execute in recordable form an
+227 affidavit swearing that payment in full has been received. Upon recordation thereof in
+228 the county in which the Affidavit of Nonpayment was recorded, the affidavit of
+229 nonpayment to which it relates shall be deemed void.
+S. B. 315
+- 7 -
+20 LC 41 2195
+230 (4) Nothing in this Code section shall shorten the time within which to file a claim of
+231 lien.
+232 (5) A waiver and release provided in this Code section shall be suspended upon filing of
+233 an affidavit of nonpayment until payment in full has been received.
+234 (6) The claimant may rely upon the information contained in the waiver and release form
+235 when completing for filing the affidavit of nonpayment [-or-] [-claim-] [-of-] [-lien.-]
+"
+236 SECTION 2.
+237 All laws and parts of laws in conflict with this Act are repealed.
+S. B. 315
+- 8 -

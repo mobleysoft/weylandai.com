@@ -13,7 +13,7 @@ import { STATES, STATUTORY_NOT_CARRIED, FORM_KINDS, KIND_LABEL, formFor, fill, m
 import { newDoc, title, field, para, notice, signature, small, finish } from "../lib/pdf.js";
 import { outputAccess, paymentRequired } from "../../../weyland-shared/output-access.js";
 
-const KEYS = ["amount", "checkMaker", "payee", "owner", "jobDescription", "customer", "throughDate", "date", "company", "signerTitle", "project", "jobNo", "propertyName", "propertyLocation", "invoiceNumber", "paymentPeriod", "disputedAmount", "propertyDescription", "year", "coversAll", "claimantAddress", "claimantPhone", "retainage", "unpaidAmount", "priorWaiverDates", "priorUnpaid"];
+const KEYS = ["amount", "checkMaker", "payee", "owner", "jobDescription", "customer", "throughDate", "date", "company", "signerTitle", "project", "jobNo", "propertyName", "propertyLocation", "invoiceNumber", "paymentPeriod", "disputedAmount", "propertyDescription", "year", "coversAll", "claimantAddress", "claimantPhone", "retainage", "unpaidAmount", "priorWaiverDates", "priorUnpaid", "county", "city", "signer"];
 
 export function cleanValues(raw) {
   const v = {};
@@ -27,6 +27,14 @@ export function cleanValues(raw) {
     v.date = d.toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric", timeZone: "UTC" });
   }
   if (!v.year) v.year = (v.date.match(/\b(19|20)\d{2}\b/) || [String(new Date().getUTCFullYear())])[0];
+  // Georgia's "THIS ___ DAY OF ______, ____" takes the date apart.
+  const parsed = Date.parse(v.date + " 00:00:00 UTC");
+  if (Number.isFinite(parsed)) {
+    const d = new Date(parsed), n = d.getUTCDate();
+    const sfx = n % 100 >= 11 && n % 100 <= 13 ? "th" : ({ 1: "st", 2: "nd", 3: "rd" })[n % 10] || "th";
+    v.dateDay = n + sfx;
+    v.dateMonth = d.toLocaleDateString("en-US", { month: "long", timeZone: "UTC" });
+  } else { v.dateDay = ""; v.dateMonth = ""; }
   return v;
 }
 
@@ -52,24 +60,31 @@ export function filledWaiver(state, kind, raw) {
     stateName: f.state ? f.state.name : null,
     cite: f.state ? f.state.cite : null,
     source: f.state ? f.state.source : null,
+    minFont: f.state && f.state.minFont ? f.state.minFont : 0,
+    onePage: !!(f.state && f.state.onePage),
     note: f.state ? f.state.note : "This state does not print a statutory waiver form that LienX knows of; this is a general-form waiver. Check your state's requirements or have counsel review it before relying on it.",
     title: (blocks.find((b) => b.t === "title") || {}).text || "Lien waiver",
     blocks,
   };
 }
 
-export async function waiverPdf(w) {
+export async function waiverPdf(w, shrink = 0) {
   const doc = await newDoc({ title: w.title, footer: w.statutory ? `${w.cite} · filled by WeylandAI LienX` : "General-form waiver · WeylandAI LienX" });
+  // A state that sets a minimum type size (Georgia: 12 point) gets it on every line of the form.
+  // A form that must carry its notice on its face (Mississippi) is set smaller, and
+  // smaller again if long entries still push it past one page.
+  const min = w.minFont || 0, cut = w.onePage ? 2 + shrink : 0, at = (n) => Math.max(n - cut, min);
   let titled = false;
   for (const b of w.blocks) {
     // The form's own title first; later titles are the statute's section headings.
-    if (b.t === "title") { if (titled) { doc.y -= 10; title(doc, b.text, { size: 12, gapAfter: 12 }); } else title(doc, b.text); titled = true; }
-    else if (b.t === "field") field(doc, b.label, b.value);
-    else if (b.t === "para") para(doc, b.text);
-    else if (b.t === "notice") notice(doc, b.text);
-    else if (b.t === "sign") signature(doc, b.lines);
+    if (b.t === "title") { if (titled) { doc.y -= 10; title(doc, b.text, { size: at(12), gapAfter: 12 }); } else title(doc, b.text, w.onePage ? { size: at(15) } : {}); titled = true; }
+    else if (b.t === "field") field(doc, b.label, b.value, { size: at(11.5) });
+    else if (b.t === "para") para(doc, b.text, { size: at(11.5), gapAfter: w.onePage ? 8 - Math.min(shrink, 4) : 10 });
+    else if (b.t === "notice") notice(doc, b.text, w.onePage ? { size: at(12) } : {});
+    else if (b.t === "sign") signature(doc, b.lines, { size: at(11), captionSize: Math.max(at(8), 6) });
   }
   if (!w.statutory) { doc.y -= 10; small(doc, w.note); }
+  if (w.onePage && doc.pages.length > 1 && shrink < 4) return waiverPdf(w, shrink + 1);
   return finish(doc);
 }
 

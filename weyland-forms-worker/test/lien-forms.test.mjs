@@ -56,7 +56,9 @@ test("every unconditional statutory form carries its notice", () => {
 test("states with statutory forms not carried refuse a generic waiver; others get the general form", () => {
   assert.ok(formFor("CA", "conditional_progress").statutory);
   assert.equal(formFor("WY", "conditional_progress").blocks, formFor("WY", "unconditional_final").blocks, "Wyoming has one form");
-  assert.match(formFor("GA", "unconditional_final").refused, /44-14-366/);
+  assert.ok(formFor("GA", "unconditional_final").statutory);
+  assert.ok(formFor("MS", "conditional_progress").statutory);
+  assert.equal(Object.keys(STATUTORY_NOT_CARRIED).length, 0, "every state known to print waiver forms is carried");
   assert.equal(STATES.TX.forms.unconditional_final[0].t, "notice", "Texas notice is at the top");
   assert.ok(formFor("OH", "conditional_progress").generic);
   assert.ok(formFor("AZ", "conditional_final").statutory);

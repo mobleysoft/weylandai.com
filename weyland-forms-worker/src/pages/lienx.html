@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
   <meta name="theme-color" content="#090a0d">
   <title>LienX | Statutory lien waivers, filled from the job</title>
-  <meta name="description" content="LienX fills your state's own statutory lien waiver form, word for word, with the job's owner, customer, amount and dates: Arizona, California, Florida, Michigan, Nevada, Texas, Utah and Wyoming today. States with statutory forms LienX doesn't carry yet are refused, not given a generic waiver.">
+  <meta name="description" content="LienX fills your state's own statutory lien waiver form, word for word, with the job's owner, customer, amount and dates: Arizona, California, Florida, Georgia, Michigan, Mississippi, Nevada, Texas, Utah and Wyoming today. States with statutory forms LienX doesn't carry yet are refused, not given a generic waiver.">
   <style>
     :root{--bg:#090a0d;--panel:#111318;--line:#2b3038;--text:#eef1f2;--muted:#9299a3;--primary:#2a52ff;--accent:#ffd400;--red:#ff716b;--green:#68e0a0}
     *{box-sizing:border-box}html,body{margin:0;background:var(--bg);color:var(--text);font-family:"Avenir Next","Helvetica Neue",-apple-system,sans-serif}body{overflow-x:hidden}
@@ -47,7 +47,7 @@
     </header>
     <div class="eyebrow">LIEN WAIVERS</div>
     <h1>LienX</h1>
-    <p class="lead">Where a state prints its lien waiver forms in its statutes, a waiver counts only on that form. LienX fills your state's statutory form word for word, from the statute on the legislature's own site, with the job's owner, customer, amount and dates. It covers Arizona, California, Florida, Michigan, Nevada, Texas, Utah and Wyoming today, each checked word for word against the statute's official text. A state with statutory forms LienX doesn't carry yet (Georgia and Mississippi) is refused instead of getting a generic waiver that may not hold. Any other state gets a general-form waiver labelled as one. Previewing is free; the PDF comes with LienX, the suite or the $100 first submittal.</p>
+    <p class="lead">Where a state prints its lien waiver forms in its statutes, a waiver counts only on that form. LienX fills your state's statutory form word for word, from the statute on the legislature's own site, with the job's owner, customer, amount and dates. It covers Arizona, California, Florida, Georgia, Michigan, Mississippi, Nevada, Texas, Utah and Wyoming, every state we know of that prints statutory waiver forms, each checked word for word against the official text. Any other state gets a general-form waiver labelled as one. Previewing is free; the PDF comes with LienX, the suite or the $100 first submittal.</p>
 
     <div class="grid">
       <form class="card" id="f" autocomplete="off">
@@ -101,6 +101,8 @@
       CA: [["propertyLocation", "JOB LOCATION"], ["throughDate", "THROUGH DATE (PROGRESS)"], ["checkMaker", "MAKER OF CHECK (CONDITIONAL)"], ["payee", "CHECK PAYABLE TO (CONDITIONAL)"], ["priorWaiverDates", "EARLIER CONDITIONAL WAIVERS STILL UNPAID: DATES"], ["priorUnpaid", "EARLIER CONDITIONAL WAIVERS STILL UNPAID: AMOUNT ($)"], ["disputedAmount", "DISPUTED EXTRAS ($, FINAL)"]],
       MI: [["jobDescription", "WHAT YOU PROVIDE (E.G. DOORS, FRAMES AND HARDWARE)"], ["propertyDescription", "PROPERTY DESCRIPTION"], ["throughDate", "THROUGH DATE (PARTIAL)"], ["coversAll", "COVERS ALL AMOUNTS DUE THROUGH THAT DATE? (does / does not)"], ["claimantAddress", "YOUR ADDRESS"], ["claimantPhone", "YOUR TELEPHONE"]],
       WY: [["project", "PROJECT"], ["retainage", "RETAINAGE WITHHELD ($)"], ["unpaidAmount", "AMOUNT STILL UNPAID ($)"]],
+      GA: [["project", "PROJECT OR BUILDING"], ["jobDescription", "MATERIALS AND/OR LABOR FURNISHED"], ["city", "CITY"], ["county", "COUNTY"], ["propertyDescription", "PROPERTY (STREET ADDRESS, LOT/BLOCK OR METES AND BOUNDS)"], ["throughDate", "THROUGH DATE (INTERIM)"]],
+      MS: [["project", "PROJECT OR BUILDING"], ["jobDescription", "MATERIALS AND/OR LABOR FURNISHED"], ["city", "CITY"], ["county", "COUNTY"], ["propertyDescription", "PROPERTY (STREET ADDRESS, LOT/BLOCK OR METES AND BOUNDS)"], ["throughDate", "THROUGH DATE (INTERIM)"], ["signer", "SIGNER'S PRINTED NAME"]],
       UT: [["propertyName", "PROPERTY NAME"], ["propertyLocation", "PROPERTY LOCATION"], ["invoiceNumber", "INVOICE / PAY APPLICATION NO."], ["paymentPeriod", "PAYMENT PERIOD (PROGRESS)"]],
       generic: [["project", "PROJECT"], ["jobDescription", "JOB LOCATION"], ["checkMaker", "PAYMENT FROM (CONDITIONAL)"], ["throughDate", "THROUGH DATE (PROGRESS)"], ["disputedAmount", "DISPUTED CLAIMS ($, FINAL)"]],
     };

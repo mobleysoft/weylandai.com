@@ -31,11 +31,14 @@ test("Florida's DATED line takes the day and the year apart", () => {
   assert.ok(w.blocks.some((b) => b.text === "DATED on October 8, 2026."));
 });
 
-test("routes: preview is free; Georgia is refused; the PDF needs an account and payment", async () => {
+test("routes: preview is free; every statutory state fills; the PDF needs an account and payment", async () => {
   const guest = setup(null, false);
   const p = await (await guest("/api/forms/lienx/preview", { state: "NV", kind: "unconditional_final", values: VALUES })).json();
   assert.equal(p.waiver.cite, "Nev. Rev. Stat. § 108.2457(5)");
-  assert.equal((await guest("/api/forms/lienx/preview", { state: "GA", kind: "conditional_progress", values: VALUES })).status, 422);
+  const ga = await (await guest("/api/forms/lienx/preview", { state: "GA", kind: "conditional_progress", values: { ...VALUES, date: "October 8, 2026", county: "Fulton", city: "Atlanta" } })).json();
+  assert.ok(ga.waiver.blocks.some((b) => b.text === "GIVEN UNDER HAND AND SEAL THIS 8th DAY OF October, 2026."));
+  assert.ok(ga.waiver.blocks.some((b) => /CITY OF Atlanta, COUNTY OF Fulton/.test(b.text || "")));
+  assert.equal(ga.waiver.minFont, 12);
   const ca = await (await guest("/api/forms/lienx/preview", { state: "CA", kind: "unconditional_final", values: { ...VALUES, disputedAmount: "1200" } })).json();
   assert.equal(ca.waiver.blocks[1].t, "notice");
   assert.ok(ca.waiver.blocks.some((b) => b.label === "Disputed claims for extras in the amount of:" && b.value === "$1,200.00"));
@@ -50,5 +53,14 @@ test("routes: preview is free; Georgia is refused; the PDF needs an account and 
   const doc = await PDFDocument.load(await res.arrayBuffer());
   assert.ok(doc.getPageCount() >= 1);
   const states = await (await guest("/api/forms/lienx/states")).json();
-  assert.deepEqual(states.statutory.map((s) => s.code), ["AZ", "NV", "FL", "TX", "MI", "WY", "CA", "UT"]);
+  assert.deepEqual(states.statutory.map((s) => s.code), ["AZ", "NV", "FL", "TX", "MI", "WY", "CA", "UT", "GA", "MS"]);
+});
+
+test("Mississippi's notice stays on the face of the form: one page even with long entries", async () => {
+  const { filledWaiver, waiverPdf } = await import("../src/routes/lienx.js");
+  for (const kind of ["conditional_progress", "unconditional_final"]) {
+    const long = { ...VALUES, propertyDescription: "Lot 14, Block C, Riverside Commons Subdivision, as recorded in Plat Book 112, Page 45, Hinds County, together with all improvements thereon, 2200 Riverside Drive, Jackson, MS 39202".repeat(2), jobDescription: "hollow metal doors and frames, wood doors, finish hardware, access control rough-in", project: "Riverside Commons Phase II", county: "Hinds", city: "Jackson", signer: "Pat Lee" };
+    const doc = await PDFDocument.load(await waiverPdf(filledWaiver("MS", kind, long)));
+    assert.equal(doc.getPageCount(), 1, kind);
+  }
 });
