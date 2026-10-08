@@ -22,7 +22,7 @@
 import { PDFDocument, StandardFonts, rgb } from "pdf-lib";
 import { jsonResponse3 } from "../lib/json-response.js";
 import { assembleSubmittalPackage } from "../lib/submittal-assembler.js";
-import { matchComponentToCutSheets } from "../lib/product-database.js";
+import { matchComponentToCutSheets, citedPagesFor, PACKET_MATCH_TYPES } from "../lib/product-database.js";
 import { incrementSubmittalsUsed } from "../lib/edge-telemetry.js";
 import { outputAccess, paymentRequired } from "../../../weyland-shared/output-access.js";
 
@@ -77,48 +77,46 @@ async function packageStatus(env2, sessionId) {
   }
 }
 
-// Cut sheets for the session's hardware components: only an exact
-// manufacturer + model match from the product database attaches a document
-// (a category or partial guess would put the wrong product in a submittal).
-async function persistExactCutSheetMatches(sessionId, env2) {
+// The catalogue page each of the session's hardware components is cited on
+// (2026-10-08), for the packet: the shared matcher's answer for the named
+// maker's own product (exact, base model, variant, series, or the maker's
+// catalogue page naming the model) and citedPagesFor's first page that is on
+// file. One page per product; a page several components cite goes in once,
+// listing the sets that use it. Nothing is guessed: no match, no page.
+export async function citedPagesForSession(sessionId, env2, match = matchComponentToCutSheets) {
   const comps = await env2.DB.prepare(`
-    SELECT hc.manufacturer, hc.model, hc.catalog_number, hc.component_type
+    SELECT hs.set_number, hc.manufacturer, hc.model, hc.catalog_number, hc.component_type
     FROM hardware_components hc JOIN hardware_sets hs ON hc.set_id = hs.id
-    WHERE hs.session_id = ?
+    WHERE hs.session_id = ? ORDER BY hs.set_number, hc.sequence_order
   `).bind(sessionId).all();
-  const seen = new Set();
+  const byKey = new Map();
+  for (const c of comps.results || []) {
+    const model = c.model || c.catalog_number || "";
+    const key = (c.manufacturer || "").toUpperCase() + "|" + model.toUpperCase();
+    if (!model) continue;
+    if (!byKey.has(key)) byKey.set(key, { c: { ...c, model }, sets: new Set() });
+    if (c.set_number) byKey.get(key).sets.add(String(c.set_number));
+  }
+  const pages = new Map();
   let matched = 0, unmatched = 0;
   const missing = [];
-  for (const c of comps.results || []) {
-    const key = (c.manufacturer || "") + "|" + (c.model || c.catalog_number || "");
-    if (seen.has(key) || key === "|") continue;
-    seen.add(key);
-    let match = null;
-    try { match = await matchComponentToCutSheets(c, env2); } catch (e) { match = null; }
-    if (match && match.matched && match.matchType === "exact" && match.cutSheets.length > 0) {
+  for (const { c, sets } of byKey.values()) {
+    let m = null;
+    try { m = await match(c, env2); } catch (_) { m = null; }
+    const cited = m && m.matched && PACKET_MATCH_TYPES.has(String(m.matchType)) ? citedPagesFor(m, 1) : [];
+    if (cited.length) {
       matched++;
-      for (const cs of match.cutSheets.slice(0, 2)) {
-        try {
-          // session_cut_sheet_matches has no UNIQUE(session_id, cut_sheet_id)
-          // (only its id primary key), so an upsert cannot target that pair:
-          // look first, insert once.
-          const existing = await env2.DB.prepare("SELECT id FROM session_cut_sheet_matches WHERE session_id = ? AND cut_sheet_id = ?").bind(sessionId, cs.id).first();
-          if (!existing) {
-            await env2.DB.prepare(`
-              INSERT INTO session_cut_sheet_matches (id, session_id, cut_sheet_id, matched_manufacturer, matched_model, match_type, confidence, status, created_at)
-              VALUES (?, ?, ?, ?, ?, 'exact', 1.0, 'matched', CURRENT_TIMESTAMP)
-            `).bind("scm_" + crypto.randomUUID(), sessionId, cs.id, c.manufacturer || null, c.model || c.catalog_number || null).run();
-          }
-        } catch (e) {
-          console.warn("[SubX package] could not record cut sheet match: " + e.message);
-        }
-      }
+      const p = cited[0];
+      const k = p.catalogueId + "#" + p.pageNum;
+      if (!pages.has(k)) pages.set(k, { catalogueId: p.catalogueId, pageNum: p.pageNum, title: p.title, kind: p.kind, manufacturer: (m.product && m.product.manufacturer) || c.manufacturer || null, model: (m.product && m.product.model) || c.model, sets: [] });
+      const entry = pages.get(k);
+      for (const s of sets) if (!entry.sets.includes(s)) entry.sets.push(s);
     } else {
       unmatched++;
-      if (missing.length < 25) missing.push({ manufacturer: c.manufacturer || null, model: c.model || c.catalog_number || null, component_type: c.component_type || null });
+      if (missing.length < 25) missing.push({ manufacturer: c.manufacturer || null, model: c.model || null, component_type: c.component_type || null, reason: m && m.matched ? "no cited page on file" : ((m && m.reasonText) || "no catalogue match") });
     }
   }
-  return { components: seen.size, matched, unmatched, missing };
+  return { components: byKey.size, matched, unmatched, missing, pages: [...pages.values()] };
 }
 
 export function registerSubxWorkspaceRoutes(router, { authenticate, requireActiveSubscription }) {
@@ -272,7 +270,7 @@ export function registerSubxWorkspaceRoutes(router, { authenticate, requireActiv
         return jsonResponse3({ success: false, error: "NOTHING_EXTRACTED", details: "Nothing has been read from this schedule yet. Read a page first (READ THIS PAGE), then build the package: it is made from the door rows and hardware sets that were read." }, 409);
       }
       const hadPackage = await packageStatus(env2, sessionId);
-      const cutSheets = await persistExactCutSheetMatches(sessionId, env2);
+      const cutSheets = await citedPagesForSession(sessionId, env2);
       // The cover names the company (2026-10-08): what the workspace sent,
       // else the account's company, else the vendor profile. Never the email.
       let preparedBy = String(body.preparedBy || "").trim().slice(0, 120) || null;
@@ -300,6 +298,7 @@ export function registerSubxWorkspaceRoutes(router, { authenticate, requireActiv
         dsaNumber: body.dsaNumber || null,
         includeDraftSets: true,
         saveToR2: true,
+        citedPages: cutSheets.pages,
       }, env2, { PDFDocument, StandardFonts, rgb });
       if (!result.success) {
         return jsonResponse3({ success: false, error: "Assembly failed", details: result.errors.join("; ") }, 500);
@@ -326,7 +325,7 @@ export function registerSubxWorkspaceRoutes(router, { authenticate, requireActiv
         doors: result.doorCount,
         hardware_sets: result.hardwareSetCount,
         cut_sheets: result.cutSheetCount,
-        cut_sheet_matching: cutSheets,
+        cut_sheet_matching: { components: cutSheets.components, matched: cutSheets.matched, unmatched: cutSheets.unmatched, missing: cutSheets.missing, pages: cutSheets.pages.length },
         warnings: result.errors.length ? result.errors : undefined,
         submittals_used: usage,
       });
