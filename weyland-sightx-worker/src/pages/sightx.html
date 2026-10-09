@@ -1250,7 +1250,7 @@
     </div>
   </div>
 
-  <script src="/assets/sightx-controls.js?v=20261007-1"></script>
+  <script src="/assets/sightx-controls.js?v=20261009a"></script>
   <script src="/assets/sightx-experience.js?v=20261005-1"></script>
   <script>
     // Ingest (PDF upload UI) and the Unreal runtime bridge are not used in
@@ -3336,15 +3336,30 @@
       el.addEventListener("keydown", function (e) { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); raiseDossier(); } });
     });
     document.addEventListener("keydown", function (e) {
-      if (e.key === "Enter" && !siteRaised && !document.pointerLockElement) {
+      if (e.key === "Enter" && !siteRaised) {
         var t = e.target; if (t && (t.tagName === "INPUT" || t.tagName === "TEXTAREA")) return;
+        // Enter raises the dossier whether or not the world holds the mouse (S0).
+        if (document.pointerLockElement) { try { document.exitPointerLock(); } catch (err) {} }
         raiseDossier();
       }
     });
     window.addEventListener("message", function (e) {
       if (e.source !== window.parent || e.origin !== location.origin || !e.data || e.data.type !== "weyland:dossier-state") return;
       siteRaised = !!e.data.raised;
+      // The world is in front while the dossier is lowered: its keys move the player (S0).
+      try { if (sightxControls && sightxControls.setExternalKeys) sightxControls.setExternalKeys(!siteRaised); } catch (err) {}
       update(value);
+    });
+    // The host's input layer (S0, 2026-10-09; assets/weyland-input.js): focus stays on the homepage
+    // (its raise control), so the host reads keys, mouse, its own touch stick and gamepads into one
+    // state and posts it here every live frame ({type:"weyland:input-state", move, look, buttons}).
+    window.addEventListener("message", function (e) {
+      if (e.source !== window.parent || e.origin !== location.origin || !e.data || e.data.type !== "weyland:input-state") return;
+      var c = null;
+      try { c = sightxControls; } catch (err) { c = null; }
+      if (!c || !c.setExternalState) return;
+      window.__sxForwarded = (window.__sxForwarded || 0) + 1;
+      c.setExternalState(e.data);
     });
     window.sxDossier = { geometry: geometry, lowered: lowered, update: update, introUp: introUp };
   })();

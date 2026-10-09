@@ -345,10 +345,11 @@
        own box lets touches through to the world; its children keep their
        pointer-events (zero-specificity reset, so an explicit rule such as
        the frame's none still wins). Mouse pointers are left as they were. */
-    @media (hover: none) and (pointer: coarse) {
-      html.folder-lowered body { pointer-events: none; }
-      :where(html.folder-lowered body > *) { pointer-events: auto; }
-    }
+    /* 2026-10-09 (S0): the same for a mouse. The Mac's probe found a click at the centre of the
+       lowered page landing on BODY, so the world never saw a pointerdown, never took focus and
+       never captured the mouse; W reached nothing. */
+    html.folder-lowered body { pointer-events: none; }
+    :where(html.folder-lowered body > *) { pointer-events: auto; }
     @media (prefers-reduced-motion: reduce) {
       .envelope-frame, .wn-persistent-footer { transition: none; }
     }
@@ -1942,6 +1943,7 @@
       to { opacity: 0; visibility: hidden; pointer-events: none; }
     }
   </style>
+  <script src="/assets/weyland-input.js?v=20261009a"></script>
 </head>
 <body>
   <script>
@@ -4414,6 +4416,7 @@
       return true;
     }
     function raise() {
+      try { releaseAll(); } catch (e) {}
       live = false;
       if (tap) tap.classList.remove("is-on");
       frame.style.transition = "";
@@ -4438,6 +4441,35 @@
       if (!isLowered()) return;
       if (e.key === "Escape" || e.key === "Enter") { e.preventDefault(); raise(); }
     });
+    // The world input layer (S0, 2026-10-09; assets/weyland-input.js). While the dossier is lowered the
+    // world is in front, but focus stays on this page (the raise control): the host reads the keys,
+    // a gamepad and, on a phone, the stick it draws here into one state and posts it into the world
+    // frame every live frame. A click or a drag on the world reaches the frame itself (body lets the
+    // pointer through while lowered, CSS above). Tab, Enter and Escape stay this page's.
+    var worldInput = window.WeylandInput ? window.WeylandInput.create({
+      forward: function () { var bd = document.querySelector("#stage-backdrop iframe"); return bd && bd.contentWindow; },
+      active: isLowered,
+      stick: "auto",
+    }) : null;
+    window.__weylandWorldInput = worldInput;
+    function releaseAll() { if (worldInput) worldInput.clear(); }
+    // The SightX chapter says W/A/S/D MOVE and CLICK TO FLY: either one lowers the dossier into the world.
+    var chapter = document.getElementById("sightx");
+    function chapterInView() {
+      if (!chapter) return false;
+      var r = chapter.getBoundingClientRect();
+      return r.top < innerHeight * 0.6 && r.bottom > innerHeight * 0.4;
+    }
+    document.addEventListener("keydown", function (e) {
+      if (isLowered() || !/^Key[WASD]$/.test(e.code || "") || e.repeat || !chapterInView()) return;
+      var t = e.target; if (t && (/^(INPUT|TEXTAREA|SELECT)$/.test(t.tagName) || t.isContentEditable)) return;
+      e.preventDefault();
+      if (lower() && worldInput) worldInput.key(e.code, true);
+    });
+    document.addEventListener("keyup", function (e) { if (worldInput && /^Key[WASD]$/.test(e.code || "")) worldInput.key(e.code, false); });
+    var hudCard = chapter && chapter.querySelector(".sightx-canvas-card");
+    if (hudCard) hudCard.addEventListener("click", function (e) { if (e.target.closest && e.target.closest("a,button,input,textarea,select")) return; lower(); });
+
     // SightX's in-world [tap / enter] callout asks us to raise.
     window.addEventListener("message", function (e) {
       if (e.origin !== location.origin || !e.data) return;

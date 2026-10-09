@@ -180,6 +180,9 @@
     let desktopScanHeld = false;
     const keys = Object.create(null);
     const stickAxis = { x: 0, y: 0 };
+    // The host's input layer (assets/weyland-input.js, S0 2026-10-09): one normalized state,
+    // forwarded into this frame or read in this page, folded in with this module's own keys and stick.
+    const ext = { x: 0, y: 0, buttons: {}, at: 0 };
     const touchUI = buildTouchUI();
     const moveZone = touchUI.querySelector('.sx-move-zone');
     const stick = touchUI.querySelector('.sx-stick');
@@ -229,6 +232,7 @@
     }
 
     function actionActive(action) {
+      if (ext.buttons[action] && performance.now() - ext.at < 400) return true;
       if (bindings[action] && keys[bindings[action]]) return true;
       if (action === 'forward') return keys.ArrowUp;
       if (action === 'backward') return keys.ArrowDown;
@@ -318,6 +322,21 @@
       if (options.onRelease) options.onRelease();
     }
 
+    // Drag to look with the mouse when the pointer is not captured (S0, 2026-10-09): a browser that
+    // refuses pointer lock (an iframe without the permission, a headless run) still turns the view.
+    let mouseDrag = null;
+    canvas.addEventListener('pointerdown', (e) => {
+      if (e.pointerType !== 'mouse' || locked) return;
+      mouseDrag = { id: e.pointerId, x: e.clientX, y: e.clientY };
+    });
+    window.addEventListener('pointermove', (e) => {
+      if (!mouseDrag || e.pointerId !== mouseDrag.id || locked) return;
+      const dx = e.clientX - mouseDrag.x, dy = e.clientY - mouseDrag.y;
+      mouseDrag.x = e.clientX; mouseDrag.y = e.clientY;
+      if (dx || dy) lookBy(dx, dy);
+    });
+    window.addEventListener('pointerup', (e) => { if (mouseDrag && e.pointerId === mouseDrag.id) mouseDrag = null; });
+
     canvas.addEventListener('click', () => {
       if (coarsePointer) {
         activate();
@@ -332,13 +351,34 @@
       if (locked) activate(); else release();
     });
 
+    let externalKeys = false;
+    function setExternalKeys(on) {
+      externalKeys = !!on;
+      if (!externalKeys) { Object.keys(keys).forEach(code => { keys[code] = false; }); }
+    }
+
+    // state: { move: { x, y }, look: { dx, dy }, buttons } from WeylandInput.
+    function setExternalState(state) {
+      if (!state || !inputEnabled) return;
+      const m = state.move || {};
+      ext.x = clamp(Number(m.x) || 0, -1, 1);
+      ext.y = clamp(Number(m.y) || 0, -1, 1);
+      ext.buttons = state.buttons || {};
+      ext.at = performance.now();
+      if (ext.x || ext.y) signalInput('move');
+      const l = state.look || {};
+      if (l.dx || l.dy) lookBy(Number(l.dx) || 0, Number(l.dy) || 0);
+    }
+
     function onKeyDown(event) {
       if (event._sxHandled) return;
       event._sxHandled = true;
       const activeEl = document.activeElement;
       const formFocused = Boolean(activeEl && /^(INPUT|TEXTAREA|SELECT)$/i.test(activeEl.tagName));
       if (formFocused && !locked) return;
-      if (!locked && !isDedicatedDemo) return;
+      // externalKeys (2026-10-09, S0): the host page says the world is in front (the homepage
+      // dossier lowered), so its keys move the player without pointer lock first.
+      if (!locked && !isDedicatedDemo && !externalKeys) return;
       if (!event.repeat && event.code === profile.desktop.tour && options.onTourToggle) options.onTourToggle();
       if (!event.repeat && event.code === profile.desktop.settings && options.onSettingsToggle) options.onSettingsToggle();
       if (!event.repeat && event.code === profile.desktop.report && options.onReportToggle) options.onReportToggle();
@@ -545,8 +585,9 @@
       // Grounded = the host reports a floor under us (see groundY below):
       // use the walking profile and ignore vertical thrust.
       const grounded = typeof options.groundY === 'function' && Number.isFinite(options.groundY(position[0], position[2]));
-      let forwardAmt = -stickAxis.y;
-      let strafe = stickAxis.x;
+      const extLive = performance.now() - ext.at < 400; // a host that stops posting stops the player
+      let forwardAmt = -stickAxis.y + (extLive ? ext.y : 0);
+      let strafe = stickAxis.x + (extLive ? ext.x : 0);
       let vertical = 0;
       if (actionActive('forward')) forwardAmt += 1;
       if (actionActive('backward')) forwardAmt -= 1;
@@ -771,6 +812,9 @@
       setPose,
       lookBy,
       setStick,
+      setExternalKeys,
+      setExternalState,
+      state: () => ({ pos: position.slice(), yaw: Math.atan2(fwd[0], fwd[2]), pitch: Math.asin(clamp(fwd[1], -1, 1)) }),
       updateSettings,
       resetSettings,
       setBinding,
@@ -786,5 +830,10 @@
     });
   }
 
-  window.SightXControls = Object.freeze({ profile, mount });
+  // SightXControls.state(): the mounted player's { pos, yaw, pitch }, read-only (a copy), so a
+  // journey can assert motion without reaching into the renderer.
+  let lastMounted = null;
+  function mountAndKeep(options) { lastMounted = mount(options); return lastMounted; }
+  function state() { return lastMounted ? lastMounted.state() : null; }
+  window.SightXControls = Object.freeze({ profile, mount: mountAndKeep, state });
 }());

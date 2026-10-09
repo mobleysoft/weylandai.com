@@ -31,7 +31,7 @@
     .pane{display:none;gap:10px;flex-wrap:wrap;align-items:center;margin:0 0 12px}.pane.on{display:flex}
     textarea{width:100%;min-height:150px;font:13px/1.45 ui-monospace,monospace}
     .status{min-height:20px;color:var(--muted);font-size:13px;margin:4px 2px 12px;line-height:1.5}.status.err{color:var(--red)}
-    .stage{display:grid;grid-template-columns:minmax(0,1fr) 340px;gap:14px}
+    .stage{display:grid;grid-template-columns:minmax(0,1fr) 340px;gap:14px;margin-bottom:18px}
     .viewer{position:relative;height:min(64vh,640px);min-height:360px;border:1px solid var(--line);border-radius:18px;overflow:hidden;background:#0c0e12}
     .viewer canvas{display:block;width:100%;height:100%;touch-action:none;cursor:grab}
     .hud{position:absolute;left:12px;top:12px;right:12px;display:flex;justify-content:space-between;gap:8px;pointer-events:none;font:700 10px/1.4 ui-monospace,monospace;letter-spacing:.06em}
@@ -63,6 +63,25 @@
       <a class="brand" href="/"><span class="mark">SX</span><span><b>SIGHTX</b><small>WALK YOUR DOOR SCHEDULE</small></span></a>
       <nav><a href="/subx-app">SUBX</a><a href="/cutsheetx">CUTSHEETX</a><a href="/propx-app">PROPX</a><a href="/meetingx">MEETINGX</a><a href="/pricing">PRICING</a></nav>
     </header>
+    <div class="stage">
+      <div class="viewer" id="viewer">
+        <canvas id="sx-canvas" aria-label="3D corridor built from the schedule"></canvas>
+        <div class="nogl" id="nogl">This browser can't draw the 3D corridor (no WebGL). The door list below has everything in the schedule.</div>
+        <div class="hud"><span id="hud-project">-</span><span id="hud-layout">-</span><span id="hud-count">-</span></div>
+        <div class="hint" id="hint">W/A/S/D TO WALK · DRAG TO LOOK · CLICK A DOOR · GAMEPAD WORKS</div>
+        <div class="ctrl">
+          <button class="btn" id="prev" type="button">◀ PREV DOOR</button>
+          <button class="btn primary" id="tour" type="button">TOUR</button>
+          <button class="btn" id="next" type="button">NEXT DOOR ▶</button>
+          <button class="btn" id="reset" type="button">START</button>
+          <button class="btn" id="share" type="button">SHARE WITH YOUR GC</button>
+        </div>
+      </div>
+      <aside class="info" id="info" aria-live="polite">
+        <h2>Pick a door</h2>
+        <div class="loc">Click a door in the corridor or a row below, or press TOUR.</div>
+      </aside>
+    </div>
     <div class="eyebrow">3D DOOR SCHEDULE</div>
     <h1>SightX</h1>
     <div class="tagline">Walk your openings before the doors arrive.</div>
@@ -90,27 +109,6 @@ HW-2: lever lockset, 3 hinges, wall stop"></textarea>
     </div>
     <div class="status" id="sx-status" role="status" aria-live="polite"></div>
 
-    <div class="stage">
-      <div class="viewer" id="viewer">
-        <canvas id="sx-canvas" aria-label="3D corridor built from the schedule"></canvas>
-        <div class="nogl" id="nogl">This browser can't draw the 3D corridor (no WebGL). The door list below has everything in the schedule.</div>
-        <div class="hud"><span id="hud-project">-</span><span id="hud-layout">-</span><span id="hud-count">-</span></div>
-        <div class="hint" id="hint">DRAG TO LOOK · W/S OR ↑/↓ TO WALK · CLICK A DOOR</div>
-        <div class="ctrl">
-          <button class="btn" id="prev" type="button">◀ PREV DOOR</button>
-          <button class="btn primary" id="tour" type="button">TOUR</button>
-          <button class="btn" id="next" type="button">NEXT DOOR ▶</button>
-          <button class="btn" id="fwd" type="button" aria-label="Walk forward">WALK ▲</button>
-          <button class="btn" id="back" type="button" aria-label="Walk back">▼</button>
-          <button class="btn" id="reset" type="button">START</button>
-          <button class="btn" id="share" type="button">SHARE WITH YOUR GC</button>
-        </div>
-      </div>
-      <aside class="info" id="info" aria-live="polite">
-        <h2>Pick a door</h2>
-        <div class="loc">Click a door in the corridor or a row below, or press TOUR.</div>
-      </aside>
-    </div>
     <div class="notes" id="notes"></div>
     <div id="shareBox"></div>
 
@@ -162,7 +160,9 @@ HW-2: lever lockset, 3 hinges, wall stop"></textarea>
     }
   })();
   </script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js" crossorigin="anonymous"></script>
+  <!-- three.js r128, vendored (S0: nothing from a third-party CDN). -->
+  <script src="/assets/vendor/three-r128.min.js"></script>
+  <script src="/assets/weyland-input.js?v=20261009a"></script>
   <script>
   (function () {
     "use strict";
@@ -180,7 +180,7 @@ HW-2: lever lockset, 3 hinges, wall stop"></textarea>
 
     // ---------- 3D ----------
     var gl = null, scene, camera, renderer, doorsGroup, pickables = [], doorPos = [];
-    var yaw = 0, pitch = 0, pos = null, keys = {}, anim = null, length = 10, planMode = false, bounds = null;
+    var yaw = 0, pitch = 0, pos = null, vel = { x: 0, z: 0 }, lastT = 0, anim = null, length = 10, planMode = false, bounds = null;
     function initGL() {
       if (!window.THREE) return false;
       try {
@@ -386,30 +386,36 @@ HW-2: lever lockset, 3 hinges, wall stop"></textarea>
         pos.lerpVectors(anim.p1, anim.p2, e); yaw = anim.y1 + anim.dy * e; pitch = anim.pt1 + (anim.pt2 - anim.pt1) * e;
         if (k >= 1) anim = null;
       }
-      var mv = (keys.f ? 1 : 0) - (keys.b ? 1 : 0), strafe = (keys.r ? 1 : 0) - (keys.l ? 1 : 0);
-      if (mv || strafe) { anim = null; pos.x += (Math.sin(yaw) * mv - Math.cos(yaw) * strafe) * 0.06; pos.z += (Math.cos(yaw) * mv + Math.sin(yaw) * strafe) * 0.06; }
-      if (planMode && bounds) { if (mv || strafe) { pos.y = Math.max(1.6, pos.y - 0.4); pos.x += (Math.sin(yaw) * mv - Math.cos(yaw) * strafe) * 0.1; pos.z += (Math.cos(yaw) * mv + Math.sin(yaw) * strafe) * 0.1; } pos.x = Math.max(bounds.minX, Math.min(bounds.maxX, pos.x)); pos.z = Math.max(bounds.minZ, Math.min(bounds.maxZ, pos.z)); }
+      var dt = Math.min(0.1, ((t || 0) - (lastT || t || 0)) / 1000) || 0.016; lastT = t;
+      var inp = input ? input.state() : { move: { x: 0, y: 0 }, look: { dx: 0, dy: 0 }, buttons: {} };
+      if (inp.look.dx || inp.look.dy) { anim = null; yaw -= inp.look.dx * 0.005; pitch = Math.max(-1.2, Math.min(1.2, pitch - inp.look.dy * 0.005)); }
+      var mx = inp.move.x, my = inp.move.y;
+      if (mx || my) { anim = null; stopTour(); }
+      // Acceleration and damping: a game's walking pace, 3.5 m/s (sprint 7), across a plan 3x that.
+      var top = (planMode ? 10 : 3.5) * (inp.buttons.sprint ? 2 : 1);
+      var wantX = (Math.sin(yaw) * my - Math.cos(yaw) * mx) * top, wantZ = (Math.cos(yaw) * my + Math.sin(yaw) * mx) * top;
+      var k = 1 - Math.exp(-dt * (mx || my ? 10 : 14));
+      vel.x += (wantX - vel.x) * k; vel.z += (wantZ - vel.z) * k;
+      if (Math.abs(vel.x) + Math.abs(vel.z) > 1e-4) {
+        if (planMode && bounds) { pos.y = Math.max(1.6, pos.y - 4 * dt * Math.hypot(vel.x, vel.z)); }
+        pos.x += vel.x * dt; pos.z += vel.z * dt;
+      }
+      if (planMode && bounds) { pos.x = Math.max(bounds.minX, Math.min(bounds.maxX, pos.x)); pos.z = Math.max(bounds.minZ, Math.min(bounds.maxZ, pos.z)); }
       else { pos.x = Math.max(-HALF + 0.3, Math.min(HALF - 0.3, pos.x)); pos.z = Math.max(-2.5, Math.min(length - 0.5, pos.z)); }
       camera.position.copy(pos);
       camera.lookAt(pos.x + Math.sin(yaw) * Math.cos(pitch), pos.y + Math.sin(pitch), pos.z + Math.cos(yaw) * Math.cos(pitch));
       renderer.render(scene, camera);
     }
+    // Input (S0, 2026-10-09): the shared layer (assets/weyland-input.js) reads keys, mouse or finger
+    // drag on the canvas, the touch stick (phones) and gamepads into one state; this page only turns
+    // that state into motion. A short click or tap on a door still picks it.
+    var input = null;
     function bindInput() {
-      var cv = $("sx-canvas"), down = null, moved = 0;
-      cv.addEventListener("pointerdown", function (e) { down = { x: e.clientX, y: e.clientY }; moved = 0; cv.setPointerCapture(e.pointerId); stopTour(); });
-      cv.addEventListener("pointermove", function (e) {
-        if (!down) return; var dx = e.clientX - down.x, dy = e.clientY - down.y; moved += Math.abs(dx) + Math.abs(dy);
-        anim = null; yaw -= dx * 0.005; pitch = Math.max(-1.2, Math.min(1.2, pitch - dy * 0.005)); down = { x: e.clientX, y: e.clientY };
-      });
-      cv.addEventListener("pointerup", function (e) {
-        if (down && moved < 6) pick(e);
-        down = null;
-      });
-      var map = { KeyW: "f", ArrowUp: "f", KeyS: "b", ArrowDown: "b", KeyA: "l", ArrowLeft: "l", KeyD: "r", ArrowRight: "r" };
-      window.addEventListener("keydown", function (e) { if (/input|textarea|select/i.test(e.target.tagName)) return; if (map[e.code]) { keys[map[e.code]] = true; stopTour(); e.preventDefault(); } });
-      window.addEventListener("keyup", function (e) { if (map[e.code]) keys[map[e.code]] = false; });
-      function hold(id, k) { var b = $(id); var on = function (e) { e.preventDefault(); keys[k] = true; stopTour(); }, off = function () { keys[k] = false; }; b.addEventListener("pointerdown", on); ["pointerup", "pointerleave", "pointercancel"].forEach(function (t) { b.addEventListener(t, off); }); }
-      hold("fwd", "f"); hold("back", "b");
+      var cv = $("sx-canvas"), down = null;
+      input = window.WeylandInput ? window.WeylandInput.create({ lookTarget: cv, stick: "auto", stickParent: $("viewer") }) : null;
+      cv.addEventListener("pointerdown", function (e) { down = { x: e.clientX, y: e.clientY, moved: 0 }; try { cv.setPointerCapture(e.pointerId); } catch (x) {} stopTour(); anim = null; });
+      cv.addEventListener("pointermove", function (e) { if (down) down.moved += Math.abs(e.movementX || 0) + Math.abs(e.movementY || 0); });
+      cv.addEventListener("pointerup", function (e) { if (down && down.moved < 6 && Math.hypot(e.clientX - down.x, e.clientY - down.y) < 6) pick(e); down = null; });
     }
     function pick(e) {
       var r = $("sx-canvas").getBoundingClientRect();
@@ -540,6 +546,8 @@ HW-2: lever lockset, 3 hinges, wall stop"></textarea>
     $("sx-signin").onclick = function () { window.WeylandPage.signIn("/sightx/?src=subx"); };
     window.addEventListener("weyland-auth", function () { if ($("pane-subx").classList.contains("on")) loadSessions(); });
 
+    // SightXControls.state() (S0): the camera's { pos, yaw, pitch }, read-only, for journeys and probes.
+    if (!window.SightXControls) window.SightXControls = Object.freeze({ state: function () { return pos ? { pos: [pos.x, pos.y, pos.z], yaw: yaw, pitch: pitch } : null; } });
     gl = initGL();
     if (!gl) { $("nogl").style.display = "grid"; $("sx-canvas").style.display = "none"; $("hint").style.display = "none"; }
     // Saved and shared corridors (routes/sightx-share.js): keeping one and
