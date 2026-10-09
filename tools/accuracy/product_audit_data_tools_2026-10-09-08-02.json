@@ -1,0 +1,382 @@
+{
+  "base": "https://weylandai.com",
+  "at": "2026-10-09T08:02:20.310Z",
+  "results": [
+    {
+      "id": "huntx",
+      "label": "HuntX",
+      "pass": true,
+      "seconds": 19,
+      "claim": "Seven public sources, sorted by what a door sub can bid. Opportunity Discovery. Public construction notices from seven sources (Illinois CDB, NYC City Record and School Construction Authority, Los Angeles, Delaware, Texas DOT, California school funding), each tagged by trade fit: door scope named, building work, funding to watch, or civil. Filter by state, due date and value; saved searches count new notices since you last looked and send them to your feed reader (RSS) and your calendar (bid due dates).",
+      "bar": "All seven named sources hold notices; every notice carries a trade fit and a link on its source's own site, and no link is dead (every distinct link fetched; a bot challenge is reported, not counted as dead); fit=doors returns only door-scope notices, each with the words that put it there, and its total equals the index's door count; state, due-date and value filters return only matching rows; 5 source links (5 different sources) answer HTTP 200; a saved search returns a new-notice count and working RSS and calendar feeds. The sample email is sent only if the account's address is jmobleyworks+<tag>@gmail.com.",
+      "checks": [
+        {
+          "name": "index answers",
+          "ok": true,
+          "detail": "HTTP 200"
+        },
+        {
+          "name": "seven named sources each hold notices",
+          "ok": true,
+          "detail": {
+            "txdot": 673,
+            "nyc_sca": 356,
+            "ca_opsc": 166,
+            "nyc_cityrecord": 93,
+            "il_cdb": 52,
+            "de_mmp": 25,
+            "la_ramp": 22
+          }
+        },
+        {
+          "name": "full index read equals indexed count",
+          "ok": true,
+          "detail": "1387 rows read, indexed 1387"
+        },
+        {
+          "name": "every notice tagged with a trade fit",
+          "ok": true,
+          "detail": "0 untagged"
+        },
+        {
+          "name": "every notice links to its source's own site",
+          "ok": true,
+          "detail": "all 1387"
+        },
+        {
+          "name": "fit=doors returns only door-scope notices",
+          "ok": true,
+          "detail": "11 rows"
+        },
+        {
+          "name": "fit=doors total equals the index's door count",
+          "ok": true,
+          "detail": "total 11, fits.doors 11"
+        },
+        {
+          "name": "each door notice says why (trade_fit_why)",
+          "ok": true,
+          "detail": "0 without a reason"
+        },
+        {
+          "name": "state=TX returns only TX",
+          "ok": true,
+          "detail": "673 rows"
+        },
+        {
+          "name": "due_within=30 returns only notices due in the next 30 days",
+          "ok": true,
+          "detail": "217 rows, 0 outside"
+        },
+        {
+          "name": "min_value=1000000 returns only notices worth $1M+",
+          "ok": true,
+          "detail": "889 rows, 0 under"
+        },
+        {
+          "name": "5 source links answer 200",
+          "ok": true,
+          "detail": [
+            "nyc_cityrecord 200",
+            "il_cdb 200",
+            "nyc_sca 200",
+            "la_ramp 200",
+            "de_mmp 200"
+          ]
+        },
+        {
+          "name": "no notice links to a dead page (every distinct link fetched)",
+          "ok": true,
+          "detail": "144 distinct links; 0 of 1387 notices link to a dead page"
+        },
+        {
+          "name": "saved search created",
+          "ok": true,
+          "detail": "HTTP 200"
+        },
+        {
+          "name": "saved search reports a new-notice count",
+          "ok": true,
+          "detail": "new_count 0"
+        },
+        {
+          "name": "RSS feed works",
+          "ok": true,
+          "detail": "200, 50 items"
+        },
+        {
+          "name": "calendar feed works (bid due dates)",
+          "ok": true,
+          "detail": "200, 157 events"
+        }
+      ],
+      "input": "whole index (1387 notices), fit=doors, state=TX, due_within=30, min_value=1M, a saved search",
+      "numbers": {
+        "indexed": 1387,
+        "sources": {
+          "txdot": 673,
+          "nyc_sca": 356,
+          "ca_opsc": 166,
+          "nyc_cityrecord": 93,
+          "il_cdb": 52,
+          "de_mmp": 25,
+          "la_ramp": 22
+        },
+        "fits": {
+          "doors": 11,
+          "building": 164,
+          "signal": 514,
+          "civil": 698
+        },
+        "lastIngest": {
+          "started_at": "2026-10-09T07:50:45.561Z",
+          "finished_at": "2026-10-09T07:50:47.442Z",
+          "upserted": 1104,
+          "errors": null
+        },
+        "links": [
+          {
+            "source": "nyc_cityrecord",
+            "url": "https://a856-cityrecord.nyc.gov/RequestDetail/20260514019",
+            "status": 200
+          },
+          {
+            "source": "il_cdb",
+            "url": "https://cdb.illinois.gov/procurement.html",
+            "status": 200
+          },
+          {
+            "source": "nyc_sca",
+            "url": "https://data.cityofnewyork.us/d/tsak-vtv3",
+            "status": 200
+          },
+          {
+            "source": "la_ramp",
+            "url": "https://www.rampla.org/s/opportunity-details?id=006Ql00000lMaGHIA0",
+            "status": 200
+          },
+          {
+            "source": "de_mmp",
+            "url": "https://mmp.delaware.gov/Bids/Details/9333",
+            "status": 200
+          }
+        ],
+        "notice_specific_links": 140,
+        "agency_page_links": [
+          {
+            "source": "txdot",
+            "rows": 673,
+            "link": "https://www.txdot.gov/business/road-bridge-maintenance/contract-letting.html"
+          },
+          {
+            "source": "il_cdb",
+            "rows": 52,
+            "link": "https://cdb.illinois.gov/procurement.html"
+          },
+          {
+            "source": "ca_opsc",
+            "rows": 166,
+            "link": "https://www.dgs.ca.gov/OPSC"
+          },
+          {
+            "source": "nyc_sca",
+            "rows": 356,
+            "link": "https://data.cityofnewyork.us/d/tsak-vtv3"
+          }
+        ],
+        "distinct_links": 144,
+        "notices_with_dead_links": 0,
+        "dead_links_by_source": [],
+        "notices_behind_bot_challenge": 0,
+        "saved": {
+          "created": "cae74dfa-b42b-424d-8aee-8512c845842c",
+          "rss_items": 50,
+          "ics_events": 157,
+          "deleted": true
+        },
+        "sample": {
+          "run": false,
+          "why": "account email is user-sim-qa-1791490681@weylandai.com, not jmobleyworks+<tag>@gmail.com; not sent"
+        }
+      },
+      "summary": "1387 notices from 7 sources; 11 door / 164 building / 514 signal / 698 civil; links 5/5 200; 0 of 1387 notices link to a dead page (none); 140 of 1387 link to the notice itself (txdot, il_cdb, ca_opsc, nyc_sca link to one agency page); sample email not sent (not a jmobleyworks+ address)",
+      "failed": []
+    },
+    {
+      "id": "compx",
+      "label": "CompX",
+      "pass": true,
+      "seconds": 6,
+      "claim": "Real Who wins public door and building work. Public contract awards for door, hardware and building work (NYC City Record, since 2021): who won, how much, from which agency and by what method, with vendors and agencies ranked by what they won. CSV export.",
+      "bar": "Every award row names vendor, amount, agency, method and an award date on or after 2021-01-01; vendors and agencies come ranked by total won; door-fit awards exist; for 3 real door vendors CompX's award count and total equal NYC open data's own (same award notices, one per request id); the CSV the page's button asks for (limit 2000) holds every award of the search up to that cap (a cut is reported).",
+      "checks": [
+        {
+          "name": "awards answer, paid",
+          "ok": true,
+          "detail": "HTTP 200 paid true"
+        },
+        {
+          "name": "each award: vendor, amount, agency, method, date >= 2021",
+          "ok": true,
+          "detail": "0 of 2000 incomplete"
+        },
+        {
+          "name": "all rows returned to a paying account",
+          "ok": true,
+          "detail": "2000 rows of 2809"
+        },
+        {
+          "name": "vendors ranked by total won",
+          "ok": true,
+          "detail": "50 vendors"
+        },
+        {
+          "name": "agencies ranked by total won",
+          "ok": true,
+          "detail": "30 agencies"
+        },
+        {
+          "name": "door-fit awards present",
+          "ok": true,
+          "detail": "59 door awards, $69,281,833"
+        },
+        {
+          "name": "3 door vendors: award count and total equal NYC open data",
+          "ok": true,
+          "detail": [
+            "Atlantic Rolling Steel Door Corp.: 9 / $6,832,825 vs 9 / $6,832,825",
+            "FREDANTE CONSTR CORP: 3 / $7,004,457 vs 3 / $7,004,457",
+            "B.J. Laura & Sons Inc.: 5 / $3,817,650 vs 5 / $3,817,650"
+          ]
+        },
+        {
+          "name": "CSV export holds the search's awards (up to the page's 2,000 cap)",
+          "ok": true,
+          "detail": "HTTP 200, 2000 rows; the search has 2328"
+        }
+      ],
+      "input": "all awards; fit=doors; vendors Atlantic Rolling Steel Door Corp., FREDANTE CONSTR CORP, B.J. Laura & Sons Inc.; CSV of the default (building) search",
+      "numbers": {
+        "awards_all": 2809,
+        "total_all": 42610619643.24,
+        "door_awards": 59,
+        "door_total": 69281832.86,
+        "door_award_titles_with_a_door_word": 58,
+        "indexedAt": "2026-10-08T19:58:34.045Z",
+        "vendor_checks": [
+          {
+            "vendor": "Atlantic Rolling Steel Door Corp.",
+            "compx": {
+              "awards": 9,
+              "total": 6832825
+            },
+            "nyc_open_data": {
+              "raw": 9,
+              "awards": 9,
+              "total": 6832825
+            }
+          },
+          {
+            "vendor": "FREDANTE CONSTR CORP",
+            "compx": {
+              "awards": 3,
+              "total": 7004457.359999999
+            },
+            "nyc_open_data": {
+              "raw": 3,
+              "awards": 3,
+              "total": 7004457.359999999
+            }
+          },
+          {
+            "vendor": "B.J. Laura & Sons Inc.",
+            "compx": {
+              "awards": 5,
+              "total": 3817650
+            },
+            "nyc_open_data": {
+              "raw": 5,
+              "awards": 5,
+              "total": 3817650
+            }
+          }
+        ],
+        "csv_rows": 2000,
+        "csv_search_count": 2328
+      },
+      "summary": "2809 awards ($42,610,619,643), 59 door awards; vendors 3/3 equal NYC open data; CSV 2000 of 2328 rows",
+      "failed": []
+    },
+    {
+      "id": "compx-txdot",
+      "label": "CompX TxDOT vendor route (off-card)",
+      "pass": false,
+      "seconds": 1,
+      "claim": "(Not on the pricing card any more; the CompX page no longer calls it.) /api/compx/vendors: TxDOT bid tabulations by vendor: total bids, wins, win rate, total won value.",
+      "bar": "For a real TxDOT contractor, total_bids equals the distinct projects (CSJ) that vendor bid in data.texas.gov's bid tabulations and wins equals the projects where it was low bidder: one count per project, not per bid item.",
+      "checks": [
+        {
+          "name": "route answers",
+          "ok": true,
+          "detail": "HTTP 200"
+        },
+        {
+          "name": "the vendor is in the result",
+          "ok": true,
+          "detail": "32 vendors returned"
+        },
+        {
+          "name": "total bids = distinct projects in TxDOT data",
+          "ok": false,
+          "detail": "CompX 7, TxDOT 76 projects (8418 bid-item rows)"
+        },
+        {
+          "name": "wins = projects where low bidder",
+          "ok": false,
+          "detail": "CompX 5, TxDOT 12"
+        },
+        {
+          "name": "total won value equals TxDOT's",
+          "ok": false,
+          "detail": "CompX $33,499,043, TxDOT $75,514,048"
+        }
+      ],
+      "input": "q=Austin Bridge -> AUSTIN BRIDGE & ROAD SERVICES, LP",
+      "numbers": {
+        "vendor": "AUSTIN BRIDGE & ROAD SERVICES, LP",
+        "compx": {
+          "total_bids": 7,
+          "wins": 5,
+          "win_rate_pct": 71.4,
+          "total_win_value": 33499043.240000002
+        },
+        "txdot": {
+          "projects": 76,
+          "wins": 12,
+          "win_value": 75514047.69,
+          "bid_item_rows": 8418
+        },
+        "other_vendors_in_reply": 31,
+        "fetched_at": "2026-10-07T23:55:32.982Z"
+      },
+      "summary": "AUSTIN BRIDGE & ROAD SERVICES, LP: CompX 7 bids / 5 wins ($33,499,043); TxDOT 76 projects / 12 wins ($75,514,048); 31 other vendors in the reply",
+      "failed": [
+        {
+          "name": "total bids = distinct projects in TxDOT data",
+          "ok": false,
+          "detail": "CompX 7, TxDOT 76 projects (8418 bid-item rows)"
+        },
+        {
+          "name": "wins = projects where low bidder",
+          "ok": false,
+          "detail": "CompX 5, TxDOT 12"
+        },
+        {
+          "name": "total won value equals TxDOT's",
+          "ok": false,
+          "detail": "CompX $33,499,043, TxDOT $75,514,048"
+        }
+      ]
+    }
+  ]
+}

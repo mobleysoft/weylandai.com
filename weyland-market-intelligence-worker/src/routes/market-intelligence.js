@@ -198,7 +198,7 @@ export function registerMarketIntelligenceRoutes(router) {
 
   // /api/marketx/trends: MarketX was rebuilt 2026-10-09 on the cities' building permits (routes/marketx.js).
 
-  router.get("/api/compx/vendors", withStoreCache((u) => (u.searchParams.get("q") || "").trim() ? "compx:" + (u.searchParams.get("q") || "").trim().toLowerCase() : null, 604800, async (request2, env2) => {
+  router.get("/api/compx/vendors", withStoreCache((u) => (u.searchParams.get("q") || "").trim() ? "compx2:" + (u.searchParams.get("q") || "").trim().toLowerCase() : null, 604800, async (request2, env2) => {
     try {
       const url = new URL(request2.url);
       const q = (url.searchParams.get("q") || "").trim();

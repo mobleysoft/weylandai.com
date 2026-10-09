@@ -69,8 +69,15 @@ const makerKeyOf = (m) => String(m || "").toLowerCase().replace(/[^a-z0-9]+/g, "
  * (weyland-forms-worker/src/routes/pricex.js); a component it cannot price stays unpriced and is
  * named on the line. Each priced component keeps its book (c.book_name).
  */
-export async function priceFromBooks(db, userId, sets, priceItem, env = null) {
+export async function priceFromBooks(db, userId, sets, priceItem, env = null, doors = []) {
   if (!priceItem || !sets || !sets.length) return;
+  // A part sold by length or sized to the door (a seal, an LDW plate) is priced for the set's
+  // first opening with a size read.
+  const doorOf = new Map();
+  for (const d of doors || []) {
+    const k = setKey(d.hardware_group);
+    if (k && !doorOf.has(k) && Number(d.width_inches) > 0 && Number(d.height_inches) > 0) doorOf.set(k, { width: Number(d.width_inches), height: Number(d.height_inches) });
+  }
   const mult = { default: 1, byMaker: {} };
   try {
     for (const r of (await all(db, "SELECT maker, multiplier FROM forms_price_multipliers WHERE user_id = ?", userId))) {
@@ -83,7 +90,7 @@ export async function priceFromBooks(db, userId, sets, priceItem, env = null) {
       if (compPrice(c) != null || !c.model) continue;
       let r = null;
       // The worker's own env (the matcher reads its catalogue index and books through it), else the database alone.
-      try { r = await priceItem(env || { DB: db }, { maker: c.manufacturer || "", model: c.model, finish: c.finish || null }, undefined, caches); } catch (e) { console.warn("[propx] book price", c.manufacturer, c.model, e && e.message); r = null; }
+      try { r = await priceItem(env || { DB: db }, { maker: c.manufacturer || "", model: c.model, finish: c.finish || null, door: doorOf.get(setKey(set.set_number)) || null }, undefined, caches); } catch (e) { console.warn("[propx] book price", c.manufacturer, c.model, e && e.message); r = null; }
       if (!r || !r.priced || !(r.variant && r.variant.list > 0)) continue;
       const m = mult.byMaker[makerKeyOf(r.product && r.product.manufacturer)] ?? mult.byMaker[makerKeyOf(c.manufacturer)] ?? mult.default;
       c.book_net = Math.round(r.variant.list * m * 100) / 100;
@@ -210,7 +217,9 @@ export function deriveLines(doors, sets) {
       quantity: qty,
       unitPrice,
       priceSource,
-      notes: [marksText(g.marks), compText].filter(Boolean).join(" | ") || null
+      // The PDF prints a hardware line's notes in full (its title is cut to the item column), so a
+      // partial price says so there too.
+      notes: [partial ? "PRICE COVERS " + priced + " OF " + comps.length + " ITEMS" + partial.replace(/^ \(\d+ of \d+ items priced/, "").replace(/\)$/, "") : null, marksText(g.marks), compText].filter(Boolean).join(" | ") || null
     });
   }
   return lines;
@@ -323,7 +332,7 @@ export async function loadSource(db, user, kind, id, { priceItem = null, env = n
     if (!s) return null;
     const doors = await sessionDoors(db, s.id);
     const sets = await setsWithComponents(db, s.id);
-    await priceFromBooks(db, userId, sets, priceItem, env);
+    await priceFromBooks(db, userId, sets, priceItem, env, doors);
     const project = await projectFor(db, s.project_id);
     return { source: { kind, id: s.id, name: s.project_name || s.filename || "SubX session", demo: isDemoClone(s) }, project, doors, lines: deriveLines(doors, sets) };
   }
