@@ -1,0 +1,149 @@
+{
+ "sha16": "f2a23b820b4d0a28",
+ "sha256": "f2a23b820b4d0a281de49074ce58c30afa5df890bd2845afb46a71cde519a051",
+ "file": "f2a23b820b4d0a28.pdf",
+ "bytes": 20535494,
+ "family": "missouri_oa_fmdc",
+ "source": "harvest",
+ "label": "missouri_oa_fmdc - _T2504-03%20-%20Final%20Specs_1.pdf",
+ "source_url": "https://oa.mo.gov/sites/default/files/bid-opportunities/_T2504-03%20-%20Final%20Specs_1.pdf",
+ "page_count": 877,
+ "text_layer": {
+  "pages_with_text": 785,
+  "pages": 877
+ },
+ "pages": {
+  "door_candidates": 16,
+  "hardware_candidates": 10,
+  "door_schedule_pages": [],
+  "hardware_pages": [
+   333,
+   334,
+   335,
+   336,
+   337,
+   338,
+   339,
+   340,
+   341
+  ]
+ },
+ "readers": {
+  "a": {
+   "doors": 0,
+   "sets": 13,
+   "items": 83,
+   "name": "production text layer (weyland-subx-worker/src/lib/text-layer-read.js)"
+  },
+  "b": {
+   "doors": 0,
+   "sets": 13,
+   "items": 83,
+   "name": "geometry first (tools/accuracy/truth/reader_b.mjs)",
+   "tables": 0
+  }
+ },
+ "rows_agreed": 81,
+ "rows_disputed": 2,
+ "rows_total": 83,
+ "agreement_rate": 0.9759,
+ "agreement": {
+  "doors": {
+   "rows": 0,
+   "agreed": 0,
+   "disputed": 0,
+   "only_a": 0,
+   "only_b": 0,
+   "fields": {},
+   "agreement_rate": null
+  },
+  "items": {
+   "rows": 83,
+   "agreed": 81,
+   "disputed": 2,
+   "only_a": 0,
+   "only_b": 0,
+   "fields": {
+    "qty": {
+     "agree": 83,
+     "total": 83
+    },
+    "description": {
+     "agree": 82,
+     "total": 83
+    },
+    "catalog": {
+     "agree": 81,
+     "total": 83
+    },
+    "finish": {
+     "agree": 81,
+     "total": 81
+    },
+    "manufacturer": {
+     "agree": 82,
+     "total": 82
+    }
+   },
+   "agreement_rate": 0.9759
+  },
+  "sets": {
+   "sets": 13,
+   "agreed": 13
+  }
+ },
+ "triage_class": "spec-only",
+ "triage_from": "tools/corpus/harvest/triage.json",
+ "oracles": {
+  "marks_on_plan": {
+   "applicable": false,
+   "reason": "not for class spec-only"
+  },
+  "sets_exist": {
+   "applicable": false,
+   "reason": "not for class spec-only"
+  },
+  "set_door_lists": {
+   "applicable": false,
+   "reason": "not for class spec-only"
+  },
+  "types_in_legend": {
+   "applicable": false,
+   "reason": "not for class spec-only"
+  },
+  "sizes_and_marks": {
+   "applicable": false,
+   "reason": "not for class spec-only"
+  }
+ },
+ "tier": "agreed",
+ "disagreement_count": 3,
+ "disagreements": [
+  {
+   "kind": "item",
+   "page": 333,
+   "key": "1 / EXISTING DOOR, FRAME AND HARDWARE TO REMAIN",
+   "field": "catalog",
+   "a": "EXISTING DOOR, FRAME AND HARDWARE TO REMAIN",
+   "b": null
+  },
+  {
+   "kind": "item",
+   "page": 339,
+   "key": "9 / 7764  ",
+   "field": "description",
+   "a": "DOOR CONTACT",
+   "b": "DOOR CONTACT EA CLOSER TEMPLATING, BRACKETS, SHOES, SPACERS, ETC"
+  },
+  {
+   "kind": "item",
+   "page": 339,
+   "key": "9 / 7764  ",
+   "field": "catalog",
+   "a": "7764  ",
+   "b": "7764 AS REQUIRED"
+  }
+ ],
+ "ms": 1912,
+ "generated_at": "2026-10-09T10:49:39.375Z"
+}

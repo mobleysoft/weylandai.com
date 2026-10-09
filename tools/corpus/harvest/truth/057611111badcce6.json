@@ -1,0 +1,94 @@
+{
+ "sha16": "057611111badcce6",
+ "sha256": "057611111badcce645c3946553151cfb4f7e491985f97bd7e31aa76fc7c6b494",
+ "file": "057611111badcce6.pdf",
+ "bytes": 6465097,
+ "family": "missouri_oa_fmdc",
+ "source": "harvest",
+ "label": "missouri_oa_fmdc - _R2507-01%20Final%20Bid%20Specs.pdf",
+ "source_url": "https://oa.mo.gov/sites/default/files/bid-opportunities/_R2507-01%20Final%20Bid%20Specs.pdf",
+ "page_count": 376,
+ "text_layer": {
+  "pages_with_text": 361,
+  "pages": 376
+ },
+ "pages": {
+  "door_candidates": 0,
+  "hardware_candidates": 0,
+  "door_schedule_pages": [],
+  "hardware_pages": []
+ },
+ "readers": {
+  "a": {
+   "doors": 0,
+   "sets": 0,
+   "items": 0,
+   "name": "production text layer (weyland-subx-worker/src/lib/text-layer-read.js)"
+  },
+  "b": {
+   "doors": 0,
+   "sets": 0,
+   "items": 0,
+   "name": "geometry first (tools/accuracy/truth/reader_b.mjs)",
+   "tables": 0
+  }
+ },
+ "rows_agreed": 0,
+ "rows_disputed": 0,
+ "rows_total": 0,
+ "agreement_rate": null,
+ "agreement": {
+  "doors": {
+   "rows": 0,
+   "agreed": 0,
+   "disputed": 0,
+   "only_a": 0,
+   "only_b": 0,
+   "fields": {},
+   "agreement_rate": null
+  },
+  "items": {
+   "rows": 0,
+   "agreed": 0,
+   "disputed": 0,
+   "only_a": 0,
+   "only_b": 0,
+   "fields": {},
+   "agreement_rate": null
+  },
+  "sets": {
+   "sets": 0,
+   "agreed": 0
+  }
+ },
+ "triage_class": "none",
+ "triage_from": "tools/corpus/harvest/triage.json",
+ "oracles": {
+  "marks_on_plan": {
+   "applicable": false,
+   "reason": "not for class none"
+  },
+  "sets_exist": {
+   "applicable": false,
+   "reason": "not for class none"
+  },
+  "set_door_lists": {
+   "applicable": false,
+   "reason": "not for class none"
+  },
+  "types_in_legend": {
+   "applicable": false,
+   "reason": "not for class none"
+  },
+  "sizes_and_marks": {
+   "applicable": false,
+   "reason": "not for class none"
+  }
+ },
+ "tier": "unread",
+ "unread_reason": "no door schedule or hardware set read by either reader",
+ "disagreement_count": 0,
+ "disagreements": [],
+ "ms": 1111,
+ "generated_at": "2026-10-09T10:44:40.002Z"
+}

@@ -1,0 +1,459 @@
+{
+ "sha16": "194733de48af8797",
+ "sha256": "194733de48af879786f2e5b5b9b0ddcf7dc9747920fdb12a7783c17084115ed4",
+ "file": "194733de48af8797.pdf",
+ "bytes": 5509278,
+ "family": "missouri_oa_fmdc",
+ "source": "harvest",
+ "label": "missouri_oa_fmdc - _C2410-01%20Add%201%20Plans-Specs_0.pdf",
+ "source_url": "https://oa.mo.gov/sites/default/files/bid-opportunities/_C2410-01%20Add%201%20Plans-Specs_0.pdf",
+ "page_count": 45,
+ "text_layer": {
+  "pages_with_text": 41,
+  "pages": 45
+ },
+ "pages": {
+  "door_candidates": 4,
+  "hardware_candidates": 2,
+  "door_schedule_pages": [
+   45
+  ],
+  "hardware_pages": [
+   45
+  ]
+ },
+ "readers": {
+  "a": {
+   "doors": 0,
+   "sets": 2,
+   "items": 3,
+   "name": "production text layer (weyland-subx-worker/src/lib/text-layer-read.js)"
+  },
+  "b": {
+   "doors": 35,
+   "sets": 1,
+   "items": 4,
+   "name": "geometry first (tools/accuracy/truth/reader_b.mjs)",
+   "tables": 5
+  }
+ },
+ "rows_agreed": 0,
+ "rows_disputed": 42,
+ "rows_total": 42,
+ "agreement_rate": 0,
+ "agreement": {
+  "doors": {
+   "rows": 35,
+   "agreed": 0,
+   "disputed": 0,
+   "only_a": 0,
+   "only_b": 35,
+   "fields": {},
+   "agreement_rate": 0
+  },
+  "items": {
+   "rows": 7,
+   "agreed": 0,
+   "disputed": 0,
+   "only_a": 3,
+   "only_b": 4,
+   "fields": {},
+   "agreement_rate": 0
+  },
+  "sets": {
+   "sets": 2,
+   "agreed": 0
+  }
+ },
+ "triage_class": "pair",
+ "triage_from": "inferred (S=true H=true plan sheets=0)",
+ "oracles": {
+  "marks_on_plan": {
+   "applicable": false,
+   "reason": "not for class pair"
+  },
+  "sets_exist": {
+   "applicable": false,
+   "reason": "no door schedule rows"
+  },
+  "set_door_lists": {
+   "applicable": false,
+   "reason": "no door schedule rows"
+  },
+  "types_in_legend": {
+   "applicable": false,
+   "reason": "no door schedule rows"
+  },
+  "sizes_and_marks": {
+   "applicable": false,
+   "reason": "no door schedule rows"
+  }
+ },
+ "tier": "unread",
+ "unread_reason": "no rows agreed and no oracle applies",
+ "disagreement_count": 44,
+ "disagreements": [
+  {
+   "kind": "door",
+   "page": 45,
+   "key": "1A101",
+   "field": "(row)",
+   "a": null,
+   "b": "read",
+   "why": "only reader B read this row"
+  },
+  {
+   "kind": "door",
+   "page": 45,
+   "key": "1D116",
+   "field": "(row)",
+   "a": null,
+   "b": "read",
+   "why": "only reader B read this row"
+  },
+  {
+   "kind": "door",
+   "page": 45,
+   "key": "1A105",
+   "field": "(row)",
+   "a": null,
+   "b": "read",
+   "why": "only reader B read this row"
+  },
+  {
+   "kind": "door",
+   "page": 45,
+   "key": "1A116",
+   "field": "(row)",
+   "a": null,
+   "b": "read",
+   "why": "only reader B read this row"
+  },
+  {
+   "kind": "door",
+   "page": 45,
+   "key": "1B109",
+   "field": "(row)",
+   "a": null,
+   "b": "read",
+   "why": "only reader B read this row"
+  },
+  {
+   "kind": "door",
+   "page": 45,
+   "key": "1B116",
+   "field": "(row)",
+   "a": null,
+   "b": "read",
+   "why": "only reader B read this row"
+  },
+  {
+   "kind": "door",
+   "page": 45,
+   "key": "1A201",
+   "field": "(row)",
+   "a": null,
+   "b": "read",
+   "why": "only reader B read this row"
+  },
+  {
+   "kind": "door",
+   "page": 45,
+   "key": "1D216",
+   "field": "(row)",
+   "a": null,
+   "b": "read",
+   "why": "only reader B read this row"
+  },
+  {
+   "kind": "door",
+   "page": 45,
+   "key": "2A101",
+   "field": "(row)",
+   "a": null,
+   "b": "read",
+   "why": "only reader B read this row"
+  },
+  {
+   "kind": "door",
+   "page": 45,
+   "key": "2D116",
+   "field": "(row)",
+   "a": null,
+   "b": "read",
+   "why": "only reader B read this row"
+  },
+  {
+   "kind": "door",
+   "page": 45,
+   "key": "2A109",
+   "field": "(row)",
+   "a": null,
+   "b": "read",
+   "why": "only reader B read this row"
+  },
+  {
+   "kind": "door",
+   "page": 45,
+   "key": "2A112",
+   "field": "(row)",
+   "a": null,
+   "b": "read",
+   "why": "only reader B read this row"
+  },
+  {
+   "kind": "door",
+   "page": 45,
+   "key": "2B109",
+   "field": "(row)",
+   "a": null,
+   "b": "read",
+   "why": "only reader B read this row"
+  },
+  {
+   "kind": "door",
+   "page": 45,
+   "key": "2B112",
+   "field": "(row)",
+   "a": null,
+   "b": "read",
+   "why": "only reader B read this row"
+  },
+  {
+   "kind": "door",
+   "page": 45,
+   "key": "2A201",
+   "field": "(row)",
+   "a": null,
+   "b": "read",
+   "why": "only reader B read this row"
+  },
+  {
+   "kind": "door",
+   "page": 45,
+   "key": "2D216",
+   "field": "(row)",
+   "a": null,
+   "b": "read",
+   "why": "only reader B read this row"
+  },
+  {
+   "kind": "door",
+   "page": 45,
+   "key": "3A101",
+   "field": "(row)",
+   "a": null,
+   "b": "read",
+   "why": "only reader B read this row"
+  },
+  {
+   "kind": "door",
+   "page": 45,
+   "key": "3D116",
+   "field": "(row)",
+   "a": null,
+   "b": "read",
+   "why": "only reader B read this row"
+  },
+  {
+   "kind": "door",
+   "page": 45,
+   "key": "3A109",
+   "field": "(row)",
+   "a": null,
+   "b": "read",
+   "why": "only reader B read this row"
+  },
+  {
+   "kind": "door",
+   "page": 45,
+   "key": "3A",
+   "field": "(row)",
+   "a": null,
+   "b": "read",
+   "why": "only reader B read this row"
+  },
+  {
+   "kind": "door",
+   "page": 45,
+   "key": "3A201",
+   "field": "(row)",
+   "a": null,
+   "b": "read",
+   "why": "only reader B read this row"
+  },
+  {
+   "kind": "door",
+   "page": 45,
+   "key": "3D216",
+   "field": "(row)",
+   "a": null,
+   "b": "read",
+   "why": "only reader B read this row"
+  },
+  {
+   "kind": "door",
+   "page": 45,
+   "key": "4A101",
+   "field": "(row)",
+   "a": null,
+   "b": "read",
+   "why": "only reader B read this row"
+  },
+  {
+   "kind": "door",
+   "page": 45,
+   "key": "4D116",
+   "field": "(row)",
+   "a": null,
+   "b": "read",
+   "why": "only reader B read this row"
+  },
+  {
+   "kind": "door",
+   "page": 45,
+   "key": "4B109",
+   "field": "(row)",
+   "a": null,
+   "b": "read",
+   "why": "only reader B read this row"
+  },
+  {
+   "kind": "door",
+   "page": 45,
+   "key": "4B112",
+   "field": "(row)",
+   "a": null,
+   "b": "read",
+   "why": "only reader B read this row"
+  },
+  {
+   "kind": "door",
+   "page": 45,
+   "key": "4A201",
+   "field": "(row)",
+   "a": null,
+   "b": "read",
+   "why": "only reader B read this row"
+  },
+  {
+   "kind": "door",
+   "page": 45,
+   "key": "4D216",
+   "field": "(row)",
+   "a": null,
+   "b": "read",
+   "why": "only reader B read this row"
+  },
+  {
+   "kind": "door",
+   "page": 45,
+   "key": "151A",
+   "field": "(row)",
+   "a": null,
+   "b": "read",
+   "why": "only reader B read this row"
+  },
+  {
+   "kind": "door",
+   "page": 45,
+   "key": "151C",
+   "field": "(row)",
+   "a": null,
+   "b": "read",
+   "why": "only reader B read this row"
+  },
+  {
+   "kind": "door",
+   "page": 45,
+   "key": "256",
+   "field": "(row)",
+   "a": null,
+   "b": "read",
+   "why": "only reader B read this row"
+  },
+  {
+   "kind": "door",
+   "page": 45,
+   "key": "258A",
+   "field": "(row)",
+   "a": null,
+   "b": "read",
+   "why": "only reader B read this row"
+  },
+  {
+   "kind": "door",
+   "page": 45,
+   "key": "258B",
+   "field": "(row)",
+   "a": null,
+   "b": "read",
+   "why": "only reader B read this row"
+  },
+  {
+   "kind": "door",
+   "page": 45,
+   "key": "259A",
+   "field": "(row)",
+   "a": null,
+   "b": "read",
+   "why": "only reader B read this row"
+  },
+  {
+   "kind": "door",
+   "page": 45,
+   "key": "259B",
+   "field": "(row)",
+   "a": null,
+   "b": "read",
+   "why": "only reader B read this row"
+  },
+  {
+   "kind": "item",
+   "page": 45,
+   "key": "S. / 2 3 &",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 45,
+   "key": "1 / PERIMETER OF THE METAL PLATE",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 45,
+   "key": "1 / 258 4'-0\" x 7'-0\" 2 3 1 NEW DOOR/FRAME W/ 1\" METAL SPANDREL PANEL 1",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 45,
+   "key": "1 / METAL 2 3 FRAME METAL DOOR FRAME ARCHITECTURE &",
+   "field": "(row)",
+   "a": null,
+   "b": "read",
+   "why": "only reader B read this row"
+  },
+  {
+   "kind": "item",
+   "page": 45,
+   "key": "1 / DEAD BOLT W/",
+   "field": "(row)",
+   "a": null,
+   "b": "read",
+   "why": "only reader B read this row"
+  }
+ ],
+ "ms": 358,
+ "generated_at": "2026-10-09T10:45:09.324Z"
+}

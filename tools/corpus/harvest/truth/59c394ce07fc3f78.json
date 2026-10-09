@@ -1,0 +1,154 @@
+{
+ "sha16": "59c394ce07fc3f78",
+ "sha256": "59c394ce07fc3f78c07f48e6904a11e46b24e7b719d5a30b019394a3decfbbc1",
+ "file": "59c394ce07fc3f78.pdf",
+ "bytes": 624889,
+ "family": "school_district_sites",
+ "source": "harvest",
+ "label": "school_district_sites - Addendum-01.pdf",
+ "source_url": "https://www.qacps.org/wp-content/uploads/2026/03/Addendum-01.pdf",
+ "page_count": 12,
+ "text_layer": {
+  "pages_with_text": 10,
+  "pages": 12
+ },
+ "pages": {
+  "door_candidates": 2,
+  "hardware_candidates": 3,
+  "door_schedule_pages": [],
+  "hardware_pages": [
+   2,
+   3
+  ]
+ },
+ "readers": {
+  "a": {
+   "doors": 0,
+   "sets": 4,
+   "items": 9,
+   "name": "production text layer (weyland-subx-worker/src/lib/text-layer-read.js)"
+  },
+  "b": {
+   "doors": 0,
+   "sets": 2,
+   "items": 7,
+   "name": "geometry first (tools/accuracy/truth/reader_b.mjs)",
+   "tables": 0
+  }
+ },
+ "rows_agreed": 7,
+ "rows_disputed": 2,
+ "rows_total": 9,
+ "agreement_rate": 0.7778,
+ "agreement": {
+  "doors": {
+   "rows": 0,
+   "agreed": 0,
+   "disputed": 0,
+   "only_a": 0,
+   "only_b": 0,
+   "fields": {},
+   "agreement_rate": null
+  },
+  "items": {
+   "rows": 9,
+   "agreed": 7,
+   "disputed": 0,
+   "only_a": 2,
+   "only_b": 0,
+   "fields": {
+    "qty": {
+     "agree": 7,
+     "total": 7
+    },
+    "description": {
+     "agree": 7,
+     "total": 7
+    },
+    "catalog": {
+     "agree": 7,
+     "total": 7
+    },
+    "finish": {
+     "agree": 5,
+     "total": 5
+    },
+    "manufacturer": {
+     "agree": 7,
+     "total": 7
+    }
+   },
+   "agreement_rate": 0.7778
+  },
+  "sets": {
+   "sets": 4,
+   "agreed": 2
+  }
+ },
+ "triage_class": "spec-only",
+ "triage_from": "tools/corpus/harvest/triage.json",
+ "oracles": {
+  "marks_on_plan": {
+   "applicable": false,
+   "reason": "not for class spec-only"
+  },
+  "sets_exist": {
+   "applicable": false,
+   "reason": "not for class spec-only"
+  },
+  "set_door_lists": {
+   "applicable": false,
+   "reason": "not for class spec-only"
+  },
+  "types_in_legend": {
+   "applicable": false,
+   "reason": "not for class spec-only"
+  },
+  "sizes_and_marks": {
+   "applicable": false,
+   "reason": "not for class spec-only"
+  }
+ },
+ "tier": "agreed",
+ "disagreement_count": 4,
+ "disagreements": [
+  {
+   "kind": "item",
+   "page": 2,
+   "key": "(CONTINUED) / March 2026",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 2,
+   "key": "78 / March 2026",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "group",
+   "page": null,
+   "key": "(CONTINUED)",
+   "field": "(set)",
+   "a": "",
+   "b": null,
+   "why": "only reader A read this set"
+  },
+  {
+   "kind": "group",
+   "page": null,
+   "key": "S",
+   "field": "(set)",
+   "a": "46.1, 49, 52.1, 52.2, 53, 59, 60, 61, A1.1, A10.1, A11.1, A12.1, A2.1, A3.1, A4.1, A5.1, A6.1, A7.1, A8.1, A9.1, B1.1, B10.1, B11.1, B12.1, B16.1., B2.1, B3.1, B4.1, B5.1, B6.1, B7.1, B8.1, B9.1, C2, C4, C7.1, C7.2, M01.4.",
+   "b": null,
+   "why": "only reader A read this set"
+  }
+ ],
+ "ms": 40,
+ "generated_at": "2026-10-09T10:46:18.700Z"
+}

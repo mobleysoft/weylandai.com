@@ -1,0 +1,104 @@
+{
+ "sha16": "964f1753a534dc75",
+ "sha256": "964f1753a534dc7553c2ace7597eaad4bc4785f8eba6594f3eab49ea8b08492f",
+ "file": "964f1753a534dc75.pdf",
+ "bytes": 3248769,
+ "family": "missouri_oa_fmdc",
+ "source": "harvest",
+ "label": "missouri_oa_fmdc - _C2410-01%20-%20Final%20Specs.pdf",
+ "source_url": "https://oa.mo.gov/sites/default/files/bid-opportunities/_C2410-01%20-%20Final%20Specs.pdf",
+ "page_count": 147,
+ "text_layer": {
+  "pages_with_text": 144,
+  "pages": 147
+ },
+ "pages": {
+  "door_candidates": 2,
+  "hardware_candidates": 1,
+  "door_schedule_pages": [],
+  "hardware_pages": []
+ },
+ "readers": {
+  "a": {
+   "doors": 0,
+   "sets": 0,
+   "items": 0,
+   "name": "production text layer (weyland-subx-worker/src/lib/text-layer-read.js)"
+  },
+  "b": {
+   "doors": 0,
+   "sets": 1,
+   "items": 0,
+   "name": "geometry first (tools/accuracy/truth/reader_b.mjs)",
+   "tables": 0
+  }
+ },
+ "rows_agreed": 0,
+ "rows_disputed": 0,
+ "rows_total": 0,
+ "agreement_rate": null,
+ "agreement": {
+  "doors": {
+   "rows": 0,
+   "agreed": 0,
+   "disputed": 0,
+   "only_a": 0,
+   "only_b": 0,
+   "fields": {},
+   "agreement_rate": null
+  },
+  "items": {
+   "rows": 0,
+   "agreed": 0,
+   "disputed": 0,
+   "only_a": 0,
+   "only_b": 0,
+   "fields": {},
+   "agreement_rate": null
+  },
+  "sets": {
+   "sets": 1,
+   "agreed": 0
+  }
+ },
+ "triage_class": "none",
+ "triage_from": "inferred (S=false H=false plan sheets=0)",
+ "oracles": {
+  "marks_on_plan": {
+   "applicable": false,
+   "reason": "not for class none"
+  },
+  "sets_exist": {
+   "applicable": false,
+   "reason": "not for class none"
+  },
+  "set_door_lists": {
+   "applicable": false,
+   "reason": "not for class none"
+  },
+  "types_in_legend": {
+   "applicable": false,
+   "reason": "not for class none"
+  },
+  "sizes_and_marks": {
+   "applicable": false,
+   "reason": "not for class none"
+  }
+ },
+ "tier": "unread",
+ "unread_reason": "no door schedule or hardware set read by either reader",
+ "disagreement_count": 1,
+ "disagreements": [
+  {
+   "kind": "group",
+   "page": null,
+   "key": "1",
+   "field": "(set)",
+   "a": null,
+   "b": "1A103, 1A104, 1A105, 1A106, 1A107, 1A108, 1A109, 1A110, 1A111, 1A112, 1A113, 1A114, 1A115, 1A116, 1A201, 1A202, 1A203, 1A204, 1A205, 1A206, 1A207, 1A208, 1A209, 1A210, 1A211, 1A212, 1A213, 1A214, 1A215, 1A216, 1B103, 1B104, 1B105, 1B106, 1B107, 1B108, 1B109, 1B110, 1B111, 1B112, 1B113, 1B114, 1B115, 1B116, 1B1213, 1B201, 1B202, 1B203, 1B204, 1B205, 1B206, 1B207, 1B208, 1B209, 1B210, 1B211, 1B212, 1B214, 1B215, 1B216, 1C103, 1C104, 1C105, 1C106, 1C107, 1C108, 1C109, 1C110, 1C111, 1C112, 1C113, 1C114, 1C115, 1C116, 1C201, 1C202, 1C203, 1C204, 1C205, 1C206, 1C207, 1C208, 1C209, 1C210, 1C211, 1C212, 1C213, 1C214, 1C215, 1C216, 1D103, 1D104, 1D105, 1D106, 1D107, 1D108, 1D109, 1D110, 1D111, 1D112, 1D113, 1D114, 1D115, 1D116, 1D201, 1D202, 1D203, 1D204, 1D205, 1D206, 1D207, 1D208, 1D209, 1D210, 1D211, 1D212, 1D213, 1D214, 1D215, 1D216, 2A103, 2A104, 2A105, 2A106, 2A107, 2A108, 2A109, 2A110, 2A111, 2A112, 2A113, 2A114, 2A115, 2A116, 2A201, 2A202, 2A203, 2A204, 2A205, 2A206, 2A207, 2A208, 2A209, 2A210, 2A211, 2A212, 2A213, 2A214, 2A215, 2A216, 2B103, 2B104, 2B105, 2B106, 2B107, 2B108, 2B109, 2B110, 2B111, 2B112, 2B113, 2B114, 2B115, 2B116, 2B1213, 2B201, 2B202, 2B203, 2B204, 2B205, 2B206, 2B207, 2B208, 2B209, 2B210, 2B211, 2B212, 2B214, 2B215, 2B216, 2C103, 2C104, 2C105, 2C106, 2C107, 2C108, 2C109, 2C110, 2C111, 2C112, 2C113, 2C114, 2C115, 2C116, 2C201, 2C202, 2C203, 2C204, 2C205, 2C206, 2C207, 2C208, 2C209, 2C210, 2C211, 2C212, 2C213, 2C214, 2C215, 2D103, 2D104, 2D105, 2D106, 2D107, 2D108, 2D109, 2D110, 2D111, 2D112, 2D113, 2D114, 2D115, 2D116",
+   "why": "only reader B read this set"
+  }
+ ],
+ "ms": 450,
+ "generated_at": "2026-10-09T10:47:49.406Z"
+}

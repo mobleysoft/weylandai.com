@@ -1,0 +1,160 @@
+{
+ "sha16": "a6de54d2ad086d19",
+ "sha256": "a6de54d2ad086d19466b1b277f65c6d8cb3bf665ca7d9ed746d363de5c8b6ba9",
+ "file": "a6de54d2ad086d19.pdf",
+ "bytes": 14855644,
+ "family": "missouri_oa_fmdc",
+ "source": "harvest",
+ "label": "missouri_oa_fmdc - _C2512-01%20Final%20Bid%20Specs_Vol%201.pdf",
+ "source_url": "https://oa.mo.gov/sites/default/files/bid-opportunities/_C2512-01%20Final%20Bid%20Specs_Vol%201.pdf",
+ "page_count": 725,
+ "text_layer": {
+  "pages_with_text": 711,
+  "pages": 725
+ },
+ "pages": {
+  "door_candidates": 6,
+  "hardware_candidates": 16,
+  "door_schedule_pages": [],
+  "hardware_pages": [
+   383,
+   384,
+   385,
+   386,
+   387,
+   388,
+   389,
+   390,
+   391,
+   392,
+   393,
+   394,
+   395,
+   486
+  ]
+ },
+ "readers": {
+  "a": {
+   "doors": 0,
+   "sets": 29,
+   "items": 213,
+   "name": "production text layer (weyland-subx-worker/src/lib/text-layer-read.js)"
+  },
+  "b": {
+   "doors": 0,
+   "sets": 28,
+   "items": 214,
+   "name": "geometry first (tools/accuracy/truth/reader_b.mjs)",
+   "tables": 0
+  }
+ },
+ "rows_agreed": 212,
+ "rows_disputed": 2,
+ "rows_total": 214,
+ "agreement_rate": 0.9907,
+ "agreement": {
+  "doors": {
+   "rows": 0,
+   "agreed": 0,
+   "disputed": 0,
+   "only_a": 0,
+   "only_b": 0,
+   "fields": {},
+   "agreement_rate": null
+  },
+  "items": {
+   "rows": 214,
+   "agreed": 212,
+   "disputed": 1,
+   "only_a": 0,
+   "only_b": 1,
+   "fields": {
+    "qty": {
+     "agree": 213,
+     "total": 213
+    },
+    "description": {
+     "agree": 212,
+     "total": 213
+    },
+    "catalog": {
+     "agree": 212,
+     "total": 213
+    },
+    "manufacturer": {
+     "agree": 207,
+     "total": 207
+    }
+   },
+   "agreement_rate": 0.9907
+  },
+  "sets": {
+   "sets": 29,
+   "agreed": 28
+  }
+ },
+ "triage_class": "spec-only",
+ "triage_from": "tools/corpus/harvest/triage.json",
+ "oracles": {
+  "marks_on_plan": {
+   "applicable": false,
+   "reason": "not for class spec-only"
+  },
+  "sets_exist": {
+   "applicable": false,
+   "reason": "not for class spec-only"
+  },
+  "set_door_lists": {
+   "applicable": false,
+   "reason": "not for class spec-only"
+  },
+  "types_in_legend": {
+   "applicable": false,
+   "reason": "not for class spec-only"
+  },
+  "sizes_and_marks": {
+   "applicable": false,
+   "reason": "not for class spec-only"
+  }
+ },
+ "tier": "agreed",
+ "disagreement_count": 4,
+ "disagreements": [
+  {
+   "kind": "item",
+   "page": 394,
+   "key": "27 / AS REQ'D",
+   "field": "description",
+   "a": "CYLINDER",
+   "b": "CYLINDER EA NOTE"
+  },
+  {
+   "kind": "item",
+   "page": 394,
+   "key": "27 / AS REQ'D",
+   "field": "catalog",
+   "a": "AS REQ'D",
+   "b": "AS REQ'D REMAINDER OF HARDWARE BY DOOR SUPPLIER"
+  },
+  {
+   "kind": "item",
+   "page": 395,
+   "key": "28 / Type A5109a: REAR WALL GRAB BAR: 36 inches, Horizontal",
+   "field": "(row)",
+   "a": null,
+   "b": "read",
+   "why": "only reader B read this row"
+  },
+  {
+   "kind": "group",
+   "page": null,
+   "key": "S",
+   "field": "(set)",
+   "a": "09/10/2026",
+   "b": null,
+   "why": "only reader A read this set"
+  }
+ ],
+ "ms": 2419,
+ "generated_at": "2026-10-09T10:48:02.280Z"
+}

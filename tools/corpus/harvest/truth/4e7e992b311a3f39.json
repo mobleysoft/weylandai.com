@@ -1,0 +1,461 @@
+{
+ "sha16": "4e7e992b311a3f39",
+ "sha256": "4e7e992b311a3f39bf8d40c99fc2ec8dddcf813c7f1f686081bae99fb0852092",
+ "file": "4e7e992b311a3f39.pdf",
+ "bytes": 396315,
+ "family": "ohio_ofcc",
+ "source": "harvest",
+ "label": "ohio_ofcc - ADD2-SOC-250003.pdf",
+ "source_url": "https://dam.assets.ohio.gov/image/upload/ofcc.ohio.gov/Portals/0/Documents/Bids/2026/ADD2-SOC-250003.pdf",
+ "page_count": 28,
+ "text_layer": {
+  "pages_with_text": 28,
+  "pages": 28
+ },
+ "pages": {
+  "door_candidates": 1,
+  "hardware_candidates": 5,
+  "door_schedule_pages": [],
+  "hardware_pages": [
+   24,
+   25,
+   26,
+   27,
+   28
+  ]
+ },
+ "readers": {
+  "a": {
+   "doors": 0,
+   "sets": 1,
+   "items": 65,
+   "name": "production text layer (weyland-subx-worker/src/lib/text-layer-read.js)"
+  },
+  "b": {
+   "doors": 0,
+   "sets": 10,
+   "items": 59,
+   "name": "geometry first (tools/accuracy/truth/reader_b.mjs)",
+   "tables": 0
+  }
+ },
+ "rows_agreed": 0,
+ "rows_disputed": 124,
+ "rows_total": 124,
+ "agreement_rate": 0,
+ "agreement": {
+  "doors": {
+   "rows": 0,
+   "agreed": 0,
+   "disputed": 0,
+   "only_a": 0,
+   "only_b": 0,
+   "fields": {},
+   "agreement_rate": null
+  },
+  "items": {
+   "rows": 124,
+   "agreed": 0,
+   "disputed": 0,
+   "only_a": 65,
+   "only_b": 59,
+   "fields": {},
+   "agreement_rate": 0
+  },
+  "sets": {
+   "sets": 11,
+   "agreed": 0
+  }
+ },
+ "triage_class": "spec-only",
+ "triage_from": "tools/corpus/harvest/triage.json",
+ "oracles": {
+  "marks_on_plan": {
+   "applicable": false,
+   "reason": "not for class spec-only"
+  },
+  "sets_exist": {
+   "applicable": false,
+   "reason": "not for class spec-only"
+  },
+  "set_door_lists": {
+   "applicable": false,
+   "reason": "not for class spec-only"
+  },
+  "types_in_legend": {
+   "applicable": false,
+   "reason": "not for class spec-only"
+  },
+  "sizes_and_marks": {
+   "applicable": false,
+   "reason": "not for class spec-only"
+  }
+ },
+ "tier": "unread",
+ "unread_reason": "no rows agreed and no oracle applies",
+ "disagreement_count": 135,
+ "disagreements": [
+  {
+   "kind": "item",
+   "page": 24,
+   "key": "S / Continuous Hinge Required CLX3357 NZD N7 (Key to",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 24,
+   "key": "S / 626",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 24,
+   "key": "S / 689",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 24,
+   "key": "S / US26D",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 24,
+   "key": "S / Gasketing Supplier",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 24,
+   "key": "S / Continuous Hinge Required CLX3351 NZD N7 (Key to",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 24,
+   "key": "S / 626",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 24,
+   "key": "S / US26D",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 24,
+   "key": "S / Gasketing Supplier",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 24,
+   "key": "S / Required CLX3351 NZD N7 (Key to",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 24,
+   "key": "S / existing key system)",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 24,
+   "key": "S / 10-X36 (Size as Required)",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 24,
+   "key": "S / 7500",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 24,
+   "key": "S / K1050 10\" high CSK BEV Provided By Door/Frame",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 24,
+   "key": "S / Supplier",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 24,
+   "key": "S / Required CLX3351 NZD N7 (Key to",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 24,
+   "key": "S / existing key system)",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 24,
+   "key": "S / 7500 (Reg or P/A) 403 (or) 441CU (As",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 24,
+   "key": "S / Required) Provided By Door/Frame",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 24,
+   "key": "S / Supplier Electric Strike to Fit",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 24,
+   "key": "S / Application",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 24,
+   "key": "S / QC-C3000P",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 24,
+   "key": "S / Required CLX3351 NZD N7 (Key to",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 24,
+   "key": "S / existing key system)",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 24,
+   "key": "S / 10-X36 (Size as Required)",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 24,
+   "key": "S / 7500 (Reg or P/A) Provided By Door/Frame",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 24,
+   "key": "S / Supplier",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 24,
+   "key": "S / Required",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 24,
+   "key": "S / 570",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 24,
+   "key": "S / 2845",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 24,
+   "key": "S / RX 72 8271-xxV LNP Match/expand existing",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 24,
+   "key": "S / BEST Core 2600 Series x Mounting",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 24,
+   "key": "S / Brackets & filler bars as req'd",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 24,
+   "key": "S / 351 O K1050 10\" HGT x BEV x",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 24,
+   "key": "S / CSK",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 24,
+   "key": "S / 400 series as req'd",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 24,
+   "key": "S / 609/608/608CA",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 24,
+   "key": "S / QC-C3000P QC-CxxxP x length as",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 24,
+   "key": "S / req'd",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 24,
+   "key": "S / DPS-M-BK AQ series x amps/options",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  }
+ ],
+ "ms": 131,
+ "generated_at": "2026-10-09T10:46:11.083Z"
+}

@@ -1,0 +1,469 @@
+{
+ "sha16": "8c77fa69fc375a81",
+ "sha256": "8c77fa69fc375a810652c9c0d4c7c3bd51997212d9bd6cd0d39cdb7a9071e4b4",
+ "file": "8c77fa69fc375a81.pdf",
+ "bytes": 21413263,
+ "family": "missouri_oa_fmdc",
+ "source": "harvest",
+ "label": "missouri_oa_fmdc - X2207-01%20Add%20%234%20Plans%20%26%20Specs.pdf",
+ "source_url": "https://oa.mo.gov/sites/default/files/bid-opportunities/X2207-01%20Add%20%234%20Plans%20%26%20Specs.pdf",
+ "page_count": 117,
+ "text_layer": {
+  "pages_with_text": 116,
+  "pages": 117
+ },
+ "pages": {
+  "door_candidates": 14,
+  "hardware_candidates": 13,
+  "door_schedule_pages": [],
+  "hardware_pages": [
+   35,
+   36,
+   37,
+   38,
+   39,
+   40,
+   41,
+   42,
+   43,
+   44,
+   45,
+   46,
+   47
+  ]
+ },
+ "readers": {
+  "a": {
+   "doors": 0,
+   "sets": 1,
+   "items": 262,
+   "name": "production text layer (weyland-subx-worker/src/lib/text-layer-read.js)"
+  },
+  "b": {
+   "doors": 0,
+   "sets": 37,
+   "items": 250,
+   "name": "geometry first (tools/accuracy/truth/reader_b.mjs)",
+   "tables": 0
+  }
+ },
+ "rows_agreed": 0,
+ "rows_disputed": 512,
+ "rows_total": 512,
+ "agreement_rate": 0,
+ "agreement": {
+  "doors": {
+   "rows": 0,
+   "agreed": 0,
+   "disputed": 0,
+   "only_a": 0,
+   "only_b": 0,
+   "fields": {},
+   "agreement_rate": null
+  },
+  "items": {
+   "rows": 512,
+   "agreed": 0,
+   "disputed": 0,
+   "only_a": 262,
+   "only_b": 250,
+   "fields": {},
+   "agreement_rate": 0
+  },
+  "sets": {
+   "sets": 38,
+   "agreed": 0
+  }
+ },
+ "triage_class": "spec-only",
+ "triage_from": "tools/corpus/harvest/triage.json",
+ "oracles": {
+  "marks_on_plan": {
+   "applicable": false,
+   "reason": "not for class spec-only"
+  },
+  "sets_exist": {
+   "applicable": false,
+   "reason": "not for class spec-only"
+  },
+  "set_door_lists": {
+   "applicable": false,
+   "reason": "not for class spec-only"
+  },
+  "types_in_legend": {
+   "applicable": false,
+   "reason": "not for class spec-only"
+  },
+  "sizes_and_marks": {
+   "applicable": false,
+   "reason": "not for class spec-only"
+  }
+ },
+ "tier": "unread",
+ "unread_reason": "no rows agreed and no oracle applies",
+ "disagreement_count": 550,
+ "disagreements": [
+  {
+   "kind": "item",
+   "page": 35,
+   "key": "S / Manufacturer 16 70 PE8804 WEL (SFIC, Cyl.",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 35,
+   "key": "S / Dogging)",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 35,
+   "key": "S / Key as Directed by Owner Construction Core - Removed when",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 35,
+   "key": "S / Final Cores are installed",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 35,
+   "key": "S / 351 CPS (HD Cush STP Arm)",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 35,
+   "key": "S / K1050 10\" high CSK BEV Prehung Door/Frame - Gaskets and",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 35,
+   "key": "S / Threshold by Manufacturer",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 35,
+   "key": "S / TA2314 (NRP and Size as Required) 16 70 PE8804 WEL (SFIC, Cyl.",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 35,
+   "key": "S / Dogging)",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 35,
+   "key": "S / Key as Directed by Owner Construction Core - Removed when",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 35,
+   "key": "S / Final Cores are installed",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 35,
+   "key": "S / 351 CPS (HD Cush STP Arm)",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 35,
+   "key": "S / K1050 10\" high CSK BEV",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 35,
+   "key": "S / 303DS",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 35,
+   "key": "S / 346D x Width of Frame Head",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 35,
+   "key": "S / 3452DNB x Length Required 273x224-10BE-FGT MSES25SS x",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 35,
+   "key": "S / Length Required",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 35,
+   "key": "S / Manufacturer",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 35,
+   "key": "S / 12 70 PE8804 WEL",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 35,
+   "key": "S / Key as Directed by Owner Construction Core - Removed when",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 35,
+   "key": "S / Final Cores are installed",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 35,
+   "key": "S / 351 CPS (HD Cush STP Arm)",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 35,
+   "key": "S / K1050 10\" high CSK BEV Prehung Door/Frame - Gaskets and",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 35,
+   "key": "S / Threshold by Manufacturer",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 35,
+   "key": "S / Manufacturer MT Series RFID Mortised Lockset",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 35,
+   "key": "S / (SFIC)",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 35,
+   "key": "S / Key as Directed by Owner Construction Core - Removed when",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 35,
+   "key": "S / Final Cores are installed 351 UO (RA or PA Mount as",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 35,
+   "key": "S / Required)",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 35,
+   "key": "S / K1050 10\" high CSK BEV",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 35,
+   "key": "S / 403 (or) 441CU (As Required) Prehung Door/Frame - Gaskets and",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 35,
+   "key": "S / Threshold by Manufacturer",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 35,
+   "key": "S / T4A3386 (NRP and size as required) MT Series RFID Mortised Lockset",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 35,
+   "key": "S / (SFIC)",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 35,
+   "key": "S / Key as Directed by Owner Construction Core - Removed when",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 35,
+   "key": "S / Final Cores are installed",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 35,
+   "key": "S / 10-X36 (Size as Required) 351 UO (RA or PA Mount as",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 35,
+   "key": "S / Required)",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 35,
+   "key": "S / K1050 10\" high CSK BEV",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 35,
+   "key": "S / 303DS",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  }
+ ],
+ "ms": 3378,
+ "generated_at": "2026-10-09T10:47:42.079Z"
+}

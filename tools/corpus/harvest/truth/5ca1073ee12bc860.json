@@ -1,0 +1,115 @@
+{
+ "sha16": "5ca1073ee12bc860",
+ "sha256": "5ca1073ee12bc860b548e8f8f8d263592790d86082db1b16891eca13967cdfe5",
+ "file": "5ca1073ee12bc860.pdf",
+ "bytes": 12627499,
+ "family": "school_district_sites",
+ "source": "harvest",
+ "label": "school_district_sites - so-1847_averill_elementary_classroom_renovations.pdf",
+ "source_url": "https://www.lansingschools.net/downloads/purchasing/so-1847_averill_elementary_classroom_renovations.pdf",
+ "page_count": 139,
+ "text_layer": {
+  "pages_with_text": 127,
+  "pages": 139
+ },
+ "pages": {
+  "door_candidates": 4,
+  "hardware_candidates": 1,
+  "door_schedule_pages": [],
+  "hardware_pages": [
+   113
+  ]
+ },
+ "readers": {
+  "a": {
+   "doors": 0,
+   "sets": 1,
+   "items": 1,
+   "name": "production text layer (weyland-subx-worker/src/lib/text-layer-read.js)"
+  },
+  "b": {
+   "doors": 0,
+   "sets": 0,
+   "items": 0,
+   "name": "geometry first (tools/accuracy/truth/reader_b.mjs)",
+   "tables": 0
+  }
+ },
+ "rows_agreed": 0,
+ "rows_disputed": 1,
+ "rows_total": 1,
+ "agreement_rate": 0,
+ "agreement": {
+  "doors": {
+   "rows": 0,
+   "agreed": 0,
+   "disputed": 0,
+   "only_a": 0,
+   "only_b": 0,
+   "fields": {},
+   "agreement_rate": null
+  },
+  "items": {
+   "rows": 1,
+   "agreed": 0,
+   "disputed": 0,
+   "only_a": 1,
+   "only_b": 0,
+   "fields": {},
+   "agreement_rate": 0
+  },
+  "sets": {
+   "sets": 1,
+   "agreed": 0
+  }
+ },
+ "triage_class": "spec-only",
+ "triage_from": "tools/corpus/harvest/triage.json",
+ "oracles": {
+  "marks_on_plan": {
+   "applicable": false,
+   "reason": "not for class spec-only"
+  },
+  "sets_exist": {
+   "applicable": false,
+   "reason": "not for class spec-only"
+  },
+  "set_door_lists": {
+   "applicable": false,
+   "reason": "not for class spec-only"
+  },
+  "types_in_legend": {
+   "applicable": false,
+   "reason": "not for class spec-only"
+  },
+  "sizes_and_marks": {
+   "applicable": false,
+   "reason": "not for class spec-only"
+  }
+ },
+ "tier": "unread",
+ "unread_reason": "no rows agreed and no oracle applies",
+ "disagreement_count": 2,
+ "disagreements": [
+  {
+   "kind": "item",
+   "page": 113,
+   "key": "(CONTINUED) / 11/14/2025 BIDS & PERMITS",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "group",
+   "page": null,
+   "key": "(CONTINUED)",
+   "field": "(set)",
+   "a": "",
+   "b": null,
+   "why": "only reader A read this set"
+  }
+ ],
+ "ms": 1857,
+ "generated_at": "2026-10-09T10:46:21.402Z"
+}

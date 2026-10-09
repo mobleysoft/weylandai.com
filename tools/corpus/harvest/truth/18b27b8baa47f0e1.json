@@ -1,0 +1,330 @@
+{
+ "sha16": "18b27b8baa47f0e1",
+ "sha256": "18b27b8baa47f0e12774ee77ddf4dee7a25847a9641b17b11d5bd42f90dabb25",
+ "file": "18b27b8baa47f0e1.pdf",
+ "bytes": 18824389,
+ "family": "missouri_oa_fmdc",
+ "source": "harvest",
+ "label": "missouri_oa_fmdc - _X2530-01%20-%20Final%20Plans.pdf",
+ "source_url": "https://oa.mo.gov/sites/default/files/bid-opportunities/_X2530-01%20-%20Final%20Plans.pdf",
+ "page_count": 71,
+ "text_layer": {
+  "pages_with_text": 71,
+  "pages": 71
+ },
+ "pages": {
+  "door_candidates": 6,
+  "hardware_candidates": 0,
+  "door_schedule_pages": [
+   18,
+   53
+  ],
+  "hardware_pages": []
+ },
+ "readers": {
+  "a": {
+   "doors": 35,
+   "sets": 0,
+   "items": 0,
+   "name": "production text layer (weyland-subx-worker/src/lib/text-layer-read.js)"
+  },
+  "b": {
+   "doors": 36,
+   "sets": 0,
+   "items": 0,
+   "name": "geometry first (tools/accuracy/truth/reader_b.mjs)",
+   "tables": 2
+  }
+ },
+ "rows_agreed": 18,
+ "rows_disputed": 19,
+ "rows_total": 37,
+ "agreement_rate": 0.4865,
+ "agreement": {
+  "doors": {
+   "rows": 37,
+   "agreed": 18,
+   "disputed": 16,
+   "only_a": 1,
+   "only_b": 2,
+   "fields": {
+    "width_inches": {
+     "agree": 34,
+     "total": 34
+    },
+    "height_inches": {
+     "agree": 34,
+     "total": 34
+    },
+    "door_type": {
+     "agree": 34,
+     "total": 34
+    },
+    "material": {
+     "agree": 34,
+     "total": 34
+    },
+    "fire_rating": {
+     "agree": 0,
+     "total": 16
+    },
+    "hardware_group": {
+     "agree": 32,
+     "total": 34
+    }
+   },
+   "agreement_rate": 0.4865
+  },
+  "items": {
+   "rows": 0,
+   "agreed": 0,
+   "disputed": 0,
+   "only_a": 0,
+   "only_b": 0,
+   "fields": {},
+   "agreement_rate": null
+  },
+  "sets": {
+   "sets": 0,
+   "agreed": 0
+  }
+ },
+ "triage_class": "schedule-only",
+ "triage_from": "inferred (S=true H=false plan sheets=1)",
+ "oracles": {
+  "marks_on_plan": {
+   "applicable": true,
+   "total": 35,
+   "pass": 3,
+   "fail": 32,
+   "pass_rate": 0.0857,
+   "examples": [
+    "mark 100-1 (schedule p.18) not tagged on any plan",
+    "mark 100-2 (schedule p.18) not tagged on any plan",
+    "mark 101-1 (schedule p.18) not tagged on any plan",
+    "mark 103-1 (schedule p.18) not tagged on any plan",
+    "mark 105-1 (schedule p.18) not tagged on any plan",
+    "mark 106-1 (schedule p.18) not tagged on any plan",
+    "mark 109-1 (schedule p.18) not tagged on any plan",
+    "mark 110-1 (schedule p.18) not tagged on any plan",
+    "mark 111-1 (schedule p.18) not tagged on any plan",
+    "mark 112-1 (schedule p.18) not tagged on any plan",
+    "mark 113-1 (schedule p.18) not tagged on any plan",
+    "mark 114-1 (schedule p.18) not tagged on any plan"
+   ],
+   "plan_sheets": [
+    "A-401 p.22"
+   ],
+   "plan_counts": {
+    "plan_sheets": 1,
+    "rooms": 7,
+    "corridors": 0,
+    "tags": 3,
+    "unmatched_tags": 0,
+    "schedule_marks": 35,
+    "marks_not_on_plan": 32
+   }
+  },
+  "sets_exist": {
+   "applicable": false,
+   "reason": "not for class schedule-only"
+  },
+  "set_door_lists": {
+   "applicable": false,
+   "reason": "not for class schedule-only"
+  },
+  "types_in_legend": {
+   "applicable": false,
+   "reason": "no DOOR TYPES / FRAME TYPES legend title in this PDF"
+  },
+  "sizes_and_marks": {
+   "applicable": true,
+   "total": 35,
+   "pass": 34,
+   "fail": 1,
+   "pass_rate": 0.9714,
+   "examples": [
+    "mark 115-1116-1 p.18: size \"3'3' -- 0\\\"0\\\" x 7'7' -- 0\\\"0\\\"\" -> null x null"
+   ],
+   "size_fail": 1,
+   "mark_fail": 0
+  }
+ },
+ "tier": "agreed",
+ "disagreement_count": 21,
+ "disagreements": [
+  {
+   "kind": "door",
+   "page": 18,
+   "key": "100-1",
+   "field": "fire_rating",
+   "a": "PNT 45 MIN.",
+   "b": "45 MIN"
+  },
+  {
+   "kind": "door",
+   "page": 18,
+   "key": "100-1",
+   "field": "hardware_group",
+   "a": "1 REQUIRED: FIRE RATED",
+   "b": "1"
+  },
+  {
+   "kind": "door",
+   "page": 18,
+   "key": "100-2",
+   "field": "fire_rating",
+   "a": "PNT 45 MIN.",
+   "b": "45 MIN"
+  },
+  {
+   "kind": "door",
+   "page": 18,
+   "key": "100-2",
+   "field": "hardware_group",
+   "a": "1 REQUIRED: FIRE RATED",
+   "b": "1"
+  },
+  {
+   "kind": "door",
+   "page": 18,
+   "key": "101-1",
+   "field": "fire_rating",
+   "a": "PNT",
+   "b": null
+  },
+  {
+   "kind": "door",
+   "page": 18,
+   "key": "102-1",
+   "field": "fire_rating",
+   "a": "PNT",
+   "b": null
+  },
+  {
+   "kind": "door",
+   "page": 18,
+   "key": "103-1",
+   "field": "fire_rating",
+   "a": "PNT",
+   "b": null
+  },
+  {
+   "kind": "door",
+   "page": 18,
+   "key": "104-1",
+   "field": "fire_rating",
+   "a": "PNT",
+   "b": null
+  },
+  {
+   "kind": "door",
+   "page": 18,
+   "key": "105-1",
+   "field": "fire_rating",
+   "a": "PNT",
+   "b": null
+  },
+  {
+   "kind": "door",
+   "page": 18,
+   "key": "106-1",
+   "field": "fire_rating",
+   "a": "PNT",
+   "b": null
+  },
+  {
+   "kind": "door",
+   "page": 18,
+   "key": "109-1",
+   "field": "fire_rating",
+   "a": "PNT",
+   "b": null
+  },
+  {
+   "kind": "door",
+   "page": 18,
+   "key": "110-1",
+   "field": "fire_rating",
+   "a": "PNT",
+   "b": null
+  },
+  {
+   "kind": "door",
+   "page": 18,
+   "key": "111-1",
+   "field": "fire_rating",
+   "a": "PNT",
+   "b": null
+  },
+  {
+   "kind": "door",
+   "page": 18,
+   "key": "112-1",
+   "field": "fire_rating",
+   "a": "PNT",
+   "b": null
+  },
+  {
+   "kind": "door",
+   "page": 18,
+   "key": "113-1",
+   "field": "fire_rating",
+   "a": "PNT",
+   "b": null
+  },
+  {
+   "kind": "door",
+   "page": 18,
+   "key": "114-1",
+   "field": "fire_rating",
+   "a": "PNT",
+   "b": null
+  },
+  {
+   "kind": "door",
+   "page": 18,
+   "key": "115-1116-1",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "door",
+   "page": 18,
+   "key": "117-1",
+   "field": "fire_rating",
+   "a": "PNT",
+   "b": null
+  },
+  {
+   "kind": "door",
+   "page": 18,
+   "key": "118-1",
+   "field": "fire_rating",
+   "a": "PNT",
+   "b": null
+  },
+  {
+   "kind": "door",
+   "page": 18,
+   "key": "115-1",
+   "field": "(row)",
+   "a": null,
+   "b": "read",
+   "why": "only reader B read this row"
+  },
+  {
+   "kind": "door",
+   "page": 18,
+   "key": "116-1",
+   "field": "(row)",
+   "a": null,
+   "b": "read",
+   "why": "only reader B read this row"
+  }
+ ],
+ "ms": 3628,
+ "generated_at": "2026-10-09T10:45:07.449Z"
+}

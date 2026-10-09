@@ -1,0 +1,94 @@
+{
+ "sha16": "2628479aced915d9",
+ "sha256": "2628479aced915d90e9b23a31dc97f3ee13f5aa9141b8681b0f17e9aabe2b2f5",
+ "file": "2628479aced915d9.pdf",
+ "bytes": 900712,
+ "family": "school_district_sites",
+ "source": "harvest",
+ "label": "school_district_sites - 1435-bid-and-permit-docs-specs.pdf",
+ "source_url": "https://www.oakton.edu/_pdfs/procurement/1435-bid-and-permit-docs-specs.pdf",
+ "page_count": 142,
+ "text_layer": {
+  "pages_with_text": 141,
+  "pages": 142
+ },
+ "pages": {
+  "door_candidates": 8,
+  "hardware_candidates": 0,
+  "door_schedule_pages": [],
+  "hardware_pages": []
+ },
+ "readers": {
+  "a": {
+   "doors": 0,
+   "sets": 0,
+   "items": 0,
+   "name": "production text layer (weyland-subx-worker/src/lib/text-layer-read.js)"
+  },
+  "b": {
+   "doors": 0,
+   "sets": 0,
+   "items": 0,
+   "name": "geometry first (tools/accuracy/truth/reader_b.mjs)",
+   "tables": 0
+  }
+ },
+ "rows_agreed": 0,
+ "rows_disputed": 0,
+ "rows_total": 0,
+ "agreement_rate": null,
+ "agreement": {
+  "doors": {
+   "rows": 0,
+   "agreed": 0,
+   "disputed": 0,
+   "only_a": 0,
+   "only_b": 0,
+   "fields": {},
+   "agreement_rate": null
+  },
+  "items": {
+   "rows": 0,
+   "agreed": 0,
+   "disputed": 0,
+   "only_a": 0,
+   "only_b": 0,
+   "fields": {},
+   "agreement_rate": null
+  },
+  "sets": {
+   "sets": 0,
+   "agreed": 0
+  }
+ },
+ "triage_class": "spec-only",
+ "triage_from": "tools/corpus/harvest/triage.json",
+ "oracles": {
+  "marks_on_plan": {
+   "applicable": false,
+   "reason": "not for class spec-only"
+  },
+  "sets_exist": {
+   "applicable": false,
+   "reason": "not for class spec-only"
+  },
+  "set_door_lists": {
+   "applicable": false,
+   "reason": "not for class spec-only"
+  },
+  "types_in_legend": {
+   "applicable": false,
+   "reason": "not for class spec-only"
+  },
+  "sizes_and_marks": {
+   "applicable": false,
+   "reason": "not for class spec-only"
+  }
+ },
+ "tier": "unread",
+ "unread_reason": "no door schedule or hardware set read by either reader",
+ "disagreement_count": 0,
+ "disagreements": [],
+ "ms": 247,
+ "generated_at": "2026-10-09T10:45:27.651Z"
+}

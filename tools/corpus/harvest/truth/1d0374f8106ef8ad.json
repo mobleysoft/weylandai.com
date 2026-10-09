@@ -1,0 +1,467 @@
+{
+ "sha16": "1d0374f8106ef8ad",
+ "sha256": "1d0374f8106ef8ade38ec4ab737f6f380a2c1aaf733e143344591ea07cc79406",
+ "file": "1d0374f8106ef8ad.pdf",
+ "bytes": 14452619,
+ "family": "missouri_oa_fmdc",
+ "source": "harvest",
+ "label": "missouri_oa_fmdc - X2207-01%20Final%20specs%20-%20Volume%201.pdf",
+ "source_url": "https://oa.mo.gov/sites/default/files/bid-opportunities/X2207-01%20Final%20specs%20-%20Volume%201.pdf",
+ "page_count": 840,
+ "text_layer": {
+  "pages_with_text": 834,
+  "pages": 840
+ },
+ "pages": {
+  "door_candidates": 9,
+  "hardware_candidates": 11,
+  "door_schedule_pages": [],
+  "hardware_pages": [
+   349,
+   350,
+   351,
+   352,
+   353,
+   354,
+   355,
+   356,
+   357,
+   358,
+   359
+  ]
+ },
+ "readers": {
+  "a": {
+   "doors": 0,
+   "sets": 1,
+   "items": 238,
+   "name": "production text layer (weyland-subx-worker/src/lib/text-layer-read.js)"
+  },
+  "b": {
+   "doors": 0,
+   "sets": 31,
+   "items": 238,
+   "name": "geometry first (tools/accuracy/truth/reader_b.mjs)",
+   "tables": 0
+  }
+ },
+ "rows_agreed": 0,
+ "rows_disputed": 476,
+ "rows_total": 476,
+ "agreement_rate": 0,
+ "agreement": {
+  "doors": {
+   "rows": 0,
+   "agreed": 0,
+   "disputed": 0,
+   "only_a": 0,
+   "only_b": 0,
+   "fields": {},
+   "agreement_rate": null
+  },
+  "items": {
+   "rows": 476,
+   "agreed": 0,
+   "disputed": 0,
+   "only_a": 238,
+   "only_b": 238,
+   "fields": {},
+   "agreement_rate": 0
+  },
+  "sets": {
+   "sets": 32,
+   "agreed": 0
+  }
+ },
+ "triage_class": "spec-only",
+ "triage_from": "tools/corpus/harvest/triage.json",
+ "oracles": {
+  "marks_on_plan": {
+   "applicable": false,
+   "reason": "not for class spec-only"
+  },
+  "sets_exist": {
+   "applicable": false,
+   "reason": "not for class spec-only"
+  },
+  "set_door_lists": {
+   "applicable": false,
+   "reason": "not for class spec-only"
+  },
+  "types_in_legend": {
+   "applicable": false,
+   "reason": "not for class spec-only"
+  },
+  "sizes_and_marks": {
+   "applicable": false,
+   "reason": "not for class spec-only"
+  }
+ },
+ "tier": "unread",
+ "unread_reason": "no rows agreed and no oracle applies",
+ "disagreement_count": 508,
+ "disagreements": [
+  {
+   "kind": "item",
+   "page": 349,
+   "key": "S / T4A3386 (NRP and size as required) US10BE 16 70 PE8804 WEL (SFIC, Cyl.",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 349,
+   "key": "S / US10BE Dogging) Match Owner's Existing Small Format",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 349,
+   "key": "S / 613 Key System Construction Core - Removed when Final",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 349,
+   "key": "S / Cores are installed",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 349,
+   "key": "S / 351 CPS (HD Cush STP Arm) EB",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 349,
+   "key": "S / K1050 10\" high CSK BEV US10B 273x224-10BE-FGT MSES25SS x",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 349,
+   "key": "S / Length Required",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 349,
+   "key": "S / 303DS",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 349,
+   "key": "S / 346D x Width of Frame Head",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 349,
+   "key": "S / 3452DNB x Length Required",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 349,
+   "key": "S / T4A3386 (NRP and size as required) US10BE 16 70 PE8804 WEL (SFIC, Cyl.",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 349,
+   "key": "S / US10BE Dogging) Match Owner's Existing Small Format",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 349,
+   "key": "S / 613 Key System Construction Core - Removed when Final",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 349,
+   "key": "S / Cores are installed",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 349,
+   "key": "S / 351 CPS (HD Cush STP Arm) EB",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 349,
+   "key": "S / K1050 10\" high CSK BEV US10B 273x224-10BE-FGT MSES25SS x",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 349,
+   "key": "S / Length Required",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 349,
+   "key": "S / 303DS",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 349,
+   "key": "S / 346D x Width of Frame Head",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 349,
+   "key": "S / 3452DNB x Length Required",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 349,
+   "key": "S / T4A3386 (NRP and size as required) US10BE",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 349,
+   "key": "S / 12 70 PE8804 WEL (SFIC) US10BE Match Owner's Existing Small Format",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 349,
+   "key": "S / 613 Key System Construction Core - Removed when Final",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 349,
+   "key": "S / Cores are installed",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 349,
+   "key": "S / 351 CPS (HD Cush STP Arm) EB",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 349,
+   "key": "S / K1050 10\" high CSK BEV US10B 273x224-10BE-FGT MSES25SS x",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 349,
+   "key": "S / Length Required",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 349,
+   "key": "S / 303DS",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 349,
+   "key": "S / 346D x Width of Frame Head",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 349,
+   "key": "S / 3452DNB x Length Required",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 349,
+   "key": "S / T4A3386 (NRP and size as required) US10BE Match Owner's Existing Small Format",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 349,
+   "key": "S / 613 Key System Construction Core - Removed when Final",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 349,
+   "key": "S / Cores are installed",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 349,
+   "key": "S / MT Series RFID Mortised Lockset (SFIC) 613",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 349,
+   "key": "S / 351 UO (RA or PA Mount as Required) EB",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 349,
+   "key": "S / K1050 10\" high CSK BEV US10B",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 349,
+   "key": "S / 403 (or) 441CU (As Required) US10B",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 349,
+   "key": "S / 175-10BE MSES25SS x Length Required",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 349,
+   "key": "S / 303DS",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 349,
+   "key": "S / 346D x Width of Frame Head",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  }
+ ],
+ "ms": 2246,
+ "generated_at": "2026-10-09T10:45:18.884Z"
+}

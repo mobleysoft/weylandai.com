@@ -1,0 +1,472 @@
+{
+ "sha16": "ef4f9bfd055baa96",
+ "sha256": "ef4f9bfd055baa9644a25e2bd345f87e95e5cb7bf46981b41da1f4d1d7877cdc",
+ "file": "ef4f9bfd055baa96.pdf",
+ "bytes": 420341,
+ "family": "delaware_bidcondocs",
+ "source": "harvest",
+ "label": "delaware_bidcondocs - BSD_19001BidPac_B_specs_add1c.pdf",
+ "source_url": "https://bidcondocs.delaware.gov/BSD/BSD_19001BidPac_B_specs_add1c.pdf",
+ "page_count": 34,
+ "text_layer": {
+  "pages_with_text": 33,
+  "pages": 34
+ },
+ "pages": {
+  "door_candidates": 17,
+  "hardware_candidates": 16,
+  "door_schedule_pages": [],
+  "hardware_pages": [
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9,
+   10,
+   11,
+   12,
+   13,
+   14,
+   15,
+   16,
+   17
+  ]
+ },
+ "readers": {
+  "a": {
+   "doors": 0,
+   "sets": 2,
+   "items": 310,
+   "name": "production text layer (weyland-subx-worker/src/lib/text-layer-read.js)"
+  },
+  "b": {
+   "doors": 0,
+   "sets": 41,
+   "items": 301,
+   "name": "geometry first (tools/accuracy/truth/reader_b.mjs)",
+   "tables": 0
+  }
+ },
+ "rows_agreed": 0,
+ "rows_disputed": 611,
+ "rows_total": 611,
+ "agreement_rate": 0,
+ "agreement": {
+  "doors": {
+   "rows": 0,
+   "agreed": 0,
+   "disputed": 0,
+   "only_a": 0,
+   "only_b": 0,
+   "fields": {},
+   "agreement_rate": null
+  },
+  "items": {
+   "rows": 611,
+   "agreed": 0,
+   "disputed": 0,
+   "only_a": 310,
+   "only_b": 301,
+   "fields": {},
+   "agreement_rate": 0
+  },
+  "sets": {
+   "sets": 42,
+   "agreed": 0
+  }
+ },
+ "triage_class": "none",
+ "triage_from": "tools/corpus/harvest/triage.json",
+ "oracles": {
+  "marks_on_plan": {
+   "applicable": false,
+   "reason": "not for class none"
+  },
+  "sets_exist": {
+   "applicable": false,
+   "reason": "not for class none"
+  },
+  "set_door_lists": {
+   "applicable": false,
+   "reason": "not for class none"
+  },
+  "types_in_legend": {
+   "applicable": false,
+   "reason": "not for class none"
+  },
+  "sizes_and_marks": {
+   "applicable": false,
+   "reason": "not for class none"
+  }
+ },
+ "tier": "unread",
+ "unread_reason": "no rows agreed and no oracle applies",
+ "disagreement_count": 653,
+ "disagreements": [
+  {
+   "kind": "item",
+   "page": 2,
+   "key": "(CONTINUED) / HARDWARE SCHEDULE",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 2,
+   "key": "(CONTINUED) / Hinges BB1279 4.5” x 4.5” NRP",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 2,
+   "key": "(CONTINUED) / Classroom Intruder Lock L9071R 06A",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 2,
+   "key": "(CONTINUED) / Core Match Existing System",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 2,
+   "key": "(CONTINUED) / Kick Plate 190S 10” x 2” LDW",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 2,
+   "key": "(CONTINUED) / Floor Stop/Holder 327W",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 2,
+   "key": "(CONTINUED) / Gasket 726 head and jambs",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 2,
+   "key": "(CONTINUED) / Hinges BB1279 4.5” x 4.5” NRP",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 2,
+   "key": "(CONTINUED) / Classroom Intruder Lock L9071R 06A",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 2,
+   "key": "(CONTINUED) / Core Match Existing System",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 2,
+   "key": "(CONTINUED) / O.H. Holder 7017 SRF",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 2,
+   "key": "(CONTINUED) / Kick Plate 190S 10” x 2” LDW",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 2,
+   "key": "(CONTINUED) / Gasket 726 head and jambs",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 2,
+   "key": "(CONTINUED) / - 2",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 2,
+   "key": "(CONTINUED) / Hinges BB1279 4.5” x 4.5” NRP",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 2,
+   "key": "(CONTINUED) / Classroom Intruder Lock L9071R 06A",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 2,
+   "key": "(CONTINUED) / Core Match Existing System",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 2,
+   "key": "(CONTINUED) / Kick Plate 190S 10” x 2” LDW",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 2,
+   "key": "(CONTINUED) / Wall Stop 236W",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 2,
+   "key": "(CONTINUED) / Gasket 726 head and jambs",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 2,
+   "key": "(CONTINUED) / Hinges BB1279 4.5” x 4.5” NRP",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 2,
+   "key": "(CONTINUED) / Classroom Intruder Lock L9071R 06A",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 2,
+   "key": "(CONTINUED) / Core Match Existing System",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 2,
+   "key": "(CONTINUED) / Closer 4000",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 2,
+   "key": "(CONTINUED) / Kick Plate 190S 10” x 2” LDW",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 2,
+   "key": "(CONTINUED) / Wall Stop 236W",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 2,
+   "key": "(CONTINUED) / Gasket 726 head and jambs",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 3,
+   "key": "3A / Hinges BB1279 4.5” x 4.5” NRP",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 3,
+   "key": "3A / Surface Bolt 275D",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 3,
+   "key": "3A / Classroom Intruder Lock L9071R 06A",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 3,
+   "key": "3A / Core Match Existing System",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 3,
+   "key": "3A / Closer 4111 CUSH",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 3,
+   "key": "3A / O.H. Holder 7016 SRF (Inactive leaf)",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 3,
+   "key": "3A / Kick Plate 190S 10” x 1” LDW",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 3,
+   "key": "3A / Threshold 412S door opening width",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 3,
+   "key": "3A / Sound Gasket 726 head and jambs",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 3,
+   "key": "3A / Sound Gasket 722 Meeting stiles at astragal",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 3,
+   "key": "3A / Concealed Auto. Door Bottoms 730S N door width",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 3,
+   "key": "3A / Astragal 835S door height",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 3,
+   "key": "3A / Hinges BB1279 4.5” x 4.5” NRP",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  }
+ ],
+ "ms": 496,
+ "generated_at": "2026-10-09T10:49:35.142Z"
+}

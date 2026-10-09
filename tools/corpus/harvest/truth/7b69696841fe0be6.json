@@ -1,0 +1,458 @@
+{
+ "sha16": "7b69696841fe0be6",
+ "sha256": "7b69696841fe0be693a24d70eba692e508f1bcc4cb5e2f5e23a05c45600dd083",
+ "file": "7b69696841fe0be6.pdf",
+ "bytes": 6488348,
+ "family": "delaware_bidcondocs",
+ "source": "harvest",
+ "label": "delaware_bidcondocs - RCCD_1501(A)Warner_Add2.pdf",
+ "source_url": "https://bidcondocs.delaware.gov/RCCD/RCCD_1501(A)Warner_Add2.pdf",
+ "page_count": 530,
+ "text_layer": {
+  "pages_with_text": 458,
+  "pages": 530
+ },
+ "pages": {
+  "door_candidates": 10,
+  "hardware_candidates": 2,
+  "door_schedule_pages": [],
+  "hardware_pages": [
+   280,
+   281
+  ]
+ },
+ "readers": {
+  "a": {
+   "doors": 0,
+   "sets": 1,
+   "items": 38,
+   "name": "production text layer (weyland-subx-worker/src/lib/text-layer-read.js)"
+  },
+  "b": {
+   "doors": 0,
+   "sets": 5,
+   "items": 38,
+   "name": "geometry first (tools/accuracy/truth/reader_b.mjs)",
+   "tables": 0
+  }
+ },
+ "rows_agreed": 0,
+ "rows_disputed": 76,
+ "rows_total": 76,
+ "agreement_rate": 0,
+ "agreement": {
+  "doors": {
+   "rows": 0,
+   "agreed": 0,
+   "disputed": 0,
+   "only_a": 0,
+   "only_b": 0,
+   "fields": {},
+   "agreement_rate": null
+  },
+  "items": {
+   "rows": 76,
+   "agreed": 0,
+   "disputed": 0,
+   "only_a": 38,
+   "only_b": 38,
+   "fields": {},
+   "agreement_rate": 0
+  },
+  "sets": {
+   "sets": 6,
+   "agreed": 0
+  }
+ },
+ "triage_class": "none",
+ "triage_from": "tools/corpus/harvest/triage.json",
+ "oracles": {
+  "marks_on_plan": {
+   "applicable": false,
+   "reason": "not for class none"
+  },
+  "sets_exist": {
+   "applicable": false,
+   "reason": "not for class none"
+  },
+  "set_door_lists": {
+   "applicable": false,
+   "reason": "not for class none"
+  },
+  "types_in_legend": {
+   "applicable": false,
+   "reason": "not for class none"
+  },
+  "sizes_and_marks": {
+   "applicable": false,
+   "reason": "not for class none"
+  }
+ },
+ "tier": "unread",
+ "unread_reason": "no rows agreed and no oracle applies",
+ "disagreement_count": 82,
+ "disagreements": [
+  {
+   "kind": "item",
+   "page": 280,
+   "key": "(CONTINUED) / Hinge 5BB1HW NRP",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 280,
+   "key": "(CONTINUED) / Exit Device 98L-NL 06",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 280,
+   "key": "(CONTINUED) / Trim VR910",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 280,
+   "key": "(CONTINUED) / Cylinder Schlage Primus",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 280,
+   "key": "(CONTINUED) / Closer 4040 XP 3049 CNS",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 280,
+   "key": "(CONTINUED) / Kick Plate 8400 10\" x 2\" LDW",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 280,
+   "key": "(CONTINUED) / Gasket 5050",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 280,
+   "key": "(CONTINUED) / Threshold 896",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 280,
+   "key": "(CONTINUED) / Continuous Hinges 224 HD",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 280,
+   "key": "(CONTINUED) / Exit Device 98L-NL 06",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 280,
+   "key": "(CONTINUED) / Trim VR910",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 280,
+   "key": "(CONTINUED) / Cylinder Schlage Primus",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 280,
+   "key": "(CONTINUED) / Removable Mullion 9954",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 280,
+   "key": "(CONTINUED) / Closer 4040 XP 3049 CNS",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 280,
+   "key": "(CONTINUED) / Kick Plate 8400 10\" x 2\" LDW",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 280,
+   "key": "(CONTINUED) / Gasket 5050",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 280,
+   "key": "(CONTINUED) / Exit Device 98L-NL 06",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 280,
+   "key": "(CONTINUED) / Trim VR910",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 280,
+   "key": "(CONTINUED) / Cylinder Schlage Primus",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 280,
+   "key": "(CONTINUED) / Closer 4040 XP 3049 CNS",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 280,
+   "key": "(CONTINUED) / Kick Plate 8400 10\" x 2\" LDW",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 280,
+   "key": "(CONTINUED) / Gasket 5050",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 280,
+   "key": "(CONTINUED) / Continuous Hinge 780-224HD",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 280,
+   "key": "(CONTINUED) / Exit Device 98L-NL 06",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 280,
+   "key": "(CONTINUED) / Trim VR910",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 280,
+   "key": "(CONTINUED) / Cylinder Schlage Primus",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 280,
+   "key": "(CONTINUED) / Removable Mullion 5654",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 280,
+   "key": "(CONTINUED) / Closer 4040 XP 3049 CNS",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 280,
+   "key": "(CONTINUED) / Gasket 5050",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 280,
+   "key": "(CONTINUED) / Threshold 896",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 280,
+   "key": "(CONTINUED) / Sweep 627",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 280,
+   "key": "(CONTINUED) / Continuous Hinge 780-224HD",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 280,
+   "key": "(CONTINUED) / Exit Device 98L-NL 06",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 280,
+   "key": "(CONTINUED) / Trim VR910",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 280,
+   "key": "(CONTINUED) / Cylinder Schlage Primus",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 280,
+   "key": "(CONTINUED) / Closer 4040 XP 3049 CNS",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 280,
+   "key": "(CONTINUED) / Gasket 5050",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 280,
+   "key": "(CONTINUED) / Sweep 627",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 280,
+   "key": "1 / 5BB1HW NRP",
+   "field": "(row)",
+   "a": null,
+   "b": "read",
+   "why": "only reader B read this row"
+  },
+  {
+   "kind": "item",
+   "page": 280,
+   "key": "1 / 98L-NL 06",
+   "field": "(row)",
+   "a": null,
+   "b": "read",
+   "why": "only reader B read this row"
+  }
+ ],
+ "ms": 1222,
+ "generated_at": "2026-10-09T10:47:23.834Z"
+}

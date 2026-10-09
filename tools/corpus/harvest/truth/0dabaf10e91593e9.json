@@ -1,0 +1,131 @@
+{
+ "sha16": "0dabaf10e91593e9",
+ "sha256": "0dabaf10e91593e96812565291fde696a51b21498428f8e33cabc4d919f39763",
+ "file": "0dabaf10e91593e9.pdf",
+ "bytes": 45639298,
+ "family": "missouri_oa_fmdc",
+ "source": "harvest",
+ "label": "missouri_oa_fmdc - _X2528-01%20-%20Final%20Plans.pdf",
+ "source_url": "https://oa.mo.gov/sites/default/files/bid-opportunities/_X2528-01%20-%20Final%20Plans.pdf",
+ "page_count": 36,
+ "text_layer": {
+  "pages_with_text": 36,
+  "pages": 36
+ },
+ "pages": {
+  "door_candidates": 3,
+  "hardware_candidates": 0,
+  "door_schedule_pages": [
+   18
+  ],
+  "hardware_pages": []
+ },
+ "readers": {
+  "a": {
+   "doors": 18,
+   "sets": 0,
+   "items": 0,
+   "name": "production text layer (weyland-subx-worker/src/lib/text-layer-read.js)"
+  },
+  "b": {
+   "doors": 18,
+   "sets": 0,
+   "items": 0,
+   "name": "geometry first (tools/accuracy/truth/reader_b.mjs)",
+   "tables": 1
+  }
+ },
+ "rows_agreed": 18,
+ "rows_disputed": 0,
+ "rows_total": 18,
+ "agreement_rate": 1,
+ "agreement": {
+  "doors": {
+   "rows": 18,
+   "agreed": 18,
+   "disputed": 0,
+   "only_a": 0,
+   "only_b": 0,
+   "fields": {
+    "width_inches": {
+     "agree": 18,
+     "total": 18
+    },
+    "height_inches": {
+     "agree": 18,
+     "total": 18
+    },
+    "door_type": {
+     "agree": 18,
+     "total": 18
+    },
+    "material": {
+     "agree": 18,
+     "total": 18
+    },
+    "hardware_group": {
+     "agree": 18,
+     "total": 18
+    }
+   },
+   "agreement_rate": 1
+  },
+  "items": {
+   "rows": 0,
+   "agreed": 0,
+   "disputed": 0,
+   "only_a": 0,
+   "only_b": 0,
+   "fields": {},
+   "agreement_rate": null
+  },
+  "sets": {
+   "sets": 0,
+   "agreed": 0
+  }
+ },
+ "triage_class": "schedule-only",
+ "triage_from": "inferred (S=true H=false plan sheets=0)",
+ "oracles": {
+  "marks_on_plan": {
+   "applicable": false,
+   "reason": "no floor plan sheet found in this PDF (title blocks)",
+   "plan_counts": {
+    "plan_sheets": 0,
+    "rooms": 0,
+    "corridors": 0,
+    "tags": 0,
+    "unmatched_tags": 0,
+    "schedule_marks": 18,
+    "marks_not_on_plan": 18
+   }
+  },
+  "sets_exist": {
+   "applicable": false,
+   "reason": "not for class schedule-only"
+  },
+  "set_door_lists": {
+   "applicable": false,
+   "reason": "not for class schedule-only"
+  },
+  "types_in_legend": {
+   "applicable": false,
+   "reason": "no DOOR TYPES / FRAME TYPES legend title in this PDF"
+  },
+  "sizes_and_marks": {
+   "applicable": true,
+   "total": 18,
+   "pass": 18,
+   "fail": 0,
+   "pass_rate": 1,
+   "examples": [],
+   "size_fail": 0,
+   "mark_fail": 0
+  }
+ },
+ "tier": "agreed",
+ "disagreement_count": 0,
+ "disagreements": [],
+ "ms": 4450,
+ "generated_at": "2026-10-09T10:44:53.120Z"
+}

@@ -1,0 +1,403 @@
+{
+ "sha16": "3f4359137b47a5f0",
+ "sha256": "3f4359137b47a5f003cbdbbd31cf14ce4e5e1e82da1f5b17949f9190eb3db3df",
+ "file": "3f4359137b47a5f0.pdf",
+ "bytes": 11634870,
+ "family": "missouri_oa_fmdc",
+ "source": "harvest",
+ "label": "missouri_oa_fmdc - R2502-01%20REBID%20MSHP%20Dorm%20Renovations%20ADD%201.pdf",
+ "source_url": "https://oa.mo.gov/sites/default/files/bid-opportunities/R2502-01%20REBID%20MSHP%20Dorm%20Renovations%20ADD%201.pdf",
+ "page_count": 24,
+ "text_layer": {
+  "pages_with_text": 16,
+  "pages": 24
+ },
+ "pages": {
+  "door_candidates": 2,
+  "hardware_candidates": 2,
+  "door_schedule_pages": [],
+  "hardware_pages": [
+   1
+  ]
+ },
+ "readers": {
+  "a": {
+   "doors": 0,
+   "sets": 1,
+   "items": 16,
+   "name": "production text layer (weyland-subx-worker/src/lib/text-layer-read.js)"
+  },
+  "b": {
+   "doors": 0,
+   "sets": 1,
+   "items": 16,
+   "name": "geometry first (tools/accuracy/truth/reader_b.mjs)",
+   "tables": 0
+  }
+ },
+ "rows_agreed": 0,
+ "rows_disputed": 32,
+ "rows_total": 32,
+ "agreement_rate": 0,
+ "agreement": {
+  "doors": {
+   "rows": 0,
+   "agreed": 0,
+   "disputed": 0,
+   "only_a": 0,
+   "only_b": 0,
+   "fields": {},
+   "agreement_rate": null
+  },
+  "items": {
+   "rows": 32,
+   "agreed": 0,
+   "disputed": 0,
+   "only_a": 16,
+   "only_b": 16,
+   "fields": {},
+   "agreement_rate": 0
+  },
+  "sets": {
+   "sets": 2,
+   "agreed": 0
+  }
+ },
+ "triage_class": "spec-only",
+ "triage_from": "tools/corpus/harvest/triage.json",
+ "oracles": {
+  "marks_on_plan": {
+   "applicable": false,
+   "reason": "not for class spec-only"
+  },
+  "sets_exist": {
+   "applicable": false,
+   "reason": "not for class spec-only"
+  },
+  "set_door_lists": {
+   "applicable": false,
+   "reason": "not for class spec-only"
+  },
+  "types_in_legend": {
+   "applicable": false,
+   "reason": "not for class spec-only"
+  },
+  "sizes_and_marks": {
+   "applicable": false,
+   "reason": "not for class spec-only"
+  }
+ },
+ "tier": "unread",
+ "unread_reason": "no rows agreed and no oracle applies",
+ "disagreement_count": 34,
+ "disagreements": [
+  {
+   "kind": "item",
+   "page": 1,
+   "key": "1.01A / 5BB1HW 4.5 X 4.5",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 1,
+   "key": "1.01A / F-24-R-NL-OP",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 1,
+   "key": "1.01A / AS REQ'D",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 1,
+   "key": "1.01A / AS REQ'D",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 1,
+   "key": "1.01A / AS REQ'D",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 1,
+   "key": "1.01A / 6211AL FSE CON 12/16/24/28 VAC/VDC",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 1,
+   "key": "1.01A / 8190EZHD 12\" O",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 1,
+   "key": "1.01A / SC71A SS",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 1,
+   "key": "1.01A / 142AA",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 1,
+   "key": "1.01A / 328AA-S",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 1,
+   "key": "1.01A / 39A",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 1,
+   "key": "1.01A / 655A-223",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 1,
+   "key": "1.01A / CON-6W",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 1,
+   "key": "1.01A / 679-05",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 1,
+   "key": "1.01A / PS902 900-2RS",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 1,
+   "key": "1.01A / AS REQUIRED",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 1,
+   "key": "1 / 5BB1HW 4.5 X 4.5",
+   "field": "(row)",
+   "a": null,
+   "b": "read",
+   "why": "only reader B read this row"
+  },
+  {
+   "kind": "item",
+   "page": 1,
+   "key": "1 / F-24-R-NL-OP",
+   "field": "(row)",
+   "a": null,
+   "b": "read",
+   "why": "only reader B read this row"
+  },
+  {
+   "kind": "item",
+   "page": 1,
+   "key": "1 / AS REQ'D",
+   "field": "(row)",
+   "a": null,
+   "b": "read",
+   "why": "only reader B read this row"
+  },
+  {
+   "kind": "item",
+   "page": 1,
+   "key": "1 / AS REQ'D",
+   "field": "(row)",
+   "a": null,
+   "b": "read",
+   "why": "only reader B read this row"
+  },
+  {
+   "kind": "item",
+   "page": 1,
+   "key": "1 / AS REQ'D",
+   "field": "(row)",
+   "a": null,
+   "b": "read",
+   "why": "only reader B read this row"
+  },
+  {
+   "kind": "item",
+   "page": 1,
+   "key": "1 / 6211AL FSE CON 12/16/24/28 VAC/VDC",
+   "field": "(row)",
+   "a": null,
+   "b": "read",
+   "why": "only reader B read this row"
+  },
+  {
+   "kind": "item",
+   "page": 1,
+   "key": "1 / 8190EZHD 12\" O",
+   "field": "(row)",
+   "a": null,
+   "b": "read",
+   "why": "only reader B read this row"
+  },
+  {
+   "kind": "item",
+   "page": 1,
+   "key": "1 / SC71A SS",
+   "field": "(row)",
+   "a": null,
+   "b": "read",
+   "why": "only reader B read this row"
+  },
+  {
+   "kind": "item",
+   "page": 1,
+   "key": "1 / 142AA",
+   "field": "(row)",
+   "a": null,
+   "b": "read",
+   "why": "only reader B read this row"
+  },
+  {
+   "kind": "item",
+   "page": 1,
+   "key": "1 / 328AA-S",
+   "field": "(row)",
+   "a": null,
+   "b": "read",
+   "why": "only reader B read this row"
+  },
+  {
+   "kind": "item",
+   "page": 1,
+   "key": "1 / 39A",
+   "field": "(row)",
+   "a": null,
+   "b": "read",
+   "why": "only reader B read this row"
+  },
+  {
+   "kind": "item",
+   "page": 1,
+   "key": "1 / 655A-223",
+   "field": "(row)",
+   "a": null,
+   "b": "read",
+   "why": "only reader B read this row"
+  },
+  {
+   "kind": "item",
+   "page": 1,
+   "key": "1 / CON-6W",
+   "field": "(row)",
+   "a": null,
+   "b": "read",
+   "why": "only reader B read this row"
+  },
+  {
+   "kind": "item",
+   "page": 1,
+   "key": "1 / 679-05",
+   "field": "(row)",
+   "a": null,
+   "b": "read",
+   "why": "only reader B read this row"
+  },
+  {
+   "kind": "item",
+   "page": 1,
+   "key": "1 / PS902 900-2RS",
+   "field": "(row)",
+   "a": null,
+   "b": "read",
+   "why": "only reader B read this row"
+  },
+  {
+   "kind": "item",
+   "page": 1,
+   "key": "1 / AS REQUIRED",
+   "field": "(row)",
+   "a": null,
+   "b": "read",
+   "why": "only reader B read this row"
+  },
+  {
+   "kind": "group",
+   "page": null,
+   "key": "1.01A",
+   "field": "(set)",
+   "a": "130A",
+   "b": null,
+   "why": "only reader A read this set"
+  },
+  {
+   "kind": "group",
+   "page": null,
+   "key": "1",
+   "field": "(set)",
+   "a": null,
+   "b": "130A",
+   "why": "only reader B read this set"
+  }
+ ],
+ "ms": 250,
+ "generated_at": "2026-10-09T10:45:49.538Z"
+}

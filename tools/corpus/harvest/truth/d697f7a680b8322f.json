@@ -1,0 +1,94 @@
+{
+ "sha16": "d697f7a680b8322f",
+ "sha256": "d697f7a680b8322f9feeb8fd368f0ca6ecb6f89d1e2f352959308bc20194b769",
+ "file": "d697f7a680b8322f.pdf",
+ "bytes": 8604070,
+ "family": "school_district_sites",
+ "source": "harvest",
+ "label": "school_district_sites - 241012-EASD-EAHS-2025-Mechanical-Specifications-09052024.pdf",
+ "source_url": "https://resources.finalsite.net/images/v1779093915/d131org/ptygv8m8czjafutlkhhd/241012-EASD-EAHS-2025-Mechanical-Specifications-09052024.pdf",
+ "page_count": 908,
+ "text_layer": {
+  "pages_with_text": 839,
+  "pages": 908
+ },
+ "pages": {
+  "door_candidates": 0,
+  "hardware_candidates": 0,
+  "door_schedule_pages": [],
+  "hardware_pages": []
+ },
+ "readers": {
+  "a": {
+   "doors": 0,
+   "sets": 0,
+   "items": 0,
+   "name": "production text layer (weyland-subx-worker/src/lib/text-layer-read.js)"
+  },
+  "b": {
+   "doors": 0,
+   "sets": 0,
+   "items": 0,
+   "name": "geometry first (tools/accuracy/truth/reader_b.mjs)",
+   "tables": 0
+  }
+ },
+ "rows_agreed": 0,
+ "rows_disputed": 0,
+ "rows_total": 0,
+ "agreement_rate": null,
+ "agreement": {
+  "doors": {
+   "rows": 0,
+   "agreed": 0,
+   "disputed": 0,
+   "only_a": 0,
+   "only_b": 0,
+   "fields": {},
+   "agreement_rate": null
+  },
+  "items": {
+   "rows": 0,
+   "agreed": 0,
+   "disputed": 0,
+   "only_a": 0,
+   "only_b": 0,
+   "fields": {},
+   "agreement_rate": null
+  },
+  "sets": {
+   "sets": 0,
+   "agreed": 0
+  }
+ },
+ "triage_class": "none",
+ "triage_from": "tools/corpus/harvest/triage.json",
+ "oracles": {
+  "marks_on_plan": {
+   "applicable": false,
+   "reason": "not for class none"
+  },
+  "sets_exist": {
+   "applicable": false,
+   "reason": "not for class none"
+  },
+  "set_door_lists": {
+   "applicable": false,
+   "reason": "not for class none"
+  },
+  "types_in_legend": {
+   "applicable": false,
+   "reason": "not for class none"
+  },
+  "sizes_and_marks": {
+   "applicable": false,
+   "reason": "not for class none"
+  }
+ },
+ "tier": "unread",
+ "unread_reason": "no door schedule or hardware set read by either reader",
+ "disagreement_count": 0,
+ "disagreements": [],
+ "ms": 2069,
+ "generated_at": "2026-10-09T10:48:48.505Z"
+}

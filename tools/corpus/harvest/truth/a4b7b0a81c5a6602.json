@@ -1,0 +1,478 @@
+{
+ "sha16": "a4b7b0a81c5a6602",
+ "sha256": "a4b7b0a81c5a6602506b44e81baf18866d492adea8982830c3a9c229874d68af",
+ "file": "a4b7b0a81c5a6602.pdf",
+ "bytes": 17033105,
+ "family": "missouri_oa_fmdc",
+ "source": "harvest",
+ "label": "missouri_oa_fmdc - _R2405-01%20Final%20Bid%20Plans.pdf",
+ "source_url": "https://oa.mo.gov/sites/default/files/bid-opportunities/_R2405-01%20Final%20Bid%20Plans.pdf",
+ "page_count": 24,
+ "text_layer": {
+  "pages_with_text": 24,
+  "pages": 24
+ },
+ "pages": {
+  "door_candidates": 2,
+  "hardware_candidates": 1,
+  "door_schedule_pages": [
+   15,
+   16
+  ],
+  "hardware_pages": [
+   20
+  ]
+ },
+ "readers": {
+  "a": {
+   "doors": 14,
+   "sets": 2,
+   "items": 16,
+   "name": "production text layer (weyland-subx-worker/src/lib/text-layer-read.js)"
+  },
+  "b": {
+   "doors": 0,
+   "sets": 2,
+   "items": 14,
+   "name": "geometry first (tools/accuracy/truth/reader_b.mjs)",
+   "tables": 0
+  }
+ },
+ "rows_agreed": 0,
+ "rows_disputed": 30,
+ "rows_total": 30,
+ "agreement_rate": 0,
+ "agreement": {
+  "doors": {
+   "rows": 14,
+   "agreed": 0,
+   "disputed": 0,
+   "only_a": 14,
+   "only_b": 0,
+   "fields": {},
+   "agreement_rate": 0
+  },
+  "items": {
+   "rows": 16,
+   "agreed": 0,
+   "disputed": 14,
+   "only_a": 2,
+   "only_b": 0,
+   "fields": {
+    "qty": {
+     "agree": 14,
+     "total": 14
+    },
+    "description": {
+     "agree": 14,
+     "total": 14
+    },
+    "catalog": {
+     "agree": 0,
+     "total": 14
+    },
+    "manufacturer": {
+     "agree": 0,
+     "total": 14
+    },
+    "finish": {
+     "agree": 0,
+     "total": 1
+    }
+   },
+   "agreement_rate": 0
+  },
+  "sets": {
+   "sets": 2,
+   "agreed": 2
+  }
+ },
+ "triage_class": "complete",
+ "triage_from": "tools/corpus/harvest/triage.json",
+ "oracles": {
+  "marks_on_plan": {
+   "applicable": false,
+   "reason": "no floor plan sheet found in this PDF (title blocks)",
+   "plan_counts": {
+    "plan_sheets": 0,
+    "rooms": 0,
+    "corridors": 0,
+    "tags": 0,
+    "unmatched_tags": 0,
+    "schedule_marks": 14,
+    "marks_not_on_plan": 14
+   }
+  },
+  "sets_exist": {
+   "applicable": true,
+   "total": 3,
+   "pass": 1,
+   "fail": 2,
+   "pass_rate": 0.3333,
+   "examples": [
+    "schedule set 01 not in 08 71 00 (sets read: (CONTINUED), 3)",
+    "schedule set 02 not in 08 71 00 (sets read: (CONTINUED), 3)"
+   ]
+  },
+  "set_door_lists": {
+   "applicable": false,
+   "reason": "no hardware set prints its own door list"
+  },
+  "types_in_legend": {
+   "applicable": false,
+   "reason": "no DOOR TYPES / FRAME TYPES legend title in this PDF"
+  },
+  "sizes_and_marks": {
+   "applicable": true,
+   "total": 14,
+   "pass": 14,
+   "fail": 0,
+   "pass_rate": 1,
+   "examples": [],
+   "size_fail": 0,
+   "mark_fail": 0
+  }
+ },
+ "tier": "oracle-checked",
+ "disagreement_count": 45,
+ "disagreements": [
+  {
+   "kind": "door",
+   "page": 15,
+   "key": "1",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "door",
+   "page": 15,
+   "key": "2",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "door",
+   "page": 15,
+   "key": "3",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "door",
+   "page": 15,
+   "key": "4",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "door",
+   "page": 15,
+   "key": "5",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "door",
+   "page": 15,
+   "key": "6",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "door",
+   "page": 15,
+   "key": "7",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "door",
+   "page": 16,
+   "key": "1",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "door",
+   "page": 16,
+   "key": "2",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "door",
+   "page": 16,
+   "key": "3",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "door",
+   "page": 16,
+   "key": "4",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "door",
+   "page": 16,
+   "key": "5",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "door",
+   "page": 16,
+   "key": "6",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "door",
+   "page": 16,
+   "key": "7",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 20,
+   "key": "(CONTINUED) / 112XY",
+   "field": "catalog",
+   "a": "112XY",
+   "b": "112XY US28 IVE A) Materials:"
+  },
+  {
+   "kind": "item",
+   "page": 20,
+   "key": "(CONTINUED) / 112XY",
+   "field": "manufacturer",
+   "a": "US28 IVE A) MATERIALS:",
+   "b": null
+  },
+  {
+   "kind": "item",
+   "page": 20,
+   "key": "(CONTINUED) / AS REQ'D",
+   "field": "catalog",
+   "a": "AS REQ'D",
+   "b": "AS REQ'D 626 SCH All paint shall be as manufactured by Pratt & Lambert, Sherwin Williams"
+  },
+  {
+   "kind": "item",
+   "page": 20,
+   "key": "(CONTINUED) / AS REQ'D",
+   "field": "manufacturer",
+   "a": "626 SCH ALL PAINT SHALL BE AS MANUFACTURED BY PRATT & LAMBERT, SHERWIN WILLIAMS",
+   "b": null
+  },
+  {
+   "kind": "item",
+   "page": 20,
+   "key": "(CONTINUED) / PERMANENT CORE AS REQ'D",
+   "field": "catalog",
+   "a": "PERMANENT CORE AS REQ'D",
+   "b": "PERMANENT CORE AS REQ'D BYO delivered to the worksite in the original sealed containers."
+  },
+  {
+   "kind": "item",
+   "page": 20,
+   "key": "(CONTINUED) / PERMANENT CORE AS REQ'D",
+   "field": "manufacturer",
+   "a": "BYO DELIVERED TO THE WORKSITE IN THE ORIGINAL SEALED CONTAINERS",
+   "b": null
+  },
+  {
+   "kind": "item",
+   "page": 20,
+   "key": "(CONTINUED) / 142AA",
+   "field": "catalog",
+   "a": "142AA",
+   "b": "142AA AA ZER Colors shall be as selected by the Architect from color cards furnished by"
+  },
+  {
+   "kind": "item",
+   "page": 20,
+   "key": "(CONTINUED) / 142AA",
+   "field": "manufacturer",
+   "a": "AA ZER COLORS SHALL BE AS SELECTED BY THE ARCHITECT FROM COLOR CARDS FURNISHED BY",
+   "b": null
+  },
+  {
+   "kind": "item",
+   "page": 20,
+   "key": "(CONTINUED) / 328AA-S",
+   "field": "catalog",
+   "a": "328AA-S",
+   "b": "328AA-S AA ZER the Contractor. Tinting and mixing done in strict accordance with the"
+  },
+  {
+   "kind": "item",
+   "page": 20,
+   "key": "(CONTINUED) / 328AA-S",
+   "field": "manufacturer",
+   "a": "AA ZER THE CONTRACTOR. TINTING AND MIXING DONE IN STRICT ACCORDANCE WITH THE",
+   "b": null
+  },
+  {
+   "kind": "item",
+   "page": 20,
+   "key": "(CONTINUED) / 39A",
+   "field": "catalog",
+   "a": "39A",
+   "b": "39A A ZER manufacturer's specifications and recommendations."
+  },
+  {
+   "kind": "item",
+   "page": 20,
+   "key": "(CONTINUED) / 39A",
+   "field": "manufacturer",
+   "a": "A ZER MANUFACTURER'S SPECIFICATIONS AND RECOMMENDATIONS",
+   "b": null
+  },
+  {
+   "kind": "item",
+   "page": 20,
+   "key": "(CONTINUED) / CON-6W",
+   "field": "catalog",
+   "a": "CON-6W",
+   "b": "CON-6W SCH C) Preparation:"
+  },
+  {
+   "kind": "item",
+   "page": 20,
+   "key": "(CONTINUED) / CON-6W",
+   "field": "manufacturer",
+   "a": "SCH C) PREPARATION:",
+   "b": null
+  },
+  {
+   "kind": "item",
+   "page": 20,
+   "key": "(CONTINUED) / gauge steel with no visible seams on either face. Welds on 2\" centers",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 20,
+   "key": "(CONTINUED) / CD-25-R-NL-OP",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 20,
+   "key": "(CONTINUED) / CONST./DISP.",
+   "field": "catalog",
+   "a": "CONST./DISP.",
+   "b": "CONST./DISP. grease before applying paint. Rust and scale shall be wire brushed and"
+  },
+  {
+   "kind": "item",
+   "page": 20,
+   "key": "(CONTINUED) / CONST./DISP.",
+   "field": "manufacturer",
+   "a": "GREASE BEFORE APPLYING PAINT. RUST AND SCALE SHALL BE WIRE BRUSHED AND",
+   "b": null
+  },
+  {
+   "kind": "item",
+   "page": 20,
+   "key": "(CONTINUED) / 8190EZHD 12\" O",
+   "field": "catalog",
+   "a": "8190EZHD 12\" O",
+   "b": "8190EZHD 12\" O 630-316 IVE metal surfaces shall be chemically treated with a compound designed for"
+  },
+  {
+   "kind": "item",
+   "page": 20,
+   "key": "(CONTINUED) / 8190EZHD 12\" O",
+   "field": "manufacturer",
+   "a": "630-316 IVE METAL SURFACES SHALL BE CHEMICALLY TREATED WITH A COMPOUND DESIGNED FOR",
+   "b": null
+  },
+  {
+   "kind": "item",
+   "page": 20,
+   "key": "(CONTINUED) / 8400 10\" X 2\" LDW B-CS",
+   "field": "catalog",
+   "a": "8400 10\" X 2\" LDW B-CS",
+   "b": "8400 10\" X 2\" LDW B-CS BLK IVE before applying the first coat of paint."
+  },
+  {
+   "kind": "item",
+   "page": 20,
+   "key": "(CONTINUED) / 8400 10\" X 2\" LDW B-CS",
+   "field": "manufacturer",
+   "a": "BLK IVE BEFORE APPLYING THE FIRST COAT OF PAINT",
+   "b": null
+  },
+  {
+   "kind": "item",
+   "page": 20,
+   "key": "(CONTINUED) / 142AA",
+   "field": "catalog",
+   "a": "142AA",
+   "b": "142AA AA ZER"
+  },
+  {
+   "kind": "item",
+   "page": 20,
+   "key": "(CONTINUED) / 142AA",
+   "field": "manufacturer",
+   "a": "AA ZER",
+   "b": null
+  },
+  {
+   "kind": "item",
+   "page": 20,
+   "key": "(CONTINUED) / 328AA-S",
+   "field": "catalog",
+   "a": "328AA-S",
+   "b": "328AA-S AA ZER D) Application:"
+  },
+  {
+   "kind": "item",
+   "page": 20,
+   "key": "(CONTINUED) / 328AA-S",
+   "field": "manufacturer",
+   "a": "AA ZER D) APPLICATION:",
+   "b": null
+  }
+ ],
+ "ms": 2686,
+ "generated_at": "2026-10-09T10:47:58.607Z"
+}

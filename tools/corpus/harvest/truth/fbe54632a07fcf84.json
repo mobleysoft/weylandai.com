@@ -1,0 +1,94 @@
+{
+ "sha16": "fbe54632a07fcf84",
+ "sha256": "fbe54632a07fcf8429799065b3deda7fcbf796fa6973d08beeccc779de98a69b",
+ "file": "fbe54632a07fcf84.pdf",
+ "bytes": 6370537,
+ "family": "school_district_sites",
+ "source": "harvest",
+ "label": "school_district_sites - 25007_PSDSouthHigh_BidPermit__20251114_AddendumONE.pdf",
+ "source_url": "https://resources.finalsite.net/images/v1763152380/parkwayschoolsnet/tn056ycqlf8859jvebxo/25007_PSDSouthHigh_BidPermit__20251114_AddendumONE.pdf",
+ "page_count": 114,
+ "text_layer": {
+  "pages_with_text": 95,
+  "pages": 114
+ },
+ "pages": {
+  "door_candidates": 1,
+  "hardware_candidates": 0,
+  "door_schedule_pages": [],
+  "hardware_pages": []
+ },
+ "readers": {
+  "a": {
+   "doors": 0,
+   "sets": 0,
+   "items": 0,
+   "name": "production text layer (weyland-subx-worker/src/lib/text-layer-read.js)"
+  },
+  "b": {
+   "doors": 0,
+   "sets": 0,
+   "items": 0,
+   "name": "geometry first (tools/accuracy/truth/reader_b.mjs)",
+   "tables": 0
+  }
+ },
+ "rows_agreed": 0,
+ "rows_disputed": 0,
+ "rows_total": 0,
+ "agreement_rate": null,
+ "agreement": {
+  "doors": {
+   "rows": 0,
+   "agreed": 0,
+   "disputed": 0,
+   "only_a": 0,
+   "only_b": 0,
+   "fields": {},
+   "agreement_rate": null
+  },
+  "items": {
+   "rows": 0,
+   "agreed": 0,
+   "disputed": 0,
+   "only_a": 0,
+   "only_b": 0,
+   "fields": {},
+   "agreement_rate": null
+  },
+  "sets": {
+   "sets": 0,
+   "agreed": 0
+  }
+ },
+ "triage_class": "none",
+ "triage_from": "tools/corpus/harvest/triage.json",
+ "oracles": {
+  "marks_on_plan": {
+   "applicable": false,
+   "reason": "not for class none"
+  },
+  "sets_exist": {
+   "applicable": false,
+   "reason": "not for class none"
+  },
+  "set_door_lists": {
+   "applicable": false,
+   "reason": "not for class none"
+  },
+  "types_in_legend": {
+   "applicable": false,
+   "reason": "not for class none"
+  },
+  "sizes_and_marks": {
+   "applicable": false,
+   "reason": "not for class none"
+  }
+ },
+ "tier": "unread",
+ "unread_reason": "no door schedule or hardware set read by either reader",
+ "disagreement_count": 0,
+ "disagreements": [],
+ "ms": 836,
+ "generated_at": "2026-10-09T10:49:54.645Z"
+}

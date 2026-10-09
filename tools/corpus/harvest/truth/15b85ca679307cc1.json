@@ -1,0 +1,94 @@
+{
+ "sha16": "15b85ca679307cc1",
+ "sha256": "15b85ca679307cc1b08c4d31661e6aa538bf3cfc0989a76b12d0431a8f34698c",
+ "file": "15b85ca679307cc1.pdf",
+ "bytes": 9748711,
+ "family": "missouri_oa_fmdc",
+ "source": "harvest",
+ "label": "missouri_oa_fmdc - _REBID%20T2421-01-%20Final%20Plans.pdf",
+ "source_url": "https://oa.mo.gov/sites/default/files/bid-opportunities/_REBID%20T2421-01-%20Final%20Plans.pdf",
+ "page_count": 35,
+ "text_layer": {
+  "pages_with_text": 35,
+  "pages": 35
+ },
+ "pages": {
+  "door_candidates": 4,
+  "hardware_candidates": 0,
+  "door_schedule_pages": [],
+  "hardware_pages": []
+ },
+ "readers": {
+  "a": {
+   "doors": 0,
+   "sets": 0,
+   "items": 0,
+   "name": "production text layer (weyland-subx-worker/src/lib/text-layer-read.js)"
+  },
+  "b": {
+   "doors": 0,
+   "sets": 0,
+   "items": 0,
+   "name": "geometry first (tools/accuracy/truth/reader_b.mjs)",
+   "tables": 0
+  }
+ },
+ "rows_agreed": 0,
+ "rows_disputed": 0,
+ "rows_total": 0,
+ "agreement_rate": null,
+ "agreement": {
+  "doors": {
+   "rows": 0,
+   "agreed": 0,
+   "disputed": 0,
+   "only_a": 0,
+   "only_b": 0,
+   "fields": {},
+   "agreement_rate": null
+  },
+  "items": {
+   "rows": 0,
+   "agreed": 0,
+   "disputed": 0,
+   "only_a": 0,
+   "only_b": 0,
+   "fields": {},
+   "agreement_rate": null
+  },
+  "sets": {
+   "sets": 0,
+   "agreed": 0
+  }
+ },
+ "triage_class": "schedule-only",
+ "triage_from": "tools/corpus/harvest/triage.json",
+ "oracles": {
+  "marks_on_plan": {
+   "applicable": false,
+   "reason": "no door schedule rows"
+  },
+  "sets_exist": {
+   "applicable": false,
+   "reason": "not for class schedule-only"
+  },
+  "set_door_lists": {
+   "applicable": false,
+   "reason": "not for class schedule-only"
+  },
+  "types_in_legend": {
+   "applicable": false,
+   "reason": "no door schedule rows"
+  },
+  "sizes_and_marks": {
+   "applicable": false,
+   "reason": "no door schedule rows"
+  }
+ },
+ "tier": "unread",
+ "unread_reason": "no door schedule or hardware set read by either reader",
+ "disagreement_count": 0,
+ "disagreements": [],
+ "ms": 1625,
+ "generated_at": "2026-10-09T10:44:59.733Z"
+}

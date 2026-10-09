@@ -1,0 +1,277 @@
+{
+ "sha16": "c6611cb8e91110f9",
+ "sha256": "c6611cb8e91110f960f8e83c948614e1d99364a4614fd0b034271851c1b7dd95",
+ "file": "c6611cb8e91110f9.pdf",
+ "bytes": 5874215,
+ "family": "missouri_oa_fmdc",
+ "source": "harvest",
+ "label": "missouri_oa_fmdc - _R2513-01%20Final%20Bid%20Specs.pdf",
+ "source_url": "https://oa.mo.gov/sites/default/files/bid-opportunities/_R2513-01%20Final%20Bid%20Specs.pdf",
+ "page_count": 425,
+ "text_layer": {
+  "pages_with_text": 414,
+  "pages": 425
+ },
+ "pages": {
+  "door_candidates": 2,
+  "hardware_candidates": 1,
+  "door_schedule_pages": [],
+  "hardware_pages": [
+   139
+  ]
+ },
+ "readers": {
+  "a": {
+   "doors": 0,
+   "sets": 1,
+   "items": 9,
+   "name": "production text layer (weyland-subx-worker/src/lib/text-layer-read.js)"
+  },
+  "b": {
+   "doors": 0,
+   "sets": 1,
+   "items": 9,
+   "name": "geometry first (tools/accuracy/truth/reader_b.mjs)",
+   "tables": 0
+  }
+ },
+ "rows_agreed": 0,
+ "rows_disputed": 18,
+ "rows_total": 18,
+ "agreement_rate": 0,
+ "agreement": {
+  "doors": {
+   "rows": 0,
+   "agreed": 0,
+   "disputed": 0,
+   "only_a": 0,
+   "only_b": 0,
+   "fields": {},
+   "agreement_rate": null
+  },
+  "items": {
+   "rows": 18,
+   "agreed": 0,
+   "disputed": 0,
+   "only_a": 9,
+   "only_b": 9,
+   "fields": {},
+   "agreement_rate": 0
+  },
+  "sets": {
+   "sets": 2,
+   "agreed": 0
+  }
+ },
+ "triage_class": "none",
+ "triage_from": "tools/corpus/harvest/triage.json",
+ "oracles": {
+  "marks_on_plan": {
+   "applicable": false,
+   "reason": "not for class none"
+  },
+  "sets_exist": {
+   "applicable": false,
+   "reason": "not for class none"
+  },
+  "set_door_lists": {
+   "applicable": false,
+   "reason": "not for class none"
+  },
+  "types_in_legend": {
+   "applicable": false,
+   "reason": "not for class none"
+  },
+  "sizes_and_marks": {
+   "applicable": false,
+   "reason": "not for class none"
+  }
+ },
+ "tier": "unread",
+ "unread_reason": "no rows agreed and no oracle applies",
+ "disagreement_count": 20,
+ "disagreements": [
+  {
+   "kind": "item",
+   "page": 139,
+   "key": "S / FM SLF-HD1 x Door Height",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 139,
+   "key": "S / 10 43 32D 8804",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 139,
+   "key": "S / As Specified – Compatible with Best 7-pin",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 139,
+   "key": "S / 1-X36",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 139,
+   "key": "S / J7500",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 139,
+   "key": "S / 252x FG",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 139,
+   "key": "S / 346",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 139,
+   "key": "S / 345 PK",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 139,
+   "key": "S / (door manufacturer’s heavy duty standard)",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 139,
+   "key": "1.0 / FM SLF-HD1 x Door Height",
+   "field": "(row)",
+   "a": null,
+   "b": "read",
+   "why": "only reader B read this row"
+  },
+  {
+   "kind": "item",
+   "page": 139,
+   "key": "1.0 / 10 43 32D 8804",
+   "field": "(row)",
+   "a": null,
+   "b": "read",
+   "why": "only reader B read this row"
+  },
+  {
+   "kind": "item",
+   "page": 139,
+   "key": "1.0 / As Specified – Compatible with Best 7-pin",
+   "field": "(row)",
+   "a": null,
+   "b": "read",
+   "why": "only reader B read this row"
+  },
+  {
+   "kind": "item",
+   "page": 139,
+   "key": "1.0 / 1-X36",
+   "field": "(row)",
+   "a": null,
+   "b": "read",
+   "why": "only reader B read this row"
+  },
+  {
+   "kind": "item",
+   "page": 139,
+   "key": "1.0 / J7500",
+   "field": "(row)",
+   "a": null,
+   "b": "read",
+   "why": "only reader B read this row"
+  },
+  {
+   "kind": "item",
+   "page": 139,
+   "key": "1.0 / 252x FG",
+   "field": "(row)",
+   "a": null,
+   "b": "read",
+   "why": "only reader B read this row"
+  },
+  {
+   "kind": "item",
+   "page": 139,
+   "key": "1.0 / 346",
+   "field": "(row)",
+   "a": null,
+   "b": "read",
+   "why": "only reader B read this row"
+  },
+  {
+   "kind": "item",
+   "page": 139,
+   "key": "1.0 / 345 PK",
+   "field": "(row)",
+   "a": null,
+   "b": "read",
+   "why": "only reader B read this row"
+  },
+  {
+   "kind": "item",
+   "page": 139,
+   "key": "1.0 / (door manufacturer’s heavy duty standard)",
+   "field": "(row)",
+   "a": null,
+   "b": "read",
+   "why": "only reader B read this row"
+  },
+  {
+   "kind": "group",
+   "page": null,
+   "key": "S",
+   "field": "(set)",
+   "a": "",
+   "b": null,
+   "why": "only reader A read this set"
+  },
+  {
+   "kind": "group",
+   "page": null,
+   "key": "1.0",
+   "field": "(set)",
+   "a": null,
+   "b": "",
+   "why": "only reader B read this set"
+  }
+ ],
+ "ms": 1296,
+ "generated_at": "2026-10-09T10:48:29.902Z"
+}

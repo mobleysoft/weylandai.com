@@ -1,0 +1,460 @@
+{
+ "sha16": "df76d4056a456207",
+ "sha256": "df76d4056a456207196fb9870fee5e5cf57339959df7a5ae32296846d0b0a171",
+ "file": "df76d4056a456207.pdf",
+ "bytes": 20586082,
+ "family": "missouri_oa_fmdc",
+ "source": "harvest",
+ "label": "missouri_oa_fmdc - T2232-01%20Add%20%232.pdf",
+ "source_url": "https://oa.mo.gov/sites/default/files/bid-opportunities/T2232-01%20Add%20%232.pdf",
+ "page_count": 123,
+ "text_layer": {
+  "pages_with_text": 65,
+  "pages": 123
+ },
+ "pages": {
+  "door_candidates": 3,
+  "hardware_candidates": 1,
+  "door_schedule_pages": [
+   114,
+   118
+  ],
+  "hardware_pages": [
+   114
+  ]
+ },
+ "readers": {
+  "a": {
+   "doors": 0,
+   "sets": 5,
+   "items": 15,
+   "name": "production text layer (weyland-subx-worker/src/lib/text-layer-read.js)"
+  },
+  "b": {
+   "doors": 19,
+   "sets": 4,
+   "items": 13,
+   "name": "geometry first (tools/accuracy/truth/reader_b.mjs)",
+   "tables": 2
+  }
+ },
+ "rows_agreed": 0,
+ "rows_disputed": 47,
+ "rows_total": 47,
+ "agreement_rate": 0,
+ "agreement": {
+  "doors": {
+   "rows": 19,
+   "agreed": 0,
+   "disputed": 0,
+   "only_a": 0,
+   "only_b": 19,
+   "fields": {},
+   "agreement_rate": 0
+  },
+  "items": {
+   "rows": 28,
+   "agreed": 0,
+   "disputed": 0,
+   "only_a": 15,
+   "only_b": 13,
+   "fields": {},
+   "agreement_rate": 0
+  },
+  "sets": {
+   "sets": 6,
+   "agreed": 2
+  }
+ },
+ "triage_class": "pair",
+ "triage_from": "tools/corpus/harvest/triage.json",
+ "oracles": {
+  "marks_on_plan": {
+   "applicable": false,
+   "reason": "not for class pair"
+  },
+  "sets_exist": {
+   "applicable": false,
+   "reason": "no door schedule rows"
+  },
+  "set_door_lists": {
+   "applicable": false,
+   "reason": "no door schedule rows"
+  },
+  "types_in_legend": {
+   "applicable": false,
+   "reason": "no door schedule rows"
+  },
+  "sizes_and_marks": {
+   "applicable": false,
+   "reason": "no door schedule rows"
+  }
+ },
+ "tier": "unread",
+ "unread_reason": "no rows agreed and no oracle applies",
+ "disagreement_count": 51,
+ "disagreements": [
+  {
+   "kind": "door",
+   "page": 114,
+   "key": "100",
+   "field": "(row)",
+   "a": null,
+   "b": "read",
+   "why": "only reader B read this row"
+  },
+  {
+   "kind": "door",
+   "page": 114,
+   "key": "101A",
+   "field": "(row)",
+   "a": null,
+   "b": "read",
+   "why": "only reader B read this row"
+  },
+  {
+   "kind": "door",
+   "page": 114,
+   "key": "101B",
+   "field": "(row)",
+   "a": null,
+   "b": "read",
+   "why": "only reader B read this row"
+  },
+  {
+   "kind": "door",
+   "page": 114,
+   "key": "101C",
+   "field": "(row)",
+   "a": null,
+   "b": "read",
+   "why": "only reader B read this row"
+  },
+  {
+   "kind": "door",
+   "page": 114,
+   "key": "102",
+   "field": "(row)",
+   "a": null,
+   "b": "read",
+   "why": "only reader B read this row"
+  },
+  {
+   "kind": "door",
+   "page": 114,
+   "key": "103",
+   "field": "(row)",
+   "a": null,
+   "b": "read",
+   "why": "only reader B read this row"
+  },
+  {
+   "kind": "door",
+   "page": 114,
+   "key": "108",
+   "field": "(row)",
+   "a": null,
+   "b": "read",
+   "why": "only reader B read this row"
+  },
+  {
+   "kind": "door",
+   "page": 114,
+   "key": "109",
+   "field": "(row)",
+   "a": null,
+   "b": "read",
+   "why": "only reader B read this row"
+  },
+  {
+   "kind": "door",
+   "page": 114,
+   "key": "110",
+   "field": "(row)",
+   "a": null,
+   "b": "read",
+   "why": "only reader B read this row"
+  },
+  {
+   "kind": "door",
+   "page": 114,
+   "key": "111",
+   "field": "(row)",
+   "a": null,
+   "b": "read",
+   "why": "only reader B read this row"
+  },
+  {
+   "kind": "door",
+   "page": 114,
+   "key": "113A",
+   "field": "(row)",
+   "a": null,
+   "b": "read",
+   "why": "only reader B read this row"
+  },
+  {
+   "kind": "door",
+   "page": 114,
+   "key": "113B",
+   "field": "(row)",
+   "a": null,
+   "b": "read",
+   "why": "only reader B read this row"
+  },
+  {
+   "kind": "door",
+   "page": 114,
+   "key": "114",
+   "field": "(row)",
+   "a": null,
+   "b": "read",
+   "why": "only reader B read this row"
+  },
+  {
+   "kind": "door",
+   "page": 118,
+   "key": "KEH1",
+   "field": "(row)",
+   "a": null,
+   "b": "read",
+   "why": "only reader B read this row"
+  },
+  {
+   "kind": "door",
+   "page": 118,
+   "key": "KEH1",
+   "field": "(row)",
+   "a": null,
+   "b": "read",
+   "why": "only reader B read this row"
+  },
+  {
+   "kind": "door",
+   "page": 118,
+   "key": "1",
+   "field": "(row)",
+   "a": null,
+   "b": "read",
+   "why": "only reader B read this row"
+  },
+  {
+   "kind": "door",
+   "page": 118,
+   "key": "2",
+   "field": "(row)",
+   "a": null,
+   "b": "read",
+   "why": "only reader B read this row"
+  },
+  {
+   "kind": "door",
+   "page": 118,
+   "key": "KEH2",
+   "field": "(row)",
+   "a": null,
+   "b": "read",
+   "why": "only reader B read this row"
+  },
+  {
+   "kind": "door",
+   "page": 118,
+   "key": "KEH3",
+   "field": "(row)",
+   "a": null,
+   "b": "read",
+   "why": "only reader B read this row"
+  },
+  {
+   "kind": "item",
+   "page": 114,
+   "key": "(CONTINUED) / PRE-ENGINEERED METAL BUILDING WALL SYSTEM, REFER",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 114,
+   "key": "(CONTINUED) / TO WALL SECTIONS. DOOR SCHEDULE 2 INTERIOR WALL FRAMING, REFER TO FLOOR PLAN AND INTERIOR WALL TYPES. DOOR HARDWARE FRAME DETAILS REMARKS DOUBLE 600S162-33 (6\"-20GA.) COLD FORM METAL FIRE FRAMING BOX HEADER. MARK GLAZ. SET HEAD RATING (REFER SIZE (W x H x D) TYPE SWING MATERIAL KEYED TYPE MATERIAL HEAD JAMB SILL NOTES) TYPE # WIDTH BATT INSULATION (UNCOMPRESSED) (R-25) WITH FOIL FACE VAPOR BARRIER. 100 (PAIR) 3'-0\" X 7'-0\" X 1 3/4\" AA RHR/LHR ALUMINUM 1 1 LEVEL 1 1 ALUMINUM -- 1/A-601 2/A-601 3/A-601 --- 1 & 2 101A (PAIR) 3'-0\" X 7'-0\" X 1 3/4\" AA RHR/LHR ALUMINUM 2 2 --- 2 ALUMINUM -- 4/A-601 5/A-601 --- --- 1 5/8\" TYPE \"X\" GYPSUM BOARD. 101B (PAIR) 3'-0\" X 7'-0\" X 1 3/4\" AA RHR/LHR ALUMINUM 1 1 LEVEL 1 1 ALUMINUM -- 1/A-601 2/A-601 3/A-601 --- 1 & 2 SEALANT AROUND BOTH SIDES OF OPENING PERIMETER 101C (PAIR) 3'-0\" X 7'-0\" X 1 3/4\" AA RHR/LHR ALUMINUM 1 1 LEVEL 1 1 ALUMINUM -- 1/A-601 2/A-601 3/A-601 --- 1 & 2 (TYPICAL). 102 3'-0\" X 7'-0\" X 1 3/4\" B RH SOLID WOOD --- 3 --- 4 HOL. METAL -- 7/A-501 8/A-501 --- --- 1 PRE-ENGINEERED METAL BUILDING SHEET METAL (24 GA.) 103 3'-0\" X 7'-0\" X 1 3/4\" B LH SOLID WOOD --- 3 --- 4 HOL. METAL -- 7/A-501 8/A-501 --- --- 1 CLOSURE, OPENING TRIM, AND FLASHING AT BOTH SIDES OF OPENING PERIMETER. 108 3'-0\" X 7'-0\" X 1 3/4\" B RH SOLID WOOD --- 4 LEVEL 2 3 HOL. METAL -- 7/A-601 8/A-601 --- --- 1 ALUMINUM STOREFRONT DOOR AND FRAME SYSTEM, 109 3'-0\" X 7'-0\" X 1 3/4\" B LH SOLID WOOD --- 5 LEVEL 2 3 HOL. METAL -- 7/A-601 8/A-601 --- --- 1",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 114,
+   "key": "(CONTINUED) / PRE-ENGINEERED METAL BUILDING WALL SYSTEM, REFER TO 113B114 4'-0\"8'-0\"X 7'-0\"X 8'-0\"X 1 3/4\" DC SEC.RHRO.H. HOL.HOL. METALMETAL ------ 98 LEVEL--- 3 MFGR'S3 HOL.STANDARDSMETAL ---- 6/A-4034/A-403 7/A-4035/A-403 3/A-601SIM.--- ------ 1 &1 2",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 114,
+   "key": "(CONTINUED) / B REFER TO BUILDING CODE SUMMARY AND STRUCTURAL DRAWINGS",
+   "field": "(row)",
+   "a": null,
+   "b": "read",
+   "why": "only reader B read this row"
+  },
+  {
+   "kind": "item",
+   "page": 114,
+   "key": "3 / 1. 1. ALL ALL DOORS DOORS SHALL SHALL BE BE SHOP SHOP PREPARED PREPARED FOR FOR HARDWARE. HARDWARE. 1 SET PUSH / PULL (1\" DIAMETER STRAIGHT BENT BAR 10\" C.T.C. WITH 4\"",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 114,
+   "key": "3 / 2\" OPENING PERIMETER. 2. REFER TO HARDWARE NOTES FOR ADDITIONAL REQUIREMENTS. X 16\" PLATES) 2. VERIFY COMPATIBILITY OF HARDWARE SPECIFIED. NOTIFY ARCHITECT 1 CLOSER WITH COVER, PARALLEL ARM, CUSH, THRU-BOLT MOUNTED FOAM INSULATION OF INCOMPATIBILITY ISSUES PRIOR TO ORDERING AND INSTALLATION. 1 KICK PLATE (0.050\"T X 12\"H X 2\" L.D.W.) 1 WALL 3. ALL HARDWARE TO BE GRADE 1 (HEAVY DUTY COMMERCIAL). SYSTEM, REFER",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 114,
+   "key": "3 / 3. ALL HARDWARE TO BE GRADE 1 (HEAVY DUTY COMMERCIAL).",
+   "field": "(row)",
+   "a": null,
+   "b": "read",
+   "why": "only reader B read this row"
+  },
+  {
+   "kind": "item",
+   "page": 114,
+   "key": "3 / KICK PLATE (0.050\"T X 12\"H X 2\" L.D.W.)",
+   "field": "(row)",
+   "a": null,
+   "b": "read",
+   "why": "only reader B read this row"
+  },
+  {
+   "kind": "item",
+   "page": 114,
+   "key": "3 / KICK PLATE (0.050\"T X 12\"H X 2\" L.D.W.)",
+   "field": "(row)",
+   "a": null,
+   "b": "read",
+   "why": "only reader B read this row"
+  },
+  {
+   "kind": "item",
+   "page": 114,
+   "key": "4 / BALL BEARING HINGES",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 114,
+   "key": "4 / F82A) OFFICE LOCK WITH LEVER HANDLES",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 114,
+   "key": "4 / (0.050\"T X 12\"H X 2\" L.D.W.)",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 114,
+   "key": "4 / WALL STOP",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 114,
+   "key": "5 / 1:",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 114,
+   "key": "5 / (0.050\"T X 12\"H X 2\" L.D.W.)",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 114,
+   "key": "6 / 111 KICK(ANSICLOSERPLATEFUNCTIONWITH(0.050\"TCOVER,NO.X 12\"HF86)PARALLELX 2\"STOREROOML.D.W.)ARM, CUSH,LOCK WITHTHRU-BOLTLEVER HANDLESMOUNTED",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 114,
+   "key": "6 / CONT.WALL CONSTRUCTION,FIRE TREATED WOODREFERBLOCKINGTO FLOOR PLAN 11 KICKPLATECLOSERTHRU-BOLTWITH(0.050\"TMOUNTEDCOVER,X 12\"HPARALLELX 2\" L.D.W.)ARM, HOLD OPEN WITH SPRING CUSH, PERFORMANCEVISIBLE LIGHT TRANSMITTANCEREQUIREMENTS:(VLT): 13",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 114,
+   "key": "6 / INTERIOR HM DOOR HEAD DETAIL DOUBLEMETAL FRAMING600S162-33BOX(6\"-20HEADER.GA.)COLD FORM 41\" 2\" FLASHINGPERIMETER.AT BOTH SIDES OF OPENING ALUMINUM STOREFRONT",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 114,
+   "key": "6 / 1 1/2\" = 1'-0\" 9 1 1/2\" = 1'-0\" 10 1 1/2\" = 1'-0\" HARDWAREADDITIONALLOCATIONS.ANCHORS AT",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 114,
+   "key": "6 / BASIC SECURITY: MAINTENANCE, MECHANICAL / ELECTRICAL, JANITOR",
+   "field": "(row)",
+   "a": null,
+   "b": "read",
+   "why": "only reader B read this row"
+  },
+  {
+   "kind": "item",
+   "page": 114,
+   "key": "6 / KICK PLATE (0.050\"T X 12\"H X 2\" L.D.W.)",
+   "field": "(row)",
+   "a": null,
+   "b": "read",
+   "why": "only reader B read this row"
+  }
+ ],
+ "ms": 2495,
+ "generated_at": "2026-10-09T10:48:59.684Z"
+}

@@ -1,0 +1,451 @@
+{
+ "sha16": "4ee0455611e3d73b",
+ "sha256": "4ee0455611e3d73bad551defcafd01aa154ec69879d4493fb5c2005f1f6f5a3b",
+ "file": "4ee0455611e3d73b.pdf",
+ "bytes": 15846604,
+ "family": "missouri_oa_fmdc",
+ "source": "harvest",
+ "label": "missouri_oa_fmdc - _T2147-01%20-%20Final%20Specs.pdf",
+ "source_url": "https://oa.mo.gov/sites/default/files/bid-opportunities/_T2147-01%20-%20Final%20Specs.pdf",
+ "page_count": 694,
+ "text_layer": {
+  "pages_with_text": 663,
+  "pages": 694
+ },
+ "pages": {
+  "door_candidates": 2,
+  "hardware_candidates": 6,
+  "door_schedule_pages": [],
+  "hardware_pages": [
+   355,
+   356,
+   357,
+   366,
+   367
+  ]
+ },
+ "readers": {
+  "a": {
+   "doors": 0,
+   "sets": 1,
+   "items": 41,
+   "name": "production text layer (weyland-subx-worker/src/lib/text-layer-read.js)"
+  },
+  "b": {
+   "doors": 0,
+   "sets": 1,
+   "items": 33,
+   "name": "geometry first (tools/accuracy/truth/reader_b.mjs)",
+   "tables": 0
+  }
+ },
+ "rows_agreed": 1,
+ "rows_disputed": 50,
+ "rows_total": 51,
+ "agreement_rate": 0.0196,
+ "agreement": {
+  "doors": {
+   "rows": 0,
+   "agreed": 0,
+   "disputed": 0,
+   "only_a": 0,
+   "only_b": 0,
+   "fields": {},
+   "agreement_rate": null
+  },
+  "items": {
+   "rows": 51,
+   "agreed": 1,
+   "disputed": 22,
+   "only_a": 18,
+   "only_b": 10,
+   "fields": {
+    "qty": {
+     "agree": 23,
+     "total": 23
+    },
+    "description": {
+     "agree": 22,
+     "total": 23
+    },
+    "catalog": {
+     "agree": 0,
+     "total": 22
+    },
+    "manufacturer": {
+     "agree": 0,
+     "total": 22
+    },
+    "finish": {
+     "agree": 0,
+     "total": 11
+    }
+   },
+   "agreement_rate": 0.0196
+  },
+  "sets": {
+   "sets": 1,
+   "agreed": 1
+  }
+ },
+ "triage_class": "spec-only",
+ "triage_from": "tools/corpus/harvest/triage.json",
+ "oracles": {
+  "marks_on_plan": {
+   "applicable": false,
+   "reason": "not for class spec-only"
+  },
+  "sets_exist": {
+   "applicable": false,
+   "reason": "not for class spec-only"
+  },
+  "set_door_lists": {
+   "applicable": false,
+   "reason": "not for class spec-only"
+  },
+  "types_in_legend": {
+   "applicable": false,
+   "reason": "not for class spec-only"
+  },
+  "sizes_and_marks": {
+   "applicable": false,
+   "reason": "not for class spec-only"
+  }
+ },
+ "tier": "agreed",
+ "disagreement_count": 84,
+ "disagreements": [
+  {
+   "kind": "item",
+   "page": 355,
+   "key": "(CONTINUED) / Best LCN LCN",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 355,
+   "key": "(CONTINUED) / SCUSH Bolted) Pemko",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 355,
+   "key": "(CONTINUED) / (with seal)",
+   "field": "catalog",
+   "a": "(with seal)",
+   "b": "(with integrated TPE seal) Aluminum Clear Anodized"
+  },
+  {
+   "kind": "item",
+   "page": 355,
+   "key": "(CONTINUED) / (with seal)",
+   "field": "manufacturer",
+   "a": "INTEGRATED TPE ALUMINUM CLEAR ANODIZED",
+   "b": null
+  },
+  {
+   "kind": "item",
+   "page": 355,
+   "key": "(CONTINUED) / Pemko",
+   "field": "catalog",
+   "a": "Pemko",
+   "b": "Pemko - 29310_S Aluminum Clear Anodized"
+  },
+  {
+   "kind": "item",
+   "page": 355,
+   "key": "(CONTINUED) / Pemko",
+   "field": "manufacturer",
+   "a": "- 29310_S ALUMINUM CLEAR ANODIZED",
+   "b": null
+  },
+  {
+   "kind": "item",
+   "page": 355,
+   "key": "(CONTINUED) / Pemko Rockwood",
+   "field": "catalog",
+   "a": "Pemko Rockwood",
+   "b": "Pemko - 369_AP Rockwood K-1062 Aluminum"
+  },
+  {
+   "kind": "item",
+   "page": 355,
+   "key": "(CONTINUED) / Pemko Rockwood",
+   "field": "manufacturer",
+   "a": "- 369_AP ALUMINUM K-1062",
+   "b": null
+  },
+  {
+   "kind": "item",
+   "page": 355,
+   "key": "(CONTINUED) / Install",
+   "field": "catalog",
+   "a": "Install",
+   "b": "Install on Push Side"
+  },
+  {
+   "kind": "item",
+   "page": 355,
+   "key": "(CONTINUED) / Install",
+   "field": "finish",
+   "a": null,
+   "b": "US32D"
+  },
+  {
+   "kind": "item",
+   "page": 355,
+   "key": "(CONTINUED) / Install",
+   "field": "manufacturer",
+   "a": "US32D ON PUSH SIDE",
+   "b": null
+  },
+  {
+   "kind": "item",
+   "page": 355,
+   "key": "(CONTINUED) / Pemko Von",
+   "field": "catalog",
+   "a": "Pemko Von",
+   "b": "Pemko - FM_HD Von Duprin - WS99 Aluminum"
+  },
+  {
+   "kind": "item",
+   "page": 355,
+   "key": "(CONTINUED) / Pemko Von",
+   "field": "manufacturer",
+   "a": "- FM_HD ALUMINUM DUPRIN - WS99",
+   "b": null
+  },
+  {
+   "kind": "item",
+   "page": 355,
+   "key": "(CONTINUED) / Series Standard HES",
+   "field": "catalog",
+   "a": "Series Standard HES",
+   "b": "Series Trim - 996L Aluminum Standard Lever - 06 HES 9600 630 Satin Stanless"
+  },
+  {
+   "kind": "item",
+   "page": 355,
+   "key": "(CONTINUED) / Series Standard HES",
+   "field": "manufacturer",
+   "a": "TRIM - 996L ALUMINUM LEVER - 06 9600 630 SATIN STANLESS",
+   "b": null
+  },
+  {
+   "kind": "item",
+   "page": 355,
+   "key": "(CONTINUED) / Genesis",
+   "field": "catalog",
+   "a": "Genesis",
+   "b": "Genesis Series Steel"
+  },
+  {
+   "kind": "item",
+   "page": 355,
+   "key": "(CONTINUED) / Genesis",
+   "field": "manufacturer",
+   "a": "SERIES STEEL",
+   "b": null
+  },
+  {
+   "kind": "item",
+   "page": 355,
+   "key": "(CONTINUED) / Best LCN LCN",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 355,
+   "key": "(CONTINUED) / SCUSH Bolted) Rockwood",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 355,
+   "key": "(CONTINUED) / Install",
+   "field": "description",
+   "a": "Inches Tall Beveled 4 Edges with Countersunk Holes ADA Compliant Latching",
+   "b": "Inches Tall Beveled 4 Edges with Countersunk Holes"
+  },
+  {
+   "kind": "item",
+   "page": 355,
+   "key": "(CONTINUED) / Install",
+   "field": "catalog",
+   "a": "Install",
+   "b": "Install on Push Side"
+  },
+  {
+   "kind": "item",
+   "page": 355,
+   "key": "(CONTINUED) / Install",
+   "field": "finish",
+   "a": null,
+   "b": "US32D"
+  },
+  {
+   "kind": "item",
+   "page": 355,
+   "key": "(CONTINUED) / Install",
+   "field": "manufacturer",
+   "a": "US32D ON PUSH SIDE MILL FINISH",
+   "b": null
+  },
+  {
+   "kind": "item",
+   "page": 355,
+   "key": "(CONTINUED) / PEMKO",
+   "field": "catalog",
+   "a": "PEMKO",
+   "b": "PEMKO 2005_AV Aluminum"
+  },
+  {
+   "kind": "item",
+   "page": 355,
+   "key": "(CONTINUED) / PEMKO",
+   "field": "manufacturer",
+   "a": "2005_AV ALUMINUM",
+   "b": null
+  },
+  {
+   "kind": "item",
+   "page": 355,
+   "key": "(CONTINUED) / Gauge)Ives 4-1/2\" Best",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 355,
+   "key": "(CONTINUED) / Standard",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 355,
+   "key": "(CONTINUED) / Best LCN",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 355,
+   "key": "(CONTINUED) / (or Rockwood",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 355,
+   "key": "(CONTINUED) / Install Pemko",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 355,
+   "key": "(CONTINUED) / 10C Compliant)",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 355,
+   "key": "(CONTINUED) / Pemko",
+   "field": "catalog",
+   "a": "Pemko",
+   "b": "Pemko - 170_A Aluminum Clear Anodized"
+  },
+  {
+   "kind": "item",
+   "page": 355,
+   "key": "(CONTINUED) / Pemko",
+   "field": "manufacturer",
+   "a": "- 170_A ALUMINUM CLEAR ANODIZED",
+   "b": null
+  },
+  {
+   "kind": "item",
+   "page": 355,
+   "key": "(CONTINUED) / Pemko Pemko",
+   "field": "catalog",
+   "a": "Pemko Pemko",
+   "b": "Pemko - 29310_V Aluminum Pemko - 315_N Clear Anodized"
+  },
+  {
+   "kind": "item",
+   "page": 355,
+   "key": "(CONTINUED) / Pemko Pemko",
+   "field": "manufacturer",
+   "a": "- 29310_V ALUMINUM - 315_N CLEAR ANODIZED",
+   "b": null
+  },
+  {
+   "kind": "item",
+   "page": 355,
+   "key": "(CONTINUED) / Install Door Rockwood",
+   "field": "catalog",
+   "a": "Install Door Rockwood",
+   "b": "Install on Exterior of Aluminum Door Rockwood K-1062"
+  },
+  {
+   "kind": "item",
+   "page": 355,
+   "key": "(CONTINUED) / Install Door Rockwood",
+   "field": "manufacturer",
+   "a": "ON EXTERIOR OF ALUMINUM K-1062",
+   "b": null
+  },
+  {
+   "kind": "item",
+   "page": 355,
+   "key": "(CONTINUED) / Install",
+   "field": "catalog",
+   "a": "Install",
+   "b": "Install on Push Side"
+  },
+  {
+   "kind": "item",
+   "page": 355,
+   "key": "(CONTINUED) / Install",
+   "field": "finish",
+   "a": null,
+   "b": "US32D"
+  },
+  {
+   "kind": "item",
+   "page": 355,
+   "key": "(CONTINUED) / Install",
+   "field": "manufacturer",
+   "a": "US32D ON PUSH SIDE",
+   "b": null
+  }
+ ],
+ "ms": 2070,
+ "generated_at": "2026-10-09T10:46:13.167Z"
+}

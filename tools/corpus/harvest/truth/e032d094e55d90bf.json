@@ -1,0 +1,276 @@
+{
+ "sha16": "e032d094e55d90bf",
+ "sha256": "e032d094e55d90bfdeabad16be545984c85bfdada8ee461ea20ceee1a5804d53",
+ "file": "e032d094e55d90bf.pdf",
+ "bytes": 7590061,
+ "family": "california_dgs_obas",
+ "source": "harvest",
+ "label": "california_dgs_obas - 22120165Technical-Specifications.pdf",
+ "source_url": "https://www.dgs.ca.gov/-/media/Divisions/OBAS/Plans-and-Specs/22120165Technical-Specifications.pdf",
+ "page_count": 1025,
+ "text_layer": {
+  "pages_with_text": 1005,
+  "pages": 1025
+ },
+ "pages": {
+  "door_candidates": 3,
+  "hardware_candidates": 4,
+  "door_schedule_pages": [],
+  "hardware_pages": [
+   205,
+   206,
+   207,
+   208
+  ]
+ },
+ "readers": {
+  "a": {
+   "doors": 0,
+   "sets": 1,
+   "items": 97,
+   "name": "production text layer (weyland-subx-worker/src/lib/text-layer-read.js)"
+  },
+  "b": {
+   "doors": 0,
+   "sets": 1,
+   "items": 85,
+   "name": "geometry first (tools/accuracy/truth/reader_b.mjs)",
+   "tables": 0
+  }
+ },
+ "rows_agreed": 81,
+ "rows_disputed": 16,
+ "rows_total": 97,
+ "agreement_rate": 0.8351,
+ "agreement": {
+  "doors": {
+   "rows": 0,
+   "agreed": 0,
+   "disputed": 0,
+   "only_a": 0,
+   "only_b": 0,
+   "fields": {},
+   "agreement_rate": null
+  },
+  "items": {
+   "rows": 97,
+   "agreed": 81,
+   "disputed": 4,
+   "only_a": 12,
+   "only_b": 0,
+   "fields": {
+    "qty": {
+     "agree": 84,
+     "total": 85
+    },
+    "description": {
+     "agree": 81,
+     "total": 85
+    },
+    "catalog": {
+     "agree": 83,
+     "total": 85
+    }
+   },
+   "agreement_rate": 0.8351
+  },
+  "sets": {
+   "sets": 1,
+   "agreed": 1
+  }
+ },
+ "triage_class": "spec-only",
+ "triage_from": "tools/corpus/harvest/triage.json",
+ "oracles": {
+  "marks_on_plan": {
+   "applicable": false,
+   "reason": "not for class spec-only"
+  },
+  "sets_exist": {
+   "applicable": false,
+   "reason": "not for class spec-only"
+  },
+  "set_door_lists": {
+   "applicable": false,
+   "reason": "not for class spec-only"
+  },
+  "types_in_legend": {
+   "applicable": false,
+   "reason": "not for class spec-only"
+  },
+  "sizes_and_marks": {
+   "applicable": false,
+   "reason": "not for class spec-only"
+  }
+ },
+ "tier": "agreed",
+ "disagreement_count": 19,
+ "disagreements": [
+  {
+   "kind": "item",
+   "page": 205,
+   "key": "(CONTINUED) / HAGER BB1279 4 ½” x 4 ½”",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 205,
+   "key": "(CONTINUED) / HAGER BB1279 4 ½” x 4 ½”",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 205,
+   "key": "(CONTINUED) / SCHLAGE L9080-06A",
+   "field": "description",
+   "a": "LOCKSET DOOR HARDWARE",
+   "b": "LOCKSET"
+  },
+  {
+   "kind": "item",
+   "page": 205,
+   "key": "(CONTINUED) / HAGER BB1279 4 ½” x 4 ½”",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 205,
+   "key": "(CONTINUED) / HAGER BB1279 4 ½” x 4 ½”",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 205,
+   "key": "(CONTINUED) / HAGER BB1279 4 ½” x 4 ½”",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 205,
+   "key": "(CONTINUED) / HAGER BB1279 4 ½” x 4 ½”",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 205,
+   "key": "(CONTINUED) / HAGER BB1279 4 ½” x 4 ½”",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 205,
+   "key": "(CONTINUED) / HAGER BB1279 4 ½” x 4 ½”",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 205,
+   "key": "(CONTINUED) / HAGER BB1279 4 ½” x 4 ½”",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 205,
+   "key": "(CONTINUED) / HAGER BB1279 NRP 4 ½” x 4 ½”",
+   "field": "qty",
+   "a": 1,
+   "b": 3
+  },
+  {
+   "kind": "item",
+   "page": 205,
+   "key": "(CONTINUED) / HAGER BB1279 NRP 4 ½” x 4 ½”",
+   "field": "description",
+   "a": "½ PR BUTTS",
+   "b": "BUTTS"
+  },
+  {
+   "kind": "item",
+   "page": 205,
+   "key": "(CONTINUED) / HAGER BB1279 NRP 4 ½” x 4 ½”",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 205,
+   "key": "(CONTINUED) / HAGER BB1279 NRP 4 ½” x 4 ½”",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 205,
+   "key": "(CONTINUED) / HAGER BB1279 NRP 4 ½” x 4 ½”",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 205,
+   "key": "(CONTINUED) / DORMA TS93-PT",
+   "field": "description",
+   "a": "CLOSER",
+   "b": "CLOSER DOOR"
+  },
+  {
+   "kind": "item",
+   "page": 205,
+   "key": "(CONTINUED) / DORMA TS93-PT",
+   "field": "catalog",
+   "a": "DORMA TS93-PT",
+   "b": "DORMA TS93-PT HARDWARE"
+  },
+  {
+   "kind": "item",
+   "page": 205,
+   "key": "(CONTINUED) / SCHLAGE L9080-06A",
+   "field": "description",
+   "a": "LOCKSET",
+   "b": "LOCKSET DOOR"
+  },
+  {
+   "kind": "item",
+   "page": 205,
+   "key": "(CONTINUED) / SCHLAGE L9080-06A",
+   "field": "catalog",
+   "a": "SCHLAGE L9080-06A",
+   "b": "SCHLAGE L9080-06A HARDWARE"
+  }
+ ],
+ "ms": 2462,
+ "generated_at": "2026-10-09T10:49:02.153Z"
+}

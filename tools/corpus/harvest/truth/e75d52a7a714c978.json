@@ -1,0 +1,459 @@
+{
+ "sha16": "e75d52a7a714c978",
+ "sha256": "e75d52a7a714c9783a78ceac5ea0050fb3e4400d7634e8766e899b94f3589f44",
+ "file": "e75d52a7a714c978.pdf",
+ "bytes": 34846233,
+ "family": "missouri_oa_fmdc",
+ "source": "harvest",
+ "label": "missouri_oa_fmdc - _T2612-01%20Final%20Bid%20Plans.pdf",
+ "source_url": "https://oa.mo.gov/sites/default/files/bid-opportunities/_T2612-01%20Final%20Bid%20Plans.pdf",
+ "page_count": 34,
+ "text_layer": {
+  "pages_with_text": 34,
+  "pages": 34
+ },
+ "pages": {
+  "door_candidates": 8,
+  "hardware_candidates": 1,
+  "door_schedule_pages": [
+   23
+  ],
+  "hardware_pages": [
+   23
+  ]
+ },
+ "readers": {
+  "a": {
+   "doors": 0,
+   "sets": 1,
+   "items": 9,
+   "name": "production text layer (weyland-subx-worker/src/lib/text-layer-read.js)"
+  },
+  "b": {
+   "doors": 14,
+   "sets": 3,
+   "items": 18,
+   "name": "geometry first (tools/accuracy/truth/reader_b.mjs)",
+   "tables": 1
+  }
+ },
+ "rows_agreed": 0,
+ "rows_disputed": 41,
+ "rows_total": 41,
+ "agreement_rate": 0,
+ "agreement": {
+  "doors": {
+   "rows": 14,
+   "agreed": 0,
+   "disputed": 0,
+   "only_a": 0,
+   "only_b": 14,
+   "fields": {},
+   "agreement_rate": 0
+  },
+  "items": {
+   "rows": 27,
+   "agreed": 0,
+   "disputed": 0,
+   "only_a": 9,
+   "only_b": 18,
+   "fields": {},
+   "agreement_rate": 0
+  },
+  "sets": {
+   "sets": 3,
+   "agreed": 1
+  }
+ },
+ "triage_class": "schedule-only",
+ "triage_from": "tools/corpus/harvest/triage.json",
+ "oracles": {
+  "marks_on_plan": {
+   "applicable": false,
+   "reason": "no door schedule rows"
+  },
+  "sets_exist": {
+   "applicable": false,
+   "reason": "not for class schedule-only"
+  },
+  "set_door_lists": {
+   "applicable": false,
+   "reason": "not for class schedule-only"
+  },
+  "types_in_legend": {
+   "applicable": false,
+   "reason": "no door schedule rows"
+  },
+  "sizes_and_marks": {
+   "applicable": false,
+   "reason": "no door schedule rows"
+  }
+ },
+ "tier": "unread",
+ "unread_reason": "no rows agreed and no oracle applies",
+ "disagreement_count": 43,
+ "disagreements": [
+  {
+   "kind": "door",
+   "page": 23,
+   "key": "101",
+   "field": "(row)",
+   "a": null,
+   "b": "read",
+   "why": "only reader B read this row"
+  },
+  {
+   "kind": "door",
+   "page": 23,
+   "key": "102",
+   "field": "(row)",
+   "a": null,
+   "b": "read",
+   "why": "only reader B read this row"
+  },
+  {
+   "kind": "door",
+   "page": 23,
+   "key": "103A",
+   "field": "(row)",
+   "a": null,
+   "b": "read",
+   "why": "only reader B read this row"
+  },
+  {
+   "kind": "door",
+   "page": 23,
+   "key": "103B",
+   "field": "(row)",
+   "a": null,
+   "b": "read",
+   "why": "only reader B read this row"
+  },
+  {
+   "kind": "door",
+   "page": 23,
+   "key": "103C",
+   "field": "(row)",
+   "a": null,
+   "b": "read",
+   "why": "only reader B read this row"
+  },
+  {
+   "kind": "door",
+   "page": 23,
+   "key": "104",
+   "field": "(row)",
+   "a": null,
+   "b": "read",
+   "why": "only reader B read this row"
+  },
+  {
+   "kind": "door",
+   "page": 23,
+   "key": "105A",
+   "field": "(row)",
+   "a": null,
+   "b": "read",
+   "why": "only reader B read this row"
+  },
+  {
+   "kind": "door",
+   "page": 23,
+   "key": "105B",
+   "field": "(row)",
+   "a": null,
+   "b": "read",
+   "why": "only reader B read this row"
+  },
+  {
+   "kind": "door",
+   "page": 23,
+   "key": "105C",
+   "field": "(row)",
+   "a": null,
+   "b": "read",
+   "why": "only reader B read this row"
+  },
+  {
+   "kind": "door",
+   "page": 23,
+   "key": "106A",
+   "field": "(row)",
+   "a": null,
+   "b": "read",
+   "why": "only reader B read this row"
+  },
+  {
+   "kind": "door",
+   "page": 23,
+   "key": "106B",
+   "field": "(row)",
+   "a": null,
+   "b": "read",
+   "why": "only reader B read this row"
+  },
+  {
+   "kind": "door",
+   "page": 23,
+   "key": "107A",
+   "field": "(row)",
+   "a": null,
+   "b": "read",
+   "why": "only reader B read this row"
+  },
+  {
+   "kind": "door",
+   "page": 23,
+   "key": "107B",
+   "field": "(row)",
+   "a": null,
+   "b": "read",
+   "why": "only reader B read this row"
+  },
+  {
+   "kind": "door",
+   "page": 23,
+   "key": "107C",
+   "field": "(row)",
+   "a": null,
+   "b": "read",
+   "why": "only reader B read this row"
+  },
+  {
+   "kind": "item",
+   "page": 23,
+   "key": "(CONTINUED) / 6\" 5\" DOOR SCHEDULE 8 REFER TO FLOOR PLAN AND INTERIOR WALL TYPES FOR CONSTRUCTION. DOOR HARDWARE FRAME DETAILS FIRE REMARKS COLD FORM METAL FRAMING BOX HEADER. MARK (REFER GLAZ. SET HEAD RATING REFER TO STRUCTURAL DRAWINGS. SIZE (W x H x D) TYPE SWING MATERIAL KEYED TYPE MATERIAL HEAD JAMB SILL NOTES) TYPE # WIDTH 8/A-401 SEALANT BOTH SIDES AROUND PERIMETER, 101 (PAIR) 3'-0\" X 7'-0\" X 1 3/4\" CC RHR/LHR ALUMINUM 1 1 LEVEL 1 4 ALUMINUM --- 8/A-401 9/A-402 --- 1, 2 SIMILAR (TYPICAL) 102 3'-0\" X 7'-0\" X 1 3/4\" B RH HOL. METAL --- 4 LEVEL 3 3 HOL. METAL --- 1/A-601 2/A-601 - 20 MIN. 1, 2 HOLLOW METAL FRAME, REFER DOOR 103A 3'-0\" X 7'-0\" X 1 3/4\" B LHR HOL. METAL --- 5 ---- 2 HOL. METAL --- 3/A-601 4/A-601 - 20 MIN. 1, 2 SCHEDULE FOR TYPES. SHIM AND ANCHOR PER MANUFACTURER'S RECOMMENDATIONS. 103B 3'-0\" X 7'-0\" X 1 3/4\" A LHR HOL. METAL --- 2 LEVEL 1 1 HOL. METAL --- 6/A-401 7/A-401 8/A-401 --- 1, 2 103C 3'-0\" X 7'-0\" X 1 3/4\" B RHR HOL. METAL --- 5 ---- 2 HOL. METAL --- 3/A-601 4/A-601 - 20 MIN. 1, 2",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 23,
+   "key": "(CONTINUED) / 1\" DOOR, REFER TO DOOR SCHEDULE FOR",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 23,
+   "key": "(CONTINUED) / 6/A-401 7/A-401 TYPES. 104 3'-0\" X 7'-0\" X 1 3/4\" A LHR HOL. METAL --- 3 LEVEL 3 1 HOL. METAL --- 8/A-401 --- 1, 2 SIMILAR SIMILAR 105A 3'-0\" X 7'-0\" X 1 3/4\" B LHR HOL. METAL --- 5 ---- 2 HOL. METAL --- 3/A-601 4/A-601 - 20 MIN. 1, 2",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 23,
+   "key": "(CONTINUED) / DETAIL 105B 3'-0\" X 7'-0\" X 1 3/4\" A RHR HOL. METAL --- 2 LEVEL 1 1 HOL. METAL --- 6/A-401 7/A-401 8/A-401 --- 1, 2",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 23,
+   "key": "(CONTINUED) / = 1'-0\" 106A 3'-0\" X 7'-0\" X 1 3/4\" B LHR HOL. METAL --- 6 ---- 2 HOL. METAL --- 3/A-601 4/A-601 - 20 MIN. 1, 2 106B 3'-0\" X 7'-0\" X 1 3/4\" B LHR HOL. METAL --- 5 ---- 2 HOL. METAL --- 3/A-601 4/A-601 - 20 MIN. 1, 2 WALL (WHERE OCCURS). 107A 3'-0\" X 7'-0\" X 1 3/4\" B RHR HOL. METAL --- 5 ---- 2 HOL. METAL --- 3/A-601 4/A-601 - 20 MIN. 1, 2, 3 REFER TO FLOOR PLAN AND INTERIOR WALL 4\" 107B 3'-0\" X 7'-0\" X 1 3/4\" A RHR HOL. METAL --- 2 LEVEL 1 1 HOL. METAL --- 6/A-401 7/A-401 8/A-401 --- 1, 2 TYPES FOR CONSTRUCTION. 107C 3'-0\" X 7'-0\" X 1 3/4\" B LHR HOL. METAL --- 5 ---- 2 HOL. METAL --- 3/A-601 4/A-601 - 20 MIN. 1, 2 HOLLOW METAL FRAME, REFER DOOR SCHEDULE FOR TYPES. SHIM AND ANCHOR PER MANUFACTURER'S RECOMMENDATIONS. PROVIDE (3) ANCHORS PER JAMB MIN. WITH REINFORCEMENT AT HARDWARE LOCATIONS. DOOR, REFER TO DOOR SCHEDULE FOR TYPES. 6\" COLD FORM METAL FRAMING DOUBLE STUDS AT JAMBS. REFER TO STRUCTURAL DRAWINGS. NOTES: 1. ALL DOORS SHALL BE SHOP PREPARED FOR HARDWARE. SEALANT BOTH SIDES AROUND PERIMETER, 2. REFER TO HARDWARE NOTES FOR ADDITIONAL REQUIREMENTS. (TYPICAL). 3. ALTERNATE NO. 1: BARRACKS 107 AND SHOWER 107A INTERIOR INFILL. REFER TO PROJECT MANUAL - SECTION 01 23 00 FOR DESCRIPTION OF WORK.",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 23,
+   "key": "(CONTINUED) / DETAIL",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 23,
+   "key": "(CONTINUED) / 3\" PER MANUFACTURER'S RECOMMENDATIONS. 4 DOOR, REFER TO DOOR SCHEDULE FOR FLUSH HOLLOW METAL (INSULATED) FLUSH HOLLOW METAL ALUMINUM ENTRANCE AND STOREFRONT TYPES. (WITHOUT INSULATION). SYSTEM W/ INSULATED SAFETY GLASS (REFER SCHEDULES FOR GLAZING TYPES).",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 23,
+   "key": "(CONTINUED) / DETAIL NOTE:",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 23,
+   "key": "(CONTINUED) / DETAIL WELDED HOLLOW METAL FRAME WELDED HOLLOW METAL FRAME",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 23,
+   "key": "(CONTINUED) / HARDWARE FRAME DETAILS REMARKS FIRE SET NO. 1 (DOOR: 101) RATING (REFER 2 CONTINUOUS GEARED HINGES GLAZ. SET HEAD KEYED TYPE MATERIAL HEAD JAMB SILL NOTES) 2 EXTERIOR CYLINDERS WITH REMOVABLE CORES TYPE # WIDTH 8/A-401 2 (ANSI FUNCTION NO. 08) ENTRY LOCK AND EXIT PANIC WITH TWO POINT 1 1 LEVEL 1 4 ALUMINUM --- 8/A-401 9/A-402 --- 1, 2 LOCKING SURFACE VERTICAL RODS, COVER GUARDS, DUST PROOF SIMILAR --- 4 LEVEL 3 3 HOL. METAL --- 1/A-601 2/A-601 - 20 MIN. 1, 2 BOTTOM STRIKES, EXTERIOR LEVER HANDLES WITH ESCUTCHEON TRIM, THRU-BOLT MOUNTED --- 5 ---- 2 HOL. METAL --- 3/A-601 4/A-601 - 20 MIN. 1, 2 A REFER TO PROJECT MANUAL FOR ADDITIONAL REQUIREMENTS. B REFER TO BUILDING CODE SUMMARY AND STRUCTURAL DRAWINGS FOR PROJECT STRUCTURAL DESIGN CRITERIA. SUBMITTALS SHALL INCLUDE MANUFACTURER'S REQUIREMENTS FOR ANCHOR TYPES, SPACING, AND LOCATIONS REQUIRED FOR PROJECT CONDITIONS. C DIMENSIONS TO ROUGH FACE OF OPENING UNLESS OTHERWISE",
+   "field": "(row)",
+   "a": null,
+   "b": "read",
+   "why": "only reader B read this row"
+  },
+  {
+   "kind": "item",
+   "page": 23,
+   "key": "(CONTINUED) / CLOSERS WITH COVER, PARALLEL ARM, HOLD OPEN WITH SPRING CUSH,",
+   "field": "(row)",
+   "a": null,
+   "b": "read",
+   "why": "only reader B read this row"
+  },
+  {
+   "kind": "item",
+   "page": 23,
+   "key": "(CONTINUED) / --- 2 LEVEL 1 1 HOL. METAL --- 6/A-401 7/A-401 8/A-401 --- 1, 2 --- 5 ---- 2 HOL. METAL --- 3/A-601 4/A-601 - 20 MIN. 1, 2 SET NO. 2 (DOORS: 103B, 105B, 107B)",
+   "field": "(row)",
+   "a": null,
+   "b": "read",
+   "why": "only reader B read this row"
+  },
+  {
+   "kind": "item",
+   "page": 23,
+   "key": "3 / WEATHER SEAL PERIMETER GASKETS",
+   "field": "(row)",
+   "a": null,
+   "b": "read",
+   "why": "only reader B read this row"
+  },
+  {
+   "kind": "item",
+   "page": 23,
+   "key": "3 / RAIN DRIP",
+   "field": "(row)",
+   "a": null,
+   "b": "read",
+   "why": "only reader B read this row"
+  },
+  {
+   "kind": "item",
+   "page": 23,
+   "key": "3 / SET NO. 4 (DOOR: 102) MISSOURI NATIONAL GUARD 1 (ANSI FUNCTION NO. F86) STOREROOM LOCK WITH LEVER HANDLES ATTN: JEREMY NEWTON, ENGINEERING ARCHITECTURAL PROJECT MANAGER (P): (573) 638-9500, EXT. 37484",
+   "field": "(row)",
+   "a": null,
+   "b": "read",
+   "why": "only reader B read this row"
+  },
+  {
+   "kind": "item",
+   "page": 23,
+   "key": "3 / CLOSER WITH COVER, PARALLEL ARM, SPRING CUSH STOP, THRU-BOLT MOUNTED (C): (573) 308-6894",
+   "field": "(row)",
+   "a": null,
+   "b": "read",
+   "why": "only reader B read this row"
+  },
+  {
+   "kind": "item",
+   "page": 23,
+   "key": "3 / SMOKE SEAL PERIMETER GASKETS",
+   "field": "(row)",
+   "a": null,
+   "b": "read",
+   "why": "only reader B read this row"
+  },
+  {
+   "kind": "item",
+   "page": 23,
+   "key": "3 / SMOKE SEAL DOOR BOTTOM SWEEP",
+   "field": "(row)",
+   "a": null,
+   "b": "read",
+   "why": "only reader B read this row"
+  },
+  {
+   "kind": "item",
+   "page": 23,
+   "key": "3 / BALL BEARING HINGES KEYING LEGEND",
+   "field": "(row)",
+   "a": null,
+   "b": "read",
+   "why": "only reader B read this row"
+  },
+  {
+   "kind": "item",
+   "page": 23,
+   "key": "3 / CLOSER WITH COVER, PARALLEL ARM, SPRING CUSH STOP, THRU-BOLT MOUNTED",
+   "field": "(row)",
+   "a": null,
+   "b": "read",
+   "why": "only reader B read this row"
+  },
+  {
+   "kind": "item",
+   "page": 23,
+   "key": "3 / KICK PLATE (0.062T X 12\"H X 2\" L.D.W.) DIVISION OF FACILITIES",
+   "field": "(row)",
+   "a": null,
+   "b": "read",
+   "why": "only reader B read this row"
+  },
+  {
+   "kind": "item",
+   "page": 23,
+   "key": "3 / SMOKE SEAL PERIMETER GASKETS UPGRADED SECURITY: PERIMETER ENTRANCE",
+   "field": "(row)",
+   "a": null,
+   "b": "read",
+   "why": "only reader B read this row"
+  },
+  {
+   "kind": "item",
+   "page": 23,
+   "key": "6 / KICK PLATE (0.062T X 12\"H X 2\" L.D.W.) PUBLIC SAFETY",
+   "field": "(row)",
+   "a": null,
+   "b": "read",
+   "why": "only reader B read this row"
+  },
+  {
+   "kind": "item",
+   "page": 23,
+   "key": "6 / SMOKE SEAL PERIMETER GASKETS MISSOURI ARMY",
+   "field": "(row)",
+   "a": null,
+   "b": "read",
+   "why": "only reader B read this row"
+  },
+  {
+   "kind": "item",
+   "page": 23,
+   "key": "6 / SMOKE SEAL DOOR BOTTOM SWEEP",
+   "field": "(row)",
+   "a": null,
+   "b": "read",
+   "why": "only reader B read this row"
+  },
+  {
+   "kind": "item",
+   "page": 23,
+   "key": "6 / TYPE 1:",
+   "field": "(row)",
+   "a": null,
+   "b": "read",
+   "why": "only reader B read this row"
+  }
+ ],
+ "ms": 3419,
+ "generated_at": "2026-10-09T10:49:16.267Z"
+}

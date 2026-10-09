@@ -1,0 +1,444 @@
+{
+ "sha16": "89236ffa156fbaf5",
+ "sha256": "89236ffa156fbaf5275413b258fd4beac283fa8c54388a7ca660962e0f415a72",
+ "file": "89236ffa156fbaf5.pdf",
+ "bytes": 28089297,
+ "family": "missouri_oa_fmdc",
+ "source": "harvest",
+ "label": "missouri_oa_fmdc - _T2147-01%20-%20Final%20Plans.pdf",
+ "source_url": "https://oa.mo.gov/sites/default/files/bid-opportunities/_T2147-01%20-%20Final%20Plans.pdf",
+ "page_count": 85,
+ "text_layer": {
+  "pages_with_text": 85,
+  "pages": 85
+ },
+ "pages": {
+  "door_candidates": 8,
+  "hardware_candidates": 0,
+  "door_schedule_pages": [
+   42,
+   43
+  ],
+  "hardware_pages": []
+ },
+ "readers": {
+  "a": {
+   "doors": 16,
+   "sets": 0,
+   "items": 0,
+   "name": "production text layer (weyland-subx-worker/src/lib/text-layer-read.js)"
+  },
+  "b": {
+   "doors": 29,
+   "sets": 0,
+   "items": 0,
+   "name": "geometry first (tools/accuracy/truth/reader_b.mjs)",
+   "tables": 2
+  }
+ },
+ "rows_agreed": 0,
+ "rows_disputed": 29,
+ "rows_total": 29,
+ "agreement_rate": 0,
+ "agreement": {
+  "doors": {
+   "rows": 29,
+   "agreed": 0,
+   "disputed": 16,
+   "only_a": 0,
+   "only_b": 13,
+   "fields": {
+    "width_inches": {
+     "agree": 0,
+     "total": 16
+    },
+    "height_inches": {
+     "agree": 0,
+     "total": 16
+    },
+    "door_type": {
+     "agree": 16,
+     "total": 16
+    },
+    "material": {
+     "agree": 13,
+     "total": 16
+    },
+    "fire_rating": {
+     "agree": 3,
+     "total": 3
+    },
+    "hardware_group": {
+     "agree": 11,
+     "total": 15
+    }
+   },
+   "agreement_rate": 0
+  },
+  "items": {
+   "rows": 0,
+   "agreed": 0,
+   "disputed": 0,
+   "only_a": 0,
+   "only_b": 0,
+   "fields": {},
+   "agreement_rate": null
+  },
+  "sets": {
+   "sets": 0,
+   "agreed": 0
+  }
+ },
+ "triage_class": "plan-only",
+ "triage_from": "tools/corpus/harvest/triage.json",
+ "oracles": {
+  "marks_on_plan": {
+   "applicable": false,
+   "reason": "not for class plan-only"
+  },
+  "sets_exist": {
+   "applicable": false,
+   "reason": "not for class plan-only"
+  },
+  "set_door_lists": {
+   "applicable": false,
+   "reason": "not for class plan-only"
+  },
+  "types_in_legend": {
+   "applicable": false,
+   "reason": "not for class plan-only"
+  },
+  "sizes_and_marks": {
+   "applicable": false,
+   "reason": "not for class plan-only"
+  }
+ },
+ "tier": "unread",
+ "unread_reason": "no rows agreed and no oracle applies",
+ "disagreement_count": 52,
+ "disagreements": [
+  {
+   "kind": "door",
+   "page": 42,
+   "key": "129C",
+   "field": "width_inches",
+   "a": null,
+   "b": 36
+  },
+  {
+   "kind": "door",
+   "page": 42,
+   "key": "129C",
+   "field": "height_inches",
+   "a": null,
+   "b": 84
+  },
+  {
+   "kind": "door",
+   "page": 42,
+   "key": "129C",
+   "field": "hardware_group",
+   "a": "2",
+   "b": "5"
+  },
+  {
+   "kind": "door",
+   "page": 42,
+   "key": "160",
+   "field": "width_inches",
+   "a": null,
+   "b": 36
+  },
+  {
+   "kind": "door",
+   "page": 42,
+   "key": "160",
+   "field": "height_inches",
+   "a": null,
+   "b": 84
+  },
+  {
+   "kind": "door",
+   "page": 42,
+   "key": "160",
+   "field": "material",
+   "a": null,
+   "b": "HM"
+  },
+  {
+   "kind": "door",
+   "page": 42,
+   "key": "160",
+   "field": "hardware_group",
+   "a": null,
+   "b": "2"
+  },
+  {
+   "kind": "door",
+   "page": 42,
+   "key": "161",
+   "field": "width_inches",
+   "a": null,
+   "b": 36
+  },
+  {
+   "kind": "door",
+   "page": 42,
+   "key": "161",
+   "field": "height_inches",
+   "a": null,
+   "b": 84
+  },
+  {
+   "kind": "door",
+   "page": 42,
+   "key": "162",
+   "field": "width_inches",
+   "a": null,
+   "b": 36
+  },
+  {
+   "kind": "door",
+   "page": 42,
+   "key": "162",
+   "field": "height_inches",
+   "a": null,
+   "b": 84
+  },
+  {
+   "kind": "door",
+   "page": 42,
+   "key": "163",
+   "field": "width_inches",
+   "a": null,
+   "b": 36
+  },
+  {
+   "kind": "door",
+   "page": 42,
+   "key": "163",
+   "field": "height_inches",
+   "a": null,
+   "b": 84
+  },
+  {
+   "kind": "door",
+   "page": 42,
+   "key": "164",
+   "field": "width_inches",
+   "a": null,
+   "b": 36
+  },
+  {
+   "kind": "door",
+   "page": 42,
+   "key": "164",
+   "field": "height_inches",
+   "a": null,
+   "b": 84
+  },
+  {
+   "kind": "door",
+   "page": 42,
+   "key": "165A",
+   "field": "width_inches",
+   "a": null,
+   "b": 36
+  },
+  {
+   "kind": "door",
+   "page": 42,
+   "key": "165A",
+   "field": "height_inches",
+   "a": null,
+   "b": 84
+  },
+  {
+   "kind": "door",
+   "page": 42,
+   "key": "165B",
+   "field": "width_inches",
+   "a": null,
+   "b": 36
+  },
+  {
+   "kind": "door",
+   "page": 42,
+   "key": "165B",
+   "field": "height_inches",
+   "a": null,
+   "b": 84
+  },
+  {
+   "kind": "door",
+   "page": 42,
+   "key": "166",
+   "field": "width_inches",
+   "a": null,
+   "b": 36
+  },
+  {
+   "kind": "door",
+   "page": 42,
+   "key": "166",
+   "field": "height_inches",
+   "a": null,
+   "b": 84
+  },
+  {
+   "kind": "door",
+   "page": 42,
+   "key": "167A",
+   "field": "width_inches",
+   "a": null,
+   "b": 36
+  },
+  {
+   "kind": "door",
+   "page": 42,
+   "key": "167A",
+   "field": "height_inches",
+   "a": null,
+   "b": 84
+  },
+  {
+   "kind": "door",
+   "page": 42,
+   "key": "167B",
+   "field": "width_inches",
+   "a": null,
+   "b": 36
+  },
+  {
+   "kind": "door",
+   "page": 42,
+   "key": "167B",
+   "field": "height_inches",
+   "a": null,
+   "b": 84
+  },
+  {
+   "kind": "door",
+   "page": 42,
+   "key": "168A",
+   "field": "width_inches",
+   "a": null,
+   "b": 36
+  },
+  {
+   "kind": "door",
+   "page": 42,
+   "key": "168A",
+   "field": "height_inches",
+   "a": null,
+   "b": 84
+  },
+  {
+   "kind": "door",
+   "page": 42,
+   "key": "168A",
+   "field": "material",
+   "a": "HM HM",
+   "b": "HM"
+  },
+  {
+   "kind": "door",
+   "page": 42,
+   "key": "168A",
+   "field": "hardware_group",
+   "a": "3 2",
+   "b": "3"
+  },
+  {
+   "kind": "door",
+   "page": 42,
+   "key": "168B",
+   "field": "width_inches",
+   "a": null,
+   "b": 36
+  },
+  {
+   "kind": "door",
+   "page": 42,
+   "key": "168B",
+   "field": "height_inches",
+   "a": null,
+   "b": 84
+  },
+  {
+   "kind": "door",
+   "page": 42,
+   "key": "168B",
+   "field": "material",
+   "a": null,
+   "b": "HM"
+  },
+  {
+   "kind": "door",
+   "page": 42,
+   "key": "168B",
+   "field": "hardware_group",
+   "a": null,
+   "b": "2"
+  },
+  {
+   "kind": "door",
+   "page": 42,
+   "key": "169A",
+   "field": "width_inches",
+   "a": null,
+   "b": 36
+  },
+  {
+   "kind": "door",
+   "page": 42,
+   "key": "169A",
+   "field": "height_inches",
+   "a": null,
+   "b": 84
+  },
+  {
+   "kind": "door",
+   "page": 42,
+   "key": "169B",
+   "field": "width_inches",
+   "a": null,
+   "b": 36
+  },
+  {
+   "kind": "door",
+   "page": 42,
+   "key": "169B",
+   "field": "height_inches",
+   "a": null,
+   "b": 84
+  },
+  {
+   "kind": "door",
+   "page": 42,
+   "key": "169C",
+   "field": "width_inches",
+   "a": null,
+   "b": 96
+  },
+  {
+   "kind": "door",
+   "page": 42,
+   "key": "169C",
+   "field": "height_inches",
+   "a": null,
+   "b": 80
+  },
+  {
+   "kind": "door",
+   "page": 43,
+   "key": "101A",
+   "field": "(row)",
+   "a": null,
+   "b": "read",
+   "why": "only reader B read this row"
+  }
+ ],
+ "ms": 2135,
+ "generated_at": "2026-10-09T10:47:30.789Z"
+}

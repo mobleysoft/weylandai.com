@@ -1,0 +1,371 @@
+{
+ "sha16": "73792e72800f0eb7",
+ "sha256": "73792e72800f0eb702f6d08fc7317cb8d00534e1d6e75e83925760d023a729d5",
+ "file": "73792e72800f0eb7.pdf",
+ "bytes": 11206686,
+ "family": "missouri_oa_fmdc",
+ "source": "harvest",
+ "label": "missouri_oa_fmdc - _R2502-01%20REBID%20Final%20Bid%20Specs_Volume%201.pdf",
+ "source_url": "https://oa.mo.gov/sites/default/files/bid-opportunities/_R2502-01%20REBID%20Final%20Bid%20Specs_Volume%201.pdf",
+ "page_count": 577,
+ "text_layer": {
+  "pages_with_text": 519,
+  "pages": 577
+ },
+ "pages": {
+  "door_candidates": 15,
+  "hardware_candidates": 26,
+  "door_schedule_pages": [],
+  "hardware_pages": [
+   397,
+   398,
+   399,
+   400,
+   401,
+   403,
+   404,
+   405,
+   406,
+   407,
+   408,
+   409,
+   410,
+   411,
+   412,
+   413,
+   414,
+   415,
+   416,
+   417,
+   418,
+   419,
+   420,
+   421,
+   422
+  ]
+ },
+ "readers": {
+  "a": {
+   "doors": 0,
+   "sets": 28,
+   "items": 193,
+   "name": "production text layer (weyland-subx-worker/src/lib/text-layer-read.js)"
+  },
+  "b": {
+   "doors": 0,
+   "sets": 28,
+   "items": 193,
+   "name": "geometry first (tools/accuracy/truth/reader_b.mjs)",
+   "tables": 0
+  }
+ },
+ "rows_agreed": 180,
+ "rows_disputed": 19,
+ "rows_total": 199,
+ "agreement_rate": 0.9045,
+ "agreement": {
+  "doors": {
+   "rows": 0,
+   "agreed": 0,
+   "disputed": 0,
+   "only_a": 0,
+   "only_b": 0,
+   "fields": {},
+   "agreement_rate": null
+  },
+  "items": {
+   "rows": 199,
+   "agreed": 180,
+   "disputed": 7,
+   "only_a": 6,
+   "only_b": 6,
+   "fields": {
+    "qty": {
+     "agree": 187,
+     "total": 187
+    },
+    "description": {
+     "agree": 186,
+     "total": 187
+    },
+    "catalog": {
+     "agree": 178,
+     "total": 184
+    },
+    "finish": {
+     "agree": 147,
+     "total": 153
+    },
+    "manufacturer": {
+     "agree": 170,
+     "total": 170
+    }
+   },
+   "agreement_rate": 0.9045
+  },
+  "sets": {
+   "sets": 29,
+   "agreed": 27
+  }
+ },
+ "triage_class": "spec-only",
+ "triage_from": "tools/corpus/harvest/triage.json",
+ "oracles": {
+  "marks_on_plan": {
+   "applicable": false,
+   "reason": "not for class spec-only"
+  },
+  "sets_exist": {
+   "applicable": false,
+   "reason": "not for class spec-only"
+  },
+  "set_door_lists": {
+   "applicable": false,
+   "reason": "not for class spec-only"
+  },
+  "types_in_legend": {
+   "applicable": false,
+   "reason": "not for class spec-only"
+  },
+  "sizes_and_marks": {
+   "applicable": false,
+   "reason": "not for class spec-only"
+  }
+ },
+ "tier": "agreed",
+ "disagreement_count": 27,
+ "disagreements": [
+  {
+   "kind": "item",
+   "page": 398,
+   "key": "1.01 / 8190EZHD 12\" O ",
+   "field": "catalog",
+   "a": "8190EZHD 12\" O ",
+   "b": "8190EZHD 12\" O 316"
+  },
+  {
+   "kind": "item",
+   "page": 398,
+   "key": "1.01 / 8190EZHD 12\" O ",
+   "field": "finish",
+   "a": "630- 316",
+   "b": "630-"
+  },
+  {
+   "kind": "item",
+   "page": 398,
+   "key": "1.01 / PS902 900-2RS  ",
+   "field": "description",
+   "a": "POWER SUPPLY",
+   "b": "POWER SUPPLY EA CARD READER BY GC"
+  },
+  {
+   "kind": "item",
+   "page": 400,
+   "key": "3.01 / CD-25-V-EO-LBR ",
+   "field": "catalog",
+   "a": "CD-25-V-EO-LBR ",
+   "b": "CD-25-V-EO-LBR D"
+  },
+  {
+   "kind": "item",
+   "page": 400,
+   "key": "3.01 / CD-25-V-EO-LBR ",
+   "field": "finish",
+   "a": "US26 D",
+   "b": "US26"
+  },
+  {
+   "kind": "item",
+   "page": 400,
+   "key": "3.01 / CD-25-V-NL-OP-LBR ",
+   "field": "catalog",
+   "a": "CD-25-V-NL-OP-LBR ",
+   "b": "CD-25-V-NL-OP-LBR D"
+  },
+  {
+   "kind": "item",
+   "page": 400,
+   "key": "3.01 / CD-25-V-NL-OP-LBR ",
+   "field": "finish",
+   "a": "US26 D",
+   "b": "US26"
+  },
+  {
+   "kind": "item",
+   "page": 400,
+   "key": "3.01 / 8190EZHD 12\" O ",
+   "field": "catalog",
+   "a": "8190EZHD 12\" O ",
+   "b": "8190EZHD 12\" O 316"
+  },
+  {
+   "kind": "item",
+   "page": 400,
+   "key": "3.01 / 8190EZHD 12\" O ",
+   "field": "finish",
+   "a": "630- 316",
+   "b": "630-"
+  },
+  {
+   "kind": "item",
+   "page": 407,
+   "key": "5.02A / 5BB1HW 4.5 X 4.5 ",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 407,
+   "key": "5.02A / F-25-R-L-BE-DANE ",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 407,
+   "key": "5.02A / SC71A REG OR PA AS REQ ",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 407,
+   "key": "5.02A / 8400 10\" X 2\" LDW B-CS ",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 407,
+   "key": "5.02A / SEM7850  ",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 407,
+   "key": "5.02A / 488SBK PSA ",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 408,
+   "key": "5.04 / F-25-V-L-BE-LBR-DANE ",
+   "field": "catalog",
+   "a": "F-25-V-L-BE-LBR-DANE ",
+   "b": "F-25-V-L-BE-LBR-DANE D"
+  },
+  {
+   "kind": "item",
+   "page": 408,
+   "key": "5.04 / F-25-V-L-BE-LBR-DANE ",
+   "field": "finish",
+   "a": "US26 D",
+   "b": "US26"
+  },
+  {
+   "kind": "item",
+   "page": 408,
+   "key": "5.04 / F-25-V-L-BE-LBRAFL-DANE ",
+   "field": "catalog",
+   "a": "F-25-V-L-BE-LBRAFL-DANE ",
+   "b": "F-25-V-L-BE-LBRAFL-DANE D"
+  },
+  {
+   "kind": "item",
+   "page": 408,
+   "key": "5.04 / F-25-V-L-BE-LBRAFL-DANE ",
+   "field": "finish",
+   "a": "US26 D",
+   "b": "US26"
+  },
+  {
+   "kind": "item",
+   "page": 407,
+   "key": "5 / 5BB1HW 4.5 X 4.5",
+   "field": "(row)",
+   "a": null,
+   "b": "read",
+   "why": "only reader B read this row"
+  },
+  {
+   "kind": "item",
+   "page": 407,
+   "key": "5 / F-25-R-L-BE-DANE D",
+   "field": "(row)",
+   "a": null,
+   "b": "read",
+   "why": "only reader B read this row"
+  },
+  {
+   "kind": "item",
+   "page": 407,
+   "key": "5 / SC71A REG OR PA AS REQ",
+   "field": "(row)",
+   "a": null,
+   "b": "read",
+   "why": "only reader B read this row"
+  },
+  {
+   "kind": "item",
+   "page": 407,
+   "key": "5 / 8400 10\" X 2\" LDW B-CS",
+   "field": "(row)",
+   "a": null,
+   "b": "read",
+   "why": "only reader B read this row"
+  },
+  {
+   "kind": "item",
+   "page": 407,
+   "key": "5 / SEM7850",
+   "field": "(row)",
+   "a": null,
+   "b": "read",
+   "why": "only reader B read this row"
+  },
+  {
+   "kind": "item",
+   "page": 407,
+   "key": "5 / 488SBK PSA",
+   "field": "(row)",
+   "a": null,
+   "b": "read",
+   "why": "only reader B read this row"
+  },
+  {
+   "kind": "group",
+   "page": null,
+   "key": "5.02A",
+   "field": "(set)",
+   "a": "130C, 133C, 239D",
+   "b": null,
+   "why": "only reader A read this set"
+  },
+  {
+   "kind": "group",
+   "page": null,
+   "key": "5",
+   "field": "(set)",
+   "a": null,
+   "b": "130C, 133C, 239D",
+   "why": "only reader B read this set"
+  }
+ ],
+ "ms": 2085,
+ "generated_at": "2026-10-09T10:47:10.345Z"
+}

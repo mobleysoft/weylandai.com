@@ -1,0 +1,459 @@
+{
+ "sha16": "977cec6301f40433",
+ "sha256": "977cec6301f40433bfd05b46b7406a4efc0455466cb878a1a0171803fe910182",
+ "file": "977cec6301f40433.pdf",
+ "bytes": 3906878,
+ "family": "missouri_oa_fmdc",
+ "source": "harvest",
+ "label": "missouri_oa_fmdc - _T2423-01%20-%20Final%20Plans.pdf",
+ "source_url": "https://oa.mo.gov/sites/default/files/bid-opportunities/_T2423-01%20-%20Final%20Plans.pdf",
+ "page_count": 31,
+ "text_layer": {
+  "pages_with_text": 31,
+  "pages": 31
+ },
+ "pages": {
+  "door_candidates": 3,
+  "hardware_candidates": 1,
+  "door_schedule_pages": [
+   10
+  ],
+  "hardware_pages": [
+   10
+  ]
+ },
+ "readers": {
+  "a": {
+   "doors": 0,
+   "sets": 2,
+   "items": 31,
+   "name": "production text layer (weyland-subx-worker/src/lib/text-layer-read.js)"
+  },
+  "b": {
+   "doors": 3,
+   "sets": 1,
+   "items": 19,
+   "name": "geometry first (tools/accuracy/truth/reader_b.mjs)",
+   "tables": 1
+  }
+ },
+ "rows_agreed": 0,
+ "rows_disputed": 53,
+ "rows_total": 53,
+ "agreement_rate": 0,
+ "agreement": {
+  "doors": {
+   "rows": 3,
+   "agreed": 0,
+   "disputed": 0,
+   "only_a": 0,
+   "only_b": 3,
+   "fields": {},
+   "agreement_rate": 0
+  },
+  "items": {
+   "rows": 50,
+   "agreed": 0,
+   "disputed": 0,
+   "only_a": 31,
+   "only_b": 19,
+   "fields": {},
+   "agreement_rate": 0
+  },
+  "sets": {
+   "sets": 2,
+   "agreed": 1
+  }
+ },
+ "triage_class": "pair",
+ "triage_from": "inferred (S=true H=true plan sheets=0)",
+ "oracles": {
+  "marks_on_plan": {
+   "applicable": false,
+   "reason": "not for class pair"
+  },
+  "sets_exist": {
+   "applicable": false,
+   "reason": "no door schedule rows"
+  },
+  "set_door_lists": {
+   "applicable": false,
+   "reason": "no door schedule rows"
+  },
+  "types_in_legend": {
+   "applicable": false,
+   "reason": "no door schedule rows"
+  },
+  "sizes_and_marks": {
+   "applicable": false,
+   "reason": "no door schedule rows"
+  }
+ },
+ "tier": "unread",
+ "unread_reason": "no rows agreed and no oracle applies",
+ "disagreement_count": 54,
+ "disagreements": [
+  {
+   "kind": "door",
+   "page": 10,
+   "key": "112",
+   "field": "(row)",
+   "a": null,
+   "b": "read",
+   "why": "only reader B read this row"
+  },
+  {
+   "kind": "door",
+   "page": 10,
+   "key": "114",
+   "field": "(row)",
+   "a": null,
+   "b": "read",
+   "why": "only reader B read this row"
+  },
+  {
+   "kind": "door",
+   "page": 10,
+   "key": "114",
+   "field": "(row)",
+   "a": null,
+   "b": "read",
+   "why": "only reader B read this row"
+  },
+  {
+   "kind": "item",
+   "page": 10,
+   "key": "(CONTINUED) / Existing to Remain -- -- -- -- -- Existing To Remain",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 10,
+   "key": "(CONTINUED) / Existing to Remain -- -- -- -- -- Existing To Remain",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 10,
+   "key": "(CONTINUED) / Existing to Remain -- -- -- -- -- Existing To Remain",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 10,
+   "key": "(CONTINUED) / Existing to Remain -- -- -- -- -- Existing To Remain",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 10,
+   "key": "(CONTINUED) / Existing to Remain RB-1 PT-1 PT-1 PT-1 PT-1 PT-2",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 10,
+   "key": "(CONTINUED) / Existing to Remain RB-1 PT-1 PT-1 PT-1 PT-1 PT-2",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 10,
+   "key": "(CONTINUED) / Existing to Remain RB-1 PT-1 PT-1 PT-1 PT-1 PT-2",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 10,
+   "key": "(CONTINUED) / Existing to Remain RB-1 PT-1 PT-1 PT-1 PT-1 PT-2",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 10,
+   "key": "(CONTINUED) / Existing to Remain -- -- -- -- -- --",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 10,
+   "key": "(CONTINUED) / Existing to Remain -- -- -- -- -- Existing To Remain",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 10,
+   "key": "(CONTINUED) / Existing to Remain -- -- -- -- -- --",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 10,
+   "key": "(CONTINUED) / Existing to Remain -- -- -- -- -- Existing To Remain",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 10,
+   "key": "(CONTINUED) / Existing to Remain RB-1 -- -- PT-1 -- Open",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 10,
+   "key": "(CONTINUED) / Existing to Remain RB-1 PT-1 -- -- -- Open",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 10,
+   "key": "(CONTINUED) / Existing to Remain -- -- -- -- -- Existing To Remain",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 10,
+   "key": "(CONTINUED) / Existing to Remain -- -- -- -- -- --",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 10,
+   "key": "(CONTINUED) / Existing to Remain -- -- -- -- -- --",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 10,
+   "key": "(CONTINUED) / Existing to Remain -- -- -- -- -- --",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 10,
+   "key": "(CONTINUED) / Existing to Remain -- PT-3",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 10,
+   "key": "(CONTINUED) / Existing to Remain RB-1 PT-1 PT-1 PT-1 PT-1 PT-2",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 10,
+   "key": "(CONTINUED) / Color - Ceiling White, Flat Finish 6",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 10,
+   "key": "(CONTINUED) / Supply Closet Supply Storage Office 4 Office 3",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 10,
+   "key": "(CONTINUED) / 111 110A 110 109 108 107",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 10,
+   "key": "(CONTINUED) / C Elec. / Data HM 3' - 0\" 7' - 0\" 1 3/4\" HM-1 3 / A-601 4 / A-601 None 3 3",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 10,
+   "key": "(CONTINUED) / Lobby Existing to Remain -- -- -- -- -- Existing To Remain 8'-8\"",
+   "field": "(row)",
+   "a": null,
+   "b": "read",
+   "why": "only reader B read this row"
+  },
+  {
+   "kind": "item",
+   "page": 10,
+   "key": "(CONTINUED) / Recruiter Office Existing to Remain -- -- -- -- -- Existing To Remain 8'-8\" Alt. #1: LVT flooring",
+   "field": "(row)",
+   "a": null,
+   "b": "read",
+   "why": "only reader B read this row"
+  },
+  {
+   "kind": "item",
+   "page": 10,
+   "key": "(CONTINUED) / Office 1 Existing to Remain RB-1 PT-1 PT-1 PT-1 PT-1 PT-2 8'-7\" Alt. #1: LVT flooring",
+   "field": "(row)",
+   "a": null,
+   "b": "read",
+   "why": "only reader B read this row"
+  },
+  {
+   "kind": "item",
+   "page": 10,
+   "key": "(CONTINUED) / Office 2 Existing to Remain RB-1 PT-1 PT-1 PT-1 PT-1 PT-2 8'-7\" Alt. #1: LVT flooring",
+   "field": "(row)",
+   "a": null,
+   "b": "read",
+   "why": "only reader B read this row"
+  },
+  {
+   "kind": "item",
+   "page": 10,
+   "key": "(CONTINUED) / Office 3 Existing to Remain RB-1 PT-1 PT-1 PT-1 PT-1 PT-2 8'-7\" Alt. #1: LVT flooring Jana E Bee Triplett - Architect",
+   "field": "(row)",
+   "a": null,
+   "b": "read",
+   "why": "only reader B read this row"
+  },
+  {
+   "kind": "item",
+   "page": 10,
+   "key": "(CONTINUED) / Office 4 Existing to Remain RB-1 PT-1 PT-1 PT-1 PT-1 PT-2 8'-7\" Alt. #1: LVT flooring MO# 2002006831",
+   "field": "(row)",
+   "a": null,
+   "b": "read",
+   "why": "only reader B read this row"
+  },
+  {
+   "kind": "item",
+   "page": 10,
+   "key": "(CONTINUED) / Ord. Storage Existing to Remain -- -- -- -- -- -- -- No Work This Area",
+   "field": "(row)",
+   "a": null,
+   "b": "read",
+   "why": "only reader B read this row"
+  },
+  {
+   "kind": "item",
+   "page": 10,
+   "key": "(CONTINUED) / Supply Existing to Remain -- -- -- -- -- Existing To Remain 8'-7\" No Work This Area",
+   "field": "(row)",
+   "a": null,
+   "b": "read",
+   "why": "only reader B read this row"
+  },
+  {
+   "kind": "item",
+   "page": 10,
+   "key": "(CONTINUED) / Supply Existing to Remain -- -- -- -- -- -- Open No Work This Area",
+   "field": "(row)",
+   "a": null,
+   "b": "read",
+   "why": "only reader B read this row"
+  },
+  {
+   "kind": "item",
+   "page": 10,
+   "key": "(CONTINUED) / Assembly Existing to Remain -- -- -- -- -- Existing To Remain 16'-8\"",
+   "field": "(row)",
+   "a": null,
+   "b": "read",
+   "why": "only reader B read this row"
+  },
+  {
+   "kind": "item",
+   "page": 10,
+   "key": "(CONTINUED) / Classroom Existing to Remain -- -- -- -- -- Existing To Remain 7'-7\" Alt. #1: LVT flooring",
+   "field": "(row)",
+   "a": null,
+   "b": "read",
+   "why": "only reader B read this row"
+  },
+  {
+   "kind": "item",
+   "page": 10,
+   "key": "(CONTINUED) / Office Existing to Remain -- -- -- -- -- -- 7'-7\" Alt. #1: LVT flooring",
+   "field": "(row)",
+   "a": null,
+   "b": "read",
+   "why": "only reader B read this row"
+  },
+  {
+   "kind": "item",
+   "page": 10,
+   "key": "(CONTINUED) / Office Existing to Remain -- -- -- -- -- -- 7'-7\" Alt. #1: LVT flooring",
+   "field": "(row)",
+   "a": null,
+   "b": "read",
+   "why": "only reader B read this row"
+  }
+ ],
+ "ms": 1875,
+ "generated_at": "2026-10-09T10:47:51.357Z"
+}

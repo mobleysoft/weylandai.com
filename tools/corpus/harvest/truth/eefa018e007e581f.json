@@ -1,0 +1,499 @@
+{
+ "sha16": "eefa018e007e581f",
+ "sha256": "eefa018e007e581f8c5e24ddd89593118e47758b1212ac9d9aba3423f1311b16",
+ "file": "eefa018e007e581f.pdf",
+ "bytes": 23608846,
+ "family": "missouri_oa_fmdc",
+ "source": "harvest",
+ "label": "missouri_oa_fmdc - X2207-01%20Add%20%232%20Plans%20%26%20Specs.pdf",
+ "source_url": "https://oa.mo.gov/sites/default/files/bid-opportunities/X2207-01%20Add%20%232%20Plans%20%26%20Specs.pdf",
+ "page_count": 60,
+ "text_layer": {
+  "pages_with_text": 60,
+  "pages": 60
+ },
+ "pages": {
+  "door_candidates": 5,
+  "hardware_candidates": 0,
+  "door_schedule_pages": [
+   59
+  ],
+  "hardware_pages": []
+ },
+ "readers": {
+  "a": {
+   "doors": 76,
+   "sets": 0,
+   "items": 0,
+   "name": "production text layer (weyland-subx-worker/src/lib/text-layer-read.js)"
+  },
+  "b": {
+   "doors": 0,
+   "sets": 0,
+   "items": 0,
+   "name": "geometry first (tools/accuracy/truth/reader_b.mjs)",
+   "tables": 0
+  }
+ },
+ "rows_agreed": 0,
+ "rows_disputed": 76,
+ "rows_total": 76,
+ "agreement_rate": 0,
+ "agreement": {
+  "doors": {
+   "rows": 76,
+   "agreed": 0,
+   "disputed": 0,
+   "only_a": 76,
+   "only_b": 0,
+   "fields": {},
+   "agreement_rate": 0
+  },
+  "items": {
+   "rows": 0,
+   "agreed": 0,
+   "disputed": 0,
+   "only_a": 0,
+   "only_b": 0,
+   "fields": {},
+   "agreement_rate": null
+  },
+  "sets": {
+   "sets": 0,
+   "agreed": 0
+  }
+ },
+ "triage_class": "schedule-only",
+ "triage_from": "tools/corpus/harvest/triage.json",
+ "oracles": {
+  "marks_on_plan": {
+   "applicable": true,
+   "total": 76,
+   "pass": 38,
+   "fail": 38,
+   "pass_rate": 0.5,
+   "examples": [
+    "mark 100-1 (schedule p.59) not tagged on any plan",
+    "mark 100-2 (schedule p.59) not tagged on any plan",
+    "mark 102-1 (schedule p.59) not tagged on any plan",
+    "mark 103-1 (schedule p.59) not tagged on any plan",
+    "mark 104-1 (schedule p.59) not tagged on any plan",
+    "mark 105-1 (schedule p.59) not tagged on any plan",
+    "mark 106-1 (schedule p.59) not tagged on any plan",
+    "mark 107-1 (schedule p.59) not tagged on any plan",
+    "mark 108-1 (schedule p.59) not tagged on any plan",
+    "mark 109-1 (schedule p.59) not tagged on any plan",
+    "mark 110-1 (schedule p.59) not tagged on any plan",
+    "mark 111-1 (schedule p.59) not tagged on any plan"
+   ],
+   "plan_sheets": [
+    "A-109 p.47",
+    "A-110 p.48"
+   ],
+   "plan_counts": {
+    "plan_sheets": 2,
+    "rooms": 39,
+    "corridors": 1,
+    "tags": 38,
+    "unmatched_tags": 0,
+    "schedule_marks": 76,
+    "marks_not_on_plan": 38
+   }
+  },
+  "sets_exist": {
+   "applicable": false,
+   "reason": "not for class schedule-only"
+  },
+  "set_door_lists": {
+   "applicable": false,
+   "reason": "not for class schedule-only"
+  },
+  "types_in_legend": {
+   "applicable": false,
+   "reason": "schedule types present, but no legend title for them",
+   "skipped": []
+  },
+  "sizes_and_marks": {
+   "applicable": true,
+   "total": 76,
+   "pass": 71,
+   "fail": 5,
+   "pass_rate": 0.9342,
+   "examples": [
+    "mark 200-6 p.59: size \"2' - 0\\\" x 2' - 0\\\"\" -> 24 x null",
+    "mark 200-7 p.59: size \"2' - 5\\\" x 2' - 5\\\"\" -> 29 x null",
+    "mark 200-8 p.59: size \"2' - 5\\\" x 2' - 5\\\"\" -> 29 x null",
+    "mark 200-9 p.59: size \"2' - 5\\\" 3' - 0\\\" x 2' - 5\\\" 7' - 0\\\"\" -> null x null",
+    "mark 600-2 p.59: size \"2' - 8\\\" x 3' - 0\\\"\" -> 32 x null"
+   ],
+   "size_fail": 5,
+   "mark_fail": 0
+  }
+ },
+ "tier": "oracle-checked",
+ "disagreement_count": 76,
+ "disagreements": [
+  {
+   "kind": "door",
+   "page": 59,
+   "key": "100-1",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "door",
+   "page": 59,
+   "key": "100-2",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "door",
+   "page": 59,
+   "key": "102-1",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "door",
+   "page": 59,
+   "key": "103-1",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "door",
+   "page": 59,
+   "key": "104-1",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "door",
+   "page": 59,
+   "key": "105-1",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "door",
+   "page": 59,
+   "key": "106-1",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "door",
+   "page": 59,
+   "key": "107-1",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "door",
+   "page": 59,
+   "key": "108-1",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "door",
+   "page": 59,
+   "key": "109-1",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "door",
+   "page": 59,
+   "key": "110-1",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "door",
+   "page": 59,
+   "key": "111-1",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "door",
+   "page": 59,
+   "key": "112-1",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "door",
+   "page": 59,
+   "key": "200-1",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "door",
+   "page": 59,
+   "key": "200-2",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "door",
+   "page": 59,
+   "key": "200-3",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "door",
+   "page": 59,
+   "key": "200-5",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "door",
+   "page": 59,
+   "key": "200-6",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "door",
+   "page": 59,
+   "key": "200-7",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "door",
+   "page": 59,
+   "key": "200-8",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "door",
+   "page": 59,
+   "key": "200-9",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "door",
+   "page": 59,
+   "key": "201-1",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "door",
+   "page": 59,
+   "key": "202-1",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "door",
+   "page": 59,
+   "key": "202-2",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "door",
+   "page": 59,
+   "key": "205-1",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "door",
+   "page": 59,
+   "key": "205-2",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "door",
+   "page": 59,
+   "key": "206-1",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "door",
+   "page": 59,
+   "key": "207-1",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "door",
+   "page": 59,
+   "key": "208-1",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "door",
+   "page": 59,
+   "key": "209-1",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "door",
+   "page": 59,
+   "key": "209-2",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "door",
+   "page": 59,
+   "key": "209-3",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "door",
+   "page": 59,
+   "key": "210-1",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "door",
+   "page": 59,
+   "key": "211-1",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "door",
+   "page": 59,
+   "key": "212-1",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "door",
+   "page": 59,
+   "key": "213-1",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "door",
+   "page": 59,
+   "key": "214-1",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "door",
+   "page": 59,
+   "key": "215-1",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "door",
+   "page": 59,
+   "key": "216-1",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "door",
+   "page": 59,
+   "key": "217-1",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  }
+ ],
+ "ms": 2400,
+ "generated_at": "2026-10-09T10:49:34.644Z"
+}

@@ -1,0 +1,136 @@
+{
+ "sha16": "13423239b61e7a7a",
+ "sha256": "13423239b61e7a7a658f32f1d859aa7c2f65f3ffe3826d1c2374d50cfb34ff6c",
+ "file": "13423239b61e7a7a.pdf",
+ "bytes": 5786019,
+ "family": "missouri_oa_fmdc",
+ "source": "harvest",
+ "label": "missouri_oa_fmdc - _T2507-01%20Final%20Bid%20Specs.pdf",
+ "source_url": "https://oa.mo.gov/sites/default/files/bid-opportunities/_T2507-01%20Final%20Bid%20Specs.pdf",
+ "page_count": 350,
+ "text_layer": {
+  "pages_with_text": 333,
+  "pages": 350
+ },
+ "pages": {
+  "door_candidates": 7,
+  "hardware_candidates": 2,
+  "door_schedule_pages": [],
+  "hardware_pages": [
+   180,
+   181
+  ]
+ },
+ "readers": {
+  "a": {
+   "doors": 0,
+   "sets": 7,
+   "items": 29,
+   "name": "production text layer (weyland-subx-worker/src/lib/text-layer-read.js)"
+  },
+  "b": {
+   "doors": 0,
+   "sets": 7,
+   "items": 27,
+   "name": "geometry first (tools/accuracy/truth/reader_b.mjs)",
+   "tables": 0
+  }
+ },
+ "rows_agreed": 27,
+ "rows_disputed": 2,
+ "rows_total": 29,
+ "agreement_rate": 0.931,
+ "agreement": {
+  "doors": {
+   "rows": 0,
+   "agreed": 0,
+   "disputed": 0,
+   "only_a": 0,
+   "only_b": 0,
+   "fields": {},
+   "agreement_rate": null
+  },
+  "items": {
+   "rows": 29,
+   "agreed": 27,
+   "disputed": 0,
+   "only_a": 2,
+   "only_b": 0,
+   "fields": {
+    "qty": {
+     "agree": 27,
+     "total": 27
+    },
+    "description": {
+     "agree": 27,
+     "total": 27
+    },
+    "catalog": {
+     "agree": 27,
+     "total": 27
+    },
+    "finish": {
+     "agree": 27,
+     "total": 27
+    },
+    "manufacturer": {
+     "agree": 27,
+     "total": 27
+    }
+   },
+   "agreement_rate": 0.931
+  },
+  "sets": {
+   "sets": 7,
+   "agreed": 7
+  }
+ },
+ "triage_class": "spec-only",
+ "triage_from": "inferred (S=false H=true plan sheets=0)",
+ "oracles": {
+  "marks_on_plan": {
+   "applicable": false,
+   "reason": "not for class spec-only"
+  },
+  "sets_exist": {
+   "applicable": false,
+   "reason": "not for class spec-only"
+  },
+  "set_door_lists": {
+   "applicable": false,
+   "reason": "not for class spec-only"
+  },
+  "types_in_legend": {
+   "applicable": false,
+   "reason": "not for class spec-only"
+  },
+  "sizes_and_marks": {
+   "applicable": false,
+   "reason": "not for class spec-only"
+  }
+ },
+ "tier": "agreed",
+ "disagreement_count": 2,
+ "disagreements": [
+  {
+   "kind": "item",
+   "page": 180,
+   "key": "3 / NOVEMEBER 2025",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 181,
+   "key": "7 / NOVEMEBER 2025",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  }
+ ],
+ "ms": 1164,
+ "generated_at": "2026-10-09T10:44:57.441Z"
+}

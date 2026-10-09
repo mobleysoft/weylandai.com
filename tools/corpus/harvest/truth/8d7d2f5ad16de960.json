@@ -1,0 +1,136 @@
+{
+ "sha16": "8d7d2f5ad16de960",
+ "sha256": "8d7d2f5ad16de960f3ff9fe51dae316e514a510f97e427ff46cb57ddede976d2",
+ "file": "8d7d2f5ad16de960.pdf",
+ "bytes": 14190455,
+ "family": "missouri_oa_fmdc",
+ "source": "harvest",
+ "label": "missouri_oa_fmdc - _T2519-01%20-%20Final%20Specs_1.pdf",
+ "source_url": "https://oa.mo.gov/sites/default/files/bid-opportunities/_T2519-01%20-%20Final%20Specs_1.pdf",
+ "page_count": 504,
+ "text_layer": {
+  "pages_with_text": 481,
+  "pages": 504
+ },
+ "pages": {
+  "door_candidates": 12,
+  "hardware_candidates": 2,
+  "door_schedule_pages": [],
+  "hardware_pages": [
+   186,
+   187
+  ]
+ },
+ "readers": {
+  "a": {
+   "doors": 0,
+   "sets": 4,
+   "items": 20,
+   "name": "production text layer (weyland-subx-worker/src/lib/text-layer-read.js)"
+  },
+  "b": {
+   "doors": 0,
+   "sets": 3,
+   "items": 19,
+   "name": "geometry first (tools/accuracy/truth/reader_b.mjs)",
+   "tables": 0
+  }
+ },
+ "rows_agreed": 19,
+ "rows_disputed": 1,
+ "rows_total": 20,
+ "agreement_rate": 0.95,
+ "agreement": {
+  "doors": {
+   "rows": 0,
+   "agreed": 0,
+   "disputed": 0,
+   "only_a": 0,
+   "only_b": 0,
+   "fields": {},
+   "agreement_rate": null
+  },
+  "items": {
+   "rows": 20,
+   "agreed": 19,
+   "disputed": 0,
+   "only_a": 1,
+   "only_b": 0,
+   "fields": {
+    "qty": {
+     "agree": 19,
+     "total": 19
+    },
+    "description": {
+     "agree": 19,
+     "total": 19
+    },
+    "catalog": {
+     "agree": 19,
+     "total": 19
+    },
+    "finish": {
+     "agree": 19,
+     "total": 19
+    },
+    "manufacturer": {
+     "agree": 19,
+     "total": 19
+    }
+   },
+   "agreement_rate": 0.95
+  },
+  "sets": {
+   "sets": 4,
+   "agreed": 3
+  }
+ },
+ "triage_class": "spec-only",
+ "triage_from": "tools/corpus/harvest/triage.json",
+ "oracles": {
+  "marks_on_plan": {
+   "applicable": false,
+   "reason": "not for class spec-only"
+  },
+  "sets_exist": {
+   "applicable": false,
+   "reason": "not for class spec-only"
+  },
+  "set_door_lists": {
+   "applicable": false,
+   "reason": "not for class spec-only"
+  },
+  "types_in_legend": {
+   "applicable": false,
+   "reason": "not for class spec-only"
+  },
+  "sizes_and_marks": {
+   "applicable": false,
+   "reason": "not for class spec-only"
+  }
+ },
+ "tier": "agreed",
+ "disagreement_count": 2,
+ "disagreements": [
+  {
+   "kind": "item",
+   "page": 186,
+   "key": "(CONTINUED) / \"Demonstration and Training.\"",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "group",
+   "page": null,
+   "key": "(CONTINUED)",
+   "field": "(set)",
+   "a": "",
+   "b": null,
+   "why": "only reader A read this set"
+  }
+ ],
+ "ms": 1285,
+ "generated_at": "2026-10-09T10:47:45.754Z"
+}

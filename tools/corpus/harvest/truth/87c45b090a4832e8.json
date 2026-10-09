@@ -1,0 +1,117 @@
+{
+ "sha16": "87c45b090a4832e8",
+ "sha256": "87c45b090a4832e84cd85e38c806cd823aa03caac8d8aa42c7f54d25965fe343",
+ "file": "87c45b090a4832e8.pdf",
+ "bytes": 7131979,
+ "family": "missouri_oa_fmdc",
+ "source": "harvest",
+ "label": "missouri_oa_fmdc - _R2508-01%20-%20Final%20Specs.pdf",
+ "source_url": "https://oa.mo.gov/sites/default/files/bid-opportunities/_R2508-01%20-%20Final%20Specs.pdf",
+ "page_count": 318,
+ "text_layer": {
+  "pages_with_text": 307,
+  "pages": 318
+ },
+ "pages": {
+  "door_candidates": 1,
+  "hardware_candidates": 2,
+  "door_schedule_pages": [],
+  "hardware_pages": [
+   197,
+   198
+  ]
+ },
+ "readers": {
+  "a": {
+   "doors": 0,
+   "sets": 2,
+   "items": 10,
+   "name": "production text layer (weyland-subx-worker/src/lib/text-layer-read.js)"
+  },
+  "b": {
+   "doors": 0,
+   "sets": 2,
+   "items": 10,
+   "name": "geometry first (tools/accuracy/truth/reader_b.mjs)",
+   "tables": 0
+  }
+ },
+ "rows_agreed": 10,
+ "rows_disputed": 0,
+ "rows_total": 10,
+ "agreement_rate": 1,
+ "agreement": {
+  "doors": {
+   "rows": 0,
+   "agreed": 0,
+   "disputed": 0,
+   "only_a": 0,
+   "only_b": 0,
+   "fields": {},
+   "agreement_rate": null
+  },
+  "items": {
+   "rows": 10,
+   "agreed": 10,
+   "disputed": 0,
+   "only_a": 0,
+   "only_b": 0,
+   "fields": {
+    "qty": {
+     "agree": 10,
+     "total": 10
+    },
+    "description": {
+     "agree": 10,
+     "total": 10
+    },
+    "catalog": {
+     "agree": 10,
+     "total": 10
+    },
+    "finish": {
+     "agree": 10,
+     "total": 10
+    },
+    "manufacturer": {
+     "agree": 10,
+     "total": 10
+    }
+   },
+   "agreement_rate": 1
+  },
+  "sets": {
+   "sets": 2,
+   "agreed": 2
+  }
+ },
+ "triage_class": "none",
+ "triage_from": "tools/corpus/harvest/triage.json",
+ "oracles": {
+  "marks_on_plan": {
+   "applicable": false,
+   "reason": "not for class none"
+  },
+  "sets_exist": {
+   "applicable": false,
+   "reason": "not for class none"
+  },
+  "set_door_lists": {
+   "applicable": false,
+   "reason": "not for class none"
+  },
+  "types_in_legend": {
+   "applicable": false,
+   "reason": "not for class none"
+  },
+  "sizes_and_marks": {
+   "applicable": false,
+   "reason": "not for class none"
+  }
+ },
+ "tier": "agreed",
+ "disagreement_count": 0,
+ "disagreements": [],
+ "ms": 659,
+ "generated_at": "2026-10-09T10:47:27.236Z"
+}

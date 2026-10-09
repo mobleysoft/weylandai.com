@@ -1,0 +1,126 @@
+{
+ "sha16": "f2c552167c78e1c4",
+ "sha256": "f2c552167c78e1c46a5eef817c64484cfb178eda7bffd3d9ff1bf89ed0b07683",
+ "file": "f2c552167c78e1c4.pdf",
+ "bytes": 9634305,
+ "family": "university_bid_pages",
+ "source": "harvest",
+ "label": "university_bid_pages - esbd-rfp-fm2020-001-uta-project-manual---bid-issue-2019-07-12.pdf",
+ "source_url": "https://resources.uta.edu/business-affairs/procurement/rfp-files/fm2020-001/esbd-rfp-fm2020-001-uta-project-manual---bid-issue-2019-07-12.pdf",
+ "page_count": 661,
+ "text_layer": {
+  "pages_with_text": 597,
+  "pages": 661
+ },
+ "pages": {
+  "door_candidates": 5,
+  "hardware_candidates": 3,
+  "door_schedule_pages": [],
+  "hardware_pages": [
+   313,
+   314
+  ]
+ },
+ "readers": {
+  "a": {
+   "doors": 0,
+   "sets": 3,
+   "items": 18,
+   "name": "production text layer (weyland-subx-worker/src/lib/text-layer-read.js)"
+  },
+  "b": {
+   "doors": 0,
+   "sets": 3,
+   "items": 18,
+   "name": "geometry first (tools/accuracy/truth/reader_b.mjs)",
+   "tables": 0
+  }
+ },
+ "rows_agreed": 17,
+ "rows_disputed": 1,
+ "rows_total": 18,
+ "agreement_rate": 0.9444,
+ "agreement": {
+  "doors": {
+   "rows": 0,
+   "agreed": 0,
+   "disputed": 0,
+   "only_a": 0,
+   "only_b": 0,
+   "fields": {},
+   "agreement_rate": null
+  },
+  "items": {
+   "rows": 18,
+   "agreed": 17,
+   "disputed": 1,
+   "only_a": 0,
+   "only_b": 0,
+   "fields": {
+    "qty": {
+     "agree": 18,
+     "total": 18
+    },
+    "description": {
+     "agree": 18,
+     "total": 18
+    },
+    "catalog": {
+     "agree": 17,
+     "total": 18
+    },
+    "finish": {
+     "agree": 13,
+     "total": 13
+    },
+    "manufacturer": {
+     "agree": 14,
+     "total": 14
+    }
+   },
+   "agreement_rate": 0.9444
+  },
+  "sets": {
+   "sets": 3,
+   "agreed": 3
+  }
+ },
+ "triage_class": "spec-only",
+ "triage_from": "tools/corpus/harvest/triage.json",
+ "oracles": {
+  "marks_on_plan": {
+   "applicable": false,
+   "reason": "not for class spec-only"
+  },
+  "sets_exist": {
+   "applicable": false,
+   "reason": "not for class spec-only"
+  },
+  "set_door_lists": {
+   "applicable": false,
+   "reason": "not for class spec-only"
+  },
+  "types_in_legend": {
+   "applicable": false,
+   "reason": "not for class spec-only"
+  },
+  "sizes_and_marks": {
+   "applicable": false,
+   "reason": "not for class spec-only"
+  }
+ },
+ "tier": "agreed",
+ "disagreement_count": 1,
+ "disagreements": [
+  {
+   "kind": "item",
+   "page": 313,
+   "key": "802 / 9266F 36” 20” STD 626",
+   "field": "catalog",
+   "a": "9266F 36” 20” STD 626",
+   "b": "9266F 36” 20” STD"
+  }
+ ],
+ "ms": 1843,
+ "generated_at": "2026-10-09T10:49:41.228Z"
+}

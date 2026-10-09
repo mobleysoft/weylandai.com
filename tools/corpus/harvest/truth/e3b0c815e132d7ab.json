@@ -1,0 +1,316 @@
+{
+ "sha16": "e3b0c815e132d7ab",
+ "sha256": "e3b0c815e132d7ab6cc87d01588d22ab9f18f2edd99bf437bfbfcc74638a6b66",
+ "file": "e3b0c815e132d7ab.pdf",
+ "bytes": 20171859,
+ "family": "missouri_oa_fmdc",
+ "source": "harvest",
+ "label": "missouri_oa_fmdc - _X2531-01%20-%20Final%20Plans.pdf",
+ "source_url": "https://oa.mo.gov/sites/default/files/bid-opportunities/_X2531-01%20-%20Final%20Plans.pdf",
+ "page_count": 38,
+ "text_layer": {
+  "pages_with_text": 38,
+  "pages": 38
+ },
+ "pages": {
+  "door_candidates": 3,
+  "hardware_candidates": 0,
+  "door_schedule_pages": [
+   20
+  ],
+  "hardware_pages": []
+ },
+ "readers": {
+  "a": {
+   "doors": 18,
+   "sets": 0,
+   "items": 0,
+   "name": "production text layer (weyland-subx-worker/src/lib/text-layer-read.js)"
+  },
+  "b": {
+   "doors": 18,
+   "sets": 0,
+   "items": 0,
+   "name": "geometry first (tools/accuracy/truth/reader_b.mjs)",
+   "tables": 1
+  }
+ },
+ "rows_agreed": 0,
+ "rows_disputed": 18,
+ "rows_total": 18,
+ "agreement_rate": 0,
+ "agreement": {
+  "doors": {
+   "rows": 18,
+   "agreed": 0,
+   "disputed": 18,
+   "only_a": 0,
+   "only_b": 0,
+   "fields": {
+    "width_inches": {
+     "agree": 18,
+     "total": 18
+    },
+    "height_inches": {
+     "agree": 18,
+     "total": 18
+    },
+    "door_type": {
+     "agree": 18,
+     "total": 18
+    },
+    "material": {
+     "agree": 18,
+     "total": 18
+    },
+    "fire_rating": {
+     "agree": 0,
+     "total": 18
+    },
+    "hardware_group": {
+     "agree": 16,
+     "total": 18
+    }
+   },
+   "agreement_rate": 0
+  },
+  "items": {
+   "rows": 0,
+   "agreed": 0,
+   "disputed": 0,
+   "only_a": 0,
+   "only_b": 0,
+   "fields": {},
+   "agreement_rate": null
+  },
+  "sets": {
+   "sets": 0,
+   "agreed": 0
+  }
+ },
+ "triage_class": "schedule-only",
+ "triage_from": "inferred (S=true H=false plan sheets=1)",
+ "oracles": {
+  "marks_on_plan": {
+   "applicable": true,
+   "total": 18,
+   "pass": 4,
+   "fail": 14,
+   "pass_rate": 0.2222,
+   "examples": [
+    "mark 100-1 (schedule p.20) not tagged on any plan",
+    "mark 100-2 (schedule p.20) not tagged on any plan",
+    "mark 101-1 (schedule p.20) not tagged on any plan",
+    "mark 103-1 (schedule p.20) not tagged on any plan",
+    "mark 105-1 (schedule p.20) not tagged on any plan",
+    "mark 106-1 (schedule p.20) not tagged on any plan",
+    "mark 109-1 (schedule p.20) not tagged on any plan",
+    "mark 110-1 (schedule p.20) not tagged on any plan",
+    "mark 111-1 (schedule p.20) not tagged on any plan",
+    "mark 112-1 (schedule p.20) not tagged on any plan",
+    "mark 113-1 (schedule p.20) not tagged on any plan",
+    "mark 114-1 (schedule p.20) not tagged on any plan"
+   ],
+   "plan_sheets": [
+    "A-401 p.24"
+   ],
+   "plan_counts": {
+    "plan_sheets": 1,
+    "rooms": 4,
+    "corridors": 0,
+    "tags": 4,
+    "unmatched_tags": 0,
+    "schedule_marks": 18,
+    "marks_not_on_plan": 14
+   }
+  },
+  "sets_exist": {
+   "applicable": false,
+   "reason": "not for class schedule-only"
+  },
+  "set_door_lists": {
+   "applicable": false,
+   "reason": "not for class schedule-only"
+  },
+  "types_in_legend": {
+   "applicable": false,
+   "reason": "no DOOR TYPES / FRAME TYPES legend title in this PDF"
+  },
+  "sizes_and_marks": {
+   "applicable": true,
+   "total": 18,
+   "pass": 18,
+   "fail": 0,
+   "pass_rate": 1,
+   "examples": [],
+   "size_fail": 0,
+   "mark_fail": 0
+  }
+ },
+ "tier": "oracle-checked",
+ "disagreement_count": 20,
+ "disagreements": [
+  {
+   "kind": "door",
+   "page": 20,
+   "key": "100-1",
+   "field": "fire_rating",
+   "a": "PNT 45 MIN.",
+   "b": "45 MIN"
+  },
+  {
+   "kind": "door",
+   "page": 20,
+   "key": "100-1",
+   "field": "hardware_group",
+   "a": "1 REQUIRED: FIRE RATED",
+   "b": "1"
+  },
+  {
+   "kind": "door",
+   "page": 20,
+   "key": "100-2",
+   "field": "fire_rating",
+   "a": "PNT 45 MIN.",
+   "b": "45 MIN"
+  },
+  {
+   "kind": "door",
+   "page": 20,
+   "key": "100-2",
+   "field": "hardware_group",
+   "a": "1 REQUIRED: FIRE RATED",
+   "b": "1"
+  },
+  {
+   "kind": "door",
+   "page": 20,
+   "key": "101-1",
+   "field": "fire_rating",
+   "a": "PNT",
+   "b": null
+  },
+  {
+   "kind": "door",
+   "page": 20,
+   "key": "102-1",
+   "field": "fire_rating",
+   "a": "PNT",
+   "b": null
+  },
+  {
+   "kind": "door",
+   "page": 20,
+   "key": "103-1",
+   "field": "fire_rating",
+   "a": "PNT",
+   "b": null
+  },
+  {
+   "kind": "door",
+   "page": 20,
+   "key": "104-1",
+   "field": "fire_rating",
+   "a": "PNT",
+   "b": null
+  },
+  {
+   "kind": "door",
+   "page": 20,
+   "key": "105-1",
+   "field": "fire_rating",
+   "a": "PNT",
+   "b": null
+  },
+  {
+   "kind": "door",
+   "page": 20,
+   "key": "106-1",
+   "field": "fire_rating",
+   "a": "PNT",
+   "b": null
+  },
+  {
+   "kind": "door",
+   "page": 20,
+   "key": "109-1",
+   "field": "fire_rating",
+   "a": "PNT",
+   "b": null
+  },
+  {
+   "kind": "door",
+   "page": 20,
+   "key": "110-1",
+   "field": "fire_rating",
+   "a": "PNT",
+   "b": null
+  },
+  {
+   "kind": "door",
+   "page": 20,
+   "key": "111-1",
+   "field": "fire_rating",
+   "a": "PNT",
+   "b": null
+  },
+  {
+   "kind": "door",
+   "page": 20,
+   "key": "112-1",
+   "field": "fire_rating",
+   "a": "PNT",
+   "b": null
+  },
+  {
+   "kind": "door",
+   "page": 20,
+   "key": "113-1",
+   "field": "fire_rating",
+   "a": "PNT",
+   "b": null
+  },
+  {
+   "kind": "door",
+   "page": 20,
+   "key": "114-1",
+   "field": "fire_rating",
+   "a": "PNT",
+   "b": null
+  },
+  {
+   "kind": "door",
+   "page": 20,
+   "key": "115-1",
+   "field": "fire_rating",
+   "a": "PNT",
+   "b": null
+  },
+  {
+   "kind": "door",
+   "page": 20,
+   "key": "116-1",
+   "field": "fire_rating",
+   "a": "PNT",
+   "b": null
+  },
+  {
+   "kind": "door",
+   "page": 20,
+   "key": "117-1",
+   "field": "fire_rating",
+   "a": "PNT",
+   "b": null
+  },
+  {
+   "kind": "door",
+   "page": 20,
+   "key": "118-1",
+   "field": "fire_rating",
+   "a": "PNT",
+   "b": null
+  }
+ ],
+ "ms": 4013,
+ "generated_at": "2026-10-09T10:49:08.553Z"
+}

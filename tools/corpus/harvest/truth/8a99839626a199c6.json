@@ -1,0 +1,334 @@
+{
+ "sha16": "8a99839626a199c6",
+ "sha256": "8a99839626a199c632fe72e5de191035fcff67f0937c472fad98c5e987335acd",
+ "file": "8a99839626a199c6.pdf",
+ "bytes": 11161446,
+ "family": "missouri_oa_fmdc",
+ "source": "harvest",
+ "label": "missouri_oa_fmdc - _R2410-01%20Final%20Bid%20Plans.pdf",
+ "source_url": "https://oa.mo.gov/sites/default/files/bid-opportunities/_R2410-01%20Final%20Bid%20Plans.pdf",
+ "page_count": 39,
+ "text_layer": {
+  "pages_with_text": 39,
+  "pages": 39
+ },
+ "pages": {
+  "door_candidates": 1,
+  "hardware_candidates": 1,
+  "door_schedule_pages": [
+   19
+  ],
+  "hardware_pages": [
+   19
+  ]
+ },
+ "readers": {
+  "a": {
+   "doors": 2,
+   "sets": 2,
+   "items": 9,
+   "name": "production text layer (weyland-subx-worker/src/lib/text-layer-read.js)"
+  },
+  "b": {
+   "doors": 2,
+   "sets": 2,
+   "items": 7,
+   "name": "geometry first (tools/accuracy/truth/reader_b.mjs)",
+   "tables": 1
+  }
+ },
+ "rows_agreed": 1,
+ "rows_disputed": 15,
+ "rows_total": 16,
+ "agreement_rate": 0.0625,
+ "agreement": {
+  "doors": {
+   "rows": 2,
+   "agreed": 0,
+   "disputed": 2,
+   "only_a": 0,
+   "only_b": 0,
+   "fields": {
+    "width_inches": {
+     "agree": 2,
+     "total": 2
+    },
+    "height_inches": {
+     "agree": 0,
+     "total": 2
+    },
+    "door_type": {
+     "agree": 2,
+     "total": 2
+    },
+    "material": {
+     "agree": 2,
+     "total": 2
+    },
+    "hardware_group": {
+     "agree": 0,
+     "total": 2
+    },
+    "location": {
+     "agree": 1,
+     "total": 2
+    }
+   },
+   "agreement_rate": 0
+  },
+  "items": {
+   "rows": 14,
+   "agreed": 1,
+   "disputed": 1,
+   "only_a": 7,
+   "only_b": 5,
+   "fields": {
+    "qty": {
+     "agree": 2,
+     "total": 2
+    },
+    "description": {
+     "agree": 2,
+     "total": 2
+    },
+    "catalog": {
+     "agree": 0,
+     "total": 1
+    },
+    "finish": {
+     "agree": 0,
+     "total": 1
+    },
+    "manufacturer": {
+     "agree": 0,
+     "total": 1
+    }
+   },
+   "agreement_rate": 0.0714
+  },
+  "sets": {
+   "sets": 3,
+   "agreed": 1
+  }
+ },
+ "triage_class": "spec-only",
+ "triage_from": "tools/corpus/harvest/triage.json",
+ "oracles": {
+  "marks_on_plan": {
+   "applicable": false,
+   "reason": "not for class spec-only"
+  },
+  "sets_exist": {
+   "applicable": false,
+   "reason": "not for class spec-only"
+  },
+  "set_door_lists": {
+   "applicable": false,
+   "reason": "not for class spec-only"
+  },
+  "types_in_legend": {
+   "applicable": false,
+   "reason": "not for class spec-only"
+  },
+  "sizes_and_marks": {
+   "applicable": false,
+   "reason": "not for class spec-only"
+  }
+ },
+ "tier": "agreed",
+ "disagreement_count": 22,
+ "disagreements": [
+  {
+   "kind": "door",
+   "page": 19,
+   "key": "D1",
+   "field": "height_inches",
+   "a": null,
+   "b": 32
+  },
+  {
+   "kind": "door",
+   "page": 19,
+   "key": "D1",
+   "field": "hardware_group",
+   "a": "EXIST.",
+   "b": "1"
+  },
+  {
+   "kind": "door",
+   "page": 19,
+   "key": "D1",
+   "field": "location",
+   "a": "RESTROOM",
+   "b": "MENS RESTROOM"
+  },
+  {
+   "kind": "door",
+   "page": 19,
+   "key": "D2",
+   "field": "height_inches",
+   "a": null,
+   "b": 30
+  },
+  {
+   "kind": "door",
+   "page": 19,
+   "key": "D2",
+   "field": "hardware_group",
+   "a": "EXIST.",
+   "b": "2"
+  },
+  {
+   "kind": "item",
+   "page": 19,
+   "key": "(CONTINUED) / TA-6 TOILET PAPER HOLDER; SURFACE MOUNTED ___ ___ REUSE EXISTING B r a dM. S c h a e f e r - A r c h i t e c t",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 19,
+   "key": "(CONTINUED) / - 2 0 0 9 0 2 7 2 9 4",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 19,
+   "key": "(CONTINUED) / TA-7 SANITARY NAPKIN DISPOSAL; SURFACE MOUNTED BOBRICK B-254",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 19,
+   "key": "(CONTINUED) / DOOR CLOSER",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 19,
+   "key": "(CONTINUED) / TA-8 SANITARY NAPKIN DISPOSAL; PARTITION MOUNTED; DUAL-ACCESS BOBRICK B-354",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 19,
+   "key": "2 / HINGES",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 19,
+   "key": "2 / GB-1 GRAB BAR; 18\" LENGTH",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 19,
+   "key": "2 / GB-2 GRAB BAR; 36\" LENGTH",
+   "field": "catalog",
+   "a": "GB-2 GRAB BAR; 36\" LENGTH",
+   "b": "GB-2 GRAB BAR; 36\" LENGTH BOBRICK B-5806x36"
+  },
+  {
+   "kind": "item",
+   "page": 19,
+   "key": "2 / GB-2 GRAB BAR; 36\" LENGTH",
+   "field": "finish",
+   "a": "BOBRICK",
+   "b": null
+  },
+  {
+   "kind": "item",
+   "page": 19,
+   "key": "2 / GB-2 GRAB BAR; 36\" LENGTH",
+   "field": "manufacturer",
+   "a": "B-5806X36",
+   "b": null
+  },
+  {
+   "kind": "item",
+   "page": 19,
+   "key": "2 / 7-PIN CORE GB-1 GRAB BAR; 18\" LENGTH BOBRICK B-5806x18",
+   "field": "(row)",
+   "a": null,
+   "b": "read",
+   "why": "only reader B read this row"
+  },
+  {
+   "kind": "item",
+   "page": 19,
+   "key": "1 / MO # A - 2 0 0 9 0 2 7 2 9 4",
+   "field": "(row)",
+   "a": null,
+   "b": "read",
+   "why": "only reader B read this row"
+  },
+  {
+   "kind": "item",
+   "page": 19,
+   "key": "1 / TA-7 SANITARY NAPKIN DISPOSAL; SURFACE MOUNTED BOBRICK B-254",
+   "field": "(row)",
+   "a": null,
+   "b": "read",
+   "why": "only reader B read this row"
+  },
+  {
+   "kind": "item",
+   "page": 19,
+   "key": "1 / DOOR CLOSER",
+   "field": "(row)",
+   "a": null,
+   "b": "read",
+   "why": "only reader B read this row"
+  },
+  {
+   "kind": "item",
+   "page": 19,
+   "key": "1 / TA-8 SANITARY NAPKIN DISPOSAL; PARTITION MOUNTED; DUAL-ACCESS BOBRICK B-354",
+   "field": "(row)",
+   "a": null,
+   "b": "read",
+   "why": "only reader B read this row"
+  },
+  {
+   "kind": "group",
+   "page": null,
+   "key": "(CONTINUED)",
+   "field": "(set)",
+   "a": "",
+   "b": null,
+   "why": "only reader A read this set"
+  },
+  {
+   "kind": "group",
+   "page": null,
+   "key": "1",
+   "field": "(set)",
+   "a": null,
+   "b": "",
+   "why": "only reader B read this set"
+  }
+ ],
+ "ms": 1266,
+ "generated_at": "2026-10-09T10:47:34.012Z"
+}

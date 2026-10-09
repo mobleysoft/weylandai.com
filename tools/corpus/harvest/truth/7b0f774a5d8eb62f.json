@@ -1,0 +1,106 @@
+{
+ "sha16": "7b0f774a5d8eb62f",
+ "sha256": "7b0f774a5d8eb62fb7391e414dd9658795ed21d06eee4b804c043bc081ce7ef8",
+ "file": "7b0f774a5d8eb62f.pdf",
+ "bytes": 2427166,
+ "family": "ohio_ofcc",
+ "source": "harvest",
+ "label": "ohio_ofcc - ADD3-DRC-25F132.pdf",
+ "source_url": "https://dam.assets.ohio.gov/image/upload/ofcc.ohio.gov/Portals/0/Documents/Bids/2026/ADD3-DRC-25F132.pdf",
+ "page_count": 43,
+ "text_layer": {
+  "pages_with_text": 33,
+  "pages": 43
+ },
+ "pages": {
+  "door_candidates": 1,
+  "hardware_candidates": 0,
+  "door_schedule_pages": [
+   12
+  ],
+  "hardware_pages": []
+ },
+ "readers": {
+  "a": {
+   "doors": 0,
+   "sets": 0,
+   "items": 0,
+   "name": "production text layer (weyland-subx-worker/src/lib/text-layer-read.js)"
+  },
+  "b": {
+   "doors": 1,
+   "sets": 0,
+   "items": 0,
+   "name": "geometry first (tools/accuracy/truth/reader_b.mjs)",
+   "tables": 1
+  }
+ },
+ "rows_agreed": 0,
+ "rows_disputed": 1,
+ "rows_total": 1,
+ "agreement_rate": 0,
+ "agreement": {
+  "doors": {
+   "rows": 1,
+   "agreed": 0,
+   "disputed": 0,
+   "only_a": 0,
+   "only_b": 1,
+   "fields": {},
+   "agreement_rate": 0
+  },
+  "items": {
+   "rows": 0,
+   "agreed": 0,
+   "disputed": 0,
+   "only_a": 0,
+   "only_b": 0,
+   "fields": {},
+   "agreement_rate": null
+  },
+  "sets": {
+   "sets": 0,
+   "agreed": 0
+  }
+ },
+ "triage_class": "plan-only",
+ "triage_from": "tools/corpus/harvest/triage.json",
+ "oracles": {
+  "marks_on_plan": {
+   "applicable": false,
+   "reason": "not for class plan-only"
+  },
+  "sets_exist": {
+   "applicable": false,
+   "reason": "not for class plan-only"
+  },
+  "set_door_lists": {
+   "applicable": false,
+   "reason": "not for class plan-only"
+  },
+  "types_in_legend": {
+   "applicable": false,
+   "reason": "not for class plan-only"
+  },
+  "sizes_and_marks": {
+   "applicable": false,
+   "reason": "not for class plan-only"
+  }
+ },
+ "tier": "unread",
+ "unread_reason": "no rows agreed and no oracle applies",
+ "disagreement_count": 1,
+ "disagreements": [
+  {
+   "kind": "door",
+   "page": 12,
+   "key": "140",
+   "field": "(row)",
+   "a": null,
+   "b": "read",
+   "why": "only reader B read this row"
+  }
+ ],
+ "ms": 205,
+ "generated_at": "2026-10-09T10:47:21.383Z"
+}

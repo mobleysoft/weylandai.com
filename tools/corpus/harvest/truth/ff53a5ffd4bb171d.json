@@ -1,0 +1,437 @@
+{
+ "sha16": "ff53a5ffd4bb171d",
+ "sha256": "ff53a5ffd4bb171dd3ff8117300d87452535ff7ee09b808a6da2b289392ca93f",
+ "file": "ff53a5ffd4bb171d.pdf",
+ "bytes": 2660336,
+ "family": "delaware_bidcondocs",
+ "source": "harvest",
+ "label": "delaware_bidcondocs - OMB_MJ4501000000_add2.pdf",
+ "source_url": "https://bidcondocs.delaware.gov/OMB/OMB_MJ4501000000_add2.pdf",
+ "page_count": 18,
+ "text_layer": {
+  "pages_with_text": 13,
+  "pages": 18
+ },
+ "pages": {
+  "door_candidates": 3,
+  "hardware_candidates": 2,
+  "door_schedule_pages": [],
+  "hardware_pages": [
+   4
+  ]
+ },
+ "readers": {
+  "a": {
+   "doors": 0,
+   "sets": 4,
+   "items": 37,
+   "name": "production text layer (weyland-subx-worker/src/lib/text-layer-read.js)"
+  },
+  "b": {
+   "doors": 0,
+   "sets": 4,
+   "items": 36,
+   "name": "geometry first (tools/accuracy/truth/reader_b.mjs)",
+   "tables": 0
+  }
+ },
+ "rows_agreed": 1,
+ "rows_disputed": 36,
+ "rows_total": 37,
+ "agreement_rate": 0.027,
+ "agreement": {
+  "doors": {
+   "rows": 0,
+   "agreed": 0,
+   "disputed": 0,
+   "only_a": 0,
+   "only_b": 0,
+   "fields": {},
+   "agreement_rate": null
+  },
+  "items": {
+   "rows": 37,
+   "agreed": 1,
+   "disputed": 35,
+   "only_a": 1,
+   "only_b": 0,
+   "fields": {
+    "qty": {
+     "agree": 36,
+     "total": 36
+    },
+    "description": {
+     "agree": 36,
+     "total": 36
+    },
+    "catalog": {
+     "agree": 0,
+     "total": 35
+    },
+    "finish": {
+     "agree": 0,
+     "total": 32
+    },
+    "manufacturer": {
+     "agree": 0,
+     "total": 3
+    }
+   },
+   "agreement_rate": 0.027
+  },
+  "sets": {
+   "sets": 4,
+   "agreed": 4
+  }
+ },
+ "triage_class": "none",
+ "triage_from": "tools/corpus/harvest/triage.json",
+ "oracles": {
+  "marks_on_plan": {
+   "applicable": false,
+   "reason": "not for class none"
+  },
+  "sets_exist": {
+   "applicable": false,
+   "reason": "not for class none"
+  },
+  "set_door_lists": {
+   "applicable": false,
+   "reason": "not for class none"
+  },
+  "types_in_legend": {
+   "applicable": false,
+   "reason": "not for class none"
+  },
+  "sizes_and_marks": {
+   "applicable": false,
+   "reason": "not for class none"
+  }
+ },
+ "tier": "agreed",
+ "disagreement_count": 71,
+ "disagreements": [
+  {
+   "kind": "item",
+   "page": 4,
+   "key": "1 / 630",
+   "field": "catalog",
+   "a": "630",
+   "b": "630 STANLEY"
+  },
+  {
+   "kind": "item",
+   "page": 4,
+   "key": "1 / 630",
+   "field": "finish",
+   "a": "STANLEY",
+   "b": null
+  },
+  {
+   "kind": "item",
+   "page": 4,
+   "key": "1 / 626",
+   "field": "catalog",
+   "a": "626",
+   "b": "626 BEST"
+  },
+  {
+   "kind": "item",
+   "page": 4,
+   "key": "1 / 626",
+   "field": "finish",
+   "a": "BEST",
+   "b": null
+  },
+  {
+   "kind": "item",
+   "page": 4,
+   "key": "1 / 626",
+   "field": "catalog",
+   "a": "626",
+   "b": "626 BEST"
+  },
+  {
+   "kind": "item",
+   "page": 4,
+   "key": "1 / 626",
+   "field": "finish",
+   "a": "BEST",
+   "b": null
+  },
+  {
+   "kind": "item",
+   "page": 4,
+   "key": "1 / 628",
+   "field": "catalog",
+   "a": "628",
+   "b": "628 ABH"
+  },
+  {
+   "kind": "item",
+   "page": 4,
+   "key": "1 / 628",
+   "field": "manufacturer",
+   "a": "ABH",
+   "b": null
+  },
+  {
+   "kind": "item",
+   "page": 4,
+   "key": "1 / 600",
+   "field": "catalog",
+   "a": "600",
+   "b": "600 PRECISION"
+  },
+  {
+   "kind": "item",
+   "page": 4,
+   "key": "1 / 600",
+   "field": "finish",
+   "a": "PRECISION",
+   "b": null
+  },
+  {
+   "kind": "item",
+   "page": 4,
+   "key": "1 / 630",
+   "field": "catalog",
+   "a": "630",
+   "b": "630 PRECISION"
+  },
+  {
+   "kind": "item",
+   "page": 4,
+   "key": "1 / 630",
+   "field": "finish",
+   "a": "PRECISION",
+   "b": null
+  },
+  {
+   "kind": "item",
+   "page": 4,
+   "key": "1 / 689",
+   "field": "catalog",
+   "a": "689",
+   "b": "689 STANLEY"
+  },
+  {
+   "kind": "item",
+   "page": 4,
+   "key": "1 / 689",
+   "field": "finish",
+   "a": "STANLEY",
+   "b": null
+  },
+  {
+   "kind": "item",
+   "page": 4,
+   "key": "1 / WIRE HARNESS WH-26\"",
+   "field": "catalog",
+   "a": null,
+   "b": "STANLEY"
+  },
+  {
+   "kind": "item",
+   "page": 4,
+   "key": "1 / WIRE HARNESS WH-26\"",
+   "field": "finish",
+   "a": "STANLEY",
+   "b": null
+  },
+  {
+   "kind": "item",
+   "page": 4,
+   "key": "1 / WIRE HARNESS WH-192\"",
+   "field": "catalog",
+   "a": null,
+   "b": "STANLEY"
+  },
+  {
+   "kind": "item",
+   "page": 4,
+   "key": "1 / WIRE HARNESS WH-192\"",
+   "field": "finish",
+   "a": "STANLEY",
+   "b": null
+  },
+  {
+   "kind": "item",
+   "page": 4,
+   "key": "1 / WIRE HARNESS WH-6E\"",
+   "field": "catalog",
+   "a": null,
+   "b": "STANLEY"
+  },
+  {
+   "kind": "item",
+   "page": 4,
+   "key": "1 / WIRE HARNESS WH-6E\"",
+   "field": "finish",
+   "a": "STANLEY",
+   "b": null
+  },
+  {
+   "kind": "item",
+   "page": 4,
+   "key": "1 / 630",
+   "field": "catalog",
+   "a": "630",
+   "b": "630 TRIMCO"
+  },
+  {
+   "kind": "item",
+   "page": 4,
+   "key": "1 / 630",
+   "field": "finish",
+   "a": "TRIMCO",
+   "b": null
+  },
+  {
+   "kind": "item",
+   "page": 4,
+   "key": "1 / DOOR CONTACT MC-7 x SPDT x 1\" DIA",
+   "field": "catalog",
+   "a": null,
+   "b": "SDC"
+  },
+  {
+   "kind": "item",
+   "page": 4,
+   "key": "1 / DOOR CONTACT MC-7 x SPDT x 1\" DIA",
+   "field": "manufacturer",
+   "a": "SDC",
+   "b": null
+  },
+  {
+   "kind": "item",
+   "page": 4,
+   "key": "1 / BLK",
+   "field": "catalog",
+   "a": "BLK",
+   "b": "BLK REESE"
+  },
+  {
+   "kind": "item",
+   "page": 4,
+   "key": "1 / BLK",
+   "field": "finish",
+   "a": "REESE",
+   "b": null
+  },
+  {
+   "kind": "item",
+   "page": 4,
+   "key": "1 / 628",
+   "field": "catalog",
+   "a": "628",
+   "b": "628 REESE"
+  },
+  {
+   "kind": "item",
+   "page": 4,
+   "key": "1 / 628",
+   "field": "finish",
+   "a": "REESE",
+   "b": null
+  },
+  {
+   "kind": "item",
+   "page": 4,
+   "key": "1 / 628",
+   "field": "catalog",
+   "a": "628",
+   "b": "628 REESE"
+  },
+  {
+   "kind": "item",
+   "page": 4,
+   "key": "1 / 628",
+   "field": "finish",
+   "a": "REESE",
+   "b": null
+  },
+  {
+   "kind": "item",
+   "page": 4,
+   "key": "1 / 628",
+   "field": "catalog",
+   "a": "628",
+   "b": "628 REESE"
+  },
+  {
+   "kind": "item",
+   "page": 4,
+   "key": "1 / 628",
+   "field": "finish",
+   "a": "REESE",
+   "b": null
+  },
+  {
+   "kind": "item",
+   "page": 4,
+   "key": "2 / 652",
+   "field": "catalog",
+   "a": "652",
+   "b": "652 STANLEY"
+  },
+  {
+   "kind": "item",
+   "page": 4,
+   "key": "2 / 652",
+   "field": "finish",
+   "a": "STANLEY",
+   "b": null
+  },
+  {
+   "kind": "item",
+   "page": 4,
+   "key": "2 / 626",
+   "field": "catalog",
+   "a": "626",
+   "b": "626 BEST"
+  },
+  {
+   "kind": "item",
+   "page": 4,
+   "key": "2 / 626",
+   "field": "finish",
+   "a": "BEST",
+   "b": null
+  },
+  {
+   "kind": "item",
+   "page": 4,
+   "key": "2 / 630",
+   "field": "catalog",
+   "a": "630",
+   "b": "630 TRIMCO"
+  },
+  {
+   "kind": "item",
+   "page": 4,
+   "key": "2 / 630",
+   "field": "finish",
+   "a": "TRIMCO",
+   "b": null
+  },
+  {
+   "kind": "item",
+   "page": 4,
+   "key": "2 / 630",
+   "field": "catalog",
+   "a": "630",
+   "b": "630 TRIMCO"
+  },
+  {
+   "kind": "item",
+   "page": 4,
+   "key": "2 / 630",
+   "field": "finish",
+   "a": "TRIMCO",
+   "b": null
+  }
+ ],
+ "ms": 162,
+ "generated_at": "2026-10-09T10:49:56.920Z"
+}

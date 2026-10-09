@@ -1,0 +1,94 @@
+{
+ "sha16": "0a11467a5730ccb1",
+ "sha256": "0a11467a5730ccb11d375a4a62ca0900f4aab8dda7b0ce5948a62743b3e82bb0",
+ "file": "0a11467a5730ccb1.pdf",
+ "bytes": 14822400,
+ "family": "missouri_oa_fmdc",
+ "source": "harvest",
+ "label": "missouri_oa_fmdc - _R2415-01%20-%20Final%20Plans.pdf",
+ "source_url": "https://oa.mo.gov/sites/default/files/bid-opportunities/_R2415-01%20-%20Final%20Plans.pdf",
+ "page_count": 22,
+ "text_layer": {
+  "pages_with_text": 9,
+  "pages": 22
+ },
+ "pages": {
+  "door_candidates": 1,
+  "hardware_candidates": 0,
+  "door_schedule_pages": [],
+  "hardware_pages": []
+ },
+ "readers": {
+  "a": {
+   "doors": 0,
+   "sets": 0,
+   "items": 0,
+   "name": "production text layer (weyland-subx-worker/src/lib/text-layer-read.js)"
+  },
+  "b": {
+   "doors": 0,
+   "sets": 0,
+   "items": 0,
+   "name": "geometry first (tools/accuracy/truth/reader_b.mjs)",
+   "tables": 0
+  }
+ },
+ "rows_agreed": 0,
+ "rows_disputed": 0,
+ "rows_total": 0,
+ "agreement_rate": null,
+ "agreement": {
+  "doors": {
+   "rows": 0,
+   "agreed": 0,
+   "disputed": 0,
+   "only_a": 0,
+   "only_b": 0,
+   "fields": {},
+   "agreement_rate": null
+  },
+  "items": {
+   "rows": 0,
+   "agreed": 0,
+   "disputed": 0,
+   "only_a": 0,
+   "only_b": 0,
+   "fields": {},
+   "agreement_rate": null
+  },
+  "sets": {
+   "sets": 0,
+   "agreed": 0
+  }
+ },
+ "triage_class": "plan-only",
+ "triage_from": "tools/corpus/harvest/triage.json",
+ "oracles": {
+  "marks_on_plan": {
+   "applicable": false,
+   "reason": "not for class plan-only"
+  },
+  "sets_exist": {
+   "applicable": false,
+   "reason": "not for class plan-only"
+  },
+  "set_door_lists": {
+   "applicable": false,
+   "reason": "not for class plan-only"
+  },
+  "types_in_legend": {
+   "applicable": false,
+   "reason": "not for class plan-only"
+  },
+  "sizes_and_marks": {
+   "applicable": false,
+   "reason": "not for class plan-only"
+  }
+ },
+ "tier": "unread",
+ "unread_reason": "no door schedule or hardware set read by either reader",
+ "disagreement_count": 0,
+ "disagreements": [],
+ "ms": 1523,
+ "generated_at": "2026-10-09T10:44:43.600Z"
+}

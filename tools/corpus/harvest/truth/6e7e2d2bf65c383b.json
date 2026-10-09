@@ -1,0 +1,356 @@
+{
+ "sha16": "6e7e2d2bf65c383b",
+ "sha256": "6e7e2d2bf65c383bbc7c716ec8cca0e0e6bafc2a2aed6f5e5502a97a634ff0f9",
+ "file": "6e7e2d2bf65c383b.pdf",
+ "bytes": 55462049,
+ "family": "missouri_oa_fmdc",
+ "source": "harvest",
+ "label": "missouri_oa_fmdc - _X2410-01%20Final%20Bid%20Plans_Rebid.pdf",
+ "source_url": "https://oa.mo.gov/sites/default/files/bid-opportunities/_X2410-01%20Final%20Bid%20Plans_Rebid.pdf",
+ "page_count": 105,
+ "text_layer": {
+  "pages_with_text": 105,
+  "pages": 105
+ },
+ "pages": {
+  "door_candidates": 3,
+  "hardware_candidates": 0,
+  "door_schedule_pages": [
+   81,
+   97,
+   102
+  ],
+  "hardware_pages": []
+ },
+ "readers": {
+  "a": {
+   "doors": 16,
+   "sets": 0,
+   "items": 0,
+   "name": "production text layer (weyland-subx-worker/src/lib/text-layer-read.js)"
+  },
+  "b": {
+   "doors": 19,
+   "sets": 0,
+   "items": 0,
+   "name": "geometry first (tools/accuracy/truth/reader_b.mjs)",
+   "tables": 3
+  }
+ },
+ "rows_agreed": 7,
+ "rows_disputed": 13,
+ "rows_total": 20,
+ "agreement_rate": 0.35,
+ "agreement": {
+  "doors": {
+   "rows": 20,
+   "agreed": 7,
+   "disputed": 8,
+   "only_a": 1,
+   "only_b": 4,
+   "fields": {
+    "width_inches": {
+     "agree": 0,
+     "total": 8
+    },
+    "height_inches": {
+     "agree": 0,
+     "total": 8
+    },
+    "door_type": {
+     "agree": 15,
+     "total": 15
+    },
+    "material": {
+     "agree": 8,
+     "total": 8
+    },
+    "hardware_group": {
+     "agree": 0,
+     "total": 8
+    }
+   },
+   "agreement_rate": 0.35
+  },
+  "items": {
+   "rows": 0,
+   "agreed": 0,
+   "disputed": 0,
+   "only_a": 0,
+   "only_b": 0,
+   "fields": {},
+   "agreement_rate": null
+  },
+  "sets": {
+   "sets": 0,
+   "agreed": 0
+  }
+ },
+ "triage_class": "plan-only",
+ "triage_from": "tools/corpus/harvest/triage.json",
+ "oracles": {
+  "marks_on_plan": {
+   "applicable": false,
+   "reason": "not for class plan-only"
+  },
+  "sets_exist": {
+   "applicable": false,
+   "reason": "not for class plan-only"
+  },
+  "set_door_lists": {
+   "applicable": false,
+   "reason": "not for class plan-only"
+  },
+  "types_in_legend": {
+   "applicable": false,
+   "reason": "not for class plan-only"
+  },
+  "sizes_and_marks": {
+   "applicable": false,
+   "reason": "not for class plan-only"
+  }
+ },
+ "tier": "agreed",
+ "disagreement_count": 29,
+ "disagreements": [
+  {
+   "kind": "door",
+   "page": 81,
+   "key": "100A",
+   "field": "width_inches",
+   "a": null,
+   "b": 36
+  },
+  {
+   "kind": "door",
+   "page": 81,
+   "key": "100A",
+   "field": "height_inches",
+   "a": null,
+   "b": 80
+  },
+  {
+   "kind": "door",
+   "page": 81,
+   "key": "100A",
+   "field": "hardware_group",
+   "a": null,
+   "b": "SECURE ENTRY FUNCTION"
+  },
+  {
+   "kind": "door",
+   "page": 81,
+   "key": "101A",
+   "field": "width_inches",
+   "a": null,
+   "b": 36
+  },
+  {
+   "kind": "door",
+   "page": 81,
+   "key": "101A",
+   "field": "height_inches",
+   "a": null,
+   "b": 80
+  },
+  {
+   "kind": "door",
+   "page": 81,
+   "key": "101A",
+   "field": "hardware_group",
+   "a": null,
+   "b": "PRIVACY LOCK FUNCTION"
+  },
+  {
+   "kind": "door",
+   "page": 81,
+   "key": "102A",
+   "field": "width_inches",
+   "a": null,
+   "b": 36
+  },
+  {
+   "kind": "door",
+   "page": 81,
+   "key": "102A",
+   "field": "height_inches",
+   "a": null,
+   "b": 80
+  },
+  {
+   "kind": "door",
+   "page": 81,
+   "key": "102A",
+   "field": "hardware_group",
+   "a": null,
+   "b": "PRIVACY LOCK FUNCTION"
+  },
+  {
+   "kind": "door",
+   "page": 81,
+   "key": "103A",
+   "field": "width_inches",
+   "a": null,
+   "b": 36
+  },
+  {
+   "kind": "door",
+   "page": 81,
+   "key": "103A",
+   "field": "height_inches",
+   "a": null,
+   "b": 80
+  },
+  {
+   "kind": "door",
+   "page": 81,
+   "key": "103A",
+   "field": "hardware_group",
+   "a": null,
+   "b": "SECURE STOREROOM FUNCTION"
+  },
+  {
+   "kind": "door",
+   "page": 81,
+   "key": "104A",
+   "field": "width_inches",
+   "a": null,
+   "b": 36
+  },
+  {
+   "kind": "door",
+   "page": 81,
+   "key": "104A",
+   "field": "height_inches",
+   "a": null,
+   "b": 80
+  },
+  {
+   "kind": "door",
+   "page": 81,
+   "key": "104A",
+   "field": "hardware_group",
+   "a": null,
+   "b": "SECURE ENTRY FUNCTION"
+  },
+  {
+   "kind": "door",
+   "page": 81,
+   "key": "105A",
+   "field": "width_inches",
+   "a": null,
+   "b": 36
+  },
+  {
+   "kind": "door",
+   "page": 81,
+   "key": "105A",
+   "field": "height_inches",
+   "a": null,
+   "b": 80
+  },
+  {
+   "kind": "door",
+   "page": 81,
+   "key": "105A",
+   "field": "hardware_group",
+   "a": null,
+   "b": "PRIVACY LOCK FUNCTION"
+  },
+  {
+   "kind": "door",
+   "page": 81,
+   "key": "106A",
+   "field": "width_inches",
+   "a": null,
+   "b": 36
+  },
+  {
+   "kind": "door",
+   "page": 81,
+   "key": "106A",
+   "field": "height_inches",
+   "a": null,
+   "b": 80
+  },
+  {
+   "kind": "door",
+   "page": 81,
+   "key": "106A",
+   "field": "hardware_group",
+   "a": null,
+   "b": "PRIVACY LOCK FUNCTION"
+  },
+  {
+   "kind": "door",
+   "page": 81,
+   "key": "107A",
+   "field": "width_inches",
+   "a": null,
+   "b": 36
+  },
+  {
+   "kind": "door",
+   "page": 81,
+   "key": "107A",
+   "field": "height_inches",
+   "a": null,
+   "b": 80
+  },
+  {
+   "kind": "door",
+   "page": 81,
+   "key": "107A",
+   "field": "hardware_group",
+   "a": null,
+   "b": "SECURE STOREROOM FUNCTION"
+  },
+  {
+   "kind": "door",
+   "page": 81,
+   "key": "2X6",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "door",
+   "page": 97,
+   "key": "C3",
+   "field": "(row)",
+   "a": null,
+   "b": "read",
+   "why": "only reader B read this row"
+  },
+  {
+   "kind": "door",
+   "page": 97,
+   "key": "I1",
+   "field": "(row)",
+   "a": null,
+   "b": "read",
+   "why": "only reader B read this row"
+  },
+  {
+   "kind": "door",
+   "page": 97,
+   "key": "R1",
+   "field": "(row)",
+   "a": null,
+   "b": "read",
+   "why": "only reader B read this row"
+  },
+  {
+   "kind": "door",
+   "page": 97,
+   "key": "R2",
+   "field": "(row)",
+   "a": null,
+   "b": "read",
+   "why": "only reader B read this row"
+  }
+ ],
+ "ms": 2677,
+ "generated_at": "2026-10-09T10:46:50.905Z"
+}

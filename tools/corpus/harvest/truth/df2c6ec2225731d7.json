@@ -1,0 +1,132 @@
+{
+ "sha16": "df2c6ec2225731d7",
+ "sha256": "df2c6ec2225731d7ea2ceca1bcd1cd60105cf1daaa166e8fe35e01441f69d112",
+ "file": "df2c6ec2225731d7.pdf",
+ "bytes": 1450232,
+ "family": "missouri_oa_fmdc",
+ "source": "harvest",
+ "label": "missouri_oa_fmdc - _U2610-01%20Addendum%202.pdf",
+ "source_url": "https://oa.mo.gov/sites/default/files/bid-opportunities/_U2610-01%20Addendum%202.pdf",
+ "page_count": 11,
+ "text_layer": {
+  "pages_with_text": 10,
+  "pages": 11
+ },
+ "pages": {
+  "door_candidates": 1,
+  "hardware_candidates": 0,
+  "door_schedule_pages": [
+   10
+  ],
+  "hardware_pages": []
+ },
+ "readers": {
+  "a": {
+   "doors": 2,
+   "sets": 0,
+   "items": 0,
+   "name": "production text layer (weyland-subx-worker/src/lib/text-layer-read.js)"
+  },
+  "b": {
+   "doors": 0,
+   "sets": 0,
+   "items": 0,
+   "name": "geometry first (tools/accuracy/truth/reader_b.mjs)",
+   "tables": 0
+  }
+ },
+ "rows_agreed": 0,
+ "rows_disputed": 2,
+ "rows_total": 2,
+ "agreement_rate": 0,
+ "agreement": {
+  "doors": {
+   "rows": 2,
+   "agreed": 0,
+   "disputed": 0,
+   "only_a": 2,
+   "only_b": 0,
+   "fields": {},
+   "agreement_rate": 0
+  },
+  "items": {
+   "rows": 0,
+   "agreed": 0,
+   "disputed": 0,
+   "only_a": 0,
+   "only_b": 0,
+   "fields": {},
+   "agreement_rate": null
+  },
+  "sets": {
+   "sets": 0,
+   "agreed": 0
+  }
+ },
+ "triage_class": "schedule-only",
+ "triage_from": "tools/corpus/harvest/triage.json",
+ "oracles": {
+  "marks_on_plan": {
+   "applicable": false,
+   "reason": "no floor plan sheet found in this PDF (title blocks)",
+   "plan_counts": {
+    "plan_sheets": 0,
+    "rooms": 0,
+    "corridors": 0,
+    "tags": 0,
+    "unmatched_tags": 0,
+    "schedule_marks": 2,
+    "marks_not_on_plan": 2
+   }
+  },
+  "sets_exist": {
+   "applicable": false,
+   "reason": "not for class schedule-only"
+  },
+  "set_door_lists": {
+   "applicable": false,
+   "reason": "not for class schedule-only"
+  },
+  "types_in_legend": {
+   "applicable": false,
+   "reason": "no DOOR TYPES / FRAME TYPES legend title in this PDF"
+  },
+  "sizes_and_marks": {
+   "applicable": true,
+   "total": 2,
+   "pass": 0,
+   "fail": 2,
+   "pass_rate": 0,
+   "examples": [
+    "mark 101 p.10: size \"7' - 0\\\" 1 3/4\\\"\" -> null x null",
+    "mark 102 p.10: size \"7' - 0\\\" 1 3/4\\\"\" -> null x null"
+   ],
+   "size_fail": 2,
+   "mark_fail": 0
+  }
+ },
+ "tier": "oracle-checked",
+ "disagreement_count": 2,
+ "disagreements": [
+  {
+   "kind": "door",
+   "page": 10,
+   "key": "101",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "door",
+   "page": 10,
+   "key": "102",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  }
+ ],
+ "ms": 341,
+ "generated_at": "2026-10-09T10:48:56.698Z"
+}
