@@ -139,6 +139,7 @@ export function deriveLines(doors, sets) {
     const set = setByNumber.get(key) || null;
     const comps = (set && Array.isArray(set.components)) ? set.components : [];
     let unitPrice = 0, priceSource = "enter", priced = 0;
+    const unpriced = [];
     if (set && set.unit_price_override != null && Number.isFinite(Number(set.unit_price_override))) {
       unitPrice = Number(set.unit_price_override);
       priceSource = "set price on the schedule";
@@ -146,7 +147,7 @@ export function deriveLines(doors, sets) {
       let sum = 0;
       for (const c of comps) {
         const p = compPrice(c);
-        if (p == null) continue;
+        if (p == null) { unpriced.push(c); continue; }
         priced++;
         sum += p * (Number(c.quantity) || 1);
       }
@@ -159,9 +160,15 @@ export function deriveLines(doors, sets) {
       ? comps.slice(0, 6).map((c) => [Number(c.quantity) > 1 ? Number(c.quantity) + "x" : null, clean(c.component_type), clean(c.manufacturer), clean(c.model)].filter(Boolean).join(" ")).join("; ") + (comps.length > 6 ? "; +" + (comps.length - 6) + " more" : "")
       : null;
     const qty = g.marks.length || g.doorCount || 1;
+    // A set priced from only some of its items says so in the line itself (product audit
+    // 2026-10-09: Berryessa set 2 printed $455.80 an opening from 2 of its 9 items, its $3,564
+    // exit device not among them, with nothing on the PDF to say the total was short).
+    const partial = priced > 0 && unpriced.length
+      ? " (" + priced + " of " + comps.length + " items priced; not in this price: " + unpriced.slice(0, 4).map((c) => [clean(c.manufacturer), clean(c.model) || clean(c.component_type)].filter(Boolean).join(" ")).join(", ") + (unpriced.length > 4 ? ", +" + (unpriced.length - 4) + " more" : "") + ")"
+      : "";
     lines.push({
       kind: "hardware",
-      description: "Hardware set " + g.number + (set && clean(set.set_name) ? " - " + clean(set.set_name) : ""),
+      description: "Hardware set " + g.number + (set && clean(set.set_name) ? " - " + clean(set.set_name) : "") + partial,
       material: null,
       size: null,
       fireRating: null,

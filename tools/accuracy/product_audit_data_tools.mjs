@@ -51,9 +51,18 @@ async function ext(url, init = {}) {
   const r = await fetch(url, { redirect: "follow", signal: AbortSignal.timeout(30000), ...init, headers: { "User-Agent": UA, ...(init.headers || {}) } });
   return r;
 }
+// A link's status. A Cloudflare bot challenge ("Just a moment...", 403/503 with cf-mitigated) means
+// the page exists but a script cannot read it: reported as "challenge", never counted as dead or as 200.
 async function linkStatus(url) {
-  try { const r = await ext(url); await r.arrayBuffer().catch(() => null); return r.status; } catch (e) { return "error: " + e.message; }
+  try {
+    const r = await ext(url, { headers: { Accept: "text/html,application/xhtml+xml" } });
+    const t = await r.text().catch(() => "");
+    if ((r.status === 403 || r.status === 503) && (r.headers.get("cf-mitigated") === "challenge" || /<title>Just a moment\.\.\.<\/title>/i.test(t))) return "challenge";
+    return r.status;
+  } catch (e) { return "error: " + e.message; }
 }
+const dead = (st) => st !== 200 && st !== "challenge" && !(typeof st === "number" && st < 400);
+async function pool(items, n, fn) { const out = new Array(items.length); let i = 0; await Promise.all(Array.from({ length: n }, async () => { while (i < items.length) { const k = i++; out[k] = await fn(items[k]); } })); return out; }
 const csvRows = (t) => { const out = []; let row = [], cell = "", q = false; for (let i = 0; i < t.length; i++) { const c = t[i]; if (q) { if (c === '"' && t[i + 1] === '"') { cell += '"'; i++; } else if (c === '"') q = false; else cell += c; } else if (c === '"') q = true; else if (c === ",") { row.push(cell); cell = ""; } else if (c === "\n" || c === "\r") { if (c === "\r" && t[i + 1] === "\n") i++; row.push(cell); out.push(row); row = []; cell = ""; } else cell += c; } if (cell || row.length) { row.push(cell); out.push(row); } return out.filter((r) => r.length > 1 || r[0]); };
 const near = (a, b, tol) => Math.abs(Number(a) - Number(b)) <= tol;
 const sortedDesc = (xs) => xs.every((x, i) => i === 0 || xs[i - 1] >= x);
@@ -69,7 +78,7 @@ function checker() {
 // ---------------------------------------------------------------- HuntX
 async function huntx() {
   const claim = "Seven public sources, sorted by what a door sub can bid. Opportunity Discovery. Public construction notices from seven sources (Illinois CDB, NYC City Record and School Construction Authority, Los Angeles, Delaware, Texas DOT, California school funding), each tagged by trade fit: door scope named, building work, funding to watch, or civil. Filter by state, due date and value; saved searches count new notices since you last looked and send them to your feed reader (RSS) and your calendar (bid due dates).";
-  const bar = "All seven named sources hold notices; every notice carries a trade fit and a link on its source's own site; fit=doors returns only door-scope notices, each with the words that put it there, and its total equals the index's door count; state, due-date and value filters return only matching rows; 5 source links (5 different sources) answer HTTP 200; a saved search returns a new-notice count and working RSS and calendar feeds. The sample email is sent only if the account's address is jmobleyworks+<tag>@gmail.com.";
+  const bar = "All seven named sources hold notices; every notice carries a trade fit and a link on its source's own site, and no link is dead (every distinct link fetched; a bot challenge is reported, not counted as dead); fit=doors returns only door-scope notices, each with the words that put it there, and its total equals the index's door count; state, due-date and value filters return only matching rows; 5 source links (5 different sources) answer HTTP 200; a saved search returns a new-notice count and working RSS and calendar feeds. The sample email is sent only if the account's address is jmobleyworks+<tag>@gmail.com.";
   const { checks, check } = checker();
   const SOURCES = { il_cdb: "cdb.illinois.gov", nyc_cityrecord: "a856-cityrecord.nyc.gov", nyc_sca: "nycsca.org", la_ramp: "rampla.org", de_mmp: "mmp.delaware.gov", txdot: "txdot.gov", ca_opsc: "dgs.ca.gov" };
   const first = await api("/api/hunt/opportunities?limit=1");
@@ -117,6 +126,15 @@ async function huntx() {
   const links = [];
   for (const o of picks) links.push({ source: o.source, url: o.detail_url, status: await linkStatus(o.detail_url) });
   check("5 source links answer 200", links.length === 5 && links.every((l) => l.status === 200), links.map((l) => l.source + " " + l.status));
+  // Every distinct link in the index, and how many notices each dead one carries.
+  const distinct = [...new Set(all.map((o) => o.detail_url))];
+  const linkSt = Object.fromEntries(await pool(distinct, 6, async (u) => [u, await linkStatus(u)]));
+  const deadRows = all.filter((o) => dead(linkSt[o.detail_url]));
+  const deadBySource = {};
+  for (const o of deadRows) { const d = (deadBySource[o.source] ||= { notices: 0, links: new Set() }); d.notices++; d.links.add(o.detail_url + " -> " + linkSt[o.detail_url]); }
+  const deadList = Object.entries(deadBySource).map(([k, v]) => ({ source: k, notices: v.notices, links: [...v.links].slice(0, 3) }));
+  const challenged = all.filter((o) => linkSt[o.detail_url] === "challenge").length;
+  check("no notice links to a dead page (every distinct link fetched)", deadRows.length === 0, `${distinct.length} distinct links; ${deadRows.length} of ${all.length} notices link to a dead page` + (deadList.length ? ": " + deadList.map((d) => `${d.source} ${d.notices} (${d.links.join(", ")})`).join("; ") : "") + (challenged ? `; ${challenged} behind a bot challenge` : ""));
   // Saved search -> new count, RSS, calendar; then deleted.
   const saved = { created: null };
   const sv = await post("/api/hunt/saved", { name: "audit " + new Date().toISOString().slice(0, 16), params: { fit: "building" } });
@@ -150,8 +168,8 @@ async function huntx() {
   const fits = idx.fits || {};
   return {
     claim, bar, checks, input: "whole index (" + idx.indexed + " notices), fit=doors, state=TX, due_within=30, min_value=1M, a saved search",
-    numbers: { indexed: idx.indexed, sources: srcN, fits, lastIngest: idx.lastIngest, links, notice_specific_links: specific, agency_page_links: generic, saved, sample },
-    summary: `${idx.indexed} notices from ${Object.keys(srcN).length} sources; ${fits.doors} door / ${fits.building} building / ${fits.signal} signal / ${fits.civil} civil; links ${links.filter((l) => l.status === 200).length}/5 200; ${specific} of ${all.length} link to the notice itself (${generic.map((g) => g.source).join(", ")} link to one agency page); sample email ${sample.run ? "sent" : "not sent (not a jmobleyworks+ address)"}`,
+    numbers: { indexed: idx.indexed, sources: srcN, fits, lastIngest: idx.lastIngest, links, notice_specific_links: specific, agency_page_links: generic, distinct_links: distinct.length, notices_with_dead_links: deadRows.length, dead_links_by_source: deadList, notices_behind_bot_challenge: challenged, saved, sample },
+    summary: `${idx.indexed} notices from ${Object.keys(srcN).length} sources; ${fits.doors} door / ${fits.building} building / ${fits.signal} signal / ${fits.civil} civil; links ${links.filter((l) => l.status === 200).length}/5 200; ${deadRows.length} of ${all.length} notices link to a dead page (${deadList.map((d) => d.source + " " + d.notices).join(", ") || "none"}); ${specific} of ${all.length} link to the notice itself (${generic.map((g) => g.source).join(", ")} link to one agency page); sample email ${sample.run ? "sent" : "not sent (not a jmobleyworks+ address)"}`,
   };
 }
 
@@ -229,7 +247,7 @@ async function compxTxdot() {
 // ---------------------------------------------------------------- MarketX
 async function marketx() {
   const claim = "The door work your city is permitting, and who is building it. Commercial and multifamily building permits from Chicago, New York, Los Angeles, Austin, San Francisco and Seattle: permitted value by month against last year, by building use, for work likely to include doors; the largest and newest projects; the general contractors and owners ranked by permitted value; the open public bids in the state. Projects and companies CSV.";
-  const bar = "All six metros hold permits with a permitted value; each metro's page carries months for this year and last year, a by-use split that adds up to the total, largest projects in value order, newest in date order, general contractors ranked by permitted value, the open-bids block, and the metros list's figures; both CSVs download for the paying account, the projects CSV holding every project of the period (up to its 5,000 cap) and the companies CSV every ranked company.";
+  const bar = "All six metros hold permits with a permitted value; each metro's page carries months for this year and last year, a by-use split that adds up to the total, largest projects in value order, newest in date order, general contractors or owners ranked by permitted value (at least one of the two; a metro with neither fails 'who is building it'), the open-bids block, and the metros list's figures; both CSVs download for the paying account, the projects CSV holding every project of the period (up to its 5,000 cap) and the companies CSV beginning with the same ranking.";
   const { checks, check } = checker();
   const NAMES = { chicago: "Chicago", nyc: "New York City", la: "Los Angeles", austin: "Austin", sf: "San Francisco", seattle: "Seattle" };
   const ms = await api("/api/marketx/metros");
@@ -251,7 +269,13 @@ async function marketx() {
     const pRows = pc.status === 200 ? csvRows(pc.text).length - 1 : -1;
     const cRows = cc.status === 200 ? csvRows(cc.text).length - 1 : -1;
     const expectP = Math.min(t.projects || 0, 5000);
-    const expectC = (d.contractors || []).length + (d.owners || []).length;
+    const jsonC = (d.contractors || []).length + (d.owners || []).length;
+    const cRowsParsed = cc.status === 200 ? csvRows(cc.text).slice(1) : [];
+    // The CSV ranks up to 5,000 of each; the JSON up to 200: the CSV must begin with the JSON's ranking.
+    const csvC = cRowsParsed.filter((r) => r[0] === "contractor").map((r) => r[1]);
+    const csvO = cRowsParsed.filter((r) => r[0] === "owner").map((r) => r[1]);
+    const companiesCsvOk = cc.status === 200 && cRowsParsed.length >= jsonC && (d.contractors || []).every((x, i) => csvC[i] === x.name) && (d.owners || []).every((x, i) => csvO[i] === x.name);
+    const expectC = jsonC;
     const linkOk = (d.largest || []).slice(0, 1).map((x) => x.url)[0];
     const row = {
       metro: k, http: m.status, paid: d.paid, projects: t.projects, value: t.value, priorValue: t.priorValue, valueChange: t.valueChange,
@@ -260,11 +284,11 @@ async function marketx() {
       contractors: (d.contractors || []).length, contractors_ranked: sortedDesc((d.contractors || []).map((x) => Number(x.value) || 0)), owners: (d.owners || []).length,
       matches_metros_list: list[k] && list[k].projects === t.projects && near(list[k].value, t.value, 1),
       bids: d.bids ? { open: d.bids.open, doors: d.bids.doors } : null, latest: list[k]?.latest,
-      projects_csv: { http: pc.status, rows: pRows, expected: expectP }, companies_csv: { http: cc.status, rows: cRows, expected: expectC }, sample_link: linkOk || null,
+      projects_csv: { http: pc.status, rows: pRows, expected: expectP }, companies_csv: { http: cc.status, rows: cRows, json_ranked: expectC, ok: companiesCsvOk }, names_note: d.names, sample_link: linkOk || null,
     };
-    row.ok = m.ok && d.paid && t.projects > 0 && t.value > 0 && t.priorValue > 0 && thisYearMonths >= 10 && lastYearMonths >= 10 && row.by_use_sum_equals_total && row.largest_desc && row.newest_desc && row.contractors > 0 && row.contractors_ranked && row.matches_metros_list && row.bids && pRows === expectP && cRows === expectC;
+    row.ok = m.ok && d.paid && t.projects > 0 && t.value > 0 && t.priorValue > 0 && thisYearMonths >= 10 && lastYearMonths >= 10 && row.by_use_sum_equals_total && row.largest_desc && row.newest_desc && (row.contractors + row.owners) > 0 && row.contractors_ranked && row.matches_metros_list && row.bids && pRows === expectP && companiesCsvOk;
     per.push(row);
-    check(`${NAMES[k]}: value by month vs last year, by use, ranked lists, bids, both CSVs`, row.ok, `${t.projects} projects ${money(t.value)} (last yr ${money(t.priorValue)}, ${t.valueChange}%), months ${thisYearMonths}+${lastYearMonths}, use sum=total ${row.by_use_sum_equals_total}, GCs ${row.contractors}, owners ${row.owners}, bids ${d.bids?.open}, projects.csv ${pRows}/${expectP}, companies.csv ${cRows}/${expectC}`);
+    check(`${NAMES[k]}: value by month vs last year, by use, ranked lists, bids, both CSVs`, row.ok, `${t.projects} projects ${money(t.value)} (last yr ${money(t.priorValue)}, ${t.valueChange}%), months ${thisYearMonths}+${lastYearMonths}, use sum=total ${row.by_use_sum_equals_total}, GCs ${row.contractors}, owners ${row.owners}, bids ${d.bids?.open}, projects.csv ${pRows}/${expectP}, companies.csv ${cRows} rows (JSON ranks ${expectC})` + (row.contractors + row.owners === 0 ? `; no GC or owner ranked: "${d.names}"` : ""));
   }
   // A permit link per metro, spot-checked.
   const links = [];
@@ -309,6 +333,12 @@ async function geox() {
   const rows = [];
   for (const j of jobs) {
     const c = await censusGeocode(j.address);
+    if (!c) {
+      const honest = !j.matched && !j.county && !j.tract && j.miles_from_shop == null;
+      rows.push({ address: j.address, census: null, geox_matched: j.matched, ok: honest });
+      check(`job ${j.quote_number}: the Census cannot place "${j.address}"; GeoX says so and invents nothing`, honest, "matched " + j.matched);
+      continue;
+    }
     const auth = c?.place ? c.place : c?.county;
     const mi = shopC && c ? miles(shopC, c) : null;
     const ok = j.matched && c && j.county === c.county && j.place === c.place && j.tract === c.tract && near(j.lat, c.lat, 1e-4) && near(j.lon, c.lon, 1e-4)
@@ -324,7 +354,7 @@ async function geox() {
   return {
     claim, bar, checks, input: `${jobs.length} PropX job(s); shop ${SHOP}`,
     numbers: { shop: r.data.shop?.matched_address, jobs: rows, unincorporated_branch_exercised: unincorporated },
-    summary: rows.map((x) => `${x.geox.city} / ${x.geox.county} / ${x.geox.tract}, ${x.geox.miles} mi`).join("; ") + `; ${rows.filter((x) => x.ok).length}/${rows.length} equal Census` + (unincorporated ? "" : "; unincorporated case not exercised (no such job)"),
+    summary: rows.map((x) => !x.census ? `"${x.address}" unplaceable (Census has no match; GeoX says unmatched)` : `${x.geox.city} / ${x.geox.county} / ${x.geox.tract}, ${x.geox.miles} mi`).join("; ") + `; ${rows.filter((x) => x.ok).length}/${rows.length} agree with Census` + (unincorporated ? "" : "; unincorporated case not exercised (no such job)"),
   };
 }
 
@@ -344,12 +374,14 @@ async function weatherx() {
   if (!check("jobs answer", r.ok && Array.isArray(r.data?.jobs), "HTTP " + r.status)) return { claim, bar, checks, summary: "HTTP " + r.status };
   const proposals = Object.fromEntries((await myJobs()).map((p) => [p.id, p]));
   const out = [];
+  const unplaceable = [];
   for (const j of r.data.jobs.filter((x) => x.address)) {
     const P = j.periods || [];
+    const c = await censusGeocode(j.address);
+    if (!c) { unplaceable.push(j.address); check(`job ${j.quote_number}: "${j.address}" has no Census match; no forecast is invented`, P.length === 0, P.length + " periods"); continue; }
     const spanDays = P.length ? (Date.parse(P[P.length - 1].start) - Date.parse(P[0].start)) / 86400000 : 0;
     const fresh = P.length && Date.now() - Date.parse(P[0].start) < 24 * 3600000;
     check(`job ${j.quote_number}: 14 periods covering 7 days, current`, P.length >= 14 && spanDays >= 6 && fresh && !j.stale, `${P.length} periods over ${spanDays.toFixed(1)} days, first ${P[0]?.start}`);
-    const c = await censusGeocode(j.address);
     let nws = null, compared = 0, agree = 0;
     try {
       const pt = await (await ext(`https://api.weather.gov/points/${c.lat.toFixed(4)},${c.lon.toFixed(4)}`, { headers: { "User-Agent": NWS_UA } })).json();
@@ -365,13 +397,18 @@ async function weatherx() {
     const fieldsOk = days.length && days.every((d) => d.station && d.observations > 0 && d.max_temp_f != null && "max_wind_mph" in d && "max_gust_mph" in d && "precip_in" in d);
     const created = proposals[j.id]?.created_at;
     const ageH = created ? (Date.now() - Date.parse(created)) / 3600000 : null;
-    check(`job ${j.quote_number}: daily weather log holds observed days`, log.ok && fieldsOk, `${days.length} logged days; job created ${created || "?"} (${ageH == null ? "?" : ageH.toFixed(1)} h ago)`);
+    // The log is kept by a once-a-day job (a 24 h lease) that logs yesterday for every job, so a job
+    // 48 h old must have at least one day. A younger job's empty log proves nothing either way.
+    if (ageH != null && ageH >= 48) check(`job ${j.quote_number}: daily weather log holds observed days`, log.ok && fieldsOk, `${days.length} logged days; job ${ageH.toFixed(1)} h old`);
+    else if (days.length) check(`job ${j.quote_number}: daily weather log holds observed days`, fieldsOk, `${days.length} logged days; job ${ageH?.toFixed(1)} h old`);
     out.push({ quote: j.quote_number, address: j.address, place: j.place, periods: P.length, span_days: Math.round(spanDays * 10) / 10, first: P[0] ? `${P[0].name} ${P[0].temperature}F ${P[0].forecast} risk ${P[0].risk}` : null, nws_compared: compared, nws_agree: agree, log_days: days.length, log_sample: days[0] || null, job_age_hours: ageH == null ? null : Math.round(ageH * 10) / 10 });
   }
-  check("at least one job with an address", out.length > 0, out.length + " jobs");
+  check("at least one placeable job", out.length > 0, out.length + " jobs");
+  const logOld = out.filter((x) => x.job_age_hours >= 48 || x.log_days > 0);
+  check("the daily log is shown on at least one job (one 48 h old, or any job with logged days)", logOld.length > 0 && logOld.some((x) => x.log_days > 0), logOld.length ? logOld.map((x) => `${x.address}: ${x.log_days} days`) : `unproven: no job is 48 h old (oldest ${Math.max(0, ...out.map((x) => x.job_age_hours || 0))} h) and no job has a logged day`);
   return {
     claim, bar, checks, input: `${out.length} PropX job(s): ${out.map((x) => x.address).join("; ")}`,
-    numbers: { jobs: out },
+    numbers: { jobs: out, unplaceable },
     summary: out.map((x) => `${x.place}: ${x.periods} periods/${x.span_days} d, NWS ${x.nws_agree}/${x.nws_compared} agree; log ${x.log_days} days (job ${x.job_age_hours} h old)`).join("; "),
   };
 }
@@ -407,7 +444,7 @@ async function forecastx() {
   const { checks, check } = checker();
   const ct = await api("/api/forms/changeordx/contracts");
   const contracts = ct.data?.contracts || [];
-  const p = contracts.find((c) => c.grand_total > 0);
+  const p = contracts.find((c) => c.grand_total > 0 && (c.change_orders || []).length) || contracts.find((c) => c.grand_total > 0);
   if (!check("a real PropX proposal on the account", p, contracts.length + " contracts")) return { claim, bar, checks, summary: "no proposal" };
   const approvedNow = (p.change_orders || []).filter((c) => c.status === "approved").reduce((s, c) => s + Number(c.amount || 0), 0);
   const job = { proposalId: p.id, start: "2026-11-01", months: 4, retainagePct: 5, termsDays: 45, materialPct: 55, supplierTermsDays: 30 };
@@ -463,7 +500,7 @@ async function forecastx() {
 // ---------------------------------------------------------------- WireX
 async function wirex() {
   const claim = "(From /news; WireX is not on /pricing.) Construction industry news & engineering-report desk. Live headlines from Engineering News-Record & Construction Dive, a deterministic Editor's Briefing that cites its own sources, and WeylandAI's own real, audited price-extraction validation history. WireX Pro, $49.00/month: 20 headlines per feed instead of 6, full reports wire.";
-  const bar = "For the paying account the wire is Pro and carries headlines from Engineering News-Record and from Construction Dive; every headline has a title, a link to the publisher and a publication date within 14 days; each feed gives min(20, what the feed itself publishes) headlines (each feed read directly for comparison); the wire was ingested within the last hour; 5 headline links answer 200; every citation in the briefing points at a listed source; the reports list has dated, statused entries.";
+  const bar = "For the paying account the wire is Pro and carries headlines from Engineering News-Record and from Construction Dive; every headline has a title, a link to the publisher and a publication date within 14 days; each feed gives min(20, what the feed itself publishes) headlines (each feed read directly for comparison); the wire was ingested within the last hour; 5 headline links are live (200, or a publisher's bot challenge, reported); every citation in the briefing points at a listed source; the reports list has dated, statused entries.";
   const { checks, check } = checker();
   const FEEDS = { "Engineering News-Record": "https://www.enr.com/rss/articles", "Construction Dive": "https://www.constructiondive.com/feeds/news/", "For Construction Pros": "https://www.forconstructionpros.com/rss", "Building Enclosure": "https://www.buildingenclosureonline.com/rss/articles", "SDM Magazine": "https://www.sdmmag.com/rss/articles", "Security Sales & Integration": "https://www.securitysales.com/feed/", "USGlass": "https://www.usglassmag.com/feed/" };
   const n = await api("/api/wire/news");
@@ -486,8 +523,9 @@ async function wirex() {
   const short = feeds.filter((f) => f.expected != null && f.on_wire !== f.expected);
   check("each feed gives min(20, what it publishes)", short.length === 0, feeds.map((f) => `${f.source} ${f.on_wire}/${f.expected}`));
   const links = [];
-  for (const it of N.items.filter((x, i, a) => a.findIndex((y) => y.source === x.source) === i).concat(N.items).slice(0, 5)) links.push({ source: it.source, url: it.link, status: await linkStatus(it.link) });
-  check("5 headline links answer 200", links.length === 5 && links.every((l) => l.status === 200), links.map((l) => l.source + " " + l.status));
+  const pick = [...new Set([...N.items.filter((x, i, a) => a.findIndex((y) => y.source === x.source) === i), ...N.items])].slice(0, 5);
+  for (const it of pick) links.push({ source: it.source, url: it.link, status: await linkStatus(it.link) });
+  check("5 headline links: none dead (a bot challenge is reported, not counted)", links.length === 5 && !links.some((l) => dead(l.status)), links.map((l) => l.source + " " + l.status));
   const s = await api("/api/wire/synthesis");
   const cites = [...String(s.data?.parsed?.synthesis || "").matchAll(/\[(\d+)\]/g)].map((m) => Number(m[1]));
   const nSrc = (s.data?.sources || []).length;
@@ -498,7 +536,7 @@ async function wirex() {
   return {
     claim, bar, checks, input: "the paying account's wire, the briefing, the reports; each of the 7 listed feeds read directly",
     numbers: { pro: N.pro, items: N.items.length, by_source: by, ingested_at: N.ingested_at, feeds, links, briefing_citations: cites.length, reports: reps.length, newest: N.items[0] ? `${N.items[0].pubDate} ${N.items[0].title}` : null },
-    summary: `${N.items.length} headlines: ${Object.entries(by).map(([k, v]) => k + " " + v).join(", ") || "none"}; ENR ${by["Engineering News-Record"] || 0}; ${feeds.filter((f) => !f.on_wire).length} of 7 listed feeds empty on the wire though each publishes ${feeds.filter((f) => !f.on_wire).map((f) => f.feed_items).join("/")} items; links ${links.filter((l) => l.status === 200).length}/5 200`,
+    summary: `${N.items.length} headlines: ${Object.entries(by).map(([k, v]) => k + " " + v).join(", ") || "none"}; ENR ${by["Engineering News-Record"] || 0}; ${feeds.filter((f) => !f.on_wire).length} of 7 listed feeds empty on the wire though each publishes ${feeds.filter((f) => !f.on_wire).map((f) => f.feed_items).join("/")} items; links ${links.map((l) => l.status).join("/")}`,
   };
 }
 

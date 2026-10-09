@@ -1,23 +1,23 @@
-# The data tools on sale, against their pricing-card claims, 2026-10-09-07-01
+# The data tools on sale, against their pricing-card claims, 2026-10-09-07-04
 
 Live API https://weylandai.com, as a paying test account. Pass = every check of the tool's bar (tools/accuracy/product_audit_data_tools.mjs).
 
 | tool | input | result | numbers |
 |---|---|---|---|
-| HuntX | whole index (1387 notices), fit=doors, state=TX, due_within=30, min_value=1M, a saved search | FAIL | 1387 notices from 7 sources; 11 door / 164 building / 514 signal / 698 civil; links 3/5 200; 140 of 1387 link to the notice itself (txdot, il_cdb, ca_opsc, nyc_sca link to one agency page); sample email not sent (not a jmobleyworks+ address) |
+| HuntX | whole index (1387 notices), fit=doors, state=TX, due_within=30, min_value=1M, a saved search | FAIL | 1387 notices from 7 sources; 11 door / 164 building / 514 signal / 698 civil; links 3/5 200; 1081 of 1387 notices link to a dead page (txdot 673, il_cdb 52, nyc_sca 356); 140 of 1387 link to the notice itself (txdot, il_cdb, ca_opsc, nyc_sca link to one agency page); sample email not sent (not a jmobleyworks+ address) |
 | CompX | all awards; fit=doors; vendors Atlantic Rolling Steel Door Corp., FREDANTE CONSTR CORP, B.J. Laura & Sons Inc.; CSV of the default (building) search | PASS | 2809 awards ($42,610,619,643), 59 door awards; vendors 3/3 equal NYC open data; CSV 2000 of 2328 rows |
 | CompX TxDOT vendor route (off-card) | q=Austin Bridge -> AUSTIN BRIDGE & ROAD SERVICES, LP | FAIL | AUSTIN BRIDGE & ROAD SERVICES, LP: CompX 7 bids / 5 wins ($33,499,043); TxDOT 76 projects / 12 wins ($75,514,048); 31 other vendors in the reply |
 | MarketX | all six metros, default 12 months, likely-door scope; both CSVs per metro | FAIL | chicago 1850 / $6,127,511,480; nyc 9437 / $18,932,146,292; la 827 / $5,408,090,321; austin 78 / $1,071,811,700; sf 754 / $2,175,277,963; seattle 405 / $1,043,269,869; projects CSV capped at 5,000: nyc 5000 of 9437; owners empty in la, austin, sf, seattle |
-| WeatherX | 2 PropX job(s): Berryessa Union School District, San Jose, CA; 1855 Lucretia Ave, San Jose, CA 95122 | FAIL | null: 0 periods/0 d, NWS 0/0 agree; log 0 days (job 0 h old); San Jose city: 14 periods/6.3 d, NWS 13/13 agree; log 0 days (job 9.2 h old) |
-| GeoX | 2 PropX job(s); shop 1600 Pennsylvania Ave NW, Washington, DC 20500 | FAIL | undefined / undefined / undefined, null mi; San Jose city / Santa Clara County / Census Tract 5031.22, 2414 mi; 1/2 equal Census; unincorporated case not exercised (no such job) |
-| ForecastX | proposal 2 (Audit Harness GC, $11,754), start 2026-11-01, 4 months, retainage 5%, terms 45 d, material 55% on 30 d | FAIL | 7 months, contract $11,754, lowest 2026-12 $-6,465; independent recompute equal to the cent; approved CO not tested |
-| WireX | the paying account's wire, the briefing, the reports; each of the 7 listed feeds read directly | FAIL | 20 headlines: Construction Dive 10, For Construction Pros 10; ENR 0; 5 of 7 listed feeds empty on the wire though each publishes 30/30/30/19/10 items; links 4/5 200 |
+| WeatherX | 1 PropX job(s): 1855 Lucretia Ave, San Jose, CA 95122 | FAIL | San Jose city: 14 periods/6.3 d, NWS 13/13 agree; log 0 days (job 9.3 h old) |
+| GeoX | 3 PropX job(s); shop 1600 Pennsylvania Ave NW, Washington, DC 20500 | PASS | "Berryessa Union School District, San Jose, CA" unplaceable (Census has no match; GeoX says unmatched); "Berryessa Union School District, San Jose, CA" unplaceable (Census has no match; GeoX says unmatched); San Jose city / Santa Clara County / Census Tract 5031.22, 2414 mi; 3/3 agree with Census; unincorporated case not exercised (no such job) |
+| ForecastX | proposal 1 (QA GC, $11,754), start 2026-11-01, 4 months, retainage 5%, terms 45 d, material 55% on 30 d | PASS | 7 months, contract $11,754, lowest 2026-12 $-6,465; independent recompute equal to the cent; approved CO $1,290 added (CO $1,290, status restored to submitted) |
+| WireX | the paying account's wire, the briefing, the reports; each of the 7 listed feeds read directly | FAIL | 20 headlines: Construction Dive 10, For Construction Pros 10; ENR 0; 5 of 7 listed feeds empty on the wire though each publishes 30/30/30/19/0 items; links 200/challenge/200/200/200 |
 
 ## HuntX: FAIL
 
 Claim: "Seven public sources, sorted by what a door sub can bid. Opportunity Discovery. Public construction notices from seven sources (Illinois CDB, NYC City Record and School Construction Authority, Los Angeles, Delaware, Texas DOT, California school funding), each tagged by trade fit: door scope named, building work, funding to watch, or civil. Filter by state, due date and value; saved searches count new notices since you last looked and send them to your feed reader (RSS) and your calendar (bid due dates)."
 
-Bar: All seven named sources hold notices; every notice carries a trade fit and a link on its source's own site; fit=doors returns only door-scope notices, each with the words that put it there, and its total equals the index's door count; state, due-date and value filters return only matching rows; 5 source links (5 different sources) answer HTTP 200; a saved search returns a new-notice count and working RSS and calendar feeds. The sample email is sent only if the account's address is jmobleyworks+<tag>@gmail.com.
+Bar: All seven named sources hold notices; every notice carries a trade fit and a link on its source's own site, and no link is dead (every distinct link fetched; a bot challenge is reported, not counted as dead); fit=doors returns only door-scope notices, each with the words that put it there, and its total equals the index's door count; state, due-date and value filters return only matching rows; 5 source links (5 different sources) answer HTTP 200; a saved search returns a new-notice count and working RSS and calendar feeds. The sample email is sent only if the account's address is jmobleyworks+<tag>@gmail.com.
 
 - ok index answers: HTTP 200
 - ok seven named sources each hold notices: {"txdot":673,"nyc_sca":356,"ca_opsc":166,"nyc_cityrecord":93,"il_cdb":52,"de_mmp":25,"la_ramp":22}
@@ -31,6 +31,7 @@ Bar: All seven named sources hold notices; every notice carries a trade fit and 
 - ok due_within=30 returns only notices due in the next 30 days: 217 rows, 0 outside
 - ok min_value=1000000 returns only notices worth $1M+: 889 rows, 0 under
 - **FAIL** 5 source links answer 200: ["nyc_cityrecord 200","il_cdb 404","nyc_sca 404","la_ramp 200","de_mmp 200"]
+- **FAIL** no notice links to a dead page (every distinct link fetched): 144 distinct links; 1081 of 1387 notices link to a dead page: txdot 673 (https://www.txdot.gov/business/letting-bids.html -> 404); il_cdb 52 (https://cdb.illinois.gov/business/procurement.html -> 404); nyc_sca 356 (https://www.nycsca.org/Procurement -> 404)
 - ok saved search created: HTTP 200
 - ok saved search reports a new-notice count: new_count 0
 - ok RSS feed works: 200, 50 items
@@ -67,16 +68,16 @@ Bar: For a real TxDOT contractor, total_bids equals the distinct projects (CSJ) 
 
 Claim: "The door work your city is permitting, and who is building it. Commercial and multifamily building permits from Chicago, New York, Los Angeles, Austin, San Francisco and Seattle: permitted value by month against last year, by building use, for work likely to include doors; the largest and newest projects; the general contractors and owners ranked by permitted value; the open public bids in the state. Projects and companies CSV."
 
-Bar: All six metros hold permits with a permitted value; each metro's page carries months for this year and last year, a by-use split that adds up to the total, largest projects in value order, newest in date order, general contractors ranked by permitted value, the open-bids block, and the metros list's figures; both CSVs download for the paying account, the projects CSV holding every project of the period (up to its 5,000 cap) and the companies CSV every ranked company.
+Bar: All six metros hold permits with a permitted value; each metro's page carries months for this year and last year, a by-use split that adds up to the total, largest projects in value order, newest in date order, general contractors or owners ranked by permitted value (at least one of the two; a metro with neither fails 'who is building it'), the open-bids block, and the metros list's figures; both CSVs download for the paying account, the projects CSV holding every project of the period (up to its 5,000 cap) and the companies CSV beginning with the same ranking.
 
 - ok metros answer: HTTP 200
 - ok six metros, each with permits and value: ["chicago 1850","nyc 9437","la 827","austin 78","sf 754","seattle 405"]
-- **FAIL** Chicago: value by month vs last year, by use, ranked lists, bids, both CSVs: 1850 projects $6,127,511,480 (last yr $5,229,420,905, 17.2%), months 13+12, use sum=total true, GCs 200, owners 200, bids 50, projects.csv 1850/1850, companies.csv 2088/400
-- **FAIL** New York City: value by month vs last year, by use, ranked lists, bids, both CSVs: 9437 projects $18,932,146,292 (last yr $8,661,260,201, 118.6%), months 13+12, use sum=total true, GCs 0, owners 200, bids 73, projects.csv 5000/5000, companies.csv 2932/200
-- **FAIL** Los Angeles: value by month vs last year, by use, ranked lists, bids, both CSVs: 827 projects $5,408,090,321 (last yr $2,124,721,515, 154.5%), months 13+12, use sum=total true, GCs 0, owners 0, bids 14, projects.csv 827/827, companies.csv 0/0
-- ok Austin: value by month vs last year, by use, ranked lists, bids, both CSVs: 78 projects $1,071,811,700 (last yr $1,006,378,802, 6.5%), months 13+12, use sum=total true, GCs 70, owners 0, bids 0, projects.csv 78/78, companies.csv 70/70
-- **FAIL** San Francisco: value by month vs last year, by use, ranked lists, bids, both CSVs: 754 projects $2,175,277,963 (last yr $1,274,456,543, 70.7%), months 13+12, use sum=total true, GCs 0, owners 0, bids 14, projects.csv 754/754, companies.csv 0/0
-- ok Seattle: value by month vs last year, by use, ranked lists, bids, both CSVs: 405 projects $1,043,269,869 (last yr $1,106,605,349, -5.7%), months 13+12, use sum=total true, GCs 10, owners 0, bids 0, projects.csv 405/405, companies.csv 10/10
+- ok Chicago: value by month vs last year, by use, ranked lists, bids, both CSVs: 1850 projects $6,127,511,480 (last yr $5,229,420,905, 17.2%), months 13+12, use sum=total true, GCs 200, owners 200, bids 50, projects.csv 1850/1850, companies.csv 2088 rows (JSON ranks 400)
+- ok New York City: value by month vs last year, by use, ranked lists, bids, both CSVs: 9437 projects $18,932,146,292 (last yr $8,661,260,201, 118.6%), months 13+12, use sum=total true, GCs 0, owners 200, bids 73, projects.csv 5000/5000, companies.csv 2932 rows (JSON ranks 200)
+- **FAIL** Los Angeles: value by month vs last year, by use, ranked lists, bids, both CSVs: 827 projects $5,408,090,321 (last yr $2,124,721,515, 154.5%), months 13+12, use sum=total true, GCs 0, owners 0, bids 14, projects.csv 827/827, companies.csv 0 rows (JSON ranks 0); no GC or owner ranked: "No owner or contractor in LADBS's open data"
+- ok Austin: value by month vs last year, by use, ranked lists, bids, both CSVs: 78 projects $1,071,811,700 (last yr $1,006,378,802, 6.5%), months 13+12, use sum=total true, GCs 70, owners 0, bids 0, projects.csv 78/78, companies.csv 70 rows (JSON ranks 70)
+- **FAIL** San Francisco: value by month vs last year, by use, ranked lists, bids, both CSVs: 754 projects $2,175,277,963 (last yr $1,274,456,543, 70.7%), months 13+12, use sum=total true, GCs 0, owners 0, bids 14, projects.csv 754/754, companies.csv 0 rows (JSON ranks 0); no GC or owner ranked: "No owner or contractor in DBI's open data"
+- ok Seattle: value by month vs last year, by use, ranked lists, bids, both CSVs: 405 projects $1,043,269,869 (last yr $1,106,605,349, -5.7%), months 13+12, use sum=total true, GCs 10, owners 0, bids 0, projects.csv 405/405, companies.csv 10 rows (JSON ranks 10)
 
 ## WeatherX: FAIL
 
@@ -85,17 +86,15 @@ Claim: "Install-day weather and a daily weather log per job. Each job's next 7 d
 Bar: Each job gets 7 days (14 NWS periods) starting now, each period's temperature equal to the NWS forecast for the job's point (within 3 F, the route caches up to 3 h) and its install risk following the stated rule (thunder/snow/ice, rain >= 60%, wind >= 25 mph or <= 32 F is high; rain >= 30% or wind >= 15 mph moderate); and each job's daily log holds at least one observed day with station, temperatures, wind, gust and precipitation fields.
 
 - ok jobs answer: HTTP 200
-- **FAIL** job 2: 14 periods covering 7 days, current: 0 periods over 0.0 days, first undefined
-- **FAIL** job 2: temperatures equal the NWS forecast (±3 F): 0 of 0 matching periods agree
-- **FAIL** job 2: install risk follows the stated rule: 0 periods off; risks 
-- **FAIL** job 2: daily weather log holds observed days: 0 logged days; job created 2026-10-09T07:01:14.471Z (0.0 h ago)
+- ok job 3: "Berryessa Union School District, San Jose, CA" has no Census match; no forecast is invented: 0 periods
+- ok job 2: "Berryessa Union School District, San Jose, CA" has no Census match; no forecast is invented: 0 periods
 - ok job 1: 14 periods covering 7 days, current: 14 periods over 6.3 days, first 2026-10-08T23:00:00-07:00
 - ok job 1: temperatures equal the NWS forecast (±3 F): 13 of 13 matching periods agree
 - ok job 1: install risk follows the stated rule: 0 periods off; risks low
-- **FAIL** job 1: daily weather log holds observed days: 0 logged days; job created 2026-10-08T21:49:06.903Z (9.2 h ago)
-- ok at least one job with an address: 2 jobs
+- ok at least one placeable job: 1 jobs
+- **FAIL** the daily log is shown on at least one job (one 48 h old, or any job with logged days): unproven: no job is 48 h old (oldest 9.3 h) and no job has a logged day
 
-## GeoX: FAIL
+## GeoX: PASS
 
 Claim: "Where each job is and who permits it. Places every job with the Census geocoder: county, city, census tract and the building permit authority it usually answers to (city if incorporated, else county), with miles from your shop."
 
@@ -103,39 +102,40 @@ Bar: Every job with an address is placed; its county, city, tract and coordinate
 
 - ok jobs answer: HTTP 200
 - ok shop placed: 1600 PENNSYLVANIA AVE NW, WASHINGTON, DC, 20500
-- ok account has at least one job with an address: 2 jobs
-- **FAIL** job 2: county, city, tract, authority, miles equal the Census answer: undefined / undefined / undefined; null mi (recomputed ?)
+- ok account has at least one job with an address: 3 jobs
+- ok job 3: the Census cannot place "Berryessa Union School District, San Jose, CA"; GeoX says so and invents nothing: matched false
+- ok job 2: the Census cannot place "Berryessa Union School District, San Jose, CA"; GeoX says so and invents nothing: matched false
 - ok job 1: county, city, tract, authority, miles equal the Census answer: San Jose city / Santa Clara County / Census Tract 5031.22; 2414 mi (recomputed 2414.0)
-- ok CSV export carries the jobs: HTTP 200, 2 rows
+- ok CSV export carries the jobs: HTTP 200, 3 rows
 
-## ForecastX: FAIL
+## ForecastX: PASS
 
 Claim: "Cash flow across your contracts, change orders included. Monthly cash flow across your PropX contracts with approved change orders counted: billing, retainage held and released, payments after each job's terms, material paid on supplier terms, and your lowest month."
 
 Bar: For a real PropX proposal, every month's billing, retainage held, payments received, retainage released, material paid, net and cumulative equal a cash flow computed independently from the card's words (to the cent); billing adds up to the contract; the contract is the proposal's total plus its approved change orders (an existing change order is set approved for one call, the contract must rise by exactly its amount, and its old status is put back); the lowest month is the month with the lowest cumulative; the CSV carries the same months.
 
-- ok a real PropX proposal on the account: 2 contracts
+- ok a real PropX proposal on the account: 3 contracts
 - ok portfolio answers: HTTP 200 
 - ok contract = proposal total + approved change orders: 11754.43 = 11754.43 + 0
 - ok every month equals the independent cash flow: 7 months
 - ok billing adds up to the contract: $11,754
 - ok lowest month is the lowest cumulative: 2026-12 $-6,465
-- **FAIL** an approved change order raises the contract (needs a change order on the proposal): no change order to test with; approved now 0
+- ok an approved change order raises the contract by exactly its amount: CO 1 $1,290: 11754.43 -> 13044.18
 - ok CSV carries the same months: HTTP 200, 7 rows
 
 ## WireX: FAIL
 
 Claim: "(From /news; WireX is not on /pricing.) Construction industry news & engineering-report desk. Live headlines from Engineering News-Record & Construction Dive, a deterministic Editor's Briefing that cites its own sources, and WeylandAI's own real, audited price-extraction validation history. WireX Pro, $49.00/month: 20 headlines per feed instead of 6, full reports wire."
 
-Bar: For the paying account the wire is Pro and carries headlines from Engineering News-Record and from Construction Dive; every headline has a title, a link to the publisher and a publication date within 14 days; each feed gives min(20, what the feed itself publishes) headlines (each feed read directly for comparison); the wire was ingested within the last hour; 5 headline links answer 200; every citation in the briefing points at a listed source; the reports list has dated, statused entries.
+Bar: For the paying account the wire is Pro and carries headlines from Engineering News-Record and from Construction Dive; every headline has a title, a link to the publisher and a publication date within 14 days; each feed gives min(20, what the feed itself publishes) headlines (each feed read directly for comparison); the wire was ingested within the last hour; 5 headline links are live (200, or a publisher's bot challenge, reported); every citation in the briefing points at a listed source; the reports list has dated, statused entries.
 
 - ok news answers: HTTP 200
 - ok paying account is Pro: pro true
 - **FAIL** headlines from Engineering News-Record: 0 items
 - ok headlines from Construction Dive: 10 items
 - ok every headline: title, publisher link, date within 14 days: 0 of 20 fail
-- ok ingested within the last hour: 2026-10-09T06:47:53.324Z (15 min ago)
-- **FAIL** each feed gives min(20, what it publishes): ["Engineering News-Record 0/20","Construction Dive 10/10","For Construction Pros 10/10","Building Enclosure 0/20","SDM Magazine 0/20","Security Sales & Integration 0/19","USGlass 0/10"]
-- **FAIL** 5 headline links answer 200: ["Construction Dive 200","For Construction Pros 403","Construction Dive 200","Construction Dive 200","Construction Dive 200"]
+- ok ingested within the last hour: 2026-10-09T06:47:53.324Z (17 min ago)
+- **FAIL** each feed gives min(20, what it publishes): ["Engineering News-Record 0/20","Construction Dive 10/10","For Construction Pros 10/10","Building Enclosure 0/20","SDM Magazine 0/20","Security Sales & Integration 0/19","USGlass 0/0"]
+- ok 5 headline links: none dead (a bot challenge is reported, not counted): ["Construction Dive 200","For Construction Pros challenge","Construction Dive 200","Construction Dive 200","Construction Dive 200"]
 - ok briefing cites only listed sources: 7 citations over 12 sources
 - ok reports: dated, statused entries: ["1 VALIDATED 2026-09-30","2 FALSIFIED 2026-10-01","3 VALIDATED 2026-10-01","4 VALIDATED 2026-10-02","5 PARTIAL 2026-10-02"]

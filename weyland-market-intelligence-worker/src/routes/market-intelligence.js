@@ -185,20 +185,10 @@ export function registerMarketIntelligenceRoutes(router) {
 
   // /api/marketx/trends: MarketX was rebuilt 2026-10-09 on the cities' building permits (routes/marketx.js).
 
-  router.get("/api/compx/vendors", withStoreCache((u) => (u.searchParams.get("q") || "").trim() ? "compx:" + (u.searchParams.get("q") || "").trim().toLowerCase() : null, 604800, async (request2, env2) => {
-    try {
-      const url = new URL(request2.url);
-      const q = (url.searchParams.get("q") || "").trim();
-      if (!q) {
-        return jsonResponse3({ detail: { message: "q (vendor or company name search) is required" } }, 400);
-      }
-      const vendors = await compxVendorSearch(q);
-      return jsonResponse3({ source: "TXDOT open-data bid tabulations (data.texas.gov)", query: q, fetched_at: new Date().toISOString(), vendors });
-    } catch (err) {
-      console.error("[CompX] vendor search error:", err.message);
-      return jsonResponse3({ detail: { message: err.message } }, 502);
-    }
-  }));
+  // Retired 2026-10-09 (product audit): it counted "bids" from at most 1,000 TxDOT bid-item rows
+  // (Austin Bridge alone has 8,418), so 76 projects read as 7; nothing on the CompX page or card
+  // uses it. CompX is the NYC City Record awards (/compx).
+  router.get("/api/compx/vendors", async () => jsonResponse3({ detail: { code: "gone", message: "This TxDOT vendor search was retired: it undercounted bids. CompX now reads awards from the NYC City Record at /compx." } }, 410));
 
   // WeatherX runs on the National Weather Service's public API
   // (api.weather.gov) - free, keyless, no signup. Verified live 2026-09-02.
