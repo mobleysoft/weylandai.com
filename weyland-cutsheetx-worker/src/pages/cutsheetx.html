@@ -409,14 +409,21 @@
           var html = '<div class="loading" style="margin-bottom:8px">Matched product: <b style="color:var(--text)">' +
             esc(p.name || ((p.manufacturer || '') + ' ' + (p.model || ''))) + '</b> &middot; confidence: ' + esc(result.confidence) +
             ' (' + esc(result.matchType) + ')</div>';
-          var sheets = result.cutSheets || [], pages = result.cataloguePages || [];
-          if (sheets.length) {
-            html += '<table><thead><tr><th>Cited document</th><th>Size</th><th></th></tr></thead><tbody>' + sheets.map(function(sheet, i){
+          var sheets = result.cutSheets || [], pages = result.cataloguePages || [], cites = result.citations || [];
+          // The ranked pages (2026-10-09): one page or a run of at most three, the pages that open
+          // first. A price book that lists the model somewhere in pp.6-48 is not a citation.
+          if (cites.length) {
+            html += '<table><thead><tr><th>Cited page</th><th>Page</th><th></th></tr></thead><tbody>' + cites.map(function(c, i){
+              return '<tr><td>' + esc(c.title) + '</td><td>' + (/-/.test(String(c.page)) ? 'pp. ' : 'p. ') + esc(c.page) + '</td><td>' +
+                (c.url ? citeButton('cite-open-' + i, 'OPEN AT THE PAGE', c.url, c.title + ', p. ' + c.page) : '<span class="pill">PDF NOT ON FILE; PAGE TEXT INDEXED</span>') + '</td></tr>';
+            }).join('') + '</tbody></table>';
+          } else if (sheets.length) {
+            html += '<div class="loading">No page of the filed document is pinned for this model yet. The document:</div>' +
+              '<table><thead><tr><th>Filed document</th><th>Size</th><th></th></tr></thead><tbody>' + sheets.map(function(sheet){
               var title = String(sheet.title || 'Cut sheet').split(' (')[0];
-              return '<tr><td>' + esc(title) + (sheet.pageHint ? ', pp. ' + esc(sheet.pageHint) : '') + '</td>' +
+              return '<tr><td>' + esc(title) + '</td>' +
                 '<td>' + esc(sheet.pages != null ? sheet.pages + '-page price book' : '') + '</td>' +
-                '<td>' + citeButton('cite-open-' + i, 'OPEN AT THE PAGE', sheet.pageUrl, title + (sheet.pageHint ? ', pp. ' + sheet.pageHint : '')) + ' ' +
-                (sheet.id ? '<button type="button" class="link-btn" data-doc-download="/api/cut-sheets/download/' + esc(encodeURIComponent(sheet.id)) + '" data-doc-title="' + esc(title) + '">DOWNLOAD PDF</button>' : '') + '</td></tr>';
+                '<td>' + (sheet.id ? '<button type="button" class="link-btn" data-doc-download="/api/cut-sheets/download/' + esc(encodeURIComponent(sheet.id)) + '" data-doc-title="' + esc(title) + '">DOWNLOAD PDF</button>' : '') + '</td></tr>';
             }).join('') + '</tbody></table>';
           } else if (pages.length) {
             html += '<div class="loading">No standalone cut sheet is filed for this model. Cited by the catalogue pages that name it:</div>' +

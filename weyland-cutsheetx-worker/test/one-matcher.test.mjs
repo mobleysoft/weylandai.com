@@ -72,7 +72,10 @@ test("/match keeps every key it returned before", async () => {
   assert.equal(data.cutSheets[0].id, "d-4040xp");
   assert.equal(data.cutSheets[0].pageHint, "6-48");
   assert.match(data.cutSheets[0].pageUrl, /^\/api\/cut-sheets\/sheet\/d-4040xp\/pdf/);
-  assert.equal(data.citation.kind, "cut_sheet");
+  // The row says the product is somewhere in pp.6-48 of the edition catalogued: that is a book,
+  // not a citation, and nothing names its page here (no catalogue page, the book's text not read).
+  assert.equal(data.citation, null);
+  assert.deepEqual(data.citations, []);
 });
 
 test("an unmatched line is recorded as a miss with the parsed manufacturer and model", async () => {

@@ -22,7 +22,7 @@ import { newDoc, title, field, para, table, small, signature, finish } from "../
 import { outputAccess, paymentRequired } from "../../../weyland-shared/output-access.js";
 import { matchComponentToCutSheets, citedPagesFor, PACKET_MATCH_TYPES } from "../../../weyland-shared/product-database.js";
 import { getCataloguePagePdf, getDocumentPagePdf } from "../../../weyland-shared/cut-sheet-pages.js";
-import { pageNamingInFiledPdf, scheduleTokens } from "../../../weyland-shared/filed-page.js";
+import { newReadBudget, filedPageFor, variantPageFor } from "../../../weyland-shared/page-citations.js";
 
 export const CHECKLIST = [
   "Hardware installed and adjusted per the hardware schedule",
@@ -120,6 +120,7 @@ export function closeoutModel(job, input = {}) {
 /** The cited page of each product; misses come back with a reason. */
 export async function citedProductPages(env, products, match = matchComponentToCutSheets) {
   const pages = [], missing = [];
+  const budget = newReadBudget(15000);
   const seen = new Set();
   for (const p of products) {
     let m = null;
@@ -132,20 +133,16 @@ export async function citedProductPages(env, products, match = matchComponentToC
       continue;
     }
     // A filed price book whose index is another edition: the page naming the model in that
-    // very file, from the text SubX's packet build cached in R2 (weyland-shared/filed-page.js).
-    // This worker reads the cache only (no OCR binding), so nothing is guessed when it is cold.
-    const sheet = firm && m.maker && m.maker.known ? (m.cutSheets || []).find((s) => s.r2Key && !s.pinnedPage) : null;
-    let hit = null;
-    if (sheet) {
-      const prod = m.product || {};
-      for (const model of [...new Set([prod.model, prod.base_model, ...scheduleTokens(p.model)].filter(Boolean))]) {
-        try { hit = await pageNamingInFiledPdf(env, sheet.r2Key, model); } catch (_) { hit = null; }
-        if (hit) break;
-      }
-    }
-    if (hit) {
-      const k = "doc:" + sheet.r2Key + "#" + hit.pageNum;
-      if (!seen.has(k)) { seen.add(k); pages.push({ r2Key: sheet.r2Key, catalogueId: null, pageNum: hit.pageNum, title: String(sheet.title || "Price book").split(" (")[0], kind: "price_book_filed", manufacturer: p.manufacturer, model: p.model }); }
+    // very file, else the page its price row was imported from, confirmed in that file
+    // (weyland-shared/page-citations.js, the same steps as SubX's packet and CutsheetX), so
+    // "PA-AX-99-L-F-2SI-06" is cited where the book prints "[98/99] . L . F" and "188SBK PSA"
+    // where it prints 188S-BK. Read from the text SubX's packet build cached in R2: this worker
+    // has no OCR binding, so nothing is guessed when it is cold.
+    let filed = null;
+    try { filed = (await filedPageFor(env, m, budget, p.model)) || (await variantPageFor(env, m, p.model, budget)); } catch (_) { filed = null; }
+    if (filed) {
+      const k = "doc:" + filed.r2Key + "#" + filed.pageNum;
+      if (!seen.has(k)) { seen.add(k); pages.push({ r2Key: filed.r2Key, catalogueId: null, pageNum: filed.pageNum, title: filed.title, kind: "price_book_filed", manufacturer: p.manufacturer, model: p.model }); }
       continue;
     }
     missing.push(`${p.manufacturer} ${p.model}`.trim());
