@@ -12,6 +12,8 @@ const here = dirname(fileURLToPath(import.meta.url));
 const CORPUS = join(here, "..", "..", "tools/corpus/door-schedules");
 const rockford = readFileSync(join(CORPUS, "f0e863d88ea688ff.pdf"));
 
+// 110 is the document's own count: pdftotext shows 114 quantity lines on pages 17-23 because page 22 prints four
+// struck-through addendum deletions (Group 40 UTY) under their bold replacements; the reader rightly skips them (2026-10-09).
 test("Rockford 08 71 00 pages 17-23 read from their text: 14 groups, 110 items, each page under 2 s", async () => {
   let groups = 0, items = 0;
   for (let p = 17; p <= 23; p++) {
