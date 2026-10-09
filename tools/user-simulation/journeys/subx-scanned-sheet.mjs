@@ -72,11 +72,14 @@ await J.run(async () => {
     J.check(variant + " rows cite the schedule page and row", detail.rows.length === 48 && detail.rows.every(r => new RegExp("^p\\." + schedulePage + " row \\d+").test(r.source)), detail.rows.slice(0, 3));
     const extraction = submitted.slice(before).find(x => x.doors?.length);
     J.check(variant + " saved the expected reader route", !!extraction && (variant === "scanned" ? /^(ocr_|client_grid)/.test(extraction.metadata?.extraction_mode || "") : extraction.metadata?.extraction_mode === "text_layer"), extraction?.metadata);
-    if (extraction) {
-      const a = mapResult({schedule_type:"door_schedule",result:extraction},"door_schedule");
-      J.note(variant + "_field_score", scoreDoorsVs(truth, a.doors.map(d => ({page:schedulePage,...d}))));
-      J.note(variant + "_metadata", extraction.metadata);
-    }
+    const parsed = extraction ? mapResult({schedule_type:"door_schedule",result:extraction},"door_schedule") : null;
+    const score = parsed ? scoreDoorsVs(truth, parsed.doors.map(d => ({page:schedulePage,...d}))) : null;
+    J.check(variant + " matches every expected field across all 48 schedule rows",
+      !!score && score.expected_rows === 48 && score.rows_found === 48 && score.rows_fully_right === 48 &&
+      score.fields_total === 336 && score.fields_right === 336 && score.extra_rows === 0 && score.wrong.length === 0,
+      score || "No saved extraction to score");
+    if (score) J.note(variant + "_field_score", score);
+    if (extraction) J.note(variant + "_metadata", extraction.metadata);
   }
   J.check("scanned and vector sheets display the same marks", marks.vector?.length === 48 && JSON.stringify(marks.scanned) === JSON.stringify(marks.vector), {vector:marks.vector?.length,scanned:marks.scanned?.length});
   await ctx.close();
