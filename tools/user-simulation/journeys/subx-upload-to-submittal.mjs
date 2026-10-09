@@ -50,7 +50,8 @@ await J.run(async () => {
   const badge = await waitText(page, "#session-badge", /LIVE|VERIFIED|fail/i, 45000);
   J.note("subx_chapter_badge", badge);
   await sleep(800);
-  const cta = page.locator("#subx a, #subx button").filter({ hasText: /pdf package|export/i }).first();
+  // The chapter's one button into the workspace (2026-10-09: #subx-open-workspace); its words are followed as printed.
+  const cta = (await page.locator("#subx-open-workspace").count()) ? page.locator("#subx-open-workspace") : page.locator("#subx a, #subx button").filter({ hasText: /pdf package|export|workspace/i }).first();
   const ctaText = (await cta.innerText().catch(() => "")).trim();
   let frame = null;
   if (await cta.count()) {
@@ -115,7 +116,8 @@ await J.run(async () => {
     await until(() => frame.evaluate(() => /WeylandAI Building/i.test((document.getElementById("sd-title") || {}).innerText || "") && (document.querySelectorAll("#doors-wrap tbody tr, #sets-wrap tbody tr").length > 0 || /No rows read yet/i.test((document.getElementById("doors-wrap") || {}).innerText || ""))), 20000, 500);
     const dd = await workspaceDetail(frame);
     J.note("demo_building", { title: dd.title, sub: dd.sub, doors: dd.rows.length, sets: dd.sets.slice(0, 8) });
-    const withProducts = dd.sets.filter((s) => /\d+ x \S+/.test(s.items));
+    // An item reads "1 exit device · Von Duprin · 98-NL-OP" (quantity, then description, maker, model).
+    const withProducts = dd.sets.filter((s) => /\d+ x \S+/.test(s.items) || /(^|; )\d+ [^;]*·/.test(s.items));
     J.check("the demo building's hardware sets list their products", dd.sets.length > 0 && withProducts.length === dd.sets.length, { sets: dd.sets.length, withProducts: withProducts.length, sample: dd.sets.slice(0, 3) });
   }
 

@@ -285,7 +285,8 @@ export async function openHome(page, journey, tag = "") {
   await sleep(600);
 }
 
-/** Desktop starts with the dossier lowered over the 3D corridor; Enter raises it (phones start raised).
+/** Raises the dossier if the page opened with it lowered (since 2026-10-08 every visitor starts raised; a
+ *  journey that lowered it, or an older page, gets it back with Enter). Desktop used to start lowered.
  *  Returns once the dossier has stopped moving: html.folder-lowered goes at the START of the raise,
  *  and .envelope-frame's 0.75 s transform transition is still carrying every control on it from the
  *  hand to the eye. A press aimed while it moves can miss (seen live 2026-10-07: #hm-run sampled at
@@ -633,11 +634,14 @@ export async function workspaceDetail(target) {
     const txt = (el) => (el ? el.innerText.replace(/\s+/g, " ").trim() : "");
     const rows = Array.from(document.querySelectorAll("#doors-wrap tbody tr")).map((tr) => {
       const td = tr.querySelectorAll("td");
-      return { mark: txt(td[0]), group: txt(td[1]), size: txt(td[2]), source: txt(td[td.length - 1]) };
+      // The citation cell (2026-10-09: the EDIT control has its own cell after it).
+      return { mark: txt(td[0]), group: txt(td[1]), size: txt(td[2]), source: txt(tr.querySelector("td.src-cell") || td[td.length - 1]) };
     });
     const sets = Array.from(document.querySelectorAll("#sets-wrap tbody tr")).map((tr) => {
       const td = tr.querySelectorAll("td");
-      return { set: txt(td[0]), name: txt(td[1]), items: txt(td[2]), status: txt(td[3]) };
+      // Each item's own text, without its EDIT control (2026-10-09).
+      const items = Array.from(tr.querySelectorAll(".item-text")).map(txt);
+      return { set: txt(td[0]), name: txt(td[1]), items: items.length ? items.join("; ") : txt(td[2]), status: txt(td[3]) };
     });
     const tiles = Array.from(document.querySelectorAll("#takeoff .stat")).map((s) => ({ label: txt(s.querySelector("span")), value: txt(s.querySelector("b")) }));
     const step = (id) => { const el = document.getElementById(id); return el ? (el.classList.contains("done") ? "done" : el.classList.contains("now") ? "now" : "") : null; };
