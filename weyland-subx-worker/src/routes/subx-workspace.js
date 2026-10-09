@@ -22,7 +22,7 @@
 import { PDFDocument, StandardFonts, rgb } from "pdf-lib";
 import { jsonResponse3 } from "../lib/json-response.js";
 import { assembleSubmittalPackage } from "../lib/submittal-assembler.js";
-import { matchComponentToCutSheets, citedPagesFor, PACKET_MATCH_TYPES } from "../lib/product-database.js";
+import { matchComponentToCutSheets, citedPagesFor, PACKET_MATCH_TYPES, parsePageHint } from "../lib/product-database.js";
 import { pageNamingInFiledPdf, scheduleTokens, makerFiledBooks, variantPagesFor, confirmedVariantPage } from "../../../weyland-shared/filed-page.js";
 import { incrementSubmittalsUsed } from "../lib/edge-telemetry.js";
 import { outputAccess, paymentRequired } from "../../../weyland-shared/output-access.js";
@@ -172,9 +172,13 @@ async function filedPageFor(env2, m, budget, scheduleModel = "") {
     try { hit = await timed(budget, () => pageNamingInFiledPdf(env2, sheet.r2Key, model, { budgetMs: left })); } catch (_) { hit = null; }
     if (hit) return { r2Key: sheet.r2Key, pageNum: hit.pageNum, title: String(sheet.title || "Price book").split(" (")[0] };
   }
-  // A maker's spec sheet for this one product (Select's SL57 sheet): the whole sheet is the
-  // product's, so its first page is cited when the number is printed only in a drawing.
-  if (/\bspec sheet\b/i.test(String(sheet.title || ""))) return { r2Key: sheet.r2Key, pageNum: 1, title: String(sheet.title).split(" (")[0] };
+  // A maker's spec, sell or data sheet filed for this product (Select's SL57 sheet; Schlage's ALX
+  // sell sheet, which prints "53 Entrance", not ALX53): the page its catalogue title names, else
+  // page 1, when the number is printed only in a drawing or as a function code.
+  if (/\b(spec|sell|data) sheet\b/i.test(String(sheet.title || ""))) {
+    const hint = parsePageHint(sheet.title);
+    return { r2Key: sheet.r2Key, pageNum: (hint && hint.firstPage) || 1, title: String(sheet.title).split(" (")[0] };
+  }
   return null;
 }
 
