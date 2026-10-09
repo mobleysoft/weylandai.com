@@ -1,0 +1,193 @@
+{
+  "accepted": {
+    "runs": 6,
+    "phone_runs": 3,
+    "overlay_runs": 3,
+    "passed_checks": 213,
+    "total_checks": 213,
+    "failed_checks": 0,
+    "deleted_rows": 402,
+    "remaining_counts": {
+      "users": 0,
+      "weyland_sessions": 0,
+      "extraction_sessions": 0,
+      "projects": 0
+    }
+  },
+  "source_hashes": {
+    "runner": "055c6f3ef6726a3265daabc580de66db011578514ab4dee45605fc428e8d6964",
+    "shared_harness": "53798a58767a0568f0f75d2dec579907cc657129ff59d1664c50f314bfaa2ccf",
+    "phone": "65b67e988a0c40f55c8f051fec7ace7c9516874046053ac2f2b6b3640acfc9a4",
+    "corrected_overlay": "098c8e11c114cb44569c5840df18016c449944020079912f46fa63b8e62fa724"
+  },
+  "runs": [
+    {
+      "journey": "phone-key-journeys",
+      "started_at": "2026-10-09T23:23:09.766Z",
+      "finished_at": "2026-10-09T23:23:41.986Z",
+      "passed_checks": 24,
+      "total_checks": 24,
+      "failed_checks": 0,
+      "source_sha256": "65b67e988a0c40f55c8f051fec7ace7c9516874046053ac2f2b6b3640acfc9a4",
+      "raw_receipt_sha256": "3e3536a4bcb4321c3f4c6357a1fb84ae7b3cc769b993fb85f450fb19f9a26945",
+      "cleanup": {
+        "deleted_rows": 90,
+        "remaining_counts": {
+          "users": 0,
+          "weyland_sessions": 0,
+          "extraction_sessions": 0,
+          "projects": 0
+        }
+      }
+    },
+    {
+      "journey": "phone-key-journeys",
+      "started_at": "2026-10-09T23:27:28.512Z",
+      "finished_at": "2026-10-09T23:28:00.937Z",
+      "passed_checks": 24,
+      "total_checks": 24,
+      "failed_checks": 0,
+      "source_sha256": "65b67e988a0c40f55c8f051fec7ace7c9516874046053ac2f2b6b3640acfc9a4",
+      "raw_receipt_sha256": "913bc7ed3137fdc69ba99391001718ae2f465184adcba23afe7656809420db52",
+      "cleanup": {
+        "deleted_rows": 90,
+        "remaining_counts": {
+          "users": 0,
+          "weyland_sessions": 0,
+          "extraction_sessions": 0,
+          "projects": 0
+        }
+      }
+    },
+    {
+      "journey": "overlay-products",
+      "started_at": "2026-10-09T23:28:01.121Z",
+      "finished_at": "2026-10-09T23:31:26.406Z",
+      "passed_checks": 47,
+      "total_checks": 47,
+      "failed_checks": 0,
+      "source_sha256": "098c8e11c114cb44569c5840df18016c449944020079912f46fa63b8e62fa724",
+      "raw_receipt_sha256": "3303774a1728fbc73217dcd4808b998b320394a97aa09e5e49cc090d64aa07e9",
+      "cleanup": {
+        "deleted_rows": 44,
+        "remaining_counts": {
+          "users": 0,
+          "weyland_sessions": 0,
+          "extraction_sessions": 0,
+          "projects": 0
+        }
+      }
+    },
+    {
+      "journey": "phone-key-journeys",
+      "started_at": "2026-10-09T23:31:26.589Z",
+      "finished_at": "2026-10-09T23:31:58.940Z",
+      "passed_checks": 24,
+      "total_checks": 24,
+      "failed_checks": 0,
+      "source_sha256": "65b67e988a0c40f55c8f051fec7ace7c9516874046053ac2f2b6b3640acfc9a4",
+      "raw_receipt_sha256": "42e98f7ef829996d48049121cd62faaebf41a57d43bcf99a61b3ee7ccb833483",
+      "cleanup": {
+        "deleted_rows": 90,
+        "remaining_counts": {
+          "users": 0,
+          "weyland_sessions": 0,
+          "extraction_sessions": 0,
+          "projects": 0
+        }
+      }
+    },
+    {
+      "journey": "overlay-products",
+      "started_at": "2026-10-09T23:32:29.976Z",
+      "finished_at": "2026-10-09T23:35:57.555Z",
+      "passed_checks": 47,
+      "total_checks": 47,
+      "failed_checks": 0,
+      "source_sha256": "098c8e11c114cb44569c5840df18016c449944020079912f46fa63b8e62fa724",
+      "raw_receipt_sha256": "6bf81af78de889fb5fdcf261beb43f6a86e9aefd18d13395f6ff2d41f43daf91",
+      "cleanup": {
+        "deleted_rows": 44,
+        "remaining_counts": {
+          "users": 0,
+          "weyland_sessions": 0,
+          "extraction_sessions": 0,
+          "projects": 0
+        }
+      }
+    },
+    {
+      "journey": "overlay-products",
+      "started_at": "2026-10-09T23:35:57.744Z",
+      "finished_at": "2026-10-09T23:39:22.989Z",
+      "passed_checks": 47,
+      "total_checks": 47,
+      "failed_checks": 0,
+      "source_sha256": "098c8e11c114cb44569c5840df18016c449944020079912f46fa63b8e62fa724",
+      "raw_receipt_sha256": "ca59cb4a9ec27aece70eb0663aac25d52d0f505b489d31fd2d0675ceb4d5a696",
+      "cleanup": {
+        "deleted_rows": 44,
+        "remaining_counts": {
+          "users": 0,
+          "weyland_sessions": 0,
+          "extraction_sessions": 0,
+          "projects": 0
+        }
+      }
+    }
+  ],
+  "selector_diagnostics": {
+    "runs": 2,
+    "failed_runs": 2,
+    "passed_checks": 92,
+    "total_checks": 94,
+    "failed_checks": 2,
+    "deleted_rows": 88,
+    "reason": "The readiness check required homepage selectors inside Finder. Failed raw receipts remain unchanged.",
+    "runs_detail": [
+      {
+        "journey": "overlay-products",
+        "started_at": "2026-10-09T23:19:25.049Z",
+        "finished_at": "2026-10-09T23:23:09.556Z",
+        "passed_checks": 46,
+        "total_checks": 47,
+        "failed_checks": 1,
+        "source_sha256": "eabca4b6d8460bac17d8219e186bfa3c4cc5bce84d2839a8e818baa728162212",
+        "raw_receipt_sha256": "3fc44ba749736b745d5adf1dec7602467c3a2476a7002f2fb182d3fd1ba3c084",
+        "cleanup": {
+          "deleted_rows": 44,
+          "remaining_counts": {
+            "users": 0,
+            "weyland_sessions": 0,
+            "extraction_sessions": 0,
+            "projects": 0
+          }
+        }
+      },
+      {
+        "journey": "overlay-products",
+        "started_at": "2026-10-09T23:23:42.172Z",
+        "finished_at": "2026-10-09T23:27:28.321Z",
+        "passed_checks": 46,
+        "total_checks": 47,
+        "failed_checks": 1,
+        "source_sha256": "eabca4b6d8460bac17d8219e186bfa3c4cc5bce84d2839a8e818baa728162212",
+        "raw_receipt_sha256": "afa045c1d34e615b90c7bfe0a4ecb985addbd6ed2a6043a17d32a2424bc2f128",
+        "cleanup": {
+          "deleted_rows": 44,
+          "remaining_counts": {
+            "users": 0,
+            "weyland_sessions": 0,
+            "extraction_sessions": 0,
+            "projects": 0
+          }
+        }
+      }
+    ]
+  },
+  "limits": [
+    "Phone journeys used Chromium emulation at 390 x 844 with touch and an iPhone user agent. Physical iPhone and Safari were not tested.",
+    "Checkout was tested only through the loaded form. Payment settlement was not tested.",
+    "Three test AuthFor identities remain at AuthFor. Owned WeylandAI test rows were deleted."
+  ]
+}

@@ -1,0 +1,58 @@
+{
+  "reviewed_at": "2026-10-09T23:56:14.870925+00:00",
+  "release_state": "reviewed_local_gates_passed_pending_production",
+  "problem": {
+    "production_jobs_table_absent": true,
+    "legacy_insert_error_previously_swallowed": true,
+    "diagnostic_upload_attempted": false,
+    "diagnostic_test_identity_removed": true
+  },
+  "repair": {
+    "migration": "migrations/20261009_legacy_hardware_extraction_jobs.sql",
+    "migration_sha256": "948de738f69f8af5a5c05b9ee5aaf3564ad22b582b8d9064cc22b229400a6599",
+    "fresh_schema_matches_migration": true,
+    "processing_job_before_object_or_group_writes": true,
+    "pending_review_requires_complete_storage_counts": true,
+    "resolved_unsuccessful_or_missing_write_metadata_rejected": true,
+    "partial_write_response": {
+      "http_status": 503,
+      "code": "HARDWARE_PERSISTENCE_INCOMPLETE",
+      "job_id_returned": true,
+      "retryable": false,
+      "partial": true
+    },
+    "early_job_failure_response": {
+      "http_status": 503,
+      "code": "HARDWARE_JOB_SAVE_FAILED",
+      "retryable": true
+    },
+    "guest_response": {
+      "http_status": 401,
+      "code": "SIGN_IN_REQUIRED"
+    },
+    "failed_marker": "best effort for the owned processing job"
+  },
+  "verification": {
+    "final_focused_tests": {
+      "passed": 49,
+      "failed": 0
+    },
+    "worker_suite_before_final_missing_metadata_hardening": {
+      "passed": 179,
+      "failed": 0
+    },
+    "sqlite_migration_applied_twice": true,
+    "sqlite_existing_rows_preserved": true,
+    "monolith_build_passed": true,
+    "independent_read_only_review": "passed14 focused route tests; metadata recommendation incorporated"
+  },
+  "production": {
+    "migration_applied": false,
+    "deployed": false,
+    "acceptance_completed": false
+  },
+  "limits": [
+    "D1, KV and R2 writes are not atomic. Failed partial legacy jobs can retain rows and objects; automatic retries are disabled.",
+    "This change covers extraction persistence; it does not overhaul legacy review/approval or perform an AuthFor migration."
+  ]
+}

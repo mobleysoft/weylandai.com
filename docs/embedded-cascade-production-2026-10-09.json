@@ -1,130 +1,90 @@
 {
-  "reviewed_at": "2026-10-09T23:39:57.907191+00:00",
-  "release_state": "merged_deployed_production_occ_acceptance_passed",
-  "scope": "OCC and synthetic ARCH D development regressions; no independent held-out calibration",
-  "grid_sha256": "8359a8d7b0fe2f5283bc4a10855e30ebb611837f037fc18c497f79c85805a937",
-  "text_sha256": "a9577c335a0fc07d7452ca8b20ad1ed2ed11f0fd5facc3d39cb8b79f6cc4a351",
-  "tests": {
-    "worker_suite": {
-      "passed": 167,
-      "failed": 0
-    },
-    "dom_regression": {
-      "passed": 8,
-      "failed": 0
-    },
-    "additional_merged_fixture_regressions": {
-      "passed": 7,
-      "failed": 0
-    },
-    "monolith_bundle": {
-      "built": true,
-      "bytes": 12303944
+  "deployment": {
+    "main": "3f5886e4576b2143b3381e38bef6cefb7bfd6e4d",
+    "actions_run": "38005721062",
+    "monolith_actions_run": "38005764013",
+    "expected_reader": "8359a8d7b0fe2f5283bc4a10855e30ebb611837f037fc18c497f79c85805a937",
+    "workers": {
+      "weyland-subx-worker": {
+        "actions_run": "38005721062",
+        "conclusion": "success",
+        "version_id": "d9f048c0-34fd-49eb-a556-5dcfc8db664f"
+      },
+      "weylandai-com-worker": {
+        "actions_run": "38005764013",
+        "conclusion": "success",
+        "version_id": "9c45af2c-84a5-482a-b4c9-d078785eca37"
+      }
     }
   },
-  "occ_browser": {
-    "pass": true,
-    "returned_rows": 42,
-    "unique_marks": 42,
-    "expected_rows": 42,
-    "missing_count": 0,
-    "extra_count": 0,
-    "duplicate_count": 0,
-    "fields_right": 252,
-    "fields_total": 252,
-    "per_field": {
-      "mark": {
-        "right": 42,
-        "wrong": 0
-      },
-      "hardware_group": {
-        "right": 42,
-        "wrong": 0
-      },
-      "width_inches": {
-        "right": 42,
-        "wrong": 0
-      },
-      "height_inches": {
-        "right": 42,
-        "wrong": 0
-      },
-      "fire_rating": {
-        "right": 42,
-        "wrong": 0
-      },
-      "door_type": {
-        "right": 42,
-        "wrong": 0
-      }
-    },
-    "partial": false,
-    "extraction_mode": "client_grid_deterministic",
-    "metadata_safe": {
+  "started_at": "2026-10-09T23:44:21.103Z",
+  "finished_at": "2026-10-09T23:44:59.211Z",
+  "base": "https://weylandai.com",
+  "pdf_sha256": "fb3e0a8137da6cdf789eb29c85ffdd8343ab6d07f7d6d47a960359111529be82",
+  "asset": {
+    "status": 200,
+    "content_type": "text/javascript; charset=utf-8",
+    "bytes": 104691,
+    "sha256": "8359a8d7b0fe2f5283bc4a10855e30ebb611837f037fc18c497f79c85805a937"
+  },
+  "text_asset": {
+    "status": 200,
+    "bytes": 64317,
+    "sha256": "a9577c335a0fc07d7452ca8b20ad1ed2ed11f0fd5facc3d39cb8b79f6cc4a351"
+  },
+  "page": {
+    "success": true,
+    "status": "pending_review",
+    "cached": false,
+    "entry_count": 42,
+    "read_from": null,
+    "extraction_route": "browser_grid_deterministic",
+    "metadata": {
+      "extraction_mode": "client_grid_deterministic",
+      "extraction_route": "client_grid_deterministic",
+      "rotation_applied": 90,
+      "row_count": 42,
+      "total_time_ms": 15960,
       "partial": false,
+      "recognition": {
+        "partial": false,
+        "reason": null,
+        "cells": 352,
+        "max_cells": 2000,
+        "elapsed_ms": 15944,
+        "max_ms": 60000
+      },
+      "page_isolated": false,
       "vector_color_paints_omitted": 836,
-      "total_time_ms": 5240
-    }
+      "code_cells_reread": 2,
+      "code_cells_reread_used": 2
+    },
+    "provider": null
   },
-  "large_sheet_browser": {
-    "pass": true,
-    "variants": [
-      {
-        "variant": "vector",
-        "rows": 48,
-        "unique_marks": 48,
-        "expected_marks": 48,
-        "missing_count": 0,
-        "extra_count": 0,
-        "duplicate_count": 0,
-        "fields_right": 336,
-        "fields_total": 336,
-        "partial": false,
-        "text_items": 1075,
-        "extraction_mode": "text_layer",
-        "recognition": null,
-        "ms": 109,
-        "field_evidence_rows": 48,
-        "pass": true
-      },
-      {
-        "variant": "scanned",
-        "rows": 48,
-        "unique_marks": 48,
-        "expected_marks": 48,
-        "missing_count": 0,
-        "extra_count": 0,
-        "duplicate_count": 0,
-        "fields_right": 336,
-        "fields_total": 336,
-        "partial": false,
-        "text_items": 0,
-        "extraction_mode": "ocr_text_lines",
-        "recognition": {
-          "partial": false,
-          "reason": null,
-          "cells": 1178,
-          "max_cells": 2000,
-          "elapsed_ms": 17756,
-          "max_ms": 60000
-        },
-        "ms": 17759,
-        "field_evidence_rows": 48,
-        "pass": true
-      }
-    ],
-    "assets": [
-      {
-        "name": "schedule-grid-extraction-client.mjs.bin",
-        "sha256": "8359a8d7b0fe2f5283bc4a10855e30ebb611837f037fc18c497f79c85805a937"
-      },
-      {
-        "name": "schedule-text-layer.mjs.bin",
-        "sha256": "a9577c335a0fc07d7452ca8b20ad1ed2ed11f0fd5facc3d39cb8b79f6cc4a351"
-      }
-    ]
+  "metrics": {
+    "returned_rows": 42,
+    "expected_rows": 42,
+    "exact_expected_mark_rows": 42,
+    "exact_distinct_marks": 42,
+    "missing_expected_marks": [],
+    "extra_marks": [],
+    "duplicate_marks": [],
+    "paired_numeric_dimensions": 42,
+    "correct_exact_mark_dimension_pairs": 42,
+    "trusted_dimensions": 0,
+    "parsed_but_untrusted_dimensions": 42,
+    "missing_dimension_rows": [],
+    "wrong_numeric_dimension_rows": [],
+    "field_denominator_all_expected": 252,
+    "fields_correct_matched": 252,
+    "field_accuracy_pct_all_expected": 100
   },
-  "occ_dimension_evidence": {
+  "evidence": {
+    "rows": 42,
+    "all_bounded": true,
+    "max_row_bytes": 8221
+  },
+  "cascade_evidence": {
     "project": "occ",
     "split": "development",
     "page": 1,
@@ -282,16 +242,24 @@
       }
     ]
   },
-  "receipt_sha256": {
-    "occ-summary.json": "3053b4991b58491dfda10ca7622101ad0cf04d702e9b93ebfbb5789a8bdabfce",
-    "large-summary.json": "3d679ce77399d9b85658de566e123e30f6c9fdb683558af8c95f16adc3480119",
-    "occ-cascade-evidence.json": "13c07f4c050134a90ceeac80921ce8094616c2150d8ab8ad2a9d38ec3d37e00b"
+  "accepted": true,
+  "errors": [],
+  "cleanup": {
+    "ok": true,
+    "deletedTotal": 47,
+    "remaining": {
+      "users": 0,
+      "weyland_sessions": 0,
+      "extraction_sessions": 0,
+      "projects": 0
+    },
+    "r2": [
+      "subx-uploads: deleted"
+    ],
+    "kv": [
+      "deleted"
+    ]
   },
-  "policy": {
-    "review_threshold": 0.8,
-    "threshold_changed": false,
-    "trained_new_model": false,
-    "evidence_bytes_per_row_max": 16000
-  },
-  "production_receipt": "embedded-cascade-production-2026-10-09.json"
+  "private_receipt_sha256": "d6c0860abd3b5b847d126e9e6ec43e34829663b70fe4591d6f85722cc3c3fa95",
+  "scope": "Fresh owned-account API acceptance and saved evidence on the repeatedly used OCC development regression. No independent calibration or held-out project certification."
 }

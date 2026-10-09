@@ -53,7 +53,7 @@ test("actual sessionless extract endpoint reads the selected Rockford page witho
   assert.equal(r.saved[0].page_number, 17);
   assert.equal(r.saved[0].metadata.read_source, "text_layer");
   assert.deepEqual(body.usage, { input_tokens: 0, output_tokens: 0 });
-  assert.deepEqual(r.writes, ["cache", "r2", "groups", "job"]);
+  assert.deepEqual(r.writes, ["job", "cache", "r2", "groups", "job"]);
 });
 
 test("real notes and a real blank PDF return actionable outcomes before any persistence", async () => {
@@ -94,3 +94,96 @@ test("SubX and monolith legacy endpoints persist the selected page with real sto
     assert.equal(failure.retryable, true); assert.deepEqual(blank.statements, []);
   }
 });
+
+
+const implementations = [
+  ["SubX", registerHardwareScheduleExtractRoutes, storeHardwareExtraction],
+  ["monolith", registerMonolithRoutes, storeMonolithHardware],
+];
+function overrideRuns(r, run) {
+  const prepare = r.env.DB.prepare;
+  r.env.DB.prepare = sql => {
+    const statement = prepare(sql), original = statement.run;
+    statement.run = async function () {
+      const override = await run(sql, this.args);
+      return override === undefined ? original.call(this) : override;
+    };
+    return statement;
+  };
+}
+for (const [name, register, store] of implementations) {
+  test(`${name}: guests cannot start legacy extraction or storage`, async () => {
+    const r = route(() => assert.fail("guest must not read PDF"), register);
+    const router = new NativeRouter();
+    register(router, { authenticate: async () => ({ user: { userId: null, ephemeral: true } }),
+      extractHardwareSchedule: () => assert.fail("guest must not read PDF"),
+      storeHardwareExtraction: () => assert.fail("guest must not store hardware") });
+    r.router = router;
+    const response = await submit(r, book, 17), body = await response.json();
+    assert.equal(response.status, 401); assert.equal(body.code, "SIGN_IN_REQUIRED");
+    assert.deepEqual(r.writes, []);
+  });
+
+  test(`${name}: absent or unsuccessful job INSERT stops all PDF and hardware writes`, async () => {
+    for (const failure of ["throw", "false", "zero", "missing"]) {
+      const r = route(undefined, register);
+      overrideRuns(r, sql => {
+        if (sql.includes("INSERT INTO hardware_extraction_jobs")) {
+          if (failure === "throw") throw new Error("no such table: hardware_extraction_jobs PRIVATE");
+          return failure === "false" ? { success: false } : failure === "missing" ? { success: true } : { success: true, meta: { changes: 0 } };
+        }
+      });
+      const response = await submit(r, book, 17), body = await response.json();
+      assert.equal(response.status, 503); assert.equal(body.code, "HARDWARE_JOB_SAVE_FAILED");
+      assert.equal(body.retryable, true); assert.equal(body.jobId, undefined);
+      assert.doesNotMatch(JSON.stringify(body), /PRIVATE|no such table/);
+      assert.deepEqual(r.writes, []); assert.deepEqual(r.saved, []);
+    }
+  });
+
+  test(`${name}: an object-write failure marks the created job failed before group storage`, async () => {
+    const r = route(undefined, register);
+    r.env.UPLOADS.put = async () => { throw new Error("R2 unavailable"); };
+    const response = await submit(r, book, 17), body = await response.json();
+    assert.equal(response.status, 503); assert.equal(body.retryable, true); assert.ok(body.jobId);
+    assert.deepEqual(r.saved, []);
+    assert.ok(r.statements.some(s => s.sql.includes("status = 'failed'")));
+    assert.ok(!r.statements.some(s => s.sql.includes("status = 'pending_review'")));
+  });
+
+  test(`${name}: actual per-component storage failures cannot return a complete job`, async () => {
+    for (const failure of ["throw", "false", "zero", "missing"]) {
+      const r = route(undefined, register, store);
+      let failed = false;
+      overrideRuns(r, sql => {
+        if (!failed && sql.includes("INSERT OR REPLACE INTO hardware_components")) {
+          failed = true;
+          if (failure === "throw") throw new Error("component insert unavailable");
+          return failure === "false" ? { success: false } : failure === "missing" ? { success: true } : { success: true, meta: { changes: 0 } };
+        }
+      });
+      const response = await submit(r, book, 17), body = await response.json();
+      assert.equal(response.status, 503); assert.equal(body.code, "HARDWARE_PERSISTENCE_INCOMPLETE");
+      assert.equal(body.retryable, false); assert.equal(body.partial, true); assert.ok(body.jobId);
+      assert.ok(r.statements.some(s => s.sql.includes("status = 'failed'")));
+      assert.ok(!r.statements.some(s => s.sql.includes("status = 'pending_review'")));
+    }
+  });
+
+  test(`${name}: completion and failed-marker failures never turn stored rows into a201`, async () => {
+    for (const failure of ["throw", "false", "zero", "missing"]) {
+      const r = route(undefined, register);
+      overrideRuns(r, sql => {
+        if (sql.includes("status = 'pending_review'")) {
+          if (failure === "throw") throw new Error("completion failed");
+          return failure === "false" ? { success: false } : failure === "missing" ? { success: true } : { success: true, meta: { changes: 0 } };
+        }
+        if (sql.includes("status = 'failed'")) throw new Error("marker unavailable");
+      });
+      const response = await submit(r, book, 17), body = await response.json();
+      assert.equal(response.status, 503); assert.equal(body.code, "HARDWARE_PERSISTENCE_INCOMPLETE");
+      assert.equal(body.retryable, false); assert.equal(body.partial, true); assert.ok(body.jobId);
+      assert.equal(r.saved.length, 1);
+    }
+  });
+}

@@ -1,3 +1,4 @@
+import { assertHardwareWrite } from "./hardware-extraction-job.js";
 // src/lib/hardware-extraction-pipeline.js
 //
 // MONOLITH_HELPER_MAP.md's Cluster A, sub-step (c): the stateful
@@ -117,7 +118,7 @@ export async function storeHardwareExtraction(extractionResult, env2, userId, co
           group3.notes || null,
           now,
           groupId
-        ).run();
+        ).run().then(assertHardwareWrite);
       } else {
         await db.prepare(`
           INSERT OR REPLACE INTO hardware_sets
@@ -154,7 +155,7 @@ export async function storeHardwareExtraction(extractionResult, env2, userId, co
           // created_at NOT NULL
           now
           // updated_at
-        ).run();
+        ).run().then(assertHardwareWrite);
       }
       insertedGroups.push({ group_number: group3.group_number, id: groupId, merged: !!isMultiPageMerge });
       for (let i = 0; i < group3.components.length; i++) {
@@ -230,7 +231,7 @@ export async function storeHardwareExtraction(extractionResult, env2, userId, co
             // created_at NOT NULL
             now
             // updated_at
-          ).run();
+          ).run().then(assertHardwareWrite);
           insertedComponents.push({
             group_number: group3.group_number,
             component_id: componentId,
