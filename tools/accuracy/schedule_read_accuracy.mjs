@@ -18,10 +18,14 @@
 // points at the run's sessions, the R2 upload and its KV copy.
 //
 // Usage: node tools/accuracy/schedule_read_accuracy.mjs [--base https://weylandai.com]
-//        [--only rockford,berryessa,occ,christina] [--label before]
+//        [--only rockford,berryessa,occ,christina] [--label before] [--token-file <path>]
+// --token-file (2026-10-09): sign in with a real test account's AuthFor bearer token read from
+// the file (a jmobleyworks+<tag> address, never printed) instead of writing a throwaway account
+// into D1; for a machine without the Cloudflare login (the cloud session). Its sessions are
+// deleted through DELETE /api/hardware-schedule/session/:id.
 // Writes schedule_report_<stamp>[_<label>].json and .md next to this file. Needs the Cloudflare
 // login wrangler already uses (run with CF_API_KEY unset, like the deploy steps).
-import { readFileSync, writeFileSync } from "node:fs";
+import { readFileSync, writeFileSync, existsSync } from "node:fs";
 import { dirname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import { execFile } from "node:child_process";
@@ -34,6 +38,7 @@ const args = Object.fromEntries(process.argv.slice(2).map((a, i, all) => a.start
 const BASE = String(args.base || "https://weylandai.com").replace(/\/$/, "");
 const ONLY = args.only ? String(args.only).split(",").map((s) => s.trim()) : null;
 const LABEL = args.label ? "_" + String(args.label).replace(/[^A-Za-z0-9_-]/g, "") : "";
+const TOKEN = args["token-file"] ? readFileSync(String(args["token-file"]), "utf8").trim() : null;
 const UPLOADS_BUCKET = "subx-uploads";
 const CACHE_KV = "80a77dcf4f5f4e8588c172f2ecef95fb";
 
@@ -44,7 +49,7 @@ const DOCS = [
     doors: "rockford-a2.2-door-schedule.json", groups: "rockford-087100-hardware-groups.json" },
   { id: "berryessa", file: join(CORPUS, "dd339f57b51538ed.pdf"), upload_type: "door_schedule",
     doors: "berryessa-a9.2-door-schedules.json", groups: "berryessa-087100-hardware-groups.json" },
-  { id: "occ", file: "/Users/johnmobley/pdf/OCCDoorSchedulePg4.pdf", upload_type: "door_schedule",
+  { id: "occ", file: [join(CORPUS, "occ-a-801-pg4.pdf"), "/Users/johnmobley/pdf/OCCDoorSchedulePg4.pdf"].find((f) => existsSync(f)) || "/Users/johnmobley/pdf/OCCDoorSchedulePg4.pdf", upload_type: "door_schedule",
     doors: "occ-a-801-door-schedule.json" },
   { id: "christina", file: join(CORPUS, "525dc0b72011077a.pdf"), upload_type: "hardware_schedule",
     groups: "christina-chs-hardware-set-01.json" },
@@ -84,7 +89,7 @@ async function schemaTablesWith(column, except = []) {
   const out = [];
   for (const t of r.results || []) {
     if (except.includes(t.name)) continue;
-    const cols = String(t.sql || "").replace(/^[^(]*\(/s, "").split(/,(?![^()]*\))/).map((c) => c.trim().split(/\s+/)[0].replace(/["`\[\]]/g, "").toLowerCase());
+    const cols = String(t.sql || "").replace(/^[^(]*\(/s, "").replace(/\)\s*$/, "").split(/,(?![^()]*\))/).map((c) => c.trim().split(/\s+/)[0].replace(/["`\[\]]/g, "").toLowerCase());
     if (cols.includes(column)) out.push(t.name);
   }
   return out;
@@ -124,10 +129,20 @@ async function purge(acct, sessions) {
   return out;
 }
 
+async function deleteViaApi(acct, sessions) {
+  const out = { mode: "api", deleted: [], failed: [] };
+  for (const s of sessions) {
+    const r = await api(acct, "/api/hardware-schedule/session/" + s.id, { method: "DELETE" });
+    (r.ok ? out.deleted : out.failed).push(s.id + (r.ok ? " (" + (r.data && r.data.rows) + " rows)" : " HTTP " + r.status));
+  }
+  out.ok = !out.failed.length;
+  return out;
+}
+
 // ---------------------------------------------------------------- HTTP, as the page makes it
 async function api(acct, path, init = {}) {
   const t0 = Date.now();
-  const r = await fetch(BASE + path, { ...init, headers: { Cookie: acct.cookie, ...(init.headers || {}) } });
+  const r = await fetch(BASE + path, { ...init, headers: { ...(acct.auth ? { Authorization: acct.auth } : { Cookie: acct.cookie }), ...(init.headers || {}) } });
   const text = await r.text();
   let data = null;
   try { data = JSON.parse(text); } catch (_) { data = { raw: text.slice(0, 300) }; }
@@ -286,7 +301,7 @@ function scoreGroups(expectedDoc, sets, comps, foundDoors) {
 const started = new Date();
 const docs = DOCS.filter((d) => !ONLY || ONLY.includes(d.id));
 const report = { base: BASE, started_at: started.toISOString(), documents: [] };
-const acct = await createAccount();
+const acct = TOKEN ? { auth: "Bearer " + TOKEN, userId: null, token_mode: true } : await createAccount();
 const sessions = [];
 try {
   for (const doc of docs) {
@@ -294,6 +309,7 @@ try {
     report.documents.push(entry);
     const expDoors = doc.doors ? JSON.parse(readFileSync(join(EXPECTED, doc.doors), "utf8")) : null;
     const expGroups = doc.groups ? JSON.parse(readFileSync(join(EXPECTED, doc.groups), "utf8")) : null;
+    if (!existsSync(doc.file)) { entry.errors.push("the PDF is not on this machine: " + doc.file); continue; }
     let s;
     try { s = await upload(acct, doc); } catch (e) { entry.errors.push(String(e.message)); continue; }
     sessions.push(s);
@@ -340,13 +356,13 @@ try {
     const rows = await api(acct, "/api/hardware-schedule/session/" + s.id + "/doors");
     if (!rows.ok) { entry.errors.push("doors route " + rows.status); continue; }
     const found = rows.data || {};
-    try { const [k] = await d1("SELECT file_buffer_key FROM hardware_extraction_sessions WHERE id = " + q(s.id) + ";"); s.key = ((k.results || [])[0] || {}).file_buffer_key || null; } catch (_) { /* purge falls back to prefix */ }
+    if (!acct.token_mode) { try { const [k] = await d1("SELECT file_buffer_key FROM hardware_extraction_sessions WHERE id = " + q(s.id) + ";"); s.key = ((k.results || [])[0] || {}).file_buffer_key || null; } catch (_) { /* purge falls back to prefix */ } }
     entry.found = { doors: (found.doors || []).map((d) => ({ page: (d.source && d.source.page) || d.page_number, row: d.source && d.source.table_row, mark: d.mark, hardware_group: d.hardware_group, width: d.width, width_inches: d.width_inches, height_inches: d.height_inches, fire_rating: d.fire_rating, door_type: d.door_type })), hardware_sets: found.hardware_sets || [], components: found.components || [] };
     if (expDoors) entry.doors = scoreDoors(expDoors, found.doors || []);
     if (expGroups) entry.hardware = scoreGroups(expGroups, found.hardware_sets || [], found.components || [], found.doors || []);
   }
 } finally {
-  report.cleanup = await purge(acct, sessions).catch((e) => ({ ok: false, error: String(e.message).slice(0, 300) }));
+  report.cleanup = acct.token_mode ? await deleteViaApi(acct, sessions) : await purge(acct, sessions).catch((e) => ({ ok: false, error: String(e.message).slice(0, 300) }));
 }
 report.finished_at = new Date().toISOString();
 
