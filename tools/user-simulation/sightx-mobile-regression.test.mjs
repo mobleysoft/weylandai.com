@@ -23,20 +23,109 @@ class Element {
   remove() { this.removed=true; }
   getBoundingClientRect() { return {left:18,top:600,width:140,height:140}; }
 }
-function fixture({external=false, coarse=true}={}) {
+function browserFixture({coarse=true}={}) {
   const win=new Element(), doc=new Element(), canvas=new Element(), timers=new Map();
   let time=100, next=0, pads=[];
   doc.body=new Element(); doc.body.classList.add('sightx-demo'); doc.documentElement=new Element(); doc.activeElement=doc.body;
   doc.createElement=()=>new Element();
-  const context=vm.createContext({window:win, document:doc, localStorage:{getItem:()=>null,setItem(){}}, matchMedia:()=>({matches:coarse}),performance:{now:()=>time}, navigator:{getGamepads:()=>pads}, location:{origin:'https://weylandai.com'}, console, requestAnimationFrame:fn=>{timers.set(++next,fn);return next;},cancelAnimationFrame:id=>timers.delete(id)});
+  win.parent=win;
+  const context=vm.createContext({window:win, document:doc, localStorage:{getItem:()=>null,setItem(){}}, matchMedia:()=>({matches:coarse}),performance:{now:()=>time}, navigator:{getGamepads:()=>pads}, location:{origin:'https://weylandai.com',hostname:'weylandai.com',search:''}, URLSearchParams, console, requestAnimationFrame:fn=>{timers.set(++next,fn);return next;},cancelAnimationFrame:id=>timers.delete(id)});
+  const step=(ms=16)=>{time+=ms;const callbacks=[...timers.values()];timers.clear();callbacks.forEach(fn=>fn(time));};
+  return {win,doc,canvas,context,step,setPads:p=>{pads=p;}, advance:ms=>{time+=ms;}};
+}
+function fixture({external=false, coarse=true}={}) {
+  const f=browserFixture({coarse}), {win,canvas,context,step}=f;
   vm.runInContext(inputSource,context); vm.runInContext(controlsSource,context);
   const control=win.SightXControls.mount({canvas,externalInput:external,initialPosition:[0,1,-9],groundY:()=>1});
-  const step=(ms=16)=>{time+=ms;const callbacks=[...timers.values()];timers.clear();callbacks.forEach(fn=>fn(time));};
   const walk=(n=60)=>{for(let i=0;i<n;i++){step();control.update(.016);}};
-  return {win,doc,canvas,control,context,step,walk,setPads:p=>{pads=p;}, advance:ms=>{time+=ms;}};
+  return {...f,control,walk};
 }
 const touch=(id,x,y)=>({pointerId:id,clientX:x,clientY:y,pointerType:'touch',button:0});
 const near=(actual,expected)=>assert.ok(Math.abs(actual-expected)<1e-8,`${actual} != ${expected}`);
+function loadPageControls(f, html, {expectLocalInput=true}={}) {
+  // Execute the actual page's classic scripts in parser order through controls.
+  // No fixture preloads the dependency: removing/reordering its tag must fail.
+  for(const [,attrs,body] of html.matchAll(/<script\b([^>]*)>([\s\S]*?)<\/script>/g)) {
+    const src=attrs.match(/\bsrc=["']([^"']+)["']/)?.[1];
+    const pathname=src && new URL(src, f.context.location.origin).pathname;
+    assert.doesNotMatch(attrs,/\b(?:async|defer)\b|\btype=["']module["']/);
+    if(pathname==='/assets/sightx-controls.js' && expectLocalInput) {
+      assert.equal(typeof f.win.WeylandInput?.neutral,'function','WeylandInput.neutral must exist before controls run');
+      assert.deepEqual(JSON.parse(JSON.stringify(f.win.WeylandInput.neutral())),{move:{x:0,y:0},look:{dx:0,dy:0},buttons:{}});
+    }
+    vm.runInContext(src ? read(pathname.slice(1)) : body,f.context,{filename:src || 'embed-inline.js'});
+    if(pathname==='/assets/sightx-controls.js') return;
+  }
+  assert.fail('embed page did not load controls');
+}
+for(const path of ['weyland-sightx-worker/src/pages/sightx.html','src/pages/sightx.html']) {
+  test(path + ' loads neutral before controls and mounts a state-reporting embed',()=>{
+    const f=browserFixture(); f.win.parent={}; f.context.location.search='?embed=bg';
+    loadPageControls(f,read(path));
+    assert.equal(f.doc.documentElement.classList.contains('sxe-bg-embed'),true);
+    const control=f.win.SightXControls.mount({canvas:f.canvas});
+    control.setExternalState({move:{y:1}}); control.update(.05); f.step();
+    assert.ok(f.win.SightXControls.state().pos[2]>-9);
+    assert.equal(f.doc.body.children.length,0,'the host owns the stick in embeds');
+  });
+}
+test('an older embed without the input tag or externalInput option consumes its same-origin host input',()=>{
+  const host=browserFixture(); vm.runInContext(inputSource,host.context);
+  const f=browserFixture(); f.win.parent=host.win; f.context.location.search='?embed=bg';
+  const oldPage=page.replace(/<script src="\/assets\/weyland-input\.js[^\"]*"><\/script>/,'');
+  loadPageControls(f,oldPage,{expectLocalInput:false});
+  assert.equal(f.win.WeylandInput,undefined);
+  const control=f.win.SightXControls.mount({canvas:f.canvas});
+  control.setExternalState({move:{y:1},look:{dx:260}}); control.update(.05);
+  const state=f.win.SightXControls.state();
+  assert.ok(state.pos[2]>-9); assert.ok(Math.abs(state.yaw)>.5);
+  control.update(.05); near(f.win.SightXControls.state().yaw,state.yaw);
+  control.setEnabled(false); near(Math.hypot(...control.velocity),0);
+  f.step(); host.step();
+  assert.equal(f.doc.body.children.length,0); assert.equal(host.doc.body.children.length,0);
+});
+function backdropFixture({coarse=true, idle=true, reduced=false, gl='hardware'}={}) {
+  const f=browserFixture({coarse}), backdrop=new Element(), observers=[], idleCallbacks=[], timeouts=[];
+  f.doc.readyState='complete';
+  f.doc.getElementById=id=>id==='stage-backdrop' ? backdrop : null;
+  f.doc.querySelector=selector=>selector==='#stage-backdrop iframe' ? backdrop.children[0] || null : null;
+  f.win.matchMedia=query=>({matches:query.includes('reduced-motion') ? reduced : coarse});
+  f.win.__weylandGLClass=()=>gl;
+  if(idle) f.win.requestIdleCallback=fn=>idleCallbacks.push(fn);
+  f.context.setTimeout=fn=>timeouts.push(fn);
+  f.context.MutationObserver=class { constructor(fn){observers.push(fn);} observe(){} };
+  const script=[...read('index.html').matchAll(/<script(?:\s[^>]*)?>([\s\S]*?)<\/script>/g)].map(x=>x[1]).find(x=>x.includes('var injected = false;'));
+  assert.ok(script); vm.runInContext(script,f.context);
+  return {...f,backdrop,idleCallbacks,timeouts,sync:()=>observers.forEach(fn=>fn())};
+}
+test('phone mounts exactly once on the first trusted touch without waiting for idle or a timer',()=>{
+  for(const idle of [true,false]) for(const type of ['pointerdown','touchstart']) {
+    const f=backdropFixture({idle});
+    assert.equal(f.backdrop.children.length,0);
+    f.win.emit(type,{isTrusted:false}); f.win.emit('scroll',{isTrusted:true,target:new Element()});
+    assert.equal(f.backdrop.children.length,0);
+    f.win.emit(type,{isTrusted:true});
+    assert.equal(f.backdrop.children.length,1);
+    assert.equal(f.backdrop.children[0].src,'/sightx/?embed=bg');
+    f.win.emit('touchstart',{isTrusted:true}); f.win.emit('pointerdown',{isTrusted:true});
+    assert.equal(f.backdrop.children.length,1);
+    assert.equal(f.idleCallbacks.length,0); assert.equal(f.timeouts.length,0);
+  }
+});
+test('phone touch waits for an open overlay to close, then mounts without another gesture',()=>{
+  const f=backdropFixture(); f.doc.documentElement.classList.add('wa-overlay-open');
+  f.win.emit('touchstart',{isTrusted:true}); assert.equal(f.backdrop.children.length,0);
+  f.doc.documentElement.classList.remove('wa-overlay-open'); f.sync();
+  assert.equal(f.backdrop.children.length,1); assert.equal(f.idleCallbacks.length,0);
+});
+test('backdrop keeps desktop idle loading, reduced-motion opt-in and the hardware gate',()=>{
+  const desktop=backdropFixture({coarse:false}); assert.equal(desktop.backdrop.children.length,0);
+  assert.equal(desktop.idleCallbacks.length,1); desktop.idleCallbacks[0](); assert.equal(desktop.backdrop.children.length,1);
+  const reduced=backdropFixture({reduced:true}); reduced.win.emit('touchstart',{isTrusted:true});
+  assert.equal(reduced.backdrop.children.length,0); reduced.win.__weylandEnsureBackdrop(true); assert.equal(reduced.backdrop.children.length,1);
+  const software=backdropFixture({gl:'software'}); software.win.emit('touchstart',{isTrusted:true});
+  assert.equal(software.win.__weylandEnsureBackdrop(true),false); assert.equal(software.backdrop.children.length,0);
+});
 test('W and a pointer drag drive the world through the same state, with independent snapshots',()=>{
   const f=fixture(); const before=f.win.SightXControls.state();
   f.win.emit('keydown',{code:'KeyW'}); f.walk(95); f.win.emit('keyup',{code:'KeyW'});

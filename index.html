@@ -4163,9 +4163,7 @@
   })();
   </script>
 
-  <!-- Live SightX world as the stage backdrop (desktop + motion-ok only -
-       a full WebGL2 raymarched scene isn't worth the battery/bandwidth
-       cost on mobile for a purely ambient backdrop). -->
+  <!-- Live SightX backdrop: idle after desktop load, first gesture on phones. -->
   <script>
   (function () {
     var injected = false;
@@ -4205,7 +4203,7 @@
     function syncBackdrop() {
       if (overlayOpen()) { pauseBackdrop(); return; }
       resumeBackdrop();
-      if (pendingMount) { pendingMount = false; whenIdle(bootBackdrop); }
+      if (pendingMount) { pendingMount = false; bootBackdrop(); }
     }
     new MutationObserver(syncBackdrop).observe(docEl, { attributes: true, attributeFilter: ["class"] });
     var upgradeEl = document.getElementById("upgrade-modal");
@@ -4275,7 +4273,9 @@
         if (ev && (!ev.isTrusted || (ev.type === "scroll" && ev.target !== document))) return;
         if (armed) return; armed = true;
         ["pointerdown", "touchstart", "scroll", "keydown", "wheel"].forEach(function (t) { window.removeEventListener(t, onFirstInput, true); });
-        whenIdle(bootBackdrop);
+        // The gesture has already deferred startup past first paint. Start
+        // loading now: waiting for idle again can delay a busy phone's frame.
+        bootBackdrop();
       };
       ["pointerdown", "touchstart", "scroll", "keydown", "wheel"].forEach(function (t) { window.addEventListener(t, onFirstInput, { capture: true, passive: true }); });
     } else {

@@ -125,6 +125,20 @@
     const canvas = options.canvas;
     if (!canvas) throw new Error('SightX controls require a canvas.');
 
+    const backgroundEmbed = window.parent !== window && document.documentElement.classList.contains('sxe-bg-embed');
+    const externalInput = options.externalInput ?? backgroundEmbed;
+    let inputLayer = window.WeylandInput;
+    // The worker HTML and shared assets deploy independently. Older embeds
+    // omit both the input script and externalInput; their same-origin host
+    // already owns input. Borrow only its stateless helpers, never create()
+    // (which would bind a second controller to the parent's document).
+    if (!inputLayer && backgroundEmbed && externalInput) {
+      try { inputLayer = window.parent.WeylandInput; } catch (_) {}
+    }
+    if (typeof inputLayer?.neutral !== 'function' || typeof inputLayer?.normalize !== 'function' || (!externalInput && typeof inputLayer?.create !== 'function')) {
+      throw new Error('SightX controls require /assets/weyland-input.js before mounting.');
+    }
+
     const preferences = loadPreferences();
     const settings = preferences.settings;
     const bindings = preferences.bindings;
@@ -140,12 +154,12 @@
     let locked = false;
     let inputEnabled = true;
     let desktopScanHeld = false;
-    let ext = window.WeylandInput.neutral(), externalAt = -Infinity;
-    const input = options.externalInput ? null : window.WeylandInput.create({
+    let ext = inputLayer.neutral(), externalAt = -Infinity;
+    const input = externalInput ? null : inputLayer.create({
       lookTarget: canvas, stick: 'auto', active: () => inputEnabled,
       bindings: () => bindings
     });
-    let current = window.WeylandInput.neutral();
+    let current = inputLayer.neutral();
 
     function persist() {
       try { localStorage.setItem(SETTINGS_KEY, JSON.stringify({ settings, bindings })); } catch (_) {}
@@ -264,7 +278,7 @@
     // The world only consumes normalized input. The homepage owns every physical input in embeds.
     function setExternalState(state) {
       if (!inputEnabled) return;
-      const next = window.WeylandInput.normalize(state);
+      const next = inputLayer.normalize(state);
       next.look.dx += ext.look.dx; next.look.dy += ext.look.dy;
       ext = next; externalAt = performance.now();
     }
@@ -296,7 +310,7 @@
 
     function update(dt) {
       if (!inputEnabled) return;
-      current = input ? input.state() : (performance.now() - externalAt < 400 ? ext : window.WeylandInput.neutral());
+      current = input ? input.state() : (performance.now() - externalAt < 400 ? ext : inputLayer.neutral());
       lookBy(current.look.dx, current.look.dy);
       ext.look = { dx: 0, dy: 0 };
       if (desktopScanHeld !== actionActive('scan')) { desktopScanHeld = actionActive('scan'); setScan(desktopScanHeld); }
@@ -480,7 +494,7 @@
       inputEnabled = Boolean(active);
       if (input) input.setEnabled(inputEnabled);
       if (!inputEnabled) {
-        ext = window.WeylandInput.neutral(); externalAt = -Infinity;
+        ext = inputLayer.neutral(); externalAt = -Infinity;
         velocity.fill(0); desktopScanHeld = false; setScan(false);
       }
     }
@@ -510,7 +524,7 @@
     }
 
     window.addEventListener('blur', () => {
-      ext = window.WeylandInput.neutral(); externalAt = -Infinity;
+      ext = inputLayer.neutral(); externalAt = -Infinity;
       velocity.fill(0); desktopScanHeld = false; setScan(false);
     });
 
