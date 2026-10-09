@@ -3,7 +3,7 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "build": "esbuild src/worker-entry.js --bundle --format=esm --platform=neutral --main-fields=module,main --target=es2022 --outfile=weyland.worker.js --external:cloudflare:workers --external:node:*"
+    "build": "esbuild src/worker-entry.js --bundle --format=esm --platform=neutral --main-fields=module,main --target=es2022 --outfile=weyland.worker.js --external:cloudflare:workers --external:node:* --external:events --external:http --external:https --external:stream --external:crypto --external:tty --external:net --external:tls --external:zlib --external:url --external:buffer --external:util --external:fs --external:path --external:os --external:child_process --external:bufferutil --external:utf-8-validate"
   },
   "dependencies": {
     "@cloudflare/puppeteer": "1.0.4"

@@ -61,6 +61,9 @@ jobs:
         if: steps.dir.outputs.build == 'true'
         run: |
           npm ci --ignore-scripts
+          # The monolith re-exports SubX's libraries (src/lib/*.js -> weyland-subx-worker/src/lib):
+          # a bare import there resolves from SubX's own node_modules (pdf-lib, @cloudflare/puppeteer).
+          (cd weyland-subx-worker && npm ci --ignore-scripts)
           npm run build
       - name: Install worker deps (if any)
         if: steps.dir.outputs.build == 'false'
