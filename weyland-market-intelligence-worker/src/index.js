@@ -39,7 +39,7 @@ import { registerCompxRoutes } from "./routes/compx.js";
 import { ingestAwards } from "./lib/awards.js";
 import compxHtml from "./pages/compx.html";
 import { registerMarketxRoutes } from "./routes/marketx.js";
-import { ingestPermits } from "./lib/permits.js";
+import { ingestPermits, backfilling } from "./lib/permits.js";
 import marketxHtml from "./pages/marketx.html";
 import { registerJobToolRoutes, logYesterday } from "./routes/job-tools.js";
 import geoxHtml from "./pages/geox.html";
@@ -102,6 +102,9 @@ export default secured({
     // (24 months the first runs, then what each city issued since).
     trafficDrivenJob(env, ctx, { db: env.DB, job: "marketx-permits-ingest", cadenceSeconds: 900, worker: "weyland-market-intelligence-worker",
       run: () => ingestPermits(env.DB).then((r) => console.log("[marketx-permits] traffic-driven:", JSON.stringify(r))) });
+    // While a city is still reading its 24 months, a run every 2 minutes (a no-op once all are current).
+    trafficDrivenJob(env, ctx, { db: env.DB, job: "marketx-permits-backfill", cadenceSeconds: 120, worker: "weyland-market-intelligence-worker",
+      run: () => backfilling(env.DB).then((b) => (b ? ingestPermits(env.DB).then((r) => console.log("[marketx-backfill]", JSON.stringify(r))) : null)) });
     trafficDrivenJob(env, ctx, { db: env.DB, job: "weatherx-daily-log", cadenceSeconds: 86400, worker: "weyland-market-intelligence-worker",
       run: () => logYesterday(env).then((r) => console.log("[weatherx-log] traffic-driven:", JSON.stringify(r))) });
     trafficDrivenJob(env, ctx, { db: env.DB, job: "pricex-index-snapshot", cadenceSeconds: 7 * 86400, worker: "weyland-market-intelligence-worker",
