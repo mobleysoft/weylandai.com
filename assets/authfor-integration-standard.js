@@ -278,7 +278,7 @@ class AuthForStandard {
     if (!container) return;
 
     container.innerHTML = `
-      <div style="max-width:400px;margin:100px auto;padding:20px;border:1px solid #333;border-radius:8px;background:#1a1a1a">
+      <div id="authfor-primary" style="max-width:400px;margin:100px auto;padding:20px;border:1px solid #333;border-radius:8px;background:#1a1a1a">
         <h2 style="margin:0 0 20px 0;color:#fff;font-size:20px">Sign In</h2>
         <div id="authfor-error" style="color:#ff4444;margin-bottom:10px;display:none"></div>
 
@@ -338,9 +338,12 @@ class AuthForStandard {
       try {
         const result = await this.login(email, password);
         if (result.mfa_required) {
-          document.querySelector(this.loginUISelector).style.display = 'none';
+          // Both cards live inside the login container. Keep their parent visible.
+          document.querySelector(this.loginUISelector).style.display = 'block';
+          document.getElementById('authfor-primary').style.display = 'none';
           document.getElementById('authfor-mfa').style.display = 'block';
           this._setupMFAHandler();
+          document.getElementById('authfor-mfa-code').focus();
         }
       } catch (e) {
         errorDiv.textContent = e.message.toUpperCase();
@@ -402,19 +405,11 @@ class AuthForStandard {
 
   // Logout
   async logout() {
-    this._sessionEpoch++; // An outstanding refresh cannot restore a signed-out session.
-    if (this._token) {
-      try {
-        await fetch('https://authfor.com/api/v1/logout', {
-          method: 'POST',
-          headers: { 'Authorization': 'Bearer ' + this._token },
-          body: JSON.stringify({ session_id: this._sessionId })
-        });
-      } catch (e) { /* cleanup locally anyway */ }
-    }
-
+    const token = this._token;
+    const sessionId = this._sessionId;
+    const epoch = ++this._sessionEpoch; // An outstanding refresh cannot restore this session.
     if (this._refreshTimer) clearTimeout(this._refreshTimer);
-
+    this._refreshTimer = null;
     this._token = null;
     this._user = null;
     this._refreshToken = null;
@@ -422,12 +417,33 @@ class AuthForStandard {
     this._mfaRequired = false;
     this._mfaPending = null;
 
-    localStorage.removeItem('_authfor_token');
-    localStorage.removeItem('_authfor_refresh');
-    localStorage.removeItem('_authfor_session');
+    // A stale tab must not clear a newer tab's primary sign-in. Clear the
+    // owned pair now; the remote answer must never clear credentials later.
+    const ownsStoredSession = sessionId
+      ? localStorage.getItem('_authfor_session') === sessionId
+      : token && localStorage.getItem('_authfor_token') === token;
+    if (ownsStoredSession) {
+      localStorage.removeItem('_authfor_token');
+      localStorage.removeItem('_authfor_refresh');
+      localStorage.removeItem('_authfor_session');
+    }
 
-    // Reload to show login UI
-    window.location.reload();
+    if (token) {
+      try {
+        await fetch('https://authfor.com/api/v1/logout', {
+          method: 'POST',
+          headers: { 'Authorization': 'Bearer ' + token },
+          body: JSON.stringify({ session_id: sessionId })
+        });
+      } catch (e) { /* the owned local session already ended */ }
+    }
+
+    // A newer sign-in (or MFA challenge) owns its UI and timer. Only reload
+    // while this logout still owns the signed-out state.
+    if (epoch === this._sessionEpoch && !this._token && !this._mfaRequired &&
+        !localStorage.getItem('_authfor_token') && !localStorage.getItem('_authfor_session')) {
+      window.location.reload();
+    }
   }
 
   // Public API

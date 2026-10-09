@@ -38,6 +38,76 @@ function browser({ fetchImpl = async () => answer({}), localStorage = storage(),
   return { context, window, auth, calls, timers, events, localStorage, reloads: () => reloads };
 }
 
+// A small DOM tree built from the SDK's actual template. Visibility includes
+// ancestors, so showing a child of a hidden login container cannot pass.
+function standardLoginDOM() {
+  const ids = new Map();
+  let focused = null;
+  class Node {
+    constructor(tag, parent = null, attributes = '') {
+      this.tag = tag; this.parentNode = parent; this.children = []; this.style = {};
+      this.value = ''; this.disabled = false; this.textContent = '';
+      const attrs = Object.fromEntries([...attributes.matchAll(/([\w-]+)="([^"]*)"/g)].map(m => [m[1], m[2]]));
+      if (attrs.id) ids.set(attrs.id, this);
+      for (const pair of (attrs.style || '').split(';')) {
+        const at = pair.indexOf(':');
+        if (at >= 0) this.style[pair.slice(0, at).trim()] = pair.slice(at + 1).trim();
+      }
+      if (parent) parent.children.push(this);
+    }
+    focus() { focused = this; }
+    visible() { return this.style.display !== 'none' && (!this.parentNode || this.parentNode.visible()); }
+    set innerHTML(html) {
+      this.children = []; ids.clear(); ids.set('login-ui', this);
+      const stack = [this];
+      for (const match of html.matchAll(/<(\/)?([a-z][\w-]*)([^>]*)>/gi)) {
+        const [, closing, tag, attributes] = match;
+        if (closing) { if (stack.length > 1) stack.pop(); continue; }
+        const child = new Node(tag.toLowerCase(), stack.at(-1), attributes);
+        if (!['input', 'br', 'hr', 'img', 'meta', 'link'].includes(child.tag)) stack.push(child);
+      }
+    }
+  }
+  const root = new Node('div');
+  return { root, ids, focused: () => focused,
+    document: { querySelector: selector => selector === '#login-ui' ? root : null, getElementById: id => ids.get(id) || null } };
+}
+
+test('SDK standard login keeps MFA controls visible through failure, retry and success', async () => {
+  let factorAttempts = 0;
+  const issued = session();
+  const f = browser({ fetchImpl: async url => {
+    if (url.endsWith('/login')) return answer({ mfa_required: true, challenge: 'standard-ui-challenge' });
+    if (++factorAttempts === 1) return answer({ code: 'UNAUTHORIZED' }, 401);
+    // Actual AuthFor MFA verification returns credentials without a user object.
+    return answer({ token: issued.token, session_id: issued.session_id, refresh_token: issued.refresh_token, mfa_verified: true });
+  } });
+  const dom = standardLoginDOM(), alerts = [];
+  Object.assign(f.context, { document: dom.document, alert: message => alerts.push(message) });
+  f.auth._showLoginUI();
+  dom.ids.get('authfor-email').value = 'fixture@example.test';
+  dom.ids.get('authfor-password').value = 'fixture-password';
+  await dom.ids.get('authfor-login-btn').onclick();
+  assert.equal(dom.root.visible(), true);
+  assert.equal(dom.ids.get('authfor-primary').visible(), false);
+  assert.equal(dom.ids.get('authfor-mfa-code').visible(), true);
+  assert.equal(dom.ids.get('authfor-mfa-btn').visible(), true);
+  assert.equal(dom.focused(), dom.ids.get('authfor-mfa-code'));
+  assert.equal(f.localStorage.getItem('_authfor_token'), null);
+  dom.ids.get('authfor-mfa-code').value = '111111';
+  await dom.ids.get('authfor-mfa-btn').onclick();
+  assert.equal(alerts.length, 1);
+  assert.equal(dom.ids.get('authfor-mfa-code').visible(), true);
+  assert.equal(dom.ids.get('authfor-mfa-btn').disabled, false);
+  assert.equal(f.localStorage.getItem('_authfor_token'), null);
+  dom.ids.get('authfor-mfa-code').value = '123456';
+  await dom.ids.get('authfor-mfa-btn').onclick();
+  assert.deepEqual(f.calls[2].body, { challenge: 'standard-ui-challenge', totp_code: '123456' });
+  assert.equal(f.auth.isAuthenticated(), true);
+  assert.equal(dom.root.visible(), false);
+  assert.equal(f.events.length, 1);
+});
+
 test('SDK password MFA retains a challenge and sends challenge/totp_code before saving a session', async () => {
   const f = browser({ fetchImpl: async url => answer(url.endsWith('/login') ? { mfa_required: true, challenge: 'c1' } : session()) });
   const result = await f.auth.login('fixture@example.test', 'fixture-password');
@@ -135,6 +205,103 @@ test('SDK an in-flight refresh cannot restore credentials after logout', async (
   assert.equal(f.localStorage.getItem('_authfor_token'), null);
   assert.equal(f.localStorage.getItem('_authfor_refresh'), null);
   assert.equal(f.auth.getToken(), null);
+});
+
+test('SDK logout clears its owned local session before the remote answer and revokes the captured pair', async () => {
+  const remote = deferred();
+  const f = browser({ fetchImpl: async () => remote.promise });
+  const old = session();
+  f.auth._processAuthResponse(old);
+  const pending = f.auth.logout();
+  assert.equal(f.auth.getToken(), null);
+  assert.equal(f.auth._sessionId, null);
+  assert.equal(f.localStorage.getItem('_authfor_token'), null);
+  assert.equal(f.localStorage.getItem('_authfor_session'), null);
+  assert.equal(f.localStorage.getItem('_authfor_refresh'), null);
+  assert.equal(f.timers.size, 0);
+  assert.equal(f.calls[0].init.headers.Authorization, 'Bearer ' + old.token);
+  assert.deepEqual(f.calls[0].body, { session_id: old.session_id });
+  remote.resolve(answer({}));
+  await pending;
+  assert.equal(f.reloads(), 1);
+});
+
+test('SDK delayed logout preserves another tab primary sign-in and does not reload', async () => {
+  const shared = storage(), remote = deferred();
+  const a = browser({ localStorage: shared, fetchImpl: async () => remote.promise });
+  a.auth._processAuthResponse(session());
+  const pending = a.auth.logout();
+  const b = browser({ localStorage: shared });
+  const next = { ...session('new-tab-refresh'), token: jwt(now / 1000 + 7200), session_id: 'new-tab-session' };
+  b.auth._processAuthResponse(next);
+  remote.resolve(answer({}));
+  await pending;
+  assert.equal(shared.getItem('_authfor_session'), next.session_id);
+  assert.equal(shared.getItem('_authfor_token'), next.token);
+  assert.equal(shared.getItem('_authfor_refresh'), next.refresh_token);
+  assert.equal(b.auth.getToken(), next.token);
+  assert.equal(b.timers.size, 1);
+  assert.equal(a.reloads(), 0);
+});
+
+test('SDK delayed logout preserves a newer sign-in on the same instance and its timer', async () => {
+  const remote = deferred();
+  const f = browser({ fetchImpl: async () => remote.promise });
+  f.auth._processAuthResponse(session());
+  const pending = f.auth.logout();
+  const next = { ...session('new-instance-refresh'), token: jwt(now / 1000 + 7200), session_id: 'new-instance-session' };
+  f.auth._processAuthResponse(next);
+  remote.resolve(answer({}));
+  await pending;
+  assert.equal(f.auth.getToken(), next.token);
+  assert.equal(f.auth._sessionId, next.session_id);
+  assert.equal(f.auth._refreshToken, next.refresh_token);
+  assert.equal(f.localStorage.getItem('_authfor_session'), next.session_id);
+  assert.equal(f.timers.size, 1);
+  assert.equal(f.reloads(), 0);
+});
+
+test('SDK a stale tab logout does not clear a newer stored primary session', async () => {
+  const shared = storage(), remote = deferred();
+  const a = browser({ localStorage: shared, fetchImpl: async () => remote.promise });
+  a.auth._processAuthResponse(session());
+  const b = browser({ localStorage: shared });
+  const next = { ...session('already-new-refresh'), session_id: 'already-new-session' };
+  b.auth._processAuthResponse(next);
+  const pending = a.auth.logout();
+  assert.equal(shared.getItem('_authfor_session'), next.session_id);
+  assert.deepEqual(a.calls[0].body, { session_id: 's1' });
+  remote.resolve(answer({}));
+  await pending;
+  assert.equal(shared.getItem('_authfor_refresh'), next.refresh_token);
+  assert.equal(a.reloads(), 0);
+});
+
+test('SDK delayed failed logout preserves a newer primary sign-in', async () => {
+  const remote = deferred();
+  const f = browser({ fetchImpl: async () => { await remote.promise; throw new Error('fixture network failure'); } });
+  f.auth._processAuthResponse(session());
+  const pending = f.auth.logout();
+  const next = { ...session('new-primary'), session_id: 's2' };
+  f.auth._processAuthResponse(next);
+  remote.resolve();
+  await pending;
+  assert.equal(f.localStorage.getItem('_authfor_session'), 's2');
+  assert.equal(f.localStorage.getItem('_authfor_refresh'), 'new-primary');
+  assert.equal(f.reloads(), 0);
+});
+
+test('SDK delayed logout does not reload a newer pending MFA sign-in', async () => {
+  const remote = deferred();
+  const f = browser({ fetchImpl: async () => remote.promise });
+  f.auth._processAuthResponse(session());
+  const pending = f.auth.logout();
+  f.auth._processAuthResponse({ mfa_required: true, challenge: 'new-primary-challenge' });
+  remote.resolve(answer({}));
+  await pending;
+  assert.equal(f.auth._mfaPending, 'new-primary-challenge');
+  assert.equal(f.auth._mfaRequired, true);
+  assert.equal(f.reloads(), 0);
 });
 
 test('SDK an old refresh timer cannot sign out a newer primary sign-in', async () => {
