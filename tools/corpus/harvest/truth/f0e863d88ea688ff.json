@@ -1,0 +1,491 @@
+{
+ "sha16": "f0e863d88ea688ff",
+ "sha256": "f0e863d88ea688fffdb625132383d48130afb8a50ae4546fd4627281e2648c59",
+ "file": "tools/corpus/door-schedules/f0e863d88ea688ff.pdf",
+ "bytes": 6803216,
+ "family": "Rockford",
+ "source": "corpus/door-schedules",
+ "label": "Rockford Board of Education — Bid 26-27 Addendum One (complete)",
+ "source_url": "https://files-backend.assets.thrillshare.com/documents/asset/uploaded_file/4629/Rps/bfc49a08-a8c7-4373-8d6d-ca10a1218fa5/26-27-Addendum-One-COMPLETE.pdf",
+ "page_count": 30,
+ "text_layer": {
+  "pages_with_text": 28,
+  "pages": 30
+ },
+ "pages": {
+  "door_candidates": 10,
+  "hardware_candidates": 8,
+  "door_schedule_pages": [
+   29
+  ],
+  "hardware_pages": [
+   17,
+   18,
+   19,
+   20,
+   21,
+   22,
+   23
+  ]
+ },
+ "readers": {
+  "a": {
+   "doors": 65,
+   "sets": 14,
+   "items": 110,
+   "name": "production text layer (weyland-subx-worker/src/lib/text-layer-read.js)"
+  },
+  "b": {
+   "doors": 65,
+   "sets": 14,
+   "items": 110,
+   "name": "geometry first (tools/accuracy/truth/reader_b.mjs)",
+   "tables": 1
+  }
+ },
+ "rows_agreed": 173,
+ "rows_disputed": 2,
+ "rows_total": 175,
+ "agreement_rate": 0.9886,
+ "agreement": {
+  "doors": {
+   "rows": 65,
+   "agreed": 65,
+   "disputed": 0,
+   "only_a": 0,
+   "only_b": 0,
+   "fields": {
+    "width_inches": {
+     "agree": 65,
+     "total": 65
+    },
+    "height_inches": {
+     "agree": 65,
+     "total": 65
+    },
+    "door_type": {
+     "agree": 65,
+     "total": 65
+    },
+    "material": {
+     "agree": 64,
+     "total": 64
+    },
+    "hardware_group": {
+     "agree": 64,
+     "total": 64
+    },
+    "fire_rating": {
+     "agree": 1,
+     "total": 1
+    }
+   },
+   "agreement_rate": 1
+  },
+  "items": {
+   "rows": 110,
+   "agreed": 108,
+   "disputed": 2,
+   "only_a": 0,
+   "only_b": 0,
+   "fields": {
+    "qty": {
+     "agree": 110,
+     "total": 110
+    },
+    "description": {
+     "agree": 108,
+     "total": 110
+    },
+    "catalog": {
+     "agree": 109,
+     "total": 110
+    },
+    "finish": {
+     "agree": 99,
+     "total": 99
+    },
+    "manufacturer": {
+     "agree": 110,
+     "total": 110
+    }
+   },
+   "agreement_rate": 0.9818
+  },
+  "sets": {
+   "sets": 14,
+   "agreed": 14
+  }
+ },
+ "triage_class": "complete",
+ "triage_from": "inferred (S=true H=true plan sheets=2)",
+ "oracles": {
+  "marks_on_plan": {
+   "applicable": true,
+   "total": 65,
+   "pass": 64,
+   "fail": 1,
+   "pass_rate": 0.9846,
+   "examples": [
+    "mark 126.1.2 (schedule p.29) not tagged on any plan"
+   ],
+   "plan_sheets": [
+    "A1.1 p.26",
+    "A1.2 p.27"
+   ],
+   "plan_counts": {
+    "plan_sheets": 2,
+    "rooms": 153,
+    "corridors": 43,
+    "tags": 64,
+    "unmatched_tags": 0,
+    "schedule_marks": 65,
+    "marks_not_on_plan": 1
+   }
+  },
+  "sets_exist": {
+   "applicable": true,
+   "total": 14,
+   "pass": 14,
+   "fail": 0,
+   "pass_rate": 1,
+   "examples": []
+  },
+  "set_door_lists": {
+   "applicable": true,
+   "total": 14,
+   "pass": 14,
+   "fail": 0,
+   "pass_rate": 1,
+   "examples": []
+  },
+  "types_in_legend": {
+   "applicable": true,
+   "total": 4,
+   "pass": 3,
+   "fail": 1,
+   "pass_rate": 0.75,
+   "examples": [
+    "door type G (4 rows) not found near the door types legend"
+   ],
+   "legend_titles": [
+    "DOOR TYPES p.29"
+   ],
+   "skipped": [
+    "no FRAME TYPES legend title"
+   ],
+   "note": "weak for numeric types: a detail number near the legend can pass a numeric frame type"
+  },
+  "sizes_and_marks": {
+   "applicable": true,
+   "total": 65,
+   "pass": 64,
+   "fail": 1,
+   "pass_rate": 0.9846,
+   "examples": [
+    "mark 1J.1 p.29: shape 9A.9 is used by 1 of 65 marks on the sheet"
+   ],
+   "size_fail": 0,
+   "mark_fail": 1
+  }
+ },
+ "calibration": [
+  {
+   "expected": "rockford-087100-hardware-groups.json",
+   "kind": "items",
+   "reader_a": {
+    "expected_groups": 14,
+    "groups_found": 14,
+    "expected_rows": 110,
+    "rows_found": 110,
+    "rows_fully_right": 108,
+    "fields_right": 547,
+    "fields_total": 550,
+    "per_field": {
+     "qty": {
+      "right": 110,
+      "total": 110
+     },
+     "description": {
+      "right": 108,
+      "total": 110
+     },
+     "catalog": {
+      "right": 109,
+      "total": 110
+     },
+     "finish": {
+      "right": 110,
+      "total": 110
+     },
+     "manufacturer": {
+      "right": 110,
+      "total": 110
+     }
+    },
+    "wrong": [
+     {
+      "key": "32 / 4040XP REG / 4040XP EDA - AS REQUIRED",
+      "field": "description",
+      "expected": "SURFACE CLOSER",
+      "read": "SURFACE CLOSER (REG/"
+     },
+     {
+      "key": "32 / 4040XP REG / 4040XP EDA - AS REQUIRED",
+      "field": "catalog",
+      "expected": "4040XP REG / 4040XP EDA - AS REQUIRED",
+      "read": "4040XP REG / 4040XP EDA - AS"
+     },
+     {
+      "key": "40 / 4040XP SCUSH",
+      "field": "description",
+      "expected": "SURFACE CLOSER",
+      "read": "SURFACE CLOSER (PA"
+     }
+    ]
+   },
+   "reader_b": {
+    "expected_groups": 14,
+    "groups_found": 14,
+    "expected_rows": 110,
+    "rows_found": 110,
+    "rows_fully_right": 110,
+    "fields_right": 550,
+    "fields_total": 550,
+    "per_field": {
+     "qty": {
+      "right": 110,
+      "total": 110
+     },
+     "description": {
+      "right": 110,
+      "total": 110
+     },
+     "catalog": {
+      "right": 110,
+      "total": 110
+     },
+     "finish": {
+      "right": 110,
+      "total": 110
+     },
+     "manufacturer": {
+      "right": 110,
+      "total": 110
+     }
+    },
+    "wrong": []
+   },
+   "agreed": {
+    "expected_groups": 14,
+    "groups_found": 14,
+    "expected_rows": 110,
+    "rows_found": 108,
+    "rows_fully_right": 108,
+    "fields_right": 540,
+    "fields_total": 540,
+    "per_field": {
+     "qty": {
+      "right": 108,
+      "total": 108
+     },
+     "description": {
+      "right": 108,
+      "total": 108
+     },
+     "catalog": {
+      "right": 108,
+      "total": 108
+     },
+     "finish": {
+      "right": 108,
+      "total": 108
+     },
+     "manufacturer": {
+      "right": 108,
+      "total": 108
+     }
+    },
+    "wrong": [
+     {
+      "key": "32 / 4040XP REG / 4040XP EDA - AS REQUIRED",
+      "field": "(row)",
+      "expected": "row",
+      "read": null
+     },
+     {
+      "key": "40 / 4040XP SCUSH",
+      "field": "(row)",
+      "expected": "row",
+      "read": null
+     }
+    ]
+   },
+   "fields": {
+    "agreed": {
+     "right": 536,
+     "total": 536
+    },
+    "disputed": {
+     "total": 3,
+     "a_right": 0,
+     "b_right": 3,
+     "neither": 0
+    },
+    "agreed_wrong": []
+   }
+  },
+  {
+   "expected": "rockford-a2.2-door-schedule.json",
+   "kind": "doors",
+   "reader_a": {
+    "expected_rows": 65,
+    "rows_found": 65,
+    "rows_fully_right": 65,
+    "fields_right": 390,
+    "fields_total": 390,
+    "per_field": {
+     "width_inches": {
+      "right": 65,
+      "total": 65
+     },
+     "height_inches": {
+      "right": 65,
+      "total": 65
+     },
+     "door_type": {
+      "right": 65,
+      "total": 65
+     },
+     "material": {
+      "right": 65,
+      "total": 65
+     },
+     "fire_rating": {
+      "right": 65,
+      "total": 65
+     },
+     "hardware_group": {
+      "right": 65,
+      "total": 65
+     }
+    },
+    "extra_rows": 0,
+    "wrong": []
+   },
+   "reader_b": {
+    "expected_rows": 65,
+    "rows_found": 65,
+    "rows_fully_right": 65,
+    "fields_right": 390,
+    "fields_total": 390,
+    "per_field": {
+     "width_inches": {
+      "right": 65,
+      "total": 65
+     },
+     "height_inches": {
+      "right": 65,
+      "total": 65
+     },
+     "door_type": {
+      "right": 65,
+      "total": 65
+     },
+     "material": {
+      "right": 65,
+      "total": 65
+     },
+     "fire_rating": {
+      "right": 65,
+      "total": 65
+     },
+     "hardware_group": {
+      "right": 65,
+      "total": 65
+     }
+    },
+    "extra_rows": 0,
+    "wrong": []
+   },
+   "agreed": {
+    "expected_rows": 65,
+    "rows_found": 65,
+    "rows_fully_right": 65,
+    "fields_right": 390,
+    "fields_total": 390,
+    "per_field": {
+     "width_inches": {
+      "right": 65,
+      "total": 65
+     },
+     "height_inches": {
+      "right": 65,
+      "total": 65
+     },
+     "door_type": {
+      "right": 65,
+      "total": 65
+     },
+     "material": {
+      "right": 65,
+      "total": 65
+     },
+     "fire_rating": {
+      "right": 65,
+      "total": 65
+     },
+     "hardware_group": {
+      "right": 65,
+      "total": 65
+     }
+    },
+    "extra_rows": 0,
+    "wrong": []
+   },
+   "fields": {
+    "agreed": {
+     "right": 324,
+     "total": 324
+    },
+    "disputed": {
+     "total": 0,
+     "a_right": 0,
+     "b_right": 0,
+     "neither": 0
+    },
+    "agreed_wrong": []
+   }
+  }
+ ],
+ "tier": "audited",
+ "disagreement_count": 3,
+ "disagreements": [
+  {
+   "kind": "item",
+   "page": 21,
+   "key": "32 / 4040XP REG / 4040XP EDA - AS",
+   "field": "description",
+   "a": "SURFACE CLOSER (REG/",
+   "b": "SURFACE CLOSER"
+  },
+  {
+   "kind": "item",
+   "page": 21,
+   "key": "32 / 4040XP REG / 4040XP EDA - AS",
+   "field": "catalog",
+   "a": "4040XP REG / 4040XP EDA - AS",
+   "b": "4040XP REG / 4040XP EDA - AS REQUIRED"
+  },
+  {
+   "kind": "item",
+   "page": 22,
+   "key": "40 / 4040XP SCUSH",
+   "field": "description",
+   "a": "SURFACE CLOSER (PA",
+   "b": "SURFACE CLOSER"
+  }
+ ],
+ "ms": 10744,
+ "generated_at": "2026-10-09T09:15:58.845Z"
+}

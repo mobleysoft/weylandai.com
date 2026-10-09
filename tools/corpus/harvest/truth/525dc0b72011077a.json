@@ -1,0 +1,414 @@
+{
+ "sha16": "525dc0b72011077a",
+ "sha256": "525dc0b72011077a6781aeaed3c325ce249a416be42803906d81f4fcbc992eba",
+ "file": "tools/corpus/door-schedules/525dc0b72011077a.pdf",
+ "bytes": 5921486,
+ "family": "Christina",
+ "source": "corpus/door-schedules",
+ "label": "Christina School District (DE) — Bid CHR23018 Christiana HS G-Building Secure Vestibule (entry door + hardware replacement)",
+ "source_url": "https://bidcondocs.delaware.gov/CHR/CHR23018-CHSGVEST-specs.pdf",
+ "page_count": 537,
+ "text_layer": {
+  "pages_with_text": 491,
+  "pages": 537
+ },
+ "pages": {
+  "door_candidates": 2,
+  "hardware_candidates": 5,
+  "door_schedule_pages": [],
+  "hardware_pages": [
+   219,
+   220,
+   221,
+   222,
+   223
+  ]
+ },
+ "readers": {
+  "a": {
+   "doors": 0,
+   "sets": 9,
+   "items": 103,
+   "name": "production text layer (weyland-subx-worker/src/lib/text-layer-read.js)"
+  },
+  "b": {
+   "doors": 0,
+   "sets": 9,
+   "items": 102,
+   "name": "geometry first (tools/accuracy/truth/reader_b.mjs)",
+   "tables": 0
+  }
+ },
+ "rows_agreed": 99,
+ "rows_disputed": 5,
+ "rows_total": 104,
+ "agreement_rate": 0.9519,
+ "agreement": {
+  "doors": {
+   "rows": 0,
+   "agreed": 0,
+   "disputed": 0,
+   "only_a": 0,
+   "only_b": 0,
+   "fields": {},
+   "agreement_rate": null
+  },
+  "items": {
+   "rows": 104,
+   "agreed": 99,
+   "disputed": 2,
+   "only_a": 2,
+   "only_b": 1,
+   "fields": {
+    "qty": {
+     "agree": 101,
+     "total": 101
+    },
+    "description": {
+     "agree": 100,
+     "total": 101
+    },
+    "catalog": {
+     "agree": 100,
+     "total": 101
+    },
+    "finish": {
+     "agree": 80,
+     "total": 81
+    },
+    "manufacturer": {
+     "agree": 78,
+     "total": 78
+    }
+   },
+   "agreement_rate": 0.9519
+  },
+  "sets": {
+   "sets": 9,
+   "agreed": 9
+  }
+ },
+ "triage_class": "spec-only",
+ "triage_from": "inferred (S=false H=true plan sheets=0)",
+ "oracles": {
+  "marks_on_plan": {
+   "applicable": false,
+   "reason": "not for class spec-only"
+  },
+  "sets_exist": {
+   "applicable": false,
+   "reason": "not for class spec-only"
+  },
+  "set_door_lists": {
+   "applicable": false,
+   "reason": "not for class spec-only"
+  },
+  "types_in_legend": {
+   "applicable": false,
+   "reason": "not for class spec-only"
+  },
+  "sizes_and_marks": {
+   "applicable": false,
+   "reason": "not for class spec-only"
+  }
+ },
+ "calibration": [
+  {
+   "expected": "christina-chs-hardware-set-01.json",
+   "kind": "items",
+   "reader_a": {
+    "expected_groups": 1,
+    "groups_found": 1,
+    "expected_rows": 23,
+    "rows_found": 22,
+    "rows_fully_right": 20,
+    "fields_right": 107,
+    "fields_total": 110,
+    "per_field": {
+     "qty": {
+      "right": 21,
+      "total": 22
+     },
+     "description": {
+      "right": 21,
+      "total": 22
+     },
+     "catalog": {
+      "right": 21,
+      "total": 22
+     },
+     "finish": {
+      "right": 22,
+      "total": 22
+     },
+     "manufacturer": {
+      "right": 22,
+      "total": 22
+     }
+    },
+    "wrong": [
+     {
+      "key": "1 / DORMA 100 SERIES BY SECURITY VENDOR",
+      "field": "description",
+      "expected": "AUTO DOOR OPERATOR",
+      "read": "AUTO DOOR OPERATOR RELAY MODULE"
+     },
+     {
+      "key": "1 / DORMA 100 SERIES BY SECURITY VENDOR",
+      "field": "catalog",
+      "expected": "DORMA 100 SERIES BY SECURITY VENDOR",
+      "read": "DORMA 100 SERIES BY SECURITY VENDOR ALTRONTICS RB1224 BY SECURITY VENDOR"
+     },
+     {
+      "key": "1 / ALTRONTICS RB1224 BY SECURITY VENDOR",
+      "field": "(row)",
+      "expected": "row",
+      "read": null
+     },
+     {
+      "key": "1 / BY SECURITY VENDOR",
+      "field": "qty",
+      "expected": null,
+      "read": 1
+     }
+    ]
+   },
+   "reader_b": {
+    "expected_groups": 1,
+    "groups_found": 1,
+    "expected_rows": 23,
+    "rows_found": 20,
+    "rows_fully_right": 18,
+    "fields_right": 96,
+    "fields_total": 100,
+    "per_field": {
+     "qty": {
+      "right": 19,
+      "total": 20
+     },
+     "description": {
+      "right": 18,
+      "total": 20
+     },
+     "catalog": {
+      "right": 19,
+      "total": 20
+     },
+     "finish": {
+      "right": 20,
+      "total": 20
+     },
+     "manufacturer": {
+      "right": 20,
+      "total": 20
+     }
+    },
+    "wrong": [
+     {
+      "key": "1 / DORMA 100 SERIES BY SECURITY VENDOR",
+      "field": "description",
+      "expected": "AUTO DOOR OPERATOR",
+      "read": "AUTO DOOR OPERATOR RELAY MODULE"
+     },
+     {
+      "key": "1 / DORMA 100 SERIES BY SECURITY VENDOR",
+      "field": "catalog",
+      "expected": "DORMA 100 SERIES BY SECURITY VENDOR",
+      "read": "DORMA 100 SERIES BY SECURITY VENDOR ALTRONTICS RB1224 BY SECURITY VENDOR"
+     },
+     {
+      "key": "1 / ALTRONTICS RB1224 BY SECURITY VENDOR",
+      "field": "(row)",
+      "expected": "row",
+      "read": null
+     },
+     {
+      "key": "1 / 946HP45MO x 946475WR (EXTERIOR) BY SECURITY VENDOR",
+      "field": "(row)",
+      "expected": "row",
+      "read": null
+     },
+     {
+      "key": "1 / 946HP45MO (INTERIOR) BY SECURITY VENDOR",
+      "field": "(row)",
+      "expected": "row",
+      "read": null
+     },
+     {
+      "key": "1 / BY SECURITY VENDOR",
+      "field": "qty",
+      "expected": null,
+      "read": 1
+     },
+     {
+      "key": "1 / BY SECURITY VENDOR",
+      "field": "description",
+      "expected": "VIDEO/INTERCOM STATION & CONSOLE w/ 5 RELEASE BUTTONS",
+      "read": "VIDEO/INTERCOM STATION & CONSOLE w/"
+     }
+    ]
+   },
+   "agreed": {
+    "expected_groups": 1,
+    "groups_found": 1,
+    "expected_rows": 23,
+    "rows_found": 19,
+    "rows_fully_right": 18,
+    "fields_right": 93,
+    "fields_total": 95,
+    "per_field": {
+     "qty": {
+      "right": 19,
+      "total": 19
+     },
+     "description": {
+      "right": 18,
+      "total": 19
+     },
+     "catalog": {
+      "right": 18,
+      "total": 19
+     },
+     "finish": {
+      "right": 19,
+      "total": 19
+     },
+     "manufacturer": {
+      "right": 19,
+      "total": 19
+     }
+    },
+    "wrong": [
+     {
+      "key": "1 / DORMA 100 SERIES BY SECURITY VENDOR",
+      "field": "description",
+      "expected": "AUTO DOOR OPERATOR",
+      "read": "AUTO DOOR OPERATOR RELAY MODULE"
+     },
+     {
+      "key": "1 / DORMA 100 SERIES BY SECURITY VENDOR",
+      "field": "catalog",
+      "expected": "DORMA 100 SERIES BY SECURITY VENDOR",
+      "read": "DORMA 100 SERIES BY SECURITY VENDOR ALTRONTICS RB1224 BY SECURITY VENDOR"
+     },
+     {
+      "key": "1 / ALTRONTICS RB1224 BY SECURITY VENDOR",
+      "field": "(row)",
+      "expected": "row",
+      "read": null
+     },
+     {
+      "key": "1 / 946HP45MO x 946475WR (EXTERIOR) BY SECURITY VENDOR",
+      "field": "(row)",
+      "expected": "row",
+      "read": null
+     },
+     {
+      "key": "1 / 946HP45MO (INTERIOR) BY SECURITY VENDOR",
+      "field": "(row)",
+      "expected": "row",
+      "read": null
+     },
+     {
+      "key": "1 / BY SECURITY VENDOR",
+      "field": "(row)",
+      "expected": "row",
+      "read": null
+     }
+    ]
+   },
+   "fields": {
+    "agreed": {
+     "right": 86,
+     "total": 89
+    },
+    "disputed": {
+     "total": 1,
+     "a_right": 1,
+     "b_right": 0,
+     "neither": 0
+    },
+    "agreed_wrong": [
+     {
+      "key": "1 / DORMA 100 SERIES BY SECURITY VENDOR ALTRONTICS RB1224 BY SECURITY VENDOR",
+      "page": 219,
+      "field": "description",
+      "expected": "AUTO DOOR OPERATOR",
+      "agreed": "AUTO DOOR OPERATOR RELAY MODULE"
+     },
+     {
+      "key": "1 / DORMA 100 SERIES BY SECURITY VENDOR ALTRONTICS RB1224 BY SECURITY VENDOR",
+      "page": 219,
+      "field": "catalog",
+      "expected": "DORMA 100 SERIES BY SECURITY VENDOR",
+      "agreed": "DORMA 100 SERIES BY SECURITY VENDOR ALTRONTICS RB1224 BY SECURITY VENDOR"
+     },
+     {
+      "key": "1 / BY SECURITY VENDOR",
+      "page": 219,
+      "field": "qty",
+      "expected": null,
+      "agreed": 1
+     }
+    ]
+   }
+  }
+ ],
+ "tier": "audited",
+ "disagreement_count": 6,
+ "disagreements": [
+  {
+   "kind": "item",
+   "page": 219,
+   "key": "1 / 946HP45MO x 946475WR (EXTERIOR) BY SECURITY VENDOR",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 219,
+   "key": "1 / 946HP45MO (INTERIOR) BY SECURITY VENDOR",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 219,
+   "key": "1 / BY SECURITY VENDOR",
+   "field": "description",
+   "a": "VIDEO/INTERCOM STATION & CONSOLE w/ 5 RELEASE BUTTONS",
+   "b": "VIDEO/INTERCOM STATION & CONSOLE w/"
+  },
+  {
+   "kind": "item",
+   "page": 219,
+   "key": "1 / RELEASE BUTTONS",
+   "field": "(row)",
+   "a": null,
+   "b": "read",
+   "why": "only reader B read this row"
+  },
+  {
+   "kind": "item",
+   "page": 222,
+   "key": "6 / 4041 REG AL",
+   "field": "catalog",
+   "a": "4041 REG AL",
+   "b": "4041 REG"
+  },
+  {
+   "kind": "item",
+   "page": 222,
+   "key": "6 / 4041 REG AL",
+   "field": "finish",
+   "a": null,
+   "b": "AL"
+  }
+ ],
+ "ms": 6834,
+ "generated_at": "2026-10-09T09:15:31.530Z"
+}

@@ -1,0 +1,278 @@
+{
+ "stamp": "2026-10-09-09-16",
+ "head": "51beb13",
+ "records": 17,
+ "queue": 82,
+ "tiers": {
+  "exact": {
+   "pdfs": 2,
+   "rows_agreed": 102,
+   "rows_total": 102,
+   "queue": 0,
+   "families": {
+    "bidset (synthetic)": {
+     "pdfs": 2,
+     "agreed": 102,
+     "total": 102,
+     "fa": 570,
+     "ft": 570,
+     "orc": {
+      "marks_on_plan": {
+       "pass": 48,
+       "total": 48
+      },
+      "sets_exist": {
+       "pass": 10,
+       "total": 10
+      },
+      "set_door_lists": {
+       "pass": 10,
+       "total": 10
+      },
+      "types_in_legend": {
+       "pass": 3,
+       "total": 3
+      },
+      "sizes_and_marks": {
+       "pass": 48,
+       "total": 48
+      }
+     },
+     "queue": 0
+    }
+   }
+  },
+  "audited": {
+   "pdfs": 3,
+   "rows_agreed": 288,
+   "rows_total": 320,
+   "queue": 35,
+   "families": {
+    "Berryessa": {
+     "pdfs": 1,
+     "agreed": 16,
+     "total": 41,
+     "fa": 222,
+     "ft": 246,
+     "orc": {
+      "marks_on_plan": {
+       "pass": 24,
+       "total": 24
+      },
+      "sets_exist": {
+       "pass": 2,
+       "total": 2
+      },
+      "sizes_and_marks": {
+       "pass": 24,
+       "total": 24
+      }
+     },
+     "queue": 26
+    },
+    "Christina": {
+     "pdfs": 1,
+     "agreed": 99,
+     "total": 104,
+     "fa": 459,
+     "ft": 462,
+     "orc": {},
+     "queue": 6
+    },
+    "Rockford": {
+     "pdfs": 1,
+     "agreed": 173,
+     "total": 175,
+     "fa": 860,
+     "ft": 863,
+     "orc": {
+      "marks_on_plan": {
+       "pass": 64,
+       "total": 65
+      },
+      "sets_exist": {
+       "pass": 14,
+       "total": 14
+      },
+      "set_door_lists": {
+       "pass": 14,
+       "total": 14
+      },
+      "types_in_legend": {
+       "pass": 3,
+       "total": 4
+      },
+      "sizes_and_marks": {
+       "pass": 64,
+       "total": 65
+      }
+     },
+     "queue": 3
+    }
+   }
+  },
+  "agreed": {
+   "pdfs": 4,
+   "rows_agreed": 304,
+   "rows_total": 335,
+   "queue": 39,
+   "families": {
+    "Fayette County (GA)": {
+     "pdfs": 1,
+     "agreed": 31,
+     "total": 54,
+     "fa": 91,
+     "ft": 95,
+     "orc": {
+      "marks_on_plan": {
+       "pass": 25,
+       "total": 35
+      },
+      "sizes_and_marks": {
+       "pass": 33,
+       "total": 35
+      }
+     },
+     "queue": 24
+    },
+    "Noble County Highway Department": {
+     "pdfs": 1,
+     "agreed": 33,
+     "total": 37,
+     "fa": 161,
+     "ft": 161,
+     "orc": {},
+     "queue": 6
+    },
+    "Orchard View Public Schools": {
+     "pdfs": 1,
+     "agreed": 71,
+     "total": 72,
+     "fa": 332,
+     "ft": 334,
+     "orc": {},
+     "queue": 3
+    },
+    "Rockford": {
+     "pdfs": 1,
+     "agreed": 169,
+     "total": 172,
+     "fa": 840,
+     "ft": 844,
+     "orc": {},
+     "queue": 6
+    }
+   }
+  },
+  "oracle-checked": {
+   "pdfs": 1,
+   "rows_agreed": 0,
+   "rows_total": 6,
+   "queue": 8,
+   "families": {
+    "Connor Consolidated School / Maine BGS": {
+     "pdfs": 1,
+     "agreed": 0,
+     "total": 6,
+     "fa": 34,
+     "ft": 42,
+     "orc": {
+      "types_in_legend": {
+       "pass": 2,
+       "total": 2
+      },
+      "sizes_and_marks": {
+       "pass": 6,
+       "total": 6
+      }
+     },
+     "queue": 8
+    }
+   }
+  },
+  "unread": {
+   "pdfs": 7,
+   "rows_agreed": 0,
+   "rows_total": 0,
+   "queue": 0,
+   "families": {
+    "Christina": {
+     "pdfs": 2,
+     "agreed": 0,
+     "total": 0,
+     "fa": 0,
+     "ft": 0,
+     "orc": {},
+     "queue": 0
+    },
+    "City of Worcester / Worcester Public Schools": {
+     "pdfs": 1,
+     "agreed": 0,
+     "total": 0,
+     "fa": 0,
+     "ft": 0,
+     "orc": {},
+     "queue": 0
+    },
+    "Montgomery County": {
+     "pdfs": 1,
+     "agreed": 0,
+     "total": 0,
+     "fa": 0,
+     "ft": 0,
+     "orc": {},
+     "queue": 0
+    },
+    "Oakton College District 535": {
+     "pdfs": 1,
+     "agreed": 0,
+     "total": 0,
+     "fa": 0,
+     "ft": 0,
+     "orc": {},
+     "queue": 0
+    },
+    "Rockford": {
+     "pdfs": 1,
+     "agreed": 0,
+     "total": 0,
+     "fa": 0,
+     "ft": 0,
+     "orc": {},
+     "queue": 0
+    },
+    "Schenectady County": {
+     "pdfs": 1,
+     "agreed": 0,
+     "total": 0,
+     "fa": 0,
+     "ft": 0,
+     "orc": {},
+     "queue": 0
+    }
+   }
+  }
+ },
+ "calibration": {
+  "exact": {
+   "ar": 570,
+   "at": 570,
+   "rowsAgreedFound": 102,
+   "rowsAgreedRight": 102,
+   "dis": 0,
+   "disA": 0,
+   "disB": 0,
+   "disN": 0
+  },
+  "audited": {
+   "ar": 1168,
+   "at": 1171,
+   "rowsAgreedFound": 208,
+   "rowsAgreedRight": 207,
+   "dis": 28,
+   "disA": 1,
+   "disB": 27,
+   "disN": 0
+  }
+ }
+}

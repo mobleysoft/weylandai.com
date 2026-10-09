@@ -1,0 +1,180 @@
+{
+ "sha16": "a03cdcca2934ca5a",
+ "sha256": "a03cdcca2934ca5ad23d1db272bb2348ba860e3dc1666bbc1173e8bb9bb5705a",
+ "file": "tools/corpus/door-schedules/a03cdcca2934ca5a.pdf",
+ "bytes": 1612886,
+ "family": "Rockford",
+ "source": "corpus/door-schedules",
+ "label": "Rockford Board of Education — Bid 24-46 Addendum No. 1",
+ "source_url": "https://core-docs.s3.us-east-1.amazonaws.com/documents/asset/uploaded_file/4629/rps/4532798/24-46_Add._No._1.pdf",
+ "page_count": 29,
+ "text_layer": {
+  "pages_with_text": 26,
+  "pages": 29
+ },
+ "pages": {
+  "door_candidates": 6,
+  "hardware_candidates": 14,
+  "door_schedule_pages": [],
+  "hardware_pages": [
+   16,
+   17,
+   18,
+   19,
+   20,
+   21,
+   22,
+   23,
+   24,
+   25,
+   26,
+   27,
+   28,
+   29
+  ]
+ },
+ "readers": {
+  "a": {
+   "doors": 0,
+   "sets": 21,
+   "items": 172,
+   "name": "production text layer (weyland-subx-worker/src/lib/text-layer-read.js)"
+  },
+  "b": {
+   "doors": 0,
+   "sets": 21,
+   "items": 172,
+   "name": "geometry first (tools/accuracy/truth/reader_b.mjs)",
+   "tables": 0
+  }
+ },
+ "rows_agreed": 169,
+ "rows_disputed": 3,
+ "rows_total": 172,
+ "agreement_rate": 0.9826,
+ "agreement": {
+  "doors": {
+   "rows": 0,
+   "agreed": 0,
+   "disputed": 0,
+   "only_a": 0,
+   "only_b": 0,
+   "fields": {},
+   "agreement_rate": null
+  },
+  "items": {
+   "rows": 172,
+   "agreed": 169,
+   "disputed": 3,
+   "only_a": 0,
+   "only_b": 0,
+   "fields": {
+    "qty": {
+     "agree": 172,
+     "total": 172
+    },
+    "description": {
+     "agree": 172,
+     "total": 172
+    },
+    "catalog": {
+     "agree": 169,
+     "total": 172
+    },
+    "finish": {
+     "agree": 155,
+     "total": 156
+    },
+    "manufacturer": {
+     "agree": 172,
+     "total": 172
+    }
+   },
+   "agreement_rate": 0.9826
+  },
+  "sets": {
+   "sets": 21,
+   "agreed": 19
+  }
+ },
+ "triage_class": "spec-only",
+ "triage_from": "inferred (S=false H=true plan sheets=0)",
+ "oracles": {
+  "marks_on_plan": {
+   "applicable": false,
+   "reason": "not for class spec-only"
+  },
+  "sets_exist": {
+   "applicable": false,
+   "reason": "not for class spec-only"
+  },
+  "set_door_lists": {
+   "applicable": false,
+   "reason": "not for class spec-only"
+  },
+  "types_in_legend": {
+   "applicable": false,
+   "reason": "not for class spec-only"
+  },
+  "sizes_and_marks": {
+   "applicable": false,
+   "reason": "not for class spec-only"
+  }
+ },
+ "tier": "agreed",
+ "disagreement_count": 6,
+ "disagreements": [
+  {
+   "kind": "item",
+   "page": 16,
+   "key": "1 / MANUFACTURER & KEYWAY TBD BY SCHOOL - REFER TO SPEC",
+   "field": "catalog",
+   "a": "MANUFACTURER & KEYWAY TBD BY SCHOOL - REFER TO SPEC",
+   "b": "MANUFACTURER & KEYWAY TBD BY SCHOOL - SPEC REFER TO"
+  },
+  {
+   "kind": "item",
+   "page": 16,
+   "key": "1 / MANUFACTURER & KEYWAY TBD BY SCHOOL - REFER TO SPEC",
+   "field": "catalog",
+   "a": "MANUFACTURER & KEYWAY TBD BY SCHOOL - REFER TO SPEC",
+   "b": "MANUFACTURER & KEYWAY TBD BY SCHOOL - SPEC REFER TO"
+  },
+  {
+   "kind": "item",
+   "page": 19,
+   "key": "5 / ALX70P6 RHO 626",
+   "field": "catalog",
+   "a": "ALX70P6 RHO 626",
+   "b": "ALX70P6 RHO"
+  },
+  {
+   "kind": "item",
+   "page": 19,
+   "key": "5 / ALX70P6 RHO 626",
+   "field": "finish",
+   "a": null,
+   "b": "626"
+  },
+  {
+   "kind": "group",
+   "page": null,
+   "key": "1",
+   "field": "doors",
+   "a": "BGYM1, BGYM2",
+   "b": "",
+   "why": "the set's door lists differ"
+  },
+  {
+   "kind": "group",
+   "page": null,
+   "key": "3",
+   "field": "doors",
+   "a": "",
+   "b": "B1, B100, FJ3, FK1",
+   "why": "the set's door lists differ"
+  }
+ ],
+ "ms": 1499,
+ "generated_at": "2026-10-09T09:15:42.310Z"
+}

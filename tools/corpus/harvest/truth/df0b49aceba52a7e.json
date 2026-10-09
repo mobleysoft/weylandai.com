@@ -1,0 +1,172 @@
+{
+ "sha16": "df0b49aceba52a7e",
+ "sha256": "df0b49aceba52a7ea781de87f5ae3ab565402e6018171ccef36690bb32916f0a",
+ "file": "tools/corpus/specs/df0b49aceba52a7e.pdf",
+ "bytes": 239484,
+ "family": "Noble County Highway Department",
+ "source": "corpus/specs",
+ "label": "Noble County Highway Department (IN) - Renovation, project 2025.02329, Section 08 71 00",
+ "source_url": "https://secure.in.gov/counties/noble/files/public-notices/087100-DOOR-HARDWARE.pdf",
+ "page_count": 10,
+ "text_layer": {
+  "pages_with_text": 10,
+  "pages": 10
+ },
+ "pages": {
+  "door_candidates": 3,
+  "hardware_candidates": 3,
+  "door_schedule_pages": [],
+  "hardware_pages": [
+   9,
+   10
+  ]
+ },
+ "readers": {
+  "a": {
+   "doors": 0,
+   "sets": 6,
+   "items": 35,
+   "name": "production text layer (weyland-subx-worker/src/lib/text-layer-read.js)"
+  },
+  "b": {
+   "doors": 0,
+   "sets": 6,
+   "items": 35,
+   "name": "geometry first (tools/accuracy/truth/reader_b.mjs)",
+   "tables": 0
+  }
+ },
+ "rows_agreed": 33,
+ "rows_disputed": 4,
+ "rows_total": 37,
+ "agreement_rate": 0.8919,
+ "agreement": {
+  "doors": {
+   "rows": 0,
+   "agreed": 0,
+   "disputed": 0,
+   "only_a": 0,
+   "only_b": 0,
+   "fields": {},
+   "agreement_rate": null
+  },
+  "items": {
+   "rows": 37,
+   "agreed": 33,
+   "disputed": 0,
+   "only_a": 2,
+   "only_b": 2,
+   "fields": {
+    "qty": {
+     "agree": 33,
+     "total": 33
+    },
+    "description": {
+     "agree": 33,
+     "total": 33
+    },
+    "catalog": {
+     "agree": 33,
+     "total": 33
+    },
+    "finish": {
+     "agree": 29,
+     "total": 29
+    },
+    "manufacturer": {
+     "agree": 33,
+     "total": 33
+    }
+   },
+   "agreement_rate": 0.8919
+  },
+  "sets": {
+   "sets": 6,
+   "agreed": 4
+  }
+ },
+ "triage_class": "spec-only",
+ "triage_from": "inferred (S=false H=true plan sheets=0)",
+ "oracles": {
+  "marks_on_plan": {
+   "applicable": false,
+   "reason": "not for class spec-only"
+  },
+  "sets_exist": {
+   "applicable": false,
+   "reason": "not for class spec-only"
+  },
+  "set_door_lists": {
+   "applicable": false,
+   "reason": "not for class spec-only"
+  },
+  "types_in_legend": {
+   "applicable": false,
+   "reason": "not for class spec-only"
+  },
+  "sizes_and_marks": {
+   "applicable": false,
+   "reason": "not for class spec-only"
+  }
+ },
+ "tier": "agreed",
+ "disagreement_count": 6,
+ "disagreements": [
+  {
+   "kind": "item",
+   "page": 8,
+   "key": "1 / 425 36\" closed and latched. Presentation of a valid credential retracting the latch to permit entry; egress is always available",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 8,
+   "key": "1 / 425 36\" normally closed and latched. Presentation of a valid credential energizes device retracting the latch to permit entry; egress is always available by device.",
+   "field": "(row)",
+   "a": null,
+   "b": "read",
+   "why": "only reader B read this row"
+  },
+  {
+   "kind": "item",
+   "page": 9,
+   "key": "3 / B664P6 10-087 on push side of door",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 9,
+   "key": "3 / B664P6 10-087 Deadbolt on push side of door",
+   "field": "(row)",
+   "a": null,
+   "b": "read",
+   "why": "only reader B read this row"
+  },
+  {
+   "kind": "group",
+   "page": null,
+   "key": "1",
+   "field": "doors",
+   "a": "101A",
+   "b": "00, 08, 101A, 71, 8",
+   "why": "the set's door lists differ"
+  },
+  {
+   "kind": "group",
+   "page": null,
+   "key": "5",
+   "field": "doors",
+   "a": "101C",
+   "b": "00, 08, 101C, 71, 9",
+   "why": "the set's door lists differ"
+  }
+ ],
+ "ms": 358,
+ "generated_at": "2026-10-09T09:16:09.193Z"
+}
