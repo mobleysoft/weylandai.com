@@ -98,7 +98,10 @@ async function huntx() {
   const FITS = new Set(["doors", "building", "signal", "civil"]);
   const unfit = all.filter((o) => !FITS.has(o.trade_fit));
   check("every notice tagged with a trade fit", unfit.length === 0, unfit.length + " untagged");
-  const badLink = all.filter((o) => { try { const h = new URL(o.detail_url).hostname; return !SOURCES[o.source] || !h.endsWith(SOURCES[o.source]); } catch { return true; } });
+  // The SCA's procurement pages are gone (404 on 2026-10-09); its upcoming projects are published on
+  // NYC Open Data (the dataset HuntX reads, tsak-vtv3), which is the notices' own public source.
+  const ALSO = { nyc_sca: "data.cityofnewyork.us" };
+  const badLink = all.filter((o) => { try { const h = new URL(o.detail_url).hostname; return !SOURCES[o.source] || !(h.endsWith(SOURCES[o.source]) || (ALSO[o.source] && h.endsWith(ALSO[o.source]))); } catch { return true; } });
   check("every notice links to its source's own site", badLink.length === 0, badLink.length ? badLink.slice(0, 3).map((o) => o.source + " " + o.detail_url) : "all " + all.length);
   const perSource = {};
   for (const o of all) { const s = (perSource[o.source] ||= { rows: 0, urls: new Set() }); s.rows++; s.urls.add(o.detail_url); }
