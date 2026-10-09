@@ -176,3 +176,34 @@ Measure (the matrix runs these on the Mac after every merge): four journeys in t
 app page phone, homepage desktop, homepage phone — each asserting movement ≥ 1 unit on W (or the stick) and a turn
 ≥ 0.5 rad on look, plus no third-party request on either page. Feel targets, John's triple-A bar: 60 fps on an iPhone
 and a MacBook, input to camera within one frame, acceleration and damping on movement, collision with floors and walls.
+
+## Truth at scale for the harvested corpus (John, 2026-10-09 05:15 EDT)
+
+John, on the sentence "a set only tests the product once someone has written the expected rows": "this sounds like a
+false bottleneck we created; why? let's be ... someone." He is right. The hand-written expected rows
+(tools/corpus/expected: six files, 148 rows, how_checked by eye) are the calibration core, not the gate. A harvested set
+tests the product the moment it is downloaded, from three sources of truth we own:
+
+1. The documents check themselves. A bid set is built to be cross-checked by the GC. Oracles the harness scores with no
+   label: (a) every schedule mark appears as a door tag on a floor plan; (b) every hardware set named on the schedule
+   exists in 08 71 00; (c) each set's own door list ("Doors: 101, 102A") names exactly the schedule's doors carrying
+   that set; (d) every door type and frame type exists in the legend; (e) sizes parse and marks follow the sheet's
+   pattern. A disagreement is a defect in the reading or in the document; either is worth knowing.
+2. We are the someone. Two independent readers over the same page, the production text-layer reader and a second one
+   built differently (a read of the rendered row band, or the OCR path), produce rows. Rows they agree on are accepted
+   truth; rows they disagree on go to a third look and into the work queue. Authoring rows by hand becomes verifying
+   disagreements, done by the sessions, not by John.
+3. The Architect-and-GC generator (tools/bidset) produces exact truth for synthetic sets in any rendering variation.
+
+What stays human: the six audited files; random 2% spot checks of agreed rows, to catch two readers wrong the same way;
+and every EDIT a real user makes in the product, which is a field label.
+
+Reporting: accuracy per truth tier, never pooled: exact (synthetic), agreed (two readers agree; quote the agreement
+rate), oracle-checked (which oracles passed), audited (a person read it). A harvested set's triage class (complete,
+pair, schedule-only, spec-only, plan-only; tools/corpus/harvest/triage.json) says which oracles apply to it.
+
+Build (cloud): the second reader; the agreement scorer; the five oracles; a truth record per harvested PDF at
+tools/corpus/harvest/truth/<sha16>.json (tier, agreement rate, oracle results, disagreements); the disagreement queue;
+run over everything in tools/corpus and the harvest downloads (the Mac pushes those to the private weyland-fixtures R2
+bucket under harvest/<sha16>.pdf). Measure: agreement and oracle pass rates per set and per family in the matrix report,
+and the queue length falling as the reader improves.
