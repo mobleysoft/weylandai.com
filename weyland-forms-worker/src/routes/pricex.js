@@ -14,7 +14,7 @@
 import { jsonResponse3 } from "../lib/json-response.js";
 import { outputAccess, paymentRequired } from "../../../weyland-shared/output-access.js";
 import { matchComponentToCutSheets, PACKET_MATCH_TYPES } from "../../../weyland-shared/product-database.js";
-import { pickVariant, priceLine, finishCode, variantNumber, variantFinish } from "../lib/pricing.js";
+import { pickVariant, priceLine, finishCode, variantNumber, variantFinish, lengthFeet, compact } from "../lib/pricing.js";
 import { loadJob, setKey } from "./closex.js";
 import { filedBookPrice, sizedByDoor } from "../lib/filed-books.js";
 
@@ -45,16 +45,51 @@ async function variantsOf(env, productId) {
   }
 }
 
+/** A known maker's priced variants whose number begins the schedule's number, for a model
+ *  the catalogue files under another product name (Zero "188SBK" is a variant of "188S-B"). */
+async function makerVariants(env, makerName, model) {
+  const want = compact(model);
+  const run = (String(model || "").toUpperCase().match(/[A-Z0-9]+/) || [""])[0];
+  if (!makerName || run.length < 3 || want.length < 4) return [];
+  try {
+    const rows = (await env.DB.prepare(
+      `SELECT v.full_model_number, v.finish_code, v.list_price, v.price_effective_date, v.source_catalogue_id,
+              c.title AS book_title, c.version AS book_version
+       FROM product_variants v JOIN products p ON p.id = v.product_id JOIN manufacturers mf ON mf.id = p.manufacturer_id
+       LEFT JOIN catalogues c ON c.catalogue_id = v.source_catalogue_id
+       WHERE lower(mf.name) = lower(?) AND v.full_model_number LIKE ? AND v.list_price > 0 AND COALESCE(v.active, 1) = 1 LIMIT 2000`
+    ).bind(String(makerName), run.slice(0, 4) + "%").all()).results || [];
+    return rows.filter((v) => { const k = compact(variantNumber(v)); return k.length >= 4 && want.startsWith(k); });
+  } catch (_) {
+    return [];
+  }
+}
+
+/** A seal or gasket the book sells by length: the shortest length covering the opening's
+ *  head and both jambs (2 x height + width). */
+function pickLength(vs, model, door) {
+  const want = compact(model);
+  const numbers = [...new Set(vs.filter((v) => lengthFeet(v) != null).map((v) => compact(variantNumber(v))))].filter((k) => want.startsWith(k)).sort((a, b) => b.length - a.length);
+  if (!numbers.length) return null;
+  const rows = vs.filter((v) => lengthFeet(v) != null && compact(variantNumber(v)) === numbers[0]).sort((a, b) => lengthFeet(a) - lengthFeet(b));
+  const basis = numbers[0] === want ? "exact" : "options";
+  if (!door || !(door.width > 0) || !(door.height > 0)) return { needsDoor: true, rows, basis };
+  const need = (2 * door.height + door.width) / 12;
+  const v = rows.find((r) => lengthFeet(r) >= need);
+  if (!v) return { error: `the head and jambs need ${need.toFixed(1)} ft; the longest length in the book is ${lengthFeet(rows[rows.length - 1])}'` };
+  return { variant: v, basis, note: `one ${lengthFeet(v)}' length for the head and jambs of a ${door.width}" x ${door.height}" opening (${need.toFixed(1)} ft)` };
+}
+
 const bookName = (v) => [v.book_title, v.book_version].filter(Boolean).join(" ") || (v.source_catalogue_id ? "price book " + v.source_catalogue_id : "price book on file");
 
 /**
  * One item priced: { priced: true, product, variant, basis, finishMatched, note, book } or
  * { priced: false, reason }. caches: { match: Map, variants: Map } shared across a schedule.
  */
-export async function priceItem(env, { maker, model, finish, doorWidth }, match = matchComponentToCutSheets, caches = { match: new Map(), variants: new Map() }) {
+export async function priceItem(env, { maker, model, finish, door }, match = matchComponentToCutSheets, caches = { match: new Map(), variants: new Map() }) {
   if (!model) return { priced: false, reason: "No catalogue number on the schedule." };
   // A maker's filed book read directly (lib/filed-books.js) where it covers the item.
-  const filed = filedBookPrice({ maker, model, finish, doorWidth });
+  const filed = filedBookPrice({ maker, model, finish, doorWidth: door && door.width });
   if (filed) return filed;
   const mk = makerKey(maker) + "|" + String(model).toUpperCase();
   let m = caches.match.get(mk);
@@ -62,14 +97,38 @@ export async function priceItem(env, { maker, model, finish, doorWidth }, match 
     try { m = await match({ manufacturer: maker || "", model }, env); } catch (_) { m = null; }
     caches.match.set(mk, m);
   }
-  if (!m || !m.matched || !PACKET_MATCH_TYPES.has(String(m.matchType)) || !m.product || !m.product.id) {
+  let product = m && m.matched && PACKET_MATCH_TYPES.has(String(m.matchType)) && m.product && m.product.id ? m.product : null;
+  let vs = null;
+  if (product) {
+    vs = caches.variants.get(product.id);
+    if (!vs) { vs = await variantsOf(env, product.id); caches.variants.set(product.id, vs); }
+  } else if (m && m.maker && m.maker.known && m.maker.name) {
+    const key = "maker:" + makerKey(m.maker.name) + "|" + compact(model);
+    vs = caches.variants.get(key);
+    if (!vs) { vs = await makerVariants(env, m.maker.name, model); caches.variants.set(key, vs); }
+    if (vs.length) product = { manufacturer: m.maker.name, model: variantNumber(vs[0]) };
+  }
+  if (product && vs && vs.length) {
+    const len = pickLength(vs, model, door);
+    if (len && len.needsDoor) return { priced: false, needsDoor: true, product, reason: `${product.manufacturer} ${variantNumber(len.rows[0])} is priced by length; no door size was read for this opening.` };
+    if (len && len.error) return { priced: false, product, reason: `${product.manufacturer} ${variantNumber(len.rows ? len.rows[0] : vs[0])}: ${len.error}.` };
+    if (len && len.variant) {
+      const v = len.variant;
+      return {
+        priced: true, product: { manufacturer: product.manufacturer, model: product.model },
+        variant: { number: `${variantNumber(v)} ${lengthFeet(v)}'`, finish: variantFinish(v), list: Number(v.list_price), effective: v.price_effective_date || null },
+        basis: len.basis, finishMatched: true, book: { id: v.source_catalogue_id || null, name: bookName(v) },
+        note: [len.basis === "options" ? "options on the schedule beyond " + variantNumber(v) + " are not priced" : null, len.note].filter(Boolean).join("; "),
+      };
+    }
+  }
+  if (!product) {
     const why = m && m.maker && m.maker.typed && !m.maker.known ? `${maker} is not a maker in the catalogue.`
       : m && m.reasonText ? m.reasonText
       : maker ? `${maker} ${model} is not in the catalogue.` : `No manufacturer named for ${model}.`;
     return { priced: false, reason: why };
   }
-  let vs = caches.variants.get(m.product.id);
-  if (!vs) { vs = await variantsOf(env, m.product.id); caches.variants.set(m.product.id, vs); }
+  m = { ...m, product };
   const pick = pickVariant(vs, model, finish);
   if (!pick) return { priced: false, product: m.product, reason: `No price book on file prices ${m.product.manufacturer} ${m.product.model}.` };
   if (!pick.variant) return { priced: false, product: m.product, candidates: pick.candidates, reason: `${m.product.manufacturer} ${m.product.model}: ${pick.note}.`, book: vs[0] ? { id: vs[0].source_catalogue_id || null, name: bookName(vs[0]) } : null };
@@ -116,23 +175,43 @@ export async function priceSchedule(env, job, mult, match = matchComponentToCutS
   }
   const noDoors = job.doors.length === 0;
   const lines = [];
-  let total = 0, listTotal = 0, unpriced = 0;
+  let total = 0, listTotal = 0, unpriced = 0, notes = 0;
   for (const [k, set] of job.sets) {
     const openings = noDoors ? 1 : (openingsBySet.get(k) || 0);
     for (const it of set.items) {
       const number = it.catalog || it.model;
-      // A plate sized from the door ("10 x 2 LDW") is priced once per door width in the set.
-      const groups = [];
-      if (sizedByDoor({ maker: it.manufacturer, model: number }) && !noDoors) {
-        const byWidth = new Map();
-        for (const d of doorsBySet.get(k) || []) { const w = Number(d.width_inches) > 0 ? Number(d.width_inches) : null; byWidth.set(w, (byWidth.get(w) || 0) + 1); }
-        for (const [w, n] of byWidth) groups.push({ doorWidth: w, openings: n });
+      // An item sized from the door (an LDW plate, a seal sold by length) is priced once per
+      // door size in the set.
+      const byDoor = (withHeight) => {
+        const sizes = new Map();
+        for (const d of doorsBySet.get(k) || []) {
+          const w = Number(d.width_inches) > 0 ? Number(d.width_inches) : null, h = Number(d.height_inches) > 0 ? Number(d.height_inches) : null;
+          const door = w && (!withHeight || h) ? { width: w, height: withHeight ? h : null } : null;
+          const key = door ? door.width + "x" + door.height : "none";
+          if (!sizes.has(key)) sizes.set(key, { door, openings: 0 });
+          sizes.get(key).openings++;
+        }
+        return [...sizes.values()];
+      };
+      // A schedule note in the item column ("VERIFY PERMANENT CORE WITH DISTRICT"): no maker,
+      // no catalogue number, only words. It is listed, not counted as an unpriced item.
+      if (!it.manufacturer && !/\d/.test(number || "") && String(number || "").trim().split(/\s+/).length >= 3) {
+        notes++;
+        lines.push({ set: set.number, openings, item: it.description, maker: "", number, finish: it.finish, qtyPerOpening: Number(it.qty) || 1, qty: 0, priced: false, scheduleNote: true, reason: "A note on the schedule, not an item to price." });
+        continue;
       }
-      if (!groups.length) groups.push({ doorWidth: null, openings });
+      let groups = [];
+      if (sizedByDoor({ maker: it.manufacturer, model: number }) && !noDoors) groups = byDoor(false);
+      else {
+        const first = await priceItem(env, { maker: it.manufacturer, model: number, finish: it.finish, door: null }, match, caches);
+        if (first.needsDoor && !noDoors) groups = byDoor(true);
+        if (!groups.length) groups = [{ door: null, openings, p: first }];
+      }
+      if (!groups.length) groups = [{ door: null, openings }];
       for (const g of groups) {
-      const p = await priceItem(env, { maker: it.manufacturer, model: number, finish: it.finish, doorWidth: g.doorWidth }, match, caches);
+      const p = g.p || await priceItem(env, { maker: it.manufacturer, model: number, finish: it.finish, door: g.door }, match, caches);
       const qty = (Number(it.qty) || 1) * g.openings;
-      const line = { set: set.number, openings: g.openings, item: it.description, maker: it.manufacturer, number, finish: it.finish, qtyPerOpening: Number(it.qty) || 1, qty, ...(g.doorWidth ? { doorWidth: g.doorWidth } : {}) };
+      const line = { set: set.number, openings: g.openings, item: it.description, maker: it.manufacturer, number, finish: it.finish, qtyPerOpening: Number(it.qty) || 1, qty, ...(g.door ? { doorWidth: g.door.width, ...(g.door.height ? { doorHeight: g.door.height } : {}) } : {}) };
       if (!p.priced) { unpriced++; lines.push({ ...line, priced: false, reason: p.reason }); continue; }
       const m = mult.byMaker[makerKey(p.product.manufacturer)] ?? mult.byMaker[makerKey(it.manufacturer)] ?? mult.default;
       const pl = priceLine({ qty, list: p.variant.list, multiplier: m });
@@ -143,7 +222,7 @@ export async function priceSchedule(env, job, mult, match = matchComponentToCutS
   }
   return {
     lines,
-    totals: { net: r2(total), list: r2(listTotal), pricedLines: lines.length - unpriced, unpricedLines: unpriced, exactLines: lines.filter((l) => l.basis === "exact").length },
+    totals: { net: r2(total), list: r2(listTotal), pricedLines: lines.length - unpriced - notes, unpricedLines: unpriced, noteLines: notes, exactLines: lines.filter((l) => l.basis === "exact").length },
     basisNote: noDoors ? "No door schedule was read, so each set is priced for one opening." : null,
   };
 }
@@ -153,7 +232,7 @@ export function pricedCsv(project, result, mult) {
   const head = ["Set", "Openings", "Item", "Manufacturer", "Catalogue no. (schedule)", "Finish", "Qty per opening", "Qty", "Priced as", "Price finish", "Basis", "Price book", "List", "Multiplier", "Net each", "Extended", "Note"];
   const rows = result.lines.map((l) => l.priced
     ? [l.set, l.openings, l.item, l.maker, l.number, l.finish, l.qtyPerOpening, l.qty, l.pricedAs, l.pricedFinish, l.basis, l.book, l.list.toFixed(2), l.multiplier, l.net.toFixed(2), l.extended.toFixed(2), l.note]
-    : [l.set, l.openings, l.item, l.maker, l.number, l.finish, l.qtyPerOpening, l.qty, "", "", "not priced", "", "", "", "", "", l.reason]);
+    : [l.set, l.openings, l.item, l.maker, l.number, l.finish, l.qtyPerOpening, l.qty, "", "", l.scheduleNote ? "schedule note" : "not priced", "", "", "", "", "", l.reason]);
   const out = [["Project", project], ["Default multiplier", mult.default], [], head, ...rows, [],
     ["", "", "", "", "", "", "", "", "", "", "", "Total of priced lines (list)", result.totals.list.toFixed(2), "", "", result.totals.net.toFixed(2), `${result.totals.unpricedLines} line(s) not priced and not in the total`]];
   if (result.basisNote) out.push([result.basisNote]);
