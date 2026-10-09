@@ -19,8 +19,8 @@
 
 export const MIN_VALUE = 250000;
 export const BACKFILL_MONTHS = 24;
-// Bumped whenever permitRow reads a permit differently (2: Austin's permit classes, structures with no doors).
-export const RULES_VERSION = 2;
+// Bumped whenever permitRow reads a permit differently (2: Austin's permit classes, structures with no doors; 3: placeholder company names).
+export const RULES_VERSION = 3;
 const PAGE = 1000;
 
 const RESIDENTIAL_SMALL = /\b(single[- ]family|one[- ]family|two[- ]family|1[- ]family|2[- ]family|duplex|townhouse|accessory dwelling|\badu\b)/i;
@@ -73,6 +73,9 @@ const num = (v) => { const t = String(v ?? "").replace(/[$,]/g, "").trim(); if (
 const day = (v) => (v ? String(v).slice(0, 10) : null);
 const clean = (v, n = 200) => { const s = String(v ?? "").replace(/\s+/g, " ").trim(); return s ? s.slice(0, n) : null; };
 const join = (...p) => p.map((x) => clean(x)).filter(Boolean).join(" ");
+// Placeholders some filings carry where a company name belongs ("PR" on 135 NYC filings in a year).
+const PLACEHOLDER = /^(pr|na|n\/a|none|tbd|owner|self|null|unknown|same|see (plans|above)|-+|\.+)$/i;
+const company = (v) => { const s = clean(v, 120); return s && s.length > 2 && !PLACEHOLDER.test(s) ? s : null; };
 
 function chicagoContacts(r) {
   const out = {};
@@ -161,7 +164,7 @@ export function permitRow(metro, r, now) {
   return {
     id: metro + ":" + p.permit_no, metro, state: city.state, permit_no: String(p.permit_no).slice(0, 60), issued: p.issued, kind: p.kind,
     use, scope, use_text: clean(p.use_text, 120), description: clean(p.description, 600), address: clean(p.address, 200),
-    valuation: Math.round(p.valuation), sqft: p.sqft || null, units: p.units || null, owner: p.owner, contractor: p.contractor, applicant: p.applicant,
+    valuation: Math.round(p.valuation), sqft: p.sqft || null, units: p.units || null, owner: company(p.owner), contractor: company(p.contractor), applicant: company(p.applicant),
     url: p.url, lat: p.lat, lon: p.lon, fetched_at: now,
   };
 }
@@ -305,7 +308,7 @@ export async function metroSummary(db, metro, p = {}, today = new Date().toISOSt
   if (!CITIES[metro]) return null;
   const months = [3, 6, 12, 24].includes(Number(p.months)) ? Number(p.months) : 12;
   const since = monthsAgo(today, months), prior = monthsAgo(today, months * 2);
-  const limit = Math.min(Math.max(Number(p.limit) || 5, 1), 500);
+  const limit = Math.min(Math.max(Number(p.limit) || 5, 1), 5000);
   const { where, binds } = filterSql(metro, p);
   const one = async (sql, ...b) => (await db.prepare(sql).bind(...binds, ...b).first()) || {};
   const all = async (sql, ...b) => (await db.prepare(sql).bind(...binds, ...b).all()).results || [];
@@ -318,8 +321,8 @@ export async function metroSummary(db, metro, p = {}, today = new Date().toISOSt
   const cols = "id, permit_no, issued, kind, use, scope, use_text, description, address, valuation, sqft, units, owner, contractor, applicant, url";
   const largest = await all(`SELECT ${cols} FROM marketx_permits ${where} AND issued >= ? ORDER BY valuation DESC LIMIT ?`, since, limit);
   const newest = await all(`SELECT ${cols} FROM marketx_permits ${where} AND issued >= ? ORDER BY issued DESC, valuation DESC LIMIT ?`, since, limit);
-  const contractors = await all(`SELECT contractor AS name, COUNT(*) AS projects, SUM(valuation) AS value, MAX(issued) AS latest FROM marketx_permits ${where} AND issued >= ? AND contractor IS NOT NULL GROUP BY contractor ORDER BY value DESC LIMIT ?`, since, limit);
-  const owners = await all(`SELECT owner AS name, COUNT(*) AS projects, SUM(valuation) AS value, MAX(issued) AS latest FROM marketx_permits ${where} AND issued >= ? AND owner IS NOT NULL GROUP BY owner ORDER BY value DESC LIMIT ?`, since, limit);
+  const contractors = await all(`SELECT contractor AS name, COUNT(*) AS projects, SUM(valuation) AS value, MAX(issued) AS latest FROM marketx_permits ${where} AND issued >= ? AND contractor IS NOT NULL AND length(contractor) > 2 AND upper(contractor) NOT IN ('N/A', 'NONE', 'TBD', 'OWNER', 'SELF', 'NULL', 'UNKNOWN') GROUP BY contractor ORDER BY value DESC LIMIT ?`, since, limit);
+  const owners = await all(`SELECT owner AS name, COUNT(*) AS projects, SUM(valuation) AS value, MAX(issued) AS latest FROM marketx_permits ${where} AND issued >= ? AND owner IS NOT NULL AND length(owner) > 2 AND upper(owner) NOT IN ('N/A', 'NONE', 'TBD', 'OWNER', 'SELF', 'NULL', 'UNKNOWN') GROUP BY owner ORDER BY value DESC LIMIT ?`, since, limit);
   const fill = await db.prepare("SELECT cursor, last_run FROM marketx_ingest WHERE metro = ?").bind(metro).first();
   const change = (a, b) => (b > 0 ? Math.round(((a - b) / b) * 1000) / 10 : null);
   return {
