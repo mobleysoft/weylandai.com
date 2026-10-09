@@ -1089,7 +1089,9 @@ export async function assembleSubmittalPackage(sessionId, options, env2, PDFLib)
     result.pdfBytes = finalPdf;
     result.doorCount = doorRows.length;
     result.hardwareSetCount = hardwareSets.length;
-    result.cutSheetCount = cutSheetPdfs.length;
+    // The merge list also contains our missing-item disclosure. Only actual
+    // catalogue/cut-sheet sections count as cut sheets in the API manifest.
+    result.cutSheetCount = result.sections.filter((s) => s.type === "cut_sheet").length;
     result.success = true;
     console.log(`[Assembler] Assembly complete: ${result.totalPages} pages, ${result.sections.length} sections`);
     if (options.saveToR2 !== false) {

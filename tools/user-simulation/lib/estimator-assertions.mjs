@@ -18,13 +18,20 @@ export function firstReadWrites(requests) {
 
 export function doorEvidence(rows, page) {
   const missing = DOORS.doors.filter(d => !rows.some(r => r.mark === d.mark)).map(d => d.mark);
-  const incorrect = DOORS.doors.flatMap(d => {
+  const differences = DOORS.doors.flatMap(d => {
     const r = rows.find(r => r.mark === d.mark);
     if (!r) return [];
-    return groupKey(r.group) !== groupKey(d.hardware_group) || !new RegExp(`^p\\.${page} row ${d.row}(?:\\D|$)`).test(r.source || "") ? [d.mark] : [];
+    // The audit uses one-based ordinals; text-layer source_row/table_row is
+    // a zero-based data-row index (there are no printed row numbers on A2.2).
+    const source = `p.${page} row ${d.row - 1}`;
+    return [
+      ...(groupKey(r.group) !== groupKey(d.hardware_group) ? [{ mark: d.mark, field: "hardware_group", expected: d.hardware_group, actual: r.group }] : []),
+      ...(!new RegExp(`^p\\.${page} row ${d.row - 1}(?:\\D|$)`).test(r.source || "") ? [{ mark: d.mark, field: "source", expected: source, actual: r.source }] : []),
+    ];
   });
+  const incorrect = [...new Set(differences.map(d => d.mark))];
   return { ok: sameMembers(rows.map(r => r.mark), DOORS.doors.map(d => d.mark)) && !incorrect.length,
-    expected: DOORS.door_count, rows: rows.length, missing, incorrect };
+    expected: DOORS.door_count, rows: rows.length, missing, incorrect, differences };
 }
 
 // CSV fields can contain commas, quotes and newlines (including size strings).
@@ -55,11 +62,12 @@ export function csvEvidence(text) {
     const r = rows.find(r => r.Mark === d.mark);
     return !r || r["DOOR PAIR"] !== (d.pair ? "Yes" : "No") || r.GLAZING !== (d.glazing || "") ? [d.mark] : [];
   });
-  // Alternate pricing was independently checked against A2.2 for g018;
-  // the older corpus oracle explicitly excludes it. Keep blank distinct from No.
+  // All 65 final-column cells are audited against A2.2. Keep blank distinct from No.
   const alternates = Object.fromEntries(["Yes", "No", ""].map(v => [v || "blank", rows.filter(r => r["ALTERNATE PRICING"] === v).length]));
-  const spots = { "109.1": "Yes", "119.2": "Yes", "1J.1": "No", "126.1.2": "" };
-  const badAlternates = Object.entries(spots).filter(([mark, value]) => rows.find(r => r.Mark === mark)?.["ALTERNATE PRICING"] !== value);
+  const badAlternates = DOORS.doors.flatMap(d => {
+    const actual = rows.find(r => r.Mark === d.mark)?.["ALTERNATE PRICING"], expected = d.alternate_pricing ?? "";
+    return actual === expected ? [] : [{ mark: d.mark, expected, actual }];
+  });
   return { ok: required.every(h => headers.includes(h)) && sameMembers(rows.map(r => r.Mark), DOORS.doors.map(d => d.mark)) && !incorrect.length &&
     alternates.Yes === 18 && alternates.No === 46 && alternates.blank === 1 && !badAlternates.length,
     headers, rows: rows.length, incorrect, alternates, badAlternates };
@@ -93,7 +101,8 @@ export function packetEvidence(packet) {
     missing.every(m => m.reason && m.need) && (!(cs.unmatched > 0) || missing.length > 0) &&
     (!missing.length || sections.some(s => s.type === "cut_sheet_misses")) &&
     packet.totalPages === sections.reduce((n, s) => n + s.pages, 0) && !(packet.warnings || []).length,
-    pages: packet?.totalPages, groups: groups.length, mismatches, cutSheets: cuts.length, matched: cs.matched, unmatched: cs.unmatched, warnings: packet?.warnings || [] };
+    pages: packet?.totalPages, groups: groups.length, mismatches, cutSheets: cuts.length, reportedCutSheets: packet?.cut_sheets,
+    matched: cs.matched, unmatched: cs.unmatched, missing, warnings: packet?.warnings || [] };
 }
 
 export function packetTextEvidence(text, packet, company) {

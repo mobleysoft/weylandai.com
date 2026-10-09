@@ -12,9 +12,10 @@ const SRC = join(here, "..", "assets", "client-ocr-src");
 const BIN = join(here, "..", "assets", "client-ocr");
 
 test("every client-ocr-src module equals its served .bin twin", () => {
-  const pairs = readdirSync(SRC).filter((f) => f.endsWith(".mjs")).map((f) => [join(SRC, f), join(BIN, f + ".bin")]).filter(([, b]) => existsSync(b));
+  const pairs = readdirSync(SRC).filter((f) => f.endsWith(".mjs")).map((f) => [join(SRC, f), join(BIN, f + ".bin")]);
   assert.ok(pairs.length >= 3, "expected at least three source/.bin pairs, found " + pairs.length);
   for (const [src, bin] of pairs) {
+    assert.ok(existsSync(bin), "missing served module: " + bin);
     assert.ok(readFileSync(src).equals(readFileSync(bin)), "drift: " + src.split("/").pop() + " differs from its .bin; cp the source over the .bin");
   }
 });

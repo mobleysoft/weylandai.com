@@ -5,7 +5,7 @@ import { execFileSync } from "node:child_process";
 import { hardwareChildDeletes } from "./lib/hardware-cleanup.mjs";
 import { DOORS, HARDWARE, doorEvidence, csvEvidence, parseCsv, hardwareEvidence, packetEvidence, packetTextEvidence, firstReadWrites } from "./lib/estimator-assertions.mjs";
 
-const doorRows = () => DOORS.doors.map(d => ({ mark: d.mark, group: d.hardware_group || "(empty)", source: "p.29 row " + d.row }));
+const doorRows = () => DOORS.doors.map(d => ({ mark: d.mark, group: d.hardware_group || "(empty)", source: "p.29 row " + (d.row - 1) }));
 const hardware = () => ({ hardware_schedule_needed: null,
   hardware_sets: HARDWARE.groups.map(g => ({ set_number: g.group, components: g.items.length })),
   components: HARDWARE.groups.flatMap(g => g.items.map(i => ({ set_number: g.group, quantity: i.qty, model: i.catalog }))) });
@@ -44,7 +44,13 @@ test("65 rows pass only with the exact marks, hardware groups and source page/ro
   assert.equal(doorEvidence(badSource, 29).ok, false);
   const badGroup = doorRows(); badGroup[1].group = "47 VES";
   assert.equal(doorEvidence(badGroup, 29).ok, false);
+  assert.deepEqual(doorEvidence(badGroup, 29).differences, [{ mark: "109.1", field: "hardware_group", expected: "06 CL", actual: "47 VES" }]);
+  const ordinal = doorRows(); ordinal[0].source = "p.29 row 1";
+  assert.deepEqual(doorEvidence(ordinal, 29).differences, [{ mark: "1J.1", field: "source", expected: "p.29 row 0", actual: "p.29 row 1" }]);
   assert.equal(doorEvidence(doorRows(), 1).ok, false);
+  // These are distinct printed marks, not decimal values or OCR typos.
+  const collapsed = doorRows(); collapsed[4].mark = "111.1";
+  assert.deepEqual(doorEvidence(collapsed, 29).missing, ["111.1.1"]);
 });
 
 test("CSV parser preserves quoted size strings, commas and embedded line breaks", () => {
@@ -56,13 +62,16 @@ test("CSV parser preserves quoted size strings, commas and embedded line breaks"
 
 test("CSV rejects the old missing pricing columns and blank/No conflation", () => {
   assert.equal(csvEvidence("Mark,Hardware group\n109.1,06 CL").ok, false);
-  const yes = new Set(["109.1", "119.2"]);
-  for (const d of DOORS.doors) if (yes.size < 18 && !["1J.1", "126.1.2"].includes(d.mark)) yes.add(d.mark);
-  const rows = DOORS.doors.map(d => [d.mark, d.pair ? "Yes" : "No", d.glazing || "", d.mark === "126.1.2" ? "" : yes.has(d.mark) ? "Yes" : "No"]);
+  const rows = DOORS.doors.map(d => [d.mark, d.pair ? "Yes" : "No", d.glazing || "", d.alternate_pricing ?? ""]);
   const csv = rs => ["Mark,DOOR PAIR,GLAZING,ALTERNATE PRICING", ...rs.map(r => r.join(","))].join("\r\n");
   assert.equal(csvEvidence(csv(rows)).ok, true);
   rows.find(r => r[0] === "126.1.2")[3] = "No";
   assert.equal(csvEvidence(csv(rows)).ok, false);
+  rows.find(r => r[0] === "126.1.2")[3] = "";
+  // Equal totals and the old four spot checks must not hide swapped cells.
+  rows.find(r => r[0] === "138.1")[3] = "No";
+  rows.find(r => r[0] === "138.1.1")[3] = "Yes";
+  assert.deepEqual(csvEvidence(csv(rows)).badAlternates.map(d => d.mark), ["138.1", "138.1.1"]);
 });
 
 test("hardware cannot pass with door-derived empty groups or a duplicate replacing a group", () => {
@@ -93,6 +102,10 @@ test("a Built response with just doors/source, or a partial hardware packet, fai
 });
 
 test("packet must be accessible and carry actual cut sheets with explicit missing-item disclosure", () => {
+  assert.equal(packetEvidence(manifest()).ok, true, "an honestly disclosed unmatched item is allowed");
+  const overcount = manifest(); overcount.cut_sheets++;
+  assert.equal(packetEvidence(overcount).ok, false, "a missing-item page is not a catalogue cut sheet");
+  assert.equal(packetTextEvidence(pdfText(overcount), overcount, "Test Estimator Company").ok, false);
   const unpaid = manifest(); unpaid.paid = false;
   assert.equal(packetEvidence(unpaid).ok, false);
   const noCuts = manifest(); noCuts.sections = noCuts.sections.filter(s => s.type !== "cut_sheet");

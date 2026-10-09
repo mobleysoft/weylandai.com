@@ -1,0 +1,534 @@
+✔ every client-ocr-src module equals its served .bin twin (3.39825ms)
+[PRODUCT_DATABASE] Validation found 102 warnings:
+  - Product 0 (Schlage L9080P Passage Mortise Lock): Price range missing $ on second value
+  - Product 1 (Schlage L9050 Entry/Office Mortise Lock): Price range missing $ on second value
+  - Product 2 (Schlage L9070 Classroom Mortise Lock): Price range missing $ on second value
+  - Product 3 (Schlage L9453 Electrified Mortise Lock): Price range missing $ on second value
+  - Product 4 (Schlage ND80PD Passage Cylindrical Lock): Price range missing $ on second value
+  - Product 5 (Schlage ND70PD Classroom Cylindrical Lock): Price range missing $ on second value
+  - Product 6 (Schlage ND96PD Storeroom Cylindrical Lock): Price range missing $ on second value
+  - Product 7 (LCN 4110 Series Surface Closer): Price range missing $ on second value
+  - Product 8 (LCN 4040XP Hold Open Arm Surface Closer): Price range missing $ on second value
+  - Product 9 (LCN 8310 Series Concealed Overhead Closer): Price range missing $ on second value
+  - Product 10 (LCN 8310ME Multi-Electrical Closer): Price range missing $ on second value
+  - Product 11 (Ives 5BB1 Full Mortise Ball Bearing Hinge): Price range missing $ on second value
+  - Product 12 (Ives 5BB1HD Heavy Duty Ball Bearing Hinge): Price range missing $ on second value
+  - Product 13 (Ives BB1279 Continuous Hinge): Price range missing $ on second value
+  - Product 14 (Ives 622 Door Stop): Price range missing $ on second value
+  - Product 15 (Ives 632 Overhead Stop): Price range missing $ on second value
+  - Product 16 (Von Duprin 98 Series Rim Exit Device): Price range missing $ on second value
+  - Product 17 (Von Duprin 99 Series Surface Vertical Rod): Price range missing $ on second value
+  - Product 18 (Von Duprin 33A/35A Concealed Vertical Rod): Price range missing $ on second value
+  - Product 19 (Pemko 170 Series Threshold): Price range missing $ on second value
+  - Product 20 (Pemko 411 Series Automatic Door Bottom): Price range missing $ on second value
+  - Product 21 (Pemko 2005 Series Perimeter Gasketing): Price range missing $ on second value
+  - Product 22 (Hager BB1279 Continuous Hinge): Price range missing $ on second value
+  - Product 23 (Hager BB1168 Ball Bearing Hinge): Price range missing $ on second value
+  - Product 24 (Rockwood 70A Push Plate): Price range missing $ on second value
+  - Product 25 (Rockwood 111 Push/Pull Plate): Price range missing $ on second value
+  - Product 26 (Don-Jo LP-207 Latch Protector): Price range missing $ on second value
+  - Product 27 (Don-Jo SP-206 Security Stud): Price range missing $ on second value
+  - Product 28 (HES 1006 Series Electric Strike): Price range missing $ on second value
+  - Product 29 (HES 5000 Series Heavy Duty Electric Strike): Price range missing $ on second value
+  - Product 30 (Yale 8700 Series Rim Exit Device): Price range missing $ on second value
+  - Product 31 (Yale 8800 Series Surface Vertical Rod): Price range missing $ on second value
+  - Product 32 (Norton 7500 Series Surface Closer): Price range missing $ on second value
+  - Product 33 (Norton 8301 Concealed Overhead Closer): Price range missing $ on second value
+  - Product 34 (Schlage ND40S Entrance/Office Cylindrical Lock): Price range missing $ on second value
+  - Product 35 (Schlage ND53PD Entry Cylindrical Lock): Price range missing $ on second value
+  - Product 36 (Schlage AL70PD Classroom Cylindrical Lock): Price range missing $ on second value
+  - Product 37 (Schlage AL80PD Passage Cylindrical Lock): Price range missing $ on second value
+  - Product 38 (Schlage CO250 Exit Trim): Price range missing $ on second value
+  - Product 39 (Schlage L9000 Series Mortise Lock): Price range missing $ on second value
+  - Product 40 (Schlage L9040 Entrance Mortise Lock): Price range missing $ on second value
+  - Product 41 (Dorma 8000 Series Surface Closer): Price range missing $ on second value
+  - Product 42 (Dorma RTS85 Overhead Concealed Closer): Price range missing $ on second value
+  - Product 43 (Dorma TS93 Cam-Action Closer): Price range missing $ on second value
+  - Product 44 (Stanley QDC200 Surface Closer): Price range missing $ on second value
+  - Product 45 (Stanley QDC300 Overhead Concealed Closer): Price range missing $ on second value
+  - Product 46 (Jackson 5200 Series Surface Closer): Price range missing $ on second value
+  - Product 47 (Von Duprin 88 Series Rim Exit Device): Price range missing $ on second value
+  - Product 48 (Von Duprin 9927 Narrow Stile Exit Device): Price range missing $ on second value
+  - Product 49 (Von Duprin 22 Series Mortise Exit Device): Price range missing $ on second value
+  - Product 50 (Von Duprin 6200 Series Electric Exit Device): Price range missing $ on second value
+  - Product 51 (Corbin Russwin ED5200 Rim Exit Device): Price range missing $ on second value
+  - Product 52 (Corbin Russwin ED5400 Mortise Exit Device): Price range missing $ on second value
+  - Product 53 (Rockwood BF150 Pull Handle): Price range missing $ on second value
+  - Product 54 (Rockwood BF158 Pull Handle): Price range missing $ on second value
+  - Product 55 (Rockwood RP4 Raised Push Plate): Price range missing $ on second value
+  - Product 56 (Rockwood 450 Kick Plate): Price range missing $ on second value
+  - Product 57 (Rockwood 620 Mop Plate): Price range missing $ on second value
+  - Product 58 (Trimco 1220 Series Pull Handle): Price range missing $ on second value
+  - Product 59 (Trimco 1522 Series Push/Pull Plate): Price range missing $ on second value
+  - Product 60 (Glynn-Johnson 100 Series Overhead Stop): Price range missing $ on second value
+  - Product 61 (Glynn-Johnson 90 Series Overhead Holder): Price range missing $ on second value
+  - Product 62 (Rixson 27 Overhead Stop): Price range missing $ on second value
+  - Product 63 (Rixson 370 Floor Closer): Price range missing $ on second value
+  - Product 64 (Rixson 10 Pivot Set): Price range missing $ on second value
+  - Product 65 (McKinney TA2714 Ball Bearing Hinge): Price range missing $ on second value
+  - Product 66 (McKinney T4A3786 Electric Hinge): Price range missing $ on second value
+  - Product 67 (Stanley FBB179 Ball Bearing Hinge): Price range missing $ on second value
+  - Product 68 (Stanley CEFBB179 Electric Hinge): Price range missing $ on second value
+  - Product 69 (Stanley CBBB179 Continuous Hinge): Price range missing $ on second value
+  - Product 70 (Bommer 3029 Single Acting Pivot): Price range missing $ on second value
+  - Product 71 (Bommer 7811 Double Acting Pivot): Price range missing $ on second value
+  - Product 72 (National Guard 175 Threshold): Price range missing $ on second value
+  - Product 73 (National Guard 693L Automatic Door Bottom): Price range missing $ on second value
+  - Product 74 (Zero 780 Automatic Door Bottom): Price range missing $ on second value
+  - Product 75 (Zero 1700 Series Perimeter Seal): Price range missing $ on second value
+  - Product 76 (HES 9600 Series Folger Adam Compatible Strike): Price range missing $ on second value
+  - Product 77 (HES 5000C Cylindrical Lock Strike): Price range missing $ on second value
+  - Product 78 (Adams Rite 7400 Series Electric Strike): Price range missing $ on second value
+  - Product 79 (Adams Rite 7110 Solenoid Lock): Price range missing $ on second value
+  - Product 80 (Securitron M62 Electromagnetic Lock): Price range missing $ on second value
+  - Product 81 (Securitron M32 Electromagnetic Lock): Price range missing $ on second value
+  - Product 82 (Alarm Controls 600 Mag Lock): Price range missing $ on second value
+  - Product 83 (Don-Jo CW-1510 Edge Wrap Protector): Price range missing $ on second value
+  - Product 84 (Don-Jo 90 Door Edge Guard): Price range missing $ on second value
+  - Product 85 (Don-Jo RP-1412 Remodeler Plate): Price range missing $ on second value
+  - Product 86 (Ives FB450 Flush Bolt): Price range missing $ on second value
+  - Product 87 (Ives FB458 Automatic Flush Bolt): Price range missing $ on second value
+  - Product 88 (Ives 436B Roller Latch): Price range missing $ on second value
+  - Product 89 (Ives 315 Sliding Door Latch): Price range missing $ on second value
+  - Product 90 (Ives 8400 Series Kick Plate): Price range missing $ on second value
+  - Product 91 (Rockwood 580 Automatic Flush Bolt): Price range missing $ on second value
+  - Product 92 (Rockwood 585 Manual Flush Bolt): Price range missing $ on second value
+  - Product 93 (Hager 1450 Series Pocket Door Frame): Price range missing $ on second value
+  - Product 94 (Hager 1550 Soft Close Pocket Frame): Price range missing $ on second value
+  - Product 95 (Johnson 1500 Pocket Door Frame): Price range missing $ on second value
+  - Product 96 (Johnson 2000 Series Sliding Door Track): Price range missing $ on second value
+  - Product 97 (Hafele Slido Classic 80-P Sliding System): Price range missing $ on second value
+  - Product 98 (Rixson C28 Door Coordinator): Price range missing $ on second value
+  - Product 99 (Glynn-Johnson 60 Series Coordinator): Price range missing $ on second value
+  - Product 100 (Von Duprin 996L Exit Trim): Price range missing $ on second value
+  - Product 101 (Von Duprin 998 Exit Trim with Lever): Price range missing $ on second value
+✔ every table with the session's id, the sets' items, the R2 object and the KV copy go; another session stays (2.343917ms)
+✔ sheet A9.01: 10 doors, 8 hardware sets, 13 listed parts, each named in its set's own words (14.246916ms)
+✔ a printed part reads as manufacturer, model and finish (0.305833ms)
+✔ a two-way printed set is refused, not silently merged (0.4115ms)
+✔ seeding twice leaves one set of rows (6.415375ms)
+✔ a copy carries the doors, the 8 sets and their 13 parts, each door linked to its set (10.823458ms)
+✔ a guest's copy is attributed to the seed owner; nothing is written when the batch fails (12.931875ms)
+✔ a seed without sets still gives a copy one set per door group (no parts), as before (1.935ms)
+✔ the route hands back a complete copy, and replaces one that is gone or has no parts (69.299125ms)
+✔ a limited caller gets 429 with the wait, and nothing is written (2.473ms)
+✔ a guest's new copy counts toward its network (IPv6 by /64), an account's toward the account (1.617458ms)
+✔ the network limit counts an IPv6 visitor by /64 (0.067666ms)
+✔ an expired clone goes with its rows, its project and its package PDF (9.27975ms)
+✔ a copy stored with an ISO timestamp expires at 24 h, whatever the time of day (1.102042ms)
+✔ door sizes in feet-inches are read, with or without the foot mark (3.998625ms)
+✔ OCR misreads stay unread instead of becoming sizes no door has (0.20675ms)
+✔ plain inches count only when the row writes both dimensions that way (0.210458ms)
+✔ door thickness: the space lost in 1 3/4" is restored, impossible values are dropped (0.4835ms)
+✔ a dimension with an unreduced or odd fraction is not a dimension (0.16775ms)
+✔ fire ratings: case, punctuation and the unit word normalised, the number kept as read (0.41825ms)
+✔ door marks: a short code with a digit; section rows and noise are not doors (0.343042ms)
+✔ served browser bytes read the single-page guest A2.2 with its spec reference and every CSV pricing cell (177.826292ms)
+{"doors":65,"pairs":6,"alternate_yes":["109.1","109.2","111.1","111.1.1","113.1","113.1.1","114.1","118.1","119.1","119.2","126.1","126.1.1","128.1.1","138.1","138.2","147.1.1","167.1.1","179.1.1"],"alternate_no":46,"spec":["08 71 00"]}
+✔ Rockford pricing fields survive the reader, persistence and CSV (including No and empty) (85.087833ms)
+✔ A2.2 alone names the missing spec; reading 08 71 00 resolves all hardware groups (232.235417ms)
+✔ spec-section spellings normalize; unrelated specifications are not hardware references (0.245ms)
+✔ packet door table and hardware pages print the same full hardware-group label (13.937167ms)
+[PRODUCT_DATABASE] Validation found 102 warnings:
+  - Product 0 (Schlage L9080P Passage Mortise Lock): Price range missing $ on second value
+  - Product 1 (Schlage L9050 Entry/Office Mortise Lock): Price range missing $ on second value
+  - Product 2 (Schlage L9070 Classroom Mortise Lock): Price range missing $ on second value
+  - Product 3 (Schlage L9453 Electrified Mortise Lock): Price range missing $ on second value
+  - Product 4 (Schlage ND80PD Passage Cylindrical Lock): Price range missing $ on second value
+  - Product 5 (Schlage ND70PD Classroom Cylindrical Lock): Price range missing $ on second value
+  - Product 6 (Schlage ND96PD Storeroom Cylindrical Lock): Price range missing $ on second value
+  - Product 7 (LCN 4110 Series Surface Closer): Price range missing $ on second value
+  - Product 8 (LCN 4040XP Hold Open Arm Surface Closer): Price range missing $ on second value
+  - Product 9 (LCN 8310 Series Concealed Overhead Closer): Price range missing $ on second value
+  - Product 10 (LCN 8310ME Multi-Electrical Closer): Price range missing $ on second value
+  - Product 11 (Ives 5BB1 Full Mortise Ball Bearing Hinge): Price range missing $ on second value
+  - Product 12 (Ives 5BB1HD Heavy Duty Ball Bearing Hinge): Price range missing $ on second value
+  - Product 13 (Ives BB1279 Continuous Hinge): Price range missing $ on second value
+  - Product 14 (Ives 622 Door Stop): Price range missing $ on second value
+  - Product 15 (Ives 632 Overhead Stop): Price range missing $ on second value
+  - Product 16 (Von Duprin 98 Series Rim Exit Device): Price range missing $ on second value
+  - Product 17 (Von Duprin 99 Series Surface Vertical Rod): Price range missing $ on second value
+  - Product 18 (Von Duprin 33A/35A Concealed Vertical Rod): Price range missing $ on second value
+  - Product 19 (Pemko 170 Series Threshold): Price range missing $ on second value
+  - Product 20 (Pemko 411 Series Automatic Door Bottom): Price range missing $ on second value
+  - Product 21 (Pemko 2005 Series Perimeter Gasketing): Price range missing $ on second value
+  - Product 22 (Hager BB1279 Continuous Hinge): Price range missing $ on second value
+  - Product 23 (Hager BB1168 Ball Bearing Hinge): Price range missing $ on second value
+  - Product 24 (Rockwood 70A Push Plate): Price range missing $ on second value
+  - Product 25 (Rockwood 111 Push/Pull Plate): Price range missing $ on second value
+  - Product 26 (Don-Jo LP-207 Latch Protector): Price range missing $ on second value
+  - Product 27 (Don-Jo SP-206 Security Stud): Price range missing $ on second value
+  - Product 28 (HES 1006 Series Electric Strike): Price range missing $ on second value
+  - Product 29 (HES 5000 Series Heavy Duty Electric Strike): Price range missing $ on second value
+  - Product 30 (Yale 8700 Series Rim Exit Device): Price range missing $ on second value
+  - Product 31 (Yale 8800 Series Surface Vertical Rod): Price range missing $ on second value
+  - Product 32 (Norton 7500 Series Surface Closer): Price range missing $ on second value
+  - Product 33 (Norton 8301 Concealed Overhead Closer): Price range missing $ on second value
+  - Product 34 (Schlage ND40S Entrance/Office Cylindrical Lock): Price range missing $ on second value
+  - Product 35 (Schlage ND53PD Entry Cylindrical Lock): Price range missing $ on second value
+  - Product 36 (Schlage AL70PD Classroom Cylindrical Lock): Price range missing $ on second value
+  - Product 37 (Schlage AL80PD Passage Cylindrical Lock): Price range missing $ on second value
+  - Product 38 (Schlage CO250 Exit Trim): Price range missing $ on second value
+  - Product 39 (Schlage L9000 Series Mortise Lock): Price range missing $ on second value
+  - Product 40 (Schlage L9040 Entrance Mortise Lock): Price range missing $ on second value
+  - Product 41 (Dorma 8000 Series Surface Closer): Price range missing $ on second value
+  - Product 42 (Dorma RTS85 Overhead Concealed Closer): Price range missing $ on second value
+  - Product 43 (Dorma TS93 Cam-Action Closer): Price range missing $ on second value
+  - Product 44 (Stanley QDC200 Surface Closer): Price range missing $ on second value
+  - Product 45 (Stanley QDC300 Overhead Concealed Closer): Price range missing $ on second value
+  - Product 46 (Jackson 5200 Series Surface Closer): Price range missing $ on second value
+  - Product 47 (Von Duprin 88 Series Rim Exit Device): Price range missing $ on second value
+  - Product 48 (Von Duprin 9927 Narrow Stile Exit Device): Price range missing $ on second value
+  - Product 49 (Von Duprin 22 Series Mortise Exit Device): Price range missing $ on second value
+  - Product 50 (Von Duprin 6200 Series Electric Exit Device): Price range missing $ on second value
+  - Product 51 (Corbin Russwin ED5200 Rim Exit Device): Price range missing $ on second value
+  - Product 52 (Corbin Russwin ED5400 Mortise Exit Device): Price range missing $ on second value
+  - Product 53 (Rockwood BF150 Pull Handle): Price range missing $ on second value
+  - Product 54 (Rockwood BF158 Pull Handle): Price range missing $ on second value
+  - Product 55 (Rockwood RP4 Raised Push Plate): Price range missing $ on second value
+  - Product 56 (Rockwood 450 Kick Plate): Price range missing $ on second value
+  - Product 57 (Rockwood 620 Mop Plate): Price range missing $ on second value
+  - Product 58 (Trimco 1220 Series Pull Handle): Price range missing $ on second value
+  - Product 59 (Trimco 1522 Series Push/Pull Plate): Price range missing $ on second value
+  - Product 60 (Glynn-Johnson 100 Series Overhead Stop): Price range missing $ on second value
+  - Product 61 (Glynn-Johnson 90 Series Overhead Holder): Price range missing $ on second value
+  - Product 62 (Rixson 27 Overhead Stop): Price range missing $ on second value
+  - Product 63 (Rixson 370 Floor Closer): Price range missing $ on second value
+  - Product 64 (Rixson 10 Pivot Set): Price range missing $ on second value
+  - Product 65 (McKinney TA2714 Ball Bearing Hinge): Price range missing $ on second value
+  - Product 66 (McKinney T4A3786 Electric Hinge): Price range missing $ on second value
+  - Product 67 (Stanley FBB179 Ball Bearing Hinge): Price range missing $ on second value
+  - Product 68 (Stanley CEFBB179 Electric Hinge): Price range missing $ on second value
+  - Product 69 (Stanley CBBB179 Continuous Hinge): Price range missing $ on second value
+  - Product 70 (Bommer 3029 Single Acting Pivot): Price range missing $ on second value
+  - Product 71 (Bommer 7811 Double Acting Pivot): Price range missing $ on second value
+  - Product 72 (National Guard 175 Threshold): Price range missing $ on second value
+  - Product 73 (National Guard 693L Automatic Door Bottom): Price range missing $ on second value
+  - Product 74 (Zero 780 Automatic Door Bottom): Price range missing $ on second value
+  - Product 75 (Zero 1700 Series Perimeter Seal): Price range missing $ on second value
+  - Product 76 (HES 9600 Series Folger Adam Compatible Strike): Price range missing $ on second value
+  - Product 77 (HES 5000C Cylindrical Lock Strike): Price range missing $ on second value
+  - Product 78 (Adams Rite 7400 Series Electric Strike): Price range missing $ on second value
+  - Product 79 (Adams Rite 7110 Solenoid Lock): Price range missing $ on second value
+  - Product 80 (Securitron M62 Electromagnetic Lock): Price range missing $ on second value
+  - Product 81 (Securitron M32 Electromagnetic Lock): Price range missing $ on second value
+  - Product 82 (Alarm Controls 600 Mag Lock): Price range missing $ on second value
+  - Product 83 (Don-Jo CW-1510 Edge Wrap Protector): Price range missing $ on second value
+  - Product 84 (Don-Jo 90 Door Edge Guard): Price range missing $ on second value
+  - Product 85 (Don-Jo RP-1412 Remodeler Plate): Price range missing $ on second value
+  - Product 86 (Ives FB450 Flush Bolt): Price range missing $ on second value
+  - Product 87 (Ives FB458 Automatic Flush Bolt): Price range missing $ on second value
+  - Product 88 (Ives 436B Roller Latch): Price range missing $ on second value
+  - Product 89 (Ives 315 Sliding Door Latch): Price range missing $ on second value
+  - Product 90 (Ives 8400 Series Kick Plate): Price range missing $ on second value
+  - Product 91 (Rockwood 580 Automatic Flush Bolt): Price range missing $ on second value
+  - Product 92 (Rockwood 585 Manual Flush Bolt): Price range missing $ on second value
+  - Product 93 (Hager 1450 Series Pocket Door Frame): Price range missing $ on second value
+  - Product 94 (Hager 1550 Soft Close Pocket Frame): Price range missing $ on second value
+  - Product 95 (Johnson 1500 Pocket Door Frame): Price range missing $ on second value
+  - Product 96 (Johnson 2000 Series Sliding Door Track): Price range missing $ on second value
+  - Product 97 (Hafele Slido Classic 80-P Sliding System): Price range missing $ on second value
+  - Product 98 (Rixson C28 Door Coordinator): Price range missing $ on second value
+  - Product 99 (Glynn-Johnson 60 Series Coordinator): Price range missing $ on second value
+  - Product 100 (Von Duprin 996L Exit Trim): Price range missing $ on second value
+  - Product 101 (Von Duprin 998 Exit Trim with Lever): Price range missing $ on second value
+✔ a model is matched as a token, not inside a price or a longer number (1.89825ms)
+✔ the best page is the one naming the model most, never the contents page (1.867916ms)
+✔ the filed PDF is read in windows once, cached in R2, and searched (150.237792ms)
+✔ the packet cites the filed book's own page where the index was another edition, and cuts it from that file (41.99575ms)
+✔ a product whose catalogue model is too short is searched by the schedule's own number (0.295958ms)
+✔ a model the catalogue does not list is found in the maker's own filed price book by the schedule's number (1.642ms)
+✔ an item the book prints in its own spelling or as a grid is cited from its price row's page, only when the filed PDF confirms it (21.672459ms)
+✔ a price-book grid spelling finds its page: Von Duprin prints 99-EO as [98/99] . EO (0.46725ms)
+✔ an item named by the product's own number (Von Duprin 99) is cited from the first page that prices it; GJ 100S searches 100S before 100 (0.850042ms)
+[PRODUCT_DATABASE] Validation found 102 warnings:
+  - Product 0 (Schlage L9080P Passage Mortise Lock): Price range missing $ on second value
+  - Product 1 (Schlage L9050 Entry/Office Mortise Lock): Price range missing $ on second value
+  - Product 2 (Schlage L9070 Classroom Mortise Lock): Price range missing $ on second value
+  - Product 3 (Schlage L9453 Electrified Mortise Lock): Price range missing $ on second value
+  - Product 4 (Schlage ND80PD Passage Cylindrical Lock): Price range missing $ on second value
+  - Product 5 (Schlage ND70PD Classroom Cylindrical Lock): Price range missing $ on second value
+  - Product 6 (Schlage ND96PD Storeroom Cylindrical Lock): Price range missing $ on second value
+  - Product 7 (LCN 4110 Series Surface Closer): Price range missing $ on second value
+  - Product 8 (LCN 4040XP Hold Open Arm Surface Closer): Price range missing $ on second value
+  - Product 9 (LCN 8310 Series Concealed Overhead Closer): Price range missing $ on second value
+  - Product 10 (LCN 8310ME Multi-Electrical Closer): Price range missing $ on second value
+  - Product 11 (Ives 5BB1 Full Mortise Ball Bearing Hinge): Price range missing $ on second value
+  - Product 12 (Ives 5BB1HD Heavy Duty Ball Bearing Hinge): Price range missing $ on second value
+  - Product 13 (Ives BB1279 Continuous Hinge): Price range missing $ on second value
+  - Product 14 (Ives 622 Door Stop): Price range missing $ on second value
+  - Product 15 (Ives 632 Overhead Stop): Price range missing $ on second value
+  - Product 16 (Von Duprin 98 Series Rim Exit Device): Price range missing $ on second value
+  - Product 17 (Von Duprin 99 Series Surface Vertical Rod): Price range missing $ on second value
+  - Product 18 (Von Duprin 33A/35A Concealed Vertical Rod): Price range missing $ on second value
+  - Product 19 (Pemko 170 Series Threshold): Price range missing $ on second value
+  - Product 20 (Pemko 411 Series Automatic Door Bottom): Price range missing $ on second value
+  - Product 21 (Pemko 2005 Series Perimeter Gasketing): Price range missing $ on second value
+  - Product 22 (Hager BB1279 Continuous Hinge): Price range missing $ on second value
+  - Product 23 (Hager BB1168 Ball Bearing Hinge): Price range missing $ on second value
+  - Product 24 (Rockwood 70A Push Plate): Price range missing $ on second value
+  - Product 25 (Rockwood 111 Push/Pull Plate): Price range missing $ on second value
+  - Product 26 (Don-Jo LP-207 Latch Protector): Price range missing $ on second value
+  - Product 27 (Don-Jo SP-206 Security Stud): Price range missing $ on second value
+  - Product 28 (HES 1006 Series Electric Strike): Price range missing $ on second value
+  - Product 29 (HES 5000 Series Heavy Duty Electric Strike): Price range missing $ on second value
+  - Product 30 (Yale 8700 Series Rim Exit Device): Price range missing $ on second value
+  - Product 31 (Yale 8800 Series Surface Vertical Rod): Price range missing $ on second value
+  - Product 32 (Norton 7500 Series Surface Closer): Price range missing $ on second value
+  - Product 33 (Norton 8301 Concealed Overhead Closer): Price range missing $ on second value
+  - Product 34 (Schlage ND40S Entrance/Office Cylindrical Lock): Price range missing $ on second value
+  - Product 35 (Schlage ND53PD Entry Cylindrical Lock): Price range missing $ on second value
+  - Product 36 (Schlage AL70PD Classroom Cylindrical Lock): Price range missing $ on second value
+  - Product 37 (Schlage AL80PD Passage Cylindrical Lock): Price range missing $ on second value
+  - Product 38 (Schlage CO250 Exit Trim): Price range missing $ on second value
+  - Product 39 (Schlage L9000 Series Mortise Lock): Price range missing $ on second value
+  - Product 40 (Schlage L9040 Entrance Mortise Lock): Price range missing $ on second value
+  - Product 41 (Dorma 8000 Series Surface Closer): Price range missing $ on second value
+  - Product 42 (Dorma RTS85 Overhead Concealed Closer): Price range missing $ on second value
+  - Product 43 (Dorma TS93 Cam-Action Closer): Price range missing $ on second value
+  - Product 44 (Stanley QDC200 Surface Closer): Price range missing $ on second value
+  - Product 45 (Stanley QDC300 Overhead Concealed Closer): Price range missing $ on second value
+  - Product 46 (Jackson 5200 Series Surface Closer): Price range missing $ on second value
+  - Product 47 (Von Duprin 88 Series Rim Exit Device): Price range missing $ on second value
+  - Product 48 (Von Duprin 9927 Narrow Stile Exit Device): Price range missing $ on second value
+  - Product 49 (Von Duprin 22 Series Mortise Exit Device): Price range missing $ on second value
+  - Product 50 (Von Duprin 6200 Series Electric Exit Device): Price range missing $ on second value
+  - Product 51 (Corbin Russwin ED5200 Rim Exit Device): Price range missing $ on second value
+  - Product 52 (Corbin Russwin ED5400 Mortise Exit Device): Price range missing $ on second value
+  - Product 53 (Rockwood BF150 Pull Handle): Price range missing $ on second value
+  - Product 54 (Rockwood BF158 Pull Handle): Price range missing $ on second value
+  - Product 55 (Rockwood RP4 Raised Push Plate): Price range missing $ on second value
+  - Product 56 (Rockwood 450 Kick Plate): Price range missing $ on second value
+  - Product 57 (Rockwood 620 Mop Plate): Price range missing $ on second value
+  - Product 58 (Trimco 1220 Series Pull Handle): Price range missing $ on second value
+  - Product 59 (Trimco 1522 Series Push/Pull Plate): Price range missing $ on second value
+  - Product 60 (Glynn-Johnson 100 Series Overhead Stop): Price range missing $ on second value
+  - Product 61 (Glynn-Johnson 90 Series Overhead Holder): Price range missing $ on second value
+  - Product 62 (Rixson 27 Overhead Stop): Price range missing $ on second value
+  - Product 63 (Rixson 370 Floor Closer): Price range missing $ on second value
+  - Product 64 (Rixson 10 Pivot Set): Price range missing $ on second value
+  - Product 65 (McKinney TA2714 Ball Bearing Hinge): Price range missing $ on second value
+  - Product 66 (McKinney T4A3786 Electric Hinge): Price range missing $ on second value
+  - Product 67 (Stanley FBB179 Ball Bearing Hinge): Price range missing $ on second value
+  - Product 68 (Stanley CEFBB179 Electric Hinge): Price range missing $ on second value
+  - Product 69 (Stanley CBBB179 Continuous Hinge): Price range missing $ on second value
+  - Product 70 (Bommer 3029 Single Acting Pivot): Price range missing $ on second value
+  - Product 71 (Bommer 7811 Double Acting Pivot): Price range missing $ on second value
+  - Product 72 (National Guard 175 Threshold): Price range missing $ on second value
+  - Product 73 (National Guard 693L Automatic Door Bottom): Price range missing $ on second value
+  - Product 74 (Zero 780 Automatic Door Bottom): Price range missing $ on second value
+  - Product 75 (Zero 1700 Series Perimeter Seal): Price range missing $ on second value
+  - Product 76 (HES 9600 Series Folger Adam Compatible Strike): Price range missing $ on second value
+  - Product 77 (HES 5000C Cylindrical Lock Strike): Price range missing $ on second value
+  - Product 78 (Adams Rite 7400 Series Electric Strike): Price range missing $ on second value
+  - Product 79 (Adams Rite 7110 Solenoid Lock): Price range missing $ on second value
+  - Product 80 (Securitron M62 Electromagnetic Lock): Price range missing $ on second value
+  - Product 81 (Securitron M32 Electromagnetic Lock): Price range missing $ on second value
+  - Product 82 (Alarm Controls 600 Mag Lock): Price range missing $ on second value
+  - Product 83 (Don-Jo CW-1510 Edge Wrap Protector): Price range missing $ on second value
+  - Product 84 (Don-Jo 90 Door Edge Guard): Price range missing $ on second value
+  - Product 85 (Don-Jo RP-1412 Remodeler Plate): Price range missing $ on second value
+  - Product 86 (Ives FB450 Flush Bolt): Price range missing $ on second value
+  - Product 87 (Ives FB458 Automatic Flush Bolt): Price range missing $ on second value
+  - Product 88 (Ives 436B Roller Latch): Price range missing $ on second value
+  - Product 89 (Ives 315 Sliding Door Latch): Price range missing $ on second value
+  - Product 90 (Ives 8400 Series Kick Plate): Price range missing $ on second value
+  - Product 91 (Rockwood 580 Automatic Flush Bolt): Price range missing $ on second value
+  - Product 92 (Rockwood 585 Manual Flush Bolt): Price range missing $ on second value
+  - Product 93 (Hager 1450 Series Pocket Door Frame): Price range missing $ on second value
+  - Product 94 (Hager 1550 Soft Close Pocket Frame): Price range missing $ on second value
+  - Product 95 (Johnson 1500 Pocket Door Frame): Price range missing $ on second value
+  - Product 96 (Johnson 2000 Series Sliding Door Track): Price range missing $ on second value
+  - Product 97 (Hafele Slido Classic 80-P Sliding System): Price range missing $ on second value
+  - Product 98 (Rixson C28 Door Coordinator): Price range missing $ on second value
+  - Product 99 (Glynn-Johnson 60 Series Coordinator): Price range missing $ on second value
+  - Product 100 (Von Duprin 996L Exit Trim): Price range missing $ on second value
+  - Product 101 (Von Duprin 998 Exit Trim with Lever): Price range missing $ on second value
+✔ cited pages: one page per product, sets merged, guesses and misses left out (4.7195ms)
+[Assembler] Starting assembly for session s1
+[Assembler] Generating cover page...
+[Assembler] Found 2 hardware groups for assembly
+[Assembler] Generated set 1: 2 pages (2 components, 0 doors)
+[Assembler] Generated set 2: 2 pages (2 components, 0 doors)
+[Assembler] Generating table of contents...
+[Assembler] Merging all PDFs...
+[Assembler] Assembly complete: 8 pages, 6 sections
+[Assembler] Starting assembly for session s1
+[Assembler] Generating cover page...
+[Assembler] Found 2 hardware groups for assembly
+[Assembler] Generated set 1: 2 pages (2 components, 0 doors)
+[Assembler] Generated set 2: 2 pages (2 components, 0 doors)
+[Assembler] Generating table of contents...
+[Assembler] Merging all PDFs...
+[Assembler] Assembly complete: 7 pages, 5 sections
+[Assembler] Starting assembly for session s1
+[Assembler] Generating cover page...
+[Assembler] Found 2 hardware groups for assembly
+[Assembler] Generated set 1: 2 pages (2 components, 0 doors)
+[Assembler] Generated set 2: 2 pages (2 components, 0 doors)
+[Assembler] Generating table of contents...
+[Assembler] Merging all PDFs...
+[Assembler] Assembly complete: 6 pages, 4 sections
+[Embedded Door Schedule] session flag update failed (non-blocking): no such column: door_schedule_extracted
+[Embedded Door Schedule] session flag update failed (non-blocking): no such column: door_schedule_extracted
+[Embedded Door Schedule] session flag update failed (non-blocking): no such column: door_schedule_extracted
+[Embedded Door Schedule] session flag update failed (non-blocking): no such column: door_schedule_extracted
+✔ the packet embeds the cited page of a 300-page price book, not the book (188.748625ms)
+✔ every item without a page is listed in the packet with why and what is needed (16.656042ms)
+✔ repeated marks across sheets keep every door; re-reading a sheet adds none (2.108833ms)
+✔ a line another trade furnishes is listed as by others, not as a miss (Rockford BY DIVISION 28) (0.38375ms)
+✔ a maker's spec sheet for the one product is cited at page 1 when its number is not in the sheet's text (Select SL57) (0.805417ms)
+✔ a sell sheet that prints only the function code is cited at the page its title names (Schlage ALX80, p.4) (0.46175ms)
+✔ crossing row rules do not leave vertical fragments or erase nearby glyphs (3.434667ms)
+✔ the shared dimension reader accepts a dropped foot apostrophe without inventing digits (0.969917ms)
+✔ the shipped OCR modules and versioned entry points match source (2.243167ms)
+g019 scan evidence {"dpi":204,"rotation":270,"skew":0.6,"rows":48,"fields_right":330,"fields_total":336,"ms":17414}
+✔ sideways ARCH D image-only sheet reads the same 48 doors as vector through production OCR (17514.790458ms)
+  rockford doors: 65/65 rows, fields 100%
+✔ Rockford A2.2 (p.29): 65 doors from the text layer, fields right (122.667542ms)
+  rockford groups: 14/14, items 110/110, fields 100%
+✔ Rockford 087100 (pp.17-23): 14 hardware groups, their doors and items (49.952417ms)
+  berryessa doors: 24/24 rows, fields 100%
+✔ Berryessa A9.2 (pp.284, 286, 288): 24 doors from hairline-ruled blocks on a turned sheet (105.838625ms)
+  berryessa groups: items 16/16, fields 100%
+✔ Berryessa 08 71 00 (p.282): two groups with no header line and no door list (19.617375ms)
+  christina set: items 21/23, fields 98.8% (01: AUTO DOOR OPERATOR DORMA 100 SERIES BY SECURITY VENDOR not found; 01: RELAY MODULE ALTRONTICS RB1224 BY SECURITY VENDOR not found; 01: VIDEO/INTERCOM STATION & CONSOLE w/ 5 RELEASE BUTTONS qty = 1)
+✔ Christina set 01 (p.219): a ruled set under a watermark, from the text (no rules in Node) (36.092875ms)
+  f0e863d88ea688ff.pdf: door 29 hardware 17,18,19,20,21,22,23 in 769 ms for 30 pages
+  dd339f57b51538ed.pdf: door 284,286,288 hardware 274,282 in 917 ms for 288 pages
+  525dc0b72011077a.pdf: door  hardware 219,220,221,222,223 in 1742 ms for 537 pages
+✔ page finder: the schedule pages of the three bid sets, by text (3439.148ms)
+✔ size and dimension cells (0.216709ms)
+[PRODUCT_DATABASE] Validation found 102 warnings:
+  - Product 0 (Schlage L9080P Passage Mortise Lock): Price range missing $ on second value
+  - Product 1 (Schlage L9050 Entry/Office Mortise Lock): Price range missing $ on second value
+  - Product 2 (Schlage L9070 Classroom Mortise Lock): Price range missing $ on second value
+  - Product 3 (Schlage L9453 Electrified Mortise Lock): Price range missing $ on second value
+  - Product 4 (Schlage ND80PD Passage Cylindrical Lock): Price range missing $ on second value
+  - Product 5 (Schlage ND70PD Classroom Cylindrical Lock): Price range missing $ on second value
+  - Product 6 (Schlage ND96PD Storeroom Cylindrical Lock): Price range missing $ on second value
+  - Product 7 (LCN 4110 Series Surface Closer): Price range missing $ on second value
+  - Product 8 (LCN 4040XP Hold Open Arm Surface Closer): Price range missing $ on second value
+  - Product 9 (LCN 8310 Series Concealed Overhead Closer): Price range missing $ on second value
+  - Product 10 (LCN 8310ME Multi-Electrical Closer): Price range missing $ on second value
+  - Product 11 (Ives 5BB1 Full Mortise Ball Bearing Hinge): Price range missing $ on second value
+  - Product 12 (Ives 5BB1HD Heavy Duty Ball Bearing Hinge): Price range missing $ on second value
+  - Product 13 (Ives BB1279 Continuous Hinge): Price range missing $ on second value
+  - Product 14 (Ives 622 Door Stop): Price range missing $ on second value
+  - Product 15 (Ives 632 Overhead Stop): Price range missing $ on second value
+  - Product 16 (Von Duprin 98 Series Rim Exit Device): Price range missing $ on second value
+  - Product 17 (Von Duprin 99 Series Surface Vertical Rod): Price range missing $ on second value
+  - Product 18 (Von Duprin 33A/35A Concealed Vertical Rod): Price range missing $ on second value
+  - Product 19 (Pemko 170 Series Threshold): Price range missing $ on second value
+  - Product 20 (Pemko 411 Series Automatic Door Bottom): Price range missing $ on second value
+  - Product 21 (Pemko 2005 Series Perimeter Gasketing): Price range missing $ on second value
+  - Product 22 (Hager BB1279 Continuous Hinge): Price range missing $ on second value
+  - Product 23 (Hager BB1168 Ball Bearing Hinge): Price range missing $ on second value
+  - Product 24 (Rockwood 70A Push Plate): Price range missing $ on second value
+  - Product 25 (Rockwood 111 Push/Pull Plate): Price range missing $ on second value
+  - Product 26 (Don-Jo LP-207 Latch Protector): Price range missing $ on second value
+  - Product 27 (Don-Jo SP-206 Security Stud): Price range missing $ on second value
+  - Product 28 (HES 1006 Series Electric Strike): Price range missing $ on second value
+  - Product 29 (HES 5000 Series Heavy Duty Electric Strike): Price range missing $ on second value
+  - Product 30 (Yale 8700 Series Rim Exit Device): Price range missing $ on second value
+  - Product 31 (Yale 8800 Series Surface Vertical Rod): Price range missing $ on second value
+  - Product 32 (Norton 7500 Series Surface Closer): Price range missing $ on second value
+  - Product 33 (Norton 8301 Concealed Overhead Closer): Price range missing $ on second value
+  - Product 34 (Schlage ND40S Entrance/Office Cylindrical Lock): Price range missing $ on second value
+  - Product 35 (Schlage ND53PD Entry Cylindrical Lock): Price range missing $ on second value
+  - Product 36 (Schlage AL70PD Classroom Cylindrical Lock): Price range missing $ on second value
+  - Product 37 (Schlage AL80PD Passage Cylindrical Lock): Price range missing $ on second value
+  - Product 38 (Schlage CO250 Exit Trim): Price range missing $ on second value
+  - Product 39 (Schlage L9000 Series Mortise Lock): Price range missing $ on second value
+  - Product 40 (Schlage L9040 Entrance Mortise Lock): Price range missing $ on second value
+  - Product 41 (Dorma 8000 Series Surface Closer): Price range missing $ on second value
+  - Product 42 (Dorma RTS85 Overhead Concealed Closer): Price range missing $ on second value
+  - Product 43 (Dorma TS93 Cam-Action Closer): Price range missing $ on second value
+  - Product 44 (Stanley QDC200 Surface Closer): Price range missing $ on second value
+  - Product 45 (Stanley QDC300 Overhead Concealed Closer): Price range missing $ on second value
+  - Product 46 (Jackson 5200 Series Surface Closer): Price range missing $ on second value
+  - Product 47 (Von Duprin 88 Series Rim Exit Device): Price range missing $ on second value
+  - Product 48 (Von Duprin 9927 Narrow Stile Exit Device): Price range missing $ on second value
+  - Product 49 (Von Duprin 22 Series Mortise Exit Device): Price range missing $ on second value
+  - Product 50 (Von Duprin 6200 Series Electric Exit Device): Price range missing $ on second value
+  - Product 51 (Corbin Russwin ED5200 Rim Exit Device): Price range missing $ on second value
+  - Product 52 (Corbin Russwin ED5400 Mortise Exit Device): Price range missing $ on second value
+  - Product 53 (Rockwood BF150 Pull Handle): Price range missing $ on second value
+  - Product 54 (Rockwood BF158 Pull Handle): Price range missing $ on second value
+  - Product 55 (Rockwood RP4 Raised Push Plate): Price range missing $ on second value
+  - Product 56 (Rockwood 450 Kick Plate): Price range missing $ on second value
+  - Product 57 (Rockwood 620 Mop Plate): Price range missing $ on second value
+  - Product 58 (Trimco 1220 Series Pull Handle): Price range missing $ on second value
+  - Product 59 (Trimco 1522 Series Push/Pull Plate): Price range missing $ on second value
+  - Product 60 (Glynn-Johnson 100 Series Overhead Stop): Price range missing $ on second value
+  - Product 61 (Glynn-Johnson 90 Series Overhead Holder): Price range missing $ on second value
+  - Product 62 (Rixson 27 Overhead Stop): Price range missing $ on second value
+  - Product 63 (Rixson 370 Floor Closer): Price range missing $ on second value
+  - Product 64 (Rixson 10 Pivot Set): Price range missing $ on second value
+  - Product 65 (McKinney TA2714 Ball Bearing Hinge): Price range missing $ on second value
+  - Product 66 (McKinney T4A3786 Electric Hinge): Price range missing $ on second value
+  - Product 67 (Stanley FBB179 Ball Bearing Hinge): Price range missing $ on second value
+  - Product 68 (Stanley CEFBB179 Electric Hinge): Price range missing $ on second value
+  - Product 69 (Stanley CBBB179 Continuous Hinge): Price range missing $ on second value
+  - Product 70 (Bommer 3029 Single Acting Pivot): Price range missing $ on second value
+  - Product 71 (Bommer 7811 Double Acting Pivot): Price range missing $ on second value
+  - Product 72 (National Guard 175 Threshold): Price range missing $ on second value
+  - Product 73 (National Guard 693L Automatic Door Bottom): Price range missing $ on second value
+  - Product 74 (Zero 780 Automatic Door Bottom): Price range missing $ on second value
+  - Product 75 (Zero 1700 Series Perimeter Seal): Price range missing $ on second value
+  - Product 76 (HES 9600 Series Folger Adam Compatible Strike): Price range missing $ on second value
+  - Product 77 (HES 5000C Cylindrical Lock Strike): Price range missing $ on second value
+  - Product 78 (Adams Rite 7400 Series Electric Strike): Price range missing $ on second value
+  - Product 79 (Adams Rite 7110 Solenoid Lock): Price range missing $ on second value
+  - Product 80 (Securitron M62 Electromagnetic Lock): Price range missing $ on second value
+  - Product 81 (Securitron M32 Electromagnetic Lock): Price range missing $ on second value
+  - Product 82 (Alarm Controls 600 Mag Lock): Price range missing $ on second value
+  - Product 83 (Don-Jo CW-1510 Edge Wrap Protector): Price range missing $ on second value
+  - Product 84 (Don-Jo 90 Door Edge Guard): Price range missing $ on second value
+  - Product 85 (Don-Jo RP-1412 Remodeler Plate): Price range missing $ on second value
+  - Product 86 (Ives FB450 Flush Bolt): Price range missing $ on second value
+  - Product 87 (Ives FB458 Automatic Flush Bolt): Price range missing $ on second value
+  - Product 88 (Ives 436B Roller Latch): Price range missing $ on second value
+  - Product 89 (Ives 315 Sliding Door Latch): Price range missing $ on second value
+  - Product 90 (Ives 8400 Series Kick Plate): Price range missing $ on second value
+  - Product 91 (Rockwood 580 Automatic Flush Bolt): Price range missing $ on second value
+  - Product 92 (Rockwood 585 Manual Flush Bolt): Price range missing $ on second value
+  - Product 93 (Hager 1450 Series Pocket Door Frame): Price range missing $ on second value
+  - Product 94 (Hager 1550 Soft Close Pocket Frame): Price range missing $ on second value
+  - Product 95 (Johnson 1500 Pocket Door Frame): Price range missing $ on second value
+  - Product 96 (Johnson 2000 Series Sliding Door Track): Price range missing $ on second value
+  - Product 97 (Hafele Slido Classic 80-P Sliding System): Price range missing $ on second value
+  - Product 98 (Rixson C28 Door Coordinator): Price range missing $ on second value
+  - Product 99 (Glynn-Johnson 60 Series Coordinator): Price range missing $ on second value
+  - Product 100 (Von Duprin 996L Exit Trim): Price range missing $ on second value
+  - Product 101 (Von Duprin 998 Exit Trim with Lever): Price range missing $ on second value
+✔ sessions: your own only, demo clones marked; a guest is told to sign in, not refused (41.876333ms)
+✔ every session route refuses another account's session (7.248417ms)
+✔ doors and takeoff counts come from the stored rows; an unread size is not a size (21.187ms)
+✔ the uploaded PDF is served to its owner; the demo building has none (2.944042ms)
+✔ a package is not built from a schedule nobody has read yet (0.6905ms)
+✔ the package PDF of your own schedule needs the $100 offer or a plan (12.797041ms)
+✔ a saved door sheet keeps pricing fields and asks for Section 08 71 00 before packet assembly (1.068916ms)
+✔ Set #1 with a long name and Type/Description columns: both sets, door-list wraps, EA. units (7.264791ms)
+✔ Hardware Sets is a title; Set: headings and vertically centered multiline cells retain their own rows (2.516125ms)
+✔ a centered quantity separates a wrapped card-reader lock from the preceding strike (0.758208ms)
+✔ catalog columns learned from wrapped lines preserve catalog qualifiers and specification references do not become makers (0.648583ms)
+✔ continuation items before the first heading are retained, including rows reader B misses (2.440583ms)
+✔ HEADING n and explicit FINISH header keep dark bronze DKB as finish, not dormakaba (1.451291ms)
+✔ two schedules sharing baselines retain all 131 doors, left-overhanging marks and sparse fire-rating columns (27.531542ms)
+✔ two-row schedule next to a finish legend excludes legend text and numbered notes (6.21675ms)
+✔ Rockford 08 71 00 pages 17-23 read from their text: 14 groups, 110 items, each page under 2 s (259.702333ms)
+✔ Rockford A2.2 (p.29) asked as a door schedule: 65 doors from the text (62.212084ms)
+✔ a page with no text layer is left to the browser and OCR path (null) (1.168ms)
+✔ an architect's correction typed as a FreeText annotation is read in its row (Berryessa A9.2 door 002, type B) (109.150208ms)
+✔ Berryessa's staggered ROOM header retains all 24 audited locations (106.249083ms)
+✔ a single-item Rockford group learns its columns from the header, not indented notes (21.303ms)
+✔ a guest upload is refused before KV, R2 or D1 are touched (38.964542ms)
+ℹ tests 76
+ℹ suites 0
+ℹ pass 76
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 17785.759834

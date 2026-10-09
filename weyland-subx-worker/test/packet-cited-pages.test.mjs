@@ -79,11 +79,13 @@ test("the packet embeds the cited page of a 300-page price book, not the book", 
     async head(k) { return objects.has(k) ? { size: objects.get(k).length } : null; },
   };
   const env = { DB: d1(db), UPLOADS };
-  const { pages } = await citedPagesForSession("s1", env, fakeMatch);
-  const res = await assembleSubmittalPackage("s1", { includeDraftSets: true, citedPages: pages, saveToR2: false }, env, { PDFDocument, StandardFonts, rgb });
+  const { pages, missing } = await citedPagesForSession("s1", env, fakeMatch);
+  const res = await assembleSubmittalPackage("s1", { includeDraftSets: true, citedPages: pages, cutSheetMisses: missing, saveToR2: false }, env, { PDFDocument, StandardFonts, rgb });
   assert.equal(res.success, true, res.errors.join("; "));
   const cut = res.sections.filter((s) => s.type === "cut_sheet");
   assert.equal(cut.length, 1);
+  assert.equal(res.cutSheetCount, 1, "the missing-item disclosure is not another cut sheet");
+  assert.equal(res.sections.find(s => s.type === "cut_sheet_misses").items, 2);
   assert.equal(cut[0].page, 212);
   assert.ok(res.totalPages < 20, `packet is ${res.totalPages} pages`);
   const out = await PDFDocument.load(res.pdfBytes);
@@ -106,11 +108,13 @@ test("every item without a page is listed in the packet with why and what is nee
   const misses = res.sections.find((s) => s.type === "cut_sheet_misses");
   assert.deepEqual({ pages: misses.pages, items: misses.items }, { pages: 1, items: 2 });
   assert.equal(res.sections.filter((s) => s.type === "cut_sheet").length, 0);
+  assert.equal(res.cutSheetCount, 0);
   const out = await PDFDocument.load(res.pdfBytes);
   assert.equal(out.getPageCount(), res.totalPages);
   // Nothing to list, nothing added.
   const none = await assembleSubmittalPackage("s1", { includeDraftSets: true, citedPages: [], cutSheetMisses: [], saveToR2: false }, env, { PDFDocument, StandardFonts, rgb });
   assert.equal(none.sections.some((s) => s.type === "cut_sheet_misses"), false);
+  assert.equal(none.cutSheetCount, 0);
 });
 
 test("repeated marks across sheets keep every door; re-reading a sheet adds none", async () => {
