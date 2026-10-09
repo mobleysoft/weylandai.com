@@ -4,6 +4,7 @@ import { resolveInferenceContract } from "./hardware-extraction-vision-adapters.
 import { generateJWT, arrayBufferToBase64 } from "../auth-module.js";
 import { parseHardwareExtractionResult } from "./hardware-extraction-prompts.js";
 import { callLocalQwen } from "./qwen-bridge.js";
+import { boundedFieldEvidence } from "../../assets/client-ocr-src/schedule-text-layer.mjs";
 
 
 // Policy (John, 2026-10-05): WeylandAI runs vision / language through
@@ -1222,6 +1223,9 @@ export async function writeDoorScheduleEntries(sessionId, tenantId, pageNumber, 
         read_from: door.read_from || null,
         fields: door.field_confidence || null,
         confidence_source: door.confidence_source || null,
+        field_evidence: boundedFieldEvidence(door.field_evidence && { ...door.field_evidence,
+          partial: partial || door.field_evidence.partial,
+          partial_reason: door.field_evidence.partial_reason || (partial ? "page_incomplete" : null) }),
         original_mark: door.original_mark || null,
         generated_occurrence: door.original_mark && occurrence > 1 ? occurrence : null,
         read_audit: door.read_audit || null,

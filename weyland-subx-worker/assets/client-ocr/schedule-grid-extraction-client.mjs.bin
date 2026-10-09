@@ -50,7 +50,7 @@ const ASSET_BASE = "/api/hardware-schedule/client-ocr-assets";
 // count (no rendering, no misread digits) and is the only way to read an
 // unruled Section 08 71 00. OCR below is now the path for pages with no text
 // (a scan, a Print-to-PDF of a bitmap such as OCCDoorSchedulePg4.pdf).
-import * as TL from "./schedule-text-layer.mjs?v=20261009g019r4";
+import * as TL from "./schedule-text-layer.mjs?v=20261009g019e1";
 
 let pdfjsLibPromise = null;
 export async function loadPdfJs() {
@@ -649,22 +649,27 @@ export async function recognizePageWords(img, engine, dpi, psm = "6", opts = {})
       const cell = cropRowImage(img, top, bottom, left, right);
       let ws = recognizeWords(cell, engine, dpi, "6", budget);
       const text = ws.map((w) => w.str).join(" ");
+      const cellEvidence = { text, confidence: ws.length ? Math.min(...ws.map(w => w.conf)) / 100 : null };
       cellTexts[c] = text;
       const field = fields[c];
       if ((field === "mark" || field === "hardware_group") && (!ws.length || Math.min(...ws.map(w => w.conf)) < (field === "mark" ? 80 : 95) || (field === "mark" && !TL.looksLikeMark(text)))) {
         const acceptIdentifier = field === "mark" ? TL.looksLikeMark : s => /^[A-Z0-9][A-Z0-9 .\-\/#]{0,15}$/.test(s);
         const reread = rereadMarkCell(engine, cell, budget, text, ws.length ? Math.min(...ws.map(w => w.conf)) / 100 : 0, acceptIdentifier);
+        cellEvidence.reread = reread.evidence;
+        if (reread.text) cellEvidence.selected_view = reread.evidence?.selected_views?.[0];
         if (reread.text) ws = [{ str: reread.text, x0: 0, x1: cell.width * k, yb: cell.height * k * 0.75, h: cell.height * k / 3, conf: reread.confidence * 100 }];
       }
       if (field === "width" || field === "height") {
         const accept = (s) => { const d = readDoorDimension(s); return d && d.format === "ft-in" && d.inches >= DOOR_LIMITS[field][0] && d.inches <= DOOR_LIMITS[field][1]; };
         if (!accept(text)) {
           const reread = rereadDimensionCell(engine, img, xs[c], xs[c + 1], ys[i], ys[i + 1], { recognitionBudget: budget, inset }, text, accept);
+          cellEvidence.reread = reread.evidence;
+          if (reread.text) cellEvidence.selected_view = reread.evidence?.selected_views?.[0];
           if (reread.text) ws = [{ str: reread.text, x0: 0, x1: cell.width * k, yb: cell.height * k * 0.75, h: cell.height * k / 3, conf: reread.confidence * 100 }];
         }
       }
       const itemX0 = Math.min(...ws.map((w) => w.x0)) + left * k, itemX1 = Math.max(...ws.map((w) => w.x1)) + left * k;
-      for (const w of ws) rowWords.push({ ...w, x0: w.x0 + left * k, x1: w.x1 + left * k, yb: w.yb + top * k, item: "cell-" + i + "-" + c, itemX0, itemX1, grid_row: "table-" + ys[0] + "-" + i });
+      for (const w of ws) rowWords.push({ ...w, cell_evidence: cellEvidence, x0: w.x0 + left * k, x1: w.x1 + left * k, yb: w.yb + top * k, item: "cell-" + i + "-" + c, itemX0, itemX1, grid_row: "table-" + ys[0] + "-" + i });
     }
     // OCR's box bottoms vary with punctuation. Cells in one ruled band share a baseline.
     const baselines = rowWords.map((w) => w.yb).sort((a, b) => a - b);
@@ -895,7 +900,7 @@ function readCellOnce(engine, cell, way, budget) {
 // Repeated noisy readings do not outweigh a better supported fit. Near ties stay unresolved,
 // and rereading the same uncertain original identifier never promotes its confidence.
 export function rereadMarkCell(engine, cell, budget, firstReading = "", firstConfidence = 0, accept = TL.looksLikeMark) {
-  const trials = [{ text: String(firstReading).trim().toUpperCase(), confidence: firstConfidence, originalPixels: true }];
+  const trials = [{ text: String(firstReading).trim().toUpperCase(), confidence: firstConfidence, originalPixels: true, view: { name: "initial" } }];
   for (const way of [
     { up: 2, whitelist: false }, { up: 3, whitelist: false },
     { up: 2, interpolate: true, whitelist: false }, { up: 3, interpolate: true, whitelist: false },
@@ -909,7 +914,7 @@ export function rereadMarkCell(engine, cell, budget, firstReading = "", firstCon
   ]) {
     if (budget && !budget.check()) break;
     const trial = readCellOnce(engine, cell, way, budget);
-    trials.push({ ...trial, text: trial.text.toUpperCase(), originalPixels: !way.thr && !way.trim && way.up <= 1 });
+    trials.push({ ...trial, text: trial.text.toUpperCase(), originalPixels: !way.thr && !way.trim && way.up <= 1, view: rereadView(way) });
   }
   const votes = new Map();
   for (const trial of trials) {
@@ -918,8 +923,10 @@ export function rereadMarkCell(engine, cell, budget, firstReading = "", firstCon
     votes.get(trial.text).push(trial.confidence);
   }
   const ranked = [...votes].filter(([, support]) => support.length >= 2).sort((a, b) => Math.max(...b[1]) - Math.max(...a[1]));
+  const evidence = (reason, text = null) => rereadEvidence(trials, votes.size, reason,
+    text == null ? [] : trials.filter(t => t.text === text && t.confidence >= .5), budget);
   if (!ranked.length || (ranked[1] && Math.max(...ranked[0][1]) - Math.max(...ranked[1][1]) < .01)) {
-    return { text: null, confidence: 0, readings: trials };
+    return { text: null, confidence: 0, readings: trials, evidence: evidence(ranked.length ? "conflicting_values" : "insufficient_support") };
   }
   // Enlarging or binarizing an identifier can create a consistent new glyph. If
   // the original identifier is also supported by a reduced grey-pixel view,
@@ -927,22 +934,29 @@ export function rereadMarkCell(engine, cell, budget, firstReading = "", firstCon
   const originalSupport = trials.filter(t => t.originalPixels && t.confidence >= .5 && t.text === trials[0].text);
   const replacementSupport = trials.some(t => t.originalPixels && t.confidence >= .5 && t.text === ranked[0][0]);
   if (accept(trials[0].text) && ranked[0][0] !== trials[0].text && originalSupport.length >= 2 && !replacementSupport) {
-    return { text: null, confidence: 0, readings: trials };
+    return { text: null, confidence: 0, readings: trials, evidence: evidence("original_support_guard") };
   }
   const confidence = ranked[0][1].slice().sort((a, b) => b - a)[1];
-  return { text: ranked[0][0], confidence: ranked[0][0] === trials[0].text && firstConfidence < .8 ? Math.min(confidence, firstConfidence) : confidence, readings: trials };
+  return { text: ranked[0][0], confidence: ranked[0][0] === trials[0].text && firstConfidence < .8 ? Math.min(confidence, firstConfidence) : confidence, readings: trials, evidence: evidence("consensus", ranked[0][0]) };
+}
+const rereadView = way => ({ name: "cell_psm_7", psm: "7", scale: way.up, ...(way.thr ? { threshold: way.thr } : {}), ...(way.textHeight ? { text_height: way.textHeight } : {}), interpolate: !!way.interpolate, trim: !!way.trim, whitelist: !!way.whitelist });
+function rereadEvidence(trials, candidates, reason, support, budget) {
+  const status = budget?.status();
+  return { attempts: trials.filter(t => t.view?.name !== "initial").length, candidate_values: candidates,
+    conflict: candidates > 1, partial: !!status?.partial, reason: status?.partial ? status.reason : reason,
+    selected_views: support.slice(0, 2).map(t => t.view), readings: trials.slice(0, 6) };
 }
 export function rereadDimensionCell(engine, pageImage, x0, x1, y0, y1, opts, firstReading, accept) {
   const pad = opts.inset ?? (opts.pad || 2) + 2;
   const cx0 = Math.max(0, Math.round(x0) + pad), cx1 = Math.min(pageImage.width, Math.round(x1) - pad);
   const cy0 = Math.max(0, Math.round(y0) + pad), cy1 = Math.min(pageImage.height, Math.round(y1) - pad);
-  if (cx1 - cx0 < 6 || cy1 - cy0 < 6) return { text: null, readings: [] };
+  if (cx1 - cx0 < 6 || cy1 - cy0 < 6) return { text: null, readings: [], evidence: rereadEvidence([], 0, "cell_too_small", [], opts.recognitionBudget) };
   const cell = cropRowImage(pageImage, cy0, cy1, cx0, cx1);
   const trials = [];
   for (const way of REREAD_WAYS) {
     if (opts.recognitionBudget && !opts.recognitionBudget.check()) break;
     const trial = readCellOnce(engine, cell, way, opts.recognitionBudget);
-    trials.push({ ...trial, text: cleanDimension(trial.text) || "" });
+    trials.push({ ...trial, text: cleanDimension(trial.text) || "", view: rereadView(way) });
   }
   const readings = trials.map(r => r.text);
   const votes = new Map();
@@ -960,8 +974,10 @@ export function rereadDimensionCell(engine, pageImage, x0, x1, y0, y1, opts, fir
   // into a guess; a strong recognizer fit may distinguish the alternatives.
   const ambiguous = ranked[1]?.[1].length >= 2 &&
     Math.max(...support.map(r => r.confidence)) < .8;
-  if (!support || support.length < 2 || (ranked[1] && support.length === ranked[1][1].length) || ambiguous) return { text: null, readings, confidence: 0 };
-  return { text: support[0].text, readings, confidence: Math.min(...support.map(r => r.confidence)) };
+  if (!support || support.length < 2 || (ranked[1] && support.length === ranked[1][1].length) || ambiguous) return { text: null, readings, confidence: 0,
+    evidence: rereadEvidence(trials, votes.size, ranked[1] ? "conflicting_values" : "insufficient_support", [], opts.recognitionBudget) };
+  return { text: support[0].text, readings, confidence: Math.min(...support.map(r => r.confidence)),
+    evidence: rereadEvidence(trials, votes.size, "consensus", support, opts.recognitionBudget) };
 }
 
 // Closes the currently-open hardware group into groups/matrix - mirrors
@@ -1425,12 +1441,24 @@ export function colorInkOperationFilter(operatorList, OPS, budget) {
   for (let i = 0; i < fnArray.length; i++) {
     if (i % 4096 === 0 && budget && !budget.check()) return null;
     const fn = fnArray[i], args = argsArray[i];
+    // PDF.js annotation appearances reset paint state. Groups and optional
+    // content have their own compositing/visibility semantics. Preserve normal
+    // rendering for these unsupported states instead of suppressing real ink.
+    if ((OPS.beginAnnotation != null && fn === OPS.beginAnnotation) || (OPS.endAnnotation != null && fn === OPS.endAnnotation)) return null;
+    if ((OPS.beginGroup != null && fn === OPS.beginGroup) || (OPS.beginMarkedContentProps != null && fn === OPS.beginMarkedContentProps && args?.[0] === "OC")) return null;
+    if (OPS.setGState != null && fn === OPS.setGState) {
+      const entries = args?.[0];
+      if (!Array.isArray(entries) || entries.some(entry => !Array.isArray(entry) ||
+        !["LW", "LC", "LJ", "ML", "D", "RI", "FL", "Font", "CA", "ca"].includes(entry[0]))) return null;
+    }
     if (fn === OPS.save || fn === OPS.paintFormXObjectBegin || fn === OPS.beginGroup) stack.push({ ...state });
     else if (fn === OPS.restore || fn === OPS.paintFormXObjectEnd || fn === OPS.endGroup) state = stack.pop() || { fill: false, stroke: false };
     else if (fn === OPS.setFillRGBColor) state.fill = saturated(args?.[0]);
     else if (fn === OPS.setStrokeRGBColor) state.stroke = saturated(args?.[0]);
     else if (fn === OPS.setFillColorN || fn === OPS.setFillTransparent) state.fill = false;
     else if (fn === OPS.setStrokeColorN || fn === OPS.setStrokeTransparent) state.stroke = false;
+    else if ([OPS.setFillGray, OPS.setFillCMYKColor, OPS.setFillColor, OPS.setFillColorSpace].some(op => op != null && op === fn)) state.fill = false;
+    else if ([OPS.setStrokeGray, OPS.setStrokeCMYKColor, OPS.setStrokeColor, OPS.setStrokeColorSpace].some(op => op != null && op === fn)) state.stroke = false;
     else if (fn === OPS.clip || fn === OPS.eoClip) pendingClip = true;
     else {
       const paint = fn === OPS.constructPath ? args?.[0] : fn;
@@ -1671,7 +1699,8 @@ export async function extractDoorScheduleFromPdf(pdfBytes, pageNumber, onProgres
     const partial = ol.partial || unresolved.length > 0;
     scanned = (ds && ds.doors.length) || partial ? {
       partial,
-      doors: (ds?.doors || []).map((d) => ({ ...d, read_from: "ocr_lines", confidence_source: "ocr_words" })),
+      doors: (ds?.doors || []).map((d) => ({ ...d, read_from: "ocr_lines", confidence_source: "ocr_words",
+        field_evidence: TL.boundedFieldEvidence({ ...d.field_evidence, partial, partial_reason: ol.recognition?.reason || (unresolved.length ? "unread_marks" : null) }) })),
       extraction_confidence: 0.85,
       metadata: { ...partialMetadata(budget), partial, unresolved_rows: unresolved,
         ...(unresolved.length ? { message: "Partial machine read: " + unresolved.length + " schedule row(s) have unread marks. Review those rows on the source page." } : {}),
@@ -1780,12 +1809,13 @@ export async function extractDoorScheduleFromPdf(pdfBytes, pageNumber, onProgres
     const cells = ocrRowBand(engine, pageImage, colBounds, wideColEnd, rowLines[i], rowLines[i + 1], rowPsm, ocrOpts);
     if (!cells) continue;
     if (options.debug) rawRows.push(cells.join(" | "));
-    const row = { _band: i, _confidence: {} };
+    const row = { _band: i, _confidence: {}, _original: {}, _decisions: {}, _view: { name: "row_words", psm: rowPsm } };
     let hasAnyField = false;
     for (let ci = 0; ci < fieldNames.length; ci++) {
       const key = fieldNames[ci] || "col_" + ci;
       row[key] = cells[ci] || "";
       row._confidence[key] = cells.confidence[ci] ?? 0;
+      row._original[key] = { text: cells[ci] || "", confidence: cells.confidence[ci] ?? null };
       if (fieldNames[ci] && cells[ci]) hasAnyField = true;
     }
     if (hasAnyField) rows.push(row);
@@ -1806,6 +1836,7 @@ export async function extractDoorScheduleFromPdf(pdfBytes, pageNumber, onProgres
       reread++;
       const got = rereadDimensionCell(engine, pageImage, colBounds[ci][0], colBounds[ci][1], y0, y1, ocrOpts, row[field], parses);
       if (options.debug) (row._reread = row._reread || {})[field] = got;
+      row._decisions[field] = { ...got.evidence, selected_view: got.evidence?.selected_views?.[0] };
       if (got.text) { row[field] = got.text; row._confidence[field] = got.confidence; rereadUsed++; }
     };
     const fits = (kind) => (t) => { const d = readDoorDimension(t); return !!(d && d.format === "ft-in" && d.inches >= DOOR_LIMITS[kind][0] && d.inches <= DOOR_LIMITS[kind][1]); };
@@ -1824,6 +1855,7 @@ export async function extractDoorScheduleFromPdf(pdfBytes, pageNumber, onProgres
       const got = rereadMarkCell(engine, cell, budget, text, row._confidence[field],
         t => (field === "hardware_group" ? /^[A-Z0-9][A-Z0-9 ._\-/#]{0,15}$/ : /^[A-Z0-9][A-Z0-9_.-]{0,11}$/).test(t));
       if (options.debug) (row._codeReread = row._codeReread || {})[field] = got;
+      row._decisions[field] = { ...got.evidence, selected_view: got.evidence?.selected_views?.[0] };
       if (got.text) { row[field] = got.text; row._confidence[field] = got.confidence; codeRereadUsed++; }
     }
   }
@@ -1833,37 +1865,11 @@ export async function extractDoorScheduleFromPdf(pdfBytes, pageNumber, onProgres
   // actually carries (written by writeDoorScheduleEntries when present).
   // source_row is the table row band the values were read from (row 0 is the
   // table's top band), so every door traces back to its line on the sheet.
-  const doors = rows.map((row) => ({
-    door_number: cleanDoorMark(row.mark),
-    hardware_group: cleanCell(row.hardware_group),
-    fire_rating: cleanFireRating(row.fire_rating),
-    size: [cleanDimension(row.width), cleanDimension(row.height)].filter(Boolean).join(" x ") || null,
-    ...doorSize(row.width, row.height),
-    thickness: cleanDimension(row.thickness),
-    thickness_inches: parseThickness(row.thickness),
-    door_type: cleanCell(row.door_type),
-    material_code: cleanCell(row.door_material),
-    door_finish: cleanCell(row.door_finish),
-    stc_rating: cleanCell(row.stc_rating),
-    frame_type: cleanCode(row.frame_type),
-    frame_material: cleanCell(row.frame_material),
-    frame_finish: cleanCell(row.frame_finish),
-    head_detail: cleanCell(row.head_detail),
-    jamb_detail: cleanCell(row.jamb_detail),
-    sill_detail: cleanCell(row.sill_detail),
-    panic_hardware: cleanCell(row.panic_hardware),
-    remarks: cleanCell(row.notes),
-    source_row: row._band,
-    read_from: "ocr",
-    confidence_source: "ocr_words",
-    field_confidence: Object.fromEntries(fieldNames.filter(Boolean).map((f) => [f,
-      (f === "width" || f === "height") && doorSize(row.width, row.height)[f + "_inches"] == null ? 0 : row._confidence[f]])),
-    ...(options.debug && row._reread ? { size_reread: row._reread } : {}),
-    ...(options.debug && row._codeReread ? { code_reread: row._codeReread } : {}),
-  })).filter((d) => d.door_number);
+  const evidenceStatus = partialMetadata(budget);
+  const doors = rows.map((row) => doorFromGridRow(row, fieldNames, evidenceStatus)).filter((d) => d.door_number);
 
   const metadata = {
-    ...partialMetadata(budget),
+    ...evidenceStatus,
     expected_marks: options.expectedMarks || [],
     extraction_mode: "client_grid_deterministic",
     extraction_route: "client_grid_deterministic",
@@ -1896,6 +1902,51 @@ export async function extractDoorScheduleFromPdf(pdfBytes, pageNumber, onProgres
     if (typeof loadingTask.destroy === "function") await loadingTask.destroy();
     else await pdfDoc?.destroy?.();
   }
+}
+
+// Shared by the actual grid consumer and fixture evaluation; no recognition or
+// acceptance changes happen here. Original values survive rejected parses.
+export function doorFromGridRow(row, fieldNames, status = {}) {
+  const size = doorSize(row.width, row.height);
+  const originalSize = doorSize(row._original?.width?.text ?? row.width, row._original?.height?.text ?? row.height);
+  const fields = Object.fromEntries(fieldNames.filter(Boolean).map(f => {
+    const original = row._original?.[f] || { text: row[f], confidence: row._confidence[f] };
+    const decision = row._decisions?.[f];
+    const value = f === "width" || f === "height" ? size[f + "_inches"] : f === "thickness" ? parseThickness(row[f]) : cleanCell(row[f]);
+    const originalValue = f === "width" || f === "height" ? originalSize[f + "_inches"] : f === "thickness" ? parseThickness(original.text) : cleanCell(original.text);
+    return [f, TL.fieldDecision(original.text, original.confidence, row[f], row._confidence[f], value,
+      decision?.selected_view || row._view || { name: "row_words" }, decision, originalValue)];
+  }));
+  return {
+    door_number: cleanDoorMark(row.mark),
+    hardware_group: cleanCell(row.hardware_group),
+    fire_rating: cleanFireRating(row.fire_rating),
+    size: [cleanDimension(row.width), cleanDimension(row.height)].filter(Boolean).join(" x ") || null,
+    ...doorSize(row.width, row.height),
+    thickness: cleanDimension(row.thickness),
+    thickness_inches: parseThickness(row.thickness),
+    door_type: cleanCell(row.door_type),
+    material_code: cleanCell(row.door_material),
+    door_finish: cleanCell(row.door_finish),
+    stc_rating: cleanCell(row.stc_rating),
+    frame_type: cleanCode(row.frame_type),
+    frame_material: cleanCell(row.frame_material),
+    frame_finish: cleanCell(row.frame_finish),
+    head_detail: cleanCell(row.head_detail),
+    jamb_detail: cleanCell(row.jamb_detail),
+    sill_detail: cleanCell(row.sill_detail),
+    panic_hardware: cleanCell(row.panic_hardware),
+    remarks: cleanCell(row.notes),
+    source_row: row._band,
+    read_from: "ocr",
+    confidence_source: "ocr_words",
+    field_confidence: Object.fromEntries(fieldNames.filter(Boolean).map((f) => [f,
+      (f === "width" || f === "height") && doorSize(row.width, row.height)[f + "_inches"] == null ? 0 : row._confidence[f]])),
+    field_evidence: TL.boundedFieldEvidence({ version: TL.SCHEDULE_EVIDENCE_VERSION, stage: "ocr_grid", fields,
+      partial: status.partial, partial_reason: status.recognition?.reason }),
+    ...(row._reread ? { size_reread: row._reread } : {}),
+    ...(row._codeReread ? { code_reread: row._codeReread } : {}),
+  };
 }
 
 // The pure cell readers, exported for the worker's unit tests
