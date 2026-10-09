@@ -69,12 +69,17 @@ export function clusterLines(words) {
     // band is stronger evidence than OCR's varying glyph-box baselines.
     const ruled = w.grid_row != null;
     const L = ruled ? lastByGridRow.get(w.grid_row) : lastUnruled;
-    if (L && Math.abs(L.y - w.yb) <= Math.max(1.2, 0.35 * Math.max(w.h, L.h))) {
+    // Ruled OCR keeps its centroid tolerance; unruled text uses the whole
+    // baseline span so staggered headers cannot chain into one tall line.
+    if (L && (ruled
+      ? Math.abs(L.y - w.yb) <= Math.max(1.2, 0.35 * Math.max(w.h, L.h))
+      : w.yb - L.minY <= Math.max(1.2, 0.4 * Math.max(w.h, L.h)))) {
       L.words.push(w);
-      L.y = (L.y * (L.words.length - 1) + w.yb) / L.words.length;
+      L.maxY = Math.max(L.maxY, w.yb);
+      L.y = ruled ? (L.y * (L.words.length - 1) + w.yb) / L.words.length : (L.minY + L.maxY) / 2;
       L.h = Math.max(L.h, w.h);
     } else {
-      const line = { y: w.yb, h: w.h, words: [w], ...(ruled ? { grid_row: w.grid_row } : {}) };
+      const line = { y: w.yb, minY: w.yb, maxY: w.yb, h: w.h, words: [w], ...(ruled ? { grid_row: w.grid_row } : {}) };
       lines.push(line);
       if (ruled) lastByGridRow.set(w.grid_row, line);
       else lastUnruled = line;
@@ -163,7 +168,7 @@ export function looksLikeMark(text) {
 }
 
 // Door-schedule header vocabulary, tested on a column's header text.
-const HEADER_LABEL_WORDS = /\b(MARK|TAG|NUMBER|NUM|NO|ID|OPENING|WIDTH|WDTH|HEIGHT|HGT|HT|SIZE|THICKNESS|THICK|THK|TYPE|MATERIAL|MATL|MAT|FINISH|FIN|FIRE|RATING|RATED|LABEL|HARDWARE|HDW|HDWR|HW|SET|GROUP|GRP|GLAZING|GLASS|GLZ|HEAD|JAMB|SILL|THRESHOLD|THRES|THRESH|STC|PANIC|NOTES?|REMARKS?|COMMENTS?|PAIR|DETAILS?|FRAME|DOOR|PANEL|LEAF|ROOM|LOCATION|ALTERNATE|ALT|PRICING|QTY|LEAVES|UNDERCUT|LOUVER|CLOSER|LOCKSET|KEYSIDE|SWING|HAND|HANDING|ELEV|ELEVATION|W|H|T)\b/;
+const HEADER_LABEL_WORDS = /\b(MARK|TAG|NUMBER|NUM|NO|ID|OPENING|WIDTH|WDTH|HEIGHT|HGT|HT|SIZE|THICKNESS|THICK|THK|TYPE|MATERIAL|MATL|MAT|FINISH|FIN|FIRE|RATING|RATED|LABEL|HARDWARE|HDW|HDWR|HW|SET|GROUP|GRP|GLAZING|GLASS|GLZ|HEAD|JAMB|SILL|THRESHOLD|THRES|THRESH|STC|PANIC|NOTES?|REMARKS?|COMMENTS?|PAIR|DETAILS?|FRAME|DOOR|PANEL|LEAF|ROOM|NAME|LOCATION|ALTERNATE|ALT|PRICING|QTY|LEAVES|UNDERCUT|LOUVER|CLOSER|LOCKSET|KEYSIDE|SWING|HAND|HANDING|ELEV|ELEVATION|W|H|T)\b/;
 const GROUP_LABEL_WORDS = /^(DOOR|FRAME|PANEL|SIZE|DETAILS?|FIRE|HARDWARE|ALTERNATE|OPENING|LEAF|GLAZING|RATING)$/;
 
 function labelHits(line) {
@@ -238,7 +243,7 @@ export function fieldForHeader(text, used) {
   if (has(/\bSTC\b/)) return pick("stc_rating");
   if (has(/\bPANIC\b/)) return pick("panic_hardware");
   if (has(/\b(ALTERNATE|ALT|PRICING|PRICE)\b/)) return pick("alternate");
-  if (!has(/\b(WINDOW|CATALOG|MODEL|PRODUCT|ROOM|SET|GROUP|HARDWARE|SHEET|KEY)\b/) && (has(/\b(MARK|TAG)\b/) || has(/\b(DOOR|OPENING|DR)\s*(NO|NUMBER|NUM|#|ID)\b/) || /^(NO|NUMBER|NUM|ID|OPENING|OPENING NO|#)$/.test(t))) return pick("mark");
+  if (!has(/\b(WINDOW|CATALOG|MODEL|PRODUCT|ROOM|SET|GROUP|HARDWARE|SHEET|KEY)\b/) && (has(/\b(MARK|TAG)\b/) || has(/\b(DOOR|OPENING|DR)\s*(NO|NUMBER|NUM|#|ID)(?:\b|$)/) || /^(NO|NUMBER|NUM|ID|OPENING|OPENING NO|#)$/.test(t))) return pick("mark");
   if (has(/\bSIZE\b/) && !has(/\b(WIDTH|HEIGHT)\b/)) return pick("size");
   if (has(/\b(WIDTH|WDTH)\b/) || /^W$/.test(t)) return pick("width");
   if (has(/\b(HEIGHT|HGT|HT)\b/) || /^H$/.test(t)) return pick("height");
@@ -286,6 +291,7 @@ export async function readDoorScheduleFromLines(lines, pageSize, opts = {}) {
       if (!fg || (used.get(i) || []).some((r) => fg.x0 >= r.x0 - h0 && fg.x1 <= r.x1 + h0)) continue;
       const t = await buildTable(lines, i, pageSize, opts, fg);
       if (!t) continue;
+      console.log("Found table:", t.title, "headers:", t.header.join('|'), "fields:", t.fields.join(','), "is_door:", t.is_door_schedule);
       for (const k of t.lineIndexes) { if (!used.has(k)) used.set(k, []); used.get(k).push(t); }
       if (t.is_door_schedule) tables.push(t);
     }
@@ -317,6 +323,18 @@ async function buildTable(lines, fieldIdx, pageSize, opts, fieldCandidate = null
     // fields and just outside their x-range (Berryessa A9.2).
     const outer = lines[k].words.filter((w) => /^(ROOM|LOCATION)$/i.test(w.str) && w.x1 < x0 && x0 - w.x1 < 12 * h && prevY - lines[k].y <= 2.8 * h);
     if (outer.length) x0 = Math.min(x0, ...outer.map((w) => w.x0));
+    // Detected header bands must not expand into unruled page titles or side
+    // legends. Unruled text still needs the broader staggered-header search.
+    for (const g of gapGroups(lines[k], h)) {
+      if (field.grid_row != null && lines[k].grid_row == null) continue;
+      if (Math.max(x0, g.x0) <= Math.min(x1, g.x1) || Math.min(Math.abs(x0 - g.x1), Math.abs(x1 - g.x0)) <= 20 * h) {
+        const { hits } = labelHits({ words: g.words });
+        if (hits >= 1 && !g.words.some((w) => looksLikeMark(w.str) && /^\d/.test(w.str))) {
+          x0 = Math.min(x0, g.x0);
+          x1 = Math.max(x1, g.x1);
+        }
+      }
+    }
     const L = within(lines[k], x0, x1, 1.5 * h);
     if (!L.words.length) { if (prevY - lines[k].y > 2.8 * h) break; else continue; }
     if (prevY - L.y > 2.8 * h) break;
@@ -463,6 +481,7 @@ async function buildTable(lines, fieldIdx, pageSize, opts, fieldCandidate = null
   // line with no text in the mark column continues the row above (a wrapped
   // cell); a non-mark text in the mark column is a section label.
   const markCol = fields.indexOf("mark");
+  const locCol = fields.indexOf("location");
   const cellsOf = (L) => { const groups = Array.from({ length: ncol }, () => []); for (const w of L.words) groups[colOf(w)].push(w); return groups; };
   const rows = [];
   let section = null;
@@ -478,7 +497,13 @@ async function buildTable(lines, fieldIdx, pageSize, opts, fieldCandidate = null
   for (const L of dataLines) {
     const words = cellsOf(L);
     const cells = words.map(g => joinWords(g, h));
-    const markText = markCol >= 0 ? cells[markCol].trim() : "";
+    let markText = markCol >= 0 ? cells[markCol].trim() : "";
+    // Recover a split room/door mark before deciding whether this is a new
+    // row or a continuation within the same detected grid row.
+    if (markText && !looksLikeMark(markText.split(" ")[0]) && locCol >= 0) {
+      const locText = cells[locCol].trim();
+      if (locText && /\d/.test(locText)) markText = locText.split(/\s+/)[0] + markText;
+    }
     const prev = continuationRow;
     const validMark = markText && looksLikeMark(markText.split(" ")[0]);
     const ruled = L.grid_row != null;
@@ -572,7 +597,14 @@ function yesNo(s) { const t = UP(cleanText(s)); if (!t) return null; if (/^(Y|YE
 
 function doorFromRow(row, fields, index, pageSize) {
   const get = (f) => { const k = fields.indexOf(f); return k >= 0 ? cleanText(row.cells[k]) : null; };
-  const mark = cleanMark(get("mark"));
+  let rawMark = get("mark");
+  const loc = get("location");
+  console.log(`doorFromRow debug: rawMark=${rawMark}, loc=${loc}, cells=${row.cells}`);
+  if (rawMark && !/\d/.test(rawMark) && loc && /\d/.test(loc)) {
+    rawMark = loc.split(/\s+/)[0] + rawMark.trim();
+  }
+  const mark = cleanMark(rawMark);
+  console.log(`doorFromRow debug: cleanMark=${mark}`);
   if (!mark) return null;
   let size = { pair: false, width: get("width"), height: get("height"), thickness: get("thickness"), width_inches: null, height_inches: null, thickness_inches: null };
   if (fields.includes("size")) {
