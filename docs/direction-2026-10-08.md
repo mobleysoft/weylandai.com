@@ -45,6 +45,16 @@ John, on the Mac session's proposal of a done-for-you submittal intake: "This is
 
 The measured shortfalls at that moment, each with its source, are the "Journeys" and "Verified state" sections below plus the open items of docs/weylandai_value_report_20261007.md (desktop opens on the space intro; no upload prompt on the first screen; the Finder, News and the small tools unlinked from the homepage; WALK hangs only 12 product tags; CompX counts 9 to 50 percent of the dataset with win rates up to 4.5x too high; GeoX and WeatherX thin; ForecastX bills on day 1 and never returns retainage; CoA boxes pre-ticked; NotesX splits attendees at commas).
 
+## Journeys, three passes on main after #71, 2026-10-09 06:49 to 07:40Z (Mac GPU, clean checkout of main; written 2026-10-09 03:32 EDT)
+
+tools/user-simulation/run-journeys.mjs --passes 3 from a detached checkout of origin/main (so the cloud's updated journeys ran), SAMPLE_PDF and REAL_TEST_PDF on the OCC sheet, AUTHFOR_JOURNEY_KEY set: 23 journeys, 69 runs, 21 journeys green in every pass, 65 of 69 runs green (reports/matrix-2026-10-09T06-49-26-847Z on the Mac). Green every pass, with the fix-10 expectations now applied: first-result-no-account 29/29, signin, create-free-account, free-trial-first-use, subx-upload-to-submittal 14/14 (was 11/14), takeoffx-takeoff 12/12 (was 11/12), cutsheetx-finder-search, propx-proposal, meetingx-room, huntx-opportunities, account-view-signout, overlay-products, phone-key-journeys 19/19 (was 18/19), deep-link-login, wirex-news, forgot-password, account-plan, code-sign-in, offer-to-payment-form, reset-in-page 14/14, shell-address.
+
+Not green:
+1. sightx-corridor 14/15 in all three passes, deterministic: "the pasted schedule builds a corridor of its doors (3 doors, 2 sets)" reads "10 DOORS · 8 SETS". The corridor is built from something other than the three-door paste the journey makes (the demo building, or the account's stored schedule), or the journey's expectation no longer matches what the page shows. One of the two is wrong; the page and the journey must agree on what a pasted schedule produces.
+2. pricing-to-checkout 34/35 in pass 3 only (38/38 in passes 1 and 2): "paste result BUILD THE PACKET ($100 offer): the payment form opens inside the page", detail "buy button not found". Intermittent; it reads like a race between the paste result rendering and the journey's click. Worth a wait-for-the-button in the journey or a steadier render.
+
+Reading after the cloud's SubX deploys (07:0xZ, schedule_read_accuracy.mjs from the Mac): Rockford 65/65 doors and 110/110 items in 14/14 groups at 99.5% fields, every page in under a second (the 73 s deaths are gone); Berryessa 24/24 and 16/16. Finish line (1) of the cloud goal is met for reading on all five documents.
+
 ## Priorities after the gate: John's decision, 2026-10-09 03:27 EDT ("proceed with all of the above")
 
 Finish the gate first (the five finish lines of the cloud /goal). Then, in this order, each with its finish line; the Mac measures after each landing:
