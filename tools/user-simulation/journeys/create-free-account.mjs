@@ -48,6 +48,12 @@ async function openCreateForm(page) {
 }
 
 const dossierText = (page) => page.evaluate(() => ((document.getElementById("hs-dossier") || {}).innerText || "").trim());
+const dossierMatches = (page) => page.evaluate(() => {
+  try {
+    const data = JSON.parse(localStorage.getItem("weyland_dossier_v1") || "{}");
+    return Array.isArray(data.matches) ? data.matches : [];
+  } catch { return []; }
+});
 
 await J.run(async () => {
   await J.launch();
@@ -60,6 +66,7 @@ await J.run(async () => {
 
   const guest = await pasteSchedule(page, SAMPLE_LINES.slice(0, 2));
   J.check("as a guest, the paste matches the lines (2 of 2)", guest.matched === 2 && guest.total === 2, guest.first);
+  const originalMatches = await dossierMatches(page);
 
   const form = await openCreateForm(page);
   J.check("the legacy signup integration opens its form in the page", form.found, form);
@@ -68,7 +75,7 @@ await J.run(async () => {
   const promise = await page.evaluate(() => ((document.querySelector("#upgrade-modal.is-open .upgrade-sub") || {}).innerText || "").replace(/\s+/g, " ").trim());
   J.note("dialog_promise", promise);
   J.check("the dialog names the pasted matches and says they stay in this browser (no 'every device' claim)",
-    /holds\s+2\s+matched lines?/i.test(promise) && /in this browser/i.test(promise) && !/every device|all (of )?your devices|on every/i.test(promise), promise || "no dialog text");
+    /\b2\s+matched lines?\b/i.test(promise) && /in this browser/i.test(promise) && !/every device|all (of )?your devices|on every/i.test(promise), promise || "no dialog text");
   if (form.hasName) await page.fill("[data-waj-create=name]", "User Simulation (create account)");
   await page.fill("[data-waj-create=email]", acct.email);
   await page.fill("[data-waj-create=password]", acct.password);
@@ -93,7 +100,11 @@ await J.run(async () => {
     !!user && /trial/i.test(String(user.subscription_status)) && /(^|,)trial-suite(,|$)/.test(String(user.products_enabled)) && user.trial_days_left >= 12 && user.trial_days_left <= 14, user || "no users row");
 
   const kept = await dossierText(page);
-  J.check("the pasted matches are still in the dossier after creating the account (this browser)", /holds\s+2\s+matched lines?/i.test(kept), kept);
+  const keptMatches = await dossierMatches(page);
+  J.check("the pasted matches are still in the dossier after creating the account (this browser)",
+    /\b2\s+matched lines?\b/i.test(kept) && originalMatches.length === 2 &&
+    JSON.stringify(keptMatches) === JSON.stringify(originalMatches),
+    { text: kept, storedMatches: keptMatches.length, originalMatchesPreserved: JSON.stringify(keptMatches) === JSON.stringify(originalMatches) });
 
   const again = await pasteSchedule(page, SAMPLE_LINES);
   J.check("what the guest could do keeps working: the paste still matches (3 of 3)", again.matched === 3 && again.total === 3, again.first);
@@ -103,11 +114,16 @@ await J.run(async () => {
 
   await J.checkInPlace(page, mark);
 
+  const beforeReloadMatches = await dossierMatches(page);
   await page.reload({ waitUntil: "load" });
   await page.waitForFunction(() => document.documentElement.dataset.weylandAuth === "signed-in", null, { timeout: 20000 }).catch(() => {});
   J.check("the new account stays signed in across a reload", (await shellState(page)).auth === "signed-in");
-  const afterReload = (await until(async () => { const t = await dossierText(page); return /holds\s+[1-9]\d*\s+matched line/i.test(t) ? t : null; }, 8000)) || (await dossierText(page));
-  J.check("the dossier still holds the pasted matches after a reload (kept in this browser, as the dialog says)", /holds\s+[1-9]\d*\s+matched line/i.test(afterReload || ""), afterReload || "dossier empty after reload");
+  const afterReload = (await until(async () => { const t = await dossierText(page); return /\b[1-9]\d*\s+matched lines?\b/i.test(t) ? t : null; }, 8000)) || (await dossierText(page));
+  const afterReloadMatches = await dossierMatches(page);
+  J.check("the dossier still holds the pasted matches after a reload (kept in this browser, as the dialog says)",
+    /\b[1-9]\d*\s+matched lines?\b/i.test(afterReload || "") && beforeReloadMatches.length >= 2 &&
+    JSON.stringify(afterReloadMatches) === JSON.stringify(beforeReloadMatches),
+    { text: afterReload, storedMatches: afterReloadMatches.length, allMatchesPreserved: JSON.stringify(afterReloadMatches) === JSON.stringify(beforeReloadMatches) });
 
   // A second browser: the account itself works everywhere. The dossier is promised for this
   // browser only, so the second browser's dossier is recorded, not judged.
