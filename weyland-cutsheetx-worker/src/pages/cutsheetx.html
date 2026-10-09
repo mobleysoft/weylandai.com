@@ -415,8 +415,11 @@
           if (cites.length) {
             html += '<table><thead><tr><th>Cited page</th><th>Page</th><th></th></tr></thead><tbody>' + cites.map(function(c, i){
               return '<tr><td>' + esc(c.title) + '</td><td>' + (/-/.test(String(c.page)) ? 'pp. ' : 'p. ') + esc(c.page) + '</td><td>' +
-                (c.url ? citeButton('cite-open-' + i, 'OPEN AT THE PAGE', c.url, c.title + ', p. ' + c.page) : '<span class="pill">PDF NOT ON FILE; PAGE TEXT INDEXED</span>') + '</td></tr>';
+                (c.url ? citeButton('cite-open-' + i, 'OPEN AT THE PAGE', c.url, c.title + ', p. ' + c.page) +
+                  ' <button type="button" class="link-btn" data-doc-download="' + esc(c.url) + '" data-doc-title="' + esc(c.title + ' p. ' + c.page) + '">DOWNLOAD PDF</button>' : '<span class="pill">PDF NOT ON FILE; PAGE TEXT INDEXED</span>') + '</td></tr>';
             }).join('') + '</tbody></table>';
+            // DOWNLOAD PDF saves the cited page itself, the cut sheet (2026-10-09: the cited pages had
+            // replaced the download in the result; the whole price book is not the cut sheet).
           } else if (sheets.length) {
             html += '<div class="loading">No page of the filed document is pinned for this model yet. The document:</div>' +
               '<table><thead><tr><th>Filed document</th><th>Size</th><th></th></tr></thead><tbody>' + sheets.map(function(sheet){
