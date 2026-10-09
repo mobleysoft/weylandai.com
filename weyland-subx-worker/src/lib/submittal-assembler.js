@@ -1056,9 +1056,35 @@ export async function assembleSubmittalPackage(sessionId, options, env2, PDFLib)
     pdfParts.push(...hardwareSetPdfs);
     pdfParts.push(...cutSheetPdfs);
     if (scheduleBytes) pdfParts.push(scheduleBytes);
-    const finalPdf = await mergePdfs(pdfParts, PDFLib);
+    let finalPdf = await mergePdfs(pdfParts, PDFLib);
     const { PDFDocument: PDFDocument3 } = PDFLib;
     const finalDoc = await PDFDocument3.load(finalPdf);
+    finalDoc.setProducer("WeylandAI SubX (sovereign-pdf + pdf-lib)");
+    finalDoc.setCreator("WeylandAI SubX");
+    if (options.generatedAt) {
+      finalDoc.setCreationDate(new Date(options.generatedAt));
+      finalDoc.setModificationDate(new Date(options.generatedAt));
+    }
+    // Explicit sample output, including the source appendix. This checkout's
+    // unpaid download route returns 402; it has no existing watermark helper.
+    // Keep the label in the product generator so a fixture uses its output.
+    if (options.sample) {
+      const font = await finalDoc.embedFont(PDFLib.StandardFonts.HelveticaBold);
+      const label = "SAMPLE - SCHEDULE ONLY - NOT FOR CONSTRUCTION";
+      for (const page of finalDoc.getPages()) {
+        const { x, y, width, height } = page.getCropBox();
+        const media = page.getMediaBox();
+        const scale = Math.min(width, height) / 612;
+        // Append a band above the visible page, preserving the whole drawing.
+        // Source sheets can have a negative origin (Rockford: -1512, -1080).
+        const bandHeight = 27 * scale;
+        page.setMediaBox(media.x, media.y, media.width, Math.max(media.y + media.height, y + height + bandHeight) - media.y);
+        page.setCropBox(x, y, width, height + bandHeight);
+        page.drawRectangle({ x, y: y + height, width, height: bandHeight, color: PDFLib.rgb(1, 0.96, 0.87) });
+        page.drawText(label, { x: x + (width - font.widthOfTextAtSize(label, 10 * scale)) / 2, y: y + height + 9 * scale, size: 10 * scale, font, color: PDFLib.rgb(0.45, 0.25, 0.05) });
+      }
+    }
+    finalPdf = await finalDoc.save();
     result.totalPages = finalDoc.getPageCount();
     result.pdfBytes = finalPdf;
     result.doorCount = doorRows.length;

@@ -249,13 +249,13 @@ export function generateSubmittalHTML(submittal) {
   </div>
 
   <div class="summary">
-    <strong>Summary:</strong> ${summary.total_sets} Hardware Sets | ${summary.total_components} Components | ${summary.pages_extracted} Pages Processed
+    <strong>Summary:</strong> ${summary.total_sets} Hardware Groups | ${summary.total_components} Components | ${summary.pages_extracted} Pages Processed
   </div>
 `;
   for (const set of hardware_sets) {
     html += `
   <div class="hardware-set">
-    <div class="set-header">${set.set_number} - ${set.description || "Hardware Set"}</div>
+    <div class="set-header">${set.set_number} - ${set.description || "Hardware Group"}</div>
     <div class="set-info">
       <strong>Function:</strong> ${set.function_type || "N/A"} |
       <strong>Keying:</strong> ${set.keying_system || "N/A"}
