@@ -49,12 +49,12 @@ test("any other failure is reported, not swallowed", async () => {
   const r = await inviteViaAuthFor({}, { email: "ann@example.com" }, { fetchImpl: f });
   assert.equal(r.ok, false);
   assert.equal(r.status, 500);
-  assert.equal(r.data.error, "boom");
+  assert.equal(r.data.error, "AUTHFOR_REJECTED");
   const thrower = async () => { throw new Error("network down"); };
   const r2 = await inviteViaAuthFor({}, { email: "ann@example.com" }, { fetchImpl: thrower });
   assert.equal(r2.ok, false);
   assert.equal(r2.status, 0);
-  assert.match(r2.data.error, /network down/);
+  assert.equal(r2.data.error, "AUTHFOR_UNAVAILABLE");
 });
 
 test("a 202 email-proof request or a successful response without an identity is not a created invite", async () => {
@@ -72,4 +72,18 @@ test("current AuthFor USER_EXISTS code is accepted as an existing-account no-op"
   const r = await inviteViaAuthFor({}, { email: "ann@example.com" }, { fetchImpl: fakeFetch(400, { code: "USER_EXISTS", error: "Email already registered" }) });
   assert.equal(r.ok, true);
   assert.equal(r.data.already_member, true);
+});
+
+
+test("confidential provisioning credentials stay in the server request, including after AuthFor's deadline", async () => {
+  const f = fakeFetch(200, { user: { id: "af_u_secret" }, session_id: "s", token: "t" });
+  const r = await inviteViaAuthFor({ AUTHFOR_PROVISION_CLIENT_ID: "fixture-client", AUTHFOR_PROVISION_CLIENT_SECRET: "fixture-secret" }, { email: "ann@example.com" }, { fetchImpl: f });
+  assert.equal(f.calls[0].body.client_id, "fixture-client");
+  assert.equal(f.calls[0].body.client_secret, "fixture-secret");
+  assert.equal(r.ok, true);
+  assert.equal(JSON.stringify(r).includes("fixture-secret"), false);
+  const partial = await inviteViaAuthFor({ AUTHFOR_PROVISION_CLIENT_ID: "fixture-client" }, { email: "ann@example.com" }, { fetchImpl: f });
+  assert.equal(partial.ok, false);
+  assert.equal(partial.data.error, "AUTHFOR_PROVISION_CONFIG_INCOMPLETE");
+  assert.equal(f.calls.length, 1, "no anonymous fallback from partial configuration");
 });

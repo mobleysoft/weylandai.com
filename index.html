@@ -2850,6 +2850,11 @@
         <input type="text" id="upgrade-name" placeholder="Name (optional)" autocomplete="name">
         <input type="email" id="upgrade-email" placeholder="Email" autocomplete="email" required>
         <input type="password" id="upgrade-password" placeholder="Password (8 or more characters)" autocomplete="new-password" required minlength="8">
+        <div id="upgrade-proof" hidden>
+          <p id="upgrade-proof-note" role="status">Enter the 8-digit code sent to your email.</p>
+          <input type="text" id="upgrade-code" placeholder="8-digit email code" autocomplete="one-time-code" inputmode="numeric" maxlength="9" aria-label="Email verification code">
+          <button type="button" class="button" id="upgrade-resend">Send another code</button>
+        </div>
         <button type="submit" class="button primary" id="upgrade-submit">CREATE FREE ACCOUNT</button>
         <div id="upgrade-error" class="upgrade-error" role="alert" hidden></div>
       </form>
@@ -3706,10 +3711,17 @@
     var upgradeSubmit = document.getElementById("upgrade-submit");
     var upgradeDone = document.getElementById("upgrade-done");
     var upgradeContinueTo = null;
+    var upgradeProof = null;
+    var upgradeProofBox = document.getElementById("upgrade-proof");
+    var upgradeCode = document.getElementById("upgrade-code");
+    var upgradeResend = document.getElementById("upgrade-resend");
     try { localStorage.removeItem("weylandai_account_token_v1"); } catch (_) {} // retired: it held a token nothing read
 
     function openUpgradeModal(continueTo) {
       if (!upgradeModal) return false;
+      upgradeProof = null;
+      if (upgradeProofBox) upgradeProofBox.hidden = true;
+      if (upgradeCode) upgradeCode.value = "";
       upgradeContinueTo = typeof continueTo === "string" ? continueTo : null;
       if (upgradeForm) upgradeForm.hidden = false;
       if (upgradeDone) { upgradeDone.hidden = true; upgradeDone.textContent = ""; }
@@ -3954,11 +3966,11 @@
           upgradeError.appendChild(sw);
         }
       }
-      if (upgradeSubmit) { upgradeSubmit.disabled = false; upgradeSubmit.textContent = "CREATE FREE ACCOUNT"; }
+      if (upgradeSubmit) { upgradeSubmit.disabled = false; upgradeSubmit.textContent = upgradeProof ? "CONFIRM AND CREATE ACCOUNT" : "CREATE FREE ACCOUNT"; }
     }
     function postUpgrade(body, retried) {
       return ephemeralToken().then(function (token) {
-        return fetch("/api/auth/ephemeral/upgrade", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ token: token, email: body.email, password: body.password, name: body.name || undefined }) });
+        return fetch("/api/auth/ephemeral/upgrade", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ token: token, email: body.email, password: body.password, name: body.name || undefined, email_code: body.email_code || undefined }) });
       }).then(function (r) {
         return r.json().catch(function () { return {}; }).then(function (d) { return { ok: r.ok, status: r.status, d: d || {} }; });
       }).then(function (res) {
@@ -3971,6 +3983,26 @@
         return res;
       });
     }
+    function requestUpgradeProof(email) {
+      upgradeProof = null;
+      return fetch("https://authfor.com/api/v1/auth/magic-link", {
+        method: "POST", headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email: email, purpose: "verify", client_id: "af_weyland_subscribe", venture_id: "weylandai.com" })
+      }).then(function (r) {
+        return r.json().catch(function () { return {}; }).then(function (d) {
+          if (!r.ok || !d.sent || !d.token) throw new Error("The email code could not be sent. Try again in a minute.");
+          upgradeProof = { email: email, token: d.token };
+          if (upgradeProofBox) upgradeProofBox.hidden = false;
+          if (upgradeCode) { upgradeCode.value = ""; upgradeCode.focus(); }
+          if (upgradeSubmit) { upgradeSubmit.disabled = false; upgradeSubmit.textContent = "CONFIRM AND CREATE ACCOUNT"; }
+        });
+      });
+    }
+    if (upgradeResend) upgradeResend.addEventListener("click", function () {
+      var email = document.getElementById("upgrade-email").value.trim();
+      upgradeResend.disabled = true;
+      requestUpgradeProof(email).catch(function (err) { upgradeFail(err.message); }).finally(function () { upgradeResend.disabled = false; });
+    });
     if (upgradeForm) {
       upgradeForm.addEventListener("submit", function (e) {
         e.preventDefault();
@@ -3980,9 +4012,20 @@
         var email = emailEl.value.trim(), password = passEl.value, name = document.getElementById("upgrade-name").value.trim();
         if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) { upgradeFail("Enter the email you will sign in with."); emailEl.focus(); return; }
         if (password.length < 8) { upgradeFail("Choose a password of 8 or more characters."); passEl.focus(); return; }
+        if (upgradeProof && upgradeProof.email !== email) {
+          upgradeProof = null;
+          if (upgradeProofBox) upgradeProofBox.hidden = true;
+        }
+        var emailCode;
+        if (upgradeProof) {
+          var code = String(upgradeCode && upgradeCode.value || "").replace(/\s/g, "");
+          if (!/^[0-9]{8}$/.test(code)) { upgradeFail("Enter the 8-digit code from your email."); return; }
+          emailCode = { token: upgradeProof.token, code: code };
+        }
         upgradeSubmit.disabled = true;
         upgradeSubmit.textContent = "CREATING YOUR ACCOUNT…";
-        postUpgrade({ email: email, password: password, name: name }, false).then(function (res) {
+        postUpgrade({ email: email, password: password, name: name, email_code: emailCode }, false).then(function (res) {
+          if (res.status === 202 && res.d.code === "EMAIL_CODE_REQUIRED") return requestUpgradeProof(email);
           if (!res.ok) {
             var err = String(res.d.error || "");
             if (/already registered|already exists|user_exists/i.test(err)) return upgradeFail("That email already has an account.", email);

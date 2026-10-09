@@ -189,7 +189,7 @@ export const send = async (env, body, opts) => {
 };
 
 // ── network: AuthFor register and Stripe's subscription list answered here, nothing else ──
-export const network = { authforRegister: [], stripe: [], stripeSubscriptions: new Map(), unexpected: [] };
+export const network = { authforRegister: [], authforBodies: [], authforReply: null, stripe: [], stripeSubscriptions: new Map(), unexpected: [] };
 let realFetch = null;
 export function installNetwork() {
   realFetch = globalThis.fetch;
@@ -198,7 +198,9 @@ export function installNetwork() {
     if (url === "https://authfor.com/api/v1/register") {
       const body = JSON.parse(init.body);
       network.authforRegister.push(body.email);
-      return new Response(JSON.stringify({ token: "aft_local", session_id: "afs_local_" + network.authforRegister.length, refresh_token: "afr_local" }), { status: 201, headers: { "Content-Type": "application/json" } });
+      network.authforBodies.push(body);
+      if (network.authforReply) return network.authforReply(body);
+      return new Response(JSON.stringify({ user: { id: "afu_local" }, token: "aft_local", session_id: "afs_local_" + network.authforRegister.length, refresh_token: "afr_local" }), { status: 201, headers: { "Content-Type": "application/json" } });
     }
     const m = url.match(/^https:\/\/api\.stripe\.com\/v1\/subscriptions\?customer=([^&]+)/);
     if (m) {

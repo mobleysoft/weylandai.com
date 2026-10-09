@@ -80,12 +80,13 @@ class AuthForStandard {
   }
 
   // Handle registration
-  async register(email, password, name) {
+  async register(email, password, name, emailCode) {
     const res = await fetch('https://authfor.com/api/v1/register', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
         email, password, name,
+        ...(emailCode ? { email_code: emailCode } : {}),
         client_id: this.clientId,
         venture_id: this.ventureName,
         redirect_url: this.redirectUrl
