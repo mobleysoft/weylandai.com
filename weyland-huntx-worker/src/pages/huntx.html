@@ -119,6 +119,7 @@
           <option value="5000000">$5M+</option>
         </select>
         <button id="hx-save" class="button" type="button">SAVE THIS SEARCH</button>
+        <button id="hx-sample" class="button" type="button" title="Email the latest 10 matching notices to your account's address, once">EMAIL ME A SAMPLE</button>
       </div>
       <div class="saved-bar" id="hx-saved" hidden></div>
       <div class="status-line" id="hx-status" role="status" aria-live="polite"></div>
@@ -295,6 +296,21 @@
       });
     }
 
+    function emailSample() {
+      if (!signedIn()) { setStatus("Sign in to get a sample email of this search at your account's address."); window.WeylandPage.signIn("/huntx"); return; }
+      var params = filters(), q = $("hx-search").value.trim(), src = $("hx-source").value;
+      if (q) params.q = q;
+      if (src) params.source = src;
+      var name = [q, src && (SOURCE_LABEL[src] || src), params.fit && params.fit !== "all" && (FIT_LABEL[params.fit] || params.fit), params.state].filter(Boolean).join(" · ") || "All notices";
+      setStatus("Sending...");
+      fetch("/api/hunt/sample", { method: "POST", headers: headers(true), body: JSON.stringify({ name: name, params: params }) }).then(function (r) {
+        return r.json().catch(function () { return {}; }).then(function (d) {
+          if (!r.ok) { setStatus(errText(d, r.status), true); return; }
+          setStatus("Sent the latest " + d.notices + " matching notices to " + d.to + ". Save the search to get new ones by email, at most once a day.");
+        });
+      });
+    }
+
     function renderSources(list) {
       if (!Array.isArray(list) || !list.length) return;
       var sel = $("hx-source"), keep = sel.value;
@@ -422,6 +438,7 @@
     $("hx-source").addEventListener("change", function () { load(false); });
     ["hx-fit", "hx-state", "hx-due", "hx-min"].forEach(function (id) { $(id).addEventListener("change", function () { load(false); }); });
     $("hx-save").addEventListener("click", saveSearch);
+    $("hx-sample").addEventListener("click", emailSample);
     $("hx-saved").addEventListener("click", function (e) {
       var del = e.target.getAttribute && e.target.getAttribute("data-del");
       if (del) { fetch("/api/hunt/saved/" + encodeURIComponent(del), { method: "DELETE", headers: headers() }).then(loadSaved); return; }

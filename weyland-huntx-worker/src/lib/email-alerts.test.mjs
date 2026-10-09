@@ -80,25 +80,27 @@ test("the digest lists at most 25 and says how many more", () => {
   assert.match(m.html, /5 more in HuntX/);
 });
 
-test("a sample goes now to the account's own address with the latest matches, once per 10 minutes, paid plans only", async () => {
+test("a sample goes now to the account's own address with the latest matches, once per 10 minutes per account, trial accounts too", async () => {
   const { sendSample } = await import("./email-alerts.js");
-  const { db, env } = setup();
-  db.exec("ALTER TABLE huntx_saved_searches ADD COLUMN last_sample_at TEXT");
+  const { env } = setup();
   const sent = [];
   const fetchImpl = async (_url, init) => { sent.push(JSON.parse(init.body)); return new Response(JSON.stringify({ success: true })); };
   const now = new Date("2026-10-09T12:00:00Z");
+  const at = (min) => new Date(now.getTime() + min * 60000);
   const r = await sendSample(env, "u1", "s1", { now, fetchImpl });
   assert.deepEqual([r.sent, r.to, r.notices], [true, "pat@example.com", 3], "every open NY door notice, old or new");
   assert.equal(sent[0].subject, 'HuntX sample: the latest 3 notices for "Doors NY"');
   assert.match(sent[0].html, /A sample you asked for/);
-  assert.doesNotMatch(sent[0].html, /US 59 overlay/);
-  assert.equal((await sendSample(env, "u1", "s1", { now: new Date(now.getTime() + 5 * 60000), fetchImpl })).error[0], 429);
-  assert.equal((await sendSample(env, "u1", "s1", { now: new Date(now.getTime() + 11 * 60000), fetchImpl })).sent, true);
-  assert.equal((await sendSample(env, "u2", "s2", { now, fetchImpl })).error[0], 402, "a lapsed plan gets no email");
-  assert.equal((await sendSample(env, "u2", "s1", { now, fetchImpl })).error[0], 402);
-  db.prepare("UPDATE users SET subscription_status='active', subscription_tier='subconp' WHERE id='u2'").run();
-  assert.equal((await sendSample(env, "u2", "s1", { now, fetchImpl })).error[0], 404, "another account's search");
-  assert.equal((await sendSample({ ...env, MAILGUY_API_KEY: "" }, "u1", "s1", { now, fetchImpl })).error[0], 503);
-  const failed = await sendSample(env, "u1", "s3", { now, fetchImpl: async () => new Response(JSON.stringify({ error: "Unauthorized" }), { status: 401 }) });
+  assert.match(sent[0].html, /A one-time sample/);
+  assert.doesNotMatch(sent[0].html, /US 59 overlay|Stop these emails/);
+  assert.equal((await sendSample(env, "u1", "s3", { now: at(5), fetchImpl })).error[0], 429, "one sample per account every 10 minutes");
+  const unsaved = await sendSample(env, "u1", null, { now: at(11), fetchImpl, params: { fit: "civil" }, name: "Civil TX" });
+  assert.deepEqual([unsaved.sent, unsaved.notices], [true, 1], "the search on screen, unsaved");
+  assert.equal(sent[1].subject, 'HuntX sample: the latest 1 notice for "Civil TX"');
+  const trial = await sendSample(env, "u2", "s2", { now, fetchImpl });
+  assert.deepEqual([trial.sent, trial.to], [true, "lapsed@example.com"], "an account without a plan may ask for a sample, to its own address");
+  assert.equal((await sendSample(env, "u2", "s1", { now: at(30), fetchImpl })).error[0], 404, "another account's search");
+  assert.equal((await sendSample({ ...env, MAILGUY_API_KEY: "" }, "u1", "s1", { now: at(60), fetchImpl })).error[0], 503);
+  const failed = await sendSample(env, "u1", "s3", { now: at(60), fetchImpl: async () => new Response(JSON.stringify({ error: "Unauthorized" }), { status: 401 }) });
   assert.deepEqual([failed.error[0], failed.error[1]], [502, "SEND_FAILED"]);
 });
