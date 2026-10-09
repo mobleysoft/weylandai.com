@@ -231,3 +231,27 @@ the time given to the cloud; the deploys from PR 81 were live by then (every PR 
 Addendum 09:20Z: after PR 87 restored the DOWNLOAD PDF control, cutsheetx-finder-search ran 3 of 3 green on main
 (21 of 21 checks each pass; tools/user-simulation/reports/matrix-2026-10-09T09-17-17-567Z on the Mac). With the
 08:05Z run that makes the matrix 23 of 23 green on main.
+
+## Matrix after the Estimator-defect fixes, on main at eceb04f: three passes, 16:55 to 17:40Z, 2026-10-09
+
+28 journeys per pass (the 23 of the morning plus estimator-schedule-to-packet, the four SightX controls journeys and
+shell-address). Results: plan/evidence/matrix/2026-10-09T16-55Z-after-eceb04f-results.jsonl.
+
+| pass | journeys green | checks green | red |
+|---|---|---|---|
+| 1 | 25 of 28 | 515 of 518 | estimator-schedule-to-packet (crashed at launch), sightx-controls-home desktop and phone (the injected analytics beacon) |
+| 2 | 27 of 28 | 517 of 518 | estimator-schedule-to-packet (crashed at launch) |
+| 3 | 27 of 28 | 523 of 525 | estimator-schedule-to-packet: the disabled walk button showed at opacity .7, and the SubX app's upload button never became visible |
+
+Every red traces to something now fixed or now understood, none to the journeys' own logic:
+- The launch crash was a file-path import of playwright-core (the API lands on `default`); fixed in 340bf67 for that
+  journey and in b42caec for every tool script.
+- The beacon: Cloudflare Web Analytics injection, switched off at the zone (see S0 above); the two home journeys passed
+  14 of 14 and 11 of 11 in the seventh S0 measurement.
+- The disabled look: the front door carried a second `.button:disabled` rule at opacity .7 after the Estimator-defect
+  rule at .5; the duplicate is gone (100073e).
+- The SubX app's upload button: the Estimator-defect fix for the app (eceb04f) was on main and not deployed. Workers do
+  not deploy on push; the Deploy worker workflow is manual dispatch. The gate is now written down (goal g029) and the
+  SightX and SubX workers are being deployed from main; the journey is re-run after.
+
+The bar for the next matrix: 28 of 28 three times on main with every worker deployed from the commit under test.
