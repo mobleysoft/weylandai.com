@@ -1,0 +1,1226 @@
+{
+  "journey": "meetingx-media-acceptance",
+  "title": "MeetingX real bidirectional camera, microphone and TURN transport",
+  "base": "https://weylandai.com",
+  "started_at": "2026-10-09T22:21:08.854Z",
+  "finished_at": "2026-10-09T22:22:26.138Z",
+  "passed": 29,
+  "failed": 2,
+  "checks": [
+    {
+      "name": "browser has GPU WebGL",
+      "ok": true,
+      "detail": "ANGLE (Apple, ANGLE Metal Renderer: Apple M4, Unspecified Version)"
+    },
+    {
+      "name": "normal transport participant 0 signs in through the public UI",
+      "ok": true,
+      "detail": "{\"auth\":\"signed-in\",\"error\":\"\"}"
+    },
+    {
+      "name": "normal transport participant 0 joins the actual production WebSocket room",
+      "ok": true,
+      "detail": "{\"room\":\"CONNECTED\",\"media\":\"NOT IN A CALL\",\"roster\":1,\"configurations\":[],\"peers\":[],\"remote\":[],\"local\":[]}"
+    },
+    {
+      "name": "normal transport participant 0 starts synthetic camera and microphone through CAM + MIC",
+      "ok": true,
+      "detail": "{\"room\":\"CONNECTED\",\"media\":\"IN THE CALL\",\"roster\":1,\"configurations\":[],\"peers\":[],\"remote\":[],\"local\":[{\"kind\":\"audio\",\"enabled\":true,\"state\":\"live\"},{\"kind\":\"video\",\"enabled\":true,\"state\":\"live\"}]}"
+    },
+    {
+      "name": "normal transport participant 1 signs in through the public UI",
+      "ok": true,
+      "detail": "{\"auth\":\"signed-in\",\"error\":\"\"}"
+    },
+    {
+      "name": "normal transport participant 1 joins the actual production WebSocket room",
+      "ok": true,
+      "detail": "{\"room\":\"CONNECTED\",\"media\":\"NOT IN A CALL\",\"roster\":2,\"configurations\":[],\"peers\":[],\"remote\":[],\"local\":[]}"
+    },
+    {
+      "name": "normal transport participant 1 starts synthetic camera and microphone through CAM + MIC",
+      "ok": true,
+      "detail": "{\"room\":\"CONNECTED\",\"media\":\"IN THE CALL\",\"roster\":2,\"configurations\":[{\"policy\":\"all\",\"turn\":true,\"server_protocols\":[\"stun\",\"turn\",\"turns\"]}],\"peers\":[{\"connection\":\"new\",\"ice\":\"new\",\"signaling\":\"have-local-offer\",\"inbound\":[],\"selected\":null}],\"remote\":[{\"width\":0,\"height\":0,\"ready\":0,\"paused\":true,\"muted\":false,\"time\":0,\"brightness\":null,\"tracks\":[]}],\"local\":[{\"kind\":\"audio\",\"enabled\":true,\"state\":\"live\"},{\"kind\":\"video\",\"enabled\":true,\"state\":\"live\"}]}"
+    },
+    {
+      "name": "normal transport both browsers receive audio RTP with nonzero energy and decode/render remote video",
+      "ok": true,
+      "detail": "[{\"peers\":[{\"connection\":\"connected\",\"ice\":\"connected\",\"signaling\":\"stable\",\"inbound\":[{\"kind\":\"audio\",\"packets\":40,\"bytes\":3145,\"lost\":0,\"framesDecoded\":0,\"framesReceived\":0,\"audioEnergy\":0.002143190143598302,\"audioDuration\":0.9300000000000006},{\"kind\":\"video\",\"packets\":38,\"bytes\":14853,\"lost\":0,\"framesDecoded\":12,\"framesReceived\":12,\"audioEnergy\":0,\"audioDuration\":0}],\"selected\":{\"state\":\"succeeded\",\"local\":\"host\",\"remote\":\"prflx\",\"protocol\":\"udp\",\"bytesReceived\":25558,\"bytesSent\":12131}}],\"re"
+    },
+    {
+      "name": "normal transport participant 0 continues receiving moving video and audible samples",
+      "ok": true,
+      "detail": "{\"first\":[{\"connection\":\"connected\",\"ice\":\"connected\",\"signaling\":\"stable\",\"inbound\":[{\"kind\":\"audio\",\"packets\":40,\"bytes\":3145,\"lost\":0,\"framesDecoded\":0,\"framesReceived\":0,\"audioEnergy\":0.002143190143598302,\"audioDuration\":0.9300000000000006},{\"kind\":\"video\",\"packets\":38,\"bytes\":14853,\"lost\":0,\"framesDecoded\":12,\"framesReceived\":12,\"audioEnergy\":0,\"audioDuration\":0}],\"selected\":{\"state\":\"succeeded\",\"local\":\"host\",\"remote\":\"prflx\",\"protocol\":\"udp\",\"bytesReceived\":25558,\"bytesSent\":12131}}],\"nex"
+    },
+    {
+      "name": "normal transport participant 1 continues receiving moving video and audible samples",
+      "ok": true,
+      "detail": "{\"first\":[{\"connection\":\"connected\",\"ice\":\"connected\",\"signaling\":\"stable\",\"inbound\":[{\"kind\":\"audio\",\"packets\":39,\"bytes\":3107,\"lost\":0,\"framesDecoded\":0,\"framesReceived\":0,\"audioEnergy\":0.0002433766142338645,\"audioDuration\":0.8200000000000005},{\"kind\":\"video\",\"packets\":38,\"bytes\":17251,\"lost\":0,\"framesDecoded\":14,\"framesReceived\":14,\"audioEnergy\":0,\"audioDuration\":0}],\"selected\":{\"state\":\"succeeded\",\"local\":\"host\",\"remote\":\"host\",\"protocol\":\"udp\",\"bytesReceived\":12012,\"bytesSent\":25439}}],\"nex"
+    },
+    {
+      "name": "MUTE and CAMERA OFF disable both sender tracks",
+      "ok": true,
+      "detail": "[{\"kind\":\"audio\",\"enabled\":false,\"state\":\"live\"},{\"kind\":\"video\",\"enabled\":false,\"state\":\"live\"}]"
+    },
+    {
+      "name": "other browser receives silent audio and black video while sender is muted",
+      "ok": true,
+      "detail": "{\"normal_energy_delta\":0.0012119887188828476,\"muted_energy_delta\":0,\"remote\":[{\"width\":480,\"height\":270,\"ready\":4,\"paused\":false,\"muted\":false,\"time\":8.565,\"brightness\":0,\"tracks\":[{\"kind\":\"audio\",\"enabled\":true,\"state\":\"live\",\"muted\":false},{\"kind\":\"video\",\"enabled\":true,\"state\":\"live\",\"muted\":false}]}]}"
+    },
+    {
+      "name": "UNMUTE and CAMERA ON restore actual remote sound and video without reopening the room",
+      "ok": true,
+      "detail": "{\"room\":\"CONNECTED\",\"media\":\"IN THE CALL\",\"roster\":2,\"configurations\":[{\"policy\":\"all\",\"turn\":true,\"server_protocols\":[\"stun\",\"turn\",\"turns\"]}],\"peers\":[{\"connection\":\"connected\",\"ice\":\"connected\",\"signaling\":\"stable\",\"inbound\":[{\"kind\":\"audio\",\"packets\":466,\"bytes\":18742,\"lost\":0,\"framesDecoded\":0,\"framesReceived\":0,\"audioEnergy\":0.0017280569190254325,\"audioDuration\":9.339999999999845},{\"kind\":\"video\",\"packets\":244,\"bytes\":108705,\"lost\":0,\"framesDecoded\":185,\"framesReceived\":185,\"audioEnergy\":0"
+    },
+    {
+      "name": "normal transport leaving removes the remote participant and closes peer media",
+      "ok": true,
+      "detail": "{\"room\":\"CONNECTED\",\"media\":\"IN THE CALL\",\"roster\":1,\"configurations\":[{\"policy\":\"all\",\"turn\":true,\"server_protocols\":[\"stun\",\"turn\",\"turns\"]}],\"peers\":[{\"connection\":\"closed\",\"ice\":\"closed\",\"signaling\":\"closed\",\"inbound\":[],\"selected\":null}],\"remote\":[],\"local\":[{\"kind\":\"audio\",\"enabled\":true,\"state\":\"live\"},{\"kind\":\"video\",\"enabled\":true,\"state\":\"live\"}]}"
+    },
+    {
+      "name": "normal transport both participants leave the owned room",
+      "ok": false,
+      "detail": "{\"room\":\"CONNECTED\",\"media\":\"IN THE CALL\",\"roster\":1,\"configurations\":[{\"policy\":\"all\",\"turn\":true,\"server_protocols\":[\"stun\",\"turn\",\"turns\"]}],\"peers\":[{\"connection\":\"closed\",\"ice\":\"closed\",\"signaling\":\"closed\",\"inbound\":[],\"selected\":null}],\"remote\":[],\"local\":[{\"kind\":\"audio\",\"enabled\":true,\"state\":\"live\"},{\"kind\":\"video\",\"enabled\":true,\"state\":\"live\"}]}"
+    },
+    {
+      "name": "normal transport owned room has no retained record items",
+      "ok": true,
+      "detail": "{\"retained_items\":0}"
+    },
+    {
+      "name": "forced TURN participant 0 signs in through the public UI",
+      "ok": true,
+      "detail": "{\"auth\":\"signed-in\",\"error\":\"\"}"
+    },
+    {
+      "name": "forced TURN participant 0 joins the actual production WebSocket room",
+      "ok": true,
+      "detail": "{\"room\":\"CONNECTED\",\"media\":\"NOT IN A CALL\",\"roster\":1,\"configurations\":[],\"peers\":[],\"remote\":[],\"local\":[]}"
+    },
+    {
+      "name": "forced TURN participant 0 starts synthetic camera and microphone through CAM + MIC",
+      "ok": true,
+      "detail": "{\"room\":\"CONNECTED\",\"media\":\"IN THE CALL\",\"roster\":1,\"configurations\":[],\"peers\":[],\"remote\":[],\"local\":[{\"kind\":\"audio\",\"enabled\":true,\"state\":\"live\"},{\"kind\":\"video\",\"enabled\":true,\"state\":\"live\"}]}"
+    },
+    {
+      "name": "forced TURN participant 1 signs in through the public UI",
+      "ok": true,
+      "detail": "{\"auth\":\"signed-in\",\"error\":\"\"}"
+    },
+    {
+      "name": "forced TURN participant 1 joins the actual production WebSocket room",
+      "ok": true,
+      "detail": "{\"room\":\"CONNECTED\",\"media\":\"NOT IN A CALL\",\"roster\":2,\"configurations\":[{\"policy\":\"relay\",\"turn\":true,\"server_protocols\":[\"stun\",\"turn\",\"turns\"]}],\"peers\":[{\"connection\":\"new\",\"ice\":\"new\",\"signaling\":\"have-local-offer\",\"inbound\":[],\"selected\":null}],\"remote\":[{\"width\":0,\"height\":0,\"ready\":0,\"paused\":true,\"muted\":false,\"time\":0,\"brightness\":null,\"tracks\":[]}],\"local\":[]}"
+    },
+    {
+      "name": "forced TURN participant 1 starts synthetic camera and microphone through CAM + MIC",
+      "ok": true,
+      "detail": "{\"room\":\"CONNECTED\",\"media\":\"IN THE CALL\",\"roster\":2,\"configurations\":[{\"policy\":\"relay\",\"turn\":true,\"server_protocols\":[\"stun\",\"turn\",\"turns\"]}],\"peers\":[{\"connection\":\"connecting\",\"ice\":\"checking\",\"signaling\":\"stable\",\"inbound\":[],\"selected\":null}],\"remote\":[{\"width\":0,\"height\":0,\"ready\":0,\"paused\":false,\"muted\":false,\"time\":0,\"brightness\":null,\"tracks\":[{\"kind\":\"audio\",\"enabled\":true,\"state\":\"live\",\"muted\":true},{\"kind\":\"video\",\"enabled\":true,\"state\":\"live\",\"muted\":true}]}],\"local\":[{\"kind\":\""
+    },
+    {
+      "name": "forced TURN both browsers receive audio RTP with nonzero energy and decode/render remote video",
+      "ok": true,
+      "detail": "[{\"peers\":[{\"connection\":\"connected\",\"ice\":\"connected\",\"signaling\":\"stable\",\"inbound\":[{\"kind\":\"audio\",\"packets\":16,\"bytes\":1214,\"lost\":0,\"framesDecoded\":0,\"framesReceived\":0,\"audioEnergy\":0.0024627309619203123,\"audioDuration\":0.9300000000000006},{\"kind\":\"video\",\"packets\":25,\"bytes\":14976,\"lost\":0,\"framesDecoded\":6,\"framesReceived\":6,\"audioEnergy\":0,\"audioDuration\":0}],\"selected\":{\"state\":\"succeeded\",\"local\":\"relay\",\"remote\":\"relay\",\"protocol\":\"udp\",\"relayProtocol\":\"udp\",\"bytesReceived\":1494,\"by"
+    },
+    {
+      "name": "forced TURN participant 0 continues receiving moving video and audible samples",
+      "ok": true,
+      "detail": "{\"first\":[{\"connection\":\"connected\",\"ice\":\"connected\",\"signaling\":\"stable\",\"inbound\":[{\"kind\":\"audio\",\"packets\":16,\"bytes\":1214,\"lost\":0,\"framesDecoded\":0,\"framesReceived\":0,\"audioEnergy\":0.0024627309619203123,\"audioDuration\":0.9300000000000006},{\"kind\":\"video\",\"packets\":25,\"bytes\":14976,\"lost\":0,\"framesDecoded\":6,\"framesReceived\":6,\"audioEnergy\":0,\"audioDuration\":0}],\"selected\":{\"state\":\"succeeded\",\"local\":\"relay\",\"remote\":\"relay\",\"protocol\":\"udp\",\"relayProtocol\":\"udp\",\"bytesReceived\":1494,\"byt"
+    },
+    {
+      "name": "participant 0 selected ICE pair actually uses TURN relay",
+      "ok": true,
+      "detail": "{\"state\":\"succeeded\",\"local\":\"relay\",\"remote\":\"relay\",\"protocol\":\"udp\",\"relayProtocol\":\"udp\",\"bytesReceived\":148088,\"bytesSent\":150773}"
+    },
+    {
+      "name": "forced TURN participant 1 continues receiving moving video and audible samples",
+      "ok": true,
+      "detail": "{\"first\":[{\"connection\":\"connected\",\"ice\":\"connected\",\"signaling\":\"stable\",\"inbound\":[{\"kind\":\"audio\",\"packets\":18,\"bytes\":1295,\"lost\":0,\"framesDecoded\":0,\"framesReceived\":0,\"audioEnergy\":0.00012016901306460724,\"audioDuration\":0.8400000000000005},{\"kind\":\"video\",\"packets\":31,\"bytes\":20550,\"lost\":0,\"framesDecoded\":7,\"framesReceived\":7,\"audioEnergy\":0,\"audioDuration\":0}],\"selected\":{\"state\":\"succeeded\",\"local\":\"relay\",\"remote\":\"relay\",\"protocol\":\"udp\",\"relayProtocol\":\"udp\",\"bytesReceived\":0,\"bytes"
+    },
+    {
+      "name": "participant 1 selected ICE pair actually uses TURN relay",
+      "ok": true,
+      "detail": "{\"state\":\"succeeded\",\"local\":\"relay\",\"remote\":\"relay\",\"protocol\":\"udp\",\"relayProtocol\":\"udp\",\"bytesReceived\":148138,\"bytesSent\":150549}"
+    },
+    {
+      "name": "forced TURN leaving removes the remote participant and closes peer media",
+      "ok": true,
+      "detail": "{\"room\":\"CONNECTED\",\"media\":\"IN THE CALL\",\"roster\":1,\"configurations\":[{\"policy\":\"relay\",\"turn\":true,\"server_protocols\":[\"stun\",\"turn\",\"turns\"]}],\"peers\":[{\"connection\":\"closed\",\"ice\":\"closed\",\"signaling\":\"closed\",\"inbound\":[],\"selected\":null}],\"remote\":[],\"local\":[{\"kind\":\"audio\",\"enabled\":true,\"state\":\"live\"},{\"kind\":\"video\",\"enabled\":true,\"state\":\"live\"}]}"
+    },
+    {
+      "name": "forced TURN both participants leave the owned room",
+      "ok": false,
+      "detail": "{\"room\":\"CONNECTED\",\"media\":\"IN THE CALL\",\"roster\":1,\"configurations\":[{\"policy\":\"relay\",\"turn\":true,\"server_protocols\":[\"stun\",\"turn\",\"turns\"]}],\"peers\":[{\"connection\":\"closed\",\"ice\":\"closed\",\"signaling\":\"closed\",\"inbound\":[],\"selected\":null}],\"remote\":[],\"local\":[{\"kind\":\"audio\",\"enabled\":true,\"state\":\"live\"},{\"kind\":\"video\",\"enabled\":true,\"state\":\"live\"}]}"
+    },
+    {
+      "name": "forced TURN owned room has no retained record items",
+      "ok": true,
+      "detail": "{\"retained_items\":0}"
+    },
+    {
+      "name": "test data deleted (account rows, demo clones, uploads)",
+      "ok": true,
+      "detail": "{\"clonesCaptured\":3,\"uploadsCaptured\":0,\"packagesBuilt\":0,\"deletedRows\":140,\"r2\":[],\"kv\":[],\"remaining\":{\"users\":0,\"weyland_sessions\":0,\"extraction_sessions\":0,\"projects\":0},\"skipped\":[]}"
+    }
+  ],
+  "notes": {
+    "synthetic_devices": {
+      "camera": "Chromium moving test pattern",
+      "audio": "generated 440 Hz sine",
+      "human_devices": false
+    },
+    "launch_flags": [
+      "--use-angle=metal",
+      "--use-fake-device-for-media-stream",
+      "--use-fake-ui-for-media-stream",
+      "--use-file-for-fake-audio-capture=<temporary generated waveform>",
+      "--autoplay-policy=no-user-gesture-required"
+    ],
+    "normal_initial": [
+      {
+        "room": "CONNECTED",
+        "media": "IN THE CALL",
+        "roster": 2,
+        "configurations": [
+          {
+            "policy": "all",
+            "turn": true,
+            "server_protocols": [
+              "stun",
+              "turn",
+              "turns"
+            ]
+          }
+        ],
+        "peers": [
+          {
+            "connection": "connected",
+            "ice": "connected",
+            "signaling": "stable",
+            "inbound": [
+              {
+                "kind": "audio",
+                "packets": 40,
+                "bytes": 3145,
+                "lost": 0,
+                "framesDecoded": 0,
+                "framesReceived": 0,
+                "audioEnergy": 0.002143190143598302,
+                "audioDuration": 0.9300000000000006
+              },
+              {
+                "kind": "video",
+                "packets": 38,
+                "bytes": 14853,
+                "lost": 0,
+                "framesDecoded": 12,
+                "framesReceived": 12,
+                "audioEnergy": 0,
+                "audioDuration": 0
+              }
+            ],
+            "selected": {
+              "state": "succeeded",
+              "local": "host",
+              "remote": "prflx",
+              "protocol": "udp",
+              "bytesReceived": 25558,
+              "bytesSent": 12131
+            }
+          }
+        ],
+        "remote": [
+          {
+            "width": 320,
+            "height": 180,
+            "ready": 4,
+            "paused": false,
+            "muted": false,
+            "time": 0.563,
+            "brightness": 48.8125,
+            "tracks": [
+              {
+                "kind": "audio",
+                "enabled": true,
+                "state": "live",
+                "muted": false
+              },
+              {
+                "kind": "video",
+                "enabled": true,
+                "state": "live",
+                "muted": false
+              }
+            ]
+          }
+        ],
+        "local": [
+          {
+            "kind": "audio",
+            "enabled": true,
+            "state": "live"
+          },
+          {
+            "kind": "video",
+            "enabled": true,
+            "state": "live"
+          }
+        ]
+      },
+      {
+        "room": "CONNECTED",
+        "media": "IN THE CALL",
+        "roster": 2,
+        "configurations": [
+          {
+            "policy": "all",
+            "turn": true,
+            "server_protocols": [
+              "stun",
+              "turn",
+              "turns"
+            ]
+          }
+        ],
+        "peers": [
+          {
+            "connection": "connected",
+            "ice": "connected",
+            "signaling": "stable",
+            "inbound": [
+              {
+                "kind": "audio",
+                "packets": 39,
+                "bytes": 3107,
+                "lost": 0,
+                "framesDecoded": 0,
+                "framesReceived": 0,
+                "audioEnergy": 0.0002433766142338645,
+                "audioDuration": 0.8200000000000005
+              },
+              {
+                "kind": "video",
+                "packets": 38,
+                "bytes": 17251,
+                "lost": 0,
+                "framesDecoded": 14,
+                "framesReceived": 14,
+                "audioEnergy": 0,
+                "audioDuration": 0
+              }
+            ],
+            "selected": {
+              "state": "succeeded",
+              "local": "host",
+              "remote": "host",
+              "protocol": "udp",
+              "bytesReceived": 12012,
+              "bytesSent": 25439
+            }
+          }
+        ],
+        "remote": [
+          {
+            "width": 320,
+            "height": 180,
+            "ready": 4,
+            "paused": false,
+            "muted": false,
+            "time": 0.664,
+            "brightness": 48.774739583333336,
+            "tracks": [
+              {
+                "kind": "audio",
+                "enabled": true,
+                "state": "live",
+                "muted": false
+              },
+              {
+                "kind": "video",
+                "enabled": true,
+                "state": "live",
+                "muted": false
+              }
+            ]
+          }
+        ],
+        "local": [
+          {
+            "kind": "audio",
+            "enabled": true,
+            "state": "live"
+          },
+          {
+            "kind": "video",
+            "enabled": true,
+            "state": "live"
+          }
+        ]
+      }
+    ],
+    "normal_after_3s": [
+      {
+        "room": "CONNECTED",
+        "media": "IN THE CALL",
+        "roster": 2,
+        "configurations": [
+          {
+            "policy": "all",
+            "turn": true,
+            "server_protocols": [
+              "stun",
+              "turn",
+              "turns"
+            ]
+          }
+        ],
+        "peers": [
+          {
+            "connection": "connected",
+            "ice": "connected",
+            "signaling": "stable",
+            "inbound": [
+              {
+                "kind": "audio",
+                "packets": 190,
+                "bytes": 15295,
+                "lost": 0,
+                "framesDecoded": 0,
+                "framesReceived": 0,
+                "audioEnergy": 0.0045865029808812244,
+                "audioDuration": 3.92999999999996
+              },
+              {
+                "kind": "video",
+                "packets": 98,
+                "bytes": 66324,
+                "lost": 0,
+                "framesDecoded": 72,
+                "framesReceived": 72,
+                "audioEnergy": 0,
+                "audioDuration": 0
+              }
+            ],
+            "selected": {
+              "state": "succeeded",
+              "local": "host",
+              "remote": "prflx",
+              "protocol": "udp",
+              "bytesReceived": 99989,
+              "bytesSent": 86578
+            }
+          }
+        ],
+        "remote": [
+          {
+            "width": 320,
+            "height": 180,
+            "ready": 4,
+            "paused": false,
+            "muted": false,
+            "time": 3.564,
+            "brightness": 48.684895833333336,
+            "tracks": [
+              {
+                "kind": "audio",
+                "enabled": true,
+                "state": "live",
+                "muted": false
+              },
+              {
+                "kind": "video",
+                "enabled": true,
+                "state": "live",
+                "muted": false
+              }
+            ]
+          }
+        ],
+        "local": [
+          {
+            "kind": "audio",
+            "enabled": true,
+            "state": "live"
+          },
+          {
+            "kind": "video",
+            "enabled": true,
+            "state": "live"
+          }
+        ]
+      },
+      {
+        "room": "CONNECTED",
+        "media": "IN THE CALL",
+        "roster": 2,
+        "configurations": [
+          {
+            "policy": "all",
+            "turn": true,
+            "server_protocols": [
+              "stun",
+              "turn",
+              "turns"
+            ]
+          }
+        ],
+        "peers": [
+          {
+            "connection": "connected",
+            "ice": "connected",
+            "signaling": "stable",
+            "inbound": [
+              {
+                "kind": "audio",
+                "packets": 190,
+                "bytes": 15338,
+                "lost": 0,
+                "framesDecoded": 0,
+                "framesReceived": 0,
+                "audioEnergy": 0.001455365333116712,
+                "audioDuration": 3.8299999999999623
+              },
+              {
+                "kind": "video",
+                "packets": 98,
+                "bytes": 68718,
+                "lost": 0,
+                "framesDecoded": 74,
+                "framesReceived": 74,
+                "audioEnergy": 0,
+                "audioDuration": 0
+              }
+            ],
+            "selected": {
+              "state": "succeeded",
+              "local": "host",
+              "remote": "host",
+              "protocol": "udp",
+              "bytesReceived": 86578,
+              "bytesSent": 99989
+            }
+          }
+        ],
+        "remote": [
+          {
+            "width": 320,
+            "height": 180,
+            "ready": 4,
+            "paused": false,
+            "muted": false,
+            "time": 3.663,
+            "brightness": 48.66015625,
+            "tracks": [
+              {
+                "kind": "audio",
+                "enabled": true,
+                "state": "live",
+                "muted": false
+              },
+              {
+                "kind": "video",
+                "enabled": true,
+                "state": "live",
+                "muted": false
+              }
+            ]
+          }
+        ],
+        "local": [
+          {
+            "kind": "audio",
+            "enabled": true,
+            "state": "live"
+          },
+          {
+            "kind": "video",
+            "enabled": true,
+            "state": "live"
+          }
+        ]
+      }
+    ],
+    "normal_muted_receiver": {
+      "first": {
+        "room": "CONNECTED",
+        "media": "IN THE CALL",
+        "roster": 2,
+        "configurations": [
+          {
+            "policy": "all",
+            "turn": true,
+            "server_protocols": [
+              "stun",
+              "turn",
+              "turns"
+            ]
+          }
+        ],
+        "peers": [
+          {
+            "connection": "connected",
+            "ice": "connected",
+            "signaling": "stable",
+            "inbound": [
+              {
+                "kind": "audio",
+                "packets": 285,
+                "bytes": 15857,
+                "lost": 0,
+                "framesDecoded": 0,
+                "framesReceived": 0,
+                "audioEnergy": 0.0015511598580156387,
+                "audioDuration": 5.7199999999999225
+              },
+              {
+                "kind": "video",
+                "packets": 137,
+                "bytes": 76458,
+                "lost": 0,
+                "framesDecoded": 112,
+                "framesReceived": 112,
+                "audioEnergy": 0,
+                "audioDuration": 0
+              }
+            ],
+            "selected": {
+              "state": "succeeded",
+              "local": "host",
+              "remote": "host",
+              "protocol": "udp",
+              "bytesReceived": 101561,
+              "bytesSent": 147922
+            }
+          }
+        ],
+        "remote": [
+          {
+            "width": 320,
+            "height": 180,
+            "ready": 4,
+            "paused": false,
+            "muted": false,
+            "time": 5.563,
+            "brightness": 0,
+            "tracks": [
+              {
+                "kind": "audio",
+                "enabled": true,
+                "state": "live",
+                "muted": false
+              },
+              {
+                "kind": "video",
+                "enabled": true,
+                "state": "live",
+                "muted": false
+              }
+            ]
+          }
+        ],
+        "local": [
+          {
+            "kind": "audio",
+            "enabled": true,
+            "state": "live"
+          },
+          {
+            "kind": "video",
+            "enabled": true,
+            "state": "live"
+          }
+        ]
+      },
+      "next": {
+        "room": "CONNECTED",
+        "media": "IN THE CALL",
+        "roster": 2,
+        "configurations": [
+          {
+            "policy": "all",
+            "turn": true,
+            "server_protocols": [
+              "stun",
+              "turn",
+              "turns"
+            ]
+          }
+        ],
+        "peers": [
+          {
+            "connection": "connected",
+            "ice": "connected",
+            "signaling": "stable",
+            "inbound": [
+              {
+                "kind": "audio",
+                "packets": 435,
+                "bytes": 16307,
+                "lost": 0,
+                "framesDecoded": 0,
+                "framesReceived": 0,
+                "audioEnergy": 0.0015511598580156387,
+                "audioDuration": 8.719999999999859
+              },
+              {
+                "kind": "video",
+                "packets": 213,
+                "bytes": 85925,
+                "lost": 0,
+                "framesDecoded": 172,
+                "framesReceived": 172,
+                "audioEnergy": 0,
+                "audioDuration": 0
+              }
+            ],
+            "selected": {
+              "state": "succeeded",
+              "local": "host",
+              "remote": "host",
+              "protocol": "udp",
+              "bytesReceived": 125477,
+              "bytesSent": 241295
+            }
+          }
+        ],
+        "remote": [
+          {
+            "width": 480,
+            "height": 270,
+            "ready": 4,
+            "paused": false,
+            "muted": false,
+            "time": 8.565,
+            "brightness": 0,
+            "tracks": [
+              {
+                "kind": "audio",
+                "enabled": true,
+                "state": "live",
+                "muted": false
+              },
+              {
+                "kind": "video",
+                "enabled": true,
+                "state": "live",
+                "muted": false
+              }
+            ]
+          }
+        ],
+        "local": [
+          {
+            "kind": "audio",
+            "enabled": true,
+            "state": "live"
+          },
+          {
+            "kind": "video",
+            "enabled": true,
+            "state": "live"
+          }
+        ]
+      },
+      "sender": {
+        "room": "CONNECTED",
+        "media": "IN THE CALL",
+        "roster": 2,
+        "configurations": [
+          {
+            "policy": "all",
+            "turn": true,
+            "server_protocols": [
+              "stun",
+              "turn",
+              "turns"
+            ]
+          }
+        ],
+        "peers": [
+          {
+            "connection": "connected",
+            "ice": "connected",
+            "signaling": "stable",
+            "inbound": [
+              {
+                "kind": "audio",
+                "packets": 435,
+                "bytes": 35140,
+                "lost": 0,
+                "framesDecoded": 0,
+                "framesReceived": 0,
+                "audioEnergy": 0.00656097377968639,
+                "audioDuration": 8.829999999999856
+              },
+              {
+                "kind": "video",
+                "packets": 225,
+                "bytes": 169105,
+                "lost": 0,
+                "framesDecoded": 170,
+                "framesReceived": 171,
+                "audioEnergy": 0,
+                "audioDuration": 0
+              }
+            ],
+            "selected": {
+              "state": "succeeded",
+              "local": "host",
+              "remote": "prflx",
+              "protocol": "udp",
+              "bytesReceived": 242871,
+              "bytesSent": 125612
+            }
+          }
+        ],
+        "remote": [
+          {
+            "width": 480,
+            "height": 270,
+            "ready": 4,
+            "paused": false,
+            "muted": false,
+            "time": 8.467,
+            "brightness": 50.102864583333336,
+            "tracks": [
+              {
+                "kind": "audio",
+                "enabled": true,
+                "state": "live",
+                "muted": false
+              },
+              {
+                "kind": "video",
+                "enabled": true,
+                "state": "live",
+                "muted": false
+              }
+            ]
+          }
+        ],
+        "local": [
+          {
+            "kind": "audio",
+            "enabled": false,
+            "state": "live"
+          },
+          {
+            "kind": "video",
+            "enabled": false,
+            "state": "live"
+          }
+        ]
+      }
+    },
+    "relay_initial": [
+      {
+        "room": "CONNECTED",
+        "media": "IN THE CALL",
+        "roster": 2,
+        "configurations": [
+          {
+            "policy": "relay",
+            "turn": true,
+            "server_protocols": [
+              "stun",
+              "turn",
+              "turns"
+            ]
+          }
+        ],
+        "peers": [
+          {
+            "connection": "connected",
+            "ice": "connected",
+            "signaling": "stable",
+            "inbound": [
+              {
+                "kind": "audio",
+                "packets": 16,
+                "bytes": 1214,
+                "lost": 0,
+                "framesDecoded": 0,
+                "framesReceived": 0,
+                "audioEnergy": 0.0024627309619203123,
+                "audioDuration": 0.9300000000000006
+              },
+              {
+                "kind": "video",
+                "packets": 25,
+                "bytes": 14976,
+                "lost": 0,
+                "framesDecoded": 6,
+                "framesReceived": 6,
+                "audioEnergy": 0,
+                "audioDuration": 0
+              }
+            ],
+            "selected": {
+              "state": "succeeded",
+              "local": "relay",
+              "remote": "relay",
+              "protocol": "udp",
+              "relayProtocol": "udp",
+              "bytesReceived": 1494,
+              "bytesSent": 155
+            }
+          }
+        ],
+        "remote": [
+          {
+            "width": 640,
+            "height": 360,
+            "ready": 4,
+            "paused": false,
+            "muted": false,
+            "time": 0.311,
+            "brightness": 52.915364583333336,
+            "tracks": [
+              {
+                "kind": "audio",
+                "enabled": true,
+                "state": "live",
+                "muted": false
+              },
+              {
+                "kind": "video",
+                "enabled": true,
+                "state": "live",
+                "muted": false
+              }
+            ]
+          }
+        ],
+        "local": [
+          {
+            "kind": "audio",
+            "enabled": true,
+            "state": "live"
+          },
+          {
+            "kind": "video",
+            "enabled": true,
+            "state": "live"
+          }
+        ]
+      },
+      {
+        "room": "CONNECTED",
+        "media": "IN THE CALL",
+        "roster": 2,
+        "configurations": [
+          {
+            "policy": "relay",
+            "turn": true,
+            "server_protocols": [
+              "stun",
+              "turn",
+              "turns"
+            ]
+          }
+        ],
+        "peers": [
+          {
+            "connection": "connected",
+            "ice": "connected",
+            "signaling": "stable",
+            "inbound": [
+              {
+                "kind": "audio",
+                "packets": 18,
+                "bytes": 1295,
+                "lost": 0,
+                "framesDecoded": 0,
+                "framesReceived": 0,
+                "audioEnergy": 0.00012016901306460724,
+                "audioDuration": 0.8400000000000005
+              },
+              {
+                "kind": "video",
+                "packets": 31,
+                "bytes": 20550,
+                "lost": 0,
+                "framesDecoded": 7,
+                "framesReceived": 7,
+                "audioEnergy": 0,
+                "audioDuration": 0
+              }
+            ],
+            "selected": {
+              "state": "succeeded",
+              "local": "relay",
+              "remote": "relay",
+              "protocol": "udp",
+              "relayProtocol": "udp",
+              "bytesReceived": 0,
+              "bytesSent": 1675
+            }
+          }
+        ],
+        "remote": [
+          {
+            "width": 640,
+            "height": 360,
+            "ready": 4,
+            "paused": false,
+            "muted": false,
+            "time": 0.304,
+            "brightness": 52.919270833333336,
+            "tracks": [
+              {
+                "kind": "audio",
+                "enabled": true,
+                "state": "live",
+                "muted": false
+              },
+              {
+                "kind": "video",
+                "enabled": true,
+                "state": "live",
+                "muted": false
+              }
+            ]
+          }
+        ],
+        "local": [
+          {
+            "kind": "audio",
+            "enabled": true,
+            "state": "live"
+          },
+          {
+            "kind": "video",
+            "enabled": true,
+            "state": "live"
+          }
+        ]
+      }
+    ],
+    "relay_after_3s": [
+      {
+        "room": "CONNECTED",
+        "media": "IN THE CALL",
+        "roster": 2,
+        "configurations": [
+          {
+            "policy": "relay",
+            "turn": true,
+            "server_protocols": [
+              "stun",
+              "turn",
+              "turns"
+            ]
+          }
+        ],
+        "peers": [
+          {
+            "connection": "connected",
+            "ice": "connected",
+            "signaling": "stable",
+            "inbound": [
+              {
+                "kind": "audio",
+                "packets": 166,
+                "bytes": 13395,
+                "lost": 0,
+                "framesDecoded": 0,
+                "framesReceived": 0,
+                "audioEnergy": 0.008164814795495584,
+                "audioDuration": 3.93999999999996
+              },
+              {
+                "kind": "video",
+                "packets": 158,
+                "bytes": 136017,
+                "lost": 0,
+                "framesDecoded": 66,
+                "framesReceived": 66,
+                "audioEnergy": 0,
+                "audioDuration": 0
+              }
+            ],
+            "selected": {
+              "state": "succeeded",
+              "local": "relay",
+              "remote": "relay",
+              "protocol": "udp",
+              "relayProtocol": "udp",
+              "bytesReceived": 148088,
+              "bytesSent": 150773
+            }
+          }
+        ],
+        "remote": [
+          {
+            "width": 640,
+            "height": 360,
+            "ready": 4,
+            "paused": false,
+            "muted": false,
+            "time": 3.311,
+            "brightness": 53.04296875,
+            "tracks": [
+              {
+                "kind": "audio",
+                "enabled": true,
+                "state": "live",
+                "muted": false
+              },
+              {
+                "kind": "video",
+                "enabled": true,
+                "state": "live",
+                "muted": false
+              }
+            ]
+          }
+        ],
+        "local": [
+          {
+            "kind": "audio",
+            "enabled": true,
+            "state": "live"
+          },
+          {
+            "kind": "video",
+            "enabled": true,
+            "state": "live"
+          }
+        ]
+      },
+      {
+        "room": "CONNECTED",
+        "media": "IN THE CALL",
+        "roster": 2,
+        "configurations": [
+          {
+            "policy": "relay",
+            "turn": true,
+            "server_protocols": [
+              "stun",
+              "turn",
+              "turns"
+            ]
+          }
+        ],
+        "peers": [
+          {
+            "connection": "connected",
+            "ice": "connected",
+            "signaling": "stable",
+            "inbound": [
+              {
+                "kind": "audio",
+                "packets": 168,
+                "bytes": 13531,
+                "lost": 0,
+                "framesDecoded": 0,
+                "framesReceived": 0,
+                "audioEnergy": 0.001339568056718073,
+                "audioDuration": 3.849999999999962
+              },
+              {
+                "kind": "video",
+                "packets": 164,
+                "bytes": 143048,
+                "lost": 0,
+                "framesDecoded": 67,
+                "framesReceived": 67,
+                "audioEnergy": 0,
+                "audioDuration": 0
+              }
+            ],
+            "selected": {
+              "state": "succeeded",
+              "local": "relay",
+              "remote": "relay",
+              "protocol": "udp",
+              "relayProtocol": "udp",
+              "bytesReceived": 148138,
+              "bytesSent": 150549
+            }
+          }
+        ],
+        "remote": [
+          {
+            "width": 640,
+            "height": 360,
+            "ready": 4,
+            "paused": false,
+            "muted": false,
+            "time": 3.312,
+            "brightness": 53.0234375,
+            "tracks": [
+              {
+                "kind": "audio",
+                "enabled": true,
+                "state": "live",
+                "muted": false
+              },
+              {
+                "kind": "video",
+                "enabled": true,
+                "state": "live",
+                "muted": false
+              }
+            ]
+          }
+        ],
+        "local": [
+          {
+            "kind": "audio",
+            "enabled": true,
+            "state": "live"
+          },
+          {
+            "kind": "video",
+            "enabled": true,
+            "state": "live"
+          }
+        ]
+      }
+    ]
+  },
+  "browser": {
+    "launch_args": [
+      "--use-angle=metal"
+    ],
+    "webgl": {
+      "webgl": true,
+      "renderer": "ANGLE (Apple, ANGLE Metal Renderer: Apple M4, Unspecified Version)",
+      "vendor": "Google Inc. (Apple)"
+    }
+  },
+  "api_errors": [
+    "POST /api/demo/weyland-building/session 429"
+  ],
+  "cleanup": {
+    "ok": true,
+    "deleted": {
+      "hardware_components": 39,
+      "door_hardware_matrix": 30,
+      "door_schedule_entries": 30,
+      "hardware_page_extractions": 3,
+      "hardware_sets": 24,
+      "hardware_extraction_sessions": 3,
+      "projects": 3,
+      "weyland_sessions": 4,
+      "nodes": 2,
+      "users": 2
+    },
+    "deletedTotal": 140,
+    "r2": [],
+    "kv": [],
+    "skipped": [],
+    "remaining": {
+      "users": 0,
+      "weyland_sessions": 0,
+      "extraction_sessions": 0,
+      "projects": 0
+    },
+    "sessions": 3,
+    "projects": 3,
+    "submittals": 0
+  },
+  "side_effects": "AuthFor identities created by this run stay at AuthFor (they cannot be deleted from here): user-sim-meet-media-a-mv1j4vhy388a13@weylandai.com, user-sim-meet-media-b-mv1j4vhy388a13@weylandai.com"
+}
