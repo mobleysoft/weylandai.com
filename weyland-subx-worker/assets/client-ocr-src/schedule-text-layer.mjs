@@ -22,6 +22,82 @@
 
 import { hardwareSpecSections } from "./schedule-workspace.mjs?v=20261009g019r1";
 
+// Evidence describes the existing cascade; its scores are recognizer scores,
+// never calibrated probabilities or permission to accept a field. Keep the
+// original read even when parsing rejects it or a later view replaces it.
+export const SCHEDULE_EVIDENCE_VERSION = "schedule-fields-v1";
+export const OCR_MODEL_SHA256 = "7d4322bd2a7749724879683fc3912cb542f19906c83bcc1a52132556427170b2";
+const EVIDENCE_FIELDS = new Set(["mark", "width", "height", "size", "thickness", "hardware_group", "fire_rating", "door_type", "door_material", "door_finish", "stc_rating", "frame_type", "frame_material", "frame_finish", "head_detail", "jamb_detail", "sill_detail", "panic_hardware", "notes", "location", "glazing", "pair", "alternate", "details"]);
+// Optional client metadata must never invoke object coercion. JSON objects
+// such as {toString:null} are invalid text and should be dropped safely.
+const evidenceText = value => typeof value === "string" ? value.slice(0, 128)
+  : typeof value === "boolean" || (typeof value === "number" && Number.isFinite(value)) ? String(value) : "";
+const evidenceScore = value => Number.isFinite(value) && value >= 0 && value <= 1 ? value : null;
+const evidenceValue = value => typeof value === "number" ? (Number.isFinite(value) ? value : null) : typeof value === "boolean" ? value : typeof value === "string" ? evidenceText(value) : null;
+const evidenceEnum = (value, allowed, fallback) => allowed.includes(value) ? value : fallback;
+const evidenceCount = (value, max) => Number.isFinite(value) ? Math.min(max, Math.max(0, Math.floor(value))) : 0;
+const evidenceBytes = value => new TextEncoder().encode(JSON.stringify(value)).length;
+const evidenceView = view => ({
+  name: evidenceEnum(view?.name, ["initial", "positioned_text", "line_words", "row_words", "cell_psm_7"], "initial"),
+  ...(Number.isFinite(view?.scale) && view.scale >= .5 && view.scale <= 3 ? { scale: view.scale } : {}),
+  ...(Number.isFinite(view?.threshold) && view.threshold >= 0 && view.threshold <= 255 ? { threshold: view.threshold } : {}),
+  ...(Number.isFinite(view?.text_height) && view.text_height >= 1 && view.text_height <= 128 ? { text_height: view.text_height } : {}),
+  ...(["6", "7"].includes(view?.psm) ? { psm: view.psm } : {}),
+  ...(view?.interpolate ? { interpolate: true } : {}),
+  ...(view?.trim ? { trim: true } : {}),
+  ...(view?.whitelist ? { whitelist: true } : {}),
+});
+
+// Also used at persistence boundaries: no images, word-box arrays or arbitrary
+// customer metadata can enter the existing audit JSON through this envelope.
+export function boundedFieldEvidence(input) {
+  if (!input || input.version !== SCHEDULE_EVIDENCE_VERSION || !["pdf_text", "ocr_lines", "ocr_grid"].includes(input.stage)) return null;
+  const fields = {};
+  for (const key of EVIDENCE_FIELDS) {
+    const field = input.fields?.[key];
+    if (!field || typeof field !== "object") continue;
+    const reading = r => ({ text: evidenceText(r?.text), confidence: input.stage === "pdf_text" ? null : evidenceScore(r?.confidence), value: evidenceValue(r?.value), view: evidenceView(r?.view) });
+    fields[key] = {
+      original: reading(field.original), chosen: reading(field.chosen),
+      disposition: ["read", "abstained", "missing"].includes(field.disposition) ? field.disposition : "abstained",
+      reason: evidenceEnum(field.reason, ["parsed", "parse_rejected", "empty_read"], "parse_rejected"),
+      features: { characters: evidenceCount(field.features?.characters, 128), has_units: !!field.features?.has_units, dimension: ["width", "height", "thickness", "size"].includes(key) },
+      ...(field.reread ? { reread: {
+        attempts: evidenceCount(field.reread.attempts, 20),
+        candidate_values: evidenceCount(field.reread.candidate_values, 20),
+        conflict: !!field.reread.conflict, partial: !!field.reread.partial,
+        reason: evidenceEnum(field.reread.reason, ["consensus", "conflicting_values", "insufficient_support", "original_support_guard", "cell_too_small", "aborted", "cell_limit", "time_limit"], "insufficient_support"),
+        selected_views: (Array.isArray(field.reread.selected_views) ? field.reread.selected_views : []).slice(0, 2).map(evidenceView),
+        readings: (Array.isArray(field.reread.readings) ? field.reread.readings : []).slice(0, 6).map(reading),
+      } } : {}),
+    };
+  }
+  const out = { version: SCHEDULE_EVIDENCE_VERSION, stage: input.stage,
+    score_kind: input.stage === "pdf_text" ? "positioned_text" : "tesseract_word_confidence",
+    recognizer: input.stage === "pdf_text" ? null : { engine: "tesseract-wasm", model: "eng-tessdata-fast", model_sha256: OCR_MODEL_SHA256 },
+    partial: !!input.partial, partial_reason: input.partial ? evidenceEnum(input.partial_reason, ["aborted", "cell_limit", "time_limit", "unread_marks", "page_incomplete"], "page_incomplete") : null, fields };
+  // Even hostile client evidence has a strict serialized ceiling. Prioritize
+  // dimensions and the mark, keep the normal row unchanged, flag omitted data.
+  if (input.truncated) out.truncated = true;
+  if (evidenceBytes(out) > 16000) {
+    const bounded = {}; out.fields = bounded; out.truncated = true;
+    for (const [key, field] of Object.entries(fields)) {
+      bounded[key] = field;
+      if (evidenceBytes(out) > 16000) delete bounded[key];
+    }
+  }
+  return out;
+}
+
+export function fieldDecision(originalText, originalConfidence, chosenText, chosenConfidence, value, view = { name: "initial" }, reread = null, originalValue = value) {
+  const text = String(chosenText ?? ""), raw = String(originalText ?? "");
+  return { original: { text: raw, confidence: originalConfidence, value: originalValue, view: { name: "initial" } },
+    chosen: { text, confidence: chosenConfidence, value, view },
+    disposition: value != null && value !== "" ? "read" : text ? "abstained" : "missing",
+    reason: value != null && value !== "" ? "parsed" : text ? "parse_rejected" : "empty_read",
+    features: { characters: raw.length, has_units: /['"′″]/.test(raw) }, ...(reread ? { reread } : {}) };
+}
+
 // ---------------------------------------------------------------- geometry
 
 /**
@@ -291,7 +367,6 @@ export async function readDoorScheduleFromLines(lines, pageSize, opts = {}) {
       if (!fg || (used.get(i) || []).some((r) => fg.x0 >= r.x0 - h0 && fg.x1 <= r.x1 + h0)) continue;
       const t = await buildTable(lines, i, pageSize, opts, fg);
       if (!t) continue;
-      console.log("Found table:", t.title, "headers:", t.header.join('|'), "fields:", t.fields.join(','), "is_door:", t.is_door_schedule);
       for (const k of t.lineIndexes) { if (!used.has(k)) used.set(k, []); used.get(k).push(t); }
       if (t.is_door_schedule) tables.push(t);
     }
@@ -599,12 +674,10 @@ function doorFromRow(row, fields, index, pageSize) {
   const get = (f) => { const k = fields.indexOf(f); return k >= 0 ? cleanText(row.cells[k]) : null; };
   let rawMark = get("mark");
   const loc = get("location");
-  console.log(`doorFromRow debug: rawMark=${rawMark}, loc=${loc}, cells=${row.cells}`);
   if (rawMark && !/\d/.test(rawMark) && loc && /\d/.test(loc)) {
     rawMark = loc.split(/\s+/)[0] + rawMark.trim();
   }
   const mark = cleanMark(rawMark);
-  console.log(`doorFromRow debug: cleanMark=${mark}`);
   if (!mark) return null;
   let size = { pair: false, width: get("width"), height: get("height"), thickness: get("thickness"), width_inches: null, height_inches: null, thickness_inches: null };
   if (fields.includes("size")) {
@@ -629,15 +702,26 @@ function doorFromRow(row, fields, index, pageSize) {
   const notes = [get("notes"), get("location") ? "Room: " + get("location") : null].filter(Boolean).join("; ") || null;
   const panic = get("panic_hardware");
   const confidence = {};
+  const rawConfidence = {};
   const fromOcr = row.words.some(g => g.some(w => w.conf != null));
   fields.forEach((f, k) => {
-    if (f) confidence[f] = fromOcr ? (row.words[k].length ? Math.min(...row.words[k].map(w => (w.conf ?? 0) / 100)) : 0) : 1;
+    if (f) rawConfidence[f] = confidence[f] = fromOcr ? (row.words[k].length ? Math.min(...row.words[k].map(w => (w.conf ?? 0) / 100)) : 0) : 1;
   });
   if (fromOcr) {
     if (fields.includes("width") && size.width_inches == null) confidence.width = 0;
     if (fields.includes("height") && size.height_inches == null) confidence.height = 0;
     if (fields.includes("size") && (size.width_inches == null || size.height_inches == null)) confidence.size = 0;
   }
+  const original = Object.fromEntries(fields.filter(Boolean).map(f => {
+    const cell = row.words[fields.indexOf(f)].find(w => w.cell_evidence)?.cell_evidence;
+    return [f, cell || { text: get(f), confidence: row.words[fields.indexOf(f)].length ? rawConfidence[f] : null }];
+  }));
+  const rawW = readDimension(original.width?.text), rawH = readDimension(original.height?.text);
+  const rawPlain = !!(rawW && rawH && rawW.format === "in" && rawH.format === "in");
+  const rawSize = fields.includes("size") ? readSizeCell(original.size?.text) : {
+    width_inches: acceptDim(rawW, "width", rawPlain), height_inches: acceptDim(rawH, "height", rawPlain),
+    thickness_inches: (() => { const t = readDimension(original.thickness?.text); return t && t.inches >= .75 && t.inches <= 3 ? t.inches : null; })(),
+  };
   return {
     door_number: mark,
     hardware_group: get("hardware_group"),
@@ -667,6 +751,12 @@ function doorFromRow(row, fields, index, pageSize) {
     source_y: Math.round(row.y),
     field_confidence: confidence,
     read_from: fromOcr ? "ocr_lines" : "text_layer",
+    field_evidence: boundedFieldEvidence({ version: SCHEDULE_EVIDENCE_VERSION, stage: fromOcr ? "ocr_lines" : "pdf_text", fields: Object.fromEntries(fields.filter(Boolean).map(f => {
+      const value = f === "width" ? size.width_inches : f === "height" ? size.height_inches : f === "thickness" ? size.thickness_inches : f === "size" ? (size.width_inches != null && size.height_inches != null ? `${size.width_inches} x ${size.height_inches}` : null) : get(f);
+      const rawValue = ["width", "height", "thickness"].includes(f) ? rawSize[f + "_inches"] : f === "size" ? (rawSize.width_inches != null && rawSize.height_inches != null ? `${rawSize.width_inches} x ${rawSize.height_inches}` : null) : original[f].text;
+      return [f, fieldDecision(original[f].text, original[f].confidence, get(f), rawConfidence[f], value,
+        original[f].selected_view || { name: fromOcr ? "line_words" : "positioned_text" }, original[f].reread, rawValue)];
+    })) }),
   };
 }
 

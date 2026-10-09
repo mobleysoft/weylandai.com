@@ -8,6 +8,7 @@ import assert from "node:assert/strict";
 import { DatabaseSync } from "node:sqlite";
 import { NativeRouter } from "../src/lib/router.js";
 import { registerSubxWorkspaceRoutes } from "../src/routes/subx-workspace.js";
+import { fieldDecision, SCHEDULE_EVIDENCE_VERSION } from "../assets/client-ocr-src/schedule-text-layer.mjs";
 
 function d1(db) {
   return {
@@ -209,10 +210,15 @@ test("F3: saved OCR rows expose measured confidence, partial status and qualifie
   const fields = { mark: .95, hardware_group: .45, fire_rating: .68, width: .72, height: .98 };
   db.prepare("UPDATE door_schedule_entries SET field_confidence_json = ? WHERE session_id = ? AND mark = ?")
     .run(JSON.stringify({ source: { page: 1, table_row: 7 }, read_from: "ocr_lines", confidence_source: "ocr_words", fields,
+      field_evidence: { version: SCHEDULE_EVIDENCE_VERSION, stage: "ocr_lines", partial: true, fields: { width: { ...fieldDecision("3'-0\"", .72, "3'-0\"", .72, 36), image: "never-expose" } } },
       read_audit: { partial: true, expected_marks: ["131", "999"] } }), "sess-a", "131");
   const { data } = await call("GET", "/api/hardware-schedule/session/sess-a/doors", "a");
   const door = data.doors.find(d => d.mark === "131");
   assert.deepEqual(door.field_confidence, fields);
+  assert.equal(door.field_evidence.fields.width.original.confidence, .72);
+  assert.equal(door.field_evidence.fields.width.chosen.value, 36);
+  assert.equal(door.field_evidence.partial, true);
+  assert.equal(JSON.stringify(door.field_evidence).includes("never-expose"), false);
   for (const field of ["hardware_group", "fire_rating", "size"]) assert.ok(door.unsure.includes(field));
   assert.equal(data.takeoff.ocr_rows, 1);
   assert.equal(data.takeoff.ocr_fields, 5);

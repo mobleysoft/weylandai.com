@@ -7,8 +7,8 @@ import { scanRenderPlan, renderPageToImageData, renderRegionToImageData, recogni
 
 const sourceUrl = new URL("../assets/client-ocr-src/schedule-grid-extraction-client.mjs", import.meta.url);
 let imports = 0;
-async function clientWith(page, engine) {
-  globalThis.reviewPdfjs = { Util, getDocument: () => ({ promise: Promise.resolve({ getPage: async () => page }) }) };
+async function clientWith(page, engine, onDestroy = () => {}) {
+  globalThis.reviewPdfjs = { Util, getDocument: () => ({ promise: Promise.resolve({ getPage: async () => page, destroy: async () => onDestroy() }) }) };
   globalThis.reviewEngine = engine;
   const source = readFileSync(sourceUrl, "utf8")
     .replace(/from "\.\/schedule-text-layer.mjs[^\"]*"/, "from " + JSON.stringify(new URL("schedule-text-layer.mjs", sourceUrl).href))
@@ -186,4 +186,18 @@ test("F4: 1–59 vector words without a schedule never allocate an OCR canvas in
     } finally { await (doc.destroy?.() ?? doc.loadingTask?.destroy()); }
   }
   assert.deepEqual(pixels, []);
+});
+
+test("door PDF resources close after no-table, partial and thrown rendering outcomes", async t => {
+  allocationSpy(t, 36e6);
+  for (const outcome of ["empty", "partial", "failure"]) {
+    let destroyed = 0;
+    const page = fakePage(612, 792);
+    if (outcome === "failure") page.render = () => ({ promise: Promise.reject(new Error("render failed")) });
+    const client = await clientWith(page, emptyEngine, () => destroyed++);
+    const run = client.extractDoorScheduleFromPdf(new ArrayBuffer(1), 1, null, outcome === "partial" ? { maxCells: 0 } : {});
+    if (outcome === "failure") await assert.rejects(run, /render failed/);
+    else await run;
+    assert.equal(destroyed, 1, "each reader-owned document is destroyed once");
+  }
 });

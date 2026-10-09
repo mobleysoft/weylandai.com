@@ -10,11 +10,13 @@ import { assembleSubmittalPackage } from "../src/lib/submittal-assembler.js";
 import { writeDoorScheduleEntries } from "../src/lib/hardware-extraction-vision-dispatch.js";
 import { reviewDoorRows } from "../assets/client-ocr-src/schedule-workspace.mjs";
 import { persistBrowserGridResult } from "../src/lib/hardware-extraction-pipeline.js";
+import { fieldDecision, SCHEDULE_EVIDENCE_VERSION } from "../assets/client-ocr-src/schedule-text-layer.mjs";
 
 test("F2/F3: persistence preserves duplicate scan occurrences and never marks a partial read done", async () => {
   const db = makeDb(), env = { DB: d1(db) };
   db.exec("ALTER TABLE hardware_extraction_sessions ADD COLUMN door_schedule_extracted INTEGER DEFAULT 0; ALTER TABLE hardware_extraction_sessions ADD COLUMN door_entries_count INTEGER DEFAULT 0; ALTER TABLE hardware_extraction_sessions ADD COLUMN pages_processed INTEGER DEFAULT 0; ALTER TABLE hardware_extraction_sessions ADD COLUMN door_schedule_extracted_at TEXT; ALTER TABLE hardware_extraction_sessions ADD COLUMN updated_at TEXT;");
-  const row = { door_number: "214", read_from: "ocr_lines", confidence_source: "ocr_words", field_confidence: { mark: .61, hardware_group: .55 }, source_row: 4 };
+  const row = { door_number: "214", read_from: "ocr_lines", confidence_source: "ocr_words", field_confidence: { mark: .61, hardware_group: .55 }, source_row: 4,
+    field_evidence: { version: SCHEDULE_EVIDENCE_VERSION, stage: "ocr_lines", fields: { mark: { ...fieldDecision("214", .61, "214", .61, "214"), image: "must-not-persist" } }, secret: "must-not-persist" } };
   const br = { result: { partial: true, doors: [{ ...row, hardware_group: "02" }, { ...row, hardware_group: "05", source_row: 5 }], metadata: { partial: true, expected_marks: ["214", "211"] } } };
   const result = await persistBrowserGridResult(br, "door_schedule", "s1", null, 3, 6, env);
   assert.equal(result.partial, true);
@@ -24,6 +26,13 @@ test("F2/F3: persistence preserves duplicate scan occurrences and never marks a 
   let stored = db.prepare("SELECT * FROM door_schedule_entries WHERE session_id = 's1'").all();
   assert.equal(stored.length, 2);
   assert.deepEqual(stored.map(d => d.hardware_group), ["02", "05"]);
+  for (const d of stored) {
+    const evidence = JSON.parse(d.field_confidence_json).field_evidence;
+    assert.equal(evidence.fields.mark.original.confidence, .61);
+    assert.equal(evidence.partial, true);
+    assert.equal(JSON.stringify(evidence).includes("must-not-persist"), false);
+    assert.ok(new TextEncoder().encode(JSON.stringify(evidence)).length <= 16000);
+  }
   const doors = stored.map(d => { const fc = JSON.parse(d.field_confidence_json); return { ...d, original_mark: fc.original_mark, read_from: fc.read_from, field_confidence: fc.fields, confidence_source: fc.confidence_source, read_audit: fc.read_audit }; });
   const review = reviewDoorRows(doors);
   assert.deepEqual(review.duplicate_marks, [{ page: 3, mark: "214", count: 2 }]);

@@ -88,7 +88,7 @@ async function extractWithEmbeddedGofaineatMode(pdfBuffer, pageNumber, env2, ses
   // No sessionId available (a caller outside the session-based page route) -
   // fall back to the original hardware-groups-only behavior rather than
   // guessing a schedule type with no session row to read it from.
-  console.log(`[Hardware Extractor] Using EMBEDDED_GOFAINEAT mode (OCR + local Qwen, no Anthropic key, no sessionId - defaulting to hardware_schedule) for page ${pageNumber}/${totalPages}...`);
+  console.log(`[Hardware Extractor] Using EMBEDDED_GOFAINEAT mode (text-first JavaScript reader, no sessionId - hardware_schedule) for page ${pageNumber}/${totalPages}...`);
   return await extractHardwareGroupsViaEmbeddedGofaineat(pdfBuffer, pageNumber, totalPages, env2);
 }
 

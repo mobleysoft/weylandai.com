@@ -27,7 +27,7 @@ import { matchComponentToCutSheets, citedPagesFor, PACKET_MATCH_TYPES } from "..
 import { newReadBudget, filedPageFor, variantPageFor } from "../../../weyland-shared/page-citations.js";
 import { incrementSubmittalsUsed } from "../lib/edge-telemetry.js";
 import { outputAccess, paymentRequired } from "../../../weyland-shared/output-access.js";
-import { readDimension, readSizeCell, looksLikeMark } from "../../assets/client-ocr-src/schedule-text-layer.mjs";
+import { readDimension, readSizeCell, looksLikeMark, boundedFieldEvidence } from "../../assets/client-ocr-src/schedule-text-layer.mjs";
 
 // Which fields of a door row the reviewer should look at (2026-10-08): a
 // value read by OCR, a value that does not look like what the column holds,
@@ -304,7 +304,7 @@ export function registerSubxWorkspaceRoutes(router, { authenticate, requireActiv
         if (fc && fc.source) source = { page: fc.source.page ?? d.page_number, table_row: fc.source.table_row ?? null, rotation: fc.source.rotation ?? null };
       } catch (_) { fc = null; }
       const corrected = !!d.corrections_json;
-      const out = { ...d, original_mark: fc?.original_mark || null, field_confidence: fc?.fields || {}, confidence_source: fc?.confidence_source || null, read_audit: fc?.read_audit || null, alternate_pricing: fc?.alternate_pricing ?? null, hardware_spec_sections: fc?.hardware_spec_sections || [], source, read_from: fc ? fc.read_from || null : null, pair: fc ? fc.pair ?? null : null, glazing: fc ? fc.glazing ?? null : null, section: fc ? fc.section ?? null : null, corrected, unsure: [] };
+      const out = { ...d, original_mark: fc?.original_mark || null, field_confidence: fc?.fields || {}, confidence_source: fc?.confidence_source || null, field_evidence: boundedFieldEvidence(fc?.field_evidence), read_audit: fc?.read_audit || null, alternate_pricing: fc?.alternate_pricing ?? null, hardware_spec_sections: fc?.hardware_spec_sections || [], source, read_from: fc ? fc.read_from || null : null, pair: fc ? fc.pair ?? null : null, glazing: fc ? fc.glazing ?? null : null, section: fc ? fc.section ?? null : null, corrected, unsure: [] };
       out.unsure = corrected ? [] : unsureDoorFields(out, filled);
       delete out.field_confidence_json;
       delete out.corrections_json;

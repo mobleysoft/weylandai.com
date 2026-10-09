@@ -58,7 +58,9 @@ const { chromium } = pwMod.chromium ? pwMod : pwMod.default; // a file-path impo
   });
   const scan=variants.find(v=>v.variant==='scanned'), vector=variants.find(v=>v.variant==='vector');
   const marks=v=>(v?.result?.doors||[]).map(d=>d.door_number).sort();
-  const pass=!r.error && variants.length===2 && variants.every(v=>v.ok && v.score.rows_found===expected.doors.length && v.score.extra_rows===0)
+  const pass=!r.error && variants.length===2 && variants.every(v=>v.ok && v.score.rows_found===expected.doors.length && v.score.extra_rows===0
+    && v.score.fields_right===336 && v.score.fields_total===336
+    && new Set((v.result?.doors||[]).map(d=>d.door_number)).size===expected.doors.length)
     && scan.text_items===0 && Math.max(scan.width,scan.height)>=2592
     && scan.result.metadata.extraction_mode!=='text_layer' && JSON.stringify(marks(scan))===JSON.stringify(marks(vector));
   const assets=["schedule-grid-extraction-client.mjs.bin","schedule-text-layer.mjs.bin"].map(name=>({name,sha256:createHash("sha256").update(readFileSync(root+"weyland-subx-worker/assets/client-ocr/"+name)).digest("hex")}));

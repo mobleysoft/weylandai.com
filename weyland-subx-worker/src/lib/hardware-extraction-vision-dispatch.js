@@ -4,6 +4,8 @@ import { resolveInferenceContract } from "./hardware-extraction-vision-adapters.
 import { generateJWT, arrayBufferToBase64 } from "../auth-module.js";
 import { parseHardwareExtractionResult } from "./hardware-extraction-prompts.js";
 import { callLocalQwen } from "./qwen-bridge.js";
+import { readEmbeddedHardwarePage } from "./embedded-hardware-reader.js";
+import { boundedFieldEvidence } from "../../assets/client-ocr-src/schedule-text-layer.mjs";
 
 
 // Policy (John, 2026-10-05): WeylandAI runs vision / language through
@@ -742,12 +744,9 @@ Output the JSON object now:`;
 // ocrScheduleTableBanded: the real, CPU-budget-safe OCR step shared by
 // every embedded_gofaineat-family adapter. Factored out unchanged from
 // viaEmbeddedGofaineat's own inline version (2026-09-12) when
-// extractHardwareGroupsViaEmbeddedGofaineat below (2026-09-13, the
-// /subx-app "RUN EXTRACTION" single-page fix - see
-// EXTRACTION_PIPELINE_CUSTOMER_PATH.md Part 5) needed the identical
-// technique for a different downstream JSON contract (hardware_groups
-// instead of doors) - same OCR, same CPU-ceiling workaround, genuinely
-// shared rather than copy-pasted a second time.
+// the original hardware-page adapter (2026-09-13) needed the same
+// banding technique. The current sessionless hardware adapter below now
+// reads PDF text first, then uses the browser JS reader for textless pages.
 //
 // Uses /extract-schedule-table, not the generic /extract-text: verified
 // live 2026-09-12 against a real complex door-schedule sheet
@@ -867,45 +866,9 @@ export async function viaEmbeddedGofaineat(sessionId, pdfBuffer, env2, ctx = {})
   };
 }
 
-// EMBEDDED_HARDWARE_GROUPS_EXTRACTION_PROMPT_TEMPLATE +
-// extractHardwareGroupsViaEmbeddedGofaineat: the /subx-app single-page
-// "RUN EXTRACTION" button's real embedded_gofaineat port.
-//
-// Built 2026-09-13 (EXTRACTION_PIPELINE_CUSTOMER_PATH.md Part 5), per
-// direct instruction: "we do not need an anthropic api key for
-// weylandai.com! We do extractions via embedded gofaineats" - the same
-// instruction Part 4 above already acted on for dispatchVisionExtraction
-// (POST /api/submittals/upload). This is the OTHER real call chain that
-// was still hard-dependent on ANTHROPIC_API_KEY: GET
-// /api/hardware-schedule/session/:id/page/:pageNum
-// (routes/hardware-schedule-page-extract.js) -> extractSinglePage
-// (hardware-extraction-single-page.js) -> callClaudeWithPdf
-// (hardware-extraction-vision-adapters.js), confirmed live-broken with
-// "ANTHROPIC_API_KEY not configured" on both of extractSinglePage's real
-// fallback tiers (isolated-PDF and direct-PDF both call callClaudeWithPdf
-// - see that file's own header comment). Part 4's own honest scope note
-// flagged this exact gap as real, separate, unstarted work - this is
-// that work, not a re-do of Part 4.
-//
-// Genuinely different JSON contract than viaEmbeddedGofaineat above:
-// that adapter (and its EMBEDDED_TEXT_EXTRACTION_PROMPT_TEMPLATE) targets
-// a DOOR SCHEDULE ({doors:[...]} - sizes/materials/fire-ratings per door
-// MARK). This route's real, existing prompt family
-// (buildIsolatedPageExtractionPrompt et al. in
-// hardware-extraction-prompts.js) targets a HARDWARE SCHEDULE
-// ({hardware_groups:[...], door_hardware_matrix:[...]} - hinge/lockset/
-// closer components per numbered hardware set/group) - a different real
-// document type this platform also handles. Reusing the doors-shaped
-// adapter here would silently misparse a real hardware-schedule page, so
-// this is a parallel prompt + contract, not the same one - but the OCR
-// step (ocrScheduleTableBanded above) and the Qwen bridge call
-// (callLocalQwen) ARE the identical shared primitives, not duplicated.
-//
-// Output is fed through the same parseHardwareExtractionResult
-// (hardware-extraction-prompts.js) the real Claude-vision path already
-// used - it expects a Claude-message-shaped {content:[{text}], usage}
-// object, so Qwen's raw text is wrapped into that exact shape rather than
-// writing a second, parallel validator/mounting-defaults pass.
+// Retained exported prompt for compatibility with older callers. The current
+// hardware-page adapter below uses the PDF text/browser JS readers and does
+// not pass this template to a language model.
 export function EMBEDDED_HARDWARE_GROUPS_EXTRACTION_PROMPT_TEMPLATE(ocrText, pageNumber, totalPages) {
   return `You are extracting a HARDWARE SCHEDULE table from OCR text of page ${pageNumber} of ${totalPages} of a scanned construction PDF. The OCR is imperfect (a real WASM tesseract pass over a rasterized scan, not a clean text layer) - expect misread characters, merged columns, and noisy whitespace. Work with what's actually here; do not invent groups or components that aren't backed by real text below.
 
@@ -951,62 +914,7 @@ Output the JSON object now:`;
 }
 
 export async function extractHardwareGroupsViaEmbeddedGofaineat(pdfBuffer, pageNumber, totalPages, env2) {
-  const overallStartTime = Date.now();
-  if (!env2.OCR_SERVICE) {
-    const e = new Error("OCR_SERVICE binding missing - can't rasterize/OCR without weyland-ocr-worker (embedded_gofaineat route)");
-    e.retryable = false;
-    throw e;
-  }
-  const ocrResult = await ocrScheduleTableBanded(pdfBuffer, pageNumber, env2);
-  if (ocrResult.error) {
-    const e = new Error(`embedded_gofaineat OCR step failed (${ocrResult.error}): ${ocrResult.detail || ""}`);
-    e.retryable = ocrResult.error !== "ocr_produced_no_text";
-    throw e;
-  }
-  const { pageText } = ocrResult;
-  console.log(`[embedded_gofaineat_hardware] page ${pageNumber}: OCR produced ${pageText.length} chars. First 400: ${JSON.stringify(pageText.slice(0, 400))}`);
-  const extractionStartTime = Date.now();
-
-  const prompt = EMBEDDED_HARDWARE_GROUPS_EXTRACTION_PROMPT_TEMPLATE(pageText, pageNumber, totalPages);
-  let content;
-  try {
-    content = await callLocalQwen(env2, [{ role: "user", content: prompt }], { maxTokens: 4e3, temperature: 0.1 });
-  } catch (e) {
-    const err = new Error(`embedded_gofaineat local-Qwen structuring step failed: ${e.message}`);
-    err.retryable = true;
-    err.ocr_text_length = pageText.length;
-    throw err;
-  }
-  const extractionTime = Date.now() - extractionStartTime;
-
-  // parseHardwareExtractionResult (hardware-extraction-prompts.js) expects
-  // the same shape the real Claude Messages API returns - wrapping Qwen's
-  // raw text this way reuses its existing JSON-extraction, hardware_groups
-  // validation, and mounting-position-defaults logic verbatim instead of
-  // writing and maintaining a second parallel validator.
-  const fakeApiResponse = {
-    content: [{ text: content }],
-    usage: { input_tokens: 0, output_tokens: 0 }
-  };
-  const parsedResult = parseHardwareExtractionResult(fakeApiResponse);
-  const totalTime = Date.now() - overallStartTime;
-  return {
-    page_number: pageNumber,
-    total_pages: totalPages,
-    hardware_groups: parsedResult.hardware_groups || [],
-    door_hardware_matrix: parsedResult.door_hardware_matrix || [],
-    detected_nomenclature: parsedResult.detected_nomenclature || null,
-    metadata: {
-      ...parsedResult.metadata || {},
-      extraction_mode: "embedded_gofaineat",
-      extraction_route: "embedded_gofaineat",
-      page_isolated: false,
-      ocr_text_length: pageText.length
-    },
-    usage: parsedResult.usage,
-    extraction_time_ms: extractionTime,
-    total_time_ms: totalTime
-  };
+  return readEmbeddedHardwarePage(pdfBuffer, pageNumber, totalPages, env2);
 }
 
 // extractDoorScheduleViaEmbeddedGofaineat: the DOOR SCHEDULE contract
@@ -1222,6 +1130,9 @@ export async function writeDoorScheduleEntries(sessionId, tenantId, pageNumber, 
         read_from: door.read_from || null,
         fields: door.field_confidence || null,
         confidence_source: door.confidence_source || null,
+        field_evidence: boundedFieldEvidence(door.field_evidence && { ...door.field_evidence,
+          partial: partial || door.field_evidence.partial,
+          partial_reason: door.field_evidence.partial_reason || (partial ? "page_incomplete" : null) }),
         original_mark: door.original_mark || null,
         generated_occurrence: door.original_mark && occurrence > 1 ? occurrence : null,
         read_audit: door.read_audit || null,
@@ -1382,8 +1293,8 @@ export async function extractDoorScheduleViaEmbeddedGofaineat(sessionId, tenantI
 // the OTHER real document type this platform handles (hardware-set
 // component tables: Qty | Description | Product Number | Fin | Man,
 // confirmed live 2026-10-02 against 525dc0b72011077a.pdf p219 - "Hardware
-// Set: 01.../Door# 100B"). Replaces extractHardwareGroupsViaEmbeddedGofaineat
-// (the Qwen-bridge path above) as the default per John's standing
+// Set: 01.../Door# 100B"). Replaced the former Qwen bridge as the
+// session-backed default per John's standing
 // direction: no shipped extraction path depends on a hosted/local LLM when
 // the task genuinely decomposes - only further decomposition is the fix.
 //

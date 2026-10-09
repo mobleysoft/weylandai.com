@@ -1,0 +1,166 @@
+{
+  "captured_at": "2026-10-09T22:49:20.935652+00:00",
+  "mode": "read-only production baseline and primary-source acquisition; no production write",
+  "source": {
+    "url": "https://us.allegion.com/content/dam/allegion-us-2/web-files/glynn-johnson/information-documents/Glynn-Johnson_Overhead_Door_Holders.Stops_Catalog_101401.pdf",
+    "http_status": 200,
+    "bytes": 3027847,
+    "sha256": "20d53134b94b9894eeb2284a3aecb385c9d583cde123ee5e7fbdd6b8f685654e",
+    "pages": 32,
+    "catalogue_id": "20d53134b94b9894",
+    "r2_key": "catalog-corpus/116ee74ce84a7ffd04b688883362e538cf138ab724958f003aff06fdf75ba60d.pdf",
+    "primary_source": true
+  },
+  "inspection": {
+    "method": "pdftotext -layout plus pdftoppm rendered pages visually inspected",
+    "pdf_ordinals": [
+      14,
+      15
+    ],
+    "model_designation": "90S Series stop-only",
+    "record_scope": "Manufacturer-designated family; no size, function, certification or price inferred",
+    "quotes": {
+      "14": "90S Series stop-only model",
+      "15": "90S Series stop-only"
+    },
+    "page_text_sha256": [
+      "0fdbce38afd9cdcdfd29e8a6eb3418a810db001aa0f4fe497f78f549837327f9",
+      "9c8bf9ce380e037249df11a74c2e40d4f2aed02590c41739525b9a205bf5505f",
+      "afb0a2a6da28b39efdaffc23468891f7e3d99c5dc3e85763748e0a5315cca853",
+      "7c2c437b45692a6ed0b9002cf81830b96b217a19a7b156cdc79b18651a72bcac",
+      "4b17efa38b2cd8f5daf3b32ab215d951ac960cc191f607e28b187d443d6447ee",
+      "a51f5bc101357ec151806b745ad27e17e5991da5fdecb694ad851e43db8f6b97",
+      "fc1cb02600a558cbcc7a74fe1cd8655b9337411eb49c054f8364162fe5e50950",
+      "92e9ce8ab1b07929927329cd13e0e652281410912d7809139dfcd050e9d66d86",
+      "1befad8cfc6411ce55982180309961ddc055441f123436c7ab43577a512a1691",
+      "8e8d17bd8d47b7470a3fce9ab9223184c79fd8ce898e828be49cee29c02a8fef",
+      "d8a3bff7c9f1ae88f2c94b049063858ee6cc57b94bea65ebe9790aeec9777ebc",
+      "50ed9891dc7867f23abe215bd241619d10568624d4c5fa0f94e0d28c79d890c9",
+      "398ab316357896cac0b74fc992ba84dc46d8ab745d5d768d46160a4031dd2e7b",
+      "f381e95b464fe3a0e7b1eba5960387eb826f409bfd3589db98778d3df5dfb00d",
+      "5dc48d4bc11099e98d6c6b5b33d6187a3d2bd629a648617d80a64dec7823c8e1",
+      "2ecc38b6650df391e68ccdd1971f4d50389cc6fe9f4b0a6407420ee4a87d33b1",
+      "8185d8d7b33e6e44b337de38e5f9aaaae03ae523866ca97d962c7a050f087cc9",
+      "5f180965aba23302792dfcaad267dba8c268a7d1bf3ed26305441f6725d1d5dc",
+      "4381ace8c174db912d289997b49f836c5c1ba8ffa160b6b5ea5509dbfc659bc2",
+      "441eaec14c0a22cc6d66ab1e8db620edabc39cc68cfb7c9a5c602b50e35f8a2d",
+      "5b697fc30ae6bf0515c5106c0a0183395c500fae254116c97137005002a4151d",
+      "9584d0a8cd5411f81322dd78dba5a81c47d569571715078bf8b09418b1b89652",
+      "4141d9e22fd1445d360ed97292b9006ca70f5fb18a255a22b6a1ae86d2f86c58",
+      "cb95d62b478461d047e909be607ac04256601e0b7426f9031fffe69c2028b87a",
+      "380e9c63fdd91fbc50fc6afc846e53f223fc7cb3243ff8d33f508874700c770e",
+      "d01ad6cd9226695cb64769d681962805d09789bbf4ad85a15fa30a8b2ab6d680",
+      "649fc589c40c141a86bb661e09aa03b96c18dd73ef0064a14923d0de2de2b2bb",
+      "cdedf5f1f7e33e453c3d49a69916b66948edc7c2a00c4e16f6b819bd68bfb4cd",
+      "8c72dcfa6ae6bb5830827a1fb6b108ee181135f0584f1c48d96ea1e167282526",
+      "01b98d9820734448d681e884ebd11d13612c9eefcc543a065fd6c2c6a01d226c",
+      "501c9ea1e5715d134c676fd110f56537f8a65f1f82dccd0b21736cb56e790083",
+      "acd1790a2e3e38a432ac3673dc169b3a8eee21ddd8f6e5d5cee50992b8e68c98"
+    ]
+  },
+  "production_baseline": {
+    "family_rows": [],
+    "catalogue_hash_duplicates": [],
+    "aliases": [
+      {
+        "alias": "GJ",
+        "manufacturer_id": "mfr-glynnj"
+      },
+      {
+        "alias": "GLY",
+        "manufacturer_id": "mfr-glynnj"
+      }
+    ],
+    "technical_book_indexed": false,
+    "corpus_queue_row_present": false,
+    "sized_models_present": [
+      "902S",
+      "903S",
+      "904S",
+      "905S",
+      "906S"
+    ]
+  },
+  "live_schema": [
+    {
+      "type": "table",
+      "name": "catalog_corpus_wanted",
+      "sql": "CREATE TABLE catalog_corpus_wanted (url TEXT PRIMARY KEY, reason TEXT, requested_at TEXT NOT NULL, attempts INTEGER DEFAULT 0, last_error TEXT, fetched_at TEXT, r2_key TEXT, size INTEGER)"
+    },
+    {
+      "type": "table",
+      "name": "catalogue_pages",
+      "sql": "CREATE TABLE catalogue_pages (\n  catalogue_id TEXT NOT NULL,\n  page_num INTEGER NOT NULL,\n  text_content TEXT,\n  char_count INTEGER DEFAULT 0,\n  has_extractable_text INTEGER DEFAULT 1,\n  header_text TEXT,\n  footer_text TEXT,\n  search_text TEXT,\n  PRIMARY KEY (catalogue_id, page_num)\n)"
+    },
+    {
+      "type": "table",
+      "name": "catalogue_pages_fts",
+      "sql": "CREATE VIRTUAL TABLE catalogue_pages_fts USING fts5(text_content, content='catalogue_pages', content_rowid='rowid')"
+    },
+    {
+      "type": "table",
+      "name": "catalogues",
+      "sql": "CREATE TABLE catalogues (\n  catalogue_id TEXT PRIMARY KEY,\n  source_filename TEXT NOT NULL,\n  source_hash_sha256 TEXT NOT NULL,\n  file_size_bytes INTEGER NOT NULL,\n  page_count INTEGER NOT NULL,\n  manufacturer TEXT,\n  title TEXT,\n  version TEXT,\n  ingested_at TEXT NOT NULL,\n  ingested_by TEXT,\n  storage_path TEXT NOT NULL,\n  text_extracted INTEGER DEFAULT 0,\n  index_built INTEGER DEFAULT 0\n, source_url TEXT, price_effective_date TEXT)"
+    },
+    {
+      "type": "table",
+      "name": "manufacturer_aliases",
+      "sql": "CREATE TABLE manufacturer_aliases (\n  alias TEXT NOT NULL,\n  manufacturer_id TEXT NOT NULL REFERENCES manufacturers(id),\n  source TEXT DEFAULT 'industry_standard',\n  created_at TEXT DEFAULT (datetime('now')),\n  PRIMARY KEY (alias)\n)"
+    },
+    {
+      "type": "table",
+      "name": "manufacturers",
+      "sql": "CREATE TABLE manufacturers (\n  id TEXT PRIMARY KEY,\n  name TEXT NOT NULL,\n  slug TEXT NOT NULL,\n  website TEXT,\n  api_endpoint TEXT,\n  api_key_encrypted TEXT,\n  support_email TEXT,\n  support_phone TEXT,\n  parent_company TEXT,\n  country_of_origin TEXT,\n  founded_year INTEGER,\n  last_sync_timestamp TEXT,\n  last_sync_status TEXT,\n  sync_error_message TEXT,\n  product_count INTEGER DEFAULT 0,\n  active BOOLEAN DEFAULT TRUE,\n  verified BOOLEAN DEFAULT FALSE,\n  preferred BOOLEAN DEFAULT FALSE,\n  notes TEXT,\n  created_at TEXT NOT NULL DEFAULT (datetime('now')),\n  updated_at TEXT DEFAULT (datetime('now'))\n, trade TEXT NOT NULL DEFAULT 'doors')"
+    },
+    {
+      "type": "table",
+      "name": "product_documents",
+      "sql": "CREATE TABLE product_documents (\n  id TEXT PRIMARY KEY,\n  product_id TEXT NOT NULL,\n  variant_id TEXT,\n  document_type TEXT NOT NULL,\n  document_title TEXT NOT NULL,\n  document_subtitle TEXT,\n  document_url TEXT,\n  r2_object_key TEXT,\n  r2_bucket TEXT DEFAULT 'product-docs',\n  file_size_bytes INTEGER,\n  mime_type TEXT DEFAULT 'application/pdf',\n  file_hash_sha256 TEXT,\n  version TEXT,\n  page_count INTEGER,\n  language TEXT DEFAULT 'en',\n  published_date TEXT,\n  expiration_date TEXT,\n  searchable_text TEXT,\n  contains_pricing BOOLEAN DEFAULT FALSE,\n  contains_cad BOOLEAN DEFAULT FALSE,\n  contains_bim BOOLEAN DEFAULT FALSE,\n  active BOOLEAN DEFAULT TRUE,\n  verified BOOLEAN DEFAULT FALSE,\n  notes TEXT,\n  created_at TEXT NOT NULL DEFAULT (datetime('now')),\n  updated_at TEXT DEFAULT (datetime('now'))\n)"
+    },
+    {
+      "type": "table",
+      "name": "products",
+      "sql": "CREATE TABLE products (\n  id TEXT PRIMARY KEY,\n  manufacturer_id TEXT NOT NULL,\n  product_series TEXT NOT NULL,\n  product_family TEXT NOT NULL,\n  base_model TEXT NOT NULL,\n  display_name TEXT,\n  description TEXT,\n  category_level_1 TEXT,\n  category_level_2 TEXT,\n  category_level_3 TEXT,\n  ansi_bhma_certified BOOLEAN DEFAULT FALSE,\n  ansi_grade TEXT,\n  ul_listed BOOLEAN DEFAULT FALSE,\n  ul_listing_number TEXT,\n  ada_compliant BOOLEAN DEFAULT FALSE,\n  california_title_24 BOOLEAN DEFAULT FALSE,\n  fire_rated BOOLEAN DEFAULT FALSE,\n  max_fire_rating_minutes INTEGER,\n  smoke_rated BOOLEAN DEFAULT FALSE,\n  hurricane_rated BOOLEAN DEFAULT FALSE,\n  security_level TEXT,\n  pick_resistant BOOLEAN DEFAULT FALSE,\n  drill_resistant BOOLEAN DEFAULT FALSE,\n  door_types TEXT,\n  suitable_for_exterior BOOLEAN DEFAULT FALSE,\n  suitable_for_interior BOOLEAN DEFAULT FALSE,\n  suitable_for_fire_door BOOLEAN DEFAULT FALSE,\n  available BOOLEAN DEFAULT TRUE,\n  discontinued BOOLEAN DEFAULT FALSE,\n  eol_date TEXT,\n  eol_reason TEXT,\n  replacement_product_id TEXT,\n  popular BOOLEAN DEFAULT FALSE,\n  new_product BOOLEAN DEFAULT FALSE,\n  catalog_page_url TEXT,\n  spec_sheet_url TEXT,\n  created_at TEXT NOT NULL DEFAULT (datetime('now')),\n  updated_at TEXT DEFAULT (datetime('now')),\n  catalog_number TEXT,\n  search_text TEXT\n, trade TEXT NOT NULL DEFAULT 'doors')"
+    }
+  ],
+  "seed_file": "2026-10-09-glynn-johnson-90s.sql",
+  "seed_sha256": "b62f8c3c06ce415bad5aa8e7b2b2d3f1cc8c3b2acb04544cc1f4c9bcaf66d3da",
+  "pending_production_acceptance": [
+    "Root review and schema-safe SQL apply",
+    "Existing offline corpus ingestion stores source PDF",
+    "Read back stored PDF bytes and SHA256",
+    "Guest matcher and signed citation round trip",
+    "Fresh authenticated hardware packet matches this family with no missing 90S item"
+  ],
+  "validation_note": "Local tests simulate only presence of the specific captured R2 key; they do not prove production storage.",
+  "offline_validation": {
+    "runtime": "Node 22.23.2, node:sqlite, real shared matcher",
+    "tests_passed": 4,
+    "tests_failed": 0,
+    "seed_apply_twice_additional_changes": 0,
+    "foreign_key_check": [],
+    "explicit_orphan_checks": {
+      "products_without_manufacturers": 0,
+      "documents_without_products": 0
+    },
+    "sqlite_integrity_check": "ok",
+    "indexed_pages": 32,
+    "fts_exact_90S_pdf_ordinals": [
+      14,
+      15
+    ],
+    "source_pdf_sha256_verified_again": true,
+    "matcher_before": "model_not_in_catalogue",
+    "matcher_after": {
+      "matched": true,
+      "match_type": "exact",
+      "model": "90S",
+      "page_hint": "15",
+      "packet_citation_count": 1
+    },
+    "production_writes": 0,
+    "scope": "R2 presence simulated only for captured catalogue key; actual production storage and packet still pending"
+  },
+  "seed_statements": 43,
+  "largest_seed_statement_bytes": 9288
+}

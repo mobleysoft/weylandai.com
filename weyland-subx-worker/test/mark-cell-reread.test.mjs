@@ -125,3 +125,12 @@ test('agreement on an invalid original identifier cannot block a valid supported
   const result = rereadMarkCell(engineFor(readings), cell, recognitionBudget(), '???', .66);
   assert.equal(result.text, 'B12');
 });
+
+test('type code rereads retain legitimate single and multiple letter codes', () => {
+  const accept = text => /^[A-Z0-9][A-Z0-9_.-]{0,11}$/.test(text);
+  for (const code of ['C', 'CC', 'R', 'B', 'AL2', 'A12']) {
+    const result = rereadMarkCell(engineFor([[code, .94], [code, .91]]), cell, recognitionBudget(), code, .66, accept);
+    assert.equal(result.text, code);
+    assert.equal(result.confidence, .66, 'same uncertain original keeps its measured score');
+  }
+});

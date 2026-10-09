@@ -34,7 +34,7 @@ test("the shipped OCR modules and versioned entry points match source", () => {
     assert.deepEqual(readFileSync(new URL("../assets/client-ocr/" + name + ".bin", import.meta.url)), readFileSync(new URL("../assets/client-ocr-src/" + name, import.meta.url)));
   }
   for (const path of ["../assets/client-ocr/grid-runner.html", "../src/pages/subx-app.html"]) {
-    assert.match(readFileSync(new URL(path, import.meta.url), "utf8"), /schedule-grid-extraction-client\.mjs\?v=20261009g019r3/);
+    assert.match(readFileSync(new URL(path, import.meta.url), "utf8"), /schedule-grid-extraction-client\.mjs\?v=20261009g019e1/);
   }
 });
 
