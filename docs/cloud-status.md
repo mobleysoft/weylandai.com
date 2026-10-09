@@ -1,9 +1,13 @@
+cloud: g028 g032 g033 in review
+
 # Cloud status: the $100 first submittal on a full-size bid set, and every tool on sale
 
 Written by the cloud session, 2026-10-09 (UTC). Every number below comes from a harness run live against https://weylandai.com and committed beside it; each section names the command that reproduces it. Nothing here is estimated.
 
 ## Cloud goals (Mobley list)
 
+- g028 in review: https://github.com/mobleysoft/weylandai.com/pull/94 (needs deploy of weyland-sightx-worker, then the Mac's 3 GPU passes).
+- g033 in review (18:32Z): https://github.com/jmobleyworks/authfor/pull/1. M02 fence (operator script tools/m02-migrate.mjs, needs MIGRATION_SECRET set after deploy) and M06 (uniform registration after the unchanged 2026-10-23 deadline). hardening suite 75/75. Needs before 2026-10-23: a provisioning client (provision:true) for WeylandAI's server-side /api/v1/register calls (webhooks-subscription registerAuthFor, authfor-invite), its client_id and client_secret sent in those calls.
 - g032 in review (18:24Z): PropX PASS and HuntX PASS on rerunnable audits (BidX and CloseX also PASS; CloseX harness fixed for the PDF's Room field); offer sentence in index.html restored to the full list. MarketX FAIL stays open (Chicago companies CSV order; SF publishes no GC or owner). Needs: merge and the Pages deploy of index.html.
 
 ## The goal's five finish lines
