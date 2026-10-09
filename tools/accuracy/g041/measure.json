@@ -1,0 +1,412 @@
+{
+ "generated_at": "2026-10-09T23:47:50.145Z",
+ "results": [
+  {
+   "sha16": "192a16af8f31ae0c",
+   "rows": 46,
+   "placed": 45,
+   "exact": 0,
+   "stacked": 45,
+   "not_on_plan": [],
+   "plan_sheets": [
+    "A-100 p.7",
+    "A-101 p.8",
+    "A-104 p.11"
+   ],
+   "stacked_tags": [
+    {
+     "mark": "100A",
+     "sheet": "A-100",
+     "x": 666,
+     "y": 513,
+     "by": "stacked: 100 with A",
+     "room": "100"
+    },
+    {
+     "mark": "101A",
+     "sheet": "A-100",
+     "x": 709,
+     "y": 544,
+     "by": "stacked: 101 with A",
+     "room": "101"
+    },
+    {
+     "mark": "102A",
+     "sheet": "A-100",
+     "x": 709,
+     "y": 655,
+     "by": "stacked: 102 with A",
+     "room": "102"
+    },
+    {
+     "mark": "103A",
+     "sheet": "A-100",
+     "x": 662,
+     "y": 784,
+     "by": "stacked: 103 with A",
+     "room": "103"
+    },
+    {
+     "mark": "104A",
+     "sheet": "A-100",
+     "x": 528,
+     "y": 907,
+     "by": "stacked: 104 with A",
+     "room": "104"
+    },
+    {
+     "mark": "105A",
+     "sheet": "A-100",
+     "x": 709,
+     "y": 987,
+     "by": "stacked: 105 with A",
+     "room": "105"
+    },
+    {
+     "mark": "106A",
+     "sheet": "A-100",
+     "x": 709,
+     "y": 1083,
+     "by": "stacked: 106 with A",
+     "room": "106"
+    },
+    {
+     "mark": "107A",
+     "sheet": "A-100",
+     "x": 709,
+     "y": 1173,
+     "by": "stacked: 107 with A",
+     "room": "107"
+    },
+    {
+     "mark": "108A",
+     "sheet": "A-100",
+     "x": 687,
+     "y": 1406,
+     "by": "stacked: 108 with A",
+     "room": "108"
+    },
+    {
+     "mark": "109A",
+     "sheet": "A-100",
+     "x": 687,
+     "y": 1452,
+     "by": "stacked: 109 with A",
+     "room": "109"
+    },
+    {
+     "mark": "110A",
+     "sheet": "A-100",
+     "x": 881,
+     "y": 1356,
+     "by": "stacked: 110 with A",
+     "room": "110"
+    },
+    {
+     "mark": "113A",
+     "sheet": "A-100",
+     "x": 1007,
+     "y": 1355,
+     "by": "stacked: 113 with A",
+     "room": "113"
+    },
+    {
+     "mark": "113B",
+     "sheet": "A-100",
+     "x": 1141,
+     "y": 1339,
+     "by": "stacked: 113 with B",
+     "room": "113"
+    },
+    {
+     "mark": "114A",
+     "sheet": "A-100",
+     "x": 1241,
+     "y": 1449,
+     "by": "stacked: 114 with A",
+     "room": "114"
+    },
+    {
+     "mark": "115A",
+     "sheet": "A-100",
+     "x": 1334,
+     "y": 1339,
+     "by": "stacked: 115 with A",
+     "room": "115"
+    },
+    {
+     "mark": "115B",
+     "sheet": "A-100",
+     "x": 1241,
+     "y": 1409,
+     "by": "stacked: 115 with B",
+     "room": "115"
+    },
+    {
+     "mark": "116A",
+     "sheet": "A-100",
+     "x": 1388,
+     "y": 1339,
+     "by": "stacked: 116 with A",
+     "room": "116"
+    },
+    {
+     "mark": "116B",
+     "sheet": "A-100",
+     "x": 1548,
+     "y": 1427,
+     "by": "stacked: 116 with B",
+     "room": "116"
+    },
+    {
+     "mark": "117A",
+     "sheet": "A-100",
+     "x": 1434,
+     "y": 1449,
+     "by": "stacked: 117 with A",
+     "room": "117"
+    },
+    {
+     "mark": "118A",
+     "sheet": "A-100",
+     "x": 1473,
+     "y": 1449,
+     "by": "stacked: 118 with A",
+     "room": "118"
+    },
+    {
+     "mark": "119A",
+     "sheet": "A-100",
+     "x": 1589,
+     "y": 1339,
+     "by": "stacked: 119 with A",
+     "room": "119"
+    },
+    {
+     "mark": "120A",
+     "sheet": "A-100",
+     "x": 1532,
+     "y": 1213,
+     "by": "stacked: 120 with A",
+     "room": "120"
+    },
+    {
+     "mark": "121A",
+     "sheet": "A-100",
+     "x": 1532,
+     "y": 1171,
+     "by": "stacked: 121 with A",
+     "room": "121"
+    },
+    {
+     "mark": "122A",
+     "sheet": "A-100",
+     "x": 1662,
+     "y": 1153,
+     "by": "stacked: 122 with A",
+     "room": "122"
+    },
+    {
+     "mark": "123A",
+     "sheet": "A-100",
+     "x": 1501,
+     "y": 1153,
+     "by": "stacked: 123 with A",
+     "room": null
+    },
+    {
+     "mark": "124A",
+     "sheet": "A-100",
+     "x": 1569,
+     "y": 920,
+     "by": "stacked: 124 with A",
+     "room": "124"
+    },
+    {
+     "mark": "125A",
+     "sheet": "A-100",
+     "x": 1607,
+     "y": 927,
+     "by": "stacked: 125 with A",
+     "room": "125"
+    },
+    {
+     "mark": "126A",
+     "sheet": "A-100",
+     "x": 1276,
+     "y": 1272,
+     "by": "stacked: 126 with A",
+     "room": "126"
+    },
+    {
+     "mark": "127A",
+     "sheet": "A-100",
+     "x": 1259,
+     "y": 1093,
+     "by": "stacked: 127 with A",
+     "room": "127"
+    },
+    {
+     "mark": "128A",
+     "sheet": "A-100",
+     "x": 1274,
+     "y": 1066,
+     "by": "stacked: 128 with A",
+     "room": "128"
+    },
+    {
+     "mark": "128B",
+     "sheet": "A-100",
+     "x": 1274,
+     "y": 954,
+     "by": "stacked: 128 with B",
+     "room": "128"
+    },
+    {
+     "mark": "129A",
+     "sheet": "A-100",
+     "x": 1276,
+     "y": 765,
+     "by": "stacked: 129 with A",
+     "room": "129"
+    },
+    {
+     "mark": "129B",
+     "sheet": "A-100",
+     "x": 1483,
+     "y": 975,
+     "by": "stacked: 129 with B",
+     "room": "129"
+    },
+    {
+     "mark": "130A",
+     "sheet": "A-100",
+     "x": 1274,
+     "y": 906,
+     "by": "stacked: 130 with A",
+     "room": "130"
+    },
+    {
+     "mark": "131A",
+     "sheet": "A-100",
+     "x": 1305,
+     "y": 726,
+     "by": "stacked: 131 with A",
+     "room": "131"
+    },
+    {
+     "mark": "131B",
+     "sheet": "A-100",
+     "x": 1650,
+     "y": 474,
+     "by": "stacked: 131 with B",
+     "room": "131"
+    },
+    {
+     "mark": "132A",
+     "sheet": "A-100",
+     "x": 1223,
+     "y": 967,
+     "by": "stacked: 132 with A",
+     "room": "132"
+    },
+    {
+     "mark": "132B",
+     "sheet": "A-100",
+     "x": 737,
+     "y": 967,
+     "by": "stacked: 132 with B",
+     "room": "132"
+    },
+    {
+     "mark": "133A",
+     "sheet": "A-100",
+     "x": 1275,
+     "y": 582,
+     "by": "stacked: 133 with A",
+     "room": "133"
+    },
+    {
+     "mark": "136A",
+     "sheet": "A-100",
+     "x": 868,
+     "y": 1272,
+     "by": "stacked: 136 with A",
+     "room": "136"
+    },
+    {
+     "mark": "137A",
+     "sheet": "A-100",
+     "x": 937,
+     "y": 1209,
+     "by": "stacked: 137 with A",
+     "room": "137"
+    },
+    {
+     "mark": "138A",
+     "sheet": "A-100",
+     "x": 1019,
+     "y": 1276,
+     "by": "stacked: 138 with A",
+     "room": "138"
+    },
+    {
+     "mark": "139A",
+     "sheet": "A-100",
+     "x": 1196,
+     "y": 1226,
+     "by": "stacked: 139 with A",
+     "room": "139"
+    },
+    {
+     "mark": "140A",
+     "sheet": "A-100",
+     "x": 1196,
+     "y": 1054,
+     "by": "stacked: 140 with A",
+     "room": "140"
+    },
+    {
+     "mark": "141A",
+     "sheet": "A-100",
+     "x": 768,
+     "y": 1057,
+     "by": "stacked: 141 with A",
+     "room": "141"
+    }
+   ]
+  },
+  {
+   "sha16": "7478006f7fd5b43c",
+   "rows": 211,
+   "placed": 208,
+   "exact": 208,
+   "stacked": 0,
+   "not_on_plan": [
+    "AD101",
+    "PT101",
+    "102"
+   ],
+   "plan_sheets": [
+    "A-105 p.23",
+    "A-106 p.24",
+    "A-107 p.25",
+    "A-112 p.28"
+   ],
+   "stacked_tags": []
+  },
+  {
+   "sha16": "e3d0cc1bc22fd824",
+   "rows": 22,
+   "placed": 22,
+   "exact": 22,
+   "stacked": 0,
+   "not_on_plan": [],
+   "plan_sheets": [
+    "A-102 p.9",
+    "A-401 p.13"
+   ],
+   "stacked_tags": []
+  }
+ ]
+}
