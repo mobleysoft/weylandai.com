@@ -157,7 +157,9 @@ export function readPlan(pages, doors = [], opts = {}) {
   const byPage = new Map(pages.map((p, i) => [p.page, { p, tb: tbs[i] }]));
   const planPages = tbs.filter((t) => t.plan);
   const markOf = new Map();
-  for (const d of doors) { const k = norm(d.mark); if (!k) continue; if (!markOf.has(k)) markOf.set(k, []); markOf.get(k).push(d); }
+  // SubX keeps a mark printed on two schedule pages apart as "001 [p.286]"; the plan prints "001".
+  const tagOf = (d) => norm(String(d.mark || "").replace(/\s*\[p\.?\s*\d+\]\s*$/i, ""));
+  for (const d of doors) { const k = tagOf(d); if (!k) continue; if (!markOf.has(k)) markOf.set(k, []); markOf.get(k).push(d); }
   const rooms = [], tags = [], seenTag = new Map(), sheetsOut = [];
   const scheduleBlock = (page) => (byPage.get(page) || {}).tb;
 
@@ -218,8 +220,8 @@ export function readPlan(pages, doors = [], opts = {}) {
       unmatched.push({ tag: it.str.trim(), page: t.page, sheet: t.sheet, x: Math.round(cx(it)), y: Math.round(it.y) });
     }
   }
-  const tagged = new Set(tags.map((g) => norm(g.mark) + "|" + g.door_pages.join(",")));
-  const notOnPlan = doors.filter((d) => ![...tagged].some((k) => k.startsWith(norm(d.mark) + "|") && (d.page == null || k.split("|")[1].split(",").includes(String(d.page))))).map((d) => ({ mark: d.mark, page: d.page }));
+  const tagged = new Set(tags.map((g) => tagOf(g) + "|" + g.door_pages.join(",")));
+  const notOnPlan = doors.filter((d) => ![...tagged].some((k) => k.startsWith(tagOf(d) + "|") && (d.page == null || k.split("|")[1].split(",").includes(String(d.page))))).map((d) => ({ mark: d.mark, page: d.page }));
   for (const r of rooms) delete r._line;
   for (const g of tags) delete g.shape;
   return {
