@@ -94,7 +94,7 @@ export function registerWireRoutes(router) {
   router.get("/api/wire/news", async (request2, env2, ctx) => {
     const isPro = await wireIsPro(request2, env2);
     const wire = await readWireNews(env2, isPro, ctx);
-    return jsonResponse3({ sources: WIRE_FEEDS.map((f) => f.source), pro: isPro, items: wire.items, ingested_at: wire.fetchedAt, warming: wire.warming });
+    return jsonResponse3({ sources: WIRE_FEEDS.map((f) => f.source), feeds: wire.feeds, pro: isPro, items: wire.items, ingested_at: wire.fetchedAt, warming: wire.warming });
   });
 
   router.get("/api/wire/synthesis", async (_request2, env2, ctx) => {
@@ -296,7 +296,7 @@ const WIRE_PAGE = `<!doctype html>
   </section>
 
   <footer class="masthead-foot">
-    <p>Headlines and links are excerpted from the public RSS feeds of the trade press that answer our reader (today Construction Dive and For Construction Pros; ENR, Building Enclosure, SDM, Security Sales &amp; Integration and USGlass refuse it); full articles are hosted at their original source, not reproduced here. The Editor's Briefing is a deterministic keyword/entity-overlap clustering of the headline titles above &mdash; no AI model and no network call are involved in generating it. Read the cited headlines yourself before treating it as fact. Not fact-checked journalism. WeylandAI Reports are this venture's own internal engineering-validation notes, not third-party audited financial or safety certifications.</p>
+    <p>Headlines and links are excerpted from the public RSS feeds of the trade press that answer our reader (Engineering News-Record, Construction Dive, For Construction Pros, Building Enclosure, SDM, Security Sales &amp; Integration and USGlass; a feed that refuses our reader is listed with its answer instead of headlines); full articles are hosted at their original source, not reproduced here. The Editor's Briefing is a deterministic keyword/entity-overlap clustering of the headline titles above &mdash; no AI model and no network call are involved in generating it. Read the cited headlines yourself before treating it as fact. Not fact-checked journalism. WeylandAI Reports are this venture's own internal engineering-validation notes, not third-party audited financial or safety certifications.</p>
   </footer>
 </div>
 
@@ -343,6 +343,9 @@ const WIRE_PAGE = `<!doctype html>
           '<h3><a href="' + esc(it.link) + '" target="_blank" rel="noopener">' + esc(it.title) + '</a></h3>' +
           '</div>';
       }).join('');
+      // A feed with nothing on the wire says what it answered (2026-10-09).
+      var quiet = (data.feeds || []).filter(function (f) { return !f.items; });
+      if (quiet.length) listEl.innerHTML += '<p class="caveat">No headlines from ' + quiet.map(function (f) { return esc(f.source) + (f.status === 200 ? ' (its feed listed no items)' : ' (its feed answered our reader ' + esc(typeof f.status === 'number' ? 'HTTP ' + f.status : f.status) + ')'); }).join(', ') + ' at the last read.</p>';
       document.getElementById('news-pro-status').textContent = data.pro ? 'Pro active - 20 headlines/feed.' : '';
       document.getElementById('upgrade-box').style.display = data.pro ? 'none' : 'flex';
     })

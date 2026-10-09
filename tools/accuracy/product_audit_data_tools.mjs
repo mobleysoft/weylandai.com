@@ -53,7 +53,15 @@ async function ext(url, init = {}) {
 }
 // A link's status. A Cloudflare bot challenge ("Just a moment...", 403/503 with cf-mitigated) means
 // the page exists but a script cannot read it: reported as "challenge", never counted as dead or as 200.
+// A 5xx or a network error is fetched once more after 5 s: a server's passing error is not a dead page
+// (mmp.delaware.gov answered one notice 503 on 2026-10-09 and 200 a minute later).
 async function linkStatus(url) {
+  const st = await linkStatusOnce(url);
+  if (st === "challenge" || st === 200 || (typeof st === "number" && st < 500)) return st;
+  await new Promise((r) => setTimeout(r, 5000));
+  return linkStatusOnce(url);
+}
+async function linkStatusOnce(url) {
   try {
     const r = await ext(url, { headers: { Accept: "text/html,application/xhtml+xml" } });
     const t = await r.text().catch(() => "");
@@ -528,8 +536,12 @@ async function wirex() {
     try { const r = await ext(url, { headers: { "User-Agent": "WeylandAI WireX (+https://weylandai.com/bot)" } }); status = r.status; published = ((await r.text()).match(/<item\b/gi) || []).length; } catch (e) { status = "error: " + e.message; }
     feeds.push({ source: src, on_wire: by[src] || 0, feed_status_from_here: status, feed_items: published, expected: published == null ? null : Math.min(20, published) });
   }
-  const short = feeds.filter((f) => f.expected != null && f.on_wire !== f.expected);
-  check("each feed gives min(20, what it publishes)", short.length === 0, feeds.map((f) => `${f.source} ${f.on_wire}/${f.expected}`));
+  // A feed that refused the Worker (the wire's own record says HTTP 403, 503 or a network error) is beyond
+  // the product; it passes only when the wire page shows that answer. A feed the wire read as 200 must deliver.
+  const wireFeed = (src) => (N.feeds || []).find((f) => f.source === src) || null;
+  for (const f of feeds) { const w = wireFeed(f.source); f.wire_status = w ? w.status : "not reported"; }
+  const short = feeds.filter((f) => f.expected != null && f.on_wire !== f.expected && !(f.on_wire === 0 && f.wire_status !== 200 && f.wire_status !== "not reported"));
+  check("each feed gives min(20, what it publishes), or the wire shows the feed's refusal", short.length === 0, feeds.map((f) => `${f.source} ${f.on_wire}/${f.expected}` + (f.on_wire !== f.expected ? " (wire read: " + f.wire_status + ")" : "")));
   const links = [];
   const pick = [...new Set([...N.items.filter((x, i, a) => a.findIndex((y) => y.source === x.source) === i), ...N.items])].slice(0, 5);
   for (const it of pick) links.push({ source: it.source, url: it.link, status: await linkStatus(it.link) });
