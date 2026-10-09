@@ -1,0 +1,148 @@
+{
+ "sha16": "05d675e35802017e",
+ "sha256": "05d675e35802017e8bfd236f57ed7a3bd14cdaeebe0b7b74edd009fc88fb62b7",
+ "file": "tools/corpus/specs/05d675e35802017e.pdf",
+ "bytes": 302894,
+ "family": "Orchard View Public Schools",
+ "source": "corpus/specs",
+ "label": "Orchard View Public Schools (MI) - Early Elementary Secured Vestibule, project 25004490A, door hardware bid manual",
+ "source_url": "https://orchardview-cdn.fxbrt.com/downloads/district_files/25-0415_ovee_secured_vestibule_door_hardware_combined.pdf",
+ "page_count": 29,
+ "text_layer": {
+  "pages_with_text": 29,
+  "pages": 29
+ },
+ "pages": {
+  "door_candidates": 5,
+  "hardware_candidates": 9,
+  "door_schedule_pages": [],
+  "hardware_pages": [
+   22,
+   23,
+   24,
+   25,
+   26,
+   27,
+   28
+  ]
+ },
+ "readers": {
+  "a": {
+   "doors": 0,
+   "sets": 9,
+   "items": 72,
+   "name": "production text layer (weyland-subx-worker/src/lib/text-layer-read.js)"
+  },
+  "b": {
+   "doors": 0,
+   "sets": 8,
+   "items": 72,
+   "name": "geometry first (tools/accuracy/truth/reader_b.mjs)",
+   "tables": 0
+  }
+ },
+ "rows_agreed": 71,
+ "rows_disputed": 1,
+ "rows_total": 72,
+ "agreement_rate": 0.9861,
+ "agreement": {
+  "doors": {
+   "rows": 0,
+   "agreed": 0,
+   "disputed": 0,
+   "only_a": 0,
+   "only_b": 0,
+   "fields": {},
+   "agreement_rate": null
+  },
+  "items": {
+   "rows": 72,
+   "agreed": 71,
+   "disputed": 1,
+   "only_a": 0,
+   "only_b": 0,
+   "fields": {
+    "qty": {
+     "agree": 72,
+     "total": 72
+    },
+    "description": {
+     "agree": 72,
+     "total": 72
+    },
+    "catalog": {
+     "agree": 71,
+     "total": 72
+    },
+    "finish": {
+     "agree": 52,
+     "total": 53
+    },
+    "manufacturer": {
+     "agree": 65,
+     "total": 65
+    }
+   },
+   "agreement_rate": 0.9861
+  },
+  "sets": {
+   "sets": 9,
+   "agreed": 8
+  }
+ },
+ "triage_class": "spec-only",
+ "triage_from": "inferred (S=false H=true plan sheets=0)",
+ "oracles": {
+  "marks_on_plan": {
+   "applicable": false,
+   "reason": "not for class spec-only"
+  },
+  "sets_exist": {
+   "applicable": false,
+   "reason": "not for class spec-only"
+  },
+  "set_door_lists": {
+   "applicable": false,
+   "reason": "not for class spec-only"
+  },
+  "types_in_legend": {
+   "applicable": false,
+   "reason": "not for class spec-only"
+  },
+  "sizes_and_marks": {
+   "applicable": false,
+   "reason": "not for class spec-only"
+  }
+ },
+ "tier": "agreed",
+ "disagreement_count": 3,
+ "disagreements": [
+  {
+   "kind": "item",
+   "page": 28,
+   "key": "7 / 8190EZHD 10\" O",
+   "field": "catalog",
+   "a": "8190EZHD 10\" O",
+   "b": "8190EZHD 10\" O 16"
+  },
+  {
+   "kind": "item",
+   "page": 28,
+   "key": "7 / 8190EZHD 10\" O",
+   "field": "finish",
+   "a": "643E/7 16",
+   "b": "643E/7"
+  },
+  {
+   "kind": "group",
+   "page": null,
+   "key": "S",
+   "field": "(set)",
+   "a": "4/10/2025",
+   "b": null,
+   "why": "only reader A read this set"
+  }
+ ],
+ "ms": 526,
+ "generated_at": "2026-10-09T09:16:07.490Z"
+}

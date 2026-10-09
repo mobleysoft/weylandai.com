@@ -1,0 +1,214 @@
+{
+ "sha16": "7586a61c5ac75707",
+ "sha256": "7586a61c5ac7570753e92f870da7c4c69a53716928c8edfd7342a5ce01ae918e",
+ "file": "tools/corpus/door-schedules/7586a61c5ac75707.pdf",
+ "bytes": 525204,
+ "family": "Connor Consolidated School / Maine BGS",
+ "source": "corpus/door-schedules",
+ "label": "Connor Consolidated School / Maine BGS - Project 3403 Connor School Renovations, Addendum 2 Rebid",
+ "source_url": "https://www.maine.gov/dafs/bgs/sites/maine.gov.dafs.bgs/files/inline-files/3403%20Addendum%202%20Rebid%20Connor%202025-06-26%2010377.028_2.pdf",
+ "page_count": 3,
+ "text_layer": {
+  "pages_with_text": 3,
+  "pages": 3
+ },
+ "pages": {
+  "door_candidates": 1,
+  "hardware_candidates": 0,
+  "door_schedule_pages": [
+   3
+  ],
+  "hardware_pages": []
+ },
+ "readers": {
+  "a": {
+   "doors": 6,
+   "sets": 0,
+   "items": 0,
+   "name": "production text layer (weyland-subx-worker/src/lib/text-layer-read.js)"
+  },
+  "b": {
+   "doors": 6,
+   "sets": 0,
+   "items": 0,
+   "name": "geometry first (tools/accuracy/truth/reader_b.mjs)",
+   "tables": 1
+  }
+ },
+ "rows_agreed": 0,
+ "rows_disputed": 6,
+ "rows_total": 6,
+ "agreement_rate": 0,
+ "agreement": {
+  "doors": {
+   "rows": 6,
+   "agreed": 0,
+   "disputed": 6,
+   "only_a": 0,
+   "only_b": 0,
+   "fields": {
+    "width_inches": {
+     "agree": 6,
+     "total": 6
+    },
+    "height_inches": {
+     "agree": 6,
+     "total": 6
+    },
+    "door_type": {
+     "agree": 6,
+     "total": 6
+    },
+    "material": {
+     "agree": 6,
+     "total": 6
+    },
+    "fire_rating": {
+     "agree": 0,
+     "total": 6
+    },
+    "hardware_group": {
+     "agree": 4,
+     "total": 6
+    },
+    "location": {
+     "agree": 6,
+     "total": 6
+    }
+   },
+   "agreement_rate": 0
+  },
+  "items": {
+   "rows": 0,
+   "agreed": 0,
+   "disputed": 0,
+   "only_a": 0,
+   "only_b": 0,
+   "fields": {},
+   "agreement_rate": null
+  },
+  "sets": {
+   "sets": 0,
+   "agreed": 0
+  }
+ },
+ "triage_class": "schedule-only",
+ "triage_from": "inferred (S=true H=false plan sheets=0)",
+ "oracles": {
+  "marks_on_plan": {
+   "applicable": false,
+   "reason": "no floor plan sheet found in this PDF (title blocks)",
+   "plan_counts": {
+    "plan_sheets": 0,
+    "rooms": 0,
+    "corridors": 0,
+    "tags": 0,
+    "unmatched_tags": 0,
+    "schedule_marks": 6,
+    "marks_not_on_plan": 6
+   }
+  },
+  "sets_exist": {
+   "applicable": false,
+   "reason": "not for class schedule-only"
+  },
+  "set_door_lists": {
+   "applicable": false,
+   "reason": "not for class schedule-only"
+  },
+  "types_in_legend": {
+   "applicable": true,
+   "total": 2,
+   "pass": 2,
+   "fail": 0,
+   "pass_rate": 1,
+   "examples": [],
+   "legend_titles": [
+    "DOOR TYPES p.3",
+    "FRAME TYPES p.3"
+   ],
+   "skipped": [],
+   "note": "weak for numeric types: a detail number near the legend can pass a numeric frame type"
+  },
+  "sizes_and_marks": {
+   "applicable": true,
+   "total": 6,
+   "pass": 6,
+   "fail": 0,
+   "pass_rate": 1,
+   "examples": [],
+   "size_fail": 0,
+   "mark_fail": 0
+  }
+ },
+ "tier": "oracle-checked",
+ "disagreement_count": 8,
+ "disagreements": [
+  {
+   "kind": "door",
+   "page": 3,
+   "key": "125",
+   "field": "fire_rating",
+   "a": "ANNODIZED ALUM",
+   "b": null
+  },
+  {
+   "kind": "door",
+   "page": 3,
+   "key": "125A",
+   "field": "fire_rating",
+   "a": "ANNODIZED ALUM",
+   "b": null
+  },
+  {
+   "kind": "door",
+   "page": 3,
+   "key": "126",
+   "field": "fire_rating",
+   "a": "ANNODIZED ALUM",
+   "b": null
+  },
+  {
+   "kind": "door",
+   "page": 3,
+   "key": "126A",
+   "field": "fire_rating",
+   "a": "ANNODIZED ALUM",
+   "b": null
+  },
+  {
+   "kind": "door",
+   "page": 3,
+   "key": "128",
+   "field": "fire_rating",
+   "a": "PAINT",
+   "b": null
+  },
+  {
+   "kind": "door",
+   "page": 3,
+   "key": "128",
+   "field": "hardware_group",
+   "a": "OFFICE",
+   "b": "LEVER; OFFICE"
+  },
+  {
+   "kind": "door",
+   "page": 3,
+   "key": "129",
+   "field": "fire_rating",
+   "a": "PAINT",
+   "b": null
+  },
+  {
+   "kind": "door",
+   "page": 3,
+   "key": "129",
+   "field": "hardware_group",
+   "a": "OFFICE",
+   "b": "LEVER; OFFICE"
+  }
+ ],
+ "ms": 281,
+ "generated_at": "2026-10-09T09:15:40.804Z"
+}
