@@ -99,3 +99,20 @@ Proposed: Tuesday, October 20, 2026, fallback Thursday, October 22, with six gat
 - The two journeys fixed in PR 81 wait on the Mac's rerun.
 - A scanned full-size door schedule sheet does not read yet (the generator's scanned sheet reads nothing); the copy says so.
 - Glynn-Johnson 90S is in no book on file; the packet lists it as a miss.
+
+## Repositories this cloud session can reach (2026-10-09, after John widened access)
+
+Checked with the session's repository listing (push rights as reported) and a clone of each:
+
+| repository | answered | push | cloned at | note |
+|---|---|---|---|---|
+| mobleysoft/weylandai.com | yes | yes | /home/user/weylandai.com | this product |
+| jmobleyworks/authfor | yes | yes | /home/user/authfor (ade09a4, 2026-10-07) | the AuthFor code; mobleysoft/authfor.com is an empty repository |
+| mobleysoft/mailguyai.com | yes | yes | /home/user/mailguyai.com (ff5bef3, 2026-10-08) | MailGuy sender and keys |
+| mobleysoft/vendyai.com | yes | yes | /home/user/vendyai.com (b160eb8, 2026-10-07) | VendyAI Stripe rail |
+| mobleysoft/mobleysoft.github.io | yes | yes | /home/user/mobleysoft.github.io (211ff57, 2026-10-01) | homepage deploy path |
+| jmobleyworks/mobley-kernel | yes | yes | /home/user/mobley-kernel (1899c0e, 2026-10-09) | |
+| jmobleyworks/mobcorp-estate | listed, push reported | not attached | no | attaching it was refused by this session's permission check; John can allow it |
+| jmobleyworks/mascom-estate, jmobleyworks/mascom-nginx | listed, push reported | mascom-nginx attached | no | not needed for WeylandAI so far |
+
+The listing also shows the other MobCorp venture repositories (mobleysoft/*.com and *.cc, jmobleyworks/*) with push; none is needed for WeylandAI's open work.
