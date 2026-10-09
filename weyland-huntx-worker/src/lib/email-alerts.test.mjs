@@ -79,3 +79,26 @@ test("the digest lists at most 25 and says how many more", () => {
   assert.equal((m.html.match(/Job \d+/g) || []).length, 25);
   assert.match(m.html, /5 more in HuntX/);
 });
+
+test("a sample goes now to the account's own address with the latest matches, once per 10 minutes, paid plans only", async () => {
+  const { sendSample } = await import("./email-alerts.js");
+  const { db, env } = setup();
+  db.exec("ALTER TABLE huntx_saved_searches ADD COLUMN last_sample_at TEXT");
+  const sent = [];
+  const fetchImpl = async (_url, init) => { sent.push(JSON.parse(init.body)); return new Response(JSON.stringify({ success: true })); };
+  const now = new Date("2026-10-09T12:00:00Z");
+  const r = await sendSample(env, "u1", "s1", { now, fetchImpl });
+  assert.deepEqual([r.sent, r.to, r.notices], [true, "pat@example.com", 3], "every open NY door notice, old or new");
+  assert.equal(sent[0].subject, 'HuntX sample: the latest 3 notices for "Doors NY"');
+  assert.match(sent[0].html, /A sample you asked for/);
+  assert.doesNotMatch(sent[0].html, /US 59 overlay/);
+  assert.equal((await sendSample(env, "u1", "s1", { now: new Date(now.getTime() + 5 * 60000), fetchImpl })).error[0], 429);
+  assert.equal((await sendSample(env, "u1", "s1", { now: new Date(now.getTime() + 11 * 60000), fetchImpl })).sent, true);
+  assert.equal((await sendSample(env, "u2", "s2", { now, fetchImpl })).error[0], 402, "a lapsed plan gets no email");
+  assert.equal((await sendSample(env, "u2", "s1", { now, fetchImpl })).error[0], 402);
+  db.prepare("UPDATE users SET subscription_status='active', subscription_tier='subconp' WHERE id='u2'").run();
+  assert.equal((await sendSample(env, "u2", "s1", { now, fetchImpl })).error[0], 404, "another account's search");
+  assert.equal((await sendSample({ ...env, MAILGUY_API_KEY: "" }, "u1", "s1", { now, fetchImpl })).error[0], 503);
+  const failed = await sendSample(env, "u1", "s3", { now, fetchImpl: async () => new Response(JSON.stringify({ error: "Unauthorized" }), { status: 401 }) });
+  assert.deepEqual([failed.error[0], failed.error[1]], [502, "SEND_FAILED"]);
+});
