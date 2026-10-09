@@ -26,7 +26,7 @@ import { jsonResponse3 } from "../lib/json-response.js";
 import { classifyError, jsonErrorResponse, ErrorMetrics } from "../error-utilities.js";
 import { findPagesInBrowser, runGridPagesInBrowser } from "../lib/browser-grid-extraction.js";
 import { persistBrowserGridResult } from "../lib/hardware-extraction-pipeline.js";
-import { readPageFromTextLayer } from "../lib/text-layer-read.js";
+import { openTextLayerDoc, readPageFromDoc } from "../lib/text-layer-read.js";
 
 // The URL the runner tab fetches the session's PDF from (2026-10-08). This
 // worker holds no signing secret, so the token is a hash of the session's own
@@ -310,13 +310,16 @@ router.post("/api/hardware-schedule/session/:sessionId/read-pages", async (reque
   // only the pages with no text (scans) go to the browser runner. Every page used to go to the
   // browser, and Rockford's 08 71 00 pages died there after 73 s.
   const fromText = [], forBrowser = [];
+  let doc = null;
+  try { doc = await openTextLayerDoc(fileBuffer); } catch (e) { console.warn("[read-pages] the PDF did not open for its text: " + (e && e.message)); }
   for (const p of pages) {
     let tl = null;
-    try { tl = await readPageFromTextLayer(fileBuffer, p.page, p.type); } catch (e) { console.warn("[read-pages] text read failed p" + p.page + ": " + (e && e.message)); }
+    if (doc) { try { tl = await readPageFromDoc(doc, p.page, p.type); } catch (e) { console.warn("[read-pages] text read failed p" + p.page + ": " + (e && e.message)); } }
     const words = tl && tl.result && tl.result.metadata ? tl.result.metadata.text_words || 0 : 0;
     if (tl && (!tl.empty || words >= 60 || !env2.BROWSER)) fromText.push({ ...tl, ok: true, page: p.page, requested_type: p.type });
     else forBrowser.push(p);
   }
+  if (doc) { try { await doc.destroy(); } catch (_) { /* gone */ } }
   let run = { ok: true, results: [] };
   if (forBrowser.length) {
     run = await runGridPagesInBrowser(env2, fileBuffer, forBrowser, { pdfUrl: await runnerPdfUrl(session, env2) });
