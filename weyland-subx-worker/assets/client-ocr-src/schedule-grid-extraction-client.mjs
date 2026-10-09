@@ -50,7 +50,7 @@ const ASSET_BASE = "/api/hardware-schedule/client-ocr-assets";
 // count (no rendering, no misread digits) and is the only way to read an
 // unruled Section 08 71 00. OCR below is now the path for pages with no text
 // (a scan, a Print-to-PDF of a bitmap such as OCCDoorSchedulePg4.pdf).
-import * as TL from "./schedule-text-layer.mjs?v=20261009g019r1";
+import * as TL from "./schedule-text-layer.mjs?v=20261009g019r2";
 
 let pdfjsLibPromise = null;
 export async function loadPdfJs() {
@@ -412,6 +412,24 @@ function upscaleN(img, n) {
   }
   return { data: out, width: nw, height: nh };
 }
+function upscaleBilinear(img, n) {
+  const { width, height, data } = img, w = Math.max(1, Math.round(width * n)), h = Math.max(1, Math.round(height * n));
+  const out = new Uint8ClampedArray(w * h * 4);
+  for (let y = 0; y < h; y++) {
+    const fy = Math.max(0, Math.min(height - 1, (y + .5) * height / h - .5));
+    const y0 = Math.floor(fy), y1 = Math.min(height - 1, y0 + 1), ty = fy - y0;
+    for (let x = 0; x < w; x++) {
+      const fx = Math.max(0, Math.min(width - 1, (x + .5) * width / w - .5));
+      const x0 = Math.floor(fx), x1 = Math.min(width - 1, x0 + 1), tx = fx - x0;
+      const a = (y0 * width + x0) * 4, b = (y0 * width + x1) * 4;
+      const c = (y1 * width + x0) * 4, d = (y1 * width + x1) * 4;
+      for (let channel = 0; channel < 4; channel++) out[(y * w + x) * 4 + channel] =
+        (data[a + channel] * (1 - tx) + data[b + channel] * tx) * (1 - ty) +
+        (data[c + channel] * (1 - tx) + data[d + channel] * tx) * ty;
+    }
+  }
+  return { width: w, height: h, data: out };
+}
 
 // Renders a pdf.js page to an ImageData at the given target DPI (assumes a
 // standard 72-DPI PDF user-space unit, matching PDFium's own scale
@@ -633,14 +651,15 @@ export async function recognizePageWords(img, engine, dpi, psm = "6", opts = {})
       const text = ws.map((w) => w.str).join(" ");
       cellTexts[c] = text;
       const field = fields[c];
-      if (field === "mark" && (!TL.looksLikeMark(text) || !ws.length || Math.min(...ws.map(w => w.conf)) < 80)) {
-        const reread = rereadMarkCell(engine, cell, budget, text, ws.length ? Math.min(...ws.map(w => w.conf)) / 100 : 0);
+      if ((field === "mark" || field === "hardware_group") && (!ws.length || Math.min(...ws.map(w => w.conf)) < (field === "mark" ? 80 : 95) || (field === "mark" && !TL.looksLikeMark(text)))) {
+        const acceptIdentifier = field === "mark" ? TL.looksLikeMark : s => /^[A-Z0-9][A-Z0-9 .\-\/#]{0,15}$/.test(s);
+        const reread = rereadMarkCell(engine, cell, budget, text, ws.length ? Math.min(...ws.map(w => w.conf)) / 100 : 0, acceptIdentifier);
         if (reread.text) ws = [{ str: reread.text, x0: 0, x1: cell.width * k, yb: cell.height * k * 0.75, h: cell.height * k / 3, conf: reread.confidence * 100 }];
       }
       if (field === "width" || field === "height") {
         const accept = (s) => { const d = readDoorDimension(s); return d && d.format === "ft-in" && d.inches >= DOOR_LIMITS[field][0] && d.inches <= DOOR_LIMITS[field][1]; };
         if (!accept(text)) {
-          const reread = rereadDimensionCell(engine, img, xs[c], xs[c + 1], ys[i], ys[i + 1], { recognitionBudget: budget }, text, accept);
+          const reread = rereadDimensionCell(engine, img, xs[c], xs[c + 1], ys[i], ys[i + 1], { recognitionBudget: budget, inset }, text, accept);
           if (reread.text) ws = [{ str: reread.text, x0: 0, x1: cell.width * k, yb: cell.height * k * 0.75, h: cell.height * k / 3, conf: reread.confidence * 100 }];
         }
       }
@@ -792,19 +811,21 @@ function ocrRowBand(engine, pageImage, colBounds, rowRightEdge, y0, y1, psm = "6
 // is read again - cropped inside its rulings, with a white margin - in a few
 // fixed ways (enlarged 2x and 3x, thresholded to black on white, restricted
 // to the characters a dimension is written with, and not). No single way reads
-// every cell of that sheet; a reading is taken only when
-//   - it parses as a value a door can have (the caller's accept()), and
-//   - its digits are the digits most of the readings of that cell agree on
-//     (the row's own reading counts as one), so a reading that dropped or
-//     invented a digit is never the one taken.
+// every cell of that sheet; a reading is taken only when it parses as a value
+// the caller accepts and at least two valid readings agree on that value.
+// Compare parsed inches, not digit strings: 36" and 3'-6" are different sizes.
 // Otherwise the value stays unread for the reviewer.
 const DIMENSION_CHARS = "0123456789'\"-/ ";
 const REREAD_WAYS = [
   { up: 1, whitelist: true },
   { up: 2, whitelist: true },
-  { up: 2, thr: 150, whitelist: true },
-  { up: 3, thr: 150, whitelist: true },
-  { up: 2, thr: 150, whitelist: false },
+  { up: 2, interpolate: true, whitelist: false },
+  { up: 1, thr: 100, whitelist: false },
+  { up: 3, thr: 100, whitelist: false },
+  { up: 1, thr: 140, whitelist: false },
+  { up: 2, thr: 170, whitelist: false },
+  { up: 3, thr: 170, whitelist: false },
+  { up: 2, thr: 200, whitelist: false },
 ];
 function padWhite(img, m) {
   const w = img.width + 2 * m, h = img.height + 2 * m;
@@ -821,11 +842,30 @@ function thresholdImage(img, thr) {
   }
   return { data: d, width: img.width, height: img.height };
 }
+// A table cell can be much wider/taller than its text. Keep the original grey
+// pixels and trim only empty outer margins before the short-line recognizer;
+// thresholding is used to locate ink, never to redraw or substitute a glyph.
+function trimCellMargins(img) {
+  const { width, height, data } = img;
+  let left = width, right = -1, top = height, bottom = -1;
+  for (let y = 0; y < height; y++) for (let x = 0; x < width; x++) {
+    const i = (y * width + x) * 4;
+    if (data[i] * .299 + data[i + 1] * .587 + data[i + 2] * .114 < 220) {
+      left = Math.min(left, x); right = Math.max(right, x);
+      top = Math.min(top, y); bottom = Math.max(bottom, y);
+    }
+  }
+  if (right < left || bottom < top) return img;
+  return cropRowImage(img, Math.max(0, top - 1), Math.min(height, bottom + 2),
+    Math.max(0, left - 1), Math.min(width, right + 2));
+}
 function readCellOnce(engine, cell, way, budget) {
   if (budget && !budget.take()) return { text: "", confidence: 0 };
-  let img = way.up > 1 ? upscaleN(cell, way.up) : cell;
+  if (way.trim) cell = trimCellMargins(cell);
+  let img = way.textHeight ? upscaleBilinear(cell, way.textHeight / cell.height)
+    : way.interpolate ? upscaleBilinear(cell, way.up) : way.up > 1 ? upscaleN(cell, way.up) : cell;
   if (way.thr) img = thresholdImage(img, way.thr);
-  img = padWhite(img, Math.max(8, Math.round(img.height / 2)));
+  img = padWhite(img, way.pad ?? Math.max(8, Math.round(img.height / 2)));
   engine.clearImage();
   engine.loadImage(img);
   engine.setVariable("tessedit_pageseg_mode", "7");
@@ -842,33 +882,49 @@ function readCellOnce(engine, cell, way, budget) {
 }
 // A mark is an identifier, so never repair it from surrounding row numbers. Re-read only
 // uncertain mark pixels and accept a code supported by at least two separate pixel variants.
-// Thresholded variants remove faint scan noise that can turn a narrow "1" into another glyph.
-export function rereadMarkCell(engine, cell, budget, firstReading = "", firstConfidence = 0) {
-  const trials = [{ text: String(firstReading).trim().toUpperCase(), confidence: firstConfidence }];
+// Use enlarged, native and reduced pixels because enlargement can itself distort a glyph.
+// Repeated noisy readings do not outweigh a better supported fit. Near ties stay unresolved,
+// and rereading the same uncertain original identifier never promotes its confidence.
+export function rereadMarkCell(engine, cell, budget, firstReading = "", firstConfidence = 0, accept = TL.looksLikeMark) {
+  const trials = [{ text: String(firstReading).trim().toUpperCase(), confidence: firstConfidence, originalPixels: true }];
   for (const way of [
     { up: 2, whitelist: false }, { up: 3, whitelist: false },
+    { up: 2, interpolate: true, whitelist: false }, { up: 3, interpolate: true, whitelist: false },
     { up: 2, thr: 140, whitelist: false }, { up: 2, thr: 170, whitelist: false },
     { up: 2, thr: 200, whitelist: false },
+    { up: 1, thr: 100, whitelist: false }, { up: 1, thr: 140, whitelist: false },
+    { up: 1, thr: 170, whitelist: false }, { up: 1, thr: 200, whitelist: false },
+    { up: .5, interpolate: true, whitelist: false }, { up: .5, interpolate: true, thr: 140, whitelist: false },
+    { up: .75, interpolate: true, thr: 200, whitelist: false },
+    { up: 1, trim: true, textHeight: 36, pad: 8, whitelist: false },
   ]) {
     if (budget && !budget.check()) break;
     const trial = readCellOnce(engine, cell, way, budget);
-    trials.push({ ...trial, text: trial.text.toUpperCase() });
+    trials.push({ ...trial, text: trial.text.toUpperCase(), originalPixels: !way.thr && !way.trim && way.up <= 1 });
   }
   const votes = new Map();
   for (const trial of trials) {
-    if (!TL.looksLikeMark(trial.text)) continue;
+    if (!accept(trial.text) || trial.confidence < .5) continue;
     if (!votes.has(trial.text)) votes.set(trial.text, []);
     votes.get(trial.text).push(trial.confidence);
   }
-  const ranked = [...votes].sort((a, b) => b[1].length - a[1].length);
-  if (!ranked.length || ranked[0][1].length < 2 || (ranked[1] && ranked[0][1].length === ranked[1][1].length)) {
+  const ranked = [...votes].filter(([, support]) => support.length >= 2).sort((a, b) => Math.max(...b[1]) - Math.max(...a[1]));
+  if (!ranked.length || (ranked[1] && Math.max(...ranked[0][1]) - Math.max(...ranked[1][1]) < .01)) {
     return { text: null, confidence: 0, readings: trials };
   }
-  return { text: ranked[0][0], confidence: Math.min(...ranked[0][1]), readings: trials };
+  // Enlarging or binarizing an identifier can create a consistent new glyph. If
+  // the original identifier is also supported by a reduced grey-pixel view,
+  // require the proposed replacement to have such support before overwriting it.
+  const originalSupport = trials.filter(t => t.originalPixels && t.confidence >= .5 && t.text === trials[0].text);
+  const replacementSupport = trials.some(t => t.originalPixels && t.confidence >= .5 && t.text === ranked[0][0]);
+  if (accept(trials[0].text) && ranked[0][0] !== trials[0].text && originalSupport.length >= 2 && !replacementSupport) {
+    return { text: null, confidence: 0, readings: trials };
+  }
+  const confidence = ranked[0][1].slice().sort((a, b) => b - a)[1];
+  return { text: ranked[0][0], confidence: ranked[0][0] === trials[0].text && firstConfidence < .8 ? Math.min(confidence, firstConfidence) : confidence, readings: trials };
 }
-const digitsOf = (t) => String(t || "").replace(/\D/g, "");
-function rereadDimensionCell(engine, pageImage, x0, x1, y0, y1, opts, firstReading, accept) {
-  const pad = (opts.pad || 2) + 2;
+export function rereadDimensionCell(engine, pageImage, x0, x1, y0, y1, opts, firstReading, accept) {
+  const pad = opts.inset ?? (opts.pad || 2) + 2;
   const cx0 = Math.max(0, Math.round(x0) + pad), cx1 = Math.min(pageImage.width, Math.round(x1) - pad);
   const cy0 = Math.max(0, Math.round(y0) + pad), cy1 = Math.min(pageImage.height, Math.round(y1) - pad);
   if (cx1 - cx0 < 6 || cy1 - cy0 < 6) return { text: null, readings: [] };
@@ -881,14 +937,17 @@ function rereadDimensionCell(engine, pageImage, x0, x1, y0, y1, opts, firstReadi
   }
   const readings = trials.map(r => r.text);
   const votes = new Map();
-  for (const r of readings.concat([cleanDimension(firstReading) || ""])) {
-    const d = digitsOf(r);
-    if (d) votes.set(d, (votes.get(d) || 0) + 1);
+  for (const trial of trials) {
+    if (!trial.text || !accept(trial.text)) continue;
+    const value = readDoorDimension(trial.text)?.inches ?? parseThickness(trial.text);
+    if (value == null) continue;
+    if (!votes.has(value)) votes.set(value, []);
+    votes.get(value).push(trial);
   }
-  const ranked = [...votes.entries()].sort((a, b) => b[1] - a[1]);
-  const agreed = ranked.length && ranked[0][1] >= 2 && !(ranked[1] && ranked[1][1] === ranked[0][1]) ? ranked[0][0] : null;
-  const text = agreed ? readings.find((r) => r && digitsOf(r) === agreed && accept(r)) || null : null;
-  return { text, readings, confidence: trials.find(r => r.text === text)?.confidence ?? 0 };
+  const ranked = [...votes].sort((a, b) => b[1].length - a[1].length);
+  const support = ranked[0]?.[1];
+  if (!support || support.length < 2 || (ranked[1] && support.length === ranked[1][1].length)) return { text: null, readings, confidence: 0 };
+  return { text: support[0].text, readings, confidence: Math.min(...support.map(r => r.confidence)) };
 }
 
 // Closes the currently-open hardware group into groups/matrix - mirrors
