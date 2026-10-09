@@ -1,15 +1,10 @@
 // tools/accuracy/truth/ocr.mjs
 //
-// The OCR path of the truth harness, for a page with no text layer (a scan, or a Print-to-PDF of a
-// bitmap: OCC A-801). The page is rendered by poppler (pdftoppm, grayscale), its long dark runs are
-// taken as the table's rules and erased, and the same tesseract-wasm build and English model the
-// product ships (weyland-subx-worker/assets/client-ocr) reads the words, skew measured from word
-// baselines and taken out with the product's own helpers. Then:
-//   reader A gets the words as lines, through the production reader (schedule-text-layer.mjs
-//            readDoorScheduleFromLines / readHardwareGroupsFromLines), as the browser OCR path does;
-//   reader B gets the same words plus the rules found in the RENDERED image (the row bands and
-//            column lines a person sees), not the PDF's drawing operators: a rendered-row-band read.
-// Nothing here is shared with reader A beyond the OCR words themselves.
+// For scans, only rendering is adapted here: Poppler supplies grayscale pixels to production's
+// ocrRasterPageLines. Production chooses orientation and DPI, straightens the image, finds ruled
+// cells, recognizes them with the shipped Tesseract engine/model, and forms schedule-reader lines.
+// Reader B receives the same words plus independently detected rules from the straightened image.
+// The browser's pdf.js rendering is checked separately by tools/accuracy/scanned_sheet_browser.mjs.
 import { execFileSync } from "node:child_process";
 import { mkdtempSync, readFileSync, readdirSync, rmSync, copyFileSync } from "node:fs";
 import { tmpdir } from "node:os";
@@ -26,8 +21,8 @@ async function engine() {
     // The shipped library is stored as .bin for the Worker's asset rules; Node imports it as a module copy.
     const dir = mkdtempSync(join(tmpdir(), "truth-ocr-"));
     copyFileSync(join(OCR_ASSETS, "tesseract-wasm-lib.mjs.bin"), join(dir, "lib.mjs"));
-    const { createOCREngine } = await import(pathToFileURL(join(dir, "lib.mjs")).href);
-    const e = await createOCREngine({ wasmBinary: readFileSync(join(OCR_ASSETS, "tesseract-core-fallback.bin")) });
+    const { createOCREngine, supportsFastBuild } = await import(pathToFileURL(join(dir, "lib.mjs")).href);
+    const e = await createOCREngine({ wasmBinary: readFileSync(join(OCR_ASSETS, supportsFastBuild() ? "tesseract-core.bin" : "tesseract-core-fallback.bin")) });
     e.loadModel(readFileSync(join(OCR_ASSETS, "eng-traineddata.bin")));
     return e;
   })();
@@ -116,49 +111,29 @@ export function rotateGray(img, deg) {
   return { width: NW, height: NH, gray: out };
 }
 
-async function wordsOfImage(img, dpi, client) {
-  const rgba = new Uint8ClampedArray(img.width * img.height * 4);
-  for (let i = 0; i < img.width * img.height; i++) { rgba[4 * i] = rgba[4 * i + 1] = rgba[4 * i + 2] = img.gray[i]; rgba[4 * i + 3] = 255; }
-  const im = client.eraseLongRuns({ width: img.width, height: img.height, data: rgba }, Math.round(dpi * 0.4));
-  const e = await engine();
-  e.clearImage(); e.loadImage(im); e.setVariable("tessedit_pageseg_mode", "6");
-  const k = 72 / dpi;
-  const pct = (b) => (b.confidence == null ? 100 : b.confidence <= 1 ? b.confidence * 100 : b.confidence);
-  return (e.getTextBoxes("word") || []).filter((b) => b && b.text && b.text.trim() && pct(b) >= 30)
-    .map((b) => ({ str: b.text.trim(), x0: b.rect.left * k, x1: b.rect.right * k, yb: b.rect.bottom * k, h: Math.max(1, (b.rect.bottom - b.rect.top) * k), conf: pct(b) }));
+function toRgba(img) {
+  const data = new Uint8ClampedArray(img.width * img.height * 4);
+  for (let i = 0; i < img.gray.length; i++) { data[4 * i] = data[4 * i + 1] = data[4 * i + 2] = img.gray[i]; data[4 * i + 3] = 255; }
+  return { width: img.width, height: img.height, data };
 }
 
-export async function ocrPage(file, pageNumber, { dpi = 300, rotations = [0, 90, 270, 180] } = {}) {
+export async function ocrPage(file, pageNumber, { dpi = 300, rotations = [0, 90, 270, 180], maxPixels = 36e6 } = {}) {
   const t0 = Date.now();
-  dpi = dpiFor(file, pageNumber, dpi);
-  const client0 = await import(pathToFileURL(join(CLIENT_SRC, "schedule-grid-extraction-client.mjs")).href);
-  // Which way up: a quick read at 150 dpi (100 dpi, the browser's, misjudged OCC's small type), scored by confident words.
-  let rotation = rotations[0] || 0;
-  if (rotations.length > 1) {
-    const qd = Math.min(150, dpi);
-    const quick = renderGray(file, pageNumber, qd);
-    let best = -1;
-    for (const r of rotations) {
-      const ws = await wordsOfImage(rotateGray(quick, r), qd, client0);
-      const score = ws.filter((w) => w.conf >= 70 && w.str.length >= 3).length;
-      if (score > best) { best = score; rotation = r; }
-    }
-  }
-  const img = rotateGray(renderGray(file, pageNumber, dpi), rotation);
-  const rules = imageRules(img, dpi);
-  const client = client0;
-  const TL = await import(pathToFileURL(join(CLIENT_SRC, "schedule-text-layer.mjs")).href);
-  // Same erase as the browser path (long rulings would otherwise read as letters), inside wordsOfImage.
-  const k = 72 / dpi;
-  // Every rule found in the image is whited out before OCR (the browser erases only rulings longer
-  // than 0.4 in; a cell's short verticals then read as "|", "I" or "l" and split the rows).
-  const clean = { width: img.width, height: img.height, gray: Uint8Array.from(img.gray) };
-  const px = (v) => Math.round(v / k), pad = Math.max(2, Math.round(dpi / 150));
-  for (const r of rules.h) for (let y = px(r.y) - pad; y <= px(r.y) + pad; y++) if (y >= 0 && y < img.height) clean.gray.fill(255, y * img.width + Math.max(0, px(r.x0) - pad), y * img.width + Math.min(img.width, px(r.x1) + pad));
-  for (const r of rules.v) for (let y = Math.max(0, px(r.y0) - pad); y < Math.min(img.height, px(r.y1) + pad); y++) for (let x = px(r.x) - pad; x <= px(r.x) + pad; x++) if (x >= 0 && x < img.width) clean.gray[y * img.width + x] = 255;
-  const raw = await wordsOfImage(clean, dpi, client);
-  const deg = client.skewDegrees(raw);
-  const words = client.unskew(raw, deg).map((w, i) => ({ ...w, item: i, itemX0: w.x0, itemX1: w.x1 }));
-  const items = words.map((w) => ({ str: w.str, x: w.x0, y: w.yb, w: w.x1 - w.x0, h: w.h, rot: 0, conf: w.conf }));
-  return { width: img.width * k, height: img.height * k, dpi, rotation, words, items, lines: TL.clusterLines(words), rules, skew_deg: deg, ms: Date.now() - t0 };
+  const client = await import(pathToFileURL(join(CLIENT_SRC, "schedule-grid-extraction-client.mjs")).href);
+  const size = pageSizePt(file, pageNumber);
+  let lastImage;
+  const o = await client.ocrRasterPageLines({ width: size.w, height: size.h,
+    render: async (use, rotation) => {
+      lastImage = rotateGray(renderGray(file, pageNumber, use), rotation);
+      return toRgba(lastImage);
+    },
+  }, await engine(), () => {}, { dpi, rotations, maxPixels });
+  // Reader B gets independently detected rules from the same straightened raster, before
+  // production erases anything. No rules or expected cells from reader A are fed to B.
+  const straight = client.deskewImage(toRgba(lastImage), o.image_skew_deg);
+  const gray = new Uint8Array(straight.width * straight.height);
+  for (let i = 0; i < gray.length; i++) gray[i] = straight.data[4 * i];
+  const rules = imageRules({ width: straight.width, height: straight.height, gray }, o.dpi);
+  const items = o.words.map((w) => ({ str: w.str, x: w.x0, y: w.yb, w: w.x1 - w.x0, h: w.glyph_h, rot: 0, conf: w.conf }));
+  return { ...o, items, rules, pipeline: "production ocrRasterPageLines (Poppler renderer)", ms: Date.now() - t0 };
 }

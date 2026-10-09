@@ -29,7 +29,7 @@ export async function readAFromLines(lines, size, type, wordCount = 0) {
   return mapResult({ schedule_type: type, result: hg ? hardwareResult(hg, tl, t0) : { hardware_groups: [] } }, type);
 }
 
-function mapResult(r, type) {
+export function mapResult(r, type) {
   if (r.schedule_type !== type) return {};
   if (type === "door_schedule") {
     const doors = ((r.result && r.result.doors) || []).map((d) => ({

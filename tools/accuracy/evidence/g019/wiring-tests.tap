@@ -1,0 +1,30 @@
+TAP version 13
+# Subtest: crossing row rules do not leave vertical fragments or erase nearby glyphs
+ok 1 - crossing row rules do not leave vertical fragments or erase nearby glyphs
+  ---
+  duration_ms: 3.348708
+  ...
+# Subtest: the shared dimension reader accepts a dropped foot apostrophe without inventing digits
+ok 2 - the shared dimension reader accepts a dropped foot apostrophe without inventing digits
+  ---
+  duration_ms: 0.645083
+  ...
+# Subtest: the shipped OCR modules and versioned entry points match source
+ok 3 - the shipped OCR modules and versioned entry points match source
+  ---
+  duration_ms: 3.214375
+  ...
+# Subtest: sideways ARCH D image-only sheet reads the same 48 doors as vector through production OCR
+ok 4 - sideways ARCH D image-only sheet reads the same 48 doors as vector through production OCR # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.827625
+  ...
+1..4
+# tests 4
+# suites 0
+# pass 3
+# fail 0
+# cancelled 0
+# skipped 1
+# todo 0
+# duration_ms 100.684458

@@ -198,6 +198,7 @@ at the loaded form and left to expire.
 | `journeys/create-free-account.mjs` | guest pastes, creates a free account in the page, signed in on the 14-day trial |
 | `journeys/free-trial-first-use.mjs` | new trial account uses paste, hero, CutsheetX, PropX, HuntX, account card |
 | `journeys/subx-upload-to-submittal.mjs` | subscriber uploads a door schedule PDF in SubX, rows with sources, package PDF |
+| `journeys/subx-scanned-sheet.mjs` | uploads the generated vector and scanned ARCH D bidsets, reads page 3 in the browser, saves and compares all 48 marks and source citations; records OCR field scores |
 | `journeys/takeoffx-takeoff.mjs` | TakeOffX in the overlay, START A TAKEOFF, counts with sources and a review step |
 | `journeys/cutsheetx-finder-search.mjs` | Finder (in place), CutsheetX MATCH / SEARCH / LOCAL LOOKUP, TRY A REAL MATCH |
 | `journeys/sightx-corridor.mjs` | WALK THIS SCHEDULE IN SIGHTX, LOWER / raise the dossier, walkthrough preview |

@@ -1,0 +1,2 @@
+tools/bidset/out/weylandai-building-bidset.pdf ... exact | class complete | A {"d":48,"i":54} B {"d":0,"i":54} | agree 0.5294 (54/102) | oracles marks_on_plan 48/48, sets_exist 10/10, set_door_lists 10/10, types_in_legend 3/3, sizes_and_marks 48/48 | 0s 
+truth records: 1 queue lines: 4387 (48 from this run)

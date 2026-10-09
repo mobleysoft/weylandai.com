@@ -1,0 +1,300 @@
+{
+  "at": "2026-10-09T16:59:18.536Z",
+  "base_commit": "a09d207c5905e070ee62e87d28242f1a8680f7c1",
+  "command": "node tools/accuracy/truth_run.mjs --files tools/bidset/out/weylandai-building-bidset-scanned.pdf",
+  "exit_code": 0,
+  "production_code": "weyland-subx-worker/assets/client-ocr-src/schedule-grid-extraction-client.mjs",
+  "renderer": "Poppler; browser pdf.js verification remains pending",
+  "before": {
+    "at": "2026-10-09T09:50:19.544Z",
+    "doors": 0
+  },
+  "scan": {
+    "sha256": "e0abc0ac15f561efbeabc5aee99e847425fc0d2f827dda9e626d8b781971067c",
+    "text_layer": {
+      "pages_with_text": 0,
+      "pages": 6
+    },
+    "ocr": {
+      "requested_dpi": 600,
+      "pipeline": "production ocrRasterPageLines; Poppler renderer; shipped Tesseract",
+      "pages": [
+        {
+          "page": 1,
+          "dpi": 204,
+          "words": 65,
+          "rotation": 0,
+          "skew_deg": 0.6,
+          "rules": {
+            "h": 155,
+            "v": 996
+          },
+          "ms": 8249
+        },
+        {
+          "page": 2,
+          "dpi": 204,
+          "words": 136,
+          "rotation": 0,
+          "skew_deg": 0.6,
+          "rules": {
+            "h": 144,
+            "v": 423
+          },
+          "ms": 8253
+        },
+        {
+          "page": 3,
+          "dpi": 204,
+          "words": 640,
+          "rotation": 270,
+          "skew_deg": 0.6,
+          "rules": {
+            "h": 904,
+            "v": 395
+          },
+          "ms": 19869
+        },
+        {
+          "page": 4,
+          "dpi": 600,
+          "words": 229,
+          "rotation": 0,
+          "skew_deg": 0.6,
+          "rules": {
+            "h": 0,
+            "v": 3
+          },
+          "ms": 5847
+        },
+        {
+          "page": 5,
+          "dpi": 600,
+          "words": 272,
+          "rotation": 0,
+          "skew_deg": 0.6,
+          "rules": {
+            "h": 0,
+            "v": 0
+          },
+          "ms": 6560
+        },
+        {
+          "page": 6,
+          "dpi": 600,
+          "words": 183,
+          "rotation": 0,
+          "skew_deg": 0.6,
+          "rules": {
+            "h": 0,
+            "v": 0
+          },
+          "ms": 5293
+        }
+      ]
+    },
+    "readers": {
+      "a": {
+        "doors": 48,
+        "sets": 10,
+        "items": 50,
+        "name": "production OCR + schedule line reader (Poppler renderer)"
+      },
+      "b": {
+        "doors": 48,
+        "sets": 10,
+        "items": 50,
+        "name": "geometry first (tools/accuracy/truth/reader_b.mjs)",
+        "tables": 1
+      }
+    },
+    "score": {
+      "expected_rows": 48,
+      "rows_found": 48,
+      "rows_fully_right": 42,
+      "fields_right": 330,
+      "fields_total": 336,
+      "per_field": {
+        "width_inches": {
+          "right": 45,
+          "total": 48
+        },
+        "height_inches": {
+          "right": 46,
+          "total": 48
+        },
+        "door_type": {
+          "right": 48,
+          "total": 48
+        },
+        "material": {
+          "right": 48,
+          "total": 48
+        },
+        "fire_rating": {
+          "right": 48,
+          "total": 48
+        },
+        "hardware_group": {
+          "right": 47,
+          "total": 48
+        },
+        "location": {
+          "right": 48,
+          "total": 48
+        }
+      },
+      "extra_rows": 0,
+      "wrong": [
+        {
+          "key": "205",
+          "page": 3,
+          "field": "width_inches",
+          "expected": 36,
+          "read": null
+        },
+        {
+          "key": "208",
+          "page": 3,
+          "field": "height_inches",
+          "expected": 84,
+          "read": null
+        },
+        {
+          "key": "212",
+          "page": 3,
+          "field": "height_inches",
+          "expected": 84,
+          "read": null
+        },
+        {
+          "key": "302",
+          "page": 3,
+          "field": "hardware_group",
+          "expected": "03",
+          "read": "Q3"
+        },
+        {
+          "key": "311",
+          "page": 3,
+          "field": "width_inches",
+          "expected": 36,
+          "read": null
+        },
+        {
+          "key": "312",
+          "page": 3,
+          "field": "width_inches",
+          "expected": 36,
+          "read": null
+        }
+      ]
+    },
+    "ms": 54123
+  },
+  "vector": {
+    "sha256": "4847b09e633103f72cd4807063cfd2c206fddefc0242af4a7102092f8c859dfe",
+    "readers": {
+      "a": {
+        "doors": 48,
+        "sets": 10,
+        "items": 54,
+        "name": "production text layer (weyland-subx-worker/src/lib/text-layer-read.js)"
+      },
+      "b": {
+        "doors": 0,
+        "sets": 10,
+        "items": 54,
+        "name": "geometry first (tools/accuracy/truth/reader_b.mjs)",
+        "tables": 0
+      }
+    },
+    "score": {
+      "expected_rows": 48,
+      "rows_found": 48,
+      "rows_fully_right": 48,
+      "fields_right": 336,
+      "fields_total": 336,
+      "per_field": {
+        "width_inches": {
+          "right": 48,
+          "total": 48
+        },
+        "height_inches": {
+          "right": 48,
+          "total": 48
+        },
+        "door_type": {
+          "right": 48,
+          "total": 48
+        },
+        "material": {
+          "right": 48,
+          "total": 48
+        },
+        "fire_rating": {
+          "right": 48,
+          "total": 48
+        },
+        "hardware_group": {
+          "right": 48,
+          "total": 48
+        },
+        "location": {
+          "right": 48,
+          "total": 48
+        }
+      },
+      "extra_rows": 0,
+      "wrong": []
+    }
+  },
+  "tests": {
+    "ocr_and_cells": {
+      "pass": 11,
+      "total": 11
+    },
+    "corpus_and_workspace": {
+      "node": "22.23.2",
+      "pass": 13,
+      "total": 13
+    },
+    "asset_wiring_recheck": {
+      "pass": 3,
+      "total": 3
+    },
+    "known_preexisting_failure": {
+      "file": "weyland-subx-worker/test/text-layer-read.test.mjs",
+      "case": "Rockford 08 71 00 item total",
+      "expected": 110,
+      "actual": 114,
+      "unchanged_HEAD_parser": 114
+    }
+  },
+  "browser": {
+    "status": "not executed",
+    "chromium": "macOS sandbox: bootstrap_check_in MachPortRendezvousServer Permission denied (1100)",
+    "safari": "Computer Use was not approved to use Safari",
+    "deployed": false,
+    "live_journey": "tools/user-simulation/journeys/subx-scanned-sheet.mjs",
+    "local_browser_check": "node tools/accuracy/scanned_sheet_browser.mjs"
+  },
+  "assets": [
+    {
+      "file": "weyland-subx-worker/assets/client-ocr/schedule-grid-extraction-client.mjs.bin",
+      "sha256": "91a9d28123aacd924fde4ed7230557bf550423ddbba3e6fd1d4a5620f6a973dd"
+    },
+    {
+      "file": "weyland-subx-worker/assets/client-ocr/schedule-text-layer.mjs.bin",
+      "sha256": "00a56d089be265f0fae2904eca02d1c1e3fed8c43b66791ae9ac21e0671ee170"
+    },
+    {
+      "file": "weyland-subx-worker/assets/client-ocr/grid-runner.html",
+      "sha256": "aa2747ae54e06a43dedd172d56fd03a79db431403a934e14b010adc1f027d463"
+    },
+    {
+      "file": "weyland-subx-worker/src/pages/subx-app.html",
+      "sha256": "cca5cba68e21de5e5cad5ce0fc083fe87db061ad17ec2c5aeb60157cb64a487c"
+    }
+  ]
+}

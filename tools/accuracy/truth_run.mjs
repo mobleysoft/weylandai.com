@@ -27,7 +27,7 @@
 //   --max-pages <n>         skip PDFs with more pages (default 1200)
 //   --ocr-max-pages <n>     OCR a PDF with no text layer when it has at most n pages (default 6); --ocr-dpi (600)
 // Then: node tools/accuracy/truth_report.mjs  (the per-tier report).
-// Needs nothing installed: pdf.js is SubX's vendored copy. No network, no credentials.
+// Vector reads use vendored pdf.js; scans also require Poppler (pdfinfo / pdftoppm). No network or credentials.
 import { readFileSync, writeFileSync, existsSync, readdirSync, mkdirSync, statSync } from "node:fs";
 import { createHash } from "node:crypto";
 import { dirname, join, resolve, relative, basename } from "node:path";
@@ -155,12 +155,12 @@ async function analyze(file) {
   // same words; reader A reads them as lines through the production readers, reader B with the rules
   // found in the rendered image.
   if (textPages === 0 && pdf.numPages <= OCR_MAX) {
-    rec.ocr = { dpi: OCR_DPI, pages: [] };
+    rec.ocr = { requested_dpi: OCR_DPI, pipeline: "production ocrRasterPageLines; Poppler renderer; shipped Tesseract", pages: [] };
     for (let p = 1; p <= pdf.numPages; p++) {
       let o;
       try { o = await ocrPage(file, p, { dpi: OCR_DPI }); } catch (e) { readerNotes.push("OCR p." + p + ": " + String(e.message).slice(0, 120)); continue; }
       const text = o.items.map((i) => i.str).join("\n"), size = { width: o.width, height: o.height };
-      rec.ocr.pages.push({ page: p, words: o.words.length, rotation: o.rotation, skew_deg: o.skew_deg, rules: { h: o.rules.h.length, v: o.rules.v.length }, ms: o.ms });
+      rec.ocr.pages.push({ page: p, dpi: o.dpi, words: o.words.length, rotation: o.rotation, skew_deg: o.skew_deg, rules: { h: o.rules.h.length, v: o.rules.v.length }, ms: o.ms });
       if (DOOR_PAGE(text)) {
         doorPages.push(p);
         const a = await readAFromLines(o.lines, size, "door_schedule", o.words.length);
@@ -205,7 +205,7 @@ async function analyze(file) {
   const hwRead = [...new Set([...hwA, ...hwB].filter((x) => x.groups.some((g) => g.items.length)).map((x) => x.page))].sort((a, b) => a - b);
   rec.pages = { door_candidates: doorPages.length, hardware_candidates: hwPages.length, door_schedule_pages: schedPages, hardware_pages: hwRead };
   rec.readers = {
-    a: { doors: doorsA.length, sets: groupsA.length, items: groupsA.reduce((n, g) => n + g.items.length, 0), name: "production text layer (weyland-subx-worker/src/lib/text-layer-read.js)" },
+    a: { doors: doorsA.length, sets: groupsA.length, items: groupsA.reduce((n, g) => n + g.items.length, 0), name: rec.ocr ? "production OCR + schedule line reader (Poppler renderer)" : "production text layer (weyland-subx-worker/src/lib/text-layer-read.js)" },
     b: { doors: doorsB.length, sets: groupsB.length, items: groupsB.reduce((n, g) => n + g.items.length, 0), name: "geometry first (tools/accuracy/truth/reader_b.mjs)", tables: Object.values(tableBoxes).flat().length },
   };
   if (readerNotes.length) rec.reader_notes = readerNotes.slice(0, 20);
@@ -267,7 +267,7 @@ async function analyze(file) {
   const applicable = Object.values(rec.oracles).filter((o) => o.applicable);
   rec.tier = exp.some((e) => e.tier === "exact") ? "exact" : exp.length ? "audited" : rec.rows_agreed > 0 ? "agreed" : applicable.length ? "oracle-checked" : "unread";
   if (rec.tier === "unread") rec.unread_reason = textPages === 0 ? (rec.ocr ? "no text layer; OCR read " + rec.ocr.pages.reduce((n, x) => n + x.words, 0) + " words but neither reader found a table in them" : "no text layer and more than " + OCR_MAX + " pages (raise --ocr-max-pages to OCR it)") : !S && !H ? "no door schedule or hardware set read by either reader" : "no rows agreed and no oracle applies";
-  if (textPages === 0) rec.note = rec.ocr ? "no text layer: read by OCR at " + OCR_DPI + " dpi (truth/ocr.mjs), the same words given to both readers" : "no text layer on any page and too many pages to OCR here";
+  if (textPages === 0) rec.note = rec.ocr ? "no text layer: production OCR preprocessing, cell recognition and line reader; Poppler rendering (browser rendering is a separate check). Actual DPI is recorded per page; the same words are given to both readers" : "no text layer on any page and too many pages to OCR here";
   rec.disagreement_count = dis.length;
   rec.disagreements = dis.slice(0, 40);
   rec.ms = Date.now() - t0;

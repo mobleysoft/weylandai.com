@@ -490,7 +490,7 @@ export function readDimension(text) {
   t = t.replace(/''/g, '"');
   let m = t.match(/^(\d{1,2})\s*'\s*-?\s*(\d{1,2})(?:\s*-?\s*(\d)\/(\d{1,2}))?\s*"?$/);
   if (m) { const inch = parseInt(m[2], 10); const frac = m[3] ? fractionValue(m[3], m[4]) : 0; if (inch > 11 || frac == null) return null; return { inches: parseInt(m[1], 10) * 12 + inch + frac, format: "ft-in" }; }
-  m = t.match(/^(\d{1,2})\s*-\s*(\d{1,2})(?:\s*-?\s*(\d)\/(\d{1,2}))?$/);
+  m = t.match(/^(\d{1,2})\s*-\s*(\d{1,2})(?:\s*-?\s*(\d)\/(\d{1,2}))?\s*"?$/);
   if (m) { const inch = parseInt(m[2], 10); const frac = m[3] ? fractionValue(m[3], m[4]) : 0; if (inch > 11 || frac == null) return null; return { inches: parseInt(m[1], 10) * 12 + inch + frac, format: "ft-in" }; }
   m = t.match(/^(\d{1,2})\s*'$/);
   if (m) return { inches: parseInt(m[1], 10) * 12, format: "ft-in" };

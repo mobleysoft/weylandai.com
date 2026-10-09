@@ -1,0 +1,28 @@
+tools/bidset/out/weylandai-building-bidset-scanned.pdf ... Image too small to scale!! (1x36 vs min width of 3)
+Line cannot be recognized!!
+Image too small to scale!! (2x36 vs min width of 3)
+Line cannot be recognized!!
+Image too small to scale!! (2x36 vs min width of 3)
+Line cannot be recognized!!
+Image too small to scale!! (2x36 vs min width of 3)
+Line cannot be recognized!!
+Image too small to scale!! (2x36 vs min width of 3)
+Line cannot be recognized!!
+Image too small to scale!! (2x36 vs min width of 3)
+Line cannot be recognized!!
+Image too small to scale!! (2x36 vs min width of 3)
+Line cannot be recognized!!
+Image too small to scale!! (2x36 vs min width of 3)
+Line cannot be recognized!!
+Image too small to scale!! (2x36 vs min width of 3)
+Line cannot be recognized!!
+Image too small to scale!! (2x36 vs min width of 3)
+Line cannot be recognized!!
+Image too small to scale!! (2x36 vs min width of 3)
+Line cannot be recognized!!
+Image too small to scale!! (2x36 vs min width of 3)
+Line cannot be recognized!!
+Image too small to scale!! (2x36 vs min width of 3)
+Line cannot be recognized!!
+exact | class pair | A {"d":48,"i":50} B {"d":48,"i":50} | agree 0.602 (59/98) | oracles sets_exist 10/11, set_door_lists 8/10, sizes_and_marks 43/48 | 54s 
+truth records: 1 queue lines: 4339 (54 from this run)

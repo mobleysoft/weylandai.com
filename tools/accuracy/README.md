@@ -29,8 +29,8 @@ The numbers are from the public finder's deterministic path; no language model i
 # Truth at scale (2026-10-09)
 
 docs/direction-2026-10-08.md, "Truth at scale for the harvested corpus": a downloaded set tests the
-product the moment it is read, without anyone writing expected rows first. Offline, no network, no
-credentials, nothing to install (pdf.js is SubX's vendored copy).
+product the moment it is read, without anyone writing expected rows first. Offline, no network or credentials. Vector reads use vendored pdf.js; scan reads also need
+Poppler (`pdfinfo` / `pdftoppm`) and use the shipped Tesseract engine and model.
 
     node tools/accuracy/truth_run.mjs                  # everything in tools/corpus + tools/bidset/out (+ $OCC_PDF)
     node tools/accuracy/truth_run.mjs --dir <folder>   # a folder of PDFs, e.g. the harvest pulled from R2
@@ -71,7 +71,18 @@ Record: `tools/corpus/harvest/truth/<sha16>.json` (sha16 = first 16 hex of the f
 sha16, file, family, source, triage_class, tier, agreement_rate, rows_agreed, rows_disputed,
 per-field agreement, oracles, calibration, disagreements (first 40).
 
-Limits: pages without a text layer are not read by either reader (production sends them to the
-browser OCR path, not run here); reader B was developed against the audited files, so its
-calibration there is in-sample; the human 2% spot check of agreed rows is separate.
+Scans with at most six pages (raise `--ocr-max-pages` for larger files) use production
+`ocrRasterPageLines`: orientation, image deskew, cell recognition, and line formation. Only the
+renderer is adapted: Poppler here, pdf.js in the browser. The 36 MP budget caps ARCH D sheets
+at 204 DPI even when `--ocr-dpi 600` is requested; actual DPI is recorded per page.
+
+Browser verification: `node tools/accuracy/scanned_sheet_browser.mjs` serves the shipped assets
+and runs the real `grid-runner.html` in Chromium. `--manual` prints a local URL for an existing
+browser. Set `PLAYWRIGHT_CORE` / `CHROMIUM_PATH` to use an existing test installation. It writes
+`g019-browser.json` with both variants, exact mark equality, field scores, and asset hashes.
+The live upload/save journey is `tools/user-simulation/journeys/subx-scanned-sheet.mjs`.
+
+Limits: the truth command does not exercise browser rendering or upload/save; reader B was
+developed against the audited files, so its calibration there is in-sample; the human 2% spot
+check of agreed rows is separate.
 `TRUTH_DEBUG=1` prints reader B's table and column decisions.

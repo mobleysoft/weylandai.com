@@ -108,7 +108,7 @@ md.push("");
 md.push("## Not done here", "");
 md.push("- The harvest (R2 weyland-fixtures harvest/<sha16>.pdf) " + (harvest.length ? "is partly included (" + harvest.length + " PDFs)." : "has not been run: not reachable from this session."));
 md.push("- OCC A-801 (audited) " + (recs.some((r) => /occ/i.test(r.family || "")) ? "is included." : "is not included: OCC_PDF was not set and the file is not in the repo (private fixture)."));
-md.push("- Scanned pages (no text layer) are not read by either reader here; production sends them to the browser OCR path, which this harness does not run (no OCR engine in this environment). The scanned rendering of the synthetic set is listed with no rows for that reason.");
+md.push("- Scanned PDFs within --ocr-max-pages use production OCR preprocessing and cell recognition with Poppler rendering. The actual DPI is recorded per page under the 36 MP budget. Browser rendering and upload/save are separate checks (scanned_sheet_browser.mjs and the subx-scanned-sheet journey).");
 md.push("- The 2% human spot check of agreed rows (to catch both readers wrong the same way) is not part of this run.");
 md.push("- tools/corpus/harvest/triage.json " + (existsSync(join(REPO, "tools/corpus/harvest/triage.json")) ? "was used for triage classes." : "does not exist yet: classes are inferred (complete = schedule + hardware sets + plan sheet, pair = schedule + sets, schedule-only, spec-only, plan-only, none)."));
 md.push("");

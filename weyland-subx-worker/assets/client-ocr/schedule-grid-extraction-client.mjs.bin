@@ -50,7 +50,7 @@ const ASSET_BASE = "/api/hardware-schedule/client-ocr-assets";
 // count (no rendering, no misread digits) and is the only way to read an
 // unruled Section 08 71 00. OCR below is now the path for pages with no text
 // (a scan, a Print-to-PDF of a bitmap such as OCCDoorSchedulePg4.pdf).
-import * as TL from "./schedule-text-layer.mjs?v=20261009g004";
+import * as TL from "./schedule-text-layer.mjs?v=20261009g018-g019";
 
 let pdfjsLibPromise = null;
 export async function loadPdfJs() {
@@ -456,11 +456,14 @@ export function eraseLongRuns(img, minRun) {
   const { width: w, height: h, data: d } = img;
   const dark = (i) => d[i] * 0.299 + d[i + 1] * 0.587 + d[i + 2] * 0.114 < 140;
   const white = (i) => { d[i] = d[i + 1] = d[i + 2] = 255; };
+  // Collect both axes before erasing: removing row rules first cuts a column rule into
+  // cell-height fragments, too short to remove in the vertical pass.
+  const horizontal = [], vertical = [];
   for (let y = 0; y < h; y++) {
     let run = 0;
     for (let x = 0; x <= w; x++) {
       if (x < w && dark((y * w + x) * 4)) { run++; continue; }
-      if (run >= minRun) for (let k = x - run; k < x; k++) white((y * w + k) * 4);
+      if (run >= minRun) horizontal.push([y, x - run, x]);
       run = 0;
     }
   }
@@ -468,46 +471,199 @@ export function eraseLongRuns(img, minRun) {
     let run = 0;
     for (let y = 0; y <= h; y++) {
       if (y < h && dark((y * w + x) * 4)) { run++; continue; }
-      if (run >= minRun) for (let k = y - run; k < y; k++) white((k * w + x) * 4);
+      if (run >= minRun) vertical.push([x, y - run, y]);
       run = 0;
     }
   }
+  // Include the antialiased edges; leaving a faint parallel edge makes Tesseract see pipes.
+  const pad = Math.max(1, Math.round(minRun / 40));
+  for (const [y, x0, x1] of horizontal) for (let yy = Math.max(0, y - pad); yy <= Math.min(h - 1, y + pad); yy++) for (let x = x0; x < x1; x++) white((yy * w + x) * 4);
+  for (const [x, y0, y1] of vertical) for (let xx = Math.max(0, x - pad); xx <= Math.min(w - 1, x + pad); xx++) for (let y = y0; y < y1; y++) white((y * w + xx) * 4);
   return img;
 }
 
-async function ocrWords(pdfDoc, pageNumber, engine, rotation, dpi, maxPixels, psm = "6") {
-  const page = await pdfDoc.getPage(pageNumber);
-  const vp = page.getViewport({ scale: 1, rotation: ((page.rotate || 0) + rotation) % 360 });
-  let use = dpi;
-  if (vp.width * vp.height * (use / 72) ** 2 > maxPixels) use = Math.floor(72 * Math.sqrt(maxPixels / (vp.width * vp.height)));
-  const img = eraseLongRuns(await renderPageToImageData(pdfDoc, pageNumber, use, rotation), Math.round(use * 0.4));
+// Straighten the pixels BEFORE removing rulings/recognizing cells. Correcting only the word
+// boxes cannot recover a mark or header that OCR lost against a tilted table border.
+export function deskewImage(img, deg) {
+  if (Math.abs(deg) < 0.05) return img;
+  const { width, height, data } = img;
+  const out = new Uint8ClampedArray(data.length);
+  out.fill(255);
+  const t = deg * Math.PI / 180, cs = Math.cos(t), sn = Math.sin(t);
+  const cx = (width - 1) / 2, cy = (height - 1) / 2;
+  for (let y = 0; y < height; y++) {
+    let sx = -cx * cs - (y - cy) * sn + cx;
+    let sy = -cx * sn + (y - cy) * cs + cy;
+    for (let x = 0; x < width; x++, sx += cs, sy += sn) {
+      const ix = Math.round(sx), iy = Math.round(sy);
+      if (ix < 0 || ix >= width || iy < 0 || iy >= height) continue;
+      const a = (iy * width + ix) * 4, b = (y * width + x) * 4;
+      out[b] = data[a]; out[b + 1] = data[a + 1]; out[b + 2] = data[a + 2];
+    }
+  }
+  return { width, height, data: out };
+}
+
+// Project sampled ink onto row baselines. The image supplies a finer angle than word boxes
+// (0.1 degree is several pixels across an ARCH D sheet), including pages whose rules hide text.
+export function imageSkewDegrees(img) {
+  const { width, height, data } = img;
+  const points = [];
+  for (let y = 0; y < height; y++) for (let x = 0; x < width; x += 8) {
+    const i = (y * width + x) * 4;
+    if (data[i] + data[i + 1] + data[i + 2] < 300) points.push(x - width / 2, y);
+  }
+  if (points.length < 400) return 0;
+  const pad = Math.ceil(width * 0.04) + 2, hist = new Uint32Array(height + 2 * pad);
+  const score = (deg) => {
+    hist.fill(0);
+    const t = Math.tan(deg * Math.PI / 180);
+    let s = 0;
+    for (let i = 0; i < points.length; i += 2) { const k = Math.round(points[i + 1] - points[i] * t) + pad; s += 2 * hist[k]++ + 1; }
+    return s;
+  };
+  let best = { deg: 0, score: score(0) };
+  for (let n = -40; n <= 40; n++) { const deg = n / 20, s = score(deg); if (s > best.score) best = { deg, score: s }; }
+  const center = best.deg;
+  for (let n = -5; n <= 5; n++) { const deg = center + n / 100, s = score(deg); if (s > best.score) best = { deg, score: s }; }
+  return Math.round(best.deg * 100) / 100;
+}
+
+export function detectDoorGrid(img) {
+  const lum = toLuminance(img);
+  // The sheet border and title block also span the table's height. Find repeated row-rule
+  // extents first; otherwise those outside verticals become false schedule columns.
+  const groups = [];
+  for (let y = 0; y < img.height; y++) {
+    let start = -1, last = -1;
+    const flush = () => {
+      if (last - start < img.width * 0.15) return;
+      let g = groups.find((g) => Math.abs(g.x0 - start) < 8 && Math.abs(g.x1 - last) < 8);
+      if (!g) { g = { x0: start, x1: last, ys: [] }; groups.push(g); }
+      g.ys.push(y);
+    };
+    for (let x = 0; x <= img.width; x++) {
+      if (x < img.width && lum[y * img.width + x] < 190) { if (start < 0) start = x; last = x; }
+      else if (start >= 0 && x - last > 2) { flush(); start = -1; }
+    }
+    if (start >= 0) flush();
+  }
+  for (const g of groups) g.rows = clusterIndices(g.ys, 3);
+  const g = groups.filter((g) => g.rows.length >= 6).sort((a, b) => b.rows.length - a.rows.length)[0];
+  if (!g) return null;
+  const y0 = g.rows[0], y1 = g.rows[g.rows.length - 1];
+  const candidates = [];
+  for (let x = g.x0; x <= g.x1; x++) {
+    let n = 0;
+    for (let y = y0; y <= y1; y++) if (lum[y * img.width + x] < 190) n++;
+    if (n > (y1 - y0) * 0.5) candidates.push(x);
+  }
+  return { colLines: clusterIndices(candidates, 3), rowLines: g.rows };
+}
+
+export function recognizeWords(img, engine, dpi, psm = "6") {
   engine.clearImage();
   engine.loadImage(img);
   engine.setVariable("tessedit_pageseg_mode", psm);
   const boxes = engine.getTextBoxes("word") || [];
-  const k = 72 / use;
-  // tesseract-wasm reports confidence from 0 to 1.
+  const k = 72 / dpi;
   const pct = (b) => (b.confidence == null ? 100 : b.confidence <= 1 ? b.confidence * 100 : b.confidence);
-  const words = boxes.filter((b) => b && b.text && b.text.trim() && pct(b) >= 30)
+  return boxes.filter((b) => b && b.text && b.text.trim() && pct(b) >= 30)
     .map((b) => ({ str: b.text.trim(), x0: b.rect.left * k, x1: b.rect.right * k, yb: b.rect.bottom * k, h: Math.max(1, (b.rect.bottom - b.rect.top) * k), conf: pct(b) }));
-  return { words, width: vp.width, height: vp.height, dpi: use };
 }
-export async function ocrPageLines(pdfDoc, pageNumber, engine, progress, opts = {}) {
+
+// A whole architectural sheet is not one text block. Read a detected table one row at a
+// time so side legends/title blocks cannot make the OCR engine merge or drop schedule rows.
+// Return positioned words, not guessed fields; the normal schedule reader still interprets them.
+export function recognizePageWords(img, engine, dpi, psm = "6") {
+  const grid = detectDoorGrid(img);
+  const hasGrid = grid && grid.colLines.length >= 4 && grid.rowLines.length >= 6;
+  if (!hasGrid) return recognizeWords(eraseLongRuns(img, Math.round(dpi * 0.4)), engine, dpi, psm);
+  const xs = grid.colLines, ys = grid.rowLines;
+  const x0 = xs[0], x1 = grid.wideColEnd ?? xs[xs.length - 1];
+  const k = 72 / dpi;
+  const inset = Math.max(3, Math.ceil(dpi / 72));
+  const words = [];
+  let fields = [];
+  // Crop INSIDE each rule. This preserves the original glyphs even when JPEG noise leaves
+  // a faint rule edge; full-page line erasure must not cut a cell's characters.
+  for (let i = 0; i < ys.length - 1; i++) {
+    const top = Math.ceil(ys[i] + inset), bottom = Math.floor(ys[i + 1] - inset);
+    if (bottom <= top) continue;
+    const rowWords = [];
+    const cellTexts = [];
+    for (let c = 0; c < xs.length - 1; c++) {
+      const left = Math.ceil(xs[c] + inset), right = Math.floor(xs[c + 1] - inset);
+      if (right <= left) continue;
+      const cell = cropRowImage(img, top, bottom, left, right);
+      let ws = recognizeWords(cell, engine, dpi, "6");
+      const text = ws.map((w) => w.str).join(" ");
+      cellTexts[c] = text;
+      const field = fields[c];
+      if (field === "width" || field === "height") {
+        const accept = (s) => { const d = readDoorDimension(s); return d && d.format === "ft-in" && d.inches >= DOOR_LIMITS[field][0] && d.inches <= DOOR_LIMITS[field][1]; };
+        if (!accept(text)) {
+          const reread = rereadDimensionCell(engine, img, xs[c], xs[c + 1], ys[i], ys[i + 1], {}, text, accept);
+          if (reread.text) ws = [{ str: reread.text, x0: 0, x1: cell.width * k, yb: cell.height * k * 0.75, h: cell.height * k / 3, conf: 85 }];
+        }
+      }
+      const itemX0 = Math.min(...ws.map((w) => w.x0)) + left * k, itemX1 = Math.max(...ws.map((w) => w.x1)) + left * k;
+      for (const w of ws) rowWords.push({ ...w, x0: w.x0 + left * k, x1: w.x1 + left * k, yb: w.yb + top * k, item: "cell-" + i + "-" + c, itemX0, itemX1 });
+    }
+    // OCR's box bottoms vary with punctuation. Cells in one ruled band share a baseline.
+    const baselines = rowWords.map((w) => w.yb).sort((a, b) => a - b);
+    const baseline = baselines[Math.floor(baselines.length / 2)];
+    words.push(...rowWords.map((w) => ({ ...w, yb: baseline })));
+    if (!fields.length) {
+      const used = new Set();
+      const candidate = cellTexts.map((text) => { const f = matchHeaderLabel(text, used, DOOR_SCHEDULE_HEADER_PATTERNS); if (f) used.add(f); return f; });
+      if (used.has("mark") && used.size >= 3) fields = candidate;
+    }
+  }
+  words.push(...recognizeWords(eraseLongRuns(img, Math.round(dpi * 0.4)), engine, dpi, psm)
+    .filter((w) => w.x1 < x0 * k || w.x0 > x1 * k || w.yb < ys[0] * k || w.yb - w.h > ys[ys.length - 1] * k));
+  return words;
+}
+
+// Rendering is the only environment-specific step: the browser uses pdf.js; the accuracy
+// runner supplies Poppler pixels. Orientation, deskew, cell OCR and line formation are shared.
+export async function ocrRasterPageLines(source, engine, progress = () => {}, opts = {}) {
   const rotations = opts.rotations || [0, 90, 270, 180];
   const maxPixels = opts.maxPixels || 36e6;
-  // Which way up: a quick read at 100 dpi, scored by confident words of three or more characters.
-  let pick = { rotation: 0, score: -1 };
+  const read = async (rotation, requestedDpi, full = false) => {
+    const dpi = Math.min(requestedDpi, Math.floor(72 * Math.sqrt(maxPixels / (source.width * source.height))));
+    const raw = await source.render(dpi, rotation);
+    const skew = full ? imageSkewDegrees(raw) : 0;
+    const img = deskewImage(raw, skew);
+    const words = full ? recognizePageWords(img, engine, dpi, opts.psm || "6")
+      : recognizeWords(eraseLongRuns(img, Math.round(dpi * 0.4)), engine, dpi);
+    return { words, width: img.width * 72 / dpi, height: img.height * 72 / dpi, dpi, skew };
+  };
+  let pick = { rotation: rotations[0] || 0, score: -1 };
   for (const rotation of rotations) {
-    progress("Reading page " + pageNumber + " as a scan" + (rotation ? " (turned " + rotation + " degrees)" : "") + "...");
-    const q = await ocrWords(pdfDoc, pageNumber, engine, rotation, 100, maxPixels);
+    progress("Checking scan orientation" + (rotation ? " (turned " + rotation + " degrees)" : "") + "...");
+    const q = await read(rotation, 150);
     const score = q.words.filter((w) => w.conf >= 70 && w.str.length >= 3).length;
     if (score > pick.score) pick = { rotation, score };
   }
-  progress("Reading page " + pageNumber + " as a scan at full resolution...");
-  const full = await ocrWords(pdfDoc, pageNumber, engine, pick.rotation, opts.dpi || 300, maxPixels, opts.psm || "6");
+  progress("Reading the scan's cells at full resolution...");
+  const full = await read(pick.rotation, opts.dpi || 300, true);
   const deg = skewDegrees(full.words);
-  const words = unskew(full.words, deg).map((w, i) => ({ ...w, item: i, itemX0: w.x0, itemX1: w.x1 }));
-  return { lines: TL.clusterLines(words), width: full.width, height: full.height, rotation: pick.rotation, word_count: words.length, skew_deg: deg, dpi: full.dpi };
+  // Tesseract boxes enclose the ink; PDF text items use the font's em height. Convert cap
+  // height to em for the shared reader's row-spacing thresholds, keeping ink height for audits.
+  const words = unskew(full.words, deg).map((w, i) => ({ ...w, glyph_h: w.h, h: w.h / 0.75,
+    item: w.item ?? i, itemX0: w.itemX0 ?? w.x0, itemX1: w.itemX1 ?? w.x1 }));
+  return { words, lines: TL.clusterLines(words), width: full.width, height: full.height,
+    rotation: pick.rotation, word_count: words.length, skew_deg: full.skew + deg,
+    image_skew_deg: full.skew, dpi: full.dpi };
+}
+
+export async function ocrPageLines(pdfDoc, pageNumber, engine, progress, opts = {}) {
+  const page = await pdfDoc.getPage(pageNumber);
+  const vp = page.getViewport({ scale: 1 });
+  return ocrRasterPageLines({ width: vp.width, height: vp.height,
+    render: (dpi, rotation) => renderPageToImageData(pdfDoc, pageNumber, dpi, rotation),
+  }, engine, progress, opts);
 }
 
 async function renderPageToImageData(pdfDoc, pageNumber, dpi, rotation = 0) {
@@ -520,7 +676,9 @@ async function renderPageToImageData(pdfDoc, pageNumber, dpi, rotation = 0) {
   canvas.height = Math.ceil(viewport.height);
   const ctx = canvas.getContext("2d", { willReadFrequently: true });
   await page.render({ canvasContext: ctx, viewport }).promise;
-  return ctx.getImageData(0, 0, canvas.width, canvas.height);
+  const img = ctx.getImageData(0, 0, canvas.width, canvas.height);
+  canvas.width = canvas.height = 0;
+  return img;
 }
 
 function ocrRowBand(engine, pageImage, colBounds, rowRightEdge, y0, y1, psm = "6", opts = {}) {
@@ -1177,12 +1335,14 @@ export async function extractDoorScheduleFromPdf(pdfBytes, pageNumber, onProgres
   const pdfjsLib = await loadPdfJs();
   const pdfDoc = await pdfjsLib.getDocument({ data: pdfBytes.slice(0) }).promise;
 
+  let hasTextLayer = false;
   // The text layer first (see the note at the top of this file).
   if (!options.skipTextLayer) {
     progress("Reading the text of page " + pageNumber + "...");
     const page = await pdfDoc.getPage(pageNumber);
     const tl = await TL.pageTextLines(pdfjsLib, page);
     if (tl.word_count >= 15) {
+      hasTextLayer = true;
       const rules = (region) => rulesInRegion(pdfDoc, pageNumber, tl.rotation, region);
       const ds = await TL.readDoorScheduleFromLines(tl.lines, { width: tl.width, height: tl.height }, { rules });
       if (!(ds && ds.doors.length)) {
@@ -1219,6 +1379,26 @@ export async function extractDoorScheduleFromPdf(pdfBytes, pageNumber, onProgres
   const engine = await getOcrEngine(progress);
 
   const attempts = [];
+  let scanned;
+  const readScan = async () => {
+    if (scanned !== undefined) return scanned;
+    const ol = await ocrPageLines(pdfDoc, pageNumber, engine, progress, options);
+    const ds = ol.word_count >= 15 ? await TL.readDoorScheduleFromLines(ol.lines, { width: ol.width, height: ol.height }, {}) : null;
+    scanned = ds && ds.doors.length ? {
+      doors: ds.doors.map((d) => ({ ...d, read_from: "ocr_lines", field_confidence: Object.fromEntries(Object.keys(d.field_confidence || {}).map((f) => [f, 0.85])) })),
+      extraction_confidence: 0.85,
+      metadata: { extraction_mode: "ocr_text_lines", extraction_route: "ocr_text_lines", page_isolated: false, row_count: ds.doors.length, rotation_applied: ol.rotation, skew_corrected_deg: ol.skew_deg, ocr_dpi: ol.dpi, ocr_words: ol.word_count, orientation_attempts: attempts, total_time_ms: Math.round(performance.now() - t0) },
+    } : null;
+    if (scanned) progress("Extraction complete.");
+    return scanned;
+  };
+  // Full-size scans go through the bounded whole-sheet orientation/deskew pass first. The
+  // older grid detector assumes straight rulings and can mistake a sheet border for the table.
+  const viewport = (await pdfDoc.getPage(pageNumber)).getViewport({ scale: 1 });
+  if (!hasTextLayer && Math.max(viewport.width, viewport.height) > 1100 && !options.noOcrLines) {
+    const result = await readScan();
+    if (result) return result;
+  }
   let best = null;
   for (const rotation of rotations) {
     const turned = rotation ? " (turned " + rotation + " degrees)" : "";
@@ -1276,29 +1456,13 @@ export async function extractDoorScheduleFromPdf(pdfBytes, pageNumber, onProgres
     if (header.matches >= 4) break;
   }
 
-  if (!best) {
-    // No ruled table found at any turn (a sheet scanned a little crooked): read it as a scan, by
-    // the text-layer reader, which finds columns from the cells themselves.
+  if (!best || best.header.matches < 3) {
+    // Smaller tilted scans can fail the straight-grid pass too. Use the same OCR line path.
     if (!options.noOcrLines) {
-      const ol = await ocrPageLines(pdfDoc, pageNumber, engine, progress, options);
-      const ds = ol.word_count >= 15 ? await TL.readDoorScheduleFromLines(ol.lines, { width: ol.width, height: ol.height }, {}) : null;
-      if (ds && ds.doors.length) {
-        progress("Extraction complete.");
-        return {
-          doors: ds.doors.map((d) => ({ ...d, read_from: "ocr_lines" })),
-          extraction_confidence: 0.85,
-          metadata: { extraction_mode: "ocr_text_lines", extraction_route: "ocr_text_lines", page_isolated: false, row_count: ds.doors.length, rotation_applied: ol.rotation, skew_corrected_deg: ol.skew_deg, ocr_dpi: ol.dpi, ocr_words: ol.word_count, orientation_attempts: attempts, total_time_ms: Math.round(performance.now() - t0) },
-        };
-      }
+      const result = await readScan();
+      if (result) return result;
     }
-    return { doors: [], extraction_confidence: 0, metadata: { extraction_mode: "client_grid_deterministic", page_isolated: false, no_table_detected: true, orientation_attempts: attempts } };
-  }
-
-  // A ruled table whose header reads as fewer than three door-schedule labels
-  // is not a door schedule (a hardware-set table, a finish legend...): its
-  // first column would otherwise be read as door marks ("1", "2" quantities).
-  if (best.header.matches < 3) {
-    return { doors: [], extraction_confidence: 0, metadata: { extraction_mode: "client_grid_deterministic", page_isolated: false, no_door_header: true, header_matches: best.header.matches, orientation_attempts: attempts, total_time_ms: Math.round(performance.now() - t0) } };
+    return { doors: [], extraction_confidence: 0, metadata: { extraction_mode: "client_grid_deterministic", page_isolated: false, no_table_detected: !best, no_door_header: !!best, header_matches: best?.header.matches || 0, orientation_attempts: attempts, total_time_ms: Math.round(performance.now() - t0) } };
   }
 
   const { pageImage, colBounds, wideColEnd, rowLines, totalRowBands, headerBandTexts, header, ocrOpts } = best;
