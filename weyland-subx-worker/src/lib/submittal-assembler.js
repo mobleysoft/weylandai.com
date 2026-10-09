@@ -328,8 +328,11 @@ export async function generateHardwareSetPage(setData, options, PDFLib) {
     color: rgb2(0.2, 0.4, 0.6)
   });
   curY -= 20;
-  const badgeText = isAffirmed ? "AFFIRMED" : "PENDING REVIEW";
-  const badgeColor = isAffirmed ? rgb2(0.13, 0.55, 0.13) : rgb2(0.8, 0.5, 0);
+  // The packet is the sub's submittal to the architect (estimator audit 2026-10-09: "PENDING
+  // REVIEW" on every set read as an unfinished document). The sub's own draft/reviewed state stays
+  // in the workspace; the sheet says what a submittal is.
+  const badgeText = isAffirmed ? "REVIEWED BY SUBMITTER" : "SUBMITTED FOR REVIEW";
+  const badgeColor = isAffirmed ? rgb2(0.13, 0.55, 0.13) : rgb2(0.2, 0.4, 0.6);
   const badgeW = helveticaBold.widthOfTextAtSize(badgeText, 8);
   page.drawRectangle({
     x: pageW / 2 - (badgeW + 12) / 2,
@@ -420,7 +423,7 @@ export async function generateHardwareSetPage(setData, options, PDFLib) {
     const doorColWidths = [65, 90, 75, 75, 70, 93];
     const doorRows = doors.map((d) => [
       d.mark,
-      d.width && d.height ? `${d.width} x ${d.height}` : "\u2014",
+      d.width && d.height ? `${d.width} x ${d.height}` : (d.width || "\u2014"),
       d.door_type,
       d.frame_material,
       d.fire_rating,
@@ -695,15 +698,18 @@ export async function generateDoorSchedulePages(doorRows, info = {}) {
   const join = (...v) => v.map((x) => (x == null || x === "" ? "-" : String(x))).join(" / ");
   const rows = doorRows.map((d) => {
     let src = d.page_number ? "p." + d.page_number : "-";
+    let pair = false;
     try {
       const fc = d.field_confidence_json ? JSON.parse(d.field_confidence_json) : null;
       if (fc && fc.source && fc.source.table_row != null) src += " row " + fc.source.table_row;
+      pair = !!(fc && fc.pair);
     } catch (_) { /* not a source trace */ }
     // Sizes as read into numbers; a value the reader could not read with
     // certainty keeps its text as read, marked (?).
-    const size = d.width_inches != null && d.height_inches != null
+    // A pair as the schedule prints it: PR 3'-6" x 7'-10" (product audit 2026-10-09).
+    const size = (pair ? "PR " : "") + (d.width_inches != null && d.height_inches != null
       ? feetInchesText(d.width_inches) + " x " + feetInchesText(d.height_inches)
-      : (d.width ? d.width + " (?)" : "(?)");
+      : (d.width ? d.width + " (?)" : "(?)"));
     const thickness = d.thickness_inches != null ? inchesText(d.thickness_inches) : (d.thickness ? d.thickness + " (?)" : "-");
     return [
       d.mark,
@@ -836,6 +842,19 @@ export async function assembleSubmittalPackage(sessionId, options, env2, PDFLib)
     const hardwareSets = hardwareSetsResult.results || [];
     console.log(`[Assembler] Found ${hardwareSets.length} hardware sets for assembly`);
     const hardwareSetPdfs = [];
+    // Every door of the session once, matched to its set by the set's number as written either way
+    // ("1" on Berryessa's doors, "01" in its 08 71 00), sized from the inches the reader stores, with
+    // a pair marked PR (estimator audit 2026-10-09: set sheets listed doors with Size "—").
+    const setKey = (v) => String(v ?? "").toUpperCase().replace(/\s+/g, " ").trim().replace(/(^|[^0-9])0+(?=\d)/g, "$1");
+    const allDoors = ((await env2.DB.prepare(`
+      SELECT mark, hardware_group, width, height, width_inches, height_inches, door_type, frame_material, fire_rating, field_confidence_json
+      FROM door_schedule_entries WHERE session_id = ? ORDER BY mark ASC
+    `).bind(sessionId).all()).results || []).map((d) => {
+      let pair = false;
+      try { pair = !!(d.field_confidence_json && JSON.parse(d.field_confidence_json).pair); } catch (_) { /* not recorded */ }
+      const sized = d.width_inches != null && d.height_inches != null ? feetInchesText(d.width_inches) + " x " + feetInchesText(d.height_inches) : (d.width && d.height ? d.width + " x " + d.height : null);
+      return { ...d, width: sized ? (pair ? "PR " : "") + sized : null, height: sized ? "" : null };
+    });
     for (const set of hardwareSets) {
       const componentsResult = await env2.DB.prepare(`
         SELECT component_type, quantity, manufacturer, model, finish,
@@ -846,13 +865,8 @@ export async function assembleSubmittalPackage(sessionId, options, env2, PDFLib)
         ORDER BY sequence_order ASC
       `).bind(set.id).all();
       const components = componentsResult.results || [];
-      const doorsResult = await env2.DB.prepare(`
-        SELECT mark, width, height, door_type, frame_material, fire_rating
-        FROM door_schedule_entries
-        WHERE session_id = ? AND hardware_group = ?
-        ORDER BY mark ASC
-      `).bind(sessionId, set.set_number).all();
-      const doors = doorsResult.results || [];
+      let doors = allDoors.filter((d) => setKey(d.hardware_group) === setKey(set.set_number));
+      if (!doors.length) doors = allDoors.filter((d) => setKey(d.hardware_group).split(" ")[0] === setKey(set.set_number).split(" ")[0] && setKey(d.hardware_group));
       const setData = {
         set,
         components,
@@ -868,7 +882,7 @@ export async function assembleSubmittalPackage(sessionId, options, env2, PDFLib)
         const setDoc = await PDFLib.PDFDocument.load(setBytes);
         const setPageCount = setDoc.getPageCount();
         tocSections.push({
-          title: `Hardware Set ${set.set_number}${set.set_name ? " — " + set.set_name : ""}${set.affirmed === 1 ? "" : " (pending review)"}`,
+          title: `Hardware Set ${set.set_number}${set.set_name ? " — " + set.set_name : ""}`,
           pageNumber: currentPage,
           type: "hardware_set"
         });
@@ -946,7 +960,6 @@ export async function assembleSubmittalPackage(sessionId, options, env2, PDFLib)
           page.drawText(truncateText("   needed: " + (item.need || "the maker's name and catalogue number"), W - M * 2, h, 8), { x: M, y, size: 8, font: h, color: grey });
           y -= 16;
         }
-        page.drawText("Page " + (currentPage + pg), { x: W - M - 40, y: 26, size: 7.5, font: h, color: grey });
       }
       tocSections.push({ title: "Items without a cut sheet (" + missed.length + (byOthers.length ? "; " + byOthers.length + " by others" : "") + ")", pageNumber: currentPage, type: "cut_sheet" });
       currentPage += needed;
@@ -1025,8 +1038,18 @@ export async function assembleSubmittalPackage(sessionId, options, env2, PDFLib)
       }
     }
     console.log("[Assembler] Generating table of contents...");
-    const tocBytes = await generateTableOfContents(tocSections, PDFLib);
-    result.sections.splice(1, 0, { type: "toc", title: "Table of Contents", pages: 1 });
+    // The contents can run past one page (Rockford: 2 pages for 69), and every page number after it
+    // moves by its extra pages; numbered for one page, it sent each entry one page short
+    // (estimator audit 2026-10-09: "TOC says door schedule p.3; it is p.4").
+    let tocBytes = await generateTableOfContents(tocSections, PDFLib);
+    let tocPages = (await PDFLib.PDFDocument.load(tocBytes)).getPageCount();
+    if (tocPages > 1) {
+      for (const sec of tocSections) if (sec.pageNumber >= 3) sec.pageNumber += tocPages - 1;
+      tocBytes = await generateTableOfContents(tocSections, PDFLib);
+      const again = (await PDFLib.PDFDocument.load(tocBytes)).getPageCount();
+      if (again !== tocPages) { for (const sec of tocSections) if (sec.pageNumber >= 3 + tocPages - 1) sec.pageNumber += again - tocPages; tocBytes = await generateTableOfContents(tocSections, PDFLib); tocPages = again; }
+    }
+    result.sections.splice(1, 0, { type: "toc", title: "Table of Contents", pages: tocPages });
     console.log("[Assembler] Merging all PDFs...");
     const pdfParts = [coverBytes, tocBytes];
     if (doorSection) pdfParts.push(doorSection.bytes);

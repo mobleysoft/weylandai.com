@@ -11,9 +11,13 @@
 // Both are word rules, so they say which words decided them.
 
 // Order matters: a falling OBJECT is struck-by, so it is tested before falls.
+// 2026-10-09: the form tools audit (NIOSH FACE 2000-16) found a truss that "fell with
+// or after the victim's fall, striking him" and "One or more of the trusses fell" read
+// as Falls. Striking a person, a named object that fell, and something that "fell
+// with him" are struck-by; "when he fell" stays a fall.
 export const HAZARDS = [
   { key: "struck", label: "Struck-by", focusFour: true, cfr: "29 CFR 1926.451(h) (falling objects), 1926.600-.602 (vehicles, equipment), 1926.100 (head protection)",
-    re: /\b(?:struck(?: by)?|falling objects?|dropped|(?:fell|slid|tipped) (?:from|off|over) (?:the |a |an )?(?:cart|rack|shelf|truck|lift|forklift|dolly|table|pallet|stack|bench)|unsecured (?:load|door|slab|frame|material|panel)|swing(?:ing)? load|forklift|backing (?:up|vehicle)|hit by|flying (?:debris|particles?|objects?))\b/i },
+    re: /\b(?:struck(?: by)?|striking (?:him|her|them|his|the (?:victim|worker|employee))|(?:truss(?:es)?|beams?|joists?|rafters?|boards?|planks?|lumber|sections?|panels?|pipes?|tools?|materials?|loads?|objects?|bricks?|blocks?|sheets?) (?:fell|dropped)|fell (?:with|on|onto) (?:him|her|them)|falling objects?|dropped|(?:fell|slid|tipped) (?:from|off|over) (?:the |a |an )?(?:cart|rack|shelf|truck|lift|forklift|dolly|table|pallet|stack|bench)|unsecured (?:load|door|slab|frame|material|panel)|swing(?:ing)? load|forklift|backing (?:up|vehicle)|hit by|flying (?:debris|particles?|objects?))\b/i },
   { key: "fall", label: "Falls", focusFour: true, cfr: "29 CFR 1926.501-.503 (fall protection), 1926.1053 (ladders), 1926 Subpart L (scaffolds)",
     re: /\b(?:fall protection|fall arrest|fell|falls?|falling|guard ?rails?|harness|tie[- ]?off|tied off|lanyard|ladders?|scaffold\w*|leading edge|roof edge|floor (?:hole|opening)|stair (?:opening|well)|unprotected (?:edge|side|opening)s?|lost (?:his |her |their )?balance|trigger height|aerial lift|scissor lift)\b/i },
   { key: "caught", label: "Caught-in/between", focusFour: true, cfr: "29 CFR 1926.300(b) (guarding), 1926 Subpart P (excavations)",

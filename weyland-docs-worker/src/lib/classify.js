@@ -41,6 +41,9 @@ export const SAFETY_FLAG_PATTERNS = compile([
   "sprain\\w*", "first[- ]aid", "medical treatment", "stitches", "sutures?", "restricted (?:duty|work)", "light duty", "days? away", "sent to (?:the )?(?:clinic|hospital|doctor|er\\b)",
   "emergency room", "concussion", "passed out", "lost consciousness", "bruis\\w*", "burn(?:ed|s)? (?:his|her|their)", "energi[sz]ed", "guard ?rails? (?:missing|removed|down|not installed)",
   "missing guard ?rails?", "unsecured (?:load|door|slab|frame|material|panel|opening)", "dropped (?:a |the )?\\w+ (?:from|off)", "pinch(?:ed)?", "crush\\w*", "close call",
+  // 2026-10-09: the form tools audit (NIOSH FACE 2000-16) found "he was struck on the head by
+  // a truss" unflagged: only "struck by" was listed. Struck on / in / against, and striking a person.
+  "struck (?:on|in|against)", "striking (?:him|her|them|his|the (?:victim|worker|employee))",
 ]);
 export const SAFETY_CLEAR_PATTERNS = compile(["resolved", "corrected", "no incidents", "compliant", "ppe worn", "safe condition", "no hazards"]);
 

@@ -35,3 +35,14 @@ test("Rockford A2.2 (p.29) asked as a door schedule: 65 doors from the text", as
 test("a page with no text layer is left to the browser and OCR path (null)", async () => {
   assert.equal(await readPageFromTextLayer(rockford, 31, "door_schedule"), null);
 });
+
+test("an architect's correction typed as a FreeText annotation is read in its row (Berryessa A9.2 door 002, type B)", async () => {
+  const { readFileSync } = await import("node:fs");
+  const { readPageFromTextLayer } = await import("../src/lib/text-layer-read.js");
+  const b = readFileSync(new URL("../../tools/corpus/door-schedules/dd339f57b51538ed.pdf", import.meta.url));
+  for (const page of [286, 288]) {
+    const r = await readPageFromTextLayer(b.buffer.slice(b.byteOffset, b.byteOffset + b.byteLength), page, "door_schedule");
+    const types = r.result.doors.map((d) => d.door_type);
+    assert.ok(types.every((t) => t === "B"), "p" + page + " types " + types.join(","));
+  }
+});

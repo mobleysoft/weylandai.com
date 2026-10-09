@@ -1833,7 +1833,7 @@ global.SovereignPdfRender = {
       var root = document.documentElement;
       var EMBED = root.classList.contains("embedded");
       var TAKEOFF = root.classList.contains("takeoff");
-      var MODULE_URL = "/api/hardware-schedule/client-ocr-assets/schedule-grid-extraction-client.mjs?v=20261008a";
+      var MODULE_URL = "/api/hardware-schedule/client-ocr-assets/schedule-grid-extraction-client.mjs?v=20261009a";
       var state = { sessions: [], current: null, detail: null, lastUpload: null, blobUrl: null, busy: false, company: null };
       window.SUBX_MODULE_URL = MODULE_URL;
       // The pages the finder named, as a reading plan: door schedule pages
@@ -1890,7 +1890,10 @@ global.SovereignPdfRender = {
       // The reader's own words for a page that could not be read (the server
       // says why in plain words); codes and HTTP status stay out of the page.
       function plainError(d, status) {
-        if (!d) return status ? "No answer from the server (HTTP " + status + ")." : "Unknown error";
+        // An empty or non-JSON answer (a gateway 502/503/504) said "{}" (estimator audit 2026-10-09).
+        var empty = !d || (typeof d === "object" && !Object.keys(d).length);
+        if (empty && status >= 502 && status <= 504) return "The server was busy and did not answer in time (HTTP " + status + "). Your work is saved; try again in a minute.";
+        if (empty) return status ? "No answer from the server (HTTP " + status + ")." : "Unknown error";
         var e = d.error;
         if (typeof e === "object" && e && e.message && !/^[a-z_]+$/.test(e.message)) return String(e.message);
         if (d.detail) return String(d.detail);
@@ -2354,19 +2357,22 @@ global.SovereignPdfRender = {
           var stop = ticking(out, "Reading page " + p.page + " (" + label + "): finding the table, turning the sheet upright if it is sideways, reading every row...");
           return api("/api/hardware-schedule/session/" + encodeURIComponent(id) + "/page/" + p.page + "?type=" + encodeURIComponent(p.type)).then(function (res) {
             stop();
-            if (!res.ok) lines.push({ ok: false, text: "Page " + p.page + " could not be read: " + plainError(res.data, res.status) });
-            else lines.push({ ok: true, text: summaryText(p.page, (res.data && res.data.data) || {}, res.data && res.data.cached) });
+            if (!res.ok) { lines.push({ ok: false, text: "Page " + p.page + " could not be read: " + plainError(res.data, res.status) }); return [p]; }
+            lines.push({ ok: true, text: summaryText(p.page, (res.data && res.data.data) || {}, res.data && res.data.cached) });
+            return [];
           });
         }
         var stop2 = ticking(out, "Reading page" + (plan.length > 1 ? "s " : " ") + window.compactPages(plan.map(function (x) { return x.page; })) + " on the server, in one pass...");
         return api("/api/hardware-schedule/session/" + encodeURIComponent(id) + "/read-pages", { method: "POST", json: { pages: plan } }).then(function (res) {
           stop2();
-          if (!res.ok) { lines.push({ ok: false, text: "The pages could not be read: " + plainError(res.data, res.status) }); return; }
+          if (!res.ok) { lines.push({ ok: false, text: "The pages could not be read on the server: " + plainError(res.data, res.status) }); return plan; }
+          var failed = [];
           (res.data.results || []).forEach(function (r) {
-            if (!r.ok) { lines.push({ ok: false, text: r.error || ("Page " + r.page + " could not be read.") }); return; }
+            if (!r.ok) { failed.push(plan.find(function (x) { return x.page === r.page; }) || { page: r.page, type: r.type }); lines.push({ ok: false, text: r.error || ("Page " + r.page + " could not be read.") }); return; }
             var md = r.metadata || {};
             lines.push({ ok: true, text: "Page " + r.page + ": " + (r.type === "door_schedule" ? r.doors + " door" + (r.doors === 1 ? "" : "s") : r.groups + " hardware group" + (r.groups === 1 ? "" : "s") + (r.items ? " (" + r.items + " items)" : "")) + " read" + (md.extraction_mode === "text_layer" ? " from the page's text" : md.extraction_mode ? " from the page image" : "") + (md.rotation_applied ? " (turned " + md.rotation_applied + "°)" : "") + "." });
           });
+          return failed;
         });
       }
       function readPlan(plan, how) {
@@ -2376,11 +2382,19 @@ global.SovereignPdfRender = {
         setBusy(true);
         setStep("st-read", "now");
         var lines = [];
+        // The server reads first (2026-10-09, the first-time estimator audit): it reads a page's own
+        // text in about a second, leaves an addendum's struck-through lines out, and saves in one
+        // pass, where the in-tab reader took minutes on Rockford, kept 4 struck lines and hit 502s
+        // saving. This browser reads only the pages the server could not (a scan, when the
+        // uploaded file is still at hand).
         var inTab = how !== "server" && state.lastUpload && state.lastUpload.sessionId === id && state.lastUpload.file;
-        var p = inTab ? readPlanInTab(id, plan, out, lines).catch(function (e) {
-          lines.push({ ok: false, text: "This browser could not read the pages (" + ((e && e.message) || e) + "); reading them on the server instead." });
-          return readPlanOnServer(id, plan, out, lines);
-        }) : readPlanOnServer(id, plan, out, lines);
+        var p = readPlanOnServer(id, plan, out, lines).then(function (failed) {
+          if (!inTab || !failed || !failed.length) return;
+          lines.push({ ok: true, text: "Reading " + (failed.length === 1 ? "page " + failed[0].page : "pages " + window.compactPages(failed.map(function (x) { return x.page; }))) + " in this browser instead." });
+          return readPlanInTab(id, failed, out, lines).catch(function (e) {
+            lines.push({ ok: false, text: "This browser could not read them either (" + ((e && e.message) || e) + ")." });
+          });
+        });
         return p.then(function () {
           setBusy(false);
           renderLines(out, lines, lines.filter(function (l) { return l.ok; }).length);
@@ -2539,8 +2553,19 @@ global.SovereignPdfRender = {
           }
         });
       }
+      // Free to try, pay for the output: wherever the package is refused for payment (the build's
+      // answer, or SHOW IT on a package built earlier), the $100 offer is shown in place.
+      function showPayBox(pay) {
+        var out = $("package-result");
+        if (out.querySelector(".pay-box")) return;
+        out.insertAdjacentHTML("beforeend", '<div class="pay-box"><p>' + esc((pay && pay.message) || "The submittal package PDF comes with the $100 first submittal or a plan.") +
+          '</p><p><a class="button primary" href="/#offer">GET THIS PACKAGE &middot; $100 FIRST SUBMITTAL</a> <a class="button" href="/pricing">SEE PLANS</a></p>' +
+          '<p class="muted-small">Paid with this account\'s email, it opens here as soon as the payment goes through; nothing renews automatically.</p></div>');
+        $("package-card").scrollIntoView({ behavior: "smooth", block: "start" });
+      }
       function showPdf(url) {
         return fetch(url, { credentials: "same-origin", headers: authHeaders(false) }).then(function (r) {
+          if (r.status === 402) { showPayBox(null); throw Object.assign(new Error("payment required"), { quiet: true }); }
           if (!r.ok) throw new Error("HTTP " + r.status);
           return r.arrayBuffer();
         }).then(function (buf) {
@@ -2552,6 +2577,7 @@ global.SovereignPdfRender = {
           a.classList.remove("hide");
           return renderPdfPages(buf, "Submittal package for " + ((state.detail && state.detail.session.project_name) || "this schedule"));
         }).catch(function (e) {
+          if (e && e.quiet) return;
           var msg = "The PDF could not be shown here: " + ((e && e.message) || e) + (state.blobUrl ? ". DOWNLOAD PDF still saves it." : ".");
           $("package-result").insertAdjacentHTML("beforeend", '<div class="error-box">' + esc(msg) + "</div>");
         });
@@ -2570,6 +2596,17 @@ global.SovereignPdfRender = {
           stop();
           setBusy(false);
           if (!res.ok) {
+            if (res.status === 402) { out.innerHTML = ""; showPayBox(res.data && res.data.payment); return; }
+            // A gateway timeout (502-504) can arrive after the server finished the package (estimator
+            // audit 2026-10-09: "could not be built: {}" for a 69-page package that was built). Look.
+            if (res.status >= 502 && res.status <= 504) {
+              out.innerHTML = '<span class="spin"></span>' + esc("The server is still finishing the package; checking...");
+              return new Promise(function (r) { setTimeout(r, 8000); }).then(function () { return loadDetail(id); }).then(function () {
+                var p = state.detail && state.detail.package;
+                if (p) { out.removeAttribute("data-fresh"); renderPackageStatus(); setStep("st-pdf", "done"); return showPdf(p.url); }
+                out.innerHTML = '<div class="error-box">' + esc("The package could not be built: " + plainError(res.data, res.status)) + "</div>";
+              });
+            }
             out.innerHTML = '<div class="error-box">' + esc("The package could not be built: " + plainError(res.data, res.status)) + "</div>";
             return;
           }
@@ -2593,14 +2630,7 @@ global.SovereignPdfRender = {
           setStep("st-pdf", "done");
           // Free to try, pay for the output: the package of your own schedule
           // opens with the $100 first submittal or a plan.
-          if (d.paid === false) {
-            var pay = d.payment || {};
-            out.insertAdjacentHTML("beforeend", '<div class="pay-box"><p>' + esc(pay.message || "The submittal package PDF comes with the $100 first submittal or a plan.") +
-              '</p><p><a class="button primary" href="/#offer">GET THIS PACKAGE &middot; $100 FIRST SUBMITTAL</a> <a class="button" href="/pricing">SEE PLANS</a></p>' +
-              '<p class="muted-small">Paid with this account\'s email, it opens here as soon as the payment goes through; nothing renews automatically.</p></div>');
-            $("package-card").scrollIntoView({ behavior: "smooth", block: "start" });
-            return;
-          }
+          if (d.paid === false) { showPayBox(d.payment); return; }
           return showPdf(d.pdfUrl).then(function () { $("package-card").scrollIntoView({ behavior: "smooth", block: "start" }); });
         });
       });
