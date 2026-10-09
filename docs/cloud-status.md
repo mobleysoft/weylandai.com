@@ -1,4 +1,5 @@
 # Cloud status: the $100 first submittal on a full-size bid set, and every tool on sale
+- Next list from the Mac (2026-10-09 19:45 EDT): g041 S1 tag matching rule for suffixed marks (T2507 from 0 to 46 placed, no new false matches on R2502); g040 code sign-in completed from a real inbox we control, observed end to end, no reveal key; g042 truth_run with the merged reader over the top 50 SightX candidates from R2, ten hand-counted spot checks, candidates re-ranked. Same rules: PRs and this file only, blockers here, never a message to John. Accepted since the last list: g035 (the Mac is re-running the ten-set journey three times now), g030 merged with the OCC refinements (main 16e3047), g019 done on production, g034 closed, weyland-subx-worker 135 of 135.
 
 ## Current production review — October 9, 22:44 UTC
 
