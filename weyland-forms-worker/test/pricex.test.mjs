@@ -34,6 +34,8 @@ test("a variant is chosen by the schedule's own number and finish class, and say
   assert.equal(pickVariant([{ full_model_number: "20-057-ICX", finish_code: "", list_price: 227 }], "20-057 ICX", "626").finishMatched, true, "a row with no finish prices every finish");
   assert.equal(variantNumber(LCN[0]), "4040XP-3049EDA");
   assert.equal(variantFinish(LCN[0]), "Powder Coat");
+  const vd = [{ full_model_number: "9927-EO-F", finish_code: "626", list_price: 3807 }, { full_model_number: "9927-EO-F [605/619/625/643e]", finish_code: "", list_price: 4318 }, { full_model_number: "9927-EO-F [628]", finish_code: "628", list_price: 3445 }];
+  assert.deepEqual([pickVariant(vd, "9927-EO-F", "619").variant.list_price, pickVariant(vd, "9927-EO-F", "643e").variant.list_price, pickVariant(vd, "9927-EO-F", "626").variant.list_price], [4318, 4318, 3807], "one price for several finishes");
 });
 
 test("net and extended at the multiplier, in cents", () => {
@@ -117,7 +119,7 @@ test("routes: the schedule priced at the account's multipliers, openings per set
   const csv = await call("POST", "/api/forms/pricex/session/s1/csv", {});
   assert.equal(csv.status, 200);
   const text = await csv.text();
-  assert.match(text, /4040XP-3049EDA,Other Plated,exact,LCN Price Book 2026,719\.00,0\.42,301\.98,603\.96/);
+  assert.match(text, /4040XP-3049EDA,Other Plated,exact,LCN Price Book 2026,2026-05-29,719\.00,0\.42,301\.98,603\.96/);
   assert.match(text, /Total of priced lines \(list\),1630\.00,,,684\.60/);
   assert.match(text, /not priced/);
 });
