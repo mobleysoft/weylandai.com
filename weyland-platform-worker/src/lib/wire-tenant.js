@@ -87,23 +87,26 @@ export async function fetchWireNews(isPro = false) {
 export const WIRE_STORE_KEY = "wire:news:v1";
 
 export async function ingestWireNews(env) {
+  // Each feed's answer is kept with the headlines (2026-10-09): a feed that refuses the Worker or
+  // sends no items is shown on the wire as such, never dropped silently.
   const results = await Promise.all(
     WIRE_FEEDS.map(async (feed) => {
       try {
         const res = await fetch(feed.url, { headers: { "User-Agent": "WeylandAI WireX (+https://weylandai.com/bot)" }, signal: AbortSignal.timeout(15000) });
-        // A feed that refuses the Worker is logged, not dropped silently (product audit 2026-10-09:
-        // ENR, Building Enclosure, SDM and SSI publish 30/30/30/19 items read from elsewhere and
-        // none reach the wire).
-        if (!res.ok) { console.warn("[wire] " + feed.source + " HTTP " + res.status); return []; }
+        if (!res.ok) { console.warn("[wire] " + feed.source + " HTTP " + res.status); return { feed, status: res.status, items: [] }; }
         const xml = await res.text();
-        return parseRssItems(xml, feed.source, 20);
-      } catch {
-        return [];
+        const items = parseRssItems(xml, feed.source, 20);
+        if (!items.length) console.warn("[wire] " + feed.source + " HTTP 200 with no items (" + xml.length + " bytes)");
+        return { feed, status: 200, items };
+      } catch (e) {
+        console.warn("[wire] " + feed.source + " " + (e && e.message));
+        return { feed, status: "error: " + String(e && e.message || e).slice(0, 80), items: [] };
       }
     })
   );
-  const items = results.flat();
-  const record = { items, fetchedAt: new Date().toISOString(), sources: WIRE_FEEDS.map((f) => f.source) };
+  const items = results.flatMap((r) => r.items);
+  const feeds = results.map((r) => ({ source: r.feed.source, status: r.status, items: r.items.length }));
+  const record = { items, feeds, fetchedAt: new Date().toISOString(), sources: WIRE_FEEDS.map((f) => f.source) };
   if (items.length && env.CACHE) await env.CACHE.put(WIRE_STORE_KEY, JSON.stringify(record));
   return record;
 }
@@ -114,7 +117,7 @@ export async function readWireNews(env, isPro = false, ctx = null) {
   try { record = env.CACHE ? await env.CACHE.get(WIRE_STORE_KEY, "json") : null; } catch { record = null; }
   if (!record) {
     if (ctx && typeof ctx.waitUntil === "function") ctx.waitUntil(ingestWireNews(env).catch((e) => console.error("[WireX] warm-up ingest failed:", e.message)));
-    return { items: [], fetchedAt: null, warming: true };
+    return { items: [], feeds: [], fetchedAt: null, warming: true };
   }
   const perSource = new Map();
   const items = [];
@@ -124,7 +127,7 @@ export async function readWireNews(env, isPro = false, ctx = null) {
     perSource.set(it.source, n + 1);
     items.push(it);
   }
-  return { items, fetchedAt: record.fetchedAt, warming: false };
+  return { items, feeds: record.feeds || [], fetchedAt: record.fetchedAt, warming: false };
 }
 
 // --- Deterministic Editor's Briefing engine --------------------------

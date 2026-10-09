@@ -358,7 +358,7 @@ async function auditPropx() {
     if (buf) {
       const text = pdfText(buf, "propx") || "";
       const money = (n) => Number(n).toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
-      pdf = Object.assign(pdf || {}, { bytes: buf.length, is_pdf: buf.subarray(0, 4).toString() === "%PDF", pages: text.split("\f").length - 1, prints_grand_total: text.includes(money(d.grandTotal)), prints_client: text.includes("Audit Harness GC"), lines_printed: lines.filter((l) => text.includes("$" + money(cents((Number(l.quantity) || 0) * (Number(l.unitPrice) || 0))))).length, partial_note_printed: /\bof \d+ components\b|not (all|every)[^.]*priced|unpriced|partial/i.test(text), has_signature_block: /signature|accepted by|authorized/i.test(text), has_terms: /terms|valid|exclusion/i.test(text) });
+      pdf = Object.assign(pdf || {}, { bytes: buf.length, is_pdf: buf.subarray(0, 4).toString() === "%PDF", pages: text.split("\f").length - 1, prints_grand_total: text.includes(money(d.grandTotal)), prints_client: text.includes("Audit Harness GC"), lines_printed: lines.filter((l) => text.includes("$" + money(cents((Number(l.quantity) || 0) * (Number(l.unitPrice) || 0))))).length, partial_note_printed: /\bof \d+ (components|items)( priced)?\b|not in this price|not (all|every)[^.]*priced|unpriced|partial/i.test(text), has_signature_block: /signature|accepted by|authorized/i.test(text), has_terms: /terms|valid|exclusion/i.test(text) });
     }
   }
   out.pdf = pdf;
