@@ -40,6 +40,7 @@
 //     each read re-checks the owner's HuntX plan, so a lapsed plan stops them.
 //   Email (2026-10-08, via mailguyAI; lib/email-alerts.js):
 //     POST /api/hunt/saved/:id/email {on}   a daily digest of new matches for that search
+//     POST /api/hunt/saved/:id/email/sample  the latest matches emailed now to the account itself (once per 10 min)
 //     GET  /api/hunt/unsubscribe/<token>    one-click stop, linked from every email
 //     GET  /api/hunt/saved also says emailAvailable (false until MAILGUY_API_KEY is set).
 //
@@ -145,7 +146,7 @@ async function ensureSavedTable(env2) {
   await env2.DB.prepare(`CREATE TABLE IF NOT EXISTS huntx_saved_searches (
     id TEXT PRIMARY KEY, user_id TEXT NOT NULL, name TEXT NOT NULL, params TEXT NOT NULL,
     last_seen_at TEXT NOT NULL, created_at TEXT NOT NULL)`).run();
-  for (const col of ["feed_token TEXT", "email_alerts INTEGER DEFAULT 0", "last_emailed_at TEXT", "unsub_token TEXT"]) {
+  for (const col of ["feed_token TEXT", "email_alerts INTEGER DEFAULT 0", "last_emailed_at TEXT", "unsub_token TEXT", "last_sample_at TEXT"]) {
     try { await env2.DB.prepare("ALTER TABLE huntx_saved_searches ADD COLUMN " + col).run(); } catch (_) { /* already there */ }
   }
   savedTableReady = true;
@@ -401,6 +402,16 @@ export function registerHuntRoutes(router, { authenticate }) {
     await env2.DB.prepare("UPDATE huntx_saved_searches SET email_alerts = ?, unsub_token = ?, last_emailed_at = CASE WHEN ? THEN ? ELSE last_emailed_at END WHERE id = ? AND user_id = ?")
       .bind(on ? 1 : 0, row.unsub_token || feedToken(), on ? 1 : 0, new Date().toISOString(), id, a.userId).run();
     return jsonResponse3({ success: true, email_alerts: on });
+  });
+
+  router.post("/api/hunt/saved/:id/email/sample", async (request2, env2) => {
+    const a = await signedIn(request2, env2);
+    if (a.error) return a.error;
+    const id = request2.params?.id || new URL(request2.url).pathname.split("/")[4];
+    const { sendSample } = await import("../lib/email-alerts.js");
+    const r = await sendSample(env2, a.userId, id);
+    if (r.error) return r.error[0] === 402 ? jsonResponse3(paymentRequired("Email from a saved search"), 402) : jsonResponse3({ success: false, error: r.error[1], message: r.error[2] }, r.error[0]);
+    return jsonResponse3({ success: true, to: r.to, notices: r.notices });
   });
 
   router.get("/api/hunt/unsubscribe/:token", async (request2, env2) => {

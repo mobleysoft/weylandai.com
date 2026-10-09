@@ -26,23 +26,23 @@ const esc = (s) => String(s == null ? "" : s).replace(/[&<>"']/g, (c) => ({ "&":
 const money = (n) => (Number(n) > 0 ? "$" + Math.round(Number(n)).toLocaleString("en-US") : "");
 
 /** The digest for one saved search: { subject, html, text }. */
-export function digestEmail({ name, rows, total, unsubscribeUrl, manageUrl = SITE + "/huntx" }) {
+export function digestEmail({ name, rows, total, unsubscribeUrl, manageUrl = SITE + "/huntx", sample = false }) {
   const shown = rows.slice(0, MAX_ROWS_PER_EMAIL);
-  const subject = `HuntX: ${total} new notice${total === 1 ? "" : "s"} for "${name}"`;
+  const subject = sample ? `HuntX sample: the latest ${shown.length} notice${shown.length === 1 ? "" : "s"} for "${name}"` : `HuntX: ${total} new notice${total === 1 ? "" : "s"} for "${name}"`;
   const line = (o) => [o.agency, o.location, o.key_date && "due " + o.key_date, money(o.estimated_value), o.trade_fit && "fit: " + o.trade_fit].filter(Boolean).join(" · ");
   const html = `<!doctype html><html><body style="margin:0;background:#f4f4f2;font-family:Helvetica,Arial,sans-serif;color:#151515">
 <div style="max-width:640px;margin:0 auto;padding:24px">
 <div style="font:700 12px/1 monospace;letter-spacing:.12em;color:#2a52ff">WEYLANDAI HUNTX</div>
-<h1 style="font-size:20px;margin:10px 0 4px">${esc(total)} new notice${total === 1 ? "" : "s"} for “${esc(name)}”</h1>
-<p style="color:#555;margin:0 0 16px;font-size:13px">Public bid notices that entered HuntX since your last alert for this saved search.</p>
+<h1 style="font-size:20px;margin:10px 0 4px">${sample ? "Latest " + esc(shown.length) + " notice" + (shown.length === 1 ? "" : "s") : esc(total) + " new notice" + (total === 1 ? "" : "s")} for “${esc(name)}”</h1>
+<p style="color:#555;margin:0 0 16px;font-size:13px">${sample ? "A sample you asked for: the latest open notices matching this saved search. The daily alert holds only notices that are new since the last one." : "Public bid notices that entered HuntX since your last alert for this saved search."}</p>
 ${shown.map((o) => `<div style="background:#fff;border:1px solid #e2e2de;border-radius:8px;padding:12px 14px;margin-bottom:10px">
 <a href="${esc(o.detail_url || manageUrl)}" style="color:#151515;font-weight:700;text-decoration:none;font-size:14px">${esc(o.title)}</a>
 <div style="color:#666;font-size:12px;margin-top:4px">${esc(line(o))}</div></div>`).join("")}
 ${total > shown.length ? `<p style="font-size:13px"><a href="${esc(manageUrl)}" style="color:#2a52ff">${total - shown.length} more in HuntX</a></p>` : ""}
-<p style="font-size:12px;color:#777;margin-top:20px">You get this because you turned on email alerts for the saved search “${esc(name)}” in <a href="${esc(manageUrl)}" style="color:#2a52ff">HuntX</a>. At most one email a day per search.
+<p style="font-size:12px;color:#777;margin-top:20px">You get this because you ${sample ? "asked for a sample email of" : "turned on email alerts for"} the saved search “${esc(name)}” in <a href="${esc(manageUrl)}" style="color:#2a52ff">HuntX</a>. At most one email a day per search.
 <a href="${esc(unsubscribeUrl)}" style="color:#777">Stop these emails</a>.</p>
 </div></body></html>`;
-  const text = [`${total} new notice${total === 1 ? "" : "s"} for "${name}" (WeylandAI HuntX)`, "",
+  const text = [sample ? `Sample: the latest ${shown.length} notices for "${name}" (WeylandAI HuntX)` : `${total} new notice${total === 1 ? "" : "s"} for "${name}" (WeylandAI HuntX)`, "",
     ...shown.map((o) => `- ${o.title}\n  ${line(o)}${o.detail_url ? "\n  " + o.detail_url : ""}`),
     total > shown.length ? `\n${total - shown.length} more: ${manageUrl}` : "", "",
     `Stop these emails: ${unsubscribeUrl}`].join("\n");
@@ -95,4 +95,33 @@ export async function runEmailDigests(env, { now = new Date(), fetchImpl = fetch
     }
   }
   return out;
+}
+
+export const SAMPLE_GAP_MINUTES = 10;
+
+/**
+ * A sample digest sent now to the account's own address, for a saved search the
+ * account owns: the latest open matches, whatever their age. Once per search
+ * every SAMPLE_GAP_MINUTES. -> { sent: true, to } or { error: [status, code, message] }
+ */
+export async function sendSample(env, userId, searchId, { now = new Date(), fetchImpl = fetch } = {}) {
+  if (!emailEnabled(env)) return { error: [503, "EMAIL_UNAVAILABLE", "Email is not switched on for HuntX yet."] };
+  if (!(await outputAccess(env, userId, "huntx", now.getTime())).paid) return { error: [402, "PAYMENT_REQUIRED", "Email from a saved search"] };
+  const s = await env.DB.prepare("SELECT id, name, params, unsub_token, last_sample_at FROM huntx_saved_searches WHERE id = ? AND user_id = ?").bind(searchId, userId).first();
+  if (!s) return { error: [404, "NOT_FOUND", "Not found."] };
+  if (s.last_sample_at && now.getTime() - Date.parse(s.last_sample_at) < SAMPLE_GAP_MINUTES * 60000) return { error: [429, "TOO_SOON", `One sample per search every ${SAMPLE_GAP_MINUTES} minutes.`] };
+  const user = await env.DB.prepare("SELECT email FROM users WHERE id = ?").bind(userId).first();
+  if (!user || !/@/.test(user.email || "")) return { error: [409, "NO_EMAIL", "This account has no email address to send to."] };
+  let params = {};
+  try { params = JSON.parse(s.params) || {}; } catch (_) { params = {}; }
+  const { where, params: binds } = searchWhere(params, now.toISOString().slice(0, 10));
+  const rows = (await env.DB.prepare(`SELECT id, title, agency, location, key_date, estimated_value, detail_url, trade_fit FROM opportunities ${where} ORDER BY created_at DESC LIMIT 10`).bind(...binds).all()).results || [];
+  if (!rows.length) return { error: [409, "NO_MATCHES", "This saved search matches no open notices right now, so there is nothing to send."] };
+  let token = s.unsub_token;
+  if (!token) { token = Array.from(crypto.getRandomValues(new Uint8Array(16)), (b) => b.toString(16).padStart(2, "0")).join(""); }
+  await env.DB.prepare("UPDATE huntx_saved_searches SET last_sample_at = ?, unsub_token = ? WHERE id = ?").bind(now.toISOString(), token, s.id).run();
+  const mail = digestEmail({ name: s.name, rows, total: rows.length, unsubscribeUrl: `${SITE}/api/hunt/unsubscribe/${token}`, sample: true });
+  try { await sendViaMailguy(env, { to: user.email, ...mail }, fetchImpl); }
+  catch (e) { return { error: [502, "SEND_FAILED", "The email could not be sent: " + e.message] }; }
+  return { sent: true, to: user.email, notices: rows.length };
 }
