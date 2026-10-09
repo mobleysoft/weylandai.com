@@ -97,3 +97,29 @@ test("a SubX session whose doors name set 2 draws group 02's hardware (Berryessa
   assert.equal(m.doors[0].set, "2");
   assert.equal((m.sets["2"] || []).length, 1);
 });
+
+// S1 (2026-10-09): a SubX session laid out on its floor plan.
+import { attachPlan as attachPlanS1, modelFromSubx as fromSubxS1 } from "../lib/schedule-model.js";
+test("attachPlan: each tagged door at its tag, in its room, in feet; untagged doors listed; no plan says schematic", () => {
+  const m = fromSubxS1({ session: { project_name: "Rockford" }, doors: [
+    { mark: "131.1", page_number: 29, hardware_group: "6 CL", width_inches: 36, height_inches: 94 },
+    { mark: "126.1.2", page_number: 29, hardware_group: "6 CL" },
+  ] });
+  const plan = { found: true, plan_sheets: [{ page: 26, sheet: "A1.1", title: "1ST FLOOR PLAN", scales: ["SCALE: 3/32\" 1'-0\""], points_per_foot: [6.75] }],
+    rooms: [{ page: 26, sheet: "A1.1", number: "131", name: "FLEX RM", x: 1260, y: 990, corridor: false, points_per_foot: 6.75 }, { page: 26, sheet: "A1.1", number: "126", name: "CORR", x: 1100, y: 900, corridor: true, points_per_foot: 6.75 }],
+    tags: [{ mark: "131.1", page: 26, sheet: "A1.1", x: 1316, y: 1128, h: 10.5, door_pages: [29], room: "131", room_name: "FLEX RM", room_by: "tag_number", points_per_foot: 6.75 }],
+    unmatched_tags: [] };
+  const out = attachPlanS1(JSON.parse(JSON.stringify(m)), plan);
+  assert.equal(out.layout.source, "plan");
+  const d = out.doors.find((x) => x.mark === "131.1");
+  assert.equal(d.plan.room, "131");
+  assert.equal(d.plan.room_name, "FLEX RM");
+  assert.equal(d.plan.sheet, "A1.1");
+  assert.equal(d.plan.x, Math.round((1316 - 1100) / 6.75 * 100) / 100, "feet from the building's west edge at 3/32\"");
+  assert.deepEqual(out.layout.not_on_plan, ["126.1.2"]);
+  assert.match(out.layout.note, /126\.1\.2/);
+  assert.equal(out.layout.buildings[0].to_scale, true);
+  const none = attachPlanS1(JSON.parse(JSON.stringify(m)), { found: false, reason: "no plan sheet." });
+  assert.equal(none.layout.source, "schematic");
+  assert.match(none.layout.note, /^Schematic layout from the schedule/);
+});
