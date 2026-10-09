@@ -50,7 +50,7 @@ const ASSET_BASE = "/api/hardware-schedule/client-ocr-assets";
 // count (no rendering, no misread digits) and is the only way to read an
 // unruled Section 08 71 00. OCR below is now the path for pages with no text
 // (a scan, a Print-to-PDF of a bitmap such as OCCDoorSchedulePg4.pdf).
-import * as TL from "./schedule-text-layer.mjs?v=20261008a";
+import * as TL from "./schedule-text-layer.mjs?v=20261009a";
 
 let pdfjsLibPromise = null;
 export async function loadPdfJs() {

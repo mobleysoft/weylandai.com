@@ -84,9 +84,41 @@ export function clusterLines(words) {
  * applied; when most of the text still runs sideways (a sheet saved turned),
  * the rotation that makes it horizontal is used and reported.
  */
+// An architect's correction typed onto the sheet as a FreeText annotation (2026-10-09: Berryessa
+// A9.2 door 002's type "B" on pp.286 and 288) is not page text, so the row read with no type. Each
+// one is read as a text item laid the way most of the page's text runs, centred in its box.
+async function annotationItems(page, items) {
+  let anns = [];
+  try { anns = (await page.getAnnotations()) || []; } catch (_) { return []; }
+  const free = anns.filter((a) => a && a.subtype === "FreeText" && Array.isArray(a.rect) && ((a.contentsObj && a.contentsObj.str) || a.contents));
+  if (!free.length) return [];
+  const counts = new Map();
+  for (const it of items) {
+    if (!it || !it.str || !it.str.trim() || !it.transform) continue;
+    const [a, b, c, d] = it.transform, sc = Math.hypot(a, b) || 1;
+    const k = [a, b, c, d].map((v) => Math.round(v / sc)).join(",");
+    counts.set(k, (counts.get(k) || 0) + 1);
+  }
+  const [ua, ub, uc, ud] = ([...counts.entries()].sort((p, q) => q[1] - p[1])[0] || ["1,0,0,1"])[0].split(",").map(Number);
+  const out = [];
+  for (const a of free) {
+    const str = String((a.contentsObj && a.contentsObj.str) || a.contents).replace(/\s+/g, " ").trim();
+    if (!str) continue;
+    const [x0, y0, x1, y1] = a.rect;
+    const across = Math.abs(ua) ? Math.abs(y1 - y0) : Math.abs(x1 - x0); // the box's size across the text
+    const s = Math.max(4, Math.min(across * 0.8, 14));
+    const w = s * 0.62 * str.length;
+    const cx = (x0 + x1) / 2, cy = (y0 + y1) / 2;
+    // origin = centre - (run direction * w/2 + up direction * 0.35 s)
+    const ox = cx - (ua * w / 2 + uc * 0.35 * s), oy = cy - (ub * w / 2 + ud * 0.35 * s);
+    out.push({ str, transform: [ua * s, ub * s, uc * s, ud * s, ox, oy], width: w, height: s, annotation: true });
+  }
+  return out;
+}
+
 export async function pageTextLines(pdfjsLib, page, opts = {}) {
   const content = await page.getTextContent();
-  const items = content.items || [];
+  const items = (content.items || []).concat(await annotationItems(page, content.items || []));
   let best = null;
   for (const rotation of opts.rotations || [0, 90, 270, 180]) {
     const viewport = page.getViewport({ scale: 1, rotation: ((page.rotate || 0) + rotation) % 360 });
