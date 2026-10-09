@@ -121,43 +121,6 @@
     return aliases[code] || code.replace(/^Key/, '').replace(/^Digit/, '');
   }
 
-  function buildTouchUI() {
-    const root = document.createElement('div');
-    root.id = 'sightx-touch-ui';
-    root.setAttribute('aria-label', 'SightX mobile controls');
-    root.innerHTML = `
-      <div class="sx-scan-sweep"></div>
-      <div class="sx-mobile-brand"><b>WEYLANDAI</b><span>SIGHTX / FACILITY 01</span></div>
-      <div class="sx-look-zone" aria-label="Drag to look"></div>
-      <div class="sx-crosshair" aria-hidden="true"></div>
-      <div class="sx-move-zone" aria-label="Movement control area"><div class="sx-stick" aria-label="Movement joystick"><div class="sx-stick-knob"></div></div></div>
-      <div class="sx-actions">
-        <button class="sx-action sprint" type="button" aria-label="Hold to sprint">SPRINT</button>
-      </div>
-      <div class="sx-utility"><button class="sx-fullscreen" type="button">FULLSCREEN</button></div>
-      <div class="sx-rotate-gate">
-        <div class="sx-rotate-device" aria-hidden="true"></div>
-        <strong>ROTATE TO LANDSCAPE</strong>
-        <p>SightX uses a wide field of view with independent movement and camera controls.</p>
-        <button class="sx-enter-landscape" type="button">ENTER LANDSCAPE</button>
-      </div>`;
-    document.body.appendChild(root);
-    return root;
-  }
-
-  function requestLandscape() {
-    const element = document.documentElement;
-    const request = element.requestFullscreen || element.webkitRequestFullscreen;
-    const fullscreen = request
-      ? Promise.resolve(request.call(element)).catch(() => {})
-      : Promise.resolve();
-    fullscreen.then(() => {
-      if (screen.orientation && screen.orientation.lock) {
-        screen.orientation.lock('landscape').catch(() => {});
-      }
-    });
-  }
-
   function mount(options) {
     const canvas = options.canvas;
     if (!canvas) throw new Error('SightX controls require a canvas.');
@@ -176,26 +139,13 @@
     let { fwd, up } = basisFromYawPitch(options.initialYaw || 0, options.initialPitch || 0);
     let locked = false;
     let inputEnabled = true;
-    let sprintHeld = false;
     let desktopScanHeld = false;
-    const keys = Object.create(null);
-    const stickAxis = { x: 0, y: 0 };
-    // The host's input layer (assets/weyland-input.js, S0 2026-10-09): one normalized state,
-    // forwarded into this frame or read in this page, folded in with this module's own keys and stick.
-    const ext = { x: 0, y: 0, buttons: {}, at: 0 };
-    const touchUI = buildTouchUI();
-    const moveZone = touchUI.querySelector('.sx-move-zone');
-    const stick = touchUI.querySelector('.sx-stick');
-    const knob = touchUI.querySelector('.sx-stick-knob');
-    const lookZone = touchUI.querySelector('.sx-look-zone');
-    const sprintButton = touchUI.querySelector('.sx-action.sprint');
-    // No SCAN button since 2026-10-05: scanning is automatic for anything in
-    // range (sightx-experience.js autoScan). setScan stays for the F key.
-    const scanButton = null;
-    let stickPointer = null;
-    let lookPointer = null;
-    let lookX = 0;
-    let lookY = 0;
+    let ext = window.WeylandInput.neutral(), externalAt = -Infinity;
+    const input = options.externalInput ? null : window.WeylandInput.create({
+      lookTarget: canvas, stick: 'auto', active: () => inputEnabled,
+      bindings: () => bindings
+    });
+    let current = window.WeylandInput.neutral();
 
     function persist() {
       try { localStorage.setItem(SETTINGS_KEY, JSON.stringify({ settings, bindings })); } catch (_) {}
@@ -208,7 +158,6 @@
       if (!['auto', 'high', 'balanced', 'performance'].includes(settings.quality)) settings.quality = 'auto';
       document.body.classList.toggle('sx-high-contrast', Boolean(settings.highContrast));
       document.body.classList.toggle('sx-reduced-motion', Boolean(settings.reducedMotion));
-      touchUI.classList.toggle('floating-stick', Boolean(settings.floatingStick));
       if (options.onSettingsChange) options.onSettingsChange({ ...settings });
     }
 
@@ -231,22 +180,7 @@
       persist();
     }
 
-    function actionActive(action) {
-      if (ext.buttons[action] && performance.now() - ext.at < 400) return true;
-      if (bindings[action] && keys[bindings[action]]) return true;
-      if (action === 'forward') return keys.ArrowUp;
-      if (action === 'backward') return keys.ArrowDown;
-      if (action === 'left') return keys.ArrowLeft;
-      if (action === 'right') return keys.ArrowRight;
-      if (action === 'sprint') return keys.ShiftRight;
-      if (action === 'up') return Boolean(keys.Space);
-      if (action === 'down') return Boolean(keys.ControlLeft || keys.ControlRight);
-      if (action === 'rollLeft') return Boolean(keys.KeyQ);
-      if (action === 'rollRight') return Boolean(keys.KeyE);
-      if (action === 'scan') return Boolean(keys.KeyF);
-      if (action === 'brake') return Boolean(keys.KeyX);
-      return false;
-    }
+    function actionActive(action) { return current.buttons[action] === true; }
 
     function signalInput(kind) {
       if (options.onInput) options.onInput(kind);
@@ -322,253 +256,50 @@
       if (options.onRelease) options.onRelease();
     }
 
-    // Drag to look with the mouse when the pointer is not captured (S0, 2026-10-09): a browser that
-    // refuses pointer lock (an iframe without the permission, a headless run) still turns the view.
-    let mouseDrag = null;
-    canvas.addEventListener('pointerdown', (e) => {
-      if (e.pointerType !== 'mouse' || locked) return;
-      mouseDrag = { id: e.pointerId, x: e.clientX, y: e.clientY };
-    });
-    window.addEventListener('pointermove', (e) => {
-      if (!mouseDrag || e.pointerId !== mouseDrag.id || locked) return;
-      const dx = e.clientX - mouseDrag.x, dy = e.clientY - mouseDrag.y;
-      mouseDrag.x = e.clientX; mouseDrag.y = e.clientY;
-      if (dx || dy) lookBy(dx, dy);
-    });
-    window.addEventListener('pointerup', (e) => { if (mouseDrag && e.pointerId === mouseDrag.id) mouseDrag = null; });
-
-    canvas.addEventListener('click', () => {
-      if (coarsePointer) {
-        activate();
-      } else if (document.pointerLockElement !== canvas) {
-        canvas.requestPointerLock();
-      }
-    });
-
     document.addEventListener('pointerlockchange', () => {
       locked = document.pointerLockElement === canvas;
       setHint();
       if (locked) activate(); else release();
     });
-
-    let externalKeys = false;
-    function setExternalKeys(on) {
-      externalKeys = !!on;
-      if (!externalKeys) { Object.keys(keys).forEach(code => { keys[code] = false; }); }
-    }
-
-    // state: { move: { x, y }, look: { dx, dy }, buttons } from WeylandInput.
+    // The world only consumes normalized input. The homepage owns every physical input in embeds.
     function setExternalState(state) {
-      if (!state || !inputEnabled) return;
-      const m = state.move || {};
-      ext.x = clamp(Number(m.x) || 0, -1, 1);
-      ext.y = clamp(Number(m.y) || 0, -1, 1);
-      ext.buttons = state.buttons || {};
-      ext.at = performance.now();
-      if (ext.x || ext.y) signalInput('move');
-      const l = state.look || {};
-      if (l.dx || l.dy) lookBy(Number(l.dx) || 0, Number(l.dy) || 0);
-    }
-
-    function onKeyDown(event) {
-      if (event._sxHandled) return;
-      event._sxHandled = true;
-      const activeEl = document.activeElement;
-      const formFocused = Boolean(activeEl && /^(INPUT|TEXTAREA|SELECT)$/i.test(activeEl.tagName));
-      if (formFocused && !locked) return;
-      // externalKeys (2026-10-09, S0): the host page says the world is in front (the homepage
-      // dossier lowered), so its keys move the player without pointer lock first.
-      if (!locked && !isDedicatedDemo && !externalKeys) return;
-      if (!event.repeat && event.code === profile.desktop.tour && options.onTourToggle) options.onTourToggle();
-      if (!event.repeat && event.code === profile.desktop.settings && options.onSettingsToggle) options.onSettingsToggle();
-      if (!event.repeat && event.code === profile.desktop.report && options.onReportToggle) options.onReportToggle();
-      if (!event.repeat && event.code === profile.desktop.view && options.onViewToggle) options.onViewToggle();
       if (!inputEnabled) return;
-      keys[event.code] = true;
-      if (event.code === profile.desktop.release && document.pointerLockElement) document.exitPointerLock();
-      if (event.code === bindings.scan) {
-        if (!desktopScanHeld) {
-          desktopScanHeld = true;
-          setScan(true);
-        }
-      }
-      if ([
-        ...profile.desktop.forward, ...profile.desktop.backward, ...profile.desktop.left, ...profile.desktop.right,
-        ...profile.desktop.up, ...profile.desktop.down, ...profile.desktop.rollLeft, ...profile.desktop.rollRight,
-        ...profile.desktop.brake,
-        bindings.scan,
-        bindings.brake
-      ].includes(event.code)) {
-        event.preventDefault();
-      }
+      const next = window.WeylandInput.normalize(state);
+      next.look.dx += ext.look.dx; next.look.dy += ext.look.dy;
+      ext = next; externalAt = performance.now();
     }
-
-    function onKeyUp(event) {
-      if (event._sxHandledUp) return;
-      event._sxHandledUp = true;
-      keys[event.code] = false;
-      if (desktopScanHeld && !actionActive('scan')) {
-        desktopScanHeld = false;
-        setScan(false);
-      }
-    }
-
-    document.addEventListener('keydown', onKeyDown);
-    window.addEventListener('keydown', onKeyDown);
-    document.addEventListener('keyup', onKeyUp);
-    window.addEventListener('keyup', onKeyUp);
-    // Mouse look rotates the flight basis directly around its OWN current
-    // local axes (yaw around local up, pitch around local right) rather
-    // than accumulating world-frame Euler angles - this is what makes roll
-    // (from Q/E) persist correctly and compose with look instead of being
-    // fought by a world-up-relative yaw/pitch model.
-    document.addEventListener('mousemove', event => {
-      if (!locked || !inputEnabled) return;
-      const right = normalize3(cross3(up, fwd));
-      if (event.movementX) fwd = rotateAroundAxis(fwd, up, -event.movementX * settings.mouseSensitivity);
-      if (event.movementY) fwd = rotateAroundAxis(fwd, right, -event.movementY * settings.mouseSensitivity);
-      fwd = normalize3(fwd);
-      // up = fwd x right (same order as basisFromYawPitch). The previous
-      // right x fwd flipped the up vector on every event, so successive
-      // look events cancelled each other and the view could invert.
-      up = normalize3(cross3(fwd, right));
-      if (event.movementX || event.movementY) {
-        signalInput('look');
-        hintState.lastInput = performance.now();
-        hintState.lookPixels += Math.abs(event.movementX) + Math.abs(event.movementY);
-        if (hintState.lookPixels > 40 && !hintState.hasLooked) {
-          hintState.hasLooked = true;
-          setHint();
-        } else if (hintState.idleActive) {
-          hintState.idleActive = false;
-          hideTlouHint();
-        }
+    document.addEventListener('keydown', event => {
+      const el = document.activeElement;
+      if (!inputEnabled || event.repeat || (el && (/^(INPUT|TEXTAREA|SELECT)$/.test(el.tagName) || el.isContentEditable))) return;
+      for (const [key, callback] of [['tour', 'onTourToggle'], ['settings', 'onSettingsToggle'], ['report', 'onReportToggle'], ['view', 'onViewToggle']]) {
+        if (event.code === profile.desktop[key] && options[callback]) options[callback]();
       }
     });
-
-    function updateStick(clientX, clientY) {
-      const rect = stick.getBoundingClientRect();
-      const cx = rect.left + rect.width * 0.5;
-      const cy = rect.top + rect.height * 0.5;
-      const radius = rect.width * 0.32;
-      let dx = clientX - cx;
-      let dy = clientY - cy;
-      const length = Math.hypot(dx, dy);
-      if (length > radius) { dx = dx / length * radius; dy = dy / length * radius; }
-      stickAxis.x = dx / radius;
-      stickAxis.y = dy / radius;
-      knob.style.transform = `translate(calc(-50% + ${dx}px), calc(-50% + ${dy}px))`;
-    }
-
-    function resetStick() {
-      stickPointer = null;
-      stickAxis.x = 0;
-      stickAxis.y = 0;
-      stick.classList.remove('active');
-      knob.style.transform = 'translate(-50%, -50%)';
-      stick.style.removeProperty('--sx-stick-left');
-      stick.style.removeProperty('--sx-stick-top');
-      stick.style.removeProperty('bottom');
-      stick.style.removeProperty('right');
-    }
-
-    function placeFloatingStick(event) {
-      if (!settings.floatingStick) return;
-      // The stick floats to the finger but stays inside its own zone, wherever
-      // the host put that zone (left 45% on the full page, bottom-right in the
-      // homepage embed).
-      const size = stick.getBoundingClientRect().width;
-      const zone = moveZone.getBoundingClientRect();
-      const x = clamp(event.clientX, zone.left + size * 0.55, Math.max(zone.left + size * 0.55, zone.right - size * 0.55));
-      const y = clamp(event.clientY, Math.max(0, zone.top) + size * 0.55, Math.max(zone.top + size * 0.55, zone.bottom - size * 0.55));
-      stick.style.setProperty('--sx-stick-left', `${x - zone.left - size * 0.5}px`);
-      stick.style.setProperty('--sx-stick-top', `${y - zone.top - size * 0.5}px`);
-      stick.style.bottom = 'auto';
-      stick.style.right = 'auto';
-    }
-
-    moveZone.addEventListener('pointerdown', event => {
-      if (!inputEnabled || stickPointer !== null) return;
-      event.preventDefault();
-      stickPointer = event.pointerId;
-      moveZone.setPointerCapture(event.pointerId);
-      placeFloatingStick(event);
-      stick.classList.add('active');
-      updateStick(event.clientX, event.clientY);
-      signalInput('move');
-    });
-    moveZone.addEventListener('pointermove', event => {
-      if (event.pointerId === stickPointer) {
-        updateStick(event.clientX, event.clientY);
-        signalInput('move');
-      }
-    });
-    moveZone.addEventListener('pointerup', event => { if (event.pointerId === stickPointer) resetStick(); });
-    moveZone.addEventListener('pointercancel', event => { if (event.pointerId === stickPointer) resetStick(); });
-    moveZone.addEventListener('lostpointercapture', event => { if (event.pointerId === stickPointer) resetStick(); });
-
-    lookZone.addEventListener('pointerdown', event => {
-      if (!inputEnabled) return;
-      event.preventDefault();
-      lookPointer = event.pointerId;
-      lookX = event.clientX;
-      lookY = event.clientY;
-      lookZone.setPointerCapture(event.pointerId);
-    });
-    // Touch look in screen pixels; shared by the look zone and by hosts
-    // that drive the camera from their own gestures (the weylandai.com
-    // embed has no touch UI, so it forwards canvas drags here).
+    // Both local and forwarded look arrive in screen pixels.
     function lookBy(dx, dy) {
       if (!inputEnabled || (!dx && !dy)) return;
       const right = normalize3(cross3(up, fwd));
-      if (dx) fwd = rotateAroundAxis(fwd, up, -dx * settings.touchSensitivity);
-      if (dy) fwd = rotateAroundAxis(fwd, right, -dy * settings.touchSensitivity);
+      const sensitivity = coarsePointer ? settings.touchSensitivity : settings.mouseSensitivity;
+      if (dx) fwd = rotateAroundAxis(fwd, up, -dx * sensitivity);
+      if (dy) fwd = rotateAroundAxis(fwd, right, -dy * sensitivity);
       fwd = normalize3(fwd);
       up = normalize3(cross3(fwd, right));
       signalInput('look');
+      hintState.lastInput = performance.now();
+      hintState.lookPixels += Math.abs(dx) + Math.abs(dy);
+      if (hintState.lookPixels > 40 && !hintState.hasLooked) { hintState.hasLooked = true; setHint(); }
     }
-    // Virtual stick for hosts: x = strafe (-1..1), y = -forward (-1..1).
-    function setStick(x, y) {
-      if (!inputEnabled) return;
-      stickAxis.x = clamp(Number(x) || 0, -1, 1);
-      stickAxis.y = clamp(Number(y) || 0, -1, 1);
-      if (stickAxis.x || stickAxis.y) signalInput('move');
-    }
-    lookZone.addEventListener('pointermove', event => {
-      if (event.pointerId !== lookPointer) return;
-      const dx = event.clientX - lookX;
-      const dy = event.clientY - lookY;
-      lookX = event.clientX;
-      lookY = event.clientY;
-      lookBy(dx, dy);
-    });
-    const resetLook = event => { if (!event || event.pointerId === lookPointer) lookPointer = null; };
-    lookZone.addEventListener('pointerup', resetLook);
-    lookZone.addEventListener('pointercancel', resetLook);
-
-    const setSprint = active => {
-      if (active && !inputEnabled) return;
-      sprintHeld = active;
-      sprintButton.classList.toggle('active', active);
-      if (active) signalInput('sprint');
-    };
-    sprintButton.addEventListener('pointerdown', event => { event.preventDefault(); sprintButton.setPointerCapture(event.pointerId); setSprint(true); });
-    sprintButton.addEventListener('pointerup', () => setSprint(false));
-    sprintButton.addEventListener('pointercancel', () => setSprint(false));
-
-    const setScan = active => {
-      if (active && !inputEnabled) return;
-      if (scanButton) scanButton.classList.toggle('active', active);
-      touchUI.classList.toggle('scanning', active);
+    function setScan(active) {
       if (options.onScan) options.onScan(active, position);
       if (active) signalInput('scan');
-    };
-
-    touchUI.querySelector('.sx-fullscreen').addEventListener('click', requestLandscape);
-    touchUI.querySelector('.sx-enter-landscape').addEventListener('click', requestLandscape);
+    }
 
     function update(dt) {
       if (!inputEnabled) return;
+      current = input ? input.state() : (performance.now() - externalAt < 400 ? ext : window.WeylandInput.neutral());
+      lookBy(current.look.dx, current.look.dy);
+      ext.look = { dx: 0, dy: 0 };
+      if (desktopScanHeld !== actionActive('scan')) { desktopScanHeld = actionActive('scan'); setScan(desktopScanHeld); }
 
       // Roll: Q/E spin the basis around the CURRENT local forward axis -
       // independent of translation input, same as a spacecraft's roll
@@ -585,14 +316,9 @@
       // Grounded = the host reports a floor under us (see groundY below):
       // use the walking profile and ignore vertical thrust.
       const grounded = typeof options.groundY === 'function' && Number.isFinite(options.groundY(position[0], position[2]));
-      const extLive = performance.now() - ext.at < 400; // a host that stops posting stops the player
-      let forwardAmt = -stickAxis.y + (extLive ? ext.y : 0);
-      let strafe = stickAxis.x + (extLive ? ext.x : 0);
+      let forwardAmt = current.move.y;
+      let strafe = current.move.x;
       let vertical = 0;
-      if (actionActive('forward')) forwardAmt += 1;
-      if (actionActive('backward')) forwardAmt -= 1;
-      if (actionActive('right')) strafe += 1;
-      if (actionActive('left')) strafe -= 1;
       if (!grounded && actionActive('up')) vertical += 1;
       if (!grounded && actionActive('down')) vertical -= 1;
       const inputLength = Math.hypot(forwardAmt, strafe, vertical);
@@ -612,7 +338,7 @@
           hideTlouHint();
         }
         if (options.onThrust) options.onThrust(velocity);
-        const sprinting = sprintHeld || actionActive('sprint');
+        const sprinting = actionActive('sprint');
         const accel = (grounded
           ? (sprinting ? profile.walk.sprintAccel : profile.walk.accel)
           : (sprinting ? profile.movement.sprintAccel : profile.movement.accel)) * settings.moveScale;
@@ -752,17 +478,10 @@
 
     function setEnabled(active) {
       inputEnabled = Boolean(active);
-      touchUI.inert = !inputEnabled;
-      touchUI.setAttribute('aria-hidden', String(!inputEnabled));
+      if (input) input.setEnabled(inputEnabled);
       if (!inputEnabled) {
-        Object.keys(keys).forEach(code => { keys[code] = false; });
-        sprintHeld = false;
-        velocity.fill(0);
-        desktopScanHeld = false;
-        resetStick();
-        resetLook();
-        setSprint(false);
-        setScan(false);
+        ext = window.WeylandInput.neutral(); externalAt = -Infinity;
+        velocity.fill(0); desktopScanHeld = false; setScan(false);
       }
     }
 
@@ -790,15 +509,9 @@
       if (options.onMove) options.onMove(position);
     }
 
-    window.addEventListener('resize', () => { resetStick(); resetLook(); });
-    window.addEventListener('orientationchange', () => { resetStick(); resetLook(); });
     window.addEventListener('blur', () => {
-      Object.keys(keys).forEach(code => { keys[code] = false; });
-      desktopScanHeld = false;
-      setSprint(false);
-      setScan(false);
-      resetStick();
-      resetLook();
+      ext = window.WeylandInput.neutral(); externalAt = -Infinity;
+      velocity.fill(0); desktopScanHeld = false; setScan(false);
     });
 
     applySettings();
@@ -811,8 +524,6 @@
       setEnabled,
       setPose,
       lookBy,
-      setStick,
-      setExternalKeys,
       setExternalState,
       state: () => ({ pos: position.slice(), yaw: Math.atan2(fwd[0], fwd[2]), pitch: Math.asin(clamp(fwd[1], -1, 1)) }),
       updateSettings,

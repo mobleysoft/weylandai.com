@@ -7,11 +7,12 @@
 //   - no request leaves MobCorp's own hosts (three.js and every other script are served by us).
 // Motion is read from SightXControls.state() ({ pos, yaw, pitch }, read-only), in the page or in
 // the world frame, so nothing in the renderer is patched.
-import { BASE, SITE_HOST, sleep } from "./journey-kit.mjs";
+import { mkdir } from "node:fs/promises";
+import path from "node:path";
+import { BASE, REPORTS_DIR, sleep } from "./journey-kit.mjs";
 
-// First party: this site and MobCorp's own services (AuthFor sign-in, the GitHub Pages origin of
-// the case-study run). Anything else, a CDN included, is a third-party request.
-const OURS = [SITE_HOST, "weylandai.com", "authfor.com", "mobleysoft.github.io", "vendyai.com", "mailguyai.com"];
+// First party: this site and MobCorp's own services (AuthFor sign-in). Anything else, a CDN included, is a third-party request.
+const OURS = [new URL(BASE).hostname, "weylandai.com", "authfor.com", "vendyai.com", "mailguyai.com"];
 export function thirdPartyWatch(ctx) {
   const seen = new Set();
   ctx.on("request", (r) => {
@@ -41,11 +42,18 @@ export async function moveAndLook(J, { ctx, page, world, kind, where, lookBox })
   const s0 = await stateOf(world);
   J.check("SightXControls.state() answers (" + where + ")", !!(s0 && Array.isArray(s0.pos)), s0);
   if (!s0) return;
+  const immutable = await world.evaluate(() => {
+    const a = window.SightXControls.state(), p = a.pos.slice(), yaw = a.yaw;
+    try { a.pos[0] += 100; a.yaw += 100; } catch (_) {}
+    const b = window.SightXControls.state(); return b.pos[0] === p[0] && b.yaw === yaw;
+  });
+  J.check('state snapshots cannot mutate the player', immutable);
   if (kind === "desktop") {
     await page.keyboard.down("KeyW"); await sleep(1500); await page.keyboard.up("KeyW");
   } else {
     const stick = await page.evaluate(() => { const e = document.querySelector(".weyland-stick"); if (!e) return null; const r = e.getBoundingClientRect(); return r.width ? { x: r.x + r.width / 2, y: r.y + r.height / 2 } : null; });
     J.check("the touch stick is drawn in the page the finger touches (" + where + ")", !!stick, stick || "no .weyland-stick");
+    if (stick) J.check('the topmost element at the stick is the stick', await page.evaluate(p => !!document.elementFromPoint(p.x, p.y)?.closest('.weyland-stick'), stick));
     if (stick) await touchDrag(ctx, page, stick, { x: stick.x, y: stick.y - 60 }, { steps: 8, holdMs: 1500 });
   }
   await sleep(400);
@@ -73,12 +81,15 @@ export async function appJourney(J, kind) {
   const third = thirdPartyWatch(ctx);
   const page = await J.page(ctx);
   await page.goto(BASE + "/sightx/?journey=" + J.id + "-" + J.suffix, { waitUntil: "load", timeout: 60000 });
-  await page.waitForFunction(() => /Built \d+ doors?/.test((document.getElementById("sx-status") || {}).textContent || ""), null, { timeout: 45000 }).catch(() => {});
+  const built = await page.waitForFunction(() => /Built \d+ doors?/.test((document.getElementById("sx-status") || {}).textContent || ""), null, { timeout: 45000 }).then(() => true, () => false);
+  J.check("the schedule has built a rendered corridor", built);
   const box = await page.locator("#sx-canvas").boundingBox();
   const hero = await page.locator("h1").boundingBox().catch(() => null);
   J.check("the 3D view comes before the page's text (canvas first)", !!box && (!hero || box.y < hero.y), { canvasTop: box && Math.round(box.y), headingTop: hero && Math.round(hero.y) });
   J.check("no press-and-hold WALK button", (await page.locator("#fwd, #back").count()) === 0);
+  if (kind === "phone") await noHold(J, ctx, page, page, box);
   await moveAndLook(J, { ctx, page, world: page, kind, where: "/sightx/ " + kind, lookBox: box });
+  await snapshot(J, page);
   J.check("no third-party request (/sightx/ " + kind + ")", third.size === 0, [...third]);
   await ctx.close();
 }
@@ -109,9 +120,33 @@ export async function homeJourney(J, kind) {
   await sleep(1500);
   const world = page.frames().find((f) => /\/sightx\/?\?embed=bg|sightx\.html\?embed=bg/.test(f.url()));
   const vp = page.viewportSize();
+  if (kind === "phone") await noHold(J, ctx, page, world, { x: 0, y: 0, width: vp.width, height: vp.height });
   await moveAndLook(J, { ctx, page, world, kind, where: "homepage " + kind, lookBox: { x: 0, y: 0, width: vp.width, height: vp.height } });
+  await snapshot(J, page);
   await page.keyboard.press("Escape"); await sleep(800);
   J.check("Escape raises the dossier again", !(await page.evaluate(() => document.documentElement.classList.contains("folder-lowered"))));
+  J.check('no legacy hold controls in the homepage world', await world.locator('#fwd, #back, .sx-action.sprint').count() === 0);
+  await page.locator('#envelope-close').click(); await sleep(900);
+  await page.keyboard.press('Enter'); await sleep(800);
+  J.check('Enter raises the dossier again', !(await page.evaluate(() => document.documentElement.classList.contains('folder-lowered'))));
   J.check("no third-party request (homepage " + kind + ")", third.size === 0, [...third]);
   await ctx.close();
+}
+
+async function noHold(J, ctx, page, world, box) {
+  const point = { x: box.x + box.width * .65, y: box.y + box.height * .4 };
+  const before = await stateOf(world);
+  const cdp = await ctx.newCDPSession(page);
+  await cdp.send('Input.dispatchTouchEvent', { type: 'touchStart', touchPoints: [{ ...point, id: 1 }] });
+  await sleep(900);
+  const after = await stateOf(world);
+  await cdp.send('Input.dispatchTouchEvent', { type: 'touchCancel', touchPoints: [] });
+  await cdp.detach();
+  const moved = before && after ? dist(before, after) : Infinity;
+  J.check('holding the view without moving a stick does not walk', moved < .05, { moved });
+}
+async function snapshot(J, page) {
+  const dir = process.env.OUT_DIR || REPORTS_DIR;
+  await mkdir(dir, { recursive: true });
+  await page.screenshot({ path: path.join(dir, J.id + '.png') });
 }

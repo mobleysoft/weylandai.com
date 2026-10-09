@@ -105,15 +105,14 @@ await J.run(async () => {
     const hung = Number(((note || "").match(/hung (\d+) openings/i) || [])[1] || 0);
     J.check("phone: WALK THIS SCHEDULE hangs the matched openings and says to walk with the joystick", hung > 0 && /joystick/i.test(note || ""), note);
     await sleep(1500);
-    const sx = page.frames().find((f) => /\/sightx/.test(f.url()));
-    const stick = sx ? await sx.locator(".sx-stick").first().boundingBox().catch(() => null) : null;
+    const stick = await page.locator(".weyland-stick").first().boundingBox().catch(() => null);
     const onScreen = !!stick && stick.x >= 0 && stick.y >= 0 && stick.x + stick.width <= 390 && stick.y + stick.height <= 844;
     let moved = null, topAt = null;
     if (onScreen) {
       const cx = stick.x + stick.width / 2, cy = stick.y + stick.height / 2;
-      // What a finger on the stick's centre touches first (the stick lives in the SightX frame).
+      // What a finger on the stick's centre touches first (the host draws the stick above the SightX frame).
       topAt = await page.evaluate(([x, y]) => { const el = document.elementFromPoint(x, y); if (!el) return null; const r = el.getBoundingClientRect(); return { element: el.tagName.toLowerCase() + (el.id ? "#" + el.id : ""), box: [Math.round(r.left), Math.round(r.top), Math.round(r.right), Math.round(r.bottom)] }; }, [cx, cy]);
-      const knob = () => sx.evaluate(() => { const k = document.querySelector(".sx-stick-knob"); return k ? getComputedStyle(k).transform : null; }).catch(() => null);
+      const knob = () => page.evaluate(() => { const k = document.querySelector(".weyland-stick > div"); return k ? getComputedStyle(k).transform : null; }).catch(() => null);
       const before = await knob();
       const cdp = await ctx.newCDPSession(page);
       await cdp.send("Input.dispatchTouchEvent", { type: "touchStart", touchPoints: [{ x: cx, y: cy }] });

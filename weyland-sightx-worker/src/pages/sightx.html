@@ -961,37 +961,6 @@
     html.sxe-bg-embed, html.sxe-bg-embed body { overflow: hidden; touch-action: none; overscroll-behavior: none; }
     html.sxe-bg-embed #bg-canvas { touch-action: none; }
     html.sxe-bg-embed .sx-walk-label { pointer-events: auto; cursor: pointer; }
-    /* Embed joystick (2026-10-04, John: "better mobile motion controls when
-       in portrait mode, perhaps a joystick"): the controller's own touch UI
-       (floating stick, drag-to-look, auto-scan)
-       is shown while the folder is lowered on touch devices. No landscape
-       gate, brand plate, fullscreen or sprint in the embed: the homepage is
-       the frame, and portrait is the primary orientation there. */
-    html.sxe-bg-embed.sx-touch-on #sightx-touch-ui { display: block !important; }
-    html.sxe-bg-embed #sightx-touch-ui .sx-rotate-gate,
-    html.sxe-bg-embed #sightx-touch-ui .sx-mobile-brand,
-    html.sxe-bg-embed #sightx-touch-ui .sx-utility,
-    html.sxe-bg-embed #sightx-touch-ui .sx-crosshair,
-    html.sxe-bg-embed #sightx-touch-ui .sx-action.sprint { display: none !important; }
-    /* Joystick bottom-right (2026-10-05, John: "the joystick should be where the
-       scan button is"): the lowered dossier covers the bottom-left, so the
-       stick lives in the bottom-right quadrant where SCAN used to be, and the
-       whole screen drags to look. There is no SCAN button any more - anything
-       in range scans itself (sightx-experience.js autoScan). */
-    html.sxe-bg-embed #sightx-touch-ui .sx-actions { display: none !important; }
-    html.sxe-bg-embed #sightx-touch-ui .sx-look-zone { inset: 0; z-index: 1; }
-    html.sxe-bg-embed #sightx-touch-ui .sx-move-zone {
-      inset: auto max(10px, env(safe-area-inset-right)) max(18px, env(safe-area-inset-bottom)) auto;
-      width: 104px; height: 160px; z-index: 2;
-    }
-    html.sxe-bg-embed #sightx-touch-ui .sx-stick,
-    html.sxe-bg-embed #sightx-touch-ui.floating-stick .sx-stick {
-      left: var(--sx-stick-left, auto); right: 4px; top: var(--sx-stick-top, auto);
-      bottom: 34px; width: 96px;
-    }
-    @media (max-height: 440px) {
-      html.sxe-bg-embed #sightx-touch-ui .sx-move-zone { height: 132px; }
-    }
     /* Door labels stay tappable above the touch zones. */
     html.sxe-bg-embed #sx-walk { z-index: 45; }
   </style>
@@ -1250,7 +1219,8 @@
     </div>
   </div>
 
-  <script src="/assets/sightx-controls.js?v=20261009a"></script>
+  <script src="/assets/weyland-input.js?v=20261009-s0b"></script>
+  <script src="/assets/sightx-controls.js?v=20261009-s0b"></script>
   <script src="/assets/sightx-experience.js?v=20261005-1"></script>
   <script>
     // Ingest (PDF upload UI) and the Unreal runtime bridge are not used in
@@ -2952,6 +2922,7 @@
 
     const sightxControls = window.SightXControls.mount({
       canvas,
+      externalInput: window.parent !== window && document.documentElement.classList.contains("sxe-bg-embed"),
       hint: document.getElementById('hint'),
       // Spawn standing in the corridor just inside the near end wall,
       // eye height 1.6 m above the VCT (floor top = -1.32), looking down
@@ -3295,10 +3266,8 @@
     function update(lowerT) {
       var g = geometry();
       var off = [0, -0.95 * lowerT, 0.38 * lowerT];
-      // Joystick UI only while a finger can reach the world: folder lowered,
-      // prologue over, touch device. (CSS above shows #sightx-touch-ui.)
+      // The host owns the stick; the world accepts input only while the folder is lowered.
       var interactive = !siteRaised && !introUp();
-      document.documentElement.classList.toggle("sx-touch-on", coarseTouch && interactive);
       if (lastInteractive !== interactive) {
         lastInteractive = interactive;
         try { sightxControls.setEnabled(interactive); } catch (_) { lastInteractive = null; }
@@ -3346,8 +3315,6 @@
     window.addEventListener("message", function (e) {
       if (e.source !== window.parent || e.origin !== location.origin || !e.data || e.data.type !== "weyland:dossier-state") return;
       siteRaised = !!e.data.raised;
-      // The world is in front while the dossier is lowered: its keys move the player (S0).
-      try { if (sightxControls && sightxControls.setExternalKeys) sightxControls.setExternalKeys(!siteRaised); } catch (err) {}
       update(value);
     });
     // The host's input layer (S0, 2026-10-09; assets/weyland-input.js): focus stays on the homepage
@@ -3360,6 +3327,12 @@
       if (!c || !c.setExternalState) return;
       window.__sxForwarded = (window.__sxForwarded || 0) + 1;
       c.setExternalState(e.data);
+    });
+    window.addEventListener('message', function (e) {
+      if (e.source !== window.parent || e.origin !== location.origin || e.data?.type !== 'weyland:world-tap' || siteRaised || introUp()) return;
+      if (!Number.isFinite(e.data.x) || !Number.isFinite(e.data.y)) return;
+      var hit = document.elementFromPoint(e.data.x, e.data.y)?.closest('.sx-walk-label');
+      if (hit) hit.click();
     });
     window.sxDossier = { geometry: geometry, lowered: lowered, update: update, introUp: introUp };
   })();
@@ -3613,55 +3586,6 @@
       { label: "108 IT / DATA",   sub: "LCN 4040XP - Schlage L9080 - Hager BB1279" },
       { label: "100 EXIT PAIR",   sub: "Von Duprin 99 - LCN 4040XP - Ives 5BB1", pair: true }
     ], { silent: true });
-  })();
-  </script>
-
-  <!-- Embed touch motion (2026-10-04): the homepage backdrop hides the
-       touch joystick UI, so phones had no way to move. One finger on the
-       world: drag = look, press-and-hold = walk forward (drag sideways
-       while holding to steer), release = stop. Tapping a door label walks
-       to that door (sx-walk flyToOpening). Mouse pointers are untouched. -->
-  <script>
-  (function () {
-    if (!document.documentElement.classList.contains("sxe-bg-embed")) return;
-    var canvas = document.getElementById("bg-canvas");
-    if (!canvas) return;
-    var introOverlay = document.getElementById("cx-overlay");
-    function introUp() { return !!(introOverlay && introOverlay.parentNode && introOverlay.style.display !== "none"); }
-    function ctl() { try { return sightxControls; } catch (e) { return null; } }
-    var HOLD_MS = 320, MOVE_PX = 8;
-    var a = null;
-    // Diagnostics for the production check (counts only).
-    var stats = window.__sxTouchStats = { downs: 0, moves: 0, looks: 0, holds: 0, lastDx: 0 };
-    canvas.addEventListener("pointerdown", function (e) {
-      if (e.pointerType === "mouse" || introUp() || !ctl()) return;
-      stats.downs++;
-      e.preventDefault();
-      a = { id: e.pointerId, x0: e.clientX, y0: e.clientY, x: e.clientX, y: e.clientY, moved: false, walking: false };
-      try { canvas.setPointerCapture(e.pointerId); } catch (_) {}
-      a.timer = setTimeout(function () {
-        if (a && !a.moved) { a.walking = true; stats.holds++; var c = ctl(); if (c && c.setStick) c.setStick(0, -0.85); }
-      }, HOLD_MS);
-    }, { passive: false });
-    canvas.addEventListener("pointermove", function (e) {
-      if (!a || e.pointerId !== a.id) return;
-      var c = ctl(); if (!c || !c.lookBy) return;
-      var dx = e.clientX - a.x, dy = e.clientY - a.y;
-      a.x = e.clientX; a.y = e.clientY;
-      stats.moves++; stats.lastDx = dx;
-      if (!a.moved && Math.hypot(e.clientX - a.x0, e.clientY - a.y0) > MOVE_PX) a.moved = true;
-      if (a.walking) { stats.looks++; c.lookBy(dx, 0); }
-      else if (a.moved) { stats.looks++; c.lookBy(dx, dy); }
-    });
-    function end(e) {
-      if (!a || (e && e.pointerId !== a.id)) return;
-      clearTimeout(a.timer);
-      if (a.walking) { var c = ctl(); if (c && c.setStick) c.setStick(0, 0); }
-      a = null;
-    }
-    canvas.addEventListener("pointerup", end);
-    canvas.addEventListener("pointercancel", end);
-    window.addEventListener("blur", function () { end(null); });
   })();
   </script>
 

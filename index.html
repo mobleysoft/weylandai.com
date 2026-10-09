@@ -334,9 +334,11 @@
     html.folder-lowered .wn-persistent-footer {
       transform: translateX(-50%) translateY(calc(100vh + 80px));
     }
-    html.folder-lowered #stage-backdrop iframe {
-      pointer-events: auto;
-    }
+    /* Input stays in this document, above the world and below the dossier controls. */
+    #weyland-look { position: fixed; inset: 0; z-index: 1; display: none; touch-action: none; user-select: none; }
+    html.folder-lowered #weyland-look { display: block; pointer-events: auto; }
+    html.wa-overlay-open #weyland-look, html.wco-open #weyland-look { display: none; }
+
     /* Touch screens (2026-10-07, phone joystick): html and body are
        min-height 100% and body is not a stacking context, so body's own box
        sits above #stage-backdrop (z-index -2) in hit testing and took every
@@ -1943,7 +1945,7 @@
       to { opacity: 0; visibility: hidden; pointer-events: none; }
     }
   </style>
-  <script src="/assets/weyland-input.js?v=20261009a"></script>
+  <script src="/assets/weyland-input.js?v=20261009-s0b"></script>
 </head>
 <body>
   <script>
@@ -2015,6 +2017,7 @@
        held up against). Checkerboard is the fallback for mobile/reduced-
        motion; see the iframe-injection script near the end of <body>. -->
   <div id="stage-backdrop"></div>
+  <div id="weyland-look" aria-label="Drag to look around the building"></div>
 
   <!-- Envelope frame: all real site content (nav + main + footer) lives
        inside this as ONE continuous card, inset from the viewport so the
@@ -3501,10 +3504,10 @@
     }
 
     // 5b6. Living chapter: the built-with cards read the latest committed run
-    // (launch/case-study/latest_run.json, served by the GitHub Pages origin).
+    // (launch/case-study/latest_run.json, served from this origin).
     (function () {
       var tot = document.getElementById("bw-total"); if (!tot) return;
-      fetch("https://mobleysoft.github.io/weylandai.com/launch/case-study/latest_run.json", { cache: "no-store" }).then(function (r) { return r.ok ? r.json() : null; }).then(function (run) {
+      fetch("/launch/case-study/latest_run.json", { cache: "no-store" }).then(function (r) { return r.ok ? r.json() : null; }).then(function (run) {
         if (!run || !run.totalMs || run.failed) return;
         var real = run.source === "real-bid-file";
         document.getElementById("bw-label").textContent = (real ? "A real bid, end to end" : "Sample package, end to end (measured once)");
@@ -4441,15 +4444,17 @@
       if (!isLowered()) return;
       if (e.key === "Escape" || e.key === "Enter") { e.preventDefault(); raise(); }
     });
-    // The world input layer (S0, 2026-10-09; assets/weyland-input.js). While the dossier is lowered the
-    // world is in front, but focus stays on this page (the raise control): the host reads the keys,
-    // a gamepad and, on a phone, the stick it draws here into one state and posts it into the world
-    // frame every live frame. A click or a drag on the world reaches the frame itself (body lets the
-    // pointer through while lowered, CSS above). Tab, Enter and Escape stay this page's.
+    // The top document owns keys, mouse, stick and gamepad. The frame consumes only this state.
     var worldInput = window.WeylandInput ? window.WeylandInput.create({
-      forward: function () { var bd = document.querySelector("#stage-backdrop iframe"); return bd && bd.contentWindow; },
-      active: isLowered,
-      stick: "auto",
+      lookTarget: document.getElementById('weyland-look'),
+      forward: function () { var bd = document.querySelector('#stage-backdrop iframe'); return bd && bd.contentWindow; },
+      active: function () { return isLowered() && !root.classList.contains('wa-overlay-open') && !root.classList.contains('wco-open') && !document.querySelector('#upgrade-modal.is-open'); },
+      stick: 'auto', stickSide: 'right', stickSize: 104, stickInset: 10,
+      onTap: function (x, y) {
+        var bd = document.querySelector('#stage-backdrop iframe'); if (!bd) return;
+        var r = bd.getBoundingClientRect();
+        bd.contentWindow.postMessage({ type: 'weyland:world-tap', x: x - r.x, y: y - r.y }, location.origin);
+      }
     }) : null;
     window.__weylandWorldInput = worldInput;
     function releaseAll() { if (worldInput) worldInput.clear(); }
@@ -4472,7 +4477,7 @@
 
     // SightX's in-world [tap / enter] callout asks us to raise.
     window.addEventListener("message", function (e) {
-      if (e.origin !== location.origin || !e.data) return;
+      if (e.origin !== location.origin || e.source !== document.querySelector("#stage-backdrop iframe")?.contentWindow || !e.data) return;
       if (e.data.type === "weyland:raise-dossier") raise();
       else if (e.data.type === "weyland:dossier-geometry") applyGeometry(e.data);
     });

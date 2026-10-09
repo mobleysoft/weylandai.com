@@ -1,0 +1,68 @@
+{
+  "goal": "g002 / S0",
+  "recorded_at": "2026-10-09T11:00:43.960Z",
+  "scope": "This checkout only; no commit or deployment performed.",
+  "gate": "PENDING deployed Mac GPU measurement; local regressions do not establish the browser gate.",
+  "validation": {
+    "node": "v24.19.0",
+    "tests": 34,
+    "passed": 34,
+    "failed": 0,
+    "command": "node --test tools/user-simulation/sightx-mobile-regression.test.mjs weyland-sightx-worker/src/routes/sightx-model.test.mjs weyland-sightx-worker/src/routes/sightx-share.test.mjs weyland-sightx-worker/src/routes/sightx-walkthrough.test.mjs",
+    "log": "✔ W and a pointer drag drive the world through the same state, with independent snapshots (5.394583ms)\n✔ stick starts neutral, another finger looks without stealing movement, release stops (2.391417ms)\n✔ a stationary canvas touch never walks, and pointercancel ends look (0.877625ms)\n✔ typing, blur, orientation, hiding and disabling clear all held input (2.346166ms)\n✔ alias keys release independently and diagonal movement stays in the unit disk (0.729417ms)\n✔ gamepad look uses elapsed time rather than polling count and inactive buttons are neutral (1.724916ms)\n✔ forwarding refreshes a neutral state after frame load and sends a stop on blur (0.55775ms)\n✔ frame consumes look once, expires abandoned input and clears movement on exit (1.222916ms)\n✔ actual dossier script gates forwarded controls on entry, exit and intro; rejects another source (0.913375ms)\n✔ phone dossier leaves the top-document right stick clear in portrait and landscape (4.243042ms)\n✔ sizes, ratings and hardware kinds are read as the trade writes them (3.709708ms)\n✔ one door per line, with set definitions (1.827042ms)\n✔ a table pasted from a spreadsheet, header row first (0.6925ms)\n✔ a SubX session becomes the same model, sizes and parts from the read schedule (0.309542ms)\n✔ the sample is SubX's demo sheet, sizes marked as not given (0.990166ms)\n✔ routes: sample, paste, SubX, and an unreadable paste (22.721375ms)\n✔ page: /sightx is the schedule app; the homepage backdrop keeps the world page (1.971125ms)\n✔ a SubX session whose doors name set 2 draws group 02's hardware (Berryessa) (0.110666ms)\n✔ attachPlan: each tagged door at its tag, in its room, in feet; untagged doors listed; no plan says schematic (0.345625ms)\n✔ only the fields the page draws are stored (1.181958ms)\n✔ save needs an account and payment; anyone with the link can open it; only the owner removes it (37.060667ms)\n[SightX walkthrough-preview] render error: connection reset\n✔ missing/invalid JSON body is a real 400 (29.656458ms)\n✔ empty description is a real 400 (0.672042ms)\n✔ no FILMLINE_VIDEO binding is a real 500, not a crash (0.249083ms)\n✔ the walkthrough is built here and only drawn by /api/render: no /api/generate, no model (5.588666ms)\n✔ the journey's corridor: the setting, nine openings, the exit pair's panic devices, nothing invented (2.140584ms)\n✔ two different descriptions give two different titles and walks; the same one gives the same walk (0.462ms)\n✔ hardware and ratings go with the opening they belong to, in the order written (0.214667ms)\n✔ door-schedule rows are openings with their hardware sets (0.132667ms)\n✔ a description with nothing recognisable still walks its own clauses, and asks for what is missing (0.185958ms)\n✔ a long description stays inside the renderer's limits: <= 16 numbered scenes, short title and logline (0.75ms)\n✔ the logline is escaped for the page; the narration keeps the visitor's words (0.410125ms)\n✔ renderer failure (non-ok or missing svg) is a real 502 (0.229542ms)\n✔ a thrown network error from the binding is caught into a real 502, not an unhandled rejection (0.436333ms)\nℹ tests 34\nℹ suites 0\nℹ pass 34\nℹ fail 0\nℹ cancelled 0\nℹ skipped 0\nℹ todo 0\nℹ duration_ms 100.296875\n",
+    "inline_scripts_parsed": 38
+  },
+  "browser_attempts": {
+    "default_playwright": "Chromium headless shell revision 1234 is not installed. Both probes exited 1 before navigation.",
+    "installed_chromium_1243": "FATAL: bootstrap_check_in org.chromium.Chromium.MachPortRendezvousServer: Permission denied (1100). Browser could not launch under this sandbox."
+  },
+  "deployed_measurements": [
+    {
+      "path": "app desktop",
+      "movement_units": null,
+      "turn_radians": null,
+      "third_party_requests": null,
+      "status": "not measured"
+    },
+    {
+      "path": "app phone",
+      "movement_units": null,
+      "turn_radians": null,
+      "third_party_requests": null,
+      "status": "not measured"
+    },
+    {
+      "path": "homepage desktop",
+      "movement_units": null,
+      "turn_radians": null,
+      "third_party_requests": null,
+      "status": "not measured"
+    },
+    {
+      "path": "homepage phone",
+      "movement_units": null,
+      "turn_radians": null,
+      "third_party_requests": null,
+      "status": "not measured"
+    }
+  ],
+  "mac_commands": [
+    "node tools/user-simulation/probes/sightx-controls-probe3.mjs",
+    "node tools/user-simulation/probes/sightx-controls-probe5.mjs"
+  ],
+  "probe_outputs": "JSON to stdout; per-path reports and screenshots in tools/user-simulation/reports (OUT_DIR overrides screenshot directory). WEYLAND_BASE_URL defaults to https://weylandai.com. PLAYWRIGHT_CORE may specify the installed module.",
+  "vendor": {
+    "path": "assets/vendor/three-r128.min.js",
+    "status": "already vendored in starting checkout; app continues loading this same-origin asset",
+    "sha256": "9274bbcec8d96168626c732b5d31c775aa8cfb7eaa0599bec0c175908a2c1ce2",
+    "license": "assets/vendor/three-r128.LICENSE"
+  },
+  "assets_to_publish": [
+    "assets/weyland-input.js",
+    "assets/sightx-controls.js",
+    "index.html",
+    "launch/case-study/latest_run.json",
+    "assets/vendor/three-r128.min.js"
+  ],
+  "worker_to_deploy": "weyland-sightx-worker (not the root monolith)"
+}

@@ -53,7 +53,7 @@
     .badge{font:800 9px ui-monospace,monospace;padding:4px 8px;border-radius:99px;border:1px solid var(--line);white-space:nowrap}.badge.r{color:var(--red);border-color:rgba(255,113,107,.5)}
     .foot{color:var(--muted);font-size:13px;line-height:1.6;margin-top:16px;max-width:900px}
     .pay{border:1px solid rgba(255,212,0,.4);background:rgba(255,212,0,.06);border-radius:12px;padding:10px 12px;font-size:13px;line-height:1.5;margin-top:10px}
-    @media(max-width:700px){.hint{display:none}}
+    @media(max-width:700px){.hint{display:none}.ctrl{left:auto;right:8px;bottom:8px;transform:none;width:150px;gap:5px}.ctrl .btn{padding:9px 10px;min-height:40px}.hud{flex-wrap:wrap}}
     @media(max-width:980px){.stage{grid-template-columns:1fr}.info{max-height:none;min-height:0}.viewer{height:56vh}}
   </style>
 </head>
@@ -162,7 +162,7 @@ HW-2: lever lockset, 3 hinges, wall stop"></textarea>
   </script>
   <!-- three.js r128, vendored (S0: nothing from a third-party CDN). -->
   <script src="/assets/vendor/three-r128.min.js"></script>
-  <script src="/assets/weyland-input.js?v=20261009a"></script>
+  <script src="/assets/weyland-input.js?v=20261009-s0b"></script>
   <script>
   (function () {
     "use strict";
@@ -388,7 +388,7 @@ HW-2: lever lockset, 3 hinges, wall stop"></textarea>
       }
       var dt = Math.min(0.1, ((t || 0) - (lastT || t || 0)) / 1000) || 0.016; lastT = t;
       var inp = input ? input.state() : { move: { x: 0, y: 0 }, look: { dx: 0, dy: 0 }, buttons: {} };
-      if (inp.look.dx || inp.look.dy) { anim = null; yaw -= inp.look.dx * 0.005; pitch = Math.max(-1.2, Math.min(1.2, pitch - inp.look.dy * 0.005)); }
+      if (inp.look.dx || inp.look.dy) { anim = null; yaw -= inp.look.dx * 0.005; pitch = Math.max(-1.2, Math.min(1.2, pitch - inp.look.dy * 0.005)); stopTour(); }
       var mx = inp.move.x, my = inp.move.y;
       if (mx || my) { anim = null; stopTour(); }
       // Acceleration and damping: a game's walking pace, 3.5 m/s (sprint 7), across a plan 3x that.
@@ -413,9 +413,10 @@ HW-2: lever lockset, 3 hinges, wall stop"></textarea>
     function bindInput() {
       var cv = $("sx-canvas"), down = null;
       input = window.WeylandInput ? window.WeylandInput.create({ lookTarget: cv, stick: "auto", stickParent: $("viewer") }) : null;
-      cv.addEventListener("pointerdown", function (e) { down = { x: e.clientX, y: e.clientY, moved: 0 }; try { cv.setPointerCapture(e.pointerId); } catch (x) {} stopTour(); anim = null; });
-      cv.addEventListener("pointermove", function (e) { if (down) down.moved += Math.abs(e.movementX || 0) + Math.abs(e.movementY || 0); });
-      cv.addEventListener("pointerup", function (e) { if (down && down.moved < 6 && Math.hypot(e.clientX - down.x, e.clientY - down.y) < 6) pick(e); down = null; });
+      cv.addEventListener("pointerdown", function (e) { if (down) return; down = { id: e.pointerId, x: e.clientX, y: e.clientY, moved: 0 }; try { cv.setPointerCapture(e.pointerId); } catch (x) {} stopTour(); anim = null; });
+      cv.addEventListener("pointermove", function (e) { if (down && down.id === e.pointerId) down.moved += Math.abs(e.movementX || 0) + Math.abs(e.movementY || 0); });
+      cv.addEventListener("pointerup", function (e) { if (!down || down.id !== e.pointerId) return; if (down.moved < 6 && Math.hypot(e.clientX - down.x, e.clientY - down.y) < 6) pick(e); down = null; });
+      ["pointercancel", "lostpointercapture"].forEach(function (type) { cv.addEventListener(type, function (e) { if (down && down.id === e.pointerId) down = null; }); });
     }
     function pick(e) {
       var r = $("sx-canvas").getBoundingClientRect();
