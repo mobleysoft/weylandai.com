@@ -1,0 +1,25 @@
+{
+  "checked_at": "2026-10-09T17:28:34.487210+00:00",
+  "schema": "live D1 sqlite_master",
+  "apply_once": {
+    "manufacturers": 5,
+    "manufacturer_aliases": 13,
+    "catalogues": 5,
+    "catalogue_pages": 898,
+    "products": 7,
+    "product_documents": 7,
+    "catalog_corpus_wanted": 5
+  },
+  "apply_twice": {
+    "manufacturers": 5,
+    "manufacturer_aliases": 13,
+    "catalogues": 5,
+    "catalogue_pages": 898,
+    "products": 7,
+    "product_documents": 7,
+    "catalog_corpus_wanted": 5
+  },
+  "idempotent": true,
+  "foreign_key_check": [],
+  "integrity_check": "ok"
+}

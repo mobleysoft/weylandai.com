@@ -1,0 +1,57 @@
+{
+  "result": [
+    {
+      "results": [
+        {
+          "name": "catalogue_pages",
+          "sql": "CREATE TABLE catalogue_pages (\n  catalogue_id TEXT NOT NULL,\n  page_num INTEGER NOT NULL,\n  text_content TEXT,\n  char_count INTEGER DEFAULT 0,\n  has_extractable_text INTEGER DEFAULT 1,\n  header_text TEXT,\n  footer_text TEXT,\n  search_text TEXT,\n  PRIMARY KEY (catalogue_id, page_num)\n)"
+        },
+        {
+          "name": "catalogues",
+          "sql": "CREATE TABLE catalogues (\n  catalogue_id TEXT PRIMARY KEY,\n  source_filename TEXT NOT NULL,\n  source_hash_sha256 TEXT NOT NULL,\n  file_size_bytes INTEGER NOT NULL,\n  page_count INTEGER NOT NULL,\n  manufacturer TEXT,\n  title TEXT,\n  version TEXT,\n  ingested_at TEXT NOT NULL,\n  ingested_by TEXT,\n  storage_path TEXT NOT NULL,\n  text_extracted INTEGER DEFAULT 0,\n  index_built INTEGER DEFAULT 0\n, source_url TEXT, price_effective_date TEXT)"
+        },
+        {
+          "name": "manufacturers",
+          "sql": "CREATE TABLE manufacturers (\n  id TEXT PRIMARY KEY,\n  name TEXT NOT NULL,\n  slug TEXT NOT NULL,\n  website TEXT,\n  api_endpoint TEXT,\n  api_key_encrypted TEXT,\n  support_email TEXT,\n  support_phone TEXT,\n  parent_company TEXT,\n  country_of_origin TEXT,\n  founded_year INTEGER,\n  last_sync_timestamp TEXT,\n  last_sync_status TEXT,\n  sync_error_message TEXT,\n  product_count INTEGER DEFAULT 0,\n  active BOOLEAN DEFAULT TRUE,\n  verified BOOLEAN DEFAULT FALSE,\n  preferred BOOLEAN DEFAULT FALSE,\n  notes TEXT,\n  created_at TEXT NOT NULL DEFAULT (datetime('now')),\n  updated_at TEXT DEFAULT (datetime('now'))\n, trade TEXT NOT NULL DEFAULT 'doors')"
+        },
+        {
+          "name": "product_documents",
+          "sql": "CREATE TABLE product_documents (\n  id TEXT PRIMARY KEY,\n  product_id TEXT NOT NULL,\n  variant_id TEXT,\n  document_type TEXT NOT NULL,\n  document_title TEXT NOT NULL,\n  document_subtitle TEXT,\n  document_url TEXT,\n  r2_object_key TEXT,\n  r2_bucket TEXT DEFAULT 'product-docs',\n  file_size_bytes INTEGER,\n  mime_type TEXT DEFAULT 'application/pdf',\n  file_hash_sha256 TEXT,\n  version TEXT,\n  page_count INTEGER,\n  language TEXT DEFAULT 'en',\n  published_date TEXT,\n  expiration_date TEXT,\n  searchable_text TEXT,\n  contains_pricing BOOLEAN DEFAULT FALSE,\n  contains_cad BOOLEAN DEFAULT FALSE,\n  contains_bim BOOLEAN DEFAULT FALSE,\n  active BOOLEAN DEFAULT TRUE,\n  verified BOOLEAN DEFAULT FALSE,\n  notes TEXT,\n  created_at TEXT NOT NULL DEFAULT (datetime('now')),\n  updated_at TEXT DEFAULT (datetime('now'))\n)"
+        },
+        {
+          "name": "products",
+          "sql": "CREATE TABLE products (\n  id TEXT PRIMARY KEY,\n  manufacturer_id TEXT NOT NULL,\n  product_series TEXT NOT NULL,\n  product_family TEXT NOT NULL,\n  base_model TEXT NOT NULL,\n  display_name TEXT,\n  description TEXT,\n  category_level_1 TEXT,\n  category_level_2 TEXT,\n  category_level_3 TEXT,\n  ansi_bhma_certified BOOLEAN DEFAULT FALSE,\n  ansi_grade TEXT,\n  ul_listed BOOLEAN DEFAULT FALSE,\n  ul_listing_number TEXT,\n  ada_compliant BOOLEAN DEFAULT FALSE,\n  california_title_24 BOOLEAN DEFAULT FALSE,\n  fire_rated BOOLEAN DEFAULT FALSE,\n  max_fire_rating_minutes INTEGER,\n  smoke_rated BOOLEAN DEFAULT FALSE,\n  hurricane_rated BOOLEAN DEFAULT FALSE,\n  security_level TEXT,\n  pick_resistant BOOLEAN DEFAULT FALSE,\n  drill_resistant BOOLEAN DEFAULT FALSE,\n  door_types TEXT,\n  suitable_for_exterior BOOLEAN DEFAULT FALSE,\n  suitable_for_interior BOOLEAN DEFAULT FALSE,\n  suitable_for_fire_door BOOLEAN DEFAULT FALSE,\n  available BOOLEAN DEFAULT TRUE,\n  discontinued BOOLEAN DEFAULT FALSE,\n  eol_date TEXT,\n  eol_reason TEXT,\n  replacement_product_id TEXT,\n  popular BOOLEAN DEFAULT FALSE,\n  new_product BOOLEAN DEFAULT FALSE,\n  catalog_page_url TEXT,\n  spec_sheet_url TEXT,\n  created_at TEXT NOT NULL DEFAULT (datetime('now')),\n  updated_at TEXT DEFAULT (datetime('now')),\n  catalog_number TEXT,\n  search_text TEXT\n, trade TEXT NOT NULL DEFAULT 'doors')"
+        },
+        {
+          "name": "manufacturer_aliases",
+          "sql": "CREATE TABLE manufacturer_aliases (\n  alias TEXT NOT NULL,\n  manufacturer_id TEXT NOT NULL REFERENCES manufacturers(id),\n  source TEXT DEFAULT 'industry_standard',\n  created_at TEXT DEFAULT (datetime('now')),\n  PRIMARY KEY (alias)\n)"
+        },
+        {
+          "name": "catalog_corpus_wanted",
+          "sql": "CREATE TABLE catalog_corpus_wanted (url TEXT PRIMARY KEY, reason TEXT, requested_at TEXT NOT NULL, attempts INTEGER DEFAULT 0, last_error TEXT, fetched_at TEXT, r2_key TEXT, size INTEGER)"
+        }
+      ],
+      "success": true,
+      "meta": {
+        "served_by": "v3-prod",
+        "served_by_region": "ENAM",
+        "served_by_colo": "IAD",
+        "served_by_primary": true,
+        "timings": {
+          "sql_duration_ms": 0.396
+        },
+        "duration": 0.396,
+        "changes": 0,
+        "last_row_id": 4986,
+        "changed_db": false,
+        "size_after": 65970176,
+        "rows_read": 317,
+        "rows_written": 0,
+        "total_attempts": 1
+      }
+    }
+  ],
+  "errors": [],
+  "messages": [],
+  "success": true
+}

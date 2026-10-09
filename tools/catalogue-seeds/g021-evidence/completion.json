@@ -1,0 +1,22 @@
+{
+  "goal": "g021",
+  "verified_at": "2026-10-09T17:37:20.792257+00:00",
+  "harvest_documents": 598,
+  "manufacturer_evidence_lines": 2924,
+  "manufacturers_observed": 36,
+  "ranked_missing_books": 20,
+  "public_pdf_source_receipts": 20,
+  "live_seeded_books": 5,
+  "live_indexed_pages": 898,
+  "live_model_document_links": 7,
+  "offline_storage_completed": 5,
+  "stored_bytes": 139629559,
+  "storage_evidence": "Offline job D1 completion records written after successful R2 put; keys and byte counts match source receipts",
+  "source_hashes_verified": 20,
+  "stored_pdf_redownload_hashes_verified": 0,
+  "live_seed_repeat_changes": 0,
+  "report": "tools/catalogue-seeds/2026-10-09-g021-coverage.md",
+  "report_sha256": "c2d9b3108ec7cdf231cbe6d96e6551d37bafedfaf26511ea4081a45862032888",
+  "board_updated": false,
+  "git_commit_created": false
+}

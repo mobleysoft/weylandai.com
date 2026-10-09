@@ -1,0 +1,30 @@
+{
+  "checked_at": "2026-10-09T17:36:28.737662+00:00",
+  "live_repeat_batches": 56,
+  "changes": 0,
+  "all_batches_succeeded": true,
+  "first_batch_at": "2026-10-09T17:35:08.209402+00:00",
+  "last_batch_at": "2026-10-09T17:35:23.862647+00:00",
+  "seeds": [
+    {
+      "file": "tools/catalogue-seeds/2026-10-09-g021-1-rockwood.sql",
+      "sha256": "df18b3882384bdf8a561d3b65bc51255352ba23d9fdb0258b56d3657a9a5ada2"
+    },
+    {
+      "file": "tools/catalogue-seeds/2026-10-09-g021-2-ngp.sql",
+      "sha256": "2196604e379807ee78f43031c7cd0d64767369f2564edabc15117deac1c1b675"
+    },
+    {
+      "file": "tools/catalogue-seeds/2026-10-09-g021-3-mckinney.sql",
+      "sha256": "a546c0426394200651f8b88ab0950be5cc08f377c2798ea85d5a6911c4e61532"
+    },
+    {
+      "file": "tools/catalogue-seeds/2026-10-09-g021-4-hager.sql",
+      "sha256": "a749dab7e108823202d7dd2ba8dfcf99c33badf975f8685aa49012922e92e72a"
+    },
+    {
+      "file": "tools/catalogue-seeds/2026-10-09-g021-5-sargent.sql",
+      "sha256": "e61665e080e5c6b9b0bfc6a4e06430fbc66414034800a77540304f55557f9a50"
+    }
+  ]
+}

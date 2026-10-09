@@ -1,0 +1,15 @@
+{
+  "checked_at": "2026-10-09T17:36:11.537Z",
+  "modules": [
+    "weyland-cutsheetx-worker/src/lib/catalog-corpus.js",
+    "weyland-cutsheetx-worker/src/routes/cut-sheet-documents.js"
+  ],
+  "external_fetch_trap": "throws",
+  "books_checked": 5,
+  "r2_hit": true,
+  "r2_miss_returns_null": true,
+  "document_routes_checked": 7,
+  "document_hit_status": 200,
+  "document_miss_status": 404,
+  "scope": "Production handlers with local authentication, D1 and R2 substitutes; not a live HTTP or R2 byte download."
+}

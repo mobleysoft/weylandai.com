@@ -1,0 +1,1479 @@
+[
+  {
+    "manufacturer": "ABH",
+    "model_or_series": "4014",
+    "sets": 1,
+    "pages": 1,
+    "lines": 1
+  },
+  {
+    "manufacturer": "Adams Rite",
+    "model_or_series": "4089",
+    "sets": 1,
+    "pages": 1,
+    "lines": 1
+  },
+  {
+    "manufacturer": "Adams Rite",
+    "model_or_series": "MS1850S",
+    "sets": 1,
+    "pages": 1,
+    "lines": 1
+  },
+  {
+    "manufacturer": "BEST",
+    "model_or_series": "9K",
+    "sets": 11,
+    "pages": 12,
+    "lines": 13
+  },
+  {
+    "manufacturer": "BEST",
+    "model_or_series": "45H",
+    "sets": 6,
+    "pages": 6,
+    "lines": 7
+  },
+  {
+    "manufacturer": "BEST",
+    "model_or_series": "9K37D",
+    "sets": 2,
+    "pages": 3,
+    "lines": 3
+  },
+  {
+    "manufacturer": "BEST",
+    "model_or_series": "9K37R",
+    "sets": 2,
+    "pages": 3,
+    "lines": 3
+  },
+  {
+    "manufacturer": "BEST",
+    "model_or_series": "9K37AB",
+    "sets": 2,
+    "pages": 2,
+    "lines": 2
+  },
+  {
+    "manufacturer": "BEST",
+    "model_or_series": "47H",
+    "sets": 1,
+    "pages": 1,
+    "lines": 2
+  },
+  {
+    "manufacturer": "BEST",
+    "model_or_series": "45H0L",
+    "sets": 1,
+    "pages": 1,
+    "lines": 1
+  },
+  {
+    "manufacturer": "BEST",
+    "model_or_series": "9K37",
+    "sets": 1,
+    "pages": 1,
+    "lines": 1
+  },
+  {
+    "manufacturer": "Bommer",
+    "model_or_series": "BB5002",
+    "sets": 3,
+    "pages": 3,
+    "lines": 3
+  },
+  {
+    "manufacturer": "Bommer",
+    "model_or_series": "BB5004",
+    "sets": 3,
+    "pages": 3,
+    "lines": 3
+  },
+  {
+    "manufacturer": "Bommer",
+    "model_or_series": "BB5006",
+    "sets": 3,
+    "pages": 3,
+    "lines": 3
+  },
+  {
+    "manufacturer": "Bommer",
+    "model_or_series": "BB5000",
+    "sets": 2,
+    "pages": 2,
+    "lines": 2
+  },
+  {
+    "manufacturer": "Bommer",
+    "model_or_series": "FM120HD",
+    "sets": 2,
+    "pages": 2,
+    "lines": 2
+  },
+  {
+    "manufacturer": "Bommer",
+    "model_or_series": "BKC",
+    "sets": 1,
+    "pages": 1,
+    "lines": 1
+  },
+  {
+    "manufacturer": "Corbin Russwin",
+    "model_or_series": "DC8000",
+    "sets": 7,
+    "pages": 7,
+    "lines": 7
+  },
+  {
+    "manufacturer": "Corbin Russwin",
+    "model_or_series": "ML2000",
+    "sets": 4,
+    "pages": 4,
+    "lines": 4
+  },
+  {
+    "manufacturer": "Corbin Russwin",
+    "model_or_series": "CL3100",
+    "sets": 3,
+    "pages": 3,
+    "lines": 3
+  },
+  {
+    "manufacturer": "Corbin Russwin",
+    "model_or_series": "DC6000",
+    "sets": 3,
+    "pages": 3,
+    "lines": 3
+  },
+  {
+    "manufacturer": "Corbin Russwin",
+    "model_or_series": "ED5000",
+    "sets": 2,
+    "pages": 3,
+    "lines": 3
+  },
+  {
+    "manufacturer": "Corbin Russwin",
+    "model_or_series": "CL3300",
+    "sets": 2,
+    "pages": 2,
+    "lines": 2
+  },
+  {
+    "manufacturer": "Corbin Russwin",
+    "model_or_series": "ED4000",
+    "sets": 2,
+    "pages": 2,
+    "lines": 2
+  },
+  {
+    "manufacturer": "Dorma",
+    "model_or_series": "TS93",
+    "sets": 1,
+    "pages": 4,
+    "lines": 16
+  },
+  {
+    "manufacturer": "Falcon",
+    "model_or_series": "T581B",
+    "sets": 2,
+    "pages": 12,
+    "lines": 12
+  },
+  {
+    "manufacturer": "Falcon",
+    "model_or_series": "T101",
+    "sets": 2,
+    "pages": 4,
+    "lines": 4
+  },
+  {
+    "manufacturer": "Falcon",
+    "model_or_series": "T521B",
+    "sets": 2,
+    "pages": 4,
+    "lines": 4
+  },
+  {
+    "manufacturer": "Falcon",
+    "model_or_series": "T301S",
+    "sets": 2,
+    "pages": 2,
+    "lines": 2
+  },
+  {
+    "manufacturer": "Falcon",
+    "model_or_series": "D200",
+    "sets": 1,
+    "pages": 1,
+    "lines": 1
+  },
+  {
+    "manufacturer": "Falcon",
+    "model_or_series": "D271",
+    "sets": 1,
+    "pages": 1,
+    "lines": 1
+  },
+  {
+    "manufacturer": "Glynn-Johnson",
+    "model_or_series": "100S",
+    "sets": 5,
+    "pages": 13,
+    "lines": 13
+  },
+  {
+    "manufacturer": "Glynn-Johnson",
+    "model_or_series": "90S",
+    "sets": 4,
+    "pages": 4,
+    "lines": 4
+  },
+  {
+    "manufacturer": "Glynn-Johnson",
+    "model_or_series": "450S",
+    "sets": 2,
+    "pages": 2,
+    "lines": 2
+  },
+  {
+    "manufacturer": "Glynn-Johnson",
+    "model_or_series": "100F",
+    "sets": 1,
+    "pages": 1,
+    "lines": 1
+  },
+  {
+    "manufacturer": "HES",
+    "model_or_series": "1006",
+    "sets": 4,
+    "pages": 4,
+    "lines": 4
+  },
+  {
+    "manufacturer": "HES",
+    "model_or_series": "9600",
+    "sets": 2,
+    "pages": 3,
+    "lines": 3
+  },
+  {
+    "manufacturer": "Hager",
+    "model_or_series": "BB1191",
+    "sets": 9,
+    "pages": 9,
+    "lines": 9
+  },
+  {
+    "manufacturer": "Hager",
+    "model_or_series": "1279",
+    "sets": 7,
+    "pages": 7,
+    "lines": 7
+  },
+  {
+    "manufacturer": "Hager",
+    "model_or_series": "BB1279",
+    "sets": 3,
+    "pages": 6,
+    "lines": 16
+  },
+  {
+    "manufacturer": "Hager",
+    "model_or_series": "BB1168",
+    "sets": 3,
+    "pages": 4,
+    "lines": 10
+  },
+  {
+    "manufacturer": "Hager",
+    "model_or_series": "780-210HD",
+    "sets": 2,
+    "pages": 2,
+    "lines": 2
+  },
+  {
+    "manufacturer": "Hager",
+    "model_or_series": "780-224HD",
+    "sets": 2,
+    "pages": 2,
+    "lines": 2
+  },
+  {
+    "manufacturer": "Hager",
+    "model_or_series": "BB1199",
+    "sets": 2,
+    "pages": 2,
+    "lines": 2
+  },
+  {
+    "manufacturer": "Hager",
+    "model_or_series": "780-112",
+    "sets": 1,
+    "pages": 1,
+    "lines": 1
+  },
+  {
+    "manufacturer": "Ives",
+    "model_or_series": "8400",
+    "sets": 17,
+    "pages": 61,
+    "lines": 84
+  },
+  {
+    "manufacturer": "Ives",
+    "model_or_series": "SR64",
+    "sets": 13,
+    "pages": 42,
+    "lines": 53
+  },
+  {
+    "manufacturer": "Ives",
+    "model_or_series": "WS406",
+    "sets": 11,
+    "pages": 34,
+    "lines": 38
+  },
+  {
+    "manufacturer": "Ives",
+    "model_or_series": "5BB1",
+    "sets": 10,
+    "pages": 44,
+    "lines": 53
+  },
+  {
+    "manufacturer": "Ives",
+    "model_or_series": "WS404",
+    "sets": 1,
+    "pages": 6,
+    "lines": 11
+  },
+  {
+    "manufacturer": "Ives",
+    "model_or_series": "FS434",
+    "sets": 1,
+    "pages": 1,
+    "lines": 1
+  },
+  {
+    "manufacturer": "Ives",
+    "model_or_series": "FS439",
+    "sets": 1,
+    "pages": 1,
+    "lines": 1
+  },
+  {
+    "manufacturer": "Ives",
+    "model_or_series": "FS495",
+    "sets": 1,
+    "pages": 1,
+    "lines": 1
+  },
+  {
+    "manufacturer": "Ives",
+    "model_or_series": "WS45",
+    "sets": 1,
+    "pages": 1,
+    "lines": 1
+  },
+  {
+    "manufacturer": "LCN",
+    "model_or_series": "4040XP",
+    "sets": 16,
+    "pages": 36,
+    "lines": 58
+  },
+  {
+    "manufacturer": "LCN",
+    "model_or_series": "4050",
+    "sets": 6,
+    "pages": 6,
+    "lines": 6
+  },
+  {
+    "manufacturer": "LCN",
+    "model_or_series": "1450",
+    "sets": 5,
+    "pages": 7,
+    "lines": 7
+  },
+  {
+    "manufacturer": "LCN",
+    "model_or_series": "4040",
+    "sets": 4,
+    "pages": 4,
+    "lines": 4
+  },
+  {
+    "manufacturer": "LCN",
+    "model_or_series": "4642",
+    "sets": 2,
+    "pages": 6,
+    "lines": 7
+  },
+  {
+    "manufacturer": "LCN",
+    "model_or_series": "4111",
+    "sets": 1,
+    "pages": 11,
+    "lines": 15
+  },
+  {
+    "manufacturer": "LCN",
+    "model_or_series": "4000",
+    "sets": 1,
+    "pages": 7,
+    "lines": 9
+  },
+  {
+    "manufacturer": "LCN",
+    "model_or_series": "1201",
+    "sets": 1,
+    "pages": 1,
+    "lines": 1
+  },
+  {
+    "manufacturer": "LCN",
+    "model_or_series": "1460",
+    "sets": 1,
+    "pages": 1,
+    "lines": 1
+  },
+  {
+    "manufacturer": "LCN",
+    "model_or_series": "5010",
+    "sets": 1,
+    "pages": 1,
+    "lines": 1
+  },
+  {
+    "manufacturer": "McKinney",
+    "model_or_series": "TB SERIES",
+    "sets": 6,
+    "pages": 6,
+    "lines": 6
+  },
+  {
+    "manufacturer": "McKinney",
+    "model_or_series": "T4A3386",
+    "sets": 3,
+    "pages": 3,
+    "lines": 3
+  },
+  {
+    "manufacturer": "McKinney",
+    "model_or_series": "T4A3786",
+    "sets": 3,
+    "pages": 3,
+    "lines": 3
+  },
+  {
+    "manufacturer": "McKinney",
+    "model_or_series": "TA2314",
+    "sets": 3,
+    "pages": 3,
+    "lines": 3
+  },
+  {
+    "manufacturer": "McKinney",
+    "model_or_series": "TA2714",
+    "sets": 2,
+    "pages": 2,
+    "lines": 2
+  },
+  {
+    "manufacturer": "National Guard Products",
+    "model_or_series": "103C",
+    "sets": 2,
+    "pages": 2,
+    "lines": 2
+  },
+  {
+    "manufacturer": "National Guard Products",
+    "model_or_series": "896",
+    "sets": 2,
+    "pages": 2,
+    "lines": 2
+  },
+  {
+    "manufacturer": "National Guard Products",
+    "model_or_series": "107",
+    "sets": 1,
+    "pages": 1,
+    "lines": 1
+  },
+  {
+    "manufacturer": "National Guard Products",
+    "model_or_series": "123",
+    "sets": 1,
+    "pages": 1,
+    "lines": 1
+  },
+  {
+    "manufacturer": "National Guard Products",
+    "model_or_series": "404",
+    "sets": 1,
+    "pages": 1,
+    "lines": 1
+  },
+  {
+    "manufacturer": "Norton",
+    "model_or_series": "7500",
+    "sets": 7,
+    "pages": 7,
+    "lines": 7
+  },
+  {
+    "manufacturer": "Norton",
+    "model_or_series": "8000",
+    "sets": 2,
+    "pages": 2,
+    "lines": 2
+  },
+  {
+    "manufacturer": "Norton",
+    "model_or_series": "8500",
+    "sets": 2,
+    "pages": 2,
+    "lines": 2
+  },
+  {
+    "manufacturer": "Pemko",
+    "model_or_series": "2005AT",
+    "sets": 3,
+    "pages": 7,
+    "lines": 12
+  },
+  {
+    "manufacturer": "Pemko",
+    "model_or_series": "118",
+    "sets": 3,
+    "pages": 3,
+    "lines": 3
+  },
+  {
+    "manufacturer": "Pemko",
+    "model_or_series": "315AV",
+    "sets": 2,
+    "pages": 5,
+    "lines": 10
+  },
+  {
+    "manufacturer": "Pemko",
+    "model_or_series": "346C",
+    "sets": 2,
+    "pages": 4,
+    "lines": 5
+  },
+  {
+    "manufacturer": "Pemko",
+    "model_or_series": "345",
+    "sets": 1,
+    "pages": 2,
+    "lines": 4
+  },
+  {
+    "manufacturer": "Pemko",
+    "model_or_series": "346",
+    "sets": 1,
+    "pages": 2,
+    "lines": 4
+  },
+  {
+    "manufacturer": "Pemko",
+    "model_or_series": "262",
+    "sets": 1,
+    "pages": 1,
+    "lines": 1
+  },
+  {
+    "manufacturer": "Pemko",
+    "model_or_series": "375",
+    "sets": 1,
+    "pages": 1,
+    "lines": 1
+  },
+  {
+    "manufacturer": "Precision",
+    "model_or_series": "2000",
+    "sets": 1,
+    "pages": 1,
+    "lines": 1
+  },
+  {
+    "manufacturer": "Reese",
+    "model_or_series": "608",
+    "sets": 1,
+    "pages": 1,
+    "lines": 1
+  },
+  {
+    "manufacturer": "Reese",
+    "model_or_series": "772",
+    "sets": 1,
+    "pages": 1,
+    "lines": 1
+  },
+  {
+    "manufacturer": "Reese",
+    "model_or_series": "772A",
+    "sets": 1,
+    "pages": 1,
+    "lines": 1
+  },
+  {
+    "manufacturer": "Reese",
+    "model_or_series": "797B",
+    "sets": 1,
+    "pages": 1,
+    "lines": 1
+  },
+  {
+    "manufacturer": "Rixson",
+    "model_or_series": "6",
+    "sets": 2,
+    "pages": 2,
+    "lines": 2
+  },
+  {
+    "manufacturer": "Rixson",
+    "model_or_series": "9",
+    "sets": 2,
+    "pages": 2,
+    "lines": 2
+  },
+  {
+    "manufacturer": "Rockwood",
+    "model_or_series": "403",
+    "sets": 3,
+    "pages": 3,
+    "lines": 3
+  },
+  {
+    "manufacturer": "Rockwood",
+    "model_or_series": "555",
+    "sets": 3,
+    "pages": 3,
+    "lines": 3
+  },
+  {
+    "manufacturer": "Rockwood",
+    "model_or_series": "608",
+    "sets": 3,
+    "pages": 3,
+    "lines": 3
+  },
+  {
+    "manufacturer": "Rockwood",
+    "model_or_series": "609",
+    "sets": 3,
+    "pages": 3,
+    "lines": 3
+  },
+  {
+    "manufacturer": "Rockwood",
+    "model_or_series": "1600",
+    "sets": 2,
+    "pages": 2,
+    "lines": 2
+  },
+  {
+    "manufacturer": "Rockwood",
+    "model_or_series": "1601C",
+    "sets": 2,
+    "pages": 2,
+    "lines": 2
+  },
+  {
+    "manufacturer": "Rockwood",
+    "model_or_series": "1942",
+    "sets": 2,
+    "pages": 2,
+    "lines": 2
+  },
+  {
+    "manufacturer": "Rockwood",
+    "model_or_series": "402",
+    "sets": 2,
+    "pages": 2,
+    "lines": 2
+  },
+  {
+    "manufacturer": "Rockwood",
+    "model_or_series": "441H",
+    "sets": 2,
+    "pages": 2,
+    "lines": 2
+  },
+  {
+    "manufacturer": "Rockwood",
+    "model_or_series": "570",
+    "sets": 2,
+    "pages": 2,
+    "lines": 2
+  },
+  {
+    "manufacturer": "Rockwood",
+    "model_or_series": "K1050",
+    "sets": 2,
+    "pages": 2,
+    "lines": 2
+  },
+  {
+    "manufacturer": "Rockwood",
+    "model_or_series": "RM301",
+    "sets": 2,
+    "pages": 2,
+    "lines": 2
+  },
+  {
+    "manufacturer": "Rockwood",
+    "model_or_series": "1062",
+    "sets": 1,
+    "pages": 5,
+    "lines": 9
+  },
+  {
+    "manufacturer": "Rockwood",
+    "model_or_series": "406",
+    "sets": 1,
+    "pages": 2,
+    "lines": 4
+  },
+  {
+    "manufacturer": "Rockwood",
+    "model_or_series": "409",
+    "sets": 1,
+    "pages": 2,
+    "lines": 2
+  },
+  {
+    "manufacturer": "Rockwood",
+    "model_or_series": "050",
+    "sets": 1,
+    "pages": 1,
+    "lines": 1
+  },
+  {
+    "manufacturer": "Rockwood",
+    "model_or_series": "110",
+    "sets": 1,
+    "pages": 1,
+    "lines": 1
+  },
+  {
+    "manufacturer": "Rockwood",
+    "model_or_series": "1845",
+    "sets": 1,
+    "pages": 1,
+    "lines": 1
+  },
+  {
+    "manufacturer": "Rockwood",
+    "model_or_series": "1945",
+    "sets": 1,
+    "pages": 1,
+    "lines": 1
+  },
+  {
+    "manufacturer": "Sargent",
+    "model_or_series": "80",
+    "sets": 10,
+    "pages": 11,
+    "lines": 11
+  },
+  {
+    "manufacturer": "Sargent",
+    "model_or_series": "351",
+    "sets": 9,
+    "pages": 9,
+    "lines": 9
+  },
+  {
+    "manufacturer": "Sargent",
+    "model_or_series": "281",
+    "sets": 8,
+    "pages": 8,
+    "lines": 8
+  },
+  {
+    "manufacturer": "Sargent",
+    "model_or_series": "8200",
+    "sets": 6,
+    "pages": 6,
+    "lines": 6
+  },
+  {
+    "manufacturer": "Sargent",
+    "model_or_series": "10-LINE",
+    "sets": 3,
+    "pages": 3,
+    "lines": 3
+  },
+  {
+    "manufacturer": "Sargent",
+    "model_or_series": "10",
+    "sets": 2,
+    "pages": 2,
+    "lines": 2
+  },
+  {
+    "manufacturer": "Sargent",
+    "model_or_series": "10X",
+    "sets": 2,
+    "pages": 2,
+    "lines": 2
+  },
+  {
+    "manufacturer": "Sargent",
+    "model_or_series": "1331",
+    "sets": 2,
+    "pages": 2,
+    "lines": 2
+  },
+  {
+    "manufacturer": "Sargent",
+    "model_or_series": "1431",
+    "sets": 2,
+    "pages": 2,
+    "lines": 2
+  },
+  {
+    "manufacturer": "Sargent",
+    "model_or_series": "PE80",
+    "sets": 2,
+    "pages": 2,
+    "lines": 2
+  },
+  {
+    "manufacturer": "Sargent",
+    "model_or_series": "1131",
+    "sets": 1,
+    "pages": 1,
+    "lines": 1
+  },
+  {
+    "manufacturer": "Sargent",
+    "model_or_series": "1131-P9",
+    "sets": 1,
+    "pages": 1,
+    "lines": 1
+  },
+  {
+    "manufacturer": "Sargent",
+    "model_or_series": "1560",
+    "sets": 1,
+    "pages": 1,
+    "lines": 1
+  },
+  {
+    "manufacturer": "Sargent",
+    "model_or_series": "7000",
+    "sets": 1,
+    "pages": 1,
+    "lines": 1
+  },
+  {
+    "manufacturer": "Schlage",
+    "model_or_series": "L9000",
+    "sets": 5,
+    "pages": 5,
+    "lines": 5
+  },
+  {
+    "manufacturer": "Schlage",
+    "model_or_series": "ND40S",
+    "sets": 3,
+    "pages": 3,
+    "lines": 3
+  },
+  {
+    "manufacturer": "Schlage",
+    "model_or_series": "L9080BDC",
+    "sets": 2,
+    "pages": 2,
+    "lines": 2
+  },
+  {
+    "manufacturer": "Schlage",
+    "model_or_series": "L9070-06A",
+    "sets": 1,
+    "pages": 1,
+    "lines": 2
+  },
+  {
+    "manufacturer": "Schlage",
+    "model_or_series": "L9080-06A",
+    "sets": 1,
+    "pages": 2,
+    "lines": 2
+  },
+  {
+    "manufacturer": "Schlage",
+    "model_or_series": "ND53",
+    "sets": 1,
+    "pages": 1,
+    "lines": 2
+  },
+  {
+    "manufacturer": "Schlage",
+    "model_or_series": "AD-400-993R-50-MT",
+    "sets": 1,
+    "pages": 1,
+    "lines": 1
+  },
+  {
+    "manufacturer": "Schlage",
+    "model_or_series": "B500",
+    "sets": 1,
+    "pages": 1,
+    "lines": 1
+  },
+  {
+    "manufacturer": "Schlage",
+    "model_or_series": "B571",
+    "sets": 1,
+    "pages": 1,
+    "lines": 1
+  },
+  {
+    "manufacturer": "Schlage",
+    "model_or_series": "B572-OS-OCC-COIN",
+    "sets": 1,
+    "pages": 1,
+    "lines": 1
+  },
+  {
+    "manufacturer": "Schlage",
+    "model_or_series": "L9010-06A",
+    "sets": 1,
+    "pages": 1,
+    "lines": 1
+  },
+  {
+    "manufacturer": "Schlage",
+    "model_or_series": "L9056-06A",
+    "sets": 1,
+    "pages": 1,
+    "lines": 1
+  },
+  {
+    "manufacturer": "Schlage",
+    "model_or_series": "L9460",
+    "sets": 1,
+    "pages": 1,
+    "lines": 1
+  },
+  {
+    "manufacturer": "Schlage",
+    "model_or_series": "ND10S",
+    "sets": 1,
+    "pages": 1,
+    "lines": 1
+  },
+  {
+    "manufacturer": "Schlage",
+    "model_or_series": "ND170",
+    "sets": 1,
+    "pages": 1,
+    "lines": 1
+  },
+  {
+    "manufacturer": "Schlage",
+    "model_or_series": "ND25D",
+    "sets": 1,
+    "pages": 1,
+    "lines": 1
+  },
+  {
+    "manufacturer": "Schlage",
+    "model_or_series": "ND50HD",
+    "sets": 1,
+    "pages": 1,
+    "lines": 1
+  },
+  {
+    "manufacturer": "Schlage",
+    "model_or_series": "ND70",
+    "sets": 1,
+    "pages": 1,
+    "lines": 1
+  },
+  {
+    "manufacturer": "Schlage",
+    "model_or_series": "ND80",
+    "sets": 1,
+    "pages": 1,
+    "lines": 1
+  },
+  {
+    "manufacturer": "Schlage",
+    "model_or_series": "ND80HD",
+    "sets": 1,
+    "pages": 1,
+    "lines": 1
+  },
+  {
+    "manufacturer": "Schlage",
+    "model_or_series": "ND80PD",
+    "sets": 1,
+    "pages": 1,
+    "lines": 1
+  },
+  {
+    "manufacturer": "Schlage",
+    "model_or_series": "ND80TD",
+    "sets": 1,
+    "pages": 1,
+    "lines": 1
+  },
+  {
+    "manufacturer": "Schlage",
+    "model_or_series": "ND82D",
+    "sets": 1,
+    "pages": 1,
+    "lines": 1
+  },
+  {
+    "manufacturer": "Schlage",
+    "model_or_series": "ND82P6D",
+    "sets": 1,
+    "pages": 1,
+    "lines": 1
+  },
+  {
+    "manufacturer": "Securitron",
+    "model_or_series": "CEPT-10",
+    "sets": 2,
+    "pages": 2,
+    "lines": 2
+  },
+  {
+    "manufacturer": "Securitron",
+    "model_or_series": "CEPT",
+    "sets": 1,
+    "pages": 1,
+    "lines": 1
+  },
+  {
+    "manufacturer": "Stanley",
+    "model_or_series": "CB168",
+    "sets": 1,
+    "pages": 1,
+    "lines": 3
+  },
+  {
+    "manufacturer": "Stanley",
+    "model_or_series": "FBB168",
+    "sets": 1,
+    "pages": 1,
+    "lines": 2
+  },
+  {
+    "manufacturer": "Stanley",
+    "model_or_series": "CB199",
+    "sets": 1,
+    "pages": 1,
+    "lines": 1
+  },
+  {
+    "manufacturer": "Stanley",
+    "model_or_series": "FBB179",
+    "sets": 1,
+    "pages": 1,
+    "lines": 1
+  },
+  {
+    "manufacturer": "Stanley",
+    "model_or_series": "FBB199",
+    "sets": 1,
+    "pages": 1,
+    "lines": 1
+  },
+  {
+    "manufacturer": "Trimco",
+    "model_or_series": "3917",
+    "sets": 4,
+    "pages": 4,
+    "lines": 4
+  },
+  {
+    "manufacturer": "Trimco",
+    "model_or_series": "3815",
+    "sets": 3,
+    "pages": 3,
+    "lines": 3
+  },
+  {
+    "manufacturer": "Trimco",
+    "model_or_series": "3911",
+    "sets": 3,
+    "pages": 3,
+    "lines": 3
+  },
+  {
+    "manufacturer": "Trimco",
+    "model_or_series": "1229A",
+    "sets": 2,
+    "pages": 2,
+    "lines": 4
+  },
+  {
+    "manufacturer": "Trimco",
+    "model_or_series": "1270WV",
+    "sets": 2,
+    "pages": 2,
+    "lines": 3
+  },
+  {
+    "manufacturer": "Trimco",
+    "model_or_series": "1195",
+    "sets": 2,
+    "pages": 2,
+    "lines": 2
+  },
+  {
+    "manufacturer": "Trimco",
+    "model_or_series": "3094",
+    "sets": 2,
+    "pages": 2,
+    "lines": 2
+  },
+  {
+    "manufacturer": "Trimco",
+    "model_or_series": "3095",
+    "sets": 2,
+    "pages": 2,
+    "lines": 2
+  },
+  {
+    "manufacturer": "Trimco",
+    "model_or_series": "3096",
+    "sets": 2,
+    "pages": 2,
+    "lines": 2
+  },
+  {
+    "manufacturer": "Trimco",
+    "model_or_series": "1270CV",
+    "sets": 1,
+    "pages": 3,
+    "lines": 10
+  },
+  {
+    "manufacturer": "Trimco",
+    "model_or_series": "050",
+    "sets": 1,
+    "pages": 1,
+    "lines": 7
+  },
+  {
+    "manufacturer": "Trimco",
+    "model_or_series": "976U",
+    "sets": 1,
+    "pages": 2,
+    "lines": 3
+  },
+  {
+    "manufacturer": "Trimco",
+    "model_or_series": "1001",
+    "sets": 1,
+    "pages": 1,
+    "lines": 1
+  },
+  {
+    "manufacturer": "Trimco",
+    "model_or_series": "1012",
+    "sets": 1,
+    "pages": 1,
+    "lines": 1
+  },
+  {
+    "manufacturer": "Trimco",
+    "model_or_series": "3810",
+    "sets": 1,
+    "pages": 1,
+    "lines": 1
+  },
+  {
+    "manufacturer": "Trimco",
+    "model_or_series": "3915",
+    "sets": 1,
+    "pages": 1,
+    "lines": 1
+  },
+  {
+    "manufacturer": "Trimco",
+    "model_or_series": "5002",
+    "sets": 1,
+    "pages": 1,
+    "lines": 1
+  },
+  {
+    "manufacturer": "Von Duprin",
+    "model_or_series": "98",
+    "sets": 10,
+    "pages": 12,
+    "lines": 12
+  },
+  {
+    "manufacturer": "Von Duprin",
+    "model_or_series": "EPT-10",
+    "sets": 5,
+    "pages": 5,
+    "lines": 5
+  },
+  {
+    "manufacturer": "Von Duprin",
+    "model_or_series": "EPT10",
+    "sets": 4,
+    "pages": 6,
+    "lines": 6
+  },
+  {
+    "manufacturer": "Von Duprin",
+    "model_or_series": "35A",
+    "sets": 3,
+    "pages": 3,
+    "lines": 3
+  },
+  {
+    "manufacturer": "Von Duprin",
+    "model_or_series": "98-NL-OP-110MD-CON",
+    "sets": 2,
+    "pages": 4,
+    "lines": 4
+  },
+  {
+    "manufacturer": "Von Duprin",
+    "model_or_series": "88",
+    "sets": 2,
+    "pages": 2,
+    "lines": 2
+  },
+  {
+    "manufacturer": "Von Duprin",
+    "model_or_series": "9848EO",
+    "sets": 1,
+    "pages": 1,
+    "lines": 2
+  },
+  {
+    "manufacturer": "Von Duprin",
+    "model_or_series": "33A",
+    "sets": 1,
+    "pages": 1,
+    "lines": 1
+  },
+  {
+    "manufacturer": "Von Duprin",
+    "model_or_series": "35A-EO",
+    "sets": 1,
+    "pages": 1,
+    "lines": 1
+  },
+  {
+    "manufacturer": "Von Duprin",
+    "model_or_series": "9848NL",
+    "sets": 1,
+    "pages": 1,
+    "lines": 1
+  },
+  {
+    "manufacturer": "Von Duprin",
+    "model_or_series": "9875EO",
+    "sets": 1,
+    "pages": 1,
+    "lines": 1
+  },
+  {
+    "manufacturer": "Von Duprin",
+    "model_or_series": "9875L-BE",
+    "sets": 1,
+    "pages": 1,
+    "lines": 1
+  },
+  {
+    "manufacturer": "Von Duprin",
+    "model_or_series": "9875L-NLLESS",
+    "sets": 1,
+    "pages": 1,
+    "lines": 1
+  },
+  {
+    "manufacturer": "Von Duprin",
+    "model_or_series": "99",
+    "sets": 1,
+    "pages": 1,
+    "lines": 1
+  },
+  {
+    "manufacturer": "Von Duprin",
+    "model_or_series": "99-F",
+    "sets": 1,
+    "pages": 1,
+    "lines": 1
+  },
+  {
+    "manufacturer": "Von Duprin",
+    "model_or_series": "9947-EO-LBR",
+    "sets": 1,
+    "pages": 1,
+    "lines": 1
+  },
+  {
+    "manufacturer": "Von Duprin",
+    "model_or_series": "9947-NL-OP-LBR",
+    "sets": 1,
+    "pages": 1,
+    "lines": 1
+  },
+  {
+    "manufacturer": "Zero",
+    "model_or_series": "39A",
+    "sets": 9,
+    "pages": 20,
+    "lines": 22
+  },
+  {
+    "manufacturer": "Zero",
+    "model_or_series": "142AA",
+    "sets": 7,
+    "pages": 17,
+    "lines": 19
+  },
+  {
+    "manufacturer": "Zero",
+    "model_or_series": "328AA",
+    "sets": 7,
+    "pages": 8,
+    "lines": 9
+  },
+  {
+    "manufacturer": "Zero",
+    "model_or_series": "488SBK",
+    "sets": 6,
+    "pages": 25,
+    "lines": 26
+  },
+  {
+    "manufacturer": "Zero",
+    "model_or_series": "655A",
+    "sets": 6,
+    "pages": 8,
+    "lines": 9
+  },
+  {
+    "manufacturer": "Zero",
+    "model_or_series": "656A",
+    "sets": 3,
+    "pages": 3,
+    "lines": 3
+  },
+  {
+    "manufacturer": "Zero",
+    "model_or_series": "65A",
+    "sets": 2,
+    "pages": 7,
+    "lines": 8
+  },
+  {
+    "manufacturer": "Zero",
+    "model_or_series": "268A",
+    "sets": 2,
+    "pages": 4,
+    "lines": 4
+  },
+  {
+    "manufacturer": "Zero",
+    "model_or_series": "675A",
+    "sets": 2,
+    "pages": 4,
+    "lines": 4
+  },
+  {
+    "manufacturer": "Zero",
+    "model_or_series": "8879AA",
+    "sets": 2,
+    "pages": 2,
+    "lines": 2
+  },
+  {
+    "manufacturer": "Zero",
+    "model_or_series": "914A",
+    "sets": 2,
+    "pages": 2,
+    "lines": 2
+  },
+  {
+    "manufacturer": "Zero",
+    "model_or_series": "429AA",
+    "sets": 1,
+    "pages": 3,
+    "lines": 3
+  },
+  {
+    "manufacturer": "Zero",
+    "model_or_series": "488FS",
+    "sets": 1,
+    "pages": 2,
+    "lines": 3
+  },
+  {
+    "manufacturer": "Zero",
+    "model_or_series": "8197AA",
+    "sets": 1,
+    "pages": 2,
+    "lines": 2
+  },
+  {
+    "manufacturer": "Zero",
+    "model_or_series": "152MM",
+    "sets": 1,
+    "pages": 1,
+    "lines": 1
+  },
+  {
+    "manufacturer": "Zero",
+    "model_or_series": "188S",
+    "sets": 1,
+    "pages": 1,
+    "lines": 1
+  },
+  {
+    "manufacturer": "Zero",
+    "model_or_series": "369AA",
+    "sets": 1,
+    "pages": 1,
+    "lines": 1
+  },
+  {
+    "manufacturer": "Zero",
+    "model_or_series": "398V",
+    "sets": 1,
+    "pages": 1,
+    "lines": 1
+  },
+  {
+    "manufacturer": "Zero",
+    "model_or_series": "41AA",
+    "sets": 1,
+    "pages": 1,
+    "lines": 1
+  },
+  {
+    "manufacturer": "Zero",
+    "model_or_series": "566A",
+    "sets": 1,
+    "pages": 1,
+    "lines": 1
+  },
+  {
+    "manufacturer": "Zero",
+    "model_or_series": "8198AA",
+    "sets": 1,
+    "pages": 1,
+    "lines": 1
+  }
+]

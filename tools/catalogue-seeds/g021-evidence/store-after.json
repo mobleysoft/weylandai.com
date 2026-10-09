@@ -1,0 +1,306 @@
+{
+  "verified_at": "2026-10-09T17:36:28.762651+00:00",
+  "books": [
+    {
+      "key": "rockwood",
+      "catalogue": {
+        "catalogue_id": "1fdf1134ab1234e0",
+        "source_hash_sha256": "1fdf1134ab1234e04c8a5e59889c4b70445b187a44a087428d5798ab70bc4d71",
+        "page_count": 164,
+        "storage_path": "catalog-corpus/58ce3e35b761bd1ba417f0ebd8d75e20e85b11867431e2c36b28efe366519a68.pdf",
+        "text_extracted": 1,
+        "index_built": 1,
+        "indexed_pages": 164
+      },
+      "fts_checks": [
+        {
+          "model": "403",
+          "expected_page": 101,
+          "matches": [
+            {
+              "page_num": 101
+            }
+          ]
+        }
+      ],
+      "documents": [
+        {
+          "id": "doc-g021-rockwood-403",
+          "product_id": "prod-rockwood-403",
+          "document_url": "https://marketing-assets.seclock.com/image/upload/AADSS1014778",
+          "r2_object_key": "catalog-corpus/58ce3e35b761bd1ba417f0ebd8d75e20e85b11867431e2c36b28efe366519a68.pdf",
+          "r2_bucket": "subx-uploads",
+          "file_hash_sha256": "1fdf1134ab1234e04c8a5e59889c4b70445b187a44a087428d5798ab70bc4d71",
+          "file_size_bytes": 19308272,
+          "page_count": 164,
+          "verified": 1,
+          "active": 1
+        }
+      ],
+      "page_text_check": {
+        "pages_compared": 164,
+        "normalization": "horizontal whitespace only",
+        "all_pages_match": true,
+        "normalized_text_sha256": "c543463755dc5e27bbdba4c6ccad330e63eb73dcb1459508040defd286d8e270"
+      }
+    },
+    {
+      "key": "ngp",
+      "catalogue": {
+        "catalogue_id": "ab117b53b17abbe5",
+        "source_hash_sha256": "ab117b53b17abbe593cab804e4683282aeca045265b3dcf1f879f3cd4236aea3",
+        "page_count": 32,
+        "storage_path": "catalog-corpus/7c122f87b32bb9b538cb8bf50a18af7c6f314587d30e7e1c6fa437f02d0a059a.pdf",
+        "text_extracted": 1,
+        "index_built": 1,
+        "indexed_pages": 32
+      },
+      "fts_checks": [
+        {
+          "model": "896",
+          "expected_page": 4,
+          "matches": [
+            {
+              "page_num": 4
+            }
+          ]
+        }
+      ],
+      "documents": [
+        {
+          "id": "doc-g021-ngp-896",
+          "product_id": "prod-ngp-896",
+          "document_url": "https://www.ngp.com/ngp/cache/file/065F4F55-38B1-4AEC-852956EFA8B92AC7.pdf",
+          "r2_object_key": "catalog-corpus/7c122f87b32bb9b538cb8bf50a18af7c6f314587d30e7e1c6fa437f02d0a059a.pdf",
+          "r2_bucket": "subx-uploads",
+          "file_hash_sha256": "ab117b53b17abbe593cab804e4683282aeca045265b3dcf1f879f3cd4236aea3",
+          "file_size_bytes": 6619632,
+          "page_count": 32,
+          "verified": 1,
+          "active": 1
+        }
+      ],
+      "page_text_check": {
+        "pages_compared": 32,
+        "normalization": "horizontal whitespace only",
+        "all_pages_match": true,
+        "normalized_text_sha256": "1205a5c4592604198572b17385f730ea3d39e375d23bcf67b588cfe9345dab98"
+      }
+    },
+    {
+      "key": "mckinney",
+      "catalogue": {
+        "catalogue_id": "00414107e0710bb6",
+        "source_hash_sha256": "00414107e0710bb62551b180e5f61b947a978da0e62190dd45473f05f015afe2",
+        "page_count": 92,
+        "storage_path": "catalog-corpus/cd6304bc5b178061ec1acde48ddc67d03fdaefc1fd67d0cb49e83d02f2f85e4f.pdf",
+        "text_extracted": 1,
+        "index_built": 1,
+        "indexed_pages": 92
+      },
+      "fts_checks": [
+        {
+          "model": "TA2314",
+          "expected_page": 37,
+          "matches": [
+            {
+              "page_num": 37
+            }
+          ]
+        },
+        {
+          "model": "TA2714",
+          "expected_page": 37,
+          "matches": [
+            {
+              "page_num": 37
+            }
+          ]
+        }
+      ],
+      "documents": [
+        {
+          "id": "doc-g021-mckinney-ta2314",
+          "product_id": "prod-mckinney-ta2314",
+          "document_url": "https://marketing-assets.seclock.com/image/upload/AADSS1010289",
+          "r2_object_key": "catalog-corpus/cd6304bc5b178061ec1acde48ddc67d03fdaefc1fd67d0cb49e83d02f2f85e4f.pdf",
+          "r2_bucket": "subx-uploads",
+          "file_hash_sha256": "00414107e0710bb62551b180e5f61b947a978da0e62190dd45473f05f015afe2",
+          "file_size_bytes": 13032724,
+          "page_count": 92,
+          "verified": 1,
+          "active": 1
+        },
+        {
+          "id": "doc-g021-mckinney-ta2714",
+          "product_id": "prod-mckinney-ta2714",
+          "document_url": "https://marketing-assets.seclock.com/image/upload/AADSS1010289",
+          "r2_object_key": "catalog-corpus/cd6304bc5b178061ec1acde48ddc67d03fdaefc1fd67d0cb49e83d02f2f85e4f.pdf",
+          "r2_bucket": "subx-uploads",
+          "file_hash_sha256": "00414107e0710bb62551b180e5f61b947a978da0e62190dd45473f05f015afe2",
+          "file_size_bytes": 13032724,
+          "page_count": 92,
+          "verified": 1,
+          "active": 1
+        }
+      ],
+      "page_text_check": {
+        "pages_compared": 92,
+        "normalization": "horizontal whitespace only",
+        "all_pages_match": true,
+        "normalized_text_sha256": "95d258a04ca81e139b58994af0863eece3b04d3d1b42c3638ed0dfc9ab218474"
+      }
+    },
+    {
+      "key": "hager",
+      "catalogue": {
+        "catalogue_id": "24c796309c95d7fa",
+        "source_hash_sha256": "24c796309c95d7fa49fd3e274e7460fe439beb890544c8f83bcc9a81eba2e0d9",
+        "page_count": 530,
+        "storage_path": "catalog-corpus/9f4f7ec777a36bfa0cbc2f8f86334874ec32a62af95eb81994e3df2fc0a8253a.pdf",
+        "text_extracted": 1,
+        "index_built": 1,
+        "indexed_pages": 530
+      },
+      "fts_checks": [
+        {
+          "model": "BB1191",
+          "expected_page": 29,
+          "matches": [
+            {
+              "page_num": 29
+            }
+          ]
+        },
+        {
+          "model": "BB1279",
+          "expected_page": 29,
+          "matches": [
+            {
+              "page_num": 29
+            }
+          ]
+        }
+      ],
+      "documents": [
+        {
+          "id": "doc-g021-hager-bb1191",
+          "product_id": "prod-hager-bb1191",
+          "document_url": "https://www.hagerco.com/Files/Files/Main%20Catalog%20Sections/Catalog_2024_Complete_v06.pdf",
+          "r2_object_key": "catalog-corpus/9f4f7ec777a36bfa0cbc2f8f86334874ec32a62af95eb81994e3df2fc0a8253a.pdf",
+          "r2_bucket": "subx-uploads",
+          "file_hash_sha256": "24c796309c95d7fa49fd3e274e7460fe439beb890544c8f83bcc9a81eba2e0d9",
+          "file_size_bytes": 91403378,
+          "page_count": 530,
+          "verified": 1,
+          "active": 1
+        },
+        {
+          "id": "doc-g021-hager-bb1279",
+          "product_id": "prod-hager-bb1279",
+          "document_url": "https://www.hagerco.com/Files/Files/Main%20Catalog%20Sections/Catalog_2024_Complete_v06.pdf",
+          "r2_object_key": "catalog-corpus/9f4f7ec777a36bfa0cbc2f8f86334874ec32a62af95eb81994e3df2fc0a8253a.pdf",
+          "r2_bucket": "subx-uploads",
+          "file_hash_sha256": "24c796309c95d7fa49fd3e274e7460fe439beb890544c8f83bcc9a81eba2e0d9",
+          "file_size_bytes": 91403378,
+          "page_count": 530,
+          "verified": 1,
+          "active": 1
+        }
+      ],
+      "page_text_check": {
+        "pages_compared": 530,
+        "normalization": "horizontal whitespace only",
+        "all_pages_match": true,
+        "normalized_text_sha256": "f11fbc257bcfc49f4cc47d0098c592715d9753d11e0a32a3208ab04a85ff2fb5"
+      }
+    },
+    {
+      "key": "sargent",
+      "catalogue": {
+        "catalogue_id": "5951c34371c6b788",
+        "source_hash_sha256": "5951c34371c6b788da4ab0be979a7b3a526ca850906a15e98de1ba49948c8d67",
+        "page_count": 80,
+        "storage_path": "catalog-corpus/e28aa64695674220eed8f6dc101bdcbfe262944e1b7731352fc99ced30b5f63c.pdf",
+        "text_extracted": 1,
+        "index_built": 1,
+        "indexed_pages": 80
+      },
+      "fts_checks": [
+        {
+          "model": "8800",
+          "expected_page": 10,
+          "matches": [
+            {
+              "page_num": 10
+            }
+          ]
+        }
+      ],
+      "documents": [
+        {
+          "id": "doc-g021-sargent-8800",
+          "product_id": "prod-sargent-8800",
+          "document_url": "https://marketing-assets.seclock.com/image/upload/SARGENT_80_Series_Catalog",
+          "r2_object_key": "catalog-corpus/e28aa64695674220eed8f6dc101bdcbfe262944e1b7731352fc99ced30b5f63c.pdf",
+          "r2_bucket": "subx-uploads",
+          "file_hash_sha256": "5951c34371c6b788da4ab0be979a7b3a526ca850906a15e98de1ba49948c8d67",
+          "file_size_bytes": 9265553,
+          "page_count": 80,
+          "verified": 1,
+          "active": 1
+        }
+      ],
+      "page_text_check": {
+        "pages_compared": 80,
+        "normalization": "horizontal whitespace only",
+        "all_pages_match": true,
+        "normalized_text_sha256": "2aa75240e316d656aa8398f865d93094b597056f63cf68d0d0594b7ef39e5d23"
+      }
+    }
+  ],
+  "corpus": [
+    {
+      "url": "https://marketing-assets.seclock.com/image/upload/AADSS1014778",
+      "attempts": 1,
+      "last_error": null,
+      "fetched_at": "2026-10-09T17:32:00.511Z",
+      "r2_key": "catalog-corpus/58ce3e35b761bd1ba417f0ebd8d75e20e85b11867431e2c36b28efe366519a68.pdf",
+      "size": 19308272
+    },
+    {
+      "url": "https://www.ngp.com/ngp/cache/file/065F4F55-38B1-4AEC-852956EFA8B92AC7.pdf",
+      "attempts": 1,
+      "last_error": null,
+      "fetched_at": "2026-10-09T17:32:01.737Z",
+      "r2_key": "catalog-corpus/7c122f87b32bb9b538cb8bf50a18af7c6f314587d30e7e1c6fa437f02d0a059a.pdf",
+      "size": 6619632
+    },
+    {
+      "url": "https://marketing-assets.seclock.com/image/upload/AADSS1010289",
+      "attempts": 1,
+      "last_error": null,
+      "fetched_at": "2026-10-09T17:32:04.181Z",
+      "r2_key": "catalog-corpus/cd6304bc5b178061ec1acde48ddc67d03fdaefc1fd67d0cb49e83d02f2f85e4f.pdf",
+      "size": 13032724
+    },
+    {
+      "url": "https://www.hagerco.com/Files/Files/Main%20Catalog%20Sections/Catalog_2024_Complete_v06.pdf",
+      "attempts": 1,
+      "last_error": null,
+      "fetched_at": "2026-10-09T17:31:55.885Z",
+      "r2_key": "catalog-corpus/9f4f7ec777a36bfa0cbc2f8f86334874ec32a62af95eb81994e3df2fc0a8253a.pdf",
+      "size": 91403378
+    },
+    {
+      "url": "https://marketing-assets.seclock.com/image/upload/SARGENT_80_Series_Catalog",
+      "attempts": 1,
+      "last_error": null,
+      "fetched_at": "2026-10-09T17:32:03.076Z",
+      "r2_key": "catalog-corpus/e28aa64695674220eed8f6dc101bdcbfe262944e1b7731352fc99ced30b5f63c.pdf",
+      "size": 9265553
+    }
+  ],
+  "storage_rows_marked_fetched": 5,
+  "stored_pdf_hash_verification": "not performed: direct R2 access returned 403 and the download route requires approved authentication; source hashes and stored-byte counts are verified separately"
+}

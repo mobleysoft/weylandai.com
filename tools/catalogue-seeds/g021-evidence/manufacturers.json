@@ -1,0 +1,218 @@
+[
+  {
+    "manufacturer": "Rockwood",
+    "sets": 42,
+    "pages": 98,
+    "lines": 154
+  },
+  {
+    "manufacturer": "National Guard Products",
+    "sets": 42,
+    "pages": 74,
+    "lines": 95
+  },
+  {
+    "manufacturer": "McKinney",
+    "sets": 42,
+    "pages": 52,
+    "lines": 60
+  },
+  {
+    "manufacturer": "Ives",
+    "sets": 41,
+    "pages": 190,
+    "lines": 511
+  },
+  {
+    "manufacturer": "LCN",
+    "sets": 41,
+    "pages": 105,
+    "lines": 169
+  },
+  {
+    "manufacturer": "Hager",
+    "sets": 40,
+    "pages": 118,
+    "lines": 263
+  },
+  {
+    "manufacturer": "Schlage",
+    "sets": 37,
+    "pages": 106,
+    "lines": 200
+  },
+  {
+    "manufacturer": "Sargent",
+    "sets": 34,
+    "pages": 90,
+    "lines": 112
+  },
+  {
+    "manufacturer": "Pemko",
+    "sets": 33,
+    "pages": 71,
+    "lines": 133
+  },
+  {
+    "manufacturer": "BEST",
+    "sets": 30,
+    "pages": 59,
+    "lines": 95
+  },
+  {
+    "manufacturer": "Von Duprin",
+    "sets": 30,
+    "pages": 65,
+    "lines": 84
+  },
+  {
+    "manufacturer": "Zero",
+    "sets": 27,
+    "pages": 77,
+    "lines": 160
+  },
+  {
+    "manufacturer": "Trimco",
+    "sets": 27,
+    "pages": 69,
+    "lines": 136
+  },
+  {
+    "manufacturer": "Corbin Russwin",
+    "sets": 27,
+    "pages": 47,
+    "lines": 69
+  },
+  {
+    "manufacturer": "Norton",
+    "sets": 27,
+    "pages": 38,
+    "lines": 41
+  },
+  {
+    "manufacturer": "Stanley",
+    "sets": 25,
+    "pages": 41,
+    "lines": 60
+  },
+  {
+    "manufacturer": "Rixson",
+    "sets": 25,
+    "pages": 38,
+    "lines": 39
+  },
+  {
+    "manufacturer": "Reese",
+    "sets": 25,
+    "pages": 28,
+    "lines": 38
+  },
+  {
+    "manufacturer": "Yale",
+    "sets": 20,
+    "pages": 31,
+    "lines": 44
+  },
+  {
+    "manufacturer": "Adams Rite",
+    "sets": 19,
+    "pages": 35,
+    "lines": 40
+  },
+  {
+    "manufacturer": "Glynn-Johnson",
+    "sets": 18,
+    "pages": 37,
+    "lines": 37
+  },
+  {
+    "manufacturer": "ABH",
+    "sets": 14,
+    "pages": 19,
+    "lines": 21
+  },
+  {
+    "manufacturer": "Bommer",
+    "sets": 14,
+    "pages": 18,
+    "lines": 19
+  },
+  {
+    "manufacturer": "Securitron",
+    "sets": 14,
+    "pages": 15,
+    "lines": 17
+  },
+  {
+    "manufacturer": "Falcon",
+    "sets": 12,
+    "pages": 97,
+    "lines": 207
+  },
+  {
+    "manufacturer": "Hiawatha",
+    "sets": 12,
+    "pages": 23,
+    "lines": 35
+  },
+  {
+    "manufacturer": "Security Door Controls",
+    "sets": 9,
+    "pages": 15,
+    "lines": 18
+  },
+  {
+    "manufacturer": "Dorma",
+    "sets": 7,
+    "pages": 13,
+    "lines": 28
+  },
+  {
+    "manufacturer": "HES",
+    "sets": 7,
+    "pages": 8,
+    "lines": 9
+  },
+  {
+    "manufacturer": "Detex",
+    "sets": 7,
+    "pages": 7,
+    "lines": 7
+  },
+  {
+    "manufacturer": "Precision",
+    "sets": 7,
+    "pages": 7,
+    "lines": 7
+  },
+  {
+    "manufacturer": "Horton",
+    "sets": 4,
+    "pages": 4,
+    "lines": 4
+  },
+  {
+    "manufacturer": "Don-Jo",
+    "sets": 2,
+    "pages": 4,
+    "lines": 8
+  },
+  {
+    "manufacturer": "Soss",
+    "sets": 2,
+    "pages": 2,
+    "lines": 2
+  },
+  {
+    "manufacturer": "Camden",
+    "sets": 1,
+    "pages": 1,
+    "lines": 1
+  },
+  {
+    "manufacturer": "Door Controls International",
+    "sets": 1,
+    "pages": 1,
+    "lines": 1
+  }
+]

@@ -1,0 +1,151 @@
+[
+  {
+    "key": "rockwood",
+    "url": "https://marketing-assets.seclock.com/image/upload/AADSS1014778",
+    "final_url": "https://marketing-assets.seclock.com/image/upload/AADSS1014778",
+    "status": 200,
+    "bytes": 19308272,
+    "sha256": "1fdf1134ab1234e04c8a5e59889c4b70445b187a44a087428d5798ab70bc4d71",
+    "pages": 164,
+    "retrieved_at": "2026-10-09T17:21:24.971803+00:00",
+    "r2_key": "catalog-corpus/58ce3e35b761bd1ba417f0ebd8d75e20e85b11867431e2c36b28efe366519a68.pdf",
+    "rank": 1,
+    "manufacturer": "Rockwood",
+    "title": "Rockwood Architectural Door Accessories",
+    "catalogue_id": "1fdf1134ab1234e0",
+    "manufacturer_id": "mfr-rockwood",
+    "products": [
+      {
+        "product_id": "prod-rockwood-403",
+        "document_id": "doc-g021-rockwood-403",
+        "model": "403",
+        "page": 101,
+        "existing_product": false
+      }
+    ],
+    "seed_file": "tools/catalogue-seeds/2026-10-09-g021-1-rockwood.sql",
+    "seed_sha256": "df18b3882384bdf8a561d3b65bc51255352ba23d9fdb0258b56d3657a9a5ada2"
+  },
+  {
+    "key": "ngp",
+    "url": "https://www.ngp.com/ngp/cache/file/065F4F55-38B1-4AEC-852956EFA8B92AC7.pdf",
+    "final_url": "https://www.ngp.com/ngp/cache/file/065F4F55-38B1-4AEC-852956EFA8B92AC7.pdf",
+    "status": 200,
+    "bytes": 6619632,
+    "sha256": "ab117b53b17abbe593cab804e4683282aeca045265b3dcf1f879f3cd4236aea3",
+    "pages": 32,
+    "retrieved_at": "2026-10-09T17:21:25.581447+00:00",
+    "r2_key": "catalog-corpus/7c122f87b32bb9b538cb8bf50a18af7c6f314587d30e7e1c6fa437f02d0a059a.pdf",
+    "rank": 2,
+    "manufacturer": "National Guard Products",
+    "title": "National Guard Products Condensed Catalog",
+    "catalogue_id": "ab117b53b17abbe5",
+    "manufacturer_id": "mfr-ngp",
+    "products": [
+      {
+        "product_id": "prod-ngp-896",
+        "document_id": "doc-g021-ngp-896",
+        "model": "896",
+        "page": 4,
+        "existing_product": true
+      }
+    ],
+    "seed_file": "tools/catalogue-seeds/2026-10-09-g021-2-ngp.sql",
+    "seed_sha256": "2196604e379807ee78f43031c7cd0d64767369f2564edabc15117deac1c1b675"
+  },
+  {
+    "key": "mckinney",
+    "url": "https://marketing-assets.seclock.com/image/upload/AADSS1010289",
+    "final_url": "https://marketing-assets.seclock.com/image/upload/AADSS1010289",
+    "status": 200,
+    "bytes": 13032724,
+    "sha256": "00414107e0710bb62551b180e5f61b947a978da0e62190dd45473f05f015afe2",
+    "pages": 92,
+    "retrieved_at": "2026-10-09T17:21:28.219868+00:00",
+    "r2_key": "catalog-corpus/cd6304bc5b178061ec1acde48ddc67d03fdaefc1fd67d0cb49e83d02f2f85e4f.pdf",
+    "rank": 3,
+    "manufacturer": "McKinney",
+    "title": "McKinney Full Line Hinge Catalog",
+    "catalogue_id": "00414107e0710bb6",
+    "manufacturer_id": "mfr-mckinney",
+    "products": [
+      {
+        "product_id": "prod-mckinney-ta2314",
+        "document_id": "doc-g021-mckinney-ta2314",
+        "model": "TA2314",
+        "page": 37,
+        "existing_product": false
+      },
+      {
+        "product_id": "prod-mckinney-ta2714",
+        "document_id": "doc-g021-mckinney-ta2714",
+        "model": "TA2714",
+        "page": 37,
+        "existing_product": false
+      }
+    ],
+    "seed_file": "tools/catalogue-seeds/2026-10-09-g021-3-mckinney.sql",
+    "seed_sha256": "a546c0426394200651f8b88ab0950be5cc08f377c2798ea85d5a6911c4e61532"
+  },
+  {
+    "key": "hager",
+    "url": "https://www.hagerco.com/Files/Files/Main%20Catalog%20Sections/Catalog_2024_Complete_v06.pdf",
+    "final_url": "https://www.hagerco.com/Files/Files/Main%20Catalog%20Sections/Catalog_2024_Complete_v06.pdf",
+    "status": 200,
+    "bytes": 91403378,
+    "sha256": "24c796309c95d7fa49fd3e274e7460fe439beb890544c8f83bcc9a81eba2e0d9",
+    "pages": 530,
+    "retrieved_at": "2026-10-09T17:21:23.646934+00:00",
+    "r2_key": "catalog-corpus/9f4f7ec777a36bfa0cbc2f8f86334874ec32a62af95eb81994e3df2fc0a8253a.pdf",
+    "rank": 4,
+    "manufacturer": "Hager",
+    "title": "Hager Catalog 29 (2024)",
+    "catalogue_id": "24c796309c95d7fa",
+    "manufacturer_id": "mfr-hager",
+    "products": [
+      {
+        "product_id": "prod-hager-bb1191",
+        "document_id": "doc-g021-hager-bb1191",
+        "model": "BB1191",
+        "page": 29,
+        "existing_product": false
+      },
+      {
+        "product_id": "prod-hager-bb1279",
+        "document_id": "doc-g021-hager-bb1279",
+        "model": "BB1279",
+        "page": 29,
+        "existing_product": true
+      }
+    ],
+    "seed_file": "tools/catalogue-seeds/2026-10-09-g021-4-hager.sql",
+    "seed_sha256": "a749dab7e108823202d7dd2ba8dfcf99c33badf975f8685aa49012922e92e72a"
+  },
+  {
+    "key": "sargent",
+    "url": "https://marketing-assets.seclock.com/image/upload/SARGENT_80_Series_Catalog",
+    "final_url": "https://marketing-assets.seclock.com/image/upload/SARGENT_80_Series_Catalog",
+    "status": 200,
+    "bytes": 9265553,
+    "sha256": "5951c34371c6b788da4ab0be979a7b3a526ca850906a15e98de1ba49948c8d67",
+    "pages": 80,
+    "retrieved_at": "2026-10-09T17:21:27.722007+00:00",
+    "r2_key": "catalog-corpus/e28aa64695674220eed8f6dc101bdcbfe262944e1b7731352fc99ced30b5f63c.pdf",
+    "rank": 5,
+    "manufacturer": "Sargent",
+    "title": "Sargent 80 Series Exit Device Catalog 90641 (07/25)",
+    "catalogue_id": "5951c34371c6b788",
+    "manufacturer_id": "mfr-sargent",
+    "products": [
+      {
+        "product_id": "prod-sargent-8800",
+        "document_id": "doc-g021-sargent-8800",
+        "model": "8800",
+        "page": 10,
+        "existing_product": false
+      }
+    ],
+    "seed_file": "tools/catalogue-seeds/2026-10-09-g021-5-sargent.sql",
+    "seed_sha256": "e61665e080e5c6b9b0bfc6a4e06430fbc66414034800a77540304f55557f9a50"
+  }
+]

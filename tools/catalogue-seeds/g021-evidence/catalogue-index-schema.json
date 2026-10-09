@@ -1,0 +1,37 @@
+[
+  {
+    "name": "catalogue_pages",
+    "type": "table",
+    "sql": "CREATE TABLE catalogue_pages (\n  catalogue_id TEXT NOT NULL,\n  page_num INTEGER NOT NULL,\n  text_content TEXT,\n  char_count INTEGER DEFAULT 0,\n  has_extractable_text INTEGER DEFAULT 1,\n  header_text TEXT,\n  footer_text TEXT,\n  search_text TEXT,\n  PRIMARY KEY (catalogue_id, page_num)\n)"
+  },
+  {
+    "name": "sqlite_autoindex_catalogue_pages_1",
+    "type": "index",
+    "sql": null
+  },
+  {
+    "name": "catalogue_pages_fts",
+    "type": "table",
+    "sql": "CREATE VIRTUAL TABLE catalogue_pages_fts USING fts5(text_content, content='catalogue_pages', content_rowid='rowid')"
+  },
+  {
+    "name": "catalogue_pages_fts_data",
+    "type": "table",
+    "sql": "CREATE TABLE 'catalogue_pages_fts_data'(id INTEGER PRIMARY KEY, block BLOB)"
+  },
+  {
+    "name": "catalogue_pages_fts_idx",
+    "type": "table",
+    "sql": "CREATE TABLE 'catalogue_pages_fts_idx'(segid, term, pgno, PRIMARY KEY(segid, term)) WITHOUT ROWID"
+  },
+  {
+    "name": "catalogue_pages_fts_docsize",
+    "type": "table",
+    "sql": "CREATE TABLE 'catalogue_pages_fts_docsize'(id INTEGER PRIMARY KEY, sz BLOB)"
+  },
+  {
+    "name": "catalogue_pages_fts_config",
+    "type": "table",
+    "sql": "CREATE TABLE 'catalogue_pages_fts_config'(k PRIMARY KEY, v) WITHOUT ROWID"
+  }
+]

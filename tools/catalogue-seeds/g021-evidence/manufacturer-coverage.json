@@ -1,0 +1,888 @@
+[
+  {
+    "manufacturer": "Rockwood",
+    "sets": 42,
+    "pages": 98,
+    "lines": 154,
+    "baseline": {
+      "manufacturer_ids": [],
+      "product_count": 0,
+      "catalogue_records": [],
+      "active_document_rows": 0,
+      "technical_catalogue_records": 0,
+      "technical_document_rows": 0,
+      "status": "no technical book"
+    }
+  },
+  {
+    "manufacturer": "National Guard Products",
+    "sets": 42,
+    "pages": 74,
+    "lines": 95,
+    "baseline": {
+      "manufacturer_ids": [
+        "mfr-ngp"
+      ],
+      "product_count": 1972,
+      "catalogue_records": [
+        {
+          "id": "718caec9433fa666",
+          "title": "NGP_pricebook_03-2023",
+          "pages": 76,
+          "storage_path": "cps/catalogues/718caec9433fa666.pdf"
+        }
+      ],
+      "active_document_rows": 1971,
+      "technical_catalogue_records": 0,
+      "technical_document_rows": 0,
+      "status": "price-only"
+    }
+  },
+  {
+    "manufacturer": "McKinney",
+    "sets": 42,
+    "pages": 52,
+    "lines": 60,
+    "baseline": {
+      "manufacturer_ids": [],
+      "product_count": 0,
+      "catalogue_records": [],
+      "active_document_rows": 0,
+      "technical_catalogue_records": 0,
+      "technical_document_rows": 0,
+      "status": "no technical book"
+    }
+  },
+  {
+    "manufacturer": "Ives",
+    "sets": 41,
+    "pages": 190,
+    "lines": 511,
+    "baseline": {
+      "manufacturer_ids": [
+        "mfr-ives"
+      ],
+      "product_count": 2959,
+      "catalogue_records": [
+        {
+          "id": "8f1396cefd72a60b",
+          "title": "Ives Architectural Hardware Products Catalog",
+          "pages": 252,
+          "storage_path": "catalogues/IVES_Architectural_Hardware_Products_Catalog_105313.pdf"
+        },
+        {
+          "id": "b14117b49c7deb52",
+          "title": "Ives Price Book 2024",
+          "pages": 213,
+          "storage_path": "cps/catalogues/b14117b49c7deb52.pdf"
+        },
+        {
+          "id": "cat-ives-sr64-20260930",
+          "title": "Ives SR64 Door Silencer real distributor price",
+          "pages": 0,
+          "storage_path": ""
+        },
+        {
+          "id": "cat-ives-sr65-20260930",
+          "title": "Ives SR65 Door Silencer real distributor price",
+          "pages": 0,
+          "storage_path": ""
+        }
+      ],
+      "active_document_rows": 2951,
+      "technical_catalogue_records": 1,
+      "technical_document_rows": 0,
+      "status": "price-only"
+    }
+  },
+  {
+    "manufacturer": "LCN",
+    "sets": 41,
+    "pages": 105,
+    "lines": 169,
+    "baseline": {
+      "manufacturer_ids": [
+        "mfr-lcn"
+      ],
+      "product_count": 144,
+      "catalogue_records": [
+        {
+          "id": "cat-lcn-2030-wms-20260930",
+          "title": "LCN 2030-WMS-AL real distributor price",
+          "pages": 0,
+          "storage_path": ""
+        },
+        {
+          "id": "4432cd9abe892136",
+          "title": "LCN 4000 Series Surface Mounted Closers Catalog",
+          "pages": 76,
+          "storage_path": "catalogues/LCN_4000_Series_Catalog_109509.pdf"
+        },
+        {
+          "id": "cat-lcn-4010-18-20260930",
+          "title": "LCN 4010-18 Drop Plate real distributor price",
+          "pages": 0,
+          "storage_path": ""
+        },
+        {
+          "id": "cat-lcn-4020-18-20260930",
+          "title": "LCN 4020-18 Drop Plate real distributor price",
+          "pages": 0,
+          "storage_path": ""
+        },
+        {
+          "id": "cat-lcn-4110-18-20260930",
+          "title": "LCN 4110-18 Drop Plate real distributor price",
+          "pages": 0,
+          "storage_path": ""
+        },
+        {
+          "id": "cat-lcn-4110-30-20260930",
+          "title": "LCN 4110-30 Cush Shoe Support real distributor price",
+          "pages": 0,
+          "storage_path": ""
+        },
+        {
+          "id": "cat-lcn-4110-61-20260930",
+          "title": "LCN 4110-61 Blade Stop Spacer real distributor price",
+          "pages": 0,
+          "storage_path": ""
+        },
+        {
+          "id": "187df5a6d3d7b692",
+          "title": "LCN Concealed Closers Catalog",
+          "pages": 36,
+          "storage_path": "catalogues/LCN_Concealed_Closers_Catalog_109511.pdf"
+        },
+        {
+          "id": "1ae8e90d963f5ae0",
+          "title": "LCN Door Controls General Information Catalog",
+          "pages": 28,
+          "storage_path": "catalogues/LCN_General_Information_Catalog_109514.pdf"
+        },
+        {
+          "id": "1538de17afa634c0",
+          "title": "LCN Price Book 2025",
+          "pages": 154,
+          "storage_path": "cps/catalogues/1538de17afa634c0.pdf"
+        }
+      ],
+      "active_document_rows": 130,
+      "technical_catalogue_records": 3,
+      "technical_document_rows": 0,
+      "status": "price-only"
+    }
+  },
+  {
+    "manufacturer": "Hager",
+    "sets": 40,
+    "pages": 118,
+    "lines": 263,
+    "baseline": {
+      "manufacturer_ids": [
+        "mfr-hager"
+      ],
+      "product_count": 2,
+      "catalogue_records": [
+        {
+          "id": "cat-hager-bb1168-20260930",
+          "title": "Hager BB1168 4-1/2x4-1/2 real distributor price",
+          "pages": 0,
+          "storage_path": ""
+        },
+        {
+          "id": "cat-hager-bb1279-20260930",
+          "title": "Hager BB1279 4-1/2x4-1/2 real distributor price",
+          "pages": 0,
+          "storage_path": ""
+        }
+      ],
+      "active_document_rows": 0,
+      "technical_catalogue_records": 0,
+      "technical_document_rows": 0,
+      "status": "no technical book"
+    }
+  },
+  {
+    "manufacturer": "Schlage",
+    "sets": 37,
+    "pages": 106,
+    "lines": 200,
+    "baseline": {
+      "manufacturer_ids": [
+        "mfr-schlage"
+      ],
+      "product_count": 1099,
+      "catalogue_records": [
+        {
+          "id": "cat-sch-20-057-icx-20260930",
+          "title": "Schlage 20-057-ICX FSIC Rim Cylinder real distributor price",
+          "pages": 0,
+          "storage_path": ""
+        },
+        {
+          "id": "cat-schlage-b520-295-20260930",
+          "title": "Schlage B520-295 Cam real distributor price",
+          "pages": 0,
+          "storage_path": ""
+        },
+        {
+          "id": "58c3a134803eed96",
+          "title": "Schlage Commercial Price Book 2023",
+          "pages": 471,
+          "storage_path": "cps/catalogues/58c3a134803eed96.pdf"
+        },
+        {
+          "id": "cat-schlage-679-05hm-20260930",
+          "title": "Schlage Electronics 679-05HM real distributor price",
+          "pages": 0,
+          "storage_path": ""
+        },
+        {
+          "id": "cat-e2e-verify-1790745130428",
+          "title": "Schlage Electronics Price Book - E2E pipeline verification",
+          "pages": 0,
+          "storage_path": ""
+        },
+        {
+          "id": "20003e68649d3db9",
+          "title": "Schlage L Series Catalog",
+          "pages": 68,
+          "storage_path": "catalogues/Schlage_L_Series_Catalog_102899.pdf"
+        },
+        {
+          "id": "3e15eee15fd71476",
+          "title": "Schlage L Series Cut Sheet",
+          "pages": 26,
+          "storage_path": "catalogues/Schlage_L_Series_Cut_Sheet_113141.pdf"
+        },
+        {
+          "id": "115aa1b1af52cb54",
+          "title": "Schlage Mechanical Price Book",
+          "pages": 458,
+          "storage_path": "C:\\AthenaSystem\\PADSubX\\forge\\SubmittalExpressFoundry\\SubmittalExpress\\Phase2\\Prototype1\\cutsheet-library\\v1\\cps_data\\catalogues\\115aa1b1af52cb54.pdf"
+        },
+        {
+          "id": "cat-schlage-ndebp6d-20260930",
+          "title": "Schlage NDEBP6D real distributor price",
+          "pages": 0,
+          "storage_path": ""
+        },
+        {
+          "id": "da064d3feceb1b84",
+          "title": "Schlage_Key_Systems_Cylinders_Keys_Catalog_109487",
+          "pages": 60,
+          "storage_path": "catalogues/Schlage_Key_Systems_Cylinders_Keys_Catalog_109487.pdf"
+        },
+        {
+          "id": "1ef0c10ae00d3e7d",
+          "title": "Schlage_L_Series_TEST_3pages",
+          "pages": 3,
+          "storage_path": "cps/catalogues/1ef0c10ae00d3e7d.pdf"
+        },
+        {
+          "id": "90cdbbf619139258",
+          "title": "Schlage_L_Series_TEST_products",
+          "pages": 6,
+          "storage_path": "cps/catalogues/90cdbbf619139258.pdf"
+        }
+      ],
+      "active_document_rows": 3,
+      "technical_catalogue_records": 3,
+      "technical_document_rows": 3,
+      "status": "price-only"
+    }
+  },
+  {
+    "manufacturer": "Sargent",
+    "sets": 34,
+    "pages": 90,
+    "lines": 112,
+    "baseline": {
+      "manufacturer_ids": [
+        "mfr-sargent",
+        "mfr_sar"
+      ],
+      "product_count": 2,
+      "catalogue_records": [],
+      "active_document_rows": 0,
+      "technical_catalogue_records": 0,
+      "technical_document_rows": 0,
+      "status": "no technical book"
+    }
+  },
+  {
+    "manufacturer": "Pemko",
+    "sets": 33,
+    "pages": 71,
+    "lines": 133,
+    "baseline": {
+      "manufacturer_ids": [
+        "mfr-pemko"
+      ],
+      "product_count": 2,
+      "catalogue_records": [],
+      "active_document_rows": 0,
+      "technical_catalogue_records": 0,
+      "technical_document_rows": 0,
+      "status": "no technical book"
+    }
+  },
+  {
+    "manufacturer": "BEST",
+    "sets": 30,
+    "pages": 59,
+    "lines": 95,
+    "baseline": {
+      "manufacturer_ids": [],
+      "product_count": 0,
+      "catalogue_records": [],
+      "active_document_rows": 0,
+      "technical_catalogue_records": 0,
+      "technical_document_rows": 0,
+      "status": "no technical book"
+    }
+  },
+  {
+    "manufacturer": "Von Duprin",
+    "sets": 30,
+    "pages": 65,
+    "lines": 84,
+    "baseline": {
+      "manufacturer_ids": [
+        "mfr-vonduprin",
+        "mfr_vdp"
+      ],
+      "product_count": 639,
+      "catalogue_records": [
+        {
+          "id": "0b4d3f6cdbb2d9ee",
+          "title": "Von Duprin 22 Series Catalog",
+          "pages": 36,
+          "storage_path": "catalogues/Von_Duprin_22_Series_Catalog_106588.pdf"
+        },
+        {
+          "id": "99a4327297e9fff6",
+          "title": "Von Duprin 33A-35A Series Catalog",
+          "pages": 56,
+          "storage_path": "catalogues/Von_Duprin_33A_35A_Series_Catalog_106593.pdf"
+        },
+        {
+          "id": "0abc09bbcb666596",
+          "title": "Von Duprin 98-99 Series Catalog",
+          "pages": 80,
+          "storage_path": "catalogues/Von_Duprin_98_99_Series_Catalog_106590.pdf"
+        },
+        {
+          "id": "ea0a3a79dd0b5fb9",
+          "title": "Von Duprin Price Book 2024",
+          "pages": 237,
+          "storage_path": "cps/catalogues/ea0a3a79dd0b5fb9.pdf"
+        },
+        {
+          "id": "cat-von-ept10-20260930",
+          "title": "Von Duprin EPT10 real distributor price",
+          "pages": 0,
+          "storage_path": ""
+        },
+        {
+          "id": "cat-von-ps914-20260930",
+          "title": "Von Duprin PS914 real distributor price",
+          "pages": 0,
+          "storage_path": ""
+        },
+        {
+          "id": "cat-von-ps902-20260930",
+          "title": "Von Duprin/Schlage PS902 real distributor price",
+          "pages": 0,
+          "storage_path": ""
+        },
+        {
+          "id": "cat-von-ps904-20260930",
+          "title": "Von Duprin/Schlage PS904 real distributor price",
+          "pages": 0,
+          "storage_path": ""
+        }
+      ],
+      "active_document_rows": 635,
+      "technical_catalogue_records": 3,
+      "technical_document_rows": 0,
+      "status": "price-only"
+    }
+  },
+  {
+    "manufacturer": "Zero",
+    "sets": 27,
+    "pages": 77,
+    "lines": 160,
+    "baseline": {
+      "manufacturer_ids": [
+        "mfr-zero",
+        "mfr_zer"
+      ],
+      "product_count": 1036,
+      "catalogue_records": [
+        {
+          "id": "a0a77b1595f16370",
+          "title": "Zero International Price Book 2025",
+          "pages": 53,
+          "storage_path": "cps/catalogues/a0a77b1595f16370.pdf"
+        },
+        {
+          "id": "b9e769972f693637",
+          "title": "Zero Price Book",
+          "pages": 57,
+          "storage_path": "cps/catalogues/b9e769972f693637.pdf"
+        }
+      ],
+      "active_document_rows": 1033,
+      "technical_catalogue_records": 0,
+      "technical_document_rows": 0,
+      "status": "price-only"
+    }
+  },
+  {
+    "manufacturer": "Trimco",
+    "sets": 27,
+    "pages": 69,
+    "lines": 136,
+    "baseline": {
+      "manufacturer_ids": [
+        "mfr-trimco"
+      ],
+      "product_count": 1,
+      "catalogue_records": [],
+      "active_document_rows": 0,
+      "technical_catalogue_records": 0,
+      "technical_document_rows": 0,
+      "status": "no technical book"
+    }
+  },
+  {
+    "manufacturer": "Corbin Russwin",
+    "sets": 27,
+    "pages": 47,
+    "lines": 69,
+    "baseline": {
+      "manufacturer_ids": [
+        "mfr_cor"
+      ],
+      "product_count": 0,
+      "catalogue_records": [],
+      "active_document_rows": 0,
+      "technical_catalogue_records": 0,
+      "technical_document_rows": 0,
+      "status": "no technical book"
+    }
+  },
+  {
+    "manufacturer": "Norton",
+    "sets": 27,
+    "pages": 38,
+    "lines": 41,
+    "baseline": {
+      "manufacturer_ids": [],
+      "product_count": 0,
+      "catalogue_records": [],
+      "active_document_rows": 0,
+      "technical_catalogue_records": 0,
+      "technical_document_rows": 0,
+      "status": "no technical book"
+    }
+  },
+  {
+    "manufacturer": "Stanley",
+    "sets": 25,
+    "pages": 41,
+    "lines": 60,
+    "baseline": {
+      "manufacturer_ids": [],
+      "product_count": 0,
+      "catalogue_records": [],
+      "active_document_rows": 0,
+      "technical_catalogue_records": 0,
+      "technical_document_rows": 0,
+      "status": "no technical book"
+    }
+  },
+  {
+    "manufacturer": "Rixson",
+    "sets": 25,
+    "pages": 38,
+    "lines": 39,
+    "baseline": {
+      "manufacturer_ids": [],
+      "product_count": 0,
+      "catalogue_records": [],
+      "active_document_rows": 0,
+      "technical_catalogue_records": 0,
+      "technical_document_rows": 0,
+      "status": "no technical book"
+    }
+  },
+  {
+    "manufacturer": "Reese",
+    "sets": 25,
+    "pages": 28,
+    "lines": 38,
+    "baseline": {
+      "manufacturer_ids": [],
+      "product_count": 0,
+      "catalogue_records": [],
+      "active_document_rows": 0,
+      "technical_catalogue_records": 0,
+      "technical_document_rows": 0,
+      "status": "no technical book"
+    }
+  },
+  {
+    "manufacturer": "Yale",
+    "sets": 20,
+    "pages": 31,
+    "lines": 44,
+    "baseline": {
+      "manufacturer_ids": [],
+      "product_count": 0,
+      "catalogue_records": [],
+      "active_document_rows": 0,
+      "technical_catalogue_records": 0,
+      "technical_document_rows": 0,
+      "status": "no technical book"
+    }
+  },
+  {
+    "manufacturer": "Adams Rite",
+    "sets": 19,
+    "pages": 35,
+    "lines": 40,
+    "baseline": {
+      "manufacturer_ids": [
+        "mfr-adamsrite"
+      ],
+      "product_count": 1,
+      "catalogue_records": [
+        {
+          "id": "cat-adamsrite-ms1850s-20260930",
+          "title": "Adams Rite MS1850S-410-628 real distributor list price",
+          "pages": 0,
+          "storage_path": ""
+        }
+      ],
+      "active_document_rows": 0,
+      "technical_catalogue_records": 0,
+      "technical_document_rows": 0,
+      "status": "no technical book"
+    }
+  },
+  {
+    "manufacturer": "Glynn-Johnson",
+    "sets": 18,
+    "pages": 37,
+    "lines": 37,
+    "baseline": {
+      "manufacturer_ids": [
+        "mfr-glynnj"
+      ],
+      "product_count": 110,
+      "catalogue_records": [
+        {
+          "id": "4016927171a5364c",
+          "title": "Glynn-Johnson Price Book 2025",
+          "pages": 33,
+          "storage_path": "cps/catalogues/4016927171a5364c.pdf"
+        }
+      ],
+      "active_document_rows": 109,
+      "technical_catalogue_records": 0,
+      "technical_document_rows": 0,
+      "status": "price-only"
+    }
+  },
+  {
+    "manufacturer": "ABH",
+    "sets": 14,
+    "pages": 19,
+    "lines": 21,
+    "baseline": {
+      "manufacturer_ids": [],
+      "product_count": 0,
+      "catalogue_records": [],
+      "active_document_rows": 0,
+      "technical_catalogue_records": 0,
+      "technical_document_rows": 0,
+      "status": "no technical book"
+    }
+  },
+  {
+    "manufacturer": "Bommer",
+    "sets": 14,
+    "pages": 18,
+    "lines": 19,
+    "baseline": {
+      "manufacturer_ids": [],
+      "product_count": 0,
+      "catalogue_records": [],
+      "active_document_rows": 0,
+      "technical_catalogue_records": 0,
+      "technical_document_rows": 0,
+      "status": "no technical book"
+    }
+  },
+  {
+    "manufacturer": "Securitron",
+    "sets": 14,
+    "pages": 15,
+    "lines": 17,
+    "baseline": {
+      "manufacturer_ids": [],
+      "product_count": 0,
+      "catalogue_records": [],
+      "active_document_rows": 0,
+      "technical_catalogue_records": 0,
+      "technical_document_rows": 0,
+      "status": "no technical book"
+    }
+  },
+  {
+    "manufacturer": "Falcon",
+    "sets": 12,
+    "pages": 97,
+    "lines": 207,
+    "baseline": {
+      "manufacturer_ids": [
+        "mfr-falcon"
+      ],
+      "product_count": 455,
+      "catalogue_records": [
+        {
+          "id": "afb12ed5e7153023",
+          "title": "Falcon Price Book 2024",
+          "pages": 301,
+          "storage_path": "cps/catalogues/afb12ed5e7153023.pdf"
+        },
+        {
+          "id": "cat-fal-w101s-20260930",
+          "title": "Falcon W101S real distributor price",
+          "pages": 0,
+          "storage_path": ""
+        },
+        {
+          "id": "cat-fal-w301s-20260930",
+          "title": "Falcon W301S real distributor price",
+          "pages": 0,
+          "storage_path": ""
+        },
+        {
+          "id": "cat-fal-w501-20260930",
+          "title": "Falcon W501 real distributor price",
+          "pages": 0,
+          "storage_path": ""
+        },
+        {
+          "id": "cat-fal-w561-20260930",
+          "title": "Falcon W561 real distributor price",
+          "pages": 0,
+          "storage_path": ""
+        },
+        {
+          "id": "cat-fal-w581-20260930",
+          "title": "Falcon W581 real distributor price",
+          "pages": 0,
+          "storage_path": ""
+        }
+      ],
+      "active_document_rows": 449,
+      "technical_catalogue_records": 0,
+      "technical_document_rows": 0,
+      "status": "price-only"
+    }
+  },
+  {
+    "manufacturer": "Hiawatha",
+    "sets": 12,
+    "pages": 23,
+    "lines": 35,
+    "baseline": {
+      "manufacturer_ids": [],
+      "product_count": 0,
+      "catalogue_records": [],
+      "active_document_rows": 0,
+      "technical_catalogue_records": 0,
+      "technical_document_rows": 0,
+      "status": "no technical book"
+    }
+  },
+  {
+    "manufacturer": "Security Door Controls",
+    "sets": 9,
+    "pages": 15,
+    "lines": 18,
+    "baseline": {
+      "manufacturer_ids": [],
+      "product_count": 0,
+      "catalogue_records": [],
+      "active_document_rows": 0,
+      "technical_catalogue_records": 0,
+      "technical_document_rows": 0,
+      "status": "no technical book"
+    }
+  },
+  {
+    "manufacturer": "Dorma",
+    "sets": 7,
+    "pages": 13,
+    "lines": 28,
+    "baseline": {
+      "manufacturer_ids": [],
+      "product_count": 0,
+      "catalogue_records": [],
+      "active_document_rows": 0,
+      "technical_catalogue_records": 0,
+      "technical_document_rows": 0,
+      "status": "no technical book"
+    }
+  },
+  {
+    "manufacturer": "HES",
+    "sets": 7,
+    "pages": 8,
+    "lines": 9,
+    "baseline": {
+      "manufacturer_ids": [],
+      "product_count": 0,
+      "catalogue_records": [],
+      "active_document_rows": 0,
+      "technical_catalogue_records": 0,
+      "technical_document_rows": 0,
+      "status": "no technical book"
+    }
+  },
+  {
+    "manufacturer": "Detex",
+    "sets": 7,
+    "pages": 7,
+    "lines": 7,
+    "baseline": {
+      "manufacturer_ids": [],
+      "product_count": 0,
+      "catalogue_records": [],
+      "active_document_rows": 0,
+      "technical_catalogue_records": 0,
+      "technical_document_rows": 0,
+      "status": "no technical book"
+    }
+  },
+  {
+    "manufacturer": "Precision",
+    "sets": 7,
+    "pages": 7,
+    "lines": 7,
+    "baseline": {
+      "manufacturer_ids": [],
+      "product_count": 0,
+      "catalogue_records": [],
+      "active_document_rows": 0,
+      "technical_catalogue_records": 0,
+      "technical_document_rows": 0,
+      "status": "no technical book"
+    }
+  },
+  {
+    "manufacturer": "Horton",
+    "sets": 4,
+    "pages": 4,
+    "lines": 4,
+    "baseline": {
+      "manufacturer_ids": [
+        "mfr-horton"
+      ],
+      "product_count": 3,
+      "catalogue_records": [],
+      "active_document_rows": 0,
+      "technical_catalogue_records": 0,
+      "technical_document_rows": 0,
+      "status": "no technical book"
+    }
+  },
+  {
+    "manufacturer": "Don-Jo",
+    "sets": 2,
+    "pages": 4,
+    "lines": 8,
+    "baseline": {
+      "manufacturer_ids": [],
+      "product_count": 0,
+      "catalogue_records": [],
+      "active_document_rows": 0,
+      "technical_catalogue_records": 0,
+      "technical_document_rows": 0,
+      "status": "no technical book"
+    }
+  },
+  {
+    "manufacturer": "Soss",
+    "sets": 2,
+    "pages": 2,
+    "lines": 2,
+    "baseline": {
+      "manufacturer_ids": [],
+      "product_count": 0,
+      "catalogue_records": [],
+      "active_document_rows": 0,
+      "technical_catalogue_records": 0,
+      "technical_document_rows": 0,
+      "status": "no technical book"
+    }
+  },
+  {
+    "manufacturer": "Camden",
+    "sets": 1,
+    "pages": 1,
+    "lines": 1,
+    "baseline": {
+      "manufacturer_ids": [
+        "mfr-camden"
+      ],
+      "product_count": 548,
+      "catalogue_records": [
+        {
+          "id": "20069855fe1b32a8",
+          "title": "CAMDEN_pricebook_2024",
+          "pages": 116,
+          "storage_path": "C:\\AthenaSystem\\PADSubX\\forge\\SubmittalExpressFoundry\\SubmittalExpress\\Phase2\\Prototype1\\cutsheet-library\\v1\\cps_data\\catalogues\\20069855fe1b32a8.pdf"
+        },
+        {
+          "id": "cat-cam332-42-20260930",
+          "title": "Camden CM-332-42 real current distributor price (supersedes a correctly-retired 2017 list price)",
+          "pages": 0,
+          "storage_path": ""
+        },
+        {
+          "id": "5aabdcc2adea8b35",
+          "title": "Camden Door Controls US Price List January 2017",
+          "pages": 113,
+          "storage_path": "cps/catalogues/5aabdcc2adea8b35.pdf"
+        }
+      ],
+      "active_document_rows": 0,
+      "technical_catalogue_records": 0,
+      "technical_document_rows": 0,
+      "status": "price-only"
+    }
+  },
+  {
+    "manufacturer": "Door Controls International",
+    "sets": 1,
+    "pages": 1,
+    "lines": 1,
+    "baseline": {
+      "manufacturer_ids": [],
+      "product_count": 0,
+      "catalogue_records": [],
+      "active_document_rows": 0,
+      "technical_catalogue_records": 0,
+      "technical_document_rows": 0,
+      "status": "no technical book"
+    }
+  }
+]

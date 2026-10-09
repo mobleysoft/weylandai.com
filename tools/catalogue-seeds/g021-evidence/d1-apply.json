@@ -1,0 +1,1541 @@
+[
+  {
+    "file": "tools/catalogue-seeds/2026-10-09-g021-1-rockwood.sql",
+    "batch": 1,
+    "at": "2026-10-09T17:24:03.783033+00:00",
+    "success": true,
+    "statements": 29,
+    "changes": 29,
+    "rows_written": 59
+  },
+  {
+    "file": "tools/catalogue-seeds/2026-10-09-g021-1-rockwood.sql",
+    "batch": 2,
+    "at": "2026-10-09T17:24:04.719813+00:00",
+    "success": true,
+    "statements": 30,
+    "changes": 30,
+    "rows_written": 60
+  },
+  {
+    "file": "tools/catalogue-seeds/2026-10-09-g021-1-rockwood.sql",
+    "batch": 3,
+    "at": "2026-10-09T17:24:05.225096+00:00",
+    "success": true,
+    "statements": 27,
+    "changes": 27,
+    "rows_written": 54
+  },
+  {
+    "file": "tools/catalogue-seeds/2026-10-09-g021-1-rockwood.sql",
+    "batch": 1,
+    "at": "2026-10-09T17:24:49.382522+00:00",
+    "success": true,
+    "statements": 8,
+    "changes": 0,
+    "rows_written": 0
+  },
+  {
+    "file": "tools/catalogue-seeds/2026-10-09-g021-1-rockwood.sql",
+    "batch": 2,
+    "at": "2026-10-09T17:24:49.683989+00:00",
+    "success": true,
+    "statements": 8,
+    "changes": 0,
+    "rows_written": 0
+  },
+  {
+    "file": "tools/catalogue-seeds/2026-10-09-g021-1-rockwood.sql",
+    "batch": 3,
+    "at": "2026-10-09T17:24:49.930487+00:00",
+    "success": true,
+    "statements": 18,
+    "changes": 0,
+    "rows_written": 0
+  },
+  {
+    "file": "tools/catalogue-seeds/2026-10-09-g021-1-rockwood.sql",
+    "batch": 4,
+    "at": "2026-10-09T17:24:50.187216+00:00",
+    "success": true,
+    "statements": 18,
+    "changes": 0,
+    "rows_written": 0
+  },
+  {
+    "file": "tools/catalogue-seeds/2026-10-09-g021-1-rockwood.sql",
+    "batch": 5,
+    "at": "2026-10-09T17:24:50.455733+00:00",
+    "success": true,
+    "statements": 17,
+    "changes": 0,
+    "rows_written": 0
+  },
+  {
+    "file": "tools/catalogue-seeds/2026-10-09-g021-1-rockwood.sql",
+    "batch": 6,
+    "at": "2026-10-09T17:24:50.675154+00:00",
+    "success": true,
+    "statements": 17,
+    "changes": 0,
+    "rows_written": 0
+  },
+  {
+    "file": "tools/catalogue-seeds/2026-10-09-g021-1-rockwood.sql",
+    "batch": 7,
+    "at": "2026-10-09T17:24:50.963439+00:00",
+    "success": true,
+    "statements": 13,
+    "changes": 13,
+    "rows_written": 26
+  },
+  {
+    "file": "tools/catalogue-seeds/2026-10-09-g021-1-rockwood.sql",
+    "batch": 8,
+    "at": "2026-10-09T17:24:51.263589+00:00",
+    "success": true,
+    "statements": 21,
+    "changes": 21,
+    "rows_written": 42
+  },
+  {
+    "file": "tools/catalogue-seeds/2026-10-09-g021-1-rockwood.sql",
+    "batch": 9,
+    "at": "2026-10-09T17:24:51.536311+00:00",
+    "success": true,
+    "statements": 19,
+    "changes": 19,
+    "rows_written": 38
+  },
+  {
+    "file": "tools/catalogue-seeds/2026-10-09-g021-1-rockwood.sql",
+    "batch": 10,
+    "at": "2026-10-09T17:24:51.803724+00:00",
+    "success": true,
+    "statements": 20,
+    "changes": 20,
+    "rows_written": 40
+  },
+  {
+    "file": "tools/catalogue-seeds/2026-10-09-g021-1-rockwood.sql",
+    "batch": 11,
+    "at": "2026-10-09T17:24:52.035494+00:00",
+    "success": true,
+    "statements": 12,
+    "changes": 12,
+    "rows_written": 25
+  },
+  {
+    "file": "tools/catalogue-seeds/2026-10-09-g021-2-ngp.sql",
+    "batch": 1,
+    "at": "2026-10-09T17:24:52.353560+00:00",
+    "success": true,
+    "statements": 24,
+    "changes": 22,
+    "rows_written": 44
+  },
+  {
+    "file": "tools/catalogue-seeds/2026-10-09-g021-2-ngp.sql",
+    "batch": 2,
+    "at": "2026-10-09T17:24:52.575601+00:00",
+    "success": true,
+    "statements": 16,
+    "changes": 15,
+    "rows_written": 30
+  },
+  {
+    "file": "tools/catalogue-seeds/2026-10-09-g021-3-mckinney.sql",
+    "batch": 1,
+    "at": "2026-10-09T17:24:52.878098+00:00",
+    "success": true,
+    "statements": 20,
+    "changes": 20,
+    "rows_written": 41
+  },
+  {
+    "file": "tools/catalogue-seeds/2026-10-09-g021-3-mckinney.sql",
+    "batch": 2,
+    "at": "2026-10-09T17:24:53.154338+00:00",
+    "success": true,
+    "statements": 16,
+    "changes": 16,
+    "rows_written": 32
+  },
+  {
+    "file": "tools/catalogue-seeds/2026-10-09-g021-3-mckinney.sql",
+    "batch": 3,
+    "at": "2026-10-09T17:24:53.416792+00:00",
+    "success": true,
+    "statements": 19,
+    "changes": 19,
+    "rows_written": 38
+  },
+  {
+    "file": "tools/catalogue-seeds/2026-10-09-g021-3-mckinney.sql",
+    "batch": 4,
+    "at": "2026-10-09T17:24:53.738910+00:00",
+    "success": true,
+    "statements": 22,
+    "changes": 22,
+    "rows_written": 44
+  },
+  {
+    "file": "tools/catalogue-seeds/2026-10-09-g021-3-mckinney.sql",
+    "batch": 5,
+    "at": "2026-10-09T17:24:54.034368+00:00",
+    "success": true,
+    "statements": 18,
+    "changes": 18,
+    "rows_written": 36
+  },
+  {
+    "file": "tools/catalogue-seeds/2026-10-09-g021-3-mckinney.sql",
+    "batch": 6,
+    "at": "2026-10-09T17:24:54.269721+00:00",
+    "success": true,
+    "statements": 7,
+    "changes": 7,
+    "rows_written": 16
+  },
+  {
+    "file": "tools/catalogue-seeds/2026-10-09-g021-4-hager.sql",
+    "batch": 1,
+    "at": "2026-10-09T17:24:54.639362+00:00",
+    "success": true,
+    "statements": 19,
+    "changes": 17,
+    "rows_written": 34
+  },
+  {
+    "file": "tools/catalogue-seeds/2026-10-09-g021-4-hager.sql",
+    "batch": 2,
+    "at": "2026-10-09T17:24:54.898412+00:00",
+    "success": true,
+    "statements": 13,
+    "changes": 13,
+    "rows_written": 26
+  },
+  {
+    "file": "tools/catalogue-seeds/2026-10-09-g021-4-hager.sql",
+    "batch": 3,
+    "at": "2026-10-09T17:24:55.228057+00:00",
+    "success": true,
+    "statements": 18,
+    "changes": 18,
+    "rows_written": 36
+  },
+  {
+    "file": "tools/catalogue-seeds/2026-10-09-g021-4-hager.sql",
+    "batch": 4,
+    "at": "2026-10-09T17:24:55.475064+00:00",
+    "success": true,
+    "statements": 20,
+    "changes": 20,
+    "rows_written": 40
+  },
+  {
+    "file": "tools/catalogue-seeds/2026-10-09-g021-4-hager.sql",
+    "batch": 5,
+    "at": "2026-10-09T17:24:55.812509+00:00",
+    "success": true,
+    "statements": 16,
+    "changes": 16,
+    "rows_written": 32
+  },
+  {
+    "file": "tools/catalogue-seeds/2026-10-09-g021-4-hager.sql",
+    "batch": 6,
+    "at": "2026-10-09T17:24:56.097949+00:00",
+    "success": true,
+    "statements": 25,
+    "changes": 25,
+    "rows_written": 50
+  },
+  {
+    "file": "tools/catalogue-seeds/2026-10-09-g021-4-hager.sql",
+    "batch": 7,
+    "at": "2026-10-09T17:24:56.368205+00:00",
+    "success": true,
+    "statements": 21,
+    "changes": 21,
+    "rows_written": 42
+  },
+  {
+    "file": "tools/catalogue-seeds/2026-10-09-g021-4-hager.sql",
+    "batch": 8,
+    "at": "2026-10-09T17:24:56.649941+00:00",
+    "success": true,
+    "statements": 17,
+    "changes": 17,
+    "rows_written": 34
+  },
+  {
+    "file": "tools/catalogue-seeds/2026-10-09-g021-4-hager.sql",
+    "batch": 9,
+    "at": "2026-10-09T17:24:56.944371+00:00",
+    "success": true,
+    "statements": 23,
+    "changes": 23,
+    "rows_written": 46
+  },
+  {
+    "file": "tools/catalogue-seeds/2026-10-09-g021-4-hager.sql",
+    "batch": 10,
+    "at": "2026-10-09T17:24:57.222660+00:00",
+    "success": true,
+    "statements": 30,
+    "changes": 30,
+    "rows_written": 60
+  },
+  {
+    "file": "tools/catalogue-seeds/2026-10-09-g021-4-hager.sql",
+    "batch": 11,
+    "at": "2026-10-09T17:24:57.490975+00:00",
+    "success": true,
+    "statements": 24,
+    "changes": 24,
+    "rows_written": 48
+  },
+  {
+    "file": "tools/catalogue-seeds/2026-10-09-g021-4-hager.sql",
+    "batch": 12,
+    "at": "2026-10-09T17:24:57.959891+00:00",
+    "success": true,
+    "statements": 25,
+    "changes": 25,
+    "rows_written": 50
+  },
+  {
+    "file": "tools/catalogue-seeds/2026-10-09-g021-4-hager.sql",
+    "batch": 13,
+    "at": "2026-10-09T17:24:58.226788+00:00",
+    "success": true,
+    "statements": 17,
+    "changes": 17,
+    "rows_written": 34
+  },
+  {
+    "file": "tools/catalogue-seeds/2026-10-09-g021-4-hager.sql",
+    "batch": 14,
+    "at": "2026-10-09T17:24:58.479861+00:00",
+    "success": true,
+    "statements": 19,
+    "changes": 19,
+    "rows_written": 38
+  },
+  {
+    "file": "tools/catalogue-seeds/2026-10-09-g021-4-hager.sql",
+    "batch": 15,
+    "at": "2026-10-09T17:24:58.748800+00:00",
+    "success": true,
+    "statements": 23,
+    "changes": 23,
+    "rows_written": 46
+  },
+  {
+    "file": "tools/catalogue-seeds/2026-10-09-g021-4-hager.sql",
+    "batch": 16,
+    "at": "2026-10-09T17:24:59.050365+00:00",
+    "success": true,
+    "statements": 23,
+    "changes": 23,
+    "rows_written": 46
+  },
+  {
+    "file": "tools/catalogue-seeds/2026-10-09-g021-4-hager.sql",
+    "batch": 17,
+    "at": "2026-10-09T17:24:59.334947+00:00",
+    "success": true,
+    "statements": 16,
+    "changes": 16,
+    "rows_written": 32
+  },
+  {
+    "file": "tools/catalogue-seeds/2026-10-09-g021-4-hager.sql",
+    "batch": 18,
+    "at": "2026-10-09T17:24:59.607758+00:00",
+    "success": true,
+    "statements": 28,
+    "changes": 28,
+    "rows_written": 56
+  },
+  {
+    "file": "tools/catalogue-seeds/2026-10-09-g021-4-hager.sql",
+    "batch": 19,
+    "at": "2026-10-09T17:24:59.876285+00:00",
+    "success": true,
+    "statements": 26,
+    "changes": 26,
+    "rows_written": 52
+  },
+  {
+    "file": "tools/catalogue-seeds/2026-10-09-g021-4-hager.sql",
+    "batch": 20,
+    "at": "2026-10-09T17:25:00.149936+00:00",
+    "success": true,
+    "statements": 17,
+    "changes": 17,
+    "rows_written": 34
+  },
+  {
+    "file": "tools/catalogue-seeds/2026-10-09-g021-4-hager.sql",
+    "batch": 21,
+    "at": "2026-10-09T17:25:00.444809+00:00",
+    "success": true,
+    "statements": 19,
+    "changes": 19,
+    "rows_written": 38
+  },
+  {
+    "file": "tools/catalogue-seeds/2026-10-09-g021-4-hager.sql",
+    "batch": 22,
+    "at": "2026-10-09T17:25:00.730405+00:00",
+    "success": true,
+    "statements": 18,
+    "changes": 18,
+    "rows_written": 36
+  },
+  {
+    "file": "tools/catalogue-seeds/2026-10-09-g021-4-hager.sql",
+    "batch": 23,
+    "at": "2026-10-09T17:25:01.018216+00:00",
+    "success": true,
+    "statements": 21,
+    "changes": 21,
+    "rows_written": 42
+  },
+  {
+    "file": "tools/catalogue-seeds/2026-10-09-g021-4-hager.sql",
+    "batch": 24,
+    "at": "2026-10-09T17:25:01.308678+00:00",
+    "success": true,
+    "statements": 10,
+    "changes": 10,
+    "rows_written": 20
+  },
+  {
+    "file": "tools/catalogue-seeds/2026-10-09-g021-4-hager.sql",
+    "batch": 25,
+    "at": "2026-10-09T17:25:01.597322+00:00",
+    "success": true,
+    "statements": 7,
+    "changes": 7,
+    "rows_written": 14
+  },
+  {
+    "file": "tools/catalogue-seeds/2026-10-09-g021-4-hager.sql",
+    "batch": 26,
+    "at": "2026-10-09T17:25:01.894416+00:00",
+    "success": true,
+    "statements": 8,
+    "changes": 8,
+    "rows_written": 16
+  },
+  {
+    "file": "tools/catalogue-seeds/2026-10-09-g021-4-hager.sql",
+    "batch": 27,
+    "at": "2026-10-09T17:25:02.156686+00:00",
+    "success": true,
+    "statements": 6,
+    "changes": 6,
+    "rows_written": 12
+  },
+  {
+    "file": "tools/catalogue-seeds/2026-10-09-g021-4-hager.sql",
+    "batch": 28,
+    "at": "2026-10-09T17:25:02.481571+00:00",
+    "success": true,
+    "statements": 13,
+    "changes": 13,
+    "rows_written": 26
+  },
+  {
+    "file": "tools/catalogue-seeds/2026-10-09-g021-4-hager.sql",
+    "batch": 29,
+    "at": "2026-10-09T17:25:02.709347+00:00",
+    "success": true,
+    "statements": 17,
+    "changes": 16,
+    "rows_written": 33
+  },
+  {
+    "file": "tools/catalogue-seeds/2026-10-09-g021-5-sargent.sql",
+    "batch": 1,
+    "at": "2026-10-09T17:25:03.037980+00:00",
+    "success": true,
+    "statements": 15,
+    "changes": 11,
+    "rows_written": 22
+  },
+  {
+    "file": "tools/catalogue-seeds/2026-10-09-g021-5-sargent.sql",
+    "batch": 2,
+    "at": "2026-10-09T17:25:03.366288+00:00",
+    "success": true,
+    "statements": 8,
+    "changes": 8,
+    "rows_written": 16
+  },
+  {
+    "file": "tools/catalogue-seeds/2026-10-09-g021-5-sargent.sql",
+    "batch": 3,
+    "at": "2026-10-09T17:25:03.624977+00:00",
+    "success": true,
+    "statements": 10,
+    "changes": 10,
+    "rows_written": 20
+  },
+  {
+    "file": "tools/catalogue-seeds/2026-10-09-g021-5-sargent.sql",
+    "batch": 4,
+    "at": "2026-10-09T17:25:03.910123+00:00",
+    "success": true,
+    "statements": 10,
+    "changes": 10,
+    "rows_written": 20
+  },
+  {
+    "file": "tools/catalogue-seeds/2026-10-09-g021-5-sargent.sql",
+    "batch": 5,
+    "at": "2026-10-09T17:25:04.177495+00:00",
+    "success": true,
+    "statements": 11,
+    "changes": 11,
+    "rows_written": 22
+  },
+  {
+    "file": "tools/catalogue-seeds/2026-10-09-g021-5-sargent.sql",
+    "batch": 6,
+    "at": "2026-10-09T17:25:04.453079+00:00",
+    "success": true,
+    "statements": 13,
+    "changes": 13,
+    "rows_written": 26
+  },
+  {
+    "file": "tools/catalogue-seeds/2026-10-09-g021-5-sargent.sql",
+    "batch": 7,
+    "at": "2026-10-09T17:25:04.835270+00:00",
+    "success": true,
+    "statements": 13,
+    "changes": 13,
+    "rows_written": 26
+  },
+  {
+    "file": "tools/catalogue-seeds/2026-10-09-g021-5-sargent.sql",
+    "batch": 8,
+    "at": "2026-10-09T17:25:05.081591+00:00",
+    "success": true,
+    "statements": 8,
+    "changes": 8,
+    "rows_written": 17
+  },
+  {
+    "file": "tools/catalogue-seeds/2026-10-09-g021-1-rockwood.sql",
+    "batch": 1,
+    "at": "2026-10-09T17:26:25.482094+00:00",
+    "success": true,
+    "statements": 8,
+    "changes": 0,
+    "rows_written": 0
+  },
+  {
+    "file": "tools/catalogue-seeds/2026-10-09-g021-1-rockwood.sql",
+    "batch": 2,
+    "at": "2026-10-09T17:26:25.729013+00:00",
+    "success": true,
+    "statements": 8,
+    "changes": 0,
+    "rows_written": 0
+  },
+  {
+    "file": "tools/catalogue-seeds/2026-10-09-g021-1-rockwood.sql",
+    "batch": 3,
+    "at": "2026-10-09T17:26:25.988485+00:00",
+    "success": true,
+    "statements": 18,
+    "changes": 0,
+    "rows_written": 0
+  },
+  {
+    "file": "tools/catalogue-seeds/2026-10-09-g021-1-rockwood.sql",
+    "batch": 4,
+    "at": "2026-10-09T17:26:26.223413+00:00",
+    "success": true,
+    "statements": 18,
+    "changes": 0,
+    "rows_written": 0
+  },
+  {
+    "file": "tools/catalogue-seeds/2026-10-09-g021-1-rockwood.sql",
+    "batch": 5,
+    "at": "2026-10-09T17:26:26.471704+00:00",
+    "success": true,
+    "statements": 17,
+    "changes": 0,
+    "rows_written": 0
+  },
+  {
+    "file": "tools/catalogue-seeds/2026-10-09-g021-1-rockwood.sql",
+    "batch": 6,
+    "at": "2026-10-09T17:26:26.722216+00:00",
+    "success": true,
+    "statements": 17,
+    "changes": 0,
+    "rows_written": 0
+  },
+  {
+    "file": "tools/catalogue-seeds/2026-10-09-g021-1-rockwood.sql",
+    "batch": 7,
+    "at": "2026-10-09T17:26:27.002154+00:00",
+    "success": true,
+    "statements": 13,
+    "changes": 0,
+    "rows_written": 0
+  },
+  {
+    "file": "tools/catalogue-seeds/2026-10-09-g021-1-rockwood.sql",
+    "batch": 8,
+    "at": "2026-10-09T17:26:27.240115+00:00",
+    "success": true,
+    "statements": 21,
+    "changes": 0,
+    "rows_written": 0
+  },
+  {
+    "file": "tools/catalogue-seeds/2026-10-09-g021-1-rockwood.sql",
+    "batch": 9,
+    "at": "2026-10-09T17:26:27.488930+00:00",
+    "success": true,
+    "statements": 19,
+    "changes": 0,
+    "rows_written": 0
+  },
+  {
+    "file": "tools/catalogue-seeds/2026-10-09-g021-1-rockwood.sql",
+    "batch": 10,
+    "at": "2026-10-09T17:26:27.711118+00:00",
+    "success": true,
+    "statements": 20,
+    "changes": 0,
+    "rows_written": 0
+  },
+  {
+    "file": "tools/catalogue-seeds/2026-10-09-g021-1-rockwood.sql",
+    "batch": 11,
+    "at": "2026-10-09T17:26:27.951047+00:00",
+    "success": true,
+    "statements": 14,
+    "changes": 329,
+    "rows_written": 165
+  },
+  {
+    "file": "tools/catalogue-seeds/2026-10-09-g021-2-ngp.sql",
+    "batch": 1,
+    "at": "2026-10-09T17:26:28.220258+00:00",
+    "success": true,
+    "statements": 24,
+    "changes": 0,
+    "rows_written": 0
+  },
+  {
+    "file": "tools/catalogue-seeds/2026-10-09-g021-2-ngp.sql",
+    "batch": 2,
+    "at": "2026-10-09T17:26:28.492939+00:00",
+    "success": true,
+    "statements": 18,
+    "changes": 65,
+    "rows_written": 33
+  },
+  {
+    "file": "tools/catalogue-seeds/2026-10-09-g021-3-mckinney.sql",
+    "batch": 1,
+    "at": "2026-10-09T17:26:28.766813+00:00",
+    "success": true,
+    "statements": 20,
+    "changes": 0,
+    "rows_written": 0
+  },
+  {
+    "file": "tools/catalogue-seeds/2026-10-09-g021-3-mckinney.sql",
+    "batch": 2,
+    "at": "2026-10-09T17:26:29.072918+00:00",
+    "success": true,
+    "statements": 16,
+    "changes": 0,
+    "rows_written": 0
+  },
+  {
+    "file": "tools/catalogue-seeds/2026-10-09-g021-3-mckinney.sql",
+    "batch": 3,
+    "at": "2026-10-09T17:26:29.322482+00:00",
+    "success": true,
+    "statements": 19,
+    "changes": 0,
+    "rows_written": 0
+  },
+  {
+    "file": "tools/catalogue-seeds/2026-10-09-g021-3-mckinney.sql",
+    "batch": 4,
+    "at": "2026-10-09T17:26:29.550819+00:00",
+    "success": true,
+    "statements": 22,
+    "changes": 0,
+    "rows_written": 0
+  },
+  {
+    "file": "tools/catalogue-seeds/2026-10-09-g021-3-mckinney.sql",
+    "batch": 5,
+    "at": "2026-10-09T17:26:29.785409+00:00",
+    "success": true,
+    "statements": 18,
+    "changes": 0,
+    "rows_written": 0
+  },
+  {
+    "file": "tools/catalogue-seeds/2026-10-09-g021-3-mckinney.sql",
+    "batch": 6,
+    "at": "2026-10-09T17:26:29.978565+00:00",
+    "success": true,
+    "statements": 9,
+    "changes": 185,
+    "rows_written": 93
+  },
+  {
+    "file": "tools/catalogue-seeds/2026-10-09-g021-4-hager.sql",
+    "batch": 1,
+    "at": "2026-10-09T17:26:30.521497+00:00",
+    "success": true,
+    "statements": 19,
+    "changes": 0,
+    "rows_written": 0
+  },
+  {
+    "file": "tools/catalogue-seeds/2026-10-09-g021-4-hager.sql",
+    "batch": 2,
+    "at": "2026-10-09T17:26:30.751144+00:00",
+    "success": true,
+    "statements": 13,
+    "changes": 0,
+    "rows_written": 0
+  },
+  {
+    "file": "tools/catalogue-seeds/2026-10-09-g021-4-hager.sql",
+    "batch": 3,
+    "at": "2026-10-09T17:26:30.985072+00:00",
+    "success": true,
+    "statements": 18,
+    "changes": 0,
+    "rows_written": 0
+  },
+  {
+    "file": "tools/catalogue-seeds/2026-10-09-g021-4-hager.sql",
+    "batch": 4,
+    "at": "2026-10-09T17:26:31.228978+00:00",
+    "success": true,
+    "statements": 20,
+    "changes": 0,
+    "rows_written": 0
+  },
+  {
+    "file": "tools/catalogue-seeds/2026-10-09-g021-4-hager.sql",
+    "batch": 5,
+    "at": "2026-10-09T17:26:31.483523+00:00",
+    "success": true,
+    "statements": 16,
+    "changes": 0,
+    "rows_written": 0
+  },
+  {
+    "file": "tools/catalogue-seeds/2026-10-09-g021-4-hager.sql",
+    "batch": 6,
+    "at": "2026-10-09T17:26:31.715282+00:00",
+    "success": true,
+    "statements": 25,
+    "changes": 0,
+    "rows_written": 0
+  },
+  {
+    "file": "tools/catalogue-seeds/2026-10-09-g021-4-hager.sql",
+    "batch": 7,
+    "at": "2026-10-09T17:26:31.959696+00:00",
+    "success": true,
+    "statements": 21,
+    "changes": 0,
+    "rows_written": 0
+  },
+  {
+    "file": "tools/catalogue-seeds/2026-10-09-g021-4-hager.sql",
+    "batch": 8,
+    "at": "2026-10-09T17:26:32.233584+00:00",
+    "success": true,
+    "statements": 17,
+    "changes": 0,
+    "rows_written": 0
+  },
+  {
+    "file": "tools/catalogue-seeds/2026-10-09-g021-4-hager.sql",
+    "batch": 9,
+    "at": "2026-10-09T17:26:32.483167+00:00",
+    "success": true,
+    "statements": 23,
+    "changes": 0,
+    "rows_written": 0
+  },
+  {
+    "file": "tools/catalogue-seeds/2026-10-09-g021-4-hager.sql",
+    "batch": 10,
+    "at": "2026-10-09T17:26:32.707324+00:00",
+    "success": true,
+    "statements": 30,
+    "changes": 0,
+    "rows_written": 0
+  },
+  {
+    "file": "tools/catalogue-seeds/2026-10-09-g021-4-hager.sql",
+    "batch": 11,
+    "at": "2026-10-09T17:26:32.936594+00:00",
+    "success": true,
+    "statements": 24,
+    "changes": 0,
+    "rows_written": 0
+  },
+  {
+    "file": "tools/catalogue-seeds/2026-10-09-g021-4-hager.sql",
+    "batch": 12,
+    "at": "2026-10-09T17:26:33.176442+00:00",
+    "success": true,
+    "statements": 25,
+    "changes": 0,
+    "rows_written": 0
+  },
+  {
+    "file": "tools/catalogue-seeds/2026-10-09-g021-4-hager.sql",
+    "batch": 13,
+    "at": "2026-10-09T17:26:33.417432+00:00",
+    "success": true,
+    "statements": 17,
+    "changes": 0,
+    "rows_written": 0
+  },
+  {
+    "file": "tools/catalogue-seeds/2026-10-09-g021-4-hager.sql",
+    "batch": 14,
+    "at": "2026-10-09T17:26:33.650189+00:00",
+    "success": true,
+    "statements": 19,
+    "changes": 0,
+    "rows_written": 0
+  },
+  {
+    "file": "tools/catalogue-seeds/2026-10-09-g021-4-hager.sql",
+    "batch": 15,
+    "at": "2026-10-09T17:26:33.886568+00:00",
+    "success": true,
+    "statements": 23,
+    "changes": 0,
+    "rows_written": 0
+  },
+  {
+    "file": "tools/catalogue-seeds/2026-10-09-g021-4-hager.sql",
+    "batch": 16,
+    "at": "2026-10-09T17:26:34.132323+00:00",
+    "success": true,
+    "statements": 23,
+    "changes": 0,
+    "rows_written": 0
+  },
+  {
+    "file": "tools/catalogue-seeds/2026-10-09-g021-4-hager.sql",
+    "batch": 17,
+    "at": "2026-10-09T17:26:34.370151+00:00",
+    "success": true,
+    "statements": 16,
+    "changes": 0,
+    "rows_written": 0
+  },
+  {
+    "file": "tools/catalogue-seeds/2026-10-09-g021-4-hager.sql",
+    "batch": 18,
+    "at": "2026-10-09T17:26:34.629618+00:00",
+    "success": true,
+    "statements": 28,
+    "changes": 0,
+    "rows_written": 0
+  },
+  {
+    "file": "tools/catalogue-seeds/2026-10-09-g021-4-hager.sql",
+    "batch": 19,
+    "at": "2026-10-09T17:26:34.892776+00:00",
+    "success": true,
+    "statements": 26,
+    "changes": 0,
+    "rows_written": 0
+  },
+  {
+    "file": "tools/catalogue-seeds/2026-10-09-g021-4-hager.sql",
+    "batch": 20,
+    "at": "2026-10-09T17:26:35.149983+00:00",
+    "success": true,
+    "statements": 17,
+    "changes": 0,
+    "rows_written": 0
+  },
+  {
+    "file": "tools/catalogue-seeds/2026-10-09-g021-4-hager.sql",
+    "batch": 21,
+    "at": "2026-10-09T17:26:35.392124+00:00",
+    "success": true,
+    "statements": 19,
+    "changes": 0,
+    "rows_written": 0
+  },
+  {
+    "file": "tools/catalogue-seeds/2026-10-09-g021-4-hager.sql",
+    "batch": 22,
+    "at": "2026-10-09T17:26:35.668395+00:00",
+    "success": true,
+    "statements": 18,
+    "changes": 0,
+    "rows_written": 0
+  },
+  {
+    "file": "tools/catalogue-seeds/2026-10-09-g021-4-hager.sql",
+    "batch": 23,
+    "at": "2026-10-09T17:26:35.979468+00:00",
+    "success": true,
+    "statements": 21,
+    "changes": 0,
+    "rows_written": 0
+  },
+  {
+    "file": "tools/catalogue-seeds/2026-10-09-g021-4-hager.sql",
+    "batch": 24,
+    "at": "2026-10-09T17:26:36.204306+00:00",
+    "success": true,
+    "statements": 10,
+    "changes": 0,
+    "rows_written": 0
+  },
+  {
+    "file": "tools/catalogue-seeds/2026-10-09-g021-4-hager.sql",
+    "batch": 25,
+    "at": "2026-10-09T17:26:36.473716+00:00",
+    "success": true,
+    "statements": 7,
+    "changes": 0,
+    "rows_written": 0
+  },
+  {
+    "file": "tools/catalogue-seeds/2026-10-09-g021-4-hager.sql",
+    "batch": 26,
+    "at": "2026-10-09T17:26:36.746330+00:00",
+    "success": true,
+    "statements": 8,
+    "changes": 0,
+    "rows_written": 0
+  },
+  {
+    "file": "tools/catalogue-seeds/2026-10-09-g021-4-hager.sql",
+    "batch": 27,
+    "at": "2026-10-09T17:26:36.998905+00:00",
+    "success": true,
+    "statements": 6,
+    "changes": 0,
+    "rows_written": 0
+  },
+  {
+    "file": "tools/catalogue-seeds/2026-10-09-g021-4-hager.sql",
+    "batch": 28,
+    "at": "2026-10-09T17:26:37.230459+00:00",
+    "success": true,
+    "statements": 13,
+    "changes": 0,
+    "rows_written": 0
+  },
+  {
+    "file": "tools/catalogue-seeds/2026-10-09-g021-4-hager.sql",
+    "batch": 29,
+    "at": "2026-10-09T17:26:37.611560+00:00",
+    "success": true,
+    "statements": 19,
+    "changes": 1061,
+    "rows_written": 531
+  },
+  {
+    "file": "tools/catalogue-seeds/2026-10-09-g021-5-sargent.sql",
+    "batch": 1,
+    "at": "2026-10-09T17:26:37.905021+00:00",
+    "success": true,
+    "statements": 15,
+    "changes": 0,
+    "rows_written": 0
+  },
+  {
+    "file": "tools/catalogue-seeds/2026-10-09-g021-5-sargent.sql",
+    "batch": 2,
+    "at": "2026-10-09T17:26:38.147782+00:00",
+    "success": true,
+    "statements": 8,
+    "changes": 0,
+    "rows_written": 0
+  },
+  {
+    "file": "tools/catalogue-seeds/2026-10-09-g021-5-sargent.sql",
+    "batch": 3,
+    "at": "2026-10-09T17:26:38.388088+00:00",
+    "success": true,
+    "statements": 10,
+    "changes": 0,
+    "rows_written": 0
+  },
+  {
+    "file": "tools/catalogue-seeds/2026-10-09-g021-5-sargent.sql",
+    "batch": 4,
+    "at": "2026-10-09T17:26:38.633026+00:00",
+    "success": true,
+    "statements": 10,
+    "changes": 0,
+    "rows_written": 0
+  },
+  {
+    "file": "tools/catalogue-seeds/2026-10-09-g021-5-sargent.sql",
+    "batch": 5,
+    "at": "2026-10-09T17:26:38.890675+00:00",
+    "success": true,
+    "statements": 11,
+    "changes": 0,
+    "rows_written": 0
+  },
+  {
+    "file": "tools/catalogue-seeds/2026-10-09-g021-5-sargent.sql",
+    "batch": 6,
+    "at": "2026-10-09T17:26:39.134445+00:00",
+    "success": true,
+    "statements": 13,
+    "changes": 0,
+    "rows_written": 0
+  },
+  {
+    "file": "tools/catalogue-seeds/2026-10-09-g021-5-sargent.sql",
+    "batch": 7,
+    "at": "2026-10-09T17:26:39.398087+00:00",
+    "success": true,
+    "statements": 13,
+    "changes": 0,
+    "rows_written": 0
+  },
+  {
+    "file": "tools/catalogue-seeds/2026-10-09-g021-5-sargent.sql",
+    "batch": 8,
+    "at": "2026-10-09T17:26:39.662505+00:00",
+    "success": true,
+    "statements": 10,
+    "changes": 161,
+    "rows_written": 81
+  },
+  {
+    "file": "tools/catalogue-seeds/2026-10-09-g021-1-rockwood.sql",
+    "batch": 1,
+    "at": "2026-10-09T17:35:08.209402+00:00",
+    "success": true,
+    "statements": 8,
+    "changes": 0,
+    "rows_written": 0
+  },
+  {
+    "file": "tools/catalogue-seeds/2026-10-09-g021-1-rockwood.sql",
+    "batch": 2,
+    "at": "2026-10-09T17:35:08.457826+00:00",
+    "success": true,
+    "statements": 8,
+    "changes": 0,
+    "rows_written": 0
+  },
+  {
+    "file": "tools/catalogue-seeds/2026-10-09-g021-1-rockwood.sql",
+    "batch": 3,
+    "at": "2026-10-09T17:35:08.682536+00:00",
+    "success": true,
+    "statements": 18,
+    "changes": 0,
+    "rows_written": 0
+  },
+  {
+    "file": "tools/catalogue-seeds/2026-10-09-g021-1-rockwood.sql",
+    "batch": 4,
+    "at": "2026-10-09T17:35:08.942217+00:00",
+    "success": true,
+    "statements": 18,
+    "changes": 0,
+    "rows_written": 0
+  },
+  {
+    "file": "tools/catalogue-seeds/2026-10-09-g021-1-rockwood.sql",
+    "batch": 5,
+    "at": "2026-10-09T17:35:09.204065+00:00",
+    "success": true,
+    "statements": 17,
+    "changes": 0,
+    "rows_written": 0
+  },
+  {
+    "file": "tools/catalogue-seeds/2026-10-09-g021-1-rockwood.sql",
+    "batch": 6,
+    "at": "2026-10-09T17:35:09.441542+00:00",
+    "success": true,
+    "statements": 17,
+    "changes": 0,
+    "rows_written": 0
+  },
+  {
+    "file": "tools/catalogue-seeds/2026-10-09-g021-1-rockwood.sql",
+    "batch": 7,
+    "at": "2026-10-09T17:35:09.696475+00:00",
+    "success": true,
+    "statements": 13,
+    "changes": 0,
+    "rows_written": 0
+  },
+  {
+    "file": "tools/catalogue-seeds/2026-10-09-g021-1-rockwood.sql",
+    "batch": 8,
+    "at": "2026-10-09T17:35:09.947785+00:00",
+    "success": true,
+    "statements": 21,
+    "changes": 0,
+    "rows_written": 0
+  },
+  {
+    "file": "tools/catalogue-seeds/2026-10-09-g021-1-rockwood.sql",
+    "batch": 9,
+    "at": "2026-10-09T17:35:10.175787+00:00",
+    "success": true,
+    "statements": 19,
+    "changes": 0,
+    "rows_written": 0
+  },
+  {
+    "file": "tools/catalogue-seeds/2026-10-09-g021-1-rockwood.sql",
+    "batch": 10,
+    "at": "2026-10-09T17:35:10.416072+00:00",
+    "success": true,
+    "statements": 20,
+    "changes": 0,
+    "rows_written": 0
+  },
+  {
+    "file": "tools/catalogue-seeds/2026-10-09-g021-1-rockwood.sql",
+    "batch": 11,
+    "at": "2026-10-09T17:35:10.869419+00:00",
+    "success": true,
+    "statements": 14,
+    "changes": 0,
+    "rows_written": 0
+  },
+  {
+    "file": "tools/catalogue-seeds/2026-10-09-g021-2-ngp.sql",
+    "batch": 1,
+    "at": "2026-10-09T17:35:11.140661+00:00",
+    "success": true,
+    "statements": 24,
+    "changes": 0,
+    "rows_written": 0
+  },
+  {
+    "file": "tools/catalogue-seeds/2026-10-09-g021-2-ngp.sql",
+    "batch": 2,
+    "at": "2026-10-09T17:35:11.346158+00:00",
+    "success": true,
+    "statements": 18,
+    "changes": 0,
+    "rows_written": 0
+  },
+  {
+    "file": "tools/catalogue-seeds/2026-10-09-g021-3-mckinney.sql",
+    "batch": 1,
+    "at": "2026-10-09T17:35:11.617345+00:00",
+    "success": true,
+    "statements": 20,
+    "changes": 0,
+    "rows_written": 0
+  },
+  {
+    "file": "tools/catalogue-seeds/2026-10-09-g021-3-mckinney.sql",
+    "batch": 2,
+    "at": "2026-10-09T17:35:11.856095+00:00",
+    "success": true,
+    "statements": 16,
+    "changes": 0,
+    "rows_written": 0
+  },
+  {
+    "file": "tools/catalogue-seeds/2026-10-09-g021-3-mckinney.sql",
+    "batch": 3,
+    "at": "2026-10-09T17:35:12.157584+00:00",
+    "success": true,
+    "statements": 19,
+    "changes": 0,
+    "rows_written": 0
+  },
+  {
+    "file": "tools/catalogue-seeds/2026-10-09-g021-3-mckinney.sql",
+    "batch": 4,
+    "at": "2026-10-09T17:35:12.522269+00:00",
+    "success": true,
+    "statements": 22,
+    "changes": 0,
+    "rows_written": 0
+  },
+  {
+    "file": "tools/catalogue-seeds/2026-10-09-g021-3-mckinney.sql",
+    "batch": 5,
+    "at": "2026-10-09T17:35:12.844148+00:00",
+    "success": true,
+    "statements": 18,
+    "changes": 0,
+    "rows_written": 0
+  },
+  {
+    "file": "tools/catalogue-seeds/2026-10-09-g021-3-mckinney.sql",
+    "batch": 6,
+    "at": "2026-10-09T17:35:13.040511+00:00",
+    "success": true,
+    "statements": 9,
+    "changes": 0,
+    "rows_written": 0
+  },
+  {
+    "file": "tools/catalogue-seeds/2026-10-09-g021-4-hager.sql",
+    "batch": 1,
+    "at": "2026-10-09T17:35:13.572839+00:00",
+    "success": true,
+    "statements": 19,
+    "changes": 0,
+    "rows_written": 0
+  },
+  {
+    "file": "tools/catalogue-seeds/2026-10-09-g021-4-hager.sql",
+    "batch": 2,
+    "at": "2026-10-09T17:35:14.396633+00:00",
+    "success": true,
+    "statements": 13,
+    "changes": 0,
+    "rows_written": 0
+  },
+  {
+    "file": "tools/catalogue-seeds/2026-10-09-g021-4-hager.sql",
+    "batch": 3,
+    "at": "2026-10-09T17:35:14.734132+00:00",
+    "success": true,
+    "statements": 18,
+    "changes": 0,
+    "rows_written": 0
+  },
+  {
+    "file": "tools/catalogue-seeds/2026-10-09-g021-4-hager.sql",
+    "batch": 4,
+    "at": "2026-10-09T17:35:15.010398+00:00",
+    "success": true,
+    "statements": 20,
+    "changes": 0,
+    "rows_written": 0
+  },
+  {
+    "file": "tools/catalogue-seeds/2026-10-09-g021-4-hager.sql",
+    "batch": 5,
+    "at": "2026-10-09T17:35:15.251871+00:00",
+    "success": true,
+    "statements": 16,
+    "changes": 0,
+    "rows_written": 0
+  },
+  {
+    "file": "tools/catalogue-seeds/2026-10-09-g021-4-hager.sql",
+    "batch": 6,
+    "at": "2026-10-09T17:35:15.492222+00:00",
+    "success": true,
+    "statements": 25,
+    "changes": 0,
+    "rows_written": 0
+  },
+  {
+    "file": "tools/catalogue-seeds/2026-10-09-g021-4-hager.sql",
+    "batch": 7,
+    "at": "2026-10-09T17:35:15.734127+00:00",
+    "success": true,
+    "statements": 21,
+    "changes": 0,
+    "rows_written": 0
+  },
+  {
+    "file": "tools/catalogue-seeds/2026-10-09-g021-4-hager.sql",
+    "batch": 8,
+    "at": "2026-10-09T17:35:16.034055+00:00",
+    "success": true,
+    "statements": 17,
+    "changes": 0,
+    "rows_written": 0
+  },
+  {
+    "file": "tools/catalogue-seeds/2026-10-09-g021-4-hager.sql",
+    "batch": 9,
+    "at": "2026-10-09T17:35:16.274952+00:00",
+    "success": true,
+    "statements": 23,
+    "changes": 0,
+    "rows_written": 0
+  },
+  {
+    "file": "tools/catalogue-seeds/2026-10-09-g021-4-hager.sql",
+    "batch": 10,
+    "at": "2026-10-09T17:35:16.600416+00:00",
+    "success": true,
+    "statements": 30,
+    "changes": 0,
+    "rows_written": 0
+  },
+  {
+    "file": "tools/catalogue-seeds/2026-10-09-g021-4-hager.sql",
+    "batch": 11,
+    "at": "2026-10-09T17:35:17.017014+00:00",
+    "success": true,
+    "statements": 24,
+    "changes": 0,
+    "rows_written": 0
+  },
+  {
+    "file": "tools/catalogue-seeds/2026-10-09-g021-4-hager.sql",
+    "batch": 12,
+    "at": "2026-10-09T17:35:17.269760+00:00",
+    "success": true,
+    "statements": 25,
+    "changes": 0,
+    "rows_written": 0
+  },
+  {
+    "file": "tools/catalogue-seeds/2026-10-09-g021-4-hager.sql",
+    "batch": 13,
+    "at": "2026-10-09T17:35:17.502495+00:00",
+    "success": true,
+    "statements": 17,
+    "changes": 0,
+    "rows_written": 0
+  },
+  {
+    "file": "tools/catalogue-seeds/2026-10-09-g021-4-hager.sql",
+    "batch": 14,
+    "at": "2026-10-09T17:35:17.862246+00:00",
+    "success": true,
+    "statements": 19,
+    "changes": 0,
+    "rows_written": 0
+  },
+  {
+    "file": "tools/catalogue-seeds/2026-10-09-g021-4-hager.sql",
+    "batch": 15,
+    "at": "2026-10-09T17:35:18.148679+00:00",
+    "success": true,
+    "statements": 23,
+    "changes": 0,
+    "rows_written": 0
+  },
+  {
+    "file": "tools/catalogue-seeds/2026-10-09-g021-4-hager.sql",
+    "batch": 16,
+    "at": "2026-10-09T17:35:18.637274+00:00",
+    "success": true,
+    "statements": 23,
+    "changes": 0,
+    "rows_written": 0
+  },
+  {
+    "file": "tools/catalogue-seeds/2026-10-09-g021-4-hager.sql",
+    "batch": 17,
+    "at": "2026-10-09T17:35:18.888727+00:00",
+    "success": true,
+    "statements": 16,
+    "changes": 0,
+    "rows_written": 0
+  },
+  {
+    "file": "tools/catalogue-seeds/2026-10-09-g021-4-hager.sql",
+    "batch": 18,
+    "at": "2026-10-09T17:35:19.145553+00:00",
+    "success": true,
+    "statements": 28,
+    "changes": 0,
+    "rows_written": 0
+  },
+  {
+    "file": "tools/catalogue-seeds/2026-10-09-g021-4-hager.sql",
+    "batch": 19,
+    "at": "2026-10-09T17:35:19.415442+00:00",
+    "success": true,
+    "statements": 26,
+    "changes": 0,
+    "rows_written": 0
+  },
+  {
+    "file": "tools/catalogue-seeds/2026-10-09-g021-4-hager.sql",
+    "batch": 20,
+    "at": "2026-10-09T17:35:19.724084+00:00",
+    "success": true,
+    "statements": 17,
+    "changes": 0,
+    "rows_written": 0
+  },
+  {
+    "file": "tools/catalogue-seeds/2026-10-09-g021-4-hager.sql",
+    "batch": 21,
+    "at": "2026-10-09T17:35:19.951930+00:00",
+    "success": true,
+    "statements": 19,
+    "changes": 0,
+    "rows_written": 0
+  },
+  {
+    "file": "tools/catalogue-seeds/2026-10-09-g021-4-hager.sql",
+    "batch": 22,
+    "at": "2026-10-09T17:35:20.200118+00:00",
+    "success": true,
+    "statements": 18,
+    "changes": 0,
+    "rows_written": 0
+  },
+  {
+    "file": "tools/catalogue-seeds/2026-10-09-g021-4-hager.sql",
+    "batch": 23,
+    "at": "2026-10-09T17:35:20.430777+00:00",
+    "success": true,
+    "statements": 21,
+    "changes": 0,
+    "rows_written": 0
+  },
+  {
+    "file": "tools/catalogue-seeds/2026-10-09-g021-4-hager.sql",
+    "batch": 24,
+    "at": "2026-10-09T17:35:20.670663+00:00",
+    "success": true,
+    "statements": 10,
+    "changes": 0,
+    "rows_written": 0
+  },
+  {
+    "file": "tools/catalogue-seeds/2026-10-09-g021-4-hager.sql",
+    "batch": 25,
+    "at": "2026-10-09T17:35:20.894703+00:00",
+    "success": true,
+    "statements": 7,
+    "changes": 0,
+    "rows_written": 0
+  },
+  {
+    "file": "tools/catalogue-seeds/2026-10-09-g021-4-hager.sql",
+    "batch": 26,
+    "at": "2026-10-09T17:35:21.158743+00:00",
+    "success": true,
+    "statements": 8,
+    "changes": 0,
+    "rows_written": 0
+  },
+  {
+    "file": "tools/catalogue-seeds/2026-10-09-g021-4-hager.sql",
+    "batch": 27,
+    "at": "2026-10-09T17:35:21.366706+00:00",
+    "success": true,
+    "statements": 6,
+    "changes": 0,
+    "rows_written": 0
+  },
+  {
+    "file": "tools/catalogue-seeds/2026-10-09-g021-4-hager.sql",
+    "batch": 28,
+    "at": "2026-10-09T17:35:21.592568+00:00",
+    "success": true,
+    "statements": 13,
+    "changes": 0,
+    "rows_written": 0
+  },
+  {
+    "file": "tools/catalogue-seeds/2026-10-09-g021-4-hager.sql",
+    "batch": 29,
+    "at": "2026-10-09T17:35:21.846328+00:00",
+    "success": true,
+    "statements": 19,
+    "changes": 0,
+    "rows_written": 0
+  },
+  {
+    "file": "tools/catalogue-seeds/2026-10-09-g021-5-sargent.sql",
+    "batch": 1,
+    "at": "2026-10-09T17:35:22.124149+00:00",
+    "success": true,
+    "statements": 15,
+    "changes": 0,
+    "rows_written": 0
+  },
+  {
+    "file": "tools/catalogue-seeds/2026-10-09-g021-5-sargent.sql",
+    "batch": 2,
+    "at": "2026-10-09T17:35:22.348030+00:00",
+    "success": true,
+    "statements": 8,
+    "changes": 0,
+    "rows_written": 0
+  },
+  {
+    "file": "tools/catalogue-seeds/2026-10-09-g021-5-sargent.sql",
+    "batch": 3,
+    "at": "2026-10-09T17:35:22.578187+00:00",
+    "success": true,
+    "statements": 10,
+    "changes": 0,
+    "rows_written": 0
+  },
+  {
+    "file": "tools/catalogue-seeds/2026-10-09-g021-5-sargent.sql",
+    "batch": 4,
+    "at": "2026-10-09T17:35:22.891884+00:00",
+    "success": true,
+    "statements": 10,
+    "changes": 0,
+    "rows_written": 0
+  },
+  {
+    "file": "tools/catalogue-seeds/2026-10-09-g021-5-sargent.sql",
+    "batch": 5,
+    "at": "2026-10-09T17:35:23.133670+00:00",
+    "success": true,
+    "statements": 11,
+    "changes": 0,
+    "rows_written": 0
+  },
+  {
+    "file": "tools/catalogue-seeds/2026-10-09-g021-5-sargent.sql",
+    "batch": 6,
+    "at": "2026-10-09T17:35:23.410117+00:00",
+    "success": true,
+    "statements": 13,
+    "changes": 0,
+    "rows_written": 0
+  },
+  {
+    "file": "tools/catalogue-seeds/2026-10-09-g021-5-sargent.sql",
+    "batch": 7,
+    "at": "2026-10-09T17:35:23.655640+00:00",
+    "success": true,
+    "statements": 13,
+    "changes": 0,
+    "rows_written": 0
+  },
+  {
+    "file": "tools/catalogue-seeds/2026-10-09-g021-5-sargent.sql",
+    "batch": 8,
+    "at": "2026-10-09T17:35:23.862647+00:00",
+    "success": true,
+    "statements": 10,
+    "changes": 0,
+    "rows_written": 0
+  }
+]

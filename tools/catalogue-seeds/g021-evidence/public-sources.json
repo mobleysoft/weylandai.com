@@ -1,0 +1,222 @@
+[
+  {
+    "key": "rockwood",
+    "url": "https://marketing-assets.seclock.com/image/upload/AADSS1014778",
+    "final_url": "https://marketing-assets.seclock.com/image/upload/AADSS1014778",
+    "status": 200,
+    "bytes": 19308272,
+    "sha256": "1fdf1134ab1234e04c8a5e59889c4b70445b187a44a087428d5798ab70bc4d71",
+    "pages": 164,
+    "retrieved_at": "2026-10-09T17:21:24.971803+00:00",
+    "r2_key": "catalog-corpus/58ce3e35b761bd1ba417f0ebd8d75e20e85b11867431e2c36b28efe366519a68.pdf"
+  },
+  {
+    "key": "ngp",
+    "url": "https://www.ngp.com/ngp/cache/file/065F4F55-38B1-4AEC-852956EFA8B92AC7.pdf",
+    "final_url": "https://www.ngp.com/ngp/cache/file/065F4F55-38B1-4AEC-852956EFA8B92AC7.pdf",
+    "status": 200,
+    "bytes": 6619632,
+    "sha256": "ab117b53b17abbe593cab804e4683282aeca045265b3dcf1f879f3cd4236aea3",
+    "pages": 32,
+    "retrieved_at": "2026-10-09T17:21:25.581447+00:00",
+    "r2_key": "catalog-corpus/7c122f87b32bb9b538cb8bf50a18af7c6f314587d30e7e1c6fa437f02d0a059a.pdf"
+  },
+  {
+    "key": "mckinney",
+    "url": "https://marketing-assets.seclock.com/image/upload/AADSS1010289",
+    "final_url": "https://marketing-assets.seclock.com/image/upload/AADSS1010289",
+    "status": 200,
+    "bytes": 13032724,
+    "sha256": "00414107e0710bb62551b180e5f61b947a978da0e62190dd45473f05f015afe2",
+    "pages": 92,
+    "retrieved_at": "2026-10-09T17:21:28.219868+00:00",
+    "r2_key": "catalog-corpus/cd6304bc5b178061ec1acde48ddc67d03fdaefc1fd67d0cb49e83d02f2f85e4f.pdf"
+  },
+  {
+    "key": "hager",
+    "url": "https://www.hagerco.com/Files/Files/Main%20Catalog%20Sections/Catalog_2024_Complete_v06.pdf",
+    "final_url": "https://www.hagerco.com/Files/Files/Main%20Catalog%20Sections/Catalog_2024_Complete_v06.pdf",
+    "status": 200,
+    "bytes": 91403378,
+    "sha256": "24c796309c95d7fa49fd3e274e7460fe439beb890544c8f83bcc9a81eba2e0d9",
+    "pages": 530,
+    "retrieved_at": "2026-10-09T17:21:23.646934+00:00",
+    "r2_key": "catalog-corpus/9f4f7ec777a36bfa0cbc2f8f86334874ec32a62af95eb81994e3df2fc0a8253a.pdf"
+  },
+  {
+    "key": "sargent",
+    "url": "https://marketing-assets.seclock.com/image/upload/SARGENT_80_Series_Catalog",
+    "final_url": "https://marketing-assets.seclock.com/image/upload/SARGENT_80_Series_Catalog",
+    "status": 200,
+    "bytes": 9265553,
+    "sha256": "5951c34371c6b788da4ab0be979a7b3a526ca850906a15e98de1ba49948c8d67",
+    "pages": 80,
+    "retrieved_at": "2026-10-09T17:21:27.722007+00:00",
+    "r2_key": "catalog-corpus/e28aa64695674220eed8f6dc101bdcbfe262944e1b7731352fc99ced30b5f63c.pdf"
+  },
+  {
+    "key": "pemko",
+    "url": "https://marketing-assets.seclock.com/image/upload/2025_pemko_products_full_line_catalog",
+    "final_url": "https://marketing-assets.seclock.com/image/upload/2025_pemko_products_full_line_catalog",
+    "status": 200,
+    "bytes": 22439068,
+    "sha256": "96f3757b1c1ded0a62635d5eeda923bf047636a4c11eb4d33e4a4394466ae8e7",
+    "pages": 288,
+    "retrieved_at": "2026-10-09T17:25:28.007495+00:00",
+    "r2_key": "catalog-corpus/73a6be3ac4e4bec43739b8620bb72c536fdaab4f917fced3c56ddb231b9d78ce.pdf"
+  },
+  {
+    "key": "best",
+    "url": "https://marketing-assets.seclock.com/image/upload/BEST_9K-Series-Catalog_2021",
+    "final_url": "https://marketing-assets.seclock.com/image/upload/BEST_9K-Series-Catalog_2021",
+    "status": 200,
+    "bytes": 365635,
+    "sha256": "eefb2e585f620c8a502a7badaffb276dbe84d628d9881bc700538d92ab899ed3",
+    "pages": 12,
+    "retrieved_at": "2026-10-09T17:25:20.965546+00:00",
+    "r2_key": "catalog-corpus/ef0fa8ee80242a7a600f13b515454aa68b149261e6d36b11ce3fe4a1522f522d.pdf"
+  },
+  {
+    "key": "zero",
+    "url": "https://mea.allegion.com/content/dam/mea/en/Zero_Full_%20Catalgue.pdf",
+    "final_url": "https://mea.allegion.com/content/dam/mea/en/Zero_Full_%20Catalgue.pdf",
+    "status": 200,
+    "bytes": 33737369,
+    "sha256": "effbb834ffbb49df665634513c8649d97419d5460a1c5c0a88945acc726de30b",
+    "pages": 92,
+    "retrieved_at": "2026-10-09T17:25:48.728763+00:00",
+    "r2_key": "catalog-corpus/8ac57c26793a06d558fa6c7eccc5bef6eeb3b05b260f8ef8abc9c63d5fe6886c.pdf"
+  },
+  {
+    "key": "trimco",
+    "url": "https://marketing-assets.seclock.com/image/upload/FullLineCatalog2018",
+    "final_url": "https://marketing-assets.seclock.com/image/upload/FullLineCatalog2018",
+    "status": 200,
+    "bytes": 25543357,
+    "sha256": "17d60f0ef5e73d3fd5075ad3f6a24d1b1164f398ae9f4dc14af84a71c23d7c95",
+    "pages": 84,
+    "retrieved_at": "2026-10-09T17:25:26.930871+00:00",
+    "r2_key": "catalog-corpus/a5e353213034d12a542ca6f31e105e9d03a2261df1f71507ea91e140b94ffb51.pdf"
+  },
+  {
+    "key": "corbin-russwin",
+    "url": "https://resources.locksandsafes.com/wp-content/uploads/Corbin-Russwin-DC8000-Series-Door-Closer-Catalog_45528.pdf",
+    "final_url": "https://resources.locksandsafes.com/wp-content/uploads/Corbin-Russwin-DC8000-Series-Door-Closer-Catalog_45528.pdf",
+    "status": 200,
+    "bytes": 4484658,
+    "sha256": "0a6890f7cf229be2a86b1b12d53cafd827fbe5b21204cf502ba7e1d44aa23c85",
+    "pages": 32,
+    "retrieved_at": "2026-10-09T17:25:28.412625+00:00",
+    "r2_key": "catalog-corpus/d53558eee79318231038093e46f6434454bbeece9d32e31db00ba0c68e57e3ac.pdf"
+  },
+  {
+    "key": "norton",
+    "url": "https://www.doorhardwarecenter.com/files/docs/Norton_7500_Series_Closer_Catalog__1_1.pdf",
+    "final_url": "https://www.doorhardwarecenter.com/files/docs/Norton_7500_Series_Closer_Catalog__1_1.pdf",
+    "status": 200,
+    "bytes": 6462639,
+    "sha256": "de53e67151f3ba075a8cc823e472c2adaacbbc4255b49f00fd71ee78edf5b1b1",
+    "pages": 52,
+    "retrieved_at": "2026-10-09T17:26:00.162070+00:00",
+    "r2_key": "catalog-corpus/8ec62ce13f05e16bb6e04dce3782cdefb91ebc0c7f117f21a6a83b7c8c68668b.pdf"
+  },
+  {
+    "key": "stanley",
+    "url": "https://marketing-assets.seclock.com/image/upload/ST-HI-0007_General-Hinge-Brochure-07-22.pdf",
+    "final_url": "https://marketing-assets.seclock.com/image/upload/ST-HI-0007_General-Hinge-Brochure-07-22.pdf",
+    "status": 200,
+    "bytes": 2750962,
+    "sha256": "51bb885b82e2534263a051270170605b13f66a49f6b00ddf38105ae9dda6f291",
+    "pages": 24,
+    "retrieved_at": "2026-10-09T17:25:28.464587+00:00",
+    "r2_key": "catalog-corpus/30b904106c257b1f37d73b09303f28be9bf67e53f1ee7d0fabf7fa71114038db.pdf"
+  },
+  {
+    "key": "rixson",
+    "url": "https://dvwi9lnoau63q.cloudfront.net/rixson/catalogs/rixsoncatalog.pdf",
+    "final_url": "https://dvwi9lnoau63q.cloudfront.net/rixson/catalogs/rixsoncatalog.pdf",
+    "status": 200,
+    "bytes": 983399,
+    "sha256": "a51b02de12e38cda942f908ddc97d4ec4f4e69188c107588f3e001ab8499618c",
+    "pages": 8,
+    "retrieved_at": "2026-10-09T17:28:03.694189+00:00",
+    "r2_key": "catalog-corpus/1d422aa6322c5c36d236feaf7fe4a68731e1e6fb0b2e40b133499048c731cdf2.pdf"
+  },
+  {
+    "key": "reese",
+    "url": "https://assets.reeseusa.com/documents/2024-ws-catalog.pdf?mtime=20250313105644",
+    "final_url": "https://assets.reeseusa.com/documents/2024-ws-catalog.pdf?mtime=20250313105644",
+    "status": 200,
+    "bytes": 17349693,
+    "sha256": "0684fb1545c312c2dccabf25a20881319c78457052f1c7f7c599ae81e24d0302",
+    "pages": 44,
+    "retrieved_at": "2026-10-09T17:25:33.284806+00:00",
+    "r2_key": "catalog-corpus/0a8885d15b4e517b04aefa3ee53c553ab9239050ece6ad848a8aee27902468f4.pdf"
+  },
+  {
+    "key": "yale",
+    "url": "https://dvwi9lnoau63q.cloudfront.net/yale/catalogs/YALE_catalog_8800-series.pdf",
+    "final_url": "https://dvwi9lnoau63q.cloudfront.net/yale/catalogs/YALE_catalog_8800-series.pdf",
+    "status": 200,
+    "bytes": 5776885,
+    "sha256": "872f1dac3b25b01b44c78463f0d49a656e9b6c02a300966f2b7d46639a469666",
+    "pages": 48,
+    "retrieved_at": "2026-10-09T17:25:30.381070+00:00",
+    "r2_key": "catalog-corpus/5367800562e0694ac2fb2fc3073486a6451b112d2dfda8453c3a7eb72ce4e38a.pdf"
+  },
+  {
+    "key": "adams-rite",
+    "url": "https://cdn11.bigcommerce.com/s-iqhkw55zf5/content/product-attachments/Adams%20Rite_Product_Catalog.pdf",
+    "final_url": "https://cdn11.bigcommerce.com/s-iqhkw55zf5/content/product-attachments/Adams%20Rite_Product_Catalog.pdf",
+    "status": 200,
+    "bytes": 48922574,
+    "sha256": "7a3ca092c5242a885d145f4653a19d1cbe7b4834e2200cfb432020149db2f90f",
+    "pages": 200,
+    "retrieved_at": "2026-10-09T17:25:41.581598+00:00",
+    "r2_key": "catalog-corpus/ec21545e35a6f9b49c27a3e968065b022b503f22054b0421320b57e3a6179b94.pdf"
+  },
+  {
+    "key": "glynn-johnson",
+    "url": "https://us.allegion.com/content/dam/allegion-us-2/web-files/glynn-johnson/information-documents/Glynn-Johnson_Overhead_Door_Holders.Stops_Catalog_101401.pdf",
+    "final_url": "https://us.allegion.com/content/dam/allegion-us-2/web-files/glynn-johnson/information-documents/Glynn-Johnson_Overhead_Door_Holders.Stops_Catalog_101401.pdf",
+    "status": 200,
+    "bytes": 3027847,
+    "sha256": "20d53134b94b9894eeb2284a3aecb385c9d583cde123ee5e7fbdd6b8f685654e",
+    "pages": 32,
+    "retrieved_at": "2026-10-09T17:21:13.194157+00:00",
+    "r2_key": "catalog-corpus/116ee74ce84a7ffd04b688883362e538cf138ab724958f003aff06fdf75ba60d.pdf"
+  },
+  {
+    "key": "abh",
+    "url": "https://marketing-assets.seclock.com/image/upload/ABH-Master-Catalog",
+    "final_url": "https://marketing-assets.seclock.com/image/upload/ABH-Master-Catalog",
+    "status": 200,
+    "bytes": 26051098,
+    "sha256": "25235cd2e569163de682efd6035d92fc0328089d420885f9d0cb50e33c38cf4c",
+    "pages": 234,
+    "retrieved_at": "2026-10-09T17:25:44.651206+00:00",
+    "r2_key": "catalog-corpus/0f3068422a1b0d9d148b81057f3df42c8509e5f2febe6f059a8909f88f235875.pdf"
+  },
+  {
+    "key": "bommer",
+    "url": "https://www.bommer.com/wp-content/uploads/2020/01/Current_Bommer_BH.pdf",
+    "final_url": "https://www.bommer.com/wp-content/uploads/2020/01/Current_Bommer_BH.pdf",
+    "status": 200,
+    "bytes": 7422626,
+    "sha256": "65540bb99a5a7ada3483b7c2b32dda29e791b8482930940ad19fb9bb4c13a450",
+    "pages": 80,
+    "retrieved_at": "2026-10-09T17:25:35.666071+00:00",
+    "r2_key": "catalog-corpus/95564dc8df83c2bb7466b3ec716806a7ce62aa96010691701ca22aa081b2a653.pdf"
+  },
+  {
+    "key": "securitron",
+    "url": "https://marketing-assets.seclock.com/image/upload/Securitron_2025_Catalog",
+    "final_url": "https://marketing-assets.seclock.com/image/upload/Securitron_2025_Catalog",
+    "status": 200,
+    "bytes": 19740103,
+    "sha256": "0378d828546746f04ed00ce83d81f27b8b5aebfba2838fea170fa74081099b86",
+    "pages": 162,
+    "retrieved_at": "2026-10-09T17:25:43.127639+00:00",
+    "r2_key": "catalog-corpus/88bda8e542bee493440faa3f6051b452fffd5fbc3963bc80f69eb128be585a9f.pdf"
+  }
+]
