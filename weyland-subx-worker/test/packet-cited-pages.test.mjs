@@ -153,3 +153,16 @@ test("a maker's spec sheet for the one product is cited at page 1 when its numbe
   assert.equal(sl.pageNum, 1);
   assert.equal(sl.title, "Select Hinges SL57 spec sheet");
 });
+
+test("a sell sheet that prints only the function code is cited at the page its title names (Schlage ALX80, p.4)", async () => {
+  const db = makeDb();
+  db.prepare("INSERT INTO hardware_components (id, set_id, component_type, quantity, manufacturer, model, sequence_order) VALUES ('c8','h1','lock',1,'Schlage','ALX80R-RHO-626 FSIC',3)").run();
+  const key = "catalog-corpus/alx.pdf";
+  const UPLOADS = { async get(k) { return k.startsWith("cut-sheet-text/") ? { json: async () => [{ page: 1, text: "ALX Series" }, { page: 4, text: "Keyed 50 Entrance/office; 53 Entrance; 80 Storeroom" }] } : null; }, async put() {} };
+  const match = async (c) => c.model.startsWith("ALX80")
+    ? { matched: true, matchType: "base_model", maker: { known: true, name: "Schlage" }, product: { manufacturer: "Schlage", model: "ALX80" }, cutSheets: [{ r2Key: key, title: "Schlage ALX Series sell sheet 113320 (p.4)" }], cataloguePages: [] }
+    : fakeMatch(c);
+  const r = await citedPagesForSession("s1", { DB: d1(db), UPLOADS }, match);
+  const alx = r.pages.find((p) => p.r2Key === key);
+  assert.equal(alx && alx.pageNum, 4);
+});
