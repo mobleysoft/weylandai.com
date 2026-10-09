@@ -46,13 +46,28 @@ export function bestPageFor(pages, model) {
   return best;
 }
 
+// The last few books' text held in this isolate (2026-10-09): one packet asks for the same book
+// once per item, and each R2 read and parse of a 1,000-page book's text took a second or more.
+// Held per bucket binding, so a different bucket never sees another's text.
+const HELD = new WeakMap();
+const HELD_MAX = 4;
+const heldFor = (bucket) => { if (!HELD.has(bucket)) HELD.set(bucket, new Map()); return HELD.get(bucket); };
+function hold(held, r2Key, pages) {
+  held.delete(r2Key);
+  held.set(r2Key, pages);
+  while (held.size > HELD_MAX) held.delete(held.keys().next().value);
+  return pages;
+}
+
 /** The filed PDF's pages as text, from the R2 cache or the OCR worker; null if unreadable. */
 export async function filedPdfPages(env, r2Key, { budgetMs = 15000 } = {}) {
   if (!env || !env.UPLOADS || !r2Key) return null;
+  const held = heldFor(env.UPLOADS);
+  if (held.has(r2Key)) return hold(held, r2Key, held.get(r2Key));
   const cacheKey = filedTextKey(r2Key);
   try {
     const cached = await env.UPLOADS.get(cacheKey);
-    if (cached) return await cached.json();
+    if (cached) return hold(held, r2Key, await cached.json());
   } catch (_) { /* read it again */ }
   if (!env.OCR_SERVICE) return null;
   const obj = await env.UPLOADS.get(r2Key);
@@ -77,7 +92,7 @@ export async function filedPdfPages(env, r2Key, { budgetMs = 15000 } = {}) {
   try {
     await env.UPLOADS.put(cacheKey, JSON.stringify(pages), { httpMetadata: { contentType: "application/json" }, customMetadata: { source: r2Key, readAt: new Date().toISOString() } });
   } catch (_) { /* the answer still stands */ }
-  return pages;
+  return hold(held, r2Key, pages);
 }
 
 /** { pageNum, mentions } of the filed PDF's page naming the model, or null. */

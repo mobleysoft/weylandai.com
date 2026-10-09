@@ -1,0 +1,504 @@
+{
+  "base": "https://weylandai.com",
+  "started_at": "2026-10-09T06:27:13.306Z",
+  "documents": [
+    {
+      "id": "rockford",
+      "label": "Rockford Bid 26-27 Addendum One",
+      "errors": [],
+      "read": {
+        "status": 200,
+        "ms": 19423,
+        "failed": []
+      },
+      "packet": {
+        "ms": 39112,
+        "total_pages": 59,
+        "components": 39,
+        "matched": 23,
+        "unmatched": 16
+      },
+      "cited": [
+        {
+          "title": "Select Hinges SL11: Select Hinges SL11 spec sheet, page 2",
+          "manufacturer": "Select Hinges",
+          "model": "SL11",
+          "page": 2,
+          "sets": [
+            "01 RR",
+            "02 RR-M",
+            "06 CL",
+            "07 CL",
+            "19 STO",
+            "19F STO",
+            "20 STO",
+            "23 STO",
+            "28 COR",
+            "40 UTY",
+            "44 UTY-IT",
+            "51 UTY-CUS",
+            "32 EXD"
+          ]
+        },
+        {
+          "title": "LCN Closers 4040XP: LCN Price Book, page 45",
+          "manufacturer": "LCN Closers",
+          "model": "4040XP",
+          "page": 45,
+          "sets": [
+            "01 RR",
+            "02 RR-M",
+            "19F STO",
+            "20 STO",
+            "23 STO",
+            "44 UTY-IT",
+            "47 VES",
+            "06 CL",
+            "07 CL",
+            "19 STO",
+            "32 EXD"
+          ]
+        },
+        {
+          "title": "IVES 8400: Ives Architectural Hardware Products Catalog, page 131",
+          "manufacturer": "IVES",
+          "model": "8400",
+          "page": 131,
+          "sets": [
+            "01 RR",
+            "02 RR-M",
+            "06 CL",
+            "07 CL",
+            "20 STO",
+            "23 STO",
+            "28 COR",
+            "44 UTY-IT",
+            "19 STO",
+            "19F STO"
+          ]
+        },
+        {
+          "title": "IVES WS406/407CCV: Ives Architectural Hardware Products Catalog, page 203",
+          "manufacturer": "IVES",
+          "model": "WS406/407CCV",
+          "page": 203,
+          "sets": [
+            "01 RR",
+            "02 RR-M",
+            "06 CL",
+            "19 STO",
+            "19F STO",
+            "20 STO",
+            "44 UTY-IT"
+          ]
+        },
+        {
+          "title": "IVES SR64: Ives Architectural Hardware Products Catalog, page 187",
+          "manufacturer": "IVES",
+          "model": "SR64",
+          "page": 187,
+          "sets": [
+            "01 RR",
+            "02 RR-M",
+            "06 CL",
+            "07 CL",
+            "19 STO",
+            "20 STO",
+            "23 STO",
+            "44 UTY-IT",
+            "51 UTY-CUS"
+          ]
+        },
+        {
+          "title": "IVES FB51P / FB61P: Ives Architectural Hardware Products Catalog, page 159",
+          "manufacturer": "IVES",
+          "model": "FB51P / FB61P",
+          "page": 159,
+          "sets": [
+            "19 STO",
+            "19F STO",
+            "40 UTY"
+          ]
+        },
+        {
+          "title": "IVES DP1: Ives Architectural Hardware Products Catalog, page 167",
+          "manufacturer": "IVES",
+          "model": "DP1",
+          "page": 167,
+          "sets": [
+            "19 STO",
+            "19F STO",
+            "40 UTY"
+          ]
+        },
+        {
+          "title": "Zero International 188S-BK: Zero Price Book, page 44",
+          "manufacturer": "Zero International",
+          "model": "188S-BK",
+          "page": 44,
+          "sets": [
+            "19F STO",
+            "28 COR"
+          ]
+        },
+        {
+          "title": "Von Duprin 99: Von Duprin Price Book, page 43",
+          "manufacturer": "Von Duprin",
+          "model": "99",
+          "page": 43,
+          "sets": [
+            "28 COR"
+          ]
+        },
+        {
+          "title": "Schlage 20-057-C FSIC 6PIN: Schlage_Key_Systems_Cylinders_Keys_Catalog_109487, page 41",
+          "manufacturer": "Schlage",
+          "model": "20-057-C FSIC 6PIN",
+          "page": 41,
+          "sets": [
+            "28 COR"
+          ]
+        },
+        {
+          "title": "Glynn-Johnson 100: Glynn-Johnson Price Book, page 23",
+          "manufacturer": "Glynn-Johnson",
+          "model": "100",
+          "page": 23,
+          "sets": [
+            "28 COR",
+            "32 EXD",
+            "47 VES"
+          ]
+        },
+        {
+          "title": "LCN Closers 4040SE: LCN Door Controls General Information Catalog, page 16",
+          "manufacturer": "LCN Closers",
+          "model": "4040SE",
+          "page": 16,
+          "sets": [
+            "28 COR"
+          ]
+        },
+        {
+          "title": "Von Duprin EPT10: Von Duprin 22 Series Catalog, page 25",
+          "manufacturer": "Von Duprin",
+          "model": "EPT10",
+          "page": 25,
+          "sets": [
+            "32 EXD",
+            "40 UTY"
+          ]
+        },
+        {
+          "title": "Von Duprin 99: Von Duprin Price Book, page 224",
+          "manufacturer": "Von Duprin",
+          "model": "99",
+          "page": 224,
+          "sets": [
+            "32 EXD"
+          ]
+        },
+        {
+          "title": "Zero International 39: Zero Price Book, page 27",
+          "manufacturer": "Zero International",
+          "model": "39",
+          "page": 27,
+          "sets": [
+            "32 EXD",
+            "40 UTY"
+          ]
+        },
+        {
+          "title": "Zero International 566: Zero Price Book, page 14",
+          "manufacturer": "Zero International",
+          "model": "566",
+          "page": 14,
+          "sets": [
+            "32 EXD",
+            "40 UTY"
+          ]
+        }
+      ],
+      "misses": [
+        {
+          "item": "1 EA lock ND40S RHO OS-OCC (Schlage)",
+          "sets": [
+            "01 RR"
+          ],
+          "code": "pdf_not_on_file",
+          "why": "Schlage Mechanical Price Book p. 33 names ND40; the PDF is not on file (its text is indexed)",
+          "needed": "the PDF of Schlage Mechanical Price Book"
+        },
+        {
+          "item": "1 EA push_plate 8200 4\" X 16\" TKTX SCREWS AT HM DOORS (IVES)",
+          "sets": [
+            "02 RR-M"
+          ],
+          "code": "pdf_not_on_file",
+          "why": "Ives Price Book 2024 p. 82 names 8200 4\" X 16\" TKTX SCREWS AT HM DOORS; the PDF is not on file (its text is indexed)",
+          "needed": "the PDF of Ives Price Book 2024"
+        },
+        {
+          "item": "1 EA pull_handle 8302 10\" 4\" X 16\" TKTX SCREWS AT HM DOORS (IVES)",
+          "sets": [
+            "02 RR-M"
+          ],
+          "code": "pdf_not_on_file",
+          "why": "Ives Price Book 2024 p. 84 names 8302 10\" 4\" X 16\" TKTX SCREWS AT HM DOORS; the PDF is not on file (its text is indexed)",
+          "needed": "the PDF of Ives Price Book 2024"
+        },
+        {
+          "item": "2 EA lock ALX53R-RHO-626 FSIC (Schlage)",
+          "sets": [
+            "06 CL",
+            "07 CL"
+          ],
+          "code": "pdf_not_on_file",
+          "why": "Schlage Commercial Price Book 2023 p. 49 names ALX53; the PDF is not on file (its text is indexed)",
+          "needed": "the PDF of Schlage Commercial Price Book 2023"
+        },
+        {
+          "item": "4 EA overhead_stop 90S (Glynn-Johnson)",
+          "sets": [
+            "07 CL",
+            "23 STO",
+            "40 UTY",
+            "51 UTY-CUS"
+          ],
+          "code": "model_not_in_catalogue",
+          "why": "Glynn-Johnson is in the catalogue; 90S is not",
+          "needed": "Glynn-Johnson 90S in the catalogue"
+        },
+        {
+          "item": "7 EA lock ALX80R-RHO-626 FSIC (Schlage)",
+          "sets": [
+            "19 STO",
+            "19F STO",
+            "20 STO",
+            "23 STO",
+            "40 UTY",
+            "44 UTY-IT",
+            "51 UTY-CUS"
+          ],
+          "code": "pdf_not_on_file",
+          "why": "Schlage Commercial Price Book 2023 p. 48 names ALX80; the PDF is not on file (its text is indexed)",
+          "needed": "the PDF of Schlage Commercial Price Book 2023"
+        },
+        {
+          "item": "1 EA pull_handle 8190HD 10\" O (IVES)",
+          "sets": [
+            "32 EXD"
+          ],
+          "code": "pdf_not_on_file",
+          "why": "Ives Price Book 2024 p. 54 names 8190HD 10\" O; the PDF is not on file (its text is indexed)",
+          "needed": "the PDF of Ives Price Book 2024"
+        },
+        {
+          "item": "2 EA seal BY DOOR AND FRAME MANUFACTURER (By others)",
+          "sets": [
+            "32 EXD",
+            "47 VES"
+          ],
+          "code": "maker_unknown",
+          "why": "no maker named By others is known, and no product is named By others BY DOOR AND FRAME MANUFACTURER",
+          "needed": "the maker's name"
+        },
+        {
+          "item": "10 EA card_reader BY DIVISION 28 (By others)",
+          "sets": [
+            "32 EXD",
+            "40 UTY",
+            "44 UTY-IT"
+          ],
+          "code": "maker_unknown",
+          "why": "no maker named By others is known, and no product is named By others BY DIVISION 28",
+          "needed": "the maker's name"
+        },
+        {
+          "item": "1 EA electric_strike 6223 FSE CON 12/16/24/28 VAC/VDC (Von Duprin)",
+          "sets": [
+            "40 UTY"
+          ],
+          "code": "page_not_pinned",
+          "why": "Von Duprin Price Book is on file, but the page naming 6223 is not pinned (its indexed text is another edition)",
+          "needed": "the current edition's page of that price book"
+        },
+        {
+          "item": "1 EA closer 4040XP SCUSH (LCN Closers)",
+          "sets": [
+            "40 UTY"
+          ],
+          "code": "page_not_pinned",
+          "why": "LCN Price Book is on file, but the page naming 4040XP is not pinned (its indexed text is another edition)",
+          "needed": "the current edition's page of that price book"
+        },
+        {
+          "item": "1 EA seal 142D (Zero International)",
+          "sets": [
+            "40 UTY"
+          ],
+          "code": "page_not_pinned",
+          "why": "Zero Price Book is on file, but the page naming 142 is not pinned (its indexed text is another edition)",
+          "needed": "the current edition's page of that price book"
+        },
+        {
+          "item": "1 EA seal 429D-S (Zero International)",
+          "sets": [
+            "40 UTY"
+          ],
+          "code": "page_not_pinned",
+          "why": "Zero Price Book is on file, but the page naming 429 is not pinned (its indexed text is another edition)",
+          "needed": "the current edition's page of that price book"
+        },
+        {
+          "item": "1 EA electric_strike 6211 FSE CON 12/16/24/28 VAC/VDC (Von Duprin)",
+          "sets": [
+            "44 UTY-IT"
+          ],
+          "code": "page_not_pinned",
+          "why": "Von Duprin Price Book is on file, but the page naming 6211 is not pinned (its indexed text is another edition)",
+          "needed": "the current edition's page of that price book"
+        },
+        {
+          "item": "1 EA hinge SL57 FULL SURFACE (Select Hinges)",
+          "sets": [
+            "47 VES"
+          ],
+          "code": "page_not_pinned",
+          "why": "Select Hinges SL57 spec sheet is on file, but the page naming SL57 is not pinned (its indexed text is another edition)",
+          "needed": "the current edition's page of that price book"
+        },
+        {
+          "item": "1 EA pull_handle 9190HD-33\"-10\"-NO (IVES)",
+          "sets": [
+            "47 VES"
+          ],
+          "code": "pdf_not_on_file",
+          "why": "Ives Price Book 2024 p. 63 names 9190HD-33\"-10\"-NO; the PDF is not on file (its text is indexed)",
+          "needed": "the PDF of Ives Price Book 2024"
+        }
+      ],
+      "misses_without_need": 0,
+      "pdf": {
+        "bytes": 4555497,
+        "pages": 59,
+        "has_misses_page": true
+      },
+      "cleanup": "deleted"
+    },
+    {
+      "id": "berryessa",
+      "label": "Berryessa Bid B-09-2023-24",
+      "errors": [],
+      "read": {
+        "status": 200,
+        "ms": 3669,
+        "failed": []
+      },
+      "packet": {
+        "ms": 8699,
+        "total_pages": 20,
+        "components": 10,
+        "matched": 10,
+        "unmatched": 0
+      },
+      "cited": [
+        {
+          "title": "IVES 5BB1HW: Ives Architectural Hardware Products Catalog, page 22",
+          "manufacturer": "IVES",
+          "model": "5BB1HW",
+          "page": 22,
+          "sets": [
+            "01",
+            "02"
+          ]
+        },
+        {
+          "title": "Von Duprin 99-L-F: Von Duprin Price Book, page 26",
+          "manufacturer": "Von Duprin",
+          "model": "99-L-F",
+          "page": 26,
+          "sets": [
+            "01"
+          ]
+        },
+        {
+          "title": "Schlage 20-057-ICX: Schlage_Key_Systems_Cylinders_Keys_Catalog_109487, page 41",
+          "manufacturer": "Schlage",
+          "model": "20-057-ICX",
+          "page": 41,
+          "sets": [
+            "01",
+            "02"
+          ]
+        },
+        {
+          "title": "LCN Closers 4040XP: LCN Price Book, page 45",
+          "manufacturer": "LCN Closers",
+          "model": "4040XP",
+          "page": 45,
+          "sets": [
+            "01",
+            "02"
+          ]
+        },
+        {
+          "title": "IVES 8400: Ives Architectural Hardware Products Catalog, page 131",
+          "manufacturer": "IVES",
+          "model": "8400",
+          "page": 131,
+          "sets": [
+            "01",
+            "02"
+          ]
+        },
+        {
+          "title": "Zero International 188S-BK: Zero Price Book, page 44",
+          "manufacturer": "Zero International",
+          "model": "188S-BK",
+          "page": 44,
+          "sets": [
+            "01",
+            "02"
+          ]
+        },
+        {
+          "title": "Von Duprin 99: Von Duprin Price Book, page 56",
+          "manufacturer": "Von Duprin",
+          "model": "99",
+          "page": 56,
+          "sets": [
+            "02"
+          ]
+        },
+        {
+          "title": "Von Duprin 99: Von Duprin Price Book, page 43",
+          "manufacturer": "Von Duprin",
+          "model": "99",
+          "page": 43,
+          "sets": [
+            "02"
+          ]
+        },
+        {
+          "title": "Zero International 328A: Zero Price Book, page 34",
+          "manufacturer": "Zero International",
+          "model": "328A",
+          "page": 34,
+          "sets": [
+            "02"
+          ]
+        }
+      ],
+      "misses": [],
+      "misses_without_need": 0,
+      "pdf": {
+        "bytes": 3469161,
+        "pages": 20,
+        "has_misses_page": false
+      },
+      "cleanup": "deleted"
+    }
+  ],
+  "finished_at": "2026-10-09T06:28:36.186Z"
+}

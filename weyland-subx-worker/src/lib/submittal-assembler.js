@@ -917,7 +917,11 @@ export async function assembleSubmittalPackage(sessionId, options, env2, PDFLib)
     // not in the catalogue, the model is not, no catalogue number on the line,
     // the book is on file but its page is not pinned, the PDF is not on file).
     // A reviewer sees what is missing without opening the app.
-    const misses = Array.isArray(options.cutSheetMisses) ? options.cutSheetMisses.filter(Boolean) : [];
+    // Lines another trade furnishes ("BY DIVISION 28") follow them, said as such (2026-10-09).
+    const missed = Array.isArray(options.cutSheetMisses) ? options.cutSheetMisses.filter(Boolean) : [];
+    const byOthers = (Array.isArray(options.cutSheetByOthers) ? options.cutSheetByOthers.filter(Boolean) : [])
+      .map((x) => ({ qty: x.qty, sets: x.sets, component_type: x.component_type, model: x.text, reason: "furnished by others, as the schedule says; no hardware page belongs in this packet", need: "nothing from the hardware supplier" }));
+    const misses = missed.concat(byOthers);
     if (misses.length) {
       const { PDFDocument: PDFDocument4, StandardFonts: StandardFonts4, rgb: rgb4 } = PDFLib;
       const md = await PDFDocument4.create();
@@ -929,7 +933,7 @@ export async function assembleSubmittalPackage(sessionId, options, env2, PDFLib)
       for (let pg = 0; pg < needed; pg++) {
         const page = md.addPage([W, H]);
         let y = H - 50;
-        page.drawText("ITEMS WITHOUT A CUT SHEET (" + misses.length + ")" + (pg > 0 ? " (continued)" : ""), { x: M, y, size: 15, font: b, color: blue });
+        page.drawText("ITEMS WITHOUT A CUT SHEET (" + missed.length + (byOthers.length ? "; " + byOthers.length + " BY OTHERS" : "") + ")" + (pg > 0 ? " (continued)" : ""), { x: M, y, size: 15, font: b, color: blue });
         y -= 16;
         page.drawText("Listed as the hardware schedule names them, with why no page is in this packet and what would put one there.", { x: M, y, size: 8, font: h, color: grey });
         y -= 20;
@@ -944,10 +948,10 @@ export async function assembleSubmittalPackage(sessionId, options, env2, PDFLib)
         }
         page.drawText("Page " + (currentPage + pg), { x: W - M - 40, y: 26, size: 7.5, font: h, color: grey });
       }
-      tocSections.push({ title: "Items without a cut sheet (" + misses.length + ")", pageNumber: currentPage, type: "cut_sheet" });
+      tocSections.push({ title: "Items without a cut sheet (" + missed.length + (byOthers.length ? "; " + byOthers.length + " by others" : "") + ")", pageNumber: currentPage, type: "cut_sheet" });
       currentPage += needed;
       cutSheetPdfs.push(await md.save());
-      result.sections.push({ type: "cut_sheet_misses", title: "Items without a cut sheet", pages: needed, items: misses.length });
+      result.sections.push({ type: "cut_sheet_misses", title: "Items without a cut sheet", pages: needed, items: missed.length, by_others: byOthers.length });
     }
     for (const cs of Array.isArray(options.citedPages) ? [] : (cutSheets.results || [])) {
       if ((cs.page_count || 1) > MAX_WHOLE_DOC_PAGES) {
