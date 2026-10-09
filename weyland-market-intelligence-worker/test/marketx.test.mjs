@@ -15,6 +15,7 @@ test("each city's record becomes a row: use, door scope, who builds it; small re
   assert.deepEqual([chi.id, chi.kind, chi.use, chi.scope, chi.contractor, chi.owner, chi.valuation], ["chicago:101074704", "new", "civic", "likely", "POWER CONSTRUCTION", "OAK VIEW GROUP", 45000000]);
   const nyc = permitRow("nyc", { job_filing_number: "B00509455-P8", job_type: "Alteration", approved_date: "2026-07-14T00:00:00.000", house_no: "375", street_name: "MADISON AVENUE", borough: "Manhattan", initial_cost: "217880000", job_description: "Installation of new facade curtain wall", owner_s_business_name: "JPMorgan Chase Bank" }, NOW);
   assert.deepEqual([nyc.id, nyc.scope, nyc.owner], ["nyc:B00509455", "unlikely", "JPMorgan Chase Bank"], "one job keyed once; a curtain wall is not door work");
+  assert.equal(permitRow("nyc", { job_filing_number: "B1-I1", job_type: "New Building", approved_date: "2026-07-14", initial_cost: "900000", job_description: "New 4 story building", owner_s_business_name: "PR" }, NOW).owner, null, "a placeholder is not an owner");
   const aus = permitRow("austin", { permit_number: "2026-094822 BP", masterpermitnum: "13532840", work_class: "New", issue_date: "2026-07-23", permit_class: "C- 330 Schools", total_job_valuation: "380000000", description: "Phase 1a main building", permit_location: "3935 BRIGHT LIGHT BLVD", contractor_company_name: "Bartlett Cocke" }, NOW);
   assert.equal(aus.id, "austin:master-13532840", "a project's phase permits are one project");
   assert.equal(aus.use, "education");
