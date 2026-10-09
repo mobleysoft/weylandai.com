@@ -50,7 +50,7 @@ const ASSET_BASE = "/api/hardware-schedule/client-ocr-assets";
 // count (no rendering, no misread digits) and is the only way to read an
 // unruled Section 08 71 00. OCR below is now the path for pages with no text
 // (a scan, a Print-to-PDF of a bitmap such as OCCDoorSchedulePg4.pdf).
-import * as TL from "./schedule-text-layer.mjs?v=20261009g034";
+import * as TL from "./schedule-text-layer.mjs?v=20261009g019r1";
 
 let pdfjsLibPromise = null;
 export async function loadPdfJs() {
@@ -633,6 +633,10 @@ export async function recognizePageWords(img, engine, dpi, psm = "6", opts = {})
       const text = ws.map((w) => w.str).join(" ");
       cellTexts[c] = text;
       const field = fields[c];
+      if (field === "mark" && (!TL.looksLikeMark(text) || !ws.length || Math.min(...ws.map(w => w.conf)) < 80)) {
+        const reread = rereadMarkCell(engine, cell, budget, text, ws.length ? Math.min(...ws.map(w => w.conf)) / 100 : 0);
+        if (reread.text) ws = [{ str: reread.text, x0: 0, x1: cell.width * k, yb: cell.height * k * 0.75, h: cell.height * k / 3, conf: reread.confidence * 100 }];
+      }
       if (field === "width" || field === "height") {
         const accept = (s) => { const d = readDoorDimension(s); return d && d.format === "ft-in" && d.inches >= DOOR_LIMITS[field][0] && d.inches <= DOOR_LIMITS[field][1]; };
         if (!accept(text)) {
@@ -641,7 +645,7 @@ export async function recognizePageWords(img, engine, dpi, psm = "6", opts = {})
         }
       }
       const itemX0 = Math.min(...ws.map((w) => w.x0)) + left * k, itemX1 = Math.max(...ws.map((w) => w.x1)) + left * k;
-      for (const w of ws) rowWords.push({ ...w, x0: w.x0 + left * k, x1: w.x1 + left * k, yb: w.yb + top * k, item: "cell-" + i + "-" + c, itemX0, itemX1 });
+      for (const w of ws) rowWords.push({ ...w, x0: w.x0 + left * k, x1: w.x1 + left * k, yb: w.yb + top * k, item: "cell-" + i + "-" + c, itemX0, itemX1, grid_row: "table-" + ys[0] + "-" + i });
     }
     // OCR's box bottoms vary with punctuation. Cells in one ruled band share a baseline.
     const baselines = rowWords.map((w) => w.yb).sort((a, b) => a - b);
@@ -835,6 +839,32 @@ function readCellOnce(engine, cell, way, budget) {
   } finally {
     engine.setVariable("tessedit_char_whitelist", "");
   }
+}
+// A mark is an identifier, so never repair it from surrounding row numbers. Re-read only
+// uncertain mark pixels and accept a code supported by at least two separate pixel variants.
+// Thresholded variants remove faint scan noise that can turn a narrow "1" into another glyph.
+export function rereadMarkCell(engine, cell, budget, firstReading = "", firstConfidence = 0) {
+  const trials = [{ text: String(firstReading).trim().toUpperCase(), confidence: firstConfidence }];
+  for (const way of [
+    { up: 2, whitelist: false }, { up: 3, whitelist: false },
+    { up: 2, thr: 140, whitelist: false }, { up: 2, thr: 170, whitelist: false },
+    { up: 2, thr: 200, whitelist: false },
+  ]) {
+    if (budget && !budget.check()) break;
+    const trial = readCellOnce(engine, cell, way, budget);
+    trials.push({ ...trial, text: trial.text.toUpperCase() });
+  }
+  const votes = new Map();
+  for (const trial of trials) {
+    if (!TL.looksLikeMark(trial.text)) continue;
+    if (!votes.has(trial.text)) votes.set(trial.text, []);
+    votes.get(trial.text).push(trial.confidence);
+  }
+  const ranked = [...votes].sort((a, b) => b[1].length - a[1].length);
+  if (!ranked.length || ranked[0][1].length < 2 || (ranked[1] && ranked[0][1].length === ranked[1][1].length)) {
+    return { text: null, confidence: 0, readings: trials };
+  }
+  return { text: ranked[0][0], confidence: Math.min(...ranked[0][1]), readings: trials };
 }
 const digitsOf = (t) => String(t || "").replace(/\D/g, "");
 function rereadDimensionCell(engine, pageImage, x0, x1, y0, y1, opts, firstReading, accept) {
@@ -1480,11 +1510,15 @@ export async function extractDoorScheduleFromPdf(pdfBytes, pageNumber, onProgres
     if (scanned !== undefined) return scanned;
     const ol = await ocrPageLines(pdfDoc, pageNumber, engine, progress, options);
     const ds = ol.word_count >= 15 ? await TL.readDoorScheduleFromLines(ol.lines, { width: ol.width, height: ol.height }, {}) : null;
-    scanned = (ds && ds.doors.length) || ol.partial ? {
-      partial: ol.partial,
+    const unresolved = ds?.unresolved_rows || [];
+    const partial = ol.partial || unresolved.length > 0;
+    scanned = (ds && ds.doors.length) || partial ? {
+      partial,
       doors: (ds?.doors || []).map((d) => ({ ...d, read_from: "ocr_lines", confidence_source: "ocr_words" })),
       extraction_confidence: 0.85,
-      metadata: { ...partialMetadata(budget), extraction_mode: "ocr_text_lines", extraction_route: "ocr_text_lines", page_isolated: false, expected_marks: options.expectedMarks || [], row_count: ds?.doors.length || 0, rotation_applied: ol.rotation, skew_corrected_deg: ol.skew_deg, ocr_dpi: ol.dpi, ocr_words: ol.word_count, orientation_attempts: attempts, total_time_ms: Math.round(performance.now() - t0) },
+      metadata: { ...partialMetadata(budget), partial, unresolved_rows: unresolved,
+        ...(unresolved.length ? { message: "Partial machine read: " + unresolved.length + " schedule row(s) have unread marks. Review those rows on the source page." } : {}),
+        extraction_mode: "ocr_text_lines", extraction_route: "ocr_text_lines", page_isolated: false, expected_marks: options.expectedMarks || [], row_count: ds?.doors.length || 0, rotation_applied: ol.rotation, skew_corrected_deg: ol.skew_deg, ocr_dpi: ol.dpi, ocr_words: ol.word_count, orientation_attempts: attempts, total_time_ms: Math.round(performance.now() - t0) },
     } : null;
     if (scanned) progress(scanned.partial ? scanned.metadata.message : "Extraction complete.");
     return scanned;

@@ -20,7 +20,7 @@
 // the server persists both the same way (writeDoorScheduleEntries,
 // savePageExtraction2).
 
-import { hardwareSpecSections } from "./schedule-workspace.mjs?v=20261009g034";
+import { hardwareSpecSections } from "./schedule-workspace.mjs?v=20261009g019r1";
 
 // ---------------------------------------------------------------- geometry
 
@@ -58,18 +58,26 @@ export function itemsToWords(items, toDevice, scale = 1) {
   return words;
 }
 
-/** Words -> lines by baseline. Each line: { y, h, words (by x), x0, x1, text }. */
+/** Words -> lines by baseline, preserving detected ruled-row identity. */
 export function clusterLines(words) {
   const sorted = words.slice().sort((p, q) => p.yb - q.yb || p.x0 - q.x0);
   const lines = [];
+  const lastByGridRow = new Map();
+  let lastUnruled = null;
   for (const w of sorted) {
-    const L = lines[lines.length - 1];
+    // Nearby text can belong to another table row or a side legend. A detected
+    // band is stronger evidence than OCR's varying glyph-box baselines.
+    const ruled = w.grid_row != null;
+    const L = ruled ? lastByGridRow.get(w.grid_row) : lastUnruled;
     if (L && Math.abs(L.y - w.yb) <= Math.max(1.2, 0.35 * Math.max(w.h, L.h))) {
       L.words.push(w);
       L.y = (L.y * (L.words.length - 1) + w.yb) / L.words.length;
       L.h = Math.max(L.h, w.h);
     } else {
-      lines.push({ y: w.yb, h: w.h, words: [w] });
+      const line = { y: w.yb, h: w.h, words: [w], ...(ruled ? { grid_row: w.grid_row } : {}) };
+      lines.push(line);
+      if (ruled) lastByGridRow.set(w.grid_row, line);
+      else lastUnruled = line;
     }
   }
   for (const L of lines) {
@@ -78,7 +86,7 @@ export function clusterLines(words) {
     L.x1 = Math.max(...L.words.map((w) => w.x1));
     L.text = L.words.map((w) => w.str).join(" ");
   }
-  return lines;
+  return lines.sort((a, b) => a.y - b.y || a.x0 - b.x0);
 }
 
 /**
@@ -287,7 +295,7 @@ export async function readDoorScheduleFromLines(lines, pageSize, opts = {}) {
   for (const t of tables) for (const d of t.doors) doors.push(d);
   const sections = hardwareSpecSections(lines.map(l => l.text || (l.words || []).map(w => w.text).join(" ")).join("\n"));
   for (const d of doors) d.hardware_spec_sections = sections;
-  return { tables, doors };
+  return { tables, doors, unresolved_rows: tables.flatMap(t => t.unresolved_rows) };
 }
 
 async function buildTable(lines, fieldIdx, pageSize, opts, fieldCandidate = null) {
@@ -458,26 +466,46 @@ async function buildTable(lines, fieldIdx, pageSize, opts, fieldCandidate = null
   const cellsOf = (L) => { const groups = Array.from({ length: ncol }, () => []); for (const w of L.words) groups[colOf(w)].push(w); return groups; };
   const rows = [];
   let section = null;
+  let continuationRow = null;
+  const appendRow = (row, cells, words, recoverMark = false) => {
+    for (let k = 0; k < ncol; k++) {
+      if (recoverMark && k === markCol) { row.cells[k] = cells[k]; row.words[k] = words[k]; continue; }
+      if (cells[k]) row.cells[k] = row.cells[k] ? row.cells[k] + " " + cells[k] : cells[k];
+      row.words[k].push(...words[k]);
+    }
+    row.lines++;
+  };
   for (const L of dataLines) {
     const words = cellsOf(L);
     const cells = words.map(g => joinWords(g, h));
     const markText = markCol >= 0 ? cells[markCol].trim() : "";
-    const prev = rows[rows.length - 1];
-    if (markText && looksLikeMark(markText.split(" ")[0])) {
-      rows.push({ cells, words, section, y: L.y, lines: 1 });
+    const prev = continuationRow;
+    const validMark = markText && looksLikeMark(markText.split(" ")[0]);
+    const ruled = L.grid_row != null;
+    if (ruled && prev && prev.grid_row === L.grid_row) {
+      const previousMark = markCol >= 0 ? prev.cells[markCol].trim() : "";
+      appendRow(prev, cells, words, validMark && !looksLikeMark(previousMark.split(" ")[0]));
+    } else if (validMark || ruled) {
+      // A missing/invalid mark in a new physical row must not turn that row
+      // into wrapped text on the preceding door. Keep it for explicit review.
+      if (ruled && !validMark && markText && cells.filter(c => c).length === 1) {
+        section = cells.filter(c => c).join(" ").trim();
+        continuationRow = null;
+        continue;
+      }
+      continuationRow = { cells, words, section, y: L.y, lines: 1, ...(ruled ? { grid_row: L.grid_row } : {}) };
+      rows.push(continuationRow);
     } else if (markText) {
       if (!prev || L.y - prev.y > 1.6 * rowPitch || cells.filter((c) => c).length === 1) { section = cells.filter((c) => c).join(" ").trim(); continue; }
-      for (let k = 0; k < ncol; k++) if (cells[k]) prev.cells[k] = prev.cells[k] ? prev.cells[k] + " " + cells[k] : cells[k];
-      prev.lines++;
-      words.forEach((g, k) => prev.words[k].push(...g));
+      appendRow(prev, cells, words);
     } else if (prev && L.y - prev.y <= 1.6 * rowPitch) {
-      for (let k = 0; k < ncol; k++) if (cells[k]) prev.cells[k] = prev.cells[k] ? prev.cells[k] + " " + cells[k] : cells[k];
-      prev.lines++;
-      words.forEach((g, k) => prev.words[k].push(...g));
+      appendRow(prev, cells, words);
     }
   }
   const doors = rows.map((r, i) => doorFromRow(r, fields, i, pageSize)).filter(Boolean);
-  return { title, header: names, fields, bounds, anchors, x0, x1, header_y: headerLines.map((L) => Math.round(L.y)), y0: lines[headerIdx[0]].y, y1: dataLines[dataLines.length - 1].y, row_pitch: rowPitch, data_lines: dataLines.length, rows: rows.length, doors, is_door_schedule, lineIndexes: [...headerIdx, ...dataIdx], rules_used: !!rules };
+  const unresolved_rows = rows.flatMap((r, i) => r.grid_row != null && !cleanMark(markCol >= 0 ? r.cells[markCol] : "")
+    ? [{ grid_row: r.grid_row, source_row: i, source_y: Math.round(r.y), mark_text: markCol >= 0 ? r.cells[markCol] : "", reason: "unread_mark" }] : []);
+  return { title, header: names, fields, bounds, anchors, x0, x1, header_y: headerLines.map((L) => Math.round(L.y)), y0: lines[headerIdx[0]].y, y1: dataLines[dataLines.length - 1].y, row_pitch: rowPitch, data_lines: dataLines.length, rows: rows.length, doors, unresolved_rows, is_door_schedule, lineIndexes: [...headerIdx, ...dataIdx], rules_used: !!rules };
 }
 
 // ---- cell readers (the same meanings as the OCR path's cleaners)
