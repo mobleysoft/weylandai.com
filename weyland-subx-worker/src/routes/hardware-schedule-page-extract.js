@@ -27,6 +27,7 @@ import { classifyError, jsonErrorResponse, ErrorMetrics } from "../error-utiliti
 import { findPagesInBrowser, runGridPagesInBrowser } from "../lib/browser-grid-extraction.js";
 import { persistBrowserGridResult } from "../lib/hardware-extraction-pipeline.js";
 import { openTextLayerDoc, readPageFromDoc } from "../lib/text-layer-read.js";
+import { autoEnrichSessionOnSave } from "../lib/hardware-extraction-single-page.js";
 
 // The URL the runner tab fetches the session's PDF from (2026-10-08). This
 // worker holds no signing secret, so the token is a hash of the session's own
@@ -68,7 +69,7 @@ export function registerHardwareSchedulePageExtractRoutes(router, {
   savePageExtraction2,
   writeDoorScheduleEntries,
 }) {
-router.get("/api/hardware-schedule/session/:sessionId/page/:pageNum", async (request2, env2) => {
+router.get("/api/hardware-schedule/session/:sessionId/page/:pageNum", async (request2, env2, ctx) => {
   const { error: error4, user } = await authenticate(request2, env2);
   if (error4)
     return error4;
@@ -180,7 +181,7 @@ router.get("/api/hardware-schedule/session/:sessionId/page/:pageNum", async (req
     // result as if it were the finished extraction.
     const isPartial = extractionResult.done === false;
     if (!isPartial) {
-      await savePageExtraction2(sessionId, pageNum, extractionResult, env2);
+      await savePageExtraction2(sessionId, pageNum, extractionResult, env2, { ctx });
     }
     // extractionResult shape depends on the session's real schedule_type -
     // door_schedule yields {entries:[...], entry_count}, hardware_schedule
@@ -291,7 +292,7 @@ router.post("/api/hardware-schedule/session/:sessionId/find-pages", async (reque
 // Reads a list of pages, each as its own kind, in one runner session
 // (2026-10-08): POST { pages: [{ page, type }] }, at most 20. Each page is
 // persisted exactly as the single-page GET persists it.
-router.post("/api/hardware-schedule/session/:sessionId/read-pages", async (request2, env2) => {
+router.post("/api/hardware-schedule/session/:sessionId/read-pages", async (request2, env2, ctx) => {
   const { error: error4, user } = await authenticate(request2, env2);
   if (error4) return error4;
   if (!user || !user.userId) return jsonResponse3({ success: false, error: "Sign in to read your schedules.", code: "SIGN_IN_REQUIRED" }, 401);
@@ -335,10 +336,15 @@ router.post("/api/hardware-schedule/session/:sessionId/read-pages", async (reque
     const persisted = await persistBrowserGridResult(r, r.requested_type, sessionId, session.tenant_id || null, r.page, totalPages, env2, { explicit: true });
     if (persisted.success === false) { results.push({ page: r.page, type: r.requested_type, ok: false, error: persisted.detail || persisted.error || "nothing read", code: persisted.error || null }); continue; }
     if (persisted.schedule_type !== "door_schedule") {
-      try { await savePageExtraction2(sessionId, r.page, persisted, env2); } catch (e) { console.warn("[read-pages] save failed p" + r.page + ": " + e.message); }
+      try { await savePageExtraction2(sessionId, r.page, persisted, env2, { deferEnrich: true }); } catch (e) { console.warn("[read-pages] save failed p" + r.page + ": " + e.message); }
     }
     const isDoor = persisted.schedule_type === "door_schedule";
     results.push({ page: r.page, type: persisted.schedule_type, ok: true, doors: isDoor ? (persisted.entry_count ?? (persisted.entries || []).length) : 0, groups: isDoor ? 0 : (persisted.hardware_groups || []).length, items: isDoor ? 0 : (persisted.hardware_groups || []).reduce((n, g) => n + ((g.components || []).length), 0), metadata: { extraction_mode: (persisted.metadata || {}).extraction_mode || null, rotation_applied: (persisted.metadata || {}).rotation_applied || null, read_source: r.source || "browser" }, ms: r.ms });
+  }
+  // The items are priced once, after the last page, in the background.
+  if (results.some((r) => r.ok && r.items)) {
+    const enrich = () => autoEnrichSessionOnSave(sessionId, env2).catch((e) => console.warn("[read-pages] pricing: " + e.message));
+    if (ctx && typeof ctx.waitUntil === "function") ctx.waitUntil(enrich()); else await enrich();
   }
   return jsonResponse3({ success: true, sessionId, results, ms: Date.now() - started });
 });
