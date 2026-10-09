@@ -27,7 +27,7 @@
  "readers": {
   "a": {
    "doors": 0,
-   "sets": 1,
+   "sets": 10,
    "items": 65,
    "name": "production text layer (weyland-subx-worker/src/lib/text-layer-read.js)"
   },
@@ -39,10 +39,10 @@
    "tables": 0
   }
  },
- "rows_agreed": 0,
- "rows_disputed": 124,
- "rows_total": 124,
- "agreement_rate": 0,
+ "rows_agreed": 1,
+ "rows_disputed": 74,
+ "rows_total": 75,
+ "agreement_rate": 0.0133,
  "agreement": {
   "doors": {
    "rows": 0,
@@ -54,17 +54,38 @@
    "agreement_rate": null
   },
   "items": {
-   "rows": 124,
-   "agreed": 0,
-   "disputed": 0,
-   "only_a": 65,
-   "only_b": 59,
-   "fields": {},
-   "agreement_rate": 0
+   "rows": 75,
+   "agreed": 1,
+   "disputed": 48,
+   "only_a": 16,
+   "only_b": 10,
+   "fields": {
+    "qty": {
+     "agree": 49,
+     "total": 49
+    },
+    "description": {
+     "agree": 47,
+     "total": 49
+    },
+    "catalog": {
+     "agree": 1,
+     "total": 49
+    },
+    "manufacturer": {
+     "agree": 0,
+     "total": 48
+    },
+    "finish": {
+     "agree": 0,
+     "total": 30
+    }
+   },
+   "agreement_rate": 0.0133
   },
   "sets": {
-   "sets": 11,
-   "agreed": 0
+   "sets": 10,
+   "agreed": 10
   }
  },
  "triage_class": "spec-only",
@@ -91,14 +112,13 @@
    "reason": "not for class spec-only"
   }
  },
- "tier": "unread",
- "unread_reason": "no rows agreed and no oracle applies",
- "disagreement_count": 135,
+ "tier": "agreed",
+ "disagreement_count": 154,
  "disagreements": [
   {
    "kind": "item",
    "page": 24,
-   "key": "S / Continuous Hinge Required CLX3357 NZD N7 (Key to",
+   "key": "1.0 / CFM_SLF-HD1 x Length Required",
    "field": "(row)",
    "a": "read",
    "b": null,
@@ -107,7 +127,7 @@
   {
    "kind": "item",
    "page": 24,
-   "key": "S / 626",
+   "key": "1.0 / CLX3357 NZD N7 (Key to existing key system)",
    "field": "(row)",
    "a": "read",
    "b": null,
@@ -116,7 +136,7 @@
   {
    "kind": "item",
    "page": 24,
-   "key": "S / 689",
+   "key": "1.0 / 7500 (Reg or P/A)",
    "field": "(row)",
    "a": "read",
    "b": null,
@@ -125,7 +145,7 @@
   {
    "kind": "item",
    "page": 24,
-   "key": "S / US26D",
+   "key": "1.0 / 403 (or) 441CU (As Required)",
    "field": "(row)",
    "a": "read",
    "b": null,
@@ -134,7 +154,7 @@
   {
    "kind": "item",
    "page": 24,
-   "key": "S / Gasketing Supplier",
+   "key": "1.0 / Provided By Door/Frame Supplier",
    "field": "(row)",
    "a": "read",
    "b": null,
@@ -143,7 +163,52 @@
   {
    "kind": "item",
    "page": 24,
-   "key": "S / Continuous Hinge Required CLX3351 NZD N7 (Key to",
+   "key": "1.0 / PE 087100 NZD N7 (Key to",
+   "field": "(row)",
+   "a": null,
+   "b": "read",
+   "why": "only reader B read this row"
+  },
+  {
+   "kind": "item",
+   "page": 24,
+   "key": "1.0 / 626 RU 087100 key system)",
+   "field": "(row)",
+   "a": null,
+   "b": "read",
+   "why": "only reader B read this row"
+  },
+  {
+   "kind": "item",
+   "page": 24,
+   "key": "1.0 / or P/A) 689 NO 087100 441CU (As",
+   "field": "(row)",
+   "a": null,
+   "b": "read",
+   "why": "only reader B read this row"
+  },
+  {
+   "kind": "item",
+   "page": 24,
+   "key": "1.0 / US26D RO 087100 By Door/Frame",
+   "field": "(row)",
+   "a": null,
+   "b": "read",
+   "why": "only reader B read this row"
+  },
+  {
+   "kind": "item",
+   "page": 24,
+   "key": "1.0 / OT",
+   "field": "(row)",
+   "a": null,
+   "b": "read",
+   "why": "only reader B read this row"
+  },
+  {
+   "kind": "item",
+   "page": 24,
+   "key": "2.0 / CFM_SLF-HD1 x Length Required",
    "field": "(row)",
    "a": "read",
    "b": null,
@@ -152,7 +217,7 @@
   {
    "kind": "item",
    "page": 24,
-   "key": "S / 626",
+   "key": "2.0 / CLX3351 NZD N7 (Key to existing key system)",
    "field": "(row)",
    "a": "read",
    "b": null,
@@ -161,7 +226,7 @@
   {
    "kind": "item",
    "page": 24,
-   "key": "S / US26D",
+   "key": "2.0 / 403 (or) 441CU (As Required)",
    "field": "(row)",
    "a": "read",
    "b": null,
@@ -170,7 +235,7 @@
   {
    "kind": "item",
    "page": 24,
-   "key": "S / Gasketing Supplier",
+   "key": "2.0 / Provided By Door/Frame Supplier",
    "field": "(row)",
    "a": "read",
    "b": null,
@@ -179,283 +244,215 @@
   {
    "kind": "item",
    "page": 24,
-   "key": "S / Required CLX3351 NZD N7 (Key to",
+   "key": "2.0 / PE 087100 NZD N7 (Key to",
    "field": "(row)",
-   "a": "read",
-   "b": null,
-   "why": "only reader A read this row"
+   "a": null,
+   "b": "read",
+   "why": "only reader B read this row"
   },
   {
    "kind": "item",
    "page": 24,
-   "key": "S / existing key system)",
+   "key": "2.0 / 626 RU 087100 key system) 441CU (As By Door/Frame",
    "field": "(row)",
-   "a": "read",
-   "b": null,
-   "why": "only reader A read this row"
+   "a": null,
+   "b": "read",
+   "why": "only reader B read this row"
   },
   {
    "kind": "item",
    "page": 24,
-   "key": "S / 10-X36 (Size as Required)",
+   "key": "2.0 / OT",
    "field": "(row)",
-   "a": "read",
-   "b": null,
-   "why": "only reader A read this row"
+   "a": null,
+   "b": "read",
+   "why": "only reader B read this row"
   },
   {
    "kind": "item",
-   "page": 24,
-   "key": "S / 7500",
-   "field": "(row)",
-   "a": "read",
-   "b": null,
-   "why": "only reader A read this row"
+   "page": 25,
+   "key": "3.0 / CFM_SLF-HD1 x Length Required",
+   "field": "catalog",
+   "a": "CFM_SLF-HD1 x Length Required",
+   "b": "PE 087100 Required CLX3351 NZD N7 (Key to"
   },
   {
    "kind": "item",
-   "page": 24,
-   "key": "S / K1050 10\" high CSK BEV Provided By Door/Frame",
-   "field": "(row)",
-   "a": "read",
-   "b": null,
-   "why": "only reader A read this row"
+   "page": 25,
+   "key": "3.0 / CFM_SLF-HD1 x Length Required",
+   "field": "manufacturer",
+   "a": "PE",
+   "b": null
   },
   {
    "kind": "item",
-   "page": 24,
-   "key": "S / Supplier",
-   "field": "(row)",
-   "a": "read",
-   "b": null,
-   "why": "only reader A read this row"
+   "page": 25,
+   "key": "3.0 / CLX3351 NZD N7 (Key to existing key system)",
+   "field": "catalog",
+   "a": "CLX3351 NZD N7 (Key to existing key system)",
+   "b": "626 RU 087100 existing key system)"
   },
   {
    "kind": "item",
-   "page": 24,
-   "key": "S / Required CLX3351 NZD N7 (Key to",
-   "field": "(row)",
-   "a": "read",
-   "b": null,
-   "why": "only reader A read this row"
+   "page": 25,
+   "key": "3.0 / CLX3351 NZD N7 (Key to existing key system)",
+   "field": "finish",
+   "a": "626",
+   "b": null
   },
   {
    "kind": "item",
-   "page": 24,
-   "key": "S / existing key system)",
-   "field": "(row)",
-   "a": "read",
-   "b": null,
-   "why": "only reader A read this row"
+   "page": 25,
+   "key": "3.0 / CLX3351 NZD N7 (Key to existing key system)",
+   "field": "manufacturer",
+   "a": "RU",
+   "b": null
   },
   {
    "kind": "item",
-   "page": 24,
-   "key": "S / 7500 (Reg or P/A) 403 (or) 441CU (As",
-   "field": "(row)",
-   "a": "read",
-   "b": null,
-   "why": "only reader A read this row"
+   "page": 25,
+   "key": "3.0 / 10-X36 (Size as Required)",
+   "field": "catalog",
+   "a": "10-X36 (Size as Required)",
+   "b": "10-X36 (Size as Required) 630 RF 087100"
   },
   {
    "kind": "item",
-   "page": 24,
-   "key": "S / Required) Provided By Door/Frame",
-   "field": "(row)",
-   "a": "read",
-   "b": null,
-   "why": "only reader A read this row"
+   "page": 25,
+   "key": "3.0 / 10-X36 (Size as Required)",
+   "field": "finish",
+   "a": "630",
+   "b": null
   },
   {
    "kind": "item",
-   "page": 24,
-   "key": "S / Supplier Electric Strike to Fit",
-   "field": "(row)",
-   "a": "read",
-   "b": null,
-   "why": "only reader A read this row"
+   "page": 25,
+   "key": "3.0 / 10-X36 (Size as Required)",
+   "field": "manufacturer",
+   "a": "RF",
+   "b": null
   },
   {
    "kind": "item",
-   "page": 24,
-   "key": "S / Application",
-   "field": "(row)",
-   "a": "read",
-   "b": null,
-   "why": "only reader A read this row"
+   "page": 25,
+   "key": "3.0 / 7500 (Reg or P/A)",
+   "field": "catalog",
+   "a": "7500 (Reg or P/A)",
+   "b": "7500 (Reg or P/A) 689 NO 087100"
   },
   {
    "kind": "item",
-   "page": 24,
-   "key": "S / QC-C3000P",
-   "field": "(row)",
-   "a": "read",
-   "b": null,
-   "why": "only reader A read this row"
+   "page": 25,
+   "key": "3.0 / 7500 (Reg or P/A)",
+   "field": "finish",
+   "a": "689",
+   "b": null
   },
   {
    "kind": "item",
-   "page": 24,
-   "key": "S / Required CLX3351 NZD N7 (Key to",
-   "field": "(row)",
-   "a": "read",
-   "b": null,
-   "why": "only reader A read this row"
+   "page": 25,
+   "key": "3.0 / 7500 (Reg or P/A)",
+   "field": "manufacturer",
+   "a": "NO",
+   "b": null
   },
   {
    "kind": "item",
-   "page": 24,
-   "key": "S / existing key system)",
-   "field": "(row)",
-   "a": "read",
-   "b": null,
-   "why": "only reader A read this row"
+   "page": 25,
+   "key": "3.0 / K1050 10\" high CSK BEV",
+   "field": "catalog",
+   "a": "K1050 10\" high CSK BEV",
+   "b": "K1050 10\" high CSK BEV US32D RO 087100 Provided By Door/Frame"
   },
   {
    "kind": "item",
-   "page": 24,
-   "key": "S / 10-X36 (Size as Required)",
-   "field": "(row)",
-   "a": "read",
-   "b": null,
-   "why": "only reader A read this row"
+   "page": 25,
+   "key": "3.0 / K1050 10\" high CSK BEV",
+   "field": "finish",
+   "a": "US32D",
+   "b": null
   },
   {
    "kind": "item",
-   "page": 24,
-   "key": "S / 7500 (Reg or P/A) Provided By Door/Frame",
-   "field": "(row)",
-   "a": "read",
-   "b": null,
-   "why": "only reader A read this row"
+   "page": 25,
+   "key": "3.0 / K1050 10\" high CSK BEV",
+   "field": "manufacturer",
+   "a": "RO",
+   "b": null
   },
   {
    "kind": "item",
-   "page": 24,
-   "key": "S / Supplier",
-   "field": "(row)",
-   "a": "read",
-   "b": null,
-   "why": "only reader A read this row"
+   "page": 25,
+   "key": "3.0 / Provided By Door/Frame Supplier",
+   "field": "catalog",
+   "a": "Provided By Door/Frame Supplier",
+   "b": "OT Supplier"
   },
   {
    "kind": "item",
-   "page": 24,
-   "key": "S / Required",
-   "field": "(row)",
-   "a": "read",
-   "b": null,
-   "why": "only reader A read this row"
+   "page": 25,
+   "key": "3.0 / Provided By Door/Frame Supplier",
+   "field": "manufacturer",
+   "a": "OT",
+   "b": null
   },
   {
    "kind": "item",
-   "page": 24,
-   "key": "S / 570",
-   "field": "(row)",
-   "a": "read",
-   "b": null,
-   "why": "only reader A read this row"
+   "page": 25,
+   "key": "4.0 / CFM_SLF-HD1 x Length Required",
+   "field": "catalog",
+   "a": "CFM_SLF-HD1 x Length Required",
+   "b": "PE 087100 Required CLX3351 NZD N7 (Key to"
   },
   {
    "kind": "item",
-   "page": 24,
-   "key": "S / 2845",
-   "field": "(row)",
-   "a": "read",
-   "b": null,
-   "why": "only reader A read this row"
+   "page": 25,
+   "key": "4.0 / CFM_SLF-HD1 x Length Required",
+   "field": "manufacturer",
+   "a": "PE",
+   "b": null
   },
   {
    "kind": "item",
-   "page": 24,
-   "key": "S / RX 72 8271-xxV LNP Match/expand existing",
-   "field": "(row)",
-   "a": "read",
-   "b": null,
-   "why": "only reader A read this row"
+   "page": 25,
+   "key": "4.0 / CLX3351 NZD N7 (Key to existing key system)",
+   "field": "catalog",
+   "a": "CLX3351 NZD N7 (Key to existing key system)",
+   "b": "626 RU 087100 existing key system)"
   },
   {
    "kind": "item",
-   "page": 24,
-   "key": "S / BEST Core 2600 Series x Mounting",
-   "field": "(row)",
-   "a": "read",
-   "b": null,
-   "why": "only reader A read this row"
+   "page": 25,
+   "key": "4.0 / CLX3351 NZD N7 (Key to existing key system)",
+   "field": "finish",
+   "a": "626",
+   "b": null
   },
   {
    "kind": "item",
-   "page": 24,
-   "key": "S / Brackets & filler bars as req'd",
-   "field": "(row)",
-   "a": "read",
-   "b": null,
-   "why": "only reader A read this row"
+   "page": 25,
+   "key": "4.0 / CLX3351 NZD N7 (Key to existing key system)",
+   "field": "manufacturer",
+   "a": "RU",
+   "b": null
   },
   {
    "kind": "item",
-   "page": 24,
-   "key": "S / 351 O K1050 10\" HGT x BEV x",
-   "field": "(row)",
-   "a": "read",
-   "b": null,
-   "why": "only reader A read this row"
+   "page": 25,
+   "key": "4.0 / 7500 (Reg or P/A)",
+   "field": "catalog",
+   "a": "7500 (Reg or P/A)",
+   "b": "7500 (Reg or P/A) 689 NO 087100 403 (or) 441CU (As"
   },
   {
    "kind": "item",
-   "page": 24,
-   "key": "S / CSK",
-   "field": "(row)",
-   "a": "read",
-   "b": null,
-   "why": "only reader A read this row"
-  },
-  {
-   "kind": "item",
-   "page": 24,
-   "key": "S / 400 series as req'd",
-   "field": "(row)",
-   "a": "read",
-   "b": null,
-   "why": "only reader A read this row"
-  },
-  {
-   "kind": "item",
-   "page": 24,
-   "key": "S / 609/608/608CA",
-   "field": "(row)",
-   "a": "read",
-   "b": null,
-   "why": "only reader A read this row"
-  },
-  {
-   "kind": "item",
-   "page": 24,
-   "key": "S / QC-C3000P QC-CxxxP x length as",
-   "field": "(row)",
-   "a": "read",
-   "b": null,
-   "why": "only reader A read this row"
-  },
-  {
-   "kind": "item",
-   "page": 24,
-   "key": "S / req'd",
-   "field": "(row)",
-   "a": "read",
-   "b": null,
-   "why": "only reader A read this row"
-  },
-  {
-   "kind": "item",
-   "page": 24,
-   "key": "S / DPS-M-BK AQ series x amps/options",
-   "field": "(row)",
-   "a": "read",
-   "b": null,
-   "why": "only reader A read this row"
+   "page": 25,
+   "key": "4.0 / 7500 (Reg or P/A)",
+   "field": "finish",
+   "a": "689",
+   "b": null
   }
  ],
- "ms": 131,
- "generated_at": "2026-10-09T10:46:11.083Z"
+ "ms": 132,
+ "generated_at": "2026-10-09T11:33:21.145Z"
 }

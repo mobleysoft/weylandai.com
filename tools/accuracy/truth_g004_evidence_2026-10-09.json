@@ -1,0 +1,3823 @@
+{
+  "baseline_report": "truth_report_2026-10-09-10-49.md",
+  "after_report": "truth_report_2026-10-09-11-33.md",
+  "baseline_git_head": "b737fdf57eab4ee6a863f53137e0f457c5d7072a",
+  "node": "v26.3.0 (/opt/homebrew/bin/node)",
+  "records_before": 616,
+  "records_after": 616,
+  "queue_before": 4285,
+  "queue_after": 3780,
+  "queue_sha256_before": "7da60a4b39a687553a3c3123d51c7a797e9376dd8e8938edcb62bd331ac258f9",
+  "queue_sha256_after": "ce273bc4fda362966980cf1fe8cd6aad2ee5a1e35ffde5984bfd1844f88affce",
+  "by_why_before": {
+    "only reader A read this row": 1654,
+    "field values differ": 382,
+    "only reader B read this row": 2021,
+    "the set's door lists differ": 10,
+    "only reader A read this set": 29,
+    "only reader B read this set": 189
+  },
+  "by_why_after": {
+    "field values differ": 2693,
+    "only reader A read this row": 532,
+    "only reader B read this row": 491,
+    "only reader A read this set": 23,
+    "the set's door lists differ": 22,
+    "only reader B read this set": 19
+  },
+  "by_family_and_why_before": {
+    "Berryessa": {
+      "field values differ": 24,
+      "only reader A read this row": 1,
+      "only reader A read this set": 1
+    },
+    "Christina": {
+      "only reader A read this row": 2,
+      "field values differ": 3,
+      "only reader B read this row": 1
+    },
+    "Connor Consolidated School / Maine BGS": {
+      "field values differ": 8
+    },
+    "Fayette County (GA)": {
+      "field values differ": 4,
+      "only reader A read this row": 1,
+      "only reader B read this row": 19
+    },
+    "Noble County Highway Department": {
+      "only reader A read this row": 2,
+      "only reader B read this row": 2,
+      "the set's door lists differ": 2
+    },
+    "Orchard View Public Schools": {
+      "field values differ": 2,
+      "only reader A read this set": 1
+    },
+    "Rockford": {
+      "field values differ": 7,
+      "the set's door lists differ": 2
+    },
+    "california_dgs_obas": {
+      "only reader A read this row": 12,
+      "field values differ": 7
+    },
+    "delaware_bidcondocs": {
+      "only reader A read this row": 608,
+      "only reader B read this row": 583,
+      "only reader A read this set": 5,
+      "only reader B read this set": 77,
+      "field values differ": 71,
+      "the set's door lists differ": 4
+    },
+    "missouri_oa_fmdc": {
+      "only reader A read this row": 837,
+      "field values differ": 255,
+      "only reader B read this row": 1209,
+      "only reader A read this set": 17,
+      "the set's door lists differ": 2,
+      "only reader B read this set": 82
+    },
+    "ohio_ofcc": {
+      "only reader B read this row": 99,
+      "only reader A read this row": 65,
+      "only reader A read this set": 1,
+      "only reader B read this set": 10
+    },
+    "school_district_sites": {
+      "only reader A read this row": 3,
+      "only reader A read this set": 3
+    },
+    "university_bid_pages": {
+      "only reader A read this row": 123,
+      "only reader B read this row": 108,
+      "only reader A read this set": 1,
+      "only reader B read this set": 20,
+      "field values differ": 1
+    }
+  },
+  "by_family_and_why_after": {
+    "Berryessa": {
+      "only reader A read this row": 1
+    },
+    "Christina": {
+      "only reader A read this row": 2,
+      "field values differ": 3,
+      "only reader B read this row": 1
+    },
+    "Connor Consolidated School / Maine BGS": {
+      "field values differ": 8
+    },
+    "Fayette County (GA)": {
+      "field values differ": 4,
+      "only reader A read this row": 1,
+      "only reader B read this row": 19
+    },
+    "Noble County Highway Department": {
+      "only reader A read this row": 2,
+      "only reader B read this row": 2,
+      "the set's door lists differ": 2
+    },
+    "Orchard View Public Schools": {
+      "field values differ": 2,
+      "only reader A read this set": 1
+    },
+    "Rockford": {
+      "field values differ": 7,
+      "the set's door lists differ": 2
+    },
+    "california_dgs_obas": {
+      "only reader A read this row": 12,
+      "field values differ": 7
+    },
+    "delaware_bidcondocs": {
+      "only reader A read this row": 93,
+      "only reader B read this row": 81,
+      "only reader A read this set": 4,
+      "only reader B read this set": 5,
+      "field values differ": 1212,
+      "the set's door lists differ": 15
+    },
+    "missouri_oa_fmdc": {
+      "only reader A read this row": 387,
+      "field values differ": 1321,
+      "only reader B read this row": 338,
+      "only reader A read this set": 15,
+      "the set's door lists differ": 3,
+      "only reader B read this set": 14
+    },
+    "ohio_ofcc": {
+      "only reader B read this row": 50,
+      "only reader A read this row": 16,
+      "field values differ": 128
+    },
+    "school_district_sites": {
+      "only reader A read this row": 3,
+      "only reader A read this set": 3
+    },
+    "university_bid_pages": {
+      "field values differ": 1,
+      "only reader A read this row": 15
+    }
+  },
+  "by_kind_before": {
+    "item": 3071,
+    "door": 986,
+    "group": 228
+  },
+  "by_kind_after": {
+    "door": 545,
+    "item": 3171,
+    "group": 64
+  },
+  "fixed_cohorts": [
+    {
+      "baseline_tier": "agreed",
+      "family": "Rockford",
+      "sha16s": [
+        "a03cdcca2934ca5a"
+      ],
+      "before": {
+        "rows_agreed": 169,
+        "rows_total": 172,
+        "queue": 6
+      },
+      "after": {
+        "rows_agreed": 169,
+        "rows_total": 172,
+        "queue": 6
+      }
+    },
+    {
+      "baseline_tier": "agreed",
+      "family": "delaware_bidcondocs",
+      "sha16s": [
+        "9014786c78096b94"
+      ],
+      "before": {
+        "rows_agreed": 91,
+        "rows_total": 224,
+        "queue": 143
+      },
+      "after": {
+        "rows_agreed": 156,
+        "rows_total": 156,
+        "queue": 0
+      }
+    },
+    {
+      "baseline_tier": "audited",
+      "family": "Berryessa",
+      "sha16s": [
+        "dd339f57b51538ed"
+      ],
+      "before": {
+        "rows_agreed": 16,
+        "rows_total": 41,
+        "queue": 26
+      },
+      "after": {
+        "rows_agreed": 40,
+        "rows_total": 41,
+        "queue": 1
+      }
+    },
+    {
+      "baseline_tier": "audited",
+      "family": "Christina",
+      "sha16s": [
+        "525dc0b72011077a"
+      ],
+      "before": {
+        "rows_agreed": 99,
+        "rows_total": 104,
+        "queue": 6
+      },
+      "after": {
+        "rows_agreed": 99,
+        "rows_total": 104,
+        "queue": 6
+      }
+    },
+    {
+      "baseline_tier": "audited",
+      "family": "Rockford",
+      "sha16s": [
+        "f0e863d88ea688ff"
+      ],
+      "before": {
+        "rows_agreed": 173,
+        "rows_total": 175,
+        "queue": 3
+      },
+      "after": {
+        "rows_agreed": 173,
+        "rows_total": 175,
+        "queue": 3
+      }
+    },
+    {
+      "baseline_tier": "exact",
+      "family": "bidset (synthetic)",
+      "sha16s": [
+        "4847b09e633103f7"
+      ],
+      "before": {
+        "rows_agreed": 102,
+        "rows_total": 102,
+        "queue": 0
+      },
+      "after": {
+        "rows_agreed": 102,
+        "rows_total": 102,
+        "queue": 0
+      }
+    },
+    {
+      "baseline_tier": "unread",
+      "family": "delaware_bidcondocs",
+      "sha16s": [
+        "ef4f9bfd055baa96",
+        "1af9e638165d85fb",
+        "595613e060c69652"
+      ],
+      "before": {
+        "rows_agreed": 0,
+        "rows_total": 982,
+        "queue": 1052
+      },
+      "after": {
+        "rows_agreed": 41,
+        "rows_total": 535,
+        "queue": 1257
+      }
+    },
+    {
+      "baseline_tier": "unread",
+      "family": "missouri_oa_fmdc",
+      "sha16s": [
+        "8c77fa69fc375a81",
+        "1d0374f8106ef8ad",
+        "7478006f7fd5b43c",
+        "f97e99f88a931e74"
+      ],
+      "before": {
+        "rows_agreed": 0,
+        "rows_total": 1409,
+        "queue": 1479
+      },
+      "after": {
+        "rows_agreed": 422,
+        "rows_total": 959,
+        "queue": 1155
+      }
+    },
+    {
+      "baseline_tier": "unread",
+      "family": "ohio_ofcc",
+      "sha16s": [
+        "4e7e992b311a3f39"
+      ],
+      "before": {
+        "rows_agreed": 0,
+        "rows_total": 124,
+        "queue": 135
+      },
+      "after": {
+        "rows_agreed": 1,
+        "rows_total": 75,
+        "queue": 154
+      }
+    },
+    {
+      "baseline_tier": "unread",
+      "family": "university_bid_pages",
+      "sha16s": [
+        "a248cf8b5dee4d92"
+      ],
+      "before": {
+        "rows_agreed": 0,
+        "rows_total": 231,
+        "queue": 252
+      },
+      "after": {
+        "rows_agreed": 108,
+        "rows_total": 123,
+        "queue": 15
+      }
+    }
+  ],
+  "pdfs": {
+    "ef4f9bfd055baa96": {
+      "family": "delaware_bidcondocs",
+      "before": {
+        "tier": "unread",
+        "rows_agreed": 0,
+        "rows_total": 611,
+        "queue": 653,
+        "readers": {
+          "a": {
+            "doors": 0,
+            "sets": 2,
+            "items": 310,
+            "name": "production text layer (weyland-subx-worker/src/lib/text-layer-read.js)"
+          },
+          "b": {
+            "doors": 0,
+            "sets": 41,
+            "items": 301,
+            "name": "geometry first (tools/accuracy/truth/reader_b.mjs)",
+            "tables": 0
+          }
+        },
+        "pages": {
+          "door_candidates": 17,
+          "hardware_candidates": 16,
+          "door_schedule_pages": [],
+          "hardware_pages": [
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16,
+            17
+          ]
+        },
+        "calibration": null
+      },
+      "after": {
+        "tier": "agreed",
+        "rows_agreed": 1,
+        "rows_total": 302,
+        "queue": 898,
+        "readers": {
+          "a": {
+            "doors": 0,
+            "sets": 44,
+            "items": 301,
+            "name": "production text layer (weyland-subx-worker/src/lib/text-layer-read.js)"
+          },
+          "b": {
+            "doors": 0,
+            "sets": 41,
+            "items": 301,
+            "name": "geometry first (tools/accuracy/truth/reader_b.mjs)",
+            "tables": 0
+          }
+        },
+        "pages": {
+          "door_candidates": 17,
+          "hardware_candidates": 16,
+          "door_schedule_pages": [],
+          "hardware_pages": [
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16,
+            17
+          ]
+        },
+        "calibration": null
+      }
+    },
+    "8c77fa69fc375a81": {
+      "family": "missouri_oa_fmdc",
+      "before": {
+        "tier": "unread",
+        "rows_agreed": 0,
+        "rows_total": 512,
+        "queue": 550,
+        "readers": {
+          "a": {
+            "doors": 0,
+            "sets": 1,
+            "items": 262,
+            "name": "production text layer (weyland-subx-worker/src/lib/text-layer-read.js)"
+          },
+          "b": {
+            "doors": 0,
+            "sets": 37,
+            "items": 250,
+            "name": "geometry first (tools/accuracy/truth/reader_b.mjs)",
+            "tables": 0
+          }
+        },
+        "pages": {
+          "door_candidates": 14,
+          "hardware_candidates": 13,
+          "door_schedule_pages": [],
+          "hardware_pages": [
+            35,
+            36,
+            37,
+            38,
+            39,
+            40,
+            41,
+            42,
+            43,
+            44,
+            45,
+            46,
+            47
+          ]
+        },
+        "calibration": null
+      },
+      "after": {
+        "tier": "unread",
+        "rows_agreed": 0,
+        "rows_total": 298,
+        "queue": 677,
+        "readers": {
+          "a": {
+            "doors": 0,
+            "sets": 37,
+            "items": 262,
+            "name": "production text layer (weyland-subx-worker/src/lib/text-layer-read.js)"
+          },
+          "b": {
+            "doors": 0,
+            "sets": 37,
+            "items": 250,
+            "name": "geometry first (tools/accuracy/truth/reader_b.mjs)",
+            "tables": 0
+          }
+        },
+        "pages": {
+          "door_candidates": 14,
+          "hardware_candidates": 13,
+          "door_schedule_pages": [],
+          "hardware_pages": [
+            35,
+            36,
+            37,
+            38,
+            39,
+            40,
+            41,
+            42,
+            43,
+            44,
+            45,
+            46,
+            47
+          ]
+        },
+        "calibration": null
+      }
+    },
+    "1d0374f8106ef8ad": {
+      "family": "missouri_oa_fmdc",
+      "before": {
+        "tier": "unread",
+        "rows_agreed": 0,
+        "rows_total": 476,
+        "queue": 508,
+        "readers": {
+          "a": {
+            "doors": 0,
+            "sets": 1,
+            "items": 238,
+            "name": "production text layer (weyland-subx-worker/src/lib/text-layer-read.js)"
+          },
+          "b": {
+            "doors": 0,
+            "sets": 31,
+            "items": 238,
+            "name": "geometry first (tools/accuracy/truth/reader_b.mjs)",
+            "tables": 0
+          }
+        },
+        "pages": {
+          "door_candidates": 9,
+          "hardware_candidates": 11,
+          "door_schedule_pages": [],
+          "hardware_pages": [
+            349,
+            350,
+            351,
+            352,
+            353,
+            354,
+            355,
+            356,
+            357,
+            358,
+            359
+          ]
+        },
+        "calibration": null
+      },
+      "after": {
+        "tier": "agreed",
+        "rows_agreed": 2,
+        "rows_total": 240,
+        "queue": 474,
+        "readers": {
+          "a": {
+            "doors": 0,
+            "sets": 31,
+            "items": 238,
+            "name": "production text layer (weyland-subx-worker/src/lib/text-layer-read.js)"
+          },
+          "b": {
+            "doors": 0,
+            "sets": 31,
+            "items": 238,
+            "name": "geometry first (tools/accuracy/truth/reader_b.mjs)",
+            "tables": 0
+          }
+        },
+        "pages": {
+          "door_candidates": 9,
+          "hardware_candidates": 11,
+          "door_schedule_pages": [],
+          "hardware_pages": [
+            349,
+            350,
+            351,
+            352,
+            353,
+            354,
+            355,
+            356,
+            357,
+            358,
+            359
+          ]
+        },
+        "calibration": null
+      }
+    },
+    "1af9e638165d85fb": {
+      "family": "delaware_bidcondocs",
+      "before": {
+        "tier": "unread",
+        "rows_agreed": 0,
+        "rows_total": 295,
+        "queue": 317,
+        "readers": {
+          "a": {
+            "doors": 0,
+            "sets": 1,
+            "items": 153,
+            "name": "production text layer (weyland-subx-worker/src/lib/text-layer-read.js)"
+          },
+          "b": {
+            "doors": 0,
+            "sets": 21,
+            "items": 142,
+            "name": "geometry first (tools/accuracy/truth/reader_b.mjs)",
+            "tables": 0
+          }
+        },
+        "pages": {
+          "door_candidates": 15,
+          "hardware_candidates": 8,
+          "door_schedule_pages": [],
+          "hardware_pages": [
+            52,
+            53,
+            54,
+            55,
+            56,
+            57,
+            58
+          ]
+        },
+        "calibration": null
+      },
+      "after": {
+        "tier": "agreed",
+        "rows_agreed": 2,
+        "rows_total": 195,
+        "queue": 359,
+        "readers": {
+          "a": {
+            "doors": 0,
+            "sets": 21,
+            "items": 153,
+            "name": "production text layer (weyland-subx-worker/src/lib/text-layer-read.js)"
+          },
+          "b": {
+            "doors": 0,
+            "sets": 21,
+            "items": 142,
+            "name": "geometry first (tools/accuracy/truth/reader_b.mjs)",
+            "tables": 0
+          }
+        },
+        "pages": {
+          "door_candidates": 15,
+          "hardware_candidates": 8,
+          "door_schedule_pages": [],
+          "hardware_pages": [
+            52,
+            53,
+            54,
+            55,
+            56,
+            57,
+            58
+          ]
+        },
+        "calibration": null
+      }
+    },
+    "a248cf8b5dee4d92": {
+      "family": "university_bid_pages",
+      "before": {
+        "tier": "unread",
+        "rows_agreed": 0,
+        "rows_total": 231,
+        "queue": 252,
+        "readers": {
+          "a": {
+            "doors": 0,
+            "sets": 1,
+            "items": 123,
+            "name": "production text layer (weyland-subx-worker/src/lib/text-layer-read.js)"
+          },
+          "b": {
+            "doors": 0,
+            "sets": 20,
+            "items": 108,
+            "name": "geometry first (tools/accuracy/truth/reader_b.mjs)",
+            "tables": 0
+          }
+        },
+        "pages": {
+          "door_candidates": 4,
+          "hardware_candidates": 7,
+          "door_schedule_pages": [],
+          "hardware_pages": [
+            23,
+            24,
+            25,
+            26,
+            27,
+            28,
+            29
+          ]
+        },
+        "calibration": null
+      },
+      "after": {
+        "tier": "agreed",
+        "rows_agreed": 108,
+        "rows_total": 123,
+        "queue": 15,
+        "readers": {
+          "a": {
+            "doors": 0,
+            "sets": 20,
+            "items": 123,
+            "name": "production text layer (weyland-subx-worker/src/lib/text-layer-read.js)"
+          },
+          "b": {
+            "doors": 0,
+            "sets": 20,
+            "items": 108,
+            "name": "geometry first (tools/accuracy/truth/reader_b.mjs)",
+            "tables": 0
+          }
+        },
+        "pages": {
+          "door_candidates": 4,
+          "hardware_candidates": 7,
+          "door_schedule_pages": [],
+          "hardware_pages": [
+            23,
+            24,
+            25,
+            26,
+            27,
+            28,
+            29
+          ]
+        },
+        "calibration": null
+      }
+    },
+    "7478006f7fd5b43c": {
+      "family": "missouri_oa_fmdc",
+      "before": {
+        "tier": "unread",
+        "rows_agreed": 0,
+        "rows_total": 211,
+        "queue": 211,
+        "readers": {
+          "a": {
+            "doors": 0,
+            "sets": 0,
+            "items": 0,
+            "name": "production text layer (weyland-subx-worker/src/lib/text-layer-read.js)"
+          },
+          "b": {
+            "doors": 211,
+            "sets": 0,
+            "items": 0,
+            "name": "geometry first (tools/accuracy/truth/reader_b.mjs)",
+            "tables": 5
+          }
+        },
+        "pages": {
+          "door_candidates": 12,
+          "hardware_candidates": 0,
+          "door_schedule_pages": [
+            28,
+            32,
+            45,
+            46
+          ],
+          "hardware_pages": []
+        },
+        "calibration": null
+      },
+      "after": {
+        "tier": "agreed",
+        "rows_agreed": 210,
+        "rows_total": 211,
+        "queue": 4,
+        "readers": {
+          "a": {
+            "doors": 211,
+            "sets": 0,
+            "items": 0,
+            "name": "production text layer (weyland-subx-worker/src/lib/text-layer-read.js)"
+          },
+          "b": {
+            "doors": 211,
+            "sets": 0,
+            "items": 0,
+            "name": "geometry first (tools/accuracy/truth/reader_b.mjs)",
+            "tables": 5
+          }
+        },
+        "pages": {
+          "door_candidates": 12,
+          "hardware_candidates": 0,
+          "door_schedule_pages": [
+            28,
+            32,
+            45,
+            46
+          ],
+          "hardware_pages": []
+        },
+        "calibration": null
+      }
+    },
+    "f97e99f88a931e74": {
+      "family": "missouri_oa_fmdc",
+      "before": {
+        "tier": "unread",
+        "rows_agreed": 0,
+        "rows_total": 210,
+        "queue": 210,
+        "readers": {
+          "a": {
+            "doors": 0,
+            "sets": 0,
+            "items": 0,
+            "name": "production text layer (weyland-subx-worker/src/lib/text-layer-read.js)"
+          },
+          "b": {
+            "doors": 210,
+            "sets": 0,
+            "items": 0,
+            "name": "geometry first (tools/accuracy/truth/reader_b.mjs)",
+            "tables": 4
+          }
+        },
+        "pages": {
+          "door_candidates": 12,
+          "hardware_candidates": 0,
+          "door_schedule_pages": [
+            28,
+            44,
+            45
+          ],
+          "hardware_pages": []
+        },
+        "calibration": null
+      },
+      "after": {
+        "tier": "agreed",
+        "rows_agreed": 210,
+        "rows_total": 210,
+        "queue": 0,
+        "readers": {
+          "a": {
+            "doors": 210,
+            "sets": 0,
+            "items": 0,
+            "name": "production text layer (weyland-subx-worker/src/lib/text-layer-read.js)"
+          },
+          "b": {
+            "doors": 210,
+            "sets": 0,
+            "items": 0,
+            "name": "geometry first (tools/accuracy/truth/reader_b.mjs)",
+            "tables": 4
+          }
+        },
+        "pages": {
+          "door_candidates": 12,
+          "hardware_candidates": 0,
+          "door_schedule_pages": [
+            28,
+            44,
+            45
+          ],
+          "hardware_pages": []
+        },
+        "calibration": null
+      }
+    },
+    "9014786c78096b94": {
+      "family": "delaware_bidcondocs",
+      "before": {
+        "tier": "agreed",
+        "rows_agreed": 91,
+        "rows_total": 224,
+        "queue": 143,
+        "readers": {
+          "a": {
+            "doors": 0,
+            "sets": 12,
+            "items": 160,
+            "name": "production text layer (weyland-subx-worker/src/lib/text-layer-read.js)"
+          },
+          "b": {
+            "doors": 0,
+            "sets": 17,
+            "items": 156,
+            "name": "geometry first (tools/accuracy/truth/reader_b.mjs)",
+            "tables": 0
+          }
+        },
+        "pages": {
+          "door_candidates": 10,
+          "hardware_candidates": 7,
+          "door_schedule_pages": [],
+          "hardware_pages": [
+            18,
+            29,
+            30,
+            31,
+            32,
+            33,
+            34
+          ]
+        },
+        "calibration": null
+      },
+      "after": {
+        "tier": "agreed",
+        "rows_agreed": 156,
+        "rows_total": 156,
+        "queue": 0,
+        "readers": {
+          "a": {
+            "doors": 0,
+            "sets": 17,
+            "items": 156,
+            "name": "production text layer (weyland-subx-worker/src/lib/text-layer-read.js)"
+          },
+          "b": {
+            "doors": 0,
+            "sets": 17,
+            "items": 156,
+            "name": "geometry first (tools/accuracy/truth/reader_b.mjs)",
+            "tables": 0
+          }
+        },
+        "pages": {
+          "door_candidates": 10,
+          "hardware_candidates": 7,
+          "door_schedule_pages": [],
+          "hardware_pages": [
+            29,
+            30,
+            31,
+            32,
+            33,
+            34
+          ]
+        },
+        "calibration": null
+      }
+    },
+    "4e7e992b311a3f39": {
+      "family": "ohio_ofcc",
+      "before": {
+        "tier": "unread",
+        "rows_agreed": 0,
+        "rows_total": 124,
+        "queue": 135,
+        "readers": {
+          "a": {
+            "doors": 0,
+            "sets": 1,
+            "items": 65,
+            "name": "production text layer (weyland-subx-worker/src/lib/text-layer-read.js)"
+          },
+          "b": {
+            "doors": 0,
+            "sets": 10,
+            "items": 59,
+            "name": "geometry first (tools/accuracy/truth/reader_b.mjs)",
+            "tables": 0
+          }
+        },
+        "pages": {
+          "door_candidates": 1,
+          "hardware_candidates": 5,
+          "door_schedule_pages": [],
+          "hardware_pages": [
+            24,
+            25,
+            26,
+            27,
+            28
+          ]
+        },
+        "calibration": null
+      },
+      "after": {
+        "tier": "agreed",
+        "rows_agreed": 1,
+        "rows_total": 75,
+        "queue": 154,
+        "readers": {
+          "a": {
+            "doors": 0,
+            "sets": 10,
+            "items": 65,
+            "name": "production text layer (weyland-subx-worker/src/lib/text-layer-read.js)"
+          },
+          "b": {
+            "doors": 0,
+            "sets": 10,
+            "items": 59,
+            "name": "geometry first (tools/accuracy/truth/reader_b.mjs)",
+            "tables": 0
+          }
+        },
+        "pages": {
+          "door_candidates": 1,
+          "hardware_candidates": 5,
+          "door_schedule_pages": [],
+          "hardware_pages": [
+            24,
+            25,
+            26,
+            27,
+            28
+          ]
+        },
+        "calibration": null
+      }
+    },
+    "595613e060c69652": {
+      "family": "delaware_bidcondocs",
+      "before": {
+        "tier": "unread",
+        "rows_agreed": 0,
+        "rows_total": 76,
+        "queue": 82,
+        "readers": {
+          "a": {
+            "doors": 0,
+            "sets": 1,
+            "items": 38,
+            "name": "production text layer (weyland-subx-worker/src/lib/text-layer-read.js)"
+          },
+          "b": {
+            "doors": 0,
+            "sets": 5,
+            "items": 38,
+            "name": "geometry first (tools/accuracy/truth/reader_b.mjs)",
+            "tables": 0
+          }
+        },
+        "pages": {
+          "door_candidates": 10,
+          "hardware_candidates": 2,
+          "door_schedule_pages": [],
+          "hardware_pages": [
+            272,
+            273
+          ]
+        },
+        "calibration": null
+      },
+      "after": {
+        "tier": "agreed",
+        "rows_agreed": 38,
+        "rows_total": 38,
+        "queue": 0,
+        "readers": {
+          "a": {
+            "doors": 0,
+            "sets": 5,
+            "items": 38,
+            "name": "production text layer (weyland-subx-worker/src/lib/text-layer-read.js)"
+          },
+          "b": {
+            "doors": 0,
+            "sets": 5,
+            "items": 38,
+            "name": "geometry first (tools/accuracy/truth/reader_b.mjs)",
+            "tables": 0
+          }
+        },
+        "pages": {
+          "door_candidates": 10,
+          "hardware_candidates": 2,
+          "door_schedule_pages": [],
+          "hardware_pages": [
+            272,
+            273
+          ]
+        },
+        "calibration": null
+      }
+    },
+    "dd339f57b51538ed": {
+      "family": "Berryessa",
+      "before": {
+        "tier": "audited",
+        "rows_agreed": 16,
+        "rows_total": 41,
+        "queue": 26,
+        "readers": {
+          "a": {
+            "doors": 24,
+            "sets": 3,
+            "items": 17,
+            "name": "production text layer (weyland-subx-worker/src/lib/text-layer-read.js)"
+          },
+          "b": {
+            "doors": 24,
+            "sets": 2,
+            "items": 16,
+            "name": "geometry first (tools/accuracy/truth/reader_b.mjs)",
+            "tables": 3
+          }
+        },
+        "pages": {
+          "door_candidates": 9,
+          "hardware_candidates": 2,
+          "door_schedule_pages": [
+            284,
+            286,
+            288
+          ],
+          "hardware_pages": [
+            274,
+            282
+          ]
+        },
+        "calibration": [
+          {
+            "expected": "berryessa-087100-hardware-groups.json",
+            "kind": "items",
+            "reader_a": {
+              "expected_groups": 2,
+              "groups_found": 2,
+              "expected_rows": 16,
+              "rows_found": 16,
+              "rows_fully_right": 16,
+              "fields_right": 80,
+              "fields_total": 80,
+              "per_field": {
+                "qty": {
+                  "right": 16,
+                  "total": 16
+                },
+                "description": {
+                  "right": 16,
+                  "total": 16
+                },
+                "catalog": {
+                  "right": 16,
+                  "total": 16
+                },
+                "finish": {
+                  "right": 16,
+                  "total": 16
+                },
+                "manufacturer": {
+                  "right": 16,
+                  "total": 16
+                }
+              },
+              "wrong": []
+            },
+            "reader_b": {
+              "expected_groups": 2,
+              "groups_found": 2,
+              "expected_rows": 16,
+              "rows_found": 16,
+              "rows_fully_right": 16,
+              "fields_right": 80,
+              "fields_total": 80,
+              "per_field": {
+                "qty": {
+                  "right": 16,
+                  "total": 16
+                },
+                "description": {
+                  "right": 16,
+                  "total": 16
+                },
+                "catalog": {
+                  "right": 16,
+                  "total": 16
+                },
+                "finish": {
+                  "right": 16,
+                  "total": 16
+                },
+                "manufacturer": {
+                  "right": 16,
+                  "total": 16
+                }
+              },
+              "wrong": []
+            },
+            "agreed": {
+              "expected_groups": 2,
+              "groups_found": 2,
+              "expected_rows": 16,
+              "rows_found": 16,
+              "rows_fully_right": 16,
+              "fields_right": 80,
+              "fields_total": 80,
+              "per_field": {
+                "qty": {
+                  "right": 16,
+                  "total": 16
+                },
+                "description": {
+                  "right": 16,
+                  "total": 16
+                },
+                "catalog": {
+                  "right": 16,
+                  "total": 16
+                },
+                "finish": {
+                  "right": 16,
+                  "total": 16
+                },
+                "manufacturer": {
+                  "right": 16,
+                  "total": 16
+                }
+              },
+              "wrong": []
+            },
+            "fields": {
+              "agreed": {
+                "right": 78,
+                "total": 78
+              },
+              "disputed": {
+                "total": 0,
+                "a_right": 0,
+                "b_right": 0,
+                "neither": 0
+              },
+              "agreed_wrong": []
+            }
+          },
+          {
+            "expected": "berryessa-a9.2-door-schedules.json",
+            "kind": "doors",
+            "reader_a": {
+              "expected_rows": 24,
+              "rows_found": 24,
+              "rows_fully_right": 0,
+              "fields_right": 144,
+              "fields_total": 168,
+              "per_field": {
+                "width_inches": {
+                  "right": 24,
+                  "total": 24
+                },
+                "height_inches": {
+                  "right": 24,
+                  "total": 24
+                },
+                "door_type": {
+                  "right": 24,
+                  "total": 24
+                },
+                "material": {
+                  "right": 24,
+                  "total": 24
+                },
+                "fire_rating": {
+                  "right": 24,
+                  "total": 24
+                },
+                "hardware_group": {
+                  "right": 24,
+                  "total": 24
+                },
+                "location": {
+                  "right": 0,
+                  "total": 24
+                }
+              },
+              "extra_rows": 0,
+              "wrong": [
+                {
+                  "key": "001",
+                  "page": 284,
+                  "field": "location",
+                  "expected": "ADMIN LOBBY HALL",
+                  "read": null
+                },
+                {
+                  "key": "002",
+                  "page": 284,
+                  "field": "location",
+                  "expected": "A-POD CLASSROOM A1",
+                  "read": null
+                },
+                {
+                  "key": "003",
+                  "page": 284,
+                  "field": "location",
+                  "expected": "A-POD / LOBBY",
+                  "read": null
+                },
+                {
+                  "key": "004",
+                  "page": 284,
+                  "field": "location",
+                  "expected": "B-POD / HCORRIDOR",
+                  "read": null
+                },
+                {
+                  "key": "005",
+                  "page": 284,
+                  "field": "location",
+                  "expected": "C-POD / CORRIDOR",
+                  "read": null
+                },
+                {
+                  "key": "006",
+                  "page": 284,
+                  "field": "location",
+                  "expected": "D-POD / CORRIDOR",
+                  "read": null
+                },
+                {
+                  "key": "007",
+                  "page": 284,
+                  "field": "location",
+                  "expected": "E-POD / CORRIDOR",
+                  "read": null
+                },
+                {
+                  "key": "008",
+                  "page": 284,
+                  "field": "location",
+                  "expected": "F-POD / CORRIDOR",
+                  "read": null
+                },
+                {
+                  "key": "009",
+                  "page": 284,
+                  "field": "location",
+                  "expected": "KITCHEN / CORRIDOR",
+                  "read": null
+                },
+                {
+                  "key": "001",
+                  "page": 286,
+                  "field": "location",
+                  "expected": "ADMIN LOBBY HALL",
+                  "read": null
+                },
+                {
+                  "key": "002",
+                  "page": 286,
+                  "field": "location",
+                  "expected": "A-POD / CORRIDOR",
+                  "read": null
+                },
+                {
+                  "key": "003",
+                  "page": 286,
+                  "field": "location",
+                  "expected": "B-POD / CORRIDOR",
+                  "read": null
+                },
+                {
+                  "key": "004",
+                  "page": 286,
+                  "field": "location",
+                  "expected": "C-POD / CORRIDOR",
+                  "read": null
+                },
+                {
+                  "key": "005",
+                  "page": 286,
+                  "field": "location",
+                  "expected": "D-POD / CORRIDOR",
+                  "read": null
+                },
+                {
+                  "key": "006",
+                  "page": 286,
+                  "field": "location",
+                  "expected": "E-POD / CORRIDOR",
+                  "read": null
+                },
+                {
+                  "key": "008",
+                  "page": 286,
+                  "field": "location",
+                  "expected": "KITCHEN / CORRIDOR",
+                  "read": null
+                },
+                {
+                  "key": "001",
+                  "page": 288,
+                  "field": "location",
+                  "expected": "ADMIN LOBBY HALL",
+                  "read": null
+                },
+                {
+                  "key": "002",
+                  "page": 288,
+                  "field": "location",
+                  "expected": "A-POD / CORRIDOR",
+                  "read": null
+                },
+                {
+                  "key": "003",
+                  "page": 288,
+                  "field": "location",
+                  "expected": "B-POD / CORRIDOR",
+                  "read": null
+                },
+                {
+                  "key": "004",
+                  "page": 288,
+                  "field": "location",
+                  "expected": "C-POD / CORRIDOR",
+                  "read": null
+                },
+                {
+                  "key": "005",
+                  "page": 288,
+                  "field": "location",
+                  "expected": "D-POD / CORRIDOR",
+                  "read": null
+                },
+                {
+                  "key": "006",
+                  "page": 288,
+                  "field": "location",
+                  "expected": "E-POD / CORRIDOR",
+                  "read": null
+                },
+                {
+                  "key": "007",
+                  "page": 288,
+                  "field": "location",
+                  "expected": "F-POD / CORRIDOR",
+                  "read": null
+                },
+                {
+                  "key": "008",
+                  "page": 288,
+                  "field": "location",
+                  "expected": "KITCHEN / CORRIDOR",
+                  "read": null
+                }
+              ]
+            },
+            "reader_b": {
+              "expected_rows": 24,
+              "rows_found": 24,
+              "rows_fully_right": 24,
+              "fields_right": 168,
+              "fields_total": 168,
+              "per_field": {
+                "width_inches": {
+                  "right": 24,
+                  "total": 24
+                },
+                "height_inches": {
+                  "right": 24,
+                  "total": 24
+                },
+                "door_type": {
+                  "right": 24,
+                  "total": 24
+                },
+                "material": {
+                  "right": 24,
+                  "total": 24
+                },
+                "fire_rating": {
+                  "right": 24,
+                  "total": 24
+                },
+                "hardware_group": {
+                  "right": 24,
+                  "total": 24
+                },
+                "location": {
+                  "right": 24,
+                  "total": 24
+                }
+              },
+              "extra_rows": 0,
+              "wrong": []
+            },
+            "agreed": {
+              "expected_rows": 24,
+              "rows_found": 0,
+              "rows_fully_right": 0,
+              "fields_right": 0,
+              "fields_total": 0,
+              "per_field": {},
+              "extra_rows": 0,
+              "wrong": [
+                {
+                  "key": "001",
+                  "page": 284,
+                  "field": "(row)",
+                  "expected": "row",
+                  "read": null
+                },
+                {
+                  "key": "002",
+                  "page": 284,
+                  "field": "(row)",
+                  "expected": "row",
+                  "read": null
+                },
+                {
+                  "key": "003",
+                  "page": 284,
+                  "field": "(row)",
+                  "expected": "row",
+                  "read": null
+                },
+                {
+                  "key": "004",
+                  "page": 284,
+                  "field": "(row)",
+                  "expected": "row",
+                  "read": null
+                },
+                {
+                  "key": "005",
+                  "page": 284,
+                  "field": "(row)",
+                  "expected": "row",
+                  "read": null
+                },
+                {
+                  "key": "006",
+                  "page": 284,
+                  "field": "(row)",
+                  "expected": "row",
+                  "read": null
+                },
+                {
+                  "key": "007",
+                  "page": 284,
+                  "field": "(row)",
+                  "expected": "row",
+                  "read": null
+                },
+                {
+                  "key": "008",
+                  "page": 284,
+                  "field": "(row)",
+                  "expected": "row",
+                  "read": null
+                },
+                {
+                  "key": "009",
+                  "page": 284,
+                  "field": "(row)",
+                  "expected": "row",
+                  "read": null
+                },
+                {
+                  "key": "001",
+                  "page": 286,
+                  "field": "(row)",
+                  "expected": "row",
+                  "read": null
+                },
+                {
+                  "key": "002",
+                  "page": 286,
+                  "field": "(row)",
+                  "expected": "row",
+                  "read": null
+                },
+                {
+                  "key": "003",
+                  "page": 286,
+                  "field": "(row)",
+                  "expected": "row",
+                  "read": null
+                },
+                {
+                  "key": "004",
+                  "page": 286,
+                  "field": "(row)",
+                  "expected": "row",
+                  "read": null
+                },
+                {
+                  "key": "005",
+                  "page": 286,
+                  "field": "(row)",
+                  "expected": "row",
+                  "read": null
+                },
+                {
+                  "key": "006",
+                  "page": 286,
+                  "field": "(row)",
+                  "expected": "row",
+                  "read": null
+                },
+                {
+                  "key": "008",
+                  "page": 286,
+                  "field": "(row)",
+                  "expected": "row",
+                  "read": null
+                },
+                {
+                  "key": "001",
+                  "page": 288,
+                  "field": "(row)",
+                  "expected": "row",
+                  "read": null
+                },
+                {
+                  "key": "002",
+                  "page": 288,
+                  "field": "(row)",
+                  "expected": "row",
+                  "read": null
+                },
+                {
+                  "key": "003",
+                  "page": 288,
+                  "field": "(row)",
+                  "expected": "row",
+                  "read": null
+                },
+                {
+                  "key": "004",
+                  "page": 288,
+                  "field": "(row)",
+                  "expected": "row",
+                  "read": null
+                },
+                {
+                  "key": "005",
+                  "page": 288,
+                  "field": "(row)",
+                  "expected": "row",
+                  "read": null
+                },
+                {
+                  "key": "006",
+                  "page": 288,
+                  "field": "(row)",
+                  "expected": "row",
+                  "read": null
+                },
+                {
+                  "key": "007",
+                  "page": 288,
+                  "field": "(row)",
+                  "expected": "row",
+                  "read": null
+                },
+                {
+                  "key": "008",
+                  "page": 288,
+                  "field": "(row)",
+                  "expected": "row",
+                  "read": null
+                }
+              ]
+            },
+            "fields": {
+              "agreed": {
+                "right": 144,
+                "total": 144
+              },
+              "disputed": {
+                "total": 24,
+                "a_right": 0,
+                "b_right": 24,
+                "neither": 0
+              },
+              "agreed_wrong": []
+            }
+          }
+        ]
+      },
+      "after": {
+        "tier": "audited",
+        "rows_agreed": 40,
+        "rows_total": 41,
+        "queue": 1,
+        "readers": {
+          "a": {
+            "doors": 24,
+            "sets": 2,
+            "items": 17,
+            "name": "production text layer (weyland-subx-worker/src/lib/text-layer-read.js)"
+          },
+          "b": {
+            "doors": 24,
+            "sets": 2,
+            "items": 16,
+            "name": "geometry first (tools/accuracy/truth/reader_b.mjs)",
+            "tables": 3
+          }
+        },
+        "pages": {
+          "door_candidates": 9,
+          "hardware_candidates": 2,
+          "door_schedule_pages": [
+            284,
+            286,
+            288
+          ],
+          "hardware_pages": [
+            274,
+            282
+          ]
+        },
+        "calibration": [
+          {
+            "expected": "berryessa-087100-hardware-groups.json",
+            "kind": "items",
+            "reader_a": {
+              "expected_groups": 2,
+              "groups_found": 2,
+              "expected_rows": 16,
+              "rows_found": 16,
+              "rows_fully_right": 16,
+              "fields_right": 80,
+              "fields_total": 80,
+              "per_field": {
+                "qty": {
+                  "right": 16,
+                  "total": 16
+                },
+                "description": {
+                  "right": 16,
+                  "total": 16
+                },
+                "catalog": {
+                  "right": 16,
+                  "total": 16
+                },
+                "finish": {
+                  "right": 16,
+                  "total": 16
+                },
+                "manufacturer": {
+                  "right": 16,
+                  "total": 16
+                }
+              },
+              "wrong": []
+            },
+            "reader_b": {
+              "expected_groups": 2,
+              "groups_found": 2,
+              "expected_rows": 16,
+              "rows_found": 16,
+              "rows_fully_right": 16,
+              "fields_right": 80,
+              "fields_total": 80,
+              "per_field": {
+                "qty": {
+                  "right": 16,
+                  "total": 16
+                },
+                "description": {
+                  "right": 16,
+                  "total": 16
+                },
+                "catalog": {
+                  "right": 16,
+                  "total": 16
+                },
+                "finish": {
+                  "right": 16,
+                  "total": 16
+                },
+                "manufacturer": {
+                  "right": 16,
+                  "total": 16
+                }
+              },
+              "wrong": []
+            },
+            "agreed": {
+              "expected_groups": 2,
+              "groups_found": 2,
+              "expected_rows": 16,
+              "rows_found": 16,
+              "rows_fully_right": 16,
+              "fields_right": 80,
+              "fields_total": 80,
+              "per_field": {
+                "qty": {
+                  "right": 16,
+                  "total": 16
+                },
+                "description": {
+                  "right": 16,
+                  "total": 16
+                },
+                "catalog": {
+                  "right": 16,
+                  "total": 16
+                },
+                "finish": {
+                  "right": 16,
+                  "total": 16
+                },
+                "manufacturer": {
+                  "right": 16,
+                  "total": 16
+                }
+              },
+              "wrong": []
+            },
+            "fields": {
+              "agreed": {
+                "right": 44,
+                "total": 44
+              },
+              "disputed": {
+                "total": 0,
+                "a_right": 0,
+                "b_right": 0,
+                "neither": 0
+              },
+              "agreed_wrong": []
+            }
+          },
+          {
+            "expected": "berryessa-a9.2-door-schedules.json",
+            "kind": "doors",
+            "reader_a": {
+              "expected_rows": 24,
+              "rows_found": 24,
+              "rows_fully_right": 24,
+              "fields_right": 168,
+              "fields_total": 168,
+              "per_field": {
+                "width_inches": {
+                  "right": 24,
+                  "total": 24
+                },
+                "height_inches": {
+                  "right": 24,
+                  "total": 24
+                },
+                "door_type": {
+                  "right": 24,
+                  "total": 24
+                },
+                "material": {
+                  "right": 24,
+                  "total": 24
+                },
+                "fire_rating": {
+                  "right": 24,
+                  "total": 24
+                },
+                "hardware_group": {
+                  "right": 24,
+                  "total": 24
+                },
+                "location": {
+                  "right": 24,
+                  "total": 24
+                }
+              },
+              "extra_rows": 0,
+              "wrong": []
+            },
+            "reader_b": {
+              "expected_rows": 24,
+              "rows_found": 24,
+              "rows_fully_right": 24,
+              "fields_right": 168,
+              "fields_total": 168,
+              "per_field": {
+                "width_inches": {
+                  "right": 24,
+                  "total": 24
+                },
+                "height_inches": {
+                  "right": 24,
+                  "total": 24
+                },
+                "door_type": {
+                  "right": 24,
+                  "total": 24
+                },
+                "material": {
+                  "right": 24,
+                  "total": 24
+                },
+                "fire_rating": {
+                  "right": 24,
+                  "total": 24
+                },
+                "hardware_group": {
+                  "right": 24,
+                  "total": 24
+                },
+                "location": {
+                  "right": 24,
+                  "total": 24
+                }
+              },
+              "extra_rows": 0,
+              "wrong": []
+            },
+            "agreed": {
+              "expected_rows": 24,
+              "rows_found": 24,
+              "rows_fully_right": 24,
+              "fields_right": 168,
+              "fields_total": 168,
+              "per_field": {
+                "width_inches": {
+                  "right": 24,
+                  "total": 24
+                },
+                "height_inches": {
+                  "right": 24,
+                  "total": 24
+                },
+                "door_type": {
+                  "right": 24,
+                  "total": 24
+                },
+                "material": {
+                  "right": 24,
+                  "total": 24
+                },
+                "fire_rating": {
+                  "right": 24,
+                  "total": 24
+                },
+                "hardware_group": {
+                  "right": 24,
+                  "total": 24
+                },
+                "location": {
+                  "right": 24,
+                  "total": 24
+                }
+              },
+              "extra_rows": 0,
+              "wrong": []
+            },
+            "fields": {
+              "agreed": {
+                "right": 168,
+                "total": 168
+              },
+              "disputed": {
+                "total": 0,
+                "a_right": 0,
+                "b_right": 0,
+                "neither": 0
+              },
+              "agreed_wrong": []
+            }
+          }
+        ]
+      }
+    },
+    "f0e863d88ea688ff": {
+      "family": "Rockford",
+      "before": {
+        "tier": "audited",
+        "rows_agreed": 173,
+        "rows_total": 175,
+        "queue": 3,
+        "readers": {
+          "a": {
+            "doors": 65,
+            "sets": 14,
+            "items": 110,
+            "name": "production text layer (weyland-subx-worker/src/lib/text-layer-read.js)"
+          },
+          "b": {
+            "doors": 65,
+            "sets": 14,
+            "items": 110,
+            "name": "geometry first (tools/accuracy/truth/reader_b.mjs)",
+            "tables": 1
+          }
+        },
+        "pages": {
+          "door_candidates": 10,
+          "hardware_candidates": 8,
+          "door_schedule_pages": [
+            29
+          ],
+          "hardware_pages": [
+            17,
+            18,
+            19,
+            20,
+            21,
+            22,
+            23
+          ]
+        },
+        "calibration": [
+          {
+            "expected": "rockford-087100-hardware-groups.json",
+            "kind": "items",
+            "reader_a": {
+              "expected_groups": 14,
+              "groups_found": 14,
+              "expected_rows": 110,
+              "rows_found": 110,
+              "rows_fully_right": 108,
+              "fields_right": 547,
+              "fields_total": 550,
+              "per_field": {
+                "qty": {
+                  "right": 110,
+                  "total": 110
+                },
+                "description": {
+                  "right": 108,
+                  "total": 110
+                },
+                "catalog": {
+                  "right": 109,
+                  "total": 110
+                },
+                "finish": {
+                  "right": 110,
+                  "total": 110
+                },
+                "manufacturer": {
+                  "right": 110,
+                  "total": 110
+                }
+              },
+              "wrong": [
+                {
+                  "key": "32 / 4040XP REG / 4040XP EDA - AS REQUIRED",
+                  "field": "description",
+                  "expected": "SURFACE CLOSER",
+                  "read": "SURFACE CLOSER (REG/"
+                },
+                {
+                  "key": "32 / 4040XP REG / 4040XP EDA - AS REQUIRED",
+                  "field": "catalog",
+                  "expected": "4040XP REG / 4040XP EDA - AS REQUIRED",
+                  "read": "4040XP REG / 4040XP EDA - AS"
+                },
+                {
+                  "key": "40 / 4040XP SCUSH",
+                  "field": "description",
+                  "expected": "SURFACE CLOSER",
+                  "read": "SURFACE CLOSER (PA"
+                }
+              ]
+            },
+            "reader_b": {
+              "expected_groups": 14,
+              "groups_found": 14,
+              "expected_rows": 110,
+              "rows_found": 110,
+              "rows_fully_right": 110,
+              "fields_right": 550,
+              "fields_total": 550,
+              "per_field": {
+                "qty": {
+                  "right": 110,
+                  "total": 110
+                },
+                "description": {
+                  "right": 110,
+                  "total": 110
+                },
+                "catalog": {
+                  "right": 110,
+                  "total": 110
+                },
+                "finish": {
+                  "right": 110,
+                  "total": 110
+                },
+                "manufacturer": {
+                  "right": 110,
+                  "total": 110
+                }
+              },
+              "wrong": []
+            },
+            "agreed": {
+              "expected_groups": 14,
+              "groups_found": 14,
+              "expected_rows": 110,
+              "rows_found": 108,
+              "rows_fully_right": 108,
+              "fields_right": 540,
+              "fields_total": 540,
+              "per_field": {
+                "qty": {
+                  "right": 108,
+                  "total": 108
+                },
+                "description": {
+                  "right": 108,
+                  "total": 108
+                },
+                "catalog": {
+                  "right": 108,
+                  "total": 108
+                },
+                "finish": {
+                  "right": 108,
+                  "total": 108
+                },
+                "manufacturer": {
+                  "right": 108,
+                  "total": 108
+                }
+              },
+              "wrong": [
+                {
+                  "key": "32 / 4040XP REG / 4040XP EDA - AS REQUIRED",
+                  "field": "(row)",
+                  "expected": "row",
+                  "read": null
+                },
+                {
+                  "key": "40 / 4040XP SCUSH",
+                  "field": "(row)",
+                  "expected": "row",
+                  "read": null
+                }
+              ]
+            },
+            "fields": {
+              "agreed": {
+                "right": 536,
+                "total": 536
+              },
+              "disputed": {
+                "total": 3,
+                "a_right": 0,
+                "b_right": 3,
+                "neither": 0
+              },
+              "agreed_wrong": []
+            }
+          },
+          {
+            "expected": "rockford-a2.2-door-schedule.json",
+            "kind": "doors",
+            "reader_a": {
+              "expected_rows": 65,
+              "rows_found": 65,
+              "rows_fully_right": 65,
+              "fields_right": 390,
+              "fields_total": 390,
+              "per_field": {
+                "width_inches": {
+                  "right": 65,
+                  "total": 65
+                },
+                "height_inches": {
+                  "right": 65,
+                  "total": 65
+                },
+                "door_type": {
+                  "right": 65,
+                  "total": 65
+                },
+                "material": {
+                  "right": 65,
+                  "total": 65
+                },
+                "fire_rating": {
+                  "right": 65,
+                  "total": 65
+                },
+                "hardware_group": {
+                  "right": 65,
+                  "total": 65
+                }
+              },
+              "extra_rows": 0,
+              "wrong": []
+            },
+            "reader_b": {
+              "expected_rows": 65,
+              "rows_found": 65,
+              "rows_fully_right": 65,
+              "fields_right": 390,
+              "fields_total": 390,
+              "per_field": {
+                "width_inches": {
+                  "right": 65,
+                  "total": 65
+                },
+                "height_inches": {
+                  "right": 65,
+                  "total": 65
+                },
+                "door_type": {
+                  "right": 65,
+                  "total": 65
+                },
+                "material": {
+                  "right": 65,
+                  "total": 65
+                },
+                "fire_rating": {
+                  "right": 65,
+                  "total": 65
+                },
+                "hardware_group": {
+                  "right": 65,
+                  "total": 65
+                }
+              },
+              "extra_rows": 0,
+              "wrong": []
+            },
+            "agreed": {
+              "expected_rows": 65,
+              "rows_found": 65,
+              "rows_fully_right": 65,
+              "fields_right": 390,
+              "fields_total": 390,
+              "per_field": {
+                "width_inches": {
+                  "right": 65,
+                  "total": 65
+                },
+                "height_inches": {
+                  "right": 65,
+                  "total": 65
+                },
+                "door_type": {
+                  "right": 65,
+                  "total": 65
+                },
+                "material": {
+                  "right": 65,
+                  "total": 65
+                },
+                "fire_rating": {
+                  "right": 65,
+                  "total": 65
+                },
+                "hardware_group": {
+                  "right": 65,
+                  "total": 65
+                }
+              },
+              "extra_rows": 0,
+              "wrong": []
+            },
+            "fields": {
+              "agreed": {
+                "right": 324,
+                "total": 324
+              },
+              "disputed": {
+                "total": 0,
+                "a_right": 0,
+                "b_right": 0,
+                "neither": 0
+              },
+              "agreed_wrong": []
+            }
+          }
+        ]
+      },
+      "after": {
+        "tier": "audited",
+        "rows_agreed": 173,
+        "rows_total": 175,
+        "queue": 3,
+        "readers": {
+          "a": {
+            "doors": 65,
+            "sets": 14,
+            "items": 110,
+            "name": "production text layer (weyland-subx-worker/src/lib/text-layer-read.js)"
+          },
+          "b": {
+            "doors": 65,
+            "sets": 14,
+            "items": 110,
+            "name": "geometry first (tools/accuracy/truth/reader_b.mjs)",
+            "tables": 1
+          }
+        },
+        "pages": {
+          "door_candidates": 10,
+          "hardware_candidates": 8,
+          "door_schedule_pages": [
+            29
+          ],
+          "hardware_pages": [
+            17,
+            18,
+            19,
+            20,
+            21,
+            22,
+            23
+          ]
+        },
+        "calibration": [
+          {
+            "expected": "rockford-087100-hardware-groups.json",
+            "kind": "items",
+            "reader_a": {
+              "expected_groups": 14,
+              "groups_found": 14,
+              "expected_rows": 110,
+              "rows_found": 110,
+              "rows_fully_right": 108,
+              "fields_right": 547,
+              "fields_total": 550,
+              "per_field": {
+                "qty": {
+                  "right": 110,
+                  "total": 110
+                },
+                "description": {
+                  "right": 108,
+                  "total": 110
+                },
+                "catalog": {
+                  "right": 109,
+                  "total": 110
+                },
+                "finish": {
+                  "right": 110,
+                  "total": 110
+                },
+                "manufacturer": {
+                  "right": 110,
+                  "total": 110
+                }
+              },
+              "wrong": [
+                {
+                  "key": "32 / 4040XP REG / 4040XP EDA - AS REQUIRED",
+                  "field": "description",
+                  "expected": "SURFACE CLOSER",
+                  "read": "SURFACE CLOSER (REG/"
+                },
+                {
+                  "key": "32 / 4040XP REG / 4040XP EDA - AS REQUIRED",
+                  "field": "catalog",
+                  "expected": "4040XP REG / 4040XP EDA - AS REQUIRED",
+                  "read": "4040XP REG / 4040XP EDA - AS"
+                },
+                {
+                  "key": "40 / 4040XP SCUSH",
+                  "field": "description",
+                  "expected": "SURFACE CLOSER",
+                  "read": "SURFACE CLOSER (PA"
+                }
+              ]
+            },
+            "reader_b": {
+              "expected_groups": 14,
+              "groups_found": 14,
+              "expected_rows": 110,
+              "rows_found": 110,
+              "rows_fully_right": 110,
+              "fields_right": 550,
+              "fields_total": 550,
+              "per_field": {
+                "qty": {
+                  "right": 110,
+                  "total": 110
+                },
+                "description": {
+                  "right": 110,
+                  "total": 110
+                },
+                "catalog": {
+                  "right": 110,
+                  "total": 110
+                },
+                "finish": {
+                  "right": 110,
+                  "total": 110
+                },
+                "manufacturer": {
+                  "right": 110,
+                  "total": 110
+                }
+              },
+              "wrong": []
+            },
+            "agreed": {
+              "expected_groups": 14,
+              "groups_found": 14,
+              "expected_rows": 110,
+              "rows_found": 108,
+              "rows_fully_right": 108,
+              "fields_right": 540,
+              "fields_total": 540,
+              "per_field": {
+                "qty": {
+                  "right": 108,
+                  "total": 108
+                },
+                "description": {
+                  "right": 108,
+                  "total": 108
+                },
+                "catalog": {
+                  "right": 108,
+                  "total": 108
+                },
+                "finish": {
+                  "right": 108,
+                  "total": 108
+                },
+                "manufacturer": {
+                  "right": 108,
+                  "total": 108
+                }
+              },
+              "wrong": [
+                {
+                  "key": "32 / 4040XP REG / 4040XP EDA - AS REQUIRED",
+                  "field": "(row)",
+                  "expected": "row",
+                  "read": null
+                },
+                {
+                  "key": "40 / 4040XP SCUSH",
+                  "field": "(row)",
+                  "expected": "row",
+                  "read": null
+                }
+              ]
+            },
+            "fields": {
+              "agreed": {
+                "right": 536,
+                "total": 536
+              },
+              "disputed": {
+                "total": 3,
+                "a_right": 0,
+                "b_right": 3,
+                "neither": 0
+              },
+              "agreed_wrong": []
+            }
+          },
+          {
+            "expected": "rockford-a2.2-door-schedule.json",
+            "kind": "doors",
+            "reader_a": {
+              "expected_rows": 65,
+              "rows_found": 65,
+              "rows_fully_right": 65,
+              "fields_right": 390,
+              "fields_total": 390,
+              "per_field": {
+                "width_inches": {
+                  "right": 65,
+                  "total": 65
+                },
+                "height_inches": {
+                  "right": 65,
+                  "total": 65
+                },
+                "door_type": {
+                  "right": 65,
+                  "total": 65
+                },
+                "material": {
+                  "right": 65,
+                  "total": 65
+                },
+                "fire_rating": {
+                  "right": 65,
+                  "total": 65
+                },
+                "hardware_group": {
+                  "right": 65,
+                  "total": 65
+                }
+              },
+              "extra_rows": 0,
+              "wrong": []
+            },
+            "reader_b": {
+              "expected_rows": 65,
+              "rows_found": 65,
+              "rows_fully_right": 65,
+              "fields_right": 390,
+              "fields_total": 390,
+              "per_field": {
+                "width_inches": {
+                  "right": 65,
+                  "total": 65
+                },
+                "height_inches": {
+                  "right": 65,
+                  "total": 65
+                },
+                "door_type": {
+                  "right": 65,
+                  "total": 65
+                },
+                "material": {
+                  "right": 65,
+                  "total": 65
+                },
+                "fire_rating": {
+                  "right": 65,
+                  "total": 65
+                },
+                "hardware_group": {
+                  "right": 65,
+                  "total": 65
+                }
+              },
+              "extra_rows": 0,
+              "wrong": []
+            },
+            "agreed": {
+              "expected_rows": 65,
+              "rows_found": 65,
+              "rows_fully_right": 65,
+              "fields_right": 390,
+              "fields_total": 390,
+              "per_field": {
+                "width_inches": {
+                  "right": 65,
+                  "total": 65
+                },
+                "height_inches": {
+                  "right": 65,
+                  "total": 65
+                },
+                "door_type": {
+                  "right": 65,
+                  "total": 65
+                },
+                "material": {
+                  "right": 65,
+                  "total": 65
+                },
+                "fire_rating": {
+                  "right": 65,
+                  "total": 65
+                },
+                "hardware_group": {
+                  "right": 65,
+                  "total": 65
+                }
+              },
+              "extra_rows": 0,
+              "wrong": []
+            },
+            "fields": {
+              "agreed": {
+                "right": 324,
+                "total": 324
+              },
+              "disputed": {
+                "total": 0,
+                "a_right": 0,
+                "b_right": 0,
+                "neither": 0
+              },
+              "agreed_wrong": []
+            }
+          }
+        ]
+      }
+    },
+    "525dc0b72011077a": {
+      "family": "Christina",
+      "before": {
+        "tier": "audited",
+        "rows_agreed": 99,
+        "rows_total": 104,
+        "queue": 6,
+        "readers": {
+          "a": {
+            "doors": 0,
+            "sets": 9,
+            "items": 103,
+            "name": "production text layer (weyland-subx-worker/src/lib/text-layer-read.js)"
+          },
+          "b": {
+            "doors": 0,
+            "sets": 9,
+            "items": 102,
+            "name": "geometry first (tools/accuracy/truth/reader_b.mjs)",
+            "tables": 0
+          }
+        },
+        "pages": {
+          "door_candidates": 2,
+          "hardware_candidates": 5,
+          "door_schedule_pages": [],
+          "hardware_pages": [
+            219,
+            220,
+            221,
+            222,
+            223
+          ]
+        },
+        "calibration": [
+          {
+            "expected": "christina-chs-hardware-set-01.json",
+            "kind": "items",
+            "reader_a": {
+              "expected_groups": 1,
+              "groups_found": 1,
+              "expected_rows": 23,
+              "rows_found": 22,
+              "rows_fully_right": 20,
+              "fields_right": 107,
+              "fields_total": 110,
+              "per_field": {
+                "qty": {
+                  "right": 21,
+                  "total": 22
+                },
+                "description": {
+                  "right": 21,
+                  "total": 22
+                },
+                "catalog": {
+                  "right": 21,
+                  "total": 22
+                },
+                "finish": {
+                  "right": 22,
+                  "total": 22
+                },
+                "manufacturer": {
+                  "right": 22,
+                  "total": 22
+                }
+              },
+              "wrong": [
+                {
+                  "key": "1 / DORMA 100 SERIES BY SECURITY VENDOR",
+                  "field": "description",
+                  "expected": "AUTO DOOR OPERATOR",
+                  "read": "AUTO DOOR OPERATOR RELAY MODULE"
+                },
+                {
+                  "key": "1 / DORMA 100 SERIES BY SECURITY VENDOR",
+                  "field": "catalog",
+                  "expected": "DORMA 100 SERIES BY SECURITY VENDOR",
+                  "read": "DORMA 100 SERIES BY SECURITY VENDOR ALTRONTICS RB1224 BY SECURITY VENDOR"
+                },
+                {
+                  "key": "1 / ALTRONTICS RB1224 BY SECURITY VENDOR",
+                  "field": "(row)",
+                  "expected": "row",
+                  "read": null
+                },
+                {
+                  "key": "1 / BY SECURITY VENDOR",
+                  "field": "qty",
+                  "expected": null,
+                  "read": 1
+                }
+              ]
+            },
+            "reader_b": {
+              "expected_groups": 1,
+              "groups_found": 1,
+              "expected_rows": 23,
+              "rows_found": 20,
+              "rows_fully_right": 18,
+              "fields_right": 96,
+              "fields_total": 100,
+              "per_field": {
+                "qty": {
+                  "right": 19,
+                  "total": 20
+                },
+                "description": {
+                  "right": 18,
+                  "total": 20
+                },
+                "catalog": {
+                  "right": 19,
+                  "total": 20
+                },
+                "finish": {
+                  "right": 20,
+                  "total": 20
+                },
+                "manufacturer": {
+                  "right": 20,
+                  "total": 20
+                }
+              },
+              "wrong": [
+                {
+                  "key": "1 / DORMA 100 SERIES BY SECURITY VENDOR",
+                  "field": "description",
+                  "expected": "AUTO DOOR OPERATOR",
+                  "read": "AUTO DOOR OPERATOR RELAY MODULE"
+                },
+                {
+                  "key": "1 / DORMA 100 SERIES BY SECURITY VENDOR",
+                  "field": "catalog",
+                  "expected": "DORMA 100 SERIES BY SECURITY VENDOR",
+                  "read": "DORMA 100 SERIES BY SECURITY VENDOR ALTRONTICS RB1224 BY SECURITY VENDOR"
+                },
+                {
+                  "key": "1 / ALTRONTICS RB1224 BY SECURITY VENDOR",
+                  "field": "(row)",
+                  "expected": "row",
+                  "read": null
+                },
+                {
+                  "key": "1 / 946HP45MO x 946475WR (EXTERIOR) BY SECURITY VENDOR",
+                  "field": "(row)",
+                  "expected": "row",
+                  "read": null
+                },
+                {
+                  "key": "1 / 946HP45MO (INTERIOR) BY SECURITY VENDOR",
+                  "field": "(row)",
+                  "expected": "row",
+                  "read": null
+                },
+                {
+                  "key": "1 / BY SECURITY VENDOR",
+                  "field": "qty",
+                  "expected": null,
+                  "read": 1
+                },
+                {
+                  "key": "1 / BY SECURITY VENDOR",
+                  "field": "description",
+                  "expected": "VIDEO/INTERCOM STATION & CONSOLE w/ 5 RELEASE BUTTONS",
+                  "read": "VIDEO/INTERCOM STATION & CONSOLE w/"
+                }
+              ]
+            },
+            "agreed": {
+              "expected_groups": 1,
+              "groups_found": 1,
+              "expected_rows": 23,
+              "rows_found": 19,
+              "rows_fully_right": 18,
+              "fields_right": 93,
+              "fields_total": 95,
+              "per_field": {
+                "qty": {
+                  "right": 19,
+                  "total": 19
+                },
+                "description": {
+                  "right": 18,
+                  "total": 19
+                },
+                "catalog": {
+                  "right": 18,
+                  "total": 19
+                },
+                "finish": {
+                  "right": 19,
+                  "total": 19
+                },
+                "manufacturer": {
+                  "right": 19,
+                  "total": 19
+                }
+              },
+              "wrong": [
+                {
+                  "key": "1 / DORMA 100 SERIES BY SECURITY VENDOR",
+                  "field": "description",
+                  "expected": "AUTO DOOR OPERATOR",
+                  "read": "AUTO DOOR OPERATOR RELAY MODULE"
+                },
+                {
+                  "key": "1 / DORMA 100 SERIES BY SECURITY VENDOR",
+                  "field": "catalog",
+                  "expected": "DORMA 100 SERIES BY SECURITY VENDOR",
+                  "read": "DORMA 100 SERIES BY SECURITY VENDOR ALTRONTICS RB1224 BY SECURITY VENDOR"
+                },
+                {
+                  "key": "1 / ALTRONTICS RB1224 BY SECURITY VENDOR",
+                  "field": "(row)",
+                  "expected": "row",
+                  "read": null
+                },
+                {
+                  "key": "1 / 946HP45MO x 946475WR (EXTERIOR) BY SECURITY VENDOR",
+                  "field": "(row)",
+                  "expected": "row",
+                  "read": null
+                },
+                {
+                  "key": "1 / 946HP45MO (INTERIOR) BY SECURITY VENDOR",
+                  "field": "(row)",
+                  "expected": "row",
+                  "read": null
+                },
+                {
+                  "key": "1 / BY SECURITY VENDOR",
+                  "field": "(row)",
+                  "expected": "row",
+                  "read": null
+                }
+              ]
+            },
+            "fields": {
+              "agreed": {
+                "right": 86,
+                "total": 89
+              },
+              "disputed": {
+                "total": 1,
+                "a_right": 1,
+                "b_right": 0,
+                "neither": 0
+              },
+              "agreed_wrong": [
+                {
+                  "key": "1 / DORMA 100 SERIES BY SECURITY VENDOR ALTRONTICS RB1224 BY SECURITY VENDOR",
+                  "page": 219,
+                  "field": "description",
+                  "expected": "AUTO DOOR OPERATOR",
+                  "agreed": "AUTO DOOR OPERATOR RELAY MODULE"
+                },
+                {
+                  "key": "1 / DORMA 100 SERIES BY SECURITY VENDOR ALTRONTICS RB1224 BY SECURITY VENDOR",
+                  "page": 219,
+                  "field": "catalog",
+                  "expected": "DORMA 100 SERIES BY SECURITY VENDOR",
+                  "agreed": "DORMA 100 SERIES BY SECURITY VENDOR ALTRONTICS RB1224 BY SECURITY VENDOR"
+                },
+                {
+                  "key": "1 / BY SECURITY VENDOR",
+                  "page": 219,
+                  "field": "qty",
+                  "expected": null,
+                  "agreed": 1
+                }
+              ]
+            }
+          }
+        ]
+      },
+      "after": {
+        "tier": "audited",
+        "rows_agreed": 99,
+        "rows_total": 104,
+        "queue": 6,
+        "readers": {
+          "a": {
+            "doors": 0,
+            "sets": 9,
+            "items": 103,
+            "name": "production text layer (weyland-subx-worker/src/lib/text-layer-read.js)"
+          },
+          "b": {
+            "doors": 0,
+            "sets": 9,
+            "items": 102,
+            "name": "geometry first (tools/accuracy/truth/reader_b.mjs)",
+            "tables": 0
+          }
+        },
+        "pages": {
+          "door_candidates": 2,
+          "hardware_candidates": 5,
+          "door_schedule_pages": [],
+          "hardware_pages": [
+            219,
+            220,
+            221,
+            222,
+            223
+          ]
+        },
+        "calibration": [
+          {
+            "expected": "christina-chs-hardware-set-01.json",
+            "kind": "items",
+            "reader_a": {
+              "expected_groups": 1,
+              "groups_found": 1,
+              "expected_rows": 23,
+              "rows_found": 22,
+              "rows_fully_right": 20,
+              "fields_right": 107,
+              "fields_total": 110,
+              "per_field": {
+                "qty": {
+                  "right": 21,
+                  "total": 22
+                },
+                "description": {
+                  "right": 21,
+                  "total": 22
+                },
+                "catalog": {
+                  "right": 21,
+                  "total": 22
+                },
+                "finish": {
+                  "right": 22,
+                  "total": 22
+                },
+                "manufacturer": {
+                  "right": 22,
+                  "total": 22
+                }
+              },
+              "wrong": [
+                {
+                  "key": "1 / DORMA 100 SERIES BY SECURITY VENDOR",
+                  "field": "description",
+                  "expected": "AUTO DOOR OPERATOR",
+                  "read": "AUTO DOOR OPERATOR RELAY MODULE"
+                },
+                {
+                  "key": "1 / DORMA 100 SERIES BY SECURITY VENDOR",
+                  "field": "catalog",
+                  "expected": "DORMA 100 SERIES BY SECURITY VENDOR",
+                  "read": "DORMA 100 SERIES BY SECURITY VENDOR ALTRONTICS RB1224 BY SECURITY VENDOR"
+                },
+                {
+                  "key": "1 / ALTRONTICS RB1224 BY SECURITY VENDOR",
+                  "field": "(row)",
+                  "expected": "row",
+                  "read": null
+                },
+                {
+                  "key": "1 / BY SECURITY VENDOR",
+                  "field": "qty",
+                  "expected": null,
+                  "read": 1
+                }
+              ]
+            },
+            "reader_b": {
+              "expected_groups": 1,
+              "groups_found": 1,
+              "expected_rows": 23,
+              "rows_found": 20,
+              "rows_fully_right": 18,
+              "fields_right": 96,
+              "fields_total": 100,
+              "per_field": {
+                "qty": {
+                  "right": 19,
+                  "total": 20
+                },
+                "description": {
+                  "right": 18,
+                  "total": 20
+                },
+                "catalog": {
+                  "right": 19,
+                  "total": 20
+                },
+                "finish": {
+                  "right": 20,
+                  "total": 20
+                },
+                "manufacturer": {
+                  "right": 20,
+                  "total": 20
+                }
+              },
+              "wrong": [
+                {
+                  "key": "1 / DORMA 100 SERIES BY SECURITY VENDOR",
+                  "field": "description",
+                  "expected": "AUTO DOOR OPERATOR",
+                  "read": "AUTO DOOR OPERATOR RELAY MODULE"
+                },
+                {
+                  "key": "1 / DORMA 100 SERIES BY SECURITY VENDOR",
+                  "field": "catalog",
+                  "expected": "DORMA 100 SERIES BY SECURITY VENDOR",
+                  "read": "DORMA 100 SERIES BY SECURITY VENDOR ALTRONTICS RB1224 BY SECURITY VENDOR"
+                },
+                {
+                  "key": "1 / ALTRONTICS RB1224 BY SECURITY VENDOR",
+                  "field": "(row)",
+                  "expected": "row",
+                  "read": null
+                },
+                {
+                  "key": "1 / 946HP45MO x 946475WR (EXTERIOR) BY SECURITY VENDOR",
+                  "field": "(row)",
+                  "expected": "row",
+                  "read": null
+                },
+                {
+                  "key": "1 / 946HP45MO (INTERIOR) BY SECURITY VENDOR",
+                  "field": "(row)",
+                  "expected": "row",
+                  "read": null
+                },
+                {
+                  "key": "1 / BY SECURITY VENDOR",
+                  "field": "qty",
+                  "expected": null,
+                  "read": 1
+                },
+                {
+                  "key": "1 / BY SECURITY VENDOR",
+                  "field": "description",
+                  "expected": "VIDEO/INTERCOM STATION & CONSOLE w/ 5 RELEASE BUTTONS",
+                  "read": "VIDEO/INTERCOM STATION & CONSOLE w/"
+                }
+              ]
+            },
+            "agreed": {
+              "expected_groups": 1,
+              "groups_found": 1,
+              "expected_rows": 23,
+              "rows_found": 19,
+              "rows_fully_right": 18,
+              "fields_right": 93,
+              "fields_total": 95,
+              "per_field": {
+                "qty": {
+                  "right": 19,
+                  "total": 19
+                },
+                "description": {
+                  "right": 18,
+                  "total": 19
+                },
+                "catalog": {
+                  "right": 18,
+                  "total": 19
+                },
+                "finish": {
+                  "right": 19,
+                  "total": 19
+                },
+                "manufacturer": {
+                  "right": 19,
+                  "total": 19
+                }
+              },
+              "wrong": [
+                {
+                  "key": "1 / DORMA 100 SERIES BY SECURITY VENDOR",
+                  "field": "description",
+                  "expected": "AUTO DOOR OPERATOR",
+                  "read": "AUTO DOOR OPERATOR RELAY MODULE"
+                },
+                {
+                  "key": "1 / DORMA 100 SERIES BY SECURITY VENDOR",
+                  "field": "catalog",
+                  "expected": "DORMA 100 SERIES BY SECURITY VENDOR",
+                  "read": "DORMA 100 SERIES BY SECURITY VENDOR ALTRONTICS RB1224 BY SECURITY VENDOR"
+                },
+                {
+                  "key": "1 / ALTRONTICS RB1224 BY SECURITY VENDOR",
+                  "field": "(row)",
+                  "expected": "row",
+                  "read": null
+                },
+                {
+                  "key": "1 / 946HP45MO x 946475WR (EXTERIOR) BY SECURITY VENDOR",
+                  "field": "(row)",
+                  "expected": "row",
+                  "read": null
+                },
+                {
+                  "key": "1 / 946HP45MO (INTERIOR) BY SECURITY VENDOR",
+                  "field": "(row)",
+                  "expected": "row",
+                  "read": null
+                },
+                {
+                  "key": "1 / BY SECURITY VENDOR",
+                  "field": "(row)",
+                  "expected": "row",
+                  "read": null
+                }
+              ]
+            },
+            "fields": {
+              "agreed": {
+                "right": 86,
+                "total": 89
+              },
+              "disputed": {
+                "total": 1,
+                "a_right": 1,
+                "b_right": 0,
+                "neither": 0
+              },
+              "agreed_wrong": [
+                {
+                  "key": "1 / DORMA 100 SERIES BY SECURITY VENDOR ALTRONTICS RB1224 BY SECURITY VENDOR",
+                  "page": 219,
+                  "field": "description",
+                  "expected": "AUTO DOOR OPERATOR",
+                  "agreed": "AUTO DOOR OPERATOR RELAY MODULE"
+                },
+                {
+                  "key": "1 / DORMA 100 SERIES BY SECURITY VENDOR ALTRONTICS RB1224 BY SECURITY VENDOR",
+                  "page": 219,
+                  "field": "catalog",
+                  "expected": "DORMA 100 SERIES BY SECURITY VENDOR",
+                  "agreed": "DORMA 100 SERIES BY SECURITY VENDOR ALTRONTICS RB1224 BY SECURITY VENDOR"
+                },
+                {
+                  "key": "1 / BY SECURITY VENDOR",
+                  "page": 219,
+                  "field": "qty",
+                  "expected": null,
+                  "agreed": 1
+                }
+              ]
+            }
+          }
+        ]
+      }
+    },
+    "a03cdcca2934ca5a": {
+      "family": "Rockford",
+      "before": {
+        "tier": "agreed",
+        "rows_agreed": 169,
+        "rows_total": 172,
+        "queue": 6,
+        "readers": {
+          "a": {
+            "doors": 0,
+            "sets": 21,
+            "items": 172,
+            "name": "production text layer (weyland-subx-worker/src/lib/text-layer-read.js)"
+          },
+          "b": {
+            "doors": 0,
+            "sets": 21,
+            "items": 172,
+            "name": "geometry first (tools/accuracy/truth/reader_b.mjs)",
+            "tables": 0
+          }
+        },
+        "pages": {
+          "door_candidates": 6,
+          "hardware_candidates": 14,
+          "door_schedule_pages": [],
+          "hardware_pages": [
+            16,
+            17,
+            18,
+            19,
+            20,
+            21,
+            22,
+            23,
+            24,
+            25,
+            26,
+            27,
+            28,
+            29
+          ]
+        },
+        "calibration": null
+      },
+      "after": {
+        "tier": "agreed",
+        "rows_agreed": 169,
+        "rows_total": 172,
+        "queue": 6,
+        "readers": {
+          "a": {
+            "doors": 0,
+            "sets": 21,
+            "items": 172,
+            "name": "production text layer (weyland-subx-worker/src/lib/text-layer-read.js)"
+          },
+          "b": {
+            "doors": 0,
+            "sets": 21,
+            "items": 172,
+            "name": "geometry first (tools/accuracy/truth/reader_b.mjs)",
+            "tables": 0
+          }
+        },
+        "pages": {
+          "door_candidates": 6,
+          "hardware_candidates": 14,
+          "door_schedule_pages": [],
+          "hardware_pages": [
+            16,
+            17,
+            18,
+            19,
+            20,
+            21,
+            22,
+            23,
+            24,
+            25,
+            26,
+            27,
+            28,
+            29
+          ]
+        },
+        "calibration": null
+      }
+    },
+    "4847b09e633103f7": {
+      "family": "bidset (synthetic)",
+      "before": {
+        "tier": "exact",
+        "rows_agreed": 102,
+        "rows_total": 102,
+        "queue": 0,
+        "readers": {
+          "a": {
+            "doors": 48,
+            "sets": 10,
+            "items": 54,
+            "name": "production text layer (weyland-subx-worker/src/lib/text-layer-read.js)"
+          },
+          "b": {
+            "doors": 48,
+            "sets": 10,
+            "items": 54,
+            "name": "geometry first (tools/accuracy/truth/reader_b.mjs)",
+            "tables": 1
+          }
+        },
+        "pages": {
+          "door_candidates": 2,
+          "hardware_candidates": 3,
+          "door_schedule_pages": [
+            3
+          ],
+          "hardware_pages": [
+            4,
+            5,
+            6
+          ]
+        },
+        "calibration": [
+          {
+            "expected": "tools/bidset/out/truth-doors.json",
+            "kind": "doors",
+            "reader_a": {
+              "expected_rows": 48,
+              "rows_found": 48,
+              "rows_fully_right": 48,
+              "fields_right": 336,
+              "fields_total": 336,
+              "per_field": {
+                "width_inches": {
+                  "right": 48,
+                  "total": 48
+                },
+                "height_inches": {
+                  "right": 48,
+                  "total": 48
+                },
+                "door_type": {
+                  "right": 48,
+                  "total": 48
+                },
+                "material": {
+                  "right": 48,
+                  "total": 48
+                },
+                "fire_rating": {
+                  "right": 48,
+                  "total": 48
+                },
+                "hardware_group": {
+                  "right": 48,
+                  "total": 48
+                },
+                "location": {
+                  "right": 48,
+                  "total": 48
+                }
+              },
+              "extra_rows": 0,
+              "wrong": []
+            },
+            "reader_b": {
+              "expected_rows": 48,
+              "rows_found": 48,
+              "rows_fully_right": 48,
+              "fields_right": 336,
+              "fields_total": 336,
+              "per_field": {
+                "width_inches": {
+                  "right": 48,
+                  "total": 48
+                },
+                "height_inches": {
+                  "right": 48,
+                  "total": 48
+                },
+                "door_type": {
+                  "right": 48,
+                  "total": 48
+                },
+                "material": {
+                  "right": 48,
+                  "total": 48
+                },
+                "fire_rating": {
+                  "right": 48,
+                  "total": 48
+                },
+                "hardware_group": {
+                  "right": 48,
+                  "total": 48
+                },
+                "location": {
+                  "right": 48,
+                  "total": 48
+                }
+              },
+              "extra_rows": 0,
+              "wrong": []
+            },
+            "agreed": {
+              "expected_rows": 48,
+              "rows_found": 48,
+              "rows_fully_right": 48,
+              "fields_right": 336,
+              "fields_total": 336,
+              "per_field": {
+                "width_inches": {
+                  "right": 48,
+                  "total": 48
+                },
+                "height_inches": {
+                  "right": 48,
+                  "total": 48
+                },
+                "door_type": {
+                  "right": 48,
+                  "total": 48
+                },
+                "material": {
+                  "right": 48,
+                  "total": 48
+                },
+                "fire_rating": {
+                  "right": 48,
+                  "total": 48
+                },
+                "hardware_group": {
+                  "right": 48,
+                  "total": 48
+                },
+                "location": {
+                  "right": 48,
+                  "total": 48
+                }
+              },
+              "extra_rows": 0,
+              "wrong": []
+            },
+            "fields": {
+              "agreed": {
+                "right": 301,
+                "total": 301
+              },
+              "disputed": {
+                "total": 0,
+                "a_right": 0,
+                "b_right": 0,
+                "neither": 0
+              },
+              "agreed_wrong": []
+            }
+          },
+          {
+            "expected": "tools/bidset/out/truth-groups.json",
+            "kind": "items",
+            "reader_a": {
+              "expected_groups": 10,
+              "groups_found": 10,
+              "expected_rows": 54,
+              "rows_found": 54,
+              "rows_fully_right": 54,
+              "fields_right": 270,
+              "fields_total": 270,
+              "per_field": {
+                "qty": {
+                  "right": 54,
+                  "total": 54
+                },
+                "description": {
+                  "right": 54,
+                  "total": 54
+                },
+                "catalog": {
+                  "right": 54,
+                  "total": 54
+                },
+                "finish": {
+                  "right": 54,
+                  "total": 54
+                },
+                "manufacturer": {
+                  "right": 54,
+                  "total": 54
+                }
+              },
+              "wrong": []
+            },
+            "reader_b": {
+              "expected_groups": 10,
+              "groups_found": 10,
+              "expected_rows": 54,
+              "rows_found": 54,
+              "rows_fully_right": 54,
+              "fields_right": 270,
+              "fields_total": 270,
+              "per_field": {
+                "qty": {
+                  "right": 54,
+                  "total": 54
+                },
+                "description": {
+                  "right": 54,
+                  "total": 54
+                },
+                "catalog": {
+                  "right": 54,
+                  "total": 54
+                },
+                "finish": {
+                  "right": 54,
+                  "total": 54
+                },
+                "manufacturer": {
+                  "right": 54,
+                  "total": 54
+                }
+              },
+              "wrong": []
+            },
+            "agreed": {
+              "expected_groups": 10,
+              "groups_found": 10,
+              "expected_rows": 54,
+              "rows_found": 54,
+              "rows_fully_right": 54,
+              "fields_right": 270,
+              "fields_total": 270,
+              "per_field": {
+                "qty": {
+                  "right": 54,
+                  "total": 54
+                },
+                "description": {
+                  "right": 54,
+                  "total": 54
+                },
+                "catalog": {
+                  "right": 54,
+                  "total": 54
+                },
+                "finish": {
+                  "right": 54,
+                  "total": 54
+                },
+                "manufacturer": {
+                  "right": 54,
+                  "total": 54
+                }
+              },
+              "wrong": []
+            },
+            "fields": {
+              "agreed": {
+                "right": 269,
+                "total": 269
+              },
+              "disputed": {
+                "total": 0,
+                "a_right": 0,
+                "b_right": 0,
+                "neither": 0
+              },
+              "agreed_wrong": []
+            }
+          }
+        ]
+      },
+      "after": {
+        "tier": "exact",
+        "rows_agreed": 102,
+        "rows_total": 102,
+        "queue": 0,
+        "readers": {
+          "a": {
+            "doors": 48,
+            "sets": 10,
+            "items": 54,
+            "name": "production text layer (weyland-subx-worker/src/lib/text-layer-read.js)"
+          },
+          "b": {
+            "doors": 48,
+            "sets": 10,
+            "items": 54,
+            "name": "geometry first (tools/accuracy/truth/reader_b.mjs)",
+            "tables": 1
+          }
+        },
+        "pages": {
+          "door_candidates": 2,
+          "hardware_candidates": 3,
+          "door_schedule_pages": [
+            3
+          ],
+          "hardware_pages": [
+            4,
+            5,
+            6
+          ]
+        },
+        "calibration": [
+          {
+            "expected": "tools/bidset/out/truth-doors.json",
+            "kind": "doors",
+            "reader_a": {
+              "expected_rows": 48,
+              "rows_found": 48,
+              "rows_fully_right": 48,
+              "fields_right": 336,
+              "fields_total": 336,
+              "per_field": {
+                "width_inches": {
+                  "right": 48,
+                  "total": 48
+                },
+                "height_inches": {
+                  "right": 48,
+                  "total": 48
+                },
+                "door_type": {
+                  "right": 48,
+                  "total": 48
+                },
+                "material": {
+                  "right": 48,
+                  "total": 48
+                },
+                "fire_rating": {
+                  "right": 48,
+                  "total": 48
+                },
+                "hardware_group": {
+                  "right": 48,
+                  "total": 48
+                },
+                "location": {
+                  "right": 48,
+                  "total": 48
+                }
+              },
+              "extra_rows": 0,
+              "wrong": []
+            },
+            "reader_b": {
+              "expected_rows": 48,
+              "rows_found": 48,
+              "rows_fully_right": 48,
+              "fields_right": 336,
+              "fields_total": 336,
+              "per_field": {
+                "width_inches": {
+                  "right": 48,
+                  "total": 48
+                },
+                "height_inches": {
+                  "right": 48,
+                  "total": 48
+                },
+                "door_type": {
+                  "right": 48,
+                  "total": 48
+                },
+                "material": {
+                  "right": 48,
+                  "total": 48
+                },
+                "fire_rating": {
+                  "right": 48,
+                  "total": 48
+                },
+                "hardware_group": {
+                  "right": 48,
+                  "total": 48
+                },
+                "location": {
+                  "right": 48,
+                  "total": 48
+                }
+              },
+              "extra_rows": 0,
+              "wrong": []
+            },
+            "agreed": {
+              "expected_rows": 48,
+              "rows_found": 48,
+              "rows_fully_right": 48,
+              "fields_right": 336,
+              "fields_total": 336,
+              "per_field": {
+                "width_inches": {
+                  "right": 48,
+                  "total": 48
+                },
+                "height_inches": {
+                  "right": 48,
+                  "total": 48
+                },
+                "door_type": {
+                  "right": 48,
+                  "total": 48
+                },
+                "material": {
+                  "right": 48,
+                  "total": 48
+                },
+                "fire_rating": {
+                  "right": 48,
+                  "total": 48
+                },
+                "hardware_group": {
+                  "right": 48,
+                  "total": 48
+                },
+                "location": {
+                  "right": 48,
+                  "total": 48
+                }
+              },
+              "extra_rows": 0,
+              "wrong": []
+            },
+            "fields": {
+              "agreed": {
+                "right": 301,
+                "total": 301
+              },
+              "disputed": {
+                "total": 0,
+                "a_right": 0,
+                "b_right": 0,
+                "neither": 0
+              },
+              "agreed_wrong": []
+            }
+          },
+          {
+            "expected": "tools/bidset/out/truth-groups.json",
+            "kind": "items",
+            "reader_a": {
+              "expected_groups": 10,
+              "groups_found": 10,
+              "expected_rows": 54,
+              "rows_found": 54,
+              "rows_fully_right": 54,
+              "fields_right": 270,
+              "fields_total": 270,
+              "per_field": {
+                "qty": {
+                  "right": 54,
+                  "total": 54
+                },
+                "description": {
+                  "right": 54,
+                  "total": 54
+                },
+                "catalog": {
+                  "right": 54,
+                  "total": 54
+                },
+                "finish": {
+                  "right": 54,
+                  "total": 54
+                },
+                "manufacturer": {
+                  "right": 54,
+                  "total": 54
+                }
+              },
+              "wrong": []
+            },
+            "reader_b": {
+              "expected_groups": 10,
+              "groups_found": 10,
+              "expected_rows": 54,
+              "rows_found": 54,
+              "rows_fully_right": 54,
+              "fields_right": 270,
+              "fields_total": 270,
+              "per_field": {
+                "qty": {
+                  "right": 54,
+                  "total": 54
+                },
+                "description": {
+                  "right": 54,
+                  "total": 54
+                },
+                "catalog": {
+                  "right": 54,
+                  "total": 54
+                },
+                "finish": {
+                  "right": 54,
+                  "total": 54
+                },
+                "manufacturer": {
+                  "right": 54,
+                  "total": 54
+                }
+              },
+              "wrong": []
+            },
+            "agreed": {
+              "expected_groups": 10,
+              "groups_found": 10,
+              "expected_rows": 54,
+              "rows_found": 54,
+              "rows_fully_right": 54,
+              "fields_right": 270,
+              "fields_total": 270,
+              "per_field": {
+                "qty": {
+                  "right": 54,
+                  "total": 54
+                },
+                "description": {
+                  "right": 54,
+                  "total": 54
+                },
+                "catalog": {
+                  "right": 54,
+                  "total": 54
+                },
+                "finish": {
+                  "right": 54,
+                  "total": 54
+                },
+                "manufacturer": {
+                  "right": 54,
+                  "total": 54
+                }
+              },
+              "wrong": []
+            },
+            "fields": {
+              "agreed": {
+                "right": 269,
+                "total": 269
+              },
+              "disputed": {
+                "total": 0,
+                "a_right": 0,
+                "b_right": 0,
+                "neither": 0
+              },
+              "agreed_wrong": []
+            }
+          }
+        ]
+      }
+    }
+  },
+  "tests": {
+    "passed": 28,
+    "failed": 0,
+    "log": "truth_g004_2026-10-09_tests.txt"
+  },
+  "source_sha256": {
+    "weyland-subx-worker/assets/client-ocr-src/schedule-text-layer.mjs": "aa321815e111975e74354f40731df07d50bbbdaca1b5a30cc6c7e09f533319c6",
+    "weyland-subx-worker/src/lib/text-layer-read.js": "a484469ec685b66ea2fe54e6af9a3e0cf63766e6bfe3ed231d281a9a489a0fb2",
+    "tools/accuracy/truth/reader_b.mjs": "aee30cfca05352beaf3cdff90ffc5036e1f53dc7acc248218657f5303588e6ec",
+    "tools/accuracy/truth/agree.mjs": "5a0e1ee47ea1e0ee9d6c4cf0fba154443c513dadbd24fb5152f894650be3057a"
+  }
+}

@@ -38,8 +38,8 @@
  "readers": {
   "a": {
    "doors": 0,
-   "sets": 2,
-   "items": 310,
+   "sets": 44,
+   "items": 301,
    "name": "production text layer (weyland-subx-worker/src/lib/text-layer-read.js)"
   },
   "b": {
@@ -50,10 +50,10 @@
    "tables": 0
   }
  },
- "rows_agreed": 0,
- "rows_disputed": 611,
- "rows_total": 611,
- "agreement_rate": 0,
+ "rows_agreed": 1,
+ "rows_disputed": 301,
+ "rows_total": 302,
+ "agreement_rate": 0.0033,
  "agreement": {
   "doors": {
    "rows": 0,
@@ -65,17 +65,38 @@
    "agreement_rate": null
   },
   "items": {
-   "rows": 611,
-   "agreed": 0,
-   "disputed": 0,
-   "only_a": 310,
-   "only_b": 301,
-   "fields": {},
-   "agreement_rate": 0
+   "rows": 302,
+   "agreed": 1,
+   "disputed": 299,
+   "only_a": 1,
+   "only_b": 1,
+   "fields": {
+    "qty": {
+     "agree": 300,
+     "total": 300
+    },
+    "description": {
+     "agree": 300,
+     "total": 300
+    },
+    "catalog": {
+     "agree": 0,
+     "total": 299
+    },
+    "finish": {
+     "agree": 0,
+     "total": 294
+    },
+    "manufacturer": {
+     "agree": 0,
+     "total": 285
+    }
+   },
+   "agreement_rate": 0.0033
   },
   "sets": {
-   "sets": 42,
-   "agreed": 0
+   "sets": 44,
+   "agreed": 26
   }
  },
  "triage_class": "none",
@@ -102,371 +123,330 @@
    "reason": "not for class none"
   }
  },
- "tier": "unread",
- "unread_reason": "no rows agreed and no oracle applies",
- "disagreement_count": 653,
+ "tier": "agreed",
+ "disagreement_count": 898,
  "disagreements": [
   {
    "kind": "item",
    "page": 2,
-   "key": "(CONTINUED) / HARDWARE SCHEDULE",
-   "field": "(row)",
-   "a": "read",
-   "b": null,
-   "why": "only reader A read this row"
+   "key": "1 / BB1279 4.5” x 4.5” NRP",
+   "field": "catalog",
+   "a": "BB1279 4.5” x 4.5” NRP",
+   "b": "BB1279 4.5” x 4.5” NRP US26D HAG"
   },
   {
    "kind": "item",
    "page": 2,
-   "key": "(CONTINUED) / Hinges BB1279 4.5” x 4.5” NRP",
-   "field": "(row)",
-   "a": "read",
-   "b": null,
-   "why": "only reader A read this row"
+   "key": "1 / BB1279 4.5” x 4.5” NRP",
+   "field": "finish",
+   "a": "US26D",
+   "b": null
   },
   {
    "kind": "item",
    "page": 2,
-   "key": "(CONTINUED) / Classroom Intruder Lock L9071R 06A",
-   "field": "(row)",
-   "a": "read",
-   "b": null,
-   "why": "only reader A read this row"
+   "key": "1 / BB1279 4.5” x 4.5” NRP",
+   "field": "manufacturer",
+   "a": "HAG",
+   "b": null
   },
   {
    "kind": "item",
    "page": 2,
-   "key": "(CONTINUED) / Core Match Existing System",
-   "field": "(row)",
-   "a": "read",
-   "b": null,
-   "why": "only reader A read this row"
+   "key": "1 / L9071R 06A",
+   "field": "catalog",
+   "a": "L9071R 06A",
+   "b": "L9071R 06A US26D SCH"
   },
   {
    "kind": "item",
    "page": 2,
-   "key": "(CONTINUED) / Kick Plate 190S 10” x 2” LDW",
-   "field": "(row)",
-   "a": "read",
-   "b": null,
-   "why": "only reader A read this row"
+   "key": "1 / L9071R 06A",
+   "field": "finish",
+   "a": "US26D",
+   "b": null
   },
   {
    "kind": "item",
    "page": 2,
-   "key": "(CONTINUED) / Floor Stop/Holder 327W",
-   "field": "(row)",
-   "a": "read",
-   "b": null,
-   "why": "only reader A read this row"
+   "key": "1 / L9071R 06A",
+   "field": "manufacturer",
+   "a": "SCH",
+   "b": null
   },
   {
    "kind": "item",
    "page": 2,
-   "key": "(CONTINUED) / Gasket 726 head and jambs",
-   "field": "(row)",
-   "a": "read",
-   "b": null,
-   "why": "only reader A read this row"
+   "key": "1 / Match Existing System",
+   "field": "catalog",
+   "a": "Match Existing System",
+   "b": "Match Existing System US26D SCH"
   },
   {
    "kind": "item",
    "page": 2,
-   "key": "(CONTINUED) / Hinges BB1279 4.5” x 4.5” NRP",
-   "field": "(row)",
-   "a": "read",
-   "b": null,
-   "why": "only reader A read this row"
+   "key": "1 / Match Existing System",
+   "field": "finish",
+   "a": "US26D",
+   "b": null
   },
   {
    "kind": "item",
    "page": 2,
-   "key": "(CONTINUED) / Classroom Intruder Lock L9071R 06A",
-   "field": "(row)",
-   "a": "read",
-   "b": null,
-   "why": "only reader A read this row"
+   "key": "1 / Match Existing System",
+   "field": "manufacturer",
+   "a": "SCH",
+   "b": null
   },
   {
    "kind": "item",
    "page": 2,
-   "key": "(CONTINUED) / Core Match Existing System",
-   "field": "(row)",
-   "a": "read",
-   "b": null,
-   "why": "only reader A read this row"
+   "key": "1 / 190S 10” x 2” LDW",
+   "field": "catalog",
+   "a": "190S 10” x 2” LDW",
+   "b": "190S 10” x 2” LDW US32D HAG"
   },
   {
    "kind": "item",
    "page": 2,
-   "key": "(CONTINUED) / O.H. Holder 7017 SRF",
-   "field": "(row)",
-   "a": "read",
-   "b": null,
-   "why": "only reader A read this row"
+   "key": "1 / 190S 10” x 2” LDW",
+   "field": "finish",
+   "a": "US32D",
+   "b": null
   },
   {
    "kind": "item",
    "page": 2,
-   "key": "(CONTINUED) / Kick Plate 190S 10” x 2” LDW",
-   "field": "(row)",
-   "a": "read",
-   "b": null,
-   "why": "only reader A read this row"
+   "key": "1 / 190S 10” x 2” LDW",
+   "field": "manufacturer",
+   "a": "HAG",
+   "b": null
   },
   {
    "kind": "item",
    "page": 2,
-   "key": "(CONTINUED) / Gasket 726 head and jambs",
-   "field": "(row)",
-   "a": "read",
-   "b": null,
-   "why": "only reader A read this row"
+   "key": "1 / 327W",
+   "field": "catalog",
+   "a": "327W",
+   "b": "327W US26D HAG"
   },
   {
    "kind": "item",
    "page": 2,
-   "key": "(CONTINUED) / - 2",
-   "field": "(row)",
-   "a": "read",
-   "b": null,
-   "why": "only reader A read this row"
+   "key": "1 / 327W",
+   "field": "finish",
+   "a": "US26D",
+   "b": null
   },
   {
    "kind": "item",
    "page": 2,
-   "key": "(CONTINUED) / Hinges BB1279 4.5” x 4.5” NRP",
-   "field": "(row)",
-   "a": "read",
-   "b": null,
-   "why": "only reader A read this row"
+   "key": "1 / 327W",
+   "field": "manufacturer",
+   "a": "HAG",
+   "b": null
   },
   {
    "kind": "item",
    "page": 2,
-   "key": "(CONTINUED) / Classroom Intruder Lock L9071R 06A",
-   "field": "(row)",
-   "a": "read",
-   "b": null,
-   "why": "only reader A read this row"
+   "key": "1 / 726 head and jambs",
+   "field": "catalog",
+   "a": "726 head and jambs",
+   "b": "726 head and jambs Char HAG"
   },
   {
    "kind": "item",
    "page": 2,
-   "key": "(CONTINUED) / Core Match Existing System",
-   "field": "(row)",
-   "a": "read",
-   "b": null,
-   "why": "only reader A read this row"
+   "key": "1 / 726 head and jambs",
+   "field": "finish",
+   "a": "Char",
+   "b": null
   },
   {
    "kind": "item",
    "page": 2,
-   "key": "(CONTINUED) / Kick Plate 190S 10” x 2” LDW",
-   "field": "(row)",
-   "a": "read",
-   "b": null,
-   "why": "only reader A read this row"
+   "key": "1 / 726 head and jambs",
+   "field": "manufacturer",
+   "a": "HAG",
+   "b": null
   },
   {
    "kind": "item",
    "page": 2,
-   "key": "(CONTINUED) / Wall Stop 236W",
-   "field": "(row)",
-   "a": "read",
-   "b": null,
-   "why": "only reader A read this row"
+   "key": "1A / BB1279 4.5” x 4.5” NRP",
+   "field": "catalog",
+   "a": "BB1279 4.5” x 4.5” NRP",
+   "b": "BB1279 4.5” x 4.5” NRP US26D HAG"
   },
   {
    "kind": "item",
    "page": 2,
-   "key": "(CONTINUED) / Gasket 726 head and jambs",
-   "field": "(row)",
-   "a": "read",
-   "b": null,
-   "why": "only reader A read this row"
+   "key": "1A / BB1279 4.5” x 4.5” NRP",
+   "field": "finish",
+   "a": "US26D",
+   "b": null
   },
   {
    "kind": "item",
    "page": 2,
-   "key": "(CONTINUED) / Hinges BB1279 4.5” x 4.5” NRP",
-   "field": "(row)",
-   "a": "read",
-   "b": null,
-   "why": "only reader A read this row"
+   "key": "1A / BB1279 4.5” x 4.5” NRP",
+   "field": "manufacturer",
+   "a": "HAG",
+   "b": null
   },
   {
    "kind": "item",
    "page": 2,
-   "key": "(CONTINUED) / Classroom Intruder Lock L9071R 06A",
-   "field": "(row)",
-   "a": "read",
-   "b": null,
-   "why": "only reader A read this row"
+   "key": "1A / L9071R 06A",
+   "field": "catalog",
+   "a": "L9071R 06A",
+   "b": "L9071R 06A US26D SCH"
   },
   {
    "kind": "item",
    "page": 2,
-   "key": "(CONTINUED) / Core Match Existing System",
-   "field": "(row)",
-   "a": "read",
-   "b": null,
-   "why": "only reader A read this row"
+   "key": "1A / L9071R 06A",
+   "field": "finish",
+   "a": "US26D",
+   "b": null
   },
   {
    "kind": "item",
    "page": 2,
-   "key": "(CONTINUED) / Closer 4000",
-   "field": "(row)",
-   "a": "read",
-   "b": null,
-   "why": "only reader A read this row"
+   "key": "1A / L9071R 06A",
+   "field": "manufacturer",
+   "a": "SCH",
+   "b": null
   },
   {
    "kind": "item",
    "page": 2,
-   "key": "(CONTINUED) / Kick Plate 190S 10” x 2” LDW",
-   "field": "(row)",
-   "a": "read",
-   "b": null,
-   "why": "only reader A read this row"
+   "key": "1A / Match Existing System",
+   "field": "catalog",
+   "a": "Match Existing System",
+   "b": "Match Existing System US26D SCH"
   },
   {
    "kind": "item",
    "page": 2,
-   "key": "(CONTINUED) / Wall Stop 236W",
-   "field": "(row)",
-   "a": "read",
-   "b": null,
-   "why": "only reader A read this row"
+   "key": "1A / Match Existing System",
+   "field": "finish",
+   "a": "US26D",
+   "b": null
   },
   {
    "kind": "item",
    "page": 2,
-   "key": "(CONTINUED) / Gasket 726 head and jambs",
-   "field": "(row)",
-   "a": "read",
-   "b": null,
-   "why": "only reader A read this row"
+   "key": "1A / Match Existing System",
+   "field": "manufacturer",
+   "a": "SCH",
+   "b": null
+  },
+  {
+   "kind": "item",
+   "page": 2,
+   "key": "1A / 7017 SRF",
+   "field": "catalog",
+   "a": "7017 SRF",
+   "b": "7017 SRF US26D HAG"
+  },
+  {
+   "kind": "item",
+   "page": 2,
+   "key": "1A / 7017 SRF",
+   "field": "finish",
+   "a": "US26D",
+   "b": null
+  },
+  {
+   "kind": "item",
+   "page": 2,
+   "key": "1A / 7017 SRF",
+   "field": "manufacturer",
+   "a": "HAG",
+   "b": null
+  },
+  {
+   "kind": "item",
+   "page": 2,
+   "key": "1A / 190S 10” x 2” LDW",
+   "field": "catalog",
+   "a": "190S 10” x 2” LDW",
+   "b": "190S 10” x 2” LDW US32D HAG"
+  },
+  {
+   "kind": "item",
+   "page": 2,
+   "key": "1A / 190S 10” x 2” LDW",
+   "field": "finish",
+   "a": "US32D",
+   "b": null
+  },
+  {
+   "kind": "item",
+   "page": 2,
+   "key": "1A / 190S 10” x 2” LDW",
+   "field": "manufacturer",
+   "a": "HAG",
+   "b": null
+  },
+  {
+   "kind": "item",
+   "page": 2,
+   "key": "1A / 726 head and jambs",
+   "field": "catalog",
+   "a": "726 head and jambs",
+   "b": "726 head and jambs Char HAG"
+  },
+  {
+   "kind": "item",
+   "page": 2,
+   "key": "1A / 726 head and jambs",
+   "field": "finish",
+   "a": "Char",
+   "b": null
+  },
+  {
+   "kind": "item",
+   "page": 2,
+   "key": "1A / 726 head and jambs",
+   "field": "manufacturer",
+   "a": "HAG",
+   "b": null
   },
   {
    "kind": "item",
    "page": 3,
-   "key": "3A / Hinges BB1279 4.5” x 4.5” NRP",
-   "field": "(row)",
-   "a": "read",
-   "b": null,
-   "why": "only reader A read this row"
+   "key": "2 / BB1279 4.5” x 4.5” NRP",
+   "field": "catalog",
+   "a": "BB1279 4.5” x 4.5” NRP",
+   "b": "BB1279 4.5” x 4.5” NRP US26D HAG"
   },
   {
    "kind": "item",
    "page": 3,
-   "key": "3A / Surface Bolt 275D",
-   "field": "(row)",
-   "a": "read",
-   "b": null,
-   "why": "only reader A read this row"
+   "key": "2 / BB1279 4.5” x 4.5” NRP",
+   "field": "finish",
+   "a": "US26D",
+   "b": null
   },
   {
    "kind": "item",
    "page": 3,
-   "key": "3A / Classroom Intruder Lock L9071R 06A",
-   "field": "(row)",
-   "a": "read",
-   "b": null,
-   "why": "only reader A read this row"
+   "key": "2 / BB1279 4.5” x 4.5” NRP",
+   "field": "manufacturer",
+   "a": "HAG",
+   "b": null
   },
   {
    "kind": "item",
    "page": 3,
-   "key": "3A / Core Match Existing System",
-   "field": "(row)",
-   "a": "read",
-   "b": null,
-   "why": "only reader A read this row"
-  },
-  {
-   "kind": "item",
-   "page": 3,
-   "key": "3A / Closer 4111 CUSH",
-   "field": "(row)",
-   "a": "read",
-   "b": null,
-   "why": "only reader A read this row"
-  },
-  {
-   "kind": "item",
-   "page": 3,
-   "key": "3A / O.H. Holder 7016 SRF (Inactive leaf)",
-   "field": "(row)",
-   "a": "read",
-   "b": null,
-   "why": "only reader A read this row"
-  },
-  {
-   "kind": "item",
-   "page": 3,
-   "key": "3A / Kick Plate 190S 10” x 1” LDW",
-   "field": "(row)",
-   "a": "read",
-   "b": null,
-   "why": "only reader A read this row"
-  },
-  {
-   "kind": "item",
-   "page": 3,
-   "key": "3A / Threshold 412S door opening width",
-   "field": "(row)",
-   "a": "read",
-   "b": null,
-   "why": "only reader A read this row"
-  },
-  {
-   "kind": "item",
-   "page": 3,
-   "key": "3A / Sound Gasket 726 head and jambs",
-   "field": "(row)",
-   "a": "read",
-   "b": null,
-   "why": "only reader A read this row"
-  },
-  {
-   "kind": "item",
-   "page": 3,
-   "key": "3A / Sound Gasket 722 Meeting stiles at astragal",
-   "field": "(row)",
-   "a": "read",
-   "b": null,
-   "why": "only reader A read this row"
-  },
-  {
-   "kind": "item",
-   "page": 3,
-   "key": "3A / Concealed Auto. Door Bottoms 730S N door width",
-   "field": "(row)",
-   "a": "read",
-   "b": null,
-   "why": "only reader A read this row"
-  },
-  {
-   "kind": "item",
-   "page": 3,
-   "key": "3A / Astragal 835S door height",
-   "field": "(row)",
-   "a": "read",
-   "b": null,
-   "why": "only reader A read this row"
-  },
-  {
-   "kind": "item",
-   "page": 3,
-   "key": "3A / Hinges BB1279 4.5” x 4.5” NRP",
-   "field": "(row)",
-   "a": "read",
-   "b": null,
-   "why": "only reader A read this row"
+   "key": "2 / L9071R 06A",
+   "field": "catalog",
+   "a": "L9071R 06A",
+   "b": "L9071R 06A US26D SCH"
   }
  ],
- "ms": 496,
- "generated_at": "2026-10-09T10:49:35.142Z"
+ "ms": 461,
+ "generated_at": "2026-10-09T11:33:33.372Z"
 }

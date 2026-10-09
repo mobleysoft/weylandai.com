@@ -1,0 +1,18 @@
+Node v26.3.0; source worktree uncommitted.
+../../../../../../../Users/johnmobley/weylandai.com/tools/corpus/harvest/downloads/1af9e638165d85fb.pdf ... agreed | class none | A {"d":0,"i":153} B {"d":0,"i":142} | agree 0.0103 (2/195) | oracles none | 0s 
+../../../../../../../Users/johnmobley/weylandai.com/tools/corpus/harvest/downloads/1d0374f8106ef8ad.pdf ... agreed | class spec-only | A {"d":0,"i":238} B {"d":0,"i":238} | agree 0.0083 (2/240) | oracles none | 2s 
+../../../../../../../Users/johnmobley/weylandai.com/tools/corpus/harvest/downloads/4e7e992b311a3f39.pdf ... agreed | class spec-only | A {"d":0,"i":65} B {"d":0,"i":59} | agree 0.0133 (1/75) | oracles none | 0s 
+../../../../../../../Users/johnmobley/weylandai.com/tools/corpus/harvest/downloads/595613e060c69652.pdf ... agreed | class none | A {"d":0,"i":38} B {"d":0,"i":38} | agree 1 (38/38) | oracles none | 1s 
+../../../../../../../Users/johnmobley/weylandai.com/tools/corpus/harvest/downloads/7478006f7fd5b43c.pdf ... agreed | class schedule-only | A {"d":211,"i":0} B {"d":211,"i":0} | agree 0.9953 (210/211) | oracles marks_on_plan 208/211, types_in_legend 4/11, sizes_and_marks 210/211 | 5s 
+../../../../../../../Users/johnmobley/weylandai.com/tools/corpus/harvest/downloads/8c77fa69fc375a81.pdf ... unread | class spec-only | A {"d":0,"i":262} B {"d":0,"i":250} | agree 0 (0/298) | oracles none | 3s 
+../../../../../../../Users/johnmobley/weylandai.com/tools/corpus/harvest/downloads/9014786c78096b94.pdf ... agreed | class spec-only | A {"d":0,"i":156} B {"d":0,"i":156} | agree 1 (156/156) | oracles none | 0s 
+../../../../../../../Users/johnmobley/weylandai.com/tools/corpus/harvest/downloads/a248cf8b5dee4d92.pdf ... agreed | class spec-only | A {"d":0,"i":123} B {"d":0,"i":108} | agree 0.878 (108/123) | oracles none | 1s 
+../../../../../../../Users/johnmobley/weylandai.com/tools/corpus/harvest/downloads/ef4f9bfd055baa96.pdf ... agreed | class none | A {"d":0,"i":301} B {"d":0,"i":301} | agree 0.0033 (1/302) | oracles none | 0s 
+../../../../../../../Users/johnmobley/weylandai.com/tools/corpus/harvest/downloads/f97e99f88a931e74.pdf ... agreed | class schedule-only | A {"d":210,"i":0} B {"d":210,"i":0} | agree 1 (210/210) | oracles types_in_legend 4/10, sizes_and_marks 210/210 | 6s 
+truth records: 10 queue lines: 3782 (2581 from this run)
+tools/corpus/door-schedules/525dc0b72011077a.pdf ... audited | class spec-only | A {"d":0,"i":103} B {"d":0,"i":102} | agree 0.9519 (99/104) | oracles none | 1s 
+tools/corpus/door-schedules/a03cdcca2934ca5a.pdf ... agreed | class spec-only | A {"d":0,"i":172} B {"d":0,"i":172} | agree 0.9826 (169/172) | oracles none | 0s 
+tools/corpus/door-schedules/dd339f57b51538ed.pdf ... audited | class complete | A {"d":24,"i":17} B {"d":24,"i":16} | agree 0.9756 (40/41) | oracles marks_on_plan 24/24, sets_exist 2/2, sizes_and_marks 24/24 | 1s 
+tools/corpus/door-schedules/f0e863d88ea688ff.pdf ... audited | class complete | A {"d":65,"i":110} B {"d":65,"i":110} | agree 0.9886 (173/175) | oracles marks_on_plan 64/65, sets_exist 14/14, set_door_lists 14/14, types_in_legend 3/4, sizes_and_marks 64/65 | 3s 
+tools/bidset/out/weylandai-building-bidset.pdf ... exact | class complete | A {"d":48,"i":54} B {"d":48,"i":54} | agree 1 (102/102) | oracles marks_on_plan 48/48, sets_exist 10/10, set_door_lists 10/10, types_in_legend 3/3, sizes_and_marks 48/48 | 0s 
+truth records: 5 queue lines: 3780 (16 from this run)

@@ -145,7 +145,7 @@ const median = (xs) => { const s = xs.slice().sort((a, b) => a - b); return s.le
 // A door mark: a short code with a digit (053, 131, 144A, 1J.1, 126.1.2, B12).
 export function looksLikeMark(text) {
   const t = String(text || "").trim();
-  if (!t || t.length > 12 || /\s/.test(t)) return false;
+  if (!t || t.length > 12 || /\s/.test(t) || /^\d+\.$/.test(t)) return false;
   if (!/\d/.test(t)) return false;
   return /^[A-Za-z0-9][A-Za-z0-9.\-\/]*$/.test(t) && !/^\d+'/.test(t) && !/"/.test(t);
 }
@@ -177,7 +177,7 @@ function gapGroups(line, h) {
   const groups = [];
   let cur = null;
   for (const w of line.words) {
-    if (cur && w.x0 - cur.x1 <= 25 * h) { cur.words.push(w); cur.x1 = Math.max(cur.x1, w.x1); }
+    if (cur && w.x0 - cur.x1 <= 20 * h) { cur.words.push(w); cur.x1 = Math.max(cur.x1, w.x1); }
     else { cur = { x0: w.x0, x1: w.x1, words: [w] }; groups.push(cur); }
   }
   return groups;
@@ -264,14 +264,19 @@ export function fieldForHeader(text, used) {
  */
 export async function readDoorScheduleFromLines(lines, pageSize, opts = {}) {
   const tables = [];
-  const used = new Set();
+  const used = new Map();
   const h0 = em(lines);
   for (let i = 0; i < lines.length; i++) {
-    if (used.has(i) || !isFieldLine(lines[i], h0)) continue;
-    const t = await buildTable(lines, i, pageSize, opts);
-    if (!t) continue;
-    for (const k of t.lineIndexes) used.add(k);
-    if (t.is_door_schedule) tables.push(t);
+    // A baseline can hold two independent schedules. Consuming the left
+    // table must not consume the right table's header on that same baseline.
+    for (const group of gapGroups(lines[i], h0)) {
+      const fg = fieldGroup({ ...lines[i], words: group.words }, h0);
+      if (!fg || (used.get(i) || []).some((r) => fg.x0 >= r.x0 - h0 && fg.x1 <= r.x1 + h0)) continue;
+      const t = await buildTable(lines, i, pageSize, opts, fg);
+      if (!t) continue;
+      for (const k of t.lineIndexes) { if (!used.has(k)) used.set(k, []); used.get(k).push(t); }
+      if (t.is_door_schedule) tables.push(t);
+    }
   }
   if (!tables.length) return null;
   const doors = [];
@@ -279,9 +284,9 @@ export async function readDoorScheduleFromLines(lines, pageSize, opts = {}) {
   return { tables, doors };
 }
 
-async function buildTable(lines, fieldIdx, pageSize, opts) {
+async function buildTable(lines, fieldIdx, pageSize, opts, fieldCandidate = null) {
   const fieldFull = lines[fieldIdx];
-  const fg = fieldGroup(fieldFull, em(lines));
+  const fg = fieldCandidate || fieldGroup(fieldFull, em(lines));
   if (!fg) return null;
   // The table's own text size: the header labels' median height (a far word
   // on the same baseline must not set it).
@@ -294,6 +299,10 @@ async function buildTable(lines, fieldIdx, pageSize, opts) {
   const headerIdx = [fieldIdx];
   const headerLines = [field];
   for (let k = fieldIdx - 1, prevY = field.y; k >= 0 && headerIdx.length < 4; k--) {
+    // A staggered ROOM/LOCATION header may be one line above the other
+    // fields and just outside their x-range (Berryessa A9.2).
+    const outer = lines[k].words.filter((w) => /^(ROOM|LOCATION)$/i.test(w.str) && w.x1 < x0 && x0 - w.x1 < 12 * h && prevY - lines[k].y <= 2.8 * h);
+    if (outer.length) x0 = Math.min(x0, ...outer.map((w) => w.x0));
     const L = within(lines[k], x0, x1, 1.5 * h);
     if (!L.words.length) { if (prevY - lines[k].y > 2.8 * h) break; else continue; }
     if (prevY - L.y > 2.8 * h) break;
@@ -313,25 +322,29 @@ async function buildTable(lines, fieldIdx, pageSize, opts) {
   }
   // Data lines below, inside the header's x-extent, until the pitch breaks or
   // another table starts.
-  const inset = 0.5 * h;
+  // Headers are often centered over left-aligned marks. Include the small
+  // overhang of those values beyond the header's printed extent.
+  const inset = 1.2 * h;
   const dataIdx = [];
   let lastY = field.y;
   const pitches = [];
   for (let k = fieldIdx + 1; k < lines.length; k++) {
     const L = lines[k];
-    const inside = L.words.filter((w) => w.x0 >= x0 - inset && w.x1 <= x1 + inset);
+    const inside = L.words.filter((w) => (w.x0 >= x0 - inset || (w.itemX0 < x0 && w.itemX1 >= x0 && w.itemX1 <= x1)) && w.x1 <= x1 + inset);
     const gap = L.y - lastY;
     const limit = pitches.length >= 3 ? 3 * median(pitches) : 3.2 * h;
     if (gap > limit) break;
     if (!inside.length) { if (gap > 1.2 * h && L.x0 > x1) continue; else continue; }
     const Li = { ...L, words: inside, text: inside.map((w) => w.str).join(" ") };
+    if (/^(?:GENERAL\s+NOTES?|NOTES)\s*:/i.test(Li.text)) break;
     if (isFieldLine(Li, h) || isTitleLine(Li, h)) break;
     dataIdx.push(k);
     if (dataIdx.length > 1) pitches.push(gap);
     lastY = L.y;
   }
   if (!dataIdx.length) return null;
-  const dataLines = dataIdx.map((k) => ({ ...lines[k], words: lines[k].words.filter((w) => w.x0 >= x0 - inset && w.x1 <= x1 + inset) }));
+  const dataLines = dataIdx.map((k) => ({ ...lines[k], words: lines[k].words.filter((w) => (w.x0 >= x0 - inset || (w.itemX0 < x0 && w.itemX1 >= x0 && w.itemX1 <= x1)) && w.x1 <= x1 + inset) }));
+  x0 = Math.min(x0, ...dataLines.flatMap((L) => L.words.map((w) => w.x0)));
   const rowPitch = pitches.length ? median(pitches) : 1.3 * h;
 
   // Columns: left-aligned cell starts in the data (text items start where a
@@ -356,7 +369,7 @@ async function buildTable(lines, fieldIdx, pageSize, opts) {
   const cells = [];
   for (const w of hwords) {
     // The words of one text item are one cell; otherwise words a space apart.
-    const c = cells.find((cc) => cc.items.has(w.item) || (w.x0 < cc.x1 + 0.6 * h && w.x1 > cc.x0 - 0.6 * h));
+    const c = cells.find((cc) => cc.items.has(w.item) || (cc.words.some((v) => Math.abs(v.yb - w.yb) > 0.5 * h) && w.x0 < cc.x1 + 0.2 * h && w.x1 > cc.x0 - 0.2 * h));
     if (c) { c.x0 = Math.min(c.x0, w.x0); c.x1 = Math.max(c.x1, w.x1); c.words.push(w); c.items.add(w.item); } else cells.push({ x0: w.x0, x1: w.x1, words: [w], items: new Set([w.item]) });
   }
   cells.sort((a, b) => a.x0 - b.x0);
@@ -366,7 +379,7 @@ async function buildTable(lines, fieldIdx, pageSize, opts) {
   // the header are its own.
   const margin = 0.6 * h;
   for (const c of cells) {
-    const k = anchors.filter((a) => a <= c.x1 + margin).length - 1;
+    const k = anchors.filter((a) => a <= c.x1).length - 1;
     if (k < 0) { anchors.unshift(c.x0); continue; }
     const next = anchors[k + 1] ?? Infinity;
     let beforeRight = -Infinity, underLeft = Infinity, any = false;
@@ -588,15 +601,17 @@ export const MFR_CODES = {
   ROC: "Rockwood", RKW: "Rockwood", STA: "Stanley", STN: "Stanley", MCK: "McKinney", NOR: "Norton", RIX: "Rixson", ADA: "Adams Rite", AR: "Adams Rite",
   BES: "Best", FAL: "Falcon", YAL: "Yale", DET: "Detex", SEC: "Securitron", HES: "HES", ABH: "ABH", BUR: "Burns", DCI: "Don-Jo", DJO: "Don-Jo",
   MAR: "Markar", SDC: "SDC", "B/O": "By others", BO: "By others", OTH: "By others",
+  MK: "McKinney", SA: "Sargent", RO: "Rockwood", PE: "Pemko", RU: "Corbin Russwin", NO: "Norton", MC: "Medeco", OT: "Other", BE: "Best",
 };
-const UOM = /^(EA|EACH|SET|SETS|PR|PAIR|PRS|LF|PC|PCS|LOT)$/i;
+const UOM = /^(EA\.?|EACH|SET|SETS|PR|PAIR|PRS|LF|PC|PCS|LOT)$/i;
 const FINISH = /^(\d{3}[A-Z]?|US\d{1,2}[A-Z]?|\d{3}\/\d{3}|[A-Z]{1,5}|[A-Z]{2,3}\d{1,2}|[A-Z]\d{2,3}[A-Z]?|\d{3}[a-z])$/;
-const HEADING = /^(?:HARDWARE|HDW\.?|HW|FINISH HARDWARE)\s+(?:GROUP|SET)\s*(?:NO\.?|NUMBER|#)?\s*[:.\-]?\s*(.+)$/i;
-const HEADING2 = /^(?:GROUP|SET)\s*(?:NO\.?|NUMBER|#)\s*[:.\-]?\s*([A-Z0-9][A-Z0-9 .\-\/]{0,14})$/i;
+// Require a numbered, singular heading: "Hardware Sets" is a section title,
+// not a group named S. Set: 1.0 and Set #1 Classroom are common spec formats.
+const HEADING = /^(?:(?:FINISH HARDWARE|HARDWARE|HDWE?\.?|HW)\s+)?(?:GROUP|SET|HEADING)\b\s*(?:NO\.?|NUMBER|#)?\s*[:.\-]?\s*([A-Z]{0,2}\d+(?:\.\d+)?[A-Z]?(?:[\s\-:]+.*)?)$/i;
 
 function parseHeading(text) {
   const t = String(text || "").replace(/\s+/g, " ").trim();
-  let m = t.match(HEADING) || t.match(HEADING2);
+  let m = t.match(HEADING);
   if (!m) return null;
   let rest = m[1].trim().replace(/^[:.\-]\s*/, "");
   if (!rest) return null;
@@ -611,7 +626,7 @@ function parseHeading(text) {
 }
 
 function doorListTokens(text) {
-  const t = String(text || "").replace(/^(DOORS?\s*#?|DOOR\s*(NOS?\.?|NUMBERS?)|OPENINGS?|MARKS?)\s*[:#]?\s*/i, "").replace(/\band\b/gi, ",");
+  const t = String(text || "").replace(/^(DOOR\s*(NOS?\.?|NUMBERS?)|DOORS?\s*#?|OPENINGS?|MARKS?)\s*[:#]?\s*/i, "").replace(/\band\b/gi, ",");
   const toks = t.split(/[\s,;&]+/).filter(Boolean);
   if (!toks.length) return null;
   if (!toks.every((x) => looksLikeMark(x))) return null;
@@ -623,6 +638,7 @@ function isHardwareHeaderLine(L) {
   let n = 0;
   if (/\b(QTY|QUANTITY|QUAN)\b/.test(t)) n++;
   if (/\b(DESCRIPTION|DESC|ITEM|COMPONENT)\b/.test(t)) n++;
+  if (/\bTYPE\b/.test(t) && /\bDESCRIPTION\b/.test(t)) n++;
   if (/\b(CATALOG|CATALOGUE|PRODUCT|MODEL|PART)\b/.test(t)) n++;
   if (/\b(FINISH|FIN)\b/.test(t)) n++;
   if (/\b(MFR|MFG|MAN|MANUFACTURER|MFGR|BRAND|VENDOR)\b/.test(t)) n++;
@@ -632,6 +648,8 @@ function isHardwareHeaderLine(L) {
 function itemStart(L, qtyX, h) {
   const w = L.words;
   if (!w.length) return null;
+  // Spec section/page footers and numbered section titles are not quantities.
+  if (/^\d{2}\s+\d{2}\s+\d{2}\b/.test(L.text) || /^\d+\s+(?:DOOR\s+)?HARDWARE\s+(?:SCHEDULE|SETS?)\b/i.test(L.text)) return null;
   if (!/^\d{1,3}$/.test(w[0].str)) return null;
   // The quantity sits in the quantity column; a wrapped line that happens to
   // start with a number ("5 RELEASE BUTTONS") does not.
@@ -662,7 +680,7 @@ export async function readHardwareGroupsFromLines(lines, pageSize, opts = {}) {
   for (let i = 0; i < lines.length; i++) {
     const L = lines[i];
     const text = L.text.trim();
-    const heading = L.words.length <= 14 ? parseHeading(text) : null;
+    const heading = text.length <= 200 ? parseHeading(text) : null;
     if (heading) { open(heading, L.y); continue; }
     if (/^END OF SECTION/i.test(text)) { cur = null; continue; }
     if (!cur) {
@@ -673,10 +691,12 @@ export async function readHardwareGroupsFromLines(lines, pageSize, opts = {}) {
     }
     if (isHardwareHeaderLine(L)) {
       header = {};
+      const typeDescription = /\bTYPE\b/i.test(text) && /\bDESCRIPTION\b/i.test(text);
       for (const w of L.words) {
         const t = UP(w.str);
         if (/^(QTY|QUANTITY|QUAN)/.test(t)) header.qty = w.x0;
-        else if (/^(DESCRIPTION|DESC|ITEM|COMPONENT)/.test(t)) header.desc = w.x0;
+        else if (typeDescription && t === "TYPE") header.desc = w.x0;
+        else if (/^(DESCRIPTION|DESC|ITEM|COMPONENT)/.test(t)) header[typeDescription ? "cat" : "desc"] = w.x0;
         else if (/^(CATALOG|CATALOGUE|PRODUCT|MODEL|PART)/.test(t)) header.cat = w.x0;
         else if (/^(FINISH|FIN)/.test(t)) header.fin = w.x0;
         else if (/^(MFR|MFG|MAN|MANUFACTURER|MFGR|BRAND|VENDOR)/.test(t)) header.mfr = w.x0;
@@ -716,15 +736,31 @@ export async function readHardwareGroupsFromLines(lines, pageSize, opts = {}) {
     }
     const hdr = g._header || header || null;
     const itemLines = g._items.map((x) => x.line);
-    const col = learnHardwareColumns(itemLines, hdr, h);
+    // Word/ASSA tables center quantities beside two-line cells. Their first
+    // baseline is half a line ABOVE the quantity, not a wrap of the prior row.
+    for (let i = 0; i + 1 < g._lines.length; i++) {
+      const entry = g._lines[i], next = g._lines[i + 1];
+      if (entry.kind === "text" && next.kind === "item" && next.line.y - entry.line.y <= 0.85 * h && entry.line.x0 > qtyX + 0.7 * h) {
+        next.leading = entry.line;
+        entry.kind = "leading";
+      }
+    }
+    const descX = hdr && hdr.desc != null ? hdr.desc : Math.min(...g._items.map((x) => x.start.rest[0].x0));
+    const wrapped = g._lines.filter((e, i) => e.kind === "leading" || (e.kind === "text" && e.line.x0 >= descX - 0.6 * h && !/^NOTES?\s*:/i.test(e.line.text) && i > 0 && e.line.y - g._lines[i - 1].line.y <= 1.7 * h)).map((e) => e.line);
+    const col = learnHardwareColumns(itemLines, hdr, h, wrapped);
     g._anchors = col;
     let last = null;
     const rulesBands = await rulesBandsFor(opts, g, itemLines, h);
     for (const entry of g._lines) {
       const L = entry.line;
+      if (entry.kind === "leading") continue;
       if (entry.kind === "item") {
         const st = itemStart(L);
         const cells = assignHardwareCells(st.rest, col, h);
+        if (entry.leading) {
+          const lead = assignHardwareCells(entry.leading.words, col, h);
+          for (const k of ["desc", "cat", "fin", "mfr"]) if (lead[k]) cells[k] = [lead[k], cells[k]].filter(Boolean).join(" ");
+        }
         const it = { quantity: st.qty, uom: st.uom || "EA", description: cells.desc, catalog: cells.cat, finish: cells.fin, mfr: cells.mfr, extra: cells.extra, y: L.y, band: rulesBands ? rulesBands.bandOf(L.y) : null };
         g.components.push(it);
         last = it;
@@ -772,23 +808,23 @@ async function rulesBandsFor(opts, g, itemLines, h) {
   return { bandOf: (y) => { if (y < hs[0] - 0.5 * h || y > hs[hs.length - 1] + 0.5 * h) return null; let k = 0; while (k < hs.length && y > hs[k]) k++; return k; } };
 }
 
-function learnHardwareColumns(itemLines, header, h) {
+function learnHardwareColumns(itemLines, header, h, wrapped = []) {
   // Cell starts: the first word of each item line's "rest" and every word that
   // follows a gap wider than an em. Clustered across the group's lines.
   const starts = [];
-  for (const L of itemLines) {
-    const st = itemStart(L);
-    if (!st) continue;
-    const ws = st.rest;
+  for (const L of itemLines.concat(wrapped)) {
+    const st = wrapped.includes(L) ? null : itemStart(L);
+    const ws = st ? st.rest : L.words;
     for (let k = 0; k < ws.length; k++) {
-      if (k === 0 || ws[k].x0 - ws[k - 1].x1 > 1.0 * h) starts.push(ws[k].x0);
+      const maker = (k === ws.length - 1 || (k === ws.length - 2 && /^08\d{4}$/.test(ws[k + 1].str))) && MFR_CODES[UP(ws[k].str)] && (!header || header.mfr != null || header.fin == null || (k > 0 && ws[k - 1].x0 >= header.fin - h));
+      if (k === 0 || ws[k].x0 - ws[k - 1].x1 > 1.0 * h || maker) starts.push(ws[k].x0);
     }
   }
   starts.sort((a, b) => a - b);
   const clusters = [];
   for (const s of starts) { const c = clusters[clusters.length - 1]; if (c && s - c.last <= 0.8 * h) { c.last = s; c.n++; c.min = Math.min(c.min, s); } else clusters.push({ min: s, last: s, n: 1 }); }
   const strong = clusters.filter((c) => c.n >= Math.max(2, Math.ceil(0.3 * itemLines.length))).map((c) => c.min);
-  const col = { desc: null, cat: null, fin: null, mfr: null, learned: strong };
+  const col = { desc: null, cat: null, fin: null, mfr: null, learned: strong, finishNamed: header && header.fin != null };
   if (strong.length >= 4) { col.desc = strong[0]; col.cat = strong[1]; col.fin = strong[strong.length - 2]; col.mfr = strong[strong.length - 1]; }
   else if (strong.length === 3) { col.desc = strong[0]; col.cat = strong[1]; col.fin = strong[2]; }
   else if (strong.length === 2) { col.desc = strong[0]; col.cat = strong[1]; }
@@ -833,12 +869,14 @@ function assignHardwareCells(words, col, h) {
   }
   // A maker code that landed in the finish column (no finish printed), or a
   // finish that landed at the end of the catalog cell.
-  if (!out.mfr && out.fin && MFR_CODES[UP(out.fin)] && !/\d/.test(out.fin)) { out.mfr = out.fin; out.fin = ""; }
+  if (!col.finishNamed && !out.mfr && out.fin && MFR_CODES[UP(out.fin)] && !/\d/.test(out.fin)) { out.mfr = out.fin; out.fin = ""; }
   return out;
 }
 
 function finishComponent(c, idx) {
-  const code = c.mfr ? UP(c.mfr).replace(/\.$/, "") : null;
+  // A trailing specification cross-reference is a separate column, not part
+  // of the maker abbreviation (e.g. "MK 087100").
+  const code = c.mfr ? UP(c.mfr).replace(/\s+08\d{4}$/, "").replace(/\.$/, "") : null;
   const name = code ? MFR_CODES[code] || null : null;
   const desc = cleanText(c.description);
   const cat = cleanText(c.catalog);
@@ -846,9 +884,10 @@ function finishComponent(c, idx) {
   // the struck old one in parentheses; the current value comes first.
   const revised = (s) => { const m = String(s || "").match(/^(.+?)\s*\(([^()]+)\)\s*$/); return m && m[2].length <= 12 && /\w/.test(m[1]) && !/^(AS|PER|SEE|BY|VERIFY|TYP|TYPICAL)\b/i.test(m[2]) ? { now: m[1].trim(), was: m[2].trim() } : null; };
   const rf = revised(c.finish), rc = revised(cat);
+  const catalogRevision = rc && !/\s/.test(rc.was);
   const notes = [];
   if (rf) notes.push("finish was " + rf.was);
-  if (rc && !/[A-Z]{3,}\s/.test(rc.was)) notes.push("catalog was " + rc.was);
+  if (catalogRevision) notes.push("catalog was " + rc.was);
   return {
     component_type: desc || cat || "ITEM",
     description: desc,
@@ -856,8 +895,8 @@ function finishComponent(c, idx) {
     uom: c.uom || "EA",
     manufacturer: name || (code && code.length > 4 ? code : null),
     manufacturer_code: code,
-    model_number: rc && !/[A-Z]{3,}\s/.test(rc.was) ? rc.now : cat,
-    catalog_number: rc && !/[A-Z]{3,}\s/.test(rc.was) ? rc.now : cat,
+    model_number: catalogRevision ? rc.now : cat,
+    catalog_number: catalogRevision ? rc.now : cat,
     finish: rf ? rf.now : cleanText(c.finish),
     notes: notes.length ? notes.join("; ") : null,
     sequence: idx + 1,

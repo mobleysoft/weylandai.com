@@ -33,7 +33,7 @@
  "readers": {
   "a": {
    "doors": 0,
-   "sets": 1,
+   "sets": 31,
    "items": 238,
    "name": "production text layer (weyland-subx-worker/src/lib/text-layer-read.js)"
   },
@@ -45,10 +45,10 @@
    "tables": 0
   }
  },
- "rows_agreed": 0,
- "rows_disputed": 476,
- "rows_total": 476,
- "agreement_rate": 0,
+ "rows_agreed": 2,
+ "rows_disputed": 238,
+ "rows_total": 240,
+ "agreement_rate": 0.0083,
  "agreement": {
   "doors": {
    "rows": 0,
@@ -60,17 +60,38 @@
    "agreement_rate": null
   },
   "items": {
-   "rows": 476,
-   "agreed": 0,
-   "disputed": 0,
-   "only_a": 238,
-   "only_b": 238,
-   "fields": {},
-   "agreement_rate": 0
+   "rows": 240,
+   "agreed": 2,
+   "disputed": 234,
+   "only_a": 2,
+   "only_b": 2,
+   "fields": {
+    "qty": {
+     "agree": 236,
+     "total": 236
+    },
+    "description": {
+     "agree": 236,
+     "total": 236
+    },
+    "catalog": {
+     "agree": 2,
+     "total": 236
+    },
+    "finish": {
+     "agree": 0,
+     "total": 234
+    },
+    "manufacturer": {
+     "agree": 0,
+     "total": 2
+    }
+   },
+   "agreement_rate": 0.0083
   },
   "sets": {
-   "sets": 32,
-   "agreed": 0
+   "sets": 31,
+   "agreed": 31
   }
  },
  "triage_class": "spec-only",
@@ -97,371 +118,330 @@
    "reason": "not for class spec-only"
   }
  },
- "tier": "unread",
- "unread_reason": "no rows agreed and no oracle applies",
- "disagreement_count": 508,
+ "tier": "agreed",
+ "disagreement_count": 474,
  "disagreements": [
   {
    "kind": "item",
    "page": 349,
-   "key": "S / T4A3386 (NRP and size as required) US10BE 16 70 PE8804 WEL (SFIC, Cyl.",
-   "field": "(row)",
-   "a": "read",
-   "b": null,
-   "why": "only reader A read this row"
+   "key": "1.0 / T4A3386 (NRP and size as required) US10BE",
+   "field": "catalog",
+   "a": "T4A3386 (NRP and size as required) US10BE",
+   "b": "T4A3386 (NRP and size as required) US10BE MK 087100 16 70 PE8804 WEL (SFIC, Cyl."
   },
   {
    "kind": "item",
    "page": 349,
-   "key": "S / US10BE Dogging) Match Owner's Existing Small Format",
-   "field": "(row)",
-   "a": "read",
-   "b": null,
-   "why": "only reader A read this row"
+   "key": "1.0 / T4A3386 (NRP and size as required) US10BE",
+   "field": "finish",
+   "a": "MK",
+   "b": null
   },
   {
    "kind": "item",
    "page": 349,
-   "key": "S / 613 Key System Construction Core - Removed when Final",
-   "field": "(row)",
-   "a": "read",
-   "b": null,
-   "why": "only reader A read this row"
+   "key": "1.0 / 16 70 PE8804 WEL (SFIC, Cyl. US10BE Dogging)",
+   "field": "catalog",
+   "a": "16 70 PE8804 WEL (SFIC, Cyl. US10BE Dogging)",
+   "b": "US10BE SA 087100 Dogging) Match Owner's Existing Small Format"
   },
   {
    "kind": "item",
    "page": 349,
-   "key": "S / Cores are installed",
-   "field": "(row)",
-   "a": "read",
-   "b": null,
-   "why": "only reader A read this row"
+   "key": "1.0 / 16 70 PE8804 WEL (SFIC, Cyl. US10BE Dogging)",
+   "field": "finish",
+   "a": "SA",
+   "b": null
   },
   {
    "kind": "item",
    "page": 349,
-   "key": "S / 351 CPS (HD Cush STP Arm) EB",
-   "field": "(row)",
-   "a": "read",
-   "b": null,
-   "why": "only reader A read this row"
+   "key": "1.0 / Match Owner's Existing Small Format 613 Key System",
+   "field": "catalog",
+   "a": "Match Owner's Existing Small Format 613 Key System",
+   "b": "613 BE 087100 Key System Construction Core - Removed when Final"
   },
   {
    "kind": "item",
    "page": 349,
-   "key": "S / K1050 10\" high CSK BEV US10B 273x224-10BE-FGT MSES25SS x",
-   "field": "(row)",
-   "a": "read",
-   "b": null,
-   "why": "only reader A read this row"
+   "key": "1.0 / Match Owner's Existing Small Format 613 Key System",
+   "field": "finish",
+   "a": "BE",
+   "b": null
   },
   {
    "kind": "item",
    "page": 349,
-   "key": "S / Length Required",
-   "field": "(row)",
-   "a": "read",
-   "b": null,
-   "why": "only reader A read this row"
+   "key": "1.0 / Construction Core - Removed when Final Cores are installed",
+   "field": "catalog",
+   "a": "Construction Core - Removed when Final Cores are installed",
+   "b": "BE 087100 Cores are installed"
   },
   {
    "kind": "item",
    "page": 349,
-   "key": "S / 303DS",
-   "field": "(row)",
-   "a": "read",
-   "b": null,
-   "why": "only reader A read this row"
+   "key": "1.0 / Construction Core - Removed when Final Cores are installed",
+   "field": "finish",
+   "a": "BE",
+   "b": null
   },
   {
    "kind": "item",
    "page": 349,
-   "key": "S / 346D x Width of Frame Head",
-   "field": "(row)",
-   "a": "read",
-   "b": null,
-   "why": "only reader A read this row"
+   "key": "1.0 / 351 CPS (HD Cush STP Arm) EB",
+   "field": "catalog",
+   "a": "351 CPS (HD Cush STP Arm) EB",
+   "b": "351 CPS (HD Cush STP Arm) EB SA 087100"
   },
   {
    "kind": "item",
    "page": 349,
-   "key": "S / 3452DNB x Length Required",
-   "field": "(row)",
-   "a": "read",
-   "b": null,
-   "why": "only reader A read this row"
+   "key": "1.0 / 351 CPS (HD Cush STP Arm) EB",
+   "field": "finish",
+   "a": "SA",
+   "b": null
   },
   {
    "kind": "item",
    "page": 349,
-   "key": "S / T4A3386 (NRP and size as required) US10BE 16 70 PE8804 WEL (SFIC, Cyl.",
-   "field": "(row)",
-   "a": "read",
-   "b": null,
-   "why": "only reader A read this row"
+   "key": "1.0 / K1050 10\" high CSK BEV US10B",
+   "field": "catalog",
+   "a": "K1050 10\" high CSK BEV US10B",
+   "b": "K1050 10\" high CSK BEV US10B RO 087100 273x224-10BE-FGT MSES25SS x"
   },
   {
    "kind": "item",
    "page": 349,
-   "key": "S / US10BE Dogging) Match Owner's Existing Small Format",
-   "field": "(row)",
-   "a": "read",
-   "b": null,
-   "why": "only reader A read this row"
+   "key": "1.0 / K1050 10\" high CSK BEV US10B",
+   "field": "finish",
+   "a": "RO",
+   "b": null
   },
   {
    "kind": "item",
    "page": 349,
-   "key": "S / 613 Key System Construction Core - Removed when Final",
-   "field": "(row)",
-   "a": "read",
-   "b": null,
-   "why": "only reader A read this row"
+   "key": "1.0 / 273x224-10BE-FGT MSES25SS x Length Required",
+   "field": "catalog",
+   "a": "273x224-10BE-FGT MSES25SS x Length Required",
+   "b": "PE 087100 Length Required"
   },
   {
    "kind": "item",
    "page": 349,
-   "key": "S / Cores are installed",
-   "field": "(row)",
-   "a": "read",
-   "b": null,
-   "why": "only reader A read this row"
+   "key": "1.0 / 273x224-10BE-FGT MSES25SS x Length Required",
+   "field": "finish",
+   "a": "PE",
+   "b": null
   },
   {
    "kind": "item",
    "page": 349,
-   "key": "S / 351 CPS (HD Cush STP Arm) EB",
-   "field": "(row)",
-   "a": "read",
-   "b": null,
-   "why": "only reader A read this row"
+   "key": "1.0 / 303DS (Head & Jambs)",
+   "field": "catalog",
+   "a": "303DS (Head & Jambs)",
+   "b": "303DS (Head & Jambs) PE 087100"
   },
   {
    "kind": "item",
    "page": 349,
-   "key": "S / K1050 10\" high CSK BEV US10B 273x224-10BE-FGT MSES25SS x",
-   "field": "(row)",
-   "a": "read",
-   "b": null,
-   "why": "only reader A read this row"
+   "key": "1.0 / 303DS (Head & Jambs)",
+   "field": "finish",
+   "a": "PE",
+   "b": null
   },
   {
    "kind": "item",
    "page": 349,
-   "key": "S / Length Required",
-   "field": "(row)",
-   "a": "read",
-   "b": null,
-   "why": "only reader A read this row"
+   "key": "1.0 / 346D x Width of Frame Head",
+   "field": "catalog",
+   "a": "346D x Width of Frame Head",
+   "b": "346D x Width of Frame Head PE 087100"
   },
   {
    "kind": "item",
    "page": 349,
-   "key": "S / 303DS",
-   "field": "(row)",
-   "a": "read",
-   "b": null,
-   "why": "only reader A read this row"
+   "key": "1.0 / 346D x Width of Frame Head",
+   "field": "finish",
+   "a": "PE",
+   "b": null
   },
   {
    "kind": "item",
    "page": 349,
-   "key": "S / 346D x Width of Frame Head",
-   "field": "(row)",
-   "a": "read",
-   "b": null,
-   "why": "only reader A read this row"
+   "key": "1.0 / 3452DNB x Length Required",
+   "field": "catalog",
+   "a": "3452DNB x Length Required",
+   "b": "3452DNB x Length Required PE 087100"
   },
   {
    "kind": "item",
    "page": 349,
-   "key": "S / 3452DNB x Length Required",
-   "field": "(row)",
-   "a": "read",
-   "b": null,
-   "why": "only reader A read this row"
+   "key": "1.0 / 3452DNB x Length Required",
+   "field": "finish",
+   "a": "PE",
+   "b": null
   },
   {
    "kind": "item",
    "page": 349,
-   "key": "S / T4A3386 (NRP and size as required) US10BE",
-   "field": "(row)",
-   "a": "read",
-   "b": null,
-   "why": "only reader A read this row"
+   "key": "2.0 / T4A3386 (NRP and size as required) US10BE",
+   "field": "catalog",
+   "a": "T4A3386 (NRP and size as required) US10BE",
+   "b": "T4A3386 (NRP and size as required) US10BE MK 087100 16 70 PE8804 WEL (SFIC, Cyl."
   },
   {
    "kind": "item",
    "page": 349,
-   "key": "S / 12 70 PE8804 WEL (SFIC) US10BE Match Owner's Existing Small Format",
-   "field": "(row)",
-   "a": "read",
-   "b": null,
-   "why": "only reader A read this row"
+   "key": "2.0 / T4A3386 (NRP and size as required) US10BE",
+   "field": "finish",
+   "a": "MK",
+   "b": null
   },
   {
    "kind": "item",
    "page": 349,
-   "key": "S / 613 Key System Construction Core - Removed when Final",
-   "field": "(row)",
-   "a": "read",
-   "b": null,
-   "why": "only reader A read this row"
+   "key": "2.0 / 16 70 PE8804 WEL (SFIC, Cyl. US10BE Dogging)",
+   "field": "catalog",
+   "a": "16 70 PE8804 WEL (SFIC, Cyl. US10BE Dogging)",
+   "b": "US10BE SA 087100 Dogging) Match Owner's Existing Small Format"
   },
   {
    "kind": "item",
    "page": 349,
-   "key": "S / Cores are installed",
-   "field": "(row)",
-   "a": "read",
-   "b": null,
-   "why": "only reader A read this row"
+   "key": "2.0 / 16 70 PE8804 WEL (SFIC, Cyl. US10BE Dogging)",
+   "field": "finish",
+   "a": "SA",
+   "b": null
   },
   {
    "kind": "item",
    "page": 349,
-   "key": "S / 351 CPS (HD Cush STP Arm) EB",
-   "field": "(row)",
-   "a": "read",
-   "b": null,
-   "why": "only reader A read this row"
+   "key": "2.0 / Match Owner's Existing Small Format 613 Key System",
+   "field": "catalog",
+   "a": "Match Owner's Existing Small Format 613 Key System",
+   "b": "613 BE 087100 Key System Construction Core - Removed when Final"
   },
   {
    "kind": "item",
    "page": 349,
-   "key": "S / K1050 10\" high CSK BEV US10B 273x224-10BE-FGT MSES25SS x",
-   "field": "(row)",
-   "a": "read",
-   "b": null,
-   "why": "only reader A read this row"
+   "key": "2.0 / Match Owner's Existing Small Format 613 Key System",
+   "field": "finish",
+   "a": "BE",
+   "b": null
   },
   {
    "kind": "item",
    "page": 349,
-   "key": "S / Length Required",
-   "field": "(row)",
-   "a": "read",
-   "b": null,
-   "why": "only reader A read this row"
+   "key": "2.0 / Construction Core - Removed when Final Cores are installed",
+   "field": "catalog",
+   "a": "Construction Core - Removed when Final Cores are installed",
+   "b": "BE 087100 Cores are installed"
   },
   {
    "kind": "item",
    "page": 349,
-   "key": "S / 303DS",
-   "field": "(row)",
-   "a": "read",
-   "b": null,
-   "why": "only reader A read this row"
+   "key": "2.0 / Construction Core - Removed when Final Cores are installed",
+   "field": "finish",
+   "a": "BE",
+   "b": null
   },
   {
    "kind": "item",
    "page": 349,
-   "key": "S / 346D x Width of Frame Head",
-   "field": "(row)",
-   "a": "read",
-   "b": null,
-   "why": "only reader A read this row"
+   "key": "2.0 / 351 CPS (HD Cush STP Arm) EB",
+   "field": "catalog",
+   "a": "351 CPS (HD Cush STP Arm) EB",
+   "b": "351 CPS (HD Cush STP Arm) EB SA 087100"
   },
   {
    "kind": "item",
    "page": 349,
-   "key": "S / 3452DNB x Length Required",
-   "field": "(row)",
-   "a": "read",
-   "b": null,
-   "why": "only reader A read this row"
+   "key": "2.0 / 351 CPS (HD Cush STP Arm) EB",
+   "field": "finish",
+   "a": "SA",
+   "b": null
   },
   {
    "kind": "item",
    "page": 349,
-   "key": "S / T4A3386 (NRP and size as required) US10BE Match Owner's Existing Small Format",
-   "field": "(row)",
-   "a": "read",
-   "b": null,
-   "why": "only reader A read this row"
+   "key": "2.0 / K1050 10\" high CSK BEV US10B",
+   "field": "catalog",
+   "a": "K1050 10\" high CSK BEV US10B",
+   "b": "K1050 10\" high CSK BEV US10B RO 087100 273x224-10BE-FGT MSES25SS x"
   },
   {
    "kind": "item",
    "page": 349,
-   "key": "S / 613 Key System Construction Core - Removed when Final",
-   "field": "(row)",
-   "a": "read",
-   "b": null,
-   "why": "only reader A read this row"
+   "key": "2.0 / K1050 10\" high CSK BEV US10B",
+   "field": "finish",
+   "a": "RO",
+   "b": null
   },
   {
    "kind": "item",
    "page": 349,
-   "key": "S / Cores are installed",
-   "field": "(row)",
-   "a": "read",
-   "b": null,
-   "why": "only reader A read this row"
+   "key": "2.0 / 273x224-10BE-FGT MSES25SS x Length Required",
+   "field": "catalog",
+   "a": "273x224-10BE-FGT MSES25SS x Length Required",
+   "b": "PE 087100 Length Required"
   },
   {
    "kind": "item",
    "page": 349,
-   "key": "S / MT Series RFID Mortised Lockset (SFIC) 613",
-   "field": "(row)",
-   "a": "read",
-   "b": null,
-   "why": "only reader A read this row"
+   "key": "2.0 / 273x224-10BE-FGT MSES25SS x Length Required",
+   "field": "finish",
+   "a": "PE",
+   "b": null
   },
   {
    "kind": "item",
    "page": 349,
-   "key": "S / 351 UO (RA or PA Mount as Required) EB",
-   "field": "(row)",
-   "a": "read",
-   "b": null,
-   "why": "only reader A read this row"
+   "key": "2.0 / 303DS (Head & Jambs)",
+   "field": "catalog",
+   "a": "303DS (Head & Jambs)",
+   "b": "303DS (Head & Jambs) PE 087100"
   },
   {
    "kind": "item",
    "page": 349,
-   "key": "S / K1050 10\" high CSK BEV US10B",
-   "field": "(row)",
-   "a": "read",
-   "b": null,
-   "why": "only reader A read this row"
+   "key": "2.0 / 303DS (Head & Jambs)",
+   "field": "finish",
+   "a": "PE",
+   "b": null
   },
   {
    "kind": "item",
    "page": 349,
-   "key": "S / 403 (or) 441CU (As Required) US10B",
-   "field": "(row)",
-   "a": "read",
-   "b": null,
-   "why": "only reader A read this row"
+   "key": "2.0 / 346D x Width of Frame Head",
+   "field": "catalog",
+   "a": "346D x Width of Frame Head",
+   "b": "346D x Width of Frame Head PE 087100"
   },
   {
    "kind": "item",
    "page": 349,
-   "key": "S / 175-10BE MSES25SS x Length Required",
-   "field": "(row)",
-   "a": "read",
-   "b": null,
-   "why": "only reader A read this row"
+   "key": "2.0 / 346D x Width of Frame Head",
+   "field": "finish",
+   "a": "PE",
+   "b": null
   },
   {
    "kind": "item",
-   "page": 349,
-   "key": "S / 303DS",
-   "field": "(row)",
-   "a": "read",
-   "b": null,
-   "why": "only reader A read this row"
+   "page": 350,
+   "key": "3.0 / T4A3386 (NRP and size as required) US10BE",
+   "field": "catalog",
+   "a": "T4A3386 (NRP and size as required) US10BE",
+   "b": "T4A3386 (NRP and size as required) US10BE MK 087100"
   },
   {
    "kind": "item",
-   "page": 349,
-   "key": "S / 346D x Width of Frame Head",
-   "field": "(row)",
-   "a": "read",
-   "b": null,
-   "why": "only reader A read this row"
+   "page": 350,
+   "key": "3.0 / T4A3386 (NRP and size as required) US10BE",
+   "field": "finish",
+   "a": "MK",
+   "b": null
   }
  ],
- "ms": 2246,
- "generated_at": "2026-10-09T10:45:18.884Z"
+ "ms": 2098,
+ "generated_at": "2026-10-09T11:33:20.286Z"
 }

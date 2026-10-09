@@ -35,7 +35,7 @@
  "readers": {
   "a": {
    "doors": 0,
-   "sets": 1,
+   "sets": 37,
    "items": 262,
    "name": "production text layer (weyland-subx-worker/src/lib/text-layer-read.js)"
   },
@@ -48,8 +48,8 @@
   }
  },
  "rows_agreed": 0,
- "rows_disputed": 512,
- "rows_total": 512,
+ "rows_disputed": 298,
+ "rows_total": 298,
  "agreement_rate": 0,
  "agreement": {
   "doors": {
@@ -62,17 +62,38 @@
    "agreement_rate": null
   },
   "items": {
-   "rows": 512,
+   "rows": 298,
    "agreed": 0,
-   "disputed": 0,
-   "only_a": 262,
-   "only_b": 250,
-   "fields": {},
+   "disputed": 214,
+   "only_a": 48,
+   "only_b": 36,
+   "fields": {
+    "qty": {
+     "agree": 214,
+     "total": 214
+    },
+    "description": {
+     "agree": 207,
+     "total": 214
+    },
+    "catalog": {
+     "agree": 0,
+     "total": 214
+    },
+    "manufacturer": {
+     "agree": 0,
+     "total": 205
+    },
+    "finish": {
+     "agree": 0,
+     "total": 166
+    }
+   },
    "agreement_rate": 0
   },
   "sets": {
-   "sets": 38,
-   "agreed": 0
+   "sets": 37,
+   "agreed": 36
   }
  },
  "triage_class": "spec-only",
@@ -101,12 +122,156 @@
  },
  "tier": "unread",
  "unread_reason": "no rows agreed and no oracle applies",
- "disagreement_count": 550,
+ "disagreement_count": 677,
  "disagreements": [
   {
    "kind": "item",
    "page": 35,
-   "key": "S / Manufacturer 16 70 PE8804 WEL (SFIC, Cyl.",
+   "key": "1.0 / Prehung Door/Frame - Hinges by Manufacturer",
+   "field": "catalog",
+   "a": "Prehung Door/Frame - Hinges by Manufacturer",
+   "b": "OT Manufacturer 16 70 PE8804 WEL (SFIC, Cyl."
+  },
+  {
+   "kind": "item",
+   "page": 35,
+   "key": "1.0 / Prehung Door/Frame - Hinges by Manufacturer",
+   "field": "manufacturer",
+   "a": "OT",
+   "b": null
+  },
+  {
+   "kind": "item",
+   "page": 35,
+   "key": "1.0 / 16 70 PE8804 WEL (SFIC, Cyl. Dogging)",
+   "field": "catalog",
+   "a": "16 70 PE8804 WEL (SFIC, Cyl. Dogging)",
+   "b": "US10BE SA 087100 Dogging)"
+  },
+  {
+   "kind": "item",
+   "page": 35,
+   "key": "1.0 / 16 70 PE8804 WEL (SFIC, Cyl. Dogging)",
+   "field": "finish",
+   "a": "US10BE",
+   "b": null
+  },
+  {
+   "kind": "item",
+   "page": 35,
+   "key": "1.0 / 16 70 PE8804 WEL (SFIC, Cyl. Dogging)",
+   "field": "manufacturer",
+   "a": "SA",
+   "b": null
+  },
+  {
+   "kind": "item",
+   "page": 35,
+   "key": "1.0 / Key as Directed by Owner",
+   "field": "catalog",
+   "a": "Key as Directed by Owner",
+   "b": "Key as Directed by Owner 13 MC 087100 Construction Core - Removed when"
+  },
+  {
+   "kind": "item",
+   "page": 35,
+   "key": "1.0 / Key as Directed by Owner",
+   "field": "finish",
+   "a": "13",
+   "b": null
+  },
+  {
+   "kind": "item",
+   "page": 35,
+   "key": "1.0 / Key as Directed by Owner",
+   "field": "manufacturer",
+   "a": "MC",
+   "b": null
+  },
+  {
+   "kind": "item",
+   "page": 35,
+   "key": "1.0 / Construction Core - Removed when Final Cores are installed",
+   "field": "catalog",
+   "a": "Construction Core - Removed when Final Cores are installed",
+   "b": "13 MC 087100 Final Cores are installed"
+  },
+  {
+   "kind": "item",
+   "page": 35,
+   "key": "1.0 / Construction Core - Removed when Final Cores are installed",
+   "field": "finish",
+   "a": "13",
+   "b": null
+  },
+  {
+   "kind": "item",
+   "page": 35,
+   "key": "1.0 / Construction Core - Removed when Final Cores are installed",
+   "field": "manufacturer",
+   "a": "MC",
+   "b": null
+  },
+  {
+   "kind": "item",
+   "page": 35,
+   "key": "1.0 / 351 CPS (HD Cush STP Arm)",
+   "field": "catalog",
+   "a": "351 CPS (HD Cush STP Arm)",
+   "b": "351 CPS (HD Cush STP Arm) EB SA 087100"
+  },
+  {
+   "kind": "item",
+   "page": 35,
+   "key": "1.0 / 351 CPS (HD Cush STP Arm)",
+   "field": "finish",
+   "a": "EB",
+   "b": null
+  },
+  {
+   "kind": "item",
+   "page": 35,
+   "key": "1.0 / 351 CPS (HD Cush STP Arm)",
+   "field": "manufacturer",
+   "a": "SA",
+   "b": null
+  },
+  {
+   "kind": "item",
+   "page": 35,
+   "key": "1.0 / K1050 10\" high CSK BEV",
+   "field": "description",
+   "a": "Kick Plate",
+   "b": "Kick Plate Gaskets, sweeps Threshold by Door/Frame Manufacturer"
+  },
+  {
+   "kind": "item",
+   "page": 35,
+   "key": "1.0 / K1050 10\" high CSK BEV",
+   "field": "catalog",
+   "a": "K1050 10\" high CSK BEV",
+   "b": "K1050 10\" high CSK BEV US10B RO 087100 Prehung Door/Frame - Gaskets and Threshold by Manufacturer"
+  },
+  {
+   "kind": "item",
+   "page": 35,
+   "key": "1.0 / K1050 10\" high CSK BEV",
+   "field": "finish",
+   "a": "US10B",
+   "b": null
+  },
+  {
+   "kind": "item",
+   "page": 35,
+   "key": "1.0 / K1050 10\" high CSK BEV",
+   "field": "manufacturer",
+   "a": "RO",
+   "b": null
+  },
+  {
+   "kind": "item",
+   "page": 35,
+   "key": "1.0 / Prehung Door/Frame - Gaskets and Threshold by Manufacturer",
    "field": "(row)",
    "a": "read",
    "b": null,
@@ -115,355 +280,172 @@
   {
    "kind": "item",
    "page": 35,
-   "key": "S / Dogging)",
-   "field": "(row)",
-   "a": "read",
-   "b": null,
-   "why": "only reader A read this row"
+   "key": "2.0 / TA2314 (NRP and Size as Required)",
+   "field": "catalog",
+   "a": "TA2314 (NRP and Size as Required)",
+   "b": "TA2314 (NRP and Size as Required) US10B MK 087100 16 70 PE8804 WEL (SFIC, Cyl."
   },
   {
    "kind": "item",
    "page": 35,
-   "key": "S / Key as Directed by Owner Construction Core - Removed when",
-   "field": "(row)",
-   "a": "read",
-   "b": null,
-   "why": "only reader A read this row"
+   "key": "2.0 / TA2314 (NRP and Size as Required)",
+   "field": "finish",
+   "a": "US10B",
+   "b": null
   },
   {
    "kind": "item",
    "page": 35,
-   "key": "S / Final Cores are installed",
-   "field": "(row)",
-   "a": "read",
-   "b": null,
-   "why": "only reader A read this row"
+   "key": "2.0 / TA2314 (NRP and Size as Required)",
+   "field": "manufacturer",
+   "a": "MK",
+   "b": null
   },
   {
    "kind": "item",
    "page": 35,
-   "key": "S / 351 CPS (HD Cush STP Arm)",
-   "field": "(row)",
-   "a": "read",
-   "b": null,
-   "why": "only reader A read this row"
+   "key": "2.0 / 16 70 PE8804 WEL (SFIC, Cyl. Dogging)",
+   "field": "catalog",
+   "a": "16 70 PE8804 WEL (SFIC, Cyl. Dogging)",
+   "b": "US10BE SA 087100 Dogging)"
   },
   {
    "kind": "item",
    "page": 35,
-   "key": "S / K1050 10\" high CSK BEV Prehung Door/Frame - Gaskets and",
-   "field": "(row)",
-   "a": "read",
-   "b": null,
-   "why": "only reader A read this row"
+   "key": "2.0 / 16 70 PE8804 WEL (SFIC, Cyl. Dogging)",
+   "field": "finish",
+   "a": "US10BE",
+   "b": null
   },
   {
    "kind": "item",
    "page": 35,
-   "key": "S / Threshold by Manufacturer",
-   "field": "(row)",
-   "a": "read",
-   "b": null,
-   "why": "only reader A read this row"
+   "key": "2.0 / 16 70 PE8804 WEL (SFIC, Cyl. Dogging)",
+   "field": "manufacturer",
+   "a": "SA",
+   "b": null
   },
   {
    "kind": "item",
    "page": 35,
-   "key": "S / TA2314 (NRP and Size as Required) 16 70 PE8804 WEL (SFIC, Cyl.",
-   "field": "(row)",
-   "a": "read",
-   "b": null,
-   "why": "only reader A read this row"
+   "key": "2.0 / Key as Directed by Owner",
+   "field": "catalog",
+   "a": "Key as Directed by Owner",
+   "b": "Key as Directed by Owner 13 MC 087100 Construction Core - Removed when"
   },
   {
    "kind": "item",
    "page": 35,
-   "key": "S / Dogging)",
-   "field": "(row)",
-   "a": "read",
-   "b": null,
-   "why": "only reader A read this row"
+   "key": "2.0 / Key as Directed by Owner",
+   "field": "finish",
+   "a": "13",
+   "b": null
   },
   {
    "kind": "item",
    "page": 35,
-   "key": "S / Key as Directed by Owner Construction Core - Removed when",
-   "field": "(row)",
-   "a": "read",
-   "b": null,
-   "why": "only reader A read this row"
+   "key": "2.0 / Key as Directed by Owner",
+   "field": "manufacturer",
+   "a": "MC",
+   "b": null
   },
   {
    "kind": "item",
    "page": 35,
-   "key": "S / Final Cores are installed",
-   "field": "(row)",
-   "a": "read",
-   "b": null,
-   "why": "only reader A read this row"
+   "key": "2.0 / Construction Core - Removed when Final Cores are installed",
+   "field": "catalog",
+   "a": "Construction Core - Removed when Final Cores are installed",
+   "b": "13 MC 087100 Final Cores are installed"
   },
   {
    "kind": "item",
    "page": 35,
-   "key": "S / 351 CPS (HD Cush STP Arm)",
-   "field": "(row)",
-   "a": "read",
-   "b": null,
-   "why": "only reader A read this row"
+   "key": "2.0 / Construction Core - Removed when Final Cores are installed",
+   "field": "finish",
+   "a": "13",
+   "b": null
   },
   {
    "kind": "item",
    "page": 35,
-   "key": "S / K1050 10\" high CSK BEV",
-   "field": "(row)",
-   "a": "read",
-   "b": null,
-   "why": "only reader A read this row"
+   "key": "2.0 / Construction Core - Removed when Final Cores are installed",
+   "field": "manufacturer",
+   "a": "MC",
+   "b": null
   },
   {
    "kind": "item",
    "page": 35,
-   "key": "S / 303DS",
-   "field": "(row)",
-   "a": "read",
-   "b": null,
-   "why": "only reader A read this row"
+   "key": "2.0 / 351 CPS (HD Cush STP Arm)",
+   "field": "catalog",
+   "a": "351 CPS (HD Cush STP Arm)",
+   "b": "351 CPS (HD Cush STP Arm) EB SA 087100"
   },
   {
    "kind": "item",
    "page": 35,
-   "key": "S / 346D x Width of Frame Head",
-   "field": "(row)",
-   "a": "read",
-   "b": null,
-   "why": "only reader A read this row"
+   "key": "2.0 / 351 CPS (HD Cush STP Arm)",
+   "field": "finish",
+   "a": "EB",
+   "b": null
   },
   {
    "kind": "item",
    "page": 35,
-   "key": "S / 3452DNB x Length Required 273x224-10BE-FGT MSES25SS x",
-   "field": "(row)",
-   "a": "read",
-   "b": null,
-   "why": "only reader A read this row"
+   "key": "2.0 / 351 CPS (HD Cush STP Arm)",
+   "field": "manufacturer",
+   "a": "SA",
+   "b": null
   },
   {
    "kind": "item",
    "page": 35,
-   "key": "S / Length Required",
-   "field": "(row)",
-   "a": "read",
-   "b": null,
-   "why": "only reader A read this row"
+   "key": "2.0 / K1050 10\" high CSK BEV",
+   "field": "catalog",
+   "a": "K1050 10\" high CSK BEV",
+   "b": "K1050 10\" high CSK BEV US10B RO 087100"
   },
   {
    "kind": "item",
    "page": 35,
-   "key": "S / Manufacturer",
-   "field": "(row)",
-   "a": "read",
-   "b": null,
-   "why": "only reader A read this row"
+   "key": "2.0 / K1050 10\" high CSK BEV",
+   "field": "finish",
+   "a": "US10B",
+   "b": null
   },
   {
    "kind": "item",
    "page": 35,
-   "key": "S / 12 70 PE8804 WEL",
-   "field": "(row)",
-   "a": "read",
-   "b": null,
-   "why": "only reader A read this row"
+   "key": "2.0 / K1050 10\" high CSK BEV",
+   "field": "manufacturer",
+   "a": "RO",
+   "b": null
   },
   {
    "kind": "item",
    "page": 35,
-   "key": "S / Key as Directed by Owner Construction Core - Removed when",
-   "field": "(row)",
-   "a": "read",
-   "b": null,
-   "why": "only reader A read this row"
+   "key": "2.0 / 303DS (Head & Jambs)",
+   "field": "catalog",
+   "a": "303DS (Head & Jambs)",
+   "b": "303DS (Head & Jambs) PE 087100"
   },
   {
    "kind": "item",
    "page": 35,
-   "key": "S / Final Cores are installed",
-   "field": "(row)",
-   "a": "read",
-   "b": null,
-   "why": "only reader A read this row"
+   "key": "2.0 / 303DS (Head & Jambs)",
+   "field": "manufacturer",
+   "a": "PE",
+   "b": null
   },
   {
    "kind": "item",
    "page": 35,
-   "key": "S / 351 CPS (HD Cush STP Arm)",
-   "field": "(row)",
-   "a": "read",
-   "b": null,
-   "why": "only reader A read this row"
-  },
-  {
-   "kind": "item",
-   "page": 35,
-   "key": "S / K1050 10\" high CSK BEV Prehung Door/Frame - Gaskets and",
-   "field": "(row)",
-   "a": "read",
-   "b": null,
-   "why": "only reader A read this row"
-  },
-  {
-   "kind": "item",
-   "page": 35,
-   "key": "S / Threshold by Manufacturer",
-   "field": "(row)",
-   "a": "read",
-   "b": null,
-   "why": "only reader A read this row"
-  },
-  {
-   "kind": "item",
-   "page": 35,
-   "key": "S / Manufacturer MT Series RFID Mortised Lockset",
-   "field": "(row)",
-   "a": "read",
-   "b": null,
-   "why": "only reader A read this row"
-  },
-  {
-   "kind": "item",
-   "page": 35,
-   "key": "S / (SFIC)",
-   "field": "(row)",
-   "a": "read",
-   "b": null,
-   "why": "only reader A read this row"
-  },
-  {
-   "kind": "item",
-   "page": 35,
-   "key": "S / Key as Directed by Owner Construction Core - Removed when",
-   "field": "(row)",
-   "a": "read",
-   "b": null,
-   "why": "only reader A read this row"
-  },
-  {
-   "kind": "item",
-   "page": 35,
-   "key": "S / Final Cores are installed 351 UO (RA or PA Mount as",
-   "field": "(row)",
-   "a": "read",
-   "b": null,
-   "why": "only reader A read this row"
-  },
-  {
-   "kind": "item",
-   "page": 35,
-   "key": "S / Required)",
-   "field": "(row)",
-   "a": "read",
-   "b": null,
-   "why": "only reader A read this row"
-  },
-  {
-   "kind": "item",
-   "page": 35,
-   "key": "S / K1050 10\" high CSK BEV",
-   "field": "(row)",
-   "a": "read",
-   "b": null,
-   "why": "only reader A read this row"
-  },
-  {
-   "kind": "item",
-   "page": 35,
-   "key": "S / 403 (or) 441CU (As Required) Prehung Door/Frame - Gaskets and",
-   "field": "(row)",
-   "a": "read",
-   "b": null,
-   "why": "only reader A read this row"
-  },
-  {
-   "kind": "item",
-   "page": 35,
-   "key": "S / Threshold by Manufacturer",
-   "field": "(row)",
-   "a": "read",
-   "b": null,
-   "why": "only reader A read this row"
-  },
-  {
-   "kind": "item",
-   "page": 35,
-   "key": "S / T4A3386 (NRP and size as required) MT Series RFID Mortised Lockset",
-   "field": "(row)",
-   "a": "read",
-   "b": null,
-   "why": "only reader A read this row"
-  },
-  {
-   "kind": "item",
-   "page": 35,
-   "key": "S / (SFIC)",
-   "field": "(row)",
-   "a": "read",
-   "b": null,
-   "why": "only reader A read this row"
-  },
-  {
-   "kind": "item",
-   "page": 35,
-   "key": "S / Key as Directed by Owner Construction Core - Removed when",
-   "field": "(row)",
-   "a": "read",
-   "b": null,
-   "why": "only reader A read this row"
-  },
-  {
-   "kind": "item",
-   "page": 35,
-   "key": "S / Final Cores are installed",
-   "field": "(row)",
-   "a": "read",
-   "b": null,
-   "why": "only reader A read this row"
-  },
-  {
-   "kind": "item",
-   "page": 35,
-   "key": "S / 10-X36 (Size as Required) 351 UO (RA or PA Mount as",
-   "field": "(row)",
-   "a": "read",
-   "b": null,
-   "why": "only reader A read this row"
-  },
-  {
-   "kind": "item",
-   "page": 35,
-   "key": "S / Required)",
-   "field": "(row)",
-   "a": "read",
-   "b": null,
-   "why": "only reader A read this row"
-  },
-  {
-   "kind": "item",
-   "page": 35,
-   "key": "S / K1050 10\" high CSK BEV",
-   "field": "(row)",
-   "a": "read",
-   "b": null,
-   "why": "only reader A read this row"
-  },
-  {
-   "kind": "item",
-   "page": 35,
-   "key": "S / 303DS",
-   "field": "(row)",
-   "a": "read",
-   "b": null,
-   "why": "only reader A read this row"
+   "key": "2.0 / 346D x Width of Frame Head",
+   "field": "catalog",
+   "a": "346D x Width of Frame Head",
+   "b": "346D x Width of Frame Head PE 087100"
   }
  ],
- "ms": 3378,
- "generated_at": "2026-10-09T10:47:42.079Z"
+ "ms": 2714,
+ "generated_at": "2026-10-09T11:33:31.089Z"
 }

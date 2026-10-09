@@ -24,7 +24,7 @@
  },
  "readers": {
   "a": {
-   "doors": 0,
+   "doors": 210,
    "sets": 0,
    "items": 0,
    "name": "production text layer (weyland-subx-worker/src/lib/text-layer-read.js)"
@@ -37,19 +37,44 @@
    "tables": 4
   }
  },
- "rows_agreed": 0,
- "rows_disputed": 210,
+ "rows_agreed": 210,
+ "rows_disputed": 0,
  "rows_total": 210,
- "agreement_rate": 0,
+ "agreement_rate": 1,
  "agreement": {
   "doors": {
    "rows": 210,
-   "agreed": 0,
+   "agreed": 210,
    "disputed": 0,
    "only_a": 0,
-   "only_b": 210,
-   "fields": {},
-   "agreement_rate": 0
+   "only_b": 0,
+   "fields": {
+    "width_inches": {
+     "agree": 210,
+     "total": 210
+    },
+    "height_inches": {
+     "agree": 210,
+     "total": 210
+    },
+    "door_type": {
+     "agree": 210,
+     "total": 210
+    },
+    "hardware_group": {
+     "agree": 208,
+     "total": 208
+    },
+    "location": {
+     "agree": 210,
+     "total": 210
+    },
+    "fire_rating": {
+     "agree": 39,
+     "total": 39
+    }
+   },
+   "agreement_rate": 1
   },
   "items": {
    "rows": 0,
@@ -70,7 +95,16 @@
  "oracles": {
   "marks_on_plan": {
    "applicable": false,
-   "reason": "no door schedule rows"
+   "reason": "no floor plan sheet found in this PDF (title blocks)",
+   "plan_counts": {
+    "plan_sheets": 0,
+    "rooms": 0,
+    "corridors": 0,
+    "tags": 0,
+    "unmatched_tags": 0,
+    "schedule_marks": 210,
+    "marks_not_on_plan": 210
+   }
   },
   "sets_exist": {
    "applicable": false,
@@ -81,379 +115,40 @@
    "reason": "not for class schedule-only"
   },
   "types_in_legend": {
-   "applicable": false,
-   "reason": "no door schedule rows"
+   "applicable": true,
+   "total": 10,
+   "pass": 4,
+   "fail": 6,
+   "pass_rate": 0.4,
+   "examples": [
+    "frame type TYP-2 (47 rows) not found near the frame types legend",
+    "frame type GLZ-A (1 rows) not found near the frame types legend",
+    "frame type GLZ-B (1 rows) not found near the frame types legend",
+    "frame type TYP-1 (2 rows) not found near the frame types legend",
+    "frame type GLZ-C (1 rows) not found near the frame types legend",
+    "frame type GLZ-D (1 rows) not found near the frame types legend"
+   ],
+   "legend_titles": [
+    "DOOR TYPES p.45",
+    "FRAME TYPES p.45"
+   ],
+   "skipped": [],
+   "note": "weak for numeric types: a detail number near the legend can pass a numeric frame type"
   },
   "sizes_and_marks": {
-   "applicable": false,
-   "reason": "no door schedule rows"
+   "applicable": true,
+   "total": 210,
+   "pass": 210,
+   "fail": 0,
+   "pass_rate": 1,
+   "examples": [],
+   "size_fail": 0,
+   "mark_fail": 0
   }
  },
- "tier": "unread",
- "unread_reason": "no rows agreed and no oracle applies",
- "disagreement_count": 210,
- "disagreements": [
-  {
-   "kind": "door",
-   "page": 28,
-   "key": "AD101",
-   "field": "(row)",
-   "a": null,
-   "b": "read",
-   "why": "only reader B read this row"
-  },
-  {
-   "kind": "door",
-   "page": 28,
-   "key": "AD102",
-   "field": "(row)",
-   "a": null,
-   "b": "read",
-   "why": "only reader B read this row"
-  },
-  {
-   "kind": "door",
-   "page": 44,
-   "key": "101A",
-   "field": "(row)",
-   "a": null,
-   "b": "read",
-   "why": "only reader B read this row"
-  },
-  {
-   "kind": "door",
-   "page": 44,
-   "key": "101B",
-   "field": "(row)",
-   "a": null,
-   "b": "read",
-   "why": "only reader B read this row"
-  },
-  {
-   "kind": "door",
-   "page": 44,
-   "key": "102",
-   "field": "(row)",
-   "a": null,
-   "b": "read",
-   "why": "only reader B read this row"
-  },
-  {
-   "kind": "door",
-   "page": 44,
-   "key": "103A",
-   "field": "(row)",
-   "a": null,
-   "b": "read",
-   "why": "only reader B read this row"
-  },
-  {
-   "kind": "door",
-   "page": 44,
-   "key": "103B",
-   "field": "(row)",
-   "a": null,
-   "b": "read",
-   "why": "only reader B read this row"
-  },
-  {
-   "kind": "door",
-   "page": 44,
-   "key": "104A",
-   "field": "(row)",
-   "a": null,
-   "b": "read",
-   "why": "only reader B read this row"
-  },
-  {
-   "kind": "door",
-   "page": 44,
-   "key": "104B",
-   "field": "(row)",
-   "a": null,
-   "b": "read",
-   "why": "only reader B read this row"
-  },
-  {
-   "kind": "door",
-   "page": 44,
-   "key": "104C",
-   "field": "(row)",
-   "a": null,
-   "b": "read",
-   "why": "only reader B read this row"
-  },
-  {
-   "kind": "door",
-   "page": 44,
-   "key": "104D",
-   "field": "(row)",
-   "a": null,
-   "b": "read",
-   "why": "only reader B read this row"
-  },
-  {
-   "kind": "door",
-   "page": 44,
-   "key": "104E",
-   "field": "(row)",
-   "a": null,
-   "b": "read",
-   "why": "only reader B read this row"
-  },
-  {
-   "kind": "door",
-   "page": 44,
-   "key": "105A",
-   "field": "(row)",
-   "a": null,
-   "b": "read",
-   "why": "only reader B read this row"
-  },
-  {
-   "kind": "door",
-   "page": 44,
-   "key": "105B",
-   "field": "(row)",
-   "a": null,
-   "b": "read",
-   "why": "only reader B read this row"
-  },
-  {
-   "kind": "door",
-   "page": 44,
-   "key": "107A",
-   "field": "(row)",
-   "a": null,
-   "b": "read",
-   "why": "only reader B read this row"
-  },
-  {
-   "kind": "door",
-   "page": 44,
-   "key": "107B",
-   "field": "(row)",
-   "a": null,
-   "b": "read",
-   "why": "only reader B read this row"
-  },
-  {
-   "kind": "door",
-   "page": 44,
-   "key": "109A",
-   "field": "(row)",
-   "a": null,
-   "b": "read",
-   "why": "only reader B read this row"
-  },
-  {
-   "kind": "door",
-   "page": 44,
-   "key": "109B",
-   "field": "(row)",
-   "a": null,
-   "b": "read",
-   "why": "only reader B read this row"
-  },
-  {
-   "kind": "door",
-   "page": 44,
-   "key": "110",
-   "field": "(row)",
-   "a": null,
-   "b": "read",
-   "why": "only reader B read this row"
-  },
-  {
-   "kind": "door",
-   "page": 44,
-   "key": "111A",
-   "field": "(row)",
-   "a": null,
-   "b": "read",
-   "why": "only reader B read this row"
-  },
-  {
-   "kind": "door",
-   "page": 44,
-   "key": "111B",
-   "field": "(row)",
-   "a": null,
-   "b": "read",
-   "why": "only reader B read this row"
-  },
-  {
-   "kind": "door",
-   "page": 44,
-   "key": "112A",
-   "field": "(row)",
-   "a": null,
-   "b": "read",
-   "why": "only reader B read this row"
-  },
-  {
-   "kind": "door",
-   "page": 44,
-   "key": "112B",
-   "field": "(row)",
-   "a": null,
-   "b": "read",
-   "why": "only reader B read this row"
-  },
-  {
-   "kind": "door",
-   "page": 44,
-   "key": "113",
-   "field": "(row)",
-   "a": null,
-   "b": "read",
-   "why": "only reader B read this row"
-  },
-  {
-   "kind": "door",
-   "page": 44,
-   "key": "114",
-   "field": "(row)",
-   "a": null,
-   "b": "read",
-   "why": "only reader B read this row"
-  },
-  {
-   "kind": "door",
-   "page": 44,
-   "key": "115",
-   "field": "(row)",
-   "a": null,
-   "b": "read",
-   "why": "only reader B read this row"
-  },
-  {
-   "kind": "door",
-   "page": 44,
-   "key": "116",
-   "field": "(row)",
-   "a": null,
-   "b": "read",
-   "why": "only reader B read this row"
-  },
-  {
-   "kind": "door",
-   "page": 44,
-   "key": "117",
-   "field": "(row)",
-   "a": null,
-   "b": "read",
-   "why": "only reader B read this row"
-  },
-  {
-   "kind": "door",
-   "page": 44,
-   "key": "118",
-   "field": "(row)",
-   "a": null,
-   "b": "read",
-   "why": "only reader B read this row"
-  },
-  {
-   "kind": "door",
-   "page": 44,
-   "key": "119",
-   "field": "(row)",
-   "a": null,
-   "b": "read",
-   "why": "only reader B read this row"
-  },
-  {
-   "kind": "door",
-   "page": 44,
-   "key": "120A",
-   "field": "(row)",
-   "a": null,
-   "b": "read",
-   "why": "only reader B read this row"
-  },
-  {
-   "kind": "door",
-   "page": 44,
-   "key": "120B",
-   "field": "(row)",
-   "a": null,
-   "b": "read",
-   "why": "only reader B read this row"
-  },
-  {
-   "kind": "door",
-   "page": 44,
-   "key": "121",
-   "field": "(row)",
-   "a": null,
-   "b": "read",
-   "why": "only reader B read this row"
-  },
-  {
-   "kind": "door",
-   "page": 44,
-   "key": "122A",
-   "field": "(row)",
-   "a": null,
-   "b": "read",
-   "why": "only reader B read this row"
-  },
-  {
-   "kind": "door",
-   "page": 44,
-   "key": "122B",
-   "field": "(row)",
-   "a": null,
-   "b": "read",
-   "why": "only reader B read this row"
-  },
-  {
-   "kind": "door",
-   "page": 44,
-   "key": "123A",
-   "field": "(row)",
-   "a": null,
-   "b": "read",
-   "why": "only reader B read this row"
-  },
-  {
-   "kind": "door",
-   "page": 44,
-   "key": "123B",
-   "field": "(row)",
-   "a": null,
-   "b": "read",
-   "why": "only reader B read this row"
-  },
-  {
-   "kind": "door",
-   "page": 44,
-   "key": "124",
-   "field": "(row)",
-   "a": null,
-   "b": "read",
-   "why": "only reader B read this row"
-  },
-  {
-   "kind": "door",
-   "page": 44,
-   "key": "125A",
-   "field": "(row)",
-   "a": null,
-   "b": "read",
-   "why": "only reader B read this row"
-  },
-  {
-   "kind": "door",
-   "page": 44,
-   "key": "125B",
-   "field": "(row)",
-   "a": null,
-   "b": "read",
-   "why": "only reader B read this row"
-  }
- ],
- "ms": 7191,
- "generated_at": "2026-10-09T10:49:49.994Z"
+ "tier": "agreed",
+ "disagreement_count": 0,
+ "disagreements": [],
+ "ms": 5877,
+ "generated_at": "2026-10-09T11:33:39.414Z"
 }

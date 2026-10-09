@@ -29,7 +29,7 @@
  "readers": {
   "a": {
    "doors": 0,
-   "sets": 1,
+   "sets": 21,
    "items": 153,
    "name": "production text layer (weyland-subx-worker/src/lib/text-layer-read.js)"
   },
@@ -41,10 +41,10 @@
    "tables": 0
   }
  },
- "rows_agreed": 0,
- "rows_disputed": 295,
- "rows_total": 295,
- "agreement_rate": 0,
+ "rows_agreed": 2,
+ "rows_disputed": 193,
+ "rows_total": 195,
+ "agreement_rate": 0.0103,
  "agreement": {
   "doors": {
    "rows": 0,
@@ -56,17 +56,38 @@
    "agreement_rate": null
   },
   "items": {
-   "rows": 295,
-   "agreed": 0,
-   "disputed": 0,
-   "only_a": 153,
-   "only_b": 142,
-   "fields": {},
-   "agreement_rate": 0
+   "rows": 195,
+   "agreed": 2,
+   "disputed": 98,
+   "only_a": 53,
+   "only_b": 42,
+   "fields": {
+    "qty": {
+     "agree": 99,
+     "total": 100
+    },
+    "description": {
+     "agree": 96,
+     "total": 100
+    },
+    "catalog": {
+     "agree": 2,
+     "total": 100
+    },
+    "finish": {
+     "agree": 0,
+     "total": 81
+    },
+    "manufacturer": {
+     "agree": 0,
+     "total": 80
+    }
+   },
+   "agreement_rate": 0.0103
   },
   "sets": {
-   "sets": 22,
-   "agreed": 0
+   "sets": 21,
+   "agreed": 21
   }
  },
  "triage_class": "none",
@@ -93,14 +114,85 @@
    "reason": "not for class none"
   }
  },
- "tier": "unread",
- "unread_reason": "no rows agreed and no oracle applies",
- "disagreement_count": 317,
+ "tier": "agreed",
+ "disagreement_count": 359,
  "disagreements": [
   {
    "kind": "item",
    "page": 52,
-   "key": "(CONTINUED) / TA2714 x NRP 4-1/2\" x 4-1/2\"",
+   "key": "1.0 / TA2714 x NRP 4-1/2\" x 4-1/2\"",
+   "field": "catalog",
+   "a": "TA2714 x NRP 4-1/2\" x 4-1/2\"",
+   "b": "TA2714 x NRP 4-1/2\" x 4-1/2\" US26D MK 087100"
+  },
+  {
+   "kind": "item",
+   "page": 52,
+   "key": "1.0 / TA2714 x NRP 4-1/2\" x 4-1/2\"",
+   "field": "finish",
+   "a": "US26D",
+   "b": null
+  },
+  {
+   "kind": "item",
+   "page": 52,
+   "key": "1.0 / TA2714 x NRP 4-1/2\" x 4-1/2\"",
+   "field": "manufacturer",
+   "a": "MK",
+   "b": null
+  },
+  {
+   "kind": "item",
+   "page": 52,
+   "key": "1.0 / TA2714-QC12 4-1/2\" x 4-1/2\"",
+   "field": "catalog",
+   "a": "TA2714-QC12 4-1/2\" x 4-1/2\"",
+   "b": "TA2714-QC12 4-1/2\" x 4-1/2\" US26D MK 087100"
+  },
+  {
+   "kind": "item",
+   "page": 52,
+   "key": "1.0 / TA2714-QC12 4-1/2\" x 4-1/2\"",
+   "field": "finish",
+   "a": "US26D",
+   "b": null
+  },
+  {
+   "kind": "item",
+   "page": 52,
+   "key": "1.0 / TA2714-QC12 4-1/2\" x 4-1/2\"",
+   "field": "manufacturer",
+   "a": "MK",
+   "b": null
+  },
+  {
+   "kind": "item",
+   "page": 52,
+   "key": "1.0 / 2842 (or) 2942",
+   "field": "catalog",
+   "a": "2842 (or) 2942",
+   "b": "2842 (or) 2942 US26D RO"
+  },
+  {
+   "kind": "item",
+   "page": 52,
+   "key": "1.0 / 2842 (or) 2942",
+   "field": "finish",
+   "a": "US26D",
+   "b": null
+  },
+  {
+   "kind": "item",
+   "page": 52,
+   "key": "1.0 / 2842 (or) 2942",
+   "field": "manufacturer",
+   "a": "RO",
+   "b": null
+  },
+  {
+   "kind": "item",
+   "page": 52,
+   "key": "1.0 / 570",
    "field": "(row)",
    "a": "read",
    "b": null,
@@ -109,7 +201,7 @@
   {
    "kind": "item",
    "page": 52,
-   "key": "(CONTINUED) / TA2714-QC12 4-1/2\" x 4-1/2\"",
+   "key": "1.0 / ML20605 x TCRNE1 NSA SS078 M812 24AD",
    "field": "(row)",
    "a": "read",
    "b": null,
@@ -118,346 +210,237 @@
   {
    "kind": "item",
    "page": 52,
-   "key": "(CONTINUED) / 2842 (or) 2942",
-   "field": "(row)",
-   "a": "read",
-   "b": null,
-   "why": "only reader A read this row"
+   "key": "1.0 / 1700",
+   "field": "catalog",
+   "a": "1700",
+   "b": "1700 BLK RO 087100"
   },
   {
    "kind": "item",
    "page": 52,
-   "key": "(CONTINUED) / 570 ML20605 x TCRNE1 NSA SS078 M812",
-   "field": "(row)",
-   "a": "read",
-   "b": null,
-   "why": "only reader A read this row"
+   "key": "1.0 / 1700",
+   "field": "finish",
+   "a": "BLK",
+   "b": null
   },
   {
    "kind": "item",
    "page": 52,
-   "key": "(CONTINUED) / 24AD",
-   "field": "(row)",
-   "a": "read",
-   "b": null,
-   "why": "only reader A read this row"
+   "key": "1.0 / 1700",
+   "field": "manufacturer",
+   "a": "RO",
+   "b": null
   },
   {
    "kind": "item",
    "page": 52,
-   "key": "(CONTINUED) / 1700",
-   "field": "(row)",
-   "a": "read",
-   "b": null,
-   "why": "only reader A read this row"
+   "key": "1.0 / PR7500",
+   "field": "catalog",
+   "a": "PR7500",
+   "b": "PR7500 689 NO 087100"
   },
   {
    "kind": "item",
    "page": 52,
-   "key": "(CONTINUED) / PR7500",
-   "field": "(row)",
-   "a": "read",
-   "b": null,
-   "why": "only reader A read this row"
+   "key": "1.0 / PR7500",
+   "field": "finish",
+   "a": "689",
+   "b": null
   },
   {
    "kind": "item",
    "page": 52,
-   "key": "(CONTINUED) / K1050 8\" 4BE",
-   "field": "(row)",
-   "a": "read",
-   "b": null,
-   "why": "only reader A read this row"
+   "key": "1.0 / PR7500",
+   "field": "manufacturer",
+   "a": "NO",
+   "b": null
   },
   {
    "kind": "item",
    "page": 52,
-   "key": "(CONTINUED) / 403 (or) 441CU",
-   "field": "(row)",
-   "a": "read",
-   "b": null,
-   "why": "only reader A read this row"
+   "key": "1.0 / K1050 8\" 4BE",
+   "field": "catalog",
+   "a": "K1050 8\" 4BE",
+   "b": "K1050 8\" 4BE US32D RO"
   },
   {
    "kind": "item",
    "page": 52,
-   "key": "(CONTINUED) / S88BL",
-   "field": "(row)",
-   "a": "read",
-   "b": null,
-   "why": "only reader A read this row"
+   "key": "1.0 / K1050 8\" 4BE",
+   "field": "finish",
+   "a": "US32D",
+   "b": null
   },
   {
    "kind": "item",
    "page": 52,
-   "key": "(CONTINUED) / S771C",
-   "field": "(row)",
-   "a": "read",
-   "b": null,
-   "why": "only reader A read this row"
+   "key": "1.0 / K1050 8\" 4BE",
+   "field": "manufacturer",
+   "a": "RO",
+   "b": null
   },
   {
    "kind": "item",
    "page": 52,
-   "key": "(CONTINUED) / 357SP",
-   "field": "(row)",
-   "a": "read",
-   "b": null,
-   "why": "only reader A read this row"
+   "key": "1.0 / 403 (or) 441CU",
+   "field": "catalog",
+   "a": "403 (or) 441CU",
+   "b": "403 (or) 441CU US26D RO 087100"
   },
   {
    "kind": "item",
    "page": 52,
-   "key": "(CONTINUED) / QC-C1500",
-   "field": "(row)",
-   "a": "read",
-   "b": null,
-   "why": "only reader A read this row"
+   "key": "1.0 / 403 (or) 441CU",
+   "field": "finish",
+   "a": "US26D",
+   "b": null
   },
   {
    "kind": "item",
    "page": 52,
-   "key": "(CONTINUED) / QC-CXXX",
-   "field": "(row)",
-   "a": "read",
-   "b": null,
-   "why": "only reader A read this row"
+   "key": "1.0 / 403 (or) 441CU",
+   "field": "manufacturer",
+   "a": "RO",
+   "b": null
   },
   {
    "kind": "item",
    "page": 52,
-   "key": "(CONTINUED) / TA2714 4-1/2\" x 4-1/2\"",
-   "field": "(row)",
-   "a": "read",
-   "b": null,
-   "why": "only reader A read this row"
+   "key": "1.0 / S88BL",
+   "field": "catalog",
+   "a": "S88BL",
+   "b": "S88BL PE 087100"
   },
   {
    "kind": "item",
    "page": 52,
-   "key": "(CONTINUED) / TA2714-QC12 4-1/2\" x 4-1/2\" ML20605 x TCRNE1 NSA SS078 M812",
-   "field": "(row)",
-   "a": "read",
-   "b": null,
-   "why": "only reader A read this row"
+   "key": "1.0 / S88BL",
+   "field": "manufacturer",
+   "a": "PE",
+   "b": null
   },
   {
    "kind": "item",
    "page": 52,
-   "key": "(CONTINUED) / 24AD",
-   "field": "(row)",
-   "a": "read",
-   "b": null,
-   "why": "only reader A read this row"
+   "key": "1.0 / S771C",
+   "field": "catalog",
+   "a": "S771C",
+   "b": "S771C PE"
   },
   {
    "kind": "item",
    "page": 52,
-   "key": "(CONTINUED) / R7500",
-   "field": "(row)",
-   "a": "read",
-   "b": null,
-   "why": "only reader A read this row"
+   "key": "1.0 / S771C",
+   "field": "manufacturer",
+   "a": "PE",
+   "b": null
   },
   {
    "kind": "item",
    "page": 52,
-   "key": "(CONTINUED) / K1050 8\" 4BE",
-   "field": "(row)",
-   "a": "read",
-   "b": null,
-   "why": "only reader A read this row"
+   "key": "1.0 / 357SP",
+   "field": "catalog",
+   "a": "357SP",
+   "b": "357SP PE"
   },
   {
    "kind": "item",
    "page": 52,
-   "key": "(CONTINUED) / 403 (or) 441CU",
-   "field": "(row)",
-   "a": "read",
-   "b": null,
-   "why": "only reader A read this row"
+   "key": "1.0 / 357SP",
+   "field": "manufacturer",
+   "a": "PE",
+   "b": null
   },
   {
    "kind": "item",
    "page": 52,
-   "key": "(CONTINUED) / 608 (or) 609",
-   "field": "(row)",
-   "a": "read",
-   "b": null,
-   "why": "only reader A read this row"
+   "key": "1.0 / QC-C1500",
+   "field": "catalog",
+   "a": "QC-C1500",
+   "b": "QC-C1500 MK 087100"
   },
   {
    "kind": "item",
    "page": 52,
-   "key": "(CONTINUED) / QC-C1500",
-   "field": "(row)",
-   "a": "read",
-   "b": null,
-   "why": "only reader A read this row"
+   "key": "1.0 / QC-C1500",
+   "field": "manufacturer",
+   "a": "MK",
+   "b": null
   },
   {
    "kind": "item",
    "page": 52,
-   "key": "(CONTINUED) / QC-CXXX",
-   "field": "(row)",
-   "a": "read",
-   "b": null,
-   "why": "only reader A read this row"
+   "key": "1.0 / QC-CXXX",
+   "field": "catalog",
+   "a": "QC-CXXX",
+   "b": "QC-CXXX MK 087100"
   },
   {
    "kind": "item",
    "page": 52,
-   "key": "(CONTINUED) / TA2714 4-1/2\" x 4-1/2\"",
-   "field": "(row)",
-   "a": "read",
-   "b": null,
-   "why": "only reader A read this row"
+   "key": "1.0 / QC-CXXX",
+   "field": "manufacturer",
+   "a": "MK",
+   "b": null
   },
   {
    "kind": "item",
    "page": 52,
-   "key": "(CONTINUED) / TA2714-QC12 4-1/2\" x 4-1/2\" ML20605 x TCRNE1 NSA SS078 M812",
+   "key": "1.0 / 570 US26D RO 087100 ML20605 x TCRNE1 NSA SS078 M812 24AD",
    "field": "(row)",
-   "a": "read",
-   "b": null,
-   "why": "only reader A read this row"
+   "a": null,
+   "b": "read",
+   "why": "only reader B read this row"
   },
   {
    "kind": "item",
    "page": 52,
-   "key": "(CONTINUED) / 24AD",
-   "field": "(row)",
-   "a": "read",
-   "b": null,
-   "why": "only reader A read this row"
+   "key": "2.0 / TA2714 4-1/2\" x 4-1/2\"",
+   "field": "catalog",
+   "a": "TA2714 4-1/2\" x 4-1/2\"",
+   "b": "TA2714 4-1/2\" x 4-1/2\" US26D MK 087100"
   },
   {
    "kind": "item",
    "page": 52,
-   "key": "(CONTINUED) / R7500",
-   "field": "(row)",
-   "a": "read",
-   "b": null,
-   "why": "only reader A read this row"
+   "key": "2.0 / TA2714 4-1/2\" x 4-1/2\"",
+   "field": "finish",
+   "a": "US26D",
+   "b": null
   },
   {
    "kind": "item",
    "page": 52,
-   "key": "(CONTINUED) / K1050 8\" 4BE",
-   "field": "(row)",
-   "a": "read",
-   "b": null,
-   "why": "only reader A read this row"
+   "key": "2.0 / TA2714 4-1/2\" x 4-1/2\"",
+   "field": "manufacturer",
+   "a": "MK",
+   "b": null
   },
   {
    "kind": "item",
    "page": 52,
-   "key": "(CONTINUED) / 403 (or) 441CU",
-   "field": "(row)",
-   "a": "read",
-   "b": null,
-   "why": "only reader A read this row"
+   "key": "2.0 / TA2714-QC12 4-1/2\" x 4-1/2\"",
+   "field": "description",
+   "a": "Electric Hinge",
+   "b": "Electric Hinge Card Reader Lock (fail- secure)"
   },
   {
    "kind": "item",
    "page": 52,
-   "key": "(CONTINUED) / S88BL",
-   "field": "(row)",
-   "a": "read",
-   "b": null,
-   "why": "only reader A read this row"
+   "key": "2.0 / TA2714-QC12 4-1/2\" x 4-1/2\"",
+   "field": "catalog",
+   "a": "TA2714-QC12 4-1/2\" x 4-1/2\"",
+   "b": "TA2714-QC12 4-1/2\" x 4-1/2\" US26D MK 087100 ML20605 x TCRNE1 NSA SS078 M812 24AD"
   },
   {
    "kind": "item",
    "page": 52,
-   "key": "(CONTINUED) / QC-C1500",
-   "field": "(row)",
-   "a": "read",
-   "b": null,
-   "why": "only reader A read this row"
-  },
-  {
-   "kind": "item",
-   "page": 52,
-   "key": "(CONTINUED) / QC-CXXX",
-   "field": "(row)",
-   "a": "read",
-   "b": null,
-   "why": "only reader A read this row"
-  },
-  {
-   "kind": "item",
-   "page": 52,
-   "key": "(CONTINUED) / TA2714 x NRP 4-1/2\" x 4-1/2\"",
-   "field": "(row)",
-   "a": "read",
-   "b": null,
-   "why": "only reader A read this row"
-  },
-  {
-   "kind": "item",
-   "page": 52,
-   "key": "(CONTINUED) / TA2714-QC12 4-1/2\" x 4-1/2\" ML20605 x TCRNE1 NSA SS078 M812",
-   "field": "(row)",
-   "a": "read",
-   "b": null,
-   "why": "only reader A read this row"
-  },
-  {
-   "kind": "item",
-   "page": 52,
-   "key": "(CONTINUED) / 24AD",
-   "field": "(row)",
-   "a": "read",
-   "b": null,
-   "why": "only reader A read this row"
-  },
-  {
-   "kind": "item",
-   "page": 52,
-   "key": "(CONTINUED) / PR7500",
-   "field": "(row)",
-   "a": "read",
-   "b": null,
-   "why": "only reader A read this row"
-  },
-  {
-   "kind": "item",
-   "page": 52,
-   "key": "(CONTINUED) / K1050 8\" 4BE",
-   "field": "(row)",
-   "a": "read",
-   "b": null,
-   "why": "only reader A read this row"
-  },
-  {
-   "kind": "item",
-   "page": 52,
-   "key": "(CONTINUED) / 403 (or) 441CU",
-   "field": "(row)",
-   "a": "read",
-   "b": null,
-   "why": "only reader A read this row"
-  },
-  {
-   "kind": "item",
-   "page": 52,
-   "key": "(CONTINUED) / S88BL",
-   "field": "(row)",
-   "a": "read",
-   "b": null,
-   "why": "only reader A read this row"
-  },
-  {
-   "kind": "item",
-   "page": 52,
-   "key": "(CONTINUED) / QC-C1500",
-   "field": "(row)",
-   "a": "read",
-   "b": null,
-   "why": "only reader A read this row"
+   "key": "2.0 / TA2714-QC12 4-1/2\" x 4-1/2\"",
+   "field": "finish",
+   "a": "US26D",
+   "b": null
   }
  ],
- "ms": 305,
- "generated_at": "2026-10-09T10:45:10.776Z"
+ "ms": 361,
+ "generated_at": "2026-10-09T11:33:18.135Z"
 }

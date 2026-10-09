@@ -46,3 +46,25 @@ test("an architect's correction typed as a FreeText annotation is read in its ro
     assert.ok(types.every((t) => t === "B"), "p" + page + " types " + types.join(","));
   }
 });
+
+test("Berryessa's staggered ROOM header retains all 24 audited locations", async () => {
+  const bytes = readFileSync(join(CORPUS, "dd339f57b51538ed.pdf"));
+  const expected = JSON.parse(readFileSync(join(CORPUS, "../expected/berryessa-a9.2-door-schedules.json")));
+  for (const page of [284, 286, 288]) {
+    const r = await readPageFromTextLayer(bytes, page, "door_schedule");
+    for (const e of expected.doors.filter(d => d.page === page)) {
+      const row = r.result.doors.find(d => d.door_number === e.mark);
+      assert.ok(row, `p.${page} door ${e.mark}`);
+      assert.equal(row.remarks, "Room: " + e.room, `p.${page} door ${e.mark}`);
+    }
+  }
+});
+
+test("a single-item Rockford group learns its columns from the header, not indented notes", async () => {
+  const bytes = readFileSync(join(CORPUS, "a03cdcca2934ca5a.pdf"));
+  const r = await readPageFromTextLayer(bytes, 17, "hardware_schedule");
+  const g = r.result.hardware_groups.find(g => g.group_number === "03");
+  assert.equal(g.components.length, 1);
+  const c = g.components[0];
+  assert.deepEqual([c.description, c.catalog_number, c.finish, c.manufacturer_code], ["CLASSROOM LOCK", "ALX70P6 RHO", "626", "SCH"]);
+});
