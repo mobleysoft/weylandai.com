@@ -251,11 +251,15 @@ export function parseSchedule(text, { project = "Pasted schedule" } = {}) {
   return { project: String(project).slice(0, 120), source: "paste", doors, sets, notes };
 }
 
+// A set's key with leading zeros dropped (2026-10-09): Berryessa's doors name sets "1" and "2"
+// while its 08 71 00 prints groups "01" and "02"; keyed as printed, no door drew any hardware.
+export const setKey = (s) => String(s || "").toUpperCase().trim().replace(/(^|[^0-9])0+(?=\d)/g, "$1");
+
 /** The model for a SubX session, from GET /api/hardware-schedule/session/:id/doors. */
 export function modelFromSubx(d) {
   const sets = {};
   for (const c of d.components || []) {
-    const k = String(c.set_number || "").toUpperCase();
+    const k = setKey(c.set_number);
     if (!k) continue;
     const label = [c.description, c.manufacturer, c.model].filter(Boolean).join(" · ") || c.component_type || "item";
     (sets[k] = sets[k] || []).push({
@@ -276,7 +280,7 @@ export function modelFromSubx(d) {
     rating: x.fire_rating ? (ratingOf(x.fire_rating) || String(x.fire_rating)) : null,
     frame: [x.frame_material, x.frame_type].filter(Boolean).join(" ") || null,
     panic: !!x.panic && !/^(no|n|0|false)$/i.test(String(x.panic)),
-    set: x.hardware_group ? String(x.hardware_group).toUpperCase() : null,
+    set: x.hardware_group ? setKey(x.hardware_group) : null,
     source_page: (x.source && x.source.page) ?? x.page_number ?? null,
   }));
   const notes = [];

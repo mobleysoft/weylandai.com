@@ -91,3 +91,9 @@ test("page: /sightx is the schedule app; the homepage backdrop keeps the world p
   const index = readFileSync(new URL("../index.js", import.meta.url), "utf8");
   assert.match(index, /searchParams\.get\("embed"\) === "bg"/);
 });
+
+test("a SubX session whose doors name set 2 draws group 02's hardware (Berryessa)", () => {
+  const m = modelFromSubx({ doors: [{ mark: "001", hardware_group: "2", width_inches: 42, height_inches: 94 }], components: [{ set_number: "02", component_type: "exit_device", description: "EXIT DEVICE", manufacturer: "Von Duprin", model: "99" }] });
+  assert.equal(m.doors[0].set, "2");
+  assert.equal((m.sets["2"] || []).length, 1);
+});

@@ -144,3 +144,12 @@ test("an item the book prints in its own spelling or as a grid is cited from its
   assert.deepEqual(r.pages.map((p) => [p.r2Key, p.pageNum, p.model]), [["manufacturer-catalogs/zero.pdf", 3, "188S-BK"], ["manufacturer-catalogs/vd.pdf", 2, "99-L-F"]]);
   assert.deepEqual(r.missing.map((x) => x.model), ["PA-AX-9927-EO-F"], "a page the PDF does not confirm is not cited");
 });
+
+test("a price-book grid spelling finds its page: Von Duprin prints 99-EO as [98/99] . EO", async () => {
+  const { gridPattern, bestPageFor } = await import("../../weyland-shared/filed-page.js");
+  const pages = [{ page: 9, text: "99 EO Device (exit device only) .... 6" }, { page: 26, text: "[98/99] .   EO   . [ ] . [ ]  $2,057\n[98/99] .   EO   . F . [ ] . [ ]  $2,386" }, { page: 31, text: "[98/99]27 .  EO . [ ]" }];
+  assert.ok(gridPattern("99-EO"));
+  assert.equal(gridPattern("4040XP"), null);
+  assert.equal(bestPageFor(pages, "99-EO").pageNum, 26);
+  assert.equal(bestPageFor(pages, "99-EO-F").pageNum, 26);
+});
