@@ -21,8 +21,6 @@
 import { getDocument, Util, OPS } from "../vendor/pdfjs-text.mjs";
 import * as TL from "../../assets/client-ocr-src/schedule-text-layer.mjs";
 
-const MIN_WORDS = 15;
-
 const pdfjsLib = { Util };
 async function openPdf(bytes) {
   return getDocument({ data: new Uint8Array(bytes.slice(0)), disableFontFace: true, useSystemFonts: false, isEvalSupported: false, verbosity: 0 }).promise;
@@ -79,7 +77,7 @@ export const hardwareResult = (hg, tl, t0) => {
     })),
     door_hardware_matrix: hg.door_hardware_matrix,
     detected_nomenclature: null,
-    metadata: { extraction_mode: "text_layer", extraction_route: "text_layer_server", page_isolated: false, rotation_applied: tl.rotation, table_count: groups.length, text_words: tl.word_count, struck_lines_left_out: tl.struck || 0, total_time_ms: Date.now() - t0 },
+    metadata: { extraction_mode: "text_layer", extraction_route: "text_layer_server", page_isolated: false, rotation_applied: tl.rotation, table_count: groups.length, text_words: tl.text_word_count ?? tl.word_count, struck_lines_left_out: tl.struck || 0, total_time_ms: Date.now() - t0 },
   };
 };
 export const doorResult = (ds, tl, t0) => ({
@@ -87,7 +85,7 @@ export const doorResult = (ds, tl, t0) => ({
   extraction_confidence: 0.98,
   metadata: {
     extraction_mode: "text_layer", extraction_route: "text_layer_server", page_isolated: false,
-    row_count: ds.doors.length, rotation_applied: tl.rotation, text_words: tl.word_count,
+    row_count: ds.doors.length, rotation_applied: tl.rotation, text_words: tl.text_word_count ?? tl.word_count,
     tables: ds.tables.map((t) => ({ title: t.title, rows: t.rows, fields: t.fields, header: t.header, rules_used: false })),
     total_time_ms: Date.now() - t0,
   },
@@ -120,7 +118,7 @@ export async function readPageFromDoc(pdf, pageNumber, scheduleType, { alsoTry =
     if (pageNumber < 1 || pageNumber > pdf.numPages) return null;
     const page = await pdf.getPage(pageNumber);
     const tl = await TL.pageTextLines(pdfjsLib, page);
-    if (!tl || tl.word_count < MIN_WORDS) return null;
+    if (!tl || !tl.has_text_layer) return null;
     const size = { width: tl.width, height: tl.height };
     let struckLines = 0;
     if (Math.max(tl.width, tl.height) <= STRIKE_MAX_PT) {
@@ -141,12 +139,12 @@ export async function readPageFromDoc(pdf, pageNumber, scheduleType, { alsoTry =
     for (const type of types) {
       if (type === "hardware_schedule") {
         const hg = await TL.readHardwareGroupsFromLines(tl.lines, size, {});
-        const r = hg ? hardwareResult(hg, tl, t0) : { hardware_groups: [], door_hardware_matrix: [], metadata: { extraction_mode: "text_layer", text_words: tl.word_count, no_table_detected: true } };
+        const r = hg ? hardwareResult(hg, tl, t0) : { hardware_groups: [], door_hardware_matrix: [], metadata: { extraction_mode: "text_layer", text_words: tl.text_word_count ?? tl.word_count, no_table_detected: true } };
         if (!first) first = { schedule_type: type, result: r };
         if (r.hardware_groups.length) return { ok: true, schedule_type: type, result: r, tried: types, ms: Date.now() - t0, source: "text_layer" };
       } else if (type === "door_schedule") {
         const ds = await TL.readDoorScheduleFromLines(tl.lines, size, {});
-        const r = ds && ds.doors.length ? doorResult(ds, tl, t0) : { doors: [], extraction_confidence: 0, metadata: { extraction_mode: "text_layer", text_words: tl.word_count, no_table_detected: true } };
+        const r = ds && ds.doors.length ? doorResult(ds, tl, t0) : { doors: [], extraction_confidence: 0, metadata: { extraction_mode: "text_layer", text_words: tl.text_word_count ?? tl.word_count, no_table_detected: true } };
         if (!first) first = { schedule_type: type, result: r };
         if (r.doors.length) return { ok: true, schedule_type: type, result: r, tried: types, ms: Date.now() - t0, source: "text_layer" };
       }

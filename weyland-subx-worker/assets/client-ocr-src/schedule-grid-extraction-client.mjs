@@ -2,7 +2,7 @@
 //
 // Runs hardware_schedule AND door_schedule grid extraction ENTIRELY in the
 // customer's own browser tab - zero Cloudflare CPU spent on rendering or
-// OCR, no per-page CPU ceiling, works in a field/disconnected environment
+// OCR, with bounded rendering and recognition work, works in a field/disconnected environment
 // once this script and its two model assets (tesseract-core.wasm,
 // eng-traineddata.bin) are cached. Direct instruction 2026-10-02: no
 // shipped extraction path should depend on server-side compute when it can
@@ -50,7 +50,7 @@ const ASSET_BASE = "/api/hardware-schedule/client-ocr-assets";
 // count (no rendering, no misread digits) and is the only way to read an
 // unruled Section 08 71 00. OCR below is now the path for pages with no text
 // (a scan, a Print-to-PDF of a bitmap such as OCCDoorSchedulePg4.pdf).
-import * as TL from "./schedule-text-layer.mjs?v=20261009g018-g019";
+import * as TL from "./schedule-text-layer.mjs?v=20261009g034";
 
 let pdfjsLibPromise = null;
 export async function loadPdfJs() {
@@ -561,13 +561,39 @@ export function detectDoorGrid(img) {
   return { colLines: clusterIndices(candidates, 3), rowLines: g.rows };
 }
 
-export function recognizeWords(img, engine, dpi, psm = "6") {
+export const SCAN_MAX_CELLS = 2000;
+export const SCAN_MAX_RECOGNITION_MS = 60000;
+const yieldRow = () => new Promise(resolve => setTimeout(resolve, 0));
+export function recognitionBudget(opts = {}) {
+  const now = opts.now || (() => performance.now());
+  const start = now();
+  const maxCells = Math.max(0, Math.min(SCAN_MAX_CELLS, opts.maxCells ?? SCAN_MAX_CELLS));
+  const maxMs = Math.max(0, Math.min(SCAN_MAX_RECOGNITION_MS, opts.maxRecognitionMs ?? SCAN_MAX_RECOGNITION_MS));
+  let cells = 0, reason = null;
+  const check = () => {
+    if (!reason && opts.signal?.aborted) reason = "aborted";
+    if (!reason && now() - start >= maxMs) reason = "time_limit";
+    if (!reason && cells >= maxCells) reason = "cell_limit";
+    return !reason;
+  };
+  return { check, take() { if (!check()) return false; cells++; return true; },
+    status() { return { partial: !!reason, reason, cells, max_cells: maxCells, elapsed_ms: Math.round(now() - start), max_ms: maxMs }; } };
+}
+const partialMetadata = budget => {
+  budget.check();
+  const recognition = budget.status();
+  return { partial: recognition.partial, recognition,
+    ...(recognition.partial ? { message: "Partial machine read: " + ({ aborted: "reading stopped", cell_limit: "cell recognition limit reached", time_limit: "recognition time limit reached" }[recognition.reason]) + ". Review the rows read; the page is incomplete." } : {}) };
+};
+
+export function recognizeWords(img, engine, dpi, psm = "6", budget) {
+  if (budget && !budget.take()) return [];
   engine.clearImage();
   engine.loadImage(img);
   engine.setVariable("tessedit_pageseg_mode", psm);
   const boxes = engine.getTextBoxes("word") || [];
   const k = 72 / dpi;
-  const pct = (b) => (b.confidence == null ? 100 : b.confidence <= 1 ? b.confidence * 100 : b.confidence);
+  const pct = (b) => (b.confidence == null ? 0 : b.confidence <= 1 ? b.confidence * 100 : b.confidence);
   return boxes.filter((b) => b && b.text && b.text.trim() && pct(b) >= 30)
     .map((b) => ({ str: b.text.trim(), x0: b.rect.left * k, x1: b.rect.right * k, yb: b.rect.bottom * k, h: Math.max(1, (b.rect.bottom - b.rect.top) * k), conf: pct(b) }));
 }
@@ -575,10 +601,13 @@ export function recognizeWords(img, engine, dpi, psm = "6") {
 // A whole architectural sheet is not one text block. Read a detected table one row at a
 // time so side legends/title blocks cannot make the OCR engine merge or drop schedule rows.
 // Return positioned words, not guessed fields; the normal schedule reader still interprets them.
-export function recognizePageWords(img, engine, dpi, psm = "6") {
+export async function recognizePageWords(img, engine, dpi, psm = "6", opts = {}) {
+  const budget = opts.recognitionBudget || recognitionBudget(opts);
+  const result = words => ({ words, ...partialMetadata(budget) });
+  if (!budget.check()) return result([]);
   const grid = detectDoorGrid(img);
   const hasGrid = grid && grid.colLines.length >= 4 && grid.rowLines.length >= 6;
-  if (!hasGrid) return recognizeWords(eraseLongRuns(img, Math.round(dpi * 0.4)), engine, dpi, psm);
+  if (!hasGrid) return result(recognizeWords(eraseLongRuns(img, Math.round(dpi * 0.4)), engine, dpi, psm, budget));
   const xs = grid.colLines, ys = grid.rowLines;
   const x0 = xs[0], x1 = grid.wideColEnd ?? xs[xs.length - 1];
   const k = 72 / dpi;
@@ -588,23 +617,26 @@ export function recognizePageWords(img, engine, dpi, psm = "6") {
   // Crop INSIDE each rule. This preserves the original glyphs even when JPEG noise leaves
   // a faint rule edge; full-page line erasure must not cut a cell's characters.
   for (let i = 0; i < ys.length - 1; i++) {
+    await yieldRow();
+    if (!budget.check()) break;
     const top = Math.ceil(ys[i] + inset), bottom = Math.floor(ys[i + 1] - inset);
     if (bottom <= top) continue;
     const rowWords = [];
     const cellTexts = [];
     for (let c = 0; c < xs.length - 1; c++) {
+      if (!budget.check()) break;
       const left = Math.ceil(xs[c] + inset), right = Math.floor(xs[c + 1] - inset);
       if (right <= left) continue;
       const cell = cropRowImage(img, top, bottom, left, right);
-      let ws = recognizeWords(cell, engine, dpi, "6");
+      let ws = recognizeWords(cell, engine, dpi, "6", budget);
       const text = ws.map((w) => w.str).join(" ");
       cellTexts[c] = text;
       const field = fields[c];
       if (field === "width" || field === "height") {
         const accept = (s) => { const d = readDoorDimension(s); return d && d.format === "ft-in" && d.inches >= DOOR_LIMITS[field][0] && d.inches <= DOOR_LIMITS[field][1]; };
         if (!accept(text)) {
-          const reread = rereadDimensionCell(engine, img, xs[c], xs[c + 1], ys[i], ys[i + 1], {}, text, accept);
-          if (reread.text) ws = [{ str: reread.text, x0: 0, x1: cell.width * k, yb: cell.height * k * 0.75, h: cell.height * k / 3, conf: 85 }];
+          const reread = rereadDimensionCell(engine, img, xs[c], xs[c + 1], ys[i], ys[i + 1], { recognitionBudget: budget }, text, accept);
+          if (reread.text) ws = [{ str: reread.text, x0: 0, x1: cell.width * k, yb: cell.height * k * 0.75, h: cell.height * k / 3, conf: reread.confidence * 100 }];
         }
       }
       const itemX0 = Math.min(...ws.map((w) => w.x0)) + left * k, itemX1 = Math.max(...ws.map((w) => w.x1)) + left * k;
@@ -620,34 +652,56 @@ export function recognizePageWords(img, engine, dpi, psm = "6") {
       if (used.has("mark") && used.size >= 3) fields = candidate;
     }
   }
-  words.push(...recognizeWords(eraseLongRuns(img, Math.round(dpi * 0.4)), engine, dpi, psm)
+  if (budget.check()) words.push(...recognizeWords(eraseLongRuns(img, Math.round(dpi * 0.4)), engine, dpi, psm, budget)
     .filter((w) => w.x1 < x0 * k || w.x0 > x1 * k || w.yb < ys[0] * k || w.yb - w.h > ys[ys.length - 1] * k));
-  return words;
+  return result(words);
 }
 
 // Rendering is the only environment-specific step: the browser uses pdf.js; the accuracy
 // runner supplies Poppler pixels. Orientation, deskew, cell OCR and line formation are shared.
+export const SCAN_MAX_PIXELS = 36e6;
+export const SCAN_MIN_DPI = 18;
+// Use integer, rounded-up pixel dimensions, including at the limit. Every renderer calls
+// this before creating a canvas (and the Poppler adapter calls it before spawning a render).
+export function scanRenderPlan(width, height, requestedDpi, opts = {}) {
+  const maxPixels = Math.min(SCAN_MAX_PIXELS, opts.maxPixels ?? SCAN_MAX_PIXELS);
+  const minDpi = Math.max(SCAN_MIN_DPI, opts.minDpi ?? SCAN_MIN_DPI);
+  const pixelsAt = dpi => Math.ceil(width * dpi / 72) * Math.ceil(height * dpi / 72);
+  if (!(width > 0 && height > 0 && Number.isFinite(width * height)) ||
+      !(maxPixels > 0) || !Number.isFinite(minDpi) || pixelsAt(minDpi) > maxPixels) {
+    throw new Error("Page " + (opts.pageNumber ?? "unknown") + " (" + width + " x " + height +
+      " pt) cannot be read within the " + maxPixels + " pixel limit at the minimum " + minDpi + " DPI.");
+  }
+  let dpi = Math.max(minDpi, Math.min(Number.isFinite(requestedDpi) ? requestedDpi : 300,
+    Math.floor(72 * Math.sqrt(maxPixels / (width * height)))));
+  while (pixelsAt(dpi) > maxPixels) dpi = Math.max(minDpi, dpi - 1);
+  return { dpi, width: Math.ceil(width * dpi / 72), height: Math.ceil(height * dpi / 72), maxPixels };
+}
+
 export async function ocrRasterPageLines(source, engine, progress = () => {}, opts = {}) {
+  const budget = opts.recognitionBudget || recognitionBudget(opts);
   const rotations = opts.rotations || [0, 90, 270, 180];
-  const maxPixels = opts.maxPixels || 36e6;
   const read = async (rotation, requestedDpi, full = false) => {
-    const dpi = Math.min(requestedDpi, Math.floor(72 * Math.sqrt(maxPixels / (source.width * source.height))));
+    const { dpi } = scanRenderPlan(source.width, source.height, requestedDpi, opts);
     const raw = await source.render(dpi, rotation);
     const skew = full ? imageSkewDegrees(raw) : 0;
     const img = deskewImage(raw, skew);
-    const words = full ? recognizePageWords(img, engine, dpi, opts.psm || "6")
-      : recognizeWords(eraseLongRuns(img, Math.round(dpi * 0.4)), engine, dpi);
+    const words = full ? (await recognizePageWords(img, engine, dpi, opts.psm || "6", { ...opts, recognitionBudget: budget })).words
+      : recognizeWords(eraseLongRuns(img, Math.round(dpi * 0.4)), engine, dpi, "6", budget);
     return { words, width: img.width * 72 / dpi, height: img.height * 72 / dpi, dpi, skew };
   };
   let pick = { rotation: rotations[0] || 0, score: -1 };
   for (const rotation of rotations) {
+    await yieldRow();
+    if (!budget.check()) break;
     progress("Checking scan orientation" + (rotation ? " (turned " + rotation + " degrees)" : "") + "...");
     const q = await read(rotation, 150);
     const score = q.words.filter((w) => w.conf >= 70 && w.str.length >= 3).length;
     if (score > pick.score) pick = { rotation, score };
   }
   progress("Reading the scan's cells at full resolution...");
-  const full = await read(pick.rotation, opts.dpi || 300, true);
+  const full = budget.check() ? await read(pick.rotation, opts.dpi || 300, true)
+    : { words: [], width: source.width, height: source.height, dpi: null, skew: 0 };
   const deg = skewDegrees(full.words);
   // Tesseract boxes enclose the ink; PDF text items use the font's em height. Convert cap
   // height to em for the shared reader's row-spacing thresholds, keeping ink height for audits.
@@ -655,33 +709,46 @@ export async function ocrRasterPageLines(source, engine, progress = () => {}, op
     item: w.item ?? i, itemX0: w.itemX0 ?? w.x0, itemX1: w.itemX1 ?? w.x1 }));
   return { words, lines: TL.clusterLines(words), width: full.width, height: full.height,
     rotation: pick.rotation, word_count: words.length, skew_deg: full.skew + deg,
-    image_skew_deg: full.skew, dpi: full.dpi };
+    image_skew_deg: full.skew, dpi: full.dpi, ...partialMetadata(budget) };
 }
 
 export async function ocrPageLines(pdfDoc, pageNumber, engine, progress, opts = {}) {
   const page = await pdfDoc.getPage(pageNumber);
   const vp = page.getViewport({ scale: 1 });
   return ocrRasterPageLines({ width: vp.width, height: vp.height,
-    render: (dpi, rotation) => renderPageToImageData(pdfDoc, pageNumber, dpi, rotation),
-  }, engine, progress, opts);
+    render: (dpi, rotation) => renderPageToImageData(pdfDoc, pageNumber, dpi, rotation, opts),
+  }, engine, progress, { ...opts, pageNumber });
 }
 
-async function renderPageToImageData(pdfDoc, pageNumber, dpi, rotation = 0) {
+export async function renderPageToImageData(pdfDoc, pageNumber, dpi, rotation = 0, opts = {}) {
   const page = await pdfDoc.getPage(pageNumber);
   // rotation is applied on top of the page's own /Rotate, so 0 always means
   // "as the PDF viewer shows it" and 90/270 turn a sideways sheet upright.
-  const viewport = page.getViewport({ scale: dpi / 72, rotation: ((page.rotate || 0) + rotation) % 360 });
+  const turn = ((page.rotate || 0) + rotation) % 360;
+  const size = page.getViewport({ scale: 1, rotation: turn });
+  let plan = scanRenderPlan(size.width, size.height, dpi, { ...opts, pageNumber });
+  let viewport = page.getViewport({ scale: plan.dpi / 72, rotation: turn });
+  // Guard against renderer-specific rounding before allocating either canvas dimension.
+  while (Math.ceil(viewport.width) * Math.ceil(viewport.height) > plan.maxPixels) {
+    if (plan.dpi <= Math.max(SCAN_MIN_DPI, opts.minDpi ?? SCAN_MIN_DPI)) {
+      throw new Error("Page " + pageNumber + " (" + size.width + " x " + size.height + " pt) cannot be read within the " + plan.maxPixels + " pixel limit at the minimum DPI.");
+    }
+    plan = scanRenderPlan(size.width, size.height, plan.dpi - 1, { ...opts, pageNumber });
+    viewport = page.getViewport({ scale: plan.dpi / 72, rotation: turn });
+  }
   const canvas = document.createElement("canvas");
+  canvas.height = 0;
   canvas.width = Math.ceil(viewport.width);
   canvas.height = Math.ceil(viewport.height);
   const ctx = canvas.getContext("2d", { willReadFrequently: true });
   await page.render({ canvasContext: ctx, viewport }).promise;
   const img = ctx.getImageData(0, 0, canvas.width, canvas.height);
   canvas.width = canvas.height = 0;
-  return img;
+  return { width: img.width, height: img.height, data: img.data, dpi: plan.dpi };
 }
 
 function ocrRowBand(engine, pageImage, colBounds, rowRightEdge, y0, y1, psm = "6", opts = {}) {
+  if (opts.recognitionBudget && !opts.recognitionBudget.take()) return null;
   // opts.pad / opts.upscale: the door-schedule path renders the table itself
   // at a DPI chosen for its text size (thicker rulings, no upscale needed);
   // the defaults keep the hardware-schedule path exactly as validated.
@@ -698,11 +765,14 @@ function ocrRowBand(engine, pageImage, colBounds, rowRightEdge, y0, y1, psm = "6
   engine.setVariable("tessedit_pageseg_mode", psm);
   const words = engine.getTextBoxes("word");
   const cells = new Array(colBounds.length).fill("");
+  cells.confidence = new Array(colBounds.length).fill(null);
   for (const w of words) {
     const cx = (w.rect.left + w.rect.right) / 2 / ROW_UPSCALE;
     for (let ci = 0; ci < colBounds.length; ci++) {
       if (cx >= colBounds[ci][0] && cx < colBounds[ci][1]) {
         cells[ci] = cells[ci] ? `${cells[ci]} ${w.text}` : w.text;
+        const confidence = w.confidence == null ? 0 : w.confidence <= 1 ? w.confidence : w.confidence / 100;
+        cells.confidence[ci] = Math.min(cells.confidence[ci] ?? 1, confidence);
         break;
       }
     }
@@ -746,7 +816,8 @@ function thresholdImage(img, thr) {
   }
   return { data: d, width: img.width, height: img.height };
 }
-function readCellOnce(engine, cell, way) {
+function readCellOnce(engine, cell, way, budget) {
+  if (budget && !budget.take()) return { text: "", confidence: 0 };
   let img = way.up > 1 ? upscaleN(cell, way.up) : cell;
   if (way.thr) img = thresholdImage(img, way.thr);
   img = padWhite(img, Math.max(8, Math.round(img.height / 2)));
@@ -755,9 +826,11 @@ function readCellOnce(engine, cell, way) {
   engine.setVariable("tessedit_pageseg_mode", "7");
   engine.setVariable("tessedit_char_whitelist", way.whitelist ? DIMENSION_CHARS : "");
   try {
-    return String(engine.getText() || "").replace(/\s+/g, " ").trim();
+    const words = engine.getTextBoxes("word") || [];
+    return { text: words.map(w => w.text).join(" ").replace(/\s+/g, " ").trim(),
+      confidence: words.length ? Math.min(...words.map(w => w.confidence == null ? 0 : w.confidence <= 1 ? w.confidence : w.confidence / 100)) : 0 };
   } catch (e) {
-    return "";
+    return { text: "", confidence: 0 };
   } finally {
     engine.setVariable("tessedit_char_whitelist", "");
   }
@@ -769,7 +842,13 @@ function rereadDimensionCell(engine, pageImage, x0, x1, y0, y1, opts, firstReadi
   const cy0 = Math.max(0, Math.round(y0) + pad), cy1 = Math.min(pageImage.height, Math.round(y1) - pad);
   if (cx1 - cx0 < 6 || cy1 - cy0 < 6) return { text: null, readings: [] };
   const cell = cropRowImage(pageImage, cy0, cy1, cx0, cx1);
-  const readings = REREAD_WAYS.map((way) => cleanDimension(readCellOnce(engine, cell, way)) || "");
+  const trials = [];
+  for (const way of REREAD_WAYS) {
+    if (opts.recognitionBudget && !opts.recognitionBudget.check()) break;
+    const trial = readCellOnce(engine, cell, way, opts.recognitionBudget);
+    trials.push({ ...trial, text: cleanDimension(trial.text) || "" });
+  }
+  const readings = trials.map(r => r.text);
   const votes = new Map();
   for (const r of readings.concat([cleanDimension(firstReading) || ""])) {
     const d = digitsOf(r);
@@ -778,7 +857,7 @@ function rereadDimensionCell(engine, pageImage, x0, x1, y0, y1, opts, firstReadi
   const ranked = [...votes.entries()].sort((a, b) => b[1] - a[1]);
   const agreed = ranked.length && ranked[0][1] >= 2 && !(ranked[1] && ranked[1][1] === ranked[0][1]) ? ranked[0][0] : null;
   const text = agreed ? readings.find((r) => r && digitsOf(r) === agreed && accept(r)) || null : null;
-  return { text, readings };
+  return { text, readings, confidence: trials.find(r => r.text === text)?.confidence ?? 0 };
 }
 
 // Closes the currently-open hardware group into groups/matrix - mirrors
@@ -798,14 +877,13 @@ function closeOpenGroup(state) {
 // render of just that region (the text-layer reader asks for them to snap its
 // column boundaries and to tell ruled rows apart). Coordinates in and out are
 // device points at scale 1 with the given rotation, as pageTextLines reports.
-async function rulesInRegion(pdfDoc, pageNumber, rotation, region) {
+async function rulesInRegion(pdfDoc, pageNumber, rotation, region, opts = {}) {
   const w = region.x1 - region.x0, hgt = region.y1 - region.y0;
   if (!(w > 10) || !(hgt > 10)) return null;
-  // 150 dpi, lower for a very large region (a bitmap of at most ~12 MP).
-  let dpi = 150;
-  while (dpi > 72 && (w * dpi / 72) * (hgt * dpi / 72) > 12e6) dpi = Math.round(dpi * 0.85);
+  // Start at 150 DPI; apply the same pixel budget as every other render.
+  const { dpi } = scanRenderPlan(w, hgt, 150, { ...opts, pageNumber });
   const s = dpi / 72;
-  const img = await renderRegionToImageData(pdfDoc, pageNumber, dpi, rotation, { x0: region.x0 * s, y0: region.y0 * s, x1: region.x1 * s, y1: region.y1 * s });
+  const img = await renderRegionToImageData(pdfDoc, pageNumber, dpi, rotation, { x0: region.x0 * s, y0: region.y0 * s, x1: region.x1 * s, y1: region.y1 * s }, opts);
   const { width, height, data } = img;
   const dark = (i) => data[i] * 0.299 + data[i + 1] * 0.587 + data[i + 2] * 0.114 < 215;
   // A vertical rule: a pixel column dark over most of the region's height (a
@@ -857,6 +935,8 @@ export async function findSchedulePages(pdfBytes, onProgress, options = {}) {
 // {hardware_groups, door_hardware_matrix, detected_nomenclature, metadata} -
 // the exact shape the existing POST .../extract-result endpoint expects.
 export async function extractHardwareScheduleFromPdf(pdfBytes, pageNumber, onProgress, options = {}) {
+  const budget = options.recognitionBudget || recognitionBudget(options);
+  options = { ...options, recognitionBudget: budget };
   const t0 = performance.now();
   const progress = (msg) => { if (onProgress) onProgress(msg); };
   progress("Loading PDF renderer...");
@@ -864,12 +944,12 @@ export async function extractHardwareScheduleFromPdf(pdfBytes, pageNumber, onPro
   const pdfDoc = await pdfjsLib.getDocument({ data: pdfBytes.slice(0) }).promise;
 
   // The text layer first (see the note at the top of this file).
-  if (!options.skipTextLayer) {
+  {
     progress("Reading the text of page " + pageNumber + "...");
     const page = await pdfDoc.getPage(pageNumber);
     const tl = await TL.pageTextLines(pdfjsLib, page);
-    if (tl.word_count >= 15) {
-      const rules = (region) => rulesInRegion(pdfDoc, pageNumber, tl.rotation, region);
+    if (tl.has_text_layer) {
+      const rules = (region) => rulesInRegion(pdfDoc, pageNumber, tl.rotation, region, options);
       const hg = await TL.readHardwareGroupsFromLines(tl.lines, { width: tl.width, height: tl.height }, { rules });
       const groups = hg ? hg.hardware_groups.filter((g) => g.components.length || g.assigned_doors.length) : [];
       if (groups.length) {
@@ -879,26 +959,26 @@ export async function extractHardwareScheduleFromPdf(pdfBytes, pageNumber, onPro
             group_number: g.group_number, group_name: g.group_name, assigned_doors: g.assigned_doors, notes: g.notes || null, continued: g.continued,
             components: g.components.map((c) => ({ component_type: c.component_type, description: c.description, quantity: c.quantity == null ? 1 : c.quantity, quantity_printed: c.quantity, uom: c.uom, manufacturer: c.manufacturer, manufacturer_code: c.manufacturer_code, model_number: c.model_number, catalog_number: c.catalog_number, finish: c.finish, notes: c.notes, field_confidence: c.field_confidence, read_from: "text_layer" })),
           })),
-          door_hardware_matrix: hg.door_hardware_matrix,
+          door_hardware_matrix: hg?.door_hardware_matrix || [],
           detected_nomenclature: null,
-          metadata: { extraction_mode: "text_layer", extraction_route: "text_layer", page_isolated: false, rotation_applied: tl.rotation, table_count: groups.length, text_words: tl.word_count, total_time_ms: Math.round(performance.now() - t0) },
+          metadata: { extraction_mode: "text_layer", extraction_route: "text_layer", page_isolated: false, rotation_applied: tl.rotation, table_count: groups.length, text_words: tl.text_word_count ?? tl.word_count, total_time_ms: Math.round(performance.now() - t0) },
         };
       }
       // Text on the page but no hardware groups in it. When the text reads as
       // a door schedule instead, say so and skip the OCR pass (the caller then
       // reads the page as a door schedule, from the text, at once).
       const c = await TL.classifyLines(tl.lines, { width: tl.width, height: tl.height });
-      if (c.door_schedule) {
-        return { hardware_groups: [], door_hardware_matrix: [], detected_nomenclature: null, metadata: { extraction_mode: "text_layer", page_isolated: false, table_count: 0, no_table_detected: true, text_layer_reads_as: "door_schedule", text_words: tl.word_count } };
-      }
+      return { hardware_groups: [], door_hardware_matrix: [], detected_nomenclature: null, metadata: { extraction_mode: "text_layer", page_isolated: false, table_count: 0, no_table_detected: true, text_layer_reads_as: c.door_schedule ? "door_schedule" : null, text_words: tl.text_word_count ?? tl.word_count, message: "No hardware schedule was found in the text on page " + pageNumber + "." } };
     }
   }
 
   const DETECT_DPI = 150, BASE_DPI = 400;
-  const RATIO = BASE_DPI / DETECT_DPI;
 
   progress(`Detecting table regions on page ${pageNumber}...`);
-  const detectImage = await renderPageToImageData(pdfDoc, pageNumber, DETECT_DPI);
+  const detectImage = await renderPageToImageData(pdfDoc, pageNumber, DETECT_DPI, 0, options);
+  const pageSize = (await pdfDoc.getPage(pageNumber)).getViewport({ scale: 1 });
+  const renderDpi = scanRenderPlan(pageSize.width, pageSize.height, BASE_DPI, { ...options, pageNumber }).dpi;
+  const RATIO = renderDpi / detectImage.dpi;
   const lum = toLuminance(detectImage);
   const candidateRegions = findAllTableBounds(lum, detectImage.width, detectImage.height);
 
@@ -918,24 +998,25 @@ export async function extractHardwareScheduleFromPdf(pdfBytes, pageNumber, onPro
       const ol = await ocrPageLines(pdfDoc, pageNumber, engine0, progress, options);
       const hg = ol.word_count >= 15 ? await TL.readHardwareGroupsFromLines(ol.lines, { width: ol.width, height: ol.height }, {}) : null;
       const groups = hg ? hg.hardware_groups.filter((g) => g.components.length || g.assigned_doors.length) : [];
-      if (groups.length) {
-        progress("Extraction complete.");
+      if (groups.length || ol.partial) {
+        progress(ol.partial ? ol.message : "Extraction complete.");
         return {
+          partial: ol.partial,
           hardware_groups: groups.map((g) => ({
             group_number: g.group_number, group_name: g.group_name, assigned_doors: g.assigned_doors, notes: g.notes || null, continued: g.continued,
             components: g.components.map((c) => ({ component_type: c.component_type, description: c.description, quantity: c.quantity == null ? 1 : c.quantity, quantity_printed: c.quantity, uom: c.uom, manufacturer: c.manufacturer, manufacturer_code: c.manufacturer_code, model_number: c.model_number, catalog_number: c.catalog_number, finish: c.finish, notes: c.notes, field_confidence: c.field_confidence, read_from: "ocr_lines" })),
           })),
-          door_hardware_matrix: hg.door_hardware_matrix,
+          door_hardware_matrix: hg?.door_hardware_matrix || [],
           detected_nomenclature: null,
-          metadata: { extraction_mode: "ocr_text_lines", extraction_route: "ocr_text_lines", page_isolated: false, rotation_applied: ol.rotation, skew_corrected_deg: ol.skew_deg, ocr_dpi: ol.dpi, table_count: groups.length, ocr_words: ol.word_count, total_time_ms: Math.round(performance.now() - t0) },
+          metadata: { ...partialMetadata(budget), extraction_mode: "ocr_text_lines", extraction_route: "ocr_text_lines", page_isolated: false, rotation_applied: ol.rotation, skew_corrected_deg: ol.skew_deg, ocr_dpi: ol.dpi, table_count: groups.length, ocr_words: ol.word_count, total_time_ms: Math.round(performance.now() - t0) },
         };
       }
     }
-    return { hardware_groups: [], door_hardware_matrix: [], detected_nomenclature: null, metadata: { extraction_mode: "client_grid_deterministic", page_isolated: false, table_count: 0, no_table_detected: true } };
+    return { hardware_groups: [], partial: budget.status().partial, door_hardware_matrix: [], detected_nomenclature: null, metadata: { ...partialMetadata(budget), extraction_mode: "client_grid_deterministic", page_isolated: false, table_count: 0, no_table_detected: true } };
   }
 
   progress(`Rendering page ${pageNumber} at full resolution...`);
-  const pageImage = await renderPageToImageData(pdfDoc, pageNumber, BASE_DPI);
+  const pageImage = await renderPageToImageData(pdfDoc, pageNumber, renderDpi, 0, options);
 
   progress("Loading OCR engine...");
   const engine = await getOcrEngine(progress);
@@ -956,7 +1037,9 @@ export async function extractHardwareScheduleFromPdf(pdfBytes, pageNumber, onPro
     const headerSearchWindow = Math.min(6, t.totalRowBands);
     const headerBandTexts = [];
     for (let i = 0; i < headerSearchWindow; i++) {
-      headerBandTexts.push(ocrRowBand(engine, pageImage, t.colBounds, t.rowRightEdge, t.rowLines[i], t.rowLines[i + 1]) || []);
+      await yieldRow();
+      if (!budget.check()) break;
+      headerBandTexts.push(ocrRowBand(engine, pageImage, t.colBounds, t.rowRightEdge, t.rowLines[i], t.rowLines[i + 1], "6", { recognitionBudget: budget }) || []);
     }
     let headerRowIdx = 0, headerMatches = -1;
     for (let i = 0; i < headerBandTexts.length; i++) {
@@ -1001,7 +1084,9 @@ export async function extractHardwareScheduleFromPdf(pdfBytes, pageNumber, onPro
 
     const dataStartBand = headerRowIdx + 1;
     for (let i = dataStartBand; i < t.totalRowBands; i++) {
-      const cells = ocrRowBand(engine, pageImage, t.colBounds, t.rowRightEdge, t.rowLines[i], t.rowLines[i + 1]);
+      await yieldRow();
+      if (!budget.check()) break;
+      const cells = ocrRowBand(engine, pageImage, t.colBounds, t.rowRightEdge, t.rowLines[i], t.rowLines[i + 1], "6", { recognitionBudget: budget });
       if (!cells) continue;
       const structural = classifyHardwareRow(cells);
       if (structural) {
@@ -1029,12 +1114,15 @@ export async function extractHardwareScheduleFromPdf(pdfBytes, pageNumber, onPro
   }
   closeOpenGroup(state);
 
-  progress("Extraction complete.");
+  const work = partialMetadata(budget);
+  progress(work.partial ? work.message : "Extraction complete.");
   return {
+    partial: work.partial,
     hardware_groups: state.groups,
     door_hardware_matrix: state.matrix,
     detected_nomenclature: null,
     metadata: {
+      ...work,
       extraction_mode: "client_grid_deterministic",
       extraction_route: "client_grid_deterministic",
       page_isolated: false,
@@ -1215,11 +1303,16 @@ function medianGap(lines) {
 // Renders one rectangle of a page (device pixels at this DPI/rotation) - the
 // door table is rendered on its own at the DPI its text needs, instead of the
 // whole sheet at a fixed DPI.
-async function renderRegionToImageData(pdfDoc, pageNumber, dpi, rotation, region) {
+export async function renderRegionToImageData(pdfDoc, pageNumber, dpi, rotation, region, opts = {}) {
   const page = await pdfDoc.getPage(pageNumber);
+  const plan = scanRenderPlan((region.x1 - region.x0) * 72 / dpi, (region.y1 - region.y0) * 72 / dpi, dpi, { ...opts, pageNumber });
+  const scale = plan.dpi / dpi;
+  region = Object.fromEntries(Object.entries(region).map(([key, value]) => [key, value * scale]));
+  dpi = plan.dpi;
   const viewport = page.getViewport({ scale: dpi / 72, rotation: ((page.rotate || 0) + rotation) % 360 });
-  const w = Math.max(1, Math.round(region.x1 - region.x0)), h = Math.max(1, Math.round(region.y1 - region.y0));
+  const w = plan.width, h = plan.height;
   const canvas = document.createElement("canvas");
+  canvas.height = 0;
   canvas.width = w;
   canvas.height = h;
   const ctx = canvas.getContext("2d", { willReadFrequently: true });
@@ -1229,7 +1322,7 @@ async function renderRegionToImageData(pdfDoc, pageNumber, dpi, rotation, region
   const img = ctx.getImageData(0, 0, w, h);
   canvas.width = 0;
   canvas.height = 0;
-  return img;
+  return { width: img.width, height: img.height, data: img.data, dpi, region };
 }
 
 // Revision clouds, deltas and markups are drawn in colour (blue/red/green)
@@ -1329,6 +1422,8 @@ function eraseRowRulings(imageData, ys, x0, x1, maxHalfHeight) {
 //     instead of the whole sheet at 400 dpi with a 3x pixel upscale (which
 //     cannot add detail that was never rendered: 3'-0" read as "a").
 export async function extractDoorScheduleFromPdf(pdfBytes, pageNumber, onProgress, options = {}) {
+  const budget = options.recognitionBudget || recognitionBudget(options);
+  options = { ...options, recognitionBudget: budget };
   const t0 = performance.now();
   const progress = (msg) => { if (onProgress) onProgress(msg); };
   progress("Loading PDF renderer...");
@@ -1337,18 +1432,18 @@ export async function extractDoorScheduleFromPdf(pdfBytes, pageNumber, onProgres
 
   let hasTextLayer = false;
   // The text layer first (see the note at the top of this file).
-  if (!options.skipTextLayer) {
+  {
     progress("Reading the text of page " + pageNumber + "...");
     const page = await pdfDoc.getPage(pageNumber);
     const tl = await TL.pageTextLines(pdfjsLib, page);
-    if (tl.word_count >= 15) {
+    if (tl.has_text_layer) {
       hasTextLayer = true;
-      const rules = (region) => rulesInRegion(pdfDoc, pageNumber, tl.rotation, region);
+      const rules = (region) => rulesInRegion(pdfDoc, pageNumber, tl.rotation, region, options);
       const ds = await TL.readDoorScheduleFromLines(tl.lines, { width: tl.width, height: tl.height }, { rules });
       if (!(ds && ds.doors.length)) {
         const c = await TL.classifyLines(tl.lines, { width: tl.width, height: tl.height });
         if (c.hardware) {
-          return { doors: [], extraction_confidence: 0, metadata: { extraction_mode: "text_layer", page_isolated: false, no_table_detected: true, text_layer_reads_as: "hardware_schedule", text_words: tl.word_count } };
+          return { doors: [], extraction_confidence: 0, metadata: { extraction_mode: "text_layer", page_isolated: false, no_table_detected: true, text_layer_reads_as: "hardware_schedule", text_words: tl.text_word_count ?? tl.word_count } };
         }
       }
       if (ds && ds.doors.length) {
@@ -1358,19 +1453,19 @@ export async function extractDoorScheduleFromPdf(pdfBytes, pageNumber, onProgres
           extraction_confidence: 0.98,
           metadata: {
             extraction_mode: "text_layer", extraction_route: "text_layer", page_isolated: false,
-            row_count: ds.doors.length, rotation_applied: tl.rotation, text_words: tl.word_count,
+            row_count: ds.doors.length, rotation_applied: tl.rotation, text_words: tl.text_word_count ?? tl.word_count,
             tables: ds.tables.map((t) => ({ title: t.title, rows: t.rows, fields: t.fields, header: t.header, rules_used: t.rules_used })),
             total_time_ms: Math.round(performance.now() - t0),
           },
         };
       }
+      return { doors: [], extraction_confidence: 0, metadata: { extraction_mode: "text_layer", no_table_detected: true, text_words: tl.text_word_count ?? tl.word_count, message: "No door schedule was found in the text on page " + pageNumber + "." } };
     }
   }
 
   const DETECT_DPI = 150;
   const TARGET_ROW_PX = options.targetRowPx || 64;
   const MIN_DPI = 300, MAX_DPI = options.maxDpi || 1200;
-  const MAX_PIXELS = options.maxPixels || 36e6;
   const rotations = Array.isArray(options.rotations) && options.rotations.length ? options.rotations : [0, 90, 270, 180];
   const headerPsm = options.headerPsm || "6";
   const rowPsm = options.rowPsm || "7";
@@ -1384,12 +1479,13 @@ export async function extractDoorScheduleFromPdf(pdfBytes, pageNumber, onProgres
     if (scanned !== undefined) return scanned;
     const ol = await ocrPageLines(pdfDoc, pageNumber, engine, progress, options);
     const ds = ol.word_count >= 15 ? await TL.readDoorScheduleFromLines(ol.lines, { width: ol.width, height: ol.height }, {}) : null;
-    scanned = ds && ds.doors.length ? {
-      doors: ds.doors.map((d) => ({ ...d, read_from: "ocr_lines", field_confidence: Object.fromEntries(Object.keys(d.field_confidence || {}).map((f) => [f, 0.85])) })),
+    scanned = (ds && ds.doors.length) || ol.partial ? {
+      partial: ol.partial,
+      doors: (ds?.doors || []).map((d) => ({ ...d, read_from: "ocr_lines", confidence_source: "ocr_words" })),
       extraction_confidence: 0.85,
-      metadata: { extraction_mode: "ocr_text_lines", extraction_route: "ocr_text_lines", page_isolated: false, row_count: ds.doors.length, rotation_applied: ol.rotation, skew_corrected_deg: ol.skew_deg, ocr_dpi: ol.dpi, ocr_words: ol.word_count, orientation_attempts: attempts, total_time_ms: Math.round(performance.now() - t0) },
+      metadata: { ...partialMetadata(budget), extraction_mode: "ocr_text_lines", extraction_route: "ocr_text_lines", page_isolated: false, expected_marks: options.expectedMarks || [], row_count: ds?.doors.length || 0, rotation_applied: ol.rotation, skew_corrected_deg: ol.skew_deg, ocr_dpi: ol.dpi, ocr_words: ol.word_count, orientation_attempts: attempts, total_time_ms: Math.round(performance.now() - t0) },
     } : null;
-    if (scanned) progress("Extraction complete.");
+    if (scanned) progress(scanned.partial ? scanned.metadata.message : "Extraction complete.");
     return scanned;
   };
   // Full-size scans go through the bounded whole-sheet orientation/deskew pass first. The
@@ -1401,9 +1497,12 @@ export async function extractDoorScheduleFromPdf(pdfBytes, pageNumber, onProgres
   }
   let best = null;
   for (const rotation of rotations) {
+    await yieldRow();
+    if (!budget.check()) break;
     const turned = rotation ? " (turned " + rotation + " degrees)" : "";
     progress("Detecting the table on page " + pageNumber + turned + "...");
-    const detectImage = await renderPageToImageData(pdfDoc, pageNumber, DETECT_DPI, rotation);
+    const detectImage = await renderPageToImageData(pdfDoc, pageNumber, DETECT_DPI, rotation, options);
+    const detectDpi = detectImage.dpi;
     const lum = toLuminance(detectImage);
     const bounds = findTableBoundsDoor(lum, detectImage.width, detectImage.height);
     const detected = bounds ? detectGridLinesDoor(lum, detectImage.width, bounds) : { colLines: [], rowLines: [] };
@@ -1414,7 +1513,7 @@ export async function extractDoorScheduleFromPdf(pdfBytes, pageNumber, onProgres
     // DPI from the measured row pitch, then capped so the table bitmap stays
     // within maxPixels.
     const pitch150 = Math.max(2, medianGap(detected.rowLines));
-    let dpi = Math.max(MIN_DPI, Math.min(MAX_DPI, Math.round(DETECT_DPI * TARGET_ROW_PX / pitch150)));
+    let dpi = Math.max(MIN_DPI, Math.min(MAX_DPI, Math.round(detectDpi * TARGET_ROW_PX / pitch150)));
     const wideEnd150 = detected.wideColEnd ?? detectImage.width - 1;
     const r150 = {
       x0: Math.max(0, detected.colLines[0] - 6),
@@ -1422,11 +1521,14 @@ export async function extractDoorScheduleFromPdf(pdfBytes, pageNumber, onProgres
       y0: Math.max(0, detected.rowLines[0] - 6),
       y1: Math.min(detectImage.height, detected.rowLines[detected.rowLines.length - 1] + 6),
     };
-    while (dpi > MIN_DPI && ((r150.x1 - r150.x0) * dpi / DETECT_DPI) * ((r150.y1 - r150.y0) * dpi / DETECT_DPI) > MAX_PIXELS) dpi = Math.floor(dpi * 0.9);
-    const s = dpi / DETECT_DPI;
-    const region = { x0: Math.round(r150.x0 * s), y0: Math.round(r150.y0 * s), x1: Math.round(r150.x1 * s), y1: Math.round(r150.y1 * s) };
+    dpi = scanRenderPlan((r150.x1 - r150.x0) * 72 / detectDpi, (r150.y1 - r150.y0) * 72 / detectDpi, dpi, { ...options, pageNumber }).dpi;
+    let s = dpi / detectDpi;
+    let region = { x0: r150.x0 * s, y0: r150.y0 * s, x1: r150.x1 * s, y1: r150.y1 * s };
     progress("Rendering the table at " + dpi + " dpi" + turned + "...");
-    const pageImage = await renderRegionToImageData(pdfDoc, pageNumber, dpi, rotation, region);
+    const pageImage = await renderRegionToImageData(pdfDoc, pageNumber, dpi, rotation, region, options);
+    dpi = pageImage.dpi;
+    region = pageImage.region;
+    s = dpi / detectDpi;
     const colLines = detected.colLines.map((x) => Math.round(x * s) - region.x0);
     const rowLines = detected.rowLines.map((y) => Math.round(y * s) - region.y0);
     const wideColEnd = Math.min(Math.round(wideEnd150 * s) - region.x0, pageImage.width - 1);
@@ -1437,13 +1539,15 @@ export async function extractDoorScheduleFromPdf(pdfBytes, pageNumber, onProgres
     eraseRulings(pageImage, colLines.concat([wideColEnd]), Math.max(0, rowLines[0]), Math.min(pageImage.height, rowLines[rowLines.length - 1]), Math.max(3, Math.round(pitchPx * 2)), Math.max(4, Math.round(s * 4)));
     eraseRowRulings(pageImage, rowLines, Math.max(0, colLines[0]), Math.min(pageImage.width, wideColEnd), Math.max(3, Math.round(s * 3)));
     whitenColouredInk(pageImage);
-    const ocrOpts = { pad: 2, upscale: Math.max(1, Math.min(3, Math.round(TARGET_ROW_PX / pitchPx))) };
+    const ocrOpts = { recognitionBudget: budget, pad: 2, upscale: Math.max(1, Math.min(3, Math.round(TARGET_ROW_PX / pitchPx))) };
     const totalRowBands = rowLines.length - 1;
 
     const headerSearchWindow = Math.min(options.headerWindow || 5, totalRowBands);
     progress("Reading the header row" + turned + "...");
     const headerBandTexts = [];
     for (let i = 0; i < headerSearchWindow; i++) {
+      await yieldRow();
+      if (!budget.check()) break;
       headerBandTexts.push(ocrRowBand(engine, pageImage, colBounds, wideColEnd, rowLines[i], rowLines[i + 1], headerPsm, ocrOpts) || []);
     }
     const header = bestHeaderBand(headerBandTexts, DOOR_SCHEDULE_HEADER_PATTERNS);
@@ -1458,11 +1562,11 @@ export async function extractDoorScheduleFromPdf(pdfBytes, pageNumber, onProgres
 
   if (!best || best.header.matches < 3) {
     // Smaller tilted scans can fail the straight-grid pass too. Use the same OCR line path.
-    if (!options.noOcrLines) {
+    if (!hasTextLayer && !options.noOcrLines) {
       const result = await readScan();
       if (result) return result;
     }
-    return { doors: [], extraction_confidence: 0, metadata: { extraction_mode: "client_grid_deterministic", page_isolated: false, no_table_detected: !best, no_door_header: !!best, header_matches: best?.header.matches || 0, orientation_attempts: attempts, total_time_ms: Math.round(performance.now() - t0) } };
+    return { doors: [], partial: budget.status().partial, extraction_confidence: 0, metadata: { ...partialMetadata(budget), extraction_mode: "client_grid_deterministic", page_isolated: false, no_table_detected: !best, no_door_header: !!best, header_matches: best?.header.matches || 0, orientation_attempts: attempts, total_time_ms: Math.round(performance.now() - t0) } };
   }
 
   const { pageImage, colBounds, wideColEnd, rowLines, totalRowBands, headerBandTexts, header, ocrOpts } = best;
@@ -1477,14 +1581,17 @@ export async function extractDoorScheduleFromPdf(pdfBytes, pageNumber, onProgres
   const rows = [];
   const rawRows = [];
   for (let i = dataStartBand; i < totalRowBands; i++) {
+    await yieldRow();
+    if (!budget.check()) break;
     const cells = ocrRowBand(engine, pageImage, colBounds, wideColEnd, rowLines[i], rowLines[i + 1], rowPsm, ocrOpts);
     if (!cells) continue;
     if (options.debug) rawRows.push(cells.join(" | "));
-    const row = { _band: i };
+    const row = { _band: i, _confidence: {} };
     let hasAnyField = false;
     for (let ci = 0; ci < fieldNames.length; ci++) {
       const key = fieldNames[ci] || "col_" + ci;
       row[key] = cells[ci] || "";
+      row._confidence[key] = cells.confidence[ci] ?? 0;
       if (fieldNames[ci] && cells[ci]) hasAnyField = true;
     }
     if (hasAnyField) rows.push(row);
@@ -1494,6 +1601,8 @@ export async function extractDoorScheduleFromPdf(pdfBytes, pageNumber, onProgres
   const sizeCols = { width: fieldNames.indexOf("width"), height: fieldNames.indexOf("height"), thickness: fieldNames.indexOf("thickness") };
   let reread = 0, rereadUsed = 0;
   for (const row of rows) {
+    await yieldRow();
+    if (!budget.check()) break;
     if (!cleanDoorMark(row.mark)) continue;
     const y0 = rowLines[row._band], y1 = rowLines[row._band + 1];
     const size = doorSize(row.width, row.height);
@@ -1503,7 +1612,7 @@ export async function extractDoorScheduleFromPdf(pdfBytes, pageNumber, onProgres
       reread++;
       const got = rereadDimensionCell(engine, pageImage, colBounds[ci][0], colBounds[ci][1], y0, y1, ocrOpts, row[field], parses);
       if (options.debug) (row._reread = row._reread || {})[field] = got;
-      if (got.text) { row[field] = got.text; rereadUsed++; }
+      if (got.text) { row[field] = got.text; row._confidence[field] = got.confidence; rereadUsed++; }
     };
     const fits = (kind) => (t) => { const d = readDoorDimension(t); return !!(d && d.format === "ft-in" && d.inches >= DOOR_LIMITS[kind][0] && d.inches <= DOOR_LIMITS[kind][1]); };
     if (size.width_inches == null) tryCell("width", fits("width"));
@@ -1538,14 +1647,15 @@ export async function extractDoorScheduleFromPdf(pdfBytes, pageNumber, onProgres
     remarks: cleanCell(row.notes),
     source_row: row._band,
     read_from: "ocr",
-    // OCR values are machine-read: every field is marked for the reviewer at
-    // this confidence, and a size that did not parse at zero.
-    field_confidence: Object.fromEntries(fieldNames.filter(Boolean).map((f) => [f, 0.85])),
+    confidence_source: "ocr_words",
+    field_confidence: Object.fromEntries(fieldNames.filter(Boolean).map((f) => [f,
+      (f === "width" || f === "height") && doorSize(row.width, row.height)[f + "_inches"] == null ? 0 : row._confidence[f]])),
     ...(options.debug && row._reread ? { size_reread: row._reread } : {}),
   })).filter((d) => d.door_number);
 
-  progress("Extraction complete.");
   const metadata = {
+    ...partialMetadata(budget),
+    expected_marks: options.expectedMarks || [],
     extraction_mode: "client_grid_deterministic",
     extraction_route: "client_grid_deterministic",
     page_isolated: false,
@@ -1566,7 +1676,8 @@ export async function extractDoorScheduleFromPdf(pdfBytes, pageNumber, onProgres
     metadata.header_bands = headerBandTexts.map((cells) => cells.join(" | "));
     metadata.header_idx = header.idx;
   }
-  return { doors, extraction_confidence: 0.85, metadata };
+  progress(metadata.partial ? metadata.message : "Extraction complete.");
+  return { doors, partial: metadata.partial, extraction_confidence: 0.85, metadata };
 }
 
 // The pure cell readers, exported for the worker's unit tests

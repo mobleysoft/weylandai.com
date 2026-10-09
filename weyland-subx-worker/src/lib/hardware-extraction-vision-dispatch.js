@@ -1145,10 +1145,14 @@ function stcNumber(v) {
   return m ? parseInt(m[1], 10) : null;
 }
 
-export async function writeDoorScheduleEntries(sessionId, tenantId, pageNumber, doors, extractionConfidence, env2) {
+export async function writeDoorScheduleEntries(sessionId, tenantId, pageNumber, doors, extractionConfidence, env2, opts = {}) {
+  const partial = !!opts.partial || doors.some(d => d.read_audit?.partial);
   const isLowConf = (extractionConfidence || 0) < 0.7;
   const processedEntries = [];
   let insertedCount = 0;
+  const writes = [];
+  const markCounts = new Map(), occurrences = new Map();
+  for (const d of doors) if (d.door_number) markCounts.set(d.door_number, (markCounts.get(d.door_number) || 0) + 1);
   // A session holds one row per mark (the upsert below). A bid set with one
   // schedule per school repeats the marks (Berryessa: 001-009 on three
   // sheets), so a mark already read from another page keeps that page's row
@@ -1167,7 +1171,16 @@ export async function writeDoorScheduleEntries(sessionId, tenantId, pageNumber, 
   for (let i = 0; i < doors.length; i++) {
     let door = doors[i];
     if (!door.door_number) continue;
+    const originalMark = door.door_number;
+    const occurrence = (occurrences.get(originalMark) || 0) + 1;
+    occurrences.set(originalMark, occurrence);
     if (onOtherPages.has(door.door_number)) door = { ...door, door_number: door.door_number + " [p." + pageNumber + "]", remarks: [door.remarks, "same mark as a door on page " + onOtherPages.get(door.door_number)].filter(Boolean).join("; ") };
+    // Preserve conflicting same-page occurrences under stable keys. An upsert on the bare
+    // mark used to silently replace the first OCR row with the second.
+    if (markCounts.get(originalMark) > 1) door = { ...door,
+      door_number: door.door_number + (occurrence > 1 ? " [row." + occurrence + "]" : ""),
+      original_mark: originalMark,
+      remarks: [door.remarks, "Duplicate mark " + originalMark + " on page " + pageNumber + "; verify each occurrence"].filter(Boolean).join("; ") };
     const fullEntry = {
       id: `dse_${sessionId}_${door.door_number}_${Date.now()}_${i}`,
       session_id: sessionId,
@@ -1202,20 +1215,23 @@ export async function writeDoorScheduleEntries(sessionId, tenantId, pageNumber, 
       // table row band and the page turn they applied) - the trace the
       // submittal package prints next to every door.
       // Where the row was read (page, table row, turn) and how sure each
-      // field is (text layer 1.0, OCR 0.85), plus what the schedule printed
+      // field is (text layer 1.0, measured OCR confidence), plus what the schedule printed
       // that has no column here (pair, glazing, section).
-      field_confidence_json: door.source_row != null || door.field_confidence ? JSON.stringify({
+      field_confidence_json: door.source_row != null || door.field_confidence || door.original_mark || door.read_audit ? JSON.stringify({
         source: { page: pageNumber, table_row: door.source_row ?? null, rotation: door.source_rotation ?? null },
         read_from: door.read_from || null,
         fields: door.field_confidence || null,
+        confidence_source: door.confidence_source || null,
+        original_mark: door.original_mark || null,
+        generated_occurrence: door.original_mark && occurrence > 1 ? occurrence : null,
+        read_audit: door.read_audit || null,
         pair: door.pair ?? null, glazing: door.glazing ?? null, section: door.section ?? null,
         alternate_pricing: door.alternate_pricing ?? null, hardware_spec_sections: door.hardware_spec_sections || [],
       }) : null,
       low_confidence_fields: isLowConf ? "extraction_confidence" : ""
     };
     processedEntries.push(fullEntry);
-    try {
-      await env2.DB.prepare(`
+    writes.push(env2.DB.prepare(`
         INSERT INTO door_schedule_entries (
           id, session_id, tenant_id, page_number,
           mark, hardware_group,
@@ -1253,6 +1269,8 @@ export async function writeDoorScheduleEntries(sessionId, tenantId, pageNumber, 
           field_confidence_json = excluded.field_confidence_json,
           low_confidence_fields = excluded.low_confidence_fields,
           updated_at = datetime('now')
+        WHERE door_schedule_entries.page_number = excluded.page_number
+          AND (door_schedule_entries.corrections_json IS NULL OR door_schedule_entries.corrections_json = '')
       `).bind(
         fullEntry.id, fullEntry.session_id, fullEntry.tenant_id, fullEntry.page_number,
         fullEntry.mark, fullEntry.hardware_group,
@@ -1261,16 +1279,55 @@ export async function writeDoorScheduleEntries(sessionId, tenantId, pageNumber, 
         fullEntry.thickness, fullEntry.thickness_inches, fullEntry.door_finish, fullEntry.stc_rating,
         fullEntry.frame_finish, fullEntry.head_detail, fullEntry.jamb_detail, fullEntry.sill_detail, fullEntry.notes,
         fullEntry.extraction_confidence, fullEntry.field_confidence_json, fullEntry.low_confidence_fields
-      ).run();
-      insertedCount++;
+      ));
+  }
+  const incomingMarks = JSON.stringify(processedEntries.map(d => d.mark));
+  if (!partial && processedEntries.length) {
+    // Delete only our obsolete occurrence keys for marks this complete read covered.
+    // The JSON provenance and exact generated-key shape protect unrelated rows. The
+    // correction guard is evaluated in the same transaction as the replacement rows.
+    // Partial reads retain prior occurrences because absence is not evidence of removal.
+    writes.push(env2.DB.prepare(`
+      WITH generated AS (
+        SELECT mark, page_number,
+          CASE WHEN json_valid(field_confidence_json) THEN field_confidence_json ELSE '{}' END AS audit
+        FROM door_schedule_entries WHERE session_id = ? AND page_number = ?
+      ), candidates AS (
+        SELECT mark, page_number, json_extract(audit, '$.original_mark') AS original_mark,
+          COALESCE(json_extract(audit, '$.generated_occurrence'),
+            CAST(substr(mark, instr(mark, ' [row.') + 6) AS INTEGER)) AS occurrence
+        FROM generated
+      )
+      DELETE FROM door_schedule_entries
+      WHERE session_id = ? AND page_number = ?
+        AND (corrections_json IS NULL OR corrections_json = '')
+        AND mark IN (
+          SELECT mark FROM candidates
+          WHERE original_mark IN (SELECT value FROM json_each(?))
+            AND mark NOT IN (SELECT value FROM json_each(?))
+            AND occurrence >= 2
+            AND (mark = original_mark || ' [row.' || occurrence || ']'
+              OR mark = original_mark || ' [p.' || page_number || '] [row.' || occurrence || ']')
+        )
+    `).bind(sessionId, pageNumber, sessionId, pageNumber, JSON.stringify([...markCounts.keys()]), incomingMarks));
+  }
+  if (writes.length) {
+    // D1 batch is a transaction: a failed insert must not delete old occurrences.
+    // The final read also returns preserved manual corrections rather than OCR values.
+    writes.push(env2.DB.prepare(`SELECT * FROM door_schedule_entries
+      WHERE session_id = ? AND page_number = ? AND mark IN (SELECT value FROM json_each(?))`
+    ).bind(sessionId, pageNumber, incomingMarks));
+    try {
+      const results = await env2.DB.batch(writes);
+      const saved = results.at(-1)?.results || [];
+      insertedCount = saved.length;
+      processedEntries.splice(0, processedEntries.length, ...saved);
     } catch (insertError) {
-      console.error(`[Embedded Door Schedule] Failed to insert entry ${fullEntry.mark}:`, insertError.message);
+      console.error('[Embedded Door Schedule] Atomic page write failed:', insertError.message);
+      return { success: false, entries_count: 0, entry_count: 0, entries: [], low_confidence_count: 0, error: 'door write failure: page transaction failed' };
     }
   }
-  if (processedEntries.length > 0 && insertedCount === 0) {
-    return { success: false, entries_count: 0, entry_count: 0, entries: [], low_confidence_count: 0, error: `door write failure: parsed ${processedEntries.length} entries, inserted 0` };
-  }
-  try {
+  if (!partial) try {
     await env2.DB.prepare(`
       UPDATE hardware_extraction_sessions
       SET door_schedule_extracted = 1,
@@ -1285,6 +1342,7 @@ export async function writeDoorScheduleEntries(sessionId, tenantId, pageNumber, 
   }
   return {
     success: true,
+    partial,
     entries_count: insertedCount,
     entry_count: insertedCount,
     entries: processedEntries,

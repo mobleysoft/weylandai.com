@@ -198,6 +198,7 @@
           <button type="button" class="primary" id="extract-btn">READ THIS PAGE</button>
           <button type="button" id="client-extract-btn">READ IT IN THIS BROWSER</button>
         </div>
+        <button type="button" id="stop-read-btn" class="hide">STOP READING</button>
         <div id="extract-result" role="status" aria-live="polite"></div>
         <div id="hardware-needed" role="status"></div>
         <div id="guest-save" class="hide"><p class="sub">This read is in this browser. Save it to your account to review edits and build the packet.</p><button type="button" class="primary" id="guest-save-btn">SIGN IN TO SAVE THIS SCHEDULE</button><div id="guest-save-note" role="status"></div></div>
@@ -241,7 +242,7 @@
     function loadScript(src) { return new Promise(function (res, rej) { var s = document.createElement("script"); s.src = src; s.onload = res; s.onerror = rej; document.head.appendChild(s); }); }
     if (!embedded) document.documentElement.classList.add("wa-standalone");
     var ready = embedded ? Promise.resolve() : (window.AuthForStandard ? Promise.resolve() : loadScript("/assets/authfor-integration-standard.js"))
-      .then(function () { return window.WeylandShell ? null : loadScript("/assets/weyland-shell.js?v=20261009g018"); }).catch(function () {});
+      .then(function () { return window.WeylandShell ? null : loadScript("/assets/weyland-shell.js?v=20261009g034"); }).catch(function () {});
     window.WeylandPage = {
       embedded: embedded,
       ready: ready,
@@ -1814,10 +1815,10 @@ global.SovereignPdfRender = {
       var root = document.documentElement;
       var EMBED = root.classList.contains("embedded");
       var TAKEOFF = root.classList.contains("takeoff");
-      var MODULE_URL = "/api/hardware-schedule/client-ocr-assets/schedule-grid-extraction-client.mjs?v=20261009g018-g019";
+      var MODULE_URL = "/api/hardware-schedule/client-ocr-assets/schedule-grid-extraction-client.mjs?v=20261009g034";
       var state = { sessions: [], current: null, detail: null, lastUpload: null, blobUrl: null, busy: false, company: null };
       window.SUBX_MODULE_URL = MODULE_URL;
-      var workspace = import("/api/hardware-schedule/client-ocr-assets/schedule-workspace.mjs?v=20261009g018");
+      var workspace = import("/api/hardware-schedule/client-ocr-assets/schedule-workspace.mjs?v=20261009g034");
       // The pages the finder named, as a reading plan: door schedule pages
       // first, then hardware pages; nothing found means page 1 as the chosen
       // kind. At most 20 pages are read in one go.
@@ -2069,16 +2070,22 @@ global.SovereignPdfRender = {
       }
       function renderTakeoff() {
         var t = state.detail.takeoff, box = $("takeoff");
-        if (!t.doors && !t.hardware_sets) { box.innerHTML = ""; return; }
+        if (!t.doors && !t.hardware_sets && !t.partial) { box.innerHTML = ""; return; }
         var fireRated = (t.by_fire_rating || []).filter(function (f) { return !/^(NR|N\/R|NONE|-)$/i.test(String(f.value)); }).reduce(function (n, f) { return n + f.count; }, 0);
         var tiles = [
-          ["Doors", t.doors],
+          ["Door rows", t.doors],
           ["Sizes read", t.doors_with_size + " / " + t.doors],
           ["Fire-rated doors", fireRated],
           ["Hardware groups", t.hardware_sets || (t.by_hardware_group || []).length],
         ];
         if (t.hardware_sets) tiles.push(["Hardware items", t.hardware_components]);
+        if (t.ocr_rows) {
+          tiles = tiles.map(function (x) { return [x[0] + " (machine-read)", x[1]]; });
+          tiles.push(["OCR rows / fields", t.ocr_rows + " / " + t.ocr_fields]);
+          tiles.push(["Rows / fields below 80%", t.below_threshold_rows + " / " + t.below_threshold_fields]);
+        }
         box.innerHTML = '<div class="stats">' + tiles.map(function (x) { return '<div class="stat"><b>' + esc(x[1]) + "</b><span>" + esc(x[0]) + "</span></div>"; }).join("") + "</div>" +
+          (t.qualifier ? '<p class="unread">' + esc(t.qualifier) + '</p>' : '') +
           '<div class="counts">' + countList("By door type", t.by_door_type) + countList("By size", t.by_size, t.doors > t.doors_with_size ? { value: "Size not read (marked below)", count: t.doors - t.doors_with_size } : null) + countList("By fire rating", t.by_fire_rating) + countList("By hardware group", t.by_hardware_group) + countList("By frame material", t.by_frame_material) + "</div>";
       }
       function srcText(d) {
@@ -2142,13 +2149,13 @@ global.SovereignPdfRender = {
           return '<tr data-door="' + esc(d.id) + '"><td class="nowrap mark-cell"><b>' + flag(d, "mark", esc(d.mark)) + "</b></td>" +
             td("Hardware group", flag(d, "hardware_group", esc(d.hardware_group || "-"))) +
             td("Size", (d.unsure || []).indexOf("size") >= 0 ? unread(d.width || "not read", "Not read with certainty: check it on the sheet. Not counted under By size.") : sizeCell(d), "nowrap") +
-            td("Thick.", thicknessCell(d), "nowrap") +
+            td("Thick.", flag(d, "thickness", thicknessCell(d)), "nowrap") +
             td("Fire", flag(d, "fire_rating", esc(d.fire_rating || "-")), "nowrap") +
             td("Door type", flag(d, "door_type", esc(d.door_type || "-"))) +
-            td("Door matl / fin", esc([d.door_material, d.door_finish].filter(Boolean).join(" / ") || "-")) +
-            td("Frame", esc([d.frame_type, d.frame_material, d.frame_finish].filter(Boolean).join(" / ") || "-")) +
-            td("Notes", esc(d.notes || "") + (d.corrected ? ' <span class="tag ok">CORRECTED</span>' : "")) +
-            td("Source", '<span class="src-cite">' + esc(srcText(d)) + "</span>", "nowrap muted-small src-cell") +
+            td("Door matl / fin", flag(d, "door_material", esc(d.door_material || "-")) + " / " + flag(d, "door_finish", esc(d.door_finish || "-"))) +
+            td("Frame", ["frame_type", "frame_material", "frame_finish"].map(function (f) { return flag(d, f, esc(d[f] || "-")); }).join(" / ")) +
+            td("Notes", esc(d.notes || "") + (d.review_issues || []).map(function (issue) { return ' <span class="unread">' + esc(issue) + '</span>'; }).join('') + (d.corrected ? ' <span class="tag ok">CORRECTED</span>' : "")) +
+            td("Source", '<span class="src-cite">' + esc(srcText(d)) + (d.machine_read ? ' · machine-read OCR' : '') + "</span>", "nowrap muted-small src-cell") +
             '<td class="nowrap edit-cell"><button type="button" class="small" data-edit="' + esc(d.id) + '" aria-label="Edit door ' + esc(d.mark || "") + '">EDIT</button></td></tr>';
         }).join("");
         box.innerHTML = '<p class="muted-small">' + doors.length + " door rows, machine-read: check them against the source page before you submit." +
@@ -2246,7 +2253,7 @@ global.SovereignPdfRender = {
         b.textContent = "DOWNLOAD THE DOOR LIST (CSV)";
         b.addEventListener("click", function () {
           workspace.then(function (m) {
-          var blob = new Blob([m.doorListCsv(state.detail.doors)], { type: "text/csv" });
+          var blob = new Blob([m.doorListCsv(state.detail.doors, state.detail.takeoff)], { type: "text/csv" });
           var a = document.createElement("a");
           a.href = URL.createObjectURL(blob);
           a.download = safeName() + "_doors.csv";
@@ -2267,8 +2274,16 @@ global.SovereignPdfRender = {
       }
 
       // ---------- read a page ----------
+      function beginBrowserRead() {
+        state.readAbort = new AbortController();
+        $("stop-read-btn").classList.remove("hide");
+      }
+      $("stop-read-btn").addEventListener("click", function () { if (state.readAbort) state.readAbort.abort(); });
+      function partialRead(ex) { return !!(ex.partial || (ex.metadata && ex.metadata.partial)); }
+      function partialNote(ex) { return partialRead(ex) ? " Partial machine read: page incomplete; review the rows read." : ""; }
       function setBusy(b) {
         state.busy = b;
+        if (!b) { state.readAbort = null; $("stop-read-btn").classList.add("hide"); }
         ["extract-btn", "client-extract-btn", "package-btn", "upload-btn", "guest-save-btn"].forEach(function (id) { $(id).disabled = b; });
       }
       function summaryText(pageNum, data, cached) {
@@ -2278,6 +2293,7 @@ global.SovereignPdfRender = {
         var what = type === "door_schedule" ? n + " door" + (n === 1 ? "" : "s") : n + " hardware group" + (n === 1 ? "" : "s") + (items ? " (" + items + " items)" : "");
         var md = data.metadata || {};
         var extra = [];
+        if (partialRead(data)) extra.push("PARTIAL machine read: page incomplete");
         if (md.extraction_mode === "text_layer") extra.push("read from the page's text"); else if (md.extraction_mode) extra.push("read as an image");
         if (md.rotation_applied) extra.push("the sheet is printed sideways, so it was turned " + md.rotation_applied + "° to read it");
         if (data.schedule_type_detected) extra.push("the page is a " + typeLabel(data.schedule_type_detected) + ", so it was read as one");
@@ -2295,12 +2311,17 @@ global.SovereignPdfRender = {
           (okPages ? '<p class="muted-small">Each row below shows the page and row it came from. Check the marked values against the sheet; any row can be corrected before the package is built.</p>' : "");
       }
       function readPlanInTab(id, plan, out, lines) {
+        beginBrowserRead();
         var bytesP = state.lastUpload.file.arrayBuffer();
         var small = (navigator.maxTouchPoints || 0) > 0 && Math.min(screen.width, screen.height) < 900;
         return Promise.all([bytesP, import(MODULE_URL)]).then(function (arr) {
           var bytes = arr[0], mod = arr[1];
           var step = function (i) {
             if (i >= plan.length) return Promise.resolve();
+            if (state.readAbort.signal.aborted) {
+              lines.push({ ok: false, text: "Partial machine read: reading stopped; " + (plan.length - i) + " selected page(s) were not read." });
+              return Promise.resolve();
+            }
             var p = plan[i];
             var label = p.type === "hardware_schedule" ? "hardware groups" : "door schedule";
             var prefix = "Reading page " + p.page + " (" + label + (plan.length > 1 ? ", " + (i + 1) + " of " + plan.length : "") + ") in this browser: ";
@@ -2308,7 +2329,7 @@ global.SovereignPdfRender = {
             progress("starting...");
             var runType = function (type) {
               var run = type === "door_schedule" ? mod.extractDoorScheduleFromPdf : mod.extractHardwareScheduleFromPdf;
-              return run(bytes, p.page, progress, { maxPixels: small ? 14e6 : 36e6 }).then(function (extraction) {
+              return run(bytes, p.page, progress, { maxPixels: small ? 14e6 : 36e6, signal: state.readAbort.signal }).then(function (extraction) {
                 var n = type === "door_schedule" ? (extraction.doors || []).length : (extraction.hardware_groups || []).length;
                 return { type: type, n: n, extraction: extraction };
               });
@@ -2320,6 +2341,7 @@ global.SovereignPdfRender = {
               return r;
             }).then(function (r) {
               if (!r.n) {
+                if (partialRead(r.extraction)) { lines.push({ ok: false, text: "Page " + p.page + ":" + partialNote(r.extraction) }); return; }
                 var md = (r.extraction && r.extraction.metadata) || {};
                 lines.push({ ok: false, text: "Page " + p.page + ": nothing reads as a " + (r.type === "door_schedule" ? "door schedule" : "hardware group") + (md.text_words ? " in its text" : " (read as an image, as shown and turned 90, 180 and 270 degrees)") + ". Pick the page that holds it, or read it as the other kind." });
                 return;
@@ -2331,7 +2353,7 @@ global.SovereignPdfRender = {
                 if (!res.ok) { lines.push({ ok: false, text: "Page " + p.page + " was read but could not be saved: " + plainError(res.data, res.status) }); return; }
                 var md = (r.extraction && r.extraction.metadata) || {};
                 var items = r.type === "door_schedule" ? 0 : (r.extraction.hardware_groups || []).reduce(function (a, g) { return a + ((g.components || []).length); }, 0);
-                lines.push({ ok: true, text: "Page " + p.page + ": " + r.n + (r.type === "door_schedule" ? " doors" : " hardware groups" + (items ? " (" + items + " items)" : "")) + " read in this browser" + (md.extraction_mode === "text_layer" ? " from the page's text" : " from the page image") + (md.rotation_applied ? " (turned " + md.rotation_applied + "°)" : "") + "." });
+                lines.push({ ok: !partialRead(r.extraction), text: partialNote(r.extraction) + " Page " + p.page + ": " + r.n + (r.type === "door_schedule" ? " doors" : " hardware groups" + (items ? " (" + items + " items)" : "")) + " read in this browser" + (md.extraction_mode === "text_layer" ? " from the page's text" : " from the page image") + (md.rotation_applied ? " (turned " + md.rotation_applied + "°)" : "") + "." });
               });
             }).then(function () { return step(i + 1); });
           };
@@ -2358,7 +2380,7 @@ global.SovereignPdfRender = {
           (res.data.results || []).forEach(function (r) {
             if (!r.ok) { failed.push(plan.find(function (x) { return x.page === r.page; }) || { page: r.page, type: r.type }); lines.push({ ok: false, text: r.error || ("Page " + r.page + " could not be read.") }); return; }
             var md = r.metadata || {};
-            lines.push({ ok: true, text: "Page " + r.page + ": " + (r.type === "door_schedule" ? r.doors + " door" + (r.doors === 1 ? "" : "s") : r.groups + " hardware group" + (r.groups === 1 ? "" : "s") + (r.items ? " (" + r.items + " items)" : "")) + " read" + (md.extraction_mode === "text_layer" ? " from the page's text" : md.extraction_mode ? " from the page image" : "") + (md.rotation_applied ? " (turned " + md.rotation_applied + "°)" : "") + "." });
+            lines.push({ ok: !partialRead(r), text: partialNote(r) + " Page " + r.page + ": " + (r.type === "door_schedule" ? r.doors + " door" + (r.doors === 1 ? "" : "s") : r.groups + " hardware group" + (r.groups === 1 ? "" : "s") + (r.items ? " (" + r.items + " items)" : "")) + " read" + (md.extraction_mode === "text_layer" ? " from the page's text" : md.extraction_mode ? " from the page image" : "") + (md.rotation_applied ? " (turned " + md.rotation_applied + "°)" : "") + "." });
           });
           return failed;
         });
@@ -2409,6 +2431,7 @@ global.SovereignPdfRender = {
         var type = $("sd-type").value === "hardware_schedule" ? "hardware_schedule" : "door_schedule";
         var out = $("extract-result");
         setBusy(true);
+        beginBrowserRead();
         out.innerHTML = '<span class="spin"></span>Loading the reader into this browser...';
         var bytesP = state.lastUpload && state.lastUpload.sessionId === id
           ? state.lastUpload.file.arrayBuffer()
@@ -2421,8 +2444,9 @@ global.SovereignPdfRender = {
           var bytes = arr[0], mod = arr[1];
           var progress = function (msg) { out.innerHTML = '<span class="spin"></span>' + esc(msg); };
           var run = type === "door_schedule" ? mod.extractDoorScheduleFromPdf : mod.extractHardwareScheduleFromPdf;
-          return run(bytes, pageNum, progress, { maxPixels: small ? 14e6 : 36e6 }).then(function (extraction) {
+          return run(bytes, pageNum, progress, { maxPixels: small ? 14e6 : 36e6, signal: state.readAbort.signal }).then(function (extraction) {
             var n = type === "door_schedule" ? (extraction.doors || []).length : (extraction.hardware_groups || []).length;
+            if (!n && partialRead(extraction)) throw new Error(partialNote(extraction));
             if (!n) throw new Error("No " + typeLabel(type) + " was found on page " + pageNum + ((extraction.metadata || {}).text_words ? " in its text" : " (read as shown and turned 90, 180 and 270 degrees)") + ". Pick the page that holds it, or read it as the other kind.");
             progress("Saving " + n + " rows...");
             return api("/api/hardware-schedule/session/" + encodeURIComponent(id) + "/page/" + pageNum + "/extract-result", {
@@ -2430,7 +2454,7 @@ global.SovereignPdfRender = {
               json: { extraction: extraction, provider: { name: "client_grid_deterministic", model: null, client: "browser_pdfjs_tesseract_wasm" } }
             }).then(function (res) {
               if (!res.ok) throw new Error("Saving failed: " + plainError(res.data, res.status));
-              out.innerHTML = '<div class="ok-box">' + esc("Page " + pageNum + ": " + n + (type === "door_schedule" ? " doors" : " hardware groups") + " read in this browser and saved.") + "</div>";
+              out.innerHTML = '<div class="ok-box">' + esc("Page " + pageNum + ": " + n + (type === "door_schedule" ? " doors" : " hardware groups") + " read in this browser and saved." + partialNote(extraction)) + "</div>";
             });
           });
         }).catch(function (e) {
@@ -2446,20 +2470,27 @@ global.SovereignPdfRender = {
         $("upload-result").innerHTML = '<div class="' + (failed ? "error-box" : "ok-box") + '">' + esc(file.name + (failed ? ": read finished with page errors. Check the page results below." : ": read complete. Check the rows and source citations below.")) + '</div>';
       }
       async function readGuest(file, project, found, plan) {
+        beginBrowserRead();
         state.current = "guest";
         state.lastUpload = { sessionId: "guest", file: file };
         state.guestReadings = [];
         $("session-card").classList.remove("hide");
         var modules = await Promise.all([workspace, import(MODULE_URL), file.arrayBuffer()]);
         var m = modules[0], reader = modules[1], bytes = modules[2], lines = [];
-        for (var p of plan) {
+        state.detail = m.guestDetail(file, project, (found && found.pages) || 1, state.guestReadings);
+        for (var i = 0; i < plan.length; i++) {
+          var p = plan[i];
+          if (state.readAbort.signal.aborted) {
+            lines.push({ ok: false, text: "Partial machine read: reading stopped; " + (plan.length - i) + " selected page(s) were not read." });
+            break;
+          }
           var progress = function (msg) { $("extract-result").textContent = "Reading page " + p.page + ": " + msg; };
           try {
             var run = p.type === "hardware_schedule" ? reader.extractHardwareScheduleFromPdf : reader.extractDoorScheduleFromPdf;
-            var extraction = await run(bytes, p.page, progress, { maxPixels: 14e6 });
+            var extraction = await run(bytes, p.page, progress, { maxPixels: 14e6, signal: state.readAbort.signal });
             var n = (extraction.doors || extraction.hardware_groups || []).length;
             state.guestReadings.push({ page: p.page, extraction: extraction });
-            lines.push({ ok: !!n, text: "Page " + p.page + ": " + n + (p.type === "door_schedule" ? " doors" : " hardware groups") + " read in this browser." });
+            lines.push({ ok: !!n && !partialRead(extraction), text: partialNote(extraction) + " Page " + p.page + ": " + n + (p.type === "door_schedule" ? " doors" : " hardware groups") + " read in this browser." });
           } catch (err) { lines.push({ ok: false, text: "Page " + p.page + " could not be read: " + err.message }); }
           state.detail = m.guestDetail(file, project, (found && found.pages) || 1, state.guestReadings);
           renderDetail();
@@ -2467,7 +2498,13 @@ global.SovereignPdfRender = {
         }
         $("signin-card").classList.add("hide");
         $("session-card").scrollIntoView({ behavior: "smooth", block: "start" });
-        return lines.some(function (l) { return !l.ok; });
+        if (state.readAbort.signal.aborted) {
+          state.detail.takeoff.partial = true;
+          state.detail.takeoff.qualifier += " Partial read: reading stopped before all selected pages completed.";
+          renderDetail();
+          renderLines($("extract-result"), lines, state.detail.doors.length + state.detail.hardware_sets.length);
+        }
+        return state.readAbort.signal.aborted || lines.some(function (l) { return !l.ok; });
       }
       async function uploadAndRead(file, project, type) {
         if (state.busy) return;

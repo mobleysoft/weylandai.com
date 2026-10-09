@@ -20,7 +20,7 @@
 // the server persists both the same way (writeDoorScheduleEntries,
 // savePageExtraction2).
 
-import { hardwareSpecSections } from "./schedule-workspace.mjs?v=20261009g018";
+import { hardwareSpecSections } from "./schedule-workspace.mjs?v=20261009g034";
 
 // ---------------------------------------------------------------- geometry
 
@@ -131,7 +131,9 @@ export async function pageTextLines(pdfjsLib, page, opts = {}) {
     if (rotation === 0 && score > 0 && items.length && score >= 0.6 * items.reduce((n, it) => n + (it.str ? it.str.length : 0), 0)) break;
   }
   const lines = clusterLines(best.words);
-  return { lines, width: best.viewport.width, height: best.viewport.height, rotation: best.rotation, item_count: items.length, word_count: best.words.length };
+  const textWords = items.reduce((n, it) => n + (typeof it.str === "string" ? (it.str.match(/\S+/g) || []).length : 0), 0);
+  return { lines, width: best.viewport.width, height: best.viewport.height, rotation: best.rotation,
+    item_count: items.length, word_count: best.words.length, text_word_count: textWords, has_text_layer: textWords > 0 };
 }
 
 // ---------------------------------------------------------------- shared text helpers
@@ -453,22 +455,25 @@ async function buildTable(lines, fieldIdx, pageSize, opts, fieldCandidate = null
   // line with no text in the mark column continues the row above (a wrapped
   // cell); a non-mark text in the mark column is a section label.
   const markCol = fields.indexOf("mark");
-  const cellsOf = (L) => { const groups = Array.from({ length: ncol }, () => []); for (const w of L.words) groups[colOf(w)].push(w); return groups.map((g) => joinWords(g, h)); };
+  const cellsOf = (L) => { const groups = Array.from({ length: ncol }, () => []); for (const w of L.words) groups[colOf(w)].push(w); return groups; };
   const rows = [];
   let section = null;
   for (const L of dataLines) {
-    const cells = cellsOf(L);
+    const words = cellsOf(L);
+    const cells = words.map(g => joinWords(g, h));
     const markText = markCol >= 0 ? cells[markCol].trim() : "";
     const prev = rows[rows.length - 1];
     if (markText && looksLikeMark(markText.split(" ")[0])) {
-      rows.push({ cells, section, y: L.y, lines: 1 });
+      rows.push({ cells, words, section, y: L.y, lines: 1 });
     } else if (markText) {
       if (!prev || L.y - prev.y > 1.6 * rowPitch || cells.filter((c) => c).length === 1) { section = cells.filter((c) => c).join(" ").trim(); continue; }
       for (let k = 0; k < ncol; k++) if (cells[k]) prev.cells[k] = prev.cells[k] ? prev.cells[k] + " " + cells[k] : cells[k];
       prev.lines++;
+      words.forEach((g, k) => prev.words[k].push(...g));
     } else if (prev && L.y - prev.y <= 1.6 * rowPitch) {
       for (let k = 0; k < ncol; k++) if (cells[k]) prev.cells[k] = prev.cells[k] ? prev.cells[k] + " " + cells[k] : cells[k];
       prev.lines++;
+      words.forEach((g, k) => prev.words[k].push(...g));
     }
   }
   const doors = rows.map((r, i) => doorFromRow(r, fields, i, pageSize)).filter(Boolean);
@@ -564,7 +569,15 @@ function doorFromRow(row, fields, index, pageSize) {
   const notes = [get("notes"), get("location") ? "Room: " + get("location") : null].filter(Boolean).join("; ") || null;
   const panic = get("panic_hardware");
   const confidence = {};
-  for (const f of fields) if (f) confidence[f] = 1.0;
+  const fromOcr = row.words.some(g => g.some(w => w.conf != null));
+  fields.forEach((f, k) => {
+    if (f) confidence[f] = fromOcr ? (row.words[k].length ? Math.min(...row.words[k].map(w => (w.conf ?? 0) / 100)) : 0) : 1;
+  });
+  if (fromOcr) {
+    if (fields.includes("width") && size.width_inches == null) confidence.width = 0;
+    if (fields.includes("height") && size.height_inches == null) confidence.height = 0;
+    if (fields.includes("size") && (size.width_inches == null || size.height_inches == null)) confidence.size = 0;
+  }
   return {
     door_number: mark,
     hardware_group: get("hardware_group"),
@@ -593,7 +606,7 @@ function doorFromRow(row, fields, index, pageSize) {
     source_row: index,
     source_y: Math.round(row.y),
     field_confidence: confidence,
-    read_from: "text_layer",
+    read_from: fromOcr ? "ocr_lines" : "text_layer",
   };
 }
 

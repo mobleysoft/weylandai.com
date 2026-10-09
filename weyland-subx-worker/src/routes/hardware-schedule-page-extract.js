@@ -370,7 +370,7 @@ router.post("/api/hardware-schedule/session/:sessionId/read-pages", async (reque
     let tl = null;
     if (doc) { try { tl = await readPageFromDoc(doc, p.page, p.type); } catch (e) { console.warn("[read-pages] text read failed p" + p.page + ": " + (e && e.message)); } }
     const words = tl && tl.result && tl.result.metadata ? tl.result.metadata.text_words || 0 : 0;
-    if (tl && (!tl.empty || words >= 60 || !env2.BROWSER)) fromText.push({ ...tl, ok: true, page: p.page, requested_type: p.type });
+    if (tl && (!tl.empty || words > 0 || !env2.BROWSER)) fromText.push({ ...tl, ok: true, page: p.page, requested_type: p.type });
     else forBrowser.push(p);
   }
   if (doc) { try { await doc.destroy(); } catch (_) { /* gone */ } }
@@ -392,7 +392,7 @@ router.post("/api/hardware-schedule/session/:sessionId/read-pages", async (reque
       try { await savePageExtraction2(sessionId, r.page, persisted, env2, { deferEnrich: true }); } catch (e) { console.warn("[read-pages] save failed p" + r.page + ": " + e.message); }
     }
     const isDoor = persisted.schedule_type === "door_schedule";
-    results.push({ page: r.page, type: persisted.schedule_type, ok: true, doors: isDoor ? (persisted.entry_count ?? (persisted.entries || []).length) : 0, groups: isDoor ? 0 : (persisted.hardware_groups || []).length, items: isDoor ? 0 : (persisted.hardware_groups || []).reduce((n, g) => n + ((g.components || []).length), 0), metadata: { extraction_mode: (persisted.metadata || {}).extraction_mode || null, rotation_applied: (persisted.metadata || {}).rotation_applied || null, read_source: r.source || "browser" }, ms: r.ms });
+    results.push({ page: r.page, type: persisted.schedule_type, ok: true, doors: isDoor ? (persisted.entry_count ?? (persisted.entries || []).length) : 0, groups: isDoor ? 0 : (persisted.hardware_groups || []).length, items: isDoor ? 0 : (persisted.hardware_groups || []).reduce((n, g) => n + ((g.components || []).length), 0), partial: !!persisted.partial, metadata: { partial: !!persisted.partial, message: persisted.metadata?.message || null, extraction_mode: (persisted.metadata || {}).extraction_mode || null, rotation_applied: (persisted.metadata || {}).rotation_applied || null, read_source: r.source || "browser" }, ms: r.ms });
   }
   // The items are priced once, after the last page, in the background.
   if (results.some((r) => r.ok && r.items)) {
@@ -689,13 +689,14 @@ router.post("/api/hardware-schedule/session/:sessionId/page/:pageNum/extract-res
       if (extraction.doors.length === 0) {
         return jsonResponse3({
           success: false,
-          error: "EMPTY_DOOR_SCHEDULE",
-          details: "No door rows were extracted. Review the source page, orientation and table detection before continuing.",
+          partial: !!(extraction.partial || extraction.metadata?.partial),
+          error: extraction.partial || extraction.metadata?.partial ? "PARTIAL_READ" : "EMPTY_DOOR_SCHEDULE",
+          details: extraction.metadata?.message || "No door rows were extracted. Review the source page, orientation and table detection before continuing.",
           requires_review: true
         }, 422);
       }
       const rotation = extraction.metadata && extraction.metadata.rotation_applied != null ? extraction.metadata.rotation_applied : null;
-      const doorsWithSource = extraction.doors.map((d) => ({ ...d, source_rotation: rotation }));
+      const doorsWithSource = extraction.doors.map((d) => ({ ...d, source_rotation: rotation, read_audit: { partial: !!(extraction.partial || extraction.metadata?.partial), expected_marks: extraction.metadata?.expected_marks || [] } }));
       const written = await writeDoorScheduleEntries(sessionId, session.tenant_id || null, pageNumber, doorsWithSource, extraction.extraction_confidence || 0.85, env2);
       if (!written.success) {
         return jsonResponse3({ error: "Failed to store door-schedule result", details: written.error }, 500);
@@ -708,6 +709,8 @@ router.post("/api/hardware-schedule/session/:sessionId/page/:pageNum/extract-res
         provider: provider.name,
         schedule_type: "door_schedule",
         doors: written.entries_count,
+        partial: !!(extraction.partial || extraction.metadata?.partial),
+        metadata: extraction.metadata || {},
         next_step: `Review door index: GET /api/hardware-schedule/session/${sessionId}/door-index`
       });
     }
@@ -727,6 +730,7 @@ router.post("/api/hardware-schedule/session/:sessionId/page/:pageNum/extract-res
     const extractionResult = {
       page_number: pageNumber,
       total_pages: totalPages,
+      partial: !!(extraction.partial || extraction.metadata?.partial),
       hardware_groups: extraction.hardware_groups,
       door_hardware_matrix: extraction.door_hardware_matrix || [],
       detected_nomenclature: extraction.detected_nomenclature || null,
@@ -750,6 +754,8 @@ router.post("/api/hardware-schedule/session/:sessionId/page/:pageNum/extract-res
       provider: provider.name,
       hardware_groups: extraction.hardware_groups.length,
       components: componentCount,
+      partial: extractionResult.partial,
+      metadata: extractionResult.metadata,
       matrix_entries: (extraction.door_hardware_matrix || []).length,
       next_step: `Review and approve: POST /api/hardware-schedule/session/${sessionId}/page/${pageNumber}/approve`
     });

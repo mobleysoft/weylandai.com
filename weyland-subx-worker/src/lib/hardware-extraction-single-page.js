@@ -121,6 +121,8 @@ export async function getPdfPageCount(pdfBuffer) {
 
 export async function savePageExtraction(sessionId, pageNumber, extractionData, env2, opts = {}) {
   const mergeMode = opts && opts.merge === true;
+  const partial = !!(extractionData.partial || extractionData.metadata?.partial || extractionData.done === false);
+  extractionData = { ...extractionData, partial, metadata: { ...extractionData.metadata, partial } };
   const hardwareGroups = extractionData.hardware_groups || extractionData.hardwareGroups || [];
   const setsCount = hardwareGroups.length;
   let componentsCount = 0;
@@ -242,7 +244,15 @@ export async function savePageExtraction(sessionId, pageNumber, extractionData, 
   }
   await env2.DB.prepare(`
     UPDATE hardware_extraction_sessions
-    SET pages_processed = (SELECT COUNT(*) FROM hardware_page_extractions WHERE session_id = ?),
+    SET pages_processed = (
+          SELECT COUNT(*) FROM hardware_page_extractions
+          WHERE session_id = ?
+            AND CASE WHEN json_valid(extracted_data) THEN
+              COALESCE(json_extract(extracted_data, '$.partial'), 0) = 0
+              AND COALESCE(json_extract(extracted_data, '$.metadata.partial'), 0) = 0
+              AND COALESCE(json_extract(extracted_data, '$.done'), 1) != 0
+            ELSE 0 END
+        ),
         total_sets_extracted = ?,
         total_components_extracted = ?,
         current_page = ?,

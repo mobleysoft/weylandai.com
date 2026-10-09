@@ -8,6 +8,69 @@ import { PDFDocument, StandardFonts, rgb } from "pdf-lib";
 import { citedPagesForSession } from "../src/routes/subx-workspace.js";
 import { assembleSubmittalPackage } from "../src/lib/submittal-assembler.js";
 import { writeDoorScheduleEntries } from "../src/lib/hardware-extraction-vision-dispatch.js";
+import { reviewDoorRows } from "../assets/client-ocr-src/schedule-workspace.mjs";
+import { persistBrowserGridResult } from "../src/lib/hardware-extraction-pipeline.js";
+
+test("F2/F3: persistence preserves duplicate scan occurrences and never marks a partial read done", async () => {
+  const db = makeDb(), env = { DB: d1(db) };
+  db.exec("ALTER TABLE hardware_extraction_sessions ADD COLUMN door_schedule_extracted INTEGER DEFAULT 0; ALTER TABLE hardware_extraction_sessions ADD COLUMN door_entries_count INTEGER DEFAULT 0; ALTER TABLE hardware_extraction_sessions ADD COLUMN pages_processed INTEGER DEFAULT 0; ALTER TABLE hardware_extraction_sessions ADD COLUMN door_schedule_extracted_at TEXT; ALTER TABLE hardware_extraction_sessions ADD COLUMN updated_at TEXT;");
+  const row = { door_number: "214", read_from: "ocr_lines", confidence_source: "ocr_words", field_confidence: { mark: .61, hardware_group: .55 }, source_row: 4 };
+  const br = { result: { partial: true, doors: [{ ...row, hardware_group: "02" }, { ...row, hardware_group: "05", source_row: 5 }], metadata: { partial: true, expected_marks: ["214", "211"] } } };
+  const result = await persistBrowserGridResult(br, "door_schedule", "s1", null, 3, 6, env);
+  assert.equal(result.partial, true);
+  assert.equal(result.done, false);
+  assert.equal(db.prepare("SELECT door_schedule_extracted FROM hardware_extraction_sessions WHERE id = 's1'").get().door_schedule_extracted, 0);
+  assert.equal(db.prepare("SELECT pages_processed FROM hardware_extraction_sessions WHERE id = 's1'").get().pages_processed, 0);
+  let stored = db.prepare("SELECT * FROM door_schedule_entries WHERE session_id = 's1'").all();
+  assert.equal(stored.length, 2);
+  assert.deepEqual(stored.map(d => d.hardware_group), ["02", "05"]);
+  const doors = stored.map(d => { const fc = JSON.parse(d.field_confidence_json); return { ...d, original_mark: fc.original_mark, read_from: fc.read_from, field_confidence: fc.fields, confidence_source: fc.confidence_source, read_audit: fc.read_audit }; });
+  const review = reviewDoorRows(doors);
+  assert.deepEqual(review.duplicate_marks, [{ page: 3, mark: "214", count: 2 }]);
+  assert.deepEqual(review.missing_expected_marks, [{ page: 3, mark: "211" }]);
+  assert.equal(review.below_threshold_fields, 4);
+  await persistBrowserGridResult(br, "door_schedule", "s1", null, 3, 6, env);
+  stored = db.prepare("SELECT * FROM door_schedule_entries WHERE session_id = 's1'").all();
+  assert.equal(stored.length, 2, "replaying a read keeps the same two occurrence keys");
+  db.close();
+});
+
+test("complete rereads remove obsolete generated occurrences, preserving corrections and other pages", async () => {
+  const db = makeDb(), env = { DB: d1(db) };
+  db.exec("ALTER TABLE hardware_extraction_sessions ADD COLUMN door_schedule_extracted INTEGER DEFAULT 0; ALTER TABLE hardware_extraction_sessions ADD COLUMN door_entries_count INTEGER DEFAULT 0; ALTER TABLE hardware_extraction_sessions ADD COLUMN pages_processed INTEGER DEFAULT 0; ALTER TABLE hardware_extraction_sessions ADD COLUMN door_schedule_extracted_at TEXT; ALTER TABLE hardware_extraction_sessions ADD COLUMN updated_at TEXT;");
+  const row = { door_number: "214", hardware_group: "05", read_from: "ocr_lines", source_row: 4, field_confidence: { mark: .99 } };
+  const read = (page, doors, partial = false) => writeDoorScheduleEntries("s1", null, page, doors, .99, env, { partial });
+  const stored = () => db.prepare("SELECT mark, page_number, hardware_group FROM door_schedule_entries ORDER BY page_number, mark").all().map(r => ({ ...r }));
+  await read(3, [{ ...row, hardware_group: "02" }, row]);
+  await read(4, [row, row]);
+  const otherPage = stored().filter(r => r.page_number === 4);
+  await read(3, [row], true);
+  assert.equal(stored().filter(r => r.page_number === 3).length, 2, "partial absence cannot remove an old occurrence");
+  const complete = await read(3, [row]);
+  assert.equal(complete.partial, false);
+  assert.deepEqual(stored().filter(r => r.page_number === 3), [{ mark: "214", page_number: 3, hardware_group: "05" }]);
+  assert.deepEqual(stored().filter(r => r.page_number === 4), otherPage);
+  // Protect both an incoming row with a manual correction and an obsolete corrected occurrence.
+  await read(3, [row, row]);
+  db.prepare("UPDATE door_schedule_entries SET hardware_group = 'MANUAL', corrections_json = '{}' WHERE page_number = 3").run();
+  const corrected = await read(3, [{ ...row, hardware_group: "NEW OCR" }]);
+  assert.equal(corrected.entries[0].hardware_group, "MANUAL", "the caller also sees the preserved correction");
+  assert.deepEqual(stored().filter(r => r.page_number === 3).map(r => r.hardware_group), ["MANUAL", "MANUAL"]);
+  assert.deepEqual(stored().filter(r => r.page_number === 4), otherPage);
+  db.close();
+});
+
+test("failed replacement rolls back every row and leaves old duplicate occurrences intact", async () => {
+  const db = makeDb(), env = { DB: d1(db) };
+  const row = { door_number: "214", hardware_group: "05", read_from: "ocr_lines", source_row: 4, field_confidence: { mark: .99 } };
+  await writeDoorScheduleEntries("s1", null, 3, [{ ...row, hardware_group: "02" }, row], .99, env, { partial: true });
+  const before = db.prepare("SELECT * FROM door_schedule_entries ORDER BY mark").all();
+  db.exec("CREATE TRIGGER reject_test_group BEFORE INSERT ON door_schedule_entries WHEN NEW.hardware_group = 'FAIL' BEGIN SELECT RAISE(ABORT, 'test write failure'); END;");
+  const result = await writeDoorScheduleEntries("s1", null, 3, [{ ...row, hardware_group: "REPLACED" }, { ...row, door_number: "215", hardware_group: "FAIL" }], .99, env);
+  assert.equal(result.success, false);
+  assert.deepEqual(db.prepare("SELECT * FROM door_schedule_entries ORDER BY mark").all(), before);
+  db.close();
+});
 
 function d1(db) {
   return {
@@ -21,7 +84,15 @@ function d1(db) {
       };
       return stmt;
     },
-    async batch(stmts) { return Promise.all(stmts.map((s) => s.run())); },
+    async batch(stmts) {
+      db.exec("BEGIN IMMEDIATE");
+      try {
+        const results = [];
+        for (const s of stmts) results.push(await s.all());
+        db.exec("COMMIT");
+        return results;
+      } catch (e) { db.exec("ROLLBACK"); throw e; }
+    },
   };
 }
 
@@ -29,7 +100,7 @@ function makeDb() {
   const db = new DatabaseSync(":memory:");
   db.exec(`
     CREATE TABLE hardware_extraction_sessions (id TEXT PRIMARY KEY, user_id TEXT, project_name TEXT, filename TEXT, file_buffer_key TEXT, total_pages INTEGER, status TEXT);
-    CREATE TABLE door_schedule_entries (id TEXT, session_id TEXT, tenant_id TEXT, page_number INTEGER, mark TEXT, hardware_group TEXT, fire_rating TEXT, width TEXT, height TEXT, width_inches REAL, height_inches REAL, door_type TEXT, door_material TEXT, frame_type TEXT, frame_material TEXT, panic INTEGER, thickness TEXT, thickness_inches REAL, door_finish TEXT, stc_rating INTEGER, frame_finish TEXT, head_detail TEXT, jamb_detail TEXT, sill_detail TEXT, notes TEXT, extraction_confidence REAL, field_confidence_json TEXT, low_confidence_fields TEXT, created_at TEXT, updated_at TEXT, UNIQUE(session_id, mark));
+    CREATE TABLE door_schedule_entries (id TEXT, session_id TEXT, tenant_id TEXT, page_number INTEGER, mark TEXT, hardware_group TEXT, fire_rating TEXT, width TEXT, height TEXT, width_inches REAL, height_inches REAL, door_type TEXT, door_material TEXT, frame_type TEXT, frame_material TEXT, panic INTEGER, thickness TEXT, thickness_inches REAL, door_finish TEXT, stc_rating INTEGER, frame_finish TEXT, head_detail TEXT, jamb_detail TEXT, sill_detail TEXT, notes TEXT, extraction_confidence REAL, field_confidence_json TEXT, low_confidence_fields TEXT, corrections_json TEXT, created_at TEXT, updated_at TEXT, UNIQUE(session_id, mark));
     CREATE TABLE hardware_sets (id TEXT PRIMARY KEY, session_id TEXT, set_number TEXT, set_name TEXT, door_location TEXT, door_count INTEGER, notes TEXT, affirmed INTEGER);
     CREATE TABLE hardware_components (id TEXT, set_id TEXT, component_type TEXT, quantity INTEGER, manufacturer TEXT, model TEXT, catalog_number TEXT, finish TEXT, ansi_bhma_grade TEXT, fire_rating_minutes INTEGER, ul_listing_number TEXT, ada_compliant INTEGER, uom TEXT, sequence_order INTEGER, specifications TEXT);
     CREATE TABLE hardware_page_extractions (session_id TEXT, page_number INTEGER);
