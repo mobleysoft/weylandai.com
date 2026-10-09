@@ -359,7 +359,7 @@ export async function savePageExtraction(sessionId, pageNumber, extractionData, 
   console.log(`[Hardware Extractor] Saved page ${pageNumber} extraction to cache`);
 }
 
-async function autoEnrichSessionOnSave(sessionId, env2) {
+export async function autoEnrichSessionOnSave(sessionId, env2) {
   const compsResult = await env2.DB.prepare(`
     SELECT hc.id, hc.manufacturer, hc.model, hc.finish, hc.catalog_number,
            hc.unit_price, hc.price_source
@@ -376,12 +376,15 @@ async function autoEnrichSessionOnSave(sessionId, env2) {
   return { enriched: results.enriched, skipped: results.skipped, total: components.length };
 }
 
-export async function savePageExtraction2(sessionId, pageNumber, extractionResult, env2, options) {
+// Pricing every unpriced item of the session runs the catalogue matcher per item. It ran on
+// every page save, so a bid set's eight pages priced the same items eight times inside one
+// request and Rockford's batch read died at 92 s (2026-10-09). options.ctx: price once in the
+// background (ctx.waitUntil) instead; options.deferEnrich: the caller prices after its last page.
+export async function savePageExtraction2(sessionId, pageNumber, extractionResult, env2, options = {}) {
   const saved = await savePageExtraction(sessionId, pageNumber, extractionResult, env2, options);
-  try {
-    await autoEnrichSessionOnSave(sessionId, env2);
-  } catch (e) {
-    console.warn(`[CPS AutoEnrich] ${sessionId} p${pageNumber}: non-blocking failure:`, e.message);
-  }
+  if (options && options.deferEnrich) return saved;
+  const enrich = () => autoEnrichSessionOnSave(sessionId, env2).catch((e) => console.warn(`[CPS AutoEnrich] ${sessionId} p${pageNumber}: non-blocking failure:`, e.message));
+  if (options && options.ctx && typeof options.ctx.waitUntil === "function") options.ctx.waitUntil(enrich());
+  else await enrich();
   return saved;
 }
