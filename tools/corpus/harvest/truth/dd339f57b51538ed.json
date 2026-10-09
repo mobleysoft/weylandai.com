@@ -1,0 +1,947 @@
+{
+ "sha16": "dd339f57b51538ed",
+ "sha256": "dd339f57b51538ed362f6fd1c1d9f460fe2dacc6699b5e424d69304bb351265b",
+ "file": "tools/corpus/door-schedules/dd339f57b51538ed.pdf",
+ "bytes": 5789186,
+ "family": "Berryessa",
+ "source": "corpus/door-schedules",
+ "label": "Berryessa Union School District — Bid B-09-2023-24 Interior Door Replacement (3 elementary schools)",
+ "source_url": "https://www.berryessa.k12.ca.us/documents/MEASURE%20U%20BOND%20PROJECTS%202023-24/BID%20B-09-2023-24%20INTERIOR%20DOOR%20REPLACE%203%20SCHOOLS/PROJECT-MANUAL-DRAWINGS-BID-B-09-2023-24-INTERIOR-DOOR-REPLACEMENT-THREE-ELEMENTARY-SCHOOLS.pdf",
+ "page_count": 288,
+ "text_layer": {
+  "pages_with_text": 275,
+  "pages": 288
+ },
+ "pages": {
+  "door_candidates": 9,
+  "hardware_candidates": 2,
+  "door_schedule_pages": [
+   284,
+   286,
+   288
+  ],
+  "hardware_pages": [
+   274,
+   282
+  ]
+ },
+ "readers": {
+  "a": {
+   "doors": 24,
+   "sets": 3,
+   "items": 17,
+   "name": "production text layer (weyland-subx-worker/src/lib/text-layer-read.js)"
+  },
+  "b": {
+   "doors": 24,
+   "sets": 2,
+   "items": 16,
+   "name": "geometry first (tools/accuracy/truth/reader_b.mjs)",
+   "tables": 3
+  }
+ },
+ "rows_agreed": 16,
+ "rows_disputed": 25,
+ "rows_total": 41,
+ "agreement_rate": 0.3902,
+ "agreement": {
+  "doors": {
+   "rows": 24,
+   "agreed": 0,
+   "disputed": 24,
+   "only_a": 0,
+   "only_b": 0,
+   "fields": {
+    "width_inches": {
+     "agree": 24,
+     "total": 24
+    },
+    "height_inches": {
+     "agree": 24,
+     "total": 24
+    },
+    "door_type": {
+     "agree": 24,
+     "total": 24
+    },
+    "material": {
+     "agree": 24,
+     "total": 24
+    },
+    "fire_rating": {
+     "agree": 24,
+     "total": 24
+    },
+    "hardware_group": {
+     "agree": 24,
+     "total": 24
+    },
+    "location": {
+     "agree": 0,
+     "total": 24
+    }
+   },
+   "agreement_rate": 0
+  },
+  "items": {
+   "rows": 17,
+   "agreed": 16,
+   "disputed": 0,
+   "only_a": 1,
+   "only_b": 0,
+   "fields": {
+    "qty": {
+     "agree": 16,
+     "total": 16
+    },
+    "description": {
+     "agree": 16,
+     "total": 16
+    },
+    "catalog": {
+     "agree": 16,
+     "total": 16
+    },
+    "finish": {
+     "agree": 16,
+     "total": 16
+    },
+    "manufacturer": {
+     "agree": 14,
+     "total": 14
+    }
+   },
+   "agreement_rate": 0.9412
+  },
+  "sets": {
+   "sets": 3,
+   "agreed": 2
+  }
+ },
+ "triage_class": "complete",
+ "triage_from": "inferred (S=true H=true plan sheets=3)",
+ "oracles": {
+  "marks_on_plan": {
+   "applicable": true,
+   "total": 24,
+   "pass": 24,
+   "fail": 0,
+   "pass_rate": 1,
+   "examples": [],
+   "plan_sheets": [
+    "A2.1 p.283",
+    "A2.1 p.285",
+    "A2.1 p.287"
+   ],
+   "plan_counts": {
+    "plan_sheets": 3,
+    "rooms": 274,
+    "corridors": 20,
+    "tags": 24,
+    "unmatched_tags": 0,
+    "schedule_marks": 24,
+    "marks_not_on_plan": 0
+   }
+  },
+  "sets_exist": {
+   "applicable": true,
+   "total": 2,
+   "pass": 2,
+   "fail": 0,
+   "pass_rate": 1,
+   "examples": []
+  },
+  "set_door_lists": {
+   "applicable": false,
+   "reason": "no hardware set prints its own door list"
+  },
+  "types_in_legend": {
+   "applicable": false,
+   "reason": "no DOOR TYPES / FRAME TYPES legend title in this PDF"
+  },
+  "sizes_and_marks": {
+   "applicable": true,
+   "total": 24,
+   "pass": 24,
+   "fail": 0,
+   "pass_rate": 1,
+   "examples": [],
+   "size_fail": 0,
+   "mark_fail": 0
+  }
+ },
+ "calibration": [
+  {
+   "expected": "berryessa-087100-hardware-groups.json",
+   "kind": "items",
+   "reader_a": {
+    "expected_groups": 2,
+    "groups_found": 2,
+    "expected_rows": 16,
+    "rows_found": 16,
+    "rows_fully_right": 16,
+    "fields_right": 80,
+    "fields_total": 80,
+    "per_field": {
+     "qty": {
+      "right": 16,
+      "total": 16
+     },
+     "description": {
+      "right": 16,
+      "total": 16
+     },
+     "catalog": {
+      "right": 16,
+      "total": 16
+     },
+     "finish": {
+      "right": 16,
+      "total": 16
+     },
+     "manufacturer": {
+      "right": 16,
+      "total": 16
+     }
+    },
+    "wrong": []
+   },
+   "reader_b": {
+    "expected_groups": 2,
+    "groups_found": 2,
+    "expected_rows": 16,
+    "rows_found": 16,
+    "rows_fully_right": 16,
+    "fields_right": 80,
+    "fields_total": 80,
+    "per_field": {
+     "qty": {
+      "right": 16,
+      "total": 16
+     },
+     "description": {
+      "right": 16,
+      "total": 16
+     },
+     "catalog": {
+      "right": 16,
+      "total": 16
+     },
+     "finish": {
+      "right": 16,
+      "total": 16
+     },
+     "manufacturer": {
+      "right": 16,
+      "total": 16
+     }
+    },
+    "wrong": []
+   },
+   "agreed": {
+    "expected_groups": 2,
+    "groups_found": 2,
+    "expected_rows": 16,
+    "rows_found": 16,
+    "rows_fully_right": 16,
+    "fields_right": 80,
+    "fields_total": 80,
+    "per_field": {
+     "qty": {
+      "right": 16,
+      "total": 16
+     },
+     "description": {
+      "right": 16,
+      "total": 16
+     },
+     "catalog": {
+      "right": 16,
+      "total": 16
+     },
+     "finish": {
+      "right": 16,
+      "total": 16
+     },
+     "manufacturer": {
+      "right": 16,
+      "total": 16
+     }
+    },
+    "wrong": []
+   },
+   "fields": {
+    "agreed": {
+     "right": 78,
+     "total": 78
+    },
+    "disputed": {
+     "total": 0,
+     "a_right": 0,
+     "b_right": 0,
+     "neither": 0
+    },
+    "agreed_wrong": []
+   }
+  },
+  {
+   "expected": "berryessa-a9.2-door-schedules.json",
+   "kind": "doors",
+   "reader_a": {
+    "expected_rows": 24,
+    "rows_found": 24,
+    "rows_fully_right": 0,
+    "fields_right": 144,
+    "fields_total": 168,
+    "per_field": {
+     "width_inches": {
+      "right": 24,
+      "total": 24
+     },
+     "height_inches": {
+      "right": 24,
+      "total": 24
+     },
+     "door_type": {
+      "right": 24,
+      "total": 24
+     },
+     "material": {
+      "right": 24,
+      "total": 24
+     },
+     "fire_rating": {
+      "right": 24,
+      "total": 24
+     },
+     "hardware_group": {
+      "right": 24,
+      "total": 24
+     },
+     "location": {
+      "right": 0,
+      "total": 24
+     }
+    },
+    "extra_rows": 0,
+    "wrong": [
+     {
+      "key": "001",
+      "page": 284,
+      "field": "location",
+      "expected": "ADMIN LOBBY HALL",
+      "read": null
+     },
+     {
+      "key": "002",
+      "page": 284,
+      "field": "location",
+      "expected": "A-POD CLASSROOM A1",
+      "read": null
+     },
+     {
+      "key": "003",
+      "page": 284,
+      "field": "location",
+      "expected": "A-POD / LOBBY",
+      "read": null
+     },
+     {
+      "key": "004",
+      "page": 284,
+      "field": "location",
+      "expected": "B-POD / HCORRIDOR",
+      "read": null
+     },
+     {
+      "key": "005",
+      "page": 284,
+      "field": "location",
+      "expected": "C-POD / CORRIDOR",
+      "read": null
+     },
+     {
+      "key": "006",
+      "page": 284,
+      "field": "location",
+      "expected": "D-POD / CORRIDOR",
+      "read": null
+     },
+     {
+      "key": "007",
+      "page": 284,
+      "field": "location",
+      "expected": "E-POD / CORRIDOR",
+      "read": null
+     },
+     {
+      "key": "008",
+      "page": 284,
+      "field": "location",
+      "expected": "F-POD / CORRIDOR",
+      "read": null
+     },
+     {
+      "key": "009",
+      "page": 284,
+      "field": "location",
+      "expected": "KITCHEN / CORRIDOR",
+      "read": null
+     },
+     {
+      "key": "001",
+      "page": 286,
+      "field": "location",
+      "expected": "ADMIN LOBBY HALL",
+      "read": null
+     },
+     {
+      "key": "002",
+      "page": 286,
+      "field": "location",
+      "expected": "A-POD / CORRIDOR",
+      "read": null
+     },
+     {
+      "key": "003",
+      "page": 286,
+      "field": "location",
+      "expected": "B-POD / CORRIDOR",
+      "read": null
+     },
+     {
+      "key": "004",
+      "page": 286,
+      "field": "location",
+      "expected": "C-POD / CORRIDOR",
+      "read": null
+     },
+     {
+      "key": "005",
+      "page": 286,
+      "field": "location",
+      "expected": "D-POD / CORRIDOR",
+      "read": null
+     },
+     {
+      "key": "006",
+      "page": 286,
+      "field": "location",
+      "expected": "E-POD / CORRIDOR",
+      "read": null
+     },
+     {
+      "key": "008",
+      "page": 286,
+      "field": "location",
+      "expected": "KITCHEN / CORRIDOR",
+      "read": null
+     },
+     {
+      "key": "001",
+      "page": 288,
+      "field": "location",
+      "expected": "ADMIN LOBBY HALL",
+      "read": null
+     },
+     {
+      "key": "002",
+      "page": 288,
+      "field": "location",
+      "expected": "A-POD / CORRIDOR",
+      "read": null
+     },
+     {
+      "key": "003",
+      "page": 288,
+      "field": "location",
+      "expected": "B-POD / CORRIDOR",
+      "read": null
+     },
+     {
+      "key": "004",
+      "page": 288,
+      "field": "location",
+      "expected": "C-POD / CORRIDOR",
+      "read": null
+     },
+     {
+      "key": "005",
+      "page": 288,
+      "field": "location",
+      "expected": "D-POD / CORRIDOR",
+      "read": null
+     },
+     {
+      "key": "006",
+      "page": 288,
+      "field": "location",
+      "expected": "E-POD / CORRIDOR",
+      "read": null
+     },
+     {
+      "key": "007",
+      "page": 288,
+      "field": "location",
+      "expected": "F-POD / CORRIDOR",
+      "read": null
+     },
+     {
+      "key": "008",
+      "page": 288,
+      "field": "location",
+      "expected": "KITCHEN / CORRIDOR",
+      "read": null
+     }
+    ]
+   },
+   "reader_b": {
+    "expected_rows": 24,
+    "rows_found": 24,
+    "rows_fully_right": 24,
+    "fields_right": 168,
+    "fields_total": 168,
+    "per_field": {
+     "width_inches": {
+      "right": 24,
+      "total": 24
+     },
+     "height_inches": {
+      "right": 24,
+      "total": 24
+     },
+     "door_type": {
+      "right": 24,
+      "total": 24
+     },
+     "material": {
+      "right": 24,
+      "total": 24
+     },
+     "fire_rating": {
+      "right": 24,
+      "total": 24
+     },
+     "hardware_group": {
+      "right": 24,
+      "total": 24
+     },
+     "location": {
+      "right": 24,
+      "total": 24
+     }
+    },
+    "extra_rows": 0,
+    "wrong": []
+   },
+   "agreed": {
+    "expected_rows": 24,
+    "rows_found": 0,
+    "rows_fully_right": 0,
+    "fields_right": 0,
+    "fields_total": 0,
+    "per_field": {},
+    "extra_rows": 0,
+    "wrong": [
+     {
+      "key": "001",
+      "page": 284,
+      "field": "(row)",
+      "expected": "row",
+      "read": null
+     },
+     {
+      "key": "002",
+      "page": 284,
+      "field": "(row)",
+      "expected": "row",
+      "read": null
+     },
+     {
+      "key": "003",
+      "page": 284,
+      "field": "(row)",
+      "expected": "row",
+      "read": null
+     },
+     {
+      "key": "004",
+      "page": 284,
+      "field": "(row)",
+      "expected": "row",
+      "read": null
+     },
+     {
+      "key": "005",
+      "page": 284,
+      "field": "(row)",
+      "expected": "row",
+      "read": null
+     },
+     {
+      "key": "006",
+      "page": 284,
+      "field": "(row)",
+      "expected": "row",
+      "read": null
+     },
+     {
+      "key": "007",
+      "page": 284,
+      "field": "(row)",
+      "expected": "row",
+      "read": null
+     },
+     {
+      "key": "008",
+      "page": 284,
+      "field": "(row)",
+      "expected": "row",
+      "read": null
+     },
+     {
+      "key": "009",
+      "page": 284,
+      "field": "(row)",
+      "expected": "row",
+      "read": null
+     },
+     {
+      "key": "001",
+      "page": 286,
+      "field": "(row)",
+      "expected": "row",
+      "read": null
+     },
+     {
+      "key": "002",
+      "page": 286,
+      "field": "(row)",
+      "expected": "row",
+      "read": null
+     },
+     {
+      "key": "003",
+      "page": 286,
+      "field": "(row)",
+      "expected": "row",
+      "read": null
+     },
+     {
+      "key": "004",
+      "page": 286,
+      "field": "(row)",
+      "expected": "row",
+      "read": null
+     },
+     {
+      "key": "005",
+      "page": 286,
+      "field": "(row)",
+      "expected": "row",
+      "read": null
+     },
+     {
+      "key": "006",
+      "page": 286,
+      "field": "(row)",
+      "expected": "row",
+      "read": null
+     },
+     {
+      "key": "008",
+      "page": 286,
+      "field": "(row)",
+      "expected": "row",
+      "read": null
+     },
+     {
+      "key": "001",
+      "page": 288,
+      "field": "(row)",
+      "expected": "row",
+      "read": null
+     },
+     {
+      "key": "002",
+      "page": 288,
+      "field": "(row)",
+      "expected": "row",
+      "read": null
+     },
+     {
+      "key": "003",
+      "page": 288,
+      "field": "(row)",
+      "expected": "row",
+      "read": null
+     },
+     {
+      "key": "004",
+      "page": 288,
+      "field": "(row)",
+      "expected": "row",
+      "read": null
+     },
+     {
+      "key": "005",
+      "page": 288,
+      "field": "(row)",
+      "expected": "row",
+      "read": null
+     },
+     {
+      "key": "006",
+      "page": 288,
+      "field": "(row)",
+      "expected": "row",
+      "read": null
+     },
+     {
+      "key": "007",
+      "page": 288,
+      "field": "(row)",
+      "expected": "row",
+      "read": null
+     },
+     {
+      "key": "008",
+      "page": 288,
+      "field": "(row)",
+      "expected": "row",
+      "read": null
+     }
+    ]
+   },
+   "fields": {
+    "agreed": {
+     "right": 144,
+     "total": 144
+    },
+    "disputed": {
+     "total": 24,
+     "a_right": 0,
+     "b_right": 24,
+     "neither": 0
+    },
+    "agreed_wrong": []
+   }
+  }
+ ],
+ "tier": "audited",
+ "disagreement_count": 26,
+ "disagreements": [
+  {
+   "kind": "door",
+   "page": 284,
+   "key": "001",
+   "field": "location",
+   "a": null,
+   "b": "ADMIN LOBBY HALL"
+  },
+  {
+   "kind": "door",
+   "page": 284,
+   "key": "002",
+   "field": "location",
+   "a": null,
+   "b": "A-POD CLASSROOM A1"
+  },
+  {
+   "kind": "door",
+   "page": 284,
+   "key": "003",
+   "field": "location",
+   "a": null,
+   "b": "A-POD / LOBBY"
+  },
+  {
+   "kind": "door",
+   "page": 284,
+   "key": "004",
+   "field": "location",
+   "a": null,
+   "b": "B-POD / HCORRIDOR"
+  },
+  {
+   "kind": "door",
+   "page": 284,
+   "key": "005",
+   "field": "location",
+   "a": null,
+   "b": "C-POD / CORRIDOR"
+  },
+  {
+   "kind": "door",
+   "page": 284,
+   "key": "006",
+   "field": "location",
+   "a": null,
+   "b": "D-POD / CORRIDOR"
+  },
+  {
+   "kind": "door",
+   "page": 284,
+   "key": "007",
+   "field": "location",
+   "a": null,
+   "b": "E-POD / CORRIDOR"
+  },
+  {
+   "kind": "door",
+   "page": 284,
+   "key": "008",
+   "field": "location",
+   "a": null,
+   "b": "F-POD / CORRIDOR"
+  },
+  {
+   "kind": "door",
+   "page": 284,
+   "key": "009",
+   "field": "location",
+   "a": null,
+   "b": "KITCHEN / CORRIDOR"
+  },
+  {
+   "kind": "door",
+   "page": 286,
+   "key": "001",
+   "field": "location",
+   "a": null,
+   "b": "ADMIN LOBBY HALL"
+  },
+  {
+   "kind": "door",
+   "page": 286,
+   "key": "002",
+   "field": "location",
+   "a": null,
+   "b": "A-POD / CORRIDOR"
+  },
+  {
+   "kind": "door",
+   "page": 286,
+   "key": "003",
+   "field": "location",
+   "a": null,
+   "b": "B-POD / CORRIDOR"
+  },
+  {
+   "kind": "door",
+   "page": 286,
+   "key": "004",
+   "field": "location",
+   "a": null,
+   "b": "C-POD / CORRIDOR"
+  },
+  {
+   "kind": "door",
+   "page": 286,
+   "key": "005",
+   "field": "location",
+   "a": null,
+   "b": "D-POD / CORRIDOR"
+  },
+  {
+   "kind": "door",
+   "page": 286,
+   "key": "006",
+   "field": "location",
+   "a": null,
+   "b": "E-POD / CORRIDOR"
+  },
+  {
+   "kind": "door",
+   "page": 286,
+   "key": "008",
+   "field": "location",
+   "a": null,
+   "b": "KITCHEN / CORRIDOR"
+  },
+  {
+   "kind": "door",
+   "page": 288,
+   "key": "001",
+   "field": "location",
+   "a": null,
+   "b": "ADMIN LOBBY HALL"
+  },
+  {
+   "kind": "door",
+   "page": 288,
+   "key": "002",
+   "field": "location",
+   "a": null,
+   "b": "A-POD / CORRIDOR"
+  },
+  {
+   "kind": "door",
+   "page": 288,
+   "key": "003",
+   "field": "location",
+   "a": null,
+   "b": "B-POD / CORRIDOR"
+  },
+  {
+   "kind": "door",
+   "page": 288,
+   "key": "004",
+   "field": "location",
+   "a": null,
+   "b": "C-POD / CORRIDOR"
+  },
+  {
+   "kind": "door",
+   "page": 288,
+   "key": "005",
+   "field": "location",
+   "a": null,
+   "b": "D-POD / CORRIDOR"
+  },
+  {
+   "kind": "door",
+   "page": 288,
+   "key": "006",
+   "field": "location",
+   "a": null,
+   "b": "E-POD / CORRIDOR"
+  },
+  {
+   "kind": "door",
+   "page": 288,
+   "key": "007",
+   "field": "location",
+   "a": null,
+   "b": "F-POD / CORRIDOR"
+  },
+  {
+   "kind": "door",
+   "page": 288,
+   "key": "008",
+   "field": "location",
+   "a": null,
+   "b": "KITCHEN / CORRIDOR"
+  },
+  {
+   "kind": "item",
+   "page": 274,
+   "key": "(CONTINUED) / 6AA 1 ea Lockset - ND50PD x RHO x RH x 10-025 x JTMS",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "group",
+   "page": null,
+   "key": "(CONTINUED)",
+   "field": "(set)",
+   "a": "",
+   "b": null,
+   "why": "only reader A read this set"
+  }
+ ],
+ "ms": 5728,
+ "generated_at": "2026-10-09T09:15:48.060Z"
+}
