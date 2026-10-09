@@ -79,3 +79,12 @@ test("lines: a scale split over two text sizes and a point of baseline jitter jo
   const ls = lines([it("SCALE:", 1330, 1934, 9.5), it('3/32"', 1373, 1933.4), it("1'-0\"", 1411, 1933.4), it("1", 1301, 1930.7, 21)], 4, 1.6);
   assert.ok(ls.some((l) => /SCALE: 3\/32" 1'-0"/.test(l.str)), ls.map((l) => l.str).join(" | "));
 });
+
+test("a mark SubX keeps apart by page (\"001 [p.286]\") matches the plan's \"001\" on that school's sheet", () => {
+  const school = (n, name) => page(n, [it(name + " ELEMENTARY SCHOOL", 2929, 1771, 18.9, -90), it("A2.1", 2854, 2097, 34.6), it("FLOOR PLAN - MAIN BUILDING", 2815, 1770, 22, -90), it("001", 1449, 1506, 9.4)]);
+  const sch = (n, name) => page(n, [it(name + " ELEMENTARY SCHOOL", 2929, 1771, 18.9, -90), it("A9.2", 2854, 2097, 34.6), it("DOOR SCHEDULE AND DETAILS", 2815, 1770, 22, -90)]);
+  const r = readPlan([school(283, "MAJESTIC WAY"), sch(284, "MAJESTIC WAY"), school(285, "BROOKTREE"), sch(286, "BROOKTREE")],
+    [{ mark: "001", location: null, page: 284 }, { mark: "001 [p.286]", location: null, page: 286 }]);
+  assert.deepEqual(r.tags.map((t) => [t.mark, t.page]).sort((a, b) => a[1] - b[1]), [["001", 283], ["001 [p.286]", 285]]);
+  assert.equal(r.marks_not_on_plan.length, 0);
+});
