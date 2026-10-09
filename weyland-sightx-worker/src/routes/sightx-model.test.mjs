@@ -132,9 +132,19 @@ test("g028 sets: every door comes from a schedule row; every row is a door or li
     assert.ok(m.doors.length > 0 && m.doors.every((d) => d.row && d.row.text && d.row.text.startsWith(d.mark)), sha + ": each door carries the row it came from");
     assert.equal(m.doors.length + m.set.not_door_rows.length, m.set.rows, sha + ": rows = door rows + rows that are not doors");
     assert.ok(m.set.not_door_rows.every((r) => r.reason), sha + ": a row that is not a door says why");
-    assert.equal(m.layout.source, "plan");
+    // g035: a set with no readable plan says why and claims no tag; one with a plan places its doors on it.
+    if (m.set.no_plan_reason) {
+      assert.equal(m.layout.source, "schematic", sha);
+      assert.equal(m.doors.filter((d) => d.plan).length, 0, sha + ": no tag claimed without a plan");
+      assert.ok(m.notes.some((n) => n.includes(m.set.no_plan_reason)), sha + ": the notes say why");
+    } else {
+      assert.equal(m.layout.source, "plan", sha);
+      assert.ok(m.set.doors_on_plan > 0, sha);
+    }
   }
+  assert.equal(Object.keys(G028_SETS).length, 10, "g035: all ten harvested sets");
   assert.equal(G028_SETS["7478006f7fd5b43c"].doors.length, 152, "R2502: no 120-door cap");
+  assert.deepEqual(Object.values(G028_SETS).filter((m) => m.set.no_plan_reason).map((m) => m.set.sha16).sort(), ["977cec6301f40433", "f97e99f88a931e74"]);
 });
 test("g028 route: GET /api/sightx/sets/:sha16 answers the set and 404s an unknown one", async () => {
   const router = new NativeRouter();
