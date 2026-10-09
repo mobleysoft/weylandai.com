@@ -1,3 +1,4 @@
+import { provisionAuthFor } from "../../../weyland-shared/authfor-provisioning.js";
 // weyland-platform-worker/src/routes/webhooks-subscription.js
 //
 // POST /api/webhooks/subscription - every WeylandAI payment event.
@@ -52,7 +53,7 @@ import {
   ensureSubscriptionsTable, factsFromSubscription, factsFromInvoice,
   isWeylandSubscription, getSubscription, upsertSubscription
 } from "../lib/subscriptions-store.js";
-import { recordPurchase, markGranted, maskEmail, HELD_USER_PREFIX, PURCHASE_KINDS } from "../lib/purchases-store.js";
+import { recordPurchase, getPurchase, markGranted, maskEmail, HELD_USER_PREFIX, PURCHASE_KINDS } from "../lib/purchases-store.js";
 import { grantPurchase } from "../lib/grants.js";
 import { stripeApi } from "../lib/stripe-api.js";
 
@@ -137,11 +138,11 @@ export function registerWebhooksSubscriptionRoutes(router, { WEYLAND_PRODUCTS, v
       const result = eventType === COMPLETED
         ? await provisionCheckout(env2, event, obj, WEYLAND_PRODUCTS)
         : await applyLifecycle(env2, event, obj);
-      if (result.ignored) {
+      if (result.ignored || result.pending) {
         // Nothing was applied: forget the keys so a corrected redelivery is not a "duplicate".
         await forgetKeys(env2, inserted.splice(0));
       }
-      return jsonResponse3({ received: true, ...result });
+      return jsonResponse3({ received: true, ...result }, result.pending ? 503 : 200);
     } catch (err) {
       console.error("[Webhook] Processing error:", err && err.stack ? err.stack : err);
       await forgetKeys(env2, inserted.splice(0));
@@ -177,29 +178,6 @@ async function findAccount(env2, obj, email) {
     if (row) return { row, matchedBy: "email" };
   }
   return { row: null, matchedBy: null };
-}
-
-async function registerAuthFor(email, name) {
-  try {
-    const registerResp = await fetch("https://authfor.com/api/v1/register", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        email,
-        password: crypto.randomUUID() + crypto.randomUUID(),
-        name: name || email,
-        client_id: "af_weyland_subscribe",
-        venture_id: "weylandai.com"
-      })
-    });
-    if (registerResp.ok) {
-      const registerData = await registerResp.json();
-      if (registerData && registerData.session_id) return { session_id: registerData.session_id, token: registerData.token };
-    }
-  } catch (e) {
-    console.error("[Webhook] AuthFor register call failed:", e.message);
-  }
-  return null;
 }
 
 // Stripe's checkout session payment states that mean the money is in.
@@ -279,7 +257,15 @@ async function provisionCheckout(env2, event, obj, WEYLAND_PRODUCTS) {
   // granted when that email is proven (a code sign-in) or that account signs in
   // on the browser that paid (lib/grants.js claimHeldPurchases).
   if (account && matchedBy === "email") {
-    const { row: held } = await recordPurchase(env2.DB, { ...purchaseRow, status: "held", user_id: null });
+    let { row: held } = await recordPurchase(env2.DB, { ...purchaseRow, status: "held", user_id: null });
+    // A pending provisioning attempt can become an existing account after its
+    // owner signs in with an inbox code. Move its receipt to the normal claim
+    // path, without granting by an unproven email or overwriting a granted row.
+    if (held?.status === "pending") {
+      await env2.DB.prepare("UPDATE weyland_purchases SET status = 'held', user_id = NULL, updated_at = ? WHERE checkout_session_id = ? AND status = 'pending'")
+        .bind(now, String(obj.id)).run();
+      held = await getPurchase(env2.DB, obj.id);
+    }
     if (held?.status === "held" && !isOffer && subscriptionId) {
       // Its cancellations and failed payments are still recorded while it waits.
       const facts = {
@@ -309,7 +295,16 @@ async function provisionCheckout(env2, event, obj, WEYLAND_PRODUCTS) {
   if (!account) {
     // A new account: AuthFor identity, then the users row (free plan; the
     // purchase is granted below) and its session in one transaction.
-    const authforSession = await registerAuthFor(email, name);
+    // Keep the paid receipt before external IO. A rejected registration never
+    // becomes a local-only identity or a successful dedupe marker.
+    await recordPurchase(env2.DB, { ...purchaseRow, status: "pending", user_id: null });
+    const identity = await provisionAuthFor(env2, { email, name });
+    if (!identity.ok || !identity.session) {
+      await putCheckoutStatus(env2, obj.id, { status: "paid_pending", quantity, product_id: productId, session_id: null });
+      return { pending: true, provisioned: false, signed_in: false,
+        reason: identity.code || "AUTHFOR_SESSION_MISSING" };
+    }
+    const authforSession = identity.session;
     const userId = crypto.randomUUID();
     sessionId = crypto.randomUUID();
     await env2.DB.batch([
@@ -442,7 +437,7 @@ async function processCompletion(env2, event, obj, WEYLAND_PRODUCTS) {
   if (!r?.meta?.changes) return { duplicate: true };
   try {
     const result = await provisionCheckout(env2, event, obj, WEYLAND_PRODUCTS);
-    if (result.ignored) await forgetKeys(env2, [key]);
+    if (result.ignored || result.pending) await forgetKeys(env2, [key]);
     return result;
   } catch (err) {
     await forgetKeys(env2, [key]);
@@ -456,7 +451,7 @@ export async function reconcileCheckout(env2, sessionId, WEYLAND_PRODUCTS, strip
   if (!s || s.status !== "complete") return { ignored: "not_complete" };
   const event = { id: null, type: COMPLETED, created: s.created, data: { object: s } };
   const result = await processCompletion(env2, event, s, WEYLAND_PRODUCTS);
-  if (!result.duplicate && !result.ignored) console.log(`[Reconcile] ${sessionId} granted from Stripe's record (no webhook had arrived)`);
+  if (!result.duplicate && !result.ignored && !result.pending) console.log(`[Reconcile] ${sessionId} granted from Stripe's record (no webhook had arrived)`);
   return result;
 }
 
@@ -476,7 +471,7 @@ export async function sweepRecentCheckouts(env2, WEYLAND_PRODUCTS, { days = 3, s
       if (seen) continue;
       try {
         const r = await processCompletion(env2, { id: null, type: COMPLETED, created: s.created, data: { object: s } }, s, WEYLAND_PRODUCTS);
-        if (!r.duplicate && !r.ignored) out.granted++;
+        if (!r.duplicate && !r.ignored && !r.pending) out.granted++;
       } catch (e) { out.errors.push(s.id + ": " + e.message); }
     }
     if (!list || !list.has_more || !data.length) break;

@@ -452,3 +452,9 @@ test('shell reset proof keeps its MFA challenge and completes without another pa
   assert.equal(f.completions.length, 1);
   assert.equal(f.completions[0][0], 'view:account');
 });
+
+test('SDK registration forwards optional inbox proof and keeps the existing argument contract', async () => {
+  const f = browser({ fetchImpl: async () => answer(session()) });
+  await f.auth.register('fixture@example.test', 'fixture-password', 'Fixture', { token: 'proof-request', code: '12345678' });
+  assert.deepEqual(f.calls[0].body.email_code, { token: 'proof-request', code: '12345678' });
+});

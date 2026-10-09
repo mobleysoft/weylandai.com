@@ -33,7 +33,7 @@ test.before(() => {
     const url = String(input instanceof Request ? input.url : input);
     if (url === "https://authfor.com/api/v1/register") {
       net.register.push(JSON.parse(init.body).email);
-      return new Response(JSON.stringify({ token: "aft_local", session_id: "afs_local_" + net.register.length }), { status: 201 });
+      return new Response(JSON.stringify({ user: { id: "afu_local" }, token: "aft_local", session_id: "afs_local_" + net.register.length }), { status: 201 });
     }
     if (url === "https://authfor.com/api/v1/verify") {
       const auth = (init.headers && (init.headers.Authorization || init.headers.authorization)) || "";
