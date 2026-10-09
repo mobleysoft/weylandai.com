@@ -1,0 +1,44 @@
+diff --git a/tools/user-simulation/journeys/first-result-no-account.mjs b/tools/user-simulation/journeys/first-result-no-account.mjs
+index 9b6c66b..4133fa4 100644
+--- a/tools/user-simulation/journeys/first-result-no-account.mjs
++++ b/tools/user-simulation/journeys/first-result-no-account.mjs
+@@ -29,7 +29,11 @@ await J.run(async () => {
+       return { lowered: document.documentElement.classList.contains("folder-lowered"), heroInView: !!r && r.width > 0 && r.top >= 0 && r.top < innerHeight };
+     });
+     J.note(kind + "_first_view", { ...first, secondsAfterLoad: Math.round((Date.now() - tLoad) / 100) / 10 });
+-    if (kind === "phone") J.check("phone: the hero is in view at first load (no lowered dossier)", first.heroInView && !first.lowered, first);
++    // 2026-10-08 (fix 10): every visitor, desktop included, starts on the readable page (no lowered dossier,
++    // no space intro); the corridor waits behind LOWER THE DOSSIER and WALK.
++    J.check(kind + ": the hero is in view at first load (no lowered dossier)", first.heroInView && !first.lowered, first);
++    const upload = await page.evaluate(() => { const a = document.getElementById("hs-upload"); const r = a ? a.getBoundingClientRect() : null; return a ? { href: a.getAttribute("href"), text: a.textContent.trim(), visible: !!r && r.width > 0 && r.height > 0 } : null; });
++    J.check(kind + ": UPLOAD YOUR SCHEDULE PDF is on the first screen's paste box and opens SubX", !!upload && upload.href === "/subx-app" && /upload your schedule pdf/i.test(upload.text) && upload.visible, upload);
+     const raised = await raiseDossier(page, { touch });
+     J.check(kind + ": the hero is readable after raising the dossier", raised === "raised", raised);
+ 
+diff --git a/tools/user-simulation/journeys/sightx-corridor.mjs b/tools/user-simulation/journeys/sightx-corridor.mjs
+index c7f81f4..bfe0864 100644
+--- a/tools/user-simulation/journeys/sightx-corridor.mjs
++++ b/tools/user-simulation/journeys/sightx-corridor.mjs
+@@ -34,6 +34,8 @@ await J.run(async () => {
+     J.check("the dossier lowers to show the corridor", await lowered(page), "html.folder-lowered");
+     const bd = await page.evaluate(() => { const f = document.querySelector("#stage-backdrop iframe"); const b = f ? f.getBoundingClientRect() : null; return f ? { src: (f.getAttribute("src") || "").slice(0, 80), w: Math.round(b.width), h: Math.round(b.height) } : null; });
+     J.check("the 3D corridor is on screen behind the dossier", !!bd && /sightx/.test(bd.src) && bd.w >= 600 && bd.h >= 400, bd || "no backdrop iframe");
++    // 2026-10-08 (fix 10): the world opens on the corridor, never on the space prologue (intro=1).
++    J.check("the corridor loads without the space intro (no intro=1 in the SightX frame's address)", !!bd && !/intro=/.test(bd.src), bd ? bd.src : "no backdrop iframe");
+     // Click into the world and walk a step, then come back with Enter.
+     await page.mouse.click(640, 430).catch(() => {});
+     await page.keyboard.down("w"); await sleep(700); await page.keyboard.up("w");
+diff --git a/tools/user-simulation/lib/journey-kit.mjs b/tools/user-simulation/lib/journey-kit.mjs
+index 4ca0fbc..8fe386f 100644
+--- a/tools/user-simulation/lib/journey-kit.mjs
++++ b/tools/user-simulation/lib/journey-kit.mjs
+@@ -285,7 +285,8 @@ export async function openHome(page, journey, tag = "") {
+   await sleep(600);
+ }
+ 
+-/** Desktop starts with the dossier lowered over the 3D corridor; Enter raises it (phones start raised).
++/** Raises the dossier if the page opened with it lowered (since 2026-10-08 every visitor starts raised; a
++ *  journey that lowered it, or an older page, gets it back with Enter). Desktop used to start lowered.
+  *  Returns once the dossier has stopped moving: html.folder-lowered goes at the START of the raise,
+  *  and .envelope-frame's 0.75 s transform transition is still carrying every control on it from the
+  *  hand to the eye. A press aimed while it moves can miss (seen live 2026-10-07: #hm-run sampled at
