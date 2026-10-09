@@ -1,0 +1,170 @@
+{
+  "base": "https://weylandai.com",
+  "started_at": "2026-10-09T18:10:45.190Z",
+  "cards": {
+    "subx": "Submittal Express. Reads a ruled door or hardware schedule table on the page you name, lists the doors and hardware sets with the page and row each came from, and builds the submittal PDF, attaching the cited document for items our catalogue covers. Full-size CAD sheets and spec-section hardware groups do not read yet.",
+    "cutsheetx": "Paste product lines as maker and model; CutsheetX matches what our catalogue covers (Allegion's brands plus NGP, BEA, Camden and Dyke) and cites the price-book or catalogue page for each match. Lines pasted as a spec prints them do not parse yet.",
+    "takeoffx": "Takeoff Express. Counts doors by type, size, fire rating and hardware group from your door schedule page, 18 to 40 seconds a page, with every count traced to its row. It reads schedules, not drawings.",
+    "propx": "Requires SubX · turns a submittal into a priced, sendable proposal. Proposal Express. Builds a complete, priced proposal - client info, scope, terms, signature block - directly from a SubX submittal's real extracted door schedule.",
+    "sightx": "Spatial Project Intelligence. Builds a 3D corridor from your door schedule (a SubX session or a pasted schedule): each door at its scheduled size, material and fire rating, its hardware set drawn where it mounts, a door-by-door tour, and a link your GC can walk without an account. Doors stand in schedule order, not on your floor plan."
+  },
+  "bars": {
+    "subx": "find-pages names the schedule page (A2.2, p.29) and the 08 71 00 group pages (pp.17-23); every page reads; the doors read equal the 65 hand-read marks and each carries its page and row; the 14 hardware groups are read; the packet PDF is built and every item is either cited with a catalogue page or listed as a miss that says why and what is needed.",
+    "cutsheetx": "each real Rockford item (as maker + model) matches a product of that maker and cites a page or sheet whose document is that maker's and opens (HTTP 200); the same items pasted as lines give the same answers; an item the catalogue does not hold comes back unmatched with a stated reason.",
+    "takeoffx": "for each session the takeoff's door count and its counts by door type, size, fire rating and hardware group equal the tallies of the hand-read schedule, and every door row carries its page and table row; door pages read within the card's 40 s a page.",
+    "propx": "from the Berryessa session: the lines come from its doors (door lines total 24 openings, hardware lines total the 24 openings that name a set), generate returns a stored proposal whose PDF downloads (%PDF) and prints every line and its total, line totals and subtotal/tax/grand total are arithmetically consistent, and the proposal is priced: a grand total above $0, and no rate printed as a set's price that covers only some of its items without saying so (lines left at $0 for the estimator are allowed; the workspace says they print at $0).",
+    "sightx": "the corridor model built from the Berryessa session has 24 doors (the schedule's count, same marks), each at its scheduled size (42 x 94 in) and fire rating (120), each door's hardware set present in the model with items to draw, and the corridor saves to a link that opens without an account."
+  },
+  "sessions": {
+    "berryessa": {
+      "id": "berryessa",
+      "label": "Berryessa Bid B-09-2023-24",
+      "errors": [],
+      "upload": {
+        "status": 201,
+        "ms": 3199
+      },
+      "sid": "8e8410a1-072a-4d8d-93be-0c50853154d2",
+      "find": {
+        "status": 200,
+        "ms": 5429,
+        "door_schedule_pages": [
+          284,
+          286,
+          288
+        ],
+        "hardware_pages": [
+          274,
+          282
+        ]
+      },
+      "read_doors": {
+        "status": 200,
+        "ms": 3140,
+        "pages": 3,
+        "per_page_s": 1,
+        "results": [
+          {
+            "page": 284,
+            "ok": true,
+            "type": "door_schedule",
+            "doors": 9,
+            "read_source": "text_layer",
+            "ms": 0
+          },
+          {
+            "page": 286,
+            "ok": true,
+            "type": "door_schedule",
+            "doors": 7,
+            "read_source": "text_layer",
+            "ms": 0
+          },
+          {
+            "page": 288,
+            "ok": true,
+            "type": "door_schedule",
+            "doors": 8,
+            "read_source": "text_layer",
+            "ms": 0
+          }
+        ]
+      },
+      "read_groups": {
+        "status": 200,
+        "ms": 2523,
+        "pages": 1,
+        "results": [
+          {
+            "page": 282,
+            "ok": true,
+            "type": "hardware_schedule",
+            "groups": 2,
+            "items": 16
+          }
+        ]
+      },
+      "cleanup": "deleted"
+    }
+  },
+  "results": [
+    {
+      "id": "propx",
+      "label": "PropX",
+      "doc": "Berryessa Bid B-09-2023-24 (session read from A9.2 and 08 71 00)",
+      "pass": true,
+      "lines": [
+        {
+          "kind": "door",
+          "description": "Door - type B",
+          "quantity": 22,
+          "unitPrice": 0,
+          "priceSource": "enter"
+        },
+        {
+          "kind": "door",
+          "description": "Door - type A",
+          "quantity": 2,
+          "unitPrice": 0,
+          "priceSource": "enter"
+        },
+        {
+          "kind": "hardware",
+          "description": "Hardware set 2 (7 of 9 items priced; not in this price: VERIFY PERMANENT CORE WITH DISTRICT, Ives 8400 10\" X 1\" LDW B-CS)",
+          "quantity": 22,
+          "unitPrice": 10172.04,
+          "priceSource": "7 of 9 components priced: 2 from the schedule, 5 from the makers' price books (Von Duprin Price Book 2024 1.0, LCN Price Book 2025, Zero International Price Book 2025 1.0) at your multipliers"
+        },
+        {
+          "kind": "hardware",
+          "description": "Hardware set 1 (5 of 7 items priced; not in this price: VERIFY PERMANENT CORE WITH DISTRICT, Ives 8400 10\" X 2\" LDW B-CS)",
+          "quantity": 2,
+          "unitPrice": 4662,
+          "priceSource": "5 of 7 components priced: 2 from the schedule, 3 from the makers' price books (Von Duprin Price Book 2024 1.0, LCN Price Book 2025, Zero International Price Book 2025 1.0) at your multipliers"
+        }
+      ],
+      "source_doors": 24,
+      "generate": {
+        "http": 200,
+        "ms": 4237,
+        "stored": true,
+        "proposalId": "3ed5493b-bc9b-4002-aa48-08b272f380c2",
+        "quoteNumber": 10,
+        "doorCount": 24,
+        "lineItemCount": 4,
+        "subtotal": 233108.88,
+        "taxAmount": 21562.57,
+        "grandTotal": 254671.45,
+        "error": null
+      },
+      "arith": {
+        "expected_subtotal": 233108.88,
+        "consistent": true,
+        "lines_priced": "2 of 4",
+        "partial_set_prices": [
+          "Hardware set 2 (7 of 9 items priced; not in this price: VERIFY PERMANENT CORE WITH DISTRICT, Ives 8400 10\" X 1\" LDW B-CS) $10172.04 (7 of 9 components priced: 2 from the schedule, 5 from the makers' price books (Von Duprin Price Book 2024 1.0, LCN Price Book 2025, Zero International Price Book 2025 1.0) at your multipliers)",
+          "Hardware set 1 (5 of 7 items priced; not in this price: VERIFY PERMANENT CORE WITH DISTRICT, Ives 8400 10\" X 2\" LDW B-CS) $4662 (5 of 7 components priced: 2 from the schedule, 3 from the makers' price books (Von Duprin Price Book 2024 1.0, LCN Price Book 2025, Zero International Price Book 2025 1.0) at your multipliers)"
+        ],
+        "zero_lines": [
+          "Door - type B x22",
+          "Door - type A x2"
+        ]
+      },
+      "pdf": {
+        "http": 200,
+        "bytes": 65987,
+        "is_pdf": true,
+        "pages": 2,
+        "prints_grand_total": true,
+        "prints_client": true,
+        "lines_printed": 4,
+        "partial_note_printed": true,
+        "has_signature_block": true,
+        "has_terms": true
+      },
+      "fails": [],
+      "summary": "4 lines (door 24, frame 0, hardware 24 openings), 2 priced; subtotal $233108.88, tax $21562.57, total $254671.45; PDF 64 KB, 2 pp, 4 s"
+    }
+  ],
+  "finished_at": "2026-10-09T18:11:24.211Z"
+}

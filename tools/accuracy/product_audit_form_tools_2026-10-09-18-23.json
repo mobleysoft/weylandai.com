@@ -1,0 +1,186 @@
+{
+  "base": "https://weylandai.com",
+  "started_at": "2026-10-09T18:23:28.442Z",
+  "tools": [
+    {
+      "id": "bidx",
+      "label": "BidX",
+      "claim": "Builds the bid form for a public bid from a HuntX notice and your PropX proposal: base bid in words and figures, schedule of values, alternates, unit prices, addenda acknowledged, bid bond, qualifications, and a bidder checklist.",
+      "input": "HuntX notice \"Replace Windows & Doors, Roofing System & Upgrade Site Drainage — Galesburg Readiness Center\" (Illinois Capital Development Board) + PropX quote 1 (Berryessa, $11,754.43)",
+      "pass": true,
+      "summary": "base bid $11,754.43 in words and figures; SOV 5 lines = $10,759.20; bond $1,175.44; notice 546-140-011",
+      "numbers": {
+        "sov_lines": 5,
+        "sov_sum": 10759.2,
+        "proposal_subtotal": 10759.2,
+        "pages": 2
+      },
+      "checks": [
+        {
+          "name": "preview joins the notice and the proposal",
+          "ok": true,
+          "detail": "HTTP 200 PropX quote 1"
+        },
+        {
+          "name": "PDF returned",
+          "ok": true,
+          "detail": "HTTP 200"
+        },
+        {
+          "name": "HuntX notice facts on the bid form (agency, solicitation, location, due, notice link)",
+          "ok": true,
+          "detail": "Illinois Capital Development Board | Replace Windows & Doors, Roofing System & Upgrade Site Drainage — Galesburg Readiness Center | Knox County, IL | 2026-12-15T00:00:00.000 | https://cdb.illinois.gov/procurement.html | 546-140-011"
+        },
+        {
+          "name": "base bid in words and figures = the PropX total",
+          "ok": true,
+          "detail": "Eleven thousand seven hundred fifty-four and 43/100 dollars ($11,754.43)"
+        },
+        {
+          "name": "schedule of values = the proposal's lines (qty, unit, amount) and sums to its subtotal",
+          "ok": true,
+          "detail": "5 lines, sum $10,759.20 vs subtotal $10,759.20"
+        },
+        {
+          "name": "alternate and unit prices printed",
+          "ok": true,
+          "detail": "Deduct hardware set 1 at Majestic Way openings 002 and 003 $731.60"
+        },
+        {
+          "name": "addenda section present (none listed)",
+          "ok": true,
+          "detail": ""
+        },
+        {
+          "name": "bid bond 10% (Berryessa 00 21 13) of the base bid",
+          "ok": true,
+          "detail": "$1,175.44"
+        },
+        {
+          "name": "qualifications/exclusions printed",
+          "ok": true,
+          "detail": ""
+        },
+        {
+          "name": "bidder checklist printed",
+          "ok": true,
+          "detail": ""
+        },
+        {
+          "name": "no placeholder text",
+          "ok": true,
+          "detail": ""
+        }
+      ],
+      "notes": [
+        "HuntX holds no Berryessa notice (searched 'Berryessa', 'door replacement', state CA + fit doors), so the notice and the proposal are different jobs; the check is that each one's facts reach the form."
+      ]
+    },
+    {
+      "id": "closex",
+      "label": "CloseX",
+      "claim": "The Section 08 71 00 closeout from your SubX job: hardware schedule as installed, keying schedule, warranty table per manufacturer, attic stock, checklist with sign-off, and the catalogue page of every installed product.",
+      "input": "Berryessa SubX session; warranties from 08 71 00 1.07",
+      "pass": true,
+      "summary": "24/24 openings, 24 keyed, 5/5 warranties, 8 catalogue pages for 10 products; pairs 22/22",
+      "numbers": {
+        "openings": 24,
+        "pairs_shown_as_pairs": "22/22",
+        "keyed": 24,
+        "products": 10,
+        "cited_pages": 8,
+        "no_page_line": "VERIFY PERMANENT CORE WITH DISTRICT",
+        "appended_pages": 8,
+        "products_without_page": "",
+        "pages": 19,
+        "room_names_printed": 24,
+        "preview_products": 11
+      },
+      "checks": [
+        {
+          "name": "PDF returned",
+          "ok": true,
+          "detail": "HTTP 200"
+        },
+        {
+          "name": "hardware schedule as installed: every opening with rating and set",
+          "ok": true,
+          "detail": "24 of 24"
+        },
+        {
+          "name": "every scheduled item (catalogue number) in the as-installed schedule",
+          "ok": true,
+          "detail": "11 catalogue numbers"
+        },
+        {
+          "name": "opening sizes are the schedule's (pairs shown as pairs)",
+          "ok": true,
+          "detail": "22 of 22 pairs shown as PR; e.g. Opening 001 · Room: ADMIN LOBBY HALL · PR 3'-6\" x 7'-10\" · 120 r"
+        },
+        {
+          "name": "keying schedule lists every keyed opening (all 24 have rim cylinders)",
+          "ok": true,
+          "detail": "24 of 24"
+        },
+        {
+          "name": "warranty table per manufacturer (terms from the spec)",
+          "ok": true,
+          "detail": "LCN, Von Duprin, Ives, Schlage, Zero International"
+        },
+        {
+          "name": "attic stock and checklist with sign-off",
+          "ok": true,
+          "detail": ""
+        },
+        {
+          "name": "the catalogue page of every installed product",
+          "ok": true,
+          "detail": "8 pages cited for 10 products, 8 appended; products with no page: none"
+        },
+        {
+          "name": "project and owner on the cover",
+          "ok": true,
+          "detail": ""
+        },
+        {
+          "name": "no placeholder text",
+          "ok": true,
+          "detail": ""
+        }
+      ],
+      "notes": []
+    }
+  ],
+  "setup": {
+    "berryessa": {
+      "read": {
+        "status": 200,
+        "doors": 24,
+        "groups": 2,
+        "items": 16,
+        "failed": []
+      },
+      "expected": {
+        "doors": 24,
+        "groups": 2,
+        "items": 16
+      }
+    },
+    "proposal": {
+      "id": "6a2092d0-5fee-4c3b-8592-700dc4165528",
+      "quote": 1,
+      "client": "QA GC",
+      "address": "1855 Lucretia Ave, San Jose, CA 95122",
+      "doors": 24,
+      "subtotal": 10759.2,
+      "tax": 995.23,
+      "total": 11754.43,
+      "pdf_http": 200,
+      "pdf_has_total": true
+    }
+  },
+  "cleanup": [
+    "8c55075c: deleted"
+  ],
+  "finished_at": "2026-10-09T18:23:51.229Z"
+}
