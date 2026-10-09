@@ -119,3 +119,67 @@ export async function makerFiledBooks(env, makerName, limit = 3) {
     return [];
   }
 }
+
+// The page a price-book row was imported from (product_variants.catalog_page), checked in the
+// filed PDF (2026-10-09). A schedule number the book prints in its own spelling ("188SBK" is
+// "188S-BK") or as a grid ("[98/99] . L . F" for 99-L-F) is never found by searching the
+// schedule's spelling; the variant whose number the schedule's contains carries its page. The
+// page counts only if that very page shows the variant's number as the book spells it, or its
+// list price, so an index from another edition cannot put a wrong page in the packet.
+const compactNo = (s) => String(s || "").toUpperCase().replace(/[^A-Z0-9]/g, "");
+const bookNumber = (n) => String(n || "").replace(/\s*\[[^\]]*\]\s*$/, "").trim();
+const priceStrings = (p) => {
+  const n = Number(p);
+  if (!(n > 0)) return [];
+  const whole = Number.isInteger(n) ? n.toLocaleString("en-US") : null;
+  return [n.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 }), whole && "$" + whole].filter(Boolean);
+};
+
+/** The variants (book number, list price, catalog page, filed PDF) whose number the schedule's
+ *  number contains: of the matched product, else of the maker by the number's first characters. */
+export async function variantPagesFor(env, { productId = null, makerName = null, scheduleModel }) {
+  if (!env || !env.DB || !scheduleModel) return [];
+  const want = compactNo(scheduleModel);
+  const base = `SELECT v.full_model_number, v.list_price, v.catalog_page, d.r2_object_key AS r2Key, d.document_title AS title
+    FROM product_variants v JOIN product_documents d ON d.product_id = v.product_id AND d.document_type = 'cut_sheet' AND d.active = 1 AND d.r2_object_key IS NOT NULL`;
+  let rows = [];
+  try {
+    if (productId) {
+      rows = (await env.DB.prepare(base + " WHERE v.product_id = ? AND v.catalog_page IS NOT NULL AND v.list_price > 0 LIMIT 3000").bind(String(productId)).all()).results || [];
+    } else if (makerName) {
+      const run = (String(scheduleModel).toUpperCase().match(/[A-Z0-9]+/) || [""])[0];
+      if (run.length < 3) return [];
+      rows = (await env.DB.prepare(base + ` JOIN products p ON p.id = v.product_id JOIN manufacturers mf ON mf.id = p.manufacturer_id
+        WHERE lower(mf.name) = lower(?) AND v.full_model_number LIKE ? AND v.catalog_page IS NOT NULL AND v.list_price > 0 LIMIT 3000`).bind(String(makerName), run.slice(0, 4) + "%").all()).results || [];
+    }
+  } catch (_) {
+    return [];
+  }
+  const hits = rows.map((r) => ({ ...r, number: bookNumber(r.full_model_number), pageNum: parseInt(r.catalog_page, 10) }))
+    .filter((r) => { const k = compactNo(r.number); return r.pageNum > 0 && k.length >= 3 && (productId ? want.includes(k) : want.startsWith(k)); });
+  const longest = Math.max(0, ...hits.map((r) => compactNo(r.number).length));
+  return hits.filter((r) => compactNo(r.number).length === longest);
+}
+
+/** { r2Key, pageNum, title, number } of a variant's page that the filed PDF itself confirms, or null. */
+export async function confirmedVariantPage(env, variants, { budgetMs = 15000 } = {}) {
+  const started = Date.now();
+  const seen = new Set();
+  for (const v of variants) {
+    const k = v.r2Key + "#" + v.pageNum;
+    if (seen.has(k)) continue;
+    seen.add(k);
+    const left = budgetMs - (Date.now() - started);
+    if (left < 2000) return null;
+    const pages = await filedPdfPages(env, v.r2Key, { budgetMs: left });
+    if (!pages) continue;
+    const page = pages.find((p) => p.page === v.pageNum);
+    if (!page) continue;
+    const text = String(page.text || "");
+    const re = modelPattern(v.number);
+    const named = re ? re.test(text.toUpperCase()) : false;
+    const priced = priceStrings(v.list_price).some((s) => text.includes(s));
+    if (named || priced) return { r2Key: v.r2Key, pageNum: v.pageNum, title: String(v.title || "Price book").split(" (")[0], number: v.number };
+  }
+  return null;
+}

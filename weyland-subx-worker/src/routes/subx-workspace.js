@@ -23,7 +23,7 @@ import { PDFDocument, StandardFonts, rgb } from "pdf-lib";
 import { jsonResponse3 } from "../lib/json-response.js";
 import { assembleSubmittalPackage } from "../lib/submittal-assembler.js";
 import { matchComponentToCutSheets, citedPagesFor, PACKET_MATCH_TYPES } from "../lib/product-database.js";
-import { pageNamingInFiledPdf, scheduleTokens, makerFiledBooks } from "../../../weyland-shared/filed-page.js";
+import { pageNamingInFiledPdf, scheduleTokens, makerFiledBooks, variantPagesFor, confirmedVariantPage } from "../../../weyland-shared/filed-page.js";
 import { incrementSubmittalsUsed } from "../lib/edge-telemetry.js";
 import { outputAccess, paymentRequired } from "../../../weyland-shared/output-access.js";
 import { readDimension, readSizeCell, looksLikeMark } from "../../assets/client-ocr-src/schedule-text-layer.mjs";
@@ -166,6 +166,21 @@ async function filedPageFor(env2, m, started, scheduleModel = "") {
   return null;
 }
 
+// The page a price-book row for this item was imported from, confirmed in the filed PDF
+// (weyland-shared/filed-page.js): for a book that prints the number in its own spelling
+// (Zero "188S-BK" for the schedule's 188SBK) or as a grid (Von Duprin "[98/99] . L . F").
+async function variantPageFor(env2, m, scheduleModel, started) {
+  if (!m || !m.maker || !m.maker.known) return null;
+  const firm = m.matched && PACKET_MATCH_TYPES.has(String(m.matchType)) && m.product && m.product.id;
+  if (m.matched && !firm) return null;
+  const left = FILED_BUDGET_MS - (Date.now() - started);
+  if (left < 3000) return null;
+  let variants = [];
+  try { variants = await variantPagesFor(env2, firm ? { productId: m.product.id, scheduleModel } : { makerName: m.maker.name, scheduleModel }); } catch (_) { variants = []; }
+  if (!variants.length) return null;
+  try { return await confirmedVariantPage(env2, variants, { budgetMs: left }); } catch (_) { return null; }
+}
+
 export async function citedPagesForSession(sessionId, env2, match = matchForPacket) {
   const started = Date.now();
   const comps = await env2.DB.prepare(`
@@ -197,10 +212,10 @@ export async function citedPagesForSession(sessionId, env2, match = matchForPack
       if (!pages.has(k)) pages.set(k, { catalogueId: p.catalogueId, pageNum: p.pageNum, title: p.title, kind: p.kind, manufacturer: (m.product && m.product.manufacturer) || c.manufacturer || null, model: (m.product && m.product.model) || c.model, sets: [] });
       const entry = pages.get(k);
       for (const s of sets) if (!entry.sets.includes(s)) entry.sets.push(s);
-    } else if ((filed = await filedPageFor(env2, m, started, c.model))) {
+    } else if ((filed = (await filedPageFor(env2, m, started, c.model)) || (await variantPageFor(env2, m, c.model, started)))) {
       matched++;
       const k = "doc:" + filed.r2Key + "#" + filed.pageNum;
-      if (!pages.has(k)) pages.set(k, { r2Key: filed.r2Key, catalogueId: null, pageNum: filed.pageNum, title: filed.title, kind: "price_book_filed", manufacturer: (m.product && m.product.manufacturer) || (m.maker && m.maker.name) || c.manufacturer || null, model: (m.product && m.product.model) || c.model, sets: [] });
+      if (!pages.has(k)) pages.set(k, { r2Key: filed.r2Key, catalogueId: null, pageNum: filed.pageNum, title: filed.title, kind: "price_book_filed", manufacturer: (m.product && m.product.manufacturer) || (m.maker && m.maker.name) || c.manufacturer || null, model: filed.number || (m.product && m.product.model) || c.model, sets: [] });
       const entry = pages.get(k);
       for (const s of sets) if (!entry.sets.includes(s)) entry.sets.push(s);
     } else {
