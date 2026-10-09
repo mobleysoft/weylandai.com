@@ -177,6 +177,16 @@ app page phone, homepage desktop, homepage phone — each asserting movement ≥
 ≥ 0.5 rad on look, plus no third-party request on either page. Feel targets, John's triple-A bar: 60 fps on an iPhone
 and a MacBook, input to camera within one frame, acceleration and damping on movement, collision with floors and walls.
 
+**S0 measured green, 2026-10-09 17:25Z (seventh measurement, probe 5 at 340bf67).** App page 9 of 9 desktop and
+12 of 12 phone; homepage 11 of 11 desktop and 14 of 14 phone; evidence in docs/s0-controls-evidence-2026-10-09-final.json.
+The last red check ("no third-party request" on the homepage journeys) was not ours to ship: Cloudflare Web Analytics
+was auto-injecting its beacon from static.cloudflareinsights.com into every homepage response that carries a query
+string. Those requests miss the exact `weylandai.com/` route and fall to the monolith's `weylandai.com/*` route, whose
+response has no `cache-control: no-transform`, so the edge rewrote the HTML; the platform worker's responses carry
+`no-transform` and were never touched. Setting the zone's RUM site to auto_install=false was not enough (its injection
+ruleset stayed enabled); enabled=false switched it off, verified with `/?ref=producthunt` and `/?journey=x` loads. Rule
+kept: nothing from a third-party host, on any path, including the ones launch traffic arrives on.
+
 ## Truth at scale for the harvested corpus (John, 2026-10-09 05:15 EDT)
 
 John, on the sentence "a set only tests the product once someone has written the expected rows": "this sounds like a

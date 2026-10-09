@@ -1,0 +1,193 @@
+{
+  "base": "https://weylandai.com",
+  "measuredAt": "2026-10-09T17:28:59.245Z",
+  "paths": {
+    "desktop": {
+      "exitCode": 0,
+      "report": {
+        "journey": "sightx-controls-home-desktop",
+        "title": "SightX controls: homepage, desktop",
+        "base": "https://weylandai.com",
+        "started_at": "2026-10-09T17:28:59.481Z",
+        "finished_at": "2026-10-09T17:29:11.306Z",
+        "passed": 11,
+        "failed": 0,
+        "checks": [
+          {
+            "name": "browser has GPU WebGL",
+            "ok": true,
+            "detail": "ANGLE (Apple, ANGLE Metal Renderer: Apple M4, Unspecified Version)"
+          },
+          {
+            "name": "the world comes in front (W in the SightX chapter)",
+            "ok": true,
+            "detail": ""
+          },
+          {
+            "name": "the world frame is loaded and reports its state",
+            "ok": true,
+            "detail": ""
+          },
+          {
+            "name": "SightXControls.state() answers (homepage desktop)",
+            "ok": true,
+            "detail": "{\"pos\":[0,0.28,-0.675840789420178],\"yaw\":0,\"pitch\":-0.03}"
+          },
+          {
+            "name": "state snapshots cannot mutate the player",
+            "ok": true,
+            "detail": ""
+          },
+          {
+            "name": "W moves the player at least 1 unit (homepage desktop)",
+            "ok": true,
+            "detail": "{\"moved\":3.74,\"from\":[0,0.28,-0.675840789420178],\"to\":[0,0.28,3.0655132412530666]}"
+          },
+          {
+            "name": "a mouse drag turns the view at least 0.5 rad (homepage desktop)",
+            "ok": true,
+            "detail": "{\"turned\":0.57}"
+          },
+          {
+            "name": "Escape raises the dossier again",
+            "ok": true,
+            "detail": ""
+          },
+          {
+            "name": "no legacy hold controls in the homepage world",
+            "ok": true,
+            "detail": ""
+          },
+          {
+            "name": "Enter raises the dossier again",
+            "ok": true,
+            "detail": ""
+          },
+          {
+            "name": "no third-party request (homepage desktop)",
+            "ok": true,
+            "detail": "[]"
+          }
+        ],
+        "notes": {},
+        "browser": {
+          "launch_args": [
+            "--use-angle=metal"
+          ],
+          "webgl": {
+            "webgl": true,
+            "renderer": "ANGLE (Apple, ANGLE Metal Renderer: Apple M4, Unspecified Version)",
+            "vendor": "Google Inc. (Apple)"
+          }
+        },
+        "api_errors": [],
+        "cleanup": {
+          "nothing": true
+        },
+        "side_effects": "no AuthFor identity created"
+      },
+      "error": null
+    },
+    "phone": {
+      "exitCode": 0,
+      "report": {
+        "journey": "sightx-controls-home-phone",
+        "title": "SightX controls: homepage, phone",
+        "base": "https://weylandai.com",
+        "started_at": "2026-10-09T17:29:11.581Z",
+        "finished_at": "2026-10-09T17:29:25.044Z",
+        "passed": 14,
+        "failed": 0,
+        "checks": [
+          {
+            "name": "browser has GPU WebGL",
+            "ok": true,
+            "detail": "ANGLE (Apple, ANGLE Metal Renderer: Apple M4, Unspecified Version)"
+          },
+          {
+            "name": "the world comes in front (LOWER THE DOSSIER)",
+            "ok": true,
+            "detail": ""
+          },
+          {
+            "name": "the world frame is loaded and reports its state",
+            "ok": true,
+            "detail": ""
+          },
+          {
+            "name": "holding the view without moving a stick does not walk",
+            "ok": true,
+            "detail": "{\"moved\":0}"
+          },
+          {
+            "name": "SightXControls.state() answers (homepage phone)",
+            "ok": true,
+            "detail": "{\"pos\":[0,0.28,-1.6],\"yaw\":0,\"pitch\":-0.03}"
+          },
+          {
+            "name": "state snapshots cannot mutate the player",
+            "ok": true,
+            "detail": ""
+          },
+          {
+            "name": "the touch stick is drawn in the page the finger touches (homepage phone)",
+            "ok": true,
+            "detail": "{\"x\":328,\"y\":770}"
+          },
+          {
+            "name": "the topmost element at the stick is the stick",
+            "ok": true,
+            "detail": ""
+          },
+          {
+            "name": "the stick moves the player at least 1 unit (homepage phone)",
+            "ok": true,
+            "detail": "{\"moved\":4.7,\"from\":[0,0.28,-1.6],\"to\":[0,0.28,3.100784659077201]}"
+          },
+          {
+            "name": "a finger drag turns the view at least 0.5 rad (homepage phone)",
+            "ok": true,
+            "detail": "{\"turned\":1.04}"
+          },
+          {
+            "name": "Escape raises the dossier again",
+            "ok": true,
+            "detail": ""
+          },
+          {
+            "name": "no legacy hold controls in the homepage world",
+            "ok": true,
+            "detail": ""
+          },
+          {
+            "name": "Enter raises the dossier again",
+            "ok": true,
+            "detail": ""
+          },
+          {
+            "name": "no third-party request (homepage phone)",
+            "ok": true,
+            "detail": "[]"
+          }
+        ],
+        "notes": {},
+        "browser": {
+          "launch_args": [
+            "--use-angle=metal"
+          ],
+          "webgl": {
+            "webgl": true,
+            "renderer": "ANGLE (Apple, ANGLE Metal Renderer: Apple M4, Unspecified Version)",
+            "vendor": "Google Inc. (Apple)"
+          }
+        },
+        "api_errors": [],
+        "cleanup": {
+          "nothing": true
+        },
+        "side_effects": "no AuthFor identity created"
+      },
+      "error": null
+    }
+  }
+}
