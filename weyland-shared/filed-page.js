@@ -72,11 +72,21 @@ function hold(held, r2Key, pages) {
   return pages;
 }
 
-/** The filed PDF's pages as text, from the R2 cache or the OCR worker; null if unreadable. */
-export async function filedPdfPages(env, r2Key, { budgetMs = 15000 } = {}) {
+/** The filed PDF's pages as text, from the R2 cache or the OCR worker; null if unreadable.
+ *  `inflight` (a Map the caller keeps for one request) lets concurrent lookups in that request
+ *  share one read of a book instead of each starting its own (CutsheetX matches 8 lines at once). */
+export async function filedPdfPages(env, r2Key, { budgetMs = 15000, inflight = null } = {}) {
   if (!env || !env.UPLOADS || !r2Key) return null;
   const held = heldFor(env.UPLOADS);
   if (held.has(r2Key)) return hold(held, r2Key, held.get(r2Key));
+  if (inflight) {
+    if (!inflight.has(r2Key)) inflight.set(r2Key, readFiledPdfPages(env, r2Key, held, budgetMs));
+    return inflight.get(r2Key);
+  }
+  return readFiledPdfPages(env, r2Key, held, budgetMs);
+}
+
+async function readFiledPdfPages(env, r2Key, held, budgetMs) {
   const cacheKey = filedTextKey(r2Key);
   try {
     const cached = await env.UPLOADS.get(cacheKey);
@@ -152,8 +162,8 @@ export async function makerFiledBooks(env, makerName, limit = 3) {
 // filed PDF (2026-10-09). A schedule number the book prints in its own spelling ("188SBK" is
 // "188S-BK") or as a grid ("[98/99] . L . F" for 99-L-F) is never found by searching the
 // schedule's spelling; the variant whose number the schedule's contains carries its page. The
-// page counts only if that very page shows the variant's number as the book spells it, or its
-// list price, so an index from another edition cannot put a wrong page in the packet.
+// page counts only if that very page shows the variant's number as the book spells it (plain or
+// as its grid), or its list price, so an index from another edition cannot put a wrong page in the packet.
 const compactNo = (s) => String(s || "").toUpperCase().replace(/[^A-Z0-9]/g, "");
 const bookNumber = (n) => String(n || "").replace(/\s*\[[^\]]*\]\s*$/, "").trim();
 const priceStrings = (p) => {
@@ -164,8 +174,11 @@ const priceStrings = (p) => {
 };
 
 /** The variants (book number, list price, catalog page, filed PDF) whose number the schedule's
- *  number contains: of the matched product, else of the maker by the number's first characters. */
-export async function variantPagesFor(env, { productId = null, makerName = null, scheduleModel }) {
+ *  number contains: of the matched product, else of the maker by the number's first characters.
+ *  When the schedule names the product itself and nothing longer ("Von Duprin 99", productModel
+ *  "99"), the product's own price rows on the first page that lists them ("99-EO" ... p.26):
+ *  the page where that product is priced, still to be confirmed in the filed PDF. */
+export async function variantPagesFor(env, { productId = null, productModel = null, makerName = null, scheduleModel }) {
   if (!env || !env.DB || !scheduleModel) return [];
   const want = compactNo(scheduleModel);
   const base = `SELECT v.full_model_number, v.list_price, v.catalog_page, d.r2_object_key AS r2Key, d.document_title AS title
@@ -186,14 +199,22 @@ export async function variantPagesFor(env, { productId = null, makerName = null,
   } catch (_) {
     return [];
   }
-  const hits = rows.map((r) => ({ ...r, number: bookNumber(r.full_model_number), pageNum: parseInt(r.catalog_page, 10) }))
-    .filter((r) => { const k = compactNo(r.number); return r.pageNum > 0 && k.length >= 3 && (productId ? want.includes(k) : want.startsWith(k)); });
+  const all = rows.map((r) => ({ ...r, number: bookNumber(r.full_model_number), pageNum: parseInt(r.catalog_page, 10) }));
+  const hits = all.filter((r) => { const k = compactNo(r.number); return r.pageNum > 0 && k.length >= 3 && (productId ? want.includes(k) : want.startsWith(k)); });
+  if (!hits.length && productId && productModel && want.length >= 2 && want === compactNo(productModel)) {
+    // The product's own rows: its number, then a separator and an option ("99-EO", not "9927-EO").
+    const head = String(productModel).toUpperCase().trim();
+    const own = all.filter((r) => r.pageNum > 0 && r.number.toUpperCase().startsWith(head) && /^[\s\-\/.]/.test(r.number.slice(head.length)));
+    // The first three pages that list them, lowest first (confirmedVariantPage takes the first the PDF shows).
+    const firstPages = [...new Set(own.map((r) => r.pageNum))].sort((a, b) => a - b).slice(0, 3);
+    return own.filter((r) => firstPages.includes(r.pageNum)).sort((a, b) => a.pageNum - b.pageNum);
+  }
   const longest = Math.max(0, ...hits.map((r) => compactNo(r.number).length));
   return hits.filter((r) => compactNo(r.number).length === longest);
 }
 
 /** { r2Key, pageNum, title, number } of a variant's page that the filed PDF itself confirms, or null. */
-export async function confirmedVariantPage(env, variants, { budgetMs = 15000 } = {}) {
+export async function confirmedVariantPage(env, variants, { budgetMs = 15000, inflight = null } = {}) {
   const started = Date.now();
   const seen = new Set();
   for (const v of variants) {
@@ -202,15 +223,18 @@ export async function confirmedVariantPage(env, variants, { budgetMs = 15000 } =
     seen.add(k);
     const left = budgetMs - (Date.now() - started);
     if (left < 2000) return null;
-    const pages = await filedPdfPages(env, v.r2Key, { budgetMs: left });
+    const pages = await filedPdfPages(env, v.r2Key, { budgetMs: left, inflight });
     if (!pages) continue;
     const page = pages.find((p) => p.page === v.pageNum);
     if (!page) continue;
     const text = String(page.text || "");
-    const re = modelPattern(v.number);
-    const named = re ? re.test(text.toUpperCase()) : false;
-    const priced = priceStrings(v.list_price).some((s) => text.includes(s));
-    if (named || priced) return { r2Key: v.r2Key, pageNum: v.pageNum, title: String(v.title || "Price book").split(" (")[0], number: v.number };
+    if (isContents(text.toUpperCase())) continue; // a contents page is never the cited page
+    // Any of the rows filed at this page that the page shows, by number or by list price.
+    for (const w of variants.filter((x) => x.r2Key === v.r2Key && x.pageNum === v.pageNum)) {
+      const named = [modelPattern(w.number), gridPattern(w.number)].some((re) => re && re.test(text.toUpperCase()));
+      const priced = priceStrings(w.list_price).some((s) => text.includes(s));
+      if (named || priced) return { r2Key: w.r2Key, pageNum: w.pageNum, title: String(w.title || "Price book").split(" (")[0], number: w.number };
+    }
   }
   return null;
 }

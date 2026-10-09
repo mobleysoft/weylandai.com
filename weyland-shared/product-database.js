@@ -181,7 +181,10 @@ async function matchProductFromDb(component, env2, trade = "doors") {
       const ids = maker.ids;
       const inMaker = `p.manufacturer_id IN (${ids.map(() => "?").join(",")})`;
       const exactIn = async (s) => preferDocumented(await rows(`UPPER(p.base_model) = ? AND ${inMaker}`, [s, ...ids], EXACT_ORDER, 5), env2);
-      const compactIn = async (s) => (compact(s) && compact(s) !== s && /\d/.test(s)) ? preferDocumented(await rows(`${COMPACT} = ? AND ${inMaker}`, [compact(s), ...ids], EXACT_ORDER, 5), env2) : null;
+      // Under a named maker the compact form is compared whether or not the line wrote a
+      // separator (2026-10-09): Rockford and Berryessa print Zero's 188S-BK as "188SBK", and the
+      // catalogue's own spelling is the one with the hyphen.
+      const compactIn = async (s) => (compact(s) && /\d/.test(s)) ? preferDocumented(await rows(`${COMPACT} = ? AND ${inMaker}`, [compact(s), ...ids], EXACT_ORDER, 5), env2) : null;
       // exact, under the named maker
       for (const s of [...rest, modelSearch]) {
         const hit = found(await exactIn(s), "high", "exact");
@@ -192,9 +195,10 @@ async function matchProductFromDb(component, env2, trade = "doors") {
         const hit = found(await compactIn(s), "high", "exact");
         if (hit) return hit;
       }
-      // the base model (option suffix dropped)
+      // the base model (option suffix dropped), as written and with punctuation removed
+      // ("188SBK" -> 188SB, the catalogue's 188S-B)
       for (const s of baseModelCandidates(modelSearch)) {
-        const hit = found(await exactIn(s), "medium", "base_model");
+        const hit = found(await exactIn(s), "medium", "base_model") || found(await compactIn(s), "medium", "base_model");
         if (hit) return hit;
       }
       if (!looksLikeModel(modelSearch) || modelSearch.length < 3) return null;
@@ -294,6 +298,27 @@ function parsePageHint(title) {
   if (!Number.isFinite(first) || first < 1) return null;
   const last = m[2] ? parseInt(m[2], 10) : null;
   return { hint: last && last !== first ? `${first}-${last}` : String(first), firstPage: first, lastPage: last || first };
+}
+
+/** A title's page hint when it is a citation: one page or a run of at most three (a product
+ *  spread). "pp.6-48" is a book, not a page; "p.None" is no page. */
+export function specificPageHint(title) {
+  const h = parsePageHint(title);
+  return h && h.lastPage - h.firstPage <= 2 ? h : null;
+}
+
+/** A price-book row's page from "the edition originally catalogued": not confirmed in the filed file. */
+export function unconfirmedPageHint(title) {
+  return /originally catalogued|may have shifted|search this PDF/i.test(String(title || ""));
+}
+
+/** A filed document's title as a reader sees it: a row that says "around p.None" (no page is
+ *  known; ~3,000 Ives and Glynn-Johnson rows) never prints that. */
+export function sheetTitle(title) {
+  const t = String(title || "");
+  if (!/\bpp?\.\s*None\b/i.test(t)) return t;
+  const cleaned = t.replace(/\s*\([^()]*\bpp?\.\s*None\b[^()]*\)/i, "").trim();
+  return (cleaned && !/\bpp?\.\s*None\b/i.test(cleaned) ? cleaned : t.split(" (")[0]) + " (full manufacturer price book; no page is filed for this product)";
 }
 
 // Builds the deep-link for a cut-sheet row. A link is only produced when
@@ -466,12 +491,29 @@ function specificToken(model) {
   return t;
 }
 
-/** One citation for a result: a filed sheet first, else the catalogue page that names the model. */
+/**
+ * One citation for a result. When the caller ranked the result's pages
+ * (weyland-shared/page-citations.js citationsFor -> r.citations), the first of them. Otherwise,
+ * from what the result holds, never a run of more than three pages and never a page without a
+ * PDF ahead of one that opens: a pinned price-book page, a sheet whose title names its page, a
+ * catalogue page on file, a price-book row's page, then a catalogue page whose text alone is
+ * indexed. Null when nothing names a page.
+ */
 export function citationFor(r) {
-  const sheet = (r && r.cutSheets && r.cutSheets[0]) || null;
-  if (sheet) return { kind: "cut_sheet", title: sheet.title, page: sheet.pageHint || null, url: sheet.pageUrl || null, pinned: !!sheet.pinnedPage };
-  const cp = (r && r.cataloguePages && r.cataloguePages[0]) || null;
-  if (cp) return { kind: "catalogue_page", title: cp.title, page: String(cp.pageNum), url: cp.pageUrl || null, pdfAvailable: !!cp.pdfAvailable };
+  if (r && Array.isArray(r.citations)) return r.citations[0] || null;
+  const sheets = (r && r.cutSheets) || [];
+  const pages = (r && r.cataloguePages) || [];
+  const short = (t) => String(t || "Cut sheet").split(" (")[0];
+  const pinned = sheets.find((s) => s.pinnedPage && s.pageUrl);
+  if (pinned) return { kind: "price_book", title: short(pinned.title), page: String(pinned.pinnedPage), url: pinned.pageUrl, pinned: true, pdfAvailable: true };
+  const firm = sheets.find((s) => s.pageUrl && specificPageHint(s.title) && !unconfirmedPageHint(s.title));
+  if (firm) return { kind: "cut_sheet", title: short(firm.title), page: specificPageHint(firm.title).hint, url: firm.pageUrl, pinned: false, pdfAvailable: true };
+  const onFile = pages.find((cp) => cp.pdfAvailable && cp.pageUrl && !cp.contentsPage);
+  if (onFile) return { kind: "catalogue_page", title: onFile.title, page: String(onFile.pageNum), url: onFile.pageUrl, pdfAvailable: true };
+  const hinted = sheets.find((s) => s.pageUrl && specificPageHint(s.title));
+  if (hinted) return { kind: "price_book", title: short(hinted.title), page: specificPageHint(hinted.title).hint, url: hinted.pageUrl, pinned: false, pdfAvailable: true };
+  const textOnly = pages.find((cp) => !cp.contentsPage) || null;
+  if (textOnly) return { kind: "catalogue_page", title: textOnly.title, page: String(textOnly.pageNum), url: textOnly.pageUrl || null, pdfAvailable: !!textOnly.pdfAvailable };
   return null;
 }
 
@@ -514,7 +556,7 @@ async function matchComponentToCutSheets(component, env2, opts = {}) {
     const pinned = await pinPriceBookPage(env2, cs, match.product);
     sheets.push({
       id: cs.id,
-      title: cs.document_title,
+      title: sheetTitle(cs.document_title),
       type: cs.document_type,
       url: cs.document_url,
       r2Key: cs.r2_object_key,
@@ -528,7 +570,11 @@ async function matchComponentToCutSheets(component, env2, opts = {}) {
   // (the packet, opts.pagesWhenUnpinned), also when the filed book's page is not pinned.
   // The paste flow leaves that out: 60 lines of full-text queries and R2 checks per batch
   // took it past the harness's patience (2026-10-08, one chunk of 60 dropped).
-  const needPages = sheets.length === 0 || (!!opts.pagesWhenUnpinned && !sheets.some((s) => s.pinnedPage));
+  // CutsheetX (opts.pagesWhenUnspecific, 2026-10-09) asks only when no filed sheet gives a page
+  // that is pinned, or named by a catalogue or spec sheet's own title: a price-book row's
+  // "pp.6-48 ... search this PDF" is not a citation, so LCN 4040XP gets the catalogue's p.41.
+  const firmSheet = (s) => s.pinnedPage || (s.pageUrl && specificPageHint(s.title) && !unconfirmedPageHint(s.title));
+  const needPages = sheets.length === 0 || (!!opts.pagesWhenUnpinned && !sheets.some((s) => s.pinnedPage)) || (!!opts.pagesWhenUnspecific && !sheets.some(firmSheet));
   const cataloguePages = needPages ? await getCataloguePagesForModel(maker.typed ? maker : match.product.manufacturer_name, match.product.base_model, env2) : [];
   const typed = (component.model || "").toUpperCase().trim();
   const notes = {

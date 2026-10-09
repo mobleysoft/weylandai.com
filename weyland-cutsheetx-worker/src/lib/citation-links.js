@@ -118,6 +118,12 @@ export async function signMatchResultLinks(env, result) {
       if (item && typeof item.pageUrl === "string") item.pageUrl = await signCitationUrl(env, item.pageUrl);
     }
   }
+  // The ranked citations (routes/cut-sheet-match.js matchLine) carry their own copies of the URLs.
+  if (Array.isArray(result.citations)) {
+    for (const c of result.citations) {
+      if (c && typeof c.url === "string") c.url = await signCitationUrl(env, c.url);
+    }
+  }
   return result;
 }
 

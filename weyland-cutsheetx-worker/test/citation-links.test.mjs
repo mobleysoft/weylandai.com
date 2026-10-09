@@ -64,6 +64,8 @@ const BIG = new Uint8Array(1000).map((_, i) => i % 251);
 const bucket = {
   async get(key, opts) {
     if (key === "catalogues/cat-l/pages/page_25.pdf") return { async arrayBuffer() { return PDF.buffer; }, body: PDF, size: PDF.length };
+    // The LCN price book's own text, as SubX's packet build caches it (weyland-shared/filed-page.js).
+    if (key === "cut-sheet-text/manufacturer-catalogs/lcn.pdf.pages.json") return { async json() { return [{ page: 6, text: "LCN closers" }, { page: 31, text: "4040XP Series: 4040XP REG, 4040XP EDA" }]; } };
     if (key === "manufacturer-catalogs/lcn.pdf") {
       const bytes = opts && opts.range ? BIG.slice(opts.range.offset, opts.range.offset + opts.range.length) : BIG;
       return { body: bytes, size: BIG.length };
@@ -117,6 +119,8 @@ test("the single-line match hands out signed citations that open as plain links"
   const open = await call(data.citation.url);
   assert.equal(open.status, 200);
   const lcn = await (await router.handle(new Request("https://weylandai.com/api/cut-sheets/match-batch", { method: "POST", headers: { "Content-Type": "application/json", Authorization: "Bearer guest" }, body: JSON.stringify({ text: "LCN 4040XP" }) }), env, { waitUntil() {} })).json();
-  assert.match(lcn.results[0].citation.url, /^\/api\/cut-sheets\/sheet\/d-4040xp\/pdf\?cite=.+#page=6$/);
+  // The page of the filed book that names 4040XP, not the row's "pp.6-48" (2026-10-09).
+  assert.match(lcn.results[0].citation.url, /^\/api\/cut-sheets\/sheet\/d-4040xp\/pdf\?cite=.+#page=31$/);
+  assert.equal(lcn.results[0].citation.page, "31");
   assert.equal((await call(lcn.results[0].citation.url.split("#")[0])).status, 200);
 });

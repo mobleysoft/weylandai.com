@@ -153,3 +153,28 @@ test("a price-book grid spelling finds its page: Von Duprin prints 99-EO as [98/
   assert.equal(bestPageFor(pages, "99-EO").pageNum, 26);
   assert.equal(bestPageFor(pages, "99-EO-F").pageNum, 26);
 });
+
+test("an item named by the product's own number (Von Duprin 99) is cited from the first page that prices it; GJ 100S searches 100S before 100", async () => {
+  const db = new DatabaseSync(":memory:");
+  db.exec(`CREATE TABLE hardware_sets (id TEXT, session_id TEXT, set_number TEXT); CREATE TABLE hardware_components (id TEXT, set_id TEXT, component_type TEXT, quantity INTEGER, manufacturer TEXT, model TEXT, catalog_number TEXT, sequence_order INTEGER);
+    CREATE TABLE product_documents (product_id TEXT, document_type TEXT, active INTEGER, r2_object_key TEXT, document_title TEXT);
+    CREATE TABLE product_variants (product_id TEXT, full_model_number TEXT, list_price REAL, catalog_page TEXT);`);
+  db.prepare("INSERT INTO hardware_sets VALUES ('h1','s1','1')").run();
+  db.prepare("INSERT INTO hardware_components VALUES ('c1','h1','exit_device',1,'Von Duprin','99',NULL,1)").run();
+  db.prepare("INSERT INTO hardware_components VALUES ('c2','h1','stop',1,'Glynn-Johnson','100S',NULL,2)").run();
+  db.prepare("INSERT INTO product_documents VALUES ('pv','cut_sheet',1,'manufacturer-catalogs/vd.pdf','Von Duprin Price Book (2026)')").run();
+  const v = db.prepare("INSERT INTO product_variants VALUES ('pv',?,?,?)");
+  v.run("9927-EO", 3033, "25"); // another product's rows, on an earlier page
+  v.run("99-EO", 2085, "26");
+  v.run("99-L", 2954, "26");
+  const d1 = { prepare(sql) { let a = []; const st = { bind(...x) { a = x; return st; }, async all() { return { results: db.prepare(sql).all(...a).map((r) => ({ ...r })) }; } }; return st; } };
+  const env = fakeEnv([], { DB: d1 });
+  env.store.set("cut-sheet-text/manufacturer-catalogs/vd.pdf.pages.json", JSON.stringify([{ page: 25, text: "[98/99]27 . EO $3,033" }, { page: 26, text: "Rim devices [98/99] .  EO . [ ] $2,057" }]));
+  env.store.set("cut-sheet-text/manufacturer-catalogs/gj.pdf.pages.json", JSON.stringify([{ page: 20, text: "100 SERIES 100S stop-only 100S" }, { page: 23, text: "100 SERIES PARTS 100 100 100 100" }]));
+  const match = async (comp) => comp.manufacturer === "Von Duprin"
+    ? { matched: true, matchType: "exact", maker: { typed: true, known: true, name: "Von Duprin" }, product: { id: "pv", manufacturer: "Von Duprin", model: "99" }, cutSheets: [{ r2Key: "manufacturer-catalogs/vd.pdf", pinnedPage: null, title: "Von Duprin Price Book (2026)" }], cataloguePages: [] }
+    : { matched: true, matchType: "base_model", maker: { typed: true, known: true, name: "Glynn-Johnson" }, product: { id: "pg", manufacturer: "Glynn-Johnson", model: "100" }, cutSheets: [{ r2Key: "manufacturer-catalogs/gj.pdf", pinnedPage: null, title: "Glynn-Johnson Price Book (2026)" }], cataloguePages: [] };
+  const r = await citedPagesForSession("s1", env, match);
+  assert.deepEqual(r.pages.map((p) => [p.r2Key, p.pageNum, p.model]), [["manufacturer-catalogs/vd.pdf", 26, "99-EO"], ["manufacturer-catalogs/gj.pdf", 20, "100"]]);
+  assert.equal(r.missing.length, 0);
+});
