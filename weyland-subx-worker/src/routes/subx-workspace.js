@@ -236,7 +236,40 @@ export async function citedPagesForSession(sessionId, env2, match = matchForPack
   return { components: byKey.size - notes.length, matched, unmatched, missing, notes, pages: [...pages.values()] };
 }
 
+// Tables holding a column, read from the schema (the session's rows live in many tables).
+async function tablesWith(env2, column, except = []) {
+  const rows = (await env2.DB.prepare("SELECT name, sql FROM sqlite_master WHERE type = 'table'").all()).results || [];
+  return rows.filter((t) => !except.includes(t.name) && String(t.sql || "").replace(/^[^(]*\(/s, "").replace(/\)\s*$/, "").split(/,(?![^()]*\))/).map((c) => c.trim().split(/\s+/)[0].replace(/["`\[\]]/g, "").toLowerCase()).includes(column)).map((t) => t.name);
+}
+
+/** Every row of a session, its uploaded PDF and its cached copy (2026-10-09). -> { rows } */
+export async function deleteSessionEverywhere(env2, session) {
+  const id = session.id;
+  const stmts = [];
+  for (const t of await tablesWith(env2, "hardware_set_id", ["door_schedule_entries", "hardware_door_matrix"])) stmts.push(env2.DB.prepare("DELETE FROM " + t + " WHERE hardware_set_id IN (SELECT id FROM hardware_sets WHERE session_id = ?)").bind(id));
+  stmts.push(env2.DB.prepare("DELETE FROM hardware_components WHERE set_id IN (SELECT id FROM hardware_sets WHERE session_id = ?)").bind(id));
+  for (const t of await tablesWith(env2, "session_id", ["hardware_sets", "hardware_extraction_sessions"])) stmts.push(env2.DB.prepare("DELETE FROM " + t + " WHERE session_id = ?").bind(id));
+  stmts.push(env2.DB.prepare("DELETE FROM hardware_sets WHERE session_id = ?").bind(id));
+  stmts.push(env2.DB.prepare("DELETE FROM hardware_extraction_sessions WHERE id = ?").bind(id));
+  let rows = 0;
+  for (const st of stmts) { try { const r = await st.run(); rows += (r && r.meta && r.meta.changes) || 0; } catch (e) { console.warn("[delete-session] " + e.message); } }
+  if (session.file_buffer_key) {
+    try { if (env2.UPLOADS) await env2.UPLOADS.delete(session.file_buffer_key); } catch (_) { /* gone */ }
+    try { if (env2.CACHE) await env2.CACHE.delete(session.file_buffer_key); } catch (_) { /* gone */ }
+  }
+  return { rows };
+}
+
 export function registerSubxWorkspaceRoutes(router, { authenticate, requireActiveSubscription }) {
+  // A customer deletes a session they uploaded: its rows, the PDF and the cached copy.
+  router.delete("/api/hardware-schedule/session/:sessionId", async (request2, env2) => {
+    const o = await ownedSession(request2, env2, authenticate, request2.params.sessionId);
+    if (o.error) return o.error;
+    if (isDemoClone(o.session)) return jsonResponse3({ success: false, error: "The demo session cannot be deleted." }, 400);
+    const r = await deleteSessionEverywhere(env2, o.session);
+    return jsonResponse3({ success: true, deleted: o.session.id, rows: r.rows });
+  });
+
   router.get("/api/hardware-schedule/sessions", async (request2, env2) => {
     const { error: error4, user } = await authenticate(request2, env2);
     if (error4) return error4;

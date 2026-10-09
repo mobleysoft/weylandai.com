@@ -26,6 +26,7 @@ import { jsonResponse3 } from "../lib/json-response.js";
 import { classifyError, jsonErrorResponse, ErrorMetrics } from "../error-utilities.js";
 import { findPagesInBrowser, runGridPagesInBrowser } from "../lib/browser-grid-extraction.js";
 import { persistBrowserGridResult } from "../lib/hardware-extraction-pipeline.js";
+import { readPageFromTextLayer } from "../lib/text-layer-read.js";
 
 // The URL the runner tab fetches the session's PDF from (2026-10-08). This
 // worker holds no signing secret, so the token is a hash of the session's own
@@ -305,12 +306,28 @@ router.post("/api/hardware-schedule/session/:sessionId/read-pages", async (reque
   const fileBuffer = await sessionPdf(session, env2);
   if (!fileBuffer) return jsonResponse3({ success: false, error: "The uploaded PDF is no longer stored; upload it again." }, 404);
   const started = Date.now();
-  const run = await runGridPagesInBrowser(env2, fileBuffer, pages, { pdfUrl: await runnerPdfUrl(session, env2) });
-  if (!run.ok) {
-    return jsonResponse3({ success: false, error: "The pages could not be read just now (" + (run.error || "reader unavailable") + (run.detail ? ": " + run.detail : "") + "). Try READ THIS PAGE on one page, or READ IT IN THIS BROWSER." }, 503);
+  // 2026-10-09: each page from its own text first, in this Worker (lib/text-layer-read.js);
+  // only the pages with no text (scans) go to the browser runner. Every page used to go to the
+  // browser, and Rockford's 08 71 00 pages died there after 73 s.
+  const fromText = [], forBrowser = [];
+  for (const p of pages) {
+    let tl = null;
+    try { tl = await readPageFromTextLayer(fileBuffer, p.page, p.type); } catch (e) { console.warn("[read-pages] text read failed p" + p.page + ": " + (e && e.message)); }
+    const words = tl && tl.result && tl.result.metadata ? tl.result.metadata.text_words || 0 : 0;
+    if (tl && (!tl.empty || words >= 60 || !env2.BROWSER)) fromText.push({ ...tl, ok: true, page: p.page, requested_type: p.type });
+    else forBrowser.push(p);
   }
+  let run = { ok: true, results: [] };
+  if (forBrowser.length) {
+    run = await runGridPagesInBrowser(env2, fileBuffer, forBrowser, { pdfUrl: await runnerPdfUrl(session, env2) });
+    if (!run.ok && !fromText.length) {
+      return jsonResponse3({ success: false, error: "The pages could not be read just now (" + (run.error || "reader unavailable") + (run.detail ? ": " + run.detail : "") + "). Try READ THIS PAGE on one page, or READ IT IN THIS BROWSER." }, 503);
+    }
+  }
+  const browserResults = run.ok ? run.results : forBrowser.map((p) => ({ page: p.page, requested_type: p.type, ok: false, error: run.error || "reader unavailable", detail: run.detail || null }));
+  const ordered = [...fromText, ...browserResults].sort((a, b) => pages.findIndex((p) => p.page === a.page) - pages.findIndex((p) => p.page === b.page));
   const results = [];
-  for (const r of run.results) {
+  for (const r of ordered) {
     if (!r.ok) { results.push({ page: r.page, type: r.requested_type, ok: false, error: "Page " + r.page + " could not be read: " + (r.detail || r.error || "reader failed") }); continue; }
     const persisted = await persistBrowserGridResult(r, r.requested_type, sessionId, session.tenant_id || null, r.page, totalPages, env2, { explicit: true });
     if (persisted.success === false) { results.push({ page: r.page, type: r.requested_type, ok: false, error: persisted.detail || persisted.error || "nothing read", code: persisted.error || null }); continue; }
@@ -318,7 +335,7 @@ router.post("/api/hardware-schedule/session/:sessionId/read-pages", async (reque
       try { await savePageExtraction2(sessionId, r.page, persisted, env2); } catch (e) { console.warn("[read-pages] save failed p" + r.page + ": " + e.message); }
     }
     const isDoor = persisted.schedule_type === "door_schedule";
-    results.push({ page: r.page, type: persisted.schedule_type, ok: true, doors: isDoor ? (persisted.entry_count ?? (persisted.entries || []).length) : 0, groups: isDoor ? 0 : (persisted.hardware_groups || []).length, items: isDoor ? 0 : (persisted.hardware_groups || []).reduce((n, g) => n + ((g.components || []).length), 0), metadata: { extraction_mode: (persisted.metadata || {}).extraction_mode || null, rotation_applied: (persisted.metadata || {}).rotation_applied || null }, ms: r.ms });
+    results.push({ page: r.page, type: persisted.schedule_type, ok: true, doors: isDoor ? (persisted.entry_count ?? (persisted.entries || []).length) : 0, groups: isDoor ? 0 : (persisted.hardware_groups || []).length, items: isDoor ? 0 : (persisted.hardware_groups || []).reduce((n, g) => n + ((g.components || []).length), 0), metadata: { extraction_mode: (persisted.metadata || {}).extraction_mode || null, rotation_applied: (persisted.metadata || {}).rotation_applied || null, read_source: r.source || "browser" }, ms: r.ms });
   }
   return jsonResponse3({ success: true, sessionId, results, ms: Date.now() - started });
 });
