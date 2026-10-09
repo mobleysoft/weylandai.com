@@ -104,7 +104,7 @@
     function token() { try { return localStorage.getItem("_authfor_token"); } catch (e) { return null; } }
     function headers(json) { var h = {}; var t = token(); if (t) h.Authorization = "Bearer " + t; if (json) h["Content-Type"] = "application/json"; return h; }
     function money(n) { return "$" + Number(n).toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 }); }
-    var BASIS = { exact: "exact match", options: "options not priced", closest: "only matching configuration" };
+    var BASIS = { exact: "exact match", options: "options not priced", closest: "only matching configuration", "book rule": "the book\u2019s pricing rule" };
 
     $("lk").addEventListener("submit", function (e) {
       e.preventDefault(); $("lout").textContent = "Looking up...";

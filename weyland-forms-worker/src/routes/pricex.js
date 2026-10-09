@@ -16,6 +16,7 @@ import { outputAccess, paymentRequired } from "../../../weyland-shared/output-ac
 import { matchComponentToCutSheets, PACKET_MATCH_TYPES } from "../../../weyland-shared/product-database.js";
 import { pickVariant, priceLine, finishCode, variantNumber, variantFinish } from "../lib/pricing.js";
 import { loadJob, setKey } from "./closex.js";
+import { filedBookPrice, sizedByDoor } from "../lib/filed-books.js";
 
 let ready = false;
 export function resetForTests() { ready = false; }
@@ -50,8 +51,11 @@ const bookName = (v) => [v.book_title, v.book_version].filter(Boolean).join(" ")
  * One item priced: { priced: true, product, variant, basis, finishMatched, note, book } or
  * { priced: false, reason }. caches: { match: Map, variants: Map } shared across a schedule.
  */
-export async function priceItem(env, { maker, model, finish }, match = matchComponentToCutSheets, caches = { match: new Map(), variants: new Map() }) {
+export async function priceItem(env, { maker, model, finish, doorWidth }, match = matchComponentToCutSheets, caches = { match: new Map(), variants: new Map() }) {
   if (!model) return { priced: false, reason: "No catalogue number on the schedule." };
+  // A maker's filed book read directly (lib/filed-books.js) where it covers the item.
+  const filed = filedBookPrice({ maker, model, finish, doorWidth });
+  if (filed) return filed;
   const mk = makerKey(maker) + "|" + String(model).toUpperCase();
   let m = caches.match.get(mk);
   if (m === undefined) {
@@ -102,8 +106,14 @@ const r2 = (n) => Math.round(n * 100) / 100;
 /** The schedule priced: one line per set item, quantity times the openings using the set. */
 export async function priceSchedule(env, job, mult, match = matchComponentToCutSheets) {
   const caches = { match: new Map(), variants: new Map() };
-  const openingsBySet = new Map();
-  for (const d of job.doors) { const k = setKey(d.hardware_group); if (k) openingsBySet.set(k, (openingsBySet.get(k) || 0) + 1); }
+  const openingsBySet = new Map(), doorsBySet = new Map();
+  for (const d of job.doors) {
+    const k = setKey(d.hardware_group);
+    if (!k) continue;
+    openingsBySet.set(k, (openingsBySet.get(k) || 0) + 1);
+    if (!doorsBySet.has(k)) doorsBySet.set(k, []);
+    doorsBySet.get(k).push(d);
+  }
   const noDoors = job.doors.length === 0;
   const lines = [];
   let total = 0, listTotal = 0, unpriced = 0;
@@ -111,14 +121,24 @@ export async function priceSchedule(env, job, mult, match = matchComponentToCutS
     const openings = noDoors ? 1 : (openingsBySet.get(k) || 0);
     for (const it of set.items) {
       const number = it.catalog || it.model;
-      const p = await priceItem(env, { maker: it.manufacturer, model: number, finish: it.finish }, match, caches);
-      const qty = (Number(it.qty) || 1) * openings;
-      const line = { set: set.number, openings, item: it.description, maker: it.manufacturer, number, finish: it.finish, qtyPerOpening: Number(it.qty) || 1, qty };
+      // A plate sized from the door ("10 x 2 LDW") is priced once per door width in the set.
+      const groups = [];
+      if (sizedByDoor({ maker: it.manufacturer, model: number }) && !noDoors) {
+        const byWidth = new Map();
+        for (const d of doorsBySet.get(k) || []) { const w = Number(d.width_inches) > 0 ? Number(d.width_inches) : null; byWidth.set(w, (byWidth.get(w) || 0) + 1); }
+        for (const [w, n] of byWidth) groups.push({ doorWidth: w, openings: n });
+      }
+      if (!groups.length) groups.push({ doorWidth: null, openings });
+      for (const g of groups) {
+      const p = await priceItem(env, { maker: it.manufacturer, model: number, finish: it.finish, doorWidth: g.doorWidth }, match, caches);
+      const qty = (Number(it.qty) || 1) * g.openings;
+      const line = { set: set.number, openings: g.openings, item: it.description, maker: it.manufacturer, number, finish: it.finish, qtyPerOpening: Number(it.qty) || 1, qty, ...(g.doorWidth ? { doorWidth: g.doorWidth } : {}) };
       if (!p.priced) { unpriced++; lines.push({ ...line, priced: false, reason: p.reason }); continue; }
       const m = mult.byMaker[makerKey(p.product.manufacturer)] ?? mult.byMaker[makerKey(it.manufacturer)] ?? mult.default;
       const pl = priceLine({ qty, list: p.variant.list, multiplier: m });
       if (qty > 0) { total += pl.extended; listTotal += r2(pl.list * qty); }
-      lines.push({ ...line, priced: true, pricedAs: p.variant.number, pricedFinish: p.variant.finish, basis: p.basis, book: p.book.name, effective: p.variant.effective, ...pl, extended: qty > 0 ? pl.extended : 0, note: [p.note, openings === 0 ? "no opening in the door schedule uses this set" : null].filter(Boolean).join("; ") || null });
+      lines.push({ ...line, priced: true, pricedAs: p.variant.number, pricedFinish: p.variant.finish, basis: p.basis, book: p.book.name, effective: p.variant.effective, ...pl, extended: qty > 0 ? pl.extended : 0, note: [p.note, g.openings === 0 ? "no opening in the door schedule uses this set" : null].filter(Boolean).join("; ") || null });
+      }
     }
   }
   return {
