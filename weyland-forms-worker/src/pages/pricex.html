@@ -135,11 +135,12 @@
       fetch("/api/forms/pricex/session/" + encodeURIComponent(id), { method: "POST", credentials: "same-origin", headers: headers(true), body: JSON.stringify(mults()) }).then(function (r) { return r.json(); }).then(function (d) {
         if (!d.success) { $("sum").innerHTML = '<p class="err">' + esc(d.message) + "</p>"; return; }
         var t = d.totals;
-        $("sum").innerHTML = '<p class="tot"><b>' + money(t.net) + "</b> net · " + money(t.list) + " list</p><p class=\"note\">" + t.pricedLines + " of " + d.lines.length + " lines priced (" + t.exactLines + " exact). " + (t.unpricedLines ? '<span class="warn">' + t.unpricedLines + " not priced and not in the total.</span>" : "") + (d.basisNote ? " " + esc(d.basisNote) : "") + "</p>";
+        $("sum").innerHTML = '<p class="tot"><b>' + money(t.net) + "</b> net · " + money(t.list) + " list</p><p class=\"note\">" + t.pricedLines + " of " + (d.lines.length - (t.noteLines || 0)) + " items priced (" + t.exactLines + " exact). " + (t.unpricedLines ? '<span class="warn">' + t.unpricedLines + " not priced and not in the total.</span>" : "") + (d.basisNote ? " " + esc(d.basisNote) : "") + "</p>";
         $("tbl").querySelector("tbody").innerHTML = d.lines.map(function (l) {
           var head = "<td>" + esc(l.set) + '</td><td class="n">' + l.openings + "</td><td>" + esc(l.item) + '<br><span class="dim">' + esc(l.maker) + "</span></td><td>" + esc(l.number) + '<br><span class="dim">' + esc(l.finish) + '</span></td><td class="n">' + l.qty + "</td>";
+          if (l.scheduleNote) return "<tr>" + head + '<td colspan="4" class="dim">' + esc(l.reason) + "</td></tr>";
           if (!l.priced) return "<tr>" + head + '<td colspan="4" class="warn">Not priced: ' + esc(l.reason) + "</td></tr>";
-          return "<tr>" + head + "<td>" + esc(l.pricedAs) + " " + esc(l.pricedFinish) + '<br><span class="dim">' + esc(BASIS[l.basis]) + " · " + esc(l.book) + "</span>" + (l.note ? '<br><span class="warn">' + esc(l.note) + "</span>" : "") + '</td><td class="n">' + money(l.list) + '</td><td class="n">' + money(l.net) + "<br><span class=\"dim\">x" + l.multiplier + '</span></td><td class="n">' + money(l.extended) + "</td></tr>";
+          return "<tr>" + head + "<td>" + esc(l.pricedAs) + " " + esc(l.pricedFinish) + '<br><span class="dim">' + esc(BASIS[l.basis]) + " · " + esc(l.book) + "</span>" + (l.note ? '<br><span class="warn">' + esc(l.note) + "</span>" : "") + (l.doorWidth ? '<br><span class="dim">openings ' + l.doorWidth + '"' + (l.doorHeight ? ' x ' + l.doorHeight + '"' : " wide") + "</span>" : "") + '</td><td class="n">' + money(l.list) + '</td><td class="n">' + money(l.net) + "<br><span class=\"dim\">x" + l.multiplier + '</span></td><td class="n">' + money(l.extended) + "</td></tr>";
         }).join("");
         $("tbl").hidden = false; $("acts").hidden = false;
       }).catch(function () { $("sum").innerHTML = '<p class="err">Could not reach PriceX.</p>'; });

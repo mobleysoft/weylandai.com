@@ -41,8 +41,10 @@ const PAINTED = new Set(["600", "689", "690", "691", "692", "693", "694", "695",
 const bracket = (v) => ((String(v.full_model_number || "").match(/\[([^\]]*)\]\s*$/) || [])[1] || "").trim();
 /** The catalogue number of a variant, without its finish-class bracket. */
 export const variantNumber = (v) => String(v.full_model_number || "").replace(/\s*\[[^\]]*\]\s*$/, "").trim();
+/** Feet of a variant the book prices by length ("188S-BK [17' (5.1 m)]"), or null. */
+export const lengthFeet = (v) => { const m = bracket(v).match(/^(\d+(?:\.\d+)?)'/); return m ? Number(m[1]) : null; };
 /** The finish a variant is priced in, as the book states it. */
-export const variantFinish = (v) => String(v.finish_code || "").trim() || bracket(v) || null;
+export const variantFinish = (v) => String(v.finish_code || "").trim() || (lengthFeet(v) == null ? bracket(v) : "") || null;
 
 /** 2: the variant is priced in exactly this finish; 1: in this finish's class; 0: not this finish. */
 export function finishScore(v, fin) {
@@ -54,6 +56,7 @@ export function finishScore(v, fin) {
   if (code) return code[1] === fin ? 2 : 0;
   if (/powder|paint|prime|coat/i.test(b)) return PAINTED.has(fin) ? 1 : 0;
   if (/plated|metal/i.test(b)) return PAINTED.has(fin) ? 0 : 1;
+  if (/^\d+(?:\.\d+)?'/.test(b)) return 1; // a length, not a finish
   return b ? 0 : 1; // a row with no finish at all is the book's one price for every finish
 }
 

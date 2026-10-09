@@ -121,3 +121,34 @@ test("routes: the schedule priced at the account's multipliers, openings per set
   assert.match(text, /Total of priced lines \(list\),1630\.00,,,684\.60/);
   assert.match(text, /not priced/);
 });
+
+test("a seal sold by length: found under the maker's own numbering, one length per door size; a schedule note is not an item", async () => {
+  const { priceSchedule } = await import("../src/routes/pricex.js");
+  const db = new DatabaseSync(":memory:");
+  db.exec(`CREATE TABLE manufacturers (id TEXT, name TEXT); CREATE TABLE products (id TEXT, manufacturer_id TEXT);
+    CREATE TABLE product_variants (product_id TEXT, full_model_number TEXT, finish_code TEXT, list_price REAL, price_effective_date TEXT, source_catalogue_id TEXT, active INTEGER);
+    CREATE TABLE catalogues (catalogue_id TEXT, title TEXT, version TEXT);`);
+  db.prepare("INSERT INTO manufacturers VALUES ('mfr-zero','Zero International')").run();
+  db.prepare("INSERT INTO products VALUES ('prod-zer-188s-b','mfr-zero')").run();
+  db.prepare("INSERT INTO catalogues VALUES ('z25','Zero International Price Book 2025','1.0')").run();
+  const v = db.prepare("INSERT INTO product_variants VALUES ('prod-zer-188s-b',?,'',?,'2026-02-27','z25',1)");
+  for (const [n, p] of [["188S-BK [8' (2.4 m)]", 22.88], ["188S-BK [17' (5.1 m)]", 48.62], ["188S-BK [20' (6.1 m)]", 57.2], ["188S-BK [21' (6.4 m)]", 60.06], ["188S-BR [20' (6.1 m)]", 57.2]]) v.run(n, p);
+  db.prepare("INSERT INTO product_variants VALUES ('prod-zer-188s-b','188S-BK','626',19.68,'2025-02-28','z25',0)").run(); // superseded
+  const env = { DB: d1(db) };
+  const zeroMiss = async () => ({ matched: false, reason: "model_not_in_catalogue", maker: { typed: true, known: true, name: "Zero International" } });
+  const job = {
+    doors: [{ hardware_group: "1", width_inches: 42, height_inches: 94 }, { hardware_group: "1", width_inches: 36, height_inches: 84 }, { hardware_group: "1", width_inches: 42, height_inches: 94 }],
+    sets: new Map([["1", { number: "01", items: [
+      { qty: 1, manufacturer: "Zero International", model: "188SBK PSA", catalog: "", finish: "BK", description: "GASKETING" },
+      { qty: 2, manufacturer: "", model: "VERIFY PERMANENT CORE WITH DISTRICT", catalog: "", finish: "626", description: "CORE" },
+    ] }]]),
+  };
+  const r = await priceSchedule(env, job, { default: 1, byMaker: {} }, zeroMiss);
+  const seals = r.lines.filter((l) => l.item === "GASKETING").map((l) => [l.doorWidth, l.doorHeight, l.openings, l.pricedAs, l.list, l.basis]);
+  assert.deepEqual(seals, [[42, 94, 2, "188S-BK 20'", 57.2, "options"], [36, 84, 1, "188S-BK 17'", 48.62, "options"]], "2 x 94 + 42 = 230 in = 19.2 ft -> 20'; 2 x 84 + 36 = 17 ft -> 17'");
+  assert.match(r.lines[0].note, /one 20' length for the head and jambs of a 42" x 94" opening \(19\.2 ft\)/);
+  assert.equal(r.lines[0].book, "Zero International Price Book 2025 1.0");
+  const note = r.lines.find((l) => l.item === "CORE");
+  assert.deepEqual([note.scheduleNote, note.qty], [true, 0]);
+  assert.deepEqual([r.totals.pricedLines, r.totals.unpricedLines, r.totals.noteLines, r.totals.list], [2, 0, 1, 163.02]);
+});
