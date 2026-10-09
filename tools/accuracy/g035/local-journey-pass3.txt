@@ -1,0 +1,71 @@
+PASS 7478006f7fd5b43c: the set opens and its doors are built
+PASS 7478006f7fd5b43c: one card per schedule row (door cards + not-a-door-row cards = rows in the data)
+PASS 7478006f7fd5b43c: a door is drawn for every door row and nothing else
+PASS 7478006f7fd5b43c: the doors tagged on the plan are the ones the data places
+PASS 7478006f7fd5b43c: the door's card names it and quotes its schedule row (101A, p.45)
+PASS 7478006f7fd5b43c: the camera stands at that door on the plan (within 4 m of its tag)
+PASS 7478006f7fd5b43c: W walks on from the door
+PASS 192a16af8f31ae0c: the set opens and its doors are built
+PASS 192a16af8f31ae0c: one card per schedule row (door cards + not-a-door-row cards = rows in the data)
+PASS 192a16af8f31ae0c: a door is drawn for every door row and nothing else
+PASS 192a16af8f31ae0c: the doors tagged on the plan are the ones the data places
+PASS 192a16af8f31ae0c: the door's card names it and quotes its schedule row (100, p.10)
+PASS 192a16af8f31ae0c: the camera stands at that door on the plan (within 4 m of its tag)
+PASS 192a16af8f31ae0c: W walks on from the door
+PASS e3d0cc1bc22fd824: the set opens and its doors are built
+PASS e3d0cc1bc22fd824: one card per schedule row (door cards + not-a-door-row cards = rows in the data)
+PASS e3d0cc1bc22fd824: a door is drawn for every door row and nothing else
+PASS e3d0cc1bc22fd824: the doors tagged on the plan are the ones the data places
+PASS e3d0cc1bc22fd824: the door's card names it and quotes its schedule row (100, p.18)
+PASS e3d0cc1bc22fd824: the camera stands at that door on the plan (within 4 m of its tag)
+PASS e3d0cc1bc22fd824: W walks on from the door
+PASS f97e99f88a931e74: the set opens and its doors are built
+PASS f97e99f88a931e74: one card per schedule row (door cards + not-a-door-row cards = rows in the data)
+PASS f97e99f88a931e74: a door is drawn for every door row and nothing else
+PASS f97e99f88a931e74: no plan was read, so no door claims a tag
+PASS f97e99f88a931e74: the door's card names it and quotes its schedule row (01, p.32)
+PASS f97e99f88a931e74: the page says the layout is schematic and why no plan was read
+FAIL f97e99f88a931e74: W walks on from the door  [{"moved":0.22}]
+PASS 43a1f0db3f7ff345: the set opens and its doors are built
+PASS 43a1f0db3f7ff345: one card per schedule row (door cards + not-a-door-row cards = rows in the data)
+PASS 43a1f0db3f7ff345: a door is drawn for every door row and nothing else
+PASS 43a1f0db3f7ff345: the doors tagged on the plan are the ones the data places
+PASS 43a1f0db3f7ff345: the door's card names it and quotes its schedule row (201, p.14)
+PASS 43a1f0db3f7ff345: the camera stands at that door on the plan (within 4 m of its tag)
+PASS 43a1f0db3f7ff345: W walks on from the door
+PASS 3fd2388877347d09: the set opens and its doors are built
+PASS 3fd2388877347d09: one card per schedule row (door cards + not-a-door-row cards = rows in the data)
+PASS 3fd2388877347d09: a door is drawn for every door row and nothing else
+PASS 3fd2388877347d09: the doors tagged on the plan are the ones the data places
+PASS 3fd2388877347d09: the door's card names it and quotes its schedule row (002, p.13)
+PASS 3fd2388877347d09: the camera stands at that door on the plan (within 4 m of its tag)
+PASS 3fd2388877347d09: W walks on from the door
+PASS 4af80165bc367de8: the set opens and its doors are built
+PASS 4af80165bc367de8: one card per schedule row (door cards + not-a-door-row cards = rows in the data)
+PASS 4af80165bc367de8: a door is drawn for every door row and nothing else
+PASS 4af80165bc367de8: the doors tagged on the plan are the ones the data places
+PASS 4af80165bc367de8: the door's card names it and quotes its schedule row (104A, p.7)
+PASS 4af80165bc367de8: the camera stands at that door on the plan (within 4 m of its tag)
+PASS 4af80165bc367de8: W walks on from the door
+PASS 89236ffa156fbaf5: the set opens and its doors are built
+PASS 89236ffa156fbaf5: one card per schedule row (door cards + not-a-door-row cards = rows in the data)
+PASS 89236ffa156fbaf5: a door is drawn for every door row and nothing else
+PASS 89236ffa156fbaf5: the doors tagged on the plan are the ones the data places
+PASS 89236ffa156fbaf5: the door's card names it and quotes its schedule row (101A, p.43)
+PASS 89236ffa156fbaf5: the camera stands at that door on the plan (within 4 m of its tag)
+PASS 89236ffa156fbaf5: W walks on from the door
+PASS 977cec6301f40433: the set opens and its doors are built
+PASS 977cec6301f40433: one card per schedule row (door cards + not-a-door-row cards = rows in the data)
+PASS 977cec6301f40433: a door is drawn for every door row and nothing else
+PASS 977cec6301f40433: no plan was read, so no door claims a tag
+PASS 977cec6301f40433: the door's card names it and quotes its schedule row (114, p.10)
+PASS 977cec6301f40433: the page says the layout is schematic and why no plan was read
+PASS 977cec6301f40433: W walks on from the door
+PASS 2b7024ad75f57ddf: the set opens and its doors are built
+PASS 2b7024ad75f57ddf: one card per schedule row (door cards + not-a-door-row cards = rows in the data)
+PASS 2b7024ad75f57ddf: a door is drawn for every door row and nothing else
+PASS 2b7024ad75f57ddf: the doors tagged on the plan are the ones the data places
+PASS 2b7024ad75f57ddf: the door's card names it and quotes its schedule row (101, p.16)
+PASS 2b7024ad75f57ddf: the camera stands at that door on the plan (within 4 m of its tag)
+PASS 2b7024ad75f57ddf: W walks on from the door
+69 passed, 1 failed

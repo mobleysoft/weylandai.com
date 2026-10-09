@@ -5,6 +5,7 @@ Written by the cloud session, 2026-10-09 (UTC). Every number below comes from a 
 
 ## Cloud goals (Mobley list)
 
+- g035 in review (21:25Z): SightX opens all ten harvested sets at /sightx/?set=<sha16>; the seven new ones: O2604 6/6 tagged, T2502 2/2, C2419 2/2, T2147 13 of 26 tagged (13 listed not on the plan), T2331 4/4; R2502 rebid (162 door rows) and T2423 (1) have no plan the reader can select, so they stand on the schematic corridor with the reason shown and no tag claimed. Journey sightx-real-buildings 70 checks; local software-WebGL passes 69/70 each, the one miss is W pace at 3 fps on the rebid (tools/accuracy/g035/README.md). Needs: deploy of weyland-sightx-worker, then the Mac's 3 GPU passes.
 - g028 in review (2026-10-09T18:10Z): SightX opens the three best real harvested sets at /sightx/?set=<sha16> (R2502 152 door rows / 150 tagged, T2507 40 / 40, T2504 18 / 18), each door at its tag with the schedule row it came from; journey sightx-real-buildings 3 local passes 21/21; evidence tools/accuracy/g028/README.md. Needs: deploy of weyland-sightx-worker, then the Mac's 3 GPU passes.
 - g032 in review (18:24Z): PropX PASS and HuntX PASS on rerunnable audits (BidX and CloseX also PASS; CloseX harness fixed for the PDF's Room field); offer sentence in index.html restored to the full list. MarketX FAIL stays open (Chicago companies CSV order; SF publishes no GC or owner). Needs: merge and the Pages deploy of index.html.
 

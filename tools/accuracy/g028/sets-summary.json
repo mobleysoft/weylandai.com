@@ -39,5 +39,99 @@
   "plan": [
    "A-102 p.9"
   ]
+ },
+ {
+  "sha16": "f97e99f88a931e74",
+  "project": "_R2502-01 REBID Final Bid Plans",
+  "rows": 166,
+  "door_rows": 162,
+  "not_door_rows": 4,
+  "doors_drawn_on_plan": 0,
+  "not_on_plan": [],
+  "plan": []
+ },
+ {
+  "sha16": "43a1f0db3f7ff345",
+  "project": "_O2604-01 Final Bid Plans",
+  "rows": 7,
+  "door_rows": 6,
+  "not_door_rows": 1,
+  "doors_drawn_on_plan": 6,
+  "not_on_plan": [],
+  "plan": [
+   "A111 p.6"
+  ]
+ },
+ {
+  "sha16": "3fd2388877347d09",
+  "project": "_T2502-01 - Final Plans",
+  "rows": 3,
+  "door_rows": 2,
+  "not_door_rows": 1,
+  "doors_drawn_on_plan": 2,
+  "not_on_plan": [],
+  "plan": [
+   "A-101 p.7"
+  ]
+ },
+ {
+  "sha16": "4af80165bc367de8",
+  "project": "_C2419-01 Final Bid Plans",
+  "rows": 2,
+  "door_rows": 2,
+  "not_door_rows": 0,
+  "doors_drawn_on_plan": 2,
+  "not_on_plan": [],
+  "plan": [
+   "A102 p.6"
+  ]
+ },
+ {
+  "sha16": "89236ffa156fbaf5",
+  "project": "_T2147-01 - Final Plans",
+  "rows": 26,
+  "door_rows": 26,
+  "not_door_rows": 0,
+  "doors_drawn_on_plan": 13,
+  "not_on_plan": [
+   "161",
+   "162",
+   "163",
+   "164",
+   "165A",
+   "165B",
+   "166",
+   "167A",
+   "167B",
+   "168A",
+   "169A",
+   "169B",
+   "169C"
+  ],
+  "plan": [
+   "A113 p.27"
+  ]
+ },
+ {
+  "sha16": "977cec6301f40433",
+  "project": "_T2423-01 - Final Plans",
+  "rows": 2,
+  "door_rows": 1,
+  "not_door_rows": 1,
+  "doors_drawn_on_plan": 0,
+  "not_on_plan": [],
+  "plan": []
+ },
+ {
+  "sha16": "2b7024ad75f57ddf",
+  "project": "_T2331-01 Final Bid Plans",
+  "rows": 4,
+  "door_rows": 4,
+  "not_door_rows": 0,
+  "doors_drawn_on_plan": 4,
+  "not_on_plan": [],
+  "plan": [
+   "A-101 p.9"
+  ]
  }
 ]
