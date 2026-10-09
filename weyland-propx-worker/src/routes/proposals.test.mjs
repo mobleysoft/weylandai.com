@@ -233,3 +233,16 @@ test("deriveLines: a set written 2 on the door schedule and 02 on the hardware s
   const doorLines = lines.filter((l) => l.kind === "door");
   assert.deepEqual(doorLines.map((l) => [l.description, l.size, l.quantity]), [["Door - type B", `3'-6" x 7'-10"`, 2], ["Door - type not scheduled", `3'-6" x 7'-10"`, 1]]);
 });
+
+test("priceFromBooks: a component the schedule gives no price is priced from PriceX's books at the account's multiplier", async () => {
+  const { priceFromBooks, deriveLines } = await import("../lib/proposal-sources.js");
+  const sets = [{ set_number: "2", components: [{ component_type: "closer", quantity: 1, unit_price: 300, manufacturer: "LCN", model: "4040XP" }, { component_type: "exit_device", quantity: 1, manufacturer: "Von Duprin", model: "99-L-F", finish: "626" }, { component_type: "note", quantity: 1, manufacturer: "", model: "VERIFY CORE" }] }];
+  const db = { prepare: () => ({ bind: () => ({ all: async () => ({ results: [{ maker: "", multiplier: 0.5 }, { maker: "von duprin", multiplier: 0.4 }] }) }) }) };
+  const priceItem = async (env, { model }) => model === "99-L-F" ? { priced: true, product: { manufacturer: "Von Duprin", model: "99" }, variant: { list: 3337 }, book: { name: "Von Duprin Price Book 2024" } } : { priced: false, reason: "no" };
+  await priceFromBooks(db, "u1", sets, priceItem);
+  assert.equal(sets[0].components[1].book_net, 1334.8);
+  const hw = deriveLines([{ mark: "001", hardware_group: "2" }], sets).filter((l) => l.kind === "hardware")[0];
+  assert.equal(hw.unitPrice, 1634.8);
+  assert.match(hw.priceSource, /2 of 3 components priced: 1 from the schedule, 1 from the makers' price books \(Von Duprin Price Book 2024\) at your multipliers/);
+  assert.match(hw.description, /not in this price: VERIFY CORE/);
+});

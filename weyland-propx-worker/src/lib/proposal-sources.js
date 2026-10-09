@@ -56,8 +56,39 @@ function marksText(marks) {
 }
 
 function compPrice(c) {
-  const p = c.unit_price != null ? Number(c.unit_price) : c.list_price != null ? Number(c.list_price) : null;
+  const p = c.unit_price != null ? Number(c.unit_price) : c.list_price != null ? Number(c.list_price) : c.book_net != null ? Number(c.book_net) : null;
   return Number.isFinite(p) ? p : null;
+}
+
+const makerKeyOf = (m) => String(m || "").toLowerCase().replace(/[^a-z0-9]+/g, " ").trim();
+
+/**
+ * Components the schedule gives no price, priced from the makers' price books PriceX holds, at
+ * the account's own PriceX multipliers (2026-10-09, product audit: Berryessa set 2 was priced from
+ * 2 of its 9 items). `priceItem(env, { maker, model, finish })` is PriceX's own pricer
+ * (weyland-forms-worker/src/routes/pricex.js); a component it cannot price stays unpriced and is
+ * named on the line. Each priced component keeps its book (c.book_name).
+ */
+export async function priceFromBooks(db, userId, sets, priceItem) {
+  if (!priceItem || !sets || !sets.length) return;
+  const mult = { default: 1, byMaker: {} };
+  try {
+    for (const r of (await all(db, "SELECT maker, multiplier FROM forms_price_multipliers WHERE user_id = ?", userId))) {
+      if (r.maker === "") mult.default = Number(r.multiplier) || 1; else mult.byMaker[r.maker] = Number(r.multiplier) || 1;
+    }
+  } catch (_) { /* no multipliers saved: list price */ }
+  const caches = { match: new Map(), variants: new Map() };
+  for (const set of sets) {
+    for (const c of set.components || []) {
+      if (compPrice(c) != null || !c.model) continue;
+      let r = null;
+      try { r = await priceItem({ DB: db }, { maker: c.manufacturer || "", model: c.model, finish: c.finish || null }, undefined, caches); } catch (_) { r = null; }
+      if (!r || !r.priced || !(r.variant && r.variant.list > 0)) continue;
+      const m = mult.byMaker[makerKeyOf(r.product && r.product.manufacturer)] ?? mult.byMaker[makerKeyOf(c.manufacturer)] ?? mult.default;
+      c.book_net = Math.round(r.variant.list * m * 100) / 100;
+      c.book_name = r.book && r.book.name ? r.book.name : "price book";
+    }
+  }
 }
 
 /**
@@ -144,16 +175,19 @@ export function deriveLines(doors, sets) {
       unitPrice = Number(set.unit_price_override);
       priceSource = "set price on the schedule";
     } else if (comps.length) {
-      let sum = 0;
+      let sum = 0, fromBooks = 0;
+      const books = new Set();
       for (const c of comps) {
         const p = compPrice(c);
         if (p == null) { unpriced.push(c); continue; }
         priced++;
+        if (c.book_net != null && c.unit_price == null && c.list_price == null) { fromBooks++; books.add(c.book_name); }
         sum += p * (Number(c.quantity) || 1);
       }
       if (priced) {
         unitPrice = Math.round(sum * 100) / 100;
-        priceSource = priced === comps.length ? "component prices on the schedule" : priced + " of " + comps.length + " components priced on the schedule";
+        const how = fromBooks ? (fromBooks === priced ? "the makers' price books (" + [...books].join(", ") + ") at your multipliers" : (priced - fromBooks) + " from the schedule, " + fromBooks + " from the makers' price books (" + [...books].join(", ") + ") at your multipliers") : "the schedule";
+        priceSource = (priced === comps.length ? "every component priced: " : priced + " of " + comps.length + " components priced: ") + how;
       }
     }
     const compText = comps.length
@@ -274,7 +308,7 @@ export async function listSources(db, user) {
  * read it (not theirs, or not found).
  * -> { source: {kind, id, name, demo}, project, doors, lines }
  */
-export async function loadSource(db, user, kind, id) {
+export async function loadSource(db, user, kind, id, { priceItem = null } = {}) {
   const userId = user && !user.ephemeral ? user.userId : null;
   if (kind === "demo") {
     if (id !== DEMO_SOURCE_ID) return null;
@@ -288,6 +322,7 @@ export async function loadSource(db, user, kind, id) {
     if (!s) return null;
     const doors = await sessionDoors(db, s.id);
     const sets = await setsWithComponents(db, s.id);
+    await priceFromBooks(db, userId, sets, priceItem);
     const project = await projectFor(db, s.project_id);
     return { source: { kind, id: s.id, name: s.project_name || s.filename || "SubX session", demo: isDemoClone(s) }, project, doors, lines: deriveLines(doors, sets) };
   }
