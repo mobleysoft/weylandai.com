@@ -42,6 +42,30 @@ test("each finding gets its OSHA hazard (a falling object is struck-by, not a fa
   assert.equal(hazardOf("Electrician installing card reader").key, "other", "a trade name alone is not an electrical hazard");
 });
 
+// 2026-10-09 form tools audit: NIOSH FACE Report 2000-16 (Alabama), lines as pdftotext reads them.
+test("FACE 2000-16: struck on the head by a falling truss is struck-by; the worker's own fall stays a fall", () => {
+  const FACE = [
+    { page: 1, text: "fell with him or just behind him, striking" },
+    { page: 3, text: [
+      "interior dirt floor of the building (Photos 3 and 4). The actual fall was not witnessed. The floor area",
+      "to which he fell was covered with building materials and scrap lumber. One or more of the trusses fell",
+      "with or just behind the victim, and he was struck on the head by a truss upon impact with the ground.",
+    ].join("\n") },
+    { page: 8, text: "He was attempting to move an 8-foot wooden truss section when he fell." },
+    { page: 9, text: "debris. An 8-foot wooden truss section fell with or after the victim’s fall, striking him on" },
+  ];
+  const flagged = classifySafety(FACE).flagged;
+  const key = (re) => { const f = flagged.find((x) => re.test(x.line)); assert.ok(f, "flagged: " + re); return hazardOf(f.line).key; };
+  assert.equal(key(/struck on the head by a truss/), "struck");
+  assert.equal(flagged.find((x) => /struck on the head/.test(x.line)).page, 3);
+  assert.equal(key(/trusses fell$/), "struck");
+  assert.equal(key(/striking him on/), "struck");
+  assert.equal(key(/just behind him, striking/), "struck");
+  assert.equal(key(/when he fell\.$/), "fall");
+  assert.equal(key(/actual fall was not witnessed/), "fall");
+  assert.equal(hazardOf("Worker was struck by a swinging load").key, "struck");
+});
+
 test("trends: by hazard, Focus Four share, by month", () => {
   const flagged = classifySafety([{ page: 1, text: WEEK }]).flagged;
   const t = trendsOf([{ id: "r1", project: "Riverside", date: "2026-10-02", flagged }, { id: "r2", project: "Majestic", date: "2026-09-15", flagged: [{ line: "Worker fell from ladder" }] }]);

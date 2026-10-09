@@ -53,7 +53,7 @@ export function coaModel(job, b = {}) {
     ...o,
     closer: has(o, /closer|operator/i),
     latch: has(o, /lock|latch|lever|exit|panic|mortise|cylindrical|flush ?bolt/i),
-    pair: /pair|PR\b/i.test(o.size) || has(o, /coordinator|flush ?bolt/i),
+    pair: o.pair || has(o, /coordinator|flush ?bolt/i),
   }));
   return {
     project: { ...m.project, ahj: String(b.ahj || "").slice(0, 160), permit: String(b.permit || "").slice(0, 80), contact: String(b.contact || "").slice(0, 160) },
@@ -83,7 +83,12 @@ export async function coaPdf(c) {
   return finish(w);
 }
 
-const ELECTRIFIED = /mag(netic)? ?lock|maglock|electri|\bEL\b|\bEU\b|\bRX\b|strike|power ?transfer|card ?reader|access control|keypad|operator|actuator|delayed ?egress|\bM\d{2}\b|securitron|request.to.exit|rex|position switch|\bDPS\b/i;
+// 2026-10-09 product audit (Rockford): the bare word "strike" listed Ives
+// DP1/DP2 dust proof strikes as electrified, and "ELEC PANIC HARDWARE" (Von
+// Duprin QEL-99-EO-CON) was missed. A strike counts only when it is electric
+// ("electric strike" via electri, "elec strike", "e-strike"); ELEC/ELECT,
+// the QEL/EL device prefixes and power transfers (EPT) count.
+const ELECTRIFIED = /mag(netic)? ?lock|maglock|electri|\bELECT?\b|\bE-?STRIKE|\bEL\b|\bQ?EL-?\d|\bQEL\b|\bEU\b|\bRX\b|power ?transfer|\bEPT\b|card ?reader|access control|keypad|operator|actuator|delayed ?egress|\bM\d{2}\b|securitron|request.to.exit|rex|position switch|\bDPS\b/i;
 
 export function permitModel(job, b = {}) {
   const m = closeoutModel(job, b);

@@ -44,7 +44,7 @@ export async function loadJob(env, sessionId, userId) {
   if (!session) return { error: [404, "That SubX session was not found."] };
   if (session.user_id !== userId) return { error: [403, "That SubX session belongs to another account."] };
   const doors = (await env.DB.prepare(
-    "SELECT mark, hardware_group, fire_rating, width_inches, height_inches, door_type, door_material, frame_material, notes, page_number FROM door_schedule_entries WHERE session_id = ? ORDER BY page_number, rowid"
+    "SELECT mark, hardware_group, fire_rating, width, width_inches, height_inches, door_type, door_material, frame_material, notes, page_number, field_confidence_json FROM door_schedule_entries WHERE session_id = ? ORDER BY page_number, rowid"
   ).bind(sessionId).all()).results || [];
   const comps = (await env.DB.prepare(
     `SELECT hs.set_number, hs.set_name, hc.component_type, hc.quantity, hc.uom, hc.manufacturer, hc.model, hc.catalog_number, hc.finish, hc.specifications
@@ -63,6 +63,22 @@ export async function loadJob(env, sessionId, userId) {
 
 const ftin = (i) => (i == null ? "" : Math.floor(i / 12) + "'-" + Math.round(i % 12) + '"');
 
+// Pairs (2026-10-09): the product audit found CoA, CloseX and RFaX printing
+// every pair as a single door (Berryessa's PR 3'-6" x 7'-10" came out as
+// 3'-6" x 7'-10"). A door row is a pair when SubX marked it one (`pair`
+// on the row, or in its field_confidence_json, as the SubX doors endpoint
+// reads it), when the width as printed begins "PR"/"PAIR", or when the door
+// type says PAIR; any one of them, so this holds before and after SubX
+// carries the flag.
+const pairFlag = (v) => v === true || v === 1 || /^(true|yes|pr|pair)$/i.test(String(v ?? "").trim());
+export function isPair(d) {
+  if (!d) return false;
+  if (pairFlag(d.pair)) return true;
+  try { const fc = d.field_confidence_json ? JSON.parse(d.field_confidence_json) : null; if (fc && pairFlag(fc.pair)) return true; } catch (_) { /* unreadable: not a pair by this test */ }
+  return /^\s*(PR|PAIR)\b/i.test(String(d.width || "")) || /PAIR/i.test(String(d.door_type || ""));
+}
+export const sizeOf = (d) => (d.width_inches && d.height_inches ? `${isPair(d) ? "PR " : ""}${ftin(d.width_inches)} x ${ftin(d.height_inches)}` : "");
+
 // SubX's door notes are the schedule's remarks plus its own bookkeeping
 // ("same mark as a door on page 284", where a later schedule page reuses a
 // mark); the bookkeeping is not a location.
@@ -72,7 +88,7 @@ export function closeoutModel(job, input = {}) {
   const openings = job.doors.map((d) => {
     const set = job.sets.get(setKey(d.hardware_group)) || null;
     return {
-      mark: d.mark, location: locationFrom(d.notes), size: d.width_inches && d.height_inches ? `${ftin(d.width_inches)} x ${ftin(d.height_inches)}` : "",
+      mark: d.mark, location: locationFrom(d.notes), size: sizeOf(d), pair: isPair(d),
       rating: d.fire_rating || "", set: d.hardware_group || "", items: set ? set.items : [], page: d.page_number,
     };
   });
