@@ -7,7 +7,7 @@ Written by the cloud session, 2026-10-09 (UTC). Every number below comes from a 
 
 - g037 in review (21:36Z): MarketX audit PASS twice (21:34Z, 21:35Z). The 18:10Z FAIL most likely raced the permit reload (not proven: that run kept no copy of the CSV). Chicago's ranking and companies CSV agree today, name for name in every metro, and Chicago moved from 1,850 to 1,868 projects since; San Francisco failed on the metros list not matching its page at that moment, not on contractors or owners (the harness already exempts LA and SF; the reason written for g032 was wrong). The harness now re-measures a metro whose figures change during its measurement (up to 3 times) and reports it; the bar is unchanged.
 
-- g035 in review (21:25Z): SightX opens all ten harvested sets at /sightx/?set=<sha16>; the seven new ones: O2604 6/6 tagged, T2502 2/2, C2419 2/2, T2147 13 of 26 tagged (13 listed not on the plan), T2331 4/4; R2502 rebid (162 door rows) and T2423 (1) have no plan the reader can select, so they stand on the schematic corridor with the reason shown and no tag claimed. Journey sightx-real-buildings 70 checks; local software-WebGL passes 69/70 each, the one miss is W pace at 3 fps on the rebid (tools/accuracy/g035/README.md). Needs: deploy of weyland-sightx-worker, then the Mac's 3 GPU passes.
+- g035 deployed and accepted (21:51Z, Mac): 71/71 checks in each of three production Metal GPU passes. The following describes the data limitations of the accepted release. g035 source review (21:25Z): SightX opens all ten harvested sets at /sightx/?set=<sha16>; the seven new ones: O2604 6/6 tagged, T2502 2/2, C2419 2/2, T2147 13 of 26 tagged (13 listed not on the plan), T2331 4/4; R2502 rebid (162 door rows) and T2423 (1) have no plan the reader can select, so they stand on the schematic corridor with the reason shown and no tag claimed. Journey sightx-real-buildings 70 checks; local software-WebGL passes 69/70 each, the one miss is W pace at 3 fps on the rebid (tools/accuracy/g035/README.md). Needs: deploy of weyland-sightx-worker, then the Mac's 3 GPU passes.
 - g028 in review (2026-10-09T18:10Z): SightX opens the three best real harvested sets at /sightx/?set=<sha16> (R2502 152 door rows / 150 tagged, T2507 40 / 40, T2504 18 / 18), each door at its tag with the schedule row it came from; journey sightx-real-buildings 3 local passes 21/21; evidence tools/accuracy/g028/README.md. Needs: deploy of weyland-sightx-worker, then the Mac's 3 GPU passes.
 - g032 in review (18:24Z): PropX PASS and HuntX PASS on rerunnable audits (BidX and CloseX also PASS; CloseX harness fixed for the PDF's Room field); offer sentence in index.html restored to the full list. MarketX: see g037; its earlier SF failure was a metros-list mismatch, rather than missing company names. Needs: merge and the Pages deploy of index.html.
 
@@ -81,7 +81,7 @@ Harnesses: `tools/accuracy/doc_tools_audit.mjs`, `product_audit_schedule_tools.m
 | NotesX | the same room | PASS | attendees, 2 decisions, 2 actions, transcript appendix |
 | HuntX | whole index (1,389 notices from 7 sources) | PASS | 11 door / 166 building / 514 signal / 698 civil; 145 distinct links fetched, 0 dead; filters exact; RSS 50 items, calendar 161 events (18:10Z, `product_audit_data_tools.mjs --only huntx,marketx`) |
 | CompX | NYC City Record awards | PASS | 2,809 awards; 3 door vendors equal NYC open data exactly |
-| MarketX | six metros, both CSVs | FAIL | Chicago: companies.csv 2,106 rows does not begin with the JSON ranking (400); San Francisco: 0 GCs and 0 owners ("No owner or contractor in DBI's open data"), which the bar counts as failing 'who is building it' while the card says SF publishes neither; claim or bar must change (18:10Z) |
+| MarketX | six metros, both CSVs | PASS | Fresh post-deploy audit at 21:52Z: all six cities pass, Chicago 1,868 projects with 200 contractors and 200 owners; LA/SF source limitations disclosed; NYC CSV cap 5,000 disclosed. `tools/accuracy/product_audit_data_tools_2026-10-09-21-52_codex-release-after.md` |
 | WeatherX | job at 1855 Lucretia Ave, San Jose | PASS | NWS 13/13 periods agree; daily log written (1 day, the job is 10 h old) |
 | GeoX | 3 PropX jobs | PASS | city, county and tract equal the Census geocoder |
 | ForecastX | proposal 1, 4 months, 5% retainage | PASS | 7 months equal an independent recompute to the cent |
@@ -93,7 +93,7 @@ The SubConP suite is these tools together; it is sold on the evidence above.
 
 `node tools/bidset/make.mjs && node tools/bidset/grade.mjs --token-file <qa token>`
 
-The WeylandAI Building, one source model (`tools/bidset/building.mjs`): 48 openings, 10 hardware groups, 54 items, each marked held or not held. The generator draws the cover, plans with door tags and an ARCH D door schedule with a title block, Section 08 71 00, and a scanned variant (sideways, tilted 0.6 degrees); every sheet says SAMPLE PROJECT - NOT A REAL BUILDING. Grade of the vector set (`tools/bidset/grade_report_2026-10-09-07-38.md`): **6 of 6 GC checks** - SubX found the pages itself, 48/48 openings with 192/192 fields, 54/54 items exact, 25/25 held items cited, both not-held items listed, the packet named with contents. The scanned variant: the spec pages now read by OCR (3 groups, 16 items on the first, tilt measured and taken out); the scanned full-size schedule sheet does not read yet, and the site says so.
+The WeylandAI Building, one source model (`tools/bidset/building.mjs`): 48 openings, 10 hardware groups, 54 items, each marked held or not held. The generator draws the cover, plans with door tags and an ARCH D door schedule with a title block, Section 08 71 00, and a scanned variant (sideways, tilted 0.6 degrees); every sheet says SAMPLE PROJECT - NOT A REAL BUILDING. Grade of the vector set (`tools/bidset/grade_report_2026-10-09-07-38.md`): **6 of 6 GC checks** - SubX found the pages itself, 48/48 openings with 192/192 fields, 54/54 items exact, 25/25 held items cited, both not-held items listed, the packet named with contents. The scanned variant: the spec pages now read by OCR (3 groups, 16 items on the first, tilt measured and taken out); the scanned full-size schedule sheet now reads 48/48 unique marks and 332/336 scored fields in the browser; three widths and one hardware field remain open (the row checkpoint is deployed, further field fixes are in progress).
 
 ## The $100 self-serve
 
@@ -106,7 +106,7 @@ Proposed: Tuesday, October 20, 2026, fallback Thursday, October 22, with six gat
 ## Open, honestly
 
 - The two journeys fixed in PR 81 wait on the Mac's rerun.
-- A scanned full-size door schedule sheet does not read yet (the generator's scanned sheet reads nothing); the copy says so.
+- The generated scanned ARCH D schedule now reads 48/48 unique marks and 332/336 scored fields locally. Three widths and one hardware field remain incorrect; field fixes are in progress. `docs/g019-browser-accuracy-2026-10-09.md`.
 - Glynn-Johnson 90S is in no book on file; the packet lists it as a miss.
 
 ## Repositories this cloud session can reach (2026-10-09, after John widened access)
