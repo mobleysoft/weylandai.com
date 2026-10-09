@@ -1,0 +1,2113 @@
+{
+  "purpose": "Production acceptance of primary manufacturer-designated Glynn-Johnson 90S family seed; no payment",
+  "seed_commit": "d7c083e15dc71959b86ec5fc0afb91bdae6d50f5",
+  "root_integrated_commit": "44af253",
+  "ingestion": {
+    "started_at": "2026-10-09T22:56:39.328Z",
+    "scope": {
+      "source": "https://us.allegion.com/content/dam/allegion-us-2/web-files/glynn-johnson/information-documents/Glynn-Johnson_Overhead_Door_Holders.Stops_Catalog_101401.pdf",
+      "bucket": "subx-uploads",
+      "key": "catalog-corpus/116ee74ce84a7ffd04b688883362e538cf138ab724958f003aff06fdf75ba60d.pdf",
+      "database_id": "5729f77e-d7e3-4577-ab43-3c064fa90ca5"
+    },
+    "expected": {
+      "bytes": 3027847,
+      "sha256": "20d53134b94b9894eeb2284a3aecb385c9d583cde123ee5e7fbdd6b8f685654e"
+    },
+    "production_calls": [
+      {
+        "kind": "exact D1 query",
+        "method": "POST",
+        "status": 200
+      },
+      {
+        "kind": "exact D1 query",
+        "method": "POST",
+        "status": 200
+      },
+      {
+        "kind": "exact D1 query",
+        "method": "POST",
+        "status": 200
+      },
+      {
+        "kind": "one R2 object",
+        "method": "GET",
+        "status": 404
+      },
+      {
+        "kind": "one R2 object",
+        "method": "PUT",
+        "status": 200
+      },
+      {
+        "kind": "one R2 object",
+        "method": "GET",
+        "status": 200
+      },
+      {
+        "kind": "exact D1 query",
+        "method": "POST",
+        "status": 200
+      },
+      {
+        "kind": "exact D1 query",
+        "method": "POST",
+        "status": 200
+      }
+    ],
+    "stored_readback": {
+      "api": "Cloudflare remote R2 object GET",
+      "bucket": "subx-uploads",
+      "key": "catalog-corpus/116ee74ce84a7ffd04b688883362e538cf138ab724958f003aff06fdf75ba60d.pdf",
+      "bytes": 3027847,
+      "sha256": "20d53134b94b9894eeb2284a3aecb385c9d583cde123ee5e7fbdd6b8f685654e",
+      "hash_matches": true,
+      "content_type": "application/pdf",
+      "http_status": 200
+    },
+    "success": true,
+    "before": {
+      "url": "https://us.allegion.com/content/dam/allegion-us-2/web-files/glynn-johnson/information-documents/Glynn-Johnson_Overhead_Door_Holders.Stops_Catalog_101401.pdf",
+      "attempts": 0,
+      "fetched_at": null,
+      "r2_key": null,
+      "size": null
+    },
+    "source_fetch": {
+      "http_status": 200,
+      "bytes": 3027847,
+      "sha256": "20d53134b94b9894eeb2284a3aecb385c9d583cde123ee5e7fbdd6b8f685654e",
+      "hash_matches": true
+    },
+    "storage_write": "one verified primary PDF stored",
+    "custom_metadata_scope": "HTTP Content-Type retained; source/fetched_at/size recorded in the exact D1 queue row",
+    "ingest_summary": {
+      "tried": 1,
+      "stored": 1,
+      "failed": 0
+    },
+    "after": {
+      "url": "https://us.allegion.com/content/dam/allegion-us-2/web-files/glynn-johnson/information-documents/Glynn-Johnson_Overhead_Door_Holders.Stops_Catalog_101401.pdf",
+      "attempts": 1,
+      "fetched_at": "2026-10-09T22:56:39.649Z",
+      "r2_key": "catalog-corpus/116ee74ce84a7ffd04b688883362e538cf138ab724958f003aff06fdf75ba60d.pdf",
+      "size": 3027847,
+      "last_error": null
+    },
+    "finished_at": "2026-10-09T22:56:44.474Z"
+  },
+  "guest_and_owned_packet_journey": {
+    "journey": "glynn-johnson-90s-acceptance",
+    "title": "Estimator: door schedule and spec to a packet with hardware",
+    "base": "https://weylandai.com",
+    "started_at": "2026-10-09T23:00:10.599Z",
+    "finished_at": "2026-10-09T23:05:52.920Z",
+    "passed": 27,
+    "failed": 0,
+    "checks": [
+      {
+        "name": "real AuthFor guest token matches exact manufacturer-designated 90S family",
+        "ok": true,
+        "detail": "{\"status\":200,\"matched\":true,\"type\":\"exact\",\"model\":\"90S\",\"manufacturer\":\"Glynn-Johnson\"}"
+      },
+      {
+        "name": "guest match supplies a signed primary book citation at PDF ordinal 15",
+        "ok": true,
+        "detail": "{\"document_path\":\"/api/cut-sheets/sheet/doc-glynn-johnson-90s-101401/pdf\",\"signed\":true,\"fragment\":\"#page=15\",\"pages\":32,\"hint\":\"15\"}"
+      },
+      {
+        "name": "signed citation delivers exact remote stored primary PDF bytes without an authorization header",
+        "ok": true,
+        "detail": "{\"status\":200,\"content_type\":\"application/pdf\",\"bytes\":3027847,\"sha256\":\"20d53134b94b9894eeb2284a3aecb385c9d583cde123ee5e7fbdd6b8f685654e\"}"
+      },
+      {
+        "name": "citation page is inside a real 32-page PDF and names 90S stop-only",
+        "ok": true,
+        "detail": "{\"source_pages\":32,\"cited_page\":15,\"primary_designation_found\":true}"
+      },
+      {
+        "name": "signed document range serves the genuine PDF prefix with correct byte bounds",
+        "ok": true,
+        "detail": "{\"status\":206,\"bytes\":1024,\"content_range\":\"bytes 0-1023/3027847\"}"
+      },
+      {
+        "name": "browser has GPU WebGL",
+        "ok": true,
+        "detail": "ANGLE (Apple, ANGLE Metal Renderer: Apple M4, Unspecified Version)"
+      },
+      {
+        "name": "throwaway subscriber signs in through the homepage",
+        "ok": true,
+        "detail": "{\"auth\":\"signed-in\",\"error\":\"\"}"
+      },
+      {
+        "name": "the homepage upload control opens the workspace by pointer",
+        "ok": true,
+        "detail": "pointer"
+      },
+      {
+        "name": "sheet_only: all 65 audited door marks, hardware groups and page/row citations",
+        "ok": true,
+        "detail": "{\"ok\":true,\"expected\":65,\"rows\":65,\"missing\":[],\"incorrect\":[],\"differences\":[]}"
+      },
+      {
+        "name": "sheet_only: read completes and clears its busy status",
+        "ok": true,
+        "detail": "{\"status\":\"rockford-A2.2-p29.pdf: read complete. Check the rows and source citations below.\",\"readResult\":\"Page 1: 65 doors read (read from the page's text).\\n\\nEach row below shows the page and row it came from. Check the marked values against the sheet; any row can be corrected before the package is built.\"}"
+      },
+      {
+        "name": "sheet-only read names the missing hardware spec and asks to read it with the door sheet",
+        "ok": true,
+        "detail": "The door sheet points to Section 08 71 00 \u2014 Door Hardware. Upload the bid set including that section's hardware group pages and the door sheet so they can be read together before building the packet. Hardware groups still needed: 44 UTY-IT, 6 CL, 19 STO, 19F STO, 23 STO, 40 UTY, 28 COR, 32 EXD, 7 CL, 1 RR, 2 RR-M, 51 UTY-CUS, 47 VES, 20 STO."
+      },
+      {
+        "name": "building a door-only packet is refused with HARDWARE_SPEC_REQUIRED",
+        "ok": true,
+        "detail": "{\"status\":409,\"success\":false,\"error\":\"HARDWARE_SPEC_REQUIRED\",\"details\":\"The door sheet points to Section 08 71 00 \u2014 Door Hardware. Upload the bid set including that section's hardware group pages and the door sheet so they can be read together before building the packet. Hardware groups still needed: 6 CL, 19 STO, 19F STO, 23 STO, 40 UTY, 44 UTY-IT, 28 COR, 32 EXD, 7 CL, 1 RR, 2 RR-M, 51 UTY-CUS, 47 VES, 20 STO.\",\"hardware_schedule_needed\":{\"sections\":[\"08 71 00\"],\"missing_groups\":[\"6 CL\",\"19 "
+      },
+      {
+        "name": "schedule_plus_spec: all 65 audited door marks, hardware groups and page/row citations",
+        "ok": true,
+        "detail": "{\"ok\":true,\"expected\":65,\"rows\":65,\"missing\":[],\"incorrect\":[],\"differences\":[]}"
+      },
+      {
+        "name": "schedule_plus_spec: read completes and clears its busy status",
+        "ok": true,
+        "detail": "{\"status\":\"f0e863d88ea688ff.pdf: read complete. Check the rows and source citations below.\",\"readResult\":\" Page 29: 65 doors read from the page's text.\\n Page 17: 1 hardware group (7 items) read from the page's text.\\n Page 18: 3 hardware groups (20 items) read from the page's text.\\n Page 19: 3 hardware groups (22 items) read from the page's text.\\n Page 20: 2 hardware groups (14 items) read from the page's text.\\n Page 21: 1 hardware group (12 items) read from the page's text.\\n Page 22: 1 har"
+      },
+      {
+        "name": "the same uploaded job has all 14 audited groups and 110 real hardware items",
+        "ok": true,
+        "detail": "{\"ok\":true,\"groups\":14,\"items\":110,\"mismatches\":[],\"hardware_schedule_needed\":null}"
+      },
+      {
+        "name": "the workspace displays the hardware and clears its spec request",
+        "ok": true,
+        "detail": "{\"groups\":14,\"items\":110,\"needed\":\"\"}"
+      },
+      {
+        "name": "the packet uses this run's saved upload, not the demo job",
+        "ok": true,
+        "detail": "{\"id\":\"31f1ce73-e384-4134-be62-13784d56f323\",\"project_name\":\"user-sim schedule-plus-spec mv1kj2ef7b4b04\",\"filename\":\"f0e863d88ea688ff.pdf\",\"document_type\":\"door_schedule\",\"total_pages\":30,\"created_at\":\"2026-10-09T23:04:23.920Z\",\"is_demo\":false}"
+      },
+      {
+        "name": "the built packet contains doors, all hardware groups/items, cut sheets and source pages",
+        "ok": true,
+        "detail": "{\"ok\":true,\"pages\":69,\"groups\":14,\"mismatches\":[],\"cutSheets\":26,\"reportedCutSheets\":26,\"matched\":37,\"unmatched\":0,\"missing\":[],\"warnings\":[]}"
+      },
+      {
+        "name": "fresh real packet has zero unmatched hardware and no missing cut-sheet manifest",
+        "ok": true,
+        "detail": "{\"matched\":37,\"components\":37,\"unmatched\":0,\"missing\":[]}"
+      },
+      {
+        "name": "packet carries the actual 90S manufacturer page for all four audited groups",
+        "ok": true,
+        "detail": "{\"type\":\"cut_sheet\",\"title\":\"Glynn-Johnson 90S: Glynn-Johnson Overhead Door Holders/Stops Catalog 101401, page 15\",\"manufacturer\":\"Glynn-Johnson\",\"model\":\"90S\",\"catalogue_id\":\"20d53134b94b9894\",\"page\":15,\"sets\":[\"07 CL\",\"23 STO\",\"40 UTY\",\"51 UTY-CUS\"],\"pages\":1}"
+      },
+      {
+        "name": "the paid account opens the real PDF rendered in the workspace",
+        "ok": true,
+        "detail": "{\"result\":\"Built: 69 pages - cover, contents, door schedule (65 doors, 2 pages), hardware group 01 RR, hardware group 02 RR-M, hardware group 06 CL, hardware group 07 CL, hardware group 19 STO, hardware group 19F STO, hardware group 20 STO, hardware group 23 STO, hardware group 28 COR, hardware group 32 EXD, hardware group 40 UTY, hardware group 44 UTY-IT, hardware group 47 VES, hardware group 51 UTY-CUS, ca\",\"pages\":69,\"seconds\":58,\"viewer\":{\"kind\":\"pages drawn in the page\",\"pages\":69,\"drawn\":1"
+      },
+      {
+        "name": "DOWNLOAD PDF saves PDF bytes",
+        "ok": true,
+        "detail": "{\"bytes\":6160393,\"sha256\":\"7920642212aa90eaed1dd22b59f47e360c00f1513d6234a8e4d5dacfe9a17069\"}"
+      },
+      {
+        "name": "downloaded PDF has every generated hardware group sheet and real catalogue pages",
+        "ok": true,
+        "detail": "{\"ok\":true,\"pages\":69,\"hardware\":[{\"title\":\"Hardware Group 01 RR\",\"startPage\":6,\"ok\":true},{\"title\":\"Hardware Group 02 RR-M\",\"startPage\":8,\"ok\":true},{\"title\":\"Hardware Group 06 CL\",\"startPage\":10,\"ok\":true},{\"title\":\"Hardware Group 07 CL\",\"startPage\":13,\"ok\":true},{\"title\":\"Hardware Group 19 STO\",\"startPage\":15,\"ok\":true},{\"title\":\"Hardware Group 19F STO\",\"startPage\":17,\"ok\":true},{\"title\":\"Hardware Group 20 STO\",\"startPage\":19,\"ok\":true},{\"title\":\"Hardware Group 23 STO\",\"startPage\":21,\"ok\":tru"
+      },
+      {
+        "name": "downloaded packet's 90S cut-sheet section contains the primary manufacturer model designation",
+        "ok": true,
+        "detail": "{\"packet_page\":44,\"primary_pdf_ordinal\":15,\"designation_found\":true}"
+      },
+      {
+        "name": "same homepage document from sign-in through packet download",
+        "ok": true,
+        "detail": "{\"sameDocument\":true,\"onSite\":true,\"url\":\"https://weylandai.com/?journey=glynn-johnson-90s-acceptance-mv1kj2ef7b4b04\"}"
+      },
+      {
+        "name": "packet preview and download open no new tab",
+        "ok": true,
+        "detail": "0"
+      },
+      {
+        "name": "test data deleted (account rows, demo clones, uploads)",
+        "ok": true,
+        "detail": "{\"clonesCaptured\":2,\"uploadsCaptured\":2,\"packagesBuilt\":1,\"deletedRows\":492,\"r2\":[\"subx-uploads: deleted\",\"subx-uploads: deleted\",\"subx-uploads: deleted\"],\"kv\":[\"deleted\",\"deleted\"],\"remaining\":{\"users\":0,\"weyland_sessions\":0,\"extraction_sessions\":0,\"projects\":0},\"skipped\":[]}"
+      }
+    ],
+    "notes": {
+      "source": {
+        "head": "d7c083e15dc71959b86ec5fc0afb91bdae6d50f5",
+        "branch": "codex/glynn-johnson-90s-catalog-20261009",
+        "origin_main": "caf22e486f992150659cd77b9055775831723806",
+        "changes": "?? .local/\n?? tmp/",
+        "scope": "Real production UI and APIs; checkout revision identifies the harness, not the deployed worker revision",
+        "fixtures": [
+          {
+            "path": "tools/user-simulation/roles/rockford-A2.2-p29.pdf",
+            "bytes": 1138719,
+            "sha256": "690dfca2498e98ef101e1018a93e59fdf7ca6a274cadad3d6fa3b9f25e208855"
+          },
+          {
+            "path": "tools/corpus/door-schedules/f0e863d88ea688ff.pdf",
+            "bytes": 6803216,
+            "sha256": "f0e863d88ea688fffdb625132383d48130afb8a50ae4546fd4627281e2648c59"
+          }
+        ]
+      },
+      "artifacts": "tools/user-simulation/reports/glynn-johnson-90s-acceptance-2026-10-09T23-00-10-599Z",
+      "guest_primary_citation": {
+        "document_path": "/api/cut-sheets/sheet/doc-glynn-johnson-90s-101401/pdf",
+        "cited_page": 15,
+        "pdf_pages": 32,
+        "bytes": 3027847,
+        "sha256": "20d53134b94b9894eeb2284a3aecb385c9d583cde123ee5e7fbdd6b8f685654e",
+        "signed_url": true,
+        "authorization_header_on_download": false
+      },
+      "sheet_only_read": {
+        "seconds": 4.278,
+        "status": "rockford-A2.2-p29.pdf: read complete. Check the rows and source citations below.",
+        "readResult": "Page 1: 65 doors read (read from the page's text).\n\nEach row below shows the page and row it came from. Check the marked values against the sheet; any row can be corrected before the package is built.",
+        "detail": {
+          "title": "user-sim sheet-only mv1kj2ef7b4b04",
+          "sub": "rockford-A2.2-p29.pdf \u00b7 door schedule \u00b7 1 page",
+          "doorNote": "65 door rows, machine-read: check them against the source page before you submit. Marked values (1 row) are ones the reader is not sure of: read by OCR, not shaped like the column, or empty where the other rows have a value. A size not read is left out of the counts. Press EDIT to correct a row.",
+          "rows": [
+            {
+              "mark": "1J.1",
+              "group": "44 UTY-IT",
+              "size": "3'-0\" x 7'-10\"",
+              "source": "p.1 row 0"
+            },
+            {
+              "mark": "109.1",
+              "group": "06 CL",
+              "size": "3'-0\" x 7'-10\"",
+              "source": "p.1 row 1"
+            },
+            {
+              "mark": "109.2",
+              "group": "06 CL",
+              "size": "3'-0\" x 7'-10\"",
+              "source": "p.1 row 2"
+            },
+            {
+              "mark": "111.1",
+              "group": "06 CL",
+              "size": "3'-0\" x 7'-10\"",
+              "source": "p.1 row 3"
+            },
+            {
+              "mark": "111.1.1",
+              "group": "19 STO",
+              "size": "6'-0\" x 7'-10\"",
+              "source": "p.1 row 4"
+            },
+            {
+              "mark": "113.1",
+              "group": "06 CL",
+              "size": "3'-0\" x 7'-10\"",
+              "source": "p.1 row 5"
+            },
+            {
+              "mark": "113.1.1",
+              "group": "19 STO",
+              "size": "6'-0\" x 7'-10\"",
+              "source": "p.1 row 6"
+            },
+            {
+              "mark": "114.1",
+              "group": "19F STO",
+              "size": "6'-0\" x 7'-10\"",
+              "source": "p.1 row 7"
+            },
+            {
+              "mark": "118.1",
+              "group": "23 STO",
+              "size": "2'-8\" x 7'-10\"",
+              "source": "p.1 row 8"
+            },
+            {
+              "mark": "119.1",
+              "group": "40 UTY",
+              "size": "6'-0\" x 7'-10\"",
+              "source": "p.1 row 9"
+            },
+            {
+              "mark": "119.2",
+              "group": "44 UTY-IT",
+              "size": "3'-0\" x 7'-10\"",
+              "source": "p.1 row 10"
+            },
+            {
+              "mark": "126.1",
+              "group": "28 COR",
+              "size": "6'-0\" x 7'-10\"",
+              "source": "p.1 row 11"
+            },
+            {
+              "mark": "126.1.1",
+              "group": "32 EXD",
+              "size": "3'-0\" x 7'-10\"",
+              "source": "p.1 row 12"
+            },
+            {
+              "mark": "126.1.2",
+              "group": "(empty)",
+              "size": "3'-0\" x 7'-0\"",
+              "source": "p.1 row 13"
+            },
+            {
+              "mark": "126.2",
+              "group": "28 COR",
+              "size": "6'-0\" x 7'-10\"",
+              "source": "p.1 row 14"
+            },
+            {
+              "mark": "127.1",
+              "group": "07 CL",
+              "size": "3'-0\" x 7'-10\"",
+              "source": "p.1 row 15"
+            },
+            {
+              "mark": "128.1.1",
+              "group": "06 CL",
+              "size": "3'-0\" x 7'-10\"",
+              "source": "p.1 row 16"
+            },
+            {
+              "mark": "129.1",
+              "group": "06 CL",
+              "size": "3'-0\" x 7'-10\"",
+              "source": "p.1 row 17"
+            },
+            {
+              "mark": "130.1",
+              "group": "01 RR",
+              "size": "3'-0\" x 7'-10\"",
+              "source": "p.1 row 18"
+            },
+            {
+              "mark": "131.1",
+              "group": "06 CL",
+              "size": "3'-0\" x 7'-10\"",
+              "source": "p.1 row 19"
+            },
+            {
+              "mark": "132.1",
+              "group": "01 RR",
+              "size": "3'-0\" x 7'-10\"",
+              "source": "p.1 row 20"
+            },
+            {
+              "mark": "133.1",
+              "group": "06 CL",
+              "size": "3'-0\" x 7'-10\"",
+              "source": "p.1 row 21"
+            },
+            {
+              "mark": "134.1",
+              "group": "01 RR",
+              "size": "3'-0\" x 7'-10\"",
+              "source": "p.1 row 22"
+            },
+            {
+              "mark": "136.1",
+              "group": "44 UTY-IT",
+              "size": "3'-0\" x 7'-10\"",
+              "source": "p.1 row 23"
+            },
+            {
+              "mark": "138.1",
+              "group": "23 STO",
+              "size": "3'-0\" x 7'-10\"",
+              "source": "p.1 row 24"
+            },
+            {
+              "mark": "138.1.1",
+              "group": "06 CL",
+              "size": "3'-0\" x 7'-0\"",
+              "source": "p.1 row 25"
+            },
+            {
+              "mark": "138.2",
+              "group": "23 STO",
+              "size": "3'-0\" x 7'-10\"",
+              "source": "p.1 row 26"
+            },
+            {
+              "mark": "141.1",
+              "group": "06 CL",
+              "size": "3'-0\" x 7'-10\"",
+              "source": "p.1 row 27"
+            },
+            {
+              "mark": "142.1",
+              "group": "06 CL",
+              "size": "3'-0\" x 7'-10\"",
+              "source": "p.1 row 28"
+            },
+            {
+              "mark": "143.1",
+              "group": "06 CL",
+              "size": "3'-0\" x 7'-10\"",
+              "source": "p.1 row 29"
+            },
+            {
+              "mark": "144.1",
+              "group": "06 CL",
+              "size": "3'-0\" x 7'-10\"",
+              "source": "p.1 row 30"
+            },
+            {
+              "mark": "145.1",
+              "group": "06 CL",
+              "size": "3'-0\" x 7'-10\"",
+              "source": "p.1 row 31"
+            },
+            {
+              "mark": "146.1",
+              "group": "06 CL",
+              "size": "3'-0\" x 7'-10\"",
+              "source": "p.1 row 32"
+            },
+            {
+              "mark": "147.1",
+              "group": "02 RR-M",
+              "size": "3'-0\" x 7'-10\"",
+              "source": "p.1 row 33"
+            },
+            {
+              "mark": "147.1.1",
+              "group": "51 UTY-CUS",
+              "size": "3'-0\" x 7'-10\"",
+              "source": "p.1 row 34"
+            },
+            {
+              "mark": "148.1",
+              "group": "02 RR-M",
+              "size": "3'-0\" x 7'-10\"",
+              "source": "p.1 row 35"
+            },
+            {
+              "mark": "150.1",
+              "group": "07 CL",
+              "size": "3'-0\" x 7'-10\"",
+              "source": "p.1 row 36"
+            },
+            {
+              "mark": "151.1",
+              "group": "06 CL",
+              "size": "3'-0\" x 7'-10\"",
+              "source": "p.1 row 37"
+            },
+            {
+              "mark": "152.1",
+              "group": "47 VES",
+              "size": "3'-0\" x 7'-10\"",
+              "source": "p.1 row 38"
+            },
+            {
+              "mark": "152.1.1",
+              "group": "32 EXD",
+              "size": "3'-0\" x 7'-10\"",
+              "source": "p.1 row 39"
+            },
+            {
+              "mark": "153.1",
+              "group": "06 CL",
+              "size": "3'-0\" x 7'-10\"",
+              "source": "p.1 row 40"
+            },
+            {
+              "mark": "155.1",
+              "group": "07 CL",
+              "size": "3'-0\" x 7'-10\"",
+              "source": "p.1 row 41"
+            },
+            {
+              "mark": "155.2",
+              "group": "23 STO",
+              "size": "2'-6\" x 7'-10\"",
+              "source": "p.1 row 42"
+            },
+            {
+              "mark": "157.1",
+              "group": "20 STO",
+              "size": "3'-0\" x 7'-10\"",
+              "source": "p.1 row 43"
+            },
+            {
+              "mark": "159.1",
+              "group": "06 CL",
+              "size": "3'-0\" x 7'-10\"",
+              "source": "p.1 row 44"
+            },
+            {
+              "mark": "161.1",
+              "group": "06 CL",
+              "size": "3'-0\" x 7'-10\"",
+              "source": "p.1 row 45"
+            },
+            {
+              "mark": "162.1",
+              "group": "06 CL",
+              "size": "3'-0\" x 7'-10\"",
+              "source": "p.1 row 46"
+            },
+            {
+              "mark": "163.1",
+              "group": "06 CL",
+              "size": "3'-0\" x 7'-10\"",
+              "source": "p.1 row 47"
+            },
+            {
+              "mark": "164.1",
+              "group": "06 CL",
+              "size": "3'-0\" x 7'-10\"",
+              "source": "p.1 row 48"
+            },
+            {
+              "mark": "165.1",
+              "group": "06 CL",
+              "size": "3'-0\" x 7'-10\"",
+              "source": "p.1 row 49"
+            },
+            {
+              "mark": "166.1",
+              "group": "06 CL",
+              "size": "3'-0\" x 7'-10\"",
+              "source": "p.1 row 50"
+            },
+            {
+              "mark": "167.1",
+              "group": "02 RR-M",
+              "size": "3'-0\" x 7'-10\"",
+              "source": "p.1 row 51"
+            },
+            {
+              "mark": "167.1.1",
+              "group": "51 UTY-CUS",
+              "size": "3'-0\" x 7'-10\"",
+              "source": "p.1 row 52"
+            },
+            {
+              "mark": "168.1",
+              "group": "02 RR-M",
+              "size": "3'-0\" x 7'-10\"",
+              "source": "p.1 row 53"
+            },
+            {
+              "mark": "170.1",
+              "group": "07 CL",
+              "size": "3'-0\" x 7'-10\"",
+              "source": "p.1 row 54"
+            },
+            {
+              "mark": "173.1",
+              "group": "06 CL",
+              "size": "3'-0\" x 7'-10\"",
+              "source": "p.1 row 55"
+            },
+            {
+              "mark": "174.1",
+              "group": "06 CL",
+              "size": "3'-0\" x 7'-10\"",
+              "source": "p.1 row 56"
+            },
+            {
+              "mark": "175.1",
+              "group": "06 CL",
+              "size": "3'-0\" x 7'-10\"",
+              "source": "p.1 row 57"
+            },
+            {
+              "mark": "176.1",
+              "group": "06 CL",
+              "size": "3'-0\" x 7'-10\"",
+              "source": "p.1 row 58"
+            },
+            {
+              "mark": "177.1",
+              "group": "06 CL",
+              "size": "3'-0\" x 7'-10\"",
+              "source": "p.1 row 59"
+            },
+            {
+              "mark": "178.1",
+              "group": "06 CL",
+              "size": "3'-0\" x 7'-10\"",
+              "source": "p.1 row 60"
+            },
+            {
+              "mark": "179.1",
+              "group": "02 RR-M",
+              "size": "3'-0\" x 7'-10\"",
+              "source": "p.1 row 61"
+            },
+            {
+              "mark": "179.1.1",
+              "group": "51 UTY-CUS",
+              "size": "3'-0\" x 7'-10\"",
+              "source": "p.1 row 62"
+            },
+            {
+              "mark": "180.1",
+              "group": "02 RR-M",
+              "size": "3'-0\" x 7'-10\"",
+              "source": "p.1 row 63"
+            },
+            {
+              "mark": "182.1",
+              "group": "07 CL",
+              "size": "2'-11\" x 7'-10\"",
+              "source": "p.1 row 64"
+            }
+          ],
+          "sets": [],
+          "tiles": [
+            {
+              "label": "DOOR ROWS",
+              "value": "65"
+            },
+            {
+              "label": "SIZES READ",
+              "value": "65 / 65"
+            },
+            {
+              "label": "FIRE-RATED DOORS",
+              "value": "1"
+            },
+            {
+              "label": "HARDWARE GROUPS",
+              "value": "14"
+            }
+          ],
+          "counts": "BY DOOR TYPE F 46 NG 10 AL1 5 G 4 BY SIZE 3'-0\" x 7'-10\" 54 6'-0\" x 7'-10\" 6 3'-0\" x 7'-0\" 2 2'-6\" x 7'-10\" 1 2'-8\" x 7'-10\" 1 2'-11\" x 7'-10\" 1 BY FIRE RATING YES 1 BY HARDWARE GROUP 06 CL 30 02 RR-M 6 07 CL 5 23 STO 4 01 RR 3 44 UTY-IT 3 51 UTY-CUS 3 19 STO 2 28 COR 2 32 EXD 2 19F STO 1 20 STO 1 +",
+          "steps": {
+            "upload": "done",
+            "read": "done",
+            "review": "now",
+            "pdf": ""
+          },
+          "actions": [
+            "DOWNLOAD THE DOOR LIST (CSV)"
+          ]
+        },
+        "doorCheck": {
+          "ok": true,
+          "expected": 65,
+          "rows": 65,
+          "missing": [],
+          "incorrect": [],
+          "differences": []
+        }
+      },
+      "schedule_plus_spec_read": {
+        "seconds": 21.675,
+        "status": "f0e863d88ea688ff.pdf: read complete. Check the rows and source citations below.",
+        "readResult": " Page 29: 65 doors read from the page's text.\n Page 17: 1 hardware group (7 items) read from the page's text.\n Page 18: 3 hardware groups (20 items) read from the page's text.\n Page 19: 3 hardware groups (22 items) read from the page's text.\n Page 20: 2 hardware groups (14 items) read from the page's text.\n Page 21: 1 hardware group (12 items) read from the page's text.\n Page 22: 1 hardware group (16 items) read from the page's text.\n Page 23: 3 hardware groups (19 items) read from the page's text.\n\nEach row below shows the page and row it came from. Check the marked values against the sheet; any row can be corrected before the package is built.",
+        "detail": {
+          "title": "user-sim schedule-plus-spec mv1kj2ef7b4b04",
+          "sub": "f0e863d88ea688ff.pdf \u00b7 door schedule \u00b7 30 pages",
+          "doorNote": "65 door rows, machine-read: check them against the source page before you submit. Marked values (1 row) are ones the reader is not sure of: read by OCR, not shaped like the column, or empty where the other rows have a value. A size not read is left out of the counts. Press EDIT to correct a row.",
+          "rows": [
+            {
+              "mark": "1J.1",
+              "group": "44 UTY-IT",
+              "size": "3'-0\" x 7'-10\"",
+              "source": "p.29 row 0"
+            },
+            {
+              "mark": "109.1",
+              "group": "06 CL",
+              "size": "3'-0\" x 7'-10\"",
+              "source": "p.29 row 1"
+            },
+            {
+              "mark": "109.2",
+              "group": "06 CL",
+              "size": "3'-0\" x 7'-10\"",
+              "source": "p.29 row 2"
+            },
+            {
+              "mark": "111.1",
+              "group": "06 CL",
+              "size": "3'-0\" x 7'-10\"",
+              "source": "p.29 row 3"
+            },
+            {
+              "mark": "111.1.1",
+              "group": "19 STO",
+              "size": "6'-0\" x 7'-10\"",
+              "source": "p.29 row 4"
+            },
+            {
+              "mark": "113.1",
+              "group": "06 CL",
+              "size": "3'-0\" x 7'-10\"",
+              "source": "p.29 row 5"
+            },
+            {
+              "mark": "113.1.1",
+              "group": "19 STO",
+              "size": "6'-0\" x 7'-10\"",
+              "source": "p.29 row 6"
+            },
+            {
+              "mark": "114.1",
+              "group": "19F STO",
+              "size": "6'-0\" x 7'-10\"",
+              "source": "p.29 row 7"
+            },
+            {
+              "mark": "118.1",
+              "group": "23 STO",
+              "size": "2'-8\" x 7'-10\"",
+              "source": "p.29 row 8"
+            },
+            {
+              "mark": "119.1",
+              "group": "40 UTY",
+              "size": "6'-0\" x 7'-10\"",
+              "source": "p.29 row 9"
+            },
+            {
+              "mark": "119.2",
+              "group": "44 UTY-IT",
+              "size": "3'-0\" x 7'-10\"",
+              "source": "p.29 row 10"
+            },
+            {
+              "mark": "126.1",
+              "group": "28 COR",
+              "size": "6'-0\" x 7'-10\"",
+              "source": "p.29 row 11"
+            },
+            {
+              "mark": "126.1.1",
+              "group": "32 EXD",
+              "size": "3'-0\" x 7'-10\"",
+              "source": "p.29 row 12"
+            },
+            {
+              "mark": "126.1.2",
+              "group": "(empty)",
+              "size": "3'-0\" x 7'-0\"",
+              "source": "p.29 row 13"
+            },
+            {
+              "mark": "126.2",
+              "group": "28 COR",
+              "size": "6'-0\" x 7'-10\"",
+              "source": "p.29 row 14"
+            },
+            {
+              "mark": "127.1",
+              "group": "07 CL",
+              "size": "3'-0\" x 7'-10\"",
+              "source": "p.29 row 15"
+            },
+            {
+              "mark": "128.1.1",
+              "group": "06 CL",
+              "size": "3'-0\" x 7'-10\"",
+              "source": "p.29 row 16"
+            },
+            {
+              "mark": "129.1",
+              "group": "06 CL",
+              "size": "3'-0\" x 7'-10\"",
+              "source": "p.29 row 17"
+            },
+            {
+              "mark": "130.1",
+              "group": "01 RR",
+              "size": "3'-0\" x 7'-10\"",
+              "source": "p.29 row 18"
+            },
+            {
+              "mark": "131.1",
+              "group": "06 CL",
+              "size": "3'-0\" x 7'-10\"",
+              "source": "p.29 row 19"
+            },
+            {
+              "mark": "132.1",
+              "group": "01 RR",
+              "size": "3'-0\" x 7'-10\"",
+              "source": "p.29 row 20"
+            },
+            {
+              "mark": "133.1",
+              "group": "06 CL",
+              "size": "3'-0\" x 7'-10\"",
+              "source": "p.29 row 21"
+            },
+            {
+              "mark": "134.1",
+              "group": "01 RR",
+              "size": "3'-0\" x 7'-10\"",
+              "source": "p.29 row 22"
+            },
+            {
+              "mark": "136.1",
+              "group": "44 UTY-IT",
+              "size": "3'-0\" x 7'-10\"",
+              "source": "p.29 row 23"
+            },
+            {
+              "mark": "138.1",
+              "group": "23 STO",
+              "size": "3'-0\" x 7'-10\"",
+              "source": "p.29 row 24"
+            },
+            {
+              "mark": "138.1.1",
+              "group": "06 CL",
+              "size": "3'-0\" x 7'-0\"",
+              "source": "p.29 row 25"
+            },
+            {
+              "mark": "138.2",
+              "group": "23 STO",
+              "size": "3'-0\" x 7'-10\"",
+              "source": "p.29 row 26"
+            },
+            {
+              "mark": "141.1",
+              "group": "06 CL",
+              "size": "3'-0\" x 7'-10\"",
+              "source": "p.29 row 27"
+            },
+            {
+              "mark": "142.1",
+              "group": "06 CL",
+              "size": "3'-0\" x 7'-10\"",
+              "source": "p.29 row 28"
+            },
+            {
+              "mark": "143.1",
+              "group": "06 CL",
+              "size": "3'-0\" x 7'-10\"",
+              "source": "p.29 row 29"
+            },
+            {
+              "mark": "144.1",
+              "group": "06 CL",
+              "size": "3'-0\" x 7'-10\"",
+              "source": "p.29 row 30"
+            },
+            {
+              "mark": "145.1",
+              "group": "06 CL",
+              "size": "3'-0\" x 7'-10\"",
+              "source": "p.29 row 31"
+            },
+            {
+              "mark": "146.1",
+              "group": "06 CL",
+              "size": "3'-0\" x 7'-10\"",
+              "source": "p.29 row 32"
+            },
+            {
+              "mark": "147.1",
+              "group": "02 RR-M",
+              "size": "3'-0\" x 7'-10\"",
+              "source": "p.29 row 33"
+            },
+            {
+              "mark": "147.1.1",
+              "group": "51 UTY-CUS",
+              "size": "3'-0\" x 7'-10\"",
+              "source": "p.29 row 34"
+            },
+            {
+              "mark": "148.1",
+              "group": "02 RR-M",
+              "size": "3'-0\" x 7'-10\"",
+              "source": "p.29 row 35"
+            },
+            {
+              "mark": "150.1",
+              "group": "07 CL",
+              "size": "3'-0\" x 7'-10\"",
+              "source": "p.29 row 36"
+            },
+            {
+              "mark": "151.1",
+              "group": "06 CL",
+              "size": "3'-0\" x 7'-10\"",
+              "source": "p.29 row 37"
+            },
+            {
+              "mark": "152.1",
+              "group": "47 VES",
+              "size": "3'-0\" x 7'-10\"",
+              "source": "p.29 row 38"
+            },
+            {
+              "mark": "152.1.1",
+              "group": "32 EXD",
+              "size": "3'-0\" x 7'-10\"",
+              "source": "p.29 row 39"
+            },
+            {
+              "mark": "153.1",
+              "group": "06 CL",
+              "size": "3'-0\" x 7'-10\"",
+              "source": "p.29 row 40"
+            },
+            {
+              "mark": "155.1",
+              "group": "07 CL",
+              "size": "3'-0\" x 7'-10\"",
+              "source": "p.29 row 41"
+            },
+            {
+              "mark": "155.2",
+              "group": "23 STO",
+              "size": "2'-6\" x 7'-10\"",
+              "source": "p.29 row 42"
+            },
+            {
+              "mark": "157.1",
+              "group": "20 STO",
+              "size": "3'-0\" x 7'-10\"",
+              "source": "p.29 row 43"
+            },
+            {
+              "mark": "159.1",
+              "group": "06 CL",
+              "size": "3'-0\" x 7'-10\"",
+              "source": "p.29 row 44"
+            },
+            {
+              "mark": "161.1",
+              "group": "06 CL",
+              "size": "3'-0\" x 7'-10\"",
+              "source": "p.29 row 45"
+            },
+            {
+              "mark": "162.1",
+              "group": "06 CL",
+              "size": "3'-0\" x 7'-10\"",
+              "source": "p.29 row 46"
+            },
+            {
+              "mark": "163.1",
+              "group": "06 CL",
+              "size": "3'-0\" x 7'-10\"",
+              "source": "p.29 row 47"
+            },
+            {
+              "mark": "164.1",
+              "group": "06 CL",
+              "size": "3'-0\" x 7'-10\"",
+              "source": "p.29 row 48"
+            },
+            {
+              "mark": "165.1",
+              "group": "06 CL",
+              "size": "3'-0\" x 7'-10\"",
+              "source": "p.29 row 49"
+            },
+            {
+              "mark": "166.1",
+              "group": "06 CL",
+              "size": "3'-0\" x 7'-10\"",
+              "source": "p.29 row 50"
+            },
+            {
+              "mark": "167.1",
+              "group": "02 RR-M",
+              "size": "3'-0\" x 7'-10\"",
+              "source": "p.29 row 51"
+            },
+            {
+              "mark": "167.1.1",
+              "group": "51 UTY-CUS",
+              "size": "3'-0\" x 7'-10\"",
+              "source": "p.29 row 52"
+            },
+            {
+              "mark": "168.1",
+              "group": "02 RR-M",
+              "size": "3'-0\" x 7'-10\"",
+              "source": "p.29 row 53"
+            },
+            {
+              "mark": "170.1",
+              "group": "07 CL",
+              "size": "3'-0\" x 7'-10\"",
+              "source": "p.29 row 54"
+            },
+            {
+              "mark": "173.1",
+              "group": "06 CL",
+              "size": "3'-0\" x 7'-10\"",
+              "source": "p.29 row 55"
+            },
+            {
+              "mark": "174.1",
+              "group": "06 CL",
+              "size": "3'-0\" x 7'-10\"",
+              "source": "p.29 row 56"
+            },
+            {
+              "mark": "175.1",
+              "group": "06 CL",
+              "size": "3'-0\" x 7'-10\"",
+              "source": "p.29 row 57"
+            },
+            {
+              "mark": "176.1",
+              "group": "06 CL",
+              "size": "3'-0\" x 7'-10\"",
+              "source": "p.29 row 58"
+            },
+            {
+              "mark": "177.1",
+              "group": "06 CL",
+              "size": "3'-0\" x 7'-10\"",
+              "source": "p.29 row 59"
+            },
+            {
+              "mark": "178.1",
+              "group": "06 CL",
+              "size": "3'-0\" x 7'-10\"",
+              "source": "p.29 row 60"
+            },
+            {
+              "mark": "179.1",
+              "group": "02 RR-M",
+              "size": "3'-0\" x 7'-10\"",
+              "source": "p.29 row 61"
+            },
+            {
+              "mark": "179.1.1",
+              "group": "51 UTY-CUS",
+              "size": "3'-0\" x 7'-10\"",
+              "source": "p.29 row 62"
+            },
+            {
+              "mark": "180.1",
+              "group": "02 RR-M",
+              "size": "3'-0\" x 7'-10\"",
+              "source": "p.29 row 63"
+            },
+            {
+              "mark": "182.1",
+              "group": "07 CL",
+              "size": "2'-11\" x 7'-10\"",
+              "source": "p.29 row 64"
+            }
+          ],
+          "sets": [
+            {
+              "set": "01 RR doors: 130.1, 132.1, 134.1",
+              "name": "",
+              "items": "1 CONTINUOUS HINGE \u00b7 Select Hinges \u00b7 SL11 / SL24 \u00b7 628; 1 CYLINDRICAL PRIVACY LOCK W/OUTSIDE INDICATOR \u00b7 Schlage \u00b7 ND40S RHO OS-OCC \u00b7 626; 1 REG/ PA SURFACE CLOSER - AS REQUIRED \u00b7 LCN \u00b7 4040XP REG / 4040XP EDA - AS REQUIRED \u00b7 689; 1 KICK PLATE \u00b7 Ives \u00b7 8400 10\" HIGH B-CS TKTX SCREWS AT HM DOORS \u00b7 630; 1 MOP PLATE \u00b7 Ives \u00b7 8400 4\" HIGH B-CS TKTX SCREWS AT HM DOORS \u00b7 630; 1 WALL STOP \u00b7 Ives \u00b7 WS406/407CCV \u00b7 630; 3 SILENCER \u00b7 Ives \u00b7 SR64 \u00b7 GRY",
+              "status": "DRAFT"
+            },
+            {
+              "set": "02 RR-M doors: 147.1, 148.1, 167.1, 168.1, 179.1, 180.1",
+              "name": "",
+              "items": "1 CONTINUOUS HINGE \u00b7 Select Hinges \u00b7 SL11 / SL24 \u00b7 628; 1 PUSH PLATE \u00b7 Ives \u00b7 8200 4\" X 16\" TKTX SCREWS AT HM DOORS \u00b7 630; 1 PULL PLATE \u00b7 Ives \u00b7 8302 10\" 4\" X 16\" TKTX SCREWS AT HM DOORS \u00b7 630; 1 REG/ PA SURFACE CLOSER - AS REQUIRED \u00b7 LCN \u00b7 4040XP REG / 4040XP EDA - AS REQUIRED \u00b7 689; 1 KICK PLATE \u00b7 Ives \u00b7 8400 10\" HIGH B-CS TKTX SCREWS AT HM DOORS \u00b7 630; 1 MOP PLATE \u00b7 Ives \u00b7 8400 4\" HIGH B-CS TKTX SCREWS AT HM DOORS \u00b7 630; 1 WALL STOP \u00b7 Ives \u00b7 WS406/407CCV \u00b7 630; 3 SILENCER \u00b7 Ives \u00b7 SR64 \u00b7 GRY",
+              "status": "DRAFT"
+            },
+            {
+              "set": "06 CL doors: 109.1, 109.2, 111.1, 113.1, 128.1.1, 129.1, 131.1, 133.1, 138.1.1, 141.1, 142.1, 143.1, 144.1, 145.1, 146.1, 151.1, 153.1, 159.1, 161.1, 162.1, 163.1, 164.1, 165.1, 166.1, 173.1, 174.1, 175.1, 176.1, 177.1, 178.1",
+              "name": "",
+              "items": "1 CONTINUOUS HINGE \u00b7 Select Hinges \u00b7 SL11 / SL24 \u00b7 628; 1 ENTRANCE LOCK \u00b7 Schlage \u00b7 ALX53R-RHO-626 FSIC \u00b7 626; 1 CLOSER, HOLD OPEN \u00b7 LCN \u00b7 4040XP H / HEDA - AS REQUIRED \u00b7 689; 1 KICK PLATE \u00b7 Ives \u00b7 8400 10\" HIGH B-CS TKTX SCREWS AT HM DOORS \u00b7 630; 1 WALL STOP \u00b7 Ives \u00b7 WS406/407CCV \u00b7 630; 3 SILENCER \u00b7 Ives \u00b7 SR64 \u00b7 GRY",
+              "status": "DRAFT"
+            },
+            {
+              "set": "07 CL doors: 127.1, 150.1, 155.1, 170.1, 182.1",
+              "name": "",
+              "items": "1 CONTINUOUS HINGE \u00b7 Select Hinges \u00b7 SL11 / SL24 \u00b7 628; 1 ENTRANCE LOCK \u00b7 Schlage \u00b7 ALX53R-RHO-626 FSIC \u00b7 626; 1 OH STOP \u00b7 Glynn-Johnson \u00b7 90S \u00b7 652; 1 CLOSER, HOLD OPEN \u00b7 LCN \u00b7 4040XP H / HEDA - AS REQUIRED \u00b7 689; 1 KICK PLATE \u00b7 Ives \u00b7 8400 10\" HIGH B-CS TKTX SCREWS AT HM DOORS \u00b7 630; 3 SILENCER \u00b7 Ives \u00b7 SR64 \u00b7 GRY",
+              "status": "DRAFT"
+            },
+            {
+              "set": "19 STO doors: 111.1.1, 113.1.1",
+              "name": "",
+              "items": "2 CONTINUOUS HINGE \u00b7 Select Hinges \u00b7 SL11 / SL24 \u00b7 628; 1 CONST LATCHING BOLT \u00b7 Ives \u00b7 FB51P / FB61P \u00b7 630; 1 DUST PROOF STRIKE \u00b7 Ives \u00b7 DP1/ DP2 (AS REQ'D) \u00b7 626; 1 STOREROOM LOCK \u00b7 Schlage \u00b7 ALX80R-RHO-626 FSIC \u00b7 626; 1 CLOSER, HOLD OPEN \u00b7 LCN \u00b7 4040XP H / HEDA - AS REQUIRED \u00b7 689; 2 ARMOR PLATE \u00b7 Ives \u00b7 8400 34\" HIGH B-CS TKTX SCREWS AT HM DOORS \u00b7 630; 2 WALL STOP \u00b7 Ives \u00b7 WS406/407CCV \u00b7 630; 2 SILENCER \u00b7 Ives \u00b7 SR64 \u00b7 GRY",
+              "status": "DRAFT"
+            },
+            {
+              "set": "19F STO doors: 114.1",
+              "name": "",
+              "items": "2 CONTINUOUS HINGE \u00b7 Select Hinges \u00b7 SL11 / SL24 \u00b7 628; 1 CONST LATCHING BOLT \u00b7 Ives \u00b7 FB51P / FB61P \u00b7 630; 1 DUST PROOF STRIKE \u00b7 Ives \u00b7 DP1/ DP2 (AS REQ'D) \u00b7 626; 1 STOREROOM LOCK \u00b7 Schlage \u00b7 ALX80R-RHO-626 FSIC \u00b7 626; 2 REG/ PA SURFACE CLOSER - AS REQUIRED \u00b7 LCN \u00b7 4040XP REG / 4040XP EDA - AS REQUIRED \u00b7 689; 2 ARMOR PLATE \u00b7 Ives \u00b7 8400 34\" HIGH B-CS TKTX SCREWS AT HM DOORS \u00b7 630; 2 WALL STOP \u00b7 Ives \u00b7 WS406/407CCV \u00b7 630; 1 GASKETING \u00b7 Zero International \u00b7 188SBK PSA \u00b7 BK",
+              "status": "DRAFT"
+            },
+            {
+              "set": "20 STO doors: 157.1",
+              "name": "",
+              "items": "1 CONTINUOUS HINGE \u00b7 Select Hinges \u00b7 SL11 / SL24 \u00b7 628; 1 STOREROOM LOCK \u00b7 Schlage \u00b7 ALX80R-RHO-626 FSIC \u00b7 626; 1 REG/ PA SURFACE CLOSER - AS REQUIRED \u00b7 LCN \u00b7 4040XP REG / 4040XP EDA - AS REQUIRED \u00b7 689; 1 KICK PLATE \u00b7 Ives \u00b7 8400 10\" HIGH B-CS TKTX SCREWS AT HM DOORS \u00b7 630; 1 WALL STOP \u00b7 Ives \u00b7 WS406/407CCV \u00b7 630; 3 SILENCER \u00b7 Ives \u00b7 SR64 \u00b7 GRY",
+              "status": "DRAFT"
+            },
+            {
+              "set": "23 STO doors: 118.1, 138.1, 138.2, 155.2",
+              "name": "",
+              "items": "1 CONTINUOUS HINGE \u00b7 Select Hinges \u00b7 SL11 / SL24 \u00b7 628; 1 STOREROOM LOCK \u00b7 Schlage \u00b7 ALX80R-RHO-626 FSIC \u00b7 626; 1 OH STOP \u00b7 Glynn-Johnson \u00b7 90S \u00b7 652; 1 REG/ PA SURFACE CLOSER - AS REQUIRED \u00b7 LCN \u00b7 4040XP REG / 4040XP EDA - AS REQUIRED \u00b7 689; 1 KICK PLATE \u00b7 Ives \u00b7 8400 10\" HIGH B-CS TKTX SCREWS AT HM DOORS \u00b7 630; 3 SILENCER \u00b7 Ives \u00b7 SR64 \u00b7 GRY",
+              "status": "DRAFT"
+            },
+            {
+              "set": "28 COR doors: 126.1, 126.2",
+              "name": "",
+              "items": "2 CONTINUOUS HINGE \u00b7 Select Hinges \u00b7 SL11 / SL24 \u00b7 628; 1 FIRE EXIT HARDWARE \u00b7 Von Duprin \u00b7 9927-L-BE-F-LBR-06-499F \u00b7 626; 1 FIRE EXIT HARDWARE \u00b7 Von Duprin \u00b7 9927-L-BE-F-LBRAFL-06-499F \u00b7 626; 2 W/ C KEYWAY \u00b7 Schlage \u00b7 20-057-C FSIC 6PIN \u00b7 626; 2 OH STOP \u00b7 Glynn-Johnson \u00b7 100SE \u00b7 630; 2 FIRE/LIFE CLOSER \u00b7 LCN \u00b7 4040SE \u00b7 689; 2 KICK PLATE \u00b7 Ives \u00b7 8400 10\" HIGH B-CS TKTX SCREWS AT HM DOORS \u00b7 630; 1 GASKETING \u00b7 Zero International \u00b7 188SBK PSA \u00b7 BK",
+              "status": "DRAFT"
+            },
+            {
+              "set": "32 EXD doors: 126.1.1, 152.1.1",
+              "name": "",
+              "items": "1 CONTINUOUS HINGE \u00b7 Select Hinges \u00b7 SL11 / SL24 - EPT \u00b7 DBZ; 1 POWER TRANSFER \u00b7 Von Duprin \u00b7 EPT10 \u00b7 695; 1 ELEC PANIC HARDWARE \u00b7 Von Duprin \u00b7 QEL-99-EO-CON 24 VDC \u00b7 710; 1 90 DEG OFFSET PULL \u00b7 Ives \u00b7 8190HD 10\" O \u00b7 695; 1 OH STOP \u00b7 Glynn-Johnson \u00b7 100S \u00b7 695; 1 SURFACE CLOSER (REG/ \u00b7 LCN \u00b7 4040XP REG / 4040XP EDA - AS \u00b7 695; 1 DOOR SWEEP \u00b7 Zero International \u00b7 39D \u00b7 D; 1 THRESHOLD \u00b7 Zero International \u00b7 566D-V3-226 \u00b7 D; 1 WEATHERSTRIP \u00b7 By others \u00b7 BY DOOR AND FRAME MANUFACTURER; 1 CREDENTIAL READER \u00b7 By others \u00b7 BY DIVISION 28; 1 DOOR POSITION SWITCH - AS REQUIRED \u00b7 By others \u00b7 BY DIVISION 28; 1 POWER SUPPLY \u00b7 By others \u00b7 BY DIVISION 28",
+              "status": "DRAFT"
+            },
+            {
+              "set": "40 UTY doors: 119.1",
+              "name": "",
+              "items": "1 CONTINUOUS HINGE \u00b7 Select Hinges \u00b7 SL11 / SL24 \u00b7 DBZ; 2 CONTINUOUS HINGE \u00b7 Select Hinges \u00b7 SL11 / SL24 - EPT \u00b7 DBZ; 2 POWER TRANSFER \u00b7 Von Duprin \u00b7 EPT10 \u00b7 695; 1 CONST LATCHING BOLT \u00b7 Ives \u00b7 FB51P / FB61P \u00b7 613; 1 DUST PROOF STRIKE \u00b7 Ives \u00b7 DP1/ DP2 (AS REQ'D) \u00b7 613; 1 STOREROOM LOCK \u00b7 Schlage \u00b7 ALX80R-RHO-626 FSIC \u00b7 643E; 1 ELECTRIC STRIKE \u00b7 Von Duprin \u00b7 6223 FSE CON 12/16/24/28 VAC/VDC \u00b7 613; 1 OH STOP \u00b7 Glynn-Johnson \u00b7 90S \u00b7 695; 1 SURFACE CLOSER (PA \u00b7 LCN \u00b7 4040XP SCUSH \u00b7 695; 1 RAIN DRIP - AS REQUIRED \u00b7 Zero International \u00b7 142D \u00b7 D; 1 GASKETING \u00b7 Zero International \u00b7 429D-S \u00b7 D; 2 DOOR SWEEP \u00b7 Zero International \u00b7 39D \u00b7 D; 1 THRESHOLD \u00b7 Zero International \u00b7 566D-V3-226 \u00b7 D; 1 CREDENTIAL READER \u00b7 By others \u00b7 BY DIVISION 28; 2 DOOR POSITION SWITCH - AS REQUIRED \u00b7 By others \u00b7 BY DIVISION 28; 1 POWER SUPPLY \u00b7 By others \u00b7 BY DIVISION 28",
+              "status": "DRAFT"
+            },
+            {
+              "set": "44 UTY-IT doors: 1J.1, 119.2, 136.1",
+              "name": "",
+              "items": "1 CONTINUOUS HINGE \u00b7 Select Hinges \u00b7 SL11 / SL24 \u00b7 628; 1 STOREROOM LOCK \u00b7 Schlage \u00b7 ALX80R-RHO-626 FSIC \u00b7 626; 1 ELECTRIC STRIKE \u00b7 Von Duprin \u00b7 6211 FSE CON 12/16/24/28 VAC/VDC \u00b7 630; 1 REG/ PA SURFACE CLOSER - AS REQUIRED \u00b7 LCN \u00b7 4040XP REG / 4040XP EDA - AS REQUIRED \u00b7 689; 1 KICK PLATE \u00b7 Ives \u00b7 8400 10\" HIGH B-CS TKTX SCREWS AT HM DOORS \u00b7 630; 1 WALL STOP \u00b7 Ives \u00b7 WS406/407CCV \u00b7 630; 3 SILENCER \u00b7 Ives \u00b7 SR64 \u00b7 GRY; 1 CREDENTIAL READER \u00b7 By others \u00b7 BY DIVISION 28; 1 DOOR POSITION SWITCH - AS REQUIRED \u00b7 By others \u00b7 BY DIVISION 28; 1 POWER SUPPLY \u00b7 By others \u00b7 BY DIVISION 28",
+              "status": "DRAFT"
+            },
+            {
+              "set": "47 VES doors: 152.1",
+              "name": "",
+              "items": "1 CONTINUOUS HINGE \u00b7 Select Hinges \u00b7 SL57 FULL SURFACE \u00b7 628; 1 PUSH/PULL BAR \u00b7 Ives \u00b7 9190HD-33\"-10\"-NO \u00b7 630; 1 OH STOP \u00b7 Glynn-Johnson \u00b7 100S \u00b7 630; 1 REG/ PA SURFACE CLOSER - AS REQUIRED \u00b7 LCN \u00b7 4040XP REG / 4040XP EDA - AS REQUIRED \u00b7 689; 1 WEATHERSTRIP \u00b7 By others \u00b7 BY DOOR AND FRAME MANUFACTURER",
+              "status": "DRAFT"
+            },
+            {
+              "set": "51 UTY-CUS doors: 147.1.1, 167.1.1, 179.1.1",
+              "name": "",
+              "items": "1 CONTINUOUS HINGE \u00b7 Select Hinges \u00b7 SL11 / SL24 \u00b7 628; 1 STOREROOM LOCK \u00b7 Schlage \u00b7 ALX80R-RHO-626 FSIC \u00b7 626; 1 OH STOP \u00b7 Glynn-Johnson \u00b7 90S \u00b7 652; 3 SILENCER \u00b7 Ives \u00b7 SR64 \u00b7 GRY",
+              "status": "DRAFT"
+            }
+          ],
+          "tiles": [
+            {
+              "label": "DOOR ROWS",
+              "value": "65"
+            },
+            {
+              "label": "SIZES READ",
+              "value": "65 / 65"
+            },
+            {
+              "label": "FIRE-RATED DOORS",
+              "value": "1"
+            },
+            {
+              "label": "HARDWARE GROUPS",
+              "value": "14"
+            },
+            {
+              "label": "HARDWARE ITEMS",
+              "value": "143"
+            }
+          ],
+          "counts": "BY DOOR TYPE F 46 NG 10 AL1 5 G 4 BY SIZE 3'-0\" x 7'-10\" 54 6'-0\" x 7'-10\" 6 3'-0\" x 7'-0\" 2 2'-6\" x 7'-10\" 1 2'-8\" x 7'-10\" 1 2'-11\" x 7'-10\" 1 BY FIRE RATING YES 1 BY HARDWARE GROUP 06 CL 30 02 RR-M 6 07 CL 5 23 STO 4 01 RR 3 44 UTY-IT 3 51 UTY-CUS 3 19 STO 2 28 COR 2 32 EXD 2 19F STO 1 20 STO 1 +",
+          "steps": {
+            "upload": "done",
+            "read": "done",
+            "review": "now",
+            "pdf": ""
+          },
+          "actions": [
+            "DOWNLOAD THE DOOR LIST (CSV)"
+          ]
+        },
+        "doorCheck": {
+          "ok": true,
+          "expected": 65,
+          "rows": 65,
+          "missing": [],
+          "incorrect": [],
+          "differences": []
+        }
+      },
+      "packet": {
+        "manifest": {
+          "ok": true,
+          "pages": 69,
+          "groups": 14,
+          "mismatches": [],
+          "cutSheets": 26,
+          "reportedCutSheets": 26,
+          "matched": 37,
+          "unmatched": 0,
+          "missing": [],
+          "warnings": []
+        },
+        "contents": {
+          "ok": true,
+          "pages": 69,
+          "hardware": [
+            {
+              "title": "Hardware Group 01 RR",
+              "startPage": 6,
+              "ok": true
+            },
+            {
+              "title": "Hardware Group 02 RR-M",
+              "startPage": 8,
+              "ok": true
+            },
+            {
+              "title": "Hardware Group 06 CL",
+              "startPage": 10,
+              "ok": true
+            },
+            {
+              "title": "Hardware Group 07 CL",
+              "startPage": 13,
+              "ok": true
+            },
+            {
+              "title": "Hardware Group 19 STO",
+              "startPage": 15,
+              "ok": true
+            },
+            {
+              "title": "Hardware Group 19F STO",
+              "startPage": 17,
+              "ok": true
+            },
+            {
+              "title": "Hardware Group 20 STO",
+              "startPage": 19,
+              "ok": true
+            },
+            {
+              "title": "Hardware Group 23 STO",
+              "startPage": 21,
+              "ok": true
+            },
+            {
+              "title": "Hardware Group 28 COR",
+              "startPage": 23,
+              "ok": true
+            },
+            {
+              "title": "Hardware Group 32 EXD",
+              "startPage": 25,
+              "ok": true
+            },
+            {
+              "title": "Hardware Group 40 UTY",
+              "startPage": 27,
+              "ok": true
+            },
+            {
+              "title": "Hardware Group 44 UTY-IT",
+              "startPage": 29,
+              "ok": true
+            },
+            {
+              "title": "Hardware Group 47 VES",
+              "startPage": 31,
+              "ok": true
+            },
+            {
+              "title": "Hardware Group 51 UTY-CUS",
+              "startPage": 33,
+              "ok": true
+            }
+          ],
+          "cuts": [
+            {
+              "startPage": 35,
+              "textCharacters": 6335
+            },
+            {
+              "startPage": 36,
+              "textCharacters": 6455
+            },
+            {
+              "startPage": 37,
+              "textCharacters": 7083
+            },
+            {
+              "startPage": 38,
+              "textCharacters": 7187
+            },
+            {
+              "startPage": 39,
+              "textCharacters": 6408
+            },
+            {
+              "startPage": 40,
+              "textCharacters": 4688
+            },
+            {
+              "startPage": 41,
+              "textCharacters": 6853
+            },
+            {
+              "startPage": 42,
+              "textCharacters": 5234
+            },
+            {
+              "startPage": 43,
+              "textCharacters": 4821
+            },
+            {
+              "startPage": 44,
+              "textCharacters": 5940
+            },
+            {
+              "startPage": 45,
+              "textCharacters": 6288
+            },
+            {
+              "startPage": 46,
+              "textCharacters": 4598
+            },
+            {
+              "startPage": 47,
+              "textCharacters": 8601
+            },
+            {
+              "startPage": 48,
+              "textCharacters": 12118
+            },
+            {
+              "startPage": 49,
+              "textCharacters": 8585
+            },
+            {
+              "startPage": 50,
+              "textCharacters": 5822
+            },
+            {
+              "startPage": 51,
+              "textCharacters": 8961
+            },
+            {
+              "startPage": 52,
+              "textCharacters": 8057
+            },
+            {
+              "startPage": 53,
+              "textCharacters": 9376
+            },
+            {
+              "startPage": 54,
+              "textCharacters": 11853
+            },
+            {
+              "startPage": 55,
+              "textCharacters": 9141
+            },
+            {
+              "startPage": 56,
+              "textCharacters": 8843
+            },
+            {
+              "startPage": 57,
+              "textCharacters": 11318
+            },
+            {
+              "startPage": 58,
+              "textCharacters": 9723
+            },
+            {
+              "startPage": 59,
+              "textCharacters": 8957
+            },
+            {
+              "startPage": 60,
+              "textCharacters": 6338
+            }
+          ],
+          "misses": [
+            true
+          ]
+        },
+        "bytes": 6160393,
+        "sha256": "7920642212aa90eaed1dd22b59f47e360c00f1513d6234a8e4d5dacfe9a17069",
+        "viewer": {
+          "kind": "pages drawn in the page",
+          "pages": 69,
+          "drawn": 1,
+          "meta": "Submittal package for user-sim schedule-plus-spec mv1kj2ef7b4b04 - 69 pages, shown below."
+        },
+        "glynn_johnson_90s": {
+          "type": "cut_sheet",
+          "title": "Glynn-Johnson 90S: Glynn-Johnson Overhead Door Holders/Stops Catalog 101401, page 15",
+          "manufacturer": "Glynn-Johnson",
+          "model": "90S",
+          "catalogue_id": "20d53134b94b9894",
+          "page": 15,
+          "sets": [
+            "07 CL",
+            "23 STO",
+            "40 UTY",
+            "51 UTY-CUS"
+          ],
+          "pages": 1
+        },
+        "primary_section_page": 44
+      }
+    },
+    "browser": {
+      "launch_args": [
+        "--use-angle=metal"
+      ],
+      "webgl": {
+        "webgl": true,
+        "renderer": "ANGLE (Apple, ANGLE Metal Renderer: Apple M4, Unspecified Version)",
+        "vendor": "Google Inc. (Apple)"
+      }
+    },
+    "api_errors": [
+      "POST /api/hardware-schedule/session/05b68dc9-4747-45d2-8ea7-ae91ce55682f/submittal-pdf 409"
+    ],
+    "cleanup": {
+      "ok": true,
+      "deleted": {
+        "hardware_components": 136,
+        "hardware_specifications": 7,
+        "client_telemetry": 2,
+        "door_hardware_matrix": 148,
+        "door_schedule_entries": 150,
+        "hardware_page_extractions": 10,
+        "hardware_sets": 30,
+        "hardware_extraction_sessions": 4,
+        "projects": 2,
+        "weyland_sessions": 1,
+        "nodes": 1,
+        "users": 1
+      },
+      "deletedTotal": 492,
+      "r2": [
+        "subx-uploads: deleted",
+        "subx-uploads: deleted",
+        "subx-uploads: deleted"
+      ],
+      "kv": [
+        "deleted",
+        "deleted"
+      ],
+      "skipped": [],
+      "remaining": {
+        "users": 0,
+        "weyland_sessions": 0,
+        "extraction_sessions": 0,
+        "projects": 0
+      },
+      "sessions": 4,
+      "projects": 2,
+      "submittals": 0
+    },
+    "side_effects": "AuthFor identities created by this run stay at AuthFor (they cannot be deleted from here): user-sim-estimator-packet-mv1kj2ef7b4b04@weylandai.com"
+  },
+  "packet_matching": {
+    "components": 37,
+    "matched": 37,
+    "unmatched": 0,
+    "missing": [],
+    "by_others": [
+      {
+        "qty": 2,
+        "sets": [
+          "32 EXD",
+          "47 VES"
+        ],
+        "text": "BY DOOR AND FRAME MANUFACTURER",
+        "component_type": "seal"
+      },
+      {
+        "qty": 10,
+        "sets": [
+          "32 EXD",
+          "40 UTY",
+          "44 UTY-IT"
+        ],
+        "text": "BY DIVISION 28",
+        "component_type": "card_reader"
+      }
+    ],
+    "pages": 26
+  },
+  "packet_sections": [
+    {
+      "type": "cover",
+      "title": "Cover Page",
+      "pages": 1
+    },
+    {
+      "type": "toc",
+      "title": "Table of Contents",
+      "pages": 2
+    },
+    {
+      "type": "door_schedule",
+      "title": "Door Schedule (extracted)",
+      "pages": 2,
+      "doors": 65
+    },
+    {
+      "type": "hardware_set",
+      "title": "Hardware Group 01 RR",
+      "pages": 2,
+      "components": 7,
+      "doors": 3,
+      "affirmed": false
+    },
+    {
+      "type": "hardware_set",
+      "title": "Hardware Group 02 RR-M",
+      "pages": 2,
+      "components": 8,
+      "doors": 6,
+      "affirmed": false
+    },
+    {
+      "type": "hardware_set",
+      "title": "Hardware Group 06 CL",
+      "pages": 3,
+      "components": 6,
+      "doors": 30,
+      "affirmed": false
+    },
+    {
+      "type": "hardware_set",
+      "title": "Hardware Group 07 CL",
+      "pages": 2,
+      "components": 6,
+      "doors": 5,
+      "affirmed": false
+    },
+    {
+      "type": "hardware_set",
+      "title": "Hardware Group 19 STO",
+      "pages": 2,
+      "components": 8,
+      "doors": 2,
+      "affirmed": false
+    },
+    {
+      "type": "hardware_set",
+      "title": "Hardware Group 19F STO",
+      "pages": 2,
+      "components": 8,
+      "doors": 1,
+      "affirmed": false
+    },
+    {
+      "type": "hardware_set",
+      "title": "Hardware Group 20 STO",
+      "pages": 2,
+      "components": 6,
+      "doors": 1,
+      "affirmed": false
+    },
+    {
+      "type": "hardware_set",
+      "title": "Hardware Group 23 STO",
+      "pages": 2,
+      "components": 6,
+      "doors": 4,
+      "affirmed": false
+    },
+    {
+      "type": "hardware_set",
+      "title": "Hardware Group 28 COR",
+      "pages": 2,
+      "components": 8,
+      "doors": 2,
+      "affirmed": false
+    },
+    {
+      "type": "hardware_set",
+      "title": "Hardware Group 32 EXD",
+      "pages": 2,
+      "components": 12,
+      "doors": 2,
+      "affirmed": false
+    },
+    {
+      "type": "hardware_set",
+      "title": "Hardware Group 40 UTY",
+      "pages": 2,
+      "components": 16,
+      "doors": 1,
+      "affirmed": false
+    },
+    {
+      "type": "hardware_set",
+      "title": "Hardware Group 44 UTY-IT",
+      "pages": 2,
+      "components": 10,
+      "doors": 3,
+      "affirmed": false
+    },
+    {
+      "type": "hardware_set",
+      "title": "Hardware Group 47 VES",
+      "pages": 2,
+      "components": 5,
+      "doors": 1,
+      "affirmed": false
+    },
+    {
+      "type": "hardware_set",
+      "title": "Hardware Group 51 UTY-CUS",
+      "pages": 2,
+      "components": 4,
+      "doors": 3,
+      "affirmed": false
+    },
+    {
+      "type": "cut_sheet",
+      "title": "Select Hinges SL11: Select Hinges SL11 spec sheet, page 2",
+      "manufacturer": "Select Hinges",
+      "model": "SL11",
+      "catalogue_id": null,
+      "page": 2,
+      "sets": [
+        "01 RR",
+        "02 RR-M",
+        "06 CL",
+        "07 CL",
+        "19 STO",
+        "19F STO",
+        "20 STO",
+        "23 STO",
+        "28 COR",
+        "40 UTY",
+        "44 UTY-IT",
+        "51 UTY-CUS",
+        "32 EXD"
+      ],
+      "pages": 1
+    },
+    {
+      "type": "cut_sheet",
+      "title": "Schlage ND40: Schlage ND Series Catalog 106501, page 16",
+      "manufacturer": "Schlage",
+      "model": "ND40",
+      "catalogue_id": null,
+      "page": 16,
+      "sets": [
+        "01 RR"
+      ],
+      "pages": 1
+    },
+    {
+      "type": "cut_sheet",
+      "title": "LCN Closers 4040XP: LCN 4000 Series Surface Mounted Closers Catalog, page 41",
+      "manufacturer": "LCN Closers",
+      "model": "4040XP",
+      "catalogue_id": "4432cd9abe892136",
+      "page": 41,
+      "sets": [
+        "01 RR",
+        "02 RR-M",
+        "19F STO",
+        "20 STO",
+        "23 STO",
+        "44 UTY-IT",
+        "47 VES",
+        "06 CL",
+        "07 CL",
+        "19 STO",
+        "32 EXD",
+        "40 UTY"
+      ],
+      "pages": 1
+    },
+    {
+      "type": "cut_sheet",
+      "title": "IVES 8400: Ives Architectural Hardware Products Catalog, page 131",
+      "manufacturer": "IVES",
+      "model": "8400",
+      "catalogue_id": "8f1396cefd72a60b",
+      "page": 131,
+      "sets": [
+        "01 RR",
+        "02 RR-M",
+        "06 CL",
+        "07 CL",
+        "20 STO",
+        "23 STO",
+        "28 COR",
+        "44 UTY-IT",
+        "19 STO",
+        "19F STO"
+      ],
+      "pages": 1
+    },
+    {
+      "type": "cut_sheet",
+      "title": "IVES WS406/407CCV: Ives Architectural Hardware Products Catalog, page 203",
+      "manufacturer": "IVES",
+      "model": "WS406/407CCV",
+      "catalogue_id": "8f1396cefd72a60b",
+      "page": 203,
+      "sets": [
+        "01 RR",
+        "02 RR-M",
+        "06 CL",
+        "19 STO",
+        "19F STO",
+        "20 STO",
+        "44 UTY-IT"
+      ],
+      "pages": 1
+    },
+    {
+      "type": "cut_sheet",
+      "title": "IVES SR64: Ives Architectural Hardware Products Catalog, page 187",
+      "manufacturer": "IVES",
+      "model": "SR64",
+      "catalogue_id": "8f1396cefd72a60b",
+      "page": 187,
+      "sets": [
+        "01 RR",
+        "02 RR-M",
+        "06 CL",
+        "07 CL",
+        "19 STO",
+        "20 STO",
+        "23 STO",
+        "44 UTY-IT",
+        "51 UTY-CUS"
+      ],
+      "pages": 1
+    },
+    {
+      "type": "cut_sheet",
+      "title": "IVES 8200 4\" X 16\" TKTX SCREWS AT HM DOORS: Ives Architectural Hardware Products Catalog, page 125",
+      "manufacturer": "IVES",
+      "model": "8200 4\" X 16\" TKTX SCREWS AT HM DOORS",
+      "catalogue_id": "8f1396cefd72a60b",
+      "page": 125,
+      "sets": [
+        "02 RR-M"
+      ],
+      "pages": 1
+    },
+    {
+      "type": "cut_sheet",
+      "title": "IVES 8302 10\" 4\" X 16\" TKTX SCREWS AT HM DOORS: Ives Architectural Hardware Products Catalog, page 96",
+      "manufacturer": "IVES",
+      "model": "8302 10\" 4\" X 16\" TKTX SCREWS AT HM DOORS",
+      "catalogue_id": "8f1396cefd72a60b",
+      "page": 96,
+      "sets": [
+        "02 RR-M"
+      ],
+      "pages": 1
+    },
+    {
+      "type": "cut_sheet",
+      "title": "Schlage ALX53: Schlage ALX Series sell sheet 113320, page 4",
+      "manufacturer": "Schlage",
+      "model": "ALX53",
+      "catalogue_id": null,
+      "page": 4,
+      "sets": [
+        "06 CL",
+        "07 CL",
+        "19 STO",
+        "19F STO",
+        "20 STO",
+        "23 STO",
+        "40 UTY",
+        "44 UTY-IT",
+        "51 UTY-CUS"
+      ],
+      "pages": 1
+    },
+    {
+      "type": "cut_sheet",
+      "title": "Glynn-Johnson 90S: Glynn-Johnson Overhead Door Holders/Stops Catalog 101401, page 15",
+      "manufacturer": "Glynn-Johnson",
+      "model": "90S",
+      "catalogue_id": "20d53134b94b9894",
+      "page": 15,
+      "sets": [
+        "07 CL",
+        "23 STO",
+        "40 UTY",
+        "51 UTY-CUS"
+      ],
+      "pages": 1
+    },
+    {
+      "type": "cut_sheet",
+      "title": "IVES FB51P / FB61P: Ives Architectural Hardware Products Catalog, page 159",
+      "manufacturer": "IVES",
+      "model": "FB51P / FB61P",
+      "catalogue_id": "8f1396cefd72a60b",
+      "page": 159,
+      "sets": [
+        "19 STO",
+        "19F STO",
+        "40 UTY"
+      ],
+      "pages": 1
+    },
+    {
+      "type": "cut_sheet",
+      "title": "IVES DP1: Ives Architectural Hardware Products Catalog, page 167",
+      "manufacturer": "IVES",
+      "model": "DP1",
+      "catalogue_id": "8f1396cefd72a60b",
+      "page": 167,
+      "sets": [
+        "19 STO",
+        "19F STO",
+        "40 UTY"
+      ],
+      "pages": 1
+    },
+    {
+      "type": "cut_sheet",
+      "title": "Zero International 188S-B: Zero Price Book, page 44",
+      "manufacturer": "Zero International",
+      "model": "188S-B",
+      "catalogue_id": null,
+      "page": 44,
+      "sets": [
+        "19F STO",
+        "28 COR"
+      ],
+      "pages": 1
+    },
+    {
+      "type": "cut_sheet",
+      "title": "Von Duprin 99: Von Duprin Price Book, page 56",
+      "manufacturer": "Von Duprin",
+      "model": "99",
+      "catalogue_id": null,
+      "page": 56,
+      "sets": [
+        "28 COR"
+      ],
+      "pages": 1
+    },
+    {
+      "type": "cut_sheet",
+      "title": "Schlage 20-057-C FSIC 6PIN: Schlage_Key_Systems_Cylinders_Keys_Catalog_109487, page 41",
+      "manufacturer": "Schlage",
+      "model": "20-057-C FSIC 6PIN",
+      "catalogue_id": "da064d3feceb1b84",
+      "page": 41,
+      "sets": [
+        "28 COR"
+      ],
+      "pages": 1
+    },
+    {
+      "type": "cut_sheet",
+      "title": "Glynn-Johnson 100: Glynn-Johnson Overhead Door Holders/Stops Catalog 101401, page 18",
+      "manufacturer": "Glynn-Johnson",
+      "model": "100",
+      "catalogue_id": "20d53134b94b9894",
+      "page": 18,
+      "sets": [
+        "28 COR",
+        "32 EXD",
+        "47 VES"
+      ],
+      "pages": 1
+    },
+    {
+      "type": "cut_sheet",
+      "title": "LCN Closers 4040SE: LCN Door Controls General Information Catalog, page 16",
+      "manufacturer": "LCN Closers",
+      "model": "4040SE",
+      "catalogue_id": "1ae8e90d963f5ae0",
+      "page": 16,
+      "sets": [
+        "28 COR"
+      ],
+      "pages": 1
+    },
+    {
+      "type": "cut_sheet",
+      "title": "Von Duprin EPT10: Von Duprin 22 Series Catalog, page 25",
+      "manufacturer": "Von Duprin",
+      "model": "EPT10",
+      "catalogue_id": "0b4d3f6cdbb2d9ee",
+      "page": 25,
+      "sets": [
+        "32 EXD",
+        "40 UTY"
+      ],
+      "pages": 1
+    },
+    {
+      "type": "cut_sheet",
+      "title": "Von Duprin 99: Von Duprin Price Book, page 224",
+      "manufacturer": "Von Duprin",
+      "model": "99",
+      "catalogue_id": null,
+      "page": 224,
+      "sets": [
+        "32 EXD"
+      ],
+      "pages": 1
+    },
+    {
+      "type": "cut_sheet",
+      "title": "IVES 8190HD 10\" O: Ives Architectural Hardware Products Catalog, page 89",
+      "manufacturer": "IVES",
+      "model": "8190HD 10\" O",
+      "catalogue_id": "8f1396cefd72a60b",
+      "page": 89,
+      "sets": [
+        "32 EXD",
+        "47 VES"
+      ],
+      "pages": 1
+    },
+    {
+      "type": "cut_sheet",
+      "title": "Zero International 39: Zero Price Book, page 27",
+      "manufacturer": "Zero International",
+      "model": "39",
+      "catalogue_id": null,
+      "page": 27,
+      "sets": [
+        "32 EXD",
+        "40 UTY"
+      ],
+      "pages": 1
+    },
+    {
+      "type": "cut_sheet",
+      "title": "Zero International 566: Zero Price Book, page 14",
+      "manufacturer": "Zero International",
+      "model": "566",
+      "catalogue_id": null,
+      "page": 14,
+      "sets": [
+        "32 EXD",
+        "40 UTY"
+      ],
+      "pages": 1
+    },
+    {
+      "type": "cut_sheet",
+      "title": "Von Duprin 6223: Von Duprin Price Book, page 226",
+      "manufacturer": "Von Duprin",
+      "model": "6223",
+      "catalogue_id": null,
+      "page": 226,
+      "sets": [
+        "40 UTY"
+      ],
+      "pages": 1
+    },
+    {
+      "type": "cut_sheet",
+      "title": "Zero International 429: Zero Price Book, page 35",
+      "manufacturer": "Zero International",
+      "model": "429",
+      "catalogue_id": null,
+      "page": 35,
+      "sets": [
+        "40 UTY"
+      ],
+      "pages": 1
+    },
+    {
+      "type": "cut_sheet",
+      "title": "Von Duprin 6211: Von Duprin Price Book, page 225",
+      "manufacturer": "Von Duprin",
+      "model": "6211",
+      "catalogue_id": null,
+      "page": 225,
+      "sets": [
+        "44 UTY-IT"
+      ],
+      "pages": 1
+    },
+    {
+      "type": "cut_sheet",
+      "title": "Select Hinges SL57: Select Hinges SL57 spec sheet, page 2",
+      "manufacturer": "Select Hinges",
+      "model": "SL57",
+      "catalogue_id": null,
+      "page": 2,
+      "sets": [
+        "47 VES"
+      ],
+      "pages": 1
+    },
+    {
+      "type": "cut_sheet_misses",
+      "title": "Items without a cut sheet",
+      "pages": 1,
+      "items": 0,
+      "by_others": 2
+    },
+    {
+      "type": "schedule",
+      "title": "Uploaded schedule (source)",
+      "pages": 8
+    }
+  ],
+  "visual_inspection": {
+    "method": "pdftoppm rendered actual downloaded packet page 44 at 100 DPI and image viewed",
+    "packet_page": 44,
+    "primary_pdf_ordinal": 15,
+    "model_heading": "90S Series stop-only",
+    "primary_layout_preserved": true,
+    "rendered_image_sha256": "724fb9f39b528228483447fa24b49743e8aa063cc7ebf31329f1503af5a1f656"
+  },
+  "scope": {
+    "only_direct_operator_writes": "One exact corpus R2 object and that exact wanted URL queue row; root separately applied reviewed seed",
+    "functional_proof": "Real AuthFor guest token, signed PDF full and range download, actual homepage subscriber login, own fresh door/spec uploads, 69-page preview/download, 90S primary page for four audited groups",
+    "matched_scope": "37 catalogue manufacturer/model entries matched; 26 unique cut-sheet pages; 65 doors and 14 groups/110 hardware items",
+    "specified_by_others": [
+      {
+        "qty": 2,
+        "sets": [
+          "32 EXD",
+          "47 VES"
+        ],
+        "text": "BY DOOR AND FRAME MANUFACTURER",
+        "component_type": "seal"
+      },
+      {
+        "qty": 10,
+        "sets": [
+          "32 EXD",
+          "40 UTY",
+          "44 UTY-IT"
+        ],
+        "text": "BY DIVISION 28",
+        "component_type": "card_reader"
+      }
+    ],
+    "expected_409": "Door-only packet rejected before complete hardware spec upload; deliberate HARDWARE_SPEC_REQUIRED check",
+    "cleanup": "492 rows deleted, 3 owned R2 objects and 2 KV entries deleted, verified 0 users/Weyland sessions/extraction sessions/projects remain",
+    "provider_identity_limit": "AuthFor identity retained; existing test harness has no deletion endpoint. One controlled account, no email or payment."
+  },
+  "private_operator_harnesses": {
+    "glynn-90s-ingest.mjs": "d27640176707d851007513fac6fd7d6713592aa202383abca32cbd43b7790a6b",
+    "glynn-90s-acceptance.mjs": "96d4bcb3dc053dd776af0542ad801458e3c997f09636d6502bcf332f55d05fda"
+  },
+  "environment_observation": {
+    "temporary_host_pressure": "During the run df reached 362 MiB free and swap was 31,232 MiB used out of 31,232; operations stalled briefly. The original run still completed 27/27 and no retry occurred.",
+    "owned_stop_attempt": "Ownership guard found recorded Node/Chromium PIDs already exited and sent no signal."
+  }
+}
