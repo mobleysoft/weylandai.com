@@ -19,7 +19,7 @@
 //
 // Every session route checks that the session belongs to the caller.
 
-import { hardwareScheduleNeed } from "../../assets/client-ocr-src/schedule-workspace.mjs";
+import { hardwareScheduleNeed, reviewDoorRows, unsureDoorFields } from "../../assets/client-ocr-src/schedule-workspace.mjs";
 import { PDFDocument, StandardFonts, rgb } from "pdf-lib";
 import { jsonResponse3 } from "../lib/json-response.js";
 import { assembleSubmittalPackage } from "../lib/submittal-assembler.js";
@@ -33,25 +33,6 @@ import { readDimension, readSizeCell, looksLikeMark } from "../../assets/client-
 // value read by OCR, a value that does not look like what the column holds,
 // a size that did not read into inches, or an empty cell in a column the
 // other rows fill.
-const FIRE_OK = /^(\d{1,3}\s*(MIN\.?|MINS?\.?|MINUTES?|HRS?\.?|HOURS?)?|NR|N\/R|NONE|N\/A|-+|YES|NO|[A-Z]{1,2}|\d{1,3}\/\d{1,3}|\d{1,3}\s*(MIN\.?)?\s*[A-Z]{1,2})$/i;
-function unsureFields(d, fc, filled) {
-  const out = [];
-  const fields = fc && fc.fields ? fc.fields : null;
-  // A uniform OCR confidence (0.85 on every field) flags nothing by itself:
-  // the shape checks below do that work; a field the reader itself marked
-  // low (below 0.8) is flagged.
-  const low = (f) => !!(fields && fields[f] != null && fields[f] < 0.8);
-  const mark = String(d.mark || "");
-  if (low("mark") || !looksLikeMark(mark.replace(/\s*\[p\.\d+\]$/, ""))) out.push("mark");
-  if (d.hardware_group != null && d.hardware_group !== "") { if (low("hardware_group") || !/^[A-Z0-9][A-Z0-9 .\-\/#]{0,15}$/i.test(String(d.hardware_group))) out.push("hardware_group"); }
-  else if (filled.hardware_group) out.push("hardware_group");
-  if (d.fire_rating != null && d.fire_rating !== "") { if (low("fire_rating") || !FIRE_OK.test(String(d.fire_rating).trim())) out.push("fire_rating"); }
-  if (d.door_type != null && d.door_type !== "") { if (low("door_type") || !/^[A-Z0-9][A-Z0-9\-\/.]{0,5}$/i.test(String(d.door_type))) out.push("door_type"); }
-  else if (filled.door_type) out.push("door_type");
-  if ((d.width_inches == null || d.height_inches == null) && (d.width || filled.size)) out.push("size");
-  if (d.thickness && d.thickness_inches == null) out.push("thickness");
-  return out;
-}
 const num = (v) => (v == null || v === "" ? null : Number(v));
 
 function isDemoClone(session) {
@@ -323,7 +304,8 @@ export function registerSubxWorkspaceRoutes(router, { authenticate, requireActiv
         if (fc && fc.source) source = { page: fc.source.page ?? d.page_number, table_row: fc.source.table_row ?? null, rotation: fc.source.rotation ?? null };
       } catch (_) { fc = null; }
       const corrected = !!d.corrections_json;
-      const out = { ...d, alternate_pricing: fc?.alternate_pricing ?? null, hardware_spec_sections: fc?.hardware_spec_sections || [], source, read_from: fc ? fc.read_from || null : null, pair: fc ? fc.pair ?? null : null, glazing: fc ? fc.glazing ?? null : null, section: fc ? fc.section ?? null : null, corrected, unsure: corrected ? [] : unsureFields(d, fc, filled) };
+      const out = { ...d, original_mark: fc?.original_mark || null, field_confidence: fc?.fields || {}, confidence_source: fc?.confidence_source || null, read_audit: fc?.read_audit || null, alternate_pricing: fc?.alternate_pricing ?? null, hardware_spec_sections: fc?.hardware_spec_sections || [], source, read_from: fc ? fc.read_from || null : null, pair: fc ? fc.pair ?? null : null, glazing: fc ? fc.glazing ?? null : null, section: fc ? fc.section ?? null : null, corrected, unsure: [] };
+      out.unsure = corrected ? [] : unsureDoorFields(out, filled);
       delete out.field_confidence_json;
       delete out.corrections_json;
       return out;
@@ -348,11 +330,13 @@ export function registerSubxWorkspaceRoutes(router, { authenticate, requireActiv
       delete out.specifications;
       return out;
     }) };
+    const review = reviewDoorRows(doors);
     const takeoff = {
+      ...review,
       doors: doors.length,
-      doors_with_size: doors.filter((d) => d.width_inches != null && d.height_inches != null).length,
+      doors_with_size: doors.filter((d) => d.width_inches != null && d.height_inches != null && !d.unsure.includes("size")).length,
       by_door_type: countBy(doors, (d) => d.door_type),
-      by_size: countBy(doors, sizeLabel),
+      by_size: countBy(doors.filter(d => !d.unsure.includes("size")), sizeLabel),
       by_fire_rating: countBy(doors, (d) => d.fire_rating),
       by_hardware_group: countBy(doors, (d) => d.hardware_group),
       by_frame_material: countBy(doors, (d) => d.frame_material),

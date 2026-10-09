@@ -1,0 +1,8 @@
+chicago contractor json 200 csv 717 match
+chicago owner json 200 csv 1389 match
+nyc contractor json 0 csv 0 match
+nyc owner json 200 csv 2938 match
+austin contractor json 70 csv 70 match
+austin owner json 0 csv 0 match
+seattle contractor json 10 csv 10 match
+seattle owner json 0 csv 0 match

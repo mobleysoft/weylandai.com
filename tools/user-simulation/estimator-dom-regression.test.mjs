@@ -28,7 +28,7 @@ class Element {
   setAttribute(k, v) { this.attrs[k] = v; } getAttribute(k) { return this.attrs[k]; } removeAttribute(k) { delete this.attrs[k]; }
   scrollIntoView() {} focus() {} remove() {} click() {} insertAdjacentHTML(_, v) { this._html += v; }
 }
-async function fixture({ authed = false, failUpload = false, failRead = false, pendingDraft = null } = {}) {
+async function fixture({ authed = false, failUpload = false, failRead = false, pendingDraft = null, plannedPages = [1], stopAfterPage = null } = {}) {
   const nodes = {};
   for (const m of html.matchAll(/\bid="([^"]+)"/g)) nodes[m[1]] = new Element();
   for (const m of html.matchAll(/<[^>]*class="[^"]*\bhide\b[^>]*id="([^"]+)"/g)) nodes[m[1]]?.classList.add('hide');
@@ -41,16 +41,22 @@ async function fixture({ authed = false, failUpload = false, failRead = false, p
   const finding = new Promise(r => { releaseFind = r; });
   const reader = {
     findSchedulePages: () => finding,
-    extractDoorScheduleFromPdf: async (bytes, page) => { reads.push(page); return (await readPageFromTextLayer(bytes, page, 'door_schedule')).result; },
+    extractDoorScheduleFromPdf: async (bytes, page) => {
+      reads.push(page);
+      const result = (await readPageFromTextLayer(bytes, page, 'door_schedule')).result;
+      if (page === stopAfterPage) await nodes['stop-read-btn'].emit('click');
+      return result;
+    },
     extractHardwareScheduleFromPdf: async (bytes, page) => (await readPageFromTextLayer(bytes, page, 'hardware_schedule')).result,
   };
-  const ctx = vm.createContext({ window: win, document: doc, location: { search: '', pathname: '/subx-app' }, localStorage: { getItem: () => null }, URLSearchParams, URL, FormData, Blob, performance, console, navigator: { maxTouchPoints: 0 }, screen: { width: 1440, height: 900 }, setTimeout, clearTimeout, setInterval, clearInterval,
+  const ctx = vm.createContext({ window: win, document: doc, location: { search: '', pathname: '/subx-app' }, localStorage: { getItem: () => null }, URLSearchParams, URL, FormData, Blob, AbortController, performance, console, navigator: { maxTouchPoints: 0 }, screen: { width: 1440, height: 900 }, setTimeout, clearTimeout, setInterval, clearInterval,
     fetch: async (url, opts = {}) => {
       calls.push({ url, method: opts.method || 'GET' });
       const answer = (body, status = 200) => new Response(JSON.stringify(body), { status });
       if (url.startsWith('/api/hardware-schedule/sessions')) return answer({ signed_in: authed, sessions: authed ? [{ id: 'test', project_name: 'Rockford' }] : [] });
       if (url.endsWith('/start')) return failUpload ? answer({ detail: 'Upload unavailable' }, 503) : answer({ sessionId: 'test', totalPages: 1 });
       if (url.endsWith('/doors')) return answer(detail);
+      if (url.endsWith('/read-pages') && stopAfterPage != null) return answer({ results: plannedPages.map(page => ({ page, type: 'door_schedule', ok: false, error: 'Use the browser reader' })) });
       if (url.includes('/page/1?')) {
         if (failRead) return answer({ detail: 'Reader unavailable' }, 503);
         const r = await readPageFromTextLayer(await sheet.arrayBuffer(), 1, 'door_schedule');
@@ -67,7 +73,7 @@ async function fixture({ authed = false, failUpload = false, failRead = false, p
   new vm.Script(scripts.at(-2), opts).runInContext(ctx);
   new vm.Script(scripts.at(-1), opts).runInContext(ctx);
   await until(() => calls.some(c => c.url.includes('/sessions'))); await flush();
-  return { nodes, win, calls, reads, releaseFind: () => releaseFind({ pages: 1, door_schedule_pages: [1], hardware_pages: [], details: [{ door_schedule: { rows: 65 } }] }) };
+  return { nodes, win, calls, reads, releaseFind: () => releaseFind({ pages: Math.max(...plannedPages), door_schedule_pages: plannedPages, hardware_pages: [], details: [{ door_schedule: { rows: 65 } }] }) };
 }
 
 test('guest first read: discovery awaited, no account/upload call, real 65 rows, named section, terminal status', async () => {
@@ -99,6 +105,31 @@ test('account upload success also replaces Reading with completion', async () =>
   assert.equal(f.calls.filter(c => c.url.endsWith('/start')).length, 1);
   assert.match(f.nodes['extract-result'].innerHTML, /65 doors/);
   assert.doesNotMatch(f.nodes['upload-result'].textContent, /Reading/i);
+  assert.equal(f.nodes['upload-btn'].disabled, false);
+});
+
+test('stopping a guest read between pages reports partial completion and retains the first page', async () => {
+  const f = await fixture({ plannedPages: [1, 2], stopAfterPage: 1 });
+  f.releaseFind();
+  await f.nodes['upload-form'].emit('submit');
+  await until(() => f.nodes['upload-result'].textContent.includes('read finished with page errors'));
+  assert.deepEqual(f.reads, [1]);
+  assert.match(f.nodes['extract-result'].textContent, /Partial machine read: reading stopped; 1 selected page\(s\) were not read/);
+  assert.match(f.nodes['takeoff'].textContent, /Partial read: reading stopped before all selected pages completed/);
+  assert.equal((f.nodes['doors-wrap'].innerHTML.match(/data-door=/g) || []).length, 65);
+  assert.equal(f.nodes['upload-btn'].disabled, false);
+  assert.doesNotMatch(f.nodes['upload-result'].textContent, /read complete/);
+});
+
+test('stopping an account browser read between pages reports skipped pages instead of success', async () => {
+  const f = await fixture({ authed: true, plannedPages: [1, 2], stopAfterPage: 1 });
+  f.releaseFind();
+  await f.nodes['upload-form'].emit('submit');
+  await until(() => f.nodes['upload-result'].textContent.includes('read finished with page errors'));
+  assert.deepEqual(f.reads, [1]);
+  assert.match(f.nodes['extract-result'].textContent, /Partial machine read: reading stopped; 1 selected page\(s\) were not read/);
+  assert.equal(f.calls.filter(c => c.url.includes('/page/1/extract-result')).length, 1);
+  assert.equal(f.calls.filter(c => c.url.includes('/page/2')).length, 0);
   assert.equal(f.nodes['upload-btn'].disabled, false);
 });
 

@@ -60,7 +60,7 @@ test('Rockford pricing fields survive the reader, persistence and CSV (including
   assert.equal(doors.find(d => d.door_number === '1J.1').alternate_pricing, 'No');
   assert.deepEqual(doors[0].hardware_spec_sections, ['08 71 00']);
   const writes = [];
-  const env = { DB: { prepare(sql) { return { bind(...args) { this.args = args; return this; }, async all() { return { results: [] }; }, async run() { if (/INSERT INTO door_schedule_entries/.test(sql)) writes.push(this.args); return { success: true }; } }; } } };
+  const env = { DB: { prepare(sql) { return { bind(...args) { this.args = args; return this; }, async all() { return { results: [] }; }, async run() { if (/INSERT INTO door_schedule_entries/.test(sql)) writes.push(this.args); return { success: true }; } }; }, async batch(stmts) { return Promise.all(stmts.map(s => s.run())); } } };
   await writeDoorScheduleEntries('proof', 'proof', 29, doors, .98, env);
   assert.equal(writes.length, 65);
   for (let i = 0; i < writes.length; i++) {

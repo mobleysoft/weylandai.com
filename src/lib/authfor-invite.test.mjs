@@ -56,3 +56,20 @@ test("any other failure is reported, not swallowed", async () => {
   assert.equal(r2.status, 0);
   assert.match(r2.data.error, /network down/);
 });
+
+test("a 202 email-proof request or a successful response without an identity is not a created invite", async () => {
+  for (const [status, body, error] of [
+    [202, { code: "EMAIL_CODE_REQUIRED", verification_required: true }, "EMAIL_CODE_REQUIRED"],
+    [200, { ok: true }, "AUTHFOR_IDENTITY_MISSING"],
+  ]) {
+    const r = await inviteViaAuthFor({}, { email: "ann@example.com" }, { fetchImpl: fakeFetch(status, body) });
+    assert.equal(r.ok, false);
+    assert.equal(r.data.error, error);
+  }
+});
+
+test("current AuthFor USER_EXISTS code is accepted as an existing-account no-op", async () => {
+  const r = await inviteViaAuthFor({}, { email: "ann@example.com" }, { fetchImpl: fakeFetch(400, { code: "USER_EXISTS", error: "Email already registered" }) });
+  assert.equal(r.ok, true);
+  assert.equal(r.data.already_member, true);
+});

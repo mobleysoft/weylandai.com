@@ -203,3 +203,22 @@ test('a saved door sheet keeps pricing fields and asks for Section 08 71 00 befo
   assert.equal(build.data.error, 'HARDWARE_SPEC_REQUIRED');
   assert.match(build.data.details, /Section 08 71 00 — Door Hardware/);
 });
+
+test("F3: saved OCR rows expose measured confidence, partial status and qualified totals", async () => {
+  const { call, db } = setup();
+  const fields = { mark: .95, hardware_group: .45, fire_rating: .68, width: .72, height: .98 };
+  db.prepare("UPDATE door_schedule_entries SET field_confidence_json = ? WHERE session_id = ? AND mark = ?")
+    .run(JSON.stringify({ source: { page: 1, table_row: 7 }, read_from: "ocr_lines", confidence_source: "ocr_words", fields,
+      read_audit: { partial: true, expected_marks: ["131", "999"] } }), "sess-a", "131");
+  const { data } = await call("GET", "/api/hardware-schedule/session/sess-a/doors", "a");
+  const door = data.doors.find(d => d.mark === "131");
+  assert.deepEqual(door.field_confidence, fields);
+  for (const field of ["hardware_group", "fire_rating", "size"]) assert.ok(door.unsure.includes(field));
+  assert.equal(data.takeoff.ocr_rows, 1);
+  assert.equal(data.takeoff.ocr_fields, 5);
+  assert.equal(data.takeoff.below_threshold_fields, 3);
+  assert.equal(data.takeoff.doors_with_size, 2);
+  assert.match(data.takeoff.qualifier, /Machine-read OCR/);
+  assert.match(data.takeoff.qualifier, /Partial read/);
+  assert.deepEqual(data.takeoff.missing_expected_marks, [{ page: 1, mark: "999" }]);
+});

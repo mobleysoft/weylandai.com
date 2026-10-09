@@ -21,6 +21,8 @@ class AuthForStandard {
 
     // Token refresh timer
     this._refreshTimer = null;
+    this._refreshPromise = null;
+    this._sessionEpoch = 0;
   }
 
   // Initialize authentication state on page load
@@ -119,13 +121,6 @@ class AuthForStandard {
 
     const data = await res.json();
 
-    // Check if MFA required
-    if (data.mfa_required) {
-      this._mfaRequired = true;
-      this._mfaPending = data.mfa_token;
-      return { mfa_required: true, methods: data.mfa_methods };
-    }
-
     return this._processAuthResponse(data);
   }
 
@@ -136,7 +131,9 @@ class AuthForStandard {
     const res = await fetch('https://authfor.com/api/v1/mfa/verify', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ mfa_token: this._mfaPending, code })
+      body: JSON.stringify(this._mfaLegacy
+        ? { mfa_token: this._mfaPending, code }
+        : { challenge: this._mfaPending, totp_code: code })
     });
 
     if (!res.ok) throw new Error('MFA verification failed');
@@ -147,64 +144,103 @@ class AuthForStandard {
 
   // Process successful auth response
   _processAuthResponse(data) {
-    this._token = data.token;
-    this._user = data.user;
-    this._sessionId = data.session_id;
+    if (data.mfa_required) {
+      if (!data.challenge && !data.mfa_token) throw new Error('Missing MFA challenge');
+      this._mfaRequired = true;
+      this._mfaPending = data.challenge || data.mfa_token;
+      this._mfaLegacy = !data.challenge;
+      return { mfa_required: true, methods: data.mfa_methods };
+    }
+    if (!data.token || !data.session_id) {
+      const error = new Error(data.code === 'EMAIL_CODE_REQUIRED'
+        ? 'Confirm your email with a sign-in code before creating an account.' : 'Sign-in did not return a session.');
+      error.code = data.code;
+      throw error;
+    }
+    this._sessionEpoch++;
+    this._saveSession(data);
     this._mfaRequired = false;
     this._mfaPending = null;
-
-    // Persist tokens
-    localStorage.setItem('_authfor_token', this._token);
-    localStorage.setItem('_authfor_session', this._sessionId);
-    if (data.refresh_token) {
-      this._refreshToken = data.refresh_token;
-      localStorage.setItem('_authfor_refresh', this._refreshToken);
-    }
-
     this._setupAutoRefresh();
     this._onAuthSuccess();
-
     return { success: true, user: this._user };
   }
 
-  // Refresh session automatically
-  async _refreshSession() {
-    if (!this._refreshToken) throw new Error('No refresh token');
-
-    const res = await fetch('https://authfor.com/api/v1/refresh', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        refresh_token: this._refreshToken,
-        session_id: this._sessionId
-      })
-    });
-
-    if (!res.ok) {
-      this.logout();
-      throw new Error('Session refresh failed');
-    }
-
-    const data = await res.json();
+  _saveSession(data) {
     this._token = data.token;
+    this._user = data.user || this._user;
+    this._sessionId = data.session_id;
     localStorage.setItem('_authfor_token', this._token);
-    return data.user || this._user;
+    localStorage.setItem('_authfor_session', this._sessionId);
+    this._refreshToken = data.refresh_token || null;
+    if (this._refreshToken) localStorage.setItem('_authfor_refresh', this._refreshToken);
+    else localStorage.removeItem('_authfor_refresh');
+  }
+
+  // One refresh at a time: old refresh-secret replay revokes the session family.
+  _refreshSession() {
+    if (this._refreshPromise && this._refreshPromiseEpoch === this._sessionEpoch) return this._refreshPromise;
+    const epoch = this._sessionEpoch;
+    const refreshToken = this._refreshToken;
+    const sessionId = this._sessionId;
+    const rotate = async () => {
+      if (epoch !== this._sessionEpoch) throw new Error('Session changed during refresh');
+      const storedRefresh = localStorage.getItem('_authfor_refresh');
+      const storedSession = localStorage.getItem('_authfor_session');
+      if (!storedRefresh || !storedSession || storedSession !== sessionId) throw new Error('Session changed during refresh');
+      // Another tab holding the same Web Lock may already have rotated this pair.
+      if (storedRefresh !== refreshToken) {
+        const token = localStorage.getItem('_authfor_token');
+        if (!token) throw new Error('Session changed during refresh');
+        this._saveSession({ token, session_id: storedSession, refresh_token: storedRefresh });
+        this._setupAutoRefresh();
+        return this._user;
+      }
+      const res = await fetch('https://authfor.com/api/v1/refresh', {
+        method: 'POST', headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ refresh_token: refreshToken, session_id: sessionId })
+      });
+      if (!res.ok) throw new Error('Session refresh failed');
+      const data = await res.json();
+      if (epoch !== this._sessionEpoch || localStorage.getItem('_authfor_session') !== sessionId) throw new Error('Session changed during refresh');
+      if (!data.token || !data.session_id || !data.refresh_token) throw new Error('Refresh did not return the rotated session');
+      this._saveSession(data);
+      this._setupAutoRefresh();
+      return this._user;
+    };
+    const locks = window.navigator && window.navigator.locks;
+    const pending = Promise.resolve().then(() => {
+      if (!refreshToken || !sessionId) throw new Error('No refresh token');
+      return locks ? locks.request('authfor-refresh:' + sessionId, rotate) : rotate();
+    }).finally(() => { if (this._refreshPromise === pending) this._refreshPromise = null; });
+    this._refreshPromiseEpoch = epoch;
+    this._refreshPromise = pending;
+    return pending;
   }
 
   // Setup automatic token refresh (refresh 1 min before expiry)
   _setupAutoRefresh() {
     if (this._refreshTimer) clearTimeout(this._refreshTimer);
 
-    // Assume 24h token expiry
-    const refreshIn = 23.99 * 60 * 60 * 1000; // 23h 59m
+    if (!this._refreshToken || !this._token) return;
+    // Read exp only for scheduling; the server still validates the token.
+    let expiresAt = Date.now() + 60 * 60 * 1000;
+    try {
+      const payload = JSON.parse(atob(this._token.split('.')[1].replace(/-/g, '+').replace(/_/g, '/')));
+      if (typeof payload.exp === 'number' && Number.isFinite(payload.exp)) expiresAt = payload.exp * 1000;
+    } catch (_) { /* legacy token: bounded one-hour fallback */ }
+    const refreshIn = Math.max(0, expiresAt - Date.now() - 60 * 1000);
+    const epoch = this._sessionEpoch;
+    const sessionId = this._sessionId;
 
     this._refreshTimer = setTimeout(async () => {
       try {
         await this._refreshSession();
-        this._setupAutoRefresh(); // Reschedule
       } catch (e) {
+        if (epoch !== this._sessionEpoch || localStorage.getItem('_authfor_session') !== sessionId) return; // A later sign-in owns its own timer/session.
         console.warn('Token refresh failed:', e);
-        this.logout();
+        if (window.WeylandShell && typeof window.WeylandShell.signOut === 'function') await window.WeylandShell.signOut();
+        else await this.logout();
       }
     }, refreshIn);
   }
@@ -242,7 +278,7 @@ class AuthForStandard {
     if (!container) return;
 
     container.innerHTML = `
-      <div style="max-width:400px;margin:100px auto;padding:20px;border:1px solid #333;border-radius:8px;background:#1a1a1a">
+      <div id="authfor-primary" style="max-width:400px;margin:100px auto;padding:20px;border:1px solid #333;border-radius:8px;background:#1a1a1a">
         <h2 style="margin:0 0 20px 0;color:#fff;font-size:20px">Sign In</h2>
         <div id="authfor-error" style="color:#ff4444;margin-bottom:10px;display:none"></div>
 
@@ -302,9 +338,12 @@ class AuthForStandard {
       try {
         const result = await this.login(email, password);
         if (result.mfa_required) {
-          document.querySelector(this.loginUISelector).style.display = 'none';
+          // Both cards live inside the login container. Keep their parent visible.
+          document.querySelector(this.loginUISelector).style.display = 'block';
+          document.getElementById('authfor-primary').style.display = 'none';
           document.getElementById('authfor-mfa').style.display = 'block';
           this._setupMFAHandler();
+          document.getElementById('authfor-mfa-code').focus();
         }
       } catch (e) {
         errorDiv.textContent = e.message.toUpperCase();
@@ -366,18 +405,11 @@ class AuthForStandard {
 
   // Logout
   async logout() {
-    if (this._token) {
-      try {
-        await fetch('https://authfor.com/api/v1/logout', {
-          method: 'POST',
-          headers: { 'Authorization': 'Bearer ' + this._token },
-          body: JSON.stringify({ session_id: this._sessionId })
-        });
-      } catch (e) { /* cleanup locally anyway */ }
-    }
-
+    const token = this._token;
+    const sessionId = this._sessionId;
+    const epoch = ++this._sessionEpoch; // An outstanding refresh cannot restore this session.
     if (this._refreshTimer) clearTimeout(this._refreshTimer);
-
+    this._refreshTimer = null;
     this._token = null;
     this._user = null;
     this._refreshToken = null;
@@ -385,12 +417,33 @@ class AuthForStandard {
     this._mfaRequired = false;
     this._mfaPending = null;
 
-    localStorage.removeItem('_authfor_token');
-    localStorage.removeItem('_authfor_refresh');
-    localStorage.removeItem('_authfor_session');
+    // A stale tab must not clear a newer tab's primary sign-in. Clear the
+    // owned pair now; the remote answer must never clear credentials later.
+    const ownsStoredSession = sessionId
+      ? localStorage.getItem('_authfor_session') === sessionId
+      : token && localStorage.getItem('_authfor_token') === token;
+    if (ownsStoredSession) {
+      localStorage.removeItem('_authfor_token');
+      localStorage.removeItem('_authfor_refresh');
+      localStorage.removeItem('_authfor_session');
+    }
 
-    // Reload to show login UI
-    window.location.reload();
+    if (token) {
+      try {
+        await fetch('https://authfor.com/api/v1/logout', {
+          method: 'POST',
+          headers: { 'Authorization': 'Bearer ' + token },
+          body: JSON.stringify({ session_id: sessionId })
+        });
+      } catch (e) { /* the owned local session already ended */ }
+    }
+
+    // A newer sign-in (or MFA challenge) owns its UI and timer. Only reload
+    // while this logout still owns the signed-out state.
+    if (epoch === this._sessionEpoch && !this._token && !this._mfaRequired &&
+        !localStorage.getItem('_authfor_token') && !localStorage.getItem('_authfor_session')) {
+      window.location.reload();
+    }
   }
 
   // Public API

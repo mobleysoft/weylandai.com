@@ -51,9 +51,12 @@ export async function inviteViaAuthFor(env2, { email, name, role, operatorToken 
   try { data = await resp.json(); } catch (e) { /* non-JSON body */ }
   if (resp.ok) {
     const mhsId = (data && (data.user?.id || data.user_id || data.id)) || null;
+    if (data?.code === "EMAIL_CODE_REQUIRED" || data?.verification_required || typeof mhsId !== "string" || !mhsId) {
+      return { ok: false, status: resp.status, data: { error: data?.code || "AUTHFOR_IDENTITY_MISSING" } };
+    }
     return { ok: true, status: resp.status, data: { ok: true, mhs_id: mhsId, email_sent: false, already_member: false } };
   }
-  if (data && data.error === "USER_EXISTS") {
+  if (data && (data.code === "USER_EXISTS" || data.error === "USER_EXISTS")) {
     return { ok: true, status: resp.status, data: { ok: true, mhs_id: null, email_sent: false, already_member: true } };
   }
   return { ok: false, status: resp.status, data: { error: (data && data.error) || `AuthFor register failed (${resp.status})` } };

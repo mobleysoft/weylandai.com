@@ -41,6 +41,15 @@ function d1(db) {
       };
       return stmt;
     },
+    async batch(stmts) {
+      db.exec("BEGIN IMMEDIATE");
+      try {
+        const results = [];
+        for (const stmt of stmts) results.push(await stmt.all());
+        db.exec("COMMIT");
+        return results;
+      } catch (e) { db.exec("ROLLBACK"); throw e; }
+    },
   };
 }
 
@@ -57,7 +66,7 @@ export async function buildRockfordSample() {
   try {
     db.exec([
       "CREATE TABLE hardware_extraction_sessions (id TEXT PRIMARY KEY, project_name TEXT, filename TEXT, file_buffer_key TEXT, total_pages INTEGER, status TEXT, door_schedule_extracted INTEGER DEFAULT 0, door_entries_count INTEGER DEFAULT 0, pages_processed INTEGER DEFAULT 0, door_schedule_extracted_at TEXT, updated_at TEXT)",
-      "CREATE TABLE door_schedule_entries (id TEXT, session_id TEXT, tenant_id TEXT, page_number INTEGER, mark TEXT, hardware_group TEXT, fire_rating TEXT, width TEXT, height TEXT, width_inches REAL, height_inches REAL, door_type TEXT, door_material TEXT, frame_type TEXT, frame_material TEXT, panic INTEGER, thickness TEXT, thickness_inches REAL, door_finish TEXT, stc_rating INTEGER, frame_finish TEXT, head_detail TEXT, jamb_detail TEXT, sill_detail TEXT, notes TEXT, extraction_confidence REAL, field_confidence_json TEXT, low_confidence_fields TEXT, created_at TEXT, updated_at TEXT, UNIQUE(session_id, mark))",
+      "CREATE TABLE door_schedule_entries (id TEXT, session_id TEXT, tenant_id TEXT, page_number INTEGER, mark TEXT, hardware_group TEXT, fire_rating TEXT, width TEXT, height TEXT, width_inches REAL, height_inches REAL, door_type TEXT, door_material TEXT, frame_type TEXT, frame_material TEXT, panic INTEGER, thickness TEXT, thickness_inches REAL, door_finish TEXT, stc_rating INTEGER, frame_finish TEXT, head_detail TEXT, jamb_detail TEXT, sill_detail TEXT, notes TEXT, extraction_confidence REAL, field_confidence_json TEXT, low_confidence_fields TEXT, corrections_json TEXT, created_at TEXT, updated_at TEXT, UNIQUE(session_id, mark))",
       "CREATE TABLE hardware_sets (id TEXT PRIMARY KEY, session_id TEXT, set_number TEXT, set_name TEXT, door_location TEXT, door_count INTEGER, notes TEXT, affirmed INTEGER)",
       "CREATE TABLE hardware_page_extractions (session_id TEXT, page_number INTEGER)",
     ].join(";"));

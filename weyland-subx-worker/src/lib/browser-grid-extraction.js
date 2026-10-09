@@ -149,7 +149,7 @@ export async function runGridPagesInBrowser(env, pdfBuffer, pages, opts = {}) {
           const r = res.result || {};
           const n = type === "door_schedule" ? (r.doors || []).length : (r.hardware_groups || []).length;
           if (!firstTry) firstTry = { schedule_type: type, result: r };
-          if (n > 0) { found = { ok: true, schedule_type: type, result: r }; break; }
+          if (n > 0 || r.partial || r.metadata?.partial) { found = { ok: true, schedule_type: type, result: r }; break; }
           // The text says the page is the other kind: try it; otherwise stop.
           const md = r.metadata || {};
           if (!(md.text_layer_reads_as === other) && type === first && !opts.alwaysTryOther) { /* fall through to the other type anyway */ }
@@ -208,7 +208,7 @@ export async function runGridInBrowser(env, pdfBuffer, pageNumber, scheduleType,
       const r = res.result || {};
       const found = type === "door_schedule" ? (r.doors || []).length : (r.hardware_groups || []).length;
       if (!first) first = { schedule_type: type, result: r };
-      if (found > 0) return { ok: true, schedule_type: type, result: r, logs, ms: Date.now() - started };
+      if (found > 0 || r.partial || r.metadata?.partial) return { ok: true, schedule_type: type, result: r, logs, ms: Date.now() - started };
     }
     return { ok: true, schedule_type: first.schedule_type, result: first.result, empty: true, tried: types, logs, ms: Date.now() - started };
   } catch (e) {

@@ -263,7 +263,7 @@ async function marketx() {
   // ranked lists are rightly empty and the response says why.
   const PUBLISHES_NO_COMPANIES = ["la", "sf"];
   const claim = "The door work your city is permitting, and who is building it. Commercial and multifamily building permits from Chicago, New York, Los Angeles, Austin, San Francisco and Seattle: permitted value by month against last year, by building use, for work likely to include doors; the largest and newest projects; the general contractors and owners ranked by permitted value where the city's permits name them (both in Chicago, owners in New York, contractors in Austin and Seattle; Los Angeles and San Francisco publish neither); the open public bids in the state. Projects and companies CSV.";
-  const bar = "All six metros hold permits with a permitted value; each metro's page carries months for this year and last year, a by-use split that adds up to the total, largest projects in value order, newest in date order, general contractors or owners ranked by permitted value (at least one of the two; a metro with neither fails 'who is building it'), the open-bids block, and the metros list's figures; both CSVs download for the paying account, the projects CSV holding every project of the period (up to its 5,000 cap) and the companies CSV beginning with the same ranking.";
+  const bar = "All six metros hold permits with a permitted value; each metro's page carries months for this year and last year, a by-use split that adds up to the total, largest projects in value order, newest in date order, general contractors or owners ranked by permitted value where the city's published records name them; Los Angeles and San Francisco must explain that their source publishes neither, rather than supply invented companies, the open-bids block, and the metros list's figures; both CSVs download for the paying account, the projects CSV holding every project of the period (up to its 5,000 cap) and the companies CSV beginning with the same ranking.";
   const { checks, check } = checker();
   const NAMES = { chicago: "Chicago", nyc: "New York City", la: "Los Angeles", austin: "Austin", sf: "San Francisco", seattle: "Seattle" };
   const ms = await api("/api/marketx/metros");
@@ -271,7 +271,10 @@ async function marketx() {
   const list = Object.fromEntries(ms.data.metros.map((m) => [m.metro, m]));
   check("six metros, each with permits and value", Object.keys(NAMES).every((k) => list[k] && list[k].projects > 0 && list[k].value > 0), Object.keys(NAMES).map((k) => k + " " + (list[k]?.projects ?? 0)));
   const per = [];
-  for (const k of Object.keys(NAMES)) {
+  // g037: the permit data is reloaded by a job while the audit runs; a metro whose figures change
+  // between its page, the metros list and its CSVs is measured again (up to 3 times) and the row
+  // says so. The bar is unchanged: the passing measurement is one where all of them agree.
+  const measure = async (k, list) => {
     const m = await api("/api/marketx/metro/" + k);
     const d = m.data || {};
     const t = d.totals || {};
@@ -298,13 +301,31 @@ async function marketx() {
       months_this_period: thisYearMonths, months_last_year: lastYearMonths, by_use_sum_equals_total: near(useSum, t.value, 1),
       largest_desc: sortedDesc((d.largest || []).map((x) => Number(x.valuation) || 0)), newest_desc: sortedDesc((d.newest || []).map((x) => String(x.issued))),
       contractors: (d.contractors || []).length, contractors_ranked: sortedDesc((d.contractors || []).map((x) => Number(x.value) || 0)), owners: (d.owners || []).length,
+      company_coverage_disclosed: ((d.contractors || []).length + (d.owners || []).length) > 0 || (PUBLISHES_NO_COMPANIES.includes(k) && /^No owner or contractor in .+open data/i.test(String(d.names || ""))),
       matches_metros_list: list[k] && list[k].projects === t.projects && near(list[k].value, t.value, 1),
       bids: d.bids ? { open: d.bids.open, doors: d.bids.doors } : null, latest: list[k]?.latest,
       projects_csv: { http: pc.status, rows: pRows, expected: expectP }, companies_csv: { http: cc.status, rows: cRows, json_ranked: expectC, ok: companiesCsvOk }, names_note: d.names, sample_link: linkOk || null,
     };
-    row.ok = m.ok && d.paid && t.projects > 0 && t.value > 0 && t.priorValue > 0 && thisYearMonths >= 10 && lastYearMonths >= 10 && row.by_use_sum_equals_total && row.largest_desc && row.newest_desc && ((row.contractors + row.owners) > 0 || PUBLISHES_NO_COMPANIES.includes(k)) && row.contractors_ranked && row.matches_metros_list && row.bids && pRows === expectP && companiesCsvOk;
+    row.ok = m.ok && d.paid && t.projects > 0 && t.value > 0 && t.priorValue > 0 && thisYearMonths >= 10 && lastYearMonths >= 10 && row.by_use_sum_equals_total && row.largest_desc && row.newest_desc && row.company_coverage_disclosed && row.contractors_ranked && row.matches_metros_list && row.bids && pRows === expectP && companiesCsvOk;
+    return { row, m, d, t, thisYearMonths, lastYearMonths, pRows, expectP, cRows, expectC };
+  };
+  for (const k of Object.keys(NAMES)) {
+    let res, changes = [], measurements = 0, stable = false;
+    for (let attempt = 0; attempt < 3; attempt++) {
+      const fresh = attempt === 0 ? list : Object.fromEntries(((await api("/api/marketx/metros")).data?.metros || []).map((x) => [x.metro, x]));
+      res = await measure(k, fresh);
+      measurements++;
+      const again = (await api("/api/marketx/metro/" + k)).data?.totals || {};
+      if (again.projects === res.t.projects && near(again.value, res.t.value, 1)) { stable = true; break; }
+      changes.push(`${res.t.projects} -> ${again.projects} projects during the measurement`);
+    }
+    const { row, d, t, thisYearMonths, lastYearMonths, pRows, expectP, cRows, expectC } = res;
+    row.measurements = measurements;
+    row.stable_measurement = stable;
+    row.ok = !!row.ok && stable;
+    if (changes.length) row.data_changed_during_run = changes;
     per.push(row);
-    check(`${NAMES[k]}: value by month vs last year, by use, ranked lists, bids, both CSVs`, row.ok, `${t.projects} projects ${money(t.value)} (last yr ${money(t.priorValue)}, ${t.valueChange}%), months ${thisYearMonths}+${lastYearMonths}, use sum=total ${row.by_use_sum_equals_total}, GCs ${row.contractors}, owners ${row.owners}, bids ${d.bids?.open}, projects.csv ${pRows}/${expectP}, companies.csv ${cRows} rows (JSON ranks ${expectC})` + (row.contractors + row.owners === 0 ? `; no GC or owner ranked: "${d.names}"` : ""));
+    check(`${NAMES[k]}: value by month vs last year, by use, ranked lists, bids, both CSVs`, row.ok, `${t.projects} projects ${money(t.value)} (last yr ${money(t.priorValue)}, ${t.valueChange}%), months ${thisYearMonths}+${lastYearMonths}, use sum=total ${row.by_use_sum_equals_total}, GCs ${row.contractors}, owners ${row.owners}, bids ${d.bids?.open}, projects.csv ${pRows}/${expectP}, companies.csv ${cRows} rows (JSON ranks ${expectC})` + (row.contractors + row.owners === 0 ? `; no GC or owner ranked: "${d.names}"` : "") + (changes.length ? `; data reloaded during the run, measured ${measurements} times (${changes.join("; ")})` : ""));
   }
   // A permit link per metro, spot-checked.
   const links = [];
