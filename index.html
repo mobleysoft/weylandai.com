@@ -1877,6 +1877,7 @@
       inset: 0;
       z-index: 99999;
       background: var(--bg);
+      pointer-events: none; /* a splash never swallows the first tap: the hit test at 500 ms found it over the upload button */
       display: flex;
       align-items: center;
       justify-content: center;
@@ -1915,7 +1916,6 @@
     .tools-chapter .wn-blade { display: flex; flex: 1; gap: 4px; margin: 0; padding: 3px; overflow-x: auto; clip-path: none; }
     .tools-chapter .wn-flag { flex: 1 0 108px; }
     .tools-chapter .wn-flag:first-child { margin-left: 0; }
-    .button:disabled, .button:disabled:hover { background: #292e38; border-color: #434b5a; color: #969eac; opacity: .7; cursor: not-allowed; box-shadow: none; transform: none; }
     @media (max-width: 899px) {
       .hero-sub-desktop { display: none; }
       .hero-sub-phone { display: block; margin: 0 0 24px; color: var(--muted); font-size: 16px; line-height: 1.45; }
