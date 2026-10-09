@@ -36,7 +36,8 @@ export function wordsOf(items) {
   const out = [];
   for (const it of items) {
     if (it.rot) continue; // turned text is not table text here
-    const s = it.str;
+    // Control, zero-width and private-use characters (a symbol-font revision mark before a finish code) are spaces here.
+    const s = it.str.replace(/[\u0000-\u001f\u007f-\u009f\u00ad\u200b-\u200f\u2028\u2029\ufeff\ue000-\uf8ff]/g, " ");
     const cw = s.length ? (it.w || 0) / s.length : 0;
     const re = /\S+/g;
     let m;
@@ -161,15 +162,60 @@ export function sizeOf(text) {
 
 // ---------------------------------------------------------------- door schedule
 
+/**
+ * Tables whose row rules share one x-extent: on a CAD sheet a schedule's rules can touch the sheet's
+ * frame or a neighbouring drawing, which joins its connected group to half the sheet; its own row
+ * rules still start and end at the same two x positions.
+ */
+export function extentTables(rules) {
+  const groups = new Map();
+  for (const s of rules.h) {
+    if (s.x1 - s.x0 < 60) continue;
+    const k = Math.round(s.x0 / 2) + ":" + Math.round(s.x1 / 2);
+    if (!groups.has(k)) groups.set(k, []);
+    groups.get(k).push(s);
+  }
+  const out = [];
+  for (const list of groups.values()) {
+    const ys = distinct(list.map((s) => s.y), 1.0);
+    if (ys.length < 4) continue;
+    const gaps = ys.slice(1).map((y, i) => y - ys[i]);
+    const med = median(gaps);
+    // Split where the rules stop for longer than a few rows (another table with the same width).
+    let run = [ys[0]];
+    const runs = [];
+    for (let i = 1; i < ys.length; i++) { if (ys[i] - ys[i - 1] > Math.max(4 * med, 60)) { runs.push(run); run = []; } run.push(ys[i]); }
+    runs.push(run);
+    const x0 = Math.min(...list.map((s) => s.x0)), x1 = Math.max(...list.map((s) => s.x1));
+    for (const r of runs) {
+      if (r.length < 4) continue;
+      const y0 = r[0], y1 = r[r.length - 1];
+      const h = rules.h.filter((s) => s.y >= y0 - 1 && s.y <= y1 + 1 && s.x1 > x0 + 1 && s.x0 < x1 - 1).map((s) => ({ y: s.y, x0: Math.max(s.x0, x0), x1: Math.min(s.x1, x1) }));
+      const v = rules.v.filter((s) => s.x >= x0 - 1.5 && s.x <= x1 + 1.5 && s.y1 > y0 + 1 && s.y0 < y1 - 1).map((s) => ({ x: s.x, y0: Math.max(s.y0, y0), y1: Math.min(s.y1, y1) }));
+      if (distinct(v.map((s) => s.x), 3).length < 4) continue;
+      out.push({ x0, x1, y0, y1, h, v, by: "extent" });
+    }
+  }
+  return out;
+}
+
 export function readDoorsB(items, rules, size) {
   const words = wordsOf(items);
-  const tables = [];
-  const doors = [];
-  if (!rules || !rules.h || !rules.v) return { tables, doors };
-  for (const T of ruleTables(rules)) {
+  const found = [];
+  if (!rules || !rules.h || !rules.v) return { tables: [], doors: [] };
+  for (const T of [...ruleTables(rules), ...extentTables(rules)]) {
     const t = tableFrom(T, words);
-    if (!t) continue;
-    tables.push({ bbox: [T.x0, T.y0, T.x1, T.y1].map((v) => Math.round(v)), header: t.header, fields: t.fields, rows: t.doors.length });
+    if (t) found.push({ T, t });
+  }
+  // The same table found both ways (or nested): keep the reading with more rows.
+  const area = (T) => Math.max(1, (T.x1 - T.x0) * (T.y1 - T.y0));
+  const overlap = (a, b) => Math.max(0, Math.min(a.x1, b.x1) - Math.max(a.x0, b.x0)) * Math.max(0, Math.min(a.y1, b.y1) - Math.max(a.y0, b.y0));
+  found.sort((a, b) => b.t.doors.length - a.t.doors.length || area(a.T) - area(b.T));
+  const keep = [];
+  for (const f of found) if (!keep.some((k) => overlap(k.T, f.T) > 0.5 * Math.min(area(k.T), area(f.T)))) keep.push(f);
+  const tables = [], doors = [];
+  for (const { T, t } of keep.sort((a, b) => a.T.y0 - b.T.y0 || a.T.x0 - b.T.x0)) {
+    tables.push({ bbox: [T.x0, T.y0, T.x1, T.y1].map((v) => Math.round(v)), header: t.header, fields: t.fields, rows: t.doors.length, found_by: T.by || "connected rules" });
     doors.push(...t.doors);
   }
   return { tables, doors };
@@ -297,6 +343,11 @@ const UOM_RE = /^(EA|EA\.|EACH|PR|PAIR|PRS|SET|SETS|LF|L\.F\.|FT|LOT|SF)$/i;
 const MAKER_RE = /^(?:[A-Z]{2,4}|B\/O|BY\s*OTHERS|N\/A|[A-Z]{2,3}\/[A-Z]{2,3})$/;
 const FINISH_RE = /^(?:US\s?\d{1,2}[A-Z]?|\d{3}[A-Z]?|[A-Z]{1,3}\d{0,3}|\d{1,2}[A-Z]{1,3}|N\/A|-+)$/;
 
+// The catalog cell: its first-line text, then words spilled from the finish cell (same line), then the wrapped lines.
+function spillInto(first, cont, spill) {
+  return clean([first.filter(Boolean).join(" "), spill, cont.filter(Boolean).join(" ")].join(" "));
+}
+
 function linesOf(words) {
   const s = words.slice().sort((a, b) => a.y - b.y || a.x0 - b.x0);
   const rows = [];
@@ -305,27 +356,55 @@ function linesOf(words) {
   return rows;
 }
 
+// A sentence, not a table line: it ends like one, or most of its words start in lower case.
+function prose(L) {
+  const t = L.text.trim();
+  return /[.:;]$/.test(t) || L.ws.filter((w) => /^[a-z]/.test(w.str)).length >= 0.4 * L.ws.length;
+}
+
 function doorTokens(s) {
+  // A section footer (08 71 00 - 8) is not a door list.
+  if (/^\s*\d{2}\s+\d{2}\s+\d{2}\b/.test(s)) return null;
   const toks = String(s).split(/[\s,;]+/).map((x) => x.replace(/[()]/g, "")).filter(Boolean);
   const marks = toks.filter((x) => markLike(x));
   return marks.length && marks.length >= 0.6 * toks.length ? marks.map(UP) : null;
 }
 
+/** Words crossed through the middle of their letters by a ruled bar (an addendum's strike-through). */
+export function struckWords(words, rules) {
+  if (!rules || !rules.h || !rules.h.length) return new Set();
+  const hs = rules.h.slice().sort((a, b) => a.y - b.y);
+  const out = new Set();
+  for (const w of words) {
+    const top = w.y - 0.75 * w.h, bottom = w.y - 0.2 * w.h;
+    let cover = 0;
+    for (const b of hs) { if (b.y < top) continue; if (b.y > bottom) break; cover += Math.max(0, Math.min(w.x1, b.x1) - Math.max(w.x0, b.x0)); }
+    if (cover >= 0.6 * (w.x1 - w.x0)) out.add(w);
+  }
+  return out;
+}
+
 export function readHardwareB(items, rules, size) {
-  const words = wordsOf(items);
+  const all = wordsOf(items);
+  const struck = struckWords(all, rules);
+  const words = all.filter((w) => !struck.has(w));
   const lines = linesOf(words);
   const em = median(lines.map((l) => l.h)) || 10;
   const groups = [];
   let cur = null;
   const open = (set, name, heading, continued = false) => { cur = { set, name: clean(name) || null, heading, doors: [], items: [], continued, _rows: [] }; groups.push(cur); };
   const itemRows = [];
+  // Where most item lines carry a unit (EA, PR, SET), a numbered line without one is a note, not an item.
+  const cand = lines.filter((L) => /^\(?\d{1,3}\)?$/.test(L.ws[0].str) && L.ws.length >= 3);
+  const unitShare = cand.length ? cand.filter((L) => UOM_RE.test(L.ws[1].str)).length / cand.length : 0;
+  const needUnit = cand.length >= 3 && unitShare >= 0.6;
   for (const L of lines) {
     const text = L.text.trim();
     const hm = text.length < 120 ? text.match(HEADING_RE) : null;
     if (hm && !/^\d/.test(text)) { open(UP(hm[1]), hm[2], text); continue; }
     if (/^END OF SECTION/i.test(text)) { cur = null; continue; }
     const q = L.ws[0].str.match(/^\(?(\d{1,3})\)?$/);
-    const isItem = q && L.ws.length >= 3 && (UOM_RE.test(L.ws[1].str) || /^[A-Z]{3,}/i.test(L.ws[1].str)) && !/^\d+\.\d/.test(L.ws[0].str);
+    const isItem = q && L.ws.length >= 3 && (UOM_RE.test(L.ws[1].str) || (!needUnit && /^[A-Z][A-Za-z]{2,}/.test(L.ws[1].str) && !prose(L))) && !/^\d+\.\d/.test(L.ws[0].str);
     if (isItem) {
       if (!cur) open("(continued)", null, null, true);
       const row = { L, qty: +q[1], uom: UOM_RE.test(L.ws[1].str) ? UP(L.ws[1].str).replace(/\.$/, "") : null, rest: L.ws.slice(UOM_RE.test(L.ws[1].str) ? 2 : 1), cont: [] };
@@ -358,7 +437,8 @@ export function readHardwareB(items, rules, size) {
         for (let x = 0; x < bins.length; x++) bins[x] += seen[x];
       }
       const n = itemRows.length;
-      const allow = n >= 10 ? Math.floor(0.06 * n) : 0;
+      // A gutter may be crossed by an odd long line (a note that starts with a number): allow one in ten.
+      const allow = n >= 5 ? Math.max(1, Math.floor(0.1 * n)) : 0;
       fences = [];
       let run = null;
       for (let x = 0; x < bins.length; x++) {
@@ -366,6 +446,17 @@ export function readHardwareB(items, rules, size) {
         else { if (run != null && x - run >= Math.max(4, 0.5 * em)) fences.push(xmin + (run + x) / 2); run = null; }
       }
     }
+  }
+  if (!fences) fences = [];
+  // A column that few item rows use (a note line's stray start, a lone overhang) is not a column:
+  // its fence goes and its words join the column to its right (the last one joins the left).
+  for (let changed = true; changed && fences.length;) {
+    changed = false;
+    const counts = new Array(fences.length + 1).fill(0);
+    for (const r of itemRows) { const seen = new Set(); for (const w of r.rest) { let k = 0; while (k < fences.length && w.cx >= fences[k]) k++; seen.add(k); } for (const k of seen) counts[k]++; }
+    const need = Math.max(1, 0.2 * itemRows.length);
+    const sparse = counts.findIndex((c) => c > 0 && c < need);
+    if (sparse >= 0) { fences.splice(sparse < fences.length ? sparse : sparse - 1, 1); changed = true; }
   }
   const colOf = (w) => { let k = 0; while (k < fences.length && w.cx >= fences[k]) k++; return k; };
   const ncol = (fences ? fences.length : 0) + 1;
@@ -379,6 +470,7 @@ export function readHardwareB(items, rules, size) {
   if (live.length >= 3 && share(live[live.length - 1], MAKER_RE) >= 0.6) mfrCol = live[live.length - 1];
   const beforeMfr = mfrCol >= 0 ? live.slice(0, live.indexOf(mfrCol)) : live;
   if (beforeMfr.length >= 3 && share(beforeMfr[beforeMfr.length - 1], FINISH_RE) >= 0.6) finCol = beforeMfr[beforeMfr.length - 1];
+  if (process.env.TRUTH_DEBUG) console.error("hw cols", JSON.stringify(colTexts.map((t) => t.slice(0, 6))), "mfr", mfrCol, "fin", finCol);
   const textCols = live.filter((i) => i !== mfrCol && i !== finCol);
   const descCol = textCols[0];
   const catCols = textCols.slice(1);
@@ -389,11 +481,14 @@ export function readHardwareB(items, rules, size) {
       for (const L of r.cont) for (const w of L.ws) { let c = colOf(w); if (c === finCol || c === mfrCol) c = catCols.length ? catCols[catCols.length - 1] : descCol; if (c != null && c >= 0) contCols[c].push(w); }
       const add = (i) => clean([r.cols[i] || "", joinWords(contCols[i])].join(" "));
       let finish = finCol >= 0 ? clean(r.cols[finCol]) : null;
+      // A finish is one code: words before it in its cell ran over from the catalog cell.
+      let spill = "";
+      if (finish && finish.includes(" ")) { const parts = finish.split(" "); finish = parts.pop(); spill = parts.join(" "); }
       let manufacturer = mfrCol >= 0 ? clean(r.cols[mfrCol]) : null;
       g.items.push({
         qty: r.qty, uom: r.uom,
         description: descCol != null ? add(descCol) : null,
-        catalog: catCols.map(add).filter(Boolean).join(" ") || null,
+        catalog: spillInto(catCols.map((i) => r.cols[i] || ""), catCols.map((i) => joinWords(contCols[i])), spill) || null,
         finish: finish || null, manufacturer: manufacturer || null,
       });
     }
