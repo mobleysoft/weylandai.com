@@ -1,0 +1,14 @@
+waiting for the code sent to jmobleyworks+wa-code-g040@gmail.com in /tmp/claude-0/-home-user/2f8cb0f6-6ae8-50f4-ba0d-d84a79222d2c/scratchpad/g040_code.txt
+PASS a browser that bought without a password opens the sign-in on the code, prefilled
+PASS the sign-in view leads with the emailed code and hides the optional password
+PASS the page asks AuthFor for a code for exactly that email, naming WeylandAI
+PASS AuthFor's answer: sent, WeylandAI's mail, an 8-digit code for 15 minutes, a request id and no code
+PASS the page moves to the code step and says where the code went
+PASS 'Send a new code' waits while AuthFor would refuse another (resend_after)
+PASS a wrong code is refused by AuthFor (401 CODE_INVALID) and the page says so with the tries left
+PASS the emailed code was read from the alias's inbox
+PASS the right code from the inbox signs the visitor in at AuthFor (200, inbox proven)
+PASS the page says it is signed in as the alias, has no WeylandAI account yet, and offers the free trial
+PASS stayed in place: same document, still on weylandai.com
+11 passed, 0 failed
+exit 0

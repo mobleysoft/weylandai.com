@@ -21,8 +21,12 @@ import { existsSync, readFileSync } from "node:fs";
 import { Journey, d1, q, openHome, raiseDossier, setMark, press, until, sleep, shellState, serverSession, openAccountCard, ALL_PRODUCTS } from "../lib/journey-kit.mjs";
 
 const J = new Journey("code-sign-in", "Sign in with an emailed code");
-const ALIAS = "jmobleyworks+wa-code-" + J.suffix + "@gmail.com";
+// g040: CODE_ALIAS_TAG=<tag> fixes the alias (jmobleyworks+wa-code-<tag>@gmail.com) so reruns reuse one
+// account; NO_D1=1 skips the users-row insert and its cleanup (no D1 access): the site then makes the
+// row itself on the first sign-in, as for any visitor, and it stays until deleted in D1.
+const ALIAS = "jmobleyworks+wa-code-" + (process.env.CODE_ALIAS_TAG || J.suffix) + "@gmail.com";
 const CODE_FILE = process.env.CODE_FILE || "";
+const NO_D1 = process.env.NO_D1 === "1";
 const MAGIC = /authfor\.com\/api\/v1\/auth\/magic-link$/;
 const VERIFY = /authfor\.com\/api\/v1\/auth\/magic-link\/verify$/;
 
@@ -31,12 +35,14 @@ let userId = null;
 // its sessions, this deletes the nodes row too.
 const kitCleanup = J.cleanup.bind(J);
 J.cleanup = async () => {
+  if (NO_D1) { J.note("cleanup", { skipped: "NO_D1: no D1 access", demo_clones_left_to_the_sweep: [...J.clones.keys()] }); J.cleanupResult = { skipped: true }; return; }
   await kitCleanup();
   if (userId) { try { await d1("DELETE FROM nodes WHERE id = " + q(userId) + " OR lower(email) = " + q(ALIAS.toLowerCase()) + ";"); } catch (e) {} }
 };
 await J.run(async () => {
   await J.launch();
-  if (CODE_FILE) {
+  if (CODE_FILE && NO_D1) J.note("users_row", "NO_D1: not inserted or deleted here; the site makes the row for " + ALIAS + " on its first sign-in");
+  if (CODE_FILE && !NO_D1) {
     userId = "usersim_code_" + J.suffix;
     J.accounts.push({ label: "code", email: ALIAS, userId, usersRow: true });
     const [res] = await d1("INSERT INTO users (id, email, name, tenant_id, subscription_tier, subscription_status, submittals_used, submittals_limit, products_enabled, trial_ends_at) VALUES (" +
@@ -121,6 +127,17 @@ await J.run(async () => {
       try { okb = ok ? await ok.json() : {}; } catch (e) { okb = {}; }
       await page.waitForFunction(() => document.documentElement.dataset.weylandAuth === "signed-in", null, { timeout: 45000 }).catch(() => {});
       const st = await shellState(page);
+      if (NO_D1) {
+        // g040: with no WeylandAI account on the alias, the right code proves the inbox at AuthFor and
+        // the page names the signed-in address and offers the free trial (it makes no account itself).
+        await until(() => page.evaluate(() => /No WeylandAI account on this email yet/i.test((document.querySelector("#wa-overlay.is-open") || {}).innerText || "")), 15000, 300);
+        const offer = ((await page.evaluate(() => (document.querySelector("#wa-overlay.is-open") || {}).innerText || "")) || "").replace(/\s+/g, " ");
+        J.check("the right code from the inbox signs the visitor in at AuthFor (200, inbox proven)", !!ok && ok.status() === 200 && !!okb.token && okb.user && okb.user.email_verified === true, { status: ok && ok.status(), email_verified: okb.user && okb.user.email_verified, new_account: okb.new_account });
+        J.check("the page says it is signed in as the alias, has no WeylandAI account yet, and offers the free trial", st.auth === "no-account" && offer.toLowerCase().includes("signed in as " + ALIAS.toLowerCase()) && /free 14-day trial/i.test(offer), { auth: st.auth, offer: offer.slice(0, 240) });
+        await J.checkInPlace(page, mark);
+        await ctx.close();
+        return;
+      }
       J.check("the right code signs the visitor in, in place", !!ok && ok.status() === 200 && !!okb.token && st.auth === "signed-in" && st.user === ALIAS.toLowerCase(), { status: ok && ok.status(), email_verified: okb.user && okb.user.email_verified, new_account: okb.new_account, auth: st.auth, user: st.user, error: st.error });
       const sv = await serverSession(page);
       J.check("the WeylandAI server session belongs to the alias", sv.valid && sv.email === ALIAS.toLowerCase(), sv);
