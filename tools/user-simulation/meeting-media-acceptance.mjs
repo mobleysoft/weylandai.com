@@ -24,7 +24,7 @@ wav.write("data", 36); wav.writeUInt32LE(samples * 2, 40);
 for (let i = 0; i < samples; i++) wav.writeInt16LE(Math.round(6000 * Math.sin(2 * Math.PI * 440 * i / 48000)), 44 + i * 2);
 await writeFile(audioPath, wav, { mode: 0o600, flag: "wx" });
 
-const args = ["--use-angle=metal", "--use-fake-device-for-media-stream", "--use-fake-ui-for-media-stream", "--use-file-for-fake-audio-capture=" + audioPath, "--autoplay-policy=no-user-gesture-required"];
+const args = ["--use-angle=metal", "--use-fake-device-for-media-stream", "--use-fake-ui-for-media-stream", "--use-file-for-fake-audio-capture=" + audioPath];
 J.launch = async () => {
   J.browser = await chromium.launch({ args });
   J.renderer = await gpuRenderer(J.browser);
