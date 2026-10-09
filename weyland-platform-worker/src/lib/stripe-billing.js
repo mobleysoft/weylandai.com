@@ -195,6 +195,11 @@ export const CHECKOUT_READY_PRODUCTS = new Set([
   "weyland-specx-seat",
   "weyland-inspecx-seat",
   "weyland-survx-seat",
+  // PriceX listed 2026-10-09 (owner's decision), rebuilt on the makers' price
+  // books (weyland-forms-worker /pricex): on the live Berryessa schedule 8 of 16
+  // lines priced from the LCN, Von Duprin, Schlage and Zero books, 4 exactly; the
+  // rest are listed as not priced, never estimated. The paid output is the CSV.
+  "weyland-pricex-seat",
   // History: they were removed earlier 2026-10-08 (fix 7 of
   // plan/weylandai_value_report.md): on the audit documents each one errors
   // (HTTP 500 "Worker exceeded memory limit" on a 36 x 24 drawing sheet for

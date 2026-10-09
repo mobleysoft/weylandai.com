@@ -117,8 +117,8 @@ test("/pricing: no mail app, no hosted checkout; MarketX not sold; the offer lea
 // documents were taken off sale. Five passed live on the docs worker the same evening (DrawX and
 // AsBuiltX on the 36 x 24 Fayette set, SpecX on the 288-page Berryessa manual, InspecX on the
 // FCMAT FIT inspection with 7 OCR'd pages, SurvX on the 289-page NSW dilapidation report) and are
-// sold again (owner's decision). PriceX is rebuilt on the price books and free to use; not sold yet.
-test("/pricing: DrawX, SpecX, AsBuiltX, InspecX and SurvX are sold again; PriceX is NOT SOLD YET, with the reason", async () => {
+// sold again (owner's decision). PriceX, rebuilt on the price books, is sold too.
+test("/pricing: DrawX, SpecX, AsBuiltX, InspecX, SurvX and PriceX are sold", async () => {
   const env = await envWithCatalog();
   const { text } = await page(env, "/pricing");
   const ready = text.match(/var READY = (\[[^\]]*\]);/)[1];
@@ -130,11 +130,12 @@ test("/pricing: DrawX, SpecX, AsBuiltX, InspecX and SurvX are sold again; PriceX
     assert.doesNotMatch(card, /NOT SOLD YET|Not sold yet/, cardId);
     assert.ok(ready.includes(sku), sku + " in READY");
   }
-  assert.equal(CHECKOUT_READY_PRODUCTS.has("weyland-pricex-seat"), false);
+  // PriceX, rebuilt on the makers' price books, is sold (owner's decision 2026-10-09).
+  assert.equal(CHECKOUT_READY_PRODUCTS.has("weyland-pricex-seat"), true);
   const price = text.match(/<div class="card" id="cardPrice">[\s\S]*?<\/button>/)[0];
-  assert.match(price, /<div class="sku-edge">Not sold yet: free to use at <a href="\/pricex">/);
-  assert.match(price, /disabled aria-disabled="true"[^>]*>NOT SOLD YET<\/button>/);
-  assert.ok(!ready.includes("weyland-pricex-seat"));
+  assert.match(price, /triggerCheckout\('weyland-pricex-seat'/);
+  assert.doesNotMatch(price, /NOT SOLD YET|Not sold yet/);
+  assert.ok(ready.includes("weyland-pricex-seat"));
   assert.doesNotMatch(text, /real FRED data|Live Producer Price Index/);
   for (const sku of ["weyland-subconp-seat", "weyland-first-submittal", "weyland-huntx-seat", "weyland-subx-seat", "weyland-cutsheetx-seat", "weyland-lienx-seat", "weyland-safetyx-seat"]) assert.ok(ready.includes(sku), sku + " in READY");
 });
@@ -156,14 +157,14 @@ test("/pricing: no cryptographic provenance, Togal, Lumion or Dodge comparisons,
 test("/api/billing/catalog: a kept copy that still says a not-sold product is ready is served as not ready", async () => {
   const env = await envWithCatalog();
   const kept = JSON.parse(await env.CACHE.get("billing_catalog_v2"));
-  for (const p of kept.products) if (p.id === "weyland-marketx-seat" || p.id === "weyland-pricex-seat") { p.checkout_ready = true; delete p.price_active; }
+  for (const p of kept.products) if (p.id === "weyland-marketx-seat") { p.checkout_ready = true; delete p.price_active; }
   await env.CACHE.put("billing_catalog_v2", JSON.stringify(kept));
   _resetCatalogMemory();
   const r = await worker.fetch(new Request("https://weylandai.com/api/billing/catalog"), env, ctx);
   const d = await r.json();
   const byId = Object.fromEntries(d.products.map((p) => [p.id, p]));
   assert.equal(byId["weyland-drawx-seat"].checkout_ready, true, "re-listed");
-  assert.equal(byId["weyland-pricex-seat"].checkout_ready, false);
+  assert.equal(byId["weyland-pricex-seat"].checkout_ready, true, "listed");
   assert.equal(byId["weyland-marketx-seat"].checkout_ready, false);
   assert.equal(byId["weyland-huntx-seat"].checkout_ready, true);
   assert.equal(byId["weyland-first-submittal"].checkout_ready, true);
