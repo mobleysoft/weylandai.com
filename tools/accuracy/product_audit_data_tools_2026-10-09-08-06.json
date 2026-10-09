@@ -1,0 +1,1274 @@
+{
+  "base": "https://weylandai.com",
+  "at": "2026-10-09T08:06:45.392Z",
+  "results": [
+    {
+      "id": "huntx",
+      "label": "HuntX",
+      "pass": false,
+      "seconds": 28,
+      "claim": "Seven public sources, sorted by what a door sub can bid. Opportunity Discovery. Public construction notices from seven sources (Illinois CDB, NYC City Record and School Construction Authority, Los Angeles, Delaware, Texas DOT, California school funding), each tagged by trade fit: door scope named, building work, funding to watch, or civil. Filter by state, due date and value; saved searches count new notices since you last looked and send them to your feed reader (RSS) and your calendar (bid due dates).",
+      "bar": "All seven named sources hold notices; every notice carries a trade fit and a link on its source's own site, and no link is dead (every distinct link fetched; a bot challenge is reported, not counted as dead); fit=doors returns only door-scope notices, each with the words that put it there, and its total equals the index's door count; state, due-date and value filters return only matching rows; 5 source links (5 different sources) answer HTTP 200; a saved search returns a new-notice count and working RSS and calendar feeds. The sample email is sent only if the account's address is jmobleyworks+<tag>@gmail.com.",
+      "checks": [
+        {
+          "name": "index answers",
+          "ok": true,
+          "detail": "HTTP 200"
+        },
+        {
+          "name": "seven named sources each hold notices",
+          "ok": true,
+          "detail": {
+            "txdot": 673,
+            "nyc_sca": 356,
+            "ca_opsc": 166,
+            "nyc_cityrecord": 93,
+            "il_cdb": 52,
+            "de_mmp": 25,
+            "la_ramp": 22
+          }
+        },
+        {
+          "name": "full index read equals indexed count",
+          "ok": true,
+          "detail": "1387 rows read, indexed 1387"
+        },
+        {
+          "name": "every notice tagged with a trade fit",
+          "ok": true,
+          "detail": "0 untagged"
+        },
+        {
+          "name": "every notice links to its source's own site",
+          "ok": true,
+          "detail": "all 1387"
+        },
+        {
+          "name": "fit=doors returns only door-scope notices",
+          "ok": true,
+          "detail": "11 rows"
+        },
+        {
+          "name": "fit=doors total equals the index's door count",
+          "ok": true,
+          "detail": "total 11, fits.doors 11"
+        },
+        {
+          "name": "each door notice says why (trade_fit_why)",
+          "ok": true,
+          "detail": "0 without a reason"
+        },
+        {
+          "name": "state=TX returns only TX",
+          "ok": true,
+          "detail": "673 rows"
+        },
+        {
+          "name": "due_within=30 returns only notices due in the next 30 days",
+          "ok": true,
+          "detail": "217 rows, 0 outside"
+        },
+        {
+          "name": "min_value=1000000 returns only notices worth $1M+",
+          "ok": true,
+          "detail": "889 rows, 0 under"
+        },
+        {
+          "name": "5 source links answer 200",
+          "ok": true,
+          "detail": [
+            "nyc_cityrecord 200",
+            "il_cdb 200",
+            "nyc_sca 200",
+            "la_ramp 200",
+            "de_mmp 200"
+          ]
+        },
+        {
+          "name": "no notice links to a dead page (every distinct link fetched)",
+          "ok": false,
+          "detail": "144 distinct links; 1 of 1387 notices link to a dead page: de_mmp 1 (https://mmp.delaware.gov/Bids/Details/9329 -> 503)"
+        },
+        {
+          "name": "saved search created",
+          "ok": true,
+          "detail": "HTTP 200"
+        },
+        {
+          "name": "saved search reports a new-notice count",
+          "ok": true,
+          "detail": "new_count 0"
+        },
+        {
+          "name": "RSS feed works",
+          "ok": true,
+          "detail": "200, 50 items"
+        },
+        {
+          "name": "calendar feed works (bid due dates)",
+          "ok": true,
+          "detail": "200, 157 events"
+        }
+      ],
+      "input": "whole index (1387 notices), fit=doors, state=TX, due_within=30, min_value=1M, a saved search",
+      "numbers": {
+        "indexed": 1387,
+        "sources": {
+          "txdot": 673,
+          "nyc_sca": 356,
+          "ca_opsc": 166,
+          "nyc_cityrecord": 93,
+          "il_cdb": 52,
+          "de_mmp": 25,
+          "la_ramp": 22
+        },
+        "fits": {
+          "doors": 11,
+          "building": 164,
+          "signal": 514,
+          "civil": 698
+        },
+        "lastIngest": {
+          "started_at": "2026-10-09T07:50:45.561Z",
+          "finished_at": "2026-10-09T07:50:47.442Z",
+          "upserted": 1104,
+          "errors": null
+        },
+        "links": [
+          {
+            "source": "nyc_cityrecord",
+            "url": "https://a856-cityrecord.nyc.gov/RequestDetail/20260514019",
+            "status": 200
+          },
+          {
+            "source": "il_cdb",
+            "url": "https://cdb.illinois.gov/procurement.html",
+            "status": 200
+          },
+          {
+            "source": "nyc_sca",
+            "url": "https://data.cityofnewyork.us/d/tsak-vtv3",
+            "status": 200
+          },
+          {
+            "source": "la_ramp",
+            "url": "https://www.rampla.org/s/opportunity-details?id=006Ql00000lMaGHIA0",
+            "status": 200
+          },
+          {
+            "source": "de_mmp",
+            "url": "https://mmp.delaware.gov/Bids/Details/9333",
+            "status": 200
+          }
+        ],
+        "notice_specific_links": 140,
+        "agency_page_links": [
+          {
+            "source": "txdot",
+            "rows": 673,
+            "link": "https://www.txdot.gov/business/road-bridge-maintenance/contract-letting.html"
+          },
+          {
+            "source": "il_cdb",
+            "rows": 52,
+            "link": "https://cdb.illinois.gov/procurement.html"
+          },
+          {
+            "source": "ca_opsc",
+            "rows": 166,
+            "link": "https://www.dgs.ca.gov/OPSC"
+          },
+          {
+            "source": "nyc_sca",
+            "rows": 356,
+            "link": "https://data.cityofnewyork.us/d/tsak-vtv3"
+          }
+        ],
+        "distinct_links": 144,
+        "notices_with_dead_links": 1,
+        "dead_links_by_source": [
+          {
+            "source": "de_mmp",
+            "notices": 1,
+            "links": [
+              "https://mmp.delaware.gov/Bids/Details/9329 -> 503"
+            ]
+          }
+        ],
+        "notices_behind_bot_challenge": 0,
+        "saved": {
+          "created": "57de3205-e4ba-402a-88ec-7d1aa7496dcc",
+          "rss_items": 50,
+          "ics_events": 157,
+          "deleted": true
+        },
+        "sample": {
+          "run": false,
+          "why": "account email is user-sim-qa-1791490681@weylandai.com, not jmobleyworks+<tag>@gmail.com; not sent"
+        }
+      },
+      "summary": "1387 notices from 7 sources; 11 door / 164 building / 514 signal / 698 civil; links 5/5 200; 1 of 1387 notices link to a dead page (de_mmp 1); 140 of 1387 link to the notice itself (txdot, il_cdb, ca_opsc, nyc_sca link to one agency page); sample email not sent (not a jmobleyworks+ address)",
+      "failed": [
+        {
+          "name": "no notice links to a dead page (every distinct link fetched)",
+          "ok": false,
+          "detail": "144 distinct links; 1 of 1387 notices link to a dead page: de_mmp 1 (https://mmp.delaware.gov/Bids/Details/9329 -> 503)"
+        }
+      ]
+    },
+    {
+      "id": "compx",
+      "label": "CompX",
+      "pass": true,
+      "seconds": 5,
+      "claim": "Real Who wins public door and building work. Public contract awards for door, hardware and building work (NYC City Record, since 2021): who won, how much, from which agency and by what method, with vendors and agencies ranked by what they won. CSV export.",
+      "bar": "Every award row names vendor, amount, agency, method and an award date on or after 2021-01-01; vendors and agencies come ranked by total won; door-fit awards exist; for 3 real door vendors CompX's award count and total equal NYC open data's own (same award notices, one per request id); the CSV the page's button asks for (limit 2000) holds every award of the search up to that cap (a cut is reported).",
+      "checks": [
+        {
+          "name": "awards answer, paid",
+          "ok": true,
+          "detail": "HTTP 200 paid true"
+        },
+        {
+          "name": "each award: vendor, amount, agency, method, date >= 2021",
+          "ok": true,
+          "detail": "0 of 2000 incomplete"
+        },
+        {
+          "name": "all rows returned to a paying account",
+          "ok": true,
+          "detail": "2000 rows of 2809"
+        },
+        {
+          "name": "vendors ranked by total won",
+          "ok": true,
+          "detail": "50 vendors"
+        },
+        {
+          "name": "agencies ranked by total won",
+          "ok": true,
+          "detail": "30 agencies"
+        },
+        {
+          "name": "door-fit awards present",
+          "ok": true,
+          "detail": "59 door awards, $69,281,833"
+        },
+        {
+          "name": "3 door vendors: award count and total equal NYC open data",
+          "ok": true,
+          "detail": [
+            "Atlantic Rolling Steel Door Corp.: 9 / $6,832,825 vs 9 / $6,832,825",
+            "FREDANTE CONSTR CORP: 3 / $7,004,457 vs 3 / $7,004,457",
+            "B.J. Laura & Sons Inc.: 5 / $3,817,650 vs 5 / $3,817,650"
+          ]
+        },
+        {
+          "name": "CSV export holds the search's awards (up to the page's 2,000 cap)",
+          "ok": true,
+          "detail": "HTTP 200, 2000 rows; the search has 2328"
+        }
+      ],
+      "input": "all awards; fit=doors; vendors Atlantic Rolling Steel Door Corp., FREDANTE CONSTR CORP, B.J. Laura & Sons Inc.; CSV of the default (building) search",
+      "numbers": {
+        "awards_all": 2809,
+        "total_all": 42610619643.24,
+        "door_awards": 59,
+        "door_total": 69281832.86,
+        "door_award_titles_with_a_door_word": 58,
+        "indexedAt": "2026-10-08T19:58:34.045Z",
+        "vendor_checks": [
+          {
+            "vendor": "Atlantic Rolling Steel Door Corp.",
+            "compx": {
+              "awards": 9,
+              "total": 6832825
+            },
+            "nyc_open_data": {
+              "raw": 9,
+              "awards": 9,
+              "total": 6832825
+            }
+          },
+          {
+            "vendor": "FREDANTE CONSTR CORP",
+            "compx": {
+              "awards": 3,
+              "total": 7004457.359999999
+            },
+            "nyc_open_data": {
+              "raw": 3,
+              "awards": 3,
+              "total": 7004457.359999999
+            }
+          },
+          {
+            "vendor": "B.J. Laura & Sons Inc.",
+            "compx": {
+              "awards": 5,
+              "total": 3817650
+            },
+            "nyc_open_data": {
+              "raw": 5,
+              "awards": 5,
+              "total": 3817650
+            }
+          }
+        ],
+        "csv_rows": 2000,
+        "csv_search_count": 2328
+      },
+      "summary": "2809 awards ($42,610,619,643), 59 door awards; vendors 3/3 equal NYC open data; CSV 2000 of 2328 rows",
+      "failed": []
+    },
+    {
+      "id": "compx-txdot",
+      "label": "CompX TxDOT vendor route (off-card)",
+      "pass": true,
+      "seconds": 2,
+      "claim": "(Not on the pricing card any more; the CompX page no longer calls it.) /api/compx/vendors: TxDOT bid tabulations by vendor: total bids, wins, win rate, total won value.",
+      "bar": "For a real TxDOT contractor, total_bids equals the distinct projects (CSJ) that vendor bid in data.texas.gov's bid tabulations and wins equals the projects where it was low bidder: one count per project, not per bid item.",
+      "checks": [
+        {
+          "name": "route answers",
+          "ok": true,
+          "detail": "HTTP 200"
+        },
+        {
+          "name": "the vendor is in the result",
+          "ok": true,
+          "detail": "1 vendors returned"
+        },
+        {
+          "name": "total bids = distinct projects in TxDOT data",
+          "ok": true,
+          "detail": "CompX 76, TxDOT 76 projects (8418 bid-item rows)"
+        },
+        {
+          "name": "wins = projects where low bidder",
+          "ok": true,
+          "detail": "CompX 12, TxDOT 12"
+        },
+        {
+          "name": "total won value equals TxDOT's",
+          "ok": true,
+          "detail": "CompX $75,514,048, TxDOT $75,514,048"
+        }
+      ],
+      "input": "q=Austin Bridge -> AUSTIN BRIDGE & ROAD SERVICES, LP",
+      "numbers": {
+        "vendor": "AUSTIN BRIDGE & ROAD SERVICES, LP",
+        "compx": {
+          "total_bids": 76,
+          "wins": 12,
+          "win_rate_pct": 15.8,
+          "total_win_value": 75514047.69
+        },
+        "txdot": {
+          "projects": 76,
+          "wins": 12,
+          "win_value": 75514047.69,
+          "bid_item_rows": 8418
+        },
+        "other_vendors_in_reply": 0,
+        "fetched_at": "2026-10-09T08:07:19.991Z"
+      },
+      "summary": "AUSTIN BRIDGE & ROAD SERVICES, LP: CompX 76 bids / 12 wins ($75,514,048); TxDOT 76 projects / 12 wins ($75,514,048); 0 other vendors in the reply",
+      "failed": []
+    },
+    {
+      "id": "marketx",
+      "label": "MarketX",
+      "pass": true,
+      "seconds": 22,
+      "claim": "The door work your city is permitting, and who is building it. Commercial and multifamily building permits from Chicago, New York, Los Angeles, Austin, San Francisco and Seattle: permitted value by month against last year, by building use, for work likely to include doors; the largest and newest projects; the general contractors and owners ranked by permitted value where the city's permits name them (both in Chicago, owners in New York, contractors in Austin and Seattle; Los Angeles and San Francisco publish neither); the open public bids in the state. Projects and companies CSV.",
+      "bar": "All six metros hold permits with a permitted value; each metro's page carries months for this year and last year, a by-use split that adds up to the total, largest projects in value order, newest in date order, general contractors or owners ranked by permitted value (at least one of the two; a metro with neither fails 'who is building it'), the open-bids block, and the metros list's figures; both CSVs download for the paying account, the projects CSV holding every project of the period (up to its 5,000 cap) and the companies CSV beginning with the same ranking.",
+      "checks": [
+        {
+          "name": "metros answer",
+          "ok": true,
+          "detail": "HTTP 200"
+        },
+        {
+          "name": "six metros, each with permits and value",
+          "ok": true,
+          "detail": [
+            "chicago 1850",
+            "nyc 9437",
+            "la 827",
+            "austin 78",
+            "sf 754",
+            "seattle 405"
+          ]
+        },
+        {
+          "name": "Chicago: value by month vs last year, by use, ranked lists, bids, both CSVs",
+          "ok": true,
+          "detail": "1850 projects $6,127,511,480 (last yr $5,229,420,905, 17.2%), months 13+12, use sum=total true, GCs 200, owners 200, bids 50, projects.csv 1850/1850, companies.csv 2088 rows (JSON ranks 400)"
+        },
+        {
+          "name": "New York City: value by month vs last year, by use, ranked lists, bids, both CSVs",
+          "ok": true,
+          "detail": "9437 projects $18,932,146,292 (last yr $8,661,260,201, 118.6%), months 13+12, use sum=total true, GCs 0, owners 200, bids 73, projects.csv 5000/5000, companies.csv 2932 rows (JSON ranks 200)"
+        },
+        {
+          "name": "Los Angeles: value by month vs last year, by use, ranked lists, bids, both CSVs",
+          "ok": true,
+          "detail": "827 projects $5,408,090,321 (last yr $2,124,721,515, 154.5%), months 13+12, use sum=total true, GCs 0, owners 0, bids 14, projects.csv 827/827, companies.csv 0 rows (JSON ranks 0); no GC or owner ranked: \"No owner or contractor in LADBS's open data\""
+        },
+        {
+          "name": "Austin: value by month vs last year, by use, ranked lists, bids, both CSVs",
+          "ok": true,
+          "detail": "78 projects $1,071,811,700 (last yr $1,006,378,802, 6.5%), months 13+12, use sum=total true, GCs 70, owners 0, bids 0, projects.csv 78/78, companies.csv 70 rows (JSON ranks 70)"
+        },
+        {
+          "name": "San Francisco: value by month vs last year, by use, ranked lists, bids, both CSVs",
+          "ok": true,
+          "detail": "754 projects $2,175,277,963 (last yr $1,274,456,543, 70.7%), months 13+12, use sum=total true, GCs 0, owners 0, bids 14, projects.csv 754/754, companies.csv 0 rows (JSON ranks 0); no GC or owner ranked: \"No owner or contractor in DBI's open data\""
+        },
+        {
+          "name": "Seattle: value by month vs last year, by use, ranked lists, bids, both CSVs",
+          "ok": true,
+          "detail": "405 projects $1,043,269,869 (last yr $1,106,605,349, -5.7%), months 13+12, use sum=total true, GCs 10, owners 0, bids 0, projects.csv 405/405, companies.csv 10 rows (JSON ranks 10)"
+        }
+      ],
+      "input": "all six metros, default 12 months, likely-door scope; both CSVs per metro",
+      "numbers": {
+        "metros": [
+          {
+            "metro": "chicago",
+            "http": 200,
+            "paid": true,
+            "projects": 1850,
+            "value": 6127511480,
+            "priorValue": 5229420905,
+            "valueChange": 17.2,
+            "months_this_period": 13,
+            "months_last_year": 12,
+            "by_use_sum_equals_total": true,
+            "largest_desc": true,
+            "newest_desc": true,
+            "contractors": 200,
+            "contractors_ranked": true,
+            "owners": 200,
+            "matches_metros_list": true,
+            "bids": {
+              "open": 50,
+              "doors": 2
+            },
+            "latest": "2026-10-06",
+            "projects_csv": {
+              "http": 200,
+              "rows": 1850,
+              "expected": 1850
+            },
+            "companies_csv": {
+              "http": 200,
+              "rows": 2088,
+              "json_ranked": 400,
+              "ok": true
+            },
+            "names_note": "Contractor and owner from the permit's contacts",
+            "sample_link": null,
+            "ok": true
+          },
+          {
+            "metro": "nyc",
+            "http": 200,
+            "paid": true,
+            "projects": 9437,
+            "value": 18932146292,
+            "priorValue": 8661260201,
+            "valueChange": 118.6,
+            "months_this_period": 13,
+            "months_last_year": 12,
+            "by_use_sum_equals_total": true,
+            "largest_desc": true,
+            "newest_desc": true,
+            "contractors": 0,
+            "contractors_ranked": true,
+            "owners": 200,
+            "matches_metros_list": true,
+            "bids": {
+              "open": 73,
+              "doors": 1
+            },
+            "latest": "2026-10-07",
+            "projects_csv": {
+              "http": 200,
+              "rows": 5000,
+              "expected": 5000
+            },
+            "companies_csv": {
+              "http": 200,
+              "rows": 2932,
+              "json_ranked": 200,
+              "ok": true
+            },
+            "names_note": "Owner from the DOB NOW filing; no contractor (the filing's applicant is the architect or engineer)",
+            "sample_link": null,
+            "ok": true
+          },
+          {
+            "metro": "la",
+            "http": 200,
+            "paid": true,
+            "projects": 827,
+            "value": 5408090321,
+            "priorValue": 2124721515,
+            "valueChange": 154.5,
+            "months_this_period": 13,
+            "months_last_year": 12,
+            "by_use_sum_equals_total": true,
+            "largest_desc": true,
+            "newest_desc": true,
+            "contractors": 0,
+            "contractors_ranked": true,
+            "owners": 0,
+            "matches_metros_list": true,
+            "bids": {
+              "open": 14,
+              "doors": 0
+            },
+            "latest": "2026-10-02",
+            "projects_csv": {
+              "http": 200,
+              "rows": 827,
+              "expected": 827
+            },
+            "companies_csv": {
+              "http": 200,
+              "rows": 0,
+              "json_ranked": 0,
+              "ok": true
+            },
+            "names_note": "No owner or contractor in LADBS's open data",
+            "sample_link": null,
+            "ok": true
+          },
+          {
+            "metro": "austin",
+            "http": 200,
+            "paid": true,
+            "projects": 78,
+            "value": 1071811700,
+            "priorValue": 1006378802,
+            "valueChange": 6.5,
+            "months_this_period": 13,
+            "months_last_year": 12,
+            "by_use_sum_equals_total": true,
+            "largest_desc": true,
+            "newest_desc": true,
+            "contractors": 70,
+            "contractors_ranked": true,
+            "owners": 0,
+            "matches_metros_list": true,
+            "bids": {
+              "open": 0,
+              "doors": 0
+            },
+            "latest": "2026-10-01",
+            "projects_csv": {
+              "http": 200,
+              "rows": 78,
+              "expected": 78
+            },
+            "companies_csv": {
+              "http": 200,
+              "rows": 70,
+              "json_ranked": 70,
+              "ok": true
+            },
+            "names_note": "Contractor from the permit",
+            "sample_link": "https://abc.austintexas.gov/web/permit/public-search-other?t_detail=1&t_selected_folderrsn=13742459",
+            "ok": true
+          },
+          {
+            "metro": "sf",
+            "http": 200,
+            "paid": true,
+            "projects": 754,
+            "value": 2175277963,
+            "priorValue": 1274456543,
+            "valueChange": 70.7,
+            "months_this_period": 13,
+            "months_last_year": 12,
+            "by_use_sum_equals_total": true,
+            "largest_desc": true,
+            "newest_desc": true,
+            "contractors": 0,
+            "contractors_ranked": true,
+            "owners": 0,
+            "matches_metros_list": true,
+            "bids": {
+              "open": 14,
+              "doors": 0
+            },
+            "latest": "2026-10-07",
+            "projects_csv": {
+              "http": 200,
+              "rows": 754,
+              "expected": 754
+            },
+            "companies_csv": {
+              "http": 200,
+              "rows": 0,
+              "json_ranked": 0,
+              "ok": true
+            },
+            "names_note": "No owner or contractor in DBI's open data",
+            "sample_link": "https://dbiweb02.sfgov.org/dbipts/default.aspx?page=Permit&PermitNumber=202512151804",
+            "ok": true
+          },
+          {
+            "metro": "seattle",
+            "http": 200,
+            "paid": true,
+            "projects": 405,
+            "value": 1043269869,
+            "priorValue": 1106605349,
+            "valueChange": -5.7,
+            "months_this_period": 13,
+            "months_last_year": 12,
+            "by_use_sum_equals_total": true,
+            "largest_desc": true,
+            "newest_desc": true,
+            "contractors": 10,
+            "contractors_ranked": true,
+            "owners": 0,
+            "matches_metros_list": true,
+            "bids": {
+              "open": 0,
+              "doors": 0
+            },
+            "latest": "2026-10-07",
+            "projects_csv": {
+              "http": 200,
+              "rows": 405,
+              "expected": 405
+            },
+            "companies_csv": {
+              "http": 200,
+              "rows": 10,
+              "json_ranked": 10,
+              "ok": true
+            },
+            "names_note": "Contractor from the permit when one is listed",
+            "sample_link": "https://services.seattle.gov/portal/customize/LinkToRecord.aspx?altId=6971406-PH",
+            "ok": true
+          }
+        ],
+        "permit_links": [
+          {
+            "metro": "austin",
+            "url": "https://abc.austintexas.gov/web/permit/public-search-other?t_detail=1&t_selected_folderrsn=13742459",
+            "status": 200
+          },
+          {
+            "metro": "sf",
+            "url": "https://dbiweb02.sfgov.org/dbipts/default.aspx?page=Permit&PermitNumber=202512151804",
+            "status": 200
+          },
+          {
+            "metro": "seattle",
+            "url": "https://services.seattle.gov/portal/customize/LinkToRecord.aspx?altId=6971406-PH",
+            "status": 200
+          }
+        ],
+        "projects_csv_capped": [
+          "nyc 5000 of 9437"
+        ]
+      },
+      "summary": "chicago 1850 / $6,127,511,480; nyc 9437 / $18,932,146,292; la 827 / $5,408,090,321; austin 78 / $1,071,811,700; sf 754 / $2,175,277,963; seattle 405 / $1,043,269,869; projects CSV capped at 5,000: nyc 5000 of 9437; owners empty in la, austin, sf, seattle",
+      "failed": []
+    },
+    {
+      "id": "weatherx",
+      "label": "WeatherX",
+      "pass": true,
+      "seconds": 4,
+      "claim": "Install-day weather and a daily weather log per job. Each job's next 7 days from the National Weather Service with the install risk for door and frame work, and a daily log of what the nearest station observed at the job (temperatures, wind, gusts, precipitation) for delay claims.",
+      "bar": "Each job gets 7 days (14 NWS periods) starting now, each period's temperature equal to the NWS forecast for the job's point (within 3 F, the route caches up to 3 h) and its install risk following the stated rule (thunder/snow/ice, rain >= 60%, wind >= 25 mph or <= 32 F is high; rain >= 30% or wind >= 15 mph moderate); and each job's daily log holds at least one observed day with station, temperatures, wind, gust and precipitation fields.",
+      "checks": [
+        {
+          "name": "jobs answer",
+          "ok": true,
+          "detail": "HTTP 200"
+        },
+        {
+          "name": "job 7: \"Berryessa Union School District, San Jose, CA\" has no Census match; no forecast is invented",
+          "ok": true,
+          "detail": "0 periods"
+        },
+        {
+          "name": "job 6: \"Berryessa Union School District, San Jose, CA\" has no Census match; no forecast is invented",
+          "ok": true,
+          "detail": "0 periods"
+        },
+        {
+          "name": "job 5: \"Berryessa Union School District, San Jose, CA\" has no Census match; no forecast is invented",
+          "ok": true,
+          "detail": "0 periods"
+        },
+        {
+          "name": "job 4: \"Berryessa Union School District, San Jose, CA\" has no Census match; no forecast is invented",
+          "ok": true,
+          "detail": "0 periods"
+        },
+        {
+          "name": "job 3: \"Berryessa Union School District, San Jose, CA\" has no Census match; no forecast is invented",
+          "ok": true,
+          "detail": "0 periods"
+        },
+        {
+          "name": "job 2: \"Berryessa Union School District, San Jose, CA\" has no Census match; no forecast is invented",
+          "ok": true,
+          "detail": "0 periods"
+        },
+        {
+          "name": "job 1: 14 periods covering 7 days, current",
+          "ok": true,
+          "detail": "14 periods over 6.3 days, first 2026-10-08T23:00:00-07:00"
+        },
+        {
+          "name": "job 1: temperatures equal the NWS forecast (±3 F)",
+          "ok": true,
+          "detail": "13 of 13 matching periods agree"
+        },
+        {
+          "name": "job 1: install risk follows the stated rule",
+          "ok": true,
+          "detail": "0 periods off; risks low"
+        },
+        {
+          "name": "job 1: daily weather log holds observed days",
+          "ok": true,
+          "detail": "1 logged days; job 10.3 h old"
+        },
+        {
+          "name": "at least one placeable job",
+          "ok": true,
+          "detail": "1 jobs"
+        },
+        {
+          "name": "the daily log is shown on at least one job (one 48 h old, or any job with logged days)",
+          "ok": true,
+          "detail": [
+            "1855 Lucretia Ave, San Jose, CA 95122: 1 days"
+          ]
+        }
+      ],
+      "input": "1 PropX job(s): 1855 Lucretia Ave, San Jose, CA 95122",
+      "numbers": {
+        "jobs": [
+          {
+            "quote": 1,
+            "address": "1855 Lucretia Ave, San Jose, CA 95122",
+            "place": "San Jose city",
+            "periods": 14,
+            "span_days": 6.3,
+            "first": "Tonight 59F Mostly Clear risk low",
+            "nws_compared": 13,
+            "nws_agree": 13,
+            "log_days": 1,
+            "log_sample": {
+              "day": "2026-10-08",
+              "station": "KRHV",
+              "observations": 16,
+              "min_temp_f": 61,
+              "max_temp_f": 90,
+              "max_wind_mph": 8,
+              "max_gust_mph": null,
+              "precip_in": null,
+              "conditions": "Clear"
+            },
+            "job_age_hours": 10.3
+          }
+        ],
+        "unplaceable": [
+          "Berryessa Union School District, San Jose, CA",
+          "Berryessa Union School District, San Jose, CA",
+          "Berryessa Union School District, San Jose, CA",
+          "Berryessa Union School District, San Jose, CA",
+          "Berryessa Union School District, San Jose, CA",
+          "Berryessa Union School District, San Jose, CA"
+        ]
+      },
+      "summary": "San Jose city: 14 periods/6.3 d, NWS 13/13 agree; log 1 days (job 10.3 h old)",
+      "failed": []
+    },
+    {
+      "id": "geox",
+      "label": "GeoX",
+      "pass": true,
+      "seconds": 6,
+      "claim": "Where each job is and who permits it. Places every job with the Census geocoder: county, city, census tract and the building permit authority it usually answers to (city if incorporated, else county), with miles from your shop.",
+      "bar": "Every job with an address is placed; its county, city, tract and coordinates equal the Census geocoder's own answer for that address; the permit authority is the city when the address is in an incorporated place and the county otherwise; miles from the shop equal the great-circle distance within 0.5 mi; the CSV export carries the same jobs.",
+      "checks": [
+        {
+          "name": "jobs answer",
+          "ok": true,
+          "detail": "HTTP 200"
+        },
+        {
+          "name": "shop placed",
+          "ok": true,
+          "detail": "1600 PENNSYLVANIA AVE NW, WASHINGTON, DC, 20500"
+        },
+        {
+          "name": "account has at least one job with an address",
+          "ok": true,
+          "detail": "7 jobs"
+        },
+        {
+          "name": "job 7: the Census cannot place \"Berryessa Union School District, San Jose, CA\"; GeoX says so and invents nothing",
+          "ok": true,
+          "detail": "matched false"
+        },
+        {
+          "name": "job 6: the Census cannot place \"Berryessa Union School District, San Jose, CA\"; GeoX says so and invents nothing",
+          "ok": true,
+          "detail": "matched false"
+        },
+        {
+          "name": "job 5: the Census cannot place \"Berryessa Union School District, San Jose, CA\"; GeoX says so and invents nothing",
+          "ok": true,
+          "detail": "matched false"
+        },
+        {
+          "name": "job 4: the Census cannot place \"Berryessa Union School District, San Jose, CA\"; GeoX says so and invents nothing",
+          "ok": true,
+          "detail": "matched false"
+        },
+        {
+          "name": "job 3: the Census cannot place \"Berryessa Union School District, San Jose, CA\"; GeoX says so and invents nothing",
+          "ok": true,
+          "detail": "matched false"
+        },
+        {
+          "name": "job 2: the Census cannot place \"Berryessa Union School District, San Jose, CA\"; GeoX says so and invents nothing",
+          "ok": true,
+          "detail": "matched false"
+        },
+        {
+          "name": "job 1: county, city, tract, authority, miles equal the Census answer",
+          "ok": true,
+          "detail": "San Jose city / Santa Clara County / Census Tract 5031.22; 2414 mi (recomputed 2414.0)"
+        },
+        {
+          "name": "CSV export carries the jobs",
+          "ok": true,
+          "detail": "HTTP 200, 7 rows"
+        }
+      ],
+      "input": "7 PropX job(s); shop 1600 Pennsylvania Ave NW, Washington, DC 20500",
+      "numbers": {
+        "shop": "1600 PENNSYLVANIA AVE NW, WASHINGTON, DC, 20500",
+        "jobs": [
+          {
+            "address": "Berryessa Union School District, San Jose, CA",
+            "census": null,
+            "geox_matched": false,
+            "ok": true
+          },
+          {
+            "address": "Berryessa Union School District, San Jose, CA",
+            "census": null,
+            "geox_matched": false,
+            "ok": true
+          },
+          {
+            "address": "Berryessa Union School District, San Jose, CA",
+            "census": null,
+            "geox_matched": false,
+            "ok": true
+          },
+          {
+            "address": "Berryessa Union School District, San Jose, CA",
+            "census": null,
+            "geox_matched": false,
+            "ok": true
+          },
+          {
+            "address": "Berryessa Union School District, San Jose, CA",
+            "census": null,
+            "geox_matched": false,
+            "ok": true
+          },
+          {
+            "address": "Berryessa Union School District, San Jose, CA",
+            "census": null,
+            "geox_matched": false,
+            "ok": true
+          },
+          {
+            "address": "1855 Lucretia Ave, San Jose, CA 95122",
+            "geox": {
+              "county": "Santa Clara County",
+              "city": "San Jose city",
+              "tract": "Census Tract 5031.22",
+              "authority": "San Jose city (incorporated: usually the city's building department)",
+              "miles": 2414
+            },
+            "census": {
+              "county": "Santa Clara County",
+              "city": "San Jose city",
+              "tract": "Census Tract 5031.22"
+            },
+            "miles_recomputed": 2414,
+            "ok": true
+          }
+        ],
+        "unincorporated_branch_exercised": false
+      },
+      "summary": "\"Berryessa Union School District, San Jose, CA\" unplaceable (Census has no match; GeoX says unmatched); \"Berryessa Union School District, San Jose, CA\" unplaceable (Census has no match; GeoX says unmatched); \"Berryessa Union School District, San Jose, CA\" unplaceable (Census has no match; GeoX says unmatched); \"Berryessa Union School District, San Jose, CA\" unplaceable (Census has no match; GeoX says unmatched); \"Berryessa Union School District, San Jose, CA\" unplaceable (Census has no match; GeoX says unmatched); \"Berryessa Union School District, San Jose, CA\" unplaceable (Census has no match; GeoX says unmatched); San Jose city / Santa Clara County / Census Tract 5031.22, 2414 mi; 7/7 agree with Census; unincorporated case not exercised (no such job)",
+      "failed": []
+    },
+    {
+      "id": "forecastx",
+      "label": "ForecastX",
+      "pass": false,
+      "seconds": 3,
+      "claim": "Cash flow across your contracts, change orders included. Monthly cash flow across your PropX contracts with approved change orders counted: billing, retainage held and released, payments after each job's terms, material paid on supplier terms, and your lowest month.",
+      "bar": "For a real PropX proposal, every month's billing, retainage held, payments received, retainage released, material paid, net and cumulative equal a cash flow computed independently from the card's words (to the cent); billing adds up to the contract; the contract is the proposal's total plus its approved change orders (an existing change order is set approved for one call, the contract must rise by exactly its amount, and its old status is put back); the lowest month is the month with the lowest cumulative; the CSV carries the same months.",
+      "checks": [
+        {
+          "name": "a real PropX proposal on the account",
+          "ok": true,
+          "detail": "7 contracts"
+        },
+        {
+          "name": "portfolio answers",
+          "ok": true,
+          "detail": "HTTP 200 "
+        },
+        {
+          "name": "contract = proposal total + approved change orders",
+          "ok": false,
+          "detail": "12772.02 = 11754.43 + 0"
+        },
+        {
+          "name": "every month equals the independent cash flow",
+          "ok": true,
+          "detail": "7 months"
+        },
+        {
+          "name": "billing adds up to the contract",
+          "ok": true,
+          "detail": "$12,772"
+        },
+        {
+          "name": "lowest month is the lowest cumulative",
+          "ok": true,
+          "detail": "2026-12 $-7,025"
+        },
+        {
+          "name": "an approved change order raises the contract by exactly its amount",
+          "ok": true,
+          "detail": "CO 1 $1,290: 12772.02 -> 14061.77"
+        },
+        {
+          "name": "CSV carries the same months",
+          "ok": true,
+          "detail": "HTTP 200, 7 rows"
+        }
+      ],
+      "input": "proposal 1 (QA GC, $11,754), start 2026-11-01, 4 months, retainage 5%, terms 45 d, material 55% on 30 d",
+      "numbers": {
+        "contract": 12772.02,
+        "months": [
+          {
+            "month": "2026-11",
+            "billed": 3193.01,
+            "retainage_held": 159.65,
+            "received": 0,
+            "retainage_released": 0,
+            "material_paid": 0,
+            "net": 0,
+            "cumulative": 0
+          },
+          {
+            "month": "2026-12",
+            "billed": 3193.01,
+            "retainage_held": 159.65,
+            "received": 0,
+            "retainage_released": 0,
+            "material_paid": 7024.61,
+            "net": -7024.61,
+            "cumulative": -7024.61
+          },
+          {
+            "month": "2027-01",
+            "billed": 3193.01,
+            "retainage_held": 159.65,
+            "received": 3033.35,
+            "retainage_released": 0,
+            "material_paid": 0,
+            "net": 3033.35,
+            "cumulative": -3991.26
+          },
+          {
+            "month": "2027-02",
+            "billed": 3193.01,
+            "retainage_held": 159.65,
+            "received": 3033.35,
+            "retainage_released": 0,
+            "material_paid": 0,
+            "net": 3033.35,
+            "cumulative": -957.9
+          },
+          {
+            "month": "2027-03",
+            "billed": 0,
+            "retainage_held": 0,
+            "received": 3033.35,
+            "retainage_released": 0,
+            "material_paid": 0,
+            "net": 3033.35,
+            "cumulative": 2075.45
+          },
+          {
+            "month": "2027-04",
+            "billed": 0,
+            "retainage_held": 0,
+            "received": 3033.35,
+            "retainage_released": 0,
+            "material_paid": 0,
+            "net": 3033.35,
+            "cumulative": 5108.81
+          },
+          {
+            "month": "2027-05",
+            "billed": 0,
+            "retainage_held": 0,
+            "received": 0,
+            "retainage_released": 638.6,
+            "material_paid": 0,
+            "net": 638.6,
+            "cumulative": 5747.41
+          }
+        ],
+        "lowest": {
+          "month": "2026-12",
+          "billed": 3193.01,
+          "retainage_held": 159.65,
+          "received": 0,
+          "retainage_released": 0,
+          "material_paid": 7024.61,
+          "net": -7024.61,
+          "cumulative": -7024.61
+        },
+        "change_order_test": {
+          "id": "4964981d-a740-4b2e-be54-b747432a6fe3",
+          "number": 1,
+          "amount": 1289.75,
+          "was": "submitted",
+          "set_http": 200,
+          "contract_before": 12772.02,
+          "contract_after": 14061.77,
+          "changes_reported": 2307.34,
+          "restored": "submitted"
+        }
+      },
+      "summary": "7 months, contract $12,772, lowest 2026-12 $-7,025; independent recompute equal to the cent; approved CO $1,290 added (CO $1,290, status restored to submitted)",
+      "failed": [
+        {
+          "name": "contract = proposal total + approved change orders",
+          "ok": false,
+          "detail": "12772.02 = 11754.43 + 0"
+        }
+      ]
+    },
+    {
+      "id": "wirex",
+      "label": "WireX",
+      "pass": false,
+      "seconds": 4,
+      "claim": "(From /news; WireX is not on /pricing.) Construction industry news & engineering-report desk. Live headlines from Engineering News-Record & Construction Dive, a deterministic Editor's Briefing that cites its own sources, and WeylandAI's own real, audited price-extraction validation history. WireX Pro, $49.00/month: 20 headlines per feed instead of 6, full reports wire.",
+      "bar": "For the paying account the wire is Pro and carries headlines from Engineering News-Record and from Construction Dive; every headline has a title, a link to the publisher and a publication date within 14 days; each feed gives min(20, what the feed itself publishes) headlines (each feed read directly for comparison); the wire was ingested within the last hour; 5 headline links are live (200, or a publisher's bot challenge, reported); every citation in the briefing points at a listed source; the reports list has dated, statused entries.",
+      "checks": [
+        {
+          "name": "news answers",
+          "ok": true,
+          "detail": "HTTP 200"
+        },
+        {
+          "name": "paying account is Pro",
+          "ok": true,
+          "detail": "pro true"
+        },
+        {
+          "name": "headlines from Engineering News-Record",
+          "ok": true,
+          "detail": "20 items"
+        },
+        {
+          "name": "headlines from Construction Dive",
+          "ok": true,
+          "detail": "10 items"
+        },
+        {
+          "name": "every headline: title, publisher link, date within 14 days",
+          "ok": true,
+          "detail": "0 of 99 fail"
+        },
+        {
+          "name": "ingested within the last hour",
+          "ok": true,
+          "detail": "2026-10-09T07:49:38.692Z (18 min ago)"
+        },
+        {
+          "name": "each feed gives min(20, what it publishes)",
+          "ok": false,
+          "detail": [
+            "Engineering News-Record 20/20",
+            "Construction Dive 10/10",
+            "For Construction Pros 10/10",
+            "Building Enclosure 20/20",
+            "SDM Magazine 20/20",
+            "Security Sales & Integration 19/19",
+            "USGlass 0/10"
+          ]
+        },
+        {
+          "name": "5 headline links: none dead (a bot challenge is reported, not counted)",
+          "ok": true,
+          "detail": [
+            "Engineering News-Record 200",
+            "Construction Dive 200",
+            "For Construction Pros challenge",
+            "Building Enclosure 200",
+            "SDM Magazine 200"
+          ]
+        },
+        {
+          "name": "briefing cites only listed sources",
+          "ok": true,
+          "detail": "18 citations over 36 sources"
+        },
+        {
+          "name": "reports: dated, statused entries",
+          "ok": true,
+          "detail": [
+            "1 VALIDATED 2026-09-30",
+            "2 FALSIFIED 2026-10-01",
+            "3 VALIDATED 2026-10-01",
+            "4 VALIDATED 2026-10-02",
+            "5 PARTIAL 2026-10-02"
+          ]
+        }
+      ],
+      "input": "the paying account's wire, the briefing, the reports; each of the 7 listed feeds read directly",
+      "numbers": {
+        "pro": true,
+        "items": 99,
+        "by_source": {
+          "Engineering News-Record": 20,
+          "Construction Dive": 10,
+          "For Construction Pros": 10,
+          "Building Enclosure": 20,
+          "SDM Magazine": 20,
+          "Security Sales & Integration": 19
+        },
+        "ingested_at": "2026-10-09T07:49:38.692Z",
+        "feeds": [
+          {
+            "source": "Engineering News-Record",
+            "on_wire": 20,
+            "feed_status_from_here": 200,
+            "feed_items": 30,
+            "expected": 20
+          },
+          {
+            "source": "Construction Dive",
+            "on_wire": 10,
+            "feed_status_from_here": 200,
+            "feed_items": 10,
+            "expected": 10
+          },
+          {
+            "source": "For Construction Pros",
+            "on_wire": 10,
+            "feed_status_from_here": 200,
+            "feed_items": 10,
+            "expected": 10
+          },
+          {
+            "source": "Building Enclosure",
+            "on_wire": 20,
+            "feed_status_from_here": 200,
+            "feed_items": 30,
+            "expected": 20
+          },
+          {
+            "source": "SDM Magazine",
+            "on_wire": 20,
+            "feed_status_from_here": 200,
+            "feed_items": 30,
+            "expected": 20
+          },
+          {
+            "source": "Security Sales & Integration",
+            "on_wire": 19,
+            "feed_status_from_here": 200,
+            "feed_items": 19,
+            "expected": 19
+          },
+          {
+            "source": "USGlass",
+            "on_wire": 0,
+            "feed_status_from_here": 200,
+            "feed_items": 10,
+            "expected": 10
+          }
+        ],
+        "links": [
+          {
+            "source": "Engineering News-Record",
+            "url": "https://www.enr.com/articles/63816-judge-hits-hks-with-33m-hospital-design-error-damages",
+            "status": 200
+          },
+          {
+            "source": "Construction Dive",
+            "url": "https://www.constructiondive.com/news/education-healthcare-projects-boosted-construction-planning-september/832535/",
+            "status": 200
+          },
+          {
+            "source": "For Construction Pros",
+            "url": "https://www.forconstructionpros.com/equipment/equipment-technology/robotics-and-automation/article/22974686/ric-robotics-robotic-concrete-construction-frees-architecture-design",
+            "status": "challenge"
+          },
+          {
+            "source": "Building Enclosure",
+            "url": "https://www.buildingenclosureonline.com/articles/95225-raina-2026-awards-honor-rainscreen-design-projects",
+            "status": 200
+          },
+          {
+            "source": "SDM Magazine",
+            "url": "https://www.sdmmag.com/articles/105886-cctv-design-tool-is-now-part-of-techmagic",
+            "status": 200
+          }
+        ],
+        "briefing_citations": 18,
+        "reports": 5,
+        "newest": "Thu, 08 Oct 2026 19:07:26 -0400 Judge Hits HKS With $3.3M Hospital Design Error Damages"
+      },
+      "summary": "99 headlines: Engineering News-Record 20, Construction Dive 10, For Construction Pros 10, Building Enclosure 20, SDM Magazine 20, Security Sales & Integration 19; ENR 20; 1 of 7 listed feeds empty on the wire though each publishes 10 items; links 200/200/challenge/200/200",
+      "failed": [
+        {
+          "name": "each feed gives min(20, what it publishes)",
+          "ok": false,
+          "detail": [
+            "Engineering News-Record 20/20",
+            "Construction Dive 10/10",
+            "For Construction Pros 10/10",
+            "Building Enclosure 20/20",
+            "SDM Magazine 20/20",
+            "Security Sales & Integration 19/19",
+            "USGlass 0/10"
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,539 @@
+{
+  "base": "https://weylandai.com",
+  "at": "2026-10-09T08:30:08.361Z",
+  "results": [
+    {
+      "id": "huntx",
+      "label": "HuntX",
+      "pass": true,
+      "seconds": 18,
+      "claim": "Seven public sources, sorted by what a door sub can bid. Opportunity Discovery. Public construction notices from seven sources (Illinois CDB, NYC City Record and School Construction Authority, Los Angeles, Delaware, Texas DOT, California school funding), each tagged by trade fit: door scope named, building work, funding to watch, or civil. Filter by state, due date and value; saved searches count new notices since you last looked and send them to your feed reader (RSS) and your calendar (bid due dates).",
+      "bar": "All seven named sources hold notices; every notice carries a trade fit and a link on its source's own site, and no link is dead (every distinct link fetched; a bot challenge is reported, not counted as dead); fit=doors returns only door-scope notices, each with the words that put it there, and its total equals the index's door count; state, due-date and value filters return only matching rows; 5 source links (5 different sources) answer HTTP 200; a saved search returns a new-notice count and working RSS and calendar feeds. The sample email is sent only if the account's address is jmobleyworks+<tag>@gmail.com.",
+      "checks": [
+        {
+          "name": "index answers",
+          "ok": true,
+          "detail": "HTTP 200"
+        },
+        {
+          "name": "seven named sources each hold notices",
+          "ok": true,
+          "detail": {
+            "txdot": 673,
+            "nyc_sca": 356,
+            "ca_opsc": 166,
+            "nyc_cityrecord": 93,
+            "il_cdb": 52,
+            "de_mmp": 25,
+            "la_ramp": 22
+          }
+        },
+        {
+          "name": "full index read equals indexed count",
+          "ok": true,
+          "detail": "1387 rows read, indexed 1387"
+        },
+        {
+          "name": "every notice tagged with a trade fit",
+          "ok": true,
+          "detail": "0 untagged"
+        },
+        {
+          "name": "every notice links to its source's own site",
+          "ok": true,
+          "detail": "all 1387"
+        },
+        {
+          "name": "fit=doors returns only door-scope notices",
+          "ok": true,
+          "detail": "11 rows"
+        },
+        {
+          "name": "fit=doors total equals the index's door count",
+          "ok": true,
+          "detail": "total 11, fits.doors 11"
+        },
+        {
+          "name": "each door notice says why (trade_fit_why)",
+          "ok": true,
+          "detail": "0 without a reason"
+        },
+        {
+          "name": "state=TX returns only TX",
+          "ok": true,
+          "detail": "673 rows"
+        },
+        {
+          "name": "due_within=30 returns only notices due in the next 30 days",
+          "ok": true,
+          "detail": "217 rows, 0 outside"
+        },
+        {
+          "name": "min_value=1000000 returns only notices worth $1M+",
+          "ok": true,
+          "detail": "889 rows, 0 under"
+        },
+        {
+          "name": "5 source links answer 200",
+          "ok": true,
+          "detail": [
+            "nyc_cityrecord 200",
+            "il_cdb 200",
+            "nyc_sca 200",
+            "la_ramp 200",
+            "de_mmp 200"
+          ]
+        },
+        {
+          "name": "no notice links to a dead page (every distinct link fetched)",
+          "ok": true,
+          "detail": "144 distinct links; 0 of 1387 notices link to a dead page"
+        },
+        {
+          "name": "saved search created",
+          "ok": true,
+          "detail": "HTTP 200"
+        },
+        {
+          "name": "saved search reports a new-notice count",
+          "ok": true,
+          "detail": "new_count 0"
+        },
+        {
+          "name": "RSS feed works",
+          "ok": true,
+          "detail": "200, 50 items"
+        },
+        {
+          "name": "calendar feed works (bid due dates)",
+          "ok": true,
+          "detail": "200, 157 events"
+        }
+      ],
+      "input": "whole index (1387 notices), fit=doors, state=TX, due_within=30, min_value=1M, a saved search",
+      "numbers": {
+        "indexed": 1387,
+        "sources": {
+          "txdot": 673,
+          "nyc_sca": 356,
+          "ca_opsc": 166,
+          "nyc_cityrecord": 93,
+          "il_cdb": 52,
+          "de_mmp": 25,
+          "la_ramp": 22
+        },
+        "fits": {
+          "doors": 11,
+          "building": 164,
+          "signal": 514,
+          "civil": 698
+        },
+        "lastIngest": {
+          "started_at": "2026-10-09T08:23:47.720Z",
+          "finished_at": "2026-10-09T08:23:49.124Z",
+          "upserted": 1104,
+          "errors": null
+        },
+        "links": [
+          {
+            "source": "nyc_cityrecord",
+            "url": "https://a856-cityrecord.nyc.gov/RequestDetail/20260514019",
+            "status": 200
+          },
+          {
+            "source": "il_cdb",
+            "url": "https://cdb.illinois.gov/procurement.html",
+            "status": 200
+          },
+          {
+            "source": "nyc_sca",
+            "url": "https://data.cityofnewyork.us/d/tsak-vtv3",
+            "status": 200
+          },
+          {
+            "source": "la_ramp",
+            "url": "https://www.rampla.org/s/opportunity-details?id=006Ql00000lMaGHIA0",
+            "status": 200
+          },
+          {
+            "source": "de_mmp",
+            "url": "https://mmp.delaware.gov/Bids/Details/9333",
+            "status": 200
+          }
+        ],
+        "notice_specific_links": 140,
+        "agency_page_links": [
+          {
+            "source": "txdot",
+            "rows": 673,
+            "link": "https://www.txdot.gov/business/road-bridge-maintenance/contract-letting.html"
+          },
+          {
+            "source": "il_cdb",
+            "rows": 52,
+            "link": "https://cdb.illinois.gov/procurement.html"
+          },
+          {
+            "source": "ca_opsc",
+            "rows": 166,
+            "link": "https://www.dgs.ca.gov/OPSC"
+          },
+          {
+            "source": "nyc_sca",
+            "rows": 356,
+            "link": "https://data.cityofnewyork.us/d/tsak-vtv3"
+          }
+        ],
+        "distinct_links": 144,
+        "notices_with_dead_links": 0,
+        "dead_links_by_source": [],
+        "notices_behind_bot_challenge": 0,
+        "saved": {
+          "created": "5fd6e47f-524c-44a5-876a-031b3b641670",
+          "rss_items": 50,
+          "ics_events": 157,
+          "deleted": true
+        },
+        "sample": {
+          "run": false,
+          "why": "account email is user-sim-qa-1791490681@weylandai.com, not jmobleyworks+<tag>@gmail.com; not sent"
+        }
+      },
+      "summary": "1387 notices from 7 sources; 11 door / 164 building / 514 signal / 698 civil; links 5/5 200; 0 of 1387 notices link to a dead page (none); 140 of 1387 link to the notice itself (txdot, il_cdb, ca_opsc, nyc_sca link to one agency page); sample email not sent (not a jmobleyworks+ address)",
+      "failed": []
+    },
+    {
+      "id": "forecastx",
+      "label": "ForecastX",
+      "pass": true,
+      "seconds": 3,
+      "claim": "Cash flow across your contracts, change orders included. Monthly cash flow across your PropX contracts with approved change orders counted: billing, retainage held and released, payments after each job's terms, material paid on supplier terms, and your lowest month.",
+      "bar": "For a real PropX proposal, every month's billing, retainage held, payments received, retainage released, material paid, net and cumulative equal a cash flow computed independently from the card's words (to the cent); billing adds up to the contract; the contract is the proposal's total plus its approved change orders (an existing change order is set approved for one call, the contract must rise by exactly its amount, and its old status is put back); the lowest month is the month with the lowest cumulative; the CSV carries the same months.",
+      "checks": [
+        {
+          "name": "a real PropX proposal on the account",
+          "ok": true,
+          "detail": "9 contracts"
+        },
+        {
+          "name": "portfolio answers",
+          "ok": true,
+          "detail": "HTTP 200 "
+        },
+        {
+          "name": "contract = proposal total + approved change orders",
+          "ok": true,
+          "detail": "11754.43 = 11754.43 + 0"
+        },
+        {
+          "name": "every month equals the independent cash flow",
+          "ok": true,
+          "detail": "7 months"
+        },
+        {
+          "name": "billing adds up to the contract",
+          "ok": true,
+          "detail": "$11,754"
+        },
+        {
+          "name": "lowest month is the lowest cumulative",
+          "ok": true,
+          "detail": "2026-12 $-6,465"
+        },
+        {
+          "name": "an approved change order raises the contract by exactly its amount",
+          "ok": true,
+          "detail": "CO 1 $1,290: 11754.43 -> 13044.18"
+        },
+        {
+          "name": "CSV carries the same months",
+          "ok": true,
+          "detail": "HTTP 200, 7 rows"
+        }
+      ],
+      "input": "proposal 1 (QA GC, $11,754), start 2026-11-01, 4 months, retainage 5%, terms 45 d, material 55% on 30 d",
+      "numbers": {
+        "contract": 11754.43,
+        "months": [
+          {
+            "month": "2026-11",
+            "billed": 2938.61,
+            "retainage_held": 146.93,
+            "received": 0,
+            "retainage_released": 0,
+            "material_paid": 0,
+            "net": 0,
+            "cumulative": 0
+          },
+          {
+            "month": "2026-12",
+            "billed": 2938.61,
+            "retainage_held": 146.93,
+            "received": 0,
+            "retainage_released": 0,
+            "material_paid": 6464.94,
+            "net": -6464.94,
+            "cumulative": -6464.94
+          },
+          {
+            "month": "2027-01",
+            "billed": 2938.61,
+            "retainage_held": 146.93,
+            "received": 2791.68,
+            "retainage_released": 0,
+            "material_paid": 0,
+            "net": 2791.68,
+            "cumulative": -3673.26
+          },
+          {
+            "month": "2027-02",
+            "billed": 2938.61,
+            "retainage_held": 146.93,
+            "received": 2791.68,
+            "retainage_released": 0,
+            "material_paid": 0,
+            "net": 2791.68,
+            "cumulative": -881.58
+          },
+          {
+            "month": "2027-03",
+            "billed": 0,
+            "retainage_held": 0,
+            "received": 2791.68,
+            "retainage_released": 0,
+            "material_paid": 0,
+            "net": 2791.68,
+            "cumulative": 1910.09
+          },
+          {
+            "month": "2027-04",
+            "billed": 0,
+            "retainage_held": 0,
+            "received": 2791.68,
+            "retainage_released": 0,
+            "material_paid": 0,
+            "net": 2791.68,
+            "cumulative": 4701.77
+          },
+          {
+            "month": "2027-05",
+            "billed": 0,
+            "retainage_held": 0,
+            "received": 0,
+            "retainage_released": 587.72,
+            "material_paid": 0,
+            "net": 587.72,
+            "cumulative": 5289.49
+          }
+        ],
+        "lowest": {
+          "month": "2026-12",
+          "billed": 2938.61,
+          "retainage_held": 146.93,
+          "received": 0,
+          "retainage_released": 0,
+          "material_paid": 6464.94,
+          "net": -6464.94,
+          "cumulative": -6464.94
+        },
+        "change_order_test": {
+          "id": "4964981d-a740-4b2e-be54-b747432a6fe3",
+          "number": 1,
+          "amount": 1289.75,
+          "was": "submitted",
+          "set_http": 200,
+          "contract_before": 11754.43,
+          "contract_after": 13044.18,
+          "changes_reported": 1289.75,
+          "restored": "submitted"
+        }
+      },
+      "summary": "7 months, contract $11,754, lowest 2026-12 $-6,465; independent recompute equal to the cent; approved CO $1,290 added (CO $1,290, status restored to submitted)",
+      "failed": []
+    },
+    {
+      "id": "wirex",
+      "label": "WireX",
+      "pass": true,
+      "seconds": 4,
+      "claim": "(From /news; WireX is not on /pricing.) Construction industry news & engineering-report desk. Live headlines from Engineering News-Record & Construction Dive, a deterministic Editor's Briefing that cites its own sources, and WeylandAI's own real, audited price-extraction validation history. WireX Pro, $49.00/month: 20 headlines per feed instead of 6, full reports wire.",
+      "bar": "For the paying account the wire is Pro and carries headlines from Engineering News-Record and from Construction Dive; every headline has a title, a link to the publisher and a publication date within 14 days; each feed gives min(20, what the feed itself publishes) headlines (each feed read directly for comparison); the wire was ingested within the last hour; 5 headline links are live (200, or a publisher's bot challenge, reported); every citation in the briefing points at a listed source; the reports list has dated, statused entries.",
+      "checks": [
+        {
+          "name": "news answers",
+          "ok": true,
+          "detail": "HTTP 200"
+        },
+        {
+          "name": "paying account is Pro",
+          "ok": true,
+          "detail": "pro true"
+        },
+        {
+          "name": "headlines from Engineering News-Record",
+          "ok": true,
+          "detail": "20 items"
+        },
+        {
+          "name": "headlines from Construction Dive",
+          "ok": true,
+          "detail": "10 items"
+        },
+        {
+          "name": "every headline: title, publisher link, date within 14 days",
+          "ok": true,
+          "detail": "0 of 99 fail"
+        },
+        {
+          "name": "ingested within the last hour",
+          "ok": true,
+          "detail": "2026-10-09T08:29:59.815Z (1 min ago)"
+        },
+        {
+          "name": "each feed gives min(20, what it publishes), or the wire shows the feed's refusal",
+          "ok": true,
+          "detail": [
+            "Engineering News-Record 20/20",
+            "Construction Dive 10/10",
+            "For Construction Pros 10/10",
+            "Building Enclosure 20/20",
+            "SDM Magazine 20/20",
+            "Security Sales & Integration 19/19",
+            "USGlass 0/0"
+          ]
+        },
+        {
+          "name": "5 headline links: none dead (a bot challenge is reported, not counted)",
+          "ok": true,
+          "detail": [
+            "Engineering News-Record 200",
+            "Construction Dive 200",
+            "For Construction Pros challenge",
+            "Building Enclosure 200",
+            "SDM Magazine 200"
+          ]
+        },
+        {
+          "name": "briefing cites only listed sources",
+          "ok": true,
+          "detail": "18 citations over 36 sources"
+        },
+        {
+          "name": "reports: dated, statused entries",
+          "ok": true,
+          "detail": [
+            "1 VALIDATED 2026-09-30",
+            "2 FALSIFIED 2026-10-01",
+            "3 VALIDATED 2026-10-01",
+            "4 VALIDATED 2026-10-02",
+            "5 PARTIAL 2026-10-02"
+          ]
+        }
+      ],
+      "input": "the paying account's wire, the briefing, the reports; each of the 7 listed feeds read directly",
+      "numbers": {
+        "pro": true,
+        "items": 99,
+        "by_source": {
+          "Engineering News-Record": 20,
+          "Construction Dive": 10,
+          "For Construction Pros": 10,
+          "Building Enclosure": 20,
+          "SDM Magazine": 20,
+          "Security Sales & Integration": 19
+        },
+        "ingested_at": "2026-10-09T08:29:59.815Z",
+        "feeds": [
+          {
+            "source": "Engineering News-Record",
+            "on_wire": 20,
+            "feed_status_from_here": 200,
+            "feed_items": 30,
+            "expected": 20,
+            "wire_status": 200
+          },
+          {
+            "source": "Construction Dive",
+            "on_wire": 10,
+            "feed_status_from_here": 200,
+            "feed_items": 10,
+            "expected": 10,
+            "wire_status": 200
+          },
+          {
+            "source": "For Construction Pros",
+            "on_wire": 10,
+            "feed_status_from_here": 200,
+            "feed_items": 10,
+            "expected": 10,
+            "wire_status": 200
+          },
+          {
+            "source": "Building Enclosure",
+            "on_wire": 20,
+            "feed_status_from_here": 200,
+            "feed_items": 30,
+            "expected": 20,
+            "wire_status": 200
+          },
+          {
+            "source": "SDM Magazine",
+            "on_wire": 20,
+            "feed_status_from_here": 200,
+            "feed_items": 30,
+            "expected": 20,
+            "wire_status": 200
+          },
+          {
+            "source": "Security Sales & Integration",
+            "on_wire": 19,
+            "feed_status_from_here": 200,
+            "feed_items": 19,
+            "expected": 19,
+            "wire_status": 200
+          },
+          {
+            "source": "USGlass",
+            "on_wire": 0,
+            "feed_status_from_here": 202,
+            "feed_items": 0,
+            "expected": 0,
+            "wire_status": 200
+          }
+        ],
+        "links": [
+          {
+            "source": "Engineering News-Record",
+            "url": "https://www.enr.com/articles/63816-judge-hits-hks-with-33m-hospital-design-error-damages",
+            "status": 200
+          },
+          {
+            "source": "Construction Dive",
+            "url": "https://www.constructiondive.com/news/education-healthcare-projects-boosted-construction-planning-september/832535/",
+            "status": 200
+          },
+          {
+            "source": "For Construction Pros",
+            "url": "https://www.forconstructionpros.com/equipment/equipment-technology/robotics-and-automation/article/22974686/ric-robotics-robotic-concrete-construction-frees-architecture-design",
+            "status": "challenge"
+          },
+          {
+            "source": "Building Enclosure",
+            "url": "https://www.buildingenclosureonline.com/articles/95225-raina-2026-awards-honor-rainscreen-design-projects",
+            "status": 200
+          },
+          {
+            "source": "SDM Magazine",
+            "url": "https://www.sdmmag.com/articles/105886-cctv-design-tool-is-now-part-of-techmagic",
+            "status": 200
+          }
+        ],
+        "briefing_citations": 18,
+        "reports": 5,
+        "newest": "Thu, 08 Oct 2026 19:07:26 -0400 Judge Hits HKS With $3.3M Hospital Design Error Damages"
+      },
+      "summary": "99 headlines: Engineering News-Record 20, Construction Dive 10, For Construction Pros 10, Building Enclosure 20, SDM Magazine 20, Security Sales & Integration 19; ENR 20; 1 of 7 listed feeds empty on the wire though each publishes 0 items; links 200/200/challenge/200/200",
+      "failed": []
+    }
+  ]
+}
