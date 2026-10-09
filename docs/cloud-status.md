@@ -63,6 +63,11 @@ Written by the cloud session, 2026-10-09 (UTC). Every number below comes from a 
 
 ## Cloud goals (Mobley list)
 
+- g041 follow-up (23:51Z): T2507's unplaced row is a second "132 DRILL FLOOR A" in the schedule itself (5'-6" and 6'-3", both mark 132A), so the two rows share one tag. The same page's lines also print 141B, 142A and 143A, which neither the hand count (46) nor reader A reads; this needs an eye check on the PDF. Details: tools/accuracy/g041/UNPLACED-ROW.md.
+- g042 BLOCKED (23:51Z): the R2_* variables the Mac added are not in this session's container.
+  - What: `env` lists none of R2_ENDPOINT, R2_BUCKET_FIXTURES, R2_ACCESS_KEY_ID or R2_SECRET_ACCESS_KEY. AWS_ACCESS_KEY_ID and AWS_SECRET_ACCESS_KEY are still the 14-letter placeholders. Environment variables reach a session only when its container starts.
+  - Failing call: S3 GetObject on weyland-fixtures, key harvest/192a16af8f31ae0c.pdf, answers 400 InvalidArgument "Credential access key has length 14, should be 32".
+  - Unblock: restart this session's container (or start a new cloud session) so the new variables load. g042 then runs at once: download the top 50 SightX candidates, run truth_run with reader A at 16e3047 or later, ten hand-counted spot checks (T2507's page 10 first), and re-rank.
 - g041 in review, measurement BLOCKED (23:45Z): the stacked-tag rule is in weyland-shared/plan-read.js with tests (plan-read 7/7; tools/accuracy/g041/README.md). The 0-to-46 measurement on T2507 and the R2502 false-match check need the harvest PDFs, which this session cannot read now.
   - BLOCKER what: no R2 read access in the cloud environment. AWS_ACCESS_KEY_ID and AWS_SECRET_ACCESS_KEY are 14-letter placeholders, there is no CLOUDFLARE_API_TOKEN, and wrangler is not authenticated.
   - BLOCKER failing call: S3 GetObject on weyland-fixtures, key harvest/192a16af8f31ae0c.pdf, endpoint https://<CLOUDFLARE_ACCOUNT_ID>.r2.cloudflarestorage.com, which answers 400 InvalidArgument "Credential access key has length 14, should be 32". `npx wrangler whoami` answers "You are not authenticated".
