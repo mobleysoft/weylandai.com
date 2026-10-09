@@ -229,12 +229,12 @@ export async function priceSchedule(env, job, mult, match = matchComponentToCutS
 
 const csvCell = (v) => { const s = v == null ? "" : String(v); return /[",\n]/.test(s) ? '"' + s.replace(/"/g, '""') + '"' : s; };
 export function pricedCsv(project, result, mult) {
-  const head = ["Set", "Openings", "Item", "Manufacturer", "Catalogue no. (schedule)", "Finish", "Qty per opening", "Qty", "Priced as", "Price finish", "Basis", "Price book", "List", "Multiplier", "Net each", "Extended", "Note"];
+  const head = ["Set", "Openings", "Item", "Manufacturer", "Catalogue no. (schedule)", "Finish", "Qty per opening", "Qty", "Priced as", "Price finish", "Basis", "Price book", "Effective", "List", "Multiplier", "Net each", "Extended", "Note"];
   const rows = result.lines.map((l) => l.priced
-    ? [l.set, l.openings, l.item, l.maker, l.number, l.finish, l.qtyPerOpening, l.qty, l.pricedAs, l.pricedFinish, l.basis, l.book, l.list.toFixed(2), l.multiplier, l.net.toFixed(2), l.extended.toFixed(2), l.note]
-    : [l.set, l.openings, l.item, l.maker, l.number, l.finish, l.qtyPerOpening, l.qty, "", "", l.scheduleNote ? "schedule note" : "not priced", "", "", "", "", "", l.reason]);
+    ? [l.set, l.openings, l.item, l.maker, l.number, l.finish, l.qtyPerOpening, l.qty, l.pricedAs, l.pricedFinish, l.basis, l.book, l.effective || "", l.list.toFixed(2), l.multiplier, l.net.toFixed(2), l.extended.toFixed(2), l.note]
+    : [l.set, l.openings, l.item, l.maker, l.number, l.finish, l.qtyPerOpening, l.qty, "", "", l.scheduleNote ? "schedule note" : "not priced", "", "", "", "", "", "", l.reason]);
   const out = [["Project", project], ["Default multiplier", mult.default], [], head, ...rows, [],
-    ["", "", "", "", "", "", "", "", "", "", "", "Total of priced lines (list)", result.totals.list.toFixed(2), "", "", result.totals.net.toFixed(2), `${result.totals.unpricedLines} line(s) not priced and not in the total`]];
+    ["", "", "", "", "", "", "", "", "", "", "", "", "Total of priced lines (list)", result.totals.list.toFixed(2), "", "", result.totals.net.toFixed(2), `${result.totals.unpricedLines} line(s) not priced and not in the total`]];
   if (result.basisNote) out.push([result.basisNote]);
   return out.map((r) => r.map(csvCell).join(",")).join("\r\n") + "\r\n";
 }

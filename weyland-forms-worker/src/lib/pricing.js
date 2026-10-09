@@ -52,6 +52,8 @@ export function finishScore(v, fin) {
   const own = finishCode(v.finish_code);
   if (own) return own === fin ? 2 : 0;
   const b = bracket(v);
+  // One price for several finishes ("[605/619/625/643e]").
+  if (/^\d{3}[a-z]?(?:\s*\/\s*\d{3}[a-z]?)+$/i.test(b)) return b.split("/").map((x) => finishCode(x.trim())).includes(fin) ? 2 : 0;
   const code = b.match(/^(\d{3})\b/);
   if (code) return code[1] === fin ? 2 : 0;
   if (/powder|paint|prime|coat/i.test(b)) return PAINTED.has(fin) ? 1 : 0;
