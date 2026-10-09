@@ -1,0 +1,9 @@
+{
+  "command": "PLAYWRIGHT_CORE=/private/tmp/claude-501/-Users-johnmobley/36836088-d551-4ec6-b6ef-38f1b69cf0bc/scratchpad/node_modules/playwright-core/index.mjs node tools/user-simulation/run-journeys.mjs --passes 3 --only upload-without-account-to-first-read,schedule-plus-spec-to-packet-with-hardware",
+  "cwd": "/private/tmp/g022-main-validation",
+  "base": "340bf67338e76e727111838e1cd41a90e0dc2ce9",
+  "matrix": "/private/tmp/g022-main-validation/tools/user-simulation/reports/matrix-2026-10-09T17-35-47-903Z",
+  "exit": 1,
+  "scope": "isolated checkout of origin/main plus uncommitted g022 changes; not merged main and not a deployment",
+  "functional_checks_reached": 0
+}

@@ -245,3 +245,44 @@ Rules every journey keeps (`lib/journey-kit.mjs`):
 `cleanup-usersim-clones.mjs` lists (dry run) or deletes (`--delete`) demo
 clones owned by `usersim_*` ids, left by runs from before the journeys
 deleted their own.
+
+## Estimator regressions (g022, after g018)
+
+```bash
+node tools/user-simulation/run-journeys.mjs --passes 3 \
+  --only upload-without-account-to-first-read,schedule-plus-spec-to-packet-with-hardware
+```
+
+The runner discovers both scripts automatically. Run from **main after g018 and
+these journeys have landed**, against the deployed workspace. A local checkout
+revision does not establish which worker is live. Both journeys use the shared
+GPU/browser and cleanup rules above, with no intercepted or fabricated API
+responses and no local-success fallback.
+
+| Journey | Required evidence |
+|---|---|
+| `upload-without-account-to-first-read` | Cold desktop and touch phone: homepage upload, 65 audited Rockford marks/groups and source rows, completed reading status, zero account or hardware upload writes before the read, named Section 08 71 00 request, downloaded CSV with all pair/glazing values and alternate-pricing tallies. |
+| `schedule-plus-spec-to-packet-with-hardware` | Throwaway subscriber, desktop: sheet-only packet refused with `409 HARDWARE_SPEC_REQUIRED`; upload the full Rockford bid set through the UI; 65 doors, 14 hardware groups/110 items, group counts and representative hinge models checked against the audited spec; packet manifest, rendered PDF and download; actual generated hardware pages, catalogue page text, company cover and total page count checked in the saved PDF. Missing cut sheets must be disclosed in the packet. |
+
+Fixtures are checked in: `roles/rockford-A2.2-p29.pdf` and
+`tools/corpus/door-schedules/f0e863d88ea688ff.pdf` (A2.2 p29, hardware pp17–23).
+The packet journey also requires Poppler's `pdftotext` on PATH and the existing
+Wrangler credentials for the throwaway account. No card, payment or email is
+sent. Its AuthFor test identity remains, as with the existing subscriber journey.
+
+Each run retains screenshots, CSV/PDF/text, observed workspace API responses,
+fixture SHA-256 hashes, checkout revision and dirty state in a timestamped
+`reports/<journey>-<stamp>/` folder, linked by the normal journey report.
+Keep the matrix directory **and** these artifact folders as measurement evidence.
+The shared cleanup handles both `set_id` and `hardware_set_id` children so the
+110 newly materialized hardware rows are deleted before their parent groups.
+
+Assertion/cleanup tests (Node plus Python 3's in-memory SQLite; no browser or
+production writes) deliberately reject the earlier failure modes:
+
+```bash
+node --test tools/user-simulation/estimator-assertions.test.mjs
+```
+
+Those tests are not journey passes. Mobley's number two measures the three-pass
+production matrix on main and updates the board from its retained evidence.

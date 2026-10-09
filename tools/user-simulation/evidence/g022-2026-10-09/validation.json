@@ -1,0 +1,59 @@
+{
+  "at": "2026-10-09T17:35:47.263699+00:00",
+  "base": "340bf67338e76e727111838e1cd41a90e0dc2ce9",
+  "scope": "isolated checkout of origin/main plus uncommitted g022 changes; not merged main and not a deployment",
+  "files": {
+    "tools/user-simulation/estimator-assertions.test.mjs": "3fa27b38cb47b1b039b9ed9b2807fef3c362dbbeda13d2dfb89b3741a2d666c8",
+    "tools/user-simulation/lib/estimator-assertions.mjs": "857d182584ff76b79b236bccc8ce47ec30fd84ee967ed38a0b20a7cce7344f85",
+    "tools/user-simulation/lib/estimator-kit.mjs": "12fae248457cb80fc8abcc7de2e3b85cb10a7307f4e985bfcfbd15a3e38664c0",
+    "tools/user-simulation/lib/hardware-cleanup.mjs": "22759d211a8fd85fcfd920ee985a12616149c5a5ef29ce56e0c188dc61cb9eae",
+    "tools/user-simulation/lib/journey-kit.mjs": "f816c2d11af99139c40fd8d74d0ef0ec164cf669e7a321b95ff201c78ef9d75f",
+    "tools/user-simulation/journeys/upload-without-account-to-first-read.mjs": "0aaf8f0817b2a2009c3aee151faf6992858a9354a0d01fd159b90e983a62a5d2",
+    "tools/user-simulation/journeys/schedule-plus-spec-to-packet-with-hardware.mjs": "df57990bfe3854ed0b8ee1cea847611c3b4819197f2cca2b0118282d655e2ea4"
+  },
+  "tests": {
+    "command": "node --test --test-reporter=tap tools/user-simulation/estimator-assertions.test.mjs",
+    "exit": 0
+  },
+  "syntax": [
+    {
+      "file": "tools/user-simulation/estimator-assertions.test.mjs",
+      "exit": 0,
+      "output": ""
+    },
+    {
+      "file": "tools/user-simulation/lib/estimator-assertions.mjs",
+      "exit": 0,
+      "output": ""
+    },
+    {
+      "file": "tools/user-simulation/lib/estimator-kit.mjs",
+      "exit": 0,
+      "output": ""
+    },
+    {
+      "file": "tools/user-simulation/lib/hardware-cleanup.mjs",
+      "exit": 0,
+      "output": ""
+    },
+    {
+      "file": "tools/user-simulation/lib/journey-kit.mjs",
+      "exit": 0,
+      "output": ""
+    },
+    {
+      "file": "tools/user-simulation/journeys/upload-without-account-to-first-read.mjs",
+      "exit": 0,
+      "output": ""
+    },
+    {
+      "file": "tools/user-simulation/journeys/schedule-plus-spec-to-packet-with-hardware.mjs",
+      "exit": 0,
+      "output": ""
+    }
+  ],
+  "diff_check": {
+    "exit": 0,
+    "output": ""
+  }
+}

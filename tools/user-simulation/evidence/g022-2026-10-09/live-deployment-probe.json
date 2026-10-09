@@ -1,0 +1,21 @@
+[
+  {
+    "at": "2026-10-09T17:34:26.430Z",
+    "url": "https://weylandai.com/subx-app?embed=1",
+    "status": 200,
+    "sha256": "92c4538d3339268c2d8f408650d1d40dfb65025b6ef285de93bc7ac0601cc7a3",
+    "bytes": 141892,
+    "guestSaveControl": false,
+    "hardwareNeededControl": false
+  },
+  {
+    "at": "2026-10-09T17:34:26.474Z",
+    "url": "https://weylandai.com/api/hardware-schedule/client-ocr-assets/schedule-workspace.mjs",
+    "status": 404,
+    "sha256": "ff0f1a99151185edc8038b50f9b85d59726ad765f771a4347ec85ffb70d67aaa",
+    "bytes": 57,
+    "guestSaveControl": false,
+    "hardwareNeededControl": false,
+    "body": "{\"error\":\"unknown_asset\",\"name\":\"schedule-workspace.mjs\"}"
+  }
+]

@@ -1,0 +1,49 @@
+{
+  "journey": "upload-without-account-to-first-read",
+  "title": "Estimator: upload without an account to the first read",
+  "base": "https://weylandai.com",
+  "started_at": "2026-10-09T17:35:49.708Z",
+  "finished_at": "2026-10-09T17:35:49.801Z",
+  "passed": 0,
+  "failed": 1,
+  "checks": [
+    {
+      "name": "journey ran to completion",
+      "ok": false,
+      "detail": "browserType.launch: Target page, context or browser has been closed\nBrowser logs:\n\n<launching> /Users/johnmobley/Library/Caches/ms-playwright/chromium_headless_shell-1243/chrome-headless-shell-mac-arm64/chrome-headless-shell --disable-field-trial-config --disable-background-networking --disable-background-timer-throttling --disable-backgrounding-occluded-windows --disable-back-forward-cache --disable-breakpad --disable-client-side-phishing-detection --disable-component-extensions-with-background"
+    }
+  ],
+  "notes": {
+    "source": {
+      "head": "340bf67338e76e727111838e1cd41a90e0dc2ce9",
+      "branch": "HEAD",
+      "origin_main": "340bf67338e76e727111838e1cd41a90e0dc2ce9",
+      "changes": "M tools/user-simulation/README.md\n M tools/user-simulation/lib/journey-kit.mjs\n?? tools/user-simulation/estimator-assertions.test.mjs\n?? tools/user-simulation/journeys/schedule-plus-spec-to-packet-with-hardware.mjs\n?? tools/user-simulation/journeys/upload-without-account-to-first-read.mjs\n?? tools/user-simulation/lib/estimator-assertions.mjs\n?? tools/user-simulation/lib/estimator-kit.mjs\n?? tools/user-simulation/lib/hardware-cleanup.mjs",
+      "scope": "Real production UI and APIs; checkout revision identifies the harness, not the deployed worker revision",
+      "fixtures": [
+        {
+          "path": "tools/user-simulation/roles/rockford-A2.2-p29.pdf",
+          "bytes": 1138719,
+          "sha256": "690dfca2498e98ef101e1018a93e59fdf7ca6a274cadad3d6fa3b9f25e208855"
+        },
+        {
+          "path": "tools/corpus/door-schedules/f0e863d88ea688ff.pdf",
+          "bytes": 6803216,
+          "sha256": "f0e863d88ea688fffdb625132383d48130afb8a50ae4546fd4627281e2648c59"
+        }
+      ]
+    },
+    "artifacts": "tools/user-simulation/reports/upload-without-account-to-first-read-2026-10-09T17-35-49-708Z"
+  },
+  "browser": {
+    "launch_args": [
+      "--use-angle=metal"
+    ],
+    "webgl": null
+  },
+  "api_errors": [],
+  "cleanup": {
+    "nothing": true
+  },
+  "side_effects": "no AuthFor identity created"
+}

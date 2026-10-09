@@ -24,6 +24,7 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { execFile } from "node:child_process";
 import { promisify } from "node:util";
+import { hardwareChildDeletes } from "./hardware-cleanup.mjs";
 
 const execFileP = promisify(execFile);
 const playwright = await import(process.env.PLAYWRIGHT_CORE || "playwright-core");
@@ -151,15 +152,14 @@ export async function purgeTestData({ userIds = [], emails = [], cloneSessions =
   for (const r of props.results || []) if (/^proposals\//.test(r.r2_key || "")) R2.push([UPLOADS_BUCKET, r.r2_key]);
 
   const s = await schema();
-  const childOfSets = tablesWith(s, "hardware_set_id", ["door_schedule_entries", "hardware_door_matrix"]);
   const stmts = [];
   if (S.length) {
-    for (const t of childOfSets) stmts.push("DELETE FROM " + t + " WHERE hardware_set_id IN (SELECT id FROM hardware_sets WHERE session_id IN " + inList(S) + ");");
+    stmts.push(...hardwareChildDeletes(s, "session_id IN " + inList(S)));
     for (const t of tablesWith(s, "session_id")) stmts.push("DELETE FROM " + t + " WHERE session_id IN " + inList(S) + ";");
     stmts.push("DELETE FROM hardware_extraction_sessions WHERE id IN " + inList(S) + ";");
   }
   if (SUB.length) {
-    for (const t of childOfSets) stmts.push("DELETE FROM " + t + " WHERE hardware_set_id IN (SELECT id FROM hardware_sets WHERE submittal_id IN " + inList(SUB) + ");");
+    stmts.push(...hardwareChildDeletes(s, "submittal_id IN " + inList(SUB)));
     for (const t of tablesWith(s, "submittal_id")) stmts.push("DELETE FROM " + t + " WHERE submittal_id IN " + inList(SUB) + ";");
     stmts.push("DELETE FROM submittals WHERE id IN " + inList(SUB) + ";");
   }
@@ -170,7 +170,7 @@ export async function purgeTestData({ userIds = [], emails = [], cloneSessions =
     stmts.push("DELETE FROM projects WHERE id IN " + PL + " AND id" + unused + ";");
   }
   if (U.length) {
-    for (const t of childOfSets) stmts.push("DELETE FROM " + t + " WHERE hardware_set_id IN (SELECT id FROM hardware_sets WHERE user_id IN " + inList(U) + ");");
+    stmts.push(...hardwareChildDeletes(s, "user_id IN " + inList(U)));
     for (const t of tablesWith(s, "user_id", ["users"])) stmts.push("DELETE FROM " + t + " WHERE user_id IN " + inList(U) + ";");
   }
   if (E.length) for (const t of tablesWith(s, "email", ["users"])) stmts.push("DELETE FROM " + t + " WHERE lower(email) IN " + inList(E) + ";");
