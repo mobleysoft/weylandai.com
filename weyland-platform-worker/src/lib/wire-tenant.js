@@ -91,7 +91,10 @@ export async function ingestWireNews(env) {
     WIRE_FEEDS.map(async (feed) => {
       try {
         const res = await fetch(feed.url, { headers: { "User-Agent": "WeylandAI WireX (+https://weylandai.com/bot)" }, signal: AbortSignal.timeout(15000) });
-        if (!res.ok) return [];
+        // A feed that refuses the Worker is logged, not dropped silently (product audit 2026-10-09:
+        // ENR, Building Enclosure, SDM and SSI publish 30/30/30/19 items read from elsewhere and
+        // none reach the wire).
+        if (!res.ok) { console.warn("[wire] " + feed.source + " HTTP " + res.status); return []; }
         const xml = await res.text();
         return parseRssItems(xml, feed.source, 20);
       } catch {

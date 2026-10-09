@@ -85,9 +85,12 @@ test("deriveLines: a hardware set price comes only from the schedule (override, 
     { set_number: "C", door_count: 4, components: [] },
   ];
   const hw = deriveLines(doors, sets).filter((l) => l.kind === "hardware");
-  const by = Object.fromEntries(hw.map((l) => [l.description, l]));
+  const by = Object.fromEntries(hw.map((l) => [l.description.replace(/ \(.*$/, ""), l]));
   assert.equal(by["Hardware set A"].unitPrice, 900);
   assert.equal(by["Hardware set B"].unitPrice, 360);
+  // The line itself says the set's price leaves an item out (it prints on the PDF).
+  assert.equal(by["Hardware set B"].description, "Hardware set B (2 of 3 items priced; not in this price: lock)");
+  assert.equal(by["Hardware set A"].description, "Hardware set A");
   assert.match(by["Hardware set B"].priceSource, /2 of 3 components/);
   assert.equal(by["Hardware set C"].quantity, 4);
   assert.equal(by["Hardware set C"].unitPrice, 0);

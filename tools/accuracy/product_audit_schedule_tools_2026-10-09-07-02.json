@@ -1,0 +1,727 @@
+{
+  "base": "https://weylandai.com",
+  "started_at": "2026-10-09T07:02:26.346Z",
+  "cards": {
+    "subx": "Submittal Express. Reads a ruled door or hardware schedule table on the page you name, lists the doors and hardware sets with the page and row each came from, and builds the submittal PDF, attaching the cited document for items our catalogue covers. Full-size CAD sheets and spec-section hardware groups do not read yet.",
+    "cutsheetx": "Paste product lines as maker and model; CutsheetX matches what our catalogue covers (Allegion's brands plus NGP, BEA, Camden and Dyke) and cites the price-book or catalogue page for each match. Lines pasted as a spec prints them do not parse yet.",
+    "takeoffx": "Takeoff Express. Counts doors by type, size, fire rating and hardware group from your door schedule page, 18 to 40 seconds a page, with every count traced to its row. It reads schedules, not drawings.",
+    "propx": "Requires SubX · turns a submittal into a priced, sendable proposal. Proposal Express. Builds a complete, priced proposal - client info, scope, terms, signature block - directly from a SubX submittal's real extracted door schedule.",
+    "sightx": "Spatial Project Intelligence. Builds a 3D corridor from your door schedule (a SubX session or a pasted schedule): each door at its scheduled size, material and fire rating, its hardware set drawn where it mounts, a door-by-door tour, and a link your GC can walk without an account. Doors stand in schedule order, not on your floor plan."
+  },
+  "bars": {
+    "subx": "find-pages names the schedule page (A2.2, p.29) and the 08 71 00 group pages (pp.17-23); every page reads; the doors read equal the 65 hand-read marks and each carries its page and row; the 14 hardware groups are read; the packet PDF is built and every item is either cited with a catalogue page or listed as a miss that says why and what is needed.",
+    "cutsheetx": "each real Rockford item (as maker + model) matches a product of that maker and cites a page or sheet whose document is that maker's and opens (HTTP 200); the same items pasted as lines give the same answers; an item the catalogue does not hold comes back unmatched with a stated reason.",
+    "takeoffx": "for each session the takeoff's door count and its counts by door type, size, fire rating and hardware group equal the tallies of the hand-read schedule, and every door row carries its page and table row; door pages read within the card's 40 s a page.",
+    "propx": "from the Berryessa session: the lines come from its doors (door lines total 24 openings, hardware lines total the 24 openings that name a set), generate returns a stored proposal whose PDF downloads (%PDF) and prints every line and its total, line totals and subtotal/tax/grand total are arithmetically consistent, and the proposal is priced: a grand total above $0, and no rate printed as a set's price that covers only some of its items without saying so (lines left at $0 for the estimator are allowed; the workspace says they print at $0).",
+    "sightx": "the corridor model built from the Berryessa session has 24 doors (the schedule's count, same marks), each at its scheduled size (42 x 94 in) and fire rating (120), each door's hardware set present in the model with items to draw, and the corridor saves to a link that opens without an account."
+  },
+  "sessions": {
+    "rockford": {
+      "id": "rockford",
+      "label": "Rockford Bid 26-27 Addendum One",
+      "errors": [],
+      "upload": {
+        "status": 201,
+        "ms": 2545
+      },
+      "sid": "73e05f9e-549b-4fa4-a84d-153f351e172a",
+      "find": {
+        "status": 200,
+        "ms": 3228,
+        "door_schedule_pages": [
+          29
+        ],
+        "hardware_pages": [
+          17,
+          18,
+          19,
+          20,
+          21,
+          22,
+          23
+        ]
+      },
+      "read_doors": {
+        "status": 200,
+        "ms": 4334,
+        "pages": 1,
+        "per_page_s": 4.3,
+        "results": [
+          {
+            "page": 29,
+            "ok": true,
+            "type": "door_schedule",
+            "doors": 65,
+            "read_source": "text_layer",
+            "ms": 0
+          }
+        ]
+      },
+      "read_groups": {
+        "status": 200,
+        "ms": 16189,
+        "pages": 7,
+        "results": [
+          {
+            "page": 17,
+            "ok": true,
+            "type": "hardware_schedule",
+            "groups": 1,
+            "items": 7
+          },
+          {
+            "page": 18,
+            "ok": true,
+            "type": "hardware_schedule",
+            "groups": 3,
+            "items": 20
+          },
+          {
+            "page": 19,
+            "ok": true,
+            "type": "hardware_schedule",
+            "groups": 3,
+            "items": 22
+          },
+          {
+            "page": 20,
+            "ok": true,
+            "type": "hardware_schedule",
+            "groups": 2,
+            "items": 14
+          },
+          {
+            "page": 21,
+            "ok": true,
+            "type": "hardware_schedule",
+            "groups": 1,
+            "items": 12
+          },
+          {
+            "page": 22,
+            "ok": true,
+            "type": "hardware_schedule",
+            "groups": 1,
+            "items": 16
+          },
+          {
+            "page": 23,
+            "ok": true,
+            "type": "hardware_schedule",
+            "groups": 3,
+            "items": 19
+          }
+        ]
+      },
+      "cleanup": "deleted"
+    },
+    "berryessa": {
+      "id": "berryessa",
+      "label": "Berryessa Bid B-09-2023-24",
+      "errors": [],
+      "upload": {
+        "status": 201,
+        "ms": 4048
+      },
+      "sid": "3cd4c905-066f-4f76-a262-f2a14087cc32",
+      "find": {
+        "status": 200,
+        "ms": 9640,
+        "door_schedule_pages": [
+          284,
+          286,
+          288
+        ],
+        "hardware_pages": [
+          282
+        ]
+      },
+      "read_doors": {
+        "status": 200,
+        "ms": 2988,
+        "pages": 3,
+        "per_page_s": 1,
+        "results": [
+          {
+            "page": 284,
+            "ok": true,
+            "type": "door_schedule",
+            "doors": 9,
+            "read_source": "text_layer",
+            "ms": 0
+          },
+          {
+            "page": 286,
+            "ok": true,
+            "type": "door_schedule",
+            "doors": 7,
+            "read_source": "text_layer",
+            "ms": 0
+          },
+          {
+            "page": 288,
+            "ok": true,
+            "type": "door_schedule",
+            "doors": 8,
+            "read_source": "text_layer",
+            "ms": 0
+          }
+        ]
+      },
+      "read_groups": {
+        "status": 200,
+        "ms": 1576,
+        "pages": 1,
+        "results": [
+          {
+            "page": 282,
+            "ok": true,
+            "type": "hardware_schedule",
+            "groups": 2,
+            "items": 16
+          }
+        ]
+      },
+      "cleanup": "deleted"
+    }
+  },
+  "results": [
+    {
+      "id": "subx",
+      "label": "SubX",
+      "doc": "Rockford Bid 26-27 Addendum One (A2.2 p.29; 08 71 00 pp.17-23)",
+      "pass": true,
+      "checks": {
+        "find_pages": {
+          "door_page_found": true,
+          "hardware_pages_found": "7 of 7",
+          "door_schedule_pages": [
+            29
+          ],
+          "hardware_pages": [
+            17,
+            18,
+            19,
+            20,
+            21,
+            22,
+            23
+          ],
+          "status": 200
+        },
+        "read": {
+          "door_pages_ms": 4334,
+          "group_pages_ms": 16189,
+          "failed": []
+        },
+        "doors": {
+          "read": 65,
+          "schedule": 65,
+          "missing": [],
+          "extra": [],
+          "with_page_and_row": 65
+        },
+        "groups": {
+          "read": 14,
+          "schedule": 14,
+          "set_numbers": [
+            "01 RR",
+            "02 RR-M",
+            "06 CL",
+            "07 CL",
+            "19 STO",
+            "19F STO",
+            "20 STO",
+            "23 STO",
+            "28 COR",
+            "32 EXD",
+            "40 UTY",
+            "44 UTY-IT",
+            "47 VES",
+            "51 UTY-CUS"
+          ]
+        },
+        "packet": {
+          "ms": 37452,
+          "total_pages": 69,
+          "components": 37,
+          "cited": 36,
+          "missed": 1,
+          "misses_without_why_or_need": 0,
+          "misses": [
+            "Glynn-Johnson 90S - Glynn-Johnson is in the catalogue; 90S is not"
+          ],
+          "pdf": {
+            "status": 200,
+            "bytes": 6164516,
+            "is_pdf": true,
+            "pages": 69
+          }
+        }
+      },
+      "fails": [],
+      "summary": "pages found: door yes, groups 7/7; doors 65/65 (65 with page+row); groups 14/14; packet 69 pp, 36 of 37 items cited, 1 stated misses, 37 s"
+    },
+    {
+      "id": "cutsheetx",
+      "label": "CutSheetX",
+      "doc": "Rockford 08 71 00 items (10 real, 2 not in catalogue)",
+      "pass": false,
+      "items": [
+        {
+          "item": "LCN 4040XP",
+          "http": 200,
+          "ms": 461,
+          "matched": true,
+          "page_specific": false,
+          "product": "LCN Closers 4040XP",
+          "matchType": "exact",
+          "citation": {
+            "kind": "cut_sheet",
+            "title": "LCN Price Book (full manufacturer price book; product listed around pp.6-48 in the edition originally catalogued - search this PDF for the exact model, current edition may have shifted pages)",
+            "page": "6-48"
+          },
+          "citation_opens": 200,
+          "citation_type": "application/pdf",
+          "right_maker": true,
+          "doc_names_maker": true,
+          "pass": false,
+          "why": "cites no specific page (pp.6-48 of LCN Price Book)"
+        },
+        {
+          "item": "Von Duprin 99",
+          "http": 200,
+          "ms": 197,
+          "matched": true,
+          "page_specific": false,
+          "product": "Von Duprin 99",
+          "matchType": "exact",
+          "citation": {
+            "kind": "cut_sheet",
+            "title": "Von Duprin Price Book (full manufacturer price book; product listed around pp.26-198 in the edition originally catalogued - search this PDF for the exact model, current edition may have shifted pages)",
+            "page": "26-198"
+          },
+          "citation_opens": 200,
+          "citation_type": "application/pdf",
+          "right_maker": true,
+          "doc_names_maker": true,
+          "pass": false,
+          "why": "cites no specific page (pp.26-198 of Von Duprin Price Book)"
+        },
+        {
+          "item": "Ives 8400",
+          "http": 200,
+          "ms": 596,
+          "matched": true,
+          "page_specific": true,
+          "product": "IVES 8400",
+          "matchType": "exact",
+          "citation": {
+            "kind": "catalogue_page",
+            "title": "Ives Price Book 2024",
+            "page": "93"
+          },
+          "citation_opens": null,
+          "citation_type": null,
+          "right_maker": true,
+          "doc_names_maker": true,
+          "pass": false,
+          "why": "cited Ives Price Book 2024 p.93 has no PDF on file (no link to open)"
+        },
+        {
+          "item": "Schlage ND40",
+          "http": 200,
+          "ms": 351,
+          "matched": true,
+          "page_specific": true,
+          "product": "Schlage ND40",
+          "matchType": "exact",
+          "citation": {
+            "kind": "cut_sheet",
+            "title": "Schlage ND Series Catalog 106501 (p.16)",
+            "page": "16"
+          },
+          "citation_opens": 200,
+          "citation_type": "application/pdf",
+          "right_maker": true,
+          "doc_names_maker": true,
+          "pass": true
+        },
+        {
+          "item": "Select SL11",
+          "http": 200,
+          "ms": 156,
+          "matched": true,
+          "page_specific": true,
+          "product": "Select Hinges SL11",
+          "matchType": "exact",
+          "citation": {
+            "kind": "cut_sheet",
+            "title": "Select Hinges SL11 spec sheet (p.1)",
+            "page": "1"
+          },
+          "citation_opens": 200,
+          "citation_type": "application/pdf",
+          "right_maker": true,
+          "doc_names_maker": true,
+          "pass": true
+        },
+        {
+          "item": "Zero 188SBK",
+          "http": 200,
+          "ms": 467,
+          "matched": false,
+          "page_specific": false,
+          "product": null,
+          "matchType": null,
+          "citation": null,
+          "citation_opens": null,
+          "citation_type": null,
+          "right_maker": false,
+          "doc_names_maker": false,
+          "pass": false,
+          "why": "no match: Zero International is in the catalogue; 188SBK is not"
+        },
+        {
+          "item": "Ives WS406/407CCV",
+          "http": 200,
+          "ms": 260,
+          "matched": true,
+          "page_specific": true,
+          "product": "IVES WS406/407CCV",
+          "matchType": "exact",
+          "citation": {
+            "kind": "cut_sheet",
+            "title": "Ives Price Book (full manufacturer price book; product listed around p.130 in the edition originally catalogued - search this PDF for the exact model, current edition may have shifted pages)",
+            "page": "130"
+          },
+          "citation_opens": 200,
+          "citation_type": "application/pdf",
+          "right_maker": true,
+          "doc_names_maker": true,
+          "pass": true
+        },
+        {
+          "item": "Schlage ALX53",
+          "http": 200,
+          "ms": 160,
+          "matched": true,
+          "page_specific": true,
+          "product": "Schlage ALX53",
+          "matchType": "exact",
+          "citation": {
+            "kind": "cut_sheet",
+            "title": "Schlage ALX Series sell sheet 113320 (p.4)",
+            "page": "4"
+          },
+          "citation_opens": 200,
+          "citation_type": "application/pdf",
+          "right_maker": true,
+          "doc_names_maker": true,
+          "pass": true
+        },
+        {
+          "item": "Glynn-Johnson 100S",
+          "http": 200,
+          "ms": 225,
+          "matched": true,
+          "page_specific": false,
+          "product": "Glynn-Johnson 100",
+          "matchType": "base_model",
+          "citation": {
+            "kind": "cut_sheet",
+            "title": "Glynn-Johnson Price Book (full manufacturer price book; product listed around p.None in the edition originally catalogued - search this PDF for the exact model, current edition may have shifted pages)",
+            "page": null
+          },
+          "citation_opens": 200,
+          "citation_type": "application/pdf",
+          "right_maker": true,
+          "doc_names_maker": true,
+          "pass": false,
+          "why": "cites no specific page (page null of Glynn-Johnson Price Book)"
+        },
+        {
+          "item": "Von Duprin EPT10",
+          "http": 200,
+          "ms": 327,
+          "matched": true,
+          "page_specific": true,
+          "product": "Von Duprin EPT10",
+          "matchType": "exact",
+          "citation": {
+            "kind": "catalogue_page",
+            "title": "Von Duprin 22 Series Catalog",
+            "page": "25"
+          },
+          "citation_opens": 200,
+          "citation_type": "application/pdf",
+          "right_maker": true,
+          "doc_names_maker": true,
+          "pass": true
+        }
+      ],
+      "unknown": [
+        {
+          "item": "Acme Doorworks ZX-4471",
+          "kind": "a maker the catalogue does not hold",
+          "http": 200,
+          "matched": false,
+          "product": null,
+          "reason": "maker_unknown",
+          "reasonText": "no maker named Acme Doorworks is known, and no product is named Acme Doorworks ZX-4471",
+          "need": "the maker's name",
+          "pass": true
+        },
+        {
+          "item": "LCN 9977QZ",
+          "kind": "a known maker, a model it does not make",
+          "http": 200,
+          "matched": false,
+          "product": null,
+          "reason": "model_not_in_catalogue",
+          "reasonText": "LCN Closers is in the catalogue; 9977QZ is not",
+          "need": "LCN Closers 9977QZ in the catalogue",
+          "pass": true
+        }
+      ],
+      "paste": {
+        "http": 200,
+        "ms": 1224,
+        "lines": 12,
+        "summary": {
+          "total": 12,
+          "matched": 9,
+          "missed": 3,
+          "skipped": 0,
+          "ms": 986
+        },
+        "skipped": 0,
+        "disagree": []
+      },
+      "fails": [
+        "LCN 4040XP: cites no specific page (pp.6-48 of LCN Price Book)",
+        "Von Duprin 99: cites no specific page (pp.26-198 of Von Duprin Price Book)",
+        "Ives 8400: cited Ives Price Book 2024 p.93 has no PDF on file (no link to open)",
+        "Zero 188SBK: no match: Zero International is in the catalogue; 188SBK is not",
+        "Glynn-Johnson 100S: cites no specific page (page null of Glynn-Johnson Price Book)"
+      ],
+      "summary": "5 of 10 items matched to the right maker with an opening citation; 2 of 2 unknown items stated as misses; paste agrees on 12 of 12. FAIL: LCN 4040XP: cites no specific page (pp.6-48 of LCN Price Book); Von Duprin 99: cites no specific page (pp.26-198 of Von Duprin Price Book); Ives 8400: cited Ives Price Book 2024 p.93 has no PDF on file (no link to open); Zero 188SBK: no match: Zero International is in the catalogue; 188SBK is not; Glynn-Johnson 100S: cites no specific page (page null of Glynn-Johnson Price Book)"
+    },
+    {
+      "id": "takeoffx",
+      "label": "TakeoffX",
+      "doc": "Rockford A2.2 (65 doors) and Berryessa A9.2 x3 (24 doors)",
+      "pass": false,
+      "sessions": [
+        {
+          "door_diffs": [],
+          "id": "rockford",
+          "label": "Rockford Bid 26-27 Addendum One",
+          "session": "73e05f9e-549b-4fa4-a84d-153f351e172a",
+          "doors": 65,
+          "schedule_doors": 65,
+          "traced_to_row": 65,
+          "read_s_per_page": 4.3,
+          "read_pages": [
+            {
+              "page": 29,
+              "ok": true,
+              "type": "door_schedule",
+              "doors": 65,
+              "read_source": "text_layer",
+              "ms": 0
+            }
+          ],
+          "diffs": {
+            "door_type": [],
+            "size": [],
+            "fire_rating": [],
+            "hardware_group": []
+          },
+          "fails": []
+        },
+        {
+          "door_diffs": [
+            "p.286 002: door type read null, schedule \"B\"",
+            "p.288 002: door type read null, schedule \"B\""
+          ],
+          "id": "berryessa",
+          "label": "Berryessa Bid B-09-2023-24",
+          "session": "3cd4c905-066f-4f76-a262-f2a14087cc32",
+          "doors": 24,
+          "schedule_doors": 24,
+          "traced_to_row": 24,
+          "read_s_per_page": 1,
+          "read_pages": [
+            {
+              "page": 284,
+              "ok": true,
+              "type": "door_schedule",
+              "doors": 9,
+              "read_source": "text_layer",
+              "ms": 0
+            },
+            {
+              "page": 286,
+              "ok": true,
+              "type": "door_schedule",
+              "doors": 7,
+              "read_source": "text_layer",
+              "ms": 0
+            },
+            {
+              "page": 288,
+              "ok": true,
+              "type": "door_schedule",
+              "doors": 8,
+              "read_source": "text_layer",
+              "ms": 0
+            }
+          ],
+          "diffs": {
+            "door_type": [
+              "B: read 20, schedule 22",
+              "(none): read 2, schedule 0"
+            ],
+            "size": [],
+            "fire_rating": [],
+            "hardware_group": []
+          },
+          "fails": [
+            "by door type differs (B: read 20, schedule 22; (none): read 2, schedule 0)",
+            "doors: p.286 002: door type read null, schedule \"B\"; p.288 002: door type read null, schedule \"B\""
+          ]
+        }
+      ],
+      "fails": [
+        "berryessa: by door type differs (B: read 20, schedule 22; (none): read 2, schedule 0)",
+        "berryessa: doors: p.286 002: door type read null, schedule \"B\"; p.288 002: door type read null, schedule \"B\""
+      ],
+      "summary": "rockford 65/65 doors, 4 of 4 breakdowns exact, 65 traced to row, 4.3 s/page; berryessa 24/24 doors, 3 of 4 breakdowns exact, 24 traced to row, 1 s/page. FAIL: berryessa: by door type differs (B: read 20, schedule 22; (none): read 2, schedule 0); berryessa: doors: p.286 002: door type read null, schedule \"B\"; p.288 002: door type read null, schedule \"B\""
+    },
+    {
+      "id": "propx",
+      "label": "PropX",
+      "doc": "Berryessa Bid B-09-2023-24 (session read from A9.2 and 08 71 00)",
+      "pass": false,
+      "lines": [
+        {
+          "kind": "door",
+          "description": "Door - type B",
+          "quantity": 20,
+          "unitPrice": 0,
+          "priceSource": "enter"
+        },
+        {
+          "kind": "door",
+          "description": "Door - type A",
+          "quantity": 2,
+          "unitPrice": 0,
+          "priceSource": "enter"
+        },
+        {
+          "kind": "door",
+          "description": "Door - type not scheduled",
+          "quantity": 2,
+          "unitPrice": 0,
+          "priceSource": "enter"
+        },
+        {
+          "kind": "hardware",
+          "description": "Hardware set 2",
+          "quantity": 22,
+          "unitPrice": 455.8,
+          "priceSource": "2 of 9 components priced on the schedule"
+        },
+        {
+          "kind": "hardware",
+          "description": "Hardware set 1",
+          "quantity": 2,
+          "unitPrice": 365.8,
+          "priceSource": "2 of 7 components priced on the schedule"
+        }
+      ],
+      "source_doors": 24,
+      "generate": {
+        "http": 200,
+        "ms": 1708,
+        "stored": true,
+        "proposalId": "1fe3b290-36dd-4fb2-9715-f343badc2236",
+        "quoteNumber": 3,
+        "doorCount": 24,
+        "lineItemCount": 5,
+        "subtotal": 10759.2,
+        "taxAmount": 995.23,
+        "grandTotal": 11754.43,
+        "error": null
+      },
+      "arith": {
+        "expected_subtotal": 10759.2,
+        "consistent": true,
+        "lines_priced": "2 of 5",
+        "partial_set_prices": [
+          "Hardware set 2 $455.8 (2 of 9 components priced on the schedule)",
+          "Hardware set 1 $365.8 (2 of 7 components priced on the schedule)"
+        ],
+        "zero_lines": [
+          "Door - type B x20",
+          "Door - type A x2",
+          "Door - type not scheduled x2"
+        ]
+      },
+      "pdf": {
+        "http": 200,
+        "bytes": 65504,
+        "is_pdf": true,
+        "pages": 2,
+        "prints_grand_total": true,
+        "prints_client": true,
+        "lines_printed": 5,
+        "partial_note_printed": false,
+        "has_signature_block": true,
+        "has_terms": true
+      },
+      "fails": [
+        "Hardware set 2 is printed at $455.8 an opening, which prices 2 of 9 components; the PDF does not say the rest are unpriced; Hardware set 1 is printed at $365.8 an opening, which prices 2 of 7 components; the PDF does not say the rest are unpriced"
+      ],
+      "summary": "5 lines (door 24, frame 0, hardware 24 openings), 2 priced; subtotal $10759.2, tax $995.23, total $11754.43; PDF 64 KB, 2 pp, 2 s. FAIL: Hardware set 2 is printed at $455.8 an opening, which prices 2 of 9 components; the PDF does not say the rest are unpriced; Hardware set 1 is printed at $365.8 an opening, which prices 2 of 7 components; the PDF does not say the rest are unpriced"
+    },
+    {
+      "id": "sightx",
+      "label": "SightX",
+      "doc": "Berryessa Bid B-09-2023-24 (session, 24 doors on 3 sheets)",
+      "pass": false,
+      "model": {
+        "http": 200,
+        "ms": 56,
+        "doors": 24,
+        "schedule_doors": 24,
+        "same_marks": true,
+        "sized_42x94": 24,
+        "rated_120": 24,
+        "sets_in_model": [
+          "01",
+          "02"
+        ],
+        "door_sets": [
+          "2",
+          "1"
+        ],
+        "doors_with_hardware_drawn": 0,
+        "notes": []
+      },
+      "link": {
+        "save_http": 200,
+        "url": "/sightx/?m=fXTMRbWgzDT5",
+        "open_without_account_http": 200,
+        "doors_in_link": 24,
+        "cleanup": "deleted"
+      },
+      "fails": [
+        "0 of 24 doors have their hardware set in the model: the doors name sets 2, 1 and the model keys the read groups as 01, 02 (keys compared as printed, so \"2\" never finds \"02\"); no hardware is drawn on any door"
+      ],
+      "summary": "24/24 doors (same marks), 24 at 42x94, 24 rated 120, 0 with hardware drawn; shared link opens with 24 doors. FAIL: 0 of 24 doors have their hardware set in the model: the doors name sets 2, 1 and the model keys the read groups as 01, 02 (keys compared as printed, so \"2\" never finds \"02\"); no hardware is drawn on any door"
+    }
+  ],
+  "finished_at": "2026-10-09T07:04:21.895Z"
+}

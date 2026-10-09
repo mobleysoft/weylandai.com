@@ -35,7 +35,7 @@ export async function fetchTxdotOpportunities() {
     status: r.proposal_status || null,
     key_date: r.bids_will_be_opened_date || null,
     estimated_value: r.sealed_engineer_s_estimate ? parseFloat(r.sealed_engineer_s_estimate) : null,
-    detail_url: "https://www.txdot.gov/business/letting-bids.html",
+    detail_url: "https://www.txdot.gov/business/road-bridge-maintenance/contract-letting.html",
     raw_data: r
   }));
 }
@@ -87,7 +87,7 @@ export async function fetchIllinoisCdbOpportunities() {
       status: "Future Solicitation",
       key_date: r.estimated_bid_date || null,
       estimated_value: parseCostBand(r.approximate_cost),
-      detail_url: "https://cdb.illinois.gov/business/procurement.html",
+      detail_url: "https://cdb.illinois.gov/procurement.html",
       raw_data: r
     };
   });
@@ -212,7 +212,9 @@ export async function fetchNycScaUpcoming() {
     status: r.upcoming_project_status_ ? "Upcoming (" + r.upcoming_project_status_ + ")" : "Upcoming",
     key_date: null,
     estimated_value: parseMoneyBand(r.upcoming_project_design_completion_date),
-    detail_url: "https://www.nycsca.org/Procurement",
+    // The SCA's procurement pages moved off its site (404 on 2026-10-09); the row's own public source,
+    // NYC Open Data's upcoming-projects dataset, is the link that stays.
+    detail_url: "https://data.cityofnewyork.us/d/tsak-vtv3",
     raw_data: r
   }));
 }
@@ -237,7 +239,7 @@ const UPSERT_SQL = `
         ON CONFLICT(source, source_ref) DO UPDATE SET
           title=excluded.title, agency=excluded.agency, location=excluded.location, category=excluded.category,
           status=excluded.status, key_date=excluded.key_date, estimated_value=excluded.estimated_value,
-          raw_data=excluded.raw_data, fetched_at=excluded.fetched_at,
+          raw_data=excluded.raw_data, fetched_at=excluded.fetched_at, detail_url=excluded.detail_url,
           trade_fit=excluded.trade_fit, trade_fit_why=excluded.trade_fit_why, state=excluded.state
       `;
 

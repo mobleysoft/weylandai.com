@@ -139,7 +139,7 @@ const WIRE_PAGE = `<!doctype html>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>WeylandAI WireX</title>
 <link rel="canonical" href="https://weylandai.com/news">
-<meta name="description" content="Live construction-industry headlines from Engineering News-Record and Construction Dive, a deterministic Editor's Briefing that cites its own sources, and WeylandAI's own real, audited price-extraction engineering reports.">
+<meta name="description" content="Live construction-industry headlines from the trade press (Construction Dive, For Construction Pros), a deterministic Editor's Briefing that cites its own sources, and WeylandAI's own real, audited price-extraction engineering reports.">
 <style>
   :root {
     --bg: #0a0e16;
@@ -259,7 +259,7 @@ const WIRE_PAGE = `<!doctype html>
     ${WIRE_WORDMARK_SVG}
     <div style="flex:1 1 auto">
       <div style="font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-muted)">Construction industry news &amp; engineering-report desk</div>
-      <div class="dek">Live headlines from Engineering News-Record &amp; Construction Dive, a deterministic Editor's Briefing that cites its own sources, and WeylandAI's own real, audited price-extraction validation history.</div>
+      <div class="dek">Live headlines from the construction trade press (Construction Dive, For Construction Pros), a deterministic Editor's Briefing that cites its own sources, and WeylandAI's own real, audited price-extraction validation history.</div>
     </div>
   </header>
   <hr class="rule-thick">
@@ -279,13 +279,13 @@ const WIRE_PAGE = `<!doctype html>
   </div>
 
   <section class="wire" aria-label="Full wire">
-    <h2 class="section-head">The Wire &mdash; ENR &amp; Construction Dive, live</h2>
+    <h2 class="section-head">The Wire &mdash; the construction trade press, live</h2>
     <div id="wire-list" class="headline-list"><p class="loading">Loading&hellip;</p></div>
     <p id="news-pro-status" class="loading"></p>
   </section>
 
   <div class="upgrade-box" id="upgrade-box" style="display:none">
-    <span><strong>WeylandAI WireX Pro</strong> &mdash; $49.00/month, real recurring Stripe subscription: 20 headlines per feed instead of 6, full reports wire.</span>
+    <span><strong>WeylandAI WireX Pro</strong> &mdash; $49.00/month, real recurring Stripe subscription: up to 20 headlines per feed instead of 6 (as many as each feed publishes), full reports wire.</span>
     <button id="upgrade-btn" type="button">Subscribe &mdash; $49/mo</button>
   </div>
 
@@ -296,7 +296,7 @@ const WIRE_PAGE = `<!doctype html>
   </section>
 
   <footer class="masthead-foot">
-    <p>Headlines and links are excerpted from Engineering News-Record and Construction Dive's public RSS feeds; full articles are hosted at their original source, not reproduced here. The Editor's Briefing is a deterministic keyword/entity-overlap clustering of the headline titles above &mdash; no AI model and no network call are involved in generating it. Read the cited headlines yourself before treating it as fact. Not fact-checked journalism. WeylandAI Reports are this venture's own internal engineering-validation notes, not third-party audited financial or safety certifications.</p>
+    <p>Headlines and links are excerpted from the public RSS feeds of the trade press that answer our reader (today Construction Dive and For Construction Pros; ENR, Building Enclosure, SDM, Security Sales &amp; Integration and USGlass refuse it); full articles are hosted at their original source, not reproduced here. The Editor's Briefing is a deterministic keyword/entity-overlap clustering of the headline titles above &mdash; no AI model and no network call are involved in generating it. Read the cited headlines yourself before treating it as fact. Not fact-checked journalism. WeylandAI Reports are this venture's own internal engineering-validation notes, not third-party audited financial or safety certifications.</p>
   </footer>
 </div>
 
