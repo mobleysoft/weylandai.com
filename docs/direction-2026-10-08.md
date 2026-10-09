@@ -45,6 +45,16 @@ John, on the Mac session's proposal of a done-for-you submittal intake: "This is
 
 The measured shortfalls at that moment, each with its source, are the "Journeys" and "Verified state" sections below plus the open items of docs/weylandai_value_report_20261007.md (desktop opens on the space intro; no upload prompt on the first screen; the Finder, News and the small tools unlinked from the homepage; WALK hangs only 12 product tags; CompX counts 9 to 50 percent of the dataset with win rates up to 4.5x too high; GeoX and WeatherX thin; ForecastX bills on day 1 and never returns retainage; CoA boxes pre-ticked; NotesX splits attendees at commas).
 
+## AuthFor hardened and live; sign-in journeys after it, 2026-10-09 02:37 EDT
+
+AuthFor (every venture's login) was hardened by Codex through Mobley and deployed at 02:20 EDT on John's yes (authfor-gateway-worker 4d706522; fecundant goals rank 2): new access tokens expire after one hour and refresh through POST /api/v1/refresh; passwords are PBKDF2 and rehash at the next sign-in; tokens are accepted only as Authorization: Bearer (single-use reset and invite links excepted); accounts, reset links and revocation marks live in a Durable Object with lazy migration from KV, so a reset or password change takes effect at once. Old tokens without exp keep working until a cutover date John has not set.
+
+Verified live from the Mac at 06:33 to 06:36Z on a throwaway alias account: the WeylandAI-branded reset mail arrived from auth@weylandai.com; POST /api/v1/password/reset-confirm with the emailed token and new_password answered success with email_verified true; the new password signed in; the old password was refused immediately; the used link answered RESET_INVALID on reuse. A reset request for an address with no account answered the same 200 sent:true and mailed a no-account note (no enumeration).
+
+Sign-in family, three passes against production after the deploy (tools/user-simulation/reports/matrix-2026-10-09T06-27-15-828Z): signin 22/22, create-free-account 18/18, free-trial-first-use 12/12, account-view-signout 15/15, deep-link-login 17/17, forgot-password 9/9, code-sign-in 10/10, all three passes; reset-in-page 3/4 in all three passes on one check only, "the issued reset token could not be read back": the journey read the token from AuthFor's KV key reset:user:<id>, and reset links now live in the Durable Object. Test drift, not product. Fix in progress through Codex: a reveal of the issued token in reset-request's answer, only for the journey alias pattern and only with the Worker secret JOURNEY_REVEAL_KEY in header X-Authfor-Journey-Key; the journey then reads reset_token from the answer. Until that lands, treat reset-in-page's red as known.
+
+For the cloud session: check in a real browser that the shell's SDK refresh timer renews the token before the hour is up; no journey covers the hourly boundary.
+
 ## Verified state, 2026-10-08 23:44 EDT (measured from the Mac against production, no product changes)
 
 Reading, through the same requests the SubX page makes, against the expected rows read by eye (tools/accuracy/schedule_report_2026-10-09-03-44_after-cloud-20261008.md; live SubX worker was the cloud's version 8ff50f5e):
