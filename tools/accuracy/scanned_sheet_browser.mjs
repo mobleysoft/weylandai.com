@@ -46,7 +46,8 @@ let browser, timer;
 try {
   console.log("Browser verification: " + server.base);
   if (!process.argv.includes("--manual")) {
-    const { chromium } = await import(process.env.PLAYWRIGHT_CORE || "playwright-core");
+    const pwMod = await import(process.env.PLAYWRIGHT_CORE || "playwright-core");
+const { chromium } = pwMod.chromium ? pwMod : pwMod.default; // a file-path import of playwright-core puts the API on default
     browser = await chromium.launch({ ...(process.env.CHROMIUM_PATH ? { executablePath: process.env.CHROMIUM_PATH } : {}) });
     const page = await browser.newPage(); await page.goto(server.base);
   }
