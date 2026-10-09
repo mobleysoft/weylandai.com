@@ -173,11 +173,13 @@
   </script>
   <script>
     const state={started:Date.now(),transcript:[],decisions:[],actions:[],chat:[],camera:null,display:null,recognition:null,recording:false};
+    let mediaGeneration=0;
     const $=id=>document.getElementById(id);
     const clock=()=>{const s=Math.floor((Date.now()-state.started)/1000);$('timer').textContent=[s/3600,s/60%60,s%60].map(v=>String(Math.floor(v)).padStart(2,'0')).join(':')};setInterval(clock,1000);clock();
     function showStream(stream,label){$('stage').srcObject=stream;$('tile-local').hidden=false;$('media-status').textContent=label;updateStage()}
-    async function startMedia(){try{if(!state.camera)state.camera=await navigator.mediaDevices.getUserMedia({video:{width:{ideal:1280},height:{ideal:720}},audio:{echoCancellation:true,noiseSuppression:true}});showStream(state.camera,connected?'IN THE CALL':'CAMERA + MICROPHONE READY');$('media-btn').classList.add('active');$('mute-btn').hidden=false;$('cam-btn').hidden=false;pushLocalTracks()}catch(e){$('media-status').textContent='MEDIA PERMISSION REQUIRED';alert('Allow camera and microphone access to activate the MeetingX stage.') }}
-    async function shareScreen(){try{state.display=await navigator.mediaDevices.getDisplayMedia({video:true,audio:true});showStream(state.display,'SCREEN SHARE ACTIVE');$('share-btn').classList.add('active');pushLocalTracks();state.display.getVideoTracks()[0].addEventListener('ended',()=>{state.display=null;$('share-btn').classList.remove('active');pushLocalTracks();if(state.camera)showStream(state.camera,connected?'IN THE CALL':'CAMERA + MICROPHONE READY');else{$('stage').srcObject=null;$('tile-local').hidden=true;updateStage()}})}catch(e){if(e.name!=='NotAllowedError')alert('Screen sharing could not start: '+e.message)}}
+    async function startMedia(){const generation=mediaGeneration;try{if(!state.camera){const stream=await navigator.mediaDevices.getUserMedia({video:{width:{ideal:1280},height:{ideal:720}},audio:{echoCancellation:true,noiseSuppression:true}});if(generation!==mediaGeneration){stream.getTracks().forEach(t=>t.stop());return}state.camera=stream}showStream(state.camera,connected?'IN THE CALL':'CAMERA + MICROPHONE READY');$('media-btn').classList.add('active');$('mute-btn').hidden=false;$('cam-btn').hidden=false;pushLocalTracks()}catch(e){if(generation!==mediaGeneration)return;$('media-status').textContent='MEDIA PERMISSION REQUIRED';alert('Allow camera and microphone access to activate the MeetingX stage.') }}
+    async function shareScreen(){const generation=mediaGeneration;try{const stream=await navigator.mediaDevices.getDisplayMedia({video:true,audio:true});if(generation!==mediaGeneration){stream.getTracks().forEach(t=>t.stop());return}state.display=stream;showStream(stream,'SCREEN SHARE ACTIVE');$('share-btn').classList.add('active');pushLocalTracks();stream.getVideoTracks()[0].addEventListener('ended',()=>{if(state.display!==stream)return;state.display=null;$('share-btn').classList.remove('active');pushLocalTracks();if(state.camera)showStream(state.camera,connected?'IN THE CALL':'CAMERA + MICROPHONE READY');else{$('stage').srcObject=null;$('tile-local').hidden=true;updateStage()}})}catch(e){if(generation!==mediaGeneration)return;if(e.name!=='NotAllowedError')alert('Screen sharing could not start: '+e.message)}}
+    function stopLocalMedia(){mediaGeneration++;const streams=[state.camera,state.display],recognition=state.recognition;state.camera=null;state.display=null;state.recognition=null;state.recording=false;streams.forEach(s=>{if(s)s.getTracks().forEach(t=>t.stop())});if(recognition){try{recognition.stop()}catch(e){}}$('stage').srcObject=null;$('tile-local').hidden=true;$('media-status').textContent='NOT IN A CALL';['media-btn','share-btn','record-btn','mute-btn','cam-btn'].forEach(id=>$(id).classList.remove('active'));$('mute-btn').hidden=true;$('cam-btn').hidden=true;$('mute-btn').textContent='MUTE';$('cam-btn').textContent='CAMERA OFF';$('speech-status').textContent='PAUSED';updateStage()}
     function initSpeech(){const SR=window.SpeechRecognition||window.webkitSpeechRecognition;if(!SR)return null;const r=new SR();r.continuous=true;r.interimResults=true;r.lang='en-US';r.onresult=e=>{let interim='';for(let i=e.resultIndex;i<e.results.length;i++){const text=e.results[i][0].transcript.trim();if(e.results[i].isFinal){if(text)saveItem('transcript',text)}else interim=text}renderTranscript(interim)};r.onend=()=>{if(state.recording){try{r.start()}catch(_){}}};r.onerror=e=>{$('speech-status').textContent=e.error.toUpperCase()};return r}
     function renderTranscript(interim=''){$('transcript').innerHTML=(state.transcript.length?state.transcript.map(x=>`<div>${x.by?`<b>${escapeHtml(x.by)}:</b> `:''}${escapeHtml(x.text)}</div>`).join(''):(state.recording?'<span class="interim">Listening…</span>':'<span class="interim">No transcript yet. Press TRANSCRIBE to add what your microphone hears.</span>'))+(interim?`<div class="interim">${escapeHtml(interim)}</div>`:'');$('transcript').scrollTop=$('transcript').scrollHeight}
     function toggleSpeech(){if(!state.recognition)state.recognition=initSpeech();if(!state.recognition){$('speech-status').textContent='UNSUPPORTED';alert('Live browser transcription is not available in this browser. Camera, notes, decisions, and export still work.');return}state.recording=!state.recording;if(state.recording){state.recognition.start();$('record-btn').classList.add('active');$('speech-status').textContent='LISTENING'}else{state.recognition.stop();$('record-btn').classList.remove('active');$('speech-status').textContent='PAUSED'}}
@@ -245,8 +247,10 @@
       setRoomState('CONNECTING');
       const proto=location.protocol==='https:'?'wss:':'ws:';
       try{roomSocket=new WebSocket(proto+'//'+location.host+'/api/sight/room/'+encodeURIComponent(roomId))}catch(e){roomSocket=null;setRoomState('UNAVAILABLE','warn');notice('This browser could not open the room connection.');return}
-      roomSocket.onopen=()=>{connected=true;setJoinLabels();setRoomState('CONNECTED','on');notice('You are in room '+roomId+' as '+((info&&info.name)||'you')+'. Turn on CAM + MIC to talk; share the link (COPY LINK) so others can join.');if(state.camera)$('media-status').textContent='IN THE CALL';loadRecord();try{$('room-card').scrollIntoView({behavior:'smooth',block:'nearest'})}catch(e){}};
+      const socket=roomSocket;
+      roomSocket.onopen=()=>{if(roomSocket!==socket)return;connected=true;setJoinLabels();setRoomState('CONNECTED','on');notice('You are in room '+roomId+' as '+((info&&info.name)||'you')+'. Turn on CAM + MIC to talk; share the link (COPY LINK) so others can join.');if(state.camera)$('media-status').textContent='IN THE CALL';loadRecord();try{$('room-card').scrollIntoView({behavior:'smooth',block:'nearest'})}catch(e){}};
       roomSocket.onmessage=evt=>{
+        if(roomSocket!==socket)return;
         let msg;try{msg=JSON.parse(evt.data)}catch(e){return}
         if(msg.type==='roster'){roomRoster=msg.users||[];roomYouId=msg.you;renderRoster();appendRoomChat(`You joined room ${roomId}. ${roomRoster.length} participant(s) here now.`);callEveryone()}
         else if(msg.type==='join'){roomRoster.push(msg.user);renderRoster();appendRoomChat(`${msg.user.name} joined the room.`)}
@@ -255,7 +259,8 @@
         else if(msg.type==='chat'){appendRoomChat(`${msg.user.name}: ${msg.text}`)}
       };
       roomSocket.onclose=evt=>{
-        const was=connected;connected=false;roomSocket=null;closeAllPeers();roomRoster=[];roomYouId=null;setJoinLabels();renderRoster();
+        if(roomSocket!==socket)return;
+        const was=connected;clearRoomConnection(socket);
         setRoomState('NOT CONNECTED',was&&evt.code!==1000?'warn':'');
         if(was&&evt.code!==1000)notice('The room connection dropped. Press JOIN ROOM to reconnect.');
         else if(!was)notice('The room did not accept the connection. Press JOIN ROOM to try again.');
@@ -263,6 +268,7 @@
       };
       roomSocket.onerror=()=>{};
     }
+    function clearRoomConnection(socket){if(roomSocket!==socket)return;connected=false;roomSocket=null;closeAllPeers();roomRoster=[];roomYouId=null;setJoinLabels();renderRoster()}
     // Calls (2026-10-08): a browser-to-browser mesh. The room's Durable Object relays
     // {type:'signal', to, payload} between members; whoever joins calls everyone already
     // here, so two people never offer to each other at once. Each call carries one audio
@@ -282,10 +288,12 @@
     function setTracks(p){p.pc.getTransceivers().forEach(t=>{const kind=t.receiver&&t.receiver.track&&t.receiver.track.kind;if(!kind||t.stopped)return;t.sender.replaceTrack(kind==='audio'?localAudio():localVideo()).catch(()=>{})})}
     function pushLocalTracks(){peers.forEach(setTracks)}
     async function makePeer(id,name){
-      const pc=new RTCPeerConnection(await iceServers());
+      const socket=roomSocket,config=await iceServers();
+      if(!connected||!socket||roomSocket!==socket)return null;
+      const pc=new RTCPeerConnection(config);
       const p={pc,name,pending:[]};peers.set(id,p);
       const tile=tileFor(id,name);updateStage();
-      pc.onicecandidate=e=>{if(e.candidate)sendSignal(id,{kind:'ice',candidate:e.candidate})};
+      pc.onicecandidate=e=>{if(e.candidate&&roomSocket===socket&&peers.get(id)===p)sendSignal(id,{kind:'ice',candidate:e.candidate})};
       pc.ontrack=e=>{const v=tile.querySelector('video');if(!v.srcObject)v.srcObject=new MediaStream();v.srcObject.addTrack(e.track);v.play().catch(()=>{})};
       pc.onconnectionstatechange=()=>{const note=tile.querySelector('.tile-note');const st=pc.connectionState;if(st==='connected')note.textContent='';else if(st==='failed')note.textContent='Could not connect: a network between you blocks direct calls. Chat still works.';else if(st==='disconnected')note.textContent='Reconnecting...'};
       return p;
@@ -293,12 +301,12 @@
     function closePeer(id){const p=peers.get(id);if(p){try{p.pc.close()}catch(e){}peers.delete(id)}const t=document.getElementById('tile-'+id);if(t)t.remove();updateStage()}
     function closeAllPeers(){Array.from(peers.keys()).forEach(closePeer)}
     async function flush(p){const c=p.pending.splice(0);for(const x of c){try{await p.pc.addIceCandidate(x)}catch(e){}}}
-    async function callPeer(u){const p=await makePeer(u.userId,u.name);p.pc.addTransceiver('audio',{direction:'sendrecv'});p.pc.addTransceiver('video',{direction:'sendrecv'});setTracks(p);await p.pc.setLocalDescription(await p.pc.createOffer());sendSignal(u.userId,{kind:'offer',sdp:p.pc.localDescription})}
+    async function callPeer(u){const p=await makePeer(u.userId,u.name);if(!p)return;p.pc.addTransceiver('audio',{direction:'sendrecv'});p.pc.addTransceiver('video',{direction:'sendrecv'});setTracks(p);await p.pc.setLocalDescription(await p.pc.createOffer());sendSignal(u.userId,{kind:'offer',sdp:p.pc.localDescription})}
     function callEveryone(){if(!window.RTCPeerConnection)return;const others=roomRoster.filter(u=>u.userId!==roomYouId);if(others.length>MAX_PEERS)appendRoomChat('Calls connect up to '+(MAX_PEERS+1)+' people; chat reaches everyone.');others.slice(0,MAX_PEERS).forEach(u=>callPeer(u).catch(()=>{}))}
     async function onSignal(msg){
       const from=msg.from,pl=msg.payload||{};
       try{
-        if(pl.kind==='offer'){if(!window.RTCPeerConnection)return;if(peers.size>=MAX_PEERS&&!peers.has(from))return;closePeer(from);const p=await makePeer(from,msg.fromName);await p.pc.setRemoteDescription(pl.sdp);p.pc.getTransceivers().forEach(t=>{t.direction='sendrecv'});setTracks(p);await p.pc.setLocalDescription(await p.pc.createAnswer());sendSignal(from,{kind:'answer',sdp:p.pc.localDescription});await flush(p)}
+        if(pl.kind==='offer'){if(!window.RTCPeerConnection)return;if(peers.size>=MAX_PEERS&&!peers.has(from))return;closePeer(from);const p=await makePeer(from,msg.fromName);if(!p)return;await p.pc.setRemoteDescription(pl.sdp);p.pc.getTransceivers().forEach(t=>{t.direction='sendrecv'});setTracks(p);await p.pc.setLocalDescription(await p.pc.createAnswer());sendSignal(from,{kind:'answer',sdp:p.pc.localDescription});await flush(p)}
         else if(pl.kind==='answer'){const p=peers.get(from);if(p){await p.pc.setRemoteDescription(pl.sdp);await flush(p)}}
         else if(pl.kind==='ice'){const p=peers.get(from);if(!p)return;if(p.pc.remoteDescription)await p.pc.addIceCandidate(pl.candidate).catch(()=>{});else p.pending.push(pl.candidate)}
         else if(pl.kind==='record'&&pl.item){applyItem(pl.item)}
@@ -327,7 +335,7 @@
         for(const k of ['decision','action','transcript'])for(const x of local[k])await saveItem(k,x.text);
       }catch(e){}
     }
-    function leaveRoom(){if(roomSocket)roomSocket.close(1000,'user left')}
+    function leaveRoom(){const socket=roomSocket;ssDel(JOIN_KEY);joining=false;if(socket)clearRoomConnection(socket);stopLocalMedia();setRoomState('NOT CONNECTED');notice('You left room '+roomId+'. Press JOIN ROOM to come back.');if(socket)socket.close(1000,'user left')}
     function sendRoomChat(){const v=$('room-chat-input').value.trim();if(!v||!roomSocket||roomSocket.readyState!==1)return;roomSocket.send(JSON.stringify({type:'chat',text:v}));$('room-chat-input').value='';fetch(recordUrl(),{method:'POST',credentials:'same-origin',headers:{'Content-Type':'application/json'},body:JSON.stringify({kind:'chat',text:v})}).then(r=>r.ok?r.json():null).then(d=>{if(d&&d.item)state.chat.push(d.item)}).catch(()=>{})}
     $('room-btn').onclick=()=>{if(roomSocket)leaveRoom();else joinRoom()};
     $('room-join-bar').onclick=()=>{if(roomSocket)leaveRoom();else joinRoom()};
