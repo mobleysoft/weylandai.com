@@ -1,0 +1,477 @@
+{
+  "base": "https://weylandai.com",
+  "started_at": "2026-10-09T06:46:31.267Z",
+  "documents": [
+    {
+      "id": "rockford",
+      "label": "Rockford Bid 26-27 Addendum One",
+      "errors": [],
+      "read": {
+        "status": 200,
+        "ms": 20366,
+        "failed": []
+      },
+      "packet": {
+        "ms": 61516,
+        "total_pages": 69,
+        "components": 37,
+        "matched": 36,
+        "unmatched": 1
+      },
+      "cited": [
+        {
+          "title": "Select Hinges SL11: Select Hinges SL11 spec sheet, page 2",
+          "manufacturer": "Select Hinges",
+          "model": "SL11",
+          "page": 2,
+          "sets": [
+            "01 RR",
+            "02 RR-M",
+            "06 CL",
+            "07 CL",
+            "19 STO",
+            "19F STO",
+            "20 STO",
+            "23 STO",
+            "28 COR",
+            "40 UTY",
+            "44 UTY-IT",
+            "51 UTY-CUS",
+            "32 EXD"
+          ]
+        },
+        {
+          "title": "Schlage ND40: Schlage ND Series Catalog 106501, page 16",
+          "manufacturer": "Schlage",
+          "model": "ND40",
+          "page": 16,
+          "sets": [
+            "01 RR"
+          ]
+        },
+        {
+          "title": "LCN Closers 4040XP: LCN 4000 Series Surface Mounted Closers Catalog, page 41",
+          "manufacturer": "LCN Closers",
+          "model": "4040XP",
+          "page": 41,
+          "sets": [
+            "01 RR",
+            "02 RR-M",
+            "19F STO",
+            "20 STO",
+            "23 STO",
+            "44 UTY-IT",
+            "47 VES",
+            "06 CL",
+            "07 CL",
+            "19 STO",
+            "32 EXD",
+            "40 UTY"
+          ]
+        },
+        {
+          "title": "IVES 8400: Ives Architectural Hardware Products Catalog, page 131",
+          "manufacturer": "IVES",
+          "model": "8400",
+          "page": 131,
+          "sets": [
+            "01 RR",
+            "02 RR-M",
+            "06 CL",
+            "07 CL",
+            "20 STO",
+            "23 STO",
+            "28 COR",
+            "44 UTY-IT",
+            "19 STO",
+            "19F STO"
+          ]
+        },
+        {
+          "title": "IVES WS406/407CCV: Ives Architectural Hardware Products Catalog, page 203",
+          "manufacturer": "IVES",
+          "model": "WS406/407CCV",
+          "page": 203,
+          "sets": [
+            "01 RR",
+            "02 RR-M",
+            "06 CL",
+            "19 STO",
+            "19F STO",
+            "20 STO",
+            "44 UTY-IT"
+          ]
+        },
+        {
+          "title": "IVES SR64: Ives Architectural Hardware Products Catalog, page 187",
+          "manufacturer": "IVES",
+          "model": "SR64",
+          "page": 187,
+          "sets": [
+            "01 RR",
+            "02 RR-M",
+            "06 CL",
+            "07 CL",
+            "19 STO",
+            "20 STO",
+            "23 STO",
+            "44 UTY-IT",
+            "51 UTY-CUS"
+          ]
+        },
+        {
+          "title": "IVES 8200 4\" X 16\" TKTX SCREWS AT HM DOORS: Ives Architectural Hardware Products Catalog, page 125",
+          "manufacturer": "IVES",
+          "model": "8200 4\" X 16\" TKTX SCREWS AT HM DOORS",
+          "page": 125,
+          "sets": [
+            "02 RR-M"
+          ]
+        },
+        {
+          "title": "IVES 8302 10\" 4\" X 16\" TKTX SCREWS AT HM DOORS: Ives Architectural Hardware Products Catalog, page 96",
+          "manufacturer": "IVES",
+          "model": "8302 10\" 4\" X 16\" TKTX SCREWS AT HM DOORS",
+          "page": 96,
+          "sets": [
+            "02 RR-M"
+          ]
+        },
+        {
+          "title": "Schlage ALX53: Schlage ALX Series sell sheet 113320, page 4",
+          "manufacturer": "Schlage",
+          "model": "ALX53",
+          "page": 4,
+          "sets": [
+            "06 CL",
+            "07 CL",
+            "19 STO",
+            "19F STO",
+            "20 STO",
+            "23 STO",
+            "40 UTY",
+            "44 UTY-IT",
+            "51 UTY-CUS"
+          ]
+        },
+        {
+          "title": "IVES FB51P / FB61P: Ives Architectural Hardware Products Catalog, page 159",
+          "manufacturer": "IVES",
+          "model": "FB51P / FB61P",
+          "page": 159,
+          "sets": [
+            "19 STO",
+            "19F STO",
+            "40 UTY"
+          ]
+        },
+        {
+          "title": "IVES DP1: Ives Architectural Hardware Products Catalog, page 167",
+          "manufacturer": "IVES",
+          "model": "DP1",
+          "page": 167,
+          "sets": [
+            "19 STO",
+            "19F STO",
+            "40 UTY"
+          ]
+        },
+        {
+          "title": "Zero International 188S-BK: Zero Price Book, page 44",
+          "manufacturer": "Zero International",
+          "model": "188S-BK",
+          "page": 44,
+          "sets": [
+            "19F STO",
+            "28 COR"
+          ]
+        },
+        {
+          "title": "Von Duprin 99: Von Duprin Price Book, page 43",
+          "manufacturer": "Von Duprin",
+          "model": "99",
+          "page": 43,
+          "sets": [
+            "28 COR"
+          ]
+        },
+        {
+          "title": "Schlage 20-057-C FSIC 6PIN: Schlage_Key_Systems_Cylinders_Keys_Catalog_109487, page 41",
+          "manufacturer": "Schlage",
+          "model": "20-057-C FSIC 6PIN",
+          "page": 41,
+          "sets": [
+            "28 COR"
+          ]
+        },
+        {
+          "title": "Glynn-Johnson 100: Glynn-Johnson Price Book, page 23",
+          "manufacturer": "Glynn-Johnson",
+          "model": "100",
+          "page": 23,
+          "sets": [
+            "28 COR",
+            "32 EXD",
+            "47 VES"
+          ]
+        },
+        {
+          "title": "LCN Closers 4040SE: LCN Door Controls General Information Catalog, page 16",
+          "manufacturer": "LCN Closers",
+          "model": "4040SE",
+          "page": 16,
+          "sets": [
+            "28 COR"
+          ]
+        },
+        {
+          "title": "Von Duprin EPT10: Von Duprin 22 Series Catalog, page 25",
+          "manufacturer": "Von Duprin",
+          "model": "EPT10",
+          "page": 25,
+          "sets": [
+            "32 EXD",
+            "40 UTY"
+          ]
+        },
+        {
+          "title": "Von Duprin 99: Von Duprin Price Book, page 224",
+          "manufacturer": "Von Duprin",
+          "model": "99",
+          "page": 224,
+          "sets": [
+            "32 EXD"
+          ]
+        },
+        {
+          "title": "IVES 8190HD 10\" O: Ives Architectural Hardware Products Catalog, page 89",
+          "manufacturer": "IVES",
+          "model": "8190HD 10\" O",
+          "page": 89,
+          "sets": [
+            "32 EXD",
+            "47 VES"
+          ]
+        },
+        {
+          "title": "Zero International 39: Zero Price Book, page 27",
+          "manufacturer": "Zero International",
+          "model": "39",
+          "page": 27,
+          "sets": [
+            "32 EXD",
+            "40 UTY"
+          ]
+        },
+        {
+          "title": "Zero International 566: Zero Price Book, page 14",
+          "manufacturer": "Zero International",
+          "model": "566",
+          "page": 14,
+          "sets": [
+            "32 EXD",
+            "40 UTY"
+          ]
+        },
+        {
+          "title": "Von Duprin 6223: Von Duprin Price Book, page 226",
+          "manufacturer": "Von Duprin",
+          "model": "6223",
+          "page": 226,
+          "sets": [
+            "40 UTY"
+          ]
+        },
+        {
+          "title": "Zero International 142: Zero Price Book, page 15",
+          "manufacturer": "Zero International",
+          "model": "142",
+          "page": 15,
+          "sets": [
+            "40 UTY"
+          ]
+        },
+        {
+          "title": "Zero International 429: Zero Price Book, page 35",
+          "manufacturer": "Zero International",
+          "model": "429",
+          "page": 35,
+          "sets": [
+            "40 UTY"
+          ]
+        },
+        {
+          "title": "Von Duprin 6211: Von Duprin Price Book, page 225",
+          "manufacturer": "Von Duprin",
+          "model": "6211",
+          "page": 225,
+          "sets": [
+            "44 UTY-IT"
+          ]
+        },
+        {
+          "title": "Select Hinges SL57: Select Hinges SL57 spec sheet, page 2",
+          "manufacturer": "Select Hinges",
+          "model": "SL57",
+          "page": 2,
+          "sets": [
+            "47 VES"
+          ]
+        }
+      ],
+      "misses": [
+        {
+          "item": "4 EA overhead_stop 90S (Glynn-Johnson)",
+          "sets": [
+            "07 CL",
+            "23 STO",
+            "40 UTY",
+            "51 UTY-CUS"
+          ],
+          "code": "model_not_in_catalogue",
+          "why": "Glynn-Johnson is in the catalogue; 90S is not",
+          "needed": "Glynn-Johnson 90S in the catalogue"
+        }
+      ],
+      "misses_without_need": 0,
+      "by_others": [
+        {
+          "item": "2 EA seal BY DOOR AND FRAME MANUFACTURER",
+          "sets": [
+            "32 EXD",
+            "47 VES"
+          ]
+        },
+        {
+          "item": "10 EA card_reader BY DIVISION 28",
+          "sets": [
+            "32 EXD",
+            "40 UTY",
+            "44 UTY-IT"
+          ]
+        }
+      ],
+      "pdf": {
+        "bytes": 6164592,
+        "pages": 69,
+        "has_misses_page": true
+      },
+      "cleanup": "deleted"
+    },
+    {
+      "id": "berryessa",
+      "label": "Berryessa Bid B-09-2023-24",
+      "errors": [],
+      "read": {
+        "status": 200,
+        "ms": 3511,
+        "failed": []
+      },
+      "packet": {
+        "ms": 10843,
+        "total_pages": 20,
+        "components": 10,
+        "matched": 10,
+        "unmatched": 0
+      },
+      "cited": [
+        {
+          "title": "IVES 5BB1HW: Ives Architectural Hardware Products Catalog, page 22",
+          "manufacturer": "IVES",
+          "model": "5BB1HW",
+          "page": 22,
+          "sets": [
+            "01",
+            "02"
+          ]
+        },
+        {
+          "title": "Von Duprin 99-L-F: Von Duprin Price Book, page 26",
+          "manufacturer": "Von Duprin",
+          "model": "99-L-F",
+          "page": 26,
+          "sets": [
+            "01"
+          ]
+        },
+        {
+          "title": "Schlage 20-057-ICX: Schlage_Key_Systems_Cylinders_Keys_Catalog_109487, page 41",
+          "manufacturer": "Schlage",
+          "model": "20-057-ICX",
+          "page": 41,
+          "sets": [
+            "01",
+            "02"
+          ]
+        },
+        {
+          "title": "LCN Closers 4040XP: LCN 4000 Series Surface Mounted Closers Catalog, page 41",
+          "manufacturer": "LCN Closers",
+          "model": "4040XP",
+          "page": 41,
+          "sets": [
+            "01",
+            "02"
+          ]
+        },
+        {
+          "title": "IVES 8400: Ives Architectural Hardware Products Catalog, page 131",
+          "manufacturer": "IVES",
+          "model": "8400",
+          "page": 131,
+          "sets": [
+            "01",
+            "02"
+          ]
+        },
+        {
+          "title": "Zero International 188S-BK: Zero Price Book, page 44",
+          "manufacturer": "Zero International",
+          "model": "188S-BK",
+          "page": 44,
+          "sets": [
+            "01",
+            "02"
+          ]
+        },
+        {
+          "title": "Von Duprin 99: Von Duprin Price Book, page 56",
+          "manufacturer": "Von Duprin",
+          "model": "99",
+          "page": 56,
+          "sets": [
+            "02"
+          ]
+        },
+        {
+          "title": "Von Duprin 99: Von Duprin Price Book, page 43",
+          "manufacturer": "Von Duprin",
+          "model": "99",
+          "page": 43,
+          "sets": [
+            "02"
+          ]
+        },
+        {
+          "title": "Zero International 328A: Zero Price Book, page 34",
+          "manufacturer": "Zero International",
+          "model": "328A",
+          "page": 34,
+          "sets": [
+            "02"
+          ]
+        }
+      ],
+      "misses": [],
+      "misses_without_need": 0,
+      "by_others": [],
+      "pdf": {
+        "bytes": 3719097,
+        "pages": 20,
+        "has_misses_page": false
+      },
+      "cleanup": "deleted"
+    }
+  ],
+  "finished_at": "2026-10-09T06:48:18.931Z"
+}
