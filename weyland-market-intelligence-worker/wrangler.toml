@@ -61,6 +61,15 @@ database_id = "5729f77e-d7e3-4577-ab43-3c064fa90ca5"
 # 2026-10-08: CompX, WeatherX, ForecastX and GeoX are rebuilt here and
 # answered by this worker directly (until today the monolith served their
 # pages and reached these APIs through a service binding).
+# 2026-10-09: MarketX, rebuilt on six cities' building permits, moves here from the platform worker.
+[[routes]]
+pattern = "weylandai.com/api/marketx/*"
+zone_name = "weylandai.com"
+
+[[routes]]
+pattern = "weylandai.com/marketx*"
+zone_name = "weylandai.com"
+
 [[routes]]
 pattern = "weylandai.com/api/compx/*"
 zone_name = "weylandai.com"

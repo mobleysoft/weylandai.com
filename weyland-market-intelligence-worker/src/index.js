@@ -38,6 +38,9 @@ import { registerMarketIntelligenceRoutes, computePriceIndexSnapshot } from "./r
 import { registerCompxRoutes } from "./routes/compx.js";
 import { ingestAwards } from "./lib/awards.js";
 import compxHtml from "./pages/compx.html";
+import { registerMarketxRoutes } from "./routes/marketx.js";
+import { ingestPermits } from "./lib/permits.js";
+import marketxHtml from "./pages/marketx.html";
 import { registerJobToolRoutes, logYesterday } from "./routes/job-tools.js";
 import geoxHtml from "./pages/geox.html";
 import weatherxHtml from "./pages/weatherx.html";
@@ -47,10 +50,11 @@ import { secured } from "../../weyland-shared/security-headers.js";
 const router = new NativeRouter();
 registerMarketIntelligenceRoutes(router);
 registerCompxRoutes(router);
+registerMarketxRoutes(router);
 registerJobToolRoutes(router);
 // The rebuilt tools' pages (2026-10-08): this worker now has zone routes for them.
 const page = (html) => () => new Response(html, { headers: { "Content-Type": "text/html; charset=UTF-8", "Cache-Control": "no-store" } });
-for (const [name, html] of [["compx", compxHtml], ["geox", geoxHtml], ["weatherx", weatherxHtml], ["forecastx", forecastxHtml]]) for (const p of ["/" + name, "/" + name + "/"]) router.get(p, page(html));
+for (const [name, html] of [["marketx", marketxHtml], ["compx", compxHtml], ["geox", geoxHtml], ["weatherx", weatherxHtml], ["forecastx", forecastxHtml]]) for (const p of ["/" + name, "/" + name + "/"]) router.get(p, page(html));
 
 // Daily pre-warm (wrangler.toml [triggers], second cron) - per direct
 // instruction (2026-10-05) no visitor request should be the first to hit
@@ -94,6 +98,10 @@ export default secured({
       run: () => prewarmProjectLocations(env, ctx).then((r) => console.log("[prewarm-locations] traffic-driven:", JSON.stringify(r))) });
     trafficDrivenJob(env, ctx, { db: env.DB, job: "compx-awards-ingest-v2", cadenceSeconds: 86400, worker: "weyland-market-intelligence-worker",
       run: () => ingestAwards(env.DB).then((r) => console.log("[compx-awards] traffic-driven:", JSON.stringify(r))) });
+    // MarketX's permits: every 15 minutes a run reads each city onward from its cursor for up to 20 s
+    // (24 months the first runs, then what each city issued since).
+    trafficDrivenJob(env, ctx, { db: env.DB, job: "marketx-permits-ingest", cadenceSeconds: 900, worker: "weyland-market-intelligence-worker",
+      run: () => ingestPermits(env.DB).then((r) => console.log("[marketx-permits] traffic-driven:", JSON.stringify(r))) });
     trafficDrivenJob(env, ctx, { db: env.DB, job: "weatherx-daily-log", cadenceSeconds: 86400, worker: "weyland-market-intelligence-worker",
       run: () => logYesterday(env).then((r) => console.log("[weatherx-log] traffic-driven:", JSON.stringify(r))) });
     trafficDrivenJob(env, ctx, { db: env.DB, job: "pricex-index-snapshot", cadenceSeconds: 7 * 86400, worker: "weyland-market-intelligence-worker",
