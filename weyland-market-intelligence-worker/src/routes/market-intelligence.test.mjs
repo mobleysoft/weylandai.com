@@ -138,12 +138,19 @@ test("GET /api/compx/vendors: 400 when q param missing", async () => {
   assert.equal(res.status, 400);
 });
 
-test("GET /api/compx/vendors: real happy path aggregates vendor win rate", async () => {
+test("GET /api/compx/vendors: bids are counted per project, not per bid item (Austin Bridge: 76 projects, not 7)", async () => {
   globalThis.fetch = async (url) => {
     assert.match(url, /data\.texas\.gov/);
+    const q = new URL(url).searchParams;
+    if (/count\(\*\)/.test(q.get("$select"))) {
+      assert.match(q.get("$where"), /not like '%ESTIMATE%'/);
+      return new Response(JSON.stringify([{ vendor_name: "ACME CONSTRUCTION", n: "900" }]), { status: 200 });
+    }
+    // grouped by project and low-bidder flag: one row per (project, flag), whatever its item count
     return new Response(JSON.stringify([
-      { vendor_name: "Acme Construction", low_bidder_flag: true, bid_total_amount: "100000", project_name: "P1", county: "Travis", project_actual_let_date: "2026-01-01", control_section_job_csj: "csj1" },
-      { vendor_name: "Acme Construction", low_bidder_flag: false, bid_total_amount: "90000", project_name: "P2", county: "Travis", project_actual_let_date: "2026-02-01", control_section_job_csj: "csj2" },
+      { control_section_job_csj: "csj1", low_bidder_flag: true, amount: "100000", project_name: "P1", county: "Travis", let_date: "2026-02-01" },
+      { control_section_job_csj: "csj2", low_bidder_flag: false, amount: "90000", project_name: "P2", county: "Travis", let_date: "2026-01-01" },
+      { control_section_job_csj: "csj3", low_bidder_flag: false, amount: "50000", project_name: "P3", county: "Hays", let_date: "2025-12-01" },
     ]), { status: 200 });
   };
   const { router, env } = setup();
@@ -151,9 +158,10 @@ test("GET /api/compx/vendors: real happy path aggregates vendor win rate", async
   assert.equal(res.status, 200);
   const body = await res.json();
   assert.equal(body.vendors.length, 1);
-  assert.equal(body.vendors[0].total_bids, 2);
+  assert.equal(body.vendors[0].total_bids, 3);
   assert.equal(body.vendors[0].wins, 1);
-  assert.equal(body.vendors[0].win_rate_pct, 50);
+  assert.equal(body.vendors[0].total_win_value, 100000);
+  assert.equal(body.vendors[0].win_rate_pct, 33.3);
 });
 
 test("GET /api/weatherx/delay-risk: 400 when lat/lon missing", async () => {

@@ -119,35 +119,48 @@ function pctChange(latest, prior) {
 }
 
 export function registerMarketIntelligenceRoutes(router) {
-  async function compxVendorSearch(vendorQuery) {
-    const url = `https://data.texas.gov/resource/de7b-7dna.json?${new URLSearchParams({
-      "$q": vendorQuery,
-      "$select": "vendor_name,low_bidder_flag,bid_total_amount,project_name,county,project_actual_let_date,control_section_job_csj",
-      "$limit": "1000"
-    })}`;
-    const resp = await fetch(url);
+  // TxDOT bid tabulations by vendor (2026-10-09 fix). Each row of de7b-7dna is one bid ITEM, so
+  // the old 1,000-row read counted line items of a handful of projects (Austin Bridge: 7 "bids"
+  // where the data has 76 projects, 12 won). Now SoQL groups by project for each vendor: one bid
+  // per project (control_section_job_csj), a win where the vendor was low bidder, the won value
+  // that project's bid total. The engineer's estimate rows are not a vendor.
+  const TXDOT = "https://data.texas.gov/resource/de7b-7dna.json?";
+  const soql = (s) => String(s).replace(/'/g, "''");
+  async function txdot(params) {
+    const resp = await fetch(TXDOT + new URLSearchParams(params));
     if (!resp.ok) throw new Error(`TXDOT open-data ${resp.status}`);
-    const rows = await resp.json();
-    const seen = new Map();
-    for (const r of rows) {
-      const key = r.vendor_name + "|" + r.control_section_job_csj;
-      if (!seen.has(key)) seen.set(key, r);
-    }
-    const bids = [...seen.values()];
-    const byVendor = new Map();
-    for (const b of bids) {
-      if (!byVendor.has(b.vendor_name)) byVendor.set(b.vendor_name, { vendor_name: b.vendor_name, total_bids: 0, wins: 0, total_win_value: 0, recent_projects: [] });
-      const v = byVendor.get(b.vendor_name);
-      v.total_bids++;
-      if (b.low_bidder_flag) {
-        v.wins++;
-        v.total_win_value += Number.parseFloat(b.bid_total_amount || 0);
+    return resp.json();
+  }
+  async function compxVendorSearch(vendorQuery) {
+    const names = await txdot({
+      "$select": "vendor_name, count(*) as n",
+      "$where": `upper(vendor_name) like '%${soql(vendorQuery.toUpperCase())}%' AND upper(vendor_name) not like '%ESTIMATE%'`,
+      "$group": "vendor_name", "$order": "n DESC", "$limit": "10",
+    });
+    const out = [];
+    for (const { vendor_name } of names) {
+      const rows = await txdot({
+        "$select": "control_section_job_csj, low_bidder_flag, max(bid_total_amount) as amount, max(project_name) as project_name, max(county) as county, max(project_actual_let_date) as let_date",
+        "$where": `vendor_name = '${soql(vendor_name)}'`,
+        "$group": "control_section_job_csj, low_bidder_flag", "$order": "let_date DESC", "$limit": "50000",
+      });
+      const projects = new Map();
+      for (const r of rows) {
+        const won = r.low_bidder_flag === true || r.low_bidder_flag === "true";
+        const p = projects.get(r.control_section_job_csj) || { project_name: r.project_name, county: r.county, let_date: r.let_date, bid_amount: Number.parseFloat(r.amount || 0), won: false };
+        if (won) { p.won = true; p.bid_amount = Number.parseFloat(r.amount || 0); }
+        projects.set(r.control_section_job_csj, p);
       }
-      if (v.recent_projects.length < 8) {
-        v.recent_projects.push({ project_name: b.project_name, county: b.county, let_date: b.project_actual_let_date, bid_amount: Number.parseFloat(b.bid_total_amount || 0), won: !!b.low_bidder_flag });
-      }
+      const list = [...projects.values()];
+      const wins = list.filter((p) => p.won);
+      out.push({
+        vendor_name, total_bids: list.length, wins: wins.length,
+        total_win_value: Math.round(wins.reduce((n, p) => n + p.bid_amount, 0) * 100) / 100,
+        win_rate_pct: list.length ? Math.round((wins.length / list.length) * 1000) / 10 : 0,
+        recent_projects: list.slice(0, 8),
+      });
     }
-    return [...byVendor.values()].map((v) => ({ ...v, win_rate_pct: v.total_bids ? Math.round((v.wins / v.total_bids) * 1000) / 10 : 0 }));
+    return out.sort((x, y) => y.total_bids - x.total_bids);
   }
 
   router.get("/api/pricex/materials", async (request2, env2) => {

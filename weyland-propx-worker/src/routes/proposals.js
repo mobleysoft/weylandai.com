@@ -73,7 +73,7 @@ import { outputAccess, paymentRequired } from "../../../weyland-shared/output-ac
 import { jsonResponse3 } from "../lib/json-response.js";
 import { listSources, loadSource } from "../lib/proposal-sources.js";
 // PriceX's own pricer: components the schedule gives no price are priced from the makers' books.
-import { priceItem } from "../../../weyland-forms-worker/src/routes/pricex.js";
+import { priceItem } from "../../../weyland-forms-worker/src/lib/price-item.js";
 
 // 2026-10-07: PropX prices data the caller really has. GET
 // /api/proposals/sources lists it (the caller's SubX extraction sessions,
