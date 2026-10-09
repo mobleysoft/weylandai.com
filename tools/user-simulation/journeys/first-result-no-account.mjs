@@ -29,7 +29,11 @@ await J.run(async () => {
       return { lowered: document.documentElement.classList.contains("folder-lowered"), heroInView: !!r && r.width > 0 && r.top >= 0 && r.top < innerHeight };
     });
     J.note(kind + "_first_view", { ...first, secondsAfterLoad: Math.round((Date.now() - tLoad) / 100) / 10 });
-    if (kind === "phone") J.check("phone: the hero is in view at first load (no lowered dossier)", first.heroInView && !first.lowered, first);
+    // 2026-10-08 (fix 10): every visitor, desktop included, starts on the readable page (no lowered dossier,
+    // no space intro); the corridor waits behind LOWER THE DOSSIER and WALK.
+    J.check(kind + ": the hero is in view at first load (no lowered dossier)", first.heroInView && !first.lowered, first);
+    const upload = await page.evaluate(() => { const a = document.getElementById("hs-upload"); const r = a ? a.getBoundingClientRect() : null; return a ? { href: a.getAttribute("href"), text: a.textContent.trim(), visible: !!r && r.width > 0 && r.height > 0 } : null; });
+    J.check(kind + ": UPLOAD YOUR SCHEDULE PDF is on the first screen's paste box and opens SubX", !!upload && upload.href === "/subx-app" && /upload your schedule pdf/i.test(upload.text) && upload.visible, upload);
     const raised = await raiseDossier(page, { touch });
     J.check(kind + ": the hero is readable after raising the dossier", raised === "raised", raised);
 

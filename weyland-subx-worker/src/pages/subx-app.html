@@ -2154,8 +2154,8 @@ global.SovereignPdfRender = {
             td("Door matl / fin", esc([d.door_material, d.door_finish].filter(Boolean).join(" / ") || "-")) +
             td("Frame", esc([d.frame_type, d.frame_material, d.frame_finish].filter(Boolean).join(" / ") || "-")) +
             td("Notes", esc(d.notes || "") + (d.corrected ? ' <span class="tag ok">CORRECTED</span>' : "")) +
-            td("Source", esc(srcText(d)), "nowrap muted-small") +
-            '<td class="nowrap"><button type="button" class="small" data-edit="' + esc(d.id) + '">EDIT</button></td></tr>';
+            td("Source", '<span class="src-cite">' + esc(srcText(d)) + "</span>", "nowrap muted-small src-cell") +
+            '<td class="nowrap edit-cell"><button type="button" class="small" data-edit="' + esc(d.id) + '" aria-label="Edit door ' + esc(d.mark || "") + '">EDIT</button></td></tr>';
         }).join("");
         box.innerHTML = '<p class="muted-small">' + doors.length + " door rows, machine-read: check them against the source page before you submit." +
           (unsureRows ? ' <span class="unread">Marked</span> values (' + unsureRows + " row" + (unsureRows === 1 ? "" : "s") + ") are ones the reader is not sure of: read by OCR, not shaped like the column, or empty where the other rows have a value. A size not read is left out of the counts. Press EDIT to correct a row." : " Press EDIT to correct a row.") +
@@ -2219,7 +2219,7 @@ global.SovereignPdfRender = {
                 ' <button type="button" class="small primary" data-save-item="' + esc(c.id) + '">SAVE</button> <button type="button" class="small" data-cancel-item="1">CANCEL</button><span class="muted-small item-note"></span></div>';
             }
             var line = (c.quantity == null ? "? " : c.quantity + " ") + (c.uom && c.uom !== "EA" ? c.uom + " " : "") + [c.description || (c.component_type ? String(c.component_type).replace(/_/g, " ") : ""), c.manufacturer, c.model, c.finish].filter(Boolean).join(" · ");
-            return '<div class="item-line">' + esc(line) + (c.quantity == null ? ' <span class="unread" title="No quantity printed">quantity?</span>' : "") + ' <button type="button" class="small" data-edit-item="' + esc(c.id) + '">EDIT</button></div>';
+            return '<div class="item-line"><span class="item-text">' + esc(line) + "</span>" + (c.quantity == null ? ' <span class="unread" title="No quantity printed">quantity?</span>' : "") + ' <button type="button" class="small" data-edit-item="' + esc(c.id) + '" aria-label="Edit item: ' + esc(line) + '">EDIT</button></div>';
           }).join("");
           return "<tr><td class=\"nowrap\"><b>" + esc(s.set_number) + "</b>" + (doorsOfSet.length ? '<div class="muted-small">doors: ' + esc(doorsOfSet.join(", ")) + "</div>" : (s.door_count ? '<div class="muted-small">' + esc(s.door_count) + " doors</div>" : "")) + "</td><td>" + esc(s.set_name || "") + "</td><td>" + items + '</td><td class="nowrap">' + (s.affirmed ? '<span class="tag ok">REVIEWED</span>' : '<span class="tag warn">DRAFT</span>') + "</td></tr>";
         }).join("");

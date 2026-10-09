@@ -1986,9 +1986,9 @@
           document.documentElement.setAttribute("data-weyland-gl", v);
           return v;
         };
-        if (!reduce && !coarse && window.__weylandGLClass() === "hardware") {
-          document.documentElement.classList.add("folder-lowered");
-        }
+        // 2026-10-09 (fix 10): every visitor, desktop included, starts on the readable page; the
+        // corridor waits behind LOWER THE DOSSIER and WALK. The GL class is still read for them.
+        window.__weylandGLClass();
       } catch (e) {}
     })();
   </script>
@@ -2111,7 +2111,10 @@
              + model only) so coverage can grow. WALK THIS SCHEDULE hands the
              matched openings to SightX and lowers the dossier. -->
         <div class="metric-card" id="hero-schedule" style="text-align:left;padding:18px 22px">
-          <span>Or paste your door hardware schedule</span>
+          <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:center;justify-content:space-between">
+            <span>Or paste your door hardware schedule</span>
+            <a id="hs-upload" href="/subx-app" class="button primary" style="padding:9px 16px;font-size:11px">UPLOAD YOUR SCHEDULE PDF</a>
+          </div>
           <textarea id="hs-text" rows="4" placeholder="One spec per line, e.g.&#10;LCN 4040XP&#10;Von Duprin, 99&#10;Schlage	L9080" style="width:100%;margin-top:10px;background:#161920;color:var(--text);border:1px solid var(--line);border-radius:8px;padding:10px 12px;font:500 13px/1.45 ui-monospace,monospace;resize:vertical"></textarea>
           <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-top:10px">
             <button id="hs-run" type="button" class="button accent" style="padding:9px 16px;font-size:11px">MATCH THE SCHEDULE</button>
@@ -2139,8 +2142,8 @@
 
       <div class="filter-bar">
         <input id="hx-search" class="search-input" type="text" placeholder="Search title, agency, or location (e.g. Austin, Bridge, High School)...">
-        <select id="hx-source">
-          <option value="">All sources (TxDOT, CA OPSC, NYC City Record, Illinois CDB)</option>
+        <select id="hx-source" aria-label="Source" title="TxDOT, CA OPSC, NYC City Record, Illinois CDB" style="max-width:100%">
+          <option value="">All sources</option>
           <option value="txdot">Texas DOT (Highway &amp; Bridge Lettings)</option>
           <option value="ca_opsc">CA School Construction Funding (OPSC)</option>
         </select>
@@ -2304,6 +2307,10 @@
             </tbody>
           </table>
         </div>
+      </div>
+      <div style="margin-top:16px;display:flex;gap:10px;flex-wrap:wrap;align-items:center">
+        <a id="subx-open-workspace" href="/subx-app" class="button accent">OPEN YOUR WORKSPACE &middot; BUILD THE PDF PACKAGE</a>
+        <small style="color:var(--muted)">Upload your own schedule there; the sample session above is in it too.</small>
       </div>
     </section>
 
@@ -3958,6 +3965,12 @@
       if (st && st.status === "signed-in") window.WeylandShell.open("app", { path: "/subx-app" });
       else window.WeylandShell.open("signin", { mode: "code", continueTo: "/subx-app" });
     }
+    // The first screen's UPLOAD YOUR SCHEDULE PDF and the SubX chapter's workspace button open
+    // SubX in the overlay (no page hop); the href stays for a page without the shell.
+    ["hs-upload", "subx-open-workspace"].forEach(function (id) {
+      var a = document.getElementById(id);
+      if (a) a.addEventListener("click", function (e) { if (!window.WeylandShell) return; e.preventDefault(); openSubxNext(); });
+    });
     function paintOffer(box) {
       if (!box) return;
       var st = shellNow(), win = offerWindow(st), signedIn = !!st && st.status === "signed-in";
@@ -4197,12 +4210,13 @@
         if (!backdrop) return false;
         var frame = document.createElement("iframe");
         frame.src = (location.hostname === "127.0.0.1" || location.hostname === "localhost")
-          ? "/weyland-sightx-worker/src/pages/sightx.html?embed=bg&intro=1"
+          ? "/weyland-sightx-worker/src/pages/sightx.html?embed=bg"
           // Trailing slash matters: on this zone "/sightx?query" falls
           // through to the monolith's stale bundled copy of the page, while
           // "/sightx/?query" is matched by the weylandai.com/sightx/* route
           // to weyland-sightx-worker (verified live 2026-10-04).
-          : "/sightx/?embed=bg&intro=1";
+          // No intro=1 (fix 10): the world opens on the corridor, not the space prologue.
+          : "/sightx/?embed=bg";
         frame.addEventListener("load", function () {
           if (window.__weylandSendDossierState) window.__weylandSendDossierState();
         });
