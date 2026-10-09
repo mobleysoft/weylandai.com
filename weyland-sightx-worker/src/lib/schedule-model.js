@@ -338,3 +338,71 @@ export function sampleModel() {
     notes: ["Sheet A9.01 gives no door sizes: every door is drawn 3'-0\" x 7'-0\". D-122 is fire-rated on the sheet but no rating is printed."],
   };
 }
+
+// ---------------------------------------------------------------- the plan (S1, 2026-10-09)
+// SubX reads the bid set's floor plans (GET /api/hardware-schedule/session/:id/plan,
+// weyland-shared/plan-read.js): the plan sheets by their title blocks, the rooms they label, and
+// each door tag tied to a schedule mark. attachPlan puts every tagged door where its tag is drawn,
+// in feet at the drawing's printed scale, in the room the plan gives it. What the plan does not
+// give is not drawn: no walls yet, no swing; a door the plans never tag stays in the list only.
+const nk = (s) => String(s || "").toUpperCase().replace(/\s+/g, "");
+const FT = 1;
+export function attachPlan(model, plan) {
+  if (!plan || !plan.found || !Array.isArray(plan.tags) || !plan.tags.length) {
+    model.layout = { source: "schematic", note: "Schematic layout from the schedule: " + (plan && plan.reason ? plan.reason : "no floor plan was read for these doors") + " Doors stand in schedule order along one corridor." };
+    return model;
+  }
+  // One building per plan sheet the tags are on (a set covering three schools has three A2.1 sheets).
+  const bySheet = new Map();
+  for (const t of plan.tags) {
+    const k = t.page + "|" + t.sheet;
+    if (!bySheet.has(k)) bySheet.set(k, { page: t.page, sheet: t.sheet, tags: [] });
+    bySheet.get(k).tags.push(t);
+  }
+  const sheetInfo = new Map((plan.plan_sheets || []).map((s) => [s.page, s]));
+  const buildings = [];
+  let offsetX = 0;
+  const placed = new Map();
+  for (const b of bySheet.values()) {
+    const info = sheetInfo.get(b.page) || {};
+    const ppfs = b.tags.map((t) => t.points_per_foot).filter((x) => x > 0);
+    const scaled = ppfs.length > 0;
+    const ppfOf = (v) => (v > 0 ? v : (scaled ? ppfs[0] : 9));
+    const rooms = (plan.rooms || []).filter((r) => r.page === b.page);
+    const pts = [...b.tags.map((t) => [t.x / ppfOf(t.points_per_foot), t.y / ppfOf(t.points_per_foot)]), ...rooms.map((r) => [r.x / ppfOf(r.points_per_foot), r.y / ppfOf(r.points_per_foot)])];
+    const minX = Math.min(...pts.map((p) => p[0])), minZ = Math.min(...pts.map((p) => p[1]));
+    const maxX = Math.max(...pts.map((p) => p[0])), maxZ = Math.max(...pts.map((p) => p[1]));
+    const at = (x, y, v) => ({ x: Math.round((x / ppfOf(v) - minX + offsetX) * 100) / 100 * FT, z: Math.round((y / ppfOf(v) - minZ) * 100) / 100 * FT });
+    const bld = {
+      sheet: b.sheet, page: b.page, title: info.title || null,
+      scale: scaled ? (info.scales || []).join(", ") : null,
+      to_scale: scaled,
+      origin_x: offsetX, width_ft: Math.round(maxX - minX), depth_ft: Math.round(maxZ - minZ),
+      rooms: rooms.map((r) => ({ number: r.number, name: r.name, corridor: !!r.corridor, ...at(r.x, r.y, r.points_per_foot) })),
+    };
+    buildings.push(bld);
+    for (const t of b.tags) {
+      const pos = at(t.x, t.y, t.points_per_foot);
+      const room = t.room != null || t.room_name ? bld.rooms.find((r) => r.number === t.room && r.name === t.room_name) : null;
+      placed.set(nk(t.mark) + "|" + (t.door_pages || []).join(","), { sheet: t.sheet, page: t.page, x: pos.x, z: pos.z, room: t.room, room_name: t.room_name, room_by: t.room_by, unsure: !!t.unsure, also_on: t.also_on || [], room_x: room ? room.x : null, room_z: room ? room.z : null, building: buildings.length - 1 });
+    }
+    offsetX += (maxX - minX) + 40;
+  }
+  let onPlan = 0;
+  for (const d of model.doors) {
+    const key = [...placed.keys()].find((k) => k.split("|")[0] === nk(d.mark) && (d.source_page == null || k.split("|")[1] === "" || k.split("|")[1] === "null" || k.split("|")[1].split(",").includes(String(d.source_page))));
+    if (key) { d.plan = placed.get(key); onPlan++; }
+  }
+  const off = model.doors.filter((d) => !d.plan).map((d) => d.mark);
+  model.layout = {
+    source: "plan",
+    buildings,
+    counts: { doors: model.doors.length, on_plan: onPlan, rooms: buildings.reduce((n, b) => n + b.rooms.length, 0), corridors: buildings.reduce((n, b) => n + b.rooms.filter((r) => r.corridor).length, 0), unmatched_tags: (plan.unmatched_tags || []).length },
+    unmatched_tags: (plan.unmatched_tags || []).map((u) => ({ tag: u.tag, sheet: u.sheet, page: u.page })),
+    not_on_plan: off,
+    note: "Laid out from the floor plan" + (buildings.length > 1 ? "s" : "") + " " + buildings.map((b) => b.sheet + (b.title ? " (" + b.title + ")" : "") + " p." + b.page).join(", ") +
+      ": each door stands where its tag is drawn, in the room the plan gives it" + (buildings.some((b) => !b.to_scale) ? "; a sheet with no printed scale is drawn at 1/8\" = 1'-0\" and says so" : ", at the sheet's printed scale") +
+      ". Walls and door swings are not read from the plan yet." + (off.length ? " Not tagged on any plan sheet: " + off.join(", ") + "." : ""),
+  };
+  return model;
+}

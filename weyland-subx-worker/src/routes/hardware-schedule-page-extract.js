@@ -26,7 +26,8 @@ import { jsonResponse3 } from "../lib/json-response.js";
 import { classifyError, jsonErrorResponse, ErrorMetrics } from "../error-utilities.js";
 import { findPagesInBrowser, runGridPagesInBrowser } from "../lib/browser-grid-extraction.js";
 import { persistBrowserGridResult } from "../lib/hardware-extraction-pipeline.js";
-import { openTextLayerDoc, readPageFromDoc } from "../lib/text-layer-read.js";
+import { openTextLayerDoc, readPageFromDoc, pageTextItems } from "../lib/text-layer-read.js";
+import { readPlan } from "../../../weyland-shared/plan-read.js";
 import { autoEnrichSessionOnSave } from "../lib/hardware-extraction-single-page.js";
 
 // The URL the runner tab fetches the session's PDF from (2026-10-08). This
@@ -287,6 +288,58 @@ router.post("/api/hardware-schedule/session/:sessionId/find-pages", async (reque
     console.warn("[find-pages] could not store the result: " + e.message);
   }
   return jsonResponse3({ success: true, sessionId, cached: false, ...stored });
+});
+
+// The floor plan (S1, 2026-10-09): the plan sheets found by their title blocks, the rooms they
+// label, and every door tag tied to a schedule mark (weyland-shared/plan-read.js). Read from the
+// PDF's own text in this Worker; kept in the cache against the session's door rows, so a re-read
+// schedule is tagged again. Drawing-size pages only (a spec page has no plan).
+const PLAN_VERSION = "plan:v1:";
+function fnv(s) { let h = 0x811c9dc5; for (let i = 0; i < s.length; i++) { h ^= s.charCodeAt(i); h = Math.imul(h, 0x01000193) >>> 0; } return h.toString(36); }
+router.get("/api/hardware-schedule/session/:sessionId/plan", async (request2, env2) => {
+  const { error: error4, user } = await authenticate(request2, env2);
+  if (error4) return error4;
+  const sessionId = request2.params.sessionId;
+  const session = await env2.DB.prepare("SELECT * FROM hardware_extraction_sessions WHERE id = ?").bind(sessionId).first();
+  if (!session) return jsonResponse3({ success: false, error: "Session not found" }, 404);
+  if (!user || session.user_id !== user.userId) return jsonResponse3({ success: false, error: "This session belongs to another account" }, 403);
+  if (String(session.file_buffer_key || "").startsWith("demo-clone/")) {
+    return jsonResponse3({ success: true, sessionId, found: false, reason: "The demo building has no uploaded plans; SightX lays it out from the schedule." });
+  }
+  const rows = (await env2.DB.prepare("SELECT mark, notes, page_number FROM door_schedule_entries WHERE session_id = ? ORDER BY page_number, rowid").bind(sessionId).all()).results || [];
+  const doors = rows.filter((r) => r.mark).map((r) => ({ mark: String(r.mark), location: ((String(r.notes || "").match(/Room:\s*([^;]+)/i) || [])[1] || "").trim() || null, page: r.page_number ?? null }));
+  const key = PLAN_VERSION + sessionId + ":" + fnv(JSON.stringify(doors));
+  const refresh = new URL(request2.url).searchParams.get("refresh") === "1";
+  if (!refresh) {
+    try { const hit = await env2.CACHE.get(key, "json"); if (hit) return jsonResponse3({ success: true, sessionId, cached: true, ...hit }); } catch (_) { /* read again */ }
+  }
+  const fileBuffer = await sessionPdf(session, env2);
+  if (!fileBuffer) return jsonResponse3({ success: false, error: "The uploaded PDF is no longer stored; upload it again." }, 404);
+  const t0 = Date.now();
+  let doc;
+  try { doc = await openTextLayerDoc(fileBuffer); } catch (e) { return jsonResponse3({ success: false, error: "The PDF did not open for its text: " + (e && e.message) }, 422); }
+  const pages = [];
+  let skipped = 0, stopped = null;
+  try {
+    for (let n = 1; n <= Math.min(doc.numPages, 600); n++) {
+      if (Date.now() - t0 > 20000) { stopped = n; break; }
+      const pg = await doc.getPage(n);
+      const vp = pg.getViewport({ scale: 1 });
+      // Letter, Legal and Tabloid portrait pages are specs and forms; plans are drawing sheets.
+      if (!(vp.width > vp.height * 1.15 || vp.width > 1500)) { pages.push({ page: n, width: vp.width, height: vp.height, items: [] }); skipped++; continue; }
+      pages.push(await pageTextItems(doc, n));
+    }
+  } finally { try { await doc.destroy(); } catch (_) { /* gone */ } }
+  const plan = readPlan(pages, doors);
+  const out = {
+    found: plan.plan_sheets.length > 0,
+    ...plan,
+    sheets: plan.sheets.filter((x) => x.sheet),
+    read: { pages: pages.length, drawing_pages: pages.length - skipped, ms: Date.now() - t0, stopped_at_page: stopped },
+    reason: plan.plan_sheets.length ? null : "No floor plan sheet was found: no title block in the PDF names an architectural (A) sheet a plan.",
+  };
+  try { await env2.CACHE.put(key, JSON.stringify(out), { expirationTtl: 86400 * 14 }); } catch (_) { /* too large: answered anyway */ }
+  return jsonResponse3({ success: true, sessionId, cached: false, ...out });
 });
 
 // Reads a list of pages, each as its own kind, in one runner session

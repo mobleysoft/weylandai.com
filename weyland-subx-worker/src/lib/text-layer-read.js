@@ -155,3 +155,23 @@ export async function readPageFromDoc(pdf, pageNumber, scheduleType, { alsoTry =
     return { ok: true, schedule_type: first ? first.schedule_type : scheduleType, result: first ? first.result : {}, empty: true, tried: types, ms: Date.now() - t0, source: "text_layer" };
   }
 }
+
+/**
+ * One page's text items in viewport space (points, y down), as weyland-shared/plan-read.js takes them:
+ * { page, width, height, items: [{ str, x, y, h, w, rot }] }. Text only: no operator list, so a full-size
+ * drawing sheet costs what its text costs.
+ */
+export async function pageTextItems(pdf, pageNumber) {
+  const page = await pdf.getPage(pageNumber);
+  try {
+    const vp = page.getViewport({ scale: 1 });
+    const tc = await page.getTextContent();
+    const items = [];
+    for (const it of tc.items) {
+      if (!it.str || !it.str.trim()) continue;
+      const m = Util.transform(vp.transform, it.transform);
+      items.push({ str: it.str, x: m[4], y: m[5], h: Math.hypot(m[2], m[3]), w: it.width || 0, rot: Math.round(Math.atan2(m[1], m[0]) * 180 / Math.PI) });
+    }
+    return { page: pageNumber, width: vp.width, height: vp.height, items };
+  } finally { try { page.cleanup(); } catch (_) { /* gone */ } }
+}

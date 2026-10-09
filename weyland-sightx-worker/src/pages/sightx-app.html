@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
   <meta name="theme-color" content="#090a0d">
   <title>SightX | Walk your door schedule in 3D</title>
-  <meta name="description" content="SightX builds a 3D corridor from your own door schedule: every door at its scheduled size, material and fire rating, with its hardware set drawn where it mounts. Walk it, tour it door by door, click a door for its parts.">
+  <meta name="description" content="SightX lays your doors out on your own floor plan, or along a schematic corridor from your door schedule: every door at its scheduled size, material and fire rating, with its hardware set drawn where it mounts. Walk it, tour it door by door, click a door for its parts.">
   <style>
     :root{--bg:#090a0d;--panel:#111318;--panel2:#171a20;--line:#2b3038;--text:#eef1f2;--muted:#9299a3;--primary:#2a52ff;--accent:#ffd400;--green:#68e0a0;--red:#ff716b;--blue:#6ed8ff}
     *{box-sizing:border-box}html,body{margin:0;min-height:100%;background:var(--bg);color:var(--text);font-family:"Avenir Next","Helvetica Neue",-apple-system,sans-serif}body{overflow-x:hidden}
@@ -66,7 +66,7 @@
     <div class="eyebrow">3D DOOR SCHEDULE</div>
     <h1>SightX</h1>
     <div class="tagline">Walk your openings before the doors arrive.</div>
-    <p class="lead">SightX builds a corridor from your door schedule: each door at its scheduled size, material and fire rating, and its hardware set drawn where it mounts (hinges, levers and locks, exit devices, closers, kick plates, mag locks, readers, operators). Walk it, tour it door by door, and click a door for the parts in its set. Use a schedule SubX read from your plans, paste one, or start with the sample.</p>
+    <p class="lead">SightX builds your building from your bid set: SubX finds the floor plan sheets by their title blocks, and each door stands where its tag is drawn, in the room the plan gives it, at its scheduled size, material and fire rating, with its hardware set drawn where it mounts (hinges, levers and locks, exit devices, closers, kick plates, mag locks, readers, operators). Walk it, tour it door by door, and click a door for its room, its plan sheet and the parts in its set. Use a SubX session, paste a schedule, or start with the sample; with no floor plan the doors stand along a schematic corridor, and the page says so.</p>
 
     <div class="sources" role="tablist">
       <button class="tab on" type="button" data-src="sample" role="tab">SAMPLE BUILDING</button>
@@ -94,7 +94,7 @@ HW-2: lever lockset, 3 hinges, wall stop"></textarea>
       <div class="viewer" id="viewer">
         <canvas id="sx-canvas" aria-label="3D corridor built from the schedule"></canvas>
         <div class="nogl" id="nogl">This browser can't draw the 3D corridor (no WebGL). The door list below has everything in the schedule.</div>
-        <div class="hud"><span id="hud-project">-</span><span id="hud-count">-</span></div>
+        <div class="hud"><span id="hud-project">-</span><span id="hud-layout">-</span><span id="hud-count">-</span></div>
         <div class="hint" id="hint">DRAG TO LOOK · W/S OR ↑/↓ TO WALK · CLICK A DOOR</div>
         <div class="ctrl">
           <button class="btn" id="prev" type="button">◀ PREV DOOR</button>
@@ -120,7 +120,8 @@ HW-2: lever lockset, 3 hinges, wall stop"></textarea>
         <tbody id="rows"><tr><td colspan="7" style="color:var(--muted)">Loading...</td></tr></tbody>
       </table>
     </div>
-    <p class="foot">The corridor is laid out from the schedule, not from your floor plan: doors stand in schedule order on alternating walls, about 2 m apart, all drawn swinging toward you. Sizes, materials, ratings and hardware are the schedule's. A door the schedule gives no size for is drawn 3'-0" x 7'-0" and says so; a set with no parts listed is drawn bare. Laying doors out on your actual plans is not built yet.</p>
+    <p class="foot" id="layout-note"></p>
+    <p class="foot">A SubX session is laid out on its own floor plan: SubX finds the plan sheets by their title blocks, reads the rooms they label, and ties each door tag to its schedule mark; the door stands where its tag is drawn, in that room, at the sheet's printed scale. With no plan (a pasted schedule, the sample sheet, or a set whose plans name no A sheet a plan) the doors stand in schedule order along one schematic corridor, and the page says so. Sizes, materials, ratings and hardware are the schedule's. A door the schedule gives no size for is drawn 3'-0" x 7'-0" and says so; a set with no parts listed is drawn bare. Walls and door swings are not read from the plan yet, so none are drawn there.</p>
   </div>
 
   <script>
@@ -179,7 +180,7 @@ HW-2: lever lockset, 3 hinges, wall stop"></textarea>
 
     // ---------- 3D ----------
     var gl = null, scene, camera, renderer, doorsGroup, pickables = [], doorPos = [];
-    var yaw = 0, pitch = 0, pos = null, keys = {}, anim = null, length = 10;
+    var yaw = 0, pitch = 0, pos = null, keys = {}, anim = null, length = 10, planMode = false, bounds = null;
     function initGL() {
       if (!window.THREE) return false;
       try {
@@ -280,6 +281,8 @@ HW-2: lever lockset, 3 hinges, wall stop"></textarea>
     }
     function buildScene(model) {
       if (!gl) return;
+      if (model.layout && model.layout.source === "plan") return buildPlanScene(model);
+      planMode = false; bounds = null;
       clearScene(); var m = mats();
       var z = 1.5, prevW = 0;
       model.doors.forEach(function (d, i) {
@@ -305,6 +308,53 @@ HW-2: lever lockset, 3 hinges, wall stop"></textarea>
       for (var lz = 0; lz < length; lz += 4) { var p = new THREE.PointLight(0xfff4e0, 0.35, 9); p.position.set(0, WALL_H - 0.2, lz); doorsGroup.add(p); }
       goStart(true);
     }
+    // The floor plan (S1): each building on its own floor plate, its rooms labelled where the plan
+    // labels them, each door standing at its tag. Nothing else is drawn: no walls, no swings.
+    var FTM = 0.3048;
+    function floorLabel(text, w, h, color) {
+      var cv = document.createElement("canvas"); cv.width = 512; cv.height = Math.round(512 * h / w);
+      var c = cv.getContext("2d"); c.fillStyle = "rgba(0,0,0,0)"; c.clearRect(0, 0, cv.width, cv.height);
+      c.fillStyle = color || "#e8eaee"; c.font = "bold " + Math.round(cv.height * 0.42) + "px ui-monospace,monospace"; c.textAlign = "center"; c.textBaseline = "middle";
+      var parts = String(text).split("\n");
+      parts.forEach(function (t, k) { c.fillText(t.slice(0, 30), cv.width / 2, cv.height * (parts.length === 1 ? 0.5 : (k === 0 ? 0.32 : 0.74))); });
+      var mesh = new THREE.Mesh(new THREE.PlaneGeometry(w, h), new THREE.MeshBasicMaterial({ map: new THREE.CanvasTexture(cv), transparent: true, depthWrite: false }));
+      mesh.rotation.x = -Math.PI / 2; return mesh;
+    }
+    function buildPlanScene(model) {
+      clearScene(); planMode = true; var m = mats();
+      var L = model.layout, minX = Infinity, maxX = -Infinity, minZ = Infinity, maxZ = -Infinity;
+      L.buildings.forEach(function (b, k) {
+        var x0 = b.origin_x * FTM - 6, z0 = -6, w = b.width_ft * FTM + 12, d = b.depth_ft * FTM + 12;
+        var fl = new THREE.Mesh(new THREE.PlaneGeometry(w, d), m.floor); fl.rotation.x = -Math.PI / 2; fl.position.set(x0 + w / 2, 0, z0 + d / 2); doorsGroup.add(fl);
+        var sign = label([b.sheet + " · p." + b.page, (b.title || "floor plan") + (b.to_scale ? " · " + (b.scale || "") : " · NOT TO SCALE")], 6, 1.6);
+        sign.position.set(x0 + 3.2, 2.4, z0 - 0.2); doorsGroup.add(sign);
+        b.rooms.forEach(function (r) {
+          var lab = floorLabel((r.number ? r.number + "\n" : "") + r.name, 4.2, 1.6, r.corridor ? "#6ed8ff" : "#e8eaee");
+          lab.position.set(r.x * FTM, 0.02, r.z * FTM); doorsGroup.add(lab);
+          if (r.corridor) { var disc = new THREE.Mesh(new THREE.CircleGeometry(1.4, 24), mat(0x1f4d6b, { rough: 1 })); disc.rotation.x = -Math.PI / 2; disc.position.set(r.x * FTM, 0.01, r.z * FTM); doorsGroup.add(disc); }
+        });
+        minX = Math.min(minX, x0); maxX = Math.max(maxX, x0 + w); minZ = Math.min(minZ, z0); maxZ = Math.max(maxZ, z0 + d);
+      });
+      var off = 0;
+      model.doors.forEach(function (d, i) {
+        var g = buildDoor(d, i), x, z, ang = 0;
+        if (d.plan) {
+          x = d.plan.x * FTM; z = d.plan.z * FTM;
+          // Face away from the room the plan gives it (the swing is not read; the approach is).
+          if (d.plan.room_x != null) { var dx = x - d.plan.room_x * FTM, dz = z - d.plan.room_z * FTM; if (Math.hypot(dx, dz) > 0.2) ang = Math.atan2(dx, dz); }
+        } else {
+          // Not tagged on any plan sheet: in a row beside the first building, under its own sign.
+          x = minX + 2 + off * 2.2; z = minZ - 4; off++;
+        }
+        g.position.set(x, 0, z); g.rotation.y = ang; doorsGroup.add(g);
+        doorPos.push({ x: x, z: z, h: d.height_in * IN, nx: Math.sin(ang), nz: Math.cos(ang) });
+      });
+      if (off) { var s2 = label(["NOT ON THE PLAN", off + " door" + (off === 1 ? "" : "s") + " no plan sheet tags"], 4.6, 1.2); s2.position.set(minX + 2 + (off - 1) * 1.1, 3.2, minZ - 4); doorsGroup.add(s2); minZ -= 6; }
+      bounds = { minX: minX - 4, maxX: maxX + 4, minZ: minZ - 4, maxZ: maxZ + 4 };
+      for (var k = 0; k < Math.min(model.doors.length, 40); k++) { var pl = new THREE.PointLight(0xfff4e0, 0.25, 14); pl.position.set(doorPos[k].x, 3, doorPos[k].z); doorsGroup.add(pl); }
+      scene.fog.near = 60; scene.fog.far = 260;
+      goStart(true);
+    }
     function lookAt(target) { var dx = target.x - pos.x, dy = target.y - pos.y, dz = target.z - pos.z; yaw = Math.atan2(dx, dz); pitch = Math.atan2(dy, Math.hypot(dx, dz)); }
     function flyTo(p2, target, ms) {
       var p1 = pos.clone(), y1 = yaw, pt1 = pitch;
@@ -312,10 +362,20 @@ HW-2: lever lockset, 3 hinges, wall stop"></textarea>
       var dy = ((y2 - y1 + Math.PI * 3) % (Math.PI * 2)) - Math.PI;
       anim = { t0: performance.now(), ms: ms || 700, p1: p1, p2: p2.clone(), y1: y1, dy: dy, pt1: pt1, pt2: pt2 };
     }
-    function goStart(instant) { var p = new THREE.Vector3(0, 1.6, -0.5); if (instant) { pos.copy(p); yaw = 0; pitch = -0.03; anim = null; } else flyTo(p, new THREE.Vector3(0, 1.5, 10)); }
+    function goStart(instant) {
+      if (planMode && bounds) {
+        // Above the plan, looking down over it, so the whole building is in view.
+        var cxp = (bounds.minX + bounds.maxX) / 2, span = Math.max(bounds.maxX - bounds.minX, bounds.maxZ - bounds.minZ);
+        var p0 = new THREE.Vector3(cxp, Math.min(140, span * 0.55), bounds.maxZ + span * 0.15), t0 = new THREE.Vector3(cxp, 0, (bounds.minZ + bounds.maxZ) / 2);
+        if (instant) { pos.copy(p0); lookAt(t0); anim = null; } else flyTo(p0, t0, 900);
+        return;
+      }
+      var p = new THREE.Vector3(0, 1.6, -0.5); if (instant) { pos.copy(p); yaw = 0; pitch = -0.03; anim = null; } else flyTo(p, new THREE.Vector3(0, 1.5, 10));
+    }
     function goDoor(i) {
       if (!gl || !doorPos[i]) return;
       var d = doorPos[i];
+      if (planMode) { flyTo(new THREE.Vector3(d.x + d.nx * 2.6, 1.6, d.z + d.nz * 2.6), new THREE.Vector3(d.x, d.h / 2 + 0.15, d.z), 1100); return; }
       flyTo(new THREE.Vector3(-d.side * 0.95, 1.5, d.z - 0.35), new THREE.Vector3(d.x, d.h / 2 + 0.15, d.z));
     }
     function loop(t) {
@@ -328,7 +388,8 @@ HW-2: lever lockset, 3 hinges, wall stop"></textarea>
       }
       var mv = (keys.f ? 1 : 0) - (keys.b ? 1 : 0), strafe = (keys.r ? 1 : 0) - (keys.l ? 1 : 0);
       if (mv || strafe) { anim = null; pos.x += (Math.sin(yaw) * mv - Math.cos(yaw) * strafe) * 0.06; pos.z += (Math.cos(yaw) * mv + Math.sin(yaw) * strafe) * 0.06; }
-      pos.x = Math.max(-HALF + 0.3, Math.min(HALF - 0.3, pos.x)); pos.z = Math.max(-2.5, Math.min(length - 0.5, pos.z));
+      if (planMode && bounds) { if (mv || strafe) { pos.y = Math.max(1.6, pos.y - 0.4); pos.x += (Math.sin(yaw) * mv - Math.cos(yaw) * strafe) * 0.1; pos.z += (Math.cos(yaw) * mv + Math.sin(yaw) * strafe) * 0.1; } pos.x = Math.max(bounds.minX, Math.min(bounds.maxX, pos.x)); pos.z = Math.max(bounds.minZ, Math.min(bounds.maxZ, pos.z)); }
+      else { pos.x = Math.max(-HALF + 0.3, Math.min(HALF - 0.3, pos.x)); pos.z = Math.max(-2.5, Math.min(length - 0.5, pos.z)); }
       camera.position.copy(pos);
       camera.lookAt(pos.x + Math.sin(yaw) * Math.cos(pitch), pos.y + Math.sin(pitch), pos.z + Math.cos(yaw) * Math.cos(pitch));
       renderer.render(scene, camera);
@@ -372,7 +433,13 @@ HW-2: lever lockset, 3 hinges, wall stop"></textarea>
         ["SET", esc(d.set || "-")],
       ];
       if (d.source_page != null) kv.push(["SOURCE", "schedule page " + esc(d.source_page)]);
-      $("info").innerHTML = "<h2>" + esc(d.mark) + "</h2><div class=\"loc\">" + esc(d.location || "") + " · door " + (i + 1) + " of " + st.model.doors.length + "</div>" +
+      if (d.plan) {
+        var how = { tag_number: "numbered after the room", schedule_location: "the schedule's location, found on the plan", nearest_label: "the nearest room label (unsure)" }[d.plan.room_by] || "";
+        kv.unshift(["ROOM", d.plan.room_name ? esc((d.plan.room ? d.plan.room + " " : "") + d.plan.room_name) + ' <span class="' + (d.plan.unsure ? "flag" : "") + '" style="color:var(--muted)">(' + esc(how) + ")</span>" : '<span class="flag">no room label near its tag</span>']);
+        kv.push(["PLAN", "tag on sheet " + esc(d.plan.sheet) + " p." + esc(d.plan.page) + (d.plan.also_on && d.plan.also_on.length ? " · also on " + esc(d.plan.also_on.join(", ")) : "")]);
+      } else if (st.model.layout && st.model.layout.source === "plan") kv.push(["PLAN", '<span class="flag">not tagged on any plan sheet</span>']);
+      var where = d.plan && d.plan.room_name ? (d.plan.room ? d.plan.room + " " : "") + d.plan.room_name : (d.location || "");
+      $("info").innerHTML = "<h2>" + esc(d.mark) + "</h2><div class=\"loc\" id=\"door-where\">" + esc(where) + " · door " + (i + 1) + " of " + st.model.doors.length + "</div>" +
         '<div class="kv">' + kv.map(function (x) { return "<b>" + x[0] + "</b><span>" + x[1] + "</span>"; }).join("") + "</div>" +
         "<div class=\"eyebrow\" style=\"margin-bottom:8px\">HARDWARE" + (d.set ? " · SET " + esc(d.set) : "") + "</div>" +
         '<div class="hw">' + (items.length ? items.map(function (it) {
@@ -385,12 +452,16 @@ HW-2: lever lockset, 3 hinges, wall stop"></textarea>
       var m = st.model;
       $("rows").innerHTML = m.doors.length ? m.doors.map(function (d, i) {
         var items = itemsOf(d);
-        return '<tr class="door" data-i="' + i + '"><td><b>' + esc(d.mark) + "</b></td><td>" + esc(d.location || "-") + "</td><td>" + esc(sizeText(d)) + (d.size_known ? "" : ' <span class="flag">*</span>') +
+        var loc = d.plan && d.plan.room_name ? (d.plan.room ? d.plan.room + " " : "") + d.plan.room_name + " (plan " + d.plan.sheet + ")" : (d.location || "-");
+        return '<tr class="door" data-i="' + i + '"><td><b>' + esc(d.mark) + "</b></td><td>" + esc(loc) + "</td><td>" + esc(sizeText(d)) + (d.size_known ? "" : ' <span class="flag">*</span>') +
           "</td><td>" + esc(d.type || d.material || "-") + "</td><td>" + (d.rating ? '<span class="badge r">' + esc(d.rating) + "</span>" : "-") + "</td><td>" + esc(d.set || "-") +
           "</td><td>" + (items.length ? esc(items.map(function (x) { return KIND[x.type] && x.type !== "other" ? KIND[x.type] : x.label; }).filter(function (v, k, a) { return a.indexOf(v) === k; }).join(", ")) : '<span style="color:var(--muted)">none listed</span>') + "</td></tr>";
       }).join("") : '<tr><td colspan="7" style="color:var(--muted)">No doors.</td></tr>';
       $("notes").innerHTML = (m.notes || []).map(function (n) { return "<div>" + esc(n) + "</div>"; }).join("");
       $("hud-project").textContent = m.project;
+      var L = m.layout || { source: "schematic" };
+      $("hud-layout").textContent = L.source === "plan" ? "FROM THE PLAN " + L.buildings.map(function (b) { return b.sheet; }).filter(function (v, k, a) { return a.indexOf(v) === k; }).join(", ") + " · " + L.counts.on_plan + " OF " + L.counts.doors + " TAGGED" : "SCHEMATIC FROM THE SCHEDULE";
+      $("layout-note").textContent = L.note || "";
       $("hud-count").textContent = m.doors.length + " DOOR" + (m.doors.length === 1 ? "" : "S") + " · " + Object.keys(m.sets || {}).length + " SETS";
     }
     $("rows").addEventListener("click", function (e) { var tr = e.target.closest && e.target.closest("tr.door"); if (tr) { stopTour(); select(+tr.dataset.i, true); try { $("viewer").scrollIntoView({ behavior: "smooth", block: "nearest" }); } catch (x) {} } });
@@ -432,10 +503,17 @@ HW-2: lever lockset, 3 hinges, wall stop"></textarea>
       setStatus("Reading the session's door schedule...");
       return getJSON("/api/hardware-schedule/session/" + encodeURIComponent(id) + "/doors", { credentials: "same-origin", headers: headers() }).then(function (r) {
         if (!r.ok) { setStatus("The session could not be read: " + ((r.data && (r.data.error || r.data.message)) || "HTTP " + r.status), true); return; }
-        return getJSON("/api/sightx/model", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ subx: { session: r.data.session, doors: r.data.doors, components: r.data.components } }) }).then(function (m) {
+        // The floor plan from the session's own PDF (S1): plan sheets by title block, rooms, door tags.
+        setStatus("Reading the floor plan from your bid set...");
+        return getJSON("/api/hardware-schedule/session/" + encodeURIComponent(id) + "/plan", { credentials: "same-origin", headers: headers() }).catch(function () { return { ok: false, status: 0, data: {} }; }).then(function (pr) {
+          var plan = pr.ok && pr.data && pr.data.success ? pr.data : { found: false, reason: "the floor plan could not be read just now (" + ((pr.data && pr.data.error) || "HTTP " + pr.status) + ")." };
+          st.plan = plan;
+          return getJSON("/api/sightx/model", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ subx: { session: r.data.session, doors: r.data.doors, components: r.data.components }, plan: plan }) });
+        }).then(function (m) {
           if (!m.ok) { setStatus("The corridor could not be built: " + ((m.data && m.data.message) || "HTTP " + m.status), true); return; }
           if (!m.data.model.doors.length) { setStatus("SubX has no door rows in this session yet. Open it in SubX and read its schedule pages first.", true); return; }
-          show(m.data.model, "your SubX session");
+          var lay = m.data.model.layout || {};
+          show(m.data.model, "your SubX session" + (lay.source === "plan" ? ", laid out on its floor plan (" + lay.counts.on_plan + " of " + lay.counts.doors + " doors tagged on " + lay.buildings.map(function (b) { return b.sheet; }).join(", ") + ")" : ", on a schematic corridor (no floor plan found)"));
           try { var u = new URL(location.href); u.searchParams.set("session", id); history.replaceState(null, "", u.pathname + u.search); } catch (e) {}
         });
       });
