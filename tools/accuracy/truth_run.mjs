@@ -25,6 +25,7 @@
 //   --files a.pdf,b.pdf     just these files
 //   --only <sha16,...>      just these (from whatever set was chosen)
 //   --max-pages <n>         skip PDFs with more pages (default 1200)
+//   --ocr-max-pages <n>     OCR a PDF with no text layer when it has at most n pages (default 6); --ocr-dpi (600)
 // Then: node tools/accuracy/truth_report.mjs  (the per-tier report).
 // Needs nothing installed: pdf.js is SubX's vendored copy. No network, no credentials.
 import { readFileSync, writeFileSync, existsSync, readdirSync, mkdirSync, statSync } from "node:fs";
@@ -32,7 +33,8 @@ import { createHash } from "node:crypto";
 import { dirname, join, resolve, relative, basename } from "node:path";
 import { fileURLToPath } from "node:url";
 import { openPdf, pageItems, pageRules } from "./truth/pdf.mjs";
-import { readA } from "./truth/reader_a.mjs";
+import { readA, readAFromLines } from "./truth/reader_a.mjs";
+import { ocrPage } from "./truth/ocr.mjs";
 import { readDoorsB, readHardwareB } from "./truth/reader_b.mjs";
 import { alignDoors, alignGroups, mergeGroups, summarize, disagreements, scoreDoorsVs, scoreGroupsVs, calibrateFields, N } from "./truth/agree.mjs";
 import { oracleMarksOnPlan, oracleSetsExist, oracleSetDoorLists, oracleTypesInLegend, oracleSizesAndMarks, ORACLES_FOR } from "./truth/oracles.mjs";
@@ -43,6 +45,8 @@ const OUT = join(REPO, "tools/corpus/harvest/truth");
 const argv = process.argv.slice(2);
 const opt = (k, d = null) => { const i = argv.indexOf("--" + k); return i >= 0 && argv[i + 1] && !argv[i + 1].startsWith("--") ? argv[i + 1] : d; };
 const MAX_PAGES = +opt("max-pages", 1200);
+// A PDF with no text layer is OCR'd (truth/ocr.mjs) when it has at most this many pages (a page takes about a minute).
+const OCR_MAX = +opt("ocr-max-pages", 6), OCR_DPI = +opt("ocr-dpi", 600);
 const ONLY = opt("only") ? opt("only").split(",") : null;
 mkdirSync(OUT, { recursive: true });
 
@@ -147,7 +151,34 @@ async function analyze(file) {
   const doorsA = [], doorsB = [], tableBoxes = {};
   const hwA = [], hwB = [];
   const readerNotes = [];
-  for (const p of doorPages) {
+  // No text layer at all (a scan, a Print-to-PDF bitmap): OCR the pages once, and give both readers the
+  // same words; reader A reads them as lines through the production readers, reader B with the rules
+  // found in the rendered image.
+  if (textPages === 0 && pdf.numPages <= OCR_MAX) {
+    rec.ocr = { dpi: OCR_DPI, pages: [] };
+    for (let p = 1; p <= pdf.numPages; p++) {
+      let o;
+      try { o = await ocrPage(file, p, { dpi: OCR_DPI }); } catch (e) { readerNotes.push("OCR p." + p + ": " + String(e.message).slice(0, 120)); continue; }
+      const text = o.items.map((i) => i.str).join("\n"), size = { width: o.width, height: o.height };
+      rec.ocr.pages.push({ page: p, words: o.words.length, rotation: o.rotation, skew_deg: o.skew_deg, rules: { h: o.rules.h.length, v: o.rules.v.length }, ms: o.ms });
+      if (DOOR_PAGE(text)) {
+        doorPages.push(p);
+        const a = await readAFromLines(o.lines, size, "door_schedule", o.words.length);
+        for (const d of a.doors || []) doorsA.push({ page: p, ...d });
+        const b = readDoorsB(o.items, o.rules, size);
+        if (b.tables.length) tableBoxes[p] = b.tables.map((t) => t.bbox);
+        for (const d of b.doors) doorsB.push({ page: p, ...d });
+      }
+      if (HW_PAGE(text)) {
+        hwPages.push(p);
+        const a = await readAFromLines(o.lines, size, "hardware_schedule", o.words.length);
+        hwA.push({ page: p, groups: a.groups || [] });
+        hwB.push({ page: p, groups: readHardwareB(o.items, o.rules, size).groups });
+      }
+    }
+  }
+  const ocrDone = !!rec.ocr;
+  for (const p of ocrDone ? [] : doorPages) {
     const a = await readA(pdf, p, "door_schedule");
     if (a.error) readerNotes.push("A p." + p + ": " + a.error);
     for (const d of a.doors || []) doorsA.push({ page: p, ...d });
@@ -158,7 +189,7 @@ async function analyze(file) {
     if (b.tables.length) tableBoxes[p] = b.tables.map((t) => t.bbox);
     for (const d of b.doors) doorsB.push({ page: p, ...d });
   }
-  for (const p of hwPages) {
+  for (const p of ocrDone ? [] : hwPages) {
     const a = await readA(pdf, p, "hardware_schedule");
     if (a.error) readerNotes.push("A p." + p + ": " + a.error);
     hwA.push({ page: p, groups: a.groups || [] });
@@ -235,8 +266,8 @@ async function analyze(file) {
   // Tier.
   const applicable = Object.values(rec.oracles).filter((o) => o.applicable);
   rec.tier = exp.some((e) => e.tier === "exact") ? "exact" : exp.length ? "audited" : rec.rows_agreed > 0 ? "agreed" : applicable.length ? "oracle-checked" : "unread";
-  if (rec.tier === "unread") rec.unread_reason = textPages === 0 ? "no text layer (a scan): both readers need text; the OCR path is not in this harness" : !S && !H ? "no door schedule or hardware set read by either reader" : "no rows agreed and no oracle applies";
-  if (textPages === 0) rec.note = "no text layer on any page: neither reader can read it here (production would send it to the browser OCR path)";
+  if (rec.tier === "unread") rec.unread_reason = textPages === 0 ? (rec.ocr ? "no text layer; OCR read " + rec.ocr.pages.reduce((n, x) => n + x.words, 0) + " words but neither reader found a table in them" : "no text layer and more than " + OCR_MAX + " pages (raise --ocr-max-pages to OCR it)") : !S && !H ? "no door schedule or hardware set read by either reader" : "no rows agreed and no oracle applies";
+  if (textPages === 0) rec.note = rec.ocr ? "no text layer: read by OCR at " + OCR_DPI + " dpi (truth/ocr.mjs), the same words given to both readers" : "no text layer on any page and too many pages to OCR here";
   rec.disagreement_count = dis.length;
   rec.disagreements = dis.slice(0, 40);
   rec.ms = Date.now() - t0;

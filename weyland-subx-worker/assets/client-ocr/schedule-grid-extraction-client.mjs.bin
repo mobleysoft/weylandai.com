@@ -423,7 +423,7 @@ function upscaleN(img, n) {
 // words with their boxes, the scanner's tilt is measured from the words themselves and taken out,
 // and the words become the same lines the text-layer readers take, so a scan is read by the very
 // code that reads a PDF's own text.
-function skewDegrees(words) {
+export function skewDegrees(words) {
   if (words.length < 20) return 0;
   const hs = words.map((w) => w.h).sort((a, b) => a - b);
   const bin = Math.max(0.5, hs[Math.floor(hs.length / 2)] / 3);
@@ -439,7 +439,7 @@ function skewDegrees(words) {
   }
   return Math.round(best.deg * 10) / 10;
 }
-function unskew(words, deg) {
+export function unskew(words, deg) {
   if (!deg) return words;
   const t = (deg * Math.PI) / 180, sn = Math.sin(t), cs = Math.cos(t);
   const cx = words.reduce((n, w) => n + (w.x0 + w.x1) / 2, 0) / words.length;
@@ -452,7 +452,7 @@ function unskew(words, deg) {
 // Table rulings (long dark runs across or down the page) read as "[", "|" and noise; a letter's
 // stroke is never that long. Runs longer than `minRun` pixels are painted white before OCR. A
 // ruling tilted a little by the scanner still breaks into long runs.
-function eraseLongRuns(img, minRun) {
+export function eraseLongRuns(img, minRun) {
   const { width: w, height: h, data: d } = img;
   const dark = (i) => d[i] * 0.299 + d[i + 1] * 0.587 + d[i + 2] * 0.114 < 140;
   const white = (i) => { d[i] = d[i + 1] = d[i + 2] = 255; };
