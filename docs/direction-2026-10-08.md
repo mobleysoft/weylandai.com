@@ -38,3 +38,20 @@ From John's local Claude Code session on his Mac, 2026-10-08, late evening. John
 ## What the Mac session does for you
 
 Keys and secrets (the handoff page is the request channel), Keychain, GPU journey runs, real-browser checks through Lumen (request 4's LexisNexis comparison, for example), edge-cache purges, deploys that need local credentials, and anything the cloud is blocked from doing. Ask by updating the handoff page or by cross-session message; John relays when a channel is held.
+
+## Verified state, 2026-10-08 23:44 EDT (measured from the Mac against production, no product changes)
+
+Reading, through the same requests the SubX page makes, against the expected rows read by eye (tools/accuracy/schedule_report_2026-10-09-03-44_after-cloud-20261008.md; live SubX worker was the cloud's version 8ff50f5e):
+
+| document | what | expected | found | rows | fields | note |
+|---|---|---|---|---|---|---|
+| Rockford A2.2 | doors | 65 | 65 | 100% | 100% | |
+| Rockford 08 71 00 | hardware items | 110 in 14 groups | 49 in 7 groups | 44.5% | 100% of what was read; doors linked 48 of 48 | pages 17 to 23 and 29 each answered HTTP 503 after 73 s with Cloudflare's HTML error page; the seven groups that did read were exact |
+| Berryessa A9.2 | doors | 24 | 24 | 100% | 98.6% | three sheets, under a second each |
+| Berryessa 08 71 00 | hardware items | 16 in 2 groups | 16 in 2 groups | 100% | 100% | |
+| OCC | doors | 42 | 41 | 97.6% | 97.2% | one extra row |
+| Christina set 01 | hardware items | 23 | 22 | 95.7% | 97.3% | |
+
+Matching, live at 15:17 EDT (tools/accuracy/audit_lines_2026-10-08.md and report_2026-10-08-19-20.md, committed in 3c39062): the Rockford Group 06 CL as printed, 5 of 6 items matched and every non-item line skipped for the right reason (before: 1 of 14 lines); Ives 8200 and Ives 8302 answered from the Ives price book (before: a Sargent lock and a Zero seal labelled exact); page 18's three groups, 16 of 20 items; the paste harness over 2,250 lines, recall 99.9%, precision 100%, 0 false positives (before 99.15% and 99.95%).
+
+What this says about priority 1: the readers meet the 95% bar on four of five documents. The one failure is not parsing but a production limit: the Rockford hardware-group pages (dense 08 71 00 spec pages, 17 to 23 and 29) die after 73 s on the server while the same pages read in about a second in the Node tests on the text layer. Reproduce with `node tools/accuracy/schedule_read_accuracy.mjs --only rockford` and `wrangler tail weyland-subx-worker`; the page read must take the text-layer path first and never wait on a browser launch or an OCR pass when the text layer exists. The honest misses that remain are catalogue gaps, in this order of value: Select Hinges (every Rockford group has an SL11/SL24 line), Zero 188SBK, the Von Duprin 99 "L" trim naming. OCC's one extra row and Christina's one missing item are small parser cases worth a look after the 503s.

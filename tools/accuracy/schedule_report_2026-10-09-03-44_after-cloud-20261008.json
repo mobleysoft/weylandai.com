@@ -1,0 +1,4650 @@
+{
+ "base": "https://weylandai.com",
+ "started_at": "2026-10-09T03:44:40.065Z",
+ "documents": [
+  {
+   "id": "rockford",
+   "file": "/Users/johnmobley/weylandai.com/tools/corpus/door-schedules/f0e863d88ea688ff.pdf",
+   "reads": [
+    {
+     "page": 29,
+     "type": "door_schedule",
+     "status": 503,
+     "ms": 72693,
+     "ok": false,
+     "found": null,
+     "route": null,
+     "error": "{\"raw\":\"<!DOCTYPE html>\\n<!--[if lt IE 7]> <html class=\\\"no-js ie6 oldie\\\" lang=\\\"en-US\\\"> <![endif]-->\\n<!--[if IE 7]>    <html class=\\\"no-js ie7 oldie\\\" lang=\\\"en-US\\\"> <![endif]-->\\n<!--[if IE 8]> "
+    },
+    {
+     "page": 17,
+     "type": "hardware_schedule",
+     "status": 503,
+     "ms": 72693,
+     "ok": false,
+     "found": null,
+     "route": null,
+     "error": "{\"raw\":\"<!DOCTYPE html>\\n<!--[if lt IE 7]> <html class=\\\"no-js ie6 oldie\\\" lang=\\\"en-US\\\"> <![endif]-->\\n<!--[if IE 7]>    <html class=\\\"no-js ie7 oldie\\\" lang=\\\"en-US\\\"> <![endif]-->\\n<!--[if IE 8]> "
+    },
+    {
+     "page": 18,
+     "type": "hardware_schedule",
+     "status": 503,
+     "ms": 72693,
+     "ok": false,
+     "found": null,
+     "route": null,
+     "error": "{\"raw\":\"<!DOCTYPE html>\\n<!--[if lt IE 7]> <html class=\\\"no-js ie6 oldie\\\" lang=\\\"en-US\\\"> <![endif]-->\\n<!--[if IE 7]>    <html class=\\\"no-js ie7 oldie\\\" lang=\\\"en-US\\\"> <![endif]-->\\n<!--[if IE 8]> "
+    },
+    {
+     "page": 19,
+     "type": "hardware_schedule",
+     "status": 503,
+     "ms": 72693,
+     "ok": false,
+     "found": null,
+     "route": null,
+     "error": "{\"raw\":\"<!DOCTYPE html>\\n<!--[if lt IE 7]> <html class=\\\"no-js ie6 oldie\\\" lang=\\\"en-US\\\"> <![endif]-->\\n<!--[if IE 7]>    <html class=\\\"no-js ie7 oldie\\\" lang=\\\"en-US\\\"> <![endif]-->\\n<!--[if IE 8]> "
+    },
+    {
+     "page": 20,
+     "type": "hardware_schedule",
+     "status": 503,
+     "ms": 72693,
+     "ok": false,
+     "found": null,
+     "route": null,
+     "error": "{\"raw\":\"<!DOCTYPE html>\\n<!--[if lt IE 7]> <html class=\\\"no-js ie6 oldie\\\" lang=\\\"en-US\\\"> <![endif]-->\\n<!--[if IE 7]>    <html class=\\\"no-js ie7 oldie\\\" lang=\\\"en-US\\\"> <![endif]-->\\n<!--[if IE 8]> "
+    },
+    {
+     "page": 21,
+     "type": "hardware_schedule",
+     "status": 503,
+     "ms": 72693,
+     "ok": false,
+     "found": null,
+     "route": null,
+     "error": "{\"raw\":\"<!DOCTYPE html>\\n<!--[if lt IE 7]> <html class=\\\"no-js ie6 oldie\\\" lang=\\\"en-US\\\"> <![endif]-->\\n<!--[if IE 7]>    <html class=\\\"no-js ie7 oldie\\\" lang=\\\"en-US\\\"> <![endif]-->\\n<!--[if IE 8]> "
+    },
+    {
+     "page": 22,
+     "type": "hardware_schedule",
+     "status": 503,
+     "ms": 72693,
+     "ok": false,
+     "found": null,
+     "route": null,
+     "error": "{\"raw\":\"<!DOCTYPE html>\\n<!--[if lt IE 7]> <html class=\\\"no-js ie6 oldie\\\" lang=\\\"en-US\\\"> <![endif]-->\\n<!--[if IE 7]>    <html class=\\\"no-js ie7 oldie\\\" lang=\\\"en-US\\\"> <![endif]-->\\n<!--[if IE 8]> "
+    },
+    {
+     "page": 23,
+     "type": "hardware_schedule",
+     "status": 503,
+     "ms": 72693,
+     "ok": false,
+     "found": null,
+     "route": null,
+     "error": "{\"raw\":\"<!DOCTYPE html>\\n<!--[if lt IE 7]> <html class=\\\"no-js ie6 oldie\\\" lang=\\\"en-US\\\"> <![endif]-->\\n<!--[if IE 7]>    <html class=\\\"no-js ie7 oldie\\\" lang=\\\"en-US\\\"> <![endif]-->\\n<!--[if IE 8]> "
+    }
+   ],
+   "errors": [],
+   "session": "d57ab3ee-bcb7-48f2-87f2-7ed6d951ce89",
+   "total_pages": 30,
+   "upload_ms": 7284,
+   "find_pages": {
+    "available": true,
+    "status": 200,
+    "ms": 6186,
+    "door_schedule_pages": [
+     29
+    ],
+    "hardware_pages": [
+     17,
+     18,
+     19,
+     20,
+     21,
+     22,
+     23
+    ],
+    "door_pages_expected": [
+     29
+    ],
+    "hardware_pages_expected": [
+     17,
+     18,
+     19,
+     20,
+     21,
+     22,
+     23
+    ],
+    "door_pages_right": true,
+    "hardware_pages_right": true,
+    "error": null
+   },
+   "read_route": "read-pages",
+   "batch_ms": 72693,
+   "found": {
+    "doors": [
+     {
+      "page": 29,
+      "row": 0,
+      "mark": "1J.1",
+      "hardware_group": "44 UTY-IT",
+      "width": "3'-0\" x 7'-10\"",
+      "width_inches": 36,
+      "height_inches": 94,
+      "fire_rating": null,
+      "door_type": "F"
+     },
+     {
+      "page": 29,
+      "row": 1,
+      "mark": "109.1",
+      "hardware_group": "06 CL",
+      "width": "3'-0\" x 7'-10\"",
+      "width_inches": 36,
+      "height_inches": 94,
+      "fire_rating": null,
+      "door_type": "NG"
+     },
+     {
+      "page": 29,
+      "row": 2,
+      "mark": "109.2",
+      "hardware_group": "06 CL",
+      "width": "3'-0\" x 7'-10\"",
+      "width_inches": 36,
+      "height_inches": 94,
+      "fire_rating": null,
+      "door_type": "NG"
+     },
+     {
+      "page": 29,
+      "row": 3,
+      "mark": "111.1",
+      "hardware_group": "06 CL",
+      "width": "3'-0\" x 7'-10\"",
+      "width_inches": 36,
+      "height_inches": 94,
+      "fire_rating": null,
+      "door_type": "NG"
+     },
+     {
+      "page": 29,
+      "row": 4,
+      "mark": "111.1.1",
+      "hardware_group": "19 STO",
+      "width": "6'-0\" x 7'-10\"",
+      "width_inches": 72,
+      "height_inches": 94,
+      "fire_rating": null,
+      "door_type": "F"
+     },
+     {
+      "page": 29,
+      "row": 5,
+      "mark": "113.1",
+      "hardware_group": "06 CL",
+      "width": "3'-0\" x 7'-10\"",
+      "width_inches": 36,
+      "height_inches": 94,
+      "fire_rating": null,
+      "door_type": "NG"
+     },
+     {
+      "page": 29,
+      "row": 6,
+      "mark": "113.1.1",
+      "hardware_group": "19 STO",
+      "width": "6'-0\" x 7'-10\"",
+      "width_inches": 72,
+      "height_inches": 94,
+      "fire_rating": null,
+      "door_type": "F"
+     },
+     {
+      "page": 29,
+      "row": 7,
+      "mark": "114.1",
+      "hardware_group": "19F STO",
+      "width": "6'-0\" x 7'-10\"",
+      "width_inches": 72,
+      "height_inches": 94,
+      "fire_rating": "YES",
+      "door_type": "F"
+     },
+     {
+      "page": 29,
+      "row": 8,
+      "mark": "118.1",
+      "hardware_group": "23 STO",
+      "width": "2'-8\" x 7'-10\"",
+      "width_inches": 32,
+      "height_inches": 94,
+      "fire_rating": null,
+      "door_type": "F"
+     },
+     {
+      "page": 29,
+      "row": 9,
+      "mark": "119.1",
+      "hardware_group": "40 UTY",
+      "width": "6'-0\" x 7'-10\"",
+      "width_inches": 72,
+      "height_inches": 94,
+      "fire_rating": null,
+      "door_type": "F"
+     },
+     {
+      "page": 29,
+      "row": 10,
+      "mark": "119.2",
+      "hardware_group": "44 UTY-IT",
+      "width": "3'-0\" x 7'-10\"",
+      "width_inches": 36,
+      "height_inches": 94,
+      "fire_rating": null,
+      "door_type": "F"
+     },
+     {
+      "page": 29,
+      "row": 11,
+      "mark": "126.1",
+      "hardware_group": "28 COR",
+      "width": "6'-0\" x 7'-10\"",
+      "width_inches": 72,
+      "height_inches": 94,
+      "fire_rating": null,
+      "door_type": "NG"
+     },
+     {
+      "page": 29,
+      "row": 12,
+      "mark": "126.1.1",
+      "hardware_group": "32 EXD",
+      "width": "3'-0\" x 7'-10\"",
+      "width_inches": 36,
+      "height_inches": 94,
+      "fire_rating": null,
+      "door_type": "AL1"
+     },
+     {
+      "page": 29,
+      "row": 13,
+      "mark": "126.1.2",
+      "hardware_group": null,
+      "width": "3'-0\" x 7'-0\"",
+      "width_inches": 36,
+      "height_inches": 84,
+      "fire_rating": null,
+      "door_type": "F"
+     },
+     {
+      "page": 29,
+      "row": 14,
+      "mark": "126.2",
+      "hardware_group": "28 COR",
+      "width": "6'-0\" x 7'-10\"",
+      "width_inches": 72,
+      "height_inches": 94,
+      "fire_rating": null,
+      "door_type": "NG"
+     },
+     {
+      "page": 29,
+      "row": 15,
+      "mark": "127.1",
+      "hardware_group": "07 CL",
+      "width": "3'-0\" x 7'-10\"",
+      "width_inches": 36,
+      "height_inches": 94,
+      "fire_rating": null,
+      "door_type": "F"
+     },
+     {
+      "page": 29,
+      "row": 16,
+      "mark": "128.1.1",
+      "hardware_group": "06 CL",
+      "width": "3'-0\" x 7'-10\"",
+      "width_inches": 36,
+      "height_inches": 94,
+      "fire_rating": null,
+      "door_type": "NG"
+     },
+     {
+      "page": 29,
+      "row": 17,
+      "mark": "129.1",
+      "hardware_group": "06 CL",
+      "width": "3'-0\" x 7'-10\"",
+      "width_inches": 36,
+      "height_inches": 94,
+      "fire_rating": null,
+      "door_type": "F"
+     },
+     {
+      "page": 29,
+      "row": 18,
+      "mark": "130.1",
+      "hardware_group": "01 RR",
+      "width": "3'-0\" x 7'-10\"",
+      "width_inches": 36,
+      "height_inches": 94,
+      "fire_rating": null,
+      "door_type": "F"
+     },
+     {
+      "page": 29,
+      "row": 19,
+      "mark": "131.1",
+      "hardware_group": "06 CL",
+      "width": "3'-0\" x 7'-10\"",
+      "width_inches": 36,
+      "height_inches": 94,
+      "fire_rating": null,
+      "door_type": "F"
+     },
+     {
+      "page": 29,
+      "row": 20,
+      "mark": "132.1",
+      "hardware_group": "01 RR",
+      "width": "3'-0\" x 7'-10\"",
+      "width_inches": 36,
+      "height_inches": 94,
+      "fire_rating": null,
+      "door_type": "F"
+     },
+     {
+      "page": 29,
+      "row": 21,
+      "mark": "133.1",
+      "hardware_group": "06 CL",
+      "width": "3'-0\" x 7'-10\"",
+      "width_inches": 36,
+      "height_inches": 94,
+      "fire_rating": null,
+      "door_type": "NG"
+     },
+     {
+      "page": 29,
+      "row": 22,
+      "mark": "134.1",
+      "hardware_group": "01 RR",
+      "width": "3'-0\" x 7'-10\"",
+      "width_inches": 36,
+      "height_inches": 94,
+      "fire_rating": null,
+      "door_type": "F"
+     },
+     {
+      "page": 29,
+      "row": 23,
+      "mark": "136.1",
+      "hardware_group": "44 UTY-IT",
+      "width": "3'-0\" x 7'-10\"",
+      "width_inches": 36,
+      "height_inches": 94,
+      "fire_rating": null,
+      "door_type": "F"
+     },
+     {
+      "page": 29,
+      "row": 24,
+      "mark": "138.1",
+      "hardware_group": "23 STO",
+      "width": "3'-0\" x 7'-10\"",
+      "width_inches": 36,
+      "height_inches": 94,
+      "fire_rating": null,
+      "door_type": "F"
+     },
+     {
+      "page": 29,
+      "row": 25,
+      "mark": "138.1.1",
+      "hardware_group": "06 CL",
+      "width": "3'-0\" x 7'-0\"",
+      "width_inches": 36,
+      "height_inches": 84,
+      "fire_rating": null,
+      "door_type": "NG"
+     },
+     {
+      "page": 29,
+      "row": 26,
+      "mark": "138.2",
+      "hardware_group": "23 STO",
+      "width": "3'-0\" x 7'-10\"",
+      "width_inches": 36,
+      "height_inches": 94,
+      "fire_rating": null,
+      "door_type": "F"
+     },
+     {
+      "page": 29,
+      "row": 27,
+      "mark": "141.1",
+      "hardware_group": "06 CL",
+      "width": "3'-0\" x 7'-10\"",
+      "width_inches": 36,
+      "height_inches": 94,
+      "fire_rating": null,
+      "door_type": "F"
+     },
+     {
+      "page": 29,
+      "row": 28,
+      "mark": "142.1",
+      "hardware_group": "06 CL",
+      "width": "3'-0\" x 7'-10\"",
+      "width_inches": 36,
+      "height_inches": 94,
+      "fire_rating": null,
+      "door_type": "F"
+     },
+     {
+      "page": 29,
+      "row": 29,
+      "mark": "143.1",
+      "hardware_group": "06 CL",
+      "width": "3'-0\" x 7'-10\"",
+      "width_inches": 36,
+      "height_inches": 94,
+      "fire_rating": null,
+      "door_type": "G"
+     },
+     {
+      "page": 29,
+      "row": 30,
+      "mark": "144.1",
+      "hardware_group": "06 CL",
+      "width": "3'-0\" x 7'-10\"",
+      "width_inches": 36,
+      "height_inches": 94,
+      "fire_rating": null,
+      "door_type": "G"
+     },
+     {
+      "page": 29,
+      "row": 31,
+      "mark": "145.1",
+      "hardware_group": "06 CL",
+      "width": "3'-0\" x 7'-10\"",
+      "width_inches": 36,
+      "height_inches": 94,
+      "fire_rating": null,
+      "door_type": "G"
+     },
+     {
+      "page": 29,
+      "row": 32,
+      "mark": "146.1",
+      "hardware_group": "06 CL",
+      "width": "3'-0\" x 7'-10\"",
+      "width_inches": 36,
+      "height_inches": 94,
+      "fire_rating": null,
+      "door_type": "G"
+     },
+     {
+      "page": 29,
+      "row": 33,
+      "mark": "147.1",
+      "hardware_group": "02 RR-M",
+      "width": "3'-0\" x 7'-10\"",
+      "width_inches": 36,
+      "height_inches": 94,
+      "fire_rating": null,
+      "door_type": "F"
+     },
+     {
+      "page": 29,
+      "row": 34,
+      "mark": "147.1.1",
+      "hardware_group": "51 UTY-CUS",
+      "width": "3'-0\" x 7'-10\"",
+      "width_inches": 36,
+      "height_inches": 94,
+      "fire_rating": null,
+      "door_type": "F"
+     },
+     {
+      "page": 29,
+      "row": 35,
+      "mark": "148.1",
+      "hardware_group": "02 RR-M",
+      "width": "3'-0\" x 7'-10\"",
+      "width_inches": 36,
+      "height_inches": 94,
+      "fire_rating": null,
+      "door_type": "F"
+     },
+     {
+      "page": 29,
+      "row": 36,
+      "mark": "150.1",
+      "hardware_group": "07 CL",
+      "width": "3'-0\" x 7'-10\"",
+      "width_inches": 36,
+      "height_inches": 94,
+      "fire_rating": null,
+      "door_type": "AL1"
+     },
+     {
+      "page": 29,
+      "row": 37,
+      "mark": "151.1",
+      "hardware_group": "06 CL",
+      "width": "3'-0\" x 7'-10\"",
+      "width_inches": 36,
+      "height_inches": 94,
+      "fire_rating": null,
+      "door_type": "F"
+     },
+     {
+      "page": 29,
+      "row": 38,
+      "mark": "152.1",
+      "hardware_group": "47 VES",
+      "width": "3'-0\" x 7'-10\"",
+      "width_inches": 36,
+      "height_inches": 94,
+      "fire_rating": null,
+      "door_type": "F"
+     },
+     {
+      "page": 29,
+      "row": 39,
+      "mark": "152.1.1",
+      "hardware_group": "32 EXD",
+      "width": "3'-0\" x 7'-10\"",
+      "width_inches": 36,
+      "height_inches": 94,
+      "fire_rating": null,
+      "door_type": "AL1"
+     },
+     {
+      "page": 29,
+      "row": 40,
+      "mark": "153.1",
+      "hardware_group": "06 CL",
+      "width": "3'-0\" x 7'-10\"",
+      "width_inches": 36,
+      "height_inches": 94,
+      "fire_rating": null,
+      "door_type": "F"
+     },
+     {
+      "page": 29,
+      "row": 41,
+      "mark": "155.1",
+      "hardware_group": "07 CL",
+      "width": "3'-0\" x 7'-10\"",
+      "width_inches": 36,
+      "height_inches": 94,
+      "fire_rating": null,
+      "door_type": "F"
+     },
+     {
+      "page": 29,
+      "row": 42,
+      "mark": "155.2",
+      "hardware_group": "23 STO",
+      "width": "2'-6\" x 7'-10\"",
+      "width_inches": 30,
+      "height_inches": 94,
+      "fire_rating": null,
+      "door_type": "F"
+     },
+     {
+      "page": 29,
+      "row": 43,
+      "mark": "157.1",
+      "hardware_group": "20 STO",
+      "width": "3'-0\" x 7'-10\"",
+      "width_inches": 36,
+      "height_inches": 94,
+      "fire_rating": null,
+      "door_type": "F"
+     },
+     {
+      "page": 29,
+      "row": 44,
+      "mark": "159.1",
+      "hardware_group": "06 CL",
+      "width": "3'-0\" x 7'-10\"",
+      "width_inches": 36,
+      "height_inches": 94,
+      "fire_rating": null,
+      "door_type": "NG"
+     },
+     {
+      "page": 29,
+      "row": 45,
+      "mark": "161.1",
+      "hardware_group": "06 CL",
+      "width": "3'-0\" x 7'-10\"",
+      "width_inches": 36,
+      "height_inches": 94,
+      "fire_rating": null,
+      "door_type": "F"
+     },
+     {
+      "page": 29,
+      "row": 46,
+      "mark": "162.1",
+      "hardware_group": "06 CL",
+      "width": "3'-0\" x 7'-10\"",
+      "width_inches": 36,
+      "height_inches": 94,
+      "fire_rating": null,
+      "door_type": "F"
+     },
+     {
+      "page": 29,
+      "row": 47,
+      "mark": "163.1",
+      "hardware_group": "06 CL",
+      "width": "3'-0\" x 7'-10\"",
+      "width_inches": 36,
+      "height_inches": 94,
+      "fire_rating": null,
+      "door_type": "F"
+     },
+     {
+      "page": 29,
+      "row": 48,
+      "mark": "164.1",
+      "hardware_group": "06 CL",
+      "width": "3'-0\" x 7'-10\"",
+      "width_inches": 36,
+      "height_inches": 94,
+      "fire_rating": null,
+      "door_type": "F"
+     },
+     {
+      "page": 29,
+      "row": 49,
+      "mark": "165.1",
+      "hardware_group": "06 CL",
+      "width": "3'-0\" x 7'-10\"",
+      "width_inches": 36,
+      "height_inches": 94,
+      "fire_rating": null,
+      "door_type": "F"
+     },
+     {
+      "page": 29,
+      "row": 50,
+      "mark": "166.1",
+      "hardware_group": "06 CL",
+      "width": "3'-0\" x 7'-10\"",
+      "width_inches": 36,
+      "height_inches": 94,
+      "fire_rating": null,
+      "door_type": "F"
+     },
+     {
+      "page": 29,
+      "row": 51,
+      "mark": "167.1",
+      "hardware_group": "02 RR-M",
+      "width": "3'-0\" x 7'-10\"",
+      "width_inches": 36,
+      "height_inches": 94,
+      "fire_rating": null,
+      "door_type": "F"
+     },
+     {
+      "page": 29,
+      "row": 52,
+      "mark": "167.1.1",
+      "hardware_group": "51 UTY-CUS",
+      "width": "3'-0\" x 7'-10\"",
+      "width_inches": 36,
+      "height_inches": 94,
+      "fire_rating": null,
+      "door_type": "F"
+     },
+     {
+      "page": 29,
+      "row": 53,
+      "mark": "168.1",
+      "hardware_group": "02 RR-M",
+      "width": "3'-0\" x 7'-10\"",
+      "width_inches": 36,
+      "height_inches": 94,
+      "fire_rating": null,
+      "door_type": "F"
+     },
+     {
+      "page": 29,
+      "row": 54,
+      "mark": "170.1",
+      "hardware_group": "07 CL",
+      "width": "3'-0\" x 7'-10\"",
+      "width_inches": 36,
+      "height_inches": 94,
+      "fire_rating": null,
+      "door_type": "AL1"
+     },
+     {
+      "page": 29,
+      "row": 55,
+      "mark": "173.1",
+      "hardware_group": "06 CL",
+      "width": "3'-0\" x 7'-10\"",
+      "width_inches": 36,
+      "height_inches": 94,
+      "fire_rating": null,
+      "door_type": "F"
+     },
+     {
+      "page": 29,
+      "row": 56,
+      "mark": "174.1",
+      "hardware_group": "06 CL",
+      "width": "3'-0\" x 7'-10\"",
+      "width_inches": 36,
+      "height_inches": 94,
+      "fire_rating": null,
+      "door_type": "F"
+     },
+     {
+      "page": 29,
+      "row": 57,
+      "mark": "175.1",
+      "hardware_group": "06 CL",
+      "width": "3'-0\" x 7'-10\"",
+      "width_inches": 36,
+      "height_inches": 94,
+      "fire_rating": null,
+      "door_type": "F"
+     },
+     {
+      "page": 29,
+      "row": 58,
+      "mark": "176.1",
+      "hardware_group": "06 CL",
+      "width": "3'-0\" x 7'-10\"",
+      "width_inches": 36,
+      "height_inches": 94,
+      "fire_rating": null,
+      "door_type": "F"
+     },
+     {
+      "page": 29,
+      "row": 59,
+      "mark": "177.1",
+      "hardware_group": "06 CL",
+      "width": "3'-0\" x 7'-10\"",
+      "width_inches": 36,
+      "height_inches": 94,
+      "fire_rating": null,
+      "door_type": "F"
+     },
+     {
+      "page": 29,
+      "row": 60,
+      "mark": "178.1",
+      "hardware_group": "06 CL",
+      "width": "3'-0\" x 7'-10\"",
+      "width_inches": 36,
+      "height_inches": 94,
+      "fire_rating": null,
+      "door_type": "F"
+     },
+     {
+      "page": 29,
+      "row": 61,
+      "mark": "179.1",
+      "hardware_group": "02 RR-M",
+      "width": "3'-0\" x 7'-10\"",
+      "width_inches": 36,
+      "height_inches": 94,
+      "fire_rating": null,
+      "door_type": "F"
+     },
+     {
+      "page": 29,
+      "row": 62,
+      "mark": "179.1.1",
+      "hardware_group": "51 UTY-CUS",
+      "width": "3'-0\" x 7'-10\"",
+      "width_inches": 36,
+      "height_inches": 94,
+      "fire_rating": null,
+      "door_type": "F"
+     },
+     {
+      "page": 29,
+      "row": 63,
+      "mark": "180.1",
+      "hardware_group": "02 RR-M",
+      "width": "3'-0\" x 7'-10\"",
+      "width_inches": 36,
+      "height_inches": 94,
+      "fire_rating": null,
+      "door_type": "F"
+     },
+     {
+      "page": 29,
+      "row": 64,
+      "mark": "182.1",
+      "hardware_group": "07 CL",
+      "width": "2'-11\" x 7'-10\"",
+      "width_inches": 35,
+      "height_inches": 94,
+      "fire_rating": null,
+      "door_type": "AL1"
+     }
+    ],
+    "hardware_sets": [
+     {
+      "id": "set_1791517505538_x8nhlenrb",
+      "set_number": "01 RR",
+      "set_name": null,
+      "affirmed": 0,
+      "door_count": null,
+      "components": 7
+     },
+     {
+      "id": "set_1791517511950_iy6o07zcq",
+      "set_number": "02 RR-M",
+      "set_name": null,
+      "affirmed": 0,
+      "door_count": null,
+      "components": 8
+     },
+     {
+      "id": "set_1791517512396_sri5owwho",
+      "set_number": "06 CL",
+      "set_name": null,
+      "affirmed": 0,
+      "door_count": null,
+      "components": 6
+     },
+     {
+      "id": "set_1791517512732_hkl5m5b3y",
+      "set_number": "07 CL",
+      "set_name": null,
+      "affirmed": 0,
+      "door_count": null,
+      "components": 6
+     },
+     {
+      "id": "set_1791517537164_z11vqfz3z",
+      "set_number": "19 STO",
+      "set_name": null,
+      "affirmed": 0,
+      "door_count": null,
+      "components": 8
+     },
+     {
+      "id": "set_1791517537588_1u5avhnu7",
+      "set_number": "19F STO",
+      "set_name": null,
+      "affirmed": 0,
+      "door_count": null,
+      "components": 8
+     },
+     {
+      "id": "set_1791517537904_fvg6pfjek",
+      "set_number": "20 STO",
+      "set_name": null,
+      "affirmed": 0,
+      "door_count": null,
+      "components": 6
+     }
+    ],
+    "components": [
+     {
+      "id": "comp_1791517505565_ihug68kd4",
+      "set_number": "01 RR",
+      "component_type": "hinge",
+      "quantity": 1,
+      "uom": "EA",
+      "manufacturer": "Select Hinges",
+      "model": "SL11 / SL24",
+      "catalog_number": "SL11 / SL24",
+      "finish": "628",
+      "description": "CONTINUOUS HINGE",
+      "notes": null
+     },
+     {
+      "id": "comp_1791517505597_j78ham8sm",
+      "set_number": "01 RR",
+      "component_type": "lock",
+      "quantity": 1,
+      "uom": "EA",
+      "manufacturer": "Schlage",
+      "model": "ND40S RHO OS-OCC",
+      "catalog_number": "ND40S RHO OS-OCC",
+      "finish": "626",
+      "description": "CYLINDRICAL PRIVACY LOCK W/OUTSIDE INDICATOR",
+      "notes": null
+     },
+     {
+      "id": "comp_1791517505626_gg1evbcxj",
+      "set_number": "01 RR",
+      "component_type": "closer",
+      "quantity": 1,
+      "uom": "EA",
+      "manufacturer": "LCN",
+      "model": "4040XP REG / 4040XP EDA - AS REQUIRED",
+      "catalog_number": "4040XP REG / 4040XP EDA - AS REQUIRED",
+      "finish": "689",
+      "description": "REG/ PA SURFACE CLOSER - AS REQUIRED",
+      "notes": null
+     },
+     {
+      "id": "comp_1791517505655_esboap3in",
+      "set_number": "01 RR",
+      "component_type": "kick_plate",
+      "quantity": 1,
+      "uom": "EA",
+      "manufacturer": "Ives",
+      "model": "8400 10\" HIGH B-CS TKTX SCREWS AT HM DOORS",
+      "catalog_number": "8400 10\" HIGH B-CS TKTX SCREWS AT HM DOORS",
+      "finish": "630",
+      "description": "KICK PLATE",
+      "notes": null
+     },
+     {
+      "id": "comp_1791517505684_jt75bffou",
+      "set_number": "01 RR",
+      "component_type": "mop_plate",
+      "quantity": 1,
+      "uom": "EA",
+      "manufacturer": "Ives",
+      "model": "8400 4\" HIGH B-CS TKTX SCREWS AT HM DOORS",
+      "catalog_number": "8400 4\" HIGH B-CS TKTX SCREWS AT HM DOORS",
+      "finish": "630",
+      "description": "MOP PLATE",
+      "notes": null
+     },
+     {
+      "id": "comp_1791517505710_2mt1781zo",
+      "set_number": "01 RR",
+      "component_type": "wall_stop",
+      "quantity": 1,
+      "uom": "EA",
+      "manufacturer": "Ives",
+      "model": "WS406/407CCV",
+      "catalog_number": "WS406/407CCV",
+      "finish": "630",
+      "description": "WALL STOP",
+      "notes": null
+     },
+     {
+      "id": "comp_1791517505735_kcpmy416w",
+      "set_number": "01 RR",
+      "component_type": "silencer",
+      "quantity": 3,
+      "uom": "EA",
+      "manufacturer": "Ives",
+      "model": "SR64",
+      "catalog_number": "SR64",
+      "finish": "GRY",
+      "description": "SILENCER",
+      "notes": null
+     },
+     {
+      "id": "comp_1791517512001_jhtcs8prw",
+      "set_number": "02 RR-M",
+      "component_type": "hinge",
+      "quantity": 1,
+      "uom": "EA",
+      "manufacturer": "Select Hinges",
+      "model": "SL11 / SL24",
+      "catalog_number": "SL11 / SL24",
+      "finish": "628",
+      "description": "CONTINUOUS HINGE",
+      "notes": null
+     },
+     {
+      "id": "comp_1791517512048_7elrmzkyl",
+      "set_number": "02 RR-M",
+      "component_type": "push_plate",
+      "quantity": 1,
+      "uom": "EA",
+      "manufacturer": "Ives",
+      "model": "8200 4\" X 16\" TKTX SCREWS AT HM DOORS",
+      "catalog_number": "8200 4\" X 16\" TKTX SCREWS AT HM DOORS",
+      "finish": "630",
+      "description": "PUSH PLATE",
+      "notes": null
+     },
+     {
+      "id": "comp_1791517512093_0ytzbvtbp",
+      "set_number": "02 RR-M",
+      "component_type": "pull_handle",
+      "quantity": 1,
+      "uom": "EA",
+      "manufacturer": "Ives",
+      "model": "8302 10\" 4\" X 16\" TKTX SCREWS AT HM DOORS",
+      "catalog_number": "8302 10\" 4\" X 16\" TKTX SCREWS AT HM DOORS",
+      "finish": "630",
+      "description": "PULL PLATE",
+      "notes": null
+     },
+     {
+      "id": "comp_1791517512142_4fctvirb7",
+      "set_number": "02 RR-M",
+      "component_type": "closer",
+      "quantity": 1,
+      "uom": "EA",
+      "manufacturer": "LCN",
+      "model": "4040XP REG / 4040XP EDA - AS REQUIRED",
+      "catalog_number": "4040XP REG / 4040XP EDA - AS REQUIRED",
+      "finish": "689",
+      "description": "REG/ PA SURFACE CLOSER - AS REQUIRED",
+      "notes": null
+     },
+     {
+      "id": "comp_1791517512188_0wxtt2tpp",
+      "set_number": "02 RR-M",
+      "component_type": "kick_plate",
+      "quantity": 1,
+      "uom": "EA",
+      "manufacturer": "Ives",
+      "model": "8400 10\" HIGH B-CS TKTX SCREWS AT HM DOORS",
+      "catalog_number": "8400 10\" HIGH B-CS TKTX SCREWS AT HM DOORS",
+      "finish": "630",
+      "description": "KICK PLATE",
+      "notes": null
+     },
+     {
+      "id": "comp_1791517512235_l3j7j0uig",
+      "set_number": "02 RR-M",
+      "component_type": "mop_plate",
+      "quantity": 1,
+      "uom": "EA",
+      "manufacturer": "Ives",
+      "model": "8400 4\" HIGH B-CS TKTX SCREWS AT HM DOORS",
+      "catalog_number": "8400 4\" HIGH B-CS TKTX SCREWS AT HM DOORS",
+      "finish": "630",
+      "description": "MOP PLATE",
+      "notes": null
+     },
+     {
+      "id": "comp_1791517512280_pvadnktpr",
+      "set_number": "02 RR-M",
+      "component_type": "wall_stop",
+      "quantity": 1,
+      "uom": "EA",
+      "manufacturer": "Ives",
+      "model": "WS406/407CCV",
+      "catalog_number": "WS406/407CCV",
+      "finish": "630",
+      "description": "WALL STOP",
+      "notes": null
+     },
+     {
+      "id": "comp_1791517512334_l3vyiabi2",
+      "set_number": "02 RR-M",
+      "component_type": "silencer",
+      "quantity": 3,
+      "uom": "EA",
+      "manufacturer": "Ives",
+      "model": "SR64",
+      "catalog_number": "SR64",
+      "finish": "GRY",
+      "description": "SILENCER",
+      "notes": null
+     },
+     {
+      "id": "comp_1791517512449_xxxo24jaw",
+      "set_number": "06 CL",
+      "component_type": "hinge",
+      "quantity": 1,
+      "uom": "EA",
+      "manufacturer": "Select Hinges",
+      "model": "SL11 / SL24",
+      "catalog_number": "SL11 / SL24",
+      "finish": "628",
+      "description": "CONTINUOUS HINGE",
+      "notes": null
+     },
+     {
+      "id": "comp_1791517512493_xtirgxg1a",
+      "set_number": "06 CL",
+      "component_type": "lock",
+      "quantity": 1,
+      "uom": "EA",
+      "manufacturer": "Schlage",
+      "model": "ALX53R-RHO-626 FSIC",
+      "catalog_number": "ALX53R-RHO-626 FSIC",
+      "finish": "626",
+      "description": "ENTRANCE LOCK",
+      "notes": null
+     },
+     {
+      "id": "comp_1791517512536_54hbz54ee",
+      "set_number": "06 CL",
+      "component_type": "closer",
+      "quantity": 1,
+      "uom": "EA",
+      "manufacturer": "LCN",
+      "model": "4040XP H / HEDA - AS REQUIRED",
+      "catalog_number": "4040XP H / HEDA - AS REQUIRED",
+      "finish": "689",
+      "description": "CLOSER, HOLD OPEN",
+      "notes": null
+     },
+     {
+      "id": "comp_1791517512580_8vyo3lqwl",
+      "set_number": "06 CL",
+      "component_type": "kick_plate",
+      "quantity": 1,
+      "uom": "EA",
+      "manufacturer": "Ives",
+      "model": "8400 10\" HIGH B-CS TKTX SCREWS AT HM DOORS",
+      "catalog_number": "8400 10\" HIGH B-CS TKTX SCREWS AT HM DOORS",
+      "finish": "630",
+      "description": "KICK PLATE",
+      "notes": null
+     },
+     {
+      "id": "comp_1791517512621_jgeg58z21",
+      "set_number": "06 CL",
+      "component_type": "wall_stop",
+      "quantity": 1,
+      "uom": "EA",
+      "manufacturer": "Ives",
+      "model": "WS406/407CCV",
+      "catalog_number": "WS406/407CCV",
+      "finish": "630",
+      "description": "WALL STOP",
+      "notes": null
+     },
+     {
+      "id": "comp_1791517512673_agjcr2x1w",
+      "set_number": "06 CL",
+      "component_type": "silencer",
+      "quantity": 3,
+      "uom": "EA",
+      "manufacturer": "Ives",
+      "model": "SR64",
+      "catalog_number": "SR64",
+      "finish": "GRY",
+      "description": "SILENCER",
+      "notes": null
+     },
+     {
+      "id": "comp_1791517512774_f7n3j52og",
+      "set_number": "07 CL",
+      "component_type": "hinge",
+      "quantity": 1,
+      "uom": "EA",
+      "manufacturer": "Select Hinges",
+      "model": "SL11 / SL24",
+      "catalog_number": "SL11 / SL24",
+      "finish": "628",
+      "description": "CONTINUOUS HINGE",
+      "notes": null
+     },
+     {
+      "id": "comp_1791517512818_cbgn59xg5",
+      "set_number": "07 CL",
+      "component_type": "lock",
+      "quantity": 1,
+      "uom": "EA",
+      "manufacturer": "Schlage",
+      "model": "ALX53R-RHO-626 FSIC",
+      "catalog_number": "ALX53R-RHO-626 FSIC",
+      "finish": "626",
+      "description": "ENTRANCE LOCK",
+      "notes": null
+     },
+     {
+      "id": "comp_1791517512859_24n9h3izn",
+      "set_number": "07 CL",
+      "component_type": "overhead_stop",
+      "quantity": 1,
+      "uom": "EA",
+      "manufacturer": "Glynn-Johnson",
+      "model": "90S",
+      "catalog_number": "90S",
+      "finish": "652",
+      "description": "OH STOP",
+      "notes": null
+     },
+     {
+      "id": "comp_1791517512900_3blvg9gqy",
+      "set_number": "07 CL",
+      "component_type": "closer",
+      "quantity": 1,
+      "uom": "EA",
+      "manufacturer": "LCN",
+      "model": "4040XP H / HEDA - AS REQUIRED",
+      "catalog_number": "4040XP H / HEDA - AS REQUIRED",
+      "finish": "689",
+      "description": "CLOSER, HOLD OPEN",
+      "notes": null
+     },
+     {
+      "id": "comp_1791517512942_yo4eeoulz",
+      "set_number": "07 CL",
+      "component_type": "kick_plate",
+      "quantity": 1,
+      "uom": "EA",
+      "manufacturer": "Ives",
+      "model": "8400 10\" HIGH B-CS TKTX SCREWS AT HM DOORS",
+      "catalog_number": "8400 10\" HIGH B-CS TKTX SCREWS AT HM DOORS",
+      "finish": "630",
+      "description": "KICK PLATE",
+      "notes": null
+     },
+     {
+      "id": "comp_1791517512981_z4vyvl8pu",
+      "set_number": "07 CL",
+      "component_type": "silencer",
+      "quantity": 3,
+      "uom": "EA",
+      "manufacturer": "Ives",
+      "model": "SR64",
+      "catalog_number": "SR64",
+      "finish": "GRY",
+      "description": "SILENCER",
+      "notes": null
+     },
+     {
+      "id": "comp_1791517537200_s6tornzgj",
+      "set_number": "19 STO",
+      "component_type": "hinge",
+      "quantity": 2,
+      "uom": "EA",
+      "manufacturer": "Select Hinges",
+      "model": "SL11 / SL24",
+      "catalog_number": "SL11 / SL24",
+      "finish": "628",
+      "description": "CONTINUOUS HINGE",
+      "notes": null
+     },
+     {
+      "id": "comp_1791517537266_a0lmzo3zj",
+      "set_number": "19 STO",
+      "component_type": "flush_bolt",
+      "quantity": 1,
+      "uom": "EA",
+      "manufacturer": "Ives",
+      "model": "FB51P / FB61P",
+      "catalog_number": "FB51P / FB61P",
+      "finish": "630",
+      "description": "CONST LATCHING BOLT",
+      "notes": null
+     },
+     {
+      "id": "comp_1791517537325_pga88kjtx",
+      "set_number": "19 STO",
+      "component_type": "dust_proof_strike",
+      "quantity": 1,
+      "uom": "EA",
+      "manufacturer": "Ives",
+      "model": "DP1/ DP2 (AS REQ'D)",
+      "catalog_number": "DP1/ DP2 (AS REQ'D)",
+      "finish": "626",
+      "description": "DUST PROOF STRIKE",
+      "notes": null
+     },
+     {
+      "id": "comp_1791517537362_vktn53lz2",
+      "set_number": "19 STO",
+      "component_type": "lock",
+      "quantity": 1,
+      "uom": "EA",
+      "manufacturer": "Schlage",
+      "model": "ALX80R-RHO-626 FSIC",
+      "catalog_number": "ALX80R-RHO-626 FSIC",
+      "finish": "626",
+      "description": "STOREROOM LOCK",
+      "notes": null
+     },
+     {
+      "id": "comp_1791517537397_ioofjyt7p",
+      "set_number": "19 STO",
+      "component_type": "closer",
+      "quantity": 1,
+      "uom": "EA",
+      "manufacturer": "LCN",
+      "model": "4040XP H / HEDA - AS REQUIRED",
+      "catalog_number": "4040XP H / HEDA - AS REQUIRED",
+      "finish": "689",
+      "description": "CLOSER, HOLD OPEN",
+      "notes": null
+     },
+     {
+      "id": "comp_1791517537432_pusnggjak",
+      "set_number": "19 STO",
+      "component_type": "armor_plate",
+      "quantity": 2,
+      "uom": "EA",
+      "manufacturer": "Ives",
+      "model": "8400 34\" HIGH B-CS TKTX SCREWS AT HM DOORS",
+      "catalog_number": "8400 34\" HIGH B-CS TKTX SCREWS AT HM DOORS",
+      "finish": "630",
+      "description": "ARMOR PLATE",
+      "notes": null
+     },
+     {
+      "id": "comp_1791517537465_qa56d1l5h",
+      "set_number": "19 STO",
+      "component_type": "wall_stop",
+      "quantity": 2,
+      "uom": "EA",
+      "manufacturer": "Ives",
+      "model": "WS406/407CCV",
+      "catalog_number": "WS406/407CCV",
+      "finish": "630",
+      "description": "WALL STOP",
+      "notes": null
+     },
+     {
+      "id": "comp_1791517537501_jxuufb69n",
+      "set_number": "19 STO",
+      "component_type": "silencer",
+      "quantity": 2,
+      "uom": "EA",
+      "manufacturer": "Ives",
+      "model": "SR64",
+      "catalog_number": "SR64",
+      "finish": "GRY",
+      "description": "SILENCER",
+      "notes": null
+     },
+     {
+      "id": "comp_1791517537626_t4e1r4ssk",
+      "set_number": "19F STO",
+      "component_type": "hinge",
+      "quantity": 2,
+      "uom": "EA",
+      "manufacturer": "Select Hinges",
+      "model": "SL11 / SL24",
+      "catalog_number": "SL11 / SL24",
+      "finish": "628",
+      "description": "CONTINUOUS HINGE",
+      "notes": null
+     },
+     {
+      "id": "comp_1791517537659_l7q57le75",
+      "set_number": "19F STO",
+      "component_type": "flush_bolt",
+      "quantity": 1,
+      "uom": "EA",
+      "manufacturer": "Ives",
+      "model": "FB51P / FB61P",
+      "catalog_number": "FB51P / FB61P",
+      "finish": "630",
+      "description": "CONST LATCHING BOLT",
+      "notes": null
+     },
+     {
+      "id": "comp_1791517537691_kvezx3srb",
+      "set_number": "19F STO",
+      "component_type": "dust_proof_strike",
+      "quantity": 1,
+      "uom": "EA",
+      "manufacturer": "Ives",
+      "model": "DP1/ DP2 (AS REQ'D)",
+      "catalog_number": "DP1/ DP2 (AS REQ'D)",
+      "finish": "626",
+      "description": "DUST PROOF STRIKE",
+      "notes": null
+     },
+     {
+      "id": "comp_1791517537721_qrol6vil6",
+      "set_number": "19F STO",
+      "component_type": "lock",
+      "quantity": 1,
+      "uom": "EA",
+      "manufacturer": "Schlage",
+      "model": "ALX80R-RHO-626 FSIC",
+      "catalog_number": "ALX80R-RHO-626 FSIC",
+      "finish": "626",
+      "description": "STOREROOM LOCK",
+      "notes": null
+     },
+     {
+      "id": "comp_1791517537754_v5g54g2hp",
+      "set_number": "19F STO",
+      "component_type": "closer",
+      "quantity": 2,
+      "uom": "EA",
+      "manufacturer": "LCN",
+      "model": "4040XP REG / 4040XP EDA - AS REQUIRED",
+      "catalog_number": "4040XP REG / 4040XP EDA - AS REQUIRED",
+      "finish": "689",
+      "description": "REG/ PA SURFACE CLOSER - AS REQUIRED",
+      "notes": null
+     },
+     {
+      "id": "comp_1791517537789_d0p9oogd9",
+      "set_number": "19F STO",
+      "component_type": "armor_plate",
+      "quantity": 2,
+      "uom": "EA",
+      "manufacturer": "Ives",
+      "model": "8400 34\" HIGH B-CS TKTX SCREWS AT HM DOORS",
+      "catalog_number": "8400 34\" HIGH B-CS TKTX SCREWS AT HM DOORS",
+      "finish": "630",
+      "description": "ARMOR PLATE",
+      "notes": null
+     },
+     {
+      "id": "comp_1791517537824_wr0c58ji3",
+      "set_number": "19F STO",
+      "component_type": "wall_stop",
+      "quantity": 2,
+      "uom": "EA",
+      "manufacturer": "Ives",
+      "model": "WS406/407CCV",
+      "catalog_number": "WS406/407CCV",
+      "finish": "630",
+      "description": "WALL STOP",
+      "notes": null
+     },
+     {
+      "id": "comp_1791517537856_efn3z8u3n",
+      "set_number": "19F STO",
+      "component_type": "seal",
+      "quantity": 1,
+      "uom": "EA",
+      "manufacturer": "Zero International",
+      "model": "188SBK PSA",
+      "catalog_number": "188SBK PSA",
+      "finish": "BK",
+      "description": "GASKETING",
+      "notes": null
+     },
+     {
+      "id": "comp_1791517537934_ngk0a79ip",
+      "set_number": "20 STO",
+      "component_type": "hinge",
+      "quantity": 1,
+      "uom": "EA",
+      "manufacturer": "Select Hinges",
+      "model": "SL11 / SL24",
+      "catalog_number": "SL11 / SL24",
+      "finish": "628",
+      "description": "CONTINUOUS HINGE",
+      "notes": null
+     },
+     {
+      "id": "comp_1791517537966_7zgicd36k",
+      "set_number": "20 STO",
+      "component_type": "lock",
+      "quantity": 1,
+      "uom": "EA",
+      "manufacturer": "Schlage",
+      "model": "ALX80R-RHO-626 FSIC",
+      "catalog_number": "ALX80R-RHO-626 FSIC",
+      "finish": "626",
+      "description": "STOREROOM LOCK",
+      "notes": null
+     },
+     {
+      "id": "comp_1791517538001_eeamplnc7",
+      "set_number": "20 STO",
+      "component_type": "closer",
+      "quantity": 1,
+      "uom": "EA",
+      "manufacturer": "LCN",
+      "model": "4040XP REG / 4040XP EDA - AS REQUIRED",
+      "catalog_number": "4040XP REG / 4040XP EDA - AS REQUIRED",
+      "finish": "689",
+      "description": "REG/ PA SURFACE CLOSER - AS REQUIRED",
+      "notes": null
+     },
+     {
+      "id": "comp_1791517538035_yyhd8d7c1",
+      "set_number": "20 STO",
+      "component_type": "kick_plate",
+      "quantity": 1,
+      "uom": "EA",
+      "manufacturer": "Ives",
+      "model": "8400 10\" HIGH B-CS TKTX SCREWS AT HM DOORS",
+      "catalog_number": "8400 10\" HIGH B-CS TKTX SCREWS AT HM DOORS",
+      "finish": "630",
+      "description": "KICK PLATE",
+      "notes": null
+     },
+     {
+      "id": "comp_1791517538070_3wznv2t5o",
+      "set_number": "20 STO",
+      "component_type": "wall_stop",
+      "quantity": 1,
+      "uom": "EA",
+      "manufacturer": "Ives",
+      "model": "WS406/407CCV",
+      "catalog_number": "WS406/407CCV",
+      "finish": "630",
+      "description": "WALL STOP",
+      "notes": null
+     },
+     {
+      "id": "comp_1791517538103_rxc665yvi",
+      "set_number": "20 STO",
+      "component_type": "silencer",
+      "quantity": 3,
+      "uom": "EA",
+      "manufacturer": "Ives",
+      "model": "SR64",
+      "catalog_number": "SR64",
+      "finish": "GRY",
+      "description": "SILENCER",
+      "notes": null
+     }
+    ]
+   },
+   "doors": {
+    "expected_rows": 65,
+    "rows_found": 65,
+    "rows_found_pct": 100,
+    "extra_rows": 0,
+    "extra_sample": [],
+    "field_accuracy_pct": 100,
+    "per_field": {
+     "mark": {
+      "right": 65,
+      "wrong": 0
+     },
+     "hardware_group": {
+      "right": 65,
+      "wrong": 0
+     },
+     "width_inches": {
+      "right": 65,
+      "wrong": 0
+     },
+     "height_inches": {
+      "right": 65,
+      "wrong": 0
+     },
+     "fire_rating": {
+      "right": 65,
+      "wrong": 0
+     },
+     "door_type": {
+      "right": 65,
+      "wrong": 0
+     }
+    },
+    "rows": [
+     {
+      "mark": "1J.1",
+      "page": 29,
+      "found": true,
+      "wrong": []
+     },
+     {
+      "mark": "109.1",
+      "page": 29,
+      "found": true,
+      "wrong": []
+     },
+     {
+      "mark": "109.2",
+      "page": 29,
+      "found": true,
+      "wrong": []
+     },
+     {
+      "mark": "111.1",
+      "page": 29,
+      "found": true,
+      "wrong": []
+     },
+     {
+      "mark": "111.1.1",
+      "page": 29,
+      "found": true,
+      "wrong": []
+     },
+     {
+      "mark": "113.1",
+      "page": 29,
+      "found": true,
+      "wrong": []
+     },
+     {
+      "mark": "113.1.1",
+      "page": 29,
+      "found": true,
+      "wrong": []
+     },
+     {
+      "mark": "114.1",
+      "page": 29,
+      "found": true,
+      "wrong": []
+     },
+     {
+      "mark": "118.1",
+      "page": 29,
+      "found": true,
+      "wrong": []
+     },
+     {
+      "mark": "119.1",
+      "page": 29,
+      "found": true,
+      "wrong": []
+     },
+     {
+      "mark": "119.2",
+      "page": 29,
+      "found": true,
+      "wrong": []
+     },
+     {
+      "mark": "126.1",
+      "page": 29,
+      "found": true,
+      "wrong": []
+     },
+     {
+      "mark": "126.1.1",
+      "page": 29,
+      "found": true,
+      "wrong": []
+     },
+     {
+      "mark": "126.1.2",
+      "page": 29,
+      "found": true,
+      "wrong": []
+     },
+     {
+      "mark": "126.2",
+      "page": 29,
+      "found": true,
+      "wrong": []
+     },
+     {
+      "mark": "127.1",
+      "page": 29,
+      "found": true,
+      "wrong": []
+     },
+     {
+      "mark": "128.1.1",
+      "page": 29,
+      "found": true,
+      "wrong": []
+     },
+     {
+      "mark": "129.1",
+      "page": 29,
+      "found": true,
+      "wrong": []
+     },
+     {
+      "mark": "130.1",
+      "page": 29,
+      "found": true,
+      "wrong": []
+     },
+     {
+      "mark": "131.1",
+      "page": 29,
+      "found": true,
+      "wrong": []
+     },
+     {
+      "mark": "132.1",
+      "page": 29,
+      "found": true,
+      "wrong": []
+     },
+     {
+      "mark": "133.1",
+      "page": 29,
+      "found": true,
+      "wrong": []
+     },
+     {
+      "mark": "134.1",
+      "page": 29,
+      "found": true,
+      "wrong": []
+     },
+     {
+      "mark": "136.1",
+      "page": 29,
+      "found": true,
+      "wrong": []
+     },
+     {
+      "mark": "138.1",
+      "page": 29,
+      "found": true,
+      "wrong": []
+     },
+     {
+      "mark": "138.1.1",
+      "page": 29,
+      "found": true,
+      "wrong": []
+     },
+     {
+      "mark": "138.2",
+      "page": 29,
+      "found": true,
+      "wrong": []
+     },
+     {
+      "mark": "141.1",
+      "page": 29,
+      "found": true,
+      "wrong": []
+     },
+     {
+      "mark": "142.1",
+      "page": 29,
+      "found": true,
+      "wrong": []
+     },
+     {
+      "mark": "143.1",
+      "page": 29,
+      "found": true,
+      "wrong": []
+     },
+     {
+      "mark": "144.1",
+      "page": 29,
+      "found": true,
+      "wrong": []
+     },
+     {
+      "mark": "145.1",
+      "page": 29,
+      "found": true,
+      "wrong": []
+     },
+     {
+      "mark": "146.1",
+      "page": 29,
+      "found": true,
+      "wrong": []
+     },
+     {
+      "mark": "147.1",
+      "page": 29,
+      "found": true,
+      "wrong": []
+     },
+     {
+      "mark": "147.1.1",
+      "page": 29,
+      "found": true,
+      "wrong": []
+     },
+     {
+      "mark": "148.1",
+      "page": 29,
+      "found": true,
+      "wrong": []
+     },
+     {
+      "mark": "150.1",
+      "page": 29,
+      "found": true,
+      "wrong": []
+     },
+     {
+      "mark": "151.1",
+      "page": 29,
+      "found": true,
+      "wrong": []
+     },
+     {
+      "mark": "152.1",
+      "page": 29,
+      "found": true,
+      "wrong": []
+     },
+     {
+      "mark": "152.1.1",
+      "page": 29,
+      "found": true,
+      "wrong": []
+     },
+     {
+      "mark": "153.1",
+      "page": 29,
+      "found": true,
+      "wrong": []
+     },
+     {
+      "mark": "155.1",
+      "page": 29,
+      "found": true,
+      "wrong": []
+     },
+     {
+      "mark": "155.2",
+      "page": 29,
+      "found": true,
+      "wrong": []
+     },
+     {
+      "mark": "157.1",
+      "page": 29,
+      "found": true,
+      "wrong": []
+     },
+     {
+      "mark": "159.1",
+      "page": 29,
+      "found": true,
+      "wrong": []
+     },
+     {
+      "mark": "161.1",
+      "page": 29,
+      "found": true,
+      "wrong": []
+     },
+     {
+      "mark": "162.1",
+      "page": 29,
+      "found": true,
+      "wrong": []
+     },
+     {
+      "mark": "163.1",
+      "page": 29,
+      "found": true,
+      "wrong": []
+     },
+     {
+      "mark": "164.1",
+      "page": 29,
+      "found": true,
+      "wrong": []
+     },
+     {
+      "mark": "165.1",
+      "page": 29,
+      "found": true,
+      "wrong": []
+     },
+     {
+      "mark": "166.1",
+      "page": 29,
+      "found": true,
+      "wrong": []
+     },
+     {
+      "mark": "167.1",
+      "page": 29,
+      "found": true,
+      "wrong": []
+     },
+     {
+      "mark": "167.1.1",
+      "page": 29,
+      "found": true,
+      "wrong": []
+     },
+     {
+      "mark": "168.1",
+      "page": 29,
+      "found": true,
+      "wrong": []
+     },
+     {
+      "mark": "170.1",
+      "page": 29,
+      "found": true,
+      "wrong": []
+     },
+     {
+      "mark": "173.1",
+      "page": 29,
+      "found": true,
+      "wrong": []
+     },
+     {
+      "mark": "174.1",
+      "page": 29,
+      "found": true,
+      "wrong": []
+     },
+     {
+      "mark": "175.1",
+      "page": 29,
+      "found": true,
+      "wrong": []
+     },
+     {
+      "mark": "176.1",
+      "page": 29,
+      "found": true,
+      "wrong": []
+     },
+     {
+      "mark": "177.1",
+      "page": 29,
+      "found": true,
+      "wrong": []
+     },
+     {
+      "mark": "178.1",
+      "page": 29,
+      "found": true,
+      "wrong": []
+     },
+     {
+      "mark": "179.1",
+      "page": 29,
+      "found": true,
+      "wrong": []
+     },
+     {
+      "mark": "179.1.1",
+      "page": 29,
+      "found": true,
+      "wrong": []
+     },
+     {
+      "mark": "180.1",
+      "page": 29,
+      "found": true,
+      "wrong": []
+     },
+     {
+      "mark": "182.1",
+      "page": 29,
+      "found": true,
+      "wrong": []
+     }
+    ]
+   },
+   "hardware": {
+    "expected_groups": 14,
+    "groups_found": 7,
+    "extra_groups": [],
+    "expected_items": 110,
+    "items_found": 49,
+    "items_found_pct": 44.5,
+    "field_accuracy_pct": 100,
+    "per_field": {
+     "qty": {
+      "right": 49,
+      "wrong": 0
+     },
+     "description": {
+      "right": 49,
+      "wrong": 0
+     },
+     "catalog": {
+      "right": 49,
+      "wrong": 0
+     },
+     "finish": {
+      "right": 49,
+      "wrong": 0
+     },
+     "mfr": {
+      "right": 49,
+      "wrong": 0
+     }
+    },
+    "doors_linked": {
+     "expected": 48,
+     "linked": 48,
+     "pct": 100
+    },
+    "groups": [
+     {
+      "group": "01 RR",
+      "found": true,
+      "read_as": "01 RR",
+      "items_expected": 7,
+      "items_found": 7,
+      "extra_items": 0,
+      "link": {
+       "expected_doors": 3,
+       "linked": 3,
+       "set_door_count": null
+      },
+      "items": [
+       {
+        "item": "CONTINUOUS HINGE SL11 / SL24",
+        "found": true,
+        "wrong": []
+       },
+       {
+        "item": "CYLINDRICAL PRIVACY LOCK W/OUTSIDE INDICATOR ND40S RHO OS-OCC",
+        "found": true,
+        "wrong": []
+       },
+       {
+        "item": "REG/ PA SURFACE CLOSER - AS REQUIRED 4040XP REG / 4040XP EDA - AS REQUIRED",
+        "found": true,
+        "wrong": []
+       },
+       {
+        "item": "KICK PLATE 8400 10\" HIGH B-CS TKTX SCREWS AT HM DOORS",
+        "found": true,
+        "wrong": []
+       },
+       {
+        "item": "MOP PLATE 8400 4\" HIGH B-CS TKTX SCREWS AT HM DOORS",
+        "found": true,
+        "wrong": []
+       },
+       {
+        "item": "WALL STOP WS406/407CCV",
+        "found": true,
+        "wrong": []
+       },
+       {
+        "item": "SILENCER SR64",
+        "found": true,
+        "wrong": []
+       }
+      ]
+     },
+     {
+      "group": "02 RR-M",
+      "found": true,
+      "read_as": "02 RR-M",
+      "items_expected": 8,
+      "items_found": 8,
+      "extra_items": 0,
+      "link": {
+       "expected_doors": 6,
+       "linked": 6,
+       "set_door_count": null
+      },
+      "items": [
+       {
+        "item": "CONTINUOUS HINGE SL11 / SL24",
+        "found": true,
+        "wrong": []
+       },
+       {
+        "item": "PUSH PLATE 8200 4\" X 16\" TKTX SCREWS AT HM DOORS",
+        "found": true,
+        "wrong": []
+       },
+       {
+        "item": "PULL PLATE 8302 10\" 4\" X 16\" TKTX SCREWS AT HM DOORS",
+        "found": true,
+        "wrong": []
+       },
+       {
+        "item": "REG/ PA SURFACE CLOSER - AS REQUIRED 4040XP REG / 4040XP EDA - AS REQUIRED",
+        "found": true,
+        "wrong": []
+       },
+       {
+        "item": "KICK PLATE 8400 10\" HIGH B-CS TKTX SCREWS AT HM DOORS",
+        "found": true,
+        "wrong": []
+       },
+       {
+        "item": "MOP PLATE 8400 4\" HIGH B-CS TKTX SCREWS AT HM DOORS",
+        "found": true,
+        "wrong": []
+       },
+       {
+        "item": "WALL STOP WS406/407CCV",
+        "found": true,
+        "wrong": []
+       },
+       {
+        "item": "SILENCER SR64",
+        "found": true,
+        "wrong": []
+       }
+      ]
+     },
+     {
+      "group": "06 CL",
+      "found": true,
+      "read_as": "06 CL",
+      "items_expected": 6,
+      "items_found": 6,
+      "extra_items": 0,
+      "link": {
+       "expected_doors": 30,
+       "linked": 30,
+       "set_door_count": null
+      },
+      "items": [
+       {
+        "item": "CONTINUOUS HINGE SL11 / SL24",
+        "found": true,
+        "wrong": []
+       },
+       {
+        "item": "ENTRANCE LOCK ALX53R-RHO-626 FSIC",
+        "found": true,
+        "wrong": []
+       },
+       {
+        "item": "CLOSER, HOLD OPEN 4040XP H / HEDA - AS REQUIRED",
+        "found": true,
+        "wrong": []
+       },
+       {
+        "item": "KICK PLATE 8400 10\" HIGH B-CS TKTX SCREWS AT HM DOORS",
+        "found": true,
+        "wrong": []
+       },
+       {
+        "item": "WALL STOP WS406/407CCV",
+        "found": true,
+        "wrong": []
+       },
+       {
+        "item": "SILENCER SR64",
+        "found": true,
+        "wrong": []
+       }
+      ]
+     },
+     {
+      "group": "07 CL",
+      "found": true,
+      "read_as": "07 CL",
+      "items_expected": 6,
+      "items_found": 6,
+      "extra_items": 0,
+      "link": {
+       "expected_doors": 5,
+       "linked": 5,
+       "set_door_count": null
+      },
+      "items": [
+       {
+        "item": "CONTINUOUS HINGE SL11 / SL24",
+        "found": true,
+        "wrong": []
+       },
+       {
+        "item": "ENTRANCE LOCK ALX53R-RHO-626 FSIC",
+        "found": true,
+        "wrong": []
+       },
+       {
+        "item": "OH STOP 90S",
+        "found": true,
+        "wrong": []
+       },
+       {
+        "item": "CLOSER, HOLD OPEN 4040XP H / HEDA - AS REQUIRED",
+        "found": true,
+        "wrong": []
+       },
+       {
+        "item": "KICK PLATE 8400 10\" HIGH B-CS TKTX SCREWS AT HM DOORS",
+        "found": true,
+        "wrong": []
+       },
+       {
+        "item": "SILENCER SR64",
+        "found": true,
+        "wrong": []
+       }
+      ]
+     },
+     {
+      "group": "19 STO",
+      "found": true,
+      "read_as": "19 STO",
+      "items_expected": 8,
+      "items_found": 8,
+      "extra_items": 0,
+      "link": {
+       "expected_doors": 2,
+       "linked": 2,
+       "set_door_count": null
+      },
+      "items": [
+       {
+        "item": "CONTINUOUS HINGE SL11 / SL24",
+        "found": true,
+        "wrong": []
+       },
+       {
+        "item": "CONST LATCHING BOLT FB51P / FB61P",
+        "found": true,
+        "wrong": []
+       },
+       {
+        "item": "DUST PROOF STRIKE DP1/ DP2 (AS REQ'D)",
+        "found": true,
+        "wrong": []
+       },
+       {
+        "item": "STOREROOM LOCK ALX80R-RHO-626 FSIC",
+        "found": true,
+        "wrong": []
+       },
+       {
+        "item": "CLOSER, HOLD OPEN 4040XP H / HEDA - AS REQUIRED",
+        "found": true,
+        "wrong": []
+       },
+       {
+        "item": "ARMOR PLATE 8400 34\" HIGH B-CS TKTX SCREWS AT HM DOORS",
+        "found": true,
+        "wrong": []
+       },
+       {
+        "item": "WALL STOP WS406/407CCV",
+        "found": true,
+        "wrong": []
+       },
+       {
+        "item": "SILENCER SR64",
+        "found": true,
+        "wrong": []
+       }
+      ]
+     },
+     {
+      "group": "19F STO",
+      "found": true,
+      "read_as": "19F STO",
+      "items_expected": 8,
+      "items_found": 8,
+      "extra_items": 0,
+      "link": {
+       "expected_doors": 1,
+       "linked": 1,
+       "set_door_count": null
+      },
+      "items": [
+       {
+        "item": "CONTINUOUS HINGE SL11 / SL24",
+        "found": true,
+        "wrong": []
+       },
+       {
+        "item": "CONST LATCHING BOLT FB51P / FB61P",
+        "found": true,
+        "wrong": []
+       },
+       {
+        "item": "DUST PROOF STRIKE DP1/ DP2 (AS REQ'D)",
+        "found": true,
+        "wrong": []
+       },
+       {
+        "item": "STOREROOM LOCK ALX80R-RHO-626 FSIC",
+        "found": true,
+        "wrong": []
+       },
+       {
+        "item": "REG/ PA SURFACE CLOSER - AS REQUIRED 4040XP REG / 4040XP EDA - AS REQUIRED",
+        "found": true,
+        "wrong": []
+       },
+       {
+        "item": "ARMOR PLATE 8400 34\" HIGH B-CS TKTX SCREWS AT HM DOORS",
+        "found": true,
+        "wrong": []
+       },
+       {
+        "item": "WALL STOP WS406/407CCV",
+        "found": true,
+        "wrong": []
+       },
+       {
+        "item": "GASKETING 188SBK PSA",
+        "found": true,
+        "wrong": []
+       }
+      ]
+     },
+     {
+      "group": "20 STO",
+      "found": true,
+      "read_as": "20 STO",
+      "items_expected": 6,
+      "items_found": 6,
+      "extra_items": 0,
+      "link": {
+       "expected_doors": 1,
+       "linked": 1,
+       "set_door_count": null
+      },
+      "items": [
+       {
+        "item": "CONTINUOUS HINGE SL11 / SL24",
+        "found": true,
+        "wrong": []
+       },
+       {
+        "item": "STOREROOM LOCK ALX80R-RHO-626 FSIC",
+        "found": true,
+        "wrong": []
+       },
+       {
+        "item": "REG/ PA SURFACE CLOSER - AS REQUIRED 4040XP REG / 4040XP EDA - AS REQUIRED",
+        "found": true,
+        "wrong": []
+       },
+       {
+        "item": "KICK PLATE 8400 10\" HIGH B-CS TKTX SCREWS AT HM DOORS",
+        "found": true,
+        "wrong": []
+       },
+       {
+        "item": "WALL STOP WS406/407CCV",
+        "found": true,
+        "wrong": []
+       },
+       {
+        "item": "SILENCER SR64",
+        "found": true,
+        "wrong": []
+       }
+      ]
+     },
+     {
+      "group": "23 STO",
+      "found": false,
+      "items_expected": 6
+     },
+     {
+      "group": "28 COR",
+      "found": false,
+      "items_expected": 8
+     },
+     {
+      "group": "32 EXD",
+      "found": false,
+      "items_expected": 12
+     },
+     {
+      "group": "40 UTY",
+      "found": false,
+      "items_expected": 16
+     },
+     {
+      "group": "44 UTY-IT",
+      "found": false,
+      "items_expected": 10
+     },
+     {
+      "group": "47 VES",
+      "found": false,
+      "items_expected": 5
+     },
+     {
+      "group": "51 UTY-CUS",
+      "found": false,
+      "items_expected": 4
+     }
+    ]
+   }
+  },
+  {
+   "id": "berryessa",
+   "file": "/Users/johnmobley/weylandai.com/tools/corpus/door-schedules/dd339f57b51538ed.pdf",
+   "reads": [
+    {
+     "page": 284,
+     "type": "door_schedule",
+     "status": 200,
+     "ms": 559,
+     "ok": true,
+     "found": "9 doors",
+     "route": "text_layer",
+     "error": null
+    },
+    {
+     "page": 286,
+     "type": "door_schedule",
+     "status": 200,
+     "ms": 462,
+     "ok": true,
+     "found": "7 doors",
+     "route": "text_layer",
+     "error": null
+    },
+    {
+     "page": 288,
+     "type": "door_schedule",
+     "status": 200,
+     "ms": 461,
+     "ok": true,
+     "found": "8 doors",
+     "route": "text_layer",
+     "error": null
+    },
+    {
+     "page": 282,
+     "type": "hardware_schedule",
+     "status": 200,
+     "ms": 267,
+     "ok": true,
+     "found": "2 groups",
+     "route": "text_layer",
+     "error": null
+    }
+   ],
+   "errors": [],
+   "session": "d20cab7b-9550-446a-8ea4-baa00b9fe78d",
+   "total_pages": 288,
+   "upload_ms": 5996,
+   "find_pages": {
+    "available": true,
+    "status": 200,
+    "ms": 6113,
+    "door_schedule_pages": [
+     284,
+     286,
+     288
+    ],
+    "hardware_pages": [
+     282
+    ],
+    "door_pages_expected": [
+     284,
+     286,
+     288
+    ],
+    "hardware_pages_expected": [
+     282
+    ],
+    "door_pages_right": true,
+    "hardware_pages_right": true,
+    "error": null
+   },
+   "read_route": "read-pages",
+   "batch_ms": 19627,
+   "found": {
+    "doors": [
+     {
+      "page": 284,
+      "row": 0,
+      "mark": "001",
+      "hardware_group": "2",
+      "width": "3'-6\" x 7'-10\"",
+      "width_inches": 42,
+      "height_inches": 94,
+      "fire_rating": "120",
+      "door_type": "B"
+     },
+     {
+      "page": 284,
+      "row": 1,
+      "mark": "002",
+      "hardware_group": "1",
+      "width": "3'-6\" x 7'-10",
+      "width_inches": 42,
+      "height_inches": 94,
+      "fire_rating": "120",
+      "door_type": "A"
+     },
+     {
+      "page": 284,
+      "row": 2,
+      "mark": "003",
+      "hardware_group": "1",
+      "width": "3'-6\" x 7'-10",
+      "width_inches": 42,
+      "height_inches": 94,
+      "fire_rating": "120",
+      "door_type": "A"
+     },
+     {
+      "page": 284,
+      "row": 3,
+      "mark": "004",
+      "hardware_group": "2",
+      "width": "3'-6\" x 7'-10\"",
+      "width_inches": 42,
+      "height_inches": 94,
+      "fire_rating": "120",
+      "door_type": "B"
+     },
+     {
+      "page": 284,
+      "row": 4,
+      "mark": "005",
+      "hardware_group": "2",
+      "width": "3'-6\" x 7'-10\"",
+      "width_inches": 42,
+      "height_inches": 94,
+      "fire_rating": "120",
+      "door_type": "B"
+     },
+     {
+      "page": 284,
+      "row": 5,
+      "mark": "006",
+      "hardware_group": "2",
+      "width": "3'-6\" x 7'-10\"",
+      "width_inches": 42,
+      "height_inches": 94,
+      "fire_rating": "120",
+      "door_type": "B"
+     },
+     {
+      "page": 284,
+      "row": 6,
+      "mark": "007",
+      "hardware_group": "2",
+      "width": "3'-6\" x 7'-10\"",
+      "width_inches": 42,
+      "height_inches": 94,
+      "fire_rating": "120",
+      "door_type": "B"
+     },
+     {
+      "page": 284,
+      "row": 7,
+      "mark": "008",
+      "hardware_group": "2",
+      "width": "3'-6\" x 7'-10\"",
+      "width_inches": 42,
+      "height_inches": 94,
+      "fire_rating": "120",
+      "door_type": "B"
+     },
+     {
+      "page": 284,
+      "row": 8,
+      "mark": "009",
+      "hardware_group": "2",
+      "width": "3'-6\" x 7'-10\"",
+      "width_inches": 42,
+      "height_inches": 94,
+      "fire_rating": "120",
+      "door_type": "B"
+     },
+     {
+      "page": 286,
+      "row": 0,
+      "mark": "001 [p.286]",
+      "hardware_group": "2",
+      "width": "3'-6\" x 7'-10\"",
+      "width_inches": 42,
+      "height_inches": 94,
+      "fire_rating": "120",
+      "door_type": "B"
+     },
+     {
+      "page": 286,
+      "row": 1,
+      "mark": "002 [p.286]",
+      "hardware_group": "2",
+      "width": "3'-6\" x 7'-10\"",
+      "width_inches": 42,
+      "height_inches": 94,
+      "fire_rating": "120",
+      "door_type": null
+     },
+     {
+      "page": 286,
+      "row": 2,
+      "mark": "003 [p.286]",
+      "hardware_group": "2",
+      "width": "3'-6\" x 7'-10\"",
+      "width_inches": 42,
+      "height_inches": 94,
+      "fire_rating": "120",
+      "door_type": "B"
+     },
+     {
+      "page": 286,
+      "row": 3,
+      "mark": "004 [p.286]",
+      "hardware_group": "2",
+      "width": "3'-6\" x 7'-10\"",
+      "width_inches": 42,
+      "height_inches": 94,
+      "fire_rating": "120",
+      "door_type": "B"
+     },
+     {
+      "page": 286,
+      "row": 4,
+      "mark": "005 [p.286]",
+      "hardware_group": "2",
+      "width": "3'-6\" x 7'-10\"",
+      "width_inches": 42,
+      "height_inches": 94,
+      "fire_rating": "120",
+      "door_type": "B"
+     },
+     {
+      "page": 286,
+      "row": 5,
+      "mark": "006 [p.286]",
+      "hardware_group": "2",
+      "width": "3'-6\" x 7'-10\"",
+      "width_inches": 42,
+      "height_inches": 94,
+      "fire_rating": "120",
+      "door_type": "B"
+     },
+     {
+      "page": 286,
+      "row": 6,
+      "mark": "008 [p.286]",
+      "hardware_group": "2",
+      "width": "3'-6\" x 7'-10\"",
+      "width_inches": 42,
+      "height_inches": 94,
+      "fire_rating": "120",
+      "door_type": "B"
+     },
+     {
+      "page": 288,
+      "row": 0,
+      "mark": "001 [p.288]",
+      "hardware_group": "2",
+      "width": "3'-6\" x 7'-10\"",
+      "width_inches": 42,
+      "height_inches": 94,
+      "fire_rating": "120",
+      "door_type": "B"
+     },
+     {
+      "page": 288,
+      "row": 1,
+      "mark": "002 [p.288]",
+      "hardware_group": "2",
+      "width": "3'-6\" x 7'-10\"",
+      "width_inches": 42,
+      "height_inches": 94,
+      "fire_rating": "120",
+      "door_type": null
+     },
+     {
+      "page": 288,
+      "row": 2,
+      "mark": "003 [p.288]",
+      "hardware_group": "2",
+      "width": "3'-6\" x 7'-10\"",
+      "width_inches": 42,
+      "height_inches": 94,
+      "fire_rating": "120",
+      "door_type": "B"
+     },
+     {
+      "page": 288,
+      "row": 3,
+      "mark": "004 [p.288]",
+      "hardware_group": "2",
+      "width": "3'-6\" x 7'-10\"",
+      "width_inches": 42,
+      "height_inches": 94,
+      "fire_rating": "120",
+      "door_type": "B"
+     },
+     {
+      "page": 288,
+      "row": 4,
+      "mark": "005 [p.288]",
+      "hardware_group": "2",
+      "width": "3'-6\" x 7'-10\"",
+      "width_inches": 42,
+      "height_inches": 94,
+      "fire_rating": "120",
+      "door_type": "B"
+     },
+     {
+      "page": 288,
+      "row": 5,
+      "mark": "006 [p.288]",
+      "hardware_group": "2",
+      "width": "3'-6\" x 7'-10\"",
+      "width_inches": 42,
+      "height_inches": 94,
+      "fire_rating": "120",
+      "door_type": "B"
+     },
+     {
+      "page": 288,
+      "row": 6,
+      "mark": "007 [p.288]",
+      "hardware_group": "2",
+      "width": "3'-6\" x 7'-10\"",
+      "width_inches": 42,
+      "height_inches": 94,
+      "fire_rating": "120",
+      "door_type": "B"
+     },
+     {
+      "page": 288,
+      "row": 7,
+      "mark": "008 [p.288]",
+      "hardware_group": "2",
+      "width": "3'-6\" x 7'-10\"",
+      "width_inches": 42,
+      "height_inches": 94,
+      "fire_rating": "120",
+      "door_type": "B"
+     }
+    ],
+    "hardware_sets": [
+     {
+      "id": "set_1791517586285_8rb06o08h",
+      "set_number": "01",
+      "set_name": null,
+      "affirmed": 0,
+      "door_count": null,
+      "components": 7
+     },
+     {
+      "id": "set_1791517586492_66b3r3hg8",
+      "set_number": "02",
+      "set_name": null,
+      "affirmed": 0,
+      "door_count": null,
+      "components": 9
+     }
+    ],
+    "components": [
+     {
+      "id": "comp_1791517586309_mzec3buk0",
+      "set_number": "01",
+      "component_type": "hinge",
+      "quantity": 4,
+      "uom": "EA",
+      "manufacturer": "Ives",
+      "model": "5BB1HW 4.5 X 4.5",
+      "catalog_number": "5BB1HW 4.5 X 4.5",
+      "finish": "652",
+      "description": "HINGE",
+      "notes": null
+     },
+     {
+      "id": "comp_1791517586335_ob0suu9jo",
+      "set_number": "01",
+      "component_type": "exit_device",
+      "quantity": 1,
+      "uom": "EA",
+      "manufacturer": "Von Duprin",
+      "model": "PA-AX-99-L-F-2SI-06",
+      "catalog_number": "PA-AX-99-L-F-2SI-06",
+      "finish": "626",
+      "description": "FIRE EXIT HARDWARE",
+      "notes": null
+     },
+     {
+      "id": "comp_1791517586360_ctdc5nc7b",
+      "set_number": "01",
+      "component_type": "cylinder",
+      "quantity": 2,
+      "uom": "EA",
+      "manufacturer": "Schlage",
+      "model": "20-057 ICX",
+      "catalog_number": "20-057 ICX",
+      "finish": "626",
+      "description": "RIM CYLINDER",
+      "notes": null
+     },
+     {
+      "id": "comp_1791517586383_m54l09te3",
+      "set_number": "01",
+      "component_type": "core",
+      "quantity": 2,
+      "uom": "EA",
+      "manufacturer": null,
+      "model": "VERIFY PERMANENT CORE WITH DISTRICT",
+      "catalog_number": "VERIFY PERMANENT CORE WITH DISTRICT",
+      "finish": "626",
+      "description": "INTERCHANGEABLE CORE",
+      "notes": null
+     },
+     {
+      "id": "comp_1791517586408_i6ckacocc",
+      "set_number": "01",
+      "component_type": "closer",
+      "quantity": 1,
+      "uom": "EA",
+      "manufacturer": "LCN",
+      "model": "4040XP EDA",
+      "catalog_number": "4040XP EDA",
+      "finish": "689",
+      "description": "SURFACE CLOSER",
+      "notes": null
+     },
+     {
+      "id": "comp_1791517586432_rxpgnttft",
+      "set_number": "01",
+      "component_type": "kick_plate",
+      "quantity": 1,
+      "uom": "EA",
+      "manufacturer": "Ives",
+      "model": "8400 10\" X 2\" LDW B-CS",
+      "catalog_number": "8400 10\" X 2\" LDW B-CS",
+      "finish": "630",
+      "description": "KICK PLATE",
+      "notes": null
+     },
+     {
+      "id": "comp_1791517586457_8vi59qr2n",
+      "set_number": "01",
+      "component_type": "seal",
+      "quantity": 1,
+      "uom": "EA",
+      "manufacturer": "Zero International",
+      "model": "188SBK PSA",
+      "catalog_number": "188SBK PSA",
+      "finish": "BK",
+      "description": "GASKETING",
+      "notes": null
+     },
+     {
+      "id": "comp_1791517586524_0xu5qqgbz",
+      "set_number": "02",
+      "component_type": "hinge",
+      "quantity": 8,
+      "uom": "EA",
+      "manufacturer": "Ives",
+      "model": "5BB1HW 4.5 X 4.5",
+      "catalog_number": "5BB1HW 4.5 X 4.5",
+      "finish": "652",
+      "description": "HINGE",
+      "notes": null
+     },
+     {
+      "id": "comp_1791517586550_v3oe3f43f",
+      "set_number": "02",
+      "component_type": "exit_device",
+      "quantity": 1,
+      "uom": "EA",
+      "manufacturer": "Von Duprin",
+      "model": "PA-AX-9927-EO-F-LBR-499F",
+      "catalog_number": "PA-AX-9927-EO-F-LBR-499F",
+      "finish": "626",
+      "description": "FIRE EXIT HARDWARE",
+      "notes": null
+     },
+     {
+      "id": "comp_1791517586577_fi774lsro",
+      "set_number": "02",
+      "component_type": "exit_device",
+      "quantity": 1,
+      "uom": "EA",
+      "manufacturer": "Von Duprin",
+      "model": "PA-AX-9927-L-F-2SI-LBR-06-499F",
+      "catalog_number": "PA-AX-9927-L-F-2SI-LBR-06-499F",
+      "finish": "626",
+      "description": "FIRE EXIT HARDWARE",
+      "notes": null
+     },
+     {
+      "id": "comp_1791517586602_rwlqnaatt",
+      "set_number": "02",
+      "component_type": "cylinder",
+      "quantity": 2,
+      "uom": "EA",
+      "manufacturer": "Schlage",
+      "model": "20-057 ICX",
+      "catalog_number": "20-057 ICX",
+      "finish": "626",
+      "description": "RIM CYLINDER",
+      "notes": null
+     },
+     {
+      "id": "comp_1791517586626_aj812y12w",
+      "set_number": "02",
+      "component_type": "core",
+      "quantity": 2,
+      "uom": "EA",
+      "manufacturer": null,
+      "model": "VERIFY PERMANENT CORE WITH DISTRICT",
+      "catalog_number": "VERIFY PERMANENT CORE WITH DISTRICT",
+      "finish": "626",
+      "description": "INTERCHANGEABLE CORE",
+      "notes": null
+     },
+     {
+      "id": "comp_1791517586656_jkckslab2",
+      "set_number": "02",
+      "component_type": "closer",
+      "quantity": 2,
+      "uom": "EA",
+      "manufacturer": "LCN",
+      "model": "4040XP EDA",
+      "catalog_number": "4040XP EDA",
+      "finish": "689",
+      "description": "SURFACE CLOSER",
+      "notes": null
+     },
+     {
+      "id": "comp_1791517586682_2lqcpm82b",
+      "set_number": "02",
+      "component_type": "kick_plate",
+      "quantity": 2,
+      "uom": "EA",
+      "manufacturer": "Ives",
+      "model": "8400 10\" X 1\" LDW B-CS",
+      "catalog_number": "8400 10\" X 1\" LDW B-CS",
+      "finish": "630",
+      "description": "KICK PLATE",
+      "notes": null
+     },
+     {
+      "id": "comp_1791517586708_mnsscu60p",
+      "set_number": "02",
+      "component_type": "seal",
+      "quantity": 1,
+      "uom": "EA",
+      "manufacturer": "Zero International",
+      "model": "188SBK PSA",
+      "catalog_number": "188SBK PSA",
+      "finish": "BK",
+      "description": "GASKETING",
+      "notes": null
+     },
+     {
+      "id": "comp_1791517586734_1nbrjzo06",
+      "set_number": "02",
+      "component_type": "seal",
+      "quantity": 1,
+      "uom": "EA",
+      "manufacturer": "Zero International",
+      "model": "328AA-S",
+      "catalog_number": "328AA-S",
+      "finish": "AA",
+      "description": "MEETING STILE",
+      "notes": null
+     }
+    ]
+   },
+   "doors": {
+    "expected_rows": 24,
+    "rows_found": 24,
+    "rows_found_pct": 100,
+    "extra_rows": 0,
+    "extra_sample": [],
+    "field_accuracy_pct": 98.6,
+    "per_field": {
+     "mark": {
+      "right": 24,
+      "wrong": 0
+     },
+     "hardware_group": {
+      "right": 24,
+      "wrong": 0
+     },
+     "width_inches": {
+      "right": 24,
+      "wrong": 0
+     },
+     "height_inches": {
+      "right": 24,
+      "wrong": 0
+     },
+     "fire_rating": {
+      "right": 24,
+      "wrong": 0
+     },
+     "door_type": {
+      "right": 22,
+      "wrong": 2
+     }
+    },
+    "rows": [
+     {
+      "mark": "001",
+      "page": 284,
+      "found": true,
+      "wrong": []
+     },
+     {
+      "mark": "002",
+      "page": 284,
+      "found": true,
+      "wrong": []
+     },
+     {
+      "mark": "003",
+      "page": 284,
+      "found": true,
+      "wrong": []
+     },
+     {
+      "mark": "004",
+      "page": 284,
+      "found": true,
+      "wrong": []
+     },
+     {
+      "mark": "005",
+      "page": 284,
+      "found": true,
+      "wrong": []
+     },
+     {
+      "mark": "006",
+      "page": 284,
+      "found": true,
+      "wrong": []
+     },
+     {
+      "mark": "007",
+      "page": 284,
+      "found": true,
+      "wrong": []
+     },
+     {
+      "mark": "008",
+      "page": 284,
+      "found": true,
+      "wrong": []
+     },
+     {
+      "mark": "009",
+      "page": 284,
+      "found": true,
+      "wrong": []
+     },
+     {
+      "mark": "001",
+      "page": 286,
+      "found": true,
+      "wrong": []
+     },
+     {
+      "mark": "002",
+      "page": 286,
+      "found": true,
+      "wrong": [
+       "door_type: expected \"B\", read null"
+      ]
+     },
+     {
+      "mark": "003",
+      "page": 286,
+      "found": true,
+      "wrong": []
+     },
+     {
+      "mark": "004",
+      "page": 286,
+      "found": true,
+      "wrong": []
+     },
+     {
+      "mark": "005",
+      "page": 286,
+      "found": true,
+      "wrong": []
+     },
+     {
+      "mark": "006",
+      "page": 286,
+      "found": true,
+      "wrong": []
+     },
+     {
+      "mark": "008",
+      "page": 286,
+      "found": true,
+      "wrong": []
+     },
+     {
+      "mark": "001",
+      "page": 288,
+      "found": true,
+      "wrong": []
+     },
+     {
+      "mark": "002",
+      "page": 288,
+      "found": true,
+      "wrong": [
+       "door_type: expected \"B\", read null"
+      ]
+     },
+     {
+      "mark": "003",
+      "page": 288,
+      "found": true,
+      "wrong": []
+     },
+     {
+      "mark": "004",
+      "page": 288,
+      "found": true,
+      "wrong": []
+     },
+     {
+      "mark": "005",
+      "page": 288,
+      "found": true,
+      "wrong": []
+     },
+     {
+      "mark": "006",
+      "page": 288,
+      "found": true,
+      "wrong": []
+     },
+     {
+      "mark": "007",
+      "page": 288,
+      "found": true,
+      "wrong": []
+     },
+     {
+      "mark": "008",
+      "page": 288,
+      "found": true,
+      "wrong": []
+     }
+    ]
+   },
+   "hardware": {
+    "expected_groups": 2,
+    "groups_found": 2,
+    "extra_groups": [],
+    "expected_items": 16,
+    "items_found": 16,
+    "items_found_pct": 100,
+    "field_accuracy_pct": 100,
+    "per_field": {
+     "qty": {
+      "right": 16,
+      "wrong": 0
+     },
+     "description": {
+      "right": 16,
+      "wrong": 0
+     },
+     "catalog": {
+      "right": 16,
+      "wrong": 0
+     },
+     "finish": {
+      "right": 16,
+      "wrong": 0
+     },
+     "mfr": {
+      "right": 16,
+      "wrong": 0
+     }
+    },
+    "doors_linked": null,
+    "groups": [
+     {
+      "group": "01",
+      "found": true,
+      "read_as": "01",
+      "items_expected": 7,
+      "items_found": 7,
+      "extra_items": 0,
+      "link": null,
+      "items": [
+       {
+        "item": "HINGE 5BB1HW 4.5 X 4.5",
+        "found": true,
+        "wrong": []
+       },
+       {
+        "item": "FIRE EXIT HARDWARE PA-AX-99-L-F-2SI-06",
+        "found": true,
+        "wrong": []
+       },
+       {
+        "item": "RIM CYLINDER 20-057 ICX",
+        "found": true,
+        "wrong": []
+       },
+       {
+        "item": "INTERCHANGEABLE CORE VERIFY PERMANENT CORE WITH DISTRICT",
+        "found": true,
+        "wrong": []
+       },
+       {
+        "item": "SURFACE CLOSER 4040XP EDA",
+        "found": true,
+        "wrong": []
+       },
+       {
+        "item": "KICK PLATE 8400 10\" X 2\" LDW B-CS",
+        "found": true,
+        "wrong": []
+       },
+       {
+        "item": "GASKETING 188SBK PSA",
+        "found": true,
+        "wrong": []
+       }
+      ]
+     },
+     {
+      "group": "02",
+      "found": true,
+      "read_as": "02",
+      "items_expected": 9,
+      "items_found": 9,
+      "extra_items": 0,
+      "link": null,
+      "items": [
+       {
+        "item": "HINGE 5BB1HW 4.5 X 4.5",
+        "found": true,
+        "wrong": []
+       },
+       {
+        "item": "FIRE EXIT HARDWARE PA-AX-9927-EO-F-LBR-499F",
+        "found": true,
+        "wrong": []
+       },
+       {
+        "item": "FIRE EXIT HARDWARE PA-AX-9927-L-F-2SI-LBR-06-499F",
+        "found": true,
+        "wrong": []
+       },
+       {
+        "item": "RIM CYLINDER 20-057 ICX",
+        "found": true,
+        "wrong": []
+       },
+       {
+        "item": "INTERCHANGEABLE CORE VERIFY PERMANENT CORE WITH DISTRICT",
+        "found": true,
+        "wrong": []
+       },
+       {
+        "item": "SURFACE CLOSER 4040XP EDA",
+        "found": true,
+        "wrong": []
+       },
+       {
+        "item": "KICK PLATE 8400 10\" X 1\" LDW B-CS",
+        "found": true,
+        "wrong": []
+       },
+       {
+        "item": "GASKETING 188SBK PSA",
+        "found": true,
+        "wrong": []
+       },
+       {
+        "item": "MEETING STILE 328AA-S",
+        "found": true,
+        "wrong": []
+       }
+      ]
+     }
+    ]
+   }
+  },
+  {
+   "id": "occ",
+   "file": "/Users/johnmobley/pdf/OCCDoorSchedulePg4.pdf",
+   "reads": [
+    {
+     "page": 1,
+     "type": "door_schedule",
+     "status": 200,
+     "ms": 15534,
+     "ok": true,
+     "found": "42 doors",
+     "route": "client_grid_deterministic",
+     "error": null
+    }
+   ],
+   "errors": [],
+   "session": "31f67d1e-12ce-4788-a9fd-fe18079b5380",
+   "total_pages": 1,
+   "upload_ms": 2071,
+   "find_pages": {
+    "available": true,
+    "status": 200,
+    "ms": 2579,
+    "door_schedule_pages": [],
+    "hardware_pages": [],
+    "door_pages_expected": [
+     1
+    ],
+    "hardware_pages_expected": [],
+    "door_pages_right": false,
+    "hardware_pages_right": null,
+    "error": null
+   },
+   "read_route": "read-pages",
+   "batch_ms": 19420,
+   "found": {
+    "doors": [
+     {
+      "page": 1,
+      "row": 5,
+      "mark": "053",
+      "hardware_group": "01",
+      "width": "3'-8\" x 6'-10\"",
+      "width_inches": 44,
+      "height_inches": 82,
+      "fire_rating": "NR",
+      "door_type": "A"
+     },
+     {
+      "page": 1,
+      "row": 7,
+      "mark": "131",
+      "hardware_group": "02",
+      "width": "3'-0\" x 7-0\"",
+      "width_inches": 36,
+      "height_inches": 84,
+      "fire_rating": "20 MIN.",
+      "door_type": "A"
+     },
+     {
+      "page": 1,
+      "row": 8,
+      "mark": "133",
+      "hardware_group": "03",
+      "width": "3'-0\" x 7-0\"",
+      "width_inches": 36,
+      "height_inches": 84,
+      "fire_rating": "NR",
+      "door_type": "A"
+     },
+     {
+      "page": 1,
+      "row": 9,
+      "mark": "134",
+      "hardware_group": "01",
+      "width": "3-0\" x 7-0\"",
+      "width_inches": 36,
+      "height_inches": 84,
+      "fire_rating": "NR",
+      "door_type": "A"
+     },
+     {
+      "page": 1,
+      "row": 10,
+      "mark": "135",
+      "hardware_group": "02",
+      "width": "3'-0\" x 7-0\"",
+      "width_inches": 36,
+      "height_inches": 84,
+      "fire_rating": "20 MIN.",
+      "door_type": "A"
+     },
+     {
+      "page": 1,
+      "row": 11,
+      "mark": "144B",
+      "hardware_group": "10",
+      "width": "6'-0\" x 7'-0\"",
+      "width_inches": 72,
+      "height_inches": 84,
+      "fire_rating": "NR",
+      "door_type": "F"
+     },
+     {
+      "page": 1,
+      "row": 12,
+      "mark": "152",
+      "hardware_group": "14",
+      "width": "3'-0\" x 7'-0\"",
+      "width_inches": 36,
+      "height_inches": 84,
+      "fire_rating": "20 MIN.",
+      "door_type": "A"
+     },
+     {
+      "page": 1,
+      "row": 13,
+      "mark": "153",
+      "hardware_group": "15",
+      "width": "4'-8\" x 7-0\"",
+      "width_inches": 56,
+      "height_inches": 84,
+      "fire_rating": "20 MIN.",
+      "door_type": "B"
+     },
+     {
+      "page": 1,
+      "row": 15,
+      "mark": "228B",
+      "hardware_group": "10",
+      "width": "6-0\" x 7-0\"",
+      "width_inches": 72,
+      "height_inches": 84,
+      "fire_rating": "NR",
+      "door_type": "F"
+     },
+     {
+      "page": 1,
+      "row": 17,
+      "mark": "136",
+      "hardware_group": "04",
+      "width": "3-0\" x 7-11\"",
+      "width_inches": 36,
+      "height_inches": 95,
+      "fire_rating": "20 MIN.",
+      "door_type": "D"
+     },
+     {
+      "page": 1,
+      "row": 18,
+      "mark": "137A",
+      "hardware_group": "05",
+      "width": "3'-0\" x 8'-0\"",
+      "width_inches": 36,
+      "height_inches": 96,
+      "fire_rating": "45 MIN.",
+      "door_type": "R"
+     },
+     {
+      "page": 1,
+      "row": 19,
+      "mark": "137B",
+      "hardware_group": "05",
+      "width": "3'-0\" x 8'-0\"",
+      "width_inches": 36,
+      "height_inches": 96,
+      "fire_rating": "45 MIN.",
+      "door_type": "R"
+     },
+     {
+      "page": 1,
+      "row": 20,
+      "mark": "138",
+      "hardware_group": "06",
+      "width": "3's\" x 7'-0\"",
+      "width_inches": null,
+      "height_inches": 84,
+      "fire_rating": "20 MIN.",
+      "door_type": "A"
+     },
+     {
+      "page": 1,
+      "row": 21,
+      "mark": "139",
+      "hardware_group": "07",
+      "width": "6-0\" x 8'-0\"",
+      "width_inches": 72,
+      "height_inches": 96,
+      "fire_rating": "20 MIN.",
+      "door_type": "Cc"
+     },
+     {
+      "page": 1,
+      "row": 22,
+      "mark": "141",
+      "hardware_group": "08",
+      "width": "3'-0\" x 7-0\"",
+      "width_inches": 36,
+      "height_inches": 84,
+      "fire_rating": "20 MIN.",
+      "door_type": "A"
+     },
+     {
+      "page": 1,
+      "row": 23,
+      "mark": "142",
+      "hardware_group": "09",
+      "width": "3'-0\" x 6-11\"",
+      "width_inches": 36,
+      "height_inches": 83,
+      "fire_rating": "20 MIN.",
+      "door_type": "D"
+     },
+     {
+      "page": 1,
+      "row": 24,
+      "mark": "1423",
+      "hardware_group": "tale)",
+      "width": "2'\" x 614\"",
+      "width_inches": null,
+      "height_inches": null,
+      "fire_rating": "20 MIN.",
+      "door_type": "D"
+     },
+     {
+      "page": 1,
+      "row": 25,
+      "mark": "144A",
+      "hardware_group": null,
+      "width": "3'-0\" x 7'-0\"",
+      "width_inches": 36,
+      "height_inches": 84,
+      "fire_rating": null,
+      "door_type": "SL"
+     },
+     {
+      "page": 1,
+      "row": 26,
+      "mark": "145",
+      "hardware_group": "11",
+      "width": "3-0\" x 7-0\"",
+      "width_inches": 36,
+      "height_inches": 84,
+      "fire_rating": "45 MIN.",
+      "door_type": "A"
+     },
+     {
+      "page": 1,
+      "row": 27,
+      "mark": "146",
+      "hardware_group": "05",
+      "width": "3'-0\" x 8'-0\"",
+      "width_inches": 36,
+      "height_inches": 96,
+      "fire_rating": "20 MIN.",
+      "door_type": "D"
+     },
+     {
+      "page": 1,
+      "row": 28,
+      "mark": "147A",
+      "hardware_group": "12",
+      "width": "6-0\" x 7-11\"",
+      "width_inches": 72,
+      "height_inches": 95,
+      "fire_rating": "20 MIN.",
+      "door_type": "Cc"
+     },
+     {
+      "page": 1,
+      "row": 29,
+      "mark": "147B",
+      "hardware_group": "13",
+      "width": "3'-0\" x 7-11\"",
+      "width_inches": 36,
+      "height_inches": 95,
+      "fire_rating": "NR",
+      "door_type": "D"
+     },
+     {
+      "page": 1,
+      "row": 30,
+      "mark": "148",
+      "hardware_group": "04",
+      "width": "3'-0\" x 7-11\"",
+      "width_inches": 36,
+      "height_inches": 95,
+      "fire_rating": "20 MIN.",
+      "door_type": "D"
+     },
+     {
+      "page": 1,
+      "row": 31,
+      "mark": "151",
+      "hardware_group": "11",
+      "width": "3'-0\" x 7'-0\"",
+      "width_inches": 36,
+      "height_inches": 84,
+      "fire_rating": "45 MIN.",
+      "door_type": "A"
+     },
+     {
+      "page": 1,
+      "row": 33,
+      "mark": "221",
+      "hardware_group": "02",
+      "width": "3'-0\" x 7-0\"",
+      "width_inches": 36,
+      "height_inches": 84,
+      "fire_rating": "20 MIN.",
+      "door_type": "A"
+     },
+     {
+      "page": 1,
+      "row": 34,
+      "mark": "227",
+      "hardware_group": "16",
+      "width": "6'-0\" x 7'-0\"",
+      "width_inches": 72,
+      "height_inches": 84,
+      "fire_rating": "20 MIN.",
+      "door_type": "R"
+     },
+     {
+      "page": 1,
+      "row": 35,
+      "mark": "228A",
+      "hardware_group": null,
+      "width": "10'-0\" x 7'-0\"",
+      "width_inches": 120,
+      "height_inches": 84,
+      "fire_rating": null,
+      "door_type": "SL"
+     },
+     {
+      "page": 1,
+      "row": 36,
+      "mark": "235",
+      "hardware_group": "02",
+      "width": "3'-0\" x 7'-0\"",
+      "width_inches": 36,
+      "height_inches": 84,
+      "fire_rating": "2U MIN.",
+      "door_type": "A"
+     },
+     {
+      "page": 1,
+      "row": 37,
+      "mark": "238",
+      "hardware_group": "15",
+      "width": "4'-8\" x 7-0\"",
+      "width_inches": 56,
+      "height_inches": 84,
+      "fire_rating": "20 MIN.",
+      "door_type": "B"
+     },
+     {
+      "page": 1,
+      "row": 38,
+      "mark": "241",
+      "hardware_group": "04",
+      "width": "3'-0\" x 7-11\"",
+      "width_inches": 36,
+      "height_inches": 95,
+      "fire_rating": "20 MIN.",
+      "door_type": "D"
+     },
+     {
+      "page": 1,
+      "row": 39,
+      "mark": "242",
+      "hardware_group": "04",
+      "width": "3-0\" x 7-11\"",
+      "width_inches": 36,
+      "height_inches": 95,
+      "fire_rating": "20 MIN.",
+      "door_type": "D"
+     },
+     {
+      "page": 1,
+      "row": 40,
+      "mark": "243",
+      "hardware_group": "04",
+      "width": "3'-0\" x 7-11\"",
+      "width_inches": 36,
+      "height_inches": 95,
+      "fire_rating": "20 MIN.",
+      "door_type": "D"
+     },
+     {
+      "page": 1,
+      "row": 41,
+      "mark": "244",
+      "hardware_group": "04",
+      "width": "3'-0\" x 11\"",
+      "width_inches": 36,
+      "height_inches": null,
+      "fire_rating": "20 MIN.",
+      "door_type": "D"
+     },
+     {
+      "page": 1,
+      "row": 42,
+      "mark": "245",
+      "hardware_group": "04",
+      "width": "3'-0\" x 7211\"",
+      "width_inches": 36,
+      "height_inches": null,
+      "fire_rating": "20 MIN.",
+      "door_type": "D"
+     },
+     {
+      "page": 1,
+      "row": 43,
+      "mark": "246",
+      "hardware_group": "04",
+      "width": "3'-0\" x 7-11\"",
+      "width_inches": 36,
+      "height_inches": 95,
+      "fire_rating": "20 MIN.",
+      "door_type": "D"
+     },
+     {
+      "page": 1,
+      "row": 44,
+      "mark": "247",
+      "hardware_group": "04",
+      "width": "3'-0\" x 7-11\"",
+      "width_inches": 36,
+      "height_inches": 95,
+      "fire_rating": "20 MIN.",
+      "door_type": "D"
+     },
+     {
+      "page": 1,
+      "row": 45,
+      "mark": "248",
+      "hardware_group": "04",
+      "width": "3'-0\" x 7-11\"",
+      "width_inches": 36,
+      "height_inches": 95,
+      "fire_rating": "20 MIN.",
+      "door_type": "D"
+     },
+     {
+      "page": 1,
+      "row": 46,
+      "mark": "249",
+      "hardware_group": "04",
+      "width": "3'-0\" x 7-11\"",
+      "width_inches": 36,
+      "height_inches": 95,
+      "fire_rating": "20 MIN.",
+      "door_type": "D"
+     },
+     {
+      "page": 1,
+      "row": 47,
+      "mark": "250",
+      "hardware_group": "08",
+      "width": "3-0\" x 8-0\"",
+      "width_inches": 36,
+      "height_inches": 96,
+      "fire_rating": "20 MIN.",
+      "door_type": "A"
+     },
+     {
+      "page": 1,
+      "row": 48,
+      "mark": "251",
+      "hardware_group": "04",
+      "width": "3'-0\" x 7-11\"",
+      "width_inches": 36,
+      "height_inches": 95,
+      "fire_rating": "20 MIN.",
+      "door_type": "D"
+     },
+     {
+      "page": 1,
+      "row": 49,
+      "mark": "252",
+      "hardware_group": "04",
+      "width": "3'-0\" x 7-11\"",
+      "width_inches": 36,
+      "height_inches": 95,
+      "fire_rating": "20 MIN.",
+      "door_type": "E"
+     },
+     {
+      "page": 1,
+      "row": 50,
+      "mark": "253",
+      "hardware_group": "17",
+      "width": "3'-0\" x 8'-0\"",
+      "width_inches": 36,
+      "height_inches": 96,
+      "fire_rating": "20 MIN.",
+      "door_type": "A"
+     }
+    ],
+    "hardware_sets": [],
+    "components": []
+   },
+   "doors": {
+    "expected_rows": 42,
+    "rows_found": 41,
+    "rows_found_pct": 97.6,
+    "extra_rows": 1,
+    "extra_sample": [
+     {
+      "page": 1,
+      "mark": "1423"
+     }
+    ],
+    "field_accuracy_pct": 97.2,
+    "per_field": {
+     "mark": {
+      "right": 41,
+      "wrong": 0
+     },
+     "hardware_group": {
+      "right": 41,
+      "wrong": 0
+     },
+     "width_inches": {
+      "right": 40,
+      "wrong": 1
+     },
+     "height_inches": {
+      "right": 39,
+      "wrong": 2
+     },
+     "fire_rating": {
+      "right": 40,
+      "wrong": 1
+     },
+     "door_type": {
+      "right": 38,
+      "wrong": 3
+     }
+    },
+    "rows": [
+     {
+      "mark": "053",
+      "page": 1,
+      "found": true,
+      "wrong": []
+     },
+     {
+      "mark": "131",
+      "page": 1,
+      "found": true,
+      "wrong": []
+     },
+     {
+      "mark": "133",
+      "page": 1,
+      "found": true,
+      "wrong": []
+     },
+     {
+      "mark": "134",
+      "page": 1,
+      "found": true,
+      "wrong": []
+     },
+     {
+      "mark": "135",
+      "page": 1,
+      "found": true,
+      "wrong": []
+     },
+     {
+      "mark": "144B",
+      "page": 1,
+      "found": true,
+      "wrong": []
+     },
+     {
+      "mark": "152",
+      "page": 1,
+      "found": true,
+      "wrong": []
+     },
+     {
+      "mark": "153",
+      "page": 1,
+      "found": true,
+      "wrong": []
+     },
+     {
+      "mark": "228B",
+      "page": 1,
+      "found": true,
+      "wrong": []
+     },
+     {
+      "mark": "136",
+      "page": 1,
+      "found": true,
+      "wrong": []
+     },
+     {
+      "mark": "137A",
+      "page": 1,
+      "found": true,
+      "wrong": []
+     },
+     {
+      "mark": "137B",
+      "page": 1,
+      "found": true,
+      "wrong": []
+     },
+     {
+      "mark": "138",
+      "page": 1,
+      "found": true,
+      "wrong": [
+       "width_inches: expected 36, read null"
+      ]
+     },
+     {
+      "mark": "139",
+      "page": 1,
+      "found": true,
+      "wrong": [
+       "door_type: expected \"C\", read \"Cc\""
+      ]
+     },
+     {
+      "mark": "141",
+      "page": 1,
+      "found": true,
+      "wrong": []
+     },
+     {
+      "mark": "142",
+      "page": 1,
+      "found": true,
+      "wrong": []
+     },
+     {
+      "mark": "143",
+      "page": 1,
+      "found": false
+     },
+     {
+      "mark": "144A",
+      "page": 1,
+      "found": true,
+      "wrong": []
+     },
+     {
+      "mark": "145",
+      "page": 1,
+      "found": true,
+      "wrong": []
+     },
+     {
+      "mark": "146",
+      "page": 1,
+      "found": true,
+      "wrong": []
+     },
+     {
+      "mark": "147A",
+      "page": 1,
+      "found": true,
+      "wrong": [
+       "door_type: expected \"C\", read \"Cc\""
+      ]
+     },
+     {
+      "mark": "147B",
+      "page": 1,
+      "found": true,
+      "wrong": []
+     },
+     {
+      "mark": "148",
+      "page": 1,
+      "found": true,
+      "wrong": []
+     },
+     {
+      "mark": "151",
+      "page": 1,
+      "found": true,
+      "wrong": []
+     },
+     {
+      "mark": "221",
+      "page": 1,
+      "found": true,
+      "wrong": []
+     },
+     {
+      "mark": "227",
+      "page": 1,
+      "found": true,
+      "wrong": [
+       "door_type: expected \"B\", read \"R\""
+      ]
+     },
+     {
+      "mark": "228A",
+      "page": 1,
+      "found": true,
+      "wrong": []
+     },
+     {
+      "mark": "235",
+      "page": 1,
+      "found": true,
+      "wrong": [
+       "fire_rating: expected \"20 MIN.\", read \"2U MIN.\""
+      ]
+     },
+     {
+      "mark": "238",
+      "page": 1,
+      "found": true,
+      "wrong": []
+     },
+     {
+      "mark": "241",
+      "page": 1,
+      "found": true,
+      "wrong": []
+     },
+     {
+      "mark": "242",
+      "page": 1,
+      "found": true,
+      "wrong": []
+     },
+     {
+      "mark": "243",
+      "page": 1,
+      "found": true,
+      "wrong": []
+     },
+     {
+      "mark": "244",
+      "page": 1,
+      "found": true,
+      "wrong": [
+       "height_inches: expected 95, read null"
+      ]
+     },
+     {
+      "mark": "245",
+      "page": 1,
+      "found": true,
+      "wrong": [
+       "height_inches: expected 95, read null"
+      ]
+     },
+     {
+      "mark": "246",
+      "page": 1,
+      "found": true,
+      "wrong": []
+     },
+     {
+      "mark": "247",
+      "page": 1,
+      "found": true,
+      "wrong": []
+     },
+     {
+      "mark": "248",
+      "page": 1,
+      "found": true,
+      "wrong": []
+     },
+     {
+      "mark": "249",
+      "page": 1,
+      "found": true,
+      "wrong": []
+     },
+     {
+      "mark": "250",
+      "page": 1,
+      "found": true,
+      "wrong": []
+     },
+     {
+      "mark": "251",
+      "page": 1,
+      "found": true,
+      "wrong": []
+     },
+     {
+      "mark": "252",
+      "page": 1,
+      "found": true,
+      "wrong": []
+     },
+     {
+      "mark": "253",
+      "page": 1,
+      "found": true,
+      "wrong": []
+     }
+    ]
+   }
+  },
+  {
+   "id": "christina",
+   "file": "/Users/johnmobley/weylandai.com/tools/corpus/door-schedules/525dc0b72011077a.pdf",
+   "reads": [
+    {
+     "page": 219,
+     "type": "hardware_schedule",
+     "status": 200,
+     "ms": 383,
+     "ok": true,
+     "found": "1 groups",
+     "route": "text_layer",
+     "error": null
+    }
+   ],
+   "errors": [],
+   "session": "fa747704-bfba-4a4e-9e85-1cb33a341856",
+   "total_pages": 537,
+   "upload_ms": 6608,
+   "find_pages": {
+    "available": true,
+    "status": 200,
+    "ms": 5369,
+    "door_schedule_pages": [],
+    "hardware_pages": [
+     219,
+     220,
+     221,
+     222,
+     223
+    ],
+    "door_pages_expected": [],
+    "hardware_pages_expected": [
+     219
+    ],
+    "door_pages_right": null,
+    "hardware_pages_right": true,
+    "error": null
+   },
+   "read_route": "read-pages",
+   "batch_ms": 29284,
+   "found": {
+    "doors": [],
+    "hardware_sets": [
+     {
+      "id": "set_1791517642167_0o74262hm",
+      "set_number": "01",
+      "set_name": "CARD READER EXTERIOR BULLET RESTANT ALD & ALF",
+      "affirmed": 0,
+      "door_count": null,
+      "components": 23
+     }
+    ],
+    "components": [
+     {
+      "id": "comp_1791517642190_wkj5tz8fz",
+      "set_number": "01",
+      "component_type": "hinge",
+      "quantity": 2,
+      "uom": "EA",
+      "manufacturer": "Ives",
+      "model": "224HD (PREP’D FOR EPT)",
+      "catalog_number": "224HD (PREP’D FOR EPT)",
+      "finish": "689",
+      "description": "CONTINUOUS HINGES",
+      "notes": null
+     },
+     {
+      "id": "comp_1791517642213_syknefvn4",
+      "set_number": "01",
+      "component_type": "mullion",
+      "quantity": 1,
+      "uom": "EA",
+      "manufacturer": "Von Duprin",
+      "model": "KR4954",
+      "catalog_number": "KR4954",
+      "finish": "BLK",
+      "description": "KEY REMOVEABLE MULLION",
+      "notes": null
+     },
+     {
+      "id": "comp_1791517642239_cmz51jg5x",
+      "set_number": "01",
+      "component_type": "cylinder",
+      "quantity": 1,
+      "uom": "EA",
+      "manufacturer": "Schlage",
+      "model": "MORTISE TYPE W/ CORE (KEYED TO EXISTING SYSTEM)",
+      "catalog_number": "MORTISE TYPE W/ CORE (KEYED TO EXISTING SYSTEM)",
+      "finish": "626",
+      "description": "MULLION CYLINDER",
+      "notes": null
+     },
+     {
+      "id": "comp_1791517642265_tfor84g1j",
+      "set_number": "01",
+      "component_type": "pull_handle",
+      "quantity": 2,
+      "uom": "EA",
+      "manufacturer": "Trimco",
+      "model": "1191-4",
+      "catalog_number": "1191-4",
+      "finish": "630",
+      "description": "DOOR PULLS",
+      "notes": null
+     },
+     {
+      "id": "comp_1791517642288_jux034d41",
+      "set_number": "01",
+      "component_type": "closer",
+      "quantity": 1,
+      "uom": "EA",
+      "manufacturer": "LCN",
+      "model": "4041XP SPR CNS 4041XP-30 & 61",
+      "catalog_number": "4041XP SPR CNS 4041XP-30 & 61",
+      "finish": "689",
+      "description": "DOOR CLOSER W/ STOPS",
+      "notes": null
+     },
+     {
+      "id": "comp_1791517642313_hh6injquu",
+      "set_number": "01",
+      "component_type": "power_transfer",
+      "quantity": 2,
+      "uom": "EA",
+      "manufacturer": "Von Duprin",
+      "model": "EPT-10 BY SECURITY VENDOR",
+      "catalog_number": "EPT-10 BY SECURITY VENDOR",
+      "finish": "630",
+      "description": "ELECTRIC POWER TRANSFERS",
+      "notes": null
+     },
+     {
+      "id": "comp_1791517642336_sewi1zlvx",
+      "set_number": "01",
+      "component_type": "exit_device",
+      "quantity": 1,
+      "uom": "EA",
+      "manufacturer": "Von Duprin",
+      "model": "RX-QEL98L-NL-03 LD BY SECURITY VENDOR",
+      "catalog_number": "RX-QEL98L-NL-03 LD BY SECURITY VENDOR",
+      "finish": "630",
+      "description": "ELECTRIFIED PANIC DEVICE",
+      "notes": null
+     },
+     {
+      "id": "comp_1791517642361_zpzj3zxvo",
+      "set_number": "01",
+      "component_type": "power_supply",
+      "quantity": 1,
+      "uom": "EA",
+      "manufacturer": null,
+      "model": "BY SECURITY VENDOR",
+      "catalog_number": "BY SECURITY VENDOR",
+      "finish": null,
+      "description": "POWER SUPPLY",
+      "notes": null
+     },
+     {
+      "id": "comp_1791517642387_ygqd8dldm",
+      "set_number": "01",
+      "component_type": "cylinder",
+      "quantity": 1,
+      "uom": "EA",
+      "manufacturer": "Schlage",
+      "model": "AS REQUIRED (KEYED TO EXISTING SYSTEM)",
+      "catalog_number": "AS REQUIRED (KEYED TO EXISTING SYSTEM)",
+      "finish": "626",
+      "description": "TRIM CYLINDER & CORE",
+      "notes": null
+     },
+     {
+      "id": "comp_1791517642412_7wbtur1fm",
+      "set_number": "01",
+      "component_type": "pull_handle",
+      "quantity": 2,
+      "uom": "EA",
+      "manufacturer": "Trimco",
+      "model": "1191-4",
+      "catalog_number": "1191-4",
+      "finish": "630",
+      "description": "DOOR PULLS",
+      "notes": null
+     },
+     {
+      "id": "comp_1791517642436_3v8y62ivh",
+      "set_number": "01",
+      "component_type": "closer",
+      "quantity": 1,
+      "uom": "EA",
+      "manufacturer": "LCN",
+      "model": "4041XP SPR CNS 4041XP-30 & 61",
+      "catalog_number": "4041XP SPR CNS 4041XP-30 & 61",
+      "finish": "689",
+      "description": "DOOR CLOSER W/ STOPS",
+      "notes": null
+     },
+     {
+      "id": "comp_1791517642464_34uy0ai8o",
+      "set_number": "01",
+      "component_type": "exit_device",
+      "quantity": 1,
+      "uom": "EA",
+      "manufacturer": "Von Duprin",
+      "model": "RX-QEL98L-BE-03 LD BY SECURITY VENDOR",
+      "catalog_number": "RX-QEL98L-BE-03 LD BY SECURITY VENDOR",
+      "finish": "630",
+      "description": "ELECTRIFIED PANIC DEVICE",
+      "notes": null
+     },
+     {
+      "id": "comp_1791517642493_3rli3q7jd",
+      "set_number": "01",
+      "component_type": "threshold",
+      "quantity": 1,
+      "uom": "EA",
+      "manufacturer": "National Guard Products",
+      "model": "896ADJ SIA SSMS/EA",
+      "catalog_number": "896ADJ SIA SSMS/EA",
+      "finish": "AL",
+      "description": "THRESHOLD",
+      "notes": null
+     },
+     {
+      "id": "comp_1791517642517_3008okjvp",
+      "set_number": "01",
+      "component_type": "seal",
+      "quantity": 2,
+      "uom": "EA",
+      "manufacturer": "National Guard Products",
+      "model": "101V",
+      "catalog_number": "101V",
+      "finish": "AL",
+      "description": "DOOR SWEEPS",
+      "notes": null
+     },
+     {
+      "id": "comp_1791517642540_gokwp8n75",
+      "set_number": "01",
+      "component_type": "power_operator",
+      "quantity": 1,
+      "uom": "EA",
+      "manufacturer": "dormakaba",
+      "model": "DORMA 100 SERIES BY SECURITY VENDOR",
+      "catalog_number": "DORMA 100 SERIES BY SECURITY VENDOR",
+      "finish": "AL",
+      "description": "AUTO DOOR OPERATOR",
+      "notes": null
+     },
+     {
+      "id": "comp_1791517642565_erqrit9bg",
+      "set_number": "01",
+      "component_type": "switch",
+      "quantity": 1,
+      "uom": "EA",
+      "manufacturer": "RCI",
+      "model": "946HP45MO x 946475WR (EXTERIOR) BY SECURITY VENDOR",
+      "catalog_number": "946HP45MO x 946475WR (EXTERIOR) BY SECURITY VENDOR",
+      "finish": "630",
+      "description": "H/C PUSH SWITCH",
+      "notes": null
+     },
+     {
+      "id": "comp_1791517642588_wazm35fw4",
+      "set_number": "01",
+      "component_type": "switch",
+      "quantity": 1,
+      "uom": "EA",
+      "manufacturer": "RCI",
+      "model": "946HP45MO (INTERIOR) BY SECURITY VENDOR",
+      "catalog_number": "946HP45MO (INTERIOR) BY SECURITY VENDOR",
+      "finish": "630",
+      "description": "H/C PUSH SWITCH",
+      "notes": null
+     },
+     {
+      "id": "comp_1791517642612_ppuvhk8yx",
+      "set_number": "01",
+      "component_type": "switch",
+      "quantity": 1,
+      "uom": "EA",
+      "manufacturer": null,
+      "model": "BY SECURITY VENDOR",
+      "catalog_number": "BY SECURITY VENDOR",
+      "finish": null,
+      "description": "BALLARD POST (FOR H/C SWITCH)",
+      "notes": null
+     },
+     {
+      "id": "comp_1791517642636_dr4m3f6ov",
+      "set_number": "01",
+      "component_type": "switch",
+      "quantity": 1,
+      "uom": "EA",
+      "manufacturer": "RCI",
+      "model": "960MA BY SECURITY VENDOR",
+      "catalog_number": "960MA BY SECURITY VENDOR",
+      "finish": "630",
+      "description": "KEY SWITCH",
+      "notes": null
+     },
+     {
+      "id": "comp_1791517642660_9bzpv5xle",
+      "set_number": "01",
+      "component_type": "switch",
+      "quantity": 1,
+      "uom": "EA",
+      "manufacturer": "Schlage",
+      "model": "MORTISE TYPE W/ CORE (KEYED TO EXISTING SYSTEM)",
+      "catalog_number": "MORTISE TYPE W/ CORE (KEYED TO EXISTING SYSTEM)",
+      "finish": "626",
+      "description": "KEY SWITCH CYLINDER",
+      "notes": null
+     },
+     {
+      "id": "comp_1791517642684_mthhk43u7",
+      "set_number": "01",
+      "component_type": "door_position_switch",
+      "quantity": 2,
+      "uom": "EA",
+      "manufacturer": null,
+      "model": "GRI 180-12-W-34” STL DR CONTACT WHITE BY SECURITY VENDOR",
+      "catalog_number": "GRI 180-12-W-34” STL DR CONTACT WHITE BY SECURITY VENDOR",
+      "finish": null,
+      "description": "DOOR POSITION SWITCHES",
+      "notes": null
+     },
+     {
+      "id": "comp_1791517642707_gi0e87j9p",
+      "set_number": "01",
+      "component_type": "intercom",
+      "quantity": 1,
+      "uom": "EA",
+      "manufacturer": null,
+      "model": "BY SECURITY VENDOR",
+      "catalog_number": "BY SECURITY VENDOR",
+      "finish": null,
+      "description": "VIDEO/INTERCOM STATION & CONSOLE w/ 5 RELEASE BUTTONS",
+      "notes": null
+     },
+     {
+      "id": "comp_1791517642735_1zsqgan38",
+      "set_number": "01",
+      "component_type": "card_reader",
+      "quantity": 1,
+      "uom": "EA",
+      "manufacturer": null,
+      "model": "HID GLOBAL SIGNO 40TKS-002MRN- ADV iClass/EOS BY SECURITY VENDOR",
+      "catalog_number": "HID GLOBAL SIGNO 40TKS-002MRN- ADV iClass/EOS BY SECURITY VENDOR",
+      "finish": null,
+      "description": "CARD READER",
+      "notes": null
+     }
+    ]
+   },
+   "hardware": {
+    "expected_groups": 1,
+    "groups_found": 1,
+    "extra_groups": [],
+    "expected_items": 23,
+    "items_found": 22,
+    "items_found_pct": 95.7,
+    "field_accuracy_pct": 97.3,
+    "per_field": {
+     "qty": {
+      "right": 21,
+      "wrong": 1
+     },
+     "description": {
+      "right": 22,
+      "wrong": 0
+     },
+     "catalog": {
+      "right": 22,
+      "wrong": 0
+     },
+     "finish": {
+      "right": 20,
+      "wrong": 2
+     },
+     "mfr": {
+      "right": 22,
+      "wrong": 0
+     }
+    },
+    "doors_linked": null,
+    "groups": [
+     {
+      "group": "01",
+      "found": true,
+      "read_as": "01",
+      "items_expected": 23,
+      "items_found": 22,
+      "extra_items": 1,
+      "link": null,
+      "items": [
+       {
+        "item": "CONTINUOUS HINGES 224HD (PREP'D FOR EPT)",
+        "found": true,
+        "wrong": []
+       },
+       {
+        "item": "KEY REMOVEABLE MULLION KR4954",
+        "found": true,
+        "wrong": []
+       },
+       {
+        "item": "MULLION CYLINDER MORTISE TYPE W/ CORE (KEYED TO EXISTING SYSTEM)",
+        "found": true,
+        "wrong": []
+       },
+       {
+        "item": "DOOR PULLS 1191-4",
+        "found": true,
+        "wrong": []
+       },
+       {
+        "item": "DOOR CLOSER W/ STOPS 4041XP SPR CNS 4041XP-30 & 61",
+        "found": true,
+        "wrong": []
+       },
+       {
+        "item": "ELECTRIC POWER TRANSFERS EPT-10 BY SECURITY VENDOR",
+        "found": true,
+        "wrong": []
+       },
+       {
+        "item": "ELECTRIFIED PANIC DEVICE RX-QEL98L-NL-03 LD BY SECURITY VENDOR",
+        "found": true,
+        "wrong": []
+       },
+       {
+        "item": "POWER SUPPLY BY SECURITY VENDOR",
+        "found": true,
+        "wrong": []
+       },
+       {
+        "item": "TRIM CYLINDER & CORE AS REQUIRED (KEYED TO EXISTING SYSTEM)",
+        "found": true,
+        "wrong": []
+       },
+       {
+        "item": "DOOR PULLS 1191-4",
+        "found": true,
+        "wrong": []
+       },
+       {
+        "item": "DOOR CLOSER W/ STOPS 4041XP SPR CNS 4041XP-30 & 61",
+        "found": true,
+        "wrong": []
+       },
+       {
+        "item": "ELECTRIFIED PANIC DEVICE RX-QEL98L-BE-03 LD BY SECURITY VENDOR",
+        "found": true,
+        "wrong": []
+       },
+       {
+        "item": "THRESHOLD 896ADJ SIA SSMS/EA",
+        "found": true,
+        "wrong": []
+       },
+       {
+        "item": "AUTO DOOR OPERATOR DORMA 100 SERIES BY SECURITY VENDOR",
+        "found": true,
+        "wrong": []
+       },
+       {
+        "item": "RELAY MODULE ALTRONTICS RB1224 BY SECURITY VENDOR",
+        "found": false
+       },
+       {
+        "item": "H/C PUSH SWITCH 946HP45MO x 946475WR (EXTERIOR) BY SECURITY VENDOR",
+        "found": true,
+        "wrong": [
+         "finish: expected \"US32D\", read \"630\""
+        ]
+       },
+       {
+        "item": "H/C PUSH SWITCH 946HP45MO (INTERIOR) BY SECURITY VENDOR",
+        "found": true,
+        "wrong": [
+         "finish: expected \"US32D\", read \"630\""
+        ]
+       },
+       {
+        "item": "BALLARD POST (FOR H/C SWITCH) BY SECURITY VENDOR",
+        "found": true,
+        "wrong": []
+       },
+       {
+        "item": "KEY SWITCH 960MA BY SECURITY VENDOR",
+        "found": true,
+        "wrong": []
+       },
+       {
+        "item": "KEY SWITCH CYLINDER MORTISE TYPE W/ CORE (KEYED TO EXISTING SYSTEM)",
+        "found": true,
+        "wrong": []
+       },
+       {
+        "item": "DOOR POSITION SWITCHES GRI 180-12-W-34\" STL DR CONTACT WHITE BY SECURITY VENDOR",
+        "found": true,
+        "wrong": []
+       },
+       {
+        "item": "VIDEO/INTERCOM STATION & CONSOLE w/ 5 RELEASE BUTTONS BY SECURITY VENDOR",
+        "found": true,
+        "wrong": [
+         "qty: expected null, read 1"
+        ]
+       },
+       {
+        "item": "CARD READER HID GLOBAL SIGNO 40TKS-002MRN-ADV iClass/EOS BY SECURITY VENDOR",
+        "found": true,
+        "wrong": []
+       }
+      ]
+     }
+    ]
+   }
+  }
+ ],
+ "cleanup": {
+  "deleted": {
+   "hardware_components": 88,
+   "client_telemetry": 4,
+   "door_hardware_matrix": 98,
+   "door_schedule_entries": 131,
+   "hardware_page_extractions": 5,
+   "hardware_sets": 10,
+   "hardware_extraction_sessions": 4,
+   "weyland_sessions": 1,
+   "users": 1
+  },
+  "r2": [
+   "deleted",
+   "deleted",
+   "deleted",
+   "deleted"
+  ],
+  "kv": [
+   "deleted",
+   "deleted",
+   "deleted",
+   "deleted"
+  ],
+  "remaining": {
+   "users": 0,
+   "weyland_sessions": 0,
+   "extraction_sessions": 0
+  },
+  "ok": true
+ },
+ "finished_at": "2026-10-09T03:48:05.319Z"
+}
