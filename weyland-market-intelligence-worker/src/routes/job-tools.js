@@ -134,24 +134,28 @@ export async function logYesterday(env, fetchImpl = fetch, now = new Date()) {
   const jobs = (await env.WEYLAND_DB.prepare("SELECT id, project_address FROM proposals WHERE project_address IS NOT NULL AND TRIM(project_address) != '' ORDER BY created_at DESC LIMIT 200").all()).results || [];
   let logged = 0;
   for (const j of jobs) {
-    try {
-      const g = await geocode(env, j.project_address, fetchImpl);
-      if (!g.matched) continue;
-      const fc = await forecast(env, g.lat, g.lon, fetchImpl);
-      if (!fc.stations) continue;
-      const st = await (await fetchImpl(fc.stations, { headers: { "User-Agent": NWS_UA } })).json();
-      const station = st.features?.[0]?.properties?.stationIdentifier;
-      if (!station) continue;
-      const obs = await (await fetchImpl(`https://api.weather.gov/stations/${station}/observations?start=${day}T00:00:00Z&end=${day}T23:59:59Z`, { headers: { "User-Agent": NWS_UA } })).json();
-      const s = summarizeObservations(obs.features || []);
-      if (!s.observations) continue;
-      await env.DB.prepare(`INSERT INTO weather_log (proposal_id, day, station, observations, min_temp_f, max_temp_f, max_wind_mph, max_gust_mph, precip_in, conditions, fetched_at)
-        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) ON CONFLICT(proposal_id, day) DO NOTHING`)
-        .bind(j.id, day, station, s.observations, s.min_temp_f, s.max_temp_f, s.max_wind_mph, s.max_gust_mph, s.precip_in, s.conditions, new Date().toISOString()).run();
-      logged++;
-    } catch (e) { console.warn("[weather-log]", j.id, e.message); }
+    try { if (await logJobDay(env, j, day, fetchImpl)) logged++; } catch (e) { console.warn("[weather-log]", j.id, e.message); }
   }
   return { day, jobs: jobs.length, logged };
+}
+
+/** One job's observed weather for one day, written to the log. -> true when a day was logged. */
+export async function logJobDay(env, j, day, fetchImpl = fetch) {
+  await ensureLog(env.DB);
+  const g = await geocode(env, j.project_address, fetchImpl);
+  if (!g.matched) return false;
+  const fc = await forecast(env, g.lat, g.lon, fetchImpl);
+  if (!fc.stations) return false;
+  const st = await (await fetchImpl(fc.stations, { headers: { "User-Agent": NWS_UA } })).json();
+  const station = st.features?.[0]?.properties?.stationIdentifier;
+  if (!station) return false;
+  const obs = await (await fetchImpl(`https://api.weather.gov/stations/${station}/observations?start=${day}T00:00:00Z&end=${day}T23:59:59Z`, { headers: { "User-Agent": NWS_UA } })).json();
+  const s = summarizeObservations(obs.features || []);
+  if (!s.observations) return false;
+  await env.DB.prepare(`INSERT INTO weather_log (proposal_id, day, station, observations, min_temp_f, max_temp_f, max_wind_mph, max_gust_mph, precip_in, conditions, fetched_at)
+    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) ON CONFLICT(proposal_id, day) DO NOTHING`)
+    .bind(j.id, day, station, s.observations, s.min_temp_f, s.max_temp_f, s.max_wind_mph, s.max_gust_mph, s.precip_in, s.conditions, new Date().toISOString()).run();
+  return true;
 }
 
 async function approvedChanges(db, proposalId, userId) {
@@ -231,7 +235,7 @@ export function registerJobToolRoutes(router, { auth = authenticate } = {}) {
     return jsonResponse3({ success: true, jobs: out });
   });
 
-  router.get("/api/weatherx/log/:id", async (request, env) => {
+  router.get("/api/weatherx/log/:id", async (request, env, ctx) => {
     const a = await who(request, env); if (a.error) return a.error;
     const own = await env.WEYLAND_DB.prepare("SELECT id, project_address FROM proposals WHERE id = ? AND user_id = ?").bind(request.params.id, a.userId).first();
     if (!own) return jsonResponse3({ success: false, message: "Not one of your jobs." }, 404);
@@ -243,7 +247,16 @@ export function registerJobToolRoutes(router, { auth = authenticate } = {}) {
       if (!(await outputAccess(a.shared, a.userId, "weatherx")).paid) return needPay("The weather log export", "WeatherX");
       return csv(["day", "station", "observations", "min_temp_f", "max_temp_f", "max_wind_mph", "max_gust_mph", "precip_in", "conditions"], rows.map((r) => [r.day, r.station, r.observations, r.min_temp_f, r.max_temp_f, r.max_wind_mph, r.max_gust_mph, r.precip_in, r.conditions]), "weather-log");
     }
-    return jsonResponse3({ success: true, address: own.project_address, days: rows });
+    // A job added since the daily run has no day yet (product audit 2026-10-09: a 9-hour-old job,
+    // 0 days, until the next 24-hour run). Yesterday is logged for it in the background now; the
+    // visitor never waits on the weather service.
+    const yesterday = new Date(Date.now() - 86400000).toISOString().slice(0, 10);
+    let pending = null;
+    if (own.project_address && !rows.some((r) => r.day === yesterday) && ctx && ctx.waitUntil) {
+      pending = yesterday;
+      ctx.waitUntil(logJobDay(env, own, yesterday).catch((e) => console.warn("[weather-log]", own.id, e.message)));
+    }
+    return jsonResponse3({ success: true, address: own.project_address, days: rows, pending });
   });
 
   router.post("/api/forecastx/portfolio", async (request, env) => {
