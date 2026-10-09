@@ -516,7 +516,6 @@
           if (r.status === 401) msg = "That email and password do not match an account.";
           throw new Error(msg || ("Sign-in failed (" + r.status + ")."));
         }
-        if (d.mfa_required) { auth._mfaRequired = true; auth._mfaPending = d.mfa_token; return { mfa_required: true }; }
         return auth._processAuthResponse(d);
       });
     });
@@ -549,7 +548,8 @@
   // A sign-in answer from AuthFor (login, code, reset): kept exactly as a password sign-in keeps it.
   function keepLogin(data) {
     var auth = sdk();
-    if (auth && typeof auth._processAuthResponse === "function") { auth._processAuthResponse(data); return; }
+    if (auth && typeof auth._processAuthResponse === "function") return auth._processAuthResponse(data);
+    if (data.mfa_required || !data.token || !data.session_id) throw new Error("Sign-in is still loading. Try again in a second.");
     lsSet(TOKEN_KEY, data.token);
     if (data.session_id) lsSet(SESSION_KEY, data.session_id);
     if (data.refresh_token) lsSet(REFRESH_KEY, data.refresh_token);
@@ -583,7 +583,8 @@
     var mfaInput = h("input", { id: "weyland-signin-mfa", type: "text", inputmode: "numeric", autocomplete: "one-time-code" });
     var mfaWrap = h("div", { style: "display:none" }, [h("label", { "for": "weyland-signin-mfa", text: "Authenticator code" }), mfaInput]);
     var submit = h("button", { id: "weyland-signin-submit", "class": "wa-primary", type: "submit", text: "SIGN IN" });
-    var pwPart = h("div", null, [h("label", { "for": "weyland-signin-password", text: "Password" }), pass, mfaWrap, submit]);
+    var passLabel = h("label", { "for": "weyland-signin-password", text: "Password" });
+    var pwPart = h("div", null, [passLabel, pass, mfaWrap, submit]);
     var orLine = h("div", { "class": "wa-or", text: "or" });
     var codeBtn = h("button", { id: "weyland-signin-code-send", "class": "wa-secondary", type: "button", text: "EMAIL ME A SIGN-IN CODE" });
     var otp = h("input", { id: "weyland-signin-code", "class": "wa-code", type: "text", inputmode: "numeric", autocomplete: "one-time-code", maxlength: "12", spellcheck: "false" });
@@ -596,7 +597,7 @@
     ]);
     var toPassword = h("button", { id: "weyland-signin-use-password", "class": "wa-link", type: "button", text: "Use my password instead" });
     var toPasswordRow = h("div", { "class": "wa-links", style: "display:none" }, [toPassword]);
-    var state = { mode: mode === "password" ? "password" : "code", pending: null, sentTo: "", mfa: false, inflight: false };
+    var state = { mode: mode === "password" ? "password" : "code", pending: null, sentTo: "", mfa: false, inflight: false, provedEmail: false, passwordRemoved: false };
 
     function setMode(m) {
       state.mode = m;
@@ -609,6 +610,23 @@
       toPasswordRow.style.display = code && !confirm ? "flex" : "none";
       otherEmail.style.display = confirm ? "none" : "";
       email.disabled = confirm || !!(code && state.pending);
+      pass.required = !code && !state.mfa;
+    }
+    function requireMFA() {
+      state.mfa = true;
+      setMode("password");
+      passLabel.style.display = "none"; pass.style.display = "none";
+      mfaWrap.style.display = "block"; submit.textContent = "VERIFY CODE";
+      codeBtn.style.display = "none"; orLine.style.display = "none"; toPasswordRow.style.display = "none";
+      try { mfaInput.focus({ preventScroll: true }); } catch (e) {}
+    }
+    function finishSignIn() {
+      var next = continueTo;
+      if (state.passwordRemoved) {
+        S.flash = "Signed in with the emailed code. This email had not been confirmed before, so its old password was removed; to sign in with a password again, choose Forgot password.";
+        if (!next || next === "/") next = "view:account";
+      }
+      return afterAuthFor(next, err, state.provedEmail);
     }
     function busy(btn, text) { state.inflight = true; btn.disabled = true; btn.setAttribute("data-label", btn.textContent); btn.textContent = text; }
     function idle(btn) { state.inflight = false; btn.disabled = false; if (btn.getAttribute("data-label")) btn.textContent = btn.getAttribute("data-label"); }
@@ -619,7 +637,8 @@
       err.style.display = "none";
       if (!validEmail(em)) { showError(err, "Type your email, then choose Email me a sign-in code."); email.focus(); return; }
       busy(codeBtn, "SENDING THE CODE...");
-      authforCall("/api/v1/auth/magic-link", { email: em, client_id: AF_CLIENT, venture_id: AF_VENTURE, purpose: confirm ? "verify" : "signin" }).then(function (res) {
+      // Signing in by inbox code also confirms the email; the redemption endpoint accepts signin purpose.
+      authforCall("/api/v1/auth/magic-link", { email: em, client_id: AF_CLIENT, venture_id: AF_VENTURE, purpose: "signin" }).then(function (res) {
         idle(codeBtn);
         if (!res.ok || !res.data.token || res.data.sent === false) {
           var m = authforMessage(res), wait = +res.data.retry_after || 0;
@@ -648,7 +667,7 @@
       if (!/^\d{4,10}$/.test(c)) { showError(err, "Type the code from the email (8 digits)."); otp.focus(); return; }
       busy(otpSubmit, "CHECKING THE CODE...");
       authforCall("/api/v1/auth/magic-link/verify", { token: state.pending, code: c }).then(function (res) {
-        if (!res.ok || !res.data.token) {
+        if (!res.ok || (!res.data.token && !res.data.mfa_required)) {
           var m = authforMessage(res), code = String(res.data.code || "");
           var left = typeof res.data.attempts_left === "number" ? res.data.attempts_left : null;
           var wrongCode = "That code does not match the latest one sent to " + state.sentTo + "." + (left != null ? " " + left + " tr" + (left === 1 ? "y" : "ies") + " left." : "") + " Check the email, or send a new code.";
@@ -660,14 +679,12 @@
             : (m || "The code could not be checked (" + res.status + ")."));
         }
         keepLogin(res.data);
+        state.provedEmail = true;
+        state.passwordRemoved = !!res.data.password_removed;
         rememberCodeSignIn(state.sentTo);
+        if (res.data.mfa_required) { requireMFA(); return; }
         otpSubmit.textContent = "OPENING YOUR ACCOUNT...";
-        var next = continueTo;
-        if (res.data.password_removed) {
-          S.flash = "Signed in with the emailed code. This email had not been confirmed before, so its old password was removed; to sign in with a password again, choose Forgot password.";
-          if (!next || next === "/") next = "view:account";
-        }
-        return afterAuthFor(next, err, true);
+        return finishSignIn();
       }).catch(function (e) { showError(err, (e && e.message) || "The code could not be checked."); })
         .then(function () { idle(otpSubmit); });
     }
@@ -693,12 +710,11 @@
       var p = state.mfa ? auth.verifyMFA(mfaInput.value.trim()) : authforLogin(auth, em, pw);
       Promise.resolve(p).then(function (res) {
         if (res && res.mfa_required) {
-          state.mfa = true; mfaWrap.style.display = "block"; done();
-          try { mfaInput.focus({ preventScroll: true }); } catch (e) {}
+          requireMFA(); done();
           return;
         }
         stage = "Opening your account";
-        return afterAuthFor(continueTo, err);
+        return finishSignIn();
       }).catch(function (e2) {
         var msg = (e2 && e2.message) || "Sign-in failed. Check the email and password.";
         showError(err, msg);
@@ -757,6 +773,7 @@
       } })])
     ]);
     setMode(state.mode);
+    if (opts && opts.mfa) requireMFA();
     show(confirm ? "Confirm your email" : "Sign in", card, "signin");
     if (state.mode === "code" && email.value) { try { codeBtn.focus({ preventScroll: true }); } catch (e) {} }
     return Promise.resolve();
@@ -805,6 +822,10 @@
         submit.textContent = "SIGNING IN...";
         // Whoever was signed in on this browser before is signed out first: the link's account takes over.
         return endSession().then(function () {
+          if (res.data.mfa_required) {
+            keepLogin(res.data);
+            return viewSignIn("view:account", who, "password", { mfa: true }).then(function () { flashSignIn("Your new password is saved. Enter your authenticator code to finish signing in."); });
+          }
           if (res.data.token) { keepLogin(res.data); return finish(); }
           if (!who) { S.flash = null; return viewSignIn(null, "").then(function () { flashSignIn("Your new password is saved. Sign in with your email and the new password."); }); }
           return authforLogin(sdk(), who, a).then(function (r2) {
@@ -1708,7 +1729,7 @@
     var sid = lsGet(SESSION_KEY);
     var authfor = t ? fetch(AUTHFOR + "/api/v1/logout", { method: "POST", headers: { "Authorization": "Bearer " + t, "Content-Type": "application/json" }, body: JSON.stringify({ session_id: sid }) }).catch(function () {}) : Promise.resolve();
     [TOKEN_KEY, REFRESH_KEY, SESSION_KEY].forEach(lsDel);
-    if (S.sdk) { S.sdk._token = null; S.sdk._user = null; S.sdk._refreshToken = null; S.sdk._sessionId = null; if (S.sdk._refreshTimer) clearTimeout(S.sdk._refreshTimer); }
+    if (S.sdk) { S.sdk._sessionEpoch = (S.sdk._sessionEpoch || 0) + 1; S.sdk._token = null; S.sdk._user = null; S.sdk._refreshToken = null; S.sdk._sessionId = null; S.sdk._mfaRequired = false; S.sdk._mfaPending = null; if (S.sdk._refreshTimer) clearTimeout(S.sdk._refreshTimer); }
     var local = api("/api/auth/logout", { method: "POST" });
     S.loggingOut = local; // a refresh meanwhile waits for the server session to be gone
     S.status = "signed-in"; // so setSignedOut() also drops the account token from the guest slot
@@ -1871,6 +1892,8 @@
     var ready = null;
     S.ready = new Promise(function (resolve) { ready = resolve; });
     restoreView();
+    var auth = sdk();
+    if (auth && token()) auth._setupAutoRefresh();
     refreshState().catch(function () {}).then(function () {
       ready();
       if (S.status === "signed-in") ensureServerSession();
