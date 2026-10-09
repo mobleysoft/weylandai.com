@@ -5,8 +5,9 @@ Written by the cloud session, 2026-10-09 (UTC). Every number below comes from a 
 
 ## Cloud goals (Mobley list)
 
+- g037 in review (21:36Z): MarketX audit PASS twice (21:34Z, 21:35Z). The 18:10Z FAIL most likely raced the permit reload (not proven: that run kept no copy of the CSV). Chicago's ranking and companies CSV agree today, name for name in every metro, and Chicago moved from 1,850 to 1,868 projects since; San Francisco failed on the metros list not matching its page at that moment, not on contractors or owners (the harness already exempts LA and SF; the reason written for g032 was wrong). The harness now re-measures a metro whose figures change during its measurement (up to 3 times) and reports it; the bar is unchanged.
 - g028 in review (2026-10-09T18:10Z): SightX opens the three best real harvested sets at /sightx/?set=<sha16> (R2502 152 door rows / 150 tagged, T2507 40 / 40, T2504 18 / 18), each door at its tag with the schedule row it came from; journey sightx-real-buildings 3 local passes 21/21; evidence tools/accuracy/g028/README.md. Needs: deploy of weyland-sightx-worker, then the Mac's 3 GPU passes.
-- g032 in review (18:24Z): PropX PASS and HuntX PASS on rerunnable audits (BidX and CloseX also PASS; CloseX harness fixed for the PDF's Room field); offer sentence in index.html restored to the full list. MarketX FAIL stays open (Chicago companies CSV order; SF publishes no GC or owner). Needs: merge and the Pages deploy of index.html.
+- g032 in review (18:24Z): PropX PASS and HuntX PASS on rerunnable audits (BidX and CloseX also PASS; CloseX harness fixed for the PDF's Room field); offer sentence in index.html restored to the full list. MarketX: see g037. Needs: merge and the Pages deploy of index.html.
 
 ## The goal's five finish lines
 
@@ -78,7 +79,7 @@ Harnesses: `tools/accuracy/doc_tools_audit.mjs`, `product_audit_schedule_tools.m
 | NotesX | the same room | PASS | attendees, 2 decisions, 2 actions, transcript appendix |
 | HuntX | whole index (1,389 notices from 7 sources) | PASS | 11 door / 166 building / 514 signal / 698 civil; 145 distinct links fetched, 0 dead; filters exact; RSS 50 items, calendar 161 events (18:10Z, `product_audit_data_tools.mjs --only huntx,marketx`) |
 | CompX | NYC City Record awards | PASS | 2,809 awards; 3 door vendors equal NYC open data exactly |
-| MarketX | six metros, both CSVs | FAIL | Chicago: companies.csv 2,106 rows does not begin with the JSON ranking (400); San Francisco: 0 GCs and 0 owners ("No owner or contractor in DBI's open data"), which the bar counts as failing 'who is building it' while the card says SF publishes neither; claim or bar must change (18:10Z) |
+| MarketX | six metros, both CSVs | PASS | chicago 1,868 / $6.17B, nyc 9,466 / $19.0B (projects CSV capped at 5,000), la 827, austin 78, sf 757, seattle 405; contractors and owners ranked where the city names them, both CSVs agree with the page (21:34Z and 21:35Z, `product_audit_data_tools.mjs --only marketx`; g037) |
 | WeatherX | job at 1855 Lucretia Ave, San Jose | PASS | NWS 13/13 periods agree; daily log written (1 day, the job is 10 h old) |
 | GeoX | 3 PropX jobs | PASS | city, county and tract equal the Census geocoder |
 | ForecastX | proposal 1, 4 months, 5% retainage | PASS | 7 months equal an independent recompute to the cent |
