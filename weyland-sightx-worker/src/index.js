@@ -95,7 +95,9 @@ router.get("/health", () => jsonResponse3({
 function serveSightX(request) {
   const bg = new URL(request.url).searchParams.get("embed") === "bg";
   return new Response(bg ? sightxHtml : sightxAppHtml, {
-    headers: { "Content-Type": "text/html; charset=UTF-8", "Cache-Control": "public, max-age=60" },
+    // no-transform (S0, 2026-10-09): the zone's edge otherwise injects a beacon script from
+    // static.cloudflareinsights.com into the HTML, a third-party request on a page that makes none.
+    headers: { "Content-Type": "text/html; charset=UTF-8", "Cache-Control": "public, max-age=60, no-transform" },
   });
 }
 

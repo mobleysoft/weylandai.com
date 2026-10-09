@@ -201,7 +201,9 @@ async function handle(request, env, ctx) {
             headers: {
               "Content-Type": edgeResp.headers.get("Content-Type") || "text/html; charset=utf-8",
               "X-Cache": edgeResp.headers.get("X-Cache") || "",
-              "X-Served-By": "mascom-edge-via-weyland-platform-worker"
+              "X-Served-By": "mascom-edge-via-weyland-platform-worker",
+              // The edge must not inject its analytics beacon (a third-party request, S0).
+              "Cache-Control": "public, max-age=60, no-transform"
             }
           });
         }
