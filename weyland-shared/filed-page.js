@@ -32,14 +32,27 @@ export function modelPattern(model) {
 // A contents or index page names every model once, with dot leaders; it is never the cited page.
 const isContents = (t) => /TABLE OF CONTENTS|^\s*CONTENTS\b|\bINDEX\b/im.test(t) || (t.match(/\.{5,}/g) || []).length >= 6;
 
-/** The best page for the model in a list of { page, text }: most mentions, earliest on a tie. */
+/** The model as a price-book grid prints it (2026-10-09): Von Duprin lists 99-EO as
+ *  "[98/99] .   EO" and 99-EO-F as "[98/99] . EO . F": the series alone or inside brackets with
+ *  its sibling ("[98/99]"), then each option run after dots or spaces. Only for a number of two or
+ *  more runs whose first is all digits ("99-EO"); a single run is left to modelPattern. */
+export function gridPattern(model) {
+  const runs = String(model || "").toUpperCase().match(/[A-Z0-9]+/g) || [];
+  if (runs.length < 2 || !/^\d{2,}$/.test(runs[0])) return null;
+  const series = "(?:\\[(?:\\d+\\/)*" + runs[0] + "(?:\\/\\d+)*\\]|(?<![A-Z0-9\\/])" + runs[0] + ")";
+  return new RegExp(series + runs.slice(1).map((r) => "[\\s.]*" + r).join("") + "(?![A-Z0-9])", "g");
+}
+
+/** The best page for the model in a list of { page, text }: most mentions, earliest on a tie.
+ *  A page counts by whichever spelling it prints more often, plain or price-book grid (the two
+ *  overlap on "99 EO", so they are not added). */
 export function bestPageFor(pages, model) {
-  const re = modelPattern(model);
-  if (!re) return null;
+  const res = [modelPattern(model), gridPattern(model)].filter(Boolean);
+  if (!res.length) return null;
   let best = null;
   for (const p of pages || []) {
     const text = String(p.text || "").toUpperCase();
-    const n = (text.match(re) || []).length;
+    const n = Math.max(...res.map((re) => (text.match(re) || []).length));
     if (!n || isContents(text)) continue;
     if (!best || n > best.mentions) best = { pageNum: p.page, mentions: n };
   }
@@ -97,7 +110,7 @@ export async function filedPdfPages(env, r2Key, { budgetMs = 15000 } = {}) {
 
 /** { pageNum, mentions } of the filed PDF's page naming the model, or null. */
 export async function pageNamingInFiledPdf(env, r2Key, model, opts = {}) {
-  if (!modelPattern(model)) return null;
+  if (!modelPattern(model) && !gridPattern(model)) return null;
   const pages = await filedPdfPages(env, r2Key, opts);
   return pages ? bestPageFor(pages, model) : null;
 }
