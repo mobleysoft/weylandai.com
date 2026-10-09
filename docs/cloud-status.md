@@ -1,4 +1,5 @@
 # Cloud status: the $100 first submittal on a full-size bid set, and every tool on sale
+- Next list from the Mac (2026-10-09 15:10 EDT), after g033 is in a PR: g035 SightX on the remaining seven harvested sets (same pipeline as g028, rows from tools/accuracy/g020/<sha16>.json, journey extended to all ten, three green passes on the Mac); g036 journeys fail cleanly on an unexpected API answer (shared in journey-kit, with a test; the first g028 acceptance pass crashed on an undefined response during deploy propagation); g037 MarketX audit to PASS or a written reason (Chicago CSV ranking order; San Francisco GC and owner). Same rules: PRs and this file only, blockers here, never a message to John. g028 and g032 are merged and accepted on production (22 of 22 four passes; offer sentence live).
 
 Written by the cloud session, 2026-10-09 (UTC). Every number below comes from a harness run live against https://weylandai.com and committed beside it; each section names the command that reproduces it. Nothing here is estimated.
 
