@@ -113,3 +113,34 @@ test("a model the catalogue does not list is found in the maker's own filed pric
   assert.deepEqual(r.pages.map((p) => [p.r2Key, p.pageNum, p.manufacturer, p.title]), [["manufacturer-catalogs/zero.pdf", 2, "Zero International", "Zero Price Book"]]);
   assert.equal(r.missing.length, 0);
 });
+
+test("an item the book prints in its own spelling or as a grid is cited from its price row's page, only when the filed PDF confirms it", async () => {
+  const db = new DatabaseSync(":memory:");
+  db.exec(`CREATE TABLE hardware_sets (id TEXT, session_id TEXT, set_number TEXT); CREATE TABLE hardware_components (id TEXT, set_id TEXT, component_type TEXT, quantity INTEGER, manufacturer TEXT, model TEXT, catalog_number TEXT, sequence_order INTEGER);
+    CREATE TABLE manufacturers (id TEXT, name TEXT); CREATE TABLE products (id TEXT, manufacturer_id TEXT);
+    CREATE TABLE product_documents (product_id TEXT, document_type TEXT, active INTEGER, r2_object_key TEXT, document_title TEXT);
+    CREATE TABLE product_variants (product_id TEXT, full_model_number TEXT, list_price REAL, catalog_page TEXT);`);
+  db.prepare("INSERT INTO hardware_sets VALUES ('h1','s1','1')").run();
+  const c = db.prepare("INSERT INTO hardware_components VALUES (?,'h1',?,1,?,?,NULL,?)");
+  c.run("c1", "seal", "Zero International", "188SBK PSA", 1);
+  c.run("c2", "exit_device", "Von Duprin", "PA-AX-99-L-F-2SI-06", 2);
+  c.run("c3", "exit_device", "Von Duprin", "PA-AX-9927-EO-F", 3);
+  db.prepare("INSERT INTO manufacturers VALUES ('mz','Zero International')").run();
+  db.prepare("INSERT INTO products VALUES ('pz','mz')").run();
+  db.prepare("INSERT INTO products VALUES ('pv','mv')").run();
+  db.prepare("INSERT INTO product_documents VALUES ('pz','cut_sheet',1,'manufacturer-catalogs/zero.pdf','Zero Price Book (2026)')").run();
+  db.prepare("INSERT INTO product_documents VALUES ('pv','cut_sheet',1,'manufacturer-catalogs/vd.pdf','Von Duprin Price Book (2026)')").run();
+  db.prepare("INSERT INTO product_variants VALUES ('pz',?,22.88,'3')").run("188S-BK [8' (2.4 m)]");
+  db.prepare("INSERT INTO product_variants VALUES ('pv','99-L-F',3564,'2')").run();
+  db.prepare("INSERT INTO product_variants VALUES ('pv','9927-EO-F',3807,'1')").run(); // a stale page: p.1 does not show it
+  const d1 = { prepare(sql) { let a = []; const st = { bind(...x) { a = x; return st; }, async all() { return { results: db.prepare(sql).all(...a).map((r) => ({ ...r })) }; } }; return st; } };
+  const env = fakeEnv([], { DB: d1 });
+  env.store.set("cut-sheet-text/manufacturer-catalogs/zero.pdf.pages.json", JSON.stringify([{ page: 1, text: "Zero" }, { page: 2, text: "Thresholds" }, { page: 3, text: "188S-BK Silicone/black/PSA $22.88" }]));
+  env.store.set("cut-sheet-text/manufacturer-catalogs/vd.pdf.pages.json", JSON.stringify([{ page: 1, text: "Contents" }, { page: 2, text: "[98/99] . L . F . [ ] $3,564 $3,337" }]));
+  const match = async (comp) => comp.manufacturer === "Zero International"
+    ? { matched: false, reason: "model_not_in_catalogue", maker: { typed: true, known: true, name: "Zero International" }, cutSheets: [], cataloguePages: [] }
+    : { matched: true, matchType: "base_model", maker: { typed: true, known: true, name: "Von Duprin" }, product: { id: "pv", manufacturer: "Von Duprin", model: "99" }, cutSheets: [], cataloguePages: [] };
+  const r = await citedPagesForSession("s1", env, match);
+  assert.deepEqual(r.pages.map((p) => [p.r2Key, p.pageNum, p.model]), [["manufacturer-catalogs/zero.pdf", 3, "188S-BK"], ["manufacturer-catalogs/vd.pdf", 2, "99-L-F"]]);
+  assert.deepEqual(r.missing.map((x) => x.model), ["PA-AX-9927-EO-F"], "a page the PDF does not confirm is not cited");
+});
