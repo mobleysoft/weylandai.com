@@ -6,12 +6,14 @@ import { guestDetail, doorListCsv } from "../assets/client-ocr-src/schedule-work
 import { pageTextLines, readDoorScheduleFromLines } from "../assets/client-ocr-src/schedule-text-layer.mjs";
 import { getDocument, Util } from "../src/vendor/pdfjs-text.mjs";
 
-const evidence = JSON.parse(readFileSync(new URL("./fixtures/g019-qualified-scan.json", import.meta.url)));
+// Frozen verbatim from tools/accuracy/g019-browser.json at 2a96ef4f7be5b9abcd5a8d9ff8e4f66c323cf8d3.
+// Keep the 47 rows (duplicate 214, missing 111/211, legacy confidence) as the reader improves.
+const evidence = JSON.parse(readFileSync(new URL("./fixtures/g019-browser-47-rows.json", import.meta.url)));
 const scanned = evidence.variants.find(v => v.variant === "scanned");
 const expected = evidence.variants.find(v => v.variant === "vector").result.doors.map(d => ({ page: 3, mark: d.door_number }));
 const replay = (options = {}) => guestDetail({ name: "scan.pdf" }, "scan", 6, [{ page: 3, extraction: structuredClone(scanned.result) }], options);
 
-test("F3: committed browser scan is qualified, duplicated 214 is flagged, and unread sizes are excluded", () => {
+test("F3: frozen 47-row browser scan is qualified, duplicated 214 is flagged, and unread sizes are excluded", () => {
   const detail = replay();
   assert.equal(detail.takeoff.doors, 47);
   assert.equal(detail.takeoff.unique_marks, 46);
@@ -38,6 +40,25 @@ test("F3: an explicit expected-mark checklist reports missing 111 and 211", () =
   assert.deepEqual(detail.takeoff.missing_expected_marks.map(d => d.mark).sort(), ["111", "211"]);
   assert.match(detail.takeoff.qualifier, /Missing expected marks: 111 \(page 3\), 211 \(page 3\)/);
   assert.match(doorListCsv(detail.doors, detail.takeoff), /Missing expected marks/);
+});
+
+test("F3: current 48-row browser scan has no duplicate or missing marks and qualifies its counts", () => {
+  const currentEvidence = JSON.parse(readFileSync(new URL("../../tools/accuracy/g019-browser.json", import.meta.url)));
+  const currentScan = currentEvidence.variants.find(v => v.variant === "scanned").result;
+  const expectedMarks = currentEvidence.variants.find(v => v.variant === "vector").result.doors.map(d => ({ page: 3, mark: d.door_number }));
+  const detail = guestDetail({ name: "scan.pdf" }, "scan", 6, [{ page: 3, extraction: structuredClone(currentScan) }], { expectedMarks });
+  const fields = currentScan.doors.reduce((n, d) => n + Object.keys(d.field_confidence).length, 0);
+  assert.equal(expectedMarks.length, 48);
+  assert.equal(detail.takeoff.doors, 48);
+  assert.equal(detail.takeoff.unique_marks, 48);
+  assert.equal(detail.takeoff.ocr_rows, 48);
+  assert.equal(detail.takeoff.ocr_fields, fields);
+  assert.equal(detail.takeoff.expected_marks_checked, true);
+  assert.deepEqual(detail.takeoff.duplicate_marks, []);
+  assert.deepEqual(detail.takeoff.missing_expected_marks, []);
+  assert.ok(detail.takeoff.qualifier.startsWith("Machine-read OCR: 48 rows / " + fields + " fields;"));
+  assert.match(detail.takeoff.qualifier, /below the 80% review threshold/);
+  assert.doesNotMatch(detail.takeoff.qualifier, /Duplicate marks|Missing expected marks|completeness is unverified/);
 });
 
 test("F3: guest warnings and counts use per-field confidence, including fire, hardware and dimensions", () => {
