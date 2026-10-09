@@ -5,6 +5,7 @@ Written by the cloud session, 2026-10-09 (UTC). Every number below comes from a 
 ## Cloud goals (Mobley list)
 
 - g028 in review (2026-10-09T18:10Z): SightX opens the three best real harvested sets at /sightx/?set=<sha16> (R2502 152 door rows / 150 tagged, T2507 40 / 40, T2504 18 / 18), each door at its tag with the schedule row it came from; journey sightx-real-buildings 3 local passes 21/21; evidence tools/accuracy/g028/README.md. Needs: deploy of weyland-sightx-worker, then the Mac's 3 GPU passes.
+- g032 in review (18:24Z): PropX PASS and HuntX PASS on rerunnable audits (BidX and CloseX also PASS; CloseX harness fixed for the PDF's Room field); offer sentence in index.html restored to the full list. MarketX FAIL stays open (Chicago companies CSV order; SF publishes no GC or owner). Needs: merge and the Pages deploy of index.html.
 
 ## The goal's five finish lines
 
@@ -57,7 +58,7 @@ Harnesses: `tools/accuracy/doc_tools_audit.mjs`, `product_audit_schedule_tools.m
 | CutSheetX | 10 real Rockford items + 2 not in the catalogue | PASS | 10 of 10 to the right maker with a citation that opens (LCN 4000 catalogue p.41, Von Duprin p.26, Ives catalogue p.131, Zero 188S-BK p.44, Schlage ND p.16, Select SL11 p.1 ...); both unknowns stated as misses; paste agrees 12/12 |
 | TakeoffX | Rockford A2.2; Berryessa A9.2 x3 | PASS | 65/65 and 24/24 doors, 4 of 4 breakdowns exact, every door traced to its row |
 | SightX | Berryessa session | PASS | 24/24 doors, hardware drawn on 24, shared link opens without an account |
-| PropX | Berryessa session | PENDING_PROPX | |
+| PropX | Berryessa session | PASS | 4 lines (door 24, hardware 24 openings), 2 priced, every unpriced line says why; total $254,671.45; PDF 2 pp, 4 s (18:10Z, `product_audit_schedule_tools.mjs --only propx`) |
 | PriceX | Berryessa and Rockford hardware | PASS | Berryessa 10 of 14 lines priced (6 exact), Rockford 44 of 110 (15 exact); every unpriced line says why |
 | DrawX | Fayette GA 2419, 21 sheets at 36 x 24 | PASS | 21 of 21 numbered and titled, 4 s |
 | AsBuiltX | Fayette sheets A3.2 / A4.1 | PASS | same sheet 0%, different sheets 4.2% |
@@ -65,18 +66,18 @@ Harnesses: `tools/accuracy/doc_tools_audit.mjs`, `product_audit_schedule_tools.m
 | InspecX | FCMAT Mayacamas FIT inspection, 9 pages (7 scanned) | PASS | 22 deficiencies, 50 s |
 | SurvX | NSW Newcastle dilapidation report, 289 pages | PASS | 60 findings, the report's grading legend not flagged, 7 s |
 | LienX | CA conditional progress waiver, Berryessa job; Ohio general form | PASS | 25 of 25 statute lines in order; amount from the proposal |
-| BidX | HuntX notice (IL CDB 546-140-011) + PropX quote | PENDING_BIDX | |
+| BidX | HuntX notice (IL CDB 546-140-011) + PropX quote | PASS | base bid $11,754.43 in words and figures; SOV 5 lines = $10,759.20; bond $1,175.44 (18:23Z, `product_audit_form_tools.mjs --only bidx,closex`) |
 | CoA | Berryessa (24 rated openings) | PASS | 24 of 24 records, pairs shown 22/22 |
-| CloseX | Berryessa; warranties from 08 71 00 1.07 | PENDING_CLOSEX | |
+| CloseX | Berryessa; warranties from 08 71 00 1.07 | PASS | 24/24 openings, 24 keyed, 5/5 warranties, 8 catalogue pages for 10 products; pairs 22/22 (18:23Z; harness now accepts the PDF's new Room field) |
 | RFaX | Berryessa | PASS | the real issue (core with no maker), RFIs numbered, 3 schedule pages attached |
 | ChangeOrdX | PropX quote 1 | PASS | add $1,017.59 and deduct -$456.34 to the cent; contract carried forward |
 | PermitX | Berryessa (none electrified) and Rockford (6 electrified) | PASS | Rockford 6 of 6 listed, 0 extra; catalogue pages 4 |
 | SafetyX | NIOSH FACE 2000-16 (fall and struck-by fatality, 20 pages) | PASS | 54 lines; falls and struck-by (3) classed; recording hint; 300/300A |
 | MeetingX | room with the Berryessa coordination record | PASS | 8/8 record items intact; TURN relay on (calls browser to browser are not testable over HTTP) |
 | NotesX | the same room | PASS | attendees, 2 decisions, 2 actions, transcript appendix |
-| HuntX | whole index (1,387 notices from 7 sources) | PENDING_HUNTX | |
+| HuntX | whole index (1,389 notices from 7 sources) | PASS | 11 door / 166 building / 514 signal / 698 civil; 145 distinct links fetched, 0 dead; filters exact; RSS 50 items, calendar 161 events (18:10Z, `product_audit_data_tools.mjs --only huntx,marketx`) |
 | CompX | NYC City Record awards | PASS | 2,809 awards; 3 door vendors equal NYC open data exactly |
-| MarketX | six metros, both CSVs | PENDING_MARKETX | |
+| MarketX | six metros, both CSVs | FAIL | Chicago: companies.csv 2,106 rows does not begin with the JSON ranking (400); San Francisco: 0 GCs and 0 owners ("No owner or contractor in DBI's open data"), which the bar counts as failing 'who is building it' while the card says SF publishes neither; claim or bar must change (18:10Z) |
 | WeatherX | job at 1855 Lucretia Ave, San Jose | PASS | NWS 13/13 periods agree; daily log written (1 day, the job is 10 h old) |
 | GeoX | 3 PropX jobs | PASS | city, county and tract equal the Census geocoder |
 | ForecastX | proposal 1, 4 months, 5% retainage | PASS | 7 months equal an independent recompute to the cent |

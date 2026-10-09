@@ -36,7 +36,7 @@
  "notes": [
   "Rows 119.2 and 126.1.1 are inside revision clouds (this addendum).",
   "126.1.2 has no frame material/finish, no panel material/finish, no details, no hardware set and no glazing printed.",
-  "COMMENTS and ALTERNATE PRICING are not part of the expected fields."
+  "COMMENTS are not part of the expected fields. ALTERNATE PRICING was audited against A2.2 with pdftotext -layout and rendered schedule crops on 2026-10-09: 18 Yes, 46 No, one blank (126.1.2)."
  ],
  "door_count": 65,
  "pairs": 6,
@@ -75,7 +75,8 @@
    "details": "EXIST.",
    "fire_rating": null,
    "hardware_group": "44 UTY-IT",
-   "glazing": null
+   "glazing": null,
+   "alternate_pricing": "No"
   },
   {
    "row": 2,
@@ -94,7 +95,8 @@
    "details": "EXIST.",
    "fire_rating": null,
    "hardware_group": "06 CL",
-   "glazing": null
+   "glazing": null,
+   "alternate_pricing": "Yes"
   },
   {
    "row": 3,
@@ -113,7 +115,8 @@
    "details": "EXIST.",
    "fire_rating": null,
    "hardware_group": "06 CL",
-   "glazing": null
+   "glazing": null,
+   "alternate_pricing": "Yes"
   },
   {
    "row": 4,
@@ -132,7 +135,8 @@
    "details": "EXIST.",
    "fire_rating": null,
    "hardware_group": "06 CL",
-   "glazing": "G2"
+   "glazing": "G2",
+   "alternate_pricing": "Yes"
   },
   {
    "row": 5,
@@ -151,7 +155,8 @@
    "details": "EXIST.",
    "fire_rating": null,
    "hardware_group": "19 STO",
-   "glazing": null
+   "glazing": null,
+   "alternate_pricing": "Yes"
   },
   {
    "row": 6,
@@ -170,7 +175,8 @@
    "details": "EXIST.",
    "fire_rating": null,
    "hardware_group": "06 CL",
-   "glazing": "G2"
+   "glazing": "G2",
+   "alternate_pricing": "Yes"
   },
   {
    "row": 7,
@@ -189,7 +195,8 @@
    "details": "EXIST.",
    "fire_rating": null,
    "hardware_group": "19 STO",
-   "glazing": null
+   "glazing": null,
+   "alternate_pricing": "Yes"
   },
   {
    "row": 8,
@@ -208,7 +215,8 @@
    "details": "EXIST.",
    "fire_rating": "YES",
    "hardware_group": "19F STO",
-   "glazing": null
+   "glazing": null,
+   "alternate_pricing": "Yes"
   },
   {
    "row": 9,
@@ -227,7 +235,8 @@
    "details": "EXIST.",
    "fire_rating": null,
    "hardware_group": "23 STO",
-   "glazing": null
+   "glazing": null,
+   "alternate_pricing": "Yes"
   },
   {
    "row": 10,
@@ -246,7 +255,8 @@
    "details": "H2/J2 (V.I.F.)",
    "fire_rating": null,
    "hardware_group": "40 UTY",
-   "glazing": null
+   "glazing": null,
+   "alternate_pricing": "Yes"
   },
   {
    "row": 11,
@@ -265,7 +275,8 @@
    "details": "EXIST.",
    "fire_rating": null,
    "hardware_group": "44 UTY-IT",
-   "glazing": null
+   "glazing": null,
+   "alternate_pricing": "Yes"
   },
   {
    "row": 12,
@@ -284,7 +295,8 @@
    "details": "EXIST.",
    "fire_rating": null,
    "hardware_group": "28 COR",
-   "glazing": "G2"
+   "glazing": "G2",
+   "alternate_pricing": "Yes"
   },
   {
    "row": 13,
@@ -303,7 +315,8 @@
    "details": "EXIST.",
    "fire_rating": null,
    "hardware_group": "32 EXD",
-   "glazing": "G1"
+   "glazing": "G1",
+   "alternate_pricing": "Yes"
   },
   {
    "row": 14,
@@ -322,7 +335,8 @@
    "details": null,
    "fire_rating": null,
    "hardware_group": null,
-   "glazing": null
+   "glazing": null,
+   "alternate_pricing": null
   },
   {
    "row": 15,
@@ -341,7 +355,8 @@
    "details": "EXIST.",
    "fire_rating": null,
    "hardware_group": "28 COR",
-   "glazing": "G2"
+   "glazing": "G2",
+   "alternate_pricing": "No"
   },
   {
    "row": 16,
@@ -360,7 +375,8 @@
    "details": "H4/J4",
    "fire_rating": null,
    "hardware_group": "07 CL",
-   "glazing": "G2"
+   "glazing": "G2",
+   "alternate_pricing": "No"
   },
   {
    "row": 17,
@@ -379,7 +395,8 @@
    "details": "EXIST.",
    "fire_rating": null,
    "hardware_group": "06 CL",
-   "glazing": "G2"
+   "glazing": "G2",
+   "alternate_pricing": "Yes"
   },
   {
    "row": 18,
@@ -398,7 +415,8 @@
    "details": "H4/J4",
    "fire_rating": null,
    "hardware_group": "06 CL",
-   "glazing": "G2"
+   "glazing": "G2",
+   "alternate_pricing": "No"
   },
   {
    "row": 19,
@@ -417,7 +435,8 @@
    "details": "EXIST.",
    "fire_rating": null,
    "hardware_group": "01 RR",
-   "glazing": null
+   "glazing": null,
+   "alternate_pricing": "No"
   },
   {
    "row": 20,
@@ -436,7 +455,8 @@
    "details": "H4/J4",
    "fire_rating": null,
    "hardware_group": "06 CL",
-   "glazing": "G2"
+   "glazing": "G2",
+   "alternate_pricing": "No"
   },
   {
    "row": 21,
@@ -455,7 +475,8 @@
    "details": "EXIST.",
    "fire_rating": null,
    "hardware_group": "01 RR",
-   "glazing": null
+   "glazing": null,
+   "alternate_pricing": "No"
   },
   {
    "row": 22,
@@ -474,7 +495,8 @@
    "details": "EXIST.",
    "fire_rating": null,
    "hardware_group": "06 CL",
-   "glazing": "G2"
+   "glazing": "G2",
+   "alternate_pricing": "No"
   },
   {
    "row": 23,
@@ -493,7 +515,8 @@
    "details": "H1/J1",
    "fire_rating": null,
    "hardware_group": "01 RR",
-   "glazing": null
+   "glazing": null,
+   "alternate_pricing": "No"
   },
   {
    "row": 24,
@@ -512,7 +535,8 @@
    "details": "EXIST.",
    "fire_rating": null,
    "hardware_group": "44 UTY-IT",
-   "glazing": null
+   "glazing": null,
+   "alternate_pricing": "No"
   },
   {
    "row": 25,
@@ -531,7 +555,8 @@
    "details": "EXIST.",
    "fire_rating": null,
    "hardware_group": "23 STO",
-   "glazing": null
+   "glazing": null,
+   "alternate_pricing": "Yes"
   },
   {
    "row": 26,
@@ -550,7 +575,8 @@
    "details": "EXIST.",
    "fire_rating": null,
    "hardware_group": "06 CL",
-   "glazing": "G2"
+   "glazing": "G2",
+   "alternate_pricing": "No"
   },
   {
    "row": 27,
@@ -569,7 +595,8 @@
    "details": "EXIST.",
    "fire_rating": null,
    "hardware_group": "23 STO",
-   "glazing": null
+   "glazing": null,
+   "alternate_pricing": "Yes"
   },
   {
    "row": 28,
@@ -588,7 +615,8 @@
    "details": "H4/J4",
    "fire_rating": null,
    "hardware_group": "06 CL",
-   "glazing": "G2"
+   "glazing": "G2",
+   "alternate_pricing": "No"
   },
   {
    "row": 29,
@@ -607,7 +635,8 @@
    "details": "H4/J4",
    "fire_rating": null,
    "hardware_group": "06 CL",
-   "glazing": "G2"
+   "glazing": "G2",
+   "alternate_pricing": "No"
   },
   {
    "row": 30,
@@ -626,7 +655,8 @@
    "details": "H4/J4",
    "fire_rating": null,
    "hardware_group": "06 CL",
-   "glazing": "G2"
+   "glazing": "G2",
+   "alternate_pricing": "No"
   },
   {
    "row": 31,
@@ -645,7 +675,8 @@
    "details": "H4/J4",
    "fire_rating": null,
    "hardware_group": "06 CL",
-   "glazing": "G2"
+   "glazing": "G2",
+   "alternate_pricing": "No"
   },
   {
    "row": 32,
@@ -664,7 +695,8 @@
    "details": "H4/J4",
    "fire_rating": null,
    "hardware_group": "06 CL",
-   "glazing": "G2"
+   "glazing": "G2",
+   "alternate_pricing": "No"
   },
   {
    "row": 33,
@@ -683,7 +715,8 @@
    "details": "H4/J4",
    "fire_rating": null,
    "hardware_group": "06 CL",
-   "glazing": "G2"
+   "glazing": "G2",
+   "alternate_pricing": "No"
   },
   {
    "row": 34,
@@ -702,7 +735,8 @@
    "details": "EXIST.",
    "fire_rating": null,
    "hardware_group": "02 RR-M",
-   "glazing": null
+   "glazing": null,
+   "alternate_pricing": "No"
   },
   {
    "row": 35,
@@ -721,7 +755,8 @@
    "details": "H1/J3",
    "fire_rating": null,
    "hardware_group": "51 UTY-CUS",
-   "glazing": null
+   "glazing": null,
+   "alternate_pricing": "Yes"
   },
   {
    "row": 36,
@@ -740,7 +775,8 @@
    "details": "EXIST.",
    "fire_rating": null,
    "hardware_group": "02 RR-M",
-   "glazing": null
+   "glazing": null,
+   "alternate_pricing": "No"
   },
   {
    "row": 37,
@@ -759,7 +795,8 @@
    "details": "H5/J5",
    "fire_rating": null,
    "hardware_group": "07 CL",
-   "glazing": "G2"
+   "glazing": "G2",
+   "alternate_pricing": "No"
   },
   {
    "row": 38,
@@ -778,7 +815,8 @@
    "details": "H4/J4",
    "fire_rating": null,
    "hardware_group": "06 CL",
-   "glazing": "G2"
+   "glazing": "G2",
+   "alternate_pricing": "No"
   },
   {
    "row": 39,
@@ -797,7 +835,8 @@
    "details": "H4/J4",
    "fire_rating": null,
    "hardware_group": "47 VES",
-   "glazing": "G2"
+   "glazing": "G2",
+   "alternate_pricing": "No"
   },
   {
    "row": 40,
@@ -816,7 +855,8 @@
    "details": "H11/J11",
    "fire_rating": null,
    "hardware_group": "32 EXD",
-   "glazing": "G1"
+   "glazing": "G1",
+   "alternate_pricing": "No"
   },
   {
    "row": 41,
@@ -835,7 +875,8 @@
    "details": "H4/J4",
    "fire_rating": null,
    "hardware_group": "06 CL",
-   "glazing": "G2"
+   "glazing": "G2",
+   "alternate_pricing": "No"
   },
   {
    "row": 42,
@@ -854,7 +895,8 @@
    "details": "H4/J4",
    "fire_rating": null,
    "hardware_group": "07 CL",
-   "glazing": "G2"
+   "glazing": "G2",
+   "alternate_pricing": "No"
   },
   {
    "row": 43,
@@ -873,7 +915,8 @@
    "details": "H4/J4",
    "fire_rating": null,
    "hardware_group": "23 STO",
-   "glazing": null
+   "glazing": null,
+   "alternate_pricing": "No"
   },
   {
    "row": 44,
@@ -892,7 +935,8 @@
    "details": "EXIST.",
    "fire_rating": null,
    "hardware_group": "20 STO",
-   "glazing": null
+   "glazing": null,
+   "alternate_pricing": "No"
   },
   {
    "row": 45,
@@ -911,7 +955,8 @@
    "details": "EXIST.",
    "fire_rating": null,
    "hardware_group": "06 CL",
-   "glazing": "G2"
+   "glazing": "G2",
+   "alternate_pricing": "No"
   },
   {
    "row": 46,
@@ -930,7 +975,8 @@
    "details": "H4/J4",
    "fire_rating": null,
    "hardware_group": "06 CL",
-   "glazing": "G2"
+   "glazing": "G2",
+   "alternate_pricing": "No"
   },
   {
    "row": 47,
@@ -949,7 +995,8 @@
    "details": "H4/J4",
    "fire_rating": null,
    "hardware_group": "06 CL",
-   "glazing": "G2"
+   "glazing": "G2",
+   "alternate_pricing": "No"
   },
   {
    "row": 48,
@@ -968,7 +1015,8 @@
    "details": "H4/J4",
    "fire_rating": null,
    "hardware_group": "06 CL",
-   "glazing": "G2"
+   "glazing": "G2",
+   "alternate_pricing": "No"
   },
   {
    "row": 49,
@@ -987,7 +1035,8 @@
    "details": "H4/J4",
    "fire_rating": null,
    "hardware_group": "06 CL",
-   "glazing": "G2"
+   "glazing": "G2",
+   "alternate_pricing": "No"
   },
   {
    "row": 50,
@@ -1006,7 +1055,8 @@
    "details": "H4/J4",
    "fire_rating": null,
    "hardware_group": "06 CL",
-   "glazing": "G2"
+   "glazing": "G2",
+   "alternate_pricing": "No"
   },
   {
    "row": 51,
@@ -1025,7 +1075,8 @@
    "details": "H4/J4",
    "fire_rating": null,
    "hardware_group": "06 CL",
-   "glazing": "G2"
+   "glazing": "G2",
+   "alternate_pricing": "No"
   },
   {
    "row": 52,
@@ -1044,7 +1095,8 @@
    "details": "EXIST.",
    "fire_rating": null,
    "hardware_group": "02 RR-M",
-   "glazing": null
+   "glazing": null,
+   "alternate_pricing": "No"
   },
   {
    "row": 53,
@@ -1063,7 +1115,8 @@
    "details": "H1/J3",
    "fire_rating": null,
    "hardware_group": "51 UTY-CUS",
-   "glazing": null
+   "glazing": null,
+   "alternate_pricing": "Yes"
   },
   {
    "row": 54,
@@ -1082,7 +1135,8 @@
    "details": "EXIST.",
    "fire_rating": null,
    "hardware_group": "02 RR-M",
-   "glazing": null
+   "glazing": null,
+   "alternate_pricing": "No"
   },
   {
    "row": 55,
@@ -1101,7 +1155,8 @@
    "details": "H5/J5",
    "fire_rating": null,
    "hardware_group": "07 CL",
-   "glazing": "G2"
+   "glazing": "G2",
+   "alternate_pricing": "No"
   },
   {
    "row": 56,
@@ -1120,7 +1175,8 @@
    "details": "H4/J4",
    "fire_rating": null,
    "hardware_group": "06 CL",
-   "glazing": "G2"
+   "glazing": "G2",
+   "alternate_pricing": "No"
   },
   {
    "row": 57,
@@ -1139,7 +1195,8 @@
    "details": "H4/J4",
    "fire_rating": null,
    "hardware_group": "06 CL",
-   "glazing": "G2"
+   "glazing": "G2",
+   "alternate_pricing": "No"
   },
   {
    "row": 58,
@@ -1158,7 +1215,8 @@
    "details": "H4/J4",
    "fire_rating": null,
    "hardware_group": "06 CL",
-   "glazing": "G2"
+   "glazing": "G2",
+   "alternate_pricing": "No"
   },
   {
    "row": 59,
@@ -1177,7 +1235,8 @@
    "details": "H4/J4",
    "fire_rating": null,
    "hardware_group": "06 CL",
-   "glazing": "G2"
+   "glazing": "G2",
+   "alternate_pricing": "No"
   },
   {
    "row": 60,
@@ -1196,7 +1255,8 @@
    "details": "H4/J4",
    "fire_rating": null,
    "hardware_group": "06 CL",
-   "glazing": "G2"
+   "glazing": "G2",
+   "alternate_pricing": "No"
   },
   {
    "row": 61,
@@ -1215,7 +1275,8 @@
    "details": "H4/J4",
    "fire_rating": null,
    "hardware_group": "06 CL",
-   "glazing": "G2"
+   "glazing": "G2",
+   "alternate_pricing": "No"
   },
   {
    "row": 62,
@@ -1234,7 +1295,8 @@
    "details": "EXIST.",
    "fire_rating": null,
    "hardware_group": "02 RR-M",
-   "glazing": null
+   "glazing": null,
+   "alternate_pricing": "No"
   },
   {
    "row": 63,
@@ -1253,7 +1315,8 @@
    "details": "H1/J3",
    "fire_rating": null,
    "hardware_group": "51 UTY-CUS",
-   "glazing": null
+   "glazing": null,
+   "alternate_pricing": "Yes"
   },
   {
    "row": 64,
@@ -1272,7 +1335,8 @@
    "details": "EXIST.",
    "fire_rating": null,
    "hardware_group": "02 RR-M",
-   "glazing": null
+   "glazing": null,
+   "alternate_pricing": "No"
   },
   {
    "row": 65,
@@ -1291,7 +1355,8 @@
    "details": "H5/J5",
    "fire_rating": null,
    "hardware_group": "07 CL",
-   "glazing": "G2"
+   "glazing": "G2",
+   "alternate_pricing": "No"
   }
  ]
 }

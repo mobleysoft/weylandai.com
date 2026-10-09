@@ -4,6 +4,7 @@ import { mkdir, readFile, writeFile } from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { estimatorLocalServer } from '../lib/estimator-local.mjs';
+import { csvEvidence } from '../lib/estimator-assertions.mjs';
 const pwMod = await import(process.env.PLAYWRIGHT_CORE || 'playwright-core');
 const pw = pwMod.chromium ? pwMod : pwMod.default; // a file-path import of playwright-core puts the API on default (journey-kit does the same)
 const root = fileURLToPath(new URL('../../../', import.meta.url));
@@ -64,7 +65,8 @@ try {
     const dl = await dlP;
     const csvFile = path.join(out, mode + '-doors.csv'); await dl.saveAs(csvFile);
     const csv = await readFile(csvFile, 'utf8');
-    check(mode + ': CSV retains all three pricing columns and 65 rows', /DOOR PAIR,GLAZING,ALTERNATE PRICING/.test(csv.split('\r\n')[0]) && csv.split('\r\n').length === 66, csv.split('\r\n')[0]);
+    const csvCheck = csvEvidence(csv);
+    check(mode + ': CSV retains all 65 marks, pair/glazing values and alternate pricing', csvCheck.ok, csvCheck);
     await frame.locator('#guest-save-btn').click();
     await page.waitForSelector('#weyland-signin-code-send', { state: 'visible' });
     const signIn = await page.locator('#wa-overlay').innerText();

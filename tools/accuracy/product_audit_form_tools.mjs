@@ -316,7 +316,7 @@ try {
     const r = await post("/api/forms/closex/pdf", req);
     if (t.check("PDF returned", isPdf(r), "HTTP " + r.status)) {
       const pdf = readPdf(r.buf, "closex"), txt = body(pdf.text);
-      const heads = bOpen.filter((o) => new RegExp("Opening " + o.subxMark.replace(/[.[\]]/g, "\\$&") + "(?: · [^·]*)? · 120 rated · set " + o.set + "\\b").test(txt));
+      const heads = bOpen.filter((o) => new RegExp("Opening " + o.subxMark.replace(/[.[\]]/g, "\\$&") + "(?: · [^·]*)* · 120 rated · set " + o.set + "\\b").test(txt));
       t.numbers.openings = heads.length;
       t.check("hardware schedule as installed: every opening with rating and set", heads.length === bOpen.length, `${heads.length} of ${bOpen.length}`);
       const cats = [...new Set(berry.groups.groups.flatMap((g) => g.items.map((i) => i.catalog)))];
@@ -324,7 +324,7 @@ try {
       const flat = norm(pdf.raw).replace(/\s+/g, ""), has = (c) => flat.includes(norm(c).replace(/\s+/g, ""));
       t.check("every scheduled item (catalogue number) in the as-installed schedule", cats.every(has), cats.filter((c) => !has(c)).join(", ") || cats.length + " catalogue numbers");
       const pairs = bOpen.filter((o) => o.pair);
-      const pairShown = pairs.filter((o) => new RegExp("Opening " + o.subxMark.replace(/[.[\]]/g, "\\$&") + " · PR").test(txt)).length;
+      const pairShown = pairs.filter((o) => new RegExp("Opening " + o.subxMark.replace(/[.[\]]/g, "\\$&") + "(?: · Room: [^·]*)? · PR").test(txt)).length;
       t.numbers.pairs_shown_as_pairs = `${pairShown}/${pairs.length}`;
       t.check("opening sizes are the schedule's (pairs shown as pairs)", pairShown === pairs.length, `${pairShown} of ${pairs.length} pairs shown as PR; e.g. ${(txt.match(/Opening 001 · [^\n]{0,50}/) || [""])[0]}`);
       const ks = txt.slice(txt.lastIndexOf("2. Keying schedule"), txt.lastIndexOf("3. Warranties"));

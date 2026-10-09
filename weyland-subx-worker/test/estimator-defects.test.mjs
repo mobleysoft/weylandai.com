@@ -4,9 +4,41 @@ import { readFileSync } from 'node:fs';
 import { readPageFromTextLayer } from '../src/lib/text-layer-read.js';
 import { hardwareSpecSections, hardwareScheduleNeed, guestDetail, doorListCsv } from '../assets/client-ocr-src/schedule-workspace.mjs';
 import { writeDoorScheduleEntries } from '../src/lib/hardware-extraction-vision-dispatch.js';
+import { getDocument, Util } from '../src/vendor/pdfjs-text.mjs';
+import { csvEvidence, doorEvidence } from '../../tools/user-simulation/lib/estimator-assertions.mjs';
 
 const pdf = readFileSync(new URL('../../tools/corpus/door-schedules/f0e863d88ea688ff.pdf', import.meta.url));
 const truth = JSON.parse(readFileSync(new URL('../../tools/corpus/expected/rockford-a2.2-door-schedule.json', import.meta.url)));
+
+test('served browser bytes read the single-page guest A2.2 with its spec reference and every CSV pricing cell', async () => {
+  // Import the actual .bin payloads the asset route sends, not their source
+  // twins. Node needs data URLs for the .bin extension and its relative import.
+  const moduleUrl = source => 'data:text/javascript;base64,' + Buffer.from(source).toString('base64');
+  const workspaceUrl = moduleUrl(readFileSync(new URL('../assets/client-ocr/schedule-workspace.mjs.bin', import.meta.url)));
+  const readerCode = readFileSync(new URL('../assets/client-ocr/schedule-text-layer.mjs.bin', import.meta.url), 'utf8')
+    .replace(/(["'])\.\/schedule-workspace\.mjs(?:\?[^"']*)?\1/g, JSON.stringify(workspaceUrl));
+  const reader = await import(moduleUrl(readerCode)), workspace = await import(workspaceUrl);
+  const sheet = readFileSync(new URL('../../tools/user-simulation/roles/rockford-A2.2-p29.pdf', import.meta.url));
+  const doc = await getDocument({ data: new Uint8Array(sheet), disableFontFace: true, useSystemFonts: false, isEvalSupported: false, verbosity: 0 }).promise;
+  try {
+    assert.equal(doc.numPages, 1);
+    const layer = await reader.pageTextLines({ Util }, await doc.getPage(1));
+    const extraction = await reader.readDoorScheduleFromLines(layer.lines, layer);
+    const detail = workspace.guestDetail({ name: 'rockford-A2.2-p29.pdf' }, 'Guest Rockford', 1, [{ page: 1, extraction }]);
+    assert.equal(detail.session.guest, true);
+    assert.equal(detail.hardware_sets.length, 0);
+    assert.match(detail.hardware_schedule_needed.message, /Section 08 71 00.*Door Hardware/);
+    assert.match(detail.hardware_schedule_needed.message, /hardware group pages.*door sheet/);
+    assert.equal(detail.hardware_schedule_needed.missing_groups.length, 14);
+    const citations = doorEvidence(detail.doors.map(d => ({ mark: d.mark, group: d.hardware_group, source: 'p.' + d.source.page + ' row ' + d.source.table_row })), 1);
+    assert.equal(citations.ok, true, JSON.stringify(citations));
+    const csv = csvEvidence(workspace.doorListCsv(detail.doors));
+    assert.equal(csv.ok, true, JSON.stringify(csv));
+    for (const expected of truth.doors) {
+      assert.equal(detail.doors.find(d => d.mark === expected.mark).alternate_pricing, expected.alternate_pricing, expected.mark);
+    }
+  } finally { await (doc.destroy?.() ?? doc.loadingTask?.destroy()); }
+});
 
 test('Rockford pricing fields survive the reader, persistence and CSV (including No and empty)', async () => {
   const r = await readPageFromTextLayer(pdf, 29, 'door_schedule');
@@ -16,6 +48,9 @@ test('Rockford pricing fields survive the reader, persistence and CSV (including
     const d = doors.find(d => d.door_number === expected.mark);
     assert.equal(d.pair, expected.pair, expected.mark + ' pair');
     assert.equal(d.glazing, expected.glazing, expected.mark + ' glazing');
+    assert.equal(d.alternate_pricing, expected.alternate_pricing, expected.mark + ' alternate pricing');
+    assert.equal(d.hardware_group, expected.hardware_group, expected.mark + ' hardware group');
+    assert.equal(d.source_row, expected.row - 1, expected.mark + ' zero-based source index');
   }
   const alt = doors.filter(d => /^YES$/i.test(d.alternate_pricing || ''));
   // Independently checked in A2.2's final column (pdftotext -layout).

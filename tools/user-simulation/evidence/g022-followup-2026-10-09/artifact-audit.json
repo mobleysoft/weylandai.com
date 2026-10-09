@@ -1,0 +1,2824 @@
+{
+  "revisions": [
+    {
+      "rev": "b5c9a57",
+      "same": false,
+      "source": "c950377cd630408d538788752aea4135bfb30091f961f479a756e88386c5daaa",
+      "bin": "aa321815e111975e74354f40731df07d50bbbdaca1b5a30cc6c7e09f533319c6",
+      "binHasPricing": false,
+      "binHasSpec": false
+    },
+    {
+      "rev": "HEAD",
+      "same": true,
+      "source": "2ac89c99245d4358025e584ebe52fbe16a9f390d0f523a96c40918428ef58dff",
+      "bin": "2ac89c99245d4358025e584ebe52fbe16a9f390d0f523a96c40918428ef58dff",
+      "binHasPricing": true,
+      "binHasSpec": true
+    }
+  ],
+  "readerReplays": [
+    {
+      "rev": "b5c9a57",
+      "servedBytes": false,
+      "doors": 65,
+      "hardware_schedule_needed": {
+        "sections": [
+          "08 71 00"
+        ],
+        "missing_groups": [
+          "44 UTY-IT",
+          "6 CL",
+          "19 STO",
+          "19F STO",
+          "23 STO",
+          "40 UTY",
+          "28 COR",
+          "32 EXD",
+          "7 CL",
+          "1 RR",
+          "2 RR-M",
+          "51 UTY-CUS",
+          "47 VES",
+          "20 STO"
+        ],
+        "message": "The door sheet points to Section 08 71 00 — Door Hardware. Upload the bid set including that section's hardware group pages and the door sheet so they can be read together before building the packet. Hardware groups still needed: 44 UTY-IT, 6 CL, 19 STO, 19F STO, 23 STO, 40 UTY, 28 COR, 32 EXD, 7 CL, 1 RR, 2 RR-M, 51 UTY-CUS, 47 VES, 20 STO."
+      },
+      "csv": {
+        "ok": true,
+        "headers": [
+          "Mark",
+          "Hardware group",
+          "Size (as read)",
+          "Width (in)",
+          "Height (in)",
+          "Thickness",
+          "Fire rating",
+          "Door type",
+          "Door material",
+          "Door finish",
+          "Frame type",
+          "Frame material",
+          "Frame finish",
+          "Head",
+          "Jamb",
+          "Sill",
+          "DOOR PAIR",
+          "GLAZING",
+          "ALTERNATE PRICING",
+          "Notes",
+          "Source page",
+          "Source row"
+        ],
+        "rows": 65,
+        "incorrect": [],
+        "alternates": {
+          "Yes": 18,
+          "No": 46,
+          "blank": 1
+        },
+        "badAlternates": []
+      }
+    },
+    {
+      "rev": "b5c9a57",
+      "servedBytes": true,
+      "doors": 65,
+      "hardware_schedule_needed": null,
+      "csv": {
+        "ok": false,
+        "headers": [
+          "Mark",
+          "Hardware group",
+          "Size (as read)",
+          "Width (in)",
+          "Height (in)",
+          "Thickness",
+          "Fire rating",
+          "Door type",
+          "Door material",
+          "Door finish",
+          "Frame type",
+          "Frame material",
+          "Frame finish",
+          "Head",
+          "Jamb",
+          "Sill",
+          "DOOR PAIR",
+          "GLAZING",
+          "ALTERNATE PRICING",
+          "Notes",
+          "Source page",
+          "Source row"
+        ],
+        "rows": 65,
+        "incorrect": [],
+        "alternates": {
+          "Yes": 0,
+          "No": 0,
+          "blank": 65
+        },
+        "badAlternates": [
+          {
+            "mark": "1J.1",
+            "expected": "No",
+            "actual": ""
+          },
+          {
+            "mark": "109.1",
+            "expected": "Yes",
+            "actual": ""
+          },
+          {
+            "mark": "109.2",
+            "expected": "Yes",
+            "actual": ""
+          },
+          {
+            "mark": "111.1",
+            "expected": "Yes",
+            "actual": ""
+          },
+          {
+            "mark": "111.1.1",
+            "expected": "Yes",
+            "actual": ""
+          },
+          {
+            "mark": "113.1",
+            "expected": "Yes",
+            "actual": ""
+          },
+          {
+            "mark": "113.1.1",
+            "expected": "Yes",
+            "actual": ""
+          },
+          {
+            "mark": "114.1",
+            "expected": "Yes",
+            "actual": ""
+          },
+          {
+            "mark": "118.1",
+            "expected": "Yes",
+            "actual": ""
+          },
+          {
+            "mark": "119.1",
+            "expected": "Yes",
+            "actual": ""
+          },
+          {
+            "mark": "119.2",
+            "expected": "Yes",
+            "actual": ""
+          },
+          {
+            "mark": "126.1",
+            "expected": "Yes",
+            "actual": ""
+          },
+          {
+            "mark": "126.1.1",
+            "expected": "Yes",
+            "actual": ""
+          },
+          {
+            "mark": "126.2",
+            "expected": "No",
+            "actual": ""
+          },
+          {
+            "mark": "127.1",
+            "expected": "No",
+            "actual": ""
+          },
+          {
+            "mark": "128.1.1",
+            "expected": "Yes",
+            "actual": ""
+          },
+          {
+            "mark": "129.1",
+            "expected": "No",
+            "actual": ""
+          },
+          {
+            "mark": "130.1",
+            "expected": "No",
+            "actual": ""
+          },
+          {
+            "mark": "131.1",
+            "expected": "No",
+            "actual": ""
+          },
+          {
+            "mark": "132.1",
+            "expected": "No",
+            "actual": ""
+          },
+          {
+            "mark": "133.1",
+            "expected": "No",
+            "actual": ""
+          },
+          {
+            "mark": "134.1",
+            "expected": "No",
+            "actual": ""
+          },
+          {
+            "mark": "136.1",
+            "expected": "No",
+            "actual": ""
+          },
+          {
+            "mark": "138.1",
+            "expected": "Yes",
+            "actual": ""
+          },
+          {
+            "mark": "138.1.1",
+            "expected": "No",
+            "actual": ""
+          },
+          {
+            "mark": "138.2",
+            "expected": "Yes",
+            "actual": ""
+          },
+          {
+            "mark": "141.1",
+            "expected": "No",
+            "actual": ""
+          },
+          {
+            "mark": "142.1",
+            "expected": "No",
+            "actual": ""
+          },
+          {
+            "mark": "143.1",
+            "expected": "No",
+            "actual": ""
+          },
+          {
+            "mark": "144.1",
+            "expected": "No",
+            "actual": ""
+          },
+          {
+            "mark": "145.1",
+            "expected": "No",
+            "actual": ""
+          },
+          {
+            "mark": "146.1",
+            "expected": "No",
+            "actual": ""
+          },
+          {
+            "mark": "147.1",
+            "expected": "No",
+            "actual": ""
+          },
+          {
+            "mark": "147.1.1",
+            "expected": "Yes",
+            "actual": ""
+          },
+          {
+            "mark": "148.1",
+            "expected": "No",
+            "actual": ""
+          },
+          {
+            "mark": "150.1",
+            "expected": "No",
+            "actual": ""
+          },
+          {
+            "mark": "151.1",
+            "expected": "No",
+            "actual": ""
+          },
+          {
+            "mark": "152.1",
+            "expected": "No",
+            "actual": ""
+          },
+          {
+            "mark": "152.1.1",
+            "expected": "No",
+            "actual": ""
+          },
+          {
+            "mark": "153.1",
+            "expected": "No",
+            "actual": ""
+          },
+          {
+            "mark": "155.1",
+            "expected": "No",
+            "actual": ""
+          },
+          {
+            "mark": "155.2",
+            "expected": "No",
+            "actual": ""
+          },
+          {
+            "mark": "157.1",
+            "expected": "No",
+            "actual": ""
+          },
+          {
+            "mark": "159.1",
+            "expected": "No",
+            "actual": ""
+          },
+          {
+            "mark": "161.1",
+            "expected": "No",
+            "actual": ""
+          },
+          {
+            "mark": "162.1",
+            "expected": "No",
+            "actual": ""
+          },
+          {
+            "mark": "163.1",
+            "expected": "No",
+            "actual": ""
+          },
+          {
+            "mark": "164.1",
+            "expected": "No",
+            "actual": ""
+          },
+          {
+            "mark": "165.1",
+            "expected": "No",
+            "actual": ""
+          },
+          {
+            "mark": "166.1",
+            "expected": "No",
+            "actual": ""
+          },
+          {
+            "mark": "167.1",
+            "expected": "No",
+            "actual": ""
+          },
+          {
+            "mark": "167.1.1",
+            "expected": "Yes",
+            "actual": ""
+          },
+          {
+            "mark": "168.1",
+            "expected": "No",
+            "actual": ""
+          },
+          {
+            "mark": "170.1",
+            "expected": "No",
+            "actual": ""
+          },
+          {
+            "mark": "173.1",
+            "expected": "No",
+            "actual": ""
+          },
+          {
+            "mark": "174.1",
+            "expected": "No",
+            "actual": ""
+          },
+          {
+            "mark": "175.1",
+            "expected": "No",
+            "actual": ""
+          },
+          {
+            "mark": "176.1",
+            "expected": "No",
+            "actual": ""
+          },
+          {
+            "mark": "177.1",
+            "expected": "No",
+            "actual": ""
+          },
+          {
+            "mark": "178.1",
+            "expected": "No",
+            "actual": ""
+          },
+          {
+            "mark": "179.1",
+            "expected": "No",
+            "actual": ""
+          },
+          {
+            "mark": "179.1.1",
+            "expected": "Yes",
+            "actual": ""
+          },
+          {
+            "mark": "180.1",
+            "expected": "No",
+            "actual": ""
+          },
+          {
+            "mark": "182.1",
+            "expected": "No",
+            "actual": ""
+          }
+        ]
+      }
+    },
+    {
+      "rev": "HEAD",
+      "servedBytes": true,
+      "doors": 65,
+      "hardware_schedule_needed": {
+        "sections": [
+          "08 71 00"
+        ],
+        "missing_groups": [
+          "44 UTY-IT",
+          "6 CL",
+          "19 STO",
+          "19F STO",
+          "23 STO",
+          "40 UTY",
+          "28 COR",
+          "32 EXD",
+          "7 CL",
+          "1 RR",
+          "2 RR-M",
+          "51 UTY-CUS",
+          "47 VES",
+          "20 STO"
+        ],
+        "message": "The door sheet points to Section 08 71 00 — Door Hardware. Upload the bid set including that section's hardware group pages and the door sheet so they can be read together before building the packet. Hardware groups still needed: 44 UTY-IT, 6 CL, 19 STO, 19F STO, 23 STO, 40 UTY, 28 COR, 32 EXD, 7 CL, 1 RR, 2 RR-M, 51 UTY-CUS, 47 VES, 20 STO."
+      },
+      "csv": {
+        "ok": true,
+        "headers": [
+          "Mark",
+          "Hardware group",
+          "Size (as read)",
+          "Width (in)",
+          "Height (in)",
+          "Thickness",
+          "Fire rating",
+          "Door type",
+          "Door material",
+          "Door finish",
+          "Frame type",
+          "Frame material",
+          "Frame finish",
+          "Head",
+          "Jamb",
+          "Sill",
+          "DOOR PAIR",
+          "GLAZING",
+          "ALTERNATE PRICING",
+          "Notes",
+          "Source page",
+          "Source row"
+        ],
+        "rows": 65,
+        "incorrect": [],
+        "alternates": {
+          "Yes": 18,
+          "No": 46,
+          "blank": 1
+        },
+        "badAlternates": []
+      }
+    }
+  ],
+  "captures": [
+    {
+      "file": "tools/user-simulation/reports-mac/upload-without-account-to-first-read-2026-10-09T18-02-15-512Z/desktop-doors.csv",
+      "citations": {
+        "ok": true,
+        "expected": 65,
+        "rows": 65,
+        "missing": [],
+        "incorrect": [],
+        "differences": []
+      },
+      "csv": {
+        "ok": false,
+        "headers": [
+          "Mark",
+          "Hardware group",
+          "Size (as read)",
+          "Width (in)",
+          "Height (in)",
+          "Thickness",
+          "Fire rating",
+          "Door type",
+          "Door material",
+          "Door finish",
+          "Frame type",
+          "Frame material",
+          "Frame finish",
+          "Head",
+          "Jamb",
+          "Sill",
+          "DOOR PAIR",
+          "GLAZING",
+          "ALTERNATE PRICING",
+          "Notes",
+          "Source page",
+          "Source row"
+        ],
+        "rows": 65,
+        "incorrect": [],
+        "alternates": {
+          "Yes": 0,
+          "No": 0,
+          "blank": 65
+        },
+        "badAlternates": [
+          {
+            "mark": "1J.1",
+            "expected": "No",
+            "actual": ""
+          },
+          {
+            "mark": "109.1",
+            "expected": "Yes",
+            "actual": ""
+          },
+          {
+            "mark": "109.2",
+            "expected": "Yes",
+            "actual": ""
+          },
+          {
+            "mark": "111.1",
+            "expected": "Yes",
+            "actual": ""
+          },
+          {
+            "mark": "111.1.1",
+            "expected": "Yes",
+            "actual": ""
+          },
+          {
+            "mark": "113.1",
+            "expected": "Yes",
+            "actual": ""
+          },
+          {
+            "mark": "113.1.1",
+            "expected": "Yes",
+            "actual": ""
+          },
+          {
+            "mark": "114.1",
+            "expected": "Yes",
+            "actual": ""
+          },
+          {
+            "mark": "118.1",
+            "expected": "Yes",
+            "actual": ""
+          },
+          {
+            "mark": "119.1",
+            "expected": "Yes",
+            "actual": ""
+          },
+          {
+            "mark": "119.2",
+            "expected": "Yes",
+            "actual": ""
+          },
+          {
+            "mark": "126.1",
+            "expected": "Yes",
+            "actual": ""
+          },
+          {
+            "mark": "126.1.1",
+            "expected": "Yes",
+            "actual": ""
+          },
+          {
+            "mark": "126.2",
+            "expected": "No",
+            "actual": ""
+          },
+          {
+            "mark": "127.1",
+            "expected": "No",
+            "actual": ""
+          },
+          {
+            "mark": "128.1.1",
+            "expected": "Yes",
+            "actual": ""
+          },
+          {
+            "mark": "129.1",
+            "expected": "No",
+            "actual": ""
+          },
+          {
+            "mark": "130.1",
+            "expected": "No",
+            "actual": ""
+          },
+          {
+            "mark": "131.1",
+            "expected": "No",
+            "actual": ""
+          },
+          {
+            "mark": "132.1",
+            "expected": "No",
+            "actual": ""
+          },
+          {
+            "mark": "133.1",
+            "expected": "No",
+            "actual": ""
+          },
+          {
+            "mark": "134.1",
+            "expected": "No",
+            "actual": ""
+          },
+          {
+            "mark": "136.1",
+            "expected": "No",
+            "actual": ""
+          },
+          {
+            "mark": "138.1",
+            "expected": "Yes",
+            "actual": ""
+          },
+          {
+            "mark": "138.1.1",
+            "expected": "No",
+            "actual": ""
+          },
+          {
+            "mark": "138.2",
+            "expected": "Yes",
+            "actual": ""
+          },
+          {
+            "mark": "141.1",
+            "expected": "No",
+            "actual": ""
+          },
+          {
+            "mark": "142.1",
+            "expected": "No",
+            "actual": ""
+          },
+          {
+            "mark": "143.1",
+            "expected": "No",
+            "actual": ""
+          },
+          {
+            "mark": "144.1",
+            "expected": "No",
+            "actual": ""
+          },
+          {
+            "mark": "145.1",
+            "expected": "No",
+            "actual": ""
+          },
+          {
+            "mark": "146.1",
+            "expected": "No",
+            "actual": ""
+          },
+          {
+            "mark": "147.1",
+            "expected": "No",
+            "actual": ""
+          },
+          {
+            "mark": "147.1.1",
+            "expected": "Yes",
+            "actual": ""
+          },
+          {
+            "mark": "148.1",
+            "expected": "No",
+            "actual": ""
+          },
+          {
+            "mark": "150.1",
+            "expected": "No",
+            "actual": ""
+          },
+          {
+            "mark": "151.1",
+            "expected": "No",
+            "actual": ""
+          },
+          {
+            "mark": "152.1",
+            "expected": "No",
+            "actual": ""
+          },
+          {
+            "mark": "152.1.1",
+            "expected": "No",
+            "actual": ""
+          },
+          {
+            "mark": "153.1",
+            "expected": "No",
+            "actual": ""
+          },
+          {
+            "mark": "155.1",
+            "expected": "No",
+            "actual": ""
+          },
+          {
+            "mark": "155.2",
+            "expected": "No",
+            "actual": ""
+          },
+          {
+            "mark": "157.1",
+            "expected": "No",
+            "actual": ""
+          },
+          {
+            "mark": "159.1",
+            "expected": "No",
+            "actual": ""
+          },
+          {
+            "mark": "161.1",
+            "expected": "No",
+            "actual": ""
+          },
+          {
+            "mark": "162.1",
+            "expected": "No",
+            "actual": ""
+          },
+          {
+            "mark": "163.1",
+            "expected": "No",
+            "actual": ""
+          },
+          {
+            "mark": "164.1",
+            "expected": "No",
+            "actual": ""
+          },
+          {
+            "mark": "165.1",
+            "expected": "No",
+            "actual": ""
+          },
+          {
+            "mark": "166.1",
+            "expected": "No",
+            "actual": ""
+          },
+          {
+            "mark": "167.1",
+            "expected": "No",
+            "actual": ""
+          },
+          {
+            "mark": "167.1.1",
+            "expected": "Yes",
+            "actual": ""
+          },
+          {
+            "mark": "168.1",
+            "expected": "No",
+            "actual": ""
+          },
+          {
+            "mark": "170.1",
+            "expected": "No",
+            "actual": ""
+          },
+          {
+            "mark": "173.1",
+            "expected": "No",
+            "actual": ""
+          },
+          {
+            "mark": "174.1",
+            "expected": "No",
+            "actual": ""
+          },
+          {
+            "mark": "175.1",
+            "expected": "No",
+            "actual": ""
+          },
+          {
+            "mark": "176.1",
+            "expected": "No",
+            "actual": ""
+          },
+          {
+            "mark": "177.1",
+            "expected": "No",
+            "actual": ""
+          },
+          {
+            "mark": "178.1",
+            "expected": "No",
+            "actual": ""
+          },
+          {
+            "mark": "179.1",
+            "expected": "No",
+            "actual": ""
+          },
+          {
+            "mark": "179.1.1",
+            "expected": "Yes",
+            "actual": ""
+          },
+          {
+            "mark": "180.1",
+            "expected": "No",
+            "actual": ""
+          },
+          {
+            "mark": "182.1",
+            "expected": "No",
+            "actual": ""
+          }
+        ]
+      }
+    },
+    {
+      "file": "tools/user-simulation/reports-mac/upload-without-account-to-first-read-2026-10-09T18-02-15-512Z/phone-doors.csv",
+      "citations": {
+        "ok": true,
+        "expected": 65,
+        "rows": 65,
+        "missing": [],
+        "incorrect": [],
+        "differences": []
+      },
+      "csv": {
+        "ok": false,
+        "headers": [
+          "Mark",
+          "Hardware group",
+          "Size (as read)",
+          "Width (in)",
+          "Height (in)",
+          "Thickness",
+          "Fire rating",
+          "Door type",
+          "Door material",
+          "Door finish",
+          "Frame type",
+          "Frame material",
+          "Frame finish",
+          "Head",
+          "Jamb",
+          "Sill",
+          "DOOR PAIR",
+          "GLAZING",
+          "ALTERNATE PRICING",
+          "Notes",
+          "Source page",
+          "Source row"
+        ],
+        "rows": 65,
+        "incorrect": [],
+        "alternates": {
+          "Yes": 0,
+          "No": 0,
+          "blank": 65
+        },
+        "badAlternates": [
+          {
+            "mark": "1J.1",
+            "expected": "No",
+            "actual": ""
+          },
+          {
+            "mark": "109.1",
+            "expected": "Yes",
+            "actual": ""
+          },
+          {
+            "mark": "109.2",
+            "expected": "Yes",
+            "actual": ""
+          },
+          {
+            "mark": "111.1",
+            "expected": "Yes",
+            "actual": ""
+          },
+          {
+            "mark": "111.1.1",
+            "expected": "Yes",
+            "actual": ""
+          },
+          {
+            "mark": "113.1",
+            "expected": "Yes",
+            "actual": ""
+          },
+          {
+            "mark": "113.1.1",
+            "expected": "Yes",
+            "actual": ""
+          },
+          {
+            "mark": "114.1",
+            "expected": "Yes",
+            "actual": ""
+          },
+          {
+            "mark": "118.1",
+            "expected": "Yes",
+            "actual": ""
+          },
+          {
+            "mark": "119.1",
+            "expected": "Yes",
+            "actual": ""
+          },
+          {
+            "mark": "119.2",
+            "expected": "Yes",
+            "actual": ""
+          },
+          {
+            "mark": "126.1",
+            "expected": "Yes",
+            "actual": ""
+          },
+          {
+            "mark": "126.1.1",
+            "expected": "Yes",
+            "actual": ""
+          },
+          {
+            "mark": "126.2",
+            "expected": "No",
+            "actual": ""
+          },
+          {
+            "mark": "127.1",
+            "expected": "No",
+            "actual": ""
+          },
+          {
+            "mark": "128.1.1",
+            "expected": "Yes",
+            "actual": ""
+          },
+          {
+            "mark": "129.1",
+            "expected": "No",
+            "actual": ""
+          },
+          {
+            "mark": "130.1",
+            "expected": "No",
+            "actual": ""
+          },
+          {
+            "mark": "131.1",
+            "expected": "No",
+            "actual": ""
+          },
+          {
+            "mark": "132.1",
+            "expected": "No",
+            "actual": ""
+          },
+          {
+            "mark": "133.1",
+            "expected": "No",
+            "actual": ""
+          },
+          {
+            "mark": "134.1",
+            "expected": "No",
+            "actual": ""
+          },
+          {
+            "mark": "136.1",
+            "expected": "No",
+            "actual": ""
+          },
+          {
+            "mark": "138.1",
+            "expected": "Yes",
+            "actual": ""
+          },
+          {
+            "mark": "138.1.1",
+            "expected": "No",
+            "actual": ""
+          },
+          {
+            "mark": "138.2",
+            "expected": "Yes",
+            "actual": ""
+          },
+          {
+            "mark": "141.1",
+            "expected": "No",
+            "actual": ""
+          },
+          {
+            "mark": "142.1",
+            "expected": "No",
+            "actual": ""
+          },
+          {
+            "mark": "143.1",
+            "expected": "No",
+            "actual": ""
+          },
+          {
+            "mark": "144.1",
+            "expected": "No",
+            "actual": ""
+          },
+          {
+            "mark": "145.1",
+            "expected": "No",
+            "actual": ""
+          },
+          {
+            "mark": "146.1",
+            "expected": "No",
+            "actual": ""
+          },
+          {
+            "mark": "147.1",
+            "expected": "No",
+            "actual": ""
+          },
+          {
+            "mark": "147.1.1",
+            "expected": "Yes",
+            "actual": ""
+          },
+          {
+            "mark": "148.1",
+            "expected": "No",
+            "actual": ""
+          },
+          {
+            "mark": "150.1",
+            "expected": "No",
+            "actual": ""
+          },
+          {
+            "mark": "151.1",
+            "expected": "No",
+            "actual": ""
+          },
+          {
+            "mark": "152.1",
+            "expected": "No",
+            "actual": ""
+          },
+          {
+            "mark": "152.1.1",
+            "expected": "No",
+            "actual": ""
+          },
+          {
+            "mark": "153.1",
+            "expected": "No",
+            "actual": ""
+          },
+          {
+            "mark": "155.1",
+            "expected": "No",
+            "actual": ""
+          },
+          {
+            "mark": "155.2",
+            "expected": "No",
+            "actual": ""
+          },
+          {
+            "mark": "157.1",
+            "expected": "No",
+            "actual": ""
+          },
+          {
+            "mark": "159.1",
+            "expected": "No",
+            "actual": ""
+          },
+          {
+            "mark": "161.1",
+            "expected": "No",
+            "actual": ""
+          },
+          {
+            "mark": "162.1",
+            "expected": "No",
+            "actual": ""
+          },
+          {
+            "mark": "163.1",
+            "expected": "No",
+            "actual": ""
+          },
+          {
+            "mark": "164.1",
+            "expected": "No",
+            "actual": ""
+          },
+          {
+            "mark": "165.1",
+            "expected": "No",
+            "actual": ""
+          },
+          {
+            "mark": "166.1",
+            "expected": "No",
+            "actual": ""
+          },
+          {
+            "mark": "167.1",
+            "expected": "No",
+            "actual": ""
+          },
+          {
+            "mark": "167.1.1",
+            "expected": "Yes",
+            "actual": ""
+          },
+          {
+            "mark": "168.1",
+            "expected": "No",
+            "actual": ""
+          },
+          {
+            "mark": "170.1",
+            "expected": "No",
+            "actual": ""
+          },
+          {
+            "mark": "173.1",
+            "expected": "No",
+            "actual": ""
+          },
+          {
+            "mark": "174.1",
+            "expected": "No",
+            "actual": ""
+          },
+          {
+            "mark": "175.1",
+            "expected": "No",
+            "actual": ""
+          },
+          {
+            "mark": "176.1",
+            "expected": "No",
+            "actual": ""
+          },
+          {
+            "mark": "177.1",
+            "expected": "No",
+            "actual": ""
+          },
+          {
+            "mark": "178.1",
+            "expected": "No",
+            "actual": ""
+          },
+          {
+            "mark": "179.1",
+            "expected": "No",
+            "actual": ""
+          },
+          {
+            "mark": "179.1.1",
+            "expected": "Yes",
+            "actual": ""
+          },
+          {
+            "mark": "180.1",
+            "expected": "No",
+            "actual": ""
+          },
+          {
+            "mark": "182.1",
+            "expected": "No",
+            "actual": ""
+          }
+        ]
+      }
+    },
+    {
+      "file": "tools/user-simulation/reports-mac/estimator-schedule-to-packet-2026-10-09T18-07-21-013Z/desktop-doors.csv",
+      "citations": {
+        "ok": true,
+        "expected": 65,
+        "rows": 65,
+        "missing": [],
+        "incorrect": [],
+        "differences": []
+      },
+      "csv": {
+        "ok": false,
+        "headers": [
+          "Mark",
+          "Hardware group",
+          "Size (as read)",
+          "Width (in)",
+          "Height (in)",
+          "Thickness",
+          "Fire rating",
+          "Door type",
+          "Door material",
+          "Door finish",
+          "Frame type",
+          "Frame material",
+          "Frame finish",
+          "Head",
+          "Jamb",
+          "Sill",
+          "DOOR PAIR",
+          "GLAZING",
+          "ALTERNATE PRICING",
+          "Notes",
+          "Source page",
+          "Source row"
+        ],
+        "rows": 65,
+        "incorrect": [],
+        "alternates": {
+          "Yes": 0,
+          "No": 0,
+          "blank": 65
+        },
+        "badAlternates": [
+          {
+            "mark": "1J.1",
+            "expected": "No",
+            "actual": ""
+          },
+          {
+            "mark": "109.1",
+            "expected": "Yes",
+            "actual": ""
+          },
+          {
+            "mark": "109.2",
+            "expected": "Yes",
+            "actual": ""
+          },
+          {
+            "mark": "111.1",
+            "expected": "Yes",
+            "actual": ""
+          },
+          {
+            "mark": "111.1.1",
+            "expected": "Yes",
+            "actual": ""
+          },
+          {
+            "mark": "113.1",
+            "expected": "Yes",
+            "actual": ""
+          },
+          {
+            "mark": "113.1.1",
+            "expected": "Yes",
+            "actual": ""
+          },
+          {
+            "mark": "114.1",
+            "expected": "Yes",
+            "actual": ""
+          },
+          {
+            "mark": "118.1",
+            "expected": "Yes",
+            "actual": ""
+          },
+          {
+            "mark": "119.1",
+            "expected": "Yes",
+            "actual": ""
+          },
+          {
+            "mark": "119.2",
+            "expected": "Yes",
+            "actual": ""
+          },
+          {
+            "mark": "126.1",
+            "expected": "Yes",
+            "actual": ""
+          },
+          {
+            "mark": "126.1.1",
+            "expected": "Yes",
+            "actual": ""
+          },
+          {
+            "mark": "126.2",
+            "expected": "No",
+            "actual": ""
+          },
+          {
+            "mark": "127.1",
+            "expected": "No",
+            "actual": ""
+          },
+          {
+            "mark": "128.1.1",
+            "expected": "Yes",
+            "actual": ""
+          },
+          {
+            "mark": "129.1",
+            "expected": "No",
+            "actual": ""
+          },
+          {
+            "mark": "130.1",
+            "expected": "No",
+            "actual": ""
+          },
+          {
+            "mark": "131.1",
+            "expected": "No",
+            "actual": ""
+          },
+          {
+            "mark": "132.1",
+            "expected": "No",
+            "actual": ""
+          },
+          {
+            "mark": "133.1",
+            "expected": "No",
+            "actual": ""
+          },
+          {
+            "mark": "134.1",
+            "expected": "No",
+            "actual": ""
+          },
+          {
+            "mark": "136.1",
+            "expected": "No",
+            "actual": ""
+          },
+          {
+            "mark": "138.1",
+            "expected": "Yes",
+            "actual": ""
+          },
+          {
+            "mark": "138.1.1",
+            "expected": "No",
+            "actual": ""
+          },
+          {
+            "mark": "138.2",
+            "expected": "Yes",
+            "actual": ""
+          },
+          {
+            "mark": "141.1",
+            "expected": "No",
+            "actual": ""
+          },
+          {
+            "mark": "142.1",
+            "expected": "No",
+            "actual": ""
+          },
+          {
+            "mark": "143.1",
+            "expected": "No",
+            "actual": ""
+          },
+          {
+            "mark": "144.1",
+            "expected": "No",
+            "actual": ""
+          },
+          {
+            "mark": "145.1",
+            "expected": "No",
+            "actual": ""
+          },
+          {
+            "mark": "146.1",
+            "expected": "No",
+            "actual": ""
+          },
+          {
+            "mark": "147.1",
+            "expected": "No",
+            "actual": ""
+          },
+          {
+            "mark": "147.1.1",
+            "expected": "Yes",
+            "actual": ""
+          },
+          {
+            "mark": "148.1",
+            "expected": "No",
+            "actual": ""
+          },
+          {
+            "mark": "150.1",
+            "expected": "No",
+            "actual": ""
+          },
+          {
+            "mark": "151.1",
+            "expected": "No",
+            "actual": ""
+          },
+          {
+            "mark": "152.1",
+            "expected": "No",
+            "actual": ""
+          },
+          {
+            "mark": "152.1.1",
+            "expected": "No",
+            "actual": ""
+          },
+          {
+            "mark": "153.1",
+            "expected": "No",
+            "actual": ""
+          },
+          {
+            "mark": "155.1",
+            "expected": "No",
+            "actual": ""
+          },
+          {
+            "mark": "155.2",
+            "expected": "No",
+            "actual": ""
+          },
+          {
+            "mark": "157.1",
+            "expected": "No",
+            "actual": ""
+          },
+          {
+            "mark": "159.1",
+            "expected": "No",
+            "actual": ""
+          },
+          {
+            "mark": "161.1",
+            "expected": "No",
+            "actual": ""
+          },
+          {
+            "mark": "162.1",
+            "expected": "No",
+            "actual": ""
+          },
+          {
+            "mark": "163.1",
+            "expected": "No",
+            "actual": ""
+          },
+          {
+            "mark": "164.1",
+            "expected": "No",
+            "actual": ""
+          },
+          {
+            "mark": "165.1",
+            "expected": "No",
+            "actual": ""
+          },
+          {
+            "mark": "166.1",
+            "expected": "No",
+            "actual": ""
+          },
+          {
+            "mark": "167.1",
+            "expected": "No",
+            "actual": ""
+          },
+          {
+            "mark": "167.1.1",
+            "expected": "Yes",
+            "actual": ""
+          },
+          {
+            "mark": "168.1",
+            "expected": "No",
+            "actual": ""
+          },
+          {
+            "mark": "170.1",
+            "expected": "No",
+            "actual": ""
+          },
+          {
+            "mark": "173.1",
+            "expected": "No",
+            "actual": ""
+          },
+          {
+            "mark": "174.1",
+            "expected": "No",
+            "actual": ""
+          },
+          {
+            "mark": "175.1",
+            "expected": "No",
+            "actual": ""
+          },
+          {
+            "mark": "176.1",
+            "expected": "No",
+            "actual": ""
+          },
+          {
+            "mark": "177.1",
+            "expected": "No",
+            "actual": ""
+          },
+          {
+            "mark": "178.1",
+            "expected": "No",
+            "actual": ""
+          },
+          {
+            "mark": "179.1",
+            "expected": "No",
+            "actual": ""
+          },
+          {
+            "mark": "179.1.1",
+            "expected": "Yes",
+            "actual": ""
+          },
+          {
+            "mark": "180.1",
+            "expected": "No",
+            "actual": ""
+          },
+          {
+            "mark": "182.1",
+            "expected": "No",
+            "actual": ""
+          }
+        ]
+      }
+    },
+    {
+      "file": "tools/user-simulation/reports-mac/estimator-schedule-to-packet-2026-10-09T18-07-21-013Z/phone-doors.csv",
+      "citations": {
+        "ok": true,
+        "expected": 65,
+        "rows": 65,
+        "missing": [],
+        "incorrect": [],
+        "differences": []
+      },
+      "csv": {
+        "ok": false,
+        "headers": [
+          "Mark",
+          "Hardware group",
+          "Size (as read)",
+          "Width (in)",
+          "Height (in)",
+          "Thickness",
+          "Fire rating",
+          "Door type",
+          "Door material",
+          "Door finish",
+          "Frame type",
+          "Frame material",
+          "Frame finish",
+          "Head",
+          "Jamb",
+          "Sill",
+          "DOOR PAIR",
+          "GLAZING",
+          "ALTERNATE PRICING",
+          "Notes",
+          "Source page",
+          "Source row"
+        ],
+        "rows": 65,
+        "incorrect": [],
+        "alternates": {
+          "Yes": 0,
+          "No": 0,
+          "blank": 65
+        },
+        "badAlternates": [
+          {
+            "mark": "1J.1",
+            "expected": "No",
+            "actual": ""
+          },
+          {
+            "mark": "109.1",
+            "expected": "Yes",
+            "actual": ""
+          },
+          {
+            "mark": "109.2",
+            "expected": "Yes",
+            "actual": ""
+          },
+          {
+            "mark": "111.1",
+            "expected": "Yes",
+            "actual": ""
+          },
+          {
+            "mark": "111.1.1",
+            "expected": "Yes",
+            "actual": ""
+          },
+          {
+            "mark": "113.1",
+            "expected": "Yes",
+            "actual": ""
+          },
+          {
+            "mark": "113.1.1",
+            "expected": "Yes",
+            "actual": ""
+          },
+          {
+            "mark": "114.1",
+            "expected": "Yes",
+            "actual": ""
+          },
+          {
+            "mark": "118.1",
+            "expected": "Yes",
+            "actual": ""
+          },
+          {
+            "mark": "119.1",
+            "expected": "Yes",
+            "actual": ""
+          },
+          {
+            "mark": "119.2",
+            "expected": "Yes",
+            "actual": ""
+          },
+          {
+            "mark": "126.1",
+            "expected": "Yes",
+            "actual": ""
+          },
+          {
+            "mark": "126.1.1",
+            "expected": "Yes",
+            "actual": ""
+          },
+          {
+            "mark": "126.2",
+            "expected": "No",
+            "actual": ""
+          },
+          {
+            "mark": "127.1",
+            "expected": "No",
+            "actual": ""
+          },
+          {
+            "mark": "128.1.1",
+            "expected": "Yes",
+            "actual": ""
+          },
+          {
+            "mark": "129.1",
+            "expected": "No",
+            "actual": ""
+          },
+          {
+            "mark": "130.1",
+            "expected": "No",
+            "actual": ""
+          },
+          {
+            "mark": "131.1",
+            "expected": "No",
+            "actual": ""
+          },
+          {
+            "mark": "132.1",
+            "expected": "No",
+            "actual": ""
+          },
+          {
+            "mark": "133.1",
+            "expected": "No",
+            "actual": ""
+          },
+          {
+            "mark": "134.1",
+            "expected": "No",
+            "actual": ""
+          },
+          {
+            "mark": "136.1",
+            "expected": "No",
+            "actual": ""
+          },
+          {
+            "mark": "138.1",
+            "expected": "Yes",
+            "actual": ""
+          },
+          {
+            "mark": "138.1.1",
+            "expected": "No",
+            "actual": ""
+          },
+          {
+            "mark": "138.2",
+            "expected": "Yes",
+            "actual": ""
+          },
+          {
+            "mark": "141.1",
+            "expected": "No",
+            "actual": ""
+          },
+          {
+            "mark": "142.1",
+            "expected": "No",
+            "actual": ""
+          },
+          {
+            "mark": "143.1",
+            "expected": "No",
+            "actual": ""
+          },
+          {
+            "mark": "144.1",
+            "expected": "No",
+            "actual": ""
+          },
+          {
+            "mark": "145.1",
+            "expected": "No",
+            "actual": ""
+          },
+          {
+            "mark": "146.1",
+            "expected": "No",
+            "actual": ""
+          },
+          {
+            "mark": "147.1",
+            "expected": "No",
+            "actual": ""
+          },
+          {
+            "mark": "147.1.1",
+            "expected": "Yes",
+            "actual": ""
+          },
+          {
+            "mark": "148.1",
+            "expected": "No",
+            "actual": ""
+          },
+          {
+            "mark": "150.1",
+            "expected": "No",
+            "actual": ""
+          },
+          {
+            "mark": "151.1",
+            "expected": "No",
+            "actual": ""
+          },
+          {
+            "mark": "152.1",
+            "expected": "No",
+            "actual": ""
+          },
+          {
+            "mark": "152.1.1",
+            "expected": "No",
+            "actual": ""
+          },
+          {
+            "mark": "153.1",
+            "expected": "No",
+            "actual": ""
+          },
+          {
+            "mark": "155.1",
+            "expected": "No",
+            "actual": ""
+          },
+          {
+            "mark": "155.2",
+            "expected": "No",
+            "actual": ""
+          },
+          {
+            "mark": "157.1",
+            "expected": "No",
+            "actual": ""
+          },
+          {
+            "mark": "159.1",
+            "expected": "No",
+            "actual": ""
+          },
+          {
+            "mark": "161.1",
+            "expected": "No",
+            "actual": ""
+          },
+          {
+            "mark": "162.1",
+            "expected": "No",
+            "actual": ""
+          },
+          {
+            "mark": "163.1",
+            "expected": "No",
+            "actual": ""
+          },
+          {
+            "mark": "164.1",
+            "expected": "No",
+            "actual": ""
+          },
+          {
+            "mark": "165.1",
+            "expected": "No",
+            "actual": ""
+          },
+          {
+            "mark": "166.1",
+            "expected": "No",
+            "actual": ""
+          },
+          {
+            "mark": "167.1",
+            "expected": "No",
+            "actual": ""
+          },
+          {
+            "mark": "167.1.1",
+            "expected": "Yes",
+            "actual": ""
+          },
+          {
+            "mark": "168.1",
+            "expected": "No",
+            "actual": ""
+          },
+          {
+            "mark": "170.1",
+            "expected": "No",
+            "actual": ""
+          },
+          {
+            "mark": "173.1",
+            "expected": "No",
+            "actual": ""
+          },
+          {
+            "mark": "174.1",
+            "expected": "No",
+            "actual": ""
+          },
+          {
+            "mark": "175.1",
+            "expected": "No",
+            "actual": ""
+          },
+          {
+            "mark": "176.1",
+            "expected": "No",
+            "actual": ""
+          },
+          {
+            "mark": "177.1",
+            "expected": "No",
+            "actual": ""
+          },
+          {
+            "mark": "178.1",
+            "expected": "No",
+            "actual": ""
+          },
+          {
+            "mark": "179.1",
+            "expected": "No",
+            "actual": ""
+          },
+          {
+            "mark": "179.1.1",
+            "expected": "Yes",
+            "actual": ""
+          },
+          {
+            "mark": "180.1",
+            "expected": "No",
+            "actual": ""
+          },
+          {
+            "mark": "182.1",
+            "expected": "No",
+            "actual": ""
+          }
+        ]
+      }
+    }
+  ],
+  "savedReads": [
+    {
+      "project": "user-sim sheet-only mv19wax75b93b5",
+      "doors": 65,
+      "citations": {
+        "ok": true,
+        "expected": 65,
+        "rows": 65,
+        "missing": [],
+        "incorrect": [],
+        "differences": []
+      },
+      "hardware_schedule_needed": {
+        "sections": [
+          "08 71 00"
+        ],
+        "missing_groups": [
+          "44 UTY-IT",
+          "6 CL",
+          "19 STO",
+          "19F STO",
+          "23 STO",
+          "40 UTY",
+          "28 COR",
+          "32 EXD",
+          "7 CL",
+          "1 RR",
+          "2 RR-M",
+          "51 UTY-CUS",
+          "47 VES",
+          "20 STO"
+        ],
+        "message": "The door sheet points to Section 08 71 00 — Door Hardware. Upload the bid set including that section's hardware group pages and the door sheet so they can be read together before building the packet. Hardware groups still needed: 44 UTY-IT, 6 CL, 19 STO, 19F STO, 23 STO, 40 UTY, 28 COR, 32 EXD, 7 CL, 1 RR, 2 RR-M, 51 UTY-CUS, 47 VES, 20 STO."
+      }
+    },
+    {
+      "project": "user-sim schedule-plus-spec mv19wax75b93b5",
+      "doors": 65,
+      "citations": {
+        "ok": true,
+        "expected": 65,
+        "rows": 65,
+        "missing": [],
+        "incorrect": [],
+        "differences": []
+      },
+      "hardware_schedule_needed": null
+    }
+  ],
+  "diff": [
+    {
+      "mark": "1J.1",
+      "auditRow": 1,
+      "csvRow": "0",
+      "savedRow": 0,
+      "group": true,
+      "savedGroup": true
+    },
+    {
+      "mark": "109.1",
+      "auditRow": 2,
+      "csvRow": "1",
+      "savedRow": 1,
+      "group": true,
+      "savedGroup": true
+    },
+    {
+      "mark": "109.2",
+      "auditRow": 3,
+      "csvRow": "2",
+      "savedRow": 2,
+      "group": true,
+      "savedGroup": true
+    },
+    {
+      "mark": "111.1",
+      "auditRow": 4,
+      "csvRow": "3",
+      "savedRow": 3,
+      "group": true,
+      "savedGroup": true
+    },
+    {
+      "mark": "111.1.1",
+      "auditRow": 5,
+      "csvRow": "4",
+      "savedRow": 4,
+      "group": true,
+      "savedGroup": true
+    },
+    {
+      "mark": "113.1",
+      "auditRow": 6,
+      "csvRow": "5",
+      "savedRow": 5,
+      "group": true,
+      "savedGroup": true
+    },
+    {
+      "mark": "113.1.1",
+      "auditRow": 7,
+      "csvRow": "6",
+      "savedRow": 6,
+      "group": true,
+      "savedGroup": true
+    },
+    {
+      "mark": "114.1",
+      "auditRow": 8,
+      "csvRow": "7",
+      "savedRow": 7,
+      "group": true,
+      "savedGroup": true
+    },
+    {
+      "mark": "118.1",
+      "auditRow": 9,
+      "csvRow": "8",
+      "savedRow": 8,
+      "group": true,
+      "savedGroup": true
+    },
+    {
+      "mark": "119.1",
+      "auditRow": 10,
+      "csvRow": "9",
+      "savedRow": 9,
+      "group": true,
+      "savedGroup": true
+    },
+    {
+      "mark": "119.2",
+      "auditRow": 11,
+      "csvRow": "10",
+      "savedRow": 10,
+      "group": true,
+      "savedGroup": true
+    },
+    {
+      "mark": "126.1",
+      "auditRow": 12,
+      "csvRow": "11",
+      "savedRow": 11,
+      "group": true,
+      "savedGroup": true
+    },
+    {
+      "mark": "126.1.1",
+      "auditRow": 13,
+      "csvRow": "12",
+      "savedRow": 12,
+      "group": true,
+      "savedGroup": true
+    },
+    {
+      "mark": "126.1.2",
+      "auditRow": 14,
+      "csvRow": "13",
+      "savedRow": 13,
+      "group": true,
+      "savedGroup": true
+    },
+    {
+      "mark": "126.2",
+      "auditRow": 15,
+      "csvRow": "14",
+      "savedRow": 14,
+      "group": true,
+      "savedGroup": true
+    },
+    {
+      "mark": "127.1",
+      "auditRow": 16,
+      "csvRow": "15",
+      "savedRow": 15,
+      "group": true,
+      "savedGroup": true
+    },
+    {
+      "mark": "128.1.1",
+      "auditRow": 17,
+      "csvRow": "16",
+      "savedRow": 16,
+      "group": true,
+      "savedGroup": true
+    },
+    {
+      "mark": "129.1",
+      "auditRow": 18,
+      "csvRow": "17",
+      "savedRow": 17,
+      "group": true,
+      "savedGroup": true
+    },
+    {
+      "mark": "130.1",
+      "auditRow": 19,
+      "csvRow": "18",
+      "savedRow": 18,
+      "group": true,
+      "savedGroup": true
+    },
+    {
+      "mark": "131.1",
+      "auditRow": 20,
+      "csvRow": "19",
+      "savedRow": 19,
+      "group": true,
+      "savedGroup": true
+    },
+    {
+      "mark": "132.1",
+      "auditRow": 21,
+      "csvRow": "20",
+      "savedRow": 20,
+      "group": true,
+      "savedGroup": true
+    },
+    {
+      "mark": "133.1",
+      "auditRow": 22,
+      "csvRow": "21",
+      "savedRow": 21,
+      "group": true,
+      "savedGroup": true
+    },
+    {
+      "mark": "134.1",
+      "auditRow": 23,
+      "csvRow": "22",
+      "savedRow": 22,
+      "group": true,
+      "savedGroup": true
+    },
+    {
+      "mark": "136.1",
+      "auditRow": 24,
+      "csvRow": "23",
+      "savedRow": 23,
+      "group": true,
+      "savedGroup": true
+    },
+    {
+      "mark": "138.1",
+      "auditRow": 25,
+      "csvRow": "24",
+      "savedRow": 24,
+      "group": true,
+      "savedGroup": true
+    },
+    {
+      "mark": "138.1.1",
+      "auditRow": 26,
+      "csvRow": "25",
+      "savedRow": 25,
+      "group": true,
+      "savedGroup": true
+    },
+    {
+      "mark": "138.2",
+      "auditRow": 27,
+      "csvRow": "26",
+      "savedRow": 26,
+      "group": true,
+      "savedGroup": true
+    },
+    {
+      "mark": "141.1",
+      "auditRow": 28,
+      "csvRow": "27",
+      "savedRow": 27,
+      "group": true,
+      "savedGroup": true
+    },
+    {
+      "mark": "142.1",
+      "auditRow": 29,
+      "csvRow": "28",
+      "savedRow": 28,
+      "group": true,
+      "savedGroup": true
+    },
+    {
+      "mark": "143.1",
+      "auditRow": 30,
+      "csvRow": "29",
+      "savedRow": 29,
+      "group": true,
+      "savedGroup": true
+    },
+    {
+      "mark": "144.1",
+      "auditRow": 31,
+      "csvRow": "30",
+      "savedRow": 30,
+      "group": true,
+      "savedGroup": true
+    },
+    {
+      "mark": "145.1",
+      "auditRow": 32,
+      "csvRow": "31",
+      "savedRow": 31,
+      "group": true,
+      "savedGroup": true
+    },
+    {
+      "mark": "146.1",
+      "auditRow": 33,
+      "csvRow": "32",
+      "savedRow": 32,
+      "group": true,
+      "savedGroup": true
+    },
+    {
+      "mark": "147.1",
+      "auditRow": 34,
+      "csvRow": "33",
+      "savedRow": 33,
+      "group": true,
+      "savedGroup": true
+    },
+    {
+      "mark": "147.1.1",
+      "auditRow": 35,
+      "csvRow": "34",
+      "savedRow": 34,
+      "group": true,
+      "savedGroup": true
+    },
+    {
+      "mark": "148.1",
+      "auditRow": 36,
+      "csvRow": "35",
+      "savedRow": 35,
+      "group": true,
+      "savedGroup": true
+    },
+    {
+      "mark": "150.1",
+      "auditRow": 37,
+      "csvRow": "36",
+      "savedRow": 36,
+      "group": true,
+      "savedGroup": true
+    },
+    {
+      "mark": "151.1",
+      "auditRow": 38,
+      "csvRow": "37",
+      "savedRow": 37,
+      "group": true,
+      "savedGroup": true
+    },
+    {
+      "mark": "152.1",
+      "auditRow": 39,
+      "csvRow": "38",
+      "savedRow": 38,
+      "group": true,
+      "savedGroup": true
+    },
+    {
+      "mark": "152.1.1",
+      "auditRow": 40,
+      "csvRow": "39",
+      "savedRow": 39,
+      "group": true,
+      "savedGroup": true
+    },
+    {
+      "mark": "153.1",
+      "auditRow": 41,
+      "csvRow": "40",
+      "savedRow": 40,
+      "group": true,
+      "savedGroup": true
+    },
+    {
+      "mark": "155.1",
+      "auditRow": 42,
+      "csvRow": "41",
+      "savedRow": 41,
+      "group": true,
+      "savedGroup": true
+    },
+    {
+      "mark": "155.2",
+      "auditRow": 43,
+      "csvRow": "42",
+      "savedRow": 42,
+      "group": true,
+      "savedGroup": true
+    },
+    {
+      "mark": "157.1",
+      "auditRow": 44,
+      "csvRow": "43",
+      "savedRow": 43,
+      "group": true,
+      "savedGroup": true
+    },
+    {
+      "mark": "159.1",
+      "auditRow": 45,
+      "csvRow": "44",
+      "savedRow": 44,
+      "group": true,
+      "savedGroup": true
+    },
+    {
+      "mark": "161.1",
+      "auditRow": 46,
+      "csvRow": "45",
+      "savedRow": 45,
+      "group": true,
+      "savedGroup": true
+    },
+    {
+      "mark": "162.1",
+      "auditRow": 47,
+      "csvRow": "46",
+      "savedRow": 46,
+      "group": true,
+      "savedGroup": true
+    },
+    {
+      "mark": "163.1",
+      "auditRow": 48,
+      "csvRow": "47",
+      "savedRow": 47,
+      "group": true,
+      "savedGroup": true
+    },
+    {
+      "mark": "164.1",
+      "auditRow": 49,
+      "csvRow": "48",
+      "savedRow": 48,
+      "group": true,
+      "savedGroup": true
+    },
+    {
+      "mark": "165.1",
+      "auditRow": 50,
+      "csvRow": "49",
+      "savedRow": 49,
+      "group": true,
+      "savedGroup": true
+    },
+    {
+      "mark": "166.1",
+      "auditRow": 51,
+      "csvRow": "50",
+      "savedRow": 50,
+      "group": true,
+      "savedGroup": true
+    },
+    {
+      "mark": "167.1",
+      "auditRow": 52,
+      "csvRow": "51",
+      "savedRow": 51,
+      "group": true,
+      "savedGroup": true
+    },
+    {
+      "mark": "167.1.1",
+      "auditRow": 53,
+      "csvRow": "52",
+      "savedRow": 52,
+      "group": true,
+      "savedGroup": true
+    },
+    {
+      "mark": "168.1",
+      "auditRow": 54,
+      "csvRow": "53",
+      "savedRow": 53,
+      "group": true,
+      "savedGroup": true
+    },
+    {
+      "mark": "170.1",
+      "auditRow": 55,
+      "csvRow": "54",
+      "savedRow": 54,
+      "group": true,
+      "savedGroup": true
+    },
+    {
+      "mark": "173.1",
+      "auditRow": 56,
+      "csvRow": "55",
+      "savedRow": 55,
+      "group": true,
+      "savedGroup": true
+    },
+    {
+      "mark": "174.1",
+      "auditRow": 57,
+      "csvRow": "56",
+      "savedRow": 56,
+      "group": true,
+      "savedGroup": true
+    },
+    {
+      "mark": "175.1",
+      "auditRow": 58,
+      "csvRow": "57",
+      "savedRow": 57,
+      "group": true,
+      "savedGroup": true
+    },
+    {
+      "mark": "176.1",
+      "auditRow": 59,
+      "csvRow": "58",
+      "savedRow": 58,
+      "group": true,
+      "savedGroup": true
+    },
+    {
+      "mark": "177.1",
+      "auditRow": 60,
+      "csvRow": "59",
+      "savedRow": 59,
+      "group": true,
+      "savedGroup": true
+    },
+    {
+      "mark": "178.1",
+      "auditRow": 61,
+      "csvRow": "60",
+      "savedRow": 60,
+      "group": true,
+      "savedGroup": true
+    },
+    {
+      "mark": "179.1",
+      "auditRow": 62,
+      "csvRow": "61",
+      "savedRow": 61,
+      "group": true,
+      "savedGroup": true
+    },
+    {
+      "mark": "179.1.1",
+      "auditRow": 63,
+      "csvRow": "62",
+      "savedRow": 62,
+      "group": true,
+      "savedGroup": true
+    },
+    {
+      "mark": "180.1",
+      "auditRow": 64,
+      "csvRow": "63",
+      "savedRow": 63,
+      "group": true,
+      "savedGroup": true
+    },
+    {
+      "mark": "182.1",
+      "auditRow": 65,
+      "csvRow": "64",
+      "savedRow": 64,
+      "group": true,
+      "savedGroup": true
+    }
+  ],
+  "guestTraffic": [
+    {
+      "path": "/api/hardware-schedule/sessions",
+      "status": 401
+    },
+    {
+      "path": "/api/hardware-schedule/session/8baf108b-eaaa-4e3c-a6e7-85ba007a3d8e/door-index",
+      "status": 200
+    }
+  ],
+  "guestRequests": [
+    {
+      "method": "POST",
+      "host": "weylandai.com",
+      "path": "/api/auth/ephemeral"
+    },
+    {
+      "method": "POST",
+      "host": "weylandai.com",
+      "path": "/api/telemetry"
+    },
+    {
+      "method": "POST",
+      "host": "weylandai.com",
+      "path": "/api/demo/weyland-building/session"
+    }
+  ],
+  "manifest": {
+    "ok": false,
+    "pages": 68,
+    "groups": 14,
+    "mismatches": [],
+    "cutSheets": 25,
+    "reportedCutSheets": 26,
+    "matched": 36,
+    "unmatched": 1,
+    "missing": [
+      {
+        "qty": 4,
+        "sets": [
+          "07 CL",
+          "23 STO",
+          "40 UTY",
+          "51 UTY-CUS"
+        ],
+        "manufacturer": "Glynn-Johnson",
+        "model": "90S",
+        "component_type": "overhead_stop",
+        "reason": "Glynn-Johnson is in the catalogue; 90S is not",
+        "code": "model_not_in_catalogue",
+        "need": "Glynn-Johnson 90S in the catalogue"
+      }
+    ],
+    "warnings": []
+  },
+  "savedSpec": [
+    "08 71 00"
+  ],
+  "savedAlternates": {
+    "Yes": 18,
+    "No": 46,
+    "null": 1
+  },
+  "countOnlyCorrection": {
+    "note": "Counterfactual replay of the captured response with only cut_sheets corrected; this is not a fresh production run.",
+    "manifest": {
+      "ok": true,
+      "pages": 68,
+      "groups": 14,
+      "mismatches": [],
+      "cutSheets": 25,
+      "reportedCutSheets": 25,
+      "matched": 36,
+      "unmatched": 1,
+      "missing": [
+        {
+          "qty": 4,
+          "sets": [
+            "07 CL",
+            "23 STO",
+            "40 UTY",
+            "51 UTY-CUS"
+          ],
+          "manufacturer": "Glynn-Johnson",
+          "model": "90S",
+          "component_type": "overhead_stop",
+          "reason": "Glynn-Johnson is in the catalogue; 90S is not",
+          "code": "model_not_in_catalogue",
+          "need": "Glynn-Johnson 90S in the catalogue"
+        }
+      ],
+      "warnings": []
+    },
+    "pdfText": {
+      "ok": true,
+      "pages": 68,
+      "hardware": [
+        {
+          "title": "Hardware Group 01 RR",
+          "startPage": 6,
+          "ok": true
+        },
+        {
+          "title": "Hardware Group 02 RR-M",
+          "startPage": 8,
+          "ok": true
+        },
+        {
+          "title": "Hardware Group 06 CL",
+          "startPage": 10,
+          "ok": true
+        },
+        {
+          "title": "Hardware Group 07 CL",
+          "startPage": 13,
+          "ok": true
+        },
+        {
+          "title": "Hardware Group 19 STO",
+          "startPage": 15,
+          "ok": true
+        },
+        {
+          "title": "Hardware Group 19F STO",
+          "startPage": 17,
+          "ok": true
+        },
+        {
+          "title": "Hardware Group 20 STO",
+          "startPage": 19,
+          "ok": true
+        },
+        {
+          "title": "Hardware Group 23 STO",
+          "startPage": 21,
+          "ok": true
+        },
+        {
+          "title": "Hardware Group 28 COR",
+          "startPage": 23,
+          "ok": true
+        },
+        {
+          "title": "Hardware Group 32 EXD",
+          "startPage": 25,
+          "ok": true
+        },
+        {
+          "title": "Hardware Group 40 UTY",
+          "startPage": 27,
+          "ok": true
+        },
+        {
+          "title": "Hardware Group 44 UTY-IT",
+          "startPage": 29,
+          "ok": true
+        },
+        {
+          "title": "Hardware Group 47 VES",
+          "startPage": 31,
+          "ok": true
+        },
+        {
+          "title": "Hardware Group 51 UTY-CUS",
+          "startPage": 33,
+          "ok": true
+        }
+      ],
+      "cuts": [
+        {
+          "startPage": 35,
+          "textCharacters": 6335
+        },
+        {
+          "startPage": 36,
+          "textCharacters": 6455
+        },
+        {
+          "startPage": 37,
+          "textCharacters": 7083
+        },
+        {
+          "startPage": 38,
+          "textCharacters": 7187
+        },
+        {
+          "startPage": 39,
+          "textCharacters": 6408
+        },
+        {
+          "startPage": 40,
+          "textCharacters": 4688
+        },
+        {
+          "startPage": 41,
+          "textCharacters": 6853
+        },
+        {
+          "startPage": 42,
+          "textCharacters": 5234
+        },
+        {
+          "startPage": 43,
+          "textCharacters": 4821
+        },
+        {
+          "startPage": 44,
+          "textCharacters": 6288
+        },
+        {
+          "startPage": 45,
+          "textCharacters": 4598
+        },
+        {
+          "startPage": 46,
+          "textCharacters": 8601
+        },
+        {
+          "startPage": 47,
+          "textCharacters": 12118
+        },
+        {
+          "startPage": 48,
+          "textCharacters": 8585
+        },
+        {
+          "startPage": 49,
+          "textCharacters": 8921
+        },
+        {
+          "startPage": 50,
+          "textCharacters": 8961
+        },
+        {
+          "startPage": 51,
+          "textCharacters": 8057
+        },
+        {
+          "startPage": 52,
+          "textCharacters": 9376
+        },
+        {
+          "startPage": 53,
+          "textCharacters": 11853
+        },
+        {
+          "startPage": 54,
+          "textCharacters": 9141
+        },
+        {
+          "startPage": 55,
+          "textCharacters": 8843
+        },
+        {
+          "startPage": 56,
+          "textCharacters": 11318
+        },
+        {
+          "startPage": 57,
+          "textCharacters": 9723
+        },
+        {
+          "startPage": 58,
+          "textCharacters": 8957
+        },
+        {
+          "startPage": 59,
+          "textCharacters": 6338
+        }
+      ],
+      "misses": [
+        true
+      ]
+    }
+  }
+}

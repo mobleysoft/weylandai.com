@@ -1,0 +1,65 @@
+TAP version 13
+# Subtest: guest guard detects real email-code, account-exchange and upload endpoints, allowing anonymous demo/auth
+ok 1 - guest guard detects real email-code, account-exchange and upload endpoints, allowing anonymous demo/auth
+  ---
+  duration_ms: 1.936084
+  ...
+# Subtest: 65 rows pass only with the exact marks, hardware groups and source page/row
+ok 2 - 65 rows pass only with the exact marks, hardware groups and source page/row
+  ---
+  duration_ms: 14.503458
+  ...
+# Subtest: CSV parser preserves quoted size strings, commas and embedded line breaks
+ok 3 - CSV parser preserves quoted size strings, commas and embedded line breaks
+  ---
+  duration_ms: 0.408875
+  ...
+# Subtest: CSV rejects the old missing pricing columns and blank/No conflation
+ok 4 - CSV rejects the old missing pricing columns and blank/No conflation
+  ---
+  duration_ms: 1.860417
+  ...
+# Subtest: hardware cannot pass with door-derived empty groups or a duplicate replacing a group
+ok 5 - hardware cannot pass with door-derived empty groups or a duplicate replacing a group
+  ---
+  duration_ms: 2.203792
+  ...
+# Subtest: hardware counts cannot disguise a missing item, wrong model or unresolved spec
+ok 6 - hardware counts cannot disguise a missing item, wrong model or unresolved spec
+  ---
+  duration_ms: 2.318542
+  ...
+# Subtest: a Built response with just doors/source, or a partial hardware packet, fails
+ok 7 - a Built response with just doors/source, or a partial hardware packet, fails
+  ---
+  duration_ms: 0.880125
+  ...
+# Subtest: packet must be accessible and carry actual cut sheets with explicit missing-item disclosure
+ok 8 - packet must be accessible and carry actual cut sheets with explicit missing-item disclosure
+  ---
+  duration_ms: 2.241292
+  ...
+# Subtest: PDF content is checked on generated group pages, not names in the TOC or source appendix
+ok 9 - PDF content is checked on generated group pages, not names in the TOC or source appendix
+  ---
+  duration_ms: 0.800167
+  ...
+# Subtest: PDF rejects missing catalogue content, page count mismatch and another customer's cover
+ok 10 - PDF rejects missing catalogue content, page count mismatch and another customer's cover
+  ---
+  duration_ms: 0.877834
+  ...
+# Subtest: cleanup removes this run's materialized hardware under either key and preserves another job
+ok 11 - cleanup removes this run's materialized hardware under either key and preserves another job
+  ---
+  duration_ms: 59.98625
+  ...
+1..11
+# tests 11
+# suites 0
+# pass 11
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 165.346916
