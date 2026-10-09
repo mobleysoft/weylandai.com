@@ -1,4 +1,45 @@
 # Cloud status: the $100 first submittal on a full-size bid set, and every tool on sale
+
+## Current production review — October 9, 22:30 UTC
+
+**The full suite is not yet ready to claim every product works.** This review
+supersedes older readiness claims below. The historical tool audits remain useful
+for their named inputs.
+
+- The generated vector and scanned ARCH D schedule both returned 48 exact rows
+  and **336/336 scored fields** in the fresh production browser run at 22:17Z.
+  The scanned path used 998 recognition calls, finished in 16.685 seconds, reported
+  no partial result or unresolved rows, and cleaned up all owned data. PR101 and
+  SubX deploy run 37998023640 are live.
+- Fresh server reading of the OCC PDF still returned 41 of 42 expected marks and
+  one extra mark. It scored **236/252 fields (93.7%) across all expected rows**;
+  the matched-row score alone is 236/246 (95.9%). It parsed 35 correct numeric size
+  pairs, but none met the confidence threshold for takeoff quantities. A generic
+  repair is in progress; this input is a real remaining limitation.
+- MarketX passes a fresh post-deploy audit of all six metros. SightX passes all ten
+  harvested model checks and actual production Metal GPU controls. Two sets use
+  an explicitly disclosed schematic because no floor plan was selected; this is
+  not complete plan interpretation for every set.
+- Production MFA passed 9/9 checks. The actual password-reset flow is passing
+  with the existing private test key, including one-time use and immediate old
+  password rejection. Final repeat counts will follow the running receipts.
+- MeetingX has demonstrated real two-way audio/video, mute/camera controls and
+  relay-only TURN media. A new leave-room test found delayed local teardown;
+  the client repair is in progress.
+- The current matrix covers 32 journeys, three passes each. It is still running.
+  The first pass's TakeOffX failure was a stale test label, now corrected. Its
+  reset test stopped before execution because its environment lacked the private
+  key; a separate three-pass reset matrix supplies that key without changing it.
+- AuthFor confidential provisioning and inline signup proof code have meaningful
+  offline coverage. Production client credentials are still absent, and no live
+  migration or authority cutover has been performed. Provisioning must be
+  configured and verified before the fixed October 23 UTC deadline.
+
+Fresh sanitized OCC diagnosis is retained locally under
+`mascom/logs/weyland-occ-production-20261009/`; it contains no credentials or PDF.
+The completed release evidence will be collected in the production readiness
+report once the remaining checks finish.
+
 - Next list from the Mac (2026-10-09 15:10 EDT), after g033 is in a PR: g035 SightX on the remaining seven harvested sets (same pipeline as g028, rows from tools/accuracy/g020/<sha16>.json, journey extended to all ten, three green passes on the Mac); g036 journeys fail cleanly on an unexpected API answer (shared in journey-kit, with a test; the first g028 acceptance pass crashed on an undefined response during deploy propagation); g037 MarketX audit to PASS or a written reason (Chicago CSV ranking order; San Francisco metros-list mismatch). Same rules: PRs and this file only, blockers here, never a message to John. g028 and g032 are merged and accepted on production (22 of 22 four passes; offer sentence live).
 
 Written by the cloud session, 2026-10-09 (UTC). Every number below comes from a harness run live against https://weylandai.com and committed beside it; each section names the command that reproduces it. Nothing here is estimated.
@@ -15,7 +56,7 @@ Written by the cloud session, 2026-10-09 (UTC). Every number below comes from a 
 
 | # | finish line | state | evidence |
 |---|---|---|---|
-| 1 | Schedule reading at 95% of rows and 95% of fields on all five documents, no page read failing | **met** | `tools/accuracy/schedule_report_2026-10-09-06-48_all-five.md` |
+| 1 | Schedule reading at 95% of rows and 95% of fields on all five documents, no page read failing | **not met on the latest OCC read; historical audit below** | `tools/accuracy/schedule_report_2026-10-09-06-48_all-five.md` |
 | 2 | Rockford and Berryessa packets cite every item the catalogue holds; every other item a miss with what is needed; Select Hinges in the catalogue first | **met** | `tools/accuracy/packet_report_2026-10-09-06-46_schlage-ives.md` |
 | 3 | `run-journeys.mjs --passes 3` green for all 23; the four regressions fixed; fix-10 applied with its homepage change | regressions and fix 10 **met**; matrix **21 of 23** green every pass, the other two fixed in the journeys, rerun pending | `docs/direction-2026-10-08.md` (Mac matrix 06:49-07:40Z), PRs 71 and 81 |
 | 4 | Every tool on sale has its pass on the audit documents written down, or shows NOT SOLD YET with the reason | see the table below | `tools/accuracy/*audit*` |
@@ -93,7 +134,7 @@ The SubConP suite is these tools together; it is sold on the evidence above.
 
 `node tools/bidset/make.mjs && node tools/bidset/grade.mjs --token-file <qa token>`
 
-The WeylandAI Building, one source model (`tools/bidset/building.mjs`): 48 openings, 10 hardware groups, 54 items, each marked held or not held. The generator draws the cover, plans with door tags and an ARCH D door schedule with a title block, Section 08 71 00, and a scanned variant (sideways, tilted 0.6 degrees); every sheet says SAMPLE PROJECT - NOT A REAL BUILDING. Grade of the vector set (`tools/bidset/grade_report_2026-10-09-07-38.md`): **6 of 6 GC checks** - SubX found the pages itself, 48/48 openings with 192/192 fields, 54/54 items exact, 25/25 held items cited, both not-held items listed, the packet named with contents. The scanned variant: the spec pages now read by OCR (3 groups, 16 items on the first, tilt measured and taken out); the scanned full-size schedule sheet now reads 48/48 unique marks and 332/336 scored fields in the browser; three widths and one hardware field remain open (the row checkpoint is deployed, further field fixes are in progress).
+The WeylandAI Building, one source model (`tools/bidset/building.mjs`): 48 openings, 10 hardware groups, 54 items, each marked held or not held. The generator draws the cover, plans with door tags and an ARCH D door schedule with a title block, Section 08 71 00, and a scanned variant (sideways, tilted 0.6 degrees); every sheet says SAMPLE PROJECT - NOT A REAL BUILDING. Grade of the vector set (`tools/bidset/grade_report_2026-10-09-07-38.md`): **6 of 6 GC checks** - SubX found the pages itself, 48/48 openings with 192/192 fields, 54/54 items exact, 25/25 held items cited, both not-held items listed, the packet named with contents. The scanned variant: the spec pages now read by OCR (3 groups, 16 items on the first, tilt measured and taken out); the scanned full-size schedule sheet now reads 48/48 unique marks and 336/336 scored fields in the fresh production browser receipt. OCC remains a separate open input, as described in the current review above.
 
 ## The $100 self-serve
 
@@ -106,7 +147,7 @@ Proposed: Tuesday, October 20, 2026, fallback Thursday, October 22, with six gat
 ## Open, honestly
 
 - The two journeys fixed in PR 81 wait on the Mac's rerun.
-- The generated scanned ARCH D schedule now reads 48/48 unique marks and 332/336 scored fields locally. Three widths and one hardware field remain incorrect; field fixes are in progress. `docs/g019-browser-accuracy-2026-10-09.md`.
+- The generated scanned ARCH D benchmark is now correct on every scored field. OCC scanned reading and confidence remain open, together with MeetingX leave-room teardown and live AuthFor provisioning. See the current review above.
 - Glynn-Johnson 90S is in no book on file; the packet lists it as a miss.
 
 ## Repositories this cloud session can reach (2026-10-09, after John widened access)

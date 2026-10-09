@@ -2,6 +2,7 @@ import { test } from "node:test";
 import assert from "node:assert/strict";
 import { NativeRouter } from "../lib/router.js";
 import { registerWebhooksSubscriptionRoutes } from "./webhooks-subscription.js";
+import { makeEnv, paidSession, subscriptionObject, insertFreeAccount, userByEmail } from "../../weyland-platform-worker/src/routes/webhooks-subscription.fixtures.mjs";
 
 const PRODUCTS = {
   "weyland-subconp-seat": { priceId: "price_subconp", tier: null },
@@ -89,94 +90,38 @@ test("POST /api/webhooks/subscription: real happy path skips a duplicate event i
   assert.equal(body.duplicate, true);
 });
 
-test("POST /api/webhooks/subscription: real happy path provisions a brand-new user on checkout.session.completed", async () => {
-  globalThis.fetch = async (url) => {
-    assert.match(url, /authfor\.com\/api\/v1\/register/);
-    return new Response(JSON.stringify({ session_id: "afs_1", token: "tok_1" }), { status: 200 });
-  };
-  const runCalls = [];
-  const db = {
-    prepare(sql) {
-      const stmt = {
-        async first() { return sql.includes("FROM users WHERE email") ? null : null; },
-        async run() {
-          runCalls.push(sql.trim().split("\n")[0]);
-          if (sql.includes("processed_webhook_events")) return { meta: { changes: 1 } };
-          return { success: true };
-        },
-      };
-      stmt.bind = () => stmt;
-      return stmt;
-    },
-  };
-  const cache = { async put() {} };
-  const { router, env } = setup({ db, cache });
-  const req = webhookRequest({
-    id: "evt_2",
-    type: "checkout.session.completed",
-    data: { object: { id: "cs_1", mode: "subscription", customer: "cus_1", customer_details: { email: "new@example.com", name: "New Customer" }, metadata: { seats: "2", product_id: "weyland-subconp-seat" } } },
-  }, { "Stripe-Signature": "ok" });
+test("POST /api/webhooks/subscription: provisions a brand-new buyer with an AuthFor identity and a durable receipt", async () => {
+  globalThis.fetch = async () => new Response(JSON.stringify({ user: { id: "af-user" }, session_id: "afs_1", token: "tok_1" }), { status: 200 });
+  const env = makeEnv();
+  const { router } = setup();
+  const obj = paidSession({ productId: "weyland-subconp-seat", seats: 2, email: "new@example.com" });
+  const req = webhookRequest({ id: "evt_2", type: "checkout.session.completed", data: { object: obj } }, { "Stripe-Signature": "ok" });
   const res = await router.handle(req, env, {});
   assert.equal(res.status, 200);
-  const body = await res.json();
-  assert.equal(body.received, true);
-  assert.ok(runCalls.some((s) => s.includes("INSERT INTO users")));
-  assert.ok(runCalls.some((s) => s.includes("INSERT INTO weyland_sessions")));
+  assert.equal((await res.json()).provisioned, true);
+  const user = await userByEmail(env, "new@example.com");
+  assert.equal(user.subscription_tier, "subconp");
+  const session = await env.DB.prepare("SELECT player_json FROM weyland_sessions WHERE user_id = ?").bind(user.id).first();
+  assert.equal(JSON.parse(session.player_json).authfor_backed, true);
+  assert.equal((await env.DB.prepare("SELECT status FROM weyland_purchases").first()).status, "granted");
 });
 
-test("POST /api/webhooks/subscription: real happy path updates an existing user's subscription status", async () => {
-  const runCalls = [];
-  const db = {
-    prepare(sql) {
-      const stmt = {
-        async first() { return null; },
-        async run() {
-          runCalls.push(sql.trim());
-          if (sql.includes("processed_webhook_events")) return { meta: { changes: 1 } };
-          return { success: true };
-        },
-      };
-      stmt.bind = () => stmt;
-      return stmt;
-    },
-  };
-  const { router, env } = setup({ db });
-  const req = webhookRequest({
-    id: "evt_3",
-    type: "customer.subscription.updated",
-    data: { object: { customer: "cus_1", status: "past_due" } },
-  }, { "Stripe-Signature": "ok" });
-  const res = await router.handle(req, env, {});
-  assert.equal(res.status, 200);
-  assert.ok(runCalls.some((s) => s.includes("subscription_status=?") && s.includes("WHERE stripe_customer_id=?")));
-});
-
-test("POST /api/webhooks/subscription: real happy path cancels on customer.subscription.deleted", async () => {
-  const runCalls = [];
-  const db = {
-    prepare(sql) {
-      const stmt = {
-        async first() { return null; },
-        async run() {
-          runCalls.push(sql.trim());
-          if (sql.includes("processed_webhook_events")) return { meta: { changes: 1 } };
-          return { success: true };
-        },
-      };
-      stmt.bind = () => stmt;
-      return stmt;
-    },
-  };
-  const { router, env } = setup({ db });
-  const req = webhookRequest({
-    id: "evt_4",
-    type: "customer.subscription.deleted",
-    data: { object: { customer: "cus_1" } },
-  }, { "Stripe-Signature": "ok" });
-  const res = await router.handle(req, env, {});
-  assert.equal(res.status, 200);
-  assert.ok(runCalls.some((s) => s.includes("subscription_status='cancelled'")));
-});
+for (const [type, status] of [["customer.subscription.updated", "past_due"], ["customer.subscription.deleted", "canceled"]]) {
+  test("POST /api/webhooks/subscription: recorded " + type + " removes the paid grant", async () => {
+    const env = makeEnv();
+    const { router } = setup();
+    const userId = await insertFreeAccount(env, "existing@example.com");
+    const obj = paidSession({ productId: "weyland-meetingx-seat", email: "existing@example.com", signedInUserId: userId });
+    await router.handle(webhookRequest({ id: "evt-paid", type: "checkout.session.completed", created: 100, data: { object: obj } }, { "Stripe-Signature": "ok" }), env, {});
+    const subscription = subscriptionObject({ id: obj.subscription, customer: obj.customer, productId: "weyland-meetingx-seat", status });
+    const res = await router.handle(webhookRequest({ id: "evt-stop", type, created: 101, data: { object: subscription } }, { "Stripe-Signature": "ok" }), env, {});
+    assert.equal(res.status, 200);
+    assert.equal((await res.json()).applied, true);
+    const row = await userByEmail(env, "existing@example.com");
+    assert.ok(!row.products_enabled.split(",").includes("meetingx"));
+    assert.equal((await env.DB.prepare("SELECT status FROM weyland_subscriptions WHERE subscription_id = ?").bind(obj.subscription).first()).status, status);
+  });
+}
 
 test("POST /api/webhooks/subscription: an unhandled event type still returns received:true", async () => {
   const { router, env } = setup();

@@ -285,20 +285,20 @@ export function registerAuthSessionRoutes(router, { authenticate, errorResponse 
         });
       }
       const body = await request2.json().catch(() => ({}));
-      const { token, email, password, name } = body;
+      const { token, email, password, name, email_code } = body;
       if (!token || !email || !password) {
         return jsonResponse3({ error: "token, email, and password are required" }, 400);
       }
       const resp = await fetch("https://authfor.com/api/v1/ephemeral/upgrade", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ token, email, password, name })
+        body: JSON.stringify({ token, email, password, name, ...(email_code ? { email_code } : {}) })
       });
       const data = await resp.json().catch(() => ({}));
       if (!resp.ok) {
         return jsonResponse3({ error: data.error || "ephemeral_upgrade_failed" }, resp.status);
       }
-      return jsonResponse3(data);
+      return jsonResponse3(data, resp.status);
     } catch (err) {
       return jsonResponse3({ error: "Ephemeral upgrade failed: " + err.message }, 500);
     }

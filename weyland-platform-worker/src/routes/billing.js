@@ -304,7 +304,7 @@ export function registerBillingRoutes(router, { WEYLAND_PRODUCTS, CHECKOUT_READY
               : null;
         }
       }
-      if (!parsed) {
+      if (!parsed || parsed.status === "paid_pending") {
         // No webhook delivery yet: ask Stripe itself, and grant a completed
         // checkout the same way the webhook would (webhooks-subscription.js).
         try {
