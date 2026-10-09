@@ -4,7 +4,8 @@ import { mkdir, readFile, writeFile } from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { estimatorLocalServer } from '../lib/estimator-local.mjs';
-const pw = await import(process.env.PLAYWRIGHT_CORE || 'playwright-core');
+const pwMod = await import(process.env.PLAYWRIGHT_CORE || 'playwright-core');
+const pw = pwMod.chromium ? pwMod : pwMod.default; // a file-path import of playwright-core puts the API on default (journey-kit does the same)
 const root = fileURLToPath(new URL('../../../', import.meta.url));
 const reportDir = path.join(root, 'tools/user-simulation/reports');
 const stamp = new Date().toISOString(), id = 'estimator-schedule-to-packet';
