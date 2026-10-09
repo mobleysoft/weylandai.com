@@ -19,6 +19,8 @@
 
 export const MIN_VALUE = 250000;
 export const BACKFILL_MONTHS = 24;
+// Bumped whenever permitRow reads a permit differently (2: Austin's permit classes, structures with no doors).
+export const RULES_VERSION = 2;
 const PAGE = 1000;
 
 const RESIDENTIAL_SMALL = /\b(single[- ]family|one[- ]family|two[- ]family|1[- ]family|2[- ]family|duplex|townhouse|accessory dwelling|\badu\b)/i;
@@ -53,9 +55,12 @@ export const useOf = (text) => (USES.find((u) => u.re.test(String(text || ""))) 
 // are; facade, roofing, mechanical-only, structural and site work are not.
 const NOT_DOORS = /\b(fa[cç]ade|curtain ?wall|re-?roof|roofing|roof (replacement|repair)|mechanical (only|modification|upgrade)|hvac|boiler|chiller|cooling tower|elevator|escalator|sprinkler|fire alarm|standpipe|plumbing|solar|photovoltaic|parapet|sidewalk|scaffold|window replacement|replace(ment of)? windows|structural repair|underpinning|caissons?|foundation only|excavation|shoring|demolition|antenna|signage|masonry|local law 11|\bll ?11\b|\bfisp\b|generator|electrical service|ev charg)/i;
 const DOORS = /\b(interior|tenant|fit-?out|build-?out|renovat|remodel|partition|convert|conversion|change of use|egress|classroom|restroom|gut|new (building|construction)|construct (a |an )?(new )?\d*-?stor|erect|addition|rebuild|full building permit|core and shell|shell building|finish-?out|doors?\b|hardware)/i;
-export function doorScope(kind, text) {
+// Structures with next to no door hardware, new or not.
+const NO_DOOR_STRUCTURE = /\b(shade structure|gazebo|canopy|carport|boat dock|\bdock\b|trellis|pergola|pavilion|parking (garage|structure|deck|lot)|retaining wall|site work|bridge|tower crane|billboard)/i;
+export function doorScope(kind, text, use = null) {
   const t = String(text || "");
   const not = NOT_DOORS.test(t), yes = DOORS.test(t);
+  if (use === "parking" || (NO_DOOR_STRUCTURE.test(t) && !/\b(building|apartment|school|office|hotel|clinic|units?)\b/i.test(t.replace(NO_DOOR_STRUCTURE, "")))) return "unlikely";
   if (kind === "new") return /\b(caissons? only|foundation only|excavation only|shoring only)\b/i.test(t) ? "unlikely" : "likely";
   if (yes) return "likely";
   if (not) return "unlikely";
@@ -110,6 +115,12 @@ export const CITIES = {
       owner: null, contractor: null, applicant: null, url: null, lat: num(r.lat), lon: num(r.lon) }),
   },
   austin: {
+    // The Census building-permit class Austin records: the use, and 329 (structures other than buildings) and 321 (parking) carry no doors to speak of.
+    classUse: (r) => {
+      const c = (String(r.permit_class || "").match(/C-\s*(\d+)/) || [])[1];
+      const map = { 105: "multifamily", 104: "multifamily", 326: "education", 324: "office", 327: "retail", 323: "healthcare", 213: "hotel", 318: "civic", 319: "civic", 325: "civic", 320: "industrial", 322: "industrial", 321: "parking" };
+      return c ? { use: map[c] || null, noDoors: c === "329" || c === "321" } : null;
+    },
     name: "Austin", state: "TX", dataset: "https://data.austintexas.gov/resource/3syk-w9eu.json", dateField: "issue_date", order: "issue_date, permit_number",
     where: `permittype = 'BP' AND total_job_valuation::number >= ${MIN_VALUE} AND (permit_class_mapped = 'Commercial' OR permit_class like '%Five or More%') AND work_class in ('New', 'Remodel', 'Shell', 'Addition and Remodel', 'Addition')`,
     // A project's phase permits each carry the whole job's valuation: one row per project.
@@ -144,9 +155,12 @@ export function permitRow(metro, r, now) {
   const text = [p.use_text, p.description].filter(Boolean).join(" ");
   if (NOT_A_BUILDING.test(String(p.description || ""))) return null;
   if (RESIDENTIAL_SMALL.test(text) && !/\b(apartment|multi-?family|units|school|hospital|office|retail|hotel)\b/i.test(text)) return null;
+  const cls = city.classUse ? city.classUse(r) : null;
+  const use = (cls && cls.use) || useOf(text);
+  const scope = cls && cls.noDoors ? "unlikely" : doorScope(p.kind, text, use);
   return {
     id: metro + ":" + p.permit_no, metro, state: city.state, permit_no: String(p.permit_no).slice(0, 60), issued: p.issued, kind: p.kind,
-    use: useOf(text), scope: doorScope(p.kind, text), use_text: clean(p.use_text, 120), description: clean(p.description, 600), address: clean(p.address, 200),
+    use, scope, use_text: clean(p.use_text, 120), description: clean(p.description, 600), address: clean(p.address, 200),
     valuation: Math.round(p.valuation), sqft: p.sqft || null, units: p.units || null, owner: p.owner, contractor: p.contractor, applicant: p.applicant,
     url: p.url, lat: p.lat, lon: p.lon, fetched_at: now,
   };
@@ -163,6 +177,13 @@ export async function ensurePermits(db) {
   await db.prepare("CREATE INDEX IF NOT EXISTS idx_mxp_metro_issued ON marketx_permits(metro, issued)").run();
   await db.prepare("CREATE INDEX IF NOT EXISTS idx_mxp_contractor ON marketx_permits(metro, contractor)").run();
   await db.prepare("CREATE TABLE IF NOT EXISTS marketx_ingest (metro TEXT PRIMARY KEY, cursor TEXT NOT NULL, skip INTEGER NOT NULL DEFAULT 0, rows INTEGER NOT NULL DEFAULT 0, last_run TEXT, last_error TEXT)").run();
+  // When the reading of a permit changes, every city is read again from the start (rows are upserted).
+  await db.prepare("CREATE TABLE IF NOT EXISTS marketx_meta (key TEXT PRIMARY KEY, value TEXT)").run();
+  const v = await db.prepare("SELECT value FROM marketx_meta WHERE key = 'rules'").first();
+  if (!v || Number(v.value) < RULES_VERSION) {
+    await db.prepare("DELETE FROM marketx_ingest").run();
+    await db.prepare("INSERT INTO marketx_meta (key, value) VALUES ('rules', ?) ON CONFLICT(key) DO UPDATE SET value = excluded.value").bind(String(RULES_VERSION)).run();
+  }
   ready = true;
 }
 

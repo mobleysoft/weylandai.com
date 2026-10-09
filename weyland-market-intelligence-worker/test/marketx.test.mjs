@@ -25,6 +25,13 @@ test("each city's record becomes a row: use, door scope, who builds it; small re
   assert.equal(doorScope("alteration", "Replace rooftop HVAC units"), "unlikely");
   assert.equal(doorScope("alteration", "Interior renovation of floors 3-5, new partitions and restrooms"), "likely");
   assert.equal(doorScope("new", "CAISSONS ONLY for proposed building"), "unlikely");
+  assert.equal(doorScope("new", "New Construction of Shade Structure (Courtyard Cabana Trellis)"), "unlikely");
+  assert.equal(doorScope("new", "New Construction of Parking Garage", "parking"), "unlikely");
+  assert.equal(doorScope("new", "New 5 story office building with parking garage"), "likely");
+  const dock = permitRow("austin", { permit_number: "9 BP", work_class: "New", issue_date: "2026-06-08", permit_class: "C- 329 Com Structures Other Than Bldg", total_job_valuation: "830000000", description: "New Construction of Boat Dock an Amenity Lounge", permit_location: "6915 BRIDGE POINT PKWY" }, NOW);
+  assert.equal(dock.scope, "unlikely", "Austin class 329: a structure, not a building");
+  const apt = permitRow("austin", { permit_number: "8 BP", work_class: "New", issue_date: "2026-06-08", permit_class: "C- 105 Five or More Family Bldgs", total_job_valuation: "30000000", description: "Building 3", permit_location: "1 A ST" }, NOW);
+  assert.deepEqual([apt.use, apt.scope], ["multifamily", "likely"]);
 });
 
 const rec = (i, date, cost, extra = {}) => ({ permitnum: "P" + i, permittypedesc: "New", issueddate: date + "T00:00:00.000", estprojectcost: String(cost), description: "Construct new apartment building", originaladdress1: i + " PINE ST", contractorcompanyname: i % 2 ? "Sellen" : "Lease Crutcher", ...extra });
