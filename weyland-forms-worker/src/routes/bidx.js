@@ -45,6 +45,21 @@ export function dollarsInWords(amount) {
   return s.charAt(0).toUpperCase() + s.slice(1) + ` and ${String(cents).padStart(2, "0")}/100 dollars`;
 }
 
+// Bids due (2026-10-09): the product audit found the bid form printing
+// HuntX's key_date raw ("2026-12-15T00:00:00.000"). An ISO date prints as a
+// date ("December 15, 2026"), with the time only when the notice gives one
+// (as written: the notice carries no zone); anything else as entered.
+const MONTHS = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+export function dueDate(v) {
+  const s = String(v || "").trim();
+  const m = s.match(/^(\d{4})-(\d{2})-(\d{2})(?:[T ](\d{2}):(\d{2})(?::\d{2}(?:\.\d+)?)?(?:Z|[+-]\d{2}:?\d{2})?)?$/);
+  if (!m || !(+m[2] >= 1 && +m[2] <= 12) || !(+m[3] >= 1 && +m[3] <= 31)) return s;
+  const date = `${MONTHS[+m[2] - 1]} ${+m[3]}, ${m[1]}`;
+  if (!m[4] || (m[4] === "00" && m[5] === "00")) return date;
+  const h = +m[4];
+  return `${date}, ${h % 12 || 12}:${m[5]} ${h < 12 ? "AM" : "PM"}`;
+}
+
 export const CHECKLIST = ["Bid form signed", "Bid security (bond or check)", "Addenda acknowledged", "Schedule of values", "Non-collusion affidavit", "Contractor license number shown", "Insurance certificate", "References / experience", "DBE / small business forms (if required)", "Product data for named substitutions"];
 
 function proposalLines(p) {
@@ -68,7 +83,7 @@ export function bidPackage(opp, prop, b) {
       solicitation: String((opp && opp.title) || b.solicitation || "").slice(0, 300),
       reference: String((opp && opp.source_ref) || b.reference || "").slice(0, 80),
       location: String((opp && opp.location) || b.location || "").slice(0, 160),
-      due: String((opp && opp.key_date) || b.due || "").slice(0, 40),
+      due: dueDate(String((opp && opp.key_date) || b.due || "").slice(0, 40)),
       noticeUrl: String((opp && opp.detail_url) || "").slice(0, 400),
       source: opp ? opp.source : null,
     },

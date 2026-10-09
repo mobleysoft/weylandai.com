@@ -10,12 +10,12 @@ function d1(db) { return { prepare(sql) { let a = []; const st = { bind(...x) { 
 function makeDb() {
   const db = new DatabaseSync(":memory:");
   db.exec(`CREATE TABLE hardware_extraction_sessions (id TEXT, user_id TEXT, project_name TEXT, filename TEXT, file_buffer_key TEXT);
-    CREATE TABLE door_schedule_entries (session_id TEXT, mark TEXT, hardware_group TEXT, fire_rating TEXT, width_inches REAL, height_inches REAL, door_type TEXT, door_material TEXT, frame_material TEXT, notes TEXT, page_number INTEGER);
+    CREATE TABLE door_schedule_entries (session_id TEXT, mark TEXT, hardware_group TEXT, fire_rating TEXT, width_inches REAL, height_inches REAL, door_type TEXT, door_material TEXT, frame_material TEXT, notes TEXT, page_number INTEGER, width TEXT, field_confidence_json TEXT);
     CREATE TABLE hardware_sets (id TEXT, session_id TEXT, set_number TEXT, set_name TEXT);
     CREATE TABLE hardware_components (set_id TEXT, component_type TEXT, quantity INTEGER, uom TEXT, manufacturer TEXT, model TEXT, catalog_number TEXT, finish TEXT, specifications TEXT, sequence_order INTEGER);
     CREATE TABLE users (id TEXT, subscription_tier TEXT, subscription_status TEXT, trial_ends_at TEXT);`);
   db.prepare("INSERT INTO hardware_extraction_sessions VALUES ('s1','u1','Majestic Way ES','a92.pdf','hardware-sessions/u1/a92.pdf')").run();
-  const d = db.prepare("INSERT INTO door_schedule_entries VALUES ('s1',?,?,?,?,?,NULL,NULL,NULL,?,?)");
+  const d = db.prepare("INSERT INTO door_schedule_entries (session_id, mark, hardware_group, fire_rating, width_inches, height_inches, door_type, door_material, frame_material, notes, page_number) VALUES ('s1',?,?,?,?,?,NULL,NULL,NULL,?,?)");
   d.run("001", "2", "20 MIN", 42, 94, "ADMIN LOBBY HALL", 2);
   d.run("002", "1", "NR", 42, 94, "CLASSROOM", 2);
   d.run("003", "7", null, null, null, "STORAGE", 3);

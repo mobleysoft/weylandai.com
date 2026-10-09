@@ -2,7 +2,7 @@ import { test } from "node:test";
 import assert from "node:assert/strict";
 import { DatabaseSync } from "node:sqlite";
 import { PDFDocument, StandardFonts } from "pdf-lib";
-import { loadJob, closeoutModel, citedProductPages, closeoutPdf } from "../src/routes/closex.js";
+import { loadJob, closeoutModel, citedProductPages, closeoutPdf, isPair } from "../src/routes/closex.js";
 
 function d1(db) {
   return { prepare(sql) { let a = []; const st = { bind(...x) { a = x; return st; }, async first() { const r = db.prepare(sql).get(...a); return r ? { ...r } : null; }, async all() { return { results: db.prepare(sql).all(...a).map((r) => ({ ...r })) }; }, async run() { db.prepare(sql).run(...a); return {}; } }; return st; } };
@@ -10,12 +10,12 @@ function d1(db) {
 function makeDb() {
   const db = new DatabaseSync(":memory:");
   db.exec(`CREATE TABLE hardware_extraction_sessions (id TEXT, user_id TEXT, project_name TEXT, filename TEXT);
-    CREATE TABLE door_schedule_entries (session_id TEXT, mark TEXT, hardware_group TEXT, fire_rating TEXT, width_inches REAL, height_inches REAL, door_type TEXT, door_material TEXT, frame_material TEXT, notes TEXT, page_number INTEGER);
+    CREATE TABLE door_schedule_entries (session_id TEXT, mark TEXT, hardware_group TEXT, fire_rating TEXT, width_inches REAL, height_inches REAL, door_type TEXT, door_material TEXT, frame_material TEXT, notes TEXT, page_number INTEGER, width TEXT, field_confidence_json TEXT);
     CREATE TABLE hardware_sets (id TEXT, session_id TEXT, set_number TEXT, set_name TEXT);
     CREATE TABLE hardware_components (set_id TEXT, component_type TEXT, quantity INTEGER, uom TEXT, manufacturer TEXT, model TEXT, catalog_number TEXT, finish TEXT, specifications TEXT, sequence_order INTEGER);
     CREATE TABLE catalogues (catalogue_id TEXT, source_filename TEXT, storage_path TEXT, page_count INTEGER);`);
   db.prepare("INSERT INTO hardware_extraction_sessions VALUES ('s1','u1','Majestic Way ES','a92.pdf')").run();
-  const d = db.prepare("INSERT INTO door_schedule_entries VALUES ('s1',?,?,?,?,?,NULL,NULL,NULL,?,284)");
+  const d = db.prepare("INSERT INTO door_schedule_entries (session_id, mark, hardware_group, fire_rating, width_inches, height_inches, door_type, door_material, frame_material, notes, page_number) VALUES ('s1',?,?,?,?,?,NULL,NULL,NULL,?,284)");
   d.run("001", "2", "20 MIN", 42, 94, "ADMIN LOBBY HALL");
   d.run("002", "1", null, 42, 94, "A-POD CLASSROOM A1");
   d.run("003", "9", null, 36, 84, "STORAGE");
@@ -62,6 +62,28 @@ test("SubX's duplicate-mark bookkeeping is not printed as a door's location", ()
   const job = { session: { project_name: "P" }, sets: new Map(), doors: [{ mark: "001 [p.286]", notes: "CORRIDOR 12; same mark as a door on page 284" }, { mark: "002 [p.286]", notes: "same mark as a door on page 284" }] };
   const m = closeoutModel(job, {});
   assert.deepEqual(m.openings.map((o) => o.location), ["CORRIDOR 12", ""]);
+});
+
+// 2026-10-09 audit: Berryessa's PR 3'-6" x 7'-10" pairs printed as single doors.
+test("a pair prints as PR: SubX's pair flag, a PR/PAIR width or a PAIR door type", async () => {
+  const db = makeDb();
+  const ins = db.prepare("INSERT INTO door_schedule_entries (session_id, mark, hardware_group, fire_rating, width, width_inches, height_inches, door_type, notes, page_number, field_confidence_json) VALUES ('s1',?,'2','120 MIN',?,42,94,?,NULL,286,?)");
+  ins.run("010", "PR 3'-6\"", null, null);
+  ins.run("011", "3'-6\"", null, JSON.stringify({ pair: true }));
+  ins.run("012", "3'-6\"", "PAIR HM", null);
+  ins.run("013", "PAIR 3'-6\"", null, "{not json");
+  ins.run("014", "3'-6\"", "HM", JSON.stringify({ pair: false }));
+  const m = closeoutModel(await loadJob({ DB: d1(db) }, "s1", "u1"), {});
+  const by = Object.fromEntries(m.openings.map((o) => [o.mark, o]));
+  for (const k of ["010", "011", "012", "013"]) { assert.equal(by[k].size, "PR 3'-6\" x 7'-10\"", k); assert.equal(by[k].pair, true, k); }
+  assert.equal(by["014"].size, "3'-6\" x 7'-10\"");
+  assert.equal(by["001"].size, "3'-6\" x 7'-10\"");
+  assert.equal(isPair({ pair: true }), true);
+  assert.equal(isPair({ width: "PRESSED 3'-0\"" }), false);
+  const { coaModel, coaPdf } = await import("../src/routes/coa-permitx.js");
+  const c = coaModel({ ...(await loadJob({ DB: d1(db) }, "s1", "u1")) }, {});
+  assert.equal(c.ratedOpenings.find((o) => o.mark === "010").pair, true);
+  assert.ok((await coaPdf(c)).length > 1000);
 });
 
 test("a catalog number wider than its column wraps inside it", async () => {

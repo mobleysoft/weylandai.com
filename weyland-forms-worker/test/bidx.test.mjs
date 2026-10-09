@@ -3,7 +3,7 @@ import assert from "node:assert/strict";
 import { DatabaseSync } from "node:sqlite";
 import { PDFDocument } from "pdf-lib";
 import { NativeRouter } from "../src/lib/router.js";
-import { registerBidxRoutes, dollarsInWords, bidPackage } from "../src/routes/bidx.js";
+import { registerBidxRoutes, dollarsInWords, bidPackage, dueDate } from "../src/routes/bidx.js";
 
 test("amounts in words, as a bid form writes them", () => {
   assert.equal(dollarsInWords(48250.5), "Forty-eight thousand two hundred fifty and 50/100 dollars");
@@ -24,6 +24,17 @@ test("the package joins the HuntX notice and the PropX price", () => {
   assert.deepEqual(pkg.alternates.map((a) => a.add), [true, false]);
   assert.deepEqual(pkg.lines[0], { description: "Pair", qty: 8, unit: 4200, ext: 33600 });
   assert.equal(pkg.priceSource, "PropX quote 7");
+  assert.equal(pkg.bid.due, "December 15, 2026");
+});
+
+// 2026-10-09 audit: "Bids due" printed HuntX's raw key_date.
+test("bids due prints as a date, not a timestamp", () => {
+  assert.equal(dueDate("2026-12-15T00:00:00.000"), "December 15, 2026");
+  assert.equal(dueDate("2026-12-15"), "December 15, 2026");
+  assert.equal(dueDate("2026-12-15T14:00:00"), "December 15, 2026, 2:00 PM");
+  assert.equal(dueDate("Dec 15, 2 PM local"), "Dec 15, 2 PM local");
+  assert.equal(dueDate(""), "");
+  assert.equal(bidPackage({ key_date: "2026-12-15T00:00:00.000" }, null, {}).bid.due, "December 15, 2026");
 });
 
 function d1(db) { return { prepare(sql) { let a = []; const st = { bind(...x) { a = x; return st; }, async first() { const r = db.prepare(sql).get(...a); return r ? { ...r } : null; }, async all() { return { results: db.prepare(sql).all(...a).map((r) => ({ ...r })) }; }, async run() { db.prepare(sql).run(...a); return {}; } }; return st; } }; }

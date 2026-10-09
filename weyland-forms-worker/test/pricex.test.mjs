@@ -47,14 +47,14 @@ function d1(db) { return { prepare(sql) { let a = []; const st = { bind(...x) { 
 function makeDb() {
   const db = new DatabaseSync(":memory:");
   db.exec(`CREATE TABLE hardware_extraction_sessions (id TEXT, user_id TEXT, project_name TEXT, filename TEXT, file_buffer_key TEXT);
-    CREATE TABLE door_schedule_entries (session_id TEXT, mark TEXT, hardware_group TEXT, fire_rating TEXT, width_inches REAL, height_inches REAL, door_type TEXT, door_material TEXT, frame_material TEXT, notes TEXT, page_number INTEGER);
+    CREATE TABLE door_schedule_entries (session_id TEXT, mark TEXT, hardware_group TEXT, fire_rating TEXT, width_inches REAL, height_inches REAL, door_type TEXT, door_material TEXT, frame_material TEXT, notes TEXT, page_number INTEGER, width TEXT, field_confidence_json TEXT);
     CREATE TABLE hardware_sets (id TEXT, session_id TEXT, set_number TEXT, set_name TEXT);
     CREATE TABLE hardware_components (set_id TEXT, component_type TEXT, quantity INTEGER, uom TEXT, manufacturer TEXT, model TEXT, catalog_number TEXT, finish TEXT, specifications TEXT, sequence_order INTEGER);
     CREATE TABLE product_variants (product_id TEXT, full_model_number TEXT, finish_code TEXT, list_price REAL, price_effective_date TEXT, source_catalogue_id TEXT, active INTEGER);
     CREATE TABLE catalogues (catalogue_id TEXT, title TEXT, version TEXT);
     CREATE TABLE users (id TEXT, subscription_tier TEXT, subscription_status TEXT, trial_ends_at TEXT);`);
   db.prepare("INSERT INTO hardware_extraction_sessions VALUES ('s1','u1','Berryessa Elementary','b.pdf',NULL)").run();
-  const d = db.prepare("INSERT INTO door_schedule_entries VALUES ('s1',?,?,NULL,36,84,NULL,NULL,NULL,NULL,1)");
+  const d = db.prepare("INSERT INTO door_schedule_entries (session_id, mark, hardware_group, fire_rating, width_inches, height_inches, door_type, door_material, frame_material, notes, page_number) VALUES ('s1',?,?,NULL,36,84,NULL,NULL,NULL,NULL,1)");
   d.run("101", "02"); d.run("102", "HW-2"); d.run("103", "1");
   db.prepare("INSERT INTO hardware_sets VALUES ('h1','s1','1','Office')").run();
   db.prepare("INSERT INTO hardware_sets VALUES ('h2','s1','2','Corridor')").run();
