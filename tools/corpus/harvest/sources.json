@@ -1,0 +1,232 @@
+{
+  "about": "Seed list for WeylandAI's public bid-document harvest (2026-10-09). Public procurement records only. Every row keeps its source URL and retrieval date; PDFs stay out of git; manifests are committed. Respect robots.txt per host; one request per two seconds per host; declared user agent WeylandAI-corpus/1.0 (+https://weylandai.com). Nothing behind a login.",
+  "want": {
+    "door_schedule": [
+      "DOOR SCHEDULE",
+      "DOOR AND FRAME SCHEDULE",
+      "OPENING SCHEDULE",
+      "sheet A6xx / A8xx / A9xx"
+    ],
+    "hardware_spec": [
+      "08 71 00",
+      "087100",
+      "08710",
+      "08 70 00",
+      "HARDWARE SET",
+      "HW SET",
+      "HARDWARE GROUP",
+      "DOOR HARDWARE SCHEDULE"
+    ],
+    "floor_plan": [
+      "FLOOR PLAN",
+      "sheet A1xx",
+      "early sheets of the architectural set"
+    ],
+    "complete_triple": "a set with all three: schedule + hardware spec + floor plan (the full WeylandAI test case; SightX needs the plan)"
+  },
+  "families": [
+    {
+      "family": "delaware_bidcondocs",
+      "kind": "state_archive",
+      "host": "bidcondocs.delaware.gov",
+      "enumeration": "directory listing answers 403; direct file URLs work; robots.txt disallows /_Drawings for all agents, so never fetch under /_Drawings. Enumerate by agency code (BSD, DTCC, STA, OMB, ASD, RCCD, CSD, BSD, DOC, DNREC, DSHA) with the naming pattern <AGENCY>/<AGENCY>_<ProjectNo><Suffix>.pdf where suffix is _SPEC, _Add<n>, _add<n>, _specs<n>, _add<n>_pt<n>; search-engine site: queries are the other door.",
+      "seeds": [
+        "https://bidcondocs.delaware.gov/BSD/BSD_18005Gcservices_add4_pt2.pdf",
+        "https://bidcondocs.delaware.gov/DTCC/DTCC_13345C-WingExp_Add4.pdf",
+        "https://bidcondocs.delaware.gov/STA/STA_18101Vetdining_add2.pdf",
+        "https://bidcondocs.delaware.gov/OMB/OMB_MJ4501000000_add2.pdf",
+        "https://bidcondocs.delaware.gov/ASD/ASD_1706-21BidPakC_add2.pdf",
+        "https://bidcondocs.delaware.gov/RCCD/RCCD_1501(A)Warner_SPEC.pdf",
+        "https://bidcondocs.delaware.gov/RCCD/RCCD_1501Linden_Add2.pdf",
+        "https://bidcondocs.delaware.gov/DTCC/DTCC_19C900404SscE_specs2.pdf",
+        "https://bidcondocs.delaware.gov/RCCD/RCCD_1501(A)Warner_Add2.pdf",
+        "https://bidcondocs.delaware.gov/BSD/BSD_19001BidPac_B_specs_add1c.pdf"
+      ]
+    },
+    {
+      "family": "ohio_ofcc",
+      "kind": "state_archive",
+      "host": "dam.assets.ohio.gov",
+      "enumeration": "ofcc.ohio.gov bid opportunities pages link addenda as .../ofcc.ohio.gov/Portals/0/Documents/Bids/<year>/ADD<n>-<PROJ>.pdf and solicitations as .../Project_Opportunities/Bids/<year>/SOL-<PROJ>.pdf; crawl the 2025 and 2026 listings for every ADD and SOL link. Drawings themselves are often via the plan room; the addenda carry revised schedule sheets.",
+      "seeds": [
+        "https://dam.assets.ohio.gov/image/upload/ofcc.ohio.gov/Portals/0/Documents/Bids/2026/ADD1-SOC-250003.pdf",
+        "https://dam.assets.ohio.gov/image/upload/ofcc.ohio.gov/Portals/0/Documents/Bids/2026/ADD2-SOC-250003.pdf",
+        "https://dam.assets.ohio.gov/image/upload/ofcc.ohio.gov/Portals/0/Documents/Bids/2026/ADD3-DRC-25F132.pdf",
+        "https://dam.assets.ohio.gov/image/upload/ofcc.ohio.gov/Project_Opportunities/Bids/2026/ADD-DOT-250002.pdf",
+        "https://dam.assets.ohio.gov/image/upload/ofcc.ohio.gov/Portals/0/Documents/Bids/2026/ADD3-DNR-250014.pdf",
+        "https://dam.assets.ohio.gov/image/upload/ofcc.ohio.gov/Portals/0/Documents/Bids/2026/ADD2-DNR-250014.pdf",
+        "https://dam.assets.ohio.gov/image/upload/ofcc.ohio.gov/Project_Opportunities/Bids/2026/SOL-DOT-250004.pdf",
+        "https://dam.assets.ohio.gov/image/upload/ofcc.ohio.gov/Project_Opportunities/Bids/2026/SOL-DRC-25F428.pdf"
+      ],
+      "index_pages": [
+        "https://ofcc.ohio.gov/project-opportunities/bids"
+      ]
+    },
+    {
+      "family": "missouri_oa_fmdc",
+      "kind": "state_archive",
+      "host": "oa.mo.gov",
+      "enumeration": "the bid listing page links each project's plans, specifications, addenda and bid tabs under /sites/default/files/bid-opportunities/; full compiled drawing sets exist (R2402-01 Bid Drawings Compiled.pdf). Follow every project link on the listing and take plans + specs + addenda; skip bid tabs for this corpus (they feed tools/corpus/bid-tabulations instead).",
+      "seeds": [
+        "https://oa.mo.gov/sites/default/files/bid-opportunities/R2402-01%20Bid%20Drawings%20Compiled.pdf"
+      ],
+      "index_pages": [
+        "https://oa.mo.gov/facilities/bid-opportunities/bid-listing-electronic-plans",
+        "https://fmdc.oa.mo.gov/bid-opportunities/bid-listingelectronic-plans-projects-currently-bidding"
+      ]
+    },
+    {
+      "family": "missouri_um_pdc",
+      "kind": "university_archive",
+      "host": "pdc-projects.missouri.edu",
+      "enumeration": "per-project folders /pdc/adsite/projects/<cpNNNNNN>/{ad.pdf, plans/*.pdf, sealed/*.pdf}; directory listing answers 403; the PDC 'projects currently bidding' page lists the cp numbers. Sealed drawing sets are complete architectural sets.",
+      "seeds": [
+        "https://pdc-projects.missouri.edu/pdc/adsite/projects/cp252281/sealed/CP252281_CCA_-_Paralleling_Switchgear_Replacement_-_Drawings_SEALED_2025_0610.pdf",
+        "https://pdc-projects.missouri.edu/pdc/adsite/projects/cp241481/plans/CP241481_Agriculture_Science-Electrical_Panel_Replacement-Drawings-SEALED_2025-0106.pdf",
+        "https://pdc-projects.missouri.edu/pdc/adsite/projects/cp231546/ad.pdf",
+        "https://pdc-projects.missouri.edu/pdc/adsite/projects/cp253191/ad.pdf",
+        "https://pdc-projects.missouri.edu/pdc/adsite/projects/cp252341/ad.pdf",
+        "https://pdc-projects.missouri.edu/pdc/adsite/projects/cp253171/ad.pdf"
+      ]
+    },
+    {
+      "family": "california_dgs_obas",
+      "kind": "state_archive",
+      "host": "www.dgs.ca.gov",
+      "enumeration": "robots allows all; project folders /-/media/Divisions/OBAS/Plans-and-Specs/<project>/ hold project manuals, addenda and bid packages; the OBAS bidding page lists current projects.",
+      "seeds": [
+        "https://www.dgs.ca.gov/-/media/Divisions/OBAS/Plans-and-Specs/25-275745/Bid-Package-Documents.pdf",
+        "https://www.dgs.ca.gov/-/media/Divisions/OBAS/Plans-and-Specs/24-235656/1-142452--Project-Manual-Book-I.pdf",
+        "https://www.dgs.ca.gov/-/media/Divisions/OBAS/Plans-and-Specs/24-235656/2-142452--Project-Manual-Book-II.pdf",
+        "https://www.dgs.ca.gov/-/media/Divisions/OBAS/Plans-and-Specs/24-235656/3-142452--Project-Manual-Book-III.pdf",
+        "https://www.dgs.ca.gov/-/media/Divisions/OBAS/Plans-and-Specs/25-276567-ReAd/9324--Addendum-No-3-with-attachments.pdf",
+        "https://www.dgs.ca.gov/-/media/Divisions/OBAS/Plans-and-Specs/22120165Technical-Specifications.pdf"
+      ]
+    },
+    {
+      "family": "utah_pmn",
+      "kind": "state_notice_attachments",
+      "host": "www.utah.gov",
+      "enumeration": "public notice attachments live at /pmn/files/<id>.pdf; enumerate from the notice search for construction bids.",
+      "seeds": [
+        "https://www.utah.gov/pmn/files/1244599.pdf"
+      ]
+    },
+    {
+      "family": "civicplus_documentcenter",
+      "kind": "municipal_vendor",
+      "host_pattern": "<city>/DocumentCenter/View/<id>/<slug>?bidId=",
+      "enumeration": "thousands of cities and counties; the ?bidId= attachments are bid documents. Enumerate per city from its /Bids.aspx page.",
+      "seeds": [
+        "https://buffalony.gov/DocumentCenter/View/13460/JFK-46-50203-Addendum-2?bidId=",
+        "https://fitchburgma.gov/DocumentCenter/View/10469/087100-Door-Hardware?bidId="
+      ],
+      "low_priority_seeds": [
+        "https://losaltosca.gov/DocumentCenter/View/258/Studio-1-Bed-Style-B-Architectural-Drawings-PDF?bidId=",
+        "https://losaltosca.gov/DocumentCenter/View/276/2-Bed-Style-B-Architectural-Drawings-PDF?bidId="
+      ]
+    },
+    {
+      "family": "opengov_portal",
+      "kind": "municipal_vendor",
+      "host": "procurement.opengov.com",
+      "enumeration": "public project pages /portal/<agency>/projects/<id>/document?section=<id>; verify attachments open without a login before harvesting; otherwise record and skip.",
+      "seeds": [
+        "https://procurement.opengov.com/portal/sfoconstruction/projects/135222/document?section=1218158",
+        "https://procurement.opengov.com/portal/piercecountywa/projects/132277/q-and-a",
+        "https://procurement.opengov.com/portal/dc/projects/147969/addenda"
+      ]
+    },
+    {
+      "family": "school_district_sites",
+      "kind": "k12",
+      "enumeration": "district business-office bid pages (Finalsite resources, Thrillshare file backends, WordPress uploads, district downloads). Addenda often carry revised door schedule sheets; the full set is sometimes a single combined PDF.",
+      "seeds": [
+        "https://www.lansingschools.net/downloads/purchasing/so-1847_averill_elementary_classroom_renovations.pdf",
+        "https://files-backend.assets.thrillshare.com/documents/asset/uploaded_file/4629/Rps/bfc49a08-a8c7-4373-8d6d-ca10a1218fa5/26-27-Addendum-One-COMPLETE.pdf?disposition=inline",
+        "https://www.qacps.org/wp-content/uploads/2026/03/Addendum-01.pdf",
+        "https://resources.finalsite.net/images/v1763152380/parkwayschoolsnet/tn056ycqlf8859jvebxo/25007_PSDSouthHigh_BidPermit__20251114_AddendumONE.pdf",
+        "https://resources.finalsite.net/images/v1779093915/d131org/ptygv8m8czjafutlkhhd/241012-EASD-EAHS-2025-Mechanical-Specifications-09052024.pdf",
+        "https://resources.finalsite.net/images/v1786111550/d131org/f6zdklfenwkqwqvodaetf/SPECS_EAHSSecuredEntrance_251008.pdf",
+        "https://www.oakton.edu/_pdfs/procurement/1435-bid-and-permit-docs-specs.pdf"
+      ],
+      "index_pages": [
+        "https://www.npenn.org/central_office/business_office/bid_specifications",
+        "https://www.vcsedu.org/directory/departments/operation-services/facilities-services/design-construction/bid-documents"
+      ]
+    },
+    {
+      "family": "municipal_wordpress_uploads",
+      "kind": "municipal",
+      "seeds": [
+        "https://cityofpage.org/wp-content/uploads/2025/01/Notice-of-Addendum-3-PWD-TI.pdf",
+        "https://www.metroparks.org/wp-content/uploads/2026/01/DIS-AGG-Gate-Project-2026-combined-260115.pdf",
+        "https://ngrl.org/wp-content/uploads/2025/10/DW-Invitaiton-to-Bid-Bid-Documents.pdf"
+      ]
+    },
+    {
+      "family": "university_bid_pages",
+      "kind": "university",
+      "seeds": [
+        "https://sc.edu/purchasing/solicitations/documents/s_1522941787.pdf",
+        "https://resources.uta.edu/business-affairs/procurement/rfp-files/fm2020-001/esbd-rfp-fm2020-001-uta-project-manual---bid-issue-2019-07-12.pdf",
+        "https://fcs.cornell.edu/bid-projects/mary-donlon-student-room-door-hardware-replacements"
+      ],
+      "standards_not_bid_sets": [
+        "https://fcs.cornell.edu/sites/default/files/imce/site_contributor/Design_Standards/087100_Door%20Hardware.pdf",
+        "https://www.northwestern.edu/facilities/docs/contractor-docs/nu_08-7100-2018---door-hardware.pdf",
+        "https://ipf.msu.edu/sites/default/files/2018-08/CS_TEC_2004_087100_DOOR_HARDWARE.PDF",
+        "https://pdc.ufl.edu/wp-content/uploads/2025/03/dcs-13-087000-rev-092122-final.pdf"
+      ]
+    },
+    {
+      "family": "registration_gated_plan_rooms",
+      "kind": "decision_for_john",
+      "note": "PlanetBids, Bonfire, BidNet Direct, QuestCDN, Public Purchase, DemandStar, Periscope S2G, Dodge and ConstructConnect hold most municipal full drawing sets but need accounts and their terms often forbid bulk download. Not harvested without John's approval; if approved, accounts in the firm's name and one project at a time by hand."
+    }
+  ],
+  "already_in_corpus": [
+    "OCC A-801 pg4",
+    "Rockford A2.2 + 087100",
+    "Berryessa A9.2 + 087100",
+    "Christina CHS hardware set 01",
+    "Fayette GA 2419 addendum plans",
+    "Grandview Chief Architect sample",
+    "round-1 downloads under tools/corpus/.triage-2026-10-09 (Codex, 2026-10-09)"
+  ],
+  "enumerators": [
+    {
+      "family": "missouri_oa_fmdc",
+      "kind": "oa",
+      "urls": [
+        "https://oa.mo.gov/facilities/bid-opportunities/bid-listing-electronic-plans"
+      ],
+      "filename_contains": [
+        "Plans",
+        "Specs",
+        "Bid Documents",
+        "Bid Docs",
+        "Addendum",
+        "Add",
+        "Plans-Specs",
+        "IFB"
+      ],
+      "exclude": "Bid Tab"
+    },
+    {
+      "family": "missouri_um_pdc",
+      "kind": "pdc",
+      "urls": [
+        "https://www.umsystem.edu/ums/fa/facilities/construction-bids",
+        "https://pdc-projects.missouri.edu/pdc/adsite/"
+      ],
+      "project_pattern": "project.php?project=CP252751&format=html",
+      "document_locations": [
+        "projects/<cp>/plans/",
+        "projects/<cp>/sealed/",
+        "projects/<cp>/ad.pdf",
+        "projects/<cp>/pb.pdf"
+      ]
+    }
+  ]
+}

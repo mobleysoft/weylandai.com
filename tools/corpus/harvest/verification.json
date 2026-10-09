@@ -1,0 +1,9 @@
+{
+  "verified_at": "2026-10-09T09:18:13Z",
+  "downloaded": 459,
+  "seeds_accounted": 52,
+  "enumerators_accounted": 2,
+  "triaged": 459,
+  "checks": "manifest required fields, all seeds/enumerators accounted, PDF signatures, SHA256 and sizes, unique hashes, exclusions, triage coverage, sampled-page bounds, preview existence, saved-byte accounting",
+  "outcome": "passed"
+}

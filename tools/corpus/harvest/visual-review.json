@@ -1,0 +1,26 @@
+[
+  {
+    "sha256": "a4b7b0a81c5a6602506b44e81baf18866d492adea8982830c3a9c229874d68af",
+    "reviewed_at": "2026-10-09T09:19:45Z",
+    "door_schedule": {
+      "page_index": 14,
+      "page_number": 15,
+      "sheet": "A-101",
+      "finding": "Actual door schedule: door marks 1–7, width/height, type, material, hardware codes and access-control/frame columns."
+    },
+    "floor_plan": {
+      "page_index": 14,
+      "page_number": 15,
+      "sheet": "A-101",
+      "finding": "Actual demolition and proposed floor plans, including door locations and marks."
+    },
+    "hardware_spec": {
+      "page_index": 19,
+      "page_number": 20,
+      "sheet": "A-801",
+      "method": "pdftotext -layout inspection",
+      "finding": "08710 Door Hardware; Hardware Group No. 01 and further inventories with quantities, descriptions, catalog numbers, finishes and manufacturers."
+    },
+    "scope": "Schedule/plan preview inspected by eye; hardware specification text inspected. Not a product acceptance test."
+  }
+]
