@@ -13,6 +13,8 @@
 // Usage: node tools/user-simulation/journeys/phone-key-journeys.mjs   (exit 0 = all passed)
 import { Journey, openHome, setMark, placeState, press, until, sleep, waitText, signIn, shellState, pasteSchedule, documentOutcome, closeOverlay, citedPage, openAccountCard, overlayFrame, subxWorkspace, findPaymentForm, SAMPLE_LINES } from "../lib/journey-kit.mjs";
 
+import { checkFirstScreen } from "../lib/first-screen.mjs";
+
 const J = new Journey("phone-key-journeys", "Key journeys on a phone (390x844, touch, iPhone user agent)");
 const touch = true;
 
@@ -65,6 +67,8 @@ await J.run(async () => {
   const t0 = Date.now();
   await openHome(page, J, "phone");
   const mark = await setMark(page);
+
+  await checkFirstScreen(J, page, "phone");
 
   // First view.
   const first = await page.evaluate(() => {

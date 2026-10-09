@@ -2,7 +2,7 @@
 //
 // Journey map id "takeoffx-takeoff" (priority 2): a signed-in subscriber runs a TakeOffX takeoff on
 // their own drawing (/Users/johnmobley/pdf/OCCDoorSchedulePg4.pdf, a door schedule).
-// Expected: door and hardware counts from the visitor's own drawings, with how sure they are and a
+// Expected: door and hardware counts from the visitor's own schedule, with how sure they are and a
 // review step; reached in place (the TakeOffX page opens in the homepage overlay and leads into the
 // takeoff workspace there). Since 2026-10-07 (6d31174, 82aea46) /takeoffx is the SubX workspace in
 // takeoff mode (before 82aea46 its START A TAKEOFF led there): the counts (doors, sizes read, fire-rated doors, hardware
@@ -13,7 +13,7 @@
 // account rows are deleted in finally.
 //
 // Usage: node tools/user-simulation/journeys/takeoffx-takeoff.mjs   (exit 0 = all passed)
-import { Journey, openHome, raiseDossier, setMark, press, pressIn, until, sleep, signIn, openApp, overlayFrame, frameInfo, subxWorkspace, workspaceUploadAndExtract } from "../lib/journey-kit.mjs";
+import { Journey, openHome, raiseDossier, setMark, press, pressIn, sleep, signIn, openApp, overlayFrame, frameInfo, subxWorkspace, workspaceUploadAndExtract } from "../lib/journey-kit.mjs";
 
 const J = new Journey("takeoffx-takeoff", "TakeOffX takeoff");
 
@@ -26,10 +26,11 @@ await J.run(async () => {
   await raiseDossier(page);
   const mark = await setMark(page);
 
-  // The homepage chapter: the stage-1 wall extraction of a public bid sheet.
+  // The homepage explains that TakeOffX uses the schedule SubX read.
   await page.evaluate(() => { const s = document.getElementById("takeoffx"); if (s) s.scrollIntoView({ block: "center" }); });
-  const walls = await until(() => page.evaluate(() => { const n = (document.getElementById("tx-walls-n") || {}).innerText || ""; const ft = (document.getElementById("tx-walls-ft") || {}).innerText || ""; return /\d/.test(n) && /\d/.test(ft) ? n + " / " + ft : null; }), 20000);
-  J.check("the homepage TakeOffX chapter shows the wall extraction (segments and length)", !!walls, walls || "still loading");
+  const intro = await page.locator("#takeoffx").innerText();
+  J.check("the homepage TakeOffX chapter promises door counts from the shared schedule reader", /Door counts, from the schedule SubX read/i.test(intro) && /source page and row/i.test(intro), intro);
+  J.check("the homepage door-count action opens the TakeOffX workspace", await page.locator("#takeoffx a.button").getAttribute("href") === "/takeoffx");
 
   const st = await signIn(page, acct);
   J.check("subscriber signs in on the homepage", st.auth === "signed-in", { auth: st.auth, error: st.error, seconds: st.seconds });

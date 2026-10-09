@@ -41,8 +41,8 @@ await J.run(async () => {
 
   // Homepage chapter.
   await page.evaluate(() => { const s = document.getElementById("huntx"); if (s) s.scrollIntoView({ block: "center" }); });
-  const status = (await waitText(page, "#hx-status", /opportunities in the index|no opportunities|Couldn't|include|plan/i, 30000, /^(Loading|Connecting)/i)) || "";
-  J.check("the HuntX chapter loads the opportunity index (count, source, ingest time)", /\d+ opportunities in the index/i.test(status) && /ingested/i.test(status), status);
+  const status = (await waitText(page, "#hx-status", /notices|no notices|Couldn't|include|plan/i, 30000, /^(Loading|Connecting)/i)) || "";
+  J.check("the HuntX chapter loads the opportunity index (count, source, last-read time)", /\d+ notices/i.test(status) && /sources last read/i.test(status), status);
   const links = await page.evaluate(() => Array.from(document.querySelectorAll("#hx-body tr a")).slice(0, 20).map((a) => a.getAttribute("href") || ""));
   const external = links.filter((h) => { try { const u = new URL(h); return /^https?:$/.test(u.protocol) && u.host && !/weylandai\.com$/.test(u.host); } catch (e) { return false; } });
   J.check("each opportunity links to its public source", links.length > 0 && external.length === links.length, { rows: links.length, external: external.length, sample: links.slice(0, 3) });

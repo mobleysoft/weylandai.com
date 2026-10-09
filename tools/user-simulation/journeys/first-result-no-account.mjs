@@ -1,7 +1,7 @@
 // tools/user-simulation/journeys/first-result-no-account.mjs
 //
 // Journey map id "first-result-no-account" (priority 1): a cold, signed-out visitor gets a first
-// cited result on the homepage, on desktop (1280x860) and on a phone (390x844, touch).
+// cited result on the homepage, on desktop (1440x900) and on a phone (390x664, touch).
 // Expected: "N of N lines matched" with each line's matched catalogue product, a confidence and a
 // citation that opens the cited page; the hero note reads "Live result just now, N ms round trip";
 // everything happens in the homepage (no page hop, no new tab for our own documents): since
@@ -12,6 +12,8 @@
 // Usage: node tools/user-simulation/journeys/first-result-no-account.mjs   (exit 0 = all passed)
 import { Journey, openHome, raiseDossier, setMark, press, waitText, pasteSchedule, documentOutcome, closeOverlay, citedPage, SAMPLE_LINES } from "../lib/journey-kit.mjs";
 
+import { checkFirstScreen } from "../lib/first-screen.mjs";
+
 const J = new Journey("first-result-no-account", "First visit to a first cited result, no account");
 
 await J.run(async () => {
@@ -20,27 +22,45 @@ await J.run(async () => {
     const touch = kind === "phone";
     const ctx = await J.context(kind);
     const page = await J.page(ctx);
+    await page.setViewportSize(touch ? { width: 390, height: 664 } : { width: 1440, height: 900 });
     const tLoad = Date.now();
     await openHome(page, J, kind);
     const mark = await setMark(page);
-    const first = await page.evaluate(() => {
-      const h = document.querySelector("#hero h1");
-      const r = h ? h.getBoundingClientRect() : null;
-      return { lowered: document.documentElement.classList.contains("folder-lowered"), heroInView: !!r && r.width > 0 && r.top >= 0 && r.top < innerHeight };
-    });
-    J.note(kind + "_first_view", { ...first, secondsAfterLoad: Math.round((Date.now() - tLoad) / 100) / 10 });
-    // 2026-10-08 (fix 10): every visitor, desktop included, starts on the readable page (no lowered dossier,
-    // no space intro); the corridor waits behind LOWER THE DOSSIER and WALK.
-    J.check(kind + ": the hero is in view at first load (no lowered dossier)", first.heroInView && !first.lowered, first);
-    const upload = await page.evaluate(() => { const a = document.getElementById("hs-upload"); const r = a ? a.getBoundingClientRect() : null; return a ? { href: a.getAttribute("href"), text: a.textContent.trim(), visible: !!r && r.width > 0 && r.height > 0 } : null; });
-    J.check(kind + ": UPLOAD YOUR SCHEDULE PDF is on the first screen's paste box and opens SubX", !!upload && upload.href === "/subx-app" && /upload your schedule pdf/i.test(upload.text) && upload.visible, upload);
+    await checkFirstScreen(J, page, kind);
+    J.note(kind + "_seconds_after_load", Math.round((Date.now() - tLoad) / 100) / 10);
+
+    // A cold guest sees the real, labeled sample inside this page without signing in.
+    const addressBeforeSample = await page.evaluate(() => location.pathname + location.search + location.hash);
+    await press(page, "#hero-sample", { touch });
+    const sampleDrawn = await page.waitForFunction(() => {
+      const c = document.querySelector("#wa-overlay.is-open canvas.wa-pdf-canvas");
+      return !!c && c.width > 0 && c.height > 0;
+    }, null, { timeout: 20000 }).then(() => true, () => false);
+    const sampleText = await page.locator("#wa-overlay").innerText().catch(() => "");
+    J.check(kind + ": the schedule-only sample packet opens in the PDF overlay", sampleDrawn && /Rockford.*schedule only/i.test(sampleText), sampleText);
+    const afterSample = await closeOverlay(page, touch ? "close" : "escape", { touch });
+    J.check(kind + ": closing the sample restores the homepage address", !afterSample.overlayOpen && afterSample.url === addressBeforeSample, afterSample);
+    // Upload and sign-in still use the shell; no account is created by these checks.
+    await press(page, "#hs-upload", { touch });
+    const uploadInPlace = await page.waitForFunction(() => {
+      const state = window.WeylandShell && window.WeylandShell.state();
+      return !!document.querySelector("#wa-overlay.is-open") && state &&
+        ((state.view === "app" && state.path === "/subx-app") || state.view === "signin");
+    }, null, { timeout: 20000 }).then(() => true, () => false);
+    J.check(kind + ": the upload opens SubX or its sign-in gate in the overlay", uploadInPlace);
+    await closeOverlay(page, touch ? "close" : "escape", { touch });
+    await press(page, ".wn-persistent-footer #wa-account-chip", { touch });
+    const signInOpen = await page.waitForFunction(() => window.WeylandShell && window.WeylandShell.state().view === "signin", null, { timeout: 10000 }).then(() => true, () => false);
+    J.check(kind + ": footer sign-in opens inside the page", signInOpen);
+    await closeOverlay(page, touch ? "close" : "escape", { touch });
+    await J.checkInPlace(page, mark, kind + ": upload, sample and sign-in keep the same document");
     const raised = await raiseDossier(page, { touch });
     J.check(kind + ": the hero is readable after raising the dossier", raised === "raised", raised);
 
-    // Hero: ONE REAL MATCH, RUN IT LIVE
+    // Catalog tools: ONE HARDWARE LINE, RUN IT LIVE
     await press(page, "#hm-run", { touch });
     const hm = await waitText(page, "#hm-note", /Live result|Matcher returned|failed|no match/i, 30000, /^Running against/i);
-    J.check(kind + ": hero RUN IT LIVE shows a live result", /Live result just now, \d+ ms round trip/i.test(hm || ""), hm);
+    J.check(kind + ": catalog RUN IT LIVE shows a live result", /Live result just now, \d+ ms round trip/i.test(hm || ""), hm);
 
     // Paste a schedule
     const r = await pasteSchedule(page, SAMPLE_LINES, { touch });

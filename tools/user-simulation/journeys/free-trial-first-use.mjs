@@ -63,8 +63,8 @@ await J.run(async () => {
   J.check("trial: PropX GENERATE prices the sample proposal", /^Generated/i.test(px || ""), (px || "").split("\n")[0]);
 
   await press(page, "#hx-refresh-btn");
-  const hx = await waitText(page, "#hx-status", /opportunities in the index|no opportunities|Couldn't|include|plan/i, 30000, /^Loading/i);
-  J.check("trial: the HuntX chapter loads the opportunity index", /\d+ opportunities in the index/i.test(hx || ""), hx);
+  const hx = await waitText(page, "#hx-status", /notices|no notices|Couldn't|include|plan/i, 30000, /^Loading/i);
+  J.check("trial: the HuntX chapter loads the opportunity index", /\d+ notices/i.test(hx || ""), hx);
 
   // The account card shows the trial; OPEN SUBX opens the workspace signed in.
   const card = await openAccountCard(page);

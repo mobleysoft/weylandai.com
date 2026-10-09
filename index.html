@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <meta name="theme-color" content="#0b0d13">
-  <title>WeylandAI | Match every spec line to the real catalog page, with the citation</title>
+  <title>WeylandAI | Door schedule in. Submittal packet out. $100.</title>
   <!-- 2026-10-05: the two homepage faces are declared inline and preloaded
        (one fewer render-blocking round trip, and the font is in hand before
        first paint so the hero does not reflow on swap). Other pages keep
@@ -18,20 +18,20 @@
 @font-face{font-family:'Outfit';font-style:normal;font-weight:300 600;font-display:optional;src:url(/assets/fonts/outfit-variable.woff2) format('woff2');unicode-range:U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD}
 @font-face{font-family:'Space Grotesk';font-style:normal;font-weight:400 700;font-display:optional;src:url(/assets/fonts/space-grotesk-variable.woff2) format('woff2');unicode-range:U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD}
   </style>
-  <script type="application/ld+json">{"@context":"https://schema.org","@type":"Organization","name":"WeylandAI","url":"https://weylandai.com/","description":"CutsheetX matches every door and hardware spec line to the real catalog page, with the citation; the same project record flows through bids, takeoffs, submittals, proposals, meetings and a 3D field twin.","founder":[{"@type":"Person","name":"Ron Helms","jobTitle":"CEO and Lead Software Developer"},{"@type":"Person","name":"John Mobley","jobTitle":"CTO and Chief Architect"},{"@type":"Person","name":"Andrew Miller","jobTitle":"Business Development","worksFor":{"@type":"Organization","name":"Precision Auto Doors"}}]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"Organization","name":"WeylandAI","url":"https://weylandai.com/","description":"Reads a door schedule PDF, traces every door to its page and row, builds the submittal packet with the hardware groups from the 08 71 00 section, and walks the openings in 3D. $100 for the first submittal, 30 days of every product, no automatic charge.","founder":[{"@type":"Person","name":"Ron Helms","jobTitle":"CEO and Lead Software Developer"},{"@type":"Person","name":"John Mobley","jobTitle":"CTO and Chief Architect"},{"@type":"Person","name":"Andrew Miller","jobTitle":"Business Development","worksFor":{"@type":"Organization","name":"Precision Auto Doors"}}]}</script>
 <link rel="canonical" href="https://weylandai.com/">
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%232a52ff'/%3E%3Cpath d='M10 16h8l6 24 6-18h4l6 18 6-24h8L44 50h-8l-4-13-4 13h-8z' fill='%23ffd400'/%3E%3C/svg%3E">
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="WeylandAI">
   <meta property="og:url" content="https://weylandai.com/">
-  <meta property="og:title" content="WeylandAI: match every spec line to the real catalog page, with the citation">
-  <meta property="og:description" content="CutsheetX matches door and hardware specs to the manufacturer catalog page and opens the real price book at the cited page. No account to try it. Part of a subcontractor suite that opens inside a 3D building you can walk.">
+  <meta property="og:title" content="WeylandAI: door schedule in, submittal packet out, $100">
+  <meta property="og:description" content="Upload your door schedule PDF: every door read and traced to its page and row. Add the hardware section (08 71 00) and the sets go in the packet. $100 for your first submittal, 30 days of every product, no automatic charge.">
   <meta property="og:image" content="https://mobleysoft.github.io/weylandai.com/launch/og/og-image.png">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="WeylandAI: cited catalog matches for door and hardware specs">
-  <meta name="twitter:description" content="Paste a spec line or a whole schedule. Every line matched to the real catalog page, with the citation. Try it with no account.">
+  <meta name="twitter:title" content="WeylandAI: door schedule in, submittal packet out, $100">
+  <meta name="twitter:description" content="Upload your door schedule PDF. Every door read and traced to its row. Your first submittal packet for $100, no automatic charge.">
   <meta name="twitter:image" content="https://mobleysoft.github.io/weylandai.com/launch/og/og-image.png">
   <!-- Cloudflare Web Analytics: cookieless, no personal data, aggregate
        only; Cloudflare is already a named processor in the privacy policy
@@ -60,7 +60,7 @@
     else addEventListener("load", function () { setTimeout(send, 0); }, { once: true });
   })();
   </script>
-  <meta name="description" content="CutsheetX matches every door and hardware spec line to the real manufacturer catalog page, with a citation back to the source. Try it with no account. Part of the WeylandAI suite for commercial subcontractors: bids, takeoffs, submittals, proposals, meetings, and a 3D field twin on one project record.">
+  <meta name="description" content="Upload your door schedule PDF: every door read and traced to its page and row. Add the hardware section (08 71 00) and the sets go in the submittal packet. Walk the openings in 3D. $100 for your first submittal, 30 days of every product, no automatic charge.">
   <style>
     :root {
       /* Same pairing SightX's own HUD already uses - the card (device) and
@@ -903,56 +903,6 @@
       margin-bottom: 40px;
     }
     
-    /* Journey Breadcrumb Bar */
-    .journey-bar {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      flex-wrap: wrap;
-      background: rgba(18, 20, 25, 0.9);
-      border: 1px solid var(--line);
-      border-radius: 14px;
-      padding: 14px 20px;
-      margin-bottom: 40px;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-    }
-    .journey-label {
-      font: 800 10px/1 ui-monospace, monospace;
-      letter-spacing: 0.12em;
-      color: var(--muted);
-      text-transform: uppercase;
-      margin-right: 6px;
-    }
-    .journey-step {
-      display: flex;
-      align-items: center;
-      gap: 7px;
-      font: 800 11px/1 ui-monospace, monospace;
-      letter-spacing: 0.06em;
-      color: var(--text);
-      text-decoration: none;
-      padding: 6px 12px;
-      border-radius: 8px;
-      background: rgba(255, 255, 255, 0.03);
-      border: 1px solid rgba(255, 255, 255, 0.06);
-      transition: all 0.2s ease;
-    }
-    .journey-step:hover {
-      background: rgba(42, 82, 255, 0.15);
-      border-color: var(--primary);
-      color: #fff;
-    }
-    .journey-step .dot {
-      width: 8px;
-      height: 8px;
-      border-radius: 50%;
-      background: var(--accent);
-    }
-    .journey-sep {
-      color: var(--line);
-      font-size: 12px;
-    }
-
     /* Live Stat Cards */
     .metrics-row {
       display: grid;
@@ -1948,6 +1898,46 @@
     @keyframes boot-fade {
       to { opacity: 0; visibility: hidden; pointer-events: none; }
     }
+
+    /* The offer occupies the first scrollport; the footer has its own space. */
+    :root { --home-viewport: 100vh; --frame-gutter: clamp(10px, 2.4vw, 32px); --footer-bar-height: 65px; --site-header-height: 57px; }
+    @supports (height: 100dvh) { :root { --home-viewport: 100dvh; } }
+    .envelope-frame { height: calc(var(--home-viewport) - 2 * var(--frame-gutter) - var(--footer-bar-height)); scroll-padding-bottom: 16px; }
+    .wn-persistent-footer { bottom: var(--frame-gutter); width: calc(100% - 2 * var(--frame-gutter)); }
+    .site-header .wn-logo { flex: 0 0 168px; }
+    .hero-chapter { min-height: calc(var(--home-viewport) - 2 * var(--frame-gutter) - var(--footer-bar-height) - var(--site-header-height)); display: flex; flex-direction: column; justify-content: center; align-items: flex-start; padding: 32px 0 48px; }
+    #hero h1 { font-size: clamp(42px, 5.2vw, 72px); line-height: 1.04; letter-spacing: -.045em; max-width: 900px; margin: 0 0 24px; }
+    .hero-kicker { color: var(--accent); line-height: 1.3; }
+    .hero-sub-desktop { max-width: 770px; }
+    .hero-sub-phone { display: none; }
+    .hero-actions { margin: 0; }
+    #sample-packet-status { max-width: 36em; color: var(--muted); font-size: 14px; }
+    .tools-chapter .wn-blade { display: flex; flex: 1; gap: 4px; margin: 0; padding: 3px; overflow-x: auto; clip-path: none; }
+    .tools-chapter .wn-flag { flex: 1 0 108px; }
+    .tools-chapter .wn-flag:first-child { margin-left: 0; }
+    .button:disabled, .button:disabled:hover { background: #292e38; border-color: #434b5a; color: #969eac; opacity: .7; cursor: not-allowed; box-shadow: none; transform: none; }
+    @media (max-width: 899px) {
+      .hero-sub-desktop { display: none; }
+      .hero-sub-phone { display: block; margin: 0 0 24px; color: var(--muted); font-size: 16px; line-height: 1.45; }
+      .hero-sub-phone p { margin: 0 0 8px; max-width: 33em; }
+      .hero-kicker { font-size: 11px; letter-spacing: .08em; }
+      .hero-actions { flex-direction: column; align-items: stretch; width: 100%; max-width: 380px; gap: 10px; }
+      .hero-actions .button { justify-content: center; min-height: 48px; font-size: 12px; padding: 12px; }
+      .site-header .wn-logo { flex-basis: 120px; }
+    }
+    @media (max-width: 640px) {
+      :root { --frame-gutter: 6px; --site-header-height: 47px; }
+      #hero h1 { font-size: clamp(34px, 10vw, 44px); margin-bottom: 20px; max-width: 420px; }
+      .hero-chapter { padding: 24px 0 32px; }
+      .wn-persistent-footer { padding: 8px; gap: 4px; }
+      .wn-persistent-footer a { padding-left: 6px; padding-right: 6px; font-size: 11px; }
+    }
+    @media (max-height: 620px) and (max-width: 899px) {
+      .hero-chapter { padding: 16px 0; }
+      #hero h1 { font-size: 32px; margin-bottom: 14px; }
+      .hero-sub-phone { margin-bottom: 14px; font-size: 15px; }
+      .hero-kicker { margin-bottom: 12px; }
+    }
   </style>
   <script src="/assets/weyland-input.js?v=20261009-s0b"></script>
 </head>
@@ -2033,21 +2023,11 @@
   <!-- Sticky Scrollytelling Ribbon Header -->
   <header class="site-header" id="top-nav">
     <div class="wn-row">
-      <div class="wn-ribbon" role="navigation" aria-label="Product Navigation Ribbon">
+      <div class="wn-ribbon" role="navigation" aria-label="Home">
         <a href="#hero" class="wn-flag wn-logo" data-tone="blue" data-target="hero" aria-label="WeylandAI Home">
           <span class="wn-flag-frame"></span>
           <span class="wn-flag-fill"><img id="wn-logo-img" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA1MzYgMTQ1IiB3aWR0aD0iNTM2IiBoZWlnaHQ9IjE0NSI+CiAgPHRpdGxlPldleWxhbmRBSSB3b3JkbWFyayDigJQgcmVhbCB2ZWN0b3IgdHJhY2UsIHJlY29sb3JlZCBiYWRnZTwvdGl0bGU+CiAgPHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjUzNiIgaGVpZ2h0PSIxNDUiIHJ4PSIyMCIgZmlsbD0iIzJBNTJGRiIvPgogIDxnIHRyYW5zZm9ybT0idHJhbnNsYXRlKDI4LDI4KSI+CiAgICA8ZyB0cmFuc2Zvcm09InRyYW5zbGF0ZSgwLDg0KSBzY2FsZSgxLDEuMDIwMykgdHJhbnNsYXRlKDAsLTg0KSI+CiAgICA8ZyB0cmFuc2Zvcm09InRyYW5zbGF0ZSgtMi45LDUpIHNjYWxlKDEsMS4xMTkpIHRyYW5zbGF0ZSgyLjksLTUpIj4KICAgIDxnIHRyYW5zZm9ybT0idHJhbnNsYXRlKDAsOS4yKSB0cmFuc2xhdGUoNTgsNjYuMykgc2NhbGUoMS4xNSkgdHJhbnNsYXRlKC01OCwtNjYuMykiPgogICAgPGcgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoMC4wMDAwMDAsODkuMDAwMDAwKSBzY2FsZSgwLjEwMDAwMCwtMC4xMDAwMDApIiBmaWxsPSIjRkZENDAwIiBzdHJva2U9Im5vbmUiPgogICAgICA8cGF0aCBkPSJNIDgyLjksODQwLjAgTCA4Mi45LDgwMi4wIEwgMjE2LjAsMzAwLjAgTCAxOTguMCwzMzguMCBMIDEyNi45LDU5NS4zIEwgMTE0LjQsMzQzLjIgTCA3MS44LDI2MS42IEwgNzEuOCwyMjguMSBMIDQ1Ni41LDIyOC4xIEwgNTc4LjMsNjAwLjIgTCA3MDAuMSwyMjguMSBMIDEwNzguMiwyMjguMSBMIDEwNzguMiwyNjEuNiBMIDEwMzYuMywzNDIuMCBMIDEwMjMuNCw2MDEuMyBMIDk1MC4wLDMzMy4wIEwgOTI3LjUsMzA2LjAgTCAxMDYyLjksODAyLjAgTCAxMDYyLjksODQwLjAgTCA4MjEuNSw4NDAuMCBMIDgyMS41LDgwMi4wIEwgODA3LjUsMzkwLjYgTCA2NjguMCw4NDAuMCBMIDQ5NS4wLDg0MC4wIEwgMzUwLjIsMzc1LjMgTCAzMzUuNyw4MDIuMCBMIDMzNS43LDg0MC4wIFoiLz4KICAgIDwvZz4KICAgIDwvZz4KICAgIDwvZz4KICAgIDwvZz4KICAgIDxnIHRyYW5zZm9ybT0idHJhbnNsYXRlKDAsMi41KSI+CiAgICA8ZyB0cmFuc2Zvcm09InRyYW5zbGF0ZSgwLjAwMDAwMCw4OS4wMDAwMDApIHNjYWxlKDAuMTAwMDAwLC0wLjEwMDAwMCkiIGZpbGw9IiNGNUY3RkEiIHN0cm9rZT0ibm9uZSI+CiAgICAgIDxwYXRoIGQ9Ik0yMTAwIDUzNSBsMCAtMzA1IDY1IDAgNjUgMCAwIDMwNSAwIDMwNSAtNjUgMCAtNjUgMCAwIC0zMDV6Ii8+CiAgICAgIDxwYXRoIGQ9Ik0zNjEwIDcyOSBjMCAtOTggLTIgLTEwOSAtMTUgLTk2IC0yNSAyNiAtODQgNDAgLTEzOCAzNCAtMTExIC0xNAotMTcyIC05NSAtMTcxIC0yMjcgMCAtMTE0IDQzIC0xODMgMTMzIC0yMTUgNjEgLTIxIDk5IC0xOSAxNTAgMTAgNTIgMzAgNTEgMzAKNTEgNyAwIC0xNiA3IC0xOCA1OCAtMTYgbDU3IDMgMyAzMDUgMiAzMDYgLTY1IDAgLTY1IDAgMCAtMTExeiBtLTI3IC0xOTAgYzIzCi0yNSAyNyAtMzggMjcgLTkwIDAgLTkzIC0zMiAtMTM5IC05NyAtMTM5IC0xMTEgMCAtMTQzIDIxMCAtMzkgMjU2IDQxIDE4IDc1CjEwIDEwOSAtMjd6Ii8+CiAgICAgIDxwYXRoIGQ9Ik0xMzM1IDY2NSBjLTUgLTIgLTIyIC02IC0zOCAtOSAtNDEgLTkgLTEwMyAtNzEgLTEyMyAtMTIyIC0yNiAtNjcKLTE1IC0xNzMgMjIgLTIyNyA5MCAtMTMwIDMwOCAtMTI0IDM4MiAxMCBsMjIgNDEgLTQzIDYgYy01MSA4IC03MCAyIC0xMDMgLTMwCi0yNiAtMjcgLTk3IC0zMyAtMTI2IC0xMCAtMjIgMTYgLTQ5IDY3IC00MiA3OCAzIDQgNzQgOCAxNTkgOCA5MSAwIDE1NiA0IDE2MAoxMCAzIDUgMSAzNiAtNCA2NyAtMjEgMTEwIC05NyAxNzggLTIwNCAxODEgLTI5IDAgLTU2IC0xIC02MiAtM3ogbTg5IC05NSBjMjEKLTggNTYgLTU0IDU2IC03NSAwIC0zIC00MyAtNSAtOTUgLTUgLTg1IDAgLTk1IDIgLTk1IDE4IDAgMTAgMTAgMjggMjMgMzkgMzYKMzMgNjggNDAgMTExIDIzeiIvPgogICAgICA8cGF0aCBkPSJNMjQ0NSA2NjQgYy03OCAtMTkgLTEzNSAtNzEgLTEzNSAtMTIzIDAgLTE5IDUgLTIxIDYwIC0yMSA1NCAwIDYxIDIKNjkgMjQgMTEgMjggMjkgMzYgODEgMzYgMzggMCA3MCAtMjAgNzAgLTQzIC0xIC0yOCAtMjIgLTM5IC0xMDYgLTUyIC00OSAtOAotMTA2IC0yMiAtMTI2IC0zMSAtNjYgLTI5IC04NiAtMTE1IC00MyAtMTgxIDIwIC0yOSA4OCAtNjMgMTMwIC02MyAzNiAwIDEyMgoyNSAxNDEgNDEgMTEgOSAxNCA4IDE0IC00IDAgLTEyIDE1IC0xNiA2MyAtMTkgMzQgLTIgNjIgLTQgNjMgLTMgMCAwIC0yIDc5Ci02IDE3NSAtNyAxOTYgLTEzIDIxNSAtNzggMjQ2IC0zNiAxNyAtMTU2IDI4IC0xOTcgMTh6IG0xNDIgLTI4MSBjLTExIC03MAotODkgLTEwNiAtMTQ1IC02NyAtMjUgMTcgLTI4IDQyIC05IDY3IDEyIDE3IDc0IDM0IDEzMSAzNiAyOCAxIDI4IDAgMjMgLTM2eiIvPgogICAgICA8cGF0aCBkPSJNMjk5NiA2NjAgYy0xNiAtNSAtMzkgLTE5IC01MiAtMzEgbC0yNCAtMjIgMCAyNiBjMCAyNyAtMSAyNyAtNjUgMjcKbC02NSAwIDAgLTIxMyBjMCAtMTE4IDIgLTIxNiA0IC0yMTggMiAtMiAzNCAtMyA2OSAtMSBsNjYgNCAzIDE1MCBjMyAxNDQgNAoxNTEgMjcgMTY5IDI3IDIyIDc5IDI1IDEwNyA1IDE3IC0xMyAxOSAtMzAgMjIgLTE3MCA0IC0xNzMgLTEgLTE2NCA4MyAtMTU4Cmw0OSA0IDAgMTY0IGMwIDE0NCAtMiAxNzAgLTIwIDIwMyAtMzAgNjAgLTExOSA4NiAtMjA0IDYxeiIvPgogICAgICA8cGF0aCBkPSJNMTYwMCA2NTcgYzAgLTIgMzYgLTk1IDgxIC0yMDggNDUgLTExMiA4MSAtMjE0IDgxIC0yMjYgMCAtMTMgLTcKLTM0IC0xNiAtNDggLTE0IC0yMSAtMjQgLTI1IC02MSAtMjUgbC00NSAwIDAgLTUwIDAgLTUwIDU1IDAgYzY0IDAgMTEwIDE3CjE0MiA1MSAxMiAxMyA2MiAxMzIgMTEyIDI2NCA0OSAxMzIgOTQgMjUzIDEwMCAyNjggbDExIDI4IC02NyAtMyAtNjYgLTMgLTQ4Ci0xNDAgYy0yNiAtNzcgLTUwIC0xMzMgLTUzIC0xMjUgLTMgOCAtMjUgNzEgLTQ5IDE0MCBsLTQ0IDEyNSAtNjYgMyBjLTM3IDIKLTY3IDEgLTY3IC0xeiIvPgogICAgPC9nPgogICAgPC9nPgogICAgPGcgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoLTkuMywwKSI+CiAgICA8ZyB0cmFuc2Zvcm09InRyYW5zbGF0ZSgwLDg0KSBzY2FsZSgxLDEuMDIwMykgdHJhbnNsYXRlKDAsLTg0KSI+CiAgICA8ZyB0cmFuc2Zvcm09InRyYW5zbGF0ZSgzODkuOCw1KSBzY2FsZSgxLDEuMTE1OCkgdHJhbnNsYXRlKC0zODkuOCwtNSkiPgogICAgPGcgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoMzg5LjgsNSkgc2NhbGUoMS4xNSkgdHJhbnNsYXRlKC0zODkuOCwtNSkiPgogICAgPGcgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoMC4wMDAwMDAsODkuMDAwMDAwKSBzY2FsZSgwLjEwMDAwMCwtMC4xMDAwMDApIiBmaWxsPSIjRjVGN0ZBIiBzdHJva2U9Im5vbmUiPgogICAgICA8cGF0aCBkPSJNNDEzMCA4MTggYy02MCAtMTM5IC0yMzcgLTU4OSAtMjMyIC01OTEgNCAtMiAzOCAtMyA3NyAtMyA3NiAxIDc1IDAKMTA5IDg5IGwxNSAzNyAxMjQgMCAxMjMgMCAyNSAtNjIgMjQgLTYzIDc3IDAgYzQzIDAgNzggNCA3OCA5IDAgNCAtMzEgODMsLTY4CjE3NSAtMzggOTEgLTkzIDIyNiAtMTIyIDI5OSBsLTU0IDEzMiAtODMgMCBjLTc3IDAgLTg0IC0yIC05MyAtMjJ6IG0xMzkgLTI1OApjMTYgLTQxIDI3IC03OCAyNCAtODIgLTIgLTUgLTM1IC04IC03NCAtOCAtNTEgMCAtNjkgNCAtNjkgMTMgMCAxMiAzMyAxMDEgNjIKMTY3IDEyIDI5IDggMzYgNTcgLTkweiIvPgogICAgICA8cGF0aCBkPSJNNDYwMiA1MzMgbDMgLTMwOCA3MyAwIDcyIDAgMCAzMDcgMCAzMDggLTc1IDAgLTc1IDAgMiAtMzA3eiIvPgogICAgPC9nPgogICAgPC9nPgogICAgPC9nPgogICAgPC9nPgogICAgPC9nPgogIDwvZz4KPC9zdmc+Cg==" alt="WeylandAI" width="536" height="145"></span>
         </a>
-        <div class="wn-blade">
-        <a href="#huntx" class="wn-flag" data-tone="yellow" data-target="huntx"><span class="wn-flag-frame"></span><span class="wn-flag-fill">HuntX</span></a>
-        <a href="#takeoffx" class="wn-flag" data-tone="yellow" data-target="takeoffx"><span class="wn-flag-frame"></span><span class="wn-flag-fill">TakeOffX</span></a>
-        <a href="#subx" class="wn-flag" data-tone="yellow" data-target="subx"><span class="wn-flag-frame"></span><span class="wn-flag-fill">SubX</span></a>
-        <a href="#cutsheetx" class="wn-flag" data-tone="yellow" data-target="cutsheetx"><span class="wn-flag-frame"></span><span class="wn-flag-fill">CutsheetX</span></a>
-        <a href="#propx" class="wn-flag" data-tone="yellow" data-target="propx"><span class="wn-flag-frame"></span><span class="wn-flag-fill">PropX</span></a>
-        <a href="#meetingx" class="wn-flag" data-tone="yellow" data-target="meetingx"><span class="wn-flag-frame"></span><span class="wn-flag-fill">MeetingX</span></a>
-        <a href="#sightx" class="wn-flag" data-tone="yellow" data-target="sightx"><span class="wn-flag-frame"></span><span class="wn-flag-fill">SightX</span></a>
-        <a href="#wire" class="wn-flag" data-tone="yellow" data-target="wire"><span class="wn-flag-frame"></span><span class="wn-flag-fill">WireX</span></a>
-        </div>
       </div>
       <nav class="wn-secondary">
         <a href="#whyweyland" data-target="whyweyland">Why WeylandAI</a>
@@ -2055,7 +2035,7 @@
         <a href="#wire" data-target="wire">News</a>
         <a class="wn-signin js-upgrade-cta" href="/login?redirect=/">Sign In</a>
       </nav>
-      <button type="button" class="wn-close" id="envelope-close" aria-label="Close: lower the dossier back into your hand and reveal the SightX world"><span class="wn-close-x" aria-hidden="true">&#x2715;</span><span class="wn-close-hint">[close]</span></button>
+      <button type="button" class="wn-close" id="envelope-close" aria-label="Lower this page and walk the 3D corridor behind it"><span class="wn-close-x" aria-hidden="true">&#x2715;</span><span class="wn-close-hint">[walk 3D]</span></button>
     </div>
     <!-- Scroll progress bar IS the seam between nav and content - a child of
          the sticky header so it always sits exactly at its bottom edge,
@@ -2064,56 +2044,41 @@
   </header>
 
   <main class="shell">
-    <!-- HERO SECTION: Master Storyboard Entry -->
     <section class="story-chapter hero-chapter" id="hero">
-      <div class="hero-kicker">CUTSHEETX &middot; CATALOG MATCHING WITH CITATIONS &middot; ONE TOOL OF THE WEYLANDAI SUITE</div>
-      <h1>Match every spec line to the real catalog page. With the citation to prove it.</h1>
-      <p class="hero-sub">CutsheetX reads a door or hardware spec, finds the manufacturer&rsquo;s catalog variant, and hands you the match with a link back to the source document. Try it below with no account. The rest of the suite picks up the same project record from there: public bid notices, door counts from the schedule, submittals, proposals priced with your numbers, the project room, and a 3D jobsite walk-through.</p>
-      
+      <div class="hero-kicker">DOOR AND HARDWARE SUBMITTALS</div>
+      <h1>Door schedule in. Submittal packet out. $100.</h1>
+      <p class="hero-sub hero-sub-desktop">Upload your door schedule and hardware section (08 71 00): every door read and traced to its row, free; the packet is $100 for your first submittal, no automatic charge.</p>
+      <div class="hero-sub-phone">
+        <p>Every door read and traced to its row, free.</p>
+        <p>First packet: $100. No automatic charge.</p>
+        <p>Includes 30 days of every product.</p>
+      </div>
       <div class="hero-actions">
-        <a class="button accent" href="#cutsheetx">TRY A REAL MATCH NOW &darr;</a>
-        <a class="button primary" href="#huntx">SEE THE WHOLE SUITE</a>
-        <a class="button" href="#pricing">PRICING</a>
-        <a class="js-upgrade-cta button" href="/login?redirect=/">SIGN IN</a>
+        <a id="hs-upload" href="/subx-app" class="button accent">UPLOAD YOUR SCHEDULE PDF</a>
+        <button id="hero-sample" type="button" class="button js-sample-packet">SEE A SAMPLE PACKET</button>
+      </div>
+      <p id="sample-packet-status" role="status" hidden></p>
+    </section>
+
+    <section class="story-chapter" id="subx">
+      <div class="chapter-eyebrow">
+        <span class="ch-badge ch-accent">SUBX</span>
+        <span>YOUR SCHEDULE, READ AND TRACED &middot; A SAMPLE BELOW</span>
+      </div>
+      <div class="chapter-head">
+        <div class="chapter-product-badge"><span>SubX</span></div>
+        <h2>Every door read and traced to its row. Then the packet.</h2>
+        <div class="chapter-tagline">Reads ruled schedule tables on the page you name; a size it cannot read with certainty is flagged, not guessed.</div>
+        <p class="chapter-desc">Door rows read from your schedule, each traced to its page and row, matched to the catalogue where it covers them, and built into the submittal PDF. On a real bid set (Rockford, sheet A2.2) it read 65 of 65 doors and traced each to its row. Upload the hardware section (08 71 00) as well: the packet needs it for the hardware groups. A scanned full-size schedule sheet does not read yet.</p>
       </div>
 
-      <!-- Scrollytelling Timeline Breadcrumb -->
-      <nav class="journey-bar" aria-label="Build Lifecycle Journey">
-        <span class="journey-label">PROJECT LIFECYCLE:</span>
-        <a class="journey-step" href="#huntx"><span class="dot"></span>01 HuntX: Opportunity</a>
-        <span class="journey-sep">&rarr;</span>
-        <a class="journey-step" href="#takeoffx"><span class="dot"></span>02 TakeoffX: Quantify</a>
-        <span class="journey-sep">&rarr;</span>
-        <a class="journey-step" href="#subx"><span class="dot"></span>03 SubX: Extract</a>
-        <span class="journey-sep">&rarr;</span>
-        <a class="journey-step" href="#cutsheetx"><span class="dot"></span>04 CutsheetX: Match</a>
-        <span class="journey-sep">&rarr;</span>
-        <a class="journey-step" href="#propx"><span class="dot"></span>05 PropX: Price &amp; Margin</a>
-        <span class="journey-sep">&rarr;</span>
-        <a class="journey-step" href="#sightx"><span class="dot"></span>06 SightX: 3D Twin</a>
-      </nav>
+      <div class="note-card" id="sample-packet">
+        <strong>See what the packet contains.</strong>
+        <p>The Rockford sample has a cover, contents, all 65 door rows and the uploaded sheet. It is a schedule-only sample: hardware groups and cut sheets need Section 08 71 00.</p>
+        <button type="button" class="button js-sample-packet">SEE A SAMPLE PACKET</button>
+        <a class="button" href="#hero-schedule">PASTE HARDWARE LINES &middot; NO ACCOUNT</a>
+      </div>
 
-      <!-- One real CutsheetX match in the hero, instead of metric cards.
-           The static result below is a REAL response captured from
-           POST /api/cut-sheets/match on 2026-10-04 (LCN 4040XP: exact match,
-           high confidence, cited to the LCN price book). RUN IT LIVE re-runs
-           the same request with an ephemeral session and replaces the card
-           with whatever the matcher returns right now - including a miss. -->
-      <div id="hero-match" class="metrics-row" style="grid-template-columns:1fr;max-width:860px">
-        <div class="metric-card" style="text-align:left;padding:18px 22px">
-          <span>One real match, as the matcher returned it</span>
-          <div style="display:grid;grid-template-columns:auto 1fr;gap:6px 16px;margin:10px 0 12px;font-size:13px;line-height:1.45">
-            <div style="color:var(--muted)">Spec line</div><div id="hm-spec" style="font-family:ui-monospace,monospace;color:var(--text)">LCN 4040XP</div>
-            <div style="color:var(--muted)">Matched</div><div id="hm-product" style="color:var(--text);font-weight:700">LCN 4040XP Extra Heavy Duty Door Closer</div>
-            <div style="color:var(--muted)">Confidence</div><div id="hm-conf" style="color:var(--green);font-weight:700">high &middot; exact</div>
-            <div style="color:var(--muted)">Citation</div><div id="hm-cite" style="color:var(--text)">LCN Price Book, 152 pages (product listed around pp. 6&ndash;48 in the edition catalogued)</div>
-          </div>
-          <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:center">
-            <button id="hm-run" type="button" class="button accent" style="padding:9px 16px;font-size:11px">RUN IT LIVE</button>
-            <a class="button" href="#cutsheetx" style="padding:9px 16px;font-size:11px">TRY YOUR OWN SPEC &darr;</a>
-            <small id="hm-note" style="color:var(--muted);font-size:11px">Captured from the live matcher on 2026-10-04.</small>
-          </div>
-        </div>
         <!-- Paste a whole schedule: one spec per line (CSV/TSV/"Mfr Model"
              all accepted). POST /api/cut-sheets/match-batch matches every
              line through the same matcher and records misses (manufacturer
@@ -2121,146 +2086,18 @@
              matched openings to SightX and lowers the dossier. -->
         <div class="metric-card" id="hero-schedule" style="text-align:left;padding:18px 22px">
           <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:center;justify-content:space-between">
-            <span>Or paste your door hardware schedule</span>
-            <a id="hs-upload" href="/subx-app" class="button primary" style="padding:9px 16px;font-size:11px">UPLOAD YOUR SCHEDULE PDF</a>
+            <span>Or paste hardware lines, no account needed</span>
           </div>
           <textarea id="hs-text" rows="4" placeholder="One spec per line, e.g.&#10;LCN 4040XP&#10;Von Duprin, 99&#10;Schlage	L9080" style="width:100%;margin-top:10px;background:#161920;color:var(--text);border:1px solid var(--line);border-radius:8px;padding:10px 12px;font:500 13px/1.45 ui-monospace,monospace;resize:vertical"></textarea>
           <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-top:10px">
-            <button id="hs-run" type="button" class="button accent" style="padding:9px 16px;font-size:11px">MATCH THE SCHEDULE</button>
-            <button id="hs-walk" aria-describedby="hs-walk-help" type="button" class="button primary" style="padding:9px 16px;font-size:11px" disabled>WALK THIS SCHEDULE IN SIGHTX</button>
+            <button id="hs-run" type="button" class="button accent" style="padding:9px 16px;font-size:11px">MATCH THESE LINES</button>
+            <button id="hs-walk" aria-describedby="hs-walk-help" type="button" class="button primary" style="padding:9px 16px;font-size:11px" disabled>WALK THESE DOORS IN 3D</button>
             <small id="hs-walk-help" style="color:var(--muted);font-size:11px">Match at least one spec line to enable the walk.</small>
-            <small id="hs-note" style="color:var(--muted);font-size:11px">Up to 60 lines. Misses are recorded as manufacturer + model only, so coverage grows.</small>
+            <small id="hs-note" style="color:var(--muted);font-size:11px">Up to 60 lines. A line we cannot match says so.</small>
           </div>
           <div id="hs-results" style="margin-top:12px;font-size:13px;color:var(--muted)"></div>
           <div id="hs-dossier" style="margin-top:10px;font-size:11px;color:var(--muted)"></div>
         </div>
-      </div>
-    </section>
-
-    <!-- CHAPTER 01: HuntX — Opportunity Discovery -->
-    <section class="story-chapter" id="huntx">
-      <div class="chapter-eyebrow">
-        <span class="ch-badge ch-accent">HUNTX</span>
-        <span>PUBLIC BID DISCOVERY &amp; OPPORTUNITY INGESTION</span>
-      </div>
-      <div class="chapter-head">
-        <div class="chapter-product-badge"><span>HuntX</span></div>
-        <h2>Texas DOT Lettings, California School Funding, NYC and Illinois Notices.</h2>
-        <div class="chapter-tagline">Four public sources, refreshed hourly, searchable by title, agency and place.</div>
-        <p class="chapter-desc">An index of public notices as the sources publish them. WeylandAI does not verify them, and a notice stays listed after its date has passed.</p>
-      </div>
-
-      <div class="filter-bar">
-        <input id="hx-search" class="search-input" type="text" placeholder="Search title, agency, or location (e.g. Austin, Bridge, High School)...">
-        <select id="hx-source" aria-label="Source" title="TxDOT, CA OPSC, NYC City Record, Illinois CDB" style="max-width:100%">
-          <option value="">All sources</option>
-          <option value="txdot">Texas DOT (Highway &amp; Bridge Lettings)</option>
-          <option value="ca_opsc">CA School Construction Funding (OPSC)</option>
-        </select>
-        <button id="hx-refresh-btn" class="button primary" type="button">RELOAD INDEX</button>
-        <span id="hx-status" style="color:var(--muted);font-size:12px;margin-left:auto">Connecting&hellip;</span>
-      </div>
-
-      <div class="metrics-row" style="grid-template-columns:repeat(3,1fr)">
-        <div class="metric-card"><span>Opportunities Listed</span><strong id="hx-count">&mdash;</strong></div>
-        <div class="metric-card"><span>Sources last ingested</span><strong id="hx-last-fetch" style="font-size:16px;color:var(--blue)">Connecting&hellip;</strong></div>
-        <div class="metric-card"><span>Listed value of the rows shown</span><strong id="hx-capital" style="font-size:24px;color:var(--green)">&mdash;</strong></div>
-      </div>
-
-      <div class="table-card">
-        <div class="card-head">
-          <h3>Public Construction Opportunities Feed</h3>
-          <span style="color:var(--green)">PUBLIC OPEN-DATA INDEX, REFRESHED HOURLY</span>
-        </div>
-        <div class="table-scroll">
-          <table>
-            <thead>
-              <tr><th>OPPORTUNITY</th><th>AGENCY</th><th>LOCATION</th><th>KEY DATE</th><th>EST. VALUE</th><th>SOURCE</th></tr>
-            </thead>
-            <tbody id="hx-body">
-              <tr><td colspan="6" style="text-align:center;color:var(--muted);padding:24px">Connecting to live public sources&hellip;</td></tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
-      <div class="note-card" style="margin-bottom:0">
-        HuntX is available standalone at <b>$799/mo</b> or as part of the complete SubConP Suite. <a class="button primary" href="#takeoffx" style="margin-left:12px">NEXT: QUANTIFY PLANS IN TAKEOFFX &darr;</a>
-      </div>
-    </section>
-
-    <!-- CHAPTER 02: TakeoffX — Machine-Vision Plan Quantification -->
-    <section class="story-chapter" id="takeoffx">
-      <div class="chapter-eyebrow">
-        <span class="ch-badge">TAKEOFFX</span>
-        <span>DOOR COUNTS FROM YOUR SCHEDULE PAGE</span>
-      </div>
-      <div class="chapter-head">
-        <div class="chapter-product-badge"><span>TakeoffX</span></div>
-        <h2>Count Doors by Size, Rating and Hardware Group from Your Schedule Page.</h2>
-        <div class="chapter-tagline">Every count traced to the row it came from; a page reads in 18 to 40 seconds.</div>
-        <p class="chapter-desc">Door and hardware counts from a ruled schedule table, not from the drawings. The canvas below is a stored example of stage-1 wall extraction from a real public bid-set sheet; it is not run for you. The door counts come from the schedule reader.</p>
-      </div>
-
-      <div class="workspace-grid">
-        <!-- Interactive Blueprint Viewport -->
-        <div class="canvas-card">
-          <div class="canvas-header">
-            <div>
-              <strong style="color:#fff;font-size:15px">Stage-1 Vector Extraction &middot; Fayette County, GA bid set</strong>
-              <small style="display:block;color:var(--muted);font-family:ui-monospace,monospace">Public addendum plans &middot; Life Safety Plan, page 6 of 21 &middot; a stored result, drawn from geometry extracted once</small>
-            </div>
-            <span class="status-badge" id="tx-scale-badge" style="background:rgba(97,223,160,.15);color:var(--green);border:1px solid rgba(97,223,160,.35)">SCALE LOCK: loading</span>
-          </div>
-
-          <div class="canvas-viewport" id="blueprint-viewport">
-            <div class="blueprint-grid"></div>
-            <!-- Real walls (2026-10-05): /assets/takeoffx/fayette-p6-walls.json is the
-                 output of tools/plan-extract on a public bid-set sheet (613 walls,
-                 scale locked from the sheet's own "SCALE: 3/16\" = 1'-0\"" note).
-                 Replaced four hand-written zones with invented counts and confidences. -->
-            <svg id="tx-walls" class="vector-overlay" style="display:block;padding:0;grid-template-columns:none" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid meet" role="img" aria-label="Walls extracted from a real floor plan"></svg>
-          </div>
-          <div style="margin-top:14px;display:flex;justify-content:space-between;align-items:center;font-size:12px;color:var(--muted)">
-            <span>Every line above is a wall the extractor found on the sheet. Hover one for its length.</span>
-            <span id="zone-inspector-readout" style="font-family:ui-monospace,monospace;color:var(--green)">loading the extraction</span>
-          </div>
-        </div>
-
-        <!-- Takeoff Quantity Ledger -->
-        <div class="ledger-card">
-          <div>
-            <div class="card-head" style="padding:0 0 16px;border-bottom:1px solid var(--line);margin-bottom:16px">
-              <h3 style="margin:0">Stage-1 Extraction Ledger</h3>
-              <span class="status-badge status-matched" id="tx-ledger-badge">REAL SHEET</span>
-            </div>
-            <div class="ledger-row"><span>Wall segments found</span><strong id="tx-walls-n">loading</strong></div>
-            <div class="ledger-row"><span>Total wall length</span><strong id="tx-walls-ft">loading</strong></div>
-            <div class="ledger-row"><span>Closure (wall ends meeting another wall)</span><strong id="tx-closure" style="color:var(--green)">loading</strong></div>
-            <div class="ledger-row"><span>Stroked segments / filled polygons parsed</span><strong id="tx-parsed">loading</strong></div>
-            <div class="ledger-row"><span>Scale lock, read from the sheet</span><strong id="tx-scale">loading</strong></div>
-            <div class="ledger-row" style="border-bottom:none"><span>Extraction time (laptop, pdf.js operator walk)</span><strong id="tx-time" style="color:var(--blue)">loading</strong></div>
-            <p style="color:var(--muted);font-size:11.5px;margin:12px 0 0">Door and hardware counts come from the schedule stage below, not from this geometry pass.</p>
-          </div>
-
-          <div style="margin-top:20px">
-            <a class="button primary" href="#subx" style="width:100%;justify-content:center">FEED DIRECTLY INTO SUBX PIPELINE &darr;</a>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- CHAPTER 03: SubX — Submittal Package Automation -->
-    <section class="story-chapter" id="subx">
-      <div class="chapter-eyebrow">
-        <span class="ch-badge ch-accent">SUBX</span>
-        <span>SUBMITTAL AUTOMATION &middot; YOUR SAMPLE SESSION</span>
-      </div>
-      <div class="chapter-head">
-        <div class="chapter-product-badge"><span>SubX</span></div>
-        <h2>Read a Door Schedule Page into a Door List, Then a Packet.</h2>
-        <div class="chapter-tagline">Reads ruled schedule tables on the page you name; a size it cannot read with certainty is flagged, not guessed.</div>
-        <p class="chapter-desc">Door rows and hardware groups read from a ruled schedule table, each traced to its page and row, matched to the catalogue where it covers them, and built into the submittal PDF. Full-size CAD sheets and the hardware groups of a spec section read too: on the Rockford bid set, 65 of 65 doors from sheet A2.2 and 110 of 110 items from Section 08 71 00. A scanned spec section's hardware groups are read by OCR; a scanned full-size schedule sheet does not read yet.</p>
-      </div>
 
       <!-- The sample schedule page the session below was read from. 2026-10-08: the five-step
            storyboard that stood here (five "live" panels labelled as the visitor's own session) is gone: nothing
@@ -2282,7 +2119,7 @@
 
       <!-- Live Trial Session Table -->
       <div class="trial-status-row">
-        <span class="trial-status-label">The WeylandAI Building &middot; Your Trial Session</span>
+        <span class="trial-status-label">The sample building &middot; your sample session</span>
         <span class="demo-badge is-loading" id="session-badge"><span class="skel" style="width:96px;height:9px"></span></span>
       </div>
 
@@ -2319,12 +2156,161 @@
         </div>
       </div>
       <div style="margin-top:16px;display:flex;gap:10px;flex-wrap:wrap;align-items:center">
-        <a id="subx-open-workspace" href="/subx-app" class="button accent">OPEN YOUR WORKSPACE &middot; BUILD THE PDF PACKAGE</a>
+        <a id="subx-open-workspace" href="/subx-app" class="button accent">UPLOAD YOUR SCHEDULE &middot; BUILD THE PACKET</a>
         <small style="color:var(--muted)">Upload your own schedule there; the sample session above is in it too.</small>
       </div>
     </section>
 
-    <!-- CHAPTER 04: CutsheetX — Verified Catalog Matching -->
+    <section class="story-chapter" id="sightx">
+      <div class="chapter-eyebrow">
+        <span class="ch-badge">SIGHTX</span>
+        <span>WALK YOUR OPENINGS IN 3D</span>
+      </div>
+      <div class="chapter-head">
+        <div class="chapter-product-badge"><span>SightX</span></div>
+        <h2>Walk your doors in a 3D corridor.</h2>
+        <div class="chapter-tagline">A corridor of hollow-metal doors, every product on them a real catalog page.</div>
+        <p class="chapter-desc">Behind this page is a 30 m commercial corridor: hollow-metal frames, flush doors, hinges, levers and closers drawn where the hardware group mounts them, and an exit pair with rim devices at the end. Every product named in it (LCN 4040XP and 1461, Schlage L9080, Ives 5BB1, Hager BB1279, Von Duprin 99) resolves in the CutsheetX catalog today. <a href="#hero-schedule">Paste your own hardware lines</a> and press walk: your matched openings replace the sample ones. <a href="/sightx/">Open SightX</a> to build a corridor from a whole schedule SubX read from your schedule, or one you paste: every door at its scheduled size and rating, its hardware group drawn where it mounts. Laying the doors out on your own floor plan is not built yet.</p>
+      </div>
+
+      <div class="sightx-container">
+        <!-- 3D field-twin viewport card -->
+        <div class="sightx-canvas-card">
+          <div class="sightx-hud">
+            <div class="sightx-telemetry">
+              SCENE: A SAMPLE CORRIDOR, NOT YOUR BUILDING<br>
+              DOORS: 8 SAMPLE DOORS AND AN EXIT PAIR, OR YOUR PASTED LINES (UP TO 12)<br>
+              HARDWARE: LCN &middot; VON DUPRIN &middot; SCHLAGE &middot; IVES &middot; HAGER<br>
+              CONTROLS: CLICK THE CORRIDOR TO WALK &middot; ENTER BRINGS THIS PAGE BACK
+            </div>
+            <div class="sightx-tlou-hint">
+              <span>W A S D WALK &middot; DRAG TO LOOK</span>
+            </div>
+          </div>
+
+          <div class="sightx-centerpiece">
+            <h3>Walk the corridor</h3>
+            <p>The corridor is behind this page. Walk it, or <a href="#hero-schedule">paste hardware lines</a> and press walk to hang your doors in it. Every label is a part you can buy.</p>
+            <button type="button" class="button primary js-lower-dossier" style="padding:14px 26px;font-size:12px">
+              WALK THE CORRIDOR &rarr;
+            </button>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+    <section class="story-chapter" id="pricing">
+      <div class="chapter-eyebrow">
+        <span class="ch-badge ch-accent">PRICING</span>
+        <span>START WITH ONE SUBMITTAL</span>
+      </div>
+      <div class="chapter-head">
+        <h2>Your first submittal: $100, with every product for 30 days.</h2>
+        <div class="chapter-tagline">Pasting a schedule and seeing the cited matches is free, with no account. Pay when you want the packet built.</div>
+      </div>
+
+      <!-- The offer (John, 2026-10-07): one payment, no automatic charge. The button opens the payment
+           form in this page (fc:payments' SKU weyland-first-submittal); the result and the next step
+           appear in this card. -->
+      <div class="offer-card" id="offer" data-offer-box>
+        <div class="offer-line"><strong>$100</strong> &middot; your first submittal + 30 days of every product &middot; no automatic charge</div>
+        <ul class="pricing-features">
+          <li><span class="chk-yes">&check;</span> <span>One submittal packet: upload the door schedule and the hardware section (08 71 00); SubX reads them, lists the doors and hardware groups with the page and row each came from, and builds the PDF; items our catalogue covers get their cited document. On a real bid set (Rockford, sheet A2.2) it read 65 of 65 doors and traced each to its row. A scanned full-size schedule sheet does not read yet.</span></li>
+          <li><span class="chk-yes">&check;</span> <span>30 days of every product: SubX, TakeOffX, CutsheetX, SightX, PropX, MeetingX and HuntX.</span></li>
+          <li><span class="chk-yes">&check;</span> <span>One payment. Nothing renews: before the 30 days end we ask you to choose a plan. Without one, the paid tools pause and your account and work stay.</span></li>
+        </ul>
+        <div class="offer-act">
+          <a class="js-checkout button accent" data-product="weyland-first-submittal" href="#pricing">BUILD MY FIRST SUBMITTAL &middot; <span data-sku-price="weyland-first-submittal">$100</span></a>
+          <span class="js-checkout-note" aria-live="polite"></span>
+        </div>
+      </div>
+
+      <h3 class="pricing-sub">Monthly plans, after your first submittal</h3>
+      <p class="chapter-desc">A plan is charged when you choose it and then each month until you cancel. Cancel, change the card and see invoices in your account.</p>
+
+      <div class="pricing-grid">
+        <!-- Standalone HuntX Card -->
+        <div class="pricing-card">
+          <div class="pricing-head">
+            <span style="color:var(--blue);font:800 11px ui-monospace,monospace;letter-spacing:0.12em;text-transform:uppercase">ONE PRODUCT ON ITS OWN</span>
+            <h3>HuntX Standalone</h3>
+            <p style="color:var(--muted);font-size:13px;line-height:1.5;margin:8px 0 0">Public construction notices from four sources, indexed hourly and searchable.</p>
+            <div class="pricing-cost">$799 <span>/ month</span></div>
+          </div>
+          <ul class="pricing-features">
+            <li><span class="chk-yes">&check;</span> Texas DOT (highway &amp; bridge) live lettings</li>
+            <li><span class="chk-yes">&check;</span> California school facility (OPSC) releases</li>
+            <li><span class="chk-yes">&check;</span> NYC City Record and Illinois CDB notices</li>
+            <li><span class="chk-yes">&check;</span> Search by title, agency and place; the whole index, refreshed hourly</li>
+          </ul>
+          <a class="js-checkout button" data-product="weyland-huntx-seat" href="#pricing" style="width:100%;justify-content:center">START HUNTX &middot; <span data-sku-price="weyland-huntx-seat">$799</span>/MO</a>
+          <div class="js-checkout-note" style="font-size:12px;color:var(--muted);margin-top:8px;min-height:1.2em" aria-live="polite"></div>
+        </div>
+
+        <!-- Featured SubConP Suite Card -->
+        <div class="pricing-card featured">
+          <span class="featured-pill">THE PLAN AFTER YOUR 30 DAYS</span>
+          <div class="pricing-head">
+            <span style="color:var(--accent);font:800 11px ui-monospace,monospace;letter-spacing:0.12em;text-transform:uppercase">EVERY PRODUCT, MONTHLY</span>
+            <h3>The full plan</h3>
+            <p style="color:var(--muted);font-size:13px;line-height:1.5;margin:8px 0 0">Every product on this page, for one person, each month.</p>
+            <div class="pricing-cost" style="color:var(--accent)"><span data-sku-price="weyland-subconp-seat">$2,000</span> <span>/ seat / month</span></div>
+            <p class="plan-when">The plan for keeping every product after your first submittal&rsquo;s 30 days. Charged the day you choose it, then monthly until you cancel.</p>
+          </div>
+          <ul class="pricing-features">
+            <li><span class="chk-yes">&check;</span> <strong>HuntX</strong>: public bid notices from four sources</li>
+            <li><span class="chk-yes">&check;</span> <strong>TakeoffX</strong>: Door counts from your schedule page</li>
+            <li><span class="chk-yes">&check;</span> <strong>SubX &amp; CutsheetX</strong>: Catalog matches with source citations where covered</li>
+            <li><span class="chk-yes">&check;</span> <strong>PropX</strong>: Priced proposals from your schedule and your unit prices</li>
+            <li><span class="chk-yes">&check;</span> <strong>MeetingX &amp; SightX</strong>: the project room and the 3D walk</li>
+            <li><span class="chk-yes">&check;</span> Uncapped project estimating volume</li>
+            <li><span class="chk-yes">&check;</span> One seat per person; add seats as the team grows</li>
+          </ul>
+          <a class="js-checkout button accent" data-product="weyland-subconp-seat" href="#pricing" style="width:100%;justify-content:center">CHOOSE THE SUITE &middot; <span data-sku-price="weyland-subconp-seat">$2,000</span>/MO</a>
+          <div class="js-checkout-note" style="font-size:12px;color:var(--muted);margin-top:8px;min-height:1.2em" aria-live="polite"></div>
+        </div>
+
+        <!-- Private deployment card -->
+        <div class="pricing-card">
+          <div class="pricing-head">
+            <span style="color:var(--green);font:800 11px ui-monospace,monospace;letter-spacing:0.12em;text-transform:uppercase">PRIVATE DEPLOYMENT</span>
+            <h3>Private deployment</h3>
+            <p style="color:var(--muted);font-size:13px;line-height:1.5;margin:8px 0 0">Quoted on request; nothing below is built yet.</p>
+            <div class="pricing-cost">Custom <span>/ annual</span></div>
+          </div>
+          <ul class="pricing-features">
+            <li><span class="chk-yes">&check;</span> Private manufacturer catalogue ingestion: on request, quoted</li>
+            <li><span class="chk-yes">&check;</span> Procore or ERP sync: on request, quoted</li>
+            <li><span class="chk-yes">&check;</span> Private deployment and data isolation: on request, quoted</li>
+            <li><span class="chk-yes">&check;</span> Dedicated engineering: on request, quoted</li>
+          </ul>
+          <a class="button" href="mailto:enterprise@weylandai.com" style="width:100%;justify-content:center">CONTACT ENTERPRISE</a>
+        </div>
+      </div>
+
+      <!-- 2026-10-08: the "average annual savings" banner that stood here is gone: a hypothetical sum, not a
+           measured one. A measured job goes here when one has run. -->
+    </section>
+
+    <section class="story-chapter tools-chapter" id="tools">
+      <div class="chapter-eyebrow"><span>TOOLS FOR THE REST OF THE JOB</span></div>
+      <h2>Explore the tools.</h2>
+      <nav class="wn-ribbon" aria-label="Product Navigation Ribbon">
+        <div class="wn-blade">
+        <a href="#huntx" class="wn-flag" data-tone="yellow" data-target="huntx"><span class="wn-flag-frame"></span><span class="wn-flag-fill">HuntX</span></a>
+        <a href="#takeoffx" class="wn-flag" data-tone="yellow" data-target="takeoffx"><span class="wn-flag-frame"></span><span class="wn-flag-fill">TakeOffX</span></a>
+        <a href="#subx" class="wn-flag" data-tone="yellow" data-target="subx"><span class="wn-flag-frame"></span><span class="wn-flag-fill">SubX</span></a>
+        <a href="#cutsheetx" class="wn-flag" data-tone="yellow" data-target="cutsheetx"><span class="wn-flag-frame"></span><span class="wn-flag-fill">CutsheetX</span></a>
+        <a href="#propx" class="wn-flag" data-tone="yellow" data-target="propx"><span class="wn-flag-frame"></span><span class="wn-flag-fill">PropX</span></a>
+        <a href="#meetingx" class="wn-flag" data-tone="yellow" data-target="meetingx"><span class="wn-flag-frame"></span><span class="wn-flag-fill">MeetingX</span></a>
+        <a href="#sightx" class="wn-flag" data-tone="yellow" data-target="sightx"><span class="wn-flag-frame"></span><span class="wn-flag-fill">SightX</span></a>
+        <a href="#wire" class="wn-flag" data-tone="yellow" data-target="wire"><span class="wn-flag-frame"></span><span class="wn-flag-fill">WireX</span></a>
+        </div>
+      </nav>
+    </section>
+
     <section class="story-chapter" id="cutsheetx">
       <div class="chapter-eyebrow">
         <span class="ch-badge">CUTSHEETX</span>
@@ -2332,9 +2318,33 @@
       </div>
       <div class="chapter-head">
         <div class="chapter-product-badge"><span>CutsheetX</span></div>
-        <h2>60,000 Catalogued Variants. 8 Price Books, 7,792 Page Citations. 3,618 Catalogue Pages.</h2>
-        <div class="chapter-tagline">Most matches cite the page; the rest say so.</div>
-        <p class="chapter-desc">60,000 variants of about 10,500 products in our own store, from Allegion&rsquo;s brands (Schlage, LCN, Von Duprin, Ives, Falcon, Zero, Steelcraft, Glynn-Johnson) plus NGP, BEA, Camden and Dyke, and 24 manufacturer catalogues indexed page by page. Sargent, Corbin Russwin, Pemko, dormakaba and Hager are not covered yet. A match cites its price-book pages, or the catalogue page that names the model; a citation can be a page range, and when nothing is filed the match says so and the miss is recorded.</p>
+        <h2>Hardware lines matched to their catalog pages.</h2>
+        <div class="chapter-tagline">See the source page where the catalog covers your line.</div>
+        <p class="chapter-desc">Paste a hardware line to find a catalog match and its source document. A citation may name a page or a page range. A line we cannot match says so; current coverage is listed below.</p>
+      </div>
+
+      <!-- One real CutsheetX match alongside the catalog tools.
+           The static result below is a REAL response captured from
+           POST /api/cut-sheets/match on 2026-10-04 (LCN 4040XP: exact match,
+           high confidence, cited to the LCN price book). RUN IT LIVE re-runs
+           the same request with an ephemeral session and replaces the card
+           with whatever the matcher returns right now - including a miss. -->
+      <div id="hero-match" class="metrics-row" style="grid-template-columns:1fr;max-width:860px">
+        <div class="metric-card" style="text-align:left;padding:18px 22px">
+          <span>One hardware line, matched to its catalog page</span>
+          <div style="display:grid;grid-template-columns:auto 1fr;gap:6px 16px;margin:10px 0 12px;font-size:13px;line-height:1.45">
+            <div style="color:var(--muted)">Spec line</div><div id="hm-spec" style="font-family:ui-monospace,monospace;color:var(--text)">LCN 4040XP</div>
+            <div style="color:var(--muted)">Matched</div><div id="hm-product" style="color:var(--text);font-weight:700">LCN 4040XP Extra Heavy Duty Door Closer</div>
+            <div style="color:var(--muted)">Confidence</div><div id="hm-conf" style="color:var(--green);font-weight:700">high</div>
+            <div style="color:var(--muted)">Citation</div><div id="hm-cite" style="color:var(--text)">LCN Price Book, 152 pages (product listed around pp. 6&ndash;48 in the edition catalogued)</div>
+          </div>
+          <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:center">
+            <button id="hm-run" type="button" class="button accent" style="padding:9px 16px;font-size:11px">RUN IT LIVE</button>
+            <a class="button" href="#hero-schedule" style="padding:9px 16px;font-size:11px">MATCH YOUR OWN LINE &darr;</a>
+            <small id="hm-note" style="color:var(--muted);font-size:11px">Matched on 2026-10-04; RUN IT LIVE matches it again now.</small>
+          </div>
+        </div>
+
       </div>
 
       <!-- Live cards (2026-10-05): rendered from POST /api/cut-sheets/match for
@@ -2370,15 +2380,10 @@
       </div>
     </section>
 
-    <!-- CHAPTER 05: PropX & MeetingX — Commercial Proposal & Field Presence -->
-    <!-- COFOUNDED WITH: Andrew Miller (Precision Auto Doors) approved being
-         named by phone on 2026-10-04 and is a cofounder, per John. The
-         measured before/after lands here when launch/case-study/ is filled
-         in from one of their real jobs. -->
     <section class="story-chapter" id="builtwith">
       <div class="chapter-eyebrow"><span class="ch-badge">COFOUNDED WITH A WORKING DOOR COMPANY</span></div>
       <h2>Precision Auto Doors is the suite&rsquo;s first real user. Its owner is a cofounder.</h2>
-      <p class="hero-sub">Andrew Miller runs Precision Auto Doors and cofounded WeylandAI; his company runs its own work through the suite while it is being built. The door and hardware workflows on this page are the ones that trade actually lives in: spec lines, catalog variants, submittal packages, priced proposals. When one of their jobs has been run start to finish with the clock on it, that number goes here. Until then, the only timed figure is the sample package below, and it is labeled as such.</p>
+      <p class="hero-sub">Andrew Miller runs Precision Auto Doors and cofounded WeylandAI; his company runs its own work through the suite while it is being built. The door and hardware workflows on this page are the ones that trade actually lives in: spec lines, catalog variants, submittal packages, priced proposals. When one of their jobs has been run start to finish with the clock on it, that number goes here. Until then, the only timed figure is the sample run below, and it is labeled as such.</p>
       <div class="metrics-row" style="grid-template-columns:repeat(3,1fr);max-width:860px;margin-bottom:14px">
         <div class="metric-card" style="text-align:left"><span>CEO &middot; Lead Software Developer</span><strong style="font-size:18px">Ron Helms</strong></div>
         <div class="metric-card" style="text-align:left"><span>CTO &middot; Chief Architect</span><strong style="font-size:18px">John Mobley</strong></div>
@@ -2691,54 +2696,69 @@
       </script>
     </section>
 
-    <!-- CHAPTER 06: SightX — Photorealistic 3D Spatial Digital Twin -->
-    <section class="story-chapter" id="sightx">
+    <section class="story-chapter" id="huntx">
       <div class="chapter-eyebrow">
-        <span class="ch-badge">SIGHTX</span>
-        <span>3D SAMPLE CORRIDOR &middot; MADE OF PARTS YOU CAN BUY</span>
+        <span class="ch-badge ch-accent">HUNTX</span>
+        <span>PUBLIC BID NOTICES &middot; FOUR SOURCES</span>
       </div>
       <div class="chapter-head">
-        <div class="chapter-product-badge"><span>SightX</span></div>
-        <h2>SightX &mdash; Walk a sample corridor; your matched products hang in it.</h2>
-        <div class="chapter-tagline">A corridor of hollow-metal doors, every product on them a real catalog page.</div>
-        <p class="chapter-desc">Behind this dossier is a 30 m commercial corridor: hollow-metal frames, flush doors, hinges, levers and closers drawn where the hardware group mounts them, and an exit pair with rim devices at the end. Every product named in it (LCN 4040XP and 1461, Schlage L9080, Ives 5BB1, Hager BB1279, Von Duprin 99) resolves in the CutsheetX catalog today. Paste your own schedule above and press walk: your matched openings replace the sample ones. <a href="/sightx/">Open SightX</a> to build a corridor from a whole schedule SubX read from your plans, or one you paste: every door at its scheduled size and rating, its hardware group drawn where it mounts. A SubX session is laid out on its own floor plan: SubX finds the plan sheets by their title blocks and ties each door tag to its schedule mark, so each door stands in the room the plan gives it (walls and swings are not drawn yet).</p>
+        <div class="chapter-product-badge"><span>HuntX</span></div>
+        <h2>Texas DOT Lettings, California School Funding, NYC and Illinois Notices.</h2>
+        <div class="chapter-tagline">Four public sources, refreshed hourly, searchable by title, agency and place.</div>
+        <p class="chapter-desc">An index of public notices as the sources publish them. WeylandAI does not verify them, and a notice stays listed after its date has passed.</p>
       </div>
 
-      <div class="sightx-container">
-        <!-- 3D field-twin viewport card -->
-        <div class="sightx-canvas-card">
-          <div class="sightx-hud">
-            <div class="sightx-telemetry">
-              SCENE: CORRIDOR 100 (SAMPLE JOBSITE TWIN, HAND-AUTHORED)<br>
-              OPENINGS: 8 SAMPLE DOORS + EXIT PAIR, OR YOUR SCHEDULE (UP TO 12)<br>
-              HARDWARE: LCN &middot; VON DUPRIN &middot; SCHLAGE &middot; IVES &middot; HAGER<br>
-              CONTROLS: CLICK TO FLY &middot; ENTER RAISES THE DOSSIER
-            </div>
-            <div class="sightx-tlou-hint">
-              <span>W/A/S/D MOVE &middot; MOUSE LOOK &middot; F SCAN</span>
-            </div>
-          </div>
+      <div class="filter-bar">
+        <input id="hx-search" class="search-input" type="text" placeholder="Search title, agency, or location (e.g. Austin, Bridge, High School)...">
+        <select id="hx-source" aria-label="Source" title="TxDOT, CA OPSC, NYC City Record, Illinois CDB" style="max-width:100%">
+          <option value="">All sources</option>
+          <option value="txdot">Texas DOT (Highway &amp; Bridge Lettings)</option>
+          <option value="ca_opsc">CA School Construction Funding (OPSC)</option>
+        </select>
+        <button id="hx-refresh-btn" class="button primary" type="button">RELOAD</button>
+        <span id="hx-status" style="color:var(--muted);font-size:12px;margin-left:auto">Connecting&hellip;</span>
+      </div>
 
-          <div class="sightx-centerpiece">
-            <h3>A Jobsite, Not a Space Station</h3>
-            <p>Lower the dossier and the corridor is behind it. Walk it, scan a frame to read its hardware group, or match your own schedule and press walk to hang your doors in its walls. Nothing on a label is a part you cannot buy.</p>
-            <button type="button" class="button primary js-lower-dossier" style="padding:14px 26px;font-size:12px">
-              LOWER THE DOSSIER AND LOOK AROUND &rarr;
-            </button>
-          </div>
+      <div class="metrics-row" style="grid-template-columns:repeat(3,1fr)">
+        <div class="metric-card"><span>Notices listed</span><strong id="hx-count">&mdash;</strong></div>
+        <div class="metric-card"><span>Sources last read</span><strong id="hx-last-fetch" style="font-size:16px;color:var(--blue)">Connecting&hellip;</strong></div>
+        <div class="metric-card"><span>Listed value of the rows shown</span><strong id="hx-capital" style="font-size:24px;color:var(--green)">&mdash;</strong></div>
+      </div>
 
+      <div class="table-card">
+        <div class="card-head">
+          <h3>Public construction bid notices</h3>
+          <span style="color:var(--green)">PUBLIC NOTICES, REFRESHED HOURLY</span>
         </div>
-
+        <div class="table-scroll">
+          <table>
+            <thead>
+              <tr><th>NOTICE</th><th>AGENCY</th><th>LOCATION</th><th>KEY DATE</th><th>EST. VALUE</th><th>SOURCE</th></tr>
+            </thead>
+            <tbody id="hx-body">
+              <tr><td colspan="6" style="text-align:center;color:var(--muted);padding:24px">Connecting to live public sources&hellip;</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="note-card" style="margin-bottom:0">
+        HuntX on its own is <b>$799/mo</b>, or it comes with every product in the monthly plan. <a class="button primary" href="#takeoffx" style="margin-left:12px">NEXT: DOOR COUNTS FROM YOUR SCHEDULE &darr;</a>
       </div>
     </section>
 
-    <!-- CHAPTER 07: WireX (renamed from Wire 2026-10-04) - real product (weyland-wire-seat, real Stripe
-         price_1UMD5fLWTxUJi5AVF6xGy8mK), previously had zero presence
-         anywhere in the main page or pricing table despite being fully
-         live and billable - only reachable via a footer link to a
-         separate /news page. GET /api/wire/news is unauthenticated and
-         public (free tier, 6 headlines; the $49/mo tier unlocks 20 +
-         synthesis), so this renders real data with no token needed. -->
+    <section class="story-chapter" id="takeoffx">
+      <div class="chapter-eyebrow">
+        <span class="ch-badge">TAKEOFFX</span>
+        <span>DOOR COUNTS FROM YOUR SCHEDULE</span>
+      </div>
+      <div class="chapter-head">
+        <div class="chapter-product-badge"><span>TakeoffX</span></div>
+        <h2>Door counts, from the schedule SubX read.</h2>
+        <p class="chapter-desc">Count doors by size, rating and hardware group using the same schedule reader as SubX. Every door is traced to its source page and row.</p>
+        <a class="button primary" href="/takeoffx">OPEN YOUR DOOR COUNTS</a>
+      </div>
+    </section>
+
     <section class="story-chapter" id="wire">
       <div class="chapter-eyebrow">
         <span class="ch-badge ch-accent">WIREX</span>
@@ -2762,172 +2782,19 @@
       </div>
     </section>
 
-    <!-- Why WeylandAI - a positioning section, not part of the HuntX->SightX
-         product sequence, so it deliberately carries no CHAPTER number. -->
     <section class="story-chapter" id="whyweyland">
-      <div class="chapter-eyebrow">
-        <span class="ch-badge ch-accent">ABOUT</span>
-        <span>WHY WEYLANDAI &middot; ONE PROJECT RECORD</span>
-      </div>
+      <div class="chapter-eyebrow"><span>WHY WEYLANDAI</span></div>
       <div class="chapter-head">
-        <h2>One Project Spine. Seven Operating Engines.</h2>
-        <div class="chapter-tagline">One record, not seven disconnected tools.</div>
-        <p class="chapter-desc">Discovery to close-out, one continuous record &mdash; not seven disconnected tools.</p>
+        <h2>Read the schedule. Check the rows. Walk the openings.</h2>
+        <p class="chapter-desc">On Rockford sheet A2.2, SubX read 65 of 65 doors and traced each to its row. Add the hardware section (08 71 00) for the packet&rsquo;s hardware groups. SightX lets you walk the openings in a sample corridor.</p>
+        <a class="button" href="#builtwith">MEET THE COFOUNDERS</a>
       </div>
-
-      <div class="matrix-card">
-        <div class="table-scroll">
-          <table>
-            <thead>
-              <tr>
-                <th style="width:22%">CAPABILITY DIMENSION</th>
-                <th class="weyland-col" style="width:30%;color:var(--accent)">WEYLANDAI SUBCONP SUITE</th>
-                <th style="width:24%">POINT TOOLS (TOGAL, DODGE, LUMION)</th>
-                <th style="width:24%">LEGACY GC PLATFORMS (PROCORE)</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td><strong>Project Record Architecture</strong></td>
-                <td class="weyland-col"><span class="chk-yes">&check;</span> <strong>Unified Single Spine</strong> &mdash; Plans, takeoffs, matches, and proposals share one live record.</td>
-                <td><span class="chk-no">&cross;</span> <strong>Siloed &amp; Fragmented</strong> &mdash; 5 disconnected apps, re-entering data in CSVs.</td>
-                <td><span class="chk-no">&cross;</span> <strong>GC-Centric Database</strong> &mdash; Built for owner billing, not sub estimating.</td>
-              </tr>
-              <tr>
-                <td><strong>Plan Quantification</strong></td>
-                <td class="weyland-col"><span class="chk-yes">&check;</span> <strong>Schedule-Based Door Counts</strong> &mdash; doors by size, rating and hardware group, read from your schedule page and traced to the row.</td>
-                <td><span class="chk-no">&cross;</span> A separate takeoff subscription per user.</td>
-                <td><span class="chk-no">&cross;</span> Static PDF viewer with no native hardware AI.</td>
-              </tr>
-              <tr>
-                <td><strong>Manufacturer Spec Matching</strong></td>
-                <td class="weyland-col"><span class="chk-yes">&check;</span> <strong>60,000 catalogued variants; 7,792 page citations into 8 manufacturer price books; 3,618 indexed catalogue pages from 24 catalogues</strong> &mdash; a match cites its price-book pages, or the catalogue page that names the model, or says nothing is filed yet.</td>
-                <td><span class="chk-no">&cross;</span> None. Estimators manually flip through vendor binders.</td>
-                <td><span class="chk-no">&cross;</span> Manual submittal logs; no automated cut sheet library.</td>
-              </tr>
-              <tr>
-                <td><strong>Proposal &amp; Margin Protection</strong></td>
-                <td class="weyland-col"><span class="chk-yes">&check;</span> <strong>Priced Proposal</strong> &mdash; your unit prices and your margin on the schedule you read, as one PDF.</td>
-                <td><span class="chk-no">&cross;</span> Stale Excel spreadsheets prone to formula corruption.</td>
-                <td><span class="chk-no">&cross;</span> Heavy enterprise ERP change order overhead.</td>
-              </tr>
-              <tr>
-                <td><strong>3D Spatial Field Twin</strong></td>
-                <td class="weyland-col"><span class="chk-yes">&check;</span> <strong>Real-Time WebGL Corridor</strong> &mdash; Zero plugins; a sample corridor of real, buyable hardware.</td>
-                <td><span class="chk-no">&cross;</span> Offline desktop renderers, licensed per seat.</td>
-                <td><span class="chk-no">&cross;</span> Heavy BIM 360 viewer requiring high-end GPU workstations.</td>
-              </tr>
-              <tr>
-                <td><strong>Pricing Model</strong></td>
-                <td class="weyland-col"><span class="chk-yes">&check;</span> <strong><span data-sku-price="weyland-first-submittal">$100</span> first submittal, then the <span data-sku-price="weyland-subconp-seat">$2,000</span>/mo per seat suite</strong> &mdash; 30 days of every product first, with no automatic charge; the suite only when you choose it, with uncapped estimating volume.</td>
-                <td><span class="chk-no">&cross;</span> Several vendor bills a year, one per tool.</td>
-                <td><span class="chk-no">&cross;</span> Priced on the firm's gross revenue.</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
-    </section>
-
-    <!-- Pricing - likewise not part of the product sequence; no CHAPTER
-         number. -->
-    <section class="story-chapter" id="pricing">
-      <div class="chapter-eyebrow">
-        <span class="ch-badge ch-accent">PRICING</span>
-        <span>START WITH ONE SUBMITTAL</span>
-      </div>
-      <div class="chapter-head">
-        <h2>Your first submittal: $100, with every product for 30 days.</h2>
-        <div class="chapter-tagline">Pasting a schedule and seeing the cited matches is free, with no account. Pay when you want the packet built.</div>
-      </div>
-
-      <!-- The offer (John, 2026-10-07): one payment, no automatic charge. The button opens the payment
-           form in this page (fc:payments' SKU weyland-first-submittal); the result and the next step
-           appear in this card. -->
-      <div class="offer-card" id="offer" data-offer-box>
-        <div class="offer-line"><strong>$100</strong> &middot; your first submittal + 30 days of every product &middot; no automatic charge</div>
-        <ul class="pricing-features">
-          <li><span class="chk-yes">&check;</span> <span>One submittal packet: SubX finds the door schedule and hardware pages in your bid set, reads them, lists the doors and hardware groups with the page and row each came from, and builds the PDF; items our catalogue covers get their cited document. Full-size CAD sheets and the hardware groups of a spec section read too: on the Rockford bid set, 65 of 65 doors from sheet A2.2 and 110 of 110 items from Section 08 71 00. A scanned spec section's hardware groups are read by OCR; a scanned full-size schedule sheet does not read yet.</span></li>
-          <li><span class="chk-yes">&check;</span> <span>30 days of every product: SubX, TakeOffX, CutsheetX, SightX, PropX, MeetingX and HuntX.</span></li>
-          <li><span class="chk-yes">&check;</span> <span>One payment. Nothing renews: before the 30 days end we ask you to choose a plan. Without one, the paid tools pause and your account and work stay.</span></li>
-        </ul>
-        <div class="offer-act">
-          <a class="js-checkout button accent" data-product="weyland-first-submittal" href="#pricing">BUILD MY FIRST SUBMITTAL &middot; <span data-sku-price="weyland-first-submittal">$100</span></a>
-          <span class="js-checkout-note" aria-live="polite"></span>
-        </div>
-      </div>
-
-      <h3 class="pricing-sub">Monthly plans, after your first submittal</h3>
-      <p class="chapter-desc">A plan is charged when you choose it and then each month until you cancel. Cancel, change the card and see invoices in your account.</p>
-
-      <div class="pricing-grid">
-        <!-- Standalone HuntX Card -->
-        <div class="pricing-card">
-          <div class="pricing-head">
-            <span style="color:var(--blue);font:800 11px ui-monospace,monospace;letter-spacing:0.12em;text-transform:uppercase">A LA CARTE ENGINE</span>
-            <h3>HuntX Standalone</h3>
-            <p style="color:var(--muted);font-size:13px;line-height:1.5;margin:8px 0 0">Public construction notices from four sources, indexed hourly and searchable.</p>
-            <div class="pricing-cost">$799 <span>/ month</span></div>
-          </div>
-          <ul class="pricing-features">
-            <li><span class="chk-yes">&check;</span> Texas DOT (highway &amp; bridge) live lettings</li>
-            <li><span class="chk-yes">&check;</span> California school facility (OPSC) releases</li>
-            <li><span class="chk-yes">&check;</span> NYC City Record and Illinois CDB notices</li>
-            <li><span class="chk-yes">&check;</span> Search by title, agency and place; the whole index, refreshed hourly</li>
-          </ul>
-          <a class="js-checkout button" data-product="weyland-huntx-seat" href="#pricing" style="width:100%;justify-content:center">START HUNTX &middot; <span data-sku-price="weyland-huntx-seat">$799</span>/MO</a>
-          <div class="js-checkout-note" style="font-size:12px;color:var(--muted);margin-top:8px;min-height:1.2em" aria-live="polite"></div>
-        </div>
-
-        <!-- Featured SubConP Suite Card -->
-        <div class="pricing-card featured">
-          <span class="featured-pill">THE PLAN AFTER YOUR 30 DAYS</span>
-          <div class="pricing-head">
-            <span style="color:var(--accent);font:800 11px ui-monospace,monospace;letter-spacing:0.12em;text-transform:uppercase">UNIFIED OPERATING PACKAGE</span>
-            <h3>SubConP Core Suite</h3>
-            <p style="color:var(--muted);font-size:13px;line-height:1.5;margin:8px 0 0">The complete back-office to field automation suite for commercial subcontractors.</p>
-            <div class="pricing-cost" style="color:var(--accent)"><span data-sku-price="weyland-subconp-seat">$2,000</span> <span>/ seat / month</span></div>
-            <p class="plan-when">The plan for keeping every product after your first submittal&rsquo;s 30 days. Charged the day you choose it, then monthly until you cancel.</p>
-          </div>
-          <ul class="pricing-features">
-            <li><span class="chk-yes">&check;</span> <strong>HuntX</strong>: Full state open-data lead discovery</li>
-            <li><span class="chk-yes">&check;</span> <strong>TakeoffX</strong>: Door counts from your schedule page</li>
-            <li><span class="chk-yes">&check;</span> <strong>SubX &amp; CutsheetX</strong>: 60,000 catalog matches with PDF citations</li>
-            <li><span class="chk-yes">&check;</span> <strong>PropX</strong>: Priced proposals from your schedule and your unit prices</li>
-            <li><span class="chk-yes">&check;</span> <strong>MeetingX &amp; SightX</strong>: Project room chat and the 3D sample corridor</li>
-            <li><span class="chk-yes">&check;</span> Uncapped project estimating volume</li>
-            <li><span class="chk-yes">&check;</span> One seat per person; add seats as the team grows</li>
-          </ul>
-          <a class="js-checkout button accent" data-product="weyland-subconp-seat" href="#pricing" style="width:100%;justify-content:center">CHOOSE THE SUITE &middot; <span data-sku-price="weyland-subconp-seat">$2,000</span>/MO</a>
-          <div class="js-checkout-note" style="font-size:12px;color:var(--muted);margin-top:8px;min-height:1.2em" aria-live="polite"></div>
-        </div>
-
-        <!-- Enterprise Sovereign Card -->
-        <div class="pricing-card">
-          <div class="pricing-head">
-            <span style="color:var(--green);font:800 11px ui-monospace,monospace;letter-spacing:0.12em;text-transform:uppercase">PRIVATE DEPLOYMENT</span>
-            <h3>Enterprise Sovereign</h3>
-            <p style="color:var(--muted);font-size:13px;line-height:1.5;margin:8px 0 0">Quoted on request; nothing below is built yet.</p>
-            <div class="pricing-cost">Custom <span>/ annual</span></div>
-          </div>
-          <ul class="pricing-features">
-            <li><span class="chk-yes">&check;</span> Private manufacturer catalogue ingestion: on request, quoted</li>
-            <li><span class="chk-yes">&check;</span> Procore or ERP sync: on request, quoted</li>
-            <li><span class="chk-yes">&check;</span> Private deployment and data isolation: on request, quoted</li>
-            <li><span class="chk-yes">&check;</span> Dedicated engineering: on request, quoted</li>
-          </ul>
-          <a class="button" href="mailto:enterprise@weylandai.com" style="width:100%;justify-content:center">CONTACT ENTERPRISE</a>
-        </div>
-      </div>
-
-      <!-- 2026-10-08: the "average annual savings" banner that stood here is gone: a hypothetical sum, not a
-           measured one. A measured job goes here when one has run. -->
     </section>
 
     <!-- Site Footer -->
     <footer class="site-footer">
       <div>
-        <strong>WeylandAI</strong> &middot; Construction Document Automation &amp; Spatial Twin OS<br>
+        <strong>WeylandAI</strong> &middot; Door schedules read, submittals built, openings walked in 3D<br>
         <span class="site-operator">WeylandAI is operated by Argo LLC.</span>
         <span class="site-contact">Write to us: <span class="site-mail">hello@weylandai.com</span> &middot; accounts and billing: <span class="site-mail">support@weylandai.com</span></span>
       </div>
@@ -2950,8 +2817,8 @@
   </main>
 
   </div><!-- /.envelope-frame -->
-  <button type="button" id="dossier-tap" aria-label="Raise the dossier"></button>
-  <button type="button" class="wn-raise" id="envelope-raise" hidden aria-label="Raise dossier: bring the folder back up to the eye"><span aria-hidden="true">&#x25B2;</span> [raise dossier]</button>
+  <button type="button" id="dossier-tap" aria-label="Bring the page back"></button>
+  <button type="button" class="wn-raise" id="envelope-raise" hidden aria-label="Bring the page back"><span aria-hidden="true">&#x25B2;</span> [back to the page]</button>
 
   <!-- Persistent footer (position:fixed, outside the scroll container,
        visible at every screen width) - the header's .wn-secondary is
@@ -3092,7 +2959,7 @@
     });
 
     // 3. Dynamic Ribbon & Nav Spy via IntersectionObserver
-    var chapters = ["hero", "huntx", "takeoffx", "subx", "cutsheetx", "propx", "meetingx", "sightx", "whyweyland", "pricing"];
+    var chapters = ["hero", "subx", "sightx", "pricing", "tools", "cutsheetx", "builtwith", "propx", "meetingx", "huntx", "takeoffx", "wire", "whyweyland"];
     var navObserver = new IntersectionObserver(function(entries) {
       entries.forEach(function(entry) {
         if (entry.isIntersecting) {
@@ -3222,7 +3089,7 @@
         var ing = data && data.lastIngest;
         var when = ing && (ing.finished_at || ing.started_at) ? new Date(ing.finished_at || ing.started_at).toLocaleString() : (data && data.lastFetchedAt ? new Date(data.lastFetchedAt).toLocaleString() : null);
         var total = (data && typeof data.total === "number" && data.total >= rows.length) ? data.total : rows.length;
-        if (hxStatus) hxStatus.textContent = rows.length ? ("Showing " + rows.length + " of " + total + " opportunities in the index" + (when ? " · sources ingested " + when : "") + ".") : "The index has no opportunities matching the current filters yet.";
+        if (hxStatus) hxStatus.textContent = rows.length ? ("Showing " + rows.length + " of " + total + " notices" + (when ? " · sources last read " + when : "") + ".") : "No notices match the current filters yet.";
         // The time the sources were last ingested (the API's lastIngest), not the visitor's clock.
         if (hxLastFetch) hxLastFetch.textContent = when || "Unknown";
         filterHuntRows();
@@ -3247,7 +3114,7 @@
       if (hxCapital) { var capital = filtered.reduce(function (sum, r) { return sum + (r.valNum || 0); }, 0); hxCapital.textContent = capital > 0 ? "$" + Math.round(capital).toLocaleString() : "\u2014"; }
       if (hxBody) {
         if (!filtered.length) {
-          hxBody.innerHTML = '<tr><td colspan="6" style="text-align:center;color:var(--muted);padding:24px">No opportunities match the search filters.</td></tr>';
+          hxBody.innerHTML = '<tr><td colspan="6" style="text-align:center;color:var(--muted);padding:24px">No notices match the search filters.</td></tr>';
         } else {
           hxBody.innerHTML = filtered.map(function(r) {
             var badgeTone = r.src === "TXDOT" ? "background:rgba(42,82,255,.15);color:var(--primary);border:1px solid rgba(42,82,255,.35)" : "background:rgba(255,212,0,.15);color:var(--accent);border:1px solid rgba(255,212,0,.35)";
@@ -3296,7 +3163,7 @@
       });
     }
 
-    // 5b2. Hero: re-run the one real match live, replacing the captured card
+    // 5b2. Catalog tools: re-run the one real match live, replacing the captured card
     // with whatever the matcher returns now (a miss is shown as a miss).
     var hmRun = document.getElementById("hm-run");
     if (hmRun) {
@@ -3312,7 +3179,7 @@
           var d = res.data, p = d.product || {}, sheet = (d.cutSheets || [])[0];
           if (!d.matched) { document.getElementById("hm-product").textContent = "No match"; document.getElementById("hm-conf").textContent = "\u2014"; document.getElementById("hm-cite").textContent = "\u2014"; note.textContent = "Live result, " + ms + " ms: no match this time."; return; }
           document.getElementById("hm-product").textContent = p.name || ((p.manufacturer || "") + " " + (p.model || ""));
-          document.getElementById("hm-conf").textContent = (d.confidence || "") + " \u00b7 " + (d.matchType || "");
+          document.getElementById("hm-conf").textContent = d.confidence || "";
           document.getElementById("hm-cite").textContent = sheet ? ((sheet.title || "Cut sheet") + (sheet.pages != null ? ", " + sheet.pages + " pages" : "")) : "no cut sheet returned";
           note.textContent = "Live result just now, " + ms + " ms round trip from your browser.";
         }).catch(function(err) { note.textContent = "Request failed: " + err.message; }).finally(function() { hmRun.disabled = false; });
@@ -3328,7 +3195,7 @@
       var d = dossierRead(), n = (d.matches || []).length, el = document.getElementById("hs-dossier"), sub = document.querySelector("#upgrade-modal .upgrade-sub");
       var text = "";
       if (n || d.proposal) {
-        text = "Your dossier holds " + n + " matched line" + (n === 1 ? "" : "s") + (d.proposal ? " and a priced proposal (" + Number(d.proposal.total).toLocaleString(undefined, { style: "currency", currency: "USD" }) + ")" : "") + ", kept in this browser.";
+        text = n + " matched line" + (n === 1 ? "" : "s") + (d.proposal ? " and a priced proposal (" + Number(d.proposal.total).toLocaleString(undefined, { style: "currency", currency: "USD" }) + ")" : "") + ", kept in this browser.";
       }
       if (el) el.textContent = text;
       // Honest about where the dossier lives: this browser (localStorage), not the account.
@@ -3425,7 +3292,7 @@
             out.insertAdjacentHTML("beforeend",
               "<div class=\"hs-packet offer-box\" data-offer-box>" +
                 "<div class=\"offer-line\">" + hsEsc(OFFER_LINE) + "</div>" +
-                "<p class=\"offer-copy\"><strong>" + nMatched + " matched line" + (nMatched === 1 ? "" : "s") + "</strong> can become your first submittal packet: SubX finds the door schedule and hardware pages in your bid set, reads them, lists its doors and hardware groups with the page and row each came from, and builds the PDF, attaching the cited document for the items our catalogue covers. For 30 days you also have every product; nothing is charged after that unless you choose a plan.</p>" +
+                "<p class=\"offer-copy\"><strong>" + nMatched + " matched line" + (nMatched === 1 ? "" : "s") + "</strong> can become your first submittal packet: upload the door schedule and hardware section (08 71 00); SubX reads them, lists the doors and hardware groups with the page and row each came from, and builds the PDF, attaching the cited document for the items our catalogue covers. For 30 days you also have every product; nothing is charged after that unless you choose a plan.</p>" +
                 "<div class=\"offer-act\">" +
                   "<a class=\"js-checkout button accent\" data-product=\"" + OFFER_SKU + "\" href=\"#pricing\">BUILD THE PACKET \u00b7 <span data-sku-price=\"" + OFFER_SKU + "\">$100</span></a>" +
                   "<span class=\"js-checkout-note\" aria-live=\"polite\"></span>" +
@@ -3453,13 +3320,13 @@
         var openings = hsMatched.slice(0, 12);
         var send = function () { try { bd.contentWindow.postMessage({ type: "weyland:walk-schedule", openings: openings }, location.origin); } catch (e) {} };
         if (bd && bd.classList.contains("is-loaded")) send(); else if (bd) bd.addEventListener("load", send, { once: true });
-        note.textContent = "Handing " + openings.length + " openings to SightX\u2026 raise the dossier any time with Enter.";
+        note.textContent = "Hanging " + openings.length + " doors in the 3D corridor\u2026 Enter brings this page back.";
         if (window.__weylandLowerDossier) window.__weylandLowerDossier();
       });
       window.addEventListener("message", function (e) {
         if (e.origin !== location.origin || !e.data || e.data.type !== "weyland:walk-ready") return;
         var touch = window.matchMedia && window.matchMedia("(pointer: coarse)").matches;
-        var note = document.getElementById("hs-note"); if (note) note.textContent = "SightX hung " + e.data.count + " openings in the corridor walls. " + (touch ? "Walk with the joystick; tap [raise dossier] to bring this back." : "Click the world to walk; Enter raises the dossier.");
+        var note = document.getElementById("hs-note"); if (note) note.textContent = "SightX hung " + e.data.count + " openings in the corridor walls. " + (touch ? "Walk with the joystick; tap [back to the page] to bring this back." : "Click the corridor to walk; Enter brings this page back.");
       });
     }
 
@@ -3590,37 +3457,6 @@
         });
       });
     }
-
-    // 6. Chapter 02: TakeoffX canvas - real walls from the stage-1 extractor
-    (function () {
-      var svg = document.getElementById("tx-walls");
-      if (!svg) return;
-      var readout = document.getElementById("zone-inspector-readout");
-      var set = function (id, v) { var el = document.getElementById(id); if (el) el.textContent = v; };
-      fetch("/assets/takeoffx/fayette-p6-walls.json").then(function (r) { return r.json(); }).then(function (d) {
-        var bb = d.bboxFt, pad = 4, w = bb[2] - bb[0] + pad * 2, h = bb[3] - bb[1] + pad * 2;
-        svg.setAttribute("viewBox", (bb[0] - pad) + " " + (bb[1] - pad) + " " + w + " " + h);
-        var ns = "http://www.w3.org/2000/svg", frag = document.createDocumentFragment();
-        d.walls.forEach(function (wl) {
-          var ln = document.createElementNS(ns, "line");
-          ln.setAttribute("x1", wl[0]); ln.setAttribute("y1", wl[1]); ln.setAttribute("x2", wl[2]); ln.setAttribute("y2", wl[3]);
-          ln.setAttribute("stroke", "rgba(97,223,160,.85)"); ln.setAttribute("stroke-width", Math.max(0.35, wl[4])); ln.setAttribute("stroke-linecap", "square");
-          var len = Math.hypot(wl[2] - wl[0], wl[3] - wl[1]);
-          var t = document.createElementNS(ns, "title"); t.textContent = len.toFixed(1) + " ft wall, " + Math.round(wl[4] * 12) + " in thick"; ln.appendChild(t);
-          ln.addEventListener("mouseenter", function () { if (readout) readout.textContent = len.toFixed(1) + " ft wall \u00b7 " + Math.round(wl[4] * 12) + " in thick"; });
-          frag.appendChild(ln);
-        });
-        svg.appendChild(frag);
-        set("tx-walls-n", d.wallCount + " segments");
-        set("tx-walls-ft", Math.round(d.totalWallLengthFt).toLocaleString() + " ft");
-        set("tx-closure", Math.round(d.closure.closedFraction * 1000) / 10 + "% (" + d.closure.open + " of " + d.closure.endpoints + " ends open)");
-        set("tx-parsed", d.parsed.strokedSegments.toLocaleString() + " / " + d.parsed.filledPolygons.toLocaleString());
-        set("tx-scale", d.scale.text);
-        set("tx-time", d.extraction.wallSeconds + " s");
-        set("tx-scale-badge", "SCALE LOCK: " + d.scale.text.replace(/^SCALE:\s*/, ""));
-        if (readout) readout.textContent = d.wallCount + " walls drawn \u00b7 " + Math.round(d.totalWallLengthFt).toLocaleString() + " ft";
-      }).catch(function (e) { if (readout) readout.textContent = "extraction asset failed to load: " + e.message; set("tx-scale-badge", "SCALE LOCK: unavailable"); });
-    })();
 
     // 7. Chapter 05: PropX Margin Slider
     var marginSlider = document.getElementById("margin-slider");
@@ -4465,7 +4301,7 @@
     }) : null;
     window.__weylandWorldInput = worldInput;
     function releaseAll() { if (worldInput) worldInput.clear(); }
-    // The SightX chapter says W/A/S/D MOVE and CLICK TO FLY: either one lowers the dossier into the world.
+    // The SightX chapter offers walking: keys or a corridor click lower the page into the world.
     var chapter = document.getElementById("sightx");
     function chapterInView() {
       if (!chapter) return false;
@@ -4507,5 +4343,42 @@
 </script>
 <script src="/assets/authfor-integration-standard.js?v=20261006c"></script>
 <script src="/assets/weyland-shell.js?v=20261009g018"></script>
+
+  <script>
+  (function () {
+    var root = document.documentElement;
+    var footer = document.querySelector(".wn-persistent-footer");
+    var header = document.getElementById("top-nav");
+    function fitOffer() {
+      root.style.setProperty("--footer-bar-height", footer.offsetHeight + "px");
+      root.style.setProperty("--site-header-height", header.offsetHeight + "px");
+    }
+    fitOffer();
+    if (window.ResizeObserver) {
+      var size = new ResizeObserver(fitOffer);
+      size.observe(footer); size.observe(header);
+    } else { window.addEventListener("resize", fitOffer); }
+    var sample;
+    document.querySelectorAll(".js-sample-packet").forEach(function (button) {
+      button.addEventListener("click", function () {
+        var status = document.getElementById("sample-packet-status");
+        button.disabled = true;
+        status.hidden = true;
+        if (!sample) sample = fetch("/assets/samples/rockford-schedule-packet.pdf").then(function (r) {
+          if (!r.ok) throw new Error("sample unavailable");
+          return r.blob();
+        }).catch(function (err) { sample = null; throw err; });
+        sample.then(function (blob) {
+          if (!window.WeylandShell) throw new Error("viewer unavailable");
+          return window.WeylandShell.open("pdf", { blob: blob, title: "Sample packet - Rockford (schedule only)" });
+        }).catch(function () {
+          status.textContent = "The sample could not open. Please try again.";
+          status.hidden = false;
+          if (!button.closest("#hero")) button.after(status);
+        }).finally(function () { button.disabled = false; });
+      });
+    });
+  })();
+  </script>
 </body>
 </html>
