@@ -132,11 +132,28 @@ test("computePriceIndexSnapshot: queries only this account's own weyland_db (env
   assert.equal(env.DB.rows[0].avg_unit_price, 750.1);
 });
 
-test("GET /api/compx/vendors: retired (410), pointing to CompX on the NYC City Record", async () => {
+test("GET /api/compx/vendors: 400 when q param missing", async () => {
   const { router, env } = setup();
-  const res = await router.handle(new Request("https://example.com/api/compx/vendors?q=Austin%20Bridge"), env, {});
-  assert.equal(res.status, 410);
-  assert.match((await res.json()).detail.message, /NYC City Record/);
+  const res = await router.handle(new Request("https://example.com/api/compx/vendors"), env, {});
+  assert.equal(res.status, 400);
+});
+
+test("GET /api/compx/vendors: real happy path aggregates vendor win rate", async () => {
+  globalThis.fetch = async (url) => {
+    assert.match(url, /data\.texas\.gov/);
+    return new Response(JSON.stringify([
+      { vendor_name: "Acme Construction", low_bidder_flag: true, bid_total_amount: "100000", project_name: "P1", county: "Travis", project_actual_let_date: "2026-01-01", control_section_job_csj: "csj1" },
+      { vendor_name: "Acme Construction", low_bidder_flag: false, bid_total_amount: "90000", project_name: "P2", county: "Travis", project_actual_let_date: "2026-02-01", control_section_job_csj: "csj2" },
+    ]), { status: 200 });
+  };
+  const { router, env } = setup();
+  const res = await router.handle(new Request("https://example.com/api/compx/vendors?q=Acme"), env, {});
+  assert.equal(res.status, 200);
+  const body = await res.json();
+  assert.equal(body.vendors.length, 1);
+  assert.equal(body.vendors[0].total_bids, 2);
+  assert.equal(body.vendors[0].wins, 1);
+  assert.equal(body.vendors[0].win_rate_pct, 50);
 });
 
 test("GET /api/weatherx/delay-risk: 400 when lat/lon missing", async () => {
