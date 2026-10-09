@@ -1,0 +1,43 @@
+[
+ {
+  "sha16": "7478006f7fd5b43c",
+  "project": "_R2502-01 Final Bid Plans",
+  "rows": 156,
+  "door_rows": 152,
+  "not_door_rows": 4,
+  "doors_drawn_on_plan": 150,
+  "not_on_plan": [
+   "01",
+   "102"
+  ],
+  "plan": [
+   "A-105 p.23",
+   "A-106 p.24",
+   "A-107 p.25"
+  ]
+ },
+ {
+  "sha16": "192a16af8f31ae0c",
+  "project": "_T2507-01 Final Bid Plans",
+  "rows": 41,
+  "door_rows": 40,
+  "not_door_rows": 1,
+  "doors_drawn_on_plan": 40,
+  "not_on_plan": [],
+  "plan": [
+   "A-100 p.7"
+  ]
+ },
+ {
+  "sha16": "e3d0cc1bc22fd824",
+  "project": "_T2504-03 - Final Plans",
+  "rows": 19,
+  "door_rows": 18,
+  "not_door_rows": 1,
+  "doors_drawn_on_plan": 18,
+  "not_on_plan": [],
+  "plan": [
+   "A-102 p.9"
+  ]
+ }
+]
