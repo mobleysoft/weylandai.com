@@ -41,6 +41,7 @@
 //   Email (2026-10-08, via mailguyAI; lib/email-alerts.js):
 //     POST /api/hunt/saved/:id/email {on}   a daily digest of new matches for that search
 //     POST /api/hunt/saved/:id/email/sample  the latest matches emailed now to the account itself (once per 10 min)
+//     POST /api/hunt/sample {params, name}   the same for the search on screen, unsaved; free to try
 //     GET  /api/hunt/unsubscribe/<token>    one-click stop, linked from every email
 //     GET  /api/hunt/saved also says emailAvailable (false until MAILGUY_API_KEY is set).
 //
@@ -402,6 +403,16 @@ export function registerHuntRoutes(router, { authenticate }) {
     await env2.DB.prepare("UPDATE huntx_saved_searches SET email_alerts = ?, unsub_token = ?, last_emailed_at = CASE WHEN ? THEN ? ELSE last_emailed_at END WHERE id = ? AND user_id = ?")
       .bind(on ? 1 : 0, row.unsub_token || feedToken(), on ? 1 : 0, new Date().toISOString(), id, a.userId).run();
     return jsonResponse3({ success: true, email_alerts: on });
+  });
+
+  router.post("/api/hunt/sample", async (request2, env2) => {
+    const a = await signedIn(request2, env2);
+    if (a.error) return a.error;
+    const body = await request2.json().catch(() => ({}));
+    const { sendSample } = await import("../lib/email-alerts.js");
+    const r = await sendSample(env2, a.userId, null, { params: pickSearch((k) => body?.params?.[k]), name: body?.name });
+    if (r.error) return jsonResponse3({ success: false, error: r.error[1], message: r.error[2] }, r.error[0]);
+    return jsonResponse3({ success: true, to: r.to, notices: r.notices });
   });
 
   router.post("/api/hunt/saved/:id/email/sample", async (request2, env2) => {
