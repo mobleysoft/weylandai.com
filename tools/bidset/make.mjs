@@ -6,7 +6,7 @@
 //       p2 A-101 floor plans with door tags (ARCH D)
 //       p3 A-601 door schedule, ruled, with title block (ARCH D)
 //       p4.. Section 08 71 00 DOOR HARDWARE, hardware groups as printed (Letter)
-//   out/weylandai-building-bidset-scanned.pdf  the same pages as 150 dpi images, the schedule
+//   out/weylandai-building-bidset-scanned.pdf  the same pages as images (sheets 200 dpi, spec pages 150), the schedule
 //       sheet turned 90 degrees and every page tilted 0.6 degrees, no text layer (a scan)
 //   out/truth-doors.json, out/truth-groups.json   the truth, in tools/corpus/expected's shape
 // Every sheet carries "SAMPLE PROJECT - NOT A REAL BUILDING".
@@ -188,7 +188,8 @@ rmSync(tmp, { recursive: true, force: true }); mkdirSync(tmp);
 const scan = await PDFDocument.create();
 for (let p = 1; p <= pageCount; p++) {
   const sheet = p <= SCHED_PAGE;
-  execFileSync("pdftoppm", ["-r", sheet ? "100" : "150", "-f", String(p), "-l", String(p), "-gray", "-png", vectorFile, join(tmp, "p")]);
+  // 200 dpi for the ARCH D sheets (the low end of how drawings are scanned), 150 for the spec pages.
+  execFileSync("pdftoppm", ["-r", sheet ? "200" : "150", "-f", String(p), "-l", String(p), "-gray", "-png", vectorFile, join(tmp, "p")]);
   const png = readdirSync(tmp).find((f) => f.endsWith(".png"));
   const turned = join(tmp, "t" + p + ".jpg");
   // the schedule sheet scanned sideways (90 degrees), every page a little crooked, as a scanner leaves it

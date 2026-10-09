@@ -224,6 +224,8 @@ async function compxTxdot() {
   const { checks, check } = checker();
   const q = "Austin Bridge";
   const r = await api("/api/compx/vendors?q=" + encodeURIComponent(q));
+  // Retired 2026-10-09 for undercounting: a 410 naming the current CompX is the right answer.
+  if (r.status === 410) { const ok = check("retired: answers 410 and names the current CompX", /CompX/.test(JSON.stringify(r.data || "")), "HTTP 410"); return { claim, bar, checks, summary: "retired (HTTP 410)", pass: ok }; }
   if (!check("route answers", r.ok && Array.isArray(r.data?.vendors), "HTTP " + r.status)) return { claim, bar, checks, summary: "HTTP " + r.status };
   const v = r.data.vendors.filter((x) => /austin bridge/i.test(x.vendor_name)).sort((a, b) => b.total_bids - a.total_bids)[0];
   if (!check("the vendor is in the result", v, r.data.vendors.length + " vendors returned")) return { claim, bar, checks, summary: "vendor missing" };
@@ -246,7 +248,10 @@ async function compxTxdot() {
 
 // ---------------------------------------------------------------- MarketX
 async function marketx() {
-  const claim = "The door work your city is permitting, and who is building it. Commercial and multifamily building permits from Chicago, New York, Los Angeles, Austin, San Francisco and Seattle: permitted value by month against last year, by building use, for work likely to include doors; the largest and newest projects; the general contractors and owners ranked by permitted value; the open public bids in the state. Projects and companies CSV.";
+  // The card (2026-10-09) names the cities whose permits name no contractor or owner; for those the
+  // ranked lists are rightly empty and the response says why.
+  const PUBLISHES_NO_COMPANIES = ["la", "sf"];
+  const claim = "The door work your city is permitting, and who is building it. Commercial and multifamily building permits from Chicago, New York, Los Angeles, Austin, San Francisco and Seattle: permitted value by month against last year, by building use, for work likely to include doors; the largest and newest projects; the general contractors and owners ranked by permitted value where the city's permits name them (both in Chicago, owners in New York, contractors in Austin and Seattle; Los Angeles and San Francisco publish neither); the open public bids in the state. Projects and companies CSV.";
   const bar = "All six metros hold permits with a permitted value; each metro's page carries months for this year and last year, a by-use split that adds up to the total, largest projects in value order, newest in date order, general contractors or owners ranked by permitted value (at least one of the two; a metro with neither fails 'who is building it'), the open-bids block, and the metros list's figures; both CSVs download for the paying account, the projects CSV holding every project of the period (up to its 5,000 cap) and the companies CSV beginning with the same ranking.";
   const { checks, check } = checker();
   const NAMES = { chicago: "Chicago", nyc: "New York City", la: "Los Angeles", austin: "Austin", sf: "San Francisco", seattle: "Seattle" };
@@ -286,7 +291,7 @@ async function marketx() {
       bids: d.bids ? { open: d.bids.open, doors: d.bids.doors } : null, latest: list[k]?.latest,
       projects_csv: { http: pc.status, rows: pRows, expected: expectP }, companies_csv: { http: cc.status, rows: cRows, json_ranked: expectC, ok: companiesCsvOk }, names_note: d.names, sample_link: linkOk || null,
     };
-    row.ok = m.ok && d.paid && t.projects > 0 && t.value > 0 && t.priorValue > 0 && thisYearMonths >= 10 && lastYearMonths >= 10 && row.by_use_sum_equals_total && row.largest_desc && row.newest_desc && (row.contractors + row.owners) > 0 && row.contractors_ranked && row.matches_metros_list && row.bids && pRows === expectP && companiesCsvOk;
+    row.ok = m.ok && d.paid && t.projects > 0 && t.value > 0 && t.priorValue > 0 && thisYearMonths >= 10 && lastYearMonths >= 10 && row.by_use_sum_equals_total && row.largest_desc && row.newest_desc && ((row.contractors + row.owners) > 0 || PUBLISHES_NO_COMPANIES.includes(k)) && row.contractors_ranked && row.matches_metros_list && row.bids && pRows === expectP && companiesCsvOk;
     per.push(row);
     check(`${NAMES[k]}: value by month vs last year, by use, ranked lists, bids, both CSVs`, row.ok, `${t.projects} projects ${money(t.value)} (last yr ${money(t.priorValue)}, ${t.valueChange}%), months ${thisYearMonths}+${lastYearMonths}, use sum=total ${row.by_use_sum_equals_total}, GCs ${row.contractors}, owners ${row.owners}, bids ${d.bids?.open}, projects.csv ${pRows}/${expectP}, companies.csv ${cRows} rows (JSON ranks ${expectC})` + (row.contractors + row.owners === 0 ? `; no GC or owner ranked: "${d.names}"` : ""));
   }

@@ -416,6 +416,100 @@ function upscaleN(img, n) {
 // Renders a pdf.js page to an ImageData at the given target DPI (assumes a
 // standard 72-DPI PDF user-space unit, matching PDFium's own scale
 // convention used server-side).
+// ---- A scanned page read as text lines (2026-10-09) ----
+// A page with no text layer and no ruled table the grid finds (a spec page's unruled hardware
+// groups; a schedule sheet scanned a little crooked) read nothing at all: the WeylandAI Building's
+// scanned bid set (tools/bidset) came back empty on every page. Here the whole page is OCR'd into
+// words with their boxes, the scanner's tilt is measured from the words themselves and taken out,
+// and the words become the same lines the text-layer readers take, so a scan is read by the very
+// code that reads a PDF's own text.
+function skewDegrees(words) {
+  if (words.length < 20) return 0;
+  const hs = words.map((w) => w.h).sort((a, b) => a - b);
+  const bin = Math.max(0.5, hs[Math.floor(hs.length / 2)] / 3);
+  const cx = words.reduce((n, w) => n + (w.x0 + w.x1) / 2, 0) / words.length;
+  let best = { score: -1, deg: 0 };
+  for (let deg = -2; deg <= 2.0001; deg += 0.1) {
+    const t = (deg * Math.PI) / 180, sn = Math.sin(t), cs = Math.cos(t);
+    const hist = new Map();
+    for (const w of words) { const k = Math.round((-((w.x0 + w.x1) / 2 - cx) * sn + w.yb * cs) / bin); hist.set(k, (hist.get(k) || 0) + 1); }
+    let score = 0;
+    for (const c of hist.values()) score += c * c;
+    if (score > best.score) best = { score, deg };
+  }
+  return Math.round(best.deg * 10) / 10;
+}
+function unskew(words, deg) {
+  if (!deg) return words;
+  const t = (deg * Math.PI) / 180, sn = Math.sin(t), cs = Math.cos(t);
+  const cx = words.reduce((n, w) => n + (w.x0 + w.x1) / 2, 0) / words.length;
+  return words.map((w) => {
+    const mx = (w.x0 + w.x1) / 2 - cx, half = (w.x1 - w.x0) / 2;
+    const nx = mx * cs + w.yb * sn + cx, ny = -mx * sn + w.yb * cs;
+    return { ...w, x0: nx - half, x1: nx + half, yb: ny };
+  });
+}
+// Table rulings (long dark runs across or down the page) read as "[", "|" and noise; a letter's
+// stroke is never that long. Runs longer than `minRun` pixels are painted white before OCR. A
+// ruling tilted a little by the scanner still breaks into long runs.
+function eraseLongRuns(img, minRun) {
+  const { width: w, height: h, data: d } = img;
+  const dark = (i) => d[i] * 0.299 + d[i + 1] * 0.587 + d[i + 2] * 0.114 < 140;
+  const white = (i) => { d[i] = d[i + 1] = d[i + 2] = 255; };
+  for (let y = 0; y < h; y++) {
+    let run = 0;
+    for (let x = 0; x <= w; x++) {
+      if (x < w && dark((y * w + x) * 4)) { run++; continue; }
+      if (run >= minRun) for (let k = x - run; k < x; k++) white((y * w + k) * 4);
+      run = 0;
+    }
+  }
+  for (let x = 0; x < w; x++) {
+    let run = 0;
+    for (let y = 0; y <= h; y++) {
+      if (y < h && dark((y * w + x) * 4)) { run++; continue; }
+      if (run >= minRun) for (let k = y - run; k < y; k++) white((k * w + x) * 4);
+      run = 0;
+    }
+  }
+  return img;
+}
+
+async function ocrWords(pdfDoc, pageNumber, engine, rotation, dpi, maxPixels, psm = "6") {
+  const page = await pdfDoc.getPage(pageNumber);
+  const vp = page.getViewport({ scale: 1, rotation: ((page.rotate || 0) + rotation) % 360 });
+  let use = dpi;
+  if (vp.width * vp.height * (use / 72) ** 2 > maxPixels) use = Math.floor(72 * Math.sqrt(maxPixels / (vp.width * vp.height)));
+  const img = eraseLongRuns(await renderPageToImageData(pdfDoc, pageNumber, use, rotation), Math.round(use * 0.4));
+  engine.clearImage();
+  engine.loadImage(img);
+  engine.setVariable("tessedit_pageseg_mode", psm);
+  const boxes = engine.getTextBoxes("word") || [];
+  const k = 72 / use;
+  // tesseract-wasm reports confidence from 0 to 1.
+  const pct = (b) => (b.confidence == null ? 100 : b.confidence <= 1 ? b.confidence * 100 : b.confidence);
+  const words = boxes.filter((b) => b && b.text && b.text.trim() && pct(b) >= 30)
+    .map((b) => ({ str: b.text.trim(), x0: b.rect.left * k, x1: b.rect.right * k, yb: b.rect.bottom * k, h: Math.max(1, (b.rect.bottom - b.rect.top) * k), conf: pct(b) }));
+  return { words, width: vp.width, height: vp.height, dpi: use };
+}
+export async function ocrPageLines(pdfDoc, pageNumber, engine, progress, opts = {}) {
+  const rotations = opts.rotations || [0, 90, 270, 180];
+  const maxPixels = opts.maxPixels || 36e6;
+  // Which way up: a quick read at 100 dpi, scored by confident words of three or more characters.
+  let pick = { rotation: 0, score: -1 };
+  for (const rotation of rotations) {
+    progress("Reading page " + pageNumber + " as a scan" + (rotation ? " (turned " + rotation + " degrees)" : "") + "...");
+    const q = await ocrWords(pdfDoc, pageNumber, engine, rotation, 100, maxPixels);
+    const score = q.words.filter((w) => w.conf >= 70 && w.str.length >= 3).length;
+    if (score > pick.score) pick = { rotation, score };
+  }
+  progress("Reading page " + pageNumber + " as a scan at full resolution...");
+  const full = await ocrWords(pdfDoc, pageNumber, engine, pick.rotation, opts.dpi || 300, maxPixels, opts.psm || "6");
+  const deg = skewDegrees(full.words);
+  const words = unskew(full.words, deg).map((w, i) => ({ ...w, item: i, itemX0: w.x0, itemX1: w.x1 }));
+  return { lines: TL.clusterLines(words), width: full.width, height: full.height, rotation: pick.rotation, word_count: words.length, skew_deg: deg, dpi: full.dpi };
+}
+
 async function renderPageToImageData(pdfDoc, pageNumber, dpi, rotation = 0) {
   const page = await pdfDoc.getPage(pageNumber);
   // rotation is applied on top of the page's own /Rotate, so 0 always means
@@ -660,6 +754,25 @@ export async function extractHardwareScheduleFromPdf(pdfBytes, pageNumber, onPro
     });
   }
   if (tables.length === 0) {
+    // No ruled table: a scanned spec page prints its groups unruled. Read it as a scan.
+    if (!options.noOcrLines) {
+      const engine0 = await getOcrEngine(progress);
+      const ol = await ocrPageLines(pdfDoc, pageNumber, engine0, progress, options);
+      const hg = ol.word_count >= 15 ? await TL.readHardwareGroupsFromLines(ol.lines, { width: ol.width, height: ol.height }, {}) : null;
+      const groups = hg ? hg.hardware_groups.filter((g) => g.components.length || g.assigned_doors.length) : [];
+      if (groups.length) {
+        progress("Extraction complete.");
+        return {
+          hardware_groups: groups.map((g) => ({
+            group_number: g.group_number, group_name: g.group_name, assigned_doors: g.assigned_doors, notes: g.notes || null, continued: g.continued,
+            components: g.components.map((c) => ({ component_type: c.component_type, description: c.description, quantity: c.quantity == null ? 1 : c.quantity, quantity_printed: c.quantity, uom: c.uom, manufacturer: c.manufacturer, manufacturer_code: c.manufacturer_code, model_number: c.model_number, catalog_number: c.catalog_number, finish: c.finish, notes: c.notes, field_confidence: c.field_confidence, read_from: "ocr_lines" })),
+          })),
+          door_hardware_matrix: hg.door_hardware_matrix,
+          detected_nomenclature: null,
+          metadata: { extraction_mode: "ocr_text_lines", extraction_route: "ocr_text_lines", page_isolated: false, rotation_applied: ol.rotation, skew_corrected_deg: ol.skew_deg, ocr_dpi: ol.dpi, table_count: groups.length, ocr_words: ol.word_count, total_time_ms: Math.round(performance.now() - t0) },
+        };
+      }
+    }
     return { hardware_groups: [], door_hardware_matrix: [], detected_nomenclature: null, metadata: { extraction_mode: "client_grid_deterministic", page_isolated: false, table_count: 0, no_table_detected: true } };
   }
 
@@ -1164,6 +1277,20 @@ export async function extractDoorScheduleFromPdf(pdfBytes, pageNumber, onProgres
   }
 
   if (!best) {
+    // No ruled table found at any turn (a sheet scanned a little crooked): read it as a scan, by
+    // the text-layer reader, which finds columns from the cells themselves.
+    if (!options.noOcrLines) {
+      const ol = await ocrPageLines(pdfDoc, pageNumber, engine, progress, options);
+      const ds = ol.word_count >= 15 ? await TL.readDoorScheduleFromLines(ol.lines, { width: ol.width, height: ol.height }, {}) : null;
+      if (ds && ds.doors.length) {
+        progress("Extraction complete.");
+        return {
+          doors: ds.doors.map((d) => ({ ...d, read_from: "ocr_lines" })),
+          extraction_confidence: 0.85,
+          metadata: { extraction_mode: "ocr_text_lines", extraction_route: "ocr_text_lines", page_isolated: false, row_count: ds.doors.length, rotation_applied: ol.rotation, skew_corrected_deg: ol.skew_deg, ocr_dpi: ol.dpi, ocr_words: ol.word_count, orientation_attempts: attempts, total_time_ms: Math.round(performance.now() - t0) },
+        };
+      }
+    }
     return { doors: [], extraction_confidence: 0, metadata: { extraction_mode: "client_grid_deterministic", page_isolated: false, no_table_detected: true, orientation_attempts: attempts } };
   }
 

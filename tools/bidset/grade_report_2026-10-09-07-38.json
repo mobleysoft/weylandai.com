@@ -1,0 +1,90 @@
+{
+  "base": "https://weylandai.com",
+  "project": "The WeylandAI Building",
+  "at": "2026-10-09T07:38:09.486Z",
+  "variants": [
+    {
+      "variant": "vector",
+      "file": "tools/bidset/out/weylandai-building-bidset.pdf",
+      "checks": [
+        {
+          "n": 1,
+          "what": "every opening is in the submittal, with its mark",
+          "pass": true,
+          "numbers": "48 of 48 openings; 0 extra rows"
+        },
+        {
+          "n": 2,
+          "what": "each opening's hardware group, size, door type and fire rating are right",
+          "pass": true,
+          "numbers": "192 of 192 fields right"
+        },
+        {
+          "n": 3,
+          "what": "every group is there with every item as specified (qty, catalog number, finish, maker)",
+          "pass": true,
+          "numbers": "54 of 54 items exact in 10 sets read (spec 10)"
+        },
+        {
+          "n": 4,
+          "what": "every item the catalogue holds has its cut-sheet page in the packet",
+          "pass": true,
+          "numbers": "25 of 25 held items cited"
+        },
+        {
+          "n": 5,
+          "what": "every item it does not hold is listed as missing with what is needed, or as furnished by others",
+          "pass": true,
+          "numbers": "2 of 2 listed"
+        },
+        {
+          "n": 6,
+          "what": "the packet names the project and opens with a table of contents",
+          "pass": true,
+          "numbers": "project named on its first pages: true; contents: true; 51 pages read back"
+        }
+      ],
+      "errors": [],
+      "find_pages": {
+        "status": 200,
+        "ms": 4718,
+        "door": [
+          3
+        ],
+        "hardware": [
+          4,
+          5,
+          6
+        ],
+        "expected_door": [
+          3
+        ],
+        "expected_hardware": [
+          4,
+          5,
+          6
+        ],
+        "right": true
+      },
+      "read": {
+        "status": 200,
+        "ms": 16256,
+        "failed": []
+      },
+      "packet": {
+        "pages": 51,
+        "ms": 47837,
+        "components": 26,
+        "matched": 25,
+        "unmatched": 1,
+        "missing": [
+          "90S - Glynn-Johnson is in the catalogue; 90S is not / needed: Glynn-Johnson 90S in the catalogue"
+        ],
+        "by_others": [
+          "BY DIVISION 28"
+        ]
+      },
+      "cleanup": "deleted"
+    }
+  ]
+}

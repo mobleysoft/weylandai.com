@@ -242,7 +242,9 @@ try {
     if (t.check("PDF returned", isPdf(r), "HTTP " + r.status) && pkg && proposal) {
       const pdf = readPdf(r.buf, "bidx"), txt = body(pdf.text);
       const notice = { agency: opp.agency || pkg.bid.agency, solicitation: opp.title || pkg.bid.solicitation, location: opp.location || pkg.bid.location, due: String(opp.key_date || pkg.bid.due).slice(0, 40), notice: opp.detail_url || pkg.bid.noticeUrl, reference: pkg.bid.reference };
-      const nmiss = Object.entries(notice).filter(([, v]) => v && !txt.includes(norm(v)));
+      // The due date may print as a date ("December 15, 2026") rather than the notice's timestamp.
+      const longDate = (v) => { const m = /^(\d{4})-(\d{2})-(\d{2})/.exec(String(v)); return m ? new Date(Date.UTC(+m[1], +m[2] - 1, +m[3])).toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric", timeZone: "UTC" }) : null; };
+      const nmiss = Object.entries(notice).filter(([k, v]) => v && !txt.includes(norm(v)) && !(k === "due" && longDate(v) && txt.includes(longDate(v))));
       t.check("HuntX notice facts on the bid form (agency, solicitation, location, due, notice link)", !nmiss.length, nmiss.length ? "missing: " + nmiss.map(([k, v]) => k + "=" + v).join("; ") : Object.values(notice).filter(Boolean).join(" | "));
       const fig = money(proposal.grand_total), w = words(Number(proposal.grand_total));
       t.check("base bid in words and figures = the PropX total", txt.includes(norm(`${w} (${fig})`)), `${w} (${fig})`);
@@ -315,7 +317,9 @@ try {
       t.numbers.openings = heads.length;
       t.check("hardware schedule as installed: every opening with rating and set", heads.length === bOpen.length, `${heads.length} of ${bOpen.length}`);
       const cats = [...new Set(berry.groups.groups.flatMap((g) => g.items.map((i) => i.catalog)))];
-      t.check("every scheduled item (catalogue number) in the as-installed schedule", cats.every((c) => txt.includes(norm(c))), cats.filter((c) => !txt.includes(norm(c))).join(", ") || cats.length + " catalogue numbers");
+      // A long catalogue number wraps inside its table cell; it is looked for with the spaces taken out.
+      const flat = txt.replace(/\s+/g, ""), has = (c) => flat.includes(norm(c).replace(/\s+/g, ""));
+      t.check("every scheduled item (catalogue number) in the as-installed schedule", cats.every(has), cats.filter((c) => !has(c)).join(", ") || cats.length + " catalogue numbers");
       const pairs = bOpen.filter((o) => o.pair);
       const pairShown = pairs.filter((o) => new RegExp("Opening " + o.subxMark.replace(/[.[\]]/g, "\\$&") + " · PR").test(txt)).length;
       t.numbers.pairs_shown_as_pairs = `${pairShown}/${pairs.length}`;
