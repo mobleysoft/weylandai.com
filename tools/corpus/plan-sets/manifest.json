@@ -1,0 +1,100 @@
+{
+  "documents": [
+    {
+      "sha256": "fb77f58b8f8faae886a1698a1708ff038cd750d7a0067b80952626d42eb80e73",
+      "bytes": 4362603,
+      "source_url": "https://montgomerytn.gov/storage/departments/purchasing/BID/2025-12-01%20Montgomery%20County%20EMS%20Station%2028%20-%20Addendum%20No_%2003.pdf",
+      "fetched_at": "2026-10-09T08:03:12Z",
+      "filename": "fb77f58b8f8faae8.pdf",
+      "source_label": "Montgomery County (TN) - EMS Station 28, Addendum 3, December 1, 2025",
+      "basis": "Public procurement record",
+      "rights_review": {
+        "status": "No explicit document reproduction prohibition found during visual screening",
+        "note": "Public availability is not a public-domain or redistribution license."
+      },
+      "triage": {
+        "page_count": 10,
+        "page_number_convention": "page_number is 1-based PDF ordinal; page_index is zero-based; sheet_number is printed drawing ID",
+        "door_schedule_pages": [],
+        "hardware_group_pages": [],
+        "floor_plan_pages": [
+          {
+            "page_number": 7,
+            "page_index": 6,
+            "sheet_number": "E2.0",
+            "description": "Electrical power floor plan"
+          }
+        ],
+        "text_layer": {
+          "classification": "text layer",
+          "has_text_layer": true,
+          "scanned_page_numbers": [],
+          "scanned_page_indexes": [],
+          "evidence": "Selectable/extractable text supported by pdftotext; page content and target locations independently read from Poppler PNGs"
+        },
+        "sheet_sizes": [
+          {
+            "page_numbers": [
+              1,
+              2,
+              3,
+              4
+            ],
+            "page_indexes": [
+              0,
+              1,
+              2,
+              3
+            ],
+            "width_points": 612.0,
+            "height_points": 792.0,
+            "width_inches": 8.5,
+            "height_inches": 11.0,
+            "rotation_degrees": 0
+          },
+          {
+            "page_numbers": [
+              5,
+              6,
+              7,
+              8,
+              9,
+              10
+            ],
+            "page_indexes": [
+              4,
+              5,
+              6,
+              7,
+              8,
+              9
+            ],
+            "width_points": 2448.0,
+            "height_points": 1584.0,
+            "width_inches": 34.0,
+            "height_inches": 22.0,
+            "rotation_degrees": 0
+          }
+        ],
+        "visual_review": {
+          "renderer": "pdftoppm (Poppler), PNG, 1500-pixel long edge; detail renders at 2500 pixels where needed",
+          "reviewed_page_numbers": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10
+          ],
+          "method": "Every page visually screened in PNG contact sheets; target pages read individually or in enlarged contact sheets. Extraction used only to locate candidates and assess text-layer presence."
+        },
+        "notes": "Partial replacement drawing set, not a complete bid set. Electrical power floor plan E2.0 shows rooms, walls and doors. Pages 1-2 amend 08 71 00 manufacturer requirements but contain no hardware groups."
+      }
+    }
+  ],
+  "updated_at": "2026-10-09T08:08:43Z"
+}

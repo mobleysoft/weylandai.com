@@ -13,3 +13,13 @@ Rejected: University of Florida Rinker Hall drawings (coremng.dcp.ufl.edu) carry
 Datasets considered for later stages (images or SVG, not construction PDFs): CubiCasa5K (5,000 annotated floor-plan images with SVG, github.com/CubiCasa/CubiCasa5k), ResPlan (17,000 vector residential plans, arXiv 2508.14006). Useful for wall/room segmentation benchmarks, not for door-schedule or hardware work.
 
 Where to find more of the right kind: state and county purchasing portals that post full drawing sets as addenda (bidcondocs.delaware.gov, county purchasing pages), school district bid pages (thrillshare and finalsite hosted PDFs). Search pattern that worked: "issued for bid" OR "bid set" architectural drawings pdf "door schedule" "floor plan".
+
+## Procurement additions - 2026-10-09
+
+Machine-readable provenance and rendered-page triage for new files: [manifest.json](manifest.json). This dated acquisition admits public procurement records only and excludes PDFs with reproduction restrictions; it does not change the legacy entries above.
+
+| File | Source | Basis | What it has |
+|---|---|---|---|
+| [fb77f58b8f8faae8.pdf](fb77f58b8f8faae8.pdf) | [Montgomery County EMS Station 28, Addendum 3](https://montgomerytn.gov/storage/departments/purchasing/BID/2025-12-01%20Montgomery%20County%20EMS%20Station%2028%20-%20Addendum%20No_%2003.pdf) | Public procurement record; all 10 pages visually screened, no explicit reproduction restriction found | Partial replacement set only. Electrical power floor plan E2.0 p.7 (page index 6), 34 x 22 inch drawing sheets, text layer. 08 71 00 amendments pp.1-2, no hardware groups or door schedule. |
+
+The requested complete Delaware sets could not be admitted: unavailable drawing URLs and restrictive project manuals. See [dated additions and blockers](../README-additions-2026-10-09.md) and [acquisition log](../acquisition-2026-10-09.json).

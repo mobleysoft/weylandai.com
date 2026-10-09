@@ -1,0 +1,650 @@
+{
+  "documents": [
+    {
+      "sha256": "05d675e35802017e8bfd236f57ed7a3bd14cdaeebe0b7b74edd009fc88fb62b7",
+      "bytes": 302894,
+      "source_url": "https://orchardview-cdn.fxbrt.com/downloads/district_files/25-0415_ovee_secured_vestibule_door_hardware_combined.pdf",
+      "fetched_at": "2026-10-09T08:02:48Z",
+      "filename": "05d675e35802017e.pdf",
+      "source_label": "Orchard View Public Schools (MI) - Early Elementary Secured Vestibule, project 25004490A, door hardware bid manual",
+      "basis": "Public procurement record",
+      "rights_review": {
+        "status": "No explicit document reproduction prohibition found during visual screening",
+        "note": "Public availability is not a public-domain or redistribution license."
+      },
+      "triage": {
+        "page_count": 29,
+        "page_number_convention": "page_number is 1-based PDF ordinal; page_index is zero-based; sheet_number is printed drawing ID",
+        "door_schedule_pages": [],
+        "hardware_group_pages": [
+          {
+            "page_number": 22,
+            "page_index": 21,
+            "section": "08 71 00"
+          },
+          {
+            "page_number": 23,
+            "page_index": 22,
+            "section": "08 71 00"
+          },
+          {
+            "page_number": 24,
+            "page_index": 23,
+            "section": "08 71 00"
+          },
+          {
+            "page_number": 25,
+            "page_index": 24,
+            "section": "08 71 00"
+          },
+          {
+            "page_number": 26,
+            "page_index": 25,
+            "section": "08 71 00"
+          },
+          {
+            "page_number": 27,
+            "page_index": 26,
+            "section": "08 71 00"
+          },
+          {
+            "page_number": 28,
+            "page_index": 27,
+            "section": "08 71 00"
+          },
+          {
+            "page_number": 29,
+            "page_index": 28,
+            "section": "08 71 00"
+          }
+        ],
+        "floor_plan_pages": [],
+        "text_layer": {
+          "classification": "text layer",
+          "has_text_layer": true,
+          "scanned_page_numbers": [],
+          "scanned_page_indexes": [],
+          "evidence": "Selectable/extractable text supported by pdftotext; page content and target locations independently read from Poppler PNGs"
+        },
+        "sheet_sizes": [
+          {
+            "page_numbers": [
+              1,
+              2,
+              3,
+              4,
+              5,
+              6,
+              7,
+              8,
+              9,
+              10,
+              11,
+              12,
+              13,
+              14,
+              15,
+              16,
+              17,
+              18,
+              19,
+              20,
+              21,
+              22,
+              23,
+              24,
+              25,
+              26,
+              27,
+              28,
+              29
+            ],
+            "page_indexes": [
+              0,
+              1,
+              2,
+              3,
+              4,
+              5,
+              6,
+              7,
+              8,
+              9,
+              10,
+              11,
+              12,
+              13,
+              14,
+              15,
+              16,
+              17,
+              18,
+              19,
+              20,
+              21,
+              22,
+              23,
+              24,
+              25,
+              26,
+              27,
+              28
+            ],
+            "width_points": 612.0,
+            "height_points": 792.0,
+            "width_inches": 8.5,
+            "height_inches": 11.0,
+            "rotation_degrees": 0
+          }
+        ],
+        "visual_review": {
+          "renderer": "pdftoppm (Poppler), PNG, 1500-pixel long edge; detail renders at 2500 pixels where needed",
+          "reviewed_page_numbers": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16,
+            17,
+            18,
+            19,
+            20,
+            21,
+            22,
+            23,
+            24,
+            25,
+            26,
+            27,
+            28,
+            29
+          ],
+          "method": "Every page visually screened in PNG contact sheets; target pages read individually or in enlarged contact sheets. Extraction used only to locate candidates and assess text-layer presence."
+        },
+        "notes": "Eight numbered hardware groups keyed to door IDs; useful for item reading and door-to-group matching. Copyright reservation on cover, no explicit reproduction prohibition found.",
+        "hardware_section_pages": [
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          21,
+          22,
+          23,
+          24,
+          25,
+          26,
+          27,
+          28,
+          29
+        ]
+      }
+    },
+    {
+      "sha256": "4743b24c01862b5f6913fd12723e2bb698179711b25251a60451c694ceccafde",
+      "bytes": 343500,
+      "source_url": "https://www.worcesterma.gov/sites/default/files/bids/8369-M5-Door-Hardware-Replacement-WPS-Phase-II-Specifications-Scope-Final.pdf",
+      "fetched_at": "2026-10-09T08:02:50Z",
+      "filename": "4743b24c01862b5f.pdf",
+      "source_label": "City of Worcester / Worcester Public Schools (MA) - Bid 8369-M5 Door & Hardware Replacement Phase II, specifications and scope",
+      "basis": "Public procurement record",
+      "rights_review": {
+        "status": "No explicit document reproduction prohibition found during visual screening",
+        "note": "Public availability is not a public-domain or redistribution license."
+      },
+      "triage": {
+        "page_count": 15,
+        "page_number_convention": "page_number is 1-based PDF ordinal; page_index is zero-based; sheet_number is printed drawing ID",
+        "door_schedule_pages": [],
+        "hardware_group_pages": [],
+        "floor_plan_pages": [],
+        "text_layer": {
+          "classification": "text layer",
+          "has_text_layer": true,
+          "scanned_page_numbers": [],
+          "scanned_page_indexes": [],
+          "evidence": "Selectable/extractable text supported by pdftotext; page content and target locations independently read from Poppler PNGs"
+        },
+        "sheet_sizes": [
+          {
+            "page_numbers": [
+              1,
+              2,
+              3,
+              4,
+              5,
+              6,
+              7,
+              8,
+              9,
+              10,
+              11,
+              12,
+              13,
+              14,
+              15
+            ],
+            "page_indexes": [
+              0,
+              1,
+              2,
+              3,
+              4,
+              5,
+              6,
+              7,
+              8,
+              9,
+              10,
+              11,
+              12,
+              13,
+              14
+            ],
+            "width_points": 612.0,
+            "height_points": 792.0,
+            "width_inches": 8.5,
+            "height_inches": 11.0,
+            "rotation_degrees": 0
+          }
+        ],
+        "visual_review": {
+          "renderer": "pdftoppm (Poppler), PNG, 1500-pixel long edge; detail renders at 2500 pixels where needed",
+          "reviewed_page_numbers": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15
+          ],
+          "method": "Every page visually screened in PNG contact sheets; target pages read individually or in enlarged contact sheets. Extraction used only to locate candidates and assess text-layer presence."
+        },
+        "notes": "Specifications and scope only. Page 15 refers to a separate hardware-sets attachment and separate floor plans; neither is embedded. Useful negative example for page discovery; not a source of actual hardware groups."
+      }
+    },
+    {
+      "sha256": "89ce8170e64b6508c620ea4c038b240306002eb125612be21b72c0b55f53fa99",
+      "bytes": 2772754,
+      "source_url": "https://cdp.oakton.edu/_pdfs/procurement/addendum1-exterior-door-hardware.pdf",
+      "fetched_at": "2026-10-09T08:02:55Z",
+      "filename": "89ce8170e64b6508.pdf",
+      "source_label": "Oakton College District 535 (IL) - Bid 0617-25-10 Exterior Door Renovations, Des Plaines and Skokie campuses, Addendum 1",
+      "basis": "Public procurement record",
+      "rights_review": {
+        "status": "No explicit document reproduction prohibition found during visual screening",
+        "note": "Public availability is not a public-domain or redistribution license."
+      },
+      "triage": {
+        "page_count": 26,
+        "page_number_convention": "page_number is 1-based PDF ordinal; page_index is zero-based; sheet_number is printed drawing ID",
+        "door_schedule_pages": [],
+        "hardware_group_pages": [],
+        "floor_plan_pages": [
+          {
+            "page_number": 18,
+            "page_index": 17,
+            "sheet_number": "AT102",
+            "description": "Des Plaines main building lower level"
+          },
+          {
+            "page_number": 19,
+            "page_index": 18,
+            "sheet_number": "AT113",
+            "description": "Des Plaines main building first floor east"
+          },
+          {
+            "page_number": 20,
+            "page_index": 19,
+            "sheet_number": "AT312",
+            "description": "Skokie buildings A/F first floor"
+          },
+          {
+            "page_number": 21,
+            "page_index": 20,
+            "sheet_number": "AT321",
+            "description": "Skokie buildings A/B/C second floor"
+          }
+        ],
+        "text_layer": {
+          "classification": "text layer",
+          "has_text_layer": true,
+          "scanned_page_numbers": [],
+          "scanned_page_indexes": [],
+          "evidence": "Selectable/extractable text supported by pdftotext; page content and target locations independently read from Poppler PNGs"
+        },
+        "sheet_sizes": [
+          {
+            "page_numbers": [
+              1,
+              2,
+              3,
+              4,
+              5,
+              6,
+              7,
+              8,
+              9,
+              10,
+              11,
+              12,
+              13,
+              14,
+              15,
+              16,
+              17,
+              22,
+              23,
+              24,
+              25,
+              26
+            ],
+            "page_indexes": [
+              0,
+              1,
+              2,
+              3,
+              4,
+              5,
+              6,
+              7,
+              8,
+              9,
+              10,
+              11,
+              12,
+              13,
+              14,
+              15,
+              16,
+              21,
+              22,
+              23,
+              24,
+              25
+            ],
+            "width_points": 612.0,
+            "height_points": 792.0,
+            "width_inches": 8.5,
+            "height_inches": 11.0,
+            "rotation_degrees": 0
+          },
+          {
+            "page_numbers": [
+              18,
+              19,
+              20,
+              21
+            ],
+            "page_indexes": [
+              17,
+              18,
+              19,
+              20
+            ],
+            "width_points": 2160.0,
+            "height_points": 3024.0,
+            "width_inches": 30.0,
+            "height_inches": 42.0,
+            "rotation_degrees": 90
+          }
+        ],
+        "visual_review": {
+          "renderer": "pdftoppm (Poppler), PNG, 1500-pixel long edge; detail renders at 2500 pixels where needed",
+          "reviewed_page_numbers": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16,
+            17,
+            18,
+            19,
+            20,
+            21,
+            22,
+            23,
+            24,
+            25,
+            26
+          ],
+          "method": "Every page visually screened in PNG contact sheets; target pages read individually or in enlarged contact sheets. Extraction used only to locate candidates and assess text-layer presence."
+        },
+        "notes": "Revised 08 71 00 specification on pages 6-17; no numbered hardware groups or door schedule. Technology/access-control floor plans on pages 18-21. Copyright notices reserve rights but no explicit reproduction prohibition found.",
+        "hardware_section_pages": [
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17
+        ]
+      }
+    },
+    {
+      "sha256": "df0b49aceba52a7ea781de87f5ae3ab565402e6018171ccef36690bb32916f0a",
+      "bytes": 239484,
+      "source_url": "https://secure.in.gov/counties/noble/files/public-notices/087100-DOOR-HARDWARE.pdf",
+      "fetched_at": "2026-10-09T08:03:02Z",
+      "filename": "df0b49aceba52a7e.pdf",
+      "source_label": "Noble County Highway Department (IN) - Renovation, project 2025.02329, Section 08 71 00",
+      "basis": "Public procurement record",
+      "rights_review": {
+        "status": "No explicit document reproduction prohibition found during visual screening",
+        "note": "Public availability is not a public-domain or redistribution license."
+      },
+      "triage": {
+        "page_count": 10,
+        "page_number_convention": "page_number is 1-based PDF ordinal; page_index is zero-based; sheet_number is printed drawing ID",
+        "door_schedule_pages": [],
+        "hardware_group_pages": [
+          {
+            "page_number": 8,
+            "page_index": 7,
+            "section": "08 71 00"
+          },
+          {
+            "page_number": 9,
+            "page_index": 8,
+            "section": "08 71 00"
+          },
+          {
+            "page_number": 10,
+            "page_index": 9,
+            "section": "08 71 00"
+          }
+        ],
+        "floor_plan_pages": [],
+        "text_layer": {
+          "classification": "text layer",
+          "has_text_layer": true,
+          "scanned_page_numbers": [],
+          "scanned_page_indexes": [],
+          "evidence": "Selectable/extractable text supported by pdftotext; page content and target locations independently read from Poppler PNGs"
+        },
+        "sheet_sizes": [
+          {
+            "page_numbers": [
+              1,
+              2,
+              3,
+              4,
+              5,
+              6,
+              7,
+              8,
+              9,
+              10
+            ],
+            "page_indexes": [
+              0,
+              1,
+              2,
+              3,
+              4,
+              5,
+              6,
+              7,
+              8,
+              9
+            ],
+            "width_points": 612.0,
+            "height_points": 792.0,
+            "width_inches": 8.5,
+            "height_inches": 11.0,
+            "rotation_degrees": 0
+          }
+        ],
+        "visual_review": {
+          "renderer": "pdftoppm (Poppler), PNG, 1500-pixel long edge; detail renders at 2500 pixels where needed",
+          "reviewed_page_numbers": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10
+          ],
+          "method": "Every page visually screened in PNG contact sheets; target pages read individually or in enlarged contact sheets. Extraction used only to locate candidates and assess text-layer presence."
+        },
+        "notes": "Hardware sets 001-006 on pages 8-10 (set 001 heading and door list start on page 8; item list continues on page 9). No separate architectural door schedule or floor-plan sheet.",
+        "hardware_section_pages": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10
+        ]
+      }
+    },
+    {
+      "sha256": "636c4b0e68b8036d6285450e5cf25fff7c021b00eb7bb6e9f824674de814df1d",
+      "bytes": 374572,
+      "source_url": "https://www.schenectadycountyny.gov/sites/default/files/bids/RFB-2026-19_Add_3-Schenectady_County_Jail_Kitchen_Door_Replacement.pdf",
+      "fetched_at": "2026-10-09T08:03:18Z",
+      "filename": "636c4b0e68b8036d.pdf",
+      "source_label": "Schenectady County (NY) - RFB-2026-19 Jail Kitchen Door Replacement, Addendum 3",
+      "basis": "Public procurement record",
+      "rights_review": {
+        "status": "No explicit document reproduction prohibition found during visual screening",
+        "note": "Public availability is not a public-domain or redistribution license."
+      },
+      "triage": {
+        "page_count": 2,
+        "page_number_convention": "page_number is 1-based PDF ordinal; page_index is zero-based; sheet_number is printed drawing ID",
+        "door_schedule_pages": [],
+        "hardware_group_pages": [],
+        "floor_plan_pages": [],
+        "text_layer": {
+          "classification": "mixed text and scanned",
+          "has_text_layer": true,
+          "scanned_page_numbers": [
+            2
+          ],
+          "scanned_page_indexes": [
+            1
+          ],
+          "evidence": "pdftotext text presence checked against rendered pages; handwriting and raster attendance page 2 visually confirmed without text"
+        },
+        "sheet_sizes": [
+          {
+            "page_numbers": [
+              1
+            ],
+            "page_indexes": [
+              0
+            ],
+            "width_points": 612.0,
+            "height_points": 792.0,
+            "width_inches": 8.5,
+            "height_inches": 11.0,
+            "rotation_degrees": 0
+          },
+          {
+            "page_numbers": [
+              2
+            ],
+            "page_indexes": [
+              1
+            ],
+            "width_points": 612.0,
+            "height_points": 792.0,
+            "width_inches": 8.5,
+            "height_inches": 11.0,
+            "rotation_degrees": 90
+          }
+        ],
+        "visual_review": {
+          "renderer": "pdftoppm (Poppler), PNG, 1500-pixel long edge; detail renders at 2500 pixels where needed",
+          "reviewed_page_numbers": [
+            1,
+            2
+          ],
+          "method": "Every page visually screened in PNG contact sheets; target pages read individually or in enlarged contact sheets. Extraction used only to locate candidates and assess text-layer presence."
+        },
+        "notes": "Text cover plus scanned, handwritten walk-through attendance sheet. Useful only as a mixed-document OCR/routing example; no schedule, hardware groups or floor plan."
+      }
+    }
+  ],
+  "updated_at": "2026-10-09T08:08:43Z"
+}

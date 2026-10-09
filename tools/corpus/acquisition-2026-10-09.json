@@ -1,0 +1,268 @@
+{
+  "recorded_at": "2026-10-09T08:08:43Z",
+  "method": "GET only, curl --location --fail; sequential requests with one-second spacing, declared User-Agent; 60,000,000-byte cap; no credentials",
+  "user_agent": "WeylandAI-CorpusReview/1.0 (public procurement research)",
+  "maximum_bytes": 60000000,
+  "attempts": [
+    {
+      "id": 1,
+      "source_url": "https://orchardview-cdn.fxbrt.com/downloads/district_files/25-0415_ovee_secured_vestibule_door_hardware_combined.pdf",
+      "fetched_at": "2026-10-09T08:02:48Z",
+      "response": "200 application/pdf https://orchardview-cdn.fxbrt.com/downloads/district_files/25-0415_ovee_secured_vestibule_door_hardware_combined.pdf",
+      "error": "",
+      "status": "kept",
+      "bytes": 302894,
+      "sha256": "05d675e35802017e8bfd236f57ed7a3bd14cdaeebe0b7b74edd009fc88fb62b7",
+      "filename": "specs/05d675e35802017e.pdf",
+      "source_label": "Orchard View Public Schools (MI) - Early Elementary Secured Vestibule, project 25004490A, door hardware bid manual"
+    },
+    {
+      "id": 2,
+      "source_url": "https://www.worcesterma.gov/sites/default/files/bids/8369-M5-Door-Hardware-Replacement-WPS-Phase-II-Specifications-Scope-Final.pdf",
+      "fetched_at": "2026-10-09T08:02:50Z",
+      "response": "200 application/pdf https://www.worcesterma.gov/sites/default/files/bids/8369-M5-Door-Hardware-Replacement-WPS-Phase-II-Specifications-Scope-Final.pdf",
+      "error": "",
+      "status": "kept",
+      "bytes": 343500,
+      "sha256": "4743b24c01862b5f6913fd12723e2bb698179711b25251a60451c694ceccafde",
+      "filename": "specs/4743b24c01862b5f.pdf",
+      "source_label": "City of Worcester / Worcester Public Schools (MA) - Bid 8369-M5 Door & Hardware Replacement Phase II, specifications and scope"
+    },
+    {
+      "id": 3,
+      "source_url": "https://bidcondocs.delaware.gov/RCCD/RCCD2539-DOORPURCH-specs.pdf",
+      "fetched_at": "2026-10-09T08:02:52Z",
+      "response": "200 application/pdf https://bidcondocs.delaware.gov/RCCD/RCCD2539-DOORPURCH-specs.pdf",
+      "error": "",
+      "status": "rejected",
+      "bytes": 1332917,
+      "sha256": "be97417d303df409c09e8896de130eb4f73e996e3d497601fca40734899e5776",
+      "reason": "Conservative exclusion: page 47 authorizes reproduction for contract work and limits use outside that work; not retained under the requested restriction filter."
+    },
+    {
+      "id": 4,
+      "source_url": "https://cdp.oakton.edu/_pdfs/procurement/addendum1-exterior-door-hardware.pdf",
+      "fetched_at": "2026-10-09T08:02:55Z",
+      "response": "200 application/pdf https://cdp.oakton.edu/_pdfs/procurement/addendum1-exterior-door-hardware.pdf",
+      "error": "",
+      "status": "kept",
+      "bytes": 2772754,
+      "sha256": "89ce8170e64b6508c620ea4c038b240306002eb125612be21b72c0b55f53fa99",
+      "filename": "specs/89ce8170e64b6508.pdf",
+      "source_label": "Oakton College District 535 (IL) - Bid 0617-25-10 Exterior Door Renovations, Des Plaines and Skokie campuses, Addendum 1"
+    },
+    {
+      "id": 5,
+      "source_url": "https://www.maine.gov/dafs/bgs/sites/maine.gov.dafs.bgs/files/inline-files/3403%20Addendum%202%20Rebid%20Connor%202025-06-26%2010377.028_2.pdf",
+      "fetched_at": "2026-10-09T08:02:57Z",
+      "response": "200 application/pdf https://www.maine.gov/dafs/bgs/sites/maine.gov.dafs.bgs/files/inline-files/3403%20Addendum%202%20Rebid%20Connor%202025-06-26%2010377.028_2.pdf",
+      "error": "",
+      "status": "kept",
+      "bytes": 525204,
+      "sha256": "7586a61c5ac7570753e92f870da7c4c69a53716928c8edfd7342a5ce01ae918e",
+      "filename": "door-schedules/7586a61c5ac75707.pdf",
+      "source_label": "Connor Consolidated School / Maine BGS - Project 3403 Connor School Renovations, Addendum 2 Rebid"
+    },
+    {
+      "id": 6,
+      "source_url": "https://docs.wcs.edu/pdf/purchasing/projects/RFB-1408-Addendum-II.pdf",
+      "fetched_at": "2026-10-09T08:03:00Z",
+      "response": "200 application/pdf https://docs.wcs.edu/pdf/purchasing/projects/RFB-1408-Addendum-II.pdf",
+      "error": "",
+      "status": "rejected",
+      "bytes": 1441640,
+      "sha256": "b140ef19538742e71c7f2c8e806a99df4acf43e6bf379537d86eaf745ce238c5",
+      "reason": "Explicit no-reproduction statement on page 4, sheet A9.2: drawing may not be reproduced, published or used without written permission."
+    },
+    {
+      "id": 7,
+      "source_url": "https://secure.in.gov/counties/noble/files/public-notices/087100-DOOR-HARDWARE.pdf",
+      "fetched_at": "2026-10-09T08:03:02Z",
+      "response": "200 application/pdf https://secure.in.gov/counties/noble/files/public-notices/087100-DOOR-HARDWARE.pdf",
+      "error": "",
+      "status": "kept",
+      "bytes": 239484,
+      "sha256": "df0b49aceba52a7ea781de87f5ae3ab565402e6018171ccef36690bb32916f0a",
+      "filename": "specs/df0b49aceba52a7e.pdf",
+      "source_label": "Noble County Highway Department (IN) - Renovation, project 2025.02329, Section 08 71 00"
+    },
+    {
+      "id": 8,
+      "source_url": "https://www.palmbeachschools.org/cms/lib/FL50010848/Centricity/Domain/388/08%2071%2000%20Door%20Hardware.pdf",
+      "fetched_at": "2026-10-09T08:03:04Z",
+      "response": "404 text/html; charset=utf-8 https://www.palmbeachschools.org/cms/lib/FL50010848/Centricity/Domain/388/08%2071%2000%20Door%20Hardware.pdf",
+      "error": "curl: (56) The requested URL returned error: 404",
+      "status": "blocked",
+      "reason": "Download unavailable; HTTP error recorded. No PDF retained."
+    },
+    {
+      "id": 9,
+      "source_url": "https://scusd.edu/sites/main/files/file-attachments/0183-470_jbes_playgrounds_add01_specsplans.pdf",
+      "fetched_at": "2026-10-09T08:03:08Z",
+      "response": "404 text/html; charset=utf-8 https://www.scusd.edu/sites/main/files/file-attachments/0183-470_jbes_playgrounds_add01_specsplans.pdf",
+      "error": "curl: (56) The requested URL returned error: 404",
+      "status": "blocked",
+      "reason": "Download unavailable; HTTP error recorded. No PDF retained."
+    },
+    {
+      "id": 10,
+      "source_url": "https://www.cusd.com/Downloads/Bid%202942%20ADDENDUM%20NO%205.pdf",
+      "fetched_at": "2026-10-09T08:03:09Z",
+      "response": "404 text/html; charset=UTF-8 https://www.cusd.com/Downloads/Bid%202942%20ADDENDUM%20NO%205.pdf",
+      "error": "curl: (56) The requested URL returned error: 404",
+      "status": "blocked",
+      "reason": "Download unavailable; HTTP error recorded. No PDF retained."
+    },
+    {
+      "id": 11,
+      "source_url": "https://www.cusd.com/Downloads/clovis%20usd%20-%20access%20control%20upgrades%20-%20pkg%202%20-%20addendum%2002.pdf",
+      "fetched_at": "2026-10-09T08:03:10Z",
+      "response": "404 text/html; charset=UTF-8 https://www.cusd.com/Downloads/clovis%20usd%20-%20access%20control%20upgrades%20-%20pkg%202%20-%20addendum%2002.pdf",
+      "error": "curl: (56) The requested URL returned error: 404",
+      "status": "blocked",
+      "reason": "Download unavailable; HTTP error recorded. No PDF retained."
+    },
+    {
+      "id": 12,
+      "source_url": "https://montgomerytn.gov/storage/departments/purchasing/BID/2025-12-01%20Montgomery%20County%20EMS%20Station%2028%20-%20Addendum%20No_%2003.pdf",
+      "fetched_at": "2026-10-09T08:03:12Z",
+      "response": "200 application/pdf https://montgomerytn.gov/storage/departments/purchasing/BID/2025-12-01%20Montgomery%20County%20EMS%20Station%2028%20-%20Addendum%20No_%2003.pdf",
+      "error": "",
+      "status": "kept",
+      "bytes": 4362603,
+      "sha256": "fb77f58b8f8faae886a1698a1708ff038cd750d7a0067b80952626d42eb80e73",
+      "filename": "plan-sets/fb77f58b8f8faae8.pdf",
+      "source_label": "Montgomery County (TN) - EMS Station 28, Addendum 3, December 1, 2025"
+    },
+    {
+      "id": 13,
+      "source_url": "https://pcdl.org/sites/default/files/addendum1.pdf",
+      "fetched_at": "2026-10-09T08:03:16Z",
+      "response": "200 application/pdf https://www.pcdl.org/sites/default/files/addendum1.pdf",
+      "error": "",
+      "status": "rejected",
+      "bytes": 6244220,
+      "sha256": "855a4e77b7804b6aef3c88ae854b02273212544ab0c099d412276e54e9269d81",
+      "reason": "Explicit restriction on page 21, E-101 (also pages 22-23): drawings may not be used, duplicated or altered without written consent of engineer. Found by rendering, not keyword extraction."
+    },
+    {
+      "id": 14,
+      "source_url": "https://www.schenectadycountyny.gov/sites/default/files/bids/RFB-2026-19_Add_3-Schenectady_County_Jail_Kitchen_Door_Replacement.pdf",
+      "fetched_at": "2026-10-09T08:03:18Z",
+      "response": "200 application/pdf https://www.schenectadycountyny.gov/sites/default/files/bids/RFB-2026-19_Add_3-Schenectady_County_Jail_Kitchen_Door_Replacement.pdf",
+      "error": "",
+      "status": "kept",
+      "bytes": 374572,
+      "sha256": "636c4b0e68b8036d6285450e5cf25fff7c021b00eb7bb6e9f824674de814df1d",
+      "filename": "specs/636c4b0e68b8036d.pdf",
+      "source_label": "Schenectady County (NY) - RFB-2026-19 Jail Kitchen Door Replacement, Addendum 3"
+    },
+    {
+      "id": 15,
+      "source_url": "https://www.sedgwickcounty.org/media/70595/25-0086a2.pdf",
+      "fetched_at": "2026-10-09T08:03:27Z",
+      "response": "200 application/pdf https://www.sedgwickcounty.org/media/70595/25-0086a2.pdf",
+      "error": "",
+      "status": "rejected",
+      "bytes": 7943932,
+      "sha256": "174b9f7cb59d8be737fbcaeb54469c9c1987e3ac524b48263152a483f5f95532",
+      "reason": "Explicit restriction on page 62, G10.1 and following drawings: may not be used or reproduced without express written consent."
+    },
+    {
+      "id": 16,
+      "source_url": "https://bidcondocs.delaware.gov/RCCD/RCCD2607-HESRENOVAT-specs.pdf",
+      "fetched_at": "2026-10-09T08:04:36Z",
+      "response": "200 application/pdf https://bidcondocs.delaware.gov/RCCD/RCCD2607-HESRENOVAT-specs.pdf",
+      "error": "",
+      "status": "rejected",
+      "bytes": 4965281,
+      "sha256": "fa5985696bd1a14203d344eceeb78385047edaaf68aaf3a397e2e70d39f1c6a2",
+      "reason": "Explicit copying/reproduction restriction page 66, plus unauthorized reproduction warning in embedded AIA payment form page 124. Whole manual excluded."
+    },
+    {
+      "id": 17,
+      "source_url": "https://bidcondocs.delaware.gov/RCCD/RCCD2607-HESRENOVAT-drawings.pdf",
+      "fetched_at": "2026-10-09T08:04:37Z",
+      "response": "404 text/html https://bidcondocs.delaware.gov/RCCD/RCCD2607-HESRENOVAT-drawings.pdf",
+      "error": "curl: (22) The requested URL returned error: 404",
+      "status": "blocked",
+      "reason": "Download unavailable; HTTP error recorded. No PDF retained."
+    },
+    {
+      "id": 18,
+      "source_url": "https://bidcondocs.delaware.gov/COL/COL2659-GBSECURE-specs.pdf",
+      "fetched_at": "2026-10-09T08:04:39Z",
+      "response": "404 text/html https://bidcondocs.delaware.gov/COL/COL2659-GBSECURE-specs.pdf",
+      "error": "curl: (22) The requested URL returned error: 404",
+      "status": "blocked",
+      "reason": "Download unavailable; HTTP error recorded. No PDF retained."
+    },
+    {
+      "id": 19,
+      "source_url": "https://bidcondocs.delaware.gov/COL/COL2659-GBSECURE-drawings.pdf",
+      "fetched_at": "2026-10-09T08:04:40Z",
+      "response": "404 text/html https://bidcondocs.delaware.gov/COL/COL2659-GBSECURE-drawings.pdf",
+      "error": "curl: (22) The requested URL returned error: 404",
+      "status": "blocked",
+      "reason": "Download unavailable; HTTP error recorded. No PDF retained."
+    },
+    {
+      "id": 20,
+      "source_url": "https://bidcondocs.delaware.gov/NAT/NAT24818-FTMILESGC-specs.pdf",
+      "fetched_at": "2026-10-09T08:04:51Z",
+      "response": "200 application/pdf https://bidcondocs.delaware.gov/NAT/NAT24818-FTMILESGC-specs.pdf",
+      "error": "",
+      "status": "rejected",
+      "bytes": 17255403,
+      "sha256": "cba536fe2db505daefc5565362db36507bd1a5cc990f45dec5992d44854f18be",
+      "reason": "Conservative exclusion: page 123 authorizes reproduction for contract work and limits use outside that work; not retained under the requested restriction filter."
+    },
+    {
+      "id": 21,
+      "source_url": "https://bidcondocs.delaware.gov/NAT/NAT24818-FTMILESGC-drawings.pdf",
+      "fetched_at": "2026-10-09T08:04:53Z",
+      "response": "404 text/html https://bidcondocs.delaware.gov/NAT/NAT24818-FTMILESGC-drawings.pdf",
+      "error": "curl: (22) The requested URL returned error: 404",
+      "status": "blocked",
+      "reason": "Download unavailable; HTTP error recorded. No PDF retained."
+    },
+    {
+      "id": 22,
+      "source_url": "https://bidcondocs.delaware.gov/RCCD/RCCD2607-HESRENOVAT-plans.pdf",
+      "fetched_at": "2026-10-09T08:05:57Z",
+      "response": "404 text/html https://bidcondocs.delaware.gov/RCCD/RCCD2607-HESRENOVAT-plans.pdf",
+      "error": "curl: (22) The requested URL returned error: 404",
+      "status": "blocked",
+      "reason": "Download unavailable; HTTP error recorded. No PDF retained."
+    },
+    {
+      "id": 23,
+      "source_url": "https://bidcondocs.delaware.gov/COL/COL2659-GBSECURE-plans.pdf",
+      "fetched_at": "2026-10-09T08:05:58Z",
+      "response": "404 text/html https://bidcondocs.delaware.gov/COL/COL2659-GBSECURE-plans.pdf",
+      "error": "curl: (22) The requested URL returned error: 404",
+      "status": "blocked",
+      "reason": "Download unavailable; HTTP error recorded. No PDF retained."
+    },
+    {
+      "id": 24,
+      "source_url": "https://bidcondocs.delaware.gov/NAT/NAT24818-FTMILESGC-plans.pdf",
+      "fetched_at": "2026-10-09T08:05:59Z",
+      "response": "404 text/html https://bidcondocs.delaware.gov/NAT/NAT24818-FTMILESGC-plans.pdf",
+      "error": "curl: (22) The requested URL returned error: 404",
+      "status": "blocked",
+      "reason": "Download unavailable; HTTP error recorded. No PDF retained."
+    }
+  ],
+  "discovery_blockers": [
+    "GET https://bidcondocs.delaware.gov/ returned HTTP 403.",
+    "Public closed-bid details pages for Heritage Elementary (8911) and Gunning Bedford (9028) did not expose drawing attachment links. Drawing/plans filename probes are logged as attempts, not verified source links.",
+    "No complete Delaware drawing-plus-manual pair meeting the reproduction filter was retained. Requested two or three complete sets remain blocked."
+  ],
+  "commit_blocker": {
+    "recorded_at": "2026-10-09T08:10:28Z",
+    "status": "blocked - no commits created",
+    "reason": "Filesystem sandbox exposes .git as read-only. git add failed creating .git/index.lock with Operation not permitted; path-scoped git commit could not proceed. No push attempted.",
+    "required_next_step": "Mac session stages and commits only the explicitly listed corpus paths."
+  }
+}
