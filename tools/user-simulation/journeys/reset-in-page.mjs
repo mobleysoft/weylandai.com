@@ -6,7 +6,7 @@
 // account card. The token is the one AuthFor's own API issued: the journey registers a throwaway
 // AuthFor account on one of John's aliases (jmobleyworks+wa-reset-<run>@gmail.com, the only
 // addresses tests may mail), asks AuthFor's reset-request for it (one real email goes to that alias),
-// and reads the token AuthFor stored for that account (KV reset:user:<id>) instead of the inbox.
+// and reads reset_token from the secret-gated reset-request response instead of the inbox.
 // Expected: the view opens and drops the token from the address; a short password and two that
 // differ are refused in the page; SAVE AND SIGN IN signs in as the account, in the same document; the
 // new password signs in from a second browser; the old one no longer does; the link works once.
@@ -15,18 +15,14 @@
 //
 // Usage: node tools/user-simulation/journeys/reset-in-page.mjs   (exit 0 = all passed)
 import { randomBytes } from "node:crypto";
-import { execFile } from "node:child_process";
-import { promisify } from "node:util";
 import { Journey, BASE, d1, q, setMark, press, until, sleep, shellState, serverSession, signIn, raiseDossier, ALL_PRODUCTS } from "../lib/journey-kit.mjs";
 
-const execFileP = promisify(execFile);
 const J = new Journey("reset-in-page", "Password reset inside the page");
 const ALIAS = "jmobleyworks+wa-reset-" + J.suffix + "@gmail.com";
-const AUTHFOR_KV = "b8dd096a7b504403986f888a928ad17c"; // authfor.com/wrangler.toml AUTHFOR_KV
-const REPO = new URL("../../../", import.meta.url).pathname;
+const JOURNEY_KEY = process.env.AUTHFOR_JOURNEY_KEY;
 
-async function authfor(path, body) {
-  const r = await fetch("https://authfor.com" + path, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(body) });
+async function authfor(path, body, extraHeaders = {}) {
+  const r = await fetch("https://authfor.com" + path, { method: "POST", headers: { "Content-Type": "application/json", ...extraHeaders }, body: JSON.stringify(body) });
   const d = await r.json().catch(() => ({}));
   return { status: r.status, d };
 }
@@ -39,6 +35,11 @@ J.cleanup = async () => {
 };
 
 await J.run(async () => {
+  if (!JOURNEY_KEY) {
+    J.check("AUTHFOR_JOURNEY_KEY is required for the reset-in-page journey", false, "Set AUTHFOR_JOURNEY_KEY to AuthFor's JOURNEY_REVEAL_KEY.");
+    return;
+  }
+  J.secrets.push(JOURNEY_KEY);
   await J.launch();
   const oldPassword = "Us!" + randomBytes(12).toString("base64url");
   const newPassword = "Nw!" + randomBytes(12).toString("base64url");
@@ -55,18 +56,12 @@ await J.run(async () => {
   if (!ins || !ins.success) throw new Error("users insert failed");
 
   // AuthFor's own API issues the token (and mails the link to the alias).
-  const req = await authfor("/api/v1/password/reset-request", { email: ALIAS, client_id: "af_weyland_login", venture_id: "weylandai.com" });
+  const req = await authfor("/api/v1/password/reset-request", { email: ALIAS, client_id: "af_weyland_login", venture_id: "weylandai.com" }, { "X-Authfor-Journey-Key": JOURNEY_KEY });
   J.check("AuthFor's reset-request answers sent, with WeylandAI's mail", req.status === 200 && req.d.sent === true && req.d.brand === "weylandai", { status: req.status, sent: req.d.sent, brand: req.d.brand });
-  let token = "";
-  for (let i = 0; i < 5 && !token; i++) {
-    try {
-      const { stdout } = await execFileP("npx", ["wrangler", "kv", "key", "get", "reset:user:" + afId, "--namespace-id", AUTHFOR_KV, "--remote"], { cwd: REPO, maxBuffer: 1024 * 1024 });
-      token = String(stdout || "").trim();
-    } catch (e) { await sleep(1500); }
-  }
-  if (!/^[0-9a-f]{64}$/.test(token)) throw new Error("the issued reset token could not be read back (" + token.length + " chars)");
+  const token = req.d.reset_token;
+  if (typeof token !== "string" || !/^[0-9a-f]{64}$/.test(token)) throw new Error("AuthFor did not reveal the issued reset token; check AUTHFOR_JOURNEY_KEY and the deployed journey reveal.");
   J.secrets.push(token);
-  J.check("the token AuthFor issued was read back from its store", true, "64 hex");
+  J.check("AuthFor revealed the issued token in its secret-gated response", true, "64 hex");
 
   // The emailed link, as the alias's owner would follow it.
   const ctx = await J.context("desktop");
@@ -136,10 +131,8 @@ await J.run(async () => {
   await raiseDossier(p2);
   const oldTry = await authfor("/api/v1/login", { email: ALIAS, password: oldPassword, client_id: "af_weyland_login" });
   const oldAfter = Math.round((Date.now() - resetAt) / 1000);
-  // AuthFor keeps users and reset links in Workers KV, which is eventually consistent (a write can
-  // take about 60 s to reach every read). An old password still accepted is tried once more after
-  // that window, so the report says whether it stopped working later or not at all. The check
-  // itself stays strict: the old password must be refused at once.
+  // The old password must be refused at once. If it is accepted, retry later for diagnosis;
+  // the check still fails regardless of that later result.
   let oldLater = null;
   if (oldTry.status !== 401) {
     await sleep(65000);
