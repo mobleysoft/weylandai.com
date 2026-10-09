@@ -1,15 +1,15 @@
 {
-  "at": "2026-10-09T17:53:36.573Z",
-  "pass": false,
+  "at": "2026-10-09T22:49:48.734Z",
+  "pass": true,
   "browser": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/153.0.8010.12 Safari/537.36",
   "assets": [
     {
       "name": "schedule-grid-extraction-client.mjs.bin",
-      "sha256": "d706cbc03a41ad8e8e5189bef965158d7e600898287de90089580de043a08b5b"
+      "sha256": "535335c4a71af478738798eefa27580b2edda8177d8cd123d098f4d045e6b274"
     },
     {
       "name": "schedule-text-layer.mjs.bin",
-      "sha256": "2ac89c99245d4358025e584ebe52fbe16a9f390d0f523a96c40918428ef58dff"
+      "sha256": "543ce13e84979c4cc938224660a3eedd412f987629ae74456d6c386c6bedfdca"
     }
   ],
   "variants": [
@@ -2273,15 +2273,15 @@
               "rules_used": true
             }
           ],
-          "total_time_ms": 109
+          "total_time_ms": 105
         }
       },
       "logs": [
         "0ms Loading PDF renderer...",
         "39ms Reading the text of page 3...",
-        "109ms Extraction complete."
+        "105ms Extraction complete."
       ],
-      "ms": 109,
+      "ms": 105,
       "score": {
         "expected_rows": 48,
         "rows_found": 48,
@@ -2329,6 +2329,7 @@
       "height": 2592,
       "ok": true,
       "result": {
+        "partial": false,
         "doors": [
           {
             "door_number": "100A",
@@ -2356,25 +2357,26 @@
             "pair": false,
             "section": null,
             "source_row": 0,
-            "source_y": 184,
+            "source_y": 183,
             "field_confidence": {
-              "mark": 0.85,
-              "location": 0.85,
-              "width": 0.85,
-              "height": 0.85,
-              "thickness": 0.85,
-              "door_type": 0.85,
-              "door_material": 0.85,
-              "frame_type": 0.85,
-              "frame_material": 0.85,
-              "fire_rating": 0.85,
-              "hardware_group": 0.85,
-              "notes": 0.85
+              "mark": 0.9619258046150208,
+              "location": 0.9597712159156799,
+              "width": 0,
+              "height": 0.6651460528373718,
+              "thickness": 0.7164862751960754,
+              "door_type": 0.8990457653999329,
+              "door_material": 0.9679274559020996,
+              "frame_type": 0.9651747941970825,
+              "frame_material": 0.9675413370132446,
+              "fire_rating": 0,
+              "hardware_group": 0.9412623047828674,
+              "notes": 0.9688080549240112
             },
             "read_from": "ocr_lines",
             "hardware_spec_sections": [
               "08 71 00"
-            ]
+            ],
+            "confidence_source": "ocr_words"
           },
           {
             "door_number": "100B",
@@ -2402,25 +2404,26 @@
             "pair": false,
             "section": null,
             "source_row": 1,
-            "source_y": 208,
+            "source_y": 209,
             "field_confidence": {
-              "mark": 0.85,
-              "location": 0.85,
-              "width": 0.85,
-              "height": 0.85,
-              "thickness": 0.85,
-              "door_type": 0.85,
-              "door_material": 0.85,
-              "frame_type": 0.85,
-              "frame_material": 0.85,
-              "fire_rating": 0.85,
-              "hardware_group": 0.85,
-              "notes": 0.85
+              "mark": 0.9132704138755798,
+              "location": 0.9546983242034912,
+              "width": 0.6440980434417725,
+              "height": 0.1878022700548172,
+              "thickness": 0.8916004300117493,
+              "door_type": 0.8848282694816589,
+              "door_material": 0.9681156873703003,
+              "frame_type": 0.9694480299949646,
+              "frame_material": 0.9686068892478943,
+              "fire_rating": 0,
+              "hardware_group": 0.9695733785629272,
+              "notes": 0
             },
             "read_from": "ocr_lines",
             "hardware_spec_sections": [
               "08 71 00"
-            ]
+            ],
+            "confidence_source": "ocr_words"
           },
           {
             "door_number": "101",
@@ -2448,25 +2451,26 @@
             "pair": false,
             "section": null,
             "source_row": 2,
-            "source_y": 235,
+            "source_y": 234,
             "field_confidence": {
-              "mark": 0.85,
-              "location": 0.85,
-              "width": 0.85,
-              "height": 0.85,
-              "thickness": 0.85,
-              "door_type": 0.85,
-              "door_material": 0.85,
-              "frame_type": 0.85,
-              "frame_material": 0.85,
-              "fire_rating": 0.85,
-              "hardware_group": 0.85,
-              "notes": 0.85
+              "mark": 0.9682527780532837,
+              "location": 0.963162899017334,
+              "width": 0.6784022450447083,
+              "height": 0.6073399186134338,
+              "thickness": 0.7354189157485962,
+              "door_type": 0.909752368927002,
+              "door_material": 0.9407948851585388,
+              "frame_type": 0.9473274946212769,
+              "frame_material": 0.9693418741226196,
+              "fire_rating": 0,
+              "hardware_group": 0.9693629741668701,
+              "notes": 0
             },
             "read_from": "ocr_lines",
             "hardware_spec_sections": [
               "08 71 00"
-            ]
+            ],
+            "confidence_source": "ocr_words"
           },
           {
             "door_number": "102",
@@ -2496,23 +2500,24 @@
             "source_row": 3,
             "source_y": 260,
             "field_confidence": {
-              "mark": 0.85,
-              "location": 0.85,
-              "width": 0.85,
-              "height": 0.85,
-              "thickness": 0.85,
-              "door_type": 0.85,
-              "door_material": 0.85,
-              "frame_type": 0.85,
-              "frame_material": 0.85,
-              "fire_rating": 0.85,
-              "hardware_group": 0.85,
-              "notes": 0.85
+              "mark": 0.9700244069099426,
+              "location": 0.9586092233657837,
+              "width": 0.7910102605819702,
+              "height": 0.6501641273498535,
+              "thickness": 0.7863617539405823,
+              "door_type": 0.9649345874786377,
+              "door_material": 0.9449729919433594,
+              "frame_type": 0.37567588686943054,
+              "frame_material": 0.9553264379501343,
+              "fire_rating": 0,
+              "hardware_group": 0.969219982624054,
+              "notes": 0
             },
             "read_from": "ocr_lines",
             "hardware_spec_sections": [
               "08 71 00"
-            ]
+            ],
+            "confidence_source": "ocr_words"
           },
           {
             "door_number": "103",
@@ -2540,25 +2545,26 @@
             "pair": false,
             "section": null,
             "source_row": 4,
-            "source_y": 286,
+            "source_y": 285,
             "field_confidence": {
-              "mark": 0.85,
-              "location": 0.85,
-              "width": 0.85,
-              "height": 0.85,
-              "thickness": 0.85,
-              "door_type": 0.85,
-              "door_material": 0.85,
-              "frame_type": 0.85,
-              "frame_material": 0.85,
-              "fire_rating": 0.85,
-              "hardware_group": 0.85,
-              "notes": 0.85
+              "mark": 0.9696550965309143,
+              "location": 0.9570066928863525,
+              "width": 0.3950905501842499,
+              "height": 0.6595771312713623,
+              "thickness": 0.8620513677597046,
+              "door_type": 0.9323457479476929,
+              "door_material": 0.9493797421455383,
+              "frame_type": 0.9553958773612976,
+              "frame_material": 0.9630909562110901,
+              "fire_rating": 0,
+              "hardware_group": 0.9666968584060669,
+              "notes": 0
             },
             "read_from": "ocr_lines",
             "hardware_spec_sections": [
               "08 71 00"
-            ]
+            ],
+            "confidence_source": "ocr_words"
           },
           {
             "door_number": "104",
@@ -2588,23 +2594,24 @@
             "source_row": 5,
             "source_y": 311,
             "field_confidence": {
-              "mark": 0.85,
-              "location": 0.85,
-              "width": 0.85,
-              "height": 0.85,
-              "thickness": 0.85,
-              "door_type": 0.85,
-              "door_material": 0.85,
-              "frame_type": 0.85,
-              "frame_material": 0.85,
-              "fire_rating": 0.85,
-              "hardware_group": 0.85,
-              "notes": 0.85
+              "mark": 0.9691385626792908,
+              "location": 0.9645383954048157,
+              "width": 0.6734981536865234,
+              "height": 0.8472914695739746,
+              "thickness": 0.9070872664451599,
+              "door_type": 0.9662244319915771,
+              "door_material": 0.9031165838241577,
+              "frame_type": 0.95473313331604,
+              "frame_material": 0.9690093398094177,
+              "fire_rating": 0,
+              "hardware_group": 0.560837984085083,
+              "notes": 0
             },
             "read_from": "ocr_lines",
             "hardware_spec_sections": [
               "08 71 00"
-            ]
+            ],
+            "confidence_source": "ocr_words"
           },
           {
             "door_number": "105",
@@ -2634,23 +2641,24 @@
             "source_row": 6,
             "source_y": 337,
             "field_confidence": {
-              "mark": 0.85,
-              "location": 0.85,
-              "width": 0.85,
-              "height": 0.85,
-              "thickness": 0.85,
-              "door_type": 0.85,
-              "door_material": 0.85,
-              "frame_type": 0.85,
-              "frame_material": 0.85,
-              "fire_rating": 0.85,
-              "hardware_group": 0.85,
-              "notes": 0.85
+              "mark": 0.969819188117981,
+              "location": 0.9636421799659729,
+              "width": 0.7112014293670654,
+              "height": 0.41280055046081543,
+              "thickness": 0.6834651231765747,
+              "door_type": 0.9646873474121094,
+              "door_material": 0.9465048909187317,
+              "frame_type": 0.9580705761909485,
+              "frame_material": 0.9693204760551453,
+              "fire_rating": 0,
+              "hardware_group": 0.9695093631744385,
+              "notes": 0
             },
             "read_from": "ocr_lines",
             "hardware_spec_sections": [
               "08 71 00"
-            ]
+            ],
+            "confidence_source": "ocr_words"
           },
           {
             "door_number": "106",
@@ -2680,23 +2688,24 @@
             "source_row": 7,
             "source_y": 362,
             "field_confidence": {
-              "mark": 0.85,
-              "location": 0.85,
-              "width": 0.85,
-              "height": 0.85,
-              "thickness": 0.85,
-              "door_type": 0.85,
-              "door_material": 0.85,
-              "frame_type": 0.85,
-              "frame_material": 0.85,
-              "fire_rating": 0.85,
-              "hardware_group": 0.85,
-              "notes": 0.85
+              "mark": 0.9694961309432983,
+              "location": 0.9649468064308167,
+              "width": 0.7991899251937866,
+              "height": 0.7202304601669312,
+              "thickness": 0.7896792888641357,
+              "door_type": 0.965484619140625,
+              "door_material": 0.9335330724716187,
+              "frame_type": 0.9614651203155518,
+              "frame_material": 0.9590981006622314,
+              "fire_rating": 0,
+              "hardware_group": 0.9694059491157532,
+              "notes": 0.4235275983810425
             },
             "read_from": "ocr_lines",
             "hardware_spec_sections": [
               "08 71 00"
-            ]
+            ],
+            "confidence_source": "ocr_words"
           },
           {
             "door_number": "107",
@@ -2726,23 +2735,24 @@
             "source_row": 8,
             "source_y": 388,
             "field_confidence": {
-              "mark": 0.85,
-              "location": 0.85,
-              "width": 0.85,
-              "height": 0.85,
-              "thickness": 0.85,
-              "door_type": 0.85,
-              "door_material": 0.85,
-              "frame_type": 0.85,
-              "frame_material": 0.85,
-              "fire_rating": 0.85,
-              "hardware_group": 0.85,
-              "notes": 0.85
+              "mark": 0.9659829139709473,
+              "location": 0.9656121134757996,
+              "width": 0.7365062832832336,
+              "height": 0.5385351777076721,
+              "thickness": 0.7645769715309143,
+              "door_type": 0.9651148319244385,
+              "door_material": 0.9621005058288574,
+              "frame_type": 0.6377527117729187,
+              "frame_material": 0.9606342911720276,
+              "fire_rating": 0,
+              "hardware_group": 0.9585279226303101,
+              "notes": 0.3501203954219818
             },
             "read_from": "ocr_lines",
             "hardware_spec_sections": [
               "08 71 00"
-            ]
+            ],
+            "confidence_source": "ocr_words"
           },
           {
             "door_number": "108",
@@ -2772,23 +2782,24 @@
             "source_row": 9,
             "source_y": 413,
             "field_confidence": {
-              "mark": 0.85,
-              "location": 0.85,
-              "width": 0.85,
-              "height": 0.85,
-              "thickness": 0.85,
-              "door_type": 0.85,
-              "door_material": 0.85,
-              "frame_type": 0.85,
-              "frame_material": 0.85,
-              "fire_rating": 0.85,
-              "hardware_group": 0.85,
-              "notes": 0.85
+              "mark": 0.9641988277435303,
+              "location": 0.9610544443130493,
+              "width": 0.04551940783858299,
+              "height": 0.8324368000030518,
+              "thickness": 0.9236701130867004,
+              "door_type": 0.9614620208740234,
+              "door_material": 0.6643747687339783,
+              "frame_type": 0.9625015258789062,
+              "frame_material": 0.9656179547309875,
+              "fire_rating": 0,
+              "hardware_group": 0.9535576701164246,
+              "notes": 0
             },
             "read_from": "ocr_lines",
             "hardware_spec_sections": [
               "08 71 00"
-            ]
+            ],
+            "confidence_source": "ocr_words"
           },
           {
             "door_number": "109",
@@ -2818,39 +2829,40 @@
             "source_row": 10,
             "source_y": 439,
             "field_confidence": {
-              "mark": 0.85,
-              "location": 0.85,
-              "width": 0.85,
-              "height": 0.85,
-              "thickness": 0.85,
-              "door_type": 0.85,
-              "door_material": 0.85,
-              "frame_type": 0.85,
-              "frame_material": 0.85,
-              "fire_rating": 0.85,
-              "hardware_group": 0.85,
-              "notes": 0.85
+              "mark": 0.9699386358261108,
+              "location": 0.9622159600257874,
+              "width": 0.6473536491394043,
+              "height": 0.7137162089347839,
+              "thickness": 0.6980903744697571,
+              "door_type": 0.9651299118995667,
+              "door_material": 0.9474078416824341,
+              "frame_type": 0.9420833587646484,
+              "frame_material": 0.9691782593727112,
+              "fire_rating": 0,
+              "hardware_group": 0.9622070789337158,
+              "notes": 0
             },
             "read_from": "ocr_lines",
             "hardware_spec_sections": [
               "08 71 00"
-            ]
+            ],
+            "confidence_source": "ocr_words"
           },
           {
             "door_number": "110",
-            "hardware_group": "06 07",
-            "fire_rating": "60 MIN. 20 MIN.",
-            "size": "3-0\" 6'-0\" x 7'-0\" 7'-0\"",
-            "width_inches": null,
-            "height_inches": null,
-            "thickness": "13/4\" 13/4\"",
-            "thickness_inches": null,
-            "door_type": "A B",
-            "material_code": "HM WD",
+            "hardware_group": "06",
+            "fire_rating": "60 MIN.",
+            "size": "3-0\" x 7'-0\"",
+            "width_inches": 36,
+            "height_inches": 84,
+            "thickness": "13/4\"",
+            "thickness_inches": 1.75,
+            "door_type": "A",
+            "material_code": "HM",
             "door_finish": null,
             "stc_rating": null,
-            "frame_type": "1 2",
-            "frame_material": "HM HM",
+            "frame_type": "1",
+            "frame_material": "HM",
             "frame_finish": null,
             "head_detail": null,
             "jamb_detail": null,
@@ -2858,29 +2870,77 @@
             "panic_hardware": null,
             "glazing": null,
             "alternate_pricing": null,
-            "remarks": "PAIR; Room: IT/ SERVER CORRIDOR",
+            "remarks": "Room: IT/ SERVER",
             "pair": false,
             "section": null,
             "source_row": 11,
             "source_y": 464,
             "field_confidence": {
-              "mark": 0.85,
-              "location": 0.85,
-              "width": 0.85,
-              "height": 0.85,
-              "thickness": 0.85,
-              "door_type": 0.85,
-              "door_material": 0.85,
-              "frame_type": 0.85,
-              "frame_material": 0.85,
-              "fire_rating": 0.85,
-              "hardware_group": 0.85,
-              "notes": 0.85
+              "mark": 0.9674034118652344,
+              "location": 0.8789124488830566,
+              "width": 0,
+              "height": 0.5948803424835205,
+              "thickness": 0.7548556327819824,
+              "door_type": 0.9647284746170044,
+              "door_material": 0.9685099124908447,
+              "frame_type": 0.9647080302238464,
+              "frame_material": 0.9584922194480896,
+              "fire_rating": 0.9697878360748291,
+              "hardware_group": 0.9691482782363892,
+              "notes": 0
             },
             "read_from": "ocr_lines",
             "hardware_spec_sections": [
               "08 71 00"
-            ]
+            ],
+            "confidence_source": "ocr_words"
+          },
+          {
+            "door_number": "111",
+            "hardware_group": "07",
+            "fire_rating": "20 MIN.",
+            "size": "6'-0\" x 7'-0\"",
+            "width_inches": 72,
+            "height_inches": 84,
+            "thickness": "13/4\"",
+            "thickness_inches": 1.75,
+            "door_type": "B",
+            "material_code": "WD",
+            "door_finish": null,
+            "stc_rating": null,
+            "frame_type": "2",
+            "frame_material": "HM",
+            "frame_finish": null,
+            "head_detail": null,
+            "jamb_detail": null,
+            "sill_detail": null,
+            "panic_hardware": null,
+            "glazing": null,
+            "alternate_pricing": null,
+            "remarks": "PAIR; Room: CORRIDOR",
+            "pair": false,
+            "section": null,
+            "source_row": 12,
+            "source_y": 490,
+            "field_confidence": {
+              "mark": 0.9655191898345947,
+              "location": 0.9656674861907959,
+              "width": 0.5261785387992859,
+              "height": 0.19919845461845398,
+              "thickness": 0.7215157151222229,
+              "door_type": 0.9325466156005859,
+              "door_material": 0.9479707479476929,
+              "frame_type": 0.9698548913002014,
+              "frame_material": 0.9627390503883362,
+              "fire_rating": 0.968972384929657,
+              "hardware_group": 0.9596375823020935,
+              "notes": 0.9648642539978027
+            },
+            "read_from": "ocr_lines",
+            "hardware_spec_sections": [
+              "08 71 00"
+            ],
+            "confidence_source": "ocr_words"
           },
           {
             "door_number": "112",
@@ -2907,26 +2967,27 @@
             "remarks": "Room: STAIR 1",
             "pair": false,
             "section": null,
-            "source_row": 12,
+            "source_row": 13,
             "source_y": 516,
             "field_confidence": {
-              "mark": 0.85,
-              "location": 0.85,
-              "width": 0.85,
-              "height": 0.85,
-              "thickness": 0.85,
-              "door_type": 0.85,
-              "door_material": 0.85,
-              "frame_type": 0.85,
-              "frame_material": 0.85,
-              "fire_rating": 0.85,
-              "hardware_group": 0.85,
-              "notes": 0.85
+              "mark": 0.9637072086334229,
+              "location": 0.9388880133628845,
+              "width": 0.021877670660614967,
+              "height": 0.6644903421401978,
+              "thickness": 0.7513879537582397,
+              "door_type": 0.9650023579597473,
+              "door_material": 0.9662021398544312,
+              "frame_type": 0.9513975381851196,
+              "frame_material": 0.9649674296379089,
+              "fire_rating": 0.9577593803405762,
+              "hardware_group": 0.9519681334495544,
+              "notes": 0
             },
             "read_from": "ocr_lines",
             "hardware_spec_sections": [
               "08 71 00"
-            ]
+            ],
+            "confidence_source": "ocr_words"
           },
           {
             "door_number": "113",
@@ -2953,26 +3014,27 @@
             "remarks": "Room: STAIR 2",
             "pair": false,
             "section": null,
-            "source_row": 13,
+            "source_row": 14,
             "source_y": 541,
             "field_confidence": {
-              "mark": 0.85,
-              "location": 0.85,
-              "width": 0.85,
-              "height": 0.85,
-              "thickness": 0.85,
-              "door_type": 0.85,
-              "door_material": 0.85,
-              "frame_type": 0.85,
-              "frame_material": 0.85,
-              "fire_rating": 0.85,
-              "hardware_group": 0.85,
-              "notes": 0.85
+              "mark": 0.9679745435714722,
+              "location": 0.9595557451248169,
+              "width": 0.6572300791740417,
+              "height": 0.8290268182754517,
+              "thickness": 0.711438775062561,
+              "door_type": 0.9660578966140747,
+              "door_material": 0.951240062713623,
+              "frame_type": 0.6207793951034546,
+              "frame_material": 0.9527242183685303,
+              "fire_rating": 0.9516949653625488,
+              "hardware_group": 0.964581310749054,
+              "notes": 0
             },
             "read_from": "ocr_lines",
             "hardware_spec_sections": [
               "08 71 00"
-            ]
+            ],
+            "confidence_source": "ocr_words"
           },
           {
             "door_number": "114",
@@ -2999,26 +3061,27 @@
             "remarks": "Room: JANITOR",
             "pair": false,
             "section": null,
-            "source_row": 14,
+            "source_row": 15,
             "source_y": 567,
             "field_confidence": {
-              "mark": 0.85,
-              "location": 0.85,
-              "width": 0.85,
-              "height": 0.85,
-              "thickness": 0.85,
-              "door_type": 0.85,
-              "door_material": 0.85,
-              "frame_type": 0.85,
-              "frame_material": 0.85,
-              "fire_rating": 0.85,
-              "hardware_group": 0.85,
-              "notes": 0.85
+              "mark": 0.9639844298362732,
+              "location": 0.9636977910995483,
+              "width": 0,
+              "height": 0.6053934693336487,
+              "thickness": 0.7102149128913879,
+              "door_type": 0.9658657312393188,
+              "door_material": 0.9657649397850037,
+              "frame_type": 0.9598514437675476,
+              "frame_material": 0.9599490165710449,
+              "fire_rating": 0,
+              "hardware_group": 0.963412344455719,
+              "notes": 0
             },
             "read_from": "ocr_lines",
             "hardware_spec_sections": [
               "08 71 00"
-            ]
+            ],
+            "confidence_source": "ocr_words"
           },
           {
             "door_number": "200",
@@ -3045,33 +3108,34 @@
             "remarks": "PAIR; Room: CORRIDOR",
             "pair": false,
             "section": null,
-            "source_row": 15,
+            "source_row": 16,
             "source_y": 593,
             "field_confidence": {
-              "mark": 0.85,
-              "location": 0.85,
-              "width": 0.85,
-              "height": 0.85,
-              "thickness": 0.85,
-              "door_type": 0.85,
-              "door_material": 0.85,
-              "frame_type": 0.85,
-              "frame_material": 0.85,
-              "fire_rating": 0.85,
-              "hardware_group": 0.85,
-              "notes": 0.85
+              "mark": 0.9667149186134338,
+              "location": 0.9666135311126709,
+              "width": 0.584599494934082,
+              "height": 0.49410247802734375,
+              "thickness": 0.7334600687026978,
+              "door_type": 0.9138063192367554,
+              "door_material": 0.9573920369148254,
+              "frame_type": 0.9698699712753296,
+              "frame_material": 0.9667527675628662,
+              "fire_rating": 0.968890905380249,
+              "hardware_group": 0.9650225043296814,
+              "notes": 0.9649248719215393
             },
             "read_from": "ocr_lines",
             "hardware_spec_sections": [
               "08 71 00"
-            ]
+            ],
+            "confidence_source": "ocr_words"
           },
           {
             "door_number": "201",
             "hardware_group": "03",
             "fire_rating": null,
-            "size": "7-0\"",
-            "width_inches": null,
+            "size": "3-0\" x 7-0\"",
+            "width_inches": 36,
             "height_inches": 84,
             "thickness": "13/4\"",
             "thickness_inches": 1.75,
@@ -3091,26 +3155,27 @@
             "remarks": "Room: OPEN OFFICE",
             "pair": false,
             "section": null,
-            "source_row": 16,
+            "source_row": 17,
             "source_y": 618,
             "field_confidence": {
-              "mark": 0.85,
-              "location": 0.85,
-              "width": 0.85,
-              "height": 0.85,
-              "thickness": 0.85,
-              "door_type": 0.85,
-              "door_material": 0.85,
-              "frame_type": 0.85,
-              "frame_material": 0.85,
-              "fire_rating": 0.85,
-              "hardware_group": 0.85,
-              "notes": 0.85
+              "mark": 0.9558018445968628,
+              "location": 0.9547566771507263,
+              "width": 0,
+              "height": 0.7365289330482483,
+              "thickness": 0.6861199140548706,
+              "door_type": 0.8746563196182251,
+              "door_material": 0.9435371160507202,
+              "frame_type": 0.9098902940750122,
+              "frame_material": 0.9641007781028748,
+              "fire_rating": 0,
+              "hardware_group": 0.9642245769500732,
+              "notes": 0
             },
             "read_from": "ocr_lines",
             "hardware_spec_sections": [
               "08 71 00"
-            ]
+            ],
+            "confidence_source": "ocr_words"
           },
           {
             "door_number": "202",
@@ -3137,26 +3202,27 @@
             "remarks": "Room: OFFICE",
             "pair": false,
             "section": null,
-            "source_row": 17,
+            "source_row": 18,
             "source_y": 643,
             "field_confidence": {
-              "mark": 0.85,
-              "location": 0.85,
-              "width": 0.85,
-              "height": 0.85,
-              "thickness": 0.85,
-              "door_type": 0.85,
-              "door_material": 0.85,
-              "frame_type": 0.85,
-              "frame_material": 0.85,
-              "fire_rating": 0.85,
-              "hardware_group": 0.85,
-              "notes": 0.85
+              "mark": 0.9698488116264343,
+              "location": 0.9620491862297058,
+              "width": 0.6810694932937622,
+              "height": 0.7282688617706299,
+              "thickness": 0.6682866811752319,
+              "door_type": 0.9625957012176514,
+              "door_material": 0.9390622973442078,
+              "frame_type": 0.6394764184951782,
+              "frame_material": 0.9567262530326843,
+              "fire_rating": 0,
+              "hardware_group": 0.969195544719696,
+              "notes": 0
             },
             "read_from": "ocr_lines",
             "hardware_spec_sections": [
               "08 71 00"
-            ]
+            ],
+            "confidence_source": "ocr_words"
           },
           {
             "door_number": "203",
@@ -3183,26 +3249,27 @@
             "remarks": "Room: OFFICE",
             "pair": false,
             "section": null,
-            "source_row": 18,
+            "source_row": 19,
             "source_y": 670,
             "field_confidence": {
-              "mark": 0.85,
-              "location": 0.85,
-              "width": 0.85,
-              "height": 0.85,
-              "thickness": 0.85,
-              "door_type": 0.85,
-              "door_material": 0.85,
-              "frame_type": 0.85,
-              "frame_material": 0.85,
-              "fire_rating": 0.85,
-              "hardware_group": 0.85,
-              "notes": 0.85
+              "mark": 0.9634146094322205,
+              "location": 0.962146520614624,
+              "width": 0.1294291615486145,
+              "height": 0.6461723446846008,
+              "thickness": 0.7865309119224548,
+              "door_type": 0.9619525671005249,
+              "door_material": 0.9067916870117188,
+              "frame_type": 0.963971734046936,
+              "frame_material": 0.9614536762237549,
+              "fire_rating": 0,
+              "hardware_group": 0.9689946174621582,
+              "notes": 0
             },
             "read_from": "ocr_lines",
             "hardware_spec_sections": [
               "08 71 00"
-            ]
+            ],
+            "confidence_source": "ocr_words"
           },
           {
             "door_number": "204",
@@ -3229,26 +3296,27 @@
             "remarks": "Room: OFFICE",
             "pair": false,
             "section": null,
-            "source_row": 19,
+            "source_row": 20,
             "source_y": 695,
             "field_confidence": {
-              "mark": 0.85,
-              "location": 0.85,
-              "width": 0.85,
-              "height": 0.85,
-              "thickness": 0.85,
-              "door_type": 0.85,
-              "door_material": 0.85,
-              "frame_type": 0.85,
-              "frame_material": 0.85,
-              "fire_rating": 0.85,
-              "hardware_group": 0.85,
-              "notes": 0.85
+              "mark": 0.966219961643219,
+              "location": 0.9636532068252563,
+              "width": 0.5996703505516052,
+              "height": 0.05430366471409798,
+              "thickness": 0.8180217742919922,
+              "door_type": 0.9658036231994629,
+              "door_material": 0.9624216556549072,
+              "frame_type": 0.6480852365493774,
+              "frame_material": 0.9475686550140381,
+              "fire_rating": 0,
+              "hardware_group": 0.9571048617362976,
+              "notes": 0
             },
             "read_from": "ocr_lines",
             "hardware_spec_sections": [
               "08 71 00"
-            ]
+            ],
+            "confidence_source": "ocr_words"
           },
           {
             "door_number": "205",
@@ -3275,26 +3343,27 @@
             "remarks": "Room: CONFERENCE",
             "pair": false,
             "section": null,
-            "source_row": 20,
+            "source_row": 21,
             "source_y": 720,
             "field_confidence": {
-              "mark": 0.85,
-              "location": 0.85,
-              "width": 0.85,
-              "height": 0.85,
-              "thickness": 0.85,
-              "door_type": 0.85,
-              "door_material": 0.85,
-              "frame_type": 0.85,
-              "frame_material": 0.85,
-              "fire_rating": 0.85,
-              "hardware_group": 0.85,
-              "notes": 0.85
+              "mark": 0.961469292640686,
+              "location": 0.9597495794296265,
+              "width": 0.8313841223716736,
+              "height": 0.33405372500419617,
+              "thickness": 0.5854795575141907,
+              "door_type": 0.9206483364105225,
+              "door_material": 0.940107524394989,
+              "frame_type": 0.9433494806289673,
+              "frame_material": 0.9688830375671387,
+              "fire_rating": 0,
+              "hardware_group": 0.9687199592590332,
+              "notes": 0
             },
             "read_from": "ocr_lines",
             "hardware_spec_sections": [
               "08 71 00"
-            ]
+            ],
+            "confidence_source": "ocr_words"
           },
           {
             "door_number": "206",
@@ -3321,33 +3390,34 @@
             "remarks": "Room: WOMEN",
             "pair": false,
             "section": null,
-            "source_row": 21,
+            "source_row": 22,
             "source_y": 746,
             "field_confidence": {
-              "mark": 0.85,
-              "location": 0.85,
-              "width": 0.85,
-              "height": 0.85,
-              "thickness": 0.85,
-              "door_type": 0.85,
-              "door_material": 0.85,
-              "frame_type": 0.85,
-              "frame_material": 0.85,
-              "fire_rating": 0.85,
-              "hardware_group": 0.85,
-              "notes": 0.85
+              "mark": 0.9699477553367615,
+              "location": 0.9667775630950928,
+              "width": 0.6883466243743896,
+              "height": 0.7096302509307861,
+              "thickness": 0.7851949334144592,
+              "door_type": 0.9603803157806396,
+              "door_material": 0.9569811224937439,
+              "frame_type": 0.9687301516532898,
+              "frame_material": 0.9622191786766052,
+              "fire_rating": 0,
+              "hardware_group": 0.9693117737770081,
+              "notes": 0
             },
             "read_from": "ocr_lines",
             "hardware_spec_sections": [
               "08 71 00"
-            ]
+            ],
+            "confidence_source": "ocr_words"
           },
           {
             "door_number": "207",
             "hardware_group": "04",
             "fire_rating": null,
-            "size": "zo\" x 7'-0\"",
-            "width_inches": null,
+            "size": "3'-0\" x 7'-0\"",
+            "width_inches": 36,
             "height_inches": 84,
             "thickness": "13/4\"",
             "thickness_inches": 1.75,
@@ -3367,26 +3437,27 @@
             "remarks": "Room: MEN",
             "pair": false,
             "section": null,
-            "source_row": 22,
+            "source_row": 23,
             "source_y": 772,
             "field_confidence": {
-              "mark": 0.85,
-              "location": 0.85,
-              "width": 0.85,
-              "height": 0.85,
-              "thickness": 0.85,
-              "door_type": 0.85,
-              "door_material": 0.85,
-              "frame_type": 0.85,
-              "frame_material": 0.85,
-              "fire_rating": 0.85,
-              "hardware_group": 0.85,
-              "notes": 0.85
+              "mark": 0.9691329002380371,
+              "location": 0.9690276384353638,
+              "width": 0.14824485778808594,
+              "height": 0.5996941924095154,
+              "thickness": 0.6806468963623047,
+              "door_type": 0.9650391936302185,
+              "door_material": 0.9039432406425476,
+              "frame_type": 0.9676764607429504,
+              "frame_material": 0.9609569311141968,
+              "fire_rating": 0,
+              "hardware_group": 0.9687263369560242,
+              "notes": 0
             },
             "read_from": "ocr_lines",
             "hardware_spec_sections": [
               "08 71 00"
-            ]
+            ],
+            "confidence_source": "ocr_words"
           },
           {
             "door_number": "208",
@@ -3413,26 +3484,27 @@
             "remarks": "||; Room: BREAK ROOM",
             "pair": false,
             "section": null,
-            "source_row": 23,
+            "source_row": 24,
             "source_y": 797,
             "field_confidence": {
-              "mark": 0.85,
-              "location": 0.85,
-              "width": 0.85,
-              "height": 0.85,
-              "thickness": 0.85,
-              "door_type": 0.85,
-              "door_material": 0.85,
-              "frame_type": 0.85,
-              "frame_material": 0.85,
-              "fire_rating": 0.85,
-              "hardware_group": 0.85,
-              "notes": 0.85
+              "mark": 0.9680652618408203,
+              "location": 0.9550857543945312,
+              "width": 0.8196740746498108,
+              "height": 0.33518341183662415,
+              "thickness": 0.7683318257331848,
+              "door_type": 0.9664933681488037,
+              "door_material": 0.9554105401039124,
+              "frame_type": 0.9610024094581604,
+              "frame_material": 0.9399925470352173,
+              "fire_rating": 0,
+              "hardware_group": 0.9686208367347717,
+              "notes": 0.4450225830078125
             },
             "read_from": "ocr_lines",
             "hardware_spec_sections": [
               "08 71 00"
-            ]
+            ],
+            "confidence_source": "ocr_words"
           },
           {
             "door_number": "209",
@@ -3459,26 +3531,27 @@
             "remarks": "Room: STORAGE",
             "pair": false,
             "section": null,
-            "source_row": 24,
+            "source_row": 25,
             "source_y": 823,
             "field_confidence": {
-              "mark": 0.85,
-              "location": 0.85,
-              "width": 0.85,
-              "height": 0.85,
-              "thickness": 0.85,
-              "door_type": 0.85,
-              "door_material": 0.85,
-              "frame_type": 0.85,
-              "frame_material": 0.85,
-              "fire_rating": 0.85,
-              "hardware_group": 0.85,
-              "notes": 0.85
+              "mark": 0.937619149684906,
+              "location": 0.9655753970146179,
+              "width": 0.729259729385376,
+              "height": 0.47060471773147583,
+              "thickness": 0.6920538544654846,
+              "door_type": 0.9618092179298401,
+              "door_material": 0.967995285987854,
+              "frame_type": 0.9476160407066345,
+              "frame_material": 0.9687904119491577,
+              "fire_rating": 0,
+              "hardware_group": 0.9559851884841919,
+              "notes": 0
             },
             "read_from": "ocr_lines",
             "hardware_spec_sections": [
               "08 71 00"
-            ]
+            ],
+            "confidence_source": "ocr_words"
           },
           {
             "door_number": "210",
@@ -3505,29 +3578,30 @@
             "remarks": "Room: DATA CLOSET",
             "pair": false,
             "section": null,
-            "source_row": 25,
+            "source_row": 26,
             "source_y": 848,
             "field_confidence": {
-              "mark": 0.85,
-              "location": 0.85,
-              "width": 0.85,
-              "height": 0.85,
-              "thickness": 0.85,
-              "door_type": 0.85,
-              "door_material": 0.85,
-              "frame_type": 0.85,
-              "frame_material": 0.85,
-              "fire_rating": 0.85,
-              "hardware_group": 0.85,
-              "notes": 0.85
+              "mark": 0.9695737957954407,
+              "location": 0.9480124115943909,
+              "width": 0.7885324954986572,
+              "height": 0.6131933331489563,
+              "thickness": 0.7551581859588623,
+              "door_type": 0.9607859253883362,
+              "door_material": 0.9604641199111938,
+              "frame_type": 0.9590351581573486,
+              "frame_material": 0.9587867856025696,
+              "fire_rating": 0.9653542041778564,
+              "hardware_group": 0.9682967662811279,
+              "notes": 0
             },
             "read_from": "ocr_lines",
             "hardware_spec_sections": [
               "08 71 00"
-            ]
+            ],
+            "confidence_source": "ocr_words"
           },
           {
-            "door_number": "214",
+            "door_number": "211",
             "hardware_group": "02",
             "fire_rating": "90 MIN.",
             "size": "3'-0\" x 7-0\"",
@@ -3551,26 +3625,27 @@
             "remarks": "Room: STAIR 1",
             "pair": false,
             "section": null,
-            "source_row": 26,
+            "source_row": 27,
             "source_y": 874,
             "field_confidence": {
-              "mark": 0.85,
-              "location": 0.85,
-              "width": 0.85,
-              "height": 0.85,
-              "thickness": 0.85,
-              "door_type": 0.85,
-              "door_material": 0.85,
-              "frame_type": 0.85,
-              "frame_material": 0.85,
-              "fire_rating": 0.85,
-              "hardware_group": 0.85,
-              "notes": 0.85
+              "mark": 0.9616451859474182,
+              "location": 0.9280349612236023,
+              "width": 0.628063976764679,
+              "height": 0.881864070892334,
+              "thickness": 0.7923600077629089,
+              "door_type": 0.9615370035171509,
+              "door_material": 0.9676012396812439,
+              "frame_type": 0.9668616652488708,
+              "frame_material": 0.9446730017662048,
+              "fire_rating": 0.9642266631126404,
+              "hardware_group": 0.9668717384338379,
+              "notes": 0
             },
             "read_from": "ocr_lines",
             "hardware_spec_sections": [
               "08 71 00"
-            ]
+            ],
+            "confidence_source": "ocr_words"
           },
           {
             "door_number": "212",
@@ -3597,26 +3672,27 @@
             "remarks": "Room: STAIR 2",
             "pair": false,
             "section": null,
-            "source_row": 27,
+            "source_row": 28,
             "source_y": 900,
             "field_confidence": {
-              "mark": 0.85,
-              "location": 0.85,
-              "width": 0.85,
-              "height": 0.85,
-              "thickness": 0.85,
-              "door_type": 0.85,
-              "door_material": 0.85,
-              "frame_type": 0.85,
-              "frame_material": 0.85,
-              "fire_rating": 0.85,
-              "hardware_group": 0.85,
-              "notes": 0.85
+              "mark": 0.9676345586776733,
+              "location": 0.9563444256782532,
+              "width": 0.47510623931884766,
+              "height": 0.6421616077423096,
+              "thickness": 0.7029606699943542,
+              "door_type": 0.9647462368011475,
+              "door_material": 0.9495601058006287,
+              "frame_type": 0.4353642165660858,
+              "frame_material": 0.9459217190742493,
+              "fire_rating": 0.964097261428833,
+              "hardware_group": 0.9672031402587891,
+              "notes": 0
             },
             "read_from": "ocr_lines",
             "hardware_spec_sections": [
               "08 71 00"
-            ]
+            ],
+            "confidence_source": "ocr_words"
           },
           {
             "door_number": "213",
@@ -3643,26 +3719,27 @@
             "remarks": "Room: COPY / PRINT",
             "pair": false,
             "section": null,
-            "source_row": 28,
+            "source_row": 29,
             "source_y": 925,
             "field_confidence": {
-              "mark": 0.85,
-              "location": 0.85,
-              "width": 0.85,
-              "height": 0.85,
-              "thickness": 0.85,
-              "door_type": 0.85,
-              "door_material": 0.85,
-              "frame_type": 0.85,
-              "frame_material": 0.85,
-              "fire_rating": 0.85,
-              "hardware_group": 0.85,
-              "notes": 0.85
+              "mark": 0.956474781036377,
+              "location": 0.9260923862457275,
+              "width": 0.018292389810085297,
+              "height": 0,
+              "thickness": 0.7136408090591431,
+              "door_type": 0.961148202419281,
+              "door_material": 0.938658595085144,
+              "frame_type": 0.375529408454895,
+              "frame_material": 0.9593114256858826,
+              "fire_rating": 0,
+              "hardware_group": 0.9692666530609131,
+              "notes": 0
             },
             "read_from": "ocr_lines",
             "hardware_spec_sections": [
               "08 71 00"
-            ]
+            ],
+            "confidence_source": "ocr_words"
           },
           {
             "door_number": "214",
@@ -3689,26 +3766,27 @@
             "remarks": "Room: JANITOR",
             "pair": false,
             "section": null,
-            "source_row": 29,
+            "source_row": 30,
             "source_y": 951,
             "field_confidence": {
-              "mark": 0.85,
-              "location": 0.85,
-              "width": 0.85,
-              "height": 0.85,
-              "thickness": 0.85,
-              "door_type": 0.85,
-              "door_material": 0.85,
-              "frame_type": 0.85,
-              "frame_material": 0.85,
-              "fire_rating": 0.85,
-              "hardware_group": 0.85,
-              "notes": 0.85
+              "mark": 0.9577594995498657,
+              "location": 0.9670298099517822,
+              "width": 0.7414842844009399,
+              "height": 0.6784904599189758,
+              "thickness": 0.7651617527008057,
+              "door_type": 0.9641029834747314,
+              "door_material": 0.9534538984298706,
+              "frame_type": 0,
+              "frame_material": 0.9649695754051208,
+              "fire_rating": 0,
+              "hardware_group": 0.9438443183898926,
+              "notes": 0
             },
             "read_from": "ocr_lines",
             "hardware_spec_sections": [
               "08 71 00"
-            ]
+            ],
+            "confidence_source": "ocr_words"
           },
           {
             "door_number": "215",
@@ -3735,26 +3813,27 @@
             "remarks": "Room: WELLNESS",
             "pair": false,
             "section": null,
-            "source_row": 30,
+            "source_row": 31,
             "source_y": 976,
             "field_confidence": {
-              "mark": 0.85,
-              "location": 0.85,
-              "width": 0.85,
-              "height": 0.85,
-              "thickness": 0.85,
-              "door_type": 0.85,
-              "door_material": 0.85,
-              "frame_type": 0.85,
-              "frame_material": 0.85,
-              "fire_rating": 0.85,
-              "hardware_group": 0.85,
-              "notes": 0.85
+              "mark": 0.9634929895401001,
+              "location": 0.961090624332428,
+              "width": 0.7975606322288513,
+              "height": 0.265462189912796,
+              "thickness": 0.6640109419822693,
+              "door_type": 0.9617494940757751,
+              "door_material": 0.9142249822616577,
+              "frame_type": 0.9687252044677734,
+              "frame_material": 0.9562247395515442,
+              "fire_rating": 0,
+              "hardware_group": 0.9689487218856812,
+              "notes": 0
             },
             "read_from": "ocr_lines",
             "hardware_spec_sections": [
               "08 71 00"
-            ]
+            ],
+            "confidence_source": "ocr_words"
           },
           {
             "door_number": "300",
@@ -3781,26 +3860,27 @@
             "remarks": "PAIR; Room: CORRIDOR",
             "pair": false,
             "section": null,
-            "source_row": 31,
+            "source_row": 32,
             "source_y": 1002,
             "field_confidence": {
-              "mark": 0.85,
-              "location": 0.85,
-              "width": 0.85,
-              "height": 0.85,
-              "thickness": 0.85,
-              "door_type": 0.85,
-              "door_material": 0.85,
-              "frame_type": 0.85,
-              "frame_material": 0.85,
-              "fire_rating": 0.85,
-              "hardware_group": 0.85,
-              "notes": 0.85
+              "mark": 0.9667440056800842,
+              "location": 0.9661949872970581,
+              "width": 0.6482092142105103,
+              "height": 0.5938069820404053,
+              "thickness": 0.7041536569595337,
+              "door_type": 0.9326010942459106,
+              "door_material": 0.95644211769104,
+              "frame_type": 0.9695858955383301,
+              "frame_material": 0.9569304585456848,
+              "fire_rating": 0.9609083533287048,
+              "hardware_group": 0.9537497758865356,
+              "notes": 0.9620568156242371
             },
             "read_from": "ocr_lines",
             "hardware_spec_sections": [
               "08 71 00"
-            ]
+            ],
+            "confidence_source": "ocr_words"
           },
           {
             "door_number": "301",
@@ -3827,30 +3907,31 @@
             "remarks": "Room: EXECUTIVE SUITE",
             "pair": false,
             "section": null,
-            "source_row": 32,
+            "source_row": 33,
             "source_y": 1027,
             "field_confidence": {
-              "mark": 0.85,
-              "location": 0.85,
-              "width": 0.85,
-              "height": 0.85,
-              "thickness": 0.85,
-              "door_type": 0.85,
-              "door_material": 0.85,
-              "frame_type": 0.85,
-              "frame_material": 0.85,
-              "fire_rating": 0.85,
-              "hardware_group": 0.85,
-              "notes": 0.85
+              "mark": 0.9600591063499451,
+              "location": 0.9546462297439575,
+              "width": 0,
+              "height": 0,
+              "thickness": 0.8774105906486511,
+              "door_type": 0.932636022567749,
+              "door_material": 0.9417871832847595,
+              "frame_type": 0.9624001383781433,
+              "frame_material": 0.9652775526046753,
+              "fire_rating": 0,
+              "hardware_group": 0.9693390130996704,
+              "notes": 0
             },
             "read_from": "ocr_lines",
             "hardware_spec_sections": [
               "08 71 00"
-            ]
+            ],
+            "confidence_source": "ocr_words"
           },
           {
             "door_number": "302",
-            "hardware_group": "Q3",
+            "hardware_group": "03",
             "fire_rating": null,
             "size": "3'-0\" x 7-0\"",
             "width_inches": 36,
@@ -3873,26 +3954,27 @@
             "remarks": "Room: EXECUTIVE OFFICE",
             "pair": false,
             "section": null,
-            "source_row": 33,
+            "source_row": 34,
             "source_y": 1053,
             "field_confidence": {
-              "mark": 0.85,
-              "location": 0.85,
-              "width": 0.85,
-              "height": 0.85,
-              "thickness": 0.85,
-              "door_type": 0.85,
-              "door_material": 0.85,
-              "frame_type": 0.85,
-              "frame_material": 0.85,
-              "fire_rating": 0.85,
-              "hardware_group": 0.85,
-              "notes": 0.85
+              "mark": 0.969611406326294,
+              "location": 0.9591905474662781,
+              "width": 0.7560936212539673,
+              "height": 0.6770036816596985,
+              "thickness": 0.7063690423965454,
+              "door_type": 0.9648296236991882,
+              "door_material": 0.8751420378684998,
+              "frame_type": 0.4983195960521698,
+              "frame_material": 0.9674022197723389,
+              "fire_rating": 0,
+              "hardware_group": 0.9199959635734558,
+              "notes": 0
             },
             "read_from": "ocr_lines",
             "hardware_spec_sections": [
               "08 71 00"
-            ]
+            ],
+            "confidence_source": "ocr_words"
           },
           {
             "door_number": "303",
@@ -3919,26 +4001,27 @@
             "remarks": "Room: EXECUTIVE OFFICE",
             "pair": false,
             "section": null,
-            "source_row": 34,
+            "source_row": 35,
             "source_y": 1079,
             "field_confidence": {
-              "mark": 0.85,
-              "location": 0.85,
-              "width": 0.85,
-              "height": 0.85,
-              "thickness": 0.85,
-              "door_type": 0.85,
-              "door_material": 0.85,
-              "frame_type": 0.85,
-              "frame_material": 0.85,
-              "fire_rating": 0.85,
-              "hardware_group": 0.85,
-              "notes": 0.85
+              "mark": 0.9679893255233765,
+              "location": 0.9601165056228638,
+              "width": 0.5937132239341736,
+              "height": 0.5410766005516052,
+              "thickness": 0.6812041401863098,
+              "door_type": 0.9643314480781555,
+              "door_material": 0.9250512719154358,
+              "frame_type": 0.9683011770248413,
+              "frame_material": 0.9625992774963379,
+              "fire_rating": 0,
+              "hardware_group": 0.9631252288818359,
+              "notes": 0
             },
             "read_from": "ocr_lines",
             "hardware_spec_sections": [
               "08 71 00"
-            ]
+            ],
+            "confidence_source": "ocr_words"
           },
           {
             "door_number": "304",
@@ -3965,26 +4048,27 @@
             "remarks": "Room: BOARD ROOM",
             "pair": false,
             "section": null,
-            "source_row": 35,
+            "source_row": 36,
             "source_y": 1104,
             "field_confidence": {
-              "mark": 0.85,
-              "location": 0.85,
-              "width": 0.85,
-              "height": 0.85,
-              "thickness": 0.85,
-              "door_type": 0.85,
-              "door_material": 0.85,
-              "frame_type": 0.85,
-              "frame_material": 0.85,
-              "fire_rating": 0.85,
-              "hardware_group": 0.85,
-              "notes": 0.85
+              "mark": 0.9675042629241943,
+              "location": 0.9602194428443909,
+              "width": 0.5682327151298523,
+              "height": 0.7201252579689026,
+              "thickness": 0.702587902545929,
+              "door_type": 0.9326331615447998,
+              "door_material": 0.947315514087677,
+              "frame_type": 0.9573963284492493,
+              "frame_material": 0.9653818607330322,
+              "fire_rating": 0,
+              "hardware_group": 0.969468355178833,
+              "notes": 0
             },
             "read_from": "ocr_lines",
             "hardware_spec_sections": [
               "08 71 00"
-            ]
+            ],
+            "confidence_source": "ocr_words"
           },
           {
             "door_number": "305",
@@ -4011,26 +4095,27 @@
             "remarks": "Room: OFFICE",
             "pair": false,
             "section": null,
-            "source_row": 36,
+            "source_row": 37,
             "source_y": 1130,
             "field_confidence": {
-              "mark": 0.85,
-              "location": 0.85,
-              "width": 0.85,
-              "height": 0.85,
-              "thickness": 0.85,
-              "door_type": 0.85,
-              "door_material": 0.85,
-              "frame_type": 0.85,
-              "frame_material": 0.85,
-              "fire_rating": 0.85,
-              "hardware_group": 0.85,
-              "notes": 0.85
+              "mark": 0.9663419127464294,
+              "location": 0.957374095916748,
+              "width": 0.6066892147064209,
+              "height": 0.5033493041992188,
+              "thickness": 0.8974616527557373,
+              "door_type": 0.9647088050842285,
+              "door_material": 0.9449466466903687,
+              "frame_type": 0.9563419818878174,
+              "frame_material": 0.9681875705718994,
+              "fire_rating": 0,
+              "hardware_group": 0.9686496257781982,
+              "notes": 0
             },
             "read_from": "ocr_lines",
             "hardware_spec_sections": [
               "08 71 00"
-            ]
+            ],
+            "confidence_source": "ocr_words"
           },
           {
             "door_number": "306",
@@ -4057,26 +4142,27 @@
             "remarks": "Room: WOMEN",
             "pair": false,
             "section": null,
-            "source_row": 37,
+            "source_row": 38,
             "source_y": 1156,
             "field_confidence": {
-              "mark": 0.85,
-              "location": 0.85,
-              "width": 0.85,
-              "height": 0.85,
-              "thickness": 0.85,
-              "door_type": 0.85,
-              "door_material": 0.85,
-              "frame_type": 0.85,
-              "frame_material": 0.85,
-              "fire_rating": 0.85,
-              "hardware_group": 0.85,
-              "notes": 0.85
+              "mark": 0.9694521427154541,
+              "location": 0.9667800068855286,
+              "width": 0.6468675136566162,
+              "height": 0,
+              "thickness": 0.9370582103729248,
+              "door_type": 0.9629281759262085,
+              "door_material": 0.6802244782447815,
+              "frame_type": 0.962489902973175,
+              "frame_material": 0.9668434262275696,
+              "fire_rating": 0,
+              "hardware_group": 0.9611279368400574,
+              "notes": 0
             },
             "read_from": "ocr_lines",
             "hardware_spec_sections": [
               "08 71 00"
-            ]
+            ],
+            "confidence_source": "ocr_words"
           },
           {
             "door_number": "307",
@@ -4103,33 +4189,34 @@
             "remarks": "Room: MEN",
             "pair": false,
             "section": null,
-            "source_row": 38,
+            "source_row": 39,
             "source_y": 1181,
             "field_confidence": {
-              "mark": 0.85,
-              "location": 0.85,
-              "width": 0.85,
-              "height": 0.85,
-              "thickness": 0.85,
-              "door_type": 0.85,
-              "door_material": 0.85,
-              "frame_type": 0.85,
-              "frame_material": 0.85,
-              "fire_rating": 0.85,
-              "hardware_group": 0.85,
-              "notes": 0.85
+              "mark": 0.9665136933326721,
+              "location": 0.9570326805114746,
+              "width": 0.7428345680236816,
+              "height": 0.5000078082084656,
+              "thickness": 0.7372888922691345,
+              "door_type": 0.9632407426834106,
+              "door_material": 0.8773297071456909,
+              "frame_type": 0.4478653371334076,
+              "frame_material": 0.9698032140731812,
+              "fire_rating": 0,
+              "hardware_group": 0.9689269065856934,
+              "notes": 0
             },
             "read_from": "ocr_lines",
             "hardware_spec_sections": [
               "08 71 00"
-            ]
+            ],
+            "confidence_source": "ocr_words"
           },
           {
             "door_number": "308",
             "hardware_group": "08",
             "fire_rating": null,
-            "size": "7'-0\"",
-            "width_inches": null,
+            "size": "3-0\" x 7'-0\"",
+            "width_inches": 36,
             "height_inches": 84,
             "thickness": "1 3/4\"",
             "thickness_inches": 1.75,
@@ -4149,26 +4236,27 @@
             "remarks": "Room: PANTRY",
             "pair": false,
             "section": null,
-            "source_row": 39,
+            "source_row": 40,
             "source_y": 1206,
             "field_confidence": {
-              "mark": 0.85,
-              "location": 0.85,
-              "width": 0.85,
-              "height": 0.85,
-              "thickness": 0.85,
-              "door_type": 0.85,
-              "door_material": 0.85,
-              "frame_type": 0.85,
-              "frame_material": 0.85,
-              "fire_rating": 0.85,
-              "hardware_group": 0.85,
-              "notes": 0.85
+              "mark": 0.960601806640625,
+              "location": 0.9657927751541138,
+              "width": 0,
+              "height": 0.6914750933647156,
+              "thickness": 0.6285624504089355,
+              "door_type": 0.9646468162536621,
+              "door_material": 0.9594980478286743,
+              "frame_type": 0.9545953273773193,
+              "frame_material": 0.9668811559677124,
+              "fire_rating": 0,
+              "hardware_group": 0.9682170152664185,
+              "notes": 0
             },
             "read_from": "ocr_lines",
             "hardware_spec_sections": [
               "08 71 00"
-            ]
+            ],
+            "confidence_source": "ocr_words"
           },
           {
             "door_number": "309",
@@ -4195,26 +4283,27 @@
             "remarks": "Room: STORAGE",
             "pair": false,
             "section": null,
-            "source_row": 40,
+            "source_row": 41,
             "source_y": 1232,
             "field_confidence": {
-              "mark": 0.85,
-              "location": 0.85,
-              "width": 0.85,
-              "height": 0.85,
-              "thickness": 0.85,
-              "door_type": 0.85,
-              "door_material": 0.85,
-              "frame_type": 0.85,
-              "frame_material": 0.85,
-              "fire_rating": 0.85,
-              "hardware_group": 0.85,
-              "notes": 0.85
+              "mark": 0.9662414789199829,
+              "location": 0.958610475063324,
+              "width": 0.6587574481964111,
+              "height": 0.3044053018093109,
+              "thickness": 0.7847222089767456,
+              "door_type": 0.9662901163101196,
+              "door_material": 0.9608941078186035,
+              "frame_type": 0.394948273897171,
+              "frame_material": 0.968934953212738,
+              "fire_rating": 0,
+              "hardware_group": 0.9596489071846008,
+              "notes": 0
             },
             "read_from": "ocr_lines",
             "hardware_spec_sections": [
               "08 71 00"
-            ]
+            ],
+            "confidence_source": "ocr_words"
           },
           {
             "door_number": "310",
@@ -4241,26 +4330,27 @@
             "remarks": "Room: DATA CLOSET",
             "pair": false,
             "section": null,
-            "source_row": 41,
+            "source_row": 42,
             "source_y": 1258,
             "field_confidence": {
-              "mark": 0.85,
-              "location": 0.85,
-              "width": 0.85,
-              "height": 0.85,
-              "thickness": 0.85,
-              "door_type": 0.85,
-              "door_material": 0.85,
-              "frame_type": 0.85,
-              "frame_material": 0.85,
-              "fire_rating": 0.85,
-              "hardware_group": 0.85,
-              "notes": 0.85
+              "mark": 0.9601392149925232,
+              "location": 0.9567863941192627,
+              "width": 0.750214695930481,
+              "height": 0,
+              "thickness": 0.9590162634849548,
+              "door_type": 0.9557243585586548,
+              "door_material": 0.9671540856361389,
+              "frame_type": 0.6106191277503967,
+              "frame_material": 0.9693276882171631,
+              "fire_rating": 0.9502941966056824,
+              "hardware_group": 0.966987133026123,
+              "notes": 0
             },
             "read_from": "ocr_lines",
             "hardware_spec_sections": [
               "08 71 00"
-            ]
+            ],
+            "confidence_source": "ocr_words"
           },
           {
             "door_number": "311",
@@ -4287,26 +4377,27 @@
             "remarks": "Room: STAIR 1",
             "pair": false,
             "section": null,
-            "source_row": 42,
+            "source_row": 43,
             "source_y": 1283,
             "field_confidence": {
-              "mark": 0.85,
-              "location": 0.85,
-              "width": 0.85,
-              "height": 0.85,
-              "thickness": 0.85,
-              "door_type": 0.85,
-              "door_material": 0.85,
-              "frame_type": 0.85,
-              "frame_material": 0.85,
-              "fire_rating": 0.85,
-              "hardware_group": 0.85,
-              "notes": 0.85
+              "mark": 0.9443781971931458,
+              "location": 0.961230993270874,
+              "width": 0.7965182662010193,
+              "height": 0.7908483743667603,
+              "thickness": 0.6445397734642029,
+              "door_type": 0.9641523957252502,
+              "door_material": 0.9686663746833801,
+              "frame_type": 0.9582503437995911,
+              "frame_material": 0.9695350527763367,
+              "fire_rating": 0.953827440738678,
+              "hardware_group": 0.9570160508155823,
+              "notes": 0
             },
             "read_from": "ocr_lines",
             "hardware_spec_sections": [
               "08 71 00"
-            ]
+            ],
+            "confidence_source": "ocr_words"
           },
           {
             "door_number": "312",
@@ -4333,26 +4424,27 @@
             "remarks": "Room: STAIR 2",
             "pair": false,
             "section": null,
-            "source_row": 43,
+            "source_row": 44,
             "source_y": 1309,
             "field_confidence": {
-              "mark": 0.85,
-              "location": 0.85,
-              "width": 0.85,
-              "height": 0.85,
-              "thickness": 0.85,
-              "door_type": 0.85,
-              "door_material": 0.85,
-              "frame_type": 0.85,
-              "frame_material": 0.85,
-              "fire_rating": 0.85,
-              "hardware_group": 0.85,
-              "notes": 0.85
+              "mark": 0.969327449798584,
+              "location": 0.9577429294586182,
+              "width": 0.6689136028289795,
+              "height": 0.658551812171936,
+              "thickness": 0.7194409370422363,
+              "door_type": 0.9658443927764893,
+              "door_material": 0.9521843194961548,
+              "frame_type": 0.9608656167984009,
+              "frame_material": 0.9667565226554871,
+              "fire_rating": 0.9519432187080383,
+              "hardware_group": 0.9662055969238281,
+              "notes": 0
             },
             "read_from": "ocr_lines",
             "hardware_spec_sections": [
               "08 71 00"
-            ]
+            ],
+            "confidence_source": "ocr_words"
           },
           {
             "door_number": "313",
@@ -4379,26 +4471,27 @@
             "remarks": "Room: MECHANICAL",
             "pair": false,
             "section": null,
-            "source_row": 44,
+            "source_row": 45,
             "source_y": 1334,
             "field_confidence": {
-              "mark": 0.85,
-              "location": 0.85,
-              "width": 0.85,
-              "height": 0.85,
-              "thickness": 0.85,
-              "door_type": 0.85,
-              "door_material": 0.85,
-              "frame_type": 0.85,
-              "frame_material": 0.85,
-              "fire_rating": 0.85,
-              "hardware_group": 0.85,
-              "notes": 0.85
+              "mark": 0.9630064368247986,
+              "location": 0.9656116962432861,
+              "width": 0.751194179058075,
+              "height": 0,
+              "thickness": 0.7077244520187378,
+              "door_type": 0.9658036231994629,
+              "door_material": 0.958820104598999,
+              "frame_type": 0.9576857089996338,
+              "frame_material": 0.9687982797622681,
+              "fire_rating": 0.9683041572570801,
+              "hardware_group": 0.9570176601409912,
+              "notes": 0
             },
             "read_from": "ocr_lines",
             "hardware_spec_sections": [
               "08 71 00"
-            ]
+            ],
+            "confidence_source": "ocr_words"
           },
           {
             "door_number": "314",
@@ -4425,26 +4518,27 @@
             "remarks": "Room: ROOF ACCESS",
             "pair": false,
             "section": null,
-            "source_row": 45,
+            "source_row": 46,
             "source_y": 1360,
             "field_confidence": {
-              "mark": 0.85,
-              "location": 0.85,
-              "width": 0.85,
-              "height": 0.85,
-              "thickness": 0.85,
-              "door_type": 0.85,
-              "door_material": 0.85,
-              "frame_type": 0.85,
-              "frame_material": 0.85,
-              "fire_rating": 0.85,
-              "hardware_group": 0.85,
-              "notes": 0.85
+              "mark": 0.9686773419380188,
+              "location": 0.9597921967506409,
+              "width": 0.600898265838623,
+              "height": 0.7103562951087952,
+              "thickness": 0.9421586394309998,
+              "door_type": 0.9543097019195557,
+              "door_material": 0.9664933085441589,
+              "frame_type": 0.5186322927474976,
+              "frame_material": 0.9645047783851624,
+              "fire_rating": 0,
+              "hardware_group": 0.5216590166091919,
+              "notes": 0
             },
             "read_from": "ocr_lines",
             "hardware_spec_sections": [
               "08 71 00"
-            ]
+            ],
+            "confidence_source": "ocr_words"
           },
           {
             "door_number": "315",
@@ -4471,207 +4565,106 @@
             "remarks": "Room: JANITOR",
             "pair": false,
             "section": null,
-            "source_row": 46,
+            "source_row": 47,
             "source_y": 1386,
             "field_confidence": {
-              "mark": 0.85,
-              "location": 0.85,
-              "width": 0.85,
-              "height": 0.85,
-              "thickness": 0.85,
-              "door_type": 0.85,
-              "door_material": 0.85,
-              "frame_type": 0.85,
-              "frame_material": 0.85,
-              "fire_rating": 0.85,
-              "hardware_group": 0.85,
-              "notes": 0.85
+              "mark": 0.9676846265792847,
+              "location": 0.9574960470199585,
+              "width": 0.7189364433288574,
+              "height": 0.5511728525161743,
+              "thickness": 0.6622745990753174,
+              "door_type": 0.9658733606338501,
+              "door_material": 0.9691883325576782,
+              "frame_type": 0.9560404419898987,
+              "frame_material": 0.9694033265113831,
+              "fire_rating": 0,
+              "hardware_group": 0.9661007523536682,
+              "notes": 0
             },
             "read_from": "ocr_lines",
             "hardware_spec_sections": [
               "08 71 00"
-            ]
+            ],
+            "confidence_source": "ocr_words"
           }
         ],
         "extraction_confidence": 0.85,
         "metadata": {
+          "partial": false,
+          "recognition": {
+            "partial": false,
+            "reason": null,
+            "cells": 1178,
+            "max_cells": 2000,
+            "elapsed_ms": 17745,
+            "max_ms": 60000
+          },
+          "unresolved_rows": [],
           "extraction_mode": "ocr_text_lines",
           "extraction_route": "ocr_text_lines",
           "page_isolated": false,
-          "row_count": 47,
+          "expected_marks": [],
+          "row_count": 48,
           "rotation_applied": 270,
           "skew_corrected_deg": 0.6,
           "ocr_dpi": 204,
-          "ocr_words": 660,
+          "ocr_words": 662,
           "orientation_attempts": [],
-          "total_time_ms": 15927
+          "total_time_ms": 17745
         }
       },
       "logs": [
         "0ms Loading PDF renderer...",
-        "28ms Reading the text of page 3...",
-        "30ms Loading OCR engine...",
-        "34ms Loading OCR engine...",
-        "47ms Loading OCR language model...",
-        "74ms Checking scan orientation...",
-        "3626ms Checking scan orientation (turned 90 degrees)...",
-        "5914ms Checking scan orientation (turned 270 degrees)...",
-        "8029ms Checking scan orientation (turned 180 degrees)...",
-        "11191ms Reading the scan's cells at full resolution...",
-        "15927ms Extraction complete."
+        "29ms Reading the text of page 3...",
+        "31ms Loading OCR engine...",
+        "35ms Loading OCR engine...",
+        "46ms Loading OCR language model...",
+        "70ms Checking scan orientation...",
+        "3618ms Checking scan orientation (turned 90 degrees)...",
+        "5945ms Checking scan orientation (turned 270 degrees)...",
+        "8072ms Checking scan orientation (turned 180 degrees)...",
+        "11336ms Reading the scan's cells at full resolution...",
+        "17745ms Extraction complete."
       ],
-      "ms": 15927,
+      "ms": 17745,
       "score": {
         "expected_rows": 48,
-        "rows_found": 46,
-        "rows_fully_right": 40,
-        "fields_right": 308,
-        "fields_total": 322,
+        "rows_found": 48,
+        "rows_fully_right": 48,
+        "fields_right": 336,
+        "fields_total": 336,
         "per_field": {
           "width_inches": {
-            "right": 42,
-            "total": 46
+            "right": 48,
+            "total": 48
           },
           "height_inches": {
-            "right": 45,
-            "total": 46
+            "right": 48,
+            "total": 48
           },
           "door_type": {
-            "right": 45,
-            "total": 46
+            "right": 48,
+            "total": 48
           },
           "material": {
-            "right": 45,
-            "total": 46
+            "right": 48,
+            "total": 48
           },
           "fire_rating": {
-            "right": 44,
-            "total": 46
+            "right": 48,
+            "total": 48
           },
           "hardware_group": {
-            "right": 43,
-            "total": 46
+            "right": 48,
+            "total": 48
           },
           "location": {
-            "right": 44,
-            "total": 46
+            "right": 48,
+            "total": 48
           }
         },
-        "extra_rows": 1,
-        "wrong": [
-          {
-            "key": "110",
-            "page": 3,
-            "field": "width_inches",
-            "expected": 36,
-            "read": null
-          },
-          {
-            "key": "110",
-            "page": 3,
-            "field": "height_inches",
-            "expected": 84,
-            "read": null
-          },
-          {
-            "key": "110",
-            "page": 3,
-            "field": "door_type",
-            "expected": "A",
-            "read": "A B"
-          },
-          {
-            "key": "110",
-            "page": 3,
-            "field": "material",
-            "expected": "HM",
-            "read": "HM WD"
-          },
-          {
-            "key": "110",
-            "page": 3,
-            "field": "fire_rating",
-            "expected": "60 MIN",
-            "read": "60 MIN. 20 MIN."
-          },
-          {
-            "key": "110",
-            "page": 3,
-            "field": "hardware_group",
-            "expected": "06",
-            "read": "06 07"
-          },
-          {
-            "key": "110",
-            "page": 3,
-            "field": "location",
-            "expected": "IT / SERVER",
-            "read": "IT/ SERVER CORRIDOR"
-          },
-          {
-            "key": "111",
-            "page": 3,
-            "field": "(row)",
-            "expected": "row",
-            "read": null
-          },
-          {
-            "key": "201",
-            "page": 3,
-            "field": "width_inches",
-            "expected": 36,
-            "read": null
-          },
-          {
-            "key": "207",
-            "page": 3,
-            "field": "width_inches",
-            "expected": 36,
-            "read": null
-          },
-          {
-            "key": "211",
-            "page": 3,
-            "field": "(row)",
-            "expected": "row",
-            "read": null
-          },
-          {
-            "key": "214",
-            "page": 3,
-            "field": "fire_rating",
-            "expected": null,
-            "read": "90 MIN."
-          },
-          {
-            "key": "214",
-            "page": 3,
-            "field": "hardware_group",
-            "expected": "05",
-            "read": "02"
-          },
-          {
-            "key": "214",
-            "page": 3,
-            "field": "location",
-            "expected": "JANITOR",
-            "read": "STAIR 1"
-          },
-          {
-            "key": "302",
-            "page": 3,
-            "field": "hardware_group",
-            "expected": "03",
-            "read": "Q3"
-          },
-          {
-            "key": "308",
-            "page": 3,
-            "field": "width_inches",
-            "expected": 36,
-            "read": null
-          }
-        ]
+        "extra_rows": 0,
+        "wrong": []
       }
     }
   ]
