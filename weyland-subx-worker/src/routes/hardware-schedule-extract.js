@@ -178,7 +178,11 @@ router.post("/api/hardware-schedule/extract", async (request2, env2) => {
     console.error("[Hardware Extract] Error:", error5);
     return jsonResponse3({
       error: "Failed to extract hardware schedule",
-      details: error5.message
+      details: error5.message,
+      ...(error5.name === "EmbeddedHardwareReadError" ? {
+        code: error5.code, retryable: error5.retryable,
+        ...(error5.partial ? { partial: true } : {})
+      } : {})
     }, error5.status || 500);
   }
 });

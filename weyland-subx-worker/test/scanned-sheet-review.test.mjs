@@ -6,7 +6,7 @@ import { guestDetail, doorListCsv } from "../assets/client-ocr-src/schedule-work
 import { pageTextLines, readDoorScheduleFromLines } from "../assets/client-ocr-src/schedule-text-layer.mjs";
 import { getDocument, Util } from "../src/vendor/pdfjs-text.mjs";
 
-const evidence = JSON.parse(readFileSync(new URL("../../tools/accuracy/g019-browser.json", import.meta.url)));
+const evidence = JSON.parse(readFileSync(new URL("./fixtures/g019-qualified-scan.json", import.meta.url)));
 const scanned = evidence.variants.find(v => v.variant === "scanned");
 const expected = evidence.variants.find(v => v.variant === "vector").result.doors.map(d => ({ page: 3, mark: d.door_number }));
 const replay = (options = {}) => guestDetail({ name: "scan.pdf" }, "scan", 6, [{ page: 3, extraction: structuredClone(scanned.result) }], options);

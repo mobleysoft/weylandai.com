@@ -10,7 +10,7 @@ value, followed by the chosen read/value/view. A rejected parse keeps its raw
 score here even though the existing review confidence remains zero. Reread
 summaries record conflicts, stopped budgets and selected views. They contain at
 most six text readings, two selected views and no pixels or word-box arrays.
-The envelope has a version, stage and pinned language-model SHA-256; it is
+The envelope has a version, stage and pinned OCR model SHA-256; it is
 limited to 24 known fields and 16,000 UTF-8 bytes per row. Text-layer reads
 carry null recognition scores because positioned text is not an OCR prediction.
 

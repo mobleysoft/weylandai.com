@@ -119,9 +119,22 @@ await J.run(async () => {
   // A reload while an app is open (the document is replaced on purpose here, after the in-place check).
   await openApp(page, "/find");
   await sleep(1500);
-  await page.reload({ waitUntil: "load" });
-  await sleep(2500);
+  // Wait for the shell and the restored app, rather than unrelated page
+  // resources finishing. The actual controls below still have to be present.
+  await page.reload({ waitUntil: "domcontentloaded", timeout: 30000 });
+  await until(() => page.evaluate(() => !!window.WeylandShell && !!document.querySelector("#wa-overlay.is-open iframe")), 20000);
+  const restoredFrame = await overlayFrame(page, 20000);
+  if (restoredFrame) await restoredFrame.locator('form[role="search"] input[type="search"][name="q"]').waitFor({ state: "visible", timeout: 20000 }).catch(() => {});
+  const restored = await frameInfo(restoredFrame);
+  const finderControls = restoredFrame ? await restoredFrame.evaluate(() => {
+    const form = document.querySelector('form[role="search"]');
+    const input = form?.querySelector('input[type="search"][name="q"]');
+    const submit = form?.querySelector('button[type="submit"]');
+    const usable = el => !!el && !el.disabled && el.getBoundingClientRect().width > 0 && el.getBoundingClientRect().height > 0;
+    return { search: usable(input), submit: usable(submit) };
+  }).catch(() => ({ search: false, submit: false })) : { search: false, submit: false };
   const after = await page.evaluate(() => ({ path: location.pathname, shell: !!document.getElementById("wa-account-chip") && !!window.WeylandShell, overlay: !!document.querySelector("#wa-overlay.is-open") }));
-  J.check("a reload with an app open keeps the single-page shell", after.shell, after);
+  const workingApp = restored && norm(restored.path) === "/find" && !restored.jsonError && !restored.chromeError && !restored.evalError && !restored.nestedShell && finderControls.search && finderControls.submit;
+  J.check("a reload with an app open keeps the single-page shell and restores the finder", after.shell && after.path === "/" && after.overlay && workingApp, { ...after, finderControls, restored: restored ? { path: restored.path, title: restored.title, jsonError: restored.jsonError, chromeError: restored.chromeError, evalError: restored.evalError, nestedShell: restored.nestedShell } : null });
   await ctx.close();
 });
