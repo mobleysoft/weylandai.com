@@ -93,31 +93,49 @@ const doorResult = (ds, tl, t0) => ({
   },
 });
 
+/** Open a PDF once for several page reads (close it with doc.destroy()). */
+export async function openTextLayerDoc(pdfBytes) {
+  return openPdf(pdfBytes);
+}
+
 /**
  * Read one page from its text layer, trying scheduleType first and then the other kind.
  * -> null when the page has no text layer (the caller goes on to the browser/OCR path), else
  *    the runner's own shape: { ok: true, schedule_type, result, empty?, tried, ms, source: "text_layer" }.
  */
-export async function readPageFromTextLayer(pdfBytes, pageNumber, scheduleType, { alsoTry = null } = {}) {
-  const t0 = Date.now();
+export async function readPageFromTextLayer(pdfBytes, pageNumber, scheduleType, opts = {}) {
   const pdf = await openPdf(pdfBytes);
-  try {
+  try { return await readPageFromDoc(pdf, pageNumber, scheduleType, opts); }
+  finally { try { await pdf.destroy(); } catch (_) { /* gone */ } }
+}
+
+// Strikes are looked for on spec-size pages only (Letter and Legal, where an addendum strikes
+// items): a drawing sheet's operator list is every line of the drawing, and reading it ran the
+// Worker out of its limits on Rockford A2.2 (ARCH D).
+const STRIKE_MAX_PT = 1100;
+
+export async function readPageFromDoc(pdf, pageNumber, scheduleType, { alsoTry = null } = {}) {
+  const t0 = Date.now();
+  {
     if (pageNumber < 1 || pageNumber > pdf.numPages) return null;
     const page = await pdf.getPage(pageNumber);
     const tl = await TL.pageTextLines(pdfjsLib, page);
     if (!tl || tl.word_count < MIN_WORDS) return null;
     const size = { width: tl.width, height: tl.height };
     let struckLines = 0;
-    try {
-      const viewport = page.getViewport({ scale: 1, rotation: ((page.rotate || 0) + (tl.rotation || 0)) % 360 });
-      const bars = await horizontalBars(page, viewport);
-      if (bars.length) {
-        const kept = tl.lines.filter((L) => struckShare(L, bars) < 0.6);
-        struckLines = tl.lines.length - kept.length;
-        tl.lines = kept;
-        tl.struck = struckLines;
-      }
-    } catch (_) { /* no operator list: read every line */ }
+    if (Math.max(tl.width, tl.height) <= STRIKE_MAX_PT) {
+      try {
+        const viewport = page.getViewport({ scale: 1, rotation: ((page.rotate || 0) + (tl.rotation || 0)) % 360 });
+        const bars = await horizontalBars(page, viewport);
+        if (bars.length) {
+          const kept = tl.lines.filter((L) => struckShare(L, bars) < 0.6);
+          struckLines = tl.lines.length - kept.length;
+          tl.lines = kept;
+          tl.struck = struckLines;
+        }
+      } catch (_) { /* no operator list: read every line */ }
+    }
+    try { page.cleanup(); } catch (_) { /* fine */ }
     const types = [scheduleType].concat(alsoTry && alsoTry !== scheduleType ? [alsoTry] : []);
     let first = null;
     for (const type of types) {
@@ -135,7 +153,5 @@ export async function readPageFromTextLayer(pdfBytes, pageNumber, scheduleType, 
     }
     // Text, but neither kind of schedule in it: said plainly, without a browser launch.
     return { ok: true, schedule_type: first ? first.schedule_type : scheduleType, result: first ? first.result : {}, empty: true, tried: types, ms: Date.now() - t0, source: "text_layer" };
-  } finally {
-    try { await pdf.destroy(); } catch (_) { /* gone */ }
   }
 }
