@@ -160,7 +160,10 @@ export async function variantPagesFor(env, { productId = null, makerName = null,
   let rows = [];
   try {
     if (productId) {
-      rows = (await env.DB.prepare(base + " WHERE v.product_id = ? AND v.catalog_page IS NOT NULL AND v.list_price > 0 LIMIT 3000").bind(String(productId)).all()).results || [];
+      // The rows starting with the schedule's own number first (2026-10-09): Von Duprin 99 has more
+      // price rows than the limit once each is joined to its filed documents, and 99-EO's fell past it
+      // (the WeylandAI Building grade: "no page of it names 99" while page 26 prints its row).
+      rows = (await env.DB.prepare(base + " WHERE v.product_id = ? AND v.catalog_page IS NOT NULL AND v.list_price > 0 ORDER BY (REPLACE(REPLACE(REPLACE(REPLACE(UPPER(v.full_model_number), '-', ''), ' ', ''), '.', ''), '/', '') LIKE ?) DESC LIMIT 3000").bind(String(productId), want.slice(0, 4) + "%").all()).results || [];
     } else if (makerName) {
       const run = (String(scheduleModel).toUpperCase().match(/[A-Z0-9]+/) || [""])[0];
       if (run.length < 3) return [];
