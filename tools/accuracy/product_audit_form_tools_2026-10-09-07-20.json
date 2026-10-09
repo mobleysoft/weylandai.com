@@ -1,0 +1,605 @@
+{
+  "base": "https://weylandai.com",
+  "started_at": "2026-10-09T07:20:54.845Z",
+  "tools": [
+    {
+      "id": "lienx",
+      "label": "LienX",
+      "claim": "Fills the state's own statutory lien waiver form word for word (Arizona, California, Florida, Georgia, Michigan, Mississippi, Nevada, Texas, Utah and Wyoming today, checked against the statute's text) from the job's owner, customer, amount and dates. States whose statutory forms LienX does not carry yet are refused rather than given a generic waiver; other states get a general form, labelled as one.",
+      "input": "CA conditional progress waiver, Berryessa job (owner from the bid set; customer, job location and amount from the PropX proposal); Ohio for the general form",
+      "pass": true,
+      "summary": "CA § 8132: 25 of 25 statute lines in order; amount $11,754.43; 10 statutory states; 0 refused",
+      "numbers": {
+        "statute_lines": 25,
+        "statute_lines_in_order": 25,
+        "pages": 2,
+        "states_carried": "AZ,CA,FL,GA,MI,MS,NV,TX,UT,WY",
+        "states_refused": 0
+      },
+      "checks": [
+        {
+          "name": "PDF returned",
+          "ok": true,
+          "detail": "HTTP 200"
+        },
+        {
+          "name": "every line of the Civ. Code § 8132 form, word for word and in order",
+          "ok": true,
+          "detail": "25 lines"
+        },
+        {
+          "name": "job facts filled (owner, customer, location, amount, dates)",
+          "ok": true,
+          "detail": "QA Door Hardware Co (WeylandAI test account) | QA GC | 1855 Lucretia Ave, San Jose, CA 95122 | Berryessa Union School District | September 30, 2026 | QA GC | $11,754.43 | QA Door Hardware Co (WeylandAI test account) | October 9, 2026"
+        },
+        {
+          "name": "no placeholder text",
+          "ok": true,
+          "detail": ""
+        },
+        {
+          "name": "the ten states the card names are the statutory states carried",
+          "ok": true,
+          "detail": "AZ,CA,FL,GA,MI,MS,NV,TX,UT,WY"
+        },
+        {
+          "name": "Ohio (no statutory form) gets a PDF",
+          "ok": true,
+          "detail": "HTTP 200"
+        },
+        {
+          "name": "Ohio's waiver is labelled a general form",
+          "ok": true,
+          "detail": "label found: true"
+        }
+      ],
+      "notes": [
+        "The refused list is empty, so no state is refused today; the card's refusal branch cannot be exercised."
+      ]
+    },
+    {
+      "id": "bidx",
+      "label": "BidX",
+      "claim": "Builds the bid form for a public bid from a HuntX notice and your PropX proposal: base bid in words and figures, schedule of values, alternates, unit prices, addenda acknowledged, bid bond, qualifications, and a bidder checklist.",
+      "input": "HuntX notice \"Replace Windows & Doors, Roofing System & Upgrade Site Drainage — Galesburg Readiness Center\" (Illinois Capital Development Board) + PropX quote 1 (Berryessa, $11,754.43)",
+      "pass": false,
+      "summary": "base bid $11,754.43 in words and figures; SOV 5 lines = $10,759.20; bond $1,175.44; notice 546-140-011",
+      "numbers": {
+        "sov_lines": 5,
+        "sov_sum": 10759.2,
+        "proposal_subtotal": 10759.2,
+        "pages": 2
+      },
+      "checks": [
+        {
+          "name": "preview joins the notice and the proposal",
+          "ok": true,
+          "detail": "HTTP 200 PropX quote 1"
+        },
+        {
+          "name": "PDF returned",
+          "ok": true,
+          "detail": "HTTP 200"
+        },
+        {
+          "name": "HuntX notice facts on the bid form (agency, solicitation, location, due, notice link)",
+          "ok": false,
+          "detail": "missing: due=2026-12-15T00:00:00.000"
+        },
+        {
+          "name": "base bid in words and figures = the PropX total",
+          "ok": true,
+          "detail": "Eleven thousand seven hundred fifty-four and 43/100 dollars ($11,754.43)"
+        },
+        {
+          "name": "schedule of values = the proposal's lines (qty, unit, amount) and sums to its subtotal",
+          "ok": true,
+          "detail": "5 lines, sum $10,759.20 vs subtotal $10,759.20"
+        },
+        {
+          "name": "alternate and unit prices printed",
+          "ok": true,
+          "detail": "Deduct hardware set 1 at Majestic Way openings 002 and 003 $731.60"
+        },
+        {
+          "name": "addenda section present (none listed)",
+          "ok": true,
+          "detail": ""
+        },
+        {
+          "name": "bid bond 10% (Berryessa 00 21 13) of the base bid",
+          "ok": true,
+          "detail": "$1,175.44"
+        },
+        {
+          "name": "qualifications/exclusions printed",
+          "ok": true,
+          "detail": ""
+        },
+        {
+          "name": "bidder checklist printed",
+          "ok": true,
+          "detail": ""
+        },
+        {
+          "name": "no placeholder text",
+          "ok": true,
+          "detail": ""
+        }
+      ],
+      "notes": [
+        "HuntX holds no Berryessa notice (searched 'Berryessa', 'door replacement', state CA + fit doors), so the notice and the proposal are different jobs; the check is that each one's facts reach the form."
+      ]
+    },
+    {
+      "id": "coa",
+      "label": "CoA",
+      "claim": "The certificate of occupancy request package with an acceptance inspection record for every fire-rated opening in your SubX schedule: rating, hardware, a flag when the set has no closer or latch, and the checks NFPA 80 calls for, with pass/fail and sign-off.",
+      "input": "Berryessa SubX session (24 openings, all 120 min rated, sets 1 and 2)",
+      "pass": true,
+      "summary": "24 of 24 rated openings have a record; 0 closer/latch flags (0 expected); pairs shown 22/22",
+      "numbers": {
+        "rated_expected": 24,
+        "records": 24,
+        "pairs": 22,
+        "pairs_shown_as_pairs": 22,
+        "pages": 14
+      },
+      "checks": [
+        {
+          "name": "PDF returned",
+          "ok": true,
+          "detail": "HTTP 200"
+        },
+        {
+          "name": "one record per fire-rated opening, with its rating and set",
+          "ok": true,
+          "detail": "24 records"
+        },
+        {
+          "name": "closer / latch flags right (both sets have LCN 4040XP and a Von Duprin exit device: no flags)",
+          "ok": true,
+          "detail": "0 flags"
+        },
+        {
+          "name": "hardware of the set listed on the record",
+          "ok": true,
+          "detail": ""
+        },
+        {
+          "name": "NFPA 80 checks with PASS / FAIL / NA and sign-off per opening",
+          "ok": true,
+          "detail": "24 sign-off lines"
+        },
+        {
+          "name": "openings' sizes are the schedule's (pairs shown as pairs)",
+          "ok": true,
+          "detail": "22 of 22 pairs (PR) shown as pairs; e.g. Opening 001 · rating 120 · PR 3'-6\" x 7'-10\" · set 2 Self-closing in the s"
+        },
+        {
+          "name": "project and owner on the cover",
+          "ok": true,
+          "detail": ""
+        },
+        {
+          "name": "no placeholder text",
+          "ok": true,
+          "detail": ""
+        }
+      ],
+      "notes": []
+    },
+    {
+      "id": "closex",
+      "label": "CloseX",
+      "claim": "The Section 08 71 00 closeout from your SubX job: hardware schedule as installed, keying schedule, warranty table per manufacturer, attic stock, checklist with sign-off, and the catalogue page of every installed product.",
+      "input": "Berryessa SubX session; warranties from 08 71 00 1.07",
+      "pass": false,
+      "summary": "24/24 openings, 24 keyed, 5/5 warranties, 7 catalogue pages for 10 products (no page: Von Duprin PA-AX-99-L-F-2SI-06; Zero International 188SBK PSA); pairs 22/22",
+      "numbers": {
+        "openings": 24,
+        "pairs_shown_as_pairs": "22/22",
+        "keyed": 24,
+        "products": 10,
+        "cited_pages": 7,
+        "no_page_line": "Von Duprin PA-AX-99-L-F-2SI-06, VERIFY PERMANENT CORE WITH DISTRICT, Zero International 188SBK PSA",
+        "appended_pages": 7,
+        "products_without_page": "Von Duprin PA-AX-99-L-F-2SI-06; Zero International 188SBK PSA",
+        "pages": 18,
+        "room_names_printed": 0,
+        "preview_products": 11
+      },
+      "checks": [
+        {
+          "name": "PDF returned",
+          "ok": true,
+          "detail": "HTTP 200"
+        },
+        {
+          "name": "hardware schedule as installed: every opening with rating and set",
+          "ok": true,
+          "detail": "24 of 24"
+        },
+        {
+          "name": "every scheduled item (catalogue number) in the as-installed schedule",
+          "ok": true,
+          "detail": "11 catalogue numbers"
+        },
+        {
+          "name": "opening sizes are the schedule's (pairs shown as pairs)",
+          "ok": true,
+          "detail": "22 of 22 pairs shown as PR; e.g. Opening 001 · PR 3'-6\" x 7'-10\" · 120 rated · set 2 QTY ITEM MAN"
+        },
+        {
+          "name": "keying schedule lists every keyed opening (all 24 have rim cylinders)",
+          "ok": true,
+          "detail": "24 of 24"
+        },
+        {
+          "name": "warranty table per manufacturer (terms from the spec)",
+          "ok": true,
+          "detail": "LCN, Von Duprin, Ives, Schlage, Zero International"
+        },
+        {
+          "name": "attic stock and checklist with sign-off",
+          "ok": true,
+          "detail": ""
+        },
+        {
+          "name": "the catalogue page of every installed product",
+          "ok": false,
+          "detail": "7 pages cited for 10 products, 7 appended; products with no page: Von Duprin PA-AX-99-L-F-2SI-06; Zero International 188SBK PSA"
+        },
+        {
+          "name": "project and owner on the cover",
+          "ok": true,
+          "detail": ""
+        },
+        {
+          "name": "no placeholder text",
+          "ok": true,
+          "detail": ""
+        }
+      ],
+      "notes": [
+        "No room names (ADMIN LOBBY HALL, A-POD / CORRIDOR, ...) appear: SubX's door rows carry no location for Berryessa."
+      ]
+    },
+    {
+      "id": "rfax",
+      "label": "RFaX",
+      "claim": "Reads your SubX schedule and finds what to ask: missing hardware sets, fire-rated openings without a closer or latch, missing sizes, unnamed manufacturers. Each becomes a numbered RFI with the affected openings and schedule pages attached, tracked until answered.",
+      "input": "Berryessa SubX session",
+      "pass": true,
+      "summary": "issues: no_manufacturer; RFIs 1, 2; 24 openings, 3 schedule pages attached; answered tracked",
+      "numbers": {
+        "issues": "no_manufacturer",
+        "affected_openings": 24,
+        "pdf_pages": 15,
+        "schedule_pages_attached": 3
+      },
+      "checks": [
+        {
+          "name": "issues found = the schedule's real gaps (only: core with no manufacturer, sets 1 and 2)",
+          "ok": true,
+          "detail": "[\"Hardware items with no manufacturer named: The hardware schedule names no manufacturer for: INTERCHANGEABLE CORE VERIFY PERMANENT CORE WITH DISTRICT (sets 1, 2). Please confirm the manufacturer, or whether an equal is acceptable.\"]"
+        },
+        {
+          "name": "RFIs numbered in turn",
+          "ok": true,
+          "detail": "1, 2"
+        },
+        {
+          "name": "PDF returned",
+          "ok": true,
+          "detail": "HTTP 200"
+        },
+        {
+          "name": "RFI number, project, question on the RFI",
+          "ok": true,
+          "detail": ""
+        },
+        {
+          "name": "affected openings listed (mark, set, items, page)",
+          "ok": true,
+          "detail": "24 of 24"
+        },
+        {
+          "name": "schedule pages attached",
+          "ok": true,
+          "detail": "3 of 3 schedule pages (284, 286, 288) in the PDF"
+        },
+        {
+          "name": "openings' sizes are the schedule's (pairs shown as pairs)",
+          "ok": true,
+          "detail": "22 of 22 pairs shown as PR"
+        },
+        {
+          "name": "no placeholder text",
+          "ok": true,
+          "detail": ""
+        },
+        {
+          "name": "tracked until answered (answered RFI shows its answer and date; the other stays open)",
+          "ok": true,
+          "detail": "[{\"n\":1,\"status\":\"answered\",\"answered_at\":\"2026-10-09T07:21:54.827Z\"},{\"n\":2,\"status\":\"open\",\"days\":0}]"
+        }
+      ],
+      "notes": []
+    },
+    {
+      "id": "changeordx",
+      "label": "ChangeOrdX",
+      "claim": "Prices change orders from your PropX contract's own unit prices plus labor, overhead, profit, tax and bond; numbers them per contract and carries the contract sum and time forward through the approved ones.",
+      "input": "PropX quote 1 (Berryessa, $11,754.43): CO A adds one hardware set 2, approved; CO B deletes one set 1",
+      "pass": false,
+      "summary": "",
+      "numbers": {},
+      "checks": [
+        {
+          "name": "the proposal's unit prices match its PropX PDF",
+          "ok": true,
+          "detail": "set 2 $455.80, set 1 $365.80 in the PropX PDF: true"
+        },
+        {
+          "name": "CO A priced at the contract's unit price + labor, overhead, profit, tax, bond",
+          "ok": true,
+          "detail": "amount 1017.59 vs expected 1017.59; number 6 vs 6"
+        },
+        {
+          "name": "CO B (a deduct) priced and numbered next",
+          "ok": true,
+          "detail": "amount -456.34 vs expected -456.34; number 7"
+        },
+        {
+          "name": "PDFs returned",
+          "ok": false,
+          "detail": "HTTP 401, 401"
+        }
+      ],
+      "notes": [
+        "Both test change orders are set to 'rejected' afterwards so the contract sum carried forward is unchanged; they stay on the contract (no delete in the API)."
+      ]
+    },
+    {
+      "id": "permitx",
+      "label": "PermitX",
+      "claim": "Writes the scope of work from your SubX schedule and lists every opening with electrified, access-control or operator hardware, the plan-review coordination (power, fire alarm release, free egress) and the electrified products' catalogue pages.",
+      "input": "Berryessa SubX session (no electrified hardware) and Rockford SubX session (sets 32 EXD, 40 UTY, 44 UTY-IT electrified)",
+      "pass": false,
+      "summary": "Berryessa scope \"24 openings (24 fire-rated), 464 items in 2 sets\", 0 electrified; Rockford 0 listed vs 6 electrified (missed 6, extra 0); catalogue pages 0",
+      "numbers": {
+        "rockford_electrified_expected": 6,
+        "rockford_listed": 0
+      },
+      "checks": [
+        {
+          "name": "Berryessa PDF returned",
+          "ok": false,
+          "detail": "HTTP 401"
+        },
+        {
+          "name": "Rockford: every electrified opening listed, and only those",
+          "ok": false,
+          "detail": "expected 6 (1J.1, 119.1, 119.2, 126.1.1, 136.1, 152.1.1); listed 0; missed: 1J.1 (set 44 UTY-IT), 119.1 (set 40 UTY), 119.2 (set 44 UTY-IT), 126.1.1 (set 32 EXD), 136.1 (set 44 UTY-IT), 152.1.1 (set 32 EXD); not electrified but listed: none"
+        },
+        {
+          "name": "Rockford PDF returned",
+          "ok": false,
+          "detail": "HTTP 401"
+        }
+      ],
+      "notes": []
+    },
+    {
+      "id": "safetyx",
+      "label": "SafetyX",
+      "claim": "Reads your safety reports and daily logs (text or scanned) and lists every incident, injury and hazard with its page, sorted by OSHA hazard (falls, struck-by, caught-in, electrocution first) with the 29 CFR 1926 standard. Injuries get a 29 CFR 1904.7 recording hint. Your safety log keeps corrective actions with owners and due dates, and builds the OSHA 300 log and 300A summary from your cases. Reading and the log are free; the 300/300A forms and exports are paid.",
+      "input": "NIOSH FACE Report 2000-16 (Alabama, 16-year-old framer fell 27 ft and was struck by a truss; died), 20 pages, text layer",
+      "pass": false,
+      "summary": "0 lines over undefined pages; falls on pages ; struck-by 0; death hint 0; action + case + 300/300A",
+      "numbers": {
+        "input_sha256": "66e38c02a9e2b8b2",
+        "flagged": 0
+      },
+      "checks": [
+        {
+          "name": "input is the FACE 2000-16 PDF",
+          "ok": true,
+          "detail": "sha256 66e38c02a9e2b8b2 (the copy audited on 2026-10-09: 66e38c02a9e2b8b2)"
+        },
+        {
+          "name": "report read",
+          "ok": false,
+          "detail": "HTTP 401, undefined pages (undefined text layer, undefined OCR), 0 lines {\"error\":\"Authentication required — sign in at /\"}"
+        },
+        {
+          "name": "every flagged line has its page",
+          "ok": false,
+          "detail": ""
+        },
+        {
+          "name": "the 27 ft fall flagged as Falls with 29 CFR 1926.501 (pages 1 and 3)",
+          "ok": false,
+          "detail": "fall lines on pages : "
+        },
+        {
+          "name": "struck on the head by a truss flagged as Struck-by (page 3)",
+          "ok": false,
+          "detail": ""
+        },
+        {
+          "name": "the death gets the 1904.7 recording hint",
+          "ok": false,
+          "detail": ""
+        },
+        {
+          "name": "corrective action kept with owner, due date, hazard, closed",
+          "ok": false,
+          "detail": ""
+        },
+        {
+          "name": "300A totals count the case (G deaths +1, M1 injuries +1)",
+          "ok": true,
+          "detail": "G 0 -> 1, M1 0 -> 1"
+        },
+        {
+          "name": "OSHA 300 CSV export carries the case",
+          "ok": true,
+          "detail": "HTTP 200"
+        },
+        {
+          "name": "OSHA 300 / 300A PDF returned",
+          "ok": true,
+          "detail": "HTTP 200"
+        },
+        {
+          "name": "300 log row and 300A summary in the PDF",
+          "ok": true,
+          "detail": "G H I J = 1 0 0 0"
+        },
+        {
+          "name": "no placeholder text",
+          "ok": true,
+          "detail": ""
+        }
+      ],
+      "notes": [
+        "No real safety report exists for the Berryessa job; a published NIOSH incident report is the real input. It has a text layer, so the scanned (OCR) path is not exercised here."
+      ]
+    },
+    {
+      "id": "meetingx",
+      "label": "MeetingX",
+      "claim": "A project room with voice, video and screen share between browsers (up to 6 people). Chat, decisions, actions and transcript are saved with the room, so everyone, and anyone who opens it later, sees the same record. Some strict office networks block direct calls.",
+      "input": "Room pamv0n0mpw: the Berryessa coordination meeting, 8 record items",
+      "pass": true,
+      "summary": "8/8 record items read back intact; TURN relay on",
+      "numbers": {
+        "turn_relay": true,
+        "saved": 8,
+        "read_back": 8
+      },
+      "checks": [
+        {
+          "name": "room access for a MeetingX account",
+          "ok": true,
+          "detail": "HTTP 200 {\"room\":\"pamv0n0mpw\",\"signedIn\":true,\"access\":true,\"name\":\"WeylandAI QA (Claude cloud)\"}"
+        },
+        {
+          "name": "ICE servers for the browser-to-browser call",
+          "ok": true,
+          "detail": "relay (TURN): true"
+        },
+        {
+          "name": "chat, decisions, actions, transcript saved and read back in order with who, when and done state",
+          "ok": true,
+          "detail": "8 of 8 back; first mismatch: null"
+        }
+      ],
+      "notes": [
+        "Voice, video and screen share run browser to browser over WebRTC and are not exercised over HTTP; the check covers room access, ICE servers and the saved record."
+      ]
+    },
+    {
+      "id": "notesx",
+      "label": "NotesX",
+      "claim": "Turns a MeetingX room's saved record into minutes: attendees, numbered decisions, action items open and done, discussion, and the transcript as an appendix.",
+      "input": "Room pamv0n0mpw (the MeetingX record above)",
+      "pass": true,
+      "summary": "attendees WeylandAI QA (Claude cloud); 2 decisions, 2 actions (1 done), 2 chat, transcript appendix",
+      "numbers": {
+        "pages": 1
+      },
+      "checks": [
+        {
+          "name": "PDF returned",
+          "ok": true,
+          "detail": "HTTP 200"
+        },
+        {
+          "name": "attendees from the record",
+          "ok": true,
+          "detail": "WeylandAI QA (Claude cloud)"
+        },
+        {
+          "name": "decisions numbered in order",
+          "ok": true,
+          "detail": "2 decisions"
+        },
+        {
+          "name": "action items with open / done state",
+          "ok": true,
+          "detail": "Action items # ACTION (AND OWNER) STATUS RECORDED BY 1 Send the core RFI to the architect (owner: hardware PM) Done WeylandAI QA (Claude cloud) 2 Confirm whether PR 3'-6\" is per leaf at Majestic Way, "
+        },
+        {
+          "name": "discussion (room chat)",
+          "ok": true,
+          "detail": ""
+        },
+        {
+          "name": "transcript as an appendix",
+          "ok": true,
+          "detail": ""
+        },
+        {
+          "name": "meeting date is today's",
+          "ok": true,
+          "detail": ""
+        },
+        {
+          "name": "no placeholder text",
+          "ok": true,
+          "detail": ""
+        }
+      ],
+      "notes": []
+    }
+  ],
+  "setup": {
+    "berryessa": {
+      "read": {
+        "status": 200,
+        "doors": 24,
+        "groups": 2,
+        "items": 16,
+        "failed": []
+      },
+      "expected": {
+        "doors": 24,
+        "groups": 2,
+        "items": 16
+      }
+    },
+    "rockford": {
+      "read": {
+        "status": 200,
+        "doors": 65,
+        "groups": 14,
+        "items": 110,
+        "failed": []
+      },
+      "expected": {
+        "doors": 65,
+        "groups": 14
+      }
+    },
+    "proposal": {
+      "id": "6a2092d0-5fee-4c3b-8592-700dc4165528",
+      "quote": 1,
+      "client": "QA GC",
+      "address": "1855 Lucretia Ave, San Jose, CA 95122",
+      "doors": 24,
+      "subtotal": 10759.2,
+      "tax": 995.23,
+      "total": 11754.43,
+      "pdf_http": 200,
+      "pdf_has_total": true
+    }
+  },
+  "cleanup": [
+    "fd90317a: deleted",
+    "5d21d2d7: deleted"
+  ],
+  "finished_at": "2026-10-09T07:22:13.338Z"
+}
