@@ -243,7 +243,18 @@ const UPSERT_SQL = `
           trade_fit=excluded.trade_fit, trade_fit_why=excluded.trade_fit_why, state=excluded.state
       `;
 
+// Agency pages that moved (404 on 2026-10-09) and where each source's rows now link. A source only
+// returns its latest rows, so the older notices are rewritten in place on every run (no-op after).
+export const MOVED_LINKS = [
+  ["https://www.txdot.gov/business/letting-bids.html", "https://www.txdot.gov/business/road-bridge-maintenance/contract-letting.html"],
+  ["https://cdb.illinois.gov/business/procurement.html", "https://cdb.illinois.gov/procurement.html"],
+  ["https://www.nycsca.org/Procurement", "https://data.cityofnewyork.us/d/tsak-vtv3"],
+];
+
 export async function ingestSources(env, trigger = "cron") {
+  for (const [from, to] of MOVED_LINKS) {
+    try { await env.DB.prepare("UPDATE opportunities SET detail_url = ? WHERE detail_url = ?").bind(to, from).run(); } catch (e) { console.warn("[HuntX Ingest] link rewrite", e.message); }
+  }
   await env.DB.prepare(
     "CREATE TABLE IF NOT EXISTS ingest_runs (id TEXT PRIMARY KEY, started_at TEXT NOT NULL, finished_at TEXT, trigger TEXT, upserted INTEGER DEFAULT 0, sources INTEGER DEFAULT 0, errors TEXT)"
   ).run();

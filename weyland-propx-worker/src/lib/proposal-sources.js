@@ -69,7 +69,7 @@ const makerKeyOf = (m) => String(m || "").toLowerCase().replace(/[^a-z0-9]+/g, "
  * (weyland-forms-worker/src/routes/pricex.js); a component it cannot price stays unpriced and is
  * named on the line. Each priced component keeps its book (c.book_name).
  */
-export async function priceFromBooks(db, userId, sets, priceItem) {
+export async function priceFromBooks(db, userId, sets, priceItem, env = null) {
   if (!priceItem || !sets || !sets.length) return;
   const mult = { default: 1, byMaker: {} };
   try {
@@ -82,7 +82,8 @@ export async function priceFromBooks(db, userId, sets, priceItem) {
     for (const c of set.components || []) {
       if (compPrice(c) != null || !c.model) continue;
       let r = null;
-      try { r = await priceItem({ DB: db }, { maker: c.manufacturer || "", model: c.model, finish: c.finish || null }, undefined, caches); } catch (_) { r = null; }
+      // The worker's own env (the matcher reads its catalogue index and books through it), else the database alone.
+      try { r = await priceItem(env || { DB: db }, { maker: c.manufacturer || "", model: c.model, finish: c.finish || null }, undefined, caches); } catch (e) { console.warn("[propx] book price", c.manufacturer, c.model, e && e.message); r = null; }
       if (!r || !r.priced || !(r.variant && r.variant.list > 0)) continue;
       const m = mult.byMaker[makerKeyOf(r.product && r.product.manufacturer)] ?? mult.byMaker[makerKeyOf(c.manufacturer)] ?? mult.default;
       c.book_net = Math.round(r.variant.list * m * 100) / 100;
@@ -308,7 +309,7 @@ export async function listSources(db, user) {
  * read it (not theirs, or not found).
  * -> { source: {kind, id, name, demo}, project, doors, lines }
  */
-export async function loadSource(db, user, kind, id, { priceItem = null } = {}) {
+export async function loadSource(db, user, kind, id, { priceItem = null, env = null } = {}) {
   const userId = user && !user.ephemeral ? user.userId : null;
   if (kind === "demo") {
     if (id !== DEMO_SOURCE_ID) return null;
@@ -322,7 +323,7 @@ export async function loadSource(db, user, kind, id, { priceItem = null } = {}) 
     if (!s) return null;
     const doors = await sessionDoors(db, s.id);
     const sets = await setsWithComponents(db, s.id);
-    await priceFromBooks(db, userId, sets, priceItem);
+    await priceFromBooks(db, userId, sets, priceItem, env);
     const project = await projectFor(db, s.project_id);
     return { source: { kind, id: s.id, name: s.project_name || s.filename || "SubX session", demo: isDemoClone(s) }, project, doors, lines: deriveLines(doors, sets) };
   }

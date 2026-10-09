@@ -246,7 +246,7 @@ export function registerProposalsRoutes(router, { authenticate, requireProductAc
     const { error, user } = await gate(request2, env2);
     if (error) return error;
     try {
-      const loaded = await loadSource(env2.DB, user, request2.params.kind, decodeURIComponent(request2.params.id || ""), { priceItem });
+      const loaded = await loadSource(env2.DB, user, request2.params.kind, decodeURIComponent(request2.params.id || ""), { priceItem, env: env2 });
       if (!loaded) return jsonResponse3({ error: "Schedule not found" }, 404);
       return jsonResponse3({ success: true, ...loaded });
     } catch (e) {
@@ -292,7 +292,7 @@ export function registerProposalsRoutes(router, { authenticate, requireProductAc
         if (limited) return limited;
       }
       const tenantId = user.tenantId || user.tenant_id || "ven_weyland";
-      const loaded = await loadSource(env2.DB, user, src.kind, src.id, { priceItem });
+      const loaded = await loadSource(env2.DB, user, src.kind, src.id, { priceItem, env: env2 });
       if (!loaded) {
         return jsonResponse3({ error: src.kind === "submittal" ? "Submittal not found" : "Schedule not found" }, 404);
       }
