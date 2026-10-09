@@ -72,6 +72,8 @@
 import { outputAccess, paymentRequired } from "../../../weyland-shared/output-access.js";
 import { jsonResponse3 } from "../lib/json-response.js";
 import { listSources, loadSource } from "../lib/proposal-sources.js";
+// PriceX's own pricer: components the schedule gives no price are priced from the makers' books.
+import { priceItem } from "../../../weyland-forms-worker/src/routes/pricex.js";
 
 // 2026-10-07: PropX prices data the caller really has. GET
 // /api/proposals/sources lists it (the caller's SubX extraction sessions,
@@ -244,7 +246,7 @@ export function registerProposalsRoutes(router, { authenticate, requireProductAc
     const { error, user } = await gate(request2, env2);
     if (error) return error;
     try {
-      const loaded = await loadSource(env2.DB, user, request2.params.kind, decodeURIComponent(request2.params.id || ""));
+      const loaded = await loadSource(env2.DB, user, request2.params.kind, decodeURIComponent(request2.params.id || ""), { priceItem });
       if (!loaded) return jsonResponse3({ error: "Schedule not found" }, 404);
       return jsonResponse3({ success: true, ...loaded });
     } catch (e) {
@@ -290,7 +292,7 @@ export function registerProposalsRoutes(router, { authenticate, requireProductAc
         if (limited) return limited;
       }
       const tenantId = user.tenantId || user.tenant_id || "ven_weyland";
-      const loaded = await loadSource(env2.DB, user, src.kind, src.id);
+      const loaded = await loadSource(env2.DB, user, src.kind, src.id, { priceItem });
       if (!loaded) {
         return jsonResponse3({ error: src.kind === "submittal" ? "Submittal not found" : "Schedule not found" }, 404);
       }
