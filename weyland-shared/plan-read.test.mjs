@@ -88,3 +88,44 @@ test("a mark SubX keeps apart by page (\"001 [p.286]\") matches the plan's \"001
   assert.deepEqual(r.tags.map((t) => [t.mark, t.page]).sort((a, b) => a[1] - b[1]), [["001", 283], ["001 [p.286]", 285]]);
   assert.equal(r.marks_not_on_plan.length, 0);
 });
+
+// g041: T2507-style sets number doors by room and letter (schedule 113A, 113B) and draw each tag
+// as the room number with its letter stacked under it: two items on two baselines.
+test("g041: a suffixed mark is placed on a stacked number-and-letter tag, nowhere else", () => {
+  const sheet = page(7, [
+    ...titleBlock("A-100", "FIRST FLOOR PLAN"),
+    it("CLASSROOM", 1200, 950), it("113", 1210, 968),          // the room label
+    it("113", 1400, 1000, 7.8), it("A", 1404, 1012, 7.8),      // door 113A: number over letter
+    it("113", 1600, 1000, 7.8), it("B", 1604, 989, 7.8),       // door 113B: letter above
+    it("120", 1800, 1000, 7.8), it("A", 1900, 1012, 7.8),      // a letter far off: not 120A's tag
+    it("130A", 2000, 1000, 7.8), it("130", 2100, 1000, 7.8), it("A", 2104, 1012, 7.8), // exact tag wins
+    it("C", 1404, 1030, 7.8),                                   // 113C: no stacked C close enough
+  ]);
+  const sch = page(10, [...titleBlock("A-103", "DOOR SCHEDULE")]);
+  const ds = ["113A", "113B", "120A", "130A", "113C"].map((mark) => ({ mark, location: null, page: 10 }));
+  const r = readPlan([sheet, sch], ds);
+  const by = Object.fromEntries(r.tags.map((g) => [g.mark, g]));
+  assert.ok(by["113A"] && by["113B"], "113A and 113B placed");
+  assert.equal(by["113A"].matched_by, "stacked: 113 with A");
+  assert.ok(Math.abs(by["113A"].x - 1404) < 12, "113A at its own symbol, not the room label");
+  assert.ok(by["113B"].x > 1590 && by["113B"].x < 1620, "113B at the symbol with B above");
+  assert.equal(by["130A"].matched_by, undefined, "an exact 130A tag wins over a stacked pair");
+  assert.equal(by["130A"].x, Math.round(2000 + (4 * 7.8 * 0.6) / 2));
+  assert.equal(by["120A"], undefined, "a letter 100 points away is not a stacked tag");
+  assert.equal(by["113C"], undefined, "a C 30 points under 113 is too far");
+  assert.deepEqual(r.marks_not_on_plan.map((m) => m.mark).sort(), ["113C", "120A"]);
+});
+
+test("g041: one letter item serves one tag, and plain marks are unaffected", () => {
+  const sheet = page(7, [
+    ...titleBlock("A-100", "FIRST FLOOR PLAN"),
+    it("140", 1400, 1000, 7.8), it("140", 1402, 1024, 7.8), it("A", 1404, 1012, 7.8), // one A between two 140s
+    it("150", 1600, 1000, 7.8),
+  ]);
+  const sch = page(10, [...titleBlock("A-103", "DOOR SCHEDULE")]);
+  const ds = [{ mark: "140A", page: 10 }, { mark: "150", page: 10 }, { mark: "1A", page: 10 }];
+  const r = readPlan([sheet, sch], ds);
+  assert.equal(r.tags.filter((g) => g.mark === "140A").length, 1);
+  assert.equal(r.tags.find((g) => g.mark === "150").matched_by, undefined);
+  assert.equal(r.tags.find((g) => g.mark === "1A"), undefined, "no item reads 1");
+});
