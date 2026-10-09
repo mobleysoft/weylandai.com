@@ -1,50 +1,61 @@
 # Cloud status: the $100 first submittal on a full-size bid set, and every tool on sale
 - Next list from the Mac (2026-10-09 19:45 EDT): g041 S1 tag matching rule for suffixed marks (T2507 from 0 to 46 placed, no new false matches on R2502); g040 code sign-in completed from a real inbox we control, observed end to end, no reveal key; g042 truth_run with the merged reader over the top 50 SightX candidates from R2, ten hand-counted spot checks, candidates re-ranked. Same rules: PRs and this file only, blockers here, never a message to John. Accepted since the last list: g035 (the Mac is re-running the ten-set journey three times now), g030 merged with the OCC refinements (main 16e3047), g019 done on production, g034 closed, weyland-subx-worker 135 of 135.
 
-## Current production review — October 9, 22:44 UTC
+## Current release review — October 9, 23:55 UTC
 
-**The full suite is not yet ready to claim every product works.** This review
-supersedes older readiness claims below. The historical tool audits remain useful
-for their named inputs.
+This review supersedes the historical readiness and open-item summaries below.
+The embedded cascade e1 has passed its local release gates; its new production
+acceptance is pending deployment.
 
-- The generated vector and scanned ARCH D schedule both returned 48 exact rows
-  and **336/336 scored fields** in the fresh production browser run at 22:17Z.
-  The scanned path used 998 recognition calls, finished in 16.685 seconds, reported
-  no partial result or unresolved rows, and cleaned up all owned data.
-- The repaired OCC reader now returns **42/42 exact marks, no extras, 41 correct
-  numeric size pairs and 245/252 fields (97.2%)**, in three local actual-browser
-  runs. It preserves the large-sheet 336/336 benchmark. Its production acceptance
-  is pending; the last live r2 read scored 236/252. Trusted sizes remain 0/42;
-  low confidence and seven field discrepancies remain explicit review gaps.
-  See [the scoped repair](occ-scanned-size-repair-2026-10-09.md).
-- MarketX passes a fresh post-deploy audit of all six metros. SightX passes all ten
-  harvested model checks and actual production Metal GPU controls. Two sets use
-  an explicitly disclosed schematic because no floor plan was selected.
-- Production MFA passed 9/9. Actual password reset passed **14/14 checks in each
-  of three runs**, including one-time use and immediate old-password rejection.
-  The reset matrix supplied the existing private test key; no key was changed.
-- MeetingX's fresh public acceptance passed **36/36**: real audio/video through
-  the homepage overlay, default autoplay, actual TURN relay, mute/camera controls,
-  immediate leave, ended camera/mic capture and closed peer connections. All 184
-  owned test rows were removed. See [the acceptance](meetingx-media-2026-10-09.md).
-- The matrix covers 32 journeys, three passes each, and is still running. Its
-  historical TakeOffX failures are stale labels/empty-cell test handling; the
-  helper is fixed and a fresh repeat is pending. Historical reset failures
-  stopped before execution because that matrix lacked the private key.
-- **AuthFor provisioning is configured and verified in production.** The reviewed
-  AuthFor release passed 140/140 tests and safe deployment. Mobley installed its
-  scoped operator credential, captured the one-time client secret privately,
-  configured both consumer workers, and verified accepted provisioning, invalid
-  secret rejection and venture scope rejection. No live migration/cutover or
-  payment charge was performed. This removes the credential gap ahead of the
-  fixed October 23 UTC deadline. See [the production receipt](authfor-operator-production-2026-10-09.json).
-- Code sign-in's send/wrong-code/resend checks pass, but actual inbox-code
-  completion has not been independently observed. The named packet continues to
-  disclose its missing Glynn-Johnson 90S catalog sheet.
+- The final merged browser reader returns **42 exact unique OCC rows and
+  252/252 scored fields**, and **48 exact unique rows and 336/336 fields** on
+  both the vector and sideways scanned ARCH D sheet. Every variant has zero
+  missing, extra or duplicate marks and no partial result. Browser OCR takes
+  5.240 s on OCC and 17.759 s on the sideways scan. These are development
+  regressions, without an independent held-out project claim.
+- The JavaScript cascade retains original scores, chosen rereads, conflicts,
+  partial reasons and its recognizer fingerprint. Evidence is whitelisted and
+  capped at 16,000 UTF-8 bytes per row through saving and retrieval. The offline
+  evaluator uses all labeled dimensions and explicit cropped-page mappings.
+  **The 0.8 review threshold is unchanged; zero OCC size pairs clear it.**
+  No new OCR or NEAT model was trained. See [the evidence contract](../tools/accuracy/CASCADE_EVIDENCE.md)
+  and [the local receipt](embedded-cascade-2026-10-09.json).
+- The legacy hardware upload now uses the existing PDF text/browser readers,
+  rejects empty and partial reads before persistence, and saves the selected
+  page as its provenance. Real Rockford pages 17–23 yield 14 groups and 110
+  items without language-model or OCR-worker bindings. The merged worker suite
+  passes 167/167, DOM checks 8/8, and the newly merged frozen/current scan
+  regressions 7/7. The monolith builds successfully.
+- **The missing Glynn-Johnson 90S sheet is closed in production.** The primary
+  catalog was indexed and its PDF verified in R2. Fresh packet acceptance
+  passes 27/27: 37/37 distinct catalog items cited, zero unmatched items,
+  65 doors, 14 groups and 110 components. The actual stop-only 90S catalog
+  sheet is in the 69-page packet; by-others lines stay explicit. All owned
+  test data was removed. See [the production receipt](../tools/catalogue-seeds/glynn-johnson-90s-production-acceptance.json).
+- The full 32-journey, three-pass matrix completed **89/96 green runs**,
+  2036/2043 checks and zero journey timeouts. Its seven failed receipts remain
+  failed: stale Takeoff labels, a missing reset test key, a transient overlay
+  load wait and a database setup failure. The affected repeats now pass:
+  Takeoff 13/13, actual password reset 14/14 three times, phone journeys
+  24/24 three times. The corrected Finder reload gate has two accepted 47/47
+  runs; its third is running. It verifies the actual restored search controls.
+- MarketX passes all six metro audits. SightX passes all ten harvested model
+  checks and three production Metal GPU passes; two sets use disclosed
+  schematics. MeetingX's public media acceptance passes 36/36, including TURN,
+  audio/video, autoplay and camera/microphone teardown; all 184 owned rows were
+  removed. See [MeetingX acceptance](meetingx-media-2026-10-09.md).
+- **AuthFor provisioning is configured and verified in production.** Its
+  reviewed release passed 140/140 tests and safe deployment. Mobley's scoped
+  operator configured both consumers and verified accepted provisioning,
+  invalid-secret rejection and venture scope rejection. No live migration or
+  cutover was performed. See [the receipt](authfor-operator-production-2026-10-09.json).
+- Actual inbox-code completion and a real payment/webhook remain unobserved.
+  Provider-outage UI checks used a mock. Mobile runs use Chromium emulation.
+  These limits prevent a universal claim that every product journey is proven.
 
-Fresh private OCC receipts are retained locally under
-`mascom/logs/weyland-occ-production-20261009/`; no credentials or private PDF are
-committed. Final production evidence will follow the remaining checks.
+Private full PDF and diagnostic receipts remain under
+`mascom/logs/weyland-occ-production-20261009/`; credentials and owned test
+identities are excluded from committed evidence.
 
 - Next list from the Mac (2026-10-09 15:10 EDT), after g033 is in a PR: g035 SightX on the remaining seven harvested sets (same pipeline as g028, rows from tools/accuracy/g020/<sha16>.json, journey extended to all ten, three green passes on the Mac); g036 journeys fail cleanly on an unexpected API answer (shared in journey-kit, with a test; the first g028 acceptance pass crashed on an undefined response during deploy propagation); g037 MarketX audit to PASS or a written reason (Chicago CSV ranking order; San Francisco metros-list mismatch). Same rules: PRs and this file only, blockers here, never a message to John. g028 and g032 are merged and accepted on production (22 of 22 four passes; offer sentence live).
 

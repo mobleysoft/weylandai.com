@@ -1,0 +1,296 @@
+{
+  "reviewed_at": "2026-10-09T23:39:57.907191+00:00",
+  "release_state": "reviewed_local_gates_passed_production_acceptance_pending",
+  "scope": "OCC and synthetic ARCH D development regressions; no independent held-out calibration",
+  "grid_sha256": "8359a8d7b0fe2f5283bc4a10855e30ebb611837f037fc18c497f79c85805a937",
+  "text_sha256": "a9577c335a0fc07d7452ca8b20ad1ed2ed11f0fd5facc3d39cb8b79f6cc4a351",
+  "tests": {
+    "worker_suite": {
+      "passed": 167,
+      "failed": 0
+    },
+    "dom_regression": {
+      "passed": 8,
+      "failed": 0
+    },
+    "additional_merged_fixture_regressions": {
+      "passed": 7,
+      "failed": 0
+    },
+    "monolith_bundle": {
+      "built": true,
+      "bytes": 12303944
+    }
+  },
+  "occ_browser": {
+    "pass": true,
+    "returned_rows": 42,
+    "unique_marks": 42,
+    "expected_rows": 42,
+    "missing_count": 0,
+    "extra_count": 0,
+    "duplicate_count": 0,
+    "fields_right": 252,
+    "fields_total": 252,
+    "per_field": {
+      "mark": {
+        "right": 42,
+        "wrong": 0
+      },
+      "hardware_group": {
+        "right": 42,
+        "wrong": 0
+      },
+      "width_inches": {
+        "right": 42,
+        "wrong": 0
+      },
+      "height_inches": {
+        "right": 42,
+        "wrong": 0
+      },
+      "fire_rating": {
+        "right": 42,
+        "wrong": 0
+      },
+      "door_type": {
+        "right": 42,
+        "wrong": 0
+      }
+    },
+    "partial": false,
+    "extraction_mode": "client_grid_deterministic",
+    "metadata_safe": {
+      "partial": false,
+      "vector_color_paints_omitted": 836,
+      "total_time_ms": 5240
+    }
+  },
+  "large_sheet_browser": {
+    "pass": true,
+    "variants": [
+      {
+        "variant": "vector",
+        "rows": 48,
+        "unique_marks": 48,
+        "expected_marks": 48,
+        "missing_count": 0,
+        "extra_count": 0,
+        "duplicate_count": 0,
+        "fields_right": 336,
+        "fields_total": 336,
+        "partial": false,
+        "text_items": 1075,
+        "extraction_mode": "text_layer",
+        "recognition": null,
+        "ms": 109,
+        "field_evidence_rows": 48,
+        "pass": true
+      },
+      {
+        "variant": "scanned",
+        "rows": 48,
+        "unique_marks": 48,
+        "expected_marks": 48,
+        "missing_count": 0,
+        "extra_count": 0,
+        "duplicate_count": 0,
+        "fields_right": 336,
+        "fields_total": 336,
+        "partial": false,
+        "text_items": 0,
+        "extraction_mode": "ocr_text_lines",
+        "recognition": {
+          "partial": false,
+          "reason": null,
+          "cells": 1178,
+          "max_cells": 2000,
+          "elapsed_ms": 17756,
+          "max_ms": 60000
+        },
+        "ms": 17759,
+        "field_evidence_rows": 48,
+        "pass": true
+      }
+    ],
+    "assets": [
+      {
+        "name": "schedule-grid-extraction-client.mjs.bin",
+        "sha256": "8359a8d7b0fe2f5283bc4a10855e30ebb611837f037fc18c497f79c85805a937"
+      },
+      {
+        "name": "schedule-text-layer.mjs.bin",
+        "sha256": "a9577c335a0fc07d7452ca8b20ad1ed2ed11f0fd5facc3d39cb8b79f6cc4a351"
+      }
+    ]
+  },
+  "occ_dimension_evidence": {
+    "project": "occ",
+    "split": "development",
+    "page": 1,
+    "receipt_page": 1,
+    "scope": "Diagnostic evidence on labeled construction dimensions; no probability calibration, threshold promotion or held-out certification is implied.",
+    "expected_rows": 42,
+    "exact_rows": 42,
+    "missing_or_duplicate_rows": 0,
+    "extra_marks": [],
+    "duplicate_marks": [],
+    "evidence_rows": 42,
+    "text_rows_excluded_from_raw_calibration": 0,
+    "partial_rows": 0,
+    "corrected_rows_excluded_from_thresholds": 0,
+    "stages": {
+      "ocr_grid": 42
+    },
+    "artifacts": [
+      "schedule-fields-v1"
+    ],
+    "recognizer_model_sha256": [
+      "7d4322bd2a7749724879683fc3912cb542f19906c83bcc1a52132556427170b2"
+    ],
+    "expected_dimension_fields": 84,
+    "correct_dimension_fields": 84,
+    "raw_score_fields": 84,
+    "raw_evidence_status": "observed",
+    "raw_score_reliability": [
+      {
+        "lower": 0,
+        "upper": 0.1,
+        "n": 8,
+        "correct": 2,
+        "mean_score": 0.012595110340043902,
+        "accuracy": 0.25
+      },
+      {
+        "lower": 0.1,
+        "upper": 0.2,
+        "n": 6,
+        "correct": 4,
+        "mean_score": 0.157906174659729,
+        "accuracy": 0.6666666666666666
+      },
+      {
+        "lower": 0.2,
+        "upper": 0.3,
+        "n": 10,
+        "correct": 5,
+        "mean_score": 0.23385543674230574,
+        "accuracy": 0.5
+      },
+      {
+        "lower": 0.3,
+        "upper": 0.4,
+        "n": 9,
+        "correct": 9,
+        "mean_score": 0.3613206578625573,
+        "accuracy": 1
+      },
+      {
+        "lower": 0.4,
+        "upper": 0.5,
+        "n": 9,
+        "correct": 9,
+        "mean_score": 0.45227714048491585,
+        "accuracy": 1
+      },
+      {
+        "lower": 0.5,
+        "upper": 0.6,
+        "n": 27,
+        "correct": 27,
+        "mean_score": 0.5545776949988471,
+        "accuracy": 1
+      },
+      {
+        "lower": 0.6,
+        "upper": 0.7,
+        "n": 10,
+        "correct": 10,
+        "mean_score": 0.6597997784614563,
+        "accuracy": 1
+      },
+      {
+        "lower": 0.7,
+        "upper": 0.8,
+        "n": 4,
+        "correct": 4,
+        "mean_score": 0.7475973516702652,
+        "accuracy": 1
+      },
+      {
+        "lower": 0.8,
+        "upper": 0.9,
+        "n": 1,
+        "correct": 1,
+        "mean_score": 0.8564652800559998,
+        "accuracy": 1
+      },
+      {
+        "lower": 0.9,
+        "upper": 1,
+        "n": 0,
+        "correct": 0,
+        "mean_score": null,
+        "accuracy": null
+      }
+    ],
+    "thresholds": [
+      {
+        "threshold": 0.5,
+        "accepted_fields": 42,
+        "wrong_accepted_fields": 0,
+        "precision": 1,
+        "coverage": 0.5,
+        "accepted_pairs": 8,
+        "wrong_accepted_pairs": 0
+      },
+      {
+        "threshold": 0.6,
+        "accepted_fields": 15,
+        "wrong_accepted_fields": 0,
+        "precision": 1,
+        "coverage": 0.17857142857142858,
+        "accepted_pairs": 1,
+        "wrong_accepted_pairs": 0
+      },
+      {
+        "threshold": 0.7,
+        "accepted_fields": 5,
+        "wrong_accepted_fields": 0,
+        "precision": 1,
+        "coverage": 0.05952380952380952,
+        "accepted_pairs": 0,
+        "wrong_accepted_pairs": 0
+      },
+      {
+        "threshold": 0.8,
+        "accepted_fields": 1,
+        "wrong_accepted_fields": 0,
+        "precision": 1,
+        "coverage": 0.011904761904761904,
+        "accepted_pairs": 0,
+        "wrong_accepted_pairs": 0
+      },
+      {
+        "threshold": 0.9,
+        "accepted_fields": 0,
+        "wrong_accepted_fields": 0,
+        "precision": null,
+        "coverage": 0,
+        "accepted_pairs": 0,
+        "wrong_accepted_pairs": 0
+      }
+    ]
+  },
+  "receipt_sha256": {
+    "occ-summary.json": "3053b4991b58491dfda10ca7622101ad0cf04d702e9b93ebfbb5789a8bdabfce",
+    "large-summary.json": "3d679ce77399d9b85658de566e123e30f6c9fdb683558af8c95f16adc3480119",
+    "occ-cascade-evidence.json": "13c07f4c050134a90ceeac80921ce8094616c2150d8ab8ad2a9d38ec3d37e00b"
+  },
+  "policy": {
+    "review_threshold": 0.8,
+    "threshold_changed": false,
+    "trained_new_model": false,
+    "evidence_bytes_per_row_max": 16000
+  }
+}
