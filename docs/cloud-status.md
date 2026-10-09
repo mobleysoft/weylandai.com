@@ -1,6 +1,6 @@
 # Cloud status: the $100 first submittal on a full-size bid set, and every tool on sale
 
-## Current production review — October 9, 22:30 UTC
+## Current production review — October 9, 22:44 UTC
 
 **The full suite is not yet ready to claim every product works.** This review
 supersedes older readiness claims below. The historical tool audits remain useful
@@ -9,36 +9,41 @@ for their named inputs.
 - The generated vector and scanned ARCH D schedule both returned 48 exact rows
   and **336/336 scored fields** in the fresh production browser run at 22:17Z.
   The scanned path used 998 recognition calls, finished in 16.685 seconds, reported
-  no partial result or unresolved rows, and cleaned up all owned data. PR101 and
-  SubX deploy run 37998023640 are live.
-- Fresh server reading of the OCC PDF still returned 41 of 42 expected marks and
-  one extra mark. It scored **236/252 fields (93.7%) across all expected rows**;
-  the matched-row score alone is 236/246 (95.9%). It parsed 35 correct numeric size
-  pairs, but none met the confidence threshold for takeoff quantities. A generic
-  repair is in progress; this input is a real remaining limitation.
+  no partial result or unresolved rows, and cleaned up all owned data.
+- The repaired OCC reader now returns **42/42 exact marks, no extras, 41 correct
+  numeric size pairs and 245/252 fields (97.2%)**, in three local actual-browser
+  runs. It preserves the large-sheet 336/336 benchmark. Its production acceptance
+  is pending; the last live r2 read scored 236/252. Trusted sizes remain 0/42;
+  low confidence and seven field discrepancies remain explicit review gaps.
+  See [the scoped repair](occ-scanned-size-repair-2026-10-09.md).
 - MarketX passes a fresh post-deploy audit of all six metros. SightX passes all ten
   harvested model checks and actual production Metal GPU controls. Two sets use
-  an explicitly disclosed schematic because no floor plan was selected; this is
-  not complete plan interpretation for every set.
-- Production MFA passed 9/9 checks. The actual password-reset flow is passing
-  with the existing private test key, including one-time use and immediate old
-  password rejection. Final repeat counts will follow the running receipts.
-- MeetingX has demonstrated real two-way audio/video, mute/camera controls and
-  relay-only TURN media. A new leave-room test found delayed local teardown;
-  the client repair is in progress.
-- The current matrix covers 32 journeys, three passes each. It is still running.
-  The first pass's TakeOffX failure was a stale test label, now corrected. Its
-  reset test stopped before execution because its environment lacked the private
-  key; a separate three-pass reset matrix supplies that key without changing it.
-- AuthFor confidential provisioning and inline signup proof code have meaningful
-  offline coverage. Production client credentials are still absent, and no live
-  migration or authority cutover has been performed. Provisioning must be
-  configured and verified before the fixed October 23 UTC deadline.
+  an explicitly disclosed schematic because no floor plan was selected.
+- Production MFA passed 9/9. Actual password reset passed **14/14 checks in each
+  of three runs**, including one-time use and immediate old-password rejection.
+  The reset matrix supplied the existing private test key; no key was changed.
+- MeetingX's fresh public acceptance passed **36/36**: real audio/video through
+  the homepage overlay, default autoplay, actual TURN relay, mute/camera controls,
+  immediate leave, ended camera/mic capture and closed peer connections. All 184
+  owned test rows were removed. See [the acceptance](meetingx-media-2026-10-09.md).
+- The matrix covers 32 journeys, three passes each, and is still running. Its
+  historical TakeOffX failures are stale labels/empty-cell test handling; the
+  helper is fixed and a fresh repeat is pending. Historical reset failures
+  stopped before execution because that matrix lacked the private key.
+- **AuthFor provisioning is configured and verified in production.** The reviewed
+  AuthFor release passed 140/140 tests and safe deployment. Mobley installed its
+  scoped operator credential, captured the one-time client secret privately,
+  configured both consumer workers, and verified accepted provisioning, invalid
+  secret rejection and venture scope rejection. No live migration/cutover or
+  payment charge was performed. This removes the credential gap ahead of the
+  fixed October 23 UTC deadline. See [the production receipt](authfor-operator-production-2026-10-09.json).
+- Code sign-in's send/wrong-code/resend checks pass, but actual inbox-code
+  completion has not been independently observed. The named packet continues to
+  disclose its missing Glynn-Johnson 90S catalog sheet.
 
-Fresh sanitized OCC diagnosis is retained locally under
-`mascom/logs/weyland-occ-production-20261009/`; it contains no credentials or PDF.
-The completed release evidence will be collected in the production readiness
-report once the remaining checks finish.
+Fresh private OCC receipts are retained locally under
+`mascom/logs/weyland-occ-production-20261009/`; no credentials or private PDF are
+committed. Final production evidence will follow the remaining checks.
 
 - Next list from the Mac (2026-10-09 15:10 EDT), after g033 is in a PR: g035 SightX on the remaining seven harvested sets (same pipeline as g028, rows from tools/accuracy/g020/<sha16>.json, journey extended to all ten, three green passes on the Mac); g036 journeys fail cleanly on an unexpected API answer (shared in journey-kit, with a test; the first g028 acceptance pass crashed on an undefined response during deploy propagation); g037 MarketX audit to PASS or a written reason (Chicago CSV ranking order; San Francisco metros-list mismatch). Same rules: PRs and this file only, blockers here, never a message to John. g028 and g032 are merged and accepted on production (22 of 22 four passes; offer sentence live).
 
