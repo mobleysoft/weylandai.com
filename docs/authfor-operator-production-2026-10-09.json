@@ -1,0 +1,36 @@
+{
+  "verified_at": "2026-10-09T22:44:36.617604+00:00",
+  "authfor_pr": "https://github.com/jmobleyworks/authfor/pull/3",
+  "authfor_main": "812a9728ae0c83d1a888ce0f7934344ac5369b71",
+  "authfor_version": "2d75daff-734d-4452-bbc8-8c16a7208300",
+  "safe_deploy_completed": true,
+  "authfor_tests": {
+    "passed": 140,
+    "total": 140
+  },
+  "operator_tests": {
+    "passed": 14,
+    "total": 14
+  },
+  "scope": {
+    "venture_id": "weylandai.com",
+    "redirect_uri": "https://weylandai.com/login",
+    "provision_only": true
+  },
+  "generation": 1,
+  "consumer_bindings_configured": [
+    "weyland-platform-worker",
+    "weylandai-com-worker"
+  ],
+  "credential_verified": true,
+  "invalid_secret_rejected": true,
+  "other_venture_rejected": true,
+  "controlled_identity_retained_at_authfor": true,
+  "email_sent": false,
+  "payment_charged": false,
+  "live_migration_performed": false,
+  "limits": [
+    "Consumer binding and direct AuthFor checks do not prove a paid checkout delivered a grant.",
+    "Code sign-in inbox completion has not been independently observed."
+  ]
+}
