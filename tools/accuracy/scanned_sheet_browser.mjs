@@ -28,10 +28,10 @@ try {
     status.textContent+='\\nReading '+variant+' page ${pageNumber}…';
     const bytes=new Uint8Array(await(await fetch('/'+variant+'.pdf')).arrayBuffer());
     const grid=await import('/api/hardware-schedule/client-ocr-assets/schedule-grid-extraction-client.mjs?v=20261009g019');
-    const lib=await grid.loadPdfJs(), doc=await lib.getDocument({data:bytes.slice()}).promise;
+    const lib=await grid.loadPdfJs(), task=lib.getDocument({data:bytes.slice()}), doc=await task.promise;
     const pg=await doc.getPage(${pageNumber}), text=await pg.getTextContent();
     const vp=pg.getViewport({scale:1});
-    await doc.destroy();
+    await (typeof doc.destroy==='function' ? doc.destroy() : task.destroy());
     await frame.contentWindow.__loadPdf('/'+variant+'.pdf');
     const r=await frame.contentWindow.__runGrid({cached:true},${pageNumber},'door_schedule',{});
     results.push({variant,text_items:text.items.length,width:vp.width,height:vp.height,...r});

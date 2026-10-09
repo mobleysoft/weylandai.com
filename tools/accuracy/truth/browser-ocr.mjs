@@ -1,16 +1,17 @@
 // Serve the exact assets SubX ships. No service credentials, mocked OCR, or expected rows.
 import { createServer } from "node:http";
-import { readFileSync } from "node:fs";
+import { readFileSync, readdirSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 const assets = fileURLToPath(new URL("../../../weyland-subx-worker/assets/client-ocr/", import.meta.url));
-const names = {
-  "pdf.mjs": "pdf.mjs.bin", "pdf-worker.mjs": "pdf-worker.mjs.bin",
-  "tesseract-wasm-lib.mjs": "tesseract-wasm-lib.mjs.bin",
-  "tesseract-core.wasm": "tesseract-core.bin", "tesseract-core-fallback.wasm": "tesseract-core-fallback.bin",
-  "eng-traineddata.bin": "eng-traineddata.bin",
-  "schedule-grid-extraction-client.mjs": "schedule-grid-extraction-client.mjs.bin",
-  "schedule-text-layer.mjs": "schedule-text-layer.mjs.bin", "grid-runner.html": "grid-runner.html",
-};
+// Every shipped client-OCR module (assets/client-ocr/<name>.mjs.bin) is served as /<name>.mjs, plus the runner page,
+// so a new module (schedule-workspace.mjs, 2026-10-09) never 404s here while the Worker serves it fine.
+const names = Object.fromEntries([
+  ...readdirSync(assets).filter((f) => f.endsWith(".mjs.bin")).map((f) => [f.slice(0, -4), f]),
+  ["grid-runner.html", "grid-runner.html"],
+  // The OCR engine's binaries keep the Worker route's public names (src/routes/hardware-schedule-client-ocr-assets.js).
+  ["tesseract-core.wasm", "tesseract-core.bin"], ["tesseract-core-fallback.wasm", "tesseract-core-fallback.bin"],
+  ["eng-traineddata.bin", "eng-traineddata.bin"],
+]);
 export async function serveOcrAssets({ files = {}, html = "", onResult } = {}) {
   const server = createServer(async (req, res) => {
     const url = new URL(req.url, "http://localhost"), name = url.pathname.split("/").pop();

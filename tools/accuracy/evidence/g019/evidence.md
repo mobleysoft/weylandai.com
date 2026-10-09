@@ -54,3 +54,16 @@ node tools/user-simulation/journeys/subx-scanned-sheet.mjs
 The first command checks both complete PDFs through the shipped browser runner, confirms no text in the scan, and writes `tools/accuracy/g019-browser.json`. Use `--manual` to open its printed local URL in an existing browser, or `PLAYWRIGHT_CORE` / `CHROMIUM_PATH` for an installed test browser. The journey uses real SubX upload → page 3 → READ IT IN THIS BROWSER → save, compares all 48 displayed marks and page/row citations, records field scores, and cleans up its test uploads/account data with the existing Journey kit. The journey runner discovers it automatically.
 
 Neither browser check was executed here. Chromium launch failed at the sandbox's MachPortRendezvousServer check (permission denied 1100). Computer Use rejected opening Safari because this session is not approved to control it. No deployment or board update was performed.
+
+## Mac browser measurement, 2026-10-09 18:05Z (shipped runner in Chromium, tools/accuracy/scanned_sheet_browser.mjs)
+
+| Path on the scanned sheet (page 3, turned 270 degrees) | Rows | Fields | Extra rows | Time |
+|---|---:|---:|---:|---:|
+| Browser path on main before this landing (b5c9a57): extractDoorScheduleFromPdf in Chromium | 0 of 48 | 0 | 0 | 11.1 s |
+| Browser path after this landing (same call through grid-runner.html) | 46 of 48 | 308 of 322 | 1 | 15.9 s |
+| Node path after this landing (truth_run, Poppler render) | 48 of 48 | 330 of 336 | 0 | 54 s |
+| Vector twin, browser path after this landing | 48 of 48 | 336 of 336 | 0 | 0.1 s |
+
+The browser check's own pass bar (48 of 48, no extras) is not met yet: two rows and one extra row separate the pdf.js
+raster from the Poppler raster. Landed because the browser path went from nothing to 46 rows; goal g019 stays open
+for the last two rows. Report: tools/accuracy/g019-browser.json.
