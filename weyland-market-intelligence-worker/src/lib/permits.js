@@ -322,3 +322,11 @@ export async function openBids(weylandDb, state, today = new Date().toISOString(
     return null;
   }
 }
+
+/** True while some city's cursor is more than 10 days behind (still reading its 24 months). */
+export async function backfilling(db, today = new Date().toISOString().slice(0, 10)) {
+  await ensurePermits(db);
+  const rows = (await db.prepare("SELECT metro, cursor FROM marketx_ingest").all()).results || [];
+  const behind = new Date(Date.parse(today + "T00:00:00Z") - 10 * 86400000).toISOString().slice(0, 10);
+  return Object.keys(CITIES).some((m) => { const r = rows.find((x) => x.metro === m); return !r || r.cursor < behind; });
+}
