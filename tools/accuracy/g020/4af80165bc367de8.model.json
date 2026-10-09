@@ -1,0 +1,404 @@
+{
+  "project": "_C2419-01 Final Bid Plans.pdf — harvest-mark diagnostic",
+  "source": "subx",
+  "doors": [
+    {
+      "mark": "104A",
+      "location": null,
+      "type": null,
+      "material": null,
+      "width_in": 36,
+      "height_in": 84,
+      "size_known": false,
+      "leaves": 1,
+      "rating": null,
+      "frame": null,
+      "panic": false,
+      "set": null,
+      "source_page": 7,
+      "plan": {
+        "sheet": "A102",
+        "page": 6,
+        "x": 188.74,
+        "z": 2.37,
+        "room": "104",
+        "room_name": "STAFF LOUNGE",
+        "room_by": "tag_number",
+        "unsure": false,
+        "also_on": [],
+        "room_x": 175.85,
+        "room_z": 3.56,
+        "building": 0
+      }
+    },
+    {
+      "mark": "104B",
+      "location": null,
+      "type": null,
+      "material": null,
+      "width_in": 36,
+      "height_in": 84,
+      "size_known": false,
+      "leaves": 1,
+      "rating": null,
+      "frame": null,
+      "panic": false,
+      "set": null,
+      "source_page": 7,
+      "plan": {
+        "sheet": "A102",
+        "page": 6,
+        "x": 164.74,
+        "z": 2.37,
+        "room": "104",
+        "room_name": "STAFF LOUNGE",
+        "room_by": "tag_number",
+        "unsure": false,
+        "also_on": [],
+        "room_x": 175.85,
+        "room_z": 3.56,
+        "building": 0
+      }
+    }
+  ],
+  "sets": {},
+  "notes": [
+    "Unchanged S1 reader supplied harvest schedule-row regex marks, not production doors or audited truth. Tag-shaped text can be room/grid/detail numbers. Unmatched tags are style candidates, not verified doors.",
+    "2 doors have no size read from the schedule; drawn 3'-0\" x 7'-0\"."
+  ],
+  "layout": {
+    "source": "plan",
+    "buildings": [
+      {
+        "sheet": "A102",
+        "page": 6,
+        "title": "FLOOR PLAN",
+        "scale": "A102 SCALE: 1/8\" = 1'-0\", A102 SCALE: 1/8\" = 1'-0\", SCALE: 3/32\" = 1'-0\", SCALE: 3/32\" = 1'-0\"",
+        "to_scale": true,
+        "origin_x": 0,
+        "width_ft": 308,
+        "depth_ft": 100,
+        "rooms": [
+          {
+            "number": "124",
+            "name": "TRASH STOR",
+            "corridor": false,
+            "x": 92.15,
+            "z": 0
+          },
+          {
+            "number": "104",
+            "name": "STAFF LOUNGE",
+            "corridor": false,
+            "x": 175.85,
+            "z": 3.56
+          },
+          {
+            "number": "140",
+            "name": "MEAT STORAGE REF.",
+            "corridor": false,
+            "x": 10.52,
+            "z": 6.07
+          },
+          {
+            "number": "137",
+            "name": "COOLER #8",
+            "corridor": false,
+            "x": 42.96,
+            "z": 6.37
+          },
+          {
+            "number": "136",
+            "name": "FREEZER #9",
+            "corridor": false,
+            "x": 61.19,
+            "z": 6.81
+          },
+          {
+            "number": "123",
+            "name": "REFUSE",
+            "corridor": false,
+            "x": 77.48,
+            "z": 6.81
+          },
+          {
+            "number": "117",
+            "name": "SERVING",
+            "corridor": false,
+            "x": 107.41,
+            "z": 12.15
+          },
+          {
+            "number": "105",
+            "name": "STAFF DINING",
+            "corridor": false,
+            "x": 137.04,
+            "z": 13.93
+          },
+          {
+            "number": "122",
+            "name": "SCULLERY",
+            "corridor": false,
+            "x": 88.74,
+            "z": 22.22
+          },
+          {
+            "number": "139",
+            "name": "COOLER #6",
+            "corridor": false,
+            "x": 8,
+            "z": 27.26
+          },
+          {
+            "number": "135",
+            "name": "VEG. PREP",
+            "corridor": false,
+            "x": 57.93,
+            "z": 29.33
+          },
+          {
+            "number": "138",
+            "name": "MEAT PREPERATION",
+            "corridor": false,
+            "x": 31.26,
+            "z": 30.81
+          },
+          {
+            "number": "121",
+            "name": "CORRIDOR",
+            "corridor": true,
+            "x": 76,
+            "z": 30.81
+          },
+          {
+            "number": "118",
+            "name": "OFFICE",
+            "corridor": false,
+            "x": 110.96,
+            "z": 33.93
+          },
+          {
+            "number": "106",
+            "name": "VEST. STORAGE TOILET",
+            "corridor": true,
+            "x": 142.07,
+            "z": 33.33
+          },
+          {
+            "number": "107",
+            "name": "VEST. STORAGE TOILET",
+            "corridor": true,
+            "x": 146.96,
+            "z": 33.33
+          },
+          {
+            "number": "108",
+            "name": "VEST. STORAGE TOILET",
+            "corridor": true,
+            "x": 153.33,
+            "z": 33.33
+          },
+          {
+            "number": "109",
+            "name": "WOMEN",
+            "corridor": false,
+            "x": 160.3,
+            "z": 33.33
+          },
+          {
+            "number": "B01",
+            "name": "STAIR WELL",
+            "corridor": false,
+            "x": 244.15,
+            "z": 33.48
+          },
+          {
+            "number": "119",
+            "name": "POTS & PANS",
+            "corridor": false,
+            "x": 93.78,
+            "z": 39.11
+          },
+          {
+            "number": "7005",
+            "name": "PROJECT # C2419-01",
+            "corridor": false,
+            "x": 307.85,
+            "z": 38.22
+          },
+          {
+            "number": "103",
+            "name": "PLATING",
+            "corridor": false,
+            "x": 169.63,
+            "z": 46.37
+          },
+          {
+            "number": "141",
+            "name": "CORRIDOR",
+            "corridor": true,
+            "x": 48.59,
+            "z": 51.7
+          },
+          {
+            "number": "110",
+            "name": "MAIN KITCHEN",
+            "corridor": false,
+            "x": 132.44,
+            "z": 52.15
+          },
+          {
+            "number": "102",
+            "name": "DINING HALL",
+            "corridor": true,
+            "x": 196.89,
+            "z": 54.37
+          },
+          {
+            "number": "B02",
+            "name": "BASEMENT",
+            "corridor": false,
+            "x": 237.78,
+            "z": 55.26
+          },
+          {
+            "number": "132",
+            "name": "REFRIG.",
+            "corridor": false,
+            "x": 20.89,
+            "z": 59.85
+          },
+          {
+            "number": "126",
+            "name": "STEWARD",
+            "corridor": false,
+            "x": 82.22,
+            "z": 59.85
+          },
+          {
+            "number": "142",
+            "name": "SALLY PORT",
+            "corridor": false,
+            "x": 5.04,
+            "z": 64.59
+          },
+          {
+            "number": "127",
+            "name": "CLOSET",
+            "corridor": false,
+            "x": 77.19,
+            "z": 68
+          },
+          {
+            "number": "128",
+            "name": "CLOSET",
+            "corridor": false,
+            "x": 87.26,
+            "z": 68
+          },
+          {
+            "number": "133",
+            "name": "DRY GOODS",
+            "corridor": false,
+            "x": 20,
+            "z": 72.3
+          },
+          {
+            "number": "129",
+            "name": "BAKERY",
+            "corridor": false,
+            "x": 58.67,
+            "z": 74.81
+          },
+          {
+            "number": "116B",
+            "name": "NEW RESTROOM",
+            "corridor": false,
+            "x": 73.78,
+            "z": 74.07
+          },
+          {
+            "number": "115",
+            "name": "INMATES TOILET",
+            "corridor": false,
+            "x": 120.59,
+            "z": 76.3
+          },
+          {
+            "number": "143",
+            "name": "VESTIBULE",
+            "corridor": true,
+            "x": 0,
+            "z": 88.74
+          },
+          {
+            "number": "144",
+            "name": "TOILETS",
+            "corridor": false,
+            "x": 7.7,
+            "z": 88
+          },
+          {
+            "number": "134",
+            "name": "STORAGE",
+            "corridor": false,
+            "x": 15.85,
+            "z": 88
+          },
+          {
+            "number": "131",
+            "name": "FERMENT",
+            "corridor": false,
+            "x": 24.15,
+            "z": 87.11
+          },
+          {
+            "number": "116",
+            "name": "UNIFORM STORAGE",
+            "corridor": false,
+            "x": 91.11,
+            "z": 88.74
+          },
+          {
+            "number": "114",
+            "name": "INMATES LOCKER",
+            "corridor": false,
+            "x": 108.89,
+            "z": 83.85
+          },
+          {
+            "number": "112",
+            "name": "JANITOR",
+            "corridor": false,
+            "x": 122.96,
+            "z": 86.07
+          },
+          {
+            "number": "111",
+            "name": "DISHWASHING",
+            "corridor": false,
+            "x": 152.44,
+            "z": 86.81
+          },
+          {
+            "number": "113",
+            "name": "SPRINKLER",
+            "corridor": false,
+            "x": 123.26,
+            "z": 99.7
+          }
+        ]
+      }
+    ],
+    "counts": {
+      "doors": 2,
+      "on_plan": 2,
+      "rooms": 44,
+      "corridors": 7,
+      "unmatched_tags": 0
+    },
+    "unmatched_tags": [],
+    "not_on_plan": [],
+    "note": "Laid out from the floor plan A102 (FLOOR PLAN) p.6: each door stands where its tag is drawn, in the room the plan gives it, at the sheet's printed scale. Walls and door swings are not read from the plan yet."
+  }
+}

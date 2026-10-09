@@ -1,0 +1,2602 @@
+{
+  "sha16": "e3d0cc1bc22fd824",
+  "sha256": "e3d0cc1bc22fd82445079c068872f2877a6c2c9bd37cca59b0b727b1adb8816f",
+  "rank": 5,
+  "source_url": "https://oa.mo.gov/sites/default/files/bid-opportunities/_T2504-03%20-%20Final%20Plans.pdf",
+  "page_count": 51,
+  "candidate_plan_pages": [
+    8,
+    9,
+    13
+  ],
+  "candidate_schedule_pages": [
+    18
+  ],
+  "production_schedule_pages": [
+    {
+      "page": 2,
+      "rows": 0,
+      "error": null
+    },
+    {
+      "page": 9,
+      "rows": 0,
+      "error": null
+    },
+    {
+      "page": 11,
+      "rows": 0,
+      "error": null
+    },
+    {
+      "page": 12,
+      "rows": 0,
+      "error": null
+    },
+    {
+      "page": 13,
+      "rows": 0,
+      "error": null
+    },
+    {
+      "page": 18,
+      "rows": 0,
+      "error": null
+    },
+    {
+      "page": 41,
+      "rows": 0,
+      "error": null
+    },
+    {
+      "page": 45,
+      "rows": 0,
+      "error": null
+    }
+  ],
+  "production_doors": [],
+  "production_plan": {
+    "sheets": [
+      {
+        "page": 1,
+        "sheet": "G-001",
+        "title": "NORTH",
+        "plan": false
+      },
+      {
+        "page": 2,
+        "sheet": "G-002",
+        "title": "READINESS CENTER",
+        "plan": false
+      },
+      {
+        "page": 3,
+        "sheet": "S-001",
+        "title": "FACILITY #6303",
+        "plan": false
+      },
+      {
+        "page": 4,
+        "sheet": "S-101",
+        "title": "PARTIAL EXISTING FOUNDATION PLAN",
+        "plan": false
+      },
+      {
+        "page": 5,
+        "sheet": "S-102",
+        "title": "SHEET 5 OF 51",
+        "plan": false
+      },
+      {
+        "page": 6,
+        "sheet": "S-501",
+        "title": "MASONRY WALL INFILL DETAIL",
+        "plan": false
+      },
+      {
+        "page": 7,
+        "sheet": "A-001",
+        "title": "CODE RELATED NOTES",
+        "plan": false
+      },
+      {
+        "page": 8,
+        "sheet": "A-101",
+        "title": "DEMOLITION PLAN LEGEND",
+        "plan": false
+      },
+      {
+        "page": 9,
+        "sheet": "A-102",
+        "title": "NEW CONSTRUCTION PLAN LEGEND",
+        "plan": true
+      },
+      {
+        "page": 10,
+        "sheet": "A-103",
+        "title": "SHEET 10 OF 51",
+        "plan": false
+      },
+      {
+        "page": 11,
+        "sheet": "A-201",
+        "title": "SHEET 11 OF 51",
+        "plan": false
+      },
+      {
+        "page": 12,
+        "sheet": "A-202",
+        "title": "WEST ELEVATION - TYP. INFILL",
+        "plan": false
+      },
+      {
+        "page": 13,
+        "sheet": "A-401",
+        "title": "NEW CONSTRUCTION PLAN LEGEND",
+        "plan": true
+      },
+      {
+        "page": 14,
+        "sheet": "A-402",
+        "title": "ADA TOILET ROOM SIGNAGE",
+        "plan": false
+      },
+      {
+        "page": 15,
+        "sheet": "A-403",
+        "title": "SHEET 15 OF 51",
+        "plan": false
+      },
+      {
+        "page": 16,
+        "sheet": "A-501",
+        "title": "SECTION THRU WINDOW (HIGH SIDE)",
+        "plan": false
+      },
+      {
+        "page": 17,
+        "sheet": "A-502",
+        "title": "BOX HEADER",
+        "plan": false
+      },
+      {
+        "page": 18,
+        "sheet": "A-601",
+        "title": "FRAME TYPES",
+        "plan": false
+      },
+      {
+        "page": 19,
+        "sheet": "A-701",
+        "title": "SHEET 19 OF 51",
+        "plan": false
+      },
+      {
+        "page": 20,
+        "sheet": "P-001",
+        "title": "MISCELLANEOUS SYMBOLS",
+        "plan": false
+      },
+      {
+        "page": 21,
+        "sheet": "P-101",
+        "title": "PLUMBING BASEMENT PLAN",
+        "plan": false
+      },
+      {
+        "page": 22,
+        "sheet": "P-102",
+        "title": "PLUMBING SANITARY & VENT DEMO PLAN",
+        "plan": false
+      },
+      {
+        "page": 23,
+        "sheet": "P-103",
+        "title": "PLUMBING DOMESTIC WATER DEMO PLAN",
+        "plan": false
+      },
+      {
+        "page": 24,
+        "sheet": "P-104",
+        "title": "PLUMBING SANITARY & VENT PLAN",
+        "plan": false
+      },
+      {
+        "page": 25,
+        "sheet": "P-105",
+        "title": "PLUMBING DOMESTIC WATER PLAN",
+        "plan": false
+      },
+      {
+        "page": 26,
+        "sheet": "P-106",
+        "title": "PLUMBING ROOF PLAN",
+        "plan": false
+      },
+      {
+        "page": 27,
+        "sheet": "P-201",
+        "title": "PLUMBING ENLARGED RESTROOM PLAN",
+        "plan": false
+      },
+      {
+        "page": 28,
+        "sheet": "P-501",
+        "title": "HOT WATER RECIRCULATING PUMP",
+        "plan": false
+      },
+      {
+        "page": 29,
+        "sheet": "P-502",
+        "title": "PLUMBING SANITARY ISOMETRIC",
+        "plan": false
+      },
+      {
+        "page": 30,
+        "sheet": "P-503",
+        "title": "PLUMBING DOMESTIC WATER ISOMETRIC",
+        "plan": false
+      },
+      {
+        "page": 31,
+        "sheet": "P-601",
+        "title": "PLUMBING SCHEDULES",
+        "plan": false
+      },
+      {
+        "page": 32,
+        "sheet": "M-001",
+        "title": "ABBREVIATIONS",
+        "plan": false
+      },
+      {
+        "page": 33,
+        "sheet": "M-101",
+        "title": "MECHANICAL BASEMENT PLAN",
+        "plan": false
+      },
+      {
+        "page": 34,
+        "sheet": "M-102",
+        "title": "MECHANICAL DEMO FLOOR PLAN",
+        "plan": false
+      },
+      {
+        "page": 35,
+        "sheet": "M-103",
+        "title": "MECHANICAL DEMO ROOF PLAN",
+        "plan": false
+      },
+      {
+        "page": 36,
+        "sheet": "M-104",
+        "title": "CLASSROOM DUCTWORK SOFFIT SECTION (TYP.)",
+        "plan": false
+      },
+      {
+        "page": 37,
+        "sheet": "M-105",
+        "title": "MECHANICAL ROOF PLAN",
+        "plan": false
+      },
+      {
+        "page": 38,
+        "sheet": "M-501",
+        "title": "DUCTWORK TRAPEZE SUPPORT DETAIL",
+        "plan": false
+      },
+      {
+        "page": 39,
+        "sheet": "M-601",
+        "title": "MECHANICAL SCHEDULES",
+        "plan": false
+      },
+      {
+        "page": 40,
+        "sheet": "M-602",
+        "title": "MECHANICAL CONTROLS",
+        "plan": false
+      },
+      {
+        "page": 41,
+        "sheet": "E-001",
+        "title": "ELECTRICAL GENERAL NOTES & ABBREVIATIONS",
+        "plan": false
+      },
+      {
+        "page": 42,
+        "sheet": "E-101",
+        "title": "ELECTRICAL BASEMENT PLAN DEMO",
+        "plan": false
+      },
+      {
+        "page": 43,
+        "sheet": "E-102",
+        "title": "ELECTRICAL FIRST FLOOR DEMO PLAN",
+        "plan": false
+      },
+      {
+        "page": 44,
+        "sheet": "E-103",
+        "title": "LIGHTING PLAN",
+        "plan": false
+      },
+      {
+        "page": 45,
+        "sheet": "E-104",
+        "title": "POWER AND SYSTEMS PLAN",
+        "plan": false
+      },
+      {
+        "page": 46,
+        "sheet": "E-105",
+        "title": "ROOFTOP POWER PLAN",
+        "plan": false
+      },
+      {
+        "page": 47,
+        "sheet": "E-106",
+        "title": "ENLARGED POWER AND SYSTEMS PLANS",
+        "plan": false
+      },
+      {
+        "page": 48,
+        "sheet": "E-107",
+        "title": "ELECTRICAL SITE PLAN",
+        "plan": false
+      },
+      {
+        "page": 49,
+        "sheet": "E-501",
+        "title": "ELECTRICAL DETAILS & RISER",
+        "plan": false
+      },
+      {
+        "page": 50,
+        "sheet": "E-601",
+        "title": "ELECTRICAL SCHEDULES",
+        "plan": false
+      },
+      {
+        "page": 51,
+        "sheet": "E-602",
+        "title": "ELECTRICAL SCHEDULES",
+        "plan": false
+      }
+    ],
+    "plan_sheets": [
+      {
+        "page": 9,
+        "sheet": "A-102",
+        "title": "NEW CONSTRUCTION PLAN LEGEND",
+        "rooms": 37,
+        "scales": [
+          "SCALE: 3/16\" = 1'-0\"",
+          "SCALE: 3/32\" = 1'-0\"",
+          "SCALE: 1/4\" = 1'-0\"",
+          "NORTH A-102 SCALE: 3/32\" = 1'-0\""
+        ],
+        "points_per_foot": [
+          13.5,
+          6.75,
+          18
+        ]
+      },
+      {
+        "page": 13,
+        "sheet": "A-401",
+        "title": "NEW CONSTRUCTION PLAN LEGEND",
+        "rooms": 17,
+        "scales": [
+          "SCALE: 1/4\" = 1'-0\"",
+          "SCALE: 1/4\" = 1'-0\""
+        ],
+        "points_per_foot": [
+          18
+        ]
+      }
+    ],
+    "rooms": [
+      {
+        "page": 9,
+        "sheet": "A-102",
+        "number": "25",
+        "name": "ALTERNATE #1",
+        "x": 1241,
+        "y": 239,
+        "h": 8.00899,
+        "corridor": false,
+        "points_per_foot": 13.5
+      },
+      {
+        "page": 9,
+        "sheet": "A-102",
+        "number": "118",
+        "name": "STORAGE",
+        "x": 1304,
+        "y": 292,
+        "h": 9.51068,
+        "corridor": false,
+        "points_per_foot": 13.5
+      },
+      {
+        "page": 9,
+        "sheet": "A-102",
+        "number": "100",
+        "name": "CORRIDOR",
+        "x": 1433,
+        "y": 286,
+        "h": 9.51068,
+        "corridor": true,
+        "points_per_foot": 13.5
+      },
+      {
+        "page": 9,
+        "sheet": "A-102",
+        "number": "119",
+        "name": "CLASSROOM",
+        "x": 1568,
+        "y": 292,
+        "h": 9.51068,
+        "corridor": false,
+        "points_per_foot": 13.5
+      },
+      {
+        "page": 9,
+        "sheet": "A-102",
+        "number": "129",
+        "name": "MECHANICAL ROOM",
+        "x": 556,
+        "y": 333,
+        "h": 9.51068,
+        "corridor": false,
+        "points_per_foot": 13.5
+      },
+      {
+        "page": 9,
+        "sheet": "A-102",
+        "number": "25",
+        "name": "ALTERNATE #1",
+        "x": 1234,
+        "y": 404,
+        "h": 8.00899,
+        "corridor": false,
+        "points_per_foot": 18
+      },
+      {
+        "page": 9,
+        "sheet": "A-102",
+        "number": "120",
+        "name": "STORAGE",
+        "x": 1336,
+        "y": 430,
+        "h": 9.51068,
+        "corridor": false,
+        "points_per_foot": 18
+      },
+      {
+        "page": 9,
+        "sheet": "A-102",
+        "number": "121",
+        "name": "CLASSROOM",
+        "x": 1568,
+        "y": 434,
+        "h": 9.51068,
+        "corridor": false,
+        "points_per_foot": 18
+      },
+      {
+        "page": 9,
+        "sheet": "A-102",
+        "number": "128",
+        "name": "DATA CLOSET",
+        "x": 1279,
+        "y": 479,
+        "h": 9.51068,
+        "corridor": false,
+        "points_per_foot": 18
+      },
+      {
+        "page": 9,
+        "sheet": "A-102",
+        "number": "113",
+        "name": "LOCKER ROOM",
+        "x": 1346,
+        "y": 641,
+        "h": 9.51068,
+        "corridor": false,
+        "points_per_foot": 6.75
+      },
+      {
+        "page": 9,
+        "sheet": "A-102",
+        "number": "122",
+        "name": "CLASSROOM",
+        "x": 1569,
+        "y": 641,
+        "h": 9.51068,
+        "corridor": false,
+        "points_per_foot": 6.75
+      },
+      {
+        "page": 9,
+        "sheet": "A-102",
+        "number": "01",
+        "name": "76 LOCKERS",
+        "x": 1310,
+        "y": 683,
+        "h": 8.00899,
+        "corridor": false,
+        "points_per_foot": 6.75
+      },
+      {
+        "page": 9,
+        "sheet": "A-102",
+        "number": "110",
+        "name": "TOILET",
+        "x": 927,
+        "y": 705,
+        "h": 9.51068,
+        "corridor": false,
+        "points_per_foot": 6.75
+      },
+      {
+        "page": 9,
+        "sheet": "A-102",
+        "number": "108",
+        "name": "STORAGE",
+        "x": 949,
+        "y": 792,
+        "h": 9.51068,
+        "corridor": false,
+        "points_per_foot": 6.75
+      },
+      {
+        "page": 9,
+        "sheet": "A-102",
+        "number": "109",
+        "name": "STORAGE",
+        "x": 1075,
+        "y": 778,
+        "h": 9.51068,
+        "corridor": false,
+        "points_per_foot": 6.75
+      },
+      {
+        "page": 9,
+        "sheet": "A-102",
+        "number": "123",
+        "name": "CLASSROOM",
+        "x": 1569,
+        "y": 801,
+        "h": 9.51068,
+        "corridor": false,
+        "points_per_foot": 6.75
+      },
+      {
+        "page": 9,
+        "sheet": "A-102",
+        "number": "107",
+        "name": "OFFICE",
+        "x": 1127,
+        "y": 810,
+        "h": 9.51068,
+        "corridor": false,
+        "points_per_foot": 6.75
+      },
+      {
+        "page": 9,
+        "sheet": "A-102",
+        "number": "114",
+        "name": "MEN'S SHOWER",
+        "x": 1254,
+        "y": 848,
+        "h": 9.51068,
+        "corridor": false,
+        "points_per_foot": 6.75
+      },
+      {
+        "page": 9,
+        "sheet": "A-102",
+        "number": "115",
+        "name": "WOMEN'S SHOWER",
+        "x": 1380,
+        "y": 848,
+        "h": 9.51068,
+        "corridor": false,
+        "points_per_foot": 6.75
+      },
+      {
+        "page": 9,
+        "sheet": "A-102",
+        "number": "105",
+        "name": "KITCHEN",
+        "x": 947,
+        "y": 856,
+        "h": 9.51068,
+        "corridor": false,
+        "points_per_foot": 6.75
+      },
+      {
+        "page": 9,
+        "sheet": "A-102",
+        "number": "11",
+        "name": "DN",
+        "x": 1069,
+        "y": 939,
+        "h": 8.00899,
+        "corridor": false,
+        "points_per_foot": 6.75
+      },
+      {
+        "page": 9,
+        "sheet": "A-102",
+        "number": "111",
+        "name": "STAIR",
+        "x": 1069,
+        "y": 970,
+        "h": 9.51068,
+        "corridor": false,
+        "points_per_foot": 6.75
+      },
+      {
+        "page": 9,
+        "sheet": "A-102",
+        "number": "106",
+        "name": "OFFICE",
+        "x": 1138,
+        "y": 955,
+        "h": 9.51068,
+        "corridor": false,
+        "points_per_foot": 6.75
+      },
+      {
+        "page": 9,
+        "sheet": "A-102",
+        "number": "116",
+        "name": "MENS RESTROOM",
+        "x": 1245,
+        "y": 970,
+        "h": 9.51068,
+        "corridor": false,
+        "points_per_foot": 6.75
+      },
+      {
+        "page": 9,
+        "sheet": "A-102",
+        "number": "117",
+        "name": "WOMENS RESTROOM",
+        "x": 1368,
+        "y": 976,
+        "h": 9.51068,
+        "corridor": false,
+        "points_per_foot": 6.75
+      },
+      {
+        "page": 9,
+        "sheet": "A-102",
+        "number": "124",
+        "name": "CLASSROOM",
+        "x": 1568,
+        "y": 977,
+        "h": 9.51068,
+        "corridor": false,
+        "points_per_foot": 6.75
+      },
+      {
+        "page": 9,
+        "sheet": "A-102",
+        "number": "104",
+        "name": "VESTIBULE",
+        "x": 937,
+        "y": 1049,
+        "h": 9.51068,
+        "corridor": true,
+        "points_per_foot": 6.75
+      },
+      {
+        "page": 9,
+        "sheet": "A-102",
+        "number": "112",
+        "name": "JAN CL",
+        "x": 1283,
+        "y": 1082,
+        "h": 9.51068,
+        "corridor": false,
+        "points_per_foot": 6.75
+      },
+      {
+        "page": 9,
+        "sheet": "A-102",
+        "number": "103",
+        "name": "CORRIDOR",
+        "x": 1358,
+        "y": 1082,
+        "h": 9.51068,
+        "corridor": true,
+        "points_per_foot": 6.75
+      },
+      {
+        "page": 9,
+        "sheet": "A-102",
+        "number": "101",
+        "name": "CORRIDOR",
+        "x": 1523,
+        "y": 1088,
+        "h": 9.51068,
+        "corridor": true,
+        "points_per_foot": 6.75
+      },
+      {
+        "page": 9,
+        "sheet": "A-102",
+        "number": "25",
+        "name": "ALTERNATE #1",
+        "x": 1141,
+        "y": 1134,
+        "h": 8.00899,
+        "corridor": false,
+        "points_per_foot": 6.75
+      },
+      {
+        "page": 9,
+        "sheet": "A-102",
+        "number": "6303",
+        "name": "PROJECT # T2504-03",
+        "x": 2450,
+        "y": 1161,
+        "h": 17.01912,
+        "corridor": false,
+        "points_per_foot": 6.75
+      },
+      {
+        "page": 9,
+        "sheet": "A-102",
+        "number": "126",
+        "name": "CLASSROOM",
+        "x": 1571,
+        "y": 1188,
+        "h": 9.51068,
+        "corridor": false,
+        "points_per_foot": 6.75
+      },
+      {
+        "page": 9,
+        "sheet": "A-102",
+        "number": "102",
+        "name": "CORRIDOR",
+        "x": 1430,
+        "y": 1200,
+        "h": 9.51068,
+        "corridor": true,
+        "points_per_foot": 6.75
+      },
+      {
+        "page": 9,
+        "sheet": "A-102",
+        "number": "125",
+        "name": "CLASSROOM",
+        "x": 1306,
+        "y": 1236,
+        "h": 9.51068,
+        "corridor": false,
+        "points_per_foot": 6.75
+      },
+      {
+        "page": 9,
+        "sheet": "A-102",
+        "number": "25",
+        "name": "ALTERNATE #1",
+        "x": 1145,
+        "y": 1302,
+        "h": 8.00899,
+        "corridor": false,
+        "points_per_foot": 6.75
+      },
+      {
+        "page": 9,
+        "sheet": "A-102",
+        "number": "127",
+        "name": "CLASSROOM",
+        "x": 1568,
+        "y": 1361,
+        "h": 9.51068,
+        "corridor": false,
+        "points_per_foot": 6.75
+      },
+      {
+        "page": 13,
+        "sheet": "A-401",
+        "number": "113",
+        "name": "LOCKER ROOM",
+        "x": 1212,
+        "y": 371,
+        "h": 9.51068,
+        "corridor": false,
+        "points_per_foot": 18
+      },
+      {
+        "page": 13,
+        "sheet": "A-401",
+        "number": "22",
+        "name": "CLASSROOM",
+        "x": 536,
+        "y": 386,
+        "h": 9.51068,
+        "corridor": false,
+        "points_per_foot": 18
+      },
+      {
+        "page": 13,
+        "sheet": "A-401",
+        "number": "11",
+        "name": "STORAGE",
+        "x": 351,
+        "y": 809,
+        "h": 9.51068,
+        "corridor": false,
+        "points_per_foot": 18
+      },
+      {
+        "page": 13,
+        "sheet": "A-401",
+        "number": "12",
+        "name": "STORAGE",
+        "x": 586,
+        "y": 809,
+        "h": 9.51068,
+        "corridor": false,
+        "points_per_foot": 18
+      },
+      {
+        "page": 13,
+        "sheet": "A-401",
+        "number": "115",
+        "name": "WOMEN'S SHOWER",
+        "x": 1568,
+        "y": 948,
+        "h": 9.51068,
+        "corridor": false,
+        "points_per_foot": 18
+      },
+      {
+        "page": 13,
+        "sheet": "A-401",
+        "number": "114",
+        "name": "MEN'S SHOWER",
+        "x": 1124,
+        "y": 1009,
+        "h": 9.51068,
+        "corridor": false,
+        "points_per_foot": 18
+      },
+      {
+        "page": 13,
+        "sheet": "A-401",
+        "number": "13",
+        "name": "STORAGE",
+        "x": 346,
+        "y": 1032,
+        "h": 9.51068,
+        "corridor": false,
+        "points_per_foot": 18
+      },
+      {
+        "page": 13,
+        "sheet": "A-401",
+        "number": "14",
+        "name": "RR",
+        "x": 436,
+        "y": 1032,
+        "h": 9.51068,
+        "corridor": false,
+        "points_per_foot": 18
+      },
+      {
+        "page": 13,
+        "sheet": "A-401",
+        "number": "P1",
+        "name": "CHANGING AREA",
+        "x": 1369,
+        "y": 1026,
+        "h": 9.51068,
+        "corridor": false,
+        "points_per_foot": 18
+      },
+      {
+        "page": 13,
+        "sheet": "A-401",
+        "number": "P1",
+        "name": "CHANGING AREA",
+        "x": 1470,
+        "y": 1026,
+        "h": 9.51068,
+        "corridor": false,
+        "points_per_foot": 18
+      },
+      {
+        "page": 13,
+        "sheet": "A-401",
+        "number": "15",
+        "name": "WOMENS RR",
+        "x": 614,
+        "y": 1161,
+        "h": 9.51068,
+        "corridor": false,
+        "points_per_foot": 18
+      },
+      {
+        "page": 13,
+        "sheet": "A-401",
+        "number": "6303",
+        "name": "PROJECT # T2504-03",
+        "x": 2450,
+        "y": 1161,
+        "h": 17.01912,
+        "corridor": false,
+        "points_per_foot": 18
+      },
+      {
+        "page": 13,
+        "sheet": "A-401",
+        "number": "16",
+        "name": "JAN. CLO.",
+        "x": 735,
+        "y": 1229,
+        "h": 9.51068,
+        "corridor": false,
+        "points_per_foot": 18
+      },
+      {
+        "page": 13,
+        "sheet": "A-401",
+        "number": "117",
+        "name": "WOMENS RESTROOM",
+        "x": 1479,
+        "y": 1320,
+        "h": 9.51068,
+        "corridor": false,
+        "points_per_foot": 18
+      },
+      {
+        "page": 13,
+        "sheet": "A-401",
+        "number": "17",
+        "name": "MENS RR",
+        "x": 656,
+        "y": 1360,
+        "h": 9.51068,
+        "corridor": false,
+        "points_per_foot": 18
+      },
+      {
+        "page": 13,
+        "sheet": "A-401",
+        "number": "116",
+        "name": "MENS RESTROOM",
+        "x": 1162,
+        "y": 1373,
+        "h": 9.51068,
+        "corridor": false,
+        "points_per_foot": 18
+      },
+      {
+        "page": 13,
+        "sheet": "A-401",
+        "number": "112",
+        "name": "JAN CL",
+        "x": 1354,
+        "y": 1462,
+        "h": 9.51068,
+        "corridor": false,
+        "points_per_foot": 18
+      }
+    ],
+    "tags": [],
+    "unmatched_tags": [],
+    "marks_not_on_plan": [],
+    "counts": {
+      "plan_sheets": 2,
+      "rooms": 54,
+      "corridors": 5,
+      "tags": 0,
+      "unmatched_tags": 0,
+      "schedule_marks": 0,
+      "marks_not_on_plan": 0
+    }
+  },
+  "diagnostic_note": "Unchanged S1 reader supplied harvest schedule-row regex marks, not production doors or audited truth. Tag-shaped text can be room/grid/detail numbers. Unmatched tags are style candidates, not verified doors.",
+  "harvest_schedule_rows": [
+    {
+      "page": 18,
+      "marks": [
+        "100",
+        "101",
+        "102",
+        "103",
+        "104",
+        "105",
+        "106",
+        "107",
+        "108",
+        "109",
+        "110",
+        "111",
+        "112",
+        "113",
+        "114",
+        "115",
+        "116",
+        "1",
+        "120"
+      ],
+      "lines": [
+        "                                                                                                                                                                              SEALANT, EACH SIDE                                                                                                                              100        AL-1                PR 3' - 0\"        7' - 0\"               F3                     H4                       J4                                            09                                                                               LEVER/PADDLE HARDWARE; KEYPAD CONTROLS ENTRY SIDE ONLY. SEE SPECIFICATIONS.                                     EXP. DATE: 12/31/2027",
+        "                                                                                                                                                                                                                                                                                                                              101        WD-1                3' - 0\"           7' - 0\"               F1                     H1                       J1            90 MIN.                         04                                        11",
+        "                                                                                                                                                                                                                                                                                                                              102        HM-1                3' - 0\"           7' - 0\"               F2                     H2                       J2                                            05                                        7,10,12                             3. PROVIDE SURFACE-MOUNTED OR FLUSH-MOUNT DIGITAL KEYPAD (STANDALONE CONTROLLER",
+        "                                                                                                                                                                              STUD NOTES                                                                                                                                      103        HM-1                3' - 0\"           7' - 0\"               F2                     H2                       J2                                            05                                        7,10",
+        "                                                                                                                                                                              5/8\" TYP X, GYPSUM WALL BOARD                                                                                                                   104        HM-1                3' - 0\"           7' - 0\"               F2                     H2                       J2                                            06                                        7,10,12",
+        "                                                                                                                                                                                                                                                                                                                              105        HM-1                3' - 0\"           7' - 0\"               F2                     H2                       J2                                            06                                        7,10                                4. PROVIDE LOW-VOLTAGE POWER TRANSFER (ELECTRIC HINGE, DOOR LOOP, OR WIRELESS",
+        "                                                                                                                                                                                                                                                                                                                              106        HM-1                3' - 0\"           7' - 0\"               F2                     H2                       J2                                            07                                                                               POWER TRANSFER DEVICE) TO ROUTE WIRING ACROSS DOOR LEAF TO FRAME (EXISTING DOORS",
+        "                                            1/2\"                                  SEALANT, EACH SIDE                                                                                                                                                                                                                          107        WD-1                3' - 0\"           7' - 0\"               F2                     H2                       J2                                            05                                        7,11,12                                WHERE NO FACTORY-WIRED HINGE EXISTS).",
+        "                                            TYP                                   HOLLOW METAL DOOR FRAME                               7 1/8\"                                                      6 1/8\"                                                                                                                    108        WD-1                3' - 0\"           7' - 0\"               F1                     H1                       J1            90 MIN.                         04                                        11",
+        "                                                                                                                                                                                                                                                                                                                              109        HM-1                PR 3' - 0\"        7' - 0\"               F2                     H2                       J2                                            10                                                                            5. PROVIDE CLASS 2 LOW-VOLTAGE POWER SUPPLY/TRANSFORMER (12/24VDC, RATED FOR",
+        "                                                                                                                                                                                                                                                                                                                              110        EXISTING AL         PR 3' - 0\"        7' - 0\"               EXISTING               EXISTING                 EXISTING                                      03A                                                                              TO DEDICATED 120V CIRCUIT BY ELECTRICAL CONTRACTOR.",
+        "                                                            7 1/8\"                                                                                                                                                                                                                                                            111        EXISTING AL         PR 3' - 0\"        7' - 0\"               EXISTING               EXISTING                 EXISTING                                      03                                        1,2,3,4,5,6,7,8",
+        "                                                                                                                                                             TYP                                                                                                                                                              112        EXISTING AL         PR 3' - 0\"        7' - 0\"               EXISTING               EXISTING                 EXISTING                                      03B                                                                           6. PROVIDE LOW-VOLTAGE WIRING (18-22 AWG PER LOCK MANUFACTURER) FROM POWER SUPPLY",
+        "                                                                                                                                                                                                                                                                                                                              113        EXISTING AL         PR 3' - 0\"        7' - 0\"               EXISTING               EXISTING                 EXISTING                                      03B                                                                              TO KEYPAD AND ELECTRIFIED LOCK, ROUTED IN CONDUIT/RACEWAY.                                                       Professional of Record:",
+        "                                                            HEAD                                                                                                     JAMB                                                                                                                                                     114        EXISTING HM         3' - 0\"           7' - 0\"               EXISTING               EXISTING                 EXISTING                                      02                                                                                                                                                                                              MICHAEL S. SUNDERMEYER",
+        "                                                                                                                                                                                                                                                                                                                              115        EXISTING HM         PR 3' - 0\"        7' - 0\"               EXISTING               EXISTING                 EXISTING                                      11",
+        "                                                                                                                                                                                                                                                                                                                              116        EXISTING AL         PR 3' - 0\"        7' - 0\"               EXISTING               EXISTING                 EXISTING                                      01                                                                               PRIOR TO ROUGH-IN.",
+        "                                        1                                                                                                                                                                                                                                                                                     117        EXISTING AL         PR 3' - 0\"        7' - 0\"               EXISTING               EXISTING                 EXISTING                                      01",
+        "                                                                                                                                                                                                                                                                                                                              120        HM-1                3' - 0\"           7' - 0\"               F2                     H2                       J2                                            08                                        12"
+      ]
+    }
+  ],
+  "harvest_schedule_marks": [
+    {
+      "mark": "100",
+      "page": 18
+    },
+    {
+      "mark": "101",
+      "page": 18
+    },
+    {
+      "mark": "102",
+      "page": 18
+    },
+    {
+      "mark": "103",
+      "page": 18
+    },
+    {
+      "mark": "104",
+      "page": 18
+    },
+    {
+      "mark": "105",
+      "page": 18
+    },
+    {
+      "mark": "106",
+      "page": 18
+    },
+    {
+      "mark": "107",
+      "page": 18
+    },
+    {
+      "mark": "108",
+      "page": 18
+    },
+    {
+      "mark": "109",
+      "page": 18
+    },
+    {
+      "mark": "110",
+      "page": 18
+    },
+    {
+      "mark": "111",
+      "page": 18
+    },
+    {
+      "mark": "112",
+      "page": 18
+    },
+    {
+      "mark": "113",
+      "page": 18
+    },
+    {
+      "mark": "114",
+      "page": 18
+    },
+    {
+      "mark": "115",
+      "page": 18
+    },
+    {
+      "mark": "116",
+      "page": 18
+    },
+    {
+      "mark": "1",
+      "page": 18
+    },
+    {
+      "mark": "120",
+      "page": 18
+    }
+  ],
+  "harvest_marks_plan": {
+    "sheets": [
+      {
+        "page": 1,
+        "sheet": "G-001",
+        "title": "NORTH",
+        "plan": false
+      },
+      {
+        "page": 2,
+        "sheet": "G-002",
+        "title": "READINESS CENTER",
+        "plan": false
+      },
+      {
+        "page": 3,
+        "sheet": "S-001",
+        "title": "FACILITY #6303",
+        "plan": false
+      },
+      {
+        "page": 4,
+        "sheet": "S-101",
+        "title": "PARTIAL EXISTING FOUNDATION PLAN",
+        "plan": false
+      },
+      {
+        "page": 5,
+        "sheet": "S-102",
+        "title": "SHEET 5 OF 51",
+        "plan": false
+      },
+      {
+        "page": 6,
+        "sheet": "S-501",
+        "title": "MASONRY WALL INFILL DETAIL",
+        "plan": false
+      },
+      {
+        "page": 7,
+        "sheet": "A-001",
+        "title": "CODE RELATED NOTES",
+        "plan": false
+      },
+      {
+        "page": 8,
+        "sheet": "A-101",
+        "title": "DEMOLITION PLAN LEGEND",
+        "plan": false
+      },
+      {
+        "page": 9,
+        "sheet": "A-102",
+        "title": "NEW CONSTRUCTION PLAN LEGEND",
+        "plan": true
+      },
+      {
+        "page": 10,
+        "sheet": "A-103",
+        "title": "SHEET 10 OF 51",
+        "plan": false
+      },
+      {
+        "page": 11,
+        "sheet": "A-201",
+        "title": "SHEET 11 OF 51",
+        "plan": false
+      },
+      {
+        "page": 12,
+        "sheet": "A-202",
+        "title": "WEST ELEVATION - TYP. INFILL",
+        "plan": false
+      },
+      {
+        "page": 13,
+        "sheet": "A-401",
+        "title": "NEW CONSTRUCTION PLAN LEGEND",
+        "plan": true
+      },
+      {
+        "page": 14,
+        "sheet": "A-402",
+        "title": "ADA TOILET ROOM SIGNAGE",
+        "plan": false
+      },
+      {
+        "page": 15,
+        "sheet": "A-403",
+        "title": "SHEET 15 OF 51",
+        "plan": false
+      },
+      {
+        "page": 16,
+        "sheet": "A-501",
+        "title": "SECTION THRU WINDOW (HIGH SIDE)",
+        "plan": false
+      },
+      {
+        "page": 17,
+        "sheet": "A-502",
+        "title": "BOX HEADER",
+        "plan": false
+      },
+      {
+        "page": 18,
+        "sheet": "A-601",
+        "title": "FRAME TYPES",
+        "plan": false
+      },
+      {
+        "page": 19,
+        "sheet": "A-701",
+        "title": "SHEET 19 OF 51",
+        "plan": false
+      },
+      {
+        "page": 20,
+        "sheet": "P-001",
+        "title": "MISCELLANEOUS SYMBOLS",
+        "plan": false
+      },
+      {
+        "page": 21,
+        "sheet": "P-101",
+        "title": "PLUMBING BASEMENT PLAN",
+        "plan": false
+      },
+      {
+        "page": 22,
+        "sheet": "P-102",
+        "title": "PLUMBING SANITARY & VENT DEMO PLAN",
+        "plan": false
+      },
+      {
+        "page": 23,
+        "sheet": "P-103",
+        "title": "PLUMBING DOMESTIC WATER DEMO PLAN",
+        "plan": false
+      },
+      {
+        "page": 24,
+        "sheet": "P-104",
+        "title": "PLUMBING SANITARY & VENT PLAN",
+        "plan": false
+      },
+      {
+        "page": 25,
+        "sheet": "P-105",
+        "title": "PLUMBING DOMESTIC WATER PLAN",
+        "plan": false
+      },
+      {
+        "page": 26,
+        "sheet": "P-106",
+        "title": "PLUMBING ROOF PLAN",
+        "plan": false
+      },
+      {
+        "page": 27,
+        "sheet": "P-201",
+        "title": "PLUMBING ENLARGED RESTROOM PLAN",
+        "plan": false
+      },
+      {
+        "page": 28,
+        "sheet": "P-501",
+        "title": "HOT WATER RECIRCULATING PUMP",
+        "plan": false
+      },
+      {
+        "page": 29,
+        "sheet": "P-502",
+        "title": "PLUMBING SANITARY ISOMETRIC",
+        "plan": false
+      },
+      {
+        "page": 30,
+        "sheet": "P-503",
+        "title": "PLUMBING DOMESTIC WATER ISOMETRIC",
+        "plan": false
+      },
+      {
+        "page": 31,
+        "sheet": "P-601",
+        "title": "PLUMBING SCHEDULES",
+        "plan": false
+      },
+      {
+        "page": 32,
+        "sheet": "M-001",
+        "title": "ABBREVIATIONS",
+        "plan": false
+      },
+      {
+        "page": 33,
+        "sheet": "M-101",
+        "title": "MECHANICAL BASEMENT PLAN",
+        "plan": false
+      },
+      {
+        "page": 34,
+        "sheet": "M-102",
+        "title": "MECHANICAL DEMO FLOOR PLAN",
+        "plan": false
+      },
+      {
+        "page": 35,
+        "sheet": "M-103",
+        "title": "MECHANICAL DEMO ROOF PLAN",
+        "plan": false
+      },
+      {
+        "page": 36,
+        "sheet": "M-104",
+        "title": "CLASSROOM DUCTWORK SOFFIT SECTION (TYP.)",
+        "plan": false
+      },
+      {
+        "page": 37,
+        "sheet": "M-105",
+        "title": "MECHANICAL ROOF PLAN",
+        "plan": false
+      },
+      {
+        "page": 38,
+        "sheet": "M-501",
+        "title": "DUCTWORK TRAPEZE SUPPORT DETAIL",
+        "plan": false
+      },
+      {
+        "page": 39,
+        "sheet": "M-601",
+        "title": "MECHANICAL SCHEDULES",
+        "plan": false
+      },
+      {
+        "page": 40,
+        "sheet": "M-602",
+        "title": "MECHANICAL CONTROLS",
+        "plan": false
+      },
+      {
+        "page": 41,
+        "sheet": "E-001",
+        "title": "ELECTRICAL GENERAL NOTES & ABBREVIATIONS",
+        "plan": false
+      },
+      {
+        "page": 42,
+        "sheet": "E-101",
+        "title": "ELECTRICAL BASEMENT PLAN DEMO",
+        "plan": false
+      },
+      {
+        "page": 43,
+        "sheet": "E-102",
+        "title": "ELECTRICAL FIRST FLOOR DEMO PLAN",
+        "plan": false
+      },
+      {
+        "page": 44,
+        "sheet": "E-103",
+        "title": "LIGHTING PLAN",
+        "plan": false
+      },
+      {
+        "page": 45,
+        "sheet": "E-104",
+        "title": "POWER AND SYSTEMS PLAN",
+        "plan": false
+      },
+      {
+        "page": 46,
+        "sheet": "E-105",
+        "title": "ROOFTOP POWER PLAN",
+        "plan": false
+      },
+      {
+        "page": 47,
+        "sheet": "E-106",
+        "title": "ENLARGED POWER AND SYSTEMS PLANS",
+        "plan": false
+      },
+      {
+        "page": 48,
+        "sheet": "E-107",
+        "title": "ELECTRICAL SITE PLAN",
+        "plan": false
+      },
+      {
+        "page": 49,
+        "sheet": "E-501",
+        "title": "ELECTRICAL DETAILS & RISER",
+        "plan": false
+      },
+      {
+        "page": 50,
+        "sheet": "E-601",
+        "title": "ELECTRICAL SCHEDULES",
+        "plan": false
+      },
+      {
+        "page": 51,
+        "sheet": "E-602",
+        "title": "ELECTRICAL SCHEDULES",
+        "plan": false
+      }
+    ],
+    "plan_sheets": [
+      {
+        "page": 9,
+        "sheet": "A-102",
+        "title": "NEW CONSTRUCTION PLAN LEGEND",
+        "rooms": 37,
+        "scales": [
+          "SCALE: 3/16\" = 1'-0\"",
+          "SCALE: 3/32\" = 1'-0\"",
+          "SCALE: 1/4\" = 1'-0\"",
+          "NORTH A-102 SCALE: 3/32\" = 1'-0\""
+        ],
+        "points_per_foot": [
+          13.5,
+          6.75,
+          18
+        ]
+      },
+      {
+        "page": 13,
+        "sheet": "A-401",
+        "title": "NEW CONSTRUCTION PLAN LEGEND",
+        "rooms": 17,
+        "scales": [
+          "SCALE: 1/4\" = 1'-0\"",
+          "SCALE: 1/4\" = 1'-0\""
+        ],
+        "points_per_foot": [
+          18
+        ]
+      }
+    ],
+    "rooms": [
+      {
+        "page": 9,
+        "sheet": "A-102",
+        "number": "25",
+        "name": "ALTERNATE #1",
+        "x": 1241,
+        "y": 239,
+        "h": 8.00899,
+        "corridor": false,
+        "points_per_foot": 13.5
+      },
+      {
+        "page": 9,
+        "sheet": "A-102",
+        "number": "118",
+        "name": "STORAGE",
+        "x": 1304,
+        "y": 292,
+        "h": 9.51068,
+        "corridor": false,
+        "points_per_foot": 13.5
+      },
+      {
+        "page": 9,
+        "sheet": "A-102",
+        "number": "100",
+        "name": "CORRIDOR",
+        "x": 1433,
+        "y": 286,
+        "h": 9.51068,
+        "corridor": true,
+        "points_per_foot": 13.5
+      },
+      {
+        "page": 9,
+        "sheet": "A-102",
+        "number": "119",
+        "name": "CLASSROOM",
+        "x": 1568,
+        "y": 292,
+        "h": 9.51068,
+        "corridor": false,
+        "points_per_foot": 13.5
+      },
+      {
+        "page": 9,
+        "sheet": "A-102",
+        "number": "129",
+        "name": "MECHANICAL ROOM",
+        "x": 556,
+        "y": 333,
+        "h": 9.51068,
+        "corridor": false,
+        "points_per_foot": 13.5
+      },
+      {
+        "page": 9,
+        "sheet": "A-102",
+        "number": "25",
+        "name": "ALTERNATE #1",
+        "x": 1234,
+        "y": 404,
+        "h": 8.00899,
+        "corridor": false,
+        "points_per_foot": 18
+      },
+      {
+        "page": 9,
+        "sheet": "A-102",
+        "number": "120",
+        "name": "STORAGE",
+        "x": 1336,
+        "y": 430,
+        "h": 9.51068,
+        "corridor": false,
+        "points_per_foot": 18
+      },
+      {
+        "page": 9,
+        "sheet": "A-102",
+        "number": "121",
+        "name": "CLASSROOM",
+        "x": 1568,
+        "y": 434,
+        "h": 9.51068,
+        "corridor": false,
+        "points_per_foot": 18
+      },
+      {
+        "page": 9,
+        "sheet": "A-102",
+        "number": "128",
+        "name": "DATA CLOSET",
+        "x": 1279,
+        "y": 479,
+        "h": 9.51068,
+        "corridor": false,
+        "points_per_foot": 18
+      },
+      {
+        "page": 9,
+        "sheet": "A-102",
+        "number": "113",
+        "name": "LOCKER ROOM",
+        "x": 1346,
+        "y": 641,
+        "h": 9.51068,
+        "corridor": false,
+        "points_per_foot": 6.75
+      },
+      {
+        "page": 9,
+        "sheet": "A-102",
+        "number": "122",
+        "name": "CLASSROOM",
+        "x": 1569,
+        "y": 641,
+        "h": 9.51068,
+        "corridor": false,
+        "points_per_foot": 6.75
+      },
+      {
+        "page": 9,
+        "sheet": "A-102",
+        "number": "01",
+        "name": "76 LOCKERS",
+        "x": 1310,
+        "y": 683,
+        "h": 8.00899,
+        "corridor": false,
+        "points_per_foot": 6.75
+      },
+      {
+        "page": 9,
+        "sheet": "A-102",
+        "number": "110",
+        "name": "TOILET",
+        "x": 927,
+        "y": 705,
+        "h": 9.51068,
+        "corridor": false,
+        "points_per_foot": 6.75
+      },
+      {
+        "page": 9,
+        "sheet": "A-102",
+        "number": "108",
+        "name": "STORAGE",
+        "x": 949,
+        "y": 792,
+        "h": 9.51068,
+        "corridor": false,
+        "points_per_foot": 6.75
+      },
+      {
+        "page": 9,
+        "sheet": "A-102",
+        "number": "109",
+        "name": "STORAGE",
+        "x": 1075,
+        "y": 778,
+        "h": 9.51068,
+        "corridor": false,
+        "points_per_foot": 6.75
+      },
+      {
+        "page": 9,
+        "sheet": "A-102",
+        "number": "123",
+        "name": "CLASSROOM",
+        "x": 1569,
+        "y": 801,
+        "h": 9.51068,
+        "corridor": false,
+        "points_per_foot": 6.75
+      },
+      {
+        "page": 9,
+        "sheet": "A-102",
+        "number": "107",
+        "name": "OFFICE",
+        "x": 1127,
+        "y": 810,
+        "h": 9.51068,
+        "corridor": false,
+        "points_per_foot": 6.75
+      },
+      {
+        "page": 9,
+        "sheet": "A-102",
+        "number": "114",
+        "name": "MEN'S SHOWER",
+        "x": 1254,
+        "y": 848,
+        "h": 9.51068,
+        "corridor": false,
+        "points_per_foot": 6.75
+      },
+      {
+        "page": 9,
+        "sheet": "A-102",
+        "number": "115",
+        "name": "WOMEN'S SHOWER",
+        "x": 1380,
+        "y": 848,
+        "h": 9.51068,
+        "corridor": false,
+        "points_per_foot": 6.75
+      },
+      {
+        "page": 9,
+        "sheet": "A-102",
+        "number": "105",
+        "name": "KITCHEN",
+        "x": 947,
+        "y": 856,
+        "h": 9.51068,
+        "corridor": false,
+        "points_per_foot": 6.75
+      },
+      {
+        "page": 9,
+        "sheet": "A-102",
+        "number": "11",
+        "name": "DN",
+        "x": 1069,
+        "y": 939,
+        "h": 8.00899,
+        "corridor": false,
+        "points_per_foot": 6.75
+      },
+      {
+        "page": 9,
+        "sheet": "A-102",
+        "number": "111",
+        "name": "STAIR",
+        "x": 1069,
+        "y": 970,
+        "h": 9.51068,
+        "corridor": false,
+        "points_per_foot": 6.75
+      },
+      {
+        "page": 9,
+        "sheet": "A-102",
+        "number": "106",
+        "name": "OFFICE",
+        "x": 1138,
+        "y": 955,
+        "h": 9.51068,
+        "corridor": false,
+        "points_per_foot": 6.75
+      },
+      {
+        "page": 9,
+        "sheet": "A-102",
+        "number": "116",
+        "name": "MENS RESTROOM",
+        "x": 1245,
+        "y": 970,
+        "h": 9.51068,
+        "corridor": false,
+        "points_per_foot": 6.75
+      },
+      {
+        "page": 9,
+        "sheet": "A-102",
+        "number": "117",
+        "name": "WOMENS RESTROOM",
+        "x": 1368,
+        "y": 976,
+        "h": 9.51068,
+        "corridor": false,
+        "points_per_foot": 6.75
+      },
+      {
+        "page": 9,
+        "sheet": "A-102",
+        "number": "124",
+        "name": "CLASSROOM",
+        "x": 1568,
+        "y": 977,
+        "h": 9.51068,
+        "corridor": false,
+        "points_per_foot": 6.75
+      },
+      {
+        "page": 9,
+        "sheet": "A-102",
+        "number": "104",
+        "name": "VESTIBULE",
+        "x": 937,
+        "y": 1049,
+        "h": 9.51068,
+        "corridor": true,
+        "points_per_foot": 6.75
+      },
+      {
+        "page": 9,
+        "sheet": "A-102",
+        "number": "112",
+        "name": "JAN CL",
+        "x": 1283,
+        "y": 1082,
+        "h": 9.51068,
+        "corridor": false,
+        "points_per_foot": 6.75
+      },
+      {
+        "page": 9,
+        "sheet": "A-102",
+        "number": "103",
+        "name": "CORRIDOR",
+        "x": 1358,
+        "y": 1082,
+        "h": 9.51068,
+        "corridor": true,
+        "points_per_foot": 6.75
+      },
+      {
+        "page": 9,
+        "sheet": "A-102",
+        "number": "101",
+        "name": "CORRIDOR",
+        "x": 1523,
+        "y": 1088,
+        "h": 9.51068,
+        "corridor": true,
+        "points_per_foot": 6.75
+      },
+      {
+        "page": 9,
+        "sheet": "A-102",
+        "number": "25",
+        "name": "ALTERNATE #1",
+        "x": 1141,
+        "y": 1134,
+        "h": 8.00899,
+        "corridor": false,
+        "points_per_foot": 6.75
+      },
+      {
+        "page": 9,
+        "sheet": "A-102",
+        "number": "6303",
+        "name": "PROJECT # T2504-03",
+        "x": 2450,
+        "y": 1161,
+        "h": 17.01912,
+        "corridor": false,
+        "points_per_foot": 6.75
+      },
+      {
+        "page": 9,
+        "sheet": "A-102",
+        "number": "126",
+        "name": "CLASSROOM",
+        "x": 1571,
+        "y": 1188,
+        "h": 9.51068,
+        "corridor": false,
+        "points_per_foot": 6.75
+      },
+      {
+        "page": 9,
+        "sheet": "A-102",
+        "number": "102",
+        "name": "CORRIDOR",
+        "x": 1430,
+        "y": 1200,
+        "h": 9.51068,
+        "corridor": true,
+        "points_per_foot": 6.75
+      },
+      {
+        "page": 9,
+        "sheet": "A-102",
+        "number": "125",
+        "name": "CLASSROOM",
+        "x": 1306,
+        "y": 1236,
+        "h": 9.51068,
+        "corridor": false,
+        "points_per_foot": 6.75
+      },
+      {
+        "page": 9,
+        "sheet": "A-102",
+        "number": "25",
+        "name": "ALTERNATE #1",
+        "x": 1145,
+        "y": 1302,
+        "h": 8.00899,
+        "corridor": false,
+        "points_per_foot": 6.75
+      },
+      {
+        "page": 9,
+        "sheet": "A-102",
+        "number": "127",
+        "name": "CLASSROOM",
+        "x": 1568,
+        "y": 1361,
+        "h": 9.51068,
+        "corridor": false,
+        "points_per_foot": 6.75
+      },
+      {
+        "page": 13,
+        "sheet": "A-401",
+        "number": "113",
+        "name": "LOCKER ROOM",
+        "x": 1212,
+        "y": 371,
+        "h": 9.51068,
+        "corridor": false,
+        "points_per_foot": 18
+      },
+      {
+        "page": 13,
+        "sheet": "A-401",
+        "number": "22",
+        "name": "CLASSROOM",
+        "x": 536,
+        "y": 386,
+        "h": 9.51068,
+        "corridor": false,
+        "points_per_foot": 18
+      },
+      {
+        "page": 13,
+        "sheet": "A-401",
+        "number": "11",
+        "name": "STORAGE",
+        "x": 351,
+        "y": 809,
+        "h": 9.51068,
+        "corridor": false,
+        "points_per_foot": 18
+      },
+      {
+        "page": 13,
+        "sheet": "A-401",
+        "number": "12",
+        "name": "STORAGE",
+        "x": 586,
+        "y": 809,
+        "h": 9.51068,
+        "corridor": false,
+        "points_per_foot": 18
+      },
+      {
+        "page": 13,
+        "sheet": "A-401",
+        "number": "115",
+        "name": "WOMEN'S SHOWER",
+        "x": 1568,
+        "y": 948,
+        "h": 9.51068,
+        "corridor": false,
+        "points_per_foot": 18
+      },
+      {
+        "page": 13,
+        "sheet": "A-401",
+        "number": "114",
+        "name": "MEN'S SHOWER",
+        "x": 1124,
+        "y": 1009,
+        "h": 9.51068,
+        "corridor": false,
+        "points_per_foot": 18
+      },
+      {
+        "page": 13,
+        "sheet": "A-401",
+        "number": "13",
+        "name": "STORAGE",
+        "x": 346,
+        "y": 1032,
+        "h": 9.51068,
+        "corridor": false,
+        "points_per_foot": 18
+      },
+      {
+        "page": 13,
+        "sheet": "A-401",
+        "number": "14",
+        "name": "RR",
+        "x": 436,
+        "y": 1032,
+        "h": 9.51068,
+        "corridor": false,
+        "points_per_foot": 18
+      },
+      {
+        "page": 13,
+        "sheet": "A-401",
+        "number": "P1",
+        "name": "CHANGING AREA",
+        "x": 1369,
+        "y": 1026,
+        "h": 9.51068,
+        "corridor": false,
+        "points_per_foot": 18
+      },
+      {
+        "page": 13,
+        "sheet": "A-401",
+        "number": "P1",
+        "name": "CHANGING AREA",
+        "x": 1470,
+        "y": 1026,
+        "h": 9.51068,
+        "corridor": false,
+        "points_per_foot": 18
+      },
+      {
+        "page": 13,
+        "sheet": "A-401",
+        "number": "15",
+        "name": "WOMENS RR",
+        "x": 614,
+        "y": 1161,
+        "h": 9.51068,
+        "corridor": false,
+        "points_per_foot": 18
+      },
+      {
+        "page": 13,
+        "sheet": "A-401",
+        "number": "6303",
+        "name": "PROJECT # T2504-03",
+        "x": 2450,
+        "y": 1161,
+        "h": 17.01912,
+        "corridor": false,
+        "points_per_foot": 18
+      },
+      {
+        "page": 13,
+        "sheet": "A-401",
+        "number": "16",
+        "name": "JAN. CLO.",
+        "x": 735,
+        "y": 1229,
+        "h": 9.51068,
+        "corridor": false,
+        "points_per_foot": 18
+      },
+      {
+        "page": 13,
+        "sheet": "A-401",
+        "number": "117",
+        "name": "WOMENS RESTROOM",
+        "x": 1479,
+        "y": 1320,
+        "h": 9.51068,
+        "corridor": false,
+        "points_per_foot": 18
+      },
+      {
+        "page": 13,
+        "sheet": "A-401",
+        "number": "17",
+        "name": "MENS RR",
+        "x": 656,
+        "y": 1360,
+        "h": 9.51068,
+        "corridor": false,
+        "points_per_foot": 18
+      },
+      {
+        "page": 13,
+        "sheet": "A-401",
+        "number": "116",
+        "name": "MENS RESTROOM",
+        "x": 1162,
+        "y": 1373,
+        "h": 9.51068,
+        "corridor": false,
+        "points_per_foot": 18
+      },
+      {
+        "page": 13,
+        "sheet": "A-401",
+        "number": "112",
+        "name": "JAN CL",
+        "x": 1354,
+        "y": 1462,
+        "h": 9.51068,
+        "corridor": false,
+        "points_per_foot": 18
+      }
+    ],
+    "tags": [
+      {
+        "mark": "1",
+        "page": 9,
+        "sheet": "A-102",
+        "x": 1836,
+        "y": 1446,
+        "h": 14.01575,
+        "door_pages": [
+          18
+        ],
+        "room": "127",
+        "room_name": "CLASSROOM",
+        "room_by": "nearest_label",
+        "unsure": true,
+        "points_per_foot": 6.75,
+        "also_on": [
+          "A-401"
+        ]
+      },
+      {
+        "mark": "113",
+        "page": 9,
+        "sheet": "A-102",
+        "x": 1433,
+        "y": 188,
+        "h": 9.51068,
+        "door_pages": [
+          18
+        ],
+        "room": "100",
+        "room_name": "CORRIDOR",
+        "room_by": "nearest_label",
+        "unsure": true,
+        "points_per_foot": 13.5
+      },
+      {
+        "mark": "104",
+        "page": 9,
+        "sheet": "A-102",
+        "x": 1353,
+        "y": 726,
+        "h": 9.51068,
+        "door_pages": [
+          18
+        ],
+        "room": "01",
+        "room_name": "76 LOCKERS",
+        "room_by": "nearest_label",
+        "unsure": true,
+        "points_per_foot": 6.75,
+        "also_on": [
+          "A-401"
+        ]
+      },
+      {
+        "mark": "105",
+        "page": 9,
+        "sheet": "A-102",
+        "x": 1315,
+        "y": 726,
+        "h": 9.51068,
+        "door_pages": [
+          18
+        ],
+        "room": "01",
+        "room_name": "76 LOCKERS",
+        "room_by": "nearest_label",
+        "unsure": true,
+        "points_per_foot": 6.75,
+        "also_on": [
+          "A-401"
+        ]
+      },
+      {
+        "mark": "100",
+        "page": 9,
+        "sheet": "A-102",
+        "x": 1668,
+        "y": 1078,
+        "h": 9.51068,
+        "door_pages": [
+          18
+        ],
+        "room": "124",
+        "room_name": "CLASSROOM",
+        "room_by": "nearest_label",
+        "unsure": true,
+        "points_per_foot": 6.75
+      },
+      {
+        "mark": "101",
+        "page": 9,
+        "sheet": "A-102",
+        "x": 1440,
+        "y": 1119,
+        "h": 9.51068,
+        "door_pages": [
+          18
+        ],
+        "room": "102",
+        "room_name": "CORRIDOR",
+        "room_by": "nearest_label",
+        "unsure": true,
+        "points_per_foot": 6.75
+      },
+      {
+        "mark": "106",
+        "page": 9,
+        "sheet": "A-102",
+        "x": 1387,
+        "y": 527,
+        "h": 9.51068,
+        "door_pages": [
+          18
+        ],
+        "room": "120",
+        "room_name": "STORAGE",
+        "room_by": "nearest_label",
+        "unsure": true,
+        "points_per_foot": 18
+      },
+      {
+        "mark": "103",
+        "page": 9,
+        "sheet": "A-102",
+        "x": 1251,
+        "y": 1059,
+        "h": 9.51068,
+        "door_pages": [
+          18
+        ],
+        "room": "112",
+        "room_name": "JAN CL",
+        "room_by": "nearest_label",
+        "unsure": true,
+        "points_per_foot": 6.75,
+        "also_on": [
+          "A-401"
+        ]
+      },
+      {
+        "mark": "102",
+        "page": 9,
+        "sheet": "A-102",
+        "x": 1359,
+        "y": 1059,
+        "h": 9.51068,
+        "door_pages": [
+          18
+        ],
+        "room": "103",
+        "room_name": "CORRIDOR",
+        "room_by": "nearest_label",
+        "unsure": true,
+        "points_per_foot": 6.75,
+        "also_on": [
+          "A-401"
+        ]
+      },
+      {
+        "mark": "107",
+        "page": 9,
+        "sheet": "A-102",
+        "x": 1411,
+        "y": 699,
+        "h": 9.51068,
+        "door_pages": [
+          18
+        ],
+        "room": "113",
+        "room_name": "LOCKER ROOM",
+        "room_by": "nearest_label",
+        "unsure": true,
+        "points_per_foot": 6.75,
+        "also_on": [
+          "A-401"
+        ]
+      },
+      {
+        "mark": "108",
+        "page": 9,
+        "sheet": "A-102",
+        "x": 1200,
+        "y": 1083,
+        "h": 9.51068,
+        "door_pages": [
+          18
+        ],
+        "room": "25",
+        "room_name": "ALTERNATE #1",
+        "room_by": "nearest_label",
+        "unsure": true,
+        "points_per_foot": 6.75
+      },
+      {
+        "mark": "111",
+        "page": 9,
+        "sheet": "A-102",
+        "x": 1066,
+        "y": 1092,
+        "h": 9.51068,
+        "door_pages": [
+          18
+        ],
+        "room": "25",
+        "room_name": "ALTERNATE #1",
+        "room_by": "nearest_label",
+        "unsure": true,
+        "points_per_foot": 6.75
+      },
+      {
+        "mark": "110",
+        "page": 9,
+        "sheet": "A-102",
+        "x": 981,
+        "y": 1092,
+        "h": 9.51068,
+        "door_pages": [
+          18
+        ],
+        "room": "104",
+        "room_name": "VESTIBULE",
+        "room_by": "nearest_label",
+        "unsure": true,
+        "points_per_foot": 6.75
+      },
+      {
+        "mark": "112",
+        "page": 9,
+        "sheet": "A-102",
+        "x": 1432,
+        "y": 1430,
+        "h": 9.51068,
+        "door_pages": [
+          18
+        ],
+        "room": "127",
+        "room_name": "CLASSROOM",
+        "room_by": "nearest_label",
+        "unsure": true,
+        "points_per_foot": 6.75
+      },
+      {
+        "mark": "114",
+        "page": 9,
+        "sheet": "A-102",
+        "x": 1019,
+        "y": 759,
+        "h": 9.51068,
+        "door_pages": [
+          18
+        ],
+        "room": "109",
+        "room_name": "STORAGE",
+        "room_by": "nearest_label",
+        "unsure": true,
+        "points_per_foot": 6.75
+      },
+      {
+        "mark": "115",
+        "page": 9,
+        "sheet": "A-102",
+        "x": 640,
+        "y": 719,
+        "h": 9.51068,
+        "door_pages": [
+          18
+        ],
+        "room": null,
+        "room_name": null,
+        "room_by": null,
+        "points_per_foot": 6.75
+      },
+      {
+        "mark": "116",
+        "page": 9,
+        "sheet": "A-102",
+        "x": 443,
+        "y": 1271,
+        "h": 9.51068,
+        "door_pages": [
+          18
+        ],
+        "room": null,
+        "room_name": null,
+        "room_by": null,
+        "points_per_foot": 6.75
+      },
+      {
+        "mark": "120",
+        "page": 9,
+        "sheet": "A-102",
+        "x": 1325,
+        "y": 1038,
+        "h": 9.51068,
+        "door_pages": [
+          18
+        ],
+        "room": "103",
+        "room_name": "CORRIDOR",
+        "room_by": "nearest_label",
+        "unsure": true,
+        "points_per_foot": 6.75,
+        "also_on": [
+          "A-401"
+        ]
+      },
+      {
+        "mark": "109",
+        "page": 9,
+        "sheet": "A-102",
+        "x": 490,
+        "y": 282,
+        "h": 9.51068,
+        "door_pages": [
+          18
+        ],
+        "room": "129",
+        "room_name": "MECHANICAL ROOM",
+        "room_by": "nearest_label",
+        "unsure": true,
+        "points_per_foot": 6.75
+      }
+    ],
+    "unmatched_tags": [
+      {
+        "tag": "3",
+        "page": 9,
+        "sheet": "A-102",
+        "x": 1845,
+        "y": 1113
+      },
+      {
+        "tag": "2",
+        "page": 9,
+        "sheet": "A-102",
+        "x": 1836,
+        "y": 1281
+      },
+      {
+        "tag": "4",
+        "page": 9,
+        "sheet": "A-102",
+        "x": 1845,
+        "y": 1055
+      },
+      {
+        "tag": "5",
+        "page": 9,
+        "sheet": "A-102",
+        "x": 1836,
+        "y": 888
+      },
+      {
+        "tag": "6",
+        "page": 9,
+        "sheet": "A-102",
+        "x": 1836,
+        "y": 720
+      },
+      {
+        "tag": "7",
+        "page": 9,
+        "sheet": "A-102",
+        "x": 1836,
+        "y": 553
+      },
+      {
+        "tag": "8",
+        "page": 9,
+        "sheet": "A-102",
+        "x": 1836,
+        "y": 386
+      },
+      {
+        "tag": "9",
+        "page": 9,
+        "sheet": "A-102",
+        "x": 1836,
+        "y": 214
+      },
+      {
+        "tag": "3",
+        "page": 9,
+        "sheet": "A-102",
+        "x": 700,
+        "y": 464
+      },
+      {
+        "tag": "3",
+        "page": 9,
+        "sheet": "A-102",
+        "x": 783,
+        "y": 283
+      },
+      {
+        "tag": "4",
+        "page": 9,
+        "sheet": "A-102",
+        "x": 782,
+        "y": 166
+      },
+      {
+        "tag": "4",
+        "page": 13,
+        "sheet": "A-401",
+        "x": 916,
+        "y": 1522
+      },
+      {
+        "tag": "5",
+        "page": 13,
+        "sheet": "A-401",
+        "x": 892,
+        "y": 1076
+      },
+      {
+        "tag": "6",
+        "page": 13,
+        "sheet": "A-401",
+        "x": 892,
+        "y": 630
+      },
+      {
+        "tag": "7",
+        "page": 13,
+        "sheet": "A-401",
+        "x": 892,
+        "y": 184
+      },
+      {
+        "tag": "4",
+        "page": 13,
+        "sheet": "A-401",
+        "x": 1796,
+        "y": 1522
+      },
+      {
+        "tag": "5",
+        "page": 13,
+        "sheet": "A-401",
+        "x": 1772,
+        "y": 1076
+      },
+      {
+        "tag": "6",
+        "page": 13,
+        "sheet": "A-401",
+        "x": 1772,
+        "y": 630
+      },
+      {
+        "tag": "7",
+        "page": 13,
+        "sheet": "A-401",
+        "x": 1772,
+        "y": 184
+      },
+      {
+        "tag": "118",
+        "page": 13,
+        "sheet": "A-401",
+        "x": 1115,
+        "y": 1059
+      },
+      {
+        "tag": "119",
+        "page": 13,
+        "sheet": "A-401",
+        "x": 1568,
+        "y": 1059
+      }
+    ],
+    "marks_not_on_plan": [],
+    "counts": {
+      "plan_sheets": 2,
+      "rooms": 54,
+      "corridors": 5,
+      "tags": 19,
+      "unmatched_tags": 21,
+      "schedule_marks": 19,
+      "marks_not_on_plan": 0
+    }
+  },
+  "truth": {
+    "tier": "unread",
+    "readers": {
+      "a": {
+        "doors": 0,
+        "sets": 0,
+        "items": 0,
+        "name": "production text layer (weyland-subx-worker/src/lib/text-layer-read.js)"
+      },
+      "b": {
+        "doors": 0,
+        "sets": 0,
+        "items": 0,
+        "name": "geometry first (tools/accuracy/truth/reader_b.mjs)",
+        "tables": 0
+      }
+    },
+    "agreement": {
+      "doors": {
+        "rows": 0,
+        "agreed": 0,
+        "disputed": 0,
+        "only_a": 0,
+        "only_b": 0,
+        "fields": {},
+        "agreement_rate": null
+      },
+      "items": {
+        "rows": 0,
+        "agreed": 0,
+        "disputed": 0,
+        "only_a": 0,
+        "only_b": 0,
+        "fields": {},
+        "agreement_rate": null
+      },
+      "sets": {
+        "sets": 0,
+        "agreed": 0
+      }
+    },
+    "marks_on_plan": {
+      "applicable": false,
+      "reason": "no door schedule rows"
+    }
+  }
+}

@@ -1,0 +1,196 @@
+{
+  "project": "_T2331-01 Final Bid Plans.pdf — harvest-mark diagnostic",
+  "source": "subx",
+  "doors": [
+    {
+      "mark": "101",
+      "location": null,
+      "type": null,
+      "material": null,
+      "width_in": 36,
+      "height_in": 84,
+      "size_known": false,
+      "leaves": 1,
+      "rating": null,
+      "frame": null,
+      "panic": false,
+      "set": null,
+      "source_page": 16,
+      "plan": {
+        "sheet": "A-101",
+        "page": 9,
+        "x": 43,
+        "z": 15.78,
+        "room": null,
+        "room_name": null,
+        "room_by": null,
+        "unsure": false,
+        "also_on": [],
+        "room_x": null,
+        "room_z": null,
+        "building": 0
+      }
+    },
+    {
+      "mark": "102",
+      "location": null,
+      "type": null,
+      "material": null,
+      "width_in": 36,
+      "height_in": 84,
+      "size_known": false,
+      "leaves": 1,
+      "rating": null,
+      "frame": null,
+      "panic": false,
+      "set": null,
+      "source_page": 16,
+      "plan": {
+        "sheet": "A-101",
+        "page": 9,
+        "x": 57.78,
+        "z": 15.83,
+        "room": null,
+        "room_name": null,
+        "room_by": null,
+        "unsure": false,
+        "also_on": [],
+        "room_x": null,
+        "room_z": null,
+        "building": 0
+      }
+    },
+    {
+      "mark": "103",
+      "location": null,
+      "type": null,
+      "material": null,
+      "width_in": 36,
+      "height_in": 84,
+      "size_known": false,
+      "leaves": 1,
+      "rating": null,
+      "frame": null,
+      "panic": false,
+      "set": null,
+      "source_page": 16,
+      "plan": {
+        "sheet": "A-101",
+        "page": 9,
+        "x": 77.44,
+        "z": 15.83,
+        "room": "L15",
+        "room_name": "C OF COLUMN TO C OF COLUMN",
+        "room_by": "nearest_label",
+        "unsure": true,
+        "also_on": [],
+        "room_x": 82.39,
+        "room_z": 23.94,
+        "building": 0
+      }
+    },
+    {
+      "mark": "104",
+      "location": null,
+      "type": null,
+      "material": null,
+      "width_in": 36,
+      "height_in": 84,
+      "size_known": false,
+      "leaves": 1,
+      "rating": null,
+      "frame": null,
+      "panic": false,
+      "set": null,
+      "source_page": 16,
+      "plan": {
+        "sheet": "A-101",
+        "page": 9,
+        "x": 96.11,
+        "z": 15.83,
+        "room": null,
+        "room_name": null,
+        "room_by": null,
+        "unsure": false,
+        "also_on": [],
+        "room_x": null,
+        "room_z": null,
+        "building": 0
+      }
+    }
+  ],
+  "sets": {},
+  "notes": [
+    "Unchanged S1 reader supplied harvest schedule-row regex marks, not production doors or audited truth. Tag-shaped text can be room/grid/detail numbers. Unmatched tags are style candidates, not verified doors.",
+    "4 doors have no size read from the schedule; drawn 3'-0\" x 7'-0\"."
+  ],
+  "layout": {
+    "source": "plan",
+    "buildings": [
+      {
+        "sheet": "A-101",
+        "page": 9,
+        "title": "ARCHITECTURAL FLOOR PLAN",
+        "scale": "1/4\"=1'-0\"",
+        "to_scale": true,
+        "origin_x": 0,
+        "width_ft": 123,
+        "depth_ft": 61,
+        "rooms": [
+          {
+            "number": "A-101",
+            "name": "D3 EXTERIOR ELEVATION KEY PLAN",
+            "corridor": false,
+            "x": 0,
+            "z": 0
+          },
+          {
+            "number": "L15",
+            "name": "C OF COLUMN TO C OF COLUMN",
+            "corridor": false,
+            "x": 82.39,
+            "z": 23.94
+          },
+          {
+            "number": "6322",
+            "name": "PROJECT # T2331-01",
+            "corridor": false,
+            "x": 122.83,
+            "z": 35.83
+          },
+          {
+            "number": "101",
+            "name": "EXIT ACCESS HALLWAY",
+            "corridor": true,
+            "x": 34.39,
+            "z": 39.89
+          },
+          {
+            "number": "B4",
+            "name": "FOUNDATION",
+            "corridor": false,
+            "x": 106.44,
+            "z": 51.61
+          },
+          {
+            "number": "A-101",
+            "name": "A4 ARCHITECTURAL FLOOR PLAN",
+            "corridor": false,
+            "x": 40.11,
+            "z": 60.89
+          }
+        ]
+      }
+    ],
+    "counts": {
+      "doors": 4,
+      "on_plan": 4,
+      "rooms": 6,
+      "corridors": 1,
+      "unmatched_tags": 0
+    },
+    "unmatched_tags": [],
+    "not_on_plan": [],
+    "note": "Laid out from the floor plan A-101 (ARCHITECTURAL FLOOR PLAN) p.9: each door stands where its tag is drawn, in the room the plan gives it, at the sheet's printed scale. Walls and door swings are not read from the plan yet."
+  }
+}

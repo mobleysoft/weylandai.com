@@ -1,0 +1,682 @@
+{
+  "generated_at": "2026-10-09T17:07:49.841Z",
+  "git_head": "a09d207c5905e070ee62e87d28242f1a8680f7c1",
+  "candidate_sha256": "bfc07b3f3b224b6f0533a62bc86adebdfc0eb952e1c231682d5d33a72b4f1ab4",
+  "page_convention": "All report page numbers are one-based PDF ordinals; source candidate indexes are zero-based.",
+  "results": [
+    {
+      "rank": 1,
+      "sha16": "7478006f7fd5b43c",
+      "project": "_R2502-01 Final Bid Plans",
+      "candidate_plan_pages": [
+        18,
+        19,
+        20,
+        21,
+        23,
+        24,
+        25,
+        32,
+        56,
+        57,
+        58
+      ],
+      "schedule_pages": [
+        28,
+        32,
+        45,
+        46
+      ],
+      "production": {
+        "plan_sheets": 4,
+        "rooms": 169,
+        "corridors": 11,
+        "tags": 0,
+        "unmatched_tags": 0,
+        "schedule_marks": 0,
+        "marks_not_on_plan": 0
+      },
+      "diagnostic": {
+        "plan_sheets": 4,
+        "rooms": 169,
+        "corridors": 11,
+        "tags": 154,
+        "unmatched_tags": 45,
+        "schedule_marks": 156,
+        "marks_not_on_plan": 2
+      },
+      "plan_sheets": [
+        {
+          "page": 23,
+          "sheet": "A-105",
+          "title": "DORM FIRST FLOOR PLAN",
+          "rooms": 42,
+          "scales": [
+            "SCALE: 1/8\" = 1'-0\"",
+            "SCALE: 1/8\" = 1'-0\""
+          ],
+          "points_per_foot": [
+            9
+          ]
+        },
+        {
+          "page": 24,
+          "sheet": "A-106",
+          "title": "DORM SECOND FLOOR PLAN",
+          "rooms": 60,
+          "scales": [
+            "SCALE: 1/8\" = 1'-0\""
+          ],
+          "points_per_foot": [
+            9
+          ]
+        },
+        {
+          "page": 25,
+          "sheet": "A-107",
+          "title": "DORM THIRD FLOOR PLAN",
+          "rooms": 65,
+          "scales": [
+            "SCALE: 1/8\" = 1'-0\""
+          ],
+          "points_per_foot": [
+            9
+          ]
+        },
+        {
+          "page": 28,
+          "sheet": "A-112",
+          "title": "ADMIN. RESTROOM PLANS AND DETAILS ALTERNATE #1",
+          "rooms": 2,
+          "scales": [
+            "SCALE: 1/4\" = 1'-0\"",
+            "SCALE: 1/4\" = 1'-0\"",
+            "SCALE: 1/4\" = 1'-0\"",
+            "SCALE: 1/4\" = 1'-0\"",
+            "SCALE: 3\" = 1'-0\"",
+            "SCALE: 1/4\" = 1'-0\"",
+            "SCALE: 1/4\" = 1'-0\"",
+            "SCALE: 1/4\" = 1'-0\"",
+            "SCALE: 1/4\" = 1'-0\"",
+            "SCALE: 1\" = 1'-0\"",
+            "SCALE: 1 1/2\" = 1'-0\"",
+            "SCALE: 1 1/2\" = 1'-0\"",
+            "SCALE: 1 1/2\" = 1'-0\"",
+            "SCALE: 3\" = 1'-0\""
+          ],
+          "points_per_foot": [
+            18,
+            216,
+            72,
+            108
+          ]
+        }
+      ],
+      "model_counts": {
+        "doors": 120,
+        "on_plan": 118,
+        "rooms": 167,
+        "corridors": 11,
+        "unmatched_tags": 45
+      }
+    },
+    {
+      "rank": 2,
+      "sha16": "f97e99f88a931e74",
+      "project": "_R2502-01 REBID Final Bid Plans",
+      "candidate_plan_pages": [
+        18,
+        19,
+        20,
+        21,
+        23,
+        24,
+        25,
+        32,
+        55,
+        56,
+        57
+      ],
+      "schedule_pages": [
+        28,
+        32,
+        44,
+        45
+      ],
+      "production": {
+        "plan_sheets": 0,
+        "rooms": 0,
+        "corridors": 0,
+        "tags": 0,
+        "unmatched_tags": 0,
+        "schedule_marks": 0,
+        "marks_not_on_plan": 0
+      },
+      "diagnostic": {
+        "plan_sheets": 0,
+        "rooms": 0,
+        "corridors": 0,
+        "tags": 0,
+        "unmatched_tags": 0,
+        "schedule_marks": 166,
+        "marks_not_on_plan": 166
+      },
+      "plan_sheets": [],
+      "model_counts": null
+    },
+    {
+      "rank": 3,
+      "sha16": "192a16af8f31ae0c",
+      "project": "_T2507-01 Final Bid Plans",
+      "candidate_plan_pages": [
+        6,
+        7,
+        8,
+        9,
+        11
+      ],
+      "schedule_pages": [
+        10
+      ],
+      "production": {
+        "plan_sheets": 3,
+        "rooms": 151,
+        "corridors": 7,
+        "tags": 0,
+        "unmatched_tags": 0,
+        "schedule_marks": 0,
+        "marks_not_on_plan": 0
+      },
+      "diagnostic": {
+        "plan_sheets": 3,
+        "rooms": 151,
+        "corridors": 7,
+        "tags": 40,
+        "unmatched_tags": 0,
+        "schedule_marks": 41,
+        "marks_not_on_plan": 1
+      },
+      "plan_sheets": [
+        {
+          "page": 7,
+          "sheet": "A-100",
+          "title": "FIRST FLOOR PLANS",
+          "rooms": 63,
+          "scales": [
+            "SCALE: 1 1/2\"= 1'-0\"",
+            "SCALE: 1/8\" = 1'-0\""
+          ],
+          "points_per_foot": [
+            108,
+            9
+          ]
+        },
+        {
+          "page": 8,
+          "sheet": "A-101",
+          "title": "FIRST FLOOR DIMENSION PLAN",
+          "rooms": 44,
+          "scales": [
+            "SCALE: 1/8\" = 1'-0\""
+          ],
+          "points_per_foot": [
+            9
+          ]
+        },
+        {
+          "page": 11,
+          "sheet": "A-104",
+          "title": "PLANS & DETAILS",
+          "rooms": 44,
+          "scales": [
+            "SCALE: 1/4\" = 1'-0\"",
+            "SCALE: 1 1/2\"= 1'-0\"",
+            "SCALE: 3/4\" = 1'-0\"",
+            "SCALE: 1/4\" = 1'-0\"",
+            "SCALE: 1/4\" = 1'-0\"",
+            "SCALE: 1/4\" = 1'-0\"",
+            "SCALE: 3/4\" = 1'-0\""
+          ],
+          "points_per_foot": [
+            18,
+            108,
+            54
+          ]
+        }
+      ],
+      "model_counts": {
+        "doors": 41,
+        "on_plan": 40,
+        "rooms": 63,
+        "corridors": 3,
+        "unmatched_tags": 0
+      }
+    },
+    {
+      "rank": 4,
+      "sha16": "43a1f0db3f7ff345",
+      "project": "_O2604-01 Final Bid Plans",
+      "candidate_plan_pages": [
+        4,
+        5,
+        6
+      ],
+      "schedule_pages": [
+        14
+      ],
+      "production": {
+        "plan_sheets": 1,
+        "rooms": 1,
+        "corridors": 0,
+        "tags": 0,
+        "unmatched_tags": 0,
+        "schedule_marks": 0,
+        "marks_not_on_plan": 0
+      },
+      "diagnostic": {
+        "plan_sheets": 1,
+        "rooms": 1,
+        "corridors": 0,
+        "tags": 6,
+        "unmatched_tags": 1,
+        "schedule_marks": 7,
+        "marks_not_on_plan": 1
+      },
+      "plan_sheets": [
+        {
+          "page": 6,
+          "sheet": "A111",
+          "title": "FLOOR PLANS",
+          "rooms": 1,
+          "scales": [
+            "1/8\" = 1'-0\"",
+            "1/8\" = 1'-0\"",
+            "1/8\" = 1'-0\""
+          ],
+          "points_per_foot": [
+            9
+          ]
+        }
+      ],
+      "model_counts": {
+        "doors": 7,
+        "on_plan": 6,
+        "rooms": 1,
+        "corridors": 0,
+        "unmatched_tags": 1
+      }
+    },
+    {
+      "rank": 5,
+      "sha16": "e3d0cc1bc22fd824",
+      "project": "_T2504-03 - Final Plans",
+      "candidate_plan_pages": [
+        8,
+        9,
+        13
+      ],
+      "schedule_pages": [
+        18
+      ],
+      "production": {
+        "plan_sheets": 2,
+        "rooms": 54,
+        "corridors": 5,
+        "tags": 0,
+        "unmatched_tags": 0,
+        "schedule_marks": 0,
+        "marks_not_on_plan": 0
+      },
+      "diagnostic": {
+        "plan_sheets": 2,
+        "rooms": 54,
+        "corridors": 5,
+        "tags": 19,
+        "unmatched_tags": 21,
+        "schedule_marks": 19,
+        "marks_not_on_plan": 0
+      },
+      "plan_sheets": [
+        {
+          "page": 9,
+          "sheet": "A-102",
+          "title": "NEW CONSTRUCTION PLAN LEGEND",
+          "rooms": 37,
+          "scales": [
+            "SCALE: 3/16\" = 1'-0\"",
+            "SCALE: 3/32\" = 1'-0\"",
+            "SCALE: 1/4\" = 1'-0\"",
+            "NORTH A-102 SCALE: 3/32\" = 1'-0\""
+          ],
+          "points_per_foot": [
+            13.5,
+            6.75,
+            18
+          ]
+        },
+        {
+          "page": 13,
+          "sheet": "A-401",
+          "title": "NEW CONSTRUCTION PLAN LEGEND",
+          "rooms": 17,
+          "scales": [
+            "SCALE: 1/4\" = 1'-0\"",
+            "SCALE: 1/4\" = 1'-0\""
+          ],
+          "points_per_foot": [
+            18
+          ]
+        }
+      ],
+      "model_counts": {
+        "doors": 19,
+        "on_plan": 19,
+        "rooms": 37,
+        "corridors": 5,
+        "unmatched_tags": 21
+      }
+    },
+    {
+      "rank": 6,
+      "sha16": "3fd2388877347d09",
+      "project": "_T2502-01 - Final Plans",
+      "candidate_plan_pages": [
+        4,
+        7
+      ],
+      "schedule_pages": [
+        13
+      ],
+      "production": {
+        "plan_sheets": 2,
+        "rooms": 23,
+        "corridors": 2,
+        "tags": 0,
+        "unmatched_tags": 0,
+        "schedule_marks": 0,
+        "marks_not_on_plan": 0
+      },
+      "diagnostic": {
+        "plan_sheets": 2,
+        "rooms": 23,
+        "corridors": 2,
+        "tags": 3,
+        "unmatched_tags": 2,
+        "schedule_marks": 3,
+        "marks_not_on_plan": 0
+      },
+      "plan_sheets": [
+        {
+          "page": 7,
+          "sheet": "A-101",
+          "title": "FLOOR PLAN",
+          "rooms": 22,
+          "scales": [
+            "1/8\" = 1'-0\""
+          ],
+          "points_per_foot": [
+            9
+          ]
+        },
+        {
+          "page": 10,
+          "sheet": "A-500",
+          "title": "PLAN DETAILS",
+          "rooms": 1,
+          "scales": [
+            "3/8\" = 1'-0\"",
+            "3/8\" = 1'-0\""
+          ],
+          "points_per_foot": [
+            27
+          ]
+        }
+      ],
+      "model_counts": {
+        "doors": 3,
+        "on_plan": 3,
+        "rooms": 22,
+        "corridors": 2,
+        "unmatched_tags": 2
+      }
+    },
+    {
+      "rank": 7,
+      "sha16": "4af80165bc367de8",
+      "project": "_C2419-01 Final Bid Plans",
+      "candidate_plan_pages": [
+        5,
+        6,
+        7
+      ],
+      "schedule_pages": [
+        7
+      ],
+      "production": {
+        "plan_sheets": 3,
+        "rooms": 90,
+        "corridors": 12,
+        "tags": 0,
+        "unmatched_tags": 0,
+        "schedule_marks": 0,
+        "marks_not_on_plan": 0
+      },
+      "diagnostic": {
+        "plan_sheets": 3,
+        "rooms": 90,
+        "corridors": 12,
+        "tags": 2,
+        "unmatched_tags": 0,
+        "schedule_marks": 2,
+        "marks_not_on_plan": 0
+      },
+      "plan_sheets": [
+        {
+          "page": 5,
+          "sheet": "A101",
+          "title": "OVERALL FLOOR PLAN",
+          "rooms": 38,
+          "scales": [
+            "SCALE: 1\" = 20'-0\""
+          ],
+          "points_per_foot": [
+            3.6
+          ]
+        },
+        {
+          "page": 6,
+          "sheet": "A102",
+          "title": "FLOOR PLAN",
+          "rooms": 44,
+          "scales": [
+            "A102 SCALE: 1/8\" = 1'-0\"",
+            "A102 SCALE: 1/8\" = 1'-0\"",
+            "SCALE: 3/32\" = 1'-0\"",
+            "SCALE: 3/32\" = 1'-0\""
+          ],
+          "points_per_foot": [
+            9,
+            6.75
+          ]
+        },
+        {
+          "page": 8,
+          "sheet": "A602",
+          "title": "PLANS AND ELEVATIONS",
+          "rooms": 8,
+          "scales": [
+            "SCALE: 1/2\" = 1'-0\"",
+            "SCALE: 1/2\" = 1'-0\"",
+            "SCALE: 1/2\" = 1'-0\""
+          ],
+          "points_per_foot": [
+            36
+          ]
+        }
+      ],
+      "model_counts": {
+        "doors": 2,
+        "on_plan": 2,
+        "rooms": 44,
+        "corridors": 7,
+        "unmatched_tags": 0
+      }
+    },
+    {
+      "rank": 8,
+      "sha16": "89236ffa156fbaf5",
+      "project": "_T2147-01 - Final Plans",
+      "candidate_plan_pages": [
+        17,
+        22,
+        23,
+        27,
+        46
+      ],
+      "schedule_pages": [
+        42,
+        43
+      ],
+      "production": {
+        "plan_sheets": 2,
+        "rooms": 17,
+        "corridors": 0,
+        "tags": 0,
+        "unmatched_tags": 0,
+        "schedule_marks": 16,
+        "marks_not_on_plan": 16
+      },
+      "diagnostic": {
+        "plan_sheets": 2,
+        "rooms": 17,
+        "corridors": 0,
+        "tags": 13,
+        "unmatched_tags": 0,
+        "schedule_marks": 26,
+        "marks_not_on_plan": 13
+      },
+      "plan_sheets": [
+        {
+          "page": 27,
+          "sheet": "A113",
+          "title": "MAIN LEVEL FLOOR PLAN - ALT. 1",
+          "rooms": 14,
+          "scales": [
+            "3/16\" = 1'-0\"",
+            "0 SCALE: 3/16\" = 1'-0\""
+          ],
+          "points_per_foot": [
+            13.5
+          ]
+        },
+        {
+          "page": 39,
+          "sheet": "A501",
+          "title": "PLAN DETAILS",
+          "rooms": 3,
+          "scales": [
+            "1 1/2\" = 1'-0\"",
+            "1 1/2\" = 1'-0\"",
+            "1 1/2\" = 1'-0\"",
+            "1 1/2\" = 1'-0\"",
+            "SCALE: 1 1/2\" = 1'-0\""
+          ],
+          "points_per_foot": [
+            108
+          ]
+        }
+      ],
+      "model_counts": {
+        "doors": 26,
+        "on_plan": 13,
+        "rooms": 14,
+        "corridors": 0,
+        "unmatched_tags": 0
+      }
+    },
+    {
+      "rank": 9,
+      "sha16": "977cec6301f40433",
+      "project": "_T2423-01 - Final Plans",
+      "candidate_plan_pages": [
+        3,
+        4,
+        9
+      ],
+      "schedule_pages": [
+        10
+      ],
+      "production": {
+        "plan_sheets": 0,
+        "rooms": 0,
+        "corridors": 0,
+        "tags": 0,
+        "unmatched_tags": 0,
+        "schedule_marks": 0,
+        "marks_not_on_plan": 0
+      },
+      "diagnostic": {
+        "plan_sheets": 0,
+        "rooms": 0,
+        "corridors": 0,
+        "tags": 0,
+        "unmatched_tags": 0,
+        "schedule_marks": 2,
+        "marks_not_on_plan": 2
+      },
+      "plan_sheets": [],
+      "model_counts": null
+    },
+    {
+      "rank": 10,
+      "sha16": "2b7024ad75f57ddf",
+      "project": "_T2331-01 Final Bid Plans",
+      "candidate_plan_pages": [
+        4,
+        9
+      ],
+      "schedule_pages": [
+        16
+      ],
+      "production": {
+        "plan_sheets": 1,
+        "rooms": 6,
+        "corridors": 1,
+        "tags": 0,
+        "unmatched_tags": 0,
+        "schedule_marks": 0,
+        "marks_not_on_plan": 0
+      },
+      "diagnostic": {
+        "plan_sheets": 1,
+        "rooms": 6,
+        "corridors": 1,
+        "tags": 4,
+        "unmatched_tags": 0,
+        "schedule_marks": 4,
+        "marks_not_on_plan": 0
+      },
+      "plan_sheets": [
+        {
+          "page": 9,
+          "sheet": "A-101",
+          "title": "ARCHITECTURAL FLOOR PLAN",
+          "rooms": 6,
+          "scales": [
+            "1/4\"=1'-0\""
+          ],
+          "points_per_foot": [
+            18
+          ]
+        }
+      ],
+      "model_counts": {
+        "doors": 4,
+        "on_plan": 4,
+        "rooms": 6,
+        "corridors": 1,
+        "unmatched_tags": 0
+      }
+    }
+  ]
+}

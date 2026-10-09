@@ -1,0 +1,627 @@
+{
+  "sha16": "43a1f0db3f7ff345",
+  "sha256": "43a1f0db3f7ff3453f4ee2f02f83591820eb562d31175a97c62065f2f9421468",
+  "rank": 4,
+  "source_url": "https://oa.mo.gov/sites/default/files/bid-opportunities/_O2604-01%20Final%20Bid%20Plans.pdf",
+  "page_count": 25,
+  "candidate_plan_pages": [
+    4,
+    5,
+    6
+  ],
+  "candidate_schedule_pages": [
+    14
+  ],
+  "production_schedule_pages": [
+    {
+      "page": 2,
+      "rows": 0,
+      "error": null
+    },
+    {
+      "page": 15,
+      "rows": 0,
+      "error": null
+    },
+    {
+      "page": 17,
+      "rows": 0,
+      "error": null
+    }
+  ],
+  "production_doors": [],
+  "production_plan": {
+    "sheets": [
+      {
+        "page": 1,
+        "sheet": "G001",
+        "title": "FACILITY NUMBER: 351113001",
+        "plan": false
+      },
+      {
+        "page": 2,
+        "sheet": "G002",
+        "title": "SHEET INDEX AND PROJECT SYMBOLS",
+        "plan": false
+      },
+      {
+        "page": 3,
+        "sheet": "G004",
+        "title": "SITE & BUILDING ACCESS PLANS",
+        "plan": false
+      },
+      {
+        "page": 4,
+        "sheet": "G005",
+        "title": "AREA OF WORK PLAN",
+        "plan": false
+      },
+      {
+        "page": 5,
+        "sheet": "AD111",
+        "title": "FLOOR AND CEILING PLANS",
+        "plan": false
+      },
+      {
+        "page": 6,
+        "sheet": "A111",
+        "title": "FLOOR PLANS",
+        "plan": true
+      },
+      {
+        "page": 7,
+        "sheet": "A121",
+        "title": "TYPICAL CONDITIONS",
+        "plan": false
+      },
+      {
+        "page": 8,
+        "sheet": "A131",
+        "title": "CEILING PLANS",
+        "plan": false
+      },
+      {
+        "page": 9,
+        "sheet": "A151",
+        "title": "FINISH PLANS",
+        "plan": false
+      },
+      {
+        "page": 10,
+        "sheet": "A211",
+        "title": "INTERIOR ELEVATIONS",
+        "plan": false
+      },
+      {
+        "page": 11,
+        "sheet": "A212",
+        "title": "INTERIOR ELEVATIONS",
+        "plan": false
+      },
+      {
+        "page": 12,
+        "sheet": "A213",
+        "title": "INTERIOR ELEVATIONS",
+        "plan": false
+      },
+      {
+        "page": 13,
+        "sheet": "A531",
+        "title": "CEILING DETAILS",
+        "plan": false
+      },
+      {
+        "page": 14,
+        "sheet": "A601",
+        "title": "DETAILS AND DOOR TYPES",
+        "plan": false
+      },
+      {
+        "page": 15,
+        "sheet": "MEP100",
+        "title": "MEP COVERSHEET",
+        "plan": false
+      },
+      {
+        "page": 16,
+        "sheet": "MEP200",
+        "title": "MEP SPECIFICATIONS",
+        "plan": false
+      },
+      {
+        "page": 17,
+        "sheet": "MEP201",
+        "title": "MEP SPECIFICATIONS",
+        "plan": false
+      },
+      {
+        "page": 18,
+        "sheet": "M100",
+        "title": "MECHANICAL FLOOR PLANS",
+        "plan": false
+      },
+      {
+        "page": 19,
+        "sheet": "E100",
+        "title": "ELECTRICAL FLOOR PLANS",
+        "plan": false
+      },
+      {
+        "page": 20,
+        "sheet": "E200",
+        "title": "TYPICAL CONDUIT ROUTING DETAIL",
+        "plan": false
+      },
+      {
+        "page": 21,
+        "sheet": "E201",
+        "title": "GENERAL NOTES AND SCHEDULES",
+        "plan": false
+      },
+      {
+        "page": 22,
+        "sheet": "E202",
+        "title": "LIGHTING PLANS",
+        "plan": false
+      },
+      {
+        "page": 23,
+        "sheet": "E203",
+        "title": "LIGHTING PLANS - ADD ALT #2",
+        "plan": false
+      },
+      {
+        "page": 24,
+        "sheet": "E204",
+        "title": "LIGHTING PLANS",
+        "plan": false
+      },
+      {
+        "page": 25,
+        "sheet": "E205",
+        "title": "LIGHTING DETAILS",
+        "plan": false
+      }
+    ],
+    "plan_sheets": [
+      {
+        "page": 6,
+        "sheet": "A111",
+        "title": "FLOOR PLANS",
+        "rooms": 1,
+        "scales": [
+          "1/8\" = 1'-0\"",
+          "1/8\" = 1'-0\"",
+          "1/8\" = 1'-0\""
+        ],
+        "points_per_foot": [
+          9
+        ]
+      }
+    ],
+    "rooms": [
+      {
+        "page": 6,
+        "sheet": "A111",
+        "number": "1",
+        "name": "SOUTH MEZZANINE",
+        "x": 599,
+        "y": 777,
+        "h": 9.599516160192,
+        "corridor": false,
+        "points_per_foot": 9
+      }
+    ],
+    "tags": [],
+    "unmatched_tags": [],
+    "marks_not_on_plan": [],
+    "counts": {
+      "plan_sheets": 1,
+      "rooms": 1,
+      "corridors": 0,
+      "tags": 0,
+      "unmatched_tags": 0,
+      "schedule_marks": 0,
+      "marks_not_on_plan": 0
+    }
+  },
+  "diagnostic_note": "Unchanged S1 reader supplied harvest schedule-row regex marks, not production doors or audited truth. Tag-shaped text can be room/grid/detail numbers. Unmatched tags are style candidates, not verified doors.",
+  "harvest_schedule_rows": [
+    {
+      "page": 14,
+      "marks": [
+        "201",
+        "202",
+        "203",
+        "204",
+        "A601",
+        "301",
+        "302"
+      ],
+      "lines": [
+        "                                                                                                                                                                                                                                                                                                                                                    201           A                  WD.            3' - 6\"                  7' - 6\"                      2\"                WD.                           1   ETR         1,2,3",
+        "                                                                                                                                                                                                                                                                                                                                                    202           A                  WD.            3' - 6\"                  7' - 6\"                      2\"                WD.                           1   ETR         1,2,3                      OR",
+        "                                                                                                                                                                                                                                                                                                                                                    203           A                  WD.            3' - 6\"                  7' - 6\"                      2\"                WD.                           1   ETR         1,2,3",
+        "                                                                                                                                                                                                                                                                                                                                                    204           B                  WD.            3' - 0\"                  7' - 0\"                      2\"                WD.                           3   -                                                      TR",
+        "                                                                                                                                                                                                                                          A601                                                                                                      205           B                  WD.            3' - 0\"                  7' - 0\"                      2\"                WD.                           3   -                                                          TIO",
+        "                                                                                                                                                                                                                                                                                                                                                    301           A                  WD.            3' - 6\"                  7' - 6\"                      2\"                WD.                           2   ETR         2,3",
+        "                                                                                                                                                                                                                                                                                                                                                    302           A                  WD.            3' - 6\"                  7' - 6\"                      2\"                WD.                           2   ETR         2,3"
+      ]
+    }
+  ],
+  "harvest_schedule_marks": [
+    {
+      "mark": "201",
+      "page": 14
+    },
+    {
+      "mark": "202",
+      "page": 14
+    },
+    {
+      "mark": "203",
+      "page": 14
+    },
+    {
+      "mark": "204",
+      "page": 14
+    },
+    {
+      "mark": "A601",
+      "page": 14
+    },
+    {
+      "mark": "301",
+      "page": 14
+    },
+    {
+      "mark": "302",
+      "page": 14
+    }
+  ],
+  "harvest_marks_plan": {
+    "sheets": [
+      {
+        "page": 1,
+        "sheet": "G001",
+        "title": "FACILITY NUMBER: 351113001",
+        "plan": false
+      },
+      {
+        "page": 2,
+        "sheet": "G002",
+        "title": "SHEET INDEX AND PROJECT SYMBOLS",
+        "plan": false
+      },
+      {
+        "page": 3,
+        "sheet": "G004",
+        "title": "SITE & BUILDING ACCESS PLANS",
+        "plan": false
+      },
+      {
+        "page": 4,
+        "sheet": "G005",
+        "title": "AREA OF WORK PLAN",
+        "plan": false
+      },
+      {
+        "page": 5,
+        "sheet": "AD111",
+        "title": "FLOOR AND CEILING PLANS",
+        "plan": false
+      },
+      {
+        "page": 6,
+        "sheet": "A111",
+        "title": "FLOOR PLANS",
+        "plan": true
+      },
+      {
+        "page": 7,
+        "sheet": "A121",
+        "title": "TYPICAL CONDITIONS",
+        "plan": false
+      },
+      {
+        "page": 8,
+        "sheet": "A131",
+        "title": "CEILING PLANS",
+        "plan": false
+      },
+      {
+        "page": 9,
+        "sheet": "A151",
+        "title": "FINISH PLANS",
+        "plan": false
+      },
+      {
+        "page": 10,
+        "sheet": "A211",
+        "title": "INTERIOR ELEVATIONS",
+        "plan": false
+      },
+      {
+        "page": 11,
+        "sheet": "A212",
+        "title": "INTERIOR ELEVATIONS",
+        "plan": false
+      },
+      {
+        "page": 12,
+        "sheet": "A213",
+        "title": "INTERIOR ELEVATIONS",
+        "plan": false
+      },
+      {
+        "page": 13,
+        "sheet": "A531",
+        "title": "CEILING DETAILS",
+        "plan": false
+      },
+      {
+        "page": 14,
+        "sheet": "A601",
+        "title": "DETAILS AND DOOR TYPES",
+        "plan": false
+      },
+      {
+        "page": 15,
+        "sheet": "MEP100",
+        "title": "MEP COVERSHEET",
+        "plan": false
+      },
+      {
+        "page": 16,
+        "sheet": "MEP200",
+        "title": "MEP SPECIFICATIONS",
+        "plan": false
+      },
+      {
+        "page": 17,
+        "sheet": "MEP201",
+        "title": "MEP SPECIFICATIONS",
+        "plan": false
+      },
+      {
+        "page": 18,
+        "sheet": "M100",
+        "title": "MECHANICAL FLOOR PLANS",
+        "plan": false
+      },
+      {
+        "page": 19,
+        "sheet": "E100",
+        "title": "ELECTRICAL FLOOR PLANS",
+        "plan": false
+      },
+      {
+        "page": 20,
+        "sheet": "E200",
+        "title": "TYPICAL CONDUIT ROUTING DETAIL",
+        "plan": false
+      },
+      {
+        "page": 21,
+        "sheet": "E201",
+        "title": "GENERAL NOTES AND SCHEDULES",
+        "plan": false
+      },
+      {
+        "page": 22,
+        "sheet": "E202",
+        "title": "LIGHTING PLANS",
+        "plan": false
+      },
+      {
+        "page": 23,
+        "sheet": "E203",
+        "title": "LIGHTING PLANS - ADD ALT #2",
+        "plan": false
+      },
+      {
+        "page": 24,
+        "sheet": "E204",
+        "title": "LIGHTING PLANS",
+        "plan": false
+      },
+      {
+        "page": 25,
+        "sheet": "E205",
+        "title": "LIGHTING DETAILS",
+        "plan": false
+      }
+    ],
+    "plan_sheets": [
+      {
+        "page": 6,
+        "sheet": "A111",
+        "title": "FLOOR PLANS",
+        "rooms": 1,
+        "scales": [
+          "1/8\" = 1'-0\"",
+          "1/8\" = 1'-0\"",
+          "1/8\" = 1'-0\""
+        ],
+        "points_per_foot": [
+          9
+        ]
+      }
+    ],
+    "rooms": [
+      {
+        "page": 6,
+        "sheet": "A111",
+        "number": "1",
+        "name": "SOUTH MEZZANINE",
+        "x": 599,
+        "y": 777,
+        "h": 9.599516160192,
+        "corridor": false,
+        "points_per_foot": 9
+      }
+    ],
+    "tags": [
+      {
+        "mark": "201",
+        "page": 6,
+        "sheet": "A111",
+        "x": 459,
+        "y": 1163,
+        "h": 9.599516160192,
+        "door_pages": [
+          14
+        ],
+        "room": null,
+        "room_name": null,
+        "room_by": null,
+        "points_per_foot": 9
+      },
+      {
+        "mark": "202",
+        "page": 6,
+        "sheet": "A111",
+        "x": 598,
+        "y": 1163,
+        "h": 9.599516160192,
+        "door_pages": [
+          14
+        ],
+        "room": null,
+        "room_name": null,
+        "room_by": null,
+        "points_per_foot": 9
+      },
+      {
+        "mark": "203",
+        "page": 6,
+        "sheet": "A111",
+        "x": 738,
+        "y": 1163,
+        "h": 9.599516160192,
+        "door_pages": [
+          14
+        ],
+        "room": null,
+        "room_name": null,
+        "room_by": null,
+        "points_per_foot": 9
+      },
+      {
+        "mark": "204",
+        "page": 6,
+        "sheet": "A111",
+        "x": 266,
+        "y": 1188,
+        "h": 9.599516160192,
+        "door_pages": [
+          14
+        ],
+        "room": null,
+        "room_name": null,
+        "room_by": null,
+        "points_per_foot": 9
+      },
+      {
+        "mark": "301",
+        "page": 6,
+        "sheet": "A111",
+        "x": 459,
+        "y": 104,
+        "h": 9.599516160192,
+        "door_pages": [
+          14
+        ],
+        "room": null,
+        "room_name": null,
+        "room_by": null,
+        "points_per_foot": 9
+      },
+      {
+        "mark": "302",
+        "page": 6,
+        "sheet": "A111",
+        "x": 738,
+        "y": 104,
+        "h": 9.599516160192,
+        "door_pages": [
+          14
+        ],
+        "room": null,
+        "room_name": null,
+        "room_by": null,
+        "points_per_foot": 9
+      }
+    ],
+    "unmatched_tags": [
+      {
+        "tag": "205",
+        "page": 6,
+        "sheet": "A111",
+        "x": 931,
+        "y": 1192
+      }
+    ],
+    "marks_not_on_plan": [
+      {
+        "mark": "A601",
+        "page": 14
+      }
+    ],
+    "counts": {
+      "plan_sheets": 1,
+      "rooms": 1,
+      "corridors": 0,
+      "tags": 6,
+      "unmatched_tags": 1,
+      "schedule_marks": 7,
+      "marks_not_on_plan": 1
+    }
+  },
+  "truth": {
+    "tier": "unread",
+    "readers": {
+      "a": {
+        "doors": 0,
+        "sets": 0,
+        "items": 0,
+        "name": "production text layer (weyland-subx-worker/src/lib/text-layer-read.js)"
+      },
+      "b": {
+        "doors": 0,
+        "sets": 0,
+        "items": 0,
+        "name": "geometry first (tools/accuracy/truth/reader_b.mjs)",
+        "tables": 0
+      }
+    },
+    "agreement": {
+      "doors": {
+        "rows": 0,
+        "agreed": 0,
+        "disputed": 0,
+        "only_a": 0,
+        "only_b": 0,
+        "fields": {},
+        "agreement_rate": null
+      },
+      "items": {
+        "rows": 0,
+        "agreed": 0,
+        "disputed": 0,
+        "only_a": 0,
+        "only_b": 0,
+        "fields": {},
+        "agreement_rate": null
+      },
+      "sets": {
+        "sets": 0,
+        "agreed": 0
+      }
+    },
+    "marks_on_plan": {
+      "applicable": false,
+      "reason": "no door schedule rows"
+    }
+  }
+}

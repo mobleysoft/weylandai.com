@@ -1,0 +1,756 @@
+{
+  "sha16": "2b7024ad75f57ddf",
+  "sha256": "2b7024ad75f57ddf04c0a5dd68ea80662f8fafc86390a6ad3c61ec6052c88357",
+  "rank": 10,
+  "source_url": "https://oa.mo.gov/sites/default/files/bid-opportunities/_T2331-01%20Final%20Bid%20Plans.pdf",
+  "page_count": 32,
+  "candidate_plan_pages": [
+    4,
+    9
+  ],
+  "candidate_schedule_pages": [
+    16
+  ],
+  "production_schedule_pages": [
+    {
+      "page": 2,
+      "rows": 0,
+      "error": null
+    },
+    {
+      "page": 4,
+      "rows": 0,
+      "error": null
+    },
+    {
+      "page": 16,
+      "rows": 0,
+      "error": null
+    }
+  ],
+  "production_doors": [],
+  "production_plan": {
+    "sheets": [
+      {
+        "page": 1,
+        "sheet": "G-000",
+        "title": "SITE NUMBER: FACILITY NUMBER:",
+        "plan": false
+      },
+      {
+        "page": 2,
+        "sheet": "G-001",
+        "title": "DRAWING INDEX, GENERAL NOTES, LEGENDS",
+        "plan": false
+      },
+      {
+        "page": 3,
+        "sheet": "G-002",
+        "title": "LIFE SAFETY / CODE PLAN",
+        "plan": false
+      },
+      {
+        "page": 4,
+        "sheet": "AD-101",
+        "title": "DEMOLITION FLOOR PLAN",
+        "plan": false
+      },
+      {
+        "page": 5,
+        "sheet": "AD-102",
+        "title": "DEMOLITION MEZZANINE PLAN",
+        "plan": false
+      },
+      {
+        "page": 6,
+        "sheet": "AD-103",
+        "title": "DEMOLITION CEILING PLAN",
+        "plan": false
+      },
+      {
+        "page": 7,
+        "sheet": "AD-104",
+        "title": "ARCHITECTURAL DEMOLITION",
+        "plan": false
+      },
+      {
+        "page": 8,
+        "sheet": "A-100",
+        "title": "ARCHITECTURAL SITE PLAN",
+        "plan": false
+      },
+      {
+        "page": 9,
+        "sheet": "A-101",
+        "title": "ARCHITECTURAL FLOOR PLAN",
+        "plan": true
+      },
+      {
+        "page": 10,
+        "sheet": "A-102",
+        "title": "ARCHITECTURAL CEILING PLAN",
+        "plan": false
+      },
+      {
+        "page": 11,
+        "sheet": "A-103",
+        "title": "ARCHITECTURAL ROOF PLAN",
+        "plan": false
+      },
+      {
+        "page": 12,
+        "sheet": "A-201",
+        "title": "EXTERIOR ELEVATIONS",
+        "plan": false
+      },
+      {
+        "page": 13,
+        "sheet": "A-301",
+        "title": "ARCHITECTURAL",
+        "plan": false
+      },
+      {
+        "page": 14,
+        "sheet": "A-501",
+        "title": "ARCHITECTURAL BUILDING DETAILS",
+        "plan": false
+      },
+      {
+        "page": 15,
+        "sheet": "A-502",
+        "title": "ARCHITECTURAL BUILDING DETAILS",
+        "plan": false
+      },
+      {
+        "page": 16,
+        "sheet": "A-601",
+        "title": "ROOM SCHEDULE, & PARTITION TYPES",
+        "plan": false
+      },
+      {
+        "page": 17,
+        "sheet": "S-001",
+        "title": "DESIGN INFORMATION",
+        "plan": false
+      },
+      {
+        "page": 18,
+        "sheet": "S-101",
+        "title": "STRUCTURAL FOUNDATION PLAN",
+        "plan": false
+      },
+      {
+        "page": 19,
+        "sheet": "S-201",
+        "title": "STRUCTURAL ELEVATIONS",
+        "plan": false
+      },
+      {
+        "page": 20,
+        "sheet": "M-001",
+        "title": "MECHANICAL GENERAL NOTES",
+        "plan": false
+      },
+      {
+        "page": 21,
+        "sheet": "MD-101",
+        "title": "MECHANICAL DEMOLITION PLAN",
+        "plan": false
+      },
+      {
+        "page": 22,
+        "sheet": "M-101",
+        "title": "MECHANICAL FLOOR PLAN",
+        "plan": false
+      },
+      {
+        "page": 23,
+        "sheet": "M-601",
+        "title": "DETAILS & SCHEDULES",
+        "plan": false
+      },
+      {
+        "page": 24,
+        "sheet": "P-001",
+        "title": "PLUMBING GENERAL NOTES",
+        "plan": false
+      },
+      {
+        "page": 25,
+        "sheet": "PD-101",
+        "title": "PLUMBING DEMOLITION PLAN",
+        "plan": false
+      },
+      {
+        "page": 26,
+        "sheet": "E-001",
+        "title": "ELECTRICAL GENERAL NOTES",
+        "plan": false
+      },
+      {
+        "page": 27,
+        "sheet": "ED-101",
+        "title": "DEMOLITION FLOOR PLAN",
+        "plan": false
+      },
+      {
+        "page": 28,
+        "sheet": "ED-102",
+        "title": "DEMOLITION MEZZANINE PLAN",
+        "plan": false
+      },
+      {
+        "page": 29,
+        "sheet": "ED-103",
+        "title": "DEMOLITION CEILING PLAN",
+        "plan": false
+      },
+      {
+        "page": 30,
+        "sheet": "E-101",
+        "title": "ELECTRICAL FLOOR PLAN",
+        "plan": false
+      },
+      {
+        "page": 31,
+        "sheet": "E-102",
+        "title": "ELECTRICAL CEILING PLAN",
+        "plan": false
+      },
+      {
+        "page": 32,
+        "sheet": "E-601",
+        "title": "DETAILS & SCHEDULES",
+        "plan": false
+      }
+    ],
+    "plan_sheets": [
+      {
+        "page": 9,
+        "sheet": "A-101",
+        "title": "ARCHITECTURAL FLOOR PLAN",
+        "rooms": 6,
+        "scales": [
+          "1/4\"=1'-0\""
+        ],
+        "points_per_foot": [
+          18
+        ]
+      }
+    ],
+    "rooms": [
+      {
+        "page": 9,
+        "sheet": "A-101",
+        "number": "A-101",
+        "name": "D3 EXTERIOR ELEVATION KEY PLAN",
+        "x": 240,
+        "y": 525,
+        "h": 9.499080000000001,
+        "corridor": false,
+        "points_per_foot": 18
+      },
+      {
+        "page": 9,
+        "sheet": "A-101",
+        "number": "L15",
+        "name": "C OF COLUMN TO C OF COLUMN",
+        "x": 1723,
+        "y": 956,
+        "h": 10.120800000000001,
+        "corridor": false,
+        "points_per_foot": 18
+      },
+      {
+        "page": 9,
+        "sheet": "A-101",
+        "number": "6322",
+        "name": "PROJECT # T2331-01",
+        "x": 2451,
+        "y": 1170,
+        "h": 16.61016,
+        "corridor": false,
+        "points_per_foot": 18
+      },
+      {
+        "page": 9,
+        "sheet": "A-101",
+        "number": "101",
+        "name": "EXIT ACCESS HALLWAY",
+        "x": 859,
+        "y": 1243,
+        "h": 22.49064,
+        "corridor": true,
+        "points_per_foot": 18
+      },
+      {
+        "page": 9,
+        "sheet": "A-101",
+        "number": "B4",
+        "name": "FOUNDATION",
+        "x": 2156,
+        "y": 1454,
+        "h": 12.14496,
+        "corridor": false,
+        "points_per_foot": 18
+      },
+      {
+        "page": 9,
+        "sheet": "A-101",
+        "number": "A-101",
+        "name": "A4 ARCHITECTURAL FLOOR PLAN",
+        "x": 962,
+        "y": 1621,
+        "h": 9.488159999999999,
+        "corridor": false,
+        "points_per_foot": 18
+      }
+    ],
+    "tags": [],
+    "unmatched_tags": [],
+    "marks_not_on_plan": [],
+    "counts": {
+      "plan_sheets": 1,
+      "rooms": 6,
+      "corridors": 1,
+      "tags": 0,
+      "unmatched_tags": 0,
+      "schedule_marks": 0,
+      "marks_not_on_plan": 0
+    }
+  },
+  "diagnostic_note": "Unchanged S1 reader supplied harvest schedule-row regex marks, not production doors or audited truth. Tag-shaped text can be room/grid/detail numbers. Unmatched tags are style candidates, not verified doors.",
+  "harvest_schedule_rows": [
+    {
+      "page": 16,
+      "marks": [
+        "101",
+        "102",
+        "103",
+        "104"
+      ],
+      "lines": [
+        "                                                                                                                                                                                                                                                                                                                                                                                                                                            101                     3'-0\"    7'-0\"   HM-1     HMF-1 B8/A-501 A8/A-501      NO RATING          NOTE 1,3",
+        "                                                                                                                                                                                                                                                                                                                                                                                                                                            102                     3'-0\"    7'-0\"   HM-1     HMF-1 B8/A-501 A8/A-501      NO RATING          NOTE 1,3",
+        "                                                                                                                                                                                                                                                                                                                                                                                                                                            103                     3'-0\"    7'-0\"   HM-1     HMF-1 B8/A-501 A8/A-501      NO RATING          NOTE 1,3",
+        "                                                                                                                                                                                                                                                                                                                                                                                                                                            104                     3'-0\"    7'-0\"   HM-1     HMF-1 B8/A-501 A8/A-501      NO RATING          NOTE 1,3"
+      ]
+    }
+  ],
+  "harvest_schedule_marks": [
+    {
+      "mark": "101",
+      "page": 16
+    },
+    {
+      "mark": "102",
+      "page": 16
+    },
+    {
+      "mark": "103",
+      "page": 16
+    },
+    {
+      "mark": "104",
+      "page": 16
+    }
+  ],
+  "harvest_marks_plan": {
+    "sheets": [
+      {
+        "page": 1,
+        "sheet": "G-000",
+        "title": "SITE NUMBER: FACILITY NUMBER:",
+        "plan": false
+      },
+      {
+        "page": 2,
+        "sheet": "G-001",
+        "title": "DRAWING INDEX, GENERAL NOTES, LEGENDS",
+        "plan": false
+      },
+      {
+        "page": 3,
+        "sheet": "G-002",
+        "title": "LIFE SAFETY / CODE PLAN",
+        "plan": false
+      },
+      {
+        "page": 4,
+        "sheet": "AD-101",
+        "title": "DEMOLITION FLOOR PLAN",
+        "plan": false
+      },
+      {
+        "page": 5,
+        "sheet": "AD-102",
+        "title": "DEMOLITION MEZZANINE PLAN",
+        "plan": false
+      },
+      {
+        "page": 6,
+        "sheet": "AD-103",
+        "title": "DEMOLITION CEILING PLAN",
+        "plan": false
+      },
+      {
+        "page": 7,
+        "sheet": "AD-104",
+        "title": "ARCHITECTURAL DEMOLITION",
+        "plan": false
+      },
+      {
+        "page": 8,
+        "sheet": "A-100",
+        "title": "ARCHITECTURAL SITE PLAN",
+        "plan": false
+      },
+      {
+        "page": 9,
+        "sheet": "A-101",
+        "title": "ARCHITECTURAL FLOOR PLAN",
+        "plan": true
+      },
+      {
+        "page": 10,
+        "sheet": "A-102",
+        "title": "ARCHITECTURAL CEILING PLAN",
+        "plan": false
+      },
+      {
+        "page": 11,
+        "sheet": "A-103",
+        "title": "ARCHITECTURAL ROOF PLAN",
+        "plan": false
+      },
+      {
+        "page": 12,
+        "sheet": "A-201",
+        "title": "EXTERIOR ELEVATIONS",
+        "plan": false
+      },
+      {
+        "page": 13,
+        "sheet": "A-301",
+        "title": "ARCHITECTURAL",
+        "plan": false
+      },
+      {
+        "page": 14,
+        "sheet": "A-501",
+        "title": "ARCHITECTURAL BUILDING DETAILS",
+        "plan": false
+      },
+      {
+        "page": 15,
+        "sheet": "A-502",
+        "title": "ARCHITECTURAL BUILDING DETAILS",
+        "plan": false
+      },
+      {
+        "page": 16,
+        "sheet": "A-601",
+        "title": "ROOM SCHEDULE, & PARTITION TYPES",
+        "plan": false
+      },
+      {
+        "page": 17,
+        "sheet": "S-001",
+        "title": "DESIGN INFORMATION",
+        "plan": false
+      },
+      {
+        "page": 18,
+        "sheet": "S-101",
+        "title": "STRUCTURAL FOUNDATION PLAN",
+        "plan": false
+      },
+      {
+        "page": 19,
+        "sheet": "S-201",
+        "title": "STRUCTURAL ELEVATIONS",
+        "plan": false
+      },
+      {
+        "page": 20,
+        "sheet": "M-001",
+        "title": "MECHANICAL GENERAL NOTES",
+        "plan": false
+      },
+      {
+        "page": 21,
+        "sheet": "MD-101",
+        "title": "MECHANICAL DEMOLITION PLAN",
+        "plan": false
+      },
+      {
+        "page": 22,
+        "sheet": "M-101",
+        "title": "MECHANICAL FLOOR PLAN",
+        "plan": false
+      },
+      {
+        "page": 23,
+        "sheet": "M-601",
+        "title": "DETAILS & SCHEDULES",
+        "plan": false
+      },
+      {
+        "page": 24,
+        "sheet": "P-001",
+        "title": "PLUMBING GENERAL NOTES",
+        "plan": false
+      },
+      {
+        "page": 25,
+        "sheet": "PD-101",
+        "title": "PLUMBING DEMOLITION PLAN",
+        "plan": false
+      },
+      {
+        "page": 26,
+        "sheet": "E-001",
+        "title": "ELECTRICAL GENERAL NOTES",
+        "plan": false
+      },
+      {
+        "page": 27,
+        "sheet": "ED-101",
+        "title": "DEMOLITION FLOOR PLAN",
+        "plan": false
+      },
+      {
+        "page": 28,
+        "sheet": "ED-102",
+        "title": "DEMOLITION MEZZANINE PLAN",
+        "plan": false
+      },
+      {
+        "page": 29,
+        "sheet": "ED-103",
+        "title": "DEMOLITION CEILING PLAN",
+        "plan": false
+      },
+      {
+        "page": 30,
+        "sheet": "E-101",
+        "title": "ELECTRICAL FLOOR PLAN",
+        "plan": false
+      },
+      {
+        "page": 31,
+        "sheet": "E-102",
+        "title": "ELECTRICAL CEILING PLAN",
+        "plan": false
+      },
+      {
+        "page": 32,
+        "sheet": "E-601",
+        "title": "DETAILS & SCHEDULES",
+        "plan": false
+      }
+    ],
+    "plan_sheets": [
+      {
+        "page": 9,
+        "sheet": "A-101",
+        "title": "ARCHITECTURAL FLOOR PLAN",
+        "rooms": 6,
+        "scales": [
+          "1/4\"=1'-0\""
+        ],
+        "points_per_foot": [
+          18
+        ]
+      }
+    ],
+    "rooms": [
+      {
+        "page": 9,
+        "sheet": "A-101",
+        "number": "A-101",
+        "name": "D3 EXTERIOR ELEVATION KEY PLAN",
+        "x": 240,
+        "y": 525,
+        "h": 9.499080000000001,
+        "corridor": false,
+        "points_per_foot": 18
+      },
+      {
+        "page": 9,
+        "sheet": "A-101",
+        "number": "L15",
+        "name": "C OF COLUMN TO C OF COLUMN",
+        "x": 1723,
+        "y": 956,
+        "h": 10.120800000000001,
+        "corridor": false,
+        "points_per_foot": 18
+      },
+      {
+        "page": 9,
+        "sheet": "A-101",
+        "number": "6322",
+        "name": "PROJECT # T2331-01",
+        "x": 2451,
+        "y": 1170,
+        "h": 16.61016,
+        "corridor": false,
+        "points_per_foot": 18
+      },
+      {
+        "page": 9,
+        "sheet": "A-101",
+        "number": "101",
+        "name": "EXIT ACCESS HALLWAY",
+        "x": 859,
+        "y": 1243,
+        "h": 22.49064,
+        "corridor": true,
+        "points_per_foot": 18
+      },
+      {
+        "page": 9,
+        "sheet": "A-101",
+        "number": "B4",
+        "name": "FOUNDATION",
+        "x": 2156,
+        "y": 1454,
+        "h": 12.14496,
+        "corridor": false,
+        "points_per_foot": 18
+      },
+      {
+        "page": 9,
+        "sheet": "A-101",
+        "number": "A-101",
+        "name": "A4 ARCHITECTURAL FLOOR PLAN",
+        "x": 962,
+        "y": 1621,
+        "h": 9.488159999999999,
+        "corridor": false,
+        "points_per_foot": 18
+      }
+    ],
+    "tags": [
+      {
+        "mark": "101",
+        "page": 9,
+        "sheet": "A-101",
+        "x": 1014,
+        "y": 809,
+        "h": 11.13288,
+        "door_pages": [
+          16
+        ],
+        "room": null,
+        "room_name": null,
+        "room_by": null,
+        "points_per_foot": 18
+      },
+      {
+        "mark": "102",
+        "page": 9,
+        "sheet": "A-101",
+        "x": 1280,
+        "y": 810,
+        "h": 11.13288,
+        "door_pages": [
+          16
+        ],
+        "room": null,
+        "room_name": null,
+        "room_by": null,
+        "points_per_foot": 18
+      },
+      {
+        "mark": "103",
+        "page": 9,
+        "sheet": "A-101",
+        "x": 1634,
+        "y": 810,
+        "h": 11.13288,
+        "door_pages": [
+          16
+        ],
+        "room": "L15",
+        "room_name": "C OF COLUMN TO C OF COLUMN",
+        "room_by": "nearest_label",
+        "unsure": true,
+        "points_per_foot": 18
+      },
+      {
+        "mark": "104",
+        "page": 9,
+        "sheet": "A-101",
+        "x": 1970,
+        "y": 810,
+        "h": 11.13288,
+        "door_pages": [
+          16
+        ],
+        "room": null,
+        "room_name": null,
+        "room_by": null,
+        "points_per_foot": 18
+      }
+    ],
+    "unmatched_tags": [],
+    "marks_not_on_plan": [],
+    "counts": {
+      "plan_sheets": 1,
+      "rooms": 6,
+      "corridors": 1,
+      "tags": 4,
+      "unmatched_tags": 0,
+      "schedule_marks": 4,
+      "marks_not_on_plan": 0
+    }
+  },
+  "truth": {
+    "tier": "unread",
+    "readers": {
+      "a": {
+        "doors": 0,
+        "sets": 0,
+        "items": 0,
+        "name": "production text layer (weyland-subx-worker/src/lib/text-layer-read.js)"
+      },
+      "b": {
+        "doors": 0,
+        "sets": 0,
+        "items": 0,
+        "name": "geometry first (tools/accuracy/truth/reader_b.mjs)",
+        "tables": 0
+      }
+    },
+    "agreement": {
+      "doors": {
+        "rows": 0,
+        "agreed": 0,
+        "disputed": 0,
+        "only_a": 0,
+        "only_b": 0,
+        "fields": {},
+        "agreement_rate": null
+      },
+      "items": {
+        "rows": 0,
+        "agreed": 0,
+        "disputed": 0,
+        "only_a": 0,
+        "only_b": 0,
+        "fields": {},
+        "agreement_rate": null
+      },
+      "sets": {
+        "sets": 0,
+        "agreed": 0
+      }
+    },
+    "marks_on_plan": {
+      "applicable": false,
+      "reason": "no door schedule rows"
+    }
+  }
+}

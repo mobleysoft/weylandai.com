@@ -1,0 +1,11 @@
+../../../../../g020-harvest/192a16af8f31ae0c.pdf ... unread | class schedule-only | A {"d":0,"i":0} B {"d":0,"i":0} | agree null (0/0) | oracles none | 1s 
+../../../../../g020-harvest/2b7024ad75f57ddf.pdf ... unread | class schedule-only | A {"d":0,"i":0} B {"d":0,"i":0} | agree null (0/0) | oracles none | 1s 
+../../../../../g020-harvest/3fd2388877347d09.pdf ... unread | class complete | A {"d":0,"i":18} B {"d":9,"i":1} | agree 0 (0/28) | oracles none | 1s 
+../../../../../g020-harvest/43a1f0db3f7ff345.pdf ... unread | class schedule-only | A {"d":0,"i":0} B {"d":0,"i":0} | agree null (0/0) | oracles none | 1s 
+../../../../../g020-harvest/4af80165bc367de8.pdf ... unread | class schedule-only | A {"d":0,"i":0} B {"d":0,"i":0} | agree null (0/0) | oracles none | 1s 
+../../../../../g020-harvest/7478006f7fd5b43c.pdf ... unread | class schedule-only | A {"d":0,"i":0} B {"d":0,"i":0} | agree null (0/0) | oracles none | 6s 
+../../../../../g020-harvest/89236ffa156fbaf5.pdf ... oracle-checked | class schedule-only | A {"d":16,"i":0} B {"d":0,"i":0} | agree 0 (0/16) | oracles marks_on_plan 0/16, types_in_legend 4/4, sizes_and_marks 0/16 | 2s 
+../../../../../g020-harvest/977cec6301f40433.pdf ... unread | class schedule-only | A {"d":0,"i":31} B {"d":0,"i":19} | agree 0 (0/50) | oracles none | 2s 
+../../../../../g020-harvest/e3d0cc1bc22fd824.pdf ... unread | class schedule-only | A {"d":0,"i":0} B {"d":0,"i":0} | agree null (0/0) | oracles none | 3s 
+../../../../../g020-harvest/f97e99f88a931e74.pdf ... unread | class schedule-only | A {"d":0,"i":0} B {"d":0,"i":0} | agree null (0/0) | oracles none | 7s 
+truth records: 10 queue lines: 3799 (97 from this run)

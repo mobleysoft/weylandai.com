@@ -1,0 +1,1212 @@
+{
+  "sha16": "3fd2388877347d09",
+  "sha256": "3fd2388877347d09a41fbd92b6757eeb830e8b362ac1b73ef2d0182df8b78636",
+  "rank": 6,
+  "source_url": "https://oa.mo.gov/sites/default/files/bid-opportunities/_T2502-01%20-%20Final%20Plans.pdf",
+  "page_count": 37,
+  "candidate_plan_pages": [
+    4,
+    7
+  ],
+  "candidate_schedule_pages": [
+    13
+  ],
+  "production_schedule_pages": [
+    {
+      "page": 2,
+      "rows": 0,
+      "error": null
+    },
+    {
+      "page": 13,
+      "rows": 0,
+      "error": null
+    },
+    {
+      "page": 16,
+      "rows": 0,
+      "error": null
+    }
+  ],
+  "production_doors": [],
+  "production_plan": {
+    "sheets": [
+      {
+        "page": 1,
+        "sheet": null,
+        "title": null,
+        "plan": false
+      },
+      {
+        "page": 2,
+        "sheet": "A-000",
+        "title": "ARCHITECTURAL GENERAL NOTES",
+        "plan": false
+      },
+      {
+        "page": 3,
+        "sheet": "A-010",
+        "title": "CODE PLAN",
+        "plan": false
+      },
+      {
+        "page": 4,
+        "sheet": "AD100",
+        "title": "DEMO FLOOR PLAN",
+        "plan": false
+      },
+      {
+        "page": 5,
+        "sheet": "AD101",
+        "title": "DEMO REFLECTED CEILING PLAN",
+        "plan": false
+      },
+      {
+        "page": 6,
+        "sheet": "A-100",
+        "title": "DEMO AND CONSTRUCTION PLANS",
+        "plan": false
+      },
+      {
+        "page": 7,
+        "sheet": "A-101",
+        "title": "FLOOR PLAN",
+        "plan": true
+      },
+      {
+        "page": 8,
+        "sheet": "A-102",
+        "title": "ROOF PLAN",
+        "plan": false
+      },
+      {
+        "page": 9,
+        "sheet": "A-120",
+        "title": "REFLECTED CEILING PLAN",
+        "plan": false
+      },
+      {
+        "page": 10,
+        "sheet": "A-500",
+        "title": "PLAN DETAILS",
+        "plan": true
+      },
+      {
+        "page": 11,
+        "sheet": "A-600",
+        "title": "INTERIOR ELEVATIONS",
+        "plan": false
+      },
+      {
+        "page": 12,
+        "sheet": "A-610",
+        "title": "EXTERIOR ELEVATIONS",
+        "plan": false
+      },
+      {
+        "page": 13,
+        "sheet": "A-700",
+        "title": "SCHEDULE & LEGENDS",
+        "plan": false
+      },
+      {
+        "page": 14,
+        "sheet": "A-710",
+        "title": "FINISH FLOOR PLANS, SCHEDULES",
+        "plan": false
+      },
+      {
+        "page": 15,
+        "sheet": "ME000",
+        "title": "MEP SYMBOLS LEGEND",
+        "plan": false
+      },
+      {
+        "page": 16,
+        "sheet": "ME001",
+        "title": "AND ABBREVIATIONS",
+        "plan": false
+      },
+      {
+        "page": 17,
+        "sheet": "MD100",
+        "title": "MECHANICAL DEMO PLAN",
+        "plan": false
+      },
+      {
+        "page": 18,
+        "sheet": "MD110",
+        "title": "MECHANICAL PIPING DEMO PLAN",
+        "plan": false
+      },
+      {
+        "page": 19,
+        "sheet": "M-100",
+        "title": "MECHANICAL NEW WORK PLAN",
+        "plan": false
+      },
+      {
+        "page": 20,
+        "sheet": "M-110",
+        "title": "MECHANICAL ROOF PLAN",
+        "plan": false
+      },
+      {
+        "page": 21,
+        "sheet": "M-120",
+        "title": "MECHANICAL PIPING NEW WORK PLAN",
+        "plan": false
+      },
+      {
+        "page": 22,
+        "sheet": "M-300",
+        "title": "MECHANICAL DIAGRAMS",
+        "plan": false
+      },
+      {
+        "page": 23,
+        "sheet": "M-400",
+        "title": "DUCTWORK CONSTRUCTION DETAIL",
+        "plan": false
+      },
+      {
+        "page": 24,
+        "sheet": "M-410",
+        "title": "MECHANICAL DETAILS",
+        "plan": false
+      },
+      {
+        "page": 25,
+        "sheet": "M-420",
+        "title": "MECHANICAL DETAILS",
+        "plan": false
+      },
+      {
+        "page": 26,
+        "sheet": "M-500",
+        "title": "MECHANICAL SCHEDULES",
+        "plan": false
+      },
+      {
+        "page": 27,
+        "sheet": "P-100",
+        "title": "PLUMBING PLAN",
+        "plan": false
+      },
+      {
+        "page": 28,
+        "sheet": "P-500",
+        "title": "SHOWER INSTALLATION DETAIL",
+        "plan": false
+      },
+      {
+        "page": 29,
+        "sheet": "ED100",
+        "title": "ELECTRICAL DEMO PLAN",
+        "plan": false
+      },
+      {
+        "page": 30,
+        "sheet": "E-100",
+        "title": "LIGHTING NEW WORK PLAN",
+        "plan": false
+      },
+      {
+        "page": 31,
+        "sheet": "E-110",
+        "title": "POWER NEW WORK PLAN",
+        "plan": false
+      },
+      {
+        "page": 32,
+        "sheet": "E-120",
+        "title": "ELECTRICAL ROOF PLAN",
+        "plan": false
+      },
+      {
+        "page": 33,
+        "sheet": "E-300",
+        "title": "ELECTRICAL DIAGRAMS",
+        "plan": false
+      },
+      {
+        "page": 34,
+        "sheet": "E-400",
+        "title": "LIGHTNING GROUND TEST WELL",
+        "plan": false
+      },
+      {
+        "page": 35,
+        "sheet": "E-410",
+        "title": "ELECTRICAL DETAILS",
+        "plan": false
+      },
+      {
+        "page": 36,
+        "sheet": "E-500",
+        "title": "ELECTRICAL SCHEDULES",
+        "plan": false
+      },
+      {
+        "page": 37,
+        "sheet": "E-510",
+        "title": "PANEL SCHEDULES",
+        "plan": false
+      }
+    ],
+    "plan_sheets": [
+      {
+        "page": 7,
+        "sheet": "A-101",
+        "title": "FLOOR PLAN",
+        "rooms": 22,
+        "scales": [
+          "1/8\" = 1'-0\""
+        ],
+        "points_per_foot": [
+          9
+        ]
+      },
+      {
+        "page": 10,
+        "sheet": "A-500",
+        "title": "PLAN DETAILS",
+        "rooms": 1,
+        "scales": [
+          "3/8\" = 1'-0\"",
+          "3/8\" = 1'-0\""
+        ],
+        "points_per_foot": [
+          27
+        ]
+      }
+    ],
+    "rooms": [
+      {
+        "page": 7,
+        "sheet": "A-101",
+        "number": "10",
+        "name": "VAULT",
+        "x": 1583,
+        "y": 347,
+        "h": 9.574676170128,
+        "corridor": false,
+        "points_per_foot": 9
+      },
+      {
+        "page": 7,
+        "sheet": "A-101",
+        "number": "11",
+        "name": "ARMS",
+        "x": 1710,
+        "y": 347,
+        "h": 9.574676170128,
+        "corridor": false,
+        "points_per_foot": 9
+      },
+      {
+        "page": 7,
+        "sheet": "A-101",
+        "number": "09",
+        "name": "STOR",
+        "x": 1172,
+        "y": 350,
+        "h": 9.574676170128,
+        "corridor": false,
+        "points_per_foot": 9
+      },
+      {
+        "page": 7,
+        "sheet": "A-101",
+        "number": "12",
+        "name": "STOR",
+        "x": 1790,
+        "y": 350,
+        "h": 9.574676170128,
+        "corridor": false,
+        "points_per_foot": 9
+      },
+      {
+        "page": 7,
+        "sheet": "A-101",
+        "number": "08",
+        "name": "CLASS ROOM",
+        "x": 560,
+        "y": 369,
+        "h": 9.574676170128,
+        "corridor": false,
+        "points_per_foot": 9
+      },
+      {
+        "page": 7,
+        "sheet": "A-101",
+        "number": "13",
+        "name": "STOR",
+        "x": 1940,
+        "y": 369,
+        "h": 9.574676170128,
+        "corridor": false,
+        "points_per_foot": 9
+      },
+      {
+        "page": 7,
+        "sheet": "A-101",
+        "number": "07",
+        "name": "OFFICE",
+        "x": 479,
+        "y": 516,
+        "h": 9.574676170128,
+        "corridor": false,
+        "points_per_foot": 9
+      },
+      {
+        "page": 7,
+        "sheet": "A-101",
+        "number": "06",
+        "name": "OFFICE",
+        "x": 479,
+        "y": 634,
+        "h": 9.574676170128,
+        "corridor": false,
+        "points_per_foot": 9
+      },
+      {
+        "page": 7,
+        "sheet": "A-101",
+        "number": "02",
+        "name": "DRILL HALL",
+        "x": 1076,
+        "y": 736,
+        "h": 9.574676170128,
+        "corridor": true,
+        "points_per_foot": 9
+      },
+      {
+        "page": 7,
+        "sheet": "A-101",
+        "number": "01",
+        "name": "VESTIBULE",
+        "x": 479,
+        "y": 742,
+        "h": 9.574676170128,
+        "corridor": true,
+        "points_per_foot": 9
+      },
+      {
+        "page": 7,
+        "sheet": "A-101",
+        "number": "05",
+        "name": "OFFICE",
+        "x": 479,
+        "y": 850,
+        "h": 9.574676170128,
+        "corridor": false,
+        "points_per_foot": 9
+      },
+      {
+        "page": 7,
+        "sheet": "A-101",
+        "number": "04",
+        "name": "OFFICE",
+        "x": 479,
+        "y": 964,
+        "h": 9.574676170128,
+        "corridor": false,
+        "points_per_foot": 9
+      },
+      {
+        "page": 7,
+        "sheet": "A-101",
+        "number": "16",
+        "name": "WOMAN'S ROOM",
+        "x": 1282,
+        "y": 1048,
+        "h": 9.550316179871999,
+        "corridor": false,
+        "points_per_foot": 9
+      },
+      {
+        "page": 7,
+        "sheet": "A-101",
+        "number": "15",
+        "name": "MEN'S ROOM",
+        "x": 1475,
+        "y": 1048,
+        "h": 9.550316179871999,
+        "corridor": false,
+        "points_per_foot": 9
+      },
+      {
+        "page": 7,
+        "sheet": "A-101",
+        "number": "17",
+        "name": "KITCHEN",
+        "x": 1104,
+        "y": 1074,
+        "h": 9.574676170128,
+        "corridor": false,
+        "points_per_foot": 9
+      },
+      {
+        "page": 7,
+        "sheet": "A-101",
+        "number": "04",
+        "name": "MEETING ROOM",
+        "x": 401,
+        "y": 1119,
+        "h": 9.550316179871999,
+        "corridor": false,
+        "points_per_foot": 9
+      },
+      {
+        "page": 7,
+        "sheet": "A-101",
+        "number": "03",
+        "name": "OFFICES",
+        "x": 652,
+        "y": 1119,
+        "h": 9.550316179871999,
+        "corridor": false,
+        "points_per_foot": 9
+      },
+      {
+        "page": 7,
+        "sheet": "A-101",
+        "number": "18",
+        "name": "UTILITY",
+        "x": 882,
+        "y": 1111,
+        "h": 9.574676170128,
+        "corridor": false,
+        "points_per_foot": 9
+      },
+      {
+        "page": 7,
+        "sheet": "A-101",
+        "number": "14",
+        "name": "BUNK ROOM",
+        "x": 1772,
+        "y": 1104,
+        "h": 9.574676170128,
+        "corridor": false,
+        "points_per_foot": 9
+      },
+      {
+        "page": 7,
+        "sheet": "A-101",
+        "number": "1",
+        "name": "LEVEL 1",
+        "x": 1413,
+        "y": 1426,
+        "h": 24.90759003696,
+        "corridor": false,
+        "points_per_foot": 9
+      },
+      {
+        "page": 7,
+        "sheet": "A-101",
+        "number": "1",
+        "name": "NEW CONSTRUCTION KEYNOTES",
+        "x": 1896,
+        "y": 1445,
+        "h": 9.451916219231999,
+        "corridor": false,
+        "points_per_foot": 9
+      },
+      {
+        "page": 7,
+        "sheet": "A-101",
+        "number": "2",
+        "name": "NEW CONSTRUCTION KEYNOTES",
+        "x": 1896,
+        "y": 1451,
+        "h": 9.451916219231999,
+        "corridor": false,
+        "points_per_foot": 9
+      },
+      {
+        "page": 10,
+        "sheet": "A-500",
+        "number": "6261",
+        "name": "PROJECT # T2502-01",
+        "x": 2443,
+        "y": 1107,
+        "h": 17.0709931716,
+        "corridor": false,
+        "points_per_foot": 27
+      }
+    ],
+    "tags": [],
+    "unmatched_tags": [],
+    "marks_not_on_plan": [],
+    "counts": {
+      "plan_sheets": 2,
+      "rooms": 23,
+      "corridors": 2,
+      "tags": 0,
+      "unmatched_tags": 0,
+      "schedule_marks": 0,
+      "marks_not_on_plan": 0
+    }
+  },
+  "diagnostic_note": "Unchanged S1 reader supplied harvest schedule-row regex marks, not production doors or audited truth. Tag-shaped text can be room/grid/detail numbers. Unmatched tags are style candidates, not verified doors.",
+  "harvest_schedule_rows": [
+    {
+      "page": 13,
+      "marks": [
+        "001",
+        "002",
+        "003"
+      ],
+      "lines": [
+        "                                                                                                                    3 - CONTINUOUS GEAR HINGE, STAINLESS STEEL, W/ SS PINS                                           001         REPLACE                         3'-0\"/2'-6\" X 7'-0\"    STOREFRONT                                 PRE-FIN             6 3/4\" W/ 4\" HEAD           ALUMINUM            PRE-FIN               3           MATCH EXISTING HEAD HEIGHT",
+        "                                                                                                                    1 - THRESHOLD DRIP EDGE                                                                          002         REPLACE                            3'-0\" X 7'-0\"       STOREFRONT                                 PRE-FIN                 PER MFR.                ALUMINUM            PRE-FIN               1           MATCH EXISTING HEAD HEIGHT",
+        "                                                                                                                                                                                                                     003         REPLACE                            3'-0\" X 7'-0\"     HOLLOW METAL/FRP                             PRE-FIN               MATCH EXIST                HM/FRP              PAINT                1           MATCH EXISTING HEAD HEIGHT"
+      ]
+    }
+  ],
+  "harvest_schedule_marks": [
+    {
+      "mark": "001",
+      "page": 13
+    },
+    {
+      "mark": "002",
+      "page": 13
+    },
+    {
+      "mark": "003",
+      "page": 13
+    }
+  ],
+  "harvest_marks_plan": {
+    "sheets": [
+      {
+        "page": 1,
+        "sheet": null,
+        "title": null,
+        "plan": false
+      },
+      {
+        "page": 2,
+        "sheet": "A-000",
+        "title": "ARCHITECTURAL GENERAL NOTES",
+        "plan": false
+      },
+      {
+        "page": 3,
+        "sheet": "A-010",
+        "title": "CODE PLAN",
+        "plan": false
+      },
+      {
+        "page": 4,
+        "sheet": "AD100",
+        "title": "DEMO FLOOR PLAN",
+        "plan": false
+      },
+      {
+        "page": 5,
+        "sheet": "AD101",
+        "title": "DEMO REFLECTED CEILING PLAN",
+        "plan": false
+      },
+      {
+        "page": 6,
+        "sheet": "A-100",
+        "title": "DEMO AND CONSTRUCTION PLANS",
+        "plan": false
+      },
+      {
+        "page": 7,
+        "sheet": "A-101",
+        "title": "FLOOR PLAN",
+        "plan": true
+      },
+      {
+        "page": 8,
+        "sheet": "A-102",
+        "title": "ROOF PLAN",
+        "plan": false
+      },
+      {
+        "page": 9,
+        "sheet": "A-120",
+        "title": "REFLECTED CEILING PLAN",
+        "plan": false
+      },
+      {
+        "page": 10,
+        "sheet": "A-500",
+        "title": "PLAN DETAILS",
+        "plan": true
+      },
+      {
+        "page": 11,
+        "sheet": "A-600",
+        "title": "INTERIOR ELEVATIONS",
+        "plan": false
+      },
+      {
+        "page": 12,
+        "sheet": "A-610",
+        "title": "EXTERIOR ELEVATIONS",
+        "plan": false
+      },
+      {
+        "page": 13,
+        "sheet": "A-700",
+        "title": "SCHEDULE & LEGENDS",
+        "plan": false
+      },
+      {
+        "page": 14,
+        "sheet": "A-710",
+        "title": "FINISH FLOOR PLANS, SCHEDULES",
+        "plan": false
+      },
+      {
+        "page": 15,
+        "sheet": "ME000",
+        "title": "MEP SYMBOLS LEGEND",
+        "plan": false
+      },
+      {
+        "page": 16,
+        "sheet": "ME001",
+        "title": "AND ABBREVIATIONS",
+        "plan": false
+      },
+      {
+        "page": 17,
+        "sheet": "MD100",
+        "title": "MECHANICAL DEMO PLAN",
+        "plan": false
+      },
+      {
+        "page": 18,
+        "sheet": "MD110",
+        "title": "MECHANICAL PIPING DEMO PLAN",
+        "plan": false
+      },
+      {
+        "page": 19,
+        "sheet": "M-100",
+        "title": "MECHANICAL NEW WORK PLAN",
+        "plan": false
+      },
+      {
+        "page": 20,
+        "sheet": "M-110",
+        "title": "MECHANICAL ROOF PLAN",
+        "plan": false
+      },
+      {
+        "page": 21,
+        "sheet": "M-120",
+        "title": "MECHANICAL PIPING NEW WORK PLAN",
+        "plan": false
+      },
+      {
+        "page": 22,
+        "sheet": "M-300",
+        "title": "MECHANICAL DIAGRAMS",
+        "plan": false
+      },
+      {
+        "page": 23,
+        "sheet": "M-400",
+        "title": "DUCTWORK CONSTRUCTION DETAIL",
+        "plan": false
+      },
+      {
+        "page": 24,
+        "sheet": "M-410",
+        "title": "MECHANICAL DETAILS",
+        "plan": false
+      },
+      {
+        "page": 25,
+        "sheet": "M-420",
+        "title": "MECHANICAL DETAILS",
+        "plan": false
+      },
+      {
+        "page": 26,
+        "sheet": "M-500",
+        "title": "MECHANICAL SCHEDULES",
+        "plan": false
+      },
+      {
+        "page": 27,
+        "sheet": "P-100",
+        "title": "PLUMBING PLAN",
+        "plan": false
+      },
+      {
+        "page": 28,
+        "sheet": "P-500",
+        "title": "SHOWER INSTALLATION DETAIL",
+        "plan": false
+      },
+      {
+        "page": 29,
+        "sheet": "ED100",
+        "title": "ELECTRICAL DEMO PLAN",
+        "plan": false
+      },
+      {
+        "page": 30,
+        "sheet": "E-100",
+        "title": "LIGHTING NEW WORK PLAN",
+        "plan": false
+      },
+      {
+        "page": 31,
+        "sheet": "E-110",
+        "title": "POWER NEW WORK PLAN",
+        "plan": false
+      },
+      {
+        "page": 32,
+        "sheet": "E-120",
+        "title": "ELECTRICAL ROOF PLAN",
+        "plan": false
+      },
+      {
+        "page": 33,
+        "sheet": "E-300",
+        "title": "ELECTRICAL DIAGRAMS",
+        "plan": false
+      },
+      {
+        "page": 34,
+        "sheet": "E-400",
+        "title": "LIGHTNING GROUND TEST WELL",
+        "plan": false
+      },
+      {
+        "page": 35,
+        "sheet": "E-410",
+        "title": "ELECTRICAL DETAILS",
+        "plan": false
+      },
+      {
+        "page": 36,
+        "sheet": "E-500",
+        "title": "ELECTRICAL SCHEDULES",
+        "plan": false
+      },
+      {
+        "page": 37,
+        "sheet": "E-510",
+        "title": "PANEL SCHEDULES",
+        "plan": false
+      }
+    ],
+    "plan_sheets": [
+      {
+        "page": 7,
+        "sheet": "A-101",
+        "title": "FLOOR PLAN",
+        "rooms": 22,
+        "scales": [
+          "1/8\" = 1'-0\""
+        ],
+        "points_per_foot": [
+          9
+        ]
+      },
+      {
+        "page": 10,
+        "sheet": "A-500",
+        "title": "PLAN DETAILS",
+        "rooms": 1,
+        "scales": [
+          "3/8\" = 1'-0\"",
+          "3/8\" = 1'-0\""
+        ],
+        "points_per_foot": [
+          27
+        ]
+      }
+    ],
+    "rooms": [
+      {
+        "page": 7,
+        "sheet": "A-101",
+        "number": "10",
+        "name": "VAULT",
+        "x": 1583,
+        "y": 347,
+        "h": 9.574676170128,
+        "corridor": false,
+        "points_per_foot": 9
+      },
+      {
+        "page": 7,
+        "sheet": "A-101",
+        "number": "11",
+        "name": "ARMS",
+        "x": 1710,
+        "y": 347,
+        "h": 9.574676170128,
+        "corridor": false,
+        "points_per_foot": 9
+      },
+      {
+        "page": 7,
+        "sheet": "A-101",
+        "number": "09",
+        "name": "STOR",
+        "x": 1172,
+        "y": 350,
+        "h": 9.574676170128,
+        "corridor": false,
+        "points_per_foot": 9
+      },
+      {
+        "page": 7,
+        "sheet": "A-101",
+        "number": "12",
+        "name": "STOR",
+        "x": 1790,
+        "y": 350,
+        "h": 9.574676170128,
+        "corridor": false,
+        "points_per_foot": 9
+      },
+      {
+        "page": 7,
+        "sheet": "A-101",
+        "number": "08",
+        "name": "CLASS ROOM",
+        "x": 560,
+        "y": 369,
+        "h": 9.574676170128,
+        "corridor": false,
+        "points_per_foot": 9
+      },
+      {
+        "page": 7,
+        "sheet": "A-101",
+        "number": "13",
+        "name": "STOR",
+        "x": 1940,
+        "y": 369,
+        "h": 9.574676170128,
+        "corridor": false,
+        "points_per_foot": 9
+      },
+      {
+        "page": 7,
+        "sheet": "A-101",
+        "number": "07",
+        "name": "OFFICE",
+        "x": 479,
+        "y": 516,
+        "h": 9.574676170128,
+        "corridor": false,
+        "points_per_foot": 9
+      },
+      {
+        "page": 7,
+        "sheet": "A-101",
+        "number": "06",
+        "name": "OFFICE",
+        "x": 479,
+        "y": 634,
+        "h": 9.574676170128,
+        "corridor": false,
+        "points_per_foot": 9
+      },
+      {
+        "page": 7,
+        "sheet": "A-101",
+        "number": "02",
+        "name": "DRILL HALL",
+        "x": 1076,
+        "y": 736,
+        "h": 9.574676170128,
+        "corridor": true,
+        "points_per_foot": 9
+      },
+      {
+        "page": 7,
+        "sheet": "A-101",
+        "number": "01",
+        "name": "VESTIBULE",
+        "x": 479,
+        "y": 742,
+        "h": 9.574676170128,
+        "corridor": true,
+        "points_per_foot": 9
+      },
+      {
+        "page": 7,
+        "sheet": "A-101",
+        "number": "05",
+        "name": "OFFICE",
+        "x": 479,
+        "y": 850,
+        "h": 9.574676170128,
+        "corridor": false,
+        "points_per_foot": 9
+      },
+      {
+        "page": 7,
+        "sheet": "A-101",
+        "number": "04",
+        "name": "OFFICE",
+        "x": 479,
+        "y": 964,
+        "h": 9.574676170128,
+        "corridor": false,
+        "points_per_foot": 9
+      },
+      {
+        "page": 7,
+        "sheet": "A-101",
+        "number": "16",
+        "name": "WOMAN'S ROOM",
+        "x": 1282,
+        "y": 1048,
+        "h": 9.550316179871999,
+        "corridor": false,
+        "points_per_foot": 9
+      },
+      {
+        "page": 7,
+        "sheet": "A-101",
+        "number": "15",
+        "name": "MEN'S ROOM",
+        "x": 1475,
+        "y": 1048,
+        "h": 9.550316179871999,
+        "corridor": false,
+        "points_per_foot": 9
+      },
+      {
+        "page": 7,
+        "sheet": "A-101",
+        "number": "17",
+        "name": "KITCHEN",
+        "x": 1104,
+        "y": 1074,
+        "h": 9.574676170128,
+        "corridor": false,
+        "points_per_foot": 9
+      },
+      {
+        "page": 7,
+        "sheet": "A-101",
+        "number": "04",
+        "name": "MEETING ROOM",
+        "x": 401,
+        "y": 1119,
+        "h": 9.550316179871999,
+        "corridor": false,
+        "points_per_foot": 9
+      },
+      {
+        "page": 7,
+        "sheet": "A-101",
+        "number": "03",
+        "name": "OFFICES",
+        "x": 652,
+        "y": 1119,
+        "h": 9.550316179871999,
+        "corridor": false,
+        "points_per_foot": 9
+      },
+      {
+        "page": 7,
+        "sheet": "A-101",
+        "number": "18",
+        "name": "UTILITY",
+        "x": 882,
+        "y": 1111,
+        "h": 9.574676170128,
+        "corridor": false,
+        "points_per_foot": 9
+      },
+      {
+        "page": 7,
+        "sheet": "A-101",
+        "number": "14",
+        "name": "BUNK ROOM",
+        "x": 1772,
+        "y": 1104,
+        "h": 9.574676170128,
+        "corridor": false,
+        "points_per_foot": 9
+      },
+      {
+        "page": 7,
+        "sheet": "A-101",
+        "number": "1",
+        "name": "LEVEL 1",
+        "x": 1413,
+        "y": 1426,
+        "h": 24.90759003696,
+        "corridor": false,
+        "points_per_foot": 9
+      },
+      {
+        "page": 7,
+        "sheet": "A-101",
+        "number": "1",
+        "name": "NEW CONSTRUCTION KEYNOTES",
+        "x": 1896,
+        "y": 1445,
+        "h": 9.451916219231999,
+        "corridor": false,
+        "points_per_foot": 9
+      },
+      {
+        "page": 7,
+        "sheet": "A-101",
+        "number": "2",
+        "name": "NEW CONSTRUCTION KEYNOTES",
+        "x": 1896,
+        "y": 1451,
+        "h": 9.451916219231999,
+        "corridor": false,
+        "points_per_foot": 9
+      },
+      {
+        "page": 10,
+        "sheet": "A-500",
+        "number": "6261",
+        "name": "PROJECT # T2502-01",
+        "x": 2443,
+        "y": 1107,
+        "h": 17.0709931716,
+        "corridor": false,
+        "points_per_foot": 27
+      }
+    ],
+    "tags": [
+      {
+        "mark": "002",
+        "page": 7,
+        "sheet": "A-101",
+        "x": 363,
+        "y": 1015,
+        "h": 9.574676170128,
+        "door_pages": [
+          13
+        ],
+        "room": "04",
+        "room_name": "MEETING ROOM",
+        "room_by": "nearest_label",
+        "unsure": true,
+        "points_per_foot": 9
+      },
+      {
+        "mark": "001",
+        "page": 7,
+        "sheet": "A-101",
+        "x": 400,
+        "y": 748,
+        "h": 9.574676170128,
+        "door_pages": [
+          13
+        ],
+        "room": "01",
+        "room_name": "VESTIBULE",
+        "room_by": "nearest_label",
+        "unsure": true,
+        "points_per_foot": 9
+      },
+      {
+        "mark": "003",
+        "page": 7,
+        "sheet": "A-101",
+        "x": 1019,
+        "y": 1208,
+        "h": 9.574676170128,
+        "door_pages": [
+          13
+        ],
+        "room": "17",
+        "room_name": "KITCHEN",
+        "room_by": "nearest_label",
+        "unsure": true,
+        "points_per_foot": 9
+      }
+    ],
+    "unmatched_tags": [
+      {
+        "tag": "004",
+        "page": 7,
+        "sheet": "A-101",
+        "x": 1601,
+        "y": 778
+      },
+      {
+        "tag": "005",
+        "page": 7,
+        "sheet": "A-101",
+        "x": 1631,
+        "y": 1133
+      }
+    ],
+    "marks_not_on_plan": [],
+    "counts": {
+      "plan_sheets": 2,
+      "rooms": 23,
+      "corridors": 2,
+      "tags": 3,
+      "unmatched_tags": 2,
+      "schedule_marks": 3,
+      "marks_not_on_plan": 0
+    }
+  },
+  "truth": {
+    "tier": "unread",
+    "readers": {
+      "a": {
+        "doors": 0,
+        "sets": 2,
+        "items": 18,
+        "name": "production text layer (weyland-subx-worker/src/lib/text-layer-read.js)"
+      },
+      "b": {
+        "doors": 9,
+        "sets": 2,
+        "items": 1,
+        "name": "geometry first (tools/accuracy/truth/reader_b.mjs)",
+        "tables": 1
+      }
+    },
+    "agreement": {
+      "doors": {
+        "rows": 9,
+        "agreed": 0,
+        "disputed": 0,
+        "only_a": 0,
+        "only_b": 9,
+        "fields": {},
+        "agreement_rate": 0
+      },
+      "items": {
+        "rows": 19,
+        "agreed": 0,
+        "disputed": 0,
+        "only_a": 18,
+        "only_b": 1,
+        "fields": {},
+        "agreement_rate": 0
+      },
+      "sets": {
+        "sets": 3,
+        "agreed": 1
+      }
+    },
+    "marks_on_plan": {
+      "applicable": false,
+      "reason": "no door schedule rows"
+    }
+  }
+}

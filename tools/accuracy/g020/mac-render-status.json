@@ -1,0 +1,12 @@
+{
+  "status": "pending",
+  "reason": "Computer Use was not approved to use Safari",
+  "renders_verified": 0,
+  "candidates": [
+    "7478006f7fd5b43c",
+    "192a16af8f31ae0c",
+    "e3d0cc1bc22fd824"
+  ],
+  "production_successes": 0,
+  "board_updated": false
+}

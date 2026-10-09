@@ -1,0 +1,45 @@
+{
+  "project": "_T2423-01 - Final Plans.pdf — harvest-mark diagnostic",
+  "source": "subx",
+  "doors": [
+    {
+      "mark": "112",
+      "location": null,
+      "type": null,
+      "material": null,
+      "width_in": 36,
+      "height_in": 84,
+      "size_known": false,
+      "leaves": 1,
+      "rating": null,
+      "frame": null,
+      "panic": false,
+      "set": null,
+      "source_page": 10
+    },
+    {
+      "mark": "114",
+      "location": null,
+      "type": null,
+      "material": null,
+      "width_in": 36,
+      "height_in": 84,
+      "size_known": false,
+      "leaves": 1,
+      "rating": null,
+      "frame": null,
+      "panic": false,
+      "set": null,
+      "source_page": 10
+    }
+  ],
+  "sets": {},
+  "notes": [
+    "Unchanged S1 reader supplied harvest schedule-row regex marks, not production doors or audited truth. Tag-shaped text can be room/grid/detail numbers. Unmatched tags are style candidates, not verified doors.",
+    "2 doors have no size read from the schedule; drawn 3'-0\" x 7'-0\"."
+  ],
+  "layout": {
+    "source": "schematic",
+    "note": "Schematic layout from the schedule: no floor plan was read for these doors Doors stand in schedule order along one corridor."
+  }
+}

@@ -1,0 +1,242 @@
+{
+  "project": "_O2604-01 Final Bid Plans.pdf — harvest-mark diagnostic",
+  "source": "subx",
+  "doors": [
+    {
+      "mark": "201",
+      "location": null,
+      "type": null,
+      "material": null,
+      "width_in": 36,
+      "height_in": 84,
+      "size_known": false,
+      "leaves": 1,
+      "rating": null,
+      "frame": null,
+      "panic": false,
+      "set": null,
+      "source_page": 14,
+      "plan": {
+        "sheet": "A111",
+        "page": 6,
+        "x": 21.44,
+        "z": 117.67,
+        "room": null,
+        "room_name": null,
+        "room_by": null,
+        "unsure": false,
+        "also_on": [],
+        "room_x": null,
+        "room_z": null,
+        "building": 0
+      }
+    },
+    {
+      "mark": "202",
+      "location": null,
+      "type": null,
+      "material": null,
+      "width_in": 36,
+      "height_in": 84,
+      "size_known": false,
+      "leaves": 1,
+      "rating": null,
+      "frame": null,
+      "panic": false,
+      "set": null,
+      "source_page": 14,
+      "plan": {
+        "sheet": "A111",
+        "page": 6,
+        "x": 36.89,
+        "z": 117.67,
+        "room": null,
+        "room_name": null,
+        "room_by": null,
+        "unsure": false,
+        "also_on": [],
+        "room_x": null,
+        "room_z": null,
+        "building": 0
+      }
+    },
+    {
+      "mark": "203",
+      "location": null,
+      "type": null,
+      "material": null,
+      "width_in": 36,
+      "height_in": 84,
+      "size_known": false,
+      "leaves": 1,
+      "rating": null,
+      "frame": null,
+      "panic": false,
+      "set": null,
+      "source_page": 14,
+      "plan": {
+        "sheet": "A111",
+        "page": 6,
+        "x": 52.44,
+        "z": 117.67,
+        "room": null,
+        "room_name": null,
+        "room_by": null,
+        "unsure": false,
+        "also_on": [],
+        "room_x": null,
+        "room_z": null,
+        "building": 0
+      }
+    },
+    {
+      "mark": "204",
+      "location": null,
+      "type": null,
+      "material": null,
+      "width_in": 36,
+      "height_in": 84,
+      "size_known": false,
+      "leaves": 1,
+      "rating": null,
+      "frame": null,
+      "panic": false,
+      "set": null,
+      "source_page": 14,
+      "plan": {
+        "sheet": "A111",
+        "page": 6,
+        "x": 0,
+        "z": 120.44,
+        "room": null,
+        "room_name": null,
+        "room_by": null,
+        "unsure": false,
+        "also_on": [],
+        "room_x": null,
+        "room_z": null,
+        "building": 0
+      }
+    },
+    {
+      "mark": "A601",
+      "location": null,
+      "type": null,
+      "material": null,
+      "width_in": 36,
+      "height_in": 84,
+      "size_known": false,
+      "leaves": 1,
+      "rating": null,
+      "frame": null,
+      "panic": false,
+      "set": null,
+      "source_page": 14
+    },
+    {
+      "mark": "301",
+      "location": null,
+      "type": null,
+      "material": null,
+      "width_in": 36,
+      "height_in": 84,
+      "size_known": false,
+      "leaves": 1,
+      "rating": null,
+      "frame": null,
+      "panic": false,
+      "set": null,
+      "source_page": 14,
+      "plan": {
+        "sheet": "A111",
+        "page": 6,
+        "x": 21.44,
+        "z": 0,
+        "room": null,
+        "room_name": null,
+        "room_by": null,
+        "unsure": false,
+        "also_on": [],
+        "room_x": null,
+        "room_z": null,
+        "building": 0
+      }
+    },
+    {
+      "mark": "302",
+      "location": null,
+      "type": null,
+      "material": null,
+      "width_in": 36,
+      "height_in": 84,
+      "size_known": false,
+      "leaves": 1,
+      "rating": null,
+      "frame": null,
+      "panic": false,
+      "set": null,
+      "source_page": 14,
+      "plan": {
+        "sheet": "A111",
+        "page": 6,
+        "x": 52.44,
+        "z": 0,
+        "room": null,
+        "room_name": null,
+        "room_by": null,
+        "unsure": false,
+        "also_on": [],
+        "room_x": null,
+        "room_z": null,
+        "building": 0
+      }
+    }
+  ],
+  "sets": {},
+  "notes": [
+    "Unchanged S1 reader supplied harvest schedule-row regex marks, not production doors or audited truth. Tag-shaped text can be room/grid/detail numbers. Unmatched tags are style candidates, not verified doors.",
+    "7 doors have no size read from the schedule; drawn 3'-0\" x 7'-0\"."
+  ],
+  "layout": {
+    "source": "plan",
+    "buildings": [
+      {
+        "sheet": "A111",
+        "page": 6,
+        "title": "FLOOR PLANS",
+        "scale": "1/8\" = 1'-0\", 1/8\" = 1'-0\", 1/8\" = 1'-0\"",
+        "to_scale": true,
+        "origin_x": 0,
+        "width_ft": 52,
+        "depth_ft": 120,
+        "rooms": [
+          {
+            "number": "1",
+            "name": "SOUTH MEZZANINE",
+            "corridor": false,
+            "x": 37,
+            "z": 74.78
+          }
+        ]
+      }
+    ],
+    "counts": {
+      "doors": 7,
+      "on_plan": 6,
+      "rooms": 1,
+      "corridors": 0,
+      "unmatched_tags": 1
+    },
+    "unmatched_tags": [
+      {
+        "tag": "205",
+        "sheet": "A111",
+        "page": 6
+      }
+    ],
+    "not_on_plan": [
+      "A601"
+    ],
+    "note": "Laid out from the floor plan A111 (FLOOR PLANS) p.6: each door stands where its tag is drawn, in the room the plan gives it, at the sheet's printed scale. Walls and door swings are not read from the plan yet. Not tagged on any plan sheet: A601."
+  }
+}

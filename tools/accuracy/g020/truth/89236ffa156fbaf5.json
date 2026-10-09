@@ -1,0 +1,302 @@
+{
+ "sha16": "89236ffa156fbaf5",
+ "sha256": "89236ffa156fbaf5275413b258fd4beac283fa8c54388a7ca660962e0f415a72",
+ "file": "89236ffa156fbaf5.pdf",
+ "bytes": 28089297,
+ "family": "Missouri OA",
+ "source": "harvest",
+ "label": "_T2147-01%20-%20Final%20Plans.pdf",
+ "source_url": "https://oa.mo.gov/sites/default/files/bid-opportunities/_T2147-01%20-%20Final%20Plans.pdf",
+ "page_count": 85,
+ "text_layer": {
+  "pages_with_text": 85,
+  "pages": 85
+ },
+ "pages": {
+  "door_candidates": 8,
+  "hardware_candidates": 0,
+  "door_schedule_pages": [
+   42
+  ],
+  "hardware_pages": []
+ },
+ "readers": {
+  "a": {
+   "doors": 16,
+   "sets": 0,
+   "items": 0,
+   "name": "production text layer (weyland-subx-worker/src/lib/text-layer-read.js)"
+  },
+  "b": {
+   "doors": 0,
+   "sets": 0,
+   "items": 0,
+   "name": "geometry first (tools/accuracy/truth/reader_b.mjs)",
+   "tables": 0
+  }
+ },
+ "rows_agreed": 0,
+ "rows_disputed": 16,
+ "rows_total": 16,
+ "agreement_rate": 0,
+ "agreement": {
+  "doors": {
+   "rows": 16,
+   "agreed": 0,
+   "disputed": 0,
+   "only_a": 16,
+   "only_b": 0,
+   "fields": {},
+   "agreement_rate": 0
+  },
+  "items": {
+   "rows": 0,
+   "agreed": 0,
+   "disputed": 0,
+   "only_a": 0,
+   "only_b": 0,
+   "fields": {},
+   "agreement_rate": null
+  },
+  "sets": {
+   "sets": 0,
+   "agreed": 0
+  }
+ },
+ "triage_class": "schedule-only",
+ "triage_from": "tools/corpus/harvest/triage.json",
+ "oracles": {
+  "marks_on_plan": {
+   "applicable": true,
+   "total": 16,
+   "pass": 0,
+   "fail": 16,
+   "pass_rate": 0,
+   "examples": [
+    "mark 129C (schedule p.42) not tagged on any plan",
+    "mark 160 (schedule p.42) not tagged on any plan",
+    "mark 161 (schedule p.42) not tagged on any plan",
+    "mark 162 (schedule p.42) not tagged on any plan",
+    "mark 163 (schedule p.42) not tagged on any plan",
+    "mark 164 (schedule p.42) not tagged on any plan",
+    "mark 165A (schedule p.42) not tagged on any plan",
+    "mark 165B (schedule p.42) not tagged on any plan",
+    "mark 166 (schedule p.42) not tagged on any plan",
+    "mark 167A (schedule p.42) not tagged on any plan",
+    "mark 167B (schedule p.42) not tagged on any plan",
+    "mark 168A (schedule p.42) not tagged on any plan"
+   ],
+   "plan_sheets": [
+    "A113 p.27",
+    "A501 p.39"
+   ],
+   "plan_counts": {
+    "plan_sheets": 2,
+    "rooms": 17,
+    "corridors": 0,
+    "tags": 0,
+    "unmatched_tags": 0,
+    "schedule_marks": 16,
+    "marks_not_on_plan": 16
+   }
+  },
+  "sets_exist": {
+   "applicable": false,
+   "reason": "not for class schedule-only"
+  },
+  "set_door_lists": {
+   "applicable": false,
+   "reason": "not for class schedule-only"
+  },
+  "types_in_legend": {
+   "applicable": true,
+   "total": 4,
+   "pass": 4,
+   "fail": 0,
+   "pass_rate": 1,
+   "examples": [],
+   "legend_titles": [
+    "DOOR TYPES p.42",
+    "FRAME TYPES p.42",
+    "DOOR AND FRAME TYPES p.42",
+    "DOOR TYPES p.43",
+    "FRAME TYPES p.43"
+   ],
+   "skipped": [],
+   "note": "weak for numeric types: a detail number near the legend can pass a numeric frame type"
+  },
+  "sizes_and_marks": {
+   "applicable": true,
+   "total": 16,
+   "pass": 0,
+   "fail": 16,
+   "pass_rate": 0,
+   "examples": [
+    "mark 129C p.42: size null -> null x null",
+    "mark 160 p.42: size null -> null x null",
+    "mark 161 p.42: size null -> null x null",
+    "mark 162 p.42: size null -> null x null",
+    "mark 163 p.42: size null -> null x null",
+    "mark 164 p.42: size null -> null x null",
+    "mark 165A p.42: size null -> null x null",
+    "mark 165B p.42: size null -> null x null",
+    "mark 166 p.42: size null -> null x null",
+    "mark 167A p.42: size null -> null x null",
+    "mark 167B p.42: size null -> null x null",
+    "mark 168A p.42: size null -> null x null"
+   ],
+   "size_fail": 16,
+   "mark_fail": 0
+  }
+ },
+ "tier": "oracle-checked",
+ "disagreement_count": 16,
+ "disagreements": [
+  {
+   "kind": "door",
+   "page": 42,
+   "key": "129C",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "door",
+   "page": 42,
+   "key": "160",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "door",
+   "page": 42,
+   "key": "161",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "door",
+   "page": 42,
+   "key": "162",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "door",
+   "page": 42,
+   "key": "163",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "door",
+   "page": 42,
+   "key": "164",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "door",
+   "page": 42,
+   "key": "165A",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "door",
+   "page": 42,
+   "key": "165B",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "door",
+   "page": 42,
+   "key": "166",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "door",
+   "page": 42,
+   "key": "167A",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "door",
+   "page": 42,
+   "key": "167B",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "door",
+   "page": 42,
+   "key": "168A",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "door",
+   "page": 42,
+   "key": "168B",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "door",
+   "page": 42,
+   "key": "169A",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "door",
+   "page": 42,
+   "key": "169B",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "door",
+   "page": 42,
+   "key": "169C",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  }
+ ],
+ "ms": 1997,
+ "generated_at": "2026-10-09T17:05:40.362Z"
+}

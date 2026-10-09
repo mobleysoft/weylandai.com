@@ -1,0 +1,2361 @@
+{
+  "sha16": "89236ffa156fbaf5",
+  "sha256": "89236ffa156fbaf5275413b258fd4beac283fa8c54388a7ca660962e0f415a72",
+  "rank": 8,
+  "source_url": "https://oa.mo.gov/sites/default/files/bid-opportunities/_T2147-01%20-%20Final%20Plans.pdf",
+  "page_count": 85,
+  "candidate_plan_pages": [
+    17,
+    22,
+    23,
+    27,
+    46
+  ],
+  "candidate_schedule_pages": [
+    42,
+    43
+  ],
+  "production_schedule_pages": [
+    {
+      "page": 4,
+      "rows": 0,
+      "error": null
+    },
+    {
+      "page": 5,
+      "rows": 0,
+      "error": null
+    },
+    {
+      "page": 40,
+      "rows": 0,
+      "error": null
+    },
+    {
+      "page": 42,
+      "rows": 16,
+      "error": null
+    },
+    {
+      "page": 43,
+      "rows": 0,
+      "error": null
+    },
+    {
+      "page": 47,
+      "rows": 0,
+      "error": null
+    },
+    {
+      "page": 57,
+      "rows": 0,
+      "error": null
+    },
+    {
+      "page": 60,
+      "rows": 0,
+      "error": null
+    }
+  ],
+  "production_doors": [
+    {
+      "page": 42,
+      "mark": "129C",
+      "location": null,
+      "size": null,
+      "width_inches": null,
+      "height_inches": null,
+      "pair": false,
+      "door_type": "F",
+      "frame_type": "HM1",
+      "material": "HM",
+      "fire_rating": "3-HOUR",
+      "hardware_group": "2",
+      "y": 171
+    },
+    {
+      "page": 42,
+      "mark": "160",
+      "location": null,
+      "size": null,
+      "width_inches": null,
+      "height_inches": null,
+      "pair": false,
+      "door_type": "F",
+      "frame_type": "HM2",
+      "material": null,
+      "fire_rating": "45 MIN.",
+      "hardware_group": null,
+      "y": 194
+    },
+    {
+      "page": 42,
+      "mark": "161",
+      "location": null,
+      "size": null,
+      "width_inches": null,
+      "height_inches": null,
+      "pair": false,
+      "door_type": "F",
+      "frame_type": "HM1",
+      "material": "HM",
+      "fire_rating": "NONE",
+      "hardware_group": "3",
+      "y": 213
+    },
+    {
+      "page": 42,
+      "mark": "162",
+      "location": null,
+      "size": null,
+      "width_inches": null,
+      "height_inches": null,
+      "pair": false,
+      "door_type": "F",
+      "frame_type": "HM1",
+      "material": "HM",
+      "fire_rating": "NONE",
+      "hardware_group": "3",
+      "y": 226
+    },
+    {
+      "page": 42,
+      "mark": "163",
+      "location": null,
+      "size": null,
+      "width_inches": null,
+      "height_inches": null,
+      "pair": false,
+      "door_type": "F",
+      "frame_type": "HM1",
+      "material": "HM",
+      "fire_rating": "NONE",
+      "hardware_group": "3",
+      "y": 239
+    },
+    {
+      "page": 42,
+      "mark": "164",
+      "location": null,
+      "size": null,
+      "width_inches": null,
+      "height_inches": null,
+      "pair": false,
+      "door_type": "F",
+      "frame_type": "HM1",
+      "material": "HM",
+      "fire_rating": "NONE",
+      "hardware_group": "3",
+      "y": 252
+    },
+    {
+      "page": 42,
+      "mark": "165A",
+      "location": null,
+      "size": null,
+      "width_inches": null,
+      "height_inches": null,
+      "pair": false,
+      "door_type": "F",
+      "frame_type": "HM1",
+      "material": "HM",
+      "fire_rating": "NONE",
+      "hardware_group": "3",
+      "y": 265
+    },
+    {
+      "page": 42,
+      "mark": "165B",
+      "location": null,
+      "size": null,
+      "width_inches": null,
+      "height_inches": null,
+      "pair": false,
+      "door_type": "F",
+      "frame_type": "HM1",
+      "material": "HM",
+      "fire_rating": "NONE",
+      "hardware_group": "3",
+      "y": 277
+    },
+    {
+      "page": 42,
+      "mark": "166",
+      "location": null,
+      "size": null,
+      "width_inches": null,
+      "height_inches": null,
+      "pair": false,
+      "door_type": "F",
+      "frame_type": "HM1",
+      "material": "HM",
+      "fire_rating": "NONE",
+      "hardware_group": "4",
+      "y": 290
+    },
+    {
+      "page": 42,
+      "mark": "167A",
+      "location": null,
+      "size": null,
+      "width_inches": null,
+      "height_inches": null,
+      "pair": false,
+      "door_type": "F",
+      "frame_type": "HM1",
+      "material": "HM",
+      "fire_rating": "NONE",
+      "hardware_group": "3",
+      "y": 303
+    },
+    {
+      "page": 42,
+      "mark": "167B",
+      "location": null,
+      "size": null,
+      "width_inches": null,
+      "height_inches": null,
+      "pair": false,
+      "door_type": "F",
+      "frame_type": "HM1",
+      "material": "HM",
+      "fire_rating": "NONE",
+      "hardware_group": "3",
+      "y": 316
+    },
+    {
+      "page": 42,
+      "mark": "168A",
+      "location": null,
+      "size": null,
+      "width_inches": null,
+      "height_inches": null,
+      "pair": false,
+      "door_type": "F",
+      "frame_type": "HM1",
+      "material": "HM HM",
+      "fire_rating": "NONE",
+      "hardware_group": "3 2",
+      "y": 329
+    },
+    {
+      "page": 42,
+      "mark": "168B",
+      "location": null,
+      "size": null,
+      "width_inches": null,
+      "height_inches": null,
+      "pair": false,
+      "door_type": "F",
+      "frame_type": "HM2",
+      "material": null,
+      "fire_rating": "45 MIN.",
+      "hardware_group": null,
+      "y": 348
+    },
+    {
+      "page": 42,
+      "mark": "169A",
+      "location": null,
+      "size": null,
+      "width_inches": null,
+      "height_inches": null,
+      "pair": false,
+      "door_type": "F",
+      "frame_type": "HM1",
+      "material": "HM",
+      "fire_rating": "NONE",
+      "hardware_group": "4",
+      "y": 366
+    },
+    {
+      "page": 42,
+      "mark": "169B",
+      "location": null,
+      "size": null,
+      "width_inches": null,
+      "height_inches": null,
+      "pair": false,
+      "door_type": "F",
+      "frame_type": "HM2",
+      "material": "HM",
+      "fire_rating": "NONE",
+      "hardware_group": "1",
+      "y": 379
+    },
+    {
+      "page": 42,
+      "mark": "169C",
+      "location": null,
+      "size": null,
+      "width_inches": null,
+      "height_inches": null,
+      "pair": false,
+      "door_type": "OH",
+      "frame_type": "--",
+      "material": "STEEL",
+      "fire_rating": "NONE",
+      "hardware_group": "-",
+      "y": 392
+    }
+  ],
+  "production_plan": {
+    "sheets": [
+      {
+        "page": 1,
+        "sheet": "G001",
+        "title": "KLINGNER & ASSOCIATES, P.C.",
+        "plan": false
+      },
+      {
+        "page": 2,
+        "sheet": "G002",
+        "title": "INDEX SHEET",
+        "plan": false
+      },
+      {
+        "page": 3,
+        "sheet": "G110",
+        "title": "CODE PLAN & REVIEW",
+        "plan": false
+      },
+      {
+        "page": 4,
+        "sheet": "G111",
+        "title": "CODE REVIEW",
+        "plan": false
+      },
+      {
+        "page": 5,
+        "sheet": "G112",
+        "title": "OCCUPANCY LEGEND",
+        "plan": false
+      },
+      {
+        "page": 6,
+        "sheet": "C001",
+        "title": "GENERAL NOTES AND LEGEND",
+        "plan": false
+      },
+      {
+        "page": 7,
+        "sheet": "CD101",
+        "title": "EXISTING CONDITIONS AND DEMOLITION",
+        "plan": false
+      },
+      {
+        "page": 8,
+        "sheet": "CD102",
+        "title": "CONDITIONS AND DEMOLITION SITE PLAN - ALT #1",
+        "plan": false
+      },
+      {
+        "page": 9,
+        "sheet": "C101",
+        "title": "SITE AND UTILITY PLAN",
+        "plan": false
+      },
+      {
+        "page": 10,
+        "sheet": "C102",
+        "title": "SITE AND UTILITY PLAN - ALT #1",
+        "plan": false
+      },
+      {
+        "page": 11,
+        "sheet": "C201",
+        "title": "EROSION CONTROL PLAN",
+        "plan": false
+      },
+      {
+        "page": 12,
+        "sheet": "C202",
+        "title": "GRADING AND EROSION CONTROL PLAN - ALT #1",
+        "plan": false
+      },
+      {
+        "page": 13,
+        "sheet": "C501",
+        "title": "SITE DETAILS",
+        "plan": false
+      },
+      {
+        "page": 14,
+        "sheet": "C502",
+        "title": "ALT - #1",
+        "plan": false
+      },
+      {
+        "page": 15,
+        "sheet": "C503",
+        "title": "ALT - #1",
+        "plan": false
+      },
+      {
+        "page": 16,
+        "sheet": "C504",
+        "title": "ALT - #1",
+        "plan": false
+      },
+      {
+        "page": 17,
+        "sheet": "AD110",
+        "title": "FIRST FLOOR DEMOLITION PLAN",
+        "plan": false
+      },
+      {
+        "page": 18,
+        "sheet": "A010",
+        "title": "PARTITION TYPES & PARTITION",
+        "plan": false
+      },
+      {
+        "page": 19,
+        "sheet": "A011",
+        "title": "FIRESTOPPING DETAILS",
+        "plan": false
+      },
+      {
+        "page": 20,
+        "sheet": "A012",
+        "title": "FIRESTOPPING DETAILS",
+        "plan": false
+      },
+      {
+        "page": 21,
+        "sheet": "A013",
+        "title": "FIRESTOPPING DETAILS",
+        "plan": false
+      },
+      {
+        "page": 22,
+        "sheet": null,
+        "title": null,
+        "plan": false
+      },
+      {
+        "page": 23,
+        "sheet": null,
+        "title": null,
+        "plan": false
+      },
+      {
+        "page": 24,
+        "sheet": null,
+        "title": null,
+        "plan": false
+      },
+      {
+        "page": 25,
+        "sheet": null,
+        "title": null,
+        "plan": false
+      },
+      {
+        "page": 26,
+        "sheet": null,
+        "title": null,
+        "plan": false
+      },
+      {
+        "page": 27,
+        "sheet": "A113",
+        "title": "MAIN LEVEL FLOOR PLAN - ALT. 1",
+        "plan": true
+      },
+      {
+        "page": 28,
+        "sheet": "A114",
+        "title": "REFLECTED CEILING PLAN - ALT. 1",
+        "plan": false
+      },
+      {
+        "page": 29,
+        "sheet": "A120",
+        "title": "ROOF PLAN",
+        "plan": false
+      },
+      {
+        "page": 30,
+        "sheet": "A121",
+        "title": "ROOF PLAN - ALT.",
+        "plan": false
+      },
+      {
+        "page": 31,
+        "sheet": "A201",
+        "title": "EXTERIOR ELEVATIONS",
+        "plan": false
+      },
+      {
+        "page": 32,
+        "sheet": "A202",
+        "title": "BUILDING ELEVATIONS - ALT. 1",
+        "plan": false
+      },
+      {
+        "page": 33,
+        "sheet": "A301",
+        "title": "BUILDING SECTIONS",
+        "plan": false
+      },
+      {
+        "page": 34,
+        "sheet": "A302",
+        "title": "BUILDING SECTIONS - ALT. 1",
+        "plan": false
+      },
+      {
+        "page": 35,
+        "sheet": "A310",
+        "title": "WALL SECTIONS",
+        "plan": false
+      },
+      {
+        "page": 36,
+        "sheet": "A311",
+        "title": "WALL SECTIONS",
+        "plan": false
+      },
+      {
+        "page": 37,
+        "sheet": "A312",
+        "title": "WALL SECTIONS",
+        "plan": false
+      },
+      {
+        "page": 38,
+        "sheet": "A313",
+        "title": "WALL SECTIONS - ALT. 1",
+        "plan": false
+      },
+      {
+        "page": 39,
+        "sheet": "A501",
+        "title": "PLAN DETAILS",
+        "plan": true
+      },
+      {
+        "page": 40,
+        "sheet": "A502",
+        "title": "DETAILS - ALT. 1",
+        "plan": false
+      },
+      {
+        "page": 41,
+        "sheet": "A510",
+        "title": "WALL SECTION DETAILS",
+        "plan": false
+      },
+      {
+        "page": 42,
+        "sheet": "A601",
+        "title": "DOOR SCHEDULE & DETAILS",
+        "plan": false
+      },
+      {
+        "page": 43,
+        "sheet": "A602",
+        "title": "DOOR SCHEDULE & DETAILS - ALT.",
+        "plan": false
+      },
+      {
+        "page": 44,
+        "sheet": null,
+        "title": null,
+        "plan": false
+      },
+      {
+        "page": 45,
+        "sheet": null,
+        "title": null,
+        "plan": false
+      },
+      {
+        "page": 46,
+        "sheet": "A710",
+        "title": "FIRST FLOOR SIGNAGE PLAN",
+        "plan": false
+      },
+      {
+        "page": 47,
+        "sheet": "S001",
+        "title": "STRUCTURAL NOTES",
+        "plan": false
+      },
+      {
+        "page": 48,
+        "sheet": "S002",
+        "title": "STRUCTURAL NOTES",
+        "plan": false
+      },
+      {
+        "page": 49,
+        "sheet": "S003",
+        "title": "STRUCTURAL NOTES - ALT #1",
+        "plan": false
+      },
+      {
+        "page": 50,
+        "sheet": "S004",
+        "title": "STRUCTURAL NOTES - ALT #1",
+        "plan": false
+      },
+      {
+        "page": 51,
+        "sheet": "S101",
+        "title": "FOUNDATION & SLAB PLAN",
+        "plan": false
+      },
+      {
+        "page": 52,
+        "sheet": "S102",
+        "title": "FOUNDATION AND SLAB PLAN - ALT",
+        "plan": false
+      },
+      {
+        "page": 53,
+        "sheet": "S201",
+        "title": "FRAMING PLAN",
+        "plan": false
+      },
+      {
+        "page": 54,
+        "sheet": "S202",
+        "title": "FRAMING PLAN - ALT #1",
+        "plan": false
+      },
+      {
+        "page": 55,
+        "sheet": "S203",
+        "title": "ROOF PLAN - ALT",
+        "plan": false
+      },
+      {
+        "page": 56,
+        "sheet": "S301",
+        "title": "FRAMING ELEVATIONS",
+        "plan": false
+      },
+      {
+        "page": 57,
+        "sheet": "S401",
+        "title": "FOUNDATION DETAILS",
+        "plan": false
+      },
+      {
+        "page": 58,
+        "sheet": "S501",
+        "title": "STRUCTURAL DETAILS",
+        "plan": false
+      },
+      {
+        "page": 59,
+        "sheet": "S502",
+        "title": "STRUCTURAL DETAILS",
+        "plan": false
+      },
+      {
+        "page": 60,
+        "sheet": "S601",
+        "title": "COLD-FORM DETAILS",
+        "plan": false
+      },
+      {
+        "page": 61,
+        "sheet": "MEP001",
+        "title": "MEP SYMBOLS LIST",
+        "plan": false
+      },
+      {
+        "page": 62,
+        "sheet": "D101",
+        "title": "DEMOLITION PLAN - AREA A",
+        "plan": false
+      },
+      {
+        "page": 63,
+        "sheet": "D102",
+        "title": "DEMOLITION PLAN - AREA B",
+        "plan": false
+      },
+      {
+        "page": 64,
+        "sheet": "FP111",
+        "title": "PROTECTION PLAN - ALT #2",
+        "plan": false
+      },
+      {
+        "page": 65,
+        "sheet": "P101",
+        "title": "PLUMBING PLAN - NEW ADDITION",
+        "plan": false
+      },
+      {
+        "page": 66,
+        "sheet": "P102",
+        "title": "PLUMBING ROOF PLAN - NEW",
+        "plan": false
+      },
+      {
+        "page": 67,
+        "sheet": "P103",
+        "title": "EXTERIOR GAS PIPING PLAN - AREA B",
+        "plan": false
+      },
+      {
+        "page": 68,
+        "sheet": "P111",
+        "title": "PLUMBING PLAN - ALT #1",
+        "plan": false
+      },
+      {
+        "page": 69,
+        "sheet": "M101",
+        "title": "MECHANICAL FLOOR PLAN - AREA A",
+        "plan": false
+      },
+      {
+        "page": 70,
+        "sheet": "M102",
+        "title": "MECHANICAL FLOOR PLAN - AREA B",
+        "plan": false
+      },
+      {
+        "page": 71,
+        "sheet": "M103",
+        "title": "MECHANICAL ROOF PLAN - AREA B",
+        "plan": false
+      },
+      {
+        "page": 72,
+        "sheet": "M111",
+        "title": "HVAC PLAN - ALT",
+        "plan": false
+      },
+      {
+        "page": 73,
+        "sheet": "M401",
+        "title": "HVAC AIRFLOW SCHEMATIC",
+        "plan": false
+      },
+      {
+        "page": 74,
+        "sheet": "M601",
+        "title": "MECHANICAL SCHEDULES AND DETAILS",
+        "plan": false
+      },
+      {
+        "page": 75,
+        "sheet": "M611",
+        "title": "HVAC SCHEDULES & DETAILS - ALT",
+        "plan": false
+      },
+      {
+        "page": 76,
+        "sheet": "M701",
+        "title": "SEQUENCE OF OPERATION",
+        "plan": false
+      },
+      {
+        "page": 77,
+        "sheet": "M711",
+        "title": "HVAC SEQUENCE OF OPERATION - ALT #1",
+        "plan": false
+      },
+      {
+        "page": 78,
+        "sheet": "E101",
+        "title": "ELECTRICAL POWER PLAN - AREA A",
+        "plan": false
+      },
+      {
+        "page": 79,
+        "sheet": "E102",
+        "title": "ELECTRICAL POWER PLAN - AREA B",
+        "plan": false
+      },
+      {
+        "page": 80,
+        "sheet": "E103",
+        "title": "ROOF POWER PLAN - AREA B",
+        "plan": false
+      },
+      {
+        "page": 81,
+        "sheet": "E104",
+        "title": "ELECTRICAL LIGHTING PLAN - AREA A",
+        "plan": false
+      },
+      {
+        "page": 82,
+        "sheet": "E105",
+        "title": "ELECTRICAL LIGHTING PLAN - AREA B",
+        "plan": false
+      },
+      {
+        "page": 83,
+        "sheet": "E111",
+        "title": "ELECTRICAL PLAN - ALT #1",
+        "plan": false
+      },
+      {
+        "page": 84,
+        "sheet": "E601",
+        "title": "ELECTRICAL SCHEDULES AND DETAILS",
+        "plan": false
+      },
+      {
+        "page": 85,
+        "sheet": "E611",
+        "title": "SCHEDULES & DETAILS - ALT #1",
+        "plan": false
+      }
+    ],
+    "plan_sheets": [
+      {
+        "page": 27,
+        "sheet": "A113",
+        "title": "MAIN LEVEL FLOOR PLAN - ALT. 1",
+        "rooms": 14,
+        "scales": [
+          "3/16\" = 1'-0\"",
+          "0 SCALE: 3/16\" = 1'-0\""
+        ],
+        "points_per_foot": [
+          13.5
+        ]
+      },
+      {
+        "page": 39,
+        "sheet": "A501",
+        "title": "PLAN DETAILS",
+        "rooms": 3,
+        "scales": [
+          "1 1/2\" = 1'-0\"",
+          "1 1/2\" = 1'-0\"",
+          "1 1/2\" = 1'-0\"",
+          "1 1/2\" = 1'-0\"",
+          "SCALE: 1 1/2\" = 1'-0\""
+        ],
+        "points_per_foot": [
+          108
+        ]
+      }
+    ],
+    "rooms": [
+      {
+        "page": 27,
+        "sheet": "A113",
+        "number": "SC-1",
+        "name": "TAG",
+        "x": 1304,
+        "y": 120,
+        "h": 9.451916219231999,
+        "corridor": false,
+        "points_per_foot": 13.5
+      },
+      {
+        "page": 27,
+        "sheet": "A113",
+        "number": "MC-1",
+        "name": "TAG",
+        "x": 1304,
+        "y": 176,
+        "h": 9.451916219231999,
+        "corridor": false,
+        "points_per_foot": 13.5
+      },
+      {
+        "page": 27,
+        "sheet": "A113",
+        "number": "103",
+        "name": "STORAGE",
+        "x": 1884,
+        "y": 785,
+        "h": 9.603716158511999,
+        "corridor": false,
+        "points_per_foot": 13.5
+      },
+      {
+        "page": 27,
+        "sheet": "A113",
+        "number": "MC-1",
+        "name": "SC-1",
+        "x": 1885,
+        "y": 829,
+        "h": 9.603716158511999,
+        "corridor": false,
+        "points_per_foot": 13.5
+      },
+      {
+        "page": 27,
+        "sheet": "A113",
+        "number": "104",
+        "name": "MEDICAL STORAGE",
+        "x": 1748,
+        "y": 1033,
+        "h": 9.603716158511999,
+        "corridor": false,
+        "points_per_foot": 13.5
+      },
+      {
+        "page": 27,
+        "sheet": "A113",
+        "number": "105",
+        "name": "STORAGE ROOM",
+        "x": 1975,
+        "y": 1023,
+        "h": 9.603716158511999,
+        "corridor": false,
+        "points_per_foot": 13.5
+      },
+      {
+        "page": 27,
+        "sheet": "A113",
+        "number": "MC-1",
+        "name": "SC-1",
+        "x": 1976,
+        "y": 1058,
+        "h": 9.603716158511999,
+        "corridor": false,
+        "points_per_foot": 13.5
+      },
+      {
+        "page": 27,
+        "sheet": "A113",
+        "number": "MC-1",
+        "name": "SC-1",
+        "x": 1845,
+        "y": 1075,
+        "h": 9.603716158511999,
+        "corridor": false,
+        "points_per_foot": 13.5
+      },
+      {
+        "page": 27,
+        "sheet": "A113",
+        "number": "101",
+        "name": "EXISTING BAYS",
+        "x": 703,
+        "y": 1094,
+        "h": 9.603716158511999,
+        "corridor": false,
+        "points_per_foot": 13.5
+      },
+      {
+        "page": 27,
+        "sheet": "A113",
+        "number": "102",
+        "name": "READY BAYS",
+        "x": 1523,
+        "y": 1085,
+        "h": 9.603716158511999,
+        "corridor": false,
+        "points_per_foot": 13.5
+      },
+      {
+        "page": 27,
+        "sheet": "A113",
+        "number": "MC-1",
+        "name": "SC-1",
+        "x": 1525,
+        "y": 1136,
+        "h": 9.603716158511999,
+        "corridor": false,
+        "points_per_foot": 13.5
+      },
+      {
+        "page": 27,
+        "sheet": "A113",
+        "number": "6298",
+        "name": "PROJECT # T2147-01",
+        "x": 2448,
+        "y": 1170,
+        "h": 17.0704931718,
+        "corridor": false,
+        "points_per_foot": 13.5
+      },
+      {
+        "page": 27,
+        "sheet": "A113",
+        "number": "106",
+        "name": "PERSONAL FITNESS AREA",
+        "x": 1878,
+        "y": 1263,
+        "h": 9.603716158511999,
+        "corridor": false,
+        "points_per_foot": 13.5
+      },
+      {
+        "page": 27,
+        "sheet": "A113",
+        "number": "MC-1",
+        "name": "SC-1",
+        "x": 1851,
+        "y": 1330,
+        "h": 9.603716158511999,
+        "corridor": false,
+        "points_per_foot": 13.5
+      },
+      {
+        "page": 39,
+        "sheet": "A501",
+        "number": "23.1",
+        "name": "(ABOVE)",
+        "x": 504,
+        "y": 943,
+        "h": 9.603716158511999,
+        "corridor": false,
+        "points_per_foot": 108
+      },
+      {
+        "page": 39,
+        "sheet": "A501",
+        "number": "C1",
+        "name": "(ABOVE)",
+        "x": 145,
+        "y": 1104,
+        "h": 9.603716158511999,
+        "corridor": false,
+        "points_per_foot": 108
+      },
+      {
+        "page": 39,
+        "sheet": "A501",
+        "number": "6298",
+        "name": "PROJECT # T2147-01",
+        "x": 2448,
+        "y": 1170,
+        "h": 17.0704931718,
+        "corridor": false,
+        "points_per_foot": 108
+      }
+    ],
+    "tags": [],
+    "unmatched_tags": [],
+    "marks_not_on_plan": [
+      {
+        "mark": "129C",
+        "page": 42
+      },
+      {
+        "mark": "160",
+        "page": 42
+      },
+      {
+        "mark": "161",
+        "page": 42
+      },
+      {
+        "mark": "162",
+        "page": 42
+      },
+      {
+        "mark": "163",
+        "page": 42
+      },
+      {
+        "mark": "164",
+        "page": 42
+      },
+      {
+        "mark": "165A",
+        "page": 42
+      },
+      {
+        "mark": "165B",
+        "page": 42
+      },
+      {
+        "mark": "166",
+        "page": 42
+      },
+      {
+        "mark": "167A",
+        "page": 42
+      },
+      {
+        "mark": "167B",
+        "page": 42
+      },
+      {
+        "mark": "168A",
+        "page": 42
+      },
+      {
+        "mark": "168B",
+        "page": 42
+      },
+      {
+        "mark": "169A",
+        "page": 42
+      },
+      {
+        "mark": "169B",
+        "page": 42
+      },
+      {
+        "mark": "169C",
+        "page": 42
+      }
+    ],
+    "counts": {
+      "plan_sheets": 2,
+      "rooms": 17,
+      "corridors": 0,
+      "tags": 0,
+      "unmatched_tags": 0,
+      "schedule_marks": 16,
+      "marks_not_on_plan": 16
+    }
+  },
+  "diagnostic_note": "Unchanged S1 reader supplied harvest schedule-row regex marks, not production doors or audited truth. Tag-shaped text can be room/grid/detail numbers. Unmatched tags are style candidates, not verified doors.",
+  "harvest_schedule_rows": [
+    {
+      "page": 42,
+      "marks": [
+        "161",
+        "162",
+        "163",
+        "164",
+        "165A",
+        "165B",
+        "166",
+        "167A",
+        "167B",
+        "168A",
+        "169A",
+        "169B",
+        "169C"
+      ],
+      "lines": [
+        "                                                                                                                                                                                                                                                                                                      161        3' - 0\"   7' - 0\"     1 3/4\"             F   HM           PNT-3      HM1     HM         PNT-3      2/A601    6/A601       NONE         3          161",
+        "                                                                                                                                                                                                                                                                                                      162        3' - 0\"   7' - 0\"     1 3/4\"             F   HM           PNT-3      HM1     HM         PNT-3      2/A601    6/A601       NONE         3          162",
+        "                                                                                                                                                                                                                                                                                                      163        3' - 0\"   7' - 0\"     1 3/4\"             F   HM           PNT-3      HM1     HM         PNT-3      2/A601    6/A601       NONE         3          163",
+        "                                                                                                                                                                                                                                                                                                      164        3' - 0\"   7' - 0\"     1 3/4\"             F   HM           PNT-3      HM1     HM         PNT-3      2/A601    6/A601       NONE         3          164",
+        "                                                                                                                                                                                                                                                                                                     165A        3' - 0\"   7' - 0\"     1 3/4\"             F   HM           PNT-3      HM1     HM         PNT-3      2/A601    6/A601       NONE         3         165A",
+        "                                                                                                                                                                                                                                                                                                     165B        3' - 0\"   7' - 0\"     1 3/4\"             F   HM           PNT-3      HM1     HM         PNT-3      2/A601    6/A601       NONE         3         165B",
+        "                                                                                                                        HM1                             HM2                                                    AL1                                                         AL2                        166        3' - 0\"   7' - 0\"     1 3/4\"             F   HM           PNT-3      HM1     HM         PNT-3      2/A601    6/A601       NONE         4          166",
+        "                                                                                                                                                                                                                                                                                                     167A        3' - 0\"   7' - 0\"     1 3/4\"             F   HM           PNT-3      HM1     HM         PNT-3      2/A601    6/A601       NONE         3         167A                                                KURT J FANDERCLAI - ARCHITECT",
+        "                                       DOOR TYPES                                                                                                              FRAME TYPES                                                                                                                           167B        3' - 0\"   7' - 0\"     1 3/4\"             F   HM           PNT-3      HM1     HM         PNT-3      2/A601    6/A601       NONE         3         167B                                                MO # A-2023012887",
+        "                                                                                                                                                                                                                                                                                                     168A        3' - 0\"   7' - 0\"     1 3/4\"             F   HM           PNT-3      HM1     HM         PNT-3      2/A601    6/A601       NONE         3         168A",
+        "                                                                                                                                                                                                                                                                                                     169A        3' - 0\"   7' - 0\"     1 3/4\"          F      HM           PNT-3      HM1     HM         PNT-3      2/A601    6/A601       NONE         4         169A",
+        "                                                                                                                                                                                                                                                                                                     169B        3' - 0\"   7' - 0\"     1 3/4\"          F      HM           PNT-3      HM2     HM         PNT-3      1/A601    5/A601       NONE         1         169B   -",
+        "                                                                                                                                                                                                                                                                                                     169C        8' - 0\"   6' - 8\"     1 1/2\"         OH      STEEL        PNT-3       --     --         --         3/A601    7/A601       NONE         -         169C"
+      ]
+    },
+    {
+      "page": 43,
+      "marks": [
+        "101A",
+        "101B",
+        "102A",
+        "102B",
+        "102C",
+        "102D",
+        "103A",
+        "103B",
+        "104",
+        "105",
+        "106A",
+        "106B",
+        "106C"
+      ],
+      "lines": [
+        "                                                                                                                          101A        3' - 0\"     7' - 0\"      1 3/4\"      F       --          PNT-1             --   --         PNT-1        --        --                   N/A  --        101A  EXISTING DOOR; SCOPE LIMITED TO REPAINTING",
+        "                                                                                                                          101B        3' - 0\"     7' - 0\"      1 3/4\"      F       --          PNT-1             --   --         PNT-1        --        --                   N/A  --        101B  EXISTING DOOR; SCOPE LIMITED TO REPAINTING                                   SEE STRUCTURAL DWG'S",
+        "                                                                                                                          102A        12' - 0\"   14' - 0\"        2\"       OH       STEEL       PREF              --   STEEL      PREF         2/A501    4/A501               N/A  N/A       102A",
+        "                                                                                                                          102B        12' - 0\"   14' - 0\"        2\"       OH       STEEL       PREF              --   STEEL      PREF         2/A501    4/A501               N/A  N/A       102B                                                                               BASE. SEE CIVIL DWG'S",
+        "                                                                                                2\"                        102C        12' - 0\"   14' - 0\"        2\"       OH       STEEL       PREF              --   STEEL      PREF         2/A501    4/A501               N/A  N/A       102C                                                                     061000.01 2X4 WALL NAILER LAID FLAT @ 2'-0\" O.C.",
+        "                                                                                                                          102D        12' - 0\"   14' - 0\"        2\"       OH       STEEL       PREF              --   STEEL      PREF         2/A501    4/A501               N/A  N/A       102D                                                                     061000.11 2X WOOD DOOR HEADER - SEE STRUCTURAL DWG'S FOR",
+        "                                                                                                                          103A        3' - 0\"     7' - 0\"      1 3/4\"      F       HM          PNT-1             1    HM         PNT-1        2/A601    5/A601               N/A  5         103A                                                                               MINIMUM SIZE AND TYPE",
+        "                                                                                                                          103B        8' - 0\"    14' - 0\"        2\"       OH       STEEL       PREF              --   STEEL      PREF         3/A601    6/A601               N/A  N/A       103B                                                                     061000.15 (2) 2x6 STUDS @ DOOR JAMBS UNLESS NOTED OTHERWISE",
+        "                                                                                                                           104        3' - 0\"     7' - 0\"      1 3/4\"      F       HM          PNT-1             1    HM         PNT-1        2/A601    5/A601               N/A  3          104                                                                               BY STRUCTURAL DWG'S",
+        "                                                                                                                           105        3' - 0\"     7' - 0\"      1 3/4\"      F       HM          PNT-1             1    HM         PNT-1        2/A601    5/A601               N/A  4          105                                                                     061000.16 TREATED WOOD BLOCKING AS REQUIRED",
+        "                                                                                                                          106A        3' - 0\"     7' - 0\"      1 3/4\"      F       HM          PNT-1             1    HM         PNT-1        1/A601    4/A601    7/A601     N/A  1         106A                                                                     061000.17 2X6 WOOD STUDS @ 16\" O.C. MAX. SEE STRUCTURAL DWG'S",
+        "                                                                                                                          106B        8' - 0\"     8' - 0\"        2\"       OH       STEEL       PREF              --   STEEL      PREF         2/A501    8/A601               N/A  N/A       106B  PROVIDE HIGH LIFT TRACK",
+        "                                                                                                                          106C        3' - 0\"     7' - 0\"      1 3/4\"      F       HM          PNT-1             1    HM         PNT-1        2/A601    5/A601               N/A  2         106C                                                                     061000.21 2X WOOD BLOCKING                                       KURT J FANDERCLAI - ARCHITECT"
+      ]
+    }
+  ],
+  "harvest_schedule_marks": [
+    {
+      "mark": "161",
+      "page": 42
+    },
+    {
+      "mark": "162",
+      "page": 42
+    },
+    {
+      "mark": "163",
+      "page": 42
+    },
+    {
+      "mark": "164",
+      "page": 42
+    },
+    {
+      "mark": "165A",
+      "page": 42
+    },
+    {
+      "mark": "165B",
+      "page": 42
+    },
+    {
+      "mark": "166",
+      "page": 42
+    },
+    {
+      "mark": "167A",
+      "page": 42
+    },
+    {
+      "mark": "167B",
+      "page": 42
+    },
+    {
+      "mark": "168A",
+      "page": 42
+    },
+    {
+      "mark": "169A",
+      "page": 42
+    },
+    {
+      "mark": "169B",
+      "page": 42
+    },
+    {
+      "mark": "169C",
+      "page": 42
+    },
+    {
+      "mark": "101A",
+      "page": 43
+    },
+    {
+      "mark": "101B",
+      "page": 43
+    },
+    {
+      "mark": "102A",
+      "page": 43
+    },
+    {
+      "mark": "102B",
+      "page": 43
+    },
+    {
+      "mark": "102C",
+      "page": 43
+    },
+    {
+      "mark": "102D",
+      "page": 43
+    },
+    {
+      "mark": "103A",
+      "page": 43
+    },
+    {
+      "mark": "103B",
+      "page": 43
+    },
+    {
+      "mark": "104",
+      "page": 43
+    },
+    {
+      "mark": "105",
+      "page": 43
+    },
+    {
+      "mark": "106A",
+      "page": 43
+    },
+    {
+      "mark": "106B",
+      "page": 43
+    },
+    {
+      "mark": "106C",
+      "page": 43
+    }
+  ],
+  "harvest_marks_plan": {
+    "sheets": [
+      {
+        "page": 1,
+        "sheet": "G001",
+        "title": "KLINGNER & ASSOCIATES, P.C.",
+        "plan": false
+      },
+      {
+        "page": 2,
+        "sheet": "G002",
+        "title": "INDEX SHEET",
+        "plan": false
+      },
+      {
+        "page": 3,
+        "sheet": "G110",
+        "title": "CODE PLAN & REVIEW",
+        "plan": false
+      },
+      {
+        "page": 4,
+        "sheet": "G111",
+        "title": "CODE REVIEW",
+        "plan": false
+      },
+      {
+        "page": 5,
+        "sheet": "G112",
+        "title": "OCCUPANCY LEGEND",
+        "plan": false
+      },
+      {
+        "page": 6,
+        "sheet": "C001",
+        "title": "GENERAL NOTES AND LEGEND",
+        "plan": false
+      },
+      {
+        "page": 7,
+        "sheet": "CD101",
+        "title": "EXISTING CONDITIONS AND DEMOLITION",
+        "plan": false
+      },
+      {
+        "page": 8,
+        "sheet": "CD102",
+        "title": "CONDITIONS AND DEMOLITION SITE PLAN - ALT #1",
+        "plan": false
+      },
+      {
+        "page": 9,
+        "sheet": "C101",
+        "title": "SITE AND UTILITY PLAN",
+        "plan": false
+      },
+      {
+        "page": 10,
+        "sheet": "C102",
+        "title": "SITE AND UTILITY PLAN - ALT #1",
+        "plan": false
+      },
+      {
+        "page": 11,
+        "sheet": "C201",
+        "title": "EROSION CONTROL PLAN",
+        "plan": false
+      },
+      {
+        "page": 12,
+        "sheet": "C202",
+        "title": "GRADING AND EROSION CONTROL PLAN - ALT #1",
+        "plan": false
+      },
+      {
+        "page": 13,
+        "sheet": "C501",
+        "title": "SITE DETAILS",
+        "plan": false
+      },
+      {
+        "page": 14,
+        "sheet": "C502",
+        "title": "ALT - #1",
+        "plan": false
+      },
+      {
+        "page": 15,
+        "sheet": "C503",
+        "title": "ALT - #1",
+        "plan": false
+      },
+      {
+        "page": 16,
+        "sheet": "C504",
+        "title": "ALT - #1",
+        "plan": false
+      },
+      {
+        "page": 17,
+        "sheet": "AD110",
+        "title": "FIRST FLOOR DEMOLITION PLAN",
+        "plan": false
+      },
+      {
+        "page": 18,
+        "sheet": "A010",
+        "title": "PARTITION TYPES & PARTITION",
+        "plan": false
+      },
+      {
+        "page": 19,
+        "sheet": "A011",
+        "title": "FIRESTOPPING DETAILS",
+        "plan": false
+      },
+      {
+        "page": 20,
+        "sheet": "A012",
+        "title": "FIRESTOPPING DETAILS",
+        "plan": false
+      },
+      {
+        "page": 21,
+        "sheet": "A013",
+        "title": "FIRESTOPPING DETAILS",
+        "plan": false
+      },
+      {
+        "page": 22,
+        "sheet": null,
+        "title": null,
+        "plan": false
+      },
+      {
+        "page": 23,
+        "sheet": null,
+        "title": null,
+        "plan": false
+      },
+      {
+        "page": 24,
+        "sheet": null,
+        "title": null,
+        "plan": false
+      },
+      {
+        "page": 25,
+        "sheet": null,
+        "title": null,
+        "plan": false
+      },
+      {
+        "page": 26,
+        "sheet": null,
+        "title": null,
+        "plan": false
+      },
+      {
+        "page": 27,
+        "sheet": "A113",
+        "title": "MAIN LEVEL FLOOR PLAN - ALT. 1",
+        "plan": true
+      },
+      {
+        "page": 28,
+        "sheet": "A114",
+        "title": "REFLECTED CEILING PLAN - ALT. 1",
+        "plan": false
+      },
+      {
+        "page": 29,
+        "sheet": "A120",
+        "title": "ROOF PLAN",
+        "plan": false
+      },
+      {
+        "page": 30,
+        "sheet": "A121",
+        "title": "ROOF PLAN - ALT.",
+        "plan": false
+      },
+      {
+        "page": 31,
+        "sheet": "A201",
+        "title": "EXTERIOR ELEVATIONS",
+        "plan": false
+      },
+      {
+        "page": 32,
+        "sheet": "A202",
+        "title": "BUILDING ELEVATIONS - ALT. 1",
+        "plan": false
+      },
+      {
+        "page": 33,
+        "sheet": "A301",
+        "title": "BUILDING SECTIONS",
+        "plan": false
+      },
+      {
+        "page": 34,
+        "sheet": "A302",
+        "title": "BUILDING SECTIONS - ALT. 1",
+        "plan": false
+      },
+      {
+        "page": 35,
+        "sheet": "A310",
+        "title": "WALL SECTIONS",
+        "plan": false
+      },
+      {
+        "page": 36,
+        "sheet": "A311",
+        "title": "WALL SECTIONS",
+        "plan": false
+      },
+      {
+        "page": 37,
+        "sheet": "A312",
+        "title": "WALL SECTIONS",
+        "plan": false
+      },
+      {
+        "page": 38,
+        "sheet": "A313",
+        "title": "WALL SECTIONS - ALT. 1",
+        "plan": false
+      },
+      {
+        "page": 39,
+        "sheet": "A501",
+        "title": "PLAN DETAILS",
+        "plan": true
+      },
+      {
+        "page": 40,
+        "sheet": "A502",
+        "title": "DETAILS - ALT. 1",
+        "plan": false
+      },
+      {
+        "page": 41,
+        "sheet": "A510",
+        "title": "WALL SECTION DETAILS",
+        "plan": false
+      },
+      {
+        "page": 42,
+        "sheet": "A601",
+        "title": "DOOR SCHEDULE & DETAILS",
+        "plan": false
+      },
+      {
+        "page": 43,
+        "sheet": "A602",
+        "title": "DOOR SCHEDULE & DETAILS - ALT.",
+        "plan": false
+      },
+      {
+        "page": 44,
+        "sheet": null,
+        "title": null,
+        "plan": false
+      },
+      {
+        "page": 45,
+        "sheet": null,
+        "title": null,
+        "plan": false
+      },
+      {
+        "page": 46,
+        "sheet": "A710",
+        "title": "FIRST FLOOR SIGNAGE PLAN",
+        "plan": false
+      },
+      {
+        "page": 47,
+        "sheet": "S001",
+        "title": "STRUCTURAL NOTES",
+        "plan": false
+      },
+      {
+        "page": 48,
+        "sheet": "S002",
+        "title": "STRUCTURAL NOTES",
+        "plan": false
+      },
+      {
+        "page": 49,
+        "sheet": "S003",
+        "title": "STRUCTURAL NOTES - ALT #1",
+        "plan": false
+      },
+      {
+        "page": 50,
+        "sheet": "S004",
+        "title": "STRUCTURAL NOTES - ALT #1",
+        "plan": false
+      },
+      {
+        "page": 51,
+        "sheet": "S101",
+        "title": "FOUNDATION & SLAB PLAN",
+        "plan": false
+      },
+      {
+        "page": 52,
+        "sheet": "S102",
+        "title": "FOUNDATION AND SLAB PLAN - ALT",
+        "plan": false
+      },
+      {
+        "page": 53,
+        "sheet": "S201",
+        "title": "FRAMING PLAN",
+        "plan": false
+      },
+      {
+        "page": 54,
+        "sheet": "S202",
+        "title": "FRAMING PLAN - ALT #1",
+        "plan": false
+      },
+      {
+        "page": 55,
+        "sheet": "S203",
+        "title": "ROOF PLAN - ALT",
+        "plan": false
+      },
+      {
+        "page": 56,
+        "sheet": "S301",
+        "title": "FRAMING ELEVATIONS",
+        "plan": false
+      },
+      {
+        "page": 57,
+        "sheet": "S401",
+        "title": "FOUNDATION DETAILS",
+        "plan": false
+      },
+      {
+        "page": 58,
+        "sheet": "S501",
+        "title": "STRUCTURAL DETAILS",
+        "plan": false
+      },
+      {
+        "page": 59,
+        "sheet": "S502",
+        "title": "STRUCTURAL DETAILS",
+        "plan": false
+      },
+      {
+        "page": 60,
+        "sheet": "S601",
+        "title": "COLD-FORM DETAILS",
+        "plan": false
+      },
+      {
+        "page": 61,
+        "sheet": "MEP001",
+        "title": "MEP SYMBOLS LIST",
+        "plan": false
+      },
+      {
+        "page": 62,
+        "sheet": "D101",
+        "title": "DEMOLITION PLAN - AREA A",
+        "plan": false
+      },
+      {
+        "page": 63,
+        "sheet": "D102",
+        "title": "DEMOLITION PLAN - AREA B",
+        "plan": false
+      },
+      {
+        "page": 64,
+        "sheet": "FP111",
+        "title": "PROTECTION PLAN - ALT #2",
+        "plan": false
+      },
+      {
+        "page": 65,
+        "sheet": "P101",
+        "title": "PLUMBING PLAN - NEW ADDITION",
+        "plan": false
+      },
+      {
+        "page": 66,
+        "sheet": "P102",
+        "title": "PLUMBING ROOF PLAN - NEW",
+        "plan": false
+      },
+      {
+        "page": 67,
+        "sheet": "P103",
+        "title": "EXTERIOR GAS PIPING PLAN - AREA B",
+        "plan": false
+      },
+      {
+        "page": 68,
+        "sheet": "P111",
+        "title": "PLUMBING PLAN - ALT #1",
+        "plan": false
+      },
+      {
+        "page": 69,
+        "sheet": "M101",
+        "title": "MECHANICAL FLOOR PLAN - AREA A",
+        "plan": false
+      },
+      {
+        "page": 70,
+        "sheet": "M102",
+        "title": "MECHANICAL FLOOR PLAN - AREA B",
+        "plan": false
+      },
+      {
+        "page": 71,
+        "sheet": "M103",
+        "title": "MECHANICAL ROOF PLAN - AREA B",
+        "plan": false
+      },
+      {
+        "page": 72,
+        "sheet": "M111",
+        "title": "HVAC PLAN - ALT",
+        "plan": false
+      },
+      {
+        "page": 73,
+        "sheet": "M401",
+        "title": "HVAC AIRFLOW SCHEMATIC",
+        "plan": false
+      },
+      {
+        "page": 74,
+        "sheet": "M601",
+        "title": "MECHANICAL SCHEDULES AND DETAILS",
+        "plan": false
+      },
+      {
+        "page": 75,
+        "sheet": "M611",
+        "title": "HVAC SCHEDULES & DETAILS - ALT",
+        "plan": false
+      },
+      {
+        "page": 76,
+        "sheet": "M701",
+        "title": "SEQUENCE OF OPERATION",
+        "plan": false
+      },
+      {
+        "page": 77,
+        "sheet": "M711",
+        "title": "HVAC SEQUENCE OF OPERATION - ALT #1",
+        "plan": false
+      },
+      {
+        "page": 78,
+        "sheet": "E101",
+        "title": "ELECTRICAL POWER PLAN - AREA A",
+        "plan": false
+      },
+      {
+        "page": 79,
+        "sheet": "E102",
+        "title": "ELECTRICAL POWER PLAN - AREA B",
+        "plan": false
+      },
+      {
+        "page": 80,
+        "sheet": "E103",
+        "title": "ROOF POWER PLAN - AREA B",
+        "plan": false
+      },
+      {
+        "page": 81,
+        "sheet": "E104",
+        "title": "ELECTRICAL LIGHTING PLAN - AREA A",
+        "plan": false
+      },
+      {
+        "page": 82,
+        "sheet": "E105",
+        "title": "ELECTRICAL LIGHTING PLAN - AREA B",
+        "plan": false
+      },
+      {
+        "page": 83,
+        "sheet": "E111",
+        "title": "ELECTRICAL PLAN - ALT #1",
+        "plan": false
+      },
+      {
+        "page": 84,
+        "sheet": "E601",
+        "title": "ELECTRICAL SCHEDULES AND DETAILS",
+        "plan": false
+      },
+      {
+        "page": 85,
+        "sheet": "E611",
+        "title": "SCHEDULES & DETAILS - ALT #1",
+        "plan": false
+      }
+    ],
+    "plan_sheets": [
+      {
+        "page": 27,
+        "sheet": "A113",
+        "title": "MAIN LEVEL FLOOR PLAN - ALT. 1",
+        "rooms": 14,
+        "scales": [
+          "3/16\" = 1'-0\"",
+          "0 SCALE: 3/16\" = 1'-0\""
+        ],
+        "points_per_foot": [
+          13.5
+        ]
+      },
+      {
+        "page": 39,
+        "sheet": "A501",
+        "title": "PLAN DETAILS",
+        "rooms": 3,
+        "scales": [
+          "1 1/2\" = 1'-0\"",
+          "1 1/2\" = 1'-0\"",
+          "1 1/2\" = 1'-0\"",
+          "1 1/2\" = 1'-0\"",
+          "SCALE: 1 1/2\" = 1'-0\""
+        ],
+        "points_per_foot": [
+          108
+        ]
+      }
+    ],
+    "rooms": [
+      {
+        "page": 27,
+        "sheet": "A113",
+        "number": "SC-1",
+        "name": "TAG",
+        "x": 1304,
+        "y": 120,
+        "h": 9.451916219231999,
+        "corridor": false,
+        "points_per_foot": 13.5
+      },
+      {
+        "page": 27,
+        "sheet": "A113",
+        "number": "MC-1",
+        "name": "TAG",
+        "x": 1304,
+        "y": 176,
+        "h": 9.451916219231999,
+        "corridor": false,
+        "points_per_foot": 13.5
+      },
+      {
+        "page": 27,
+        "sheet": "A113",
+        "number": "103",
+        "name": "STORAGE",
+        "x": 1884,
+        "y": 785,
+        "h": 9.603716158511999,
+        "corridor": false,
+        "points_per_foot": 13.5
+      },
+      {
+        "page": 27,
+        "sheet": "A113",
+        "number": "MC-1",
+        "name": "SC-1",
+        "x": 1885,
+        "y": 829,
+        "h": 9.603716158511999,
+        "corridor": false,
+        "points_per_foot": 13.5
+      },
+      {
+        "page": 27,
+        "sheet": "A113",
+        "number": "104",
+        "name": "MEDICAL STORAGE",
+        "x": 1748,
+        "y": 1033,
+        "h": 9.603716158511999,
+        "corridor": false,
+        "points_per_foot": 13.5
+      },
+      {
+        "page": 27,
+        "sheet": "A113",
+        "number": "105",
+        "name": "STORAGE ROOM",
+        "x": 1975,
+        "y": 1023,
+        "h": 9.603716158511999,
+        "corridor": false,
+        "points_per_foot": 13.5
+      },
+      {
+        "page": 27,
+        "sheet": "A113",
+        "number": "MC-1",
+        "name": "SC-1",
+        "x": 1976,
+        "y": 1058,
+        "h": 9.603716158511999,
+        "corridor": false,
+        "points_per_foot": 13.5
+      },
+      {
+        "page": 27,
+        "sheet": "A113",
+        "number": "MC-1",
+        "name": "SC-1",
+        "x": 1845,
+        "y": 1075,
+        "h": 9.603716158511999,
+        "corridor": false,
+        "points_per_foot": 13.5
+      },
+      {
+        "page": 27,
+        "sheet": "A113",
+        "number": "101",
+        "name": "EXISTING BAYS",
+        "x": 703,
+        "y": 1094,
+        "h": 9.603716158511999,
+        "corridor": false,
+        "points_per_foot": 13.5
+      },
+      {
+        "page": 27,
+        "sheet": "A113",
+        "number": "102",
+        "name": "READY BAYS",
+        "x": 1523,
+        "y": 1085,
+        "h": 9.603716158511999,
+        "corridor": false,
+        "points_per_foot": 13.5
+      },
+      {
+        "page": 27,
+        "sheet": "A113",
+        "number": "MC-1",
+        "name": "SC-1",
+        "x": 1525,
+        "y": 1136,
+        "h": 9.603716158511999,
+        "corridor": false,
+        "points_per_foot": 13.5
+      },
+      {
+        "page": 27,
+        "sheet": "A113",
+        "number": "6298",
+        "name": "PROJECT # T2147-01",
+        "x": 2448,
+        "y": 1170,
+        "h": 17.0704931718,
+        "corridor": false,
+        "points_per_foot": 13.5
+      },
+      {
+        "page": 27,
+        "sheet": "A113",
+        "number": "106",
+        "name": "PERSONAL FITNESS AREA",
+        "x": 1878,
+        "y": 1263,
+        "h": 9.603716158511999,
+        "corridor": false,
+        "points_per_foot": 13.5
+      },
+      {
+        "page": 27,
+        "sheet": "A113",
+        "number": "MC-1",
+        "name": "SC-1",
+        "x": 1851,
+        "y": 1330,
+        "h": 9.603716158511999,
+        "corridor": false,
+        "points_per_foot": 13.5
+      },
+      {
+        "page": 39,
+        "sheet": "A501",
+        "number": "23.1",
+        "name": "(ABOVE)",
+        "x": 504,
+        "y": 943,
+        "h": 9.603716158511999,
+        "corridor": false,
+        "points_per_foot": 108
+      },
+      {
+        "page": 39,
+        "sheet": "A501",
+        "number": "C1",
+        "name": "(ABOVE)",
+        "x": 145,
+        "y": 1104,
+        "h": 9.603716158511999,
+        "corridor": false,
+        "points_per_foot": 108
+      },
+      {
+        "page": 39,
+        "sheet": "A501",
+        "number": "6298",
+        "name": "PROJECT # T2147-01",
+        "x": 2448,
+        "y": 1170,
+        "h": 17.0704931718,
+        "corridor": false,
+        "points_per_foot": 108
+      }
+    ],
+    "tags": [
+      {
+        "mark": "101A",
+        "page": 27,
+        "sheet": "A113",
+        "x": 356,
+        "y": 642,
+        "h": 9.603716158511999,
+        "door_pages": [
+          43
+        ],
+        "room": "101",
+        "room_name": "EXISTING BAYS",
+        "room_by": "tag_number",
+        "points_per_foot": 13.5
+      },
+      {
+        "mark": "101B",
+        "page": 27,
+        "sheet": "A113",
+        "x": 1257,
+        "y": 659,
+        "h": 9.603716158511999,
+        "door_pages": [
+          43
+        ],
+        "room": "101",
+        "room_name": "EXISTING BAYS",
+        "room_by": "tag_number",
+        "points_per_foot": 13.5
+      },
+      {
+        "mark": "102A",
+        "page": 27,
+        "sheet": "A113",
+        "x": 1419,
+        "y": 675,
+        "h": 9.603716158511999,
+        "door_pages": [
+          43
+        ],
+        "room": "102",
+        "room_name": "READY BAYS",
+        "room_by": "tag_number",
+        "points_per_foot": 13.5
+      },
+      {
+        "mark": "102B",
+        "page": 27,
+        "sheet": "A113",
+        "x": 1594,
+        "y": 675,
+        "h": 9.603716158511999,
+        "door_pages": [
+          43
+        ],
+        "room": "102",
+        "room_name": "READY BAYS",
+        "room_by": "tag_number",
+        "points_per_foot": 13.5
+      },
+      {
+        "mark": "103B",
+        "page": 27,
+        "sheet": "A113",
+        "x": 1758,
+        "y": 783,
+        "h": 9.603716158511999,
+        "door_pages": [
+          43
+        ],
+        "room": "103",
+        "room_name": "STORAGE",
+        "room_by": "tag_number",
+        "points_per_foot": 13.5
+      },
+      {
+        "mark": "103A",
+        "page": 27,
+        "sheet": "A113",
+        "x": 1744,
+        "y": 945,
+        "h": 9.603716158511999,
+        "door_pages": [
+          43
+        ],
+        "room": "103",
+        "room_name": "STORAGE",
+        "room_by": "tag_number",
+        "points_per_foot": 13.5
+      },
+      {
+        "mark": "104",
+        "page": 27,
+        "sheet": "A113",
+        "x": 1710,
+        "y": 1097,
+        "h": 9.603716158511999,
+        "door_pages": [
+          43
+        ],
+        "room": "104",
+        "room_name": "MEDICAL STORAGE",
+        "room_by": "nearest_label",
+        "unsure": true,
+        "points_per_foot": 13.5
+      },
+      {
+        "mark": "105",
+        "page": 27,
+        "sheet": "A113",
+        "x": 2016,
+        "y": 1149,
+        "h": 9.603716158511999,
+        "door_pages": [
+          43
+        ],
+        "room": "MC-1",
+        "room_name": "SC-1",
+        "room_by": "nearest_label",
+        "unsure": true,
+        "points_per_foot": 13.5
+      },
+      {
+        "mark": "106A",
+        "page": 27,
+        "sheet": "A113",
+        "x": 1733,
+        "y": 1493,
+        "h": 9.603716158511999,
+        "door_pages": [
+          43
+        ],
+        "room": "106",
+        "room_name": "PERSONAL FITNESS AREA",
+        "room_by": "tag_number",
+        "points_per_foot": 13.5
+      },
+      {
+        "mark": "102D",
+        "page": 27,
+        "sheet": "A113",
+        "x": 1594,
+        "y": 1444,
+        "h": 9.603716158511999,
+        "door_pages": [
+          43
+        ],
+        "room": "102",
+        "room_name": "READY BAYS",
+        "room_by": "tag_number",
+        "points_per_foot": 13.5
+      },
+      {
+        "mark": "102C",
+        "page": 27,
+        "sheet": "A113",
+        "x": 1405,
+        "y": 1444,
+        "h": 9.603716158511999,
+        "door_pages": [
+          43
+        ],
+        "room": "102",
+        "room_name": "READY BAYS",
+        "room_by": "tag_number",
+        "points_per_foot": 13.5
+      },
+      {
+        "mark": "106B",
+        "page": 27,
+        "sheet": "A113",
+        "x": 1945,
+        "y": 1444,
+        "h": 9.603716158511999,
+        "door_pages": [
+          43
+        ],
+        "room": "106",
+        "room_name": "PERSONAL FITNESS AREA",
+        "room_by": "tag_number",
+        "points_per_foot": 13.5
+      },
+      {
+        "mark": "106C",
+        "page": 27,
+        "sheet": "A113",
+        "x": 1712,
+        "y": 1153,
+        "h": 9.603716158511999,
+        "door_pages": [
+          43
+        ],
+        "room": "106",
+        "room_name": "PERSONAL FITNESS AREA",
+        "room_by": "tag_number",
+        "points_per_foot": 13.5
+      }
+    ],
+    "unmatched_tags": [],
+    "marks_not_on_plan": [
+      {
+        "mark": "161",
+        "page": 42
+      },
+      {
+        "mark": "162",
+        "page": 42
+      },
+      {
+        "mark": "163",
+        "page": 42
+      },
+      {
+        "mark": "164",
+        "page": 42
+      },
+      {
+        "mark": "165A",
+        "page": 42
+      },
+      {
+        "mark": "165B",
+        "page": 42
+      },
+      {
+        "mark": "166",
+        "page": 42
+      },
+      {
+        "mark": "167A",
+        "page": 42
+      },
+      {
+        "mark": "167B",
+        "page": 42
+      },
+      {
+        "mark": "168A",
+        "page": 42
+      },
+      {
+        "mark": "169A",
+        "page": 42
+      },
+      {
+        "mark": "169B",
+        "page": 42
+      },
+      {
+        "mark": "169C",
+        "page": 42
+      }
+    ],
+    "counts": {
+      "plan_sheets": 2,
+      "rooms": 17,
+      "corridors": 0,
+      "tags": 13,
+      "unmatched_tags": 0,
+      "schedule_marks": 26,
+      "marks_not_on_plan": 13
+    }
+  },
+  "truth": {
+    "tier": "oracle-checked",
+    "readers": {
+      "a": {
+        "doors": 16,
+        "sets": 0,
+        "items": 0,
+        "name": "production text layer (weyland-subx-worker/src/lib/text-layer-read.js)"
+      },
+      "b": {
+        "doors": 0,
+        "sets": 0,
+        "items": 0,
+        "name": "geometry first (tools/accuracy/truth/reader_b.mjs)",
+        "tables": 0
+      }
+    },
+    "agreement": {
+      "doors": {
+        "rows": 16,
+        "agreed": 0,
+        "disputed": 0,
+        "only_a": 16,
+        "only_b": 0,
+        "fields": {},
+        "agreement_rate": 0
+      },
+      "items": {
+        "rows": 0,
+        "agreed": 0,
+        "disputed": 0,
+        "only_a": 0,
+        "only_b": 0,
+        "fields": {},
+        "agreement_rate": null
+      },
+      "sets": {
+        "sets": 0,
+        "agreed": 0
+      }
+    },
+    "marks_on_plan": {
+      "applicable": true,
+      "total": 16,
+      "pass": 0,
+      "fail": 16,
+      "pass_rate": 0,
+      "examples": [
+        "mark 129C (schedule p.42) not tagged on any plan",
+        "mark 160 (schedule p.42) not tagged on any plan",
+        "mark 161 (schedule p.42) not tagged on any plan",
+        "mark 162 (schedule p.42) not tagged on any plan",
+        "mark 163 (schedule p.42) not tagged on any plan",
+        "mark 164 (schedule p.42) not tagged on any plan",
+        "mark 165A (schedule p.42) not tagged on any plan",
+        "mark 165B (schedule p.42) not tagged on any plan",
+        "mark 166 (schedule p.42) not tagged on any plan",
+        "mark 167A (schedule p.42) not tagged on any plan",
+        "mark 167B (schedule p.42) not tagged on any plan",
+        "mark 168A (schedule p.42) not tagged on any plan"
+      ],
+      "plan_sheets": [
+        "A113 p.27",
+        "A501 p.39"
+      ],
+      "plan_counts": {
+        "plan_sheets": 2,
+        "rooms": 17,
+        "corridors": 0,
+        "tags": 0,
+        "unmatched_tags": 0,
+        "schedule_marks": 16,
+        "marks_not_on_plan": 16
+      }
+    }
+  }
+}

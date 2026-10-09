@@ -1,0 +1,3604 @@
+{
+  "sha16": "f97e99f88a931e74",
+  "sha256": "f97e99f88a931e749a6f2a08027d47be715dbace3b4642ab6eff40f6ace2f2fd",
+  "rank": 2,
+  "source_url": "https://oa.mo.gov/sites/default/files/bid-opportunities/_R2502-01%20REBID%20Final%20Bid%20Plans.pdf",
+  "page_count": 147,
+  "candidate_plan_pages": [
+    18,
+    19,
+    20,
+    21,
+    23,
+    24,
+    25,
+    32,
+    55,
+    56,
+    57
+  ],
+  "candidate_schedule_pages": [
+    28,
+    32,
+    44,
+    45
+  ],
+  "production_schedule_pages": [
+    {
+      "page": 3,
+      "rows": 0,
+      "error": null
+    },
+    {
+      "page": 19,
+      "rows": 0,
+      "error": null
+    },
+    {
+      "page": 20,
+      "rows": 0,
+      "error": null
+    },
+    {
+      "page": 21,
+      "rows": 0,
+      "error": null
+    },
+    {
+      "page": 28,
+      "rows": 0,
+      "error": null
+    },
+    {
+      "page": 32,
+      "rows": 0,
+      "error": null
+    },
+    {
+      "page": 44,
+      "rows": 0,
+      "error": null
+    },
+    {
+      "page": 45,
+      "rows": 0,
+      "error": null
+    },
+    {
+      "page": 103,
+      "rows": 0,
+      "error": null
+    },
+    {
+      "page": 113,
+      "rows": 0,
+      "error": null
+    },
+    {
+      "page": 119,
+      "rows": 0,
+      "error": null
+    },
+    {
+      "page": 120,
+      "rows": 0,
+      "error": null
+    }
+  ],
+  "production_doors": [],
+  "production_plan": {
+    "sheets": [
+      {
+        "page": 1,
+        "sheet": "G-001",
+        "title": "PROJECT NUMBER: R2502-01",
+        "plan": false
+      },
+      {
+        "page": 2,
+        "sheet": "G-002",
+        "title": "FACILITY #8136001003",
+        "plan": false
+      },
+      {
+        "page": 3,
+        "sheet": "G-003",
+        "title": "FACILITY #8136001003",
+        "plan": false
+      },
+      {
+        "page": 4,
+        "sheet": "G-004",
+        "title": "ADA GENERAL SIGNAGE",
+        "plan": false
+      },
+      {
+        "page": 5,
+        "sheet": "V-101",
+        "title": "PARTIAL TOPOGRAPHIC SURVEY",
+        "plan": false
+      },
+      {
+        "page": 6,
+        "sheet": "C-001",
+        "title": "GENERAL NOTES AND DETAILS",
+        "plan": false
+      },
+      {
+        "page": 7,
+        "sheet": "C-101",
+        "title": "SITE & UTILITY PLAN",
+        "plan": false
+      },
+      {
+        "page": 8,
+        "sheet": "S-001",
+        "title": "SHEET 8 OF 147",
+        "plan": false
+      },
+      {
+        "page": 9,
+        "sheet": "S-101",
+        "title": "SHEET 9 OF 147",
+        "plan": false
+      },
+      {
+        "page": 10,
+        "sheet": "S-102",
+        "title": "SHEET 10 OF 147",
+        "plan": false
+      },
+      {
+        "page": 11,
+        "sheet": "S-103",
+        "title": "SHEET 11 OF 147",
+        "plan": false
+      },
+      {
+        "page": 12,
+        "sheet": "S-104",
+        "title": "SHEET 12 OF 147",
+        "plan": false
+      },
+      {
+        "page": 13,
+        "sheet": "S-111",
+        "title": "FACILITY #8136001006",
+        "plan": false
+      },
+      {
+        "page": 14,
+        "sheet": "S-121",
+        "title": "FACILITY #8136001003",
+        "plan": false
+      },
+      {
+        "page": 15,
+        "sheet": "S-501",
+        "title": "SECTION",
+        "plan": false
+      },
+      {
+        "page": 16,
+        "sheet": "S-511",
+        "title": "FACILITY #8136001006",
+        "plan": false
+      },
+      {
+        "page": 17,
+        "sheet": "A-001",
+        "title": "FACILITY #8136001003",
+        "plan": false
+      },
+      {
+        "page": 18,
+        "sheet": "A-002",
+        "title": "SHEET 18 OF 147",
+        "plan": false
+      },
+      {
+        "page": 19,
+        "sheet": "A-101",
+        "title": "SHEET 19 OF 147",
+        "plan": false
+      },
+      {
+        "page": 20,
+        "sheet": "A-102",
+        "title": "SHEET 20 OF 147",
+        "plan": false
+      },
+      {
+        "page": 21,
+        "sheet": "A-103",
+        "title": "SHEET 21 OF 147",
+        "plan": false
+      },
+      {
+        "page": 22,
+        "sheet": "A-104",
+        "title": "SHEET 22 OF 147",
+        "plan": false
+      },
+      {
+        "page": 23,
+        "sheet": "A-105",
+        "title": "SHEET 23 OF 147",
+        "plan": false
+      },
+      {
+        "page": 24,
+        "sheet": "A-106",
+        "title": "SHEET 24 OF 147",
+        "plan": false
+      },
+      {
+        "page": 25,
+        "sheet": "A-107",
+        "title": "SHEET 25 OF 147",
+        "plan": false
+      },
+      {
+        "page": 26,
+        "sheet": "A-108",
+        "title": "SHEET 26 OF 147",
+        "plan": false
+      },
+      {
+        "page": 27,
+        "sheet": "A-111",
+        "title": "FACILITY #8136001006",
+        "plan": false
+      },
+      {
+        "page": 28,
+        "sheet": "A-112",
+        "title": "FACILITY #8136001006",
+        "plan": false
+      },
+      {
+        "page": 29,
+        "sheet": "A-113",
+        "title": "FACILITY #8136001006",
+        "plan": false
+      },
+      {
+        "page": 30,
+        "sheet": "A-114",
+        "title": "FACILITY #8136001006",
+        "plan": false
+      },
+      {
+        "page": 31,
+        "sheet": "A-121",
+        "title": "FACILITY #8136001003",
+        "plan": false
+      },
+      {
+        "page": 32,
+        "sheet": "A-122",
+        "title": "FACILITY #8136001003",
+        "plan": false
+      },
+      {
+        "page": 33,
+        "sheet": "A-123",
+        "title": "FACILITY #8136001003",
+        "plan": false
+      },
+      {
+        "page": 34,
+        "sheet": "A-124",
+        "title": "FACILITY #8136001003",
+        "plan": false
+      },
+      {
+        "page": 35,
+        "sheet": "A-201",
+        "title": "SHEET 35 OF 147",
+        "plan": false
+      },
+      {
+        "page": 36,
+        "sheet": "A-401",
+        "title": "SECTION @ CLOSET",
+        "plan": false
+      },
+      {
+        "page": 37,
+        "sheet": "A-402",
+        "title": "KITCHENETE RM-113 ELEVATION",
+        "plan": false
+      },
+      {
+        "page": 38,
+        "sheet": "A-403",
+        "title": "CHASE",
+        "plan": false
+      },
+      {
+        "page": 39,
+        "sheet": "A-404",
+        "title": "RESTROOM - SINGLE BEDROOM SECOND FLOOR",
+        "plan": false
+      },
+      {
+        "page": 40,
+        "sheet": "A-405",
+        "title": "EXISTING INFILL",
+        "plan": false
+      },
+      {
+        "page": 41,
+        "sheet": "A-406",
+        "title": "SECTION THRU MECH. CHASE",
+        "plan": false
+      },
+      {
+        "page": 42,
+        "sheet": "A-501",
+        "title": "BOLLARD DETAIL",
+        "plan": false
+      },
+      {
+        "page": 43,
+        "sheet": "A-511",
+        "title": "FACILITY #8136001006",
+        "plan": false
+      },
+      {
+        "page": 44,
+        "sheet": "A-601",
+        "title": "GLZ-D",
+        "plan": false
+      },
+      {
+        "page": 45,
+        "sheet": "A-602",
+        "title": "WINDOW JAMB",
+        "plan": false
+      },
+      {
+        "page": 46,
+        "sheet": "A-603",
+        "title": "SHEET 46 OF 147",
+        "plan": false
+      },
+      {
+        "page": 47,
+        "sheet": "A-604",
+        "title": "ROLLER SHADE CEILING MOUNT",
+        "plan": false
+      },
+      {
+        "page": 48,
+        "sheet": "A-701",
+        "title": "SHEET 48 OF 147",
+        "plan": false
+      },
+      {
+        "page": 49,
+        "sheet": "A-702",
+        "title": "SHEET 49 OF 147",
+        "plan": false
+      },
+      {
+        "page": 50,
+        "sheet": "A-703",
+        "title": "SHEET 50 OF 147",
+        "plan": false
+      },
+      {
+        "page": 51,
+        "sheet": "A-704",
+        "title": "SHEET 51 OF 147",
+        "plan": false
+      },
+      {
+        "page": 52,
+        "sheet": "A-705",
+        "title": "SHEET 52 OF 147",
+        "plan": false
+      },
+      {
+        "page": 53,
+        "sheet": "A-706",
+        "title": "SHEET 53 OF 147",
+        "plan": false
+      },
+      {
+        "page": 54,
+        "sheet": "A-711",
+        "title": "FACILITY #8136001006",
+        "plan": false
+      },
+      {
+        "page": 55,
+        "sheet": "A-801",
+        "title": "SHEET 55 OF 147",
+        "plan": false
+      },
+      {
+        "page": 56,
+        "sheet": "A-802",
+        "title": "SHEET 56 OF 147",
+        "plan": false
+      },
+      {
+        "page": 57,
+        "sheet": "A-803",
+        "title": "SHEET 57 OF 147",
+        "plan": false
+      },
+      {
+        "page": 58,
+        "sheet": "P-001",
+        "title": "SHEET 58 OF 147",
+        "plan": false
+      },
+      {
+        "page": 59,
+        "sheet": "P-101.1",
+        "title": "KEY MAP",
+        "plan": false
+      },
+      {
+        "page": 60,
+        "sheet": "P-101.2",
+        "title": "KEY MAP",
+        "plan": false
+      },
+      {
+        "page": 61,
+        "sheet": "P-102.1",
+        "title": "KEY MAP",
+        "plan": false
+      },
+      {
+        "page": 62,
+        "sheet": "P-102.2",
+        "title": "KEY MAP",
+        "plan": false
+      },
+      {
+        "page": 63,
+        "sheet": "P-103.1",
+        "title": "KEY MAP",
+        "plan": false
+      },
+      {
+        "page": 64,
+        "sheet": "P-103.2",
+        "title": "KEY MAP",
+        "plan": false
+      },
+      {
+        "page": 65,
+        "sheet": "P-104.1",
+        "title": "KEY MAP",
+        "plan": false
+      },
+      {
+        "page": 66,
+        "sheet": "P-105.1",
+        "title": "KEY MAP",
+        "plan": false
+      },
+      {
+        "page": 67,
+        "sheet": "P-105.2",
+        "title": "KEY MAP",
+        "plan": false
+      },
+      {
+        "page": 68,
+        "sheet": "P-106.1",
+        "title": "KEY MAP",
+        "plan": false
+      },
+      {
+        "page": 69,
+        "sheet": "P-106.2",
+        "title": "KEY MAP",
+        "plan": false
+      },
+      {
+        "page": 70,
+        "sheet": "P-107.1",
+        "title": "KEY MAP",
+        "plan": false
+      },
+      {
+        "page": 71,
+        "sheet": "P-107.2",
+        "title": "KEY MAP",
+        "plan": false
+      },
+      {
+        "page": 72,
+        "sheet": "P-108.1",
+        "title": "SHEET 72 OF 147",
+        "plan": false
+      },
+      {
+        "page": 73,
+        "sheet": "P-111",
+        "title": "RESTROOM RENO PLAN",
+        "plan": false
+      },
+      {
+        "page": 74,
+        "sheet": "P-401",
+        "title": "SHEET 74 OF 147",
+        "plan": false
+      },
+      {
+        "page": 75,
+        "sheet": "P-402",
+        "title": "SHEET 75 OF 147",
+        "plan": false
+      },
+      {
+        "page": 76,
+        "sheet": "P-501",
+        "title": "SANITARY RISER 1",
+        "plan": false
+      },
+      {
+        "page": 77,
+        "sheet": "P-502",
+        "title": "SANITARY RISER 15",
+        "plan": false
+      },
+      {
+        "page": 78,
+        "sheet": "P-503",
+        "title": "DOMESTIC WATER RISER 1",
+        "plan": false
+      },
+      {
+        "page": 79,
+        "sheet": "P-504",
+        "title": "DOMESTIC WATER RISER 11",
+        "plan": false
+      },
+      {
+        "page": 80,
+        "sheet": "P-505",
+        "title": "WATER SOFTENER DETAIL",
+        "plan": false
+      },
+      {
+        "page": 81,
+        "sheet": "P-601",
+        "title": "STORAGE TANK SCHEDULE",
+        "plan": false
+      },
+      {
+        "page": 82,
+        "sheet": "M-001",
+        "title": "SHEET 82 OF 147",
+        "plan": false
+      },
+      {
+        "page": 83,
+        "sheet": "M-101",
+        "title": "KEY MAP",
+        "plan": false
+      },
+      {
+        "page": 84,
+        "sheet": "M-102",
+        "title": "KEY MAP",
+        "plan": false
+      },
+      {
+        "page": 85,
+        "sheet": "M-103",
+        "title": "KEY MAP",
+        "plan": false
+      },
+      {
+        "page": 86,
+        "sheet": "M-104",
+        "title": "KEY MAP",
+        "plan": false
+      },
+      {
+        "page": 87,
+        "sheet": "M-105",
+        "title": "KEY MAP",
+        "plan": false
+      },
+      {
+        "page": 88,
+        "sheet": "M-106",
+        "title": "KEY MAP",
+        "plan": false
+      },
+      {
+        "page": 89,
+        "sheet": "M-107",
+        "title": "KEY MAP",
+        "plan": false
+      },
+      {
+        "page": 90,
+        "sheet": "M-108",
+        "title": "KEY MAP",
+        "plan": false
+      },
+      {
+        "page": 91,
+        "sheet": "M-401",
+        "title": "SHEET 91 OF 147",
+        "plan": false
+      },
+      {
+        "page": 92,
+        "sheet": "M-402",
+        "title": "SHEET 92 OF 147",
+        "plan": false
+      },
+      {
+        "page": 93,
+        "sheet": "M-403",
+        "title": "SHEET 93 OF 147",
+        "plan": false
+      },
+      {
+        "page": 94,
+        "sheet": "M-411",
+        "title": "FACILITY #8136001006",
+        "plan": false
+      },
+      {
+        "page": 95,
+        "sheet": "M-412",
+        "title": "FACILITY #8136001006",
+        "plan": false
+      },
+      {
+        "page": 96,
+        "sheet": "M-413",
+        "title": "FACILITY #8136001006",
+        "plan": false
+      },
+      {
+        "page": 97,
+        "sheet": "M-414",
+        "title": "FACILITY #8136001006",
+        "plan": false
+      },
+      {
+        "page": 98,
+        "sheet": "M-415",
+        "title": "FACILITY #8136001006",
+        "plan": false
+      },
+      {
+        "page": 99,
+        "sheet": "M-421",
+        "title": "FACILITY #8136001003",
+        "plan": false
+      },
+      {
+        "page": 100,
+        "sheet": "M-422",
+        "title": "FACILITY #8136001003",
+        "plan": false
+      },
+      {
+        "page": 101,
+        "sheet": "M-423",
+        "title": "FACILITY #8136001003",
+        "plan": false
+      },
+      {
+        "page": 102,
+        "sheet": "M-501",
+        "title": "EQUIPMENT BOLTING TO EXISTING PAD DETAIL",
+        "plan": false
+      },
+      {
+        "page": 103,
+        "sheet": "M-502",
+        "title": "UTILITY SET CENTRIFUGAL EXHAUST FAN",
+        "plan": false
+      },
+      {
+        "page": 104,
+        "sheet": "M-503",
+        "title": "CONDENSATE ROUTING AT FAN COIL UNIT (TYP.)",
+        "plan": false
+      },
+      {
+        "page": 105,
+        "sheet": "M-504",
+        "title": "CHASE RISER 4",
+        "plan": false
+      },
+      {
+        "page": 106,
+        "sheet": "M-505",
+        "title": "SHEET106OF 147",
+        "plan": false
+      },
+      {
+        "page": 107,
+        "sheet": "M-506",
+        "title": "SHEET107OF 147",
+        "plan": false
+      },
+      {
+        "page": 108,
+        "sheet": "M-507",
+        "title": "SHEET108OF 147",
+        "plan": false
+      },
+      {
+        "page": 109,
+        "sheet": "M-601",
+        "title": "AIR DEVICE SCHEDULE",
+        "plan": false
+      },
+      {
+        "page": 110,
+        "sheet": "M-602",
+        "title": "MECHANICAL SCHEDULES 2",
+        "plan": false
+      },
+      {
+        "page": 111,
+        "sheet": "M-603",
+        "title": "SHEET111OF 147",
+        "plan": false
+      },
+      {
+        "page": 112,
+        "sheet": "M-604",
+        "title": "SHEET112OF 147",
+        "plan": false
+      },
+      {
+        "page": 113,
+        "sheet": "M-605",
+        "title": "SHEET113OF 147",
+        "plan": false
+      },
+      {
+        "page": 114,
+        "sheet": "M-606",
+        "title": "SHEET114OF 147",
+        "plan": false
+      },
+      {
+        "page": 115,
+        "sheet": "M-607",
+        "title": "SHEET115OF 147",
+        "plan": false
+      },
+      {
+        "page": 116,
+        "sheet": "M-608",
+        "title": "SHEET116OF 147",
+        "plan": false
+      },
+      {
+        "page": 117,
+        "sheet": "M-609",
+        "title": "SHEET117OF 147",
+        "plan": false
+      },
+      {
+        "page": 118,
+        "sheet": "M-610",
+        "title": "SHEET118OF 147",
+        "plan": false
+      },
+      {
+        "page": 119,
+        "sheet": "M-611",
+        "title": "SHEET119OF 147",
+        "plan": false
+      },
+      {
+        "page": 120,
+        "sheet": "E-001",
+        "title": "MISCELLANEOUS",
+        "plan": false
+      },
+      {
+        "page": 121,
+        "sheet": "E-002",
+        "title": "SHEET121OF 147",
+        "plan": false
+      },
+      {
+        "page": 122,
+        "sheet": "E-101",
+        "title": "KEY MAP",
+        "plan": false
+      },
+      {
+        "page": 123,
+        "sheet": "E-102",
+        "title": "KEY MAP",
+        "plan": false
+      },
+      {
+        "page": 124,
+        "sheet": "E-103",
+        "title": "KEY MAP",
+        "plan": false
+      },
+      {
+        "page": 125,
+        "sheet": "E-104",
+        "title": "KEY MAP",
+        "plan": false
+      },
+      {
+        "page": 126,
+        "sheet": "E-105",
+        "title": "KEY MAP",
+        "plan": false
+      },
+      {
+        "page": 127,
+        "sheet": "E-106",
+        "title": "KEY MAP",
+        "plan": false
+      },
+      {
+        "page": 128,
+        "sheet": "E-107",
+        "title": "KEY MAP",
+        "plan": false
+      },
+      {
+        "page": 129,
+        "sheet": "E-108",
+        "title": "KEY MAP",
+        "plan": false
+      },
+      {
+        "page": 130,
+        "sheet": "E-401",
+        "title": "SHEET130OF 147",
+        "plan": false
+      },
+      {
+        "page": 131,
+        "sheet": "E-402",
+        "title": "SHEET131OF 147",
+        "plan": false
+      },
+      {
+        "page": 132,
+        "sheet": "E-403",
+        "title": "SHEET132OF 147",
+        "plan": false
+      },
+      {
+        "page": 133,
+        "sheet": "E-411",
+        "title": "FACILITY #8136001006",
+        "plan": false
+      },
+      {
+        "page": 134,
+        "sheet": "E-412",
+        "title": "FACILITY #8136001006",
+        "plan": false
+      },
+      {
+        "page": 135,
+        "sheet": "E-413",
+        "title": "FACILITY #8136001006",
+        "plan": false
+      },
+      {
+        "page": 136,
+        "sheet": "E-414",
+        "title": "FACILITY #8136001006",
+        "plan": false
+      },
+      {
+        "page": 137,
+        "sheet": "E-415",
+        "title": "FACILITY #8136001006",
+        "plan": false
+      },
+      {
+        "page": 138,
+        "sheet": "E-421",
+        "title": "FACILITY #8136001003",
+        "plan": false
+      },
+      {
+        "page": 139,
+        "sheet": "E-422",
+        "title": "FACILITY #8136001003",
+        "plan": false
+      },
+      {
+        "page": 140,
+        "sheet": "E-601",
+        "title": "SHEET140OF 147",
+        "plan": false
+      },
+      {
+        "page": 141,
+        "sheet": "E-602",
+        "title": "SHEET141OF 147",
+        "plan": false
+      },
+      {
+        "page": 142,
+        "sheet": "E-603",
+        "title": "SHEET142OF 147",
+        "plan": false
+      },
+      {
+        "page": 143,
+        "sheet": "E-604",
+        "title": "SHEET143OF 147",
+        "plan": false
+      },
+      {
+        "page": 144,
+        "sheet": "E-605",
+        "title": "SHEET144OF 147",
+        "plan": false
+      },
+      {
+        "page": 145,
+        "sheet": "E-701",
+        "title": "KEY MAP",
+        "plan": false
+      },
+      {
+        "page": 146,
+        "sheet": "E-702",
+        "title": "KEY MAP",
+        "plan": false
+      },
+      {
+        "page": 147,
+        "sheet": "E-703",
+        "title": "KEY MAP",
+        "plan": false
+      }
+    ],
+    "plan_sheets": [],
+    "rooms": [],
+    "tags": [],
+    "unmatched_tags": [],
+    "marks_not_on_plan": [],
+    "counts": {
+      "plan_sheets": 0,
+      "rooms": 0,
+      "corridors": 0,
+      "tags": 0,
+      "unmatched_tags": 0,
+      "schedule_marks": 0,
+      "marks_not_on_plan": 0
+    }
+  },
+  "diagnostic_note": "Unchanged S1 reader supplied harvest schedule-row regex marks, not production doors or audited truth. Tag-shaped text can be room/grid/detail numbers. Unmatched tags are style candidates, not verified doors.",
+  "harvest_schedule_rows": [
+    {
+      "page": 28,
+      "marks": [],
+      "lines": []
+    },
+    {
+      "page": 32,
+      "marks": [
+        "01"
+      ],
+      "lines": [
+        "                                                                                                                                                                                                                                                                                                                                                                                                                                                         01                                               A-122                                                                                        PT101     EXISTING     HM-1(PR) 8' - 0\"  7' - 4\"  1 3/4\"                  TYP-1   3/A-602 6/A-602 8/A-602   09.08"
+      ]
+    },
+    {
+      "page": 44,
+      "marks": [
+        "101A",
+        "1",
+        "101B",
+        "201B",
+        "102",
+        "202A",
+        "103A",
+        "103B",
+        "203A",
+        "104A",
+        "203B",
+        "104B",
+        "2",
+        "104C",
+        "3",
+        "104D",
+        "104E",
+        "105A",
+        "105B",
+        "206B",
+        "107A",
+        "107B",
+        "207B",
+        "109A",
+        "109B",
+        "208B",
+        "110",
+        "111A",
+        "111B",
+        "210A",
+        "112A",
+        "4",
+        "112B",
+        "211A",
+        "113",
+        "114",
+        "115",
+        "212B",
+        "116",
+        "213A",
+        "117",
+        "213B",
+        "118",
+        "214A",
+        "119",
+        "214B",
+        "120A",
+        "215A",
+        "120B",
+        "121",
+        "216A",
+        "122A",
+        "216B",
+        "122B",
+        "123A",
+        "217B",
+        "123B",
+        "124",
+        "125A",
+        "219A",
+        "125B",
+        "126A",
+        "220A",
+        "126B",
+        "127",
+        "221A",
+        "128A",
+        "221B",
+        "128B",
+        "129A",
+        "222B",
+        "130A",
+        "130C",
+        "226A",
+        "226B",
+        "133C",
+        "227B",
+        "228A",
+        "228B",
+        "229A",
+        "229B",
+        "230A",
+        "230B",
+        "231A",
+        "231B",
+        "232A",
+        "232B",
+        "232C",
+        "234",
+        "235B",
+        "236",
+        "237",
+        "238",
+        "239A",
+        "239B"
+      ],
+      "lines": [
+        "                                                      101A         DORM 101                        WD-1       3' - 0\"                                                                                                      6' - 8\"                                                                              1 3/4\"                                             EXIST                                        N/A           N/A                  N/A                                                                                                     07.03            1                                                                                                                                                                                                                   201A         DORM 201                        WD-1       3' - 0\"                         6' - 8\"              1 3/4\"   EXIST                  N/A                                                                                                                                         N/A           N/A                07.03                                                1                                                                                                                                                                                                           LICENSE #: 000329",
+        "                                                      101B         RESTROOM 101B                   WD-1       2' - 0\"                                                                                                      6' - 8\"                                                                              1 3/4\"                                             EXIST                                        N/A           N/A                  N/A                                                                                                     06.01            1&2                                                                                                                                                                                                                 201B         RESTROOM 201B                   WD-1       2' - 0\"                         6' - 8\"              1 3/4\"   EXIST                  N/A                                                                                                                                         N/A           N/A                06.01                                                1&2                                                                                                                                                                                                        EXP. DATE: 12/31/27",
+        "                                                      102          LAUNDRY ROOM 102                WD-1       2' - 6\"                                                                                                      6' - 8\"                                                                              1 3/4\"                                             EXIST                                        N/A           N/A                  N/A                                                                                                     05.01            1&2                                                                                                                                                                                                                 202A         DORM 202                        WD-1       3' - 0\"                         6' - 8\"              1 3/4\"   EXIST                  N/A                                                                                                                                         N/A           N/A                07.03                                                1",
+        "                                                      103A         DORM 103                        WD-1       3' - 0\"                                                                                                      6' - 8\"                                                                              1 3/4\"                                             EXIST                                        N/A           N/A                  N/A                                                                                                     07.03            1                                                                                                                                                                                                                   202B         RESTROOM 202B                   WD-1       2' - 0\"                         6' - 8\"              1 3/4\"   EXIST                  N/A                                                                                                                                         N/A           N/A                06.01                                                1&2",
+        "                                                      103B         RESTROOM 101B                   WD-1       2' - 0\"                                                                                                      6' - 8\"                                                                              1 3/4\"                                             EXIST                                        N/A           N/A                  N/A                                                                                                     06.01            1&2                                                                                                                                                                                                                 203A         DORM 203                        WD-1       3' - 0\"                         6' - 8\"              1 3/4\"   EXIST                  N/A                                                                                                                                         N/A           N/A                07.03                                                1",
+        "                                                      104A         SINGLE BEDROOM 104A             WD-1       3' - 0\"                                                                                                      6' - 8\"                                                                              1 3/4\"                                             TYP-2                                        4/A602        5/A602                                3/4 HR                                                                                 07.04                                                                                                                                                                                                                                203B         RESTROOM 203B                   WD-1       2' - 0\"                         6' - 8\"              1 3/4\"   EXIST                  N/A                                                                                                                                         N/A           N/A                06.01                                                1&2",
+        "                                                      104B         PRIVATE BATH 104B               WD-1       3' - 0\"                                                                                                      6' - 8\"                                                                              1 3/4\"                                             TYP-2                                        4/A602        5/A602                                                                                                                       06.01            2                                                                                                                                                                                                                   204A         DORM 204                        WD-1       3' - 0\"                         6' - 8\"              1 3/4\"   EXIST                  N/A                                                                                                                                         N/A           N/A                07.03                                                1",
+        "                                                      104C         SINGLE BEDROOM 104              WD-2       3' - 0\"                                                                                                      6' - 8\"                                                                              1 3/4\"                                             TYP-2                                        4/A602        5/A602                                                                                                                       06.01            3                                                                                                                                                                                                                   204B         RESTROOM 202B                   WD-1       2' - 0\"                         6' - 8\"              1 3/4\"   EXIST                  N/A                                                                                                                                         N/A           N/A                06.01                                                1&2",
+        "                                                      104D         CLOSET 104                      WD-2 (PR) 3' - 4\"                                                                                                       6' - 8\"                                                                              1 3/4\"                                             TYP-2                                        4/A602        5/A602                                                                                                                       04.02            3                                                                                                                                                                                                                   205A         DORM 205                        WD-1       3' - 0\"                         6' - 8\"              1 3/4\"   EXIST                  N/A                                                                                                                                         N/A           N/A      3/4 HR    07.03                                                1",
+        "                                                      104E         CLOSET 104                      WD-2 (PR) 3' - 4\"                                                                                                       6' - 8\"                                                                              1 3/4\"                                             TYP-2                                        4/A602        5/A602                                                                                                                       04.02            3                                                                                                                                                                                                                   205B         RESTROOM 203B                   WD-1       2' - 0\"                         6' - 8\"              1 3/4\"   EXIST                  N/A                                                                                                                                         N/A           N/A                06.01                                                1&2",
+        "                                                      105A         DORM 105                        WD-1       3' - 0\"                                                                                                      6' - 8\"                                                                              1 3/4\"                                             EXIST                                        N/A           N/A                  N/A              3/4 HR                                                                                 07.04            1                                                                                                                                                                                                                   206A         DORM 206                        WD-1       3' - 0\"                         6' - 8\"              1 3/4\"   EXIST                  N/A                                                                                                                                         N/A           N/A      3/4 HR    07.03                                                1",
+        "                                                      105B         RESTROOM 105B                   WD-1       2' - 0\"                                                                                                      6' - 8\"                                                                              1 3/4\"                                             EXIST                                        N/A           N/A                  N/A                                                                                                     06.01            1&2                                                                                                                                                                                                                 206B         RESTROOM 206B                   WD-1       2' - 0\"                         6' - 8\"              1 3/4\"   EXIST                  N/A                                                                                                                                         N/A           N/A                06.01                                                1&2",
+        "                                                      107A         DORM 107                        WD-1       3' - 0\"                                                                                                      6' - 8\"                                                                              1 3/4\"                                             EXIST                                        N/A           N/A                  N/A              3/4 HR                                                                                 07.04            1                                                                                                                                                                                                                   207A         DORM 207                        WD-1       3' - 0\"                         6' - 8\"              1 3/4\"   EXIST                  N/A                                                                                                                                         N/A           N/A      3/4 HR    07.03                                                1",
+        "                                                      107B         RESTROOM 105B                   WD-1       2' - 0\"                                                                                                      6' - 8\"                                                                              1 3/4\"                                             EXIST                                        N/A           N/A                  N/A                                                                                                     06.01            1&2                                                                                                                                                                                                                 207B         RESTROOM 207B                   WD-1       2' - 0\"                         6' - 8\"              1 3/4\"   EXIST                  N/A                                                                                                                                         N/A           N/A                06.01                                                1&2",
+        "                                                      109A         DORM 109                        WD-1       3' - 0\"                                                                                                      6' - 8\"                                                                              1 3/4\"                                             EXIST                                        N/A           N/A                  N/A              3/4 HR                                                                                 07.04            1                                                                                                                                                                                                                   208A         DORM 208                        WD-1       3' - 0\"                         6' - 8\"              1 3/4\"   EXIST                  N/A                                                                                                                                         N/A           N/A      3/4 HR    07.03                                                1                                                                                                                                                                                                          Professional of Record:",
+        "                                                      109B         RESTROOM 109B                   WD-1       2' - 0\"                                                                                                      6' - 8\"                                                                              1 3/4\"                                             EXIST                                        N/A           N/A                  N/A                                                                                                     06.01            1&2                                                                                                                                                                                                                 208B         RESTROOM 206B                   WD-1       2' - 0\"                         6' - 8\"              1 3/4\"   EXIST                  N/A                                                                                                                                         N/A           N/A                06.01                                                1&2                                                                                                                                                                                                      MICHAEL S. SUNDERMEYER",
+        "                                                      110          STORAGE 110                     WD-1       3' - 0\"                                                                                                      6' - 8\"                                                                              1 3/4\"                                             EXIST                                        N/A           N/A                  N/A              3/4 HR                                                                                 09.05            1                                                                                                                                                                                                                   209A         DORM 209                        WD-1       3' - 0\"                         6' - 8\"              1 3/4\"   EXIST                  N/A                                                                                                                                         N/A           N/A      3/4 HR    07.03                                                1                                                                                                                                                                                                          LICENSE #: 2014026855",
+        "                                                      111A         DORM 111                        WD-1       3' - 0\"                                                                                                      6' - 8\"                                                                              1 3/4\"                                             EXIST                                        N/A           N/A                  N/A              3/4 HR                                                                                 07.04            1                                                                                                                                                                                                                   209B         RESTROOM 207B                   WD-1       2' - 0\"                         6' - 8\"              1 3/4\"   EXIST                  N/A                                                                                                                                         N/A           N/A                06.01                                                1&2",
+        "                                                      111B         RESTROOM 109B                   WD-1       2' - 0\"                                                                                                      6' - 8\"                                                                              1 3/4\"                                             EXIST                                        N/A           N/A                  N/A                                                                                                     06.01            1&2                                                                                                                                                                                                                 210A         DORM 210                        WD-1       3' - 0\"                         6' - 8\"              1 3/4\"   EXIST                  N/A                                                                                                                                         N/A           N/A                07.03                                                1",
+        "                                                      112A         VESTIBULE 112                   AL-1 (PR)  6' - 0\"                                                                                                      7' - 0\"                                                                              1 3/4\"                                             GLZ-A                                        10/A602       12/A602              9/A602                                                                                                  01.02            4                                                                                                                                                                                                                   210B         RESTROOM 210B                   WD-1       2' - 0\"                         6' - 8\"              1 3/4\"   EXIST                  N/A                                                                                                                                         N/A           N/A                06.01                                                1&2",
+        "                                                      112B         VESTIBULE 112                   AL-1 (PR)  6' - 0\"                                                                                                      7' - 0\"                                                                              1 3/4\"                                             GLZ-B                                        12/A602 SIM   14/A602                                                                                                                      04.01                                                                                                                                                                                                                                211A         DORM 211                        WD-1       3' - 0\"                         6' - 8\"              1 3/4\"   EXIST                  N/A                                                                                                                                         N/A           N/A                07.03                                                1",
+        "                                                      113          KITCHENETE 113                  WD-1       3' - 0\"                                                                                                      6' - 8\"                                                                              1 3/4\"                                             EXIST                                        N/A           N/A                  N/A                                                                                                     08.02            1                                                                                                                                                                                                                   211B         RESTROOM 211B                   WD-1       2' - 0\"                         6' - 8\"              1 3/4\"   EXIST                  N/A                                                                                                                                         N/A           N/A                06.01                                                1&2",
+        "                                                      114          STORAGE 114                     WD-1       3' - 0\"                                                                                                      6' - 8\"                                                                              1 3/4\"                                             EXIST                                        N/A           N/A                  N/A                                                                                                     09.02            1                                                                                                                                                                                                                   212A         DORM 212                        WD-1       3' - 0\"                         6' - 8\"              1 3/4\"   EXIST                  N/A                                                                                                                                         N/A           N/A                07.03                                                1",
+        "                                                      115          UNISEX RESTROOM 115             WD-1       3' - 0\"                                                                                                      6' - 8\"                                                                              1 3/4\"                                             EXIST                                        N/A           N/A                  N/A                                                                                                     06.02            1&2                                                                                                                                                                                                                 212B         RESTROOM 210B                   WD-1       2' - 0\"                         6' - 8\"              1 3/4\"   EXIST                  N/A                                                                                                                                         N/A           N/A                06.01                                                1&2",
+        "                                                      116          JANITOR CLOSET 116              WD-1       3' - 0\"                                                                                                      6' - 8\"                                                                              1 3/4\"                                             EXIST                                        N/A           N/A                  N/A                                                                                                     09.01            1&2                                                                                                                                                                                                                 213A         DORM 213                        WD-1       3' - 0\"                         6' - 8\"              1 3/4\"   EXIST                  N/A                                                                                                                                         N/A           N/A                07.03                                                1",
+        "                                                      117          OFFICE 117                      WD-1       3' - 0\"                                                                                                      6' - 8\"                                                                              1 3/4\"                                             TYP-2                                        4/A602        5/A602                                                                                                                       07.01                                                                                                                                                                                                                                213B         RESTROOM 211B                   WD-1       2' - 0\"                         6' - 8\"              1 3/4\"   EXIST                  N/A                                                                                                                                         N/A           N/A                06.01                                                1&2",
+        "                                                      118          OFFICE 118                      WD-1       3' - 0\"                                                                                                      6' - 8\"                                                                              1 3/4\"                                             TYP-2                                        4/A602        5/A602                                                                                                                       07.01                                                                                                                                                                                                                                214A         DORM 214                        WD-1       3' - 0\"                         6' - 8\"              1 3/4\"   EXIST                  N/A                                                                                                                                         N/A           N/A                07.03                                                1",
+        "                                                      119          CONFERENCE ROOM 119             WD-1       3' - 0\"                                                                                                      6' - 8\"                                                                              1 3/4\"                                             TYP-2                                        4/A602        5/A602                                                                                                                       08.01                                                                                                                                                                                                                                214B         RESTROOM 214B                   WD-1       2' - 0\"                         6' - 8\"              1 3/4\"   EXIST                  N/A                                                                                                                                         N/A           N/A                06.01                                                1&2",
+        "                                                      120A         OFFICE 120                      WD-1       3' - 0\"                                                                                                      6' - 8\"                                                                              1 3/4\"                                             TYP-2                                        4/A602        5/A602                                                                                                                       07.01                                                                                                                                                                                                                                215A         PRIVATE DORM 215                WD-1       3' - 0\"                         6' - 8\"              1 3/4\"   TYP-2                  4/A602                                                                                                                                      5/A602                           07.02",
+        "                                                      120B         RESTROOM 120B                   WD-1       3' - 0\"                                                                                                      6' - 8\"                                                                              1 3/4\"                                             TYP-2                                        4/A602        5/A602                                                                                                                       06.01            2                                                                                                                                                                                                                   215B         PRIVATE RESTROOM 215B           WD-1       3' - 0\"                         6' - 8\"              1 3/4\"   TYP-2                  4/A602                                                                                                                                      5/A602                           06.01                                                2",
+        "                                                      121          CONFERENCE ROOM 121             WD-1       3' - 0\"                                                                                                      6' - 8\"                                                                              1 3/4\"                                             TYP-2                                        4/A602        5/A602                                                                                                                       08.01                                                                                                                                                                                                                                216A         DORM 216                        WD-1       3' - 0\"                         6' - 8\"              1 3/4\"   EXIST                  N/A                                                                                                                                         N/A           N/A                07.03                                                1",
+        "                                                      122A         OFFICE 122                      WD-1       3' - 0\"                                                                                                      6' - 8\"                                                                              1 3/4\"                                             TYP-2                                        4/A602        5/A602                                                                                                                       07.01                                                                                                                                                                                                                                216B         RESTROOM 214B                   WD-1       2' - 0\"                         6' - 8\"              1 3/4\"   EXIST                  N/A                                                                                                                                         N/A           N/A                06.01                                                1&2",
+        "                                                      122B         RESTROOM 120B                   WD-1       3' - 0\"                                                                                                      6' - 8\"                                                                              1 3/4\"                                             TYP-2                                        4/A602        5/A602                                                                                                                       06.01            2                                                                                                                                                                                                                   217A         DORM 217                        WD-1       3' - 0\"                         6' - 8\"              1 3/4\"   EXIST                  N/A                                                                                                                                         N/A           N/A                07.03                                                1",
+        "                                                      123A         OFFICE 123                      WD-1       3' - 0\"                                                                                                      6' - 8\"                                                                              1 3/4\"                                             TYP-2                                        4/A602        5/A602                                                                                                                       07.01                                                                                                                                                                                                                                217B         RESTROOM 217B                   WD-1       2' - 0\"                         6' - 8\"              1 3/4\"   EXIST                  N/A                                                                                                                                         N/A           N/A                06.01                                                1&2",
+        "                                                      123B         RESTROOM 123B                   WD-1       3' - 0\"                                                                                                      6' - 8\"                                                                              1 3/4\"                                             TYP-2                                        4/A602        5/A602                                                                                                                       06.01            2                                                                                                                                                                                                                   218A         DORM 218                        WD-1       3' - 0\"                         6' - 8\"              1 3/4\"   EXIST                  N/A                                                                                                                                         N/A           N/A                07.03                                                1",
+        "                                                      124          STORAGE 124                     WD-1       3' - 0\"                                                                                                      6' - 8\"                                                                              1 3/4\"                                             EXIST                                        N/A           N/A                  N/A              3/4 HR                                                                                 09.06            1                                                                                                                                                                                                                   218B         RESTROOM 218B                   WD-1       2' - 0\"                         6' - 8\"              1 3/4\"   EXIST                  N/A                                                                                                                                         N/A           N/A                06.01                                                1&2",
+        "                                                      125A         OFFICE 125                      WD-1       3' - 0\"                                                                                                      6' - 8\"                                                                              1 3/4\"                                             TYP-2                                        4/A602        5/A602                                3/4 HR                                                                                 07.04                                                                                                                                                                                                                                219A         DORM 219                        WD-1       3' - 0\"                         6' - 8\"              1 3/4\"   EXIST                  N/A                                                                                                                                         N/A           N/A                07.03                                                1",
+        "                                                      125B         RESTROOM 125B                   WD-1       3' - 0\"                                                                                                      6' - 8\"                                                                              1 3/4\"                                             TYP-2                                        4/A602        5/A602                                                                                                                       06.01            2                                                                                                                                                                                                                   219B         RESTROOM 217B                   WD-1       2' - 0\"                         6' - 8\"              1 3/4\"   EXIST                  N/A                                                                                                                                         N/A           N/A                06.01                                                1&2",
+        "                                                      126A         OFFICE 126                      WD-1       3' - 0\"                                                                                                      6' - 8\"                                                                              1 3/4\"                                             TYP-2                                        4/A602        5/A602                                3/4 HR                                                                                 07.04                                                                                                                                                                                                                                220A         DORM 220                        WD-1       3' - 0\"                         6' - 8\"              1 3/4\"   EXIST                  N/A                                                                                                                                         N/A           N/A                07.03                                                1",
+        "                                                      126B         RESTROOM 126B                   WD-1       3' - 0\"                                                                                                      6' - 8\"                                                                              1 3/4\"                                             TYP-2                                        4/A602        5/A602                                                                                                                       06.01            2                                                                                                                                                                                                                   220B         RESTROOM 218B                   WD-1       2' - 0\"                         6' - 8\"              1 3/4\"   EXIST                  N/A                                                                                                                                         N/A           N/A                06.01                                                1&2",
+        "                                                      127          CLASSROOM 127                   WD-1       3' - 0\"                                                                                                      6' - 8\"                                                                              1 3/4\"                                             TYP-2                                        4/A602        5/A602                                3/4 HR                                                                                 08.03                                                                                                                                                                                                                                221A         DORM 221                        WD-1       3' - 0\"                         6' - 8\"              1 3/4\"   EXIST                  N/A                                                                                                                                         N/A           N/A                07.03                                                1",
+        "                                                      128A         OFFICE 128                      WD-1       3' - 0\"                                                                                                      6' - 8\"                                                                              1 3/4\"                                             TYP-2                                        4/A602        5/A602                                3/4 HR                                                                                 07.04                                                                                                                                                                                                                                221B         RESTROOM 221`B                  WD-1       2' - 0\"                         6' - 8\"              1 3/4\"   EXIST                  N/A                                                                                                                                         N/A           N/A                06.01                                                1&2",
+        "                                                      128B         RESTROOM 126B                   WD-1       3' - 0\"                                                                                                      6' - 8\"                                                                              1 3/4\"                                             TYP-2                                        4/A602        5/A602                                                                                                                       06.01            2                                                                                                                                                                                                                   222A         DORM 222                        WD-1       3' - 0\"                         6' - 8\"              1 3/4\"   EXIST                  N/A                                                                                                                                         N/A           N/A                07.03                                                1",
+        "                                                      129A         MECHANICAL ROOM 129             HM-1 (PR) 8' - 0\"                                                                                                       7' - 0\"                                                                              1 3/4\"                                             TYP-1                                        SIM. 3/A602   7/A602               8/A602                                                                                                  05.04                                                                                                                                                                                                                                222B         RESTROOM 222B                   WD-1       2' - 0\"                         6' - 8\"              1 3/4\"   EXIST                  N/A                                                                                                                                         N/A           N/A                06.01                                                1&2",
+        "                                                      129B         MECHANICAL ROOM 129             EXIST      3' - 0\"                                                                                                      6' - 8\"                                                                              1 3/4\"                                             EXIST                                        N/A           N/A                  N/A                                                                                                     00.01            1                                                                                                                                                                                                                   223A         DORM 223                        WD-1       3' - 0\"                         6' - 8\"              1 3/4\"   EXIST                  N/A                                                                                                                                         N/A           N/A                07.03                                                1",
+        "                                                      129C         MECHANICAL ROOM 129             EXIST      5' - 0\"                                                                                                      7' - 0\"                                                                              1 3/4\"                                             EXIST                                        N/A           N/A                  N/A                                                                                                     00.01            1                                                                                                                                                                                                                   223B         RESTROOM 221B                   WD-1       2' - 0\"                         6' - 8\"              1 3/4\"   EXIST                  N/A                                                                                                                                         N/A           N/A                06.01                                                1&2",
+        "                                                      129D         STAIR                           EXIST      3' - 0\"                                                                                                      6' - 8\"                                                                              1 3/4\"                                             EXIST                                        N/A           N/A                  N/A              3/4 HR                                                                                 00.01            1                                                                                                                                                                                                                   224A         DORM 224                        WD-1       3' - 0\"                         6' - 8\"              1 3/4\"   EXIST                  N/A                                                                                                                                         N/A           N/A                07.03                                                1",
+        "                                                      129F         MECHANICAL ROOM 129             EXIST      3' - 0\"                                                                                                      6' - 8\"                                                                              1 3/4\"                                             EXIST                                        N/A           N/A                  N/A                                                                                                     00.01            1                                                                                                                                                                                                                   224B         RESTROOM 222B                   WD-1       2' - 0\"                         6' - 8\"              1 3/4\"   EXIST                  N/A                                                                                                                                         N/A           N/A                06.01                                                1&2                                                                                                                                                                                            OFFICE OF ADMINISTRATION",
+        "                                                      130A         CORRIDOR 130                    HM-2       3' - 0\"                                                                                                      7' - 0\"                                                                              1 3/4\"                                             TYP-1                                        3/A602        6/A602               8/A602           3/4 HR                                                                                 01.01            4                                                                                                                                                                                                                   225A         DORM 225                        WD-1       3' - 0\"                         6' - 8\"              1 3/4\"   EXIST                  N/A                                                                                                                                         N/A           N/A                07.03                                                1                                                                                                                                                                                              DIVISION OF FACILITIES",
+        "                                                      130B         STAIR                           EXIST      3' - 0\"                                                                                                      6' - 8\"                                                                              1 3/4\"                                             EXIST                                        N/A           N/A                  N/A              3/4 HR                                                                                 00.01            1                                                                                                                                                                                                                   225B         RESTROOM 225B                   WD-1       2' - 0\"                         6' - 8\"              1 3/4\"   EXIST                  N/A                                                                                                                                         N/A           N/A                06.01                                                1&2                                                                                                                                                                                            MANAGEMENT,",
+        "                                                      130C         CORRIDOR 130                    HM-2       3' - 0\"                                                                                                      6' - 8\"                                                                              1 3/4\"                                             TYP-2                                        4/A602        5/A602                                3/4 HR                                                                                 05.02A                                                                                                                                                                                                                               226A         ACCESSIBLE DORM 226             WD-1       3' - 0\"                         6' - 8\"              1 3/4\"   EXIST                  N/A                                                                                                                                         N/A           N/A                07.02                                                1                                                                                                                                                                                              DESIGN AND CONSTRUCTION",
+        "                                                      133A         CORRIDOR 133                    EXIST      3' - 0\"                                                                                                      7' - 0\"                                                                              1 3/4\"                                             EXIST                                        N/A           N/A                  N/A              3/4 HR                                                                                 00.02            1&4                                                                                                                                                                                                                 226B         ACCESSIBLE RESTROOM 226B        WD-1       3' - 0\"                         6' - 8\"              1 3/4\"   EXIST                  N/A                                                                                                                                         N/A           N/A                06.01                                                1&2",
+        "                                                      133B         STAIR                           EXIST      3' - 0\"                                                                                                      6' - 8\"                                                                              1 3/4\"                                             EXIST                                        N/A           N/A                  N/A              3/4 HR                                                                                 00.01            1                                                                                                                                                                                                                   227A         DORM 227                        WD-1       3' - 0\"                         6' - 8\"              1 3/4\"   EXIST                  N/A                                                                                                                                         N/A           N/A                07.03                                                1",
+        "                                                      133C         CORRIDOR 133                    HM-2       3' - 0\"                                                                                                      6' - 8\"                                                                              1 3/4\"                                             TYP-2                                        4/A602        5/A602                                3/4 HR                                                                                 05.02A                                                                                                                                                                                                                               227B         RESTROOM 225B                   WD-1       2' - 0\"                         6' - 8\"              1 3/4\"   EXIST                  N/A                                                                                                                                         N/A           N/A                06.01                                                1&2",
+        "                                                      GENERAL NOTE: REFER TO SHEET A-602 FOR DOOR AND FRAME TYPES.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              228A         DORM 228                        WD-1       3' - 0\"                         6' - 8\"              1 3/4\"   EXIST                  N/A                                                                                                                                         N/A           N/A                07.03                                                1",
+        "                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                228B         RESTROOM 228B                   WD-1       2' - 0\"                         6' - 8\"              1 3/4\"   EXIST                  N/A                                                                                                                                         N/A           N/A                06.01                                                1&2",
+        "                                                      NOTES:                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    229A         DORM 229                        WD-1       3' - 0\"                         6' - 8\"              1 3/4\"   EXIST                  N/A                                                                                                                                         N/A           N/A                07.03                                                1",
+        "                                                      2. UNDERCUT DOOR 1\"                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       229B         RESTROOM 229B                   WD-1       2' - 0\"                         6' - 8\"              1 3/4\"   EXIST                  N/A                                                                                                                                         N/A           N/A                06.01                                                1&2                                                                                                                                                                                            DEPARTMENT OF MISSOURI",
+        "                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                230A         DORM 230                        WD-1       3' - 0\"                         6' - 8\"              1 3/4\"   EXIST                  N/A                                                                                                                                         N/A           N/A                07.03                                                1",
+        "                                                      4. ACCESS/CARD READER, PROVIDE BY & INSTALLED BY OWNER. CONDUIT BY G.C.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   230B         RESTROOM 228B                   WD-1       2' - 0\"                         6' - 8\"              1 3/4\"   EXIST                  N/A                                                                                                                                         N/A           N/A                06.01                                                1&2",
+        "                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                231A         DORM 231                        WD-1       3' - 0\"                         6' - 8\"              1 3/4\"   EXIST                  N/A                                                                                                                                         N/A           N/A                07.03                                                1",
+        "                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                231B         RESTROOM 229B                   WD-1       2' - 0\"                         6' - 8\"              1 3/4\"   EXIST                  N/A                                                                                                                                         N/A           N/A                06.01                                                1&2",
+        "                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                232A         LIVING ROOM 232                 WD-1       3' - 0\"                         6' - 8\"              1 3/4\"   TYP-2                  4/A602                                                                                                                                      5/A602                           07.03                                                                                                                                                                                                                                               REBID RENOVATIONS TO",
+        "                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                232B         RESTROOM 232B                   WD-1       3' - 0\"                         6' - 8\"              1 3/4\"   TYP-2                  4/A602                                                                                                                                      5/A602                           06.01                                                2                                                                                                                                                                                              INTERIOR/EXTERIOR & INSTALL",
+        "                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                232C         BEDROOM 232                     WD-1       3' - 0\"                         6' - 8\"              1 3/4\"   TYP-2                  4/A602                                                                                                                                      5/A602                           06.01                                                                                                                                                                                                                                               EMERGENCY GENERATOR,",
+        "                                                                                                                                                                                                                                        FINISH                                                                                                                                                                                          GLAZING                                                                                                                        FRAME                                                                                                                                                                                                                    234          UNISEX RESTROOM 234             WD-2       3' - 0\"                         6' - 8\"              1 3/4\"   TYP-2                  4/A602                                                                                                                                      5/A602                                                                                3                                                                                                                                                                                              MSHP GENERAL",
+        "                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                235B         CORRIDOR 240                    HM-2       3' - 0\"                         6' - 8\"              1 3/4\"   TYP-2                  4/A602                                                                                                                                      5/A602                 3/4 HR    05.02",
+        "                                       FRAME TYPE                           LOCATION                                                                                ELEVATION              (R.O.)         HEIGHT                                                 FINISH                                                                          COLOR                                                                THICK                        TYPE                                                                                                     HEADER        JAMB              SILL            NOTES                                                                                                                                                                               236          JANITOR CLOSET 236              WD-1       3' - 0\"                         6' - 8\"              1 3/4\"   EXIST                  N/A                                                                                                                                         N/A           N/A                09.03                                                1&2                                                                                                                                                                                            1510 E. ELM STREET",
+        "                                       GLZ-A            112-VESTIBULE      1/A-601         11'-8 1/2\"   8' - 0 1/2\" PRE-FINISHED ALUM.   ANODIZED ALUM.    1\"         TEMPERED, INSULATED GLAZING        10/A602      12/A602 SIM. 12/A602                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      237          CLEAN LINEN 237                 WD-1       3' - 0\"                         6' - 8\"              1 3/4\"   EXIST                  N/A                                                                                                                                         N/A           N/A                09.04                                                1&2                                                                                                                                                                                            JEFFERSON CITY, MO 65101",
+        "                                       GLZ-B            112-VESTIBULE      2/A-601         12'-2 5/8\"   8' - 5\"     PRE-FINISHED ALUM.   ANODIZED ALUM.    1\"         TEMPERED, INSULATED GLAZING        12/A602 SIM. 14/A602      12/A602                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      238          STORAGE 238                     WD-1       3' - 0\"                         6' - 8\"              1 3/4\"   EXIST                  N/A                                                                                                                                         N/A           N/A      3/4 HR    09.02                                                1",
+        "                                       GLZ-C            239-CORRIDOR       3/A-601         10'-8\"       5' - 5\"     PRE-FINISHED ALUM.   ANODIZED ALUM.    1\"         TEMPERED, INSULATED GLAZING        10/A602      11/A602 SIM  11/A602                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      239A         CORRIDOR 239                    AL-1       3' - 0\"                         7' - 0\"              1 3/4\"   GLZ-C                  10/A602                                                                                                                                     11/A602       9/A602   3/4 HR    01.01                                                4",
+        "                                       GLZ-D            239-CORRIDOR       4/A-601         5'-2\"        7' - 4\"     PRE-FINISHED ALUM.   ANODIZED ALUM.    1\"         TEMPERED, INSULATED GLAZING        10/A602 SIM. 13/A602      12/A602                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      239B         CORRIDOR 239                    AL-1       3' - 0\"                         7' - 0\"              1 3/4\"   GLZ-D                  10/A602 SIM.                                                                                                                                13/A602       9/A602   3/4 HR    01.01                                                4"
+      ]
+    },
+    {
+      "page": 45,
+      "marks": [
+        "301A",
+        "301B",
+        "302A",
+        "302B",
+        "303A",
+        "303B",
+        "304A",
+        "304B",
+        "305A",
+        "305B",
+        "306A",
+        "306B",
+        "307A",
+        "307B",
+        "308A",
+        "308B",
+        "309A",
+        "309B",
+        "310A",
+        "310B",
+        "311A",
+        "311B",
+        "312A",
+        "312B",
+        "313A",
+        "313B",
+        "314A",
+        "314B",
+        "315A",
+        "315B",
+        "316A",
+        "316B",
+        "317A",
+        "317B",
+        "318A",
+        "318B",
+        "319A",
+        "319B",
+        "320A",
+        "321B",
+        "322A",
+        "322B",
+        "323A",
+        "323B",
+        "324A",
+        "324B",
+        "325A",
+        "325B",
+        "326A",
+        "326B",
+        "327A",
+        "327B",
+        "328A",
+        "328B",
+        "329A",
+        "330B",
+        "331A",
+        "331B",
+        "332A",
+        "332B",
+        "332C",
+        "332D",
+        "333B",
+        "334",
+        "335B",
+        "336A",
+        "336B",
+        "337",
+        "338B",
+        "339"
+      ],
+      "lines": [
+        "                                        301A         DORM 301                        WD-1       3' - 0\"     6' - 8\"      1 3/4\"   EXIST   N/A        N/A              N/A                07.03             1",
+        "                                        301B         RESTROOM 301B                   WD-1       2' - 0\"     6' - 8\"      1 3/4\"   EXIST   N/A        N/A              N/A                06.01             1&2",
+        "                                        302A         DORM 302                        WD-1       3' - 0\"     6' - 8\"      1 3/4\"   EXIST   N/A        N/A              N/A                07.03             1",
+        "                                        302B         RESTROOM 302B                   WD-1       2' - 0\"     6' - 8\"      1 3/4\"   EXIST   N/A        N/A              N/A                06.01             1&2",
+        "                                        303A         DORM 303                        WD-1       3' - 0\"     6' - 8\"      1 3/4\"   EXIST   N/A        N/A              N/A                07.03             1",
+        "                                        303B         RESTROOM 303B                   WD-1       2' - 0\"     6' - 8\"      1 3/4\"   EXIST   N/A        N/A              N/A                06.01             1&2",
+        "                                        304A         DORM 304                        WD-1       3' - 0\"     6' - 8\"      1 3/4\"   EXIST   N/A        N/A              N/A                07.03             1",
+        "                                        304B         RESTROOM 302B                   WD-1       2' - 0\"     6' - 8\"      1 3/4\"   EXIST   N/A        N/A              N/A                06.01             1&2                                                                                                                                                                                                            EQ.      EQ.",
+        "                                        305A         DORM 305                        WD-1       3' - 0\"     6' - 8\"      1 3/4\"   EXIST   N/A        N/A              N/A                07.03             1                                                                                                     10\"",
+        "                                        305B         RESTROOM 303B                   WD-1       2' - 0\"     6' - 8\"      1 3/4\"   EXIST   N/A        N/A              N/A                06.01             1&2",
+        "                                        306A         DORM 306                        WD-1       3' - 0\"     6' - 8\"      1 3/4\"   EXIST   N/A        N/A              N/A                07.03             1",
+        "                                        306B         RESTROOM 306B                   WD-1       2' - 0\"     6' - 8\"      1 3/4\"   EXIST   N/A        N/A              N/A                06.01             1&2                                              WD-1: FLUSH - WOOD                                    AL-1: FULL GLASS-ALUMINUM            HM-2: VISION LITE-HOLLOW METAL                                 WD-2: LOUVER - WOOD                                                      TYPE-1: HOLLOW METAL                       TYPE-2: HOLLOW METAL                                                                  04/15/2026",
+        "                                        307A         DORM 307                        WD-1       3' - 0\"     6' - 8\"      1 3/4\"   EXIST   N/A        N/A              N/A                07.03             1                                                HM-1: FLUSH - HOLLOW METAL",
+        "                                        307B         RESTROOM 307B                   WD-1       2' - 0\"     6' - 8\"      1 3/4\"   EXIST   N/A        N/A              N/A                06.01             1&2",
+        "                                        308A         DORM 308                        WD-1       3' - 0\"     6' - 8\"      1 3/4\"   EXIST   N/A        N/A              N/A                07.03             1",
+        "                                        308B         RESTROOM 306B                   WD-1       2' - 0\"     6' - 8\"      1 3/4\"   EXIST   N/A        N/A              N/A                06.01             1&2",
+        "                                        309A         DORM 309                        WD-1       3' - 0\"     6' - 8\"      1 3/4\"   EXIST   N/A        N/A              N/A                07.03             1                                                                                                                                                                                                                                                                                                                                                                                                   EXP. DATE: 12/31/26",
+        "                                        309B         RESTROOM 307B                   WD-1       2' - 0\"     6' - 8\"      1 3/4\"   EXIST   N/A        N/A              N/A                06.01             1&2                              A-602          SCALE: 1/4\" = 1'-0\"                                                                                                                                                                                                     A-602          SCALE: 1/4\" = 1'-0\"",
+        "                                        310A         DORM 310                        WD-1       3' - 0\"     6' - 8\"      1 3/4\"   EXIST   N/A        N/A              N/A                07.03             1",
+        "                                        310B         RESTROOM 310B                   WD-1       2' - 0\"     6' - 8\"      1 3/4\"   EXIST   N/A        N/A              N/A                06.01             1&2",
+        "                                        311A         DORM 311                        WD-1       3' - 0\"     6' - 8\"      1 3/4\"   EXIST   N/A        N/A              N/A                07.03             1",
+        "                                        311B         RESTROOM 311B                   WD-1       2' - 0\"     6' - 8\"      1 3/4\"   EXIST   N/A        N/A              N/A                06.01             1&2",
+        "                                        312A         DORM 312                        WD-1       3' - 0\"     6' - 8\"      1 3/4\"   EXIST   N/A        N/A              N/A                07.03             1                                                                                                               MASONRY WITH",
+        "                                        312B         RESTROOM 310B                   WD-1       2' - 0\"     6' - 8\"      1 3/4\"   EXIST   N/A        N/A              N/A                06.01             1&2                                                                                                             STEEL LINTEL",
+        "                                        313A         DORM 313                        WD-1       3' - 0\"     6' - 8\"      1 3/4\"   EXIST   N/A        N/A              N/A                07.03             1",
+        "                                        313B         RESTROOM 311B                   WD-1       2' - 0\"     6' - 8\"      1 3/4\"   EXIST   N/A        N/A              N/A                06.01             1&2",
+        "                                        314A         DORM 314                        WD-1       3' - 0\"     6' - 8\"      1 3/4\"   EXIST   N/A        N/A              N/A                07.03             1                                                                                                                                                                                                                                               STUD BOX HEADER",
+        "                                        314B         RESTROOM 314B                   WD-1       2' - 0\"     6' - 8\"      1 3/4\"   EXIST   N/A        N/A              N/A                06.01             1&2                                                          5/8\"                                               SEALANT @ INTERIOR                                                                                                              STUD WALL, AS",
+        "                                        315A         ACCESSIBLE DORM 315             WD-1       3' - 0\"     6' - 8\"      1 3/4\"   TYP-2   4/A602     5/A602                              07.02                                                                                                                                                                                                                                                             SCHEDULED",
+        "                                        315B         ACCESSIBLE RESTROOM 315B        WD-1       3' - 0\"     6' - 8\"      1 3/4\"   TYP-2   4/A602     5/A602                              06.01             2",
+        "                                        316A         DORM 316                        WD-1       3' - 0\"     6' - 8\"      1 3/4\"   EXIST   N/A        N/A              N/A                07.03             1                                                                                                               SIDES)",
+        "                                        316B         RESTROOM 314B                   WD-1       2' - 0\"     6' - 8\"      1 3/4\"   EXIST   N/A        N/A              N/A                06.01             1&2                                                                                                                                                                                           2\"                                                H.M. DOOR FRAME PER                                                                      11 5/8\"",
+        "                                        317A         DORM 317                        WD-1       3' - 0\"     6' - 8\"      1 3/4\"   EXIST   N/A        N/A              N/A                07.03             1                                          PRE-FINISHED METAL                                                                                                                                                                                   DOOR SCHEDULE                                                                             V.I.F.",
+        "                                        317B         RESTROOM 317B                   WD-1       2' - 0\"     6' - 8\"      1 3/4\"   EXIST   N/A        N/A              N/A                06.01             1&2                                        FLASHING W/ DRIP.",
+        "                                        318A         DORM 318                        WD-1       3' - 0\"     6' - 8\"      1 3/4\"   EXIST   N/A        N/A              N/A                07.03             1                                          REFER TO SPECS.",
+        "                                        318B         RESTROOM 318B                   WD-1       2' - 0\"     6' - 8\"      1 3/4\"   EXIST   N/A        N/A              N/A                06.01             1&2",
+        "                                        319A         DORM 319                        WD-1       3' - 0\"     6' - 8\"      1 3/4\"   EXIST   N/A        N/A              N/A                07.03             1                                                                     1/2\"                   5 3/4\"                                                                                                                VARIES",
+        "                                        319B         RESTROOM 317B                   WD-1       2' - 0\"     6' - 8\"      1 3/4\"   EXIST   N/A        N/A              N/A                06.01             1&2",
+        "                                        320A         DORM 320                        WD-1       3' - 0\"     6' - 8\"      1 3/4\"   EXIST   N/A        N/A              N/A                07.03             1",
+        "                                        321B         RESTROOM 321B                   WD-1       2' - 0\"     6' - 8\"      1 3/4\"   EXIST   N/A        N/A              N/A                06.01             1&2                                A-602           SCALE: 1 1/2\" = 1'-0\"                                                                                              A-602                SCALE: 1 1/2\" = 1'-0\"                                                                                                                                                    GROUT",
+        "                                        322A         DORM 322                        WD-1       3' - 0\"     6' - 8\"      1 3/4\"   EXIST   N/A        N/A              N/A                07.03             1",
+        "                                        322B         RESTROOM 322B                   WD-1       2' - 0\"     6' - 8\"      1 3/4\"   EXIST   N/A        N/A              N/A                06.01             1&2",
+        "                                        323A         DORM 323                        WD-1       3' - 0\"     6' - 8\"      1 3/4\"   EXIST   N/A        N/A              N/A                07.03             1                                                                                                                                                                                                                                                    BACKER ROD (TYP.                                                   8\"",
+        "                                        323B         RESTROOM 321B                   WD-1       2' - 0\"     6' - 8\"      1 3/4\"   EXIST   N/A        N/A              N/A                06.01             1&2                                                                                              2\"                                                                                                                                                                                                                                                                 WIRE ANCHOR",
+        "                                        324A         DORM 324                        WD-1       3' - 0\"     6' - 8\"      1 3/4\"   EXIST   N/A        N/A              N/A                07.03             1                                                                                     5/8\"                                                                                                                                                                                                                                                                                            OFFICE OF ADMINISTRATION",
+        "                                        324B         RESTROOM 322B                   WD-1       2' - 0\"     6' - 8\"      1 3/4\"   EXIST   N/A        N/A              N/A                06.01             1&2",
+        "                                        325A         DORM 325                        WD-1       3' - 0\"     6' - 8\"      1 3/4\"   EXIST   N/A        N/A              N/A                07.03             1                                                                                                                                                                                                                                                     5 3/4\"",
+        "                                        325B         RESTROOM 325B                   WD-1       2' - 0\"     6' - 8\"      1 3/4\"   EXIST   N/A        N/A              N/A                06.01             1&2                                                                                                                                                                                                                                                                                                                                                                 HOLLOW METAL",
+        "                                        326A         ACCESSIBLE DORM 326             WD-1       3' - 0\"     6' - 8\"      1 3/4\"   EXIST   N/A        N/A              N/A                07.02             1                                                                                                                                                                                                                                                                                                                                                                   DOOR FRAME. SEE   DESIGN AND CONSTRUCTION",
+        "                                        326B         ACCESSIBLE RESTROOM 326B        WD-1       3' - 0\"     6' - 8\"      1 3/4\"   TYP-2   4/A602     5/A602                              06.01             2                                                                                                                                                                                                                                                    H.M. DOOR, AS SCHEDULED                                                                                        DOOR SCHEDULE",
+        "                                        327A         DORM 327                        WD-1       3' - 0\"     6' - 8\"      1 3/4\"   EXIST   N/A        N/A              N/A                07.03             1                                                                                                              H.M. DOOR FRAME",
+        "                                        327B         RESTROOM 325B                   WD-1       2' - 0\"     6' - 8\"      1 3/4\"   EXIST   N/A        N/A              N/A                06.01             1&2                                                                            1/2\"                            DOOR, AS SCHEDULED                                                                                                                    GROUT SOLID",
+        "                                        328A         DORM 328                        WD-1       3' - 0\"     6' - 8\"      1 3/4\"   EXIST   N/A        N/A              N/A                07.03             1",
+        "                                        328B         RESTROOM 328B                   WD-1       2' - 0\"     6' - 8\"      1 3/4\"   EXIST   N/A        N/A              N/A                06.01             1&2",
+        "                                        329A         DORM 329                        WD-1       3' - 0\"     6' - 8\"      1 3/4\"   EXIST   N/A        N/A              N/A                07.03             1",
+        "                                        330B         RESTROOM 328B                   WD-1       2' - 0\"     6' - 8\"      1 3/4\"   EXIST   N/A        N/A              N/A                06.01             1&2                                A-602           SCALE: 1 1/2\" = 1'-0\"                                                                                              A-602                SCALE: 1 1/2\" = 1'-0\"                                                                                             A-602       SCALE: 1 1/2\" = 1'-0\"",
+        "                                        331A         DORM 331                        WD-1       3' - 0\"     6' - 8\"      1 3/4\"   EXIST   N/A        N/A              N/A                07.03             1",
+        "                                        331B         RESTROOM 329B                   WD-1       2' - 0\"     6' - 8\"      1 3/4\"   EXIST   N/A        N/A              N/A                06.01             1&2",
+        "                                        332A         LIVING ROOM 332                 WD-1       3' - 0\"     6' - 8\"      1 3/4\"   TYP-2   4/A602     5/A602                              07.03",
+        "                                        332B         RESTROOM 332B                   WD-1       3' - 0\"     6' - 8\"      1 3/4\"   TYP-2   4/A602     5/A602                              06.01             2                                                                                                                                                                                                                                                                                                                                                                                     INTERIOR/EXTERIOR & INSTALL",
+        "                                        332C         BEDROOM 332C                    WD-2       3' - 0\"     6' - 8\"      1 3/4\"   TYP-2   4/A602     5/A602                              06.01             3                                                                                                                                                                                                                                                                                                                                                                                     EMERGENCY GENERATOR,",
+        "                                        332D         BEDROOM 332D                    WD-2       3' - 0\"     6' - 8\"      1 3/4\"   TYP-2   4/A602     5/A602                              06.01             3                                                                                                                                                                                                                           4 1/2\"                                                                                                                                                    MULTIPLE ASSETS",
+        "                                        333B         CORRIDOR 341                    HM-2       3' - 0\"     6' - 8\"      1 3/4\"   TYP-2   4/A602     5/A602                    3/4 HR    05.02                                                                  STAINLESS STEEL                                                                                                        FLAT HEAD                                                                          ALUMINUM DOOR.                                                                                                         MSHP GENERAL",
+        "                                        334          UNISEX RESTROOM 334A            WD-2       3' - 0\"     6' - 8\"      1 3/4\"   TYP-2   4/A602     5/A602                              06.02             3                                                    CONCRETE SCREW                                                                                                         STAINLESS STEEL                                                                    SEE SPECS.                                                                                                             HEADQUARTERS COMPLEX",
+        "                                        335B         CORRIDOR 341                    HM-2       3' - 0\"     6' - 8\"      1 3/4\"   TYP-2   4/A602     5/A602                    3/4 HR    05.02                                                                                                                                                                                         THRESHOLD SET IN                                                                   1/8\" SEALANT JOINT",
+        "                                        336A         JANITOR CLOSET 336A             WD-1       3' - 0\"     6' - 8\"      1 3/4\"   EXIST   N/A        N/A              N/A                09.03             1&2",
+        "                                        336B         STORAGE 336B                    WD-1       3' - 0\"     6' - 8\"      1 3/4\"   TYP-2   4/A602     5/A602                              09.02                                                                                                                                       CONCRETE                                          HEIGHT (TYP.)",
+        "                                        337          CLEAN LINEN 337                 WD-1       3' - 0\"     6' - 8\"      1 3/4\"   EXIST   N/A        N/A              N/A                09.04             1&2                                                  CONCRETE SLAB                                                        FLOORING                                                                                                                             FINISH LEGEND",
+        "                                        338B         CORRIDOR 340                    HM-2       3' - 0\"     6' - 8\"      1 3/4\"   TYP-2   4/A602     5/A602                    3/4 HR    05.02                                                                  EXTERIOR                                                                INTERIOR                                       EXTERIOR                           1/2\"                                                       INTERIOR",
+        "                                        339          STORAGE 339                     WD-1       3' - 0\"     6' - 8\"      1 3/4\"   EXIST   N/A        N/A              N/A      3/4 HR    09.02             1"
+      ]
+    }
+  ],
+  "harvest_schedule_marks": [
+    {
+      "mark": "01",
+      "page": 32
+    },
+    {
+      "mark": "101A",
+      "page": 44
+    },
+    {
+      "mark": "1",
+      "page": 44
+    },
+    {
+      "mark": "101B",
+      "page": 44
+    },
+    {
+      "mark": "201B",
+      "page": 44
+    },
+    {
+      "mark": "102",
+      "page": 44
+    },
+    {
+      "mark": "202A",
+      "page": 44
+    },
+    {
+      "mark": "103A",
+      "page": 44
+    },
+    {
+      "mark": "103B",
+      "page": 44
+    },
+    {
+      "mark": "203A",
+      "page": 44
+    },
+    {
+      "mark": "104A",
+      "page": 44
+    },
+    {
+      "mark": "203B",
+      "page": 44
+    },
+    {
+      "mark": "104B",
+      "page": 44
+    },
+    {
+      "mark": "2",
+      "page": 44
+    },
+    {
+      "mark": "104C",
+      "page": 44
+    },
+    {
+      "mark": "3",
+      "page": 44
+    },
+    {
+      "mark": "104D",
+      "page": 44
+    },
+    {
+      "mark": "104E",
+      "page": 44
+    },
+    {
+      "mark": "105A",
+      "page": 44
+    },
+    {
+      "mark": "105B",
+      "page": 44
+    },
+    {
+      "mark": "206B",
+      "page": 44
+    },
+    {
+      "mark": "107A",
+      "page": 44
+    },
+    {
+      "mark": "107B",
+      "page": 44
+    },
+    {
+      "mark": "207B",
+      "page": 44
+    },
+    {
+      "mark": "109A",
+      "page": 44
+    },
+    {
+      "mark": "109B",
+      "page": 44
+    },
+    {
+      "mark": "208B",
+      "page": 44
+    },
+    {
+      "mark": "110",
+      "page": 44
+    },
+    {
+      "mark": "111A",
+      "page": 44
+    },
+    {
+      "mark": "111B",
+      "page": 44
+    },
+    {
+      "mark": "210A",
+      "page": 44
+    },
+    {
+      "mark": "112A",
+      "page": 44
+    },
+    {
+      "mark": "4",
+      "page": 44
+    },
+    {
+      "mark": "112B",
+      "page": 44
+    },
+    {
+      "mark": "211A",
+      "page": 44
+    },
+    {
+      "mark": "113",
+      "page": 44
+    },
+    {
+      "mark": "114",
+      "page": 44
+    },
+    {
+      "mark": "115",
+      "page": 44
+    },
+    {
+      "mark": "212B",
+      "page": 44
+    },
+    {
+      "mark": "116",
+      "page": 44
+    },
+    {
+      "mark": "213A",
+      "page": 44
+    },
+    {
+      "mark": "117",
+      "page": 44
+    },
+    {
+      "mark": "213B",
+      "page": 44
+    },
+    {
+      "mark": "118",
+      "page": 44
+    },
+    {
+      "mark": "214A",
+      "page": 44
+    },
+    {
+      "mark": "119",
+      "page": 44
+    },
+    {
+      "mark": "214B",
+      "page": 44
+    },
+    {
+      "mark": "120A",
+      "page": 44
+    },
+    {
+      "mark": "215A",
+      "page": 44
+    },
+    {
+      "mark": "120B",
+      "page": 44
+    },
+    {
+      "mark": "121",
+      "page": 44
+    },
+    {
+      "mark": "216A",
+      "page": 44
+    },
+    {
+      "mark": "122A",
+      "page": 44
+    },
+    {
+      "mark": "216B",
+      "page": 44
+    },
+    {
+      "mark": "122B",
+      "page": 44
+    },
+    {
+      "mark": "123A",
+      "page": 44
+    },
+    {
+      "mark": "217B",
+      "page": 44
+    },
+    {
+      "mark": "123B",
+      "page": 44
+    },
+    {
+      "mark": "124",
+      "page": 44
+    },
+    {
+      "mark": "125A",
+      "page": 44
+    },
+    {
+      "mark": "219A",
+      "page": 44
+    },
+    {
+      "mark": "125B",
+      "page": 44
+    },
+    {
+      "mark": "126A",
+      "page": 44
+    },
+    {
+      "mark": "220A",
+      "page": 44
+    },
+    {
+      "mark": "126B",
+      "page": 44
+    },
+    {
+      "mark": "127",
+      "page": 44
+    },
+    {
+      "mark": "221A",
+      "page": 44
+    },
+    {
+      "mark": "128A",
+      "page": 44
+    },
+    {
+      "mark": "221B",
+      "page": 44
+    },
+    {
+      "mark": "128B",
+      "page": 44
+    },
+    {
+      "mark": "129A",
+      "page": 44
+    },
+    {
+      "mark": "222B",
+      "page": 44
+    },
+    {
+      "mark": "130A",
+      "page": 44
+    },
+    {
+      "mark": "130C",
+      "page": 44
+    },
+    {
+      "mark": "226A",
+      "page": 44
+    },
+    {
+      "mark": "226B",
+      "page": 44
+    },
+    {
+      "mark": "133C",
+      "page": 44
+    },
+    {
+      "mark": "227B",
+      "page": 44
+    },
+    {
+      "mark": "228A",
+      "page": 44
+    },
+    {
+      "mark": "228B",
+      "page": 44
+    },
+    {
+      "mark": "229A",
+      "page": 44
+    },
+    {
+      "mark": "229B",
+      "page": 44
+    },
+    {
+      "mark": "230A",
+      "page": 44
+    },
+    {
+      "mark": "230B",
+      "page": 44
+    },
+    {
+      "mark": "231A",
+      "page": 44
+    },
+    {
+      "mark": "231B",
+      "page": 44
+    },
+    {
+      "mark": "232A",
+      "page": 44
+    },
+    {
+      "mark": "232B",
+      "page": 44
+    },
+    {
+      "mark": "232C",
+      "page": 44
+    },
+    {
+      "mark": "234",
+      "page": 44
+    },
+    {
+      "mark": "235B",
+      "page": 44
+    },
+    {
+      "mark": "236",
+      "page": 44
+    },
+    {
+      "mark": "237",
+      "page": 44
+    },
+    {
+      "mark": "238",
+      "page": 44
+    },
+    {
+      "mark": "239A",
+      "page": 44
+    },
+    {
+      "mark": "239B",
+      "page": 44
+    },
+    {
+      "mark": "301A",
+      "page": 45
+    },
+    {
+      "mark": "301B",
+      "page": 45
+    },
+    {
+      "mark": "302A",
+      "page": 45
+    },
+    {
+      "mark": "302B",
+      "page": 45
+    },
+    {
+      "mark": "303A",
+      "page": 45
+    },
+    {
+      "mark": "303B",
+      "page": 45
+    },
+    {
+      "mark": "304A",
+      "page": 45
+    },
+    {
+      "mark": "304B",
+      "page": 45
+    },
+    {
+      "mark": "305A",
+      "page": 45
+    },
+    {
+      "mark": "305B",
+      "page": 45
+    },
+    {
+      "mark": "306A",
+      "page": 45
+    },
+    {
+      "mark": "306B",
+      "page": 45
+    },
+    {
+      "mark": "307A",
+      "page": 45
+    },
+    {
+      "mark": "307B",
+      "page": 45
+    },
+    {
+      "mark": "308A",
+      "page": 45
+    },
+    {
+      "mark": "308B",
+      "page": 45
+    },
+    {
+      "mark": "309A",
+      "page": 45
+    },
+    {
+      "mark": "309B",
+      "page": 45
+    },
+    {
+      "mark": "310A",
+      "page": 45
+    },
+    {
+      "mark": "310B",
+      "page": 45
+    },
+    {
+      "mark": "311A",
+      "page": 45
+    },
+    {
+      "mark": "311B",
+      "page": 45
+    },
+    {
+      "mark": "312A",
+      "page": 45
+    },
+    {
+      "mark": "312B",
+      "page": 45
+    },
+    {
+      "mark": "313A",
+      "page": 45
+    },
+    {
+      "mark": "313B",
+      "page": 45
+    },
+    {
+      "mark": "314A",
+      "page": 45
+    },
+    {
+      "mark": "314B",
+      "page": 45
+    },
+    {
+      "mark": "315A",
+      "page": 45
+    },
+    {
+      "mark": "315B",
+      "page": 45
+    },
+    {
+      "mark": "316A",
+      "page": 45
+    },
+    {
+      "mark": "316B",
+      "page": 45
+    },
+    {
+      "mark": "317A",
+      "page": 45
+    },
+    {
+      "mark": "317B",
+      "page": 45
+    },
+    {
+      "mark": "318A",
+      "page": 45
+    },
+    {
+      "mark": "318B",
+      "page": 45
+    },
+    {
+      "mark": "319A",
+      "page": 45
+    },
+    {
+      "mark": "319B",
+      "page": 45
+    },
+    {
+      "mark": "320A",
+      "page": 45
+    },
+    {
+      "mark": "321B",
+      "page": 45
+    },
+    {
+      "mark": "322A",
+      "page": 45
+    },
+    {
+      "mark": "322B",
+      "page": 45
+    },
+    {
+      "mark": "323A",
+      "page": 45
+    },
+    {
+      "mark": "323B",
+      "page": 45
+    },
+    {
+      "mark": "324A",
+      "page": 45
+    },
+    {
+      "mark": "324B",
+      "page": 45
+    },
+    {
+      "mark": "325A",
+      "page": 45
+    },
+    {
+      "mark": "325B",
+      "page": 45
+    },
+    {
+      "mark": "326A",
+      "page": 45
+    },
+    {
+      "mark": "326B",
+      "page": 45
+    },
+    {
+      "mark": "327A",
+      "page": 45
+    },
+    {
+      "mark": "327B",
+      "page": 45
+    },
+    {
+      "mark": "328A",
+      "page": 45
+    },
+    {
+      "mark": "328B",
+      "page": 45
+    },
+    {
+      "mark": "329A",
+      "page": 45
+    },
+    {
+      "mark": "330B",
+      "page": 45
+    },
+    {
+      "mark": "331A",
+      "page": 45
+    },
+    {
+      "mark": "331B",
+      "page": 45
+    },
+    {
+      "mark": "332A",
+      "page": 45
+    },
+    {
+      "mark": "332B",
+      "page": 45
+    },
+    {
+      "mark": "332C",
+      "page": 45
+    },
+    {
+      "mark": "332D",
+      "page": 45
+    },
+    {
+      "mark": "333B",
+      "page": 45
+    },
+    {
+      "mark": "334",
+      "page": 45
+    },
+    {
+      "mark": "335B",
+      "page": 45
+    },
+    {
+      "mark": "336A",
+      "page": 45
+    },
+    {
+      "mark": "336B",
+      "page": 45
+    },
+    {
+      "mark": "337",
+      "page": 45
+    },
+    {
+      "mark": "338B",
+      "page": 45
+    },
+    {
+      "mark": "339",
+      "page": 45
+    }
+  ],
+  "harvest_marks_plan": {
+    "sheets": [
+      {
+        "page": 1,
+        "sheet": "G-001",
+        "title": "PROJECT NUMBER: R2502-01",
+        "plan": false
+      },
+      {
+        "page": 2,
+        "sheet": "G-002",
+        "title": "FACILITY #8136001003",
+        "plan": false
+      },
+      {
+        "page": 3,
+        "sheet": "G-003",
+        "title": "FACILITY #8136001003",
+        "plan": false
+      },
+      {
+        "page": 4,
+        "sheet": "G-004",
+        "title": "ADA GENERAL SIGNAGE",
+        "plan": false
+      },
+      {
+        "page": 5,
+        "sheet": "V-101",
+        "title": "PARTIAL TOPOGRAPHIC SURVEY",
+        "plan": false
+      },
+      {
+        "page": 6,
+        "sheet": "C-001",
+        "title": "GENERAL NOTES AND DETAILS",
+        "plan": false
+      },
+      {
+        "page": 7,
+        "sheet": "C-101",
+        "title": "SITE & UTILITY PLAN",
+        "plan": false
+      },
+      {
+        "page": 8,
+        "sheet": "S-001",
+        "title": "SHEET 8 OF 147",
+        "plan": false
+      },
+      {
+        "page": 9,
+        "sheet": "S-101",
+        "title": "SHEET 9 OF 147",
+        "plan": false
+      },
+      {
+        "page": 10,
+        "sheet": "S-102",
+        "title": "SHEET 10 OF 147",
+        "plan": false
+      },
+      {
+        "page": 11,
+        "sheet": "S-103",
+        "title": "SHEET 11 OF 147",
+        "plan": false
+      },
+      {
+        "page": 12,
+        "sheet": "S-104",
+        "title": "SHEET 12 OF 147",
+        "plan": false
+      },
+      {
+        "page": 13,
+        "sheet": "S-111",
+        "title": "FACILITY #8136001006",
+        "plan": false
+      },
+      {
+        "page": 14,
+        "sheet": "S-121",
+        "title": "FACILITY #8136001003",
+        "plan": false
+      },
+      {
+        "page": 15,
+        "sheet": "S-501",
+        "title": "SECTION",
+        "plan": false
+      },
+      {
+        "page": 16,
+        "sheet": "S-511",
+        "title": "FACILITY #8136001006",
+        "plan": false
+      },
+      {
+        "page": 17,
+        "sheet": "A-001",
+        "title": "FACILITY #8136001003",
+        "plan": false
+      },
+      {
+        "page": 18,
+        "sheet": "A-002",
+        "title": "SHEET 18 OF 147",
+        "plan": false
+      },
+      {
+        "page": 19,
+        "sheet": "A-101",
+        "title": "SHEET 19 OF 147",
+        "plan": false
+      },
+      {
+        "page": 20,
+        "sheet": "A-102",
+        "title": "SHEET 20 OF 147",
+        "plan": false
+      },
+      {
+        "page": 21,
+        "sheet": "A-103",
+        "title": "SHEET 21 OF 147",
+        "plan": false
+      },
+      {
+        "page": 22,
+        "sheet": "A-104",
+        "title": "SHEET 22 OF 147",
+        "plan": false
+      },
+      {
+        "page": 23,
+        "sheet": "A-105",
+        "title": "SHEET 23 OF 147",
+        "plan": false
+      },
+      {
+        "page": 24,
+        "sheet": "A-106",
+        "title": "SHEET 24 OF 147",
+        "plan": false
+      },
+      {
+        "page": 25,
+        "sheet": "A-107",
+        "title": "SHEET 25 OF 147",
+        "plan": false
+      },
+      {
+        "page": 26,
+        "sheet": "A-108",
+        "title": "SHEET 26 OF 147",
+        "plan": false
+      },
+      {
+        "page": 27,
+        "sheet": "A-111",
+        "title": "FACILITY #8136001006",
+        "plan": false
+      },
+      {
+        "page": 28,
+        "sheet": "A-112",
+        "title": "FACILITY #8136001006",
+        "plan": false
+      },
+      {
+        "page": 29,
+        "sheet": "A-113",
+        "title": "FACILITY #8136001006",
+        "plan": false
+      },
+      {
+        "page": 30,
+        "sheet": "A-114",
+        "title": "FACILITY #8136001006",
+        "plan": false
+      },
+      {
+        "page": 31,
+        "sheet": "A-121",
+        "title": "FACILITY #8136001003",
+        "plan": false
+      },
+      {
+        "page": 32,
+        "sheet": "A-122",
+        "title": "FACILITY #8136001003",
+        "plan": false
+      },
+      {
+        "page": 33,
+        "sheet": "A-123",
+        "title": "FACILITY #8136001003",
+        "plan": false
+      },
+      {
+        "page": 34,
+        "sheet": "A-124",
+        "title": "FACILITY #8136001003",
+        "plan": false
+      },
+      {
+        "page": 35,
+        "sheet": "A-201",
+        "title": "SHEET 35 OF 147",
+        "plan": false
+      },
+      {
+        "page": 36,
+        "sheet": "A-401",
+        "title": "SECTION @ CLOSET",
+        "plan": false
+      },
+      {
+        "page": 37,
+        "sheet": "A-402",
+        "title": "KITCHENETE RM-113 ELEVATION",
+        "plan": false
+      },
+      {
+        "page": 38,
+        "sheet": "A-403",
+        "title": "CHASE",
+        "plan": false
+      },
+      {
+        "page": 39,
+        "sheet": "A-404",
+        "title": "RESTROOM - SINGLE BEDROOM SECOND FLOOR",
+        "plan": false
+      },
+      {
+        "page": 40,
+        "sheet": "A-405",
+        "title": "EXISTING INFILL",
+        "plan": false
+      },
+      {
+        "page": 41,
+        "sheet": "A-406",
+        "title": "SECTION THRU MECH. CHASE",
+        "plan": false
+      },
+      {
+        "page": 42,
+        "sheet": "A-501",
+        "title": "BOLLARD DETAIL",
+        "plan": false
+      },
+      {
+        "page": 43,
+        "sheet": "A-511",
+        "title": "FACILITY #8136001006",
+        "plan": false
+      },
+      {
+        "page": 44,
+        "sheet": "A-601",
+        "title": "GLZ-D",
+        "plan": false
+      },
+      {
+        "page": 45,
+        "sheet": "A-602",
+        "title": "WINDOW JAMB",
+        "plan": false
+      },
+      {
+        "page": 46,
+        "sheet": "A-603",
+        "title": "SHEET 46 OF 147",
+        "plan": false
+      },
+      {
+        "page": 47,
+        "sheet": "A-604",
+        "title": "ROLLER SHADE CEILING MOUNT",
+        "plan": false
+      },
+      {
+        "page": 48,
+        "sheet": "A-701",
+        "title": "SHEET 48 OF 147",
+        "plan": false
+      },
+      {
+        "page": 49,
+        "sheet": "A-702",
+        "title": "SHEET 49 OF 147",
+        "plan": false
+      },
+      {
+        "page": 50,
+        "sheet": "A-703",
+        "title": "SHEET 50 OF 147",
+        "plan": false
+      },
+      {
+        "page": 51,
+        "sheet": "A-704",
+        "title": "SHEET 51 OF 147",
+        "plan": false
+      },
+      {
+        "page": 52,
+        "sheet": "A-705",
+        "title": "SHEET 52 OF 147",
+        "plan": false
+      },
+      {
+        "page": 53,
+        "sheet": "A-706",
+        "title": "SHEET 53 OF 147",
+        "plan": false
+      },
+      {
+        "page": 54,
+        "sheet": "A-711",
+        "title": "FACILITY #8136001006",
+        "plan": false
+      },
+      {
+        "page": 55,
+        "sheet": "A-801",
+        "title": "SHEET 55 OF 147",
+        "plan": false
+      },
+      {
+        "page": 56,
+        "sheet": "A-802",
+        "title": "SHEET 56 OF 147",
+        "plan": false
+      },
+      {
+        "page": 57,
+        "sheet": "A-803",
+        "title": "SHEET 57 OF 147",
+        "plan": false
+      },
+      {
+        "page": 58,
+        "sheet": "P-001",
+        "title": "SHEET 58 OF 147",
+        "plan": false
+      },
+      {
+        "page": 59,
+        "sheet": "P-101.1",
+        "title": "KEY MAP",
+        "plan": false
+      },
+      {
+        "page": 60,
+        "sheet": "P-101.2",
+        "title": "KEY MAP",
+        "plan": false
+      },
+      {
+        "page": 61,
+        "sheet": "P-102.1",
+        "title": "KEY MAP",
+        "plan": false
+      },
+      {
+        "page": 62,
+        "sheet": "P-102.2",
+        "title": "KEY MAP",
+        "plan": false
+      },
+      {
+        "page": 63,
+        "sheet": "P-103.1",
+        "title": "KEY MAP",
+        "plan": false
+      },
+      {
+        "page": 64,
+        "sheet": "P-103.2",
+        "title": "KEY MAP",
+        "plan": false
+      },
+      {
+        "page": 65,
+        "sheet": "P-104.1",
+        "title": "KEY MAP",
+        "plan": false
+      },
+      {
+        "page": 66,
+        "sheet": "P-105.1",
+        "title": "KEY MAP",
+        "plan": false
+      },
+      {
+        "page": 67,
+        "sheet": "P-105.2",
+        "title": "KEY MAP",
+        "plan": false
+      },
+      {
+        "page": 68,
+        "sheet": "P-106.1",
+        "title": "KEY MAP",
+        "plan": false
+      },
+      {
+        "page": 69,
+        "sheet": "P-106.2",
+        "title": "KEY MAP",
+        "plan": false
+      },
+      {
+        "page": 70,
+        "sheet": "P-107.1",
+        "title": "KEY MAP",
+        "plan": false
+      },
+      {
+        "page": 71,
+        "sheet": "P-107.2",
+        "title": "KEY MAP",
+        "plan": false
+      },
+      {
+        "page": 72,
+        "sheet": "P-108.1",
+        "title": "SHEET 72 OF 147",
+        "plan": false
+      },
+      {
+        "page": 73,
+        "sheet": "P-111",
+        "title": "RESTROOM RENO PLAN",
+        "plan": false
+      },
+      {
+        "page": 74,
+        "sheet": "P-401",
+        "title": "SHEET 74 OF 147",
+        "plan": false
+      },
+      {
+        "page": 75,
+        "sheet": "P-402",
+        "title": "SHEET 75 OF 147",
+        "plan": false
+      },
+      {
+        "page": 76,
+        "sheet": "P-501",
+        "title": "SANITARY RISER 1",
+        "plan": false
+      },
+      {
+        "page": 77,
+        "sheet": "P-502",
+        "title": "SANITARY RISER 15",
+        "plan": false
+      },
+      {
+        "page": 78,
+        "sheet": "P-503",
+        "title": "DOMESTIC WATER RISER 1",
+        "plan": false
+      },
+      {
+        "page": 79,
+        "sheet": "P-504",
+        "title": "DOMESTIC WATER RISER 11",
+        "plan": false
+      },
+      {
+        "page": 80,
+        "sheet": "P-505",
+        "title": "WATER SOFTENER DETAIL",
+        "plan": false
+      },
+      {
+        "page": 81,
+        "sheet": "P-601",
+        "title": "STORAGE TANK SCHEDULE",
+        "plan": false
+      },
+      {
+        "page": 82,
+        "sheet": "M-001",
+        "title": "SHEET 82 OF 147",
+        "plan": false
+      },
+      {
+        "page": 83,
+        "sheet": "M-101",
+        "title": "KEY MAP",
+        "plan": false
+      },
+      {
+        "page": 84,
+        "sheet": "M-102",
+        "title": "KEY MAP",
+        "plan": false
+      },
+      {
+        "page": 85,
+        "sheet": "M-103",
+        "title": "KEY MAP",
+        "plan": false
+      },
+      {
+        "page": 86,
+        "sheet": "M-104",
+        "title": "KEY MAP",
+        "plan": false
+      },
+      {
+        "page": 87,
+        "sheet": "M-105",
+        "title": "KEY MAP",
+        "plan": false
+      },
+      {
+        "page": 88,
+        "sheet": "M-106",
+        "title": "KEY MAP",
+        "plan": false
+      },
+      {
+        "page": 89,
+        "sheet": "M-107",
+        "title": "KEY MAP",
+        "plan": false
+      },
+      {
+        "page": 90,
+        "sheet": "M-108",
+        "title": "KEY MAP",
+        "plan": false
+      },
+      {
+        "page": 91,
+        "sheet": "M-401",
+        "title": "SHEET 91 OF 147",
+        "plan": false
+      },
+      {
+        "page": 92,
+        "sheet": "M-402",
+        "title": "SHEET 92 OF 147",
+        "plan": false
+      },
+      {
+        "page": 93,
+        "sheet": "M-403",
+        "title": "SHEET 93 OF 147",
+        "plan": false
+      },
+      {
+        "page": 94,
+        "sheet": "M-411",
+        "title": "FACILITY #8136001006",
+        "plan": false
+      },
+      {
+        "page": 95,
+        "sheet": "M-412",
+        "title": "FACILITY #8136001006",
+        "plan": false
+      },
+      {
+        "page": 96,
+        "sheet": "M-413",
+        "title": "FACILITY #8136001006",
+        "plan": false
+      },
+      {
+        "page": 97,
+        "sheet": "M-414",
+        "title": "FACILITY #8136001006",
+        "plan": false
+      },
+      {
+        "page": 98,
+        "sheet": "M-415",
+        "title": "FACILITY #8136001006",
+        "plan": false
+      },
+      {
+        "page": 99,
+        "sheet": "M-421",
+        "title": "FACILITY #8136001003",
+        "plan": false
+      },
+      {
+        "page": 100,
+        "sheet": "M-422",
+        "title": "FACILITY #8136001003",
+        "plan": false
+      },
+      {
+        "page": 101,
+        "sheet": "M-423",
+        "title": "FACILITY #8136001003",
+        "plan": false
+      },
+      {
+        "page": 102,
+        "sheet": "M-501",
+        "title": "EQUIPMENT BOLTING TO EXISTING PAD DETAIL",
+        "plan": false
+      },
+      {
+        "page": 103,
+        "sheet": "M-502",
+        "title": "UTILITY SET CENTRIFUGAL EXHAUST FAN",
+        "plan": false
+      },
+      {
+        "page": 104,
+        "sheet": "M-503",
+        "title": "CONDENSATE ROUTING AT FAN COIL UNIT (TYP.)",
+        "plan": false
+      },
+      {
+        "page": 105,
+        "sheet": "M-504",
+        "title": "CHASE RISER 4",
+        "plan": false
+      },
+      {
+        "page": 106,
+        "sheet": "M-505",
+        "title": "SHEET106OF 147",
+        "plan": false
+      },
+      {
+        "page": 107,
+        "sheet": "M-506",
+        "title": "SHEET107OF 147",
+        "plan": false
+      },
+      {
+        "page": 108,
+        "sheet": "M-507",
+        "title": "SHEET108OF 147",
+        "plan": false
+      },
+      {
+        "page": 109,
+        "sheet": "M-601",
+        "title": "AIR DEVICE SCHEDULE",
+        "plan": false
+      },
+      {
+        "page": 110,
+        "sheet": "M-602",
+        "title": "MECHANICAL SCHEDULES 2",
+        "plan": false
+      },
+      {
+        "page": 111,
+        "sheet": "M-603",
+        "title": "SHEET111OF 147",
+        "plan": false
+      },
+      {
+        "page": 112,
+        "sheet": "M-604",
+        "title": "SHEET112OF 147",
+        "plan": false
+      },
+      {
+        "page": 113,
+        "sheet": "M-605",
+        "title": "SHEET113OF 147",
+        "plan": false
+      },
+      {
+        "page": 114,
+        "sheet": "M-606",
+        "title": "SHEET114OF 147",
+        "plan": false
+      },
+      {
+        "page": 115,
+        "sheet": "M-607",
+        "title": "SHEET115OF 147",
+        "plan": false
+      },
+      {
+        "page": 116,
+        "sheet": "M-608",
+        "title": "SHEET116OF 147",
+        "plan": false
+      },
+      {
+        "page": 117,
+        "sheet": "M-609",
+        "title": "SHEET117OF 147",
+        "plan": false
+      },
+      {
+        "page": 118,
+        "sheet": "M-610",
+        "title": "SHEET118OF 147",
+        "plan": false
+      },
+      {
+        "page": 119,
+        "sheet": "M-611",
+        "title": "SHEET119OF 147",
+        "plan": false
+      },
+      {
+        "page": 120,
+        "sheet": "E-001",
+        "title": "MISCELLANEOUS",
+        "plan": false
+      },
+      {
+        "page": 121,
+        "sheet": "E-002",
+        "title": "SHEET121OF 147",
+        "plan": false
+      },
+      {
+        "page": 122,
+        "sheet": "E-101",
+        "title": "KEY MAP",
+        "plan": false
+      },
+      {
+        "page": 123,
+        "sheet": "E-102",
+        "title": "KEY MAP",
+        "plan": false
+      },
+      {
+        "page": 124,
+        "sheet": "E-103",
+        "title": "KEY MAP",
+        "plan": false
+      },
+      {
+        "page": 125,
+        "sheet": "E-104",
+        "title": "KEY MAP",
+        "plan": false
+      },
+      {
+        "page": 126,
+        "sheet": "E-105",
+        "title": "KEY MAP",
+        "plan": false
+      },
+      {
+        "page": 127,
+        "sheet": "E-106",
+        "title": "KEY MAP",
+        "plan": false
+      },
+      {
+        "page": 128,
+        "sheet": "E-107",
+        "title": "KEY MAP",
+        "plan": false
+      },
+      {
+        "page": 129,
+        "sheet": "E-108",
+        "title": "KEY MAP",
+        "plan": false
+      },
+      {
+        "page": 130,
+        "sheet": "E-401",
+        "title": "SHEET130OF 147",
+        "plan": false
+      },
+      {
+        "page": 131,
+        "sheet": "E-402",
+        "title": "SHEET131OF 147",
+        "plan": false
+      },
+      {
+        "page": 132,
+        "sheet": "E-403",
+        "title": "SHEET132OF 147",
+        "plan": false
+      },
+      {
+        "page": 133,
+        "sheet": "E-411",
+        "title": "FACILITY #8136001006",
+        "plan": false
+      },
+      {
+        "page": 134,
+        "sheet": "E-412",
+        "title": "FACILITY #8136001006",
+        "plan": false
+      },
+      {
+        "page": 135,
+        "sheet": "E-413",
+        "title": "FACILITY #8136001006",
+        "plan": false
+      },
+      {
+        "page": 136,
+        "sheet": "E-414",
+        "title": "FACILITY #8136001006",
+        "plan": false
+      },
+      {
+        "page": 137,
+        "sheet": "E-415",
+        "title": "FACILITY #8136001006",
+        "plan": false
+      },
+      {
+        "page": 138,
+        "sheet": "E-421",
+        "title": "FACILITY #8136001003",
+        "plan": false
+      },
+      {
+        "page": 139,
+        "sheet": "E-422",
+        "title": "FACILITY #8136001003",
+        "plan": false
+      },
+      {
+        "page": 140,
+        "sheet": "E-601",
+        "title": "SHEET140OF 147",
+        "plan": false
+      },
+      {
+        "page": 141,
+        "sheet": "E-602",
+        "title": "SHEET141OF 147",
+        "plan": false
+      },
+      {
+        "page": 142,
+        "sheet": "E-603",
+        "title": "SHEET142OF 147",
+        "plan": false
+      },
+      {
+        "page": 143,
+        "sheet": "E-604",
+        "title": "SHEET143OF 147",
+        "plan": false
+      },
+      {
+        "page": 144,
+        "sheet": "E-605",
+        "title": "SHEET144OF 147",
+        "plan": false
+      },
+      {
+        "page": 145,
+        "sheet": "E-701",
+        "title": "KEY MAP",
+        "plan": false
+      },
+      {
+        "page": 146,
+        "sheet": "E-702",
+        "title": "KEY MAP",
+        "plan": false
+      },
+      {
+        "page": 147,
+        "sheet": "E-703",
+        "title": "KEY MAP",
+        "plan": false
+      }
+    ],
+    "plan_sheets": [],
+    "rooms": [],
+    "tags": [],
+    "unmatched_tags": [],
+    "marks_not_on_plan": [
+      {
+        "mark": "01",
+        "page": 32
+      },
+      {
+        "mark": "101A",
+        "page": 44
+      },
+      {
+        "mark": "1",
+        "page": 44
+      },
+      {
+        "mark": "101B",
+        "page": 44
+      },
+      {
+        "mark": "201B",
+        "page": 44
+      },
+      {
+        "mark": "102",
+        "page": 44
+      },
+      {
+        "mark": "202A",
+        "page": 44
+      },
+      {
+        "mark": "103A",
+        "page": 44
+      },
+      {
+        "mark": "103B",
+        "page": 44
+      },
+      {
+        "mark": "203A",
+        "page": 44
+      },
+      {
+        "mark": "104A",
+        "page": 44
+      },
+      {
+        "mark": "203B",
+        "page": 44
+      },
+      {
+        "mark": "104B",
+        "page": 44
+      },
+      {
+        "mark": "2",
+        "page": 44
+      },
+      {
+        "mark": "104C",
+        "page": 44
+      },
+      {
+        "mark": "3",
+        "page": 44
+      },
+      {
+        "mark": "104D",
+        "page": 44
+      },
+      {
+        "mark": "104E",
+        "page": 44
+      },
+      {
+        "mark": "105A",
+        "page": 44
+      },
+      {
+        "mark": "105B",
+        "page": 44
+      },
+      {
+        "mark": "206B",
+        "page": 44
+      },
+      {
+        "mark": "107A",
+        "page": 44
+      },
+      {
+        "mark": "107B",
+        "page": 44
+      },
+      {
+        "mark": "207B",
+        "page": 44
+      },
+      {
+        "mark": "109A",
+        "page": 44
+      },
+      {
+        "mark": "109B",
+        "page": 44
+      },
+      {
+        "mark": "208B",
+        "page": 44
+      },
+      {
+        "mark": "110",
+        "page": 44
+      },
+      {
+        "mark": "111A",
+        "page": 44
+      },
+      {
+        "mark": "111B",
+        "page": 44
+      },
+      {
+        "mark": "210A",
+        "page": 44
+      },
+      {
+        "mark": "112A",
+        "page": 44
+      },
+      {
+        "mark": "4",
+        "page": 44
+      },
+      {
+        "mark": "112B",
+        "page": 44
+      },
+      {
+        "mark": "211A",
+        "page": 44
+      },
+      {
+        "mark": "113",
+        "page": 44
+      },
+      {
+        "mark": "114",
+        "page": 44
+      },
+      {
+        "mark": "115",
+        "page": 44
+      },
+      {
+        "mark": "212B",
+        "page": 44
+      },
+      {
+        "mark": "116",
+        "page": 44
+      },
+      {
+        "mark": "213A",
+        "page": 44
+      },
+      {
+        "mark": "117",
+        "page": 44
+      },
+      {
+        "mark": "213B",
+        "page": 44
+      },
+      {
+        "mark": "118",
+        "page": 44
+      },
+      {
+        "mark": "214A",
+        "page": 44
+      },
+      {
+        "mark": "119",
+        "page": 44
+      },
+      {
+        "mark": "214B",
+        "page": 44
+      },
+      {
+        "mark": "120A",
+        "page": 44
+      },
+      {
+        "mark": "215A",
+        "page": 44
+      },
+      {
+        "mark": "120B",
+        "page": 44
+      },
+      {
+        "mark": "121",
+        "page": 44
+      },
+      {
+        "mark": "216A",
+        "page": 44
+      },
+      {
+        "mark": "122A",
+        "page": 44
+      },
+      {
+        "mark": "216B",
+        "page": 44
+      },
+      {
+        "mark": "122B",
+        "page": 44
+      },
+      {
+        "mark": "123A",
+        "page": 44
+      },
+      {
+        "mark": "217B",
+        "page": 44
+      },
+      {
+        "mark": "123B",
+        "page": 44
+      },
+      {
+        "mark": "124",
+        "page": 44
+      },
+      {
+        "mark": "125A",
+        "page": 44
+      },
+      {
+        "mark": "219A",
+        "page": 44
+      },
+      {
+        "mark": "125B",
+        "page": 44
+      },
+      {
+        "mark": "126A",
+        "page": 44
+      },
+      {
+        "mark": "220A",
+        "page": 44
+      },
+      {
+        "mark": "126B",
+        "page": 44
+      },
+      {
+        "mark": "127",
+        "page": 44
+      },
+      {
+        "mark": "221A",
+        "page": 44
+      },
+      {
+        "mark": "128A",
+        "page": 44
+      },
+      {
+        "mark": "221B",
+        "page": 44
+      },
+      {
+        "mark": "128B",
+        "page": 44
+      },
+      {
+        "mark": "129A",
+        "page": 44
+      },
+      {
+        "mark": "222B",
+        "page": 44
+      },
+      {
+        "mark": "130A",
+        "page": 44
+      },
+      {
+        "mark": "130C",
+        "page": 44
+      },
+      {
+        "mark": "226A",
+        "page": 44
+      },
+      {
+        "mark": "226B",
+        "page": 44
+      },
+      {
+        "mark": "133C",
+        "page": 44
+      },
+      {
+        "mark": "227B",
+        "page": 44
+      },
+      {
+        "mark": "228A",
+        "page": 44
+      },
+      {
+        "mark": "228B",
+        "page": 44
+      },
+      {
+        "mark": "229A",
+        "page": 44
+      },
+      {
+        "mark": "229B",
+        "page": 44
+      },
+      {
+        "mark": "230A",
+        "page": 44
+      },
+      {
+        "mark": "230B",
+        "page": 44
+      },
+      {
+        "mark": "231A",
+        "page": 44
+      },
+      {
+        "mark": "231B",
+        "page": 44
+      },
+      {
+        "mark": "232A",
+        "page": 44
+      },
+      {
+        "mark": "232B",
+        "page": 44
+      },
+      {
+        "mark": "232C",
+        "page": 44
+      },
+      {
+        "mark": "234",
+        "page": 44
+      },
+      {
+        "mark": "235B",
+        "page": 44
+      },
+      {
+        "mark": "236",
+        "page": 44
+      },
+      {
+        "mark": "237",
+        "page": 44
+      },
+      {
+        "mark": "238",
+        "page": 44
+      },
+      {
+        "mark": "239A",
+        "page": 44
+      },
+      {
+        "mark": "239B",
+        "page": 44
+      },
+      {
+        "mark": "301A",
+        "page": 45
+      },
+      {
+        "mark": "301B",
+        "page": 45
+      },
+      {
+        "mark": "302A",
+        "page": 45
+      },
+      {
+        "mark": "302B",
+        "page": 45
+      },
+      {
+        "mark": "303A",
+        "page": 45
+      },
+      {
+        "mark": "303B",
+        "page": 45
+      },
+      {
+        "mark": "304A",
+        "page": 45
+      },
+      {
+        "mark": "304B",
+        "page": 45
+      },
+      {
+        "mark": "305A",
+        "page": 45
+      },
+      {
+        "mark": "305B",
+        "page": 45
+      },
+      {
+        "mark": "306A",
+        "page": 45
+      },
+      {
+        "mark": "306B",
+        "page": 45
+      },
+      {
+        "mark": "307A",
+        "page": 45
+      },
+      {
+        "mark": "307B",
+        "page": 45
+      },
+      {
+        "mark": "308A",
+        "page": 45
+      },
+      {
+        "mark": "308B",
+        "page": 45
+      },
+      {
+        "mark": "309A",
+        "page": 45
+      },
+      {
+        "mark": "309B",
+        "page": 45
+      },
+      {
+        "mark": "310A",
+        "page": 45
+      },
+      {
+        "mark": "310B",
+        "page": 45
+      },
+      {
+        "mark": "311A",
+        "page": 45
+      },
+      {
+        "mark": "311B",
+        "page": 45
+      },
+      {
+        "mark": "312A",
+        "page": 45
+      },
+      {
+        "mark": "312B",
+        "page": 45
+      },
+      {
+        "mark": "313A",
+        "page": 45
+      },
+      {
+        "mark": "313B",
+        "page": 45
+      },
+      {
+        "mark": "314A",
+        "page": 45
+      },
+      {
+        "mark": "314B",
+        "page": 45
+      },
+      {
+        "mark": "315A",
+        "page": 45
+      },
+      {
+        "mark": "315B",
+        "page": 45
+      },
+      {
+        "mark": "316A",
+        "page": 45
+      },
+      {
+        "mark": "316B",
+        "page": 45
+      },
+      {
+        "mark": "317A",
+        "page": 45
+      },
+      {
+        "mark": "317B",
+        "page": 45
+      },
+      {
+        "mark": "318A",
+        "page": 45
+      },
+      {
+        "mark": "318B",
+        "page": 45
+      },
+      {
+        "mark": "319A",
+        "page": 45
+      },
+      {
+        "mark": "319B",
+        "page": 45
+      },
+      {
+        "mark": "320A",
+        "page": 45
+      },
+      {
+        "mark": "321B",
+        "page": 45
+      },
+      {
+        "mark": "322A",
+        "page": 45
+      },
+      {
+        "mark": "322B",
+        "page": 45
+      },
+      {
+        "mark": "323A",
+        "page": 45
+      },
+      {
+        "mark": "323B",
+        "page": 45
+      },
+      {
+        "mark": "324A",
+        "page": 45
+      },
+      {
+        "mark": "324B",
+        "page": 45
+      },
+      {
+        "mark": "325A",
+        "page": 45
+      },
+      {
+        "mark": "325B",
+        "page": 45
+      },
+      {
+        "mark": "326A",
+        "page": 45
+      },
+      {
+        "mark": "326B",
+        "page": 45
+      },
+      {
+        "mark": "327A",
+        "page": 45
+      },
+      {
+        "mark": "327B",
+        "page": 45
+      },
+      {
+        "mark": "328A",
+        "page": 45
+      },
+      {
+        "mark": "328B",
+        "page": 45
+      },
+      {
+        "mark": "329A",
+        "page": 45
+      },
+      {
+        "mark": "330B",
+        "page": 45
+      },
+      {
+        "mark": "331A",
+        "page": 45
+      },
+      {
+        "mark": "331B",
+        "page": 45
+      },
+      {
+        "mark": "332A",
+        "page": 45
+      },
+      {
+        "mark": "332B",
+        "page": 45
+      },
+      {
+        "mark": "332C",
+        "page": 45
+      },
+      {
+        "mark": "332D",
+        "page": 45
+      },
+      {
+        "mark": "333B",
+        "page": 45
+      },
+      {
+        "mark": "334",
+        "page": 45
+      },
+      {
+        "mark": "335B",
+        "page": 45
+      },
+      {
+        "mark": "336A",
+        "page": 45
+      },
+      {
+        "mark": "336B",
+        "page": 45
+      },
+      {
+        "mark": "337",
+        "page": 45
+      },
+      {
+        "mark": "338B",
+        "page": 45
+      },
+      {
+        "mark": "339",
+        "page": 45
+      }
+    ],
+    "counts": {
+      "plan_sheets": 0,
+      "rooms": 0,
+      "corridors": 0,
+      "tags": 0,
+      "unmatched_tags": 0,
+      "schedule_marks": 166,
+      "marks_not_on_plan": 166
+    }
+  },
+  "truth": {
+    "tier": "unread",
+    "readers": {
+      "a": {
+        "doors": 0,
+        "sets": 0,
+        "items": 0,
+        "name": "production text layer (weyland-subx-worker/src/lib/text-layer-read.js)"
+      },
+      "b": {
+        "doors": 0,
+        "sets": 0,
+        "items": 0,
+        "name": "geometry first (tools/accuracy/truth/reader_b.mjs)",
+        "tables": 0
+      }
+    },
+    "agreement": {
+      "doors": {
+        "rows": 0,
+        "agreed": 0,
+        "disputed": 0,
+        "only_a": 0,
+        "only_b": 0,
+        "fields": {},
+        "agreement_rate": null
+      },
+      "items": {
+        "rows": 0,
+        "agreed": 0,
+        "disputed": 0,
+        "only_a": 0,
+        "only_b": 0,
+        "fields": {},
+        "agreement_rate": null
+      },
+      "sets": {
+        "sets": 0,
+        "agreed": 0
+      }
+    },
+    "marks_on_plan": {
+      "applicable": false,
+      "reason": "no door schedule rows"
+    }
+  }
+}

@@ -1,0 +1,10 @@
+node --check plan-report.mjs: PASS
+node --check serve.mjs: PASS
+10 PDF SHA256 values match candidate manifest: PASS
+10 production schedule row totals match truth_run: PASS
+Applicable production plan-oracle totals match truth_run: PASS
+3 local model HTTP fixtures: PASS
+SightX app response bytes equal source: PASS
+WebGL and input assets HTTP 200: PASS
+POST rejected (read-only server): PASS
+Mac WebGL rendering: NOT VERIFIED (Safari access denied)

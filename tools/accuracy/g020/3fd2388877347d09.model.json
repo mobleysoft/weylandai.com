@@ -1,0 +1,290 @@
+{
+  "project": "_T2502-01 - Final Plans.pdf — harvest-mark diagnostic",
+  "source": "subx",
+  "doors": [
+    {
+      "mark": "001",
+      "location": null,
+      "type": null,
+      "material": null,
+      "width_in": 36,
+      "height_in": 84,
+      "size_known": false,
+      "leaves": 1,
+      "rating": null,
+      "frame": null,
+      "panic": false,
+      "set": null,
+      "source_page": 13,
+      "plan": {
+        "sheet": "A-101",
+        "page": 7,
+        "x": 4.11,
+        "z": 44.56,
+        "room": "01",
+        "room_name": "VESTIBULE",
+        "room_by": "nearest_label",
+        "unsure": true,
+        "also_on": [],
+        "room_x": 12.89,
+        "room_z": 43.89,
+        "building": 0
+      }
+    },
+    {
+      "mark": "002",
+      "location": null,
+      "type": null,
+      "material": null,
+      "width_in": 36,
+      "height_in": 84,
+      "size_known": false,
+      "leaves": 1,
+      "rating": null,
+      "frame": null,
+      "panic": false,
+      "set": null,
+      "source_page": 13,
+      "plan": {
+        "sheet": "A-101",
+        "page": 7,
+        "x": 0,
+        "z": 74.22,
+        "room": "04",
+        "room_name": "MEETING ROOM",
+        "room_by": "nearest_label",
+        "unsure": true,
+        "also_on": [],
+        "room_x": 4.22,
+        "room_z": 85.78,
+        "building": 0
+      }
+    },
+    {
+      "mark": "003",
+      "location": null,
+      "type": null,
+      "material": null,
+      "width_in": 36,
+      "height_in": 84,
+      "size_known": false,
+      "leaves": 1,
+      "rating": null,
+      "frame": null,
+      "panic": false,
+      "set": null,
+      "source_page": 13,
+      "plan": {
+        "sheet": "A-101",
+        "page": 7,
+        "x": 72.89,
+        "z": 95.67,
+        "room": "17",
+        "room_name": "KITCHEN",
+        "room_by": "nearest_label",
+        "unsure": true,
+        "also_on": [],
+        "room_x": 82.33,
+        "room_z": 80.78,
+        "building": 0
+      }
+    }
+  ],
+  "sets": {},
+  "notes": [
+    "Unchanged S1 reader supplied harvest schedule-row regex marks, not production doors or audited truth. Tag-shaped text can be room/grid/detail numbers. Unmatched tags are style candidates, not verified doors.",
+    "3 doors have no size read from the schedule; drawn 3'-0\" x 7'-0\"."
+  ],
+  "layout": {
+    "source": "plan",
+    "buildings": [
+      {
+        "sheet": "A-101",
+        "page": 7,
+        "title": "FLOOR PLAN",
+        "scale": "1/8\" = 1'-0\"",
+        "to_scale": true,
+        "origin_x": 0,
+        "width_ft": 175,
+        "depth_ft": 123,
+        "rooms": [
+          {
+            "number": "10",
+            "name": "VAULT",
+            "corridor": false,
+            "x": 135.56,
+            "z": 0
+          },
+          {
+            "number": "11",
+            "name": "ARMS",
+            "corridor": false,
+            "x": 149.67,
+            "z": 0
+          },
+          {
+            "number": "09",
+            "name": "STOR",
+            "corridor": false,
+            "x": 89.89,
+            "z": 0.33
+          },
+          {
+            "number": "12",
+            "name": "STOR",
+            "corridor": false,
+            "x": 158.56,
+            "z": 0.33
+          },
+          {
+            "number": "08",
+            "name": "CLASS ROOM",
+            "corridor": false,
+            "x": 21.89,
+            "z": 2.44
+          },
+          {
+            "number": "13",
+            "name": "STOR",
+            "corridor": false,
+            "x": 175.22,
+            "z": 2.44
+          },
+          {
+            "number": "07",
+            "name": "OFFICE",
+            "corridor": false,
+            "x": 12.89,
+            "z": 18.78
+          },
+          {
+            "number": "06",
+            "name": "OFFICE",
+            "corridor": false,
+            "x": 12.89,
+            "z": 31.89
+          },
+          {
+            "number": "02",
+            "name": "DRILL HALL",
+            "corridor": true,
+            "x": 79.22,
+            "z": 43.22
+          },
+          {
+            "number": "01",
+            "name": "VESTIBULE",
+            "corridor": true,
+            "x": 12.89,
+            "z": 43.89
+          },
+          {
+            "number": "05",
+            "name": "OFFICE",
+            "corridor": false,
+            "x": 12.89,
+            "z": 55.89
+          },
+          {
+            "number": "04",
+            "name": "OFFICE",
+            "corridor": false,
+            "x": 12.89,
+            "z": 68.56
+          },
+          {
+            "number": "16",
+            "name": "WOMAN'S ROOM",
+            "corridor": false,
+            "x": 102.11,
+            "z": 77.89
+          },
+          {
+            "number": "15",
+            "name": "MEN'S ROOM",
+            "corridor": false,
+            "x": 123.56,
+            "z": 77.89
+          },
+          {
+            "number": "17",
+            "name": "KITCHEN",
+            "corridor": false,
+            "x": 82.33,
+            "z": 80.78
+          },
+          {
+            "number": "04",
+            "name": "MEETING ROOM",
+            "corridor": false,
+            "x": 4.22,
+            "z": 85.78
+          },
+          {
+            "number": "03",
+            "name": "OFFICES",
+            "corridor": false,
+            "x": 32.11,
+            "z": 85.78
+          },
+          {
+            "number": "18",
+            "name": "UTILITY",
+            "corridor": false,
+            "x": 57.67,
+            "z": 84.89
+          },
+          {
+            "number": "14",
+            "name": "BUNK ROOM",
+            "corridor": false,
+            "x": 156.56,
+            "z": 84.11
+          },
+          {
+            "number": "1",
+            "name": "LEVEL 1",
+            "corridor": false,
+            "x": 116.67,
+            "z": 119.89
+          },
+          {
+            "number": "1",
+            "name": "NEW CONSTRUCTION KEYNOTES",
+            "corridor": false,
+            "x": 170.33,
+            "z": 122
+          },
+          {
+            "number": "2",
+            "name": "NEW CONSTRUCTION KEYNOTES",
+            "corridor": false,
+            "x": 170.33,
+            "z": 122.67
+          }
+        ]
+      }
+    ],
+    "counts": {
+      "doors": 3,
+      "on_plan": 3,
+      "rooms": 22,
+      "corridors": 2,
+      "unmatched_tags": 2
+    },
+    "unmatched_tags": [
+      {
+        "tag": "004",
+        "sheet": "A-101",
+        "page": 7
+      },
+      {
+        "tag": "005",
+        "sheet": "A-101",
+        "page": 7
+      }
+    ],
+    "not_on_plan": [],
+    "note": "Laid out from the floor plan A-101 (FLOOR PLAN) p.7: each door stands where its tag is drawn, in the room the plan gives it, at the sheet's printed scale. Walls and door swings are not read from the plan yet."
+  }
+}

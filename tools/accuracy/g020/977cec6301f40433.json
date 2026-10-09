@@ -1,0 +1,521 @@
+{
+  "sha16": "977cec6301f40433",
+  "sha256": "977cec6301f40433bfd05b46b7406a4efc0455466cb878a1a0171803fe910182",
+  "rank": 9,
+  "source_url": "https://oa.mo.gov/sites/default/files/bid-opportunities/_T2423-01%20-%20Final%20Plans.pdf",
+  "page_count": 31,
+  "candidate_plan_pages": [
+    3,
+    4,
+    9
+  ],
+  "candidate_schedule_pages": [
+    10
+  ],
+  "production_schedule_pages": [
+    {
+      "page": 2,
+      "rows": 0,
+      "error": null
+    },
+    {
+      "page": 10,
+      "rows": 0,
+      "error": null
+    },
+    {
+      "page": 21,
+      "rows": 0,
+      "error": null
+    }
+  ],
+  "production_doors": [],
+  "production_plan": {
+    "sheets": [
+      {
+        "page": 1,
+        "sheet": "G-001",
+        "title": "SITE NUMBER: ASSET NUMBER: 8136265008",
+        "plan": false
+      },
+      {
+        "page": 2,
+        "sheet": "G-002",
+        "title": "NORTH",
+        "plan": false
+      },
+      {
+        "page": 3,
+        "sheet": "A-101",
+        "title": "CHECKED BY: DESIGNED BY: GW&",
+        "plan": false
+      },
+      {
+        "page": 4,
+        "sheet": "A-102",
+        "title": "CHECKED BY: DESIGNED BY: GW&",
+        "plan": false
+      },
+      {
+        "page": 5,
+        "sheet": "A-103",
+        "title": "CHECKED BY: DESIGNED BY: GW&",
+        "plan": false
+      },
+      {
+        "page": 6,
+        "sheet": "A-201",
+        "title": "CHECKED BY: DESIGNED BY: GW&",
+        "plan": false
+      },
+      {
+        "page": 7,
+        "sheet": "A-202",
+        "title": "CHECKED BY: DESIGNED BY: GW&",
+        "plan": false
+      },
+      {
+        "page": 8,
+        "sheet": "A-301",
+        "title": "CHECKED BY: DESIGNED BY: GW&",
+        "plan": false
+      },
+      {
+        "page": 9,
+        "sheet": "A-401",
+        "title": "CHECKED BY: DESIGNED BY: GW&",
+        "plan": false
+      },
+      {
+        "page": 10,
+        "sheet": "A-601",
+        "title": "CHECKED BY: DESIGNED BY: GW&",
+        "plan": false
+      },
+      {
+        "page": 11,
+        "sheet": "A-701",
+        "title": "CHECKED BY: DESIGNED BY: GW&",
+        "plan": false
+      },
+      {
+        "page": 12,
+        "sheet": "A-702",
+        "title": "CHECKED BY: DESIGNED BY: GW&",
+        "plan": false
+      },
+      {
+        "page": 13,
+        "sheet": "M000",
+        "title": "HVAC COVERSHEET",
+        "plan": false
+      },
+      {
+        "page": 14,
+        "sheet": "M111",
+        "title": "LEVEL 01 DEMOLITION PLAN - VENTILATION",
+        "plan": false
+      },
+      {
+        "page": 15,
+        "sheet": "M211",
+        "title": "LEVEL 01 PLAN - VENTILATION",
+        "plan": false
+      },
+      {
+        "page": 16,
+        "sheet": "M400",
+        "title": "LOUVER INSTALLATION",
+        "plan": false
+      },
+      {
+        "page": 17,
+        "sheet": "M500",
+        "title": "MECHANICAL CONTROLS",
+        "plan": false
+      },
+      {
+        "page": 18,
+        "sheet": "M600",
+        "title": "HVAC SCHEDULES",
+        "plan": false
+      },
+      {
+        "page": 19,
+        "sheet": "MPE112",
+        "title": "ROOF DEMOLITION PLAN",
+        "plan": false
+      },
+      {
+        "page": 20,
+        "sheet": "MPE212",
+        "title": "ROOF PLAN",
+        "plan": false
+      },
+      {
+        "page": 21,
+        "sheet": "P000",
+        "title": "PLUMBING COVERSHEET",
+        "plan": false
+      },
+      {
+        "page": 22,
+        "sheet": "P101",
+        "title": "LEVEL 01 DEMOLITION PLANS - PLUMBING",
+        "plan": false
+      },
+      {
+        "page": 23,
+        "sheet": "P201",
+        "title": "UNDERFLOOR & LEVEL 01 PLANS - PLUMBING",
+        "plan": false
+      },
+      {
+        "page": 24,
+        "sheet": "P400",
+        "title": "PLUMBING DETAILS AND RISER DIAGRAM",
+        "plan": false
+      },
+      {
+        "page": 25,
+        "sheet": "E000",
+        "title": "ELECTRICAL COVERSHEET",
+        "plan": false
+      },
+      {
+        "page": 26,
+        "sheet": "E101",
+        "title": "LEVEL 01 DEMOLITION PLAN - LIGHTING",
+        "plan": false
+      },
+      {
+        "page": 27,
+        "sheet": "E111",
+        "title": "LEVEL 01 DEMOLITION PLAN - POWER",
+        "plan": false
+      },
+      {
+        "page": 28,
+        "sheet": "E201",
+        "title": "LEVEL 01 PLAN - LIGHTING",
+        "plan": false
+      },
+      {
+        "page": 29,
+        "sheet": "E211",
+        "title": "LEVEL 01 PLAN - POWER",
+        "plan": false
+      },
+      {
+        "page": 30,
+        "sheet": "E600",
+        "title": "ELECTRICAL SCHEDULES",
+        "plan": false
+      },
+      {
+        "page": 31,
+        "sheet": "E700",
+        "title": "ELECTRICAL PANEL SCHEDULES",
+        "plan": false
+      }
+    ],
+    "plan_sheets": [],
+    "rooms": [],
+    "tags": [],
+    "unmatched_tags": [],
+    "marks_not_on_plan": [],
+    "counts": {
+      "plan_sheets": 0,
+      "rooms": 0,
+      "corridors": 0,
+      "tags": 0,
+      "unmatched_tags": 0,
+      "schedule_marks": 0,
+      "marks_not_on_plan": 0
+    }
+  },
+  "diagnostic_note": "Unchanged S1 reader supplied harvest schedule-row regex marks, not production doors or audited truth. Tag-shaped text can be room/grid/detail numbers. Unmatched tags are style candidates, not verified doors.",
+  "harvest_schedule_rows": [
+    {
+      "page": 10,
+      "marks": [
+        "112",
+        "114"
+      ],
+      "lines": [
+        "112       A                  Assembly        Existing   14' - 0\"                   14' - 0\"       1 1/2\"     Existing        Existing Existing None           1        1, 2                                                                                                                       Supply                          Closet     Supply        Storage         Office 4                  Office 3                        Office 2                         Office 1",
+        "114       B                  Elec. / Data    Existing   6' - 0\"                    7' - 0\"        1 3/4\"     Existing        Existing Existing None           2        1, 2                                                                                                                        111                            110A        110            109            108                       107                             106                              105                                                 Project Name:",
+        "114       C                  Elec. / Data    HM         3' - 0\"                    7' - 0\"        1 3/4\"     HM-1            3 / A-601 4 / A-601 None         3        3                                                                                                                                                                                                                                                                                                                                                   Readiness Center"
+      ]
+    }
+  ],
+  "harvest_schedule_marks": [
+    {
+      "mark": "112",
+      "page": 10
+    },
+    {
+      "mark": "114",
+      "page": 10
+    }
+  ],
+  "harvest_marks_plan": {
+    "sheets": [
+      {
+        "page": 1,
+        "sheet": "G-001",
+        "title": "SITE NUMBER: ASSET NUMBER: 8136265008",
+        "plan": false
+      },
+      {
+        "page": 2,
+        "sheet": "G-002",
+        "title": "NORTH",
+        "plan": false
+      },
+      {
+        "page": 3,
+        "sheet": "A-101",
+        "title": "CHECKED BY: DESIGNED BY: GW&",
+        "plan": false
+      },
+      {
+        "page": 4,
+        "sheet": "A-102",
+        "title": "CHECKED BY: DESIGNED BY: GW&",
+        "plan": false
+      },
+      {
+        "page": 5,
+        "sheet": "A-103",
+        "title": "CHECKED BY: DESIGNED BY: GW&",
+        "plan": false
+      },
+      {
+        "page": 6,
+        "sheet": "A-201",
+        "title": "CHECKED BY: DESIGNED BY: GW&",
+        "plan": false
+      },
+      {
+        "page": 7,
+        "sheet": "A-202",
+        "title": "CHECKED BY: DESIGNED BY: GW&",
+        "plan": false
+      },
+      {
+        "page": 8,
+        "sheet": "A-301",
+        "title": "CHECKED BY: DESIGNED BY: GW&",
+        "plan": false
+      },
+      {
+        "page": 9,
+        "sheet": "A-401",
+        "title": "CHECKED BY: DESIGNED BY: GW&",
+        "plan": false
+      },
+      {
+        "page": 10,
+        "sheet": "A-601",
+        "title": "CHECKED BY: DESIGNED BY: GW&",
+        "plan": false
+      },
+      {
+        "page": 11,
+        "sheet": "A-701",
+        "title": "CHECKED BY: DESIGNED BY: GW&",
+        "plan": false
+      },
+      {
+        "page": 12,
+        "sheet": "A-702",
+        "title": "CHECKED BY: DESIGNED BY: GW&",
+        "plan": false
+      },
+      {
+        "page": 13,
+        "sheet": "M000",
+        "title": "HVAC COVERSHEET",
+        "plan": false
+      },
+      {
+        "page": 14,
+        "sheet": "M111",
+        "title": "LEVEL 01 DEMOLITION PLAN - VENTILATION",
+        "plan": false
+      },
+      {
+        "page": 15,
+        "sheet": "M211",
+        "title": "LEVEL 01 PLAN - VENTILATION",
+        "plan": false
+      },
+      {
+        "page": 16,
+        "sheet": "M400",
+        "title": "LOUVER INSTALLATION",
+        "plan": false
+      },
+      {
+        "page": 17,
+        "sheet": "M500",
+        "title": "MECHANICAL CONTROLS",
+        "plan": false
+      },
+      {
+        "page": 18,
+        "sheet": "M600",
+        "title": "HVAC SCHEDULES",
+        "plan": false
+      },
+      {
+        "page": 19,
+        "sheet": "MPE112",
+        "title": "ROOF DEMOLITION PLAN",
+        "plan": false
+      },
+      {
+        "page": 20,
+        "sheet": "MPE212",
+        "title": "ROOF PLAN",
+        "plan": false
+      },
+      {
+        "page": 21,
+        "sheet": "P000",
+        "title": "PLUMBING COVERSHEET",
+        "plan": false
+      },
+      {
+        "page": 22,
+        "sheet": "P101",
+        "title": "LEVEL 01 DEMOLITION PLANS - PLUMBING",
+        "plan": false
+      },
+      {
+        "page": 23,
+        "sheet": "P201",
+        "title": "UNDERFLOOR & LEVEL 01 PLANS - PLUMBING",
+        "plan": false
+      },
+      {
+        "page": 24,
+        "sheet": "P400",
+        "title": "PLUMBING DETAILS AND RISER DIAGRAM",
+        "plan": false
+      },
+      {
+        "page": 25,
+        "sheet": "E000",
+        "title": "ELECTRICAL COVERSHEET",
+        "plan": false
+      },
+      {
+        "page": 26,
+        "sheet": "E101",
+        "title": "LEVEL 01 DEMOLITION PLAN - LIGHTING",
+        "plan": false
+      },
+      {
+        "page": 27,
+        "sheet": "E111",
+        "title": "LEVEL 01 DEMOLITION PLAN - POWER",
+        "plan": false
+      },
+      {
+        "page": 28,
+        "sheet": "E201",
+        "title": "LEVEL 01 PLAN - LIGHTING",
+        "plan": false
+      },
+      {
+        "page": 29,
+        "sheet": "E211",
+        "title": "LEVEL 01 PLAN - POWER",
+        "plan": false
+      },
+      {
+        "page": 30,
+        "sheet": "E600",
+        "title": "ELECTRICAL SCHEDULES",
+        "plan": false
+      },
+      {
+        "page": 31,
+        "sheet": "E700",
+        "title": "ELECTRICAL PANEL SCHEDULES",
+        "plan": false
+      }
+    ],
+    "plan_sheets": [],
+    "rooms": [],
+    "tags": [],
+    "unmatched_tags": [],
+    "marks_not_on_plan": [
+      {
+        "mark": "112",
+        "page": 10
+      },
+      {
+        "mark": "114",
+        "page": 10
+      }
+    ],
+    "counts": {
+      "plan_sheets": 0,
+      "rooms": 0,
+      "corridors": 0,
+      "tags": 0,
+      "unmatched_tags": 0,
+      "schedule_marks": 2,
+      "marks_not_on_plan": 2
+    }
+  },
+  "truth": {
+    "tier": "unread",
+    "readers": {
+      "a": {
+        "doors": 0,
+        "sets": 2,
+        "items": 31,
+        "name": "production text layer (weyland-subx-worker/src/lib/text-layer-read.js)"
+      },
+      "b": {
+        "doors": 0,
+        "sets": 1,
+        "items": 19,
+        "name": "geometry first (tools/accuracy/truth/reader_b.mjs)",
+        "tables": 0
+      }
+    },
+    "agreement": {
+      "doors": {
+        "rows": 0,
+        "agreed": 0,
+        "disputed": 0,
+        "only_a": 0,
+        "only_b": 0,
+        "fields": {},
+        "agreement_rate": null
+      },
+      "items": {
+        "rows": 50,
+        "agreed": 0,
+        "disputed": 0,
+        "only_a": 31,
+        "only_b": 19,
+        "fields": {},
+        "agreement_rate": 0
+      },
+      "sets": {
+        "sets": 2,
+        "agreed": 1
+      }
+    },
+    "marks_on_plan": {
+      "applicable": false,
+      "reason": "no door schedule rows"
+    }
+  }
+}

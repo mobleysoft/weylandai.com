@@ -1,0 +1,4836 @@
+{
+  "sha16": "192a16af8f31ae0c",
+  "sha256": "192a16af8f31ae0c4a41976578627641eddcb36eeb645d0e4d99f92f97690ceb",
+  "rank": 3,
+  "source_url": "https://oa.mo.gov/sites/default/files/bid-opportunities/_T2507-01%20Final%20Bid%20Plans.pdf",
+  "page_count": 30,
+  "candidate_plan_pages": [
+    6,
+    7,
+    8,
+    9,
+    11
+  ],
+  "candidate_schedule_pages": [
+    10
+  ],
+  "production_schedule_pages": [
+    {
+      "page": 5,
+      "rows": 0,
+      "error": null
+    },
+    {
+      "page": 6,
+      "rows": 0,
+      "error": null
+    },
+    {
+      "page": 10,
+      "rows": 0,
+      "error": null
+    },
+    {
+      "page": 12,
+      "rows": 0,
+      "error": null
+    }
+  ],
+  "production_doors": [],
+  "production_plan": {
+    "sheets": [
+      {
+        "page": 1,
+        "sheet": "G-001",
+        "title": "WELLS",
+        "plan": false
+      },
+      {
+        "page": 2,
+        "sheet": "S-001",
+        "title": "GENE",
+        "plan": false
+      },
+      {
+        "page": 3,
+        "sheet": "S-100",
+        "title": "STRUCTURAL PLAN",
+        "plan": false
+      },
+      {
+        "page": 4,
+        "sheet": "S-200",
+        "title": "STRUCTURAL DETAILS",
+        "plan": false
+      },
+      {
+        "page": 5,
+        "sheet": "A-001",
+        "title": "LEGENDS & CODE PLANS",
+        "plan": false
+      },
+      {
+        "page": 6,
+        "sheet": "A-002",
+        "title": "DEMOLITION FLOOR PLANS",
+        "plan": false
+      },
+      {
+        "page": 7,
+        "sheet": "A-100",
+        "title": "FIRST FLOOR PLANS",
+        "plan": true
+      },
+      {
+        "page": 8,
+        "sheet": "A-101",
+        "title": "FIRST FLOOR DIMENSION PLAN",
+        "plan": true
+      },
+      {
+        "page": 9,
+        "sheet": "A-102",
+        "title": "FIRST FLOOR FINISH PLAN",
+        "plan": false
+      },
+      {
+        "page": 10,
+        "sheet": "A-103",
+        "title": "SCHEDULES AND FRAME TYPES",
+        "plan": false
+      },
+      {
+        "page": 11,
+        "sheet": "A-104",
+        "title": "PLANS & DETAILS",
+        "plan": true
+      },
+      {
+        "page": 12,
+        "sheet": "A-400",
+        "title": "REFLECTED CEILING PLAN",
+        "plan": false
+      },
+      {
+        "page": 13,
+        "sheet": "A-401",
+        "title": "REFLECTED CEILING PLAN",
+        "plan": false
+      },
+      {
+        "page": 14,
+        "sheet": "A-402",
+        "title": "ALTERNATE 1: ACCOUSTIC PANELS",
+        "plan": false
+      },
+      {
+        "page": 15,
+        "sheet": "A-500",
+        "title": "ROOF PLAN",
+        "plan": false
+      },
+      {
+        "page": 16,
+        "sheet": "MEP-101",
+        "title": "MEP TITLE SHEET",
+        "plan": false
+      },
+      {
+        "page": 17,
+        "sheet": "P-001",
+        "title": "DEMO PLUMBING PLAN",
+        "plan": false
+      },
+      {
+        "page": 18,
+        "sheet": "P-101",
+        "title": "UNDERGROUND PLUMBING PLAN",
+        "plan": false
+      },
+      {
+        "page": 19,
+        "sheet": "P-201",
+        "title": "PLUMBING PLAN",
+        "plan": false
+      },
+      {
+        "page": 20,
+        "sheet": "P-301",
+        "title": "PLUMBING DETAILS",
+        "plan": false
+      },
+      {
+        "page": 21,
+        "sheet": "P-401",
+        "title": "PLUMBING SCHEDULES",
+        "plan": false
+      },
+      {
+        "page": 22,
+        "sheet": "M-001",
+        "title": "DEMO MECHANICAL PLAN",
+        "plan": false
+      },
+      {
+        "page": 23,
+        "sheet": "M-101",
+        "title": "MECHANICAL PLAN",
+        "plan": false
+      },
+      {
+        "page": 24,
+        "sheet": "M-102",
+        "title": "MECHANICAL PIPING PLAN",
+        "plan": false
+      },
+      {
+        "page": 25,
+        "sheet": "M-201",
+        "title": "FURNACE",
+        "plan": false
+      },
+      {
+        "page": 26,
+        "sheet": "E-001",
+        "title": "DEMO LIGHTING PLAN",
+        "plan": false
+      },
+      {
+        "page": 27,
+        "sheet": "E-002",
+        "title": "DEMO POWER PLAN",
+        "plan": false
+      },
+      {
+        "page": 28,
+        "sheet": "E-101",
+        "title": "LIGHTING PLAN",
+        "plan": false
+      },
+      {
+        "page": 29,
+        "sheet": "E-201",
+        "title": "POWER PLAN",
+        "plan": false
+      },
+      {
+        "page": 30,
+        "sheet": "E-301",
+        "title": "DEMO ELECTRICAL RISER",
+        "plan": false
+      }
+    ],
+    "plan_sheets": [
+      {
+        "page": 7,
+        "sheet": "A-100",
+        "title": "FIRST FLOOR PLANS",
+        "rooms": 63,
+        "scales": [
+          "SCALE: 1 1/2\"= 1'-0\"",
+          "SCALE: 1/8\" = 1'-0\""
+        ],
+        "points_per_foot": [
+          108,
+          9
+        ]
+      },
+      {
+        "page": 8,
+        "sheet": "A-101",
+        "title": "FIRST FLOOR DIMENSION PLAN",
+        "rooms": 44,
+        "scales": [
+          "SCALE: 1/8\" = 1'-0\""
+        ],
+        "points_per_foot": [
+          9
+        ]
+      },
+      {
+        "page": 11,
+        "sheet": "A-104",
+        "title": "PLANS & DETAILS",
+        "rooms": 44,
+        "scales": [
+          "SCALE: 1/4\" = 1'-0\"",
+          "SCALE: 1 1/2\"= 1'-0\"",
+          "SCALE: 3/4\" = 1'-0\"",
+          "SCALE: 1/4\" = 1'-0\"",
+          "SCALE: 1/4\" = 1'-0\"",
+          "SCALE: 1/4\" = 1'-0\"",
+          "SCALE: 3/4\" = 1'-0\""
+        ],
+        "points_per_foot": [
+          18,
+          108,
+          54
+        ]
+      }
+    ],
+    "rooms": [
+      {
+        "page": 7,
+        "sheet": "A-100",
+        "number": "135",
+        "name": "UNIT STORAGE",
+        "x": 1469,
+        "y": 308,
+        "h": 7.5412071,
+        "corridor": false,
+        "points_per_foot": 108
+      },
+      {
+        "page": 7,
+        "sheet": "A-100",
+        "number": "100",
+        "name": "CAN WASH",
+        "x": 563,
+        "y": 471,
+        "h": 7.5412071,
+        "corridor": false,
+        "points_per_foot": 9
+      },
+      {
+        "page": 7,
+        "sheet": "A-100",
+        "number": "101",
+        "name": "SCULLERY",
+        "x": 605,
+        "y": 579,
+        "h": 7.5412071,
+        "corridor": false,
+        "points_per_foot": 9
+      },
+      {
+        "page": 7,
+        "sheet": "A-100",
+        "number": "133",
+        "name": "SUPPLY OFFICE",
+        "x": 1307,
+        "y": 639,
+        "h": 7.5412071,
+        "corridor": false,
+        "points_per_foot": 108
+      },
+      {
+        "page": 7,
+        "sheet": "A-100",
+        "number": "134",
+        "name": "ARMS VAULT",
+        "x": 1414,
+        "y": 661,
+        "h": 7.5412071,
+        "corridor": false,
+        "points_per_foot": 108
+      },
+      {
+        "page": 7,
+        "sheet": "A-100",
+        "number": "131",
+        "name": "EXCERCISE ROOM",
+        "x": 1557,
+        "y": 673,
+        "h": 7.5412071,
+        "corridor": false,
+        "points_per_foot": 108
+      },
+      {
+        "page": 7,
+        "sheet": "A-100",
+        "number": "132",
+        "name": "DRILL FLOOR",
+        "x": 1130,
+        "y": 685,
+        "h": 7.5412071,
+        "corridor": false,
+        "points_per_foot": 9
+      },
+      {
+        "page": 7,
+        "sheet": "A-100",
+        "number": "102",
+        "name": "FOOD PREP",
+        "x": 605,
+        "y": 707,
+        "h": 7.5412071,
+        "corridor": false,
+        "points_per_foot": 9
+      },
+      {
+        "page": 7,
+        "sheet": "A-100",
+        "number": "103",
+        "name": "FOOD STORAGE",
+        "x": 599,
+        "y": 835,
+        "h": 7.5412071,
+        "corridor": false,
+        "points_per_foot": 9
+      },
+      {
+        "page": 7,
+        "sheet": "A-100",
+        "number": "125",
+        "name": "OFFICE",
+        "x": 1633,
+        "y": 868,
+        "h": 7.5412071,
+        "corridor": false,
+        "points_per_foot": 108
+      },
+      {
+        "page": 7,
+        "sheet": "A-100",
+        "number": "129",
+        "name": "UNIT ADMIN",
+        "x": 1318,
+        "y": 889,
+        "h": 7.5412071,
+        "corridor": false,
+        "points_per_foot": 108
+      },
+      {
+        "page": 7,
+        "sheet": "A-100",
+        "number": "124",
+        "name": "OFFICE",
+        "x": 1545,
+        "y": 889,
+        "h": 7.5412071,
+        "corridor": false,
+        "points_per_foot": 108
+      },
+      {
+        "page": 7,
+        "sheet": "A-100",
+        "number": "104",
+        "name": "CORRIDOR",
+        "x": 637,
+        "y": 907,
+        "h": 7.5412071,
+        "corridor": true,
+        "points_per_foot": 9
+      },
+      {
+        "page": 7,
+        "sheet": "A-100",
+        "number": "TA17",
+        "name": "TA10",
+        "x": 853,
+        "y": 926,
+        "h": 7.7630076,
+        "corridor": false,
+        "points_per_foot": 9
+      },
+      {
+        "page": 7,
+        "sheet": "A-100",
+        "number": "130",
+        "name": "STO",
+        "x": 1274,
+        "y": 932,
+        "h": 7.5412071,
+        "corridor": false,
+        "points_per_foot": 108
+      },
+      {
+        "page": 7,
+        "sheet": "A-100",
+        "number": "TA19",
+        "name": "TA17",
+        "x": 853,
+        "y": 940,
+        "h": 7.7630076,
+        "corridor": false,
+        "points_per_foot": 9
+      },
+      {
+        "page": 7,
+        "sheet": "A-100",
+        "number": "105",
+        "name": "MAINT / STOR",
+        "x": 583,
+        "y": 984,
+        "h": 7.5412071,
+        "corridor": false,
+        "points_per_foot": 9
+      },
+      {
+        "page": 7,
+        "sheet": "A-100",
+        "number": "143",
+        "name": "TROOP CMDR",
+        "x": 822,
+        "y": 979,
+        "h": 7.5412071,
+        "corridor": false,
+        "points_per_foot": 9
+      },
+      {
+        "page": 7,
+        "sheet": "A-100",
+        "number": "142",
+        "name": "LEGAL",
+        "x": 920,
+        "y": 988,
+        "h": 7.5412071,
+        "corridor": false,
+        "points_per_foot": 9
+      },
+      {
+        "page": 7,
+        "sheet": "A-100",
+        "number": "TA2",
+        "name": "TA1",
+        "x": 1963,
+        "y": 1011,
+        "h": 7.7630067,
+        "corridor": false,
+        "points_per_foot": 108
+      },
+      {
+        "page": 7,
+        "sheet": "A-100",
+        "number": "TA3",
+        "name": "TA2",
+        "x": 1963,
+        "y": 1026,
+        "h": 7.7630067,
+        "corridor": false,
+        "points_per_foot": 108
+      },
+      {
+        "page": 7,
+        "sheet": "A-100",
+        "number": "128",
+        "name": "MECH",
+        "x": 1275,
+        "y": 1036,
+        "h": 7.5412071,
+        "corridor": false,
+        "points_per_foot": 108
+      },
+      {
+        "page": 7,
+        "sheet": "A-100",
+        "number": "106",
+        "name": "MOTHERS CNTR",
+        "x": 600,
+        "y": 1081,
+        "h": 7.5412071,
+        "corridor": false,
+        "points_per_foot": 9
+      },
+      {
+        "page": 7,
+        "sheet": "A-100",
+        "number": "141",
+        "name": "HHD CMND TEAM",
+        "x": 934,
+        "y": 1100,
+        "h": 7.5412071,
+        "corridor": false,
+        "points_per_foot": 9
+      },
+      {
+        "page": 7,
+        "sheet": "A-100",
+        "number": "TA4",
+        "name": "TA3",
+        "x": 1963,
+        "y": 1040,
+        "h": 7.7630067,
+        "corridor": false,
+        "points_per_foot": 108
+      },
+      {
+        "page": 7,
+        "sheet": "A-100",
+        "number": "TA5",
+        "name": "TA4",
+        "x": 1963,
+        "y": 1053,
+        "h": 7.7630067,
+        "corridor": false,
+        "points_per_foot": 108
+      },
+      {
+        "page": 7,
+        "sheet": "A-100",
+        "number": "TA6",
+        "name": "TA5",
+        "x": 1963,
+        "y": 1067,
+        "h": 7.7630067,
+        "corridor": false,
+        "points_per_foot": 108
+      },
+      {
+        "page": 7,
+        "sheet": "A-100",
+        "number": "TA7",
+        "name": "TA6",
+        "x": 1963,
+        "y": 1079,
+        "h": 7.7630085,
+        "corridor": false,
+        "points_per_foot": 108
+      },
+      {
+        "page": 7,
+        "sheet": "A-100",
+        "number": "TA8",
+        "name": "TA7",
+        "x": 1963,
+        "y": 1092,
+        "h": 7.7630112,
+        "corridor": false,
+        "points_per_foot": 108
+      },
+      {
+        "page": 7,
+        "sheet": "A-100",
+        "number": "TA9",
+        "name": "TA8",
+        "x": 1963,
+        "y": 1105,
+        "h": 7.763013,
+        "corridor": false,
+        "points_per_foot": 108
+      },
+      {
+        "page": 7,
+        "sheet": "A-100",
+        "number": "TA10",
+        "name": "TA9",
+        "x": 1965,
+        "y": 1120,
+        "h": 7.7630112,
+        "corridor": false,
+        "points_per_foot": 108
+      },
+      {
+        "page": 7,
+        "sheet": "A-100",
+        "number": "140",
+        "name": "TACTICAL OP. CNTR",
+        "x": 1139,
+        "y": 1137,
+        "h": 7.5412071,
+        "corridor": false,
+        "points_per_foot": 9
+      },
+      {
+        "page": 7,
+        "sheet": "A-100",
+        "number": "127",
+        "name": "MENS",
+        "x": 1370,
+        "y": 1137,
+        "h": 7.5412071,
+        "corridor": false,
+        "points_per_foot": 108
+      },
+      {
+        "page": 7,
+        "sheet": "A-100",
+        "number": "137",
+        "name": "STORAGE",
+        "x": 953,
+        "y": 1177,
+        "h": 7.5412071,
+        "corridor": false,
+        "points_per_foot": 9
+      },
+      {
+        "page": 7,
+        "sheet": "A-100",
+        "number": "121",
+        "name": "MECH",
+        "x": 1585,
+        "y": 1176,
+        "h": 7.5412071,
+        "corridor": false,
+        "points_per_foot": 108
+      },
+      {
+        "page": 7,
+        "sheet": "A-100",
+        "number": "122",
+        "name": "STO.",
+        "x": 1640,
+        "y": 1173,
+        "h": 7.5412071,
+        "corridor": false,
+        "points_per_foot": 108
+      },
+      {
+        "page": 7,
+        "sheet": "A-100",
+        "number": "TA12",
+        "name": "TA11",
+        "x": 1965,
+        "y": 1157,
+        "h": 7.7630139,
+        "corridor": false,
+        "points_per_foot": 108
+      },
+      {
+        "page": 7,
+        "sheet": "A-100",
+        "number": "TA13",
+        "name": "TA12",
+        "x": 1965,
+        "y": 1170,
+        "h": 7.7630139,
+        "corridor": false,
+        "points_per_foot": 108
+      },
+      {
+        "page": 7,
+        "sheet": "A-100",
+        "number": "TA14",
+        "name": "TA13",
+        "x": 1965,
+        "y": 1183,
+        "h": 7.7630139,
+        "corridor": false,
+        "points_per_foot": 108
+      },
+      {
+        "page": 7,
+        "sheet": "A-100",
+        "number": "136",
+        "name": "RECRUITER",
+        "x": 832,
+        "y": 1193,
+        "h": 7.5412071,
+        "corridor": false,
+        "points_per_foot": 9
+      },
+      {
+        "page": 7,
+        "sheet": "A-100",
+        "number": "TA15",
+        "name": "TA14",
+        "x": 1965,
+        "y": 1196,
+        "h": 7.7630139,
+        "corridor": false,
+        "points_per_foot": 108
+      },
+      {
+        "page": 7,
+        "sheet": "A-100",
+        "number": "TA16",
+        "name": "TA15",
+        "x": 1965,
+        "y": 1210,
+        "h": 7.7630139,
+        "corridor": false,
+        "points_per_foot": 108
+      },
+      {
+        "page": 7,
+        "sheet": "A-100",
+        "number": "138",
+        "name": "MECH/MAIL ROOM",
+        "x": 1017,
+        "y": 1223,
+        "h": 7.5412071,
+        "corridor": false,
+        "points_per_foot": 9
+      },
+      {
+        "page": 7,
+        "sheet": "A-100",
+        "number": "139",
+        "name": "CHAPLAINS OFFICE",
+        "x": 1125,
+        "y": 1228,
+        "h": 7.5412071,
+        "corridor": false,
+        "points_per_foot": 9
+      },
+      {
+        "page": 7,
+        "sheet": "A-100",
+        "number": "TA17",
+        "name": "TA16",
+        "x": 1965,
+        "y": 1223,
+        "h": 7.7630139,
+        "corridor": false,
+        "points_per_foot": 108
+      },
+      {
+        "page": 7,
+        "sheet": "A-100",
+        "number": "120",
+        "name": "SIPR ROOM",
+        "x": 1601,
+        "y": 1233,
+        "h": 7.5412071,
+        "corridor": false,
+        "points_per_foot": 108
+      },
+      {
+        "page": 7,
+        "sheet": "A-100",
+        "number": "TA18",
+        "name": "TA17",
+        "x": 1965,
+        "y": 1237,
+        "h": 7.7630139,
+        "corridor": false,
+        "points_per_foot": 108
+      },
+      {
+        "page": 7,
+        "sheet": "A-100",
+        "number": "107",
+        "name": "MAINT. EQUIP.",
+        "x": 626,
+        "y": 1243,
+        "h": 7.5412071,
+        "corridor": false,
+        "points_per_foot": 9
+      },
+      {
+        "page": 7,
+        "sheet": "A-100",
+        "number": "126",
+        "name": "WOMENS",
+        "x": 1330,
+        "y": 1256,
+        "h": 7.5412071,
+        "corridor": false,
+        "points_per_foot": 108
+      },
+      {
+        "page": 7,
+        "sheet": "A-100",
+        "number": "TA19",
+        "name": "TA18",
+        "x": 1965,
+        "y": 1251,
+        "h": 7.7630139,
+        "corridor": false,
+        "points_per_foot": 108
+      },
+      {
+        "page": 7,
+        "sheet": "A-100",
+        "number": "TA20",
+        "name": "TA19",
+        "x": 1965,
+        "y": 1265,
+        "h": 7.7630139,
+        "corridor": false,
+        "points_per_foot": 108
+      },
+      {
+        "page": 7,
+        "sheet": "A-100",
+        "number": "112",
+        "name": "LOBBY",
+        "x": 955,
+        "y": 1299,
+        "h": 7.5412071,
+        "corridor": true,
+        "points_per_foot": 9
+      },
+      {
+        "page": 7,
+        "sheet": "A-100",
+        "number": "115",
+        "name": "BDE HR TECH",
+        "x": 1304,
+        "y": 1391,
+        "h": 7.5412071,
+        "corridor": false,
+        "points_per_foot": 108
+      },
+      {
+        "page": 7,
+        "sheet": "A-100",
+        "number": "108",
+        "name": "OFFICE",
+        "x": 606,
+        "y": 1399,
+        "h": 7.5412071,
+        "corridor": false,
+        "points_per_foot": 9
+      },
+      {
+        "page": 7,
+        "sheet": "A-100",
+        "number": "116",
+        "name": "CLASSROOM",
+        "x": 1461,
+        "y": 1413,
+        "h": 7.5412071,
+        "corridor": false,
+        "points_per_foot": 108
+      },
+      {
+        "page": 7,
+        "sheet": "A-100",
+        "number": "119",
+        "name": "AO/XO",
+        "x": 1628,
+        "y": 1416,
+        "h": 7.5412071,
+        "corridor": false,
+        "points_per_foot": 108
+      },
+      {
+        "page": 7,
+        "sheet": "A-100",
+        "number": "110",
+        "name": "OP S-3",
+        "x": 801,
+        "y": 1432,
+        "h": 7.5412071,
+        "corridor": false,
+        "points_per_foot": 9
+      },
+      {
+        "page": 7,
+        "sheet": "A-100",
+        "number": "113",
+        "name": "S1 PERSONNEL SERVICES",
+        "x": 1121,
+        "y": 1450,
+        "h": 7.5412071,
+        "corridor": false,
+        "points_per_foot": 9
+      },
+      {
+        "page": 7,
+        "sheet": "A-100",
+        "number": "111",
+        "name": "VEST.",
+        "x": 950,
+        "y": 1466,
+        "h": 7.5412071,
+        "corridor": true,
+        "points_per_foot": 9
+      },
+      {
+        "page": 7,
+        "sheet": "A-100",
+        "number": "109",
+        "name": "BDE OP SGM",
+        "x": 613,
+        "y": 1470,
+        "h": 7.5412071,
+        "corridor": false,
+        "points_per_foot": 9
+      },
+      {
+        "page": 7,
+        "sheet": "A-100",
+        "number": "114",
+        "name": "BDE S1 OFFICER",
+        "x": 1316,
+        "y": 1479,
+        "h": 7.5412071,
+        "corridor": false,
+        "points_per_foot": 108
+      },
+      {
+        "page": 7,
+        "sheet": "A-100",
+        "number": "117",
+        "name": "BDE CMD SGT MAJ",
+        "x": 1398,
+        "y": 1511,
+        "h": 7.5412071,
+        "corridor": false,
+        "points_per_foot": 108
+      },
+      {
+        "page": 7,
+        "sheet": "A-100",
+        "number": "118",
+        "name": "COMMANDER",
+        "x": 1504,
+        "y": 1514,
+        "h": 7.5412071,
+        "corridor": false,
+        "points_per_foot": 108
+      },
+      {
+        "page": 8,
+        "sheet": "A-101",
+        "number": "135",
+        "name": "UNIT STORAGE",
+        "x": 1521,
+        "y": 308,
+        "h": 7.5412071,
+        "corridor": false,
+        "points_per_foot": 9
+      },
+      {
+        "page": 8,
+        "sheet": "A-101",
+        "number": "100",
+        "name": "CAN WASH",
+        "x": 674,
+        "y": 479,
+        "h": 7.5412071,
+        "corridor": false,
+        "points_per_foot": 9
+      },
+      {
+        "page": 8,
+        "sheet": "A-101",
+        "number": "101",
+        "name": "SCULLERY",
+        "x": 674,
+        "y": 580,
+        "h": 7.5412071,
+        "corridor": false,
+        "points_per_foot": 9
+      },
+      {
+        "page": 8,
+        "sheet": "A-101",
+        "number": "133",
+        "name": "SUPPLY OFFICE",
+        "x": 1350,
+        "y": 637,
+        "h": 7.5412071,
+        "corridor": false,
+        "points_per_foot": 9
+      },
+      {
+        "page": 8,
+        "sheet": "A-101",
+        "number": "134",
+        "name": "ARMS VAULT",
+        "x": 1453,
+        "y": 673,
+        "h": 7.5412071,
+        "corridor": false,
+        "points_per_foot": 9
+      },
+      {
+        "page": 8,
+        "sheet": "A-101",
+        "number": "132",
+        "name": "DRILL FLOOR",
+        "x": 1182,
+        "y": 685,
+        "h": 7.5412071,
+        "corridor": false,
+        "points_per_foot": 9
+      },
+      {
+        "page": 8,
+        "sheet": "A-101",
+        "number": "102",
+        "name": "FOOD PREP",
+        "x": 674,
+        "y": 707,
+        "h": 7.5412071,
+        "corridor": false,
+        "points_per_foot": 9
+      },
+      {
+        "page": 8,
+        "sheet": "A-101",
+        "number": "131",
+        "name": "EXCERCISE ROOM",
+        "x": 1592,
+        "y": 747,
+        "h": 7.5412071,
+        "corridor": false,
+        "points_per_foot": 9
+      },
+      {
+        "page": 8,
+        "sheet": "A-101",
+        "number": "103",
+        "name": "FOOD STORAGE",
+        "x": 674,
+        "y": 834,
+        "h": 7.5412071,
+        "corridor": false,
+        "points_per_foot": 9
+      },
+      {
+        "page": 8,
+        "sheet": "A-101",
+        "number": "129",
+        "name": "UNIT ADMIN",
+        "x": 1377,
+        "y": 886,
+        "h": 7.5412071,
+        "corridor": false,
+        "points_per_foot": 9
+      },
+      {
+        "page": 8,
+        "sheet": "A-101",
+        "number": "124",
+        "name": "OFFICE",
+        "x": 1585,
+        "y": 888,
+        "h": 7.5412071,
+        "corridor": false,
+        "points_per_foot": 9
+      },
+      {
+        "page": 8,
+        "sheet": "A-101",
+        "number": "125",
+        "name": "OFFICE",
+        "x": 1688,
+        "y": 888,
+        "h": 7.5412071,
+        "corridor": false,
+        "points_per_foot": 9
+      },
+      {
+        "page": 8,
+        "sheet": "A-101",
+        "number": "104",
+        "name": "CORRIDOR",
+        "x": 674,
+        "y": 910,
+        "h": 7.5412071,
+        "corridor": true,
+        "points_per_foot": 9
+      },
+      {
+        "page": 8,
+        "sheet": "A-101",
+        "number": "130",
+        "name": "STO",
+        "x": 1325,
+        "y": 940,
+        "h": 7.5412071,
+        "corridor": false,
+        "points_per_foot": 9
+      },
+      {
+        "page": 8,
+        "sheet": "A-101",
+        "number": "105",
+        "name": "MAINT / STOR",
+        "x": 674,
+        "y": 988,
+        "h": 7.5412071,
+        "corridor": false,
+        "points_per_foot": 9
+      },
+      {
+        "page": 8,
+        "sheet": "A-101",
+        "number": "142",
+        "name": "LEGAL",
+        "x": 973,
+        "y": 988,
+        "h": 7.5412071,
+        "corridor": false,
+        "points_per_foot": 9
+      },
+      {
+        "page": 8,
+        "sheet": "A-101",
+        "number": "143",
+        "name": "TROOP CMDR",
+        "x": 871,
+        "y": 1003,
+        "h": 7.5412071,
+        "corridor": false,
+        "points_per_foot": 9
+      },
+      {
+        "page": 8,
+        "sheet": "A-101",
+        "number": "128",
+        "name": "MECH",
+        "x": 1328,
+        "y": 1041,
+        "h": 7.5412071,
+        "corridor": false,
+        "points_per_foot": 9
+      },
+      {
+        "page": 8,
+        "sheet": "A-101",
+        "number": "106",
+        "name": "MOTHERS CNTR",
+        "x": 722,
+        "y": 1071,
+        "h": 7.5412071,
+        "corridor": false,
+        "points_per_foot": 9
+      },
+      {
+        "page": 8,
+        "sheet": "A-101",
+        "number": "140",
+        "name": "TACTICAL OP. CNTR",
+        "x": 1169,
+        "y": 1073,
+        "h": 7.5412071,
+        "corridor": false,
+        "points_per_foot": 9
+      },
+      {
+        "page": 8,
+        "sheet": "A-101",
+        "number": "141",
+        "name": "HHD CMND TEAM",
+        "x": 977,
+        "y": 1103,
+        "h": 7.5412071,
+        "corridor": false,
+        "points_per_foot": 9
+      },
+      {
+        "page": 8,
+        "sheet": "A-101",
+        "number": "127",
+        "name": "MENS",
+        "x": 1355,
+        "y": 1123,
+        "h": 7.5412071,
+        "corridor": false,
+        "points_per_foot": 9
+      },
+      {
+        "page": 8,
+        "sheet": "A-101",
+        "number": "137",
+        "name": "STORAGE",
+        "x": 1017,
+        "y": 1180,
+        "h": 7.5412071,
+        "corridor": false,
+        "points_per_foot": 9
+      },
+      {
+        "page": 8,
+        "sheet": "A-101",
+        "number": "121",
+        "name": "MECH",
+        "x": 1633,
+        "y": 1176,
+        "h": 7.5412071,
+        "corridor": false,
+        "points_per_foot": 9
+      },
+      {
+        "page": 8,
+        "sheet": "A-101",
+        "number": "122",
+        "name": "STO.",
+        "x": 1688,
+        "y": 1177,
+        "h": 7.5412071,
+        "corridor": false,
+        "points_per_foot": 9
+      },
+      {
+        "page": 8,
+        "sheet": "A-101",
+        "number": "6286",
+        "name": "PROJECT # T2507-01",
+        "x": 2451,
+        "y": 1169,
+        "h": 16.87131,
+        "corridor": false,
+        "points_per_foot": 9
+      },
+      {
+        "page": 8,
+        "sheet": "A-101",
+        "number": "139",
+        "name": "CHAPLAINS OFFICE",
+        "x": 1167,
+        "y": 1210,
+        "h": 7.5412071,
+        "corridor": false,
+        "points_per_foot": 9
+      },
+      {
+        "page": 8,
+        "sheet": "A-101",
+        "number": "136",
+        "name": "RECRUITER",
+        "x": 884,
+        "y": 1217,
+        "h": 7.5412071,
+        "corridor": false,
+        "points_per_foot": 9
+      },
+      {
+        "page": 8,
+        "sheet": "A-101",
+        "number": "138",
+        "name": "MECH/MAIL ROOM",
+        "x": 1067,
+        "y": 1217,
+        "h": 7.5412071,
+        "corridor": false,
+        "points_per_foot": 9
+      },
+      {
+        "page": 8,
+        "sheet": "A-101",
+        "number": "120",
+        "name": "SIPR ROOM",
+        "x": 1635,
+        "y": 1228,
+        "h": 7.5412071,
+        "corridor": false,
+        "points_per_foot": 9
+      },
+      {
+        "page": 8,
+        "sheet": "A-101",
+        "number": "107",
+        "name": "MAINT. EQUIP.",
+        "x": 674,
+        "y": 1232,
+        "h": 7.5412071,
+        "corridor": false,
+        "points_per_foot": 9
+      },
+      {
+        "page": 8,
+        "sheet": "A-101",
+        "number": "126",
+        "name": "WOMENS",
+        "x": 1382,
+        "y": 1256,
+        "h": 7.5412071,
+        "corridor": false,
+        "points_per_foot": 9
+      },
+      {
+        "page": 8,
+        "sheet": "A-101",
+        "number": "112",
+        "name": "LOBBY",
+        "x": 995,
+        "y": 1308,
+        "h": 7.5412071,
+        "corridor": true,
+        "points_per_foot": 9
+      },
+      {
+        "page": 8,
+        "sheet": "A-101",
+        "number": "108",
+        "name": "OFFICE",
+        "x": 674,
+        "y": 1390,
+        "h": 7.5412071,
+        "corridor": false,
+        "points_per_foot": 9
+      },
+      {
+        "page": 8,
+        "sheet": "A-101",
+        "number": "115",
+        "name": "BDE HR TECH",
+        "x": 1357,
+        "y": 1391,
+        "h": 7.5412071,
+        "corridor": false,
+        "points_per_foot": 9
+      },
+      {
+        "page": 8,
+        "sheet": "A-101",
+        "number": "116",
+        "name": "CLASSROOM",
+        "x": 1532,
+        "y": 1418,
+        "h": 7.5412071,
+        "corridor": false,
+        "points_per_foot": 9
+      },
+      {
+        "page": 8,
+        "sheet": "A-101",
+        "number": "110",
+        "name": "OP S-3",
+        "x": 844,
+        "y": 1434,
+        "h": 7.5412071,
+        "corridor": false,
+        "points_per_foot": 9
+      },
+      {
+        "page": 8,
+        "sheet": "A-101",
+        "number": "113",
+        "name": "S1 PERSONNEL SERVICES",
+        "x": 1160,
+        "y": 1451,
+        "h": 7.5412071,
+        "corridor": false,
+        "points_per_foot": 9
+      },
+      {
+        "page": 8,
+        "sheet": "A-101",
+        "number": "119",
+        "name": "AO/XO",
+        "x": 1675,
+        "y": 1461,
+        "h": 7.5412071,
+        "corridor": false,
+        "points_per_foot": 9
+      },
+      {
+        "page": 8,
+        "sheet": "A-101",
+        "number": "111",
+        "name": "VEST.",
+        "x": 1005,
+        "y": 1468,
+        "h": 7.5412071,
+        "corridor": true,
+        "points_per_foot": 9
+      },
+      {
+        "page": 8,
+        "sheet": "A-101",
+        "number": "109",
+        "name": "BDE OP SGM",
+        "x": 674,
+        "y": 1480,
+        "h": 7.5412071,
+        "corridor": false,
+        "points_per_foot": 9
+      },
+      {
+        "page": 8,
+        "sheet": "A-101",
+        "number": "114",
+        "name": "BDE S1 OFFICER",
+        "x": 1355,
+        "y": 1485,
+        "h": 7.5412071,
+        "corridor": false,
+        "points_per_foot": 9
+      },
+      {
+        "page": 8,
+        "sheet": "A-101",
+        "number": "117",
+        "name": "BDE CMD SGT MAJ",
+        "x": 1458,
+        "y": 1504,
+        "h": 7.5412071,
+        "corridor": false,
+        "points_per_foot": 9
+      },
+      {
+        "page": 8,
+        "sheet": "A-101",
+        "number": "118",
+        "name": "COMMANDER",
+        "x": 1556,
+        "y": 1504,
+        "h": 7.5412071,
+        "corridor": false,
+        "points_per_foot": 9
+      },
+      {
+        "page": 11,
+        "sheet": "A-104",
+        "number": "TA2",
+        "name": "TA1",
+        "x": 1943,
+        "y": 160,
+        "h": 7.7630067,
+        "corridor": false,
+        "points_per_foot": 54
+      },
+      {
+        "page": 11,
+        "sheet": "A-104",
+        "number": "TA3",
+        "name": "TA2",
+        "x": 1943,
+        "y": 174,
+        "h": 7.7630067,
+        "corridor": false,
+        "points_per_foot": 54
+      },
+      {
+        "page": 11,
+        "sheet": "A-104",
+        "number": "TA4",
+        "name": "TA3",
+        "x": 1943,
+        "y": 188,
+        "h": 7.7630067,
+        "corridor": false,
+        "points_per_foot": 54
+      },
+      {
+        "page": 11,
+        "sheet": "A-104",
+        "number": "TA5",
+        "name": "TA4",
+        "x": 1943,
+        "y": 202,
+        "h": 7.7630067,
+        "corridor": false,
+        "points_per_foot": 54
+      },
+      {
+        "page": 11,
+        "sheet": "A-104",
+        "number": "TA6",
+        "name": "TA5",
+        "x": 1943,
+        "y": 215,
+        "h": 7.7630067,
+        "corridor": false,
+        "points_per_foot": 54
+      },
+      {
+        "page": 11,
+        "sheet": "A-104",
+        "number": "TA7",
+        "name": "TA6",
+        "x": 1943,
+        "y": 228,
+        "h": 7.7630085,
+        "corridor": false,
+        "points_per_foot": 54
+      },
+      {
+        "page": 11,
+        "sheet": "A-104",
+        "number": "TA8",
+        "name": "TA7",
+        "x": 1943,
+        "y": 241,
+        "h": 7.7630112,
+        "corridor": false,
+        "points_per_foot": 54
+      },
+      {
+        "page": 11,
+        "sheet": "A-104",
+        "number": "TA9",
+        "name": "TA8",
+        "x": 1943,
+        "y": 254,
+        "h": 7.763013,
+        "corridor": false,
+        "points_per_foot": 54
+      },
+      {
+        "page": 11,
+        "sheet": "A-104",
+        "number": "TA10",
+        "name": "TA9",
+        "x": 1945,
+        "y": 269,
+        "h": 7.7630112,
+        "corridor": false,
+        "points_per_foot": 54
+      },
+      {
+        "page": 11,
+        "sheet": "A-104",
+        "number": "TA12",
+        "name": "TA11",
+        "x": 1945,
+        "y": 305,
+        "h": 7.7630139,
+        "corridor": false,
+        "points_per_foot": 54
+      },
+      {
+        "page": 11,
+        "sheet": "A-104",
+        "number": "TA13",
+        "name": "TA12",
+        "x": 1945,
+        "y": 319,
+        "h": 7.7630139,
+        "corridor": false,
+        "points_per_foot": 54
+      },
+      {
+        "page": 11,
+        "sheet": "A-104",
+        "number": "TA14",
+        "name": "TA13",
+        "x": 1945,
+        "y": 332,
+        "h": 7.7630139,
+        "corridor": false,
+        "points_per_foot": 54
+      },
+      {
+        "page": 11,
+        "sheet": "A-104",
+        "number": "TA15",
+        "name": "TA14",
+        "x": 1945,
+        "y": 345,
+        "h": 7.7630139,
+        "corridor": false,
+        "points_per_foot": 54
+      },
+      {
+        "page": 11,
+        "sheet": "A-104",
+        "number": "TA16",
+        "name": "TA15",
+        "x": 1945,
+        "y": 358,
+        "h": 7.7630139,
+        "corridor": false,
+        "points_per_foot": 54
+      },
+      {
+        "page": 11,
+        "sheet": "A-104",
+        "number": "TA17",
+        "name": "TA16",
+        "x": 1945,
+        "y": 372,
+        "h": 7.7630139,
+        "corridor": false,
+        "points_per_foot": 54
+      },
+      {
+        "page": 11,
+        "sheet": "A-104",
+        "number": "TA18",
+        "name": "TA17",
+        "x": 1945,
+        "y": 386,
+        "h": 7.7630139,
+        "corridor": false,
+        "points_per_foot": 54
+      },
+      {
+        "page": 11,
+        "sheet": "A-104",
+        "number": "TA19",
+        "name": "TA18",
+        "x": 1945,
+        "y": 400,
+        "h": 7.7630139,
+        "corridor": false,
+        "points_per_foot": 54
+      },
+      {
+        "page": 11,
+        "sheet": "A-104",
+        "number": "TA20",
+        "name": "TA19",
+        "x": 1945,
+        "y": 413,
+        "h": 7.7630139,
+        "corridor": false,
+        "points_per_foot": 54
+      },
+      {
+        "page": 11,
+        "sheet": "A-104",
+        "number": "128",
+        "name": "MECH",
+        "x": 1625,
+        "y": 552,
+        "h": 7.5412071,
+        "corridor": false,
+        "points_per_foot": 18
+      },
+      {
+        "page": 11,
+        "sheet": "A-104",
+        "number": "TA9",
+        "name": "TA8",
+        "x": 1265,
+        "y": 564,
+        "h": 7.7630076,
+        "corridor": false,
+        "points_per_foot": 18
+      },
+      {
+        "page": 11,
+        "sheet": "A-104",
+        "number": "TA1",
+        "name": "TA2",
+        "x": 1727,
+        "y": 636,
+        "h": 7.7630076,
+        "corridor": false,
+        "points_per_foot": 18
+      },
+      {
+        "page": 11,
+        "sheet": "A-104",
+        "number": "TA3",
+        "name": "TA1",
+        "x": 1727,
+        "y": 649,
+        "h": 7.7630076,
+        "corridor": false,
+        "points_per_foot": 18
+      },
+      {
+        "page": 11,
+        "sheet": "A-104",
+        "number": "TA5",
+        "name": "TA3",
+        "x": 1727,
+        "y": 662,
+        "h": 7.7630076,
+        "corridor": false,
+        "points_per_foot": 18
+      },
+      {
+        "page": 11,
+        "sheet": "A-104",
+        "number": "127",
+        "name": "MENS",
+        "x": 1751,
+        "y": 796,
+        "h": 7.5412071,
+        "corridor": false,
+        "points_per_foot": 18
+      },
+      {
+        "page": 11,
+        "sheet": "A-104",
+        "number": "TA16",
+        "name": "TA11",
+        "x": 1928,
+        "y": 832,
+        "h": 7.7630076,
+        "corridor": false,
+        "points_per_foot": 54
+      },
+      {
+        "page": 11,
+        "sheet": "A-104",
+        "number": "TA9",
+        "name": "TA7",
+        "x": 1614,
+        "y": 867,
+        "h": 7.7630076,
+        "corridor": false,
+        "points_per_foot": 18
+      },
+      {
+        "page": 11,
+        "sheet": "A-104",
+        "number": "TA9",
+        "name": "TA8",
+        "x": 1664,
+        "y": 868,
+        "h": 7.7630076,
+        "corridor": false,
+        "points_per_foot": 18
+      },
+      {
+        "page": 11,
+        "sheet": "A-104",
+        "number": "112",
+        "name": "LOBBY",
+        "x": 1525,
+        "y": 885,
+        "h": 7.5412071,
+        "corridor": true,
+        "points_per_foot": 18
+      },
+      {
+        "page": 11,
+        "sheet": "A-104",
+        "number": "121",
+        "name": "MECH",
+        "x": 2215,
+        "y": 946,
+        "h": 7.5412071,
+        "corridor": false,
+        "points_per_foot": 54
+      },
+      {
+        "page": 11,
+        "sheet": "A-104",
+        "number": "TA7",
+        "name": "TA9",
+        "x": 1614,
+        "y": 993,
+        "h": 7.7630076,
+        "corridor": false,
+        "points_per_foot": 18
+      },
+      {
+        "page": 11,
+        "sheet": "A-104",
+        "number": "TA8126",
+        "name": "TA9 TA7",
+        "x": 1622,
+        "y": 1005,
+        "h": 7.7630076,
+        "corridor": false,
+        "points_per_foot": 18
+      },
+      {
+        "page": 11,
+        "sheet": "A-104",
+        "number": "TA12",
+        "name": "TA5TA1",
+        "x": 1759,
+        "y": 1018,
+        "h": 7.7630076,
+        "corridor": false,
+        "points_per_foot": 18
+      },
+      {
+        "page": 11,
+        "sheet": "A-104",
+        "number": "TA1",
+        "name": "TA2",
+        "x": 1815,
+        "y": 975,
+        "h": 7.7630076,
+        "corridor": false,
+        "points_per_foot": 54
+      },
+      {
+        "page": 11,
+        "sheet": "A-104",
+        "number": "TA5",
+        "name": "TA2 TA1",
+        "x": 1815,
+        "y": 990,
+        "h": 7.7630076,
+        "corridor": false,
+        "points_per_foot": 54
+      },
+      {
+        "page": 11,
+        "sheet": "A-104",
+        "number": "TA12",
+        "name": "TA5 TA4",
+        "x": 1836,
+        "y": 1012,
+        "h": 7.7630076,
+        "corridor": false,
+        "points_per_foot": 54
+      },
+      {
+        "page": 11,
+        "sheet": "A-104",
+        "number": "TA3",
+        "name": "TA2 TA1",
+        "x": 1838,
+        "y": 986,
+        "h": 7.7630076,
+        "corridor": false,
+        "points_per_foot": 54
+      },
+      {
+        "page": 11,
+        "sheet": "A-104",
+        "number": "TA4",
+        "name": "TA1 TA3",
+        "x": 1838,
+        "y": 998,
+        "h": 7.7630076,
+        "corridor": false,
+        "points_per_foot": 54
+      },
+      {
+        "page": 11,
+        "sheet": "A-104",
+        "number": "A-104",
+        "name": "6TA11",
+        "x": 2003,
+        "y": 1016,
+        "h": 7.7630076,
+        "corridor": false,
+        "points_per_foot": 54
+      },
+      {
+        "page": 11,
+        "sheet": "A-104",
+        "number": "120",
+        "name": "SIPR ROOM",
+        "x": 2194,
+        "y": 1072,
+        "h": 7.5412071,
+        "corridor": false,
+        "points_per_foot": 54
+      },
+      {
+        "page": 11,
+        "sheet": "A-104",
+        "number": "6286",
+        "name": "PROJECT # T2507-01",
+        "x": 2451,
+        "y": 1169,
+        "h": 16.87131,
+        "corridor": false,
+        "points_per_foot": 54
+      },
+      {
+        "page": 11,
+        "sheet": "A-104",
+        "number": "TA11",
+        "name": "OPERABLE PART",
+        "x": 988,
+        "y": 1405,
+        "h": 7.5412071,
+        "corridor": false,
+        "points_per_foot": 18
+      },
+      {
+        "page": 11,
+        "sheet": "A-104",
+        "number": "TA8",
+        "name": "OPERABLE PART",
+        "x": 1131,
+        "y": 1411,
+        "h": 7.5412071,
+        "corridor": false,
+        "points_per_foot": 18
+      },
+      {
+        "page": 11,
+        "sheet": "A-104",
+        "number": "TA6",
+        "name": "TA9",
+        "x": 853,
+        "y": 1446,
+        "h": 7.5412071,
+        "corridor": false,
+        "points_per_foot": 18
+      },
+      {
+        "page": 11,
+        "sheet": "A-104",
+        "number": "TA5",
+        "name": "TA12",
+        "x": 370,
+        "y": 1460,
+        "h": 7.5412071,
+        "corridor": false,
+        "points_per_foot": 18
+      }
+    ],
+    "tags": [],
+    "unmatched_tags": [],
+    "marks_not_on_plan": [],
+    "counts": {
+      "plan_sheets": 3,
+      "rooms": 151,
+      "corridors": 7,
+      "tags": 0,
+      "unmatched_tags": 0,
+      "schedule_marks": 0,
+      "marks_not_on_plan": 0
+    }
+  },
+  "diagnostic_note": "Unchanged S1 reader supplied harvest schedule-row regex marks, not production doors or audited truth. Tag-shaped text can be room/grid/detail numbers. Unmatched tags are style candidates, not verified doors.",
+  "harvest_schedule_rows": [
+    {
+      "page": 10,
+      "marks": [
+        "100",
+        "101",
+        "102",
+        "103",
+        "104",
+        "105",
+        "106",
+        "107",
+        "108",
+        "109",
+        "110",
+        "113",
+        "114",
+        "115",
+        "116",
+        "117",
+        "118",
+        "119",
+        "120",
+        "121",
+        "122",
+        "123",
+        "124",
+        "125",
+        "126",
+        "127",
+        "128",
+        "B2",
+        "129",
+        "130",
+        "131",
+        "132",
+        "133",
+        "136",
+        "137",
+        "138",
+        "139",
+        "140",
+        "141",
+        "142",
+        "143"
+      ],
+      "lines": [
+        "                                                                                                                                                                                                       100                 CAN WASH          A                3'-0\"              7'-0\"    HM   EXIST    HM      EXIST                     1",
+        "                                                                                                                                                                                                       101                 SCULLERY          A                3'-0\"              7'-0\"    HM   EXIST    HM      EXIST                     1",
+        "                                                                                                                                                                                                       102                 FOOD PREP         A                3'-0\"              7'-0\"    HM   EXIST    HM      EXIST                     1                                                     D1      DOOR (SINGLE) PER DOOR SCHEDULE - PAINT.",
+        "                                                                                                                                                                                                       103               FOOD STORAGE        A                3'-0\"              7'-0\"    HM   EXIST    HM      EXIST                     1",
+        "                                                                                                                                                                                                       104                 CORRIDOR          A                3'-0\"              7'-0\"    HM   EXIST    HM      EXIST                     3                                                             NEW HOLLOW METAL FRAME - 5 3/4\" FULLY WELDED,",
+        "                                                                                                                                                                                                       105                MAINT / STOR       A                3'-0\"              7'-0\"    HM   EXIST    HM      EXIST                     1                                                     F1      FULLY GROUTED FRAME PER DOOR SCHEDULE - PAINT.",
+        "                                                                                                                                                                                                       106               MOTHERS CNTR        A                3'-0\"              7'-0\"    HM   EXIST    HM      EXIST                     1",
+        "                                                                                                                                                                                                       107                MAINT. EQUIP.      A                3'-0\"              7'-0\"    HM   EXIST    HM      EXIST                     1",
+        "                                                                                                                                                                                                       108                   OFFICE          A                3'-0\"              7'-0\"    HM   EXIST    HM      EXIST                     1",
+        "                                                                                                                                                                                                       109                BDE OP SGM         A                3'-0\"              7'-0\"    HM   EXIST    HM      EXIST                     1",
+        "                                                                                                                                                                                                       110                   OP S-3          A                3'-0\"              7'-0\"    HM   EXIST    HM      EXIST                     1",
+        "                  SERVICES                                                                                                                                                                             113       S1 PERSONNEL SERVICES       A                3'-0\"              7'-0\"    HM   EXIST    HM      EXIST                     1                                             2.        NEW OPENING. PROVIDE NEW DOOR, FRAME AND",
+        "                                                                                                                                                                                                       113       S1 PERSONNEL SERVICES       B                3'-0\"              7'-0\"    HM   EXIST    HM      EXIST                     1                                             3.        PROVIDE NEW HARDWARE TO MAKE DOOR CLOSE",
+        "                                                                                                                                                                                                       114               BDE S1 OFFICER      A                2'-8\"              7'-0\"    HM   EXIST    HM      EXIST                     1",
+        "                                                                                                                                                                                                       115                BDE HR TECH        A                3'-0\"              7'-0\"    HM   EXIST    HM      EXIST                     1",
+        "                                                                                                                                                                                                       115                BDE HR TECH        B                2'-8\"              7'-0\"    HM   EXIST    HM      EXIST                     1",
+        "                                                                                                                                                                                                       116                CLASSROOM          A                3'-0\"              7'-0\"    HM   EXIST    HM      EXIST                     1",
+        "                                                                                                                                                                                                       116                CLASSROOM          B                2'-8\"              7'-0\"    HM   EXIST    HM      EXIST                     1",
+        "                                                                                                                                                                                                       117              BDE CMD SGT MAJ      A                2'-8\"              7'-0\"    HM   EXIST    HM      EXIST                     1",
+        "                                                                                                                                                                                                       118                COMMANDER          A                2'-8\"              7'-0\"    HM   EXIST    HM      EXIST                     1                                             ALUM.     ALUMINUM",
+        "                                                                                                                                                                                                       119                   AO/XO           A                3'-0\"              7'-0\"    HM   EXIST    HM      EXIST                     1                                             PT        PAINTED SURFACE (IN FIELD)",
+        "                                                                                                                                                                                                       120                 SIPR ROOM         A                3'-0\"              7'-0\"    HM    D1      HM      F1                        2",
+        "                                                                                                                                                                                                       121                   MECH            A                3'-0\"              7'-0\"    HM    D1      HM      F1                        2",
+        "                                                                                                                                                                                                       122                    STO.           A                3'-0\"              7'-0\"    HM   EXIST    HM      EXIST                     1",
+        "                                                                                                                                                                                                       123                     S-4           A                3'-0\"              7'-0\"    HM    D1      HM      F1                        2                                             1.        REPAIR THE GROUT JOINTS IN THE EXISTING WALL AS",
+        "                                                                                                                                                                                                       124                   OFFICE          A                2'-8\"              7'-0\"    HM   EXIST    HM      EXIST                     1",
+        "                                                                                                                                                                                                       125                   OFFICE          A                2'-8\"              7'-0\"    HM    D1      HM      F1                        2",
+        "                                                                                                                                                                                                       126                  WOMENS           A                3'-0\"              7'-0\"    HM    D1      HM      F1                        2",
+        "                                                                                                                                                                                                       127                   MENS            A                3'-0\"              7'-0\"    HM    D1      HM      F1                        2                                             FLOOR FINISH TYPES:                                                  ADMINISTRATION",
+        "                                                                                                                                                                                                       128                   MECH            A                3'-0\"              7'-0\"    HM    D1      HM      F1                        2                                             FF1:      LVT TILE, SEE SPECIFICATIONS.                              DIVISION OF FACILITIES",
+        "                                            B2                                                                                                            TO REMAIN, PAINT WF1 ABOVE                   128                   MECH            B                3'-0\"              7'-0\"    HM   EXIST    HM      EXIST                     1",
+        "                                                                                                                                                                                                       129                 UNIT ADMIN        A                3'-8\"              7'-0\"    HM   EXIST    HM      EXIST                     1",
+        "                                                                                                                                                                                                       129                 UNIT ADMIN        B                3'-8\"              7'-0\"    HM   EXIST    HM      EXIST                     1                                                                                                                  CONSTRUCTION",
+        "                                                                                                                                                                                                       130                    STO            A                3'-0\"              7'-0\"    HM   EXIST    HM      EXIST                     1",
+        "                                                                                                                                                                                                       131              EXCERCISE ROOM       A                3'-0\"              7'-0\"    HM   EXIST    HM      EXIST                     1                                             B2:       PREP AND PAINT EXISTING GLAZED BLOCK AT BASE TO MATCH",
+        "                                                                                                                                                                                                       131              EXCERCISE ROOM       B                3'-0\"              7'-0\"    HM   EXIST    HM      EXIST                     1",
+        "                                                                                                                                                                                                       132                DRILL FLOOR        A                5'-6\"              7'-0\"    HM   EXIST    HM      EXIST                     1",
+        "                                                                                                                                                                                                       132                DRILL FLOOR        A                6'-3\"              7'-0\"    HM   EXIST    HM      EXIST                     1                                             WALL FINISH TYPES:",
+        "                                                                                                                                                                                                       132                DRILL FLOOR        B                5'-6\"              7'-0\"    HM   EXIST    HM      EXIST                     1                                             WF1:    PAINT - FIELD COLOR, COLOR BY ARCHITECT, SEE",
+        "                                                                                                                                                                                                       133               SUPPLY OFFICE       A                3'-0\"              7'-0\"    HM   EXIST    HM      EXIST                     1                                             WF2:    PAINT - ACCENT COLOR, COLOR BY ARCHITECT, SEE",
+        "                                                                                                                                                                                                       136                 RECRUITER         A                3'-0\"              7'-0\"    HM   EXIST    HM      EXIST                     1                                             WF4:    EXISTING FINISH TO REMAIN. PATCH AND REPAIR WALL IF",
+        "                                                                                                                                                                                                       137                  STORAGE          A                5'-0\"              7'-0\"    HM   EXIST    HM      EXIST                     1",
+        "                                                                                                                                                                                                       138              MECH/MAIL ROOM       A                3'-0\"              7'-0\"    HM   EXIST    HM      EXIST                     1                                             FG-R1: EPOXY, SEE SPECS",
+        "                                                                                                                                                                                                       139              CHAPLAINS OFFICE     A                3'-0\"              7'-0\"    HM   EXIST    HM      EXIST                     1",
+        "                                                                                                                                                                                                       140              TACTICAL OP. CNTR    A                3'-0\"              7'-0\"    HM   EXIST    HM      EXIST                     1",
+        "                                                                                                                                                                                                       141               HHD CMND TEAM       A                3'-0\"              7'-0\"    HM   EXIST    HM      EXIST                     1",
+        "                                                                                                                                                                                                       141               HHD CMND TEAM       B                3'-0\"              7'-0\"    HM   EXIST    HM      EXIST                     1                                         C",
+        "                                                                                                                                                                                                       142                   LEGAL           A                3'-0\"              7'-0\"    HM   EXIST    HM      EXIST                     1                                                               FF1:    LVT TILE.",
+        "                                                                                                                                                                                                       143                TROOP CMDR         A                3'-0\"              7'-0\"    HM   EXIST    HM      EXIST                     1                                                               FF2A:   EPOXY (TYPE 1)"
+      ]
+    }
+  ],
+  "harvest_schedule_marks": [
+    {
+      "mark": "100",
+      "page": 10
+    },
+    {
+      "mark": "101",
+      "page": 10
+    },
+    {
+      "mark": "102",
+      "page": 10
+    },
+    {
+      "mark": "103",
+      "page": 10
+    },
+    {
+      "mark": "104",
+      "page": 10
+    },
+    {
+      "mark": "105",
+      "page": 10
+    },
+    {
+      "mark": "106",
+      "page": 10
+    },
+    {
+      "mark": "107",
+      "page": 10
+    },
+    {
+      "mark": "108",
+      "page": 10
+    },
+    {
+      "mark": "109",
+      "page": 10
+    },
+    {
+      "mark": "110",
+      "page": 10
+    },
+    {
+      "mark": "113",
+      "page": 10
+    },
+    {
+      "mark": "114",
+      "page": 10
+    },
+    {
+      "mark": "115",
+      "page": 10
+    },
+    {
+      "mark": "116",
+      "page": 10
+    },
+    {
+      "mark": "117",
+      "page": 10
+    },
+    {
+      "mark": "118",
+      "page": 10
+    },
+    {
+      "mark": "119",
+      "page": 10
+    },
+    {
+      "mark": "120",
+      "page": 10
+    },
+    {
+      "mark": "121",
+      "page": 10
+    },
+    {
+      "mark": "122",
+      "page": 10
+    },
+    {
+      "mark": "123",
+      "page": 10
+    },
+    {
+      "mark": "124",
+      "page": 10
+    },
+    {
+      "mark": "125",
+      "page": 10
+    },
+    {
+      "mark": "126",
+      "page": 10
+    },
+    {
+      "mark": "127",
+      "page": 10
+    },
+    {
+      "mark": "128",
+      "page": 10
+    },
+    {
+      "mark": "B2",
+      "page": 10
+    },
+    {
+      "mark": "129",
+      "page": 10
+    },
+    {
+      "mark": "130",
+      "page": 10
+    },
+    {
+      "mark": "131",
+      "page": 10
+    },
+    {
+      "mark": "132",
+      "page": 10
+    },
+    {
+      "mark": "133",
+      "page": 10
+    },
+    {
+      "mark": "136",
+      "page": 10
+    },
+    {
+      "mark": "137",
+      "page": 10
+    },
+    {
+      "mark": "138",
+      "page": 10
+    },
+    {
+      "mark": "139",
+      "page": 10
+    },
+    {
+      "mark": "140",
+      "page": 10
+    },
+    {
+      "mark": "141",
+      "page": 10
+    },
+    {
+      "mark": "142",
+      "page": 10
+    },
+    {
+      "mark": "143",
+      "page": 10
+    }
+  ],
+  "harvest_marks_plan": {
+    "sheets": [
+      {
+        "page": 1,
+        "sheet": "G-001",
+        "title": "WELLS",
+        "plan": false
+      },
+      {
+        "page": 2,
+        "sheet": "S-001",
+        "title": "GENE",
+        "plan": false
+      },
+      {
+        "page": 3,
+        "sheet": "S-100",
+        "title": "STRUCTURAL PLAN",
+        "plan": false
+      },
+      {
+        "page": 4,
+        "sheet": "S-200",
+        "title": "STRUCTURAL DETAILS",
+        "plan": false
+      },
+      {
+        "page": 5,
+        "sheet": "A-001",
+        "title": "LEGENDS & CODE PLANS",
+        "plan": false
+      },
+      {
+        "page": 6,
+        "sheet": "A-002",
+        "title": "DEMOLITION FLOOR PLANS",
+        "plan": false
+      },
+      {
+        "page": 7,
+        "sheet": "A-100",
+        "title": "FIRST FLOOR PLANS",
+        "plan": true
+      },
+      {
+        "page": 8,
+        "sheet": "A-101",
+        "title": "FIRST FLOOR DIMENSION PLAN",
+        "plan": true
+      },
+      {
+        "page": 9,
+        "sheet": "A-102",
+        "title": "FIRST FLOOR FINISH PLAN",
+        "plan": false
+      },
+      {
+        "page": 10,
+        "sheet": "A-103",
+        "title": "SCHEDULES AND FRAME TYPES",
+        "plan": false
+      },
+      {
+        "page": 11,
+        "sheet": "A-104",
+        "title": "PLANS & DETAILS",
+        "plan": true
+      },
+      {
+        "page": 12,
+        "sheet": "A-400",
+        "title": "REFLECTED CEILING PLAN",
+        "plan": false
+      },
+      {
+        "page": 13,
+        "sheet": "A-401",
+        "title": "REFLECTED CEILING PLAN",
+        "plan": false
+      },
+      {
+        "page": 14,
+        "sheet": "A-402",
+        "title": "ALTERNATE 1: ACCOUSTIC PANELS",
+        "plan": false
+      },
+      {
+        "page": 15,
+        "sheet": "A-500",
+        "title": "ROOF PLAN",
+        "plan": false
+      },
+      {
+        "page": 16,
+        "sheet": "MEP-101",
+        "title": "MEP TITLE SHEET",
+        "plan": false
+      },
+      {
+        "page": 17,
+        "sheet": "P-001",
+        "title": "DEMO PLUMBING PLAN",
+        "plan": false
+      },
+      {
+        "page": 18,
+        "sheet": "P-101",
+        "title": "UNDERGROUND PLUMBING PLAN",
+        "plan": false
+      },
+      {
+        "page": 19,
+        "sheet": "P-201",
+        "title": "PLUMBING PLAN",
+        "plan": false
+      },
+      {
+        "page": 20,
+        "sheet": "P-301",
+        "title": "PLUMBING DETAILS",
+        "plan": false
+      },
+      {
+        "page": 21,
+        "sheet": "P-401",
+        "title": "PLUMBING SCHEDULES",
+        "plan": false
+      },
+      {
+        "page": 22,
+        "sheet": "M-001",
+        "title": "DEMO MECHANICAL PLAN",
+        "plan": false
+      },
+      {
+        "page": 23,
+        "sheet": "M-101",
+        "title": "MECHANICAL PLAN",
+        "plan": false
+      },
+      {
+        "page": 24,
+        "sheet": "M-102",
+        "title": "MECHANICAL PIPING PLAN",
+        "plan": false
+      },
+      {
+        "page": 25,
+        "sheet": "M-201",
+        "title": "FURNACE",
+        "plan": false
+      },
+      {
+        "page": 26,
+        "sheet": "E-001",
+        "title": "DEMO LIGHTING PLAN",
+        "plan": false
+      },
+      {
+        "page": 27,
+        "sheet": "E-002",
+        "title": "DEMO POWER PLAN",
+        "plan": false
+      },
+      {
+        "page": 28,
+        "sheet": "E-101",
+        "title": "LIGHTING PLAN",
+        "plan": false
+      },
+      {
+        "page": 29,
+        "sheet": "E-201",
+        "title": "POWER PLAN",
+        "plan": false
+      },
+      {
+        "page": 30,
+        "sheet": "E-301",
+        "title": "DEMO ELECTRICAL RISER",
+        "plan": false
+      }
+    ],
+    "plan_sheets": [
+      {
+        "page": 7,
+        "sheet": "A-100",
+        "title": "FIRST FLOOR PLANS",
+        "rooms": 63,
+        "scales": [
+          "SCALE: 1 1/2\"= 1'-0\"",
+          "SCALE: 1/8\" = 1'-0\""
+        ],
+        "points_per_foot": [
+          108,
+          9
+        ]
+      },
+      {
+        "page": 8,
+        "sheet": "A-101",
+        "title": "FIRST FLOOR DIMENSION PLAN",
+        "rooms": 44,
+        "scales": [
+          "SCALE: 1/8\" = 1'-0\""
+        ],
+        "points_per_foot": [
+          9
+        ]
+      },
+      {
+        "page": 11,
+        "sheet": "A-104",
+        "title": "PLANS & DETAILS",
+        "rooms": 44,
+        "scales": [
+          "SCALE: 1/4\" = 1'-0\"",
+          "SCALE: 1 1/2\"= 1'-0\"",
+          "SCALE: 3/4\" = 1'-0\"",
+          "SCALE: 1/4\" = 1'-0\"",
+          "SCALE: 1/4\" = 1'-0\"",
+          "SCALE: 1/4\" = 1'-0\"",
+          "SCALE: 3/4\" = 1'-0\""
+        ],
+        "points_per_foot": [
+          18,
+          108,
+          54
+        ]
+      }
+    ],
+    "rooms": [
+      {
+        "page": 7,
+        "sheet": "A-100",
+        "number": "135",
+        "name": "UNIT STORAGE",
+        "x": 1469,
+        "y": 308,
+        "h": 7.5412071,
+        "corridor": false,
+        "points_per_foot": 108
+      },
+      {
+        "page": 7,
+        "sheet": "A-100",
+        "number": "100",
+        "name": "CAN WASH",
+        "x": 563,
+        "y": 471,
+        "h": 7.5412071,
+        "corridor": false,
+        "points_per_foot": 9
+      },
+      {
+        "page": 7,
+        "sheet": "A-100",
+        "number": "101",
+        "name": "SCULLERY",
+        "x": 605,
+        "y": 579,
+        "h": 7.5412071,
+        "corridor": false,
+        "points_per_foot": 9
+      },
+      {
+        "page": 7,
+        "sheet": "A-100",
+        "number": "133",
+        "name": "SUPPLY OFFICE",
+        "x": 1307,
+        "y": 639,
+        "h": 7.5412071,
+        "corridor": false,
+        "points_per_foot": 108
+      },
+      {
+        "page": 7,
+        "sheet": "A-100",
+        "number": "134",
+        "name": "ARMS VAULT",
+        "x": 1414,
+        "y": 661,
+        "h": 7.5412071,
+        "corridor": false,
+        "points_per_foot": 108
+      },
+      {
+        "page": 7,
+        "sheet": "A-100",
+        "number": "131",
+        "name": "EXCERCISE ROOM",
+        "x": 1557,
+        "y": 673,
+        "h": 7.5412071,
+        "corridor": false,
+        "points_per_foot": 108
+      },
+      {
+        "page": 7,
+        "sheet": "A-100",
+        "number": "132",
+        "name": "DRILL FLOOR",
+        "x": 1130,
+        "y": 685,
+        "h": 7.5412071,
+        "corridor": false,
+        "points_per_foot": 9
+      },
+      {
+        "page": 7,
+        "sheet": "A-100",
+        "number": "102",
+        "name": "FOOD PREP",
+        "x": 605,
+        "y": 707,
+        "h": 7.5412071,
+        "corridor": false,
+        "points_per_foot": 9
+      },
+      {
+        "page": 7,
+        "sheet": "A-100",
+        "number": "103",
+        "name": "FOOD STORAGE",
+        "x": 599,
+        "y": 835,
+        "h": 7.5412071,
+        "corridor": false,
+        "points_per_foot": 9
+      },
+      {
+        "page": 7,
+        "sheet": "A-100",
+        "number": "125",
+        "name": "OFFICE",
+        "x": 1633,
+        "y": 868,
+        "h": 7.5412071,
+        "corridor": false,
+        "points_per_foot": 108
+      },
+      {
+        "page": 7,
+        "sheet": "A-100",
+        "number": "129",
+        "name": "UNIT ADMIN",
+        "x": 1318,
+        "y": 889,
+        "h": 7.5412071,
+        "corridor": false,
+        "points_per_foot": 108
+      },
+      {
+        "page": 7,
+        "sheet": "A-100",
+        "number": "124",
+        "name": "OFFICE",
+        "x": 1545,
+        "y": 889,
+        "h": 7.5412071,
+        "corridor": false,
+        "points_per_foot": 108
+      },
+      {
+        "page": 7,
+        "sheet": "A-100",
+        "number": "104",
+        "name": "CORRIDOR",
+        "x": 637,
+        "y": 907,
+        "h": 7.5412071,
+        "corridor": true,
+        "points_per_foot": 9
+      },
+      {
+        "page": 7,
+        "sheet": "A-100",
+        "number": "TA17",
+        "name": "TA10",
+        "x": 853,
+        "y": 926,
+        "h": 7.7630076,
+        "corridor": false,
+        "points_per_foot": 9
+      },
+      {
+        "page": 7,
+        "sheet": "A-100",
+        "number": "130",
+        "name": "STO",
+        "x": 1274,
+        "y": 932,
+        "h": 7.5412071,
+        "corridor": false,
+        "points_per_foot": 108
+      },
+      {
+        "page": 7,
+        "sheet": "A-100",
+        "number": "TA19",
+        "name": "TA17",
+        "x": 853,
+        "y": 940,
+        "h": 7.7630076,
+        "corridor": false,
+        "points_per_foot": 9
+      },
+      {
+        "page": 7,
+        "sheet": "A-100",
+        "number": "105",
+        "name": "MAINT / STOR",
+        "x": 583,
+        "y": 984,
+        "h": 7.5412071,
+        "corridor": false,
+        "points_per_foot": 9
+      },
+      {
+        "page": 7,
+        "sheet": "A-100",
+        "number": "143",
+        "name": "TROOP CMDR",
+        "x": 822,
+        "y": 979,
+        "h": 7.5412071,
+        "corridor": false,
+        "points_per_foot": 9
+      },
+      {
+        "page": 7,
+        "sheet": "A-100",
+        "number": "142",
+        "name": "LEGAL",
+        "x": 920,
+        "y": 988,
+        "h": 7.5412071,
+        "corridor": false,
+        "points_per_foot": 9
+      },
+      {
+        "page": 7,
+        "sheet": "A-100",
+        "number": "TA2",
+        "name": "TA1",
+        "x": 1963,
+        "y": 1011,
+        "h": 7.7630067,
+        "corridor": false,
+        "points_per_foot": 108
+      },
+      {
+        "page": 7,
+        "sheet": "A-100",
+        "number": "TA3",
+        "name": "TA2",
+        "x": 1963,
+        "y": 1026,
+        "h": 7.7630067,
+        "corridor": false,
+        "points_per_foot": 108
+      },
+      {
+        "page": 7,
+        "sheet": "A-100",
+        "number": "128",
+        "name": "MECH",
+        "x": 1275,
+        "y": 1036,
+        "h": 7.5412071,
+        "corridor": false,
+        "points_per_foot": 108
+      },
+      {
+        "page": 7,
+        "sheet": "A-100",
+        "number": "106",
+        "name": "MOTHERS CNTR",
+        "x": 600,
+        "y": 1081,
+        "h": 7.5412071,
+        "corridor": false,
+        "points_per_foot": 9
+      },
+      {
+        "page": 7,
+        "sheet": "A-100",
+        "number": "141",
+        "name": "HHD CMND TEAM",
+        "x": 934,
+        "y": 1100,
+        "h": 7.5412071,
+        "corridor": false,
+        "points_per_foot": 9
+      },
+      {
+        "page": 7,
+        "sheet": "A-100",
+        "number": "TA4",
+        "name": "TA3",
+        "x": 1963,
+        "y": 1040,
+        "h": 7.7630067,
+        "corridor": false,
+        "points_per_foot": 108
+      },
+      {
+        "page": 7,
+        "sheet": "A-100",
+        "number": "TA5",
+        "name": "TA4",
+        "x": 1963,
+        "y": 1053,
+        "h": 7.7630067,
+        "corridor": false,
+        "points_per_foot": 108
+      },
+      {
+        "page": 7,
+        "sheet": "A-100",
+        "number": "TA6",
+        "name": "TA5",
+        "x": 1963,
+        "y": 1067,
+        "h": 7.7630067,
+        "corridor": false,
+        "points_per_foot": 108
+      },
+      {
+        "page": 7,
+        "sheet": "A-100",
+        "number": "TA7",
+        "name": "TA6",
+        "x": 1963,
+        "y": 1079,
+        "h": 7.7630085,
+        "corridor": false,
+        "points_per_foot": 108
+      },
+      {
+        "page": 7,
+        "sheet": "A-100",
+        "number": "TA8",
+        "name": "TA7",
+        "x": 1963,
+        "y": 1092,
+        "h": 7.7630112,
+        "corridor": false,
+        "points_per_foot": 108
+      },
+      {
+        "page": 7,
+        "sheet": "A-100",
+        "number": "TA9",
+        "name": "TA8",
+        "x": 1963,
+        "y": 1105,
+        "h": 7.763013,
+        "corridor": false,
+        "points_per_foot": 108
+      },
+      {
+        "page": 7,
+        "sheet": "A-100",
+        "number": "TA10",
+        "name": "TA9",
+        "x": 1965,
+        "y": 1120,
+        "h": 7.7630112,
+        "corridor": false,
+        "points_per_foot": 108
+      },
+      {
+        "page": 7,
+        "sheet": "A-100",
+        "number": "140",
+        "name": "TACTICAL OP. CNTR",
+        "x": 1139,
+        "y": 1137,
+        "h": 7.5412071,
+        "corridor": false,
+        "points_per_foot": 9
+      },
+      {
+        "page": 7,
+        "sheet": "A-100",
+        "number": "127",
+        "name": "MENS",
+        "x": 1370,
+        "y": 1137,
+        "h": 7.5412071,
+        "corridor": false,
+        "points_per_foot": 108
+      },
+      {
+        "page": 7,
+        "sheet": "A-100",
+        "number": "137",
+        "name": "STORAGE",
+        "x": 953,
+        "y": 1177,
+        "h": 7.5412071,
+        "corridor": false,
+        "points_per_foot": 9
+      },
+      {
+        "page": 7,
+        "sheet": "A-100",
+        "number": "121",
+        "name": "MECH",
+        "x": 1585,
+        "y": 1176,
+        "h": 7.5412071,
+        "corridor": false,
+        "points_per_foot": 108
+      },
+      {
+        "page": 7,
+        "sheet": "A-100",
+        "number": "122",
+        "name": "STO.",
+        "x": 1640,
+        "y": 1173,
+        "h": 7.5412071,
+        "corridor": false,
+        "points_per_foot": 108
+      },
+      {
+        "page": 7,
+        "sheet": "A-100",
+        "number": "TA12",
+        "name": "TA11",
+        "x": 1965,
+        "y": 1157,
+        "h": 7.7630139,
+        "corridor": false,
+        "points_per_foot": 108
+      },
+      {
+        "page": 7,
+        "sheet": "A-100",
+        "number": "TA13",
+        "name": "TA12",
+        "x": 1965,
+        "y": 1170,
+        "h": 7.7630139,
+        "corridor": false,
+        "points_per_foot": 108
+      },
+      {
+        "page": 7,
+        "sheet": "A-100",
+        "number": "TA14",
+        "name": "TA13",
+        "x": 1965,
+        "y": 1183,
+        "h": 7.7630139,
+        "corridor": false,
+        "points_per_foot": 108
+      },
+      {
+        "page": 7,
+        "sheet": "A-100",
+        "number": "136",
+        "name": "RECRUITER",
+        "x": 832,
+        "y": 1193,
+        "h": 7.5412071,
+        "corridor": false,
+        "points_per_foot": 9
+      },
+      {
+        "page": 7,
+        "sheet": "A-100",
+        "number": "TA15",
+        "name": "TA14",
+        "x": 1965,
+        "y": 1196,
+        "h": 7.7630139,
+        "corridor": false,
+        "points_per_foot": 108
+      },
+      {
+        "page": 7,
+        "sheet": "A-100",
+        "number": "TA16",
+        "name": "TA15",
+        "x": 1965,
+        "y": 1210,
+        "h": 7.7630139,
+        "corridor": false,
+        "points_per_foot": 108
+      },
+      {
+        "page": 7,
+        "sheet": "A-100",
+        "number": "138",
+        "name": "MECH/MAIL ROOM",
+        "x": 1017,
+        "y": 1223,
+        "h": 7.5412071,
+        "corridor": false,
+        "points_per_foot": 9
+      },
+      {
+        "page": 7,
+        "sheet": "A-100",
+        "number": "139",
+        "name": "CHAPLAINS OFFICE",
+        "x": 1125,
+        "y": 1228,
+        "h": 7.5412071,
+        "corridor": false,
+        "points_per_foot": 9
+      },
+      {
+        "page": 7,
+        "sheet": "A-100",
+        "number": "TA17",
+        "name": "TA16",
+        "x": 1965,
+        "y": 1223,
+        "h": 7.7630139,
+        "corridor": false,
+        "points_per_foot": 108
+      },
+      {
+        "page": 7,
+        "sheet": "A-100",
+        "number": "120",
+        "name": "SIPR ROOM",
+        "x": 1601,
+        "y": 1233,
+        "h": 7.5412071,
+        "corridor": false,
+        "points_per_foot": 108
+      },
+      {
+        "page": 7,
+        "sheet": "A-100",
+        "number": "TA18",
+        "name": "TA17",
+        "x": 1965,
+        "y": 1237,
+        "h": 7.7630139,
+        "corridor": false,
+        "points_per_foot": 108
+      },
+      {
+        "page": 7,
+        "sheet": "A-100",
+        "number": "107",
+        "name": "MAINT. EQUIP.",
+        "x": 626,
+        "y": 1243,
+        "h": 7.5412071,
+        "corridor": false,
+        "points_per_foot": 9
+      },
+      {
+        "page": 7,
+        "sheet": "A-100",
+        "number": "126",
+        "name": "WOMENS",
+        "x": 1330,
+        "y": 1256,
+        "h": 7.5412071,
+        "corridor": false,
+        "points_per_foot": 108
+      },
+      {
+        "page": 7,
+        "sheet": "A-100",
+        "number": "TA19",
+        "name": "TA18",
+        "x": 1965,
+        "y": 1251,
+        "h": 7.7630139,
+        "corridor": false,
+        "points_per_foot": 108
+      },
+      {
+        "page": 7,
+        "sheet": "A-100",
+        "number": "TA20",
+        "name": "TA19",
+        "x": 1965,
+        "y": 1265,
+        "h": 7.7630139,
+        "corridor": false,
+        "points_per_foot": 108
+      },
+      {
+        "page": 7,
+        "sheet": "A-100",
+        "number": "112",
+        "name": "LOBBY",
+        "x": 955,
+        "y": 1299,
+        "h": 7.5412071,
+        "corridor": true,
+        "points_per_foot": 9
+      },
+      {
+        "page": 7,
+        "sheet": "A-100",
+        "number": "115",
+        "name": "BDE HR TECH",
+        "x": 1304,
+        "y": 1391,
+        "h": 7.5412071,
+        "corridor": false,
+        "points_per_foot": 108
+      },
+      {
+        "page": 7,
+        "sheet": "A-100",
+        "number": "108",
+        "name": "OFFICE",
+        "x": 606,
+        "y": 1399,
+        "h": 7.5412071,
+        "corridor": false,
+        "points_per_foot": 9
+      },
+      {
+        "page": 7,
+        "sheet": "A-100",
+        "number": "116",
+        "name": "CLASSROOM",
+        "x": 1461,
+        "y": 1413,
+        "h": 7.5412071,
+        "corridor": false,
+        "points_per_foot": 108
+      },
+      {
+        "page": 7,
+        "sheet": "A-100",
+        "number": "119",
+        "name": "AO/XO",
+        "x": 1628,
+        "y": 1416,
+        "h": 7.5412071,
+        "corridor": false,
+        "points_per_foot": 108
+      },
+      {
+        "page": 7,
+        "sheet": "A-100",
+        "number": "110",
+        "name": "OP S-3",
+        "x": 801,
+        "y": 1432,
+        "h": 7.5412071,
+        "corridor": false,
+        "points_per_foot": 9
+      },
+      {
+        "page": 7,
+        "sheet": "A-100",
+        "number": "113",
+        "name": "S1 PERSONNEL SERVICES",
+        "x": 1121,
+        "y": 1450,
+        "h": 7.5412071,
+        "corridor": false,
+        "points_per_foot": 9
+      },
+      {
+        "page": 7,
+        "sheet": "A-100",
+        "number": "111",
+        "name": "VEST.",
+        "x": 950,
+        "y": 1466,
+        "h": 7.5412071,
+        "corridor": true,
+        "points_per_foot": 9
+      },
+      {
+        "page": 7,
+        "sheet": "A-100",
+        "number": "109",
+        "name": "BDE OP SGM",
+        "x": 613,
+        "y": 1470,
+        "h": 7.5412071,
+        "corridor": false,
+        "points_per_foot": 9
+      },
+      {
+        "page": 7,
+        "sheet": "A-100",
+        "number": "114",
+        "name": "BDE S1 OFFICER",
+        "x": 1316,
+        "y": 1479,
+        "h": 7.5412071,
+        "corridor": false,
+        "points_per_foot": 108
+      },
+      {
+        "page": 7,
+        "sheet": "A-100",
+        "number": "117",
+        "name": "BDE CMD SGT MAJ",
+        "x": 1398,
+        "y": 1511,
+        "h": 7.5412071,
+        "corridor": false,
+        "points_per_foot": 108
+      },
+      {
+        "page": 7,
+        "sheet": "A-100",
+        "number": "118",
+        "name": "COMMANDER",
+        "x": 1504,
+        "y": 1514,
+        "h": 7.5412071,
+        "corridor": false,
+        "points_per_foot": 108
+      },
+      {
+        "page": 8,
+        "sheet": "A-101",
+        "number": "135",
+        "name": "UNIT STORAGE",
+        "x": 1521,
+        "y": 308,
+        "h": 7.5412071,
+        "corridor": false,
+        "points_per_foot": 9
+      },
+      {
+        "page": 8,
+        "sheet": "A-101",
+        "number": "100",
+        "name": "CAN WASH",
+        "x": 674,
+        "y": 479,
+        "h": 7.5412071,
+        "corridor": false,
+        "points_per_foot": 9
+      },
+      {
+        "page": 8,
+        "sheet": "A-101",
+        "number": "101",
+        "name": "SCULLERY",
+        "x": 674,
+        "y": 580,
+        "h": 7.5412071,
+        "corridor": false,
+        "points_per_foot": 9
+      },
+      {
+        "page": 8,
+        "sheet": "A-101",
+        "number": "133",
+        "name": "SUPPLY OFFICE",
+        "x": 1350,
+        "y": 637,
+        "h": 7.5412071,
+        "corridor": false,
+        "points_per_foot": 9
+      },
+      {
+        "page": 8,
+        "sheet": "A-101",
+        "number": "134",
+        "name": "ARMS VAULT",
+        "x": 1453,
+        "y": 673,
+        "h": 7.5412071,
+        "corridor": false,
+        "points_per_foot": 9
+      },
+      {
+        "page": 8,
+        "sheet": "A-101",
+        "number": "132",
+        "name": "DRILL FLOOR",
+        "x": 1182,
+        "y": 685,
+        "h": 7.5412071,
+        "corridor": false,
+        "points_per_foot": 9
+      },
+      {
+        "page": 8,
+        "sheet": "A-101",
+        "number": "102",
+        "name": "FOOD PREP",
+        "x": 674,
+        "y": 707,
+        "h": 7.5412071,
+        "corridor": false,
+        "points_per_foot": 9
+      },
+      {
+        "page": 8,
+        "sheet": "A-101",
+        "number": "131",
+        "name": "EXCERCISE ROOM",
+        "x": 1592,
+        "y": 747,
+        "h": 7.5412071,
+        "corridor": false,
+        "points_per_foot": 9
+      },
+      {
+        "page": 8,
+        "sheet": "A-101",
+        "number": "103",
+        "name": "FOOD STORAGE",
+        "x": 674,
+        "y": 834,
+        "h": 7.5412071,
+        "corridor": false,
+        "points_per_foot": 9
+      },
+      {
+        "page": 8,
+        "sheet": "A-101",
+        "number": "129",
+        "name": "UNIT ADMIN",
+        "x": 1377,
+        "y": 886,
+        "h": 7.5412071,
+        "corridor": false,
+        "points_per_foot": 9
+      },
+      {
+        "page": 8,
+        "sheet": "A-101",
+        "number": "124",
+        "name": "OFFICE",
+        "x": 1585,
+        "y": 888,
+        "h": 7.5412071,
+        "corridor": false,
+        "points_per_foot": 9
+      },
+      {
+        "page": 8,
+        "sheet": "A-101",
+        "number": "125",
+        "name": "OFFICE",
+        "x": 1688,
+        "y": 888,
+        "h": 7.5412071,
+        "corridor": false,
+        "points_per_foot": 9
+      },
+      {
+        "page": 8,
+        "sheet": "A-101",
+        "number": "104",
+        "name": "CORRIDOR",
+        "x": 674,
+        "y": 910,
+        "h": 7.5412071,
+        "corridor": true,
+        "points_per_foot": 9
+      },
+      {
+        "page": 8,
+        "sheet": "A-101",
+        "number": "130",
+        "name": "STO",
+        "x": 1325,
+        "y": 940,
+        "h": 7.5412071,
+        "corridor": false,
+        "points_per_foot": 9
+      },
+      {
+        "page": 8,
+        "sheet": "A-101",
+        "number": "105",
+        "name": "MAINT / STOR",
+        "x": 674,
+        "y": 988,
+        "h": 7.5412071,
+        "corridor": false,
+        "points_per_foot": 9
+      },
+      {
+        "page": 8,
+        "sheet": "A-101",
+        "number": "142",
+        "name": "LEGAL",
+        "x": 973,
+        "y": 988,
+        "h": 7.5412071,
+        "corridor": false,
+        "points_per_foot": 9
+      },
+      {
+        "page": 8,
+        "sheet": "A-101",
+        "number": "143",
+        "name": "TROOP CMDR",
+        "x": 871,
+        "y": 1003,
+        "h": 7.5412071,
+        "corridor": false,
+        "points_per_foot": 9
+      },
+      {
+        "page": 8,
+        "sheet": "A-101",
+        "number": "128",
+        "name": "MECH",
+        "x": 1328,
+        "y": 1041,
+        "h": 7.5412071,
+        "corridor": false,
+        "points_per_foot": 9
+      },
+      {
+        "page": 8,
+        "sheet": "A-101",
+        "number": "106",
+        "name": "MOTHERS CNTR",
+        "x": 722,
+        "y": 1071,
+        "h": 7.5412071,
+        "corridor": false,
+        "points_per_foot": 9
+      },
+      {
+        "page": 8,
+        "sheet": "A-101",
+        "number": "140",
+        "name": "TACTICAL OP. CNTR",
+        "x": 1169,
+        "y": 1073,
+        "h": 7.5412071,
+        "corridor": false,
+        "points_per_foot": 9
+      },
+      {
+        "page": 8,
+        "sheet": "A-101",
+        "number": "141",
+        "name": "HHD CMND TEAM",
+        "x": 977,
+        "y": 1103,
+        "h": 7.5412071,
+        "corridor": false,
+        "points_per_foot": 9
+      },
+      {
+        "page": 8,
+        "sheet": "A-101",
+        "number": "127",
+        "name": "MENS",
+        "x": 1355,
+        "y": 1123,
+        "h": 7.5412071,
+        "corridor": false,
+        "points_per_foot": 9
+      },
+      {
+        "page": 8,
+        "sheet": "A-101",
+        "number": "137",
+        "name": "STORAGE",
+        "x": 1017,
+        "y": 1180,
+        "h": 7.5412071,
+        "corridor": false,
+        "points_per_foot": 9
+      },
+      {
+        "page": 8,
+        "sheet": "A-101",
+        "number": "121",
+        "name": "MECH",
+        "x": 1633,
+        "y": 1176,
+        "h": 7.5412071,
+        "corridor": false,
+        "points_per_foot": 9
+      },
+      {
+        "page": 8,
+        "sheet": "A-101",
+        "number": "122",
+        "name": "STO.",
+        "x": 1688,
+        "y": 1177,
+        "h": 7.5412071,
+        "corridor": false,
+        "points_per_foot": 9
+      },
+      {
+        "page": 8,
+        "sheet": "A-101",
+        "number": "6286",
+        "name": "PROJECT # T2507-01",
+        "x": 2451,
+        "y": 1169,
+        "h": 16.87131,
+        "corridor": false,
+        "points_per_foot": 9
+      },
+      {
+        "page": 8,
+        "sheet": "A-101",
+        "number": "139",
+        "name": "CHAPLAINS OFFICE",
+        "x": 1167,
+        "y": 1210,
+        "h": 7.5412071,
+        "corridor": false,
+        "points_per_foot": 9
+      },
+      {
+        "page": 8,
+        "sheet": "A-101",
+        "number": "136",
+        "name": "RECRUITER",
+        "x": 884,
+        "y": 1217,
+        "h": 7.5412071,
+        "corridor": false,
+        "points_per_foot": 9
+      },
+      {
+        "page": 8,
+        "sheet": "A-101",
+        "number": "138",
+        "name": "MECH/MAIL ROOM",
+        "x": 1067,
+        "y": 1217,
+        "h": 7.5412071,
+        "corridor": false,
+        "points_per_foot": 9
+      },
+      {
+        "page": 8,
+        "sheet": "A-101",
+        "number": "120",
+        "name": "SIPR ROOM",
+        "x": 1635,
+        "y": 1228,
+        "h": 7.5412071,
+        "corridor": false,
+        "points_per_foot": 9
+      },
+      {
+        "page": 8,
+        "sheet": "A-101",
+        "number": "107",
+        "name": "MAINT. EQUIP.",
+        "x": 674,
+        "y": 1232,
+        "h": 7.5412071,
+        "corridor": false,
+        "points_per_foot": 9
+      },
+      {
+        "page": 8,
+        "sheet": "A-101",
+        "number": "126",
+        "name": "WOMENS",
+        "x": 1382,
+        "y": 1256,
+        "h": 7.5412071,
+        "corridor": false,
+        "points_per_foot": 9
+      },
+      {
+        "page": 8,
+        "sheet": "A-101",
+        "number": "112",
+        "name": "LOBBY",
+        "x": 995,
+        "y": 1308,
+        "h": 7.5412071,
+        "corridor": true,
+        "points_per_foot": 9
+      },
+      {
+        "page": 8,
+        "sheet": "A-101",
+        "number": "108",
+        "name": "OFFICE",
+        "x": 674,
+        "y": 1390,
+        "h": 7.5412071,
+        "corridor": false,
+        "points_per_foot": 9
+      },
+      {
+        "page": 8,
+        "sheet": "A-101",
+        "number": "115",
+        "name": "BDE HR TECH",
+        "x": 1357,
+        "y": 1391,
+        "h": 7.5412071,
+        "corridor": false,
+        "points_per_foot": 9
+      },
+      {
+        "page": 8,
+        "sheet": "A-101",
+        "number": "116",
+        "name": "CLASSROOM",
+        "x": 1532,
+        "y": 1418,
+        "h": 7.5412071,
+        "corridor": false,
+        "points_per_foot": 9
+      },
+      {
+        "page": 8,
+        "sheet": "A-101",
+        "number": "110",
+        "name": "OP S-3",
+        "x": 844,
+        "y": 1434,
+        "h": 7.5412071,
+        "corridor": false,
+        "points_per_foot": 9
+      },
+      {
+        "page": 8,
+        "sheet": "A-101",
+        "number": "113",
+        "name": "S1 PERSONNEL SERVICES",
+        "x": 1160,
+        "y": 1451,
+        "h": 7.5412071,
+        "corridor": false,
+        "points_per_foot": 9
+      },
+      {
+        "page": 8,
+        "sheet": "A-101",
+        "number": "119",
+        "name": "AO/XO",
+        "x": 1675,
+        "y": 1461,
+        "h": 7.5412071,
+        "corridor": false,
+        "points_per_foot": 9
+      },
+      {
+        "page": 8,
+        "sheet": "A-101",
+        "number": "111",
+        "name": "VEST.",
+        "x": 1005,
+        "y": 1468,
+        "h": 7.5412071,
+        "corridor": true,
+        "points_per_foot": 9
+      },
+      {
+        "page": 8,
+        "sheet": "A-101",
+        "number": "109",
+        "name": "BDE OP SGM",
+        "x": 674,
+        "y": 1480,
+        "h": 7.5412071,
+        "corridor": false,
+        "points_per_foot": 9
+      },
+      {
+        "page": 8,
+        "sheet": "A-101",
+        "number": "114",
+        "name": "BDE S1 OFFICER",
+        "x": 1355,
+        "y": 1485,
+        "h": 7.5412071,
+        "corridor": false,
+        "points_per_foot": 9
+      },
+      {
+        "page": 8,
+        "sheet": "A-101",
+        "number": "117",
+        "name": "BDE CMD SGT MAJ",
+        "x": 1458,
+        "y": 1504,
+        "h": 7.5412071,
+        "corridor": false,
+        "points_per_foot": 9
+      },
+      {
+        "page": 8,
+        "sheet": "A-101",
+        "number": "118",
+        "name": "COMMANDER",
+        "x": 1556,
+        "y": 1504,
+        "h": 7.5412071,
+        "corridor": false,
+        "points_per_foot": 9
+      },
+      {
+        "page": 11,
+        "sheet": "A-104",
+        "number": "TA2",
+        "name": "TA1",
+        "x": 1943,
+        "y": 160,
+        "h": 7.7630067,
+        "corridor": false,
+        "points_per_foot": 54
+      },
+      {
+        "page": 11,
+        "sheet": "A-104",
+        "number": "TA3",
+        "name": "TA2",
+        "x": 1943,
+        "y": 174,
+        "h": 7.7630067,
+        "corridor": false,
+        "points_per_foot": 54
+      },
+      {
+        "page": 11,
+        "sheet": "A-104",
+        "number": "TA4",
+        "name": "TA3",
+        "x": 1943,
+        "y": 188,
+        "h": 7.7630067,
+        "corridor": false,
+        "points_per_foot": 54
+      },
+      {
+        "page": 11,
+        "sheet": "A-104",
+        "number": "TA5",
+        "name": "TA4",
+        "x": 1943,
+        "y": 202,
+        "h": 7.7630067,
+        "corridor": false,
+        "points_per_foot": 54
+      },
+      {
+        "page": 11,
+        "sheet": "A-104",
+        "number": "TA6",
+        "name": "TA5",
+        "x": 1943,
+        "y": 215,
+        "h": 7.7630067,
+        "corridor": false,
+        "points_per_foot": 54
+      },
+      {
+        "page": 11,
+        "sheet": "A-104",
+        "number": "TA7",
+        "name": "TA6",
+        "x": 1943,
+        "y": 228,
+        "h": 7.7630085,
+        "corridor": false,
+        "points_per_foot": 54
+      },
+      {
+        "page": 11,
+        "sheet": "A-104",
+        "number": "TA8",
+        "name": "TA7",
+        "x": 1943,
+        "y": 241,
+        "h": 7.7630112,
+        "corridor": false,
+        "points_per_foot": 54
+      },
+      {
+        "page": 11,
+        "sheet": "A-104",
+        "number": "TA9",
+        "name": "TA8",
+        "x": 1943,
+        "y": 254,
+        "h": 7.763013,
+        "corridor": false,
+        "points_per_foot": 54
+      },
+      {
+        "page": 11,
+        "sheet": "A-104",
+        "number": "TA10",
+        "name": "TA9",
+        "x": 1945,
+        "y": 269,
+        "h": 7.7630112,
+        "corridor": false,
+        "points_per_foot": 54
+      },
+      {
+        "page": 11,
+        "sheet": "A-104",
+        "number": "TA12",
+        "name": "TA11",
+        "x": 1945,
+        "y": 305,
+        "h": 7.7630139,
+        "corridor": false,
+        "points_per_foot": 54
+      },
+      {
+        "page": 11,
+        "sheet": "A-104",
+        "number": "TA13",
+        "name": "TA12",
+        "x": 1945,
+        "y": 319,
+        "h": 7.7630139,
+        "corridor": false,
+        "points_per_foot": 54
+      },
+      {
+        "page": 11,
+        "sheet": "A-104",
+        "number": "TA14",
+        "name": "TA13",
+        "x": 1945,
+        "y": 332,
+        "h": 7.7630139,
+        "corridor": false,
+        "points_per_foot": 54
+      },
+      {
+        "page": 11,
+        "sheet": "A-104",
+        "number": "TA15",
+        "name": "TA14",
+        "x": 1945,
+        "y": 345,
+        "h": 7.7630139,
+        "corridor": false,
+        "points_per_foot": 54
+      },
+      {
+        "page": 11,
+        "sheet": "A-104",
+        "number": "TA16",
+        "name": "TA15",
+        "x": 1945,
+        "y": 358,
+        "h": 7.7630139,
+        "corridor": false,
+        "points_per_foot": 54
+      },
+      {
+        "page": 11,
+        "sheet": "A-104",
+        "number": "TA17",
+        "name": "TA16",
+        "x": 1945,
+        "y": 372,
+        "h": 7.7630139,
+        "corridor": false,
+        "points_per_foot": 54
+      },
+      {
+        "page": 11,
+        "sheet": "A-104",
+        "number": "TA18",
+        "name": "TA17",
+        "x": 1945,
+        "y": 386,
+        "h": 7.7630139,
+        "corridor": false,
+        "points_per_foot": 54
+      },
+      {
+        "page": 11,
+        "sheet": "A-104",
+        "number": "TA19",
+        "name": "TA18",
+        "x": 1945,
+        "y": 400,
+        "h": 7.7630139,
+        "corridor": false,
+        "points_per_foot": 54
+      },
+      {
+        "page": 11,
+        "sheet": "A-104",
+        "number": "TA20",
+        "name": "TA19",
+        "x": 1945,
+        "y": 413,
+        "h": 7.7630139,
+        "corridor": false,
+        "points_per_foot": 54
+      },
+      {
+        "page": 11,
+        "sheet": "A-104",
+        "number": "128",
+        "name": "MECH",
+        "x": 1625,
+        "y": 552,
+        "h": 7.5412071,
+        "corridor": false,
+        "points_per_foot": 18
+      },
+      {
+        "page": 11,
+        "sheet": "A-104",
+        "number": "TA9",
+        "name": "TA8",
+        "x": 1265,
+        "y": 564,
+        "h": 7.7630076,
+        "corridor": false,
+        "points_per_foot": 18
+      },
+      {
+        "page": 11,
+        "sheet": "A-104",
+        "number": "TA1",
+        "name": "TA2",
+        "x": 1727,
+        "y": 636,
+        "h": 7.7630076,
+        "corridor": false,
+        "points_per_foot": 18
+      },
+      {
+        "page": 11,
+        "sheet": "A-104",
+        "number": "TA3",
+        "name": "TA1",
+        "x": 1727,
+        "y": 649,
+        "h": 7.7630076,
+        "corridor": false,
+        "points_per_foot": 18
+      },
+      {
+        "page": 11,
+        "sheet": "A-104",
+        "number": "TA5",
+        "name": "TA3",
+        "x": 1727,
+        "y": 662,
+        "h": 7.7630076,
+        "corridor": false,
+        "points_per_foot": 18
+      },
+      {
+        "page": 11,
+        "sheet": "A-104",
+        "number": "127",
+        "name": "MENS",
+        "x": 1751,
+        "y": 796,
+        "h": 7.5412071,
+        "corridor": false,
+        "points_per_foot": 18
+      },
+      {
+        "page": 11,
+        "sheet": "A-104",
+        "number": "TA16",
+        "name": "TA11",
+        "x": 1928,
+        "y": 832,
+        "h": 7.7630076,
+        "corridor": false,
+        "points_per_foot": 54
+      },
+      {
+        "page": 11,
+        "sheet": "A-104",
+        "number": "TA9",
+        "name": "TA7",
+        "x": 1614,
+        "y": 867,
+        "h": 7.7630076,
+        "corridor": false,
+        "points_per_foot": 18
+      },
+      {
+        "page": 11,
+        "sheet": "A-104",
+        "number": "TA9",
+        "name": "TA8",
+        "x": 1664,
+        "y": 868,
+        "h": 7.7630076,
+        "corridor": false,
+        "points_per_foot": 18
+      },
+      {
+        "page": 11,
+        "sheet": "A-104",
+        "number": "112",
+        "name": "LOBBY",
+        "x": 1525,
+        "y": 885,
+        "h": 7.5412071,
+        "corridor": true,
+        "points_per_foot": 18
+      },
+      {
+        "page": 11,
+        "sheet": "A-104",
+        "number": "121",
+        "name": "MECH",
+        "x": 2215,
+        "y": 946,
+        "h": 7.5412071,
+        "corridor": false,
+        "points_per_foot": 54
+      },
+      {
+        "page": 11,
+        "sheet": "A-104",
+        "number": "TA7",
+        "name": "TA9",
+        "x": 1614,
+        "y": 993,
+        "h": 7.7630076,
+        "corridor": false,
+        "points_per_foot": 18
+      },
+      {
+        "page": 11,
+        "sheet": "A-104",
+        "number": "TA8126",
+        "name": "TA9 TA7",
+        "x": 1622,
+        "y": 1005,
+        "h": 7.7630076,
+        "corridor": false,
+        "points_per_foot": 18
+      },
+      {
+        "page": 11,
+        "sheet": "A-104",
+        "number": "TA12",
+        "name": "TA5TA1",
+        "x": 1759,
+        "y": 1018,
+        "h": 7.7630076,
+        "corridor": false,
+        "points_per_foot": 18
+      },
+      {
+        "page": 11,
+        "sheet": "A-104",
+        "number": "TA1",
+        "name": "TA2",
+        "x": 1815,
+        "y": 975,
+        "h": 7.7630076,
+        "corridor": false,
+        "points_per_foot": 54
+      },
+      {
+        "page": 11,
+        "sheet": "A-104",
+        "number": "TA5",
+        "name": "TA2 TA1",
+        "x": 1815,
+        "y": 990,
+        "h": 7.7630076,
+        "corridor": false,
+        "points_per_foot": 54
+      },
+      {
+        "page": 11,
+        "sheet": "A-104",
+        "number": "TA12",
+        "name": "TA5 TA4",
+        "x": 1836,
+        "y": 1012,
+        "h": 7.7630076,
+        "corridor": false,
+        "points_per_foot": 54
+      },
+      {
+        "page": 11,
+        "sheet": "A-104",
+        "number": "TA3",
+        "name": "TA2 TA1",
+        "x": 1838,
+        "y": 986,
+        "h": 7.7630076,
+        "corridor": false,
+        "points_per_foot": 54
+      },
+      {
+        "page": 11,
+        "sheet": "A-104",
+        "number": "TA4",
+        "name": "TA1 TA3",
+        "x": 1838,
+        "y": 998,
+        "h": 7.7630076,
+        "corridor": false,
+        "points_per_foot": 54
+      },
+      {
+        "page": 11,
+        "sheet": "A-104",
+        "number": "A-104",
+        "name": "6TA11",
+        "x": 2003,
+        "y": 1016,
+        "h": 7.7630076,
+        "corridor": false,
+        "points_per_foot": 54
+      },
+      {
+        "page": 11,
+        "sheet": "A-104",
+        "number": "120",
+        "name": "SIPR ROOM",
+        "x": 2194,
+        "y": 1072,
+        "h": 7.5412071,
+        "corridor": false,
+        "points_per_foot": 54
+      },
+      {
+        "page": 11,
+        "sheet": "A-104",
+        "number": "6286",
+        "name": "PROJECT # T2507-01",
+        "x": 2451,
+        "y": 1169,
+        "h": 16.87131,
+        "corridor": false,
+        "points_per_foot": 54
+      },
+      {
+        "page": 11,
+        "sheet": "A-104",
+        "number": "TA11",
+        "name": "OPERABLE PART",
+        "x": 988,
+        "y": 1405,
+        "h": 7.5412071,
+        "corridor": false,
+        "points_per_foot": 18
+      },
+      {
+        "page": 11,
+        "sheet": "A-104",
+        "number": "TA8",
+        "name": "OPERABLE PART",
+        "x": 1131,
+        "y": 1411,
+        "h": 7.5412071,
+        "corridor": false,
+        "points_per_foot": 18
+      },
+      {
+        "page": 11,
+        "sheet": "A-104",
+        "number": "TA6",
+        "name": "TA9",
+        "x": 853,
+        "y": 1446,
+        "h": 7.5412071,
+        "corridor": false,
+        "points_per_foot": 18
+      },
+      {
+        "page": 11,
+        "sheet": "A-104",
+        "number": "TA5",
+        "name": "TA12",
+        "x": 370,
+        "y": 1460,
+        "h": 7.5412071,
+        "corridor": false,
+        "points_per_foot": 18
+      }
+    ],
+    "tags": [
+      {
+        "mark": "100",
+        "page": 7,
+        "sheet": "A-100",
+        "x": 666,
+        "y": 509,
+        "h": 7.7630076,
+        "door_pages": [
+          10
+        ],
+        "room": "101",
+        "room_name": "SCULLERY",
+        "room_by": "nearest_label",
+        "unsure": true,
+        "points_per_foot": 9
+      },
+      {
+        "mark": "104",
+        "page": 7,
+        "sheet": "A-100",
+        "x": 528,
+        "y": 903,
+        "h": 7.7630076,
+        "door_pages": [
+          10
+        ],
+        "room": "105",
+        "room_name": "MAINT / STOR",
+        "room_by": "nearest_label",
+        "unsure": true,
+        "points_per_foot": 9
+      },
+      {
+        "mark": "116",
+        "page": 7,
+        "sheet": "A-100",
+        "x": 1388,
+        "y": 1335,
+        "h": 7.7630076,
+        "door_pages": [
+          10
+        ],
+        "room": "126",
+        "room_name": "WOMENS",
+        "room_by": "nearest_label",
+        "unsure": true,
+        "points_per_foot": 108
+      },
+      {
+        "mark": "115",
+        "page": 7,
+        "sheet": "A-100",
+        "x": 1334,
+        "y": 1335,
+        "h": 7.7630076,
+        "door_pages": [
+          10
+        ],
+        "room": "115",
+        "room_name": "BDE HR TECH",
+        "room_by": "nearest_label",
+        "unsure": true,
+        "points_per_foot": 108
+      },
+      {
+        "mark": "119",
+        "page": 7,
+        "sheet": "A-100",
+        "x": 1589,
+        "y": 1335,
+        "h": 7.7630076,
+        "door_pages": [
+          10
+        ],
+        "room": "119",
+        "room_name": "AO/XO",
+        "room_by": "nearest_label",
+        "unsure": true,
+        "points_per_foot": 108
+      },
+      {
+        "mark": "113",
+        "page": 7,
+        "sheet": "A-100",
+        "x": 1141,
+        "y": 1335,
+        "h": 7.7630076,
+        "door_pages": [
+          10
+        ],
+        "room": "139",
+        "room_name": "CHAPLAINS OFFICE",
+        "room_by": "nearest_label",
+        "unsure": true,
+        "points_per_foot": 9
+      },
+      {
+        "mark": "101",
+        "page": 7,
+        "sheet": "A-100",
+        "x": 709,
+        "y": 540,
+        "h": 7.7630076,
+        "door_pages": [
+          10
+        ],
+        "room": "101",
+        "room_name": "SCULLERY",
+        "room_by": "nearest_label",
+        "unsure": true,
+        "points_per_foot": 9
+      },
+      {
+        "mark": "102",
+        "page": 7,
+        "sheet": "A-100",
+        "x": 709,
+        "y": 651,
+        "h": 7.7630076,
+        "door_pages": [
+          10
+        ],
+        "room": "102",
+        "room_name": "FOOD PREP",
+        "room_by": "nearest_label",
+        "unsure": true,
+        "points_per_foot": 9
+      },
+      {
+        "mark": "105",
+        "page": 7,
+        "sheet": "A-100",
+        "x": 709,
+        "y": 983,
+        "h": 7.7630076,
+        "door_pages": [
+          10
+        ],
+        "room": "104",
+        "room_name": "CORRIDOR",
+        "room_by": "nearest_label",
+        "unsure": true,
+        "points_per_foot": 9
+      },
+      {
+        "mark": "106",
+        "page": 7,
+        "sheet": "A-100",
+        "x": 709,
+        "y": 1079,
+        "h": 7.7630076,
+        "door_pages": [
+          10
+        ],
+        "room": "106",
+        "room_name": "MOTHERS CNTR",
+        "room_by": "nearest_label",
+        "unsure": true,
+        "points_per_foot": 9
+      },
+      {
+        "mark": "107",
+        "page": 7,
+        "sheet": "A-100",
+        "x": 709,
+        "y": 1169,
+        "h": 7.7630076,
+        "door_pages": [
+          10
+        ],
+        "room": "107",
+        "room_name": "MAINT. EQUIP.",
+        "room_by": "nearest_label",
+        "unsure": true,
+        "points_per_foot": 9
+      },
+      {
+        "mark": "132",
+        "page": 7,
+        "sheet": "A-100",
+        "x": 1259,
+        "y": 551,
+        "h": 7.7630076,
+        "door_pages": [
+          10
+        ],
+        "room": "133",
+        "room_name": "SUPPLY OFFICE",
+        "room_by": "nearest_label",
+        "unsure": true,
+        "points_per_foot": 108
+      },
+      {
+        "mark": "127",
+        "page": 7,
+        "sheet": "A-100",
+        "x": 1259,
+        "y": 1089,
+        "h": 7.7630076,
+        "door_pages": [
+          10
+        ],
+        "room": "128",
+        "room_name": "MECH",
+        "room_by": "nearest_label",
+        "unsure": true,
+        "points_per_foot": 108,
+        "also_on": [
+          "A-104"
+        ]
+      },
+      {
+        "mark": "103",
+        "page": 7,
+        "sheet": "A-100",
+        "x": 662,
+        "y": 780,
+        "h": 7.7630076,
+        "door_pages": [
+          10
+        ],
+        "room": "103",
+        "room_name": "FOOD STORAGE",
+        "room_by": "nearest_label",
+        "unsure": true,
+        "points_per_foot": 9
+      },
+      {
+        "mark": "108",
+        "page": 7,
+        "sheet": "A-100",
+        "x": 687,
+        "y": 1402,
+        "h": 7.7630076,
+        "door_pages": [
+          10
+        ],
+        "room": "108",
+        "room_name": "OFFICE",
+        "room_by": "nearest_label",
+        "unsure": true,
+        "points_per_foot": 9
+      },
+      {
+        "mark": "109",
+        "page": 7,
+        "sheet": "A-100",
+        "x": 687,
+        "y": 1448,
+        "h": 7.7630076,
+        "door_pages": [
+          10
+        ],
+        "room": "109",
+        "room_name": "BDE OP SGM",
+        "room_by": "nearest_label",
+        "unsure": true,
+        "points_per_foot": 9
+      },
+      {
+        "mark": "131",
+        "page": 7,
+        "sheet": "A-100",
+        "x": 1650,
+        "y": 470,
+        "h": 7.7630076,
+        "door_pages": [
+          10
+        ],
+        "room": null,
+        "room_name": null,
+        "room_by": null,
+        "points_per_foot": 108
+      },
+      {
+        "mark": "129",
+        "page": 7,
+        "sheet": "A-100",
+        "x": 1483,
+        "y": 971,
+        "h": 7.7630076,
+        "door_pages": [
+          10
+        ],
+        "room": "124",
+        "room_name": "OFFICE",
+        "room_by": "nearest_label",
+        "unsure": true,
+        "points_per_foot": 108
+      },
+      {
+        "mark": "133",
+        "page": 7,
+        "sheet": "A-100",
+        "x": 1275,
+        "y": 578,
+        "h": 7.7630076,
+        "door_pages": [
+          10
+        ],
+        "room": "133",
+        "room_name": "SUPPLY OFFICE",
+        "room_by": "nearest_label",
+        "unsure": true,
+        "points_per_foot": 108
+      },
+      {
+        "mark": "130",
+        "page": 7,
+        "sheet": "A-100",
+        "x": 1274,
+        "y": 902,
+        "h": 7.7630076,
+        "door_pages": [
+          10
+        ],
+        "room": "130",
+        "room_name": "STO",
+        "room_by": "nearest_label",
+        "unsure": true,
+        "points_per_foot": 108
+      },
+      {
+        "mark": "126",
+        "page": 7,
+        "sheet": "A-100",
+        "x": 1276,
+        "y": 1268,
+        "h": 7.7630076,
+        "door_pages": [
+          10
+        ],
+        "room": "126",
+        "room_name": "WOMENS",
+        "room_by": "nearest_label",
+        "unsure": true,
+        "points_per_foot": 108,
+        "also_on": [
+          "A-104"
+        ]
+      },
+      {
+        "mark": "141",
+        "page": 7,
+        "sheet": "A-100",
+        "x": 768,
+        "y": 1053,
+        "h": 7.7630076,
+        "door_pages": [
+          10
+        ],
+        "room": "143",
+        "room_name": "TROOP CMDR",
+        "room_by": "nearest_label",
+        "unsure": true,
+        "points_per_foot": 9
+      },
+      {
+        "mark": "143",
+        "page": 7,
+        "sheet": "A-100",
+        "x": 860,
+        "y": 1035,
+        "h": 7.7630076,
+        "door_pages": [
+          10
+        ],
+        "room": "143",
+        "room_name": "TROOP CMDR",
+        "room_by": "nearest_label",
+        "unsure": true,
+        "points_per_foot": 9
+      },
+      {
+        "mark": "136",
+        "page": 7,
+        "sheet": "A-100",
+        "x": 868,
+        "y": 1269,
+        "h": 7.7630076,
+        "door_pages": [
+          10
+        ],
+        "room": "136",
+        "room_name": "RECRUITER",
+        "room_by": "nearest_label",
+        "unsure": true,
+        "points_per_foot": 9
+      },
+      {
+        "mark": "138",
+        "page": 7,
+        "sheet": "A-100",
+        "x": 1019,
+        "y": 1272,
+        "h": 7.7630076,
+        "door_pages": [
+          10
+        ],
+        "room": "138",
+        "room_name": "MECH/MAIL ROOM",
+        "room_by": "nearest_label",
+        "unsure": true,
+        "points_per_foot": 9
+      },
+      {
+        "mark": "139",
+        "page": 7,
+        "sheet": "A-100",
+        "x": 1196,
+        "y": 1223,
+        "h": 7.7630076,
+        "door_pages": [
+          10
+        ],
+        "room": "139",
+        "room_name": "CHAPLAINS OFFICE",
+        "room_by": "nearest_label",
+        "unsure": true,
+        "points_per_foot": 108,
+        "also_on": [
+          "A-104"
+        ]
+      },
+      {
+        "mark": "140",
+        "page": 7,
+        "sheet": "A-100",
+        "x": 1196,
+        "y": 1050,
+        "h": 7.7630076,
+        "door_pages": [
+          10
+        ],
+        "room": "128",
+        "room_name": "MECH",
+        "room_by": "nearest_label",
+        "unsure": true,
+        "points_per_foot": 108,
+        "also_on": [
+          "A-104"
+        ]
+      },
+      {
+        "mark": "142",
+        "page": 7,
+        "sheet": "A-100",
+        "x": 979,
+        "y": 1013,
+        "h": 7.7630076,
+        "door_pages": [
+          10
+        ],
+        "room": "142",
+        "room_name": "LEGAL",
+        "room_by": "nearest_label",
+        "unsure": true,
+        "points_per_foot": 9
+      },
+      {
+        "mark": "137",
+        "page": 7,
+        "sheet": "A-100",
+        "x": 937,
+        "y": 1205,
+        "h": 7.7630076,
+        "door_pages": [
+          10
+        ],
+        "room": "137",
+        "room_name": "STORAGE",
+        "room_by": "nearest_label",
+        "unsure": true,
+        "points_per_foot": 9
+      },
+      {
+        "mark": "114",
+        "page": 7,
+        "sheet": "A-100",
+        "x": 1241,
+        "y": 1445,
+        "h": 7.7630076,
+        "door_pages": [
+          10
+        ],
+        "room": "114",
+        "room_name": "BDE S1 OFFICER",
+        "room_by": "nearest_label",
+        "unsure": true,
+        "points_per_foot": 108
+      },
+      {
+        "mark": "117",
+        "page": 7,
+        "sheet": "A-100",
+        "x": 1434,
+        "y": 1445,
+        "h": 7.7630076,
+        "door_pages": [
+          10
+        ],
+        "room": "116",
+        "room_name": "CLASSROOM",
+        "room_by": "nearest_label",
+        "unsure": true,
+        "points_per_foot": 108
+      },
+      {
+        "mark": "118",
+        "page": 7,
+        "sheet": "A-100",
+        "x": 1473,
+        "y": 1445,
+        "h": 7.7630076,
+        "door_pages": [
+          10
+        ],
+        "room": "116",
+        "room_name": "CLASSROOM",
+        "room_by": "nearest_label",
+        "unsure": true,
+        "points_per_foot": 108
+      },
+      {
+        "mark": "122",
+        "page": 7,
+        "sheet": "A-100",
+        "x": 1662,
+        "y": 1149,
+        "h": 7.7630076,
+        "door_pages": [
+          10
+        ],
+        "room": "122",
+        "room_name": "STO.",
+        "room_by": "nearest_label",
+        "unsure": true,
+        "points_per_foot": 108
+      },
+      {
+        "mark": "123",
+        "page": 7,
+        "sheet": "A-100",
+        "x": 1501,
+        "y": 1149,
+        "h": 7.7630076,
+        "door_pages": [
+          10
+        ],
+        "room": "121",
+        "room_name": "MECH",
+        "room_by": "nearest_label",
+        "unsure": true,
+        "points_per_foot": 108,
+        "also_on": [
+          "A-101",
+          "A-104"
+        ]
+      },
+      {
+        "mark": "124",
+        "page": 7,
+        "sheet": "A-100",
+        "x": 1569,
+        "y": 916,
+        "h": 7.7630076,
+        "door_pages": [
+          10
+        ],
+        "room": "124",
+        "room_name": "OFFICE",
+        "room_by": "nearest_label",
+        "unsure": true,
+        "points_per_foot": 108
+      },
+      {
+        "mark": "110",
+        "page": 7,
+        "sheet": "A-100",
+        "x": 881,
+        "y": 1352,
+        "h": 7.7630076,
+        "door_pages": [
+          10
+        ],
+        "room": "112",
+        "room_name": "LOBBY",
+        "room_by": "nearest_label",
+        "unsure": true,
+        "points_per_foot": 9
+      },
+      {
+        "mark": "128",
+        "page": 7,
+        "sheet": "A-100",
+        "x": 1274,
+        "y": 1062,
+        "h": 7.7630076,
+        "door_pages": [
+          10
+        ],
+        "room": "128",
+        "room_name": "MECH",
+        "room_by": "nearest_label",
+        "unsure": true,
+        "points_per_foot": 108,
+        "also_on": [
+          "A-104"
+        ]
+      },
+      {
+        "mark": "121",
+        "page": 7,
+        "sheet": "A-100",
+        "x": 1532,
+        "y": 1167,
+        "h": 7.7630076,
+        "door_pages": [
+          10
+        ],
+        "room": "121",
+        "room_name": "MECH",
+        "room_by": "nearest_label",
+        "unsure": true,
+        "points_per_foot": 108,
+        "also_on": [
+          "A-104"
+        ]
+      },
+      {
+        "mark": "120",
+        "page": 7,
+        "sheet": "A-100",
+        "x": 1532,
+        "y": 1209,
+        "h": 7.7630076,
+        "door_pages": [
+          10
+        ],
+        "room": "121",
+        "room_name": "MECH",
+        "room_by": "nearest_label",
+        "unsure": true,
+        "points_per_foot": 108,
+        "also_on": [
+          "A-104"
+        ]
+      },
+      {
+        "mark": "125",
+        "page": 7,
+        "sheet": "A-100",
+        "x": 1607,
+        "y": 923,
+        "h": 7.7630076,
+        "door_pages": [
+          10
+        ],
+        "room": "125",
+        "room_name": "OFFICE",
+        "room_by": "nearest_label",
+        "unsure": true,
+        "points_per_foot": 108
+      }
+    ],
+    "unmatched_tags": [],
+    "marks_not_on_plan": [
+      {
+        "mark": "B2",
+        "page": 10
+      }
+    ],
+    "counts": {
+      "plan_sheets": 3,
+      "rooms": 151,
+      "corridors": 7,
+      "tags": 40,
+      "unmatched_tags": 0,
+      "schedule_marks": 41,
+      "marks_not_on_plan": 1
+    }
+  },
+  "truth": {
+    "tier": "unread",
+    "readers": {
+      "a": {
+        "doors": 0,
+        "sets": 0,
+        "items": 0,
+        "name": "production text layer (weyland-subx-worker/src/lib/text-layer-read.js)"
+      },
+      "b": {
+        "doors": 0,
+        "sets": 0,
+        "items": 0,
+        "name": "geometry first (tools/accuracy/truth/reader_b.mjs)",
+        "tables": 0
+      }
+    },
+    "agreement": {
+      "doors": {
+        "rows": 0,
+        "agreed": 0,
+        "disputed": 0,
+        "only_a": 0,
+        "only_b": 0,
+        "fields": {},
+        "agreement_rate": null
+      },
+      "items": {
+        "rows": 0,
+        "agreed": 0,
+        "disputed": 0,
+        "only_a": 0,
+        "only_b": 0,
+        "fields": {},
+        "agreement_rate": null
+      },
+      "sets": {
+        "sets": 0,
+        "agreed": 0
+      }
+    },
+    "marks_on_plan": {
+      "applicable": false,
+      "reason": "no door schedule rows"
+    }
+  }
+}

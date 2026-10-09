@@ -1,0 +1,50 @@
+{
+  "node": "v26.3.0",
+  "platform": "macOS-26.5-arm64-arm-64bit-Mach-O",
+  "reader_a_counts_unchanged": true,
+  "reader_b_differences": [
+    {
+      "sha16": "7478006f7fd5b43c",
+      "committed_B_doors": 211,
+      "rerun_B_doors": 0,
+      "committed_generated_at": "2026-10-09T10:47:17.240Z",
+      "rerun_generated_at": "2026-10-09T17:05:38.339Z"
+    },
+    {
+      "sha16": "f97e99f88a931e74",
+      "committed_B_doors": 210,
+      "rerun_B_doors": 0,
+      "committed_generated_at": "2026-10-09T10:49:49.994Z",
+      "rerun_generated_at": "2026-10-09T17:05:52.050Z"
+    },
+    {
+      "sha16": "e3d0cc1bc22fd824",
+      "committed_B_doors": 22,
+      "rerun_B_doors": 0,
+      "committed_generated_at": "2026-10-09T10:49:11.800Z",
+      "rerun_generated_at": "2026-10-09T17:05:45.330Z"
+    },
+    {
+      "sha16": "89236ffa156fbaf5",
+      "committed_B_doors": 29,
+      "rerun_B_doors": 0,
+      "committed_generated_at": "2026-10-09T10:47:30.789Z",
+      "rerun_generated_at": "2026-10-09T17:05:40.362Z"
+    },
+    {
+      "sha16": "977cec6301f40433",
+      "committed_B_doors": 3,
+      "rerun_B_doors": 0,
+      "committed_generated_at": "2026-10-09T10:47:51.357Z",
+      "rerun_generated_at": "2026-10-09T17:05:42.123Z"
+    },
+    {
+      "sha16": "2b7024ad75f57ddf",
+      "committed_B_doors": 4,
+      "rerun_B_doors": 0,
+      "committed_generated_at": "2026-10-09T10:45:33.633Z",
+      "rerun_generated_at": "2026-10-09T17:05:29.052Z"
+    }
+  ],
+  "interpretation": "Prior B counts did not reproduce in this checkout. No cause established; do not count the smaller queue as an accuracy improvement."
+}
