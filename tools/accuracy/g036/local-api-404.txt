@@ -1,0 +1,4 @@
+FAIL 7478006f7fd5b43c: the set opens and its doors are built  [Built 10 doors from SubX's sample sheet A9.01.]
+FAIL 192a16af8f31ae0c: the set opens and its doors are built  [Built 10 doors from SubX's sample sheet A9.01.]
+FAIL e3d0cc1bc22fd824: the set opens and its doors are built  [Built 10 doors from SubX's sample sheet A9.01.]
+0 passed, 3 failed

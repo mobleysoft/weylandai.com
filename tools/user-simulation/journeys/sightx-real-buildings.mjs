@@ -22,10 +22,13 @@ await J.run(async () => {
   for (const set of SETS) {
     const page = await J.page(ctx);
     await page.goto(BASE + "/sightx/?set=" + set + "&journey=" + J.id + "-" + J.suffix, { waitUntil: "load", timeout: 60000 });
-    const built = await page.waitForFunction(() => /Built \d+ doors?/.test((document.getElementById("sx-status") || {}).textContent || ""), null, { timeout: 60000 }).then(() => true, () => false);
+    // g036: the status must name this set: when the set fails to load the page falls back to the
+    // sample building, whose "Built N doors" alone would pass.
+    const built = await page.waitForFunction(() => { const t = (document.getElementById("sx-status") || {}).textContent || ""; return /Built \d+ doors?/.test(t) && /the schedule rows of /.test(t); }, null, { timeout: 60000 }).then(() => true, () => false);
     J.check(set + ": the set opens and its doors are built", built, await page.textContent("#sx-status").catch(() => ""));
     if (!built) { await page.close(); continue; }
-    const api = await page.evaluate(async (s) => (await (await fetch("/api/sightx/sets/" + s)).json()).model, set);
+    const api = await J.api(page, "/api/sightx/sets/" + set, set + ": the set's data answers", { require: ["model.doors", "model.set.rows", "model.layout"], pick: "model" });
+    if (!api) { await page.close(); continue; } // g036: an unexpected answer is a failed check, not a crash
     const counts = await page.evaluate(() => window.__sxCounts || null);
     const doorRows = api.doors.length, rows = api.set.rows, onPlan = api.doors.filter((d) => d.plan).length;
     J.check(set + ": one card per schedule row (door cards + not-a-door-row cards = rows in the data)", !!counts && counts.door_cards + counts.row_cards === rows && counts.door_cards === doorRows, { counts, rows, door_rows: doorRows });

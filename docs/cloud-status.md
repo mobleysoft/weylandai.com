@@ -5,6 +5,7 @@ Written by the cloud session, 2026-10-09 (UTC). Every number below comes from a 
 
 ## Cloud goals (Mobley list)
 
+- g036 in review (21:32Z): journeys fail cleanly on an unexpected API answer: apiAnswer() + Journey.api() in journey-kit (named failed check with status, content type and body; returns null, the journey goes on), run() names the crashing journey line; sightx-real-buildings uses it and its set-opens check no longer passes on the sample fallback. Test api-answer.test.mjs 6/6; local 404 run fails cleanly, healthy run 24/24 (tools/accuracy/g036/README.md).
 - g028 in review (2026-10-09T18:10Z): SightX opens the three best real harvested sets at /sightx/?set=<sha16> (R2502 152 door rows / 150 tagged, T2507 40 / 40, T2504 18 / 18), each door at its tag with the schedule row it came from; journey sightx-real-buildings 3 local passes 21/21; evidence tools/accuracy/g028/README.md. Needs: deploy of weyland-sightx-worker, then the Mac's 3 GPU passes.
 - g032 in review (18:24Z): PropX PASS and HuntX PASS on rerunnable audits (BidX and CloseX also PASS; CloseX harness fixed for the PDF's Room field); offer sentence in index.html restored to the full list. MarketX FAIL stays open (Chicago companies CSV order; SF publishes no GC or owner). Needs: merge and the Pages deploy of index.html.
 
