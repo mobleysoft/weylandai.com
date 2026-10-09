@@ -76,6 +76,7 @@ import {
   writeDoorScheduleEntries,
 } from "./hardware-extraction-vision-dispatch.js";
 import { runGridInBrowser } from "./browser-grid-extraction.js";
+import { readPageFromTextLayer } from "./text-layer-read.js";
 
 export async function extractHardwareSchedule(pdfBuffer, env2, { pageNumber } = {}) {
   const { extractHardwarePage } = await import("./schedule-input.js");
@@ -440,6 +441,19 @@ export async function runEmbeddedGofaineatExtraction(scheduleType, sessionId, te
   // same tab when the chosen one finds no table of its kind, and the session
   // is re-typed to what the page actually is. A continuation call
   // (startRow > 0) belongs to an OCR-worker run already in progress.
+  // 2026-10-09: the page's own text first, in this Worker (lib/text-layer-read.js). Rockford's
+  // 08 71 00 pages died after 73 s waiting on a browser launch while their text reads in ~0.1 s.
+  // A page with text but no schedule in it is answered at once too, unless its text is sparse
+  // (a scan with a stamp or an OCR'd overlay): that one still goes to the browser's OCR.
+  if (startRow === 0 && (scheduleType === "door_schedule" || scheduleType === "hardware_schedule")) {
+    const other = scheduleType === "door_schedule" ? "hardware_schedule" : "door_schedule";
+    let tl = null;
+    try { tl = await readPageFromTextLayer(buf, pageNumber, scheduleType, { alsoTry: other }); } catch (e) { console.warn("[Embedded Router] text-layer read failed for " + sessionId + " p" + pageNumber + ": " + (e && e.message)); }
+    const words = tl && tl.result && tl.result.metadata ? tl.result.metadata.text_words || 0 : 0;
+    if (tl && (!tl.empty || words >= 60 || !env2.BROWSER)) {
+      return await persistBrowserGridResult(tl, scheduleType, sessionId, tenantId, pageNumber, totalPages, env2, { explicit: !!opts.explicit });
+    }
+  }
   let browserProblem = null;
   if (env2.BROWSER && startRow === 0 && (scheduleType === "door_schedule" || scheduleType === "hardware_schedule")) {
     const other = scheduleType === "door_schedule" ? "hardware_schedule" : "door_schedule";
@@ -541,7 +555,7 @@ function ocrWorkerFailureText(e) {
 export async function persistBrowserGridResult(br, requestedType, sessionId, tenantId, pageNumber, totalPages, env2, opts = {}) {
   const actualType = br.schedule_type || requestedType;
   const result = br.result || {};
-  const md = { ...(result.metadata || {}), browser_ms: br.ms };
+  const md = { ...(result.metadata || {}), read_ms: br.ms, read_source: br.source || "browser", ...(br.source === "text_layer" ? {} : { browser_ms: br.ms }) };
   if (br.empty) {
     const tried = (br.tried || [requestedType]).map((t) => t.replace("_", " ")).join(" or a ");
     const hasText = md.text_words > 0 || md.extraction_mode === "text_layer";
