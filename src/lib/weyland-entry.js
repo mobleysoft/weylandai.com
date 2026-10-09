@@ -264,7 +264,9 @@ export function createWeylandWorker({ monolith }) {
               headers: {
                 "Content-Type": edgeResp.headers.get("Content-Type") || "text/html; charset=utf-8",
                 "X-Cache": edgeResp.headers.get("X-Cache") || "",
-                "X-Served-By": "mascom-edge-via-weylandai-com-worker"
+                "X-Served-By": "mascom-edge-via-weylandai-com-worker",
+                // No edge-injected analytics beacon (a third-party request, S0 2026-10-09).
+                "Cache-Control": isHome ? "public, max-age=60, no-transform" : (edgeResp.headers.get("Cache-Control") || "public, max-age=300")
               }
             });
           }
