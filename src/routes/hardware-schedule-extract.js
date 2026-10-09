@@ -1,3 +1,4 @@
+import { persistHardwareExtractionJob } from "../lib/hardware-extraction-job.js";
 import { resolveHardwareScheduleTenant } from "../../weyland-subx-worker/src/lib/hardware-schedule-tenant.js";
 // src/routes/hardware-schedule-extract.js
 //
@@ -87,6 +88,8 @@ router.post("/api/hardware-schedule/extract", async (request2, env2) => {
   const { error: error4, user } = await authenticate(request2, env2);
   if (error4)
     return error4;
+  if (!user?.userId)
+    return jsonResponse3({ success: false, error: "Sign in to upload your own schedule.", code: "SIGN_IN_REQUIRED" }, 401);
   try {
     const formData = await request2.formData();
     const file = formData.get("file");
@@ -98,45 +101,12 @@ router.post("/api/hardware-schedule/extract", async (request2, env2) => {
     if (!file.type.includes("pdf") && !file.name.endsWith(".pdf")) {
       return jsonResponse3({ error: "Only PDF files are supported" }, 400);
     }
-    const jobId = crypto.randomUUID();
     const userId = user.userId;
-    console.log(`[Hardware Extract] Starting extraction job ${jobId} for user ${userId}`);
     const fileBuffer = await file.arrayBuffer();
     const selectedPage = formData.get("page_number");
     const extractionResult = await extractHardwareSchedule(fileBuffer, env2, { pageNumber: selectedPage === null || selectedPage === "" ? undefined : Number(selectedPage) });
-    const fileBufferKey = `hardware-schedules/${userId}/${jobId}`;
-    await env2.CACHE.put(fileBufferKey, fileBuffer, {
-      expirationTtl: 86400 * 7
-      // 7 days
-    });
-    if (env2.UPLOADS) {
-      await env2.UPLOADS.put(fileBufferKey, fileBuffer);
-      console.log(`[Hardware Extract] PDF stored in R2: ${fileBufferKey}`);
-    }
-    console.log(`[Hardware Extract] Extraction complete: ${extractionResult.hardware_groups.length} sets found`);
-    const dbResult = await storeHardwareExtraction(extractionResult, env2, userId, { pageNumber: extractionResult.page_number });
-    await env2.DB.prepare(`
-      INSERT INTO hardware_extraction_jobs
-      (id, user_id, submittal_id, project_name, filename, file_buffer_key,
-       total_sets, sets_approved, sets_rejected, status, created_at)
-      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-    `).bind(
-      jobId,
-      userId,
-      submittalId,
-      projectName,
-      file.name,
-      fileBufferKey,
-      extractionResult.hardware_groups.length,
-      0,
-      // sets_approved
-      0,
-      // sets_rejected
-      "pending_review",
-      (/* @__PURE__ */ new Date()).toISOString()
-    ).run().catch((err) => {
-      console.warn("[Hardware Extract] Could not create job record (table may not exist):", err.message);
-    });
+    const { jobId, database } = await persistHardwareExtractionJob(env2, userId,
+      { name: file.name, buffer: fileBuffer }, { projectName, submittalId }, extractionResult, storeHardwareExtraction);
     return jsonResponse3({
       jobId,
       projectName,
@@ -149,10 +119,7 @@ router.post("/api/hardware-schedule/extract", async (request2, env2) => {
           component_count: s.components.length
         }))
       },
-      database: {
-        sets_inserted: dbResult.sets_inserted ?? dbResult.groups_inserted,
-        components_inserted: dbResult.components_inserted
-      },
+      database,
       usage: extractionResult.usage,
       next_step: "Review each hardware group at /api/hardware-schedule/review/:groupNumber"
     }, 201);
@@ -161,9 +128,10 @@ router.post("/api/hardware-schedule/extract", async (request2, env2) => {
     return jsonResponse3({
       error: "Failed to extract hardware schedule",
       details: error5.message,
-      ...(error5.name === "EmbeddedHardwareReadError" ? {
+      ...(["EmbeddedHardwareReadError", "HardwareJobPersistenceError"].includes(error5.name) ? {
         code: error5.code, retryable: error5.retryable,
-        ...(error5.partial ? { partial: true } : {})
+        ...(error5.partial ? { partial: true } : {}),
+        ...(error5.jobId ? { jobId: error5.jobId } : {})
       } : {})
     }, error5.status || 500);
   }

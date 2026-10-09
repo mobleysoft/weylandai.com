@@ -1,11 +1,11 @@
 # Cloud status: the $100 first submittal on a full-size bid set, and every tool on sale
 - Next list from the Mac (2026-10-09 19:45 EDT): g041 S1 tag matching rule for suffixed marks (T2507 from 0 to 46 placed, no new false matches on R2502); g040 code sign-in completed from a real inbox we control, observed end to end, no reveal key; g042 truth_run with the merged reader over the top 50 SightX candidates from R2, ten hand-counted spot checks, candidates re-ranked. Same rules: PRs and this file only, blockers here, never a message to John. Accepted since the last list: g035 (the Mac is re-running the ten-set journey three times now), g030 merged with the OCC refinements (main 16e3047), g019 done on production, g034 closed, weyland-subx-worker 135 of 135.
 
-## Current release review — October 9, 23:55 UTC
+## Current production review — October 9, 23:46 UTC
 
 This review supersedes the historical readiness and open-item summaries below.
-The embedded cascade e1 has passed its local release gates; its new production
-acceptance is pending deployment.
+The embedded cascade e1 is merged and deployed on SubX and the monolith. Its
+fresh public OCC acceptance passes, including saved evidence and cleanup.
 
 - The final merged browser reader returns **42 exact unique OCC rows and
   252/252 scored fields**, and **48 exact unique rows and 336/336 fields** on
@@ -18,14 +18,23 @@ acceptance is pending deployment.
   capped at 16,000 UTF-8 bytes per row through saving and retrieval. The offline
   evaluator uses all labeled dimensions and explicit cropped-page mappings.
   **The 0.8 review threshold is unchanged; zero OCC size pairs clear it.**
+  Fresh production OCC acceptance also returns **252/252 fields**, with all 42
+  saved evidence envelopes valid (largest 8,221 bytes) and zero owned records
+  remaining after cleanup. Both public assets match the reviewed hashes. See
+  [the production receipt](embedded-cascade-production-2026-10-09.json).
   No new OCR or NEAT model was trained. See [the evidence contract](../tools/accuracy/CASCADE_EVIDENCE.md)
   and [the local receipt](embedded-cascade-2026-10-09.json).
 - The legacy hardware upload now uses the existing PDF text/browser readers,
   rejects empty and partial reads before persistence, and saves the selected
   page as its provenance. Real Rockford pages 17–23 yield 14 groups and 110
   items without language-model or OCR-worker bindings. The merged worker suite
-  passes 167/167, DOM checks 8/8, and the newly merged frozen/current scan
-  regressions 7/7. The monolith builds successfully.
+  passes 179/179 before the final missing-write-metadata hardening; the final
+  focused persistence/storage/SQLite checks pass 49/49, DOM checks 8/8, and
+  frozen/current scan regressions 7/7. The monolith builds successfully.
+  A production preflight found the legacy jobs table absent. The reviewed
+  additive migration and failure-tracked job repair await production application
+  and acceptance; no diagnostic upload occurred. See
+  [the persistence receipt](legacy-hardware-extraction-2026-10-09.json).
 - **The missing Glynn-Johnson 90S sheet is closed in production.** The primary
   catalog was indexed and its PDF verified in R2. Fresh packet acceptance
   passes 27/27: 37/37 distinct catalog items cited, zero unmatched items,
@@ -37,8 +46,11 @@ acceptance is pending deployment.
   failed: stale Takeoff labels, a missing reset test key, a transient overlay
   load wait and a database setup failure. The affected repeats now pass:
   Takeoff 13/13, actual password reset 14/14 three times, phone journeys
-  24/24 three times. The corrected Finder reload gate has two accepted 47/47
-  runs; its third is running. It verifies the actual restored search controls.
+  24/24 three times, and the corrected Finder reload gate 47/47 three times.
+  These six phone/overlay repeats pass **213/213 checks** and verify the actual
+  restored search controls. Cleanup removes 402 owned rows, with zero owned
+  entities remaining. The two intervening selector-mismatch diagnostic runs
+  remain failed. See [the repeat receipt](phone-overlay-2026-10-09.json).
 - MarketX passes all six metro audits. SightX passes all ten harvested model
   checks and three production Metal GPU passes; two sets use disclosed
   schematics. MeetingX's public media acceptance passes 36/36, including TURN,

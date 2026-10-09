@@ -1,3 +1,4 @@
+import { readFileSync } from "node:fs";
 import { pdfFixture, PNG, embeddedEnv, withEmbeddedModel } from "../test-support/ocr-fixtures.mjs";
 import { test } from "node:test";
 import assert from "node:assert/strict";
@@ -62,10 +63,13 @@ function withMockFetch(impl, fn) {
   return fn().finally(() => { globalThis.fetch = originalFetch; });
 }
 
-test("extractHardwareSchedule: single PDF page uses existing OCR and in-ecosystem structuring", async () => {
- const pdf=await pdfFixture();const ocr=[],models=[];
- const result=await withEmbeddedModel({hardware_groups:[{group_number:"1",components:[{component_type:"LOCK",quantity:1,model_number:"L9050"}]}]},()=>extractHardwareSchedule(pdf,embeddedEnv(null,ocr)),models);
- assert.equal(result.hardware_groups.length,1);assert.equal(result.hardware_groups[0].components[0].model_number,"L9050");assert.equal(result.metadata.extraction_mode,"embedded_gofaineat");assert.equal(ocr.length,3);assert.equal(models.length,1);
+test("extractHardwareSchedule: real selected page uses embedded text reading without model services", async () => {
+ const pdf=readFileSync(new URL('../../tools/corpus/door-schedules/f0e863d88ea688ff.pdf',import.meta.url));
+ const forbidden=()=>assert.fail('model or OCR-worker must not be called');
+ const result=await extractHardwareSchedule(pdf,{OCR_SERVICE:{fetch:forbidden},QWEN:{fetch:forbidden},JITAGI:{fetch:forbidden}},{pageNumber:17});
+ assert.equal(result.page_number,17);assert.equal(result.hardware_groups.length,1);
+ assert.equal(result.hardware_groups[0].group_number,'01 RR');assert.equal(result.hardware_groups[0].components.length,7);
+ assert.equal(result.metadata.read_source,'text_layer');assert.deepEqual(result.usage,{input_tokens:0,output_tokens:0});
 });
 
 test("storeHardwareExtraction: real happy path inserts a new hardware set and its components", async () => {
@@ -165,9 +169,12 @@ test("extractWithImageMode: real renderer PNG enters embedded OCR and retains so
  assert.equal(result.total_pages,3);assert.equal(result.metadata.extraction_mode,"image_render");assert.equal(ocr.length,1);
 });
 
-test("extractWithDirectPdfMode: compatibility entry uses the selected PDF page through OCR", async () => {
- const pdf=await pdfFixture(3),ocr=[];const result=await withEmbeddedModel({hardware_groups:[]},()=>extractWithDirectPdfMode(pdf,2,embeddedEnv(null,ocr)));
- assert.equal(result.page_number,2);assert.equal(result.total_pages,3);assert.equal(result.metadata.extraction_mode,"embedded_gofaineat");assert.ok(ocr.every(x=>x.headers.get('X-Page-Number')==='2'));
+test("extractWithDirectPdfMode: compatibility entry preserves the real selected page without model services", async () => {
+ const pdf=readFileSync(new URL('../../tools/corpus/door-schedules/f0e863d88ea688ff.pdf',import.meta.url));
+ const forbidden=()=>assert.fail('model or OCR-worker must not be called');
+ const result=await extractWithDirectPdfMode(pdf,17,{OCR_SERVICE:{fetch:forbidden},QWEN:{fetch:forbidden},JITAGI:{fetch:forbidden}});
+ assert.equal(result.page_number,17);assert.ok(result.total_pages>=23);assert.equal(result.metadata.read_source,'text_layer');
+ assert.equal(result.hardware_groups[0].components.length,7);assert.deepEqual(result.usage,{input_tokens:0,output_tokens:0});
 });
 
 test("extractFromPageImage: a real PNG uses the embedded route with resolved legacy contract", async () => {
