@@ -283,3 +283,19 @@ from 7e1bd98: upload-without-account-to-first-read 22 of 22, schedule-plus-spec-
 estimator-schedule-to-packet 18 of 18, three passes each. PropX and HuntX audits PASS (PR 95, cloud), MarketX FAIL
 recorded; the offer names all seven products again. The scanned-sheet journey is red on purpose: 12 of 16, the browser
 scan path reads 46 unique marks of 48 (111 and 211 missing, 214 twice), which is g019 and review finding F3.
+
+## State at 19:40 EDT, 2026-10-09 (number two, after a four-hour gap)
+
+- While the Mac was away: the cloud session shipped PRs 94, 95 and the AuthFor PR 1 (merged and deployed by the Mac),
+  then configured AuthFor provisioning in production (docs/authfor-operator-production-2026-10-09.json) and wrote the
+  production review at the top of docs/cloud-status.md; Codex cloud merged PRs 103 and 104 (MeetingX acceptance, OCC
+  reader refinements). mobley sitrep (mobley-kernel) now reconstructs such a gap in one command; docs/RESUME.md there
+  is the procedure.
+- Scanned sheets read in production (g019 done): the review's F1 to F4 fixes landed; the browser check reads the scan
+  at 48 of 48 rows and 336 of 336 fields; subx-scanned-sheet 16 of 16 on four consecutive clean passes; the Estimator
+  path 18 of 18 three times; subx-upload-to-submittal 14 of 14 three times.
+- The two independent reader improvements (the OCC grid-row grouping from PR 104 and the real-set fixes from g030)
+  collided in schedule-text-layer.mjs and were merged with both bars held: ARCH D 48 of 48 and 336 of 336; R2502 211
+  rows, T2507 46, T2504 22 (0, 0 and 0 this morning). weyland-subx-worker: 135 of 135 tests on main.
+- Disk: the data volume was at 1.5 GB free; the home directory's git store held 9.6 GB of unreachable objects (now
+  17 MB); 16 GB free after the cleanup; mobley tidy is the policy, reported by the sitrep.
