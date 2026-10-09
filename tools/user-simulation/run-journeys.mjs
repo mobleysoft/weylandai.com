@@ -100,6 +100,26 @@ const summary = ids.map((id) => {
   console.log(id.padEnd(27) + (green + "/" + mine.length).padEnd(13) + failing.join(" | "));
   return { id, runs: mine.length, green, failing };
 });
-writeFileSync(path.join(OUT, "summary.json"), JSON.stringify({ started: stamp, passes: PASSES, summary, rows }, null, 2));
+// Truth at scale (tools/accuracy/truth_report.mjs): the reading's accuracy per truth tier, never pooled
+// (exact = synthetic, audited = read by a person, agreed = two readers agree, oracle-checked, unread).
+let truth = null;
+try {
+  const acc = path.join(REPO, "tools/accuracy");
+  const last = readdirSync(acc).filter((f) => /^truth_report_.*\.json$/.test(f)).sort().pop();
+  if (last) {
+    const t = JSON.parse(readFileSync(path.join(acc, last), "utf8"));
+    truth = { report: "tools/accuracy/" + last, records: t.records, queue: t.queue, tiers: {}, calibration: t.calibration || null };
+    console.log("\nTruth tiers (" + last + "): " + t.records + " PDFs, disagreement queue " + t.queue);
+    for (const [tier, v] of Object.entries(t.tiers || {})) {
+      truth.tiers[tier] = { pdfs: v.pdfs, rows_agreed: v.rows_agreed, rows_total: v.rows_total, agreement: v.rows_total ? +(v.rows_agreed / v.rows_total).toFixed(3) : null, queue: v.queue, families: v.families };
+      console.log("  " + tier.padEnd(15) + String(v.pdfs).padStart(3) + " PDFs  rows agreed " + v.rows_agreed + "/" + v.rows_total + "  queue " + v.queue);
+      for (const [fam, f] of Object.entries(v.families || {})) {
+        const orc = Object.entries(f.orc || {}).map(([k, o]) => k + " " + o.pass + "/" + o.total).join(", ");
+        console.log("    " + fam.padEnd(28) + " agreed " + f.agreed + "/" + f.total + (orc ? "  oracles " + orc : ""));
+      }
+    }
+  }
+} catch (e) { console.log("truth report unreadable: " + e.message); }
+writeFileSync(path.join(OUT, "summary.json"), JSON.stringify({ started: stamp, passes: PASSES, summary, truth, rows }, null, 2));
 console.log("\nresults: " + path.relative(REPO, OUT));
 process.exit(rows.every((r) => r.green) ? 0 : 1);

@@ -70,7 +70,7 @@ export function struckShare(line, bars) {
   return total ? struck / total : 0;
 }
 
-const hardwareResult = (hg, tl, t0) => {
+export const hardwareResult = (hg, tl, t0) => {
   const groups = hg.hardware_groups.filter((g) => g.components.length || g.assigned_doors.length);
   return {
     hardware_groups: groups.map((g) => ({
@@ -82,7 +82,7 @@ const hardwareResult = (hg, tl, t0) => {
     metadata: { extraction_mode: "text_layer", extraction_route: "text_layer_server", page_isolated: false, rotation_applied: tl.rotation, table_count: groups.length, text_words: tl.word_count, struck_lines_left_out: tl.struck || 0, total_time_ms: Date.now() - t0 },
   };
 };
-const doorResult = (ds, tl, t0) => ({
+export const doorResult = (ds, tl, t0) => ({
   doors: ds.doors,
   extraction_confidence: 0.98,
   metadata: {

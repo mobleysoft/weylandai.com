@@ -1,0 +1,687 @@
+{
+ "sha16": "fb3e0a8137da6cdf",
+ "sha256": "fb3e0a8137da6cdf789eb29c85ffdd8343ab6d07f7d6d47a960359111529be82",
+ "file": "occ-a-801-pg4.pdf",
+ "bytes": 1148367,
+ "family": "unknown",
+ "source": "files",
+ "label": null,
+ "source_url": null,
+ "page_count": 1,
+ "text_layer": {
+  "pages_with_text": 0,
+  "pages": 1
+ },
+ "ocr": {
+  "dpi": 600,
+  "pages": [
+   {
+    "page": 1,
+    "words": 2325,
+    "rotation": 90,
+    "skew_deg": 0,
+    "rules": {
+     "h": 162,
+     "v": 430
+    },
+    "ms": 69247
+   }
+  ]
+ },
+ "pages": {
+  "door_candidates": 1,
+  "hardware_candidates": 0,
+  "door_schedule_pages": [],
+  "hardware_pages": []
+ },
+ "readers": {
+  "a": {
+   "doors": 0,
+   "sets": 0,
+   "items": 0,
+   "name": "production text layer (weyland-subx-worker/src/lib/text-layer-read.js)"
+  },
+  "b": {
+   "doors": 0,
+   "sets": 0,
+   "items": 0,
+   "name": "geometry first (tools/accuracy/truth/reader_b.mjs)",
+   "tables": 0
+  }
+ },
+ "rows_agreed": 0,
+ "rows_disputed": 0,
+ "rows_total": 0,
+ "agreement_rate": null,
+ "agreement": {
+  "doors": {
+   "rows": 0,
+   "agreed": 0,
+   "disputed": 0,
+   "only_a": 0,
+   "only_b": 0,
+   "fields": {},
+   "agreement_rate": null
+  },
+  "items": {
+   "rows": 0,
+   "agreed": 0,
+   "disputed": 0,
+   "only_a": 0,
+   "only_b": 0,
+   "fields": {},
+   "agreement_rate": null
+  },
+  "sets": {
+   "sets": 0,
+   "agreed": 0
+  }
+ },
+ "triage_class": "none",
+ "triage_from": "inferred (S=false H=false plan sheets=0)",
+ "oracles": {
+  "marks_on_plan": {
+   "applicable": false,
+   "reason": "not for class none"
+  },
+  "sets_exist": {
+   "applicable": false,
+   "reason": "not for class none"
+  },
+  "set_door_lists": {
+   "applicable": false,
+   "reason": "not for class none"
+  },
+  "types_in_legend": {
+   "applicable": false,
+   "reason": "not for class none"
+  },
+  "sizes_and_marks": {
+   "applicable": false,
+   "reason": "not for class none"
+  }
+ },
+ "calibration": [
+  {
+   "expected": "occ-a-801-door-schedule.json",
+   "kind": "doors",
+   "reader_a": {
+    "expected_rows": 42,
+    "rows_found": 0,
+    "rows_fully_right": 0,
+    "fields_right": 0,
+    "fields_total": 0,
+    "per_field": {},
+    "extra_rows": 0,
+    "wrong": [
+     {
+      "key": "053",
+      "page": 1,
+      "field": "(row)",
+      "expected": "row",
+      "read": null
+     },
+     {
+      "key": "131",
+      "page": 1,
+      "field": "(row)",
+      "expected": "row",
+      "read": null
+     },
+     {
+      "key": "133",
+      "page": 1,
+      "field": "(row)",
+      "expected": "row",
+      "read": null
+     },
+     {
+      "key": "134",
+      "page": 1,
+      "field": "(row)",
+      "expected": "row",
+      "read": null
+     },
+     {
+      "key": "135",
+      "page": 1,
+      "field": "(row)",
+      "expected": "row",
+      "read": null
+     },
+     {
+      "key": "144B",
+      "page": 1,
+      "field": "(row)",
+      "expected": "row",
+      "read": null
+     },
+     {
+      "key": "152",
+      "page": 1,
+      "field": "(row)",
+      "expected": "row",
+      "read": null
+     },
+     {
+      "key": "153",
+      "page": 1,
+      "field": "(row)",
+      "expected": "row",
+      "read": null
+     },
+     {
+      "key": "228B",
+      "page": 1,
+      "field": "(row)",
+      "expected": "row",
+      "read": null
+     },
+     {
+      "key": "136",
+      "page": 1,
+      "field": "(row)",
+      "expected": "row",
+      "read": null
+     },
+     {
+      "key": "137A",
+      "page": 1,
+      "field": "(row)",
+      "expected": "row",
+      "read": null
+     },
+     {
+      "key": "137B",
+      "page": 1,
+      "field": "(row)",
+      "expected": "row",
+      "read": null
+     },
+     {
+      "key": "138",
+      "page": 1,
+      "field": "(row)",
+      "expected": "row",
+      "read": null
+     },
+     {
+      "key": "139",
+      "page": 1,
+      "field": "(row)",
+      "expected": "row",
+      "read": null
+     },
+     {
+      "key": "141",
+      "page": 1,
+      "field": "(row)",
+      "expected": "row",
+      "read": null
+     },
+     {
+      "key": "142",
+      "page": 1,
+      "field": "(row)",
+      "expected": "row",
+      "read": null
+     },
+     {
+      "key": "143",
+      "page": 1,
+      "field": "(row)",
+      "expected": "row",
+      "read": null
+     },
+     {
+      "key": "144A",
+      "page": 1,
+      "field": "(row)",
+      "expected": "row",
+      "read": null
+     },
+     {
+      "key": "145",
+      "page": 1,
+      "field": "(row)",
+      "expected": "row",
+      "read": null
+     },
+     {
+      "key": "146",
+      "page": 1,
+      "field": "(row)",
+      "expected": "row",
+      "read": null
+     },
+     {
+      "key": "147A",
+      "page": 1,
+      "field": "(row)",
+      "expected": "row",
+      "read": null
+     },
+     {
+      "key": "147B",
+      "page": 1,
+      "field": "(row)",
+      "expected": "row",
+      "read": null
+     },
+     {
+      "key": "148",
+      "page": 1,
+      "field": "(row)",
+      "expected": "row",
+      "read": null
+     },
+     {
+      "key": "151",
+      "page": 1,
+      "field": "(row)",
+      "expected": "row",
+      "read": null
+     },
+     {
+      "key": "221",
+      "page": 1,
+      "field": "(row)",
+      "expected": "row",
+      "read": null
+     }
+    ]
+   },
+   "reader_b": {
+    "expected_rows": 42,
+    "rows_found": 0,
+    "rows_fully_right": 0,
+    "fields_right": 0,
+    "fields_total": 0,
+    "per_field": {},
+    "extra_rows": 0,
+    "wrong": [
+     {
+      "key": "053",
+      "page": 1,
+      "field": "(row)",
+      "expected": "row",
+      "read": null
+     },
+     {
+      "key": "131",
+      "page": 1,
+      "field": "(row)",
+      "expected": "row",
+      "read": null
+     },
+     {
+      "key": "133",
+      "page": 1,
+      "field": "(row)",
+      "expected": "row",
+      "read": null
+     },
+     {
+      "key": "134",
+      "page": 1,
+      "field": "(row)",
+      "expected": "row",
+      "read": null
+     },
+     {
+      "key": "135",
+      "page": 1,
+      "field": "(row)",
+      "expected": "row",
+      "read": null
+     },
+     {
+      "key": "144B",
+      "page": 1,
+      "field": "(row)",
+      "expected": "row",
+      "read": null
+     },
+     {
+      "key": "152",
+      "page": 1,
+      "field": "(row)",
+      "expected": "row",
+      "read": null
+     },
+     {
+      "key": "153",
+      "page": 1,
+      "field": "(row)",
+      "expected": "row",
+      "read": null
+     },
+     {
+      "key": "228B",
+      "page": 1,
+      "field": "(row)",
+      "expected": "row",
+      "read": null
+     },
+     {
+      "key": "136",
+      "page": 1,
+      "field": "(row)",
+      "expected": "row",
+      "read": null
+     },
+     {
+      "key": "137A",
+      "page": 1,
+      "field": "(row)",
+      "expected": "row",
+      "read": null
+     },
+     {
+      "key": "137B",
+      "page": 1,
+      "field": "(row)",
+      "expected": "row",
+      "read": null
+     },
+     {
+      "key": "138",
+      "page": 1,
+      "field": "(row)",
+      "expected": "row",
+      "read": null
+     },
+     {
+      "key": "139",
+      "page": 1,
+      "field": "(row)",
+      "expected": "row",
+      "read": null
+     },
+     {
+      "key": "141",
+      "page": 1,
+      "field": "(row)",
+      "expected": "row",
+      "read": null
+     },
+     {
+      "key": "142",
+      "page": 1,
+      "field": "(row)",
+      "expected": "row",
+      "read": null
+     },
+     {
+      "key": "143",
+      "page": 1,
+      "field": "(row)",
+      "expected": "row",
+      "read": null
+     },
+     {
+      "key": "144A",
+      "page": 1,
+      "field": "(row)",
+      "expected": "row",
+      "read": null
+     },
+     {
+      "key": "145",
+      "page": 1,
+      "field": "(row)",
+      "expected": "row",
+      "read": null
+     },
+     {
+      "key": "146",
+      "page": 1,
+      "field": "(row)",
+      "expected": "row",
+      "read": null
+     },
+     {
+      "key": "147A",
+      "page": 1,
+      "field": "(row)",
+      "expected": "row",
+      "read": null
+     },
+     {
+      "key": "147B",
+      "page": 1,
+      "field": "(row)",
+      "expected": "row",
+      "read": null
+     },
+     {
+      "key": "148",
+      "page": 1,
+      "field": "(row)",
+      "expected": "row",
+      "read": null
+     },
+     {
+      "key": "151",
+      "page": 1,
+      "field": "(row)",
+      "expected": "row",
+      "read": null
+     },
+     {
+      "key": "221",
+      "page": 1,
+      "field": "(row)",
+      "expected": "row",
+      "read": null
+     }
+    ]
+   },
+   "agreed": {
+    "expected_rows": 42,
+    "rows_found": 0,
+    "rows_fully_right": 0,
+    "fields_right": 0,
+    "fields_total": 0,
+    "per_field": {},
+    "extra_rows": 0,
+    "wrong": [
+     {
+      "key": "053",
+      "page": 1,
+      "field": "(row)",
+      "expected": "row",
+      "read": null
+     },
+     {
+      "key": "131",
+      "page": 1,
+      "field": "(row)",
+      "expected": "row",
+      "read": null
+     },
+     {
+      "key": "133",
+      "page": 1,
+      "field": "(row)",
+      "expected": "row",
+      "read": null
+     },
+     {
+      "key": "134",
+      "page": 1,
+      "field": "(row)",
+      "expected": "row",
+      "read": null
+     },
+     {
+      "key": "135",
+      "page": 1,
+      "field": "(row)",
+      "expected": "row",
+      "read": null
+     },
+     {
+      "key": "144B",
+      "page": 1,
+      "field": "(row)",
+      "expected": "row",
+      "read": null
+     },
+     {
+      "key": "152",
+      "page": 1,
+      "field": "(row)",
+      "expected": "row",
+      "read": null
+     },
+     {
+      "key": "153",
+      "page": 1,
+      "field": "(row)",
+      "expected": "row",
+      "read": null
+     },
+     {
+      "key": "228B",
+      "page": 1,
+      "field": "(row)",
+      "expected": "row",
+      "read": null
+     },
+     {
+      "key": "136",
+      "page": 1,
+      "field": "(row)",
+      "expected": "row",
+      "read": null
+     },
+     {
+      "key": "137A",
+      "page": 1,
+      "field": "(row)",
+      "expected": "row",
+      "read": null
+     },
+     {
+      "key": "137B",
+      "page": 1,
+      "field": "(row)",
+      "expected": "row",
+      "read": null
+     },
+     {
+      "key": "138",
+      "page": 1,
+      "field": "(row)",
+      "expected": "row",
+      "read": null
+     },
+     {
+      "key": "139",
+      "page": 1,
+      "field": "(row)",
+      "expected": "row",
+      "read": null
+     },
+     {
+      "key": "141",
+      "page": 1,
+      "field": "(row)",
+      "expected": "row",
+      "read": null
+     },
+     {
+      "key": "142",
+      "page": 1,
+      "field": "(row)",
+      "expected": "row",
+      "read": null
+     },
+     {
+      "key": "143",
+      "page": 1,
+      "field": "(row)",
+      "expected": "row",
+      "read": null
+     },
+     {
+      "key": "144A",
+      "page": 1,
+      "field": "(row)",
+      "expected": "row",
+      "read": null
+     },
+     {
+      "key": "145",
+      "page": 1,
+      "field": "(row)",
+      "expected": "row",
+      "read": null
+     },
+     {
+      "key": "146",
+      "page": 1,
+      "field": "(row)",
+      "expected": "row",
+      "read": null
+     },
+     {
+      "key": "147A",
+      "page": 1,
+      "field": "(row)",
+      "expected": "row",
+      "read": null
+     },
+     {
+      "key": "147B",
+      "page": 1,
+      "field": "(row)",
+      "expected": "row",
+      "read": null
+     },
+     {
+      "key": "148",
+      "page": 1,
+      "field": "(row)",
+      "expected": "row",
+      "read": null
+     },
+     {
+      "key": "151",
+      "page": 1,
+      "field": "(row)",
+      "expected": "row",
+      "read": null
+     },
+     {
+      "key": "221",
+      "page": 1,
+      "field": "(row)",
+      "expected": "row",
+      "read": null
+     }
+    ]
+   },
+   "fields": {
+    "agreed": {
+     "right": 0,
+     "total": 0
+    },
+    "disputed": {
+     "total": 0,
+     "a_right": 0,
+     "b_right": 0,
+     "neither": 0
+    },
+    "agreed_wrong": []
+   }
+  }
+ ],
+ "tier": "audited",
+ "note": "no text layer: read by OCR at 600 dpi (truth/ocr.mjs), the same words given to both readers",
+ "disagreement_count": 0,
+ "disagreements": [],
+ "ms": 69923,
+ "generated_at": "2026-10-09T09:39:03.713Z"
+}

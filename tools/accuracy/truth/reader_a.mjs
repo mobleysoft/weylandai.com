@@ -6,12 +6,30 @@
 // harness's common row shape here and nowhere else:
 //   door:  { mark, location, size, width_inches, height_inches, pair, door_type, frame_type, material, fire_rating, hardware_group, y }
 //   group: { set, name, heading, doors: [], items: [{ qty, uom, description, catalog, finish, manufacturer }], continued }
-import { readPageFromDoc } from "../../../weyland-subx-worker/src/lib/text-layer-read.js";
+import { readPageFromDoc, doorResult, hardwareResult } from "../../../weyland-subx-worker/src/lib/text-layer-read.js";
+import * as TL from "../../../weyland-subx-worker/assets/client-ocr-src/schedule-text-layer.mjs";
 
 export async function readA(pdf, pageNumber, type) {
   let r;
   try { r = await readPageFromDoc(pdf, pageNumber, type); } catch (e) { return { error: String(e && e.message || e).slice(0, 200) }; }
   if (!r) return { no_text: true };
+  return mapResult(r, type);
+}
+
+/** The scan path: OCR lines (truth/ocr.mjs) through the production line readers, as the browser OCR
+ *  path feeds them, and the same result shaping as the server's text-layer read. */
+export async function readAFromLines(lines, size, type, wordCount = 0) {
+  const tl = { lines, word_count: wordCount, rotation: 0 };
+  const t0 = Date.now();
+  if (type === "door_schedule") {
+    const ds = await TL.readDoorScheduleFromLines(lines, size, {});
+    return mapResult({ schedule_type: type, result: ds && ds.doors.length ? doorResult(ds, tl, t0) : { doors: [] } }, type);
+  }
+  const hg = await TL.readHardwareGroupsFromLines(lines, size, {});
+  return mapResult({ schedule_type: type, result: hg ? hardwareResult(hg, tl, t0) : { hardware_groups: [] } }, type);
+}
+
+function mapResult(r, type) {
   if (r.schedule_type !== type) return {};
   if (type === "door_schedule") {
     const doors = ((r.result && r.result.doors) || []).map((d) => ({
