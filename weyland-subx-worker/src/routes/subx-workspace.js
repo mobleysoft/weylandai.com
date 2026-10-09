@@ -200,8 +200,14 @@ export async function citedPagesForSession(sessionId, env2, match = matchForPack
   }
   const pages = new Map();
   let matched = 0, unmatched = 0;
-  const missing = [];
+  const missing = [], notes = [];
   for (const { c, sets, qty } of byKey.values()) {
+    // A schedule note in the item column ("VERIFY PERMANENT CORE WITH DISTRICT"): no maker,
+    // no catalogue number, only words. Listed as a note, not as an item missing a page.
+    if (!c.manufacturer && !/\d/.test(c.model) && c.model.trim().split(/\s+/).length >= 3) {
+      notes.push({ sets: [...sets], text: c.model, component_type: c.component_type || null });
+      continue;
+    }
     let m = null, filed = null;
     try { m = await match(c, env2); } catch (_) { m = null; }
     const cited = m && m.matched && PACKET_MATCH_TYPES.has(String(m.matchType)) ? citedPagesFor(m, 1) : [];
@@ -227,7 +233,7 @@ export async function citedPagesForSession(sessionId, env2, match = matchForPack
       }
     }
   }
-  return { components: byKey.size, matched, unmatched, missing, pages: [...pages.values()] };
+  return { components: byKey.size - notes.length, matched, unmatched, missing, notes, pages: [...pages.values()] };
 }
 
 export function registerSubxWorkspaceRoutes(router, { authenticate, requireActiveSubscription }) {
