@@ -30,6 +30,8 @@ const execFileP = promisify(execFile);
 const playwright = await import(process.env.PLAYWRIGHT_CORE || "playwright-core");
 export const chromium = playwright.chromium || (playwright.default && playwright.default.chromium);
 
+import { apiAnswer } from "./api-answer.mjs";
+export { apiAnswer };
 export const BASE = (process.env.WEYLAND_BASE_URL || "https://weylandai.com").replace(/\/$/, "");
 export const SITE_HOST = new URL(BASE).host;
 export const LAUNCH_ARGS = ["--use-angle=metal"];
@@ -853,6 +855,23 @@ export class Journey {
     if (pkg && r.status() < 300) this.packages.add(decodeURIComponent(pkg[1]));
   }
 
+  /**
+   * g036: read an API answer from inside the page (same origin, the page's cookies) and record a
+   * check named `name`. An unexpected answer (non-2xx, not JSON, explicit API failure, missing a
+   * required field, invalid shape, or a failed request) is a failed check carrying the status,
+   * content type and the start of the body;
+   * the call returns null instead of throwing, so the journey skips what depends on it and goes on.
+   */
+  async api(page, apiPath, name, opts = {}) {
+    const answer = await page.evaluate(async (p) => {
+      try { const r = await fetch(p, { headers: { accept: "application/json" } }); return { status: r.status, contentType: r.headers.get("content-type"), text: await r.text() }; }
+      catch (e) { return { status: 0, error: String((e && e.message) || e) }; }
+    }, apiPath).catch((e) => ({ status: 0, error: "page.evaluate: " + String((e && e.message) || e) }));
+    const r = apiAnswer(answer, opts);
+    this.check(name, r.ok, { path: apiPath, ...r.detail });
+    return r.ok ? r.value : null;
+  }
+
   /** API responses since t0 whose path matches re. */
   responses(since, re) {
     return this.apiLog.filter((e) => e.at >= since && re.test(e.path));
@@ -945,7 +964,10 @@ export class Journey {
     try {
       await body(this);
     } catch (e) {
-      this.check("journey ran to completion", false, (e && e.message) || String(e));
+      // g036: name where it stopped (the journey's own line), so a crash on an unexpected answer reads
+      // as a failed step, not a bare "Cannot read properties of undefined".
+      const where = String((e && e.stack) || "").split("\n").find((l) => /journeys\//.test(l));
+      this.check("journey ran to completion", false, ((e && e.message) || String(e)) + (where ? " (" + where.trim().replace(/^at\s+/, "").replace(/^.*\/tools\//, "tools/") + ")" : ""));
     } finally {
       await this.settleClones();
       if (this.browser) await this.browser.close().catch(() => {});
