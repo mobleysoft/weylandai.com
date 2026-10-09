@@ -396,7 +396,10 @@ async function getCataloguePagesForModel(manufacturerName, model, env2, limit = 
     const index = await getMakerIndex(env2);
     const maker = manufacturerName && typeof manufacturerName === "object" ? manufacturerName : resolveMaker(index, manufacturerName);
     const keys = maker.typed ? catalogueMakerKeys(index, maker) : [];
-    const rows = await cataloguePagesNaming(env2, token, keys, limit);
+    // A wider net, then the pages whose PDF is on file first (2026-10-09): Ives Price Book 2024
+    // (text only) names 8200 more often than the Ives Products Catalog (PDF on file) and took all
+    // three places, so Rockford's 8200, 8302, 8190HD and 9190HD had no page a packet could carry.
+    const rows = await cataloguePagesNaming(env2, token, keys, Math.max(limit * 4, 12));
     // Only link to the page render when the source PDF (or an already rendered page) is
     // really in R2: many catalogues were ingested text-only. A citation without a PDF stays a
     // citation (title + page), never a dead link.
@@ -411,7 +414,9 @@ async function getCataloguePagesForModel(manufacturerName, model, env2, limit = 
       } catch (e) { /* no link rather than a guessed one */ }
       out.push({ catalogueId: r.catalogue_id, title: r.title, manufacturer: r.manufacturer, pageNum: r.page_num, pageUrl, pdfAvailable: !!pageUrl, mentions: r.mentions == null ? null : Number(r.mentions), contentsPage: !!r.toc });
     }
-    return out;
+    // Stable: within each kind the ranked order stands.
+    const onFile = out.filter((x) => x.pdfAvailable && !x.contentsPage);
+    return onFile.concat(out.filter((x) => !onFile.includes(x))).slice(0, limit);
   } catch (e) {
     console.warn("[matcher] catalogue page fallback failed:", e.message);
     return [];

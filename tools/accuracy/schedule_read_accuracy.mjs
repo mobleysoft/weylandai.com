@@ -19,6 +19,9 @@
 //
 // Usage: node tools/accuracy/schedule_read_accuracy.mjs [--base https://weylandai.com]
 //        [--only rockford,berryessa,occ,christina] [--label before] [--token-file <path>]
+// The OCC sheet is a real project sheet with no public source, so it is not in the repo: set
+// OCC_PDF to a copy (the cloud session downloads it from the private R2 object
+// weyland-fixtures/fixtures/occ-a-801-pg4.pdf, sha256 fb3e0a81...29be82).
 // --token-file (2026-10-09): sign in with a real test account's AuthFor bearer token read from
 // the file (a jmobleyworks+<tag> address, never printed) instead of writing a throwaway account
 // into D1; for a machine without the Cloudflare login (the cloud session). Its sessions are
@@ -49,7 +52,7 @@ const DOCS = [
     doors: "rockford-a2.2-door-schedule.json", groups: "rockford-087100-hardware-groups.json" },
   { id: "berryessa", file: join(CORPUS, "dd339f57b51538ed.pdf"), upload_type: "door_schedule",
     doors: "berryessa-a9.2-door-schedules.json", groups: "berryessa-087100-hardware-groups.json" },
-  { id: "occ", file: [join(CORPUS, "occ-a-801-pg4.pdf"), "/Users/johnmobley/pdf/OCCDoorSchedulePg4.pdf"].find((f) => existsSync(f)) || "/Users/johnmobley/pdf/OCCDoorSchedulePg4.pdf", upload_type: "door_schedule",
+  { id: "occ", file: [process.env.OCC_PDF, join(CORPUS, "occ-a-801-pg4.pdf"), "/Users/johnmobley/pdf/OCCDoorSchedulePg4.pdf"].filter(Boolean).find((f) => existsSync(f)) || "/Users/johnmobley/pdf/OCCDoorSchedulePg4.pdf", upload_type: "door_schedule",
     doors: "occ-a-801-door-schedule.json" },
   { id: "christina", file: join(CORPUS, "525dc0b72011077a.pdf"), upload_type: "hardware_schedule",
     groups: "christina-chs-hardware-set-01.json" },
