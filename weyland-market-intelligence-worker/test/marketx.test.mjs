@@ -107,3 +107,30 @@ test("routes: the summary is free with the top 5; the full lists and CSVs are pa
   const m = await (await router.handle(new Request("https://weylandai.com/api/marketx/trends"), env, {})).json();
   assert.equal(m.metros.length, 6, "the old trends route answers with the metros");
 });
+
+
+test("equal-value company rankings keep the same ordered prefix across free, paid and CSV limits", async () => {
+  resetPermitsForTests();
+  const raw = new DatabaseSync(":memory:");
+  const db = d1(raw);
+  const names = ["Zulu", "Alpha", "alpha", "Beta", "beta", ...Array.from({ length: 240 }, (_, i) => "Company " + String(i).padStart(3, "0"))];
+  const records = [...names].reverse().map((name, i) => ({
+    permit_: "tie-" + i, permit_type: "PERMIT - NEW CONSTRUCTION", issue_date: "2026-09-15T00:00:00.000",
+    street_number: String(i), street_name: "MAIN ST", reported_cost: "1000000", work_description: "New school building",
+    contact_1_type: "GENERAL CONTRACTOR", contact_1_name: name, contact_2_type: "OWNER", contact_2_name: name,
+  }));
+  try {
+    await ingestCityPage(db, "chicago", { fetchImpl: async () => new Response(JSON.stringify(records)), now: new Date(NOW) });
+    const reports = await Promise.all([5, 200, 5000].map(limit => metroSummary(db, "chicago", { limit }, "2026-10-09")));
+    for (const role of ["contractors", "owners"]) {
+      const full = reports[2][role];
+      assert.equal(full.length, names.length);
+      assert.deepEqual(full.slice(0, 4).map(x => x.name), ["Alpha", "alpha", "Beta", "beta"]);
+      assert.deepEqual(reports[0][role], full.slice(0, 5));
+      assert.deepEqual(reports[1][role], full.slice(0, 200));
+      raw.exec("PRAGMA reverse_unordered_selects = ON");
+      const reversed = await metroSummary(db, "chicago", { limit: 200 }, "2026-10-09");
+      assert.deepEqual(reversed[role], full.slice(0, 200));
+    }
+  } finally { raw.close(); }
+});
