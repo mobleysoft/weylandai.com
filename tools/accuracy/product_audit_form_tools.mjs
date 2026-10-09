@@ -84,7 +84,10 @@ function readPdf(buf, name = "out") {
   writeFileSync(f, buf);
   const text = execFileSync("pdftotext", ["-layout", f, "-"], { maxBuffer: 128 * 1024 * 1024 }).toString();
   const pages = Number((execFileSync("pdfinfo", [f]).toString().match(/Pages:\s+(\d+)/) || [])[1] || 0);
-  return { text, pages, bytes: buf.length };
+  // Reading order without the layout: a cell wrapped onto a second line stays together (in the
+  // layout text the next column's value sits between the two halves).
+  const raw = execFileSync("pdftotext", ["-raw", f, "-"], { maxBuffer: 128 * 1024 * 1024 }).toString();
+  return { text, raw, pages, bytes: buf.length };
 }
 // One line of text, quotes straightened, footers ("... page 2 of 3") dropped.
 // Dashes too: the PDF writer sets an em dash as "--".
@@ -318,7 +321,7 @@ try {
       t.check("hardware schedule as installed: every opening with rating and set", heads.length === bOpen.length, `${heads.length} of ${bOpen.length}`);
       const cats = [...new Set(berry.groups.groups.flatMap((g) => g.items.map((i) => i.catalog)))];
       // A long catalogue number wraps inside its table cell; it is looked for with the spaces taken out.
-      const flat = txt.replace(/\s+/g, ""), has = (c) => flat.includes(norm(c).replace(/\s+/g, ""));
+      const flat = norm(pdf.raw).replace(/\s+/g, ""), has = (c) => flat.includes(norm(c).replace(/\s+/g, ""));
       t.check("every scheduled item (catalogue number) in the as-installed schedule", cats.every(has), cats.filter((c) => !has(c)).join(", ") || cats.length + " catalogue numbers");
       const pairs = bOpen.filter((o) => o.pair);
       const pairShown = pairs.filter((o) => new RegExp("Opening " + o.subxMark.replace(/[.[\]]/g, "\\$&") + " · PR").test(txt)).length;
