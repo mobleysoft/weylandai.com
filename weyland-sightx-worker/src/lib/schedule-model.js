@@ -24,7 +24,7 @@
 
 export const DEFAULT_WIDTH_IN = 36;
 export const DEFAULT_HEIGHT_IN = 84;
-export const MAX_DOORS = 120;
+export const MAX_DOORS = 400; // a real set fits (R2502: 156 schedule rows; g028)
 
 const ITEM_TYPES = [
   ["exit", /\b(exit|panic|crash)\s*(device|bar|hardware)?s?\b|\bvon duprin\s*(98|99|33|35|22)|\b(98|99|33a|35a|22)-?(eo|nl|l|ta|dt)\b/i],

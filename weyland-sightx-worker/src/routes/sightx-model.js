@@ -11,11 +11,20 @@
 
 import { jsonResponse3 } from "../lib/json-response.js";
 import { parseSchedule, modelFromSubx, sampleModel, attachPlan } from "../lib/schedule-model.js";
+import { SETS } from "../data/sets/index.js";
 
 const MAX_TEXT = 60000;
 
 export function registerSightXModelRoutes(router) {
   router.get("/api/sightx/sample", () => jsonResponse3({ success: true, model: attachPlan(sampleModel(), { found: false, reason: "sheet A9.01 comes with no floor plan." }) }));
+
+  // g028: a harvested real bid set laid out on its own plan sheets (built from the set's schedule rows
+  // by tools/accuracy/g028/build-sets.mjs). Public: the sets are public bid documents.
+  router.get("/api/sightx/sets/:sha16", (request) => {
+    const m = SETS[String(request.params.sha16 || "").toLowerCase()];
+    if (!m) return jsonResponse3({ success: false, message: "No such set. Known: " + Object.keys(SETS).join(", ") }, 404);
+    return jsonResponse3({ success: true, model: m });
+  });
 
   router.post("/api/sightx/model", async (request) => {
     let body;

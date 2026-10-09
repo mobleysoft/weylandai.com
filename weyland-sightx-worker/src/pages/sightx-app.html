@@ -440,6 +440,8 @@ HW-2: lever lockset, 3 hinges, wall stop"></textarea>
         ["SET", esc(d.set || "-")],
       ];
       if (d.source_page != null) kv.push(["SOURCE", "schedule page " + esc(d.source_page)]);
+      // g028: the schedule row this door was built from, as printed.
+      if (d.row && d.row.text) kv.push(["ROW", '<span class="door-row">' + esc(d.row.text) + '</span> <span style="color:var(--muted)">(schedule p.' + esc(d.row.page) + ")</span>"]);
       if (d.plan) {
         var how = { tag_number: "numbered after the room", schedule_location: "the schedule's location, found on the plan", nearest_label: "the nearest room label (unsure)" }[d.plan.room_by] || "";
         kv.unshift(["ROOM", d.plan.room_name ? esc((d.plan.room ? d.plan.room + " " : "") + d.plan.room_name) + ' <span class="' + (d.plan.unsure ? "flag" : "") + '" style="color:var(--muted)">(' + esc(how) + ")</span>" : '<span class="flag">no room label near its tag</span>']);
@@ -464,6 +466,10 @@ HW-2: lever lockset, 3 hinges, wall stop"></textarea>
           "</td><td>" + esc(d.type || d.material || "-") + "</td><td>" + (d.rating ? '<span class="badge r">' + esc(d.rating) + "</span>" : "-") + "</td><td>" + esc(d.set || "-") +
           "</td><td>" + (items.length ? esc(items.map(function (x) { return KIND[x.type] && x.type !== "other" ? KIND[x.type] : x.label; }).filter(function (v, k, a) { return a.indexOf(v) === k; }).join(", ")) : '<span style="color:var(--muted)">none listed</span>') + "</td></tr>";
       }).join("") : '<tr><td colspan="7" style="color:var(--muted)">No doors.</td></tr>';
+      // g028: rows of a harvested set that are not door rows are listed with the reason, and drawn nowhere.
+      if (m.set && m.set.not_door_rows && m.set.not_door_rows.length) $("rows").innerHTML += m.set.not_door_rows.map(function (r) {
+        return '<tr class="row-only"><td><b>' + esc(r.mark) + '</b></td><td colspan="6" style="color:var(--muted)">schedule p.' + esc(r.page) + ": not drawn: " + esc(r.reason) + (r.text ? " (" + esc(r.text) + ")" : "") + "</td></tr>";
+      }).join("");
       $("notes").innerHTML = (m.notes || []).map(function (n) { return "<div>" + esc(n) + "</div>"; }).join("");
       $("hud-project").textContent = m.project;
       var L = m.layout || { source: "schematic" };
@@ -487,6 +493,8 @@ HW-2: lever lockset, 3 hinges, wall stop"></textarea>
     function show(model, how) {
       st.model = model; st.sel = -1; stopTour();
       renderList(); buildScene(model);
+      // Read-only counts for journeys and probes: what was drawn against what the data holds.
+      try { window.__sxCounts = Object.freeze({ door_cards: document.querySelectorAll("#rows tr.door").length, row_cards: document.querySelectorAll("#rows tr.row-only").length, doors_drawn: gl ? doorPos.length : 0, doors_on_plan: model.doors.filter(function (d) { return !!d.plan; }).length, rows: model.set ? model.set.rows : model.doors.length }); } catch (e) {}
       $("info").innerHTML = "<h2>" + esc(model.project) + "</h2><div class=\"loc\">" + model.doors.length + " doors from " + esc(how) + ". Click a door in the corridor or a row below, or press TOUR.</div>";
       setStatus("Built " + model.doors.length + " door" + (model.doors.length === 1 ? "" : "s") + " from " + how + ".");
     }
@@ -568,7 +576,15 @@ HW-2: lever lockset, 3 hinges, wall stop"></textarea>
       });
     };
     var qs = new URLSearchParams(location.search);
-    if (qs.get("m")) {
+    if (qs.get("set")) {
+      // g028: a harvested real bid set, laid out on its own plan sheets from its schedule rows.
+      setStatus("Loading the bid set...");
+      getJSON("/api/sightx/sets/" + encodeURIComponent(qs.get("set"))).then(function (r) {
+        if (!r.ok || !r.data.success) { setStatus((r.data && r.data.message) || "The set could not be loaded (HTTP " + r.status + ").", true); loadSample(); return; }
+        var m = r.data.model;
+        show(m, "the schedule rows of " + m.set.project + " (" + m.set.door_rows + " door rows of " + m.set.rows + ", " + m.set.doors_on_plan + " tagged on " + m.set.plan_sheets.map(function (x) { return x.sheet; }).join(", ") + ")");
+      });
+    } else if (qs.get("m")) {
       fetch("/api/sightx/models/" + encodeURIComponent(qs.get("m"))).then(function (r) { return r.json(); }).then(function (d) {
         if (!d.success) { setStatus(d.message, true); loadSample(); return; }
         show(d.model, "a shared corridor (" + d.name + ", shared " + String(d.shared_at).slice(0, 10) + ")");

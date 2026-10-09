@@ -123,3 +123,26 @@ test("attachPlan: each tagged door at its tag, in its room, in feet; untagged do
   assert.equal(none.layout.source, "schematic");
   assert.match(none.layout.note, /^Schematic layout from the schedule/);
 });
+
+// g028: the three harvested real sets, served for /sightx/?set=<sha16>.
+import { SETS as G028_SETS } from "../data/sets/index.js";
+test("g028 sets: every door comes from a schedule row; every row is a door or listed with its reason", () => {
+  for (const [sha, m] of Object.entries(G028_SETS)) {
+    assert.equal(m.set.sha16, sha);
+    assert.ok(m.doors.length > 0 && m.doors.every((d) => d.row && d.row.text && d.row.text.startsWith(d.mark)), sha + ": each door carries the row it came from");
+    assert.equal(m.doors.length + m.set.not_door_rows.length, m.set.rows, sha + ": rows = door rows + rows that are not doors");
+    assert.ok(m.set.not_door_rows.every((r) => r.reason), sha + ": a row that is not a door says why");
+    assert.equal(m.layout.source, "plan");
+  }
+  assert.equal(G028_SETS["7478006f7fd5b43c"].doors.length, 152, "R2502: no 120-door cap");
+});
+test("g028 route: GET /api/sightx/sets/:sha16 answers the set and 404s an unknown one", async () => {
+  const router = new NativeRouter();
+  registerSightXModelRoutes(router);
+  const ok = await router.handle(new Request("https://x/api/sightx/sets/e3d0cc1bc22fd824"), {}, {});
+  const body = await ok.json();
+  assert.equal(ok.status, 200);
+  assert.equal(body.model.set.sha16, "e3d0cc1bc22fd824");
+  const no = await router.handle(new Request("https://x/api/sightx/sets/0000000000000000"), {}, {});
+  assert.equal(no.status, 404);
+});
