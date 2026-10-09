@@ -25,3 +25,53 @@ line mark ("1705 5-LITE SSB", "6 PNL TEXT FG", Steelcraft F16/F12); "Square D" i
 manufacturer. The matcher change moved no line from correct to wrong.
 
 The numbers are from the public finder's deterministic path; no language model is in it.
+
+# Truth at scale (2026-10-09)
+
+docs/direction-2026-10-08.md, "Truth at scale for the harvested corpus": a downloaded set tests the
+product the moment it is read, without anyone writing expected rows first. Offline, no network, no
+credentials, nothing to install (pdf.js is SubX's vendored copy).
+
+    node tools/accuracy/truth_run.mjs                  # everything in tools/corpus + tools/bidset/out (+ $OCC_PDF)
+    node tools/accuracy/truth_run.mjs --dir <folder>   # a folder of PDFs, e.g. the harvest pulled from R2
+                                                       #   weyland-fixtures harvest/<sha16>.pdf; a manifest.json
+                                                       #   in the folder (filename, source_label, source_url) names families
+    node tools/accuracy/truth_run.mjs --files a.pdf,b.pdf   |   --only <sha16,...>   |   --max-pages <n>
+    node tools/accuracy/truth_report.mjs [--label x]   # per-tier report: truth_report_<stamp>.md / .json
+    node tools/accuracy/truth/show.mjs <sha16> [--all] # one truth record in short
+    node tools/accuracy/truth/debug_page.mjs <file.pdf> <page> door|hw   # both readers on one page
+
+What runs, per PDF:
+
+- Page finding: pages whose text names a door schedule (DOOR, SCHEDULE, a hardware column, a mark
+  column) or a hardware set heading are read by both readers.
+- Reader A (`truth/reader_a.mjs`): the production text-layer reader, called exactly as SubX's server
+  calls it (weyland-subx-worker/src/lib/text-layer-read.js).
+- Reader B (`truth/reader_b.mjs`): built differently. Door schedules from the page's ruled lines
+  (pdf.js operator list, `truth/pdf.mjs`): tables from connected rules or from row rules sharing one
+  x-extent, row bands from the horizontals, column fences from the long verticals, spanning header
+  labels from the short rules around them; text is only dropped into cells. No ruled table, no rows.
+  Hardware groups: column fences from the page's vertical rules, else from the white gutters of the
+  item lines' x-projection; struck-through words (a ruled bar through the letters) are left out.
+- Agreement (`truth/agree.mjs`): doors aligned by page + mark, items by set + catalog/description.
+  A row both readers read with every field equal after normalisation is agreed (accepted truth); the
+  rest are written to `tools/corpus/harvest/truth/queue.jsonl` (a run replaces the lines of the PDFs
+  it read).
+- Oracles (`truth/oracles.mjs`), over reader A's rows, chosen by the triage class
+  (`tools/corpus/harvest/triage.json` when present, else inferred: complete / pair / schedule-only /
+  spec-only / plan-only): a marks on a floor plan (weyland-shared/plan-read.js), b sets exist in
+  08 71 00, c set door lists equal the schedule's, d types in the door/frame types legend, e sizes
+  parse and marks follow the sheet's shape.
+- Tier: exact (tools/bidset/out, truth in building.mjs), audited (tools/corpus/expected), agreed (at
+  least one agreed row), oracle-checked (no agreed row, an oracle applies), unread. Exact and
+  audited files also score reader A, reader B and the agreed rows against the expected rows, which
+  calibrates the agreement method (how often an agreed field is right).
+
+Record: `tools/corpus/harvest/truth/<sha16>.json` (sha16 = first 16 hex of the file's sha256):
+sha16, file, family, source, triage_class, tier, agreement_rate, rows_agreed, rows_disputed,
+per-field agreement, oracles, calibration, disagreements (first 40).
+
+Limits: pages without a text layer are not read by either reader (production sends them to the
+browser OCR path, not run here); reader B was developed against the audited files, so its
+calibration there is in-sample; the human 2% spot check of agreed rows is separate.
+`TRUTH_DEBUG=1` prints reader B's table and column decisions.

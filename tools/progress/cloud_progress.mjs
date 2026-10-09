@@ -107,6 +107,14 @@ if (match) {
   const rec = t.match(/recall[^|]*\|\s*([0-9.]+%)/i), prec = t.match(/precision[^|]*\|\s*([0-9.]+%)/i), fp = t.match(/false positives[^|]*\|\s*([0-9/]+)/i);
   say(`Matching (${match}): recall ${rec ? rec[1] : "?"}, precision ${prec ? prec[1] : "?"}, false positives ${fp ? fp[1] : "?"}`);
 }
+// Truth at scale (tools/accuracy/truth_report.mjs): agreement and oracle pass rates per truth tier, never pooled.
+const truth = newest(/^truth_report_.*\.json$/);
+if (truth) {
+  const t = JSON.parse(readFileSync(join(acc, truth), "utf8"));
+  say(`Truth tiers (${truth}): ${t.records} PDFs, queue ${t.queue}`);
+  for (const [tier, v] of Object.entries(t.tiers || {})) say(`  - ${tier}: ${v.pdfs} PDFs, rows agreed ${v.rows_agreed}/${v.rows_total}, queue ${v.queue}`);
+  for (const [tier, c] of Object.entries(t.calibration || {})) say(`  - calibration ${tier}: agreed fields right ${c.ar}/${c.at}, disputed fields ${c.dis} (A right ${c.disA}, B right ${c.disB})`);
+}
 const reports = join(REPO, "tools/user-simulation/reports");
 if (existsSync(reports)) {
   const mats = readdirSync(reports).filter((d) => d.startsWith("matrix-")).sort();
