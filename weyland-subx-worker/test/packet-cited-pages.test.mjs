@@ -127,3 +127,29 @@ test("repeated marks across sheets keep every door; re-reading a sheet adds none
   const p286 = db.prepare("SELECT mark FROM door_schedule_entries WHERE page_number = 286 ORDER BY mark").all().map((r) => r.mark);
   assert.equal(p286[0], "001 [p.286]");
 });
+
+test("a line another trade furnishes is listed as by others, not as a miss (Rockford BY DIVISION 28)", async () => {
+  const db = makeDb();
+  const c = db.prepare("INSERT INTO hardware_components (id, set_id, component_type, quantity, manufacturer, model, sequence_order) VALUES (?,?,?,?,?,?,?)");
+  c.run("c5", "h1", "card_reader", 2, "By others", "BY DIVISION 28", 3);
+  c.run("c6", "h2", "seal", 1, null, "BY DOOR AND FRAME MANUFACTURER", 3);
+  const r = await citedPagesForSession("s1", { DB: d1(db) }, fakeMatch);
+  assert.equal(r.components, 3);
+  assert.deepEqual(r.by_others.map((x) => [x.text, x.qty]), [["BY DIVISION 28", 2], ["BY DOOR AND FRAME MANUFACTURER", 1]]);
+  assert.deepEqual(r.missing.map((m) => m.model), ["4040XP", "XYZ-1"]);
+});
+
+test("a maker's spec sheet for the one product is cited at page 1 when its number is not in the sheet's text (Select SL57)", async () => {
+  const db = makeDb();
+  db.prepare("INSERT INTO hardware_components (id, set_id, component_type, quantity, manufacturer, model, sequence_order) VALUES ('c7','h1','hinge',1,'Select Hinges','SL57 FULL SURFACE',3)").run();
+  const key = "catalog-corpus/sl57.pdf";
+  const UPLOADS = { async get(k) { return k.startsWith("cut-sheet-text/") ? { json: async () => [{ page: 1, text: "CONTINUOUS GEARED HINGE drawing" }, { page: 2, text: "templates" }] } : null; }, async put() {} };
+  const match = async (c) => c.model.startsWith("SL57")
+    ? { matched: true, matchType: "base_model", maker: { known: true, name: "Select Hinges" }, product: { manufacturer: "Select Hinges", model: "SL57" }, cutSheets: [{ r2Key: key, title: "Select Hinges SL57 spec sheet (p.1)" }], cataloguePages: [] }
+    : fakeMatch(c);
+  const r = await citedPagesForSession("s1", { DB: d1(db), UPLOADS }, match);
+  const sl = r.pages.find((p) => p.r2Key === key);
+  assert.ok(sl, "SL57 cited");
+  assert.equal(sl.pageNum, 1);
+  assert.equal(sl.title, "Select Hinges SL57 spec sheet");
+});

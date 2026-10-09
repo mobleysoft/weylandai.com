@@ -127,25 +127,34 @@ function missFor(c, m) {
   }
   const sheet = (m.cutSheets && m.cutSheets[0]) || null;
   const cp = (m.cataloguePages && m.cataloguePages[0]) || null;
-  if (sheet) return { reason: "page_not_pinned", why: String(sheet.title || "the price book").split(" (")[0] + " is on file, but the page naming " + (p.model || model) + " is not pinned (its indexed text is another edition)", need: "the current edition's page of that price book" };
+  if (sheet) return { reason: "page_not_found", why: String(sheet.title || "the price book").split(" (")[0] + " is on file, but no page of it names " + (p.model || model), need: "the page of " + (p.manufacturer || who) + "'s current book or sheet that names " + (p.model || model) };
   if (cp) return { reason: "pdf_not_on_file", why: cp.title + " p. " + cp.pageNum + " names " + (p.model || model) + "; the PDF is not on file (its text is indexed)", need: "the PDF of " + cp.title };
   return { reason: "no_document", why: (p.manufacturer || who) + " " + (p.model || model) + " is catalogued; no document is on file", need: (p.manufacturer || who) + "'s catalogue page for " + (p.model || model) };
 }
 
 // A filed price book whose index is another edition: read that very PDF for the page naming
 // the model (weyland-shared/filed-page.js), so the packet carries the page instead of a miss.
-// The book's text is cached in R2 after the first read; a build spends at most FILED_BUDGET_MS on it.
+// The book's text is cached in R2 after the first read; a build spends at most FILED_BUDGET_MS
+// reading filed books. Only that reading counts against it (2026-10-09): the clock used to start
+// with the build, so on Rockford (39 items) the matching of the first sets used it up and every
+// item in sets 40-47 was listed as "not pinned" without its book being searched.
 const FILED_BUDGET_MS = 25000;
-async function filedPageFor(env2, m, started, scheduleModel = "") {
+const newBudget = () => ({ spentMs: 0, skipped: false });
+const leftOf = (budget) => FILED_BUDGET_MS - budget.spentMs;
+async function timed(budget, fn) {
+  const t0 = Date.now();
+  try { return await fn(); } finally { budget.spentMs += Date.now() - t0; }
+}
+async function filedPageFor(env2, m, budget, scheduleModel = "") {
   // The maker is known but the catalogue does not list this model: the schedule's own number,
   // as a whole token, in the maker's filed price books (it may be printed there).
   if (m && !m.matched && m.reason === "model_not_in_catalogue" && m.maker && m.maker.known) {
     for (const book of await makerFiledBooks(env2, m.maker.name)) {
       for (const model of scheduleTokens(scheduleModel)) {
-        const left = FILED_BUDGET_MS - (Date.now() - started);
-        if (left < 3000) return null;
+        const left = leftOf(budget);
+        if (left < 3000) { budget.skipped = true; return null; }
         let hit = null;
-        try { hit = await pageNamingInFiledPdf(env2, book.r2Key, model, { budgetMs: left }); } catch (_) { hit = null; }
+        try { hit = await timed(budget, () => pageNamingInFiledPdf(env2, book.r2Key, model, { budgetMs: left })); } catch (_) { hit = null; }
         if (hit) return { r2Key: book.r2Key, pageNum: hit.pageNum, title: String(book.title || "Price book").split(" (")[0] };
       }
     }
@@ -154,35 +163,38 @@ async function filedPageFor(env2, m, started, scheduleModel = "") {
   if (!m || !m.matched || !PACKET_MATCH_TYPES.has(String(m.matchType)) || !(m.maker && m.maker.known)) return null;
   const sheet = (m.cutSheets || []).find((s) => s.r2Key && !s.pinnedPage);
   if (!sheet) return null;
-  const left = FILED_BUDGET_MS - (Date.now() - started);
-  if (left < 3000) return null;
   const p = m.product || {};
   // The catalogue's model first; when that is too short to search ("99"), the schedule's own number.
   for (const model of [...new Set([p.model, p.base_model, ...scheduleTokens(scheduleModel)].filter(Boolean))]) {
+    const left = leftOf(budget);
+    if (left < 3000) { budget.skipped = true; return null; }
     let hit = null;
-    try { hit = await pageNamingInFiledPdf(env2, sheet.r2Key, model, { budgetMs: left }); } catch (_) { hit = null; }
+    try { hit = await timed(budget, () => pageNamingInFiledPdf(env2, sheet.r2Key, model, { budgetMs: left })); } catch (_) { hit = null; }
     if (hit) return { r2Key: sheet.r2Key, pageNum: hit.pageNum, title: String(sheet.title || "Price book").split(" (")[0] };
   }
+  // A maker's spec sheet for this one product (Select's SL57 sheet): the whole sheet is the
+  // product's, so its first page is cited when the number is printed only in a drawing.
+  if (/\bspec sheet\b/i.test(String(sheet.title || ""))) return { r2Key: sheet.r2Key, pageNum: 1, title: String(sheet.title).split(" (")[0] };
   return null;
 }
 
 // The page a price-book row for this item was imported from, confirmed in the filed PDF
 // (weyland-shared/filed-page.js): for a book that prints the number in its own spelling
 // (Zero "188S-BK" for the schedule's 188SBK) or as a grid (Von Duprin "[98/99] . L . F").
-async function variantPageFor(env2, m, scheduleModel, started) {
+async function variantPageFor(env2, m, scheduleModel, budget) {
   if (!m || !m.maker || !m.maker.known) return null;
   const firm = m.matched && PACKET_MATCH_TYPES.has(String(m.matchType)) && m.product && m.product.id;
   if (m.matched && !firm) return null;
-  const left = FILED_BUDGET_MS - (Date.now() - started);
-  if (left < 3000) return null;
+  const left = leftOf(budget);
+  if (left < 3000) { budget.skipped = true; return null; }
   let variants = [];
   try { variants = await variantPagesFor(env2, firm ? { productId: m.product.id, scheduleModel } : { makerName: m.maker.name, scheduleModel }); } catch (_) { variants = []; }
   if (!variants.length) return null;
-  try { return await confirmedVariantPage(env2, variants, { budgetMs: left }); } catch (_) { return null; }
+  try { return await timed(budget, () => confirmedVariantPage(env2, variants, { budgetMs: left })); } catch (_) { return null; }
 }
 
 export async function citedPagesForSession(sessionId, env2, match = matchForPacket) {
-  const started = Date.now();
+  const budget = newBudget();
   const comps = await env2.DB.prepare(`
     SELECT hs.set_number, hc.quantity, hc.manufacturer, hc.model, hc.catalog_number, hc.component_type
     FROM hardware_components hc JOIN hardware_sets hs ON hc.set_id = hs.id
@@ -200,8 +212,14 @@ export async function citedPagesForSession(sessionId, env2, match = matchForPack
   }
   const pages = new Map();
   let matched = 0, unmatched = 0;
-  const missing = [], notes = [];
+  const missing = [], notes = [], byOthers = [];
   for (const { c, sets, qty } of byKey.values()) {
+    // Furnished by another trade ("BY DIVISION 28", "BY DOOR AND FRAME MANUFACTURER", maker
+    // "By others"): no hardware page belongs in this packet, so it is listed apart, not missed.
+    if (/^by\s+others$/i.test(String(c.manufacturer || "").trim()) || /^\s*(BY|FURNISHED BY|PROVIDED BY)\s+(OTHERS|OWNER|DIV(ISION)?\.?\s*\d+|DOOR\b|FRAME\b|[A-Z ]*(MANUFACTURER|CONTRACTOR|SUPPLIER))/i.test(c.model)) {
+      byOthers.push({ qty, sets: [...sets], text: c.model, component_type: c.component_type || null });
+      continue;
+    }
     // A schedule note in the item column ("VERIFY PERMANENT CORE WITH DISTRICT"): no maker,
     // no catalogue number, only words. Listed as a note, not as an item missing a page.
     if (!c.manufacturer && !/\d/.test(c.model) && c.model.trim().split(/\s+/).length >= 3) {
@@ -209,6 +227,7 @@ export async function citedPagesForSession(sessionId, env2, match = matchForPack
       continue;
     }
     let m = null, filed = null;
+    budget.skipped = false;
     try { m = await match(c, env2); } catch (_) { m = null; }
     const cited = m && m.matched && PACKET_MATCH_TYPES.has(String(m.matchType)) ? citedPagesFor(m, 1) : [];
     if (cited.length) {
@@ -218,7 +237,7 @@ export async function citedPagesForSession(sessionId, env2, match = matchForPack
       if (!pages.has(k)) pages.set(k, { catalogueId: p.catalogueId, pageNum: p.pageNum, title: p.title, kind: p.kind, manufacturer: (m.product && m.product.manufacturer) || c.manufacturer || null, model: (m.product && m.product.model) || c.model, sets: [] });
       const entry = pages.get(k);
       for (const s of sets) if (!entry.sets.includes(s)) entry.sets.push(s);
-    } else if ((filed = (await filedPageFor(env2, m, started, c.model)) || (await variantPageFor(env2, m, c.model, started)))) {
+    } else if ((filed = (await filedPageFor(env2, m, budget, c.model)) || (await variantPageFor(env2, m, c.model, budget)))) {
       matched++;
       const k = "doc:" + filed.r2Key + "#" + filed.pageNum;
       if (!pages.has(k)) pages.set(k, { r2Key: filed.r2Key, catalogueId: null, pageNum: filed.pageNum, title: filed.title, kind: "price_book_filed", manufacturer: (m.product && m.product.manufacturer) || (m.maker && m.maker.name) || c.manufacturer || null, model: filed.number || (m.product && m.product.model) || c.model, sets: [] });
@@ -228,12 +247,14 @@ export async function citedPagesForSession(sessionId, env2, match = matchForPack
       unmatched++;
       // Every miss, as the schedule names it, with why and what is needed (the packet lists them all).
       if (missing.length < 200) {
-        const miss = missFor(c, m);
+        const miss = budget.skipped
+          ? { reason: "search_out_of_time", why: "the filed price book was not searched for " + (c.model || "this item") + ": this build's " + FILED_BUDGET_MS / 1000 + " s for reading books ran out", need: "build the packet again (the books read so far are cached)" }
+          : missFor(c, m);
         missing.push({ qty, sets: [...sets], manufacturer: (m && m.maker && m.maker.typed && m.maker.name) || c.manufacturer || null, model: c.model || null, component_type: c.component_type || null, reason: miss.why, code: miss.reason, need: miss.need });
       }
     }
   }
-  return { components: byKey.size - notes.length, matched, unmatched, missing, notes, pages: [...pages.values()] };
+  return { components: byKey.size - notes.length - byOthers.length, matched, unmatched, missing, notes, by_others: byOthers, pages: [...pages.values()] };
 }
 
 // Tables holding a column, read from the schema (the session's rows live in many tables).
@@ -540,6 +561,7 @@ export function registerSubxWorkspaceRoutes(router, { authenticate, requireActiv
         saveToR2: true,
         citedPages: cutSheets.pages,
         cutSheetMisses: cutSheets.missing,
+        cutSheetByOthers: cutSheets.by_others,
       }, env2, { PDFDocument, StandardFonts, rgb });
       if (!result.success) {
         return jsonResponse3({ success: false, error: "Assembly failed", details: result.errors.join("; ") }, 500);
@@ -566,7 +588,7 @@ export function registerSubxWorkspaceRoutes(router, { authenticate, requireActiv
         doors: result.doorCount,
         hardware_sets: result.hardwareSetCount,
         cut_sheets: result.cutSheetCount,
-        cut_sheet_matching: { components: cutSheets.components, matched: cutSheets.matched, unmatched: cutSheets.unmatched, missing: cutSheets.missing, pages: cutSheets.pages.length },
+        cut_sheet_matching: { components: cutSheets.components, matched: cutSheets.matched, unmatched: cutSheets.unmatched, missing: cutSheets.missing, by_others: cutSheets.by_others, pages: cutSheets.pages.length },
         warnings: result.errors.length ? result.errors : undefined,
         submittals_used: usage,
       });
