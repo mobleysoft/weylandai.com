@@ -70,6 +70,9 @@ await J.run(async () => {
         if (await page.locator(c.selector).count()) { await press(page, c.selector); pressed = true; }
       } else {
         const btn = c.find(page);
+        // The paste result renders its packet box after the match answers (seen 1 of 3 passes on
+        // 2026-10-09 as "buy button not found"): wait for the button before pressing.
+        await btn.waitFor({ state: "visible", timeout: 20000 }).catch(() => {});
         if (await btn.count()) { await press(page, btn); pressed = true; }
       }
     } catch (e) {

@@ -73,7 +73,10 @@ await J.run(async () => {
     await pressIn(sx, '.tab[data-src="paste"]');
     await sx.fill("#sx-text", "101 HM 3070 HW-1 90 MIN Corridor to Stair 1\n102 WD 3070 HW-2 Office 102\n103 PR HM 6070 HW-1 Lobby\nHW-1: closer, exit device, kick plate\nHW-2: lever lockset, 3 hinges, wall stop");
     await pressIn(sx, "#sx-build");
-    const count = await waitText(sx, "#hud-count", /\d+ DOORS?/i, 60000);
+    // The page opens on the 10-door sample; wait for the build of the paste to finish before reading the count.
+    const built = await waitText(sx, "#sx-status", /Built \d+ doors? from your pasted schedule|could not|error/i, 60000);
+    J.note("sightx_build_status", built);
+    const count = await waitText(sx, "#hud-count", /^3 DOORS/i, 15000) || (await sx.locator("#hud-count").innerText().catch(() => ""));
     J.check("the pasted schedule builds a corridor of its doors (3 doors, 2 sets)", /^3 DOORS · 2 SETS/i.test(count || ""), count);
     if (await sx.locator("#tour").count()) await pressIn(sx, "#tour");
     const info = await sx.evaluate(() => { const el = document.getElementById("info"); return el ? el.innerText.replace(/\s+/g, " ").trim().slice(0, 160) : ""; }).catch(() => "");
