@@ -22,8 +22,8 @@
 import { PDFDocument, StandardFonts, rgb } from "pdf-lib";
 import { jsonResponse3 } from "../lib/json-response.js";
 import { assembleSubmittalPackage } from "../lib/submittal-assembler.js";
-import { matchComponentToCutSheets, citedPagesFor, PACKET_MATCH_TYPES, parsePageHint } from "../lib/product-database.js";
-import { pageNamingInFiledPdf, scheduleTokens, makerFiledBooks, variantPagesFor, confirmedVariantPage } from "../../../weyland-shared/filed-page.js";
+import { matchComponentToCutSheets, citedPagesFor, PACKET_MATCH_TYPES } from "../lib/product-database.js";
+import { newReadBudget, filedPageFor, variantPageFor } from "../../../weyland-shared/page-citations.js";
 import { incrementSubmittalsUsed } from "../lib/edge-telemetry.js";
 import { outputAccess, paymentRequired } from "../../../weyland-shared/output-access.js";
 import { readDimension, readSizeCell, looksLikeMark } from "../../assets/client-ocr-src/schedule-text-layer.mjs";
@@ -133,69 +133,16 @@ function missFor(c, m) {
 }
 
 // A filed price book whose index is another edition: read that very PDF for the page naming
-// the model (weyland-shared/filed-page.js), so the packet carries the page instead of a miss.
+// the model (weyland-shared/filed-page.js), so the packet carries the page instead of a miss;
+// else the page a price row for the item was imported from, confirmed in that PDF (a book that
+// prints 188SBK as "188S-BK", or 99-L-F as "[98/99] . L . F"). Both live in
+// weyland-shared/page-citations.js (2026-10-09) so CutsheetX and CloseX cite the same page.
 // The book's text is cached in R2 after the first read; a build spends at most FILED_BUDGET_MS
 // reading filed books. Only that reading counts against it (2026-10-09): the clock used to start
 // with the build, so on Rockford (39 items) the matching of the first sets used it up and every
 // item in sets 40-47 was listed as "not pinned" without its book being searched.
 const FILED_BUDGET_MS = 25000;
-const newBudget = () => ({ spentMs: 0, skipped: false });
-const leftOf = (budget) => FILED_BUDGET_MS - budget.spentMs;
-async function timed(budget, fn) {
-  const t0 = Date.now();
-  try { return await fn(); } finally { budget.spentMs += Date.now() - t0; }
-}
-async function filedPageFor(env2, m, budget, scheduleModel = "") {
-  // The maker is known but the catalogue does not list this model: the schedule's own number,
-  // as a whole token, in the maker's filed price books (it may be printed there).
-  if (m && !m.matched && m.reason === "model_not_in_catalogue" && m.maker && m.maker.known) {
-    for (const book of await makerFiledBooks(env2, m.maker.name)) {
-      for (const model of scheduleTokens(scheduleModel)) {
-        const left = leftOf(budget);
-        if (left < 3000) { budget.skipped = true; return null; }
-        let hit = null;
-        try { hit = await timed(budget, () => pageNamingInFiledPdf(env2, book.r2Key, model, { budgetMs: left })); } catch (_) { hit = null; }
-        if (hit) return { r2Key: book.r2Key, pageNum: hit.pageNum, title: String(book.title || "Price book").split(" (")[0] };
-      }
-    }
-    return null;
-  }
-  if (!m || !m.matched || !PACKET_MATCH_TYPES.has(String(m.matchType)) || !(m.maker && m.maker.known)) return null;
-  const sheet = (m.cutSheets || []).find((s) => s.r2Key && !s.pinnedPage);
-  if (!sheet) return null;
-  const p = m.product || {};
-  // The catalogue's model first; when that is too short to search ("99"), the schedule's own number.
-  for (const model of [...new Set([p.model, p.base_model, ...scheduleTokens(scheduleModel)].filter(Boolean))]) {
-    const left = leftOf(budget);
-    if (left < 3000) { budget.skipped = true; return null; }
-    let hit = null;
-    try { hit = await timed(budget, () => pageNamingInFiledPdf(env2, sheet.r2Key, model, { budgetMs: left })); } catch (_) { hit = null; }
-    if (hit) return { r2Key: sheet.r2Key, pageNum: hit.pageNum, title: String(sheet.title || "Price book").split(" (")[0] };
-  }
-  // A maker's spec, sell or data sheet filed for this product (Select's SL57 sheet; Schlage's ALX
-  // sell sheet, which prints "53 Entrance", not ALX53): the page its catalogue title names, else
-  // page 1, when the number is printed only in a drawing or as a function code.
-  if (/\b(spec|sell|data) sheet\b/i.test(String(sheet.title || ""))) {
-    const hint = parsePageHint(sheet.title);
-    return { r2Key: sheet.r2Key, pageNum: (hint && hint.firstPage) || 1, title: String(sheet.title).split(" (")[0] };
-  }
-  return null;
-}
-
-// The page a price-book row for this item was imported from, confirmed in the filed PDF
-// (weyland-shared/filed-page.js): for a book that prints the number in its own spelling
-// (Zero "188S-BK" for the schedule's 188SBK) or as a grid (Von Duprin "[98/99] . L . F").
-async function variantPageFor(env2, m, scheduleModel, budget) {
-  if (!m || !m.maker || !m.maker.known) return null;
-  const firm = m.matched && PACKET_MATCH_TYPES.has(String(m.matchType)) && m.product && m.product.id;
-  if (m.matched && !firm) return null;
-  const left = leftOf(budget);
-  if (left < 3000) { budget.skipped = true; return null; }
-  let variants = [];
-  try { variants = await variantPagesFor(env2, firm ? { productId: m.product.id, scheduleModel } : { makerName: m.maker.name, scheduleModel }); } catch (_) { variants = []; }
-  if (!variants.length) return null;
-  try { return await timed(budget, () => confirmedVariantPage(env2, variants, { budgetMs: left })); } catch (_) { return null; }
-}
+const newBudget = () => newReadBudget(FILED_BUDGET_MS);
 
 export async function citedPagesForSession(sessionId, env2, match = matchForPacket) {
   const budget = newBudget();

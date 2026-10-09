@@ -44,6 +44,7 @@
 // the line. A named maker's line is never answered with another maker's product.
 
 import { matchComponentToCutSheets, citationFor } from "../lib/product-database.js";
+import { citationsFor, newReadBudget } from "../../../weyland-shared/page-citations.js";
 import { parseSpecText, parseSpecLines, recordMisses } from "../lib/cut-sheet-misses.js";
 import { getManufacturerNames } from "../lib/product-database.js";
 import { jsonResponse3 } from "../lib/json-response.js";
@@ -98,9 +99,49 @@ export function lineFromFields(fields, knownManufacturers = []) {
 // The one matcher call every entry point makes for a line. Its citation URLs
 // come back signed (lib/citation-links.js), so a citation opens as a plain
 // link for the guest or account that asked.
-export async function matchLine(line, env2) {
-  const r = await matchComponentToCutSheets({ manufacturer: line.manufacturer || void 0, model: line.model, modelFull: line.modelFull || void 0, description: line.description || void 0, noModel: line.noModel || void 0 }, env2);
+//
+// THE PAGE, NOT THE BOOK (2026-10-09). The line's citations are ranked by
+// weyland-shared/page-citations.js citationsFor, the way SubX's packet finds a
+// page: a pinned page, a sheet that names its page, the maker's catalogue page
+// whose PDF is on file, else the filed price book's own page naming the item
+// (read from that PDF) or the page its price row was imported from (confirmed in
+// that PDF). A run of more than three pages is never a citation ("LCN Price Book
+// pp.6-48 ... search this PDF" was the answer for LCN 4040XP while the packet
+// cited p.41 of the LCN 4000 catalogue), a page without a PDF comes after every
+// page that opens (Ives 8400 cited Ives Price Book 2024 p.93, text only), and
+// "around p.None" never prints. `citations` is the ranked list; `citation` its
+// first. A model the catalogue does not list but the maker's filed book prints
+// (in the book's own spelling) is a match on that page (matchType price_book_page).
+// Reading a cold book costs seconds, so each request has a reading budget; a book
+// read once is cached in R2 next to it.
+export const SINGLE_READ_MS = 20000;
+export const BATCH_READ_MS = 25000;
+export async function matchLine(line, env2, budget = newReadBudget(SINGLE_READ_MS)) {
+  let r = await matchComponentToCutSheets({ manufacturer: line.manufacturer || void 0, model: line.model, modelFull: line.modelFull || void 0, description: line.description || void 0, noModel: line.noModel || void 0 }, env2, { pagesWhenUnspecific: true });
+  if (!line.noModel && (r.matched || r.reason === "model_not_in_catalogue")) {
+    let citations = [];
+    try { citations = await citationsFor(env2, r, { budget, scheduleModel: line.modelFull || line.model }); } catch (_) { citations = []; }
+    if (!r.matched && citations.length && citations[0].url) r = pricedPageMatch(r, line, citations[0]);
+    r.citations = r.matched ? citations : [];
+  } else {
+    r.citations = [];
+  }
   return signMatchResultLinks(env2, r);
+}
+
+// A model with no product record that the maker's own filed price book prints: a match on that page.
+function pricedPageMatch(r, line, c) {
+  const maker = r.maker || {};
+  const model = String(c.number || line.model || "").toUpperCase();
+  const { reason, reasonText, need, ...rest } = r;
+  return {
+    ...rest,
+    matched: true,
+    product: { id: null, name: `${maker.name} ${model}`.trim(), manufacturer: maker.name || null, model, series: null, category: null, ansiGrade: null, fireRated: null, adaCompliant: null },
+    confidence: "medium",
+    matchType: "price_book_page",
+    matchNote: `no product record; ${c.title} p.${c.page} prints ${model}`,
+  };
 }
 
 // Projects the shared matcher's full result down to the compact per-line
@@ -133,9 +174,12 @@ export function toBatchResult(line, r) {
     // 2026-10-05: when no cut sheet is filed, the first catalogue page that
     // mentions the model (see product-database.js getCataloguePagesForModel).
     cataloguePage: (r.cataloguePages && r.cataloguePages[0]) || null,
-    // One citation whichever kind is filed: a standalone sheet first, else
-    // the catalogue page that names the model. Null only when neither exists.
+    // The best page to cite (matchLine's ranked `citations`, first): one page or
+    // a run of at most three, a page that opens before one whose PDF is not on
+    // file. Null when nothing names a page (a price book listing the product
+    // somewhere in pp.6-48 is not a citation).
     citation: citationFor(r),
+    citations: Array.isArray(r.citations) ? r.citations : [],
   };
   // 2026-10-08: what the line said (a spec line's quantity, description and finish, the maker
   // as resolved from its code) and, for a miss, why.
@@ -263,10 +307,12 @@ router.post("/api/cut-sheets/match-batch", async (request2, env2, ctx) => {
   }
   try {
     const all = new Array(lines.length);
+    // One reading budget for the whole paste (filed books are cached after the first read).
+    const budget = newReadBudget(BATCH_READ_MS);
     for (let i = 0; i < lines.length; i += MATCH_BATCH_CONCURRENCY) {
       const chunk = lines.slice(i, i + MATCH_BATCH_CONCURRENCY);
       const chunkResults = await Promise.all(chunk.map((line) =>
-        matchLine(line, env2).then((r) => toBatchResult(line, r))
+        matchLine(line, env2, budget).then((r) => toBatchResult(line, r))
       ));
       for (let j = 0; j < chunkResults.length; j++) all[i + j] = chunkResults[j];
     }

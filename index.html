@@ -3355,9 +3355,12 @@
           var sp = specs[i], d = res.data || {}, p = d.product || {}, cs = (d.cutSheets || [])[0] || null;
           if (!res.ok) return "<div class=\"cutsheet-card\"><div><div class=\"cutsheet-meta\"><span class=\"cutsheet-mfg\">" + esc(sp[0].toUpperCase()) + "</span><span class=\"cutsheet-conf\" style=\"color:var(--red)\">MATCHER " + esc(res.status || "ERR") + "</span></div><h3>" + esc(sp[0] + " " + sp[1]) + "</h3><p>The matcher did not answer. That is the real response.</p></div><div class=\"citation-box\">CITATION: none</div></div>";
           if (!d.matched) return "<div class=\"cutsheet-card\"><div><div class=\"cutsheet-meta\"><span class=\"cutsheet-mfg\">" + esc(sp[0].toUpperCase()) + "</span><span class=\"cutsheet-conf\" style=\"color:var(--red)\">NO MATCH</span></div><h3>" + esc(sp[0] + " " + sp[1]) + "</h3><p>Not in the catalogue. Recorded as a miss so coverage grows.</p></div><div class=\"citation-box\">CITATION: none</div></div>";
-          var cp = (d.cataloguePages || [])[0] || null;
-          var cite = cs ? ((cs.pageUrl ? "<a href=\"" + esc(cs.pageUrl) + "\" data-cite-title=\"" + esc(String(cs.title || "Cut sheet").split(" (")[0]) + "\" style=\"color:var(--blue)\">" : "") + esc(cs.title || "Cut sheet") + (cs.pages != null ? " \u00b7 " + esc(cs.pages) + " pages" : "") + (cs.pageUrl ? "</a>" : ""))
-            : cp ? ("no standalone cut sheet; catalogue page: <a href=\"" + esc(cp.pageUrl) + "\" data-cite-title=\"" + esc(cp.title + ", p. " + cp.pageNum) + "\" style=\"color:var(--blue)\">" + esc(cp.title) + " \u00b7 p." + esc(cp.pageNum) + "</a>")
+          var cp = (d.cataloguePages || [])[0] || null, ci = d.citation || null;
+          // The matcher's ranked page first (2026-10-09): one page or a run of three, a page that opens before one that does not.
+          var cite = ci ? ((ci.url ? "<a href=\"" + esc(ci.url) + "\" data-cite-title=\"" + esc(ci.title + ", p. " + ci.page) + "\" style=\"color:var(--blue)\">" : "") + esc(ci.title) + " · p." + esc(ci.page) + (ci.url ? "</a>" : " (PDF not on file; page text indexed)"))
+            : (cs && !d.citations) ? ((cs.pageUrl ? "<a href=\"" + esc(cs.pageUrl) + "\" data-cite-title=\"" + esc(String(cs.title || "Cut sheet").split(" (")[0]) + "\" style=\"color:var(--blue)\">" : "") + esc(cs.title || "Cut sheet") + (cs.pages != null ? " \u00b7 " + esc(cs.pages) + " pages" : "") + (cs.pageUrl ? "</a>" : ""))
+            : (cp && !d.citations) ? ("no standalone cut sheet; catalogue page: <a href=\"" + esc(cp.pageUrl) + "\" data-cite-title=\"" + esc(cp.title + ", p. " + cp.pageNum) + "\" style=\"color:var(--blue)\">" + esc(cp.title) + " \u00b7 p." + esc(cp.pageNum) + "</a>")
+            : cs ? esc(String(cs.title || "Price book").split(" (")[0]) + " is on file; no page of it is pinned for this model yet"
             : "no cut sheet or catalogue page filed for this model yet";
           return "<div class=\"cutsheet-card\"><div><div class=\"cutsheet-meta\"><span class=\"cutsheet-mfg\">" + esc((p.manufacturer || sp[0]).toUpperCase()) + "</span><span class=\"cutsheet-conf\">" + esc((d.confidence || "") + " \u00b7 " + (d.matchType || "")) + "</span></div><h3>" + esc(p.name || (sp[0] + " " + sp[1])) + "</h3><p>Spec line: " + esc(sp[0] + " " + sp[1]) + ". Catalogue entry " + esc(p.model || sp[1]) + ".</p></div><div class=\"citation-box\">CITATION: " + cite + "</div></div>";
         }).join("");
@@ -3387,9 +3390,12 @@
           if (!res.ok) { var m = (res.data && res.data.error && (res.data.error.message || res.data.error)) || ("request failed (" + res.status + ")"); out.textContent = String(m); return; }
           var results = (res.data && res.data.results) || [], sum = res.data.summary || {};
           var rows = results.map(function (r) {
-            var p = r.product || {}, cs = r.cutSheet || null, cp = r.cataloguePage || null;
-            // A standalone sheet first; else the catalogue page that names the model (first-class since 2026-10-05); else a dash.
-            var cite = cs ? ((cs.pageUrl ? "<a href=\"" + hsEsc(cs.pageUrl) + "\" data-cite-title=\"" + hsEsc(String(cs.title || "Cut sheet").split(" (")[0] + (cs.pageHint ? ", pp. " + cs.pageHint : "")) + "\" style=\"color:var(--blue)\">" : "") + hsEsc(String(cs.title || "cut sheet").split(" (")[0]) + (cs.pageHint ? ", pp. " + hsEsc(cs.pageHint) : "") + (cs.pages ? " (" + hsEsc(cs.pages) + "-page price book)" : "") + (cs.pageUrl ? "</a>" : ""))
+            var p = r.product || {}, cs = r.cutSheet || null, cp = r.cataloguePage || null, ci = r.citation || null;
+            // The matcher's ranked page (2026-10-09): one page or a run of three, a page that opens first. Before
+            // that answer existed: a standalone sheet first; else the catalogue page that names the model; else a dash.
+            var cite = ci ? ((ci.url ? "<a href=\"" + hsEsc(ci.url) + "\" data-cite-title=\"" + hsEsc(ci.title + ", p. " + ci.page) + "\" style=\"color:var(--blue)\">" : "") + hsEsc(ci.title) + ", p. " + hsEsc(ci.page) + (ci.url ? "</a>" : " <span style=\"color:var(--muted)\">(PDF not on file; page text indexed)</span>"))
+              : r.citations ? (cs ? hsEsc(String(cs.title || "Price book").split(" (")[0]) + " <span style=\"color:var(--muted)\">(on file; no page pinned for this model yet)</span>" : "\u2014")
+              : cs ? ((cs.pageUrl ? "<a href=\"" + hsEsc(cs.pageUrl) + "\" data-cite-title=\"" + hsEsc(String(cs.title || "Cut sheet").split(" (")[0] + (cs.pageHint ? ", pp. " + cs.pageHint : "")) + "\" style=\"color:var(--blue)\">" : "") + hsEsc(String(cs.title || "cut sheet").split(" (")[0]) + (cs.pageHint ? ", pp. " + hsEsc(cs.pageHint) : "") + (cs.pages ? " (" + hsEsc(cs.pages) + "-page price book)" : "") + (cs.pageUrl ? "</a>" : ""))
               : cp ? ((cp.pageUrl ? "<a href=\"" + hsEsc(cp.pageUrl) + "\" data-cite-title=\"" + hsEsc(cp.title + ", p. " + cp.pageNum) + "\" style=\"color:var(--blue)\">" : "") + hsEsc(cp.title) + ", p. " + hsEsc(cp.pageNum) + (cp.pageUrl ? "</a>" : "") + " <span style=\"color:var(--muted)\">(catalogue page)</span>")
               : "\u2014";
             var req = r.matched ? "" : " <a href=\"#cx-coverage\" style=\"color:var(--accent)\">request</a>";
@@ -3545,11 +3551,19 @@
           }
           var cxEsc = function (v) { return String(v == null ? "" : v).replace(/[&<>"]/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", "\"": "&quot;" }[c]; }); };
           var p = result.product || {};
-          var cites = (result.cutSheets || []).map(function(s) {
+          // The matcher's ranked pages (2026-10-09), the pages that open first; never a price book's "pp.6-48".
+          var cites = (result.citations || []).map(function(c) {
+            var label = cxEsc(c.title) + ", p. " + cxEsc(c.page);
+            return "<li>" + (c.url ? "<a href=\"" + cxEsc(c.url) + "\" data-cite-title=\"" + cxEsc(c.title + ", p. " + c.page) + "\" style=\"color:var(--blue)\">" + label + "</a>" : label + " (PDF not on file; page text indexed)") + "</li>";
+          });
+          if (!cites.length && result.citations && (result.cutSheets || []).length) cites = (result.cutSheets || []).map(function(s) {
+            return "<li>" + cxEsc(String(s.title || "Price book").split(" (")[0]) + " is on file; no page of it is pinned for this model yet.</li>";
+          });
+          if (!cites.length && !result.citations) cites = (result.cutSheets || []).map(function(s) {
             var label = cxEsc(s.title || "Cut sheet") + (s.pages != null ? " · " + cxEsc(s.pages) + " pages" : "");
             return "<li>" + (s.pageUrl ? "<a href=\"" + cxEsc(s.pageUrl) + "\" data-cite-title=\"" + cxEsc(String(s.title || "Cut sheet").split(" (")[0]) + "\" style=\"color:var(--blue)\">" + label + "</a>" : label) + "</li>";
           });
-          if (!cites.length) cites = (result.cataloguePages || []).slice(0, 3).map(function(cp) {
+          if (!cites.length && !result.citations) cites = (result.cataloguePages || []).slice(0, 3).map(function(cp) {
             var label = cxEsc(cp.title) + ", p. " + cxEsc(cp.pageNum);
             return "<li>Catalogue page: " + (cp.pageUrl ? "<a href=\"" + cxEsc(cp.pageUrl) + "\" data-cite-title=\"" + cxEsc(cp.title + ", p. " + cp.pageNum) + "\" style=\"color:var(--blue)\">" + label + "</a>" : label) + "</li>";
           });

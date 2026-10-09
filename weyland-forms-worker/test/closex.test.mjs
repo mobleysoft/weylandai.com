@@ -106,3 +106,27 @@ test("a product whose filed price book is another edition's index gets the page 
   assert.deepEqual(r.pages.map((p) => [p.r2Key, p.pageNum, p.title]), [[key, 42, "Von Duprin Price Book"]]);
   assert.deepEqual(r.missing, ["Nobody X1"]);
 });
+
+test("PA-AX-99-L-F-2SI-06 and 188SBK PSA get the page their price rows came from, confirmed in the filed book (as SubX's packet does)", async () => {
+  const { filedTextKey } = await import("../../weyland-shared/filed-page.js");
+  const { DatabaseSync } = await import("node:sqlite");
+  const db = new DatabaseSync(":memory:");
+  db.exec(`CREATE TABLE manufacturers (id TEXT, name TEXT); CREATE TABLE products (id TEXT, manufacturer_id TEXT);
+    CREATE TABLE product_documents (product_id TEXT, document_type TEXT, active INTEGER, r2_object_key TEXT, document_title TEXT);
+    CREATE TABLE product_variants (product_id TEXT, full_model_number TEXT, list_price REAL, catalog_page TEXT);`);
+  db.exec("INSERT INTO manufacturers VALUES ('mz','Zero International'); INSERT INTO products VALUES ('pz','mz');");
+  db.exec("INSERT INTO product_documents VALUES ('pv','cut_sheet',1,'manufacturer-catalogs/vd.pdf','Von Duprin Price Book (2026)'), ('pz','cut_sheet',1,'manufacturer-catalogs/zero.pdf','Zero Price Book (2026)');");
+  db.exec("INSERT INTO product_variants VALUES ('pv','99-L-F',3564,'26'), ('pz','188S-BK [8'' (2.4 m)]',22.88,'44');");
+  const DB = { prepare(sql) { let a = []; const st = { bind(...x) { a = x; return st; }, async all() { return { results: db.prepare(sql).all(...a).map((r) => ({ ...r })) }; } }; return st; } };
+  const store = new Map([
+    [filedTextKey("manufacturer-catalogs/vd.pdf"), JSON.stringify([{ page: 26, text: "[98/99] .  L . F . [ ] $3,337" }])],
+    [filedTextKey("manufacturer-catalogs/zero.pdf"), JSON.stringify([{ page: 44, text: "188S-BK Silicone/black/PSA $22.88" }])],
+  ]);
+  const env = { DB, UPLOADS: { async get(k) { return store.has(k) ? { async json() { return JSON.parse(store.get(k)); } } : null; } } };
+  const match = async (c) => c.manufacturer === "Von Duprin"
+    ? { matched: true, matchType: "series", maker: { typed: true, known: true, name: "Von Duprin" }, product: { id: "pv", model: "99" }, cutSheets: [{ r2Key: "manufacturer-catalogs/vd.pdf", pinnedPage: null, title: "Von Duprin Price Book (2026)" }], cataloguePages: [] }
+    : { matched: false, reason: "model_not_in_catalogue", maker: { typed: true, known: true, name: "Zero International" }, cutSheets: [], cataloguePages: [] };
+  const r = await citedProductPages(env, [{ manufacturer: "Von Duprin", model: "PA-AX-99-L-F-2SI-06" }, { manufacturer: "Zero International", model: "188SBK PSA" }], match);
+  assert.deepEqual(r.pages.map((p) => [p.r2Key, p.pageNum]), [["manufacturer-catalogs/vd.pdf", 26], ["manufacturer-catalogs/zero.pdf", 44]]);
+  assert.deepEqual(r.missing, []);
+});
