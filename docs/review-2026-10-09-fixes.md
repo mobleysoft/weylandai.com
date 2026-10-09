@@ -46,7 +46,7 @@ Ran the exact shipped local runner on macOS with HeadlessChrome 153.0.8010.12:
 PLAYWRIGHT_CORE=/private/tmp/claude-501/-Users-johnmobley/36836088-d551-4ec6-b6ef-38f1b69cf0bc/scratchpad/node_modules/playwright-core/index.js /opt/homebrew/bin/node tools/accuracy/scanned_sheet_browser.mjs
 ```
 
-An outer 180-second process-group timeout bounded the run; it completed normally in about 17 seconds and exited 1 because accuracy failed. The refreshed receipt is `tools/accuracy/g019-browser.json`, dated `2026-10-09T21:24:12.125Z`. The prior receipt is preserved outside the checkout at `/private/tmp/claude-501/-Users-johnmobley/36836088-d551-4ec6-b6ef-38f1b69cf0bc/scratchpad/g019-browser-before-codex-20261009T212355Z.json`.
+An outer 180-second process-group timeout bounded the run; it completed normally in about 17 seconds and exited 1 because accuracy failed. The fresh receipt, dated `2026-10-09T21:24:12.125Z`, is preserved outside the checkout at `/private/tmp/claude-501/-Users-johnmobley/36836088-d551-4ec6-b6ef-38f1b69cf0bc/scratchpad/g019-browser-after-codex-20261009T212412Z.json` (SHA256 `a35e706635058928b6cac1add40baf5f979131e6df408d9023dba5c1038f4641`). The prior receipt is backed up at `/private/tmp/claude-501/-Users-johnmobley/36836088-d551-4ec6-b6ef-38f1b69cf0bc/scratchpad/g019-browser-before-codex-20261009T212355Z.json`. The tracked receipt was restored from verified identical original bytes: the historical confidence test deliberately checks its old fabricated 0.85 stamps, and the new measured receipt must not silently replace that regression fixture.
 
 | Variant | Actual rows / unique marks | Expected rows matched | Scored fields | Extras | Result |
 | --- | --- | --- | --- | --- | --- |
@@ -95,4 +95,10 @@ All paths below belong to this checkout's combined d067 change. The original d06
 - `weyland-subx-worker/test/scanned-sheet-review.test.mjs` — original untracked suite.
 - `weyland-subx-worker/test/sparse-vector-routing.test.mjs` — original untracked suite.
 
-Final scope before checkpoint: **22 tracked modified paths and five untracked paths**. The authorized scoped checkpoint contains the 21 tracked implementation/test paths, four new test suites and this report. The refreshed browser JSON remains uncommitted evidence for the parent. The separate real-set reader checkout `wt-g030` was not changed.
+Final scope before checkpoint: **22 tracked modified paths and five untracked paths**. The authorized scoped checkpoint contains the 21 tracked implementation/test paths, four new test suites and this report. The fresh browser JSON remains external evidence for the parent. The separate real-set reader checkout `wt-g030` was not changed.
+
+### Budget option hardening after parent review
+
+The parent identified that `NaN` recognition limits could bypass both comparisons. Invalid values now fall back to the finite built-in ceilings; valid cell limits are floored and clamped. Two actual-function regressions cover `NaN`, infinities, negative values, strings and objects, and show the cell reader stopping at the default timeout when given `NaN`.
+
+After syncing the source and served module, the full worker suite passed **103/103**, 0 failed or skipped, in 17.97 seconds. The existing DOM gate remains **8/8**. This safety followup changes only the grid-reader source/served pair, guard tests and this report. It does not change row recognition.

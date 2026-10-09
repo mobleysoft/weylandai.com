@@ -3,7 +3,7 @@ import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
 import { PDFDocument } from "pdf-lib";
 import { getDocument, Util } from "../src/vendor/pdfjs-text.mjs";
-import { scanRenderPlan, renderPageToImageData, renderRegionToImageData, recognizePageWords, SCAN_MAX_CELLS } from "../assets/client-ocr-src/schedule-grid-extraction-client.mjs";
+import { scanRenderPlan, renderPageToImageData, renderRegionToImageData, recognizePageWords, recognitionBudget, SCAN_MAX_CELLS, SCAN_MAX_RECOGNITION_MS } from "../assets/client-ocr-src/schedule-grid-extraction-client.mjs";
 
 const sourceUrl = new URL("../assets/client-ocr-src/schedule-grid-extraction-client.mjs", import.meta.url);
 let imports = 0;
@@ -82,6 +82,31 @@ function fineGrid() {
   }
   return { width, height, data };
 }
+test("F2: invalid caller limits cannot disable the recognition budget", () => {
+  for (const value of [NaN, Infinity, -Infinity, -1, "NaN", "2000", {}]) {
+    let elapsed = 0;
+    const budget = recognitionBudget({ maxCells: value, maxRecognitionMs: value, now: () => elapsed });
+    let accepted = 0;
+    while (accepted <= SCAN_MAX_CELLS && budget.take()) accepted++;
+    assert.equal(accepted, SCAN_MAX_CELLS);
+    assert.equal(budget.status().reason, "cell_limit");
+    const timed = recognitionBudget({ maxCells: value, maxRecognitionMs: value, now: () => elapsed });
+    assert.equal(timed.take(), true);
+    elapsed = SCAN_MAX_RECOGNITION_MS;
+    assert.equal(timed.take(), false);
+    assert.equal(timed.status().reason, "time_limit");
+  }
+});
+test("F2: NaN time limit still stops the real cell reader at the default timeout", async () => {
+  let elapsed = 0, calls = 0;
+  const result = await recognizePageWords(fineGrid(), { ...emptyEngine, getTextBoxes() {
+    calls++; elapsed += 30001; return [];
+  } }, 150, "6", { now: () => elapsed, maxRecognitionMs: NaN });
+  assert.equal(calls, 2);
+  assert.equal(result.partial, true);
+  assert.equal(result.recognition.reason, "time_limit");
+  assert.equal(result.recognition.max_ms, SCAN_MAX_RECOGNITION_MS);
+});
 test("F2: review's 1200 square fine grid stops at the default cell budget as partial", async () => {
   let calls = 0;
   const result = await recognizePageWords(fineGrid(), { ...emptyEngine, getTextBoxes() { calls++; return []; } }, 150);

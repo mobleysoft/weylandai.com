@@ -567,8 +567,9 @@ const yieldRow = () => new Promise(resolve => setTimeout(resolve, 0));
 export function recognitionBudget(opts = {}) {
   const now = opts.now || (() => performance.now());
   const start = now();
-  const maxCells = Math.max(0, Math.min(SCAN_MAX_CELLS, opts.maxCells ?? SCAN_MAX_CELLS));
-  const maxMs = Math.max(0, Math.min(SCAN_MAX_RECOGNITION_MS, opts.maxRecognitionMs ?? SCAN_MAX_RECOGNITION_MS));
+  const limit = (value, ceiling) => Number.isFinite(value) && value >= 0 ? Math.min(ceiling, value) : ceiling;
+  const maxCells = Math.floor(limit(opts.maxCells, SCAN_MAX_CELLS));
+  const maxMs = limit(opts.maxRecognitionMs, SCAN_MAX_RECOGNITION_MS);
   let cells = 0, reason = null;
   const check = () => {
     if (!reason && opts.signal?.aborted) reason = "aborted";
