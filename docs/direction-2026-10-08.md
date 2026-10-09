@@ -255,3 +255,23 @@ Every red traces to something now fixed or now understood, none to the journeys'
   SightX and SubX workers are being deployed from main; the journey is re-run after.
 
 The bar for the next matrix: 28 of 28 three times on main with every worker deployed from the commit under test.
+
+## State at 14:45 EDT, 2026-10-09 (number two)
+
+- Front door live (6c809d8, fixes 100073e and 7026853): the first screen is the offer; phone fits one viewport; no
+  third-party request on any path; first-screen journeys 45 of 45 and 24 of 24. The claim check (Gemini, independent,
+  docs/claim-check-2026-10-09.md) found one overclaim, fixed: the offer no longer names PropX and HuntX as sold.
+- The sample packet behind SEE A SAMPLE PACKET is SubX's own output (8d60411): 5 pages, 65 doors traced, SAMPLE on
+  every page, producer WeylandAI SubX.
+- Deploys: Workers never deployed on push (manual workflow). SightX and SubX were deployed from main today; the gate is
+  goal g029. On the SubX deploy from 683b84a: subx-upload-to-submittal 14 of 14 three times, estimator-schedule-to-packet
+  18 of 18 three times (the Section 08 71 00 prompt appears once the served reader matches the source).
+- Scanned sheets (g019): the browser path reads 46 of 48 rows on the scan (0 before today), Node 48 of 48. The review of
+  today's landings (Codex, docs/review-2026-10-09-landings.md) rates two findings high: the fallback render has no pixel
+  budget (a large page can request gigabytes of canvas), and scan-read rows are presented unqualified (confidences
+  overwritten, duplicates totaled). Fixes are goal g034; the first-screen wording is held to the measured product.
+- GameGob runs Forge Survivors on the SightX input layer (gamegob.com 3a25015), 40 of 40 harness checks in real Chromium.
+- Cloud session resumed at 14:15 with three bounded goals (g028 SightX on three real buildings, g032 PropX and HuntX
+  audits, g033 AuthFor deferred mediums); it reports into files and PRs only.
+- Correction of record: Rockford's hardware count is 110, not 114; the four extra text-layer lines are struck-through
+  addendum deletions on page 22. The reader and the test were right.
