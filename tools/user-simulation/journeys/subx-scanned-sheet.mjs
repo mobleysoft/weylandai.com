@@ -59,7 +59,7 @@ await J.run(async () => {
       return title.includes(project) && !!b && !b.disabled && !!result && !result.querySelector(".spin") && /Page \d+:|could not|nothing reads/i.test(result.innerText);
     }, project), 600000, 1000);
     if (!ready) throw new Error(variant + " automatic read did not finish");
-    await frame.fill("#sd-page", String(schedulePage));
+    await frame.selectOption("#sd-page", String(schedulePage)); // #sd-page is a <select> in the shipped app, not a text input
     await frame.selectOption("#sd-type", "door_schedule");
     const before = submitted.length;
     await pressIn(frame, "#client-extract-btn");
