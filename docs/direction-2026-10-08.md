@@ -217,3 +217,7 @@ DOWNLOAD PDF delivers the cut sheet (overlay)" with the detail "no DOWNLOAD PDF 
 matched product and OPEN AT THE PAGE both work; the result lost its download control. Evidence:
 plan/evidence/matrix/2026-10-09T08-05Z-results.jsonl on the Mac. Note: the run started at 08:05Z, five minutes before
 the time given to the cloud; the deploys from PR 81 were live by then (every PR 81 journey is green).
+
+Addendum 09:20Z: after PR 87 restored the DOWNLOAD PDF control, cutsheetx-finder-search ran 3 of 3 green on main
+(21 of 21 checks each pass; tools/user-simulation/reports/matrix-2026-10-09T09-17-17-567Z on the Mac). With the
+08:05Z run that makes the matrix 23 of 23 green on main.
