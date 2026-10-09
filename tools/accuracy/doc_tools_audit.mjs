@@ -150,11 +150,12 @@ async function pricexOn(file, expectedGroups, label) {
     const t0 = Date.now();
     const r = await fetch(BASE + "/api/forms/pricex/session/" + sid, { method: "POST", headers: { ...H, "Content-Type": "application/json" }, body: "{}" });
     const d = await r.json().catch(() => ({}));
-    const lines = d.lines || d.items || [];
-    const priced = lines.filter((l) => Number(l.list_price ?? l.listPrice ?? l.unit_list) > 0);
-    const exact = priced.filter((l) => /exact/i.test(String(l.how || l.match || l.basis || "")));
+    // Each line says priced (with its basis and book) or not, with its reason; schedule notes are listed, not priced.
+    const lines = (d.lines || []).filter((l) => !l.scheduleNote);
+    const priced = lines.filter((l) => l.priced);
+    const exact = priced.filter((l) => l.basis === "exact");
     const csv = await fetch(BASE + "/api/forms/pricex/session/" + sid + "/csv", { method: "POST", headers: { ...H, "Content-Type": "application/json" }, body: "{}" });
-    return { http: r.status, seconds: Math.round((Date.now() - t0) / 1000), lines: lines.length, priced: priced.length, exact: exact.length, unpriced_with_reason: lines.filter((l) => !(Number(l.list_price ?? l.listPrice ?? l.unit_list) > 0) && (l.reason || l.why || l.note)).length, csv_http: csv.status, total: d.total ?? d.totals ?? null };
+    return { http: r.status, seconds: Math.round((Date.now() - t0) / 1000), lines: lines.length, priced: priced.length, exact: exact.length, unpriced_with_reason: lines.filter((l) => !l.priced && l.reason).length, csv_http: csv.status, totals: d.totals || null, books: [...new Set(priced.map((l) => l.book))] };
   } finally {
     await fetch(BASE + "/api/hardware-schedule/session/" + sid, { method: "DELETE", headers: H });
   }

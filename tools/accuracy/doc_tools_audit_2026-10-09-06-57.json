@@ -1,0 +1,167 @@
+{
+  "base": "https://weylandai.com",
+  "at": "2026-10-09T06:57:37.062Z",
+  "results": [
+    {
+      "id": "drawx",
+      "label": "DrawX",
+      "doc": "Fayette GA 2419 Addendum 1 plans (36 x 24)",
+      "pass": true,
+      "http": 200,
+      "seconds": 5,
+      "pages": 21,
+      "sheets": 21,
+      "numbered_and_titled": 21,
+      "sample": [
+        "1G0.1 COVER SHEET,SHEET INDEX, LEGEND",
+        "1G1.0 HANDICAP",
+        "1G1.1 SPECIFICATIONS",
+        "1G1.2 SPECIFICATIONS",
+        "1G1.3 SPECIFICATIONS"
+      ],
+      "summary": "21 of 21 sheets numbered and titled, 5 s"
+    },
+    {
+      "id": "asbuiltx",
+      "label": "AsBuiltX",
+      "doc": "Fayette sheets 14 and 15 (A3.2, A4.1)",
+      "pass": true,
+      "same_sheet": {
+        "http": 200,
+        "seconds": 2,
+        "diff_pct": 0
+      },
+      "different_sheets": {
+        "http": 200,
+        "seconds": 2,
+        "diff_pct": 4.2
+      },
+      "summary": "same sheet 0%, different sheets 4.2% (2 s, 2 s)"
+    },
+    {
+      "id": "specx",
+      "label": "SpecX",
+      "doc": "Berryessa Bid B-09-2023-24 manual (288 pages)",
+      "pass": true,
+      "http": 200,
+      "seconds": 6,
+      "sections": 14,
+      "door_hardware": {
+        "number": "08 71 00",
+        "title": "DOOR HARDWARE",
+        "page": 273
+      },
+      "list": [
+        "01 10 00 SUMMARY OF WORK p200",
+        "01 20 00 PRICE AND PAYMENT PROCEDURES p205",
+        "01 21 00 ALLOWANCES p210",
+        "01 22 00 UNIT PRICES p211",
+        "01 30 00 ADMINISTRATIVE REQUIREMENTS p221",
+        "01 32 16 CONSTRUCTION PROGRESS SCHEDULE p228",
+        "01 40 00 QUALITY REQUIREMENTS p231",
+        "01 50 00 TEMPORARY FACILITIES AND CONTROLS p235",
+        "01 60 00 . p207",
+        "01 60 05 PRODUCT REQUIREMENTS p242",
+        "01 70 00 EXECUTION AND CLOSEOUT REQUIREMENTS p248",
+        "01 78 00 CLOSEOUT SUBMITTALS p266",
+        "08 14 16 FLUSH WOOD DOORS p269",
+        "08 71 00 DOOR HARDWARE p273"
+      ],
+      "summary": "14 CSI sections, 08 71 00 on p.273, 6 s"
+    },
+    {
+      "id": "inspecx",
+      "label": "InspecX",
+      "doc": "FCMAT Mayacamas FIT inspection letter (9 pages)",
+      "pass": true,
+      "http": 200,
+      "seconds": 50,
+      "pages": 9,
+      "ocr_pages": 7,
+      "deficiencies": 22,
+      "sample": [
+        "p1 FCMAT did not note any “extreme deficiencies” on the FIT, but “deficiencies” were noted in",
+        "p2 • Replace the broken plate cover for the light sensor in the men’s restroom in the hall.",
+        "p2 • Repair or remove the desk with the broken shelf in the library.",
+        "p2 leaking and need to be repaired. Most urgently, three of the five toilets in the women’s r",
+        "p2 This toilet should be placed out of service until it is inspected and repaired."
+      ],
+      "summary": "22 deficiencies over 9 pages (7 OCR'd), 50 s"
+    },
+    {
+      "id": "survx",
+      "label": "SurvX",
+      "doc": "NSW Newcastle pre-construction dilapidation report (289 pages)",
+      "pass": true,
+      "http": 200,
+      "seconds": 5,
+      "pages": 289,
+      "findings": 60,
+      "legend_lines_flagged": 0,
+      "sample": [
+        "p8 Significant cracks in asphalt",
+        "p9 Significant cracks and damaged from tree roots",
+        "p9 Significant cracks in footpath & kerb; graffiti in light pole",
+        "p10 Minor cracks in road and sign of repair/patching",
+        "p10 Several & significant or sever cracks in footpath"
+      ],
+      "summary": "289 pages read, 60 findings, grading legend not flagged: true, 5 s"
+    },
+    {
+      "id": "pricex",
+      "label": "PriceX",
+      "doc": "Berryessa and Rockford hardware groups (read by SubX)",
+      "pass": true,
+      "berryessa": {
+        "http": 200,
+        "seconds": 8,
+        "lines": 14,
+        "priced": 10,
+        "exact": 6,
+        "unpriced_with_reason": 4,
+        "csv_http": 200,
+        "totals": {
+          "net": 16457.84,
+          "list": 16457.84,
+          "pricedLines": 10,
+          "unpricedLines": 4,
+          "noteLines": 2,
+          "exactLines": 6
+        },
+        "books": [
+          "Ives Price Book 17 p.23",
+          "Von Duprin Price Book 2024 1.0",
+          "Schlage 20-057-ICX FSIC Rim Cylinder real distributor price",
+          "LCN Price Book 2025",
+          "Zero International Price Book 2025 1.0"
+        ]
+      },
+      "rockford": {
+        "http": 200,
+        "seconds": 31,
+        "lines": 110,
+        "priced": 44,
+        "exact": 15,
+        "unpriced_with_reason": 66,
+        "csv_http": 200,
+        "totals": {
+          "net": 33864.42,
+          "list": 33864.42,
+          "pricedLines": 44,
+          "unpricedLines": 66,
+          "noteLines": 0,
+          "exactLines": 15
+        },
+        "books": [
+          "price book on file",
+          "LCN Price Book 2025",
+          "Ives SR64 Door Silencer real distributor price",
+          "Von Duprin Price Book 2024 1.0",
+          "Von Duprin EPT10 real distributor price",
+          "Zero International Price Book 2025 1.0"
+        ]
+      },
+      "summary": "Berryessa 10 of 14 lines priced (6 exact); Rockford 44 of 110 (15 exact); every unpriced line says why: true"
+    }
+  ]
+}

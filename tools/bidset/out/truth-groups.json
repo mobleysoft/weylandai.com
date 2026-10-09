@@ -1,0 +1,657 @@
+{
+  "document": "The WeylandAI Building (SAMPLE PROJECT - NOT A REAL BUILDING): Section 08 71 00 DOOR HARDWARE, hardware groups",
+  "source": {
+    "file": "tools/bidset/out/weylandai-building-bidset.pdf",
+    "pages": [
+      4,
+      5,
+      6
+    ],
+    "page_size_pt": [
+      612,
+      792
+    ],
+    "text_layer": true
+  },
+  "schedule_type": "hardware_schedule",
+  "how_checked": "Generated from tools/bidset/building.mjs; the section is drawn from the same groups.",
+  "format": "QTY EA DESCRIPTION CATALOG NUMBER FINISH MFR",
+  "group_count": 10,
+  "groups": [
+    {
+      "group": "01",
+      "name": "MAIN ENTRY PAIR",
+      "page": 4,
+      "doors": [
+        "100A"
+      ],
+      "items": [
+        {
+          "qty": 2,
+          "uom": "EA",
+          "description": "CONTINUOUS HINGE",
+          "catalog": "SL11 HD",
+          "finish": "628",
+          "mfr": "SEL",
+          "held": true
+        },
+        {
+          "qty": 2,
+          "uom": "EA",
+          "description": "EXIT DEVICE",
+          "catalog": "99-L-F",
+          "finish": "626",
+          "mfr": "VON",
+          "held": true
+        },
+        {
+          "qty": 1,
+          "uom": "EA",
+          "description": "RIM CYLINDER",
+          "catalog": "20-057-ICX",
+          "finish": "626",
+          "mfr": "SCH",
+          "held": true
+        },
+        {
+          "qty": 2,
+          "uom": "EA",
+          "description": "SURFACE CLOSER",
+          "catalog": "4040XP EDA",
+          "finish": "689",
+          "mfr": "LCN",
+          "held": true
+        },
+        {
+          "qty": 2,
+          "uom": "EA",
+          "description": "KICK PLATE",
+          "catalog": "8400 10\" X 34\" B-CS",
+          "finish": "630",
+          "mfr": "IVE",
+          "held": true
+        },
+        {
+          "qty": 1,
+          "uom": "EA",
+          "description": "GASKETING",
+          "catalog": "188S-BK",
+          "finish": "BK",
+          "mfr": "ZER",
+          "held": true
+        },
+        {
+          "qty": 2,
+          "uom": "EA",
+          "description": "DOOR SWEEP",
+          "catalog": "328A",
+          "finish": "AA",
+          "mfr": "ZER",
+          "held": true
+        }
+      ],
+      "notes": []
+    },
+    {
+      "group": "02",
+      "name": "STAIR",
+      "page": 4,
+      "doors": [
+        "112",
+        "113",
+        "211",
+        "212",
+        "311",
+        "312"
+      ],
+      "items": [
+        {
+          "qty": 3,
+          "uom": "EA",
+          "description": "HINGE",
+          "catalog": "5BB1HW 4.5 X 4.5",
+          "finish": "652",
+          "mfr": "IVE",
+          "held": true
+        },
+        {
+          "qty": 1,
+          "uom": "EA",
+          "description": "FIRE EXIT DEVICE",
+          "catalog": "99-EO-F",
+          "finish": "626",
+          "mfr": "VON",
+          "held": true
+        },
+        {
+          "qty": 1,
+          "uom": "EA",
+          "description": "SURFACE CLOSER",
+          "catalog": "4040XP REG",
+          "finish": "689",
+          "mfr": "LCN",
+          "held": true
+        },
+        {
+          "qty": 1,
+          "uom": "EA",
+          "description": "KICK PLATE",
+          "catalog": "8400 10\" X 34\" B-CS",
+          "finish": "630",
+          "mfr": "IVE",
+          "held": true
+        },
+        {
+          "qty": 1,
+          "uom": "EA",
+          "description": "GASKETING",
+          "catalog": "188S-BK",
+          "finish": "BK",
+          "mfr": "ZER",
+          "held": true
+        }
+      ],
+      "notes": []
+    },
+    {
+      "group": "03",
+      "name": "OFFICE",
+      "page": 4,
+      "doors": [
+        "101",
+        "102",
+        "103",
+        "104",
+        "105",
+        "201",
+        "202",
+        "203",
+        "204",
+        "205",
+        "213",
+        "301",
+        "302",
+        "303",
+        "304",
+        "305"
+      ],
+      "items": [
+        {
+          "qty": 3,
+          "uom": "EA",
+          "description": "HINGE",
+          "catalog": "5BB1HW 4.5 X 4.5",
+          "finish": "652",
+          "mfr": "IVE",
+          "held": true
+        },
+        {
+          "qty": 1,
+          "uom": "EA",
+          "description": "ENTRANCE LOCK",
+          "catalog": "ALX53R RHO",
+          "finish": "626",
+          "mfr": "SCH",
+          "held": true
+        },
+        {
+          "qty": 1,
+          "uom": "EA",
+          "description": "WALL STOP",
+          "catalog": "WS406/407CCV",
+          "finish": "630",
+          "mfr": "IVE",
+          "held": true
+        },
+        {
+          "qty": 3,
+          "uom": "EA",
+          "description": "SILENCER",
+          "catalog": "SR64",
+          "finish": "GRY",
+          "mfr": "IVE",
+          "held": true
+        }
+      ],
+      "notes": []
+    },
+    {
+      "group": "04",
+      "name": "RESTROOM",
+      "page": 5,
+      "doors": [
+        "106",
+        "107",
+        "206",
+        "207",
+        "215",
+        "306",
+        "307"
+      ],
+      "items": [
+        {
+          "qty": 1,
+          "uom": "EA",
+          "description": "CONTINUOUS HINGE",
+          "catalog": "SL11 HD",
+          "finish": "628",
+          "mfr": "SEL",
+          "held": true
+        },
+        {
+          "qty": 1,
+          "uom": "EA",
+          "description": "PRIVACY LOCK W/ INDICATOR",
+          "catalog": "ND40S RHO OS-OCC",
+          "finish": "626",
+          "mfr": "SCH",
+          "held": true
+        },
+        {
+          "qty": 1,
+          "uom": "EA",
+          "description": "SURFACE CLOSER",
+          "catalog": "4040XP REG",
+          "finish": "689",
+          "mfr": "LCN",
+          "held": true
+        },
+        {
+          "qty": 1,
+          "uom": "EA",
+          "description": "KICK PLATE",
+          "catalog": "8400 10\" X 34\" B-CS",
+          "finish": "630",
+          "mfr": "IVE",
+          "held": true
+        },
+        {
+          "qty": 1,
+          "uom": "EA",
+          "description": "WALL STOP",
+          "catalog": "WS406/407CCV",
+          "finish": "630",
+          "mfr": "IVE",
+          "held": true
+        },
+        {
+          "qty": 3,
+          "uom": "EA",
+          "description": "SILENCER",
+          "catalog": "SR64",
+          "finish": "GRY",
+          "mfr": "IVE",
+          "held": true
+        }
+      ],
+      "notes": []
+    },
+    {
+      "group": "05",
+      "name": "STORAGE",
+      "page": 5,
+      "doors": [
+        "109",
+        "114",
+        "209",
+        "214",
+        "309",
+        "313",
+        "315"
+      ],
+      "items": [
+        {
+          "qty": 3,
+          "uom": "EA",
+          "description": "HINGE",
+          "catalog": "5BB1HW 4.5 X 4.5",
+          "finish": "652",
+          "mfr": "IVE",
+          "held": true
+        },
+        {
+          "qty": 1,
+          "uom": "EA",
+          "description": "STOREROOM LOCK",
+          "catalog": "ALX80R RHO",
+          "finish": "626",
+          "mfr": "SCH",
+          "held": true
+        },
+        {
+          "qty": 1,
+          "uom": "EA",
+          "description": "OVERHEAD STOP",
+          "catalog": "90S",
+          "finish": "630",
+          "mfr": "GLY",
+          "held": false
+        },
+        {
+          "qty": 3,
+          "uom": "EA",
+          "description": "SILENCER",
+          "catalog": "SR64",
+          "finish": "GRY",
+          "mfr": "IVE",
+          "held": true
+        }
+      ],
+      "notes": []
+    },
+    {
+      "group": "06",
+      "name": "IT ROOM",
+      "page": 5,
+      "doors": [
+        "110",
+        "210",
+        "310"
+      ],
+      "items": [
+        {
+          "qty": 3,
+          "uom": "EA",
+          "description": "HINGE",
+          "catalog": "5BB1HW 4.5 X 4.5",
+          "finish": "652",
+          "mfr": "IVE",
+          "held": true
+        },
+        {
+          "qty": 1,
+          "uom": "EA",
+          "description": "STOREROOM LOCK",
+          "catalog": "ALX80R RHO",
+          "finish": "626",
+          "mfr": "SCH",
+          "held": true
+        },
+        {
+          "qty": 1,
+          "uom": "EA",
+          "description": "ELECTRIC STRIKE",
+          "catalog": "6223 FSE 24VDC",
+          "finish": "630",
+          "mfr": "VON",
+          "held": true
+        },
+        {
+          "qty": 1,
+          "uom": "EA",
+          "description": "SURFACE CLOSER",
+          "catalog": "4040XP REG",
+          "finish": "689",
+          "mfr": "LCN",
+          "held": true
+        },
+        {
+          "qty": 1,
+          "uom": "EA",
+          "description": "CARD READER",
+          "catalog": "BY DIVISION 28",
+          "finish": "",
+          "mfr": "B/O",
+          "held": false,
+          "by_others": true
+        },
+        {
+          "qty": 3,
+          "uom": "EA",
+          "description": "SILENCER",
+          "catalog": "SR64",
+          "finish": "GRY",
+          "mfr": "IVE",
+          "held": true
+        }
+      ],
+      "notes": []
+    },
+    {
+      "group": "07",
+      "name": "CORRIDOR PAIR",
+      "page": 5,
+      "doors": [
+        "111",
+        "200",
+        "300"
+      ],
+      "items": [
+        {
+          "qty": 2,
+          "uom": "EA",
+          "description": "CONTINUOUS HINGE",
+          "catalog": "SL11 HD",
+          "finish": "628",
+          "mfr": "SEL",
+          "held": true
+        },
+        {
+          "qty": 2,
+          "uom": "EA",
+          "description": "FLUSH BOLT",
+          "catalog": "FB51P",
+          "finish": "630",
+          "mfr": "IVE",
+          "held": true
+        },
+        {
+          "qty": 1,
+          "uom": "EA",
+          "description": "DUST PROOF STRIKE",
+          "catalog": "DP1",
+          "finish": "626",
+          "mfr": "IVE",
+          "held": true
+        },
+        {
+          "qty": 1,
+          "uom": "EA",
+          "description": "STOREROOM LOCK",
+          "catalog": "ALX80R RHO",
+          "finish": "626",
+          "mfr": "SCH",
+          "held": true
+        },
+        {
+          "qty": 2,
+          "uom": "EA",
+          "description": "SURFACE CLOSER",
+          "catalog": "4040XP REG",
+          "finish": "689",
+          "mfr": "LCN",
+          "held": true
+        },
+        {
+          "qty": 2,
+          "uom": "EA",
+          "description": "KICK PLATE",
+          "catalog": "8400 10\" X 34\" B-CS",
+          "finish": "630",
+          "mfr": "IVE",
+          "held": true
+        },
+        {
+          "qty": 1,
+          "uom": "EA",
+          "description": "GASKETING",
+          "catalog": "188S-BK",
+          "finish": "BK",
+          "mfr": "ZER",
+          "held": true
+        }
+      ],
+      "notes": []
+    },
+    {
+      "group": "08",
+      "name": "BREAK ROOM",
+      "page": 6,
+      "doors": [
+        "108",
+        "208",
+        "308"
+      ],
+      "items": [
+        {
+          "qty": 3,
+          "uom": "EA",
+          "description": "HINGE",
+          "catalog": "5BB1HW 4.5 X 4.5",
+          "finish": "652",
+          "mfr": "IVE",
+          "held": true
+        },
+        {
+          "qty": 1,
+          "uom": "EA",
+          "description": "PUSH PLATE",
+          "catalog": "8200 4\" X 16\"",
+          "finish": "630",
+          "mfr": "IVE",
+          "held": true
+        },
+        {
+          "qty": 1,
+          "uom": "EA",
+          "description": "PULL",
+          "catalog": "8302 10\" 4\" X 16\"",
+          "finish": "630",
+          "mfr": "IVE",
+          "held": true
+        },
+        {
+          "qty": 1,
+          "uom": "EA",
+          "description": "SURFACE CLOSER",
+          "catalog": "4040XP REG",
+          "finish": "689",
+          "mfr": "LCN",
+          "held": true
+        },
+        {
+          "qty": 1,
+          "uom": "EA",
+          "description": "WALL STOP",
+          "catalog": "WS406/407CCV",
+          "finish": "630",
+          "mfr": "IVE",
+          "held": true
+        }
+      ],
+      "notes": []
+    },
+    {
+      "group": "09",
+      "name": "ROOF ACCESS",
+      "page": 6,
+      "doors": [
+        "314"
+      ],
+      "items": [
+        {
+          "qty": 1,
+          "uom": "EA",
+          "description": "CONTINUOUS HINGE",
+          "catalog": "SL57 HD",
+          "finish": "628",
+          "mfr": "SEL",
+          "held": true
+        },
+        {
+          "qty": 1,
+          "uom": "EA",
+          "description": "EXIT DEVICE",
+          "catalog": "99-EO",
+          "finish": "626",
+          "mfr": "VON",
+          "held": true
+        },
+        {
+          "qty": 1,
+          "uom": "EA",
+          "description": "SURFACE CLOSER",
+          "catalog": "4040XP EDA",
+          "finish": "689",
+          "mfr": "LCN",
+          "held": true
+        },
+        {
+          "qty": 1,
+          "uom": "EA",
+          "description": "GASKETING",
+          "catalog": "188S-BK",
+          "finish": "BK",
+          "mfr": "ZER",
+          "held": true
+        },
+        {
+          "qty": 1,
+          "uom": "EA",
+          "description": "DOOR SWEEP",
+          "catalog": "328A",
+          "finish": "AA",
+          "mfr": "ZER",
+          "held": true
+        }
+      ],
+      "notes": []
+    },
+    {
+      "group": "10",
+      "name": "VESTIBULE",
+      "page": 6,
+      "doors": [
+        "100B"
+      ],
+      "items": [
+        {
+          "qty": 1,
+          "uom": "EA",
+          "description": "CONTINUOUS HINGE",
+          "catalog": "SL11 HD",
+          "finish": "628",
+          "mfr": "SEL",
+          "held": true
+        },
+        {
+          "qty": 1,
+          "uom": "EA",
+          "description": "EXIT DEVICE",
+          "catalog": "99-L-F",
+          "finish": "626",
+          "mfr": "VON",
+          "held": true
+        },
+        {
+          "qty": 1,
+          "uom": "EA",
+          "description": "POWER TRANSFER",
+          "catalog": "EPT10",
+          "finish": "689",
+          "mfr": "VON",
+          "held": true
+        },
+        {
+          "qty": 1,
+          "uom": "EA",
+          "description": "SURFACE CLOSER",
+          "catalog": "4040SE",
+          "finish": "689",
+          "mfr": "LCN",
+          "held": true
+        },
+        {
+          "qty": 1,
+          "uom": "EA",
+          "description": "PULL",
+          "catalog": "8190HD 10\" O",
+          "finish": "630",
+          "mfr": "IVE",
+          "held": true
+        }
+      ],
+      "notes": []
+    }
+  ]
+}
