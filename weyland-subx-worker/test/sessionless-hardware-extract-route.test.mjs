@@ -5,6 +5,9 @@ import { PDFDocument } from "pdf-lib";
 import { NativeRouter } from "../src/lib/router.js";
 import { registerHardwareScheduleExtractRoutes } from "../src/routes/hardware-schedule-extract.js";
 import { extractHardwarePage } from "../src/lib/schedule-input.js";
+import { registerHardwareScheduleExtractRoutes as registerMonolithRoutes } from "../../src/routes/hardware-schedule-extract.js";
+import { storeHardwareExtraction } from "../src/lib/hardware-extraction-pipeline.js";
+import { storeHardwareExtraction as storeMonolithHardware } from "../../src/lib/hardware-extraction-pipeline.js";
 import { createEmbeddedHardwareReader } from "../src/lib/embedded-hardware-reader.js";
 
 const corpus = new URL("../../tools/corpus/", import.meta.url);
@@ -15,24 +18,24 @@ async function fixture(text) {
   if (text) page.drawText(text);
   return pdf.save();
 }
-function route(extract = (bytes, env, options) => extractHardwarePage(bytes, options.pageNumber, env)) {
-  const router = new NativeRouter(), writes = [], saved = [];
+function route(extract = (bytes, env, options) => extractHardwarePage(bytes, options.pageNumber, env), register = registerHardwareScheduleExtractRoutes, store) {
+  const router = new NativeRouter(), writes = [], saved = [], statements = [];
   const forbidden = () => assert.fail("no language model or OCR-worker call is allowed");
   const env = {
     OCR_SERVICE: { fetch: forbidden }, QWEN: { fetch: forbidden }, JITAGI: { fetch: forbidden },
     CACHE: { async put(key) { writes.push("cache"); } },
     UPLOADS: { async put(key) { writes.push("r2"); } },
-    DB: { prepare() { return { bind() { return this; }, async run() { writes.push("job"); } }; } },
+    DB: { prepare(sql) { return { bind(...args) { this.args = args; return this; }, async first() { return null; }, async run() { statements.push({ sql, args: this.args }); writes.push(sql.includes("hardware_extraction_jobs") ? "job" : "row"); return { meta: { changes: 1 } }; } }; } },
   };
-  registerHardwareScheduleExtractRoutes(router, {
+  register(router, {
     authenticate: async () => ({ user: { userId: "test-user" } }),
     extractHardwareSchedule: extract,
-    storeHardwareExtraction: async result => {
+    storeHardwareExtraction: store || (async result => {
       saved.push(result); writes.push("groups");
       return { sets_inserted: result.hardware_groups.length, components_inserted: result.hardware_groups.reduce((n, g) => n + g.components.length, 0) };
-    },
+    }),
   });
-  return { router, env, writes, saved };
+  return { router, env, writes, saved, statements };
 }
 async function submit(r, bytes, page) {
   const form = new FormData();
@@ -73,4 +76,21 @@ test("a partial browser outcome cannot create a successful extraction job", asyn
   assert.equal(response.status, 422); assert.equal(body.code, "PARTIAL_HARDWARE_READ");
   assert.equal(body.partial, true); assert.equal(body.retryable, true);
   assert.deepEqual(r.writes, []); assert.deepEqual(r.saved, []);
+});
+
+
+test("SubX and monolith legacy endpoints persist the selected page with real storage helpers", async () => {
+  const expected = truth.groups.filter(g => g.page === 17);
+  for (const [register, store] of [[registerHardwareScheduleExtractRoutes, storeHardwareExtraction], [registerMonolithRoutes, storeMonolithHardware]]) {
+    const r = route(undefined, register, store), response = await submit(r, book, 17), body = await response.json();
+    assert.equal(response.status, 201);
+    const sets = r.statements.filter(s => s.sql.includes("INSERT OR REPLACE INTO hardware_sets"));
+    assert.equal(sets.length, expected.length);
+    assert.ok(sets.every(s => s.args[8] === 17), "source page must remain 17 in approved_from_page");
+    assert.equal(body.database.sets_inserted, expected.length);
+    assert.equal(body.database.components_inserted, expected.reduce((n, g) => n + g.items.length, 0));
+    const blank = route(undefined, register, store), failed = await submit(blank, await fixture("")), failure = await failed.json();
+    assert.equal(failed.status, 503); assert.equal(failure.code, "HARDWARE_BROWSER_UNAVAILABLE");
+    assert.equal(failure.retryable, true); assert.deepEqual(blank.statements, []);
+  }
 });

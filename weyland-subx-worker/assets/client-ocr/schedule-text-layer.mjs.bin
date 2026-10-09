@@ -28,9 +28,12 @@ import { hardwareSpecSections } from "./schedule-workspace.mjs?v=20261009g019r1"
 export const SCHEDULE_EVIDENCE_VERSION = "schedule-fields-v1";
 export const OCR_MODEL_SHA256 = "7d4322bd2a7749724879683fc3912cb542f19906c83bcc1a52132556427170b2";
 const EVIDENCE_FIELDS = new Set(["mark", "width", "height", "size", "thickness", "hardware_group", "fire_rating", "door_type", "door_material", "door_finish", "stc_rating", "frame_type", "frame_material", "frame_finish", "head_detail", "jamb_detail", "sill_detail", "panic_hardware", "notes", "location", "glazing", "pair", "alternate", "details"]);
-const evidenceText = value => String(value ?? "").slice(0, 128);
+// Optional client metadata must never invoke object coercion. JSON objects
+// such as {toString:null} are invalid text and should be dropped safely.
+const evidenceText = value => typeof value === "string" ? value.slice(0, 128)
+  : typeof value === "boolean" || (typeof value === "number" && Number.isFinite(value)) ? String(value) : "";
 const evidenceScore = value => Number.isFinite(value) && value >= 0 && value <= 1 ? value : null;
-const evidenceValue = value => typeof value === "number" ? (Number.isFinite(value) ? value : null) : typeof value === "boolean" ? value : value == null ? null : evidenceText(value);
+const evidenceValue = value => typeof value === "number" ? (Number.isFinite(value) ? value : null) : typeof value === "boolean" ? value : typeof value === "string" ? evidenceText(value) : null;
 const evidenceEnum = (value, allowed, fallback) => allowed.includes(value) ? value : fallback;
 const evidenceCount = (value, max) => Number.isFinite(value) ? Math.min(max, Math.max(0, Math.floor(value))) : 0;
 const evidenceBytes = value => new TextEncoder().encode(JSON.stringify(value)).length;
@@ -364,7 +367,6 @@ export async function readDoorScheduleFromLines(lines, pageSize, opts = {}) {
       if (!fg || (used.get(i) || []).some((r) => fg.x0 >= r.x0 - h0 && fg.x1 <= r.x1 + h0)) continue;
       const t = await buildTable(lines, i, pageSize, opts, fg);
       if (!t) continue;
-      console.log("Found table:", t.title, "headers:", t.header.join('|'), "fields:", t.fields.join(','), "is_door:", t.is_door_schedule);
       for (const k of t.lineIndexes) { if (!used.has(k)) used.set(k, []); used.get(k).push(t); }
       if (t.is_door_schedule) tables.push(t);
     }
@@ -672,12 +674,10 @@ function doorFromRow(row, fields, index, pageSize) {
   const get = (f) => { const k = fields.indexOf(f); return k >= 0 ? cleanText(row.cells[k]) : null; };
   let rawMark = get("mark");
   const loc = get("location");
-  console.log(`doorFromRow debug: rawMark=${rawMark}, loc=${loc}, cells=${row.cells}`);
   if (rawMark && !/\d/.test(rawMark) && loc && /\d/.test(loc)) {
     rawMark = loc.split(/\s+/)[0] + rawMark.trim();
   }
   const mark = cleanMark(rawMark);
-  console.log(`doorFromRow debug: cleanMark=${mark}`);
   if (!mark) return null;
   let size = { pair: false, width: get("width"), height: get("height"), thickness: get("thickness"), width_inches: null, height_inches: null, thickness_inches: null };
   if (fields.includes("size")) {

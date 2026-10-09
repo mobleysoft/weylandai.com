@@ -135,3 +135,17 @@ test("cropped receipt page mapping must be explicit and preserves the full label
   assert.equal(result.page, 4); assert.equal(result.receipt_page, 1);
   assert.equal(result.expected_dimension_fields, 2); assert.equal(result.correct_dimension_fields, 2);
 });
+
+
+test("malformed JSON text and values are discarded without object coercion", () => {
+  const hostile = JSON.parse('{"toString":null,"valueOf":null}');
+  const result = boundedFieldEvidence(envelope({ width: {
+    original: { text: hostile, value: hostile, confidence: .8 },
+    chosen: { text: ["pretend text"], value: { inches: 36 }, confidence: .8 },
+    reread: { readings: [{ text: hostile, value: hostile }] },
+  } }));
+  for (const reading of [result.fields.width.original, result.fields.width.chosen, ...result.fields.width.reread.readings]) {
+    assert.equal(reading.text, ""); assert.equal(reading.value, null);
+  }
+  assert.ok(new TextEncoder().encode(JSON.stringify(result)).length <= 16000);
+});
