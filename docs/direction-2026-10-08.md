@@ -130,3 +130,49 @@ Real, from today's merges (fix these; each is small):
 4. sightx-corridor: "Guided Walkthrough Preview generates a walkthrough" finds no such control on the SightX page since the schedule-driven corridor rework. Either the control comes back or the journey changes to what the page now offers; today the journey's claim and the page disagree.
 
 What this says about priority 1: the readers meet the 95% bar on four of five documents. The one failure is not parsing but a production limit: the Rockford hardware-group pages (dense 08 71 00 spec pages, 17 to 23 and 29) die after 73 s on the server while the same pages read in about a second in the Node tests on the text layer. Reproduce with `node tools/accuracy/schedule_read_accuracy.mjs --only rockford` and `wrangler tail weyland-subx-worker`; the page read must take the text-layer path first and never wait on a browser launch or an OCR pass when the text layer exists. The honest misses that remain are catalogue gaps, in this order of value: Select Hinges (every Rockford group has an SL11/SL24 line), Zero 188SBK, the Von Duprin 99 "L" trim naming. OCC's one extra row and Christina's one missing item are small parser cases worth a look after the 503s.
+
+## S0 — the controls work from the user's side (John, 2026-10-09 04:50 EDT; measured 08:17–08:27Z)
+
+John, mid-session: "also last i checked wasd on desktop and the thumbstick nav on sightx did not work" and "its crucial
+that sightx plays like a triple a game to support all our other games in the future." S0 goes ahead of S1. A controls
+regression blocks shipping any S item. SightX's input and feel are the base every future MobCorp game inherits, so this
+is built once, in a shared module, and proven by journeys, not by a page fix.
+
+Measured on the live site with a real headless Chromium (tools/user-simulation/probes/sightx-controls-probe2..5.mjs;
+GPU on; iPhone 13 emulation for the phone rows):
+
+| Path | Input | Result |
+|---|---|---|
+| weylandai.com/sightx/ (app page, desktop) | W held 1.5 s, D 1 s, S 1 s | camera moved 5.46, 0.90, 3.60 units: works, no click needed |
+| same | mouse drag of 260 px across the canvas | rotation delta 6.0: works |
+| weylandai.com/sightx/ (phone) | one-finger drag across the canvas | rotation delta 6.29: works |
+| same | WALK ▲ held 1.5 s | moved 4.64: works, but press-and-hold is banned on phones |
+| same | thumbstick | none exists on this page |
+| weylandai.com #sightx (homepage, desktop) | W as loaded; W after clicking the HUD badge that reads W/A/S/D MOVE · MOUSE LOOK; after clicking the chapter; after Enter; after Escape | 0 keydown events reached the world frame in every case; the frame never had focus; no postMessage carried a key |
+| same | "CLICK TO FLY" | no point in the viewport has the world frame on top (chapter head, HUD and footer cover it), so there is nothing to click |
+| weylandai.com (homepage, phone) | first touch, then a drag where the stick sits, then a drag in the centre | the world mounts after the first touch, but #sightx-touch-ui is display:none, .sx-stick is 0 by 0 with pointer-events none, the point is covered by #stage-backdrop; __sxTouchStats stayed at downs 0, moves 0, looks 0 |
+
+Causes, read from the live sources:
+1. Two pages, two input systems. The app page (pages/sightx-app.html, 2026-10-08) binds its own forty lines of keys
+   plus hold buttons. The real controls module (assets/sightx-controls.js: window and document keydown, pointer lock,
+   floating stick, gamepad hooks, SightXControls global) is loaded only by the backdrop page (pages/sightx.html).
+2. The homepage world is an aria-hidden, tabIndex -1 iframe under the dossier. The host forwards the schedule and the
+   dossier state by postMessage and never forwards input. Keys typed on weylandai.com stop at the top document; touches
+   stop at #stage-backdrop and the chapter sections.
+3. The app page loads three.js r128 from cdnjs (banned: nothing from a third-party CDN) and places the canvas below the
+   hero on both form factors, so the first screen is a brochure, not the world.
+
+Build (shared base, not a page):
+- One input layer the host owns, weyland-input: keyboard, mouse look, touch stick, gamepad → one normalized state
+  {move: {x, y}, look: {dx, dy}, buttons}. Worlds consume it in-page or by postMessage into a frame. The games inherit it.
+- Homepage: when the SightX chapter is open, the stick is drawn in the top document (phones) and keys and the stick axis
+  are forwarded to the world frame; the "lowered" dossier path keeps working ([close] lowers, Escape and Enter raise).
+- App page: drop its own binding and the hold buttons; use the same layer; stick on phones, WASD plus mouse look plus
+  gamepad on desktop; vendor three.js under /assets/vendor (or move the page onto the raymarch engine) so the page makes
+  no third-party request; canvas first, text after.
+- SightXControls.state() returns {pos, yaw, pitch} read-only so journeys can assert motion without patching three.
+
+Measure (the matrix runs these on the Mac after every merge): four journeys in tools/user-simulation — app page desktop,
+app page phone, homepage desktop, homepage phone — each asserting movement ≥ 1 unit on W (or the stick) and a turn
+≥ 0.5 rad on look, plus no third-party request on either page. Feel targets, John's triple-A bar: 60 fps on an iPhone
+and a MacBook, input to camera within one frame, acceleration and damping on movement, collision with floors and walls.
