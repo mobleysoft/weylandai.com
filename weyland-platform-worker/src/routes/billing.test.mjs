@@ -184,9 +184,9 @@ test("embedded checkout refusals: no Terms, unknown product, not sold, not confi
     assert.equal(nt.detail.code, "terms_required");
     assert.equal(nt.detail.terms_url, DEFAULT_TERMS_URL);
     assert.equal((await call("/api/billing/checkout/embedded", { method: "POST", body: { product_id: "nope", terms_accepted: true } })).status, 400);
-    const marketx = await call("/api/billing/checkout/embedded", { method: "POST", body: { product_id: "weyland-marketx-seat", terms_accepted: true } });
-    assert.equal(marketx.status, 409);
-    assert.equal((await marketx.json()).detail.code, "not_sold");
+    const leadx = await call("/api/billing/checkout/embedded", { method: "POST", body: { product_id: "weyland-leadx-seat", terms_accepted: true } });
+    assert.equal(leadx.status, 409);
+    assert.equal((await leadx.json()).detail.code, "not_sold");
     const noKey = setup({ env: { STRIPE_PUBLISHABLE_KEY: undefined } });
     assert.equal((await noKey.call("/api/billing/checkout/embedded", { method: "POST", body: { product_id: "weyland-wire-seat", terms_accepted: true } })).status, 503);
     assert.equal(stripe.calls.filter((c) => c.url === "https://api.stripe.com/v1/checkout/sessions").length, 0, "no session was created by a refused request");
@@ -207,7 +207,7 @@ test("catalog: read from Stripe in parallel, kept in KV, the offer one-time, no 
     assert.deepEqual({ ...byId["weyland-first-submittal"], name: undefined, price_id: undefined },
       { id: "weyland-first-submittal", checkout_ready: true, price_active: true, unit_amount: 10000, currency: "usd", interval: null, one_time: true, kind: "offer", trial_period_days: null, livemode: true, name: undefined, price_id: undefined });
     assert.equal(byId["weyland-subconp-seat"].trial_period_days, null, "the price's own 30 days are never applied");
-    assert.equal(byId["weyland-marketx-seat"].checkout_ready, false);
+    assert.equal(byId["weyland-leadx-seat"].checkout_ready, false);
     const priceCalls = stripe.calls.filter((c) => c.url.includes("/v1/prices/")).length;
     assert.equal(priceCalls, Object.keys(WEYLAND_PRODUCTS).length);
     assert.ok(env.CACHE.map.has("billing_catalog_v2"), "kept in KV");

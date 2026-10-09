@@ -146,7 +146,7 @@ test("GET /api/billing/plan: the account's WeylandAI subscriptions, its card, th
     assert.equal(d.has_customer, true);
     assert.equal(d.choices[0].product_id, "weyland-subconp-seat");
     assert.ok(!d.choices.some((c) => c.product_id === "weyland-first-submittal"), "the offer is not a plan");
-    assert.ok(!d.choices.some((c) => c.product_id === "weyland-marketx-seat"), "not sold");
+    assert.ok(!d.choices.some((c) => c.product_id === "weyland-leadx-seat"), "not sold");
     assert.equal(d.access.kind, "none", "no subscription rows in D1 for this fixture account");
     assert.equal(d.plan.name, "WeylandAI weyland-meetingx-seat");
   } finally { w.restore(); }

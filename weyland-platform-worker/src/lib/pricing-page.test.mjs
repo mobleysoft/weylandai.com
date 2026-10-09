@@ -88,15 +88,16 @@ test("/pricing follows the catalog when a price changes (SubConP at $2,500: sums
   assert.match(text, /id="btnSuiteTotal" data-sku-number="weyland-subconp-seat">2,500</);
 });
 
-test("/pricing: no mail app, no hosted checkout; MarketX not sold; the offer leads; Argo LLC and the Terms in the footer", async () => {
+test("/pricing: no mail app, no hosted checkout; MarketX sold on its permits; the offer leads; Argo LLC and the Terms in the footer", async () => {
   const env = await envWithCatalog(LIVE, { TERMS_URL: "https://weylandai.com/terms", PRIVACY_URL: "https://weylandai.com/privacy" });
   const { text } = await page(env, "/pricing");
   assert.doesNotMatch(text, /mailto:/i);
   assert.doesNotMatch(text, /\/api\/billing\/checkout\/create/);
   assert.doesNotMatch(text, /checkout\.stripe\.com/);
   const market = text.match(/<div class="card" id="cardMarket">[\s\S]*?<\/button>/)[0];
-  assert.match(market, /<button type="button" class="button" id="btnBuyMarket" disabled aria-disabled="true"[^>]*>NOT SOLD YET<\/button>/);
-  assert.doesNotMatch(market, /triggerCheckout|FRED data, refreshed on every load/);
+  assert.match(market, /triggerCheckout\('weyland-marketx-seat'/);
+  assert.match(market, /building permits/);
+  assert.doesNotMatch(market, /NOT SOLD YET|FRED data, refreshed on every load/);
   const offer = text.match(/<div class="offer-box" id="offerCard">[\s\S]*?<\/button>/)[0];
   assert.match(offer, /\$100/);
   assert.match(offer, /No automatic charge/);
@@ -157,7 +158,7 @@ test("/pricing: no cryptographic provenance, Togal, Lumion or Dodge comparisons,
 test("/api/billing/catalog: a kept copy that still says a not-sold product is ready is served as not ready", async () => {
   const env = await envWithCatalog();
   const kept = JSON.parse(await env.CACHE.get("billing_catalog_v2"));
-  for (const p of kept.products) if (p.id === "weyland-marketx-seat") { p.checkout_ready = true; delete p.price_active; }
+  for (const p of kept.products) if (p.id === "weyland-leadx-seat") { p.checkout_ready = true; delete p.price_active; }
   await env.CACHE.put("billing_catalog_v2", JSON.stringify(kept));
   _resetCatalogMemory();
   const r = await worker.fetch(new Request("https://weylandai.com/api/billing/catalog"), env, ctx);
@@ -165,7 +166,8 @@ test("/api/billing/catalog: a kept copy that still says a not-sold product is re
   const byId = Object.fromEntries(d.products.map((p) => [p.id, p]));
   assert.equal(byId["weyland-drawx-seat"].checkout_ready, true, "re-listed");
   assert.equal(byId["weyland-pricex-seat"].checkout_ready, true, "listed");
-  assert.equal(byId["weyland-marketx-seat"].checkout_ready, false);
+  assert.equal(byId["weyland-leadx-seat"].checkout_ready, false);
+  assert.equal(byId["weyland-marketx-seat"].checkout_ready, true, "MarketX is sold (2026-10-09)");
   assert.equal(byId["weyland-huntx-seat"].checkout_ready, true);
   assert.equal(byId["weyland-first-submittal"].checkout_ready, true);
 });
