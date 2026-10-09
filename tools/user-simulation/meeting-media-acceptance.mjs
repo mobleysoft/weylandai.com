@@ -3,7 +3,8 @@
 // the public UI unchanged. A second diagnostic run forces iceTransportPolicy=relay
 // on its test-only peer constructor to prove TURN separately from configuration.
 // No SDP, IP addresses, device ids or TURN credentials are recorded.
-import { mkdir, writeFile, unlink } from "node:fs/promises";
+import { mkdir, writeFile, unlink, readFile } from "node:fs/promises";
+import { createHash } from "node:crypto";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { Journey, BASE, chromium, gpuRenderer, openHome, raiseDossier, signIn, pressIn, until, sleep, d1, q } from "./lib/journey-kit.mjs";
@@ -180,6 +181,12 @@ async function runPair(accounts, relay) {
 // Journey.run exits, so waveform deletion belongs to the body's own finally.
 await J.run(async () => {
   try {
+    const response = await fetch(BASE + "/meetingx?media_acceptance=" + J.suffix);
+    const publicHash = createHash("sha256").update(await response.text()).digest("hex");
+    const sourceHash = createHash("sha256").update(await readFile(path.join(root, "weyland-meetingx-worker/src/pages/meetingx.html"))).digest("hex");
+    J.note("public_page", { status: response.status, sha256: publicHash, source_sha256: sourceHash });
+    const deployed = J.check("public MeetingX page exactly matches the tested controller", response.status === 200 && publicHash === sourceHash, { status: response.status, publicHash, sourceHash });
+    if (!deployed) throw new Error("production page differs from this checkout; deploy or use the matching released checkout before claiming acceptance");
     await J.launch();
     const accounts = [await J.account("meet-media-a"), await J.account("meet-media-b")];
     await runPair(accounts, false);
