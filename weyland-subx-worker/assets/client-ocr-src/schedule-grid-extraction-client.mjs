@@ -50,7 +50,7 @@ const ASSET_BASE = "/api/hardware-schedule/client-ocr-assets";
 // count (no rendering, no misread digits) and is the only way to read an
 // unruled Section 08 71 00. OCR below is now the path for pages with no text
 // (a scan, a Print-to-PDF of a bitmap such as OCCDoorSchedulePg4.pdf).
-import * as TL from "./schedule-text-layer.mjs?v=20261009g019r2";
+import * as TL from "./schedule-text-layer.mjs?v=20261009g019r3";
 
 let pdfjsLibPromise = null;
 export async function loadPdfJs() {
@@ -826,6 +826,15 @@ const REREAD_WAYS = [
   { up: 2, thr: 170, whitelist: false },
   { up: 3, thr: 170, whitelist: false },
   { up: 2, thr: 200, whitelist: false },
+  { up: 2, thr: 150, whitelist: true },
+  { up: 3, thr: 150, whitelist: true },
+  { up: 2, thr: 150, whitelist: false },
+  { up: 1, thr: 150, whitelist: true },
+  { up: 1, trim: true, textHeight: 36, pad: 8, whitelist: false },
+  { up: 1, trim: true, textHeight: 36, pad: 8, whitelist: true },
+  { up: 1, trim: true, textHeight: 36, pad: 8, thr: 150, whitelist: true },
+  { up: 1, textHeight: 40, pad: 8, whitelist: true },
+  { up: 1, textHeight: 48, pad: 8, whitelist: true },
 ];
 function padWhite(img, m) {
   const w = img.width + 2 * m, h = img.height + 2 * m;
@@ -946,7 +955,12 @@ export function rereadDimensionCell(engine, pageImage, x0, x1, y0, y1, opts, fir
   }
   const ranked = [...votes].sort((a, b) => b[1].length - a[1].length);
   const support = ranked[0]?.[1];
-  if (!support || support.length < 2 || (ranked[1] && support.length === ranked[1][1].length)) return { text: null, readings, confidence: 0 };
+  // Distinct physical values supported by multiple weak views are ambiguous.
+  // Repetition of a low-confidence glyph must not turn one plausible size
+  // into a guess; a strong recognizer fit may distinguish the alternatives.
+  const ambiguous = ranked[1]?.[1].length >= 2 &&
+    Math.max(...support.map(r => r.confidence)) < .8;
+  if (!support || support.length < 2 || (ranked[1] && support.length === ranked[1][1].length) || ambiguous) return { text: null, readings, confidence: 0 };
   return { text: support[0].text, readings, confidence: Math.min(...support.map(r => r.confidence)) };
 }
 
@@ -1322,7 +1336,9 @@ function doorSize(widthText, heightText) {
   // Plain inches only when the row writes both dimensions that way: an
   // inches-only value next to a feet-inches one is a feet-inches value whose
   // marks were lost.
-  const plainInches = !!(w && h && w.format === "in" && h.format === "in");
+  const plainInches = !!(w && h && w.format === "in" && h.format === "in" &&
+    w.inches >= DOOR_LIMITS.width[0] && w.inches <= DOOR_LIMITS.width[1] &&
+    h.inches >= DOOR_LIMITS.height[0] && h.inches <= DOOR_LIMITS.height[1]);
   const accept = (d, kind) => (d && (d.format === "ft-in" || plainInches) && d.inches >= DOOR_LIMITS[kind][0] && d.inches <= DOOR_LIMITS[kind][1] ? d.inches : null);
   return { width_inches: accept(w, "width"), height_inches: accept(h, "height") };
 }
@@ -1425,6 +1441,31 @@ function whitenColouredInk(imageData) {
     const mx = Math.max(r, g, b), mn = Math.min(r, g, b);
     if (mx - mn > 90) { d[i] = d[i + 1] = d[i + 2] = 255; }
   }
+}
+
+// The detection render locates a table cheaply, but rounding a thin rule at
+// that DPI can move a text-sized crop by several pixels. Recenter each known
+// horizontal rule on its actual high-resolution ink before cropping rows.
+export function refineRowLines(image, lines, x0, x1, maxShift) {
+  const { width, height, data } = image;
+  const left = Math.max(0, Math.ceil(x0)), right = Math.min(width, Math.floor(x1));
+  if (right <= left || !Number.isFinite(maxShift) || maxShift < 0) return lines.slice();
+  return lines.map((line, index) => {
+    const neighborGap = Math.min(index ? line - lines[index - 1] : Infinity,
+      index + 1 < lines.length ? lines[index + 1] - line : Infinity);
+    const shift = Math.max(0, Math.min(Math.floor(maxShift), Math.floor(neighborGap / 2) - 1));
+    const candidates = [];
+    for (let y = Math.max(0, Math.ceil(line - shift)); y <= Math.min(height - 1, Math.floor(line + shift)); y++) {
+      let dark = 0;
+      for (let x = left; x < right; x++) {
+        const i = (y * width + x) * 4;
+        if (data[i] * .299 + data[i + 1] * .587 + data[i + 2] * .114 < 150) dark++;
+      }
+      if (dark / (right - left) > .55) candidates.push(y);
+    }
+    const centers = clusterIndices(candidates, 1);
+    return centers.length ? centers.sort((a, b) => Math.abs(a - line) - Math.abs(b - line))[0] : line;
+  });
 }
 
 // Erases each detected ruling over its real width: from the detected centre
@@ -1624,15 +1665,17 @@ export async function extractDoorScheduleFromPdf(pdfBytes, pageNumber, onProgres
     region = pageImage.region;
     s = dpi / detectDpi;
     const colLines = detected.colLines.map((x) => Math.round(x * s) - region.x0);
-    const rowLines = detected.rowLines.map((y) => Math.round(y * s) - region.y0);
+    let rowLines = detected.rowLines.map((y) => Math.round(y * s) - region.y0);
     const wideColEnd = Math.min(Math.round(wideEnd150 * s) - region.x0, pageImage.width - 1);
     const colBounds = [];
     for (let i = 0; i < colLines.length - 1; i++) colBounds.push([colLines[i], colLines[i + 1]]);
     colBounds.push([colLines[colLines.length - 1], wideColEnd]);
     const pitchPx = pitch150 * s;
+    whitenColouredInk(pageImage);
+    rowLines = refineRowLines(pageImage, rowLines, colLines[0], wideColEnd, Math.max(3, Math.round(s * 3)));
+    if (options.debug) attempt.high_resolution_grid = detectDoorGrid(pageImage);
     eraseRulings(pageImage, colLines.concat([wideColEnd]), Math.max(0, rowLines[0]), Math.min(pageImage.height, rowLines[rowLines.length - 1]), Math.max(3, Math.round(pitchPx * 2)), Math.max(4, Math.round(s * 4)));
     eraseRowRulings(pageImage, rowLines, Math.max(0, colLines[0]), Math.min(pageImage.width, wideColEnd), Math.max(3, Math.round(s * 3)));
-    whitenColouredInk(pageImage);
     const ocrOpts = { recognitionBudget: budget, pad: 2, upscale: Math.max(1, Math.min(3, Math.round(TARGET_ROW_PX / pitchPx))) };
     const totalRowBands = rowLines.length - 1;
 
@@ -1766,6 +1809,7 @@ export async function extractDoorScheduleFromPdf(pdfBytes, pageNumber, onProgres
   if (options.debug) {
     metadata.raw_rows = rawRows;
     metadata.col_bounds = colBounds;
+    metadata.render_region = best.region;
     metadata.row_lines = rowLines;
     metadata.header_bands = headerBandTexts.map((cells) => cells.join(" | "));
     metadata.header_idx = header.idx;

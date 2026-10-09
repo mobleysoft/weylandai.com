@@ -47,3 +47,18 @@ test('reread uses the original inset and shares the page budget', () => {
   assert.equal(engine.state().images[0].height, 30);
   assert.equal(budget.status().reason, 'cell_limit');
 });
+
+// The recognizer can support multiple plausible sizes when ink is obscured.
+// A weak majority must keep that ambiguity, including with whitelist views.
+test('conflicting physical sizes from weak views remain unread', () => {
+  const engine = engineFor(['2\'-9"', '2\'-9"', '2\'-9"', '2\'-0"', '2\'-0"']);
+  const recognize = engine.getTextBoxes;
+  engine.getTextBoxes = () => recognize().map(word => ({ ...word, confidence: .59 }));
+  assert.equal(reread(engine, 'bad').text, null);
+});
+test('plain inches require a physically valid paired width and height', () => {
+  assert.deepEqual(doorSize('36"', '84"'), { width_inches: 36, height_inches: 84 });
+  assert.deepEqual(doorSize('20"', '614"'), { width_inches: null, height_inches: null });
+  assert.deepEqual(doorSize('340"', '84"'), { width_inches: null, height_inches: null });
+  assert.deepEqual(doorSize('3\'-0"', '614"'), { width_inches: 36, height_inches: null });
+});
