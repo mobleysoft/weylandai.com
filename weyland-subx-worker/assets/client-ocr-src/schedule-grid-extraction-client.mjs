@@ -1406,6 +1406,53 @@ function medianGap(lines) {
   return gaps.length ? gaps[Math.floor(gaps.length / 2)] : 0;
 }
 
+// A coloured vector revision cloud may cover original black glyphs. Removing
+// its already-rasterized pixels loses those glyphs too. For OCR only, omit
+// saturated pure paint operations before rendering, retaining the real black
+// underlay. Images, text operators, clipping and mixed black/colour paint stay
+// untouched. This cannot recover an annotation flattened into a bitmap.
+const MAX_COLOR_INK_OPERATIONS = 1_000_000;
+export function colorInkOperationFilter(operatorList, OPS, budget) {
+  const { fnArray, argsArray } = operatorList || {};
+  if (!fnArray || !argsArray || fnArray.length !== argsArray.length || fnArray.length > MAX_COLOR_INK_OPERATIONS) return null;
+  const saturated = (color) => {
+    if (typeof color !== "string" || !/^#[0-9a-f]{6}$/i.test(color)) return false;
+    const rgb = [1, 3, 5].map(i => parseInt(color.slice(i, i + 2), 16));
+    return Math.max(...rgb) - Math.min(...rgb) > 90;
+  };
+  let state = { fill: false, stroke: false }, pendingClip = false;
+  const stack = [], omitted = new Set();
+  for (let i = 0; i < fnArray.length; i++) {
+    if (i % 4096 === 0 && budget && !budget.check()) return null;
+    const fn = fnArray[i], args = argsArray[i];
+    if (fn === OPS.save || fn === OPS.paintFormXObjectBegin || fn === OPS.beginGroup) stack.push({ ...state });
+    else if (fn === OPS.restore || fn === OPS.paintFormXObjectEnd || fn === OPS.endGroup) state = stack.pop() || { fill: false, stroke: false };
+    else if (fn === OPS.setFillRGBColor) state.fill = saturated(args?.[0]);
+    else if (fn === OPS.setStrokeRGBColor) state.stroke = saturated(args?.[0]);
+    else if (fn === OPS.setFillColorN || fn === OPS.setFillTransparent) state.fill = false;
+    else if (fn === OPS.setStrokeColorN || fn === OPS.setStrokeTransparent) state.stroke = false;
+    else if (fn === OPS.clip || fn === OPS.eoClip) pendingClip = true;
+    else {
+      const paint = fn === OPS.constructPath ? args?.[0] : fn;
+      const isStroke = paint === OPS.stroke || paint === OPS.closeStroke;
+      const isFill = paint === OPS.fill || paint === OPS.eoFill;
+      const isMixed = [OPS.fillStroke, OPS.eoFillStroke, OPS.closeFillStroke, OPS.closeEOFillStroke].includes(paint);
+      if (!pendingClip && ((isStroke && state.stroke) || (isFill && state.fill) || (isMixed && state.stroke && state.fill))) omitted.add(i);
+      if (isStroke || isFill || isMixed || paint === OPS.endPath) pendingClip = false;
+    }
+  }
+  return omitted.size ? { operationsFilter: i => !omitted.has(i), omitted: omitted.size } : null;
+}
+const colorInkFilters = new WeakMap();
+async function pageColorInkFilter(page, opts) {
+  if (!opts.removeColoredVectorInk || typeof page.getOperatorList !== "function") return null;
+  if (!colorInkFilters.has(page)) colorInkFilters.set(page, (async () => {
+    const pdfjs = await loadPdfJs();
+    return colorInkOperationFilter(await page.getOperatorList(), pdfjs.OPS, opts.recognitionBudget);
+  })());
+  return colorInkFilters.get(page);
+}
+
 // Renders one rectangle of a page (device pixels at this DPI/rotation) - the
 // door table is rendered on its own at the DPI its text needs, instead of the
 // whole sheet at a fixed DPI.
@@ -1424,11 +1471,13 @@ export async function renderRegionToImageData(pdfDoc, pageNumber, dpi, rotation,
   const ctx = canvas.getContext("2d", { willReadFrequently: true });
   ctx.fillStyle = "#ffffff";
   ctx.fillRect(0, 0, w, h);
-  await page.render({ canvasContext: ctx, viewport, transform: [1, 0, 0, 1, -region.x0, -region.y0] }).promise;
+  const colorFilter = await pageColorInkFilter(page, opts);
+  await page.render({ canvasContext: ctx, viewport, transform: [1, 0, 0, 1, -region.x0, -region.y0],
+    ...(colorFilter ? { operationsFilter: colorFilter.operationsFilter } : {}) }).promise;
   const img = ctx.getImageData(0, 0, w, h);
   canvas.width = 0;
   canvas.height = 0;
-  return { width: img.width, height: img.height, data: img.data, dpi, region };
+  return { width: img.width, height: img.height, data: img.data, dpi, region, color_paints_omitted: colorFilter?.omitted || 0 };
 }
 
 // Revision clouds, deltas and markups are drawn in colour (blue/red/green)
@@ -1660,7 +1709,7 @@ export async function extractDoorScheduleFromPdf(pdfBytes, pageNumber, onProgres
     let s = dpi / detectDpi;
     let region = { x0: r150.x0 * s, y0: r150.y0 * s, x1: r150.x1 * s, y1: r150.y1 * s };
     progress("Rendering the table at " + dpi + " dpi" + turned + "...");
-    const pageImage = await renderRegionToImageData(pdfDoc, pageNumber, dpi, rotation, region, options);
+    const pageImage = await renderRegionToImageData(pdfDoc, pageNumber, dpi, rotation, region, { ...options, removeColoredVectorInk: true });
     dpi = pageImage.dpi;
     region = pageImage.region;
     s = dpi / detectDpi;
@@ -1736,7 +1785,7 @@ export async function extractDoorScheduleFromPdf(pdfBytes, pageNumber, onProgres
 
   // Second read of the size cells that did not parse (see rereadDimensionCell).
   const sizeCols = { width: fieldNames.indexOf("width"), height: fieldNames.indexOf("height"), thickness: fieldNames.indexOf("thickness") };
-  let reread = 0, rereadUsed = 0;
+  let reread = 0, rereadUsed = 0, codeReread = 0, codeRereadUsed = 0;
   for (const row of rows) {
     await yieldRow();
     if (!budget.check()) break;
@@ -1755,6 +1804,19 @@ export async function extractDoorScheduleFromPdf(pdfBytes, pageNumber, onProgres
     if (size.width_inches == null) tryCell("width", fits("width"));
     if (size.height_inches == null) tryCell("height", fits("height"));
     if (parseThickness(row.thickness) == null) tryCell("thickness", (t) => parseThickness(t) != null);
+    // Type/group codes are identifiers too: revisit uncertain original pixels
+    // without a letter whitelist or collapsing legitimate multiletter codes.
+    for (const field of ["door_type", "hardware_group"]) {
+      const ci = fieldNames.indexOf(field), text = cleanCell(row[field]);
+      if (ci < 0 || !text || row._confidence[field] >= .8 || !budget.check()) continue;
+      const [left, right] = colBounds[ci];
+      const cell = cropRowImage(pageImage, y0 + 4, y1 - 4, left + 4, right - 4);
+      codeReread++;
+      const got = rereadMarkCell(engine, cell, budget, text, row._confidence[field],
+        t => /^[A-Z0-9][A-Z0-9_.-]{0,11}$/.test(t));
+      if (options.debug) (row._codeReread = row._codeReread || {})[field] = got;
+      if (got.text) { row[field] = got.text; row._confidence[field] = got.confidence; codeRereadUsed++; }
+    }
   }
 
   // Same {mark/hardware_group/fire_rating/size/...} mapping extractGridDoors
@@ -1788,6 +1850,7 @@ export async function extractDoorScheduleFromPdf(pdfBytes, pageNumber, onProgres
     field_confidence: Object.fromEntries(fieldNames.filter(Boolean).map((f) => [f,
       (f === "width" || f === "height") && doorSize(row.width, row.height)[f + "_inches"] == null ? 0 : row._confidence[f]])),
     ...(options.debug && row._reread ? { size_reread: row._reread } : {}),
+    ...(options.debug && row._codeReread ? { code_reread: row._codeReread } : {}),
   })).filter((d) => d.door_number);
 
   const metadata = {
@@ -1799,10 +1862,13 @@ export async function extractDoorScheduleFromPdf(pdfBytes, pageNumber, onProgres
     row_count: doors.length,
     rotation_applied: best.rotation,
     render_dpi: best.dpi,
+    vector_color_paints_omitted: pageImage.color_paints_omitted || 0,
     header_fields: fieldNames,
     header_matches: header.matches,
     size_cells_reread: reread,
     size_cells_reread_used: rereadUsed,
+    code_cells_reread: codeReread,
+    code_cells_reread_used: codeRereadUsed,
     orientation_attempts: attempts,
     total_time_ms: Math.round(performance.now() - t0),
   };
