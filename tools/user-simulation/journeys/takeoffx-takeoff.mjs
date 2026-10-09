@@ -14,6 +14,7 @@
 //
 // Usage: node tools/user-simulation/journeys/takeoffx-takeoff.mjs   (exit 0 = all passed)
 import { Journey, openHome, raiseDossier, setMark, press, pressIn, sleep, signIn, openApp, overlayFrame, frameInfo, subxWorkspace, workspaceUploadAndExtract } from "../lib/journey-kit.mjs";
+import { takeoffCounts } from "../lib/takeoff-assertions.mjs";
 
 const J = new Journey("takeoffx-takeoff", "TakeOffX takeoff");
 
@@ -72,7 +73,8 @@ await J.run(async () => {
     const run = await workspaceUploadAndExtract(ws, { project: "user-sim takeoff journey " + J.suffix });
     J.note("takeoff_run", { upload: run.upload, tries: run.tries, detail: run.detail });
     const tiles = Object.fromEntries((run.detail && run.detail.tiles || []).map((t) => [t.label.toLowerCase(), t.value]));
-    J.check("the takeoff returns door and hardware counts from the uploaded drawing", Number(tiles.doors || 0) > 0 && "hardware groups" in tiles, { tiles, doors: run.doors, tries: run.tries });
+    const counted = takeoffCounts(run.detail?.tiles, run.rows);
+    J.check("the takeoff returns door and hardware counts from the uploaded drawing", counted.ok, { ...counted, tiles, doors: run.doors, tries: run.tries });
     J.check("the counts break down by door type, size, fire rating and hardware group", /by door type/i.test(run.detail && run.detail.counts || "") && /by size/i.test(run.detail.counts) && /by fire rating/i.test(run.detail.counts),
       (run.detail && run.detail.counts || "").slice(0, 200) || "no breakdown");
     const traced = run.rows.filter((r) => /^p\.\d+ row \d+/.test(r.source));
