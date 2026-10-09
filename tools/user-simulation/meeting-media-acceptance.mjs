@@ -7,7 +7,7 @@ import { mkdir, writeFile, unlink, readFile } from "node:fs/promises";
 import { createHash } from "node:crypto";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
-import { Journey, BASE, chromium, gpuRenderer, openHome, raiseDossier, signIn, pressIn, until, sleep, d1, q } from "./lib/journey-kit.mjs";
+import { Journey, BASE, chromium, gpuRenderer, openHome, raiseDossier, signIn, pressIn, openApp, until, sleep, d1, q } from "./lib/journey-kit.mjs";
 
 const root = fileURLToPath(new URL("../../", import.meta.url));
 const J = new Journey("meetingx-media-acceptance", "MeetingX real bidirectional camera, microphone and TURN transport");
@@ -107,7 +107,7 @@ async function join(page, label) {
 async function runPair(accounts, relay) {
   const mode = relay ? "forced TURN" : "normal transport";
   const room = "usersim_media_" + J.suffix + (relay ? "_relay" : "_normal");
-  const contexts = [], pages = [];
+  const contexts = [], pages = [], targets = [];
   try {
     for (let i = 0; i < 2; i++) {
       const ctx = await J.context("desktop"); contexts.push(ctx);
@@ -119,19 +119,30 @@ async function runPair(accounts, relay) {
       const signed = await signIn(page, accounts[i]);
       J.check(mode + " participant " + i + " signs in through the public UI", signed.auth === "signed-in", { auth: signed.auth, error: signed.error });
       if (signed.auth !== "signed-in") throw new Error("could not sign in");
-      await page.goto(BASE + "/meetingx?room=" + encodeURIComponent(room), { waitUntil: "load" });
-      await join(page, mode + " participant " + i);
-      await pressIn(page, "#media-btn");
-      const ready = await until(() => page.evaluate(() => document.getElementById("media-status")?.textContent === "IN THE CALL"), 15000, 250);
-      J.check(mode + " participant " + i + " starts synthetic camera and microphone through CAM + MIC", !!ready, await mediaSnapshot(page));
+      let target;
+      if (!relay && i === 0) {
+        // Exercise the real same-origin homepage overlay and its permission inheritance.
+        await page.evaluate(() => window.WeylandShell.close());
+        target = await openApp(page, "/meetingx?room=" + encodeURIComponent(room));
+        if (!target) throw new Error("MeetingX overlay frame did not open");
+        J.note("normal_a_entry", "same-origin homepage overlay; B uses the shared standalone room URL");
+      } else {
+        await page.goto(BASE + "/meetingx?room=" + encodeURIComponent(room), { waitUntil: "load" });
+        target = page;
+      }
+      targets.push(target);
+      await join(target, mode + " participant " + i);
+      await pressIn(target, "#media-btn");
+      const ready = await until(() => target.evaluate(() => document.getElementById("media-status")?.textContent === "IN THE CALL"), 15000, 250);
+      J.check(mode + " participant " + i + " starts synthetic camera and microphone through CAM + MIC", !!ready, await mediaSnapshot(target));
     }
-    const [a, b] = pages;
+    const [a, b] = targets;
     const received = await until(async () => flowing(await mediaSnapshot(a)) && flowing(await mediaSnapshot(b)), 60000, 500);
-    let first = await Promise.all(pages.map(mediaSnapshot));
+    let first = await Promise.all(targets.map(mediaSnapshot));
     J.note(relay ? "relay_initial" : "normal_initial", first);
     J.check(mode + " both browsers receive audio RTP with nonzero energy and decode/render remote video", !!received, first.map((s) => ({ peers: s.peers, remote: s.remote })));
     await sleep(3000);
-    const next = await Promise.all(pages.map(mediaSnapshot));
+    const next = await Promise.all(targets.map(mediaSnapshot));
     J.note(relay ? "relay_after_3s" : "normal_after_3s", next);
     for (let i = 0; i < 2; i++) {
       const f = first[i], n = next[i];
@@ -163,12 +174,12 @@ async function runPair(accounts, relay) {
     J.check(mode + " leaving removes the remote participant and closes peer media", !!left, await mediaSnapshot(a));
     await pressIn(a, "#room-btn");
     const leftA = await until(() => a.evaluate(() => document.getElementById("room-status")?.textContent === "NOT CONNECTED"), 2000, 100);
-    const leftState = await Promise.all(pages.map(mediaSnapshot));
+    const leftState = await Promise.all(targets.map(mediaSnapshot));
     J.note(relay ? "relay_after_leave" : "normal_after_leave", leftState);
     J.check(mode + " both participants leave the owned room promptly", !!leftA && leftState.every((s) => s.room === "NOT CONNECTED"), leftState);
     J.check(mode + " leaving stops every camera/microphone track and peer connection", leftState.every((s) => s.local.length === 0 && s.captured_tracks.length === 2 && s.captured_tracks.every((t) => t.state === "ended") && s.peers.every((p) => p.connection === "closed") && s.remote.length === 0), leftState);
     await sleep(1200);
-    const settled = await Promise.all(pages.map(mediaSnapshot));
+    const settled = await Promise.all(targets.map(mediaSnapshot));
     J.check(mode + " stays left without reconnecting or restarting media", settled.every((s) => s.room === "NOT CONNECTED" && s.media === "NOT IN A CALL" && s.peers.every((p) => p.connection === "closed") && s.captured_tracks.every((t) => t.state === "ended")), settled);
   } finally {
     for (const ctx of contexts) await ctx.close().catch(() => {});
