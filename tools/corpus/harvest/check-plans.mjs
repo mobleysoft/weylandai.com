@@ -1,0 +1,20 @@
+import assert from 'node:assert/strict';
+import {planEvidence,classify,categories} from './qualification.mjs';
+const qualify=s=>planEvidence(s,{drawing:true});
+for(const title of ['FLOOR PLAN','LEVEL 2 PLAN','FIRST FLOOR PLAN','SECOND FLOOR PLAN','GROUND FLOOR PLAN','PARTIAL FLOOR PLAN','ENLARGED FLOOR PLAN','OVERALL PLAN'])assert.ok(qualify(title).floor_plan_architectural,title);
+for(const title of ['SITE PLAN','GRADING PLAN','ROOF PLAN','REFLECTED CEILING PLAN','FIRST FLOOR PHASING PLAN','ELECTRICAL FLOOR PLAN','MECHANICAL FLOOR PLAN','PLUMBING PLAN','JOINT PLAN','CAMPGROUND LAYOUT']){assert.ok(qualify(title).plan_other,title);assert.equal(qualify(title).floor_plan_architectural,false,title);}
+for(const id of ['A101','A-101','A1.01','AD101'])assert.ok(qualify('SCALE 1/8\n\n\n'+id).floor_plan_architectural,id);
+assert.equal(planEvidence('FLOOR PLAN',{drawing:true,reference:true}).floor_plan_architectural,false);
+assert.equal(qualify('SEE FLOOR PLAN FOR REQUIRED DIMENSIONS.').floor_plan_architectural,false);
+for(const prose of ['3. UNLESS NOTED OTHERWISE ON THE FLOOR PLAN, ALL INTERIOR DRYWALL PARTITIONS','B. FLOOR PLAN MATCHLINE SYMBOL:','Wall furring per floor plan,','FLOOR PLAN LEGEND'])assert.equal(qualify(prose).floor_plan_architectural,false,prose);
+assert.equal(qualify('REFLECTED CEILING PLAN\n\n\nA101').floor_plan_architectural,false);
+assert.equal(qualify('FLOOR PLAN - HVAC\nFLOOR PLANS\n\n\nM101').floor_plan_architectural,false);
+assert.ok(qualify('FLOOR PLAN - HVAC\nFLOOR PLANS\n\n\nM101').plan_other);
+assert.equal(qualify('EXTERIOR ELEVATIONS\n\n\nA104').floor_plan_architectural,false);
+assert.equal(qualify('\n\nA151\n\nA501').floor_plan_architectural,false);
+const rec={pages:10,markers:Object.fromEntries(categories.map(k=>[k,[]])),qualified_page_indexes:{}};
+for(const k of ['door_schedule','hardware_spec','plan_other'])rec.markers[k].push({qualified:true,page_index:1,content_evidence:{standalone_heading:true,column_header_count:4,row_matches:0}});
+classify(rec);assert.equal(rec.class,'pair');
+rec.markers.floor_plan_architectural.push({qualified:true,page_index:2});classify(rec);assert.equal(rec.class,'complete');
+rec.markers.door_schedule[0].content_evidence={standalone_heading:false,column_header_count:0,row_matches:3};classify(rec);assert.equal(rec.class,'spec-only');
+console.log('Architectural/other titles, sheet IDs, reference/prose rejection and complete-class boundary passed');

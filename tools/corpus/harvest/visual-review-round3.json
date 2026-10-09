@@ -1,0 +1,56 @@
+{
+  "reviewed_at": "2026-10-09T09:53:16Z",
+  "scope": "Representative sheets inspected as rendered PNGs; not exhaustive product acceptance.",
+  "findings": [
+    {
+      "sha16": "674e8c0ea89da178",
+      "page_index": 4,
+      "sheet": "FA101",
+      "finding": "Building 1 Level 1 Fire Alarm. Architectural geometry is a background under fire-alarm devices; numeric labels include room numbers listed in ROOM SCHEDULE. Corrected from preferred architectural-plan candidate to other-plan reference."
+    },
+    {
+      "sha16": "61bd6a483519458e",
+      "page_index": 2,
+      "sheet": "MD3.0",
+      "finding": "First Floor Mechanical Demolition Plan, with ducts and HVAC equipment over building geometry. Corrected to other-plan reference; not a primary architectural plan sheet."
+    },
+    {
+      "sha16": "32b631d235082c7c",
+      "page_index": 15,
+      "sheet": "A-101",
+      "finding": "Cabin 1 floor plans, demolition, roof and reflected ceiling views on one sheet. Architectural plan confirmed, after the first quarter of 41 pages. Boxed 101/102/103/104 label rooms; text matches alone are not verified door tags."
+    },
+    {
+      "sha16": "43a1f0db3f7ff345",
+      "page_index": 3,
+      "sheet": "G005",
+      "finding": "Area of Work Plan includes Existing Floor Plan Level 2, doors and wall geometry. Architectural plan confirmed in first quarter of 25 pages; sparse work-scope sheet, with detailed architectural sheets later."
+    },
+    {
+      "sha16": "4af80165bc367de8",
+      "page_index": 4,
+      "sheet": "A101",
+      "finding": "Overall Floor Plan, Level 1. Architectural plan confirmed in first quarter of 23 pages, with walls, rooms, doors and renovation area."
+    },
+    {
+      "sha16": "e3d0cc1bc22fd824",
+      "page_index": 7,
+      "sheet": "A-101",
+      "schedule_page_index": 17,
+      "schedule_sheet": "A-601",
+      "finding": "Architectural demolition floor plan confirmed; the door and frame schedule is on page index 17 with marks 100-121, type, width, height, frame details, rating and hardware-set columns. Numbered demolition notes are distinct from door marks."
+    },
+    {
+      "sha16": "8a99839626a199c6",
+      "page_index": 18,
+      "sheet": "A-601",
+      "finding": "Door and frame schedule confirmed with marks D1 and D2, size, material, glazing, type, frame finish and hardware sets. Same sheet includes hardware-set 1 and 2 item inventories."
+    },
+    {
+      "sha16": "3fd2388877347d09",
+      "page_index": 11,
+      "sheet": "A-610",
+      "finding": "Exterior elevations; window numbers had matched the old loose schedule-row pattern. This page is not a door schedule and was removed from qualified schedule indexes/previews."
+    }
+  ]
+}

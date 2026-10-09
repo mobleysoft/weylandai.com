@@ -1,9 +1,18 @@
 {
-  "verified_at": "2026-10-09T09:18:13Z",
-  "downloaded": 459,
+  "verified_at": "2026-10-09T09:57:07Z",
+  "downloaded": 598,
+  "baseline_sha256_preserved": 459,
   "seeds_accounted": 52,
   "enumerators_accounted": 2,
-  "triaged": 459,
-  "checks": "manifest required fields, all seeds/enumerators accounted, PDF signatures, SHA256 and sizes, unique hashes, exclusions, triage coverage, sampled-page bounds, preview existence, saved-byte accounting",
+  "triaged": 598,
+  "extraction_blockers": [
+    {
+      "sha16": "1745b65f8f8d7ec1",
+      "reason": "PDF page-boundary blocker: pdfinfo reports 41 pages but pdftotext emits 11; page indexes cannot be trusted. PDF retained unchanged; no repair attempted."
+    }
+  ],
+  "round_cap": 1000000000,
+  "received_bytes": 999553931,
+  "checks": "manifest fields, source coverage, PDF signatures, SHA256 and sizes, preserved baseline hashes, unique hashes, exclusions, exact fifth-page sampling coverage or explicit extraction blocker, per-page/set plan flags, title/ID evidence, complete requires architectural plan, candidate evidence indexes, previews, saved-byte accounting",
   "outcome": "passed"
 }

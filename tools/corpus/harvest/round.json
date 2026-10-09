@@ -1,958 +1,14 @@
 {
-  "started_at": "2026-10-09T08:30:01Z",
+  "started_at": "2026-10-09T09:43:45Z",
   "user_agent": "WeylandAI-corpus/1.0 (+https://weylandai.com)",
   "file_cap": 150000000,
-  "round_cap": 3000000000,
-  "received_bytes": 2999029552,
-  "saved_bytes": 2840149575,
+  "round_cap": 1000000000,
+  "received_bytes": 999553931,
+  "saved_bytes": 998371271,
   "robots": {
-    "https://bidcondocs.delaware.gov": {
-      "url": "https://bidcondocs.delaware.gov/robots.txt",
-      "retrieved_at": "2026-10-09T08:30:01Z",
-      "http_status": 200,
-      "rules": [
-        "/_Drawings"
-      ],
-      "policy": "apply User-agent * Disallow",
-      "error": null
-    },
-    "https://dam.assets.ohio.gov": {
-      "url": "https://dam.assets.ohio.gov/robots.txt",
-      "retrieved_at": "2026-10-09T08:30:25Z",
-      "http_status": 200,
-      "rules": [],
-      "policy": "apply User-agent * Disallow",
-      "error": null
-    },
-    "https://ofcc.ohio.gov": {
-      "url": "https://ofcc.ohio.gov/robots.txt",
-      "retrieved_at": "2026-10-09T08:30:41Z",
-      "http_status": 404,
-      "rules": [],
-      "policy": "allow: robots absent",
-      "error": "HTTP 404"
-    },
-    "https://oa.mo.gov": {
-      "url": "https://oa.mo.gov/robots.txt",
-      "retrieved_at": "2026-10-09T08:30:43Z",
-      "http_status": 404,
-      "rules": [],
-      "policy": "allow: robots absent",
-      "error": "HTTP 404"
-    },
-    "https://fmdc.oa.mo.gov": {
-      "url": "https://fmdc.oa.mo.gov/robots.txt",
-      "retrieved_at": "2026-10-09T08:30:47Z",
-      "http_status": 403,
-      "rules": [],
-      "policy": "deny: unavailable robots",
-      "error": "HTTP 403"
-    },
-    "https://pdc-projects.missouri.edu": {
-      "url": "https://pdc-projects.missouri.edu/robots.txt",
-      "retrieved_at": "2026-10-09T08:30:50Z",
-      "http_status": null,
-      "rules": [],
-      "policy": "deny: unavailable robots",
-      "error": "fetch failed"
-    },
-    "https://www.dgs.ca.gov": {
-      "url": "https://www.dgs.ca.gov/robots.txt",
-      "retrieved_at": "2026-10-09T08:30:50Z",
-      "http_status": 200,
-      "rules": [],
-      "policy": "apply User-agent * Disallow",
-      "error": null
-    },
-    "https://www.utah.gov": {
-      "url": "https://www.utah.gov/robots.txt",
-      "retrieved_at": "2026-10-09T08:31:04Z",
-      "http_status": 200,
-      "rules": [],
-      "policy": "apply User-agent * Disallow",
-      "error": null
-    },
-    "https://buffalony.gov": {
-      "url": "https://buffalony.gov/robots.txt",
-      "retrieved_at": "2026-10-09T08:31:07Z",
-      "http_status": 301,
-      "rules": [],
-      "policy": "deny: unavailable robots",
-      "error": "robots redirect: cannot establish rules safely"
-    },
-    "https://fitchburgma.gov": {
-      "url": "https://fitchburgma.gov/robots.txt",
-      "retrieved_at": "2026-10-09T08:31:07Z",
-      "http_status": 200,
-      "rules": [
-        "/activedit",
-        "/admin",
-        "/common/admin/",
-        "/OJA",
-        "/support",
-        "/currenteventsview.asp",
-        "/search.asp",
-        "/currenteventsview.aspx",
-        "/search.aspx",
-        "/currentevents.aspx",
-        "/Support",
-        "/CurrentEventsView.asp",
-        "/Search.asp",
-        "/CurrentEventsView.aspx",
-        "/Search.aspx",
-        "/Search",
-        "/CurrentEvents.aspx",
-        "/Currentevents.aspx",
-        "/map.aspx",
-        "/map.asp",
-        "/Map.aspx",
-        "/Map.asp",
-        "/RSS.aspx"
-      ],
-      "policy": "apply User-agent * Disallow",
-      "error": null
-    },
-    "https://losaltosca.gov": {
-      "url": "https://losaltosca.gov/robots.txt",
-      "retrieved_at": "2026-10-09T08:31:09Z",
-      "http_status": 301,
-      "rules": [],
-      "policy": "deny: unavailable robots",
-      "error": "robots redirect: cannot establish rules safely"
-    },
-    "https://procurement.opengov.com": {
-      "url": "https://procurement.opengov.com/robots.txt",
-      "retrieved_at": "2026-10-09T08:31:10Z",
-      "http_status": 200,
-      "rules": [],
-      "policy": "apply User-agent * Disallow",
-      "error": null
-    },
-    "https://www.lansingschools.net": {
-      "url": "https://www.lansingschools.net/robots.txt",
-      "retrieved_at": "2026-10-09T08:31:16Z",
-      "http_status": 200,
-      "rules": [
-        "/Admin/",
-        "/Core/",
-        "/skins/",
-        "/temp/",
-        "/profiles/",
-        "/downloads/_acct_/"
-      ],
-      "policy": "apply User-agent * Disallow",
-      "error": null
-    },
-    "https://files-backend.assets.thrillshare.com": {
-      "url": "https://files-backend.assets.thrillshare.com/robots.txt",
-      "retrieved_at": "2026-10-09T08:31:19Z",
-      "http_status": 403,
-      "rules": [],
-      "policy": "deny: unavailable robots",
-      "error": "HTTP 403"
-    },
-    "https://www.qacps.org": {
-      "url": "https://www.qacps.org/robots.txt",
-      "retrieved_at": "2026-10-09T08:31:20Z",
-      "http_status": 200,
-      "rules": [],
-      "policy": "apply User-agent * Disallow",
-      "error": null
-    },
-    "https://resources.finalsite.net": {
-      "url": "https://resources.finalsite.net/robots.txt",
-      "retrieved_at": "2026-10-09T08:31:22Z",
-      "http_status": 200,
-      "rules": [],
-      "policy": "apply User-agent * Disallow",
-      "error": null
-    },
-    "https://www.oakton.edu": {
-      "url": "https://www.oakton.edu/robots.txt",
-      "retrieved_at": "2026-10-09T08:31:28Z",
-      "http_status": 200,
-      "rules": [
-        "/my/",
-        "/resource/it/",
-        "/OnlineApp/",
-        "/user/",
-        "/cgi-bin/"
-      ],
-      "policy": "apply User-agent * Disallow",
-      "error": null
-    },
-    "https://www.npenn.org": {
-      "url": "https://www.npenn.org/robots.txt",
-      "retrieved_at": "2026-10-09T08:31:31Z",
-      "http_status": 301,
-      "rules": [],
-      "policy": "deny: unavailable robots",
-      "error": "robots redirect: cannot establish rules safely"
-    },
-    "https://www.vcsedu.org": {
-      "url": "https://www.vcsedu.org/robots.txt",
-      "retrieved_at": "2026-10-09T08:31:31Z",
-      "http_status": 200,
-      "rules": [
-        "/page.cfm",
-        "/cf_calendar/printpdf.cfm",
-        "/fs/",
-        "/academics/electives-special-programs/health-and-physical-education/health-in-our-schools$",
-        "/academics/electives-special-programs/health-and-physical-education/health-in-our-schools?",
-        "/academics/electives-special-programs/health-and-physical-education/health-in-our-schools/~",
-        "/production/calendar/grid$",
-        "/production/calendar/grid?",
-        "/production/calendar/grid/~",
-        "/instructions$",
-        "/instructions?",
-        "/instructions/~",
-        "/instructions/style-guide$",
-        "/instructions/style-guide?",
-        "/instructions/style-guide/~",
-        "/instructions/homepage$",
-        "/instructions/homepage?",
-        "/instructions/homepage/~",
-        "/instructions/header-and-footer$",
-        "/instructions/header-and-footer?",
-        "/instructions/header-and-footer/~",
-        "/directory/departments/financial-services/budget-department/budget-department-resources$",
-        "/directory/departments/financial-services/budget-department/budget-department-resources?",
-        "/directory/departments/financial-services/budget-department/budget-department-resources/~",
-        "/production/navigation/tier-three-page$",
-        "/production/navigation/tier-three-page?",
-        "/production/navigation/tier-three-page/~",
-        "/directory/departments/operation-services/student-transportation/demo$",
-        "/directory/departments/operation-services/student-transportation/demo?",
-        "/directory/departments/operation-services/student-transportation/demo/~",
-        "/production/navigation/tier-three-page/tier-four-page/tier-five-page$",
-        "/production/navigation/tier-three-page/tier-four-page/tier-five-page?",
-        "/production/navigation/tier-three-page/tier-four-page/tier-five-page/~",
-        "/stembus$",
-        "/stembus?",
-        "/stembus/~",
-        "/directory/departments/student-services/alternative-education/2019-2020-school-financial-report$",
-        "/directory/departments/student-services/alternative-education/2019-2020-school-financial-report?",
-        "/directory/departments/student-services/alternative-education/2019-2020-school-financial-report/~",
-        "/home-clone-think-12$",
-        "/home-clone-think-12?",
-        "/home-clone-think-12/~",
-        "/directory/departments/human-resources/volusia-leads/social-media$",
-        "/directory/departments/human-resources/volusia-leads/social-media?",
-        "/directory/departments/human-resources/volusia-leads/social-media/~",
-        "/directory/departments/human-resources/equity/equity-plan$",
-        "/directory/departments/human-resources/equity/equity-plan?",
-        "/directory/departments/human-resources/equity/equity-plan/~",
-        "/directory/departments/information-technology-services/client-services/hardware-catalog$",
-        "/directory/departments/information-technology-services/client-services/hardware-catalog?",
-        "/directory/departments/information-technology-services/client-services/hardware-catalog/~",
-        "/production/navigation/tier-three-page/tier-four-page$",
-        "/production/navigation/tier-three-page/tier-four-page?",
-        "/production/navigation/tier-three-page/tier-four-page/~",
-        "/directory/departments/human-resources/volusia-leads/professional-learning-for-members$",
-        "/directory/departments/human-resources/volusia-leads/professional-learning-for-members?",
-        "/directory/departments/human-resources/volusia-leads/professional-learning-for-members/~",
-        "/directory/departments/human-resources/employment/application-for-employment$",
-        "/directory/departments/human-resources/employment/application-for-employment?",
-        "/directory/departments/human-resources/employment/application-for-employment/~",
-        "/directory/departments/community-information-services/strategic-partnerships/adventhealth$",
-        "/directory/departments/community-information-services/strategic-partnerships/adventhealth?",
-        "/directory/departments/community-information-services/strategic-partnerships/adventhealth/~",
-        "/directory/departments/community-information-services/family-network-night$",
-        "/directory/departments/community-information-services/family-network-night?",
-        "/directory/departments/community-information-services/family-network-night/~",
-        "/production/organizational/three-column$",
-        "/production/organizational/three-column?",
-        "/production/organizational/three-column/~",
-        "/community/storm-resource-center/reopening-questions$",
-        "/community/storm-resource-center/reopening-questions?",
-        "/community/storm-resource-center/reopening-questions/~",
-        "/about-us/infographics-page$",
-        "/about-us/infographics-page?",
-        "/about-us/infographics-page/~",
-        "/bestchoice$",
-        "/bestchoice?",
-        "/bestchoice/~",
-        "/directory/departments/human-resources/risk-benefits-management-department/dental-insurance$",
-        "/directory/departments/human-resources/risk-benefits-management-department/dental-insurance?",
-        "/directory/departments/human-resources/risk-benefits-management-department/dental-insurance/~",
-        "/production/form/forms$",
-        "/production/form/forms?",
-        "/production/form/forms/~",
-        "/directory/departments/operation-services/student-transportation/parent-resources$",
-        "/directory/departments/operation-services/student-transportation/parent-resources?",
-        "/directory/departments/operation-services/student-transportation/parent-resources/~",
-        "/production/qa-testing/qa-testing-content$",
-        "/production/qa-testing/qa-testing-content?",
-        "/production/qa-testing/qa-testing-content/~",
-        "/production/qa-testing/qa-testing-buttons$",
-        "/production/qa-testing/qa-testing-buttons?",
-        "/production/qa-testing/qa-testing-buttons/~",
-        "/directory/departments/information-technology-services/learning-technologies/waterford$",
-        "/directory/departments/information-technology-services/learning-technologies/waterford?",
-        "/directory/departments/information-technology-services/learning-technologies/waterford/~",
-        "/instructions1$",
-        "/instructions1?",
-        "/instructions1/~",
-        "/academics/mathematics-department/9-12-mathematics$",
-        "/academics/mathematics-department/9-12-mathematics?",
-        "/academics/mathematics-department/9-12-mathematics/~",
-        "/directory/departments/information-technology-services/learning-technologies/vportal-down-information$",
-        "/directory/departments/information-technology-services/learning-technologies/vportal-down-information?",
-        "/directory/departments/information-technology-services/learning-technologies/vportal-down-information/~",
-        "/directory/departments/information-technology-services/learning-technologies/productivity-support$",
-        "/directory/departments/information-technology-services/learning-technologies/productivity-support?",
-        "/directory/departments/information-technology-services/learning-technologies/productivity-support/~",
-        "/directory/departments/human-resources/risk-benefits-management-department/disability-and-life-insurance$",
-        "/directory/departments/human-resources/risk-benefits-management-department/disability-and-life-insurance?",
-        "/directory/departments/human-resources/risk-benefits-management-department/disability-and-life-insurance/~",
-        "/directory/departments/teaching-leading-and-learning/professional-learning/college-universityinformation$",
-        "/directory/departments/teaching-leading-and-learning/professional-learning/college-universityinformation?",
-        "/directory/departments/teaching-leading-and-learning/professional-learning/college-universityinformation/~",
-        "/directory/departments/operation-services/facilities-services/planning-and-business-services/half-cent-sales-tax$",
-        "/directory/departments/operation-services/facilities-services/planning-and-business-services/half-cent-sales-tax?",
-        "/directory/departments/operation-services/facilities-services/planning-and-business-services/half-cent-sales-tax/~",
-        "/directory/departments/teaching-leading-and-learning/professional-learning/volusia-chats$",
-        "/directory/departments/teaching-leading-and-learning/professional-learning/volusia-chats?",
-        "/directory/departments/teaching-leading-and-learning/professional-learning/volusia-chats/~",
-        "/directory/departments/teaching-leading-and-learning/professional-learning/volusia-reads$",
-        "/directory/departments/teaching-leading-and-learning/professional-learning/volusia-reads?",
-        "/directory/departments/teaching-leading-and-learning/professional-learning/volusia-reads/~",
-        "/directory/departments/human-resources/recruitment-and-retention/relocation-information$",
-        "/directory/departments/human-resources/recruitment-and-retention/relocation-information?",
-        "/directory/departments/human-resources/recruitment-and-retention/relocation-information/~",
-        "/directory/departments/operation-services/school-way-cafe/free-and-reduced-meal-applications$",
-        "/directory/departments/operation-services/school-way-cafe/free-and-reduced-meal-applications?",
-        "/directory/departments/operation-services/school-way-cafe/free-and-reduced-meal-applications/~",
-        "/directory/departments/community-information-services/teacher-of-the-year-info/2027-teacher-of-the-year-clone$",
-        "/directory/departments/community-information-services/teacher-of-the-year-info/2027-teacher-of-the-year-clone?",
-        "/directory/departments/community-information-services/teacher-of-the-year-info/2027-teacher-of-the-year-clone/~",
-        "/directory/departments/teaching-leading-and-learning/research-evaluation-accountability/vcs-employee-resources$",
-        "/directory/departments/teaching-leading-and-learning/research-evaluation-accountability/vcs-employee-resources?",
-        "/directory/departments/teaching-leading-and-learning/research-evaluation-accountability/vcs-employee-resources/~",
-        "/directory/departments/community-information-services/state-of-our-schools$",
-        "/directory/departments/community-information-services/state-of-our-schools?",
-        "/directory/departments/community-information-services/state-of-our-schools/~",
-        "/about-us/volusia-county-schools-the-best-place-to-learn$",
-        "/about-us/volusia-county-schools-the-best-place-to-learn?",
-        "/about-us/volusia-county-schools-the-best-place-to-learn/~",
-        "/directory/departments/community-information-services/strategic-partnerships/required-paperwork-for-adventhealth-free-physicals$",
-        "/directory/departments/community-information-services/strategic-partnerships/required-paperwork-for-adventhealth-free-physicals?",
-        "/directory/departments/community-information-services/strategic-partnerships/required-paperwork-for-adventhealth-free-physicals/~",
-        "/about-us/volusiavibes$",
-        "/about-us/volusiavibes?",
-        "/about-us/volusiavibes/~",
-        "/directory/schools/djrf$",
-        "/directory/schools/djrf?",
-        "/directory/schools/djrf/~",
-        "/about-us/beyond-the-boardroom$",
-        "/about-us/beyond-the-boardroom?",
-        "/about-us/beyond-the-boardroom/~",
-        "/academics/career-and-technical-education/cte-programs-temp$",
-        "/academics/career-and-technical-education/cte-programs-temp?",
-        "/academics/career-and-technical-education/cte-programs-temp/~",
-        "/directory/departments/student-services/student-code-of-conduct-updates$",
-        "/directory/departments/student-services/student-code-of-conduct-updates?",
-        "/directory/departments/student-services/student-code-of-conduct-updates/~",
-        "/about-us/district-accreditation$",
-        "/about-us/district-accreditation?",
-        "/about-us/district-accreditation/~",
-        "/directory/departments/superintendent-clone$",
-        "/directory/departments/superintendent-clone?",
-        "/directory/departments/superintendent-clone/~",
-        "/directory/departments/financial-services/presentationsworkshops-archives$",
-        "/directory/departments/financial-services/presentationsworkshops-archives?",
-        "/directory/departments/financial-services/presentationsworkshops-archives/~",
-        "/podcast-clone$",
-        "/podcast-clone?",
-        "/podcast-clone/~",
-        "/directory/departments/human-resources/volusia-leads$",
-        "/directory/departments/human-resources/volusia-leads?",
-        "/directory/departments/human-resources/volusia-leads/~",
-        "/schools/elementary-schools/elementary-schools1$",
-        "/schools/elementary-schools/elementary-schools1?",
-        "/schools/elementary-schools/elementary-schools1/~",
-        "/home-devdemo-page$",
-        "/home-devdemo-page?",
-        "/home-devdemo-page/~",
-        "/academics/career-and-technical-education/cte-department-resources-clone$",
-        "/academics/career-and-technical-education/cte-department-resources-clone?",
-        "/academics/career-and-technical-education/cte-department-resources-clone/~",
-        "/school-board/agendas-minutes$",
-        "/school-board/agendas-minutes?",
-        "/school-board/agendas-minutes/~",
-        "/devdemo-event-calendar$",
-        "/devdemo-event-calendar?",
-        "/devdemo-event-calendar/~",
-        "/directory/departments/human-resources/payroll-department/compensatory-time$",
-        "/directory/departments/human-resources/payroll-department/compensatory-time?",
-        "/directory/departments/human-resources/payroll-department/compensatory-time/~",
-        "/directory/departments/human-resources/payroll-department/payroll-calendars-and-schedules$",
-        "/directory/departments/human-resources/payroll-department/payroll-calendars-and-schedules?",
-        "/directory/departments/human-resources/payroll-department/payroll-calendars-and-schedules/~",
-        "/directory/departments/human-resources/payroll-department/payroll-procedures$",
-        "/directory/departments/human-resources/payroll-department/payroll-procedures?",
-        "/directory/departments/human-resources/payroll-department/payroll-procedures/~",
-        "/production/banners/left-right-banners$",
-        "/production/banners/left-right-banners?",
-        "/production/banners/left-right-banners/~",
-        "/directory/schools/hbs/inpatient-unit$",
-        "/directory/schools/hbs/inpatient-unit?",
-        "/directory/schools/hbs/inpatient-unit/~",
-        "/school-board/resolutions$",
-        "/school-board/resolutions?",
-        "/school-board/resolutions/~",
-        "/directory/departments/teaching-leading-and-learning/professional-learning/professional-growth-leadership-opportunities$",
-        "/directory/departments/teaching-leading-and-learning/professional-learning/professional-growth-leadership-opportunities?",
-        "/directory/departments/teaching-leading-and-learning/professional-learning/professional-growth-leadership-opportunities/~",
-        "/production/banners/left-banner$",
-        "/production/banners/left-banner?",
-        "/production/banners/left-banner/~",
-        "/directory/departments/operation-services/student-transportation/transportation-web-main-menu$",
-        "/directory/departments/operation-services/student-transportation/transportation-web-main-menu?",
-        "/directory/departments/operation-services/student-transportation/transportation-web-main-menu/~",
-        "/production/banners/right-banner$",
-        "/production/banners/right-banner?",
-        "/production/banners/right-banner/~",
-        "/directory/departments/student-services/social-emotional-learning$",
-        "/directory/departments/student-services/social-emotional-learning?",
-        "/directory/departments/student-services/social-emotional-learning/~",
-        "/directory/departments/financial-services/procurement/notice-to-vendors$",
-        "/directory/departments/financial-services/procurement/notice-to-vendors?",
-        "/directory/departments/financial-services/procurement/notice-to-vendors/~",
-        "/directory/departments/information-technology-services/client-services/help-desk-team/returningstaff$",
-        "/directory/departments/information-technology-services/client-services/help-desk-team/returningstaff?",
-        "/directory/departments/information-technology-services/client-services/help-desk-team/returningstaff/~",
-        "/parents-students/job-fair-for-teens-online-portal$",
-        "/parents-students/job-fair-for-teens-online-portal?",
-        "/parents-students/job-fair-for-teens-online-portal/~",
-        "/directory/departments/financial-services/financial-transparency/lottery-funds-report$",
-        "/directory/departments/financial-services/financial-transparency/lottery-funds-report?",
-        "/directory/departments/financial-services/financial-transparency/lottery-funds-report/~",
-        "/directory/departments/student-services/student-health-services/covid19-information$",
-        "/directory/departments/student-services/student-health-services/covid19-information?",
-        "/directory/departments/student-services/student-health-services/covid19-information/~",
-        "/production/posts/list$",
-        "/production/posts/list?",
-        "/production/posts/list/~",
-        "/production/posts/grid$",
-        "/production/posts/grid?",
-        "/production/posts/grid/~",
-        "/production/posts/slideshow$",
-        "/production/posts/slideshow?",
-        "/production/posts/slideshow/~",
-        "/additional-callout-colors$",
-        "/additional-callout-colors?",
-        "/additional-callout-colors/~",
-        "/production/posts/single$",
-        "/production/posts/single?",
-        "/production/posts/single/~",
-        "/directory/departments/financial-services/financial-transparency-old$",
-        "/directory/departments/financial-services/financial-transparency-old?",
-        "/directory/departments/financial-services/financial-transparency-old/~",
-        "/approved-designs$",
-        "/approved-designs?",
-        "/approved-designs/~",
-        "/production$",
-        "/production?",
-        "/production/~",
-        "/directory/departments/information-technology-services/infrastructure/information-technology-security/6-educational-cybersecurity-resources-for-kids$",
-        "/directory/departments/information-technology-services/infrastructure/information-technology-security/6-educational-cybersecurity-resources-for-kids?",
-        "/directory/departments/information-technology-services/infrastructure/information-technology-security/6-educational-cybersecurity-resources-for-kids/~",
-        "/production/calendar/list$",
-        "/production/calendar/list?",
-        "/production/calendar/list/~",
-        "/production/calendar/slideshow$",
-        "/production/calendar/slideshow?",
-        "/production/calendar/slideshow/~",
-        "/production/calendar/event$",
-        "/production/calendar/event?",
-        "/production/calendar/event/~",
-        "/production/constituent/profile$",
-        "/production/constituent/profile?",
-        "/production/constituent/profile/~",
-        "/production/constituent/search$",
-        "/production/constituent/search?",
-        "/production/constituent/search/~",
-        "/production/constituent/directory$",
-        "/production/constituent/directory?",
-        "/production/constituent/directory/~",
-        "/production/constituent/students$",
-        "/production/constituent/students?",
-        "/production/constituent/students/~",
-        "/production/social-elements/vimeo$",
-        "/production/social-elements/vimeo?",
-        "/production/social-elements/vimeo/~",
-        "/production/social-elements/youtube$",
-        "/production/social-elements/youtube?",
-        "/production/social-elements/youtube/~",
-        "/directoryr/social-emotional-learning$",
-        "/directoryr/social-emotional-learning?",
-        "/directoryr/social-emotional-learning/~",
-        "/directory/departments/teaching-leading-and-learning/academics/library-media-services-instructional-materials/book-reconsideration-committee$",
-        "/directory/departments/teaching-leading-and-learning/academics/library-media-services-instructional-materials/book-reconsideration-committee?",
-        "/directory/departments/teaching-leading-and-learning/academics/library-media-services-instructional-materials/book-reconsideration-committee/~",
-        "/directory/departments/human-resources/risk-benefits-management-department/vision-insurance$",
-        "/directory/departments/human-resources/risk-benefits-management-department/vision-insurance?",
-        "/directory/departments/human-resources/risk-benefits-management-department/vision-insurance/~",
-        "/directory/departments/teaching-leading-and-learning/academics/library-media-services-instructional-materials/adoption-process$",
-        "/directory/departments/teaching-leading-and-learning/academics/library-media-services-instructional-materials/adoption-process?",
-        "/directory/departments/teaching-leading-and-learning/academics/library-media-services-instructional-materials/adoption-process/~",
-        "/directory/departments/superintendent/superintendent-clone-test$",
-        "/directory/departments/superintendent/superintendent-clone-test?",
-        "/directory/departments/superintendent/superintendent-clone-test/~",
-        "/directory/departments/human-resources/recruitment-and-retention/minority-recruitment$",
-        "/directory/departments/human-resources/recruitment-and-retention/minority-recruitment?",
-        "/directory/departments/human-resources/recruitment-and-retention/minority-recruitment/~",
-        "/directory/departments/community-information-services/student-web-page-test$",
-        "/directory/departments/community-information-services/student-web-page-test?",
-        "/directory/departments/community-information-services/student-web-page-test/~",
-        "/directory/departments/community-information-services/publications$",
-        "/directory/departments/community-information-services/publications?",
-        "/directory/departments/community-information-services/publications/~",
-        "/directory/departments/information-technology-services/software-systems/student-information-systems-team/student-information-support/department-contacts$",
-        "/directory/departments/information-technology-services/software-systems/student-information-systems-team/student-information-support/department-contacts?",
-        "/directory/departments/information-technology-services/software-systems/student-information-systems-team/student-information-support/department-contacts/~",
-        "/directory/departments/operation-services/maintenance-operations/maintenance-operations-intranet/trainingcareer-development-asset-management/equipment-list$",
-        "/directory/departments/operation-services/maintenance-operations/maintenance-operations-intranet/trainingcareer-development-asset-management/equipment-list?",
-        "/directory/departments/operation-services/maintenance-operations/maintenance-operations-intranet/trainingcareer-development-asset-management/equipment-list/~",
-        "/production/athletics/events-list$",
-        "/production/athletics/events-list?",
-        "/production/athletics/events-list/~",
-        "/production/athletics/single-event$",
-        "/production/athletics/single-event?",
-        "/production/athletics/single-event/~",
-        "/production/athletics/roster$",
-        "/production/athletics/roster?",
-        "/production/athletics/roster/~",
-        "/production/athletics/teams$",
-        "/production/athletics/teams?",
-        "/production/athletics/teams/~",
-        "/production/athletics/profile$",
-        "/production/athletics/profile?",
-        "/production/athletics/profile/~",
-        "/production/athletics/table$",
-        "/production/athletics/table?",
-        "/production/athletics/table/~",
-        "/directory/departments/safety-and-security/student-hero-award-program$",
-        "/directory/departments/safety-and-security/student-hero-award-program?",
-        "/directory/departments/safety-and-security/student-hero-award-program/~",
-        "/directory/departments/human-resources/risk-benefits-management-department/test-page$",
-        "/directory/departments/human-resources/risk-benefits-management-department/test-page?",
-        "/directory/departments/human-resources/risk-benefits-management-department/test-page/~",
-        "/production/organizational/two-column$",
-        "/production/organizational/two-column?",
-        "/production/organizational/two-column/~",
-        "/production/organizational/four-column$",
-        "/production/organizational/four-column?",
-        "/production/organizational/four-column/~",
-        "/production/organizational/accordion$",
-        "/production/organizational/accordion?",
-        "/production/organizational/accordion/~",
-        "/parents-students/parent-guide$",
-        "/parents-students/parent-guide?",
-        "/parents-students/parent-guide/~",
-        "/production/organizational/container$",
-        "/production/organizational/container?",
-        "/production/organizational/container/~",
-        "/production/organizational/tabs$",
-        "/production/organizational/tabs?",
-        "/production/organizational/tabs/~",
-        "/directory/departments/human-resources/payroll-department/direct-deposits$",
-        "/directory/departments/human-resources/payroll-department/direct-deposits?",
-        "/directory/departments/human-resources/payroll-department/direct-deposits/~",
-        "/directory/departments/information-technology-services/software-systems/student-information-systems-team/state-reporting/survey-reports$",
-        "/directory/departments/information-technology-services/software-systems/student-information-systems-team/state-reporting/survey-reports?",
-        "/directory/departments/information-technology-services/software-systems/student-information-systems-team/state-reporting/survey-reports/~",
-        "/schools/charter-schools/easter-seals-charter$",
-        "/schools/charter-schools/easter-seals-charter?",
-        "/schools/charter-schools/easter-seals-charter/~",
-        "/directory/departments/information-technology-services/infrastructure/information-technology-security/vcs-url-shortener$",
-        "/directory/departments/information-technology-services/infrastructure/information-technology-security/vcs-url-shortener?",
-        "/directory/departments/information-technology-services/infrastructure/information-technology-security/vcs-url-shortener/~",
-        "/directory/departments/operation-services/facilities-services/planning-and-business-services/half-cent-sales-tax/project-project-oversight-committe$",
-        "/directory/departments/operation-services/facilities-services/planning-and-business-services/half-cent-sales-tax/project-project-oversight-committe?",
-        "/directory/departments/operation-services/facilities-services/planning-and-business-services/half-cent-sales-tax/project-project-oversight-committe/~",
-        "/directory/departments/information-technology-services/infrastructure/information-technology-security/student-password-change-link$",
-        "/directory/departments/information-technology-services/infrastructure/information-technology-security/student-password-change-link?",
-        "/directory/departments/information-technology-services/infrastructure/information-technology-security/student-password-change-link/~",
-        "/directory/departments/information-technology-services/infrastructure/information-technology-security/teachers-essential-guide-to-cybersecurity$",
-        "/directory/departments/information-technology-services/infrastructure/information-technology-security/teachers-essential-guide-to-cybersecurity?",
-        "/directory/departments/information-technology-services/infrastructure/information-technology-security/teachers-essential-guide-to-cybersecurity/~",
-        "/parents-students/parent-academy$",
-        "/parents-students/parent-academy?",
-        "/parents-students/parent-academy/~",
-        "/parents-students/beginning-of-school-year-forms$",
-        "/parents-students/beginning-of-school-year-forms?",
-        "/parents-students/beginning-of-school-year-forms/~",
-        "/production/form/forms-manager$",
-        "/production/form/forms-manager?",
-        "/production/form/forms-manager/~",
-        "/directory/departments/teaching-leading-and-learning/academics/elementary-curriculum/early-learning-department/ese-prek$",
-        "/directory/departments/teaching-leading-and-learning/academics/elementary-curriculum/early-learning-department/ese-prek?",
-        "/directory/departments/teaching-leading-and-learning/academics/elementary-curriculum/early-learning-department/ese-prek/~",
-        "/production/page-layout/three-column-bottom$",
-        "/production/page-layout/three-column-bottom?",
-        "/production/page-layout/three-column-bottom/~",
-        "/production/page-layout/two-columns-middle$",
-        "/production/page-layout/two-columns-middle?",
-        "/production/page-layout/two-columns-middle/~",
-        "/directory/departments/operation-services/school-way-cafe/summer-food-service-program$",
-        "/directory/departments/operation-services/school-way-cafe/summer-food-service-program?",
-        "/directory/departments/operation-services/school-way-cafe/summer-food-service-program/~",
-        "/production/page-layout/2-column-layout$",
-        "/production/page-layout/2-column-layout?",
-        "/production/page-layout/2-column-layout/~",
-        "/school-board/legislative-information$",
-        "/school-board/legislative-information?",
-        "/school-board/legislative-information/~",
-        "/production/page-layout/1-column-layout$",
-        "/production/page-layout/1-column-layout?",
-        "/production/page-layout/1-column-layout/~",
-        "/production/page-layout/3-column-layout$",
-        "/production/page-layout/3-column-layout?",
-        "/production/page-layout/3-column-layout/~",
-        "/production/page-layout/4-column-layout$",
-        "/production/page-layout/4-column-layout?",
-        "/production/page-layout/4-column-layout/~",
-        "/production/page-layout/two-columns-top$",
-        "/production/page-layout/two-columns-top?",
-        "/production/page-layout/two-columns-top/~",
-        "/production/page-layout/one-column-over-two$",
-        "/production/page-layout/one-column-over-two?",
-        "/production/page-layout/one-column-over-two/~",
-        "/production/page-layout/three-columns-top$",
-        "/production/page-layout/three-columns-top?",
-        "/production/page-layout/three-columns-top/~",
-        "/production/page-layout/three-columns-middle$",
-        "/production/page-layout/three-columns-middle?",
-        "/production/page-layout/three-columns-middle/~",
-        "/production/page-layout/two-column-bottom-right-sidebar$",
-        "/production/page-layout/two-column-bottom-right-sidebar?",
-        "/production/page-layout/two-column-bottom-right-sidebar/~",
-        "/production/page-layout/two-column-bottom-left-sidebar$",
-        "/production/page-layout/two-column-bottom-left-sidebar?",
-        "/production/page-layout/two-column-bottom-left-sidebar/~",
-        "/production/page-layout/two-column-left-sidebar$",
-        "/production/page-layout/two-column-left-sidebar?",
-        "/production/page-layout/two-column-left-sidebar/~",
-        "/production/page-layout/two-column-right-sidebar$",
-        "/production/page-layout/two-column-right-sidebar?",
-        "/production/page-layout/two-column-right-sidebar/~",
-        "/directory/departments/information-technology-services/infrastructure/information-technology-security$",
-        "/directory/departments/information-technology-services/infrastructure/information-technology-security?",
-        "/directory/departments/information-technology-services/infrastructure/information-technology-security/~",
-        "/production/resources$",
-        "/production/resources?",
-        "/production/resources/~",
-        "/production/qa-testing$",
-        "/production/qa-testing?",
-        "/production/qa-testing/~",
-        "/production/form$",
-        "/production/form?",
-        "/production/form/~",
-        "/production/qa-reports$",
-        "/production/qa-reports?",
-        "/production/qa-reports/~",
-        "/production/page-layout$",
-        "/production/page-layout?",
-        "/production/page-layout/~",
-        "/production/constituent$",
-        "/production/constituent?",
-        "/production/constituent/~",
-        "/production/social-elements$",
-        "/production/social-elements?",
-        "/production/social-elements/~",
-        "/production/organizational$",
-        "/production/organizational?",
-        "/production/organizational/~",
-        "/production/navigation$",
-        "/production/navigation?",
-        "/production/navigation/~",
-        "/production/athletics$",
-        "/production/athletics?",
-        "/production/athletics/~",
-        "/production/calendar$",
-        "/production/calendar?",
-        "/production/calendar/~",
-        "/production/embed$",
-        "/production/embed?",
-        "/production/embed/~",
-        "/production/login$",
-        "/production/login?",
-        "/production/login/~",
-        "/production/search$",
-        "/production/search?",
-        "/production/search/~",
-        "/production/banners$",
-        "/production/banners?",
-        "/production/banners/~",
-        "/production/posts$",
-        "/production/posts?",
-        "/production/posts/~",
-        "/production/site-specs$",
-        "/production/site-specs?",
-        "/production/site-specs/~",
-        "/about-us/faq-the-facts$",
-        "/about-us/faq-the-facts?",
-        "/about-us/faq-the-facts/~",
-        "/directory/departments/human-resources/bargaining-update$",
-        "/directory/departments/human-resources/bargaining-update?",
-        "/directory/departments/human-resources/bargaining-update/~",
-        "/elements$",
-        "/elements?",
-        "/elements/~",
-        "/call-to-action/bargaining-updated$",
-        "/call-to-action/bargaining-updated?",
-        "/call-to-action/bargaining-updated/~",
-        "/its-store$",
-        "/its-store?",
-        "/its-store/~",
-        "/academics/career-and-technical-education/cte-home/teacher-resources-vcs-login/equipment-repair$",
-        "/academics/career-and-technical-education/cte-home/teacher-resources-vcs-login/equipment-repair?",
-        "/academics/career-and-technical-education/cte-home/teacher-resources-vcs-login/equipment-repair/~",
-        "/directory/departments/teaching-leading-and-learning/exceptional-student-education/covid-19-activities-and-resources-for-students-with-disabilities$",
-        "/directory/departments/teaching-leading-and-learning/exceptional-student-education/covid-19-activities-and-resources-for-students-with-disabilities?",
-        "/directory/departments/teaching-leading-and-learning/exceptional-student-education/covid-19-activities-and-resources-for-students-with-disabilities/~",
-        "/directory/departments/human-resources/recruitment-and-retention/recruitment-event-calendar$",
-        "/directory/departments/human-resources/recruitment-and-retention/recruitment-event-calendar?",
-        "/directory/departments/human-resources/recruitment-and-retention/recruitment-event-calendar/~",
-        "/directory/departments/teaching-leading-and-learning/academics$",
-        "/directory/departments/teaching-leading-and-learning/academics?",
-        "/directory/departments/teaching-leading-and-learning/academics/~",
-        "/directory/departments/teaching-leading-and-learning/esol-and-title-iii/translationinterpretation$",
-        "/directory/departments/teaching-leading-and-learning/esol-and-title-iii/translationinterpretation?",
-        "/directory/departments/teaching-leading-and-learning/esol-and-title-iii/translationinterpretation/~",
-        "/directory/departments/human-resources/risk-benefits-management-department/health-insurance$",
-        "/directory/departments/human-resources/risk-benefits-management-department/health-insurance?",
-        "/directory/departments/human-resources/risk-benefits-management-department/health-insurance/~",
-        "/directory/departments/teaching-leading-and-learning/academics/secondary-curriculum$",
-        "/directory/departments/teaching-leading-and-learning/academics/secondary-curriculum?",
-        "/directory/departments/teaching-leading-and-learning/academics/secondary-curriculum/~",
-        "/directory/departments/information-technology-services/software-systems/student-information-systems-team/student-information-support/teacher-technical-assistance-papers$",
-        "/directory/departments/information-technology-services/software-systems/student-information-systems-team/student-information-support/teacher-technical-assistance-papers?",
-        "/directory/departments/information-technology-services/software-systems/student-information-systems-team/student-information-support/teacher-technical-assistance-papers/~",
-        "/directory/departments/information-technology-services/software-systems/student-information-systems-team/student-information-support/grade-reporting-processing-calendars$",
-        "/directory/departments/information-technology-services/software-systems/student-information-systems-team/student-information-support/grade-reporting-processing-calendars?",
-        "/directory/departments/information-technology-services/software-systems/student-information-systems-team/student-information-support/grade-reporting-processing-calendars/~",
-        "/directory/departments/information-technology-services/software-systems/student-information-systems-team/student-information-support/technical-assistance-papers$",
-        "/directory/departments/information-technology-services/software-systems/student-information-systems-team/student-information-support/technical-assistance-papers?",
-        "/directory/departments/information-technology-services/software-systems/student-information-systems-team/student-information-support/technical-assistance-papers/~",
-        "/directory/departments/financial-services/procurement/surplus-items$",
-        "/directory/departments/financial-services/procurement/surplus-items?",
-        "/directory/departments/financial-services/procurement/surplus-items/~",
-        "/academics/career-and-technical-education/cte-in-action$",
-        "/academics/career-and-technical-education/cte-in-action?",
-        "/academics/career-and-technical-education/cte-in-action/~",
-        "/school-board/additional-resources$",
-        "/school-board/additional-resources?",
-        "/school-board/additional-resources/~",
-        "/about-us/vcs-highlights$",
-        "/about-us/vcs-highlights?",
-        "/about-us/vcs-highlights/~",
-        "/directory/departments/community-information-services/teacher-of-the-year-info/2023-teacher-of-the-year$",
-        "/directory/departments/community-information-services/teacher-of-the-year-info/2023-teacher-of-the-year?",
-        "/directory/departments/community-information-services/teacher-of-the-year-info/2023-teacher-of-the-year/~",
-        "/directory/departments/student-services/school-social-services/income-based-services-request$",
-        "/directory/departments/student-services/school-social-services/income-based-services-request?",
-        "/directory/departments/student-services/school-social-services/income-based-services-request/~",
-        "/interior/futures-foundation$",
-        "/interior/futures-foundation?",
-        "/interior/futures-foundation/~",
-        "/interior/storm-resource-center$",
-        "/interior/storm-resource-center?",
-        "/interior/storm-resource-center/~",
-        "/interior/business-partners$",
-        "/interior/business-partners?",
-        "/interior/business-partners/~",
-        "/directory/departments/information-technology-services/learning-technologies/samsung-interactive-displays$",
-        "/directory/departments/information-technology-services/learning-technologies/samsung-interactive-displays?",
-        "/directory/departments/information-technology-services/learning-technologies/samsung-interactive-displays/~",
-        "/home-clone-july-29-2022$",
-        "/home-clone-july-29-2022?",
-        "/home-clone-july-29-2022/~",
-        "/directory/departments/information-technology-services/infrastructure/information-technology-security/student-password-information$",
-        "/directory/departments/information-technology-services/infrastructure/information-technology-security/student-password-information?",
-        "/directory/departments/information-technology-services/infrastructure/information-technology-security/student-password-information/~",
-        "/academics/career-and-technical-education/cte-video-media$",
-        "/academics/career-and-technical-education/cte-video-media?",
-        "/academics/career-and-technical-education/cte-video-media/~",
-        "/about-us/organization-chart$",
-        "/about-us/organization-chart?",
-        "/about-us/organization-chart/~",
-        "/directory/departments/information-technology-services/infrastructure/tech-support-portal$",
-        "/directory/departments/information-technology-services/infrastructure/tech-support-portal?",
-        "/directory/departments/information-technology-services/infrastructure/tech-support-portal/~",
-        "/directory/departments/superintendent/superintendents-message$",
-        "/directory/departments/superintendent/superintendents-message?",
-        "/directory/departments/superintendent/superintendents-message/~",
-        "/directory/departments/community-information-services/web-services$",
-        "/directory/departments/community-information-services/web-services?",
-        "/directory/departments/community-information-services/web-services/~",
-        "/directory/departments/information-technology-services/infrastructure/information-technology-security/staff-password-requirements$",
-        "/directory/departments/information-technology-services/infrastructure/information-technology-security/staff-password-requirements?",
-        "/directory/departments/information-technology-services/infrastructure/information-technology-security/staff-password-requirements/~",
-        "/directory/departments/teaching-leading-and-learning/exceptional-student-education/ese-intranet-resources$",
-        "/directory/departments/teaching-leading-and-learning/exceptional-student-education/ese-intranet-resources?",
-        "/directory/departments/teaching-leading-and-learning/exceptional-student-education/ese-intranet-resources/~",
-        "/directory/departments/student-services/federal-programs-grants-development/federal-programs-and-grants-intranet$",
-        "/directory/departments/student-services/federal-programs-grants-development/federal-programs-and-grants-intranet?",
-        "/directory/departments/student-services/federal-programs-grants-development/federal-programs-and-grants-intranet/~",
-        "/home-clone$",
-        "/home-clone?",
-        "/home-clone/~",
-        "/directory/departments/community-information-services/alternate-pay-raise-calculator-clone$",
-        "/directory/departments/community-information-services/alternate-pay-raise-calculator-clone?",
-        "/directory/departments/community-information-services/alternate-pay-raise-calculator-clone/~",
-        "/directory/departments/community-information-services/pay-raise-calculator$",
-        "/directory/departments/community-information-services/pay-raise-calculator?",
-        "/directory/departments/community-information-services/pay-raise-calculator/~",
-        "/academics/scholars-choice$",
-        "/academics/scholars-choice?",
-        "/academics/scholars-choice/~",
-        "/directory/departments/teaching-leading-and-learning/research-evaluation-accountability/accreditation$",
-        "/directory/departments/teaching-leading-and-learning/research-evaluation-accountability/accreditation?",
-        "/directory/departments/teaching-leading-and-learning/research-evaluation-accountability/accreditation/~",
-        "/directory/departments/teaching-leading-and-learning/academics/elementary-curriculum$",
-        "/directory/departments/teaching-leading-and-learning/academics/elementary-curriculum?",
-        "/directory/departments/teaching-leading-and-learning/academics/elementary-curriculum/~",
-        "/directory/departments/community-information-services/business-partners-bulletin-board-clone$",
-        "/directory/departments/community-information-services/business-partners-bulletin-board-clone?",
-        "/directory/departments/community-information-services/business-partners-bulletin-board-clone/~"
-      ],
-      "policy": "apply User-agent * Disallow",
-      "error": null
-    },
-    "https://cityofpage.org": {
-      "url": "https://cityofpage.org/robots.txt",
-      "retrieved_at": "2026-10-09T08:31:36Z",
-      "http_status": 200,
-      "rules": [
-        "/wp-admin/",
-        "/wp-includes/",
-        "/trackback/",
-        "/wp-login.php",
-        "/wp-register.php"
-      ],
-      "policy": "apply User-agent * Disallow",
-      "error": null
-    },
-    "https://www.metroparks.org": {
-      "url": "https://www.metroparks.org/robots.txt",
-      "retrieved_at": "2026-10-09T08:31:38Z",
-      "http_status": 200,
-      "rules": [],
-      "policy": "apply User-agent * Disallow",
-      "error": null
-    },
-    "https://ngrl.org": {
-      "url": "https://ngrl.org/robots.txt",
-      "retrieved_at": "2026-10-09T08:31:47Z",
-      "http_status": 200,
-      "rules": [
-        "/formatting-example-page/",
-        "/*?tribe-bar-date=*",
-        "/*?post_type=tribe_events*",
-        "/*?eventDate=*",
-        "/*/event/*/"
-      ],
-      "policy": "apply User-agent * Disallow",
-      "error": null
-    },
-    "https://sc.edu": {
-      "url": "https://sc.edu/robots.txt",
-      "retrieved_at": "2026-10-09T08:31:49Z",
-      "http_status": 200,
-      "rules": [
-        "~",
-        "/reports/",
-        "/stats/",
-        "/gifs/",
-        "/icon/",
-        "/icons/",
-        "/images/",
-        "/cgi-bin/",
-        "/policies/athl200.pdf",
-        "/policies/eop100.pdf",
-        "/policies/hr178.pdf",
-        "/policies/ppm/athl200.pdf",
-        "/policies/ppm/eop100.pdf",
-        "/policies/ppm/hr178.pdf",
-        "/archives/",
-        "/about/contact/unsubscribe/",
-        "/*.xml$",
-        "/*.inc$",
-        "/ardc/sashtml/",
-        "/ardc/saspdf/",
-        "/usctest",
-        "/library/godort/",
-        "/library/pubserv/ala/",
-        "/library/pubserv/images/",
-        "/library/pubserv/podreport/",
-        "/library/pubserv/test/",
-        "/library/pubserv/tutorial/",
-        "/library/test/"
-      ],
-      "policy": "apply User-agent * Disallow",
-      "error": null
-    },
-    "https://resources.uta.edu": {
-      "url": "https://resources.uta.edu/robots.txt",
-      "retrieved_at": "2026-10-09T08:31:52Z",
-      "http_status": 200,
-      "rules": [],
-      "policy": "apply User-agent * Disallow",
-      "error": null
-    },
-    "https://fcs.cornell.edu": {
-      "url": "https://fcs.cornell.edu/robots.txt",
-      "retrieved_at": "2026-10-09T08:31:55Z",
-      "http_status": 200,
-      "rules": [
-        "/core/",
-        "/profiles/",
-        "/README.md",
-        "/composer/Metapackage/README.txt",
-        "/composer/Plugin/ProjectMessage/README.md",
-        "/composer/Plugin/Scaffold/README.md",
-        "/composer/Plugin/VendorHardening/README.txt",
-        "/composer/Template/README.txt",
-        "/modules/README.txt",
-        "/sites/README.txt",
-        "/themes/README.txt",
-        "/admin/",
-        "/comment/reply/",
-        "/filter/tips",
-        "/node/add/",
-        "/search/",
-        "/search?",
-        "/user/register",
-        "/user/password",
-        "/user/login",
-        "/user/logout",
-        "/media/oembed",
-        "/*/media/oembed",
-        "/index.php/admin/",
-        "/index.php/comment/reply/",
-        "/index.php/filter/tips",
-        "/index.php/node/add/",
-        "/index.php/search/",
-        "/index.php/search?",
-        "/index.php/user/password",
-        "/index.php/user/register",
-        "/index.php/user/login",
-        "/index.php/user/logout",
-        "/index.php/media/oembed",
-        "/index.php/*/media/oembed",
-        "/contact-fcs",
-        "/departments/transportation-delivery-services/contact-tds",
-        "/system/files/private/"
-      ],
-      "policy": "apply User-agent * Disallow",
-      "error": null
-    },
     "https://www.umsystem.edu": {
       "url": "https://www.umsystem.edu/robots.txt",
-      "retrieved_at": "2026-10-09T08:31:57Z",
+      "retrieved_at": "2026-10-09T09:43:45Z",
       "http_status": 200,
       "rules": [
         "/core/",
@@ -993,9 +49,25 @@
       "policy": "apply User-agent * Disallow",
       "error": null
     },
+    "https://pdc-projects.missouri.edu": {
+      "url": "https://pdc-projects.missouri.edu/robots.txt",
+      "retrieved_at": "2026-10-09T09:43:51Z",
+      "http_status": null,
+      "rules": [],
+      "policy": "deny: unavailable robots",
+      "error": "fetch failed (UNABLE_TO_GET_ISSUER_CERT_LOCALLY)"
+    },
+    "https://oa.mo.gov": {
+      "url": "https://oa.mo.gov/robots.txt",
+      "retrieved_at": "2026-10-09T09:43:51Z",
+      "http_status": 404,
+      "rules": [],
+      "policy": "allow: robots absent",
+      "error": "HTTP 404"
+    },
     "https://www.oafmdcplanroom.com": {
       "url": "https://www.oafmdcplanroom.com/robots.txt",
-      "retrieved_at": "2026-10-09T08:41:40Z",
+      "retrieved_at": "2026-10-09T09:48:49Z",
       "http_status": 200,
       "rules": [
         "/viewer/",
@@ -1006,1306 +78,38 @@
       ],
       "policy": "apply User-agent * Disallow",
       "error": null
+    },
+    "https://operations-webapps.missouri.edu": {
+      "url": "https://operations-webapps.missouri.edu/robots.txt",
+      "retrieved_at": "2026-10-09T09:45:45Z",
+      "http_status": null,
+      "rules": [],
+      "policy": "deny: unavailable robots",
+      "error": "fetch failed (UNABLE_TO_GET_ISSUER_CERT_LOCALLY)"
     }
   },
   "blockers": [
-    "https://ofcc.ohio.gov/project-opportunities/bids — HTTP 404",
-    "https://fmdc.oa.mo.gov/bid-opportunities/bid-listingelectronic-plans-projects-currently-bidding — robots unavailable; fail closed",
-    "https://pdc-projects.missouri.edu/pdc/adsite/projects/cp252281/sealed/CP252281_CCA_-_Paralleling_Switchgear_Replacement_-_Drawings_SEALED_2025_0610.pdf — robots unavailable; fail closed",
-    "https://pdc-projects.missouri.edu/pdc/adsite/projects/cp241481/plans/CP241481_Agriculture_Science-Electrical_Panel_Replacement-Drawings-SEALED_2025-0106.pdf — robots unavailable; fail closed",
-    "https://pdc-projects.missouri.edu/pdc/adsite/projects/cp231546/ad.pdf — robots unavailable; fail closed",
-    "https://pdc-projects.missouri.edu/pdc/adsite/projects/cp253191/ad.pdf — robots unavailable; fail closed",
-    "https://pdc-projects.missouri.edu/pdc/adsite/projects/cp252341/ad.pdf — robots unavailable; fail closed",
-    "https://pdc-projects.missouri.edu/pdc/adsite/projects/cp253171/ad.pdf — robots unavailable; fail closed",
-    "https://buffalony.gov/DocumentCenter/View/13460/JFK-46-50203-Addendum-2?bidId= — robots unavailable; fail closed",
-    "https://losaltosca.gov/DocumentCenter/View/258/Studio-1-Bed-Style-B-Architectural-Drawings-PDF?bidId= — robots unavailable; fail closed",
-    "https://losaltosca.gov/DocumentCenter/View/276/2-Bed-Style-B-Architectural-Drawings-PDF?bidId= — robots unavailable; fail closed",
-    "https://procurement.opengov.com/portal/sfoconstruction/projects/135222/document?section=1218158 — HTTP 403",
-    "https://procurement.opengov.com/portal/piercecountywa/projects/132277/q-and-a — HTTP 403",
-    "https://procurement.opengov.com/portal/dc/projects/147969/addenda — HTTP 403",
-    "https://files-backend.assets.thrillshare.com/documents/asset/uploaded_file/4629/Rps/bfc49a08-a8c7-4373-8d6d-ca10a1218fa5/26-27-Addendum-One-COMPLETE.pdf?disposition=inline — robots unavailable; fail closed",
-    "https://resources.finalsite.net/images/v1786111550/d131org/f6zdklfenwkqwqvodaetf/SPECS_EAHSSecuredEntrance_251008.pdf — HTTP 404",
-    "https://www.npenn.org/central_office/business_office/bid_specifications — robots unavailable; fail closed",
-    "https://www.vcsedu.org/directory/departments/operation-services/facilities-services/design-construction/bid-documents — no exposed relevant PDF links",
-    "https://fcs.cornell.edu/bid-projects/mary-donlon-student-room-door-hardware-replacements — no exposed relevant PDF links",
     "https://www.umsystem.edu/ums/fa/facilities/construction-bids — no exposed relevant PDF links",
     "https://pdc-projects.missouri.edu/pdc/adsite/ — robots unavailable; fail closed",
-    "https://www.oafmdcplanroom.com/projects/3367/details/t2147-01-jefferson-city-readiness-center-civil-support-team-building-addition — no exposed relevant PDF links",
-    "https://oa.mo.gov/sites/default/files/bid-opportunities/_REBID%20T2421-01%20-%20Final%20Specs.pdf — per-file or round cap (Content-Length)",
-    "https://www.oafmdcplanroom.com/projects/3253/details/x2207-01-add-cabins-renovate-lodge-current-river-state-park — no exposed relevant PDF links",
-    "https://oa.mo.gov/sites/default/files/bid-opportunities/_R2401-01%20-%20Final%20Plans.pdf — per-file or round cap (Content-Length)",
-    "Legacy request interrupted while tightening decimal caps: 157286400 bytes conservatively reserved for its uncheckpointed transfer.",
-    "https://oa.mo.gov/sites/default/files/bid-opportunities/_T2421-01%20-%20Final%20Specs.pdf — Per-file cap (Content-Length)",
-    "https://oa.mo.gov/sites/default/files/bid-opportunities/_X2506-01%20Final%20Bid%20Plans.pdf — Per-file cap (Content-Length)",
-    "https://oa.mo.gov/sites/default/files/bid-opportunities/R2516-01%20Bid%20Documents.pdf — Round cap: next file cannot fit remaining budget (Content-Length)"
+    "https://www.oafmdcplanroom.com/projects/3127/details/c2238-01-service-add-electrical-circuits-er-generator-food-svc-warehouse-farmington-correctional — no exposed relevant PDF links",
+    "https://oa.mo.gov/sites/default/files/bid-opportunities/_U1503-01%20-%20Final%20Bid%20Docs_2.pdf — Round cap: next file cannot fit remaining budget (Content-Length)",
+    "https://operations-webapps.missouri.edu/pdc/adsite/ad.php — robots unavailable; fetch failed (UNABLE_TO_GET_ISSUER_CERT_LOCALLY); no page or project PDFs fetched"
   ],
   "next_targets": [
-    "https://fcs.cornell.edu/sites/default/files/imce/site_contributor/Design_Standards/087100_Door%20Hardware.pdf",
-    "https://www.northwestern.edu/facilities/docs/contractor-docs/nu_08-7100-2018---door-hardware.pdf",
-    "https://ipf.msu.edu/sites/default/files/2018-08/CS_TEC_2004_087100_DOOR_HARDWARE.PDF",
-    "https://pdc.ufl.edu/wp-content/uploads/2025/03/dcs-13-087000-rev-092122-final.pdf",
-    "https://oa.mo.gov/sites/default/files/bid-opportunities/_O2534-01%20Final%20Bid%20Document.pdf",
-    "https://oa.mo.gov/sites/default/files/bid-opportunities/R2607_BID%20DRAWINGS_6-16-26.pdf",
-    "https://oa.mo.gov/sites/default/files/bid-opportunities/U2602-01%20Drawings%20-%20Nurse%20Call%20Systems%20MO%20Veterans%20Commision%20-%20Signed.pdf",
-    "https://oa.mo.gov/sites/default/files/bid-opportunities/U2603-01_BID%20DRAWINGS_7-14-26%20%281%29.pdf",
-    "https://oa.mo.gov/sites/default/files/bid-opportunities/M2522-01%20CMR%20RFQ%209.4.26.pdf",
-    "https://oa.mo.gov/sites/default/files/bid-opportunities/Awarded%20Contractor_4.pdf",
-    "https://oa.mo.gov/sites/default/files/bid-opportunities/Awarded%20Contractor_3.pdf",
-    "https://oa.mo.gov/sites/default/files/bid-opportunities/Awarded%20Contractor_2.pdf",
-    "https://oa.mo.gov/sites/default/files/bid-opportunities/C250201%20Boonville%20Correctional%20Center%20DWG.pdf",
-    "https://oa.mo.gov/sites/default/files/bid-opportunities/Notice%20of%20Award.pdf",
-    "https://oa.mo.gov/sites/default/files/bid-opportunities/R2505-01%20Awarded%20Contractor.pdf",
-    "https://oa.mo.gov/sites/default/files/bid-opportunities/R2410-01%20Awarded%20Contractor.pdf",
-    "https://oa.mo.gov/sites/default/files/bid-opportunities/T2601-01%2004%20Bid%20Document%20Drawings%20Final.pdf",
-    "https://oa.mo.gov/sites/default/files/bid-opportunities/R2507-01%20Awarded%20Contractor.pdf",
-    "https://oa.mo.gov/sites/default/files/bid-opportunities/_T2613-01%20-%20Notice%20of%20Award.pdf",
-    "https://oa.mo.gov/sites/default/files/bid-opportunities/U2610-01%20Awarded%20Contractor.pdf",
-    "https://oa.mo.gov/sites/default/files/bid-opportunities/T2505-01%20Awarded%20Contractor.pdf",
-    "https://oa.mo.gov/sites/default/files/bid-opportunities/R2513-01%20Awarded%20Contractor.pdf",
-    "https://oa.mo.gov/sites/default/files/bid-opportunities/X2534-01%20Awarded%20Contractor.pdf",
-    "https://oa.mo.gov/sites/default/files/bid-opportunities/_U2419-01%20-%20Notice%20of%20Award.pdf",
-    "https://oa.mo.gov/sites/default/files/bid-opportunities/Awarded%20Contractor_1.pdf",
-    "https://oa.mo.gov/sites/default/files/bid-opportunities/Awarded%20Contractor_0.pdf",
-    "https://oa.mo.gov/sites/default/files/bid-opportunities/_X2204-04%20-%20Notice%20of%20Award.pdf",
-    "https://oa.mo.gov/sites/default/files/bid-opportunities/R2508-01%20Notice%20of%20Award.pdf",
-    "https://oa.mo.gov/sites/default/files/bid-opportunities/C2516-01%20Awarded%20Contractor.pdf",
-    "https://oa.mo.gov/sites/default/files/bid-opportunities/O2544-01_DWG_04-17-2026.pdf",
-    "https://oa.mo.gov/sites/default/files/bid-opportunities/2025.11.26_Combined%20Dwg_CRSP%20-%20Park%20Dev%20-%200211627.00.pdf",
-    "https://oa.mo.gov/sites/default/files/bid-opportunities/U2603-01_BID%20DRAWINGS_4-9-26.pdf",
-    "https://oa.mo.gov/sites/default/files/bid-opportunities/X2501-01_BID%20DRAWINGS_4-1-26.pdf",
-    "https://oa.mo.gov/sites/default/files/bid-opportunities/T2527-01-Construction%20Documents.pdf",
-    "https://oa.mo.gov/sites/default/files/bid-opportunities/T2527-01%20-%20Notice%20of%20Award.pdf",
-    "https://oa.mo.gov/sites/default/files/bid-opportunities/M2506-01%20Awarded%20Contractor.pdf",
-    "https://oa.mo.gov/sites/default/files/bid-opportunities/_R2401-01%20-%20Notice%20of%20Award.pdf",
-    "https://oa.mo.gov/sites/default/files/bid-opportunities/_Y2401-01%20-%20Notice%20of%20Award.pdf",
-    "https://oa.mo.gov/sites/default/files/bid-opportunities/_R2509-01%20-%20Notice%20of%20Award.pdf",
-    "https://oa.mo.gov/sites/default/files/bid-opportunities/_R2515-01%20-%20Notice%20of%20Award.pdf",
-    "https://oa.mo.gov/sites/default/files/bid-opportunities/R2415-01%20-%20Notice%20of%20Award.pdf",
-    "https://oa.mo.gov/sites/default/files/bid-opportunities/R2520-01%20-%20Notice%20of%20Award.pdf",
-    "https://oa.mo.gov/sites/default/files/bid-opportunities/R23MP-13%20Awarded%20Contractor.pdf",
-    "https://oa.mo.gov/sites/default/files/bid-opportunities/R2405-01%20Awarded%20Contractor.pdf",
-    "https://oa.mo.gov/sites/default/files/bid-opportunities/X2506-01%20Awarded%20Contractor.pdf",
-    "https://oa.mo.gov/sites/default/files/bid-opportunities/_R2516-01%20BidDocumentPhase%20Troop%20D%20Envelope-1-5-26%20Drawings.pdf",
-    "https://oa.mo.gov/sites/default/files/bid-opportunities/R2416-01%20Awarded%20Contractor_0.pdf",
-    "https://oa.mo.gov/sites/default/files/bid-opportunities/T2423-01%20-%20Notice%20of%20Award.pdf",
-    "https://oa.mo.gov/sites/default/files/bid-opportunities/O2548-01%20Design%20Build%20RFQ%20OA%20Fleet%20FINAL%202-3-2026.pdf",
-    "https://oa.mo.gov/sites/default/files/bid-opportunities/O2548-01%20Evaluation%20Scoring_Step%201_1.pdf",
-    "https://oa.mo.gov/sites/default/files/bid-opportunities/O2548-01%20Evaluation%20Scoring_Step%202_0.pdf",
-    "https://oa.mo.gov/sites/default/files/bid-opportunities/O2548-01%20Evaluation%20Scoring_Step%203.pdf",
-    "https://oa.mo.gov/sites/default/files/bid-opportunities/O2548-01%20Notice%20of%20Award.pdf",
-    "https://oa.mo.gov/sites/default/files/bid-opportunities/_X2530-01%20-%20Notice%20of%20Award.pdf",
-    "https://oa.mo.gov/sites/default/files/bid-opportunities/X2408-02%20-%20Notice%20of%20Award.pdf",
-    "https://oa.mo.gov/sites/default/files/bid-opportunities/_M2511-01%20-%20Notice%20of%20Award.pdf",
-    "https://oa.mo.gov/sites/default/files/bid-opportunities/_X2117-02%20-%20Notice%20of%20Award.pdf",
-    "https://oa.mo.gov/sites/default/files/bid-opportunities/O2424-01%20Awarded%20Contractor.pdf",
-    "https://oa.mo.gov/sites/default/files/bid-opportunities/T2507-01%20Awarded%20Contractor.pdf",
-    "https://oa.mo.gov/sites/default/files/bid-opportunities/_C2416-01%20-%20Notice%20of%20Award.pdf",
-    "https://oa.mo.gov/sites/default/files/bid-opportunities/T2518-01%20Awarded%20Contractor.pdf",
-    "https://oa.mo.gov/sites/default/files/bid-opportunities/R2517-01%20Awarded%20Contractor.pdf",
-    "https://oa.mo.gov/sites/default/files/bid-opportunities/X2528-01%20Awarded%20Contractor.pdf",
-    "https://oa.mo.gov/sites/default/files/bid-opportunities/H2503-01_Full-Set.pdf",
-    "https://oa.mo.gov/sites/default/files/bid-opportunities/H2503-01%20Awarded%20Contractor.pdf",
-    "https://oa.mo.gov/sites/default/files/bid-opportunities/C2238-01%20-%20Notice%20of%20Award.pdf",
-    "https://oa.mo.gov/sites/default/files/bid-opportunities/C2509-01%20Awarded%20Contractor.pdf",
-    "https://oa.mo.gov/sites/default/files/bid-opportunities/U2301-01%20Awarded%20Contractor.pdf",
-    "https://oa.mo.gov/sites/default/files/bid-opportunities/_O2516-01%20-%20Notice%20of%20Award.pdf",
-    "https://oa.mo.gov/sites/default/files/bid-opportunities/_X2325-01%20-%20Notice%20of%20Award.pdf",
-    "https://oa.mo.gov/sites/default/files/bid-opportunities/U1503-01%20-%20Notice%20of%20Award.pdf",
-    "https://oa.mo.gov/sites/default/files/bid-opportunities/O2203-02%20Awarded%20Contractor.pdf",
-    "https://oa.mo.gov/sites/default/files/bid-opportunities/F2307-01%20State%20Fair%20Campground%20REBID.pdf",
-    "https://oa.mo.gov/sites/default/files/bid-opportunities/F2307-01%20Awarded%20Contractor.pdf",
-    "https://oa.mo.gov/sites/default/files/bid-opportunities/M2406-01%20Awarded%20Contractor.pdf",
-    "https://oa.mo.gov/sites/default/files/bid-opportunities/E2341-01%20Awarded%20Contractor.pdf",
-    "https://oa.mo.gov/sites/default/files/bid-opportunities/C1920-01%20-%20Notice%20of%20Award.pdf",
-    "https://oa.mo.gov/sites/default/files/bid-opportunities/E2328-01%20Awarded%20Contractor.pdf",
-    "https://oa.mo.gov/sites/default/files/bid-opportunities/C2415-01%20Awarded%20Contractor.pdf",
-    "https://oa.mo.gov/sites/default/files/bid-opportunities/H2404-01%20Awarded%20Contractor_0.pdf",
-    "https://oa.mo.gov/sites/default/files/bid-opportunities/M2319-01%20Awarded%20Contractor.pdf",
-    "https://oa.mo.gov/sites/default/files/bid-opportunities/U2606-01%20Awarded%20Contractor.pdf",
-    "https://oa.mo.gov/sites/default/files/bid-opportunities/X2405-01%20Awarded%20Contractor.pdf",
-    "https://oa.mo.gov/sites/default/files/bid-opportunities/H2402-01%20Awarded%20Contractor.pdf",
-    "https://oa.mo.gov/sites/default/files/bid-opportunities/_X2520-01%20-%20Notice%20of%20Award.pdf",
-    "https://oa.mo.gov/sites/default/files/bid-opportunities/_F2407-01%20-%20Notice%20of%20Award.pdf",
-    "https://oa.mo.gov/sites/default/files/bid-opportunities/F2307-01%20Campground%20Revision%201%20Plan%20Set.pdf",
-    "https://oa.mo.gov/sites/default/files/bid-opportunities/_O2421-01%20-%20Notice%20of%20Award.pdf",
-    "https://oa.mo.gov/sites/default/files/bid-opportunities/U2301-07%20Notice%20of%20Award.pdf",
-    "https://oa.mo.gov/sites/default/files/bid-opportunities/Helen%20M.%20Davis%20State%20School%20Project%20E2412-01%20Drawings.pdf",
-    "https://oa.mo.gov/sites/default/files/bid-opportunities/M2416-01%20-%20Notice%20of%20Award.pdf",
-    "https://oa.mo.gov/sites/default/files/bid-opportunities/F2405-01%20Awarded%20Contractor.pdf",
-    "https://oa.mo.gov/sites/default/files/bid-opportunities/U2417-01%20Awarded%20Contractor.pdf",
-    "https://oa.mo.gov/sites/default/files/bid-opportunities/T232601_DWGS.pdf",
-    "https://oa.mo.gov/sites/default/files/bid-opportunities/T2326-01%20REBID%20Awarded%20Contractor.pdf",
-    "https://oa.mo.gov/sites/default/files/bid-opportunities/H2409-01%20Awarded%20Contractor.pdf",
-    "https://oa.mo.gov/sites/default/files/bid-opportunities/X2317-01%20Construction%20Drawings%20-%20St.%20Francois%20State%20Park%2003-28-25%20%280002%29.pdf",
-    "https://oa.mo.gov/sites/default/files/bid-opportunities/awarded.pdf",
-    "https://oa.mo.gov/sites/default/files/bid-opportunities/T2412-01%20-%20Notice%20of%20Award.pdf",
-    "https://oa.mo.gov/sites/default/files/bid-opportunities/T2424-01%20Drawings_signed.pdf",
-    "https://oa.mo.gov/sites/default/files/bid-opportunities/T2334-01%20Awarded%20Contractor.pdf",
-    "https://oa.mo.gov/sites/default/files/bid-opportunities/O2513-01%20Awarded%20Contractor_0.pdf",
-    "https://oa.mo.gov/sites/default/files/bid-opportunities/3_Bid%20Phase%20Drawings.pdf",
-    "https://oa.mo.gov/sites/default/files/bid-opportunities/T2238-01%20Awarded%20Contractor.pdf",
-    "https://oa.mo.gov/sites/default/files/bid-opportunities/T2417-01%20Awarded%20Contractor.pdf",
-    "https://oa.mo.gov/sites/default/files/bid-opportunities/_U2307-01%20-%20Notice%20of%20Award.pdf",
-    "https://oa.mo.gov/sites/default/files/bid-opportunities/T2335-01%20Drawing%20Finals.pdf",
-    "https://oa.mo.gov/sites/default/files/bid-opportunities/T2337-01%206260%208136260012%20Bidding%20Drawings%202025%2006%2011%20Crowder%20Barracks.pdf",
-    "https://oa.mo.gov/sites/default/files/bid-opportunities/_T2234-01%20-%20Notice%20of%20Award.pdf",
-    "https://oa.mo.gov/sites/default/files/bid-opportunities/T2117%20Drawings%20%287-11-25%29.pdf",
-    "https://oa.mo.gov/sites/default/files/bid-opportunities/_T2330-01%20-%20Awarded%20Contractor.pdf",
-    "https://oa.mo.gov/sites/default/files/bid-opportunities/O2427-01%20Project%20Drawings%2020250617.pdf",
-    "https://oa.mo.gov/sites/default/files/bid-opportunities/M2405-01%20Awarded%20Contractor.pdf",
-    "https://oa.mo.gov/sites/default/files/bid-opportunities/W2303-01%20Awarded%20Contractor.pdf",
-    "https://oa.mo.gov/sites/default/files/bid-opportunities/C2325-01%20-%20Notice%20of%20Award.pdf",
-    "https://oa.mo.gov/sites/default/files/bid-opportunities/Awarded%20Amount.pdf",
-    "https://oa.mo.gov/sites/default/files/bid-opportunities/U2409-01%20Awarded%20Contractor.pdf",
-    "https://oa.mo.gov/sites/default/files/bid-opportunities/_T2143-01%20-%20Notice%20of%20Award.pdf",
-    "https://oa.mo.gov/sites/default/files/bid-opportunities/M2328-01%20-%20Notic%20of%20Award.pdf",
-    "https://oa.mo.gov/sites/default/files/bid-opportunities/R2321-01%20Drawings-BD.pdf",
-    "https://oa.mo.gov/sites/default/files/bid-opportunities/M2430-01%20Awarded%20Contractor.pdf",
-    "https://oa.mo.gov/sites/default/files/bid-opportunities/_T2406-01%20-%20Notice%20of%20Award.pdf",
-    "https://oa.mo.gov/sites/default/files/bid-opportunities/E2401-01%20Awarded%20Contractor.pdf",
-    "https://oa.mo.gov/sites/default/files/bid-opportunities/R2335-01%20Awarded%20Contractor.pdf",
-    "https://oa.mo.gov/sites/default/files/bid-opportunities/R2503-01%20Awarded%20Contractor.pdf",
-    "https://oa.mo.gov/sites/default/files/bid-opportunities/T2405-01-6256%20-%20Trenton%20Readiness%20Center.pdf",
-    "https://oa.mo.gov/sites/default/files/bid-opportunities/O220401_Capitol%20Ftns_Final%20Drawings_2024-05-06_R1.1.pdf",
-    "https://oa.mo.gov/sites/default/files/bid-opportunities/_U2415-01%20-%20Notice%20of%20Award.pdf",
-    "https://oa.mo.gov/sites/default/files/bid-opportunities/C2407-01%20Awarded%20Contractor.pdf",
-    "https://oa.mo.gov/sites/default/files/bid-opportunities/M2006-01-7356-6517356071-BID%20ISSUE%20DWGS.pdf",
-    "https://oa.mo.gov/sites/default/files/bid-opportunities/_M2006-01%20Awarded%20Contractor.pdf",
-    "https://oa.mo.gov/sites/default/files/bid-opportunities/_IDIQMCA-5003%20Awarded.pdf",
-    "https://oa.mo.gov/sites/default/files/bid-opportunities/_E2408-01%20-%20Notice%20of%20Award.pdf",
-    "https://oa.mo.gov/sites/default/files/bid-opportunities/O2204-01%20RFPQ%20Historic%20Masonry%20Abrasive.pdf",
-    "https://oa.mo.gov/sites/default/files/bid-opportunities/O2204-01%20RFPQ%20Historic%20Masonry%20Restoration.pdf",
-    "https://oa.mo.gov/sites/default/files/bid-opportunities/R2312-01%20Awarded%20Contractor.pdf",
-    "https://oa.mo.gov/sites/default/files/bid-opportunities/U2502-01_BID%20DRAWINGS_8-28-24.pdf",
-    "https://oa.mo.gov/sites/default/files/bid-opportunities/M2312-01%20Drawings.pdf",
-    "https://oa.mo.gov/sites/default/files/bid-opportunities/_M2414-01%20-%20Notice%20of%20Award.pdf",
-    "https://oa.mo.gov/sites/default/files/bid-opportunities/O243401_BID%20DRAWINGS_9-27-24.pdf",
-    "https://oa.mo.gov/sites/default/files/bid-opportunities/_O2339-01%20-%20Notice%20of%20Award.pdf",
-    "https://oa.mo.gov/sites/default/files/bid-opportunities/F2406-01%20Awarded%20Contractor.pdf",
-    "https://oa.mo.gov/sites/default/files/bid-opportunities/241017_H2401-01_DRAWINGS.pdf",
-    "https://oa.mo.gov/sites/default/files/bid-opportunities/F2404-01%20Awarded%20Contractor.pdf",
-    "https://oa.mo.gov/sites/default/files/bid-opportunities/M2409-01%20-%20Notice%20of%20Award.pdf",
-    "https://oa.mo.gov/sites/default/files/bid-opportunities/M2412-01%20-%20Notice%20of%20Award.pdf",
-    "https://oa.mo.gov/sites/default/files/bid-opportunities/C2403-01%20-%20Notice%20of%20Award.pdf",
-    "https://oa.mo.gov/sites/default/files/oa-periodic-rule-review.pdf",
-    "https://www.vcsedu.org/directory/departments/operation-services/facilities-services/design-construction/bid-documents",
-    "https://www.vcsedu.org/directory/departments/operation-services/facilities-services/design-construction/bid-documents#fsPageContent",
-    "https://www.vcsedu.org/academics/career-and-technical-education/cte-home/teacher-resources-vcs-login",
-    "https://www.vcsedu.org/directory/departments/human-resources/risk-benefits-management-department/tax-sheltered-annuities-403b-and-roth-plans",
-    "https://www.vcsedu.org/directory/departments/operation-services/facilities-services/design-construction/construction-project-tracking-reports",
-    "https://www.vcsedu.org/directory/departments/operation-services/facilities-services/design-construction/plans-and-project-manual-forms-and-documents",
-    "https://volusiastudents.sharepoint.com/sites/ArchitecturalPlansArchive",
-    "https://www.vcsedu.org/directory/departments/operation-services/school-way-cafe/swc-permits-reports-and-wellness-policy-plans",
-    "https://www.vcsedu.org/directory/departments/information-technology-services/its-division-office/project-management",
-    "https://www.vcsedu.org/directory/departments/information-technology-services/client-services/help-desk-team/first-time-login-instructions",
-    "https://www.vcsedu.org/directory/departments/information-technology-services/learning-technologies/copy-center/copy-center-vcs-login-required",
-    "https://www.vcsedu.org/directory/departments/information-technology-services/software-systems/student-information-systems-team/login-focus-sis",
-    "https://www.vcsedu.org/directory/departments/student-services/implementation-plans",
-    "https://www.vcsedu.org/directory/departments/student-services/alternative-education/school-improvement-plans",
-    "https://www.vcsedu.org/directory/departments/teaching-leading-and-learning/exceptional-student-education/transition/project-search",
-    "https://www.vcsedu.org/directory/departments/teaching-leading-and-learning/parent-family-engagement-title-i-part-a/parent-family-engagement-plans",
-    "https://www.vcsedu.org/employees/intranet-login",
-    "https://www.vcsedu.org/directory/departments/operation-services/facilities-services/planning-and-business-services/half-cent-sales-tax-clone/project-list",
-    "https://www.vcsedu.org/directory/departments/operation-services/facilities-services/planning-and-business-services/half-cent-sales-tax-clone/project-oversight-committe",
-    "https://www.vcsedu.org/directory/departments/operation-services/facilities-services/design-construction/bid-documents#fs-panel-107991",
-    "https://www.vcsedu.org/directory/departments/operation-services/facilities-services/design-construction/bid-documents#fs-panel-107994",
-    "https://www.vcsedu.org/directory/departments/operation-services/facilities-services/design-construction/bid-documents#fs-panel-107303",
-    "https://www.vcsedu.org/directory/departments/operation-services/facilities-services/design-construction/bid-documents#fs-panel-106881",
-    "https://www.vcsedu.org/directory/departments/operation-services/facilities-services/design-construction/bid-documents#fs-panel-106210",
-    "https://www.vcsedu.org/directory/departments/operation-services/facilities-services/design-construction/bid-documents#fs-panel-106208",
-    "https://www.vcsedu.org/directory/departments/operation-services/facilities-services/design-construction/bid-documents#fs-panel-106214",
-    "https://www.vcsedu.org/directory/departments/operation-services/facilities-services/design-construction/bid-documents#fs-panel-105995",
-    "https://www.vcsedu.org/directory/departments/operation-services/facilities-services/design-construction/bid-documents#fs-panel-105855",
-    "https://www.vcsedu.org/directory/departments/operation-services/facilities-services/design-construction/bid-documents#fs-panel-105618",
-    "https://www.vcsedu.org/directory/departments/operation-services/facilities-services/design-construction/bid-documents#fs-panel-105494",
-    "https://www.vcsedu.org/directory/departments/operation-services/facilities-services/design-construction/bid-documents#fs-panel-105367",
-    "https://www.vcsedu.org/directory/departments/operation-services/facilities-services/design-construction/bid-documents#fs-panel-105362",
-    "https://www.vcsedu.org/directory/departments/operation-services/facilities-services/design-construction/bid-documents#fs-panel-105171",
-    "https://www.vcsedu.org/directory/departments/operation-services/facilities-services/design-construction/bid-documents#fs-panel-105174",
-    "https://www.vcsedu.org/directory/departments/operation-services/facilities-services/design-construction/bid-documents#fs-panel-105141",
-    "https://www.vcsedu.org/directory/departments/operation-services/facilities-services/design-construction/bid-documents#fs-panel-105144",
-    "https://www.vcsedu.org/directory/departments/operation-services/facilities-services/design-construction/bid-documents#fs-panel-104864",
-    "https://www.vcsedu.org/directory/departments/operation-services/facilities-services/design-construction/bid-documents#fs-panel-104930",
-    "https://www.vcsedu.org/directory/departments/operation-services/facilities-services/design-construction/bid-documents#fs-panel-104869",
-    "https://www.vcsedu.org/directory/departments/operation-services/facilities-services/design-construction/bid-documents#fs-panel-104651",
-    "https://www.vcsedu.org/directory/departments/operation-services/facilities-services/design-construction/bid-documents#fs-panel-104481",
-    "https://www.vcsedu.org/directory/departments/operation-services/facilities-services/design-construction/bid-documents#fs-panel-103115",
-    "https://www.vcsedu.org/directory/departments/operation-services/facilities-services/design-construction/bid-documents#fs-panel-102782",
-    "https://www.vcsedu.org/directory/departments/operation-services/facilities-services/design-construction/bid-documents#fs-panel-99478",
-    "https://www.vcsedu.org/directory/departments/operation-services/facilities-services/design-construction/bid-documents#fs-panel-98731",
-    "https://www.vcsedu.org/directory/departments/operation-services/facilities-services/design-construction/bid-documents#fs-panel-98947",
-    "https://www.vcsedu.org/directory/departments/operation-services/facilities-services/design-construction/bid-documents#fs-panel-97577",
-    "https://www.vcsedu.org/directory/departments/operation-services/facilities-services/design-construction/bid-documents#fs-panel-97513",
-    "https://www.vcsedu.org/directory/departments/operation-services/facilities-services/design-construction/bid-documents#fs-panel-97099",
-    "https://www.vcsedu.org/directory/departments/operation-services/facilities-services/design-construction/bid-documents#fs-panel-97031",
-    "https://www.vcsedu.org/directory/departments/operation-services/facilities-services/design-construction/bid-documents#fs-panel-97034",
-    "https://www.vcsedu.org/directory/departments/operation-services/facilities-services/design-construction/bid-documents#fs-panel-96964",
-    "https://fcs.cornell.edu/bid-projects/mary-donlon-student-room-door-hardware-replacements",
-    "https://fcs.cornell.edu/bid-projects/mary-donlon-student-room-door-hardware-replacements#main",
-    "https://fcs.cornell.edu/projects",
-    "https://fcs.cornell.edu/projects/start-project-0",
-    "https://fcs.cornell.edu/projects/facilities-project-approval-request-fpar",
-    "https://fcs.cornell.edu/departments/engineering-project-management/epm-checklists",
-    "https://fcs.cornell.edu/departments/engineering-project-management/epm-resources",
-    "https://fcs.cornell.edu/projects/project-resources-assistance",
-    "https://fcs.cornell.edu/projects/bidding-process",
-    "https://fcs.cornell.edu/projects/cornell-design-standards-details",
-    "https://fcs.cornell.edu/projects/fire-alarm-sprinkler-shutdowns",
-    "https://fcs.cornell.edu/projects/green-building-leed-support",
-    "https://fcs.cornell.edu/projects/mapping",
-    "https://fcs.cornell.edu/departments/contract-colleges-facilities/guide-obtaining-contract-colleges-facilities-project-permits-certificates",
-    "https://fcs.cornell.edu/departments/contract-colleges-facilities/project-sunlight",
-    "https://fcs.cornell.edu/departments/engineering-project-management",
-    "https://fcs.cornell.edu/departments/engineering-project-management/engineering-project-management-leadership-team",
-    "https://fcs.cornell.edu/departments/engineering-project-management/facilities-engineering",
-    "https://fcs.cornell.edu/departments/engineering-project-management/project-management",
-    "https://fcs.cornell.edu/departments/engineering-project-management/project-management-information-system-pmis",
-    "https://fcs.cornell.edu/departments/engineering-project-management/engineering-project-management-mission-vision/quarterly-construction-report",
-    "https://fcs.cornell.edu/departments/engineering-project-management/utility-locating",
-    "https://fcs.cornell.edu/departments/office-university-architect/plans-studies-campus-planning",
-    "https://www.cornellplans.com/",
-    "https://www.oafmdcplanroom.com/projects/3367/details/t2147-01-jefferson-city-readiness-center-civil-support-team-building-addition#content",
+    "https://www.oafmdcplanroom.com/projects/3127/details/c2238-01-service-add-electrical-circuits-er-generator-food-svc-warehouse-farmington-correctional#content",
     "https://www.oafmdcplanroom.com/projects/public",
     "https://www.oafmdcplanroom.com/projects/private",
     "https://www.oafmdcplanroom.com/projects/calendar",
     "https://www.oafmdcplanroom.com/auth/login",
-    "https://www.oafmdcplanroom.com/auth/login?redirect=https%3A%2F%2Fwww.oafmdcplanroom.com%2Fprojects%2F3367%2Fdetails%2Ft2147-01-jefferson-city-readiness-center-civil-support-team-building-addition",
-    "https://www.oafmdcplanroom.com/projects/3367/details/t2147-01-jefferson-city-readiness-center-civil-support-team-building-addition",
-    "https://www.oafmdcplanroom.com/projects/3367/plans/t2147-01-jefferson-city-readiness-center-civil-support-team-building-addition",
-    "https://www.oafmdcplanroom.com/projects/3367/specs/t2147-01-jefferson-city-readiness-center-civil-support-team-building-addition",
-    "https://www.oafmdcplanroom.com/projects/3367/addenda/t2147-01-jefferson-city-readiness-center-civil-support-team-building-addition",
-    "https://www.oafmdcplanroom.com/projects/3367/plan-holders/t2147-01-jefferson-city-readiness-center-civil-support-team-building-addition",
-    "https://www.oafmdcplanroom.com/projects/3253/details/x2207-01-add-cabins-renovate-lodge-current-river-state-park#content",
-    "https://www.oafmdcplanroom.com/auth/login?redirect=https%3A%2F%2Fwww.oafmdcplanroom.com%2Fprojects%2F3253%2Fdetails%2Fx2207-01-add-cabins-renovate-lodge-current-river-state-park",
-    "https://www.oafmdcplanroom.com/projects/3253/details/x2207-01-add-cabins-renovate-lodge-current-river-state-park",
-    "https://www.oafmdcplanroom.com/projects/3253/plans/x2207-01-add-cabins-renovate-lodge-current-river-state-park",
-    "https://www.oafmdcplanroom.com/projects/3253/specs/x2207-01-add-cabins-renovate-lodge-current-river-state-park",
-    "https://www.oafmdcplanroom.com/projects/3253/addenda/x2207-01-add-cabins-renovate-lodge-current-river-state-park",
-    "https://www.oafmdcplanroom.com/projects/3253/plan-holders/x2207-01-add-cabins-renovate-lodge-current-river-state-park"
+    "https://www.oafmdcplanroom.com/auth/login?redirect=https%3A%2F%2Fwww.oafmdcplanroom.com%2Fprojects%2F3127%2Fdetails%2Fc2238-01-service-add-electrical-circuits-er-generator-food-svc-warehouse-farmington-correctional",
+    "https://www.oafmdcplanroom.com/projects/3127/plans/c2238-01-service-add-electrical-circuits-er-generator-food-svc-warehouse-farmington-correctional",
+    "https://www.oafmdcplanroom.com/projects/3127/specs/c2238-01-service-add-electrical-circuits-er-generator-food-svc-warehouse-farmington-correctional",
+    "https://www.oafmdcplanroom.com/projects/3127/addenda/c2238-01-service-add-electrical-circuits-er-generator-food-svc-warehouse-farmington-correctional",
+    "https://www.oafmdcplanroom.com/projects/3127/plan-holders/c2238-01-service-add-electrical-circuits-er-generator-food-svc-warehouse-farmington-correctional"
   ],
   "remaining": [
     {
-      "url": "https://oa.mo.gov/sites/default/files/bid-opportunities/R2516-01%20Bid%20Documents.pdf",
-      "family": "missouri_oa_fmdc",
-      "kind": "document",
-      "depth": 0
-    },
-    {
-      "url": "https://oa.mo.gov/sites/default/files/bid-opportunities/R2516-01%20IFB.pdf",
-      "family": "missouri_oa_fmdc",
-      "kind": "document",
-      "depth": 0
-    },
-    {
-      "url": "https://oa.mo.gov/sites/default/files/bid-opportunities/R2516-01%20Final%20specs.pdf",
-      "family": "missouri_oa_fmdc",
-      "kind": "document",
-      "depth": 0
-    },
-    {
-      "url": "https://oa.mo.gov/sites/default/files/bid-opportunities/R2516-01%20Add%20%231.pdf",
-      "family": "missouri_oa_fmdc",
-      "kind": "document",
-      "depth": 0
-    },
-    {
-      "url": "https://oa.mo.gov/sites/default/files/bid-opportunities/R2516-01%20Addendum%202.pdf",
-      "family": "missouri_oa_fmdc",
-      "kind": "document",
-      "depth": 0
-    },
-    {
-      "url": "https://oa.mo.gov/sites/default/files/bid-opportunities/_R2416-01%20Final%20Bid%20Documents.pdf",
-      "family": "missouri_oa_fmdc",
-      "kind": "document",
-      "depth": 0
-    },
-    {
-      "url": "https://oa.mo.gov/sites/default/files/bid-opportunities/R2416-01%20IFB.pdf",
-      "family": "missouri_oa_fmdc",
-      "kind": "document",
-      "depth": 0
-    },
-    {
-      "url": "https://oa.mo.gov/sites/default/files/bid-opportunities/_R2416-01%20Final%20Bid%20Plans.pdf",
-      "family": "missouri_oa_fmdc",
-      "kind": "document",
-      "depth": 0
-    },
-    {
-      "url": "https://oa.mo.gov/sites/default/files/bid-opportunities/_R2416-01%20Final%20Bid%20Specs.pdf",
-      "family": "missouri_oa_fmdc",
-      "kind": "document",
-      "depth": 0
-    },
-    {
-      "url": "https://oa.mo.gov/sites/default/files/bid-opportunities/_R2416-01%20Addendum%201.pdf",
-      "family": "missouri_oa_fmdc",
-      "kind": "document",
-      "depth": 0
-    },
-    {
-      "url": "https://oa.mo.gov/sites/default/files/bid-opportunities/R2416-01%20Add%20%232.pdf",
-      "family": "missouri_oa_fmdc",
-      "kind": "document",
-      "depth": 0
-    },
-    {
-      "url": "https://oa.mo.gov/sites/default/files/bid-opportunities/_X2410-01%20Final%20Bid%20Documents.pdf",
-      "family": "missouri_oa_fmdc",
-      "kind": "document",
-      "depth": 0
-    },
-    {
-      "url": "https://oa.mo.gov/sites/default/files/bid-opportunities/X2410-01%20IFB.pdf",
-      "family": "missouri_oa_fmdc",
-      "kind": "document",
-      "depth": 0
-    },
-    {
-      "url": "https://oa.mo.gov/sites/default/files/bid-opportunities/_X2410-01%20Final%20Bid%20Plans.pdf",
-      "family": "missouri_oa_fmdc",
-      "kind": "document",
-      "depth": 0
-    },
-    {
-      "url": "https://oa.mo.gov/sites/default/files/bid-opportunities/_X2410-01%20Final%20Bid%20Specs.pdf",
-      "family": "missouri_oa_fmdc",
-      "kind": "document",
-      "depth": 0
-    },
-    {
-      "url": "https://oa.mo.gov/sites/default/files/bid-opportunities/_X2410-01%20Addendum%201.pdf",
-      "family": "missouri_oa_fmdc",
-      "kind": "document",
-      "depth": 0
-    },
-    {
-      "url": "https://oa.mo.gov/sites/default/files/bid-opportunities/_X2410-01%20Addendum%202.pdf",
-      "family": "missouri_oa_fmdc",
-      "kind": "document",
-      "depth": 0
-    },
-    {
-      "url": "https://oa.mo.gov/sites/default/files/bid-opportunities/_T2423-01%20-%20Final%20Bid%20Docs.pdf",
-      "family": "missouri_oa_fmdc",
-      "kind": "document",
-      "depth": 0
-    },
-    {
-      "url": "https://oa.mo.gov/sites/default/files/bid-opportunities/T2423-01%20-%20IFB.pdf",
-      "family": "missouri_oa_fmdc",
-      "kind": "document",
-      "depth": 0
-    },
-    {
-      "url": "https://oa.mo.gov/sites/default/files/bid-opportunities/_T2423-01%20-%20Final%20Plans.pdf",
-      "family": "missouri_oa_fmdc",
-      "kind": "document",
-      "depth": 0
-    },
-    {
-      "url": "https://oa.mo.gov/sites/default/files/bid-opportunities/_T2423-01%20-%20Final%20Specs.pdf",
-      "family": "missouri_oa_fmdc",
-      "kind": "document",
-      "depth": 0
-    },
-    {
-      "url": "https://oa.mo.gov/sites/default/files/bid-opportunities/_T2423-01%20Add%20-%201.pdf",
-      "family": "missouri_oa_fmdc",
-      "kind": "document",
-      "depth": 0
-    },
-    {
-      "url": "https://oa.mo.gov/sites/default/files/bid-opportunities/T2423-01%20Add%20%232.pdf",
-      "family": "missouri_oa_fmdc",
-      "kind": "document",
-      "depth": 0
-    },
-    {
-      "url": "https://oa.mo.gov/sites/default/files/bid-opportunities/T2423-01%20Add%20-%203.pdf",
-      "family": "missouri_oa_fmdc",
-      "kind": "document",
-      "depth": 0
-    },
-    {
-      "url": "https://oa.mo.gov/sites/default/files/bid-opportunities/W2501-01%20Bid%20Documents.pdf",
-      "family": "missouri_oa_fmdc",
-      "kind": "document",
-      "depth": 0
-    },
-    {
-      "url": "https://oa.mo.gov/sites/default/files/bid-opportunities/W2501-01%20IFB.pdf",
-      "family": "missouri_oa_fmdc",
-      "kind": "document",
-      "depth": 0
-    },
-    {
-      "url": "https://oa.mo.gov/sites/default/files/bid-opportunities/W2501-01_5001_7815001008_Bid%20Documents_01-07-2026.pdf",
-      "family": "missouri_oa_fmdc",
-      "kind": "document",
-      "depth": 0
-    },
-    {
-      "url": "https://oa.mo.gov/sites/default/files/bid-opportunities/W2501-01%20Final%20specs.pdf",
-      "family": "missouri_oa_fmdc",
-      "kind": "document",
-      "depth": 0
-    },
-    {
-      "url": "https://oa.mo.gov/sites/default/files/bid-opportunities/W2501-01_Addendum%201_03-10-2026.pdf",
-      "family": "missouri_oa_fmdc",
-      "kind": "document",
-      "depth": 0
-    },
-    {
-      "url": "https://oa.mo.gov/sites/default/files/bid-opportunities/O2548-01%20Addendum%201%20Design%20Build%20RFQ.pdf",
-      "family": "missouri_oa_fmdc",
-      "kind": "document",
-      "depth": 0
-    },
-    {
-      "url": "https://oa.mo.gov/sites/default/files/bid-opportunities/O2548-01%20Addendum%202%20%20Design%20Build%20RFQ%20with%20Site%20Plan.pdf",
-      "family": "missouri_oa_fmdc",
-      "kind": "document",
-      "depth": 0
-    },
-    {
-      "url": "https://oa.mo.gov/sites/default/files/bid-opportunities/O2548-01%20Addendum%203%20%20Design%20Build%20RFQ.pdf",
-      "family": "missouri_oa_fmdc",
-      "kind": "document",
-      "depth": 0
-    },
-    {
-      "url": "https://oa.mo.gov/sites/default/files/bid-opportunities/O2548-01%20Addendum%204%20%20Design%20Build%20RFQ.pdf",
-      "family": "missouri_oa_fmdc",
-      "kind": "document",
-      "depth": 0
-    },
-    {
-      "url": "https://oa.mo.gov/sites/default/files/bid-opportunities/_X2530-01%20-%20Final%20Bid%20Docs.pdf",
-      "family": "missouri_oa_fmdc",
-      "kind": "document",
-      "depth": 0
-    },
-    {
-      "url": "https://oa.mo.gov/sites/default/files/bid-opportunities/_X2530-01%20-%20IFB.pdf",
-      "family": "missouri_oa_fmdc",
-      "kind": "document",
-      "depth": 0
-    },
-    {
-      "url": "https://oa.mo.gov/sites/default/files/bid-opportunities/_X2530-01%20-%20Final%20Plans.pdf",
-      "family": "missouri_oa_fmdc",
-      "kind": "document",
-      "depth": 0
-    },
-    {
-      "url": "https://oa.mo.gov/sites/default/files/bid-opportunities/_X2530-01%20-%20Final%20Specs.pdf",
-      "family": "missouri_oa_fmdc",
-      "kind": "document",
-      "depth": 0
-    },
-    {
-      "url": "https://oa.mo.gov/sites/default/files/bid-opportunities/_X2530-01%20Add%201.pdf",
-      "family": "missouri_oa_fmdc",
-      "kind": "document",
-      "depth": 0
-    },
-    {
-      "url": "https://oa.mo.gov/sites/default/files/bid-opportunities/_X2408-02%20-%20Final%20Bid%20Docs_1.pdf",
-      "family": "missouri_oa_fmdc",
-      "kind": "document",
-      "depth": 0
-    },
-    {
-      "url": "https://oa.mo.gov/sites/default/files/bid-opportunities/_X2408-02%20-%20IFB_1.pdf",
-      "family": "missouri_oa_fmdc",
-      "kind": "document",
-      "depth": 0
-    },
-    {
-      "url": "https://oa.mo.gov/sites/default/files/bid-opportunities/_X2408-02%20-%20Final%20Plans_1.pdf",
-      "family": "missouri_oa_fmdc",
-      "kind": "document",
-      "depth": 0
-    },
-    {
-      "url": "https://oa.mo.gov/sites/default/files/bid-opportunities/_X2408-02%20-%20Final%20Specs_1.pdf",
-      "family": "missouri_oa_fmdc",
-      "kind": "document",
-      "depth": 0
-    },
-    {
-      "url": "https://oa.mo.gov/sites/default/files/bid-opportunities/_X2408-02%20-%20Add%20-%201.pdf",
-      "family": "missouri_oa_fmdc",
-      "kind": "document",
-      "depth": 0
-    },
-    {
-      "url": "https://oa.mo.gov/sites/default/files/bid-opportunities/_X2517-01%20Final%20Bid%20Documents.pdf",
-      "family": "missouri_oa_fmdc",
-      "kind": "document",
-      "depth": 0
-    },
-    {
-      "url": "https://oa.mo.gov/sites/default/files/bid-opportunities/X2517-01%20IFB_0.pdf",
-      "family": "missouri_oa_fmdc",
-      "kind": "document",
-      "depth": 0
-    },
-    {
-      "url": "https://oa.mo.gov/sites/default/files/bid-opportunities/_X2517-01%20Final%20Bid%20Plans.pdf",
-      "family": "missouri_oa_fmdc",
-      "kind": "document",
-      "depth": 0
-    },
-    {
-      "url": "https://oa.mo.gov/sites/default/files/bid-opportunities/_X2517-01%20Final%20Bid%20Specs.pdf",
-      "family": "missouri_oa_fmdc",
-      "kind": "document",
-      "depth": 0
-    },
-    {
-      "url": "https://oa.mo.gov/sites/default/files/bid-opportunities/_X2517-01%20Addendum%201.pdf",
-      "family": "missouri_oa_fmdc",
-      "kind": "document",
-      "depth": 0
-    },
-    {
-      "url": "https://oa.mo.gov/sites/default/files/bid-opportunities/_X2504-01%20-%20Final%20Bid%20Docs.pdf",
-      "family": "missouri_oa_fmdc",
-      "kind": "document",
-      "depth": 0
-    },
-    {
-      "url": "https://oa.mo.gov/sites/default/files/bid-opportunities/_X2504-01%20-%20IFB.pdf",
-      "family": "missouri_oa_fmdc",
-      "kind": "document",
-      "depth": 0
-    },
-    {
-      "url": "https://oa.mo.gov/sites/default/files/bid-opportunities/_X2504-01%20-%20Final%20Plans.pdf",
-      "family": "missouri_oa_fmdc",
-      "kind": "document",
-      "depth": 0
-    },
-    {
-      "url": "https://oa.mo.gov/sites/default/files/bid-opportunities/_X2504-01%20-%20Final%20Specs.pdf",
-      "family": "missouri_oa_fmdc",
-      "kind": "document",
-      "depth": 0
-    },
-    {
-      "url": "https://oa.mo.gov/sites/default/files/bid-opportunities/_X2504-01%20Addendum%201.pdf",
-      "family": "missouri_oa_fmdc",
-      "kind": "document",
-      "depth": 0
-    },
-    {
-      "url": "https://oa.mo.gov/sites/default/files/bid-opportunities/_M2511-01%20-%20Final%20Bid%20Docs.pdf",
-      "family": "missouri_oa_fmdc",
-      "kind": "document",
-      "depth": 0
-    },
-    {
-      "url": "https://oa.mo.gov/sites/default/files/bid-opportunities/M2511-01%20-%20IFB.pdf",
-      "family": "missouri_oa_fmdc",
-      "kind": "document",
-      "depth": 0
-    },
-    {
-      "url": "https://oa.mo.gov/sites/default/files/bid-opportunities/_M2511-01%20-%20Final%20Plans.pdf",
-      "family": "missouri_oa_fmdc",
-      "kind": "document",
-      "depth": 0
-    },
-    {
-      "url": "https://oa.mo.gov/sites/default/files/bid-opportunities/_M2511-01%20-%20Final%20Specs.pdf",
-      "family": "missouri_oa_fmdc",
-      "kind": "document",
-      "depth": 0
-    },
-    {
-      "url": "https://oa.mo.gov/sites/default/files/bid-opportunities/_M2511-01%20Add%20-1.pdf",
-      "family": "missouri_oa_fmdc",
-      "kind": "document",
-      "depth": 0
-    },
-    {
-      "url": "https://oa.mo.gov/sites/default/files/bid-opportunities/_X2117-02%20-%20Final%20Bid%20Docs.pdf",
-      "family": "missouri_oa_fmdc",
-      "kind": "document",
-      "depth": 0
-    },
-    {
-      "url": "https://oa.mo.gov/sites/default/files/bid-opportunities/_X2117-02%20-%20IFB.pdf",
-      "family": "missouri_oa_fmdc",
-      "kind": "document",
-      "depth": 0
-    },
-    {
-      "url": "https://oa.mo.gov/sites/default/files/bid-opportunities/_X2117-02%20-%20Final%20PlansR.pdf",
-      "family": "missouri_oa_fmdc",
-      "kind": "document",
-      "depth": 0
-    },
-    {
-      "url": "https://oa.mo.gov/sites/default/files/bid-opportunities/_X2117-02%20-%20Final%20Specs_0.pdf",
-      "family": "missouri_oa_fmdc",
-      "kind": "document",
-      "depth": 0
-    },
-    {
-      "url": "https://oa.mo.gov/sites/default/files/bid-opportunities/_X2117-02%20Addendum%201.pdf",
-      "family": "missouri_oa_fmdc",
-      "kind": "document",
-      "depth": 0
-    },
-    {
-      "url": "https://oa.mo.gov/sites/default/files/bid-opportunities/_X2117-02%20-%20Add%202.pdf",
-      "family": "missouri_oa_fmdc",
-      "kind": "document",
-      "depth": 0
-    },
-    {
-      "url": "https://oa.mo.gov/sites/default/files/bid-opportunities/_X2407-01%20-%20Final%20Bid%20Docs_0.pdf",
-      "family": "missouri_oa_fmdc",
-      "kind": "document",
-      "depth": 0
-    },
-    {
-      "url": "https://oa.mo.gov/sites/default/files/bid-opportunities/X2407-01%20-%20IFB.pdf",
-      "family": "missouri_oa_fmdc",
-      "kind": "document",
-      "depth": 0
-    },
-    {
-      "url": "https://oa.mo.gov/sites/default/files/bid-opportunities/_X2407-01%20-%20Final%20Plans.pdf",
-      "family": "missouri_oa_fmdc",
-      "kind": "document",
-      "depth": 0
-    },
-    {
-      "url": "https://oa.mo.gov/sites/default/files/bid-opportunities/_X2407-01%20-%20Final%20Specs.pdf",
-      "family": "missouri_oa_fmdc",
-      "kind": "document",
-      "depth": 0
-    },
-    {
-      "url": "https://oa.mo.gov/sites/default/files/bid-opportunities/_X2407-01%20Add%201.pdf",
-      "family": "missouri_oa_fmdc",
-      "kind": "document",
-      "depth": 0
-    },
-    {
-      "url": "https://oa.mo.gov/sites/default/files/bid-opportunities/_X2407-01%20Add%20-%202.pdf",
-      "family": "missouri_oa_fmdc",
-      "kind": "document",
-      "depth": 0
-    },
-    {
-      "url": "https://oa.mo.gov/sites/default/files/bid-opportunities/_R2502-01%20Final%20Bid%20Documents.pdf",
-      "family": "missouri_oa_fmdc",
-      "kind": "document",
-      "depth": 0
-    },
-    {
-      "url": "https://oa.mo.gov/sites/default/files/bid-opportunities/R2502-01%20IFB.pdf",
-      "family": "missouri_oa_fmdc",
-      "kind": "document",
-      "depth": 0
-    },
-    {
-      "url": "https://oa.mo.gov/sites/default/files/bid-opportunities/_R2502-01%20Final%20Bid%20Plans.pdf",
-      "family": "missouri_oa_fmdc",
-      "kind": "document",
-      "depth": 0
-    },
-    {
-      "url": "https://oa.mo.gov/sites/default/files/bid-opportunities/_R2502-01%20Final%20Bid%20Specs_%20Part%201.pdf",
-      "family": "missouri_oa_fmdc",
-      "kind": "document",
-      "depth": 0
-    },
-    {
-      "url": "https://oa.mo.gov/sites/default/files/bid-opportunities/_R2502-01%20Final%20Bid%20Specs_%20Part%202.pdf",
-      "family": "missouri_oa_fmdc",
-      "kind": "document",
-      "depth": 0
-    },
-    {
-      "url": "https://oa.mo.gov/sites/default/files/bid-opportunities/_R2502-01%20Addendum%201.pdf",
-      "family": "missouri_oa_fmdc",
-      "kind": "document",
-      "depth": 0
-    },
-    {
-      "url": "https://oa.mo.gov/sites/default/files/bid-opportunities/_R2502-01%20Addendum%202.pdf",
-      "family": "missouri_oa_fmdc",
-      "kind": "document",
-      "depth": 0
-    },
-    {
-      "url": "https://oa.mo.gov/sites/default/files/bid-opportunities/_R2502-01%20Addendum%203.pdf",
-      "family": "missouri_oa_fmdc",
-      "kind": "document",
-      "depth": 0
-    },
-    {
-      "url": "https://oa.mo.gov/sites/default/files/bid-opportunities/_O2424-01%20Final%20Bid%20Documents.pdf",
-      "family": "missouri_oa_fmdc",
-      "kind": "document",
-      "depth": 0
-    },
-    {
-      "url": "https://oa.mo.gov/sites/default/files/bid-opportunities/_O2424-01%20IFB.pdf",
-      "family": "missouri_oa_fmdc",
-      "kind": "document",
-      "depth": 0
-    },
-    {
-      "url": "https://oa.mo.gov/sites/default/files/bid-opportunities/_O2424-01%20Final%20Bid%20Plans.pdf",
-      "family": "missouri_oa_fmdc",
-      "kind": "document",
-      "depth": 0
-    },
-    {
-      "url": "https://oa.mo.gov/sites/default/files/bid-opportunities/_O2424-01%20Final%20Bid%20Specs.pdf",
-      "family": "missouri_oa_fmdc",
-      "kind": "document",
-      "depth": 0
-    },
-    {
-      "url": "https://oa.mo.gov/sites/default/files/bid-opportunities/_O2424-01%20Addendum%201.pdf",
-      "family": "missouri_oa_fmdc",
-      "kind": "document",
-      "depth": 0
-    },
-    {
-      "url": "https://oa.mo.gov/sites/default/files/bid-opportunities/_O2424-01%20Addendum%202.pdf",
-      "family": "missouri_oa_fmdc",
-      "kind": "document",
-      "depth": 0
-    },
-    {
-      "url": "https://oa.mo.gov/sites/default/files/bid-opportunities/_T2507-01%20Final%20Bid%20Documents.pdf",
-      "family": "missouri_oa_fmdc",
-      "kind": "document",
-      "depth": 0
-    },
-    {
-      "url": "https://oa.mo.gov/sites/default/files/bid-opportunities/T2507-01%20IFB.pdf",
-      "family": "missouri_oa_fmdc",
-      "kind": "document",
-      "depth": 0
-    },
-    {
-      "url": "https://oa.mo.gov/sites/default/files/bid-opportunities/_T2507-01%20Final%20Bid%20Plans.pdf",
-      "family": "missouri_oa_fmdc",
-      "kind": "document",
-      "depth": 0
-    },
-    {
-      "url": "https://oa.mo.gov/sites/default/files/bid-opportunities/_T2507-01%20Final%20Bid%20Specs.pdf",
-      "family": "missouri_oa_fmdc",
-      "kind": "document",
-      "depth": 0
-    },
-    {
-      "url": "https://oa.mo.gov/sites/default/files/bid-opportunities/_T2507-01%20Addendum%201.pdf",
-      "family": "missouri_oa_fmdc",
-      "kind": "document",
-      "depth": 0
-    },
-    {
-      "url": "https://oa.mo.gov/sites/default/files/bid-opportunities/_T2507-01%20Addendum%202.pdf",
-      "family": "missouri_oa_fmdc",
-      "kind": "document",
-      "depth": 0
-    },
-    {
-      "url": "https://oa.mo.gov/sites/default/files/bid-opportunities/_T2507-01%20Addendum%203.pdf",
-      "family": "missouri_oa_fmdc",
-      "kind": "document",
-      "depth": 0
-    },
-    {
-      "url": "https://oa.mo.gov/sites/default/files/bid-opportunities/_C2416-01%20-%20Final%20Bid%20Docs_3.pdf",
-      "family": "missouri_oa_fmdc",
-      "kind": "document",
-      "depth": 0
-    },
-    {
-      "url": "https://oa.mo.gov/sites/default/files/bid-opportunities/C2416-01%20-%20IFB_3.pdf",
-      "family": "missouri_oa_fmdc",
-      "kind": "document",
-      "depth": 0
-    },
-    {
-      "url": "https://oa.mo.gov/sites/default/files/bid-opportunities/_C2416-01%20-%20Final%20Plans_4.pdf",
-      "family": "missouri_oa_fmdc",
-      "kind": "document",
-      "depth": 0
-    },
-    {
-      "url": "https://oa.mo.gov/sites/default/files/bid-opportunities/_C2416-01%20-%20Final%20Specs_3.pdf",
-      "family": "missouri_oa_fmdc",
-      "kind": "document",
-      "depth": 0
-    },
-    {
-      "url": "https://oa.mo.gov/sites/default/files/bid-opportunities/C2416-01%20Add%20%231.pdf",
-      "family": "missouri_oa_fmdc",
-      "kind": "document",
-      "depth": 0
-    },
-    {
-      "url": "https://oa.mo.gov/sites/default/files/bid-opportunities/C2416-01%20Add%20%232%20Plan%20%26%20Specs.pdf",
-      "family": "missouri_oa_fmdc",
-      "kind": "document",
-      "depth": 0
-    },
-    {
-      "url": "https://oa.mo.gov/sites/default/files/bid-opportunities/_C2416-01%20-%20Add%203%20Plan%20-%20Specs.pdf",
-      "family": "missouri_oa_fmdc",
-      "kind": "document",
-      "depth": 0
-    },
-    {
-      "url": "https://oa.mo.gov/sites/default/files/bid-opportunities/_T2518-01%20Final%20Bid%20Documents.pdf",
-      "family": "missouri_oa_fmdc",
-      "kind": "document",
-      "depth": 0
-    },
-    {
-      "url": "https://oa.mo.gov/sites/default/files/bid-opportunities/T2518-01%20IFB.pdf",
-      "family": "missouri_oa_fmdc",
-      "kind": "document",
-      "depth": 0
-    },
-    {
-      "url": "https://oa.mo.gov/sites/default/files/bid-opportunities/_T2518-01%20Final%20Bid%20Plans.pdf",
-      "family": "missouri_oa_fmdc",
-      "kind": "document",
-      "depth": 0
-    },
-    {
-      "url": "https://oa.mo.gov/sites/default/files/bid-opportunities/_T2518-01%20Final%20Bid%20Specs.pdf",
-      "family": "missouri_oa_fmdc",
-      "kind": "document",
-      "depth": 0
-    },
-    {
-      "url": "https://oa.mo.gov/sites/default/files/bid-opportunities/_T2518-01%20Addendum%201.pdf",
-      "family": "missouri_oa_fmdc",
-      "kind": "document",
-      "depth": 0
-    },
-    {
-      "url": "https://oa.mo.gov/sites/default/files/bid-opportunities/X2531-01%20Bid%20Documents.pdf",
-      "family": "missouri_oa_fmdc",
-      "kind": "document",
-      "depth": 0
-    },
-    {
-      "url": "https://oa.mo.gov/sites/default/files/bid-opportunities/X2531-01%20-%20IFB.pdf",
-      "family": "missouri_oa_fmdc",
-      "kind": "document",
-      "depth": 0
-    },
-    {
-      "url": "https://oa.mo.gov/sites/default/files/bid-opportunities/_X2531-01%20-%20Final%20Plans.pdf",
-      "family": "missouri_oa_fmdc",
-      "kind": "document",
-      "depth": 0
-    },
-    {
-      "url": "https://oa.mo.gov/sites/default/files/bid-opportunities/X2531-01%20Final%20specs.pdf",
-      "family": "missouri_oa_fmdc",
-      "kind": "document",
-      "depth": 0
-    },
-    {
-      "url": "https://oa.mo.gov/sites/default/files/bid-opportunities/X2531-01%20Add%20%231.pdf",
-      "family": "missouri_oa_fmdc",
-      "kind": "document",
-      "depth": 0
-    },
-    {
-      "url": "https://oa.mo.gov/sites/default/files/bid-opportunities/_X2319-01%20Final%20Bid%20Documents.pdf",
-      "family": "missouri_oa_fmdc",
-      "kind": "document",
-      "depth": 0
-    },
-    {
-      "url": "https://oa.mo.gov/sites/default/files/bid-opportunities/X2319-01%20IFB.pdf",
-      "family": "missouri_oa_fmdc",
-      "kind": "document",
-      "depth": 0
-    },
-    {
-      "url": "https://oa.mo.gov/sites/default/files/bid-opportunities/_X2319-01%20Final%20Bid%20Plans.pdf",
-      "family": "missouri_oa_fmdc",
-      "kind": "document",
-      "depth": 0
-    },
-    {
-      "url": "https://oa.mo.gov/sites/default/files/bid-opportunities/_X2319-01%20Final%20Bid%20Specs.pdf",
-      "family": "missouri_oa_fmdc",
-      "kind": "document",
-      "depth": 0
-    },
-    {
-      "url": "https://oa.mo.gov/sites/default/files/bid-opportunities/_X2319-01%20Addendum%201.pdf",
-      "family": "missouri_oa_fmdc",
-      "kind": "document",
-      "depth": 0
-    },
-    {
-      "url": "https://oa.mo.gov/sites/default/files/bid-opportunities/_X2319-01%20Addendum%202.pdf",
-      "family": "missouri_oa_fmdc",
-      "kind": "document",
-      "depth": 0
-    },
-    {
-      "url": "https://oa.mo.gov/sites/default/files/bid-opportunities/_R2517-01%20Final%20Bid%20Documents.pdf",
-      "family": "missouri_oa_fmdc",
-      "kind": "document",
-      "depth": 0
-    },
-    {
-      "url": "https://oa.mo.gov/sites/default/files/bid-opportunities/R2517-01%20IFB.pdf",
-      "family": "missouri_oa_fmdc",
-      "kind": "document",
-      "depth": 0
-    },
-    {
-      "url": "https://oa.mo.gov/sites/default/files/bid-opportunities/_R2517-01%20Final%20Bid%20Plans.pdf",
-      "family": "missouri_oa_fmdc",
-      "kind": "document",
-      "depth": 0
-    },
-    {
-      "url": "https://oa.mo.gov/sites/default/files/bid-opportunities/_R2517-01%20Final%20Bid%20Specs.pdf",
-      "family": "missouri_oa_fmdc",
-      "kind": "document",
-      "depth": 0
-    },
-    {
-      "url": "https://oa.mo.gov/sites/default/files/bid-opportunities/_R2517-01%20Addendum%201.pdf",
-      "family": "missouri_oa_fmdc",
-      "kind": "document",
-      "depth": 0
-    },
-    {
-      "url": "https://oa.mo.gov/sites/default/files/bid-opportunities/_R2517-01%20Addendum%202.pdf",
-      "family": "missouri_oa_fmdc",
-      "kind": "document",
-      "depth": 0
-    },
-    {
-      "url": "https://oa.mo.gov/sites/default/files/bid-opportunities/_C2410-01%20-%20Final%20Bid%20Docs.pdf",
-      "family": "missouri_oa_fmdc",
-      "kind": "document",
-      "depth": 0
-    },
-    {
-      "url": "https://oa.mo.gov/sites/default/files/bid-opportunities/_C2410-01%20-%20IFB.pdf",
-      "family": "missouri_oa_fmdc",
-      "kind": "document",
-      "depth": 0
-    },
-    {
-      "url": "https://oa.mo.gov/sites/default/files/bid-opportunities/_C2410-01%20-%20Final%20Plans.pdf",
-      "family": "missouri_oa_fmdc",
-      "kind": "document",
-      "depth": 0
-    },
-    {
-      "url": "https://oa.mo.gov/sites/default/files/bid-opportunities/_C2410-01%20-%20Final%20Specs.pdf",
-      "family": "missouri_oa_fmdc",
-      "kind": "document",
-      "depth": 0
-    },
-    {
-      "url": "https://oa.mo.gov/sites/default/files/bid-opportunities/_C2410-01%20Add%201%20Plans-Specs_0.pdf",
-      "family": "missouri_oa_fmdc",
-      "kind": "document",
-      "depth": 0
-    },
-    {
-      "url": "https://oa.mo.gov/sites/default/files/bid-opportunities/_X2528-01%20-%20Final%20Bid%20Docs.pdf",
-      "family": "missouri_oa_fmdc",
-      "kind": "document",
-      "depth": 0
-    },
-    {
-      "url": "https://oa.mo.gov/sites/default/files/bid-opportunities/_X2528-01%20-%20IFB_0.pdf",
-      "family": "missouri_oa_fmdc",
-      "kind": "document",
-      "depth": 0
-    },
-    {
-      "url": "https://oa.mo.gov/sites/default/files/bid-opportunities/_X2528-01%20-%20Final%20Plans.pdf",
-      "family": "missouri_oa_fmdc",
-      "kind": "document",
-      "depth": 0
-    },
-    {
-      "url": "https://oa.mo.gov/sites/default/files/bid-opportunities/_X2528-01%20-%20Final%20Specs.pdf",
-      "family": "missouri_oa_fmdc",
-      "kind": "document",
-      "depth": 0
-    },
-    {
-      "url": "https://oa.mo.gov/sites/default/files/bid-opportunities/X2528-01%20Add%20%231.pdf",
-      "family": "missouri_oa_fmdc",
-      "kind": "document",
-      "depth": 0
-    },
-    {
-      "url": "https://oa.mo.gov/sites/default/files/bid-opportunities/H2503-01%20Bid%20Documents.pdf",
-      "family": "missouri_oa_fmdc",
-      "kind": "document",
-      "depth": 0
-    },
-    {
-      "url": "https://oa.mo.gov/sites/default/files/bid-opportunities/H2503-01%20IFB_0.pdf",
-      "family": "missouri_oa_fmdc",
-      "kind": "document",
-      "depth": 0
-    },
-    {
-      "url": "https://oa.mo.gov/sites/default/files/bid-opportunities/H2503-01%20Final%20specs.pdf",
-      "family": "missouri_oa_fmdc",
-      "kind": "document",
-      "depth": 0
-    },
-    {
-      "url": "https://oa.mo.gov/sites/default/files/bid-opportunities/_H2503-01%20Addendum%201.pdf",
-      "family": "missouri_oa_fmdc",
-      "kind": "document",
-      "depth": 0
-    },
-    {
-      "url": "https://oa.mo.gov/sites/default/files/bid-opportunities/_H2503-01%20Addendum%202.pdf",
-      "family": "missouri_oa_fmdc",
-      "kind": "document",
-      "depth": 0
-    },
-    {
-      "url": "https://oa.mo.gov/sites/default/files/bid-opportunities/_C2238-01%20-%20Final%20Bid%20Docs.pdf",
-      "family": "missouri_oa_fmdc",
-      "kind": "document",
-      "depth": 0
-    },
-    {
-      "url": "https://oa.mo.gov/sites/default/files/bid-opportunities/C2238-01%20-%20IFB.pdf",
-      "family": "missouri_oa_fmdc",
-      "kind": "document",
-      "depth": 0
-    },
-    {
-      "url": "https://oa.mo.gov/sites/default/files/bid-opportunities/_C2238-01%20-%20Final%20Plans.pdf",
-      "family": "missouri_oa_fmdc",
-      "kind": "document",
-      "depth": 0
-    },
-    {
-      "url": "https://oa.mo.gov/sites/default/files/bid-opportunities/_C2238-01%20-%20Final%20Specs_0.pdf",
-      "family": "missouri_oa_fmdc",
-      "kind": "document",
-      "depth": 0
-    },
-    {
-      "url": "https://www.oafmdcplanroom.com/projects/3127/details/c2238-01-service-add-electrical-circuits-er-generator-food-svc-warehouse-farmington-correctional",
-      "family": "missouri_oa_fmdc",
-      "kind": "document",
-      "depth": 0
-    },
-    {
-      "url": "https://oa.mo.gov/sites/default/files/bid-opportunities/_C2238-01%20Addendum%201.pdf",
-      "family": "missouri_oa_fmdc",
-      "kind": "document",
-      "depth": 0
-    },
-    {
-      "url": "https://oa.mo.gov/sites/default/files/bid-opportunities/_C2509-01%20Final%20Bid%20Documents.pdf",
-      "family": "missouri_oa_fmdc",
-      "kind": "document",
-      "depth": 0
-    },
-    {
-      "url": "https://oa.mo.gov/sites/default/files/bid-opportunities/C2509-01%20IFB.pdf",
-      "family": "missouri_oa_fmdc",
-      "kind": "document",
-      "depth": 0
-    },
-    {
-      "url": "https://oa.mo.gov/sites/default/files/bid-opportunities/_C2509-01%20Final%20Bid%20Plans.pdf",
-      "family": "missouri_oa_fmdc",
-      "kind": "document",
-      "depth": 0
-    },
-    {
-      "url": "https://oa.mo.gov/sites/default/files/bid-opportunities/_C2509-01%20Final%20Bid%20Specs.pdf",
-      "family": "missouri_oa_fmdc",
-      "kind": "document",
-      "depth": 0
-    },
-    {
-      "url": "https://oa.mo.gov/sites/default/files/bid-opportunities/C2509-01%20Add%20%231.pdf",
-      "family": "missouri_oa_fmdc",
-      "kind": "document",
-      "depth": 0
-    },
-    {
-      "url": "https://oa.mo.gov/sites/default/files/bid-opportunities/IDIQMCA-6005%20Bid%20Documents.pdf",
-      "family": "missouri_oa_fmdc",
-      "kind": "document",
-      "depth": 0
-    },
-    {
-      "url": "https://oa.mo.gov/sites/default/files/bid-opportunities/IDIQMCA-6005%20IFB.pdf",
-      "family": "missouri_oa_fmdc",
-      "kind": "document",
-      "depth": 0
-    },
-    {
-      "url": "https://oa.mo.gov/sites/default/files/bid-opportunities/IDIQMCA-6005%20Final%20specs.pdf",
-      "family": "missouri_oa_fmdc",
-      "kind": "document",
-      "depth": 0
-    },
-    {
-      "url": "https://oa.mo.gov/sites/default/files/bid-opportunities/IDIQMCA-6005%20Addendum%201.pdf",
-      "family": "missouri_oa_fmdc",
-      "kind": "document",
-      "depth": 0
-    },
-    {
-      "url": "https://oa.mo.gov/sites/default/files/bid-opportunities/IDIQMCA-6005%20Add%20%232.pdf",
-      "family": "missouri_oa_fmdc",
-      "kind": "document",
-      "depth": 0
-    },
-    {
-      "url": "https://oa.mo.gov/sites/default/files/bid-opportunities/IDIQMCA-6005%20Add%20%233.pdf",
-      "family": "missouri_oa_fmdc",
-      "kind": "document",
-      "depth": 0
-    },
-    {
-      "url": "https://oa.mo.gov/sites/default/files/bid-opportunities/_U2301-01%20Final%20Bid%20Documents.pdf",
-      "family": "missouri_oa_fmdc",
-      "kind": "document",
-      "depth": 0
-    },
-    {
-      "url": "https://oa.mo.gov/sites/default/files/bid-opportunities/U2301-01%20IFB.pdf",
-      "family": "missouri_oa_fmdc",
-      "kind": "document",
-      "depth": 0
-    },
-    {
-      "url": "https://oa.mo.gov/sites/default/files/bid-opportunities/_U2301-01%20Final%20Bid%20Plans.pdf",
-      "family": "missouri_oa_fmdc",
-      "kind": "document",
-      "depth": 0
-    },
-    {
-      "url": "https://oa.mo.gov/sites/default/files/bid-opportunities/_U2301-01%20Final%20Bid%20Specs.pdf",
-      "family": "missouri_oa_fmdc",
-      "kind": "document",
-      "depth": 0
-    },
-    {
-      "url": "https://oa.mo.gov/sites/default/files/bid-opportunities/U2301-01%20Add%20%231.pdf",
-      "family": "missouri_oa_fmdc",
-      "kind": "document",
-      "depth": 0
-    },
-    {
-      "url": "https://oa.mo.gov/sites/default/files/bid-opportunities/_U2301-01%20Addendum%202.pdf",
-      "family": "missouri_oa_fmdc",
-      "kind": "document",
-      "depth": 0
-    },
-    {
-      "url": "https://oa.mo.gov/sites/default/files/bid-opportunities/_O2516-01%20-%20Final%20Bid%20Docs.pdf",
-      "family": "missouri_oa_fmdc",
-      "kind": "document",
-      "depth": 0
-    },
-    {
-      "url": "https://oa.mo.gov/sites/default/files/bid-opportunities/_O2516-01%20-%20IFB.pdf",
-      "family": "missouri_oa_fmdc",
-      "kind": "document",
-      "depth": 0
-    },
-    {
-      "url": "https://oa.mo.gov/sites/default/files/bid-opportunities/_O2516-01%20-%20Final%20Plans.pdf",
-      "family": "missouri_oa_fmdc",
-      "kind": "document",
-      "depth": 0
-    },
-    {
-      "url": "https://oa.mo.gov/sites/default/files/bid-opportunities/_O2516-01%20-%20Final%20Specs.pdf",
-      "family": "missouri_oa_fmdc",
-      "kind": "document",
-      "depth": 0
-    },
-    {
-      "url": "https://oa.mo.gov/sites/default/files/bid-opportunities/O2516-01%20Add%20%231.pdf",
-      "family": "missouri_oa_fmdc",
-      "kind": "document",
-      "depth": 0
-    },
-    {
-      "url": "https://oa.mo.gov/sites/default/files/bid-opportunities/_O2516-01%20Addendum%202.pdf",
-      "family": "missouri_oa_fmdc",
-      "kind": "document",
-      "depth": 0
-    },
-    {
-      "url": "https://oa.mo.gov/sites/default/files/bid-opportunities/X2325-01%20Bid%20Documents.pdf",
-      "family": "missouri_oa_fmdc",
-      "kind": "document",
-      "depth": 0
-    },
-    {
-      "url": "https://oa.mo.gov/sites/default/files/bid-opportunities/X2325-01%20IFB.pdf",
-      "family": "missouri_oa_fmdc",
-      "kind": "document",
-      "depth": 0
-    },
-    {
-      "url": "https://oa.mo.gov/sites/default/files/bid-opportunities/X2325-01%20FINAL%20Bid%20Docs%20%28plans%29.pdf",
-      "family": "missouri_oa_fmdc",
-      "kind": "document",
-      "depth": 0
-    },
-    {
-      "url": "https://oa.mo.gov/sites/default/files/bid-opportunities/X2325-01%20Final%20specs.pdf",
-      "family": "missouri_oa_fmdc",
-      "kind": "document",
-      "depth": 0
-    },
-    {
-      "url": "https://oa.mo.gov/sites/default/files/bid-opportunities/_X2325-01%20Add%201.pdf",
-      "family": "missouri_oa_fmdc",
-      "kind": "document",
-      "depth": 0
-    },
-    {
       "url": "https://oa.mo.gov/sites/default/files/bid-opportunities/_U1503-01%20-%20Final%20Bid%20Docs_2.pdf",
-      "family": "missouri_oa_fmdc",
-      "kind": "document",
-      "depth": 0
-    },
-    {
-      "url": "https://oa.mo.gov/sites/default/files/bid-opportunities/_U1503-01%20-%20IFB.pdf",
       "family": "missouri_oa_fmdc",
       "kind": "document",
       "depth": 0
@@ -2330,12 +134,6 @@
     },
     {
       "url": "https://oa.mo.gov/sites/default/files/bid-opportunities/C2406-01%20Bid%20Documents.pdf",
-      "family": "missouri_oa_fmdc",
-      "kind": "document",
-      "depth": 0
-    },
-    {
-      "url": "https://oa.mo.gov/sites/default/files/bid-opportunities/C2406-01%20IFB.pdf",
       "family": "missouri_oa_fmdc",
       "kind": "document",
       "depth": 0
@@ -2377,12 +175,6 @@
       "depth": 0
     },
     {
-      "url": "https://oa.mo.gov/sites/default/files/bid-opportunities/O2203-02%20IFB.pdf",
-      "family": "missouri_oa_fmdc",
-      "kind": "document",
-      "depth": 0
-    },
-    {
       "url": "https://oa.mo.gov/sites/default/files/bid-opportunities/_O2203-02%20Final%20Bid%20Plans.pdf",
       "family": "missouri_oa_fmdc",
       "kind": "document",
@@ -2407,12 +199,6 @@
       "depth": 0
     },
     {
-      "url": "https://oa.mo.gov/sites/default/files/bid-opportunities/F2307-01%20Final%20specs%20REBID%20IFB.pdf",
-      "family": "missouri_oa_fmdc",
-      "kind": "document",
-      "depth": 0
-    },
-    {
       "url": "https://oa.mo.gov/sites/default/files/bid-opportunities/F2307-01%20Final%20specs%20REBID.pdf",
       "family": "missouri_oa_fmdc",
       "kind": "document",
@@ -2426,12 +212,6 @@
     },
     {
       "url": "https://oa.mo.gov/sites/default/files/bid-opportunities/_M2406-01%20Final%20Bid%20Documents.pdf",
-      "family": "missouri_oa_fmdc",
-      "kind": "document",
-      "depth": 0
-    },
-    {
-      "url": "https://oa.mo.gov/sites/default/files/bid-opportunities/M2406-01%20IFB.pdf",
       "family": "missouri_oa_fmdc",
       "kind": "document",
       "depth": 0
@@ -2456,12 +236,6 @@
     },
     {
       "url": "https://oa.mo.gov/sites/default/files/bid-opportunities/_E2341-01%20Final%20Bid%20Documents.pdf",
-      "family": "missouri_oa_fmdc",
-      "kind": "document",
-      "depth": 0
-    },
-    {
-      "url": "https://oa.mo.gov/sites/default/files/bid-opportunities/E2341-01%20IFB.pdf",
       "family": "missouri_oa_fmdc",
       "kind": "document",
       "depth": 0
@@ -2509,12 +283,6 @@
       "depth": 0
     },
     {
-      "url": "https://oa.mo.gov/sites/default/files/bid-opportunities/C1920-01%20IFB.pdf",
-      "family": "missouri_oa_fmdc",
-      "kind": "document",
-      "depth": 0
-    },
-    {
       "url": "https://oa.mo.gov/sites/default/files/bid-opportunities/_C1920-01%20Final%20Bid%20Plans.pdf",
       "family": "missouri_oa_fmdc",
       "kind": "document",
@@ -2552,12 +320,6 @@
     },
     {
       "url": "https://oa.mo.gov/sites/default/files/bid-opportunities/_E2328-01%20Final%20Bid%20Documents.pdf",
-      "family": "missouri_oa_fmdc",
-      "kind": "document",
-      "depth": 0
-    },
-    {
-      "url": "https://oa.mo.gov/sites/default/files/bid-opportunities/E2328-01%20IFB.pdf",
       "family": "missouri_oa_fmdc",
       "kind": "document",
       "depth": 0
@@ -2605,12 +367,6 @@
       "depth": 0
     },
     {
-      "url": "https://oa.mo.gov/sites/default/files/bid-opportunities/C2415-01%20IFB.pdf",
-      "family": "missouri_oa_fmdc",
-      "kind": "document",
-      "depth": 0
-    },
-    {
       "url": "https://oa.mo.gov/sites/default/files/bid-opportunities/C2415-01%20Generator%20Replacement%20-%20Fulton%20R%26D%20Center%20-%20Bid%20Docs%20Plans.pdf",
       "family": "missouri_oa_fmdc",
       "kind": "document",
@@ -2642,12 +398,6 @@
     },
     {
       "url": "https://oa.mo.gov/sites/default/files/bid-opportunities/C2504-01%20Bid%20Documents.pdf",
-      "family": "missouri_oa_fmdc",
-      "kind": "document",
-      "depth": 0
-    },
-    {
-      "url": "https://oa.mo.gov/sites/default/files/bid-opportunities/C2504-01%20IFB.pdf",
       "family": "missouri_oa_fmdc",
       "kind": "document",
       "depth": 0
@@ -2689,12 +439,6 @@
       "depth": 0
     },
     {
-      "url": "https://oa.mo.gov/sites/default/files/bid-opportunities/_H2404-01%20IFB.pdf",
-      "family": "missouri_oa_fmdc",
-      "kind": "document",
-      "depth": 0
-    },
-    {
       "url": "https://oa.mo.gov/sites/default/files/bid-opportunities/_H2404-01%20Final%20Bid%20Plans.pdf",
       "family": "missouri_oa_fmdc",
       "kind": "document",
@@ -2725,12 +469,6 @@
       "depth": 0
     },
     {
-      "url": "https://oa.mo.gov/sites/default/files/bid-opportunities/M2319-01%20-%20IFB.pdf",
-      "family": "missouri_oa_fmdc",
-      "kind": "document",
-      "depth": 0
-    },
-    {
       "url": "https://oa.mo.gov/sites/default/files/bid-opportunities/_M2319-01%20-%20Final%20Plans.pdf",
       "family": "missouri_oa_fmdc",
       "kind": "document",
@@ -2750,12 +488,6 @@
     },
     {
       "url": "https://oa.mo.gov/sites/default/files/bid-opportunities/_U2606-01%20Final%20Bid%20Documents.pdf",
-      "family": "missouri_oa_fmdc",
-      "kind": "document",
-      "depth": 0
-    },
-    {
-      "url": "https://oa.mo.gov/sites/default/files/bid-opportunities/U2606-01%20IFB.pdf",
       "family": "missouri_oa_fmdc",
       "kind": "document",
       "depth": 0
@@ -2785,12 +517,6 @@
       "depth": 0
     },
     {
-      "url": "https://oa.mo.gov/sites/default/files/bid-opportunities/IDIQMCA-6004%20IFB.pdf",
-      "family": "missouri_oa_fmdc",
-      "kind": "document",
-      "depth": 0
-    },
-    {
       "url": "https://oa.mo.gov/sites/default/files/bid-opportunities/IDIQMCA-6004%20Final%20specs.pdf",
       "family": "missouri_oa_fmdc",
       "kind": "document",
@@ -2798,12 +524,6 @@
     },
     {
       "url": "https://oa.mo.gov/sites/default/files/bid-opportunities/_X2405-01%20Final%20Bid%20Documents.pdf",
-      "family": "missouri_oa_fmdc",
-      "kind": "document",
-      "depth": 0
-    },
-    {
-      "url": "https://oa.mo.gov/sites/default/files/bid-opportunities/X2405-01%20IFB.pdf",
       "family": "missouri_oa_fmdc",
       "kind": "document",
       "depth": 0
@@ -2845,12 +565,6 @@
       "depth": 0
     },
     {
-      "url": "https://oa.mo.gov/sites/default/files/bid-opportunities/H2402-01%20IFB.pdf",
-      "family": "missouri_oa_fmdc",
-      "kind": "document",
-      "depth": 0
-    },
-    {
       "url": "https://oa.mo.gov/sites/default/files/bid-opportunities/_H2402-01%20Final%20Bid%20Plans.pdf",
       "family": "missouri_oa_fmdc",
       "kind": "document",
@@ -2876,12 +590,6 @@
     },
     {
       "url": "https://oa.mo.gov/sites/default/files/bid-opportunities/_F2402-01%20Final%20Bid%20Documents.pdf",
-      "family": "missouri_oa_fmdc",
-      "kind": "document",
-      "depth": 0
-    },
-    {
-      "url": "https://oa.mo.gov/sites/default/files/bid-opportunities/F2402-01%20IFB.pdf",
       "family": "missouri_oa_fmdc",
       "kind": "document",
       "depth": 0
@@ -2917,12 +625,6 @@
       "depth": 0
     },
     {
-      "url": "https://oa.mo.gov/sites/default/files/bid-opportunities/X2520-01%20-%20IFB.pdf",
-      "family": "missouri_oa_fmdc",
-      "kind": "document",
-      "depth": 0
-    },
-    {
       "url": "https://oa.mo.gov/sites/default/files/bid-opportunities/_X2520-01%20-%20Final%20Plans.pdf",
       "family": "missouri_oa_fmdc",
       "kind": "document",
@@ -2948,12 +650,6 @@
     },
     {
       "url": "https://oa.mo.gov/sites/default/files/bid-opportunities/_W2401-01%20Final%20Bid%20Documents.pdf",
-      "family": "missouri_oa_fmdc",
-      "kind": "document",
-      "depth": 0
-    },
-    {
-      "url": "https://oa.mo.gov/sites/default/files/bid-opportunities/W2401-01%20IFB.pdf",
       "family": "missouri_oa_fmdc",
       "kind": "document",
       "depth": 0
@@ -2995,12 +691,6 @@
       "depth": 0
     },
     {
-      "url": "https://oa.mo.gov/sites/default/files/bid-opportunities/F2407-01%20-%20IFB.pdf",
-      "family": "missouri_oa_fmdc",
-      "kind": "document",
-      "depth": 0
-    },
-    {
       "url": "https://oa.mo.gov/sites/default/files/bid-opportunities/_F2407-01%20-%20Final%20Plans.pdf",
       "family": "missouri_oa_fmdc",
       "kind": "document",
@@ -3026,12 +716,6 @@
     },
     {
       "url": "https://oa.mo.gov/sites/default/files/bid-opportunities/F2307-01%20Bid%20Documents.pdf",
-      "family": "missouri_oa_fmdc",
-      "kind": "document",
-      "depth": 0
-    },
-    {
-      "url": "https://oa.mo.gov/sites/default/files/bid-opportunities/F2307-01%20IFB.pdf",
       "family": "missouri_oa_fmdc",
       "kind": "document",
       "depth": 0
@@ -3073,12 +757,6 @@
       "depth": 0
     },
     {
-      "url": "https://oa.mo.gov/sites/default/files/bid-opportunities/_O2421-01%20-%20IFB.pdf",
-      "family": "missouri_oa_fmdc",
-      "kind": "document",
-      "depth": 0
-    },
-    {
       "url": "https://oa.mo.gov/sites/default/files/bid-opportunities/_O2421-01%20-%20Final%20Plans_0.pdf",
       "family": "missouri_oa_fmdc",
       "kind": "document",
@@ -3104,12 +782,6 @@
     },
     {
       "url": "https://oa.mo.gov/sites/default/files/bid-opportunities/U2411-01%20Bid%20Documents.pdf",
-      "family": "missouri_oa_fmdc",
-      "kind": "document",
-      "depth": 0
-    },
-    {
-      "url": "https://oa.mo.gov/sites/default/files/bid-opportunities/U2411-01%20IFB.pdf",
       "family": "missouri_oa_fmdc",
       "kind": "document",
       "depth": 0
@@ -3145,12 +817,6 @@
       "depth": 0
     },
     {
-      "url": "https://oa.mo.gov/sites/default/files/bid-opportunities/U2301-07%20-%20IFB.pdf",
-      "family": "missouri_oa_fmdc",
-      "kind": "document",
-      "depth": 0
-    },
-    {
       "url": "https://oa.mo.gov/sites/default/files/bid-opportunities/_U2301-07%20-%20Final%20Plans.pdf",
       "family": "missouri_oa_fmdc",
       "kind": "document",
@@ -3181,12 +847,6 @@
       "depth": 0
     },
     {
-      "url": "https://oa.mo.gov/sites/default/files/bid-opportunities/E2412-01%20IFB.pdf",
-      "family": "missouri_oa_fmdc",
-      "kind": "document",
-      "depth": 0
-    },
-    {
       "url": "https://oa.mo.gov/sites/default/files/bid-opportunities/E2412-01%20Final%20specs.pdf",
       "family": "missouri_oa_fmdc",
       "kind": "document",
@@ -3211,12 +871,6 @@
       "depth": 0
     },
     {
-      "url": "https://oa.mo.gov/sites/default/files/bid-opportunities/_M2416-01%20-%20IFB.pdf",
-      "family": "missouri_oa_fmdc",
-      "kind": "document",
-      "depth": 0
-    },
-    {
       "url": "https://oa.mo.gov/sites/default/files/bid-opportunities/_M2416-01%20-%20Final%20Plans_1.pdf",
       "family": "missouri_oa_fmdc",
       "kind": "document",
@@ -3236,12 +890,6 @@
     },
     {
       "url": "https://oa.mo.gov/sites/default/files/bid-opportunities/_F2405-01%20Final%20Bid%20Documents.pdf",
-      "family": "missouri_oa_fmdc",
-      "kind": "document",
-      "depth": 0
-    },
-    {
-      "url": "https://oa.mo.gov/sites/default/files/bid-opportunities/F2405-01%20IFB.pdf",
       "family": "missouri_oa_fmdc",
       "kind": "document",
       "depth": 0
@@ -3277,12 +925,6 @@
       "depth": 0
     },
     {
-      "url": "https://oa.mo.gov/sites/default/files/bid-opportunities/U2417-01%20IFB.pdf",
-      "family": "missouri_oa_fmdc",
-      "kind": "document",
-      "depth": 0
-    },
-    {
       "url": "https://oa.mo.gov/sites/default/files/bid-opportunities/_U2417-01%20Final%20Bid%20Plans.pdf",
       "family": "missouri_oa_fmdc",
       "kind": "document",
@@ -3302,12 +944,6 @@
     },
     {
       "url": "https://oa.mo.gov/sites/default/files/bid-opportunities/T2326-01%20REBID%20Bid%20Documents.pdf",
-      "family": "missouri_oa_fmdc",
-      "kind": "document",
-      "depth": 0
-    },
-    {
-      "url": "https://oa.mo.gov/sites/default/files/bid-opportunities/T2326-01%20REBID%20IFB.pdf",
       "family": "missouri_oa_fmdc",
       "kind": "document",
       "depth": 0
@@ -3337,12 +973,6 @@
       "depth": 0
     },
     {
-      "url": "https://oa.mo.gov/sites/default/files/bid-opportunities/Y2303-01%20IFB_0.pdf",
-      "family": "missouri_oa_fmdc",
-      "kind": "document",
-      "depth": 0
-    },
-    {
       "url": "https://oa.mo.gov/sites/default/files/bid-opportunities/Y2303-01%20Final%20Bid%20Docs%20%28plans%29.pdf",
       "family": "missouri_oa_fmdc",
       "kind": "document",
@@ -3362,12 +992,6 @@
     },
     {
       "url": "https://oa.mo.gov/sites/default/files/bid-opportunities/_U2301-04%20-%20Final%20Bid%20Docs.pdf",
-      "family": "missouri_oa_fmdc",
-      "kind": "document",
-      "depth": 0
-    },
-    {
-      "url": "https://oa.mo.gov/sites/default/files/bid-opportunities/_U2301-04%20-%20IFB.pdf",
       "family": "missouri_oa_fmdc",
       "kind": "document",
       "depth": 0
@@ -3403,12 +1027,6 @@
       "depth": 0
     },
     {
-      "url": "https://oa.mo.gov/sites/default/files/bid-opportunities/H2409-01%20IFB.pdf",
-      "family": "missouri_oa_fmdc",
-      "kind": "document",
-      "depth": 0
-    },
-    {
       "url": "https://oa.mo.gov/sites/default/files/bid-opportunities/_H2409-01%20Final%20Bid%20Plans.pdf",
       "family": "missouri_oa_fmdc",
       "kind": "document",
@@ -3434,12 +1052,6 @@
     },
     {
       "url": "https://oa.mo.gov/sites/default/files/bid-opportunities/X2317-01%20Bid%20Documents.pdf",
-      "family": "missouri_oa_fmdc",
-      "kind": "document",
-      "depth": 0
-    },
-    {
-      "url": "https://oa.mo.gov/sites/default/files/bid-opportunities/X2317-01%20IFB.pdf",
       "family": "missouri_oa_fmdc",
       "kind": "document",
       "depth": 0
@@ -3475,12 +1087,6 @@
       "depth": 0
     },
     {
-      "url": "https://oa.mo.gov/sites/default/files/bid-opportunities/T2338-01%20-%20IFB.pdf",
-      "family": "missouri_oa_fmdc",
-      "kind": "document",
-      "depth": 0
-    },
-    {
       "url": "https://oa.mo.gov/sites/default/files/bid-opportunities/_T2338-01%20-%20Final%20Plans_0.pdf",
       "family": "missouri_oa_fmdc",
       "kind": "document",
@@ -3500,12 +1106,6 @@
     },
     {
       "url": "https://oa.mo.gov/sites/default/files/bid-opportunities/_T2412-01%20-%20Final%20Bid%20Docs.pdf",
-      "family": "missouri_oa_fmdc",
-      "kind": "document",
-      "depth": 0
-    },
-    {
-      "url": "https://oa.mo.gov/sites/default/files/bid-opportunities/_T2412-01%20-%20IFB.pdf",
       "family": "missouri_oa_fmdc",
       "kind": "document",
       "depth": 0
@@ -3535,12 +1135,6 @@
       "depth": 0
     },
     {
-      "url": "https://oa.mo.gov/sites/default/files/bid-opportunities/T2522-01%20IFB.pdf",
-      "family": "missouri_oa_fmdc",
-      "kind": "document",
-      "depth": 0
-    },
-    {
       "url": "https://oa.mo.gov/sites/default/files/bid-opportunities/T2525-01%20Richmond%20final%20plans.pdf",
       "family": "missouri_oa_fmdc",
       "kind": "document",
@@ -3565,12 +1159,6 @@
       "depth": 0
     },
     {
-      "url": "https://oa.mo.gov/sites/default/files/bid-opportunities/T2424-01%20IFB_0.pdf",
-      "family": "missouri_oa_fmdc",
-      "kind": "document",
-      "depth": 0
-    },
-    {
       "url": "https://oa.mo.gov/sites/default/files/bid-opportunities/T2424-01%20Final%20specs.pdf",
       "family": "missouri_oa_fmdc",
       "kind": "document",
@@ -3584,12 +1172,6 @@
     },
     {
       "url": "https://oa.mo.gov/sites/default/files/bid-opportunities/_T2334-01%20-%20Final%20Bid%20Documents.pdf",
-      "family": "missouri_oa_fmdc",
-      "kind": "document",
-      "depth": 0
-    },
-    {
-      "url": "https://oa.mo.gov/sites/default/files/bid-opportunities/T2334-01%20IFB.pdf",
       "family": "missouri_oa_fmdc",
       "kind": "document",
       "depth": 0
@@ -3614,12 +1196,6 @@
     },
     {
       "url": "https://oa.mo.gov/sites/default/files/bid-opportunities/_O2513-01%20Final%20Bid%20Documents.pdf",
-      "family": "missouri_oa_fmdc",
-      "kind": "document",
-      "depth": 0
-    },
-    {
-      "url": "https://oa.mo.gov/sites/default/files/bid-opportunities/O2513-01%20IFB.pdf",
       "family": "missouri_oa_fmdc",
       "kind": "document",
       "depth": 0
@@ -3655,12 +1231,6 @@
       "depth": 0
     },
     {
-      "url": "https://oa.mo.gov/sites/default/files/bid-opportunities/T2238-01%20IFB.pdf",
-      "family": "missouri_oa_fmdc",
-      "kind": "document",
-      "depth": 0
-    },
-    {
       "url": "https://oa.mo.gov/sites/default/files/bid-opportunities/T2238-01%20Final%20specs.pdf",
       "family": "missouri_oa_fmdc",
       "kind": "document",
@@ -3674,12 +1244,6 @@
     },
     {
       "url": "https://oa.mo.gov/sites/default/files/bid-opportunities/_T2417-01%20Final%20Bid%20Documents.pdf",
-      "family": "missouri_oa_fmdc",
-      "kind": "document",
-      "depth": 0
-    },
-    {
-      "url": "https://oa.mo.gov/sites/default/files/bid-opportunities/T2417-01%20IFB.pdf",
       "family": "missouri_oa_fmdc",
       "kind": "document",
       "depth": 0
@@ -3710,12 +1274,6 @@
     },
     {
       "url": "https://oa.mo.gov/sites/default/files/bid-opportunities/_U2307-01%20-%20Final%20Bid%20Docs.pdf",
-      "family": "missouri_oa_fmdc",
-      "kind": "document",
-      "depth": 0
-    },
-    {
-      "url": "https://oa.mo.gov/sites/default/files/bid-opportunities/_U2307-01%20-%20IFB.pdf",
       "family": "missouri_oa_fmdc",
       "kind": "document",
       "depth": 0
@@ -3763,12 +1321,6 @@
       "depth": 0
     },
     {
-      "url": "https://oa.mo.gov/sites/default/files/bid-opportunities/O2426-01%20-%20IFB.pdf",
-      "family": "missouri_oa_fmdc",
-      "kind": "document",
-      "depth": 0
-    },
-    {
       "url": "https://oa.mo.gov/sites/default/files/bid-opportunities/_O2426-01%20-%20Final%20Plans_0.pdf",
       "family": "missouri_oa_fmdc",
       "kind": "document",
@@ -3793,12 +1345,6 @@
       "depth": 0
     },
     {
-      "url": "https://oa.mo.gov/sites/default/files/bid-opportunities/T2335-01%20IFB.pdf",
-      "family": "missouri_oa_fmdc",
-      "kind": "document",
-      "depth": 0
-    },
-    {
       "url": "https://oa.mo.gov/sites/default/files/bid-opportunities/T2335-01%20Final%20specs.pdf",
       "family": "missouri_oa_fmdc",
       "kind": "document",
@@ -3817,12 +1363,6 @@
       "depth": 0
     },
     {
-      "url": "https://oa.mo.gov/sites/default/files/bid-opportunities/T2337-01%20IFB.pdf",
-      "family": "missouri_oa_fmdc",
-      "kind": "document",
-      "depth": 0
-    },
-    {
       "url": "https://oa.mo.gov/sites/default/files/bid-opportunities/T2337-01%20Final%20specs.pdf",
       "family": "missouri_oa_fmdc",
       "kind": "document",
@@ -3836,12 +1376,6 @@
     },
     {
       "url": "https://oa.mo.gov/sites/default/files/bid-opportunities/_T2234-01%20-%20Final%20Bid%20Docs.pdf",
-      "family": "missouri_oa_fmdc",
-      "kind": "document",
-      "depth": 0
-    },
-    {
-      "url": "https://oa.mo.gov/sites/default/files/bid-opportunities/_T2234-01%20-%20IFB.pdf",
       "family": "missouri_oa_fmdc",
       "kind": "document",
       "depth": 0
@@ -3877,12 +1411,6 @@
       "depth": 0
     },
     {
-      "url": "https://oa.mo.gov/sites/default/files/bid-opportunities/T2117-01%20IFB.pdf",
-      "family": "missouri_oa_fmdc",
-      "kind": "document",
-      "depth": 0
-    },
-    {
       "url": "https://oa.mo.gov/sites/default/files/bid-opportunities/T2117-01%20Final%20specs.pdf",
       "family": "missouri_oa_fmdc",
       "kind": "document",
@@ -3896,12 +1424,6 @@
     },
     {
       "url": "https://oa.mo.gov/sites/default/files/bid-opportunities/_T2310-01%20-%20Final%20Bid%20docs.pdf",
-      "family": "missouri_oa_fmdc",
-      "kind": "document",
-      "depth": 0
-    },
-    {
-      "url": "https://oa.mo.gov/sites/default/files/bid-opportunities/T2310-01%20-%20IFB.pdf",
       "family": "missouri_oa_fmdc",
       "kind": "document",
       "depth": 0
@@ -3926,12 +1448,6 @@
     },
     {
       "url": "https://oa.mo.gov/sites/default/files/bid-opportunities/_T2330-01%20Final%20Bid%20Documents.pdf",
-      "family": "missouri_oa_fmdc",
-      "kind": "document",
-      "depth": 0
-    },
-    {
-      "url": "https://oa.mo.gov/sites/default/files/bid-opportunities/T2330-01%20IFB.pdf",
       "family": "missouri_oa_fmdc",
       "kind": "document",
       "depth": 0
@@ -3967,12 +1483,6 @@
       "depth": 0
     },
     {
-      "url": "https://oa.mo.gov/sites/default/files/bid-opportunities/O2427-01%20IFB.pdf",
-      "family": "missouri_oa_fmdc",
-      "kind": "document",
-      "depth": 0
-    },
-    {
       "url": "https://oa.mo.gov/sites/default/files/bid-opportunities/O2427-01%20Final%20specs.pdf",
       "family": "missouri_oa_fmdc",
       "kind": "document",
@@ -3992,12 +1502,6 @@
     },
     {
       "url": "https://oa.mo.gov/sites/default/files/bid-opportunities/_U1503-01%20-%20Final%20Bid%20Docs_1.pdf",
-      "family": "missouri_oa_fmdc",
-      "kind": "document",
-      "depth": 0
-    },
-    {
-      "url": "https://oa.mo.gov/sites/default/files/bid-opportunities/U1503-01%20-%20IFB_1.pdf",
       "family": "missouri_oa_fmdc",
       "kind": "document",
       "depth": 0
@@ -4033,12 +1537,6 @@
       "depth": 0
     },
     {
-      "url": "https://oa.mo.gov/sites/default/files/bid-opportunities/M2405-01%20IFB.pdf",
-      "family": "missouri_oa_fmdc",
-      "kind": "document",
-      "depth": 0
-    },
-    {
       "url": "https://oa.mo.gov/sites/default/files/bid-opportunities/_M2405-01%20Final%20Bid%20Plans.pdf",
       "family": "missouri_oa_fmdc",
       "kind": "document",
@@ -4058,12 +1556,6 @@
     },
     {
       "url": "https://oa.mo.gov/sites/default/files/bid-opportunities/_W2303-01%20Final%20Bid%20Documents_0.pdf",
-      "family": "missouri_oa_fmdc",
-      "kind": "document",
-      "depth": 0
-    },
-    {
-      "url": "https://oa.mo.gov/sites/default/files/bid-opportunities/W2303-01%20IFB.pdf",
       "family": "missouri_oa_fmdc",
       "kind": "document",
       "depth": 0
@@ -4093,12 +1585,6 @@
       "depth": 0
     },
     {
-      "url": "https://oa.mo.gov/sites/default/files/bid-opportunities/_C2325-01%20-%20IFB.pdf",
-      "family": "missouri_oa_fmdc",
-      "kind": "document",
-      "depth": 0
-    },
-    {
       "url": "https://oa.mo.gov/sites/default/files/bid-opportunities/_C2325-01%20-%20Final%20Plans_1.pdf",
       "family": "missouri_oa_fmdc",
       "kind": "document",
@@ -4118,12 +1604,6 @@
     },
     {
       "url": "https://oa.mo.gov/sites/default/files/bid-opportunities/_C2402-01%20Final%20Bid%20Documents.pdf",
-      "family": "missouri_oa_fmdc",
-      "kind": "document",
-      "depth": 0
-    },
-    {
-      "url": "https://oa.mo.gov/sites/default/files/bid-opportunities/C2402-01%20IFB.pdf",
       "family": "missouri_oa_fmdc",
       "kind": "document",
       "depth": 0
@@ -4165,12 +1645,6 @@
       "depth": 0
     },
     {
-      "url": "https://oa.mo.gov/sites/default/files/bid-opportunities/_U1805-01%20-%20IFB.pdf",
-      "family": "missouri_oa_fmdc",
-      "kind": "document",
-      "depth": 0
-    },
-    {
       "url": "https://oa.mo.gov/sites/default/files/bid-opportunities/_U1805-01%20-%20Final%20Plans.pdf",
       "family": "missouri_oa_fmdc",
       "kind": "document",
@@ -4196,12 +1670,6 @@
     },
     {
       "url": "https://oa.mo.gov/sites/default/files/bid-opportunities/_T2327-01%20Final%20Bid%20Documents.pdf",
-      "family": "missouri_oa_fmdc",
-      "kind": "document",
-      "depth": 0
-    },
-    {
-      "url": "https://oa.mo.gov/sites/default/files/bid-opportunities/T2327-01%20IFB.pdf",
       "family": "missouri_oa_fmdc",
       "kind": "document",
       "depth": 0
@@ -4237,12 +1705,6 @@
       "depth": 0
     },
     {
-      "url": "https://oa.mo.gov/sites/default/files/bid-opportunities/U2409-01%20IFB.pdf",
-      "family": "missouri_oa_fmdc",
-      "kind": "document",
-      "depth": 0
-    },
-    {
       "url": "https://oa.mo.gov/sites/default/files/bid-opportunities/_U2409-01%20Final%20Bid%20Plans_0.pdf",
       "family": "missouri_oa_fmdc",
       "kind": "document",
@@ -4262,12 +1724,6 @@
     },
     {
       "url": "https://oa.mo.gov/sites/default/files/bid-opportunities/_T2143-01%20-%20Final%20Bid%20Docs.pdf",
-      "family": "missouri_oa_fmdc",
-      "kind": "document",
-      "depth": 0
-    },
-    {
-      "url": "https://oa.mo.gov/sites/default/files/bid-opportunities/T2143-01%20-%20IFB_0.pdf",
       "family": "missouri_oa_fmdc",
       "kind": "document",
       "depth": 0
@@ -4297,12 +1753,6 @@
       "depth": 0
     },
     {
-      "url": "https://oa.mo.gov/sites/default/files/bid-opportunities/M2328-01%20IFB.pdf",
-      "family": "missouri_oa_fmdc",
-      "kind": "document",
-      "depth": 0
-    },
-    {
       "url": "https://oa.mo.gov/sites/default/files/bid-opportunities/_M2328-01%20Final%20Bid%20Plans.pdf",
       "family": "missouri_oa_fmdc",
       "kind": "document",
@@ -4327,12 +1777,6 @@
       "depth": 0
     },
     {
-      "url": "https://oa.mo.gov/sites/default/files/bid-opportunities/R2321-01%20IFB.pdf",
-      "family": "missouri_oa_fmdc",
-      "kind": "document",
-      "depth": 0
-    },
-    {
       "url": "https://oa.mo.gov/sites/default/files/bid-opportunities/R2321-01%20Final%20specs.pdf",
       "family": "missouri_oa_fmdc",
       "kind": "document",
@@ -4346,12 +1790,6 @@
     },
     {
       "url": "https://oa.mo.gov/sites/default/files/bid-opportunities/C2324-01%20Bid%20Documents.pdf",
-      "family": "missouri_oa_fmdc",
-      "kind": "document",
-      "depth": 0
-    },
-    {
-      "url": "https://oa.mo.gov/sites/default/files/bid-opportunities/C2324-01%20IFB.pdf",
       "family": "missouri_oa_fmdc",
       "kind": "document",
       "depth": 0
@@ -4376,12 +1814,6 @@
     },
     {
       "url": "https://oa.mo.gov/sites/default/files/bid-opportunities/_M2430-01%20Final%20Bid%20Documents.pdf",
-      "family": "missouri_oa_fmdc",
-      "kind": "document",
-      "depth": 0
-    },
-    {
-      "url": "https://oa.mo.gov/sites/default/files/bid-opportunities/M2430-01%20IFB.pdf",
       "family": "missouri_oa_fmdc",
       "kind": "document",
       "depth": 0
@@ -4417,12 +1849,6 @@
       "depth": 0
     },
     {
-      "url": "https://oa.mo.gov/sites/default/files/bid-opportunities/T2406-01%20-%20IFB.pdf",
-      "family": "missouri_oa_fmdc",
-      "kind": "document",
-      "depth": 0
-    },
-    {
       "url": "https://oa.mo.gov/sites/default/files/bid-opportunities/_T2406-01%20-%20Final%20Plans.pdf",
       "family": "missouri_oa_fmdc",
       "kind": "document",
@@ -4447,12 +1873,6 @@
       "depth": 0
     },
     {
-      "url": "https://oa.mo.gov/sites/default/files/bid-opportunities/X2328-01%20IFB_0.pdf",
-      "family": "missouri_oa_fmdc",
-      "kind": "document",
-      "depth": 0
-    },
-    {
       "url": "https://oa.mo.gov/sites/default/files/bid-opportunities/X2328-01-BD%20Complete%20Plans%2036x24.pdf",
       "family": "missouri_oa_fmdc",
       "kind": "document",
@@ -4472,12 +1892,6 @@
     },
     {
       "url": "https://oa.mo.gov/sites/default/files/bid-opportunities/_E2401-01%20Final%20Bid%20Documents.pdf",
-      "family": "missouri_oa_fmdc",
-      "kind": "document",
-      "depth": 0
-    },
-    {
-      "url": "https://oa.mo.gov/sites/default/files/bid-opportunities/E2401-01%20IFB.pdf",
       "family": "missouri_oa_fmdc",
       "kind": "document",
       "depth": 0
@@ -4513,12 +1927,6 @@
       "depth": 0
     },
     {
-      "url": "https://oa.mo.gov/sites/default/files/bid-opportunities/M2416-01%20-%20IFB.pdf",
-      "family": "missouri_oa_fmdc",
-      "kind": "document",
-      "depth": 0
-    },
-    {
       "url": "https://oa.mo.gov/sites/default/files/bid-opportunities/_M2416-01%20-%20Final%20Plans_0.pdf",
       "family": "missouri_oa_fmdc",
       "kind": "document",
@@ -4538,12 +1946,6 @@
     },
     {
       "url": "https://oa.mo.gov/sites/default/files/bid-opportunities/_R2335-01%20Final%20Bid%20Documents.pdf",
-      "family": "missouri_oa_fmdc",
-      "kind": "document",
-      "depth": 0
-    },
-    {
-      "url": "https://oa.mo.gov/sites/default/files/bid-opportunities/R2335-01%20IFB.pdf",
       "family": "missouri_oa_fmdc",
       "kind": "document",
       "depth": 0
@@ -4579,12 +1981,6 @@
       "depth": 0
     },
     {
-      "url": "https://oa.mo.gov/sites/default/files/bid-opportunities/R2503-01%20IFB.pdf",
-      "family": "missouri_oa_fmdc",
-      "kind": "document",
-      "depth": 0
-    },
-    {
       "url": "https://oa.mo.gov/sites/default/files/bid-opportunities/_R2503-01%20Final%20Bid%20Plans.pdf",
       "family": "missouri_oa_fmdc",
       "kind": "document",
@@ -4615,12 +2011,6 @@
       "depth": 0
     },
     {
-      "url": "https://oa.mo.gov/sites/default/files/bid-opportunities/T2405-01%20IFB.pdf",
-      "family": "missouri_oa_fmdc",
-      "kind": "document",
-      "depth": 0
-    },
-    {
       "url": "https://oa.mo.gov/sites/default/files/bid-opportunities/T2405-01%20Final%20specs.pdf",
       "family": "missouri_oa_fmdc",
       "kind": "document",
@@ -4639,12 +2029,6 @@
       "depth": 0
     },
     {
-      "url": "https://oa.mo.gov/sites/default/files/bid-opportunities/IDIQMCA-5004%20IFB.pdf",
-      "family": "missouri_oa_fmdc",
-      "kind": "document",
-      "depth": 0
-    },
-    {
       "url": "https://oa.mo.gov/sites/default/files/bid-opportunities/IDIQMCA-5004%20Final%20specs.pdf",
       "family": "missouri_oa_fmdc",
       "kind": "document",
@@ -4652,12 +2036,6 @@
     },
     {
       "url": "https://oa.mo.gov/sites/default/files/bid-opportunities/IDIQMCA-5006%20Bid%20Documents.pdf",
-      "family": "missouri_oa_fmdc",
-      "kind": "document",
-      "depth": 0
-    },
-    {
-      "url": "https://oa.mo.gov/sites/default/files/bid-opportunities/IDIQMCA-5006%20IFB.pdf",
       "family": "missouri_oa_fmdc",
       "kind": "document",
       "depth": 0
@@ -4675,12 +2053,6 @@
       "depth": 0
     },
     {
-      "url": "https://oa.mo.gov/sites/default/files/bid-opportunities/IDIQMCA-5005%20IFB.pdf",
-      "family": "missouri_oa_fmdc",
-      "kind": "document",
-      "depth": 0
-    },
-    {
       "url": "https://oa.mo.gov/sites/default/files/bid-opportunities/IDIQMCA-5005%20Final%20specs.pdf",
       "family": "missouri_oa_fmdc",
       "kind": "document",
@@ -4688,12 +2060,6 @@
     },
     {
       "url": "https://oa.mo.gov/sites/default/files/bid-opportunities/O2204-01%20Bid%20Documents.pdf",
-      "family": "missouri_oa_fmdc",
-      "kind": "document",
-      "depth": 0
-    },
-    {
-      "url": "https://oa.mo.gov/sites/default/files/bid-opportunities/O2204-01%20IFB.pdf",
       "family": "missouri_oa_fmdc",
       "kind": "document",
       "depth": 0
@@ -4724,12 +2090,6 @@
     },
     {
       "url": "https://oa.mo.gov/sites/default/files/bid-opportunities/X2220-01%20Bid%20Documents.pdf",
-      "family": "missouri_oa_fmdc",
-      "kind": "document",
-      "depth": 0
-    },
-    {
-      "url": "https://oa.mo.gov/sites/default/files/bid-opportunities/X2220-01%20IFB.pdf",
       "family": "missouri_oa_fmdc",
       "kind": "document",
       "depth": 0
@@ -4771,12 +2131,6 @@
       "depth": 0
     },
     {
-      "url": "https://oa.mo.gov/sites/default/files/bid-opportunities/U2415-01%20-%20IFB.pdf",
-      "family": "missouri_oa_fmdc",
-      "kind": "document",
-      "depth": 0
-    },
-    {
       "url": "https://oa.mo.gov/sites/default/files/bid-opportunities/_U2415-01%20-%20Final%20Plans.pdf",
       "family": "missouri_oa_fmdc",
       "kind": "document",
@@ -4796,12 +2150,6 @@
     },
     {
       "url": "https://oa.mo.gov/sites/default/files/bid-opportunities/_C2407-01%20Final%20Bid%20Documents.pdf",
-      "family": "missouri_oa_fmdc",
-      "kind": "document",
-      "depth": 0
-    },
-    {
-      "url": "https://oa.mo.gov/sites/default/files/bid-opportunities/C2407-01%20IFB.pdf",
       "family": "missouri_oa_fmdc",
       "kind": "document",
       "depth": 0
@@ -4831,12 +2179,6 @@
       "depth": 0
     },
     {
-      "url": "https://oa.mo.gov/sites/default/files/bid-opportunities/M2507-01%20IFB.pdf",
-      "family": "missouri_oa_fmdc",
-      "kind": "document",
-      "depth": 0
-    },
-    {
       "url": "https://oa.mo.gov/sites/default/files/bid-opportunities/_M2507-01%20Final%20Bid%20Plans.pdf",
       "family": "missouri_oa_fmdc",
       "kind": "document",
@@ -4861,12 +2203,6 @@
       "depth": 0
     },
     {
-      "url": "https://oa.mo.gov/sites/default/files/bid-opportunities/M2006-01%20IFB.pdf",
-      "family": "missouri_oa_fmdc",
-      "kind": "document",
-      "depth": 0
-    },
-    {
       "url": "https://oa.mo.gov/sites/default/files/bid-opportunities/M2006-01%20Final%20specs.pdf",
       "family": "missouri_oa_fmdc",
       "kind": "document",
@@ -4885,12 +2221,6 @@
       "depth": 0
     },
     {
-      "url": "https://oa.mo.gov/sites/default/files/bid-opportunities/IDIQMCA-5003%20IFB.pdf",
-      "family": "missouri_oa_fmdc",
-      "kind": "document",
-      "depth": 0
-    },
-    {
       "url": "https://oa.mo.gov/sites/default/files/bid-opportunities/IDIQMCA-5003%20Final%20specs_.pdf",
       "family": "missouri_oa_fmdc",
       "kind": "document",
@@ -4898,12 +2228,6 @@
     },
     {
       "url": "https://oa.mo.gov/sites/default/files/bid-opportunities/_E2408-01%20-%20Final%20Bid%20Docs_0.pdf",
-      "family": "missouri_oa_fmdc",
-      "kind": "document",
-      "depth": 0
-    },
-    {
-      "url": "https://oa.mo.gov/sites/default/files/bid-opportunities/E2408-01%20-%20IFB_0.pdf",
       "family": "missouri_oa_fmdc",
       "kind": "document",
       "depth": 0
@@ -4945,12 +2269,6 @@
       "depth": 0
     },
     {
-      "url": "https://oa.mo.gov/sites/default/files/bid-opportunities/R2312-01%20IFB.pdf",
-      "family": "missouri_oa_fmdc",
-      "kind": "document",
-      "depth": 0
-    },
-    {
       "url": "https://oa.mo.gov/sites/default/files/bid-opportunities/_R2312-01%20Final%20Bid%20Plans.pdf",
       "family": "missouri_oa_fmdc",
       "kind": "document",
@@ -4975,12 +2293,6 @@
       "depth": 0
     },
     {
-      "url": "https://oa.mo.gov/sites/default/files/bid-opportunities/U2502-01%20IFB.pdf",
-      "family": "missouri_oa_fmdc",
-      "kind": "document",
-      "depth": 0
-    },
-    {
       "url": "https://oa.mo.gov/sites/default/files/bid-opportunities/U2502-01%20Final%20specs.pdf",
       "family": "missouri_oa_fmdc",
       "kind": "document",
@@ -4994,12 +2306,6 @@
     },
     {
       "url": "https://oa.mo.gov/sites/default/files/bid-opportunities/_C2414-01%20Final%20Bid%20Documents.pdf",
-      "family": "missouri_oa_fmdc",
-      "kind": "document",
-      "depth": 0
-    },
-    {
-      "url": "https://oa.mo.gov/sites/default/files/bid-opportunities/C2414-01%20IFB.pdf",
       "family": "missouri_oa_fmdc",
       "kind": "document",
       "depth": 0
@@ -5035,12 +2341,6 @@
       "depth": 0
     },
     {
-      "url": "https://oa.mo.gov/sites/default/files/bid-opportunities/M2312-01%20IFB.pdf",
-      "family": "missouri_oa_fmdc",
-      "kind": "document",
-      "depth": 0
-    },
-    {
       "url": "https://oa.mo.gov/sites/default/files/bid-opportunities/M2312-01%20Final%20specs.pdf",
       "family": "missouri_oa_fmdc",
       "kind": "document",
@@ -5054,12 +2354,6 @@
     },
     {
       "url": "https://oa.mo.gov/sites/default/files/bid-opportunities/_M2414-01%20-%20Final%20Bid%20Docs.pdf",
-      "family": "missouri_oa_fmdc",
-      "kind": "document",
-      "depth": 0
-    },
-    {
-      "url": "https://oa.mo.gov/sites/default/files/bid-opportunities/M2414-01%20-%20IFB.pdf",
       "family": "missouri_oa_fmdc",
       "kind": "document",
       "depth": 0
@@ -5095,12 +2389,6 @@
       "depth": 0
     },
     {
-      "url": "https://oa.mo.gov/sites/default/files/bid-opportunities/O2434-01%20IFB.pdf",
-      "family": "missouri_oa_fmdc",
-      "kind": "document",
-      "depth": 0
-    },
-    {
       "url": "https://oa.mo.gov/sites/default/files/bid-opportunities/O2434-01%20Final%20specs.pdf",
       "family": "missouri_oa_fmdc",
       "kind": "document",
@@ -5114,12 +2402,6 @@
     },
     {
       "url": "https://oa.mo.gov/sites/default/files/bid-opportunities/_O2339-01%20-%20Final%20Bid%20Docs.pdf",
-      "family": "missouri_oa_fmdc",
-      "kind": "document",
-      "depth": 0
-    },
-    {
-      "url": "https://oa.mo.gov/sites/default/files/bid-opportunities/O2339-01%20-%20IFB.pdf",
       "family": "missouri_oa_fmdc",
       "kind": "document",
       "depth": 0
@@ -5149,12 +2431,6 @@
       "depth": 0
     },
     {
-      "url": "https://oa.mo.gov/sites/default/files/bid-opportunities/F2406-01%20IFB.pdf",
-      "family": "missouri_oa_fmdc",
-      "kind": "document",
-      "depth": 0
-    },
-    {
       "url": "https://oa.mo.gov/sites/default/files/bid-opportunities/_F2406-01%20Final%20Bid%20Plans.pdf",
       "family": "missouri_oa_fmdc",
       "kind": "document",
@@ -5174,12 +2450,6 @@
     },
     {
       "url": "https://oa.mo.gov/sites/default/files/bid-opportunities/H2401-01%20Bid%20Documents.pdf",
-      "family": "missouri_oa_fmdc",
-      "kind": "document",
-      "depth": 0
-    },
-    {
-      "url": "https://oa.mo.gov/sites/default/files/bid-opportunities/H2401-01%20IFB.pdf",
       "family": "missouri_oa_fmdc",
       "kind": "document",
       "depth": 0
@@ -5209,12 +2479,6 @@
       "depth": 0
     },
     {
-      "url": "https://oa.mo.gov/sites/default/files/bid-opportunities/IDIQMCA-5002%20IFB.pdf",
-      "family": "missouri_oa_fmdc",
-      "kind": "document",
-      "depth": 0
-    },
-    {
       "url": "https://oa.mo.gov/sites/default/files/bid-opportunities/IDIQMCA-5002%20Final%20specs_0.pdf",
       "family": "missouri_oa_fmdc",
       "kind": "document",
@@ -5228,12 +2492,6 @@
     },
     {
       "url": "https://oa.mo.gov/sites/default/files/bid-opportunities/_F2404-01%20Final%20Bid%20Docs.pdf",
-      "family": "missouri_oa_fmdc",
-      "kind": "document",
-      "depth": 0
-    },
-    {
-      "url": "https://oa.mo.gov/sites/default/files/bid-opportunities/F2404-01%20IFB.pdf",
       "family": "missouri_oa_fmdc",
       "kind": "document",
       "depth": 0
@@ -5269,12 +2527,6 @@
       "depth": 0
     },
     {
-      "url": "https://oa.mo.gov/sites/default/files/bid-opportunities/IDIQMCA-5001%20IFB_0.pdf",
-      "family": "missouri_oa_fmdc",
-      "kind": "document",
-      "depth": 0
-    },
-    {
       "url": "https://oa.mo.gov/sites/default/files/bid-opportunities/IDIQMCA-5001%20Final%20specs_1.pdf",
       "family": "missouri_oa_fmdc",
       "kind": "document",
@@ -5288,12 +2540,6 @@
     },
     {
       "url": "https://oa.mo.gov/sites/default/files/bid-opportunities/_M2409-01%20-%20Final%20Bid%20Docs.pdf",
-      "family": "missouri_oa_fmdc",
-      "kind": "document",
-      "depth": 0
-    },
-    {
-      "url": "https://oa.mo.gov/sites/default/files/bid-opportunities/_M2409-01%20-%20IFB.pdf",
       "family": "missouri_oa_fmdc",
       "kind": "document",
       "depth": 0
@@ -5323,12 +2569,6 @@
       "depth": 0
     },
     {
-      "url": "https://oa.mo.gov/sites/default/files/bid-opportunities/_M2412-01%20-%20IFB.pdf",
-      "family": "missouri_oa_fmdc",
-      "kind": "document",
-      "depth": 0
-    },
-    {
       "url": "https://oa.mo.gov/sites/default/files/bid-opportunities/_M2412-01%20-%20Final%20Plans.pdf",
       "family": "missouri_oa_fmdc",
       "kind": "document",
@@ -5348,12 +2588,6 @@
     },
     {
       "url": "https://oa.mo.gov/sites/default/files/bid-opportunities/O2353-01%20Bid%20Documents.pdf",
-      "family": "missouri_oa_fmdc",
-      "kind": "document",
-      "depth": 0
-    },
-    {
-      "url": "https://oa.mo.gov/sites/default/files/bid-opportunities/O2353-01%20IFB.pdf",
       "family": "missouri_oa_fmdc",
       "kind": "document",
       "depth": 0
@@ -5383,12 +2617,6 @@
       "depth": 0
     },
     {
-      "url": "https://oa.mo.gov/sites/default/files/bid-opportunities/_C2403-01%20IFB.pdf",
-      "family": "missouri_oa_fmdc",
-      "kind": "document",
-      "depth": 0
-    },
-    {
       "url": "https://oa.mo.gov/sites/default/files/bid-opportunities/_C2403-01%20Final%20Bid%20Plans.pdf",
       "family": "missouri_oa_fmdc",
       "kind": "document",
@@ -5411,21 +2639,87 @@
       "family": "missouri_oa_fmdc",
       "kind": "document",
       "depth": 0
-    }
-  ],
-  "finished_at": "2026-10-09T08:51:07Z",
-  "original_limits": {
-    "file_cap": 157286400,
-    "round_cap": 3221225472
-  },
-  "resume_events": [
+    },
     {
-      "at": "2026-10-09T08:48:37Z",
-      "reason": "Tighten cap units to decimal MB/GB; preserve consumed budget"
+      "url": "https://oa.mo.gov/sites/default/files/bid-opportunities/_REBID%20T2421-01%20-%20Final%20Specs.pdf",
+      "family": "missouri_oa_fmdc",
+      "kind": "document",
+      "depth": 0,
+      "reason": "Exposed public listing URL; not fetched after the round document cap stop"
+    },
+    {
+      "url": "https://oa.mo.gov/sites/default/files/bid-opportunities/_R2401-01%20-%20Final%20Plans.pdf",
+      "family": "missouri_oa_fmdc",
+      "kind": "document",
+      "depth": 0,
+      "reason": "Exposed public listing URL; not fetched after the round document cap stop"
+    },
+    {
+      "url": "https://oa.mo.gov/sites/default/files/bid-opportunities/_T2421-01%20-%20Final%20Specs.pdf",
+      "family": "missouri_oa_fmdc",
+      "kind": "document",
+      "depth": 0,
+      "reason": "Exposed public listing URL; not fetched after the round document cap stop"
+    },
+    {
+      "url": "https://oa.mo.gov/sites/default/files/bid-opportunities/_X2506-01%20Final%20Bid%20Plans.pdf",
+      "family": "missouri_oa_fmdc",
+      "kind": "document",
+      "depth": 0,
+      "reason": "Exposed public listing URL; not fetched after the round document cap stop"
     }
   ],
-  "interruption_reserve_bytes": 157286400,
+  "finished_at": "2026-10-09T09:49:52Z",
+  "manifest_start_line": 1633,
+  "round_number": 3,
+  "pdc_observations": [
+    {
+      "url": "https://www.umsystem.edu/departments-staff/office-finance/facilities-real-estate/facilities-planning-development/construction",
+      "description": "Public HTML title Construction Bids | UM System; 0 relevant exposed links; 0 CP project identifiers. It links to https://operations-webapps.missouri.edu/pdc/adsite/ad.php and describes a June 20, 2026 transition of the bidder portal to Trimble ID. No login was attempted.",
+      "exposed_links": [
+        "https://www.umsystem.edu/departments-staff/finance/facilities-real-estate/facilities-planning-development/capital-planning-project-resources",
+        "https://www.umsystem.edu/departments-staff/finance/facilities-real-estate/facilities-planning-development/construction-bids/suspended-debarred-firms",
+        "https://www.umsystem.edu/departments-staff/finance/facilities-real-estate/facilities-planning-development/project-system-tools-unity-construct",
+        "https://operations-webapps.missouri.edu/pdc/adsite/ad.php",
+        "https://universityofmissouri.mycusthelp.com/webapp/_rs/(S(hz5pupooirsymvtzihebj11f))/supporthome.aspx",
+        "http://www.linkedin.com/companies/university-of-missouri-system"
+      ],
+      "text_excerpt": "}) to set unique ID for a customer. --> Construction Bids | UM System Skip to main content Live now: Board of Curators meeting Header: Utility Menu For Employees Rules &amp; Policies News &amp; Events Search Menu Main navigation About Impact Curators President General Counsel Departments &amp; Staff Construction Bids Breadcrumb Home Departments &amp; Staff Finance Facilities &amp; Real Estate Facilities Planning &amp; Development Construction Bids Welcome to the University of Missouri System construction bid and request for qualifications (RFQ) announcement center.&nbsp; &nbsp; Subscribing to UM System Bids Join our mailing list to receive bid announcements via email. To subscribe, send an email with no subject and include the following in the body of the email: subscribe um-bids firstname lastname .&nbsp; To unsubscribe, send an email with no subject and include the following in the body of the message: signoff um-bids .&nbsp; Subscribe or Unsubscribe Section Menu Facilities Planning &amp; Development Architects &amp; Engineers Building Inspections &amp; Inventory Capital Planning &amp; Project Resources Construction Bids Suspended &amp; Debarred Firms Contract Requirements Project System &amp; Tools (Unity Construct) Bid Announcements ALERT : For construction projects managed in MU's Projex4, visit this link . Trimble is now transitioning for all users to access the system through Trimble ID, which makes accessing Trimble products such as Unity Construct more efficient. The bidder's portal will transition on June 20, 2026. As you log into the bid module, on or after this date, you will be prompted to create a new Trimble ID. Trimble has created a guide to assist with creating a Trimble ID.&nbsp; NOTE : If you experience issues with tables loading, use Chrome as your web browser. MU Inline Frame URL Your browser does not support iframes, but you can visit UMKC Inline Frame URL Your browser does not support iframes, but you can visit S&amp;T Inline Frame URL Your browser does not support iframes, but you can visit UMSL Inline Frame URL Your browser does not support iframes, but you can visit Contact Us University of Missouri System Contact Information Information For Business Partners Media Current Employees Past Employees Prospective Employees Quick Links Careers &amp; Employment Equal Opportunity Title IX Executive Searches UM Academic Technology File an Open Records Request Footer: Social Media Links Facebook Instagram Linkedin X Youtube University of Missouri System is an equal opportunity employer .&nbsp; Copyright | Accessibility | Careers and Employment | Emergency Notification | Privacy Policy © Copyright 2026 by The Curators of the University of Missouri, a public corporation."
+    },
+    {
+      "url": "https://pdc-projects.missouri.edu/pdc/adsite/",
+      "description": "Not fetched: robots unavailable; fail closed. No page-content claim is possible."
+    },
+    {
+      "url": "https://operations-webapps.missouri.edu/pdc/adsite/ad.php",
+      "description": "This is the actual public MU listing linked from the current UM System page. Its robots.txt request failed with fetch failed (UNABLE_TO_GET_ISSUER_CERT_LOCALLY). Stopped without fetching the listing or project pages; cannot verify current plans/sealed/ad.pdf/pb.pdf contents."
+    }
+  ],
   "pending_request": null,
   "stopped_at_round_cap": true,
-  "queued_urls": 751
+  "queued_urls": 570,
+  "pdc_robots_observation_merged": true,
+  "observations_merged_at": "2026-10-09T09:51:30Z",
+  "oa_listing_audit": {
+    "checked_at": "2026-10-09T09:51:30Z",
+    "url": "https://oa.mo.gov/facilities/bid-opportunities/bid-listing-electronic-plans",
+    "http_status": 200,
+    "bytes": 558650,
+    "limit": 800000,
+    "reason": "Public static PDF links are exposed without credentials. Registration wording describes a bidder notification list; the earlier gate label was a parser false positive. Remaining URLs recorded; no PDFs fetched by this audit.",
+    "public_pdf_links": 912,
+    "examples": [
+      "https://oa.mo.gov/sites/default/files/bid-opportunities/_C2512-01%20Final%20Bid%20Documents.pdf",
+      "https://oa.mo.gov/sites/default/files/bid-opportunities/_C2512-01%20Final%20Bid%20Plans.pdf",
+      "https://oa.mo.gov/sites/default/files/bid-opportunities/_C2512-01%20Final%20Bid%20Specs_Vol%201.pdf",
+      "https://oa.mo.gov/sites/default/files/bid-opportunities/_C2512-01%20Final%20Bid%20Specs_Vol%202.pdf",
+      "https://oa.mo.gov/sites/default/files/bid-opportunities/_F2402-01%20Final%20Bid%20Documents_0.pdf"
+    ],
+    "password_input": false,
+    "registration_text": [
+      " To receive emails of  Invitation for Bids  for new projects, please register with our \" Application for Construction Bidder's L"
+    ],
+    "queue_urls_added": 4,
+    "description_corrected_at": "2026-10-09T09:52:39Z"
+  }
 }

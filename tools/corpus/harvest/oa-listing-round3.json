@@ -1,0 +1,22 @@
+{
+  "checked_at": "2026-10-09T09:51:30Z",
+  "url": "https://oa.mo.gov/facilities/bid-opportunities/bid-listing-electronic-plans",
+  "http_status": 200,
+  "bytes": 558650,
+  "limit": 800000,
+  "reason": "Public static PDF links are exposed without credentials. Registration wording describes a bidder notification list; the earlier gate label was a parser false positive. Remaining URLs recorded; no PDFs fetched by this audit.",
+  "public_pdf_links": 912,
+  "examples": [
+    "https://oa.mo.gov/sites/default/files/bid-opportunities/_C2512-01%20Final%20Bid%20Documents.pdf",
+    "https://oa.mo.gov/sites/default/files/bid-opportunities/_C2512-01%20Final%20Bid%20Plans.pdf",
+    "https://oa.mo.gov/sites/default/files/bid-opportunities/_C2512-01%20Final%20Bid%20Specs_Vol%201.pdf",
+    "https://oa.mo.gov/sites/default/files/bid-opportunities/_C2512-01%20Final%20Bid%20Specs_Vol%202.pdf",
+    "https://oa.mo.gov/sites/default/files/bid-opportunities/_F2402-01%20Final%20Bid%20Documents_0.pdf"
+  ],
+  "password_input": false,
+  "registration_text": [
+    " To receive emails of  Invitation for Bids  for new projects, please register with our \" Application for Construction Bidder's L"
+  ],
+  "queue_urls_added": 4,
+  "description_corrected_at": "2026-10-09T09:52:39Z"
+}

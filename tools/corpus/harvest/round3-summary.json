@@ -1,0 +1,43 @@
+{
+  "generated_at": "2026-10-09T09:57:07Z",
+  "before": {
+    "spec-only": 34,
+    "none": 376,
+    "schedule-only": 23,
+    "plan-only": 24,
+    "pair": 1,
+    "complete": 1
+  },
+  "after_existing": {
+    "complete": 3,
+    "pair": 1,
+    "schedule-only": 32,
+    "spec-only": 36,
+    "plan-only": 50,
+    "none": 337
+  },
+  "after_all": {
+    "complete": 3,
+    "pair": 1,
+    "schedule-only": 44,
+    "spec-only": 47,
+    "plan-only": 73,
+    "none": 430
+  },
+  "existing_sets": 459,
+  "total_sets": 598,
+  "architectural_floor_plan_sets": 60,
+  "architectural_first_quarter_sets": 25,
+  "plan_other_sets": 122,
+  "raster_only_sets": 1,
+  "new_downloads_by_family": {
+    "missouri_oa_fmdc": {
+      "sets": 139,
+      "bytes": 998371271
+    },
+    "missouri_um_pdc": {
+      "sets": 0,
+      "bytes": 0
+    }
+  }
+}

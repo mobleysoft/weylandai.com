@@ -218,7 +218,8 @@
       "kind": "pdc",
       "urls": [
         "https://www.umsystem.edu/ums/fa/facilities/construction-bids",
-        "https://pdc-projects.missouri.edu/pdc/adsite/"
+        "https://pdc-projects.missouri.edu/pdc/adsite/",
+        "https://operations-webapps.missouri.edu/pdc/adsite/ad.php"
       ],
       "project_pattern": "project.php?project=CP252751&format=html",
       "document_locations": [
@@ -226,7 +227,9 @@
         "projects/<cp>/sealed/",
         "projects/<cp>/ad.pdf",
         "projects/<cp>/pb.pdf"
-      ]
+      ],
+      "observed_listing_at": "2026-10-09T09:45:45Z",
+      "observed_listing_note": "Live UM System page links to operations-webapps ad.php; both Missouri PDC hosts fail TLS certificate validation at robots.txt in this environment."
     }
   ]
 }

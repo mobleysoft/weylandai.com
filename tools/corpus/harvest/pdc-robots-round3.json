@@ -1,0 +1,10 @@
+{
+  "checked_at": "2026-10-09T09:45:45Z",
+  "url": "https://operations-webapps.missouri.edu/robots.txt",
+  "source": "Exposed MU bid-announcement link in the fetched UM System construction-bids page",
+  "user_agent": "WeylandAI-corpus/1.0 (+https://weylandai.com)",
+  "http_status": null,
+  "bytes": 0,
+  "error": "fetch failed (UNABLE_TO_GET_ISSUER_CERT_LOCALLY)",
+  "policy": "deny: unavailable robots"
+}
