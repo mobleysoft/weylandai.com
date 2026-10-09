@@ -302,10 +302,6 @@ pattern = "weylandai.com/leadx*"
 zone_name = "weylandai.com"
 
 [[routes]]
-pattern = "weylandai.com/marketx*"
-zone_name = "weylandai.com"
-
-[[routes]]
 pattern = "weylandai.com/api/wire/*"
 zone_name = "weylandai.com"
 

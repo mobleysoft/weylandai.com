@@ -1,0 +1,210 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#090a0d">
+  <title>MarketX | The door hardware market in your city</title>
+  <meta name="description" content="MarketX reads six cities' building permits for commercial and multifamily work: how much door-relevant construction is permitted, by month and building use, against last year, the largest projects, and the contractors and owners building them.">
+  <style>
+    :root{--bg:#090a0d;--panel:#111318;--line:#2b3038;--text:#eef1f2;--muted:#9299a3;--primary:#2a52ff;--accent:#ffd400;--red:#ff716b;--green:#68e0a0}
+    *{box-sizing:border-box}html,body{margin:0;background:var(--bg);color:var(--text);font-family:"Avenir Next","Helvetica Neue",-apple-system,sans-serif}body{overflow-x:hidden}
+    .shell{max-width:1320px;margin:auto;padding:20px clamp(14px,2.5vw,36px) 50px}
+    html.wa-standalone .shell{padding-top:64px}
+    header{display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap;margin-bottom:18px}
+    .brand{display:flex;align-items:center;gap:12px;color:var(--text);text-decoration:none}.mark{width:42px;height:42px;display:grid;place-items:center;background:var(--primary);color:var(--bg);font-weight:900}
+    .brand b{display:block;letter-spacing:.16em}.brand small{display:block;color:var(--muted);font:700 9px/1.5 ui-monospace,monospace;letter-spacing:.11em}
+    nav{display:flex;gap:8px;flex-wrap:wrap}
+    nav a,.btn{border:1px solid var(--line);border-radius:99px;padding:9px 14px;color:var(--text);text-decoration:none;background:transparent;font:750 10px/1 ui-monospace,monospace;letter-spacing:.06em;cursor:pointer}
+    .btn.primary{background:var(--primary);border-color:var(--primary);color:#fff;font-weight:900}.btn:disabled{opacity:.5}
+    .eyebrow{color:var(--primary);font:800 11px/1 ui-monospace,monospace;letter-spacing:.18em}
+    h1{font-size:clamp(34px,4.5vw,56px);letter-spacing:-.05em;margin:10px 0 6px}
+    .lead{max-width:860px;color:var(--muted);line-height:1.6;margin:0 0 18px}
+    .grid{display:grid;grid-template-columns:minmax(0,430px) minmax(0,1fr);gap:16px;align-items:start}
+    .card{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:16px}
+    label{display:block;font:700 10px/1.4 ui-monospace,monospace;letter-spacing:.06em;color:var(--muted);margin:10px 0 4px}
+    input,select{width:100%;background:#161920;border:1px solid var(--line);border-radius:9px;padding:9px 11px;color:#fff;font-size:14px}
+    .row2{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+    .note{font-size:13px;line-height:1.5;color:var(--muted);margin:10px 0 0}
+    .warn{color:var(--accent)}.err{color:var(--red)}
+    .paper{background:#fbfbf8;color:#111;border-radius:6px;padding:clamp(18px,4vw,44px);font-family:Georgia,"Times New Roman",serif;font-size:14px;line-height:1.6;min-height:500px}
+    .paper h2{text-align:center;font-size:17px;margin:0 0 14px;text-transform:none}
+    .paper .f{margin:4px 0}.paper .f b{font-weight:700}.paper .f span{border-bottom:1px solid #999;padding:0 4px}
+    .paper p{text-align:justify;margin:10px 0}
+    .paper .sig{margin:18px 0 0 50%;}.paper .sig div{border-bottom:1px solid #333;min-height:22px;margin-top:12px}.paper .sig small{display:block;color:#666;font-size:10px}
+    .paper .notice{border:2px solid #000;padding:10px;font-weight:700;font-size:16px;margin-top:16px}
+    .cite{font-size:12px;color:var(--muted);margin:10px 2px}.cite a{color:var(--muted)}
+    .actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+    .pay{border:1px solid rgba(255,212,0,.4);background:rgba(255,212,0,.06);border-radius:12px;padding:10px 12px;font-size:13px;line-height:1.5;margin-top:10px}
+    @media(max-width:900px){.grid{grid-template-columns:1fr}}
+      table.t{width:100%;border-collapse:collapse;font-size:13px}table.t td,table.t th{padding:7px 9px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}.num{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
+    .filters{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px}.filters input,.filters select{width:auto;flex:1;min-width:160px}
+    .scroll{overflow-x:auto}
+  
+    .tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:10px;margin:12px 0}
+    .tile{background:#161920;border:1px solid var(--line);border-radius:12px;padding:12px}.tile small{display:block;color:var(--muted);font:700 10px/1.4 ui-monospace,monospace;letter-spacing:.06em}.tile b{display:block;font-size:24px;margin-top:4px;font-variant-numeric:tabular-nums}.tile span{font-size:12px;color:var(--muted)}
+    .up{color:var(--green)}.down{color:var(--red)}
+    .chart{position:relative;margin-top:6px}.chart svg{width:100%;height:220px;display:block}
+    .tip{position:absolute;pointer-events:none;background:#1b1f27;border:1px solid var(--line);border-radius:8px;padding:6px 9px;font-size:12px;white-space:nowrap;display:none;transform:translate(-50%,-110%)}
+    .badge{display:inline-block;border:1px solid var(--line);border-radius:99px;padding:1px 7px;font:700 9px/1.6 ui-monospace,monospace;color:var(--muted);margin-left:6px}
+    .badge.door{border-color:rgba(77,116,255,.6);color:#9fb3ff}
+    .sect{margin-top:16px}.sect>b{display:block;margin-bottom:6px}
+    .two{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:16px}@media(max-width:900px){.two{grid-template-columns:1fr}}
+    .desc{color:var(--muted);font-size:12px}
+    details summary{cursor:pointer;color:var(--muted);font-size:12px;margin-top:6px}
+  </style>
+</head>
+<body>
+  <div class="shell">
+    <header>
+      <a class="brand" href="/"><span class="mark">MX</span><span><b>MARKETX</b><small>YOUR MARKET, PERMIT BY PERMIT</small></span></a>
+      <nav><a href="/huntx">HUNTX</a><a href="/compx">COMPX</a><a href="/pricing">PRICING</a></nav>
+    </header>
+    <div class="eyebrow">DOOR HARDWARE MARKET</div>
+    <h1>MarketX</h1>
+    <p class="lead">How much door work your city is permitting, and who is building it. MarketX reads the building permits Chicago, New York, Los Angeles, Austin, San Francisco and Seattle publish: commercial and multifamily work of $250,000 or more, new buildings and alterations, single-family work left out. Each permit is read for its building use and for whether the work is likely to include doors (new buildings and interior work are; facade, roofing and mechanical-only work are not). You see the permitted value by month against the year before, the mix by building use, the largest and newest projects, and the general contractors and owners behind them, with the open public bids in the same state from HuntX.</p>
+    <div class="card">
+      <div class="filters">
+        <select id="metro" aria-label="City"></select>
+        <select id="months" aria-label="Period"><option value="3">Last 3 months</option><option value="6">Last 6 months</option><option value="12" selected>Last 12 months</option><option value="24">Last 24 months</option></select>
+        <select id="scope" aria-label="Which work"><option value="likely" selected>Work likely to include doors</option><option value="all">All commercial work</option></select>
+        <select id="use" aria-label="Building use"><option value="all">Every building use</option></select>
+        <select id="kind" aria-label="New or alteration"><option value="">New and alterations</option><option value="new">New buildings</option><option value="alteration">Alterations</option></select>
+        <select id="min" aria-label="Smallest project"><option value="">$250K and up</option><option value="1000000">$1M and up</option><option value="5000000">$5M and up</option><option value="25000000">$25M and up</option></select>
+        <input id="q" placeholder="search address, description, owner or contractor">
+      </div>
+      <div class="note" id="status"></div>
+      <div class="tiles" id="tiles"></div>
+      <div class="sect"><b id="chartTitle">Permitted value by month</b>
+        <div class="chart"><svg id="chart" role="img" aria-label="Permitted value by month"></svg><div class="tip" id="tip"></div></div>
+        <details><summary>Show as a table</summary><div class="scroll"><table class="t"><thead><tr><th>MONTH</th><th class="num">PROJECTS</th><th class="num">VALUE</th></tr></thead><tbody id="monthsTable"></tbody></table></div></details>
+      </div>
+      <div class="two">
+        <div class="sect scroll"><b>By building use</b><table class="t"><thead><tr><th>USE</th><th class="num">PROJECTS</th><th class="num">VALUE</th></tr></thead><tbody id="uses"></tbody></table></div>
+        <div class="sect"><b>Your share</b>
+          <p class="note">MarketX counts permitted construction value. What part of it is door hardware, and how much of that you win, is your number: enter it to see the dollars.</p>
+          <div class="row2"><div><label for="share">YOUR SHARE OF CONSTRUCTION VALUE (%)</label><input id="share" type="number" min="0" max="20" step="0.05" placeholder="e.g. your own ratio"></div><div><label>AT YOUR SHARE</label><div class="tile" style="padding:8px 11px"><b id="shareOut" style="font-size:18px">-</b></div></div></div>
+        </div>
+      </div>
+      <div class="sect scroll"><b>Largest projects</b><table class="t"><thead><tr><th>ISSUED</th><th>PROJECT</th><th>USE</th><th class="num">VALUE</th><th>BUILT BY / FOR</th></tr></thead><tbody id="largest"></tbody></table></div>
+      <div class="sect scroll"><b>Newest permits</b><table class="t"><thead><tr><th>ISSUED</th><th>PROJECT</th><th>USE</th><th class="num">VALUE</th><th>BUILT BY / FOR</th></tr></thead><tbody id="newest"></tbody></table></div>
+      <div class="two">
+        <div class="sect scroll"><b>General contractors</b><table class="t"><thead><tr><th>CONTRACTOR</th><th class="num">PROJECTS</th><th class="num">VALUE</th><th>LATEST</th></tr></thead><tbody id="contractors"></tbody></table></div>
+        <div class="sect scroll"><b>Owners</b><table class="t"><thead><tr><th>OWNER</th><th class="num">PROJECTS</th><th class="num">VALUE</th><th>LATEST</th></tr></thead><tbody id="owners"></tbody></table></div>
+      </div>
+      <p class="cite" id="names"></p>
+      <div class="sect scroll"><b id="bidsTitle">Open public bids in the state</b><table class="t"><thead><tr><th>DUE</th><th>NOTICE</th><th>AGENCY</th><th class="num">VALUE</th></tr></thead><tbody id="bids"></tbody></table></div>
+      <div class="actions"><button class="btn" type="button" id="csvProjects">PROJECTS CSV</button><button class="btn" type="button" id="csvCompanies">CONTRACTORS AND OWNERS CSV</button></div>
+      <div id="pay"></div>
+      <p class="cite" id="source"></p>
+    </div>
+  </div>
+  <script>
+  (function () {
+    var embedded = false;
+    try { embedded = window.self !== window.top; } catch (e) { embedded = true; }
+    function parentShell() { try { return embedded && window.parent && window.parent.WeylandShell ? window.parent.WeylandShell : null; } catch (e) { return null; } }
+    function shell() { return parentShell() || window.WeylandShell || null; }
+    function loadScript(src) { return new Promise(function (res, rej) { var s = document.createElement("script"); s.src = src; s.onload = res; s.onerror = rej; document.head.appendChild(s); }); }
+    if (!embedded) document.documentElement.classList.add("wa-standalone");
+    var ready = embedded ? Promise.resolve() : (window.AuthForStandard ? Promise.resolve() : loadScript("/assets/authfor-integration-standard.js"))
+      .then(function () { return window.WeylandShell ? null : loadScript("/assets/weyland-shell.js"); }).catch(function () {});
+    window.WeylandPage = {
+      ready: ready,
+      signIn: function (continueTo) { return ready.then(function () { var s = shell(); if (s) return s.open("signin", embedded ? { continueTo: continueTo } : {}); location.href = "/login?redirect=" + encodeURIComponent(continueTo); }); }
+    };
+  })();
+  </script>
+  <script>
+  (function () {
+    "use strict";
+    var $ = function (id) { return document.getElementById(id); };
+    function esc(s) { return String(s == null ? "" : s).replace(/[<>&"']/g, function (c) { return { "<": "&lt;", ">": "&gt;", "&": "&amp;", "\"": "&quot;", "'": "&#39;" }[c]; }); }
+    function token() { try { return localStorage.getItem("_authfor_token"); } catch (e) { return null; } }
+    function headers() { var h = {}; var t = token(); if (t) h.Authorization = "Bearer " + t; return h; }
+    function money(n) { n = Number(n) || 0; if (n >= 1e9) return "$" + (n / 1e9).toFixed(2) + "B"; if (n >= 1e6) return "$" + (n / 1e6).toFixed(1) + "M"; if (n >= 1e3) return "$" + Math.round(n / 1e3) + "K"; return "$" + Math.round(n); }
+    function full(n) { return "$" + Math.round(Number(n) || 0).toLocaleString("en-US"); }
+    var USE = {}, data = null;
+    function qs() { var p = new URLSearchParams(); p.set("months", $("months").value); p.set("scope", $("scope").value); if ($("use").value !== "all") p.set("use", $("use").value); if ($("kind").value) p.set("kind", $("kind").value); if ($("min").value) p.set("min", $("min").value); if ($("q").value.trim()) p.set("q", $("q").value.trim()); return p.toString(); }
+    function remember() { try { localStorage.setItem("marketx_metro", $("metro").value); } catch (e) {} }
+
+    function chart(monthly) {
+      var svg = $("chart"), W = svg.clientWidth || 800, H = 220, L = 52, B = 22, T = 8;
+      svg.setAttribute("viewBox", "0 0 " + W + " " + H);
+      var max = Math.max.apply(null, monthly.map(function (m) { return m.value; }).concat([1]));
+      var step = Math.pow(10, Math.floor(Math.log10(max))), top = Math.ceil(max / step) * step;
+      var n = Math.max(monthly.length, 1), slot = (W - L - 4) / n, bw = Math.max(Math.min(slot - 2, 28), 2);
+      var y = function (v) { return T + (H - T - B) * (1 - v / top); };
+      var out = "";
+      [0, 0.5, 1].forEach(function (f) { var v = top * f, yy = y(v); out += '<line x1="' + L + '" x2="' + W + '" y1="' + yy + '" y2="' + yy + '" stroke="#2b3038" stroke-width="1"/><text x="' + (L - 6) + '" y="' + (yy + 4) + '" text-anchor="end" fill="#9299a3" font-size="10">' + money(v) + "</text>"; });
+      monthly.forEach(function (m, i) {
+        var x = L + 2 + i * slot + (slot - bw) / 2, h = Math.max((H - T - B) - (y(m.value) - T), 0), yy = H - B - h, r = Math.min(4, bw / 2, h);
+        var d = h > 0 ? "M" + x + "," + (H - B) + "V" + (yy + r) + "Q" + x + "," + yy + " " + (x + r) + "," + yy + "H" + (x + bw - r) + "Q" + (x + bw) + "," + yy + " " + (x + bw) + "," + (yy + r) + "V" + (H - B) + "Z" : "";
+        out += '<g data-i="' + i + '"><rect x="' + (L + 2 + i * slot) + '" y="' + T + '" width="' + slot + '" height="' + (H - T - B) + '" fill="transparent"/>' + (d ? '<path d="' + d + '" fill="#4d74ff"/>' : "") + "</g>";
+        if (i % Math.ceil(n / 8) === 0) out += '<text x="' + (x + bw / 2) + '" y="' + (H - 6) + '" text-anchor="middle" fill="#9299a3" font-size="10">' + esc(m.month) + "</text>";
+      });
+      svg.innerHTML = out;
+      svg.onmousemove = function (e) { var g = e.target.closest && e.target.closest("g[data-i]"); var tip = $("tip"); if (!g) { tip.style.display = "none"; return; } var m = monthly[+g.getAttribute("data-i")]; var r = svg.getBoundingClientRect(); tip.innerHTML = "<b>" + esc(m.month) + "</b> · " + full(m.value) + " · " + m.projects + " project" + (m.projects === 1 ? "" : "s"); tip.style.left = (e.clientX - r.left) + "px"; tip.style.top = (e.clientY - r.top) + "px"; tip.style.display = "block"; };
+      svg.onmouseleave = function () { $("tip").style.display = "none"; };
+      $("monthsTable").innerHTML = monthly.map(function (m) { return "<tr><td>" + esc(m.month) + "</td><td class=num>" + m.projects + "</td><td class=num>" + full(m.value) + "</td></tr>"; }).join("");
+    }
+    function who(p) { var b = []; if (p.contractor) b.push("GC: " + esc(p.contractor)); if (p.owner) b.push("Owner: " + esc(p.owner)); if (!b.length && p.applicant) b.push("Applicant: " + esc(p.applicant)); return b.join("<br>") || '<span class="desc">not in the city\'s data</span>'; }
+    function project(p) { return "<tr><td>" + esc(p.issued) + "</td><td>" + (p.url ? '<a href="' + esc(p.url) + '" target="_blank" rel="noopener" style="color:var(--text)">' + esc(p.address) + "</a>" : esc(p.address)) + '<span class="badge">' + esc(p.kind === "new" ? "NEW" : "ALTERATION") + '</span><div class="desc">' + esc(String(p.description || "").slice(0, 220)) + "</div></td><td>" + esc(USE[p.use] || p.use) + "</td><td class=num>" + full(p.valuation) + "</td><td>" + who(p) + "</td></tr>"; }
+    function shareOut() { var s = parseFloat($("share").value); $("shareOut").textContent = data && s > 0 ? full(data.totals.value * s / 100) + " over " + data.months + " months" : "-"; try { localStorage.setItem("marketx_share", $("share").value); } catch (e) {} }
+
+    var timer = null;
+    function load() {
+      clearTimeout(timer);
+      timer = setTimeout(function () {
+        if (!$("metro").value) return;
+        $("status").textContent = "Reading the permits...";
+        fetch("/api/marketx/metro/" + encodeURIComponent($("metro").value) + "?" + qs(), { credentials: "same-origin", headers: headers() }).then(function (r) { return r.json(); }).then(function (d) {
+          if (!d.success) { $("status").textContent = d.message || "Could not read the market."; return; }
+          data = d;
+          var t = d.totals, ch = function (v) { return v == null ? "no prior period yet" : '<span class="' + (v >= 0 ? "up" : "down") + '">' + (v >= 0 ? "+" : "") + v + "%</span> vs the " + d.months + " months before"; };
+          $("status").innerHTML = esc(d.name) + " · permits issued " + esc(d.since) + " to " + esc(d.today) + (d.index.through && d.index.through < d.today ? " · the index is still reading this city (through " + esc(d.index.through) + ")" : "") + (d.limited ? " · showing the top 5 of each list" : "");
+          $("tiles").innerHTML = '<div class="tile"><small>PERMITTED VALUE</small><b>' + money(t.value) + "</b><span>" + ch(t.valueChange) + '</span></div><div class="tile"><small>PROJECTS</small><b>' + t.projects.toLocaleString() + "</b><span>" + ch(t.projectChange) + '</span></div><div class="tile"><small>NEW BUILDINGS</small><b>' + money(t.newValue) + "</b><span>" + (t.value ? Math.round(t.newValue / t.value * 100) + "% of the value" : "") + '</span></div><div class="tile"><small>OPEN PUBLIC BIDS (' + esc(d.state) + ")</small><b>" + (d.bids ? d.bids.open : "-") + "</b><span>" + (d.bids ? d.bids.doors + " door and hardware notices" : "") + "</span></div>";
+          $("chartTitle").textContent = "Permitted value by month, " + d.name + (d.scope === "likely" ? ", work likely to include doors" : ", all commercial work");
+          chart(d.monthly);
+          $("uses").innerHTML = d.byUse.map(function (u) { return "<tr><td>" + esc(u.label) + (u.doorHeavy ? '<span class="badge door">DOOR-HEAVY</span>' : "") + "</td><td class=num>" + u.projects + "</td><td class=num>" + full(u.value) + "</td></tr>"; }).join("") || "<tr><td colspan=3>None.</td></tr>";
+          $("largest").innerHTML = d.largest.map(project).join("") || "<tr><td colspan=5>None.</td></tr>";
+          $("newest").innerHTML = d.newest.map(project).join("") || "<tr><td colspan=5>None.</td></tr>";
+          var co = function (x) { return "<tr><td>" + esc(x.name) + "</td><td class=num>" + x.projects + "</td><td class=num>" + full(x.value) + "</td><td>" + esc(x.latest) + "</td></tr>"; };
+          $("contractors").innerHTML = d.contractors.map(co).join("") || '<tr><td colspan=4 class="desc">This city\'s permits do not name the contractor.</td></tr>';
+          $("owners").innerHTML = d.owners.map(co).join("") || '<tr><td colspan=4 class="desc">This city\'s permits do not name the owner.</td></tr>';
+          $("names").textContent = d.name + ": " + d.names + ".";
+          $("bidsTitle").textContent = "Open public bids for door and building work in " + d.state + " (HuntX)";
+          $("bids").innerHTML = d.bids && d.bids.rows.length ? d.bids.rows.map(function (b) { return "<tr><td>" + esc(String(b.key_date || "").slice(0, 10)) + "</td><td>" + (b.detail_url ? '<a href="' + esc(b.detail_url) + '" target="_blank" rel="noopener" style="color:var(--text)">' + esc(b.title) + "</a>" : esc(b.title)) + (b.trade_fit === "doors" ? '<span class="badge door">DOORS</span>' : "") + "</td><td>" + esc(b.agency) + "</td><td class=num>" + (b.estimated_value ? full(b.estimated_value) : "") + "</td></tr>"; }).join("") : '<tr><td colspan=4 class="desc">HuntX has no open door or building bids in ' + esc(d.state) + " right now.</td></tr>";
+          $("pay").innerHTML = d.limited ? '<div class="pay">Every project and permit, the full contractor and owner rankings, and the CSVs come with MarketX, the suite or the $100 first submittal. <a class="btn primary" href="/#offer">$100 FIRST SUBMITTAL</a> <a class="btn" href="/pricing">PLANS</a>' + (d.signedIn ? "" : ' <button class="btn" type="button" id="signinBtn">SIGN IN</button>') + "</div>" : "";
+          if ($("signinBtn")) $("signinBtn").onclick = function () { window.WeylandPage.signIn("/marketx"); };
+          shareOut();
+        }).catch(function (e) { $("status").textContent = e.message; });
+      }, 200);
+    }
+    function download(file) {
+      fetch("/api/marketx/metro/" + encodeURIComponent($("metro").value) + "/" + file + "?" + qs(), { credentials: "same-origin", headers: headers() }).then(function (r) {
+        if (r.status === 402) { $("pay").innerHTML = '<div class="pay">The CSVs come with MarketX, the suite or the $100 first submittal. <a class="btn primary" href="/#offer">$100 FIRST SUBMITTAL</a> <a class="btn" href="/pricing">PLANS</a></div>'; return; }
+        return r.blob().then(function (b) { var a = document.createElement("a"); a.href = URL.createObjectURL(b); a.download = "marketx-" + $("metro").value + "-" + file; a.click(); });
+      });
+    }
+    $("csvProjects").onclick = function () { download("projects.csv"); };
+    $("csvCompanies").onclick = function () { download("companies.csv"); };
+    ["metro", "months", "scope", "use", "kind", "min", "q"].forEach(function (id) { $(id).addEventListener("change", function () { if (id === "metro") remember(); load(); }); });
+    $("q").addEventListener("input", load);
+    $("share").addEventListener("input", shareOut);
+    try { $("share").value = localStorage.getItem("marketx_share") || ""; } catch (e) {}
+    window.addEventListener("resize", function () { if (data) chart(data.monthly); });
+    fetch("/api/marketx/metros", { credentials: "same-origin", headers: headers() }).then(function (r) { return r.json(); }).then(function (d) {
+      d.uses.forEach(function (u) { USE[u.key] = u.label; }); USE.other = "Other commercial";
+      $("use").innerHTML = '<option value="all">Every building use</option>' + d.uses.map(function (u) { return '<option value="' + esc(u.key) + '">' + esc(u.label) + (u.doorHeavy ? " (door-heavy)" : "") + "</option>"; }).join("") + '<option value="other">Other commercial</option>';
+      var saved = null; try { saved = localStorage.getItem("marketx_metro"); } catch (e) {}
+      $("metro").innerHTML = d.metros.map(function (m) { return '<option value="' + esc(m.metro) + '">' + esc(m.name) + ", " + esc(m.state) + (m.projects ? " · " + money(m.value) + " in 12 months" : " · being read") + "</option>"; }).join("");
+      if (saved && d.metros.some(function (m) { return m.metro === saved; })) $("metro").value = saved;
+      $("source").textContent = d.source + ". Chicago Building Permits, NYC DOB NOW job filings, LADBS permits, Austin issued construction permits, San Francisco DBI building permits, Seattle building permits.";
+      load();
+    });
+    window.addEventListener("weyland-auth", load);
+  })();
+  </script>
+</body>
+</html>

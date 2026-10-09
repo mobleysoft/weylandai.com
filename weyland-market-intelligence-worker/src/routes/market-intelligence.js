@@ -183,23 +183,7 @@ export function registerMarketIntelligenceRoutes(router) {
     }
   });
 
-  router.get("/api/marketx/trends", async (request2, env2) => {
-    // Honestly retired 2026-09-12, not faked and not silently 404'd. See
-    // this file's top comment for the full history: MarketX's original
-    // scope (construction spending / housing starts) has no first-party
-    // data anywhere in weylandai.com's real schema - the tables a real
-    // signal would come from (takeoff_quotes, quotes) are still 0 rows in
-    // production, so there is no real customer transaction history yet.
-    // Building it on FRED (or any other external party's data) is
-    // explicitly ruled out per John's direct correction. This route
-    // returns 501 until real first-party data exists to build it from.
-    return jsonResponse3({
-      status: "not_yet_viable",
-      detail: {
-        message: "MarketX is retired pending real first-party data. It previously depended on FRED (Federal Reserve economic data), which is no longer allowed for this product (no dependency on any external party's service, per direct correction 2026-09-12). No first-party substitute exists yet: weyland_db's takeoff_quotes and quotes tables (the real source a genuine market-trend signal would need) are still 0 rows in production. This route will be rebuilt once real customer quote/transaction volume exists to compute a trend from - not before."
-      },
-    }, 501);
-  });
+  // /api/marketx/trends: MarketX was rebuilt 2026-10-09 on the cities' building permits (routes/marketx.js).
 
   router.get("/api/compx/vendors", withStoreCache((u) => (u.searchParams.get("q") || "").trim() ? "compx:" + (u.searchParams.get("q") || "").trim().toLowerCase() : null, 604800, async (request2, env2) => {
     try {

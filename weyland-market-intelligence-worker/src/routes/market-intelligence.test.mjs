@@ -119,15 +119,6 @@ test("GET /api/pricex/materials: no snapshot yet surfaces a real 503, not fabric
   assert.equal(res.status, 503);
 });
 
-test("GET /api/marketx/trends: honestly retired (501), not faked and not silently 404'd", async () => {
-  const { router, env } = setup();
-  const res = await router.handle(new Request("https://example.com/api/marketx/trends"), env, {});
-  assert.equal(res.status, 501);
-  const body = await res.json();
-  assert.equal(body.status, "not_yet_viable");
-  assert.match(body.detail.message, /first-party/);
-});
-
 test("computePriceIndexSnapshot: queries only this account's own weyland_db (env.WEYLAND_DB), zero external fetch, and upserts into price_index_snapshots (env.DB)", async () => {
   globalThis.fetch = async () => { throw new Error("must not call any external service - this is first-party data only"); };
   const categoryRows = [
