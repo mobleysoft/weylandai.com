@@ -34,7 +34,7 @@ export function digestEmail({ name, rows, total, unsubscribeUrl, manageUrl = SIT
 <div style="max-width:640px;margin:0 auto;padding:24px">
 <div style="font:700 12px/1 monospace;letter-spacing:.12em;color:#2a52ff">WEYLANDAI HUNTX</div>
 <h1 style="font-size:20px;margin:10px 0 4px">${sample ? "Latest " + esc(shown.length) + " notice" + (shown.length === 1 ? "" : "s") : esc(total) + " new notice" + (total === 1 ? "" : "s")} for “${esc(name)}”</h1>
-<p style="color:#555;margin:0 0 16px;font-size:13px">${sample ? "A sample you asked for: the latest open notices matching this saved search. The daily alert holds only notices that are new since the last one." : "Public bid notices that entered HuntX since your last alert for this saved search."}</p>
+<p style="color:#555;margin:0 0 16px;font-size:13px">${sample ? "A sample you asked for: the latest open notices matching this search. Email alerts for a saved search hold only the notices that are new since the last one." : "Public bid notices that entered HuntX since your last alert for this saved search."}</p>
 ${shown.map((o) => `<div style="background:#fff;border:1px solid #e2e2de;border-radius:8px;padding:12px 14px;margin-bottom:10px">
 <a href="${esc(o.detail_url || manageUrl)}" style="color:#151515;font-weight:700;text-decoration:none;font-size:14px">${esc(o.title)}</a>
 <div style="color:#666;font-size:12px;margin-top:4px">${esc(line(o))}</div></div>`).join("")}
