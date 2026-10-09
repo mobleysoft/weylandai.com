@@ -7,7 +7,7 @@
   const STORAGE_KEY = 'weyland-sightx-report-v2';
 
   const tourStops = Object.freeze([
-    Object.freeze({ position: [0, 0.28, -1.6], yaw: 0, pitch: -0.03, seconds: 2.2, title: 'Corridor 100', copy: 'The sample twin: a 30 m corridor whose eight scheduled openings and exit pair are drawn from real hardware sets.' }),
+    Object.freeze({ position: [0, 0.28, -1.6], yaw: 0, pitch: -0.03, seconds: 2.2, title: 'Corridor 100', copy: 'The sample twin: a 30 m corridor whose eight scheduled openings and exit pair are drawn from real hardware groups.' }),
     Object.freeze({ position: [0.2, 0.28, 0.4], yaw: 0.95, pitch: -0.05, seconds: 3.4, title: 'Opening 101', copy: 'A 3070 hollow-metal frame and flush leaf. Hinges, lever and closer sit where the hardware set mounts them; each product is a CutsheetX catalog match.' }),
     Object.freeze({ position: [-0.2, 0.28, 4.0], yaw: -0.95, pitch: -0.05, seconds: 3.2, title: 'Opening 102', copy: 'Mirror hand across the corridor. Hand and swing come from the schedule; the twin flags a mismatch instead of guessing.' }),
     Object.freeze({ position: [0, 0.28, 14.0], yaw: 0, pitch: 0, seconds: 3.0, title: 'Walk the schedule', copy: 'Paste a door schedule on weylandai.com and every matched line becomes a labeled frame in this corridor.' }),

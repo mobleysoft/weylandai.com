@@ -139,6 +139,7 @@ try {
   check("sign-in form opens inside the page (no navigation)", formShown && await sameDoc(), "url=" + page.url());
   if (formShown) {
     await page.fill("#weyland-signin-email", email);
+    if (await page.locator("#weyland-signin-use-password").isVisible()) await page.locator("#weyland-signin-use-password").click();
     await page.fill("#weyland-signin-password", password);
     const before = await page.evaluate(() => ({ e: document.getElementById("weyland-signin-email").value.length, p: document.getElementById("weyland-signin-password").value.length }));
     check("homepage form holds both values right before submit", before.e > 0 && before.p > 0, JSON.stringify(before));
@@ -209,6 +210,7 @@ try {
   await p2.waitForSelector("#weyland-signin-email", { timeout: 15000 }).catch(() => {});
   check("/login opens the same in-page sign-in (no separate page)", await p2.locator("#weyland-signin-email").isVisible().catch(() => false));
   await p2.fill("#weyland-signin-email", email);
+  if (await p2.locator("#weyland-signin-use-password").isVisible()) await p2.locator("#weyland-signin-use-password").click();
   await p2.fill("#weyland-signin-password", password);
   const before = await p2.evaluate(() => ({ e: document.getElementById("weyland-signin-email").value.length, p: document.getElementById("weyland-signin-password").value.length }));
   check("/login form holds both values right before submit", before.e > 0 && before.p > 0, JSON.stringify(before));

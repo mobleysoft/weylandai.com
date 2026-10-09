@@ -62,14 +62,14 @@ await J.run(async () => {
   J.check("a browser that bought without a password opens the sign-in on the code, prefilled", hinted.email === ALIAS && !hinted.passwordShown && hinted.sendShown && /email me a sign-in code/i.test(hinted.sendText), hinted);
   await page.evaluate(() => { localStorage.removeItem("wa_signin_hint_v1"); window.WeylandShell.close(); });
 
-  // A visitor with no hint: password and the code side by side.
+  // A visitor with no hint starts at the same code door.
   await press(page, "#wa-account-chip");
   await page.waitForSelector("#weyland-signin-email", { state: "visible", timeout: 10000 }).catch(() => {});
   const plain = await page.evaluate(() => ({
     passwordShown: !!(document.getElementById("weyland-signin-password") || {}).offsetParent,
     sendShown: !!(document.getElementById("weyland-signin-code-send") || {}).offsetParent
   }));
-  J.check("the sign-in view offers 'Email me a sign-in code' beside the password", plain.passwordShown && plain.sendShown, plain);
+  J.check("the sign-in view leads with the emailed code and hides the optional password", !plain.passwordShown && plain.sendShown, plain);
 
   // The real code request, to John's alias.
   await page.fill("#weyland-signin-email", ALIAS);

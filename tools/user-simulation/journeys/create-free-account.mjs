@@ -40,13 +40,11 @@ async function markCreateForm(page) {
 }
 
 async function openCreateForm(page) {
-  await press(page, "#wa-account-chip");
-  await page.waitForSelector("#wa-overlay.is-open", { timeout: 10000 }).catch(() => {});
-  const link = page.locator("#wa-overlay.is-open button, #wa-overlay.is-open a").filter({ hasText: /create a free account/i }).first();
-  if (!(await link.count())) return { found: false, why: "no 'Create a free account' control in the sign-in overlay" };
-  await press(page, link);
+  // Exercise the retained legacy signup integration. The sign-in
+  // screen now leads new and returning users through the same emailed code.
+  await page.evaluate(() => window.WeylandShell.open("create"));
   const form = await until(async () => { const f = await markCreateForm(page); return f.found ? f : null; }, 8000, 400);
-  return form || { found: false, why: "pressing 'Create a free account' showed no create-account form", shell: await shellState(page) };
+  return form || { found: false, why: "the legacy signup integration showed no create-account form", shell: await shellState(page) };
 }
 
 const dossierText = (page) => page.evaluate(() => ((document.getElementById("hs-dossier") || {}).innerText || "").trim());
@@ -64,7 +62,7 @@ await J.run(async () => {
   J.check("as a guest, the paste matches the lines (2 of 2)", guest.matched === 2 && guest.total === 2, guest.first);
 
   const form = await openCreateForm(page);
-  J.check("'Create a free account' opens a create-account form in the page", form.found, form);
+  J.check("the legacy signup integration opens its form in the page", form.found, form);
   if (!form.found) throw new Error("no create-account form; cannot continue");
   // What the dialog promises about the pasted matches.
   const promise = await page.evaluate(() => ((document.querySelector("#upgrade-modal.is-open .upgrade-sub") || {}).innerText || "").replace(/\s+/g, " ").trim());
@@ -128,6 +126,6 @@ await J.run(async () => {
   await page.evaluate(() => window.WeylandShell.signOut());
   await page.waitForFunction(() => document.documentElement.dataset.weylandAuth === "signed-out", null, { timeout: 10000 }).catch(() => {});
   const again2 = await openCreateForm(page);
-  J.check("after signing out, 'Create a free account' still opens the form in this browser", again2.found, again2);
+  J.check("after signing out, the legacy signup integration still opens the form", again2.found, again2);
   await ctx.close();
 });

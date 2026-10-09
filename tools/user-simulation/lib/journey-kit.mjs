@@ -357,6 +357,7 @@ export async function signIn(page, acct, { touch = false, timeout = 75000 } = {}
     await page.waitForSelector("#weyland-signin-email", { state: "visible", timeout: 10000 }).catch(() => {});
   }
   await page.fill("#weyland-signin-email", acct.email);
+  if (await page.locator("#weyland-signin-use-password").isVisible()) await page.locator("#weyland-signin-use-password").click();
   await page.fill("#weyland-signin-password", acct.password);
   await press(page, "#weyland-signin-submit", { touch });
   await waitSignInOutcome(page, timeout);

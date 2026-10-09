@@ -1209,6 +1209,7 @@ export async function writeDoorScheduleEntries(sessionId, tenantId, pageNumber, 
         read_from: door.read_from || null,
         fields: door.field_confidence || null,
         pair: door.pair ?? null, glazing: door.glazing ?? null, section: door.section ?? null,
+        alternate_pricing: door.alternate_pricing ?? null, hardware_spec_sections: door.hardware_spec_sections || [],
       }) : null,
       low_confidence_fields: isLowConf ? "extraction_confidence" : ""
     };

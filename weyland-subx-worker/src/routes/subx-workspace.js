@@ -19,6 +19,7 @@
 //
 // Every session route checks that the session belongs to the caller.
 
+import { hardwareScheduleNeed } from "../../assets/client-ocr-src/schedule-workspace.mjs";
 import { PDFDocument, StandardFonts, rgb } from "pdf-lib";
 import { jsonResponse3 } from "../lib/json-response.js";
 import { assembleSubmittalPackage } from "../lib/submittal-assembler.js";
@@ -322,7 +323,7 @@ export function registerSubxWorkspaceRoutes(router, { authenticate, requireActiv
         if (fc && fc.source) source = { page: fc.source.page ?? d.page_number, table_row: fc.source.table_row ?? null, rotation: fc.source.rotation ?? null };
       } catch (_) { fc = null; }
       const corrected = !!d.corrections_json;
-      const out = { ...d, source, read_from: fc ? fc.read_from || null : null, pair: fc ? fc.pair ?? null : null, glazing: fc ? fc.glazing ?? null : null, section: fc ? fc.section ?? null : null, corrected, unsure: corrected ? [] : unsureFields(d, fc, filled) };
+      const out = { ...d, alternate_pricing: fc?.alternate_pricing ?? null, hardware_spec_sections: fc?.hardware_spec_sections || [], source, read_from: fc ? fc.read_from || null : null, pair: fc ? fc.pair ?? null : null, glazing: fc ? fc.glazing ?? null : null, section: fc ? fc.section ?? null : null, corrected, unsure: corrected ? [] : unsureFields(d, fc, filled) };
       delete out.field_confidence_json;
       delete out.corrections_json;
       return out;
@@ -373,6 +374,7 @@ export function registerSubxWorkspaceRoutes(router, { authenticate, requireActiv
       hardware_sets: hardwareSets,
       components: comps.results || [],
       takeoff,
+      hardware_schedule_needed: hardwareScheduleNeed(doors, hardwareSets),
       package: await packageStatus(env2, sessionId),
     });
   });
@@ -479,8 +481,15 @@ export function registerSubxWorkspaceRoutes(router, { authenticate, requireActiv
       const doorCount = await env2.DB.prepare("SELECT COUNT(*) AS n FROM door_schedule_entries WHERE session_id = ?").bind(sessionId).first();
       const setCount = await env2.DB.prepare("SELECT COUNT(*) AS n FROM hardware_sets WHERE session_id = ?").bind(sessionId).first();
       if (!(doorCount && doorCount.n) && !(setCount && setCount.n)) {
-        return jsonResponse3({ success: false, error: "NOTHING_EXTRACTED", details: "Nothing has been read from this schedule yet. Read a page first (READ THIS PAGE), then build the package: it is made from the door rows and hardware sets that were read." }, 409);
+        return jsonResponse3({ success: false, error: "NOTHING_EXTRACTED", details: "Nothing has been read from this schedule yet. Read a page first (READ THIS PAGE), then build the package: it is made from the door rows and hardware groups that were read." }, 409);
       }
+      const doorRefs = await env2.DB.prepare("SELECT hardware_group, field_confidence_json FROM door_schedule_entries WHERE session_id = ?").bind(sessionId).all();
+      const groupsRead = await env2.DB.prepare("SELECT s.set_number, (SELECT COUNT(*) FROM hardware_components c WHERE c.set_id = s.id) AS components FROM hardware_sets s WHERE s.session_id = ?").bind(sessionId).all();
+      const needed = hardwareScheduleNeed((doorRefs.results || []).map(d => {
+        let meta = {}; try { meta = JSON.parse(d.field_confidence_json || "{}") || {}; } catch (_) {}
+        return { hardware_group: d.hardware_group, hardware_spec_sections: meta.hardware_spec_sections || [] };
+      }), groupsRead.results || []);
+      if (needed) return jsonResponse3({ success: false, error: "HARDWARE_SPEC_REQUIRED", details: needed.message, hardware_schedule_needed: needed }, 409);
       const hadPackage = await packageStatus(env2, sessionId);
       const cutSheets = await citedPagesForSession(sessionId, env2);
       // The cover names the company (2026-10-08): what the workspace sent,

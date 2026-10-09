@@ -189,3 +189,17 @@ test("the package PDF of your own schedule needs the $100 offer or a plan", asyn
   db.prepare("INSERT INTO weyland_subscriptions VALUES ('sub_3','user-a','active','propx',0),('sub_4','user-a','canceled','subx',0)").run();
   assert.equal((await get("sess-a")).status, 402);
 });
+
+test('a saved door sheet keeps pricing fields and asks for Section 08 71 00 before packet assembly', async () => {
+  const { call, db } = setup();
+  db.prepare('UPDATE door_schedule_entries SET field_confidence_json = ? WHERE session_id = ? AND mark = ?').run(JSON.stringify({ source: { page: 1, table_row: 0 }, pair: false, glazing: 'G2', alternate_pricing: 'YES', hardware_spec_sections: ['08 71 00'] }), 'sess-a', '131');
+  const detail = await call('GET', '/api/hardware-schedule/session/sess-a/doors', 'a');
+  assert.equal(detail.status, 200);
+  const d = detail.data.doors.find(d => d.mark === '131');
+  assert.deepEqual([d.pair, d.glazing, d.alternate_pricing], [false, 'G2', 'YES']);
+  assert.match(detail.data.hardware_schedule_needed.message, /Section 08 71 00 — Door Hardware/);
+  const build = await call('POST', '/api/hardware-schedule/session/sess-a/submittal-pdf', 'a', {});
+  assert.equal(build.status, 409);
+  assert.equal(build.data.error, 'HARDWARE_SPEC_REQUIRED');
+  assert.match(build.data.details, /Section 08 71 00 — Door Hardware/);
+});

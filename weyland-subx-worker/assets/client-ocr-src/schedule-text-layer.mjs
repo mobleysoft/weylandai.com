@@ -20,6 +20,8 @@
 // the server persists both the same way (writeDoorScheduleEntries,
 // savePageExtraction2).
 
+import { hardwareSpecSections } from "./schedule-workspace.mjs?v=20261009g018";
+
 // ---------------------------------------------------------------- geometry
 
 /**
@@ -281,6 +283,8 @@ export async function readDoorScheduleFromLines(lines, pageSize, opts = {}) {
   if (!tables.length) return null;
   const doors = [];
   for (const t of tables) for (const d of t.doors) doors.push(d);
+  const sections = hardwareSpecSections(lines.map(l => l.text || (l.words || []).map(w => w.text).join(" ")).join("\n"));
+  for (const d of doors) d.hardware_spec_sections = sections;
   return { tables, doors };
 }
 
@@ -582,6 +586,7 @@ function doorFromRow(row, fields, index, pageSize) {
     sill_detail: sill,
     panic_hardware: panic && !/^-+$/.test(panic) ? panic : null,
     glazing: get("glazing") && !/^-+$/.test(get("glazing")) ? get("glazing") : null,
+    alternate_pricing: get("alternate"),
     remarks: notes,
     pair,
     section: row.section,

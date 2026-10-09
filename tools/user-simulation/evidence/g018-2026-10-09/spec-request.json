@@ -1,0 +1,22 @@
+{
+  "sections": [
+    "08 71 00"
+  ],
+  "missing_groups": [
+    "44 UTY-IT",
+    "6 CL",
+    "19 STO",
+    "19F STO",
+    "23 STO",
+    "40 UTY",
+    "28 COR",
+    "32 EXD",
+    "7 CL",
+    "1 RR",
+    "2 RR-M",
+    "51 UTY-CUS",
+    "47 VES",
+    "20 STO"
+  ],
+  "message": "The door sheet points to Section 08 71 00 — Door Hardware. Upload the bid set including that section's hardware group pages and the door sheet so they can be read together before building the packet. Hardware groups still needed: 44 UTY-IT, 6 CL, 19 STO, 19F STO, 23 STO, 40 UTY, 28 COR, 32 EXD, 7 CL, 1 RR, 2 RR-M, 51 UTY-CUS, 47 VES, 20 STO."
+}

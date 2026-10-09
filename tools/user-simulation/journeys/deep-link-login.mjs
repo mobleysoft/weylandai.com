@@ -22,6 +22,7 @@ async function signInHere(page, acct, ms = 20000) {
   const shown = await page.waitForSelector("#weyland-signin-email", { state: "visible", timeout: ms }).then(() => true).catch(() => false);
   if (!shown) return { shown: false };
   await page.fill("#weyland-signin-email", acct.email);
+  if (await page.locator("#weyland-signin-use-password").isVisible()) await page.locator("#weyland-signin-use-password").click();
   await page.fill("#weyland-signin-password", acct.password);
   const t0 = Date.now();
   await press(page, "#weyland-signin-submit");

@@ -596,7 +596,7 @@
     ]);
     var toPassword = h("button", { id: "weyland-signin-use-password", "class": "wa-link", type: "button", text: "Use my password instead" });
     var toPasswordRow = h("div", { "class": "wa-links", style: "display:none" }, [toPassword]);
-    var state = { mode: mode === "code" ? "code" : "password", pending: null, sentTo: "", mfa: false, inflight: false };
+    var state = { mode: mode === "password" ? "password" : "code", pending: null, sentTo: "", mfa: false, inflight: false };
 
     function setMode(m) {
       state.mode = m;
@@ -617,7 +617,7 @@
       if (state.inflight) return;
       var em = email.value.trim();
       err.style.display = "none";
-      if (!validEmail(em)) { showError(err, "Type the email your WeylandAI account uses, then choose Email me a sign-in code."); email.focus(); return; }
+      if (!validEmail(em)) { showError(err, "Type your email, then choose Email me a sign-in code."); email.focus(); return; }
       busy(codeBtn, "SENDING THE CODE...");
       authforCall("/api/v1/auth/magic-link", { email: em, client_id: AF_CLIENT, venture_id: AF_VENTURE, purpose: confirm ? "verify" : "signin" }).then(function (res) {
         idle(codeBtn);
@@ -735,17 +735,8 @@
       h("button", { "class": "wa-secondary", type: "button", text: "Back to the account", onclick: function () { viewAccount(); } })
     ] : [
       h("h2", { text: "Sign in to WeylandAI" }),
-      h("p", { text: "One account across SubX, TakeOffX, CutsheetX, SightX, PropX, MeetingX and HuntX." }),
+      h("p", { text: "Enter your email and we will send a sign-in code. New here? The same code verifies your email so you can start a free 14-day account. No password or card needed." }),
       form,
-      h("p", { style: "margin:18px 0 0" }, [
-        "New here? ",
-        h("button", { "class": "wa-link", type: "button", text: "Create a free account", onclick: function () {
-          if (typeof window.__weylandOpenCreateAccount !== "function") { showError(err, "Account creation opens from the WeylandAI homepage."); return; }
-          close(); openCreateAccount(continueTo);
-        } }),
-        " ",
-        h("span", { text: "or close this and paste a spec line to try it with no account." })
-      ]),
       h("p", { style: "margin:10px 0 0" }, [h("button", { "class": "wa-link", type: "button", text: "Forgot password?", onclick: function () {
         var em = email.value.trim();
         err.style.display = "none";
@@ -868,7 +859,7 @@
     });
     show("Finish setup", h("div", { "class": "wa-card" }, [
       h("h2", { text: "No WeylandAI account on this email yet" }),
-      h("p", { text: "You are signed in as " + email + ". Start a free 14-day trial on it, or sign in with the email your WeylandAI account uses." }),
+      h("p", { text: "You are signed in as " + email + ". Start a free 14-day trial on it. No card needed and no automatic charge." }),
       start,
       h("button", { "class": "wa-secondary", type: "button", text: "Use a different email", onclick: function () { signOut().then(function () { viewSignIn(continueTo); }); } }),
       err

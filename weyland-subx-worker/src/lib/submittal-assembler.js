@@ -319,7 +319,7 @@ export async function generateHardwareSetPage(setData, options, PDFLib) {
   const isAffirmed = set.affirmed === 1;
   let page = doc.addPage([pageW, pageH]);
   let curY = pageH - 50;
-  const titleText = `Hardware Submittal Sheet \u2014 Set ${set.set_number}`;
+  const titleText = `Hardware Group ${set.set_number} \u2014 Submittal Sheet`;
   page.drawText(titleText, {
     x: pageW / 2 - helveticaBold.widthOfTextAtSize(titleText, 16) / 2,
     y: curY,
@@ -360,8 +360,8 @@ export async function generateHardwareSetPage(setData, options, PDFLib) {
     ["Project:", setData.projectName || "Hardware Submittal Package"],
     ["DSA No.:", setData.dsaNumber || "\u2014"],
     ["Prepared For:", setData.preparedFor || "\u2014"],
-    ["Set #:", set.set_number],
-    ["Set Name:", set.set_name || "\u2014"],
+    ["Hardware group #:", set.set_number],
+    ["Hardware group name:", set.set_name || "\u2014"],
     ["Door Count:", set.door_count != null ? String(set.door_count) : String(doors.length || "\u2014")]
   ];
   const finishCounts = {};
@@ -385,7 +385,7 @@ export async function generateHardwareSetPage(setData, options, PDFLib) {
       color: rgb2(0.3, 0.3, 0.3)
     });
     page.drawText(value, {
-      x: margin + 90,
+      x: margin + 122,
       y: curY,
       size: 10,
       font: helvetica,
@@ -401,7 +401,7 @@ export async function generateHardwareSetPage(setData, options, PDFLib) {
     color: rgb2(0.8, 0.8, 0.8)
   });
   curY -= 16;
-  const doorsTitle = `Doors Using Set ${set.set_number} (${doors.length} door${doors.length !== 1 ? "s" : ""})`;
+  const doorsTitle = `Doors Using Hardware Group ${set.set_number} (${doors.length} door${doors.length !== 1 ? "s" : ""})`;
   page.drawText(doorsTitle, {
     x: margin,
     y: curY,
@@ -411,7 +411,7 @@ export async function generateHardwareSetPage(setData, options, PDFLib) {
   });
   curY -= 18;
   if (doors.length === 0) {
-    page.drawText("No door entries linked to this set", {
+    page.drawText("No door entries linked to this hardware group", {
       x: margin + 8,
       y: curY,
       size: 9,
@@ -445,7 +445,7 @@ export async function generateHardwareSetPage(setData, options, PDFLib) {
     while (remainingDoors.length > 0) {
       page = doc.addPage([pageW, pageH]);
       curY = pageH - 50;
-      const contDoorTitle = `Set ${set.set_number} Doors (continued)`;
+      const contDoorTitle = `Hardware Group ${set.set_number} Doors (continued)`;
       page.drawText(contDoorTitle, {
         x: margin,
         y: curY,
@@ -470,7 +470,7 @@ export async function generateHardwareSetPage(setData, options, PDFLib) {
     }
   }
   curY -= 12;
-  const compTitle = `Hardware Set ${set.set_number} Components (${components.length} item${components.length !== 1 ? "s" : ""})`;
+  const compTitle = `Hardware Group ${set.set_number} Components (${components.length} item${components.length !== 1 ? "s" : ""})`;
   page.drawText(compTitle, {
     x: margin,
     y: curY,
@@ -480,7 +480,7 @@ export async function generateHardwareSetPage(setData, options, PDFLib) {
   });
   curY -= 18;
   if (components.length === 0) {
-    page.drawText("No components in this set", {
+    page.drawText("No components in this hardware group", {
       x: margin + 8,
       y: curY,
       size: 9,
@@ -513,7 +513,7 @@ export async function generateHardwareSetPage(setData, options, PDFLib) {
     while (remaining.length > 0) {
       page = doc.addPage([pageW, pageH]);
       curY = pageH - 50;
-      const contTitle = `Set ${set.set_number} Components (continued)`;
+      const contTitle = `Hardware Group ${set.set_number} Components (continued)`;
       page.drawText(contTitle, {
         x: margin,
         y: curY,
@@ -547,7 +547,7 @@ export async function generateHardwareSetPage(setData, options, PDFLib) {
   });
   page = doc.addPage([pageW, pageH]);
   curY = pageH - 60;
-  const pageBTitle = `Set ${set.set_number} \u2014 Keying & Compliance`;
+  const pageBTitle = `Hardware Group ${set.set_number} \u2014 Keying & Compliance`;
   page.drawText(pageBTitle, {
     x: margin,
     y: curY,
@@ -693,8 +693,8 @@ export async function generateDoorSchedulePages(doorRows, info = {}) {
   const helveticaBold = await doc.embedFont(StandardFonts2.HelveticaBold);
   const helvetica = await doc.embedFont(StandardFonts2.Helvetica);
   const pageW = 792, pageH = 612, margin = 36;
-  const headers = ["Mark", "HW group", "Size (W x H)", "Thick.", "Fire rating", "Door type / matl / fin", "Frame type / matl / fin", "Notes", "Source"];
-  const colWidths = [50, 46, 92, 38, 54, 92, 104, 186, 58];
+  const headers = ["Mark", "Hardware group", "Size (W x H)", "Thick.", "Fire rating", "Door type / matl / fin", "Frame type / matl / fin", "Notes", "Source"];
+  const colWidths = [45, 65, 85, 34, 48, 80, 92, 121, 50];
   const join = (...v) => v.map((x) => (x == null || x === "" ? "-" : String(x))).join(" / ");
   const rows = doorRows.map((d) => {
     let src = d.page_number ? "p." + d.page_number : "-";
@@ -840,7 +840,7 @@ export async function assembleSubmittalPackage(sessionId, options, env2, PDFLib)
       ORDER BY set_number ASC
     `).bind(sessionId, options.includeDraftSets ? 1 : 0).all();
     const hardwareSets = hardwareSetsResult.results || [];
-    console.log(`[Assembler] Found ${hardwareSets.length} hardware sets for assembly`);
+    console.log(`[Assembler] Found ${hardwareSets.length} hardware groups for assembly`);
     const hardwareSetPdfs = [];
     // Every door of the session once, matched to its set by the set's number as written either way
     // ("1" on Berryessa's doors, "01" in its 08 71 00), sized from the inches the reader stores, with
@@ -882,14 +882,14 @@ export async function assembleSubmittalPackage(sessionId, options, env2, PDFLib)
         const setDoc = await PDFLib.PDFDocument.load(setBytes);
         const setPageCount = setDoc.getPageCount();
         tocSections.push({
-          title: `Hardware Set ${set.set_number}${set.set_name ? " — " + set.set_name : ""}`,
+          title: `Hardware Group ${set.set_number}${set.set_name ? " — " + set.set_name : ""}`,
           pageNumber: currentPage,
           type: "hardware_set"
         });
         currentPage += setPageCount;
         result.sections.push({
           type: "hardware_set",
-          title: `Hardware Set ${set.set_number}`,
+          title: `Hardware Group ${set.set_number}`,
           pages: setPageCount,
           components: components.length,
           doors: doors.length,
@@ -898,7 +898,7 @@ export async function assembleSubmittalPackage(sessionId, options, env2, PDFLib)
         console.log(`[Assembler] Generated set ${set.set_number}: ${setPageCount} pages (${components.length} components, ${doors.length} doors)`);
       } catch (setErr) {
         console.warn(`[Assembler] Failed to generate set ${set.set_number}: ${setErr.message}`);
-        result.errors.push(`Hardware Set ${set.set_number}: ${setErr.message}`);
+        result.errors.push(`Hardware Group ${set.set_number}: ${setErr.message}`);
       }
     }
     const cutSheetPdfs = [];
@@ -952,7 +952,7 @@ export async function assembleSubmittalPackage(sessionId, options, env2, PDFLib)
         page.drawText("Listed as the hardware schedule names them, with why no page is in this packet and what would put one there.", { x: M, y, size: 8, font: h, color: grey });
         y -= 20;
         for (const item of misses.slice(pg * perPage, (pg + 1) * perPage)) {
-          const label = [item.qty ? item.qty + " EA" : null, item.component_type ? String(item.component_type).toUpperCase() : null, item.model || null, item.manufacturer ? "(" + item.manufacturer + ")" : null].filter(Boolean).join(" ") + (item.sets && item.sets.length ? "  [set " + item.sets.join(", ") + "]" : "");
+          const label = [item.qty ? item.qty + " EA" : null, item.component_type ? String(item.component_type).toUpperCase() : null, item.model || null, item.manufacturer ? "(" + item.manufacturer + ")" : null].filter(Boolean).join(" ") + (item.sets && item.sets.length ? "  [hardware group " + item.sets.join(", ") + "]" : "");
           page.drawText(truncateText(label, W - M * 2, b, 8.5), { x: M, y, size: 8.5, font: b, color: ink });
           y -= 11;
           page.drawText(truncateText("   why: " + (item.reason || "not matched"), W - M * 2, h, 8), { x: M, y, size: 8, font: h, color: grey });

@@ -1,0 +1,48 @@
+TAP version 13
+# (node:3834) ExperimentalWarning: VM Modules is an experimental feature and might change at any time
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: guest first read: discovery awaited, no account/upload call, real 65 rows, named section, terminal status
+ok 1 - guest first read: discovery awaited, no account/upload call, real 65 rows, named section, terminal status
+  ---
+  duration_ms: 248.057375
+  type: 'test'
+  ...
+# Subtest: account upload success also replaces Reading with completion
+ok 2 - account upload success also replaces Reading with completion
+  ---
+  duration_ms: 98.646875
+  type: 'test'
+  ...
+# Subtest: failed upload clears busy status and permits retry
+ok 3 - failed upload clears busy status and permits retry
+  ---
+  duration_ms: 15.765958
+  type: 'test'
+  ...
+# Subtest: one code-first door explains new accounts; code send and wrong-code response work
+ok 4 - one code-first door explains new accounts; code send and wrong-code response work
+  ---
+  duration_ms: 15.264292
+  type: 'test'
+  ...
+# Subtest: walk stays disabled on failure/no match, resets during a new match, and has disabled styling and help
+ok 5 - walk stays disabled on failure/no match, resets during a new match, and has disabled styling and help
+  ---
+  duration_ms: 23.67125
+  type: 'test'
+  ...
+# Subtest: sign-in resumes the selected PDF before opening another job or allocating a demo
+ok 6 - sign-in resumes the selected PDF before opening another job or allocating a demo
+  ---
+  duration_ms: 64.148291
+  type: 'test'
+  ...
+1..6
+# tests 6
+# suites 0
+# pass 6
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 660.560083

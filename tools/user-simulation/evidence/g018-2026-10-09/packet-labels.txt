@@ -1,0 +1,141 @@
+Door Schedule (extracted)
+Rockford — g018 layout probe - 65 doors read from A2.2
+Machine-read from the uploaded schedule; values stay drafts until reviewed. (?) = not read with certainty, check it on the sheet. Source = page and table row on the uploaded sheet (appended at the end of this pack…
+
+Mark          Hardware group Size (W x H)                  Thick.    Fire rating   Door type / matl / fin   Frame type / matl / fin   Notes                                Source
+1J.1          44 UTY-IT          3'-0" x 7'-10"            -         -             F / WD1 / STN1           EXIST. (1) / EXIST. (H…   RETROFIT FRAME AND REPL…             p.29 row 0
+109.1         06 CL              3'-0" x 7'-10"            -         -             NG / WD1 / STN1          EXIST. (1) / EXIST. (H…   RETROFIT FRAME AND REPL…             p.29 row 1
+109.2         06 CL              3'-0" x 7'-10"            -         -             NG / WD1 / STN1          EXIST. (1) / EXIST. (H…   RETROFIT FRAME AND REPL…             p.29 row 2
+111.1         06 CL              3'-0" x 7'-10"            -         -             NG / EXIST. (WD) /… EXIST. (3) / EXIST. (H…        RETROFIT FRAME AND REPL…             p.29 row 3
+111.1.1       19 STO             PR 6'-0" x 7'-10"         -         -             F / EXIST. (WD) / E… EXIST. (2) / EXIST. (H…       RETROFIT FRAME AND REPL…             p.29 row 4
+113.1         06 CL              3'-0" x 7'-10"            -         -             NG / EXIST. (WD) /… EXIST. (3) / EXIST. (H…        RETROFIT FRAME AND REPL…             p.29 row 5
+113.1.1       19 STO             PR 6'-0" x 7'-10"         -         -             F / EXIST. (WD) / E… EXIST. (2) / EXIST. (H…       RETROFIT FRAME AND REPL…             p.29 row 6
+114.1         19F STO            PR 6'-0" x 7'-10"         -         YES           F / EXIST. (WD) / E… EXIST. (1) / EXIST. (H…       90 MIN. DOOR AND HARDWA…             p.29 row 7
+118.1         23 STO             2'-8" x 7'-10"            -         -             F / EXIST. (WD) / E… EXIST. (1) / EXIST. (H…       RETROFIT FRAME AND REPL…             p.29 row 8
+119.1         40 UTY             PR 6'-0" x 7'-10"         -         -             F / HM / P9              1 / HM / P9               EXTERIOR DOOR PAIR - FRA…            p.29 row 9
+119.2         44 UTY-IT          3'-0" x 7'-10"            -         -             F / EXIST. (WD) / E… EXIST. (1) / EXIST. (H…       RETROFIT FRAME AND REPL…             p.29 row 10
+126.1         28 COR             PR 6'-0" x 7'-10"         -         -             NG / WD1 / STN1          EXIST. (HM) / EXIST. (… RETROFIT FRAME AND REPL…               p.29 row 11
+126.1.1       32 EXD             3'-0" x 7'-10"            -         -             AL1 / ALUM2 / AN…        SF-E03A / ALUM2 / AN… EXTERIOR DOOR - PANIC HA…                p.29 row 12
+126.1.2       -                  3'-0" x 7'-0"             -         -             F/-/-                    1/-/-                     —                                    p.29 row 13
+126.2         28 COR             PR 6'-0" x 7'-10"         -         -             NG / WD1 / STN1          EXIST. (HM) / EXIST. (… RETROFIT FRAME AND REPL…               p.29 row 14
+127.1         07 CL              3'-0" x 7'-10"            -         -             F / WD1 / STN1           3 / HM / P6               —                                    p.29 row 15
+128.1.1       06 CL              3'-0" x 7'-10"            -         -             NG / WD1 / STN1          EXIST. (SF) / EXIST. (…   RETROFIT FRAME AND REPL…             p.29 row 16
+129.1         06 CL              3'-0" x 7'-10"            -         -             F / WD1 / STN1           3 / HM / P6               —                                    p.29 row 17
+130.1         01 RR              3'-0" x 7'-10"            -         -             F / WD1 / STN1           EXIST. (1) / EXIST. (H…   RETROFIT FRAME AND REPL…             p.29 row 18
+131.1         06 CL              3'-0" x 7'-10"            -         -             F / WD1 / STN1           3 / HM / P6               —                                    p.29 row 19
+132.1         01 RR              3'-0" x 7'-10"            -         -             F / WD1 / STN1           1 / HM / P6               WIDEN EXISTING MASONRY …             p.29 row 20
+133.1         06 CL              3'-0" x 7'-10"            -         -             NG / WD1 / STN1          EXIST. (1) / EXIST. (H…   RETROFIT FRAME AND REPL…             p.29 row 21
+134.1         01 RR              3'-0" x 7'-10"            -         -             F / WD1 / STN1           1 / HM / P6               —                                    p.29 row 22
+136.1         44 UTY-IT          3'-0" x 7'-10"            -         -             F / WD1 / STN1           EXIST. (1) / EXIST. (H…   RETROFIT FRAME AND REPL…             p.29 row 23
+138.1         23 STO             3'-0" x 7'-10"            -         -             F / WD1 / STN1           EXIST. (1) / EXIST. (H…   RETROFIT FRAME AND REPL…             p.29 row 24
+138.1.1       06 CL              3'-0" x 7'-0"             -         -             NG / WD1 / STN1          EXIST. (1) / EXIST. (H…   RETROFIT FRAME AND REPL…             p.29 row 25
+138.2         23 STO             3'-0" x 7'-10"            -         -             F / WD1 / STN1           EXIST. (1) / EXIST. (H…   RETROFIT FRAME AND REPL…             p.29 row 26
+141.1         06 CL              3'-0" x 7'-10"            -         -             F / WD1 / STN1           3 / HM / P6               —                                    p.29 row 27
+142.1         06 CL              3'-0" x 7'-10"            -         -             F / WD1 / STN1           3 / HM / P6               —                                    p.29 row 28
+143.1         06 CL              3'-0" x 7'-10"            -         -             G / WD1 / STN1           3 / HM / P6               —                                    p.29 row 29
+144.1         06 CL              3'-0" x 7'-10"            -         -             G / WD1 / STN1           3 / HM / P6               —                                    p.29 row 30
+145.1         06 CL              3'-0" x 7'-10"            -         -             G / WD1 / STN1           3 / HM / P6               —                                    p.29 row 31
+146.1         06 CL              3'-0" x 7'-10"            -         -             G / WD1 / STN1           3 / HM / P6               —                                    p.29 row 32
+147.1         02 RR-M            3'-0" x 7'-10"            -         -             F / WD1 / STN1           EXIST. (1) / EXIST. (H…   RETROFIT FRAME AND REPL…             p.29 row 33
+147.1.1       51 UTY-CUS         3'-0" x 7'-10"            -         -             F / WD1 / STN1           1 / HM / P6               NEW DOOR FRAME, SLAB & …             p.29 row 34
+
+
+
+                                                                                                                                                                                                           Page 1
+Door Schedule (extracted) (continued)
+Rockford — g018 layout probe - 65 doors read from A2.2
+Machine-read from the uploaded schedule; values stay drafts until reviewed. (?) = not read with certainty, check it on the sheet. Source = page and table row on the uploaded sheet (appended at the end of this pack…
+
+Mark          Hardware group Size (W x H)                  Thick.    Fire rating   Door type / matl / fin   Frame type / matl / fin   Notes                                Source
+148.1         02 RR-M            3'-0" x 7'-10"            -         -             F / WD1 / STN1           EXIST. (1) / EXIST. (H…   RETROFIT FRAME AND REPL…             p.29 row 35
+150.1         07 CL              3'-0" x 7'-10"            -         -             AL1 / ALUM1 / AN…        SF-IN09 / ALUM1 / AN…     STOREFRONT                           p.29 row 36
+151.1         06 CL              3'-0" x 7'-10"            -         -             F / WD1 / STN1           3 / HM / P6               —                                    p.29 row 37
+152.1         47 VES             3'-0" x 7'-10"            -         -             F / WD1 / STN1           3 / HM / P6               —                                    p.29 row 38
+152.1.1       32 EXD             3'-0" x 7'-10"            -         -             AL1 / ALUM2 / AN…        SF-E03 / ALUM2 / AN…      EXTERIOR DOOR - PANIC HA…            p.29 row 39
+153.1         06 CL              3'-0" x 7'-10"            -         -             F / WD1 / STN1           3 / HM / P6               —                                    p.29 row 40
+155.1         07 CL              3'-0" x 7'-10"            -         -             F / WD1 / STN1           3 / HM / P6               —                                    p.29 row 41
+155.2         23 STO             2'-6" x 7'-10"            -         -             F / WD1 / STN1           1 / HM / P6               —                                    p.29 row 42
+157.1         20 STO             3'-0" x 7'-10"            -         -             F / WD1 / STN1           EXIST. (1) / EXIST. (H…   RETROFIT FRAME AND REPL…             p.29 row 43
+159.1         06 CL              3'-0" x 7'-10"            -         -             NG / WD1 / STN1          EXIST. (1) / EXIST. (H…   RETROFIT FRAME AND REPL…             p.29 row 44
+161.1         06 CL              3'-0" x 7'-10"            -         -             F / WD1 / STN1           3 / HM / P6               —                                    p.29 row 45
+162.1         06 CL              3'-0" x 7'-10"            -         -             F / WD1 / STN1           3 / HM / P6               —                                    p.29 row 46
+163.1         06 CL              3'-0" x 7'-10"            -         -             F / WD1 / STN1           3 / HM / P6               —                                    p.29 row 47
+164.1         06 CL              3'-0" x 7'-10"            -         -             F / WD1 / STN1           3 / HM / P6               —                                    p.29 row 48
+165.1         06 CL              3'-0" x 7'-10"            -         -             F / WD1 / STN1           3 / HM / P6               —                                    p.29 row 49
+166.1         06 CL              3'-0" x 7'-10"            -         -             F / WD1 / STN1           3 / HM / P6               —                                    p.29 row 50
+167.1         02 RR-M            3'-0" x 7'-10"            -         -             F / WD1 / STN1           EXIST. (1) / EXIST. (H…   RETROFIT FRAME AND REPL…             p.29 row 51
+167.1.1       51 UTY-CUS         3'-0" x 7'-10"            -         -             F / WD1 / STN1           1 / HM / P6               NEW DOOR FRAME, SLAB & …             p.29 row 52
+168.1         02 RR-M            3'-0" x 7'-10"            -         -             F / WD1 / STN1           EXIST. (1) / EXIST. (H…   RETROFIT FRAME AND REPL…             p.29 row 53
+170.1         07 CL              3'-0" x 7'-10"            -         -             AL1 / ALUM1 / AN…        SF-IN09 / ALUM1 / AN…     STOREFRONT                           p.29 row 54
+173.1         06 CL              3'-0" x 7'-10"            -         -             F / WD1 / STN1           3 / HM / P6               —                                    p.29 row 55
+174.1         06 CL              3'-0" x 7'-10"            -         -             F / WD1 / STN1           3 / HM / P6               —                                    p.29 row 56
+175.1         06 CL              3'-0" x 7'-10"            -         -             F / WD1 / STN1           3 / HM / P6               —                                    p.29 row 57
+176.1         06 CL              3'-0" x 7'-10"            -         -             F / WD1 / STN1           3 / HM / P6               —                                    p.29 row 58
+177.1         06 CL              3'-0" x 7'-10"            -         -             F / WD1 / STN1           3 / HM / P6               —                                    p.29 row 59
+178.1         06 CL              3'-0" x 7'-10"            -         -             F / WD1 / STN1           3 / HM / P6               —                                    p.29 row 60
+179.1         02 RR-M            3'-0" x 7'-10"            -         -             F / WD1 / STN1           EXIST. (1) / EXIST. (H…   RETROFIT FRAME AND REPL…             p.29 row 61
+179.1.1       51 UTY-CUS         3'-0" x 7'-10"            -         -             F / WD1 / STN1           1 / HM / P6               NEW DOOR FRAME, SLAB & …             p.29 row 62
+180.1         02 RR-M            3'-0" x 7'-10"            -         -             F / WD1 / STN1           EXIST. (1) / EXIST. (H…   RETROFIT FRAME AND REPL…             p.29 row 63
+182.1         07 CL              2'-11" x 7'-10"           -         -             AL1 / ALUM1 / AN…        SF-IN09 / ALUM1 / AN…     STOREFRONT                           p.29 row 64
+
+
+
+
+                                                                                                                                                                                                           Page 2
+             Hardware Group 51 UTY-CUS — Submittal Sheet
+                                                   SUBMITTED FOR REVIEW
+
+
+
+
+Project:                          Rockford — g018 layout probe
+DSA No.:                          —
+Prepared For:                     —
+Hardware group #:                 51 UTY-CUS
+Hardware group name:              Utility
+Door Count:                       3
+Primary Finish:                   Satin Chromium (626)
+
+
+
+Doors Using Hardware Group 51 UTY-CUS (3 doors)
+
+
+Door No.         Size                       Type              Frame             Fire Rating   Remarks
+
+147.1.1          3'-0" x 7'-10"             F                 HM                —             NEW DOOR FRA…
+
+167.1.1          3'-0" x 7'-10"             F                 HM                —             NEW DOOR FRA…
+
+179.1.1          3'-0" x 7'-10"             F                 HM                —             NEW DOOR FRA…
+Hardware Group 51 UTY-CUS Components (4 items)
+
+
+Qty        Description                             Mfr                Model/Series            Finish
+
+1 EA       CONTINUOUS HINGE                        Select Hinges      SL11 / SL24             628
+
+1 EA       STOREROOM LOCK                          Schlage            ALX80R-RHO-626 FSIC     Satin Chromium
+
+1 EA       OH STOP                                 Glynn-Johnson      90S                     652
+
+3 EA       SILENCER                                Ives               SR64                    GRY
+
+
+
+
+                                       Generated by Weyland Hardware Submittal System
+Hardware Group 51 UTY-CUS — Keying & Compliance
+
+Keying Information
+  Keying information not specified — see project keying schedule
+
+
+Certifications & Compliance
+  No compliance data available
+
+
+
+
+                              Generated by Weyland Hardware Submittal System
+

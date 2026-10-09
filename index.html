@@ -829,6 +829,10 @@
       box-shadow: 0 0 20px rgba(42, 82, 255, 0.4);
       transform: translateY(-1px);
     }
+    .button:disabled, .button:disabled:hover {
+      background: var(--panel); color: var(--muted); border-color: var(--muted);
+      opacity: .5; cursor: not-allowed; box-shadow: none; transform: none;
+    }
     .button.accent {
       background: var(--accent);
       border-color: var(--accent);
@@ -2123,7 +2127,8 @@
           <textarea id="hs-text" rows="4" placeholder="One spec per line, e.g.&#10;LCN 4040XP&#10;Von Duprin, 99&#10;Schlage	L9080" style="width:100%;margin-top:10px;background:#161920;color:var(--text);border:1px solid var(--line);border-radius:8px;padding:10px 12px;font:500 13px/1.45 ui-monospace,monospace;resize:vertical"></textarea>
           <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-top:10px">
             <button id="hs-run" type="button" class="button accent" style="padding:9px 16px;font-size:11px">MATCH THE SCHEDULE</button>
-            <button id="hs-walk" type="button" class="button primary" style="padding:9px 16px;font-size:11px" disabled>WALK THIS SCHEDULE IN SIGHTX</button>
+            <button id="hs-walk" aria-describedby="hs-walk-help" type="button" class="button primary" style="padding:9px 16px;font-size:11px" disabled>WALK THIS SCHEDULE IN SIGHTX</button>
+            <small id="hs-walk-help" style="color:var(--muted);font-size:11px">Match at least one spec line to enable the walk.</small>
             <small id="hs-note" style="color:var(--muted);font-size:11px">Up to 60 lines. Misses are recorded as manufacturer + model only, so coverage grows.</small>
           </div>
           <div id="hs-results" style="margin-top:12px;font-size:13px;color:var(--muted)"></div>
@@ -2191,7 +2196,7 @@
       </div>
       <div class="chapter-head">
         <div class="chapter-product-badge"><span>TakeoffX</span></div>
-        <h2>Count Doors by Size, Rating and Hardware Set from Your Schedule Page.</h2>
+        <h2>Count Doors by Size, Rating and Hardware Group from Your Schedule Page.</h2>
         <div class="chapter-tagline">Every count traced to the row it came from; a page reads in 18 to 40 seconds.</div>
         <p class="chapter-desc">Door and hardware counts from a ruled schedule table, not from the drawings. The canvas below is a stored example of stage-1 wall extraction from a real public bid-set sheet; it is not run for you. The door counts come from the schedule reader.</p>
       </div>
@@ -2254,7 +2259,7 @@
         <div class="chapter-product-badge"><span>SubX</span></div>
         <h2>Read a Door Schedule Page into a Door List, Then a Packet.</h2>
         <div class="chapter-tagline">Reads ruled schedule tables on the page you name; a size it cannot read with certainty is flagged, not guessed.</div>
-        <p class="chapter-desc">Door rows and hardware sets read from a ruled schedule table, each traced to its page and row, matched to the catalogue where it covers them, and built into the submittal PDF. Full-size CAD sheets and the hardware groups of a spec section read too: on the Rockford bid set, 65 of 65 doors from sheet A2.2 and 110 of 110 items from Section 08 71 00. A scanned spec section's hardware groups are read by OCR; a scanned full-size schedule sheet does not read yet.</p>
+        <p class="chapter-desc">Door rows and hardware groups read from a ruled schedule table, each traced to its page and row, matched to the catalogue where it covers them, and built into the submittal PDF. Full-size CAD sheets and the hardware groups of a spec section read too: on the Rockford bid set, 65 of 65 doors from sheet A2.2 and 110 of 110 items from Section 08 71 00. A scanned spec section's hardware groups are read by OCR; a scanned full-size schedule sheet does not read yet.</p>
       </div>
 
       <!-- The sample schedule page the session below was read from. 2026-10-08: the five-step
@@ -2283,7 +2288,7 @@
 
       <div class="note-card">
         <b>The WeylandAI Building</b> &middot; New Corporate Headquarters, 4400 Bluestem Parkway, Austin, TX (shared example project)<br>
-        A sample schedule: WeylandAI&rsquo;s own sample building, read once and copied into your session, matched against manufacturer hardware sets. <span id="source-note"><span class="skel" style="width:220px;height:9px"></span></span><br>
+        A sample schedule: WeylandAI&rsquo;s own sample building, read once and copied into your session, matched against manufacturer hardware groups. <span id="source-note"><span class="skel" style="width:220px;height:9px"></span></span><br>
         <span style="color:var(--muted)">Click any <b style="color:var(--green)">MATCHED</b> row below to acknowledge it.</span>
       </div>
 
@@ -2291,7 +2296,7 @@
         <div class="metric-card"><span>Schedule Lines</span><strong id="stat-total"><span class="skel" style="width:2em;height:22px"></span></strong></div>
         <div class="metric-card"><span>Matched</span><strong class="g" id="stat-matched"><span class="skel" style="width:2em;height:22px"></span></strong></div>
         <div class="metric-card"><span>Pending Review</span><strong class="p" id="stat-pending"><span class="skel" style="width:2em;height:22px"></span></strong></div>
-        <div class="metric-card"><span>Hardware Sets</span><strong id="stat-sets"><span class="skel" style="width:2em;height:22px"></span></strong></div>
+        <div class="metric-card"><span>Hardware Groups</span><strong id="stat-sets"><span class="skel" style="width:2em;height:22px"></span></strong></div>
       </div>
 
       <div class="table-card">
@@ -2302,7 +2307,7 @@
         <div class="table-scroll">
           <table>
             <thead>
-              <tr><th>Door</th><th>Location</th><th>Door Type</th><th>Hardware Set</th><th>Status</th></tr>
+              <tr><th>Door</th><th>Location</th><th>Door Type</th><th>Hardware Group</th><th>Status</th></tr>
             </thead>
             <tbody id="door-schedule-tbody">
               <tr><td><span class="skel" style="width:44px;height:13px"></span></td><td><span class="skel" style="width:140px;height:13px"></span></td><td><span class="skel" style="width:90px;height:13px"></span></td><td><span class="skel" style="width:64px;height:13px"></span></td><td><span class="skel" style="width:72px;height:20px;border-radius:99px"></span></td></tr>
@@ -2403,7 +2408,7 @@
         <div class="propx-card">
           <div class="propx-head">
             <h3>Sample bid package &middot; an illustration</h3>
-            <p>Sample numbers, not a quote: the sample building is 10 doors and 8 hardware sets in SubX. The PropX builder prices your own schedule from the unit prices you enter.</p>
+            <p>Sample numbers, not a quote: the sample building is 10 doors and 8 hardware groups in SubX. The PropX builder prices your own schedule from the unit prices you enter.</p>
           </div>
 
           <table>
@@ -2696,7 +2701,7 @@
         <div class="chapter-product-badge"><span>SightX</span></div>
         <h2>SightX &mdash; Walk a sample corridor; your matched products hang in it.</h2>
         <div class="chapter-tagline">A corridor of hollow-metal doors, every product on them a real catalog page.</div>
-        <p class="chapter-desc">Behind this dossier is a 30 m commercial corridor: hollow-metal frames, flush doors, hinges, levers and closers drawn where the hardware set mounts them, and an exit pair with rim devices at the end. Every product named in it (LCN 4040XP and 1461, Schlage L9080, Ives 5BB1, Hager BB1279, Von Duprin 99) resolves in the CutsheetX catalog today. Paste your own schedule above and press walk: your matched openings replace the sample ones. <a href="/sightx/">Open SightX</a> to build a corridor from a whole schedule SubX read from your plans, or one you paste: every door at its scheduled size and rating, its hardware set drawn where it mounts. A SubX session is laid out on its own floor plan: SubX finds the plan sheets by their title blocks and ties each door tag to its schedule mark, so each door stands in the room the plan gives it (walls and swings are not drawn yet).</p>
+        <p class="chapter-desc">Behind this dossier is a 30 m commercial corridor: hollow-metal frames, flush doors, hinges, levers and closers drawn where the hardware group mounts them, and an exit pair with rim devices at the end. Every product named in it (LCN 4040XP and 1461, Schlage L9080, Ives 5BB1, Hager BB1279, Von Duprin 99) resolves in the CutsheetX catalog today. Paste your own schedule above and press walk: your matched openings replace the sample ones. <a href="/sightx/">Open SightX</a> to build a corridor from a whole schedule SubX read from your plans, or one you paste: every door at its scheduled size and rating, its hardware group drawn where it mounts. A SubX session is laid out on its own floor plan: SubX finds the plan sheets by their title blocks and ties each door tag to its schedule mark, so each door stands in the room the plan gives it (walls and swings are not drawn yet).</p>
       </div>
 
       <div class="sightx-container">
@@ -2716,7 +2721,7 @@
 
           <div class="sightx-centerpiece">
             <h3>A Jobsite, Not a Space Station</h3>
-            <p>Lower the dossier and the corridor is behind it. Walk it, scan a frame to read its hardware set, or match your own schedule and press walk to hang your doors in its walls. Nothing on a label is a part you cannot buy.</p>
+            <p>Lower the dossier and the corridor is behind it. Walk it, scan a frame to read its hardware group, or match your own schedule and press walk to hang your doors in its walls. Nothing on a label is a part you cannot buy.</p>
             <button type="button" class="button primary js-lower-dossier" style="padding:14px 26px;font-size:12px">
               LOWER THE DOSSIER AND LOOK AROUND &rarr;
             </button>
@@ -2790,7 +2795,7 @@
               </tr>
               <tr>
                 <td><strong>Plan Quantification</strong></td>
-                <td class="weyland-col"><span class="chk-yes">&check;</span> <strong>Schedule-Based Door Counts</strong> &mdash; doors by size, rating and hardware set, read from your schedule page and traced to the row.</td>
+                <td class="weyland-col"><span class="chk-yes">&check;</span> <strong>Schedule-Based Door Counts</strong> &mdash; doors by size, rating and hardware group, read from your schedule page and traced to the row.</td>
                 <td><span class="chk-no">&cross;</span> A separate takeoff subscription per user.</td>
                 <td><span class="chk-no">&cross;</span> Static PDF viewer with no native hardware AI.</td>
               </tr>
@@ -2842,7 +2847,7 @@
       <div class="offer-card" id="offer" data-offer-box>
         <div class="offer-line"><strong>$100</strong> &middot; your first submittal + 30 days of every product &middot; no automatic charge</div>
         <ul class="pricing-features">
-          <li><span class="chk-yes">&check;</span> <span>One submittal packet: SubX finds the door schedule and hardware pages in your bid set, reads them, lists the doors and hardware sets with the page and row each came from, and builds the PDF; items our catalogue covers get their cited document. Full-size CAD sheets and the hardware groups of a spec section read too: on the Rockford bid set, 65 of 65 doors from sheet A2.2 and 110 of 110 items from Section 08 71 00. A scanned spec section's hardware groups are read by OCR; a scanned full-size schedule sheet does not read yet.</span></li>
+          <li><span class="chk-yes">&check;</span> <span>One submittal packet: SubX finds the door schedule and hardware pages in your bid set, reads them, lists the doors and hardware groups with the page and row each came from, and builds the PDF; items our catalogue covers get their cited document. Full-size CAD sheets and the hardware groups of a spec section read too: on the Rockford bid set, 65 of 65 doors from sheet A2.2 and 110 of 110 items from Section 08 71 00. A scanned spec section's hardware groups are read by OCR; a scanned full-size schedule sheet does not read yet.</span></li>
           <li><span class="chk-yes">&check;</span> <span>30 days of every product: SubX, TakeOffX, CutsheetX, SightX, PropX, MeetingX and HuntX.</span></li>
           <li><span class="chk-yes">&check;</span> <span>One payment. Nothing renews: before the 30 days end we ask you to choose a plan. Without one, the paid tools pause and your account and work stay.</span></li>
         </ul>
@@ -3386,6 +3391,7 @@
         var out = document.getElementById("hs-results"), note = document.getElementById("hs-note");
         if (!text.trim()) { out.textContent = "Paste at least one spec line."; return; }
         hsRun.disabled = true; hsWalk.disabled = true; hsMatched = [];
+        document.getElementById("hs-walk-help").textContent = "Match at least one spec line to enable the walk.";
         out.textContent = "Matching every line on the real matcher\u2026";
         var t0 = performance.now();
         ephemeralToken().then(function (token) {
@@ -3419,7 +3425,7 @@
             out.insertAdjacentHTML("beforeend",
               "<div class=\"hs-packet offer-box\" data-offer-box>" +
                 "<div class=\"offer-line\">" + hsEsc(OFFER_LINE) + "</div>" +
-                "<p class=\"offer-copy\"><strong>" + nMatched + " matched line" + (nMatched === 1 ? "" : "s") + "</strong> can become your first submittal packet: SubX finds the door schedule and hardware pages in your bid set, reads them, lists its doors and sets with the page and row each came from, and builds the PDF, attaching the cited document for the items our catalogue covers. For 30 days you also have every product; nothing is charged after that unless you choose a plan.</p>" +
+                "<p class=\"offer-copy\"><strong>" + nMatched + " matched line" + (nMatched === 1 ? "" : "s") + "</strong> can become your first submittal packet: SubX finds the door schedule and hardware pages in your bid set, reads them, lists its doors and hardware groups with the page and row each came from, and builds the PDF, attaching the cited document for the items our catalogue covers. For 30 days you also have every product; nothing is charged after that unless you choose a plan.</p>" +
                 "<div class=\"offer-act\">" +
                   "<a class=\"js-checkout button accent\" data-product=\"" + OFFER_SKU + "\" href=\"#pricing\">BUILD THE PACKET \u00b7 <span data-sku-price=\"" + OFFER_SKU + "\">$100</span></a>" +
                   "<span class=\"js-checkout-note\" aria-live=\"polite\"></span>" +
@@ -3430,6 +3436,7 @@
           }
           hsMatched = results.filter(function (r) { return r.matched; }).map(function (r) { var p = r.product || {}; return { label: p.model || r.model || "", sub: (p.manufacturer || r.manufacturer || "") + (p.category ? " \u00b7 " + p.category : "") }; });
           hsWalk.disabled = hsMatched.length === 0;
+          document.getElementById("hs-walk-help").textContent = hsMatched.length ? "Ready to walk the matched schedule." : "Match at least one spec line to enable the walk.";
           var d = dossierRead(); d.matches = (d.matches || []).concat(results.filter(function (r) { return r.matched; }).map(function (r) { return { raw: r.raw, product: (r.product || {}).name, confidence: r.confidence, at: Date.now() }; })).slice(-200); dossierWrite(d);
         }).catch(function (err) { out.textContent = "Request failed: " + err.message; }).finally(function () { hsRun.disabled = false; });
       });
@@ -3708,7 +3715,7 @@
     // The demo building's door schedule as the visitor's own copy holds it (GET .../door-index:
     // by_hardware_set { "HW-01": [{ door_number, door_location, door_type, source_page, verified }] }).
     // Every cell is the row's own value (a dash where the schedule has none). MATCHED = the row's
-    // hardware set is confirmed (verified); PENDING REVIEW = not yet. Until 2026-10-07 this expected
+    // hardware group is confirmed (verified); PENDING REVIEW = not yet. Until 2026-10-07 this expected
     // { doors: [...] } and drew nothing from the live answer, and invented the location and door type.
     function renderRealDoorRows(byHardwareSet){
       if (!tbody) return 0;
@@ -4499,6 +4506,6 @@
   })();
 </script>
 <script src="/assets/authfor-integration-standard.js?v=20261006c"></script>
-<script src="/assets/weyland-shell.js?v=20261007f"></script>
+<script src="/assets/weyland-shell.js?v=20261009g018"></script>
 </body>
 </html>

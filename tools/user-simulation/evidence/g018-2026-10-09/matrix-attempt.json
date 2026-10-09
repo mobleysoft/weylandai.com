@@ -1,0 +1,491 @@
+{
+  "started": "2026-10-09T11-16-16-452Z",
+  "passes": 1,
+  "summary": [
+    {
+      "id": "estimator-schedule-to-packet",
+      "runs": 1,
+      "green": 0,
+      "failing": [
+        "journey completes"
+      ]
+    }
+  ],
+  "truth": {
+    "report": "tools/accuracy/truth_report_2026-10-09-10-49.json",
+    "records": 616,
+    "queue": 4285,
+    "tiers": {
+      "exact": {
+        "pdfs": 2,
+        "rows_agreed": 150,
+        "rows_total": 150,
+        "agreement": 1,
+        "queue": 0,
+        "families": {
+          "bidset (synthetic)": {
+            "pdfs": 1,
+            "agreed": 102,
+            "total": 102,
+            "fa": 570,
+            "ft": 570,
+            "orc": {
+              "marks_on_plan": {
+                "pass": 48,
+                "total": 48
+              },
+              "sets_exist": {
+                "pass": 10,
+                "total": 10
+              },
+              "set_door_lists": {
+                "pass": 10,
+                "total": 10
+              },
+              "types_in_legend": {
+                "pass": 3,
+                "total": 3
+              },
+              "sizes_and_marks": {
+                "pass": 48,
+                "total": 48
+              }
+            },
+            "queue": 0
+          },
+          "unknown": {
+            "pdfs": 1,
+            "agreed": 48,
+            "total": 48,
+            "fa": 239,
+            "ft": 239,
+            "orc": {},
+            "queue": 0
+          }
+        }
+      },
+      "audited": {
+        "pdfs": 4,
+        "rows_agreed": 288,
+        "rows_total": 320,
+        "agreement": 0.9,
+        "queue": 35,
+        "families": {
+          "Berryessa": {
+            "pdfs": 1,
+            "agreed": 16,
+            "total": 41,
+            "fa": 222,
+            "ft": 246,
+            "orc": {
+              "marks_on_plan": {
+                "pass": 24,
+                "total": 24
+              },
+              "sets_exist": {
+                "pass": 2,
+                "total": 2
+              },
+              "sizes_and_marks": {
+                "pass": 24,
+                "total": 24
+              }
+            },
+            "queue": 26
+          },
+          "Christina": {
+            "pdfs": 1,
+            "agreed": 99,
+            "total": 104,
+            "fa": 459,
+            "ft": 462,
+            "orc": {},
+            "queue": 6
+          },
+          "Rockford": {
+            "pdfs": 1,
+            "agreed": 173,
+            "total": 175,
+            "fa": 860,
+            "ft": 863,
+            "orc": {
+              "marks_on_plan": {
+                "pass": 64,
+                "total": 65
+              },
+              "sets_exist": {
+                "pass": 14,
+                "total": 14
+              },
+              "set_door_lists": {
+                "pass": 14,
+                "total": 14
+              },
+              "types_in_legend": {
+                "pass": 3,
+                "total": 4
+              },
+              "sizes_and_marks": {
+                "pass": 64,
+                "total": 65
+              }
+            },
+            "queue": 3
+          },
+          "unknown": {
+            "pdfs": 1,
+            "agreed": 0,
+            "total": 0,
+            "fa": 0,
+            "ft": 0,
+            "orc": {},
+            "queue": 0
+          }
+        }
+      },
+      "agreed": {
+        "pdfs": 30,
+        "rows_agreed": 1405,
+        "rows_total": 1812,
+        "agreement": 0.775,
+        "queue": 561,
+        "families": {
+          "california_dgs_obas": {
+            "pdfs": 1,
+            "agreed": 81,
+            "total": 97,
+            "fa": 248,
+            "ft": 255,
+            "orc": {},
+            "queue": 19
+          },
+          "delaware_bidcondocs": {
+            "pdfs": 2,
+            "agreed": 92,
+            "total": 261,
+            "fa": 519,
+            "ft": 590,
+            "orc": {},
+            "queue": 214
+          },
+          "Fayette County (GA)": {
+            "pdfs": 1,
+            "agreed": 31,
+            "total": 54,
+            "fa": 91,
+            "ft": 95,
+            "orc": {
+              "marks_on_plan": {
+                "pass": 25,
+                "total": 35
+              },
+              "sizes_and_marks": {
+                "pass": 33,
+                "total": 35
+              }
+            },
+            "queue": 24
+          },
+          "missouri_oa_fmdc": {
+            "pdfs": 21,
+            "agreed": 904,
+            "total": 1092,
+            "fa": 4330,
+            "ft": 4493,
+            "orc": {
+              "sizes_and_marks": {
+                "pass": 52,
+                "total": 95
+              },
+              "marks_on_plan": {
+                "pass": 37,
+                "total": 77
+              }
+            },
+            "queue": 284
+          },
+          "Noble County Highway Department": {
+            "pdfs": 1,
+            "agreed": 33,
+            "total": 37,
+            "fa": 161,
+            "ft": 161,
+            "orc": {},
+            "queue": 6
+          },
+          "Orchard View Public Schools": {
+            "pdfs": 1,
+            "agreed": 71,
+            "total": 72,
+            "fa": 332,
+            "ft": 334,
+            "orc": {},
+            "queue": 3
+          },
+          "Rockford": {
+            "pdfs": 1,
+            "agreed": 169,
+            "total": 172,
+            "fa": 840,
+            "ft": 844,
+            "orc": {},
+            "queue": 6
+          },
+          "school_district_sites": {
+            "pdfs": 1,
+            "agreed": 7,
+            "total": 9,
+            "fa": 33,
+            "ft": 33,
+            "orc": {},
+            "queue": 4
+          },
+          "university_bid_pages": {
+            "pdfs": 1,
+            "agreed": 17,
+            "total": 18,
+            "fa": 80,
+            "ft": 81,
+            "orc": {},
+            "queue": 1
+          }
+        }
+      },
+      "oracle-checked": {
+        "pdfs": 7,
+        "rows_agreed": 0,
+        "rows_total": 136,
+        "agreement": 0,
+        "queue": 158,
+        "families": {
+          "Connor Consolidated School / Maine BGS": {
+            "pdfs": 1,
+            "agreed": 0,
+            "total": 6,
+            "fa": 34,
+            "ft": 42,
+            "orc": {
+              "types_in_legend": {
+                "pass": 2,
+                "total": 2
+              },
+              "sizes_and_marks": {
+                "pass": 6,
+                "total": 6
+              }
+            },
+            "queue": 8
+          },
+          "missouri_oa_fmdc": {
+            "pdfs": 6,
+            "agreed": 0,
+            "total": 130,
+            "fa": 117,
+            "ft": 170,
+            "orc": {
+              "marks_on_plan": {
+                "pass": 44,
+                "total": 96
+              },
+              "sizes_and_marks": {
+                "pass": 103,
+                "total": 113
+              },
+              "sets_exist": {
+                "pass": 1,
+                "total": 3
+              }
+            },
+            "queue": 150
+          }
+        }
+      },
+      "unread": {
+        "pdfs": 573,
+        "rows_agreed": 0,
+        "rows_total": 3306,
+        "agreement": 0,
+        "queue": 3531,
+        "families": {
+          "california_dgs_obas": {
+            "pdfs": 5,
+            "agreed": 0,
+            "total": 0,
+            "fa": 0,
+            "ft": 0,
+            "orc": {},
+            "queue": 0
+          },
+          "Christina": {
+            "pdfs": 2,
+            "agreed": 0,
+            "total": 0,
+            "fa": 0,
+            "ft": 0,
+            "orc": {},
+            "queue": 0
+          },
+          "City of Worcester / Worcester Public Schools": {
+            "pdfs": 1,
+            "agreed": 0,
+            "total": 0,
+            "fa": 0,
+            "ft": 0,
+            "orc": {},
+            "queue": 0
+          },
+          "civicplus_documentcenter": {
+            "pdfs": 1,
+            "agreed": 0,
+            "total": 0,
+            "fa": 0,
+            "ft": 0,
+            "orc": {},
+            "queue": 0
+          },
+          "delaware_bidcondocs": {
+            "pdfs": 8,
+            "agreed": 0,
+            "total": 1058,
+            "fa": 0,
+            "ft": 0,
+            "orc": {},
+            "queue": 1134
+          },
+          "missouri_oa_fmdc": {
+            "pdfs": 535,
+            "agreed": 0,
+            "total": 1852,
+            "fa": 43,
+            "ft": 82,
+            "orc": {},
+            "queue": 1968
+          },
+          "Montgomery County": {
+            "pdfs": 1,
+            "agreed": 0,
+            "total": 0,
+            "fa": 0,
+            "ft": 0,
+            "orc": {},
+            "queue": 0
+          },
+          "municipal_wordpress_uploads": {
+            "pdfs": 3,
+            "agreed": 0,
+            "total": 0,
+            "fa": 0,
+            "ft": 0,
+            "orc": {},
+            "queue": 0
+          },
+          "Oakton College District 535": {
+            "pdfs": 1,
+            "agreed": 0,
+            "total": 0,
+            "fa": 0,
+            "ft": 0,
+            "orc": {},
+            "queue": 0
+          },
+          "ohio_ofcc": {
+            "pdfs": 8,
+            "agreed": 0,
+            "total": 164,
+            "fa": 0,
+            "ft": 0,
+            "orc": {},
+            "queue": 175
+          },
+          "Rockford": {
+            "pdfs": 1,
+            "agreed": 0,
+            "total": 0,
+            "fa": 0,
+            "ft": 0,
+            "orc": {},
+            "queue": 0
+          },
+          "Schenectady County": {
+            "pdfs": 1,
+            "agreed": 0,
+            "total": 0,
+            "fa": 0,
+            "ft": 0,
+            "orc": {},
+            "queue": 0
+          },
+          "school_district_sites": {
+            "pdfs": 4,
+            "agreed": 0,
+            "total": 1,
+            "fa": 0,
+            "ft": 0,
+            "orc": {},
+            "queue": 2
+          },
+          "university_bid_pages": {
+            "pdfs": 1,
+            "agreed": 0,
+            "total": 231,
+            "fa": 0,
+            "ft": 0,
+            "orc": {},
+            "queue": 252
+          },
+          "utah_pmn": {
+            "pdfs": 1,
+            "agreed": 0,
+            "total": 0,
+            "fa": 0,
+            "ft": 0,
+            "orc": {},
+            "queue": 0
+          }
+        }
+      }
+    },
+    "calibration": {
+      "exact": {
+        "ar": 804,
+        "at": 809,
+        "rowsAgreedFound": 150,
+        "rowsAgreedRight": 145,
+        "dis": 0,
+        "disA": 0,
+        "disB": 0,
+        "disN": 0
+      },
+      "audited": {
+        "ar": 1168,
+        "at": 1171,
+        "rowsAgreedFound": 208,
+        "rowsAgreedRight": 207,
+        "dis": 28,
+        "disA": 1,
+        "disB": 27,
+        "disN": 0
+      }
+    }
+  },
+  "rows": [
+    {
+      "pass": 1,
+      "id": "estimator-schedule-to-packet",
+      "green": false,
+      "exit": 1,
+      "timedOut": false,
+      "at": "2026-10-09T11:16:16.453Z",
+      "seconds": 0,
+      "started_at": "2026-10-09T11:16:16.629Z",
+      "passed": 0,
+      "total": 1,
+      "failed": [
+        {
+          "name": "journey completes",
+          "detail": "browserType.launch: Target page, context or browser has been closed\nBrowser logs:\n\n<launching> /Users/johnmobley/Library/Caches/ms-playwright/chromium_headless_shell-1243/chrome-headless-shell-mac-arm64/chrome-headless-shell --disable-field-trial-config --disable-background-networking --disable-background-timer-throttling --disable-backgrounding-occluded-windows --disable-back-forward-cache --disa"
+        }
+      ]
+    }
+  ]
+}

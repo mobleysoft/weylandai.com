@@ -30,6 +30,7 @@ import scheduleGridClientBin from "../../assets/client-ocr/schedule-grid-extract
 // The text-layer reader (2026-10-08): door schedules and hardware groups read
 // from the PDF's own positioned text before any OCR. Imported by the grid
 // module above as ./schedule-text-layer.mjs; source in assets/client-ocr-src.
+import scheduleWorkspaceBin from "../../assets/client-ocr/schedule-workspace.mjs.bin";
 import scheduleTextLayerBin from "../../assets/client-ocr/schedule-text-layer.mjs.bin";
 // The Browser Rendering runner page (2026-10-07): weyland-subx-worker's
 // server-side "RUN EXTRACTION" opens it in a headless tab and runs the same
@@ -59,6 +60,7 @@ const ASSETS = {
   "tesseract-core-fallback.wasm": { data: tesseractCoreFallbackBin, contentType: "application/wasm" },
   "eng-traineddata.bin": { data: engTrainedDataBin, contentType: "application/octet-stream" },
   "schedule-grid-extraction-client.mjs": { data: scheduleGridClientBin, contentType: "text/javascript; charset=utf-8" },
+  "schedule-workspace.mjs": { data: scheduleWorkspaceBin, contentType: "text/javascript; charset=utf-8" },
   "schedule-text-layer.mjs": { data: scheduleTextLayerBin, contentType: "text/javascript; charset=utf-8" },
   "grid-runner.html": { data: gridRunnerHtml, contentType: "text/html; charset=utf-8", cacheControl: "no-store" },
 };

@@ -143,8 +143,8 @@
     <ol class="steps" id="steps"><li id="st-upload">Upload</li><li id="st-read">Read</li><li id="st-review">Review</li><li id="st-pdf">Submittal PDF</li></ol>
 
     <div class="card hide" id="signin-card">
-      <h2>Sign in to work on your own schedules</h2>
-      <p class="sub">Uploads, readings and packages are kept in your account. Sign-in happens right here; nothing you have open is lost.</p>
+      <h2>Your first read is free, with no account</h2>
+      <p class="sub">Choose your PDF below to read it in this browser. Sign in afterwards to save your schedule, review edits and build the packet.</p>
       <div class="actions-row"><button type="button" class="primary" id="signin-btn">SIGN IN</button></div>
       <div id="signin-note" class="muted-small"></div>
     </div>
@@ -152,7 +152,7 @@
     <div id="app" class="hide">
       <div class="card" id="upload-card">
         <h2>Upload a schedule</h2>
-        <p class="sub">PDF up to 30 MB: the whole bid set is fine. The door schedule and the hardware groups are found by their text and read as soon as it is uploaded; a page with no text (a scan) is read as an image. Pick other pages afterwards.</p>
+        <p class="sub">PDF up to 30 MB: the whole bid set is fine. No account needed for the first read. The door schedule and the hardware groups are found by their text and read when you choose UPLOAD AND READ; a page with no text (a scan) is read as an image. Pick other pages afterwards.</p>
         <form id="upload-form">
           <div class="grid2">
             <div>
@@ -163,7 +163,7 @@
               <label for="f-doctype">If no schedule page is found by text, read page 1 as</label>
               <select id="f-doctype">
                 <option value="door_schedule" selected>Door schedule</option>
-                <option value="hardware_schedule">Hardware schedule (hardware sets)</option>
+                <option value="hardware_schedule">Hardware schedule (hardware groups)</option>
               </select>
             </div>
           </div>
@@ -173,7 +173,7 @@
             <button type="submit" class="primary" id="upload-btn">UPLOAD AND READ</button>
           </div>
         </form>
-        <div id="upload-result"></div>
+        <div id="upload-result" role="status" aria-live="polite"></div>
         <div id="rasterize-status" class="muted-small" style="margin-top:8px"></div>
         <canvas id="rasterize-canvas" class="hide"></canvas>
       </div>
@@ -198,7 +198,9 @@
           <button type="button" class="primary" id="extract-btn">READ THIS PAGE</button>
           <button type="button" id="client-extract-btn">READ IT IN THIS BROWSER</button>
         </div>
-        <div id="extract-result"></div>
+        <div id="extract-result" role="status" aria-live="polite"></div>
+        <div id="hardware-needed" role="status"></div>
+        <div id="guest-save" class="hide"><p class="sub">This read is in this browser. Save it to your account to review edits and build the packet.</p><button type="button" class="primary" id="guest-save-btn">SIGN IN TO SAVE THIS SCHEDULE</button><div id="guest-save-note" role="status"></div></div>
         <div id="takeoff"></div>
         <div id="doors-wrap" class="table-wrap"></div>
         <div id="sets-wrap" class="table-wrap"></div>
@@ -207,7 +209,7 @@
 
       <div class="card hide" id="package-card">
         <h2>Submittal package (PDF)</h2>
-        <p class="sub">Cover, contents, the door schedule with the source page and row of every line, any hardware sets with their matched cut sheets, and your uploaded schedule as the source appendix.</p>
+        <p class="sub">Cover, contents, the door schedule with the source page and row of every line, any hardware groups with their matched cut sheets, and your uploaded schedule as the source appendix.</p>
         <label for="f-company">Prepared by (your company, printed on the cover)</label>
         <input type="text" id="f-company" placeholder="e.g. Precision Auto Doors" autocomplete="organization">
         <div class="actions-row">
@@ -239,7 +241,7 @@
     function loadScript(src) { return new Promise(function (res, rej) { var s = document.createElement("script"); s.src = src; s.onload = res; s.onerror = rej; document.head.appendChild(s); }); }
     if (!embedded) document.documentElement.classList.add("wa-standalone");
     var ready = embedded ? Promise.resolve() : (window.AuthForStandard ? Promise.resolve() : loadScript("/assets/authfor-integration-standard.js"))
-      .then(function () { return window.WeylandShell ? null : loadScript("/assets/weyland-shell.js"); }).catch(function () {});
+      .then(function () { return window.WeylandShell ? null : loadScript("/assets/weyland-shell.js?v=20261009g018"); }).catch(function () {});
     window.WeylandPage = {
       embedded: embedded,
       ready: ready,
@@ -1776,55 +1778,34 @@ global.SovereignPdfRender = {
 
   </script>
   <script>
-    // Page-1 preview of the chosen PDF, drawn by the inline rasterizer above
-    // (nothing is uploaded for this step).
-    (function () {
-      var fileInput = document.getElementById("f-file");
-      var statusEl = document.getElementById("rasterize-status");
-      var canvas = document.getElementById("rasterize-canvas");
-      if (!fileInput || !statusEl || !canvas) return;
-      fileInput.addEventListener("change", function () {
-        if (!fileInput.files || fileInput.files.length === 0) return;
-        var file = fileInput.files[0];
-        var project = document.getElementById("f-project");
-        if (project && !project.value.trim()) project.value = file.name.replace(/\.pdf$/i, "");
-        canvas.classList.add("hide");
-        statusEl.textContent = "Drawing page 1 in this browser...";
-        var reader = new FileReader();
-        window.__subxFoundPages = null;
-        reader.onload = function () {
-          var bytes = reader.result;
-          window.SovereignPdfRender.renderPdfPageToCanvas(bytes, 0, canvas, { scale: 1.5 })
-            .then(function (result) {
-              canvas.classList.remove("hide");
-              statusEl.textContent = "Page 1 preview (" + result.width + " x " + result.height + " px). Looking for the schedule pages...";
-            })
-            .catch(function () {
-              canvas.classList.add("hide");
-              statusEl.textContent = "No preview for this file in this browser. Looking for the schedule pages...";
-            })
-            .then(function () {
-              // Where the schedules are, from the text of every page, in this
-              // tab (2026-10-08): the upload then reads those pages, not page 1.
-              if (!window.SUBX_MODULE_URL) return;
-              return import(window.SUBX_MODULE_URL).then(function (m) {
-                return m.findSchedulePages(bytes.slice(0), function (msg) { statusEl.textContent = msg; });
-              }).then(function (found) {
-                window.__subxFoundPages = { name: file.name, size: file.size, found: found };
-                statusEl.textContent = window.describeFoundPages ? window.describeFoundPages(found) : "";
-                var btn = document.getElementById("upload-btn");
-                if (btn && window.foundPagesPlan) {
-                  var plan = window.foundPagesPlan(found, null);
-                  btn.textContent = plan.length ? "UPLOAD AND READ " + (plan.length === 1 ? "PAGE " : "PAGES ") + window.compactPages(plan.map(function (x) { return x.page; })) : "UPLOAD AND READ PAGE 1";
-                }
-              }).catch(function (e) {
-                statusEl.textContent = "The pages could not be looked through in this browser (" + ((e && e.message) || e) + "); page 1 will be read after the upload.";
-              });
-            });
-        };
-        reader.readAsArrayBuffer(file);
+    // Page discovery starts immediately, and upload awaits this exact File's
+    // promise. A late preview or an earlier selection cannot change its plan.
+    window.findChosenSchedule = function (file) {
+      if (window.__subxScan && window.__subxScan.file === file) return window.__subxScan.promise;
+      var status = document.getElementById("rasterize-status");
+      var scan = { file: file };
+      window.__subxScan = scan;
+      scan.promise = Promise.all([file.arrayBuffer(), import(window.SUBX_MODULE_URL)]).then(function (arr) {
+        return arr[1].findSchedulePages(arr[0], function (msg) { if (window.__subxScan === scan) status.textContent = msg; });
+      }).then(function (found) {
+        if (window.__subxScan === scan) {
+          status.textContent = window.describeFoundPages(found);
+          window.__subxFoundPages = { file: file, found: found };
+        }
+        return found;
+      }).catch(function (err) {
+        if (window.__subxScan === scan) status.textContent = "The schedule pages could not be found: " + err.message + ". Page 1 will be tried as the kind selected above.";
+        return null;
       });
-    })();
+      return scan.promise;
+    };
+    document.getElementById("f-file").addEventListener("change", function () {
+      var file = this.files[0];
+      if (!file) return;
+      var project = document.getElementById("f-project");
+      if (!project.value.trim()) project.value = file.name.replace(/\.pdf$/i, "");
+      window.findChosenSchedule(file);
+    });
   </script>
   <script>
     (function () {
@@ -1833,9 +1814,10 @@ global.SovereignPdfRender = {
       var root = document.documentElement;
       var EMBED = root.classList.contains("embedded");
       var TAKEOFF = root.classList.contains("takeoff");
-      var MODULE_URL = "/api/hardware-schedule/client-ocr-assets/schedule-grid-extraction-client.mjs?v=20261009g004";
+      var MODULE_URL = "/api/hardware-schedule/client-ocr-assets/schedule-grid-extraction-client.mjs?v=20261009g004-g018";
       var state = { sessions: [], current: null, detail: null, lastUpload: null, blobUrl: null, busy: false, company: null };
       window.SUBX_MODULE_URL = MODULE_URL;
+      var workspace = import("/api/hardware-schedule/client-ocr-assets/schedule-workspace.mjs?v=20261009g018");
       // The pages the finder named, as a reading plan: door schedule pages
       // first, then hardware pages; nothing found means page 1 as the chosen
       // kind. At most 20 pages are read in one go.
@@ -1932,7 +1914,8 @@ global.SovereignPdfRender = {
       // visitor's schedules in this same document when the shell reports the sign-in.
       function showSignIn(note) {
         state.authed = false;
-        $("app").classList.add("hide");
+        $("app").classList.remove("hide");
+        $("sessions-card").classList.add("hide");
         $("logout-link").classList.add("hide");
         $("signin-card").classList.remove("hide");
         $("signin-note").textContent = note || "";
@@ -1953,7 +1936,7 @@ global.SovereignPdfRender = {
         if (state.demoRetry) { clearTimeout(state.demoRetry); state.demoRetry = null; }
         hideViewer();
         $("sessions-list").innerHTML = '<div class="empty">Loading&hellip;</div>';
-        ["session-card", "package-card"].forEach(function (id) { $(id).classList.add("hide"); });
+        ["session-card", "package-card", "guest-save"].forEach(function (id) { $(id).classList.add("hide"); });
         ["extract-result", "package-result", "upload-result", "doors-wrap", "sets-wrap", "takeoff", "list-actions"].forEach(function (id) { $(id).innerHTML = ""; });
         ["st-upload", "st-read", "st-review", "st-pdf"].forEach(function (id) { setStep(id, null); });
         showSignIn(note);
@@ -1979,6 +1962,7 @@ global.SovereignPdfRender = {
         return api("/api/hardware-schedule/sessions?limit=30").then(function (res) {
           if (res.status === 401 || (res.ok && res.data && res.data.signed_in === false)) { showSignIn(); return null; }
           state.authed = true;
+          $("sessions-card").classList.remove("hide");
           $("signin-card").classList.add("hide");
           $("app").classList.remove("hide");
           if (!res.ok) {
@@ -1998,7 +1982,7 @@ global.SovereignPdfRender = {
         var box = $("sessions-list");
         if (!state.sessions.length) { box.innerHTML = '<div class="empty">Nothing uploaded yet - upload a schedule above.</div>'; return; }
         var rows = state.sessions.map(function (s) {
-          var found = s.door_count ? s.door_count + " doors" : (s.set_count ? s.set_count + " hardware sets" : "not read yet");
+          var found = s.door_count ? s.door_count + " doors" : (s.set_count ? s.set_count + " hardware groups" : "not read yet");
           return '<tr class="clickable' + (state.current === s.id ? " selected" : "") + '" data-id="' + esc(s.id) + '">' +
             "<td>" + esc(s.project_name) + (s.is_demo ? ' <span class="tag">DEMO</span>' : "") + '<div class="muted-small">' + esc(s.filename || "") + "</div></td>" +
             '<td class="nowrap">' + esc(typeLabel(s.document_type)) + "</td>" +
@@ -2068,6 +2052,13 @@ global.SovereignPdfRender = {
         renderSets();
         renderListActions();
         renderPackageStatus();
+        $("hardware-needed").innerHTML = d.hardware_schedule_needed ? '<div class="error-box">' + esc(d.hardware_schedule_needed.message) + '</div>' : "";
+        $("guest-save").classList.toggle("hide", !s.guest);
+        $("package-card").classList.toggle("hide", !!s.guest);
+        $("read-row").classList.toggle("hide", !!s.guest || !!s.is_demo);
+        if (s.guest) {
+          Array.prototype.forEach.call(document.querySelectorAll("[data-edit], [data-edit-item]"), function (b) { b.disabled = true; b.title = "Sign in to save and edit this schedule."; });
+        }
       }
       function countList(title, items, extra) {
         if ((!items || !items.length) && !extra) return "";
@@ -2084,9 +2075,9 @@ global.SovereignPdfRender = {
           ["Doors", t.doors],
           ["Sizes read", t.doors_with_size + " / " + t.doors],
           ["Fire-rated doors", fireRated],
-          ["Hardware groups", (t.by_hardware_group || []).length],
+          ["Hardware groups", t.hardware_sets || (t.by_hardware_group || []).length],
         ];
-        if (t.hardware_sets) tiles.push(["Hardware sets", t.hardware_sets], ["Hardware items", t.hardware_components]);
+        if (t.hardware_sets) tiles.push(["Hardware items", t.hardware_components]);
         box.innerHTML = '<div class="stats">' + tiles.map(function (x) { return '<div class="stat"><b>' + esc(x[1]) + "</b><span>" + esc(x[0]) + "</span></div>"; }).join("") + "</div>" +
           '<div class="counts">' + countList("By door type", t.by_door_type) + countList("By size", t.by_size, t.doors > t.doors_with_size ? { value: "Size not read (marked below)", count: t.doors - t.doors_with_size } : null) + countList("By fire rating", t.by_fire_rating) + countList("By hardware group", t.by_hardware_group) + countList("By frame material", t.by_frame_material) + "</div>";
       }
@@ -2138,7 +2129,7 @@ global.SovereignPdfRender = {
           return;
         }
         var unsureRows = doors.filter(function (d) { return (d.unsure || []).length; }).length;
-        var head = "<tr><th>Mark</th><th>HW group</th><th>Size</th><th>Thick.</th><th>Fire</th><th>Door type</th><th>Door matl / fin</th><th>Frame</th><th>Notes</th><th>Source</th><th></th></tr>";
+        var head = "<tr><th>Mark</th><th>Hardware group</th><th>Size</th><th>Thick.</th><th>Fire</th><th>Door type</th><th>Door matl / fin</th><th>Frame</th><th>Notes</th><th>Source</th><th></th></tr>";
         // Each cell carries its column name, so on a phone a row reads as a
         // small card (label: value) instead of a ten-column table squeezed to
         // 390 px; empty cells are left out of the card.
@@ -2149,7 +2140,7 @@ global.SovereignPdfRender = {
         var body = doors.map(function (d, i) {
           if (state.editing === d.id) return editRowHtml(d, i);
           return '<tr data-door="' + esc(d.id) + '"><td class="nowrap mark-cell"><b>' + flag(d, "mark", esc(d.mark)) + "</b></td>" +
-            td("HW group", flag(d, "hardware_group", esc(d.hardware_group || "-"))) +
+            td("Hardware group", flag(d, "hardware_group", esc(d.hardware_group || "-"))) +
             td("Size", (d.unsure || []).indexOf("size") >= 0 ? unread(d.width || "not read", "Not read with certainty: check it on the sheet. Not counted under By size.") : sizeCell(d), "nowrap") +
             td("Thick.", thicknessCell(d), "nowrap") +
             td("Fire", flag(d, "fire_rating", esc(d.fire_rating || "-")), "nowrap") +
@@ -2181,7 +2172,7 @@ global.SovereignPdfRender = {
         if (d.pair && d.width_inches != null) size = "PR " + size;
         return '<tr class="editing" data-door="' + esc(d.id) + '">' +
           '<td data-label="Mark">' + inp("mark", d.mark, 70) + "</td>" +
-          '<td data-label="HW group">' + inp("hardware_group", d.hardware_group, 80) + "</td>" +
+          '<td data-label="Hardware group">' + inp("hardware_group", d.hardware_group, 80) + "</td>" +
           '<td data-label="Size">' + inp("size", size, 130) + "</td>" +
           '<td data-label="Thick.">' + inp("thickness", d.thickness || (d.thickness_inches != null ? inchText(d.thickness_inches) : ""), 60) + "</td>" +
           '<td data-label="Fire">' + inp("fire_rating", d.fire_rating, 70) + "</td>" +
@@ -2205,7 +2196,7 @@ global.SovereignPdfRender = {
           return loadDetail(state.current);
         });
       }
-      // Hardware sets: each item as the schedule prints it (quantity,
+      // Hardware groups: each item as the schedule prints it (quantity,
       // description, maker, model, finish), with the doors the door schedule
       // gives the set, and an EDIT for any item.
       function renderSets() {
@@ -2226,7 +2217,7 @@ global.SovereignPdfRender = {
           }).join("");
           return "<tr><td class=\"nowrap\"><b>" + esc(s.set_number) + "</b>" + (doorsOfSet.length ? '<div class="muted-small">doors: ' + esc(doorsOfSet.join(", ")) + "</div>" : (s.door_count ? '<div class="muted-small">' + esc(s.door_count) + " doors</div>" : "")) + "</td><td>" + esc(s.set_name || "") + "</td><td>" + items + '</td><td class="nowrap">' + (s.affirmed ? '<span class="tag ok">REVIEWED</span>' : '<span class="tag warn">DRAFT</span>') + "</td></tr>";
         }).join("");
-        box.innerHTML = '<p class="muted-small" style="margin-top:14px">' + d.hardware_sets.length + " hardware sets, " + comps.length + " items as the schedule prints them. Press EDIT to correct an item.</p><table><thead><tr><th>Set</th><th>Name</th><th>Items</th><th>Status</th></tr></thead><tbody>" + body + "</tbody></table>";
+        box.innerHTML = '<p class="muted-small" style="margin-top:14px">' + d.hardware_sets.length + " hardware groups, " + comps.length + " items as the schedule prints them. Press EDIT to correct an item.</p><table><thead><tr><th>Hardware group</th><th>Name</th><th>Items</th><th>Status</th></tr></thead><tbody>" + body + "</tbody></table>";
         Array.prototype.forEach.call(box.querySelectorAll("button[data-edit-item]"), function (b) { b.addEventListener("click", function () { state.editingItem = b.getAttribute("data-edit-item"); renderSets(); }); });
         Array.prototype.forEach.call(box.querySelectorAll("button[data-cancel-item]"), function (b) { b.addEventListener("click", function () { state.editingItem = null; renderSets(); }); });
         Array.prototype.forEach.call(box.querySelectorAll("button[data-save-item]"), function (b) {
@@ -2254,18 +2245,15 @@ global.SovereignPdfRender = {
         b.type = "button";
         b.textContent = "DOWNLOAD THE DOOR LIST (CSV)";
         b.addEventListener("click", function () {
-          var rows = [["Mark", "Hardware group", "Size (as read)", "Width (in)", "Height (in)", "Thickness", "Fire rating", "Door type", "Door material", "Door finish", "Frame type", "Frame material", "Frame finish", "Head", "Jamb", "Sill", "Notes", "Source page", "Source row"]];
-          state.detail.doors.forEach(function (d) {
-            var s = d.source || {};
-            rows.push([d.mark, d.hardware_group, d.width, d.width_inches, d.height_inches, d.thickness || d.thickness_inches, d.fire_rating, d.door_type, d.door_material, d.door_finish, d.frame_type, d.frame_material, d.frame_finish, d.head_detail, d.jamb_detail, d.sill_detail, d.notes, s.page || d.page_number, s.table_row]);
-          });
-          var blob = new Blob([rows.map(function (r) { return r.map(csvCell).join(","); }).join("\r\n")], { type: "text/csv" });
+          workspace.then(function (m) {
+          var blob = new Blob([m.doorListCsv(state.detail.doors)], { type: "text/csv" });
           var a = document.createElement("a");
           a.href = URL.createObjectURL(blob);
           a.download = safeName() + "_doors.csv";
           document.body.appendChild(a);
           a.click();
           setTimeout(function () { URL.revokeObjectURL(a.href); a.remove(); }, 2000);
+          });
         });
         box.appendChild(b);
       }
@@ -2281,7 +2269,7 @@ global.SovereignPdfRender = {
       // ---------- read a page ----------
       function setBusy(b) {
         state.busy = b;
-        ["extract-btn", "client-extract-btn", "package-btn", "upload-btn"].forEach(function (id) { $(id).disabled = b; });
+        ["extract-btn", "client-extract-btn", "package-btn", "upload-btn", "guest-save-btn"].forEach(function (id) { $(id).disabled = b; });
       }
       function summaryText(pageNum, data, cached) {
         var type = data.schedule_type || (data.hardware_groups && data.hardware_groups.length ? "hardware_schedule" : "door_schedule");
@@ -2390,7 +2378,7 @@ global.SovereignPdfRender = {
         var inTab = how !== "server" && state.lastUpload && state.lastUpload.sessionId === id && state.lastUpload.file;
         var p = readPlanOnServer(id, plan, out, lines).then(function (failed) {
           if (!inTab || !failed || !failed.length) return;
-          lines.push({ ok: true, text: "Reading " + (failed.length === 1 ? "page " + failed[0].page : "pages " + window.compactPages(failed.map(function (x) { return x.page; }))) + " in this browser instead." });
+          lines.push({ ok: true, text: "The browser retried " + (failed.length === 1 ? "page " + failed[0].page : "pages " + window.compactPages(failed.map(function (x) { return x.page; }))) + " after the server could not read it." });
           return readPlanInTab(id, failed, out, lines).catch(function (e) {
             lines.push({ ok: false, text: "This browser could not read them either (" + ((e && e.message) || e) + ")." });
           });
@@ -2398,11 +2386,12 @@ global.SovereignPdfRender = {
         return p.then(function () {
           setBusy(false);
           renderLines(out, lines, lines.filter(function (l) { return l.ok; }).length);
-          return loadSessions().then(function () { return loadDetail(id); });
+          return loadSessions().then(function () { return loadDetail(id); }).then(function () { return lines.some(function (l) { return !l.ok; }); });
         }, function (e) {
           setBusy(false);
           lines.push({ ok: false, text: "The pages could not be read: " + ((e && e.message) || e) });
           renderLines(out, lines, 0);
+          return true;
         });
       }
       function readPage(pageNum, type) {
@@ -2453,34 +2442,81 @@ global.SovereignPdfRender = {
       });
 
       // ---------- upload ----------
-      $("upload-form").addEventListener("submit", function (e) {
-        e.preventDefault();
-        var fileInput = $("f-file"), out = $("upload-result");
-        if (!fileInput.files || !fileInput.files.length) { out.innerHTML = '<div class="error-box">Choose the PDF first.</div>'; return; }
-        var file = fileInput.files[0];
-        if (file.size > 30 * 1024 * 1024) { out.innerHTML = '<div class="error-box">That PDF is ' + (file.size / 1048576).toFixed(1) + " MB; the reader takes up to 30 MB. Upload just the schedule pages.</div>"; return; }
+      function finishUpload(file, failed) {
+        $("upload-result").innerHTML = '<div class="' + (failed ? "error-box" : "ok-box") + '">' + esc(file.name + (failed ? ": read finished with page errors. Check the page results below." : ": read complete. Check the rows and source citations below.")) + '</div>';
+      }
+      async function readGuest(file, project, found, plan) {
+        state.current = "guest";
+        state.lastUpload = { sessionId: "guest", file: file };
+        state.guestReadings = [];
+        $("session-card").classList.remove("hide");
+        var modules = await Promise.all([workspace, import(MODULE_URL), file.arrayBuffer()]);
+        var m = modules[0], reader = modules[1], bytes = modules[2], lines = [];
+        for (var p of plan) {
+          var progress = function (msg) { $("extract-result").textContent = "Reading page " + p.page + ": " + msg; };
+          try {
+            var run = p.type === "hardware_schedule" ? reader.extractHardwareScheduleFromPdf : reader.extractDoorScheduleFromPdf;
+            var extraction = await run(bytes, p.page, progress, { maxPixels: 14e6 });
+            var n = (extraction.doors || extraction.hardware_groups || []).length;
+            state.guestReadings.push({ page: p.page, extraction: extraction });
+            lines.push({ ok: !!n, text: "Page " + p.page + ": " + n + (p.type === "door_schedule" ? " doors" : " hardware groups") + " read in this browser." });
+          } catch (err) { lines.push({ ok: false, text: "Page " + p.page + " could not be read: " + err.message }); }
+          state.detail = m.guestDetail(file, project, (found && found.pages) || 1, state.guestReadings);
+          renderDetail();
+          renderLines($("extract-result"), lines, state.detail.doors.length + state.detail.hardware_sets.length);
+        }
+        $("signin-card").classList.add("hide");
+        $("session-card").scrollIntoView({ behavior: "smooth", block: "start" });
+        return lines.some(function (l) { return !l.ok; });
+      }
+      async function uploadAndRead(file, project, type) {
         if (state.busy) return;
         setBusy(true);
-        out.innerHTML = '<span class="spin"></span>Uploading ' + esc(file.name) + "...";
-        var fd = new FormData();
-        fd.append("file", file);
-        fd.append("projectName", $("f-project").value.trim() || file.name.replace(/\.pdf$/i, ""));
-        fd.append("document_type", $("f-doctype").value);
-        api("/api/hardware-schedule/start", { method: "POST", form: fd }).then(function (res) {
-          setBusy(false);
-          if (res.status === 401) { showSignIn("Sign in to upload your own schedule."); return; }
-          if (!res.ok) {
-            out.innerHTML = '<div class="error-box">Upload failed: ' + esc(plainError(res.data, res.status)) + "</div>";
-            return;
+        var out = $("upload-result"), failed = false;
+        out.textContent = "Finding the schedule pages in " + file.name + "...";
+        try {
+          var found = await window.findChosenSchedule(file);
+          var plan = window.foundPagesPlan(found, type);
+          if (!state.authed) {
+            failed = await readGuest(file, project, found, plan);
+          } else {
+            out.textContent = "Uploading " + file.name + "...";
+            var fd = new FormData();
+            fd.append("file", file); fd.append("projectName", project); fd.append("document_type", type);
+            var res = await api("/api/hardware-schedule/start", { method: "POST", form: fd });
+            if (res.status === 401) { showSignIn(); failed = await readGuest(file, project, found, plan); }
+            else {
+              if (!res.ok) throw new Error(plainError(res.data, res.status));
+              var sid = res.data.sessionId;
+              state.lastUpload = { sessionId: sid, file: file };
+              setStep("st-upload", "done");
+              out.textContent = "Uploaded " + file.name + ". Reading the schedule pages...";
+              await loadSessions(); await openSession(sid, { scroll: true });
+              setBusy(false);
+              failed = await readPlan(plan);
+              var m = await workspace; await m.pendingSchedule("delete").catch(function () {});
+            }
           }
-          var sid = res.data.sessionId;
-          state.lastUpload = { sessionId: sid, file: file };
           setStep("st-upload", "done");
-          var fp = window.__subxFoundPages && window.__subxFoundPages.name === file.name && window.__subxFoundPages.size === file.size ? window.__subxFoundPages.found : null;
-          var plan = window.foundPagesPlan(fp, $("f-doctype").value);
-          out.innerHTML = '<div class="ok-box">' + esc("Uploaded " + file.name + " (" + res.data.totalPages + " page" + (res.data.totalPages === 1 ? "" : "s") + "). Reading page" + (plan.length > 1 ? "s " : " ") + window.compactPages(plan.map(function (x) { return x.page; })) + " now.") + "</div>";
-          return loadSessions().then(function () { return openSession(sid, { scroll: true }); }).then(function () { return readPlan(plan); });
-        });
+          finishUpload(file, failed);
+        } catch (err) {
+          out.innerHTML = '<div class="error-box">' + esc("The schedule could not be read: " + err.message) + '</div>';
+        } finally { setBusy(false); }
+      }
+      $("upload-form").addEventListener("submit", function (e) {
+        e.preventDefault();
+        var file = $("f-file").files[0];
+        if (!file) { $("upload-result").textContent = "Choose the PDF first."; return; }
+        if (file.size > 30 * 1024 * 1024) { $("upload-result").textContent = "The reader takes PDFs up to 30 MB. Upload just the schedule pages."; return; }
+        uploadAndRead(file, $("f-project").value.trim() || file.name.replace(/\.pdf$/i, ""), $("f-doctype").value);
+      });
+      $("guest-save-btn").addEventListener("click", async function () {
+        if (state.busy || !state.lastUpload) return;
+        try {
+          var m = await workspace;
+          await m.pendingSchedule("put", { file: state.lastUpload.file, project: state.detail.session.project_name, type: state.detail.session.document_type });
+          window.WeylandPage.signIn(workspacePath());
+        } catch (err) { $("guest-save-note").textContent = "The file could not be kept for sign-in. Leave this read open and try again: " + err.message; }
       });
 
       // ---------- submittal package ----------
@@ -2590,7 +2626,7 @@ global.SovereignPdfRender = {
         setStep("st-pdf", "now");
         hideViewer();
         out.removeAttribute("data-fresh");
-        var stop = ticking(out, "Building the package: cover, contents, door schedule, hardware sets and cut sheets, source pages...");
+        var stop = ticking(out, "Building the package: cover, contents, door schedule, hardware groups and cut sheets, source pages...");
         var company = ($("f-company").value || "").trim();
         api("/api/hardware-schedule/session/" + encodeURIComponent(id) + "/submittal-pdf", { method: "POST", json: { preparedBy: company } }).then(function (res) {
           stop();
@@ -2613,7 +2649,7 @@ global.SovereignPdfRender = {
           var d = res.data;
           var parts = (d.sections || []).filter(function (s) { return s.type !== "cover" && s.type !== "toc"; }).map(function (s) {
             if (s.type === "door_schedule") return "door schedule (" + s.doors + " doors, " + s.pages + " pages)";
-            if (s.type === "hardware_set") return "hardware set " + s.title.replace(/^Hardware Set /, "");
+            if (s.type === "hardware_set") return "hardware group " + s.title.replace(/^Hardware Group /, "");
             if (s.type === "cut_sheet") return s.page ? "catalogue page: " + s.title : "cut sheet: " + (s.manufacturer ? s.manufacturer + " " : "") + s.title;
             if (s.type === "schedule") return "your uploaded schedule (" + s.pages + " page" + (s.pages === 1 ? "" : "s") + ")";
             return s.title;
@@ -2642,15 +2678,17 @@ global.SovereignPdfRender = {
       });
 
       // ---------- start ----------
-      function start() {
+      async function start() {
         state.starting = true;
-        return loadSessions().then(function (sessions) {
-          if (sessions && !sessions.length && !state.demoAsked) return ownDemoCopy();
-          return sessions;
-        }).then(function (sessions) {
-          state.starting = false;
+        try {
+          var sessions = await loadSessions();
+          if (state.authed) {
+            var m = await workspace, draft = await m.pendingSchedule("get").catch(function () { return null; });
+            if (draft) { await uploadAndRead(draft.file, draft.project, draft.type); return; }
+          }
+          if (sessions && !sessions.length && !state.demoAsked) sessions = await ownDemoCopy();
           if (sessions) openFirst(sessions);
-        }, function () { state.starting = false; });
+        } finally { state.starting = false; }
       }
       // An account with nothing here yet gets its own copy of the demo building
       // to open (the same copy the homepage makes). The homepage makes it for

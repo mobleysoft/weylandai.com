@@ -1,0 +1,35 @@
+TAP version 13
+# {"doors":65,"pairs":6,"alternate_yes":["109.1","109.2","111.1","111.1.1","113.1","113.1.1","114.1","118.1","119.1","119.2","126.1","126.1.1","128.1.1","138.1","138.2","147.1.1","167.1.1","179.1.1"],"alternate_no":46,"spec":["08 71 00"]}
+# Subtest: Rockford pricing fields survive the reader, persistence and CSV (including No and empty)
+ok 1 - Rockford pricing fields survive the reader, persistence and CSV (including No and empty)
+  ---
+  duration_ms: 70.911541
+  type: 'test'
+  ...
+# Subtest: A2.2 alone names the missing spec; reading 08 71 00 resolves all hardware groups
+ok 2 - A2.2 alone names the missing spec; reading 08 71 00 resolves all hardware groups
+  ---
+  duration_ms: 141.137166
+  type: 'test'
+  ...
+# Subtest: spec-section spellings normalize; unrelated specifications are not hardware references
+ok 3 - spec-section spellings normalize; unrelated specifications are not hardware references
+  ---
+  duration_ms: 0.127083
+  type: 'test'
+  ...
+# Subtest: packet door table and hardware pages print the same full hardware-group label
+ok 4 - packet door table and hardware pages print the same full hardware-group label
+  ---
+  duration_ms: 9.045833
+  type: 'test'
+  ...
+1..4
+# tests 4
+# suites 0
+# pass 4
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 342.494917
