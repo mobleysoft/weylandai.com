@@ -207,3 +207,13 @@ tools/corpus/harvest/truth/<sha16>.json (tier, agreement rate, oracle results, d
 run over everything in tools/corpus and the harvest downloads (the Mac pushes those to the private weyland-fixtures R2
 bucket under harvest/<sha16>.pdf). Measure: agreement and oracle pass rates per set and per family in the matrix report,
 and the queue length falling as the reader improves.
+
+## Matrix after PR 81, on main at 6d92a25: three passes, 08:05 to 09:02Z, 2026-10-09
+
+22 of 23 journeys green in all three passes, including the two fixed in PR 81 (sightx-corridor and the paste
+result's buy button). The one failure, identical in all three passes: cutsheetx-finder-search, 18 of 20 checks.
+Failing checks, verbatim: "CutsheetX MATCH 'LCN 4040XP' returns the matched cut sheet (overlay)" and "CutsheetX
+DOWNLOAD PDF delivers the cut sheet (overlay)" with the detail "no DOWNLOAD PDF control in the MATCH result". The
+matched product and OPEN AT THE PAGE both work; the result lost its download control. Evidence:
+plan/evidence/matrix/2026-10-09T08-05Z-results.jsonl on the Mac. Note: the run started at 08:05Z, five minutes before
+the time given to the cloud; the deploys from PR 81 were live by then (every PR 81 journey is green).
