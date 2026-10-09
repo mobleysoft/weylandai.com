@@ -275,3 +275,11 @@ The bar for the next matrix: 28 of 28 three times on main with every worker depl
   audits, g033 AuthFor deferred mediums); it reports into files and PRs only.
 - Correction of record: Rockford's hardware count is 110, not 114; the four extra text-layer lines are struck-through
   addendum deletions on page 22. The reader and the test were right.
+
+**Accepted at 15:05 EDT.** SightX on three real harvested sets (PR 94, cloud): sightx-real-buildings 22 of 22 on four
+consecutive GPU passes after the SightX deploy from 9a62283 (the first pass after the deploy failed on an undefined API
+response during propagation); probes 3 and 5 unchanged at 21 of 21 and 27 of 27. Estimator path on the SubX deploy
+from 7e1bd98: upload-without-account-to-first-read 22 of 22, schedule-plus-spec-to-packet-with-hardware 19 of 19,
+estimator-schedule-to-packet 18 of 18, three passes each. PropX and HuntX audits PASS (PR 95, cloud), MarketX FAIL
+recorded; the offer names all seven products again. The scanned-sheet journey is red on purpose: 12 of 16, the browser
+scan path reads 46 unique marks of 48 (111 and 211 missing, 214 twice), which is g019 and review finding F3.
