@@ -161,6 +161,7 @@ export function readPlan(pages, doors = [], opts = {}) {
   const tagOf = (d) => norm(String(d.mark || "").replace(/\s*\[p\.?\s*\d+\]\s*$/i, ""));
   for (const d of doors) { const k = tagOf(d); if (!k) continue; if (!markOf.has(k)) markOf.set(k, []); markOf.get(k).push(d); }
   const rooms = [], tags = [], seenTag = new Map(), sheetsOut = [];
+  const paired = new Set(); // g041: the items of stacked tags, which are not unmatched tags
   const scheduleBlock = (page) => (byPage.get(page) || {}).tb;
 
   for (const t of planPages) {
@@ -180,17 +181,11 @@ export function readPlan(pages, doors = [], opts = {}) {
     for (const it of p.items) cands.push({ str: it.str.trim(), x: it.x, y: it.y, h: it.h, w: it.w || 0, it });
     for (const l of ls) if (l.parts.length > 1) cands.push({ str: l.str, x: l.x, y: l.y, h: l.h, w: l.w, line: l });
     const seenHere = new Set();
-    for (const c of cands) {
-      if (offDrawing(p, c)) continue;
-      if (c.line && used.has(c.line)) continue;
-      if (!c.line && rs.some((r) => r._line.parts.includes(c.it))) continue;
-      const k = norm(c.str);
-      const ds = (markOf.get(k) || []).filter(doorFits);
-      if (!ds.length) continue;
+    const place = (k, ds, c, extra = null) => {
       const key = k + "@" + t.page;
-      if (seenHere.has(key)) continue;
+      if (seenHere.has(key)) return;
       seenHere.add(key);
-      const tag = { mark: ds[0].mark, page: t.page, sheet: t.sheet, x: Math.round(cx(c)), y: Math.round(c.y - c.h / 2), h: c.h, shape: shape(c.str), door_pages: [...new Set(ds.map((d) => d.page))] };
+      const tag = { mark: ds[0].mark, page: t.page, sheet: t.sheet, x: Math.round(cx(c)), y: Math.round(c.y - c.h / 2), h: c.h, shape: shape(c.str), door_pages: [...new Set(ds.map((d) => d.page))], ...(extra || {}) };
       roomFor(tag, rs, ds[0], ls, p);
       tag.points_per_foot = scaleAt(scales, tag.x, tag.y);
       if (!seenTag.has(k + "|" + tag.door_pages.join(","))) { seenTag.set(k + "|" + tag.door_pages.join(","), tag); tags.push(tag); }
@@ -201,6 +196,46 @@ export function readPlan(pages, doors = [], opts = {}) {
         if (better) { Object.assign(tag, { also_on: [...(first.also_on || []), first.sheet] }); tags[tags.indexOf(first)] = tag; seenTag.set(k + "|" + tag.door_pages.join(","), tag); }
         else (first.also_on ||= []).includes(t.sheet) || first.also_on.push(t.sheet);
       }
+    };
+    for (const c of cands) {
+      if (offDrawing(p, c)) continue;
+      if (c.line && used.has(c.line)) continue;
+      if (!c.line && rs.some((r) => r._line.parts.includes(c.it))) continue;
+      const k = norm(c.str);
+      const ds = (markOf.get(k) || []).filter(doorFits);
+      if (ds.length) place(k, ds, c);
+    }
+    // g041: suffixed marks drawn as a stacked tag. Some sets number doors by room and letter
+    // (schedule 113A, 113B) and draw the tag as the room number with the letter set directly above
+    // or below it, two text items on two baselines. A mark with no exact tag on this sheet is
+    // placed on such a pair: the number item, and one lone letter item centred on it within 1.2
+    // text heights across and 2.4 down or up, at 0.6 to 1.6 times its height. An exact tag always
+    // wins, each letter item serves one tag, and the tag says how it was matched (matched_by).
+    const lone = p.items.filter((it) => /^[A-Z]$/i.test(it.str.trim()) && !offDrawing(p, it));
+    const usedLetter = paired;
+    for (const [k, all] of markOf) {
+      if (seenHere.has(k + "@" + t.page)) continue;
+      const m = /^(.*\d)-?([A-Z])$/.exec(k);
+      if (!m) continue;
+      const ds = all.filter(doorFits);
+      if (!ds.length) continue;
+      const [, base, letter] = m;
+      let best = null;
+      for (const it of p.items) {
+        if (norm(it.str) !== base || offDrawing(p, it)) continue;
+        for (const l of lone) {
+          if (usedLetter.has(l) || l.str.trim().toUpperCase() !== letter) continue;
+          const dx = Math.abs(cx(l) - cx(it)), dy = Math.abs(l.y - it.y), hr = l.h / it.h;
+          if (dx > 1.2 * it.h || dy < 0.5 * it.h || dy > 2.4 * it.h || hr < 0.6 || hr > 1.6) continue;
+          const score = dx + dy;
+          if (!best || score < best.score) best = { it, l, score };
+        }
+      }
+      if (!best) continue;
+      usedLetter.add(best.l); paired.add(best.it);
+      const top = Math.min(best.it.y - best.it.h, best.l.y - best.l.h), bottom = Math.max(best.it.y, best.l.y);
+      place(k, ds, { str: k, x: Math.min(best.it.x, best.l.x), y: bottom, h: bottom - top, w: Math.max(best.it.x + (best.it.w || 0), best.l.x + (best.l.w || 0)) - Math.min(best.it.x, best.l.x) },
+        { matched_by: "stacked: " + base + " with " + letter });
     }
   }
 
@@ -214,7 +249,7 @@ export function readPlan(pages, doors = [], opts = {}) {
     for (const it of p.items) {
       if (offDrawing(p, it)) continue;
       const k = norm(it.str);
-      if (!k || allMarks.has(k) || roomNos.has(t.page + ":" + k)) continue;
+      if (!k || allMarks.has(k) || roomNos.has(t.page + ":" + k) || paired.has(it)) continue;
       if (!styles.has(shape(it.str) + "@" + it.h.toFixed(1))) continue;
       if (rooms.some((r) => r.page === t.page && r._line.parts.includes(it))) continue;
       unmatched.push({ tag: it.str.trim(), page: t.page, sheet: t.sheet, x: Math.round(cx(it)), y: Math.round(it.y) });
