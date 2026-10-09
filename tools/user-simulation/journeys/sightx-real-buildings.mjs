@@ -26,10 +26,29 @@ await J.run(async () => {
   for (const set of SETS) {
     const page = await J.page(ctx);
     await page.goto(BASE + "/sightx/?set=" + set + "&journey=" + J.id + "-" + J.suffix, { waitUntil: "load", timeout: 60000 });
-    const built = await page.waitForFunction(() => /Built \d+ doors?/.test((document.getElementById("sx-status") || {}).textContent || ""), null, { timeout: 60000 }).then(() => true, () => false);
+    // A failed set falls back to the sample sheet, whose "Built N doors" alone would pass.
+    const built = await page.waitForFunction(() => { const t = (document.getElementById("sx-status") || {}).textContent || ""; return /Built \d+ doors?/.test(t) && /the schedule rows of /.test(t); }, null, { timeout: 60000 }).then(() => true, () => false);
     J.check(set + ": the set opens and its doors are built", built, await page.textContent("#sx-status").catch(() => ""));
     if (!built) { await page.close(); continue; }
-    const api = await page.evaluate(async (s) => (await (await fetch("/api/sightx/sets/" + s)).json()).model, set);
+    const api = await J.api(page, "/api/sightx/sets/" + set, set + ": the set's data answers", {
+      require: ["model.doors", "model.set.rows", "model.layout"], pick: "model",
+      validate(model) {
+        const object = (v) => !!v && typeof v === "object" && !Array.isArray(v);
+        if (!object(model) || !Array.isArray(model.doors)) return "model.doors must be an array";
+        if (!model.doors.length) return "model.doors must contain a door to walk to";
+        if (!object(model.set) || !Number.isInteger(model.set.rows) || model.set.rows < 0) return "model.set.rows must be a nonnegative integer";
+        if (!object(model.layout) || !["plan", "schematic"].includes(model.layout.source)) return "model.layout must name a plan or schematic source";
+        if (model.layout.source === "schematic" && (typeof model.set.no_plan_reason !== "string" || !model.set.no_plan_reason.trim())) return "schematic model.set.no_plan_reason must be a nonempty string";
+        for (const door of model.doors) {
+          if (!object(door)) return "each model.doors entry must be an object";
+          if (typeof door.mark !== "string" || !door.mark || !object(door.row) || !Number.isInteger(door.row.page) || door.row.page < 1 || typeof door.row.text !== "string" || !door.row.text) return "each door must name its mark and source row";
+          if (!door.plan) continue;
+          if (!object(door.plan) || typeof door.plan.sheet !== "string" || !door.plan.sheet || !Number.isFinite(door.plan.x) || !Number.isFinite(door.plan.z)) return "each tagged door must have a sheet and finite plan position";
+        }
+        return true;
+      }
+    });
+    if (!api) { await page.close(); continue; }
     const counts = await page.evaluate(() => window.__sxCounts || null);
     const doorRows = api.doors.length, rows = api.set.rows, onPlan = api.doors.filter((d) => d.plan).length;
     J.check(set + ": one card per schedule row (door cards + not-a-door-row cards = rows in the data)", !!counts && counts.door_cards + counts.row_cards === rows && counts.door_cards === doorRows, { counts, rows, door_rows: doorRows });
@@ -39,6 +58,7 @@ await J.run(async () => {
       !!counts && counts.doors_on_plan === onPlan && (planned ? onPlan > 0 : onPlan === 0), { on_plan: counts && counts.doors_on_plan, data: onPlan, layout: api.layout.source });
     // Walk with NEXT DOOR to the first tagged door in schedule order (no plan: the first door).
     const target = planned ? api.doors.findIndex((d) => d.plan) : 0;
+    if (target < 0) { await page.close(); continue; } // the unchanged on-plan assertion above failed; there is no tagged door to walk to
     for (let k = 0; k <= target; k++) { await page.locator("#next").click(); await sleep(150); }
     await sleep(1800);
     const d = api.doors[target];
