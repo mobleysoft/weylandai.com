@@ -271,7 +271,10 @@ async function marketx() {
   const list = Object.fromEntries(ms.data.metros.map((m) => [m.metro, m]));
   check("six metros, each with permits and value", Object.keys(NAMES).every((k) => list[k] && list[k].projects > 0 && list[k].value > 0), Object.keys(NAMES).map((k) => k + " " + (list[k]?.projects ?? 0)));
   const per = [];
-  for (const k of Object.keys(NAMES)) {
+  // g037: the permit data is reloaded by a job while the audit runs; a metro whose figures change
+  // between its page, the metros list and its CSVs is measured again (up to 3 times) and the row
+  // says so. The bar is unchanged: the passing measurement is one where all of them agree.
+  const measure = async (k, list) => {
     const m = await api("/api/marketx/metro/" + k);
     const d = m.data || {};
     const t = d.totals || {};
@@ -304,8 +307,25 @@ async function marketx() {
       projects_csv: { http: pc.status, rows: pRows, expected: expectP }, companies_csv: { http: cc.status, rows: cRows, json_ranked: expectC, ok: companiesCsvOk }, names_note: d.names, sample_link: linkOk || null,
     };
     row.ok = m.ok && d.paid && t.projects > 0 && t.value > 0 && t.priorValue > 0 && thisYearMonths >= 10 && lastYearMonths >= 10 && row.by_use_sum_equals_total && row.largest_desc && row.newest_desc && row.company_coverage_disclosed && row.contractors_ranked && row.matches_metros_list && row.bids && pRows === expectP && companiesCsvOk;
+    return { row, m, d, t, thisYearMonths, lastYearMonths, pRows, expectP, cRows, expectC };
+  };
+  for (const k of Object.keys(NAMES)) {
+    let res, changes = [], measurements = 0, stable = false;
+    for (let attempt = 0; attempt < 3; attempt++) {
+      const fresh = attempt === 0 ? list : Object.fromEntries(((await api("/api/marketx/metros")).data?.metros || []).map((x) => [x.metro, x]));
+      res = await measure(k, fresh);
+      measurements++;
+      const again = (await api("/api/marketx/metro/" + k)).data?.totals || {};
+      if (again.projects === res.t.projects && near(again.value, res.t.value, 1)) { stable = true; break; }
+      changes.push(`${res.t.projects} -> ${again.projects} projects during the measurement`);
+    }
+    const { row, d, t, thisYearMonths, lastYearMonths, pRows, expectP, cRows, expectC } = res;
+    row.measurements = measurements;
+    row.stable_measurement = stable;
+    row.ok = !!row.ok && stable;
+    if (changes.length) row.data_changed_during_run = changes;
     per.push(row);
-    check(`${NAMES[k]}: value by month vs last year, by use, ranked lists, bids, both CSVs`, row.ok, `${t.projects} projects ${money(t.value)} (last yr ${money(t.priorValue)}, ${t.valueChange}%), months ${thisYearMonths}+${lastYearMonths}, use sum=total ${row.by_use_sum_equals_total}, GCs ${row.contractors}, owners ${row.owners}, bids ${d.bids?.open}, projects.csv ${pRows}/${expectP}, companies.csv ${cRows} rows (JSON ranks ${expectC})` + (row.contractors + row.owners === 0 ? `; no GC or owner ranked: "${d.names}"` : ""));
+    check(`${NAMES[k]}: value by month vs last year, by use, ranked lists, bids, both CSVs`, row.ok, `${t.projects} projects ${money(t.value)} (last yr ${money(t.priorValue)}, ${t.valueChange}%), months ${thisYearMonths}+${lastYearMonths}, use sum=total ${row.by_use_sum_equals_total}, GCs ${row.contractors}, owners ${row.owners}, bids ${d.bids?.open}, projects.csv ${pRows}/${expectP}, companies.csv ${cRows} rows (JSON ranks ${expectC})` + (row.contractors + row.owners === 0 ? `; no GC or owner ranked: "${d.names}"` : "") + (changes.length ? `; data reloaded during the run, measured ${measurements} times (${changes.join("; ")})` : ""));
   }
   // A permit link per metro, spot-checked.
   const links = [];
