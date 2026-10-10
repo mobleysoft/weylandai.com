@@ -7,7 +7,7 @@ import { test } from "node:test";
 import assert from "node:assert/strict";
 import { DatabaseSync } from "node:sqlite";
 import { NativeRouter } from "../src/lib/router.js";
-import { registerSubxWorkspaceRoutes } from "../src/routes/subx-workspace.js";
+import { registerSubxWorkspaceRoutes, useOfferCredit } from "../src/routes/subx-workspace.js";
 import { fieldDecision, SCHEDULE_EVIDENCE_VERSION } from "../assets/client-ocr-src/schedule-text-layer.mjs";
 
 function d1(db) {
@@ -251,4 +251,16 @@ test("g052: a size corrected to a pair (PR ...) is saved as a pair, and back to 
   assert.equal(JSON.parse(db.prepare("SELECT field_confidence_json FROM door_schedule_entries WHERE id = 'door-144B'").get().field_confidence_json).pair, false);
   const other = await call("PATCH", "/api/hardware-schedule/session/sess-a/doors/door-131", "a", { notes: "checked" });
   assert.equal(other.data.changed.pair, undefined, "a correction without a size leaves the pair alone");
+});
+
+test("g052: a package built on the first submittal uses its one packet credit, and no more", async () => {
+  const db = new DatabaseSync(":memory:");
+  db.exec("CREATE TABLE weyland_purchases (checkout_session_id TEXT PRIMARY KEY, kind TEXT, status TEXT, user_id TEXT, granted_at TEXT, credits_total INTEGER, credits_used INTEGER, updated_at TEXT)");
+  db.prepare("INSERT INTO weyland_purchases VALUES ('in_1','offer','granted','user-a','2026-10-10T03:44:51Z',1,0,NULL), ('cs_2','offer','held','user-a',NULL,1,0,NULL)").run();
+  const env = { DB: d1(db) };
+  assert.equal(await useOfferCredit(env, "user-a"), true);
+  assert.equal(await useOfferCredit(env, "user-a"), false, "the one credit is used once");
+  assert.deepEqual(db.prepare("SELECT checkout_session_id AS id, credits_used AS used FROM weyland_purchases ORDER BY id").all().map((r) => ({ ...r })), [{ id: "cs_2", used: 0 }, { id: "in_1", used: 1 }]);
+  assert.equal(await useOfferCredit(env, "user-b"), false, "no offer, nothing used");
+  assert.equal(await useOfferCredit({ DB: { prepare() { throw new Error("down"); } } }, "user-a"), false, "never throws");
 });

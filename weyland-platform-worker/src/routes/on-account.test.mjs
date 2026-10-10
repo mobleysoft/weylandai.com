@@ -121,6 +121,9 @@ test("on account: a send_invoice invoice for the offer's price, no card; the pur
   assert.ok(products(row).includes(TRIAL_MARK), "the 30-day window is open");
   assert.equal(row.stripe_customer_id, "cus_onacct_1", "the account view lists the invoice under its customer");
   for (const slug of ["subx", "meetingx", "cutsheetx"]) assert.equal(await gate(env, userId, slug), "allowed", slug);
+  const me = await (await worker.fetch(new Request("https://weylandai.com/api/auth/me", { headers: { Cookie: "weyland_session=" + signin.session_id } }), env, ctx)).json();
+  assert.equal(me.entitlements.access.first_submittal.on_account, true, "the account card can say: on account, invoiced");
+  assert.equal(me.entitlements.access.first_submittal.amount_total, 10000);
 
   // Bought once: another on-account order for the account is refused.
   const third = await ask(env, order(email));

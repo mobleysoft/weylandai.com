@@ -1111,7 +1111,8 @@
     var first = acc.first;
     if (first && typeof first === "object") {
       var credit = first.credit || {};
-      rows.push(["First submittal", ["Paid " + shortDate(first.purchased_at || first.granted_at), money(first.amount_total, first.currency),
+      // Bought on account (g052): invoiced, not paid; the invoice below says whether it is due or paid.
+      rows.push(["First submittal", [(first.on_account ? "On account " : "Paid ") + shortDate(first.purchased_at || first.granted_at), money(first.amount_total, first.currency) + (first.on_account ? " invoiced" : ""),
         typeof credit.remaining === "number" ? credit.remaining + " of " + (credit.total || 1) + " packet" + ((credit.total || 1) === 1 ? "" : "s") + " left to build" : ""].filter(Boolean).join(" · ")]);
     }
     var live = billingLive();
