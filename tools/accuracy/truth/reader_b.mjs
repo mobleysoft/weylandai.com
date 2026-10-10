@@ -245,8 +245,13 @@ export function readDoorsB(items, rules, size) {
 // door fields ("# of Poles" a mark, "Frame Size" a size, "Trip Rating" a rating). Its own words:
 const PANEL_WORDS = ["CKT", "CIRCUIT", "POLES?", "BREAKERS?", "TRIP", "KVA", "AMPS?", "MCB", "MLO", "PANELBOARDS?", "MAINS", "FEEDERS?", "VOLTS?", "VOLTAGE", "PHASE", "NEMA", "LOAD"];
 const panelWordCount = (text) => { const t = " " + UP(text).replace(/[^A-Z0-9#]+/g, " ") + " "; return PANEL_WORDS.filter((w) => new RegExp(" " + w + " ").test(t)).length; };
-/** A table header that is an electrical panel's (two or more of its words), not a door schedule's. */
-export function panelHeader(labels) { return panelWordCount((labels || []).join(" ")) >= 2; }
+// g064: a mechanical equipment schedule (air devices, fans, units) maps too: "TAG" a mark, "FACE SIZE
+// WIDTH / HEIGHT" a size (X2404-01 p.97: diffusers C3, I1, R1, R2). Its own words:
+const EQUIPMENT_WORDS = ["CFM", "AIRFLOW", "THROW", "DAMPERS?", "DIFFUSERS?", "GRILLES?", "REGISTERS?", "MBH", "BTUH?", "GPM", "RPM", "SEER", "EER", "TONS?", "ESP", "NC", "NECK", "KW", "HP"];
+const equipmentWordCount = (text) => { const t = " " + UP(text).replace(/[^A-Z0-9#]+/g, " ") + " "; return EQUIPMENT_WORDS.filter((w) => new RegExp(" " + w + " ").test(t)).length; };
+/** A table header that is an electrical panel's or a mechanical equipment schedule's (two or more of
+ *  either's words), not a door schedule's. */
+export function panelHeader(labels) { const t = (labels || []).join(" "); return panelWordCount(t) >= 2 || equipmentWordCount(t) >= 2; }
 /** A page that is an electrical panel schedule sheet: four or more panel words and no door or opening
  *  schedule title on it (the page finder skips it). */
 export function electricalPanelPage(text) {
