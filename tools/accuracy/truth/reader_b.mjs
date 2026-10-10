@@ -35,7 +35,18 @@
 export function wordsOf(items) {
   const out = [];
   for (const it of items) {
-    if (it.rot) continue; // turned text is not table text here
+    if (it.rot) {
+      // g057 (C6): a column header turned 90 degrees ("Number", "Width", "Hardware set" printed
+      // upright). One word per item, marked rot: it may name a column, never fill a body cell.
+      // A -90 item reads upward from its baseline point (x, y); a +90 item downward.
+      const s = clean(it.str);
+      if (!s || Math.abs(Math.abs(it.rot) - 90) > 1) continue;
+      const w = it.w || 0, h = it.h || 0;
+      const up = it.rot < 0;
+      const x0 = it.x - (up ? h : 0), x1 = x0 + h, y0 = up ? it.y - w : it.y, y1 = up ? it.y : it.y + w;
+      out.push({ str: s, x0, x1, y: y1, h: Math.max(h, 1), cx: (x0 + x1) / 2, cy: (y0 + y1) / 2, rot: true });
+      continue;
+    }
     // Control, zero-width and private-use characters (a symbol-font revision mark before a finish code) are spaces here.
     const s = it.str.replace(/[\u0000-\u001f\u007f-\u009f\u00ad\u200b-\u200f\u2028\u2029\ufeff\ue000-\uf8ff]/g, " ");
     const cw = s.length ? (it.w || 0) / s.length : 0;
@@ -190,7 +201,15 @@ export function extentTables(rules) {
     const x0 = Math.min(...list.map((s) => s.x0)), x1 = Math.max(...list.map((s) => s.x1));
     for (const r of runs) {
       if (r.length < 4) continue;
-      const y0 = r[0], y1 = r[r.length - 1];
+      let y0 = r[0];
+      const y1 = r[r.length - 1];
+      // g057 (C6): the header's top rule may run on past the table (the sheet's schedules share it),
+      // so it is in no group of its own: the table starts at the nearest rule above that spans it,
+      // within four rows.
+      const runMed = median(r.slice(1).map((y, i) => y - r[i])) || med;
+      let above = null;
+      for (const s of rules.h) if (s.y < y0 - 1 && s.y >= y0 - Math.max(4 * runMed, 40) && s.x0 <= x0 + 2 && s.x1 >= x1 - 2 && (!above || s.y > above)) above = s.y;
+      if (above != null) y0 = above;
       const h = rules.h.filter((s) => s.y >= y0 - 1 && s.y <= y1 + 1 && s.x1 > x0 + 1 && s.x0 < x1 - 1).map((s) => ({ y: s.y, x0: Math.max(s.x0, x0), x1: Math.min(s.x1, x1) }));
       const v = rules.v.filter((s) => s.x >= x0 - 1.5 && s.x <= x1 + 1.5 && s.y1 > y0 + 1 && s.y0 < y1 - 1).map((s) => ({ x: s.x, y0: Math.max(s.y0, y0), y1: Math.min(s.y1, y1) }));
       if (distinct(v.map((s) => s.x), 3).length < 4) continue;
@@ -258,7 +277,7 @@ function tableFrom(T, allWords) {
   const colCount = fences.length - 1;
   const colOf = (x) => { for (let k = 0; k < colCount; k++) if (x >= fences[k] && x < fences[k + 1]) return k; return -1; };
   const bandWords = bands.map((b) => ws.filter((w) => w.cy > b.y0 && w.cy < b.y1));
-  const cellsOf = (bi) => { const c = Array.from({ length: colCount }, () => []); for (const w of bandWords[bi]) { const k = colOf(w.cx); if (k >= 0) c[k].push(w); } return c; };
+  const cellsOf = (bi) => { const c = Array.from({ length: colCount }, () => []); for (const w of bandWords[bi]) { if (w.rot) continue; const k = colOf(w.cx); if (k >= 0) c[k].push(w); } return c; };
   // A band crossed by fewer than two inner fences is a title band. Any vertical rule at a fence counts,
   // not only the long ones: a header's dividers are often separate short rules (or thin filled bars a
   // point off the body's stroked lines), and the long body rules start below the header.
