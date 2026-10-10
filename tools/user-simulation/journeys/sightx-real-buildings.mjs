@@ -81,6 +81,32 @@ await J.run(async () => {
     const s1 = await page.evaluate(() => window.SightXControls && window.SightXControls.state());
     const moved = s0 && s1 ? Math.hypot(s1.pos[0] - s0.pos[0], s1.pos[2] - s0.pos[2]) : 0;
     J.check(set + ": W walks on from the door", moved >= 0.5, { moved: +moved.toFixed(2) });
+    // g045: doors the shared-mark rule (g044) placed say so on the card and in the door table, with
+    // the other rows of the mark linked. T2507 prints two 132A rows and tags 132A twice on A-100.
+    const sharedIdx = api.doors.map((x, i) => (x.plan && x.plan.shared_mark ? i : -1)).filter((i) => i >= 0);
+    if (set === "192a16af8f31ae0c") J.check(set + ": two schedule rows share mark 132A and each has its own tag (g044)", sharedIdx.length === 2 && sharedIdx.every((i) => api.doors[i].mark === "132A") && (api.doors[sharedIdx[0]].plan.x !== api.doors[sharedIdx[1]].plan.x || api.doors[sharedIdx[0]].plan.z !== api.doors[sharedIdx[1]].plan.z), sharedIdx.map((i) => ({ door: i + 1, mark: api.doors[i].mark, row: api.doors[i].row.text, x: api.doors[i].plan.x, z: api.doors[i].plan.z })));
+    if (sharedIdx.length) {
+      const table = await page.evaluate(() => [...document.querySelectorAll("#rows tr.door")].map((tr) => { const b = tr.querySelector(".badge.shared-mark"); return { i: +tr.dataset.i, flag: b ? b.textContent : null, links: [...tr.querySelectorAll(".shared-link")].map((x) => +x.dataset.door) }; }));
+      const flagged = table.filter((r) => r.flag);
+      J.check(set + ": the door table flags exactly the shared-mark doors, 'shared mark, order assumed', each linking the others",
+        flagged.length === sharedIdx.length && flagged.every((r) => sharedIdx.includes(r.i) && r.flag === "shared mark, order assumed" && JSON.stringify(r.links) === JSON.stringify(sharedIdx.filter((j) => j !== r.i))),
+        { flagged, shared: sharedIdx });
+      const [a, b] = sharedIdx;
+      await page.locator('#rows tr.door[data-i="' + a + '"] td:nth-child(2)').click(); await sleep(1800);
+      const cardA = (await page.textContent("#info").catch(() => "")).replace(/\s+/g, " ");
+      const linksA = await page.evaluate(() => [...document.querySelectorAll("#info .shared-link")].map((x) => +x.dataset.door));
+      J.check(set + ": the first shared door's card says 'shared mark, order assumed', row 1 of " + sharedIdx.length + ", and links the other row",
+        /SHARED MARK/.test(cardA) && cardA.includes("shared mark, order assumed") && cardA.includes("row 1 of " + sharedIdx.length + " with mark " + api.doors[a].mark) && JSON.stringify(linksA) === JSON.stringify(sharedIdx.filter((j) => j !== a)),
+        { card: cardA.slice(0, 400), links: linksA });
+      await page.locator('#info .shared-link[data-door="' + b + '"]').click(); await sleep(1800);
+      const cardB = (await page.textContent("#info").catch(() => "")).replace(/\s+/g, " ");
+      const rowB = await page.evaluate(() => { const e = document.querySelector("#info .door-row"); return e ? e.textContent : null; });
+      const sB = await page.evaluate(() => window.SightXControls && window.SightXControls.state());
+      const distB = sB ? Math.hypot(sB.pos[0] - api.doors[b].plan.x * FTM, sB.pos[2] - api.doors[b].plan.z * FTM) : null;
+      J.check(set + ": the link opens the other row's door: its own row text, row 2 of " + sharedIdx.length + ", the camera at its own tag",
+        rowB === api.doors[b].row.text && rowB !== api.doors[a].row.text && cardB.includes("row 2 of " + sharedIdx.length) && distB != null && distB <= 4,
+        { row: rowB, expected: api.doors[b].row.text, distance_m: distB && +distB.toFixed(2) });
+    }
     await page.close();
   }
   await ctx.close();

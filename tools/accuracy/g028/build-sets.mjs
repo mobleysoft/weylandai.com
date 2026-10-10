@@ -79,11 +79,19 @@ export const NO_PLAN_REASON = {
   "977cec6301f40433": "the plan reader takes 'CHECKED BY: DESIGNED BY: GW&' as the title of A-101/A-102/A-401 and classifies none as a floor plan",
 };
 
+// g045: a set read the production way (tools/accuracy/g045/production-set.mjs: reader A's rows with
+// their printed text, and readPlan with the g041/g044 rules) replaces the harvest marks for that set.
+const G045 = path.join(HERE, "../g045");
+const productionOf = (sha16) => { const f = path.join(G045, sha16 + ".production.json"); return fs.existsSync(f) ? JSON.parse(fs.readFileSync(f, "utf8")) : null; };
+
 export function buildSet(sha16) {
   const d = JSON.parse(fs.readFileSync(path.join(G020, sha16 + ".json"), "utf8"));
+  const prod = productionOf(sha16);
   const rowsByPage = new Map(d.harvest_schedule_rows.map((r) => [r.page, r]));
   const startsByPage = new Map(d.harvest_schedule_rows.map((r) => [r.page, rowStarts(r)]));
-  const rows = d.harvest_schedule_marks.map((m, i) => {
+  const rows = prod
+    ? prod.rows.map((r, i) => { const size = sizeOf(r.text); return { i, mark: r.mark, page: r.page, text: r.text, door_row: !!size, size, reason: size ? null : "the row has no door width and height in its printed text" }; })
+    : d.harvest_schedule_marks.map((m, i) => {
     const row = rowFor(m.mark, m.page, rowsByPage, startsByPage);
     const size = row ? sizeOf(row.text) : null;
     return { i, mark: m.mark, page: m.page, text: row ? row.text : null, door_row: !!size, size, reason: !row ? "the mark begins no row of the schedule (found only inside another row's text, or not on a schedule line)" : !size ? "the row has no door width and height: not a door row (a grid number or a hardware-group digit the harvest regex picked up)" : null };
@@ -95,7 +103,7 @@ export function buildSet(sha16) {
     doors: doorRows.map((r) => ({ mark: r.mark, page_number: r.page, width_inches: r.size.w, height_inches: r.size.h, notes: null })),
     components: [],
   });
-  const plan = d.harvest_marks_plan;
+  const plan = prod ? prod.plan : d.harvest_marks_plan;
   attachPlan(model, { found: !!(plan.tags && plan.tags.length), ...plan });
   // Each door carries the schedule row it came from.
   model.doors.forEach((door, k) => { const r = doorRows[k]; door.row = { page: r.page, text: r.text, index: r.i }; door.location = door.plan && door.plan.room_name ? null : door.location; });
@@ -106,10 +114,12 @@ export function buildSet(sha16) {
     doors_on_plan: model.doors.filter((x) => x.plan).length,
     plan_sheets: (plan.plan_sheets || []).map((s) => ({ sheet: s.sheet, page: s.page, title: s.title })),
     ...(plan.plan_sheets && plan.plan_sheets.length ? {} : { no_plan_reason: NO_PLAN_REASON[sha16] || "the plan reader selected no floor-plan sheet" }),
-    input: "tools/accuracy/g020/" + sha16 + ".json (harvest schedule rows: not audited truth; see tools/accuracy/g020/REPORT.md)",
+    input: prod ? "tools/accuracy/g045/" + sha16 + ".production.json (reader A's rows and readPlan, as SubX reads the set)" : "tools/accuracy/g020/" + sha16 + ".json (harvest schedule rows: not audited truth; see tools/accuracy/g020/REPORT.md)",
+    ...((plan.shared_marks || []).length ? { shared_marks: plan.shared_marks } : {}),
   };
   model.notes = [
-    "Real harvested bid set " + project + ": the door rows are the schedule rows the harvest read from the set's own schedule pages (not audited row by row); sizes come from each row's text; no hardware sets were read.",
+    prod ? "Real harvested bid set " + project + ": the door rows are the rows SubX's reader reads from the set's own schedule pages; sizes come from each row's printed text; no hardware sets were read."
+      : "Real harvested bid set " + project + ": the door rows are the schedule rows the harvest read from the set's own schedule pages (not audited row by row); sizes come from each row's text; no hardware sets were read.",
     ...(model.set.no_plan_reason ? ["No floor plan: " + model.set.no_plan_reason + ". The doors stand in schedule order along one schematic corridor; no plan position is claimed."] : []),
     ...model.notes,
   ];

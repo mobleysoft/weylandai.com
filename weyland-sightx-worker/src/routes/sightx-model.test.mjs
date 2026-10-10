@@ -129,7 +129,9 @@ import { SETS as G028_SETS } from "../data/sets/index.js";
 test("g028 sets: every door comes from a schedule row; every row is a door or listed with its reason", () => {
   for (const [sha, m] of Object.entries(G028_SETS)) {
     assert.equal(m.set.sha16, sha);
-    assert.ok(m.doors.length > 0 && m.doors.every((d) => d.row && d.row.text && d.row.text.startsWith(d.mark)), sha + ": each door carries the row it came from");
+    // A room-and-letter mark (T2507: 132A) is printed as the room number, then the letter in its own column.
+    const rowOf = (d) => { if (d.row.text.startsWith(d.mark)) return true; const m = /^(\d+)([A-Z])$/.exec(d.mark); return !!m && d.row.text.startsWith(m[1] + " ") && d.row.text.split(" ").includes(m[2]); };
+    assert.ok(m.doors.length > 0 && m.doors.every((d) => d.row && d.row.text && rowOf(d)), sha + ": each door carries the row it came from");
     assert.equal(m.doors.length + m.set.not_door_rows.length, m.set.rows, sha + ": rows = door rows + rows that are not doors");
     assert.ok(m.set.not_door_rows.every((r) => r.reason), sha + ": a row that is not a door says why");
     // g035: a set with no readable plan says why and claims no tag; one with a plan places its doors on it.
@@ -143,6 +145,15 @@ test("g028 sets: every door comes from a schedule row; every row is a door or li
     }
   }
   assert.equal(Object.keys(G028_SETS).length, 10, "g035: all ten harvested sets");
+  // g045: T2507 is read the production way (reader A, 49 rows) and placed with the g044 shared-mark rule.
+  const t2507 = G028_SETS["192a16af8f31ae0c"];
+  assert.equal(t2507.doors.length, 49);
+  assert.equal(t2507.doors.filter((d) => d.plan).length, 49);
+  const shared = t2507.doors.filter((d) => d.plan && d.plan.shared_mark);
+  assert.deepEqual(shared.map((d) => d.mark), ["132A", "132A"]);
+  assert.ok(shared.every((d) => d.plan.note === "shared mark, order assumed"));
+  assert.notDeepEqual([shared[0].plan.x, shared[0].plan.z], [shared[1].plan.x, shared[1].plan.z]);
+  assert.deepEqual(t2507.set.shared_marks.map((x) => [x.mark, x.rows, x.tags, x.placed]), [["132A", 2, 2, true]]);
   assert.equal(G028_SETS["7478006f7fd5b43c"].doors.length, 152, "R2502: no 120-door cap");
   assert.deepEqual(Object.values(G028_SETS).filter((m) => m.set.no_plan_reason).map((m) => m.set.sha16).sort(), ["977cec6301f40433", "f97e99f88a931e74"]);
 });
