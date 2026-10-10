@@ -305,7 +305,7 @@ function within(line, x0, x1, margin) {
 
 function isTitleLine(line, dataH) {
   const t = normLabel(line.text);
-  return line.words.length <= 8 && /\b(SCHEDULE|LEGEND|NOTES|TYPES|ELEVATIONS)\b/.test(t) && (!dataH || line.h >= 1.25 * dataH);
+  const medH = line.words.length ? line.words.map(w => w.h).sort((a,b)=>a-b)[Math.floor(line.words.length/2)] : line.h; return line.words.length <= 8 && /\b(SCHEDULE|LEGEND|NOTES|TYPES|ELEVATIONS)\b/.test(t) && (!dataH || medH >= 1.25 * dataH);
 }
 
 /** Field for a header-cell text (the OCR patterns' meaning, with context words). */
