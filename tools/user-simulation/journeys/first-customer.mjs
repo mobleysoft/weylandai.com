@@ -16,6 +16,7 @@
 //   STAGE=claim    after the operator's on-account order (POST /api/billing/on-account, g052): a
 //                  second code sign-in (the email proven) takes the held first submittal; the account
 //                  card then shows it.
+//   STAGE=signin   (g063) a fresh emailed-code sign-in from the firm's inbox; the card.
 //   STAGE=record   the account card and the dossier as the customer record, read and screenshot
 //                  (SHOTS_DIR).
 // Nothing is cleaned up: the account, its project and its package are the customer record.
@@ -156,6 +157,15 @@ await J.run(async () => {
     const extract = ((await frame.evaluate(() => (document.getElementById("extract-result") || {}).innerText || "")) || "").replace(/\s+/g, " ").trim();
     J.note("read", { rows: d.rows.length, extract: extract.slice(0, 600), title: d.title, sub: d.sub, note: d.doorNote, tiles: d.tiles, steps: d.steps });
     J.check("every door row of the schedule pages is read (" + expect + " on the sheets)", d.rows.length === expect, { rows: d.rows.length, extract: extract.slice(0, 300) });
+    // g063: a mark printed on two rows (T2507's 132A: two openings sharing a tag) stays two rows,
+    // each with its own source row; the page's words for it are recorded.
+    if (process.env.SHARED_MARK) {
+      const shared = d.rows.filter((r) => r.mark.replace(/\s.*$/, "") === process.env.SHARED_MARK);
+      const words = await frame.evaluate((m) => Array.from(document.querySelectorAll("#doors-wrap tbody tr")).filter((tr) => (tr.querySelector("td.mark-cell") || {}).innerText?.trim().startsWith(m)).map((tr) => tr.innerText.replace(/\s+/g, " ").trim().slice(0, 220)), process.env.SHARED_MARK);
+      J.note("shared_mark_rows", words);
+      J.check("the two " + process.env.SHARED_MARK + " openings are two rows, each with its own source row", shared.length === 2 && new Set(shared.map((r) => r.source)).size === 2, shared);
+      J.check("the workspace says the two " + process.env.SHARED_MARK + " rows share one tag", words.length === 2 && words.every((t) => /shar(e|es|ed) (a|one|this) tag|SHARED TAG/i.test(t)), words);
+    }
     const traced = d.rows.filter((r) => /p\.\d+ row \d+/.test(r.source));
     J.check("every row cites its source page and row", traced.length === d.rows.length && d.rows.length > 0, { rows: d.rows.length, traced: traced.length, sample: d.rows.slice(0, 3) });
 
@@ -201,6 +211,26 @@ await J.run(async () => {
     await keepState(ctx);
   }
 
+  if (STAGE === "signin") {
+    // g063: the firm signs in again from its inbox (sign-out first when this browser is signed in).
+    const st0 = await shellState(page);
+    if (st0.auth === "signed-in") {
+      await page.evaluate(() => window.WeylandShell.close());
+      await openAccountCard(page);
+      const out = page.locator("#wa-overlay.is-open button").filter({ hasText: /^sign out$/i }).first();
+      if (await out.count()) await press(page, out);
+      await page.waitForFunction(() => document.documentElement.dataset.weylandAuth === "signed-out", null, { timeout: 15000 }).catch(() => {});
+      await sleep(800);
+    }
+    const st = await codeSignIn(page);
+    J.check("signed in as the firm from its inbox", st.auth === "signed-in" && st.user === EMAIL, st);
+    await page.evaluate(() => window.WeylandShell && window.WeylandShell.close());
+    const card = await openAccountCard(page);
+    J.note("account_card", card.overlayText);
+    await page.evaluate(() => window.WeylandShell.close());
+    await keepState(ctx);
+  }
+
   if (STAGE === "claim") {
     // A second emailed-code sign-in proves the address; the held first submittal comes with it.
     const st0 = await shellState(page);
@@ -239,13 +269,15 @@ await J.run(async () => {
     const card = await openAccountCard(page);
     J.note("account_card", card.overlayText);
     J.check("the account card is the customer record: the firm's address", card.view === "account" && card.overlayText.toLowerCase().includes(EMAIL), card.overlayText.slice(0, 400));
+    // g063: EXPECT_CARD (a regular expression) the card must also say, e.g. still on account with the credit used.
+    if (process.env.EXPECT_CARD) J.check("the account card says /" + process.env.EXPECT_CARD + "/", new RegExp(process.env.EXPECT_CARD, "i").test(card.overlayText), card.overlayText.slice(0, 500));
     if (shots) await page.screenshot({ path: path.join(shots, "account-card.png") });
     await page.evaluate(() => window.WeylandShell.close());
     await page.evaluate(() => window.WeylandShell.open("app", { path: "/subx-app" }));
     const frame = await overlayFrame(page, 30000);
     const ws = frame ? await subxWorkspace(frame, 30000) : null;
     J.note("schedules", ws && ws.sessions);
-    J.check("the firm's projects are listed in SubX", !!ws && /R2502/i.test(ws.sessions || ""), ws && ws.sessions);
+    J.check("the firm's projects are listed in SubX", !!ws && /R2502/i.test(ws.sessions || "") && (!process.env.EXPECT_PROJECTS || process.env.EXPECT_PROJECTS.split("|").every((p) => (ws.sessions || "").includes(p))), ws && ws.sessions);
     if (shots) await page.screenshot({ path: path.join(shots, "subx-projects.png") });
     await page.evaluate(() => window.WeylandShell.close());
   }

@@ -422,7 +422,7 @@ export async function generateHardwareSetPage(setData, options, PDFLib) {
   } else {
     const doorColWidths = [65, 90, 75, 75, 70, 93];
     const doorRows = doors.map((d) => [
-      d.mark,
+      printedMark(d.mark),
       d.width && d.height ? `${d.width} x ${d.height}` : (d.width || "\u2014"),
       d.door_type,
       d.frame_material,
@@ -687,6 +687,11 @@ export function feetInchesText(x) {
 // carries and the place it was read from (page and table row), so each line
 // in the package traces back to the uploaded sheet. Landscape Letter, as
 // many pages as the rows need.
+// g063: the mark as the sheet prints it. The workspace keys a second row with the same mark
+// "132A [row.2]" and a mark repeated from another page "101 [p.3]"; the packet prints "132A" and
+// "101" (the Source column already says which row and page).
+export const printedMark = (m) => String(m == null ? "" : m).replace(/(\s\[(row|p)\.\d+\])+$/, "");
+
 export async function generateDoorSchedulePages(doorRows, info = {}) {
   const PDFDocument3 = SovereignPDFDocument, StandardFonts2 = SovereignStandardFonts, rgb2 = sovereignRgb;
   const doc = await PDFDocument3.create();
@@ -712,7 +717,7 @@ export async function generateDoorSchedulePages(doorRows, info = {}) {
       : (d.width ? d.width + " (?)" : "(?)"));
     const thickness = d.thickness_inches != null ? inchesText(d.thickness_inches) : (d.thickness ? d.thickness + " (?)" : "-");
     return [
-      d.mark,
+      printedMark(d.mark),
       d.hardware_group || "-",
       size,
       thickness,

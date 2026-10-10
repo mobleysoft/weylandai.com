@@ -238,12 +238,27 @@ export async function pageTextLines(pdfjsLib, page, opts = {}) {
     if (!HEADER_LABEL_WORDS.test(normLabel(str)) || str.split(/\s+/).length > 4) continue;
     const yb = Math.max(m[5], m[5] + Math.sign(m[1]) * it.width);
     const x0 = m[4] - h / 2;
-    vertical.push({ str, x0, x1: x0 + h, yb, h, item, itemX0: x0, itemX1: x0 + h, rotated_header: true });
+    vertical.push({ str, x0, x1: x0 + h, yb, h, item, itemX0: x0, itemX1: x0 + h, rotated_header: true, header_top: yb - it.width });
   }
-  for (const L of clusterLines(vertical)) for (const g of gapGroups(L, L.h)) {
-    const fs = new Set(g.words.map(w => fieldForHeader(w.str, new Set())));
-    if (g.words.length >= 4 && fs.has("mark") && fs.has("width") && fs.has("height")) best.words.push(...g.words);
+  const keptVertical = new Set();
+  for (const L of clusterLines(vertical)) {
+    // A column-header band can mix orientations: NO. may be horizontal
+    // beside vertical WIDTH/HEIGHT, or DOOR NO. vertical beside W/H/T.
+    // Validate the complete local band while retaining only its rotated items.
+    const horizontal = best.words.filter(w => Math.abs(w.yb - L.y) <= 0.8 * L.h && (HEADER_LABEL_WORDS.test(normLabel(w.str)) || w.str === "#"));
+    const words = [...L.words, ...horizontal].sort((a, b) => a.x0 - b.x0);
+    for (const g of gapGroups({ words }, L.h)) {
+      const items = new Map();
+      for (const w of g.words) { if (!items.has(w.item)) items.set(w.item, []); items.get(w.item).push(w.str); }
+      const fs = new Set([...items.values()].map(ws => fieldForHeader(ws.join(" "), new Set())));
+      if (items.size >= 4 && fs.has("mark") && fs.has("width") && fs.has("height")) {
+        const vf = new Set(g.words.filter(w => w.rotated_header).map(w => fieldForHeader(w.str, new Set())));
+        const mixed = !vf.has("mark") || !vf.has("width") || !vf.has("height");
+        for (const w of g.words) if (w.rotated_header) { w.mixed_header = mixed; keptVertical.add(w); }
+      }
+    }
   }
+  best.words.push(...keptVertical);
   const lines = clusterLines(best.words);
   const textWords = items.reduce((n, it) => n + (typeof it.str === "string" ? (it.str.match(/\S+/g) || []).length : 0), 0);
   return { lines, width: best.viewport.width, height: best.viewport.height, rotation: best.rotation,
@@ -265,11 +280,14 @@ export function looksLikeMark(text) {
   const t = String(text || "").trim();
   if (!t || t.length > 12 || /\s/.test(t) || /^\d+\.$/.test(t)) return false;
   if (!/\d/.test(t)) return false;
+  // Sheet/detail references (A-501, K17/A-303) are not door marks. Keep
+  // short prefixed marks such as E-01 and I-07 valid in every row/list path.
+  if (/^[A-Z]{1,3}-\d{3}(?:\.\d+)?$/i.test(t) || /\/[A-Z]{1,3}-?\d{3}(?:\.\d+)?$/i.test(t)) return false;
   return /^[A-Za-z0-9][A-Za-z0-9.\-\/]*$/.test(t) && !/^\d+'/.test(t) && !/"/.test(t);
 }
 
 // Door-schedule header vocabulary, tested on a column's header text.
-const HEADER_LABEL_WORDS = /\b(MARK|TAG|NUMBER|NUM|NO|ID|OPENING|WIDTH|WDTH|WD|HEIGHT|HGT|HT|SIZE|THICKNESS|THICK|THK|TYPE|MATERIAL|MATL|MAT|FINISH|FIN|FIRE|RATING|RATED|LABEL|HARDWARE|HDW|HDWR|HW|SET|GROUP|GRP|GLAZING|GLASS|GLZ|HEAD|JAMB|SILL|THRESHOLD|THRES|THRESH|STC|PANIC|NOTES?|REMARKS?|COMMENTS?|PAIR|DETAILS?|FRAME|DOOR|PANEL|LEAF|ROOM|NAME|LOCATION|ALTERNATE|ALT|PRICING|QTY|LEAVES|UNDERCUT|LOUVER|CLOSER|LOCKSET|KEYSIDE|SWING|HAND|HANDING|ELEV|ELEVATION|W|H|T)\b/;
+const HEADER_LABEL_WORDS = /\b(MARK|TAG|NUMBER|NUM|NO|ID|OPENING|WIDTH|WDTH|WD|HEIGHT|HGT|HT|SIZE|THICKNESS|THICK|THK|TYPE|MATERIAL|MATL|MAT|FINISH|FIN|FIRE|RATING|RATED|LABEL|HARDWARE|HDW|HDWR|HW|SET|GROUP|GRP|GLAZING|GLASS|GLZ|HEAD|JAMB|SILL|THRESHOLD|THRES|THRESH|STC|PANIC|SECURITY|CLASS|NOTES?|REMARKS?|COMMENTS?|PAIR|DETAILS?|FRAME|DOOR|PANEL|LEAF|ROOM|NAME|LOCATION|ALTERNATE|ALT|PRICING|QTY|LEAVES|UNDERCUT|LOUVER|CLOSER|LOCKSET|KEYSIDE|SWING|HAND|HANDING|ELEV|ELEVATION|W|H|T)\b/;
 const GROUP_LABEL_WORDS = /^(DOOR|FRAME|PANEL|SIZE|DETAILS?|FIRE|HARDWARE|ALTERNATE|OPENING|LEAF|GLAZING|RATING)$/;
 
 function labelHits(line) {
@@ -393,9 +411,20 @@ export async function readDoorScheduleFromLines(lines, pageSize, opts = {}) {
     // table must not consume the right table's header on that same baseline.
     const headerH = compactHeader ? bandHeight(lines[i].words.map(w => w.h)) : h0;
     for (const group of gapGroups(lines[i], headerH)) {
-      const fg = fieldGroup({ ...lines[i], words: group.words }, headerH);
+      let fg = fieldGroup({ ...lines[i], words: group.words }, headerH);
       if (!fg || (used.get(i) || []).some((r) => fg.x0 >= r.x0 - h0 && fg.x1 <= r.x1 + h0)) continue;
-      let t = compactHeader ? null : await buildTable(lines, i, pageSize, opts, fg);
+      const rotatedHeader = fg.words.some(w => w.mixed_header);
+      if (rotatedHeader) {
+        // A neighbouring schedule's data can share this baseline. Start at
+        // this header's own mark and keep its span during upward expansion.
+        const mark = fg.words.find(w => fieldForHeader(fg.words.filter(v => v.item === w.item).map(v => v.str).join(" "), new Set()) === "mark");
+        if (mark) {
+          const labels = fg.words.filter(w => labelHits({ words: fg.words.filter(v => v.item === w.item) }).hits);
+          const end = Math.max(...labels.map(w => w.x1));
+          fg = { ...fg, x0: mark.itemX0, x1: end, words: fg.words.filter(w => w.x0 >= mark.itemX0 && w.x1 <= end) };
+        }
+      }
+      let t = compactHeader ? null : await buildTable(lines, i, pageSize, rotatedHeader ? { ...opts, compactHeader: true, rotatedHeader: true } : opts, fg);
       // On mixed sheets a finish legend can share the header's baseline and
       // gap group. Retry an unread table from its explicit mark label, keeping
       // the nearby multiline header inside that span instead of widening it.
@@ -520,16 +549,17 @@ async function buildTable(lines, fieldIdx, pageSize, opts, fieldCandidate = null
   // the table (T2502 A-700: "HARDWARE SET 1 -" next to DOOR SCHEDULE made it "HARDWARE SET 1 -
   // DOOR SCHEDULE", read as a hardware table, 9 doors dropped).
   const findTitle = (tx0, tx1) => {
-    for (let k = headerIdx[0] - 1; k >= 0 && k >= headerIdx[0] - 8; k--) {
+    const top = opts.rotatedHeader ? Math.min(...fg.words.map(w => w.header_top ?? w.yb)) : lines[headerIdx[0]].y;
+    for (let k = headerIdx[0] - 1; k >= 0 && (opts.rotatedHeader || k >= headerIdx[0] - 8); k--) {
       const W = within(lines[k], tx0, tx1, 2 * h);
-      if (lines[headerIdx[0]].y - lines[k].y > 8 * h) break;
+      if (top - lines[k].y > 8 * h) break;
       if (!W.words.length) continue;
       // A title is its title-sized words: a smaller note sharing its band (T2504 A-601: "1. EXISTING
       // STOREFRONT DOOR ..." beside DOOR AND FRAME SCHEDULE) is not part of it.
       const tallest = Math.max(...W.words.map((w) => w.h || 0));
       const tw = W.words.filter((w) => !tallest || (w.h || 0) >= 0.8 * tallest);
       const L = { ...W, words: tw, text: tw.map((w) => w.str).join(" ") };
-      if (L.words.length <= 8 && /\bSCHEDULE\b/.test(normLabel(L.text))) return L.text;
+      if (L.words.length <= 8 && /\bSCHEDULE\d*\b/.test(normLabel(L.text))) return L.text;
     }
     return null;
   };
@@ -557,7 +587,7 @@ async function buildTable(lines, fieldIdx, pageSize, opts, fieldCandidate = null
     if ((hits >= 1 && hits === total || compactLabels) && !L.words.some((w) => looksLikeMark(w.str) && /\d/.test(w.str))) { headerIdx.push(k); headerLines.push(L); prevY = L.y; firstData = k + 1; }
     else break;
   }
-  const dataIdx = [];
+  let dataIdx = [];
   let lastY = lines[firstData - 1].y, rowStartY = lastY;
   const pitches = [];
   for (let k = firstData; k < lines.length; k++) {
@@ -572,6 +602,7 @@ async function buildTable(lines, fieldIdx, pageSize, opts, fieldCandidate = null
     if (!inside.length) { if (gap > 1.2 * h && L.x0 > x1) continue; else continue; }
     const Li = { ...L, words: inside, text: inside.map((w) => w.str).join(" ") };
     if (/^(?:GENERAL\s+NOTES?|NOTES?)\s*:/i.test(Li.text)) break;
+    if (opts.rotatedHeader && /^(?:\*\s*)?SEE\s+(?:HARDWARE\s+)?SPECIFICATIONS?\b/i.test(Li.text)) break;
     if (isFieldLine(Li, h) || isTitleLine(Li, h)) break;
     dataIdx.push(k);
     // The pitch is measured from row to row. A line closer than 0.8 text heights to the one above is
@@ -584,6 +615,27 @@ async function buildTable(lines, fieldIdx, pageSize, opts, fieldCandidate = null
     lastY = L.y;
   }
   if (!dataIdx.length) return null;
+  if (opts.rotatedHeader) {
+    // Sparse drawing captions below the table can maintain a line pitch long
+    // after its last door. Bound the recovered table by the run of marks under
+    // its explicit mark header, allowing wrapped cells within the final row.
+    const markWords = fg.words.filter(w => fieldForHeader(fg.words.filter(v => v.item === w.item).map(v => v.str).join(" "), new Set()) === "mark");
+    const markItem = markWords[0]?.item;
+    const firstMark = markWords.filter(w => w.item === markItem);
+    if (firstMark.length) {
+      const right = Math.max(...firstMark.map(w => w.x1));
+      const next = fg.words.find(w => w.x0 > right && HEADER_LABEL_WORDS.test(normLabel(w.str)));
+      const fence = next ? (right + next.x0) / 2 : right + h;
+      const markYs = dataIdx.filter(k => {
+        const ws = lines[k].words.filter(w => w.x0 >= x0 - inset && w.x1 < fence);
+        return looksLikeMark(joinWords(ws, h));
+      }).map(k => lines[k].y);
+      if (markYs.length >= 2) {
+        const pitch = median(markYs.slice(1).map((y, j) => y - markYs[j]));
+        dataIdx = dataIdx.filter(k => lines[k].y <= markYs[markYs.length - 1] + 0.75 * pitch);
+      }
+    }
+  }
   // A row's text that runs on past the last header's right edge (X2530 A-101: "REQUIRED: FIRE RATED
   // LOUVER" under COMMENTS) keeps the words that continue it closely.
   const rowWords = (L) => {
@@ -740,6 +792,23 @@ async function buildTable(lines, fieldIdx, pageSize, opts, fieldCandidate = null
   }
   const usedF = new Set();
   const fields = names.map((n) => { const f = fieldForHeader(n, usedF); if (f) usedF.add(f); return f; });
+  if (opts.rotatedHeader) {
+    // A sparse remarks cell can begin left of its centred label (one "1",
+    // or a long SEE DETAIL item). Keep it out of LABEL/SECURITY CLASS, and
+    // retain the whole text item when it runs across the inferred boundary.
+    const notes = fields.indexOf("notes");
+    const label = cells.find(c => fieldForHeader(c.words.map(w => w.str).join(" "), new Set()) === "notes");
+    if (notes > 0 && label) {
+      const left = cells.filter(c => c.x1 < label.x0).at(-1);
+      if (left) {
+        let edge = Math.min(bounds[notes - 1], (left.x1 + label.x0) / 2);
+        for (const L of dataLines) for (const w of L.words) {
+          if (w.itemX0 > left.x1 + h && w.itemX1 > label.x0 && w.itemX0 < edge) edge = w.itemX0 - 0.3 * h;
+        }
+        bounds[notes - 1] = Math.max(bounds[notes - 2] ?? x0, edge);
+      }
+    }
+  }
   // What the header says this is.
   const F = new Set(fields.filter(Boolean));
   const titleUp = normLabel(title || "");
