@@ -24,6 +24,7 @@
 //                                                     come from <dir>/manifest.json when present
 //   --files a.pdf,b.pdf     just these files
 //   --only <sha16,...>      just these (from whatever set was chosen)
+//   --out <dir>             write the records and queue to <dir> (default tools/corpus/harvest/truth)
 //   --max-pages <n>         skip PDFs with more pages (default 1200)
 //   --ocr-max-pages <n>     OCR a PDF with no text layer when it has at most n pages (default 6); --ocr-dpi (600)
 // Then: node tools/accuracy/truth_report.mjs  (the per-tier report).
@@ -41,9 +42,10 @@ import { oracleMarksOnPlan, oracleSetsExist, oracleSetDoorLists, oracleTypesInLe
 
 const here = dirname(fileURLToPath(import.meta.url));
 const REPO = resolve(here, "../..");
-const OUT = join(REPO, "tools/corpus/harvest/truth");
 const argv = process.argv.slice(2);
 const opt = (k, d = null) => { const i = argv.indexOf("--" + k); return i >= 0 && argv[i + 1] && !argv[i + 1].startsWith("--") ? argv[i + 1] : d; };
+// --out <dir>: write the records and the queue there instead (a run to compare with compare_runs.mjs).
+const OUT = opt("out") ? resolve(opt("out")) : join(REPO, "tools/corpus/harvest/truth");
 const MAX_PAGES = +opt("max-pages", 1200);
 // A PDF with no text layer is OCR'd (truth/ocr.mjs) when it has at most this many pages (a page takes about a minute).
 const OCR_MAX = +opt("ocr-max-pages", 6), OCR_DPI = +opt("ocr-dpi", 600);
