@@ -251,7 +251,7 @@ export function looksLikeMark(text) {
 }
 
 // Door-schedule header vocabulary, tested on a column's header text.
-const HEADER_LABEL_WORDS = /\b(MARK|TAG|NUMBER|NUM|NO|ID|OPENING|WIDTH|WDTH|HEIGHT|HGT|HT|SIZE|THICKNESS|THICK|THK|TYPE|MATERIAL|MATL|MAT|FINISH|FIN|FIRE|RATING|RATED|LABEL|HARDWARE|HDW|HDWR|HW|SET|GROUP|GRP|GLAZING|GLASS|GLZ|HEAD|JAMB|SILL|THRESHOLD|THRES|THRESH|STC|PANIC|NOTES?|REMARKS?|COMMENTS?|PAIR|DETAILS?|FRAME|DOOR|PANEL|LEAF|ROOM|NAME|LOCATION|ALTERNATE|ALT|PRICING|QTY|LEAVES|UNDERCUT|LOUVER|CLOSER|LOCKSET|KEYSIDE|SWING|HAND|HANDING|ELEV|ELEVATION|W|H|T)\b/;
+const HEADER_LABEL_WORDS = /\b(MARK|TAG|NUMBER|NUM|NO|ID|OPENING|WIDTH|WDTH|WD|HEIGHT|HGT|HT|SIZE|THICKNESS|THICK|THK|TYPE|MATERIAL|MATL|MAT|FINISH|FIN|FIRE|RATING|RATED|LABEL|HARDWARE|HDW|HDWR|HW|SET|GROUP|GRP|GLAZING|GLASS|GLZ|HEAD|JAMB|SILL|THRESHOLD|THRES|THRESH|STC|PANIC|NOTES?|REMARKS?|COMMENTS?|PAIR|DETAILS?|FRAME|DOOR|PANEL|LEAF|ROOM|NAME|LOCATION|ALTERNATE|ALT|PRICING|QTY|LEAVES|UNDERCUT|LOUVER|CLOSER|LOCKSET|KEYSIDE|SWING|HAND|HANDING|ELEV|ELEVATION|W|H|T)\b/;
 const GROUP_LABEL_WORDS = /^(DOOR|FRAME|PANEL|SIZE|DETAILS?|FIRE|HARDWARE|ALTERNATE|OPENING|LEAF|GLAZING|RATING)$/;
 
 function labelHits(line) {
@@ -327,8 +327,8 @@ export function fieldForHeader(text, used) {
   if (has(/\bPANIC\b/)) return pick("panic_hardware");
   if (has(/\b(ALTERNATE|ALT|PRICING|PRICE)\b/)) return pick("alternate");
   if (!has(/\b(WINDOW|CATALOG|MODEL|PRODUCT|ROOM|SET|GROUP|HARDWARE|SHEET|KEY)\b/) && (has(/\b(MARK|TAG)\b/) || has(/\b(DOOR|OPENING|DR)\s*(NO|NUMBER|NUM|#|ID)(?:\b|$)/) || /^(NO|NUMBER|NUM|ID|OPENING|OPENING NO|#)$/.test(t))) return pick("mark");
-  if (has(/\bSIZE\b/) && !has(/\b(WIDTH|HEIGHT)\b/)) return pick("size");
-  if (has(/\b(WIDTH|WDTH)\b/) || /^W$/.test(t)) return pick("width");
+  if (has(/\bSIZE\b/) && !has(/\b(WIDTH|WDTH|WD|HEIGHT|HGT|HT)\b/)) return pick("size");
+  if (has(/\b(WIDTH|WDTH|WD)\b/) || /^W$/.test(t)) return pick("width");
   if (has(/\b(HEIGHT|HGT|HT)\b/) || /^H$/.test(t)) return pick("height");
   if (has(/\b(THICKNESS|THICK|THK)\b/) || /^T$/.test(t)) return pick("thickness");
   if (has(/\b(FIRE|RATING|RATED|LABEL)\b/) && !has(/\bSTC\b/)) return pick("fire_rating");
@@ -426,6 +426,10 @@ async function buildTable(lines, fieldIdx, pageSize, opts, fieldCandidate = null
     if (hits >= 1 && shortWords && hits >= 0.4 * total && !L.words.some((w) => looksLikeMark(w.str) && /^\d/.test(w.str))) { headerIdx.unshift(k); headerLines.unshift(L); prevY = L.y; x0 = Math.min(x0, L.x0); x1 = Math.max(x1, L.x1); }
     else break;
   }
+  // The field line's own words across the header's final extent: a wide gap on that line can leave
+  // part of its labels outside the group it was found by (T2147 A602: WIDTH HEIGHT THICKNESS under a
+  // nested SIZE, 311 pt left of HEAD JAMB SILL GROUP NUMBER), and those columns would go unnamed.
+  headerLines[headerLines.length - 1] = within(fieldFull, x0, x1, 1.5 * h);
   // Title: the nearest short line above the block naming a schedule. Looked for first over the
   // field line's own labels: the header search above may widen x0..x1 into a list printed beside
   // the table (T2502 A-700: "HARDWARE SET 1 -" next to DOOR SCHEDULE made it "HARDWARE SET 1 -
@@ -454,10 +458,22 @@ async function buildTable(lines, fieldIdx, pageSize, opts, fieldCandidate = null
   // Headers are often centered over left-aligned marks. Include the small
   // overhang of those values beyond the header's printed extent.
   const inset = 1.2 * h;
+  // Labels printed just below the field line (T2507 A-103: WD | HGT under SIZE) are header, not data:
+  // a following line, close below, whose words are all column labels and none a mark.
+  let firstData = fieldIdx + 1;
+  for (let k = fieldIdx + 1, prevY = field.y; k < lines.length && headerIdx.length < 5; k++) {
+    const L = within(lines[k], x0, x1, 1.5 * h);
+    if (!L.words.length) continue;
+    if (L.y - prevY > 2.8 * h) break;
+    if (isFieldLine(L, h)) break; // a full field line builds its own table
+    const { hits, total } = labelHits(L);
+    if (hits >= 1 && hits === total && !L.words.some((w) => looksLikeMark(w.str) && /\d/.test(w.str))) { headerIdx.push(k); headerLines.push(L); prevY = L.y; firstData = k + 1; }
+    else break;
+  }
   const dataIdx = [];
-  let lastY = field.y, rowStartY = field.y;
+  let lastY = lines[firstData - 1].y, rowStartY = lastY;
   const pitches = [];
-  for (let k = fieldIdx + 1; k < lines.length; k++) {
+  for (let k = firstData; k < lines.length; k++) {
     const L = lines[k];
     const inside = L.words.filter((w) => (w.x0 >= x0 - inset || (w.itemX0 < x0 && w.itemX1 >= x0 && w.itemX1 <= x1)) && w.x1 <= x1 + inset);
     const gap = L.y - lastY;
@@ -481,7 +497,17 @@ async function buildTable(lines, fieldIdx, pageSize, opts, fieldCandidate = null
     lastY = L.y;
   }
   if (!dataIdx.length) return null;
-  const dataLines = dataIdx.map((k) => ({ ...lines[k], words: lines[k].words.filter((w) => (w.x0 >= x0 - inset || (w.itemX0 < x0 && w.itemX1 >= x0 && w.itemX1 <= x1)) && w.x1 <= x1 + inset) }));
+  // A row's text that runs on past the last header's right edge (X2530 A-101: "REQUIRED: FIRE RATED
+  // LOUVER" under COMMENTS) keeps the words that continue it closely.
+  const rowWords = (L) => {
+    const ws = L.words.slice().sort((a, b) => a.x0 - b.x0);
+    const kept = ws.filter((w) => (w.x0 >= x0 - inset || (w.itemX0 < x0 && w.itemX1 >= x0 && w.itemX1 <= x1)) && w.x1 <= x1 + inset);
+    if (!kept.length) return kept;
+    let last = kept[kept.length - 1];
+    for (const w of ws) if (w.x0 > last.x1 - 0.1 && w.x1 > x1 + inset && w.x0 - last.x1 <= h) { kept.push(w); last = w; }
+    return kept;
+  };
+  const dataLines = dataIdx.map((k) => ({ ...lines[k], words: rowWords(lines[k]) }));
   x0 = Math.min(x0, ...dataLines.flatMap((L) => L.words.map((w) => w.x0)));
   const rowPitch = pitches.length ? median(pitches) : 1.3 * h;
 
@@ -534,9 +560,39 @@ async function buildTable(lines, fieldIdx, pageSize, opts, fieldCandidate = null
       }
     }
     if (!any) continue;
-    if (beforeRight !== -Infinity && beforeRight < c.x0 - margin) {
+    // The data left of this header is another column's only if another header names it: values
+    // left-aligned under a centred header (T2504 A-601: HARDWARE SETS over "09") are its own.
+    const ownHeader = cells.some((o) => o !== c && o.x1 > anchors[k] - margin && o.x0 < c.x0 - margin);
+    // A group label with sub-labels beneath it (SIZE over WD | HGT) names no column of its own.
+    const yMax = (cc) => Math.max(...cc.words.map((w) => w.yb));
+    const isGroup = cells.some((o) => o !== c && Math.min(...o.words.map((w) => w.yb)) > yMax(c) + 0.5 * h && o.x1 > c.x0 - 2 * h && o.x0 < c.x1 + 2 * h);
+    if (isGroup) continue;
+    if (ownHeader && beforeRight !== -Infinity && beforeRight < c.x0 - margin) {
       const start = Math.min(c.x0, underLeft);
       if (start > anchors[k] + h) anchors.push((beforeRight + start) / 2 + 0.3 * h);
+    }
+  }
+  // Two header cells over one column span (T2504 A-601: JAMB and RATING over "J1 ... 90 MIN.", the
+  // sparse rating column having too few values to start a column): the span splits where the second
+  // cell's values begin, when nothing starting under the first runs into them.
+  for (let k = 0; k < anchors.length; k++) {
+    const next = anchors[k + 1] ?? Infinity;
+    const over = cells.filter((c) => c.x0 >= anchors[k] - margin && c.x0 < next - margin).sort((a, b) => a.x0 - b.x0);
+    for (let j = 1; j < over.length; j++) {
+      const A = over[j - 1], B = over[j];
+      let beforeRight = -Infinity, underLeft = Infinity;
+      for (const L of dataLines) {
+        const seen = new Set();
+        for (const w of L.words) {
+          if (seen.has(w.item)) continue;
+          seen.add(w.item);
+          const ix0 = w.itemX0 >= x0 - inset ? w.itemX0 : w.x0, ix1 = w.itemX1 <= x1 + inset ? w.itemX1 : w.x1;
+          if (ix0 < anchors[k] - margin || ix0 >= next) continue;
+          if (ix0 <= A.x1 + margin) beforeRight = Math.max(beforeRight, ix1);
+          else if (ix0 <= B.x1 + margin) underLeft = Math.min(underLeft, ix0);
+        }
+      }
+      if (underLeft !== Infinity && beforeRight < underLeft - 0.3 * h && underLeft > anchors[k] + 1.5 * h) anchors.push(underLeft);
     }
   }
   anchors = [...new Set(anchors.map((a) => Math.round(a * 10) / 10))].sort((a, b) => a - b);
@@ -551,6 +607,15 @@ async function buildTable(lines, fieldIdx, pageSize, opts, fieldCandidate = null
   if (rules && Array.isArray(rules.verticals) && rules.verticals.length >= Math.max(3, anchors.length - 2)) {
     const snapped = bounds.map((b) => { let best = null; for (const v of rules.verticals) if (v > x0 && v < x1 && (best == null || Math.abs(v - b) < Math.abs(best - b))) best = v; return best != null && Math.abs(best - b) <= 1.5 * h ? best : b; });
     bounds = [...new Set(snapped)].sort((a, b) => a - b);
+  }
+  // A table of one or two rows (R2502 A-122: PT101 alone) has too few values to find its columns by:
+  // the labels on the header's bottom line name every column, and each bound sits midway between
+  // two neighbouring labels.
+  if (dataLines.length <= 2 && !rules) {
+    const fl = headerLines[headerLines.length - 1].words.slice().sort((a, b) => a.x0 - b.x0);
+    const labels = [];
+    for (const w of fl) { const l = labels[labels.length - 1]; if (l && w.x0 - l.x1 <= 0.3 * h) { l.x1 = Math.max(l.x1, w.x1); } else labels.push({ x0: w.x0, x1: w.x1 }); }
+    if (labels.length >= 6) bounds = labels.slice(1).map((l, i) => (labels[i].x1 + l.x0) / 2);
   }
   const colOf = (w) => { const c = (w.x0 + w.x1) / 2; let k = 0; while (k < bounds.length && c >= bounds[k]) k++; return k; };
   const ncol = bounds.length + 1;
@@ -600,10 +665,24 @@ async function buildTable(lines, fieldIdx, pageSize, opts, fieldCandidate = null
     }
     row.lines++;
   };
-  for (const L of dataLines) {
+  // A row's cells can print on offset lines above and below its mark's baseline (T2147 A601: frame,
+  // details and hardware 6 pt above the mark, the remark's second line 5 pt below). An unruled line
+  // with no mark goes to the row whose mark line is nearer, held for the next row when that is it.
+  const startsRow = dataLines.map((L) => { if (markCol < 0) return false; const t = joinWords(cellsOf(L)[markCol], h).trim(); return !!t && looksLikeMark(t.split(" ")[0]); });
+  let pending = [];
+  for (const [li, L] of dataLines.entries()) {
     const words = cellsOf(L);
     const cells = words.map(g => joinWords(g, h));
     let markText = markCol >= 0 ? cells[markCol].trim() : "";
+    if (!markText && L.grid_row == null) {
+      const j = startsRow.indexOf(true, li + 1);
+      const dNext = j >= 0 ? dataLines[j].y - L.y : Infinity;
+      const dPrev = continuationRow ? L.y - continuationRow.y : Infinity;
+      // Only when the row above already has cells of its own (a mark printed over two lines, "1A105
+      // TO" above its data and "1A116" below, keeps the data with its first line).
+      const prevHasCells = !continuationRow || continuationRow.cells.some((c, k) => k !== markCol && c && c.trim());
+      if (prevHasCells && dNext < 0.8 * h && dNext < dPrev) { pending.push({ cells, words }); continue; }
+    }
     // Recover a split room/door mark before deciding whether this is a new
     // row or a continuation within the same detected grid row.
     if (markText && !looksLikeMark(markText.split(" ")[0]) && locCol >= 0) {
@@ -632,6 +711,8 @@ async function buildTable(lines, fieldIdx, pageSize, opts, fieldCandidate = null
       }
       continuationRow = { cells, words, section, y: L.y, lines: 1, ...(ruled ? { grid_row: L.grid_row } : {}) };
       rows.push(continuationRow);
+      for (const p of pending) appendRow(continuationRow, p.cells, p.words);
+      pending = [];
     } else if (markText) {
       if (!prev || L.y - prev.y > 1.6 * rowPitch || cells.filter((c) => c).length === 1) { section = cells.filter((c) => c).join(" ").trim(); continue; }
       appendRow(prev, cells, words);
@@ -721,7 +802,10 @@ function doorFromRow(row, fields, index, pageSize) {
     const s = readSizeCell(get("size"));
     size = { ...size, ...s, width: s.width || size.width, height: s.height || size.height, thickness: s.thickness || size.thickness };
   } else {
-    const w = readDimension(size.width), hgt = readDimension(size.height);
+    // A pair written in the width cell ("PR 3' - 0"", T2504 A-601): the leaf width, and a pair.
+    let leaf = size.width;
+    if (leaf && /^(PR|PAIR|PRS?\.?)\s+\S/i.test(leaf)) { size.pair = true; leaf = leaf.replace(/^(PR|PAIR|PRS?\.?)\.?\s*/i, ""); }
+    const w = readDimension(leaf), hgt = readDimension(size.height);
     const plain = !!(w && hgt && w.format === "in" && hgt.format === "in");
     size.width_inches = acceptDim(w, "width", plain);
     size.height_inches = acceptDim(hgt, "height", plain);
