@@ -156,3 +156,24 @@ test("g028 route: GET /api/sightx/sets/:sha16 answers the set and 404s an unknow
   const no = await router.handle(new Request("https://x/api/sightx/sets/0000000000000000"), {}, {});
   assert.equal(no.status, 404);
 });
+
+// g044: two schedule rows share mark 132A and the plan tags it twice (readPlan's shared_mark): each
+// door stands at its own tag, flagged; a row with no tag left stays off the plan.
+import { modelFromSubx as g044Model, attachPlan as g044Attach } from "../lib/schedule-model.js";
+test("g044: rows sharing a mark take their own tags in order, never one position for two doors", () => {
+  const shared = { rows: 2, tags: 2, order: "assumed" };
+  const tag = (mark, x, y, extra = {}) => ({ mark, page: 7, sheet: "A-100", x, y, h: 8, door_pages: [10], points_per_foot: 9, room: "132", ...extra });
+  const plan = { found: true, plan_sheets: [{ page: 7, sheet: "A-100", title: "FIRST FLOOR PLAN" }], rooms: [],
+    tags: [tag("132A", 1259, 555, { shared_mark: shared, note: "shared mark, order assumed" }), tag("132A", 1223, 967, { shared_mark: shared, note: "shared mark, order assumed" }), tag("132B", 1300, 700)] };
+  const doors = ["132A", "132A", "132B"].map((mark) => ({ mark, page_number: 10, width_inches: 36, height_inches: 84 }));
+  const m = g044Model({ session: { project_name: "T2507" }, doors, components: [] });
+  g044Attach(m, plan);
+  const [a1, a2, b] = m.doors;
+  assert.ok(a1.plan && a2.plan && b.plan);
+  assert.notDeepEqual([a1.plan.x, a1.plan.z], [a2.plan.x, a2.plan.z], "two 132A doors, two positions");
+  assert.equal(a1.plan.note, "shared mark, order assumed");
+  assert.equal(b.plan.note, undefined);
+  const three = g044Model({ session: { project_name: "T2507" }, doors: [...doors, { mark: "132A", page_number: 10 }], components: [] });
+  g044Attach(three, plan);
+  assert.equal(three.doors.filter((d) => d.mark === "132A" && d.plan).length, 2, "a third 132A row gets no invented position");
+});

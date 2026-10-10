@@ -1,0 +1,96 @@
+{
+ "generated_at": "2026-10-10T00:11:38.047Z",
+ "results": [
+  {
+   "sha16": "192a16af8f31ae0c",
+   "rows": 46,
+   "tags_before": 45,
+   "tags_after": 46,
+   "not_on_plan_before": [],
+   "not_on_plan_after": [],
+   "only_before": [],
+   "only_after": [
+    "132A@A-100:1259,555"
+   ],
+   "shared_marks": [
+    {
+     "mark": "132A",
+     "sheet": "A-100",
+     "page": 7,
+     "rows": 2,
+     "tags": 2,
+     "placed": true,
+     "note": "shared mark, order assumed"
+    }
+   ],
+   "shared_tags": [
+    {
+     "mark": "132A",
+     "sheet": "A-100",
+     "x": 1259,
+     "y": 555,
+     "room": "132",
+     "note": "shared mark, order assumed",
+     "by": "stacked: 132 with A"
+    },
+    {
+     "mark": "132A",
+     "sheet": "A-100",
+     "x": 1223,
+     "y": 967,
+     "room": "132",
+     "note": "shared mark, order assumed",
+     "by": "stacked: 132 with A"
+    }
+   ],
+   "shared_rows": [
+    {
+     "mark": "132A",
+     "page": 10,
+     "width": null,
+     "height": null
+    },
+    {
+     "mark": "132A",
+     "page": 10,
+     "width": null,
+     "height": null
+    }
+   ]
+  },
+  {
+   "sha16": "7478006f7fd5b43c",
+   "rows": 211,
+   "tags_before": 208,
+   "tags_after": 208,
+   "not_on_plan_before": [
+    "AD101",
+    "PT101",
+    "102"
+   ],
+   "not_on_plan_after": [
+    "AD101",
+    "PT101",
+    "102"
+   ],
+   "only_before": [],
+   "only_after": [],
+   "shared_marks": [],
+   "shared_tags": [],
+   "shared_rows": []
+  },
+  {
+   "sha16": "e3d0cc1bc22fd824",
+   "rows": 22,
+   "tags_before": 22,
+   "tags_after": 22,
+   "not_on_plan_before": [],
+   "not_on_plan_after": [],
+   "only_before": [],
+   "only_after": [],
+   "shared_marks": [],
+   "shared_tags": [],
+   "shared_rows": []
+  }
+ ]
+}

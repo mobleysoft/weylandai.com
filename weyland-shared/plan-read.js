@@ -14,7 +14,9 @@
 //   rooms:         { page, sheet, number, name, x, y, corridor } from each plan's room labels
 //   tags:          { mark, page, sheet, x, y, room, room_name, room_by, also_on }
 //   unmatched_tags: tokens drawn like the matched door tags that no schedule mark names
-//   marks_not_on_plan: schedule marks no plan sheet tags
+//   marks_not_on_plan: schedule rows no tag of their own covers
+//   shared_marks:  marks several rows of one schedule page share, per sheet, with the tag count and
+//                  whether each row got its own tag (g044)
 //
 // Nothing is guessed silently: each tag says how its room was found (room_by), and a room found
 // only as the nearest label is marked unsure.
@@ -162,6 +164,7 @@ export function readPlan(pages, doors = [], opts = {}) {
   for (const d of doors) { const k = tagOf(d); if (!k) continue; if (!markOf.has(k)) markOf.set(k, []); markOf.get(k).push(d); }
   const rooms = [], tags = [], seenTag = new Map(), sheetsOut = [];
   const paired = new Set(); // g041: the items of stacked tags, which are not unmatched tags
+  const shared = []; // g044: marks several schedule rows share, per sheet
   const scheduleBlock = (page) => (byPage.get(page) || {}).tb;
 
   for (const t of planPages) {
@@ -180,62 +183,94 @@ export function readPlan(pages, doors = [], opts = {}) {
     const cands = [];
     for (const it of p.items) cands.push({ str: it.str.trim(), x: it.x, y: it.y, h: it.h, w: it.w || 0, it });
     for (const l of ls) if (l.parts.length > 1) cands.push({ str: l.str, x: l.x, y: l.y, h: l.h, w: l.w, line: l });
-    const seenHere = new Set();
-    const place = (k, ds, c, extra = null) => {
-      const key = k + "@" + t.page;
-      if (seenHere.has(key)) return;
-      seenHere.add(key);
-      const tag = { mark: ds[0].mark, page: t.page, sheet: t.sheet, x: Math.round(cx(c)), y: Math.round(c.y - c.h / 2), h: c.h, shape: shape(c.str), door_pages: [...new Set(ds.map((d) => d.page))], ...(extra || {}) };
-      roomFor(tag, rs, ds[0], ls, p);
+    // Each tag covers the schedule rows it stands for (tag._rows), so a row is "on the plan" only when
+    // a tag of its own covers it (g044).
+    const place = (key, rowsHere, c, extra = null) => {
+      const tag = { mark: rowsHere[0].mark, page: t.page, sheet: t.sheet, x: Math.round(cx(c)), y: Math.round(c.y - c.h / 2), h: c.h, shape: shape(c.str), door_pages: [...new Set(rowsHere.map((d) => d.page))], ...(extra || {}) };
+      Object.defineProperty(tag, "_rows", { value: rowsHere, enumerable: false });
+      roomFor(tag, rs, rowsHere[0], ls, p);
       tag.points_per_foot = scaleAt(scales, tag.x, tag.y);
-      if (!seenTag.has(k + "|" + tag.door_pages.join(","))) { seenTag.set(k + "|" + tag.door_pages.join(","), tag); tags.push(tag); }
+      if (!seenTag.has(key)) { seenTag.set(key, tag); tags.push(tag); }
       else {
-        const first = seenTag.get(k + "|" + tag.door_pages.join(","));
+        const first = seenTag.get(key);
         // Keep the sheet that also shows the door's room (an enlarged plan beats a key plan without labels).
         const better = !first.room && tag.room;
-        if (better) { Object.assign(tag, { also_on: [...(first.also_on || []), first.sheet] }); tags[tags.indexOf(first)] = tag; seenTag.set(k + "|" + tag.door_pages.join(","), tag); }
+        if (better) { Object.assign(tag, { also_on: [...(first.also_on || []), first.sheet] }); tags[tags.indexOf(first)] = tag; seenTag.set(key, tag); }
         else (first.also_on ||= []).includes(t.sheet) || first.also_on.push(t.sheet);
       }
+    };
+    // Every tag position on this sheet for each mark: exact tags first.
+    const found = new Map();
+    const add = (k, c, extra = null) => {
+      const list = found.get(k) || [];
+      // The same tag drawn twice at one spot (bold text, a line and its item) is one position.
+      if (list.some((f) => Math.abs(cx(f.c) - cx(c)) < Math.max(f.c.h, c.h) && Math.abs(f.c.y - c.y) < Math.max(f.c.h, c.h))) return;
+      list.push({ c, extra }); found.set(k, list);
     };
     for (const c of cands) {
       if (offDrawing(p, c)) continue;
       if (c.line && used.has(c.line)) continue;
       if (!c.line && rs.some((r) => r._line.parts.includes(c.it))) continue;
       const k = norm(c.str);
-      const ds = (markOf.get(k) || []).filter(doorFits);
-      if (ds.length) place(k, ds, c);
+      if ((markOf.get(k) || []).some(doorFits)) add(k, c);
     }
     // g041: suffixed marks drawn as a stacked tag. Some sets number doors by room and letter
     // (schedule 113A, 113B) and draw the tag as the room number with the letter set directly above
     // or below it, two text items on two baselines. A mark with no exact tag on this sheet is
     // placed on such a pair: the number item, and one lone letter item centred on it within 1.2
     // text heights across and 2.4 down or up, at 0.6 to 1.6 times its height. An exact tag always
-    // wins, each letter item serves one tag, and the tag says how it was matched (matched_by).
+    // wins, each item serves one tag, and the tag says how it was matched (matched_by). A mark
+    // several rows share (g044) collects up to that many pairs, closest pairs first.
     const lone = p.items.filter((it) => /^[A-Z]$/i.test(it.str.trim()) && !offDrawing(p, it));
-    const usedLetter = paired;
     for (const [k, all] of markOf) {
-      if (seenHere.has(k + "@" + t.page)) continue;
+      if (found.has(k)) continue;
       const m = /^(.*\d)-?([A-Z])$/.exec(k);
       if (!m) continue;
       const ds = all.filter(doorFits);
       if (!ds.length) continue;
       const [, base, letter] = m;
-      let best = null;
+      const pairs = [];
       for (const it of p.items) {
         if (norm(it.str) !== base || offDrawing(p, it)) continue;
         for (const l of lone) {
-          if (usedLetter.has(l) || l.str.trim().toUpperCase() !== letter) continue;
+          if (l.str.trim().toUpperCase() !== letter) continue;
           const dx = Math.abs(cx(l) - cx(it)), dy = Math.abs(l.y - it.y), hr = l.h / it.h;
           if (dx > 1.2 * it.h || dy < 0.5 * it.h || dy > 2.4 * it.h || hr < 0.6 || hr > 1.6) continue;
-          const score = dx + dy;
-          if (!best || score < best.score) best = { it, l, score };
+          pairs.push({ it, l, score: dx + dy });
         }
       }
-      if (!best) continue;
-      usedLetter.add(best.l); paired.add(best.it);
-      const top = Math.min(best.it.y - best.it.h, best.l.y - best.l.h), bottom = Math.max(best.it.y, best.l.y);
-      place(k, ds, { str: k, x: Math.min(best.it.x, best.l.x), y: bottom, h: bottom - top, w: Math.max(best.it.x + (best.it.w || 0), best.l.x + (best.l.w || 0)) - Math.min(best.it.x, best.l.x) },
-        { matched_by: "stacked: " + base + " with " + letter });
+      pairs.sort((a, b) => a.score - b.score);
+      let taken = 0;
+      for (const pr of pairs) {
+        if (taken >= ds.length) break;
+        if (paired.has(pr.l) || paired.has(pr.it)) continue;
+        paired.add(pr.l); paired.add(pr.it); taken++;
+        const top = Math.min(pr.it.y - pr.it.h, pr.l.y - pr.l.h), bottom = Math.max(pr.it.y, pr.l.y);
+        add(k, { str: k, x: Math.min(pr.it.x, pr.l.x), y: bottom, h: bottom - top, w: Math.max(pr.it.x + (pr.it.w || 0), pr.l.x + (pr.l.w || 0)) - Math.min(pr.it.x, pr.l.x) },
+          { matched_by: "stacked: " + base + " with " + letter });
+      }
+    }
+    // Assign rows to positions. One row per mark (or the same door on two schedule pages): the
+    // first position, as before. k rows of one schedule page sharing a mark (g044, T2507's two 132A
+    // openings): k positions on the sheet give each row its own tag, rows in schedule order to tags
+    // in reading order, flagged "shared mark, order assumed"; any other count places none of them
+    // on this sheet and reports it (never one shared position, never an invented one).
+    for (const [k, list] of found) {
+      const ds = (markOf.get(k) || []).filter(doorFits);
+      if (!ds.length) continue;
+      const perPage = new Map();
+      for (const d of ds) perPage.set(d.page, (perPage.get(d.page) || 0) + 1);
+      if (Math.max(...perPage.values()) < 2) { place(k + "|" + [...new Set(ds.map((d) => d.page))].join(","), ds, list[0].c, list[0].extra); continue; }
+      const rows = [...ds].sort((a, b) => doors.indexOf(a) - doors.indexOf(b));
+      if (list.length !== rows.length) {
+        shared.push({ mark: rows[0].mark, sheet: t.sheet, page: t.page, rows: rows.length, tags: list.length, placed: false,
+          note: "shared mark: " + rows.length + " rows, " + list.length + " tag" + (list.length === 1 ? "" : "s") + " on this sheet; not placed here" });
+        continue;
+      }
+      const spots = [...list].sort((a, b) => (Math.abs(a.c.y - b.c.y) > Math.max(a.c.h, b.c.h) ? a.c.y - b.c.y : cx(a.c) - cx(b.c)));
+      rows.forEach((d, i) => place(k + "|row" + doors.indexOf(d), [d], spots[i].c,
+        { ...(spots[i].extra || {}), shared_mark: { rows: rows.length, tags: list.length, order: "assumed" }, note: "shared mark, order assumed" }));
+      shared.push({ mark: rows[0].mark, sheet: t.sheet, page: t.page, rows: rows.length, tags: list.length, placed: true, note: "shared mark, order assumed" });
     }
   }
 
@@ -255,15 +290,15 @@ export function readPlan(pages, doors = [], opts = {}) {
       unmatched.push({ tag: it.str.trim(), page: t.page, sheet: t.sheet, x: Math.round(cx(it)), y: Math.round(it.y) });
     }
   }
-  const tagged = new Set(tags.map((g) => tagOf(g) + "|" + g.door_pages.join(",")));
-  const notOnPlan = doors.filter((d) => ![...tagged].some((k) => k.startsWith(tagOf(d) + "|") && (d.page == null || k.split("|")[1].split(",").includes(String(d.page))))).map((d) => ({ mark: d.mark, page: d.page }));
+  const placedRows = new Set(tags.flatMap((g) => g._rows || []));
+  const notOnPlan = doors.filter((d) => !placedRows.has(d)).map((d) => ({ mark: d.mark, page: d.page }));
   for (const r of rooms) delete r._line;
   for (const g of tags) delete g.shape;
   return {
     sheets: tbs.map(({ page, sheet, title, plan }) => ({ page, sheet, title, plan })),
     plan_sheets: sheetsOut,
-    rooms, tags, unmatched_tags: unmatched, marks_not_on_plan: notOnPlan,
-    counts: { plan_sheets: sheetsOut.length, rooms: rooms.length, corridors: rooms.filter((r) => r.corridor).length, tags: tags.length, unmatched_tags: unmatched.length, schedule_marks: doors.length, marks_not_on_plan: notOnPlan.length },
+    rooms, tags, unmatched_tags: unmatched, marks_not_on_plan: notOnPlan, shared_marks: shared,
+    counts: { plan_sheets: sheetsOut.length, rooms: rooms.length, corridors: rooms.filter((r) => r.corridor).length, tags: tags.length, unmatched_tags: unmatched.length, schedule_marks: doors.length, marks_not_on_plan: notOnPlan.length, shared_marks: shared.length },
   };
 }
 

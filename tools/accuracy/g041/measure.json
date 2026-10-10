@@ -1,12 +1,12 @@
 {
- "generated_at": "2026-10-09T23:47:50.145Z",
+ "generated_at": "2026-10-10T00:10:59.654Z",
  "results": [
   {
    "sha16": "192a16af8f31ae0c",
    "rows": 46,
-   "placed": 45,
+   "placed": 46,
    "exact": 0,
-   "stacked": 45,
+   "stacked": 46,
    "not_on_plan": [],
    "plan_sheets": [
     "A-100 p.7",
@@ -301,6 +301,14 @@
      "y": 474,
      "by": "stacked: 131 with B",
      "room": "131"
+    },
+    {
+     "mark": "132A",
+     "sheet": "A-100",
+     "x": 1259,
+     "y": 555,
+     "by": "stacked: 132 with A",
+     "room": "132"
     },
     {
      "mark": "132A",

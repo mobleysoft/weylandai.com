@@ -384,14 +384,25 @@ export function attachPlan(model, plan) {
     for (const t of b.tags) {
       const pos = at(t.x, t.y, t.points_per_foot);
       const room = t.room != null || t.room_name ? bld.rooms.find((r) => r.number === t.room && r.name === t.room_name) : null;
-      placed.set(nk(t.mark) + "|" + (t.door_pages || []).join(","), { sheet: t.sheet, page: t.page, x: pos.x, z: pos.z, room: t.room, room_name: t.room_name, room_by: t.room_by, unsure: !!t.unsure, also_on: t.also_on || [], room_x: room ? room.x : null, room_z: room ? room.z : null, building: buildings.length - 1 });
+      // g044: a mark several schedule rows share has one tag per row (readPlan's shared_mark); they
+      // queue under one key and each door takes the next, never one position for two doors.
+      const k = nk(t.mark) + "|" + (t.door_pages || []).join(",");
+      const entry = { sheet: t.sheet, page: t.page, x: pos.x, z: pos.z, room: t.room, room_name: t.room_name, room_by: t.room_by, unsure: !!t.unsure, also_on: t.also_on || [], room_x: room ? room.x : null, room_z: room ? room.z : null, building: buildings.length - 1,
+        ...(t.shared_mark ? { shared_mark: t.shared_mark, note: t.note || "shared mark, order assumed" } : {}) };
+      if (t.shared_mark && placed.has(k) && placed.get(k)[0].shared_mark) placed.get(k).push(entry);
+      else placed.set(k, [entry]);
     }
     offsetX += (maxX - minX) + 40;
   }
   let onPlan = 0;
   for (const d of model.doors) {
     const key = [...placed.keys()].find((k) => k.split("|")[0] === nk(d.mark) && (d.source_page == null || k.split("|")[1] === "" || k.split("|")[1] === "null" || k.split("|")[1].split(",").includes(String(d.source_page))));
-    if (key) { d.plan = placed.get(key); onPlan++; }
+    if (!key) continue;
+    const list = placed.get(key);
+    // One tag: every row of the mark is that one door (the same door on two schedule pages).
+    // Shared-mark tags: the rows take them in schedule order; a row left over has no tag.
+    const entry = list.length && list[0].shared_mark ? list.shift() : list[0];
+    if (entry) { d.plan = entry; onPlan++; }
   }
   const off = model.doors.filter((d) => !d.plan).map((d) => d.mark);
   model.layout = {
