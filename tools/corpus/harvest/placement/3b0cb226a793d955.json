@@ -1,0 +1,419 @@
+{
+  "rooms": [
+    {
+      "name": "PLAYGROUND",
+      "number": "101",
+      "page": 20,
+      "points_per_foot": 13.5,
+      "sheet": "A-101",
+      "x": 1065,
+      "y": 229
+    },
+    {
+      "name": "PORCH",
+      "number": "200",
+      "page": 20,
+      "points_per_foot": 13.5,
+      "sheet": "A-101",
+      "x": 1302,
+      "y": 493
+    },
+    {
+      "name": "TERRACE",
+      "number": "200",
+      "page": 20,
+      "points_per_foot": 13.5,
+      "sheet": "A-101",
+      "x": 1014,
+      "y": 1209
+    },
+    {
+      "name": "ELEC / MECH",
+      "number": "301",
+      "page": 20,
+      "points_per_foot": 13.5,
+      "sheet": "A-101",
+      "x": 776,
+      "y": 1367
+    },
+    {
+      "name": "REMOVAL FLOOR PLANS - LEVEL S4 /",
+      "number": "N3",
+      "page": 21,
+      "points_per_foot": 13.5,
+      "sheet": "A-102",
+      "x": 2352,
+      "y": 1551
+    },
+    {
+      "name": "PLAYGROUND",
+      "number": "100",
+      "page": 24,
+      "points_per_foot": 13.5,
+      "sheet": "A-105",
+      "x": 1343,
+      "y": 147
+    },
+    {
+      "name": "LEVEL S1 (PLAYGROUND)",
+      "number": "A-105",
+      "page": 24,
+      "points_per_foot": 13.5,
+      "sheet": "A-105",
+      "x": 226,
+      "y": 824
+    },
+    {
+      "name": "PORCH",
+      "number": "200",
+      "page": 24,
+      "points_per_foot": 13.5,
+      "sheet": "A-105",
+      "x": 1401,
+      "y": 1266
+    },
+    {
+      "name": "CORRIDOR",
+      "number": "201",
+      "page": 24,
+      "points_per_foot": 13.5,
+      "sheet": "A-105",
+      "x": 748,
+      "y": 1349
+    },
+    {
+      "name": "(E) MECH",
+      "number": "216",
+      "page": 24,
+      "points_per_foot": 13.5,
+      "sheet": "A-105",
+      "x": 898,
+      "y": 1349
+    },
+    {
+      "name": "(E) FLEX SPACE",
+      "number": "203",
+      "page": 24,
+      "points_per_foot": 13.5,
+      "sheet": "A-105",
+      "x": 1401,
+      "y": 1409
+    },
+    {
+      "name": "PLAYGROUND",
+      "number": "100",
+      "page": 32,
+      "points_per_foot": 9,
+      "sheet": "A-600",
+      "x": 1691,
+      "y": 127
+    },
+    {
+      "name": "LEVEL S1 (PLAYGROUND)",
+      "number": "A-600",
+      "page": 32,
+      "points_per_foot": 9,
+      "sheet": "A-600",
+      "x": 1185,
+      "y": 411
+    },
+    {
+      "name": "PORCH",
+      "number": "200",
+      "page": 32,
+      "points_per_foot": 9,
+      "sheet": "A-600",
+      "x": 1811,
+      "y": 691
+    },
+    {
+      "name": "PARTITION TYPE",
+      "number": "A-600",
+      "page": 32,
+      "points_per_foot": 108,
+      "sheet": "A-600",
+      "x": 227,
+      "y": 837
+    },
+    {
+      "name": "PARTITION TYPE LEGEND",
+      "number": "A-600",
+      "page": 32,
+      "points_per_foot": 9,
+      "sheet": "A-600",
+      "x": 227,
+      "y": 1072
+    },
+    {
+      "name": "TERRACE",
+      "number": "200",
+      "page": 32,
+      "points_per_foot": 9,
+      "sheet": "A-600",
+      "x": 1866,
+      "y": 1107
+    },
+    {
+      "name": "AL-1",
+      "number": "FC-1",
+      "page": 32,
+      "points_per_foot": 9,
+      "sheet": "A-600",
+      "x": 169,
+      "y": 1196
+    },
+    {
+      "name": "LEVEL S3 / N2 (E DORM / LIFE DORM)",
+      "number": "A-600",
+      "page": 32,
+      "points_per_foot": 9,
+      "sheet": "A-600",
+      "x": 1185,
+      "y": 1244
+    },
+    {
+      "name": "GL-1",
+      "number": "GL-2",
+      "page": 32,
+      "points_per_foot": 9,
+      "sheet": "A-600",
+      "x": 169,
+      "y": 1269
+    },
+    {
+      "name": "GL-1 GL-2",
+      "number": "ML-1",
+      "page": 32,
+      "points_per_foot": 9,
+      "sheet": "A-600",
+      "x": 169,
+      "y": 1282
+    },
+    {
+      "name": "GL-2 ML-1",
+      "number": "MR-1",
+      "page": 32,
+      "points_per_foot": 9,
+      "sheet": "A-600",
+      "x": 169,
+      "y": 1295
+    },
+    {
+      "name": "PAV-3",
+      "number": "FC-1",
+      "page": 32,
+      "points_per_foot": 9,
+      "sheet": "A-600",
+      "x": 1055,
+      "y": 1458
+    },
+    {
+      "name": "RPS-2",
+      "number": "TS-1",
+      "page": 32,
+      "points_per_foot": 9,
+      "sheet": "A-600",
+      "x": 1055,
+      "y": 1600
+    },
+    {
+      "name": "LEVEL S4 / N3 (F DORM)",
+      "number": "A-600",
+      "page": 32,
+      "points_per_foot": 9,
+      "sheet": "A-600",
+      "x": 1185,
+      "y": 1669
+    }
+  ],
+  "set": {
+    "label": "missouri_oa_fmdc - _E2332-01%20Final%20Bid%20Plans.pdf",
+    "page_count": 44,
+    "rows_total": 7,
+    "sha16": "3b0cb226a793d955",
+    "source_url": "https://oa.mo.gov/sites/default/files/bid-opportunities/_E2332-01%20Final%20Bid%20Plans.pdf",
+    "tier": "oracle-checked"
+  },
+  "sheets": [
+    {
+      "height": 1728,
+      "page": 20,
+      "points_per_foot": [
+        13.5
+      ],
+      "scales": [
+        "3/16\" = 1'-0\" 0 2' 4'"
+      ],
+      "sheet": "A-101",
+      "title": "PLANS - LEVEL S2 / N1 & LEVEL S3 / N2",
+      "width": 2592
+    },
+    {
+      "height": 1728,
+      "page": 21,
+      "points_per_foot": [
+        13.5
+      ],
+      "scales": [
+        "3/16\" = 1'-0\" 0 2' 4'"
+      ],
+      "sheet": "A-102",
+      "title": "REMOVAL FLOOR PLANS - LEVEL S4 /",
+      "width": 2592
+    },
+    {
+      "height": 1728,
+      "page": 24,
+      "points_per_foot": [
+        13.5
+      ],
+      "scales": [
+        "3/16\" = 1'-0\" 0 2' 4'"
+      ],
+      "sheet": "A-105",
+      "title": "FLOOR PLANS - LEVEL S1 & LEVEL",
+      "width": 2592
+    },
+    {
+      "height": 1728,
+      "page": 32,
+      "points_per_foot": [
+        9,
+        108
+      ],
+      "scales": [
+        "1/8\" = 1'-0\"",
+        "A-600 1 1/2\" = 1'-0\"",
+        "1/8\" = 1'-0\" 0 3' 6'"
+      ],
+      "sheet": "A-600",
+      "title": "PLANS, AND PARTITION TYPE",
+      "width": 2592
+    }
+  ],
+  "summary": {
+    "marks_placed": 2,
+    "marks_total": 7,
+    "placed_rate": 0.2857142857142857,
+    "rooms_total": 25,
+    "sheets_total": 4,
+    "sheets_with_scale": 4,
+    "unplaced": [
+      {
+        "mark": "300",
+        "page": 33,
+        "reason": "mark 300 (schedule p.33) not tagged on any plan"
+      },
+      {
+        "mark": "301",
+        "page": 33,
+        "reason": "mark 301 (schedule p.33) not tagged on any plan"
+      },
+      {
+        "mark": "302",
+        "page": 33,
+        "reason": "mark 302 (schedule p.33) not tagged on any plan"
+      },
+      {
+        "mark": "302A",
+        "page": 33,
+        "reason": "mark 302A (schedule p.33) not tagged on any plan"
+      },
+      {
+        "mark": "400",
+        "page": 33,
+        "reason": "mark 400 (schedule p.33) not tagged on any plan"
+      }
+    ]
+  },
+  "tags": [
+    {
+      "also_on": [],
+      "door_pages": [
+        33
+      ],
+      "door_type": "A1",
+      "fire_rating": "-",
+      "frame_type": "AL-1",
+      "h": 8.109836756064,
+      "hardware_group": "04",
+      "height_inches": 80,
+      "location": "(E) CORRIDOR",
+      "mark": "201",
+      "matched_by": "exact",
+      "material": null,
+      "page": 24,
+      "pair": false,
+      "points_per_foot": 13.5,
+      "room": "201",
+      "room_by": "schedule_location",
+      "room_name": "CORRIDOR",
+      "schedule_rows": [
+        {
+          "door_type": "A1",
+          "fire_rating": "-",
+          "frame_type": "AL-1",
+          "hardware_group": "04",
+          "height_inches": 80,
+          "location": "(E) CORRIDOR",
+          "mark": "201",
+          "material": null,
+          "page": 33,
+          "pair": false,
+          "size": "3'-0 x 6'-8",
+          "width_inches": 36,
+          "y": 1190
+        }
+      ],
+      "sheet": "A-105",
+      "size": "3'-0 x 6'-8",
+      "width_inches": 36,
+      "x": 798,
+      "y": 1241
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        33
+      ],
+      "door_type": "A1",
+      "fire_rating": "-",
+      "frame_type": "AL-3",
+      "h": 8.109836756064,
+      "hardware_group": "03",
+      "height_inches": 84,
+      "location": "PORCH",
+      "mark": "200",
+      "matched_by": "exact",
+      "material": null,
+      "page": 24,
+      "pair": false,
+      "points_per_foot": 13.5,
+      "room": "200",
+      "room_by": "schedule_location",
+      "room_name": "PORCH",
+      "schedule_rows": [
+        {
+          "door_type": "A1",
+          "fire_rating": "-",
+          "frame_type": "AL-3",
+          "hardware_group": "03",
+          "height_inches": 84,
+          "location": "PORCH",
+          "mark": "200",
+          "material": null,
+          "page": 33,
+          "pair": false,
+          "size": "3'-0\" x 7'-0\"",
+          "width_inches": 36,
+          "y": 1178
+        }
+      ],
+      "sheet": "A-105",
+      "size": "3'-0\" x 7'-0\"",
+      "width_inches": 36,
+      "x": 1460,
+      "y": 1317
+    }
+  ]
+}

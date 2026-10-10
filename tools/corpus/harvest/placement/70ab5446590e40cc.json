@@ -1,0 +1,932 @@
+{
+  "rooms": [
+    {
+      "name": "MECH.",
+      "number": "103",
+      "page": 60,
+      "points_per_foot": 27,
+      "sheet": "A110",
+      "x": 1012,
+      "y": 380
+    },
+    {
+      "name": "BEDROOM",
+      "number": "102",
+      "page": 60,
+      "points_per_foot": 27,
+      "sheet": "A110",
+      "x": 771,
+      "y": 423
+    },
+    {
+      "name": "FEC-SM",
+      "number": "3",
+      "page": 60,
+      "points_per_foot": 27,
+      "sheet": "A110",
+      "x": 753,
+      "y": 592
+    },
+    {
+      "name": "BATH",
+      "number": "101",
+      "page": 60,
+      "points_per_foot": 27,
+      "sheet": "A110",
+      "x": 967,
+      "y": 612
+    },
+    {
+      "name": "MAIN LIVING",
+      "number": "100",
+      "page": 60,
+      "points_per_foot": 27,
+      "sheet": "A110",
+      "x": 858,
+      "y": 1053
+    },
+    {
+      "name": "LOFT",
+      "number": "108",
+      "page": 60,
+      "points_per_foot": 27,
+      "sheet": "A110",
+      "x": 1764,
+      "y": 1068
+    },
+    {
+      "name": "PROJECT # X2410-01",
+      "number": "5116",
+      "page": 60,
+      "points_per_foot": 27,
+      "sheet": "A110",
+      "x": 2303,
+      "y": 1099
+    },
+    {
+      "name": "MECH.",
+      "number": "103",
+      "page": 61,
+      "points_per_foot": 27,
+      "sheet": "A111",
+      "x": 1076,
+      "y": 385
+    },
+    {
+      "name": "BEDROOM",
+      "number": "102",
+      "page": 61,
+      "points_per_foot": 27,
+      "sheet": "A111",
+      "x": 822,
+      "y": 488
+    },
+    {
+      "name": "BATH",
+      "number": "101",
+      "page": 61,
+      "points_per_foot": 27,
+      "sheet": "A111",
+      "x": 1033,
+      "y": 612
+    },
+    {
+      "name": "MAIN LIVING",
+      "number": "100",
+      "page": 61,
+      "points_per_foot": 27,
+      "sheet": "A111",
+      "x": 924,
+      "y": 988
+    },
+    {
+      "name": "LOFT",
+      "number": "108",
+      "page": 61,
+      "points_per_foot": 27,
+      "sheet": "A111",
+      "x": 1805,
+      "y": 1068
+    },
+    {
+      "name": "PROJECT # X2410-01",
+      "number": "5116",
+      "page": 61,
+      "points_per_foot": 27,
+      "sheet": "A111",
+      "x": 2303,
+      "y": 1099
+    },
+    {
+      "name": "MASTER",
+      "number": "106",
+      "page": 64,
+      "points_per_foot": 27,
+      "sheet": "A114",
+      "x": 763,
+      "y": 307
+    },
+    {
+      "name": "MECH.",
+      "number": "107",
+      "page": 64,
+      "points_per_foot": 27,
+      "sheet": "A114",
+      "x": 1097,
+      "y": 331
+    },
+    {
+      "name": "FEC-SM",
+      "number": "3",
+      "page": 64,
+      "points_per_foot": 27,
+      "sheet": "A114",
+      "x": 823,
+      "y": 431
+    },
+    {
+      "name": "BATH",
+      "number": "105",
+      "page": 64,
+      "points_per_foot": 27,
+      "sheet": "A114",
+      "x": 988,
+      "y": 559
+    },
+    {
+      "name": "MAIN LIVING",
+      "number": "104",
+      "page": 64,
+      "points_per_foot": 27,
+      "sheet": "A114",
+      "x": 760,
+      "y": 1019
+    },
+    {
+      "name": "PROJECT # X2410-01",
+      "number": "5116",
+      "page": 64,
+      "points_per_foot": 27,
+      "sheet": "A114",
+      "x": 2303,
+      "y": 1099
+    },
+    {
+      "name": "LOFT",
+      "number": "109",
+      "page": 64,
+      "points_per_foot": 27,
+      "sheet": "A114",
+      "x": 1762,
+      "y": 1190
+    },
+    {
+      "name": "MECH.",
+      "number": "107",
+      "page": 65,
+      "points_per_foot": 27,
+      "sheet": "A115",
+      "x": 1135,
+      "y": 323
+    },
+    {
+      "name": "MASTER",
+      "number": "106",
+      "page": 65,
+      "points_per_foot": 27,
+      "sheet": "A115",
+      "x": 894,
+      "y": 333
+    },
+    {
+      "name": "BATH",
+      "number": "105",
+      "page": 65,
+      "points_per_foot": 27,
+      "sheet": "A115",
+      "x": 1023,
+      "y": 548
+    },
+    {
+      "name": "MAIN LIVING",
+      "number": "104",
+      "page": 65,
+      "points_per_foot": 27,
+      "sheet": "A115",
+      "x": 945,
+      "y": 1017
+    },
+    {
+      "name": "PROJECT # X2410-01",
+      "number": "5116",
+      "page": 65,
+      "points_per_foot": 27,
+      "sheet": "A115",
+      "x": 2303,
+      "y": 1099
+    },
+    {
+      "name": "LOFT",
+      "number": "109",
+      "page": 65,
+      "points_per_foot": 27,
+      "sheet": "A115",
+      "x": 1767,
+      "y": 1188
+    },
+    {
+      "name": "MECH.",
+      "number": "103",
+      "page": 76,
+      "points_per_foot": 54,
+      "sheet": "A401",
+      "x": 749,
+      "y": 269
+    },
+    {
+      "name": "MASTER",
+      "number": "106",
+      "page": 76,
+      "points_per_foot": 54,
+      "sheet": "A401",
+      "x": 1461,
+      "y": 368
+    },
+    {
+      "name": "MECH.",
+      "number": "107",
+      "page": 76,
+      "points_per_foot": 54,
+      "sheet": "A401",
+      "x": 1792,
+      "y": 368
+    },
+    {
+      "name": "BEDROOM",
+      "number": "102",
+      "page": 76,
+      "points_per_foot": 54,
+      "sheet": "A401",
+      "x": 442,
+      "y": 402
+    },
+    {
+      "name": "BATH",
+      "number": "101",
+      "page": 76,
+      "points_per_foot": 54,
+      "sheet": "A401",
+      "x": 632,
+      "y": 590
+    },
+    {
+      "name": "BATH",
+      "number": "105",
+      "page": 76,
+      "points_per_foot": 54,
+      "sheet": "A401",
+      "x": 1550,
+      "y": 604
+    },
+    {
+      "name": "PROJECT # X2410-01",
+      "number": "5116",
+      "page": 76,
+      "points_per_foot": 54,
+      "sheet": "A401",
+      "x": 2303,
+      "y": 1099
+    },
+    {
+      "name": "MAIN LIVING",
+      "number": "100",
+      "page": 76,
+      "points_per_foot": 54,
+      "sheet": "A401",
+      "x": 589,
+      "y": 1111
+    },
+    {
+      "name": "MAIN LIVING",
+      "number": "104",
+      "page": 76,
+      "points_per_foot": 54,
+      "sheet": "A401",
+      "x": 1676,
+      "y": 1133
+    },
+    {
+      "name": "MAIN LIVING",
+      "number": "100",
+      "page": 77,
+      "points_per_foot": 54,
+      "sheet": "A402",
+      "x": 1165,
+      "y": 413
+    },
+    {
+      "name": "MAIN LIVING",
+      "number": "100",
+      "page": 77,
+      "points_per_foot": 54,
+      "sheet": "A402",
+      "x": 464,
+      "y": 541
+    },
+    {
+      "name": "PROJECT # X2410-01",
+      "number": "5116",
+      "page": 77,
+      "points_per_foot": 108,
+      "sheet": "A402",
+      "x": 2303,
+      "y": 1099
+    },
+    {
+      "name": "BATH",
+      "number": "101",
+      "page": 77,
+      "points_per_foot": 54,
+      "sheet": "A402",
+      "x": 299,
+      "y": 1175
+    },
+    {
+      "name": "BATH",
+      "number": "101",
+      "page": 77,
+      "points_per_foot": 54,
+      "sheet": "A402",
+      "x": 1170,
+      "y": 1202
+    },
+    {
+      "name": "MAIN LIVING",
+      "number": "104",
+      "page": 78,
+      "points_per_foot": 54,
+      "sheet": "A403",
+      "x": 1440,
+      "y": 454
+    },
+    {
+      "name": "BATH",
+      "number": "105",
+      "page": 78,
+      "points_per_foot": 54,
+      "sheet": "A403",
+      "x": 235,
+      "y": 539
+    },
+    {
+      "name": "BATH",
+      "number": "105",
+      "page": 78,
+      "points_per_foot": 54,
+      "sheet": "A403",
+      "x": 946,
+      "y": 539
+    },
+    {
+      "name": "PROJECT # X2410-01",
+      "number": "5116",
+      "page": 78,
+      "points_per_foot": 54,
+      "sheet": "A403",
+      "x": 2303,
+      "y": 1099
+    },
+    {
+      "name": "PROJECT # X2410-01",
+      "number": "5116",
+      "page": 79,
+      "points_per_foot": 108,
+      "sheet": "A501",
+      "x": 2303,
+      "y": 1099
+    }
+  ],
+  "set": {
+    "label": "missouri_oa_fmdc - _X2410-01%20Final%20Bid%20Plans.pdf",
+    "page_count": 105,
+    "rows_total": 8,
+    "sha16": "70ab5446590e40cc",
+    "source_url": "https://oa.mo.gov/sites/default/files/bid-opportunities/_X2410-01%20Final%20Bid%20Plans.pdf",
+    "tier": "agreed"
+  },
+  "sheets": [
+    {
+      "height": 1584,
+      "page": 60,
+      "points_per_foot": [
+        27
+      ],
+      "scales": [
+        "3/8\" = 1'-0\"",
+        "3/8\" = 1'-0\"",
+        "SCALE: 3/8\" = 1'-0\""
+      ],
+      "sheet": "A110",
+      "title": "FIRST FLOOR ANNOTATION PLAN - CABIN \"A\"",
+      "width": 2448
+    },
+    {
+      "height": 1584,
+      "page": 61,
+      "points_per_foot": [
+        27
+      ],
+      "scales": [
+        "3/8\" = 1'-0\"",
+        "3/8\" = 1'-0\"",
+        "SCALE: 3/8\" = 1'-0\""
+      ],
+      "sheet": "A111",
+      "title": "FIRST FLOOR DIMENSION PLAN - CABIN \"A\"",
+      "width": 2448
+    },
+    {
+      "height": 1584,
+      "page": 64,
+      "points_per_foot": [
+        27
+      ],
+      "scales": [
+        "3/8\" = 1'-0\"",
+        "3/8\" = 1'-0\"",
+        "SCALE: 3/8\" = 1'-0\""
+      ],
+      "sheet": "A114",
+      "title": "FIRST FLOOR ANNOTATION PLAN - CABIN \"B\"",
+      "width": 2448
+    },
+    {
+      "height": 1584,
+      "page": 65,
+      "points_per_foot": [
+        27
+      ],
+      "scales": [
+        "SCALE: 3/8\" = 1'-0\" SHEET NUMBER:",
+        "3/8\" = 1'-0\"",
+        "3/8\" = 1'-0\""
+      ],
+      "sheet": "A115",
+      "title": "FIRST FLOOR DIMENSION PLAN - CABIN \"B\"",
+      "width": 2448
+    },
+    {
+      "height": 1584,
+      "page": 76,
+      "points_per_foot": [
+        54
+      ],
+      "scales": [
+        "3/4\" = 1'-0\"",
+        "3/4\" = 1'-0\"",
+        "SCALE: 3/4\" = 1'-0\""
+      ],
+      "sheet": "A401",
+      "title": "ENLARGED PLANS AND ELEVATIONS",
+      "width": 2448
+    },
+    {
+      "height": 1584,
+      "page": 77,
+      "points_per_foot": [
+        54,
+        108
+      ],
+      "scales": [
+        "3/4\" = 1'-0\"",
+        "3/4\" = 1'-0\"",
+        "1 1/2\" = 1'-0\"",
+        "SCALE: 1 1/2\" = 1'-0\"",
+        "3/4\" = 1'-0\"",
+        "3/4\" = 1'-0\"",
+        "1 1/2\" = 1'-0\"",
+        "SCALE: 3/4\" = 1'-0\""
+      ],
+      "sheet": "A402",
+      "title": "ENLARGED PLANS AND ELEVATIONS",
+      "width": 2448
+    },
+    {
+      "height": 1584,
+      "page": 78,
+      "points_per_foot": [
+        54,
+        72
+      ],
+      "scales": [
+        "3/4\" = 1'-0\"",
+        "3/4\" = 1'-0\"",
+        "3/4\" = 1'-0\"",
+        "1\" = 1'-0\"",
+        "1\" = 1'-0\"",
+        "SCALE: 1\" = 1'-0\"",
+        "SCALE: 3/4\" = 1'-0\""
+      ],
+      "sheet": "A403",
+      "title": "ENLARGED PLANS AND ELEVATIONS",
+      "width": 2448
+    },
+    {
+      "height": 1584,
+      "page": 79,
+      "points_per_foot": [
+        108
+      ],
+      "scales": [
+        "1 1/2\" = 1'-0\"",
+        "1 1/2\" = 1'-0\"",
+        "1 1/2\" = 1'-0\"",
+        "SCALE: 1 1/2\" = 1'-0\""
+      ],
+      "sheet": "A501",
+      "title": "DETAILS - PLAN VIEW",
+      "width": 2448
+    }
+  ],
+  "summary": {
+    "marks_placed": 8,
+    "marks_total": 8,
+    "placed_rate": 1,
+    "rooms_total": 45,
+    "sheets_total": 8,
+    "sheets_with_scale": 8,
+    "unplaced": []
+  },
+  "tags": [
+    {
+      "also_on": [
+        "A111"
+      ],
+      "door_pages": [
+        81
+      ],
+      "door_type": "FPE",
+      "fire_rating": "NONE",
+      "frame_type": "FPE",
+      "h": 9.603716158511999,
+      "hardware_group": "SECURE STOREROOM FUNCTION",
+      "height_inches": 80,
+      "location": null,
+      "mark": "103A",
+      "matched_by": "exact",
+      "material": "FIBERGLASS",
+      "page": 60,
+      "pair": false,
+      "points_per_foot": 27,
+      "room": "103",
+      "room_by": "tag_number",
+      "room_name": "MECH.",
+      "schedule_rows": [
+        {
+          "door_type": "FPE",
+          "fire_rating": "NONE",
+          "frame_type": "FPE",
+          "hardware_group": "SECURE STOREROOM FUNCTION",
+          "height_inches": 80,
+          "location": null,
+          "mark": "103A",
+          "material": "FIBERGLASS",
+          "page": 81,
+          "pair": false,
+          "size": "3' - 0\" x 6' - 8\"",
+          "width_inches": 36,
+          "y": 197
+        }
+      ],
+      "sheet": "A110",
+      "size": "3' - 0\" x 6' - 8\"",
+      "width_inches": 36,
+      "x": 1095,
+      "y": 370
+    },
+    {
+      "also_on": [
+        "A111"
+      ],
+      "door_pages": [
+        81
+      ],
+      "door_type": "FPI",
+      "fire_rating": "NONE",
+      "frame_type": "FPI",
+      "h": 9.603716158511999,
+      "hardware_group": "PRIVACY LOCK FUNCTION",
+      "height_inches": 80,
+      "location": null,
+      "mark": "102A",
+      "matched_by": "exact",
+      "material": "WOOD",
+      "page": 60,
+      "pair": false,
+      "points_per_foot": 27,
+      "room": "102",
+      "room_by": "tag_number",
+      "room_name": "BEDROOM",
+      "schedule_rows": [
+        {
+          "door_type": "FPI",
+          "fire_rating": "NONE",
+          "frame_type": "FPI",
+          "hardware_group": "PRIVACY LOCK FUNCTION",
+          "height_inches": 80,
+          "location": null,
+          "mark": "102A",
+          "material": "WOOD",
+          "page": 81,
+          "pair": false,
+          "size": "3' - 0\" x 6' - 8\"",
+          "width_inches": 36,
+          "y": 185
+        }
+      ],
+      "sheet": "A110",
+      "size": "3' - 0\" x 6' - 8\"",
+      "width_inches": 36,
+      "x": 688,
+      "y": 609
+    },
+    {
+      "also_on": [
+        "A111",
+        "A401"
+      ],
+      "door_pages": [
+        81
+      ],
+      "door_type": "FPI",
+      "fire_rating": "NONE",
+      "frame_type": "FPI",
+      "h": 9.603716158511999,
+      "hardware_group": "PRIVACY LOCK FUNCTION",
+      "height_inches": 80,
+      "location": null,
+      "mark": "101A",
+      "matched_by": "exact",
+      "material": "WOOD",
+      "page": 60,
+      "pair": false,
+      "points_per_foot": 27,
+      "room": "101",
+      "room_by": "tag_number",
+      "room_name": "BATH",
+      "schedule_rows": [
+        {
+          "door_type": "FPI",
+          "fire_rating": "NONE",
+          "frame_type": "FPI",
+          "hardware_group": "PRIVACY LOCK FUNCTION",
+          "height_inches": 80,
+          "location": null,
+          "mark": "101A",
+          "material": "WOOD",
+          "page": 81,
+          "pair": false,
+          "size": "3' - 0\" x 6' - 8\"",
+          "width_inches": 36,
+          "y": 171
+        }
+      ],
+      "sheet": "A110",
+      "size": "3' - 0\" x 6' - 8\"",
+      "width_inches": 36,
+      "x": 857,
+      "y": 669
+    },
+    {
+      "also_on": [
+        "A111"
+      ],
+      "door_pages": [
+        81
+      ],
+      "door_type": "FGE",
+      "fire_rating": "NONE",
+      "frame_type": "FGE",
+      "h": 9.603716158511999,
+      "hardware_group": "SECURE ENTRY FUNCTION",
+      "height_inches": 80,
+      "location": null,
+      "mark": "100A",
+      "matched_by": "exact",
+      "material": "FIBERGLASS",
+      "page": 60,
+      "pair": false,
+      "points_per_foot": 27,
+      "room": "100",
+      "room_by": "tag_number",
+      "room_name": "MAIN LIVING",
+      "schedule_rows": [
+        {
+          "door_type": "FGE",
+          "fire_rating": "NONE",
+          "frame_type": "FGE",
+          "hardware_group": "SECURE ENTRY FUNCTION",
+          "height_inches": 80,
+          "location": null,
+          "mark": "100A",
+          "material": "FIBERGLASS",
+          "page": 81,
+          "pair": false,
+          "size": "3' - 0\" x 6' - 8\"",
+          "width_inches": 36,
+          "y": 158
+        }
+      ],
+      "sheet": "A110",
+      "size": "3' - 0\" x 6' - 8\"",
+      "width_inches": 36,
+      "x": 646,
+      "y": 769
+    },
+    {
+      "also_on": [
+        "A115"
+      ],
+      "door_pages": [
+        81
+      ],
+      "door_type": "FPE",
+      "fire_rating": "NONE",
+      "frame_type": "FPE",
+      "h": 9.603716158511999,
+      "hardware_group": "SECURE STOREROOM FUNCTION",
+      "height_inches": 80,
+      "location": null,
+      "mark": "107A",
+      "matched_by": "exact",
+      "material": "FIBERGLASS",
+      "page": 64,
+      "pair": false,
+      "points_per_foot": 27,
+      "room": "107",
+      "room_by": "tag_number",
+      "room_name": "MECH.",
+      "schedule_rows": [
+        {
+          "door_type": "FPE",
+          "fire_rating": "NONE",
+          "frame_type": "FPE",
+          "hardware_group": "SECURE STOREROOM FUNCTION",
+          "height_inches": 80,
+          "location": null,
+          "mark": "107A",
+          "material": "FIBERGLASS",
+          "page": 81,
+          "pair": false,
+          "size": "3' - 0\" x 6' - 8\"",
+          "width_inches": 36,
+          "y": 249
+        }
+      ],
+      "sheet": "A114",
+      "size": "3' - 0\" x 6' - 8\"",
+      "width_inches": 36,
+      "x": 1179,
+      "y": 249
+    },
+    {
+      "also_on": [
+        "A115"
+      ],
+      "door_pages": [
+        81
+      ],
+      "door_type": "FPI",
+      "fire_rating": "NONE",
+      "frame_type": "FPI",
+      "h": 9.603716158511999,
+      "hardware_group": "PRIVACY LOCK FUNCTION",
+      "height_inches": 80,
+      "location": null,
+      "mark": "106A",
+      "matched_by": "exact",
+      "material": "WOOD",
+      "page": 64,
+      "pair": false,
+      "points_per_foot": 27,
+      "room": "106",
+      "room_by": "tag_number",
+      "room_name": "MASTER",
+      "schedule_rows": [
+        {
+          "door_type": "FPI",
+          "fire_rating": "NONE",
+          "frame_type": "FPI",
+          "hardware_group": "PRIVACY LOCK FUNCTION",
+          "height_inches": 80,
+          "location": null,
+          "mark": "106A",
+          "material": "WOOD",
+          "page": 81,
+          "pair": false,
+          "size": "3' - 0\" x 6' - 8\"",
+          "width_inches": 36,
+          "y": 236
+        }
+      ],
+      "sheet": "A114",
+      "size": "3' - 0\" x 6' - 8\"",
+      "width_inches": 36,
+      "x": 755,
+      "y": 448
+    },
+    {
+      "also_on": [
+        "A115",
+        "A401"
+      ],
+      "door_pages": [
+        81
+      ],
+      "door_type": "FPI",
+      "fire_rating": "NONE",
+      "frame_type": "FPI",
+      "h": 9.603716158511999,
+      "hardware_group": "PRIVACY LOCK FUNCTION",
+      "height_inches": 80,
+      "location": null,
+      "mark": "105A",
+      "matched_by": "exact",
+      "material": "WOOD",
+      "page": 64,
+      "pair": false,
+      "points_per_foot": 27,
+      "room": "105",
+      "room_by": "tag_number",
+      "room_name": "BATH",
+      "schedule_rows": [
+        {
+          "door_type": "FPI",
+          "fire_rating": "NONE",
+          "frame_type": "FPI",
+          "hardware_group": "PRIVACY LOCK FUNCTION",
+          "height_inches": 80,
+          "location": null,
+          "mark": "105A",
+          "material": "WOOD",
+          "page": 81,
+          "pair": false,
+          "size": "3' - 0\" x 6' - 8\"",
+          "width_inches": 36,
+          "y": 223
+        }
+      ],
+      "sheet": "A114",
+      "size": "3' - 0\" x 6' - 8\"",
+      "width_inches": 36,
+      "x": 862,
+      "y": 510
+    },
+    {
+      "also_on": [
+        "A115"
+      ],
+      "door_pages": [
+        81
+      ],
+      "door_type": "FGE",
+      "fire_rating": "NONE",
+      "frame_type": "FGE",
+      "h": 9.603716158511999,
+      "hardware_group": "SECURE ENTRY FUNCTION",
+      "height_inches": 80,
+      "location": null,
+      "mark": "104A",
+      "matched_by": "exact",
+      "material": "FIBERGLASS",
+      "page": 64,
+      "pair": false,
+      "points_per_foot": 27,
+      "room": "104",
+      "room_by": "tag_number",
+      "room_name": "MAIN LIVING",
+      "schedule_rows": [
+        {
+          "door_type": "FGE",
+          "fire_rating": "NONE",
+          "frame_type": "FGE",
+          "hardware_group": "SECURE ENTRY FUNCTION",
+          "height_inches": 80,
+          "location": null,
+          "mark": "104A",
+          "material": "FIBERGLASS",
+          "page": 81,
+          "pair": false,
+          "size": "3' - 0\" x 6' - 8\"",
+          "width_inches": 36,
+          "y": 210
+        }
+      ],
+      "sheet": "A114",
+      "size": "3' - 0\" x 6' - 8\"",
+      "width_inches": 36,
+      "x": 695,
+      "y": 793
+    }
+  ]
+}

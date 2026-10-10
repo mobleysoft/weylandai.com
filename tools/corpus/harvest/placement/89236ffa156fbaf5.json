@@ -1,0 +1,864 @@
+{
+  "rooms": [
+    {
+      "name": "TAG",
+      "number": "SC-1",
+      "page": 27,
+      "points_per_foot": 13.5,
+      "sheet": "A113",
+      "x": 1304,
+      "y": 120
+    },
+    {
+      "name": "TAG",
+      "number": "MC-1",
+      "page": 27,
+      "points_per_foot": 13.5,
+      "sheet": "A113",
+      "x": 1304,
+      "y": 176
+    },
+    {
+      "name": "STORAGE",
+      "number": "103",
+      "page": 27,
+      "points_per_foot": 13.5,
+      "sheet": "A113",
+      "x": 1884,
+      "y": 785
+    },
+    {
+      "name": "SC-1",
+      "number": "MC-1",
+      "page": 27,
+      "points_per_foot": 13.5,
+      "sheet": "A113",
+      "x": 1885,
+      "y": 829
+    },
+    {
+      "name": "STORAGE ROOM",
+      "number": "105",
+      "page": 27,
+      "points_per_foot": 13.5,
+      "sheet": "A113",
+      "x": 1975,
+      "y": 1023
+    },
+    {
+      "name": "MEDICAL STORAGE",
+      "number": "104",
+      "page": 27,
+      "points_per_foot": 13.5,
+      "sheet": "A113",
+      "x": 1748,
+      "y": 1033
+    },
+    {
+      "name": "SC-1",
+      "number": "MC-1",
+      "page": 27,
+      "points_per_foot": 13.5,
+      "sheet": "A113",
+      "x": 1976,
+      "y": 1058
+    },
+    {
+      "name": "SC-1",
+      "number": "MC-1",
+      "page": 27,
+      "points_per_foot": 13.5,
+      "sheet": "A113",
+      "x": 1845,
+      "y": 1075
+    },
+    {
+      "name": "READY BAYS",
+      "number": "102",
+      "page": 27,
+      "points_per_foot": 13.5,
+      "sheet": "A113",
+      "x": 1523,
+      "y": 1085
+    },
+    {
+      "name": "EXISTING BAYS",
+      "number": "101",
+      "page": 27,
+      "points_per_foot": 13.5,
+      "sheet": "A113",
+      "x": 703,
+      "y": 1094
+    },
+    {
+      "name": "SC-1",
+      "number": "MC-1",
+      "page": 27,
+      "points_per_foot": 13.5,
+      "sheet": "A113",
+      "x": 1525,
+      "y": 1136
+    },
+    {
+      "name": "PROJECT # T2147-01",
+      "number": "6298",
+      "page": 27,
+      "points_per_foot": 13.5,
+      "sheet": "A113",
+      "x": 2448,
+      "y": 1170
+    },
+    {
+      "name": "PERSONAL FITNESS AREA",
+      "number": "106",
+      "page": 27,
+      "points_per_foot": 13.5,
+      "sheet": "A113",
+      "x": 1878,
+      "y": 1263
+    },
+    {
+      "name": "SC-1",
+      "number": "MC-1",
+      "page": 27,
+      "points_per_foot": 13.5,
+      "sheet": "A113",
+      "x": 1851,
+      "y": 1330
+    },
+    {
+      "name": "(ABOVE)",
+      "number": "23.1",
+      "page": 39,
+      "points_per_foot": 108,
+      "sheet": "A501",
+      "x": 504,
+      "y": 943
+    },
+    {
+      "name": "(ABOVE)",
+      "number": "C1",
+      "page": 39,
+      "points_per_foot": 108,
+      "sheet": "A501",
+      "x": 145,
+      "y": 1104
+    },
+    {
+      "name": "PROJECT # T2147-01",
+      "number": "6298",
+      "page": 39,
+      "points_per_foot": 108,
+      "sheet": "A501",
+      "x": 2448,
+      "y": 1170
+    }
+  ],
+  "set": {
+    "label": "missouri_oa_fmdc - _T2147-01%20-%20Final%20Plans.pdf",
+    "page_count": 85,
+    "rows_total": 29,
+    "sha16": "89236ffa156fbaf5",
+    "source_url": "https://oa.mo.gov/sites/default/files/bid-opportunities/_T2147-01%20-%20Final%20Plans.pdf",
+    "tier": "agreed"
+  },
+  "sheets": [
+    {
+      "height": 1728,
+      "page": 27,
+      "points_per_foot": [
+        13.5
+      ],
+      "scales": [
+        "3/16\" = 1'-0\"",
+        "0 SCALE: 3/16\" = 1'-0\""
+      ],
+      "sheet": "A113",
+      "title": "MAIN LEVEL FLOOR PLAN - ALT. 1",
+      "width": 2592
+    },
+    {
+      "height": 1728,
+      "page": 39,
+      "points_per_foot": [
+        108
+      ],
+      "scales": [
+        "1 1/2\" = 1'-0\"",
+        "1 1/2\" = 1'-0\"",
+        "1 1/2\" = 1'-0\"",
+        "1 1/2\" = 1'-0\"",
+        "SCALE: 1 1/2\" = 1'-0\""
+      ],
+      "sheet": "A501",
+      "title": "PLAN DETAILS",
+      "width": 2592
+    }
+  ],
+  "summary": {
+    "marks_placed": 13,
+    "marks_total": 29,
+    "placed_rate": 0.4482758620689655,
+    "rooms_total": 17,
+    "sheets_total": 2,
+    "sheets_with_scale": 2,
+    "unplaced": [
+      {
+        "mark": "129C",
+        "page": 42,
+        "reason": "mark 129C (schedule p.42) not tagged on any plan"
+      },
+      {
+        "mark": "160",
+        "page": 42,
+        "reason": "mark 160 (schedule p.42) not tagged on any plan"
+      },
+      {
+        "mark": "161",
+        "page": 42,
+        "reason": "mark 161 (schedule p.42) not tagged on any plan"
+      },
+      {
+        "mark": "162",
+        "page": 42,
+        "reason": "mark 162 (schedule p.42) not tagged on any plan"
+      },
+      {
+        "mark": "163",
+        "page": 42,
+        "reason": "mark 163 (schedule p.42) not tagged on any plan"
+      },
+      {
+        "mark": "164",
+        "page": 42,
+        "reason": "mark 164 (schedule p.42) not tagged on any plan"
+      },
+      {
+        "mark": "165A",
+        "page": 42,
+        "reason": "mark 165A (schedule p.42) not tagged on any plan"
+      },
+      {
+        "mark": "165B",
+        "page": 42,
+        "reason": "mark 165B (schedule p.42) not tagged on any plan"
+      },
+      {
+        "mark": "166",
+        "page": 42,
+        "reason": "mark 166 (schedule p.42) not tagged on any plan"
+      },
+      {
+        "mark": "167A",
+        "page": 42,
+        "reason": "mark 167A (schedule p.42) not tagged on any plan"
+      },
+      {
+        "mark": "167B",
+        "page": 42,
+        "reason": "mark 167B (schedule p.42) not tagged on any plan"
+      },
+      {
+        "mark": "168A",
+        "page": 42,
+        "reason": "mark 168A (schedule p.42) not tagged on any plan"
+      },
+      {
+        "mark": "168B",
+        "page": 42,
+        "reason": "mark 168B (schedule p.42) not tagged on any plan"
+      },
+      {
+        "mark": "169A",
+        "page": 42,
+        "reason": "mark 169A (schedule p.42) not tagged on any plan"
+      },
+      {
+        "mark": "169B",
+        "page": 42,
+        "reason": "mark 169B (schedule p.42) not tagged on any plan"
+      },
+      {
+        "mark": "169C",
+        "page": 42,
+        "reason": "mark 169C (schedule p.42) not tagged on any plan"
+      }
+    ]
+  },
+  "tags": [
+    {
+      "also_on": [],
+      "door_pages": [
+        43
+      ],
+      "door_type": "F",
+      "fire_rating": "N/A",
+      "frame_type": "--",
+      "h": 9.603716158511999,
+      "hardware_group": "--",
+      "height_inches": 84,
+      "location": null,
+      "mark": "101A",
+      "matched_by": "exact",
+      "material": "--",
+      "page": 27,
+      "pair": false,
+      "points_per_foot": 13.5,
+      "room": "101",
+      "room_by": "tag_number",
+      "room_name": "EXISTING BAYS",
+      "schedule_rows": [
+        {
+          "door_type": "F",
+          "fire_rating": "N/A",
+          "frame_type": "--",
+          "hardware_group": "--",
+          "height_inches": 84,
+          "location": null,
+          "mark": "101A",
+          "material": "--",
+          "page": 43,
+          "pair": false,
+          "size": "3' - 0\" x 7' - 0\"",
+          "width_inches": 36,
+          "y": 155
+        }
+      ],
+      "sheet": "A113",
+      "size": "3' - 0\" x 7' - 0\"",
+      "width_inches": 36,
+      "x": 356,
+      "y": 642
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        43
+      ],
+      "door_type": "F",
+      "fire_rating": "N/A",
+      "frame_type": "--",
+      "h": 9.603716158511999,
+      "hardware_group": "--",
+      "height_inches": 84,
+      "location": null,
+      "mark": "101B",
+      "matched_by": "exact",
+      "material": "--",
+      "page": 27,
+      "pair": false,
+      "points_per_foot": 13.5,
+      "room": "101",
+      "room_by": "tag_number",
+      "room_name": "EXISTING BAYS",
+      "schedule_rows": [
+        {
+          "door_type": "F",
+          "fire_rating": "N/A",
+          "frame_type": "--",
+          "hardware_group": "--",
+          "height_inches": 84,
+          "location": null,
+          "mark": "101B",
+          "material": "--",
+          "page": 43,
+          "pair": false,
+          "size": "3' - 0\" x 7' - 0\"",
+          "width_inches": 36,
+          "y": 168
+        }
+      ],
+      "sheet": "A113",
+      "size": "3' - 0\" x 7' - 0\"",
+      "width_inches": 36,
+      "x": 1257,
+      "y": 659
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        43
+      ],
+      "door_type": "OH",
+      "fire_rating": "N/A",
+      "frame_type": "--",
+      "h": 9.603716158511999,
+      "hardware_group": "N/A",
+      "height_inches": 168,
+      "location": null,
+      "mark": "102A",
+      "matched_by": "exact",
+      "material": "STEEL",
+      "page": 27,
+      "pair": false,
+      "points_per_foot": 13.5,
+      "room": "102",
+      "room_by": "tag_number",
+      "room_name": "READY BAYS",
+      "schedule_rows": [
+        {
+          "door_type": "OH",
+          "fire_rating": "N/A",
+          "frame_type": "--",
+          "hardware_group": "N/A",
+          "height_inches": 168,
+          "location": null,
+          "mark": "102A",
+          "material": "STEEL",
+          "page": 43,
+          "pair": false,
+          "size": "12' - 0\" x 14' - 0\"",
+          "width_inches": 144,
+          "y": 181
+        }
+      ],
+      "sheet": "A113",
+      "size": "12' - 0\" x 14' - 0\"",
+      "width_inches": 144,
+      "x": 1419,
+      "y": 675
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        43
+      ],
+      "door_type": "OH",
+      "fire_rating": "N/A",
+      "frame_type": "--",
+      "h": 9.603716158511999,
+      "hardware_group": "N/A",
+      "height_inches": 168,
+      "location": null,
+      "mark": "102B",
+      "matched_by": "exact",
+      "material": "STEEL",
+      "page": 27,
+      "pair": false,
+      "points_per_foot": 13.5,
+      "room": "102",
+      "room_by": "tag_number",
+      "room_name": "READY BAYS",
+      "schedule_rows": [
+        {
+          "door_type": "OH",
+          "fire_rating": "N/A",
+          "frame_type": "--",
+          "hardware_group": "N/A",
+          "height_inches": 168,
+          "location": null,
+          "mark": "102B",
+          "material": "STEEL",
+          "page": 43,
+          "pair": false,
+          "size": "12' - 0\" x 14' - 0\"",
+          "width_inches": 144,
+          "y": 195
+        }
+      ],
+      "sheet": "A113",
+      "size": "12' - 0\" x 14' - 0\"",
+      "width_inches": 144,
+      "x": 1594,
+      "y": 675
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        43
+      ],
+      "door_type": "OH",
+      "fire_rating": "N/A",
+      "frame_type": "--",
+      "h": 9.603716158511999,
+      "hardware_group": "N/A",
+      "height_inches": 168,
+      "location": null,
+      "mark": "103B",
+      "matched_by": "exact",
+      "material": "STEEL",
+      "page": 27,
+      "pair": false,
+      "points_per_foot": 13.5,
+      "room": "103",
+      "room_by": "tag_number",
+      "room_name": "STORAGE",
+      "schedule_rows": [
+        {
+          "door_type": "OH",
+          "fire_rating": "N/A",
+          "frame_type": "--",
+          "hardware_group": "N/A",
+          "height_inches": 168,
+          "location": null,
+          "mark": "103B",
+          "material": "STEEL",
+          "page": 43,
+          "pair": false,
+          "size": "8' - 0\" x 14' - 0\"",
+          "width_inches": 96,
+          "y": 246
+        }
+      ],
+      "sheet": "A113",
+      "size": "8' - 0\" x 14' - 0\"",
+      "width_inches": 96,
+      "x": 1758,
+      "y": 783
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        43
+      ],
+      "door_type": "F",
+      "fire_rating": "N/A",
+      "frame_type": "1",
+      "h": 9.603716158511999,
+      "hardware_group": "5",
+      "height_inches": 84,
+      "location": null,
+      "mark": "103A",
+      "matched_by": "exact",
+      "material": "HM",
+      "page": 27,
+      "pair": false,
+      "points_per_foot": 13.5,
+      "room": "103",
+      "room_by": "tag_number",
+      "room_name": "STORAGE",
+      "schedule_rows": [
+        {
+          "door_type": "F",
+          "fire_rating": "N/A",
+          "frame_type": "1",
+          "hardware_group": "5",
+          "height_inches": 84,
+          "location": null,
+          "mark": "103A",
+          "material": "HM",
+          "page": 43,
+          "pair": false,
+          "size": "3' - 0\" x 7' - 0\"",
+          "width_inches": 36,
+          "y": 232
+        }
+      ],
+      "sheet": "A113",
+      "size": "3' - 0\" x 7' - 0\"",
+      "width_inches": 36,
+      "x": 1744,
+      "y": 945
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        43
+      ],
+      "door_type": "F",
+      "fire_rating": "N/A",
+      "frame_type": "1",
+      "h": 9.603716158511999,
+      "hardware_group": "3",
+      "height_inches": 84,
+      "location": null,
+      "mark": "104",
+      "matched_by": "exact",
+      "material": "HM",
+      "page": 27,
+      "pair": false,
+      "points_per_foot": 13.5,
+      "room": "104",
+      "room_by": "nearest_label",
+      "room_name": "MEDICAL STORAGE",
+      "schedule_rows": [
+        {
+          "door_type": "F",
+          "fire_rating": "N/A",
+          "frame_type": "1",
+          "hardware_group": "3",
+          "height_inches": 84,
+          "location": null,
+          "mark": "104",
+          "material": "HM",
+          "page": 43,
+          "pair": false,
+          "size": "3' - 0\" x 7' - 0\"",
+          "width_inches": 36,
+          "y": 257
+        }
+      ],
+      "sheet": "A113",
+      "size": "3' - 0\" x 7' - 0\"",
+      "unsure": true,
+      "width_inches": 36,
+      "x": 1710,
+      "y": 1097
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        43
+      ],
+      "door_type": "F",
+      "fire_rating": "N/A",
+      "frame_type": "1",
+      "h": 9.603716158511999,
+      "hardware_group": "4",
+      "height_inches": 84,
+      "location": null,
+      "mark": "105",
+      "matched_by": "exact",
+      "material": "HM",
+      "page": 27,
+      "pair": false,
+      "points_per_foot": 13.5,
+      "room": "MC-1",
+      "room_by": "nearest_label",
+      "room_name": "SC-1",
+      "schedule_rows": [
+        {
+          "door_type": "F",
+          "fire_rating": "N/A",
+          "frame_type": "1",
+          "hardware_group": "4",
+          "height_inches": 84,
+          "location": null,
+          "mark": "105",
+          "material": "HM",
+          "page": 43,
+          "pair": false,
+          "size": "3' - 0\" x 7' - 0\"",
+          "width_inches": 36,
+          "y": 270
+        }
+      ],
+      "sheet": "A113",
+      "size": "3' - 0\" x 7' - 0\"",
+      "unsure": true,
+      "width_inches": 36,
+      "x": 2016,
+      "y": 1149
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        43
+      ],
+      "door_type": "F",
+      "fire_rating": "N/A",
+      "frame_type": "1",
+      "h": 9.603716158511999,
+      "hardware_group": "2",
+      "height_inches": 84,
+      "location": null,
+      "mark": "106C",
+      "matched_by": "exact",
+      "material": "HM",
+      "page": 27,
+      "pair": false,
+      "points_per_foot": 13.5,
+      "room": "106",
+      "room_by": "tag_number",
+      "room_name": "PERSONAL FITNESS AREA",
+      "schedule_rows": [
+        {
+          "door_type": "F",
+          "fire_rating": "N/A",
+          "frame_type": "1",
+          "hardware_group": "2",
+          "height_inches": 84,
+          "location": null,
+          "mark": "106C",
+          "material": "HM",
+          "page": 43,
+          "pair": false,
+          "size": "3' - 0\" x 7' - 0\"",
+          "width_inches": 36,
+          "y": 307
+        }
+      ],
+      "sheet": "A113",
+      "size": "3' - 0\" x 7' - 0\"",
+      "width_inches": 36,
+      "x": 1712,
+      "y": 1153
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        43
+      ],
+      "door_type": "OH",
+      "fire_rating": "N/A",
+      "frame_type": "--",
+      "h": 9.603716158511999,
+      "hardware_group": "N/A",
+      "height_inches": 168,
+      "location": null,
+      "mark": "102C",
+      "matched_by": "exact",
+      "material": "STEEL",
+      "page": 27,
+      "pair": false,
+      "points_per_foot": 13.5,
+      "room": "102",
+      "room_by": "tag_number",
+      "room_name": "READY BAYS",
+      "schedule_rows": [
+        {
+          "door_type": "OH",
+          "fire_rating": "N/A",
+          "frame_type": "--",
+          "hardware_group": "N/A",
+          "height_inches": 168,
+          "location": null,
+          "mark": "102C",
+          "material": "STEEL",
+          "page": 43,
+          "pair": false,
+          "size": "12' - 0\" x 14' - 0\"",
+          "width_inches": 144,
+          "y": 208
+        }
+      ],
+      "sheet": "A113",
+      "size": "12' - 0\" x 14' - 0\"",
+      "width_inches": 144,
+      "x": 1405,
+      "y": 1444
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        43
+      ],
+      "door_type": "OH",
+      "fire_rating": "N/A",
+      "frame_type": "--",
+      "h": 9.603716158511999,
+      "hardware_group": "N/A",
+      "height_inches": 168,
+      "location": null,
+      "mark": "102D",
+      "matched_by": "exact",
+      "material": "STEEL",
+      "page": 27,
+      "pair": false,
+      "points_per_foot": 13.5,
+      "room": "102",
+      "room_by": "tag_number",
+      "room_name": "READY BAYS",
+      "schedule_rows": [
+        {
+          "door_type": "OH",
+          "fire_rating": "N/A",
+          "frame_type": "--",
+          "hardware_group": "N/A",
+          "height_inches": 168,
+          "location": null,
+          "mark": "102D",
+          "material": "STEEL",
+          "page": 43,
+          "pair": false,
+          "size": "12' - 0\" x 14' - 0\"",
+          "width_inches": 144,
+          "y": 221
+        }
+      ],
+      "sheet": "A113",
+      "size": "12' - 0\" x 14' - 0\"",
+      "width_inches": 144,
+      "x": 1594,
+      "y": 1444
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        43
+      ],
+      "door_type": "OH",
+      "fire_rating": "N/A",
+      "frame_type": "--",
+      "h": 9.603716158511999,
+      "hardware_group": "N/A",
+      "height_inches": 96,
+      "location": null,
+      "mark": "106B",
+      "matched_by": "exact",
+      "material": "STEEL",
+      "page": 27,
+      "pair": false,
+      "points_per_foot": 13.5,
+      "room": "106",
+      "room_by": "tag_number",
+      "room_name": "PERSONAL FITNESS AREA",
+      "schedule_rows": [
+        {
+          "door_type": "OH",
+          "fire_rating": "N/A",
+          "frame_type": "--",
+          "hardware_group": "N/A",
+          "height_inches": 96,
+          "location": null,
+          "mark": "106B",
+          "material": "STEEL",
+          "page": 43,
+          "pair": false,
+          "size": "8' - 0\" x 8' - 0\"",
+          "width_inches": 96,
+          "y": 297
+        }
+      ],
+      "sheet": "A113",
+      "size": "8' - 0\" x 8' - 0\"",
+      "width_inches": 96,
+      "x": 1945,
+      "y": 1444
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        43
+      ],
+      "door_type": "F",
+      "fire_rating": "N/A",
+      "frame_type": "1",
+      "h": 9.603716158511999,
+      "hardware_group": "1",
+      "height_inches": 84,
+      "location": null,
+      "mark": "106A",
+      "matched_by": "exact",
+      "material": "HM",
+      "page": 27,
+      "pair": false,
+      "points_per_foot": 13.5,
+      "room": "106",
+      "room_by": "tag_number",
+      "room_name": "PERSONAL FITNESS AREA",
+      "schedule_rows": [
+        {
+          "door_type": "F",
+          "fire_rating": "N/A",
+          "frame_type": "1",
+          "hardware_group": "1",
+          "height_inches": 84,
+          "location": null,
+          "mark": "106A",
+          "material": "HM",
+          "page": 43,
+          "pair": false,
+          "size": "3' - 0\" x 7' - 0\"",
+          "width_inches": 36,
+          "y": 283
+        }
+      ],
+      "sheet": "A113",
+      "size": "3' - 0\" x 7' - 0\"",
+      "width_inches": 36,
+      "x": 1733,
+      "y": 1493
+    }
+  ]
+}

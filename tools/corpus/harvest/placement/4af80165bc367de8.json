@@ -1,0 +1,979 @@
+{
+  "rooms": [
+    {
+      "name": "TRASH STOR",
+      "number": "124",
+      "page": 5,
+      "points_per_foot": 3.6,
+      "sheet": "A101",
+      "x": 1470,
+      "y": 976
+    },
+    {
+      "name": "STAFF LOUNGE",
+      "number": "104",
+      "page": 5,
+      "points_per_foot": 3.6,
+      "sheet": "A101",
+      "x": 1771,
+      "y": 991
+    },
+    {
+      "name": "MEAT STORAGE REF.",
+      "number": "140",
+      "page": 5,
+      "points_per_foot": 3.6,
+      "sheet": "A101",
+      "x": 1178,
+      "y": 999
+    },
+    {
+      "name": "COOLER #8",
+      "number": "137",
+      "page": 5,
+      "points_per_foot": 3.6,
+      "sheet": "A101",
+      "x": 1293,
+      "y": 999
+    },
+    {
+      "name": "FREEZER #9",
+      "number": "136",
+      "page": 5,
+      "points_per_foot": 3.6,
+      "sheet": "A101",
+      "x": 1358,
+      "y": 999
+    },
+    {
+      "name": "REFUSE",
+      "number": "123",
+      "page": 5,
+      "points_per_foot": 3.6,
+      "sheet": "A101",
+      "x": 1418,
+      "y": 999
+    },
+    {
+      "name": "SCULLERY",
+      "number": "122",
+      "page": 5,
+      "points_per_foot": 3.6,
+      "sheet": "A101",
+      "x": 1460,
+      "y": 1053
+    },
+    {
+      "name": "COOLER #6",
+      "number": "139",
+      "page": 5,
+      "points_per_foot": 3.6,
+      "sheet": "A101",
+      "x": 1169,
+      "y": 1083
+    },
+    {
+      "name": "MEAT PREPERATION",
+      "number": "138",
+      "page": 5,
+      "points_per_foot": 3.6,
+      "sheet": "A101",
+      "x": 1256,
+      "y": 1083
+    },
+    {
+      "name": "VEG. PREP",
+      "number": "135",
+      "page": 5,
+      "points_per_foot": 3.6,
+      "sheet": "A101",
+      "x": 1349,
+      "y": 1083
+    },
+    {
+      "name": "CORRIDOR",
+      "number": "121",
+      "page": 5,
+      "points_per_foot": 3.6,
+      "sheet": "A101",
+      "x": 1412,
+      "y": 1094
+    },
+    {
+      "name": "VEST.",
+      "number": "106",
+      "page": 5,
+      "points_per_foot": 3.6,
+      "sheet": "A101",
+      "x": 1650,
+      "y": 1099
+    },
+    {
+      "name": "WOMEN",
+      "number": "109",
+      "page": 5,
+      "points_per_foot": 3.6,
+      "sheet": "A101",
+      "x": 1716,
+      "y": 1099
+    },
+    {
+      "name": "OFFICE",
+      "number": "118",
+      "page": 5,
+      "points_per_foot": 3.6,
+      "sheet": "A101",
+      "x": 1540,
+      "y": 1101
+    },
+    {
+      "name": "STORAGE",
+      "number": "107",
+      "page": 5,
+      "points_per_foot": 3.6,
+      "sheet": "A101",
+      "x": 1668,
+      "y": 1101
+    },
+    {
+      "name": "TOILET",
+      "number": "108",
+      "page": 5,
+      "points_per_foot": 3.6,
+      "sheet": "A101",
+      "x": 1690,
+      "y": 1101
+    },
+    {
+      "name": "POTS & PANS",
+      "number": "119",
+      "page": 5,
+      "points_per_foot": 3.6,
+      "sheet": "A101",
+      "x": 1469,
+      "y": 1119
+    },
+    {
+      "name": "PLATING",
+      "number": "103",
+      "page": 5,
+      "points_per_foot": 3.6,
+      "sheet": "A101",
+      "x": 1749,
+      "y": 1148
+    },
+    {
+      "name": "MAIN KITCHEN",
+      "number": "110",
+      "page": 5,
+      "points_per_foot": 3.6,
+      "sheet": "A101",
+      "x": 1621,
+      "y": 1161
+    },
+    {
+      "name": "CORRIDOR",
+      "number": "141",
+      "page": 5,
+      "points_per_foot": 3.6,
+      "sheet": "A101",
+      "x": 1313,
+      "y": 1165
+    },
+    {
+      "name": "DINING HALL",
+      "number": "102",
+      "page": 5,
+      "points_per_foot": 3.6,
+      "sheet": "A101",
+      "x": 1949,
+      "y": 1180
+    },
+    {
+      "name": "REFRIG.",
+      "number": "132",
+      "page": 5,
+      "points_per_foot": 3.6,
+      "sheet": "A101",
+      "x": 1212,
+      "y": 1194
+    },
+    {
+      "name": "BULK STORAGE",
+      "number": "150",
+      "page": 5,
+      "points_per_foot": 3.6,
+      "sheet": "A101",
+      "x": 844,
+      "y": 1199
+    },
+    {
+      "name": "STEWARD",
+      "number": "126",
+      "page": 5,
+      "points_per_foot": 3.6,
+      "sheet": "A101",
+      "x": 1435,
+      "y": 1199
+    },
+    {
+      "name": "SALLY PORT",
+      "number": "142",
+      "page": 5,
+      "points_per_foot": 3.6,
+      "sheet": "A101",
+      "x": 1155,
+      "y": 1214
+    },
+    {
+      "name": "DRY GOODS",
+      "number": "133",
+      "page": 5,
+      "points_per_foot": 3.6,
+      "sheet": "A101",
+      "x": 1208,
+      "y": 1240
+    },
+    {
+      "name": "BAKERY",
+      "number": "129",
+      "page": 5,
+      "points_per_foot": 3.6,
+      "sheet": "A101",
+      "x": 1347,
+      "y": 1253
+    },
+    {
+      "name": "INMATES TOILET",
+      "number": "115",
+      "page": 5,
+      "points_per_foot": 3.6,
+      "sheet": "A101",
+      "x": 1577,
+      "y": 1253
+    },
+    {
+      "name": "NEW RESTROOM",
+      "number": "116B",
+      "page": 5,
+      "points_per_foot": 3.6,
+      "sheet": "A101",
+      "x": 1457,
+      "y": 1256
+    },
+    {
+      "name": "INMATES LOCKER",
+      "number": "114",
+      "page": 5,
+      "points_per_foot": 3.6,
+      "sheet": "A101",
+      "x": 1530,
+      "y": 1280
+    },
+    {
+      "name": "JANITOR",
+      "number": "112",
+      "page": 5,
+      "points_per_foot": 3.6,
+      "sheet": "A101",
+      "x": 1579,
+      "y": 1291
+    },
+    {
+      "name": "DISHWASHING",
+      "number": "111",
+      "page": 5,
+      "points_per_foot": 3.6,
+      "sheet": "A101",
+      "x": 1672,
+      "y": 1291
+    },
+    {
+      "name": "VESTIBULE",
+      "number": "143",
+      "page": 5,
+      "points_per_foot": 3.6,
+      "sheet": "A101",
+      "x": 1138,
+      "y": 1297
+    },
+    {
+      "name": "TOILETS",
+      "number": "144",
+      "page": 5,
+      "points_per_foot": 3.6,
+      "sheet": "A101",
+      "x": 1164,
+      "y": 1297
+    },
+    {
+      "name": "STORAGE",
+      "number": "134",
+      "page": 5,
+      "points_per_foot": 3.6,
+      "sheet": "A101",
+      "x": 1192,
+      "y": 1297
+    },
+    {
+      "name": "FERMENT",
+      "number": "131",
+      "page": 5,
+      "points_per_foot": 3.6,
+      "sheet": "A101",
+      "x": 1222,
+      "y": 1297
+    },
+    {
+      "name": "UNIFORM STORAGE",
+      "number": "116",
+      "page": 5,
+      "points_per_foot": 3.6,
+      "sheet": "A101",
+      "x": 1467,
+      "y": 1299
+    },
+    {
+      "name": "SPRINKLER",
+      "number": "113",
+      "page": 5,
+      "points_per_foot": 3.6,
+      "sheet": "A101",
+      "x": 1608,
+      "y": 1330
+    },
+    {
+      "name": "TRASH STOR",
+      "number": "124",
+      "page": 6,
+      "points_per_foot": 6.75,
+      "sheet": "A102",
+      "x": 1004,
+      "y": 891
+    },
+    {
+      "name": "STAFF LOUNGE",
+      "number": "104",
+      "page": 6,
+      "points_per_foot": 6.75,
+      "sheet": "A102",
+      "x": 1569,
+      "y": 915
+    },
+    {
+      "name": "MEAT STORAGE REF.",
+      "number": "140",
+      "page": 6,
+      "points_per_foot": 6.75,
+      "sheet": "A102",
+      "x": 453,
+      "y": 932
+    },
+    {
+      "name": "COOLER #8",
+      "number": "137",
+      "page": 6,
+      "points_per_foot": 6.75,
+      "sheet": "A102",
+      "x": 672,
+      "y": 934
+    },
+    {
+      "name": "FREEZER #9",
+      "number": "136",
+      "page": 6,
+      "points_per_foot": 6.75,
+      "sheet": "A102",
+      "x": 795,
+      "y": 937
+    },
+    {
+      "name": "REFUSE",
+      "number": "123",
+      "page": 6,
+      "points_per_foot": 6.75,
+      "sheet": "A102",
+      "x": 905,
+      "y": 937
+    },
+    {
+      "name": "SERVING",
+      "number": "117",
+      "page": 6,
+      "points_per_foot": 6.75,
+      "sheet": "A102",
+      "x": 1107,
+      "y": 973
+    },
+    {
+      "name": "STAFF DINING",
+      "number": "105",
+      "page": 6,
+      "points_per_foot": 6.75,
+      "sheet": "A102",
+      "x": 1307,
+      "y": 985
+    },
+    {
+      "name": "SCULLERY",
+      "number": "122",
+      "page": 6,
+      "points_per_foot": 6.75,
+      "sheet": "A102",
+      "x": 981,
+      "y": 1041
+    },
+    {
+      "name": "COOLER #6",
+      "number": "139",
+      "page": 6,
+      "points_per_foot": 6.75,
+      "sheet": "A102",
+      "x": 436,
+      "y": 1075
+    },
+    {
+      "name": "VEG. PREP",
+      "number": "135",
+      "page": 6,
+      "points_per_foot": 6.75,
+      "sheet": "A102",
+      "x": 773,
+      "y": 1089
+    },
+    {
+      "name": "MEAT PREPERATION",
+      "number": "138",
+      "page": 6,
+      "points_per_foot": 6.75,
+      "sheet": "A102",
+      "x": 593,
+      "y": 1099
+    },
+    {
+      "name": "CORRIDOR",
+      "number": "121",
+      "page": 6,
+      "points_per_foot": 6.75,
+      "sheet": "A102",
+      "x": 895,
+      "y": 1099
+    },
+    {
+      "name": "VEST. STORAGE TOILET",
+      "number": "106",
+      "page": 6,
+      "points_per_foot": 6.75,
+      "sheet": "A102",
+      "x": 1341,
+      "y": 1116
+    },
+    {
+      "name": "VEST. STORAGE TOILET",
+      "number": "107",
+      "page": 6,
+      "points_per_foot": 6.75,
+      "sheet": "A102",
+      "x": 1374,
+      "y": 1116
+    },
+    {
+      "name": "VEST. STORAGE TOILET",
+      "number": "108",
+      "page": 6,
+      "points_per_foot": 6.75,
+      "sheet": "A102",
+      "x": 1417,
+      "y": 1116
+    },
+    {
+      "name": "WOMEN",
+      "number": "109",
+      "page": 6,
+      "points_per_foot": 6.75,
+      "sheet": "A102",
+      "x": 1464,
+      "y": 1116
+    },
+    {
+      "name": "STAIR WELL",
+      "number": "B01",
+      "page": 6,
+      "points_per_foot": 6.75,
+      "sheet": "A102",
+      "x": 2030,
+      "y": 1117
+    },
+    {
+      "name": "OFFICE",
+      "number": "118",
+      "page": 6,
+      "points_per_foot": 6.75,
+      "sheet": "A102",
+      "x": 1131,
+      "y": 1120
+    },
+    {
+      "name": "PROJECT # C2419-01",
+      "number": "7005",
+      "page": 6,
+      "points_per_foot": 6.75,
+      "sheet": "A102",
+      "x": 2460,
+      "y": 1149
+    },
+    {
+      "name": "POTS & PANS",
+      "number": "119",
+      "page": 6,
+      "points_per_foot": 6.75,
+      "sheet": "A102",
+      "x": 1015,
+      "y": 1155
+    },
+    {
+      "name": "PLATING",
+      "number": "103",
+      "page": 6,
+      "points_per_foot": 6.75,
+      "sheet": "A102",
+      "x": 1527,
+      "y": 1204
+    },
+    {
+      "name": "CORRIDOR",
+      "number": "141",
+      "page": 6,
+      "points_per_foot": 6.75,
+      "sheet": "A102",
+      "x": 710,
+      "y": 1240
+    },
+    {
+      "name": "MAIN KITCHEN",
+      "number": "110",
+      "page": 6,
+      "points_per_foot": 6.75,
+      "sheet": "A102",
+      "x": 1276,
+      "y": 1243
+    },
+    {
+      "name": "DINING HALL",
+      "number": "102",
+      "page": 6,
+      "points_per_foot": 6.75,
+      "sheet": "A102",
+      "x": 1711,
+      "y": 1258
+    },
+    {
+      "name": "BASEMENT",
+      "number": "B02",
+      "page": 6,
+      "points_per_foot": 6.75,
+      "sheet": "A102",
+      "x": 1987,
+      "y": 1264
+    },
+    {
+      "name": "REFRIG.",
+      "number": "132",
+      "page": 6,
+      "points_per_foot": 6.75,
+      "sheet": "A102",
+      "x": 523,
+      "y": 1295
+    },
+    {
+      "name": "STEWARD",
+      "number": "126",
+      "page": 6,
+      "points_per_foot": 6.75,
+      "sheet": "A102",
+      "x": 937,
+      "y": 1295
+    },
+    {
+      "name": "SALLY PORT",
+      "number": "142",
+      "page": 6,
+      "points_per_foot": 6.75,
+      "sheet": "A102",
+      "x": 416,
+      "y": 1327
+    },
+    {
+      "name": "CLOSET",
+      "number": "127",
+      "page": 6,
+      "points_per_foot": 6.75,
+      "sheet": "A102",
+      "x": 903,
+      "y": 1350
+    },
+    {
+      "name": "CLOSET",
+      "number": "128",
+      "page": 6,
+      "points_per_foot": 6.75,
+      "sheet": "A102",
+      "x": 971,
+      "y": 1350
+    },
+    {
+      "name": "DRY GOODS",
+      "number": "133",
+      "page": 6,
+      "points_per_foot": 6.75,
+      "sheet": "A102",
+      "x": 517,
+      "y": 1379
+    },
+    {
+      "name": "NEW RESTROOM",
+      "number": "116B",
+      "page": 6,
+      "points_per_foot": 6.75,
+      "sheet": "A102",
+      "x": 880,
+      "y": 1391
+    },
+    {
+      "name": "BAKERY",
+      "number": "129",
+      "page": 6,
+      "points_per_foot": 6.75,
+      "sheet": "A102",
+      "x": 778,
+      "y": 1396
+    },
+    {
+      "name": "INMATES TOILET",
+      "number": "115",
+      "page": 6,
+      "points_per_foot": 6.75,
+      "sheet": "A102",
+      "x": 1196,
+      "y": 1406
+    },
+    {
+      "name": "INMATES LOCKER",
+      "number": "114",
+      "page": 6,
+      "points_per_foot": 6.75,
+      "sheet": "A102",
+      "x": 1117,
+      "y": 1457
+    },
+    {
+      "name": "JANITOR",
+      "number": "112",
+      "page": 6,
+      "points_per_foot": 6.75,
+      "sheet": "A102",
+      "x": 1212,
+      "y": 1472
+    },
+    {
+      "name": "DISHWASHING",
+      "number": "111",
+      "page": 6,
+      "points_per_foot": 6.75,
+      "sheet": "A102",
+      "x": 1411,
+      "y": 1477
+    },
+    {
+      "name": "FERMENT",
+      "number": "131",
+      "page": 6,
+      "points_per_foot": 6.75,
+      "sheet": "A102",
+      "x": 545,
+      "y": 1479
+    },
+    {
+      "name": "TOILETS",
+      "number": "144",
+      "page": 6,
+      "points_per_foot": 6.75,
+      "sheet": "A102",
+      "x": 434,
+      "y": 1485
+    },
+    {
+      "name": "STORAGE",
+      "number": "134",
+      "page": 6,
+      "points_per_foot": 6.75,
+      "sheet": "A102",
+      "x": 489,
+      "y": 1485
+    },
+    {
+      "name": "VESTIBULE",
+      "number": "143",
+      "page": 6,
+      "points_per_foot": 6.75,
+      "sheet": "A102",
+      "x": 382,
+      "y": 1490
+    },
+    {
+      "name": "UNIFORM STORAGE",
+      "number": "116",
+      "page": 6,
+      "points_per_foot": 6.75,
+      "sheet": "A102",
+      "x": 997,
+      "y": 1490
+    },
+    {
+      "name": "SPRINKLER",
+      "number": "113",
+      "page": 6,
+      "points_per_foot": 6.75,
+      "sheet": "A102",
+      "x": 1214,
+      "y": 1564
+    },
+    {
+      "name": "GB1",
+      "number": "GB2",
+      "page": 8,
+      "points_per_foot": 36,
+      "sheet": "A602",
+      "x": 257,
+      "y": 659
+    },
+    {
+      "name": "GB1 GB2",
+      "number": "GB3",
+      "page": 8,
+      "points_per_foot": 36,
+      "sheet": "A602",
+      "x": 257,
+      "y": 672
+    },
+    {
+      "name": "GB2 GB3",
+      "number": "MI1",
+      "page": 8,
+      "points_per_foot": 36,
+      "sheet": "A602",
+      "x": 257,
+      "y": 685
+    },
+    {
+      "name": "GB3 MI1",
+      "number": "PT1",
+      "page": 8,
+      "points_per_foot": 36,
+      "sheet": "A602",
+      "x": 257,
+      "y": 698
+    },
+    {
+      "name": "MI1 PT1",
+      "number": "SD1",
+      "page": 8,
+      "points_per_foot": 36,
+      "sheet": "A602",
+      "x": 257,
+      "y": 712
+    },
+    {
+      "name": "PT1 SD1",
+      "number": "TP1",
+      "page": 8,
+      "points_per_foot": 36,
+      "sheet": "A602",
+      "x": 257,
+      "y": 725
+    },
+    {
+      "name": "SD1 TP1",
+      "number": "WR1",
+      "page": 8,
+      "points_per_foot": 36,
+      "sheet": "A602",
+      "x": 257,
+      "y": 738
+    },
+    {
+      "name": "PROJECT # C2419-01",
+      "number": "7005",
+      "page": 8,
+      "points_per_foot": 36,
+      "sheet": "A602",
+      "x": 2460,
+      "y": 1149
+    }
+  ],
+  "set": {
+    "label": "missouri_oa_fmdc - _C2419-01%20Final%20Bid%20Plans.pdf",
+    "page_count": 23,
+    "rows_total": 4,
+    "sha16": "4af80165bc367de8",
+    "source_url": "https://oa.mo.gov/sites/default/files/bid-opportunities/_C2419-01%20Final%20Bid%20Plans.pdf",
+    "tier": "agreed"
+  },
+  "sheets": [
+    {
+      "height": 1728,
+      "page": 5,
+      "points_per_foot": [
+        3.6
+      ],
+      "scales": [
+        "SCALE: 1\" = 20'-0\""
+      ],
+      "sheet": "A101",
+      "title": "OVERALL FLOOR PLAN",
+      "width": 2592
+    },
+    {
+      "height": 1728,
+      "page": 6,
+      "points_per_foot": [
+        6.75,
+        9
+      ],
+      "scales": [
+        "A102 SCALE: 1/8\" = 1'-0\"",
+        "A102 SCALE: 1/8\" = 1'-0\"",
+        "SCALE: 3/32\" = 1'-0\"",
+        "SCALE: 3/32\" = 1'-0\""
+      ],
+      "sheet": "A102",
+      "title": "FLOOR PLAN",
+      "width": 2592
+    },
+    {
+      "height": 1728,
+      "page": 8,
+      "points_per_foot": [
+        36
+      ],
+      "scales": [
+        "SCALE: 1/2\" = 1'-0\"",
+        "SCALE: 1/2\" = 1'-0\"",
+        "SCALE: 1/2\" = 1'-0\""
+      ],
+      "sheet": "A602",
+      "title": "PLANS AND ELEVATIONS",
+      "width": 2592
+    }
+  ],
+  "summary": {
+    "marks_placed": 2,
+    "marks_total": 4,
+    "placed_rate": 0.5,
+    "rooms_total": 90,
+    "sheets_total": 3,
+    "sheets_with_scale": 3,
+    "unplaced": [
+      {
+        "mark": "116B",
+        "page": 7,
+        "reason": "mark 116B (schedule p.7) not tagged on any plan"
+      },
+      {
+        "mark": "123A",
+        "page": 7,
+        "reason": "mark 123A (schedule p.7) not tagged on any plan"
+      }
+    ]
+  },
+  "tags": [
+    {
+      "also_on": [],
+      "door_pages": [
+        7
+      ],
+      "door_type": "P20HM",
+      "fire_rating": null,
+      "frame_type": "FCW00AL",
+      "h": 9.50935,
+      "hardware_group": null,
+      "height_inches": 84,
+      "location": null,
+      "mark": "104B",
+      "matched_by": "exact",
+      "material": null,
+      "page": 6,
+      "pair": false,
+      "points_per_foot": 6.75,
+      "room": "104",
+      "room_by": "tag_number",
+      "room_name": "STAFF LOUNGE",
+      "schedule_rows": [
+        {
+          "door_type": "P20HM",
+          "fire_rating": null,
+          "frame_type": "FCW00AL",
+          "hardware_group": null,
+          "height_inches": 84,
+          "location": null,
+          "mark": "104B",
+          "material": null,
+          "page": 7,
+          "pair": false,
+          "size": "3'-0\" x 7'-0\"",
+          "width_inches": 36,
+          "y": 537
+        }
+      ],
+      "sheet": "A102",
+      "size": "3'-0\" x 7'-0\"",
+      "width_inches": 36,
+      "x": 1494,
+      "y": 907
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        7
+      ],
+      "door_type": "P20HM",
+      "fire_rating": null,
+      "frame_type": "FCW00AL",
+      "h": 9.50935,
+      "hardware_group": null,
+      "height_inches": 84,
+      "location": null,
+      "mark": "104A",
+      "matched_by": "exact",
+      "material": null,
+      "page": 6,
+      "pair": false,
+      "points_per_foot": 6.75,
+      "room": "104",
+      "room_by": "tag_number",
+      "room_name": "STAFF LOUNGE",
+      "schedule_rows": [
+        {
+          "door_type": "P20HM",
+          "fire_rating": null,
+          "frame_type": "FCW00AL",
+          "hardware_group": null,
+          "height_inches": 84,
+          "location": null,
+          "mark": "104A",
+          "material": null,
+          "page": 7,
+          "pair": false,
+          "size": "3'-0\" x 7'-0\"",
+          "width_inches": 36,
+          "y": 524
+        }
+      ],
+      "sheet": "A102",
+      "size": "3'-0\" x 7'-0\"",
+      "width_inches": 36,
+      "x": 1656,
+      "y": 907
+    }
+  ]
+}

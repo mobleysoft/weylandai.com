@@ -1,0 +1,446 @@
+{
+  "rooms": [
+    {
+      "name": "D3 EXTERIOR ELEVATION KEY PLAN",
+      "number": "A-101",
+      "page": 9,
+      "points_per_foot": 18,
+      "sheet": "A-101",
+      "x": 240,
+      "y": 525
+    },
+    {
+      "name": "C OF COLUMN TO C OF COLUMN",
+      "number": "L15",
+      "page": 9,
+      "points_per_foot": 18,
+      "sheet": "A-101",
+      "x": 1723,
+      "y": 956
+    },
+    {
+      "name": "PROJECT # T2331-01",
+      "number": "6322",
+      "page": 9,
+      "points_per_foot": 18,
+      "sheet": "A-101",
+      "x": 2451,
+      "y": 1170
+    },
+    {
+      "name": "EXIT ACCESS HALLWAY",
+      "number": "101",
+      "page": 9,
+      "points_per_foot": 18,
+      "sheet": "A-101",
+      "x": 859,
+      "y": 1243
+    },
+    {
+      "name": "FOUNDATION",
+      "number": "B4",
+      "page": 9,
+      "points_per_foot": 18,
+      "sheet": "A-101",
+      "x": 2156,
+      "y": 1454
+    },
+    {
+      "name": "A4 ARCHITECTURAL FLOOR PLAN",
+      "number": "A-101",
+      "page": 9,
+      "points_per_foot": 18,
+      "sheet": "A-101",
+      "x": 962,
+      "y": 1621
+    }
+  ],
+  "set": {
+    "label": "missouri_oa_fmdc - _T2331-01%20Final%20Bid%20Plans.pdf",
+    "page_count": 32,
+    "rows_total": 8,
+    "sha16": "2b7024ad75f57ddf",
+    "source_url": "https://oa.mo.gov/sites/default/files/bid-opportunities/_T2331-01%20Final%20Bid%20Plans.pdf",
+    "tier": "agreed"
+  },
+  "sheets": [
+    {
+      "height": 1728,
+      "page": 9,
+      "points_per_foot": [
+        18
+      ],
+      "scales": [
+        "1/4\"=1'-0\""
+      ],
+      "sheet": "A-101",
+      "title": "ARCHITECTURAL FLOOR PLAN",
+      "width": 2592
+    }
+  ],
+  "summary": {
+    "marks_placed": 8,
+    "marks_total": 8,
+    "placed_rate": 1,
+    "rooms_total": 6,
+    "sheets_total": 1,
+    "sheets_with_scale": 1,
+    "unplaced": []
+  },
+  "tags": [
+    {
+      "also_on": [],
+      "door_pages": [
+        16
+      ],
+      "door_type": "HM-1",
+      "fire_rating": "NO RATING",
+      "frame_type": "HMF-1",
+      "h": 11.13288,
+      "hardware_group": null,
+      "height_inches": 84,
+      "location": null,
+      "mark": "101",
+      "matched_by": "exact",
+      "material": null,
+      "page": 9,
+      "pair": false,
+      "points_per_foot": 18,
+      "room": null,
+      "room_by": null,
+      "room_name": null,
+      "schedule_rows": [
+        {
+          "door_type": "HM-1",
+          "fire_rating": "NO RATING",
+          "frame_type": "HMF-1",
+          "hardware_group": null,
+          "height_inches": 84,
+          "location": null,
+          "mark": "101",
+          "material": null,
+          "page": 16,
+          "pair": false,
+          "size": "3'-0\" x 7'-0\"",
+          "width_inches": 36,
+          "y": 526
+        }
+      ],
+      "sheet": "A-101",
+      "size": "3'-0\" x 7'-0\"",
+      "width_inches": 36,
+      "x": 1014,
+      "y": 809
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        16
+      ],
+      "door_type": "HM-1",
+      "fire_rating": "NO RATING",
+      "frame_type": "HMF-1",
+      "h": 11.13288,
+      "hardware_group": null,
+      "height_inches": 84,
+      "location": null,
+      "mark": "102",
+      "matched_by": "exact",
+      "material": null,
+      "page": 9,
+      "pair": false,
+      "points_per_foot": 18,
+      "room": null,
+      "room_by": null,
+      "room_name": null,
+      "schedule_rows": [
+        {
+          "door_type": "HM-1",
+          "fire_rating": "NO RATING",
+          "frame_type": "HMF-1",
+          "hardware_group": null,
+          "height_inches": 84,
+          "location": null,
+          "mark": "102",
+          "material": null,
+          "page": 16,
+          "pair": false,
+          "size": "3'-0\" x 7'-0\"",
+          "width_inches": 36,
+          "y": 537
+        }
+      ],
+      "sheet": "A-101",
+      "size": "3'-0\" x 7'-0\"",
+      "width_inches": 36,
+      "x": 1280,
+      "y": 810
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        16
+      ],
+      "door_type": "HM-1",
+      "fire_rating": "NO RATING",
+      "frame_type": "HMF-1",
+      "h": 11.13288,
+      "hardware_group": null,
+      "height_inches": 84,
+      "location": null,
+      "mark": "103",
+      "matched_by": "exact",
+      "material": null,
+      "page": 9,
+      "pair": false,
+      "points_per_foot": 18,
+      "room": "L15",
+      "room_by": "nearest_label",
+      "room_name": "C OF COLUMN TO C OF COLUMN",
+      "schedule_rows": [
+        {
+          "door_type": "HM-1",
+          "fire_rating": "NO RATING",
+          "frame_type": "HMF-1",
+          "hardware_group": null,
+          "height_inches": 84,
+          "location": null,
+          "mark": "103",
+          "material": null,
+          "page": 16,
+          "pair": false,
+          "size": "3'-0\" x 7'-0\"",
+          "width_inches": 36,
+          "y": 548
+        }
+      ],
+      "sheet": "A-101",
+      "size": "3'-0\" x 7'-0\"",
+      "unsure": true,
+      "width_inches": 36,
+      "x": 1634,
+      "y": 810
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        16
+      ],
+      "door_type": "HM-1",
+      "fire_rating": "NO RATING",
+      "frame_type": "HMF-1",
+      "h": 11.13288,
+      "hardware_group": null,
+      "height_inches": 84,
+      "location": null,
+      "mark": "104",
+      "matched_by": "exact",
+      "material": null,
+      "page": 9,
+      "pair": false,
+      "points_per_foot": 18,
+      "room": null,
+      "room_by": null,
+      "room_name": null,
+      "schedule_rows": [
+        {
+          "door_type": "HM-1",
+          "fire_rating": "NO RATING",
+          "frame_type": "HMF-1",
+          "hardware_group": null,
+          "height_inches": 84,
+          "location": null,
+          "mark": "104",
+          "material": null,
+          "page": 16,
+          "pair": false,
+          "size": "3'-0\" x 7'-0\"",
+          "width_inches": 36,
+          "y": 559
+        }
+      ],
+      "sheet": "A-101",
+      "size": "3'-0\" x 7'-0\"",
+      "width_inches": 36,
+      "x": 1970,
+      "y": 810
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        16
+      ],
+      "door_type": "OVHD",
+      "fire_rating": "NO RATING",
+      "frame_type": null,
+      "h": 10.120800000000001,
+      "hardware_group": null,
+      "height_inches": null,
+      "location": null,
+      "mark": "OVHD-1",
+      "matched_by": "exact",
+      "material": null,
+      "page": 9,
+      "pair": false,
+      "points_per_foot": 18,
+      "room": null,
+      "room_by": null,
+      "room_name": null,
+      "schedule_rows": [
+        {
+          "door_type": "OVHD",
+          "fire_rating": "NO RATING",
+          "frame_type": null,
+          "hardware_group": null,
+          "height_inches": null,
+          "location": null,
+          "mark": "OVHD-1",
+          "material": null,
+          "page": 16,
+          "pair": false,
+          "size": null,
+          "width_inches": null,
+          "y": 630
+        }
+      ],
+      "sheet": "A-101",
+      "size": null,
+      "width_inches": null,
+      "x": 1172,
+      "y": 817
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        16
+      ],
+      "door_type": "OVHD",
+      "fire_rating": "NO RATING",
+      "frame_type": null,
+      "h": 10.120800000000001,
+      "hardware_group": null,
+      "height_inches": null,
+      "location": null,
+      "mark": "OVHD-2",
+      "matched_by": "exact",
+      "material": null,
+      "page": 9,
+      "pair": false,
+      "points_per_foot": 18,
+      "room": null,
+      "room_by": null,
+      "room_name": null,
+      "schedule_rows": [
+        {
+          "door_type": "OVHD",
+          "fire_rating": "NO RATING",
+          "frame_type": null,
+          "hardware_group": null,
+          "height_inches": null,
+          "location": null,
+          "mark": "OVHD-2",
+          "material": null,
+          "page": 16,
+          "pair": false,
+          "size": null,
+          "width_inches": null,
+          "y": 641
+        }
+      ],
+      "sheet": "A-101",
+      "size": null,
+      "width_inches": null,
+      "x": 1428,
+      "y": 817
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        16
+      ],
+      "door_type": "OVHD",
+      "fire_rating": "NO RATING",
+      "frame_type": null,
+      "h": 10.120800000000001,
+      "hardware_group": null,
+      "height_inches": null,
+      "location": null,
+      "mark": "OVHD-3",
+      "matched_by": "exact",
+      "material": null,
+      "page": 9,
+      "pair": false,
+      "points_per_foot": 18,
+      "room": "L15",
+      "room_by": "nearest_label",
+      "room_name": "C OF COLUMN TO C OF COLUMN",
+      "schedule_rows": [
+        {
+          "door_type": "OVHD",
+          "fire_rating": "NO RATING",
+          "frame_type": null,
+          "hardware_group": null,
+          "height_inches": null,
+          "location": null,
+          "mark": "OVHD-3",
+          "material": null,
+          "page": 16,
+          "pair": false,
+          "size": null,
+          "width_inches": null,
+          "y": 652
+        }
+      ],
+      "sheet": "A-101",
+      "size": null,
+      "unsure": true,
+      "width_inches": null,
+      "x": 1795,
+      "y": 817
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        16
+      ],
+      "door_type": "OVHD",
+      "fire_rating": "NO RATING",
+      "frame_type": null,
+      "h": 10.120800000000001,
+      "hardware_group": null,
+      "height_inches": null,
+      "location": null,
+      "mark": "OVHD-4",
+      "matched_by": "exact",
+      "material": null,
+      "page": 9,
+      "pair": false,
+      "points_per_foot": 18,
+      "room": null,
+      "room_by": null,
+      "room_name": null,
+      "schedule_rows": [
+        {
+          "door_type": "OVHD",
+          "fire_rating": "NO RATING",
+          "frame_type": null,
+          "hardware_group": null,
+          "height_inches": null,
+          "location": null,
+          "mark": "OVHD-4",
+          "material": null,
+          "page": 16,
+          "pair": false,
+          "size": null,
+          "width_inches": null,
+          "y": 664
+        }
+      ],
+      "sheet": "A-101",
+      "size": null,
+      "width_inches": null,
+      "x": 2131,
+      "y": 817
+    }
+  ]
+}

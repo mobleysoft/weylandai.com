@@ -1,0 +1,375 @@
+{
+  "rooms": [
+    {
+      "name": "RAKE DETAIL",
+      "number": "4",
+      "page": 18,
+      "points_per_foot": 54,
+      "sheet": "A-401",
+      "x": 326,
+      "y": 88
+    },
+    {
+      "name": "RAKE DETAIL",
+      "number": "4",
+      "page": 18,
+      "points_per_foot": 54,
+      "sheet": "A-401",
+      "x": 938,
+      "y": 88
+    },
+    {
+      "name": "RAKE DETAIL",
+      "number": "4",
+      "page": 18,
+      "points_per_foot": 54,
+      "sheet": "A-401",
+      "x": 1550,
+      "y": 88
+    },
+    {
+      "name": "HEAD DETAIL",
+      "number": "6",
+      "page": 18,
+      "points_per_foot": 54,
+      "sheet": "A-401",
+      "x": 1550,
+      "y": 600
+    },
+    {
+      "name": "JAMB DETAIL",
+      "number": "7",
+      "page": 18,
+      "points_per_foot": 54,
+      "sheet": "A-401",
+      "x": 1550,
+      "y": 792
+    },
+    {
+      "name": "TRIM DETAIL",
+      "number": "5",
+      "page": 18,
+      "points_per_foot": 54,
+      "sheet": "A-401",
+      "x": 326,
+      "y": 959
+    },
+    {
+      "name": "TRIM DETAIL",
+      "number": "5",
+      "page": 18,
+      "points_per_foot": 54,
+      "sheet": "A-401",
+      "x": 938,
+      "y": 959
+    },
+    {
+      "name": "SILL DETAIL",
+      "number": "8",
+      "page": 18,
+      "points_per_foot": 54,
+      "sheet": "A-401",
+      "x": 1550,
+      "y": 959
+    },
+    {
+      "name": "PROJECT # T2612-01",
+      "number": "6274",
+      "page": 18,
+      "points_per_foot": 54,
+      "sheet": "A-401",
+      "x": 2451,
+      "y": 1152
+    },
+    {
+      "name": "LOW EAVE DETAIL",
+      "number": "4",
+      "page": 19,
+      "points_per_foot": 54,
+      "sheet": "A-402",
+      "x": 326,
+      "y": 310
+    },
+    {
+      "name": "LOW EAVE DETAIL",
+      "number": "4",
+      "page": 19,
+      "points_per_foot": 54,
+      "sheet": "A-402",
+      "x": 938,
+      "y": 310
+    },
+    {
+      "name": "LOW EAVE DETAIL",
+      "number": "4",
+      "page": 19,
+      "points_per_foot": 54,
+      "sheet": "A-402",
+      "x": 1550,
+      "y": 310
+    },
+    {
+      "name": "HEAD DETAIL",
+      "number": "5",
+      "page": 19,
+      "points_per_foot": 54,
+      "sheet": "A-402",
+      "x": 326,
+      "y": 600
+    },
+    {
+      "name": "HEAD DETAIL",
+      "number": "6",
+      "page": 19,
+      "points_per_foot": 54,
+      "sheet": "A-402",
+      "x": 938,
+      "y": 600
+    },
+    {
+      "name": "HEAD DETAIL",
+      "number": "8",
+      "page": 19,
+      "points_per_foot": 54,
+      "sheet": "A-402",
+      "x": 1550,
+      "y": 600
+    },
+    {
+      "name": "JAMB DETAIL",
+      "number": "6",
+      "page": 19,
+      "points_per_foot": 54,
+      "sheet": "A-402",
+      "x": 326,
+      "y": 683
+    },
+    {
+      "name": "SILL DETAIL",
+      "number": "7",
+      "page": 19,
+      "points_per_foot": 54,
+      "sheet": "A-402",
+      "x": 326,
+      "y": 785
+    },
+    {
+      "name": "JAMB DETAIL",
+      "number": "7",
+      "page": 19,
+      "points_per_foot": 54,
+      "sheet": "A-402",
+      "x": 938,
+      "y": 792
+    },
+    {
+      "name": "JAMB DETAIL",
+      "number": "9",
+      "page": 19,
+      "points_per_foot": 54,
+      "sheet": "A-402",
+      "x": 1550,
+      "y": 792
+    },
+    {
+      "name": "TRIM DETAIL",
+      "number": "5",
+      "page": 19,
+      "points_per_foot": 54,
+      "sheet": "A-402",
+      "x": 326,
+      "y": 959
+    },
+    {
+      "name": "SILL DETAIL",
+      "number": "8",
+      "page": 19,
+      "points_per_foot": 54,
+      "sheet": "A-402",
+      "x": 938,
+      "y": 959
+    },
+    {
+      "name": "SILL DETAIL",
+      "number": "8",
+      "page": 19,
+      "points_per_foot": 54,
+      "sheet": "A-402",
+      "x": 1550,
+      "y": 959
+    },
+    {
+      "name": "PROJECT # T2612-01",
+      "number": "6274",
+      "page": 19,
+      "points_per_foot": 108,
+      "sheet": "A-402",
+      "x": 2451,
+      "y": 1152
+    },
+    {
+      "name": "PROJECT # T2612-01",
+      "number": "6274",
+      "page": 20,
+      "points_per_foot": 54,
+      "sheet": "A-403",
+      "x": 2451,
+      "y": 1152
+    }
+  ],
+  "set": {
+    "label": "missouri_oa_fmdc - _T2612-01%20Final%20Bid%20Plans.pdf",
+    "page_count": 34,
+    "rows_total": 51,
+    "sha16": "e75d52a7a714c978",
+    "source_url": "https://oa.mo.gov/sites/default/files/bid-opportunities/_T2612-01%20Final%20Bid%20Plans.pdf",
+    "tier": "agreed"
+  },
+  "sheets": [
+    {
+      "height": 1728,
+      "page": 18,
+      "points_per_foot": [
+        54,
+        108
+      ],
+      "scales": [
+        "3/4\" = 1'-0\"",
+        "3/4\" = 1'-0\"",
+        "3/4\" = 1'-0\"",
+        "1 1/2\" = 1'-0\"",
+        "1 1/2\" = 1'-0\"",
+        "1 1/2\" = 1'-0\"",
+        "1 1/2\" = 1'-0\"",
+        "1 1/2\" = 1'-0\"",
+        "3/4\" = 1'-0\""
+      ],
+      "sheet": "A-401",
+      "title": "PLAN SECTION PLAN SECTION",
+      "width": 2592
+    },
+    {
+      "height": 1728,
+      "page": 19,
+      "points_per_foot": [
+        54,
+        108
+      ],
+      "scales": [
+        "3/4\" = 1'-0\"",
+        "3/4\" = 1'-0\"",
+        "3/4\" = 1'-0\"",
+        "1 1/2\" = 1'-0\"",
+        "1 1/2\" = 1'-0\"",
+        "1 1/2\" = 1'-0\"",
+        "1 1/2\" = 1'-0\"",
+        "1 1/2\" = 1'-0\"",
+        "1 1/2\" = 1'-0\""
+      ],
+      "sheet": "A-402",
+      "title": "PLAN SECTION JAMB",
+      "width": 2592
+    },
+    {
+      "height": 1728,
+      "page": 20,
+      "points_per_foot": [
+        54,
+        108
+      ],
+      "scales": [
+        "3/4\" = 1'-0\"",
+        "3/4\" = 1'-0\"",
+        "3/4\" = 1'-0\"",
+        "3/4\" = 1'-0\"",
+        "1 1/2\" = 1'-0\"",
+        "1 1/2\" = 1'-0\"",
+        "1 1/2\" = 1'-0\""
+      ],
+      "sheet": "A-403",
+      "title": "PLAN SECTION",
+      "width": 2592
+    }
+  ],
+  "summary": {
+    "marks_placed": 0,
+    "marks_total": 14,
+    "placed_rate": 0,
+    "rooms_total": 24,
+    "sheets_total": 3,
+    "sheets_with_scale": 3,
+    "unplaced": [
+      {
+        "mark": "101",
+        "page": 23,
+        "reason": "mark 101 (schedule p.23) not tagged on any plan"
+      },
+      {
+        "mark": "102",
+        "page": 23,
+        "reason": "mark 102 (schedule p.23) not tagged on any plan"
+      },
+      {
+        "mark": "103A",
+        "page": 23,
+        "reason": "mark 103A (schedule p.23) not tagged on any plan"
+      },
+      {
+        "mark": "103B",
+        "page": 23,
+        "reason": "mark 103B (schedule p.23) not tagged on any plan"
+      },
+      {
+        "mark": "103C",
+        "page": 23,
+        "reason": "mark 103C (schedule p.23) not tagged on any plan"
+      },
+      {
+        "mark": "104",
+        "page": 23,
+        "reason": "mark 104 (schedule p.23) not tagged on any plan"
+      },
+      {
+        "mark": "105A",
+        "page": 23,
+        "reason": "mark 105A (schedule p.23) not tagged on any plan"
+      },
+      {
+        "mark": "105B",
+        "page": 23,
+        "reason": "mark 105B (schedule p.23) not tagged on any plan"
+      },
+      {
+        "mark": "105C",
+        "page": 23,
+        "reason": "mark 105C (schedule p.23) not tagged on any plan"
+      },
+      {
+        "mark": "106A",
+        "page": 23,
+        "reason": "mark 106A (schedule p.23) not tagged on any plan"
+      },
+      {
+        "mark": "106B",
+        "page": 23,
+        "reason": "mark 106B (schedule p.23) not tagged on any plan"
+      },
+      {
+        "mark": "107A",
+        "page": 23,
+        "reason": "mark 107A (schedule p.23) not tagged on any plan"
+      },
+      {
+        "mark": "107B",
+        "page": 23,
+        "reason": "mark 107B (schedule p.23) not tagged on any plan"
+      },
+      {
+        "mark": "107C",
+        "page": 23,
+        "reason": "mark 107C (schedule p.23) not tagged on any plan"
+      }
+    ]
+  },
+  "tags": []
+}

@@ -1,0 +1,282 @@
+{
+  "rooms": [
+    {
+      "name": "BOBRICK",
+      "number": "B-6861",
+      "page": 4,
+      "points_per_foot": 27,
+      "sheet": "A-101",
+      "x": 1806,
+      "y": 241
+    },
+    {
+      "name": "NUMBER",
+      "number": "A-7070",
+      "page": 4,
+      "points_per_foot": 27,
+      "sheet": "A-101",
+      "x": 2443,
+      "y": 251
+    },
+    {
+      "name": "BOBRICK",
+      "number": "B-270",
+      "page": 4,
+      "points_per_foot": 27,
+      "sheet": "A-101",
+      "x": 1804,
+      "y": 430
+    },
+    {
+      "name": "BOBRICK",
+      "number": "B-5193",
+      "page": 4,
+      "points_per_foot": 27,
+      "sheet": "A-101",
+      "x": 1806,
+      "y": 461
+    },
+    {
+      "name": "BOBRICK",
+      "number": "B-6107",
+      "page": 4,
+      "points_per_foot": 27,
+      "sheet": "A-101",
+      "x": 1806,
+      "y": 570
+    },
+    {
+      "name": "BOBRICK",
+      "number": "B-549",
+      "page": 4,
+      "points_per_foot": 27,
+      "sheet": "A-101",
+      "x": 1804,
+      "y": 633
+    },
+    {
+      "name": "BOBRICK",
+      "number": "B-7128",
+      "page": 4,
+      "points_per_foot": 27,
+      "sheet": "A-101",
+      "x": 1806,
+      "y": 664
+    },
+    {
+      "name": "HEIGHT",
+      "number": "58",
+      "page": 4,
+      "points_per_foot": 27,
+      "sheet": "A-101",
+      "x": 1815,
+      "y": 1102
+    },
+    {
+      "name": "6\" OR 3",
+      "number": "12",
+      "page": 4,
+      "points_per_foot": 27,
+      "sheet": "A-101",
+      "x": 1833,
+      "y": 1172
+    },
+    {
+      "name": "\" STEEL STUDS @ 16\" O.C. \" CEMENT BOARD SHOWER",
+      "number": "58",
+      "page": 4,
+      "points_per_foot": 27,
+      "sheet": "A-101",
+      "x": 1857,
+      "y": 1184
+    },
+    {
+      "name": "STORAGE LOCKER",
+      "number": "102",
+      "page": 4,
+      "points_per_foot": 27,
+      "sheet": "A-101",
+      "x": 326,
+      "y": 1225
+    },
+    {
+      "name": "SHOWER",
+      "number": "106",
+      "page": 4,
+      "points_per_foot": 27,
+      "sheet": "A-101",
+      "x": 823,
+      "y": 1369
+    },
+    {
+      "name": "STALLS",
+      "number": "104",
+      "page": 4,
+      "points_per_foot": 27,
+      "sheet": "A-101",
+      "x": 586,
+      "y": 1416
+    },
+    {
+      "name": "SAUNA",
+      "number": "107",
+      "page": 4,
+      "points_per_foot": 27,
+      "sheet": "A-101",
+      "x": 1051,
+      "y": 1442
+    },
+    {
+      "name": "LAVATORY",
+      "number": "103",
+      "page": 4,
+      "points_per_foot": 27,
+      "sheet": "A-101",
+      "x": 345,
+      "y": 1464
+    },
+    {
+      "name": "LAVATORY",
+      "number": "1",
+      "page": 4,
+      "points_per_foot": 27,
+      "sheet": "A-101",
+      "x": 374,
+      "y": 1465
+    },
+    {
+      "name": "CHANGING",
+      "number": "105",
+      "page": 4,
+      "points_per_foot": 27,
+      "sheet": "A-101",
+      "x": 862,
+      "y": 1466
+    }
+  ],
+  "set": {
+    "label": "missouri_oa_fmdc - R2402-01%20Bid%20Drawings%20Compiled.pdf",
+    "page_count": 17,
+    "rows_total": 2,
+    "sha16": "8c336c43fa7f9668",
+    "source_url": "https://oa.mo.gov/sites/default/files/bid-opportunities/R2402-01%20Bid%20Drawings%20Compiled.pdf",
+    "tier": "oracle-checked"
+  },
+  "sheets": [
+    {
+      "height": 1728,
+      "page": 4,
+      "points_per_foot": [
+        27
+      ],
+      "scales": [
+        "SCALE: 3/8\" = 1'-0\"",
+        "SCALE: 3/8\" = 1'-0\""
+      ],
+      "sheet": "A-101",
+      "title": "FLOOR PLAN NOTES FLOOR PLAN DIMENSIONS",
+      "width": 2592
+    }
+  ],
+  "summary": {
+    "marks_placed": 2,
+    "marks_total": 2,
+    "placed_rate": 1,
+    "rooms_total": 17,
+    "sheets_total": 1,
+    "sheets_with_scale": 1,
+    "unplaced": []
+  },
+  "tags": [
+    {
+      "also_on": [],
+      "door_pages": [
+        10
+      ],
+      "door_type": "D1",
+      "fire_rating": "---",
+      "frame_type": "F1",
+      "h": 14.14476,
+      "hardware_group": "1",
+      "height_inches": 84,
+      "location": null,
+      "mark": "101",
+      "matched_by": "exact",
+      "material": null,
+      "page": 4,
+      "pair": false,
+      "points_per_foot": 27,
+      "room": "106",
+      "room_by": "nearest_label",
+      "room_name": "SHOWER",
+      "schedule_rows": [
+        {
+          "door_type": "D1",
+          "fire_rating": "---",
+          "frame_type": "F1",
+          "hardware_group": "1",
+          "height_inches": 84,
+          "location": null,
+          "mark": "101",
+          "material": null,
+          "page": 10,
+          "pair": false,
+          "size": "3'-0\" x 7'-0\"",
+          "width_inches": 36,
+          "y": 420
+        }
+      ],
+      "sheet": "A-101",
+      "size": "3'-0\" x 7'-0\"",
+      "unsure": true,
+      "width_inches": 36,
+      "x": 973,
+      "y": 1168
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        10
+      ],
+      "door_type": "D2",
+      "fire_rating": null,
+      "frame_type": "F2",
+      "h": 10.05852,
+      "hardware_group": null,
+      "height_inches": 80,
+      "location": null,
+      "mark": "102",
+      "matched_by": "exact",
+      "material": null,
+      "page": 4,
+      "pair": false,
+      "points_per_foot": 27,
+      "room": "105",
+      "room_by": "nearest_label",
+      "room_name": "CHANGING",
+      "schedule_rows": [
+        {
+          "door_type": "D2",
+          "fire_rating": null,
+          "frame_type": "F2",
+          "hardware_group": null,
+          "height_inches": 80,
+          "location": null,
+          "mark": "102",
+          "material": null,
+          "page": 10,
+          "pair": false,
+          "size": "3'-0\" x 6'-8\"",
+          "width_inches": 36,
+          "y": 439
+        }
+      ],
+      "sheet": "A-101",
+      "size": "3'-0\" x 6'-8\"",
+      "unsure": true,
+      "width_inches": 36,
+      "x": 951,
+      "y": 1443
+    }
+  ]
+}

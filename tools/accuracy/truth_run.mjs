@@ -33,11 +33,8 @@ import { readFileSync, writeFileSync, existsSync, readdirSync, mkdirSync, statSy
 import { createHash } from "node:crypto";
 import { dirname, join, resolve, relative, basename } from "node:path";
 import { fileURLToPath } from "node:url";
-import { openPdf, pageItems, pageRules } from "./truth/pdf.mjs";
-import { readA, readAFromLines } from "./truth/reader_a.mjs";
-import { doorPageCandidate } from "./truth/page_candidates.mjs";
-import { ocrPage } from "./truth/ocr.mjs";
-import { readDoorsB, readHardwareB } from "./truth/reader_b.mjs";
+import { openPdf } from "./truth/pdf.mjs";
+import { loadPages, readSchedules } from "./truth/load_set.mjs";
 import { alignDoors, alignGroups, mergeGroups, summarize, disagreements, scoreDoorsVs, scoreGroupsVs, calibrateFields, N } from "./truth/agree.mjs";
 import { oracleMarksOnPlan, oracleSetsExist, oracleSetDoorLists, oracleTypesInLegend, oracleSizesAndMarks, ORACLES_FOR } from "./truth/oracles.mjs";
 
@@ -124,13 +121,6 @@ if (existsSync(triageFile)) {
     for (const x of list) if (x && (x.sha16 || x.sha256)) triage.set(String(x.sha16 || x.sha256).slice(0, 16), x.class || x.triage_class || x.triage);
   } catch (e) { console.error("triage.json not readable:", e.message); }
 }
-
-// ---------------------------------------------------------------- page finding
-// g051: an electrical panel schedule sheet (a motor schedule, panels by circuit) names a door now and then
-// ("OH DOOR OPERATOR") and is not a door schedule page.
-const DOOR_PAGE = doorPageCandidate;
-const HW_PAGE = (t) => /\b(HARDWARE\s+(GROUP|SET|HEADING)|HDWE?\.?\s*(GROUP|SET)|HW\s*SET|HEADING)\s*(NO\.?|NUMBER|#)?\s*[:.#]?\s*[A-Z]{0,2}\d/i.test(t) || /^\s*SET\s*(NO\.?|#|:)\s*[A-Z]{0,2}\d/im.test(t);
-
 async function analyze(file) {
   const bytes = readFileSync(file);
   const sha = createHash("sha256").update(bytes).digest("hex");
@@ -143,67 +133,11 @@ async function analyze(file) {
   try { pdf = await openPdf(bytes); } catch (e) { return { ...rec, tier: "unread", error: "pdf.js could not open it: " + String(e.message).slice(0, 160) }; }
   rec.page_count = pdf.numPages;
   if (pdf.numPages > MAX_PAGES) { return { ...rec, tier: "unread", error: "more than " + MAX_PAGES + " pages; rerun with --max-pages" }; }
-  const pages = [];
-  let words = 0;
-  for (let p = 1; p <= pdf.numPages; p++) { const it = await pageItems(pdf, p); pages.push(it); words += it.items.length; }
-  const textOf = (p) => pages[p - 1].items.map((i) => i.str).join("\n");
-  const textPages = pages.filter((p) => p.items.length >= 15).length;
+  const pages = await loadPages(pdf);
+  const { textPages, doorPages, hwPages, doorsA, doorsB, tableBoxes, hwA, hwB, readerNotes, ocr } =
+    await readSchedules(pdf, pages, { file, ocrMax: OCR_MAX, ocrDpi: OCR_DPI });
   rec.text_layer = { pages_with_text: textPages, pages: pdf.numPages };
-  const doorPages = [], hwPages = [];
-  for (let p = 1; p <= pdf.numPages; p++) { if (pages[p - 1].items.length < 15) continue; const t = textOf(p); if (DOOR_PAGE(t)) doorPages.push(p); if (HW_PAGE(t)) hwPages.push(p); }
-
-  // Both readers on every candidate page.
-  const doorsA = [], doorsB = [], tableBoxes = {};
-  const hwA = [], hwB = [];
-  const readerNotes = [];
-  // No text layer at all (a scan, a Print-to-PDF bitmap): OCR the pages once, and give both readers the
-  // same words; reader A reads them as lines through the production readers, reader B with the rules
-  // found in the rendered image.
-  if (textPages === 0 && pdf.numPages <= OCR_MAX) {
-    rec.ocr = { requested_dpi: OCR_DPI, pipeline: "production ocrRasterPageLines; Poppler renderer; shipped Tesseract", pages: [] };
-    for (let p = 1; p <= pdf.numPages; p++) {
-      let o;
-      try { o = await ocrPage(file, p, { dpi: OCR_DPI }); } catch (e) { readerNotes.push("OCR p." + p + ": " + String(e.message).slice(0, 120)); continue; }
-      const text = o.items.map((i) => i.str).join("\n"), size = { width: o.width, height: o.height };
-      rec.ocr.pages.push({ page: p, dpi: o.dpi, words: o.words.length, rotation: o.rotation, skew_deg: o.skew_deg, rules: { h: o.rules.h.length, v: o.rules.v.length }, ms: o.ms });
-      if (DOOR_PAGE(text)) {
-        doorPages.push(p);
-        const a = await readAFromLines(o.lines, size, "door_schedule", o.words.length);
-        for (const d of a.doors || []) doorsA.push({ page: p, ...d });
-        const b = readDoorsB(o.items, o.rules, size);
-        if (b.tables.length) tableBoxes[p] = b.tables.map((t) => t.bbox);
-        for (const d of b.doors) doorsB.push({ page: p, ...d });
-      }
-      if (HW_PAGE(text)) {
-        hwPages.push(p);
-        const a = await readAFromLines(o.lines, size, "hardware_schedule", o.words.length);
-        hwA.push({ page: p, groups: a.groups || [] });
-        hwB.push({ page: p, groups: readHardwareB(o.items, o.rules, size).groups });
-      }
-    }
-  }
-  const ocrDone = !!rec.ocr;
-  for (const p of ocrDone ? [] : doorPages) {
-    const a = await readA(pdf, p, "door_schedule");
-    if (a.error) readerNotes.push("A p." + p + ": " + a.error);
-    for (const d of a.doors || []) doorsA.push({ page: p, ...d });
-    let rules = null;
-    try { rules = await pageRules(pdf, p); } catch (e) { readerNotes.push("B p." + p + " rules: " + String(e.message).slice(0, 100)); }
-    const b = rules ? readDoorsB(pages[p - 1].items, rules, pages[p - 1]) : { doors: [], tables: [] };
-    if (rules && rules.skipped) readerNotes.push("B p." + p + ": " + rules.skipped + " (not read)");
-    if (b.tables.length) tableBoxes[p] = b.tables.map((t) => t.bbox);
-    for (const d of b.doors) doorsB.push({ page: p, ...d });
-  }
-  for (const p of ocrDone ? [] : hwPages) {
-    const a = await readA(pdf, p, "hardware_schedule");
-    if (a.error) readerNotes.push("A p." + p + ": " + a.error);
-    hwA.push({ page: p, groups: a.groups || [] });
-    let rules = null;
-    const big = Math.max(pages[p - 1].width, pages[p - 1].height) > 1100;
-    if (!big) { try { rules = await pageRules(pdf, p); } catch (_) { rules = null; } }
-    const b = readHardwareB(pages[p - 1].items, rules, pages[p - 1]);
-    hwB.push({ page: p, groups: b.groups });
-  }
+  if (ocr) rec.ocr = ocr;
   const groupsA = mergeGroups(hwA.filter((x) => x.groups.length)), groupsB = mergeGroups(hwB.filter((x) => x.groups.length));
   // A schedule page or a hardware page is one where either reader read rows.
   const schedPages = [...new Set([...doorsA, ...doorsB].map((d) => d.page))].sort((a, b) => a - b);

@@ -1,0 +1,172 @@
+{
+  "rooms": [
+    {
+      "name": "TPD GBUNISEX RR",
+      "number": "102",
+      "page": 9,
+      "points_per_foot": 18,
+      "sheet": "A-100",
+      "x": 1611,
+      "y": 576
+    },
+    {
+      "name": "STORAGE",
+      "number": "101",
+      "page": 9,
+      "points_per_foot": 108,
+      "sheet": "A-100",
+      "x": 1476,
+      "y": 600
+    },
+    {
+      "name": "PAVILION",
+      "number": "103",
+      "page": 9,
+      "points_per_foot": 18,
+      "sheet": "A-100",
+      "x": 1554,
+      "y": 1086
+    }
+  ],
+  "set": {
+    "label": "missouri_oa_fmdc - _U2610-01%20Final%20Bid%20Plans.pdf",
+    "page_count": 18,
+    "rows_total": 3,
+    "sha16": "2dcaf854a34b17e8",
+    "source_url": "https://oa.mo.gov/sites/default/files/bid-opportunities/_U2610-01%20Final%20Bid%20Plans.pdf",
+    "tier": "oracle-checked"
+  },
+  "sheets": [
+    {
+      "height": 1728.2399,
+      "page": 9,
+      "points_per_foot": [
+        18,
+        27,
+        72,
+        108,
+        216
+      ],
+      "scales": [
+        "SCALE: 1 1/2\" = 1'-0\"",
+        "SCALE: 3/8\" = 1'-0\"",
+        "SCALE: 3/8\" = 1'-0\"",
+        "SCALE: 3\" = 1'-0\"",
+        "SCALE: 1 1/2\" = 1'-0\"",
+        "SCALE: 1\" = 1'-0\"",
+        "SCALE: 3/8\" = 1'-0\"",
+        "SCALE: 1/4\" = 1'-0\"",
+        "SCALE: 1 1/2\" = 1'-0\""
+      ],
+      "sheet": "A-100",
+      "title": "FLOOR PLAN",
+      "width": 2587.6797
+    }
+  ],
+  "summary": {
+    "marks_placed": 2,
+    "marks_total": 3,
+    "placed_rate": 0.6666666666666666,
+    "rooms_total": 3,
+    "sheets_total": 1,
+    "sheets_with_scale": 1,
+    "unplaced": [
+      {
+        "mark": "2X",
+        "page": 12,
+        "reason": "mark 2X (schedule p.12) not tagged on any plan"
+      }
+    ]
+  },
+  "tags": [
+    {
+      "also_on": [],
+      "door_pages": [
+        12
+      ],
+      "door_type": "CONSTRUCTION. CONTACT ARCHITECT FOR RESOLUTION OF ANY WALL TYPES NOT LISTED PLANS WHETHER DESCRIBED BY THE WALL SECTIONS HEREIN SHALL BE PART OF THE",
+      "fire_rating": "-",
+      "frame_type": null,
+      "h": 7.508000060064,
+      "hardware_group": null,
+      "height_inches": null,
+      "location": null,
+      "mark": "101",
+      "matched_by": "exact",
+      "material": null,
+      "page": 9,
+      "pair": false,
+      "points_per_foot": 27,
+      "room": null,
+      "room_by": null,
+      "room_name": null,
+      "schedule_rows": [
+        {
+          "door_type": "CONSTRUCTION. CONTACT ARCHITECT FOR RESOLUTION OF ANY WALL TYPES NOT LISTED PLANS WHETHER DESCRIBED BY THE WALL SECTIONS HEREIN SHALL BE PART OF THE",
+          "fire_rating": "-",
+          "frame_type": null,
+          "hardware_group": null,
+          "height_inches": null,
+          "location": null,
+          "mark": "101",
+          "material": null,
+          "page": 12,
+          "pair": false,
+          "size": null,
+          "width_inches": null,
+          "y": 194
+        }
+      ],
+      "sheet": "A-100",
+      "size": null,
+      "width_inches": null,
+      "x": 2083,
+      "y": 126
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        12
+      ],
+      "door_type": "PRIOR TO BIDDING. 2. THESE WALL SECTIONS INDICATE PRIMARY WALL TYPE. OVERLAID VENEERS, WAINSCOT,",
+      "fire_rating": "- PROVIDE WALL MOUNT ADA ACTUATOR",
+      "frame_type": null,
+      "h": 7.508000060064,
+      "hardware_group": null,
+      "height_inches": null,
+      "location": null,
+      "mark": "102",
+      "matched_by": "exact",
+      "material": null,
+      "page": 9,
+      "pair": false,
+      "points_per_foot": 18,
+      "room": "102",
+      "room_by": "nearest_label",
+      "room_name": "TPD GBUNISEX RR",
+      "schedule_rows": [
+        {
+          "door_type": "PRIOR TO BIDDING. 2. THESE WALL SECTIONS INDICATE PRIMARY WALL TYPE. OVERLAID VENEERS, WAINSCOT,",
+          "fire_rating": "- PROVIDE WALL MOUNT ADA ACTUATOR",
+          "frame_type": null,
+          "hardware_group": null,
+          "height_inches": null,
+          "location": null,
+          "mark": "102",
+          "material": null,
+          "page": 12,
+          "pair": false,
+          "size": null,
+          "width_inches": null,
+          "y": 205
+        }
+      ],
+      "sheet": "A-100",
+      "size": null,
+      "unsure": true,
+      "width_inches": null,
+      "x": 1713,
+      "y": 542
+    }
+  ]
+}

@@ -1,0 +1,2359 @@
+{
+  "rooms": [
+    {
+      "name": "DIVISION 03",
+      "number": "3.2",
+      "page": 47,
+      "points_per_foot": 13.5,
+      "sheet": "A-109",
+      "x": 1466,
+      "y": 130
+    },
+    {
+      "name": "DIVISION 04",
+      "number": "4.1",
+      "page": 47,
+      "points_per_foot": 13.5,
+      "sheet": "A-109",
+      "x": 1466,
+      "y": 156
+    },
+    {
+      "name": "DIVISION 06",
+      "number": "6.5",
+      "page": 47,
+      "points_per_foot": 13.5,
+      "sheet": "A-109",
+      "x": 1466,
+      "y": 183
+    },
+    {
+      "name": "DIVISION 07",
+      "number": "7.2",
+      "page": 47,
+      "points_per_foot": 13.5,
+      "sheet": "A-109",
+      "x": 1466,
+      "y": 221
+    },
+    {
+      "name": "DIVISION 08",
+      "number": "8.5",
+      "page": 47,
+      "points_per_foot": 13.5,
+      "sheet": "A-109",
+      "x": 1466,
+      "y": 247
+    },
+    {
+      "name": "CRAWL SPACE BELOW BEDROOMS",
+      "number": "7.2",
+      "page": 47,
+      "points_per_foot": 13.5,
+      "sheet": "A-109",
+      "x": 1666,
+      "y": 1037
+    },
+    {
+      "name": "CRAWL SPACE BELOW LIVING/DINING",
+      "number": "7.2",
+      "page": 47,
+      "points_per_foot": 13.5,
+      "sheet": "A-109",
+      "x": 948,
+      "y": 1139
+    },
+    {
+      "name": "BASEMENT MECH RM",
+      "number": "200",
+      "page": 47,
+      "points_per_foot": 13.5,
+      "sheet": "A-109",
+      "x": 1021,
+      "y": 1340
+    },
+    {
+      "name": "STORAGE (UNCONDITIONED)",
+      "number": "200A",
+      "page": 47,
+      "points_per_foot": 13.5,
+      "sheet": "A-109",
+      "x": 1214,
+      "y": 1441
+    },
+    {
+      "name": "DIVISION 11",
+      "number": "EQ-01",
+      "page": 48,
+      "points_per_foot": 108,
+      "sheet": "A-110",
+      "x": 1042,
+      "y": 110
+    },
+    {
+      "name": "EQUIPMENT LIST",
+      "number": "EQ-02",
+      "page": 48,
+      "points_per_foot": 108,
+      "sheet": "A-110",
+      "x": 1042,
+      "y": 110
+    },
+    {
+      "name": "DIVISION 03",
+      "number": "3.3",
+      "page": 48,
+      "points_per_foot": 108,
+      "sheet": "A-110",
+      "x": 1466,
+      "y": 130
+    },
+    {
+      "name": "DIVISION 04",
+      "number": "4.2",
+      "page": 48,
+      "points_per_foot": 108,
+      "sheet": "A-110",
+      "x": 1466,
+      "y": 179
+    },
+    {
+      "name": "DIVISION 06",
+      "number": "6.1",
+      "page": 48,
+      "points_per_foot": 108,
+      "sheet": "A-110",
+      "x": 1466,
+      "y": 228
+    },
+    {
+      "name": "DIVISION 08",
+      "number": "8.1",
+      "page": 48,
+      "points_per_foot": 108,
+      "sheet": "A-110",
+      "x": 1466,
+      "y": 362
+    },
+    {
+      "name": "DIVISION 09",
+      "number": "9.3",
+      "page": 48,
+      "points_per_foot": 108,
+      "sheet": "A-110",
+      "x": 1466,
+      "y": 589
+    },
+    {
+      "name": "KITCHEN",
+      "number": "202",
+      "page": 48,
+      "points_per_foot": 13.5,
+      "sheet": "A-110",
+      "x": 467,
+      "y": 949
+    },
+    {
+      "name": "PORCH",
+      "number": "201",
+      "page": 48,
+      "points_per_foot": 13.5,
+      "sheet": "A-110",
+      "x": 250,
+      "y": 968
+    },
+    {
+      "name": "BEDROOM",
+      "number": "214",
+      "page": 48,
+      "points_per_foot": 13.5,
+      "sheet": "A-110",
+      "x": 1809,
+      "y": 970
+    },
+    {
+      "name": "BEDROOM",
+      "number": "212",
+      "page": 48,
+      "points_per_foot": 13.5,
+      "sheet": "A-110",
+      "x": 1629,
+      "y": 972
+    },
+    {
+      "name": "RESTROOM",
+      "number": "2076.7",
+      "page": 48,
+      "points_per_foot": 13.5,
+      "sheet": "A-110",
+      "x": 1165,
+      "y": 989
+    },
+    {
+      "name": "ACCESSIBLE BATH",
+      "number": "211",
+      "page": 48,
+      "points_per_foot": 13.5,
+      "sheet": "A-110",
+      "x": 1258,
+      "y": 990
+    },
+    {
+      "name": "ACCESSIBLE BEDROOM",
+      "number": "210",
+      "page": 48,
+      "points_per_foot": 13.5,
+      "sheet": "A-110",
+      "x": 1380,
+      "y": 990
+    },
+    {
+      "name": "BATH",
+      "number": "217",
+      "page": 48,
+      "points_per_foot": 13.5,
+      "sheet": "A-110",
+      "x": 2043,
+      "y": 1033
+    },
+    {
+      "name": "BATH",
+      "number": "215",
+      "page": 48,
+      "points_per_foot": 13.5,
+      "sheet": "A-110",
+      "x": 1923,
+      "y": 1036
+    },
+    {
+      "name": "DINING ROOM",
+      "number": "203",
+      "page": 48,
+      "points_per_foot": 13.5,
+      "sheet": "A-110",
+      "x": 757,
+      "y": 1054
+    },
+    {
+      "name": "JAN",
+      "number": "208",
+      "page": 48,
+      "points_per_foot": 13.5,
+      "sheet": "A-110",
+      "x": 1107,
+      "y": 1079
+    },
+    {
+      "name": "CLOSET",
+      "number": "218",
+      "page": 48,
+      "points_per_foot": 13.5,
+      "sheet": "A-110",
+      "x": 2026,
+      "y": 1108
+    },
+    {
+      "name": "STORAGE",
+      "number": "202A",
+      "page": 48,
+      "points_per_foot": 13.5,
+      "sheet": "A-110",
+      "x": 358,
+      "y": 1129
+    },
+    {
+      "name": "CORRIDOR (1/2 HR)",
+      "number": "209",
+      "page": 48,
+      "points_per_foot": 13.5,
+      "sheet": "A-110",
+      "x": 1737,
+      "y": 1131
+    },
+    {
+      "name": "DISHWASHING",
+      "number": "202B",
+      "page": 48,
+      "points_per_foot": 13.5,
+      "sheet": "A-110",
+      "x": 473,
+      "y": 1158
+    },
+    {
+      "name": "GREAT ROOM",
+      "number": "204",
+      "page": 48,
+      "points_per_foot": 13.5,
+      "sheet": "A-110",
+      "x": 1077,
+      "y": 1205
+    },
+    {
+      "name": "BEDROOM",
+      "number": "221",
+      "page": 48,
+      "points_per_foot": 13.5,
+      "sheet": "A-110",
+      "x": 1899,
+      "y": 1231
+    },
+    {
+      "name": "BEDROOM",
+      "number": "219",
+      "page": 48,
+      "points_per_foot": 13.5,
+      "sheet": "A-110",
+      "x": 2160,
+      "y": 1231
+    },
+    {
+      "name": "BEDROOM",
+      "number": "223",
+      "page": 48,
+      "points_per_foot": 13.5,
+      "sheet": "A-110",
+      "x": 1742,
+      "y": 1232
+    },
+    {
+      "name": "BEDROOM",
+      "number": "225",
+      "page": 48,
+      "points_per_foot": 13.5,
+      "sheet": "A-110",
+      "x": 1489,
+      "y": 1234
+    },
+    {
+      "name": "BATH",
+      "number": "222A",
+      "page": 48,
+      "points_per_foot": 13.5,
+      "sheet": "A-110",
+      "x": 1623,
+      "y": 1254
+    },
+    {
+      "name": "BATH",
+      "number": "220A",
+      "page": 48,
+      "points_per_foot": 13.5,
+      "sheet": "A-110",
+      "x": 2018,
+      "y": 1254
+    },
+    {
+      "name": "FRONT PORCH",
+      "number": "205",
+      "page": 48,
+      "points_per_foot": 13.5,
+      "sheet": "A-110",
+      "x": 1051,
+      "y": 1481
+    }
+  ],
+  "set": {
+    "label": "missouri_oa_fmdc - X2207-01%20Add%20%232%20Plans%20%26%20Specs.pdf",
+    "page_count": 60,
+    "rows_total": 84,
+    "sha16": "eefa018e007e581f",
+    "source_url": "https://oa.mo.gov/sites/default/files/bid-opportunities/X2207-01%20Add%20%232%20Plans%20%26%20Specs.pdf",
+    "tier": "agreed"
+  },
+  "sheets": [
+    {
+      "height": 1728,
+      "page": 47,
+      "points_per_foot": [
+        13.5
+      ],
+      "scales": [
+        "SCALE: 3/16\" = 1'-0\""
+      ],
+      "sheet": "A-109",
+      "title": "FLOOR PLANS - BASEMENT LODGE",
+      "width": 2592
+    },
+    {
+      "height": 1728,
+      "page": 48,
+      "points_per_foot": [
+        13.5,
+        108
+      ],
+      "scales": [
+        "SCALE: 1 1/2\" = 1'-0\"",
+        "SCALE: 1 1/2\" = 1'-0\"",
+        "SCALE: 1 1/2\" = 1'-0\"",
+        "SCALE: 1 1/2\" = 1'-0\"",
+        "SCALE: 3/16\" = 1'-0\""
+      ],
+      "sheet": "A-110",
+      "title": "FLOOR PLANS - FIRST FLOOR LODGE",
+      "width": 2592
+    }
+  ],
+  "summary": {
+    "marks_placed": 39,
+    "marks_total": 84,
+    "placed_rate": 0.4642857142857143,
+    "rooms_total": 39,
+    "sheets_total": 2,
+    "sheets_with_scale": 2,
+    "unplaced": [
+      {
+        "mark": "100-1",
+        "page": 59,
+        "reason": "mark 100-1 (schedule p.59) not tagged on any plan"
+      },
+      {
+        "mark": "100-2",
+        "page": 59,
+        "reason": "mark 100-2 (schedule p.59) not tagged on any plan"
+      },
+      {
+        "mark": "102-1",
+        "page": 59,
+        "reason": "mark 102-1 (schedule p.59) not tagged on any plan"
+      },
+      {
+        "mark": "103-1",
+        "page": 59,
+        "reason": "mark 103-1 (schedule p.59) not tagged on any plan"
+      },
+      {
+        "mark": "104-1",
+        "page": 59,
+        "reason": "mark 104-1 (schedule p.59) not tagged on any plan"
+      },
+      {
+        "mark": "105-1",
+        "page": 59,
+        "reason": "mark 105-1 (schedule p.59) not tagged on any plan"
+      },
+      {
+        "mark": "106-1",
+        "page": 59,
+        "reason": "mark 106-1 (schedule p.59) not tagged on any plan"
+      },
+      {
+        "mark": "107-1",
+        "page": 59,
+        "reason": "mark 107-1 (schedule p.59) not tagged on any plan"
+      },
+      {
+        "mark": "108-1",
+        "page": 59,
+        "reason": "mark 108-1 (schedule p.59) not tagged on any plan"
+      },
+      {
+        "mark": "109-1",
+        "page": 59,
+        "reason": "mark 109-1 (schedule p.59) not tagged on any plan"
+      },
+      {
+        "mark": "110-1",
+        "page": 59,
+        "reason": "mark 110-1 (schedule p.59) not tagged on any plan"
+      },
+      {
+        "mark": "111-1",
+        "page": 59,
+        "reason": "mark 111-1 (schedule p.59) not tagged on any plan"
+      },
+      {
+        "mark": "112-1",
+        "page": 59,
+        "reason": "mark 112-1 (schedule p.59) not tagged on any plan"
+      },
+      {
+        "mark": "300-1",
+        "page": 59,
+        "reason": "mark 300-1 (schedule p.59) not tagged on any plan"
+      },
+      {
+        "mark": "300-2",
+        "page": 59,
+        "reason": "mark 300-2 (schedule p.59) not tagged on any plan"
+      },
+      {
+        "mark": "301-1",
+        "page": 59,
+        "reason": "mark 301-1 (schedule p.59) not tagged on any plan"
+      },
+      {
+        "mark": "302-1",
+        "page": 59,
+        "reason": "mark 302-1 (schedule p.59) not tagged on any plan"
+      },
+      {
+        "mark": "303-1",
+        "page": 59,
+        "reason": "mark 303-1 (schedule p.59) not tagged on any plan"
+      },
+      {
+        "mark": "304-1",
+        "page": 59,
+        "reason": "mark 304-1 (schedule p.59) not tagged on any plan"
+      },
+      {
+        "mark": "305-1",
+        "page": 59,
+        "reason": "mark 305-1 (schedule p.59) not tagged on any plan"
+      },
+      {
+        "mark": "305-2",
+        "page": 59,
+        "reason": "mark 305-2 (schedule p.59) not tagged on any plan"
+      },
+      {
+        "mark": "400-1",
+        "page": 59,
+        "reason": "mark 400-1 (schedule p.59) not tagged on any plan"
+      },
+      {
+        "mark": "500-1",
+        "page": 59,
+        "reason": "mark 500-1 (schedule p.59) not tagged on any plan"
+      },
+      {
+        "mark": "500-2",
+        "page": 59,
+        "reason": "mark 500-2 (schedule p.59) not tagged on any plan"
+      },
+      {
+        "mark": "600-1",
+        "page": 59,
+        "reason": "mark 600-1 (schedule p.59) not tagged on any plan"
+      },
+      {
+        "mark": "600-2",
+        "page": 59,
+        "reason": "mark 600-2 (schedule p.59) not tagged on any plan"
+      },
+      {
+        "mark": "601-1",
+        "page": 59,
+        "reason": "mark 601-1 (schedule p.59) not tagged on any plan"
+      },
+      {
+        "mark": "603-1",
+        "page": 59,
+        "reason": "mark 603-1 (schedule p.59) not tagged on any plan"
+      },
+      {
+        "mark": "604-1",
+        "page": 59,
+        "reason": "mark 604-1 (schedule p.59) not tagged on any plan"
+      },
+      {
+        "mark": "605-1",
+        "page": 59,
+        "reason": "mark 605-1 (schedule p.59) not tagged on any plan"
+      },
+      {
+        "mark": "606-1",
+        "page": 59,
+        "reason": "mark 606-1 (schedule p.59) not tagged on any plan"
+      },
+      {
+        "mark": "606-2",
+        "page": 59,
+        "reason": "mark 606-2 (schedule p.59) not tagged on any plan"
+      },
+      {
+        "mark": "607-1",
+        "page": 59,
+        "reason": "mark 607-1 (schedule p.59) not tagged on any plan"
+      },
+      {
+        "mark": "607-2",
+        "page": 59,
+        "reason": "mark 607-2 (schedule p.59) not tagged on any plan"
+      },
+      {
+        "mark": "609-1",
+        "page": 59,
+        "reason": "mark 609-1 (schedule p.59) not tagged on any plan"
+      },
+      {
+        "mark": "610-1",
+        "page": 59,
+        "reason": "mark 610-1 (schedule p.59) not tagged on any plan"
+      },
+      {
+        "mark": "610-2",
+        "page": 59,
+        "reason": "mark 610-2 (schedule p.59) not tagged on any plan"
+      },
+      {
+        "mark": "612-1",
+        "page": 59,
+        "reason": "mark 612-1 (schedule p.59) not tagged on any plan"
+      },
+      {
+        "mark": "700-01",
+        "page": 59,
+        "reason": "mark 700-01 (schedule p.59) not tagged on any plan"
+      },
+      {
+        "mark": "701-01",
+        "page": 59,
+        "reason": "mark 701-01 (schedule p.59) not tagged on any plan"
+      },
+      {
+        "mark": "702-01",
+        "page": 59,
+        "reason": "mark 702-01 (schedule p.59) not tagged on any plan"
+      },
+      {
+        "mark": "703-01",
+        "page": 59,
+        "reason": "mark 703-01 (schedule p.59) not tagged on any plan"
+      },
+      {
+        "mark": "705-01",
+        "page": 59,
+        "reason": "mark 705-01 (schedule p.59) not tagged on any plan"
+      },
+      {
+        "mark": "706-01",
+        "page": 59,
+        "reason": "mark 706-01 (schedule p.59) not tagged on any plan"
+      },
+      {
+        "mark": "707-01",
+        "page": 59,
+        "reason": "mark 707-01 (schedule p.59) not tagged on any plan"
+      }
+    ]
+  },
+  "tags": [
+    {
+      "also_on": [],
+      "door_pages": [
+        59
+      ],
+      "door_type": null,
+      "fire_rating": null,
+      "frame_type": null,
+      "h": 9.603236158704,
+      "hardware_group": "30.0",
+      "height_inches": null,
+      "location": null,
+      "mark": "200-9",
+      "matched_by": "exact",
+      "material": "EXIST",
+      "page": 47,
+      "pair": false,
+      "points_per_foot": 13.5,
+      "room": "200",
+      "room_by": "tag_number",
+      "room_name": "BASEMENT MECH RM",
+      "schedule_rows": [
+        {
+          "door_type": null,
+          "fire_rating": null,
+          "frame_type": null,
+          "hardware_group": "30.0",
+          "height_inches": null,
+          "location": null,
+          "mark": "200-9",
+          "material": "EXIST",
+          "page": 59,
+          "pair": false,
+          "size": "2' - 5\" x 2' - 5\"",
+          "width_inches": 29,
+          "y": 430
+        }
+      ],
+      "sheet": "A-109",
+      "size": "2' - 5\" x 2' - 5\"",
+      "width_inches": 29,
+      "x": 2237,
+      "y": 1027
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        59
+      ],
+      "door_type": null,
+      "fire_rating": null,
+      "frame_type": null,
+      "h": 9.603236158704,
+      "hardware_group": "30.0",
+      "height_inches": null,
+      "location": null,
+      "mark": "200-7",
+      "matched_by": "exact",
+      "material": "EXIST",
+      "page": 47,
+      "pair": false,
+      "points_per_foot": 13.5,
+      "room": "200",
+      "room_by": "tag_number",
+      "room_name": "BASEMENT MECH RM",
+      "schedule_rows": [
+        {
+          "door_type": null,
+          "fire_rating": null,
+          "frame_type": null,
+          "hardware_group": "30.0",
+          "height_inches": null,
+          "location": null,
+          "mark": "200-7",
+          "material": "EXIST",
+          "page": 59,
+          "pair": false,
+          "size": "2' - 5\" x 2' - 5\"",
+          "width_inches": 29,
+          "y": 403
+        }
+      ],
+      "sheet": "A-109",
+      "size": "2' - 5\" x 2' - 5\"",
+      "width_inches": 29,
+      "x": 474,
+      "y": 1230
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        59
+      ],
+      "door_type": null,
+      "fire_rating": null,
+      "frame_type": null,
+      "h": 9.603236158704,
+      "hardware_group": "30.0",
+      "height_inches": null,
+      "location": null,
+      "mark": "200-8",
+      "matched_by": "exact",
+      "material": "EXIST",
+      "page": 47,
+      "pair": false,
+      "points_per_foot": 13.5,
+      "room": "200",
+      "room_by": "tag_number",
+      "room_name": "BASEMENT MECH RM",
+      "schedule_rows": [
+        {
+          "door_type": null,
+          "fire_rating": null,
+          "frame_type": null,
+          "hardware_group": "30.0",
+          "height_inches": null,
+          "location": null,
+          "mark": "200-8",
+          "material": "EXIST",
+          "page": 59,
+          "pair": false,
+          "size": "2' - 5\" x 2' - 5\"",
+          "width_inches": 29,
+          "y": 418
+        }
+      ],
+      "sheet": "A-109",
+      "size": "2' - 5\" x 2' - 5\"",
+      "width_inches": 29,
+      "x": 744,
+      "y": 1230
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        59
+      ],
+      "door_type": null,
+      "fire_rating": null,
+      "frame_type": null,
+      "h": 9.603236158704,
+      "hardware_group": "16.0",
+      "height_inches": null,
+      "location": null,
+      "mark": "200-6",
+      "matched_by": "exact",
+      "material": "F",
+      "page": 47,
+      "pair": false,
+      "points_per_foot": 13.5,
+      "room": "200",
+      "room_by": "tag_number",
+      "room_name": "BASEMENT MECH RM",
+      "schedule_rows": [
+        {
+          "door_type": null,
+          "fire_rating": null,
+          "frame_type": null,
+          "hardware_group": "16.0",
+          "height_inches": null,
+          "location": null,
+          "mark": "200-6",
+          "material": "F",
+          "page": 59,
+          "pair": false,
+          "size": "2' - 0\" x 2' - 0\"",
+          "width_inches": 24,
+          "y": 391
+        }
+      ],
+      "sheet": "A-109",
+      "size": "2' - 0\" x 2' - 0\"",
+      "width_inches": 24,
+      "x": 1030,
+      "y": 1256
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        59
+      ],
+      "door_type": null,
+      "fire_rating": null,
+      "frame_type": null,
+      "h": 9.603236158704,
+      "hardware_group": null,
+      "height_inches": 73,
+      "location": null,
+      "mark": "200-5",
+      "matched_by": "exact",
+      "material": "WD",
+      "page": 47,
+      "pair": false,
+      "points_per_foot": 13.5,
+      "room": "200",
+      "room_by": "tag_number",
+      "room_name": "BASEMENT MECH RM",
+      "schedule_rows": [
+        {
+          "door_type": null,
+          "fire_rating": null,
+          "frame_type": null,
+          "hardware_group": null,
+          "height_inches": 73,
+          "location": null,
+          "mark": "200-5",
+          "material": "WD",
+          "page": 59,
+          "pair": false,
+          "size": "2' - 7\" x 6' - 1\"",
+          "width_inches": 31,
+          "y": 381
+        }
+      ],
+      "sheet": "A-109",
+      "size": "2' - 7\" x 6' - 1\"",
+      "width_inches": 31,
+      "x": 2220,
+      "y": 1274
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        59
+      ],
+      "door_type": null,
+      "fire_rating": null,
+      "frame_type": null,
+      "h": 9.603236158704,
+      "hardware_group": "19.0",
+      "height_inches": 84,
+      "location": null,
+      "mark": "200-3",
+      "matched_by": "exact",
+      "material": "F",
+      "page": 47,
+      "pair": false,
+      "points_per_foot": 13.5,
+      "room": "200",
+      "room_by": "tag_number",
+      "room_name": "BASEMENT MECH RM",
+      "schedule_rows": [
+        {
+          "door_type": null,
+          "fire_rating": null,
+          "frame_type": null,
+          "hardware_group": "19.0",
+          "height_inches": 84,
+          "location": null,
+          "mark": "200-3",
+          "material": "F",
+          "page": 59,
+          "pair": false,
+          "size": "3' - 0\" x 7' - 0\"",
+          "width_inches": 36,
+          "y": 368
+        }
+      ],
+      "sheet": "A-109",
+      "size": "3' - 0\" x 7' - 0\"",
+      "width_inches": 36,
+      "x": 1047,
+      "y": 1444
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        59
+      ],
+      "door_type": null,
+      "fire_rating": null,
+      "frame_type": null,
+      "h": 9.603236158704,
+      "hardware_group": "8.0",
+      "height_inches": 72,
+      "location": null,
+      "mark": "200-1",
+      "matched_by": "exact",
+      "material": "WD",
+      "page": 47,
+      "pair": false,
+      "points_per_foot": 13.5,
+      "room": "200",
+      "room_by": "tag_number",
+      "room_name": "BASEMENT MECH RM",
+      "schedule_rows": [
+        {
+          "door_type": null,
+          "fire_rating": null,
+          "frame_type": null,
+          "hardware_group": "8.0",
+          "height_inches": 72,
+          "location": null,
+          "mark": "200-1",
+          "material": "WD",
+          "page": 59,
+          "pair": false,
+          "size": "2' - 10\" x 6' - 0\"",
+          "width_inches": 34,
+          "y": 339
+        }
+      ],
+      "sheet": "A-109",
+      "size": "2' - 10\" x 6' - 0\"",
+      "width_inches": 34,
+      "x": 814,
+      "y": 1474
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        59
+      ],
+      "door_type": null,
+      "fire_rating": null,
+      "frame_type": null,
+      "h": 9.603236158704,
+      "hardware_group": null,
+      "height_inches": 84,
+      "location": null,
+      "mark": "200A-1",
+      "matched_by": "exact",
+      "material": "F",
+      "page": 47,
+      "pair": false,
+      "points_per_foot": 13.5,
+      "room": "200A",
+      "room_by": "tag_number",
+      "room_name": "STORAGE (UNCONDITIONED)",
+      "schedule_rows": [
+        {
+          "door_type": null,
+          "fire_rating": null,
+          "frame_type": null,
+          "hardware_group": null,
+          "height_inches": 84,
+          "location": null,
+          "mark": "200A-1",
+          "material": "F",
+          "page": 59,
+          "pair": false,
+          "size": "3' - 0\" x 7' - 0\"",
+          "width_inches": 36,
+          "y": 442
+        }
+      ],
+      "sheet": "A-109",
+      "size": "3' - 0\" x 7' - 0\"",
+      "width_inches": 36,
+      "x": 1126,
+      "y": 1492
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        59
+      ],
+      "door_type": null,
+      "fire_rating": null,
+      "frame_type": null,
+      "h": 9.603236158704,
+      "hardware_group": "8.0",
+      "height_inches": 72,
+      "location": null,
+      "mark": "200-2",
+      "matched_by": "exact",
+      "material": "WD",
+      "page": 47,
+      "pair": false,
+      "points_per_foot": 13.5,
+      "room": "200",
+      "room_by": "tag_number",
+      "room_name": "BASEMENT MECH RM",
+      "schedule_rows": [
+        {
+          "door_type": null,
+          "fire_rating": null,
+          "frame_type": null,
+          "hardware_group": "8.0",
+          "height_inches": 72,
+          "location": null,
+          "mark": "200-2",
+          "material": "WD",
+          "page": 59,
+          "pair": false,
+          "size": "2' - 10\" x 6' - 0\"",
+          "width_inches": 34,
+          "y": 352
+        }
+      ],
+      "sheet": "A-109",
+      "size": "2' - 10\" x 6' - 0\"",
+      "width_inches": 34,
+      "x": 1047,
+      "y": 1544
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        59
+      ],
+      "door_type": null,
+      "fire_rating": null,
+      "frame_type": null,
+      "h": 9.603236158704,
+      "hardware_group": "11.0",
+      "height_inches": 78,
+      "location": null,
+      "mark": "201-1",
+      "matched_by": "exact",
+      "material": "WD",
+      "page": 48,
+      "pair": false,
+      "points_per_foot": 13.5,
+      "room": "201",
+      "room_by": "tag_number",
+      "room_name": "PORCH",
+      "schedule_rows": [
+        {
+          "door_type": null,
+          "fire_rating": null,
+          "frame_type": null,
+          "hardware_group": "11.0",
+          "height_inches": 78,
+          "location": null,
+          "mark": "201-1",
+          "material": "WD",
+          "page": 59,
+          "pair": false,
+          "size": "2' - 10\" x 6' - 6\"",
+          "width_inches": 34,
+          "y": 456
+        }
+      ],
+      "sheet": "A-110",
+      "size": "2' - 10\" x 6' - 6\"",
+      "width_inches": 34,
+      "x": 175,
+      "y": 891
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        59
+      ],
+      "door_type": null,
+      "fire_rating": null,
+      "frame_type": null,
+      "h": 9.603236158704,
+      "hardware_group": "24.0",
+      "height_inches": 84,
+      "location": null,
+      "mark": "213-1",
+      "matched_by": "exact",
+      "material": "WD",
+      "page": 48,
+      "pair": false,
+      "points_per_foot": 13.5,
+      "room": "212",
+      "room_by": "nearest_label",
+      "room_name": "BEDROOM",
+      "schedule_rows": [
+        {
+          "door_type": null,
+          "fire_rating": null,
+          "frame_type": null,
+          "hardware_group": "24.0",
+          "height_inches": 84,
+          "location": null,
+          "mark": "213-1",
+          "material": "WD",
+          "page": 59,
+          "pair": false,
+          "size": "2' - 10\" x 7' - 0\"",
+          "width_inches": 34,
+          "y": 636
+        }
+      ],
+      "sheet": "A-110",
+      "size": "2' - 10\" x 7' - 0\"",
+      "unsure": true,
+      "width_inches": 34,
+      "x": 1538,
+      "y": 946
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        59
+      ],
+      "door_type": null,
+      "fire_rating": null,
+      "frame_type": null,
+      "h": 9.603236158704,
+      "hardware_group": "24.0",
+      "height_inches": 84,
+      "location": null,
+      "mark": "215-1",
+      "matched_by": "exact",
+      "material": "WD",
+      "page": 48,
+      "pair": false,
+      "points_per_foot": 13.5,
+      "room": "215",
+      "room_by": "tag_number",
+      "room_name": "BATH",
+      "schedule_rows": [
+        {
+          "door_type": null,
+          "fire_rating": null,
+          "frame_type": null,
+          "hardware_group": "24.0",
+          "height_inches": 84,
+          "location": null,
+          "mark": "215-1",
+          "material": "WD",
+          "page": 59,
+          "pair": false,
+          "size": "2' - 10\" x 7' - 0\"",
+          "width_inches": 34,
+          "y": 663
+        }
+      ],
+      "sheet": "A-110",
+      "size": "2' - 10\" x 7' - 0\"",
+      "width_inches": 34,
+      "x": 1915,
+      "y": 950
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        59
+      ],
+      "door_type": null,
+      "fire_rating": null,
+      "frame_type": null,
+      "h": 9.603236158704,
+      "hardware_group": "24.0",
+      "height_inches": 84,
+      "location": null,
+      "mark": "217-1",
+      "matched_by": "exact",
+      "material": "WD",
+      "page": 48,
+      "pair": false,
+      "points_per_foot": 13.5,
+      "room": "217",
+      "room_by": "tag_number",
+      "room_name": "BATH",
+      "schedule_rows": [
+        {
+          "door_type": null,
+          "fire_rating": null,
+          "frame_type": null,
+          "hardware_group": "24.0",
+          "height_inches": 84,
+          "location": null,
+          "mark": "217-1",
+          "material": "WD",
+          "page": 59,
+          "pair": false,
+          "size": "2' - 10\" x 7' - 0\"",
+          "width_inches": 34,
+          "y": 687
+        }
+      ],
+      "sheet": "A-110",
+      "size": "2' - 10\" x 7' - 0\"",
+      "width_inches": 34,
+      "x": 2047,
+      "y": 950
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        59
+      ],
+      "door_type": null,
+      "fire_rating": null,
+      "frame_type": null,
+      "h": 9.603236158704,
+      "hardware_group": "7.0",
+      "height_inches": 84,
+      "location": null,
+      "mark": "202-1",
+      "matched_by": "exact",
+      "material": "F",
+      "page": 48,
+      "pair": false,
+      "points_per_foot": 13.5,
+      "room": "202",
+      "room_by": "tag_number",
+      "room_name": "KITCHEN",
+      "schedule_rows": [
+        {
+          "door_type": null,
+          "fire_rating": null,
+          "frame_type": null,
+          "hardware_group": "7.0",
+          "height_inches": 84,
+          "location": null,
+          "mark": "202-1",
+          "material": "F",
+          "page": 59,
+          "pair": false,
+          "size": "3' - 0\" x 7' - 0\"",
+          "width_inches": 36,
+          "y": 467
+        }
+      ],
+      "sheet": "A-110",
+      "size": "3' - 0\" x 7' - 0\"",
+      "width_inches": 36,
+      "x": 325,
+      "y": 997
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        59
+      ],
+      "door_type": null,
+      "fire_rating": null,
+      "frame_type": null,
+      "h": 9.603236158704,
+      "hardware_group": "24.0",
+      "height_inches": 84,
+      "location": null,
+      "mark": "211-1",
+      "matched_by": "exact",
+      "material": "WD",
+      "page": 48,
+      "pair": false,
+      "points_per_foot": 13.5,
+      "room": "211",
+      "room_by": "tag_number",
+      "room_name": "ACCESSIBLE BATH",
+      "schedule_rows": [
+        {
+          "door_type": null,
+          "fire_rating": null,
+          "frame_type": null,
+          "hardware_group": "24.0",
+          "height_inches": 84,
+          "location": null,
+          "mark": "211-1",
+          "material": "WD",
+          "page": 59,
+          "pair": false,
+          "size": "2' - 10\" x 7' - 0\"",
+          "width_inches": 34,
+          "y": 610
+        }
+      ],
+      "sheet": "A-110",
+      "size": "2' - 10\" x 7' - 0\"",
+      "width_inches": 34,
+      "x": 1274,
+      "y": 1032
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        59
+      ],
+      "door_type": null,
+      "fire_rating": null,
+      "frame_type": null,
+      "h": 9.603236158704,
+      "hardware_group": "26.0",
+      "height_inches": 84,
+      "location": null,
+      "mark": "207-1",
+      "matched_by": "exact",
+      "material": "WD",
+      "page": 48,
+      "pair": false,
+      "points_per_foot": 13.5,
+      "room": "208",
+      "room_by": "nearest_label",
+      "room_name": "JAN",
+      "schedule_rows": [
+        {
+          "door_type": null,
+          "fire_rating": null,
+          "frame_type": null,
+          "hardware_group": "26.0",
+          "height_inches": 84,
+          "location": null,
+          "mark": "207-1",
+          "material": "WD",
+          "page": 59,
+          "pair": false,
+          "size": "2' - 10\" x 7' - 0\"",
+          "width_inches": 34,
+          "y": 534
+        }
+      ],
+      "sheet": "A-110",
+      "size": "2' - 10\" x 7' - 0\"",
+      "unsure": true,
+      "width_inches": 34,
+      "x": 1197,
+      "y": 1074
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        59
+      ],
+      "door_type": null,
+      "fire_rating": null,
+      "frame_type": null,
+      "h": 9.603236158704,
+      "hardware_group": "15.0",
+      "height_inches": 84,
+      "location": null,
+      "mark": "216-1",
+      "matched_by": "exact",
+      "material": "WD",
+      "page": 48,
+      "pair": false,
+      "points_per_foot": 13.5,
+      "room": "217",
+      "room_by": "nearest_label",
+      "room_name": "BATH",
+      "schedule_rows": [
+        {
+          "door_type": null,
+          "fire_rating": null,
+          "frame_type": null,
+          "hardware_group": "15.0",
+          "height_inches": 84,
+          "location": null,
+          "mark": "216-1",
+          "material": "WD",
+          "page": 59,
+          "pair": false,
+          "size": "2' - 10\" x 7' - 0\"",
+          "width_inches": 34,
+          "y": 675
+        }
+      ],
+      "sheet": "A-110",
+      "size": "2' - 10\" x 7' - 0\"",
+      "unsure": true,
+      "width_inches": 34,
+      "x": 2108,
+      "y": 1075
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        59
+      ],
+      "door_type": null,
+      "fire_rating": null,
+      "frame_type": null,
+      "h": 9.603236158704,
+      "hardware_group": "15.0",
+      "height_inches": 84,
+      "location": null,
+      "mark": "210-1",
+      "matched_by": "exact",
+      "material": "WD",
+      "page": 48,
+      "pair": false,
+      "points_per_foot": 13.5,
+      "room": "210",
+      "room_by": "tag_number",
+      "room_name": "ACCESSIBLE BEDROOM",
+      "schedule_rows": [
+        {
+          "door_type": null,
+          "fire_rating": null,
+          "frame_type": null,
+          "hardware_group": "15.0",
+          "height_inches": 84,
+          "location": null,
+          "mark": "210-1",
+          "material": "WD",
+          "page": 59,
+          "pair": false,
+          "size": "2' - 10\" x 7' - 0\"",
+          "width_inches": 34,
+          "y": 599
+        }
+      ],
+      "sheet": "A-110",
+      "size": "2' - 10\" x 7' - 0\"",
+      "width_inches": 34,
+      "x": 1460,
+      "y": 1076
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        59
+      ],
+      "door_type": null,
+      "fire_rating": null,
+      "frame_type": null,
+      "h": 9.603236158704,
+      "hardware_group": "15.0",
+      "height_inches": 84,
+      "location": null,
+      "mark": "212-1",
+      "matched_by": "exact",
+      "material": "WD",
+      "page": 48,
+      "pair": false,
+      "points_per_foot": 13.5,
+      "room": "212",
+      "room_by": "tag_number",
+      "room_name": "BEDROOM",
+      "schedule_rows": [
+        {
+          "door_type": null,
+          "fire_rating": null,
+          "frame_type": null,
+          "hardware_group": "15.0",
+          "height_inches": 84,
+          "location": null,
+          "mark": "212-1",
+          "material": "WD",
+          "page": 59,
+          "pair": false,
+          "size": "2' - 10\" x 7' - 0\"",
+          "width_inches": 34,
+          "y": 623
+        }
+      ],
+      "sheet": "A-110",
+      "size": "2' - 10\" x 7' - 0\"",
+      "width_inches": 34,
+      "x": 1586,
+      "y": 1076
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        59
+      ],
+      "door_type": null,
+      "fire_rating": null,
+      "frame_type": null,
+      "h": 9.603236158704,
+      "hardware_group": "15.0",
+      "height_inches": 84,
+      "location": null,
+      "mark": "214-1",
+      "matched_by": "exact",
+      "material": "WD",
+      "page": 48,
+      "pair": false,
+      "points_per_foot": 13.5,
+      "room": "214",
+      "room_by": "tag_number",
+      "room_name": "BEDROOM",
+      "schedule_rows": [
+        {
+          "door_type": null,
+          "fire_rating": null,
+          "frame_type": null,
+          "hardware_group": "15.0",
+          "height_inches": 84,
+          "location": null,
+          "mark": "214-1",
+          "material": "WD",
+          "page": 59,
+          "pair": false,
+          "size": "2' - 10\" x 7' - 0\"",
+          "width_inches": 34,
+          "y": 649
+        }
+      ],
+      "sheet": "A-110",
+      "size": "2' - 10\" x 7' - 0\"",
+      "width_inches": 34,
+      "x": 1893,
+      "y": 1076
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        59
+      ],
+      "door_type": null,
+      "fire_rating": null,
+      "frame_type": null,
+      "h": 9.603236158704,
+      "hardware_group": "26.0",
+      "height_inches": 84,
+      "location": null,
+      "mark": "206-1",
+      "matched_by": "exact",
+      "material": "WD",
+      "page": 48,
+      "pair": false,
+      "points_per_foot": 13.5,
+      "room": "208",
+      "room_by": "nearest_label",
+      "room_name": "JAN",
+      "schedule_rows": [
+        {
+          "door_type": null,
+          "fire_rating": null,
+          "frame_type": null,
+          "hardware_group": "26.0",
+          "height_inches": 84,
+          "location": null,
+          "mark": "206-1",
+          "material": "WD",
+          "page": 59,
+          "pair": false,
+          "size": "2' - 10\" x 7' - 0\"",
+          "width_inches": 34,
+          "y": 519
+        }
+      ],
+      "sheet": "A-110",
+      "size": "2' - 10\" x 7' - 0\"",
+      "unsure": true,
+      "width_inches": 34,
+      "x": 1045,
+      "y": 1078
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        59
+      ],
+      "door_type": null,
+      "fire_rating": null,
+      "frame_type": null,
+      "h": 9.603236158704,
+      "hardware_group": "14.0",
+      "height_inches": 84,
+      "location": null,
+      "mark": "209-1",
+      "matched_by": "exact",
+      "material": "WD",
+      "page": 48,
+      "pair": false,
+      "points_per_foot": 13.5,
+      "room": "209",
+      "room_by": "tag_number",
+      "room_name": "CORRIDOR (1/2 HR)",
+      "schedule_rows": [
+        {
+          "door_type": null,
+          "fire_rating": null,
+          "frame_type": null,
+          "hardware_group": "14.0",
+          "height_inches": 84,
+          "location": null,
+          "mark": "209-1",
+          "material": "WD",
+          "page": 59,
+          "pair": false,
+          "size": "3' - 0\" x 7' - 0\"",
+          "width_inches": 36,
+          "y": 557
+        }
+      ],
+      "sheet": "A-110",
+      "size": "3' - 0\" x 7' - 0\"",
+      "width_inches": 36,
+      "x": 1301,
+      "y": 1104
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        59
+      ],
+      "door_type": null,
+      "fire_rating": null,
+      "frame_type": null,
+      "h": 9.603236158704,
+      "hardware_group": "17.0",
+      "height_inches": 84,
+      "location": null,
+      "mark": "208-1",
+      "matched_by": "exact",
+      "material": "WD",
+      "page": 48,
+      "pair": false,
+      "points_per_foot": 13.5,
+      "room": "208",
+      "room_by": "tag_number",
+      "room_name": "JAN",
+      "schedule_rows": [
+        {
+          "door_type": null,
+          "fire_rating": null,
+          "frame_type": null,
+          "hardware_group": "17.0",
+          "height_inches": 84,
+          "location": null,
+          "mark": "208-1",
+          "material": "WD",
+          "page": 59,
+          "pair": false,
+          "size": "2' - 0\" x 7' - 0\"",
+          "width_inches": 24,
+          "y": 546
+        }
+      ],
+      "sheet": "A-110",
+      "size": "2' - 0\" x 7' - 0\"",
+      "width_inches": 24,
+      "x": 1117,
+      "y": 1115
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        59
+      ],
+      "door_type": null,
+      "fire_rating": null,
+      "frame_type": null,
+      "h": 9.603236158704,
+      "hardware_group": "21.0",
+      "height_inches": 84,
+      "location": null,
+      "mark": "218-1",
+      "matched_by": "exact",
+      "material": "WD",
+      "page": 48,
+      "pair": false,
+      "points_per_foot": 13.5,
+      "room": "218",
+      "room_by": "tag_number",
+      "room_name": "CLOSET",
+      "schedule_rows": [
+        {
+          "door_type": null,
+          "fire_rating": null,
+          "frame_type": null,
+          "hardware_group": "21.0",
+          "height_inches": 84,
+          "location": null,
+          "mark": "218-1",
+          "material": "WD",
+          "page": 59,
+          "pair": false,
+          "size": "3' - 0\" x 7' - 0\"",
+          "width_inches": 36,
+          "y": 698
+        }
+      ],
+      "sheet": "A-110",
+      "size": "3' - 0\" x 7' - 0\"",
+      "width_inches": 36,
+      "x": 1984,
+      "y": 1120
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        59
+      ],
+      "door_type": null,
+      "fire_rating": null,
+      "frame_type": null,
+      "h": 9.603236158704,
+      "hardware_group": "3.0",
+      "height_inches": 80,
+      "location": null,
+      "mark": "209-3",
+      "matched_by": "exact",
+      "material": "F",
+      "page": 48,
+      "pair": false,
+      "points_per_foot": 13.5,
+      "room": "209",
+      "room_by": "tag_number",
+      "room_name": "CORRIDOR (1/2 HR)",
+      "schedule_rows": [
+        {
+          "door_type": null,
+          "fire_rating": null,
+          "frame_type": null,
+          "hardware_group": "3.0",
+          "height_inches": 80,
+          "location": null,
+          "mark": "209-3",
+          "material": "F",
+          "page": 59,
+          "pair": false,
+          "size": "2' - 10\" x 6' - 8\"",
+          "width_inches": 34,
+          "y": 585
+        }
+      ],
+      "sheet": "A-110",
+      "size": "2' - 10\" x 6' - 8\"",
+      "width_inches": 34,
+      "x": 2214,
+      "y": 1133
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        59
+      ],
+      "door_type": null,
+      "fire_rating": null,
+      "frame_type": null,
+      "h": 9.603236158704,
+      "hardware_group": "15.0",
+      "height_inches": 84,
+      "location": null,
+      "mark": "225-1",
+      "matched_by": "exact",
+      "material": "WD",
+      "page": 48,
+      "pair": false,
+      "points_per_foot": 13.5,
+      "room": "225",
+      "room_by": "tag_number",
+      "room_name": "BEDROOM",
+      "schedule_rows": [
+        {
+          "door_type": null,
+          "fire_rating": null,
+          "frame_type": null,
+          "hardware_group": "15.0",
+          "height_inches": 84,
+          "location": null,
+          "mark": "225-1",
+          "material": "WD",
+          "page": 59,
+          "pair": false,
+          "size": "2' - 10\" x 7' - 0\"",
+          "width_inches": 34,
+          "y": 830
+        }
+      ],
+      "sheet": "A-110",
+      "size": "2' - 10\" x 7' - 0\"",
+      "width_inches": 34,
+      "x": 1565,
+      "y": 1177
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        59
+      ],
+      "door_type": null,
+      "fire_rating": null,
+      "frame_type": null,
+      "h": 9.603236158704,
+      "hardware_group": "15.0",
+      "height_inches": 84,
+      "location": null,
+      "mark": "223-1",
+      "matched_by": "exact",
+      "material": "WD",
+      "page": 48,
+      "pair": false,
+      "points_per_foot": 13.5,
+      "room": "223",
+      "room_by": "tag_number",
+      "room_name": "BEDROOM",
+      "schedule_rows": [
+        {
+          "door_type": null,
+          "fire_rating": null,
+          "frame_type": null,
+          "hardware_group": "15.0",
+          "height_inches": 84,
+          "location": null,
+          "mark": "223-1",
+          "material": "WD",
+          "page": 59,
+          "pair": false,
+          "size": "2' - 10\" x 7' - 0\"",
+          "width_inches": 34,
+          "y": 817
+        }
+      ],
+      "sheet": "A-110",
+      "size": "2' - 10\" x 7' - 0\"",
+      "width_inches": 34,
+      "x": 1692,
+      "y": 1177
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        59
+      ],
+      "door_type": null,
+      "fire_rating": null,
+      "frame_type": null,
+      "h": 9.603236158704,
+      "hardware_group": "15.0",
+      "height_inches": 84,
+      "location": null,
+      "mark": "221-1",
+      "matched_by": "exact",
+      "material": "WD",
+      "page": 48,
+      "pair": false,
+      "points_per_foot": 13.5,
+      "room": "221",
+      "room_by": "tag_number",
+      "room_name": "BEDROOM",
+      "schedule_rows": [
+        {
+          "door_type": null,
+          "fire_rating": null,
+          "frame_type": null,
+          "hardware_group": "15.0",
+          "height_inches": 84,
+          "location": null,
+          "mark": "221-1",
+          "material": "WD",
+          "page": 59,
+          "pair": false,
+          "size": "2' - 10\" x 7' - 0\"",
+          "width_inches": 34,
+          "y": 765
+        }
+      ],
+      "sheet": "A-110",
+      "size": "2' - 10\" x 7' - 0\"",
+      "width_inches": 34,
+      "x": 1986,
+      "y": 1177
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        59
+      ],
+      "door_type": null,
+      "fire_rating": null,
+      "frame_type": null,
+      "h": 9.603236158704,
+      "hardware_group": "15.0",
+      "height_inches": 84,
+      "location": null,
+      "mark": "219-1",
+      "matched_by": "exact",
+      "material": "WD",
+      "page": 48,
+      "pair": false,
+      "points_per_foot": 13.5,
+      "room": "219",
+      "room_by": "tag_number",
+      "room_name": "BEDROOM",
+      "schedule_rows": [
+        {
+          "door_type": null,
+          "fire_rating": null,
+          "frame_type": null,
+          "hardware_group": "15.0",
+          "height_inches": 84,
+          "location": null,
+          "mark": "219-1",
+          "material": "WD",
+          "page": 59,
+          "pair": false,
+          "size": "2' - 10\" x 7' - 0\"",
+          "width_inches": 34,
+          "y": 711
+        }
+      ],
+      "sheet": "A-110",
+      "size": "2' - 10\" x 7' - 0\"",
+      "width_inches": 34,
+      "x": 2110,
+      "y": 1177
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        59
+      ],
+      "door_type": null,
+      "fire_rating": null,
+      "frame_type": null,
+      "h": 9.603236158704,
+      "hardware_group": "17.0",
+      "height_inches": 80,
+      "location": null,
+      "mark": "202-2",
+      "matched_by": "exact",
+      "material": "WD",
+      "page": 48,
+      "pair": false,
+      "points_per_foot": 13.5,
+      "room": "202",
+      "room_by": "tag_number",
+      "room_name": "KITCHEN",
+      "schedule_rows": [
+        {
+          "door_type": null,
+          "fire_rating": null,
+          "frame_type": null,
+          "hardware_group": "17.0",
+          "height_inches": 80,
+          "location": null,
+          "mark": "202-2",
+          "material": "WD",
+          "page": 59,
+          "pair": false,
+          "size": "3' - 0\" x 6' - 8\"",
+          "width_inches": 36,
+          "y": 483
+        }
+      ],
+      "sheet": "A-110",
+      "size": "3' - 0\" x 6' - 8\"",
+      "width_inches": 36,
+      "x": 540,
+      "y": 1179
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        59
+      ],
+      "door_type": null,
+      "fire_rating": null,
+      "frame_type": null,
+      "h": 9.603236158704,
+      "hardware_group": "24.0",
+      "height_inches": 84,
+      "location": null,
+      "mark": "222-1",
+      "matched_by": "exact",
+      "material": "WD",
+      "page": 48,
+      "pair": false,
+      "points_per_foot": 13.5,
+      "room": "222A",
+      "room_by": "nearest_label",
+      "room_name": "BATH",
+      "schedule_rows": [
+        {
+          "door_type": null,
+          "fire_rating": null,
+          "frame_type": null,
+          "hardware_group": "24.0",
+          "height_inches": 84,
+          "location": null,
+          "mark": "222-1",
+          "material": "WD",
+          "page": 59,
+          "pair": false,
+          "size": "2' - 10\" x 7' - 0\"",
+          "width_inches": 34,
+          "y": 780
+        }
+      ],
+      "sheet": "A-110",
+      "size": "2' - 10\" x 7' - 0\"",
+      "unsure": true,
+      "width_inches": 34,
+      "x": 1639,
+      "y": 1206
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        59
+      ],
+      "door_type": null,
+      "fire_rating": null,
+      "frame_type": null,
+      "h": 9.603236158704,
+      "hardware_group": "24.0",
+      "height_inches": 84,
+      "location": null,
+      "mark": "222-2",
+      "matched_by": "exact",
+      "material": "WD",
+      "page": 48,
+      "pair": false,
+      "points_per_foot": 13.5,
+      "room": "222A",
+      "room_by": "nearest_label",
+      "room_name": "BATH",
+      "schedule_rows": [
+        {
+          "door_type": null,
+          "fire_rating": null,
+          "frame_type": null,
+          "hardware_group": "24.0",
+          "height_inches": 84,
+          "location": null,
+          "mark": "222-2",
+          "material": "WD",
+          "page": 59,
+          "pair": false,
+          "size": "2' - 10\" x 7' - 0\"",
+          "width_inches": 34,
+          "y": 791
+        }
+      ],
+      "sheet": "A-110",
+      "size": "2' - 10\" x 7' - 0\"",
+      "unsure": true,
+      "width_inches": 34,
+      "x": 1587,
+      "y": 1207
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        59
+      ],
+      "door_type": null,
+      "fire_rating": null,
+      "frame_type": null,
+      "h": 9.603236158704,
+      "hardware_group": "24.0",
+      "height_inches": 84,
+      "location": null,
+      "mark": "220-2",
+      "matched_by": "exact",
+      "material": "WD",
+      "page": 48,
+      "pair": false,
+      "points_per_foot": 13.5,
+      "room": "220A",
+      "room_by": "nearest_label",
+      "room_name": "BATH",
+      "schedule_rows": [
+        {
+          "door_type": null,
+          "fire_rating": null,
+          "frame_type": null,
+          "hardware_group": "24.0",
+          "height_inches": 84,
+          "location": null,
+          "mark": "220-2",
+          "material": "WD",
+          "page": 59,
+          "pair": false,
+          "size": "2' - 10\" x 7' - 0\"",
+          "width_inches": 34,
+          "y": 740
+        }
+      ],
+      "sheet": "A-110",
+      "size": "2' - 10\" x 7' - 0\"",
+      "unsure": true,
+      "width_inches": 34,
+      "x": 2007,
+      "y": 1207
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        59
+      ],
+      "door_type": null,
+      "fire_rating": null,
+      "frame_type": null,
+      "h": 9.603236158704,
+      "hardware_group": "24.0",
+      "height_inches": 84,
+      "location": null,
+      "mark": "220-1",
+      "matched_by": "exact",
+      "material": "WD",
+      "page": 48,
+      "pair": false,
+      "points_per_foot": 13.5,
+      "room": "220A",
+      "room_by": "nearest_label",
+      "room_name": "BATH",
+      "schedule_rows": [
+        {
+          "door_type": null,
+          "fire_rating": null,
+          "frame_type": null,
+          "hardware_group": "24.0",
+          "height_inches": 84,
+          "location": null,
+          "mark": "220-1",
+          "material": "WD",
+          "page": 59,
+          "pair": false,
+          "size": "2' - 10\" x 7' - 0\"",
+          "width_inches": 34,
+          "y": 725
+        }
+      ],
+      "sheet": "A-110",
+      "size": "2' - 10\" x 7' - 0\"",
+      "unsure": true,
+      "width_inches": 34,
+      "x": 2059,
+      "y": 1207
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        59
+      ],
+      "door_type": null,
+      "fire_rating": null,
+      "frame_type": null,
+      "h": 9.603236158704,
+      "hardware_group": "29.0",
+      "height_inches": 84,
+      "location": null,
+      "mark": "222-3",
+      "matched_by": "exact",
+      "material": "WD",
+      "page": 48,
+      "pair": false,
+      "points_per_foot": 13.5,
+      "room": "222A",
+      "room_by": "nearest_label",
+      "room_name": "BATH",
+      "schedule_rows": [
+        {
+          "door_type": null,
+          "fire_rating": null,
+          "frame_type": null,
+          "hardware_group": "29.0",
+          "height_inches": 84,
+          "location": null,
+          "mark": "222-3",
+          "material": "WD",
+          "page": 59,
+          "pair": false,
+          "size": "2' - 10\" x 7' - 0\"",
+          "width_inches": 34,
+          "y": 804
+        }
+      ],
+      "sheet": "A-110",
+      "size": "2' - 10\" x 7' - 0\"",
+      "unsure": true,
+      "width_inches": 34,
+      "x": 1657,
+      "y": 1239
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        59
+      ],
+      "door_type": null,
+      "fire_rating": null,
+      "frame_type": null,
+      "h": 9.603236158704,
+      "hardware_group": "29.0",
+      "height_inches": 84,
+      "location": null,
+      "mark": "220-3",
+      "matched_by": "exact",
+      "material": "WD",
+      "page": 48,
+      "pair": false,
+      "points_per_foot": 13.5,
+      "room": "220A",
+      "room_by": "nearest_label",
+      "room_name": "BATH",
+      "schedule_rows": [
+        {
+          "door_type": null,
+          "fire_rating": null,
+          "frame_type": null,
+          "hardware_group": "29.0",
+          "height_inches": 84,
+          "location": null,
+          "mark": "220-3",
+          "material": "WD",
+          "page": 59,
+          "pair": false,
+          "size": "2' - 10\" x 7' - 0\"",
+          "width_inches": 34,
+          "y": 750
+        }
+      ],
+      "sheet": "A-110",
+      "size": "2' - 10\" x 7' - 0\"",
+      "unsure": true,
+      "width_inches": 34,
+      "x": 2015,
+      "y": 1239
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        59
+      ],
+      "door_type": null,
+      "fire_rating": null,
+      "frame_type": null,
+      "h": 9.603236158704,
+      "hardware_group": "3.0",
+      "height_inches": 80,
+      "location": null,
+      "mark": "209-2",
+      "matched_by": "exact",
+      "material": "F",
+      "page": 48,
+      "pair": false,
+      "points_per_foot": 13.5,
+      "room": "209",
+      "room_by": "tag_number",
+      "room_name": "CORRIDOR (1/2 HR)",
+      "schedule_rows": [
+        {
+          "door_type": null,
+          "fire_rating": null,
+          "frame_type": null,
+          "hardware_group": "3.0",
+          "height_inches": 80,
+          "location": null,
+          "mark": "209-2",
+          "material": "F",
+          "page": 59,
+          "pair": false,
+          "size": "3' - 0\" x 6' - 8\"",
+          "width_inches": 36,
+          "y": 571
+        }
+      ],
+      "sheet": "A-110",
+      "size": "3' - 0\" x 6' - 8\"",
+      "width_inches": 36,
+      "x": 1405,
+      "y": 1288
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        59
+      ],
+      "door_type": null,
+      "fire_rating": null,
+      "frame_type": null,
+      "h": 9.603236158704,
+      "hardware_group": null,
+      "height_inches": 80,
+      "location": null,
+      "mark": "205-2",
+      "matched_by": "exact",
+      "material": "EXIST",
+      "page": 48,
+      "pair": false,
+      "points_per_foot": 13.5,
+      "room": "205",
+      "room_by": "tag_number",
+      "room_name": "FRONT PORCH",
+      "schedule_rows": [
+        {
+          "door_type": null,
+          "fire_rating": null,
+          "frame_type": null,
+          "hardware_group": null,
+          "height_inches": 80,
+          "location": null,
+          "mark": "205-2",
+          "material": "EXIST",
+          "page": 59,
+          "pair": false,
+          "size": "3' - 0\" x 6' - 8\"",
+          "width_inches": 36,
+          "y": 507
+        }
+      ],
+      "sheet": "A-110",
+      "size": "3' - 0\" x 6' - 8\"",
+      "width_inches": 36,
+      "x": 1079,
+      "y": 1348
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        59
+      ],
+      "door_type": null,
+      "fire_rating": null,
+      "frame_type": null,
+      "h": 9.603236158704,
+      "hardware_group": null,
+      "height_inches": 84,
+      "location": null,
+      "mark": "205-1",
+      "matched_by": "exact",
+      "material": "EXIST",
+      "page": 48,
+      "pair": false,
+      "points_per_foot": 13.5,
+      "room": "205",
+      "room_by": "tag_number",
+      "room_name": "FRONT PORCH",
+      "schedule_rows": [
+        {
+          "door_type": null,
+          "fire_rating": null,
+          "frame_type": null,
+          "hardware_group": null,
+          "height_inches": 84,
+          "location": null,
+          "mark": "205-1",
+          "material": "EXIST",
+          "page": 59,
+          "pair": false,
+          "size": "2' - 10\" x 7' - 0\"",
+          "width_inches": 34,
+          "y": 494
+        }
+      ],
+      "sheet": "A-110",
+      "size": "2' - 10\" x 7' - 0\"",
+      "width_inches": 34,
+      "x": 809,
+      "y": 1401
+    }
+  ]
+}

@@ -1,0 +1,224 @@
+{
+  "rooms": [
+    {
+      "name": "STORAGE",
+      "number": "B101",
+      "page": 13,
+      "points_per_foot": 18,
+      "sheet": "A-101",
+      "x": 912,
+      "y": 465
+    },
+    {
+      "name": "FUTURE KITCHENETTE",
+      "number": "B105",
+      "page": 13,
+      "points_per_foot": 18,
+      "sheet": "A-101",
+      "x": 560,
+      "y": 754
+    },
+    {
+      "name": "STORAGE",
+      "number": "B102",
+      "page": 13,
+      "points_per_foot": 18,
+      "sheet": "A-101",
+      "x": 866,
+      "y": 822
+    },
+    {
+      "name": "SHOWER",
+      "number": "B104",
+      "page": 13,
+      "points_per_foot": 18,
+      "sheet": "A-101",
+      "x": 588,
+      "y": 866
+    },
+    {
+      "name": "PROJECT # R2508-01",
+      "number": "6027",
+      "page": 13,
+      "points_per_foot": 18,
+      "sheet": "A-101",
+      "x": 2435,
+      "y": 1152
+    },
+    {
+      "name": "CONSOLE",
+      "number": "103",
+      "page": 14,
+      "points_per_foot": 18,
+      "sheet": "A-102",
+      "x": 779,
+      "y": 951
+    },
+    {
+      "name": "VEST.",
+      "number": "102",
+      "page": 14,
+      "points_per_foot": 18,
+      "sheet": "A-102",
+      "x": 556,
+      "y": 986
+    },
+    {
+      "name": "STAIR",
+      "number": "101",
+      "page": 14,
+      "points_per_foot": 18,
+      "sheet": "A-102",
+      "x": 498,
+      "y": 1122
+    },
+    {
+      "name": "PROJECT # R2508-01",
+      "number": "6027",
+      "page": 14,
+      "points_per_foot": 18,
+      "sheet": "A-102",
+      "x": 2435,
+      "y": 1152
+    }
+  ],
+  "set": {
+    "label": "missouri_oa_fmdc - _R2508-01%20-%20Final%20Plans.pdf",
+    "page_count": 27,
+    "rows_total": 2,
+    "sha16": "ff9c494916a7d8b5",
+    "source_url": "https://oa.mo.gov/sites/default/files/bid-opportunities/_R2508-01%20-%20Final%20Plans.pdf",
+    "tier": "oracle-checked"
+  },
+  "sheets": [
+    {
+      "height": 1728,
+      "page": 13,
+      "points_per_foot": [
+        18
+      ],
+      "scales": [
+        "1/4\" = 1'-0\"",
+        "1/4\" = 1'-0\" 11"
+      ],
+      "sheet": "A-101",
+      "title": "BASEMENT FLOOR PLAN",
+      "width": 2592
+    },
+    {
+      "height": 1728,
+      "page": 14,
+      "points_per_foot": [
+        18
+      ],
+      "scales": [
+        "1/4\" = 1'-0\"",
+        "1/4\" = 1'-0\" 11"
+      ],
+      "sheet": "A-102",
+      "title": "GROUND LEVEL FLOOR PLAN",
+      "width": 2592
+    }
+  ],
+  "summary": {
+    "marks_placed": 2,
+    "marks_total": 2,
+    "placed_rate": 1,
+    "rooms_total": 9,
+    "sheets_total": 2,
+    "sheets_with_scale": 2,
+    "unplaced": []
+  },
+  "tags": [
+    {
+      "also_on": [],
+      "door_pages": [
+        19
+      ],
+      "door_type": "1",
+      "fire_rating": "NA",
+      "frame_type": "1",
+      "h": 9.429599999999999,
+      "hardware_group": "1",
+      "height_inches": 84,
+      "location": "STOR.",
+      "mark": "B103",
+      "matched_by": "exact",
+      "material": null,
+      "page": 13,
+      "pair": false,
+      "points_per_foot": 18,
+      "room": "B104",
+      "room_by": "nearest_label",
+      "room_name": "SHOWER",
+      "schedule_rows": [
+        {
+          "door_type": "1",
+          "fire_rating": "NA",
+          "frame_type": "1",
+          "hardware_group": "1",
+          "height_inches": 84,
+          "location": "STOR.",
+          "mark": "B103",
+          "material": null,
+          "page": 19,
+          "pair": false,
+          "size": "3'-0\" x 7'-0\"",
+          "width_inches": 36,
+          "y": 749
+        }
+      ],
+      "sheet": "A-101",
+      "size": "3'-0\" x 7'-0\"",
+      "unsure": true,
+      "width_inches": 36,
+      "x": 595,
+      "y": 981
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        19
+      ],
+      "door_type": "1",
+      "fire_rating": "NA",
+      "frame_type": "1",
+      "h": 9.429780000000001,
+      "hardware_group": "2",
+      "height_inches": 84,
+      "location": "EXT.",
+      "mark": "101",
+      "matched_by": "exact",
+      "material": null,
+      "page": 14,
+      "pair": false,
+      "points_per_foot": 18,
+      "room": "101",
+      "room_by": "nearest_label",
+      "room_name": "STAIR",
+      "schedule_rows": [
+        {
+          "door_type": "1",
+          "fire_rating": "NA",
+          "frame_type": "1",
+          "hardware_group": "2",
+          "height_inches": 84,
+          "location": "EXT.",
+          "mark": "101",
+          "material": null,
+          "page": 19,
+          "pair": false,
+          "size": "3'-0\" x 7'-0\"",
+          "width_inches": 36,
+          "y": 802
+        }
+      ],
+      "sheet": "A-102",
+      "size": "3'-0\" x 7'-0\"",
+      "unsure": true,
+      "width_inches": 36,
+      "x": 555,
+      "y": 1159
+    }
+  ]
+}

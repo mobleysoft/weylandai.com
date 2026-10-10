@@ -1,0 +1,736 @@
+{
+  "rooms": [
+    {
+      "name": "KEY VALUE",
+      "number": "27",
+      "page": 4,
+      "points_per_foot": 2.4,
+      "sheet": "A-101",
+      "x": 1720,
+      "y": 764
+    },
+    {
+      "name": "KEY VALUE",
+      "number": "1",
+      "page": 4,
+      "points_per_foot": 2.4,
+      "sheet": "A-101",
+      "x": 1183,
+      "y": 1050
+    },
+    {
+      "name": "KEY VALUE",
+      "number": "3",
+      "page": 5,
+      "points_per_foot": 9,
+      "sheet": "A-301",
+      "x": 275,
+      "y": 189
+    },
+    {
+      "name": "KEY VALUE",
+      "number": "4",
+      "page": 5,
+      "points_per_foot": 9,
+      "sheet": "A-301",
+      "x": 275,
+      "y": 198
+    },
+    {
+      "name": "KEY VALUE",
+      "number": "1",
+      "page": 5,
+      "points_per_foot": 9,
+      "sheet": "A-301",
+      "x": 288,
+      "y": 199
+    },
+    {
+      "name": "KEY VALUE",
+      "number": "1",
+      "page": 6,
+      "points_per_foot": 13.5,
+      "sheet": "A-304",
+      "x": 1860,
+      "y": 312
+    }
+  ],
+  "set": {
+    "label": "missouri_oa_fmdc - O25441-01%20Add%20%231%20Plans%20%26%20Specs.pdf",
+    "page_count": 14,
+    "rows_total": 29,
+    "sha16": "72bedaaba4d51d4f",
+    "source_url": "https://oa.mo.gov/sites/default/files/bid-opportunities/O25441-01%20Add%20%231%20Plans%20%26%20Specs.pdf",
+    "tier": "agreed"
+  },
+  "sheets": [
+    {
+      "height": 1728,
+      "page": 4,
+      "points_per_foot": [
+        2.4
+      ],
+      "scales": [
+        "A-101 SCALE: 1\" = 30'-0\""
+      ],
+      "sheet": "A-101",
+      "title": "FLOOR PLAN - AREA PLAN",
+      "width": 2592
+    },
+    {
+      "height": 1728,
+      "page": 5,
+      "points_per_foot": [
+        9,
+        18
+      ],
+      "scales": [
+        "SCALE: 1/4\" = 1'-0\"",
+        "SCALE: 1/8\" = 1'-0\"",
+        "SCALE: 1/4\" = 1'-0\""
+      ],
+      "sheet": "A-301",
+      "title": "FLOOR PLAN - AREA 4 - NEW",
+      "width": 2592
+    },
+    {
+      "height": 1728,
+      "page": 6,
+      "points_per_foot": [
+        13.5
+      ],
+      "scales": [
+        "A-304 SCALE: 3/16\" = 1'-0\"",
+        "A-304 SCALE: 3/16\" = 1'-0\""
+      ],
+      "sheet": "A-304",
+      "title": "FLOOR PLAN - AREA 9 - NEW",
+      "width": 2592
+    }
+  ],
+  "summary": {
+    "marks_placed": 12,
+    "marks_total": 29,
+    "placed_rate": 0.41379310344827586,
+    "rooms_total": 6,
+    "sheets_total": 3,
+    "sheets_with_scale": 3,
+    "unplaced": [
+      {
+        "mark": "E-04",
+        "page": 7,
+        "reason": "mark E-04 (schedule p.7) not tagged on any plan"
+      },
+      {
+        "mark": "E-05",
+        "page": 7,
+        "reason": "mark E-05 (schedule p.7) not tagged on any plan"
+      },
+      {
+        "mark": "E-06",
+        "page": 7,
+        "reason": "mark E-06 (schedule p.7) not tagged on any plan"
+      },
+      {
+        "mark": "E-07",
+        "page": 7,
+        "reason": "mark E-07 (schedule p.7) not tagged on any plan"
+      },
+      {
+        "mark": "E-08",
+        "page": 7,
+        "reason": "mark E-08 (schedule p.7) not tagged on any plan"
+      },
+      {
+        "mark": "E-09",
+        "page": 7,
+        "reason": "mark E-09 (schedule p.7) not tagged on any plan"
+      },
+      {
+        "mark": "E-10",
+        "page": 7,
+        "reason": "mark E-10 (schedule p.7) not tagged on any plan"
+      },
+      {
+        "mark": "E-13",
+        "page": 7,
+        "reason": "mark E-13 (schedule p.7) not tagged on any plan"
+      },
+      {
+        "mark": "E-14",
+        "page": 7,
+        "reason": "mark E-14 (schedule p.7) not tagged on any plan"
+      },
+      {
+        "mark": "E-15",
+        "page": 7,
+        "reason": "mark E-15 (schedule p.7) not tagged on any plan"
+      },
+      {
+        "mark": "E-16",
+        "page": 7,
+        "reason": "mark E-16 (schedule p.7) not tagged on any plan"
+      },
+      {
+        "mark": "I-01",
+        "page": 7,
+        "reason": "mark I-01 (schedule p.7) not tagged on any plan"
+      },
+      {
+        "mark": "I-02",
+        "page": 7,
+        "reason": "mark I-02 (schedule p.7) not tagged on any plan"
+      },
+      {
+        "mark": "I-03",
+        "page": 7,
+        "reason": "mark I-03 (schedule p.7) not tagged on any plan"
+      },
+      {
+        "mark": "I-06",
+        "page": 7,
+        "reason": "mark I-06 (schedule p.7) not tagged on any plan"
+      },
+      {
+        "mark": "I-11",
+        "page": 7,
+        "reason": "mark I-11 (schedule p.7) not tagged on any plan"
+      },
+      {
+        "mark": "I-13",
+        "page": 7,
+        "reason": "mark I-13 (schedule p.7) not tagged on any plan"
+      }
+    ]
+  },
+  "tags": [
+    {
+      "also_on": [],
+      "door_pages": [
+        7
+      ],
+      "door_type": "P00HM",
+      "fire_rating": null,
+      "frame_type": "F00HM",
+      "h": 9.50935,
+      "hardware_group": "D",
+      "height_inches": 84,
+      "location": null,
+      "mark": "E-11",
+      "matched_by": "exact",
+      "material": null,
+      "page": 5,
+      "pair": false,
+      "points_per_foot": 9,
+      "room": null,
+      "room_by": null,
+      "room_name": null,
+      "schedule_rows": [
+        {
+          "door_type": "P00HM",
+          "fire_rating": null,
+          "frame_type": "F00HM",
+          "hardware_group": "D",
+          "height_inches": 84,
+          "location": null,
+          "mark": "E-11",
+          "material": null,
+          "page": 7,
+          "pair": false,
+          "size": "3'-0\" x 7'-0\"",
+          "width_inches": 36,
+          "y": 1556
+        }
+      ],
+      "sheet": "A-301",
+      "size": "3'-0\" x 7'-0\"",
+      "width_inches": 36,
+      "x": 431,
+      "y": 589
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        7
+      ],
+      "door_type": "P00HM",
+      "fire_rating": null,
+      "frame_type": "F00HM",
+      "h": 9.50935,
+      "hardware_group": "G",
+      "height_inches": 84,
+      "location": null,
+      "mark": "I-04",
+      "matched_by": "exact",
+      "material": null,
+      "page": 5,
+      "pair": false,
+      "points_per_foot": 9,
+      "room": null,
+      "room_by": null,
+      "room_name": null,
+      "schedule_rows": [
+        {
+          "door_type": "P00HM",
+          "fire_rating": null,
+          "frame_type": "F00HM",
+          "hardware_group": "G",
+          "height_inches": 84,
+          "location": null,
+          "mark": "I-04",
+          "material": null,
+          "page": 7,
+          "pair": false,
+          "size": "3'-0\" x 7'-0\"",
+          "width_inches": 36,
+          "y": 1469
+        }
+      ],
+      "sheet": "A-301",
+      "size": "3'-0\" x 7'-0\"",
+      "width_inches": 36,
+      "x": 1315,
+      "y": 1434
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        7
+      ],
+      "door_type": "P00HM",
+      "fire_rating": null,
+      "frame_type": "F00HM",
+      "h": 9.50935,
+      "hardware_group": "E",
+      "height_inches": 84,
+      "location": null,
+      "mark": "E-12",
+      "matched_by": "exact",
+      "material": null,
+      "page": 5,
+      "pair": false,
+      "points_per_foot": 9,
+      "room": null,
+      "room_by": null,
+      "room_name": null,
+      "schedule_rows": [
+        {
+          "door_type": "P00HM",
+          "fire_rating": null,
+          "frame_type": "F00HM",
+          "hardware_group": "E",
+          "height_inches": 84,
+          "location": null,
+          "mark": "E-12",
+          "material": null,
+          "page": 7,
+          "pair": false,
+          "size": "3'-0\" x 7'-0\"",
+          "width_inches": 36,
+          "y": 1573
+        }
+      ],
+      "sheet": "A-301",
+      "size": "3'-0\" x 7'-0\"",
+      "width_inches": 36,
+      "x": 431,
+      "y": 1456
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        7
+      ],
+      "door_type": "P00HM",
+      "fire_rating": null,
+      "frame_type": "F00HM",
+      "h": 9.50935,
+      "hardware_group": "E",
+      "height_inches": 84,
+      "location": null,
+      "mark": "E-03",
+      "matched_by": "exact",
+      "material": null,
+      "page": 6,
+      "pair": false,
+      "points_per_foot": 13.5,
+      "room": null,
+      "room_by": null,
+      "room_name": null,
+      "schedule_rows": [
+        {
+          "door_type": "P00HM",
+          "fire_rating": null,
+          "frame_type": "F00HM",
+          "hardware_group": "E",
+          "height_inches": 84,
+          "location": null,
+          "mark": "E-03",
+          "material": null,
+          "page": 7,
+          "pair": false,
+          "size": "3'-0\" x 7'-0\"",
+          "width_inches": 36,
+          "y": 1416
+        }
+      ],
+      "sheet": "A-304",
+      "size": "3'-0\" x 7'-0\"",
+      "width_inches": 36,
+      "x": 192,
+      "y": 186
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        7
+      ],
+      "door_type": "P20HM",
+      "fire_rating": null,
+      "frame_type": "F00HM",
+      "h": 9.50935,
+      "hardware_group": "C1",
+      "height_inches": 84,
+      "location": null,
+      "mark": "E-02",
+      "matched_by": "exact",
+      "material": null,
+      "page": 6,
+      "pair": false,
+      "points_per_foot": 13.5,
+      "room": null,
+      "room_by": null,
+      "room_name": null,
+      "schedule_rows": [
+        {
+          "door_type": "P20HM",
+          "fire_rating": null,
+          "frame_type": "F00HM",
+          "hardware_group": "C1",
+          "height_inches": 84,
+          "location": null,
+          "mark": "E-02",
+          "material": null,
+          "page": 7,
+          "pair": false,
+          "size": "3'-0\" x 7'-0\"",
+          "width_inches": 36,
+          "y": 1400
+        }
+      ],
+      "sheet": "A-304",
+      "size": "3'-0\" x 7'-0\"",
+      "width_inches": 36,
+      "x": 655,
+      "y": 202
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        7
+      ],
+      "door_type": "P00WD",
+      "fire_rating": null,
+      "frame_type": "F00HM",
+      "h": 9.50935,
+      "hardware_group": "J",
+      "height_inches": 84,
+      "location": null,
+      "mark": "I-12",
+      "matched_by": "exact",
+      "material": null,
+      "page": 6,
+      "pair": false,
+      "points_per_foot": 13.5,
+      "room": null,
+      "room_by": null,
+      "room_name": null,
+      "schedule_rows": [
+        {
+          "door_type": "P00WD",
+          "fire_rating": null,
+          "frame_type": "F00HM",
+          "hardware_group": "J",
+          "height_inches": 84,
+          "location": null,
+          "mark": "I-12",
+          "material": null,
+          "page": 7,
+          "pair": false,
+          "size": "3'-0\" x 7'-0\"",
+          "width_inches": 36,
+          "y": 1639
+        }
+      ],
+      "sheet": "A-304",
+      "size": "3'-0\" x 7'-0\"",
+      "width_inches": 36,
+      "x": 668,
+      "y": 345
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        7
+      ],
+      "door_type": "P20HM",
+      "fire_rating": null,
+      "frame_type": "F00HM",
+      "h": 9.50935,
+      "hardware_group": "I",
+      "height_inches": 84,
+      "location": null,
+      "mark": "I-10",
+      "matched_by": "exact",
+      "material": null,
+      "page": 6,
+      "pair": false,
+      "points_per_foot": 13.5,
+      "room": null,
+      "room_by": null,
+      "room_name": null,
+      "schedule_rows": [
+        {
+          "door_type": "P20HM",
+          "fire_rating": null,
+          "frame_type": "F00HM",
+          "hardware_group": "I",
+          "height_inches": 84,
+          "location": null,
+          "mark": "I-10",
+          "material": null,
+          "page": 7,
+          "pair": false,
+          "size": "3'-0\" x 7'-0\"",
+          "width_inches": 36,
+          "y": 1590
+        }
+      ],
+      "sheet": "A-304",
+      "size": "3'-0\" x 7'-0\"",
+      "width_inches": 36,
+      "x": 180,
+      "y": 396
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        7
+      ],
+      "door_type": "P30AL",
+      "fire_rating": null,
+      "frame_type": "AL",
+      "h": 9.50935,
+      "hardware_group": "K",
+      "height_inches": 84,
+      "location": null,
+      "mark": "I-09",
+      "matched_by": "exact",
+      "material": null,
+      "page": 6,
+      "pair": false,
+      "points_per_foot": 13.5,
+      "room": null,
+      "room_by": null,
+      "room_name": null,
+      "schedule_rows": [
+        {
+          "door_type": "P30AL",
+          "fire_rating": null,
+          "frame_type": "AL",
+          "hardware_group": "K",
+          "height_inches": 84,
+          "location": null,
+          "mark": "I-09",
+          "material": null,
+          "page": 7,
+          "pair": false,
+          "size": "4'-0\" x 7'-0\"",
+          "width_inches": 48,
+          "y": 1556
+        }
+      ],
+      "sheet": "A-304",
+      "size": "4'-0\" x 7'-0\"",
+      "width_inches": 48,
+      "x": 642,
+      "y": 906
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        7
+      ],
+      "door_type": "P30AL",
+      "fire_rating": null,
+      "frame_type": "F00AL",
+      "h": 9.50935,
+      "hardware_group": "B",
+      "height_inches": 84,
+      "location": null,
+      "mark": "I-08",
+      "matched_by": "exact",
+      "material": null,
+      "page": 6,
+      "pair": false,
+      "points_per_foot": 13.5,
+      "room": null,
+      "room_by": null,
+      "room_name": null,
+      "schedule_rows": [
+        {
+          "door_type": "P30AL",
+          "fire_rating": null,
+          "frame_type": "F00AL",
+          "hardware_group": "B",
+          "height_inches": 84,
+          "location": null,
+          "mark": "I-08",
+          "material": null,
+          "page": 7,
+          "pair": false,
+          "size": "3'-0\" x 7'-0\"",
+          "width_inches": 36,
+          "y": 1537
+        }
+      ],
+      "sheet": "A-304",
+      "size": "3'-0\" x 7'-0\"",
+      "width_inches": 36,
+      "x": 769,
+      "y": 1000
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        7
+      ],
+      "door_type": "P30AL",
+      "fire_rating": null,
+      "frame_type": "F00AL",
+      "h": 9.50935,
+      "hardware_group": "A",
+      "height_inches": 84,
+      "location": null,
+      "mark": "E-01",
+      "matched_by": "exact",
+      "material": null,
+      "page": 6,
+      "pair": false,
+      "points_per_foot": 13.5,
+      "room": null,
+      "room_by": null,
+      "room_name": null,
+      "schedule_rows": [
+        {
+          "door_type": "P30AL",
+          "fire_rating": null,
+          "frame_type": "F00AL",
+          "hardware_group": "A",
+          "height_inches": 84,
+          "location": null,
+          "mark": "E-01",
+          "material": null,
+          "page": 7,
+          "pair": false,
+          "size": "3'-0\" x 7'-0\"",
+          "width_inches": 36,
+          "y": 1379
+        }
+      ],
+      "sheet": "A-304",
+      "size": "3'-0\" x 7'-0\"",
+      "width_inches": 36,
+      "x": 918,
+      "y": 1000
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        7
+      ],
+      "door_type": "P00HM",
+      "fire_rating": null,
+      "frame_type": "F00HM",
+      "h": 9.50935,
+      "hardware_group": "I",
+      "height_inches": 84,
+      "location": null,
+      "mark": "I-07",
+      "matched_by": "exact",
+      "material": null,
+      "page": 6,
+      "pair": false,
+      "points_per_foot": 13.5,
+      "room": null,
+      "room_by": null,
+      "room_name": null,
+      "schedule_rows": [
+        {
+          "door_type": "P00HM",
+          "fire_rating": null,
+          "frame_type": "F00HM",
+          "hardware_group": "I",
+          "height_inches": 84,
+          "location": null,
+          "mark": "I-07",
+          "material": null,
+          "page": 7,
+          "pair": false,
+          "size": "3'-0\" x 7'-0\"",
+          "width_inches": 36,
+          "y": 1504
+        }
+      ],
+      "sheet": "A-304",
+      "size": "3'-0\" x 7'-0\"",
+      "width_inches": 36,
+      "x": 161,
+      "y": 1014
+    },
+    {
+      "also_on": [],
+      "door_pages": [
+        7
+      ],
+      "door_type": "P30AL",
+      "fire_rating": null,
+      "frame_type": "AL",
+      "h": 9.50935,
+      "hardware_group": "J",
+      "height_inches": 84,
+      "location": null,
+      "mark": "I-14",
+      "matched_by": "exact",
+      "material": null,
+      "page": 6,
+      "pair": false,
+      "points_per_foot": 13.5,
+      "room": null,
+      "room_by": null,
+      "room_name": null,
+      "schedule_rows": [
+        {
+          "door_type": "P30AL",
+          "fire_rating": null,
+          "frame_type": "AL",
+          "hardware_group": "J",
+          "height_inches": 84,
+          "location": null,
+          "mark": "I-14",
+          "material": null,
+          "page": 7,
+          "pair": false,
+          "size": "3'-0\" x 7'-0\"",
+          "width_inches": 36,
+          "y": 1675
+        }
+      ],
+      "sheet": "A-304",
+      "size": "3'-0\" x 7'-0\"",
+      "width_inches": 36,
+      "x": 579,
+      "y": 1024
+    }
+  ]
+}
