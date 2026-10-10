@@ -82,3 +82,11 @@ zone_name = "weylandai.com"
 type = "Text"
 globs = ["**/*.html"]
 fallthrough = true
+
+# g068: plan-sheet images (tools/accuracy/g068/build-sheets.mjs), PNG bytes named .bin so
+# Wrangler's built-in module handling leaves them alone (weyland-subx-worker's client-ocr precedent),
+# imported as Data modules by src/data/sheets/images.js and served at /api/sightx/sheets/<sha16>/p<page>.png.
+[[rules]]
+type = "Data"
+globs = ["assets/sheets/*.bin"]
+fallthrough = true

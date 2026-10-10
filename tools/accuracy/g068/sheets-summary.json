@@ -1,0 +1,73 @@
+{
+  "dpi": 100,
+  "images": [
+    {
+      "file": "192a16af8f31ae0c-p7.bin",
+      "bytes": 216229
+    },
+    {
+      "file": "192a16af8f31ae0c-p8.bin",
+      "bytes": 174517
+    },
+    {
+      "file": "192a16af8f31ae0c-p11.bin",
+      "bytes": 177769
+    },
+    {
+      "file": "7478006f7fd5b43c-p23.bin",
+      "bytes": 239851
+    },
+    {
+      "file": "7478006f7fd5b43c-p24.bin",
+      "bytes": 237156
+    },
+    {
+      "file": "7478006f7fd5b43c-p25.bin",
+      "bytes": 218337
+    },
+    {
+      "file": "7478006f7fd5b43c-p28.bin",
+      "bytes": 219838
+    },
+    {
+      "file": "15b85ca679307cc1-p12.bin",
+      "bytes": 117468
+    },
+    {
+      "file": "15b85ca679307cc1-p13.bin",
+      "bytes": 220908
+    }
+  ],
+  "sets": [
+    {
+      "sha16": "192a16af8f31ae0c",
+      "label": "missouri_oa_fmdc - _T2507-01%20Final%20Bid%20Plans.pdf",
+      "placed": "49 of 49",
+      "sheets": [
+        "A-100 p.7 49 tags, 3600x2400 px",
+        "A-101 p.8 0 tags, 3600x2400 px",
+        "A-104 p.11 0 tags, 3600x2400 px"
+      ]
+    },
+    {
+      "sha16": "7478006f7fd5b43c",
+      "label": "missouri_oa_fmdc - _R2502-01%20Final%20Bid%20Plans.pdf",
+      "placed": "208 of 211",
+      "sheets": [
+        "A-105 p.23 53 tags, 3601x2401 px",
+        "A-106 p.24 77 tags, 3601x2401 px",
+        "A-107 p.25 77 tags, 3601x2401 px",
+        "A-112 p.28 1 tags, 3601x2401 px"
+      ]
+    },
+    {
+      "sha16": "15b85ca679307cc1",
+      "label": "missouri_oa_fmdc - _REBID%20T2421-01-%20Final%20Plans.pdf",
+      "placed": "33 of 33",
+      "sheets": [
+        "A-100 p.12 33 tags, 3600x2400 px",
+        "A-110 p.13 0 tags, 3600x2400 px"
+      ]
+    }
+  ]
+}
