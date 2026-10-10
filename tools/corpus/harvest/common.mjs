@@ -2,7 +2,8 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { execFileSync } from 'node:child_process';
-export const root = path.dirname(fileURLToPath(import.meta.url));
+// HARVEST_ROOT points a test at a fake round directory; unset, the harvester works in this directory.
+export const root = process.env.HARVEST_ROOT || path.dirname(fileURLToPath(import.meta.url));
 export const now = () => execFileSync('date', ['-u', '+%Y-%m-%dT%H:%M:%SZ'], {encoding:'utf8'}).trim();
 export const writeJSON = (name, data) => fs.writeFileSync(path.join(root,name), JSON.stringify(data,null,2)+'\n');
 export const records = () => fs.existsSync(path.join(root,'manifest.jsonl')) ? fs.readFileSync(path.join(root,'manifest.jsonl'),'utf8').trim().split('\n').filter(Boolean).map(JSON.parse) : [];

@@ -2,18 +2,25 @@ import fs from 'node:fs';
 import path from 'node:path';
 import crypto from 'node:crypto';
 import {root, now, writeJSON, records, pages} from './common.mjs';
+import {parseArgs,priorFile,checkStart,remainingQueue,dryRunLines,OA_NAME} from './round-plan.mjs';
 const UA='WeylandAI-corpus/1.0 (+https://weylandai.com)';
-const round3=process.argv.includes('--round3');
-const FILE_CAP=150000000, ROUND_CAP=round3?1000000000:3000000000;
+// --round3 is --round 3; --round N (N>3) --from-remaining takes round N-1's work-left queue. --cap-bytes sets the round cap (default 1 GB for a numbered round, 3 GB otherwise); --dry-run lists the queue and writes nothing.
+const opts=parseArgs(process.argv.slice(2)),round=opts.round,round3=round===3,numbered=round!=null;
+const FILE_CAP=150000000, ROUND_CAP=opts.capBytes;
 const sources=JSON.parse(fs.readFileSync(path.join(root,'sources.json')));
-fs.mkdirSync(path.join(root,'downloads'),{recursive:true});
+if(!opts.dryRun)fs.mkdirSync(path.join(root,'downloads'),{recursive:true});
 const known=new Set(), last=new Map(), robots=new Map(), queue=[], queued=new Set(), targets=new Set();
-const resume=process.argv.includes('--resume');
-if(round3&&resume)throw new Error('Round 3 is a new capped round; do not resume round 2');
-if(round3&&JSON.parse(fs.readFileSync(path.join(root,'round.json'))).round_number===3)throw new Error('Round 3 already started; do not reset its budget');
+const resume=opts.resume;
+const readState=name=>fs.existsSync(path.join(root,name))?JSON.parse(fs.readFileSync(path.join(root,name))):null;
+// Round N>3 preserves round N-1's finished state as round<N-1>.json (as start-round3.mjs kept round2.json) and reads its queue from there.
+const current=numbered?readState('round.json'):null;
+if(round>3&&!opts.dryRun&&!readState(priorFile(round))&&current?.round_number===round-1)fs.copyFileSync(path.join(root,'round.json'),path.join(root,priorFile(round)));
+const prior=round>3?readState(priorFile(round))??current:null;
+checkStart(opts,current,prior);
 const state=resume?JSON.parse(fs.readFileSync(path.join(root,'round.json'))):{started_at:now(),user_agent:UA,file_cap:FILE_CAP,round_cap:ROUND_CAP,received_bytes:0,saved_bytes:0,robots:{},blockers:[],next_targets:[],remaining:[],finished_at:null};
 state.manifest_start_line??=resume?0:records().length;
-if(round3){state.round_number=3;state.pdc_observations=[];}
+if(numbered){state.round_number=round;state.pdc_observations=[];}
+if(round>3)state.from_remaining={source:priorFile(round),prior_round:prior.round_number,prior_remaining:prior.remaining.length};
 let currentIndex=-1;
 if(resume){
  if(state.finished_at)throw new Error('Cannot resume a finished round; start a new round explicitly');
@@ -25,7 +32,7 @@ if(resume){
  for(const [origin,entry] of Object.entries(state.robots))robots.set(origin,{rules:entry.rules,fail:entry.policy.startsWith('deny:')});
  state.next_targets.forEach(url=>targets.add(url));
 }
-const previous=records(),visited=new Set(resume?previous.filter(r=>r.family!=='robots').map(r=>r.url):round3?previous.filter(r=>r.outcome==='downloaded'||r.sha256).flatMap(r=>[r.url,r.final_url].filter(Boolean)):[]);
+const previous=records(),visited=new Set(resume?previous.filter(r=>r.family!=='robots').map(r=>r.url):numbered?previous.filter(r=>r.outcome==='downloaded'||r.sha256).flatMap(r=>[r.url,r.final_url].filter(Boolean)):[]);
 if(resume)state.saved_bytes=previous.slice(state.manifest_start_line).filter(r=>r.outcome==='downloaded').reduce((n,r)=>n+r.bytes,0);
 function hashes(value) { if(typeof value==='string') { for(const h of value.matchAll(/\b[a-f0-9]{64}\b/gi)) known.add(h[0].toLowerCase()); } else if(value&&typeof value==='object') for(const v of Object.values(value)) hashes(v); }
 const corpus=path.dirname(root);
@@ -62,7 +69,7 @@ function expand(item,html,base) {
  for(const url of found){let decoded;try{decoded=decodeURIComponent(url);}catch{decoded=url;}const isPDF=/\.pdf(?:$|[?#])/i.test(url);const name=decoded.split('/').pop();
   if(/bid[ _-]*tab/i.test(name)){if(item.family==='missouri_oa_fmdc')log({url,family:item.family},{reason:'Bid Tab excluded from this corpus'});continue;}
   if(/login|signin|register/i.test(url)){targets.add(url);continue;}
-  if(item.kind==='oa'){if(isPDF&&(round3?/Plans|Specs|Bid Documents|Bid Docs|Addendum|Add/i:/Plans|Specs|Bid Documents|Bid Docs|Addendum|Add|Plans-Specs|IFB/i).test(name)){add(url,item.family);selected++;}else if(isPDF)targets.add(url);}
+  if(item.kind==='oa'){if(isPDF&&(numbered?OA_NAME:/Plans|Specs|Bid Documents|Bid Docs|Addendum|Add|Plans-Specs|IFB/i).test(name)){add(url,item.family);selected++;}else if(isPDF)targets.add(url);}
   else if(item.family==='missouri_um_pdc'){
    if(/(?:pdc-projects|operations-webapps)\.missouri\.edu\/pdc\/adsite\/project\.php\?/i.test(url)){add(url,item.family,'pdc-project',item.depth+1);selected++;}
    else if(isPDF&&/\/projects\/[^/]+\/(?:plans\/|sealed\/|ad\.pdf|pb\.pdf)/i.test(url)){add(url,item.family);selected++;}
@@ -75,7 +82,7 @@ function expand(item,html,base) {
   for(const cp of ids){
    if(item.kind!=='pdc-project'){const projectBase=/\/(?:pdc\/adsite)\//i.test(base)?base:'https://pdc-projects.missouri.edu/pdc/adsite/';add(new URL('project.php?project='+cp.toUpperCase()+'&format=html',projectBase).href,item.family,'pdc-project',1);}
   }
-  if(round3){const plain=html.replace(/<script[\s\S]*?<\/script>|<style[\s\S]*?<\/style>/gi,' ').replace(/<[^>]*>/g,' ').replace(/\s+/g,' ').trim();state.pdc_observations.push({url:base,description:'Public HTML title '+(html.match(/<title[^>]*>([\s\S]*?)<\/title>/i)?.[1]?.trim()||'(none)')+'; '+selected+' relevant exposed links; '+ids.size+' CP project identifiers.',exposed_links:found.filter(u=>/missouri|bids|plans|sealed|project|\.pdf/i.test(u)),text_excerpt:plain.slice(0,3000)});}
+  if(numbered){const plain=html.replace(/<script[\s\S]*?<\/script>|<style[\s\S]*?<\/style>/gi,' ').replace(/<[^>]*>/g,' ').replace(/\s+/g,' ').trim();state.pdc_observations.push({url:base,description:'Public HTML title '+(html.match(/<title[^>]*>([\s\S]*?)<\/title>/i)?.[1]?.trim()||'(none)')+'; '+selected+' relevant exposed links; '+ids.size+' CP project identifiers.',exposed_links:found.filter(u=>/missouri|bids|plans|sealed|project|\.pdf/i.test(u)),text_excerpt:plain.slice(0,3000)});}
  }
 
  return selected;
@@ -86,16 +93,18 @@ if(round3){
  for(const e of sources.enumerators.filter(e=>e.family==='missouri_oa_fmdc'))for(const url of e.urls)add(url,e.family,e.kind);
  const priorRound=JSON.parse(fs.readFileSync(path.join(root,'round2.json')));
  for(const item of priorRound.remaining||[]){const name=decodeURIComponent(new URL(item.url).pathname).split('/').pop();if(item.family==='missouri_oa_fmdc'&&!/bid[ _-]*tab|\bIFB\b/i.test(name)&&/Plans|Specs|Bid Documents|Bid Docs|Addendum|Add/i.test(name))add(item.url,item.family,item.kind,item.depth);}
+}else if(round>3){for(const item of remainingQueue(prior,visited))add(item.url,item.family,item.kind,item.depth);
 }else{
 for(const f of sources.families){for(const url of [...(f.seeds||[]),...(f.low_priority_seeds||[])])add(url,f.family);for(const url of f.index_pages||[])add(url,f.family,f.family==='missouri_oa_fmdc'?'oa':'index');for(const url of f.standards_not_bid_sets||[])targets.add(url);}
 for(const e of sources.enumerators)for(const url of e.urls)add(url,e.family,e.kind);
 }
+if(opts.dryRun){for(const line of dryRunLines(queue,opts,round>3?prior:readState('round2.json')))console.log(line);process.exit(0);}
 try {
  for(let i=0;i<queue.length;i++){
   currentIndex=i;const item=queue[i];if(state.received_bytes>=ROUND_CAP){for(const left of queue.slice(i)){state.remaining.push(left);log(left,{reason:'Round cap reached; not fetched'});}break;}
   state.pending_request=item;state.remaining=queue.slice(i);writeJSON('round.json',state);
   const r=await get(item);state.pending_request=null;
-  if(round3&&item.family==='missouri_um_pdc'&&r.error)state.pdc_observations.push({url:item.url,description:'Not fetched: '+r.error+'. No page-content claim is possible.'});
+  if(numbered&&item.family==='missouri_um_pdc'&&r.error)state.pdc_observations.push({url:item.url,description:'Not fetched: '+r.error+'. No page-content claim is possible.'});
   if(r.error){log(item,{http_status:r.status||null,bytes:r.bytes||0,reason:r.error});state.blockers.push(item.url+' — '+r.error);if(r.round_cap){state.stopped_at_round_cap=true;state.remaining=queue.slice(i);for(const left of queue.slice(i+1))log(left,{reason:'Round cap: not fetched after next file exceeded remaining budget'});break;}state.remaining=queue.slice(i+1);writeJSON('round.json',state);continue;}
   const magic=r.data.subarray(0,1024).includes(Buffer.from('%PDF-'));
   if(magic||/application\/pdf/i.test(r.type)){
