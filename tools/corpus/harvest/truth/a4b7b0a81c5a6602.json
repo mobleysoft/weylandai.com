@@ -31,26 +31,47 @@
    "name": "production text layer (weyland-subx-worker/src/lib/text-layer-read.js)"
   },
   "b": {
-   "doors": 0,
+   "doors": 14,
    "sets": 2,
    "items": 14,
    "name": "geometry first (tools/accuracy/truth/reader_b.mjs)",
-   "tables": 0
+   "tables": 2
   }
  },
- "rows_agreed": 0,
- "rows_disputed": 31,
+ "rows_agreed": 14,
+ "rows_disputed": 17,
  "rows_total": 31,
- "agreement_rate": 0,
+ "agreement_rate": 0.4516,
  "agreement": {
   "doors": {
    "rows": 14,
-   "agreed": 0,
+   "agreed": 14,
    "disputed": 0,
-   "only_a": 14,
+   "only_a": 0,
    "only_b": 0,
-   "fields": {},
-   "agreement_rate": 0
+   "fields": {
+    "width_inches": {
+     "agree": 14,
+     "total": 14
+    },
+    "height_inches": {
+     "agree": 14,
+     "total": 14
+    },
+    "door_type": {
+     "agree": 14,
+     "total": 14
+    },
+    "material": {
+     "agree": 14,
+     "total": 14
+    },
+    "hardware_group": {
+     "agree": 14,
+     "total": 14
+    }
+   },
+   "agreement_rate": 1
   },
   "items": {
    "rows": 17,
@@ -130,135 +151,9 @@
    "mark_fail": 0
   }
  },
- "tier": "oracle-checked",
- "disagreement_count": 44,
+ "tier": "agreed",
+ "disagreement_count": 30,
  "disagreements": [
-  {
-   "kind": "door",
-   "page": 15,
-   "key": "1",
-   "field": "(row)",
-   "a": "read",
-   "b": null,
-   "why": "only reader A read this row"
-  },
-  {
-   "kind": "door",
-   "page": 15,
-   "key": "2",
-   "field": "(row)",
-   "a": "read",
-   "b": null,
-   "why": "only reader A read this row"
-  },
-  {
-   "kind": "door",
-   "page": 15,
-   "key": "3",
-   "field": "(row)",
-   "a": "read",
-   "b": null,
-   "why": "only reader A read this row"
-  },
-  {
-   "kind": "door",
-   "page": 15,
-   "key": "4",
-   "field": "(row)",
-   "a": "read",
-   "b": null,
-   "why": "only reader A read this row"
-  },
-  {
-   "kind": "door",
-   "page": 15,
-   "key": "5",
-   "field": "(row)",
-   "a": "read",
-   "b": null,
-   "why": "only reader A read this row"
-  },
-  {
-   "kind": "door",
-   "page": 15,
-   "key": "6",
-   "field": "(row)",
-   "a": "read",
-   "b": null,
-   "why": "only reader A read this row"
-  },
-  {
-   "kind": "door",
-   "page": 15,
-   "key": "7",
-   "field": "(row)",
-   "a": "read",
-   "b": null,
-   "why": "only reader A read this row"
-  },
-  {
-   "kind": "door",
-   "page": 16,
-   "key": "1",
-   "field": "(row)",
-   "a": "read",
-   "b": null,
-   "why": "only reader A read this row"
-  },
-  {
-   "kind": "door",
-   "page": 16,
-   "key": "2",
-   "field": "(row)",
-   "a": "read",
-   "b": null,
-   "why": "only reader A read this row"
-  },
-  {
-   "kind": "door",
-   "page": 16,
-   "key": "3",
-   "field": "(row)",
-   "a": "read",
-   "b": null,
-   "why": "only reader A read this row"
-  },
-  {
-   "kind": "door",
-   "page": 16,
-   "key": "4",
-   "field": "(row)",
-   "a": "read",
-   "b": null,
-   "why": "only reader A read this row"
-  },
-  {
-   "kind": "door",
-   "page": 16,
-   "key": "5",
-   "field": "(row)",
-   "a": "read",
-   "b": null,
-   "why": "only reader A read this row"
-  },
-  {
-   "kind": "door",
-   "page": 16,
-   "key": "6",
-   "field": "(row)",
-   "a": "read",
-   "b": null,
-   "why": "only reader A read this row"
-  },
-  {
-   "kind": "door",
-   "page": 16,
-   "key": "7",
-   "field": "(row)",
-   "a": "read",
-   "b": null,
-   "why": "only reader A read this row"
-  },
   {
    "kind": "item",
    "page": 20,
@@ -468,8 +363,42 @@
    "field": "manufacturer",
    "a": "AA ZER D) APPLICATION:",
    "b": null
+  },
+  {
+   "kind": "item",
+   "page": 20,
+   "key": "(CONTINUED) / 655A-223",
+   "field": "catalog",
+   "a": "655A-223",
+   "b": "655A-223 A ZER The painting and staining work shall include, but is not necessarily limited"
+  },
+  {
+   "kind": "item",
+   "page": 20,
+   "key": "(CONTINUED) / 655A-223",
+   "field": "manufacturer",
+   "a": "A ZER THE PAINTING AND STAINING WORK SHALL INCLUDE, BUT IS NOT NECESSARILY LIMITED",
+   "b": null
+  },
+  {
+   "kind": "item",
+   "page": 20,
+   "key": "3 / b. Exposed primed ferrous louvers, plumbing",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 20,
+   "key": "3 / BY OVERHEAD DOOR MANUF UNF BYO b. Exposed surfaces of all factory finished, factory primed, non primed ferrous or non ferrous components such as grilles, louvers, panels, covers, wall ventilators, roof ventilators, plumbing equipment and materials, HVAC equipment and",
+   "field": "(row)",
+   "a": null,
+   "b": "read",
+   "why": "only reader B read this row"
   }
  ],
- "ms": 2656,
- "generated_at": "2026-10-10T02:36:17.786Z"
+ "ms": 2663,
+ "generated_at": "2026-10-10T03:17:35.123Z"
 }

@@ -92,3 +92,36 @@ test("T2507 A-103: WD | HGT under SIZE read as width and height; the empty SET N
   const d = doorOf(r, "100A");
   assert.deepEqual([d.door_type, d.frame_type, d.hardware_group ?? null], ["EXIST", "EXIST", null]);
 });
+
+// g050: rows that stand for several openings (g042 class C3): a range or a stack of marks over two
+// to four lines around the row's one data line, with a QUANTITY column. Eye truth from the rendered
+// sheets (tools/accuracy/g050/README.md): 16 rows standing for 520 doors on each sheet.
+import { readMarkList } from "../assets/client-ocr-src/schedule-text-layer.mjs";
+
+for (const [name, fx, expect] of [
+  ["C2410 A-601", "g050-c2410-a601-lines.json", [
+    ...[1, 2, 3, 4].flatMap((u) => [[u + "A101", [u + "A101", u + "D102"], 8], [u + "A103", [u + "A103", u + "D116"], 56], [u + "A201", [u + "A201", u + "D216"], 64]]),
+    ["151A", ["151A", "151B", "151C"], 3], ["256", null, 1], ["258A", ["258A", "258B"], 2], ["259A", ["259A", "259B"], 2]]],
+  ["C2410 addendum A-601", "g050-c2410add-a601-lines.json", [
+    ["1A101", ["1A101", "1D116"], 48], ["1A105", ["1A105", "1A116", "1B109", "1B116"], 16], ["1A201", ["1A201", "1D216"], 64],
+    ["2A101", ["2A101", "2D116"], 56], ["2A109", ["2A109", "2A112", "2B109", "2B112"], 8], ["2A201", ["2A201", "2D216"], 64],
+    ["3A101", ["3A101", "3D116"], 60], ["3A109", ["3A109", "3A112"], 4], ["3A201", ["3A201", "3D216"], 64],
+    ["4A101", ["4A101", "4D116"], 60], ["4B109", ["4B109", "4B112"], 4], ["4A201", ["4A201", "4D216"], 64],
+    ["151A", ["151A", "151B", "151C"], 3], ["256", null, 1], ["258A", ["258A", "258B"], 2], ["259A", ["259A", "259B"], 2]]],
+]) {
+  test(name + ": range and stacked-mark rows are one row each, with QUANTITY (16 rows, 520 doors)", async () => {
+    const r = await read(fx);
+    assert.deepEqual(r.doors.map((d) => [d.door_number, d.marks || null, d.quantity]), expect);
+    assert.equal(r.doors.reduce((n, d) => n + d.quantity, 0), 520);
+    for (const d of r.doors) assert.ok(d.width_inches && d.height_inches && d.door_type && d.hardware_group, d.door_number + " keeps its data");
+  });
+}
+
+test("readMarkList: ranges, stacks, & lists and a split end mark", () => {
+  assert.deepEqual(readMarkList("1A101 TO 1D102"), { marks: ["1A101", "1D102"], ranges: [{ from: "1A101", to: "1D102" }] });
+  assert.deepEqual(readMarkList("151A 151B 151C"), { marks: ["151A", "151B", "151C"], ranges: [] });
+  assert.deepEqual(readMarkList("2A109 TO 2A112 & 2B109 TO 2B112").ranges, [{ from: "2A109", to: "2A112" }, { from: "2B109", to: "2B112" }]);
+  assert.deepEqual(readMarkList("3A109 TO 3A 112").marks, ["3A109", "3A112"]);
+  assert.equal(readMarkList("101"), null);
+  assert.equal(readMarkList("101 SEE NOTE"), null);
+});

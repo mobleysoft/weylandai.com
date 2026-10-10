@@ -24,53 +24,57 @@
  },
  "readers": {
   "a": {
-   "doors": 34,
+   "doors": 16,
    "sets": 1,
    "items": 2,
    "name": "production text layer (weyland-subx-worker/src/lib/text-layer-read.js)"
   },
   "b": {
-   "doors": 35,
+   "doors": 16,
    "sets": 1,
    "items": 4,
    "name": "geometry first (tools/accuracy/truth/reader_b.mjs)",
    "tables": 5
   }
  },
- "rows_agreed": 11,
- "rows_disputed": 31,
- "rows_total": 42,
- "agreement_rate": 0.2619,
+ "rows_agreed": 16,
+ "rows_disputed": 6,
+ "rows_total": 22,
+ "agreement_rate": 0.7273,
  "agreement": {
   "doors": {
-   "rows": 36,
-   "agreed": 11,
-   "disputed": 22,
-   "only_a": 1,
-   "only_b": 2,
+   "rows": 16,
+   "agreed": 16,
+   "disputed": 0,
+   "only_a": 0,
+   "only_b": 0,
    "fields": {
     "width_inches": {
-     "agree": 5,
-     "total": 25
+     "agree": 16,
+     "total": 16
     },
     "height_inches": {
-     "agree": 5,
-     "total": 25
+     "agree": 16,
+     "total": 16
     },
     "door_type": {
-     "agree": 5,
-     "total": 25
+     "agree": 16,
+     "total": 16
     },
     "hardware_group": {
-     "agree": 5,
-     "total": 25
+     "agree": 16,
+     "total": 16
     },
     "location": {
-     "agree": 6,
-     "total": 28
+     "agree": 16,
+     "total": 16
+    },
+    "quantity": {
+     "agree": 16,
+     "total": 16
     }
    },
-   "agreement_rate": 0.3056
+   "agreement_rate": 1
   },
   "items": {
    "rows": 6,
@@ -98,8 +102,8 @@
     "corridors": 0,
     "tags": 0,
     "unmatched_tags": 0,
-    "schedule_marks": 34,
-    "marks_not_on_plan": 34,
+    "schedule_marks": 16,
+    "marks_not_on_plan": 16,
     "shared_marks": 0
    }
   },
@@ -126,352 +130,82 @@
   },
   "sizes_and_marks": {
    "applicable": true,
-   "total": 34,
-   "pass": 15,
-   "fail": 19,
-   "pass_rate": 0.4412,
-   "examples": [
-    "mark 1A101 p.45: size null -> null x null",
-    "mark 1A116 p.45: size null -> null x null",
-    "mark 1B109 p.45: size null -> null x null",
-    "mark 1B116 p.45: size null -> null x null",
-    "mark 1D216 p.45: size null -> null x null",
-    "mark 2D116 p.45: size null -> null x null",
-    "mark 2A112 p.45: size null -> null x null",
-    "mark 2B109 p.45: size null -> null x null",
-    "mark 2B112 p.45: size null -> null x null",
-    "mark 2A201 p.45: size null -> null x null",
-    "mark 3D116 p.45: size null -> null x null",
-    "mark 3A p.45: size null -> null x null"
-   ],
-   "size_fail": 18,
-   "mark_fail": 1
+   "total": 16,
+   "pass": 16,
+   "fail": 0,
+   "pass_rate": 1,
+   "examples": [],
+   "size_fail": 0,
+   "mark_fail": 0
   }
  },
  "tier": "agreed",
- "disagreement_count": 112,
+ "disagreement_count": 7,
  "disagreements": [
   {
-   "kind": "door",
-   "page": 45,
-   "key": "1A105",
-   "field": "width_inches",
-   "a": 28,
-   "b": null
+   "kind": "item",
+   "page": 38,
+   "key": "1 / 2 3 METAL DOOR FRAME",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
   },
   {
-   "kind": "door",
-   "page": 45,
-   "key": "1A105",
-   "field": "height_inches",
-   "a": 84,
-   "b": null
+   "kind": "item",
+   "page": 38,
+   "key": "1 / 3 1 NEW DOOR/FRAME W/ 1\" METAL SPANDREL PANEL 1",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
   },
   {
-   "kind": "door",
-   "page": 45,
-   "key": "1A105",
-   "field": "door_type",
-   "a": "1",
-   "b": null
-  },
-  {
-   "kind": "door",
-   "page": 45,
-   "key": "1A105",
-   "field": "hardware_group",
-   "a": "2",
-   "b": null
-  },
-  {
-   "kind": "door",
-   "page": 45,
-   "key": "1A105",
-   "field": "location",
-   "a": "CELL A105-CELL A116",
-   "b": null
-  },
-  {
-   "kind": "door",
-   "page": 45,
-   "key": "1A116",
-   "field": "width_inches",
+   "kind": "item",
+   "page": 38,
+   "key": "1 / METAL 2 3 FRAME METAL DOOR FRAME ARCHITECTURE &",
+   "field": "(row)",
    "a": null,
-   "b": 28
+   "b": "read",
+   "why": "only reader B read this row"
   },
   {
-   "kind": "door",
-   "page": 45,
-   "key": "1A116",
-   "field": "height_inches",
+   "kind": "item",
+   "page": 38,
+   "key": "1 / DEAD BOLT W/",
+   "field": "(row)",
    "a": null,
-   "b": 84
+   "b": "read",
+   "why": "only reader B read this row"
   },
   {
-   "kind": "door",
-   "page": 45,
-   "key": "1A116",
-   "field": "door_type",
+   "kind": "item",
+   "page": 38,
+   "key": "1 / PERIMETER OF THE METAL PLATE AT",
+   "field": "(row)",
    "a": null,
-   "b": "1"
+   "b": "read",
+   "why": "only reader B read this row"
   },
   {
-   "kind": "door",
-   "page": 45,
-   "key": "1A116",
-   "field": "hardware_group",
+   "kind": "item",
+   "page": 38,
+   "key": "1 / 4'-0\" x 7'-0\" 2 3 1 NEW DOOR/FRAME W/ 1\" METAL SPANDREL PANEL 1",
+   "field": "(row)",
    "a": null,
-   "b": "2"
+   "b": "read",
+   "why": "only reader B read this row"
   },
   {
-   "kind": "door",
-   "page": 45,
-   "key": "1A116",
-   "field": "location",
-   "a": null,
-   "b": "CELL A105-CELL A116"
-  },
-  {
-   "kind": "door",
-   "page": 45,
-   "key": "1A201",
-   "field": "width_inches",
-   "a": 28,
-   "b": null
-  },
-  {
-   "kind": "door",
-   "page": 45,
-   "key": "1A201",
-   "field": "height_inches",
-   "a": 84,
-   "b": null
-  },
-  {
-   "kind": "door",
-   "page": 45,
-   "key": "1A201",
-   "field": "door_type",
-   "a": "1",
-   "b": null
-  },
-  {
-   "kind": "door",
-   "page": 45,
-   "key": "1A201",
-   "field": "hardware_group",
-   "a": "1",
-   "b": null
-  },
-  {
-   "kind": "door",
-   "page": 45,
-   "key": "1A201",
-   "field": "location",
-   "a": "CELL A201-CELL D216",
-   "b": null
-  },
-  {
-   "kind": "door",
-   "page": 45,
-   "key": "1D216",
-   "field": "width_inches",
-   "a": null,
-   "b": 28
-  },
-  {
-   "kind": "door",
-   "page": 45,
-   "key": "1D216",
-   "field": "height_inches",
-   "a": null,
-   "b": 84
-  },
-  {
-   "kind": "door",
-   "page": 45,
-   "key": "1D216",
-   "field": "door_type",
-   "a": null,
-   "b": "1"
-  },
-  {
-   "kind": "door",
-   "page": 45,
-   "key": "1D216",
-   "field": "hardware_group",
-   "a": null,
-   "b": "1"
-  },
-  {
-   "kind": "door",
-   "page": 45,
-   "key": "1D216",
-   "field": "location",
-   "a": null,
-   "b": "CELL A201-CELL D216"
-  },
-  {
-   "kind": "door",
-   "page": 45,
-   "key": "2A101",
-   "field": "width_inches",
-   "a": 28,
-   "b": null
-  },
-  {
-   "kind": "door",
-   "page": 45,
-   "key": "2A101",
-   "field": "height_inches",
-   "a": 84,
-   "b": null
-  },
-  {
-   "kind": "door",
-   "page": 45,
-   "key": "2A101",
-   "field": "door_type",
-   "a": "1",
-   "b": null
-  },
-  {
-   "kind": "door",
-   "page": 45,
-   "key": "2A101",
-   "field": "hardware_group",
-   "a": "1",
-   "b": null
-  },
-  {
-   "kind": "door",
-   "page": 45,
-   "key": "2A101",
-   "field": "location",
-   "a": "CELL A101-CELL D116",
-   "b": null
-  },
-  {
-   "kind": "door",
-   "page": 45,
-   "key": "2D116",
-   "field": "width_inches",
-   "a": null,
-   "b": 28
-  },
-  {
-   "kind": "door",
-   "page": 45,
-   "key": "2D116",
-   "field": "height_inches",
-   "a": null,
-   "b": 84
-  },
-  {
-   "kind": "door",
-   "page": 45,
-   "key": "2D116",
-   "field": "door_type",
-   "a": null,
-   "b": "1"
-  },
-  {
-   "kind": "door",
-   "page": 45,
-   "key": "2D116",
-   "field": "hardware_group",
-   "a": null,
-   "b": "1"
-  },
-  {
-   "kind": "door",
-   "page": 45,
-   "key": "2D116",
-   "field": "location",
-   "a": null,
-   "b": "CELL A101-CELL D116"
-  },
-  {
-   "kind": "door",
-   "page": 45,
-   "key": "2A109",
-   "field": "width_inches",
-   "a": 28,
-   "b": null
-  },
-  {
-   "kind": "door",
-   "page": 45,
-   "key": "2A109",
-   "field": "height_inches",
-   "a": 84,
-   "b": null
-  },
-  {
-   "kind": "door",
-   "page": 45,
-   "key": "2A109",
-   "field": "door_type",
-   "a": "1",
-   "b": null
-  },
-  {
-   "kind": "door",
-   "page": 45,
-   "key": "2A109",
-   "field": "hardware_group",
-   "a": "2",
-   "b": null
-  },
-  {
-   "kind": "door",
-   "page": 45,
-   "key": "2A109",
-   "field": "location",
-   "a": "CELL A109-CELL A112",
-   "b": null
-  },
-  {
-   "kind": "door",
-   "page": 45,
-   "key": "2A112",
-   "field": "width_inches",
-   "a": null,
-   "b": 28
-  },
-  {
-   "kind": "door",
-   "page": 45,
-   "key": "2A112",
-   "field": "height_inches",
-   "a": null,
-   "b": 84
-  },
-  {
-   "kind": "door",
-   "page": 45,
-   "key": "2A112",
-   "field": "door_type",
-   "a": null,
-   "b": "1"
-  },
-  {
-   "kind": "door",
-   "page": 45,
-   "key": "2A112",
-   "field": "hardware_group",
-   "a": null,
-   "b": "2"
-  },
-  {
-   "kind": "door",
-   "page": 45,
-   "key": "2A112",
-   "field": "location",
-   "a": null,
-   "b": "CELL A109-CELL A112"
+   "kind": "group",
+   "page": null,
+   "key": "1",
+   "field": "doors",
+   "a": "1A213, 1A214, 1A215, 1A216, 1B108, 1B113, 1B114, 1B115, 1B116, 1B1213, 1B201, 1B202, 1B203, 1B204, 1B205, 1B206, 1B207, 1B208, 1B209, 1B210, 1B211, 1B212, 1B214, 1B215, 1B216, 1C101, 1C102, 1C103, 1C104, 1C105, 1C106, 1C107, 1C108, 1C109, 1C110, 1C111, 1C112, 1C113, 1C114, 1C115, 1C116, 1C201, 1C202, 1C203, 1C204, 1C205, 1C206, 1C207, 1C208, 1C209, 1C210, 1C211, 1C212, 1C213, 1C214, 1C215, 1C216, 1D101, 1D102, 1D103, 1D104, 1D105, 1D106, 1D107, 1D108, 1D109, 1D110, 1D111, 1D112, 1D113, 1D114, 1D115, 1D116, 1D201, 1D202, 1D203, 1D204, 1D205, 1D206, 1D207, 1D208, 1D209, 1D210, 1D211, 1D212, 1D213, 1D214, 1D215, 1D216, 2A113, 2A114, 2A115, 2A116, 2A213, 2A214, 2A215, 2A216, 2B101, 2B102, 2B103, 2B104, 2B105, 2B106, 2B107, 2B108, 2B109, 2B110, 2B111, 2B112, 2B113, 2B114, 2B115, 2B116, 2B1213, 2B201, 2B202, 2B203, 2B204, 2B205, 2B206, 2B207, 2B208, 2B209, 2B210, 2B211, 2B212, 2B214, 2B215, 2B216, 2C101, 2C102, 2C103, 2C104, 2C105, 2C106, 2C107, 2C108, 2C109, 2C110, 2C111, 2C112, 2C113, 2C114, 2C115, 2C116, 2C201, 2C202, 2C203, 2C204, 2C205, 2C206, 2C207, 2C208, 2C209, 2C210, 2C211, 2C212, 2C213, 2C214, 2C215, 2D101, 2D102, 2D103, 2D104, 2D105, 2D106, 2D107, 2D108, 2D109, 2D110, 2D111, 2D112, 2D113, 2D114, 2D115, 2D116",
+   "b": "1A101, 1A102, 1A103, 1A104, 1A201, 1A202, 1A203, 1A204, 1A205, 1A206, 1A207, 1A208, 1A209, 1A210, 1A211, 1A212, 1A213, 1A214, 1A215, 1A216, 1B101, 1B102, 1B103, 1B104, 1B105, 1B106, 1B107, 1B108, 1B113, 1B114, 1B115, 1B116, 1B1213, 1B201, 1B202, 1B203, 1B204, 1B205, 1B206, 1B207, 1B208, 1B209, 1B210, 1B211, 1B212, 1B214, 1B215, 1B216, 1C101, 1C102, 1C103, 1C104, 1C105, 1C106, 1C107, 1C108, 1C109, 1C110, 1C111, 1C112, 1C113, 1C114, 1C115, 1C116, 1C201, 1C202, 1C203, 1C204, 1C205, 1C206, 1C207, 1C208, 1C209, 1C210, 1C211, 1C212, 1C213, 1C214, 1C215, 1C216, 1D101, 1D102, 1D103, 1D104, 1D105, 1D106, 1D107, 1D108, 1D109, 1D110, 1D111, 1D112, 1D113, 1D114, 1D115, 1D116, 1D201, 1D202, 1D203, 1D204, 1D205, 1D206, 1D207, 1D208, 1D209, 1D210, 1D211, 1D212, 1D213, 1D214, 1D215, 1D216, 2A101, 2A102, 2A103, 2A104, 2A105, 2A106, 2A107, 2A108, 2A109, 2A110, 2A111, 2A112, 2A113, 2A114, 2A115, 2A116, 2A201, 2A202, 2A203, 2A204, 2A205, 2A206, 2A207, 2A208, 2A209, 2A210, 2A211, 2A212, 2A213, 2A214, 2A215, 2A216, 2B101, 2B102, 2B103, 2B104, 2B105, 2B106, 2B107, 2B108, 2B109, 2B110, 2B111, 2B112, 2B113, 2B114, 2B115, 2B116, 2B1213, 2B201, 2B202, 2B203, 2B204, 2B205, 2B206, 2B207, 2B208, 2B209, 2B210, 2B211, 2B212, 2B214, 2B215, 2B216, 2C101, 2C102, 2C103, 2C104, 2C105, 2C106, 2C107, 2C108, 2C109, 2C110, 2C111, 2C112, 2C113, 2C114, 2C115, 2C116, 2C201, 2C202, 2C203, 2C204, 2C205, 2C206, 2C207, 2C208, 2C209, 2C210, 2C211, 2C212, 2C213, 2C214, 2C215, 2D101, 2D102, 2D103, 2D104, 2D105, 2D106, 2D107, 2D108, 2D109, 2D110, 2D111, 2D112, 2D113, 2D114, 2D115, 2D116",
+   "why": "the set's door lists differ"
   }
  ],
- "ms": 360,
- "generated_at": "2026-10-10T02:33:18.003Z"
+ "ms": 373,
+ "generated_at": "2026-10-10T03:14:48.613Z"
 }

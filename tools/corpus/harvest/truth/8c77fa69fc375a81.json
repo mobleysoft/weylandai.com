@@ -15,7 +15,9 @@
  "pages": {
   "door_candidates": 14,
   "hardware_candidates": 13,
-  "door_schedule_pages": [],
+  "door_schedule_pages": [
+   115
+  ],
   "hardware_pages": [
    35,
    36,
@@ -40,26 +42,26 @@
    "name": "production text layer (weyland-subx-worker/src/lib/text-layer-read.js)"
   },
   "b": {
-   "doors": 0,
+   "doors": 8,
    "sets": 37,
    "items": 250,
    "name": "geometry first (tools/accuracy/truth/reader_b.mjs)",
-   "tables": 0
+   "tables": 1
   }
  },
  "rows_agreed": 0,
- "rows_disputed": 298,
- "rows_total": 298,
+ "rows_disputed": 306,
+ "rows_total": 306,
  "agreement_rate": 0,
  "agreement": {
   "doors": {
-   "rows": 0,
+   "rows": 8,
    "agreed": 0,
    "disputed": 0,
    "only_a": 0,
-   "only_b": 0,
+   "only_b": 8,
    "fields": {},
-   "agreement_rate": null
+   "agreement_rate": 0
   },
   "items": {
    "rows": 298,
@@ -122,8 +124,80 @@
  },
  "tier": "unread",
  "unread_reason": "no rows agreed and no oracle applies",
- "disagreement_count": 677,
+ "disagreement_count": 685,
  "disagreements": [
+  {
+   "kind": "door",
+   "page": 115,
+   "key": "P-1",
+   "field": "(row)",
+   "a": null,
+   "b": "read",
+   "why": "only reader B read this row"
+  },
+  {
+   "kind": "door",
+   "page": 115,
+   "key": "RB-1",
+   "field": "(row)",
+   "a": null,
+   "b": "read",
+   "why": "only reader B read this row"
+  },
+  {
+   "kind": "door",
+   "page": 115,
+   "key": "SV-1",
+   "field": "(row)",
+   "a": null,
+   "b": "read",
+   "why": "only reader B read this row"
+  },
+  {
+   "kind": "door",
+   "page": 115,
+   "key": "T-3",
+   "field": "(row)",
+   "a": null,
+   "b": "read",
+   "why": "only reader B read this row"
+  },
+  {
+   "kind": "door",
+   "page": 115,
+   "key": "T-10",
+   "field": "(row)",
+   "a": null,
+   "b": "read",
+   "why": "only reader B read this row"
+  },
+  {
+   "kind": "door",
+   "page": 115,
+   "key": "T-13",
+   "field": "(row)",
+   "a": null,
+   "b": "read",
+   "why": "only reader B read this row"
+  },
+  {
+   "kind": "door",
+   "page": 115,
+   "key": "WD-1",
+   "field": "(row)",
+   "a": null,
+   "b": "read",
+   "why": "only reader B read this row"
+  },
+  {
+   "kind": "door",
+   "page": 115,
+   "key": "WD-5",
+   "field": "(row)",
+   "a": null,
+   "b": "read",
+   "why": "only reader B read this row"
+  },
   {
    "kind": "item",
    "page": 35,
@@ -380,72 +454,8 @@
    "field": "catalog",
    "a": "351 CPS (HD Cush STP Arm)",
    "b": "351 CPS (HD Cush STP Arm) EB SA 087100"
-  },
-  {
-   "kind": "item",
-   "page": 35,
-   "key": "2.0 / 351 CPS (HD Cush STP Arm)",
-   "field": "finish",
-   "a": "EB",
-   "b": null
-  },
-  {
-   "kind": "item",
-   "page": 35,
-   "key": "2.0 / 351 CPS (HD Cush STP Arm)",
-   "field": "manufacturer",
-   "a": "SA",
-   "b": null
-  },
-  {
-   "kind": "item",
-   "page": 35,
-   "key": "2.0 / K1050 10\" high CSK BEV",
-   "field": "catalog",
-   "a": "K1050 10\" high CSK BEV",
-   "b": "K1050 10\" high CSK BEV US10B RO 087100"
-  },
-  {
-   "kind": "item",
-   "page": 35,
-   "key": "2.0 / K1050 10\" high CSK BEV",
-   "field": "finish",
-   "a": "US10B",
-   "b": null
-  },
-  {
-   "kind": "item",
-   "page": 35,
-   "key": "2.0 / K1050 10\" high CSK BEV",
-   "field": "manufacturer",
-   "a": "RO",
-   "b": null
-  },
-  {
-   "kind": "item",
-   "page": 35,
-   "key": "2.0 / 303DS (Head & Jambs)",
-   "field": "catalog",
-   "a": "303DS (Head & Jambs)",
-   "b": "303DS (Head & Jambs) PE 087100"
-  },
-  {
-   "kind": "item",
-   "page": 35,
-   "key": "2.0 / 303DS (Head & Jambs)",
-   "field": "manufacturer",
-   "a": "PE",
-   "b": null
-  },
-  {
-   "kind": "item",
-   "page": 35,
-   "key": "2.0 / 346D x Width of Frame Head",
-   "field": "catalog",
-   "a": "346D x Width of Frame Head",
-   "b": "346D x Width of Frame Head PE 087100"
   }
  ],
- "ms": 3540,
- "generated_at": "2026-10-10T02:36:01.038Z"
+ "ms": 3366,
+ "generated_at": "2026-10-10T03:17:19.089Z"
 }

@@ -52,6 +52,10 @@
     "door_type": {
      "agree": 7,
      "total": 7
+    },
+    "quantity": {
+     "agree": 7,
+     "total": 7
     }
    },
    "agreement_rate": 0.3684
@@ -252,6 +256,6 @@
    "why": "only reader B read this row"
   }
  ],
- "ms": 3118,
- "generated_at": "2026-10-10T02:35:07.110Z"
+ "ms": 2590,
+ "generated_at": "2026-10-10T03:16:28.844Z"
 }

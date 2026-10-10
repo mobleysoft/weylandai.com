@@ -22,7 +22,7 @@
  },
  "readers": {
   "a": {
-   "doors": 3,
+   "doors": 1,
    "sets": 0,
    "items": 0,
    "name": "production text layer (weyland-subx-worker/src/lib/text-layer-read.js)"
@@ -43,27 +43,10 @@
   "doors": {
    "rows": 7,
    "agreed": 0,
-   "disputed": 2,
+   "disputed": 0,
    "only_a": 1,
-   "only_b": 4,
-   "fields": {
-    "door_type": {
-     "agree": 0,
-     "total": 2
-    },
-    "material": {
-     "agree": 0,
-     "total": 2
-    },
-    "fire_rating": {
-     "agree": 0,
-     "total": 2
-    },
-    "width_inches": {
-     "agree": 0,
-     "total": 1
-    }
-   },
+   "only_b": 6,
+   "fields": {},
    "agreement_rate": 0
   },
   "items": {
@@ -106,7 +89,7 @@
  },
  "tier": "unread",
  "unread_reason": "no rows agreed and no oracle applies",
- "disagreement_count": 12,
+ "disagreement_count": 7,
  "disagreements": [
   {
    "kind": "door",
@@ -121,62 +104,24 @@
    "kind": "door",
    "page": 33,
    "key": "KEH1",
-   "field": "door_type",
-   "a": "I",
-   "b": null
+   "field": "(row)",
+   "a": null,
+   "b": "read",
+   "why": "only reader B read this row"
   },
   {
    "kind": "door",
    "page": 33,
    "key": "KEH1",
-   "field": "material",
-   "a": "300 SS",
-   "b": null
-  },
-  {
-   "kind": "door",
-   "page": 33,
-   "key": "KEH1",
-   "field": "fire_rating",
-   "a": "HEAVY",
-   "b": null
+   "field": "(row)",
+   "a": null,
+   "b": "read",
+   "why": "only reader B read this row"
   },
   {
    "kind": "door",
    "page": 33,
    "key": "1",
-   "field": "width_inches",
-   "a": null,
-   "b": 54
-  },
-  {
-   "kind": "door",
-   "page": 33,
-   "key": "1",
-   "field": "door_type",
-   "a": null,
-   "b": "I"
-  },
-  {
-   "kind": "door",
-   "page": 33,
-   "key": "1",
-   "field": "material",
-   "a": null,
-   "b": "300 SS"
-  },
-  {
-   "kind": "door",
-   "page": 33,
-   "key": "1",
-   "field": "fire_rating",
-   "a": null,
-   "b": "HEAVY"
-  },
-  {
-   "kind": "door",
-   "page": 33,
-   "key": "KEH1",
    "field": "(row)",
    "a": null,
    "b": "read",
@@ -210,6 +155,6 @@
    "why": "only reader B read this row"
   }
  ],
- "ms": 2832,
- "generated_at": "2026-10-10T02:34:12.369Z"
+ "ms": 2700,
+ "generated_at": "2026-10-10T03:15:39.601Z"
 }

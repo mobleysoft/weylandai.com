@@ -40,7 +40,11 @@ const MAKERS = {
 
 export const DOOR_FIELDS = ["width_inches", "height_inches", "door_type", "material", "fire_rating", "hardware_group", "location"];
 export const ITEM_FIELDS = ["qty", "description", "catalog", "finish", "manufacturer"];
-const doorNorm = { width_inches: N.num, height_inches: N.num, door_type: N.text, material: N.text, fire_rating: N.fire, hardware_group: N.text, location: N.text };
+const doorNorm = { width_inches: N.num, height_inches: N.num, door_type: N.text, material: N.text, fire_rating: N.fire, hardware_group: N.text, location: N.text, quantity: N.num };
+// g050: the two readers' rows also agree on QUANTITY (how many openings a range or stacked-mark row
+// stands for); absent on both sides when the schedule has no such column. Expected files carry no
+// quantity, so scoring against them keeps DOOR_FIELDS.
+export const ROW_FIELDS = [...DOOR_FIELDS, "quantity"];
 const itemNorm = { qty: N.num, description: N.text, catalog: N.cat, finish: N.text, manufacturer: N.mfr };
 
 function compare(a, b, fields, norms) {
@@ -74,9 +78,9 @@ export function alignDoors(A, B) {
   for (const a of A) {
     const list = bBy.get(key(a));
     const b = list && list.length ? list.shift() : null;
-    rows.push(rowOf("door", a.page, a.mark, a, b, DOOR_FIELDS, doorNorm));
+    rows.push(rowOf("door", a.page, a.mark, a, b, ROW_FIELDS, doorNorm));
   }
-  for (const list of bBy.values()) for (const b of list) rows.push(rowOf("door", b.page, b.mark, null, b, DOOR_FIELDS, doorNorm));
+  for (const list of bBy.values()) for (const b of list) rows.push(rowOf("door", b.page, b.mark, null, b, ROW_FIELDS, doorNorm));
   return rows;
 }
 
