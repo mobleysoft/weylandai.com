@@ -135,6 +135,8 @@ export function itemsToWords(items, toDevice, scale = 1) {
 }
 
 /** Words -> lines by baseline, preserving detected ruled-row identity. */
+// The tallest height on a line that is not an outlier (over 2.5 times the line's lower median).
+function bandHeight(xs) { const s = xs.slice().sort((a, b) => a - b); const med = s[Math.floor((s.length - 1) / 2)]; return Math.max(...s.filter((x) => x <= 2.5 * med)); }
 export function clusterLines(words) {
   const sorted = words.slice().sort((p, q) => p.yb - q.yb || p.x0 - q.x0);
   const lines = [];
@@ -147,21 +149,26 @@ export function clusterLines(words) {
     const L = ruled ? lastByGridRow.get(w.grid_row) : lastUnruled;
     // Ruled OCR keeps its centroid tolerance; unruled text uses the whole
     // baseline span so staggered headers cannot chain into one tall line.
+    // The unruled window is measured in the line's text sizes without outliers: a sheet number
+    // 55 pt tall printed beside a table's last row (7239 A-501), 7 times the row's 7.9 pt, once
+    // widened it to 22 pt and pulled the next row (176) into row 173.3 ("173.3176").
     if (L && (ruled
       ? Math.abs(L.y - w.yb) <= Math.max(1.2, 0.35 * Math.max(w.h, L.h))
-      : w.yb - L.minY <= Math.max(1.2, 0.4 * Math.max(w.h, L.h)))) {
+      : w.yb - L.minY <= Math.max(1.2, 0.4 * Math.max(w.h, bandHeight(L.hs))))) {
       L.words.push(w);
+      if (L.hs) L.hs.push(w.h);
       L.maxY = Math.max(L.maxY, w.yb);
       L.y = ruled ? (L.y * (L.words.length - 1) + w.yb) / L.words.length : (L.minY + L.maxY) / 2;
       L.h = Math.max(L.h, w.h);
     } else {
-      const line = { y: w.yb, minY: w.yb, maxY: w.yb, h: w.h, words: [w], ...(ruled ? { grid_row: w.grid_row } : {}) };
+      const line = { y: w.yb, minY: w.yb, maxY: w.yb, h: w.h, words: [w], ...(ruled ? { grid_row: w.grid_row } : { hs: [w.h] }) };
       lines.push(line);
       if (ruled) lastByGridRow.set(w.grid_row, line);
       else lastUnruled = line;
     }
   }
   for (const L of lines) {
+    delete L.hs;
     L.words.sort((p, q) => p.x0 - q.x0);
     L.x0 = L.words[0].x0;
     L.x1 = Math.max(...L.words.map((w) => w.x1));
@@ -425,9 +432,14 @@ async function buildTable(lines, fieldIdx, pageSize, opts, fieldCandidate = null
   // DOOR SCHEDULE", read as a hardware table, 9 doors dropped).
   const findTitle = (tx0, tx1) => {
     for (let k = headerIdx[0] - 1; k >= 0 && k >= headerIdx[0] - 8; k--) {
-      const L = within(lines[k], tx0, tx1, 2 * h);
+      const W = within(lines[k], tx0, tx1, 2 * h);
       if (lines[headerIdx[0]].y - lines[k].y > 8 * h) break;
-      if (!L.words.length) continue;
+      if (!W.words.length) continue;
+      // A title is its title-sized words: a smaller note sharing its band (T2504 A-601: "1. EXISTING
+      // STOREFRONT DOOR ..." beside DOOR AND FRAME SCHEDULE) is not part of it.
+      const tallest = Math.max(...W.words.map((w) => w.h || 0));
+      const tw = W.words.filter((w) => !tallest || (w.h || 0) >= 0.8 * tallest);
+      const L = { ...W, words: tw, text: tw.map((w) => w.str).join(" ") };
       if (L.words.length <= 8 && /\bSCHEDULE\b/.test(normLabel(L.text))) return L.text;
     }
     return null;
@@ -443,7 +455,7 @@ async function buildTable(lines, fieldIdx, pageSize, opts, fieldCandidate = null
   // overhang of those values beyond the header's printed extent.
   const inset = 1.2 * h;
   const dataIdx = [];
-  let lastY = field.y;
+  let lastY = field.y, rowStartY = field.y;
   const pitches = [];
   for (let k = fieldIdx + 1; k < lines.length; k++) {
     const L = lines[k];
@@ -459,7 +471,13 @@ async function buildTable(lines, fieldIdx, pageSize, opts, fieldCandidate = null
     if (/^(?:GENERAL\s+NOTES?|NOTES)\s*:/i.test(Li.text)) break;
     if (isFieldLine(Li, h) || isTitleLine(Li, h)) break;
     dataIdx.push(k);
-    if (dataIdx.length > 1) pitches.push(gap);
+    // The pitch is measured from row to row. A line closer than 0.8 text heights to the one above is
+    // part of the same row (a two-line remark printed above and below the row's baseline, T2147
+    // A601): counted as pitches, those 5 pt steps set the limit to 16 pt and the next row (18.5 pt
+    // on) ended the table after 2 of its 16 rows.
+    const sameRow = dataIdx.length > 1 && gap < 0.8 * h;
+    if (dataIdx.length > 1 && !sameRow) pitches.push(L.y - rowStartY);
+    if (!sameRow) rowStartY = L.y;
     lastY = L.y;
   }
   if (!dataIdx.length) return null;
