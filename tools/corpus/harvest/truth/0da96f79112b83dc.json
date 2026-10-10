@@ -15,7 +15,9 @@
  "pages": {
   "door_candidates": 2,
   "hardware_candidates": 1,
-  "door_schedule_pages": [],
+  "door_schedule_pages": [
+   32
+  ],
   "hardware_pages": []
  },
  "readers": {
@@ -26,26 +28,26 @@
    "name": "production text layer (weyland-subx-worker/src/lib/text-layer-read.js)"
   },
   "b": {
-   "doors": 0,
+   "doors": 5,
    "sets": 0,
    "items": 0,
    "name": "geometry first (tools/accuracy/truth/reader_b.mjs)",
-   "tables": 0
+   "tables": 1
   }
  },
  "rows_agreed": 0,
- "rows_disputed": 0,
- "rows_total": 0,
- "agreement_rate": null,
+ "rows_disputed": 5,
+ "rows_total": 5,
+ "agreement_rate": 0,
  "agreement": {
   "doors": {
-   "rows": 0,
+   "rows": 5,
    "agreed": 0,
    "disputed": 0,
    "only_a": 0,
-   "only_b": 0,
+   "only_b": 5,
    "fields": {},
-   "agreement_rate": null
+   "agreement_rate": 0
   },
   "items": {
    "rows": 0,
@@ -86,9 +88,55 @@
   }
  },
  "tier": "unread",
- "unread_reason": "no door schedule or hardware set read by either reader",
- "disagreement_count": 0,
- "disagreements": [],
- "ms": 1450,
- "generated_at": "2026-10-10T04:42:09.387Z"
+ "unread_reason": "no rows agreed and no oracle applies",
+ "disagreement_count": 5,
+ "disagreements": [
+  {
+   "kind": "door",
+   "page": 32,
+   "key": "B100XA",
+   "field": "(row)",
+   "a": null,
+   "b": "read",
+   "why": "only reader B read this row"
+  },
+  {
+   "kind": "door",
+   "page": 32,
+   "key": "B100XB",
+   "field": "(row)",
+   "a": null,
+   "b": "read",
+   "why": "only reader B read this row"
+  },
+  {
+   "kind": "door",
+   "page": 32,
+   "key": "B101X",
+   "field": "(row)",
+   "a": null,
+   "b": "read",
+   "why": "only reader B read this row"
+  },
+  {
+   "kind": "door",
+   "page": 32,
+   "key": "B102",
+   "field": "(row)",
+   "a": null,
+   "b": "read",
+   "why": "only reader B read this row"
+  },
+  {
+   "kind": "door",
+   "page": 32,
+   "key": "B103",
+   "field": "(row)",
+   "a": null,
+   "b": "read",
+   "why": "only reader B read this row"
+  }
+ ],
+ "ms": 1751,
+ "generated_at": "2026-10-10T07:31:36.348Z"
 }

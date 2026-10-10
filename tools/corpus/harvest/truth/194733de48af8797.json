@@ -190,7 +190,7 @@
   {
    "kind": "item",
    "page": 38,
-   "key": "1 / 4'-0\" x 7'-0\" 2 3 1 NEW DOOR/FRAME W/ 1\" METAL SPANDREL PANEL 1",
+   "key": "1 / 4'-0\" x 7'-0\" 2 3 1 NEW DOOR/FRAME W/ 1\" METAL SPANDREL PANEL 9\" 1",
    "field": "(row)",
    "a": null,
    "b": "read",
@@ -206,6 +206,6 @@
    "why": "the set's door lists differ"
   }
  ],
- "ms": 359,
- "generated_at": "2026-10-10T04:42:29.422Z"
+ "ms": 396,
+ "generated_at": "2026-10-10T07:31:57.825Z"
 }

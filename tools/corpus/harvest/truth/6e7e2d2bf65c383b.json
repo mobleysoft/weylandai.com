@@ -23,7 +23,7 @@
  },
  "readers": {
   "a": {
-   "doors": 0,
+   "doors": 8,
    "sets": 0,
    "items": 0,
    "name": "production text layer (weyland-subx-worker/src/lib/text-layer-read.js)"
@@ -36,19 +36,40 @@
    "tables": 2
   }
  },
- "rows_agreed": 0,
- "rows_disputed": 12,
+ "rows_agreed": 8,
+ "rows_disputed": 4,
  "rows_total": 12,
- "agreement_rate": 0,
+ "agreement_rate": 0.6667,
  "agreement": {
   "doors": {
    "rows": 12,
-   "agreed": 0,
+   "agreed": 8,
    "disputed": 0,
    "only_a": 0,
-   "only_b": 12,
-   "fields": {},
-   "agreement_rate": 0
+   "only_b": 4,
+   "fields": {
+    "width_inches": {
+     "agree": 8,
+     "total": 8
+    },
+    "height_inches": {
+     "agree": 8,
+     "total": 8
+    },
+    "door_type": {
+     "agree": 8,
+     "total": 8
+    },
+    "material": {
+     "agree": 8,
+     "total": 8
+    },
+    "hardware_group": {
+     "agree": 8,
+     "total": 8
+    }
+   },
+   "agreement_rate": 0.6667
   },
   "items": {
    "rows": 0,
@@ -68,8 +89,32 @@
  "triage_from": "tools/corpus/harvest/triage.json",
  "oracles": {
   "marks_on_plan": {
-   "applicable": false,
-   "reason": "no door schedule rows"
+   "applicable": true,
+   "total": 8,
+   "pass": 8,
+   "fail": 0,
+   "pass_rate": 1,
+   "examples": [],
+   "plan_sheets": [
+    "A110 p.60",
+    "A111 p.61",
+    "A114 p.64",
+    "A115 p.65",
+    "A401 p.76",
+    "A402 p.77",
+    "A403 p.78",
+    "A501 p.79"
+   ],
+   "plan_counts": {
+    "plan_sheets": 8,
+    "rooms": 45,
+    "corridors": 0,
+    "tags": 8,
+    "unmatched_tags": 0,
+    "schedule_marks": 8,
+    "marks_not_on_plan": 0,
+    "shared_marks": 0
+   }
   },
   "sets_exist": {
    "applicable": false,
@@ -81,89 +126,22 @@
   },
   "types_in_legend": {
    "applicable": false,
-   "reason": "no door schedule rows"
+   "reason": "no DOOR TYPES / FRAME TYPES legend title in this PDF"
   },
   "sizes_and_marks": {
-   "applicable": false,
-   "reason": "no door schedule rows"
+   "applicable": true,
+   "total": 8,
+   "pass": 8,
+   "fail": 0,
+   "pass_rate": 1,
+   "examples": [],
+   "size_fail": 0,
+   "mark_fail": 0
   }
  },
- "tier": "unread",
- "unread_reason": "no rows agreed and no oracle applies",
- "disagreement_count": 12,
+ "tier": "agreed",
+ "disagreement_count": 4,
  "disagreements": [
-  {
-   "kind": "door",
-   "page": 81,
-   "key": "100A",
-   "field": "(row)",
-   "a": null,
-   "b": "read",
-   "why": "only reader B read this row"
-  },
-  {
-   "kind": "door",
-   "page": 81,
-   "key": "101A",
-   "field": "(row)",
-   "a": null,
-   "b": "read",
-   "why": "only reader B read this row"
-  },
-  {
-   "kind": "door",
-   "page": 81,
-   "key": "102A",
-   "field": "(row)",
-   "a": null,
-   "b": "read",
-   "why": "only reader B read this row"
-  },
-  {
-   "kind": "door",
-   "page": 81,
-   "key": "103A",
-   "field": "(row)",
-   "a": null,
-   "b": "read",
-   "why": "only reader B read this row"
-  },
-  {
-   "kind": "door",
-   "page": 81,
-   "key": "104A",
-   "field": "(row)",
-   "a": null,
-   "b": "read",
-   "why": "only reader B read this row"
-  },
-  {
-   "kind": "door",
-   "page": 81,
-   "key": "105A",
-   "field": "(row)",
-   "a": null,
-   "b": "read",
-   "why": "only reader B read this row"
-  },
-  {
-   "kind": "door",
-   "page": 81,
-   "key": "106A",
-   "field": "(row)",
-   "a": null,
-   "b": "read",
-   "why": "only reader B read this row"
-  },
-  {
-   "kind": "door",
-   "page": 81,
-   "key": "107A",
-   "field": "(row)",
-   "a": null,
-   "b": "read",
-   "why": "only reader B read this row"
-  },
   {
    "kind": "door",
    "page": 97,
@@ -201,6 +179,6 @@
    "why": "only reader B read this row"
   }
  ],
- "ms": 2597,
- "generated_at": "2026-10-10T04:44:08.420Z"
+ "ms": 2725,
+ "generated_at": "2026-10-10T07:33:43.332Z"
 }

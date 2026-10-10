@@ -28,26 +28,39 @@
    "name": "production text layer (weyland-subx-worker/src/lib/text-layer-read.js)"
   },
   "b": {
-   "doors": 0,
+   "doors": 33,
    "sets": 0,
    "items": 0,
    "name": "geometry first (tools/accuracy/truth/reader_b.mjs)",
-   "tables": 0
+   "tables": 1
   }
  },
- "rows_agreed": 0,
- "rows_disputed": 33,
+ "rows_agreed": 33,
+ "rows_disputed": 0,
  "rows_total": 33,
- "agreement_rate": 0,
+ "agreement_rate": 1,
  "agreement": {
   "doors": {
    "rows": 33,
-   "agreed": 0,
+   "agreed": 33,
    "disputed": 0,
-   "only_a": 33,
+   "only_a": 0,
    "only_b": 0,
-   "fields": {},
-   "agreement_rate": 0
+   "fields": {
+    "width_inches": {
+     "agree": 16,
+     "total": 16
+    },
+    "height_inches": {
+     "agree": 16,
+     "total": 16
+    },
+    "hardware_group": {
+     "agree": 17,
+     "total": 17
+    }
+   },
+   "agreement_rate": 1
   },
   "items": {
    "rows": 0,
@@ -125,307 +138,9 @@
    "mark_fail": 0
   }
  },
- "tier": "oracle-checked",
- "disagreement_count": 33,
- "disagreements": [
-  {
-   "kind": "door",
-   "page": 15,
-   "key": "101",
-   "field": "(row)",
-   "a": "read",
-   "b": null,
-   "why": "only reader A read this row"
-  },
-  {
-   "kind": "door",
-   "page": 15,
-   "key": "101A",
-   "field": "(row)",
-   "a": "read",
-   "b": null,
-   "why": "only reader A read this row"
-  },
-  {
-   "kind": "door",
-   "page": 15,
-   "key": "102",
-   "field": "(row)",
-   "a": "read",
-   "b": null,
-   "why": "only reader A read this row"
-  },
-  {
-   "kind": "door",
-   "page": 15,
-   "key": "102A",
-   "field": "(row)",
-   "a": "read",
-   "b": null,
-   "why": "only reader A read this row"
-  },
-  {
-   "kind": "door",
-   "page": 15,
-   "key": "103",
-   "field": "(row)",
-   "a": "read",
-   "b": null,
-   "why": "only reader A read this row"
-  },
-  {
-   "kind": "door",
-   "page": 15,
-   "key": "103A",
-   "field": "(row)",
-   "a": "read",
-   "b": null,
-   "why": "only reader A read this row"
-  },
-  {
-   "kind": "door",
-   "page": 15,
-   "key": "104",
-   "field": "(row)",
-   "a": "read",
-   "b": null,
-   "why": "only reader A read this row"
-  },
-  {
-   "kind": "door",
-   "page": 15,
-   "key": "105",
-   "field": "(row)",
-   "a": "read",
-   "b": null,
-   "why": "only reader A read this row"
-  },
-  {
-   "kind": "door",
-   "page": 15,
-   "key": "106",
-   "field": "(row)",
-   "a": "read",
-   "b": null,
-   "why": "only reader A read this row"
-  },
-  {
-   "kind": "door",
-   "page": 15,
-   "key": "107",
-   "field": "(row)",
-   "a": "read",
-   "b": null,
-   "why": "only reader A read this row"
-  },
-  {
-   "kind": "door",
-   "page": 15,
-   "key": "107A",
-   "field": "(row)",
-   "a": "read",
-   "b": null,
-   "why": "only reader A read this row"
-  },
-  {
-   "kind": "door",
-   "page": 15,
-   "key": "108",
-   "field": "(row)",
-   "a": "read",
-   "b": null,
-   "why": "only reader A read this row"
-  },
-  {
-   "kind": "door",
-   "page": 15,
-   "key": "109",
-   "field": "(row)",
-   "a": "read",
-   "b": null,
-   "why": "only reader A read this row"
-  },
-  {
-   "kind": "door",
-   "page": 15,
-   "key": "110",
-   "field": "(row)",
-   "a": "read",
-   "b": null,
-   "why": "only reader A read this row"
-  },
-  {
-   "kind": "door",
-   "page": 15,
-   "key": "111",
-   "field": "(row)",
-   "a": "read",
-   "b": null,
-   "why": "only reader A read this row"
-  },
-  {
-   "kind": "door",
-   "page": 15,
-   "key": "112",
-   "field": "(row)",
-   "a": "read",
-   "b": null,
-   "why": "only reader A read this row"
-  },
-  {
-   "kind": "door",
-   "page": 15,
-   "key": "113",
-   "field": "(row)",
-   "a": "read",
-   "b": null,
-   "why": "only reader A read this row"
-  },
-  {
-   "kind": "door",
-   "page": 15,
-   "key": "114",
-   "field": "(row)",
-   "a": "read",
-   "b": null,
-   "why": "only reader A read this row"
-  },
-  {
-   "kind": "door",
-   "page": 15,
-   "key": "114A",
-   "field": "(row)",
-   "a": "read",
-   "b": null,
-   "why": "only reader A read this row"
-  },
-  {
-   "kind": "door",
-   "page": 15,
-   "key": "115",
-   "field": "(row)",
-   "a": "read",
-   "b": null,
-   "why": "only reader A read this row"
-  },
-  {
-   "kind": "door",
-   "page": 15,
-   "key": "116",
-   "field": "(row)",
-   "a": "read",
-   "b": null,
-   "why": "only reader A read this row"
-  },
-  {
-   "kind": "door",
-   "page": 15,
-   "key": "117",
-   "field": "(row)",
-   "a": "read",
-   "b": null,
-   "why": "only reader A read this row"
-  },
-  {
-   "kind": "door",
-   "page": 15,
-   "key": "118",
-   "field": "(row)",
-   "a": "read",
-   "b": null,
-   "why": "only reader A read this row"
-  },
-  {
-   "kind": "door",
-   "page": 15,
-   "key": "119",
-   "field": "(row)",
-   "a": "read",
-   "b": null,
-   "why": "only reader A read this row"
-  },
-  {
-   "kind": "door",
-   "page": 15,
-   "key": "121",
-   "field": "(row)",
-   "a": "read",
-   "b": null,
-   "why": "only reader A read this row"
-  },
-  {
-   "kind": "door",
-   "page": 15,
-   "key": "122",
-   "field": "(row)",
-   "a": "read",
-   "b": null,
-   "why": "only reader A read this row"
-  },
-  {
-   "kind": "door",
-   "page": 15,
-   "key": "122A",
-   "field": "(row)",
-   "a": "read",
-   "b": null,
-   "why": "only reader A read this row"
-  },
-  {
-   "kind": "door",
-   "page": 15,
-   "key": "123",
-   "field": "(row)",
-   "a": "read",
-   "b": null,
-   "why": "only reader A read this row"
-  },
-  {
-   "kind": "door",
-   "page": 15,
-   "key": "124",
-   "field": "(row)",
-   "a": "read",
-   "b": null,
-   "why": "only reader A read this row"
-  },
-  {
-   "kind": "door",
-   "page": 15,
-   "key": "126",
-   "field": "(row)",
-   "a": "read",
-   "b": null,
-   "why": "only reader A read this row"
-  },
-  {
-   "kind": "door",
-   "page": 15,
-   "key": "127",
-   "field": "(row)",
-   "a": "read",
-   "b": null,
-   "why": "only reader A read this row"
-  },
-  {
-   "kind": "door",
-   "page": 15,
-   "key": "128",
-   "field": "(row)",
-   "a": "read",
-   "b": null,
-   "why": "only reader A read this row"
-  },
-  {
-   "kind": "door",
-   "page": 15,
-   "key": "128A",
-   "field": "(row)",
-   "a": "read",
-   "b": null,
-   "why": "only reader A read this row"
-  }
- ],
- "ms": 3401,
- "generated_at": "2026-10-10T04:43:25.574Z"
+ "tier": "agreed",
+ "disagreement_count": 0,
+ "disagreements": [],
+ "ms": 3475,
+ "generated_at": "2026-10-10T07:32:57.361Z"
 }

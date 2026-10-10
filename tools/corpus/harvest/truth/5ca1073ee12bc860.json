@@ -15,7 +15,9 @@
  "pages": {
   "door_candidates": 4,
   "hardware_candidates": 1,
-  "door_schedule_pages": [],
+  "door_schedule_pages": [
+   118
+  ],
   "hardware_pages": []
  },
  "readers": {
@@ -26,26 +28,26 @@
    "name": "production text layer (weyland-subx-worker/src/lib/text-layer-read.js)"
   },
   "b": {
-   "doors": 0,
+   "doors": 6,
    "sets": 0,
    "items": 0,
    "name": "geometry first (tools/accuracy/truth/reader_b.mjs)",
-   "tables": 0
+   "tables": 1
   }
  },
  "rows_agreed": 0,
- "rows_disputed": 0,
- "rows_total": 0,
- "agreement_rate": null,
+ "rows_disputed": 6,
+ "rows_total": 6,
+ "agreement_rate": 0,
  "agreement": {
   "doors": {
-   "rows": 0,
+   "rows": 6,
    "agreed": 0,
    "disputed": 0,
    "only_a": 0,
-   "only_b": 0,
+   "only_b": 6,
    "fields": {},
-   "agreement_rate": null
+   "agreement_rate": 0
   },
   "items": {
    "rows": 0,
@@ -86,9 +88,64 @@
   }
  },
  "tier": "unread",
- "unread_reason": "no door schedule or hardware set read by either reader",
- "disagreement_count": 0,
- "disagreements": [],
- "ms": 1877,
- "generated_at": "2026-10-10T04:43:39.133Z"
+ "unread_reason": "no rows agreed and no oracle applies",
+ "disagreement_count": 6,
+ "disagreements": [
+  {
+   "kind": "door",
+   "page": 118,
+   "key": "001A",
+   "field": "(row)",
+   "a": null,
+   "b": "read",
+   "why": "only reader B read this row"
+  },
+  {
+   "kind": "door",
+   "page": 118,
+   "key": "001B",
+   "field": "(row)",
+   "a": null,
+   "b": "read",
+   "why": "only reader B read this row"
+  },
+  {
+   "kind": "door",
+   "page": 118,
+   "key": "206",
+   "field": "(row)",
+   "a": null,
+   "b": "read",
+   "why": "only reader B read this row"
+  },
+  {
+   "kind": "door",
+   "page": 118,
+   "key": "207",
+   "field": "(row)",
+   "a": null,
+   "b": "read",
+   "why": "only reader B read this row"
+  },
+  {
+   "kind": "door",
+   "page": 118,
+   "key": "208",
+   "field": "(row)",
+   "a": null,
+   "b": "read",
+   "why": "only reader B read this row"
+  },
+  {
+   "kind": "door",
+   "page": 118,
+   "key": "209",
+   "field": "(row)",
+   "a": null,
+   "b": "read",
+   "why": "only reader B read this row"
+  }
+ ],
+ "ms": 1947,
+ "generated_at": "2026-10-10T07:33:11.862Z"
 }

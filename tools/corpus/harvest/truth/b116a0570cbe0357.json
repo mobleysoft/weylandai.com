@@ -28,26 +28,43 @@
    "name": "production text layer (weyland-subx-worker/src/lib/text-layer-read.js)"
   },
   "b": {
-   "doors": 0,
+   "doors": 3,
    "sets": 0,
    "items": 0,
    "name": "geometry first (tools/accuracy/truth/reader_b.mjs)",
-   "tables": 0
+   "tables": 1
   }
  },
- "rows_agreed": 0,
- "rows_disputed": 3,
+ "rows_agreed": 3,
+ "rows_disputed": 0,
  "rows_total": 3,
- "agreement_rate": 0,
+ "agreement_rate": 1,
  "agreement": {
   "doors": {
    "rows": 3,
-   "agreed": 0,
+   "agreed": 3,
    "disputed": 0,
-   "only_a": 3,
+   "only_a": 0,
    "only_b": 0,
-   "fields": {},
-   "agreement_rate": 0
+   "fields": {
+    "width_inches": {
+     "agree": 3,
+     "total": 3
+    },
+    "height_inches": {
+     "agree": 3,
+     "total": 3
+    },
+    "door_type": {
+     "agree": 3,
+     "total": 3
+    },
+    "hardware_group": {
+     "agree": 3,
+     "total": 3
+    }
+   },
+   "agreement_rate": 1
   },
   "items": {
    "rows": 0,
@@ -103,37 +120,9 @@
    "mark_fail": 0
   }
  },
- "tier": "oracle-checked",
- "disagreement_count": 3,
- "disagreements": [
-  {
-   "kind": "door",
-   "page": 18,
-   "key": "110",
-   "field": "(row)",
-   "a": "read",
-   "b": null,
-   "why": "only reader A read this row"
-  },
-  {
-   "kind": "door",
-   "page": 18,
-   "key": "111",
-   "field": "(row)",
-   "a": "read",
-   "b": null,
-   "why": "only reader A read this row"
-  },
-  {
-   "kind": "door",
-   "page": 18,
-   "key": "112",
-   "field": "(row)",
-   "a": "read",
-   "b": null,
-   "why": "only reader A read this row"
-  }
- ],
- "ms": 1632,
- "generated_at": "2026-10-10T04:45:30.005Z"
+ "tier": "agreed",
+ "disagreement_count": 0,
+ "disagreements": [],
+ "ms": 1780,
+ "generated_at": "2026-10-10T07:35:11.844Z"
 }

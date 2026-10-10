@@ -28,26 +28,43 @@
    "name": "production text layer (weyland-subx-worker/src/lib/text-layer-read.js)"
   },
   "b": {
-   "doors": 0,
+   "doors": 11,
    "sets": 0,
    "items": 0,
    "name": "geometry first (tools/accuracy/truth/reader_b.mjs)",
-   "tables": 0
+   "tables": 1
   }
  },
- "rows_agreed": 0,
- "rows_disputed": 11,
+ "rows_agreed": 10,
+ "rows_disputed": 1,
  "rows_total": 11,
- "agreement_rate": 0,
+ "agreement_rate": 0.9091,
  "agreement": {
   "doors": {
    "rows": 11,
-   "agreed": 0,
-   "disputed": 0,
-   "only_a": 11,
+   "agreed": 10,
+   "disputed": 1,
+   "only_a": 0,
    "only_b": 0,
-   "fields": {},
-   "agreement_rate": 0
+   "fields": {
+    "width_inches": {
+     "agree": 11,
+     "total": 11
+    },
+    "height_inches": {
+     "agree": 11,
+     "total": 11
+    },
+    "door_type": {
+     "agree": 11,
+     "total": 11
+    },
+    "hardware_group": {
+     "agree": 10,
+     "total": 11
+    }
+   },
+   "agreement_rate": 0.9091
   },
   "items": {
    "rows": 0,
@@ -112,109 +129,18 @@
    "mark_fail": 0
   }
  },
- "tier": "oracle-checked",
- "disagreement_count": 11,
+ "tier": "agreed",
+ "disagreement_count": 1,
  "disagreements": [
   {
    "kind": "door",
    "page": 8,
-   "key": "100A",
-   "field": "(row)",
-   "a": "read",
-   "b": null,
-   "why": "only reader A read this row"
-  },
-  {
-   "kind": "door",
-   "page": 8,
-   "key": "100B",
-   "field": "(row)",
-   "a": "read",
-   "b": null,
-   "why": "only reader A read this row"
-  },
-  {
-   "kind": "door",
-   "page": 8,
-   "key": "101",
-   "field": "(row)",
-   "a": "read",
-   "b": null,
-   "why": "only reader A read this row"
-  },
-  {
-   "kind": "door",
-   "page": 8,
-   "key": "102",
-   "field": "(row)",
-   "a": "read",
-   "b": null,
-   "why": "only reader A read this row"
-  },
-  {
-   "kind": "door",
-   "page": 8,
-   "key": "105",
-   "field": "(row)",
-   "a": "read",
-   "b": null,
-   "why": "only reader A read this row"
-  },
-  {
-   "kind": "door",
-   "page": 8,
-   "key": "106",
-   "field": "(row)",
-   "a": "read",
-   "b": null,
-   "why": "only reader A read this row"
-  },
-  {
-   "kind": "door",
-   "page": 8,
-   "key": "107",
-   "field": "(row)",
-   "a": "read",
-   "b": null,
-   "why": "only reader A read this row"
-  },
-  {
-   "kind": "door",
-   "page": 8,
-   "key": "109",
-   "field": "(row)",
-   "a": "read",
-   "b": null,
-   "why": "only reader A read this row"
-  },
-  {
-   "kind": "door",
-   "page": 8,
-   "key": "201",
-   "field": "(row)",
-   "a": "read",
-   "b": null,
-   "why": "only reader A read this row"
-  },
-  {
-   "kind": "door",
-   "page": 8,
-   "key": "202",
-   "field": "(row)",
-   "a": "read",
-   "b": null,
-   "why": "only reader A read this row"
-  },
-  {
-   "kind": "door",
-   "page": 8,
    "key": "203",
-   "field": "(row)",
-   "a": "read",
-   "b": null,
-   "why": "only reader A read this row"
+   "field": "hardware_group",
+   "a": "6 PANEL",
+   "b": "6"
   }
  ],
- "ms": 1734,
- "generated_at": "2026-10-10T04:43:54.580Z"
+ "ms": 1963,
+ "generated_at": "2026-10-10T07:33:28.674Z"
 }

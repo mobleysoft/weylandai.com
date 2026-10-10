@@ -24,39 +24,60 @@
  },
  "readers": {
   "a": {
-   "doors": 0,
+   "doors": 13,
    "sets": 6,
    "items": 19,
    "name": "production text layer (weyland-subx-worker/src/lib/text-layer-read.js)"
   },
   "b": {
    "doors": 13,
-   "sets": 4,
-   "items": 13,
+   "sets": 3,
+   "items": 12,
    "name": "geometry first (tools/accuracy/truth/reader_b.mjs)",
    "tables": 1
   }
  },
- "rows_agreed": 0,
- "rows_disputed": 45,
- "rows_total": 45,
- "agreement_rate": 0,
+ "rows_agreed": 9,
+ "rows_disputed": 35,
+ "rows_total": 44,
+ "agreement_rate": 0.2045,
  "agreement": {
   "doors": {
    "rows": 13,
-   "agreed": 0,
-   "disputed": 0,
+   "agreed": 9,
+   "disputed": 4,
    "only_a": 0,
-   "only_b": 13,
-   "fields": {},
-   "agreement_rate": 0
+   "only_b": 0,
+   "fields": {
+    "width_inches": {
+     "agree": 9,
+     "total": 13
+    },
+    "height_inches": {
+     "agree": 13,
+     "total": 13
+    },
+    "door_type": {
+     "agree": 13,
+     "total": 13
+    },
+    "material": {
+     "agree": 13,
+     "total": 13
+    },
+    "hardware_group": {
+     "agree": 13,
+     "total": 13
+    }
+   },
+   "agreement_rate": 0.6923
   },
   "items": {
-   "rows": 32,
+   "rows": 31,
    "agreed": 0,
    "disputed": 0,
    "only_a": 19,
-   "only_b": 13,
+   "only_b": 12,
    "fields": {},
    "agreement_rate": 0
   },
@@ -73,142 +94,90 @@
    "reason": "not for class pair"
   },
   "sets_exist": {
-   "applicable": false,
-   "reason": "no door schedule rows"
+   "applicable": true,
+   "total": 9,
+   "pass": 5,
+   "fail": 4,
+   "pass_rate": 0.5556,
+   "examples": [
+    "schedule set 1 not in 08 71 00 (sets read: (CONTINUED), 2, 3, 4, 6, 9)",
+    "schedule set 5 not in 08 71 00 (sets read: (CONTINUED), 2, 3, 4, 6, 9)",
+    "schedule set 7 not in 08 71 00 (sets read: (CONTINUED), 2, 3, 4, 6, 9)",
+    "schedule set 8 not in 08 71 00 (sets read: (CONTINUED), 2, 3, 4, 6, 9)"
+   ]
   },
   "set_door_lists": {
-   "applicable": false,
-   "reason": "no door schedule rows"
+   "applicable": true,
+   "total": 1,
+   "pass": 0,
+   "fail": 1,
+   "pass_rate": 0,
+   "examples": [
+    "set 9: list names 2, schedule carries 1; listed but not on schedule with this set: 1 2; on schedule but not listed: 113B"
+   ]
   },
   "types_in_legend": {
-   "applicable": false,
-   "reason": "no door schedule rows"
+   "applicable": true,
+   "total": 9,
+   "pass": 7,
+   "fail": 2,
+   "pass_rate": 0.7778,
+   "examples": [
+    "door type AA (4 rows) not found near the door types legend",
+    "frame type MFGR'S (1 rows) not found near the frame types legend"
+   ],
+   "legend_titles": [
+    "FRAME TYPES p.114",
+    "DOOR TYPES p.114"
+   ],
+   "skipped": [],
+   "note": "weak for numeric types: a detail number near the legend can pass a numeric frame type"
   },
   "sizes_and_marks": {
-   "applicable": false,
-   "reason": "no door schedule rows"
+   "applicable": true,
+   "total": 13,
+   "pass": 13,
+   "fail": 0,
+   "pass_rate": 1,
+   "examples": [],
+   "size_fail": 0,
+   "mark_fail": 0
   }
  },
- "tier": "unread",
- "unread_reason": "no rows agreed and no oracle applies",
- "disagreement_count": 49,
+ "tier": "agreed",
+ "disagreement_count": 39,
  "disagreements": [
   {
    "kind": "door",
    "page": 114,
    "key": "100",
-   "field": "(row)",
-   "a": null,
-   "b": "read",
-   "why": "only reader B read this row"
+   "field": "width_inches",
+   "a": 36,
+   "b": null
   },
   {
    "kind": "door",
    "page": 114,
    "key": "101A",
-   "field": "(row)",
-   "a": null,
-   "b": "read",
-   "why": "only reader B read this row"
+   "field": "width_inches",
+   "a": 36,
+   "b": null
   },
   {
    "kind": "door",
    "page": 114,
    "key": "101B",
-   "field": "(row)",
-   "a": null,
-   "b": "read",
-   "why": "only reader B read this row"
+   "field": "width_inches",
+   "a": 36,
+   "b": null
   },
   {
    "kind": "door",
    "page": 114,
    "key": "101C",
-   "field": "(row)",
-   "a": null,
-   "b": "read",
-   "why": "only reader B read this row"
-  },
-  {
-   "kind": "door",
-   "page": 114,
-   "key": "102",
-   "field": "(row)",
-   "a": null,
-   "b": "read",
-   "why": "only reader B read this row"
-  },
-  {
-   "kind": "door",
-   "page": 114,
-   "key": "103",
-   "field": "(row)",
-   "a": null,
-   "b": "read",
-   "why": "only reader B read this row"
-  },
-  {
-   "kind": "door",
-   "page": 114,
-   "key": "108",
-   "field": "(row)",
-   "a": null,
-   "b": "read",
-   "why": "only reader B read this row"
-  },
-  {
-   "kind": "door",
-   "page": 114,
-   "key": "109",
-   "field": "(row)",
-   "a": null,
-   "b": "read",
-   "why": "only reader B read this row"
-  },
-  {
-   "kind": "door",
-   "page": 114,
-   "key": "110",
-   "field": "(row)",
-   "a": null,
-   "b": "read",
-   "why": "only reader B read this row"
-  },
-  {
-   "kind": "door",
-   "page": 114,
-   "key": "111",
-   "field": "(row)",
-   "a": null,
-   "b": "read",
-   "why": "only reader B read this row"
-  },
-  {
-   "kind": "door",
-   "page": 114,
-   "key": "113A",
-   "field": "(row)",
-   "a": null,
-   "b": "read",
-   "why": "only reader B read this row"
-  },
-  {
-   "kind": "door",
-   "page": 114,
-   "key": "113B",
-   "field": "(row)",
-   "a": null,
-   "b": "read",
-   "why": "only reader B read this row"
-  },
-  {
-   "kind": "door",
-   "page": 114,
-   "key": "114",
-   "field": "(row)",
-   "a": null,
-   "b": "read",
-   "why": "only reader B read this row"
+   "field": "width_inches",
+   "a": 36,
+   "b": null
   },
   {
    "kind": "item",
@@ -303,7 +272,7 @@
   {
    "kind": "item",
    "page": 114,
-   "key": "3 / KICK PLATE (0.050\"T X 12\"H X 2\" L.D.W.)",
+   "key": "3 / NO. 4",
    "field": "(row)",
    "a": null,
    "b": "read",
@@ -447,13 +416,85 @@
   {
    "kind": "item",
    "page": 114,
-   "key": "6 / SOLAR HEAT GAIN COEFFICIENT (SHGC): 0.21",
+   "key": "6 / PROVIDE FRAMING SYSTEM FRAMING SYSTEM WITH 1/4\" (THERMALLY BROKEN) WITH 1\" SAFETY GLAZING. REFER TO INSULATED GLAZING. REFER GLAZING SCHEDULE FOR FRAME TO GLAZING SCHEDULE FOR GLAZING TYPES. DESIGNED BY: KU GLAZING TYPES. 2\" SHEET TITLE: ANCHORS 2\" DOOR AND WINDOW",
    "field": "(row)",
    "a": null,
    "b": "read",
    "why": "only reader B read this row"
+  },
+  {
+   "kind": "item",
+   "page": 114,
+   "key": "9 / FLASHING AT BOTH SIDES OF OPENING DOUBLE 600S162-33 (6\"-20 GA.)COLD FORM 1 PERIMETER. HM DOOR HEAD DETAIL METAL FRAMING 4\" 2\" BOX HEADER. ALUMINUM STOREFRONT ALUMINUM STOREFRONT CAD",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 114,
+   "key": "9 / SEALANT BOTH SIDES (TYPICAL). PROVIDE FRAMING SYSTEM FRAMING SYSTEM WITH 1/4\" BATT INSULATION (UNCOMPRESSED) FOAM INSULATION AT SHIM CAVITY. (THERMALLY BROKEN) WITH 1\" SAFETY GLAZING. REFER TO WALL (WHERE OCCURS). INSULATED GLAZING. REFER GLAZING SCHEDULE FOR 4\" DESIGNED ALUMINUM STOREFRONT DOOR AND FRAME TO GLAZING SCHEDULE FOR GLAZING TYPES. REFER TO FLOOR PLAN AND INTERIOR WALL SYSTEM, REFER TO DOOR SCHEDULE. SHIM GLAZING TYPES. TYPES FOR CONSTRUCTION. AND ANCHOR PER MANUFACTURER'S SHEET SEALANT AROUND BOTH SIDES OF RECOMMENDATIONS. PROVIDE (3) ANCHORS HOLLOW METAL FRAME, REFER DOOR PER JAMB MIN. WITH REINFORCEMENT AT DOOR SCHEDULE FOR TYPES. SHIM AND ANCHOR HARDWARE LOCATIONS. 2\"",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 114,
+   "key": "9 / 9 10 EACH JAMB SILL, AND EACH JAMB SILL, AND",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 114,
+   "key": "9 / = 1'-0\" 1 1/2\" = 1'-0\" 1 1/2\" = 1'-0\" ADDITIONAL ANCHORS AT ADDITIONAL ANCHORS AT 18 OF",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "group",
+   "page": null,
+   "key": "2",
+   "field": "(set)",
+   "a": "",
+   "b": null,
+   "why": "only reader A read this set"
+  },
+  {
+   "kind": "group",
+   "page": null,
+   "key": "3",
+   "field": "doors",
+   "a": "",
+   "b": "1, 102, 103",
+   "why": "the set's door lists differ"
+  },
+  {
+   "kind": "group",
+   "page": null,
+   "key": "4",
+   "field": "(set)",
+   "a": "",
+   "b": null,
+   "why": "only reader A read this set"
+  },
+  {
+   "kind": "group",
+   "page": null,
+   "key": "9",
+   "field": "(set)",
+   "a": "1, 2",
+   "b": null,
+   "why": "only reader A read this set"
   }
  ],
- "ms": 1814,
- "generated_at": "2026-10-10T04:46:14.144Z"
+ "ms": 1892,
+ "generated_at": "2026-10-10T07:35:58.564Z"
 }

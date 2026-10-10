@@ -24,39 +24,64 @@
  },
  "readers": {
   "a": {
-   "doors": 0,
+   "doors": 14,
    "sets": 3,
    "items": 21,
    "name": "production text layer (weyland-subx-worker/src/lib/text-layer-read.js)"
   },
   "b": {
    "doors": 14,
-   "sets": 3,
-   "items": 18,
+   "sets": 2,
+   "items": 17,
    "name": "geometry first (tools/accuracy/truth/reader_b.mjs)",
    "tables": 1
   }
  },
- "rows_agreed": 0,
- "rows_disputed": 52,
- "rows_total": 52,
- "agreement_rate": 0,
+ "rows_agreed": 13,
+ "rows_disputed": 38,
+ "rows_total": 51,
+ "agreement_rate": 0.2549,
  "agreement": {
   "doors": {
    "rows": 14,
-   "agreed": 0,
-   "disputed": 0,
+   "agreed": 13,
+   "disputed": 1,
    "only_a": 0,
-   "only_b": 14,
-   "fields": {},
-   "agreement_rate": 0
+   "only_b": 0,
+   "fields": {
+    "width_inches": {
+     "agree": 13,
+     "total": 14
+    },
+    "height_inches": {
+     "agree": 14,
+     "total": 14
+    },
+    "door_type": {
+     "agree": 14,
+     "total": 14
+    },
+    "material": {
+     "agree": 14,
+     "total": 14
+    },
+    "hardware_group": {
+     "agree": 14,
+     "total": 14
+    },
+    "fire_rating": {
+     "agree": 9,
+     "total": 9
+    }
+   },
+   "agreement_rate": 0.9286
   },
   "items": {
-   "rows": 38,
+   "rows": 37,
    "agreed": 0,
    "disputed": 1,
    "only_a": 20,
-   "only_b": 17,
+   "only_b": 16,
    "fields": {
     "qty": {
      "agree": 1,
@@ -83,15 +108,47 @@
   },
   "sets": {
    "sets": 3,
-   "agreed": 3
+   "agreed": 2
   }
  },
  "triage_class": "schedule-only",
  "triage_from": "tools/corpus/harvest/triage.json",
  "oracles": {
   "marks_on_plan": {
-   "applicable": false,
-   "reason": "no door schedule rows"
+   "applicable": true,
+   "total": 14,
+   "pass": 0,
+   "fail": 14,
+   "pass_rate": 0,
+   "examples": [
+    "mark 101 (schedule p.23) not tagged on any plan",
+    "mark 102 (schedule p.23) not tagged on any plan",
+    "mark 103A (schedule p.23) not tagged on any plan",
+    "mark 103B (schedule p.23) not tagged on any plan",
+    "mark 103C (schedule p.23) not tagged on any plan",
+    "mark 104 (schedule p.23) not tagged on any plan",
+    "mark 105A (schedule p.23) not tagged on any plan",
+    "mark 105B (schedule p.23) not tagged on any plan",
+    "mark 105C (schedule p.23) not tagged on any plan",
+    "mark 106A (schedule p.23) not tagged on any plan",
+    "mark 106B (schedule p.23) not tagged on any plan",
+    "mark 107A (schedule p.23) not tagged on any plan"
+   ],
+   "plan_sheets": [
+    "A-401 p.18",
+    "A-402 p.19",
+    "A-403 p.20"
+   ],
+   "plan_counts": {
+    "plan_sheets": 3,
+    "rooms": 24,
+    "corridors": 0,
+    "tags": 0,
+    "unmatched_tags": 0,
+    "schedule_marks": 14,
+    "marks_not_on_plan": 14,
+    "shared_marks": 0
+   }
   },
   "sets_exist": {
    "applicable": false,
@@ -102,143 +159,42 @@
    "reason": "not for class schedule-only"
   },
   "types_in_legend": {
-   "applicable": false,
-   "reason": "no door schedule rows"
+   "applicable": true,
+   "total": 7,
+   "pass": 6,
+   "fail": 1,
+   "pass_rate": 0.8571,
+   "examples": [
+    "door type CC (1 rows) not found near the door types legend"
+   ],
+   "legend_titles": [
+    "DOOR TYPES p.23",
+    "FRAME TYPES p.23"
+   ],
+   "skipped": [],
+   "note": "weak for numeric types: a detail number near the legend can pass a numeric frame type"
   },
   "sizes_and_marks": {
-   "applicable": false,
-   "reason": "no door schedule rows"
+   "applicable": true,
+   "total": 14,
+   "pass": 14,
+   "fail": 0,
+   "pass_rate": 1,
+   "examples": [],
+   "size_fail": 0,
+   "mark_fail": 0
   }
  },
- "tier": "unread",
- "unread_reason": "no rows agreed and no oracle applies",
- "disagreement_count": 54,
+ "tier": "agreed",
+ "disagreement_count": 41,
  "disagreements": [
   {
    "kind": "door",
    "page": 23,
    "key": "101",
-   "field": "(row)",
-   "a": null,
-   "b": "read",
-   "why": "only reader B read this row"
-  },
-  {
-   "kind": "door",
-   "page": 23,
-   "key": "102",
-   "field": "(row)",
-   "a": null,
-   "b": "read",
-   "why": "only reader B read this row"
-  },
-  {
-   "kind": "door",
-   "page": 23,
-   "key": "103A",
-   "field": "(row)",
-   "a": null,
-   "b": "read",
-   "why": "only reader B read this row"
-  },
-  {
-   "kind": "door",
-   "page": 23,
-   "key": "103B",
-   "field": "(row)",
-   "a": null,
-   "b": "read",
-   "why": "only reader B read this row"
-  },
-  {
-   "kind": "door",
-   "page": 23,
-   "key": "103C",
-   "field": "(row)",
-   "a": null,
-   "b": "read",
-   "why": "only reader B read this row"
-  },
-  {
-   "kind": "door",
-   "page": 23,
-   "key": "104",
-   "field": "(row)",
-   "a": null,
-   "b": "read",
-   "why": "only reader B read this row"
-  },
-  {
-   "kind": "door",
-   "page": 23,
-   "key": "105A",
-   "field": "(row)",
-   "a": null,
-   "b": "read",
-   "why": "only reader B read this row"
-  },
-  {
-   "kind": "door",
-   "page": 23,
-   "key": "105B",
-   "field": "(row)",
-   "a": null,
-   "b": "read",
-   "why": "only reader B read this row"
-  },
-  {
-   "kind": "door",
-   "page": 23,
-   "key": "105C",
-   "field": "(row)",
-   "a": null,
-   "b": "read",
-   "why": "only reader B read this row"
-  },
-  {
-   "kind": "door",
-   "page": 23,
-   "key": "106A",
-   "field": "(row)",
-   "a": null,
-   "b": "read",
-   "why": "only reader B read this row"
-  },
-  {
-   "kind": "door",
-   "page": 23,
-   "key": "106B",
-   "field": "(row)",
-   "a": null,
-   "b": "read",
-   "why": "only reader B read this row"
-  },
-  {
-   "kind": "door",
-   "page": 23,
-   "key": "107A",
-   "field": "(row)",
-   "a": null,
-   "b": "read",
-   "why": "only reader B read this row"
-  },
-  {
-   "kind": "door",
-   "page": 23,
-   "key": "107B",
-   "field": "(row)",
-   "a": null,
-   "b": "read",
-   "why": "only reader B read this row"
-  },
-  {
-   "kind": "door",
-   "page": 23,
-   "key": "107C",
-   "field": "(row)",
-   "a": null,
-   "b": "read",
-   "why": "only reader B read this row"
+   "field": "width_inches",
+   "a": 36,
+   "b": null
   },
   {
    "kind": "item",
@@ -336,7 +292,7 @@
    "key": "3 / SET",
    "field": "catalog",
    "a": "SET",
-   "b": "SET NO. 4 (DOOR: 102) MISSOURI NATIONAL GUARD 1 (ANSI FUNCTION NO. F86) STOREROOM LOCK WITH LEVER HANDLES ATTN: JEREMY NEWTON, ENGINEERING ARCHITECTURAL PROJECT MANAGER (P): (573) 638-9500, EXT. 37484"
+   "b": "SET NO. 4 (DOOR: 102) MISSOURI NATIONAL GUARD 1 (ANSI FUNCTION NO. F86) STOREROOM LOCK WITH LEVER HANDLES ATTN: JEREMY NEWTON, ENGINEERING ARCHITECTURAL PROJECT MANAGER (P): (573) 638-9500, EXT. 37484 Buddy Webb & Company, Inc. Architects - Consultants 3057 EAST CAIRO SPRINGFIELD, MISSOURI 65802 (417) 877-1385 TELEPHONE"
   },
   {
    "kind": "item",
@@ -470,8 +426,125 @@
    "a": null,
    "b": "read",
    "why": "only reader B read this row"
+  },
+  {
+   "kind": "item",
+   "page": 23,
+   "key": "3 / SMOKE SEAL PERIMETER GASKETS",
+   "field": "(row)",
+   "a": null,
+   "b": "read",
+   "why": "only reader B read this row"
+  },
+  {
+   "kind": "item",
+   "page": 23,
+   "key": "3 / SMOKE SEAL DOOR BOTTOM SWEEP",
+   "field": "(row)",
+   "a": null,
+   "b": "read",
+   "why": "only reader B read this row"
+  },
+  {
+   "kind": "item",
+   "page": 23,
+   "key": "3 / BALL BEARING HINGES KEYING LEGEND",
+   "field": "(row)",
+   "a": null,
+   "b": "read",
+   "why": "only reader B read this row"
+  },
+  {
+   "kind": "item",
+   "page": 23,
+   "key": "3 / CLOSER WITH COVER, PARALLEL ARM, SPRING CUSH STOP, THRU-BOLT MOUNTED",
+   "field": "(row)",
+   "a": null,
+   "b": "read",
+   "why": "only reader B read this row"
+  },
+  {
+   "kind": "item",
+   "page": 23,
+   "key": "3 / KICK PLATE (0.062T X 12\"H X 2\" L.D.W.) DIVISION OF FACILITIES",
+   "field": "(row)",
+   "a": null,
+   "b": "read",
+   "why": "only reader B read this row"
+  },
+  {
+   "kind": "item",
+   "page": 23,
+   "key": "3 / SMOKE SEAL PERIMETER GASKETS UPGRADED SECURITY: PERIMETER ENTRANCE",
+   "field": "(row)",
+   "a": null,
+   "b": "read",
+   "why": "only reader B read this row"
+  },
+  {
+   "kind": "item",
+   "page": 23,
+   "key": "3 / KICK PLATE (0.062T X 12\"H X 2\" L.D.W.)",
+   "field": "(row)",
+   "a": null,
+   "b": "read",
+   "why": "only reader B read this row"
+  },
+  {
+   "kind": "item",
+   "page": 23,
+   "key": "3 / SMOKE SEAL PERIMETER GASKETS MISSOURI ARMY",
+   "field": "(row)",
+   "a": null,
+   "b": "read",
+   "why": "only reader B read this row"
+  },
+  {
+   "kind": "item",
+   "page": 23,
+   "key": "3 / SMOKE SEAL DOOR BOTTOM SWEEP",
+   "field": "(row)",
+   "a": null,
+   "b": "read",
+   "why": "only reader B read this row"
+  },
+  {
+   "kind": "item",
+   "page": 23,
+   "key": "3 / TYPE 1:",
+   "field": "(row)",
+   "a": null,
+   "b": "read",
+   "why": "only reader B read this row"
+  },
+  {
+   "kind": "item",
+   "page": 23,
+   "key": "6 / PER MANUFACTURER'S RECOMMENDATIONS. 1 CLOSER WITH COVER, PARALLEL ARM, SPRING CUSH STOP, THRU-BOLT BASIC SECURITY: MAINTENANCE, MECHANICAL / ELECTRICAL, JANITOR DEPARTMENT MOUNTED 1 KICK PLATE (0.062T X 12\"H X 2\" L.D.W.) PUBLIC SAFETY DOOR, REFER TO DOOR SCHEDULE FOR FLUSH HOLLOW METAL (INSULATED) FLUSH HOLLOW METAL ALUMINUM ENTRANCE AND STOREFRONT TYPES. 1 SET SMOKE SEAL PERIMETER GASKETS MISSOURI (WITHOUT INSULATION). SYSTEM W/ INSULATED SAFETY GLASS GLAZING SCHEDULE 1 SMOKE SEAL DOOR BOTTOM SWEEP (REFER SCHEDULES FOR GLAZING TYPES). NATIONAL",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 23,
+   "key": "6 / DETAIL NOTE: TYPE 1:",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 23,
+   "key": "6 / DETAIL REVISION:DATE: WELDED HOLLOW METAL FRAME WELDED HOLLOW METAL FRAME",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
   }
  ],
- "ms": 3314,
- "generated_at": "2026-10-10T04:46:29.997Z"
+ "ms": 3661,
+ "generated_at": "2026-10-10T07:36:14.822Z"
 }
