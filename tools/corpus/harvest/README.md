@@ -49,3 +49,24 @@ Validation: check-row-shapes.mjs and check-plans.mjs cover schedule shapes and a
 Round 3 visual QA also found that numbered windows on an elevation could match the old numeric row regex. Schedule rows now require a material/hardware token, and row-based qualification also requires table-header evidence. Type-before-size schedule rows are separately parsed for tag matching. The --schedule-check option of qualification.mjs refreshes these row matches and affected schedule previews. Run sightx.mjs again after that pass.
 
 Live PDC discovery: the supplied UM System URL redirects to a new construction-bids page that exposes https://operations-webapps.missouri.edu/pdc/adsite/ad.php, rather than CP project links directly. The enumerator now recognizes this published host/path. Both operations-webapps.missouri.edu and pdc-projects.missouri.edu fail the robots request with UNABLE_TO_GET_ISSUER_CERT_LOCALLY in this session. TLS validation is retained and no page/PDF fetch is attempted on either host. pdc-robots-round3.json preserves the additional robots observation; merge-pdc-observation.mjs merges it only after the serial harvester finishes, avoiding concurrent state writes.
+
+## Round N (g069, 2026-10-10)
+
+harvest.mjs takes `--round N --cap-bytes B --from-remaining --dry-run`. `--round3` is `--round 3` and behaves as before: its queue comes from the OA/PDC enumerators plus round2.json's work left, and it refuses a resume or a started round 3. A round from 4 up needs `--from-remaining`. It takes round N-1's work-left queue (round.json `remaining`) and keeps only Missouri OA plans, specs, bid documents and addenda. Bid tabs, IFBs and URLs already downloaded are dropped.
+
+On a real run, round N-1's finished state is first preserved as round<N-1>.json, and the round reads its queue from that file. Round N refuses to start in three cases: round N-1 has not finished, the prior state is not round N-1, or round.json already says round N. `--cap-bytes` sets the round's transfer budget in bytes. A numbered round defaults to 1,000,000,000 bytes; the plain run keeps 3,000,000,000.
+
+These are unchanged from round 3:
+- the per-file cap (150,000,000 bytes);
+- the robots rules and two-second host pacing;
+- the append-only manifest rows;
+- round.json state, with `round_number`, `from_remaining` and `remaining` at the cap.
+
+`--dry-run` prints the queue, one file per line with a closing count line, then exits. It sends no request and writes no file.
+
+Round 4, from the repository root:
+
+    node tools/corpus/harvest/harvest.mjs --round 4 --cap-bytes 1000000000 --from-remaining --dry-run
+    node tools/corpus/harvest/harvest.mjs --round 4 --cap-bytes 1000000000 --from-remaining
+
+Then run triage.mjs --new-only, sightx.mjs, verify.mjs and report.mjs as after round 3. The tests are `node --test tools/corpus/harvest/round-plan.test.mjs`, run over a fake queue and a local HTTP server. g069/ holds the round 4 dry run against round 3's state.

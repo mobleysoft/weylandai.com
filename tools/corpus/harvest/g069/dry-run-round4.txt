@@ -1,0 +1,427 @@
+   1 missouri_oa_fmdc _U1503-01 - Final Bid Docs_2.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/_U1503-01%20-%20Final%20Bid%20Docs_2.pdf
+   2 missouri_oa_fmdc _U1503-01 - Final Plans_2.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/_U1503-01%20-%20Final%20Plans_2.pdf
+   3 missouri_oa_fmdc _U1503-01 - Final Specs_2.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/_U1503-01%20-%20Final%20Specs_2.pdf
+   4 missouri_oa_fmdc _U1503-01 Addendum 1.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/_U1503-01%20Addendum%201.pdf
+   5 missouri_oa_fmdc C2406-01 Bid Documents.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/C2406-01%20Bid%20Documents.pdf
+   6 missouri_oa_fmdc C2406-01 HVAC Improvements - Fulton R&D Center - Bid Docs Drawings.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/C2406-01%20HVAC%20Improvements%20-%20Fulton%20R%26D%20Center%20-%20Bid%20Docs%20Drawings.pdf
+   7 missouri_oa_fmdc C2406-01 Final specs.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/C2406-01%20Final%20specs.pdf
+   8 missouri_oa_fmdc C2406-01 Add #1.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/C2406-01%20Add%20%231.pdf
+   9 missouri_oa_fmdc _C2406-01 Add 2 Plans-Specs.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/_C2406-01%20Add%202%20Plans-Specs.pdf
+  10 missouri_oa_fmdc C2406-01 Addendum 3.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/C2406-01%20Addendum%203.pdf
+  11 missouri_oa_fmdc _O2203-02 Final Bid Documents_0.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/_O2203-02%20Final%20Bid%20Documents_0.pdf
+  12 missouri_oa_fmdc _O2203-02 Final Bid Plans.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/_O2203-02%20Final%20Bid%20Plans.pdf
+  13 missouri_oa_fmdc _O2203-02 Final Bid Specs.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/_O2203-02%20Final%20Bid%20Specs.pdf
+  14 missouri_oa_fmdc O2203-02 Add #1 Plan & Specs.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/O2203-02%20Add%20%231%20Plan%20%26%20Specs.pdf
+  15 missouri_oa_fmdc F2307-01 Bid Documents REBID.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/F2307-01%20Bid%20Documents%20REBID.pdf
+  16 missouri_oa_fmdc F2307-01 Final specs REBID.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/F2307-01%20Final%20specs%20REBID.pdf
+  17 missouri_oa_fmdc F2307-01 Add #1_0.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/F2307-01%20Add%20%231_0.pdf
+  18 missouri_oa_fmdc _M2406-01 Final Bid Documents.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/_M2406-01%20Final%20Bid%20Documents.pdf
+  19 missouri_oa_fmdc _M2406-01 Final Bid Plans.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/_M2406-01%20Final%20Bid%20Plans.pdf
+  20 missouri_oa_fmdc _M2406-01 Final Bid Specs.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/_M2406-01%20Final%20Bid%20Specs.pdf
+  21 missouri_oa_fmdc _M2406-01 Addendum 1.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/_M2406-01%20Addendum%201.pdf
+  22 missouri_oa_fmdc _E2341-01 Final Bid Documents.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/_E2341-01%20Final%20Bid%20Documents.pdf
+  23 missouri_oa_fmdc _E2341-01 Final Bid Plans.PDF https://oa.mo.gov/sites/default/files/bid-opportunities/_E2341-01%20Final%20Bid%20Plans.PDF
+  24 missouri_oa_fmdc _E2341-01 Final Bid Specs.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/_E2341-01%20Final%20Bid%20Specs.pdf
+  25 missouri_oa_fmdc _E2341-01 Addendum 1.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/_E2341-01%20Addendum%201.pdf
+  26 missouri_oa_fmdc _E2341-01 Addendum 2.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/_E2341-01%20Addendum%202.pdf
+  27 missouri_oa_fmdc _E2341-01 Addendum 3.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/_E2341-01%20Addendum%203.pdf
+  28 missouri_oa_fmdc E2341-01 Add #4.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/E2341-01%20Add%20%234.pdf
+  29 missouri_oa_fmdc _C1920-01 Final Bid Documents.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/_C1920-01%20Final%20Bid%20Documents.pdf
+  30 missouri_oa_fmdc _C1920-01 Final Bid Plans.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/_C1920-01%20Final%20Bid%20Plans.pdf
+  31 missouri_oa_fmdc _C1920-01 Final Bid Specs.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/_C1920-01%20Final%20Bid%20Specs.pdf
+  32 missouri_oa_fmdc C1920-01 Add #1.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/C1920-01%20Add%20%231.pdf
+  33 missouri_oa_fmdc _C1920-01 Add 2.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/_C1920-01%20Add%202.pdf
+  34 missouri_oa_fmdc _C1920-01 Add 3.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/_C1920-01%20Add%203.pdf
+  35 missouri_oa_fmdc _C1920-01 Add 4.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/_C1920-01%20Add%204.pdf
+  36 missouri_oa_fmdc _E2328-01 Final Bid Documents.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/_E2328-01%20Final%20Bid%20Documents.pdf
+  37 missouri_oa_fmdc _E2328-01 Final Bid Plans.PDF https://oa.mo.gov/sites/default/files/bid-opportunities/_E2328-01%20Final%20Bid%20Plans.PDF
+  38 missouri_oa_fmdc _E2328-01 Final Bid Specs.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/_E2328-01%20Final%20Bid%20Specs.pdf
+  39 missouri_oa_fmdc _E2328-01 Addendum 1.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/_E2328-01%20Addendum%201.pdf
+  40 missouri_oa_fmdc _E2328-01 Addendum 2.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/_E2328-01%20Addendum%202.pdf
+  41 missouri_oa_fmdc _E2328-01 Addendum 3.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/_E2328-01%20Addendum%203.pdf
+  42 missouri_oa_fmdc E2328-01 Add #4.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/E2328-01%20Add%20%234.pdf
+  43 missouri_oa_fmdc C2415-01 Bid Documents.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/C2415-01%20Bid%20Documents.pdf
+  44 missouri_oa_fmdc C2415-01 Generator Replacement - Fulton R&D Center - Bid Docs Plans.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/C2415-01%20Generator%20Replacement%20-%20Fulton%20R%26D%20Center%20-%20Bid%20Docs%20Plans.pdf
+  45 missouri_oa_fmdc C2415-01 Final specs.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/C2415-01%20Final%20specs.pdf
+  46 missouri_oa_fmdc C2415-01 Add #1.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/C2415-01%20Add%20%231.pdf
+  47 missouri_oa_fmdc C2415-01 Add #2.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/C2415-01%20Add%20%232.pdf
+  48 missouri_oa_fmdc C2415-01 Add #3.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/C2415-01%20Add%20%233.pdf
+  49 missouri_oa_fmdc C2504-01 Bid Documents.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/C2504-01%20Bid%20Documents.pdf
+  50 missouri_oa_fmdc C2504-01 Farmington Roofs Drawings-Bid Documents Submittal.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/C2504-01%20Farmington%20Roofs%20Drawings-Bid%20Documents%20Submittal.pdf
+  51 missouri_oa_fmdc C2504-01 Final specs.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/C2504-01%20Final%20specs.pdf
+  52 missouri_oa_fmdc C2504-01 Add #1.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/C2504-01%20Add%20%231.pdf
+  53 missouri_oa_fmdc _C2504-01 - Add 2 Plans & Specs.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/_C2504-01%20-%20Add%202%20Plans%20%26%20Specs.pdf
+  54 missouri_oa_fmdc _C2504-01 Add 3.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/_C2504-01%20Add%203.pdf
+  55 missouri_oa_fmdc _H2404-01 Final Bid Documents.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/_H2404-01%20Final%20Bid%20Documents.pdf
+  56 missouri_oa_fmdc _H2404-01 Final Bid Plans.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/_H2404-01%20Final%20Bid%20Plans.pdf
+  57 missouri_oa_fmdc _H2404-01 Final Bid Specs.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/_H2404-01%20Final%20Bid%20Specs.pdf
+  58 missouri_oa_fmdc _H2404-01 Addendum 1.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/_H2404-01%20Addendum%201.pdf
+  59 missouri_oa_fmdc H2404-01 Add #2.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/H2404-01%20Add%20%232.pdf
+  60 missouri_oa_fmdc _M2319-01 - Final Bid Docs.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/_M2319-01%20-%20Final%20Bid%20Docs.pdf
+  61 missouri_oa_fmdc _M2319-01 - Final Plans.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/_M2319-01%20-%20Final%20Plans.pdf
+  62 missouri_oa_fmdc _M2319-01 - Final Specs.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/_M2319-01%20-%20Final%20Specs.pdf
+  63 missouri_oa_fmdc M2319-01 Add #1.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/M2319-01%20Add%20%231.pdf
+  64 missouri_oa_fmdc _U2606-01 Final Bid Documents.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/_U2606-01%20Final%20Bid%20Documents.pdf
+  65 missouri_oa_fmdc _U2606-01 Final Bid Plans.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/_U2606-01%20Final%20Bid%20Plans.pdf
+  66 missouri_oa_fmdc _U2606-01 Final Bid Specs.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/_U2606-01%20Final%20Bid%20Specs.pdf
+  67 missouri_oa_fmdc _U2606-01 Addendum 1.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/_U2606-01%20Addendum%201.pdf
+  68 missouri_oa_fmdc IDIQMCA-6004 Bid Documents.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/IDIQMCA-6004%20Bid%20Documents.pdf
+  69 missouri_oa_fmdc IDIQMCA-6004 Final specs.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/IDIQMCA-6004%20Final%20specs.pdf
+  70 missouri_oa_fmdc _X2405-01 Final Bid Documents.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/_X2405-01%20Final%20Bid%20Documents.pdf
+  71 missouri_oa_fmdc _X2405-01 Final Bid Plans.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/_X2405-01%20Final%20Bid%20Plans.pdf
+  72 missouri_oa_fmdc _X2405-01 Final Bid Specs.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/_X2405-01%20Final%20Bid%20Specs.pdf
+  73 missouri_oa_fmdc _X2405-01 Addendum 1.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/_X2405-01%20Addendum%201.pdf
+  74 missouri_oa_fmdc _X2405-01 Addendum 2.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/_X2405-01%20Addendum%202.pdf
+  75 missouri_oa_fmdc _X2405-01 Addendum 3 Plans & Specs.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/_X2405-01%20Addendum%203%20Plans%20%26%20Specs.pdf
+  76 missouri_oa_fmdc _H2402-01 Final Bid Documents.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/_H2402-01%20Final%20Bid%20Documents.pdf
+  77 missouri_oa_fmdc _H2402-01 Final Bid Plans.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/_H2402-01%20Final%20Bid%20Plans.pdf
+  78 missouri_oa_fmdc _H2402-01 Final Bid Specs.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/_H2402-01%20Final%20Bid%20Specs.pdf
+  79 missouri_oa_fmdc _H2402-01 Addendum 1.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/_H2402-01%20Addendum%201.pdf
+  80 missouri_oa_fmdc _H2402-01 Addendum 2 Plans & Specs.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/_H2402-01%20Addendum%202%20Plans%20%26%20Specs.pdf
+  81 missouri_oa_fmdc _F2402-01 Final Bid Documents.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/_F2402-01%20Final%20Bid%20Documents.pdf
+  82 missouri_oa_fmdc _F2402-01 Final Bid Plans.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/_F2402-01%20Final%20Bid%20Plans.pdf
+  83 missouri_oa_fmdc _F2402-01 Final Bid Specs.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/_F2402-01%20Final%20Bid%20Specs.pdf
+  84 missouri_oa_fmdc _F2402-01  Addendum 1.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/_F2402-01%20%20Addendum%201.pdf
+  85 missouri_oa_fmdc _F2402-01 Addendum 2 Plans and Specs.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/_F2402-01%20Addendum%202%20Plans%20and%20Specs.pdf
+  86 missouri_oa_fmdc _X2520-01 - Final Bid Docs.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/_X2520-01%20-%20Final%20Bid%20Docs.pdf
+  87 missouri_oa_fmdc _X2520-01 - Final Plans.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/_X2520-01%20-%20Final%20Plans.pdf
+  88 missouri_oa_fmdc _X2520-01 - Final Specs Vol 1.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/_X2520-01%20-%20Final%20Specs%20Vol%201.pdf
+  89 missouri_oa_fmdc _X2520-01 - Final Specs Vol 2.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/_X2520-01%20-%20Final%20Specs%20Vol%202.pdf
+  90 missouri_oa_fmdc _X2520-01 Add - 1 Plan & Specs.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/_X2520-01%20Add%20-%201%20Plan%20%26%20Specs.pdf
+  91 missouri_oa_fmdc _W2401-01 Final Bid Documents.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/_W2401-01%20Final%20Bid%20Documents.pdf
+  92 missouri_oa_fmdc _W2401-01 Final Bid Plans.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/_W2401-01%20Final%20Bid%20Plans.pdf
+  93 missouri_oa_fmdc _W2401-01 Final Bid Specs.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/_W2401-01%20Final%20Bid%20Specs.pdf
+  94 missouri_oa_fmdc W2401-01 Add #1.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/W2401-01%20Add%20%231.pdf
+  95 missouri_oa_fmdc W2401-01 Addendum 2.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/W2401-01%20Addendum%202.pdf
+  96 missouri_oa_fmdc _W2401-01 Addendum 3.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/_W2401-01%20Addendum%203.pdf
+  97 missouri_oa_fmdc _F2407-01 - Final Bid Docs.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/_F2407-01%20-%20Final%20Bid%20Docs.pdf
+  98 missouri_oa_fmdc _F2407-01 - Final Plans.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/_F2407-01%20-%20Final%20Plans.pdf
+  99 missouri_oa_fmdc _F2407-01 - Final Specs.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/_F2407-01%20-%20Final%20Specs.pdf
+ 100 missouri_oa_fmdc _F2407-01 Add -1.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/_F2407-01%20Add%20-1.pdf
+ 101 missouri_oa_fmdc F2407-01  Add #2 Plans & Specs.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/F2407-01%20%20Add%20%232%20Plans%20%26%20Specs.pdf
+ 102 missouri_oa_fmdc F2307-01 Bid Documents.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/F2307-01%20Bid%20Documents.pdf
+ 103 missouri_oa_fmdc F2307-01 Final specs.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/F2307-01%20Final%20specs.pdf
+ 104 missouri_oa_fmdc F2307-01 Add #1.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/F2307-01%20Add%20%231.pdf
+ 105 missouri_oa_fmdc F2307-01 Add #2.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/F2307-01%20Add%20%232.pdf
+ 106 missouri_oa_fmdc F2307-01 Add #3.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/F2307-01%20Add%20%233.pdf
+ 107 missouri_oa_fmdc F2307-01 Add #4 Plans & Specs.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/F2307-01%20Add%20%234%20Plans%20%26%20Specs.pdf
+ 108 missouri_oa_fmdc _O2421-01 - Final Bid Docs.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/_O2421-01%20-%20Final%20Bid%20Docs.pdf
+ 109 missouri_oa_fmdc _O2421-01 - Final Plans_0.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/_O2421-01%20-%20Final%20Plans_0.pdf
+ 110 missouri_oa_fmdc _O2421-01 - Final Specs.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/_O2421-01%20-%20Final%20Specs.pdf
+ 111 missouri_oa_fmdc O2421-01 Add #1 Plans & Specs.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/O2421-01%20Add%20%231%20Plans%20%26%20Specs.pdf
+ 112 missouri_oa_fmdc _O2421-01 Add 2.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/_O2421-01%20Add%202.pdf
+ 113 missouri_oa_fmdc U2411-01 Bid Documents.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/U2411-01%20Bid%20Documents.pdf
+ 114 missouri_oa_fmdc U2411-01 Missouri Veterans Home - STL - Bid-Permit Plans_09-17-25 V2.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/U2411-01%20Missouri%20Veterans%20Home%20-%20STL%20-%20Bid-Permit%20Plans_09-17-25%20V2.pdf
+ 115 missouri_oa_fmdc U2411-01 Final specs.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/U2411-01%20Final%20specs.pdf
+ 116 missouri_oa_fmdc U2411-01 Addendum 1.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/U2411-01%20Addendum%201.pdf
+ 117 missouri_oa_fmdc U2411-01 Add #2 Plans & Specs.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/U2411-01%20Add%20%232%20Plans%20%26%20Specs.pdf
+ 118 missouri_oa_fmdc _U2301-07 - Final Bid Docs.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/_U2301-07%20-%20Final%20Bid%20Docs.pdf
+ 119 missouri_oa_fmdc _U2301-07 - Final Plans.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/_U2301-07%20-%20Final%20Plans.pdf
+ 120 missouri_oa_fmdc _U2301-07 - Final Specs.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/_U2301-07%20-%20Final%20Specs.pdf
+ 121 missouri_oa_fmdc U2301-07 Add #1 Plans & Specs.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/U2301-07%20Add%20%231%20Plans%20%26%20Specs.pdf
+ 122 missouri_oa_fmdc _U2301-07 Add 2.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/_U2301-07%20Add%202.pdf
+ 123 missouri_oa_fmdc E2412-01 Bid Documents.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/E2412-01%20Bid%20Documents.pdf
+ 124 missouri_oa_fmdc E2412-01 Final specs.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/E2412-01%20Final%20specs.pdf
+ 125 missouri_oa_fmdc E2412-01 Add #1.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/E2412-01%20Add%20%231.pdf
+ 126 missouri_oa_fmdc E2412-01 Addendum 2.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/E2412-01%20Addendum%202.pdf
+ 127 missouri_oa_fmdc _M241601- Final Bid Docs.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/_M241601-%20Final%20Bid%20Docs.pdf
+ 128 missouri_oa_fmdc _M2416-01 - Final Plans_1.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/_M2416-01%20-%20Final%20Plans_1.pdf
+ 129 missouri_oa_fmdc _M2416-01 - Final Specs_0.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/_M2416-01%20-%20Final%20Specs_0.pdf
+ 130 missouri_oa_fmdc _M2416-01 Add 1.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/_M2416-01%20Add%201.pdf
+ 131 missouri_oa_fmdc _F2405-01 Final Bid Documents.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/_F2405-01%20Final%20Bid%20Documents.pdf
+ 132 missouri_oa_fmdc _F2405-01Final Bid Plans.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/_F2405-01Final%20Bid%20Plans.pdf
+ 133 missouri_oa_fmdc _F2405-01 Final Bid Specs.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/_F2405-01%20Final%20Bid%20Specs.pdf
+ 134 missouri_oa_fmdc F2405-01 Add #1.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/F2405-01%20Add%20%231.pdf
+ 135 missouri_oa_fmdc _F2405-01 Add 2 Plans & Specs.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/_F2405-01%20Add%202%20Plans%20%26%20Specs.pdf
+ 136 missouri_oa_fmdc _U2417-01 Final Bid Documents.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/_U2417-01%20Final%20Bid%20Documents.pdf
+ 137 missouri_oa_fmdc _U2417-01 Final Bid Plans.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/_U2417-01%20Final%20Bid%20Plans.pdf
+ 138 missouri_oa_fmdc _U2417-01 Final Bid Specs.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/_U2417-01%20Final%20Bid%20Specs.pdf
+ 139 missouri_oa_fmdc U2417-01 Add #1 Plans and Specs.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/U2417-01%20Add%20%231%20Plans%20and%20Specs.pdf
+ 140 missouri_oa_fmdc T2326-01 REBID Bid Documents.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/T2326-01%20REBID%20Bid%20Documents.pdf
+ 141 missouri_oa_fmdc T2326-01 REBID Final specs.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/T2326-01%20REBID%20Final%20specs.pdf
+ 142 missouri_oa_fmdc T2326-01 Add #1 Plans & Specs.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/T2326-01%20Add%20%231%20Plans%20%26%20Specs.pdf
+ 143 missouri_oa_fmdc T2326-01 Add #2 Plans and Specs.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/T2326-01%20Add%20%232%20Plans%20and%20Specs.pdf
+ 144 missouri_oa_fmdc Y2303-01 Bid Documents.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/Y2303-01%20Bid%20Documents.pdf
+ 145 missouri_oa_fmdc Y2303-01 Final Bid Docs (plans).pdf https://oa.mo.gov/sites/default/files/bid-opportunities/Y2303-01%20Final%20Bid%20Docs%20%28plans%29.pdf
+ 146 missouri_oa_fmdc Y2303-01 Final specs.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/Y2303-01%20Final%20specs.pdf
+ 147 missouri_oa_fmdc Y2303-01 Add #1.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/Y2303-01%20Add%20%231.pdf
+ 148 missouri_oa_fmdc _U2301-04 - Final Bid Docs.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/_U2301-04%20-%20Final%20Bid%20Docs.pdf
+ 149 missouri_oa_fmdc _U2301-04 - Final Plans.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/_U2301-04%20-%20Final%20Plans.pdf
+ 150 missouri_oa_fmdc _U2301-04 - Final Specs.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/_U2301-04%20-%20Final%20Specs.pdf
+ 151 missouri_oa_fmdc _U2301-04 - Add 1.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/_U2301-04%20-%20Add%201.pdf
+ 152 missouri_oa_fmdc U2301-04 Addendum 2.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/U2301-04%20Addendum%202.pdf
+ 153 missouri_oa_fmdc _H2409-01 Final Bid Documents.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/_H2409-01%20Final%20Bid%20Documents.pdf
+ 154 missouri_oa_fmdc _H2409-01 Final Bid Plans.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/_H2409-01%20Final%20Bid%20Plans.pdf
+ 155 missouri_oa_fmdc _H2409-01 Final Bid Specs.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/_H2409-01%20Final%20Bid%20Specs.pdf
+ 156 missouri_oa_fmdc H2409-01 Add #1.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/H2409-01%20Add%20%231.pdf
+ 157 missouri_oa_fmdc _H2409-01 Addendum 2.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/_H2409-01%20Addendum%202.pdf
+ 158 missouri_oa_fmdc X2317-01 Bid Documents.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/X2317-01%20Bid%20Documents.pdf
+ 159 missouri_oa_fmdc X2317-01 Final specs.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/X2317-01%20Final%20specs.pdf
+ 160 missouri_oa_fmdc X2317-01 Add #1.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/X2317-01%20Add%20%231.pdf
+ 161 missouri_oa_fmdc X2317-01 Add #2.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/X2317-01%20Add%20%232.pdf
+ 162 missouri_oa_fmdc X2317-01 Add #3.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/X2317-01%20Add%20%233.pdf
+ 163 missouri_oa_fmdc _T2338-01 - Final Bid Docs.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/_T2338-01%20-%20Final%20Bid%20Docs.pdf
+ 164 missouri_oa_fmdc _T2338-01 - Final Plans_0.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/_T2338-01%20-%20Final%20Plans_0.pdf
+ 165 missouri_oa_fmdc _T2338-01 - Final Specs_0.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/_T2338-01%20-%20Final%20Specs_0.pdf
+ 166 missouri_oa_fmdc T2338-01 Add #1 Plans & Specs.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/T2338-01%20Add%20%231%20Plans%20%26%20Specs.pdf
+ 167 missouri_oa_fmdc _T2412-01 - Final Bid Docs.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/_T2412-01%20-%20Final%20Bid%20Docs.pdf
+ 168 missouri_oa_fmdc _T2412-01 - Final Plans.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/_T2412-01%20-%20Final%20Plans.pdf
+ 169 missouri_oa_fmdc _T2412-01 - Final Specs.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/_T2412-01%20-%20Final%20Specs.pdf
+ 170 missouri_oa_fmdc T2412-01 Addendum 01.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/T2412-01%20Addendum%2001.pdf
+ 171 missouri_oa_fmdc T2522-01 Bid Documents.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/T2522-01%20Bid%20Documents.pdf
+ 172 missouri_oa_fmdc T2525-01 Richmond final plans.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/T2525-01%20Richmond%20final%20plans.pdf
+ 173 missouri_oa_fmdc T2522-01 Final specs.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/T2522-01%20Final%20specs.pdf
+ 174 missouri_oa_fmdc T2522-01 Add #1 Plan & Specs.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/T2522-01%20Add%20%231%20Plan%20%26%20Specs.pdf
+ 175 missouri_oa_fmdc T2424-01 Bid Documents.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/T2424-01%20Bid%20Documents.pdf
+ 176 missouri_oa_fmdc T2424-01 Final specs.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/T2424-01%20Final%20specs.pdf
+ 177 missouri_oa_fmdc T2424-01 Add #1 Plans & Specs.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/T2424-01%20Add%20%231%20Plans%20%26%20Specs.pdf
+ 178 missouri_oa_fmdc _T2334-01 - Final Bid Documents.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/_T2334-01%20-%20Final%20Bid%20Documents.pdf
+ 179 missouri_oa_fmdc _T2334-01 Final Bid Plans.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/_T2334-01%20Final%20Bid%20Plans.pdf
+ 180 missouri_oa_fmdc _T2334-01 - Final Specs.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/_T2334-01%20-%20Final%20Specs.pdf
+ 181 missouri_oa_fmdc _T2334-01 Addendum 1.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/_T2334-01%20Addendum%201.pdf
+ 182 missouri_oa_fmdc _O2513-01 Final Bid Documents.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/_O2513-01%20Final%20Bid%20Documents.pdf
+ 183 missouri_oa_fmdc _O2513-01 Final Bid Plans.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/_O2513-01%20Final%20Bid%20Plans.pdf
+ 184 missouri_oa_fmdc _O2513-01 Final Bid Specs.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/_O2513-01%20Final%20Bid%20Specs.pdf
+ 185 missouri_oa_fmdc _O2513-01 Addendum 1.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/_O2513-01%20Addendum%201.pdf
+ 186 missouri_oa_fmdc _O2513-01 Addendum 2.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/_O2513-01%20Addendum%202.pdf
+ 187 missouri_oa_fmdc T2238-01 Bid Documents.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/T2238-01%20Bid%20Documents.pdf
+ 188 missouri_oa_fmdc T2238-01 Final specs.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/T2238-01%20Final%20specs.pdf
+ 189 missouri_oa_fmdc T2238-01 Addendum 1.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/T2238-01%20Addendum%201.pdf
+ 190 missouri_oa_fmdc _T2417-01 Final Bid Documents.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/_T2417-01%20Final%20Bid%20Documents.pdf
+ 191 missouri_oa_fmdc _T2417-01 Final Bid Plans.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/_T2417-01%20Final%20Bid%20Plans.pdf
+ 192 missouri_oa_fmdc _T2417-01 Final Bid Specs.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/_T2417-01%20Final%20Bid%20Specs.pdf
+ 193 missouri_oa_fmdc _T2417-01 Addendum 1.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/_T2417-01%20Addendum%201.pdf
+ 194 missouri_oa_fmdc _T2417-01 Addendum 2.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/_T2417-01%20Addendum%202.pdf
+ 195 missouri_oa_fmdc _U2307-01 - Final Bid Docs.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/_U2307-01%20-%20Final%20Bid%20Docs.pdf
+ 196 missouri_oa_fmdc _U2307-01 - Final Plans.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/_U2307-01%20-%20Final%20Plans.pdf
+ 197 missouri_oa_fmdc _U2307-01 - Final Specs_ Vol 1.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/_U2307-01%20-%20Final%20Specs_%20Vol%201.pdf
+ 198 missouri_oa_fmdc _U2307-01 - Final Specs_ Vol 2.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/_U2307-01%20-%20Final%20Specs_%20Vol%202.pdf
+ 199 missouri_oa_fmdc _U2307-01 Addendum 1.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/_U2307-01%20Addendum%201.pdf
+ 200 missouri_oa_fmdc _U2307-01 Add - 2.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/_U2307-01%20Add%20-%202.pdf
+ 201 missouri_oa_fmdc _U2307-01 Addendum 3.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/_U2307-01%20Addendum%203.pdf
+ 202 missouri_oa_fmdc _O2426-01 - Final Bid Docs.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/_O2426-01%20-%20Final%20Bid%20Docs.pdf
+ 203 missouri_oa_fmdc _O2426-01 - Final Plans_0.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/_O2426-01%20-%20Final%20Plans_0.pdf
+ 204 missouri_oa_fmdc _O2426-01 - Final Specs.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/_O2426-01%20-%20Final%20Specs.pdf
+ 205 missouri_oa_fmdc _O2426-01 - Add 1.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/_O2426-01%20-%20Add%201.pdf
+ 206 missouri_oa_fmdc T2335-01 Bid Documents.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/T2335-01%20Bid%20Documents.pdf
+ 207 missouri_oa_fmdc T2335-01 Final specs.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/T2335-01%20Final%20specs.pdf
+ 208 missouri_oa_fmdc T2335-01 Add #1 Plans & Specs.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/T2335-01%20Add%20%231%20Plans%20%26%20Specs.pdf
+ 209 missouri_oa_fmdc T2337-01 Bid Documents.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/T2337-01%20Bid%20Documents.pdf
+ 210 missouri_oa_fmdc T2337-01 Final specs.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/T2337-01%20Final%20specs.pdf
+ 211 missouri_oa_fmdc T2337-01 Add #1.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/T2337-01%20Add%20%231.pdf
+ 212 missouri_oa_fmdc _T2234-01 - Final Bid Docs.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/_T2234-01%20-%20Final%20Bid%20Docs.pdf
+ 213 missouri_oa_fmdc _T2234-01 - Final Plans.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/_T2234-01%20-%20Final%20Plans.pdf
+ 214 missouri_oa_fmdc _T2234-01 - Final Specs.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/_T2234-01%20-%20Final%20Specs.pdf
+ 215 missouri_oa_fmdc _T2234-01 Add - 1 Plan & Specs.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/_T2234-01%20Add%20-%201%20Plan%20%26%20Specs.pdf
+ 216 missouri_oa_fmdc _T2234-01 - Add 2.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/_T2234-01%20-%20Add%202.pdf
+ 217 missouri_oa_fmdc T2117-01 Bid Documents.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/T2117-01%20Bid%20Documents.pdf
+ 218 missouri_oa_fmdc T2117-01 Final specs.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/T2117-01%20Final%20specs.pdf
+ 219 missouri_oa_fmdc T2117-01 Add #1.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/T2117-01%20Add%20%231.pdf
+ 220 missouri_oa_fmdc _T2310-01 - Final Bid docs.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/_T2310-01%20-%20Final%20Bid%20docs.pdf
+ 221 missouri_oa_fmdc _T2310-01 - Final Plans.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/_T2310-01%20-%20Final%20Plans.pdf
+ 222 missouri_oa_fmdc _T2310-01 - Final Specs.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/_T2310-01%20-%20Final%20Specs.pdf
+ 223 missouri_oa_fmdc _T2310-01 - Add 1 Plan & Specs.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/_T2310-01%20-%20Add%201%20Plan%20%26%20Specs.pdf
+ 224 missouri_oa_fmdc _T2330-01 Final Bid Documents.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/_T2330-01%20Final%20Bid%20Documents.pdf
+ 225 missouri_oa_fmdc _T2330-01 Final Bid Plans.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/_T2330-01%20Final%20Bid%20Plans.pdf
+ 226 missouri_oa_fmdc _T2330-01 Final Bid Specs.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/_T2330-01%20Final%20Bid%20Specs.pdf
+ 227 missouri_oa_fmdc T2330-01 Addendum 1.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/T2330-01%20Addendum%201.pdf
+ 228 missouri_oa_fmdc T2330-01 Addendum 2.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/T2330-01%20Addendum%202.pdf
+ 229 missouri_oa_fmdc O2427-01 Bid Documents.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/O2427-01%20Bid%20Documents.pdf
+ 230 missouri_oa_fmdc O2427-01 Final specs.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/O2427-01%20Final%20specs.pdf
+ 231 missouri_oa_fmdc O2427-01 Add #1.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/O2427-01%20Add%20%231.pdf
+ 232 missouri_oa_fmdc O2427-01 Add #2 Plans & Specs.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/O2427-01%20Add%20%232%20Plans%20%26%20Specs.pdf
+ 233 missouri_oa_fmdc _U1503-01 - Final Bid Docs_1.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/_U1503-01%20-%20Final%20Bid%20Docs_1.pdf
+ 234 missouri_oa_fmdc _U1503-01 - Final Plans_1.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/_U1503-01%20-%20Final%20Plans_1.pdf
+ 235 missouri_oa_fmdc _U1503-01 - Final Specs_1.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/_U1503-01%20-%20Final%20Specs_1.pdf
+ 236 missouri_oa_fmdc _U1503-01 - Add 1.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/_U1503-01%20-%20Add%201.pdf
+ 237 missouri_oa_fmdc _U1503-01 - Add 2.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/_U1503-01%20-%20Add%202.pdf
+ 238 missouri_oa_fmdc _M2405-01 Final Bid Documents.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/_M2405-01%20Final%20Bid%20Documents.pdf
+ 239 missouri_oa_fmdc _M2405-01 Final Bid Plans.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/_M2405-01%20Final%20Bid%20Plans.pdf
+ 240 missouri_oa_fmdc _M2405-01 Final Bid Specs.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/_M2405-01%20Final%20Bid%20Specs.pdf
+ 241 missouri_oa_fmdc _M2405-01 - Add - 1.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/_M2405-01%20-%20Add%20-%201.pdf
+ 242 missouri_oa_fmdc _W2303-01 Final Bid Documents_0.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/_W2303-01%20Final%20Bid%20Documents_0.pdf
+ 243 missouri_oa_fmdc _W2303-01 Final Bid Plans.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/_W2303-01%20Final%20Bid%20Plans.pdf
+ 244 missouri_oa_fmdc _W2303-01 Final Bid Specs.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/_W2303-01%20Final%20Bid%20Specs.pdf
+ 245 missouri_oa_fmdc W2303-01 Add #1_0.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/W2303-01%20Add%20%231_0.pdf
+ 246 missouri_oa_fmdc _C2325-01 - Final Bid Docs.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/_C2325-01%20-%20Final%20Bid%20Docs.pdf
+ 247 missouri_oa_fmdc _C2325-01 - Final Plans_1.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/_C2325-01%20-%20Final%20Plans_1.pdf
+ 248 missouri_oa_fmdc _C2325-01 - Final Specs_1.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/_C2325-01%20-%20Final%20Specs_1.pdf
+ 249 missouri_oa_fmdc _C2325-01 Addendum 1.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/_C2325-01%20Addendum%201.pdf
+ 250 missouri_oa_fmdc _C2402-01 Final Bid Documents.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/_C2402-01%20Final%20Bid%20Documents.pdf
+ 251 missouri_oa_fmdc _C2402-01 Final Bid Plans.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/_C2402-01%20Final%20Bid%20Plans.pdf
+ 252 missouri_oa_fmdc _C2402-01 Final Bid Specs.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/_C2402-01%20Final%20Bid%20Specs.pdf
+ 253 missouri_oa_fmdc C2402-01 Add #1.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/C2402-01%20Add%20%231.pdf
+ 254 missouri_oa_fmdc C2402-01 Add #2.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/C2402-01%20Add%20%232.pdf
+ 255 missouri_oa_fmdc C2402-01 Add #3.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/C2402-01%20Add%20%233.pdf
+ 256 missouri_oa_fmdc _U1805-01 - Final Bid Docs.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/_U1805-01%20-%20Final%20Bid%20Docs.pdf
+ 257 missouri_oa_fmdc _U1805-01 - Final Plans.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/_U1805-01%20-%20Final%20Plans.pdf
+ 258 missouri_oa_fmdc _U1805-01 - Final Specs.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/_U1805-01%20-%20Final%20Specs.pdf
+ 259 missouri_oa_fmdc _U1805-01 - Add - 1.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/_U1805-01%20-%20Add%20-%201.pdf
+ 260 missouri_oa_fmdc _U1805-01 Add 2 Plans Specs.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/_U1805-01%20Add%202%20Plans%20Specs.pdf
+ 261 missouri_oa_fmdc _T2327-01 Final Bid Documents.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/_T2327-01%20Final%20Bid%20Documents.pdf
+ 262 missouri_oa_fmdc _T2327-01 Final Bid Plans.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/_T2327-01%20Final%20Bid%20Plans.pdf
+ 263 missouri_oa_fmdc _T2327-01 Final Bid Specs.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/_T2327-01%20Final%20Bid%20Specs.pdf
+ 264 missouri_oa_fmdc T2327-01 Add #1.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/T2327-01%20Add%20%231.pdf
+ 265 missouri_oa_fmdc T2327-01 Add #2 Plans & Specs.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/T2327-01%20Add%20%232%20Plans%20%26%20Specs.pdf
+ 266 missouri_oa_fmdc _U2409-01 Final Bid Documents.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/_U2409-01%20Final%20Bid%20Documents.pdf
+ 267 missouri_oa_fmdc _U2409-01 Final Bid Plans_0.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/_U2409-01%20Final%20Bid%20Plans_0.pdf
+ 268 missouri_oa_fmdc _U2409-01 Final Bid Specs.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/_U2409-01%20Final%20Bid%20Specs.pdf
+ 269 missouri_oa_fmdc _U2409-01 Addendum 1_0.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/_U2409-01%20Addendum%201_0.pdf
+ 270 missouri_oa_fmdc _T2143-01 - Final Bid Docs.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/_T2143-01%20-%20Final%20Bid%20Docs.pdf
+ 271 missouri_oa_fmdc _T2143-01 - Final Plans.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/_T2143-01%20-%20Final%20Plans.pdf
+ 272 missouri_oa_fmdc _T2143-01 - Final Specs.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/_T2143-01%20-%20Final%20Specs.pdf
+ 273 missouri_oa_fmdc _T2143-01 - Add 1.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/_T2143-01%20-%20Add%201.pdf
+ 274 missouri_oa_fmdc _M2328-01 Final Bid Documents.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/_M2328-01%20Final%20Bid%20Documents.pdf
+ 275 missouri_oa_fmdc _M2328-01 Final Bid Plans.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/_M2328-01%20Final%20Bid%20Plans.pdf
+ 276 missouri_oa_fmdc _M2328-01 Final Bid Specs.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/_M2328-01%20Final%20Bid%20Specs.pdf
+ 277 missouri_oa_fmdc M2328-01 Add #1 Plans & Specs.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/M2328-01%20Add%20%231%20Plans%20%26%20Specs.pdf
+ 278 missouri_oa_fmdc R2321-01 Bid Documents.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/R2321-01%20Bid%20Documents.pdf
+ 279 missouri_oa_fmdc R2321-01 Final specs.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/R2321-01%20Final%20specs.pdf
+ 280 missouri_oa_fmdc R2321-01 Addendum #1_FINAL.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/R2321-01%20Addendum%20%231_FINAL.pdf
+ 281 missouri_oa_fmdc C2324-01 Bid Documents.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/C2324-01%20Bid%20Documents.pdf
+ 282 missouri_oa_fmdc C2324-01 - OCC Upgrade HVAC - Bid Documents Drawings.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/C2324-01%20-%20OCC%20Upgrade%20HVAC%20-%20Bid%20Documents%20Drawings.pdf
+ 283 missouri_oa_fmdc C2324-01 Final specs.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/C2324-01%20Final%20specs.pdf
+ 284 missouri_oa_fmdc C2324-01 Add #1.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/C2324-01%20Add%20%231.pdf
+ 285 missouri_oa_fmdc _M2430-01 Final Bid Documents.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/_M2430-01%20Final%20Bid%20Documents.pdf
+ 286 missouri_oa_fmdc _M2430-01 Final Bid Plans.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/_M2430-01%20Final%20Bid%20Plans.pdf
+ 287 missouri_oa_fmdc _M2430-01 Final Bid Specs.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/_M2430-01%20Final%20Bid%20Specs.pdf
+ 288 missouri_oa_fmdc _M2430-01 Addendum 1.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/_M2430-01%20Addendum%201.pdf
+ 289 missouri_oa_fmdc _M2430-01 Addendum 2.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/_M2430-01%20Addendum%202.pdf
+ 290 missouri_oa_fmdc _T2406-01 - Final Bid Documents.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/_T2406-01%20-%20Final%20Bid%20Documents.pdf
+ 291 missouri_oa_fmdc _T2406-01 - Final Plans.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/_T2406-01%20-%20Final%20Plans.pdf
+ 292 missouri_oa_fmdc _T2406-01 Final specs.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/_T2406-01%20Final%20specs.pdf
+ 293 missouri_oa_fmdc T2406-01 Addendum 1.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/T2406-01%20Addendum%201.pdf
+ 294 missouri_oa_fmdc X2328-01 Bid Documents.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/X2328-01%20Bid%20Documents.pdf
+ 295 missouri_oa_fmdc X2328-01-BD Complete Plans 36x24.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/X2328-01-BD%20Complete%20Plans%2036x24.pdf
+ 296 missouri_oa_fmdc X2328-01 Final specs.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/X2328-01%20Final%20specs.pdf
+ 297 missouri_oa_fmdc X2328-01 Add #1.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/X2328-01%20Add%20%231.pdf
+ 298 missouri_oa_fmdc _E2401-01 Final Bid Documents.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/_E2401-01%20Final%20Bid%20Documents.pdf
+ 299 missouri_oa_fmdc _E2401-01 Final Bid Plans.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/_E2401-01%20Final%20Bid%20Plans.pdf
+ 300 missouri_oa_fmdc _E2401-01 Final Bid Specs.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/_E2401-01%20Final%20Bid%20Specs.pdf
+ 301 missouri_oa_fmdc _E2401-01 Addendum 1.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/_E2401-01%20Addendum%201.pdf
+ 302 missouri_oa_fmdc _E2401-01 Addendum 2.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/_E2401-01%20Addendum%202.pdf
+ 303 missouri_oa_fmdc _M2416-01 - Final Bid Docs.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/_M2416-01%20-%20Final%20Bid%20Docs.pdf
+ 304 missouri_oa_fmdc _M2416-01 - Final Plans_0.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/_M2416-01%20-%20Final%20Plans_0.pdf
+ 305 missouri_oa_fmdc _M2416-01 - Final Specs.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/_M2416-01%20-%20Final%20Specs.pdf
+ 306 missouri_oa_fmdc _M2416-01 Add - 1.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/_M2416-01%20Add%20-%201.pdf
+ 307 missouri_oa_fmdc _R2335-01 Final Bid Documents.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/_R2335-01%20Final%20Bid%20Documents.pdf
+ 308 missouri_oa_fmdc _R2335-01 Final Bid Plans.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/_R2335-01%20Final%20Bid%20Plans.pdf
+ 309 missouri_oa_fmdc _R2335-01 Final Bid Specs.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/_R2335-01%20Final%20Bid%20Specs.pdf
+ 310 missouri_oa_fmdc _R2335-01 Addendum 1.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/_R2335-01%20Addendum%201.pdf
+ 311 missouri_oa_fmdc _R2335-01 Addendum 2.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/_R2335-01%20Addendum%202.pdf
+ 312 missouri_oa_fmdc _R2503-01 Final Bid Documents.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/_R2503-01%20Final%20Bid%20Documents.pdf
+ 313 missouri_oa_fmdc _R2503-01 Final Bid Plans.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/_R2503-01%20Final%20Bid%20Plans.pdf
+ 314 missouri_oa_fmdc _R2503-01 Final Bid Specs.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/_R2503-01%20Final%20Bid%20Specs.pdf
+ 315 missouri_oa_fmdc _R2503-01 Addendum 1.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/_R2503-01%20Addendum%201.pdf
+ 316 missouri_oa_fmdc _R2503-01 Addendum 2.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/_R2503-01%20Addendum%202.pdf
+ 317 missouri_oa_fmdc T2405-01 Bid Documents.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/T2405-01%20Bid%20Documents.pdf
+ 318 missouri_oa_fmdc T2405-01 Final specs.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/T2405-01%20Final%20specs.pdf
+ 319 missouri_oa_fmdc T2405-01 Add #1 Plans & Specs.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/T2405-01%20Add%20%231%20Plans%20%26%20Specs.pdf
+ 320 missouri_oa_fmdc IDIQMCA-5004 Bid Documents.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/IDIQMCA-5004%20Bid%20Documents.pdf
+ 321 missouri_oa_fmdc IDIQMCA-5004 Final specs.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/IDIQMCA-5004%20Final%20specs.pdf
+ 322 missouri_oa_fmdc IDIQMCA-5006 Bid Documents.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/IDIQMCA-5006%20Bid%20Documents.pdf
+ 323 missouri_oa_fmdc IDIQMCA-5006 Final specs.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/IDIQMCA-5006%20Final%20specs.pdf
+ 324 missouri_oa_fmdc IDIQMCA-5005 Bid Documents.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/IDIQMCA-5005%20Bid%20Documents.pdf
+ 325 missouri_oa_fmdc IDIQMCA-5005 Final specs.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/IDIQMCA-5005%20Final%20specs.pdf
+ 326 missouri_oa_fmdc O2204-01 Bid Documents.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/O2204-01%20Bid%20Documents.pdf
+ 327 missouri_oa_fmdc O2204-01 Final specs.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/O2204-01%20Final%20specs.pdf
+ 328 missouri_oa_fmdc O2204-01 Add #1.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/O2204-01%20Add%20%231.pdf
+ 329 missouri_oa_fmdc O2204-01 Add #2.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/O2204-01%20Add%20%232.pdf
+ 330 missouri_oa_fmdc O2204-01 Addendum 3.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/O2204-01%20Addendum%203.pdf
+ 331 missouri_oa_fmdc X2220-01 Bid Documents.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/X2220-01%20Bid%20Documents.pdf
+ 332 missouri_oa_fmdc X2220-01 Bid Plans.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/X2220-01%20Bid%20Plans.pdf
+ 333 missouri_oa_fmdc X2220-01 Final specs.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/X2220-01%20Final%20specs.pdf
+ 334 missouri_oa_fmdc X2220-01 Add #1 Plans & Specs.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/X2220-01%20Add%20%231%20Plans%20%26%20Specs.pdf
+ 335 missouri_oa_fmdc X2220-01 Add #2 Plans & Specs_.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/X2220-01%20Add%20%232%20Plans%20%26%20Specs_.pdf
+ 336 missouri_oa_fmdc _X2220-01 Add - 3 Plans - Specs.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/_X2220-01%20Add%20-%203%20Plans%20-%20Specs.pdf
+ 337 missouri_oa_fmdc _U2415-01 - Final Bid Docs.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/_U2415-01%20-%20Final%20Bid%20Docs.pdf
+ 338 missouri_oa_fmdc _U2415-01 - Final Plans.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/_U2415-01%20-%20Final%20Plans.pdf
+ 339 missouri_oa_fmdc _U2415-01 - Final Specs.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/_U2415-01%20-%20Final%20Specs.pdf
+ 340 missouri_oa_fmdc _U2415-01 Add -1 Plans & Specs.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/_U2415-01%20Add%20-1%20Plans%20%26%20Specs.pdf
+ 341 missouri_oa_fmdc _C2407-01 Final Bid Documents.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/_C2407-01%20Final%20Bid%20Documents.pdf
+ 342 missouri_oa_fmdc _C2407-01 Final Bid Plans.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/_C2407-01%20Final%20Bid%20Plans.pdf
+ 343 missouri_oa_fmdc _C2407-01 Final Bid Specs.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/_C2407-01%20Final%20Bid%20Specs.pdf
+ 344 missouri_oa_fmdc _C2407-01 Addendum 1.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/_C2407-01%20Addendum%201.pdf
+ 345 missouri_oa_fmdc _M2507-01 Final Bid Documents.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/_M2507-01%20Final%20Bid%20Documents.pdf
+ 346 missouri_oa_fmdc _M2507-01 Final Bid Plans.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/_M2507-01%20Final%20Bid%20Plans.pdf
+ 347 missouri_oa_fmdc _M2507-01 Final Bid Specs_0.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/_M2507-01%20Final%20Bid%20Specs_0.pdf
+ 348 missouri_oa_fmdc _M2507-01 Addendum 1.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/_M2507-01%20Addendum%201.pdf
+ 349 missouri_oa_fmdc M2006-01 Bid Documents.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/M2006-01%20Bid%20Documents.pdf
+ 350 missouri_oa_fmdc M2006-01 Final specs.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/M2006-01%20Final%20specs.pdf
+ 351 missouri_oa_fmdc M2006-01 Add #1 Plans & Specs.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/M2006-01%20Add%20%231%20Plans%20%26%20Specs.pdf
+ 352 missouri_oa_fmdc IDIQMCA-5003 Bid Documents.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/IDIQMCA-5003%20Bid%20Documents.pdf
+ 353 missouri_oa_fmdc IDIQMCA-5003 Final specs_.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/IDIQMCA-5003%20Final%20specs_.pdf
+ 354 missouri_oa_fmdc _E2408-01 - Final Bid Docs_0.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/_E2408-01%20-%20Final%20Bid%20Docs_0.pdf
+ 355 missouri_oa_fmdc _E2408-01 - Final Plans_0.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/_E2408-01%20-%20Final%20Plans_0.pdf
+ 356 missouri_oa_fmdc _E2408-01 - Final Specs_0.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/_E2408-01%20-%20Final%20Specs_0.pdf
+ 357 missouri_oa_fmdc E2408-01 Add1.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/E2408-01%20Add1.pdf
+ 358 missouri_oa_fmdc O2204-01 Add #1_1.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/O2204-01%20Add%20%231_1.pdf
+ 359 missouri_oa_fmdc O2204-01 Add #1_0.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/O2204-01%20Add%20%231_0.pdf
+ 360 missouri_oa_fmdc _R2312-01 Final Bid Documents.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/_R2312-01%20Final%20Bid%20Documents.pdf
+ 361 missouri_oa_fmdc _R2312-01 Final Bid Plans.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/_R2312-01%20Final%20Bid%20Plans.pdf
+ 362 missouri_oa_fmdc _R2312-01 Final Bid Specs.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/_R2312-01%20Final%20Bid%20Specs.pdf
+ 363 missouri_oa_fmdc _R2312-01 Addendum 1.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/_R2312-01%20Addendum%201.pdf
+ 364 missouri_oa_fmdc U2502-01 Bid Documents.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/U2502-01%20Bid%20Documents.pdf
+ 365 missouri_oa_fmdc U2502-01 Final specs.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/U2502-01%20Final%20specs.pdf
+ 366 missouri_oa_fmdc U2502-01 Add #1.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/U2502-01%20Add%20%231.pdf
+ 367 missouri_oa_fmdc _C2414-01 Final Bid Documents.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/_C2414-01%20Final%20Bid%20Documents.pdf
+ 368 missouri_oa_fmdc _C2414-01 Final Bid Plans.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/_C2414-01%20Final%20Bid%20Plans.pdf
+ 369 missouri_oa_fmdc _C2414-01 Final Bid Specs.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/_C2414-01%20Final%20Bid%20Specs.pdf
+ 370 missouri_oa_fmdc C2414-01 Add #1.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/C2414-01%20Add%20%231.pdf
+ 371 missouri_oa_fmdc _C2414-01 Addendum 2.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/_C2414-01%20Addendum%202.pdf
+ 372 missouri_oa_fmdc M2312-01 Bid Documents_0.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/M2312-01%20Bid%20Documents_0.pdf
+ 373 missouri_oa_fmdc M2312-01 Final specs.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/M2312-01%20Final%20specs.pdf
+ 374 missouri_oa_fmdc M2312-01 Add #1.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/M2312-01%20Add%20%231.pdf
+ 375 missouri_oa_fmdc _M2414-01 - Final Bid Docs.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/_M2414-01%20-%20Final%20Bid%20Docs.pdf
+ 376 missouri_oa_fmdc _M2414-01 - Final Plans.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/_M2414-01%20-%20Final%20Plans.pdf
+ 377 missouri_oa_fmdc _M2414-01 - Final Specs.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/_M2414-01%20-%20Final%20Specs.pdf
+ 378 missouri_oa_fmdc _M2414-01 Addendum 1.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/_M2414-01%20Addendum%201.pdf
+ 379 missouri_oa_fmdc _M2414-01  Addendum 2.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/_M2414-01%20%20Addendum%202.pdf
+ 380 missouri_oa_fmdc O2434-01 Bid Documents_0.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/O2434-01%20Bid%20Documents_0.pdf
+ 381 missouri_oa_fmdc O2434-01 Final specs.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/O2434-01%20Final%20specs.pdf
+ 382 missouri_oa_fmdc O2434-01 Add #1.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/O2434-01%20Add%20%231.pdf
+ 383 missouri_oa_fmdc _O2339-01 - Final Bid Docs.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/_O2339-01%20-%20Final%20Bid%20Docs.pdf
+ 384 missouri_oa_fmdc _O2339-01 - Final Plans.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/_O2339-01%20-%20Final%20Plans.pdf
+ 385 missouri_oa_fmdc _O2339-01 - Final Specs.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/_O2339-01%20-%20Final%20Specs.pdf
+ 386 missouri_oa_fmdc O2339-01 Add #1 Plans & Specs.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/O2339-01%20Add%20%231%20Plans%20%26%20Specs.pdf
+ 387 missouri_oa_fmdc _F2406-01 Final Bid Docs.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/_F2406-01%20Final%20Bid%20Docs.pdf
+ 388 missouri_oa_fmdc _F2406-01 Final Bid Plans.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/_F2406-01%20Final%20Bid%20Plans.pdf
+ 389 missouri_oa_fmdc _F2406-01 Final Bid Specs.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/_F2406-01%20Final%20Bid%20Specs.pdf
+ 390 missouri_oa_fmdc _F2406-01 Addendum 1.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/_F2406-01%20Addendum%201.pdf
+ 391 missouri_oa_fmdc H2401-01 Bid Documents.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/H2401-01%20Bid%20Documents.pdf
+ 392 missouri_oa_fmdc H2401-01 Final specs.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/H2401-01%20Final%20specs.pdf
+ 393 missouri_oa_fmdc H2401-01 Add #1.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/H2401-01%20Add%20%231.pdf
+ 394 missouri_oa_fmdc H2401-01 Add #2.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/H2401-01%20Add%20%232.pdf
+ 395 missouri_oa_fmdc IDIQMCA-5002 Bid Documents_0.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/IDIQMCA-5002%20Bid%20Documents_0.pdf
+ 396 missouri_oa_fmdc IDIQMCA-5002 Final specs_0.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/IDIQMCA-5002%20Final%20specs_0.pdf
+ 397 missouri_oa_fmdc IDIQMCA-5001 & 5002 - Add #1_0.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/IDIQMCA-5001%20%26%205002%20-%20Add%20%231_0.pdf
+ 398 missouri_oa_fmdc _F2404-01 Final Bid Docs.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/_F2404-01%20Final%20Bid%20Docs.pdf
+ 399 missouri_oa_fmdc _F2404-01 Final Bid Plans.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/_F2404-01%20Final%20Bid%20Plans.pdf
+ 400 missouri_oa_fmdc _F2404-01 Final Bid Specs.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/_F2404-01%20Final%20Bid%20Specs.pdf
+ 401 missouri_oa_fmdc F2404-01 Add #1.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/F2404-01%20Add%20%231.pdf
+ 402 missouri_oa_fmdc _F2404-01 Addendum 2.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/_F2404-01%20Addendum%202.pdf
+ 403 missouri_oa_fmdc IDIQMCA-5001 Bid Documents_1.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/IDIQMCA-5001%20Bid%20Documents_1.pdf
+ 404 missouri_oa_fmdc IDIQMCA-5001 Final specs_1.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/IDIQMCA-5001%20Final%20specs_1.pdf
+ 405 missouri_oa_fmdc IDIQMCA-5001 & 5002 - Add #1.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/IDIQMCA-5001%20%26%205002%20-%20Add%20%231.pdf
+ 406 missouri_oa_fmdc _M2409-01 - Final Bid Docs.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/_M2409-01%20-%20Final%20Bid%20Docs.pdf
+ 407 missouri_oa_fmdc _M2409-01 - Final Plans.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/_M2409-01%20-%20Final%20Plans.pdf
+ 408 missouri_oa_fmdc _M2409-01 - Final Specs.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/_M2409-01%20-%20Final%20Specs.pdf
+ 409 missouri_oa_fmdc _M2409-01 Add - 1.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/_M2409-01%20Add%20-%201.pdf
+ 410 missouri_oa_fmdc _M2412-01 - Final Bid Docs.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/_M2412-01%20-%20Final%20Bid%20Docs.pdf
+ 411 missouri_oa_fmdc _M2412-01 - Final Plans.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/_M2412-01%20-%20Final%20Plans.pdf
+ 412 missouri_oa_fmdc _M2412-01 - Final Specs_0.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/_M2412-01%20-%20Final%20Specs_0.pdf
+ 413 missouri_oa_fmdc _M2412-01 Add - 1.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/_M2412-01%20Add%20-%201.pdf
+ 414 missouri_oa_fmdc O2353-01 Bid Documents.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/O2353-01%20Bid%20Documents.pdf
+ 415 missouri_oa_fmdc O235301 - Bid Documents - Drawings.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/O235301%20-%20Bid%20Documents%20-%20Drawings.pdf
+ 416 missouri_oa_fmdc O2353-01 Final specs.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/O2353-01%20Final%20specs.pdf
+ 417 missouri_oa_fmdc O2353-01 Add #1.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/O2353-01%20Add%20%231.pdf
+ 418 missouri_oa_fmdc _C2403-01 Final Bid Docs.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/_C2403-01%20Final%20Bid%20Docs.pdf
+ 419 missouri_oa_fmdc _C2403-01 Final Bid Plans.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/_C2403-01%20Final%20Bid%20Plans.pdf
+ 420 missouri_oa_fmdc _C2403-01 Final Bid Specs.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/_C2403-01%20Final%20Bid%20Specs.pdf
+ 421 missouri_oa_fmdc _C2403-01 Add 1_1.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/_C2403-01%20Add%201_1.pdf
+ 422 missouri_oa_fmdc _C2403-01 Add 2_1.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/_C2403-01%20Add%202_1.pdf
+ 423 missouri_oa_fmdc _REBID T2421-01 - Final Specs.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/_REBID%20T2421-01%20-%20Final%20Specs.pdf
+ 424 missouri_oa_fmdc _R2401-01 - Final Plans.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/_R2401-01%20-%20Final%20Plans.pdf
+ 425 missouri_oa_fmdc _T2421-01 - Final Specs.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/_T2421-01%20-%20Final%20Specs.pdf
+ 426 missouri_oa_fmdc _X2506-01 Final Bid Plans.pdf https://oa.mo.gov/sites/default/files/bid-opportunities/_X2506-01%20Final%20Bid%20Plans.pdf
+dry run: round 4, 426 files queued from round 3's 426 work-left URLs; round cap 1000000000 bytes, per-file cap 150000000 bytes; nothing fetched, nothing written
