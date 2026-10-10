@@ -69,6 +69,9 @@ import { jsonResponse3 } from "./lib/json-response.js";
 import { registerSightXWalkthroughRoutes } from "./routes/sightx-walkthrough.js";
 import { registerSightXModelRoutes } from "./routes/sightx-model.js";
 import { registerSightXShareRoutes } from "./routes/sightx-share.js";
+import { registerSightXSheetRoutes } from "./routes/sightx-sheets.js";
+// g068: the plan sheets of the placement-record sets, PNG bytes as Data modules (wrangler.toml [[rules]]).
+import { SHEET_IMAGES } from "./data/sheets/images.js";
 import { authenticate } from "./lib/auth.js";
 
 import sightxHtml from "./pages/sightx.html";
@@ -109,6 +112,7 @@ router.addRoute("HEAD", "/sightx/", serveSightX);
 registerSightXWalkthroughRoutes(router);
 registerSightXModelRoutes(router);
 registerSightXShareRoutes(router, { authenticate });
+registerSightXSheetRoutes(router, { images: SHEET_IMAGES });
 
 export default secured({
   async fetch(request, env, ctx) {

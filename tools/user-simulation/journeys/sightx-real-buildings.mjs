@@ -12,6 +12,7 @@
 //   - NEXT DOOR walks to a tagged door, its card names the door and quotes its schedule row word
 //     for word, and the camera stands within 4 m of the door's plan position;
 //   - W walks on from there.
+// g068: a set with a placement record opens on its plan sheets (sightx-sheets.mjs); view=3d opens this corridor.
 // Usage: node tools/user-simulation/journeys/sightx-real-buildings.mjs   (exit 0 = all passed)
 import { Journey, BASE, sleep } from "../lib/journey-kit.mjs";
 
@@ -25,7 +26,7 @@ await J.run(async () => {
   const ctx = await J.context("desktop");
   for (const set of SETS) {
     const page = await J.page(ctx);
-    await page.goto(BASE + "/sightx/?set=" + set + "&journey=" + J.id + "-" + J.suffix, { waitUntil: "load", timeout: 60000 });
+    await page.goto(BASE + "/sightx/?set=" + set + "&view=3d&journey=" + J.id + "-" + J.suffix, { waitUntil: "load", timeout: 60000 });
     // A failed set falls back to the sample sheet, whose "Built N doors" alone would pass.
     const built = await page.waitForFunction(() => { const t = (document.getElementById("sx-status") || {}).textContent || ""; return /Built \d+ doors?/.test(t) && /the schedule rows of /.test(t); }, null, { timeout: 60000 }).then(() => true, () => false);
     J.check(set + ": the set opens and its doors are built", built, await page.textContent("#sx-status").catch(() => ""));

@@ -1,0 +1,42 @@
+PASS browser has GPU WebGL
+PASS 192a16af8f31ae0c: the set opens on its plan sheets and the first sheet's image loads
+PASS 192a16af8f31ae0c: the placement record answers
+PASS 192a16af8f31ae0c: the HUD shows placed-of-total (49 OF 49 PLACED)
+PASS 192a16af8f31ae0c: one sheet button per plan sheet in the record
+PASS 192a16af8f31ae0c: A-100 (p.7) loads and draws its 49 placed tags at the record's coordinates
+PASS 192a16af8f31ae0c: A-101 (p.8) loads and draws its 0 placed tags at the record's coordinates
+PASS 192a16af8f31ae0c: A-104 (p.11) loads and draws its 0 placed tags at the record's coordinates
+PASS 192a16af8f31ae0c: all sheets together draw the 49 placed tags
+PASS 192a16af8f31ae0c: the table row 131B opens its card and brings up A-100
+PASS 192a16af8f31ae0c: clicking tag 131B on A-100 opens its door card (room EXCERCISE ROOM, schedule p.10)
+PASS 192a16af8f31ae0c: the 0 marks the record could not place are listed NOT PLACED
+PASS 192a16af8f31ae0c: 2D sheet truth: HUD says PLAN SHEETS; a 3D CORRIDOR button only where a 3D model exists (true)
+PASS 192a16af8f31ae0c: one shell: the same document throughout, on the site
+PASS 7478006f7fd5b43c: the set opens on its plan sheets and the first sheet's image loads
+PASS 7478006f7fd5b43c: the placement record answers
+PASS 7478006f7fd5b43c: the HUD shows placed-of-total (208 OF 211 PLACED)
+PASS 7478006f7fd5b43c: one sheet button per plan sheet in the record
+PASS 7478006f7fd5b43c: A-105 (p.23) loads and draws its 53 placed tags at the record's coordinates
+PASS 7478006f7fd5b43c: A-106 (p.24) loads and draws its 77 placed tags at the record's coordinates
+PASS 7478006f7fd5b43c: A-107 (p.25) loads and draws its 77 placed tags at the record's coordinates
+PASS 7478006f7fd5b43c: A-112 (p.28) loads and draws its 1 placed tags at the record's coordinates
+PASS 7478006f7fd5b43c: all sheets together draw the 208 placed tags
+PASS 7478006f7fd5b43c: the table row 101A opens its card and brings up A-105
+PASS 7478006f7fd5b43c: clicking tag 101A on A-105 opens its door card (room EXIST DORM, schedule p.45)
+PASS 7478006f7fd5b43c: the 3 marks the record could not place are listed NOT PLACED
+PASS 7478006f7fd5b43c: 2D sheet truth: HUD says PLAN SHEETS; a 3D CORRIDOR button only where a 3D model exists (true)
+PASS 7478006f7fd5b43c: one shell: the same document throughout, on the site
+PASS 15b85ca679307cc1: the set opens on its plan sheets and the first sheet's image loads
+PASS 15b85ca679307cc1: the placement record answers
+PASS 15b85ca679307cc1: the HUD shows placed-of-total (33 OF 33 PLACED)
+PASS 15b85ca679307cc1: one sheet button per plan sheet in the record
+PASS 15b85ca679307cc1: A-100 (p.12) loads and draws its 33 placed tags at the record's coordinates
+PASS 15b85ca679307cc1: A-110 (p.13) loads and draws its 0 placed tags at the record's coordinates
+PASS 15b85ca679307cc1: all sheets together draw the 33 placed tags
+PASS 15b85ca679307cc1: the table row 114A opens its card and brings up A-100
+PASS 15b85ca679307cc1: clicking tag 114A on A-100 opens its door card (room CORRIDOR, schedule p.15)
+PASS 15b85ca679307cc1: the 0 marks the record could not place are listed NOT PLACED
+PASS 15b85ca679307cc1: 2D sheet truth: HUD says PLAN SHEETS; a 3D CORRIDOR button only where a 3D model exists (false)
+PASS 15b85ca679307cc1: one shell: the same document throughout, on the site
+PASS phone: tapping tag 131B on T2507 A-100 opens its card (131 EXCERCISE ROOM)
+41 passed, 0 failed

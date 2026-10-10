@@ -50,10 +50,22 @@
     .notes{margin:12px 2px;color:var(--accent);font-size:13px;line-height:1.5}
     .table{margin-top:16px;border:1px solid var(--line);border-radius:16px;overflow-x:auto;background:rgba(17,19,24,.94)}
     table{width:100%;border-collapse:collapse;font-size:13px}th{text-align:left;color:var(--muted);font:750 10px/1 ui-monospace,monospace;letter-spacing:.1em;padding:12px 14px;background:#0d0f14;border-bottom:2px solid var(--line);white-space:nowrap}
-    td{padding:10px 14px;border-bottom:1px solid #1f232b;vertical-align:top}tr.door{cursor:pointer}tr.door:hover td,tr.door.sel td{background:rgba(42,82,255,.08)}
+    td{padding:10px 14px;border-bottom:1px solid #1f232b;vertical-align:top}tr.door,tr.tagrow{cursor:pointer}tr.door:hover td,tr.door.sel td,tr.tagrow:hover td,tr.tagrow.sel td{background:rgba(42,82,255,.08)}
     .badge{font:800 9px ui-monospace,monospace;padding:4px 8px;border-radius:99px;border:1px solid var(--line);white-space:nowrap}.badge.r{color:var(--red);border-color:rgba(255,113,107,.5)}
     .foot{color:var(--muted);font-size:13px;line-height:1.6;margin-top:16px;max-width:900px}
     .pay{border:1px solid rgba(255,212,0,.4);background:rgba(255,212,0,.06);border-radius:12px;padding:10px 12px;font-size:13px;line-height:1.5;margin-top:10px}
+    /* g068: a set's plan sheets with its placed door tags (placement record), drawn in PDF points. */
+    .sheetview{position:absolute;inset:0;display:none;background:#fff;touch-action:none}.sheetview.on{display:block}
+    .sheetview svg{display:block;width:100%;height:100%;cursor:grab;user-select:none}
+    .sheetview .tag .ring{fill:rgba(42,82,255,.12);stroke:var(--primary);stroke-width:2;vector-effect:non-scaling-stroke}
+    .sheetview .tag .hit{fill:transparent;cursor:pointer}
+    .sheetview .tag text{fill:var(--primary);font:800 12px ui-monospace,monospace;paint-order:stroke;stroke:#fff;stroke-width:3px}
+    .sheetview .tag.sel .ring{fill:rgba(255,212,0,.35);stroke:#d14b00;stroke-width:3}.sheetview .tag.sel text{fill:#d14b00}
+    .sheet-bar{position:absolute;left:12px;right:12px;top:48px;display:flex;gap:6px;flex-wrap:wrap;align-items:center}
+    .sheet-bar .btn{background:rgba(17,19,24,.92)}.sheet-bar .btn.on{background:var(--primary);border-color:var(--primary);color:#fff}
+    .sheet-zoom{position:absolute;right:12px;bottom:12px;display:flex;gap:6px}.sheet-zoom .btn{background:rgba(17,19,24,.92);min-width:40px}
+    .sheet-note{position:absolute;left:12px;bottom:12px;max-width:min(60%,520px);color:#222;background:rgba(255,255,255,.92);border:1px solid #ccc;border-radius:8px;padding:6px 9px;font:600 11px/1.4 ui-monospace,monospace}
+    .viewer.sheets .ctrl,.viewer.sheets .hint,.viewer.sheets .weyland-stick{display:none!important}
     @media(max-width:700px){.hint{display:none}.ctrl{left:auto;right:8px;bottom:8px;transform:none;width:150px;gap:5px}.ctrl .btn{padding:9px 10px;min-height:40px}.hud{flex-wrap:wrap}}
     @media(max-width:980px){.stage{grid-template-columns:1fr}.info{max-height:none;min-height:0}.viewer{height:56vh}}
   </style>
@@ -68,6 +80,12 @@
       <div class="viewer" id="viewer">
         <canvas id="sx-canvas" aria-label="3D corridor built from the schedule"></canvas>
         <div class="nogl" id="nogl">This browser can't draw the 3D corridor (no WebGL). The door list below has everything in the schedule.</div>
+        <div class="sheetview" id="sheetview" aria-label="Plan sheets with the placed door tags">
+          <svg id="sheet-svg" xmlns="http://www.w3.org/2000/svg" role="img"></svg>
+          <div class="sheet-bar" id="sheet-bar"></div>
+          <div class="sheet-note" id="sheet-note"></div>
+          <div class="sheet-zoom"><button class="btn" id="sheet-in" type="button" aria-label="Zoom in">+</button><button class="btn" id="sheet-out" type="button" aria-label="Zoom out">−</button><button class="btn" id="sheet-fit" type="button">FIT</button></div>
+        </div>
         <div class="hud"><span id="hud-project">-</span><span id="hud-layout">-</span><span id="hud-count">-</span></div>
         <div class="hint" id="hint">W/A/S/D TO WALK · DRAG TO LOOK · CLICK A DOOR · GAMEPAD WORKS</div>
         <div class="ctrl">
@@ -518,7 +536,7 @@ HW-2: lever lockset, 3 hinges, wall stop"></textarea>
     $("reset").onclick = function () { stopTour(); if (gl) goStart(false); };
 
     function show(model, how) {
-      st.model = model; st.sel = -1; stopTour();
+      st.model = model; st.sel = -1; stopTour(); leaveSheets();
       renderList(); buildScene(model);
       // Read-only counts for journeys and probes: what was drawn against what the data holds.
       try { window.__sxCounts = Object.freeze({ door_cards: document.querySelectorAll("#rows tr.door").length, row_cards: document.querySelectorAll("#rows tr.row-only").length, doors_drawn: gl ? doorPos.length : 0, doors_on_plan: model.doors.filter(function (d) { return !!d.plan; }).length, rows: model.set ? model.set.rows : model.doors.length, shared_flags: document.querySelectorAll("#rows tr.door .badge.shared-mark").length }); } catch (e) {}
@@ -602,11 +620,144 @@ HW-2: lever lockset, 3 hinges, wall stop"></textarea>
         $("copyLink").onclick = function () { if (navigator.clipboard) navigator.clipboard.writeText(link); $("copyLink").textContent = "COPIED"; };
       });
     };
+    // g068: a set with a placement record (tools/corpus/harvest/placement) opens on its plan sheets: each
+    // sheet drawn from the set's own PDF, every placed door tag at its PDF-point coordinates, the door card on a
+    // tap, placed-of-total in the HUD. 2D sheet truth: nothing here is drawn that the record does not hold.
+    var sv = { d: null, k: 0, vb: null, sel: -1, down: null, loaded: {}, model3d: null };
+    var SVGNS = "http://www.w3.org/2000/svg";
+    function setLabel(set) { var l = String(set.label || set.sha16); try { l = decodeURIComponent(l); } catch (e) {} return l.replace(/^.* - /, "").replace(/^_/, "").replace(/\.pdf$/i, ""); }
+    function svEl(tag, attrs, parent) { var e = document.createElementNS(SVGNS, tag); for (var k in attrs) e.setAttribute(k, attrs[k]); if (parent) parent.appendChild(e); return e; }
+    function svScale() { var r = $("sheet-svg").getBoundingClientRect(); return r.width && sv.vb ? Math.min(r.width / sv.vb[2], r.height / sv.vb[3]) : 1; }
+    function svApply() {
+      var svg = $("sheet-svg"); svg.setAttribute("viewBox", sv.vb.join(" "));
+      var sc = svScale();
+      [].forEach.call(svg.querySelectorAll("g.tag"), function (g) {
+        var h = +g.dataset.h || 10;
+        g.querySelector(".hit").setAttribute("r", Math.max(h * 1.4, 16 / sc));
+        g.querySelector(".ring").setAttribute("r", Math.max(h * 0.75, 7 / sc));
+        var t = g.querySelector("text"); t.setAttribute("font-size", 12 / sc); t.setAttribute("x", Math.max(h * 0.75, 7 / sc) + 3 / sc); t.setAttribute("y", -Math.max(h * 0.75, 7 / sc)); t.style.strokeWidth = 3 / sc;
+      });
+    }
+    // The sheet buttons sit under the HUD, however many lines the HUD wraps to (a phone wraps it to three).
+    function svBar() { var h = document.querySelector("#viewer .hud"); if (h) $("sheet-bar").style.top = (h.offsetTop + h.offsetHeight + 6) + "px"; }
+    function svFit() { var s = sv.d.sheets[sv.k]; sv.vb = [0, 0, s.width, s.height]; svApply(); }
+    function svZoom(f, cx, cy) {
+      var s = sv.d.sheets[sv.k], vb = sv.vb, w = Math.min(s.width * 1.5, Math.max(s.width / 40, vb[2] / f)), h = w * vb[3] / vb[2];
+      if (cx == null) { cx = vb[0] + vb[2] / 2; cy = vb[1] + vb[3] / 2; }
+      sv.vb = [cx - (cx - vb[0]) * w / vb[2], cy - (cy - vb[1]) * h / vb[3], w, h]; svApply();
+    }
+    function svPoint(e) { var r = $("sheet-svg").getBoundingClientRect(), sc = svScale(), ox = (r.width - sv.vb[2] * sc) / 2, oy = (r.height - sv.vb[3] * sc) / 2; return [sv.vb[0] + (e.clientX - r.left - ox) / sc, sv.vb[1] + (e.clientY - r.top - oy) / sc]; }
+    function sheetTags(k) { var p = sv.d.sheets[k].page, out = []; sv.d.tags.forEach(function (t, i) { if (t.page === p) out.push(i); }); return out; }
+    function renderSheet(k) {
+      sv.k = k; var s = sv.d.sheets[k], svg = $("sheet-svg"); svg.innerHTML = "";
+      var img = svEl("image", { x: 0, y: 0, width: s.width, height: s.height, preserveAspectRatio: "none" }, svg);
+      img.addEventListener("load", function () { sv.loaded[s.page] = true; publishSheets(); });
+      img.addEventListener("error", function () { $("sheet-note").textContent = "The sheet image could not be loaded; the tags below stand at their recorded coordinates."; });
+      img.setAttributeNS("http://www.w3.org/1999/xlink", "href", s.image); img.setAttribute("href", s.image);
+      sheetTags(k).forEach(function (i) {
+        var t = sv.d.tags[i], g = svEl("g", { "class": "tag" + (i === sv.sel ? " sel" : ""), transform: "translate(" + t.x + " " + t.y + ")", "data-t": i, "data-h": t.h || 10, "data-mark": t.mark }, svg);
+        svEl("circle", { "class": "ring", cx: 0, cy: 0, r: 8 }, g); svEl("circle", { "class": "hit", cx: 0, cy: 0, r: 16 }, g);
+        var tx = svEl("text", { x: 10, y: -10 }, g); tx.textContent = t.mark;
+        var ti = svEl("title", {}, g); ti.textContent = t.mark + (t.room_name ? " · " + t.room_name : "");
+      });
+      [].forEach.call(document.querySelectorAll("#sheet-bar .btn[data-k]"), function (b) { b.classList.toggle("on", +b.dataset.k === k); });
+      var here = sheetTags(k).length;
+      $("sheet-note").textContent = s.sheet + " " + (s.title || "") + " · p." + s.page + " · " + here + " door tag" + (here === 1 ? "" : "s") + " placed here" +
+        (here ? "" : s.also_marked && s.also_marked.length ? " · " + s.also_marked.length + " marks placed on another sheet are also printed here (" + s.also_marked.slice(0, 8).join(", ") + (s.also_marked.length > 8 ? ", ..." : "") + "); their positions here are not recorded" : "");
+      svFit(); publishSheets();
+    }
+    function publishSheets() {
+      try {
+        var s = sv.d.sheets[sv.k];
+        window.__sxSheets = Object.freeze({ set: sv.d.set.sha16, sheet: s.sheet, page: s.page, image_loaded: !!sv.loaded[s.page], tags_drawn: document.querySelectorAll("#sheet-svg g.tag").length, tags_on_sheet: sheetTags(sv.k).length,
+          marks_placed: sv.d.summary.marks_placed, marks_total: sv.d.summary.marks_total, sheets: sv.d.sheets.map(function (x) { return x.sheet; }), hud: $("hud-count").textContent, selected: sv.sel >= 0 ? sv.d.tags[sv.sel].mark : null,
+          table_rows: document.querySelectorAll("#rows tr.tagrow").length, unplaced_rows: document.querySelectorAll("#rows tr.unplaced").length });
+      } catch (e) {}
+    }
+    function val(v) { return v == null || v === "" ? '<span style="color:var(--muted)">not read</span>' : esc(v); }
+    function selectTag(i, center) {
+      var t = sv.d.tags[i]; if (!t) return;
+      sv.sel = i;
+      var k = sv.d.sheets.findIndex(function (s) { return s.page === t.page; });
+      if (k !== sv.k) renderSheet(k);
+      [].forEach.call(document.querySelectorAll("#sheet-svg g.tag"), function (g) { g.classList.toggle("sel", +g.dataset.t === i); });
+      [].forEach.call(document.querySelectorAll("#rows tr.tagrow"), function (tr) { tr.classList.toggle("sel", +tr.dataset.t === i); });
+      if (center) { var s = sv.d.sheets[sv.k], w = s.width / 5, h = s.height / 5; sv.vb = [t.x - w / 2, t.y - h / 2, w, h]; svApply(); }
+      var how = { tag_number: "numbered after the room", schedule_location: "the schedule's location, found on the plan", nearest_label: "the nearest room label (unsure)" }[t.room_by] || "";
+      var rows = t.schedule_rows || [];
+      var kv = [
+        ["ROOM", t.room_name ? esc((t.room ? t.room + " " : "") + t.room_name) + ' <span class="' + (t.unsure ? "flag" : "") + '" style="color:var(--muted)">(' + esc(how) + ")</span>" : '<span class="flag">no room label near its tag</span>'],
+        ["SHEET", "tag on " + esc(t.sheet) + " p." + esc(t.page) + " at x " + Math.round(t.x) + ", y " + Math.round(t.y) + " pt" + (t.also_on && t.also_on.length ? " · also printed on " + esc(t.also_on.join(", ")) : "")],
+        ["SIZE", val(t.size) + (t.pair ? " (pair)" : "")],
+        ["DOOR TYPE", val(t.door_type)], ["FRAME", val(t.frame_type)], ["MATERIAL", val(t.material)], ["RATING", val(t.fire_rating)], ["HW GROUP", val(t.hardware_group)],
+        ["SCHEDULE", rows.length ? rows.map(function (r) { return "row " + esc(r.mark) + " on schedule p." + esc(r.page); }).join("; ") : '<span class="flag">no schedule row</span>'],
+        ["MATCHED", esc(t.matched_by || "-")]
+      ];
+      if (t.note || t.shared_mark) kv.push(["SHARED MARK", '<span class="flag shared-mark">' + esc(t.note || "this mark is printed on more than one schedule row") + "</span>"]);
+      $("info").innerHTML = '<h2 id="card-mark">' + esc(t.mark) + '</h2><div class="loc" id="door-where">' + esc(t.room_name ? (t.room ? t.room + " " : "") + t.room_name : t.location || "") + " · tag " + (sheetTags(sv.k).indexOf(i) + 1) + " of " + sheetTags(sv.k).length + " on " + esc(t.sheet) + "</div>" +
+        '<div class="kv">' + kv.map(function (x) { return "<b>" + x[0] + "</b><span>" + x[1] + "</span>"; }).join("") + "</div>" +
+        '<p class="foot" style="margin-top:0">Position from the plan sheet; size, type, frame, material, rating and group as read from the schedule row. Hardware parts are not in the placement record.</p>';
+      publishSheets();
+    }
+    function renderSheetList() {
+      var d = sv.d;
+      $("rows").innerHTML = d.tags.map(function (t, i) {
+        return '<tr class="tagrow" data-t="' + i + '"><td><b>' + esc(t.mark) + "</b></td><td>" + esc(t.room_name ? (t.room ? t.room + " " : "") + t.room_name : t.location || "") + "</td><td>" + val(t.size) + "</td><td>" + val(t.door_type) + "</td><td>" + val(t.fire_rating) + "</td><td>" + val(t.hardware_group) + '</td><td style="color:var(--muted)">' + esc(t.sheet) + " p." + esc(t.page) + "</td></tr>";
+      }).join("") + (d.summary.unplaced || []).map(function (u) {
+        return '<tr class="unplaced"><td><b>' + esc(u.mark) + '</b></td><td colspan="6"><span class="badge r">NOT PLACED</span> ' + esc(u.reason) + "</td></tr>";
+      }).join("");
+    }
+    function showSheets(d) {
+      sv.d = d; sv.sel = -1; st.model = null;
+      $("viewer").classList.add("sheets"); $("sheetview").classList.add("on");
+      $("hud-project").textContent = setLabel(d.set);
+      $("hud-layout").textContent = "PLAN SHEETS " + d.sheets.map(function (s) { return s.sheet; }).join(", ");
+      $("hud-count").textContent = d.summary.marks_placed + " OF " + d.summary.marks_total + " PLACED";
+      $("sheet-bar").innerHTML = d.sheets.map(function (s, k) { return '<button class="btn" type="button" data-k="' + k + '">' + esc(s.sheet) + " · " + s.tags_placed + "</button>"; }).join("") +
+        (sv.model3d ? '<button class="btn" type="button" id="sheet-3d">3D CORRIDOR</button>' : "");
+      renderSheetList(); svBar();
+      $("notes").innerHTML = "<div>" + d.summary.marks_placed + " of " + d.summary.marks_total + " schedule marks placed on " + d.sheets.length + " plan sheets." + ((d.summary.unplaced || []).length ? " Not placed: " + d.summary.unplaced.map(function (u) { return esc(u.mark); }).join(", ") + "." : "") + "</div>";
+      $("layout-note").textContent = "The sheets are the set's own pages (" + setLabel(d.set) + "), drawn at 100 dpi; each ring stands on a door tag where the plan reader found it, and the card gives the schedule row it matched. Nothing is drawn in 3D here.";
+      $("info").innerHTML = "<h2>Pick a door tag</h2><div class=\"loc\">Tap a ring on the sheet or a row below. Drag to pan, scroll or +/− to zoom.</div>";
+      setStatus(setLabel(d.set) + ": " + d.summary.marks_placed + " of " + d.summary.marks_total + " door marks placed on its plan sheets.");
+      renderSheet(Math.max(0, d.sheets.findIndex(function (s) { return s.tags_placed > 0; })));
+    }
+    function leaveSheets() { $("viewer").classList.remove("sheets"); $("sheetview").classList.remove("on"); }
+    $("sheet-bar").addEventListener("click", function (e) {
+      var b = e.target.closest && e.target.closest("button"); if (!b) return;
+      if (b.id === "sheet-3d") { leaveSheets(); var m = sv.model3d; show(m, "the schedule rows of " + m.set.project + " (g028 harvest rows; " + m.set.door_rows + " door rows, " + m.set.doors_on_plan + " tagged) · PLAN SHEETS returns to the placement record"); addBack(); return; }
+      renderSheet(+b.dataset.k);
+    });
+    function addBack() { if ($("sheet-back")) return; var b = document.createElement("button"); b.className = "btn"; b.type = "button"; b.id = "sheet-back"; b.textContent = "PLAN SHEETS"; b.onclick = function () { b.remove(); showSheets(sv.d); }; document.querySelector(".ctrl").appendChild(b); }
+    $("rows").addEventListener("click", function (e) { var tr = e.target.closest && e.target.closest("tr.tagrow"); if (tr && sv.d && $("sheetview").classList.contains("on")) { selectTag(+tr.dataset.t, true); try { $("viewer").scrollIntoView({ behavior: "smooth", block: "nearest" }); } catch (x) {} } });
+    (function bindSheet() {
+      var svg = $("sheet-svg");
+      svg.addEventListener("pointerdown", function (e) { sv.down = { id: e.pointerId, x: e.clientX, y: e.clientY, vb: sv.vb.slice(), moved: 0, t: e.target.closest && e.target.closest("g.tag") }; try { svg.setPointerCapture(e.pointerId); } catch (x) {} });
+      svg.addEventListener("pointermove", function (e) {
+        var d = sv.down; if (!d || d.id !== e.pointerId) return;
+        var dx = e.clientX - d.x, dy = e.clientY - d.y; d.moved = Math.max(d.moved, Math.hypot(dx, dy)); if (d.moved < 6) return;
+        var sc = svScale(); sv.vb = [d.vb[0] - dx / sc, d.vb[1] - dy / sc, d.vb[2], d.vb[3]]; svg.setAttribute("viewBox", sv.vb.join(" "));
+      });
+      svg.addEventListener("pointerup", function (e) { var d = sv.down; sv.down = null; if (!d || d.id !== e.pointerId) return; if (d.moved < 6 && d.t) selectTag(+d.t.dataset.t, false); });
+      ["pointercancel", "lostpointercapture"].forEach(function (type) { svg.addEventListener(type, function () { sv.down = null; }); });
+      svg.addEventListener("wheel", function (e) { if (!sv.d) return; e.preventDefault(); var p = svPoint(e); svZoom(e.deltaY < 0 ? 1.25 : 0.8, p[0], p[1]); }, { passive: false });
+      $("sheet-in").onclick = function () { svZoom(1.5); }; $("sheet-out").onclick = function () { svZoom(1 / 1.5); }; $("sheet-fit").onclick = svFit;
+      window.addEventListener("resize", function () { if (sv.d && $("sheetview").classList.contains("on")) { svBar(); svApply(); } });
+    })();
+    window.SightXSheets = Object.freeze({ state: function () { publishSheets(); return window.__sxSheets || null; }, select: function (mark) { var i = sv.d ? sv.d.tags.findIndex(function (t) { return t.mark === mark; }) : -1; if (i >= 0) selectTag(i, true); return i; } });
+
     var qs = new URLSearchParams(location.search);
     if (qs.get("set")) {
       // g028: a harvested real bid set, laid out on its own plan sheets from its schedule rows.
+      // g068: a set with a placement record opens on its plan sheets first; the g028 3D corridor stays one button away when it exists.
       setStatus("Loading the bid set...");
-      getJSON("/api/sightx/sets/" + encodeURIComponent(qs.get("set"))).then(function (r) {
+      var sha = encodeURIComponent(qs.get("set"));
+      Promise.all([getJSON("/api/sightx/sheets/" + sha), getJSON("/api/sightx/sets/" + sha)]).then(function (rs) {
+        var sh = rs[0], r = rs[1];
+        if (r.ok && r.data.success) sv.model3d = r.data.model;
+        // view=3d opens the g028 corridor directly (its journey); PLAN SHEETS then leads to the sheets.
+        if (sh.ok && sh.data.success && !(qs.get("view") === "3d" && sv.model3d)) return showSheets(sh.data);
+        if (sh.ok && sh.data.success) { sv.d = sh.data; setTimeout(addBack, 0); }
         if (!r.ok || !r.data.success) { setStatus((r.data && r.data.message) || "The set could not be loaded (HTTP " + r.status + ").", true); loadSample(); return; }
         var m = r.data.model;
         show(m, "the schedule rows of " + m.set.project + " (" + m.set.door_rows + " door rows of " + m.set.rows + ", " + m.set.doors_on_plan + " tagged on " + m.set.plan_sheets.map(function (x) { return x.sheet; }).join(", ") + ")");
