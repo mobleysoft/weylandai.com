@@ -1,0 +1,214 @@
+{
+ "sha16": "f30685e7ce8dc8e2",
+ "sha256": "f30685e7ce8dc8e2ab3c7f0e84928941cb3c278513f384d5a93d7de06884f4fa",
+ "file": "f30685e7ce8dc8e2.pdf",
+ "bytes": 18547431,
+ "family": "harvest",
+ "source": "harvest",
+ "label": null,
+ "source_url": null,
+ "page_count": 36,
+ "text_layer": {
+  "pages_with_text": 36,
+  "pages": 36
+ },
+ "pages": {
+  "door_candidates": 2,
+  "hardware_candidates": 0,
+  "door_schedule_pages": [
+   26
+  ],
+  "hardware_pages": []
+ },
+ "readers": {
+  "a": {
+   "doors": 29,
+   "sets": 0,
+   "items": 0,
+   "name": "production text layer (weyland-subx-worker/src/lib/text-layer-read.js)"
+  },
+  "b": {
+   "doors": 29,
+   "sets": 0,
+   "items": 0,
+   "name": "geometry first (tools/accuracy/truth/reader_b.mjs)",
+   "tables": 1
+  }
+ },
+ "rows_agreed": 22,
+ "rows_disputed": 7,
+ "rows_total": 29,
+ "agreement_rate": 0.7586,
+ "agreement": {
+  "doors": {
+   "rows": 29,
+   "agreed": 22,
+   "disputed": 7,
+   "only_a": 0,
+   "only_b": 0,
+   "fields": {
+    "width_inches": {
+     "agree": 28,
+     "total": 29
+    },
+    "height_inches": {
+     "agree": 29,
+     "total": 29
+    },
+    "door_type": {
+     "agree": 29,
+     "total": 29
+    },
+    "material": {
+     "agree": 23,
+     "total": 29
+    },
+    "hardware_group": {
+     "agree": 29,
+     "total": 29
+    }
+   },
+   "agreement_rate": 0.7586
+  },
+  "items": {
+   "rows": 0,
+   "agreed": 0,
+   "disputed": 0,
+   "only_a": 0,
+   "only_b": 0,
+   "fields": {},
+   "agreement_rate": null
+  },
+  "sets": {
+   "sets": 0,
+   "agreed": 0
+  }
+ },
+ "triage_class": "schedule-only",
+ "triage_from": "inferred (S=true H=false plan sheets=3)",
+ "oracles": {
+  "marks_on_plan": {
+   "applicable": true,
+   "total": 29,
+   "pass": 27,
+   "fail": 2,
+   "pass_rate": 0.931,
+   "examples": [
+    "mark 127 (schedule p.26) not tagged on any plan",
+    "mark 128 (schedule p.26) not tagged on any plan"
+   ],
+   "plan_sheets": [
+    "A-101 p.15",
+    "A-102 p.16",
+    "A-103 p.17"
+   ],
+   "plan_counts": {
+    "plan_sheets": 3,
+    "rooms": 30,
+    "corridors": 5,
+    "tags": 27,
+    "unmatched_tags": 0,
+    "schedule_marks": 29,
+    "marks_not_on_plan": 2,
+    "shared_marks": 0
+   }
+  },
+  "sets_exist": {
+   "applicable": false,
+   "reason": "not for class schedule-only"
+  },
+  "set_door_lists": {
+   "applicable": false,
+   "reason": "not for class schedule-only"
+  },
+  "types_in_legend": {
+   "applicable": true,
+   "total": 6,
+   "pass": 6,
+   "fail": 0,
+   "pass_rate": 1,
+   "examples": [],
+   "legend_titles": [
+    "DOOR TYPES p.26"
+   ],
+   "skipped": [
+    "no FRAME TYPES legend title"
+   ],
+   "note": "weak for numeric types: a detail number near the legend can pass a numeric frame type"
+  },
+  "sizes_and_marks": {
+   "applicable": true,
+   "total": 29,
+   "pass": 28,
+   "fail": 1,
+   "pass_rate": 0.9655,
+   "examples": [
+    "mark 128 p.26: size \"- 11 1/2\\\" x 6' - 10\\\"\" -> null x 82"
+   ],
+   "size_fail": 1,
+   "mark_fail": 0
+  }
+ },
+ "tier": "agreed",
+ "disagreement_count": 7,
+ "disagreements": [
+  {
+   "kind": "door",
+   "page": 26,
+   "key": "100",
+   "field": "material",
+   "a": "CLAD WOOD",
+   "b": "ALU CLAD WOOD"
+  },
+  {
+   "kind": "door",
+   "page": 26,
+   "key": "103",
+   "field": "material",
+   "a": "CLAD WOOD",
+   "b": "ALU CLAD WOOD"
+  },
+  {
+   "kind": "door",
+   "page": 26,
+   "key": "106",
+   "field": "material",
+   "a": "CLAD WOOD",
+   "b": "ALU CLAD WOOD"
+  },
+  {
+   "kind": "door",
+   "page": 26,
+   "key": "115",
+   "field": "material",
+   "a": "CLAD WOOD",
+   "b": "ALU CLAD WOOD"
+  },
+  {
+   "kind": "door",
+   "page": 26,
+   "key": "116",
+   "field": "material",
+   "a": "CLAD WOOD",
+   "b": "ALU CLAD WOOD"
+  },
+  {
+   "kind": "door",
+   "page": 26,
+   "key": "117",
+   "field": "material",
+   "a": "CLAD WOOD",
+   "b": "ALU CLAD WOOD"
+  },
+  {
+   "kind": "door",
+   "page": 26,
+   "key": "128",
+   "field": "width_inches",
+   "a": null,
+   "b": 35.5
+  }
+ ],
+ "ms": 1859,
+ "generated_at": "2026-10-10T13:33:31.937Z"
+}

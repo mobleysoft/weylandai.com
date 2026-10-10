@@ -1,0 +1,288 @@
+{
+ "sha16": "1719eab23155c86a",
+ "sha256": "1719eab23155c86a3c7619a35cff3b33a08b5ead65d46c7edbd8cffc8d27f011",
+ "file": "1719eab23155c86a.pdf",
+ "bytes": 2943529,
+ "family": "harvest",
+ "source": "harvest",
+ "label": null,
+ "source_url": null,
+ "page_count": 3,
+ "text_layer": {
+  "pages_with_text": 3,
+  "pages": 3
+ },
+ "pages": {
+  "door_candidates": 1,
+  "hardware_candidates": 0,
+  "door_schedule_pages": [
+   3
+  ],
+  "hardware_pages": []
+ },
+ "readers": {
+  "a": {
+   "doors": 6,
+   "sets": 0,
+   "items": 0,
+   "name": "production text layer (weyland-subx-worker/src/lib/text-layer-read.js)"
+  },
+  "b": {
+   "doors": 8,
+   "sets": 0,
+   "items": 0,
+   "name": "geometry first (tools/accuracy/truth/reader_b.mjs)",
+   "tables": 1
+  }
+ },
+ "rows_agreed": 0,
+ "rows_disputed": 8,
+ "rows_total": 8,
+ "agreement_rate": 0,
+ "agreement": {
+  "doors": {
+   "rows": 8,
+   "agreed": 0,
+   "disputed": 6,
+   "only_a": 0,
+   "only_b": 2,
+   "fields": {
+    "width_inches": {
+     "agree": 0,
+     "total": 5
+    },
+    "height_inches": {
+     "agree": 0,
+     "total": 5
+    },
+    "door_type": {
+     "agree": 5,
+     "total": 6
+    },
+    "material": {
+     "agree": 5,
+     "total": 6
+    },
+    "hardware_group": {
+     "agree": 5,
+     "total": 6
+    },
+    "location": {
+     "agree": 5,
+     "total": 6
+    }
+   },
+   "agreement_rate": 0
+  },
+  "items": {
+   "rows": 0,
+   "agreed": 0,
+   "disputed": 0,
+   "only_a": 0,
+   "only_b": 0,
+   "fields": {},
+   "agreement_rate": null
+  },
+  "sets": {
+   "sets": 0,
+   "agreed": 0
+  }
+ },
+ "triage_class": "schedule-only",
+ "triage_from": "inferred (S=true H=false plan sheets=1)",
+ "oracles": {
+  "marks_on_plan": {
+   "applicable": true,
+   "total": 6,
+   "pass": 6,
+   "fail": 0,
+   "pass_rate": 1,
+   "examples": [],
+   "plan_sheets": [
+    "A-111 p.3"
+   ],
+   "plan_counts": {
+    "plan_sheets": 1,
+    "rooms": 47,
+    "corridors": 6,
+    "tags": 6,
+    "unmatched_tags": 0,
+    "schedule_marks": 6,
+    "marks_not_on_plan": 0,
+    "shared_marks": 0
+   }
+  },
+  "sets_exist": {
+   "applicable": false,
+   "reason": "not for class schedule-only"
+  },
+  "set_door_lists": {
+   "applicable": false,
+   "reason": "not for class schedule-only"
+  },
+  "types_in_legend": {
+   "applicable": true,
+   "total": 5,
+   "pass": 4,
+   "fail": 1,
+   "pass_rate": 0.8,
+   "examples": [
+    "frame type - C I (1 rows) not found near the frame types legend"
+   ],
+   "legend_titles": [
+    "DOOR TYPES p.3",
+    "FRAME TYPES p.3"
+   ],
+   "skipped": [],
+   "note": "weak for numeric types: a detail number near the legend can pass a numeric frame type"
+  },
+  "sizes_and_marks": {
+   "applicable": true,
+   "total": 6,
+   "pass": 5,
+   "fail": 1,
+   "pass_rate": 0.8333,
+   "examples": [
+    "mark EX-007-2 p.3: size \"3' - 0\\\" 3' - 0\\\" x 7' - 0\\\" 7' - 0\\\"\" -> null x null"
+   ],
+   "size_fail": 1,
+   "mark_fail": 0
+  }
+ },
+ "tier": "oracle-checked",
+ "disagreement_count": 16,
+ "disagreements": [
+  {
+   "kind": "door",
+   "page": 3,
+   "key": "029",
+   "field": "width_inches",
+   "a": 36,
+   "b": null
+  },
+  {
+   "kind": "door",
+   "page": 3,
+   "key": "029",
+   "field": "height_inches",
+   "a": 84,
+   "b": null
+  },
+  {
+   "kind": "door",
+   "page": 3,
+   "key": "038",
+   "field": "width_inches",
+   "a": 36,
+   "b": null
+  },
+  {
+   "kind": "door",
+   "page": 3,
+   "key": "038",
+   "field": "height_inches",
+   "a": 84,
+   "b": null
+  },
+  {
+   "kind": "door",
+   "page": 3,
+   "key": "041-1",
+   "field": "width_inches",
+   "a": 40,
+   "b": null
+  },
+  {
+   "kind": "door",
+   "page": 3,
+   "key": "041-1",
+   "field": "height_inches",
+   "a": 84,
+   "b": null
+  },
+  {
+   "kind": "door",
+   "page": 3,
+   "key": "041-2",
+   "field": "width_inches",
+   "a": 40,
+   "b": null
+  },
+  {
+   "kind": "door",
+   "page": 3,
+   "key": "041-2",
+   "field": "height_inches",
+   "a": 84,
+   "b": null
+  },
+  {
+   "kind": "door",
+   "page": 3,
+   "key": "EX-007-1",
+   "field": "width_inches",
+   "a": 36,
+   "b": null
+  },
+  {
+   "kind": "door",
+   "page": 3,
+   "key": "EX-007-1",
+   "field": "height_inches",
+   "a": 84,
+   "b": null
+  },
+  {
+   "kind": "door",
+   "page": 3,
+   "key": "EX-007-2",
+   "field": "door_type",
+   "a": "C H1 C H2",
+   "b": "C H1"
+  },
+  {
+   "kind": "door",
+   "page": 3,
+   "key": "EX-007-2",
+   "field": "material",
+   "a": "HM HM",
+   "b": "HM"
+  },
+  {
+   "kind": "door",
+   "page": 3,
+   "key": "EX-007-2",
+   "field": "hardware_group",
+   "a": "B10.1 B10.1",
+   "b": "B10.1"
+  },
+  {
+   "kind": "door",
+   "page": 3,
+   "key": "EX-007-2",
+   "field": "location",
+   "a": "CORRIDOR P.E. ROOM",
+   "b": "CORRIDOR"
+  },
+  {
+   "kind": "door",
+   "page": 3,
+   "key": "EX-046",
+   "field": "(row)",
+   "a": null,
+   "b": "read",
+   "why": "only reader B read this row"
+  },
+  {
+   "kind": "door",
+   "page": 3,
+   "key": "EX-052",
+   "field": "(row)",
+   "a": null,
+   "b": "read",
+   "why": "only reader B read this row"
+  }
+ ],
+ "ms": 1523,
+ "generated_at": "2026-10-10T13:23:33.891Z"
+}

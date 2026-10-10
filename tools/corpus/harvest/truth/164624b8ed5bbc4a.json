@@ -1,0 +1,159 @@
+{
+ "sha16": "164624b8ed5bbc4a",
+ "sha256": "164624b8ed5bbc4aa1edc0e7ca522afa6f0101e3546c095d46652c9ca6fd5875",
+ "file": "164624b8ed5bbc4a.pdf",
+ "bytes": 11277063,
+ "family": "harvest",
+ "source": "harvest",
+ "label": null,
+ "source_url": null,
+ "page_count": 7,
+ "text_layer": {
+  "pages_with_text": 6,
+  "pages": 7
+ },
+ "pages": {
+  "door_candidates": 1,
+  "hardware_candidates": 0,
+  "door_schedule_pages": [
+   3
+  ],
+  "hardware_pages": []
+ },
+ "readers": {
+  "a": {
+   "doors": 1,
+   "sets": 0,
+   "items": 0,
+   "name": "production text layer (weyland-subx-worker/src/lib/text-layer-read.js)"
+  },
+  "b": {
+   "doors": 1,
+   "sets": 0,
+   "items": 0,
+   "name": "geometry first (tools/accuracy/truth/reader_b.mjs)",
+   "tables": 1
+  }
+ },
+ "rows_agreed": 0,
+ "rows_disputed": 1,
+ "rows_total": 1,
+ "agreement_rate": 0,
+ "agreement": {
+  "doors": {
+   "rows": 1,
+   "agreed": 0,
+   "disputed": 1,
+   "only_a": 0,
+   "only_b": 0,
+   "fields": {
+    "width_inches": {
+     "agree": 0,
+     "total": 1
+    },
+    "height_inches": {
+     "agree": 0,
+     "total": 1
+    },
+    "door_type": {
+     "agree": 1,
+     "total": 1
+    },
+    "material": {
+     "agree": 1,
+     "total": 1
+    },
+    "hardware_group": {
+     "agree": 1,
+     "total": 1
+    }
+   },
+   "agreement_rate": 0
+  },
+  "items": {
+   "rows": 0,
+   "agreed": 0,
+   "disputed": 0,
+   "only_a": 0,
+   "only_b": 0,
+   "fields": {},
+   "agreement_rate": null
+  },
+  "sets": {
+   "sets": 0,
+   "agreed": 0
+  }
+ },
+ "triage_class": "schedule-only",
+ "triage_from": "inferred (S=true H=false plan sheets=0)",
+ "oracles": {
+  "marks_on_plan": {
+   "applicable": false,
+   "reason": "no floor plan sheet found in this PDF (title blocks)",
+   "plan_counts": {
+    "plan_sheets": 0,
+    "rooms": 0,
+    "corridors": 0,
+    "tags": 0,
+    "unmatched_tags": 0,
+    "schedule_marks": 1,
+    "marks_not_on_plan": 1,
+    "shared_marks": 0
+   }
+  },
+  "sets_exist": {
+   "applicable": false,
+   "reason": "not for class schedule-only"
+  },
+  "set_door_lists": {
+   "applicable": false,
+   "reason": "not for class schedule-only"
+  },
+  "types_in_legend": {
+   "applicable": true,
+   "total": 2,
+   "pass": 2,
+   "fail": 0,
+   "pass_rate": 1,
+   "examples": [],
+   "legend_titles": [
+    "DOOR TYPES p.3",
+    "FRAME TYPES p.3"
+   ],
+   "skipped": [],
+   "note": "weak for numeric types: a detail number near the legend can pass a numeric frame type"
+  },
+  "sizes_and_marks": {
+   "applicable": true,
+   "total": 1,
+   "pass": 1,
+   "fail": 0,
+   "pass_rate": 1,
+   "examples": [],
+   "size_fail": 0,
+   "mark_fail": 0
+  }
+ },
+ "tier": "oracle-checked",
+ "disagreement_count": 2,
+ "disagreements": [
+  {
+   "kind": "door",
+   "page": 3,
+   "key": "100",
+   "field": "width_inches",
+   "a": 88,
+   "b": null
+  },
+  {
+   "kind": "door",
+   "page": 3,
+   "key": "100",
+   "field": "height_inches",
+   "a": 84,
+   "b": null
+  }
+ ],
+ "ms": 2326,
+ "generated_at": "2026-10-10T13:23:32.364Z"
+}

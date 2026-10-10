@@ -1,0 +1,126 @@
+{
+ "sha16": "bc97f5b5111ac53e",
+ "sha256": "bc97f5b5111ac53eca0ba1604d193d8a81ca14db325b14180da7e8758b42e156",
+ "file": "bc97f5b5111ac53e.pdf",
+ "bytes": 9150946,
+ "family": "harvest",
+ "source": "harvest",
+ "label": null,
+ "source_url": null,
+ "page_count": 433,
+ "text_layer": {
+  "pages_with_text": 420,
+  "pages": 433
+ },
+ "pages": {
+  "door_candidates": 2,
+  "hardware_candidates": 1,
+  "door_schedule_pages": [],
+  "hardware_pages": [
+   193
+  ]
+ },
+ "readers": {
+  "a": {
+   "doors": 0,
+   "sets": 2,
+   "items": 9,
+   "name": "production text layer (weyland-subx-worker/src/lib/text-layer-read.js)"
+  },
+  "b": {
+   "doors": 0,
+   "sets": 2,
+   "items": 9,
+   "name": "geometry first (tools/accuracy/truth/reader_b.mjs)",
+   "tables": 0
+  }
+ },
+ "rows_agreed": 9,
+ "rows_disputed": 0,
+ "rows_total": 9,
+ "agreement_rate": 1,
+ "agreement": {
+  "doors": {
+   "rows": 0,
+   "agreed": 0,
+   "disputed": 0,
+   "only_a": 0,
+   "only_b": 0,
+   "fields": {},
+   "agreement_rate": null
+  },
+  "items": {
+   "rows": 9,
+   "agreed": 9,
+   "disputed": 0,
+   "only_a": 0,
+   "only_b": 0,
+   "fields": {
+    "qty": {
+     "agree": 9,
+     "total": 9
+    },
+    "description": {
+     "agree": 9,
+     "total": 9
+    },
+    "catalog": {
+     "agree": 9,
+     "total": 9
+    },
+    "finish": {
+     "agree": 9,
+     "total": 9
+    },
+    "manufacturer": {
+     "agree": 9,
+     "total": 9
+    }
+   },
+   "agreement_rate": 1
+  },
+  "sets": {
+   "sets": 2,
+   "agreed": 1
+  }
+ },
+ "triage_class": "spec-only",
+ "triage_from": "inferred (S=false H=true plan sheets=0)",
+ "oracles": {
+  "marks_on_plan": {
+   "applicable": false,
+   "reason": "not for class spec-only"
+  },
+  "sets_exist": {
+   "applicable": false,
+   "reason": "not for class spec-only"
+  },
+  "set_door_lists": {
+   "applicable": false,
+   "reason": "not for class spec-only"
+  },
+  "types_in_legend": {
+   "applicable": false,
+   "reason": "not for class spec-only"
+  },
+  "sizes_and_marks": {
+   "applicable": false,
+   "reason": "not for class spec-only"
+  }
+ },
+ "tier": "agreed",
+ "disagreement_count": 1,
+ "disagreements": [
+  {
+   "kind": "group",
+   "page": null,
+   "key": "2",
+   "field": "doors",
+   "a": "OHD-1",
+   "b": "08, 3, 7100, OHD-1",
+   "why": "the set's door lists differ"
+  }
+ ],
+ "ms": 1013,
+ "generated_at": "2026-10-10T13:30:05.131Z"
+}

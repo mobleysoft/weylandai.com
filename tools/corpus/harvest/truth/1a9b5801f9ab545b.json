@@ -1,0 +1,439 @@
+{
+ "sha16": "1a9b5801f9ab545b",
+ "sha256": "1a9b5801f9ab545be9aaaa2e85d3d9edc2d684f83ae99ec0e46667b519da8ef5",
+ "file": "1a9b5801f9ab545b.pdf",
+ "bytes": 22598092,
+ "family": "harvest",
+ "source": "harvest",
+ "label": null,
+ "source_url": null,
+ "page_count": 455,
+ "text_layer": {
+  "pages_with_text": 387,
+  "pages": 455
+ },
+ "pages": {
+  "door_candidates": 0,
+  "hardware_candidates": 2,
+  "door_schedule_pages": [],
+  "hardware_pages": [
+   213,
+   214
+  ]
+ },
+ "readers": {
+  "a": {
+   "doors": 0,
+   "sets": 1,
+   "items": 23,
+   "name": "production text layer (weyland-subx-worker/src/lib/text-layer-read.js)"
+  },
+  "b": {
+   "doors": 0,
+   "sets": 1,
+   "items": 23,
+   "name": "geometry first (tools/accuracy/truth/reader_b.mjs)",
+   "tables": 0
+  }
+ },
+ "rows_agreed": 0,
+ "rows_disputed": 23,
+ "rows_total": 23,
+ "agreement_rate": 0,
+ "agreement": {
+  "doors": {
+   "rows": 0,
+   "agreed": 0,
+   "disputed": 0,
+   "only_a": 0,
+   "only_b": 0,
+   "fields": {},
+   "agreement_rate": null
+  },
+  "items": {
+   "rows": 23,
+   "agreed": 0,
+   "disputed": 23,
+   "only_a": 0,
+   "only_b": 0,
+   "fields": {
+    "qty": {
+     "agree": 23,
+     "total": 23
+    },
+    "description": {
+     "agree": 23,
+     "total": 23
+    },
+    "catalog": {
+     "agree": 0,
+     "total": 23
+    },
+    "manufacturer": {
+     "agree": 0,
+     "total": 11
+    },
+    "finish": {
+     "agree": 0,
+     "total": 12
+    }
+   },
+   "agreement_rate": 0
+  },
+  "sets": {
+   "sets": 1,
+   "agreed": 1
+  }
+ },
+ "triage_class": "spec-only",
+ "triage_from": "inferred (S=false H=true plan sheets=0)",
+ "oracles": {
+  "marks_on_plan": {
+   "applicable": false,
+   "reason": "not for class spec-only"
+  },
+  "sets_exist": {
+   "applicable": false,
+   "reason": "not for class spec-only"
+  },
+  "set_door_lists": {
+   "applicable": false,
+   "reason": "not for class spec-only"
+  },
+  "types_in_legend": {
+   "applicable": false,
+   "reason": "not for class spec-only"
+  },
+  "sizes_and_marks": {
+   "applicable": false,
+   "reason": "not for class spec-only"
+  }
+ },
+ "tier": "unread",
+ "unread_reason": "no rows agreed and no oracle applies",
+ "disagreement_count": 46,
+ "disagreements": [
+  {
+   "kind": "item",
+   "page": 213,
+   "key": "(CONTINUED) / Closer",
+   "field": "catalog",
+   "a": "Closer",
+   "b": "Closer LCN"
+  },
+  {
+   "kind": "item",
+   "page": 213,
+   "key": "(CONTINUED) / Closer",
+   "field": "manufacturer",
+   "a": "LCN",
+   "b": null
+  },
+  {
+   "kind": "item",
+   "page": 213,
+   "key": "(CONTINUED) / Exit Device",
+   "field": "catalog",
+   "a": "Exit Device",
+   "b": "Exit Device VON DUPRIN"
+  },
+  {
+   "kind": "item",
+   "page": 213,
+   "key": "(CONTINUED) / Exit Device",
+   "field": "finish",
+   "a": "VON DUPRIN",
+   "b": null
+  },
+  {
+   "kind": "item",
+   "page": 213,
+   "key": "(CONTINUED) / Cylinder",
+   "field": "catalog",
+   "a": "Cylinder",
+   "b": "Cylinder FALCON"
+  },
+  {
+   "kind": "item",
+   "page": 213,
+   "key": "(CONTINUED) / Cylinder",
+   "field": "finish",
+   "a": "FALCON",
+   "b": null
+  },
+  {
+   "kind": "item",
+   "page": 213,
+   "key": "(CONTINUED) / Threshold",
+   "field": "catalog",
+   "a": "Threshold",
+   "b": "Threshold NGP"
+  },
+  {
+   "kind": "item",
+   "page": 213,
+   "key": "(CONTINUED) / Threshold",
+   "field": "manufacturer",
+   "a": "NGP",
+   "b": null
+  },
+  {
+   "kind": "item",
+   "page": 213,
+   "key": "(CONTINUED) / Weatherstrip",
+   "field": "catalog",
+   "a": "Weatherstrip",
+   "b": "Weatherstrip NGP"
+  },
+  {
+   "kind": "item",
+   "page": 213,
+   "key": "(CONTINUED) / Weatherstrip",
+   "field": "manufacturer",
+   "a": "NGP",
+   "b": null
+  },
+  {
+   "kind": "item",
+   "page": 213,
+   "key": "(CONTINUED) / Lockset",
+   "field": "catalog",
+   "a": "Lockset",
+   "b": "Lockset FALCON"
+  },
+  {
+   "kind": "item",
+   "page": 213,
+   "key": "(CONTINUED) / Lockset",
+   "field": "finish",
+   "a": "FALCON",
+   "b": null
+  },
+  {
+   "kind": "item",
+   "page": 213,
+   "key": "(CONTINUED) / Closer",
+   "field": "catalog",
+   "a": "Closer",
+   "b": "Closer LCN"
+  },
+  {
+   "kind": "item",
+   "page": 213,
+   "key": "(CONTINUED) / Closer",
+   "field": "manufacturer",
+   "a": "LCN",
+   "b": null
+  },
+  {
+   "kind": "item",
+   "page": 213,
+   "key": "(CONTINUED) / Threshold",
+   "field": "catalog",
+   "a": "Threshold",
+   "b": "Threshold NGP"
+  },
+  {
+   "kind": "item",
+   "page": 213,
+   "key": "(CONTINUED) / Threshold",
+   "field": "manufacturer",
+   "a": "NGP",
+   "b": null
+  },
+  {
+   "kind": "item",
+   "page": 213,
+   "key": "(CONTINUED) / Weatherstrip",
+   "field": "catalog",
+   "a": "Weatherstrip",
+   "b": "Weatherstrip NGP"
+  },
+  {
+   "kind": "item",
+   "page": 213,
+   "key": "(CONTINUED) / Weatherstrip",
+   "field": "manufacturer",
+   "a": "NGP",
+   "b": null
+  },
+  {
+   "kind": "item",
+   "page": 213,
+   "key": "(CONTINUED) / Passage Latch",
+   "field": "catalog",
+   "a": "Passage Latch",
+   "b": "Passage Latch FALCON"
+  },
+  {
+   "kind": "item",
+   "page": 213,
+   "key": "(CONTINUED) / Passage Latch",
+   "field": "finish",
+   "a": "FALCON",
+   "b": null
+  },
+  {
+   "kind": "item",
+   "page": 213,
+   "key": "(CONTINUED) / Wall Stop",
+   "field": "catalog",
+   "a": "Wall Stop",
+   "b": "Wall Stop ROCKWOOD"
+  },
+  {
+   "kind": "item",
+   "page": 213,
+   "key": "(CONTINUED) / Wall Stop",
+   "field": "finish",
+   "a": "ROCKWOOD",
+   "b": null
+  },
+  {
+   "kind": "item",
+   "page": 213,
+   "key": "(CONTINUED) / Lockset",
+   "field": "catalog",
+   "a": "Lockset",
+   "b": "Lockset FALCON"
+  },
+  {
+   "kind": "item",
+   "page": 213,
+   "key": "(CONTINUED) / Lockset",
+   "field": "finish",
+   "a": "FALCON",
+   "b": null
+  },
+  {
+   "kind": "item",
+   "page": 213,
+   "key": "(CONTINUED) / Closer",
+   "field": "catalog",
+   "a": "Closer",
+   "b": "Closer LCN"
+  },
+  {
+   "kind": "item",
+   "page": 213,
+   "key": "(CONTINUED) / Closer",
+   "field": "manufacturer",
+   "a": "LCN",
+   "b": null
+  },
+  {
+   "kind": "item",
+   "page": 213,
+   "key": "(CONTINUED) / Lockset",
+   "field": "catalog",
+   "a": "Lockset",
+   "b": "Lockset FALCON"
+  },
+  {
+   "kind": "item",
+   "page": 213,
+   "key": "(CONTINUED) / Lockset",
+   "field": "finish",
+   "a": "FALCON",
+   "b": null
+  },
+  {
+   "kind": "item",
+   "page": 213,
+   "key": "(CONTINUED) / Closer",
+   "field": "catalog",
+   "a": "Closer",
+   "b": "Closer LCN"
+  },
+  {
+   "kind": "item",
+   "page": 213,
+   "key": "(CONTINUED) / Closer",
+   "field": "manufacturer",
+   "a": "LCN",
+   "b": null
+  },
+  {
+   "kind": "item",
+   "page": 213,
+   "key": "(CONTINUED) / Wall Stop",
+   "field": "catalog",
+   "a": "Wall Stop",
+   "b": "Wall Stop ROCKWOOD"
+  },
+  {
+   "kind": "item",
+   "page": 213,
+   "key": "(CONTINUED) / Wall Stop",
+   "field": "finish",
+   "a": "ROCKWOOD",
+   "b": null
+  },
+  {
+   "kind": "item",
+   "page": 213,
+   "key": "(CONTINUED) / Lockset",
+   "field": "catalog",
+   "a": "Lockset",
+   "b": "Lockset FALCON"
+  },
+  {
+   "kind": "item",
+   "page": 213,
+   "key": "(CONTINUED) / Lockset",
+   "field": "finish",
+   "a": "FALCON",
+   "b": null
+  },
+  {
+   "kind": "item",
+   "page": 213,
+   "key": "(CONTINUED) / Closer",
+   "field": "catalog",
+   "a": "Closer",
+   "b": "Closer LCN"
+  },
+  {
+   "kind": "item",
+   "page": 213,
+   "key": "(CONTINUED) / Closer",
+   "field": "manufacturer",
+   "a": "LCN",
+   "b": null
+  },
+  {
+   "kind": "item",
+   "page": 213,
+   "key": "(CONTINUED) / Lockset",
+   "field": "catalog",
+   "a": "Lockset",
+   "b": "Lockset FALCON"
+  },
+  {
+   "kind": "item",
+   "page": 213,
+   "key": "(CONTINUED) / Lockset",
+   "field": "finish",
+   "a": "FALCON",
+   "b": null
+  },
+  {
+   "kind": "item",
+   "page": 213,
+   "key": "(CONTINUED) / Closer",
+   "field": "catalog",
+   "a": "Closer",
+   "b": "Closer LCN"
+  },
+  {
+   "kind": "item",
+   "page": 213,
+   "key": "(CONTINUED) / Closer",
+   "field": "manufacturer",
+   "a": "LCN",
+   "b": null
+  }
+ ],
+ "ms": 1695,
+ "generated_at": "2026-10-10T13:23:44.320Z"
+}

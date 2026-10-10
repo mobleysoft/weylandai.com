@@ -1,0 +1,337 @@
+{
+ "sha16": "63cfbe51269b2480",
+ "sha256": "63cfbe51269b2480c029c4ea75140a8101e3c3700b8e4e83d880d4ac098d011e",
+ "file": "63cfbe51269b2480.pdf",
+ "bytes": 6595020,
+ "family": "harvest",
+ "source": "harvest",
+ "label": null,
+ "source_url": null,
+ "page_count": 18,
+ "text_layer": {
+  "pages_with_text": 18,
+  "pages": 18
+ },
+ "pages": {
+  "door_candidates": 2,
+  "hardware_candidates": 1,
+  "door_schedule_pages": [
+   14
+  ],
+  "hardware_pages": [
+   14
+  ]
+ },
+ "readers": {
+  "a": {
+   "doors": 3,
+   "sets": 2,
+   "items": 7,
+   "name": "production text layer (weyland-subx-worker/src/lib/text-layer-read.js)"
+  },
+  "b": {
+   "doors": 3,
+   "sets": 2,
+   "items": 8,
+   "name": "geometry first (tools/accuracy/truth/reader_b.mjs)",
+   "tables": 1
+  }
+ },
+ "rows_agreed": 2,
+ "rows_disputed": 11,
+ "rows_total": 13,
+ "agreement_rate": 0.1538,
+ "agreement": {
+  "doors": {
+   "rows": 3,
+   "agreed": 0,
+   "disputed": 3,
+   "only_a": 0,
+   "only_b": 0,
+   "fields": {
+    "width_inches": {
+     "agree": 0,
+     "total": 3
+    },
+    "height_inches": {
+     "agree": 2,
+     "total": 3
+    },
+    "door_type": {
+     "agree": 3,
+     "total": 3
+    },
+    "material": {
+     "agree": 3,
+     "total": 3
+    },
+    "hardware_group": {
+     "agree": 3,
+     "total": 3
+    },
+    "location": {
+     "agree": 0,
+     "total": 3
+    }
+   },
+   "agreement_rate": 0
+  },
+  "items": {
+   "rows": 10,
+   "agreed": 2,
+   "disputed": 3,
+   "only_a": 2,
+   "only_b": 3,
+   "fields": {
+    "qty": {
+     "agree": 5,
+     "total": 5
+    },
+    "description": {
+     "agree": 5,
+     "total": 5
+    },
+    "catalog": {
+     "agree": 2,
+     "total": 5
+    },
+    "finish": {
+     "agree": 0,
+     "total": 3
+    },
+    "manufacturer": {
+     "agree": 0,
+     "total": 1
+    }
+   },
+   "agreement_rate": 0.2
+  },
+  "sets": {
+   "sets": 2,
+   "agreed": 2
+  }
+ },
+ "triage_class": "complete",
+ "triage_from": "inferred (S=true H=true plan sheets=2)",
+ "oracles": {
+  "marks_on_plan": {
+   "applicable": true,
+   "total": 3,
+   "pass": 0,
+   "fail": 3,
+   "pass_rate": 0,
+   "examples": [
+    "mark D1 (schedule p.14) not tagged on any plan",
+    "mark D2 (schedule p.14) not tagged on any plan",
+    "mark D3 (schedule p.14) not tagged on any plan"
+   ],
+   "plan_sheets": [
+    "ASB101 p.3",
+    "A-104 p.8"
+   ],
+   "plan_counts": {
+    "plan_sheets": 2,
+    "rooms": 14,
+    "corridors": 3,
+    "tags": 0,
+    "unmatched_tags": 0,
+    "schedule_marks": 3,
+    "marks_not_on_plan": 3,
+    "shared_marks": 0
+   }
+  },
+  "sets_exist": {
+   "applicable": true,
+   "total": 1,
+   "pass": 1,
+   "fail": 0,
+   "pass_rate": 1,
+   "examples": []
+  },
+  "set_door_lists": {
+   "applicable": false,
+   "reason": "no hardware set prints its own door list"
+  },
+  "types_in_legend": {
+   "applicable": false,
+   "reason": "no DOOR TYPES / FRAME TYPES legend title in this PDF"
+  },
+  "sizes_and_marks": {
+   "applicable": true,
+   "total": 3,
+   "pass": 0,
+   "fail": 3,
+   "pass_rate": 0,
+   "examples": [
+    "mark D1 p.14: size \"LOBBY 6'-8\\\" x 6'-0\\\"\" -> null x 72",
+    "mark D2 p.14: size \"VEST. INT. 6'-10 1/2\\\" x 6'-0\\\"\" -> null x 72",
+    "mark D3 p.14: size \"VEST. E x T. 6'-10 1/2\\\"\" -> null x null"
+   ],
+   "size_fail": 3,
+   "mark_fail": 0
+  }
+ },
+ "tier": "agreed",
+ "disagreement_count": 19,
+ "disagreements": [
+  {
+   "kind": "door",
+   "page": 14,
+   "key": "D1",
+   "field": "width_inches",
+   "a": null,
+   "b": 80
+  },
+  {
+   "kind": "door",
+   "page": 14,
+   "key": "D1",
+   "field": "location",
+   "a": null,
+   "b": "LOBBY"
+  },
+  {
+   "kind": "door",
+   "page": 14,
+   "key": "D2",
+   "field": "width_inches",
+   "a": null,
+   "b": 82.5
+  },
+  {
+   "kind": "door",
+   "page": 14,
+   "key": "D2",
+   "field": "location",
+   "a": null,
+   "b": "VEST. INT."
+  },
+  {
+   "kind": "door",
+   "page": 14,
+   "key": "D3",
+   "field": "width_inches",
+   "a": null,
+   "b": 82.5
+  },
+  {
+   "kind": "door",
+   "page": 14,
+   "key": "D3",
+   "field": "height_inches",
+   "a": null,
+   "b": 72
+  },
+  {
+   "kind": "door",
+   "page": 14,
+   "key": "D3",
+   "field": "location",
+   "a": null,
+   "b": "VEST. EXT."
+  },
+  {
+   "kind": "item",
+   "page": 14,
+   "key": "(CONTINUED) / LVT PT PT PT",
+   "field": "catalog",
+   "a": "LVT PT PT PT",
+   "b": "LVT PT PT PT PT ___ VINYL VINYL ___ ___ ___ ___ UNFINISHED SURFACES. SEE A-104 FOR ALTERNATE NO. 1 FLOOR FINISH. SEE A-104 FOR ALTERNATE NO. 1 FLOOR FINISH. 5/9/25 SEE A-104 FOR ALTERNATE NO. 1 FLOOR FINISH. B r a dM. S c h a e f e r - A r c h i t e c t MO # A - 2 0 0 9 0 2 7 2 9 4"
+  },
+  {
+   "kind": "item",
+   "page": 14,
+   "key": "(CONTINUED) / LVT PT PT PT",
+   "field": "finish",
+   "a": "PT",
+   "b": null
+  },
+  {
+   "kind": "item",
+   "page": 14,
+   "key": "(CONTINUED) / LVT PT PT PT",
+   "field": "manufacturer",
+   "a": "UNFINISHED SURFACES. SEE A-104 FOR ALTERNATE NO. 1 FLOOR FINISH",
+   "b": null
+  },
+  {
+   "kind": "item",
+   "page": 14,
+   "key": "(CONTINUED) / ___ ___ ___ ___ VINYL GYP",
+   "field": "catalog",
+   "a": "___ ___ ___ ___ VINYL GYP",
+   "b": "VINYL GYP / PT"
+  },
+  {
+   "kind": "item",
+   "page": 14,
+   "key": "(CONTINUED) / ___ ___ ___ ___ VINYL GYP",
+   "field": "finish",
+   "a": "/ PT",
+   "b": null
+  },
+  {
+   "kind": "item",
+   "page": 14,
+   "key": "(CONTINUED) / CPT VINYL PT PT PT",
+   "field": "catalog",
+   "a": "CPT VINYL PT PT PT",
+   "b": "CPT VINYL PT PT PT PT"
+  },
+  {
+   "kind": "item",
+   "page": 14,
+   "key": "(CONTINUED) / CPT VINYL PT PT PT",
+   "field": "finish",
+   "a": "PT",
+   "b": null
+  },
+  {
+   "kind": "item",
+   "page": 14,
+   "key": "1 / PUSH/PULL HANDLES",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 14,
+   "key": "1 / INSTALLED BY OTHERS",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 14,
+   "key": "1 / PUSH/PULL HANDLES",
+   "field": "(row)",
+   "a": null,
+   "b": "read",
+   "why": "only reader B read this row"
+  },
+  {
+   "kind": "item",
+   "page": 14,
+   "key": "1 / CARD READER - PROVIDED AND INSTALLED BY OTHERS",
+   "field": "(row)",
+   "a": null,
+   "b": "read",
+   "why": "only reader B read this row"
+  },
+  {
+   "kind": "item",
+   "page": 14,
+   "key": "1 / FAIRGROUNDS ROAD",
+   "field": "(row)",
+   "a": null,
+   "b": "read",
+   "why": "only reader B read this row"
+  }
+ ],
+ "ms": 572,
+ "generated_at": "2026-10-10T13:25:36.583Z"
+}

@@ -1,0 +1,155 @@
+{
+ "sha16": "0518efcd4706c019",
+ "sha256": "0518efcd4706c019f2844380970376bbcdde923e87fece9a9f35b4d422df925b",
+ "file": "0518efcd4706c019.pdf",
+ "bytes": 21953203,
+ "family": "harvest",
+ "source": "harvest",
+ "label": null,
+ "source_url": null,
+ "page_count": 48,
+ "text_layer": {
+  "pages_with_text": 48,
+  "pages": 48
+ },
+ "pages": {
+  "door_candidates": 2,
+  "hardware_candidates": 0,
+  "door_schedule_pages": [
+   28
+  ],
+  "hardware_pages": []
+ },
+ "readers": {
+  "a": {
+   "doors": 40,
+   "sets": 0,
+   "items": 0,
+   "name": "production text layer (weyland-subx-worker/src/lib/text-layer-read.js)"
+  },
+  "b": {
+   "doors": 40,
+   "sets": 0,
+   "items": 0,
+   "name": "geometry first (tools/accuracy/truth/reader_b.mjs)",
+   "tables": 1
+  }
+ },
+ "rows_agreed": 40,
+ "rows_disputed": 0,
+ "rows_total": 40,
+ "agreement_rate": 1,
+ "agreement": {
+  "doors": {
+   "rows": 40,
+   "agreed": 40,
+   "disputed": 0,
+   "only_a": 0,
+   "only_b": 0,
+   "fields": {
+    "width_inches": {
+     "agree": 40,
+     "total": 40
+    },
+    "height_inches": {
+     "agree": 40,
+     "total": 40
+    },
+    "door_type": {
+     "agree": 40,
+     "total": 40
+    },
+    "material": {
+     "agree": 40,
+     "total": 40
+    },
+    "fire_rating": {
+     "agree": 25,
+     "total": 25
+    }
+   },
+   "agreement_rate": 1
+  },
+  "items": {
+   "rows": 0,
+   "agreed": 0,
+   "disputed": 0,
+   "only_a": 0,
+   "only_b": 0,
+   "fields": {},
+   "agreement_rate": null
+  },
+  "sets": {
+   "sets": 0,
+   "agreed": 0
+  }
+ },
+ "triage_class": "schedule-only",
+ "triage_from": "inferred (S=true H=false plan sheets=4)",
+ "oracles": {
+  "marks_on_plan": {
+   "applicable": true,
+   "total": 40,
+   "pass": 40,
+   "fail": 0,
+   "pass_rate": 1,
+   "examples": [],
+   "plan_sheets": [
+    "A-101 p.16",
+    "A-102 p.17",
+    "A-103 p.18",
+    "A-401 p.22"
+   ],
+   "plan_counts": {
+    "plan_sheets": 4,
+    "rooms": 52,
+    "corridors": 6,
+    "tags": 40,
+    "unmatched_tags": 0,
+    "schedule_marks": 40,
+    "marks_not_on_plan": 0,
+    "shared_marks": 0
+   }
+  },
+  "sets_exist": {
+   "applicable": false,
+   "reason": "not for class schedule-only"
+  },
+  "set_door_lists": {
+   "applicable": false,
+   "reason": "not for class schedule-only"
+  },
+  "types_in_legend": {
+   "applicable": true,
+   "total": 3,
+   "pass": 2,
+   "fail": 1,
+   "pass_rate": 0.6667,
+   "examples": [
+    "door type ETR (1 rows) not found near the door types legend"
+   ],
+   "legend_titles": [
+    "DOOR TYPES p.28"
+   ],
+   "skipped": [
+    "no FRAME TYPES legend title"
+   ],
+   "note": "weak for numeric types: a detail number near the legend can pass a numeric frame type"
+  },
+  "sizes_and_marks": {
+   "applicable": true,
+   "total": 40,
+   "pass": 40,
+   "fail": 0,
+   "pass_rate": 1,
+   "examples": [],
+   "size_fail": 0,
+   "mark_fail": 0
+  }
+ },
+ "tier": "agreed",
+ "disagreement_count": 0,
+ "disagreements": [],
+ "ms": 2725,
+ "generated_at": "2026-10-10T13:22:58.778Z"
+}

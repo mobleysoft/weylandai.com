@@ -1,0 +1,197 @@
+{
+ "sha16": "1234670701fceeb7",
+ "sha256": "1234670701fceeb726b43480eacc0dae7ba12fc3111c4a8f2cc81dba09e04eac",
+ "file": "1234670701fceeb7.pdf",
+ "bytes": 9222491,
+ "family": "harvest",
+ "source": "harvest",
+ "label": null,
+ "source_url": null,
+ "page_count": 277,
+ "text_layer": {
+  "pages_with_text": 269,
+  "pages": 277
+ },
+ "pages": {
+  "door_candidates": 3,
+  "hardware_candidates": 1,
+  "door_schedule_pages": [],
+  "hardware_pages": [
+   156
+  ]
+ },
+ "readers": {
+  "a": {
+   "doors": 0,
+   "sets": 1,
+   "items": 7,
+   "name": "production text layer (weyland-subx-worker/src/lib/text-layer-read.js)"
+  },
+  "b": {
+   "doors": 0,
+   "sets": 1,
+   "items": 7,
+   "name": "geometry first (tools/accuracy/truth/reader_b.mjs)",
+   "tables": 0
+  }
+ },
+ "rows_agreed": 2,
+ "rows_disputed": 5,
+ "rows_total": 7,
+ "agreement_rate": 0.2857,
+ "agreement": {
+  "doors": {
+   "rows": 0,
+   "agreed": 0,
+   "disputed": 0,
+   "only_a": 0,
+   "only_b": 0,
+   "fields": {},
+   "agreement_rate": null
+  },
+  "items": {
+   "rows": 7,
+   "agreed": 2,
+   "disputed": 5,
+   "only_a": 0,
+   "only_b": 0,
+   "fields": {
+    "qty": {
+     "agree": 7,
+     "total": 7
+    },
+    "description": {
+     "agree": 7,
+     "total": 7
+    },
+    "catalog": {
+     "agree": 2,
+     "total": 7
+    },
+    "finish": {
+     "agree": 0,
+     "total": 5
+    },
+    "manufacturer": {
+     "agree": 7,
+     "total": 7
+    }
+   },
+   "agreement_rate": 0.2857
+  },
+  "sets": {
+   "sets": 1,
+   "agreed": 1
+  }
+ },
+ "triage_class": "spec-only",
+ "triage_from": "inferred (S=false H=true plan sheets=0)",
+ "oracles": {
+  "marks_on_plan": {
+   "applicable": false,
+   "reason": "not for class spec-only"
+  },
+  "sets_exist": {
+   "applicable": false,
+   "reason": "not for class spec-only"
+  },
+  "set_door_lists": {
+   "applicable": false,
+   "reason": "not for class spec-only"
+  },
+  "types_in_legend": {
+   "applicable": false,
+   "reason": "not for class spec-only"
+  },
+  "sizes_and_marks": {
+   "applicable": false,
+   "reason": "not for class spec-only"
+  }
+ },
+ "tier": "agreed",
+ "disagreement_count": 10,
+ "disagreements": [
+  {
+   "kind": "item",
+   "page": 156,
+   "key": "1.0 / CFMHD1 x Door Height",
+   "field": "catalog",
+   "a": "CFMHD1 x Door Height",
+   "b": "CFMHD1 x Door Height US4*"
+  },
+  {
+   "kind": "item",
+   "page": 156,
+   "key": "1.0 / CFMHD1 x Door Height",
+   "field": "finish",
+   "a": "US4*",
+   "b": null
+  },
+  {
+   "kind": "item",
+   "page": 156,
+   "key": "1.0 / 70E",
+   "field": "catalog",
+   "a": "70E",
+   "b": "70E US4*"
+  },
+  {
+   "kind": "item",
+   "page": 156,
+   "key": "1.0 / 70E",
+   "field": "finish",
+   "a": "US4*",
+   "b": null
+  },
+  {
+   "kind": "item",
+   "page": 156,
+   "key": "1.0 / BF 107x70C",
+   "field": "catalog",
+   "a": "BF 107x70C",
+   "b": "BF 107x70C US4*"
+  },
+  {
+   "kind": "item",
+   "page": 156,
+   "key": "1.0 / BF 107x70C",
+   "field": "finish",
+   "a": "US4*",
+   "b": null
+  },
+  {
+   "kind": "item",
+   "page": 156,
+   "key": "1.0 / K1050 10\" x 1\" LDW CSK BEV",
+   "field": "catalog",
+   "a": "K1050 10\" x 1\" LDW CSK BEV",
+   "b": "K1050 10\" x 1\" LDW CSK BEV US4*"
+  },
+  {
+   "kind": "item",
+   "page": 156,
+   "key": "1.0 / K1050 10\" x 1\" LDW CSK BEV",
+   "field": "finish",
+   "a": "US4*",
+   "b": null
+  },
+  {
+   "kind": "item",
+   "page": 156,
+   "key": "1.0 / 281 CPSH",
+   "field": "catalog",
+   "a": "281 CPSH",
+   "b": "281 CPSH 606*"
+  },
+  {
+   "kind": "item",
+   "page": 156,
+   "key": "1.0 / 281 CPSH",
+   "field": "finish",
+   "a": "606*",
+   "b": null
+  }
+ ],
+ "ms": 851,
+ "generated_at": "2026-10-10T13:23:24.598Z"
+}

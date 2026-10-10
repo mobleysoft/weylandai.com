@@ -1,0 +1,520 @@
+{
+ "sha16": "ec14e5c37faf1194",
+ "sha256": "ec14e5c37faf1194f78f23464f57e1918aeba59dd8b2e68c4209f8f362ab1aa7",
+ "file": "ec14e5c37faf1194.pdf",
+ "bytes": 107982041,
+ "family": "harvest",
+ "source": "harvest",
+ "label": null,
+ "source_url": null,
+ "page_count": 197,
+ "text_layer": {
+  "pages_with_text": 197,
+  "pages": 197
+ },
+ "pages": {
+  "door_candidates": 25,
+  "hardware_candidates": 0,
+  "door_schedule_pages": [
+   83
+  ],
+  "hardware_pages": []
+ },
+ "readers": {
+  "a": {
+   "doors": 88,
+   "sets": 0,
+   "items": 0,
+   "name": "production text layer (weyland-subx-worker/src/lib/text-layer-read.js)"
+  },
+  "b": {
+   "doors": 166,
+   "sets": 0,
+   "items": 0,
+   "name": "geometry first (tools/accuracy/truth/reader_b.mjs)",
+   "tables": 2
+  }
+ },
+ "reader_notes": [
+  "B p.42: operator list of 3874460 (not read)"
+ ],
+ "rows_agreed": 87,
+ "rows_disputed": 79,
+ "rows_total": 166,
+ "agreement_rate": 0.5241,
+ "agreement": {
+  "doors": {
+   "rows": 166,
+   "agreed": 87,
+   "disputed": 1,
+   "only_a": 0,
+   "only_b": 78,
+   "fields": {
+    "height_inches": {
+     "agree": 88,
+     "total": 88
+    },
+    "material": {
+     "agree": 88,
+     "total": 88
+    },
+    "hardware_group": {
+     "agree": 87,
+     "total": 88
+    },
+    "width_inches": {
+     "agree": 86,
+     "total": 86
+    }
+   },
+   "agreement_rate": 0.5241
+  },
+  "items": {
+   "rows": 0,
+   "agreed": 0,
+   "disputed": 0,
+   "only_a": 0,
+   "only_b": 0,
+   "fields": {},
+   "agreement_rate": null
+  },
+  "sets": {
+   "sets": 0,
+   "agreed": 0
+  }
+ },
+ "triage_class": "schedule-only",
+ "triage_from": "inferred (S=true H=false plan sheets=6)",
+ "oracles": {
+  "marks_on_plan": {
+   "applicable": true,
+   "total": 88,
+   "pass": 47,
+   "fail": 41,
+   "pass_rate": 0.5341,
+   "examples": [
+    "mark 043 (schedule p.83) not tagged on any plan",
+    "mark A100 (schedule p.83) not tagged on any plan",
+    "mark A103 (schedule p.83) not tagged on any plan",
+    "mark A107 (schedule p.83) not tagged on any plan",
+    "mark A108 (schedule p.83) not tagged on any plan",
+    "mark A109 (schedule p.83) not tagged on any plan",
+    "mark A112 (schedule p.83) not tagged on any plan",
+    "mark A113 (schedule p.83) not tagged on any plan",
+    "mark A115 (schedule p.83) not tagged on any plan",
+    "mark A116 (schedule p.83) not tagged on any plan",
+    "mark A119 (schedule p.83) not tagged on any plan",
+    "mark A120A (schedule p.83) not tagged on any plan"
+   ],
+   "plan_sheets": [
+    "A-108 p.48",
+    "A-109 p.49",
+    "A-115 p.55",
+    "A-116 p.56",
+    "A-117 p.57",
+    "A-501 p.82"
+   ],
+   "plan_counts": {
+    "plan_sheets": 6,
+    "rooms": 127,
+    "corridors": 11,
+    "tags": 47,
+    "unmatched_tags": 3,
+    "schedule_marks": 88,
+    "marks_not_on_plan": 41,
+    "shared_marks": 0
+   }
+  },
+  "sets_exist": {
+   "applicable": false,
+   "reason": "not for class schedule-only"
+  },
+  "set_door_lists": {
+   "applicable": false,
+   "reason": "not for class schedule-only"
+  },
+  "types_in_legend": {
+   "applicable": false,
+   "reason": "schedule types present, but no legend title for them",
+   "skipped": []
+  },
+  "sizes_and_marks": {
+   "applicable": true,
+   "total": 88,
+   "pass": 86,
+   "fail": 2,
+   "pass_rate": 0.9773,
+   "examples": [
+    "mark 001A p.83: size \"6'- -.8 0\\\"1/2\\\" x 7' - 0\\\"\" -> null x 84",
+    "mark 001B p.83: size \"6'- -.8 0\\\"1/2\\\" x 7' - 0\\\"\" -> null x 84"
+   ],
+   "size_fail": 2,
+   "mark_fail": 0
+  }
+ },
+ "tier": "agreed",
+ "disagreement_count": 79,
+ "disagreements": [
+  {
+   "kind": "door",
+   "page": 83,
+   "key": "043",
+   "field": "hardware_group",
+   "a": "7.07.07.2",
+   "b": "7.0 7.0 7.2"
+  },
+  {
+   "kind": "door",
+   "page": 83,
+   "key": "B108",
+   "field": "(row)",
+   "a": null,
+   "b": "read",
+   "why": "only reader B read this row"
+  },
+  {
+   "kind": "door",
+   "page": 83,
+   "key": "B109",
+   "field": "(row)",
+   "a": null,
+   "b": "read",
+   "why": "only reader B read this row"
+  },
+  {
+   "kind": "door",
+   "page": 83,
+   "key": "B112",
+   "field": "(row)",
+   "a": null,
+   "b": "read",
+   "why": "only reader B read this row"
+  },
+  {
+   "kind": "door",
+   "page": 83,
+   "key": "B113",
+   "field": "(row)",
+   "a": null,
+   "b": "read",
+   "why": "only reader B read this row"
+  },
+  {
+   "kind": "door",
+   "page": 83,
+   "key": "B115",
+   "field": "(row)",
+   "a": null,
+   "b": "read",
+   "why": "only reader B read this row"
+  },
+  {
+   "kind": "door",
+   "page": 83,
+   "key": "B116",
+   "field": "(row)",
+   "a": null,
+   "b": "read",
+   "why": "only reader B read this row"
+  },
+  {
+   "kind": "door",
+   "page": 83,
+   "key": "B119",
+   "field": "(row)",
+   "a": null,
+   "b": "read",
+   "why": "only reader B read this row"
+  },
+  {
+   "kind": "door",
+   "page": 83,
+   "key": "B120A",
+   "field": "(row)",
+   "a": null,
+   "b": "read",
+   "why": "only reader B read this row"
+  },
+  {
+   "kind": "door",
+   "page": 83,
+   "key": "B120B",
+   "field": "(row)",
+   "a": null,
+   "b": "read",
+   "why": "only reader B read this row"
+  },
+  {
+   "kind": "door",
+   "page": 83,
+   "key": "B200",
+   "field": "(row)",
+   "a": null,
+   "b": "read",
+   "why": "only reader B read this row"
+  },
+  {
+   "kind": "door",
+   "page": 83,
+   "key": "B201",
+   "field": "(row)",
+   "a": null,
+   "b": "read",
+   "why": "only reader B read this row"
+  },
+  {
+   "kind": "door",
+   "page": 83,
+   "key": "B205",
+   "field": "(row)",
+   "a": null,
+   "b": "read",
+   "why": "only reader B read this row"
+  },
+  {
+   "kind": "door",
+   "page": 83,
+   "key": "B206",
+   "field": "(row)",
+   "a": null,
+   "b": "read",
+   "why": "only reader B read this row"
+  },
+  {
+   "kind": "door",
+   "page": 83,
+   "key": "B207",
+   "field": "(row)",
+   "a": null,
+   "b": "read",
+   "why": "only reader B read this row"
+  },
+  {
+   "kind": "door",
+   "page": 83,
+   "key": "B208",
+   "field": "(row)",
+   "a": null,
+   "b": "read",
+   "why": "only reader B read this row"
+  },
+  {
+   "kind": "door",
+   "page": 83,
+   "key": "B209",
+   "field": "(row)",
+   "a": null,
+   "b": "read",
+   "why": "only reader B read this row"
+  },
+  {
+   "kind": "door",
+   "page": 83,
+   "key": "B212",
+   "field": "(row)",
+   "a": null,
+   "b": "read",
+   "why": "only reader B read this row"
+  },
+  {
+   "kind": "door",
+   "page": 83,
+   "key": "B213",
+   "field": "(row)",
+   "a": null,
+   "b": "read",
+   "why": "only reader B read this row"
+  },
+  {
+   "kind": "door",
+   "page": 83,
+   "key": "B215",
+   "field": "(row)",
+   "a": null,
+   "b": "read",
+   "why": "only reader B read this row"
+  },
+  {
+   "kind": "door",
+   "page": 83,
+   "key": "B216",
+   "field": "(row)",
+   "a": null,
+   "b": "read",
+   "why": "only reader B read this row"
+  },
+  {
+   "kind": "door",
+   "page": 83,
+   "key": "B219",
+   "field": "(row)",
+   "a": null,
+   "b": "read",
+   "why": "only reader B read this row"
+  },
+  {
+   "kind": "door",
+   "page": 83,
+   "key": "B220A",
+   "field": "(row)",
+   "a": null,
+   "b": "read",
+   "why": "only reader B read this row"
+  },
+  {
+   "kind": "door",
+   "page": 83,
+   "key": "B220B",
+   "field": "(row)",
+   "a": null,
+   "b": "read",
+   "why": "only reader B read this row"
+  },
+  {
+   "kind": "door",
+   "page": 83,
+   "key": "B300",
+   "field": "(row)",
+   "a": null,
+   "b": "read",
+   "why": "only reader B read this row"
+  },
+  {
+   "kind": "door",
+   "page": 83,
+   "key": "B301",
+   "field": "(row)",
+   "a": null,
+   "b": "read",
+   "why": "only reader B read this row"
+  },
+  {
+   "kind": "door",
+   "page": 83,
+   "key": "B305",
+   "field": "(row)",
+   "a": null,
+   "b": "read",
+   "why": "only reader B read this row"
+  },
+  {
+   "kind": "door",
+   "page": 83,
+   "key": "B306",
+   "field": "(row)",
+   "a": null,
+   "b": "read",
+   "why": "only reader B read this row"
+  },
+  {
+   "kind": "door",
+   "page": 83,
+   "key": "B307",
+   "field": "(row)",
+   "a": null,
+   "b": "read",
+   "why": "only reader B read this row"
+  },
+  {
+   "kind": "door",
+   "page": 83,
+   "key": "B310",
+   "field": "(row)",
+   "a": null,
+   "b": "read",
+   "why": "only reader B read this row"
+  },
+  {
+   "kind": "door",
+   "page": 83,
+   "key": "B311",
+   "field": "(row)",
+   "a": null,
+   "b": "read",
+   "why": "only reader B read this row"
+  },
+  {
+   "kind": "door",
+   "page": 83,
+   "key": "B313",
+   "field": "(row)",
+   "a": null,
+   "b": "read",
+   "why": "only reader B read this row"
+  },
+  {
+   "kind": "door",
+   "page": 83,
+   "key": "B314",
+   "field": "(row)",
+   "a": null,
+   "b": "read",
+   "why": "only reader B read this row"
+  },
+  {
+   "kind": "door",
+   "page": 83,
+   "key": "B317",
+   "field": "(row)",
+   "a": null,
+   "b": "read",
+   "why": "only reader B read this row"
+  },
+  {
+   "kind": "door",
+   "page": 83,
+   "key": "B318",
+   "field": "(row)",
+   "a": null,
+   "b": "read",
+   "why": "only reader B read this row"
+  },
+  {
+   "kind": "door",
+   "page": 83,
+   "key": "B400",
+   "field": "(row)",
+   "a": null,
+   "b": "read",
+   "why": "only reader B read this row"
+  },
+  {
+   "kind": "door",
+   "page": 83,
+   "key": "C001",
+   "field": "(row)",
+   "a": null,
+   "b": "read",
+   "why": "only reader B read this row"
+  },
+  {
+   "kind": "door",
+   "page": 83,
+   "key": "C013",
+   "field": "(row)",
+   "a": null,
+   "b": "read",
+   "why": "only reader B read this row"
+  },
+  {
+   "kind": "door",
+   "page": 83,
+   "key": "C038",
+   "field": "(row)",
+   "a": null,
+   "b": "read",
+   "why": "only reader B read this row"
+  },
+  {
+   "kind": "door",
+   "page": 83,
+   "key": "C100",
+   "field": "(row)",
+   "a": null,
+   "b": "read",
+   "why": "only reader B read this row"
+  }
+ ],
+ "ms": 45730,
+ "generated_at": "2026-10-10T13:33:16.302Z"
+}

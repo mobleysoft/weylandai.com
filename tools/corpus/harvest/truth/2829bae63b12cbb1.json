@@ -1,0 +1,151 @@
+{
+ "sha16": "2829bae63b12cbb1",
+ "sha256": "2829bae63b12cbb15d66ef8e850c9a2c962781ef3672a1e9fc91f763f78e679d",
+ "file": "2829bae63b12cbb1.pdf",
+ "bytes": 9915946,
+ "family": "harvest",
+ "source": "harvest",
+ "label": null,
+ "source_url": null,
+ "page_count": 580,
+ "text_layer": {
+  "pages_with_text": 574,
+  "pages": 580
+ },
+ "pages": {
+  "door_candidates": 6,
+  "hardware_candidates": 1,
+  "door_schedule_pages": [],
+  "hardware_pages": [
+   265
+  ]
+ },
+ "readers": {
+  "a": {
+   "doors": 0,
+   "sets": 1,
+   "items": 5,
+   "name": "production text layer (weyland-subx-worker/src/lib/text-layer-read.js)"
+  },
+  "b": {
+   "doors": 0,
+   "sets": 0,
+   "items": 0,
+   "name": "geometry first (tools/accuracy/truth/reader_b.mjs)",
+   "tables": 0
+  }
+ },
+ "rows_agreed": 0,
+ "rows_disputed": 5,
+ "rows_total": 5,
+ "agreement_rate": 0,
+ "agreement": {
+  "doors": {
+   "rows": 0,
+   "agreed": 0,
+   "disputed": 0,
+   "only_a": 0,
+   "only_b": 0,
+   "fields": {},
+   "agreement_rate": null
+  },
+  "items": {
+   "rows": 5,
+   "agreed": 0,
+   "disputed": 0,
+   "only_a": 5,
+   "only_b": 0,
+   "fields": {},
+   "agreement_rate": 0
+  },
+  "sets": {
+   "sets": 1,
+   "agreed": 0
+  }
+ },
+ "triage_class": "spec-only",
+ "triage_from": "inferred (S=false H=true plan sheets=0)",
+ "oracles": {
+  "marks_on_plan": {
+   "applicable": false,
+   "reason": "not for class spec-only"
+  },
+  "sets_exist": {
+   "applicable": false,
+   "reason": "not for class spec-only"
+  },
+  "set_door_lists": {
+   "applicable": false,
+   "reason": "not for class spec-only"
+  },
+  "types_in_legend": {
+   "applicable": false,
+   "reason": "not for class spec-only"
+  },
+  "sizes_and_marks": {
+   "applicable": false,
+   "reason": "not for class spec-only"
+  }
+ },
+ "tier": "unread",
+ "unread_reason": "no rows agreed and no oracle applies",
+ "disagreement_count": 6,
+ "disagreements": [
+  {
+   "kind": "item",
+   "page": 265,
+   "key": "(CONTINUED) / skilled employees of door",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 265,
+   "key": "(CONTINUED) / 5BB1HW4.5x4.5",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 265,
+   "key": "(CONTINUED) / L9050R06N Entry",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 265,
+   "key": "(CONTINUED) / 4040XP 3049eda",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 265,
+   "key": "(CONTINUED) / 8400 – Kick",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "group",
+   "page": null,
+   "key": "(CONTINUED)",
+   "field": "(set)",
+   "a": "",
+   "b": null,
+   "why": "only reader A read this set"
+  }
+ ],
+ "ms": 1591,
+ "generated_at": "2026-10-10T13:24:08.919Z"
+}

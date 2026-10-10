@@ -1,0 +1,440 @@
+{
+ "sha16": "f473f3cd1b2fce70",
+ "sha256": "f473f3cd1b2fce70535969977e8c6cb0af92c87009e11697229fce6867ae1901",
+ "file": "f473f3cd1b2fce70.pdf",
+ "bytes": 8735145,
+ "family": "harvest",
+ "source": "harvest",
+ "label": null,
+ "source_url": null,
+ "page_count": 347,
+ "text_layer": {
+  "pages_with_text": 339,
+  "pages": 347
+ },
+ "pages": {
+  "door_candidates": 3,
+  "hardware_candidates": 1,
+  "door_schedule_pages": [],
+  "hardware_pages": [
+   216
+  ]
+ },
+ "readers": {
+  "a": {
+   "doors": 0,
+   "sets": 2,
+   "items": 15,
+   "name": "production text layer (weyland-subx-worker/src/lib/text-layer-read.js)"
+  },
+  "b": {
+   "doors": 0,
+   "sets": 2,
+   "items": 13,
+   "name": "geometry first (tools/accuracy/truth/reader_b.mjs)",
+   "tables": 0
+  }
+ },
+ "rows_agreed": 0,
+ "rows_disputed": 15,
+ "rows_total": 15,
+ "agreement_rate": 0,
+ "agreement": {
+  "doors": {
+   "rows": 0,
+   "agreed": 0,
+   "disputed": 0,
+   "only_a": 0,
+   "only_b": 0,
+   "fields": {},
+   "agreement_rate": null
+  },
+  "items": {
+   "rows": 15,
+   "agreed": 0,
+   "disputed": 13,
+   "only_a": 2,
+   "only_b": 0,
+   "fields": {
+    "qty": {
+     "agree": 13,
+     "total": 13
+    },
+    "description": {
+     "agree": 11,
+     "total": 13
+    },
+    "catalog": {
+     "agree": 0,
+     "total": 13
+    },
+    "finish": {
+     "agree": 0,
+     "total": 13
+    },
+    "manufacturer": {
+     "agree": 0,
+     "total": 13
+    }
+   },
+   "agreement_rate": 0
+  },
+  "sets": {
+   "sets": 2,
+   "agreed": 2
+  }
+ },
+ "triage_class": "spec-only",
+ "triage_from": "inferred (S=false H=true plan sheets=0)",
+ "oracles": {
+  "marks_on_plan": {
+   "applicable": false,
+   "reason": "not for class spec-only"
+  },
+  "sets_exist": {
+   "applicable": false,
+   "reason": "not for class spec-only"
+  },
+  "set_door_lists": {
+   "applicable": false,
+   "reason": "not for class spec-only"
+  },
+  "types_in_legend": {
+   "applicable": false,
+   "reason": "not for class spec-only"
+  },
+  "sizes_and_marks": {
+   "applicable": false,
+   "reason": "not for class spec-only"
+  }
+ },
+ "tier": "unread",
+ "unread_reason": "no rows agreed and no oracle applies",
+ "disagreement_count": 43,
+ "disagreements": [
+  {
+   "kind": "item",
+   "page": 216,
+   "key": "1.0 / T4A3786/T4A4786 NRP FT 4-1/2\" x 4-1/2\"",
+   "field": "description",
+   "a": "Hinge, Full Mortise",
+   "b": "Hinge, Full Mortise Storeroom or Closet Lock"
+  },
+  {
+   "kind": "item",
+   "page": 216,
+   "key": "1.0 / T4A3786/T4A4786 NRP FT 4-1/2\" x 4-1/2\"",
+   "field": "catalog",
+   "a": "T4A3786/T4A4786 NRP FT 4-1/2\" x 4-1/2\"",
+   "b": "T4A3786/T4A4786 NRP FT 4-1/2\" x 4-1/2\" US26D MK 087100"
+  },
+  {
+   "kind": "item",
+   "page": 216,
+   "key": "1.0 / T4A3786/T4A4786 NRP FT 4-1/2\" x 4-1/2\"",
+   "field": "finish",
+   "a": "US26D",
+   "b": null
+  },
+  {
+   "kind": "item",
+   "page": 216,
+   "key": "1.0 / T4A3786/T4A4786 NRP FT 4-1/2\" x 4-1/2\"",
+   "field": "manufacturer",
+   "a": "MK",
+   "b": null
+  },
+  {
+   "kind": "item",
+   "page": 216,
+   "key": "1.0 / 10XG04 LMW",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 216,
+   "key": "1.0 / CPS7500",
+   "field": "catalog",
+   "a": "CPS7500",
+   "b": "CPS7500 689 NO 087100"
+  },
+  {
+   "kind": "item",
+   "page": 216,
+   "key": "1.0 / CPS7500",
+   "field": "finish",
+   "a": "689",
+   "b": null
+  },
+  {
+   "kind": "item",
+   "page": 216,
+   "key": "1.0 / CPS7500",
+   "field": "manufacturer",
+   "a": "NO",
+   "b": null
+  },
+  {
+   "kind": "item",
+   "page": 216,
+   "key": "1.0 / K1050 10\" x 2\" LDW 4BE CSK",
+   "field": "catalog",
+   "a": "K1050 10\" x 2\" LDW 4BE CSK",
+   "b": "K1050 10\" x 2\" LDW 4BE CSK US32D RO 087100"
+  },
+  {
+   "kind": "item",
+   "page": 216,
+   "key": "1.0 / K1050 10\" x 2\" LDW 4BE CSK",
+   "field": "finish",
+   "a": "US32D",
+   "b": null
+  },
+  {
+   "kind": "item",
+   "page": 216,
+   "key": "1.0 / K1050 10\" x 2\" LDW 4BE CSK",
+   "field": "manufacturer",
+   "a": "RO",
+   "b": null
+  },
+  {
+   "kind": "item",
+   "page": 216,
+   "key": "1.0 / 2005AT",
+   "field": "catalog",
+   "a": "2005AT",
+   "b": "2005AT 689 PE 087100"
+  },
+  {
+   "kind": "item",
+   "page": 216,
+   "key": "1.0 / 2005AT",
+   "field": "finish",
+   "a": "689",
+   "b": null
+  },
+  {
+   "kind": "item",
+   "page": 216,
+   "key": "1.0 / 2005AT",
+   "field": "manufacturer",
+   "a": "PE",
+   "b": null
+  },
+  {
+   "kind": "item",
+   "page": 216,
+   "key": "1.0 / 2891AS",
+   "field": "catalog",
+   "a": "2891AS",
+   "b": "2891AS 689 PE 087100"
+  },
+  {
+   "kind": "item",
+   "page": 216,
+   "key": "1.0 / 2891AS",
+   "field": "finish",
+   "a": "689",
+   "b": null
+  },
+  {
+   "kind": "item",
+   "page": 216,
+   "key": "1.0 / 2891AS",
+   "field": "manufacturer",
+   "a": "PE",
+   "b": null
+  },
+  {
+   "kind": "item",
+   "page": 216,
+   "key": "1.0 / 3452AV",
+   "field": "catalog",
+   "a": "3452AV",
+   "b": "3452AV 689 PE 087100"
+  },
+  {
+   "kind": "item",
+   "page": 216,
+   "key": "1.0 / 3452AV",
+   "field": "finish",
+   "a": "689",
+   "b": null
+  },
+  {
+   "kind": "item",
+   "page": 216,
+   "key": "1.0 / 3452AV",
+   "field": "manufacturer",
+   "a": "PE",
+   "b": null
+  },
+  {
+   "kind": "item",
+   "page": 216,
+   "key": "2.0 / T4A3786/T4A4786 NRP FT 4-1/2\" x 4-1/2\"",
+   "field": "description",
+   "a": "Hinge, Full Mortise",
+   "b": "Hinge, Full Mortise Storeroom or Closet Lock"
+  },
+  {
+   "kind": "item",
+   "page": 216,
+   "key": "2.0 / T4A3786/T4A4786 NRP FT 4-1/2\" x 4-1/2\"",
+   "field": "catalog",
+   "a": "T4A3786/T4A4786 NRP FT 4-1/2\" x 4-1/2\"",
+   "b": "T4A3786/T4A4786 NRP FT 4-1/2\" x 4-1/2\" US26D MK 087100"
+  },
+  {
+   "kind": "item",
+   "page": 216,
+   "key": "2.0 / T4A3786/T4A4786 NRP FT 4-1/2\" x 4-1/2\"",
+   "field": "finish",
+   "a": "US26D",
+   "b": null
+  },
+  {
+   "kind": "item",
+   "page": 216,
+   "key": "2.0 / T4A3786/T4A4786 NRP FT 4-1/2\" x 4-1/2\"",
+   "field": "manufacturer",
+   "a": "MK",
+   "b": null
+  },
+  {
+   "kind": "item",
+   "page": 216,
+   "key": "2.0 / 10XG04 LMW",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 216,
+   "key": "2.0 / 468 V54",
+   "field": "catalog",
+   "a": "468 V54",
+   "b": "468 V54 626 SA 087100"
+  },
+  {
+   "kind": "item",
+   "page": 216,
+   "key": "2.0 / 468 V54",
+   "field": "finish",
+   "a": "626",
+   "b": null
+  },
+  {
+   "kind": "item",
+   "page": 216,
+   "key": "2.0 / 468 V54",
+   "field": "manufacturer",
+   "a": "SA",
+   "b": null
+  },
+  {
+   "kind": "item",
+   "page": 216,
+   "key": "2.0 / CPS7500",
+   "field": "catalog",
+   "a": "CPS7500",
+   "b": "CPS7500 689 NO 087100"
+  },
+  {
+   "kind": "item",
+   "page": 216,
+   "key": "2.0 / CPS7500",
+   "field": "finish",
+   "a": "689",
+   "b": null
+  },
+  {
+   "kind": "item",
+   "page": 216,
+   "key": "2.0 / CPS7500",
+   "field": "manufacturer",
+   "a": "NO",
+   "b": null
+  },
+  {
+   "kind": "item",
+   "page": 216,
+   "key": "2.0 / K1050 10\" x 2\" LDW 4BE CSK",
+   "field": "catalog",
+   "a": "K1050 10\" x 2\" LDW 4BE CSK",
+   "b": "K1050 10\" x 2\" LDW 4BE CSK US32D RO 087100"
+  },
+  {
+   "kind": "item",
+   "page": 216,
+   "key": "2.0 / K1050 10\" x 2\" LDW 4BE CSK",
+   "field": "finish",
+   "a": "US32D",
+   "b": null
+  },
+  {
+   "kind": "item",
+   "page": 216,
+   "key": "2.0 / K1050 10\" x 2\" LDW 4BE CSK",
+   "field": "manufacturer",
+   "a": "RO",
+   "b": null
+  },
+  {
+   "kind": "item",
+   "page": 216,
+   "key": "2.0 / 2005AT",
+   "field": "catalog",
+   "a": "2005AT",
+   "b": "2005AT 689 PE 087100"
+  },
+  {
+   "kind": "item",
+   "page": 216,
+   "key": "2.0 / 2005AT",
+   "field": "finish",
+   "a": "689",
+   "b": null
+  },
+  {
+   "kind": "item",
+   "page": 216,
+   "key": "2.0 / 2005AT",
+   "field": "manufacturer",
+   "a": "PE",
+   "b": null
+  },
+  {
+   "kind": "item",
+   "page": 216,
+   "key": "2.0 / 2891AS",
+   "field": "catalog",
+   "a": "2891AS",
+   "b": "2891AS 689 PE 087100"
+  },
+  {
+   "kind": "item",
+   "page": 216,
+   "key": "2.0 / 2891AS",
+   "field": "finish",
+   "a": "689",
+   "b": null
+  },
+  {
+   "kind": "item",
+   "page": 216,
+   "key": "2.0 / 2891AS",
+   "field": "manufacturer",
+   "a": "PE",
+   "b": null
+  }
+ ],
+ "ms": 1053,
+ "generated_at": "2026-10-10T13:33:35.172Z"
+}

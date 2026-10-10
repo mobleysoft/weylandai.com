@@ -1,0 +1,12 @@
+{
+ "sha16": "7861956196a94c71",
+ "sha256": "7861956196a94c71108894493f57d1b87d1faf093c62bf5223186ad3822b29b7",
+ "file": "7861956196a94c71.pdf",
+ "bytes": 294912,
+ "family": "harvest",
+ "source": "harvest",
+ "label": null,
+ "source_url": null,
+ "tier": "unread",
+ "error": "pdf.js could not open it: Invalid PDF structure."
+}

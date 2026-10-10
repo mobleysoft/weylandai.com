@@ -1,0 +1,321 @@
+{
+ "sha16": "7865c59ba07c90cc",
+ "sha256": "7865c59ba07c90ccfd042d497eed97347792be36adb2266236be10959ff57d6e",
+ "file": "7865c59ba07c90cc.pdf",
+ "bytes": 41216757,
+ "family": "harvest",
+ "source": "harvest",
+ "label": null,
+ "source_url": null,
+ "page_count": 93,
+ "text_layer": {
+  "pages_with_text": 93,
+  "pages": 93
+ },
+ "pages": {
+  "door_candidates": 3,
+  "hardware_candidates": 0,
+  "door_schedule_pages": [
+   27
+  ],
+  "hardware_pages": []
+ },
+ "readers": {
+  "a": {
+   "doors": 74,
+   "sets": 0,
+   "items": 0,
+   "name": "production text layer (weyland-subx-worker/src/lib/text-layer-read.js)"
+  },
+  "b": {
+   "doors": 70,
+   "sets": 0,
+   "items": 0,
+   "name": "geometry first (tools/accuracy/truth/reader_b.mjs)",
+   "tables": 2
+  }
+ },
+ "rows_agreed": 55,
+ "rows_disputed": 19,
+ "rows_total": 74,
+ "agreement_rate": 0.7432,
+ "agreement": {
+  "doors": {
+   "rows": 74,
+   "agreed": 55,
+   "disputed": 15,
+   "only_a": 4,
+   "only_b": 0,
+   "fields": {
+    "width_inches": {
+     "agree": 70,
+     "total": 70
+    },
+    "height_inches": {
+     "agree": 70,
+     "total": 70
+    },
+    "door_type": {
+     "agree": 70,
+     "total": 70
+    },
+    "material": {
+     "agree": 69,
+     "total": 70
+    },
+    "fire_rating": {
+     "agree": 0,
+     "total": 14
+    },
+    "hardware_group": {
+     "agree": 70,
+     "total": 70
+    }
+   },
+   "agreement_rate": 0.7432
+  },
+  "items": {
+   "rows": 0,
+   "agreed": 0,
+   "disputed": 0,
+   "only_a": 0,
+   "only_b": 0,
+   "fields": {},
+   "agreement_rate": null
+  },
+  "sets": {
+   "sets": 0,
+   "agreed": 0
+  }
+ },
+ "triage_class": "schedule-only",
+ "triage_from": "inferred (S=true H=false plan sheets=5)",
+ "oracles": {
+  "marks_on_plan": {
+   "applicable": true,
+   "total": 74,
+   "pass": 73,
+   "fail": 1,
+   "pass_rate": 0.9865,
+   "examples": [
+    "mark E204 (schedule p.27) not tagged on any plan"
+   ],
+   "plan_sheets": [
+    "A-100 p.11",
+    "A-103 p.13",
+    "A-104 p.14",
+    "A-105 p.15",
+    "A-106 p.16"
+   ],
+   "plan_counts": {
+    "plan_sheets": 5,
+    "rooms": 169,
+    "corridors": 2,
+    "tags": 73,
+    "unmatched_tags": 0,
+    "schedule_marks": 74,
+    "marks_not_on_plan": 1,
+    "shared_marks": 0
+   }
+  },
+  "sets_exist": {
+   "applicable": false,
+   "reason": "not for class schedule-only"
+  },
+  "set_door_lists": {
+   "applicable": false,
+   "reason": "not for class schedule-only"
+  },
+  "types_in_legend": {
+   "applicable": true,
+   "total": 5,
+   "pass": 2,
+   "fail": 3,
+   "pass_rate": 0.4,
+   "examples": [
+    "frame type HM-00-DE (5 rows) not found near the frame types legend",
+    "frame type HM-00 (32 rows) not found near the frame types legend",
+    "frame type HM-12 (3 rows) not found near the frame types legend"
+   ],
+   "legend_titles": [
+    "FRAME TYPES p.26"
+   ],
+   "skipped": [
+    "no DOOR TYPES legend title"
+   ],
+   "note": "weak for numeric types: a detail number near the legend can pass a numeric frame type"
+  },
+  "sizes_and_marks": {
+   "applicable": true,
+   "total": 74,
+   "pass": 74,
+   "fail": 0,
+   "pass_rate": 1,
+   "examples": [],
+   "size_fail": 0,
+   "mark_fail": 0
+  }
+ },
+ "tier": "agreed",
+ "disagreement_count": 19,
+ "disagreements": [
+  {
+   "kind": "door",
+   "page": 27,
+   "key": "200.1",
+   "field": "fire_rating",
+   "a": null,
+   "b": "45 MIN"
+  },
+  {
+   "kind": "door",
+   "page": 27,
+   "key": "200.2",
+   "field": "fire_rating",
+   "a": null,
+   "b": "45 MIN"
+  },
+  {
+   "kind": "door",
+   "page": 27,
+   "key": "200.3",
+   "field": "fire_rating",
+   "a": null,
+   "b": "45 MIN"
+  },
+  {
+   "kind": "door",
+   "page": 27,
+   "key": "200.4",
+   "field": "fire_rating",
+   "a": null,
+   "b": "45 MIN"
+  },
+  {
+   "kind": "door",
+   "page": 27,
+   "key": "203",
+   "field": "fire_rating",
+   "a": null,
+   "b": "45 MIN"
+  },
+  {
+   "kind": "door",
+   "page": 27,
+   "key": "210",
+   "field": "fire_rating",
+   "a": null,
+   "b": "45 MIN"
+  },
+  {
+   "kind": "door",
+   "page": 27,
+   "key": "225.1",
+   "field": "fire_rating",
+   "a": null,
+   "b": "45 MIN"
+  },
+  {
+   "kind": "door",
+   "page": 27,
+   "key": "225.2",
+   "field": "fire_rating",
+   "a": null,
+   "b": "45 MIN"
+  },
+  {
+   "kind": "door",
+   "page": 27,
+   "key": "228",
+   "field": "fire_rating",
+   "a": null,
+   "b": "90 MIN"
+  },
+  {
+   "kind": "door",
+   "page": 27,
+   "key": "232",
+   "field": "fire_rating",
+   "a": null,
+   "b": "45 MIN"
+  },
+  {
+   "kind": "door",
+   "page": 27,
+   "key": "238",
+   "field": "fire_rating",
+   "a": null,
+   "b": "45 MIN"
+  },
+  {
+   "kind": "door",
+   "page": 27,
+   "key": "E201",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "door",
+   "page": 27,
+   "key": "E202",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "door",
+   "page": 27,
+   "key": "E203",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "door",
+   "page": 27,
+   "key": "E204",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "door",
+   "page": 27,
+   "key": "E104",
+   "field": "material",
+   "a": "HM",
+   "b": "HM - A"
+  },
+  {
+   "kind": "door",
+   "page": 27,
+   "key": "152",
+   "field": "fire_rating",
+   "a": null,
+   "b": "45 MIN"
+  },
+  {
+   "kind": "door",
+   "page": 27,
+   "key": "154",
+   "field": "fire_rating",
+   "a": null,
+   "b": "45 MIN"
+  },
+  {
+   "kind": "door",
+   "page": 27,
+   "key": "158",
+   "field": "fire_rating",
+   "a": null,
+   "b": "45 MIN"
+  }
+ ],
+ "ms": 3793,
+ "generated_at": "2026-10-10T13:26:32.720Z"
+}

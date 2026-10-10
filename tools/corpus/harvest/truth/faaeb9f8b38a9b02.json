@@ -1,0 +1,203 @@
+{
+ "sha16": "faaeb9f8b38a9b02",
+ "sha256": "faaeb9f8b38a9b0269e7f5f7ec978f86d3ad8369dfc64d62553916c7f8579b68",
+ "file": "faaeb9f8b38a9b02.pdf",
+ "bytes": 11661991,
+ "family": "harvest",
+ "source": "harvest",
+ "label": null,
+ "source_url": null,
+ "page_count": 538,
+ "text_layer": {
+  "pages_with_text": 530,
+  "pages": 538
+ },
+ "pages": {
+  "door_candidates": 17,
+  "hardware_candidates": 5,
+  "door_schedule_pages": [],
+  "hardware_pages": [
+   383,
+   384,
+   385,
+   386,
+   387
+  ]
+ },
+ "readers": {
+  "a": {
+   "doors": 0,
+   "sets": 20,
+   "items": 100,
+   "name": "production text layer (weyland-subx-worker/src/lib/text-layer-read.js)"
+  },
+  "b": {
+   "doors": 0,
+   "sets": 20,
+   "items": 100,
+   "name": "geometry first (tools/accuracy/truth/reader_b.mjs)",
+   "tables": 0
+  }
+ },
+ "rows_agreed": 95,
+ "rows_disputed": 6,
+ "rows_total": 101,
+ "agreement_rate": 0.9406,
+ "agreement": {
+  "doors": {
+   "rows": 0,
+   "agreed": 0,
+   "disputed": 0,
+   "only_a": 0,
+   "only_b": 0,
+   "fields": {},
+   "agreement_rate": null
+  },
+  "items": {
+   "rows": 101,
+   "agreed": 95,
+   "disputed": 4,
+   "only_a": 1,
+   "only_b": 1,
+   "fields": {
+    "qty": {
+     "agree": 99,
+     "total": 99
+    },
+    "description": {
+     "agree": 97,
+     "total": 99
+    },
+    "catalog": {
+     "agree": 96,
+     "total": 99
+    },
+    "finish": {
+     "agree": 97,
+     "total": 99
+    },
+    "manufacturer": {
+     "agree": 98,
+     "total": 99
+    }
+   },
+   "agreement_rate": 0.9406
+  },
+  "sets": {
+   "sets": 20,
+   "agreed": 20
+  }
+ },
+ "triage_class": "spec-only",
+ "triage_from": "inferred (S=false H=true plan sheets=0)",
+ "oracles": {
+  "marks_on_plan": {
+   "applicable": false,
+   "reason": "not for class spec-only"
+  },
+  "sets_exist": {
+   "applicable": false,
+   "reason": "not for class spec-only"
+  },
+  "set_door_lists": {
+   "applicable": false,
+   "reason": "not for class spec-only"
+  },
+  "types_in_legend": {
+   "applicable": false,
+   "reason": "not for class spec-only"
+  },
+  "sizes_and_marks": {
+   "applicable": false,
+   "reason": "not for class spec-only"
+  }
+ },
+ "tier": "agreed",
+ "disagreement_count": 10,
+ "disagreements": [
+  {
+   "kind": "item",
+   "page": 383,
+   "key": "1 / 881S N x LAR",
+   "field": "description",
+   "a": "Weatherstrip NOTE: @ Pod A1B only",
+   "b": "Weatherstrip NOTE: @ Pod A1B"
+  },
+  {
+   "kind": "item",
+   "page": 383,
+   "key": "1 / 881S N x LAR",
+   "field": "catalog",
+   "a": "881S N x LAR",
+   "b": "881S N x LAR only"
+  },
+  {
+   "kind": "item",
+   "page": 383,
+   "key": "1 / 743S N x LAR",
+   "field": "description",
+   "a": "Automatic Door Bottom NOTE: @ Pod A1B only",
+   "b": "Automatic Door Bottom NOTE: @ Pod A1B"
+  },
+  {
+   "kind": "item",
+   "page": 383,
+   "key": "1 / 743S N x LAR",
+   "field": "catalog",
+   "a": "743S N x LAR",
+   "b": "743S N x LAR only"
+  },
+  {
+   "kind": "item",
+   "page": 384,
+   "key": "5 / All Existing Hardware REUSE",
+   "field": "(row)",
+   "a": "read",
+   "b": null,
+   "why": "only reader A read this row"
+  },
+  {
+   "kind": "item",
+   "page": 384,
+   "key": "5 / REUSE",
+   "field": "(row)",
+   "a": null,
+   "b": "read",
+   "why": "only reader B read this row"
+  },
+  {
+   "kind": "item",
+   "page": 386,
+   "key": "15 / Match Existing 15",
+   "field": "catalog",
+   "a": "Match Existing 15",
+   "b": "Match Existing"
+  },
+  {
+   "kind": "item",
+   "page": 386,
+   "key": "15 / Match Existing 15",
+   "field": "finish",
+   "a": null,
+   "b": "15"
+  },
+  {
+   "kind": "item",
+   "page": 386,
+   "key": "15 / REUSE",
+   "field": "finish",
+   "a": "BYOT",
+   "b": null
+  },
+  {
+   "kind": "item",
+   "page": 386,
+   "key": "15 / REUSE",
+   "field": "manufacturer",
+   "a": null,
+   "b": "BYOT"
+  }
+ ],
+ "ms": 1853,
+ "generated_at": "2026-10-10T13:33:50.995Z"
+}

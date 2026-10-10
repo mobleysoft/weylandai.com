@@ -1,0 +1,149 @@
+{
+ "sha16": "d18877f5197b9397",
+ "sha256": "d18877f5197b9397fa083d4f2f92b1922e0d45b4b8674dd2a6c090cf732728a4",
+ "file": "d18877f5197b9397.pdf",
+ "bytes": 3392379,
+ "family": "harvest",
+ "source": "harvest",
+ "label": null,
+ "source_url": null,
+ "page_count": 4,
+ "text_layer": {
+  "pages_with_text": 0,
+  "pages": 4
+ },
+ "ocr": {
+  "requested_dpi": 600,
+  "pipeline": "production ocrRasterPageLines; Poppler renderer; shipped Tesseract",
+  "pages": [
+   {
+    "page": 1,
+    "dpi": 204,
+    "words": 205,
+    "rotation": 0,
+    "skew_deg": 0,
+    "rules": {
+     "h": 408,
+     "v": 4433
+    },
+    "ms": 9220
+   },
+   {
+    "page": 2,
+    "dpi": 204,
+    "words": 532,
+    "rotation": 0,
+    "skew_deg": 0,
+    "rules": {
+     "h": 150,
+     "v": 977
+    },
+    "ms": 11027
+   },
+   {
+    "page": 3,
+    "dpi": 204,
+    "words": 1294,
+    "rotation": 0,
+    "skew_deg": 0,
+    "rules": {
+     "h": 168,
+     "v": 1123
+    },
+    "ms": 24725
+   },
+   {
+    "page": 4,
+    "dpi": 204,
+    "words": 440,
+    "rotation": 0,
+    "skew_deg": 0,
+    "rules": {
+     "h": 153,
+     "v": 975
+    },
+    "ms": 10491
+   }
+  ]
+ },
+ "pages": {
+  "door_candidates": 0,
+  "hardware_candidates": 0,
+  "door_schedule_pages": [],
+  "hardware_pages": []
+ },
+ "readers": {
+  "a": {
+   "doors": 0,
+   "sets": 0,
+   "items": 0,
+   "name": "production OCR + schedule line reader (Poppler renderer)"
+  },
+  "b": {
+   "doors": 0,
+   "sets": 0,
+   "items": 0,
+   "name": "geometry first (tools/accuracy/truth/reader_b.mjs)",
+   "tables": 0
+  }
+ },
+ "rows_agreed": 0,
+ "rows_disputed": 0,
+ "rows_total": 0,
+ "agreement_rate": null,
+ "agreement": {
+  "doors": {
+   "rows": 0,
+   "agreed": 0,
+   "disputed": 0,
+   "only_a": 0,
+   "only_b": 0,
+   "fields": {},
+   "agreement_rate": null
+  },
+  "items": {
+   "rows": 0,
+   "agreed": 0,
+   "disputed": 0,
+   "only_a": 0,
+   "only_b": 0,
+   "fields": {},
+   "agreement_rate": null
+  },
+  "sets": {
+   "sets": 0,
+   "agreed": 0
+  }
+ },
+ "triage_class": "none",
+ "triage_from": "inferred (S=false H=false plan sheets=0)",
+ "oracles": {
+  "marks_on_plan": {
+   "applicable": false,
+   "reason": "not for class none"
+  },
+  "sets_exist": {
+   "applicable": false,
+   "reason": "not for class none"
+  },
+  "set_door_lists": {
+   "applicable": false,
+   "reason": "not for class none"
+  },
+  "types_in_legend": {
+   "applicable": false,
+   "reason": "not for class none"
+  },
+  "sizes_and_marks": {
+   "applicable": false,
+   "reason": "not for class none"
+  }
+ },
+ "tier": "unread",
+ "unread_reason": "no text layer; OCR read 2471 words but neither reader found a table in them",
+ "note": "no text layer: production OCR preprocessing, cell recognition and line reader; Poppler rendering (browser rendering is a separate check). Actual DPI is recorded per page; the same words are given to both readers",
+ "disagreement_count": 0,
+ "disagreements": [],
+ "ms": 55473,
+ "generated_at": "2026-10-10T13:31:31.780Z"
+}
