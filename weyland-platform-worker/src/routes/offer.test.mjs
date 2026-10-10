@@ -121,6 +121,7 @@ test("new buyer, signed out: the offer makes the account, opens every product fo
   assert.equal(Date.parse(a.prompt_from), end - 8 * DAY);
   assert.deepEqual(a.first_submittal.credit, { total: 1, used: 0, remaining: 1 });
   assert.equal(a.first_submittal.amount_total, 10000);
+  assert.equal(a.first_submittal.on_account, false, "a card purchase is paid, not on account");
   assert.equal(a.held_purchases, 0);
   assert.equal(me.entitlements.suite, true);
   const st = await (await get(env, "/api/subscription/status", { Cookie: "weyland_session=" + cookie })).json();

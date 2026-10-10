@@ -82,3 +82,45 @@ The two failed checks on each project are the same: the package is built, but **
    - `STAGE=record`: the customer record.
 
    The cloud session runs these once the order is placed. Each run's report goes into reports/ here.
+
+## After the order (2026-10-10, 03:43–03:52 UTC, production)
+
+At 23:43 EDT the Mac placed the order: held offer purchase `in_1UOrBTLWTxUJi5AVJiJScQVc`, customer `cus_VPgYGhGvuf8Y2c`, Stripe invoice 4K1HEGPI-0001 open for $100.00 and due in 30 days. The firm's inbox received it at 03:43:05 UTC ("New invoice from John Mobley #4K1HEGPI-0001").
+
+| Stage | Result | Report |
+|---|---|---|
+| claim | See below | [5-claim.json](reports/5-claim.json): **7 of 7** |
+| R2502 again | See below | [6-project-R2502-paid.json](reports/6-project-R2502-paid.json): **11 of 11** |
+| record | Account card ([shots-after/account-card.png](shots-after/account-card.png)): "Mobley Contracting", First submittal, access until November 9, and under INVOICES "Oct 10, 2026 · $100 · Due … On account for Mobley Contracting" with VIEW. SubX lists both projects ([shots-after/subx-projects.png](shots-after/subx-projects.png)). | [7-record-after-buy.json](reports/7-record-after-buy.json): **4 of 4** |
+
+Claim stage:
+- Before signing in again, the account card said: "A purchase made with jmobleyworks+mobleycontracting@gmail.com while signed out is waiting. Confirm the email with a code".
+- A new code was read from the firm's inbox (it arrived at 03:44:14).
+- The sign-in answered `claimed: [{ session_id: "in_1UOrBTLWTxUJi5AVJiJScQVc", product_id: "weyland-first-submittal", access_ends_at: "2026-11-09T03:44:51Z" }]`.
+- The account card now reads: Plan "First submittal: every product for 30 days", access until Monday, November 9, 2026.
+
+R2502 again:
+- The firm opened its R2502 project; 211 of 211 rows, each with its source.
+- 104D was corrected to `PR 3' - 4" x 6' - 8"`, and **kept as a pair**: EDIT shows `PR 3'-4" x 6'-8"` and the row reads `PR 3'-4" x 6'-8"` (with the SubX deploy of #118).
+- The package was built (13 pages), **shown in the page** (13 pages drawn) and **downloaded**: [R2502_Missouri_Hope_first_project_submittal.pdf](R2502_Missouri_Hope_first_project_submittal.pdf). The package:
+  - says "PREPARED BY: Mobley Contracting";
+  - has a door schedule of 211 doors, each citing its page and row;
+  - lists 104D as `PR 3'-4" x 6'-8"`.
+
+### Two things the account card said wrong, fixed in this PR
+
+- **"Paid Oct 10, 2026 · $100"** on a purchase made on account, while the invoice below says Due.
+  - The access summary now carries `first_submittal.on_account` (weyland-platform-worker/src/lib/entitlements.js). The card says "On account Oct 10, 2026 · $100 invoiced" (assets/weyland-shell.js).
+  - A card purchase still says Paid.
+  - Tests: on-account.test.mjs (the claimed account's `/api/auth/me`) and offer.test.mjs (a card purchase is not on account).
+- **"1 of 1 packet left to build"** after the packet was built: nothing ever counted the credit (`credits_used` was written nowhere).
+  - A package built while the account's output access comes from the first submittal now uses the credit, capped at the credits bought (`useOfferCredit`, weyland-subx-worker/src/routes/subx-workspace.js).
+  - New test in test/subx-workspace.test.mjs.
+  - The firm's packet was built before this fix, so its card shows 1 of 1 until its next build after the deploy.
+
+Tests: SubX 194 of 195 (the one renderer-bound test), platform worker 116 of 116, estimator assertions 11 of 11.
+
+### For the Mac
+
+- **Deploy:** this PR touches weyland-subx-worker, weyland-platform-worker and assets/weyland-shell.js.
+- **Invoice sender name:** Stripe's invoice email names the seller "John Mobley". That comes from the Stripe account's public business name, not this code. Stripe's settings would make it read WeylandAI / Argo LLC, as the invoice footer does.

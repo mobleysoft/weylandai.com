@@ -428,6 +428,8 @@ export function describeAccess(row, { purchases = [], subscriptions = [], heldCo
       access_ends_at: offer.access_ends_at || null,
       amount_total: offer.amount_total ?? null,
       currency: offer.currency || null,
+      // g052: bought on account (an invoice, POST /api/billing/on-account) rather than paid by card.
+      on_account: /^in_/.test(String(offer.checkout_session_id || "")),
       credit: {
         total: Number(offer.credits_total) || 0,
         used: Number(offer.credits_used) || 0,

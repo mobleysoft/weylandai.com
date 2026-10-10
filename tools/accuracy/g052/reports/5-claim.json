@@ -1,0 +1,78 @@
+{
+  "journey": "first-customer-claim",
+  "title": "First customer on credit: claim",
+  "base": "https://weylandai.com",
+  "started_at": "2026-10-10T03:44:07.600Z",
+  "finished_at": "2026-10-10T03:44:52.600Z",
+  "passed": 7,
+  "failed": 0,
+  "checks": [
+    {
+      "name": "a sign-in code is sent to the firm's address (AuthFor: sent, WeylandAI's mail, 8 digits, 15 minutes)",
+      "ok": true,
+      "detail": "{\"status\":200,\"sent\":true,\"brand\":\"weylandai\",\"code_length\":8}"
+    },
+    {
+      "name": "the emailed code was read from the firm's inbox",
+      "ok": true,
+      "detail": "/tmp/claude-0/-home-user/2f8cb0f6-6ae8-50f4-ba0d-d84a79222d2c/scratchpad/g052/run/code.txt"
+    },
+    {
+      "name": "the right code signs the firm in at AuthFor (the inbox proven)",
+      "ok": true,
+      "detail": "{\"status\":200,\"email_verified\":true}"
+    },
+    {
+      "name": "signing in with the emailed code takes the first submittal held on account",
+      "ok": true,
+      "detail": "{\"claimed\":[{\"session_id\":\"in_1UOrBTLWTxUJi5AVJiJScQVc\",\"product_id\":\"weyland-first-submittal\",\"kind\":\"offer\",\"access_ends_at\":\"2026-11-09T03:44:51.058Z\"}]}"
+    },
+    {
+      "name": "signed in as the firm",
+      "ok": true,
+      "detail": "{\"auth\":\"signed-in\",\"user\":\"jmobleyworks+mobleycontracting@gmail.com\",\"chip\":\"jmobleyworks+mobleycontracting\",\"view\":null,\"overlayOpen\":false,\"overlayTitle\":\"\",\"overlayText\":\"\",\"error\":\"\",\"path\":\"/?journey=first-customer-claim-mv1uo88gf5a9e0\"}"
+    },
+    {
+      "name": "the account card shows the first submittal and its 30 days",
+      "ok": true,
+      "detail": "Mobley Contracting Signed in as jmobleyworks+mobleycontracting@gmail.com Plan First submittal: every product for 30 days Access until Monday, November 9, 2026 (30 days left) First submittal Paid Oct 10, 2026 · $100 · 1 of 1 packet left to build Your $100 first submittal includes every product until Monday, November 9, 2026. Nothing is charged after that. Before then, choose a plan here if you want"
+    },
+    {
+      "name": "stayed in place: same document, still on weylandai.com",
+      "ok": true,
+      "detail": "{\"sameDocument\":true,\"onSite\":true,\"url\":\"https://weylandai.com/?journey=first-customer-claim-mv1uo88gf5a9e0\"}"
+    }
+  ],
+  "notes": {
+    "browser": "software WebGL (ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)), not the Mac's GPU: timings of the 3D homepage are slower than a customer's",
+    "card_before_claim": "Mobley Contracting Signed in as jmobleyworks+mobleycontracting@gmail.com Plan Free trial: every product Trial ends Saturday, October 24, 2026 (14 days left) Your free trial includes every product until Saturday, October 24, 2026. Nothing is charged; choose a plan when you are ready. A purchase made with jmobleyworks+mobleycontracting@gmail.com while signed out is waiting. Confirm the email with a ",
+    "claim_answer": {
+      "status": 200,
+      "claimed": [
+        {
+          "session_id": "in_1UOrBTLWTxUJi5AVJiJScQVc",
+          "product_id": "weyland-first-submittal",
+          "kind": "offer",
+          "access_ends_at": "2026-11-09T03:44:51.058Z"
+        }
+      ]
+    },
+    "account_card": "Mobley Contracting Signed in as jmobleyworks+mobleycontracting@gmail.com Plan First submittal: every product for 30 days Access until Monday, November 9, 2026 (30 days left) First submittal Paid Oct 10, 2026 · $100 · 1 of 1 packet left to build Your $100 first submittal includes every product until Monday, November 9, 2026. Nothing is charged after that. Before then, choose a plan here if you want",
+    "state_kept": true
+  },
+  "browser": {
+    "launch_args": [
+      "--use-angle=metal"
+    ],
+    "webgl": {
+      "webgl": true,
+      "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)",
+      "vendor": "Google Inc. (Google)"
+    }
+  },
+  "api_errors": [],
+  "cleanup": {
+    "kept": "the customer record (account, project, package) is kept on purpose"
+  },
+  "side_effects": "no AuthFor identity created"
+}

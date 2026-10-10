@@ -214,6 +214,19 @@ export async function deleteSessionEverywhere(env2, session) {
   return { rows };
 }
 
+/** One packet of the account's latest granted first-submittal offer, never past the credits it bought.
+ *  Returns true when a credit was used. Never throws. */
+export async function useOfferCredit(env, userId) {
+  try {
+    const res = await env.DB.prepare("UPDATE weyland_purchases SET credits_used = credits_used + 1, updated_at = ? WHERE checkout_session_id = (SELECT checkout_session_id FROM weyland_purchases WHERE user_id = ? AND kind = 'offer' AND status = 'granted' ORDER BY granted_at DESC LIMIT 1) AND credits_used < credits_total")
+      .bind(new Date().toISOString(), userId).run();
+    return !!(res && res.meta && res.meta.changes);
+  } catch (e) {
+    console.error("[SubX package] credit not recorded: " + e.message);
+    return false;
+  }
+}
+
 export function registerSubxWorkspaceRoutes(router, { authenticate, requireActiveSubscription }) {
   // A customer deletes a session they uploaded: its rows, the PDF and the cached copy.
   router.delete("/api/hardware-schedule/session/:sessionId", async (request2, env2) => {
@@ -535,6 +548,9 @@ export function registerSubxWorkspaceRoutes(router, { authenticate, requireActiv
       // schedule needs the $100 first submittal or a plan. The demo
       // building's package stays open to everyone.
       const access = isDemoClone(o.session) ? { paid: true, via: "demo" } : await outputAccess(env2, o.user.userId, "subx");
+      // g052: a package built on the $100 first submittal uses its packet credit (the account card's
+      // "packets left to build").
+      if (access.via === "offer") await useOfferCredit(env2, o.user.userId);
       return jsonResponse3({
         success: true,
         sessionId,
