@@ -1,18 +1,59 @@
 {
-  "verified_at": "2026-10-09T09:57:07Z",
-  "downloaded": 598,
+  "verified_at": "2026-10-10T13:36:39Z",
+  "round_number": 4,
+  "manifest_lines": 2633,
+  "downloaded": 891,
   "baseline_sha256_preserved": 459,
   "seeds_accounted": 52,
   "enumerators_accounted": 2,
-  "triaged": 598,
+  "triaged": 891,
   "extraction_blockers": [
     {
       "sha16": "1745b65f8f8d7ec1",
       "reason": "PDF page-boundary blocker: pdfinfo reports 41 pages but pdftotext emits 11; page indexes cannot be trusted. PDF retained unchanged; no repair attempted."
+    },
+    {
+      "sha16": "7861956196a94c71",
+      "reason": "pdfinfo unavailable or PDF unreadable"
     }
   ],
-  "round_cap": 1000000000,
-  "received_bytes": 999553931,
-  "checks": "manifest fields, source coverage, PDF signatures, SHA256 and sizes, preserved baseline hashes, unique hashes, exclusions, exact fifth-page sampling coverage or explicit extraction blocker, per-page/set plan flags, title/ID evidence, complete requires architectural plan, candidate evidence indexes, previews, saved-byte accounting",
+  "round_cap": 2000000000,
+  "received_bytes": 1996173347,
+  "rounds": [
+    {
+      "round_number": 2,
+      "state_file": "round2.json",
+      "manifest_start_line": 0,
+      "manifest_end_line": 1633,
+      "downloaded": 459,
+      "sha256_verified": 459,
+      "saved_bytes": 2840149575,
+      "received_bytes": 2999029552,
+      "round_cap": 3000000000
+    },
+    {
+      "round_number": 3,
+      "state_file": "round3.json",
+      "manifest_start_line": 1633,
+      "manifest_end_line": 2206,
+      "downloaded": 139,
+      "sha256_verified": 139,
+      "saved_bytes": 998371271,
+      "received_bytes": 999553931,
+      "round_cap": 1000000000
+    },
+    {
+      "round_number": 4,
+      "state_file": "round.json",
+      "manifest_start_line": 2206,
+      "manifest_end_line": 2633,
+      "downloaded": 293,
+      "sha256_verified": 293,
+      "saved_bytes": 1996173347,
+      "received_bytes": 1996173347,
+      "round_cap": 2000000000
+    }
+  ],
+  "checks": "manifest fields, source coverage, PDF signatures, SHA256 and sizes for every round including earlier downloads, preserved baseline hashes, unique hashes, exclusions, exact fifth-page sampling coverage or explicit extraction blocker, per-page/set plan flags, title/ID evidence, complete requires architectural plan, candidate evidence indexes, previews, per-round caps and saved/received-byte accounting",
   "outcome": "passed"
 }
