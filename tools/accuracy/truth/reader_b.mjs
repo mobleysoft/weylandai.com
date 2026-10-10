@@ -112,6 +112,7 @@ function fieldOf(label, taken) {
   const has = (re) => re.test(t);
   const want = (f) => (taken.has(f) ? null : f);
   if (!t.trim()) return null;
+  if (has(/ (QTY|QUANTITY|QUAN) /) && !has(/ (LEAF|LEAVES|HINGE|HINGES|PANEL|PANELS) /)) return want("quantity");
   if (has(/ (HARDWARE|HDWR|HDW|HW|H\/W) /) || has(/ (SET|GROUP|GRP) /)) return want("hardware_group");
   if (has(/ (FIRE|RATING|RATED|LABEL) /)) return want("fire_rating");
   if (has(/ (WIDTH|WD) /) && !has(/ (HEIGHT|HT) /)) return want("width");
@@ -290,6 +291,13 @@ function tableFrom(T, allWords) {
     const cells = cellsOf(bi);
     const markWords = cells[mk];
     // Rows inside one band (a body ruled in columns only): each mark-like word in the mark column starts a row.
+    // A row that stands for several openings (a QUANTITY column) prints a range or a stack of marks
+    // in its one band ("1A101 TO / 1D102", "151A 151B / 151C"): one quantity, one row.
+    const qi = fields.indexOf("quantity");
+    if (qi >= 0 && /^\d{1,4}$/.test(clean(joinWords(cells[qi])))) {
+      const txt = clean(joinWords(markWords));
+      if (txt && markLike(txt.split(" ")[0])) { rows.push({ cells, y: bands[bi].y0 }); continue; }
+    }
     const starts = markWords.filter((w) => markLike(w.str)).sort((a, b) => a.y - b.y);
     const lineStarts = [];
     for (const w of starts) if (!lineStarts.length || w.y - lineStarts[lineStarts.length - 1].y > 0.6 * w.h) lineStarts.push(w);
@@ -306,7 +314,8 @@ function tableFrom(T, allWords) {
   }
   const doors = [];
   for (const r of rows) {
-    const mark = clean(joinWords(r.cells[mk])).split(" ")[0];
+    const markText = clean(joinWords(r.cells[mk]));
+    const mark = markText.split(" ")[0];
     if (!markLike(mark)) continue;
     let sz = { pair: false, width_inches: null, height_inches: null };
     const sizeTxt = get(r.cells, "size");
@@ -329,10 +338,34 @@ function tableFrom(T, allWords) {
       fire_rating: get(r.cells, "fire_rating") || null,
       hardware_group: get(r.cells, "hardware_group") || null,
       y: Math.round(r.y),
+      ...(fields.includes("quantity") ? { quantity: /^\d{1,4}$/.test(get(r.cells, "quantity") || "") ? +get(r.cells, "quantity") : null } : {}),
+      ...markListOf(markText),
     });
   }
   if (!doors.length) return null;
   return { header, fields, doors };
+}
+
+/** Every mark a multi-opening mark cell prints, this reader's own way: tokens that are marks, a
+ *  "TO" between two making a range, and a short prefix printed apart from its number joined
+ *  ("3A 112"). {} for a cell with one mark. */
+function markListOf(text) {
+  const toks = UP(text).replace(/[,;&]/g, " ").split(/\s+/).filter(Boolean);
+  const marks = [], ranges = [];
+  for (let i = 0; i < toks.length; i++) {
+    let t = toks[i];
+    if (/^\d[A-Z]$/.test(t) && /^\d{2,4}$/.test(toks[i + 1] || "")) { t += toks[i + 1]; i++; }
+    if (t === "AND") continue;
+    if (/^(TO|THRU)$/.test(t) && marks.length && i + 1 < toks.length) {
+      let e = toks[i + 1]; i++;
+      if (/^\d[A-Z]$/.test(e) && /^\d{2,4}$/.test(toks[i + 1] || "")) { e += toks[i + 1]; i++; }
+      if (!markLike(e)) return {};
+      ranges.push({ from: marks[marks.length - 1], to: e }); marks.push(e); continue;
+    }
+    if (!markLike(t)) return {};
+    marks.push(t);
+  }
+  return marks.length > 1 ? { marks, mark_ranges: ranges } : {};
 }
 
 // ---------------------------------------------------------------- hardware groups
