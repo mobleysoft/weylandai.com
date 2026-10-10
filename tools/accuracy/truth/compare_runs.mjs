@@ -57,6 +57,8 @@ function tierRank(tier) {
   return TIER_RANKS[tier] ?? -1;
 }
 
+const allowArg = process.argv.indexOf('--allow');
+const ALLOW = new Set(allowArg > 0 ? (process.argv[allowArg + 1] || '').split(',').filter(Boolean) : []);
 let failed = false;
 
 console.log(`| Set | Rows A | Rows B | Agreed Before | Agreed After | Tier Before | Tier After |`);
@@ -85,13 +87,10 @@ for (const sha of Array.from(allShas).sort()) {
 
   let regressed = false;
   if (r1 && r2) {
-    if (m2.agreed < m1.agreed) {
-      // Except if it's the scanned file which we know lost agreement due to Reader A improving,
-      // or if it's generally acceptable for e0abc0ac15f561ef. The prompt only required no sets losing agreement.
-      // Wait, let me just whitelist e0abc0ac15f561ef since we proved it's not a reader_b regression.
-      if (sha !== 'e0abc0ac15f561ef') {
-        regressed = true;
-      }
+    // A set that loses agreed rows is a regression unless the caller names it in --allow with a reason
+    // recorded elsewhere (plan/decisions.md). No set is exempt in the tool itself.
+    if (m2.agreed < m1.agreed && !ALLOW.has(sha)) {
+      regressed = true;
     }
     if (tierRank(m2.tier) < tierRank(m1.tier)) {
       if (!(m1.tier === "oracle-checked" && m2.tier === "agreed")) {
@@ -110,5 +109,7 @@ for (const sha of Array.from(allShas).sort()) {
 }
 
 if (failed) {
+  console.log('REGRESSION: at least one set lost agreed rows or a tier; name accepted drops with --allow <sha,...> and record why.');
   process.exit(1);
 }
+console.log('no set lost agreed rows or a tier' + (ALLOW.size ? ' (allowed: ' + Array.from(ALLOW).join(', ') + ')' : ''));
