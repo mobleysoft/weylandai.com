@@ -1,0 +1,17 @@
+waiting for the code sent to jmobleyworks+wa-code-g040@gmail.com in /tmp/claude-0/-home-user/2f8cb0f6-6ae8-50f4-ba0d-d84a79222d2c/scratchpad/g040_code.txt
+PASS a browser that bought without a password opens the sign-in on the code, prefilled
+PASS the sign-in view leads with the emailed code and hides the optional password
+PASS the page asks AuthFor for a code for exactly that email, naming WeylandAI
+PASS AuthFor's answer: sent, WeylandAI's mail, an 8-digit code for 15 minutes, a request id and no code
+PASS the page moves to the code step and says where the code went
+PASS 'Send a new code' waits while AuthFor would refuse another (resend_after)
+PASS a wrong code is refused by AuthFor (401 CODE_INVALID) and the page says so with the tries left
+PASS the emailed code was read from the alias's inbox
+FAIL the right code signs the visitor in, in place  [{"status":200,"email_verified":true,"new_account":true,"auth":"no-account","user":"","error":""}]
+FAIL the WeylandAI server session belongs to the alias  [{"valid":false,"me":404,"email":"","token":true}]
+FAIL the account card opens for the alias  [No WeylandAI account on this email yet You are signed in as jmobleyworks+wa-code-g040@gmail.com. Start a free 14-day trial on it. No card needed and no automatic charge. START MY FREE 14-DAY TRIALUse ]
+FAIL after a code sign-in, this browser's next sign-in opens on the code for that email  [{"email":"","passwordShown":false}]
+PASS stayed in place: same document, still on weylandai.com
+FAIL test data deleted (account rows, demo clones, uploads)  [{"clonesCaptured":1,"uploadsCaptured":0,"packagesBuilt":0,"error":"Command failed: npx wrangler d1 execute weyland_db --remote --json --command SELECT id FROM users WHERE lower(email) IN (NULL);\n\u001b[33m▲ \u001b[43;33m[\u001b[43;30mWARNING\u001b[43;33m]\u001b[0m \u001b[1mProxy environment variables detected. We'll use your proxy for fetch requests.\u001b[0m\n\n\n"}]
+9 passed, 5 failed
+exit 1

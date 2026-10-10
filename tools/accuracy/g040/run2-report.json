@@ -1,0 +1,102 @@
+{
+  "journey": "code-sign-in",
+  "title": "Sign in with an emailed code",
+  "base": "https://weylandai.com",
+  "started_at": "2026-10-09T23:48:38.206Z",
+  "finished_at": "2026-10-09T23:50:04.611Z",
+  "passed": 11,
+  "failed": 0,
+  "checks": [
+    {
+      "name": "a browser that bought without a password opens the sign-in on the code, prefilled",
+      "ok": true,
+      "detail": "{\"email\":\"jmobleyworks+wa-code-g040@gmail.com\",\"passwordShown\":false,\"sendShown\":true,\"sendText\":\"EMAIL ME A SIGN-IN CODE\"}"
+    },
+    {
+      "name": "the sign-in view leads with the emailed code and hides the optional password",
+      "ok": true,
+      "detail": "{\"passwordShown\":false,\"sendShown\":true}"
+    },
+    {
+      "name": "the page asks AuthFor for a code for exactly that email, naming WeylandAI",
+      "ok": true,
+      "detail": "{\"email\":\"jmobleyworks+wa-code-g040@gmail.com\",\"client_id\":\"af_weyland_login\",\"venture_id\":\"weylandai.com\",\"purpose\":\"signin\"}"
+    },
+    {
+      "name": "AuthFor's answer: sent, WeylandAI's mail, an 8-digit code for 15 minutes, a request id and no code",
+      "ok": true,
+      "detail": "{\"status\":200,\"sent\":true,\"brand\":\"weylandai\",\"code_length\":8,\"expires_in\":900,\"resend_after\":30}"
+    },
+    {
+      "name": "the page moves to the code step and says where the code went",
+      "ok": true,
+      "detail": "{\"codeShown\":true,\"note\":\"We emailed a sign-in code to jmobleyworks+wa-code-g040@gmail.com. It works for 15 minutes. If it has not arrived in a minute, check spam or send a new code.\",\"resendDisabled\":true,\"emailLocked\":true}"
+    },
+    {
+      "name": "'Send a new code' waits while AuthFor would refuse another (resend_after)",
+      "ok": true,
+      "detail": "{\"codeShown\":true,\"note\":\"We emailed a sign-in code to jmobleyworks+wa-code-g040@gmail.com. It works for 15 minutes. If it has not arrived in a minute, check spam or send a new code.\",\"resendDisabled\":true,\"emailLocked\":true}"
+    },
+    {
+      "name": "a wrong code is refused by AuthFor (401 CODE_INVALID) and the page says so with the tries left",
+      "ok": true,
+      "detail": "{\"status\":401,\"code\":\"CODE_INVALID\",\"attempts_left\":4,\"error\":\"That code does not match the latest one sent to jmobleyworks+wa-code-g040@gmail.com. 4 tries left. Check the email, or send a new code.\",\"auth\":\"signed-out\"}"
+    },
+    {
+      "name": "the emailed code was read from the alias's inbox",
+      "ok": true,
+      "detail": "/tmp/claude-0/-home-user/2f8cb0f6-6ae8-50f4-ba0d-d84a79222d2c/scratchpad/g040_code.txt"
+    },
+    {
+      "name": "the right code from the inbox signs the visitor in at AuthFor (200, inbox proven)",
+      "ok": true,
+      "detail": "{\"status\":200,\"email_verified\":true,\"new_account\":false}"
+    },
+    {
+      "name": "the page says it is signed in as the alias, has no WeylandAI account yet, and offers the free trial",
+      "ok": true,
+      "detail": "{\"auth\":\"no-account\",\"offer\":\"WEYLANDAI Finish setup Close No WeylandAI account on this email yet You are signed in as jmobleyworks+wa-code-g040@gmail.com. Start a free 14-day trial on it. No card needed and no automatic charge. START MY FREE 14-DAY TRIALUse a different\"}"
+    },
+    {
+      "name": "stayed in place: same document, still on weylandai.com",
+      "ok": true,
+      "detail": "{\"sameDocument\":true,\"onSite\":true,\"url\":\"https://weylandai.com/?journey=code-sign-in-mv1m9dxacc932d\"}"
+    }
+  ],
+  "notes": {
+    "users_row": "NO_D1: not inserted or deleted here; the site makes the row for jmobleyworks+wa-code-g040@gmail.com on its first sign-in",
+    "magic_link_answer": {
+      "status": 200,
+      "body": {
+        "sent": true,
+        "token":"<redacted>",
+        "request_id": "<request id>",
+        "expires_in": 900,
+        "code_length": 8,
+        "resend_after": 30,
+        "brand": "weylandai"
+      }
+    },
+    "cleanup": {
+      "skipped": "NO_D1: no D1 access",
+      "demo_clones_left_to_the_sweep": [
+        "ba0d8096-c3d3-4210-9173-73151f17fc3e"
+      ]
+    }
+  },
+  "browser": {
+    "launch_args": [
+      "--use-angle=metal"
+    ],
+    "webgl": null
+  },
+  "api_errors": [
+    "POST authfor.com/api/v1/auth/magic-link/verify 401",
+    "POST /api/auth/session 404",
+    "GET /api/auth/me 404"
+  ],
+  "cleanup": {
+    "skipped": true
+  },
+  "side_effects": "no AuthFor identity created"
+}
