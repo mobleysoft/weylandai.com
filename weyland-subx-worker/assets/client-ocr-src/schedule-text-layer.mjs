@@ -346,12 +346,13 @@ export function fieldForHeader(text, used) {
   if (has(/\b(ALTERNATE|ALT|PRICING|PRICE)\b/)) return pick("alternate");
   if (!has(/\b(WINDOW|CATALOG|MODEL|PRODUCT|ROOM|SET|GROUP|HARDWARE|SHEET|KEY)\b/) && (has(/\b(MARK|TAG)\b/) || has(/\b(DOOR|OPENING|DR)\s*(NO|NUMBER|NUM|#|ID)(?:\b|$)/) || /^(NO|NUMBER|NUM|ID|OPENING|OPENING NO|#)$/.test(t))) return pick("mark");
   if (has(/\bSIZE\b/) && !has(/\b(WIDTH|WDTH|WD|HEIGHT|HGT|HT)\b/)) return pick("size");
+  if (has(/\b(HEAD|JAMB)\s+(WIDTH|HEIGHT)\b/)) return null;
   if (has(/\b(WIDTH|WDTH|WD)\b/) || /^W$/.test(t)) return pick("width");
   if (has(/\b(HEIGHT|HGT|HT)\b/) || /^H$/.test(t)) return pick("height");
   if (has(/\b(THICKNESS|THICK|THK)\b/) || /^T$/.test(t)) return pick("thickness");
   if (has(/\b(FIRE|RATING|RATED|LABEL)\b/) && !has(/\bSTC\b/)) return pick("fire_rating");
   if (has(/\b(HARDWARE|HDW|HDWR|HW|H\/W)\b/) || has(/\b(SET|GROUP|GRP)\b/)) return pick("hardware_group");
-  if (has(/\b(GLAZING|GLASS|GLZ|GL)\b/)) return pick("glazing");
+  if (has(/\b(GLAZING|GLAZ|GLASS|GLZ|GL)\b/)) return pick("glazing");
   if (has(/\bHEAD\b/)) return pick("head_detail");
   if (has(/\bJAMB\b/)) return pick("jamb_detail");
   if (has(/\b(SILL|THRESHOLD|THRES|THRESH)\b/)) return pick("sill_detail");
@@ -419,12 +420,53 @@ export async function readDoorScheduleFromLines(lines, pageSize, opts = {}) {
       if (t.is_door_schedule) tables.push(t);
     }
   }
+  // A staggered mark label can sit alone above the dimension labels. No
+  // individual baseline then has both a mark and four labels. Assemble that
+  // small header band before applying the usual compact table read.
+  for (const { index, candidate } of markHeaderBands(lines)) {
+    if ((used.get(index) || []).some(r => candidate.x0 >= r.x0 - h0 && candidate.x0 <= r.x1 + h0)) continue;
+    const t = await buildTable(lines, index, pageSize, { ...opts, compactHeader: true, markHeaderBand: true }, candidate);
+    // Sparse fragments of equipment headers also name TAG, TYPE and SIZE.
+    // This extra recovery pass needs an explicit door/opening schedule title.
+    if (!t?.is_door_schedule || !/\b(DOOR|OPENING)\b/i.test(t.title || "") || !t.doors.length) continue;
+    if (tables.some(p => p.x0 < t.x1 && t.x0 < p.x1 && p.y0 <= t.y1 && t.y0 <= p.y1)) continue;
+    tables.push(t);
+    for (const k of t.lineIndexes) { if (!used.has(k)) used.set(k, []); used.get(k).push(t); }
+  }
   if (!tables.length) return null;
   const doors = [];
   for (const t of tables) for (const d of t.doors) doors.push(d);
   const sections = hardwareSpecSections(lines.map(l => l.text || (l.words || []).map(w => w.text).join(" ")).join("\n"));
   for (const d of doors) d.hardware_spec_sections = sections;
   return { tables, doors, unresolved_rows: tables.flatMap(t => t.unresolved_rows) };
+}
+
+function markHeaderBands(lines) {
+  const out = [];
+  for (const [index, line] of lines.entries()) for (const mark of line.words) {
+    if (!/^(MARK|TAG|NUMBER|NO\.?)$/i.test(mark.str)) continue;
+    const own = line.words.filter(w => w.item === mark.item);
+    if (fieldForHeader(own.map(w => w.str).join(" "), new Set()) !== "mark") continue;
+    const h = mark.h;
+    const words = [];
+    for (const L of lines) {
+      if (Math.abs(L.y - line.y) > 2.8 * h) continue;
+      const items = new Map();
+      for (const w of L.words) { if (!items.has(w.item)) items.set(w.item, []); items.get(w.item).push(w); }
+      for (const ws of items.values()) {
+        const text = ws.map(w => w.str).join(" ");
+        if (ws[0].x0 < mark.x0 || /\d|\b(SCHEDULE|LEGEND|TYPES|ELEVATIONS)\b/i.test(text)) continue;
+        if (labelHits({ words: ws }).hits && ws.every(w => w.str.length <= 14)) words.push(...ws);
+      }
+    }
+    words.sort((a, b) => a.x0 - b.x0);
+    const candidate = gapGroups({ words }, h).find(g => g.words.includes(mark));
+    if (!candidate || labelHits(candidate).hits < 6) continue;
+    const text = candidate.words.map(w => w.str).join(" ");
+    if (!/\b(SIZE|WIDTH|WDTH|WD|HEIGHT|HGT|HT)\b/i.test(text)) continue;
+    out.push({ index, candidate });
+  }
+  return out;
 }
 
 async function buildTable(lines, fieldIdx, pageSize, opts, fieldCandidate = null) {
@@ -504,7 +546,7 @@ async function buildTable(lines, fieldIdx, pageSize, opts, fieldCandidate = null
   // Labels printed just below the field line (T2507 A-103: WD | HGT under SIZE) are header, not data:
   // a following line, close below, whose words are all column labels and none a mark.
   let firstData = fieldIdx + 1;
-  for (let k = fieldIdx + 1, prevY = field.y; k < lines.length && headerIdx.length < 5; k++) {
+  for (let k = fieldIdx + 1, prevY = field.y; k < lines.length && headerIdx.length < (opts.markHeaderBand ? 8 : 5); k++) {
     const L = within(lines[k], x0, x1, 1.5 * h);
     if (!L.words.length) continue;
     if (L.y - prevY > 2.8 * h) break;
@@ -529,7 +571,7 @@ async function buildTable(lines, fieldIdx, pageSize, opts, fieldCandidate = null
     if (gap > limit) break;
     if (!inside.length) { if (gap > 1.2 * h && L.x0 > x1) continue; else continue; }
     const Li = { ...L, words: inside, text: inside.map((w) => w.str).join(" ") };
-    if (/^(?:GENERAL\s+NOTES?|NOTES)\s*:/i.test(Li.text)) break;
+    if (/^(?:GENERAL\s+NOTES?|NOTES?)\s*:/i.test(Li.text)) break;
     if (isFieldLine(Li, h) || isTitleLine(Li, h)) break;
     dataIdx.push(k);
     // The pitch is measured from row to row. A line closer than 0.8 text heights to the one above is
@@ -574,7 +616,19 @@ async function buildTable(lines, fieldIdx, pageSize, opts, fieldCandidate = null
   let anchors = clusters.filter((c) => c.n >= minCount).map((c) => c.min);
   if (!anchors.length || anchors[0] > x0 + 2 * h) anchors.unshift(x0);
   // Header cells: words overlapping in x (across the header lines) form a cell.
-  const hwords = headerLines.flatMap((L) => L.words).sort((a, b) => a.x0 - b.x0);
+  let hwords = headerLines.flatMap((L) => L.words).sort((a, b) => a.x0 - b.x0);
+  if (opts.markHeaderBand) {
+    // Group captions above explicit subcolumns must not become a spurious
+    // SIZE column or merge FIRE RATING with the neighbouring HARDWARE group.
+    const leaves = { FRAME: /^(TYPE|MATERIAL|FINISH)$/,
+      SIZE: /^(WIDTH|WDTH|WD|HEIGHT|HGT|HT)$/, DETAILS: /^(HEAD|JAMB|SILL)$/,
+      HARDWARE: /^(SET|GROUP)$/ };
+    hwords = hwords.filter(w => {
+      const sub = leaves[normLabel(w.str)];
+      return !sub || hwords.some(v => v !== w && v.item === w.item) ||
+        !hwords.some(v => v.yb > w.yb + 0.5 * h && sub.test(normLabel(v.str)));
+    });
+  }
   const cells = [];
   for (const w of hwords) {
     // The words of one text item are one cell; otherwise words a space apart.
@@ -701,6 +755,21 @@ async function buildTable(lines, fieldIdx, pageSize, opts, fieldCandidate = null
   // cell); a non-mark text in the mark column is a section label.
   const markCol = fields.indexOf("mark");
   const locCol = fields.indexOf("location");
+  if (opts.markHeaderBand) {
+    // A centred pair size starts left of the usual single-leaf size. Keep
+    // its complete text item in that cell, including the leading (PAIR).
+    const sizeCol = fields.indexOf("size");
+    if (sizeCol > 0) for (const L of dataLines) {
+      const items = new Map();
+      for (const w of L.words) { if (!items.has(w.item)) items.set(w.item, []); items.get(w.item).push(w); }
+      for (const ws of items.values()) {
+        const s = readSizeCell(joinWords(ws, h));
+        if (s.width_inches && s.height_inches && colOf(ws[ws.length - 1]) === sizeCol && ws[0].x0 > colStart(sizeCol - 1)) {
+          bounds[sizeCol - 1] = Math.min(bounds[sizeCol - 1], ws[0].x0 - 0.3 * h);
+        }
+      }
+    }
+  }
   const cellsOf = (L) => { const groups = Array.from({ length: ncol }, () => []); for (const w of L.words) groups[colOf(w)].push(w); return groups; };
   const rows = [];
   let section = null;
@@ -922,6 +991,7 @@ export function readSizeCell(text) {
   let t = String(text || "").replace(/[‘’′]/g, "'").replace(/[“”″]/g, '"').replace(/\s+/g, " ").trim();
   const out = { pair: false, width: null, height: null, thickness: null, width_inches: null, height_inches: null, thickness_inches: null };
   if (!t) return out;
+  t = t.replace(/^\((PR|PAIR|PRS?\.?)\)\s*/i, "$1 ");
   if (/^(PR|PAIR|PRS?\.?)\b/i.test(t)) { out.pair = true; t = t.replace(/^(PR|PAIR|PRS?\.?)\b\.?\s*/i, ""); }
   else if (/\b(PR|PAIR)$/i.test(t)) { out.pair = true; t = t.replace(/\s*\b(PR|PAIR)$/i, ""); }
   t = t.replace(/\(.*?\)/g, " ").trim();
