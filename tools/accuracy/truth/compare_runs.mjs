@@ -94,7 +94,9 @@ for (const sha of Array.from(allShas).sort()) {
     if (m2.agreed < m1.agreed && !ALLOW.has(sha)) {
       regressed = true;
     }
-    if (tierRank(m2.tier) < tierRank(m1.tier)) {
+    // A lower tier is a regression on the same terms: a set named in --allow is accepted (its reason is in
+    // plan/decisions.md), as is the move from oracle-checked to agreed; every other drop fails the compare.
+    if (tierRank(m2.tier) < tierRank(m1.tier) && !ALLOW.has(sha)) {
       if (!(m1.tier === "oracle-checked" && m2.tier === "agreed")) {
         regressed = true;
       }
@@ -111,7 +113,7 @@ for (const sha of Array.from(allShas).sort()) {
 }
 
 if (failed) {
-  console.log('REGRESSION: at least one set lost agreed rows or a tier; name accepted drops with --allow <sha,...> and record why.');
+  console.log('REGRESSION: at least one set lost agreed rows or a tier; name accepted drops with --allow <sha,...> and record why in plan/decisions.md.');
   process.exit(1);
 }
 console.log('no set lost agreed rows or a tier' + (ALLOW.size ? ' (allowed: ' + Array.from(ALLOW).join(', ') + ')' : ''));
