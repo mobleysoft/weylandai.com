@@ -419,14 +419,24 @@ async function buildTable(lines, fieldIdx, pageSize, opts, fieldCandidate = null
     if (hits >= 1 && shortWords && hits >= 0.4 * total && !L.words.some((w) => looksLikeMark(w.str) && /^\d/.test(w.str))) { headerIdx.unshift(k); headerLines.unshift(L); prevY = L.y; x0 = Math.min(x0, L.x0); x1 = Math.max(x1, L.x1); }
     else break;
   }
-  // Title: the nearest short line above the block naming a schedule.
-  let title = null;
-  for (let k = headerIdx[0] - 1; k >= 0 && k >= headerIdx[0] - 8; k--) {
-    const L = within(lines[k], x0, x1, 2 * h);
-    if (lines[headerIdx[0]].y - lines[k].y > 8 * h) break;
-    if (!L.words.length) continue;
-    if (L.words.length <= 8 && /\bSCHEDULE\b/.test(normLabel(L.text))) { title = L.text; break; }
-  }
+  // Title: the nearest short line above the block naming a schedule. Looked for first over the
+  // field line's own labels: the header search above may widen x0..x1 into a list printed beside
+  // the table (T2502 A-700: "HARDWARE SET 1 -" next to DOOR SCHEDULE made it "HARDWARE SET 1 -
+  // DOOR SCHEDULE", read as a hardware table, 9 doors dropped).
+  const findTitle = (tx0, tx1) => {
+    for (let k = headerIdx[0] - 1; k >= 0 && k >= headerIdx[0] - 8; k--) {
+      const L = within(lines[k], tx0, tx1, 2 * h);
+      if (lines[headerIdx[0]].y - lines[k].y > 8 * h) break;
+      if (!L.words.length) continue;
+      if (L.words.length <= 8 && /\bSCHEDULE\b/.test(normLabel(L.text))) return L.text;
+    }
+    return null;
+  };
+  // The labels' own span: a gap group can carry neighbouring text that is not a label.
+  const labelWords = fg.words.filter((w) => HEADER_LABEL_WORDS.test(normLabel(w.str)));
+  const lx0 = labelWords.length ? Math.min(...labelWords.map((w) => w.x0)) : fg.x0;
+  const lx1 = labelWords.length ? Math.max(...labelWords.map((w) => w.x1)) : fg.x1;
+  let title = findTitle(lx0, lx1) || findTitle(x0, x1);
   // Data lines below, inside the header's x-extent, until the pitch breaks or
   // another table starts.
   // Headers are often centered over left-aligned marks. Include the small
@@ -439,7 +449,10 @@ async function buildTable(lines, fieldIdx, pageSize, opts, fieldCandidate = null
     const L = lines[k];
     const inside = L.words.filter((w) => (w.x0 >= x0 - inset || (w.itemX0 < x0 && w.itemX1 >= x0 && w.itemX1 <= x1)) && w.x1 <= x1 + inset);
     const gap = L.y - lastY;
-    const limit = pitches.length >= 3 ? 3 * median(pitches) : 3.2 * h;
+    // Before the pitch is known, the gap is measured in the larger of the header's and this line's
+    // text size (capped at twice the header's): a 10 pt header over 13 pt rows on a roomy pitch put
+    // the first row just past 3.2 header heights on one OCR build and not on another.
+    const limit = pitches.length >= 3 ? 3 * median(pitches) : 3.2 * Math.max(h, Math.min(L.h || h, 2 * h));
     if (gap > limit) break;
     if (!inside.length) { if (gap > 1.2 * h && L.x0 > x1) continue; else continue; }
     const Li = { ...L, words: inside, text: inside.map((w) => w.str).join(" ") };
@@ -578,6 +591,12 @@ async function buildTable(lines, fieldIdx, pageSize, opts, fieldCandidate = null
     if (markText && !looksLikeMark(markText.split(" ")[0]) && locCol >= 0) {
       const locText = cells[locCol].trim();
       if (locText && /\d/.test(locText)) markText = locText.split(/\s+/)[0] + markText;
+    }
+    // A "Door Number" header over two sub-columns (T2423 A-601: 112 | A): the mark column holds
+    // the letter and the unnamed column just left of it the number.
+    if (markText && !looksLikeMark(markText.split(" ")[0]) && markCol > 0 && fields[markCol - 1] == null && /^[A-Z]$/i.test(markText)) {
+      const left = cells[markCol - 1].trim();
+      if (/^\d{1,4}$/.test(left) && looksLikeMark(left + markText.toUpperCase())) { markText = left + markText.toUpperCase(); cells[markCol] = markText; }
     }
     const prev = continuationRow;
     const validMark = markText && looksLikeMark(markText.split(" ")[0]);

@@ -115,11 +115,16 @@ test("F2: app STOP READING dispatches the AbortSignal passed to browser extracti
   const context = vm.createContext({ state, AbortController, $: id => { assert.equal(id, "stop-read-btn"); return button; } });
   const start = html.indexOf("      function beginBrowserRead(");
   const end = html.indexOf("      function partialRead(", start);
-  vm.runInContext(html.slice(start, end) + "\nbeginBrowserRead();", context);
+  vm.runInContext(html.slice(start, end) + "\nctl = beginBrowserRead();", context);
   assert.equal(visible, true);
-  assert.equal(state.readAbort.signal.aborted, false);
+  // Each read keeps the controller beginBrowserRead returns (8ce822a): a read still in flight never
+  // reaches for state.readAbort, which a later read replaces or clears.
+  assert.equal(context.ctl, state.readAbort);
+  assert.equal(context.ctl.signal.aborted, false);
   onStop();
-  assert.equal(state.readAbort.signal.aborted, true);
-  assert.match(html, /maxPixels: small \? 14e6 : 36e6, signal: state.readAbort.signal/);
-  assert.match(html, /maxPixels: 14e6, signal: state.readAbort.signal/);
+  assert.equal(context.ctl.signal.aborted, true);
+  assert.equal((html.match(/var ctl = beginBrowserRead\(\);/g) || []).length, 3, "every browser read takes its own controller");
+  assert.match(html, /maxPixels: small \? 14e6 : 36e6, signal: ctl.signal/);
+  assert.match(html, /maxPixels: 14e6, signal: ctl.signal/);
+  assert.doesNotMatch(html, /state\.readAbort\.signal/, "no read looks the signal up through state");
 });
